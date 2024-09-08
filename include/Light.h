@@ -47,6 +47,8 @@ struct LFlareGroup : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	// TODO: members
+	u8 _14[0x10]; // _14, unknown
+	u32 _24;      // _24, could be int
 };
 
 /**

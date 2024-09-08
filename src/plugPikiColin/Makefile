@@ -10,7 +10,7 @@ COLIN_FILES:=\
 	$(BUILD_DIR)/asm/plugPikiColin/mapSelect.o\
 	$(BUILD_DIR)/asm/plugPikiColin/newPikiGame.o\
 	$(BUILD_DIR)/asm/plugPikiColin/introGame.o\
-	$(BUILD_DIR)/asm/plugPikiColin/gameExit.o\
+	$(BUILD_DIR)/src/plugPikiColin/gameExit.o\
 	$(BUILD_DIR)/asm/plugPikiColin/gauges.o\
 	$(BUILD_DIR)/asm/plugPikiColin/genMapObject.o\
 	$(BUILD_DIR)/asm/plugPikiColin/gui.o\

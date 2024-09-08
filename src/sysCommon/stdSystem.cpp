@@ -179,7 +179,7 @@ void StdSystem::findAnyGfxObject(char*, u32)
  * Address:	8003F108
  * Size:	0000F4
  */
-void StdSystem::loadTexture(char*, bool)
+Texture* StdSystem::loadTexture(char*, bool)
 {
 	/*
 	.loc_0x0:
@@ -1072,7 +1072,7 @@ LFInfo* StdSystem::getLFlareInfo()
  * Address:	8003FAAC
  * Size:	0000DC
  */
-void StdSystem::registerLFlare(Texture*)
+LFlareGroup* StdSystem::registerLFlare(Texture*)
 {
 	/*
 	.loc_0x0:

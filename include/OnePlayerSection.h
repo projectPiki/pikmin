@@ -6,6 +6,8 @@
 
 /*
  * @brief TODO
+ *
+ * @note Size: 0x25C.
  */
 struct FlowController {
 	void readMapList(char*);
@@ -14,6 +16,9 @@ struct FlowController {
 	void setStage(char*);
 
 	// TODO: members
+	u8 _00[0x244];          // _00, unknown
+	int _244;               // _244
+	u8 _248[0x25C - 0x248]; // _248, unknown
 };
 
 /**
@@ -42,5 +47,7 @@ struct OnePlayerSection : public Section {
 	// _00-_20 = Section?
 	// TODO: members
 };
+
+extern FlowController flowCont;
 
 #endif

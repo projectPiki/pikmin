@@ -4970,26 +4970,26 @@ void zen::ogScrFileSelectMgr::update(Controller*, CardQuickInfo&)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	8018B9D0
- * Size:	000024
- */
-Colour::Colour(const Colour&)
-{
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x0(r4)
-	  stb       r0, 0x0(r3)
-	  lbz       r0, 0x1(r4)
-	  stb       r0, 0x1(r3)
-	  lbz       r0, 0x2(r4)
-	  stb       r0, 0x2(r3)
-	  lbz       r0, 0x3(r4)
-	  stb       r0, 0x3(r3)
-	  blr
-	*/
-}
+// /*
+//  * --INFO--
+//  * Address:	8018B9D0
+//  * Size:	000024
+//  */
+// Colour::Colour(const Colour&)
+// {
+// 	/*
+// 	.loc_0x0:
+// 	  lbz       r0, 0x0(r4)
+// 	  stb       r0, 0x0(r3)
+// 	  lbz       r0, 0x1(r4)
+// 	  stb       r0, 0x1(r3)
+// 	  lbz       r0, 0x2(r4)
+// 	  stb       r0, 0x2(r3)
+// 	  lbz       r0, 0x3(r4)
+// 	  stb       r0, 0x3(r3)
+// 	  blr
+// 	*/
+// }
 
 /*
  * --INFO--

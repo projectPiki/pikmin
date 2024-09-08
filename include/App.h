@@ -23,7 +23,7 @@ struct GameApp : public BaseApp {
  *
  * @note Size: 0x54.
  */
-struct PlugPikiApp : public BaseApp {
+struct PlugPikiApp : public GameApp {
 	PlugPikiApp();
 
 	virtual void update();        // _10

@@ -1,12 +1,16 @@
 #include "Generator.h"
+#include "DynSimulator.h"
+#include "DynObject.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-void _Error(char*, ...)
+void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "genMapObject");
 	// UNUSED FUNCTION
 }
 
@@ -25,32 +29,7 @@ void _Print(char*, ...)
  * Address:	8005D0E8
  * Size:	000040
  */
-void makeObjectMapObject()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x1C
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  bl        -0x160F8
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x28
-	  bl        .loc_0x40
-
-	.loc_0x28:
-	  mr        r3, r31
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-
-	.loc_0x40:
-	*/
-}
+static GenObjectMapObject* makeObjectMapObject() { return new GenObjectMapObject; }
 
 /*
  * --INFO--
@@ -58,36 +37,9 @@ void makeObjectMapObject()
  * Size:	000068
  */
 GenObjectMapObject::GenObjectMapObject()
+    : GenObject('mobj', "create MAP OBJECT")
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r1)
-	  lis       r5, 0x802B
-	  subi      r6, r4, 0x7CD8
-	  stwu      r1, -0x18(r1)
-	  lis       r4, 0x6D6F
-	  subi      r5, r5, 0x7CE4
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r4, r4, 0x626A
-	  bl        0x7DB60
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5490
-	  lis       r3, 0x802B
-	  stw       r0, 0x4(r31)
-	  subi      r0, r3, 0x7AFC
-	  stw       r0, 0x4(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stw       r0, 0x18(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_18 = 0;
 }
 
 /*
@@ -178,7 +130,7 @@ void GenObjectMapObject::render(Graphics&, Generator*) { }
  * Address:	8005D264
  * Size:	000008
  */
-u32 GenObjectMapObject::birth(BirthInfo&) { return 0x0; }
+void* GenObjectMapObject::birth(BirthInfo&) { return nullptr; }
 
 /*
  * --INFO--
@@ -528,25 +480,6 @@ WorldSpring::WorldSpring()
 DynObjBody::DynObjBody()
 {
 	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	8005D68C
- * Size:	00001C
- */
-void Vector3f::set(const f32&, const f32&, const f32&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x0(r5)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x0(r6)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
 }
 
 /*

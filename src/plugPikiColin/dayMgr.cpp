@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Menu.h"
+#include "DayMgr.h"
 
 /*
  * --INFO--
@@ -1287,7 +1288,8 @@ void LightMenu::menuDecrease(Menu&)
  * Address:	8006A714
  * Size:	00072C
  */
-ColourMenu::ColourMenu(Colour*, Controller*, Font*, bool)
+ColourMenu::ColourMenu(Colour*, Controller* controller, Font* font, bool p4)
+    : Menu(controller, font, p4)
 {
 	/*
 	.loc_0x0:
@@ -1784,7 +1786,8 @@ ColourMenu::ColourMenu(Colour*, Controller*, Font*, bool)
  * Address:	8006AE40
  * Size:	0005BC
  */
-PositionMenu::PositionMenu(Vector3f*, Controller*, Font*, bool, bool)
+PositionMenu::PositionMenu(Vector3f* p1, Controller* controller, Font* font, bool p4, bool p5)
+    : Menu(controller, font, p4)
 {
 	/*
 	.loc_0x0:
@@ -4171,7 +4174,8 @@ DayMgr::DayMgr(MapMgr*, Controller*)
  * Address:	8006D034
  * Size:	00052C
  */
-LightMenu::LightMenu(Light*, int*, Controller*, Font*, bool)
+LightMenu::LightMenu(Light*, int*, Controller* controller, Font* font, bool p5)
+    : Menu(controller, font, p5)
 {
 	/*
 	.loc_0x0:
@@ -4538,7 +4542,8 @@ LightMenu::LightMenu(Light*, int*, Controller*, Font*, bool)
  * Address:	8006D560
  * Size:	000B30
  */
-FogMenu::FogMenu(Colour*, f32*, f32*, Controller*, Font*, bool)
+FogMenu::FogMenu(Colour*, f32*, f32*, Controller* controller, Font* font, bool p6)
+    : Menu(controller, font, p6)
 {
 	/*
 	.loc_0x0:

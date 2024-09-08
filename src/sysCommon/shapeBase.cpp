@@ -7088,13 +7088,6 @@ void BaseShape::makeInstance(ShapeDynMaterials&, int)
 
 /*
  * --INFO--
- * Address:	8002FC38
- * Size:	000004
- */
-Colour::Colour() { }
-
-/*
- * --INFO--
  * Address:	8002FC3C
  * Size:	00000C
  */

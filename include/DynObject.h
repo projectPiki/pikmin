@@ -8,6 +8,18 @@ struct MapMgr;
 
 /**
  * @brief TODO
+ *
+ * @note Genuinely not sure where to put this, but here kind of makes sense?
+ */
+struct WorldSpring {
+	WorldSpring();
+
+	u8 _00[0x4];  // _00, unknown
+	Vector3f _04; // _04
+};
+
+/**
+ * @brief TODO
  */
 struct DynObjBody : public RigidBody {
 	DynObjBody(); // unused/inlined

@@ -116,6 +116,8 @@ struct Vector2f {
  * @note Size: 0x10.
  */
 struct Quat {
+	Quat();
+
 	void fromMat3f(Matrix3f&);
 	void rotate(Vector3f&, f32);
 	void multiply(Quat&);

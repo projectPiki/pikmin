@@ -174,7 +174,7 @@ struct GenObject : public GenBase {
 	virtual void init(Generator*);               // _28
 	virtual void update(Generator*);             // _2C
 	virtual void render(Graphics&, Generator*);  // _30
-	virtual void birth(BirthInfo&) = 0;          // _34
+	virtual void* birth(BirthInfo&) = 0; // _34, this and inheritances probably produce a unified base class not void*, not sure what yet
 
 	// _04     = VTBL
 	// _00-_18 = GenBase
@@ -190,7 +190,7 @@ struct GenObjectActor : public GenObject {
 	}
 
 	virtual void doRead(RandomAccessStream&); // _14
-	virtual void birth(BirthInfo&);           // _34
+	virtual void* birth(BirthInfo&);          // _34
 
 	void initialise();
 
@@ -213,7 +213,7 @@ struct GenObjectBoss : public GenObject {
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
 	virtual void doRead(RandomAccessStream&);            // _14
 	virtual void updateUseList(Generator*, int);         // _24
-	virtual void birth(BirthInfo&);                      // _34
+	virtual void* birth(BirthInfo&);                     // _34
 
 	void initialise();
 	void readParameters(RandomAccessStream&);
@@ -231,7 +231,7 @@ struct GenObjectDebug : public GenObject {
 	GenObjectDebug(); // unused/inlined
 
 	virtual void doRead(RandomAccessStream&); // _14
-	virtual void birth(BirthInfo&);           // _34
+	virtual void* birth(BirthInfo&);          // _34
 
 	void initialise();
 
@@ -251,7 +251,7 @@ struct GenObjectItem : public GenObject {
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
 	virtual void doRead(RandomAccessStream&);            // _14
 	virtual void updateUseList(Generator*, int);         // _24
-	virtual void birth(BirthInfo&);                      // _34
+	virtual void* birth(BirthInfo&);                     // _34
 
 	void initialise();
 
@@ -262,19 +262,22 @@ struct GenObjectItem : public GenObject {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct GenObjectMapObject : public GenObject {
 	GenObjectMapObject();
 
 	virtual void doRead(RandomAccessStream&);   // _14
 	virtual void render(Graphics&, Generator*); // _30
-	virtual void birth(BirthInfo&);             // _34
+	virtual void* birth(BirthInfo&);            // _34
 
 	void initialise(MapMgr*);
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
 	// TODO: members
+	u32 _18; // _18, unknown
 };
 
 /**
@@ -288,7 +291,7 @@ struct GenObjectMapParts : public GenObject {
 
 	virtual void doRead(RandomAccessStream&);   // _14
 	virtual void render(Graphics&, Generator*); // _30
-	virtual void birth(BirthInfo&);             // _34
+	virtual void* birth(BirthInfo&);            // _34
 
 	void initialise();
 
@@ -304,7 +307,7 @@ struct GenObjectNavi : public GenObject {
 	GenObjectNavi(); // unused/inlined
 
 	virtual void doRead(RandomAccessStream&); // _14
-	virtual void birth(BirthInfo&);           // _34
+	virtual void* birth(BirthInfo&);          // _34
 
 	void initialise();
 
@@ -322,7 +325,7 @@ struct GenObjectPellet : public GenObject {
 	virtual void doWrite(RandomAccessStream&);   // _08
 	virtual void doRead(RandomAccessStream&);    // _14
 	virtual void updateUseList(Generator*, int); // _24
-	virtual void birth(BirthInfo&);              // _34
+	virtual void* birth(BirthInfo&);             // _34
 
 	void initialise();
 
@@ -344,7 +347,7 @@ struct GenObjectPiki : public GenObject {
 
 	virtual void ramSaveParameters(RandomAccessStream&); // _0C
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
-	virtual void birth(BirthInfo&);                      // _34
+	virtual void* birth(BirthInfo&);                     // _34
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -361,7 +364,7 @@ struct GenObjectPlant : public GenObject {
 	virtual void doRead(RandomAccessStream&);    // _14
 	virtual void updateUseList(Generator*, int); // _24
 	virtual void render(Graphics&, Generator*);  // _30
-	virtual void birth(BirthInfo&);              // _34
+	virtual void* birth(BirthInfo&);             // _34
 
 	void initialise();
 
@@ -379,7 +382,7 @@ struct GenObjectTeki : public GenObject {
 	virtual void doWrite(RandomAccessStream&);   // _08
 	virtual void doRead(RandomAccessStream&);    // _14
 	virtual void updateUseList(Generator*, int); // _24
-	virtual void birth(BirthInfo&);              // _34
+	virtual void* birth(BirthInfo&);             // _34
 
 	void initialise();
 
@@ -399,7 +402,7 @@ struct GenObjectWorkObject : public GenObject {
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
 	virtual void doRead(RandomAccessStream&);            // _14
 	virtual void updateUseList(Generator*, int);         // _24
-	virtual void birth(BirthInfo&);                      // _34
+	virtual void* birth(BirthInfo&);                     // _34
 
 	void initialise();
 

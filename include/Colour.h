@@ -7,8 +7,15 @@
  * @brief TODO
  */
 struct Colour {
-	Colour();
-	Colour(const Colour&);
+	Colour() { }
+
+	Colour(const Colour& other)
+	{
+		r = other.r;
+		g = other.g;
+		b = other.b;
+		a = other.a;
+	}
 
 	// unused/inlined:
 	void write(struct Stream&);

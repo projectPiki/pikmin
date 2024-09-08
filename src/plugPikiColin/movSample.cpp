@@ -1,4 +1,4 @@
-#include "types.h"
+#include "MovSampleSection.h"
 
 /*
  * --INFO--
@@ -309,7 +309,7 @@ void convHVQM4TexY8UV8(int, int, u8*, u8*)
  * Address:	800782E0
  * Size:	000034
  */
-void playbackFunc(void*)
+static void playbackFunc(void*)
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "App.h"
 
 /*
  * --INFO--
@@ -525,7 +525,7 @@ void PlugPikiApp::draw(Graphics&)
  * Address:	8005F498
  * Size:	000144
  */
-void PlugPikiApp::idle()
+int PlugPikiApp::idle()
 {
 	/*
 	.loc_0x0:
@@ -726,88 +726,18 @@ PlugPikiApp::PlugPikiApp()
  * Address:	8005F724
  * Size:	000064
  */
-GameApp::~GameApp()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x48
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x77B0
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        -0x3A834
-	  extsh.    r0, r31
-	  ble-      .loc_0x48
-	  mr        r3, r30
-	  bl        -0x185BC
-
-	.loc_0x48:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+GameApp::~GameApp() { }
 
 /*
  * --INFO--
  * Address:	8005F788
  * Size:	000008
  */
-u32 GameApp::idle() { return 0x1; }
+int GameApp::idle() { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8005F790
  * Size:	000074
  */
-PlugPikiApp::~PlugPikiApp()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x58
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x772C
-	  stw       r0, 0x0(r30)
-	  beq-      .loc_0x48
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x77B0
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        -0x3A8B0
-
-	.loc_0x48:
-	  extsh.    r0, r31
-	  ble-      .loc_0x58
-	  mr        r3, r30
-	  bl        -0x18638
-
-	.loc_0x58:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+PlugPikiApp::~PlugPikiApp() { }

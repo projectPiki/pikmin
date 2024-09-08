@@ -1,4 +1,5 @@
-#include "types.h"
+#include "ModeState.h"
+#include "IntroGameSection.h"
 
 /*
  * --INFO--

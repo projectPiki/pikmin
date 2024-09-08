@@ -1,4 +1,15 @@
-#include "types.h"
+#include "LifeGauge.h"
+#include "Colour.h"
+#include "sysNew.h"
+#include "Light.h"
+
+static Colour lgborder;
+static Colour lglev0;
+static Colour lglev1;
+static Colour lglev2;
+static Colour lglev3;
+
+LifeGaugeMgr* lgMgr;
 
 /*
  * --INFO--
@@ -491,108 +502,19 @@ void GaugeInfo::refresh(Graphics&)
  * Address:	8005BD50
  * Size:	0000F0
  */
-void LifeGaugeMgr::init(int)
+void LifeGaugeMgr::init(int count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  subi      r0, r13, 0x7000
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
-	  addi      r28, r4, 0
-	  addi      r30, r28, 0
-	  stw       r5, 0x10(r3)
-	  stw       r5, 0xC(r3)
-	  mulli     r3, r30, 0x48
-	  stw       r5, 0x8(r31)
-	  addi      r3, r3, 0x8
-	  stw       r0, 0x4(r31)
-	  stw       r5, 0x58(r31)
-	  stw       r5, 0x54(r31)
-	  stw       r5, 0x50(r31)
-	  stw       r0, 0x4C(r31)
-	  bl        -0x14DA4
-	  lis       r4, 0x8006
-	  subi      r4, r4, 0x41C0
-	  addi      r7, r30, 0
-	  li        r5, 0
-	  li        r6, 0x48
-	  bl        0x1B8E68
-	  li        r29, 0
-	  mulli     r0, r29, 0x48
-	  add       r30, r3, r0
-	  b         .loc_0x98
+	_00.initCore("");
+	_48.initCore("");
 
-	.loc_0x84:
-	  addi      r3, r31, 0x48
-	  addi      r4, r30, 0
-	  bl        -0x1B804
-	  addi      r30, r30, 0x48
-	  addi      r29, r29, 0x1
+	GaugeInfo* gaugeList = new GaugeInfo[count];
 
-	.loc_0x98:
-	  cmpw      r29, r28
-	  blt+      .loc_0x84
-	  lis       r4, 0x802B
-	  lwz       r3, 0x2DEC(r13)
-	  subi      r4, r4, 0x7D20
-	  li        r5, 0x1
-	  bl        -0x1CCF8
-	  mr        r4, r3
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x1C360
-	  stw       r3, 0x90(r31)
-	  li        r0, 0x5
-	  lwz       r3, 0x90(r31)
-	  stw       r0, 0x24(r3)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
+	for (int i = 0; i < count; i++) {
+		_48.add(&gaugeList[i]);
+	}
 
-/*
- * --INFO--
- * Address:	8005BE40
- * Size:	000054
- */
-GaugeInfo::GaugeInfo()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x0(r3)
-	  li        r6, 0
-	  lis       r4, 0x802A
-	  stw       r6, 0x10(r3)
-	  subi      r5, r13, 0x7000
-	  addi      r0, r4, 0x7C30
-	  stw       r6, 0xC(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r5, 0x4(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x7A00(r2)
-	  stfs      f0, 0x30(r3)
-	  stfs      f0, 0x2C(r3)
-	  stfs      f0, 0x28(r3)
-	  stw       r6, 0x14(r3)
-	  blr
-	*/
+	mLFlare      = gsys->registerLFlare(gsys->loadTexture("intro/item_0_9.bti", true));
+	mLFlare->_24 = 5;
 }
 
 /*

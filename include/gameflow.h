@@ -43,8 +43,12 @@ struct GameFlow : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u8 _20[0x1F4 - 0x20]; // _20, unknown
-	u32 _1F4;             // _1F4, could be int
+	u8 _20[0x1F0 - 0x20];   // _20, unknown
+	u32 _1F0;               // _1F0, could be int
+	u32 _1F4;               // _1F4, could be int
+	u8 _1F8[0x2B0 - 0x1F8]; // _1F8, unknown
+	u32 _2B0;               // _2B0, could be int
+	u8 _2B4[0x355 - 0x2B4]; // _2B4, unknown
 };
 
 /**

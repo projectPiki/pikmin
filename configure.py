@@ -145,7 +145,7 @@ LIBS = [
             ["plugPikiColin/mapSelect", False],
             ["plugPikiColin/newPikiGame", False],
             ["plugPikiColin/introGame", False],
-            ["plugPikiColin/gameExit", False],
+            ["plugPikiColin/gameExit", True],
             ["plugPikiColin/gauges", False],
             ["plugPikiColin/genMapObject", False],
             ["plugPikiColin/gui", False],

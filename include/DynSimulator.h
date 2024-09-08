@@ -14,6 +14,18 @@ struct Shape;
  * @brief TODO
  */
 struct RigidBody : public Node {
+
+	/**
+	 * @brief TODO
+	 */
+	struct configuration {
+		configuration();
+
+		// TODO: members
+	};
+
+	RigidBody();
+
 	virtual void render(Graphics&);                                       // _18
 	virtual void initDimensions(f32, f32, f32);                           // _30
 	virtual void computeForces(int, f32);                                 // _34

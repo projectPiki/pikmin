@@ -61,7 +61,7 @@ struct StdSystem {
 	void resetHeap(int, int);
 	int setHeap(int);
 	void findGfxObject(char*, u32);
-	void loadTexture(char*, bool);
+	Texture* loadTexture(char*, bool);
 	void loadShape(char*, bool);
 	void findAnimation(char*);
 	void findAnyIndex(char*, char*);
@@ -76,7 +76,7 @@ struct StdSystem {
 	void initLFlares(int);
 	void resetLFlares();
 	LFInfo* getLFlareInfo();
-	void registerLFlare(Texture*);
+	LFlareGroup* registerLFlare(Texture*);
 	void flushLFlares(Graphics&);
 	void loadBundle(char*, bool);
 
