@@ -1,4 +1,4 @@
-#include "types.h"
+#include "gameFlow.h"
 
 /*
  * --INFO--
@@ -321,7 +321,7 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo&)
  * Address:	80053F2C
  * Size:	000174
  */
-void GamePrefs::checkIsHiscore(GameChalQuickInfo&)
+bool GamePrefs::checkIsHiscore(GameChalQuickInfo&)
 {
 	/*
 	.loc_0x0:
@@ -442,7 +442,7 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo&)
  * Address:	800540A0
  * Size:	00034C
  */
-void GamePrefs::checkIsHiscore(GameQuickInfo&)
+bool GamePrefs::checkIsHiscore(GameQuickInfo&)
 {
 	/*
 	.loc_0x0:

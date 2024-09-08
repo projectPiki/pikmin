@@ -102,7 +102,9 @@ struct RamStream : public RandomAccessStream {
 
 	// _04     = VTBL
 	// _00-_08 = RandomAccessStream
-	// TODO: members
+	void* mBufferAddr; // _08
+	int mPosition;     // _0C
+	int mLength;       // _10
 };
 
 #endif

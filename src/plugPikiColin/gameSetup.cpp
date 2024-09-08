@@ -1,4 +1,7 @@
-#include "types.h"
+#include "GameSetupSection.h"
+#include "gameflow.h"
+#include "system.h"
+#include "stl/mem.h"
 
 /*
  * --INFO--
@@ -338,16 +341,8 @@ GameSetupSection::GameSetupSection()
  */
 void GameSetupSection::update()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  li        r0, 0x1
-	  stw       r0, 0x1F4(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  stb       r0, 0x0(r3)
-	  blr
-	*/
+	gameflow._1F4  = 1;
+	gsys->mPending = true;
 }
 
 /*
@@ -362,98 +357,45 @@ void GameSetupSection::init() { }
  * Address:	80054F68
  * Size:	000010
  */
-void RamStream::getPending()
-{
-	/*
-	.loc_0x0:
-	  lwz       r4, 0xC(r3)
-	  lwz       r0, 0x10(r3)
-	  sub       r3, r0, r4
-	  blr
-	*/
-}
+int RamStream::getPending() { return mLength - mPosition; }
 
 /*
  * --INFO--
  * Address:	80054F78
  * Size:	000008
  */
-void RamStream::setPosition(int a1)
-{
-	// Generated from stw r4, 0xC(r3)
-	_0C = a1;
-}
+void RamStream::setPosition(int pos) { mPosition = pos; }
 
 /*
  * --INFO--
  * Address:	80054F80
  * Size:	000008
  */
-void RamStream::getPosition()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0xC(r3)
-	  blr
-	*/
-}
+int RamStream::getPosition() { return mPosition; }
 
 /*
  * --INFO--
  * Address:	80054F88
  * Size:	000008
  */
-void RamStream::getLength()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x10(r3)
-	  blr
-	*/
-}
+int RamStream::getLength() { return mLength; }
 
 /*
  * --INFO--
  * Address:	80054F90
  * Size:	000008
  */
-void RamStream::setLength(int a1)
-{
-	// Generated from stw r4, 0x10(r3)
-	_10 = a1;
-}
+void RamStream::setLength(int len) { mLength = len; }
 
 /*
  * --INFO--
  * Address:	80054F98
  * Size:	000054
  */
-void RamStream::read(void*, int)
+void RamStream::read(void* dest, int size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r6, 0x8(r3)
-	  lwz       r0, 0xC(r3)
-	  addi      r3, r4, 0
-	  add       r4, r6, r0
-	  bl        -0x51BB0
-	  lwz       r0, 0xC(r30)
-	  add       r0, r0, r31
-	  stw       r0, 0xC(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	memcpy(dest, (const void*)((int)mBufferAddr + mPosition), size);
+	mPosition += size;
 }
 
 /*
@@ -461,29 +403,8 @@ void RamStream::read(void*, int)
  * Address:	80054FEC
  * Size:	000050
  */
-void RamStream::write(void*, int)
+void RamStream::write(void* src, int size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x8(r3)
-	  lwz       r0, 0xC(r30)
-	  add       r3, r3, r0
-	  bl        -0x51C00
-	  lwz       r0, 0xC(r30)
-	  add       r0, r0, r31
-	  stw       r0, 0xC(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	memcpy((void*)((int)mBufferAddr + mPosition), src, size);
+	mPosition += size;
 }

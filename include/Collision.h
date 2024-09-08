@@ -13,6 +13,7 @@ struct ObjCollInfo;
 struct Shape;
 struct BaseShape;
 struct RoomInfo;
+struct RigidBody;
 
 /**
  * @brief TODO
@@ -179,6 +180,28 @@ struct CollTriInfo {
 	void behindEdge(Vector3f&);
 
 	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct CollState {
+	// unused/inlined:
+	void resetCollisions(Shape*);
+	void add(Vector3f&, Vector3f&, RigidBody*);
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct Collision {
+	Collision();
+
+	u8 _00[0x4];  // _00, unknown
+	Vector3f _04; // _04
+	Vector3f _10; // _10
 };
 
 #endif

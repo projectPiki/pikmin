@@ -47,7 +47,7 @@ struct TekiMessage {
 struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyListener {
 	BTeki();
 
-	virtual void alwaysUpdatePlatform();                 // _18
+	virtual bool alwaysUpdatePlatform();                 // _18
 	virtual void startAI(int);                           // _34
 	virtual f32 getiMass();                              // _38
 	virtual void doStore(CreatureInf*);                  // _48

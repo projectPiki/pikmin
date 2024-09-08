@@ -1,4 +1,6 @@
-#include "types.h"
+#include "MapSelect.h"
+#include "Delegate.h"
+#include "Menu.h"
 
 /*
  * --INFO--

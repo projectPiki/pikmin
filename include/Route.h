@@ -80,7 +80,7 @@ struct WayPoint {
 	void getLinkIndex(int);
 
 	Vector3f mPosition; // _00, probably
-	// TODO: members
+	                    // TODO: members
 };
 
 /**

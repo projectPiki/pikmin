@@ -1,11 +1,13 @@
 #include "types.h"
+#include "CardUtil.h"
+#include "Dolphin/card.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-void _Error(char*, ...)
+static void _Error(char*, ...)
 {
 	// UNUSED FUNCTION
 }
@@ -15,7 +17,7 @@ void _Error(char*, ...)
  * Address:	........
  * Size:	0000F4
  */
-void _Print(char*, ...)
+static void _Print(char*, ...)
 {
 	// UNUSED FUNCTION
 }
@@ -95,7 +97,7 @@ void CardUtilSectorSize()
  * Address:	8004C93C
  * Size:	000104
  */
-void DoMount(s32, void*)
+static void DoMount(s32, void*)
 {
 	/*
 	.loc_0x0:
@@ -186,7 +188,7 @@ void DoMount(s32, void*)
  * Address:	........
  * Size:	000064
  */
-void DoUnmount(s32)
+static void DoUnmount(s32)
 {
 	// UNUSED FUNCTION
 }
@@ -196,7 +198,7 @@ void DoUnmount(s32)
  * Address:	........
  * Size:	000088
  */
-void DoFormat(s32)
+static void DoFormat(s32)
 {
 	// UNUSED FUNCTION
 }
@@ -206,7 +208,7 @@ void DoFormat(s32)
  * Address:	8004CA40
  * Size:	0000FC
  */
-void DoErase(s32, s32)
+static void DoErase(s32, s32)
 {
 	/*
 	.loc_0x0:
@@ -293,7 +295,7 @@ void DoErase(s32, s32)
  * Address:	8004CB3C
  * Size:	0005CC
  */
-void DoList(s32, CardUtilDirent*)
+static void DoList(s32, CardUtilDirent*)
 {
 	/*
 	.loc_0x0:
@@ -724,7 +726,7 @@ void DoList(s32, CardUtilDirent*)
  * Address:	........
  * Size:	0000A0
  */
-void DoOpen(s32, s32, void*)
+static void DoOpen(s32, s32, void*)
 {
 	// UNUSED FUNCTION
 }
@@ -734,7 +736,7 @@ void DoOpen(s32, s32, void*)
  * Address:	........
  * Size:	00008C
  */
-void DoWrite(s32, s32, void*, u32, u32)
+static void DoWrite(s32, s32, void*, u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -744,7 +746,7 @@ void DoWrite(s32, s32, void*, u32, u32)
  * Address:	8004D108
  * Size:	0005AC
  */
-void DoSave(s32, CARDStat*, void*)
+static void DoSave(s32, CARDStat*, void*)
 {
 	/*
 	.loc_0x0:
@@ -1173,7 +1175,7 @@ void DoSave(s32, CARDStat*, void*)
  * Address:	8004D6B4
  * Size:	0000B0
  */
-void CardUtilCommand(s32, s32, s32, void*, u32, u32)
+static void CardUtilCommand(s32, s32, s32, void*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -1474,7 +1476,7 @@ void CardUtilWrite(s32, s32, void*, u32, u32)
  * Address:	8004D910
  * Size:	00025C
  */
-void CardUtilMain(void*)
+static void CardUtilMain(void*)
 {
 	/*
 	.loc_0x0:

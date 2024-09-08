@@ -56,13 +56,15 @@ struct Vector3f {
 		y = pY;
 		z = pZ;
 	}
+
 	inline void operator*=(const f32 other)
 	{
 		this->x *= other;
 		this->y *= other;
 		this->z *= other;
 	}
-	inline void operator=(const Vector3f& other) { set(other.x, other.y, other.z); }
+
+	// NB: do NOT make an operator= definition, needs to use the default.
 
 	inline void set(const f32 val) { x = y = z = val; }
 

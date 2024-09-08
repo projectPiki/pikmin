@@ -1,4 +1,6 @@
-#include "types.h"
+#include "DynSimulator.h"
+#include "Collision.h"
+#include "Matrix3f.h"
 
 /*
  * --INFO--
@@ -2312,7 +2314,7 @@ void RigidBody::calculateVertices(int)
  * Address:	8004FBBC
  * Size:	000008
  */
-u32 RigidBody::checkForCollisions(int, CollState&) { return 0x0; }
+bool RigidBody::checkForCollisions(int, CollState&) { return false; }
 
 /*
  * --INFO--

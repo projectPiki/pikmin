@@ -46,6 +46,12 @@ struct Controller : public Node {
 		PRESS_ABXYLRZ = (PRESS_A | PRESS_B | PRESS_X | PRESS_Y | PRESS_L | PRESS_R | PRESS_Z),
 	};
 
+	Controller()
+	    : Node("<Controller>")
+	{
+		reset(1);
+	}
+
 	void reset(u32);
 	void updateCont(u32 keyStatus);
 	void update();

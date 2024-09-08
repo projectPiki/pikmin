@@ -1,4 +1,11 @@
 #include "types.h"
+#include "Controller.h"
+#include "Section.h"
+#include "ModeState.h"
+#include "Interface.h"
+#include "NewPikiGame.h"
+#include "sysNew.h"
+#include "Controller.h"
 
 /*
  * --INFO--
@@ -339,82 +346,17 @@ void handleTutorialWindow(u32&, Controller*)
  * Size:	000118
  */
 BaseGameSection::BaseGameSection()
+    : Node("")
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  subi      r0, r13, 0x7268
-	  stwu      r1, -0x28(r1)
-	  stmw      r26, 0x10(r1)
-	  addi      r31, r3, 0
-	  addi      r30, r4, 0x738C
-	  lis       r3, 0x8022
-	  addi      r27, r3, 0x737C
-	  lis       r3, 0x8023
-	  subi      r29, r3, 0x71E0
-	  li        r28, 0
-	  addi      r3, r31, 0
-	  stw       r30, 0x0(r31)
-	  subi      r4, r13, 0x7268
-	  stw       r27, 0x0(r31)
-	  stw       r28, 0x10(r31)
-	  stw       r28, 0xC(r31)
-	  stw       r28, 0x8(r31)
-	  stw       r0, 0x4(r31)
-	  stw       r29, 0x0(r31)
-	  bl        -0x167A0
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x7F14
-	  stw       r0, 0x0(r31)
-	  li        r0, 0x6
-	  li        r3, 0x50
-	  stw       r0, 0x40(r31)
-	  stw       r28, 0x20(r31)
-	  stw       r28, 0x34(r31)
-	  stw       r28, 0x38(r31)
-	  bl        -0xFF00
-	  mr.       r26, r3
-	  beq-      .loc_0xDC
-	  stw       r30, 0x0(r26)
-	  lis       r3, 0x802A
-	  addi      r30, r3, 0x7AFC
-	  stw       r27, 0x0(r26)
-	  addi      r3, r26, 0
-	  addi      r4, r30, 0
-	  stw       r28, 0x10(r26)
-	  stw       r28, 0xC(r26)
-	  stw       r28, 0x8(r26)
-	  bl        -0x32060
-	  stw       r29, 0x0(r26)
-	  addi      r3, r26, 0
-	  addi      r4, r30, 0
-	  bl        -0x16808
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x714C
-	  stw       r0, 0x0(r26)
-	  addi      r3, r26, 0
-	  li        r4, 0x1
-	  bl        -0x165AC
-
-	.loc_0xDC:
-	  stw       r26, 0x24(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stw       r0, 0x3C(r31)
-	  lfs       f0, -0x7A84(r2)
-	  stfs      f0, 0x28(r31)
-	  lfs       f0, -0x7A80(r2)
-	  stfs      f0, 0x2C(r31)
-	  lfs       f0, -0x7A88(r2)
-	  stfs      f0, 0x30(r31)
-	  lwz       r0, 0x2C(r1)
-	  lmw       r26, 0x10(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	_40         = 6;
+	_20         = 0;
+	_34         = 0;
+	_38         = 0;
+	mController = new Controller;
+	_3C         = 0;
+	_28         = 0.0f;
+	_2C         = 1.0f;
+	_30         = 0.5f;
 }
 
 /*
@@ -3401,6 +3343,7 @@ void GameMovieInterface::parse(GameMovieInterface::ComplexMessage&)
  */
 NewPikiGameSection::NewPikiGameSection()
 {
+	Node::init("<NewPikiGameSection>");
 	/*
 	.loc_0x0:
 	  mflr      r0

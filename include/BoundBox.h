@@ -5,57 +5,62 @@
 struct Graphics;
 
 struct BoundBox {
-	BoundBox(Vector3f& max, Vector3f& min)
-	    : mMax(max)
-	    , mMin(min)
+	BoundBox(Vector3f& min, Vector3f& max)
+	    : mMin(min)
+	    , mMax(max)
 	{
 	}
 
-	BoundBox() { }
+	BoundBox()
+	{
+		// these get set to their "opposites" so the bounds can "pop" to a position
+		mMin.set(32768.0f, 32768.0f, 32768.0f);
+		mMax.set(-32768.0f, -32768.0f, -32768.0f);
+	}
 
 	void expandBound(BoundBox& other)
 	{
-		if (other.mMax.x < mMax.x) {
-			mMax.x = other.mMax.x;
-		}
-		if (other.mMax.y < mMax.y) {
-			mMax.y = other.mMax.y;
-		}
-		if (other.mMax.z < mMax.z) {
-			mMax.z = other.mMax.z;
-		}
-
-		if (other.mMin.x > mMin.x) {
+		if (other.mMin.x < mMin.x) {
 			mMin.x = other.mMin.x;
 		}
-		if (other.mMin.y > mMin.y) {
+		if (other.mMin.y < mMin.y) {
 			mMin.y = other.mMin.y;
 		}
-		if (other.mMin.z > mMin.z) {
+		if (other.mMin.z < mMin.z) {
 			mMin.z = other.mMin.z;
+		}
+
+		if (other.mMax.x > mMax.x) {
+			mMax.x = other.mMax.x;
+		}
+		if (other.mMax.y > mMax.y) {
+			mMax.y = other.mMax.y;
+		}
+		if (other.mMax.z > mMax.z) {
+			mMax.z = other.mMax.z;
 		}
 	}
 
 	void expandBound(Vector3f& other)
 	{
-		if (other.x < mMax.x) {
-			mMax.x = other.x;
-		}
-		if (other.y < mMax.y) {
-			mMax.y = other.y;
-		}
-		if (other.z < mMax.z) {
-			mMax.z = other.z;
-		}
-
-		if (other.x > mMin.x) {
+		if (other.x < mMin.x) {
 			mMin.x = other.x;
 		}
-		if (other.y > mMin.y) {
+		if (other.y < mMin.y) {
 			mMin.y = other.y;
 		}
-		if (other.z > mMin.z) {
+		if (other.z < mMin.z) {
 			mMin.z = other.z;
+		}
+
+		if (other.x > mMax.x) {
+			mMax.x = other.x;
+		}
+		if (other.y > mMax.y) {
+			mMax.y = other.y;
+		}
+		if (other.z > mMax.z) {
+			mMax.z = other.z;
 		}
 	}
 
@@ -65,17 +70,16 @@ struct BoundBox {
 		    && other.mMax.z <= mMin.z && other.mMin.z >= mMax.z;
 	}
 
-	// this puts const floats *everywhere*, definitely wrong
-	// void resetBound()
-	// {
-	// 	mMax.set(32768.0f, 32768.0f, 32768.0f);
-	// 	mMin.set(-32768.0f, -32768.0f, -32768.0f);
-	// }
+	void resetBound()
+	{
+		mMax.set(32768.0f, 32768.0f, 32768.0f);
+		mMin.set(-32768.0f, -32768.0f, -32768.0f);
+	}
 
 	void draw(Graphics&);
 
-	Vector3f mMax; // _00
-	Vector3f mMin; // _0C
+	Vector3f mMin; // _00
+	Vector3f mMax; // _0C
 };
 
 #endif // BOUNDBOX_H

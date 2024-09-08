@@ -5,6 +5,8 @@
 #include "Node.h"
 
 struct BaseApp;
+struct GameQuickInfo;
+struct GameChalQuickInfo;
 struct Texture;
 
 /**
@@ -40,7 +42,9 @@ struct GameFlow : public Node {
 	void addFilterMenu(Menu*);
 
 	// _00     = VTBL
-	// _00-_1C = Node
+	// _00-_20 = Node
+	u8 _20[0x1F4 - 0x20]; // _20, unknown
+	u32 _1F4;             // _1F4, could be int
 };
 
 /**
@@ -66,8 +70,34 @@ struct GameHiscores {
 /**
  * @brief TODO
  */
+struct PlayState : public CoreNode {
+	virtual void read(RandomAccessStream&);  // _0C
+	virtual void write(RandomAccessStream&); // _10
+
+	void openStage(int);
+
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
 struct GamePrefs : public CoreNode {
+	virtual void read(RandomAccessStream&);  // _0C
+	virtual void write(RandomAccessStream&); // _10
+
 	void Initialise();
+	void setBgmVol(u8);
+	void setSfxVol(u8);
+	void setStereoMode(bool);
+	void setVibeMode(bool);
+	void setChildMode(bool);
+	void getChallengeScores(GameChalQuickInfo&);
+	bool checkIsHiscore(GameChalQuickInfo&);
+	bool checkIsHiscore(GameQuickInfo&);
+	void fixSoundMode();
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

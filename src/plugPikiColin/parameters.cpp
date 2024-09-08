@@ -48,7 +48,7 @@ BaseParm::BaseParm(Parameters* parm, ayuID id)
 		parm->mHead = this;
 	}
 
-	mID   = id.mID;
+	mID   = (char*)id.mID;
 	mNext = nullptr;
 	/*
 	.loc_0x0:
@@ -228,15 +228,7 @@ void Parm<int>::write(RandomAccessStream& output) { output.writeInt(mValue); }
  * Address:	8005ED60
  * Size:	000058
  */
-void Parm<String>::read(RandomAccessStream& input)
-{
-	String str;
-	String str2; // just for stack - probably some consequence of an inline?
-
-	str.mStr    = input.readString();
-	str.mLength = 0;
-	mValue      = str;
-}
+void Parm<String>::read(RandomAccessStream& input) { mValue = String(input.readString(), 0); }
 
 /*
  * --INFO--

@@ -52,7 +52,7 @@ struct Creature : public RefCountable, public EventTalker {
 
 	virtual bool insideSafeArea(struct Vector3f&);            // _10 (weak)
 	virtual bool platAttachable();                            // _14 (weak)
-	virtual void alwaysUpdatePlatform();                      // _18
+	virtual bool alwaysUpdatePlatform();                      // _18
 	virtual bool doDoAI();                                    // _1C (weak)
 	virtual void setRouteTracer(RouteTracer*);                // _20 (weak)
 	virtual void init();                                      // _24

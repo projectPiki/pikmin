@@ -1,4 +1,8 @@
-#include "types.h"
+#include "DynObject.h"
+#include "DynColl.h"
+#include "MapMgr.h"
+#include "Creature.h"
+#include "PikiMacros.h"
 
 /*
  * --INFO--
@@ -27,6 +31,8 @@ void _Print(char*, ...)
  */
 void DynCollShape::createDupCollData()
 {
+	// just here to check DynCollShape ctor compiles, remove later
+	FORCE_DONT_INLINE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -717,7 +723,8 @@ void MapObjAnimator::finishOneShot()
  * Address:	........
  * Size:	000364
  */
-DynMapObject::DynMapObject(MapMgr*, MapAnimShapeObject*)
+DynMapObject::DynMapObject(MapMgr*, MapAnimShapeObject* obj)
+    : DynCollShape(obj)
 {
 	// UNUSED FUNCTION
 }
@@ -727,8 +734,17 @@ DynMapObject::DynMapObject(MapMgr*, MapAnimShapeObject*)
  * Address:	80061FE8
  * Size:	0001BC
  */
-DynCollShape::DynCollShape(Shape*)
+DynCollShape::DynCollShape(Shape* shape)
 {
+	mShape = shape;
+	if (mShape) {
+		createDupCollData();
+	}
+
+	_11C = Vector3f(1.0f, 1.0f, 1.0f);
+	_134 = Vector3f(0.0f, 0.0f, 0.0f);
+	_128 = _134;
+	_5C.makeIdentity();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5092,7 +5108,7 @@ void MapMgr::update()
  * Address:	80065B9C
  * Size:	000008
  */
-u32 Creature::alwaysUpdatePlatform() { return 0x0; }
+bool Creature::alwaysUpdatePlatform() { return false; }
 
 /*
  * --INFO--
@@ -9731,7 +9747,7 @@ void DynCollObjBody::adjust(Creature*) { }
  * Address:	8006974C
  * Size:	000008
  */
-void DynCollShape::getShape()
+Shape* DynCollShape::getShape()
 {
 	/*
 	.loc_0x0:
@@ -9801,7 +9817,7 @@ void DynCollObject::adjust(Creature*) { }
  * Address:	8006979C
  * Size:	000008
  */
-u32 DynCollObject::getShape() { return 0x0; }
+Shape* DynCollObject::getShape() { return nullptr; }
 
 /*
  * --INFO--
