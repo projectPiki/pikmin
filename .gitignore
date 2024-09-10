@@ -16,3 +16,5 @@ tools/dtk
 tools/powerpc
 *.map 
 *.dol
+*.bat
+newlines.py
