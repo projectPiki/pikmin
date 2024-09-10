@@ -53,9 +53,9 @@ BaseApp::BaseApp()
  */
 int BaseApp::idleupdate()
 {
-#ifndef __MWERKS__
-	bool hasUpdates = false;
 
+	bool hasUpdates = false;
+#ifndef __MWERKS__
 	if (mCommandStream) {
 		const int commandStatus = mCommandStream->checkCommands();
 
@@ -76,9 +76,9 @@ int BaseApp::idleupdate()
 			hasUpdates = true;
 		}
 	}
-
-	return hasUpdates;
 #endif
+	return hasUpdates;
+
 }
 
 /*
