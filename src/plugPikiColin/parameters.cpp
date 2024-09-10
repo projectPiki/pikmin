@@ -13,7 +13,7 @@ static char filename[] = __FILE__;
  * Address:	........
  * Size:	00009C
  */
-void _Error(char*, ...)
+static void _Error(char*, ...)
 {
 	// UNUSED FUNCTION
 }
@@ -23,7 +23,7 @@ void _Error(char*, ...)
  * Address:	........
  * Size:	0000F0
  */
-void _Print(char*, ...)
+static void _Print(char*, ...)
 {
 	// UNUSED FUNCTION
 }

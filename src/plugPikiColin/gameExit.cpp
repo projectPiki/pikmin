@@ -8,7 +8,7 @@
  * Address:	........
  * Size:	00009C
  */
-void _Error(char* fmt, ...)
+static void _Error(char* fmt, ...)
 {
 	OSPanic(__FILE__, __LINE__, fmt, "GameExit");
 	// UNUSED FUNCTION
@@ -19,7 +19,7 @@ void _Error(char* fmt, ...)
  * Address:	........
  * Size:	0000F4
  */
-void _Print(char*, ...)
+static void _Print(char*, ...)
 {
 	// UNUSED FUNCTION
 }
