@@ -14,3 +14,5 @@ ctx.c
 tools/mwcc_compiler
 tools/dtk
 tools/powerpc
+*.map 
+*.dol
