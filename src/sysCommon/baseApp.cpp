@@ -8,7 +8,7 @@
  * Address:	........
  * Size:	00009C
  */
-void _Error(char* msg, ...)
+static void _Error(char* msg, ...)
 {
 	OSPanic(__FILE__, __LINE__, msg);
 	// UNUSED FUNCTION
@@ -19,7 +19,7 @@ void _Error(char* msg, ...)
  * Address:	........
  * Size:	0000F0
  */
-void _Print(char*, ...)
+static void _Print(char*, ...)
 {
 	// UNUSED FUNCTION
 }
