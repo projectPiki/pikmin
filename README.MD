@@ -1,42 +1,108 @@
-# Pikmin 1
-Pikmin 1 (USA Revision 1) disassembly/decompilation to C++/C
+Pikmin  
+[![Build Status]][actions] ![Code Progress] ![Data Progress] [![Discord Badge]][discord]
+=============
 
-```diff
-- INFORMATION! -
+[Build Status]: https://github.com/projectPiki/pikmin/actions/workflows/build.yml/badge.svg
+[actions]: https://github.com/projectPiki/pikmin/actions/workflows/build.yml
+[Code Progress]: https://img.shields.io/endpoint?label=Code&url=https%3A%2F%2Fprogress.deco.mp%2Fdata%2Fpikmin%2FGPVE01%2Fdol%2F%3Fmode%3Dshield%26measure%3Dcode
+[Data Progress]: https://img.shields.io/endpoint?label=Data&url=https%3A%2F%2Fprogress.deco.mp%2Fdata%2Fpikmin%2FGPVE01%2Fdol%2F%3Fmode%3Dshield%26measure%3Ddata
+[Discord Badge]: https://img.shields.io/discord/933849697485983765?color=%237289DA&logo=discord&logoColor=%23FFFFFF
+[discord]: https://discord.gg/CWKqYMePX8
 
-The ROM this repository builds can be shifted! Meaning you are able to now
-add and remove code as you see fit, for modding or research purposes.
+A work-in-progress decompilation of Pikmin.
 
-- DISCLAIMER -
+Supported versions:
 
-Shiftability is tentative and not fully verified. Use at your own discretion.
+- `DPIJ01`: PikiDemo / Jitsuen-you Sample
+- `GPIJ01_01`: Japan (Rev 1)
+- `GPIJ01_02`: Japan (Rev 2)
+- `GPIE01_00`: USA (Rev 0)
+- `GPIE01_01`: USA (Rev 1)
+- `GPIP01_00`: Europe (Rev 0)
+
+Index
+-----
+
+- [Dependencies](#dependencies)
+  - [Windows](#windows)
+  - [macOS](#macos)
+  - [Linux](#linux)
+- [Building](#building)
+- [Diffing](#diffing)
+
+Dependencies
+------------
+
+### Windows
+
+On Windows, it's **highly recommended** to use native tooling. WSL or msys2 are **not** required.  
+When running under WSL, [objdiff](#diffing) is unable to get filesystem notifications for automatic rebuilds.
+
+- Install [Python](https://www.python.org/downloads/) and add it to `%PATH%`.
+  - Also available from the [Windows Store](https://apps.microsoft.com/store/detail/python-311/9NRWMJP3717K).
+- Download [ninja](https://github.com/ninja-build/ninja/releases) and add it to `%PATH%`.
+  - Quick install via pip: `pip install ninja`
+
+### macOS
+
+- Install [ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages):
+
+  ```sh
+  brew install ninja
+  ```
+
+- Install [wine-crossover](https://github.com/Gcenx/homebrew-wine):
+
+  ```sh
+  brew install --cask --no-quarantine gcenx/wine/wine-crossover
+  ```
+
+After OS upgrades, if macOS complains about `Wine Crossover.app` being unverified, you can unquarantine it using:
+
+```sh
+sudo xattr -rd com.apple.quarantine '/Applications/Wine Crossover.app'
 ```
 
-It builds the following DOL:
-pikmin.usa.1.dol: `sha1: 02204260B7EFE8742D34572E58BA3DFECD92E4E9`
+### Linux
 
-## Building
+- Install [ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages).
+- For non-x86(_64) platforms: Install wine from your package manager.
+  - For x86(_64), [wibo](https://github.com/decompals/wibo), a minimal 32-bit Windows binary wrapper, will be automatically downloaded and used.
 
-### Required Tools
-* [devkitPro](https://devkitpro.org/wiki/Getting_Started)
-* python
+Building
+--------
 
-### Instructions
+- Clone the repository:
 
-* WINDOWS ONLY STEP:
-	- Launch msys2 (provided by devkitPro) and run the following commands: 
-	
-	```
-	pacman -S msys2-keyring
-	pacman -S git python
-	```
+  ```sh
+  git clone https://github.com/projectPiki/pikmin.git
+  ```
 
-* OPTIONAL:
-	- Obtain a clean DOL of Pikmin 1 USA 1.01 and place it in the base working directory and rename it to `baserom.dol`.
-	
-1. Download GC_WII_COMPILERS.zip from (https://files.decomp.dev/compilers_20230715.zip) and extract it to tools/mwcc_compiler/.
-2. Run the `make` command.
+- Using [Dolphin Emulator](https://dolphin-emu.org/), extract your game's system data to `orig/GPIE01_01`. (Or the appropriate version folder.)
+  - Right-click the game in Dolphin's game list and select `Properties`.
+  - Go to the `Filesystem` tab and right-click `Disc` -> `Extract System Data`.
+![Dolphin filesystem extract](assets/dolphin-extract.png)
+  - After extraction, the following file should exist: `orig/GPIE01_01/sys/main.dol`.
+- Configure:
 
-## Project Organisation
-- For each namespace that types and functions are contained within, create a folder. E.g. the structure `Game::GameSystem` will go in include/Game/GameSystem.h.
-- The exception is only when adding extra folders becomes useless, for example having to add multiple folders that are empty, you can instead opt for creating a header file with the namespace's definitions inside.
+  ```sh
+  python configure.py
+  ```
+
+  To use version other than `GPIE01_01`, add `--version`. Add `--help` to see all available options.
+- Build:
+
+  ```sh
+  ninja
+  ```
+
+Diffing
+-------
+
+Once the initial build succeeds, an `objdiff.json` should exist in the project root.
+
+Download the latest release from [encounter/objdiff](https://github.com/encounter/objdiff). Under project settings, set `Project directory`. The configuration should be loaded automatically.
+
+Select an object from the left sidebar to begin diffing. Changes to the project will rebuild automatically: changes to source files, headers, `configure.py`, `splits.txt` or `symbols.txt`.
+
+![objdiff project configuration](assets/objdiff.png)

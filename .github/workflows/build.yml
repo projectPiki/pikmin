@@ -6,50 +6,62 @@ on:
 
 jobs:
   build:
-    name: Build
-    runs-on: ubuntu-latest
     container: ghcr.io/projectpiki/build:main
+
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        version: [usa.1]
+        version: [GPIE01_01] # TODO: other versions
+
     steps:
+    # Checkout the repository (shallow clone)
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: recursive
+
+    # Set Git config
     - name: Git config
       run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+    # Copy the original files to the workspace
+    - name: Prepare
+      run: cp -R /orig .
+
+    # Build the project
     - name: Build
       run: |
-        python configure.py -m -v ${{matrix.version}} --compilers /compilers/GC
-        ninja
+        python configure.py --map --version ${{ matrix.version }} \
+            --binutils /binutils --compilers /compilers
+        ninja build/${{ matrix.version }}/progress.json
+      # TODO: Enable all_source and report.json
+      # ninja all_source build/${{ matrix.version }}/progress.json \
+      #     build/${{ matrix.version }}/report.json
+
+    # Upload progress if we're on the main branch
     - name: Upload progress
       if: github.ref == 'refs/heads/main'
       continue-on-error: true
       env:
-        PROGRESS_API_KEY: ${{secrets.PROGRESS_API_KEY}}
+        PROGRESS_SLUG: pikmin
+        PROGRESS_API_KEY: ${{ secrets.PROGRESS_API_KEY }}
       run: |
-        python tools/upload-progress.py -b https://progress.decomp.club/ -p pikmin -v ${{matrix.version}} \
-          build/pikmin.${{matrix.version}}/main.dol.progress
+        python tools/upload_progress.py -b https://progress.decomp.club/ \
+          -p $PROGRESS_SLUG -v ${{ matrix.version }} \
+          build/${{ matrix.version }}/progress.json
+
+    # Upload map files
     - name: Upload map
       uses: actions/upload-artifact@v4
       with:
-        name: build-${{matrix.version}}.map
-        path: build/*/build.map
+        name: ${{ matrix.version }}_maps
+        path: build/${{ matrix.version }}/**/*.MAP
 
-  build_make:
-    name: Build (legacy)
-    runs-on: ubuntu-latest
-    container: ghcr.io/projectpiki/build:main
-    strategy:
-      fail-fast: false
-      matrix:
-        version: [usa.1]
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Git config
-      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-    - name: Build
-      run: |
-        python configure.py --map --compilers /compilers/GC
-        make -j$(nproc) MAPGENFLAG=1 VERSION=${{matrix.version}} COMPILERS=/compilers/GC
+    # Upload progress report
+    - name: Upload report
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.version }}_report
+        path: build/${{ matrix.version }}/report.json

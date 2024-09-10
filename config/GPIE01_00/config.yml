@@ -1,0 +1,10 @@
+object: orig/GPIE01_00/sys/main.dol
+hash: 30a3850f203a4a910eaccb8fdc697f518d22a687
+
+# Generated from dataDir/build.map
+symbols: config/GPIE01_00/symbols.txt
+splits: config/GPIE01_00/splits.txt
+
+mw_comment_version: 8 # GC Linker 1.2.5
+symbols_known: true # Very fast analysis
+fill_gaps: false # Alignments known

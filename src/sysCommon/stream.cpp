@@ -175,10 +175,10 @@ void Stream::writeString(String& s)
  * Address:	........
  * Size:	0000C4
  */
-// void Stream::print(char*, ...)
-// {
-// 	// UNUSED FUNCTION
-// }
+void Stream::print(char*, ...)
+{
+	// UNUSED FUNCTION
+}
 
 /*
  * --INFO--
