@@ -2,6 +2,14 @@
 
 #pragma section code_type ".init"
 
+static void __check_pad3(void)
+{
+	if ((Pad3Button & 0x0eef) == 0x0eef) {
+		OSResetSystem(OS_RESET_RESTART, 0, FALSE);
+	}
+	return;
+}
+
 WEAKFUNC ASM void __start(void)
 {
 #ifdef __MWERKS__ // clang-format off
@@ -75,6 +83,19 @@ _no_args:
 _end_of_parseargs:
 	bl DBInit
 	bl OSInit
+#if VERSION == 0
+	lis r4, 0x8000
+	addi r4, r4, 0x30e6
+	lhz r3, 0x0(r4)
+	andi. r5, r3, 0x8000
+	beq _check_pad
+	andi. r3, r3, 0x7fff
+	cmplwi r3, 0x1
+	bne _end
+_check_pad:
+	bl __check_pad3
+_end:
+#endif
 	bl __init_user
 	mr r3, r14
 	mr r4, r15

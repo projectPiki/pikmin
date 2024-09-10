@@ -204,7 +204,7 @@ struct GenObjectActor : public GenObject {
  */
 struct GenObjectBoss : public GenObject {
 	inline GenObjectBoss()
-	    : GenObject('boss', "ƒ{ƒX‚ğ¶‚Ş") // 'generate a boss'
+	    : GenObject('boss', "ãƒœã‚¹ã‚’ç”Ÿã‚€") // 'generate a boss'
 	{
 	}
 
@@ -285,7 +285,7 @@ struct GenObjectMapObject : public GenObject {
  */
 struct GenObjectMapParts : public GenObject {
 	inline GenObjectMapParts()
-	    : GenObject('mpar', "ƒ}ƒbƒvƒp[ƒc‚ğ¶‚Ş") // 'generate map parts'
+	    : GenObject('mpar', "ãƒãƒƒãƒ—ãƒ‘ãƒ¼ãƒ„ã‚’ç”Ÿã‚€") // 'generate map parts'
 	{
 	}
 
@@ -456,7 +456,7 @@ struct GenType : public GenBase {
  */
 struct GenTypeAtOnce : public GenType {
 	inline GenTypeAtOnce()
-	    : GenType('aton', "Å‰‚©‚ç‘S•”¶‚Ş") // 'generate everything from the beginning'
+	    : GenType('aton', "æœ€åˆã‹ã‚‰å…¨éƒ¨ç”Ÿã‚€") // 'generate everything from the beginning'
 	    , mMaxCount(this, 1, 0, 0, "p00", nullptr)
 	{
 	}
@@ -477,7 +477,7 @@ struct GenTypeAtOnce : public GenType {
  */
 struct GenTypeInitRand : public GenType {
 	inline GenTypeInitRand()
-	    : GenType('irnd', "Å‰‚©‚ç¶‚Şiƒ‰ƒ“ƒ_ƒ€j") // 'generate from the beginning (random)'
+	    : GenType('irnd', "æœ€åˆã‹ã‚‰ç”Ÿã‚€ï¼ˆãƒ©ãƒ³ãƒ€ãƒ ï¼‰") // 'generate from the beginning (random)'
 	    , _38(this, 1, 0, 0, "p00", nullptr)
 	    , mMaxCount(this, 5, 0, 0, "p01", nullptr)
 	{
@@ -500,7 +500,7 @@ struct GenTypeInitRand : public GenType {
  */
 struct GenTypeOne : public GenType {
 	inline GenTypeOne()
-	    : GenType('1one', "‚P‚Â‚¾‚¯‚¤‚Ş") // 'just one thing'
+	    : GenType('1one', "ï¼‘ã¤ã ã‘ã†ã‚€") // 'just one thing'
 	    , _38(this, 0, 0, 0, "p00", nullptr)
 	    , _48(this, 0, 0, 0, "p01", nullptr)
 	    , _58(this, 0, 0, 0, "p02", nullptr)

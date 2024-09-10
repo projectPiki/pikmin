@@ -1,0 +1,10 @@
+object: orig/GPIP01_00/sys/main.dol
+hash: e5794ffe8ac72c3ead3849edbd2f27ea5e0ed440
+
+# Generated from dataDir/build.map
+symbols: config/GPIP01_00/symbols.txt
+splits: config/GPIP01_00/splits.txt
+
+mw_comment_version: 8 # GC Linker 1.2.5
+symbols_known: true # Very fast analysis
+fill_gaps: false # Alignments known

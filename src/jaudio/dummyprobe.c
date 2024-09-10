@@ -19,10 +19,5 @@ void Probe_Finish(void) { return; }
  * Address:	........
  * Size:	000050
  */
-/*
-void Console_printf(void)
-{
-   // UNUSED FUNCTION
-}
-*/
+void Console_printf(char*, ...) { return; }
 }

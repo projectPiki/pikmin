@@ -1,1423 +1,1046 @@
-LIBS = [
+#!/usr/bin/env python3
+
+###
+# Generates build files for the project.
+# This file also includes the project configuration,
+# such as compiler flags and the object matching status.
+#
+# Usage:
+#   python3 configure.py
+#   ninja
+#
+# Append --help to see available options.
+###
+
+import argparse
+import sys
+from pathlib import Path
+from typing import Any, Dict, List
+from tools.project import *
+
+# Game versions
+DEFAULT_VERSION = 4
+VERSIONS = [
+    "DPIJ01",  # PikiDemo / Jitsuen-you Sample
+    "GPIJ01_01",  # JPN Rev 1
+    "GPIJ01_02",  # JPN Rev 2
+    "GPIE01_00",  # USA Rev 0
+    "GPIE01_01",  # USA Rev 1
+    "GPIP01_00",  # PAL Rev 0
+]
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "mode",
+    choices=["configure", "progress"],
+    default="configure",
+    help="script mode (default: configure)",
+    nargs="?",
+)
+parser.add_argument(
+    "-v",
+    "--version",
+    choices=VERSIONS,
+    type=str.upper,
+    default=VERSIONS[DEFAULT_VERSION],
+    help="version to build",
+)
+parser.add_argument(
+    "--build-dir",
+    metavar="DIR",
+    type=Path,
+    default=Path("build"),
+    help="base build directory (default: build)",
+)
+parser.add_argument(
+    "--binutils",
+    metavar="BINARY",
+    type=Path,
+    help="path to binutils (optional)",
+)
+parser.add_argument(
+    "--compilers",
+    metavar="DIR",
+    type=Path,
+    help="path to compilers (optional)",
+)
+parser.add_argument(
+    "--map",
+    action="store_true",
+    help="generate map file(s)",
+)
+parser.add_argument(
+    "--debug",
+    action="store_true",
+    help="build with debug info (non-matching)",
+)
+if not is_windows():
+    parser.add_argument(
+        "--wrapper",
+        metavar="BINARY",
+        type=Path,
+        help="path to wibo or wine (optional)",
+    )
+parser.add_argument(
+    "--dtk",
+    metavar="BINARY | DIR",
+    type=Path,
+    help="path to decomp-toolkit binary or source (optional)",
+)
+parser.add_argument(
+    "--objdiff",
+    metavar="BINARY | DIR",
+    type=Path,
+    help="path to objdiff-cli binary or source (optional)",
+)
+parser.add_argument(
+    "--sjiswrap",
+    metavar="EXE",
+    type=Path,
+    help="path to sjiswrap.exe (optional)",
+)
+parser.add_argument(
+    "--verbose",
+    action="store_true",
+    help="print verbose output",
+)
+parser.add_argument(
+    "--non-matching",
+    dest="non_matching",
+    action="store_true",
+    help="builds equivalent (but non-matching) or modded objects",
+)
+args = parser.parse_args()
+
+config = ProjectConfig()
+config.version = str(args.version)
+version_num = VERSIONS.index(config.version)
+
+# Apply arguments
+config.build_dir = args.build_dir
+config.dtk_path = args.dtk
+config.objdiff_path = args.objdiff
+config.binutils_path = args.binutils
+config.compilers_path = args.compilers
+config.generate_map = args.map
+config.non_matching = args.non_matching
+config.sjiswrap_path = args.sjiswrap
+if not is_windows():
+    config.wrapper = args.wrapper
+# Don't build asm unless we're --non-matching
+if not config.non_matching:
+    config.asm_dir = None
+
+# Tool versions
+config.binutils_tag = "2.42-1"
+config.compilers_tag = "20240706"
+config.dtk_tag = "v0.9.6"
+config.objdiff_tag = "v2.0.0"
+config.sjiswrap_tag = "v1.1.1"
+config.wibo_tag = "0.6.11"
+
+# Project
+config.config_path = Path("config") / config.version / "config.yml"
+config.check_sha_path = Path("config") / config.version / "build.sha1"
+config.asflags = [
+    "-mgekko",
+    "--strip-local-absolute",
+    "-I include",
+    f"-I build/{config.version}/include",
+    f"--defsym version={version_num}",
+]
+config.ldflags = [
+    "-fp hardware",
+    "-nodefaults",
+]
+if args.debug:
+    config.ldflags.append("-g")
+if args.map:
+    config.ldflags.append("-mapunused")
+# Use for any additional files that should cause a re-configure when modified
+config.reconfig_deps = []
+
+# Progress configuration
+config.progress_all = False
+config.progress_use_fancy = True
+config.progress_code_fancy_frac = 30
+config.progress_code_fancy_item = "ship parts"
+config.progress_data_fancy_frac = 100
+config.progress_data_fancy_item = "Pikmin"
+
+# Base flags, common to most GC/Wii games.
+# Generally leave untouched, with overrides added below.
+cflags_base = [
+    "-nodefaults",
+    "-proc gekko",
+    "-align powerpc",
+    "-enum int",
+    "-fp hardware",
+    "-Cpp_exceptions off",
+    # "-W all",
+    "-O4,p",
+    "-inline auto",
+    '-pragma "cats off"',
+    '-pragma "warn_notinlined off"',
+    "-maxerrors 1",
+    "-nosyspath",
+    "-RTTI off",
+    "-fp_contract on",
+    "-str reuse",
+    "-multibyte",
+    "-i include",
+    "-i include/stl",
+    f"-i build/{config.version}/include",
+    f"-DVERSION={version_num}",
+]
+
+# Debug flags
+if args.debug:
+    cflags_base.extend(["-sym on", "-DDEBUG=1"])
+else:
+    cflags_base.append("-DNDEBUG=1")
+
+# JAudio flags
+cflags_jaudio = [
+    *cflags_base,
+    "-common on",
+    "-func_align 32",
+    "-lang c++",
+]
+
+# Game code flags
+cflags_pikmin = [
+    *cflags_base,
+    "-fp_contract off",
+    "-common on",
+    "-RTTI on",
+]
+
+config.linker_version = "GC/1.2.5"
+
+
+# Helper function for Dolphin libraries
+def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
+    mw_version = "GC/1.2.5"
+    if version_num == 0:
+        mw_version = "GC/1.2.5n"
+    return {
+        "lib": lib_name,
+        "mw_version": mw_version,
+        "cflags": cflags_base,
+        "progress_category": "sdk",
+        "objects": objects,
+    }
+
+
+Matching = True                   # Object matches and should be linked
+NonMatching = False               # Object does not match and should not be linked
+Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
+
+config.warn_missing_config = True
+config.warn_missing_source = False
+config.libs = [
     {
         "lib": "sysBootup",
-        "cflags": "$cflags_pikmin",
-        "mw_version": "1.2.5n",
-        "host": True,
+        "cflags": cflags_pikmin,
+        "mw_version": "GC/1.2.5n",
         "objects": [
-            ["sysBootup", True],
+            Object(Matching, "sysBootup.cpp"),
         ],
     },
     {
         "lib": "jaudio",
-        "cflags": "$cflags_pikmin -func_align 32 -lang c++",
-        "mw_version": "1.2.5n",
-        "host": True,
+        "cflags": cflags_jaudio,
+        "mw_version": "GC/1.2.5n",
         "objects": [
-            ["jaudio/dummyprobe", True],
-            ["jaudio/memory", False],
-            ["jaudio/aictrl", False],
-            ["jaudio/sample", False],
-            ["jaudio/dummyrom", False],
-            ["jaudio/audiothread", False],
-            ["jaudio/audiothread_fakebss", False],
-            ["jaudio/streamctrl", False],
-            ["jaudio/dspbuf", False],
-            ["jaudio/cpubuf", False],
-            ["jaudio/playercall", False],
-            ["jaudio/dvdthread", False],
-            ["jaudio/audiomesg", False],
-            ["jaudio/rate", False],
-            ["jaudio/stackchecker", False],
-            ["jaudio/dspboot", False],
-            ["jaudio/dspproc", False],
-            ["jaudio/ipldec", False],
-            ["jaudio/dsp_cardunlock", False],
-            ["jaudio/driverinterface", False],
-            ["jaudio/dspdriver", False],
-            ["jaudio/dspinterface", False],
-            ["jaudio/fxinterface", False],
-            ["jaudio/bankread", False],
-            ["jaudio/waveread", False],
-            ["jaudio/connect", False],
-            ["jaudio/tables", False],
-            ["jaudio/bankdrv", False],
-            ["jaudio/random", False],
-            ["jaudio/aramcall", False],
-            ["jaudio/ja_calc", False],
-            ["jaudio/fat", False],
-            ["jaudio/cmdstack", False],
-            ["jaudio/virload", False],
-            ["jaudio/heapctrl", False],
-            ["jaudio/jammain_2", False],
-            ["jaudio/midplay", False],
-            ["jaudio/noteon", False],
-            ["jaudio/seqsetup", False],
-            ["jaudio/centcalc", False],
-            ["jaudio/jamosc", False],
-            ["jaudio/oneshot", False],
-            ["jaudio/interface", False],
-            ["jaudio/verysimple", False],
-            ["jaudio/app_inter", False],
-            ["jaudio/pikiinter", False],
-            ["jaudio/piki_player", False],
-            ["jaudio/piki_bgm", False],
-            ["jaudio/piki_scene", False],
-            ["jaudio/pikidemo", False],
-            ["jaudio/file_seq", False],
-            ["jaudio/cmdqueue", False],
-            ["jaudio/filter3d", True],
-            ["jaudio/syncstream", False],
-            ["jaudio/bankloader", False],
-            ["jaudio/interleave", False],
-            ["jaudio/pikiseq", False],
-            ["jaudio/hplaybss", False],
-            ["jaudio/hplaybss2", False],
-            ["jaudio/hvqm_play", False],
+            Object(Matching, "jaudio/dummyprobe.c"),
+            Object(NonMatching, "jaudio/memory.c"),
+            Object(NonMatching, "jaudio/aictrl.c"),
+            Object(NonMatching, "jaudio/sample.c"),
+            Object(NonMatching, "jaudio/dummyrom.c"),
+            Object(NonMatching, "jaudio/audiothread.c"),
+            Object(NonMatching, "jaudio/audiothread_fakebss.o"),
+            Object(NonMatching, "jaudio/streamctrl.c"),
+            Object(NonMatching, "jaudio/dspbuf.c"),
+            Object(NonMatching, "jaudio/cpubuf.c"),
+            Object(NonMatching, "jaudio/playercall.c"),
+            Object(NonMatching, "jaudio/dvdthread.c"),
+            Object(NonMatching, "jaudio/audiomesg.c"),
+            Object(NonMatching, "jaudio/rate.c"),
+            Object(NonMatching, "jaudio/stackchecker.c"),
+            Object(NonMatching, "jaudio/dspboot.c"),
+            Object(NonMatching, "jaudio/dspproc.c"),
+            Object(NonMatching, "jaudio/ipldec.c"),
+            Object(NonMatching, "jaudio/dsp_cardunlock.c"),
+            Object(NonMatching, "jaudio/driverinterface.c"),
+            Object(NonMatching, "jaudio/dspdriver.c"),
+            Object(NonMatching, "jaudio/dspinterface.c"),
+            Object(NonMatching, "jaudio/fxinterface.c"),
+            Object(NonMatching, "jaudio/bankread.c"),
+            Object(NonMatching, "jaudio/waveread.c"),
+            Object(NonMatching, "jaudio/connect.c"),
+            Object(NonMatching, "jaudio/tables.c"),
+            Object(NonMatching, "jaudio/bankdrv.c"),
+            Object(NonMatching, "jaudio/random.c"),
+            Object(NonMatching, "jaudio/aramcall.c"),
+            Object(NonMatching, "jaudio/ja_calc.c"),
+            Object(NonMatching, "jaudio/fat.c"),
+            Object(NonMatching, "jaudio/cmdstack.c"),
+            Object(NonMatching, "jaudio/virload.c"),
+            Object(NonMatching, "jaudio/heapctrl.c"),
+            Object(NonMatching, "jaudio/jammain_2.c"),
+            Object(NonMatching, "jaudio/midplay.c"),
+            Object(NonMatching, "jaudio/noteon.c"),
+            Object(NonMatching, "jaudio/seqsetup.c"),
+            Object(NonMatching, "jaudio/centcalc.c"),
+            Object(NonMatching, "jaudio/jamosc.c"),
+            Object(NonMatching, "jaudio/oneshot.c"),
+            Object(NonMatching, "jaudio/interface.c"),
+            Object(NonMatching, "jaudio/verysimple.c"),
+            Object(NonMatching, "jaudio/app_inter.c"),
+            Object(NonMatching, "jaudio/pikiinter.c"),
+            Object(NonMatching, "jaudio/piki_player.c"),
+            Object(NonMatching, "jaudio/piki_bgm.c"),
+            Object(NonMatching, "jaudio/piki_scene.c"),
+            Object(NonMatching, "jaudio/pikidemo.c"),
+            Object(NonMatching, "jaudio/file_seq.c"),
+            Object(NonMatching, "jaudio/cmdqueue.c"),
+            Object(Matching, "jaudio/filter3d.c"),
+            Object(NonMatching, "jaudio/syncstream.c"),
+            Object(NonMatching, "jaudio/bankloader.c"),
+            Object(NonMatching, "jaudio/interleave.c"),
+            Object(NonMatching, "jaudio/pikiseq.c"),
+            Object(NonMatching, "jaudio/hplaybss.c"),
+            Object(NonMatching, "jaudio/hplaybss2.c"),
+            Object(NonMatching, "jaudio/hvqm_play.c"),
         ],
     },
     {
         "lib": "hvqm4dec",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
+        "cflags": cflags_base,
+        "mw_version": "GC/1.2.5",
         "objects": [
-            ["hvqm4dec/hvqm4dec", False],
+            Object(NonMatching, "hvqm4dec/hvqm4dec.c"),
         ],
     },
     {
         "lib": "sysCommon",
-        "cflags": "$cflags_pikmin",
-        "mw_version": "1.2.5n",
-        "host": True,
+        "cflags": cflags_pikmin,
+        "mw_version": "GC/1.2.5n",
         "objects": [
-            ["sysCommon/ayuStack", False],
-            ["sysCommon/baseApp", True],
-            ["sysCommon/stream", True],
-            ["sysCommon/streamBufferedInput", False],
-            ["sysCommon/string", True],
-            ["sysCommon/graphics", False],
-            ["sysCommon/grLight", False],
-            ["sysCommon/shapeBase", False],
-            ["sysCommon/shpLightFlares", False],
-            ["sysCommon/shpObjColl", True],
-            ["sysCommon/shpRoutes", False],
-            ["sysCommon/sysMath", False],
-            ["sysCommon/matMath", False],
-            ["sysCommon/stdSystem", False],
-            ["sysCommon/node", False],
-            ["sysCommon/timers", True],
-            ["sysCommon/controller", True],
-            ["sysCommon/cmdStream", True],
-            ["sysCommon/camera", False],
-            ["sysCommon/atx", True],
-            ["sysCommon/id32", True],
+            Object(NonMatching, "sysCommon/ayuStack.cpp"),
+            Object(Matching, "sysCommon/baseApp.cpp"),
+            Object(Matching, "sysCommon/stream.cpp"),
+            Object(NonMatching, "sysCommon/streamBufferedInput.cpp"),
+            Object(Matching, "sysCommon/string.cpp"),
+            Object(NonMatching, "sysCommon/graphics.cpp"),
+            Object(NonMatching, "sysCommon/grLight.cpp"),
+            Object(NonMatching, "sysCommon/shapeBase.cpp"),
+            Object(NonMatching, "sysCommon/shpLightFlares.cpp"),
+            Object(Matching, "sysCommon/shpObjColl.cpp"),
+            Object(NonMatching, "sysCommon/shpRoutes.cpp"),
+            Object(NonMatching, "sysCommon/sysMath.cpp"),
+            Object(NonMatching, "sysCommon/matMath.cpp"),
+            Object(NonMatching, "sysCommon/stdSystem.cpp"),
+            Object(NonMatching, "sysCommon/node.cpp"),
+            Object(Matching, "sysCommon/timers.cpp"),
+            Object(Matching, "sysCommon/controller.cpp"),
+            Object(Matching, "sysCommon/cmdStream.cpp"),
+            Object(NonMatching, "sysCommon/camera.cpp"),
+            Object(Matching, "sysCommon/atx.cpp"),
+            Object(Matching, "sysCommon/id32.cpp"),
         ],
     },
     {
         "lib": "sysDolphin",
-        "cflags": "$cflags_pikmin",
-        "mw_version": "1.2.5n",
-        "host": True,
+        "cflags": cflags_pikmin,
+        "mw_version": "GC/1.2.5n",
         "objects": [
-            ["sysDolphin/texture", False],
-            ["sysDolphin/system", False],
-            ["sysDolphin/sysNew", False],
-            ["sysDolphin/controllerMgr", False],
-            ["sysDolphin/dgxGraphics", False],
-            ["sysDolphin/gameApp", True],
+            Object(NonMatching, "sysDolphin/texture.cpp"),
+            Object(NonMatching, "sysDolphin/system.cpp"),
+            Object(NonMatching, "sysDolphin/sysNew.cpp"),
+            Object(NonMatching, "sysDolphin/controllerMgr.cpp"),
+            Object(NonMatching, "sysDolphin/dgxGraphics.cpp"),
+            Object(Matching, "sysDolphin/gameApp.cpp"),
         ],
     },
     {
         "lib": "plugPikiColin",
-        "cflags": "$cflags_pikmin",
-        "mw_version": "1.2.5n",
-        "host": True,
+        "cflags": cflags_pikmin,
+        "mw_version": "GC/1.2.5n",
         "objects": [
-            ["plugPikiColin/cardutil", False],
-            ["plugPikiColin/dynsimulator", False],
-            ["plugPikiColin/animMgr", False],
-            ["plugPikiColin/gameflow", False],
-            ["plugPikiColin/game", False],
-            ["plugPikiColin/gamePrefs", False],
-            ["plugPikiColin/gameSetup", False],
-            ["plugPikiColin/cardSelect", False],
-            ["plugPikiColin/mapSelect", False],
-            ["plugPikiColin/newPikiGame", False],
-            ["plugPikiColin/introGame", False],
-            ["plugPikiColin/gameExit", True],
-            ["plugPikiColin/gauges", False],
-            ["plugPikiColin/genMapObject", False],
-            ["plugPikiColin/gui", False],
-            ["plugPikiColin/parameters", False],
-            ["plugPikiColin/plugPiki", False],
-            ["plugPikiColin/titles", False],
-            ["plugPikiColin/ninLogo", False],
-            ["plugPikiColin/mapMgr", False],
-            ["plugPikiColin/dayMgr", False],
-            ["plugPikiColin/cinePlayer", False],
-            ["plugPikiColin/lightPool", False],
-            ["plugPikiColin/memoryCard", False],
-            ["plugPikiColin/moviePlayer", False],
-            ["plugPikiColin/movSample", False],
+            Object(NonMatching, "plugPikiColin/cardutil.cpp"),
+            Object(NonMatching, "plugPikiColin/dynsimulator.cpp"),
+            Object(NonMatching, "plugPikiColin/animMgr.cpp"),
+            Object(NonMatching, "plugPikiColin/gameflow.cpp"),
+            Object(NonMatching, "plugPikiColin/game.cpp"),
+            Object(NonMatching, "plugPikiColin/gamePrefs.cpp"),
+            Object(NonMatching, "plugPikiColin/gameSetup.cpp"),
+            Object(NonMatching, "plugPikiColin/cardSelect.cpp"),
+            Object(NonMatching, "plugPikiColin/mapSelect.cpp"),
+            Object(NonMatching, "plugPikiColin/newPikiGame.cpp"),
+            Object(NonMatching, "plugPikiColin/introGame.cpp"),
+            Object(Matching, "plugPikiColin/gameExit.cpp"),
+            Object(NonMatching, "plugPikiColin/gauges.cpp"),
+            Object(NonMatching, "plugPikiColin/genMapObject.cpp"),
+            Object(NonMatching, "plugPikiColin/gui.cpp"),
+            Object(NonMatching, "plugPikiColin/parameters.cpp"),
+            Object(NonMatching, "plugPikiColin/plugPiki.cpp"),
+            Object(NonMatching, "plugPikiColin/titles.cpp"),
+            Object(NonMatching, "plugPikiColin/ninLogo.cpp"),
+            Object(NonMatching, "plugPikiColin/mapMgr.cpp"),
+            Object(NonMatching, "plugPikiColin/dayMgr.cpp"),
+            Object(NonMatching, "plugPikiColin/cinePlayer.cpp"),
+            Object(NonMatching, "plugPikiColin/lightPool.cpp"),
+            Object(NonMatching, "plugPikiColin/memoryCard.cpp"),
+            Object(NonMatching, "plugPikiColin/moviePlayer.cpp"),
+            Object(NonMatching, "plugPikiColin/movSample.cpp"),
         ],
     },
     {
         "lib": "plugPikiKando",
-        "cflags": "$cflags_pikmin",
-        "mw_version": "1.2.5n",
-        "host": True,
+        "cflags": cflags_pikmin,
+        "mw_version": "GC/1.2.5n",
         "objects": [
-            ["plugPikiKando/omake", False],
-            ["plugPikiKando/radarInfo", False],
-            ["plugPikiKando/interactBattle", False],
-            ["plugPikiKando/interactGrab", False],
-            ["plugPikiKando/interactEtc", False],
-            ["plugPikiKando/interactPullout", False],
-            ["plugPikiKando/saiEvents", False],
-            ["plugPikiKando/simpleAI", False],
-            ["plugPikiKando/formationMgr", False],
-            ["plugPikiKando/globalShapes", True],
-            ["plugPikiKando/playerState", False],
-            ["plugPikiKando/gameDemo", False],
-            ["plugPikiKando/demoInvoker", False],
-            ["plugPikiKando/demoEvent", False],
-            ["plugPikiKando/resultFlag", False],
-            ["plugPikiKando/aiConstants", False],
-            ["plugPikiKando/kio", False],
-            ["plugPikiKando/keyConfig", False],
-            ["plugPikiKando/aiPerf", False],
-            ["plugPikiKando/courseDebug", False],
-            ["plugPikiKando/memStat", False],
-            ["plugPikiKando/collInfo", False],
-            ["plugPikiKando/complexCreature", False],
-            ["plugPikiKando/creature", False],
-            ["plugPikiKando/creatureCollision", False],
-            ["plugPikiKando/creatureCollPart", False],
-            ["plugPikiKando/creatureMove", False],
-            ["plugPikiKando/creatureStick", False],
-            ["plugPikiKando/dualCreature", False],
-            ["plugPikiKando/dynCreature", False],
-            ["plugPikiKando/eventListener", True],
-            ["plugPikiKando/fastGrid", False],
-            ["plugPikiKando/ropeCreature", False],
-            ["plugPikiKando/objectTypes", True],
-            ["plugPikiKando/pelletMgr", False],
-            ["plugPikiKando/animPellet", False],
-            ["plugPikiKando/genPellet", False],
-            ["plugPikiKando/pelletState", False],
-            ["plugPikiKando/workObject", False],
-            ["plugPikiKando/routeMgr", False],
-            ["plugPikiKando/seMgr", False],
-            ["plugPikiKando/seConstants", False],
-            ["plugPikiKando/soundMgr", False],
-            ["plugPikiKando/updateMgr", False],
-            ["plugPikiKando/cPlate", False],
-            ["plugPikiKando/aiStone", False],
-            ["plugPikiKando/aiActions", False],
-            ["plugPikiKando/aiAttack", False],
-            ["plugPikiKando/aiBore", False],
-            ["plugPikiKando/aiBoMake", False],
-            ["plugPikiKando/aiBou", False],
-            ["plugPikiKando/aiBridge", False],
-            ["plugPikiKando/aiBreakWall", False],
-            ["plugPikiKando/aiTransport", False],
-            ["plugPikiKando/aiKinoko", False],
-            ["plugPikiKando/aiChase", False],
-            ["plugPikiKando/aiCrowd", False],
-            ["plugPikiKando/aiDecoy", False],
-            ["plugPikiKando/aiEnter", False],
-            ["plugPikiKando/aiEscape", False],
-            ["plugPikiKando/aiExit", False],
-            ["plugPikiKando/aiMine", False],
-            ["plugPikiKando/aiFormation", False],
-            ["plugPikiKando/aiFree", False],
-            ["plugPikiKando/aiGoto", False],
-            ["plugPikiKando/aiGuard", False],
-            ["plugPikiKando/aiPick", False],
-            ["plugPikiKando/aiPickCreature", False],
-            ["plugPikiKando/aiPullout", False],
-            ["plugPikiKando/aiPush", False],
-            ["plugPikiKando/aiPut", False],
-            ["plugPikiKando/aiRandomBoid", False],
-            ["plugPikiKando/aiRescue", False],
-            ["plugPikiKando/aiRope", False],
-            ["plugPikiKando/aiShoot", False],
-            ["plugPikiKando/aiWatch", False],
-            ["plugPikiKando/aiWeed", False],
-            ["plugPikiKando/aiTable", False],
-            ["plugPikiKando/aiAction", False],
-            ["plugPikiKando/pikiInf", False],
-            ["plugPikiKando/piki", False],
-            ["plugPikiKando/odoMeter", True],
-            ["plugPikiKando/pikidoKill", False],
-            ["plugPikiKando/pikiMgr", False],
-            ["plugPikiKando/pikiState", False],
-            ["plugPikiKando/viewPiki", False],
-            ["plugPikiKando/conditions", True],
-            ["plugPikiKando/generator", False],
-            ["plugPikiKando/generatorCache", False],
-            ["plugPikiKando/objectMgr", False],
-            ["plugPikiKando/searchSystem", False],
-            ["plugPikiKando/smartPtr", True],
-            ["plugPikiKando/itemGem", False],
-            ["plugPikiKando/weedsItem", False],
-            ["plugPikiKando/kusaItem", False],
-            ["plugPikiKando/fishItem", False],
-            ["plugPikiKando/ufoItem", False],
-            ["plugPikiKando/ufoAnim", False],
-            ["plugPikiKando/bombItem", False],
-            ["plugPikiKando/goalItem", False],
-            ["plugPikiKando/pikiheadItem", False],
-            ["plugPikiKando/keyItem", False],
-            ["plugPikiKando/ropeItem", False],
-            ["plugPikiKando/seedItem", False],
-            ["plugPikiKando/genItem", False],
-            ["plugPikiKando/itemAI", False],
-            ["plugPikiKando/itemMgr", False],
-            ["plugPikiKando/itemObject", False],
-            ["plugPikiKando/mizuItem", False],
-            ["plugPikiKando/paniItemAnimator", False],
-            ["plugPikiKando/genNavi", False],
-            ["plugPikiKando/navi", False],
-            ["plugPikiKando/naviState", False],
-            ["plugPikiKando/naviDemoState", False],
-            ["plugPikiKando/gameCoreSection", False],
-            ["plugPikiKando/gmWin", False],
-            ["plugPikiKando/gameStat", False],
-            ["plugPikiKando/kmath", False],
-            ["plugPikiKando/uteffect", False],
-            ["plugPikiKando/kontroller", False],
-            ["plugPikiKando/mapcode", True],
-            ["plugPikiKando/utkando", False],
-            ["plugPikiKando/naviMgr", False],
-            ["plugPikiKando/genMapParts", False],
-            ["plugPikiKando/mapParts", False],
-            ["plugPikiKando/panipikianimator", False],
-            ["plugPikiKando/actor", False],
-            ["plugPikiKando/actorMgr", True],
-            ["plugPikiKando/genActor", False],
-            ["plugPikiKando/pikiInfo", True],
-            ["plugPikiKando/plantMgr", False],
-            ["plugPikiKando/paniPlantAnimator", False],
+            Object(NonMatching, "plugPikiKando/omake.cpp"),
+            Object(NonMatching, "plugPikiKando/radarInfo.cpp"),
+            Object(NonMatching, "plugPikiKando/interactBattle.cpp"),
+            Object(NonMatching, "plugPikiKando/interactGrab.cpp"),
+            Object(NonMatching, "plugPikiKando/interactEtc.cpp"),
+            Object(NonMatching, "plugPikiKando/interactPullout.cpp"),
+            Object(NonMatching, "plugPikiKando/saiEvents.cpp"),
+            Object(NonMatching, "plugPikiKando/simpleAI.cpp"),
+            Object(NonMatching, "plugPikiKando/formationMgr.cpp"),
+            Object(Matching, "plugPikiKando/globalShapes.cpp"),
+            Object(NonMatching, "plugPikiKando/playerState.cpp"),
+            Object(NonMatching, "plugPikiKando/gameDemo.cpp"),
+            Object(NonMatching, "plugPikiKando/demoInvoker.cpp"),
+            Object(NonMatching, "plugPikiKando/demoEvent.cpp"),
+            Object(NonMatching, "plugPikiKando/resultFlag.cpp"),
+            Object(NonMatching, "plugPikiKando/aiConstants.cpp"),
+            Object(NonMatching, "plugPikiKando/kio.cpp"),
+            Object(NonMatching, "plugPikiKando/keyConfig.cpp"),
+            Object(NonMatching, "plugPikiKando/aiPerf.cpp"),
+            Object(NonMatching, "plugPikiKando/courseDebug.cpp"),
+            Object(NonMatching, "plugPikiKando/memStat.cpp"),
+            Object(NonMatching, "plugPikiKando/collInfo.cpp"),
+            Object(NonMatching, "plugPikiKando/complexCreature.cpp"),
+            Object(NonMatching, "plugPikiKando/creature.cpp"),
+            Object(NonMatching, "plugPikiKando/creatureCollision.cpp"),
+            Object(NonMatching, "plugPikiKando/creatureCollPart.cpp"),
+            Object(NonMatching, "plugPikiKando/creatureMove.cpp"),
+            Object(NonMatching, "plugPikiKando/creatureStick.cpp"),
+            Object(NonMatching, "plugPikiKando/dualCreature.cpp"),
+            Object(NonMatching, "plugPikiKando/dynCreature.cpp"),
+            Object(Matching, "plugPikiKando/eventListener.cpp"),
+            Object(NonMatching, "plugPikiKando/fastGrid.cpp"),
+            Object(NonMatching, "plugPikiKando/ropeCreature.cpp"),
+            Object(Matching, "plugPikiKando/objectTypes.cpp"),
+            Object(NonMatching, "plugPikiKando/pelletMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/animPellet.cpp"),
+            Object(NonMatching, "plugPikiKando/genPellet.cpp"),
+            Object(NonMatching, "plugPikiKando/pelletState.cpp"),
+            Object(NonMatching, "plugPikiKando/workObject.cpp"),
+            Object(NonMatching, "plugPikiKando/routeMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/seMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/seConstants.cpp"),
+            Object(NonMatching, "plugPikiKando/soundMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/updateMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/cPlate.cpp"),
+            Object(NonMatching, "plugPikiKando/aiStone.cpp"),
+            Object(NonMatching, "plugPikiKando/aiActions.cpp"),
+            Object(NonMatching, "plugPikiKando/aiAttack.cpp"),
+            Object(NonMatching, "plugPikiKando/aiBore.cpp"),
+            Object(NonMatching, "plugPikiKando/aiBoMake.cpp"),
+            Object(NonMatching, "plugPikiKando/aiBou.cpp"),
+            Object(NonMatching, "plugPikiKando/aiBridge.cpp"),
+            Object(NonMatching, "plugPikiKando/aiBreakWall.cpp"),
+            Object(NonMatching, "plugPikiKando/aiTransport.cpp"),
+            Object(NonMatching, "plugPikiKando/aiKinoko.cpp"),
+            Object(NonMatching, "plugPikiKando/aiChase.cpp"),
+            Object(NonMatching, "plugPikiKando/aiCrowd.cpp"),
+            Object(NonMatching, "plugPikiKando/aiDecoy.cpp"),
+            Object(NonMatching, "plugPikiKando/aiEnter.cpp"),
+            Object(NonMatching, "plugPikiKando/aiEscape.cpp"),
+            Object(NonMatching, "plugPikiKando/aiExit.cpp"),
+            Object(NonMatching, "plugPikiKando/aiMine.cpp"),
+            Object(NonMatching, "plugPikiKando/aiFormation.cpp"),
+            Object(NonMatching, "plugPikiKando/aiFree.cpp"),
+            Object(NonMatching, "plugPikiKando/aiGoto.cpp"),
+            Object(NonMatching, "plugPikiKando/aiGuard.cpp"),
+            Object(NonMatching, "plugPikiKando/aiPick.cpp"),
+            Object(NonMatching, "plugPikiKando/aiPickCreature.cpp"),
+            Object(NonMatching, "plugPikiKando/aiPullout.cpp"),
+            Object(NonMatching, "plugPikiKando/aiPush.cpp"),
+            Object(NonMatching, "plugPikiKando/aiPut.cpp"),
+            Object(NonMatching, "plugPikiKando/aiRandomBoid.cpp"),
+            Object(NonMatching, "plugPikiKando/aiRescue.cpp"),
+            Object(NonMatching, "plugPikiKando/aiRope.cpp"),
+            Object(NonMatching, "plugPikiKando/aiShoot.cpp"),
+            Object(NonMatching, "plugPikiKando/aiWatch.cpp"),
+            Object(NonMatching, "plugPikiKando/aiWeed.cpp"),
+            Object(NonMatching, "plugPikiKando/aiTable.cpp"),
+            Object(NonMatching, "plugPikiKando/aiAction.cpp"),
+            Object(NonMatching, "plugPikiKando/pikiInf.cpp"),
+            Object(NonMatching, "plugPikiKando/piki.cpp"),
+            Object(Matching, "plugPikiKando/odoMeter.cpp"),
+            Object(NonMatching, "plugPikiKando/pikidoKill.cpp"),
+            Object(NonMatching, "plugPikiKando/pikiMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/pikiState.cpp"),
+            Object(NonMatching, "plugPikiKando/viewPiki.cpp"),
+            Object(Matching, "plugPikiKando/conditions.cpp"),
+            Object(NonMatching, "plugPikiKando/generator.cpp"),
+            Object(NonMatching, "plugPikiKando/generatorCache.cpp"),
+            Object(NonMatching, "plugPikiKando/objectMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/searchSystem.cpp"),
+            Object(Matching, "plugPikiKando/smartPtr.cpp"),
+            Object(NonMatching, "plugPikiKando/itemGem.cpp"),
+            Object(NonMatching, "plugPikiKando/weedsItem.cpp"),
+            Object(NonMatching, "plugPikiKando/kusaItem.cpp"),
+            Object(NonMatching, "plugPikiKando/fishItem.cpp"),
+            Object(NonMatching, "plugPikiKando/ufoItem.cpp"),
+            Object(NonMatching, "plugPikiKando/ufoAnim.cpp"),
+            Object(NonMatching, "plugPikiKando/bombItem.cpp"),
+            Object(NonMatching, "plugPikiKando/goalItem.cpp"),
+            Object(NonMatching, "plugPikiKando/pikiheadItem.cpp"),
+            Object(NonMatching, "plugPikiKando/keyItem.cpp"),
+            Object(NonMatching, "plugPikiKando/ropeItem.cpp"),
+            Object(NonMatching, "plugPikiKando/seedItem.cpp"),
+            Object(NonMatching, "plugPikiKando/genItem.cpp"),
+            Object(NonMatching, "plugPikiKando/itemAI.cpp"),
+            Object(NonMatching, "plugPikiKando/itemMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/itemObject.cpp"),
+            Object(NonMatching, "plugPikiKando/mizuItem.cpp"),
+            Object(NonMatching, "plugPikiKando/paniItemAnimator.cpp"),
+            Object(NonMatching, "plugPikiKando/genNavi.cpp"),
+            Object(NonMatching, "plugPikiKando/navi.cpp"),
+            Object(NonMatching, "plugPikiKando/naviState.cpp"),
+            Object(NonMatching, "plugPikiKando/naviDemoState.cpp"),
+            Object(NonMatching, "plugPikiKando/gameCoreSection.cpp"),
+            Object(NonMatching, "plugPikiKando/gmWin.cpp"),
+            Object(NonMatching, "plugPikiKando/gameStat.cpp"),
+            Object(NonMatching, "plugPikiKando/kmath.cpp"),
+            Object(NonMatching, "plugPikiKando/uteffect.cpp"),
+            Object(NonMatching, "plugPikiKando/kontroller.cpp"),
+            Object(Matching, "plugPikiKando/mapcode.cpp"),
+            Object(NonMatching, "plugPikiKando/utkando.cpp"),
+            Object(NonMatching, "plugPikiKando/naviMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/genMapParts.cpp"),
+            Object(NonMatching, "plugPikiKando/mapParts.cpp"),
+            Object(NonMatching, "plugPikiKando/panipikianimator.cpp"),
+            Object(NonMatching, "plugPikiKando/actor.cpp"),
+            Object(Matching, "plugPikiKando/actorMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/genActor.cpp"),
+            Object(Matching, "plugPikiKando/pikiInfo.cpp"),
+            Object(NonMatching, "plugPikiKando/plantMgr.cpp"),
+            Object(NonMatching, "plugPikiKando/paniPlantAnimator.cpp"),
         ],
     },
     {
         "lib": "plugPikiNakata",
-        "cflags": "$cflags_pikmin",
-        "mw_version": "1.2.5n",
-        "host": True,
+        "cflags": cflags_pikmin,
+        "mw_version": "GC/1.2.5n",
         "objects": [
-            ["plugPikiNakata/genteki", False],
-            ["plugPikiNakata/nakatacode", True],
-            ["plugPikiNakata/nlibfunction", False],
-            ["plugPikiNakata/nlibgeometry", False],
-            ["plugPikiNakata/nlibgeometry3d", False],
-            ["plugPikiNakata/nlibgraphics", False],
-            ["plugPikiNakata/nlibmath", False],
-            ["plugPikiNakata/nlibspline", False],
-            ["plugPikiNakata/nlibsystem", False],
-            ["plugPikiNakata/panianimator", False],
-            ["plugPikiNakata/panipikianimmgr", False],
-            ["plugPikiNakata/panitekianimator", False],
-            ["plugPikiNakata/panitestsection", False],
-            ["plugPikiNakata/paraparameters", False],
-            ["plugPikiNakata/pcamcamera", False],
-            ["plugPikiNakata/pcamcameramanager", False],
-            ["plugPikiNakata/pcammotionevents", False],
-            ["plugPikiNakata/pcamcameraparameters", False],
-            ["plugPikiNakata/peve", False],
-            ["plugPikiNakata/peveconditions", False],
-            ["plugPikiNakata/pevemotionevents", False],
-            ["plugPikiNakata/tai", False],
-            ["plugPikiNakata/taiattackactions", False],
-            ["plugPikiNakata/taibasicactions", False],
-            ["plugPikiNakata/taichappy", False],
-            ["plugPikiNakata/taicollec", False],
-            ["plugPikiNakata/taicollisionactions", False],
-            ["plugPikiNakata/taieffectactions", False],
-            ["plugPikiNakata/taiiwagen", False],
-            ["plugPikiNakata/taijudgementactions", False],
-            ["plugPikiNakata/taikinoko", False],
-            ["plugPikiNakata/taimessageactions", False],
-            ["plugPikiNakata/taimizinko", False],
-            ["plugPikiNakata/taimotionactions", False],
-            ["plugPikiNakata/taimoveactions", False],
-            ["plugPikiNakata/tainapkid", False],
-            ["plugPikiNakata/taiotimoti", False],
-            ["plugPikiNakata/taipalm", False],
-            ["plugPikiNakata/taireactionactions", False],
-            ["plugPikiNakata/taiswallow", False],
-            ["plugPikiNakata/taishell", False],
-            ["plugPikiNakata/taitimeractions", False],
-            ["plugPikiNakata/taiwaitactions", False],
-            ["plugPikiNakata/teki", False],
-            ["plugPikiNakata/tekianimationmanager", False],
-            ["plugPikiNakata/tekibteki", False],
-            ["plugPikiNakata/tekiconditions", False],
-            ["plugPikiNakata/tekievent", True],
-            ["plugPikiNakata/tekiinteraction", False],
-            ["plugPikiNakata/tekimgr", False],
-            ["plugPikiNakata/tekinakata", False],
-            ["plugPikiNakata/tekinteki", False],
-            ["plugPikiNakata/tekiparameters", False],
-            ["plugPikiNakata/tekipersonality", False],
-            ["plugPikiNakata/tekistrategy", True],
+            Object(NonMatching, "plugPikiNakata/genteki.cpp"),
+            Object(Matching, "plugPikiNakata/nakatacode.cpp"),
+            Object(NonMatching, "plugPikiNakata/nlibfunction.cpp"),
+            Object(NonMatching, "plugPikiNakata/nlibgeometry.cpp"),
+            Object(NonMatching, "plugPikiNakata/nlibgeometry3d.cpp"),
+            Object(NonMatching, "plugPikiNakata/nlibgraphics.cpp"),
+            Object(NonMatching, "plugPikiNakata/nlibmath.cpp"),
+            Object(NonMatching, "plugPikiNakata/nlibspline.cpp"),
+            Object(NonMatching, "plugPikiNakata/nlibsystem.cpp"),
+            Object(NonMatching, "plugPikiNakata/panianimator.cpp"),
+            Object(NonMatching, "plugPikiNakata/panipikianimmgr.cpp"),
+            Object(NonMatching, "plugPikiNakata/panitekianimator.cpp"),
+            Object(NonMatching, "plugPikiNakata/panitestsection.cpp"),
+            Object(NonMatching, "plugPikiNakata/paraparameters.cpp"),
+            Object(NonMatching, "plugPikiNakata/pcamcamera.cpp"),
+            Object(NonMatching, "plugPikiNakata/pcamcameramanager.cpp"),
+            Object(NonMatching, "plugPikiNakata/pcammotionevents.cpp"),
+            Object(NonMatching, "plugPikiNakata/pcamcameraparameters.cpp"),
+            Object(NonMatching, "plugPikiNakata/peve.cpp"),
+            Object(NonMatching, "plugPikiNakata/peveconditions.cpp"),
+            Object(NonMatching, "plugPikiNakata/pevemotionevents.cpp"),
+            Object(NonMatching, "plugPikiNakata/tai.cpp"),
+            Object(NonMatching, "plugPikiNakata/taiattackactions.cpp"),
+            Object(NonMatching, "plugPikiNakata/taibasicactions.cpp"),
+            Object(NonMatching, "plugPikiNakata/taichappy.cpp"),
+            Object(NonMatching, "plugPikiNakata/taicollec.cpp"),
+            Object(NonMatching, "plugPikiNakata/taicollisionactions.cpp"),
+            Object(NonMatching, "plugPikiNakata/taieffectactions.cpp"),
+            Object(NonMatching, "plugPikiNakata/taiiwagen.cpp"),
+            Object(NonMatching, "plugPikiNakata/taijudgementactions.cpp"),
+            Object(NonMatching, "plugPikiNakata/taikinoko.cpp"),
+            Object(NonMatching, "plugPikiNakata/taimessageactions.cpp"),
+            Object(NonMatching, "plugPikiNakata/taimizinko.cpp"),
+            Object(NonMatching, "plugPikiNakata/taimotionactions.cpp"),
+            Object(NonMatching, "plugPikiNakata/taimoveactions.cpp"),
+            Object(NonMatching, "plugPikiNakata/tainapkid.cpp"),
+            Object(NonMatching, "plugPikiNakata/taiotimoti.cpp"),
+            Object(NonMatching, "plugPikiNakata/taipalm.cpp"),
+            Object(NonMatching, "plugPikiNakata/taireactionactions.cpp"),
+            Object(NonMatching, "plugPikiNakata/taiswallow.cpp"),
+            Object(NonMatching, "plugPikiNakata/taishell.cpp"),
+            Object(NonMatching, "plugPikiNakata/taitimeractions.cpp"),
+            Object(NonMatching, "plugPikiNakata/taiwaitactions.cpp"),
+            Object(NonMatching, "plugPikiNakata/teki.cpp"),
+            Object(NonMatching, "plugPikiNakata/tekianimationmanager.cpp"),
+            Object(NonMatching, "plugPikiNakata/tekibteki.cpp"),
+            Object(NonMatching, "plugPikiNakata/tekiconditions.cpp"),
+            Object(Matching, "plugPikiNakata/tekievent.cpp"),
+            Object(NonMatching, "plugPikiNakata/tekiinteraction.cpp"),
+            Object(NonMatching, "plugPikiNakata/tekimgr.cpp"),
+            Object(NonMatching, "plugPikiNakata/tekinakata.cpp"),
+            Object(NonMatching, "plugPikiNakata/tekinteki.cpp"),
+            Object(NonMatching, "plugPikiNakata/tekiparameters.cpp"),
+            Object(NonMatching, "plugPikiNakata/tekipersonality.cpp"),
+            Object(NonMatching, "plugPikiNakata/tekistrategy.cpp"),
         ],
     },
     {
         "lib": "plugPikiNishimura",
-        "cflags": "$cflags_pikmin",
-        "mw_version": "1.2.5n",
+        "cflags": cflags_pikmin,
+        "mw_version": "GC/1.2.5n",
         "host": True,
         "objects": [
-            ["plugPikiNishimura/genBoss", False],
-            ["plugPikiNishimura/Boss", False],
-            ["plugPikiNishimura/BossAnimMgr", False],
-            ["plugPikiNishimura/BossCnd", False],
-            ["plugPikiNishimura/BossMgr", False],
-            ["plugPikiNishimura/BossShapeObj", False],
-            ["plugPikiNishimura/Spider", False],
-            ["plugPikiNishimura/SpiderAi", False],
-            ["plugPikiNishimura/SpiderLeg", False],
-            ["plugPikiNishimura/Snake", False],
-            ["plugPikiNishimura/SnakeAi", False],
-            ["plugPikiNishimura/SnakeBody", False],
-            ["plugPikiNishimura/Slime", False],
-            ["plugPikiNishimura/SlimeAi", False],
-            ["plugPikiNishimura/SlimeBody", False],
-            ["plugPikiNishimura/SlimeCreature", False],
-            ["plugPikiNishimura/King", False],
-            ["plugPikiNishimura/KingAi", False],
-            ["plugPikiNishimura/KingBody", False],
-            ["plugPikiNishimura/Kogane", False],
-            ["plugPikiNishimura/KoganeAi", False],
-            ["plugPikiNishimura/Pom", False],
-            ["plugPikiNishimura/PomAi", False],
-            ["plugPikiNishimura/KingBack", False],
-            ["plugPikiNishimura/Nucleus", False],
-            ["plugPikiNishimura/NucleusAi", False],
-            ["plugPikiNishimura/CoreNucleus", False],
-            ["plugPikiNishimura/CoreNucleusAi", False],
-            ["plugPikiNishimura/Mizu", False],
-            ["plugPikiNishimura/MizuAi", False],
-            ["plugPikiNishimura/nscalculation", False],
-            ["plugPikiNishimura/RumbleData", False],
-            ["plugPikiNishimura/HmRumbleMgr", False],
-            ["plugPikiNishimura/HmRumbleSample", True],
+            Object(NonMatching, "plugPikiNishimura/genBoss.cpp"),
+            Object(NonMatching, "plugPikiNishimura/Boss.cpp"),
+            Object(NonMatching, "plugPikiNishimura/BossAnimMgr.cpp"),
+            Object(NonMatching, "plugPikiNishimura/BossCnd.cpp"),
+            Object(NonMatching, "plugPikiNishimura/BossMgr.cpp"),
+            Object(NonMatching, "plugPikiNishimura/BossShapeObj.cpp"),
+            Object(NonMatching, "plugPikiNishimura/Spider.cpp"),
+            Object(NonMatching, "plugPikiNishimura/SpiderAi.cpp"),
+            Object(NonMatching, "plugPikiNishimura/SpiderLeg.cpp"),
+            Object(NonMatching, "plugPikiNishimura/Snake.cpp"),
+            Object(NonMatching, "plugPikiNishimura/SnakeAi.cpp"),
+            Object(NonMatching, "plugPikiNishimura/SnakeBody.cpp"),
+            Object(NonMatching, "plugPikiNishimura/Slime.cpp"),
+            Object(NonMatching, "plugPikiNishimura/SlimeAi.cpp"),
+            Object(NonMatching, "plugPikiNishimura/SlimeBody.cpp"),
+            Object(NonMatching, "plugPikiNishimura/SlimeCreature.cpp"),
+            Object(NonMatching, "plugPikiNishimura/King.cpp"),
+            Object(NonMatching, "plugPikiNishimura/KingAi.cpp"),
+            Object(NonMatching, "plugPikiNishimura/KingBody.cpp"),
+            Object(NonMatching, "plugPikiNishimura/Kogane.cpp"),
+            Object(NonMatching, "plugPikiNishimura/KoganeAi.cpp"),
+            Object(NonMatching, "plugPikiNishimura/Pom.cpp"),
+            Object(NonMatching, "plugPikiNishimura/PomAi.cpp"),
+            Object(NonMatching, "plugPikiNishimura/KingBack.cpp"),
+            Object(NonMatching, "plugPikiNishimura/Nucleus.cpp"),
+            Object(NonMatching, "plugPikiNishimura/NucleusAi.cpp"),
+            Object(NonMatching, "plugPikiNishimura/CoreNucleus.cpp"),
+            Object(NonMatching, "plugPikiNishimura/CoreNucleusAi.cpp"),
+            Object(NonMatching, "plugPikiNishimura/Mizu.cpp"),
+            Object(NonMatching, "plugPikiNishimura/MizuAi.cpp"),
+            Object(NonMatching, "plugPikiNishimura/nscalculation.cpp"),
+            Object(NonMatching, "plugPikiNishimura/RumbleData.cpp"),
+            Object(NonMatching, "plugPikiNishimura/HmRumbleMgr.cpp"),
+            Object(Matching, "plugPikiNishimura/HmRumbleSample.cpp"),
         ],
     },
     {
         "lib": "plugPikiOgawa",
-        "cflags": "$cflags_pikmin",
-        "mw_version": "1.2.5n",
+        "cflags": cflags_pikmin,
+        "mw_version": "GC/1.2.5n",
         "host": True,
         "objects": [
-            ["plugPikiOgawa/ogTest", False],
-            ["plugPikiOgawa/ogSub", False],
-            ["plugPikiOgawa/ogTitle", False],
-            ["plugPikiOgawa/ogPause", False],
-            ["plugPikiOgawa/ogTutorial", False],
-            ["plugPikiOgawa/ogTutorialData", True],
-            ["plugPikiOgawa/ogMap", False],
-            ["plugPikiOgawa/ogResult", False],
-            ["plugPikiOgawa/ogRader", False],
-            ["plugPikiOgawa/ogFileSelect", False],
-            ["plugPikiOgawa/ogMessage", False],
-            ["plugPikiOgawa/ogMemChk", False],
-            ["plugPikiOgawa/ogDiary", False],
-            ["plugPikiOgawa/ogMenu", False],
-            ["plugPikiOgawa/ogFileChkSel", False],
-            ["plugPikiOgawa/ogMakeDefault", False],
-            ["plugPikiOgawa/ogTotalScore", False],
-            ["plugPikiOgawa/ogSave", False],
-            ["plugPikiOgawa/ogNitaku", False],
-            ["plugPikiOgawa/ogFileCopy", False],
-            ["plugPikiOgawa/ogFileDelete", False],
-            ["plugPikiOgawa/ogGraph", False],
-            ["plugPikiOgawa/ogStart", False],
-            ["plugPikiOgawa/ogCallBack", False],
+            Object(NonMatching, "plugPikiOgawa/ogTest.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogSub.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogTitle.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogPause.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogTutorial.cpp"),
+            Object(Matching, "plugPikiOgawa/ogTutorialData.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogMap.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogResult.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogRader.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogFileSelect.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogMessage.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogMemChk.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogDiary.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogMenu.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogFileChkSel.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogMakeDefault.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogTotalScore.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogSave.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogNitaku.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogFileCopy.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogFileDelete.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogGraph.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogStart.cpp"),
+            Object(NonMatching, "plugPikiOgawa/ogCallBack.cpp"),
         ],
     },
     {
         "lib": "plugPikiYamashita",
-        "cflags": "$cflags_pikmin",
-        "mw_version": "1.2.5n",
-        "host": True,
+        "cflags": cflags_pikmin,
+        "mw_version": "GC/1.2.5n",
         "objects": [
-            ["plugPikiYamashita/gameCourseClear", False],
-            ["plugPikiYamashita/gameStageClear", False],
-            ["plugPikiYamashita/gameCredits", False],
-            ["plugPikiYamashita/zenMath", False],
-            ["plugPikiYamashita/effectMgr", False],
-            ["plugPikiYamashita/particleGenerator", False],
-            ["plugPikiYamashita/particleLoader", False],
-            ["plugPikiYamashita/solidField", True],
-            ["plugPikiYamashita/particleManager", False],
-            ["plugPikiYamashita/particleMdlManager", False],
-            ["plugPikiYamashita/bBoardColourAnim", False],
-            ["plugPikiYamashita/simpleParticle", False],
-            ["plugPikiYamashita/tekiyteki", False],
-            ["plugPikiYamashita/tekiyamashita", False],
-            ["plugPikiYamashita/TAIanimation", True],
-            ["plugPikiYamashita/TAItank", False],
-            ["plugPikiYamashita/TAImar", False],
-            ["plugPikiYamashita/TAIAreaction", False],
-            ["plugPikiYamashita/TAIAmove", False],
-            ["plugPikiYamashita/TAIAmotion", False],
-            ["plugPikiYamashita/TAIAjudge", False],
-            ["plugPikiYamashita/TAIAattack", False],
-            ["plugPikiYamashita/P2DGrafContext", False],
-            ["plugPikiYamashita/P2DOrthoGraph", False],
-            ["plugPikiYamashita/P2DPerspGraph", False],
-            ["plugPikiYamashita/P2DPane", False],
-            ["plugPikiYamashita/P2DPicture", False],
-            ["plugPikiYamashita/P2DScreen", False],
-            ["plugPikiYamashita/P2DStream", False],
-            ["plugPikiYamashita/PSUList", False],
-            ["plugPikiYamashita/PUTRect", False],
-            ["plugPikiYamashita/P2DWindow", False],
-            ["plugPikiYamashita/P2DTextBox", False],
-            ["plugPikiYamashita/P2DPrint", False],
-            ["plugPikiYamashita/P2DFont", False],
-            ["plugPikiYamashita/drawGameInfo", False],
-            ["plugPikiYamashita/zenGraphics", False],
-            ["plugPikiYamashita/drawContainer", False],
-            ["plugPikiYamashita/drawCommon", False],
-            ["plugPikiYamashita/zenController", False],
-            ["plugPikiYamashita/drawHurryUp", False],
-            ["plugPikiYamashita/texAnim", False],
-            ["plugPikiYamashita/drawAccount", False],
-            ["plugPikiYamashita/drawMenu", False],
-            ["plugPikiYamashita/TAIeffectAttack", False],
-            ["plugPikiYamashita/TAIbeatle", False],
-            ["plugPikiYamashita/menuPanelMgr", False],
-            ["plugPikiYamashita/TAIkabekuiA", False],
-            ["plugPikiYamashita/TAIkabekuiB", False],
-            ["plugPikiYamashita/TAIkabekuiC", False],
-            ["plugPikiYamashita/TAItamago", False],
-            ["plugPikiYamashita/TAIdororo", False],
-            ["plugPikiYamashita/TAIhibaA", False],
-            ["plugPikiYamashita/TAIAeffect", False],
-            ["plugPikiYamashita/TAImiurin", False],
-            ["plugPikiYamashita/ptclGenPack", True],
-            ["plugPikiYamashita/drawProgre", False],
-            ["plugPikiYamashita/spectrumCursorMgr", False],
-            ["plugPikiYamashita/drawWorldMap", False],
-            ["plugPikiYamashita/drawCountDown", False],
-            ["plugPikiYamashita/drawGameOver", False],
-            ["plugPikiYamashita/yai", False],
-            ["plugPikiYamashita/effectMgr2D", False],
-            ["plugPikiYamashita/drawWMPause", False],
-            ["plugPikiYamashita/TAIusuba", False],
-            ["plugPikiYamashita/TAIotama", False],
-            ["plugPikiYamashita/drawCMcourseSelect", False],
-            ["plugPikiYamashita/drawCMtitle", False],
-            ["plugPikiYamashita/drawCMscore", False],
-            ["plugPikiYamashita/drawCMbest", False],
-            ["plugPikiYamashita/drawCMresult", False],
-            ["plugPikiYamashita/drawMenuBase", False],
-            ["plugPikiYamashita/drawHiScore", False],
-            ["plugPikiYamashita/damageEffect", False],
-            ["plugPikiYamashita/alphaWipe", False],
-            ["plugPikiYamashita/drawUfoParts", False],
-            ["plugPikiYamashita/zenSys", False],
-            ["plugPikiYamashita/drawSaveMes", False],
-            ["plugPikiYamashita/drawSaveFailure", False],
-            ["plugPikiYamashita/drawFinalResult", False],
-            ["plugPikiYamashita/drawOptionSave", False],
+            Object(NonMatching, "plugPikiYamashita/gameCourseClear.cpp"),
+            Object(NonMatching, "plugPikiYamashita/gameStageClear.cpp"),
+            Object(NonMatching, "plugPikiYamashita/gameCredits.cpp"),
+            Object(NonMatching, "plugPikiYamashita/zenMath.cpp"),
+            Object(NonMatching, "plugPikiYamashita/effectMgr.cpp"),
+            Object(NonMatching, "plugPikiYamashita/particleGenerator.cpp"),
+            Object(NonMatching, "plugPikiYamashita/particleLoader.cpp"),
+            Object(Matching, "plugPikiYamashita/solidField.cpp"),
+            Object(NonMatching, "plugPikiYamashita/particleManager.cpp"),
+            Object(NonMatching, "plugPikiYamashita/particleMdlManager.cpp"),
+            Object(NonMatching, "plugPikiYamashita/bBoardColourAnim.cpp"),
+            Object(NonMatching, "plugPikiYamashita/simpleParticle.cpp"),
+            Object(NonMatching, "plugPikiYamashita/tekiyteki.cpp"),
+            Object(NonMatching, "plugPikiYamashita/tekiyamashita.cpp"),
+            Object(Matching, "plugPikiYamashita/TAIanimation.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAItank.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAImar.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIAreaction.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIAmove.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIAmotion.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIAjudge.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIAattack.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DGrafContext.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DOrthoGraph.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DPerspGraph.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DPane.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DPicture.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DScreen.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DStream.cpp"),
+            Object(NonMatching, "plugPikiYamashita/PSUList.cpp"),
+            Object(NonMatching, "plugPikiYamashita/PUTRect.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DWindow.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DTextBox.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DPrint.cpp"),
+            Object(NonMatching, "plugPikiYamashita/P2DFont.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawGameInfo.cpp"),
+            Object(NonMatching, "plugPikiYamashita/zenGraphics.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawContainer.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawCommon.cpp"),
+            Object(NonMatching, "plugPikiYamashita/zenController.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawHurryUp.cpp"),
+            Object(NonMatching, "plugPikiYamashita/texAnim.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawAccount.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawMenu.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIeffectAttack.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIbeatle.cpp"),
+            Object(NonMatching, "plugPikiYamashita/menuPanelMgr.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIkabekuiA.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIkabekuiB.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIkabekuiC.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAItamago.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIdororo.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIhibaA.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIAeffect.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAImiurin.cpp"),
+            Object(Matching, "plugPikiYamashita/ptclGenPack.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawProgre.cpp"),
+            Object(NonMatching, "plugPikiYamashita/spectrumCursorMgr.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawWorldMap.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawCountDown.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawGameOver.cpp"),
+            Object(NonMatching, "plugPikiYamashita/yai.cpp"),
+            Object(NonMatching, "plugPikiYamashita/effectMgr2D.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawWMPause.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIusuba.cpp"),
+            Object(NonMatching, "plugPikiYamashita/TAIotama.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawCMcourseSelect.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawCMtitle.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawCMscore.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawCMbest.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawCMresult.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawMenuBase.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawHiScore.cpp"),
+            Object(NonMatching, "plugPikiYamashita/damageEffect.cpp"),
+            Object(NonMatching, "plugPikiYamashita/alphaWipe.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawUfoParts.cpp"),
+            Object(NonMatching, "plugPikiYamashita/zenSys.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawSaveMes.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawSaveFailure.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawFinalResult.cpp"),
+            Object(NonMatching, "plugPikiYamashita/drawOptionSave.cpp"),
         ],
     },
-    {
-        "lib": "base",
-        "mw_version": "1.2.5",
-        "cflags": "$cflags_base",
-        "host": True,
-        "objects": [
-            ["base/PPCArch", True],
+    DolphinLib(
+        "base",
+        [
+            Object(Matching, "base/PPCArch.c"),
         ],
-    },
-    {
-        "lib": "os",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["os/OS", False],
-            ["os/OSAlarm", False],
-            ["os/OSAlloc", True],
-            ["os/OSArena", True],
-            ["os/OSAudioSystem", False],
-            ["os/OSCache", False],
-            ["os/OSContext", False],
-            ["os/OSError", True],
-            ["os/OSExi", False],
-            ["os/OSFont", False],
-            ["os/OSInterrupt", False],
-            ["os/OSLink", True],
-            ["os/OSMessage", False],
-            ["os/OSMutex", False],
-            ["os/OSReboot", False],
-            ["os/OSReset", False],
-            ["os/OSResetSW", False],
-            ["os/OSRtc", False],
-            ["os/OSSerial", False],
-            ["os/OSSync", False],
-            ["os/OSThread", False],
-            ["os/OSTime", False],
-            ["os/OSUartExi", False],
-            ["os/__start", True],
-            ["os/__ppc_eabi_init", False],
+    ),
+    DolphinLib(
+        "os",
+        [
+            Object(NonMatching, "os/OS.c"),
+            Object(NonMatching, "os/OSAlarm.c"),
+            Object(Matching, "os/OSAlloc.c"),
+            Object(Matching, "os/OSArena.c"),
+            Object(NonMatching, "os/OSAudioSystem.c"),
+            Object(NonMatching, "os/OSCache.c"),
+            Object(NonMatching, "os/OSContext.c"),
+            Object(Matching, "os/OSError.c"),
+            Object(NonMatching, "os/OSExi.c"),
+            Object(NonMatching, "os/OSFont.c"),
+            Object(NonMatching, "os/OSInterrupt.c"),
+            Object(Matching, "os/OSLink.c"),
+            Object(NonMatching, "os/OSMessage.c"),
+            Object(NonMatching, "os/OSMemory.c"),
+            Object(NonMatching, "os/OSMutex.c"),
+            Object(NonMatching, "os/OSReboot.c"),
+            Object(NonMatching, "os/OSReset.c"),
+            Object(NonMatching, "os/OSResetSW.c"),
+            Object(NonMatching, "os/OSRtc.c"),
+            Object(NonMatching, "os/OSSerial.c"),
+            Object(NonMatching, "os/OSSync.c"),
+            Object(NonMatching, "os/OSThread.c"),
+            Object(NonMatching, "os/OSTime.c"),
+            Object(NonMatching, "os/OSUartExi.c"),
+            Object(Matching, "os/__start.c"),
+            Object(NonMatching, "os/__ppc_eabi_init.cpp"),
         ],
-    },
-    {
-        "lib": "db",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["db/db", True],
-        ],
-    },
-    {
-        "lib": "mtx",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["mtx/mtx", False],
-            ["mtx/mtx44", False],
-            ["mtx/vec", False],
-        ],
-    },
-    {
-        "lib": "dvd",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["dvd/dvdlow", False],
-            ["dvd/dvdfs", False],
-            ["dvd/dvd", False],
-            ["dvd/dvdqueue", False],
-            ["dvd/dvderror", False],
-            ["dvd/fstload", False],
-        ],
-    },
-    {
-        "lib": "vi",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["vi/vi", False],
-        ],
-    },
-    {
-        "lib": "pad",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["pad/Padclamp", False],
-            ["pad/Pad", False],
-        ],
-    },
-    {
-        "lib": "ai",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["ai/ai", True],
-        ],
-    },
-    {
-        "lib": "ar",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["ar/ar", False],
-            ["ar/arq", False],
-        ],
-    },
-    {
-        "lib": "dsp",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["dsp/dsp", True],
-        ],
-    },
-    {
-        "lib": "card",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["card/CARDBios", False],
-            ["card/CARDRdwr", False],
-            ["card/CARDBlock", False],
-            ["card/CARDDir", False],
-            ["card/CARDCheck", False],
-            ["card/CARDMount", False],
-            ["card/CARDFormat", False],
-            ["card/CARDOpen", False],
-            ["card/CARDCreate", False],
-            ["card/CARDRead", False],
-            ["card/CARDWrite", False],
-            ["card/CARDDelete", False],
-            ["card/CARDStat", False],
-            ["card/CARDRename", False],
-        ],
-    },
-    {
-        "lib": "hio",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["hio/hio", False],
-        ],
-    },
-    {
-        "lib": "gx",
-        "cflags": "$cflags_base",
-        "mw_version": "1.2.5",
-        "host": True,
-        "objects": [
-            ["gx/GXInit", False],
-            ["gx/GXFifo", False],
-            ["gx/GXAttr", False],
-            ["gx/GXMisc", False],
-            ["gx/GXGeometry", False],
-            ["gx/GXFrameBuf", False],
-            ["gx/GXLight", False],
-            ["gx/GXTexture", False],
-            ["gx/GXBump", False],
-            ["gx/GXTev", False],
-            ["gx/GXPixel", False],
-            ["gx/GXStubs", True],
-            ["gx/GXDisplayList", False],
-            ["gx/GXTransform", False],
-        ],
-    },
+    ),
+    DolphinLib(
+        "db",
+        [
+            Object(NonMatching, "db/db.c"),
+        ]
+    ),
+    DolphinLib(
+        "mtx",
+        [
+            Object(NonMatching, "mtx/mtx.c"),
+            Object(NonMatching, "mtx/mtx44.c"),
+            Object(NonMatching, "mtx/vec.c"),
+        ]
+    ),
+    DolphinLib(
+        "dvd",
+        [
+            Object(NonMatching, "dvd/dvdlow.c"),
+            Object(NonMatching, "dvd/dvdfs.c"),
+            Object(NonMatching, "dvd/dvd.c"),
+            Object(NonMatching, "dvd/dvdqueue.c"),
+            Object(NonMatching, "dvd/dvderror.c"),
+            Object(NonMatching, "dvd/fstload.c"),
+        ]
+    ),
+    DolphinLib(
+        "vi",
+        [
+            Object(NonMatching, "vi/vi.c"),
+        ]
+    ),
+    DolphinLib(
+        "pad",
+        [
+            Object(NonMatching, "pad/Padclamp.c"),
+            Object(NonMatching, "pad/Pad.c"),
+        ]
+    ),
+    DolphinLib(
+        "ai",
+        [
+            Object(NonMatching, "ai/ai.c"),
+        ]
+    ),
+    DolphinLib(
+        "ar",
+        [
+            Object(NonMatching, "ar/ar.c"),
+        ]
+    ),
+    DolphinLib(
+        "arq",
+        [
+            Object(NonMatching, "ar/arq.c"),
+        ]
+    ),
+    DolphinLib(
+        "dsp",
+        [
+            Object(Matching, "dsp/dsp.c"),
+        ]
+    ),
+    DolphinLib(
+        "card",
+        [
+            Object(NonMatching, "card/CARDBios.c"),
+            Object(NonMatching, "card/CARDRdwr.c"),
+            Object(NonMatching, "card/CARDBlock.c"),
+            Object(NonMatching, "card/CARDDir.c"),
+            Object(NonMatching, "card/CARDCheck.c"),
+            Object(NonMatching, "card/CARDMount.c"),
+            Object(NonMatching, "card/CARDFormat.c"),
+            Object(NonMatching, "card/CARDOpen.c"),
+            Object(NonMatching, "card/CARDCreate.c"),
+            Object(NonMatching, "card/CARDRead.c"),
+            Object(NonMatching, "card/CARDWrite.c"),
+            Object(NonMatching, "card/CARDDelete.c"),
+            Object(NonMatching, "card/CARDStat.c"),
+            Object(NonMatching, "card/CARDRename.c"),
+        ]
+    ),
+    DolphinLib(
+        "hio",
+        [
+            Object(NonMatching, "hio/hio.c"),
+        ]
+    ),
+    DolphinLib(
+        "gx",
+        [
+            Object(NonMatching, "gx/GXInit.c"),
+            Object(NonMatching, "gx/GXFifo.c"),
+            Object(NonMatching, "gx/GXAttr.c"),
+            Object(NonMatching, "gx/GXMisc.c"),
+            Object(NonMatching, "gx/GXGeometry.c"),
+            Object(NonMatching, "gx/GXFrameBuf.c"),
+            Object(NonMatching, "gx/GXLight.c"),
+            Object(NonMatching, "gx/GXTexture.c"),
+            Object(NonMatching, "gx/GXBump.c"),
+            Object(NonMatching, "gx/GXTev.c"),
+            Object(NonMatching, "gx/GXPixel.c"),
+            Object(Matching, "gx/GXStubs.c"),
+            Object(NonMatching, "gx/GXDisplayList.c"),
+            Object(NonMatching, "gx/GXTransform.c"),
+            Object(NonMatching, "gx/GXPerf.c"),
+        ]
+    ),
     {
         "lib": "Runtime.PPCEABI.H",
-        "mw_version": "1.2.5",
-        "cflags": "$cflags_base",
-        "host": True,
+        "mw_version": "GC/1.2.5",
+        "cflags": cflags_base,
         "objects": [
-            ["Runtime/PPCEABI/H/__mem", False],
-            ["Runtime/PPCEABI/H/__va_arg", False],
-            ["Runtime/PPCEABI/H/global_destructor_chain", False],
-            ["Runtime/PPCEABI/H/CPlusLibPPC", False],
-            ["Runtime/PPCEABI/H/NMWException", False],
-            ["Runtime/PPCEABI/H/ptmf", True],
-            ["Runtime/PPCEABI/H/ExceptionPPC", False],
-            ["Runtime/PPCEABI/H/runtime", False],
-            ["Runtime/PPCEABI/H/__init_cpp_exceptions", False],
+            Object(NonMatching, "Runtime/PPCEABI/H/__mem.o"),
+            Object(NonMatching, "Runtime/PPCEABI/H/__va_arg.c"),
+            Object(NonMatching, "Runtime/PPCEABI/H/global_destructor_chain.c"),
+            Object(NonMatching, "Runtime/PPCEABI/H/CPlusLibPPC.cp"),
+            Object(NonMatching, "Runtime/PPCEABI/H/NMWException.cp"),
+            Object(Matching, "Runtime/PPCEABI/H/ptmf.c"),
+            Object(NonMatching, "Runtime/PPCEABI/H/ExceptionPPC.cp"),
+            Object(NonMatching, "Runtime/PPCEABI/H/runtime.c"),
+            Object(NonMatching, "Runtime/PPCEABI/H/__init_cpp_exceptions.cpp"),
         ],
     },
     {
         "lib": "MSL_C.PPCEABI.bare.H",
-        "mw_version": "1.2.5",
-        "cflags": "$cflags_base -fp_contract on",
-        "host": True,
+        "mw_version": "GC/1.2.5",
+        "cflags": cflags_base,
         "objects": [
-            ["MSL_C/PPCEABI/bare/H/abort_exit", False],
-            ["MSL_C/PPCEABI/bare/H/errno", True],
-            ["MSL_C/PPCEABI/bare/H/ansi_fp", False],
-            ["MSL_C/PPCEABI/bare/H/arith", True],
-            ["MSL_C/PPCEABI/bare/H/buffer_io", False],
-            ["MSL_C/PPCEABI/bare/H/critical_regions.ppc_eabi", True],
-            ["MSL_C/PPCEABI/bare/H/ctype", True],
-            ["MSL_C/PPCEABI/bare/H/ansi_files", False],
-            ["MSL_C/PPCEABI/bare/H/locale", False],
-            ["MSL_C/PPCEABI/bare/H/direct_io", False],
-            ["MSL_C/PPCEABI/bare/H/mbstring", False],
-            ["MSL_C/PPCEABI/bare/H/mem", False],
-            ["MSL_C/PPCEABI/bare/H/mem_funcs", False],
-            ["MSL_C/PPCEABI/bare/H/misc_io", True],
-            ["MSL_C/PPCEABI/bare/H/printf", False],
-            ["MSL_C/PPCEABI/bare/H/rand", True],
-            ["MSL_C/PPCEABI/bare/H/scanf", False],
-            ["MSL_C/PPCEABI/bare/H/string", False],
-            ["MSL_C/PPCEABI/bare/H/strtold", False],
-            ["MSL_C/PPCEABI/bare/H/strtoul", False],
-            ["MSL_C/PPCEABI/bare/H/uart_console_io", False],
-            ["MSL_C/PPCEABI/bare/H/wchar_io", True],
-            ["MSL_C/PPCEABI/bare/H/float", True],
-            ["MSL_C/PPCEABI/bare/H/e_asin", False],
-            ["MSL_C/PPCEABI/bare/H/e_atan2", False],
-            ["MSL_C/PPCEABI/bare/H/e_pow", True],
-            ["MSL_C/PPCEABI/bare/H/fminmaxdim", False],
-            ["MSL_C/PPCEABI/bare/H/s_atan", False],
-            ["MSL_C/PPCEABI/bare/H/s_copysign", True],
-            ["MSL_C/PPCEABI/bare/H/s_frexp", True],
-            ["MSL_C/PPCEABI/bare/H/s_ldexp", False],
-            ["MSL_C/PPCEABI/bare/H/w_atan2", False],
-            ["MSL_C/PPCEABI/bare/H/w_pow", False],
-            ["MSL_C/PPCEABI/bare/H/hyperbolicsf", True],
-            ["MSL_C/PPCEABI/bare/H/inverse_trig", False],
-            ["MSL_C/PPCEABI/bare/H/trigf", False],
-            ["MSL_C/PPCEABI/bare/H/math_inlines", False],
-            ["MSL_C/PPCEABI/bare/H/common_float_tables", False],
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/abort_exit.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/errno.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/ansi_fp.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/arith.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/buffer_io.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/critical_regions.ppc_eabi.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/ctype.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/ansi_files.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/locale.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/direct_io.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/mbstring.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/mem.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/mem_funcs.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/misc_io.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/printf.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/rand.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/scanf.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/string.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/strtold.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/strtoul.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/uart_console_io.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/wchar_io.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/float.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/e_asin.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/e_atan2.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/e_pow.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/fminmaxdim.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/s_atan.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/s_copysign.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/s_frexp.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/s_ldexp.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/w_atan2.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/w_pow.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/hyperbolicsf.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/inverse_trig.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/trigf.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/math_inlines.c"),
+            Object(NonMatching, "MSL_C/PPCEABI/bare/H/common_float_tables.c"),
         ],
     },
     {
         "lib": "TRK_MINNOW_DOLPHIN",
-        "mw_version": "1.2.5",
-        "cflags": "$cflags_base",
-        "host": True,
+        "mw_version": "GC/1.2.5",
+        "cflags": cflags_base,
         "objects": [
-            ["TRK_MINNOW_DOLPHIN/mainloop", False],
-            ["TRK_MINNOW_DOLPHIN/nubevent", False],
-            ["TRK_MINNOW_DOLPHIN/nubinit", False],
-            ["TRK_MINNOW_DOLPHIN/msg", False],
-            ["TRK_MINNOW_DOLPHIN/msgbuf", False],
-            ["TRK_MINNOW_DOLPHIN/serpoll", False],
-            ["TRK_MINNOW_DOLPHIN/usr_put", True],
-            ["TRK_MINNOW_DOLPHIN/dispatch", False],
-            ["TRK_MINNOW_DOLPHIN/msghndlr", False],
-            ["TRK_MINNOW_DOLPHIN/support", False],
-            ["TRK_MINNOW_DOLPHIN/mutex_TRK", True],
-            ["TRK_MINNOW_DOLPHIN/notify", False],
-            ["TRK_MINNOW_DOLPHIN/flush_cache", False],
-            ["TRK_MINNOW_DOLPHIN/mem_TRK", False],
-            ["TRK_MINNOW_DOLPHIN/__exception", False],
-            ["TRK_MINNOW_DOLPHIN/targimpl", False],
-            ["TRK_MINNOW_DOLPHIN/dolphin_trk", False],
-            ["TRK_MINNOW_DOLPHIN/mpc_7xx_603e", False],
-            ["TRK_MINNOW_DOLPHIN/main_TRK", False],
-            ["TRK_MINNOW_DOLPHIN/dolphin_trk_glue", False],
-            ["TRK_MINNOW_DOLPHIN/targcont", False],
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/mainloop.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/nubevent.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/nubinit.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/msg.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/msgbuf.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/serpoll.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/usr_put.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/dispatch.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/msghndlr.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/support.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/mutex_TRK.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/notify.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/flush_cache.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/mem_TRK.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/__exception.s"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/targimpl.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/dolphin_trk.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/main_TRK.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/dolphin_trk_glue.c"),
+            Object(NonMatching, "TRK_MINNOW_DOLPHIN/targcont.c"),
         ],
     },
     {
         "lib": "amcExi2",
-        "mw_version": "1.2.5",
-        "cflags": "$cflags_base",
-        "host": True,
+        "mw_version": "GC/1.2.5",
+        "cflags": cflags_base,
         "objects": [
-            ["amcExi2/AmcExi", False],
-            ["amcExi2/AmcExi2Comm", False],
+            Object(NonMatching, "amcExi2/AmcExi.c"),
+            Object(NonMatching, "amcExi2/AmcExi2Comm.c"),
         ],
     },
     {
         "lib": "amcnotstub",
-        "mw_version": "1.2.5",
-        "cflags": "$cflags_base",
-        "host": True,
+        "mw_version": "GC/1.2.5",
+        "cflags": cflags_base,
         "objects": [
-            ["amcnotstub/amcnotstub", True],
+            Object(Matching, "amcnotstub/amcnotstub.c"),
         ],
     },
     {
         "lib": "OdemuExi2",
-        "mw_version": "1.2.5",
-        "cflags": "$cflags_base",
-        "host": True,
+        "mw_version": "GC/1.2.5",
+        "cflags": cflags_base,
         "objects": [
-            ["OdemuExi2/DebuggerDriver", False],
+            Object(NonMatching, "OdemuExi2/DebuggerDriver.c"),
         ],
     },
     {
         "lib": "odenotstub",
-        "mw_version": "1.2.5",
-        "cflags": "$cflags_base",
-        "host": True,
+        "mw_version": "GC/1.2.5",
+        "cflags": cflags_base,
         "objects": [
-            ["odenotstub/odenotstub", True],
+            Object(Matching, "odenotstub/odenotstub.c"),
         ],
     },
 ]
 
+# Optional extra categories for progress tracking
+# Adjust as desired for your project
+config.progress_categories = [
+    ProgressCategory("game", "Game Code"),
+    ProgressCategory("sdk", "SDK Code"),
+]
+config.progress_each_module = args.verbose
 
-def main():
-    import os
-    import io
-    import sys
-    import argparse
-    import json
-
-    from pathlib import Path
-    from shutil import which
-    from tools import ninja_syntax
-
-    if sys.version_info < (3, 8):
-        sys.exit("Python 3.8 or later required.")
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--version",
-        "-v",
-        dest="version",
-        default="usa.1",
-        help="version to build (usa.1, usa.0)",
-    )
-    parser.add_argument(
-        "--map",
-        "-m",
-        dest="map",
-        action="store_true",
-        help="generate map file",
-    )
-    parser.add_argument(
-        "--no-check",
-        dest="check",
-        action="store_false",
-        help="don't check hash of resulting dol",
-    )
-    parser.add_argument(
-        "--no-static-libs",
-        dest="static_libs",
-        action="store_false",
-        help="don't build and use static libs",
-    )
-    parser.add_argument(
-        "--powerpc",
-        dest="powerpc",
-        type=Path,
-        default=Path("tools/powerpc"),
-        help="path to powerpc-eabi tools",
-    )
-    if os.name != "nt" and not "_NT-" in os.uname().sysname:
-        parser.add_argument(
-            "--wine",
-            dest="wine",
-            type=Path,
-            help="path to wine (or wibo)",
-        )
-    parser.add_argument(
-        "--build-dtk",
-        dest="build_dtk",
-        type=Path,
-        help="path to decomp-toolkit source",
-    )
-    parser.add_argument(
-        "--debug",
-        "-d",
-        dest="debug",
-        action="store_true",
-        help="build with debug info (non-matching)",
-    )
-    parser.add_argument(
-        "--compilers",
-        dest="compilers",
-        type=Path,
-        default=Path("tools/mwcc_compiler"),
-        help="path to compilers",
-    )
-    parser.add_argument(
-        "--build-dir",
-        dest="build_dir",
-        type=Path,
-        default=Path("build"),
-        help="base build directory",
-    )
-    parser.add_argument(
-        "--context",
-        "-c",
-        dest="context",
-        action="store_true",
-        help="generate context files for decomp.me",
-    )
-    args = parser.parse_args()
-
-    # On Windows, we need this to use && in commands
-    chain = "cmd /c " if os.name == "nt" else ""
-
-    out = io.StringIO()
-    n = ninja_syntax.Writer(out)
-
-    n.variable("ninja_required_version", "1.3")
-    n.newline()
-
-    n.comment("The arguments passed to configure.py, for rerunning it.")
-    configure_args = sys.argv[1:]
-    n.variable("configure_args", configure_args)
-    n.variable("python", f'"{sys.executable}"')
-    n.newline()
-
-    ###
-    # Variables
-    ###
-    n.comment("Variables")
-    version = args.version.lower()
-    if args.version.lower() == "usa.1":
-        version_num = "2"
-    elif args.version.lower() == "usa.0":
-        version_num = "1"
-    else:
-        sys.exit(f'Invalid version "{args.version}"')
-    build_path = args.build_dir / f"pikmin.{version}"
-
-    cflags_base = f"-Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -enum int -sdata 8 -sdata2 8 -str noreadonly -DVERNUM={version_num} -i include -i include/stl -inline auto"
-    if args.debug:
-        cflags_base += " -sym on -D_DEBUG"
-    else:
-        cflags_base += " -DNDEBUG -w off"
-    n.variable("cflags_base", cflags_base)
-    n.variable("cflags_pikmin", "$cflags_base -common on")
-
-    asflags = f"-mgekko -I include --defsym version={version_num} -W --strip-local-absolute -gdwarf-2"
-    n.variable("asflags", asflags)
-
-    ldflags = "-fp fmadd -nodefaults -lcf ldscript.lcf"
-    if args.map:
-        map_path = build_path / "build.map"
-        ldflags += f" -map {map_path} -mapunused"
-    if args.debug:
-        ldflags += " -g"
-    else:
-        ldflags += " -w off"
-    n.variable("ldflags", ldflags)
-
-    mw_link_version = "1.2.5"
-    n.variable("mw_version", mw_link_version)
-    if os.name == "nt":
-        exe = ".exe"
-        wine = ""
-    else:
-        if "_NT-" in os.uname().sysname:
-            # MSYS2
-            wine = ""
-        elif args.wine:
-            wine = f"{args.wine} "
-        elif which("wibo") is not None:
-            wine = "wibo "
-        else:
-            wine = "wine "
-        exe = ""
-    n.newline()
-
-    ###
-    # Tooling
-    ###
-    tools_path = Path("tools")
-
-    def path(input):
-        if input is None:
-            return None
-        elif isinstance(input, list):
-            return list(map(str, input))
-        else:
-            return [str(input)]
-
-    n.comment("decomp-toolkit")
-    if args.build_dtk:
-        dtk = tools_path / "release" / f"dtk{exe}"
-        n.rule(
-            name="cargo",
-            command="cargo build --release --manifest-path $in --bin $bin --target-dir $target",
-            description="CARGO $bin",
-            depfile=path(Path("$target") / "release" / "$bin.d"),
-            deps="gcc",
-        )
-        n.build(
-            outputs=path(dtk),
-            rule="cargo",
-            inputs=path(args.build_dtk / "Cargo.toml"),
-            variables={
-                "bin": "dtk",
-                "target": tools_path,
-            },
-        )
-    else:
-        dtk = tools_path / f"dtk{exe}"
-        download_dtk = tools_path / "download_dtk.py"
-        n.rule(
-            name="download_dtk",
-            command=f"$python {download_dtk} $in $out",
-            description="DOWNLOAD $out",
-        )
-        n.build(
-            outputs=path(dtk),
-            rule="download_dtk",
-            inputs=path([tools_path / "dtk_version"]),
-            implicit=path([download_dtk]),
-        )
-    n.newline()
-
-    # FIXME: Manual downloads because ninja doesn't play nice with directories,
-    # replace with automated system like dtk uses if workaround is found
-    if args.powerpc == Path("tools/powerpc") and not Path("tools/powerpc").exists():
-        import tools.download_ppc
-
-        tools.download_ppc.main()
-
-    if args.compilers == Path("tools/mwcc_compiler") and not Path("tools/mwcc_compiler").exists():
-        import tools.download_mwcc
-
-        tools.download_mwcc.main()
-
-    ###
-    # Rules
-    ###
-    compiler_path = args.compilers / "$mw_version"
-    mwcc = compiler_path / "mwcceppc.exe"
-    mwld = compiler_path / "mwldeppc.exe"
-    gnu_as = args.powerpc / f"powerpc-eabi-as{exe}"
-
-    mwcc_cmd = f"{chain}{wine}{mwcc} $cflags -MMD -c $in -o $basedir"
-    if args.context:
-        mwcc_cmd += " && $python tools/decompctx.py $cfile -r -q"
-    mwld_cmd = f"{wine}{mwld} $ldflags -o $out @$out.rsp"
-    as_cmd = (
-        f"{chain}{gnu_as} $asflags -o $out $in -MD $out.d"
-        + f" && {dtk} elf fixup $out $out"
-    )
-    ar_cmd = f"{dtk} ar create $out @$out.rsp"
-
-    if os.name != "nt":
-        transform_dep = tools_path / "transform-dep.py"
-        transform_dep_cmd = f" && $python {transform_dep} $basefile.d $basefile.d"
-        mwcc_cmd += transform_dep_cmd
-
-    n.comment("Link ELF file")
-    n.rule(
-        name="link",
-        command=mwld_cmd,
-        description="LINK $out",
-        rspfile="$out.rsp",
-        rspfile_content="$in_newline",
-    )
-    n.newline()
-
-    n.comment("MWCC build")
-    n.rule(
-        name="mwcc",
-        command=mwcc_cmd,
-        description="MWCC $out",
-        depfile="$basefile.d",
-        deps="gcc",
-    )
-    n.newline()
-
-    n.comment("Assemble asm")
-    n.rule(
-        name="as",
-        command=as_cmd,
-        description="AS $out",
-        depfile="$out.d",
-        deps="gcc",
-    )
-    n.newline()
-
-    n.comment("Create static library")
-    n.rule(
-        name="ar",
-        command=ar_cmd,
-        description="AR $out",
-        rspfile="$out.rsp",
-        rspfile_content="$in_newline",
-    )
-    n.newline()
-
-    n.comment("Host build")
-    n.variable("host_cflags", "-I include -Wno-trigraphs")
-    n.variable(
-        "host_cppflags",
-        "-std=c++98 -I include -fno-exceptions -fno-rtti -D_CRT_SECURE_NO_WARNINGS -Wno-trigraphs -Wno-c++11-extensions",
-    )
-    n.rule(
-        name="host_cc",
-        command="clang $host_cflags -c -o $out $in",
-        description="CC $out",
-    )
-    n.rule(
-        name="host_cpp",
-        command="clang++ $host_cppflags -c -o $out $in",
-        description="CXX $out",
-    )
-    n.newline()
-
-    ###
-    # Rules for source files
-    ###
-    n.comment("Source files")
-    src_path = Path("src")
-    asm_path = Path("asm")
-    build_src_path = build_path / "src"
-    build_host_path = build_path / "host"
-    build_asm_path = build_path / "asm"
-    build_lib_path = build_path / "lib"
-
-    objdiff_config = {
-        "min_version": "0.4.3",
-        "custom_make": "ninja",
-        "build_target": True,
-        "watch_patterns": [
-            "*.c",
-            "*.cp",
-            "*.cpp",
-            "*.h",
-            "*.hpp",
-            "*.py",
-        ],
-        "units": [],
-    }
-
-    source_inputs = []
-    host_source_inputs = []
-    link_inputs = []
-    used_compiler_versions = set()
-    for lib in LIBS:
-        inputs = []
-        if "lib" in lib:
-            lib_name = lib["lib"]
-            n.comment(f"{lib_name}.a")
-        else:
-            n.comment("Loose files")
-
-        for object in lib["objects"]:
-            completed = False
-            options = {
-                "add_to_all": True,
-                "mw_version": None,
-                "cflags": None,
-            }
-            if type(object) is list:
-                if len(object) > 1:
-                    completed = object[1]
-                if len(object) > 2:
-                    options.update(object[2])
-                object = object[0]
-
-            cflags = options["cflags"] or lib["cflags"]
-            mw_version = options["mw_version"] or lib["mw_version"]
-            used_compiler_versions.add(mw_version)
-
-            # objdiff config
-            unit_config = {
-                "name": object,
-                "complete": completed,
-            }
-
-            c_file = None
-            if os.path.exists(src_path / f"{object}.cpp"):
-                c_file = src_path / f"{object}.cpp"
-            elif os.path.exists(src_path / f"{object}.cp"):
-                c_file = src_path / f"{object}.cp"
-            elif os.path.exists(src_path / f"{object}.c"):
-                c_file = src_path / f"{object}.c"
-            elif os.path.exists(src_path / f"{object}.C"):
-                c_file = src_path / f"{object}.C"
-            elif os.path.exists(src_path / f"{object}.s"): # specifically for __exception.s
-                n.build(
-                    outputs=path(build_src_path / f"{object}.o"),
-                    rule="as",
-                    inputs=path(src_path / f"{object}.s"),
-                    implicit=path(dtk),
-                )
-            if c_file is not None:
-                n.build(
-                    outputs=path(build_src_path / f"{object}.o"),
-                    rule="mwcc",
-                    inputs=path(c_file),
-                    variables={
-                        "mw_version": mw_version,
-                        "cflags": options["cflags"] or lib["cflags"],
-                        "basedir": os.path.dirname(build_src_path / f"{object}"),
-                        "basefile": path(build_src_path / f"{object}"),
-                        "cfile": path(c_file),
-                    },
-                    implicit_outputs = None if not args.context else (str(c_file) + ".ctx")
-                )
-                if lib["host"]:
-                    n.build(
-                        outputs=path(build_host_path / f"{object}.o"),
-                        rule="host_cc" if c_file.suffix == ".c" else "host_cpp",
-                        inputs=path(c_file),
-                        variables={
-                            "basedir": os.path.dirname(build_host_path / object),
-                            "basefile": path(build_host_path / object),
-                        },
-                    )
-                    if options["add_to_all"]:
-                        host_source_inputs.append(build_host_path / f"{object}.o")
-                if options["add_to_all"]:
-                    source_inputs.append(build_src_path / f"{object}.o")
-                unit_config["base_path"] = str(build_src_path / f"{object}.o")
-            if os.path.exists(asm_path / f"{object}.s"):
-                n.build(
-                    outputs=path(build_asm_path / f"{object}.o"),
-                    rule="as",
-                    inputs=path(asm_path / f"{object}.s"),
-                    implicit=path(dtk),
-                )
-            unit_config["target_path"] = str(build_asm_path / f"{object}.o")
-            objdiff_config["units"].append(unit_config)
-            if completed:
-                inputs.append(build_src_path / f"{object}.o")
-            else:
-                inputs.append(build_asm_path / f"{object}.o")
-        if args.static_libs and "lib" in lib:
-            lib_name = lib["lib"]
-            n.build(
-                outputs=path(build_lib_path / f"{lib_name}.a"),
-                rule="ar",
-                inputs=path(inputs),
-                implicit=path(dtk),
-            )
-            link_inputs.append(build_lib_path / f"{lib_name}.a")
-        else:
-            link_inputs.extend(inputs)
-        n.newline()
-
-    # Check if all compiler versions exist
-    for mw_version in used_compiler_versions:
-        mw_path = args.compilers / mw_version / "mwcceppc.exe"
-        if not os.path.exists(mw_path):
-            print(f"Compiler {mw_path} does not exist")
-            exit(1)
-
-    # Check if linker exists
-    mw_path = args.compilers / mw_link_version / "mwldeppc.exe"
-    if not os.path.exists(mw_path):
-        print(f"Linker {mw_path} does not exist")
-        exit(1)
-
-    ###
-    # Link
-    ###
-    n.comment("Link")
-    if args.map:
-        n.build(
-            outputs=path(build_path / "main.elf"),
-            rule="link",
-            inputs=path(link_inputs),
-            implicit_outputs=path(map_path),
-        )
-    else:
-        n.build(
-            outputs=path(build_path / "main.elf"),
-            rule="link",
-            inputs=path(link_inputs),
-        )
-    n.newline()
-
-    ###
-    # Helper rule for building all source files
-    ###
-    n.comment("Build all source files")
-    n.build(
-        outputs="all_source",
-        rule="phony",
-        inputs=path(source_inputs),
-    )
-    n.newline()
-
-    ###
-    # Helper rule for building all source files, with a host compiler
-    ###
-    n.comment("Build all source files with a host compiler")
-    n.build(
-        outputs="all_source_host",
-        rule="phony",
-        inputs=path(host_source_inputs),
-    )
-    n.newline()
-
-    ###
-    # Generate DOL
-    ###
-    n.comment("Generate DOL")
-    n.rule(
-        name="elf2dol",
-        command=f"{dtk} elf2dol $in $out",
-        description="DOL $out",
-    )
-    n.build(
-        outputs=path(build_path / "main.dol"),
-        rule="elf2dol",
-        inputs=path(build_path / "main.elf"),
-        implicit=path(dtk),
-    )
-    n.newline()
-
-    ###
-    # Check DOL hash
-    ###
-    if args.check:
-        n.comment("Check DOL hash")
-        n.rule(
-            name="check",
-            command=f"{dtk} shasum -c $in -o $out",
-            description="CHECK $in",
-        )
-        n.build(
-            outputs=path(build_path / "main.dol.ok"),
-            rule="check",
-            inputs=f"sha1/pikmin.{version}.sha1",
-            implicit=path([build_path / "main.dol", dtk]),
-        )
-        n.newline()
-
-    ###
-    # Progress script
-    ###
-    if args.map:
-        n.comment("Check progress")
-        calc_progress = tools_path / "calcprogress.py"
-        n.rule(
-            name="progress",
-            command=f"$python {calc_progress} $in -o $out",
-            description="PROGRESS $in",
-        )
-        n.build(
-            outputs=path(build_path / "main.dol.progress"),
-            rule="progress",
-            inputs=path([build_path / "main.dol", map_path]),
-            implicit=path([calc_progress, build_path / "main.dol.ok"]),
-        )
-        n.newline()
-
-    ###
-    # Regenerate on change
-    ###
-    n.comment("Reconfigure on change")
-    n.rule(
-        name="configure",
-        command="$python configure.py $configure_args",
-        generator=True,
-    )
-    n.build(
-        outputs="build.ninja",
-        rule="configure",
-        implicit=path(["configure.py", tools_path / "ninja_syntax.py"]),
-    )
-    n.newline()
-
-    ###
-    # Default rule
-    ###
-    n.comment("Default rule")
-    if args.check:
-        dol_out = build_path / "main.dol.ok"
-    else:
-        dol_out = build_path / "main.dol"
-    if args.map:
-        n.default(path([dol_out, build_path / "main.dol.progress"]))
-    else:
-        n.default(path([dol_out]))
-
-    ###
-    # Write build.ninja
-    ###
-    with open("build.ninja", "w") as f:
-        f.write(out.getvalue())
-    n.close()
-
-    ###
-    # Write objdiff config
-    ###
-    with open("objdiff.json", "w") as w:
-        json.dump(objdiff_config, w, indent=4)
-
-
-if __name__ == "__main__":
-    main()
+if args.mode == "configure":
+    # Write build.ninja and objdiff.json
+    generate_build(config)
+elif args.mode == "progress":
+    # Print progress and write progress.json
+    calculate_progress(config)
+else:
+    sys.exit("Unknown mode: " + args.mode)

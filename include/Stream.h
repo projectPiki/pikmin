@@ -34,6 +34,8 @@ struct Stream {
 	virtual void close();                       // _4C
 	virtual bool getClosing() { return false; } // _50 (weak)
 	virtual void flush() { }                    // _54 (weak)
+
+	void print(char*, ...);
 };
 
 /**
