@@ -1,4 +1,4 @@
-#include "types.h"
+#include "NinLogoSection.h"
 
 /*
  * --INFO--

@@ -9,6 +9,7 @@ struct CollGroup;
 struct CollState;
 struct RigidBody;
 struct Shape;
+struct LightCamera;
 
 /**
  * @brief TODO

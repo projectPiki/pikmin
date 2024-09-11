@@ -1,4 +1,6 @@
-#include "types.h"
+#include "TitlesSection.h"
+#include "Interface.h"
+#include "Delegate.h"
 
 /*
  * --INFO--

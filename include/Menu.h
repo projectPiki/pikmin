@@ -5,8 +5,10 @@
 #include "Node.h"
 #include "Delegate.h"
 
+struct Colour;
 struct Controller;
 struct Font;
+struct Light;
 
 /**
  * @brief TODO

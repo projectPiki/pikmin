@@ -1,4 +1,6 @@
-#include "types.h"
+#include "CinematicPlayer.h"
+#include "Creature.h"
+#include "Vector.h"
 
 /*
  * --INFO--
@@ -4145,25 +4147,6 @@ void ActorInstance::refresh(Matrix4f&, Graphics&, f32*)
 	  blr
 
 	.loc_0xF10:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80073144
- * Size:	00001C
- */
-Vector3f::Vector3f(const Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r4)
-	  stfs      f0, 0x8(r3)
-	  blr
 	*/
 }
 

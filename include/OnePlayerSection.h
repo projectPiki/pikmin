@@ -4,6 +4,8 @@
 #include "types.h"
 #include "Section.h"
 
+struct CmdStream;
+
 /*
  * @brief TODO
  *

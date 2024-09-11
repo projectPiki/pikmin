@@ -12,6 +12,8 @@
 #include "GfxObject.h"
 #include "BoundBox.h"
 #include "Joint.h"
+#include "Animator.h"
+#include "Light.h"
 
 template <typename A, typename B>
 struct IDelegate2;
@@ -27,6 +29,7 @@ struct NBT;
 struct DispList;
 struct PVWTevInfo;
 struct LFlareGroup;
+struct AnimFrameCacher;
 
 /**
  * @brief TODO
@@ -209,14 +212,6 @@ struct Shape : public BaseShape {
 	// _00      = VTBL
 	// _00-_2B0 = BaseShape
 	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct SceneData {
-	void parse(CmdStream*);
-	void getAnimInfo(CmdStream*);
 };
 
 /**

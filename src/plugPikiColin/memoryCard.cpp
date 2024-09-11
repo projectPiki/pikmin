@@ -1,4 +1,5 @@
-#include "types.h"
+#include "MemoryCard.h"
+#include "Stream.h"
 
 /*
  * --INFO--
@@ -240,8 +241,9 @@ void MemoryCard::calcChecksum(void*, u32)
  * Address:	80073A5C
  * Size:	000070
  */
-void MemoryCard::hasCardFinished()
+bool MemoryCard::hasCardFinished()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2363,22 +2365,6 @@ void MemoryCard::makeDefaultFile()
 
 /*
  * --INFO--
- * Address:	800754A4
- * Size:	000010
- */
-Stream::Stream()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x7398
-	  stw       r0, 0x4(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	800754B4
  * Size:	000314
  */
@@ -2947,8 +2933,9 @@ void MemoryCard::doFormatCard()
  * Address:	80075C88
  * Size:	000034
  */
-void MemoryCard::isCardInserted()
+bool MemoryCard::isCardInserted()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2972,8 +2959,9 @@ void MemoryCard::isCardInserted()
  * Address:	80075CBC
  * Size:	00022C
  */
-void MemoryCard::hasCardChanged()
+bool MemoryCard::hasCardChanged()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3526,8 +3514,9 @@ void MemoryCard::getOkSections()
  * Address:	8007645C
  * Size:	0000A0
  */
-void MemoryCard::isFileBroken()
+bool MemoryCard::isFileBroken()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3981,8 +3970,9 @@ void MemoryCard::repairFile()
  * Address:	80076A28
  * Size:	000040
  */
-void MemoryCard::didSaveFail()
+bool MemoryCard::didSaveFail()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0

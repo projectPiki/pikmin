@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Light.h"
+#include "Camera.h"
 
 /*
  * --INFO--

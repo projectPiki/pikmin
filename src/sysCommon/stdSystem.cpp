@@ -5,6 +5,7 @@
 #include "sysNew.h"
 #include "CmdStream.h"
 #include "stl/string.h"
+#include "Light.h"
 
 static char file[] = __FILE__;
 static char name[] = "StdSystem";
@@ -181,6 +182,7 @@ void StdSystem::findAnyGfxObject(char*, u32)
  */
 Texture* StdSystem::loadTexture(char*, bool)
 {
+	return nullptr;
 	/*
 	.loc_0x0:
 	  mflr      r0

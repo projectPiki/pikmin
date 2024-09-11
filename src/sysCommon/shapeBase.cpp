@@ -13,6 +13,7 @@
 #include "sysNew.h"
 #include "system.h"
 #include "PVW.h"
+#include "CinematicPlayer.h"
 
 /*
  * --INFO--

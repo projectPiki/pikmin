@@ -3,9 +3,11 @@
 
 #include "types.h"
 #include "CoreNode.h"
-#include "Graphics.h"
 #include "Matrix4f.h"
-#include "Animator.h"
+#include "SRT.h"
+
+struct Graphics;
+struct Vector3f;
 
 /**
  * @brief TODO

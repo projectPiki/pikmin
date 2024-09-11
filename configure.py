@@ -595,7 +595,7 @@ config.libs = [
             Object(NonMatching, "plugPikiNakata/tekinteki.cpp"),
             Object(NonMatching, "plugPikiNakata/tekiparameters.cpp"),
             Object(NonMatching, "plugPikiNakata/tekipersonality.cpp"),
-            Object(NonMatching, "plugPikiNakata/tekistrategy.cpp"),
+            Object(Matching, "plugPikiNakata/tekistrategy.cpp"),
         ],
     },
     {

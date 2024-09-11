@@ -24,6 +24,9 @@ struct AtxRouter;
 struct ControllerMgr;
 struct OSContext;
 struct OSThread;
+struct Shape;
+struct AnimData;
+struct AnimFrameCacher;
 
 /**
  * @brief TODO

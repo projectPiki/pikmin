@@ -2,7 +2,7 @@
 #define _LIGHT_H
 
 #include "types.h"
-#include "CoreNode.h"
+#include "Node.h"
 #include "Vector.h"
 #include "Camera.h"
 #include "Colour.h"
@@ -156,6 +156,19 @@ struct LightGroup : public CoreNode {
 	LightFlare mFlares;       // _40
 	int _64;                  // _64
 	LFlareGroup* mFlareGroup; // _68
+};
+
+/**
+ * @brief TODO
+ */
+struct LightPool : public Node {
+	LightPool();
+
+	virtual void draw(Graphics&); // _14
+
+	// _00     = VTBL
+	// _00-_20 = Node
+	// TODO: members
 };
 
 /**
