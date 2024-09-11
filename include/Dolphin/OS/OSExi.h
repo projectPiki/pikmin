@@ -2,7 +2,8 @@
 #define _DOLPHIN_EXI_H
 
 #include "types.h"
-#include "Dolphin/os.h"
+#include "Dolphin/OS/OSExpansion.h"
+#include "Dolphin/OS/OSInterrupt.h"
 #include "Dolphin/hw_regs.h"
 
 #ifdef __cplusplus
@@ -39,8 +40,6 @@ typedef struct EXIControl {
 	int immLen;              // _10
 	u8* immBuf;              // _14
 	u32 dev;                 // _18
-	u32 id;                  // _1C
-	s32 idTime;              // _20
 	int items;               // _24
 	struct {
 		u32 dev;

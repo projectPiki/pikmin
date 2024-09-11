@@ -1,4 +1,6 @@
-#include "types.h"
+#include "Dolphin/os.h"
+#include "Dolphin/db.h"
+#define PPCSYNC sc // system call performs PPCSync()
 
 /*
  * --INFO--
@@ -15,16 +17,19 @@ void DCFlashInvalidate(void)
  * Address:	801F6BA4
  * Size:	000014
  */
-void DCEnable(void)
+ASM void DCEnable(void)
 {
-	/*
-	.loc_0x0:
-	  sync
-	  mfspr     r3, 0x3F0
-	  ori       r3, r3, 0x4000
-	  mtspr     1008, r3
-	  blr
-	*/
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+
+	sync
+
+	mfspr   r3, HID0
+	ori     r3, r3, HID0_DCE
+	mtspr   HID0, r3
+
+	blr
+#endif // clang-format on
 }
 
 /*
@@ -112,27 +117,24 @@ void DCBlockInvalidate(void)
  * Address:	801F6BB8
  * Size:	000030
  */
-void DCInvalidateRange(void)
-{
-	/*
-	.loc_0x0:
-	  cmplwi    r4, 0
-	  blelr-
-	  rlwinm.   r5,r3,0,27,31
-	  beq-      .loc_0x14
-	  addi      r4, r4, 0x20
-
-	.loc_0x14:
-	  addi      r4, r4, 0x1F
-	  rlwinm    r4,r4,27,5,31
-	  mtctr     r4
-
-	.loc_0x20:
-	  dcbi      r0, r3
-	  addi      r3, r3, 0x20
-	  bdnz+     .loc_0x20
-	  blr
-	*/
+ASM void DCInvalidateRange(register void* addr, register u32 nBytes) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	cmplwi  nBytes,0
+	blelr-
+	rlwinm.  r5,addr,0,27,31
+	beq      _noadd
+	addi     r4, r4, 0x20
+_noadd:
+	addi    nBytes,nBytes,31
+	srwi    nBytes,nBytes,5
+	mtctr   nBytes
+_loop:
+	dcbi    0,addr
+	addi    addr,addr,32
+	bdnz    _loop
+	blr
+#endif // clang-format on
 }
 
 /*
@@ -140,28 +142,27 @@ void DCInvalidateRange(void)
  * Address:	801F6BE8
  * Size:	000034
  */
-void DCFlushRange(void)
-{
-	/*
-	.loc_0x0:
-	  cmplwi    r4, 0
-	  blelr-
-	  rlwinm.   r5,r3,0,27,31
-	  beq-      .loc_0x14
-	  addi      r4, r4, 0x20
+ASM void DCFlushRange(register void* addr, register u32 nBytes) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	cmplwi  nBytes,0
+	blelr-
+	rlwinm.  r5,addr,0,27,31
+	beq      _noadd
+	addi     r4, r4, 0x20
+_noadd:
+	addi    nBytes,nBytes,31
+	srwi    nBytes,nBytes,5
+	mtctr   nBytes
+_loop:
+	dcbf    0,addr
+	addi    addr,addr,32
+	bdnz    _loop
 
-	.loc_0x14:
-	  addi      r4, r4, 0x1F
-	  rlwinm    r4,r4,27,5,31
-	  mtctr     r4
+	PPCSYNC
 
-	.loc_0x20:
-	  dcbf      r0, r3
-	  addi      r3, r3, 0x20
-	  bdnz+     .loc_0x20
-	  sc
-	  blr
-	*/
+	blr
+#endif // clang-format on
 }
 
 /*
@@ -169,28 +170,27 @@ void DCFlushRange(void)
  * Address:	801F6C1C
  * Size:	000034
  */
-void DCStoreRange(void)
-{
-	/*
-	.loc_0x0:
-	  cmplwi    r4, 0
-	  blelr-
-	  rlwinm.   r5,r3,0,27,31
-	  beq-      .loc_0x14
-	  addi      r4, r4, 0x20
+ASM void DCStoreRange(register void* addr, register u32 nBytes) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	cmplwi  nBytes,0
+	blelr-
+	rlwinm.  r5,addr,0,27,31
+	beq      _noadd
+	addi     r4, r4, 0x20
+_noadd:
+	addi    nBytes,nBytes,31
+	srwi    nBytes,nBytes,5
+	mtctr   nBytes
+_loop:
+	dcbst   0,addr
+	addi    addr,addr,32
+	bdnz    _loop
 
-	.loc_0x14:
-	  addi      r4, r4, 0x1F
-	  rlwinm    r4,r4,27,5,31
-	  mtctr     r4
+	PPCSYNC
 
-	.loc_0x20:
-	  dcbst     r0, r3
-	  addi      r3, r3, 0x20
-	  bdnz+     .loc_0x20
-	  sc
-	  blr
-	*/
+	blr
+#endif // clang-format on
 }
 
 /*
@@ -198,27 +198,25 @@ void DCStoreRange(void)
  * Address:	801F6C50
  * Size:	000030
  */
-void DCFlushRangeNoSync(void)
-{
-	/*
-	.loc_0x0:
-	  cmplwi    r4, 0
-	  blelr-
-	  rlwinm.   r5,r3,0,27,31
-	  beq-      .loc_0x14
-	  addi      r4, r4, 0x20
+ASM void DCFlushRangeNoSync(register void* addr, register u32 nBytes) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	cmplwi  nBytes,0
+	blelr-
+	rlwinm.  r5,addr,0,27,31
+	beq      _noadd
+	addi     r4, r4, 0x20
+_noadd:
+	addi    nBytes,nBytes,31
+	srwi    nBytes,nBytes,5
+	mtctr   nBytes
+_loop:
+	dcbf    0,addr
+	addi    addr,addr,32
+	bdnz    _loop
 
-	.loc_0x14:
-	  addi      r4, r4, 0x1F
-	  rlwinm    r4,r4,27,5,31
-	  mtctr     r4
-
-	.loc_0x20:
-	  dcbf      r0, r3
-	  addi      r3, r3, 0x20
-	  bdnz+     .loc_0x20
-	  blr
-	*/
+	blr
+#endif // clang-format on
 }
 
 /*
@@ -226,27 +224,25 @@ void DCFlushRangeNoSync(void)
  * Address:	801F6C80
  * Size:	000030
  */
-void DCStoreRangeNoSync(void)
-{
-	/*
-	.loc_0x0:
-	  cmplwi    r4, 0
-	  blelr-
-	  rlwinm.   r5,r3,0,27,31
-	  beq-      .loc_0x14
-	  addi      r4, r4, 0x20
+ASM void DCStoreRangeNoSync(register void* addr, register u32 nBytes) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	cmplwi  nBytes,0
+	blelr-
+	rlwinm.  r5,addr,0,27,31
+	beq      _noadd
+	addi     r4, r4, 0x20
+_noadd:
+	addi    nBytes,nBytes,31
+	srwi    nBytes,nBytes,5
+	mtctr   nBytes
+_loop:
+	dcbst   0,addr
+	addi    addr,addr,32
+	bdnz    _loop
 
-	.loc_0x14:
-	  addi      r4, r4, 0x1F
-	  rlwinm    r4,r4,27,5,31
-	  mtctr     r4
-
-	.loc_0x20:
-	  dcbst     r0, r3
-	  addi      r3, r3, 0x20
-	  bdnz+     .loc_0x20
-	  blr
-	*/
+	blr
+#endif // clang-format on
 }
 
 /*
@@ -254,27 +250,25 @@ void DCStoreRangeNoSync(void)
  * Address:	801F6CB0
  * Size:	000030
  */
-void DCZeroRange(void)
+ASM void DCZeroRange(register void* addr, register u32 nBytes)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r4, 0
-	  blelr-
-	  rlwinm.   r5,r3,0,27,31
-	  beq-      .loc_0x14
-	  addi      r4, r4, 0x20
-
-	.loc_0x14:
-	  addi      r4, r4, 0x1F
-	  rlwinm    r4,r4,27,5,31
-	  mtctr     r4
-
-	.loc_0x20:
-	  dcbz      r0, r3
-	  addi      r3, r3, 0x20
-	  bdnz+     .loc_0x20
-	  blr
-	*/
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	cmplwi  nBytes,0
+	blelr-
+	rlwinm.  r5,addr,0,27,31
+	beq      _noadd
+	addi     r4, r4, 0x20
+_noadd:
+	addi    nBytes,nBytes,31
+	srwi    nBytes,nBytes,5
+	mtctr   nBytes
+_loop:
+	dcbz    0,addr
+	addi    addr,addr,32
+	bdnz    _loop
+	blr
+#endif // clang-format on
 }
 
 /*
@@ -282,7 +276,7 @@ void DCZeroRange(void)
  * Address:	........
  * Size:	000030
  */
-void DCTouchRange(void)
+void DCTouchRange(register void* addr, register u32 nBytes)
 {
 	// UNUSED FUNCTION
 }
@@ -292,29 +286,26 @@ void DCTouchRange(void)
  * Address:	801F6CE0
  * Size:	000038
  */
-void ICInvalidateRange(void)
-{
-	/*
-	.loc_0x0:
-	  cmplwi    r4, 0
-	  blelr-
-	  rlwinm.   r5,r3,0,27,31
-	  beq-      .loc_0x14
-	  addi      r4, r4, 0x20
-
-	.loc_0x14:
-	  addi      r4, r4, 0x1F
-	  rlwinm    r4,r4,27,5,31
-	  mtctr     r4
-
-	.loc_0x20:
-	  icbi      r0, r3
-	  addi      r3, r3, 0x20
-	  bdnz+     .loc_0x20
-	  sync
-	  isync
-	  blr
-	*/
+ASM void ICInvalidateRange(register void* addr, register u32 nBytes) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	cmplwi  nBytes,0
+	blelr-
+	rlwinm.  r5,addr,0,27,31
+	beq      _noadd
+	addi     r4, r4, 0x20
+_noadd:
+	addi    nBytes,nBytes,31
+	srwi    nBytes,nBytes,5
+	mtctr   nBytes
+_loop:
+	icbi    0,addr
+	addi    addr,addr,32
+	bdnz    _loop
+	sync
+	isync
+	blr
+#endif // clang-format on
 }
 
 /*
@@ -322,8 +313,16 @@ void ICInvalidateRange(void)
  * Address:	801F6D18
  * Size:	000010
  */
-void ICFlashInvalidate(void)
-{
+ASM void ICFlashInvalidate(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+
+	mfspr   r3, HID0
+	ori     r3, r3, HID0_ICFI
+	mtspr   HID0, r3
+
+	blr
+#endif // clang-format on
 	/*
 	.loc_0x0:
 	  mfspr     r3, 0x3F0
@@ -338,8 +337,19 @@ void ICFlashInvalidate(void)
  * Address:	801F6D28
  * Size:	000014
  */
-void ICEnable(void)
+ASM void ICEnable(void)
 {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+
+	isync
+
+	mfspr   r3, HID0
+	ori     r3, r3, HID0_ICE
+	mtspr   HID0, r3
+
+	blr
+#endif // clang-format on
 	/*
 	.loc_0x0:
 	  isync
@@ -385,7 +395,7 @@ void ICUnfreeze(void)
  * Address:	........
  * Size:	000008
  */
-void ICBlockInvalidate(void)
+void ICBlockInvalidate(void*)
 {
 	// UNUSED FUNCTION
 }
@@ -455,7 +465,7 @@ void LCAllocTags(void)
  * Address:	........
  * Size:	000024
  */
-void LCLoadBlocks(void)
+void LCLoadBlocks(void* destTag, void* srcAddr, u32 numBlocks)
 {
 	// UNUSED FUNCTION
 }
@@ -465,7 +475,7 @@ void LCLoadBlocks(void)
  * Address:	........
  * Size:	000024
  */
-void LCStoreBlocks(void)
+void LCStoreBlocks(register void* destAddr, register void* srcTag, register u32 numBlocks)
 {
 	// UNUSED FUNCTION
 }
@@ -495,7 +505,7 @@ void LCAllocNoInvalidate(void)
  * Address:	........
  * Size:	0000AC
  */
-void LCLoadData(void)
+u32 LCLoadData(void* destAddr, void* srcAddr, u32 nBytes)
 {
 	// UNUSED FUNCTION
 }
@@ -505,7 +515,7 @@ void LCLoadData(void)
  * Address:	........
  * Size:	0000AC
  */
-void LCStoreData(void)
+u32 LCStoreData(void* destAddr, void* srcAddr, u32 nBytes)
 {
 	// UNUSED FUNCTION
 }
@@ -515,7 +525,7 @@ void LCStoreData(void)
  * Address:	........
  * Size:	00000C
  */
-void LCQueueLength(void)
+u32 LCQueueLength(void)
 {
 	// UNUSED FUNCTION
 }
@@ -525,7 +535,7 @@ void LCQueueLength(void)
  * Address:	........
  * Size:	000018
  */
-void LCQueueWait(void)
+void LCQueueWait(register u32 len)
 {
 	// UNUSED FUNCTION
 }
@@ -547,6 +557,19 @@ void LCFlushQueue(void)
  */
 void L2Init(void)
 {
+	u32 oldMSR;
+
+	oldMSR = PPCMfmsr();
+
+	__sync();
+	PPCMtmsr(MSR_IR | MSR_DR);
+	__sync();
+
+	L2Disable();
+
+	L2GlobalInvalidate();
+
+	PPCMtmsr(oldMSR);
 	// UNUSED FUNCTION
 }
 
@@ -557,6 +580,7 @@ void L2Init(void)
  */
 void L2Enable(void)
 {
+	PPCMtl2cr((PPCMfl2cr() | L2CR_L2E) & ~L2CR_L2I);
 	// UNUSED FUNCTION
 }
 
@@ -567,6 +591,9 @@ void L2Enable(void)
  */
 void L2Disable(void)
 {
+	__sync();
+	PPCMtl2cr(PPCMfl2cr() & ~L2CR_L2E);
+	__sync();
 	// UNUSED FUNCTION
 }
 
@@ -577,59 +604,18 @@ void L2Disable(void)
  */
 void L2GlobalInvalidate(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  sync
-	  bl        -0x13F4
-	  rlwinm    r3,r3,0,1,31
-	  bl        -0x13F4
-	  sync
-	  bl        -0x1404
-	  oris      r3, r3, 0x20
-	  bl        -0x1404
-	  b         .loc_0x34
+	L2Disable();
 
-	.loc_0x34:
-	  b         .loc_0x38
+	PPCMtl2cr(PPCMfl2cr() | L2CR_L2I);
 
-	.loc_0x38:
-	  bl        -0x1418
-	  rlwinm    r0,r3,0,31,31
-	  cmplwi    r0, 0
-	  bne+      .loc_0x38
-	  bl        -0x1428
-	  rlwinm    r3,r3,0,11,9
-	  bl        -0x1428
-	  b         .loc_0x58
+	while (PPCMfl2cr() & L2CR_L2IP)
+		;
 
-	.loc_0x58:
-	  lis       r3, 0x802E
-	  addi      r31, r3, 0x74E8
-	  b         .loc_0x64
+	PPCMtl2cr(PPCMfl2cr() & ~L2CR_L2I);
 
-	.loc_0x64:
-	  b         .loc_0x74
-
-	.loc_0x68:
-	  mr        r3, r31
-	  crclr     6, 0x6
-	  bl        0x6D98
-
-	.loc_0x74:
-	  bl        -0x1454
-	  rlwinm    r0,r3,0,31,31
-	  cmplwi    r0, 0
-	  bne+      .loc_0x68
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
+	while (PPCMfl2cr() & L2CR_L2IP) {
+		DBPrintf(">>> L2 INVALIDATE : SHOULD NEVER HAPPEN\n");
+	}
 }
 
 /*
@@ -637,7 +623,7 @@ void L2GlobalInvalidate(void)
  * Address:	........
  * Size:	000040
  */
-void L2SetDataOnly(void)
+void L2SetDataOnly(int)
 {
 	// UNUSED FUNCTION
 }
@@ -647,7 +633,7 @@ void L2SetDataOnly(void)
  * Address:	........
  * Size:	000040
  */
-void L2SetWriteThrough(void)
+void L2SetWriteThrough(int)
 {
 	// UNUSED FUNCTION
 }
@@ -657,8 +643,41 @@ void L2SetWriteThrough(void)
  * Address:	801F6DD4
  * Size:	000160
  */
-void DMAErrorHandler(void)
+void DMAErrorHandler(OSError error, OSContext* context, ...)
 {
+#pragma unused(error)
+	u32 hid2 = PPCMfhid2();
+
+	OSReport("Machine check received\n");
+	OSReport("HID2 = 0x%x   SRR1 = 0x%x\n", hid2, context->srr1);
+	if (!(hid2 & (HID2_DCHERR | HID2_DNCERR | HID2_DCMERR | HID2_DQOERR)) || !(context->srr1 & SRR1_DMA_BIT)) {
+		OSReport("Machine check was not DMA/locked cache related\n");
+		OSDumpContext(context);
+		PPCHalt();
+		// spins forever, so not reached
+	}
+
+	OSReport("DMAErrorHandler(): An error occurred while processing DMA.\n");
+	OSReport("The following errors have been detected and cleared :\n");
+
+	if (hid2 & HID2_DCHERR) {
+		OSReport("\t- Requested a locked cache tag that was already in the cache\n");
+	}
+
+	if (hid2 & HID2_DNCERR) {
+		OSReport("\t- DMA attempted to access normal cache\n");
+	}
+
+	if (hid2 & HID2_DCMERR) {
+		OSReport("\t- DMA missed in data cache\n");
+	}
+
+	if (hid2 & HID2_DQOERR) {
+		OSReport("\t- DMA queue overflowed\n");
+	}
+
+	// write hid2 back (to clear the error bits)
+	PPCMthid2(hid2);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -773,6 +792,23 @@ void DMAErrorHandler(void)
  */
 void __OSCacheInit(void)
 {
+	if (!(PPCMfhid0() & HID0_ICE)) {
+		ICEnable();
+		DBPrintf("L1 i-caches initialized\n");
+	}
+	if (!(PPCMfhid0() & HID0_DCE)) {
+		DCEnable();
+		DBPrintf("L1 d-caches initialized\n");
+	}
+
+	if (!(PPCMfl2cr() & L2CR_L2E)) {
+		L2Init();
+		L2Enable();
+		DBPrintf("L2 cache initialized\n");
+	}
+
+	OSSetErrorHandler(OS_ERROR_MACHINE_CHECK, DMAErrorHandler);
+	DBPrintf("Locked cache machine check handler installed\n");
 	/*
 	.loc_0x0:
 	  mflr      r0

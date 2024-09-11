@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Dolphin/os.h"
+#include "Dolphin/vi.h"
 
 /*
  * --INFO--
@@ -35,8 +36,27 @@ void GetFontSize(void)
  * Address:	801F8F24
  * Size:	000058
  */
-void OSGetFontEncode(void)
+u16 OSGetFontEncode(void)
 {
+	static u16 fontEncode = 0xFFFF;
+	if (fontEncode <= 1) {
+		return fontEncode;
+	}
+	switch (__OSTVMode) {
+	case VI_NTSC:
+		fontEncode = (__VIRegs[VI_DTV_STAT] & 2) ? OS_FONT_ENCODE_SJIS : OS_FONT_ENCODE_ANSI;
+		break;
+
+	case VI_PAL:
+	case VI_MPAL:
+	case VI_DEBUG:
+	case VI_DEBUG_PAL:
+	case VI_EURGB60:
+	default:
+		fontEncode = OS_FONT_ENCODE_ANSI;
+	}
+
+	return fontEncode;
 	/*
 	.loc_0x0:
 	  lhz       r3, 0x29F0(r13)
@@ -99,7 +119,7 @@ void ReadFont(void)
  * Address:	........
  * Size:	0000EC
  */
-void OSLoadFont(void)
+u32 OSLoadFont(OSFontHeader* fontInfo, void* temp)
 {
 	// UNUSED FUNCTION
 }
@@ -109,7 +129,7 @@ void OSLoadFont(void)
  * Address:	........
  * Size:	0002CC
  */
-void OSGetFontTexel(void)
+char* OSGetFontTexel(char*, void*, s32, s32, s32*)
 {
 	// UNUSED FUNCTION
 }
@@ -129,7 +149,7 @@ void ExpandFontSheet(void)
  * Address:	........
  * Size:	0001A4
  */
-void OSInitFont(void)
+BOOL OSInitFont(OSFontHeader* font)
 {
 	// UNUSED FUNCTION
 }
@@ -139,7 +159,7 @@ void OSInitFont(void)
  * Address:	........
  * Size:	000178
  */
-void OSGetFontTexture(void)
+char* OSGetFontTexture(const char* string, void** image, s32* x, s32* y, s32* width)
 {
 	// UNUSED FUNCTION
 }
@@ -149,7 +169,7 @@ void OSGetFontTexture(void)
  * Address:	........
  * Size:	000108
  */
-void OSGetFontWidth(void)
+char* OSGetFontWidth(const char* string, s32* width)
 {
 	// UNUSED FUNCTION
 }

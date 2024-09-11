@@ -78,7 +78,6 @@ int BaseApp::idleupdate()
 	}
 #endif
 	return hasUpdates;
-
 }
 
 /*

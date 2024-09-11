@@ -1,62 +1,44 @@
-#include "types.h"
+#include "Dolphin/os.h"
+#include "Dolphin/hw_regs.h"
+
+static OSResetQueue ResetFunctionQueue;
 
 /*
  * --INFO--
  * Address:	801FA0C0
  * Size:	000084
  */
-void OSRegisterResetFunction(void)
+void OSRegisterResetFunction(OSResetFunctionInfo* info)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x3208(r13)
-	  b         .loc_0xC
+	OSResetFunctionInfo* tmp;
+	OSResetFunctionInfo* iter;
 
-	.loc_0x8:
-	  lwz       r5, 0x8(r5)
+	for (iter = ResetFunctionQueue.head; iter && iter->priority <= info->priority; iter = iter->next) {
+		;
+	}
 
-	.loc_0xC:
-	  cmplwi    r5, 0
-	  beq-      .loc_0x24
-	  lwz       r4, 0x4(r5)
-	  lwz       r0, 0x4(r3)
-	  cmplw     r4, r0
-	  ble+      .loc_0x8
+	if (iter == nullptr) {
+		tmp = ResetFunctionQueue.tail;
+		if (tmp == nullptr) {
+			ResetFunctionQueue.head = info;
+		} else {
+			tmp->next = info;
+		}
+		info->prev              = tmp;
+		info->next              = nullptr;
+		ResetFunctionQueue.tail = info;
+		return;
+	}
 
-	.loc_0x24:
-	  cmplwi    r5, 0
-	  bne-      .loc_0x5C
-	  addi      r5, r13, 0x3208
-	  lwzu      r4, 0x4(r5)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x44
-	  stw       r3, 0x3208(r13)
-	  b         .loc_0x48
-
-	.loc_0x44:
-	  stw       r3, 0x8(r4)
-
-	.loc_0x48:
-	  stw       r4, 0xC(r3)
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  stw       r3, 0x0(r5)
-	  blr
-
-	.loc_0x5C:
-	  stw       r5, 0x8(r3)
-	  lwz       r4, 0xC(r5)
-	  stw       r3, 0xC(r5)
-	  cmplwi    r4, 0
-	  stw       r4, 0xC(r3)
-	  bne-      .loc_0x7C
-	  stw       r3, 0x3208(r13)
-	  blr
-
-	.loc_0x7C:
-	  stw       r3, 0x8(r4)
-	  blr
-	*/
+	info->next = iter;
+	tmp        = iter->prev;
+	iter->prev = info;
+	info->prev = tmp;
+	if (tmp == nullptr) {
+		ResetFunctionQueue.head = info;
+		return;
+	}
+	tmp->next = info;
 }
 
 /*
@@ -64,7 +46,7 @@ void OSRegisterResetFunction(void)
  * Address:	........
  * Size:	000038
  */
-void OSUnregisterResetFunction(void)
+void OSUnregisterResetFunction(OSResetFunctionInfo*)
 {
 	// UNUSED FUNCTION
 }
@@ -74,8 +56,21 @@ void OSUnregisterResetFunction(void)
  * Address:	........
  * Size:	00008C
  */
-void CallResetFunctions(void)
+BOOL CallResetFunctions(BOOL final)
 {
+	OSResetFunctionInfo* iter;
+	BOOL retCode = FALSE;
+
+	for (iter = ResetFunctionQueue.head; (iter != nullptr); iter = iter->next) {
+		retCode |= !iter->func(final);
+	}
+
+	retCode |= !__OSSyncSram();
+
+	if (retCode) {
+		return FALSE;
+	}
+	return TRUE;
 	// UNUSED FUNCTION
 }
 
@@ -84,57 +79,56 @@ void CallResetFunctions(void)
  * Address:	801FA144
  * Size:	000070
  */
-void Reset(void)
+static ASM Reset(register s32 resetCode)
 {
-	/*
-	.loc_0x0:
-	  b         .loc_0x20
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	b _jump1
 
-	.loc_0x4:
-	  mfspr     r8, 0x3F0
-	  ori       r8, r8, 0x8
-	  mtspr     1008, r8
-	  isync
-	  sync
-	  nop
-	  b         .loc_0x24
+_begin:
+	mfspr r8, HID0
+	ori r8, r8, 8
+	mtspr HID0, r8
+	isync
+	sync
+	nop
+	b _preloop
 
-	.loc_0x20:
-	  b         .loc_0x40
+_jump1:
+	b _jump2
 
-	.loc_0x24:
-	  mftbl     r5
+_preloop:
+	mftb r5, 268
+_loop:
+	mftb r6, 268
+	subf r7, r5, r6
+	cmplwi r7, 0x1124
+	blt _loop
+	nop
+	b _setPIReg
 
-	.loc_0x28:
-	  mftbl     r6
-	  sub       r7, r6, r5
-	  cmplwi    r7, 0x1124
-	  blt+      .loc_0x28
-	  nop
-	  b         .loc_0x44
+_jump2:
+	b _jump3
 
-	.loc_0x40:
-	  b         .loc_0x60
+_setPIReg:
+	lis r8, 0xCC003000@h
+	ori r8, r8, 0xCC003000@l
+	li r4, 3
+	stw r4, 0x24(r8)
+	stw r3, 0x24(r8)
+	nop
+	b _noptrap
 
-	.loc_0x44:
-	  lis       r8, 0xCC00
-	  ori       r8, r8, 0x3000
-	  li        r4, 0x3
-	  stw       r4, 0x24(r8)
-	  stw       r3, 0x24(r8)
-	  nop
-	  b         .loc_0x64
+_jump3:
+	b _jump4
 
-	.loc_0x60:
-	  b         .loc_0x6C
+_noptrap:
+	nop
+	b _noptrap
 
-	.loc_0x64:
-	  nop
-	  b         .loc_0x64
-
-	.loc_0x6C:
-	  b         .loc_0x4
-	*/
+_jump4:
+	b _begin
+#endif // clang-format on
 }
 
 /*
@@ -142,8 +136,20 @@ void Reset(void)
  * Address:	........
  * Size:	000068
  */
-void KillThreads(void)
+static void KillThreads(void)
 {
+	OSThread* thread;
+	OSThread* next;
+
+	for (thread = __OSActiveThreadQueue.head; thread; thread = next) {
+		next = thread->linkActive.next;
+		switch (thread->state) {
+		case 1:
+		case 4:
+			OSCancelThread(thread);
+			break;
+		}
+	}
 	// UNUSED FUNCTION
 }
 
@@ -152,29 +158,12 @@ void KillThreads(void)
  * Address:	801FA1B4
  * Size:	000048
  */
-void __OSDoHotReset(void)
+void __OSDoHotReset(s32 code)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x124C
-	  lis       r3, 0xCC00
-	  addi      r3, r3, 0x2000
-	  li        r0, 0
-	  sth       r0, 0x2(r3)
-	  bl        -0x34C4
-	  rlwinm    r3,r31,3,0,28
-	  bl        -0xA0
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	OSDisableInterrupts();
+	__VIRegs[VI_DISP_CONFIG] = 0;
+	ICFlashInvalidate();
+	Reset(code * 8);
 }
 
 /*
@@ -182,167 +171,43 @@ void __OSDoHotReset(void)
  * Address:	801FA1FC
  * Size:	0001B8
  */
-void OSResetSystem(void)
+void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r26, 0x20(r1)
-	  mr        r26, r3
-	  mr        r30, r4
-	  mr        r31, r5
-	  bl        0x190C
-	  bl        -0x3750
-	  b         .loc_0x28
+	BOOL rc;
+	BOOL disableRecalibration;
+	BOOL enabled;
 
-	.loc_0x28:
-	  b         .loc_0x2C
+	OSDisableScheduler();
+	__OSStopAudioSystem();
 
-	.loc_0x2C:
-	  lwz       r28, 0x3208(r13)
-	  li        r29, 0
-	  b         .loc_0x38
+	while (!CallResetFunctions(FALSE)) {
+		;
+	}
 
-	.loc_0x38:
-	  b         .loc_0x3C
+	if (reset && forceMenu) {
+		OSSram* sram;
 
-	.loc_0x3C:
-	  b         .loc_0x60
+		sram = __OSLockSram();
+		sram->flags |= 0x40;
+		__OSUnlockSram(TRUE);
 
-	.loc_0x40:
-	  li        r3, 0
-	  lwz       r12, 0x0(r28)
-	  mtlr      r12
-	  blrl
-	  cntlzw    r0, r3
-	  lwz       r28, 0x8(r28)
-	  rlwinm    r0,r0,27,5,31
-	  or        r29, r29, r0
+		while (!__OSSyncSram()) {
+			;
+		}
+	}
 
-	.loc_0x60:
-	  cmplwi    r28, 0
-	  bne+      .loc_0x40
-	  bl        0xAEC
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  or        r29, r29, r0
-	  cmpwi     r29, 0
-	  beq-      .loc_0x88
-	  li        r0, 0
-	  b         .loc_0x8C
+	enabled = OSDisableInterrupts();
+	CallResetFunctions(TRUE);
+	if (reset == OS_RESET_HOTRESET) {
+		__OSDoHotReset(resetCode);
+	} else {
+		KillThreads();
+		OSEnableScheduler();
+		__OSReboot(resetCode, forceMenu);
+	}
 
-	.loc_0x88:
-	  li        r0, 0x1
-
-	.loc_0x8C:
-	  cmpwi     r0, 0
-	  beq+      .loc_0x2C
-	  cmpwi     r26, 0
-	  beq-      .loc_0xD0
-	  cmpwi     r31, 0
-	  beq-      .loc_0xD0
-	  bl        0x6A8
-	  lbz       r0, 0x13(r3)
-	  ori       r0, r0, 0x40
-	  stb       r0, 0x13(r3)
-	  li        r3, 0x1
-	  bl        0xA54
-	  b         .loc_0xC0
-
-	.loc_0xC0:
-	  b         .loc_0xC4
-
-	.loc_0xC4:
-	  bl        0xA90
-	  cmpwi     r3, 0
-	  beq+      .loc_0xC4
-
-	.loc_0xD0:
-	  bl        -0x1350
-	  lwz       r29, 0x3208(r13)
-	  mr        r27, r3
-	  li        r28, 0
-	  b         .loc_0xE4
-
-	.loc_0xE4:
-	  b         .loc_0xE8
-
-	.loc_0xE8:
-	  b         .loc_0x10C
-
-	.loc_0xEC:
-	  li        r3, 0x1
-	  lwz       r12, 0x0(r29)
-	  mtlr      r12
-	  blrl
-	  cntlzw    r0, r3
-	  lwz       r29, 0x8(r29)
-	  rlwinm    r0,r0,27,5,31
-	  or        r28, r28, r0
-
-	.loc_0x10C:
-	  cmplwi    r29, 0
-	  bne+      .loc_0xEC
-	  bl        0xA40
-	  cmpwi     r26, 0x1
-	  bne-      .loc_0x144
-	  bl        -0x13A0
-	  lis       r3, 0xCC00
-	  addi      r3, r3, 0x2000
-	  li        r0, 0
-	  sth       r0, 0x2(r3)
-	  bl        -0x3618
-	  rlwinm    r3,r30,3,0,28
-	  bl        -0x1F4
-	  b         .loc_0x198
-
-	.loc_0x144:
-	  lis       r3, 0x8000
-	  lwz       r3, 0xDC(r3)
-	  b         .loc_0x150
-
-	.loc_0x150:
-	  b         .loc_0x154
-
-	.loc_0x154:
-	  b         .loc_0x180
-
-	.loc_0x158:
-	  lhz       r0, 0x2C8(r3)
-	  lwz       r28, 0x2FC(r3)
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x178
-	  bge-      .loc_0x17C
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x178
-	  b         .loc_0x17C
-
-	.loc_0x178:
-	  bl        0x1F54
-
-	.loc_0x17C:
-	  mr        r3, r28
-
-	.loc_0x180:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x158
-	  bl        0x17E0
-	  mr        r3, r30
-	  mr        r4, r31
-	  bl        -0x480
-
-	.loc_0x198:
-	  mr        r3, r27
-	  bl        -0x13F4
-	  bl        0x17C8
-	  lmw       r26, 0x20(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	OSRestoreInterrupts(enabled);
+	OSEnableScheduler();
 }
 
 /*
@@ -350,7 +215,7 @@ void OSResetSystem(void)
  * Address:	........
  * Size:	000030
  */
-void OSGetResetCode(void)
+u32 OSGetResetCode(void)
 {
 	// UNUSED FUNCTION
 }

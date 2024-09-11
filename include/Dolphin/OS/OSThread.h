@@ -70,7 +70,6 @@ struct OSThread {
 	u8* stackBase;           // _304, stack high addr.
 	u32* stackEnd;           // _308, stack low addr (last word).
 	s32 error;               // _30C
-	void* specific[2];       // _310
 };
 
 // Thread global addresses.

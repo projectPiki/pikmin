@@ -17,6 +17,7 @@ extern "C" {
 #include "Dolphin/OS/OSContext.h"
 #include "Dolphin/OS/OSError.h"
 #include "Dolphin/OS/OSException.h"
+#include "Dolphin/OS/OSExi.h"
 #include "Dolphin/OS/OSExpansion.h"
 #include "Dolphin/OS/OSFastCast.h"
 #include "Dolphin/OS/OSFont.h"

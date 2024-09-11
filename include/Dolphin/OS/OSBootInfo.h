@@ -25,15 +25,16 @@ typedef struct OSBootInfo {
 
 // Disk header information, a.k.a. BI2 (size 0x28).
 typedef struct BI2Debug {
-	int debugMonSize;  // _00
-	int simMemSize;    // _04
-	u32 argOffset;     // _08
-	u32 debugFlag;     // _0C
-	int trackLocation; // _10
-	int trackSize;     // _14
-	u32 countryCode;   // _18
-	u8 _1C[0x8];       // _1C, unknown
-	u32 padSpec;       // _24
+	int debugMonSize;        // _00
+	int simMemSize;          // _04
+	u32 argOffset;           // _08
+	u32 debugFlag;           // _0C
+	int trackLocation;       // _10
+	int trackSize;           // _14
+	u32 countryCode;         // _18
+	u8 _1C[0x4];             // _1C, unknown
+	u32 dvdLongFileNameFlag; // _20
+	u32 padSpec;             // _24
 } BI2Debug;
 
 // Magic number defines.

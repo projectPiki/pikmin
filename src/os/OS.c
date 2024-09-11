@@ -1,12 +1,89 @@
-#include "types.h"
+#include "Dolphin/os.h"
+#include "Dolphin/PPCArch.h"
+#include "Dolphin/hw_regs.h"
+
+DECL_SECT(".init") extern char _db_stack_end[];
+
+// memory locations for important stuff
+#define OS_DBINTERFACE_ADDR     0x40
+#define OS_BI2_DEBUG_ADDRESS    0x800000F4
+#define OS_BI2_DEBUGFLAG_OFFSET 0xC
+#define PAD3_BUTTON_ADDR        0x800030E4
+#define OS_DVD_DEVICECODE       0x800030E6
+#define DEBUGFLAG_ADDR          0x800030E8
+#define OS_DEBUG_ADDRESS_2      0x800030E9
+#define DB_EXCEPTIONRET_OFFSET  0xC
+#define DB_EXCEPTIONDEST_OFFSET 0x8
+#define MSR_RI_BIT              0x1E
+
+extern u8 __ArenaHi[];
+extern u8 __ArenaLo[];
+extern u32 __DVDLongFileNameFlag;
+extern u32 __PADSpec;
+
+// main workhorse functions
+void ClearArena();
+void DVDInit();
+void DVDInquiryAsync(void*, void*, void*);
+void EXIInit();
+void EnableMetroTRKInterrupts();
+int OSEnableInterrupts();
+void OSExceptionInit();
+void OSRegisterVersion(const char*);
+void PPCMtmmcr0(int);
+void PPCMtmmcr1(int);
+void PPCMtpmc1(int);
+void PPCMtpmc2(int);
+void PPCMtpmc3(int);
+void PPCMtpmc4(int);
+void SIInit();
+void __OSContextInit();
+void __OSInitAudioSystem();
+void __OSInitMemoryProtection();
+void __OSInitSram();
+void __OSInitSystemCall();
+void __OSInterruptInit();
+void __OSThreadInit();
+OSTime __OSGetSystemTime();
+void DBPrintf(const char*, ...);
+BOOL __DBIsExceptionMarked(u8);
+void __OSUnhandledException(__OSException exception, OSContext* context, u32 dsisr, u32 dar);
+extern char* __OSResetSWInterruptHandler[];
+
+// The exception table.  It points to a location in LoMem.  It is set by
+// OSExceptionInit
+// typedef u32 __OSExceptionHandler;
+#define OS_EXCEPTIONTABLE_ADDR 0x3000
+#define OS_DBJUMPPOINT_ADDR    0x60
+
+vu16 __OSDeviceCode : (OS_BASE_CACHED | OS_DVD_DEVICECODE);
+
+// flags and system info
+static OSBootInfo* BootInfo;
+static vu32* BI2DebugFlag;
+static u32* BI2DebugFlagHolder;
+WEAKFUNC BOOL __OSIsGcam = FALSE;
+static f64 ZeroF;
+static f32 ZeroPS[2];
+static BOOL AreWeInitialized = FALSE;
+static __OSExceptionHandler* OSExceptionTable;
+OSTime __OSStartTime;
+BOOL __OSInIPL;
+void* __OSSavedRegionStart;
+void* __OSSavedRegionEnd;
+
+// functions
+static void OSExceptionInit(void);
+static void OSDefaultExceptionHandler(__OSException exception, OSContext* context);
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-void __OSIsDebuggerPresent(void)
+u32 __OSIsDebuggerPresent(void)
 {
+	return *(u32*)OSPhysicalToCached(0x40);
 	// UNUSED FUNCTION
 }
 
@@ -15,9 +92,43 @@ void __OSIsDebuggerPresent(void)
  * Address:	........
  * Size:	000084
  */
-void __OSInitFPRs(void)
-{
-	// UNUSED FUNCTION
+static ASM void __OSInitFPRs(void) {
+#ifdef __MWERKS__ // clang-format off
+    nofralloc
+    lfd     fp0, ZeroF
+    fmr     fp1, fp0
+    fmr     fp2, fp0
+    fmr     fp3, fp0
+    fmr     fp4, fp0
+    fmr     fp5, fp0
+    fmr     fp6, fp0
+    fmr     fp7, fp0
+    fmr     fp8, fp0
+    fmr     fp9, fp0
+    fmr     fp10, fp0
+    fmr     fp11, fp0
+    fmr     fp12, fp0
+    fmr     fp13, fp0
+    fmr     fp14, fp0
+    fmr     fp15, fp0
+    fmr     fp16, fp0
+    fmr     fp17, fp0
+    fmr     fp18, fp0
+    fmr     fp19, fp0
+    fmr     fp20, fp0
+    fmr     fp21, fp0
+    fmr     fp22, fp0
+    fmr     fp23, fp0
+    fmr     fp24, fp0
+    fmr     fp25, fp0
+    fmr     fp26, fp0
+    fmr     fp27, fp0
+    fmr     fp28, fp0
+    fmr     fp29, fp0
+    fmr     fp30, fp0
+    fmr     fp31, fp0
+    blr
+#endif // clang-format on
 }
 
 /*
@@ -25,25 +136,12 @@ void __OSInitFPRs(void)
  * Address:	801F59A8
  * Size:	000028
  */
-void OSGetConsoleType(void)
+u32 OSGetConsoleType(void)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x31C8(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x18
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x24
-
-	.loc_0x18:
-	  lis       r3, 0x1000
-	  addi      r3, r3, 0x2
-	  b         .loc_0x24
-
-	.loc_0x24:
-	  blr
-	*/
+	if (BootInfo == NULL || BootInfo->consoleType == 0) {
+		return OS_CONSOLE_ARTHUR; // default console type
+	}
+	return BootInfo->consoleType;
 }
 
 /*
@@ -54,435 +152,246 @@ void OSGetConsoleType(void)
 void OSInit(void)
 {
 	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  stw       r30, 0x8(r1)
-	  lwz       r0, 0x31D0(r13)
-	  lis       r3, 0x802E
-	  addi      r31, r3, 0x72A8
-	  cmpwi     r0, 0
-	  bne-      .loc_0x2C4
-	  li        r0, 0x1
-	  stw       r0, 0x31D0(r13)
-	  bl        0x357C
-	  li        r0, 0
-	  lis       r3, 0x8000
-	  stw       r0, 0x31CC(r13)
-	  stw       r3, 0x31C8(r13)
-	  stw       r0, 0x32AC(r13)
-	  lwz       r3, 0xF4(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x6C
-	  addi      r0, r3, 0xC
-	  stw       r0, 0x31CC(r13)
-	  lwz       r0, 0x20(r3)
-	  stw       r0, 0x32AC(r13)
-	  lwz       r0, 0x24(r3)
-	  stw       r0, 0x337C(r13)
-
-	.loc_0x6C:
-	  lis       r3, 0x8000
-	  lwz       r3, 0x30(r3)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x88
-	  lis       r3, 0x8040
-	  subi      r3, r3, 0x17C0
-	  b         .loc_0x88
-
-	.loc_0x88:
-	  bl        0xED8
-	  lwz       r3, 0x31C8(r13)
-	  lwz       r0, 0x30(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xC8
-	  lwz       r3, 0x31CC(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xC8
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0x2
-	  bge-      .loc_0xC8
-	  lis       r3, 0x8040
-	  subi      r3, r3, 0x37C0
-	  addi      r0, r3, 0x1F
-	  rlwinm    r3,r0,0,0,26
-	  bl        0xE9C
-
-	.loc_0xC8:
-	  lwz       r3, 0x31C8(r13)
-	  lwz       r3, 0x34(r3)
-	  cmplwi    r3, 0
-	  bne-      .loc_0xE4
-	  lis       r3, 0x8170
-	  addi      r3, r3, 0
-	  b         .loc_0xE4
-
-	.loc_0xE4:
-	  bl        0xE74
-	  bl        .loc_0x2DC
-	  bl        0x5E8C
-	  bl        0x3CDC
-	  bl        0x3534
-	  lis       r3, 0x8020
-	  subi      r4, r3, 0x5C4C
-	  li        r3, 0x16
-	  bl        0x34F4
-	  bl        0x1D70
-	  bl        0x1458
-	  bl        0x3158
-	  bl        0x5840
-	  bl        0x4D2C
-	  bl        0x5EC0
-	  bl        0xE48
-	  lwz       r3, 0x31C8(r13)
-	  addi      r4, r3, 0x2C
-	  lwz       r0, 0x0(r4)
-	  rlwinm    r0,r0,0,3,3
-	  cmplwi    r0, 0
-	  beq-      .loc_0x14C
-	  lis       r3, 0x1000
-	  addi      r0, r3, 0x4
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x154
-
-	.loc_0x14C:
-	  li        r0, 0x1
-	  stw       r0, 0x0(r4)
-
-	.loc_0x154:
-	  lis       r3, 0xCC00
-	  lwz       r5, 0x31C8(r13)
-	  addi      r3, r3, 0x3000
-	  crclr     6, 0x6
-	  lwz       r0, 0x2C(r3)
-	  mr        r3, r31
-	  lwz       r4, 0x2C(r5)
-	  rlwinm    r0,r0,0,0,3
-	  rlwinm    r0,r0,4,28,31
-	  add       r0, r4, r0
-	  stw       r0, 0x2C(r5)
-	  bl        0x1D40
-	  addi      r3, r31, 0x20
-	  crclr     6, 0x6
-	  addi      r4, r31, 0x38
-	  addi      r5, r31, 0x44
-	  bl        0x1D2C
-	  addi      r3, r31, 0x50
-	  crclr     6, 0x6
-	  bl        0x1D20
-	  lwz       r3, 0x31C8(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1BC
-	  lwz       r4, 0x2C(r3)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x1C8
-
-	.loc_0x1BC:
-	  lis       r3, 0x1000
-	  addi      r4, r3, 0x2
-	  b         .loc_0x1C8
-
-	.loc_0x1C8:
-	  rlwinm    r0,r4,0,3,3
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1E4
-	  crclr     6, 0x6
-	  addi      r3, r31, 0x60
-	  bl        0x1CE4
-	  b         .loc_0x26C
-
-	.loc_0x1E4:
-	  lis       r3, 0x1000
-	  addi      r0, r3, 0x2
-	  cmpw      r4, r0
-	  beq-      .loc_0x238
-	  bge-      .loc_0x208
-	  cmpw      r4, r3
-	  beq-      .loc_0x218
-	  bge-      .loc_0x228
-	  b         .loc_0x258
-
-	.loc_0x208:
-	  addi      r0, r3, 0x4
-	  cmpw      r4, r0
-	  bge-      .loc_0x258
-	  b         .loc_0x248
-
-	.loc_0x218:
-	  addi      r3, r31, 0x6C
-	  crclr     6, 0x6
-	  bl        0x1CA0
-	  b         .loc_0x26C
-
-	.loc_0x228:
-	  addi      r3, r31, 0x7C
-	  crclr     6, 0x6
-	  bl        0x1C90
-	  b         .loc_0x26C
-
-	.loc_0x238:
-	  addi      r3, r31, 0x8C
-	  crclr     6, 0x6
-	  bl        0x1C80
-	  b         .loc_0x26C
-
-	.loc_0x248:
-	  addi      r3, r31, 0x9C
-	  crclr     6, 0x6
-	  bl        0x1C70
-	  b         .loc_0x26C
-
-	.loc_0x258:
-	  subis     r4, r4, 0x1000
-	  crclr     6, 0x6
-	  addi      r3, r31, 0xAC
-	  subi      r4, r4, 0x3
-	  bl        0x1C58
-
-	.loc_0x26C:
-	  lwz       r4, 0x31C8(r13)
-	  addi      r3, r31, 0xC0
-	  crclr     6, 0x6
-	  lwz       r0, 0x28(r4)
-	  rlwinm    r4,r0,12,20,31
-	  bl        0x1C40
-	  bl        0xCC4
-	  mr        r30, r3
-	  bl        0xCC4
-	  mr        r4, r3
-	  crclr     6, 0x6
-	  mr        r5, r30
-	  addi      r3, r31, 0xD0
-	  bl        0x1C20
-	  lwz       r3, 0x31CC(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x2C0
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0x2
-	  blt-      .loc_0x2C0
-	  bl        0x2A268
-
-	.loc_0x2C0:
-	  bl        0x3300
-
-	.loc_0x2C4:
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  lwz       r30, 0x8(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x10
-	  blr
-
-	.loc_0x2DC:
+	Initializes the Dolphin operating system.
+	    - most of the main operations get farmed out to other functions
+	    - loading debug info and setting up heap bounds largely happen here
+	    - a lot of OS reporting also gets controlled here
 	*/
+	// pretty sure this is the min(/max) amount of pointers etc for the stack to match
+	BI2Debug* DebugInfo;
+	void* debugArenaLo;
+	u32 inputConsoleType;
+	u32 tdev;
+
+	// check if we've already done all this or not
+	if ((BOOL)AreWeInitialized == FALSE) { // fantastic name
+		AreWeInitialized = TRUE;           // flag to make sure we don't have to do this again
+
+		// SYSTEM //
+		OSDisableInterrupts();
+
+		// DEBUG //
+		// load some DVD stuff
+		BI2DebugFlag = 0;                           // debug flag from the DVD BI2 header
+		BootInfo     = (OSBootInfo*)OS_BASE_CACHED; // set pointer to BootInfo
+
+		__DVDLongFileNameFlag = (u32)0; // flag to tell us whether we make it through the debug loading
+
+		// time to grab a bunch of debug info from the DVD
+		// the address for where the BI2 debug info is, is stored at OS_BI2_DEBUG_ADDRESS
+		DebugInfo = (BI2Debug*)*((u32*)OS_BI2_DEBUG_ADDRESS);
+
+		// if the debug info address exists, grab some debug info
+		if (DebugInfo != NULL) {
+			BI2DebugFlag          = &DebugInfo->debugFlag;          // debug flag from DVD BI2
+			__DVDLongFileNameFlag = DebugInfo->dvdLongFileNameFlag; // we made it through debug!
+			__PADSpec             = (u32)DebugInfo->padSpec;        // some other info from DVD BI2
+		}
+
+		// HEAP //
+		// set up bottom of heap (ArenaLo)
+		// grab address from BootInfo if it exists, otherwise use default __ArenaLo
+		OSSetArenaLo((BootInfo->arenaLo == NULL) ? (void*)(0x803FE840) : BootInfo->arenaLo);
+
+		// if the input arenaLo is null, and debug flag location exists (and flag is < 2),
+		//     set arenaLo to just past the end of the db stack
+		if ((BootInfo->arenaLo == NULL) && (BI2DebugFlag != 0) && (*BI2DebugFlag < 2)) {
+			debugArenaLo = (void*)0x803FC840;
+			OSSetArenaLo((void*)ALIGN_NEXT((u32)debugArenaLo, 32));
+		}
+
+		// set up top of heap (ArenaHi)
+		// grab address from BootInfo if it exists, otherwise use default __ArenaHi
+		OSSetArenaHi((BootInfo->arenaHi == NULL) ? __ArenaHi : BootInfo->arenaHi);
+
+		// OS INIT AND REPORT //
+		// initialise a whole bunch of OS stuff
+		OSExceptionInit();
+		__OSInitSystemCall();
+		__OSModuleInit();
+		__OSInterruptInit();
+		__OSSetInterruptHandler(__OS_INTERRUPT_PI_RSW, (void*)__OSResetSWInterruptHandler);
+		__OSContextInit();
+		__OSCacheInit();
+		EXIInit();
+		SIInit();
+		__OSInitSram();
+		__OSThreadInit();
+		__OSInitAudioSystem();
+
+		if ((BootInfo->consoleType & OS_CONSOLE_DEVELOPMENT) != 0) {
+			BootInfo->consoleType = OS_CONSOLE_DEVHW1;
+		} else {
+			BootInfo->consoleType = OS_CONSOLE_RETAIL1;
+		}
+		BootInfo->consoleType += (__PIRegs[11] & 0xF0000000) >> 28;
+
+		// begin OS reporting
+		OSReport("\nDolphin OS $Revision: 37 $.\n");
+		OSReport("Kernel built : %s %s\n", "Jul 19 2001", "05:43:42");
+		OSReport("Console Type : ");
+
+		if (BootInfo == NULL || (inputConsoleType = BootInfo->consoleType) == 0) {
+			inputConsoleType = OS_CONSOLE_ARTHUR; // default console type
+		} else {
+			inputConsoleType = BootInfo->consoleType;
+		}
+
+		// work out what console type this corresponds to and report it
+		inputConsoleType = OSGetConsoleType();
+		if ((inputConsoleType & 0x10000000) == OS_CONSOLE_RETAIL) { // check "first" byte
+			OSReport("Retail %d\n", inputConsoleType);
+		} else {
+			switch (inputConsoleType) { // if "first" byte is 2, check "the rest"
+			case OS_CONSOLE_EMULATOR:
+				OSReport("Mac Emulator\n");
+				break;
+			case OS_CONSOLE_PC_EMULATOR:
+				OSReport("PC Emulator\n");
+				break;
+			case OS_CONSOLE_ARTHUR:
+				OSReport("EPPC Arthur\n");
+				break;
+			case OS_CONSOLE_MINNOW:
+				OSReport("EPPC Minnow\n");
+				break;
+			default: // if none of the above, just report the info we have
+				tdev = (u32)inputConsoleType - 0x10000000;
+				OSReport("Development HW%d\n", tdev - 3);
+				break;
+			}
+		}
+
+		// report memory size
+		OSReport("Memory %d MB\n", (u32)BootInfo->memorySize >> 0x14U);
+		// report heap bounds
+		OSReport("Arena : 0x%x - 0x%x\n", OSGetArenaLo(), OSGetArenaHi());
+
+		// if location of debug flag exists, and flag is >= 2, enable MetroTRKInterrupts
+		if (BI2DebugFlag && ((*BI2DebugFlag) >= 2)) {
+			EnableMetroTRKInterrupts();
+		}
+
+		// free up memory and re-enable things
+		OSEnableInterrupts();
+	}
 }
+
+static u32 __OSExceptionLocations[] = {
+	0x00000100, // 0  System reset
+	0x00000200, // 1  Machine check
+	0x00000300, // 2  DSI - seg fault or DABR
+	0x00000400, // 3  ISI
+	0x00000500, // 4  External interrupt
+	0x00000600, // 5  Alignment
+	0x00000700, // 6  Program
+	0x00000800, // 7  FP Unavailable
+	0x00000900, // 8  Decrementer
+	0x00000C00, // 9  System call
+	0x00000D00, // 10 Trace
+	0x00000F00, // 11 Performance monitor
+	0x00001300, // 12 Instruction address breakpoint.
+	0x00001400, // 13 System management interrupt
+	0x00001700  // 14 Thermal interrupt
+};
+
+// dummy entry points to the OS Exception vector
+void __OSEVStart(void);
+void __OSEVEnd(void);
+void __OSEVSetNumber(void);
+void __OSExceptionVector(void);
+
+void __DBVECTOR(void);
+void __OSDBINTSTART(void);
+void __OSDBINTEND(void);
+void __OSDBJUMPSTART(void);
+void __OSDBJUMPEND(void);
+
+#define NOP 0x60000000
 
 /*
  * --INFO--
  * Address:	801F5CAC
  * Size:	000280
  */
-void OSExceptionInit(void)
+static void OSExceptionInit(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r20, 0x8(r1)
-	  lis       r3, 0x8000
-	  lwz       r0, 0x60(r3)
-	  lis       r4, 0x801F
-	  addi      r30, r4, 0x5FEC
-	  lis       r5, 0x801F
-	  lwz       r25, 0x0(r30)
-	  lis       r4, 0x801F
-	  addi      r5, r5, 0x5F84
-	  addi      r4, r4, 0x601C
-	  lis       r6, 0x802E
-	  cmplwi    r0, 0
-	  mr        r24, r5
-	  addi      r29, r6, 0x72A8
-	  sub       r23, r4, r5
-	  addi      r20, r3, 0x60
-	  bne-      .loc_0x98
-	  addi      r3, r29, 0x124
-	  crclr     6, 0x6
-	  bl        0x7E40
-	  lis       r4, 0x801F
-	  lis       r3, 0x801F
-	  addi      r0, r3, 0x5F50
-	  addi      r4, r4, 0x5F2C
-	  sub       r21, r0, r4
-	  mr        r3, r20
-	  mr        r5, r21
-	  bl        -0x1F2910
-	  mr        r3, r20
-	  mr        r4, r21
-	  bl        0xF20
-	  sync
-	  mr        r3, r20
-	  mr        r4, r21
-	  bl        0xFA0
+	__OSException exception;
+	void* destAddr;
 
-	.loc_0x98:
-	  lis       r4, 0x801F
-	  lis       r3, 0x801F
-	  addi      r31, r4, 0x5F50
-	  addi      r0, r3, 0x5F54
-	  addi      r28, r29, 0xE8
-	  sub       r27, r0, r31
-	  li        r26, 0
-	  b         .loc_0xB8
+	// These two vars help us change the exception number embedded
+	// in the exception handler code.
+	u32* opCodeAddr;
+	u32 oldOpCode;
 
-	.loc_0xB8:
-	  lis       r3, 0x801F
-	  addi      r21, r3, 0x5FDC
-	  lis       r22, 0x6000
-	  b         .loc_0xC8
+	// Address range of the actual code to be copied.
+	u8* handlerStart;
+	u32 handlerSize;
 
-	.loc_0xC8:
-	  b         .loc_0x210
+	// Install the first level exception vector.
+	opCodeAddr   = (u32*)__OSEVSetNumber;
+	oldOpCode    = *opCodeAddr;
+	handlerStart = (u8*)__OSEVStart;
+	handlerSize  = (u32)((u8*)__OSEVEnd - (u8*)__OSEVStart);
 
-	.loc_0xCC:
-	  lwz       r3, 0x31CC(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x108
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0x2
-	  blt-      .loc_0x108
-	  mr        r3, r26
-	  bl        0x7D94
-	  cmpwi     r3, 0
-	  beq-      .loc_0x108
-	  addi      r3, r29, 0x140
-	  crclr     6, 0x6
-	  rlwinm    r4,r26,0,24,31
-	  bl        0x7D98
-	  b         .loc_0x208
+	// Install the DB integrator, only if we are the first OSInit to be run
+	destAddr = (void*)OSPhysicalToCached(OS_DBJUMPPOINT_ADDR);
+	if (*(u32*)destAddr == 0) // Lomem should be zero cleared only once by BS2
+	{
+		DBPrintf("Installing OSDBIntegrator\n");
+		memcpy(destAddr, (void*)__OSDBINTSTART, (u32)__OSDBINTEND - (u32)__OSDBINTSTART);
+		DCFlushRangeNoSync(destAddr, (u32)__OSDBINTEND - (u32)__OSDBINTSTART);
+		__sync();
+		ICInvalidateRange(destAddr, (u32)__OSDBINTEND - (u32)__OSDBINTSTART);
+	}
 
-	.loc_0x108:
-	  rlwinm    r20,r26,0,24,31
-	  or        r0, r25, r20
-	  stw       r0, 0x0(r30)
-	  mr        r3, r26
-	  bl        0x7D64
-	  cmpwi     r3, 0
-	  beq-      .loc_0x148
-	  mr        r4, r20
-	  crclr     6, 0x6
-	  addi      r3, r29, 0x170
-	  bl        0x7D68
-	  mr        r3, r21
-	  mr        r4, r31
-	  mr        r5, r27
-	  bl        -0x1F29D8
-	  b         .loc_0x1D4
+	// Copy the right vector into the table
+	for (exception = 0; exception < __OS_EXCEPTION_MAX; exception++) {
+		if (BI2DebugFlag && (*BI2DebugFlag >= 2) && __DBIsExceptionMarked(exception)) {
+			// this DBPrintf is suspicious.
+			DBPrintf(">>> OSINIT: exception %d commandeered by TRK\n", exception);
+			continue;
+		}
 
-	.loc_0x148:
-	  mr        r4, r21
-	  b         .loc_0x150
+		// Modify the copy of code in text before transferring
+		// to the exception table.
+		*opCodeAddr = oldOpCode | exception;
 
-	.loc_0x150:
-	  cmplwi    r27, 0
-	  addi      r3, r27, 0x3
-	  rlwinm    r3,r3,30,2,31
-	  ble-      .loc_0x1D4
-	  rlwinm    r0,r3,29,3,31
-	  cmplwi    r0, 0
-	  mtctr     r0
-	  beq-      .loc_0x1C0
-	  b         .loc_0x174
+		// Modify opcodes at __DBVECTOR if necessary
+		if (__DBIsExceptionMarked(exception)) {
+			DBPrintf(">>> OSINIT: exception %d vectored to debugger\n", exception);
+			memcpy((void*)__DBVECTOR, (void*)__OSDBJUMPSTART, (u32)__OSDBJUMPEND - (u32)__OSDBJUMPSTART);
+		} else {
+			// make sure the opcodes are still nop
+			u32* ops = (u32*)__DBVECTOR;
+			int cb;
 
-	.loc_0x174:
-	  stw       r22, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  stw       r22, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  stw       r22, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  stw       r22, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  stw       r22, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  stw       r22, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  stw       r22, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  stw       r22, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  bdnz+     .loc_0x174
-	  andi.     r3, r3, 0x7
-	  beq-      .loc_0x1D4
+			for (cb = 0; cb < (u32)__OSDBJUMPEND - (u32)__OSDBJUMPSTART; cb += sizeof(u32)) {
+				*ops++ = NOP;
+			}
+		}
 
-	.loc_0x1C0:
-	  mtctr     r3
-	  b         .loc_0x1C8
+		// Install the modified handler.
+		destAddr = (void*)OSPhysicalToCached(__OSExceptionLocations[(u32)exception]);
+		memcpy(destAddr, handlerStart, handlerSize);
+		DCFlushRangeNoSync(destAddr, handlerSize);
+		__sync();
+		ICInvalidateRange(destAddr, handlerSize);
+	}
 
-	.loc_0x1C8:
-	  stw       r22, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  bdnz+     .loc_0x1C8
+	// initialize pointer to exception table
+	OSExceptionTable = OSPhysicalToCached(OS_EXCEPTIONTABLE_ADDR);
 
-	.loc_0x1D4:
-	  lwz       r3, 0x0(r28)
-	  mr        r4, r24
-	  mr        r5, r23
-	  subis     r20, r3, 0x8000
-	  mr        r3, r20
-	  bl        -0x1F2A80
-	  mr        r3, r20
-	  mr        r4, r23
-	  bl        0xDB0
-	  sync
-	  mr        r3, r20
-	  mr        r4, r23
-	  bl        0xE30
+	// install default exception handlers
+	for (exception = 0; exception < __OS_EXCEPTION_MAX; exception++) {
+		__OSSetExceptionHandler(exception, OSDefaultExceptionHandler);
+	}
 
-	.loc_0x208:
-	  addi      r28, r28, 0x4
-	  addi      r26, r26, 0x1
+	// restore the old opcode, so that we can re-start an application without
+	// downloading the text segments
+	*opCodeAddr = oldOpCode;
 
-	.loc_0x210:
-	  rlwinm    r0,r26,0,24,31
-	  cmplwi    r0, 0xF
-	  blt+      .loc_0xCC
-	  lis       r3, 0x8000
-	  addi      r0, r3, 0x3000
-	  stw       r0, 0x31D4(r13)
-	  li        r20, 0
-	  b         .loc_0x230
-
-	.loc_0x230:
-	  lis       r3, 0x801F
-	  addi      r23, r3, 0x6020
-	  b         .loc_0x23C
-
-	.loc_0x23C:
-	  b         .loc_0x250
-
-	.loc_0x240:
-	  mr        r3, r20
-	  mr        r4, r23
-	  bl        0x60
-	  addi      r20, r20, 0x1
-
-	.loc_0x250:
-	  rlwinm    r0,r20,0,24,31
-	  cmplwi    r0, 0xF
-	  blt+      .loc_0x240
-	  stw       r25, 0x0(r30)
-	  addi      r3, r29, 0x1A0
-	  crclr     6, 0x6
-	  bl        0x7C30
-	  lmw       r20, 0x8(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	DBPrintf("Exceptions initialized...\n");
 }
 
 /*
@@ -490,20 +399,22 @@ void OSExceptionInit(void)
  * Address:	801F5F2C
  * Size:	000024
  */
-void __OSDBIntegrator(void)
+static ASM void __OSDBIntegrator(void)
 {
-	/*
-	.loc_0x0:
-	  li        r5, 0x40
-	  mflr      r3
-	  stw       r3, 0xC(r5)
-	  lwz       r3, 0x8(r5)
-	  oris      r3, r3, 0x8000
-	  mtlr      r3
-	  li        r3, 0x30
-	  mtmsr     r3
-	  blr
-	*/
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+entry __OSDBINTSTART
+	li      r5, OS_DBINTERFACE_ADDR
+	mflr    r3
+	stw     r3, DB_EXCEPTIONRET_OFFSET(r5)
+	lwz     r3, DB_EXCEPTIONDEST_OFFSET(r5)
+	oris    r3, r3, OS_CACHED_REGION_PREFIX
+	mtlr    r3
+	li      r3, 0x30 // MSR_IR | MSR_DR     // turn on memory addressing
+	mtmsr   r3
+	blr
+entry __OSDBINTEND
+#endif // clang-format on
 }
 
 /*
@@ -511,12 +422,13 @@ void __OSDBIntegrator(void)
  * Address:	801F5F50
  * Size:	000004
  */
-void __OSDBJump(void)
-{
-	/*
-	.loc_0x0:
-	  bla       0x60
-	*/
+static ASM void __OSDBJump(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+entry __OSDBJUMPSTART
+	bla     OS_DBJUMPPOINT_ADDR
+entry __OSDBJUMPEND
+#endif // clang-format on
 }
 
 /*
@@ -524,18 +436,12 @@ void __OSDBJump(void)
  * Address:	801F5F54
  * Size:	00001C
  */
-void __OSSetExceptionHandler(void)
+__OSExceptionHandler __OSSetExceptionHandler(__OSException exception, __OSExceptionHandler handler)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lwz       r3, 0x31D4(r13)
-	  rlwinm    r0,r0,2,0,29
-	  add       r5, r3, r0
-	  lwz       r3, 0x0(r5)
-	  stw       r4, 0x0(r5)
-	  blr
-	*/
+	__OSExceptionHandler oldHandler;
+	oldHandler                  = OSExceptionTable[exception];
+	OSExceptionTable[exception] = handler;
+	return oldHandler;
 }
 
 /*
@@ -543,69 +449,96 @@ void __OSSetExceptionHandler(void)
  * Address:	801F5F70
  * Size:	000014
  */
-void __OSGetExceptionHandler(void)
-{
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lwz       r3, 0x31D4(r13)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r3, r3, r0
-	  blr
-	*/
-}
+__OSExceptionHandler __OSGetExceptionHandler(__OSException exception) { return OSExceptionTable[exception]; }
 
 /*
  * --INFO--
  * Address:	801F5F84
  * Size:	00009C
  */
-void OSExceptionVector(void)
+static ASM void OSExceptionVector(void)
 {
-	/*
-	.loc_0x0:
-	  mtsprg    0, r4
-	  lwz       r4, 0xC0(r0)
-	  stw       r3, 0xC(r4)
-	  mfsprg    r3, 0
-	  stw       r3, 0x10(r4)
-	  stw       r5, 0x14(r4)
-	  lhz       r3, 0x1A2(r4)
-	  ori       r3, r3, 0x2
-	  sth       r3, 0x1A2(r4)
-	  mfcr      r3
-	  stw       r3, 0x80(r4)
-	  mflr      r3
-	  stw       r3, 0x84(r4)
-	  mfctr     r3
-	  stw       r3, 0x88(r4)
-	  mfxer     r3
-	  stw       r3, 0x8C(r4)
-	  mfsrr0    r3
-	  stw       r3, 0x198(r4)
-	  mfsrr1    r3
-	  stw       r3, 0x19C(r4)
-	  mr        r5, r3
-	  nop
-	  mfmsr     r3
-	  ori       r3, r3, 0x30
-	  mtsrr1    r3
-	  li        r3, 0
-	  lwz       r4, 0xD4(r0)
-	  rlwinm.   r5,r5,0,30,30
-	  bne-      .loc_0x88
-	  lis       r5, 0x801F
-	  addi      r5, r5, 0x6020
-	  mtsrr0    r5
-	  rfi
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
 
-	.loc_0x88:
-	  rlwinm    r5,r3,2,22,29
-	  lwz       r5, 0x3000(r5)
-	  mtsrr0    r5
-	  rfi
-	  nop
-	*/
+entry __OSEVStart
+	// Save r4 into SPRG0
+	mtsprg  0, r4
+
+	// Load current context physical address into r4
+	lwz     r4, OS_CURRENTCONTEXT_PADDR
+
+	// Save r3 - r5 into the current context
+	stw     r3, OS_CONTEXT_R3(r4)
+	mfsprg  r3, 0
+	stw     r3, OS_CONTEXT_R4(r4)
+	stw     r5, OS_CONTEXT_R5(r4)
+
+	lhz     r3, OS_CONTEXT_STATE(r4)
+	ori     r3, r3, OS_CONTEXT_STATE_EXC
+	sth     r3, OS_CONTEXT_STATE(r4)
+
+	// Save misc registers
+	mfcr    r3
+	stw     r3, OS_CONTEXT_CR(r4)
+	mflr    r3
+	stw     r3, OS_CONTEXT_LR(r4)
+	mfctr   r3
+	stw     r3, OS_CONTEXT_CTR(r4)
+	mfxer   r3
+	stw     r3, OS_CONTEXT_XER(r4)
+	mfsrr0  r3
+	stw     r3, OS_CONTEXT_SRR0(r4)
+	mfsrr1  r3
+	stw     r3, OS_CONTEXT_SRR1(r4)
+	mr      r5, r3
+
+entry __DBVECTOR
+	nop
+
+	// Set SRR1[IR|DR] to turn on address
+	// translation at the next RFI
+	mfmsr   r3
+	ori     r3, r3, 0x30
+	mtsrr1  r3
+
+	// This lets us change the exception number based on the
+	// exception we're installing.
+entry __OSEVSetNumber
+	addi    r3, 0, 0x0000
+
+	// Load current context virtual address into r4
+	lwz     r4, 0xD4
+
+	// Check non-recoverable interrupt
+	rlwinm. r5, r5, 0, MSR_RI_BIT, MSR_RI_BIT
+	bne     recoverable
+	addis   r5, 0,  OSDefaultExceptionHandler@ha
+	addi    r5, r5, OSDefaultExceptionHandler@l
+	mtsrr0  r5
+	rfi
+	// NOT REACHED HERE
+
+recoverable:
+	// Locate exception handler.
+	rlwinm  r5, r3, 2, 22, 29               // r5 contains exception*4
+	lwz     r5, OS_EXCEPTIONTABLE_ADDR(r5)
+	mtsrr0  r5
+
+	// Final state
+	// r3 - exception number
+	// r4 - pointer to context
+	// r5 - garbage
+	// srr0 - exception handler
+	// srr1 - address translation enalbed, not yet recoverable
+
+	rfi
+	// NOT REACHED HERE
+	// The handler will restore state
+
+entry __OSEVEnd
+	nop
+#endif // clang-format on
 }
 
 /*
@@ -613,32 +546,19 @@ void OSExceptionVector(void)
  * Address:	801F6020
  * Size:	000054
  */
-void OSDefaultExceptionHandler(void)
+static ASM void OSDefaultExceptionHandler(register __OSException exception, register OSContext* context)
 {
-	/*
-	.loc_0x0:
-	  stw       r0, 0x0(r4)
-	  stw       r1, 0x4(r4)
-	  stw       r2, 0x8(r4)
-	  stmw      r6, 0x18(r4)
-	  mfspr     r0, 0x391
-	  stw       r0, 0x1A8(r4)
-	  mfspr     r0, 0x392
-	  stw       r0, 0x1AC(r4)
-	  mfspr     r0, 0x393
-	  stw       r0, 0x1B0(r4)
-	  mfspr     r0, 0x394
-	  stw       r0, 0x1B4(r4)
-	  mfspr     r0, 0x395
-	  stw       r0, 0x1B8(r4)
-	  mfspr     r0, 0x396
-	  stw       r0, 0x1BC(r4)
-	  mfspr     r0, 0x397
-	  stw       r0, 0x1C0(r4)
-	  mfdsisr   r5
-	  mfdar     r6
-	  b         0x19E8
-	*/
+#pragma unused(exception)
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	OS_EXCEPTION_SAVE_GPRS(context)
+	// Load DSISR and DAR
+	mfdsisr r5
+	mfdar   r6
+
+	b       __OSUnhandledException
+	// NOT REACHED HERE
+#endif // clang-format on
 }
 
 /*
@@ -648,38 +568,23 @@ void OSDefaultExceptionHandler(void)
  */
 void __OSPSInit(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x6F0
-	  oris      r3, r3, 0xA000
-	  bl        -0x6F0
-	  bl        0xC8C
-	  sync
-	  li        r3, 0
-	  mtspr     912, r3
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	PPCMthid2(PPCMfhid2() | 0xA0000000);
+	ICFlashInvalidate();
+	__sync();
+#ifdef __MWERKS__ // clang-format off
+	asm {
+		li      r3, 0
+		mtspr   GQR0, r3
+	}
+#endif // clang-format on
 }
+
+#define DI_CONFIG_IDX         0x9
+#define DI_CONFIG_CONFIG_MASK 0xFF
 
 /*
  * --INFO--
  * Address:	801F60AC
  * Size:	000014
  */
-void __OSGetDIConfig(void)
-{
-	/*
-	.loc_0x0:
-	  lis       r3, 0xCC00
-	  addi      r3, r3, 0x6000
-	  lwz       r0, 0x24(r3)
-	  rlwinm    r3,r0,0,24,31
-	  blr
-	*/
-}
+u32 __OSGetDIConfig(void) { return (__DIRegs[DI_CONFIG_IDX] & DI_CONFIG_CONFIG_MASK); }
