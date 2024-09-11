@@ -16,5 +16,6 @@
         "*.ctx": "cpp",
         "source_location": "cpp",
         "*.cp": "cpp",
+        "__mem.h": "c"
     }
 }

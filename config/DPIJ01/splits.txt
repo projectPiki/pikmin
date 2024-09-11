@@ -2850,6 +2850,9 @@ gx/GXPerf.c:
 	.text       start:0x8021C054 end:0x8021C8FC
 	.data       start:0x802F2670 end:0x802F2760
 
+Runtime/PPCEABI/H/__mem.c:
+	.init       start:0x80003384 end:0x800034C8
+
 Runtime/PPCEABI/H/__va_arg.c:
 	.text       start:0x8021C8FC end:0x8021C9F0
 
@@ -2925,7 +2928,6 @@ MSL_C/PPCEABI/bare/H/mbstring.c:
 	.text       start:0x8021E16C end:0x8021E1F8
 
 MSL_C/PPCEABI/bare/H/mem.c:
-	.init       start:0x80003384 end:0x800034C8
 	.text       start:0x8021E1F8 end:0x8021E344
 
 MSL_C/PPCEABI/bare/H/mem_funcs.c:

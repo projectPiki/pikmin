@@ -388,4 +388,4 @@
 .comm jac_audioThread, 0x2940, 32
 .comm jac_audioStack, 0x1000, 32
 .comm jac_dvdThread, 0x310, 8
-# .comm jac_dvdStack, 0x1000, 32 # keeps wanting to be placed before jac_dvdThread
+.comm jac_dvdStack, 0x1000, 32 # keeps wanting to be placed before jac_dvdThread

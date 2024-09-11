@@ -2845,6 +2845,9 @@ Runtime/PPCEABI/H/global_destructor_chain.c:
 	.dtors      start:0x80227588 end:0x8022758C
 	.sbss       start:0x803EE828 end:0x803EE830
 
+Runtime/PPCEABI/H/__mem.c:
+	.init       start:0x80003320 end:0x80003464
+
 Runtime/PPCEABI/H/CPlusLibPPC.cp:
 	.text       start:0x80219F70 end:0x80219FA0
 
@@ -2912,7 +2915,6 @@ MSL_C/PPCEABI/bare/H/mbstring.c:
 	.text       start:0x8021B68C end:0x8021B718
 
 MSL_C/PPCEABI/bare/H/mem.c:
-	.init       start:0x80003320 end:0x80003464
 	.text       start:0x8021B718 end:0x8021B864
 
 MSL_C/PPCEABI/bare/H/mem_funcs.c:

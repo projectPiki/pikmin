@@ -1231,3 +1231,6 @@
 .obj hvqmStack, local
 	.skip 0x1000
 .endobj hvqmStack
+
+.comm pic_ctrl, 0x1B0, 4
+.comm dvd_ctrl, 0x30, 4
