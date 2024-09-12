@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Interactions.h"
 
 /*
  * --INFO--
@@ -25,14 +25,14 @@ static void _Print(char*, ...)
  * Address:	8007CB38
  * Size:	000008
  */
-u32 InteractPullout::actCommon(Creature*) { return 0x1; }
+bool InteractPullout::actCommon(Creature*) { return true; }
 
 /*
  * --INFO--
  * Address:	8007CB40
  * Size:	0002BC
  */
-void InteractPullout::actPiki(Piki*)
+bool InteractPullout::actPiki(Piki*)
 {
 	/*
 	.loc_0x0:

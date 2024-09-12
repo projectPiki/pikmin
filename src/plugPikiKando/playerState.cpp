@@ -1,10 +1,10 @@
-#include "types.h"
+#include "PlayerState.h"
+#include "sysNew.h"
 
-class PlayerState {
-	int getCurrDay();
-	int getCurrParts();
-	bool isEnding();
-};
+int PlayerState::totalUfoParts = 30;
+
+bool preloadUFO = false;
+PlayerState* playerState;
 
 /*
  * --INFO--
@@ -84,24 +84,16 @@ void TimeGraph::get(u16, int)
 
 bool PlayerState::isEnding()
 {
-	// fully matches
-	{
-		int game_stat;
-		bool is_ending;
+	if (getCurrDay() >= 29) {
+		// we've hit our 30-day limit
+		return true;
 
-		game_stat = PlayerState::getCurrDay();
-		if (game_stat >= 29) {
-			is_ending = true;
-		} else {
-			game_stat = PlayerState::getCurrParts();
-			if (game_stat >= 30) {
-				is_ending = true;
-			} else {
-				is_ending = false;
-			}
-		}
-		return is_ending;
+	} else if (getCurrParts() >= 30) {
+		// we've collected every part
+		return true;
 	}
+
+	return false;
 }
 
 /*
@@ -109,8 +101,9 @@ bool PlayerState::isEnding()
  * Address:	8007F410
  * Size:	00019C
  */
-void PlayerState::existUfoParts(u32)
+bool PlayerState::existUfoParts(u32)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -391,6 +384,8 @@ void PlayerState::initGame()
  */
 PlayerState::PlayerState()
 {
+	mTotalParts = totalUfoParts;
+	mUfoParts   = new UfoParts[mTotalParts];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1448,8 +1443,9 @@ void PlayerState::loadCard(RandomAccessStream&)
  * Address:	80080474
  * Size:	000044
  */
-void PlayerState::isTutorial()
+bool PlayerState::isTutorial()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lis       r4, 0x803A
@@ -1481,8 +1477,9 @@ void PlayerState::isTutorial()
  * Address:	800804B8
  * Size:	00002C
  */
-void PlayerState::isGameCourse()
+bool PlayerState::isGameCourse()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lis       r3, 0x803A
@@ -1644,8 +1641,9 @@ void PlayerState::init()
  * Address:	80080604
  * Size:	00005C
  */
-void PlayerState::hasUfoParts(u32)
+bool PlayerState::hasUfoParts(u32)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x174(r3)
@@ -2145,8 +2143,9 @@ void PlayerState::updateFinalResult()
  * Address:	80080BB0
  * Size:	000014
  */
-s32 PlayerState::getCurrDay()
+int PlayerState::getCurrDay()
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  lis       r3, 0x803A
@@ -2162,15 +2161,16 @@ s32 PlayerState::getCurrDay()
  * Address:	80080BC4
  * Size:	000008
  */
-s32 PlayerState::getTotalDays() { return 30; }
+int PlayerState::getTotalDays() { return 30; }
 
 /*
  * --INFO--
  * Address:	80080BCC
  * Size:	000028
  */
-void PlayerState::getStartHour()
+int PlayerState::getStartHour()
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  lis       r3, 0x803A
@@ -2191,8 +2191,9 @@ void PlayerState::getStartHour()
  * Address:	80080BF4
  * Size:	000028
  */
-void PlayerState::getEndHour()
+int PlayerState::getEndHour()
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  lis       r3, 0x803A
@@ -2213,8 +2214,9 @@ void PlayerState::getEndHour()
  * Address:	80080C1C
  * Size:	00004C
  */
-void PlayerState::getPikiHourCount(int, int)
+int PlayerState::getPikiHourCount(int, int)
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  lhz       r6, 0x18C(r3)
@@ -2246,8 +2248,9 @@ void PlayerState::getPikiHourCount(int, int)
  * Address:	80080C68
  * Size:	000008
  */
-void PlayerState::getTotalParts()
+int PlayerState::getTotalParts()
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  lwz       r3, 0x174(r3)
@@ -2260,8 +2263,9 @@ void PlayerState::getTotalParts()
  * Address:	80080C70
  * Size:	000008
  */
-void PlayerState::getCurrParts()
+int PlayerState::getCurrParts()
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  lwz       r3, 0x17C(r3)
@@ -2284,8 +2288,9 @@ void PlayerState::getRestParts()
  * Address:	80080C78
  * Size:	000050
  */
-void PlayerState::isUfoBroken()
+bool PlayerState::isUfoBroken()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lbz       r0, 0x1B6(r3)

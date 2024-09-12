@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Navi.h"
+#include "Piki.h"
 
 /*
  * --INFO--

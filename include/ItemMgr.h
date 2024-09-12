@@ -14,7 +14,7 @@ struct ItemCreature : public AICreature {
 	ItemCreature(int, CreatureProp*, Shape*);
 
 	virtual void init(Vector3f&);           // _28
-	virtual void getHeight();               // _40
+	virtual f32 getHeight();                // _40
 	virtual void stimulate(Interaction&);   // _A0
 	virtual void update();                  // _E0
 	virtual void refresh(Graphics&);        // _EC

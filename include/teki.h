@@ -52,7 +52,7 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	virtual f32 getiMass();                              // _38
 	virtual void doStore(CreatureInf*);                  // _48
 	virtual void doRestore(CreatureInf*);                // _4C
-	virtual void getShadowSize();                        // _70
+	virtual f32 getShadowSize();                         // _70
 	virtual bool isVisible();                            // _74
 	virtual bool isOrganic();                            // _78
 	virtual bool isAtari();                              // _84

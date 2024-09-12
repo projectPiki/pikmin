@@ -3018,7 +3018,7 @@ bool Creature::needShadow() { return true; }
  * Address:	8008C3CC
  * Size:	000040
  */
-void Creature::getShadowSize()
+f32 Creature::getShadowSize()
 {
 	/*
 	.loc_0x0:

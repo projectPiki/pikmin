@@ -1,4 +1,4 @@
-#include "types.h"
+#include "UtilityKando.h"
 
 /*
  * --INFO--
@@ -330,7 +330,7 @@ void BitFlags::resetFlag(u16)
  * Address:	801163B4
  * Size:	000038
  */
-void BitFlags::isFlag(u16)
+bool BitFlags::isFlag(u16)
 {
 	/*
 	.loc_0x0:

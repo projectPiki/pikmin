@@ -111,7 +111,7 @@ struct Boss : public Creature {
 	Boss(CreatureProp*);
 
 	virtual void getCentre();                          // _58
-	virtual void getShadowSize();                      // _70
+	virtual f32 getShadowSize();                       // _70
 	virtual bool isVisible();                          // _74
 	virtual bool isOrganic();                          // _78
 	virtual bool isAtari();                            // _84

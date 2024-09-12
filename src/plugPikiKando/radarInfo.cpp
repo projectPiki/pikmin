@@ -1,12 +1,19 @@
-#include "types.h"
+#include "RadarInfo.h"
+#include "Dolphin/os.h"
+#include "sysNew.h"
+#include "Creature.h"
+#include "Vector.h"
+
+RadarInfo* radarInfo;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "radarInfo");
 	// UNUSED FUNCTION
 }
 
@@ -27,59 +34,8 @@ static void _Print(char*, ...)
  */
 RadarInfo::RadarInfo()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r26, 0x10(r1)
-	  addi      r26, r3, 0
-	  addi      r27, r4, 0x738C
-	  lis       r3, 0x8022
-	  addi      r28, r3, 0x737C
-	  lis       r3, 0x802B
-	  subi      r30, r3, 0x33DC
-	  li        r29, 0
-	  addi      r3, r26, 0
-	  stw       r27, 0x0(r26)
-	  mr        r4, r30
-	  stw       r28, 0x0(r26)
-	  stw       r29, 0x10(r26)
-	  stw       r29, 0xC(r26)
-	  stw       r29, 0x8(r26)
-	  bl        -0x566DC
-	  lis       r3, 0x802B
-	  subi      r31, r3, 0x3398
-	  stw       r31, 0x0(r26)
-	  mr        r4, r30
-	  addi      r3, r26, 0x18
-	  stw       r29, 0x14(r26)
-	  stw       r27, 0x18(r26)
-	  stw       r28, 0x18(r26)
-	  stw       r29, 0x28(r26)
-	  stw       r29, 0x24(r26)
-	  stw       r29, 0x20(r26)
-	  bl        -0x5670C
-	  stw       r31, 0x18(r26)
-	  subi      r4, r13, 0x6430
-	  subi      r0, r13, 0x6428
-	  stw       r29, 0x2C(r26)
-	  mr        r3, r26
-	  stw       r29, 0x10(r26)
-	  stw       r29, 0xC(r26)
-	  stw       r29, 0x8(r26)
-	  stw       r4, 0x4(r26)
-	  stw       r29, 0x28(r26)
-	  stw       r29, 0x24(r26)
-	  stw       r29, 0x20(r26)
-	  stw       r0, 0x1C(r26)
-	  lwz       r0, 0x2C(r1)
-	  lmw       r26, 0x10(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mAlivePartsList.initCore("alive");
+	mDeadPartsList.initCore("dead ");
 }
 
 /*
@@ -87,8 +43,28 @@ RadarInfo::RadarInfo()
  * Address:	8007B62C
  * Size:	0000E8
  */
-void RadarInfo::attachParts(Creature*)
+void RadarInfo::attachParts(Creature* part)
 {
+	// check if part is already alive/attached
+	FOREACH_NODE(PartsInfo, mAlivePartsList.mChild, aliveInfo)
+	{
+		if (aliveInfo->mPart == part) {
+			// part is already attached, do nothing
+			return;
+		}
+	}
+
+	// take next part from detached list if there is one, otherwise make a new one
+	PartsInfo* newInfo;
+	if (mDeadPartsList.mChild) {
+		newInfo = static_cast<PartsInfo*>(mDeadPartsList.mChild);
+		newInfo->del();
+	} else {
+		PartsInfo* newInfo = new PartsInfo();
+	}
+
+	mAlivePartsList.add(newInfo);
+	newInfo->mPart = part;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -167,47 +143,18 @@ void RadarInfo::attachParts(Creature*)
  * Address:	8007B714
  * Size:	000070
  */
-void RadarInfo::detachParts(Creature*)
+void RadarInfo::detachParts(Creature* part)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r31, 0x10(r3)
-	  b         .loc_0x50
-
-	.loc_0x20:
-	  lwz       r0, 0x14(r31)
-	  cmplw     r0, r4
-	  bne-      .loc_0x4C
-	  mr        r3, r31
-	  bl        -0x3B134
-	  addi      r3, r30, 0x18
-	  addi      r4, r31, 0
-	  bl        -0x3B178
-	  li        r0, 0
-	  stw       r0, 0x14(r31)
-	  b         .loc_0x58
-
-	.loc_0x4C:
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x50:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x20
-
-	.loc_0x58:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	// find part and detach it
+	FOREACH_NODE(PartsInfo, mAlivePartsList.mChild, aliveInfo)
+	{
+		if (aliveInfo->mPart == part) {
+			aliveInfo->del();
+			mDeadPartsList.add(aliveInfo);
+			aliveInfo->mPart = nullptr;
+			return;
+		}
+	}
 }
 
 /*
@@ -215,28 +162,12 @@ void RadarInfo::detachParts(Creature*)
  * Address:	8007B784
  * Size:	000044
  */
-void RadarInfo::PartsInfo::getPos()
+Vector3f RadarInfo::PartsInfo::getPos()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x14(r4)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x28
-	  lfsu      f0, 0x94(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r4)
-	  stfs      f0, 0x8(r3)
-	  blr
+	if (mPart) {
+		return mPart->mPosition;
+	}
 
-	.loc_0x28:
-	  lfs       f1, -0x641C(r13)
-	  lfs       f2, -0x6418(r13)
-	  lfs       f0, -0x6420(r13)
-	  stfs      f0, 0x0(r3)
-	  stfs      f1, 0x4(r3)
-	  stfs      f2, 0x8(r3)
-	  blr
-	*/
+	Vector3f vec(0.0f, 0.0f, 0.0f); // this is necessary unfortunately
+	return vec;
 }

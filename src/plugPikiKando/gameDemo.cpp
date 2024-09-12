@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Demo.h"
 
 /*
  * --INFO--
@@ -716,7 +716,7 @@ void DemoFlags::registerDemoFlag(int, char*, u16, u16, bool)
  * Address:	800824C4
  * Size:	000030
  */
-void DemoFlags::isFlag(int)
+bool DemoFlags::isFlag(int)
 {
 	/*
 	.loc_0x0:

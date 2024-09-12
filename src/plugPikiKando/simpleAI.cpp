@@ -1081,6 +1081,7 @@ void Creature::startAI(int) { }
  */
 f32 Creature::getiMass()
 {
+	return 0.0f;
 	/*
 	.loc_0x0:
 	  lfs       f1, -0x7688(r2)
@@ -1093,7 +1094,7 @@ f32 Creature::getiMass()
  * Address:	8007DD40
  * Size:	000008
  */
-void Creature::getSize()
+f32 Creature::getSize()
 {
 	/*
 	.loc_0x0:
@@ -1107,7 +1108,7 @@ void Creature::getSize()
  * Address:	8007DD48
  * Size:	000008
  */
-void Creature::getHeight()
+f32 Creature::getHeight()
 {
 	/*
 	.loc_0x0:
@@ -1121,7 +1122,7 @@ void Creature::getHeight()
  * Address:	8007DD50
  * Size:	000008
  */
-void Creature::getCylinderHeight()
+f32 Creature::getCylinderHeight()
 {
 	/*
 	.loc_0x0:
@@ -1163,7 +1164,7 @@ void Creature::doLoad(RandomAccessStream&) { }
  * Address:	8007DD68
  * Size:	00001C
  */
-void Creature::getShadowPos()
+Vector3f Creature::getShadowPos()
 {
 	/*
 	.loc_0x0:
@@ -1209,13 +1210,6 @@ bool Creature::isOrganic() { return true; }
  * Size:	000008
  */
 bool Creature::isBuried() { return false; }
-
-/*
- * --INFO--
- * Address:	8007DDB0
- * Size:	000008
- */
-bool Creature::isAtari() { return true; }
 
 /*
  * --INFO--

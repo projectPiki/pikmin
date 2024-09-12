@@ -22,8 +22,8 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	Navi(CreatureProp*, int);
 
 	virtual f32 getiMass();                              // _38
-	virtual void getSize();                              // _3C
-	virtual void getShadowSize();                        // _70 (weak)
+	virtual f32 getSize();                               // _3C
+	virtual f32 getShadowSize();                         // _70 (weak)
 	virtual bool isVisible();                            // _74
 	virtual bool isBuried();                             // _80
 	virtual bool isAtari();                              // _84

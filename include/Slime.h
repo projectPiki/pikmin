@@ -92,7 +92,7 @@ struct SlimeCreature : public Creature {
 	SlimeCreature(CreatureProp*);
 
 	virtual f32 getiMass();              // _38
-	virtual void getSize();              // _3C
+	virtual f32 getSize();               // _3C
 	virtual void getCentre();            // _58
 	virtual void setCentre(Vector3f&);   // _6C
 	virtual bool isAtari();              // _84

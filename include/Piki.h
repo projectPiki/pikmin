@@ -20,8 +20,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	virtual bool doDoAI();                               // _1C
 	virtual void resetPosition(Vector3f&);               // _2C
 	virtual f32 getiMass();                              // _38
-	virtual void getSize();                              // _3C
-	virtual void getShadowPos();                         // _68
+	virtual f32 getSize();                               // _3C
+	virtual Vector3f getShadowPos();                     // _68
 	virtual bool isVisible();                            // _74
 	virtual bool isBuried();                             // _80
 	virtual bool isAtari();                              // _84

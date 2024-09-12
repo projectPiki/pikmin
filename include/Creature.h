@@ -6,6 +6,7 @@
 #include "FastGrid.h"
 #include "ObjType.h"
 #include "RefCountable.h"
+#include "Vector.h"
 
 struct CollInfo;
 struct CollTriInfo;
@@ -61,9 +62,9 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual void initParam(int);                              // _30 (weak)
 	virtual void startAI(int);                                // _34 (weak)
 	virtual f32 getiMass();                                   // _38 (weak)
-	virtual void getSize();                                   // _3C (weak)
-	virtual void getHeight();                                 // _40 (weak)
-	virtual void getCylinderHeight();                         // _44 (weak)
+	virtual f32 getSize();                                    // _3C (weak)
+	virtual f32 getHeight();                                  // _40 (weak)
+	virtual f32 getCylinderHeight();                          // _44 (weak)
 	virtual void doStore(CreatureInf*);                       // _48 (weak)
 	virtual void doRestore(CreatureInf*);                     // _4C (weak)
 	virtual void doSave(struct RandomAccessStream&);          // _50 (weak)
@@ -72,9 +73,9 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual f32 getCentreSize();                              // _5C
 	virtual void getBoundingSphereCentre();                   // _60
 	virtual void getBoundingSphereRadius();                   // _64
-	virtual void getShadowPos();                              // _68 (weak)
+	virtual Vector3f getShadowPos();                          // _68 (weak)
 	virtual void setCentre(Vector3f&);                        // _6C (weak)
-	virtual void getShadowSize();                             // _70
+	virtual f32 getShadowSize();                              // _70
 	virtual bool isVisible() { return true; }                 // _74
 	virtual bool isOrganic();                                 // _78 (weak)
 	virtual bool isTerrible();                                // _7C
@@ -186,7 +187,8 @@ struct Creature : public RefCountable, public EventTalker {
 	FastGrid mGrid;         // _40
 	u8 _58[0x6C - 0x58];    // _58, TODO: work out members
 	EObjType mObjType;      // _6C, object type
-	u8 _70[0xA0 - 0x70];    // _70, TODO: work out members
+	u8 _70[0x94 - 0x70];    // _70, TODO: work out members
+	Vector3f mPosition;     // _94
 	f32 mDirection;         // _A0
 	u8 _A4[0xC8 - 0xA4];    // _A4, TODO: work out members
 	u32 mCreatureFlags;     // _C8, bitflag
