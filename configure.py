@@ -403,7 +403,7 @@ config.libs = [
         "mw_version": "GC/1.2.5n",
         "objects": [
             Object(NonMatching, "plugPikiKando/omake.cpp"),
-            Object(NonMatching, "plugPikiKando/radarInfo.cpp"),
+            Object(Matching, "plugPikiKando/radarInfo.cpp"),
             Object(NonMatching, "plugPikiKando/interactBattle.cpp"),
             Object(NonMatching, "plugPikiKando/interactGrab.cpp"),
             Object(NonMatching, "plugPikiKando/interactEtc.cpp"),
