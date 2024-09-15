@@ -408,7 +408,7 @@ config.libs = [
             Object(NonMatching, "plugPikiKando/interactGrab.cpp"),
             Object(NonMatching, "plugPikiKando/interactEtc.cpp"),
             Object(NonMatching, "plugPikiKando/interactPullout.cpp"),
-            Object(NonMatching, "plugPikiKando/saiEvents.cpp"),
+            Object(Matching, "plugPikiKando/saiEvents.cpp"),
             Object(NonMatching, "plugPikiKando/simpleAI.cpp"),
             Object(NonMatching, "plugPikiKando/formationMgr.cpp"),
             Object(Matching, "plugPikiKando/globalShapes.cpp"),
@@ -417,9 +417,9 @@ config.libs = [
             Object(NonMatching, "plugPikiKando/demoInvoker.cpp"),
             Object(NonMatching, "plugPikiKando/demoEvent.cpp"),
             Object(NonMatching, "plugPikiKando/resultFlag.cpp"),
-            Object(NonMatching, "plugPikiKando/aiConstants.cpp"),
-            Object(NonMatching, "plugPikiKando/kio.cpp"),
-            Object(NonMatching, "plugPikiKando/keyConfig.cpp"),
+            Object(Matching, "plugPikiKando/aiConstants.cpp"),
+            Object(Matching, "plugPikiKando/kio.cpp"),
+            Object(Matching, "plugPikiKando/keyConfig.cpp"),
             Object(NonMatching, "plugPikiKando/aiPerf.cpp"),
             Object(NonMatching, "plugPikiKando/courseDebug.cpp"),
             Object(NonMatching, "plugPikiKando/memStat.cpp"),
@@ -881,7 +881,7 @@ config.libs = [
     DolphinLib(
         "hio",
         [
-            Object(NonMatching, "hio/hio.c"),
+            Object(Matching, "hio/hio.c"),
         ]
     ),
     DolphinLib(

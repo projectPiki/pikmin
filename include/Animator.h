@@ -39,9 +39,9 @@ struct DataChunk {
 		}
 	}
 
-	int mDataIndex;
-	int mDataSize; // _04
-	f32* mData;    // _08
+	int mDataIndex; // _00
+	int mDataSize;  // _04
+	f32* mData;     // _08
 };
 
 /**

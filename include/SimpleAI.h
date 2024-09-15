@@ -47,10 +47,110 @@ struct SAICondition : public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct SAIEvent : public Receiver<AICreature> {
-	// _00 = VTBL?
+	SAIEvent()
+	    : mEventID(-1)
+	{
+	}
+
+	// _00 = VTBL
+	int mEventID; // _04
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct SAIBounceEvent : public SAIEvent {
+	virtual void procBounceMsg(AICreature*, MsgBounce*); // _0C
+
+	// _00     = VTBL
+	// _00-_08 = SAIEvent
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct SAICollideEvent : public SAIEvent {
+	virtual void procCollideMsg(AICreature*, MsgCollide*); // _1C
+
+	// _00     = VTBL
+	// _00-_08 = SAIEvent
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct SAIGroundEvent : public SAIEvent {
+	virtual void procGroundMsg(AICreature*, MsgGround*); // _34
+
+	// _00     = VTBL
+	// _00-_08 = SAIEvent
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct SAIMotionAction0Event : public SAIEvent {
+	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
+
+	// _00     = VTBL
+	// _00-_08 = SAIEvent
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct SAIMotionDoneEvent : public SAIEvent {
+	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
+
+	// _00     = VTBL
+	// _00-_08 = SAIEvent
+};
+
+/**
+ * @brief TODO
+ */
+struct SAIMotionLoopStartEvent : public SAIEvent {
+	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
+
+	// _00     = VTBL
+	// _00-_08 = SAIEvent
 	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct SAIMotionLoopEndEvent : public SAIEvent {
+	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
+
+	// _00     = VTBL
+	// _00-_08 = SAIEvent
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct SAIUserEvent : public SAIEvent {
+	virtual void procUserMsg(AICreature*, MsgUser*); // _30
+
+	// _00     = VTBL
+	// _00-_08 = SAIEvent
+	u32 _08; // _08, maybe user id?
 };
 
 /**
@@ -92,5 +192,16 @@ struct SimpleAI : public StateMachine<AICreature> {
 	// _00-_1C = StateMachine
 	// TODO: members
 };
+
+// Global functions and objects
+void SAIEventInit();
+
+extern SAIMotionDoneEvent* saiMotionDoneEvent;
+extern SAIBounceEvent* saiBounceEvent;
+extern SAIMotionLoopStartEvent* saiMotionLoopStartEvent;
+extern SAIMotionLoopEndEvent* saiMotionLoopEndEvent;
+extern SAICollideEvent* saiCollideEvent;
+extern SAIGroundEvent* saiGroundEvent;
+extern SAIMotionAction0Event* saiMotionAction0Event;
 
 #endif

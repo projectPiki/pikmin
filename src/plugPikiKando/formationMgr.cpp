@@ -1,4 +1,5 @@
-#include "types.h"
+#include "FormationMgr.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -25,57 +26,34 @@ static void _Print(char*, ...)
  * Address:	8007DF5C
  * Size:	000010
  */
-void FormationMgr::getCreature(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x20(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwzx      r3, r3, r0
-	  blr
-	*/
-}
+Creature* FormationMgr::getCreature(int idx) { return _20[idx]; }
 
 /*
  * --INFO--
  * Address:	8007DF6C
  * Size:	000008
  */
-u32 FormationMgr::getFirst() { return 0x0; }
+int FormationMgr::getFirst() { return 0; }
 
 /*
  * --INFO--
  * Address:	8007DF74
  * Size:	000008
  */
-void FormationMgr::getNext(int)
-{
-	/*
-	.loc_0x0:
-	  addi      r3, r4, 0x1
-	  blr
-	*/
-}
+int FormationMgr::getNext(int idx) { return idx + 1; }
 
 /*
  * --INFO--
  * Address:	8007DF7C
  * Size:	00001C
  */
-void FormationMgr::isDone(int)
+bool FormationMgr::isDone(int idx)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2C(r3)
-	  cmpw      r4, r0
-	  blt-      .loc_0x14
-	  li        r3, 0x1
-	  blr
+	if (idx >= _2C) {
+		return true;
+	}
 
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -196,20 +174,6 @@ void FormationMgr::getLastCentre()
 	  lwz       r30, 0x38(r1)
 	  addi      r1, r1, 0x58
 	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8007E120
- * Size:	000008
- */
-void FormArranger::getLength(FormationMgr*)
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x7678(r2)
 	  blr
 	*/
 }
@@ -1199,7 +1163,7 @@ void PyramidArranger::arrange(FormationMgr*)
  * Address:	8007EC58
  * Size:	0000EC
  */
-void PyramidArranger::getLength(FormationMgr*)
+f32 PyramidArranger::getLength(FormationMgr*)
 {
 	/*
 	.loc_0x0:
@@ -1675,20 +1639,6 @@ Rope::Rope()
 void Rope::move(Vector3f&, Vector3f&, Vector3f&)
 {
 	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	8007F2AC
- * Size:	000008
- */
-void System::getFrameTime()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x28C(r3)
-	  blr
-	*/
 }
 
 /*

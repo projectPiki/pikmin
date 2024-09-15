@@ -14,10 +14,10 @@ struct Traversable {
 	{
 	}
 
-	virtual Creature* getCreature(int); // _08
-	virtual int getFirst();             // _0C
-	virtual int getNext(int);           // _10
-	virtual bool isDone(int);           // _14
+	virtual Creature* getCreature(int) = 0; // _08
+	virtual int getFirst()             = 0; // _0C
+	virtual int getNext(int)           = 0; // _10
+	virtual bool isDone(int)           = 0; // _14
 
 	// _00 = VTBL
 	u32 _04; // _04, unknown
