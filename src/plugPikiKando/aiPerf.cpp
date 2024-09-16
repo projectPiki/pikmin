@@ -1,4 +1,6 @@
-#include "types.h"
+#include "AIPerf.h"
+#include "WorkObject.h"
+#include "Delegate.h"
 
 /*
  * --INFO--
@@ -2331,7 +2333,7 @@ void AIPerf::breakSluice(Menu&)
  * Address:	80086470
  * Size:	000008
  */
-u32 WorkObject::isBridge() { return 0x0; }
+bool WorkObject::isBridge() { return false; }
 
 /*
  * --INFO--

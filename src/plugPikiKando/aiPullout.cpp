@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800BD670
  * Size:	000100
  */
-ActPullout::ActPullout(Piki*)
+ActPullout::ActPullout(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -295,7 +296,7 @@ void ActPullout::init(Creature*)
  * Address:	800BD9C0
  * Size:	0000DC
  */
-void ActPullout::exec()
+int ActPullout::exec()
 {
 	/*
 	.loc_0x0:
@@ -503,7 +504,8 @@ void ActPulloutCreature::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800BDBD8
  * Size:	00005C
  */
-ActPulloutCreature::ActPulloutCreature(Piki*)
+ActPulloutCreature::ActPulloutCreature(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -591,7 +593,7 @@ void ActPulloutCreature::init(Creature*)
  * Address:	800BDCC8
  * Size:	000240
  */
-void ActPulloutCreature::exec()
+int ActPulloutCreature::exec()
 {
 	/*
 	.loc_0x0:
@@ -843,19 +845,5 @@ ActPullout::~ActPullout()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800BDFE8
- * Size:	000008
- */
-void ActPulloutCreature::@20 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x14
-	  b         -0x48C
 	*/
 }

@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Piki.h"
+#include "PikiState.h"
 
 /*
  * --INFO--
@@ -25,7 +26,7 @@ static void _Print(char*, ...)
  * Address:	800C6558
  * Size:	000300
  */
-void Piki::isSafeMePos(Vector3f&)
+bool Piki::isSafeMePos(Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -2075,7 +2076,7 @@ void Piki::crMakeRefs()
  * Address:	800C7E70
  * Size:	00001C
  */
-void Piki::hasBomb()
+bool Piki::hasBomb()
 {
 	/*
 	.loc_0x0:
@@ -2189,7 +2190,7 @@ void Piki::endFire()
  * Address:	800C7F80
  * Size:	00013C
  */
-void Piki::isTeki(Piki*)
+bool Piki::isTeki(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -2563,7 +2564,7 @@ void Piki::actOnSituaton()
  * Address:	800C84C0
  * Size:	000008
  */
-u32 PikiState::freeAI() { return 0x0; }
+bool PikiState::freeAI() { return false; }
 
 /*
  * --INFO--
@@ -2580,7 +2581,7 @@ void Piki::getNaviID()
  * Address:	800C84C8
  * Size:	00004C
  */
-void Piki::doDoAI()
+bool Piki::doDoAI()
 {
 	/*
 	.loc_0x0:
@@ -2615,7 +2616,7 @@ void Piki::doDoAI()
  * Address:	800C8514
  * Size:	000024
  */
-void Piki::isRopable()
+bool Piki::isRopable()
 {
 	/*
 	.loc_0x0:
@@ -2682,7 +2683,7 @@ void Piki::getLastState()
  * Address:	800C8560
  * Size:	000018
  */
-void Piki::isBuried()
+bool Piki::isBuried()
 {
 	/*
 	.loc_0x0:
@@ -4541,7 +4542,7 @@ void Piki::updateColor()
  * Address:	800C9D44
  * Size:	000078
  */
-void Piki::needShadow()
+bool Piki::needShadow()
 {
 	/*
 	.loc_0x0:
@@ -4589,7 +4590,7 @@ void Piki::needShadow()
  * Address:	800C9DBC
  * Size:	000028
  */
-void Piki::isFixed()
+bool Piki::isFixed()
 {
 	/*
 	.loc_0x0:
@@ -4741,7 +4742,7 @@ void Piki::stimulate(Interaction&)
  * Address:	800C9F2C
  * Size:	000074
  */
-void Piki::getFormationPri()
+int Piki::getFormationPri()
 {
 	/*
 	.loc_0x0:
@@ -5021,7 +5022,7 @@ void Piki::birthBuried()
  * Address:	800CA1EC
  * Size:	000064
  */
-void Piki::isAtari()
+bool Piki::isAtari()
 {
 	/*
 	.loc_0x0:
@@ -5062,7 +5063,7 @@ void Piki::isAtari()
  * Address:	800CA250
  * Size:	0000B8
  */
-void Piki::ignoreAtari(Creature*)
+bool Piki::ignoreAtari(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -5138,14 +5139,14 @@ void Piki::ignoreAtari(Creature*)
  * Address:	800CA308
  * Size:	000008
  */
-u32 Piki::needFlick(Creature*) { return 0x1; }
+bool Piki::needFlick(Creature*) { return true; }
 
 /*
  * --INFO--
  * Address:	800CA310
  * Size:	000110
  */
-void Piki::isVisible()
+bool Piki::isVisible()
 {
 	/*
 	.loc_0x0:
@@ -5265,7 +5266,7 @@ void Piki::isTamable()
  * Address:	800CA420
  * Size:	0000C4
  */
-void Piki::isThrowable()
+bool Piki::isThrowable()
 {
 	/*
 	.loc_0x0:
@@ -5420,7 +5421,7 @@ void Piki::jumpCallback() { }
  * Address:	800CA584
  * Size:	000080
  */
-void Piki::platAttachable()
+bool Piki::platAttachable()
 {
 	/*
 	.loc_0x0:
@@ -5474,7 +5475,7 @@ void Piki::platAttachable()
  * Address:	800CA604
  * Size:	0000E0
  */
-void Piki::mayIstick()
+bool Piki::mayIstick()
 {
 	/*
 	.loc_0x0:
@@ -6962,14 +6963,15 @@ void Piki::collisionCallback(CollEvent&)
  * Address:	800CB95C
  * Size:	000008
  */
-u32 PikiState::collideAI() { return 0x0; }
+bool PikiState::collideAI() { return false; }
 
 /*
  * --INFO--
  * Address:	800CB964
  * Size:	000400
  */
-Piki::Piki(CreatureProp*)
+Piki::Piki(CreatureProp* prop)
+    : Creature(prop)
 {
 	/*
 	.loc_0x0:
@@ -7444,7 +7446,7 @@ void Piki::setSpeed(f32, f32)
  * Address:	800CBF78
  * Size:	000020
  */
-void Piki::getSize()
+f32 Piki::getSize()
 {
 	/*
 	.loc_0x0:
@@ -7466,7 +7468,7 @@ void Piki::getSize()
  * Address:	800CBF98
  * Size:	000044
  */
-void Piki::getiMass()
+f32 Piki::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -7757,7 +7759,7 @@ void Piki::initBirth() { }
  * Address:	800CC334
  * Size:	000038
  */
-void Piki::isAlive()
+bool Piki::isAlive()
 {
 	/*
 	.loc_0x0:
@@ -7787,7 +7789,7 @@ void Piki::isAlive()
  * Address:	800CC36C
  * Size:	000014
  */
-void Piki::isFruit()
+bool Piki::isFruit()
 {
 	/*
 	.loc_0x0:
@@ -8061,7 +8063,7 @@ void Piki::updateLookCreature()
  * Address:	800CC6CC
  * Size:	000008
  */
-u32 PikiState::useLookUpdate() { return 0x1; }
+bool PikiState::useLookUpdate() { return true; }
 
 /*
  * --INFO--
@@ -9285,7 +9287,7 @@ void Piki::dump()
  * Address:	800CD668
  * Size:	00001C
  */
-void Piki::getShadowPos()
+Vector3f Piki::getShadowPos()
 {
 	/*
 	.loc_0x0:
@@ -9444,19 +9446,5 @@ void __sinit_piki_cpp(void)
 	  stb       r6, 0x2A(r8)
 	  stb       r7, 0x2B(r8)
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800CD7FC
- * Size:	000008
- */
-void Piki::@696 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         -0x36F0
 	*/
 }

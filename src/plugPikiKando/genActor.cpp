@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Generator.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -25,7 +26,7 @@ static void _Print(char*, ...)
  * Address:	80119B30
  * Size:	000078
  */
-void makeObjectActor()
+static GenObjectActor* makeObjectActor()
 {
 	/*
 	.loc_0x0:
@@ -144,7 +145,7 @@ void GenObjectActor::doRead(RandomAccessStream&)
  * Address:	80119C74
  * Size:	000070
  */
-void GenObjectActor::birth(BirthInfo&)
+void* GenObjectActor::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800B92C0
  * Size:	000080
  */
-ActMine::ActMine(Piki*)
+ActMine::ActMine(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -307,7 +308,7 @@ void ActMine::exeMine()
  * Address:	800B9580
  * Size:	000200
  */
-void ActMine::exec()
+int ActMine::exec()
 {
 	/*
 	.loc_0x0:
@@ -582,22 +583,5 @@ ActMine::~ActMine()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800B98C4
- * Size:	000014
- */
-void ActMine::@40 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x28
-	  b         -0x150
 	*/
 }

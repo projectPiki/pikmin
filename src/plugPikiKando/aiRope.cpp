@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800C1E24
  * Size:	000060
  */
-ActRope::ActRope(Piki*)
+ActRope::ActRope(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -173,7 +174,7 @@ void ActRope::init(Creature*)
  * Address:	800C1FFC
  * Size:	000070
  */
-void ActRope::exec()
+int ActRope::exec()
 {
 	/*
 	.loc_0x0:

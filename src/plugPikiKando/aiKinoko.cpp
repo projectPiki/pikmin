@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800B4570
  * Size:	0000A4
  */
-ActKinoko::ActKinoko(Piki*)
+ActKinoko::ActKinoko(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -128,7 +129,7 @@ void ActKinoko::init(Creature*)
  * Address:	800B4694
  * Size:	00006C
  */
-void ActKinoko::exec()
+int ActKinoko::exec()
 {
 	/*
 	.loc_0x0:
@@ -352,7 +353,7 @@ void ActKinoko::exeJump()
 void ActKinoko::initAttack()
 {
 	// Generated from stw r0, 0x1C(r3)
-	_1C = 1;
+	// _1C = 1;
 }
 
 /*
@@ -1378,22 +1379,5 @@ ActKinoko::~ActKinoko()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800B5674
- * Size:	000014
- */
-void ActKinoko::@48 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x30
-	  b         -0x12C
 	*/
 }

@@ -1,37 +1,5 @@
-#include "types.h"
+#include "zen/particle.h"
 #include "Vector.h"
-
-namespace zen {
-struct particleGenerator {
-	u32 _00;
-	u8 filler[20];
-	Vector3f* mVector_ptr; // _18
-	u8 filler2[100];
-	u32 mPgen_flags; // _80
-
-	void forceFinish();
-};
-class PtclGenPack {
-	u32 mLimit;                         // _00
-	particleGenerator** mPtcl_gen_list; // _04
-
-	void setPtclGenPtr(u32, particleGenerator*);
-	void getPtclGenPtr(u32);
-	void setEmitPos(Vector3f&);
-	void setEmitPosPtr(Vector3f*);
-	void setEmitDir(Vector3f&);
-	void startGen();
-	void stopGen();
-	void start();
-	void stop();
-	void finish();
-	void forceFinish();
-	bool checkStopGen();
-	void checkStop();
-	void checkEmit();
-	void checkActive();
-};
-} // namespace zen
 
 /*
  * --INFO--
@@ -39,13 +7,13 @@ class PtclGenPack {
  * Size:	00001C
  */
 namespace zen {
-void PtclGenPack::setPtclGenPtr(u32 param_1, particleGenerator* param_2)
-{ // matching
-	if (param_1 >= mLimit) {
+void PtclGenPack::setPtclGenPtr(u32 idx, particleGenerator* gen)
+{
+	if (idx >= mLimit) {
 		return;
 	}
-	mPtcl_gen_list[param_1] = param_2;
-	return;
+
+	mGeneratorList[idx] = gen;
 };
 
 /*
@@ -53,10 +21,7 @@ void PtclGenPack::setPtclGenPtr(u32 param_1, particleGenerator* param_2)
  * Address:	........
  * Size:	000010
  */
-void PtclGenPack::getPtclGenPtr(u32)
-{
-	// UNUSED FUNCTION
-}
+particleGenerator* PtclGenPack::getPtclGenPtr(u32 idx) { return mGeneratorList[idx]; }
 
 /*
  * --INFO--
@@ -73,18 +38,15 @@ void PtclGenPack::setEmitPos(Vector3f&)
  * Address:	801DA0A4
  * Size:	000034
  */
-void PtclGenPack::setEmitPosPtr(Vector3f* param_1) // matching
+void PtclGenPack::setEmitPosPtr(Vector3f* posPtr)
 {
 	u32 i;
-	particleGenerator** particle_gen_list;
-
-	particle_gen_list = mPtcl_gen_list;
-	for (i = 0; i < mLimit; i++, particle_gen_list++) {
-		if (particle_gen_list[0] != nullptr) {
-			(*particle_gen_list)->mVector_ptr = param_1;
+	particleGenerator** genList = mGeneratorList;
+	for (i = 0; i < mLimit; i++, genList++) {
+		if (*genList) {
+			(*genList)->mEmitPosPtr = posPtr;
 		}
 	}
-	return;
 }
 
 /*
@@ -102,30 +64,26 @@ void PtclGenPack::setEmitDir(Vector3f&)
  * Address:	........
  * Size:	000084
  */
-// void PtclGenPack::setCallBack(zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
-//{
-//	// UNUSED FUNCTION
-//}
+void PtclGenPack::setCallBack(zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
+{
+	// UNUSED FUNCTION
+}
 
 /*
  * --INFO--
  * Address:	801DA0D8
  * Size:	00003C
  */
-void PtclGenPack::startGen() // matching
+void PtclGenPack::startGen()
 {
-	particleGenerator* pgen_ptr;
 	u32 i;
-	particleGenerator** particle_gen_list;
+	particleGenerator** genList = mGeneratorList;
 
-	particle_gen_list = mPtcl_gen_list;
-	for (i = 0; i < mLimit; i++, particle_gen_list++) {
-		pgen_ptr = particle_gen_list[0];
-		if (pgen_ptr != nullptr) {
-			pgen_ptr->mPgen_flags &= 0xFFFFFFF7;
+	for (i = 0; i < mLimit; i++, genList++) {
+		if (*genList) {
+			(*genList)->resetFlag(PTCLGEN_GenStopped);
 		}
 	}
-	return;
 }
 
 /*
@@ -133,17 +91,13 @@ void PtclGenPack::startGen() // matching
  * Address:	801DA114
  * Size:	00003C
  */
-void PtclGenPack::stopGen() // matching
+void PtclGenPack::stopGen()
 {
-	particleGenerator* pgen_ptr;
 	u32 i;
-	particleGenerator** particle_gen_list;
-
-	particle_gen_list = mPtcl_gen_list;
-	for (i = 0; i < mLimit; i++, particle_gen_list++) {
-		pgen_ptr = particle_gen_list[0];
-		if (pgen_ptr != nullptr) {
-			pgen_ptr->mPgen_flags |= 8;
+	particleGenerator** genList = mGeneratorList;
+	for (i = 0; i < mLimit; i++, genList++) {
+		if (*genList) {
+			(*genList)->setFlag(PTCLGEN_GenStopped);
 		}
 	}
 	return;
@@ -174,18 +128,14 @@ void PtclGenPack::stop()
  * Address:	801DA150
  * Size:	000044
  */
-void PtclGenPack::finish() // matching
+void PtclGenPack::finish()
 {
-	particleGenerator* pgen_ptr;
 	u32 i;
-	particleGenerator** particle_gen_list;
-
-	particle_gen_list = mPtcl_gen_list;
-	for (i = 0; i < mLimit; i++, particle_gen_list++) {
-		pgen_ptr = particle_gen_list[0];
-		if (pgen_ptr != nullptr) {
-			pgen_ptr->mPgen_flags |= 2;
-			particle_gen_list[0] = nullptr;
+	particleGenerator** genList = mGeneratorList;
+	for (i = 0; i < mLimit; i++, genList++) {
+		if (*genList) {
+			(*genList)->mGeneratorFlags |= 2;
+			*genList = nullptr;
 		}
 	}
 	return;
@@ -196,17 +146,16 @@ void PtclGenPack::finish() // matching
  * Address:	801DA194
  * Size:	000078
  */
-void PtclGenPack::forceFinish() // matches
+void PtclGenPack::forceFinish()
 {
 	u32 i;
-	particleGenerator** ptcl_list = &mPtcl_gen_list[0];
+	particleGenerator** genList = mGeneratorList;
 
-	for (i = 0; i < mLimit; i++, ptcl_list++) {
-		if (!ptcl_list[0])
-			continue;
-
-		ptcl_list[0]->forceFinish();
-		ptcl_list[0] = nullptr;
+	for (i = 0; i < mLimit; i++, genList++) {
+		if (*genList) {
+			(*genList)->forceFinish();
+			(*genList) = nullptr;
+		}
 	}
 }
 
@@ -215,17 +164,15 @@ void PtclGenPack::forceFinish() // matches
  * Address:	801DA20C
  * Size:	000044
  */
-bool PtclGenPack::checkStopGen() // matching
+bool PtclGenPack::checkStopGen()
 {
-	particleGenerator* pgen_ptr;
 	u32 i;
-	particleGenerator** particle_gen_list;
+	particleGenerator** genList = mGeneratorList;
 
-	particle_gen_list = mPtcl_gen_list;
-	for (i = 0; i < mLimit; i++, particle_gen_list++) {
-		pgen_ptr = particle_gen_list[0];
-		if ((particle_gen_list[0] != nullptr) && (((*particle_gen_list)->mPgen_flags & 8) == 0))
+	for (i = 0; i < mLimit; i++, genList++) {
+		if ((*genList) && (!(*genList)->isFlag(PTCLGEN_GenStopped))) {
 			return false;
+		}
 	}
 	return true;
 }

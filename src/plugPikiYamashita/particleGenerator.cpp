@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/particle.h"
 
 /*
  * --INFO--
@@ -4249,7 +4249,7 @@ void zen::particleGenerator::drawPtclOriented(Graphics&)
  * Address:	801A0758
  * Size:	00003C
  */
-void zen::particleGenerator::RotAxisX(f32 (&)[3][4], f32&, f32&)
+void zen::particleGenerator::RotAxisX(Mtx&, f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4276,7 +4276,7 @@ void zen::particleGenerator::RotAxisX(f32 (&)[3][4], f32&, f32&)
  * Address:	801A0794
  * Size:	00003C
  */
-void zen::particleGenerator::RotAxisY(f32 (&)[3][4], f32&, f32&)
+void zen::particleGenerator::RotAxisY(Mtx&, f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4303,7 +4303,7 @@ void zen::particleGenerator::RotAxisY(f32 (&)[3][4], f32&, f32&)
  * Address:	801A07D0
  * Size:	00003C
  */
-void zen::particleGenerator::RotAxisZ(f32 (&)[3][4], f32&, f32&)
+void zen::particleGenerator::RotAxisZ(Mtx&, f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4330,7 +4330,7 @@ void zen::particleGenerator::RotAxisZ(f32 (&)[3][4], f32&, f32&)
  * Address:	801A080C
  * Size:	000054
  */
-void zen::particleGenerator::RotAxisXY(f32 (&)[3][4], f32&, f32&)
+void zen::particleGenerator::RotAxisXY(Mtx&, f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4363,7 +4363,7 @@ void zen::particleGenerator::RotAxisXY(f32 (&)[3][4], f32&, f32&)
  * Address:	801A0860
  * Size:	00005C
  */
-void zen::particleGenerator::RotAxisXZ(f32 (&)[3][4], f32&, f32&)
+void zen::particleGenerator::RotAxisXZ(Mtx&, f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4398,7 +4398,7 @@ void zen::particleGenerator::RotAxisXZ(f32 (&)[3][4], f32&, f32&)
  * Address:	801A08BC
  * Size:	00005C
  */
-void zen::particleGenerator::RotAxisYZ(f32 (&)[3][4], f32&, f32&)
+void zen::particleGenerator::RotAxisYZ(Mtx&, f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4433,7 +4433,7 @@ void zen::particleGenerator::RotAxisYZ(f32 (&)[3][4], f32&, f32&)
  * Address:	801A0918
  * Size:	00008C
  */
-void zen::particleGenerator::RotAxisXYZ(f32 (&)[3][4], f32&, f32&)
+void zen::particleGenerator::RotAxisXYZ(Mtx&, f32&, f32&)
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Generator.h"
 
 /*
  * --INFO--
@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	000148
  */
 GenObjectItem::GenObjectItem()
+    : GenObject('item', "")
 {
 	// UNUSED FUNCTION
 }
@@ -503,7 +504,7 @@ void GenObjectItem::updateUseList(Generator*, int)
  * Address:	800EE8A0
  * Size:	000448
  */
-void GenObjectItem::birth(BirthInfo&)
+void* GenObjectItem::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

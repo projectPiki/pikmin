@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -79,7 +79,8 @@ void ActPutBomb::procCollideMsg(Piki*, MsgCollide*)
  * Address:	800BEA94
  * Size:	000088
  */
-ActPutBomb::ActPutBomb(Piki*)
+ActPutBomb::ActPutBomb(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -633,7 +634,7 @@ void ActPutBomb::init(Creature*)
 void ActPutBomb::initSet()
 {
 	// Generated from sth r0, 0x18(r3)
-	_18 = 2;
+	// _18 = 2;
 }
 
 /*
@@ -1233,7 +1234,7 @@ void ActPutBomb::exeAim()
 void ActPutBomb::initWait()
 {
 	// Generated from sth r0, 0x18(r3)
-	_18 = 4;
+	// _18 = 4;
 }
 
 /*
@@ -1572,7 +1573,7 @@ void ActPutBomb::exePut()
  * Address:	800BFD00
  * Size:	000210
  */
-void ActPutBomb::exec()
+int ActPutBomb::exec()
 {
 	/*
 	.loc_0x0:
@@ -1781,7 +1782,8 @@ void ActPutBomb::cleanup() { }
  * Address:	800BFF4C
  * Size:	00005C
  */
-ActPutItem::ActPutItem(Piki*)
+ActPutItem::ActPutItem(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -2424,7 +2426,7 @@ void ActPutItem::init(Creature*)
  * Address:	800C0760
  * Size:	000178
  */
-void ActPutItem::exec()
+int ActPutItem::exec()
 {
 	/*
 	.loc_0x0:
@@ -2643,22 +2645,5 @@ ActPutBomb::~ActPutBomb()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800C09FC
- * Size:	000014
- */
-void ActPutBomb::@40 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x28
-	  b         -0xAFC
 	*/
 }

@@ -3,10 +3,12 @@
 
 #include "types.h"
 #include "Node.h"
+#include "BoundBox.h"
 
 struct Creature;
 struct MapAnimShapeObject;
 struct MapMgr;
+struct Shape;
 
 /**
  * @brief TODO

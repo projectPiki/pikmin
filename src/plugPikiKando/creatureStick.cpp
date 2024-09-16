@@ -1,4 +1,6 @@
-#include "types.h"
+#include "Creature.h"
+#include "Iterator.h"
+#include "Stickers.h"
 
 /*
  * --INFO--
@@ -522,8 +524,9 @@ void Creature::endClimb()
  * Address:	8008FF50
  * Size:	000048
  */
-void Creature::isStickToPlatform()
+bool Creature::isStickToPlatform()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x184(r3)
@@ -1699,8 +1702,9 @@ void Stickers::calcNum()
  * Address:	80090D0C
  * Size:	0000CC
  */
-void Stickers::getCreature(int)
+Creature* Stickers::getCreature(int)
 {
+	return nullptr;
 	/*
 	.loc_0x0:
 	  lwz       r7, 0x8(r3)
@@ -1776,41 +1780,26 @@ void Stickers::getCreature(int)
  * Address:	80090DD8
  * Size:	000008
  */
-u32 Stickers::getFirst() { return 0x0; }
+int Stickers::getFirst() { return 0; }
 
 /*
  * --INFO--
  * Address:	80090DE0
  * Size:	000008
  */
-void Stickers::getNext(int)
-{
-	/*
-	.loc_0x0:
-	  addi      r3, r4, 0x1
-	  blr
-	*/
-}
+int Stickers::getNext(int idx) { return idx + 1; }
 
 /*
  * --INFO--
  * Address:	80090DE8
  * Size:	00001C
  */
-void Stickers::isDone(int)
+bool Stickers::isDone(int idx)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x8(r3)
-	  cmpw      r4, r0
-	  blt-      .loc_0x14
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-	*/
+	if (idx >= mCount) {
+		return true;
+	}
+	return false;
 }
 
 /*

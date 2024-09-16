@@ -102,6 +102,21 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	void enableMotionBlend();
 	void checkBridgeWall(Creature*, Vector3f&);
 
+	// unused/inlined:
+	void getPikiState();
+	void initRouteTraceDynamic(Creature*);
+	void updateFire();
+	void getNaviID();
+	void getLastState();
+	void birthBuried();
+	void isGrowable();
+	void isTamable();
+	void growup();
+	void doMotionBlend();
+	void swapMotion(PaniMotionInfo&, PaniMotionInfo&);
+	void setSpeed(f32);
+	void getCurrentMotionName();
+
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
@@ -114,7 +129,17 @@ struct Piki : public Creature, public PaniAnimKeyListener {
  * @brief TODO
  */
 struct PikiShapeObject {
+	PikiShapeObject(Shape*);
+
 	void exitCourse();
+	void init();
+	void getAnimMgr();
+	void initOnce();
+
+	// unused/inlined:
+	void create(int);
+
+	// TODO: members
 };
 
 #endif

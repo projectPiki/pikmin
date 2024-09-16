@@ -1,19 +1,14 @@
 #include "Generator.h"
 #include "Graphics.h"
 #include "system.h"
-
-static char file[] = __FILE__;
-static char name[] = "generator";
+#include "sysNew.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "generator"); }
 
 /*
  * --INFO--
@@ -3794,7 +3789,7 @@ void GenObjectPiki::ramLoadParameters(RandomAccessStream&)
  * Address:	800DDDB8
  * Size:	000214
  */
-void GenObjectPiki::birth(BirthInfo&)
+void* GenObjectPiki::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

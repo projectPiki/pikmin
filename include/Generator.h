@@ -2,10 +2,11 @@
 #define _GENERATOR_H
 
 #include "types.h"
-#include "Ayu.h"
 #include "Node.h"
 #include "Parameters.h"
+#include "Ayu.h"
 #include "Vector.h"
+#include "ID32.h"
 
 struct Creature;
 struct MapMgr;
@@ -237,7 +238,10 @@ struct GenObjectDebug : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	// TODO: members
+	Parm<int> mCollision;    // _18, p00
+	Parm<int> mPikiNoAttack; // _28, p01
+	Parm<int> mNoCarryover;  // _38, p02
+	Parm<int> mPelletDebug;  // _48, p03
 };
 
 /**
@@ -293,7 +297,7 @@ struct GenObjectMapParts : public GenObject {
 	virtual void render(Graphics&, Generator*); // _30
 	virtual void* birth(BirthInfo&);            // _34
 
-	void initialise();
+	void initialise(MapMgr*);
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -331,7 +335,8 @@ struct GenObjectPellet : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	// TODO: members
+	u32 _18;  // _18, unknown
+	ID32 _1C; // _1C
 };
 
 /**

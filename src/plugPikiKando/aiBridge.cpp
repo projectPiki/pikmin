@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800ACEA0
  * Size:	0000AC
  */
-ActBridge::ActBridge(Piki*)
+ActBridge::ActBridge(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -210,7 +211,7 @@ void ActBridge::collideBridgeBlocker()
  * Address:	800AD094
  * Size:	000094
  */
-void ActBridge::exec()
+int ActBridge::exec()
 {
 	/*
 	.loc_0x0:
@@ -1641,22 +1642,5 @@ ActBridge::~ActBridge()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AE128
- * Size:	000014
- */
-void ActBridge::@80 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x50
-	  b         -0xFE8
 	*/
 }

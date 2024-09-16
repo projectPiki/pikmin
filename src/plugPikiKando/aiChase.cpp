@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800B5688
  * Size:	00006C
  */
-ActChase::ActChase(Piki*)
+ActChase::ActChase(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -172,7 +173,7 @@ void ActChase::cleanup()
  * Address:	800B580C
  * Size:	00023C
  */
-void ActChase::exec()
+int ActChase::exec()
 {
 	/*
 	.loc_0x0:

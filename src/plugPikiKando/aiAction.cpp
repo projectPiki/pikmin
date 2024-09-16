@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -373,7 +373,7 @@ Action::Child::~Child()
 void Action::init(Creature*)
 {
 	// Generated from sth r0, 0x8(r3)
-	_08 = 0;
+	// _08 = 0;
 }
 
 /*
@@ -381,7 +381,7 @@ void Action::init(Creature*)
  * Address:	800C3F0C
  * Size:	000008
  */
-u32 Action::exec() { return 0x2; }
+int Action::exec() { return 2; }
 
 /*
  * --INFO--
@@ -464,7 +464,7 @@ void AndAction::init(Creature*)
  * Address:	800C3FF4
  * Size:	00014C
  */
-void AndAction::exec()
+int AndAction::exec()
 {
 	/*
 	.loc_0x0:
@@ -651,7 +651,7 @@ void OrAction::init(Creature*)
  * Address:	800C4220
  * Size:	000150
  */
-void OrAction::exec()
+int OrAction::exec()
 {
 	/*
 	.loc_0x0:
@@ -993,7 +993,8 @@ void TopAction::MotionListener::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800C45F0
  * Size:	00064C
  */
-TopAction::TopAction(Piki*)
+TopAction::TopAction(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -1602,7 +1603,7 @@ void TopAction::init(Creature*)
  * Address:	800C4DAC
  * Size:	000598
  */
-void TopAction::exec()
+int TopAction::exec()
 {
 	/*
 	.loc_0x0:
@@ -2087,7 +2088,7 @@ void TopAction::abandon(zen::particleGenerator*)
  * Address:	800C53C8
  * Size:	00004C
  */
-void TopAction::resumable()
+bool TopAction::resumable()
 {
 	/*
 	.loc_0x0:

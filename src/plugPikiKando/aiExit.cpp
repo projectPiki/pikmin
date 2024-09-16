@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800B8D68
  * Size:	000060
  */
-ActExit::ActExit(Piki*)
+ActExit::ActExit(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -144,7 +145,7 @@ void ActExit::procCollideMsg(Piki*, MsgCollide*)
  * Address:	800B8EB4
  * Size:	0002E8
  */
-void ActExit::exec()
+int ActExit::exec()
 {
 	/*
 	.loc_0x0:

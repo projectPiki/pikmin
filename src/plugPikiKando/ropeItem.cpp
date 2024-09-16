@@ -1,14 +1,12 @@
-#include "types.h"
+#include "RopeCreature.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "ropeItem"); }
 
 /*
  * --INFO--
@@ -25,7 +23,8 @@ static void _Print(char*, ...)
  * Address:	800ED9DC
  * Size:	0000B0
  */
-RopeItem::RopeItem(CreatureProp*, Shape*)
+RopeItem::RopeItem(CreatureProp* prop, Shape* shape)
+    : RopeCreature(prop)
 {
 	/*
 	.loc_0x0:
@@ -81,15 +80,16 @@ RopeItem::RopeItem(CreatureProp*, Shape*)
  * Address:	800EDA8C
  * Size:	000008
  */
-u32 RopeItem::isAtari() { return 0x0; }
+bool RopeItem::isAtari() { return false; }
 
 /*
  * --INFO--
  * Address:	800EDA94
  * Size:	000008
  */
-void RopeItem::getSize()
+f32 RopeItem::getSize()
 {
+	return 0.0f;
 	/*
 	.loc_0x0:
 	  lfs       f1, -0x64D8(r2)
@@ -377,8 +377,9 @@ void RopeItem::doKill()
  * Address:	800EDDB0
  * Size:	000008
  */
-void RopeItem::getiMass()
+f32 RopeItem::getiMass()
 {
+	0.0f;
 	/*
 	.loc_0x0:
 	  lfs       f1, -0x64CC(r2)
@@ -391,18 +392,18 @@ void RopeItem::getiMass()
  * Address:	800EDDB8
  * Size:	000008
  */
-u32 RopeItem::needShadow() { return 0x0; }
+bool RopeItem::needShadow() { return false; }
 
 /*
  * --INFO--
  * Address:	800EDDC0
  * Size:	000008
  */
-u32 RopeItem::isAlive() { return 0x1; }
+bool RopeItem::isAlive() { return true; }
 
 /*
  * --INFO--
  * Address:	800EDDC8
  * Size:	000008
  */
-u32 RopeItem::isVisible() { return 0x1; }
+bool RopeItem::isVisible() { return true; }

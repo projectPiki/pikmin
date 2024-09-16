@@ -1,14 +1,13 @@
-#include "types.h"
+#include "Generator.h"
+#include "sysNew.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "genPellet"); }
 
 /*
  * --INFO--
@@ -26,8 +25,9 @@ static void _Print(char*, ...)
  * Size:	000070
  */
 GenObjectPellet::GenObjectPellet()
+    : GenObject('pelt', "ペレットをうむ")
 {
-	// UNUSED FUNCTION
+	_18 = 0;
 }
 
 /*
@@ -35,8 +35,9 @@ GenObjectPellet::GenObjectPellet()
  * Address:	80099D1C
  * Size:	000080
  */
-void makeObjectPellet()
+static GenObjectPellet* makeObjectPellet()
 {
+	return new GenObjectPellet();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -233,7 +234,7 @@ void GenObjectPellet::updateUseList(Generator*, int)
  * Address:	80099F2C
  * Size:	000100
  */
-void GenObjectPellet::birth(BirthInfo&)
+void* GenObjectPellet::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800A6D94
  * Size:	000054
  */
-ActStone::ActStone(Piki*)
+ActStone::ActStone(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -94,7 +95,7 @@ void ActStone::init(Creature*)
  * Address:	800A6E40
  * Size:	000074
  */
-void ActStone::exec()
+int ActStone::exec()
 {
 	/*
 	.loc_0x0:
@@ -360,7 +361,7 @@ void ActStone::exeApproach()
 void ActStone::initAdjust()
 {
 	// Generated from sth r0, 0x18(r3)
-	_18 = 1;
+	// _18 = 1;
 }
 
 /*
@@ -974,7 +975,7 @@ void Action::restart() { }
  * Address:	800A7878
  * Size:	000008
  */
-u32 Action::resumable() { return 0x0; }
+bool Action::resumable() { return false; }
 
 /*
  * --INFO--
@@ -996,180 +997,5 @@ void Action::getInfo(char*)
 	  addi      r1, r1, 0x8
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800A78AC
- * Size:	000004
- */
-void Receiver<Piki>::procBounceMsg(Piki*, MsgBounce*) { }
-
-/*
- * --INFO--
- * Address:	800A78B0
- * Size:	000004
- */
-void Receiver<Piki>::procStickMsg(Piki*, MsgStick*) { }
-
-/*
- * --INFO--
- * Address:	800A78B4
- * Size:	000004
- */
-void Receiver<Piki>::procHangMsg(Piki*, MsgHang*) { }
-
-/*
- * --INFO--
- * Address:	800A78B8
- * Size:	000004
- */
-void Receiver<Piki>::procTargetMsg(Piki*, MsgTarget*) { }
-
-/*
- * --INFO--
- * Address:	800A78BC
- * Size:	000004
- */
-void Receiver<Piki>::procCollideMsg(Piki*, MsgCollide*) { }
-
-/*
- * --INFO--
- * Address:	800A78C0
- * Size:	000004
- */
-void Receiver<Piki>::procAnimMsg(Piki*, MsgAnim*) { }
-
-/*
- * --INFO--
- * Address:	800A78C4
- * Size:	000004
- */
-void Receiver<Piki>::procDamageMsg(Piki*, MsgDamage*) { }
-
-/*
- * --INFO--
- * Address:	800A78C8
- * Size:	000004
- */
-void Receiver<Piki>::procWallMsg(Piki*, MsgWall*) { }
-
-/*
- * --INFO--
- * Address:	800A78CC
- * Size:	000004
- */
-void Receiver<Piki>::procOffWallMsg(Piki*, MsgOffWall*) { }
-
-/*
- * --INFO--
- * Address:	800A78D0
- * Size:	000004
- */
-void Receiver<Piki>::procUserMsg(Piki*, MsgUser*) { }
-
-/*
- * --INFO--
- * Address:	800A78D4
- * Size:	000004
- */
-void Receiver<Piki>::procGroundMsg(Piki*, MsgGround*) { }
-
-/*
- * --INFO--
- * Address:	800A78D8
- * Size:	000118
- */
-void Receiver<Piki>::procMsg(Piki*, Msg*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r5)
-	  cmplwi    r0, 0xA
-	  bgt-      .loc_0x108
-	  lis       r6, 0x802B
-	  addi      r6, r6, 0x5044
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r6, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x108:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800A79F0
- * Size:	000008
- */
-void ActStone::@20 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x14
-	  b         -0x508
 	*/
 }

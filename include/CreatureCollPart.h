@@ -4,6 +4,8 @@
 #include "types.h"
 #include "DynColl.h"
 
+struct CollPart;
+
 /**
  * @brief TODO
  */
@@ -29,6 +31,11 @@ struct CreaturePlatMgr {
 	void init(Creature*, MapMgr*, Shape*);
 	void release();
 	void update(Graphics&);
+
+	// TODO: members
+	Shape* _00;        // _00
+	CollPart* _04[16]; // _04
+	u32 _44;           // _44, count of something?
 };
 
 #endif

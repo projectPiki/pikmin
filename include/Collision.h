@@ -115,7 +115,7 @@ struct ObjCollInfo : public CoreNode {
 	Vector3f mCentrePosition; // _34
 	f32 mRadius;              // _40
 	BaseShape* mParentShape;  // _44
-	s32 _48;                  // _48
+	u32 _48;                  // _48
 	char* mPlatformName;      // _4C
 	ObjCollFlags mFlags;      // _50
 };

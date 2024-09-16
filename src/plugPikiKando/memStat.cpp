@@ -1,12 +1,16 @@
-#include "types.h"
+#include "MemStat.h"
+#include "Dolphin/os.h"
+
+MemStat* memStat;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt);
 	// UNUSED FUNCTION
 }
 
@@ -25,46 +29,7 @@ static void _Print(char*, ...)
  * Address:	80086690
  * Size:	000080
  */
-MemStat::MemStat()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x738C
-	  subi      r4, r13, 0x5E90
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  addi      r3, r31, 0
-	  stw       r0, 0x0(r31)
-	  li        r0, 0
-	  stw       r0, 0x10(r31)
-	  stw       r0, 0xC(r31)
-	  stw       r0, 0x8(r31)
-	  bl        -0x61800
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x103C
-	  lis       r3, 0x802B
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x104C
-	  stw       r0, 0x0(r31)
-	  mr        r3, r31
-	  bl        .loc_0x80
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x80:
-	*/
-}
+MemStat::MemStat() { reset(); }
 
 /*
  * --INFO--
@@ -73,6 +38,8 @@ MemStat::MemStat()
  */
 void MemStat::reset()
 {
+	mMemInfo.initCore("infoList");
+
 	/*
 	.loc_0x0:
 	  li        r5, 0
@@ -245,24 +212,9 @@ void MemStat::getRestMemory()
  */
 void MemStat::print()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x2FE8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x24
-	  lwz       r4, 0x10(r3)
-	  li        r5, 0x4
-	  bl        0x38
-
-	.loc_0x24:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (memStat) {
+		printInfoRec(static_cast<MemInfo*>(mMemInfo.mChild), 4);
+	}
 }
 
 /*

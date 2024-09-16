@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -32,7 +32,8 @@ void ActWatch::AnimListener::animationKeyUpdated(PaniAnimKeyEvent&) { }
  * Address:	800C2C58
  * Size:	0000C4
  */
-ActWatch::ActWatch(Piki*)
+ActWatch::ActWatch(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -262,7 +263,7 @@ void ActWatch::getInfo(char*)
  * Address:	800C2EE8
  * Size:	00015C
  */
-void ActWatch::exec()
+int ActWatch::exec()
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,4 @@
-#include "Action.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	800A82E8
  * Size:	0000C8
  */
-ActAttack::ActAttack(Piki*)
+ActAttack::ActAttack(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -336,7 +336,7 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent&)
 void ActAttack::resume()
 {
 	// Generated from stb r0, 0x1C(r3)
-	_1C = 0;
+	// _1C = 0;
 }
 
 /*
@@ -379,14 +379,14 @@ void ActAttack::restart()
  * Address:	800A86C0
  * Size:	000008
  */
-u32 ActAttack::resumable() { return 0x1; }
+bool ActAttack::resumable() { return true; }
 
 /*
  * --INFO--
  * Address:	800A86C8
  * Size:	000008
  */
-u32 ActAttack::findTarget() { return 0x0; }
+Creature* ActAttack::findTarget() { return nullptr; }
 
 /*
  * --INFO--
@@ -403,7 +403,7 @@ void ActAttack::decideTarget()
  * Address:	800A86D0
  * Size:	00033C
  */
-void ActAttack::exec()
+int ActAttack::exec()
 {
 	/*
 	.loc_0x0:
@@ -699,7 +699,8 @@ void ActAttack::cleanup()
  * Address:	800A8A70
  * Size:	000060
  */
-ActJumpAttack::ActJumpAttack(Piki*)
+ActJumpAttack::ActJumpAttack(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -1162,7 +1163,7 @@ void ActJumpAttack::procCollideMsg(Piki*, MsgCollide*)
  * Address:	800A8FBC
  * Size:	000E6C
  */
-void ActJumpAttack::exec()
+int ActJumpAttack::exec()
 {
 	/*
 	.loc_0x0:
@@ -2762,33 +2763,5 @@ ActAttack::~ActAttack()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AA50C
- * Size:	000008
- */
-void ActAttack::@24 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x18
-	  b         -0x1FAC
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AA514
- * Size:	000008
- */
-void ActJumpAttack::@20 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x14
-	  b         -0x678
 	*/
 }

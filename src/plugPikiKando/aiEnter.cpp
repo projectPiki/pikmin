@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800B7F64
  * Size:	000060
  */
-ActEnter::ActEnter(Piki*)
+ActEnter::ActEnter(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -282,7 +283,7 @@ void ActEnter::findLeg()
  * Address:	800B8280
  * Size:	0000E8
  */
-void ActEnter::exec()
+int ActEnter::exec()
 {
 	/*
 	.loc_0x0:

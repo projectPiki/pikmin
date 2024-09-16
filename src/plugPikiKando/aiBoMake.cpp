@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800AC30C
  * Size:	000054
  */
-ActBoMake::ActBoMake(Piki*)
+ActBoMake::ActBoMake(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -88,7 +89,7 @@ void ActBoMake::init(Creature*)
  * Address:	800AC3A0
  * Size:	0000A0
  */
-void ActBoMake::exec()
+int ActBoMake::exec()
 {
 	/*
 	.loc_0x0:
@@ -189,7 +190,7 @@ void ActBoMake::initApproach()
  * Address:	800AC4A4
  * Size:	00012C
  */
-void ActBoMake::exeApproach()
+int ActBoMake::exeApproach()
 {
 	/*
 	.loc_0x0:
@@ -345,7 +346,7 @@ void ActBoMake::initWork()
  * Address:	800AC684
  * Size:	000008
  */
-u32 ActBoMake::exeWork() { return 0x0; }
+int ActBoMake::exeWork() { return 0; }
 
 /*
  * --INFO--
@@ -452,19 +453,5 @@ ActBoMake::~ActBoMake()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AC794
- * Size:	000008
- */
-void ActBoMake::@20 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x14
-	  b         -0xE8
 	*/
 }

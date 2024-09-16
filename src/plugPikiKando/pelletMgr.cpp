@@ -1,4 +1,8 @@
-#include "types.h"
+#include "Pellet.h"
+#include "PelletView.h"
+#include "StateMachine.h"
+#include "Interactions.h"
+#include "KEffect.h"
 
 /*
  * --INFO--
@@ -837,8 +841,9 @@ void Pellet::getState()
  * Address:	80095554
  * Size:	000038
  */
-void Pellet::ignoreAtari(Creature*)
+bool Pellet::ignoreAtari(Creature*)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x184(r4)
@@ -867,8 +872,9 @@ void Pellet::ignoreAtari(Creature*)
  * Address:	8009558C
  * Size:	000008
  */
-void Pellet::isAlive()
+bool Pellet::isAlive()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lbz       r3, 0x5B8(r3)
@@ -881,8 +887,9 @@ void Pellet::isAlive()
  * Address:	80095594
  * Size:	000048
  */
-void Pellet::isAtari()
+bool Pellet::isAtari()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lwz       r3, 0x474(r3)
@@ -921,8 +928,9 @@ void Pellet::isAtari()
  * Address:	800955DC
  * Size:	000050
  */
-void Pellet::isVisible()
+bool Pellet::isVisible()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lwz       r4, 0x474(r3)
@@ -1707,8 +1715,9 @@ void Pellet::getCentre()
  * Address:	80095ECC
  * Size:	000048
  */
-void Pellet::getCylinderHeight()
+f32 Pellet::getCylinderHeight()
 {
+	return 0.0f;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1741,8 +1750,9 @@ void Pellet::getCylinderHeight()
  * Address:	80095F14
  * Size:	000078
  */
-void Pellet::getSize()
+f32 Pellet::getSize()
 {
+	return 0.0f;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1806,8 +1816,9 @@ void PelletView::viewGetScale()
  * Address:	80095FA8
  * Size:	000008
  */
-void Pellet::getiMass()
+f32 Pellet::getiMass()
 {
+	return 0.0f;
 	/*
 	.loc_0x0:
 	  lfs       f1, -0x73E8(r2)
@@ -2891,8 +2902,9 @@ void Pellet::init(Vector3f&)
  * Address:	80096AF4
  * Size:	000034
  */
-void Pellet::isFree()
+bool Pellet::isFree()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x564(r3)
@@ -4829,8 +4841,9 @@ void Pellet::doCreateColls(Graphics&)
  * Address:	800982CC
  * Size:	000064
  */
-void InteractSwallow::actPellet(Pellet*)
+bool InteractSwallow::actPellet(Pellet*)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4874,8 +4887,9 @@ void InteractSwallow::actPellet(Pellet*)
  * Address:	80098330
  * Size:	000148
  */
-void InteractKill::actPellet(Pellet*)
+bool InteractKill::actPellet(Pellet*)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5492,40 +5506,6 @@ PelletMgr::PelletMgr(MapMgr*)
 	  blr
 
 	.loc_0x254:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80098A40
- * Size:	000058
- */
-void Parm<f32>::Parm(Parameters*, f32, f32, f32, ayuID, char*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stfd      f31, 0x30(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x0(r5)
-	  addi      r5, r1, 0x24
-	  stw       r0, 0x24(r1)
-	  bl        -0x39FE8
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x6098
-	  stw       r0, 0x8(r31)
-	  mr        r3, r31
-	  stfs      f31, 0xC(r31)
-	  lwz       r0, 0x3C(r1)
-	  lfd       f31, 0x30(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
 	*/
 }
 
@@ -6406,8 +6386,9 @@ PelletMgr::~PelletMgr()
  * Address:	80099360
  * Size:	000008
  */
-void MonoObjectMgr::getSize()
+int MonoObjectMgr::getSize()
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  lwz       r3, 0x30(r3)
@@ -6420,8 +6401,9 @@ void MonoObjectMgr::getSize()
  * Address:	80099368
  * Size:	000008
  */
-void MonoObjectMgr::getMax()
+int MonoObjectMgr::getMax()
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  lwz       r3, 0x2C(r3)
@@ -6434,7 +6416,7 @@ void MonoObjectMgr::getMax()
  * Address:	80099370
  * Size:	000008
  */
-u32 KEffect::invoke(zen::particleGenerator*) { return 0x0; }
+bool KEffect::invoke(zen::particleGenerator*) { return false; }
 
 /*
  * --INFO--
@@ -6462,14 +6444,14 @@ void KEffect::restart() { }
  * Address:	80099384
  * Size:	000008
  */
-u32 KEffect::invoke(zen::particleGenerator*, zen::particleMdl*) { return 0x0; }
+bool KEffect::invoke(zen::particleGenerator*, zen::particleMdl*) { return false; }
 
 /*
  * --INFO--
  * Address:	8009938C
  * Size:	000008
  */
-u32 KEffect::invoke(zen::particleMdl*) { return 0x0; }
+bool KEffect::invoke(zen::particleMdl*) { return false; }
 
 /*
  * --INFO--
@@ -6667,87 +6649,3 @@ void Receiver<Pellet>::procStickMsg(Pellet*, MsgStick*) { }
  * Size:	000004
  */
 void Receiver<Pellet>::procBounceMsg(Pellet*, MsgBounce*) { }
-
-/*
- * --INFO--
- * Address:	80099518
- * Size:	000008
- */
-void PelletConfig::@4 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x4
-	  b         -0x461C
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80099520
- * Size:	000008
- */
-void KEffect::@4 @invoke(zen::particleGenerator*, zen::particleMdl*)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x4
-	  b         -0x1A0
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80099528
- * Size:	000008
- */
-void KEffect::@8 @invoke(zen::particleMdl*)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x1A0
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80099530
- * Size:	000008
- */
-void Pellet::@1088 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x440
-	  b         -0x27C4
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80099538
- * Size:	000008
- */
-void PelletMgr::@8 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x7E0
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80099540
- * Size:	000008
- */
-void MonoObjectMgr::@8 @update()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         0x47E44
-	*/
-}

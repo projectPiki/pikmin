@@ -7,6 +7,8 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct CreatureProp {
 

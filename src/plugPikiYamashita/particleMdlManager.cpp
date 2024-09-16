@@ -1,4 +1,5 @@
-#include "types.h"
+#include "zen/particle.h"
+#include "zen/bBoardColourAnim.h"
 
 /*
  * --INFO--

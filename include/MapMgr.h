@@ -196,7 +196,7 @@ struct MapMgr {
 	void recTraceMove(CollGroup*, MoveTrace&, f32);
 	void traceMove(Creature*, MoveTrace&, f32);
 	void loadPlatshape(char*);
-	void requestCollPart(ObjCollInfo*, Creature*);
+	CollPart* requestCollPart(ObjCollInfo*, Creature*);
 
 	// unused/inlined:
 	void closeCollTri(CollGroup*, CollTriInfo*);

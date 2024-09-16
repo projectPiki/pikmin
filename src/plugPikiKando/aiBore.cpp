@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800AA51C
  * Size:	000108
  */
-ActFreeSelect::ActFreeSelect(Piki*)
+ActFreeSelect::ActFreeSelect(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -239,7 +240,7 @@ void ActFreeSelect::finishRest()
  * Address:	800AA79C
  * Size:	000108
  */
-void ActFreeSelect::exec()
+int ActFreeSelect::exec()
 {
 	/*
 	.loc_0x0:
@@ -608,7 +609,8 @@ void ActFreeSelect::determine()
  * Address:	800AABF8
  * Size:	000104
  */
-ActBoreSelect::ActBoreSelect(Piki*)
+ActBoreSelect::ActBoreSelect(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -771,7 +773,7 @@ void ActBoreSelect::init(Creature*)
 void ActBoreSelect::stop()
 {
 	// Generated from stb r0, 0x1A(r3)
-	_1A = 1;
+	// _1A = 1;
 }
 
 /*
@@ -779,7 +781,7 @@ void ActBoreSelect::stop()
  * Address:	800AADFC
  * Size:	000184
  */
-void ActBoreSelect::exec()
+int ActBoreSelect::exec()
 {
 	/*
 	.loc_0x0:
@@ -1254,7 +1256,8 @@ void ActBoreSelect::determine()
  * Address:	800AB390
  * Size:	000080
  */
-ActBoreTalk::ActBoreTalk(Piki*)
+ActBoreTalk::ActBoreTalk(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -1539,7 +1542,7 @@ void ActBoreTalk::startTalk()
  * Address:	800AB70C
  * Size:	000128
  */
-void ActBoreTalk::exec()
+int ActBoreTalk::exec()
 {
 	/*
 	.loc_0x0:
@@ -1665,7 +1668,8 @@ void ActBoreTalk::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	........
  * Size:	000040
  */
-ActBoreListen::ActBoreListen(Piki*)
+ActBoreListen::ActBoreListen(Piki* piki)
+    : Action(piki, false)
 {
 	// UNUSED FUNCTION
 }
@@ -1682,7 +1686,7 @@ void ActBoreListen::init(Creature*) { }
  * Address:	800AB860
  * Size:	000008
  */
-u32 ActBoreListen::exec() { return 0x0; }
+int ActBoreListen::exec() { return 0; }
 
 /*
  * --INFO--
@@ -1703,7 +1707,8 @@ void ActBoreListen::procAnimMsg(Piki*, MsgAnim*) { }
  * Address:	800AB870
  * Size:	000080
  */
-ActBoreOneshot::ActBoreOneshot(Piki*)
+ActBoreOneshot::ActBoreOneshot(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -1847,7 +1852,7 @@ void ActBoreOneshot::init(Creature*)
  * Address:	800ABA08
  * Size:	00001C
  */
-void ActBoreOneshot::exec()
+int ActBoreOneshot::exec()
 {
 	/*
 	.loc_0x0:
@@ -1893,7 +1898,8 @@ void ActBoreOneshot::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800ABA40
  * Size:	000080
  */
-ActBoreRest::ActBoreRest(Piki*)
+ActBoreRest::ActBoreRest(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -2078,7 +2084,7 @@ void ActBoreRest::standUp()
  * Address:	800ABC34
  * Size:	0002E8
  */
-void ActBoreRest::exec()
+int ActBoreRest::exec()
 {
 	/*
 	.loc_0x0:
@@ -2665,56 +2671,5 @@ ActFreeSelect::~ActFreeSelect()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AC2D0
- * Size:	000014
- */
-void ActBoreTalk::@40 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x28
-	  b         -0xAA8
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AC2E4
- * Size:	000014
- */
-void ActBoreOneshot::@28 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x1C
-	  b         -0x8CC
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AC2F8
- * Size:	000014
- */
-void ActBoreRest::@40 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x28
-	  b         -0x3E8
 	*/
 }

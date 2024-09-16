@@ -678,8 +678,8 @@ config.libs = [
         "mw_version": "GC/1.2.5n",
         "objects": [
             Object(NonMatching, "plugPikiYamashita/gameCourseClear.cpp"),
-            Object(NonMatching, "plugPikiYamashita/gameStageClear.cpp"),
-            Object(NonMatching, "plugPikiYamashita/gameCredits.cpp"),
+            Object(Matching, "plugPikiYamashita/gameStageClear.cpp"),
+            Object(Matching, "plugPikiYamashita/gameCredits.cpp"),
             Object(NonMatching, "plugPikiYamashita/zenMath.cpp"),
             Object(NonMatching, "plugPikiYamashita/effectMgr.cpp"),
             Object(NonMatching, "plugPikiYamashita/particleGenerator.cpp"),

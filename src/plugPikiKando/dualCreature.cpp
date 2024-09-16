@@ -1,4 +1,4 @@
-#include "types.h"
+#include "DualCreature.h"
 
 /*
  * --INFO--
@@ -592,8 +592,9 @@ void PelCreature::init(Vector3f&)
  * Address:	80092484
  * Size:	000008
  */
-void PelCreature::getiMass()
+f32 PelCreature::getiMass()
 {
+	return 0.0f;
 	/*
 	.loc_0x0:
 	  lfs       f1, -0x7490(r2)
@@ -606,7 +607,7 @@ void PelCreature::getiMass()
  * Address:	8009248C
  * Size:	000008
  */
-u32 PelCreature::isAlive() { return 0x1; }
+bool PelCreature::isAlive() { return true; }
 
 /*
  * --INFO--

@@ -50,11 +50,11 @@ struct Action : public Receiver<Piki> {
 	virtual void draw(struct Graphics&); // _40 (weak)
 	virtual ~Action();                   // _44
 	virtual void init(Creature*);        // _48
-	virtual void exec();                 // _4C
+	virtual int exec();                  // _4C
 	virtual void cleanup();              // _50
 	virtual void resume();               // _54 (weak)
 	virtual void restart();              // _58 (weak)
-	virtual void resumable();            // _5C (weak)
+	virtual bool resumable();            // _5C (weak)
 	virtual void getInfo(char*);         // _60 (weak)
 
 	void procMsg(Msg*); // this isn't overridden in the vtable but it exists, idk.
@@ -68,11 +68,14 @@ struct Action : public Receiver<Piki> {
  * @brief TODO
  */
 struct AndAction : public Action {
-	inline AndAction(); // TODO: probably
+	inline AndAction(Piki* piki) // TODO: probably
+	    : Action(piki, false)
+	{
+	}
 
 	virtual ~AndAction();         // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -87,7 +90,7 @@ struct OrAction : public Action {
 
 	virtual ~OrAction();          // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -115,6 +118,11 @@ struct TopAction : public Action {
 	struct ObjBore {
 		ObjBore();
 
+		// unused/inlined:
+		void getIndex(int);
+		void addBoredom(int, f32);
+		void update();
+
 		u32 _00;  // _00, unknown (pointer?)
 		u32 _04;  // _04, unknown (pointer?)
 		u8* _08;  // _08, array of size _10, might be bools
@@ -128,6 +136,13 @@ struct TopAction : public Action {
 	struct Boredom {
 		Boredom();
 
+		// unused/inlined:
+		void getIndex(int);
+		void getBoredom(int, int);
+		void addBoredom(int, int, f32);
+		void update();
+		void draw2d(Graphics&, int);
+
 		ObjBore* mObjects; // _00, array of mObjectCnt objects
 		u32 _04;           // _04, unknown (pointer?)
 		u32 _08;           // _08, unknown
@@ -140,13 +155,16 @@ struct TopAction : public Action {
 	virtual void draw(Graphics&); // _40
 	virtual ~TopAction();         // _44
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void resume();        // _54
 	virtual void restart();       // _58
-	virtual void resumable();     // _5C
+	virtual bool resumable();     // _5C
 	virtual void getInfo(char*);  // _60
 
 	void abandon(zen::particleGenerator*);
+
+	// unused/inlined:
+	void knowledgeCheck();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -173,7 +191,7 @@ struct ActAdjust : public Action {
 	virtual void defaultInitialiser(); // _38 (weak)
 	virtual ~ActAdjust();              // _44 (weak)
 	virtual void init(Creature*);      // _48
-	virtual void exec();               // _4C
+	virtual int exec();                // _4C
 	virtual void cleanup();            // _50
 
 	// _00     = VTBL
@@ -189,14 +207,17 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
 
 	virtual ~ActAttack();                                // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void resume();                               // _54
 	virtual void restart();                              // _58
-	virtual void resumable();                            // _5C
+	virtual bool resumable();                            // _5C
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
-	void findTarget();
+	Creature* findTarget();
+
+	// unused/inlined:
+	void decideTarget();
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
@@ -212,14 +233,14 @@ struct ActBoMake : public Action {
 
 	virtual ~ActBoMake();                                // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
 	void initApproach();
-	void exeApproach();
+	int exeApproach();
 	void initWork();
-	void exeWork();
+	int exeWork();
 
 	// _00 = VTBL
 	// TODO: members
@@ -234,7 +255,7 @@ struct ActBoreListen : public Action {
 	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
 	virtual ~ActBoreListen();                  // _44
 	virtual void init(Creature*);              // _48
-	virtual void exec();                       // _4C
+	virtual int exec();                        // _4C
 	virtual void cleanup();                    // _50
 
 	// _00 = VTBL
@@ -249,7 +270,7 @@ struct ActBoreOneshot : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActBoreOneshot();                           // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
@@ -269,11 +290,14 @@ struct ActBoreRest : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActBoreRest();                              // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
 	void sitDown();
+
+	// unused/inlined:
+	void standUp();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -291,7 +315,7 @@ struct ActBoreSelect : public Action {
 	virtual void procAnimMsg(Piki*, MsgAnim*);     // _20
 	virtual ~ActBoreSelect();                      // _44
 	virtual void init(Creature*);                  // _48
-	virtual void exec();                           // _4C
+	virtual int exec();                            // _4C
 	virtual void cleanup();                        // _50
 
 	void stop();
@@ -310,7 +334,7 @@ struct ActBoreTalk : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActBoreTalk();                              // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
@@ -331,7 +355,7 @@ struct ActBou : public Action {
 	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
 	virtual ~ActBou();                               // _44 (weak)
 	virtual void init(Creature*);                    // _48
-	virtual void exec();                             // _4C
+	virtual int exec();                              // _4C
 	virtual void cleanup();                          // _50
 
 	void gotoLeg();
@@ -351,7 +375,7 @@ struct ActBreakWall : public Action, public PaniAnimKeyListener {
 	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
 	virtual ~ActBreakWall();                             // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
@@ -376,7 +400,7 @@ struct ActBridge : public Action, public PaniAnimKeyListener {
 	virtual void dump();                                 // _3C
 	virtual ~ActBridge();                                // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
@@ -385,6 +409,22 @@ struct ActBridge : public Action, public PaniAnimKeyListener {
 	void newExeGo();
 	void newInitWork();
 	void newExeWork();
+
+	// unused/inlined:
+	void collideBridgeSurface();
+	void collideBridgeBlocker();
+	void initDetour();
+	void exeDetour();
+	void initClimb();
+	void exeClimb();
+	void initApproach();
+	void exeApproach();
+	void initGo();
+	void exeGo();
+	void initWork();
+	void exeWork();
+	void doWork(int);
+	void newInitApproach();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -411,7 +451,7 @@ struct ActChase : public Action {
 
 	virtual ~ActChase();          // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	// _00     = VTBL
@@ -430,14 +470,21 @@ struct ActCrowd : public Action, public SlotChangeListner {
 	virtual void procWallMsg(Piki*, MsgWall*);       // _28
 	virtual ~ActCrowd();                             // _44
 	virtual void init(Creature*);                    // _48
-	virtual void exec();                             // _4C
+	virtual int exec();                              // _4C
 	virtual void cleanup();                          // _50
-	virtual void resumable();                        // _5C
+	virtual bool resumable();                        // _5C
 	virtual void inform(int);                        // _64
 
 	void startSort();
 	void startZawatuki();
 	void finishZawatuki();
+
+	// unused/inlined:
+	void initRouteMove();
+	void exeRouteMove();
+	void setFormed();
+	void startBoredom();
+	void startTalk();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -453,11 +500,14 @@ struct ActDecoy : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActDecoy();                                 // _44 (weak)
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 
 	void findTeki();
+
+	// unused/inlined:
+	void update();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -501,12 +551,15 @@ struct ActEnter : public Action {
 	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
 	virtual ~ActEnter();                             // _44
 	virtual void init(Creature*);                    // _48
-	virtual void exec();                             // _4C
+	virtual int exec();                              // _4C
 	virtual void cleanup();                          // _50
 
 	void findLeg();
 	void gotoLeg();
 	void climb();
+
+	// unused/inlined:
+	void routeMove();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -532,7 +585,7 @@ struct ActEscape : public Action {
 
 	virtual ~ActEscape();         // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 	virtual void getInfo(char*);  // _60
 
@@ -550,7 +603,7 @@ struct ActExit : public Action {
 	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
 	virtual ~ActExit();                              // _44
 	virtual void init(Creature*);                    // _48
-	virtual void exec();                             // _4C
+	virtual int exec();                              // _4C
 	virtual void cleanup();                          // _50
 
 	// _00     = VTBL
@@ -566,7 +619,7 @@ struct ActFlower : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActFlower();                                // _44 (weak)
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
 
@@ -584,7 +637,7 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActFormation();                             // _44 (weak)
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 
@@ -605,9 +658,9 @@ struct ActFree : public Action, public PaniAnimKeyListener {
 	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
 	virtual ~ActFree();                                  // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
-	virtual void resumable();                            // _5C
+	virtual bool resumable();                            // _5C
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
 	void initBoid(struct Vector3f&, f32);
@@ -628,7 +681,7 @@ struct ActFreeSelect : public Action {
 	virtual void procTargetMsg(Piki*, MsgTarget*); // _18
 	virtual ~ActFreeSelect();                      // _44
 	virtual void init(Creature*);                  // _48
-	virtual void exec();                           // _4C
+	virtual int exec();                            // _4C
 	virtual void cleanup();                        // _50
 
 	void finishRest();
@@ -659,7 +712,7 @@ struct ActGoto : public Action {
 	virtual void defaultInitialiser(); // _38 (weak)
 	virtual ~ActGoto();                // _44 (weak)
 	virtual void init(Creature*);      // _48
-	virtual void exec();               // _4C
+	virtual int exec();                // _4C
 	virtual void cleanup();            // _50
 
 	// _00     = VTBL
@@ -676,7 +729,7 @@ struct ActGuard : public Action {
 	virtual void dump();          // _3C
 	virtual ~ActGuard();          // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	void findFriend();
@@ -704,12 +757,16 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
 	virtual ~ActJumpAttack();                            // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
 	void attackHit();
 	void doClimb();
+
+	// unused/inlined:
+	void getAttackPos();
+	void getAttackSize();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -725,7 +782,7 @@ struct ActKinoko : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActKinoko();                                // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
@@ -735,6 +792,10 @@ struct ActKinoko : public Action, public PaniAnimKeyListener {
 	void exeAttack();
 	void initBoid();
 	void exeBoid();
+
+	// unused/inlined:
+	void initStick();
+	void initJump();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -750,12 +811,18 @@ struct ActMine : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActMine();                                  // _44 (weak)
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
 
 	void initWatch();
 	void exeMine();
+
+	// unused/inlined:
+	void exeWatch();
+	void exeGo();
+	void initMine();
+	void initGo();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -782,7 +849,7 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActPick();                                  // _44 (weak)
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 
@@ -796,6 +863,15 @@ struct ActPick : public Action, public PaniAnimKeyListener {
  * @brief TODO
  */
 struct ActPickCreature : public AndAction {
+
+	/**
+	 * @brief TODO
+	 */
+	struct InitGoto {
+		void initialise(Action*, Action*);
+		// TODO: members
+	};
+
 	ActPickCreature(Piki*);
 
 	virtual ~ActPickCreature();   // _44 (weak)
@@ -814,7 +890,7 @@ struct ActPickItem : public AndAction {
 
 	virtual ~ActPickItem();       // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	void findItem();
@@ -832,7 +908,7 @@ struct ActPullout : public Action {
 
 	virtual ~ActPullout();        // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	// _00     = VTBL
@@ -848,7 +924,7 @@ struct ActPulloutCreature : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActPulloutCreature();                       // _44 (weak)
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 
@@ -866,13 +942,17 @@ struct ActPush : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActPush();                                  // _44 (weak)
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
 
 	void exeApproach();
 	void initGo();
 	void exeGo();
+
+	// unused/inlined:
+	void collideRockSurface();
+	void initApproach();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -899,7 +979,7 @@ struct ActPut : public Action {
 
 	virtual ~ActPut();            // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	// _00     = VTBL
@@ -916,7 +996,7 @@ struct ActPutBomb : public Action, public PaniAnimKeyListener {
 	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
 	virtual ~ActPutBomb();                               // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
@@ -930,6 +1010,10 @@ struct ActPutBomb : public Action, public PaniAnimKeyListener {
 	void initThrow();
 	void initPut();
 	void exeThrow();
+
+	// unused/inlined:
+	void exeWait();
+	void exePut();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -945,7 +1029,7 @@ struct ActPutItem : public Action {
 
 	virtual ~ActPutItem();        // _44
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	void findPos();
@@ -985,7 +1069,7 @@ struct ActRandomBoid : public Action {
 
 	virtual ~ActRandomBoid();     // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 	virtual void getInfo(char*);  // _60
 
@@ -1002,7 +1086,7 @@ struct ActRescue : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActRescue();                                // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
@@ -1029,7 +1113,7 @@ struct ActRope : public Action {
 
 	virtual ~ActRope();           // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	// _00     = VTBL
@@ -1045,10 +1129,13 @@ struct ActShoot : public AndAction {
 
 	virtual ~ActShoot();          // _44
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	void findTarget();
+
+	// unused/inlined:
+	void decideTarget();
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
@@ -1063,7 +1150,7 @@ struct ActShootCreature : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActShootCreature();                         // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
@@ -1081,7 +1168,7 @@ struct ActStone : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActStone();                                 // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
@@ -1107,7 +1194,7 @@ struct ActTransport : public Action, public PaniAnimKeyListener {
 	virtual void draw(Graphics&);                        // _40
 	virtual ~ActTransport();                             // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
@@ -1116,7 +1203,7 @@ struct ActTransport : public Action, public PaniAnimKeyListener {
 	void getCarriers();
 	void findPellet();
 	void setSlotIndex();
-	void execJump();
+	int execJump();
 	void gotoLiftPos();
 	void doLift();
 	void useWaterRoute();
@@ -1129,6 +1216,14 @@ struct ActTransport : public Action, public PaniAnimKeyListener {
 	void findObstacle();
 	void crMove();
 	void moveToWayPoint();
+
+	// unused/inlined:
+	void initWait();
+	void exeWait();
+	void getNumStickers();
+	void calcNumStickers();
+	void initJump();
+	void crGetRadius(int);
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1165,7 +1260,7 @@ struct ActWatch : public Action {
 
 	virtual ~ActWatch();          // _44 (weak)
 	virtual void init(Creature*); // _48
-	virtual void exec();          // _4C
+	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 	virtual void getInfo(char*);  // _60
 
@@ -1182,7 +1277,7 @@ struct ActWeed : public Action, public PaniAnimKeyListener {
 
 	virtual ~ActWeed();                                  // _44
 	virtual void init(Creature*);                        // _48
-	virtual void exec();                                 // _4C
+	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 

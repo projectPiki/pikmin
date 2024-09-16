@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Generator.h"
 
 /*
  * --INFO--
@@ -868,8 +868,9 @@ void GeneratorCache::preload(u32)
  * Address:	800DF76C
  * Size:	000128
  */
-void GeneratorCache::hasUfoParts(u32, u32)
+bool GeneratorCache::hasUfoParts(u32, u32)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0

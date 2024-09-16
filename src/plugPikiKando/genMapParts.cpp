@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Generator.h"
+#include "MapMgr.h"
 
 /*
  * --INFO--
@@ -25,7 +26,7 @@ static void _Print(char*, ...)
  * Address:	8011785C
  * Size:	0001C0
  */
-void makeObjectMapParts()
+static GenObjectMapParts* makeObjectMapParts()
 {
 	/*
 	.loc_0x0:
@@ -714,7 +715,7 @@ void GenObjectMapParts::render(Graphics&, Generator*)
  * Address:	80118228
  * Size:	00027C
  */
-void GenObjectMapParts::birth(BirthInfo&)
+void* GenObjectMapParts::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

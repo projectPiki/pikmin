@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800BDFF0
  * Size:	0000A0
  */
-ActPush::ActPush(Piki*)
+ActPush::ActPush(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -141,7 +142,7 @@ void ActPush::collideRockSurface()
  * Address:	800BE128
  * Size:	0000CC
  */
-void ActPush::exec()
+int ActPush::exec()
 {
 	/*
 	.loc_0x0:
@@ -867,22 +868,5 @@ ActPush::~ActPush()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800BE9E0
- * Size:	000014
- */
-void ActPush::@72 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x48
-	  b         -0x39C
 	*/
 }

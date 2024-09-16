@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800B77AC
  * Size:	000054
  */
-ActDecoy::ActDecoy(Piki*)
+ActDecoy::ActDecoy(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -239,7 +240,7 @@ void ActDecoy::animationKeyUpdated(PaniAnimKeyEvent&) { }
  * Address:	800B79DC
  * Size:	000514
  */
-void ActDecoy::exec()
+int ActDecoy::exec()
 {
 	/*
 	.loc_0x0:
@@ -637,19 +638,5 @@ ActDecoy::~ActDecoy()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800B7F5C
- * Size:	000008
- */
-void ActDecoy::@20 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x14
-	  b         -0x588
 	*/
 }

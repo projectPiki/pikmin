@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800C12E8
  * Size:	000098
  */
-ActRescue::ActRescue(Piki*)
+ActRescue::ActRescue(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -112,7 +113,7 @@ void ActRescue::init(Creature*)
  * Address:	800C13C4
  * Size:	00014C
  */
-void ActRescue::exec()
+int ActRescue::exec()
 {
 	/*
 	.loc_0x0:
@@ -977,22 +978,5 @@ ActRescue::~ActRescue()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800C1E10
- * Size:	000014
- */
-void ActRescue::@52 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x34
-	  b         -0x910
 	*/
 }

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800C216C
  * Size:	000120
  */
-ActShoot::ActShoot(Piki*)
+ActShoot::ActShoot(Piki* piki)
+    : AndAction(piki)
 {
 	/*
 	.loc_0x0:
@@ -315,7 +316,7 @@ void ActShoot::decideTarget()
  * Address:	800C24B4
  * Size:	0001CC
  */
-void ActShoot::exec()
+int ActShoot::exec()
 {
 	/*
 	.loc_0x0:
@@ -591,7 +592,8 @@ void ActShootCreature::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800C27AC
  * Size:	00005C
  */
-ActShootCreature::ActShootCreature(Piki*)
+ActShootCreature::ActShootCreature(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -676,7 +678,7 @@ void ActShootCreature::init(Creature*)
  * Address:	800C2890
  * Size:	0002DC
  */
-void ActShootCreature::exec()
+int ActShootCreature::exec()
 {
 	/*
 	.loc_0x0:
@@ -971,19 +973,5 @@ ActShoot::~ActShoot()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800C2C4C
- * Size:	000008
- */
-void ActShootCreature::@20 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x14
-	  b         -0x550
 	*/
 }

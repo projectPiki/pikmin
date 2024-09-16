@@ -1,4 +1,7 @@
-#include "types.h"
+#include "WorkObject.h"
+#include "Generator.h"
+#include "Interactions.h"
+#include "DynColl.h"
 
 /*
  * --INFO--
@@ -160,6 +163,7 @@ void WorkObject::finalSetup() { }
  * Size:	00008C
  */
 WorkObject::WorkObject()
+    : ItemCreature(0, nullptr, nullptr)
 {
 	// UNUSED FUNCTION
 }
@@ -511,8 +515,9 @@ void WorkObjectMgr::birth(int, int)
  * Address:	8009B584
  * Size:	000088
  */
-void WorkObjectMgr::getCreature(int)
+Creature* WorkObjectMgr::getCreature(int)
 {
+	return nullptr;
 	/*
 	.loc_0x0:
 	  cmpwi     r4, 0
@@ -567,29 +572,23 @@ void WorkObjectMgr::getCreature(int)
  * Address:	8009B60C
  * Size:	000008
  */
-u32 WorkObjectMgr::getFirst() { return 0x0; }
+int WorkObjectMgr::getFirst() { return 0; }
 
 /*
  * --INFO--
  * Address:	8009B614
  * Size:	000008
  */
-void WorkObjectMgr::getNext(int)
-{
-	/*
-	.loc_0x0:
-	  addi      r3, r4, 0x1
-	  blr
-	*/
-}
+int WorkObjectMgr::getNext(int idx) { return idx + 1; }
 
 /*
  * --INFO--
  * Address:	8009B61C
  * Size:	000044
  */
-void WorkObjectMgr::isDone(int)
+bool WorkObjectMgr::isDone(int)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -621,8 +620,9 @@ void WorkObjectMgr::isDone(int)
  * Address:	8009B660
  * Size:	000024
  */
-void WorkObjectMgr::getSize()
+int WorkObjectMgr::getSize()
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -643,6 +643,7 @@ void WorkObjectMgr::getSize()
  * Size:	00015C
  */
 GenObjectWorkObject::GenObjectWorkObject()
+    : GenObject(0, nullptr)
 {
 	// UNUSED FUNCTION
 }
@@ -756,7 +757,7 @@ void GenObjectWorkObject::ramLoadParameters(RandomAccessStream&)
  * Address:	8009B7C4
  * Size:	00016C
  */
-void makeObjectWorkObject()
+static void makeObjectWorkObject()
 {
 	/*
 	.loc_0x0:
@@ -1236,8 +1237,9 @@ void GenObjectWorkObject::updateUseList(Generator*, int)
  * Address:	8009BD9C
  * Size:	000180
  */
-void GenObjectWorkObject::birth(BirthInfo&)
+void* GenObjectWorkObject::birth(BirthInfo&)
 {
+	return nullptr;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1464,8 +1466,9 @@ HinderRock::HinderRock(Shape*)
  * Address:	8009C094
  * Size:	000074
  */
-void HinderRock::insideSafeArea(Vector3f&)
+bool HinderRock::insideSafeArea(Vector3f&)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1644,8 +1647,9 @@ void HinderRock::doSave(RandomAccessStream&)
  * Address:	8009C2AC
  * Size:	000008
  */
-void HinderRock::getCentreSize()
+f32 HinderRock::getCentreSize()
 {
+	return 0.0f;
 	/*
 	.loc_0x0:
 	  lfs       f1, 0x430(r3)
@@ -1658,8 +1662,9 @@ void HinderRock::getCentreSize()
  * Address:	8009C2B4
  * Size:	000014
  */
-void HinderRock::isFinished()
+bool HinderRock::isFinished()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lbz       r0, 0x43C(r3)
@@ -2266,8 +2271,9 @@ void HinderRock::stimulate(Interaction&)
  * Address:	8009CA0C
  * Size:	000018
  */
-void InteractPush::actHinderRock(HinderRock*)
+bool InteractPush::actHinderRock(HinderRock*)
 {
+	return true;
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x8(r3)
@@ -2344,8 +2350,9 @@ void HinderRock::refresh(Graphics&)
  * Address:	8009CAE4
  * Size:	00011C
  */
-void HinderRock::workable(Vector3f&)
+bool HinderRock::workable(Vector3f&)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lfs       f3, 0x3CC(r3)
@@ -3143,8 +3150,9 @@ void HinderRock::startAI(int)
  * Address:	8009D5C8
  * Size:	000154
  */
-void Bridge::workable(Vector3f&)
+bool Bridge::workable(Vector3f&)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4042,8 +4050,9 @@ void Bridge::doSave(RandomAccessStream&)
  * Address:	8009E124
  * Size:	0000B0
  */
-void Bridge::insideSafeArea(Vector3f&)
+bool Bridge::insideSafeArea(Vector3f&)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4102,8 +4111,9 @@ void Bridge::insideSafeArea(Vector3f&)
  * Address:	8009E1D4
  * Size:	000068
  */
-void Bridge::isFinished()
+bool Bridge::isFinished()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4272,8 +4282,9 @@ void Bridge::getJointIndex(int)
  * Address:	8009E34C
  * Size:	00009C
  */
-void Bridge::isStageFinished(int)
+bool Bridge::isStageFinished(int)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5099,8 +5110,9 @@ void Bridge::getStartPos()
  * Address:	8009ED18
  * Size:	000008
  */
-void Bridge::getStageDepth()
+f32 Bridge::getStageDepth()
 {
+	return 0.0f;
 	/*
 	.loc_0x0:
 	  lfs       f1, -0x72DC(r2)
@@ -5113,8 +5125,9 @@ void Bridge::getStageDepth()
  * Address:	8009ED20
  * Size:	000008
  */
-void Bridge::getStageWidth()
+f32 Bridge::getStageWidth()
 {
+	return 0.0f;
 	/*
 	.loc_0x0:
 	  lfs       f1, -0x72D8(r2)
@@ -5422,8 +5435,9 @@ void Bridge::startStageFinished(int, bool)
  * Address:	8009F14C
  * Size:	0000A0
  */
-void InteractBuild::actBridge(Bridge*)
+bool InteractBuild::actBridge(Bridge*)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5476,8 +5490,9 @@ void InteractBuild::actBridge(Bridge*)
  * Address:	8009F1EC
  * Size:	0002E8
  */
-void InteractBreak::actBridge(Bridge*)
+bool InteractBreak::actBridge(Bridge*)
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5725,15 +5740,16 @@ void operator*(const Vector3f&, const f32&)
  * Address:	8009F500
  * Size:	000008
  */
-u32 Bridge::isBridge() { return 0x1; }
+bool Bridge::isBridge() { return true; }
 
 /*
  * --INFO--
  * Address:	8009F508
  * Size:	000014
  */
-void Bridge::alwaysUpdatePlatform()
+bool Bridge::alwaysUpdatePlatform()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lbz       r0, 0x424(r3)
@@ -5752,7 +5768,7 @@ void Bridge::alwaysUpdatePlatform()
 void Bridge::finalSetup()
 {
 	// Generated from stb r0, 0x424(r3)
-	_424 = 3;
+	// _424 = 3;
 }
 
 /*
@@ -5760,29 +5776,30 @@ void Bridge::finalSetup()
  * Address:	8009F528
  * Size:	000008
  */
-u32 WorkObject::isVisible() { return 0x1; }
+bool WorkObject::isVisible() { return true; }
 
 /*
  * --INFO--
  * Address:	8009F530
  * Size:	000008
  */
-u32 WorkObject::isAlive() { return 0x1; }
+bool WorkObject::isAlive() { return true; }
 
 /*
  * --INFO--
  * Address:	8009F538
  * Size:	000008
  */
-u32 WorkObject::isHinderRock() { return 0x0; }
+bool WorkObject::isHinderRock() { return false; }
 
 /*
  * --INFO--
  * Address:	8009F540
  * Size:	000008
  */
-void ItemCreature::getHeight()
+f32 ItemCreature::getHeight()
 {
+	return 0.0f;
 	/*
 	.loc_0x0:
 	  lfs       f1, -0x732C(r2)
@@ -5795,7 +5812,7 @@ void ItemCreature::getHeight()
  * Address:	8009F548
  * Size:	000008
  */
-u32 HinderRock::isHinderRock() { return 0x1; }
+bool HinderRock::isHinderRock() { return true; }
 
 /*
  * --INFO--
@@ -5859,8 +5876,9 @@ WorkObjectMgr::~WorkObjectMgr()
  * Address:	8009F5C4
  * Size:	000008
  */
-void WorkObjectMgr::getMax()
+int WorkObjectMgr::getMax()
 {
+	return 0x10000;
 	/*
 	.loc_0x0:
 	  lis       r3, 0x1
@@ -5873,25 +5891,11 @@ void WorkObjectMgr::getMax()
  * Address:	8009F5CC
  * Size:	000008
  */
-u32 WorkObject::isFinished() { return 0x0; }
+bool WorkObject::isFinished() { return false; }
 
 /*
  * --INFO--
  * Address:	8009F5D4
  * Size:	000008
  */
-u32 WorkObject::workable(Vector3f&) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8009F5DC
- * Size:	000008
- */
-void ObjectMgr::@8 @update()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         0x40E78
-	*/
-}
+bool WorkObject::workable(Vector3f&) { return true; }

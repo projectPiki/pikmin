@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Collision.h"
+#include "Geometry.h"
 
 /*
  * --INFO--
@@ -1144,8 +1145,9 @@ void CollPartUpdater::updateCollPart(CollPart*)
  * Address:	80087BC0
  * Size:	000124
  */
-void CollPart::isStickable()
+bool CollPart::isStickable()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1245,8 +1247,9 @@ void CollPart::isStickable()
  * Address:	80087CE4
  * Size:	00005C
  */
-void CollPart::isClimbable()
+bool CollPart::isClimbable()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1284,8 +1287,9 @@ void CollPart::isClimbable()
  * Address:	........
  * Size:	000008
  */
-void CollPart::isDamagable()
+bool CollPart::isDamagable()
 {
+	return false;
 	// UNUSED FUNCTION
 }
 
@@ -1294,8 +1298,9 @@ void CollPart::isDamagable()
  * Address:	80087D40
  * Size:	000050
  */
-void CollPart::isBouncy()
+bool CollPart::isBouncy()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1330,8 +1335,9 @@ void CollPart::isBouncy()
  * Address:	80087D90
  * Size:	000034
  */
-void CollPart::getChildCount()
+int CollPart::getChildCount()
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1359,8 +1365,9 @@ void CollPart::getChildCount()
  * Address:	80087DC4
  * Size:	000028
  */
-void CollPart::getChild()
+CollPart* CollPart::getChild()
 {
+	return nullptr;
 	/*
 	.loc_0x0:
 	  lha       r0, 0x54(r3)
@@ -1383,8 +1390,9 @@ void CollPart::getChild()
  * Address:	80087DEC
  * Size:	00005C
  */
-void CollPart::getChildAt(int)
+CollPart* CollPart::getChildAt(int)
 {
+	return nullptr;
 	/*
 	.loc_0x0:
 	  cmpwi     r4, 0
@@ -1426,8 +1434,9 @@ void CollPart::getChildAt(int)
  * Address:	........
  * Size:	000028
  */
-void CollPart::getNext()
+CollPart* CollPart::getNext()
 {
+	return nullptr;
 	// UNUSED FUNCTION
 }
 
@@ -2874,7 +2883,7 @@ void CollInfo::checkCollisionSpecial(Vector3f&, f32, CndCollPart*)
  * Address:	80088EF8
  * Size:	000008
  */
-u32 CndCollPart::satisfy(CollPart*) { return 0x0; }
+bool CndCollPart::satisfy(CollPart*) { return false; }
 
 /*
  * --INFO--
@@ -3545,8 +3554,9 @@ void CollInfo::getBoundingSphere()
  * Address:	80089710
  * Size:	000060
  */
-void CollInfo::getSphere(u32)
+CollPart* CollInfo::getSphere(u32)
 {
+	return nullptr;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3917,8 +3927,9 @@ void CollInfo::updateInfo(Graphics&, bool)
  * Address:	80089B50
  * Size:	000014
  */
-void CollInfo::hasInfo()
+bool CollInfo::hasInfo()
 {
+	return false;
 	/*
 	.loc_0x0:
 	  lhz       r0, 0xC(r3)

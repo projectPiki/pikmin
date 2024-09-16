@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800BD364
  * Size:	0000CC
  */
-ActPickCreature::ActPickCreature(Piki*)
+ActPickCreature::ActPickCreature(Piki* piki)
+    : AndAction(piki)
 {
 	/*
 	.loc_0x0:
@@ -122,7 +123,8 @@ void ActPickCreature::InitGoto::initialise(Action*, Action*)
  * Address:	........
  * Size:	00019C
  */
-ActDeliver::ActDeliver(Piki*)
+ActDeliver::ActDeliver(Piki* piki)
+    : AndAction(piki)
 {
 	// UNUSED FUNCTION
 }
@@ -272,7 +274,7 @@ ActDeliver::~ActDeliver()
 void ActDeliver::defaultInitialiser()
 {
 	// Generated from stw r0, 0x18(r3)
-	_18 = 0;
+	// _18 = 0;
 }
 
 /*

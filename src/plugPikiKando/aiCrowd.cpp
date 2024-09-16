@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800B5AAC
  * Size:	0000FC
  */
-ActCrowd::ActCrowd(Piki*)
+ActCrowd::ActCrowd(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -107,7 +108,7 @@ ActCrowd::ActCrowd(Piki*)
 void ActCrowd::inform(int a1)
 {
 	// Generated from stw r4, 0x58(r3)
-	_58 = a1;
+	// _58 = a1;
 }
 
 /*
@@ -549,7 +550,7 @@ void ActCrowd::cleanup()
  * Address:	800B6068
  * Size:	00164C
  */
-void ActCrowd::exec()
+int ActCrowd::exec()
 {
 	/*
 	.loc_0x0:
@@ -2241,21 +2242,4 @@ ActCrowd::~ActCrowd()
  * Address:	800B7790
  * Size:	000008
  */
-u32 ActCrowd::resumable() { return 0x1; }
-
-/*
- * --INFO--
- * Address:	800B7798
- * Size:	000014
- */
-void ActCrowd::@128 @4 @inform(int)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x80
-	  b         -0x1C00
-	*/
-}
+bool ActCrowd::resumable() { return true; }

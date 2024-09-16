@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800A79F8
  * Size:	000080
  */
-ActPick::ActPick(Piki*)
+ActPick::ActPick(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -243,7 +244,7 @@ void ActPick::cleanup()
  * Address:	800A7C48
  * Size:	0000B4
  */
-void ActPick::exec()
+int ActPick::exec()
 {
 	/*
 	.loc_0x0:
@@ -306,7 +307,8 @@ void ActPick::exec()
  * Address:	........
  * Size:	000040
  */
-ActPut::ActPut(Piki*)
+ActPut::ActPut(Piki* piki)
+    : Action(piki, false)
 {
 	// UNUSED FUNCTION
 }
@@ -345,7 +347,7 @@ void ActPut::cleanup() { }
  * Address:	800A7D10
  * Size:	0000D8
  */
-void ActPut::exec()
+int ActPut::exec()
 {
 	/*
 	.loc_0x0:
@@ -419,7 +421,8 @@ void ActPut::exec()
  * Address:	800A7DE8
  * Size:	00006C
  */
-ActAdjust::ActAdjust(Piki*)
+ActAdjust::ActAdjust(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -638,7 +641,7 @@ void ActAdjust::cleanup()
  * Address:	800A807C
  * Size:	00011C
  */
-void ActAdjust::exec()
+int ActAdjust::exec()
 {
 	/*
 	.loc_0x0:
@@ -855,19 +858,5 @@ ActPick::~ActPick()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800A82E0
- * Size:	000008
- */
-void ActPick::@20 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x14
-	  b         -0x868
 	*/
 }

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "ViewPiki.h"
 
 /*
  * --INFO--
@@ -294,7 +294,7 @@ PikiShapeObject::PikiShapeObject(Shape*)
  * Address:	800D8B70
  * Size:	000020
  */
-void ViewPiki::isKinoko()
+bool ViewPiki::isKinoko()
 {
 	/*
 	.loc_0x0:
@@ -408,7 +408,8 @@ void ViewPiki::changeShape(int)
  * Address:	800D8CB8
  * Size:	000060
  */
-ViewPiki::ViewPiki(CreatureProp*)
+ViewPiki::ViewPiki(CreatureProp* prop)
+    : Piki(prop)
 {
 	/*
 	.loc_0x0:
@@ -1203,7 +1204,7 @@ void Piki::finishLook()
  * Address:	800D96DC
  * Size:	000014
  */
-void Piki::isLooking()
+bool Piki::isLooking()
 {
 	/*
 	.loc_0x0:

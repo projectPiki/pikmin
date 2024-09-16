@@ -1,14 +1,12 @@
-#include "types.h"
+#include "RopeCreature.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "ropeCreature"); }
 
 /*
  * --INFO--
@@ -25,33 +23,11 @@ static void _Print(char*, ...)
  * Address:	800946A4
  * Size:	000058
  */
-RopeCreature::RopeCreature(CreatureProp*)
+RopeCreature::RopeCreature(CreatureProp* prop)
+    : Creature(prop)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x97E0
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x524
-	  stw       r0, 0x0(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  lfs       f0, -0x7418(r2)
-	  stfs      f0, 0x2CC(r31)
-	  stfs      f0, 0x2C8(r31)
-	  stfs      f0, 0x2C4(r31)
-	  stw       r0, 0x2B8(r31)
-	  stw       r0, 0x2BC(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_2B8 = nullptr;
+	_2BC = nullptr;
 }
 
 /*
@@ -314,4 +290,4 @@ void RopeCreature::refresh(Graphics&) { }
  * Address:	80094A30
  * Size:	000008
  */
-u32 RopeCreature::needShadow() { return 0x0; }
+bool RopeCreature::needShadow() { return false; }

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800BB534
  * Size:	000084
  */
-ActGuard::ActGuard(Piki*)
+ActGuard::ActGuard(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -251,7 +252,7 @@ void ActGuard::dump()
  * Address:	800BB7A4
  * Size:	00071C
  */
-void ActGuard::exec()
+int ActGuard::exec()
 {
 	/*
 	.loc_0x0:

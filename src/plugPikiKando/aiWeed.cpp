@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800C30A8
  * Size:	000054
  */
-ActWeed::ActWeed(Piki*)
+ActWeed::ActWeed(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -94,7 +95,7 @@ void ActWeed::init(Creature*)
  * Address:	800C3154
  * Size:	000060
  */
-void ActWeed::exec()
+int ActWeed::exec()
 {
 	/*
 	.loc_0x0:
@@ -356,7 +357,7 @@ void ActWeed::exeApproach()
 void ActWeed::initAdjust()
 {
 	// Generated from sth r0, 0x18(r3)
-	_18 = 1;
+	// _18 = 1;
 }
 
 /*
@@ -880,19 +881,5 @@ ActWeed::~ActWeed()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800C3ADC
- * Size:	000008
- */
-void ActWeed::@20 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x14
-	  b         -0x324
 	*/
 }

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800BCAFC
  * Size:	0000E0
  */
-ActPickItem::ActPickItem(Piki*)
+ActPickItem::ActPickItem(Piki* piki)
+    : AndAction(piki)
 {
 	/*
 	.loc_0x0:
@@ -287,7 +288,7 @@ void ActPickItem::init(Creature*)
  * Address:	800BCE0C
  * Size:	0000E8
  */
-void ActPickItem::exec()
+int ActPickItem::exec()
 {
 	/*
 	.loc_0x0:
@@ -397,7 +398,8 @@ void ActPickItem::cleanup()
  * Address:	........
  * Size:	000080
  */
-ActFlower::ActFlower(Piki*)
+ActFlower::ActFlower(Piki* piki)
+    : Action(piki, false)
 {
 	// UNUSED FUNCTION
 }
@@ -636,7 +638,7 @@ void ActFlower::cleanup()
  * Address:	800BD1E8
  * Size:	000074
  */
-void ActFlower::exec()
+int ActFlower::exec()
 {
 	/*
 	.loc_0x0:
@@ -766,22 +768,5 @@ ActPickItem::~ActPickItem()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800BD350
- * Size:	000014
- */
-void ActFlower::@32 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x20
-	  b         -0x2D0
 	*/
 }

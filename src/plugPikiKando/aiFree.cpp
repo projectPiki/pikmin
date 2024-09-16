@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800BA600
  * Size:	0000CC
  */
-ActFree::ActFree(Piki*)
+ActFree::ActFree(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -570,7 +571,7 @@ void ActFree::animationKeyUpdated(PaniAnimKeyEvent&) { }
  * Address:	800BAD04
  * Size:	0000F0
  */
-void ActFree::exec()
+int ActFree::exec()
 {
 	/*
 	.loc_0x0:
@@ -772,21 +773,4 @@ ActFree::~ActFree()
  * Address:	800BAF4C
  * Size:	000008
  */
-u32 ActFree::resumable() { return 0x1; }
-
-/*
- * --INFO--
- * Address:	800BAF54
- * Size:	000014
- */
-void ActFree::@72 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x48
-	  b         -0x264
-	*/
-}
+bool ActFree::resumable() { return true; }

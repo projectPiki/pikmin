@@ -1,4 +1,5 @@
-#include "types.h"
+#include "PikiAI.h"
+#include "BuildingItem.h"
 
 /*
  * --INFO--
@@ -25,7 +26,8 @@ static void _Print(char*, ...)
  * Address:	800AE13C
  * Size:	000070
  */
-ActBreakWall::ActBreakWall(Piki*)
+ActBreakWall::ActBreakWall(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -367,7 +369,7 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800AE554
  * Size:	000148
  */
-void ActBreakWall::exec()
+int ActBreakWall::exec()
 {
 	/*
 	.loc_0x0:
@@ -477,7 +479,7 @@ void ActBreakWall::exec()
  * Address:	800AE69C
  * Size:	000020
  */
-void BuildingItem::isAlive()
+bool BuildingItem::isAlive()
 {
 	/*
 	.loc_0x0:
@@ -968,19 +970,5 @@ ActBreakWall::~ActBreakWall()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AEC78
- * Size:	000008
- */
-void ActBreakWall::@20 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x14
-	  b         -0x8B8
 	*/
 }

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -243,7 +243,8 @@ void ActRandomBoid::AnimListener::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800C0D08
  * Size:	00008C
  */
-ActRandomBoid::ActRandomBoid(Piki*)
+ActRandomBoid::ActRandomBoid(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -376,7 +377,7 @@ void ActRandomBoid::cleanup() { }
  * Address:	800C0E84
  * Size:	0003BC
  */
-void ActRandomBoid::exec()
+int ActRandomBoid::exec()
 {
 	/*
 	.loc_0x0:

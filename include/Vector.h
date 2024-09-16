@@ -131,7 +131,8 @@ struct Quat {
 	// unused/inlined:
 	void multiplyTo(Quat&, Quat&);
 
-	// TODO: members
+	Vector3f v; // _00, vector part
+	f32 s;      // _0C, scalar part
 };
 
 inline Vector3f operator-(const Vector3f& a, const Vector3f& b) { return Vector3f(a.x - b.x, a.y - b.y, a.z - b.z); }

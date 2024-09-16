@@ -25,6 +25,9 @@ struct ViewPiki : public Piki {
 
 	void init(Shape*, MapMgr*, Navi*);
 
+	// unused/inlined:
+	void refresh2d(Graphics&, int);
+
 	// _00      = VTBL
 	// _00-_588 = Piki
 	// TODO: members

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -260,7 +260,8 @@ void ActFormation::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800B9C04
  * Size:	00005C
  */
-ActFormation::ActFormation(Piki*)
+ActFormation::ActFormation(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -513,7 +514,7 @@ void ActFormation::cleanup()
  * Address:	800B9EE8
  * Size:	0006A4
  */
-void ActFormation::exec()
+int ActFormation::exec()
 {
 	/*
 	.loc_0x0:
@@ -1025,19 +1026,5 @@ ActFormation::~ActFormation()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800BA5F8
- * Size:	000008
- */
-void ActFormation::@20 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x14
-	  b         -0xD24
 	*/
 }

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800AC79C
  * Size:	00006C
  */
-ActBou::ActBou(Piki*)
+ActBou::ActBou(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -124,7 +125,7 @@ void ActBou::init(Creature*)
  * Address:	800AC8B0
  * Size:	00004C
  */
-void ActBou::exec()
+int ActBou::exec()
 {
 	/*
 	.loc_0x0:

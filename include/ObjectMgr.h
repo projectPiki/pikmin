@@ -43,7 +43,7 @@ struct ObjectMgr : public Traversable, public Node {
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_08 = Traversable
-	// _08-_1C = Node
+	// _08-_28 = Node
 	// TODO: members
 };
 
@@ -78,7 +78,7 @@ struct MonoObjectMgr : public ObjectMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_1C = ObjectMgr?
+	// _00-_28 = ObjectMgr?
 	// TODO: members
 };
 
@@ -117,7 +117,7 @@ struct PolyObjectMgr : public ObjectMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_1C = ObjectMgr?
+	// _00-_28 = ObjectMgr?
 	// TODO: members
 };
 

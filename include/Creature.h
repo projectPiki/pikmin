@@ -11,12 +11,15 @@
 struct CollInfo;
 struct CollTriInfo;
 struct CollPart;
+struct Colour;
 struct Condition;
 struct CreatureInf;
 struct CreatureProp;
 struct DynCollObject;
 struct Matrix4f;
+struct MoveTrace;
 struct Msg;
+struct Pellet;
 struct RopeCreature;
 struct RouteTracer;
 struct SeContext;
@@ -155,7 +158,7 @@ struct Creature : public RefCountable, public EventTalker {
 	void endStickMouth();
 	void startStickObjectSphere(Creature*, CollPart*, f32);
 	void startStickObjectTube(Creature*, CollPart*);
-	void startStickObject(Creature*, CollPart*, f32);
+	void startStickObject(Creature*, CollPart*, int, f32);
 	void endStickObject();
 	void startStick(Creature*, CollPart*);
 	void endStick();
@@ -173,6 +176,13 @@ struct Creature : public RefCountable, public EventTalker {
 	void insideSphere(struct Sphere&);
 	void adjustDistance(Vector3f&, f32);
 	void getAtariType();
+	void checkForward(Vector3f&, f32, f32&);
+	void getNextTri(CollTriInfo*, Vector3f&, int&);
+	void renderCollTriInfo(Graphics&, CollTriInfo*, Colour&);
+	void isStickToSphere();
+	void adjustStickObject(Vector3f&);
+	void startStickObjectPellet(Pellet*, int, f32);
+	void isStickLeader();
 
 	inline void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
 	inline void resetCreatureFlag(u32 flag) { mCreatureFlags &= ~flag; }
@@ -187,14 +197,17 @@ struct Creature : public RefCountable, public EventTalker {
 	FastGrid mGrid;         // _40
 	u8 _58[0x6C - 0x58];    // _58, TODO: work out members
 	EObjType mObjType;      // _6C, object type
-	u8 _70[0x94 - 0x70];    // _70, TODO: work out members
+	Vector3f _70;           // _70
+	u8 _7C[0x94 - 0x7C];    // _7C, TODO: work out members
 	Vector3f mPosition;     // _94
 	f32 mDirection;         // _A0
 	u8 _A4[0xC8 - 0xA4];    // _A4, TODO: work out members
 	u32 mCreatureFlags;     // _C8, bitflag
 	u32 _CC;                // _CC
 	f32 _D0;                // _D0
-	u8 _D4[0x184 - 0xD4];   // _CC, TODO: work out members
+	u8 _D4[0xE0 - 0xD4];    // _D4, TODO: work out members
+	Quat _E0;               // _E0
+	u8 _F0[0x184 - 0xF0];   // _F0, TODO: work out members
 	Creature* mStickTarget; // _184, creature/object this creature is stuck to
 	u8 _188[0x220 - 0x188]; // _188, TODO: work out members
 	CollInfo* mCollInfo;    // _220

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Generator.h"
 
 /*
  * --INFO--
@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	000060
  */
 GenObjectNavi::GenObjectNavi()
+    : GenObject('navi', "")
 {
 	// UNUSED FUNCTION
 }
@@ -131,7 +132,7 @@ void GenObjectNavi::doRead(RandomAccessStream&) { }
  * Address:	800F8230
  * Size:	0000B8
  */
-void GenObjectNavi::birth(BirthInfo&)
+void* GenObjectNavi::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

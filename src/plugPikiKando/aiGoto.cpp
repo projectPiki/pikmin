@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800BAF68
  * Size:	00004C
  */
-ActGoto::ActGoto(Piki*)
+ActGoto::ActGoto(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -202,7 +203,7 @@ void ActGoto::cleanup()
  * Address:	800BB144
  * Size:	000378
  */
-void ActGoto::exec()
+int ActGoto::exec()
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--
@@ -249,7 +249,7 @@ void ActTransport::exeWait()
  * Address:	800AEF10
  * Size:	000150
  */
-void ActTransport::isStickLeader()
+bool ActTransport::isStickLeader()
 {
 	/*
 	.loc_0x0:
@@ -517,7 +517,8 @@ void ActTransport::calcNumStickers()
  * Address:	800AF1F0
  * Size:	0000F4
  */
-ActTransport::ActTransport(Piki*)
+ActTransport::ActTransport(Piki* piki)
+    : Action(piki, false)
 {
 	/*
 	.loc_0x0:
@@ -1002,7 +1003,7 @@ void ActTransport::initJump()
  * Address:	800AF784
  * Size:	0004F0
  */
-void ActTransport::execJump()
+int ActTransport::execJump()
 {
 	/*
 	.loc_0x0:
@@ -2533,7 +2534,7 @@ void ActTransport::useWaterRoute()
  * Address:	800B0B80
  * Size:	0008B4
  */
-void ActTransport::exec()
+int ActTransport::exec()
 {
 	/*
 	.loc_0x0:
@@ -6932,22 +6933,5 @@ ActTransport::~ActTransport()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800B455C
- * Size:	000014
- */
-void ActTransport::@184 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0xB8
-	  b         -0x4F7C
 	*/
 }

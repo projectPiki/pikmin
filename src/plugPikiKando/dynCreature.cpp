@@ -1,6 +1,7 @@
 #include "types.h"
 #include "DynCreature.h"
 #include "DynParticle.h"
+#include "CreatureProp.h"
 #include "Matrix4f.h"
 
 /*
@@ -291,6 +292,15 @@ void DynParticleHeap::releaseOne(DynParticle*)
 DynCreature::DynCreature()
     : Creature(nullptr) // temporary for compiler happiness- probably not nullptr
 {
+	_2D8 = 0;
+	_2D4 = 0;
+	_2F4 = 0.0f;
+	_2D0 = 0.0f;
+	_2DC.set(0.0f, 0.0f, 0.0f);
+	_2B8.set(0.0f, 0.0f, 0.0f);
+	_2C4.set(0.0f, 0.0f, 0.0f);
+	_70.set(0.0f, 0.0f, 0.0f);
+	_438 |= 0x1;
 	/*
 	.loc_0x0:
 	  mflr      r0

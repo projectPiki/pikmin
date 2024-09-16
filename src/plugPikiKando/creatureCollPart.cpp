@@ -1,14 +1,14 @@
-#include "types.h"
+#include "CreatureCollPart.h"
+#include "Dolphin/os.h"
+#include "Shape.h"
+#include "MapMgr.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "creatureCollPart"); }
 
 /*
  * --INFO--
@@ -32,8 +32,17 @@ void CreatureCollPart::touchCallback(Plane&, Vector3f&, Vector3f&) { }
  * Address:	8008E0C0
  * Size:	0000A0
  */
-void CreaturePlatMgr::init(Creature*, MapMgr*, Shape*)
+void CreaturePlatMgr::init(Creature* creature, MapMgr* map, Shape* shape)
 {
+	_44 = 0;
+	_00 = shape;
+	FOREACH_NODE(ObjCollInfo, _00->mCollisionInfo.mChild, collInfo)
+	{
+		if (collInfo->_48) {
+			CollPart* part = map->requestCollPart(collInfo, creature);
+			_04[_44++]     = part;
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

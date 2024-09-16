@@ -9481,7 +9481,7 @@ void MapMgr::loadPlatshape(char*)
  * Address:	80069494
  * Size:	00009C
  */
-void MapMgr::requestCollPart(ObjCollInfo*, Creature*)
+CollPart* MapMgr::requestCollPart(ObjCollInfo*, Creature*)
 {
 	/*
 	.loc_0x0:

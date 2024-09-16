@@ -1,12 +1,21 @@
-#include "types.h"
+#include "Generator.h"
+#include "CourseDebug.h"
+#include "Dolphin/os.h"
+#include "sysNew.h"
+
+int CourseDebug::collision;
+int CourseDebug::pikiNoAttack;
+int CourseDebug::noCarryover;
+int CourseDebug::pelletDebug;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "courseDebug");
 	// UNUSED FUNCTION
 }
 
@@ -26,8 +35,12 @@ static void _Print(char*, ...)
  * Size:	00011C
  */
 GenObjectDebug::GenObjectDebug()
+    : GenObject('debg', "Debug Switches")
+    , mCollision(this, 0, 0, 0, "p00", nullptr)
+    , mPikiNoAttack(this, 0, 0, 0, "p01", nullptr)
+    , mNoCarryover(this, 0, 0, 0, "p02", nullptr)
+    , mPelletDebug(this, 0, 0, 0, "p03", nullptr)
 {
-	// UNUSED FUNCTION
 }
 
 /*
@@ -35,89 +48,7 @@ GenObjectDebug::GenObjectDebug()
  * Address:	800864A8
  * Size:	00012C
  */
-void makeObjectDebug()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x58
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  bl        -0x3F4C0
-	  mr.       r31, r3
-	  beq-      .loc_0x10C
-	  lis       r4, 0x802B
-	  lis       r3, 0x802B
-	  subi      r5, r4, 0x11AC
-	  lis       r4, 0x6465
-	  subi      r6, r3, 0x11A0
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x6267
-	  bl        0x547C8
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5490
-	  lis       r3, 0x802B
-	  stw       r0, 0x4(r31)
-	  subi      r0, r3, 0x112C
-	  stw       r0, 0x4(r31)
-	  addi      r5, r1, 0x24
-	  addi      r4, r31, 0
-	  lwz       r0, -0x5ED0(r13)
-	  addi      r3, r31, 0x18
-	  stw       r0, 0x2C(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r0, 0x24(r1)
-	  bl        -0x27AA4
-	  lis       r3, 0x802A
-	  addi      r29, r3, 0x60C4
-	  stw       r29, 0x20(r31)
-	  li        r30, 0
-	  addi      r5, r1, 0x20
-	  stw       r30, 0x24(r31)
-	  mr        r4, r31
-	  addi      r3, r31, 0x28
-	  lwz       r0, -0x5ECC(r13)
-	  stw       r0, 0x34(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r0, 0x20(r1)
-	  bl        -0x27AD8
-	  stw       r29, 0x30(r31)
-	  addi      r5, r1, 0x1C
-	  addi      r4, r31, 0
-	  stw       r30, 0x34(r31)
-	  addi      r3, r31, 0x38
-	  lwz       r0, -0x5EC8(r13)
-	  stw       r0, 0x3C(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r0, 0x1C(r1)
-	  bl        -0x27B00
-	  stw       r29, 0x40(r31)
-	  addi      r5, r1, 0x18
-	  addi      r4, r31, 0
-	  stw       r30, 0x44(r31)
-	  addi      r3, r31, 0x48
-	  lwz       r0, -0x5EC4(r13)
-	  stw       r0, 0x44(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x18(r1)
-	  bl        -0x27B28
-	  stw       r29, 0x50(r31)
-	  stw       r30, 0x54(r31)
-
-	.loc_0x10C:
-	  mr        r3, r31
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
-}
+static GenObjectDebug* makeObjectDebug() { return new GenObjectDebug; }
 
 /*
  * --INFO--
@@ -178,21 +109,14 @@ void GenObjectDebug::doRead(RandomAccessStream&) { }
  * Address:	80086664
  * Size:	000028
  */
-void GenObjectDebug::birth(BirthInfo&)
+void* GenObjectDebug::birth(BirthInfo&)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x24(r3)
-	  stw       r0, 0x2FD8(r13)
-	  lwz       r0, 0x34(r3)
-	  stw       r0, 0x2FDC(r13)
-	  lwz       r0, 0x44(r3)
-	  stw       r0, 0x2FE0(r13)
-	  lwz       r0, 0x54(r3)
-	  li        r3, 0
-	  stw       r0, 0x2FE4(r13)
-	  blr
-	*/
+	CourseDebug::collision    = mCollision();
+	CourseDebug::pikiNoAttack = mPikiNoAttack();
+	CourseDebug::noCarryover  = mNoCarryover();
+	CourseDebug::pelletDebug  = mPelletDebug();
+
+	return nullptr;
 }
 
 /*
