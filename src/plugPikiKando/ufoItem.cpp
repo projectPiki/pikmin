@@ -1,4 +1,4 @@
-#include "types.h"
+#include "UfoItem.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	800E7018
  * Size:	0000B4
  */
-void UfoItem::insideSafeArea(Vector3f&)
+bool UfoItem::insideSafeArea(Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1928,7 +1928,7 @@ void UfoItem::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800E86FC
  * Size:	000008
  */
-u32 UfoItem::needShadow() { return 0x0; }
+bool UfoItem::needShadow() { return false; }
 
 /*
  * --INFO--
@@ -2089,7 +2089,7 @@ UfoItem::Spot::Spot()
  * Address:	800E890C
  * Size:	000008
  */
-u32 UfoItem::ignoreAtari(Creature*) { return 0x0; }
+bool UfoItem::ignoreAtari(Creature*) { return false; }
 
 /*
  * --INFO--
@@ -2361,7 +2361,7 @@ void UfoItem::startAI(int)
  * Address:	800E8C90
  * Size:	000008
  */
-void UfoItem::getSize()
+f32 UfoItem::getSize()
 {
 	/*
 	.loc_0x0:
@@ -2375,7 +2375,7 @@ void UfoItem::getSize()
  * Address:	800E8C98
  * Size:	000008
  */
-void UfoItem::getiMass()
+f32 UfoItem::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -3242,25 +3242,11 @@ void UfoItem::getRouteIndex()
  * Address:	800E9794
  * Size:	000008
  */
-u32 UfoItem::isVisible() { return 0x1; }
+bool UfoItem::isVisible() { return true; }
 
 /*
  * --INFO--
  * Address:	800E979C
  * Size:	000008
  */
-u32 UfoItem::isAlive() { return 0x1; }
-
-/*
- * --INFO--
- * Address:	800E97A4
- * Size:	000008
- */
-void UfoItem::@696 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         -0x1500
-	*/
-}
+bool UfoItem::isAlive() { return true; }

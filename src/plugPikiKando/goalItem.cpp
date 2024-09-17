@@ -1,4 +1,4 @@
-#include "types.h"
+#include "GoalItem.h"
 
 /*
  * --INFO--
@@ -35,7 +35,7 @@ void printMatrix(char*, Matrix4f&)
  * Address:	800EA714
  * Size:	000040
  */
-void GoalItem::insideSafeArea(Vector3f&)
+bool GoalItem::insideSafeArea(Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -784,7 +784,7 @@ void GoalItem::setSpotActive(bool)
  * Address:	800EB0E0
  * Size:	000058
  */
-void GoalItem::invoke(zen::particleGenerator*, zen::particleMdl*)
+bool GoalItem::invoke(zen::particleGenerator*, zen::particleMdl*)
 {
 	/*
 	.loc_0x0:
@@ -823,7 +823,7 @@ void GoalItem::invoke(zen::particleGenerator*, zen::particleMdl*)
 void GoalItem::setFlightLight(bool a1)
 {
 	// Generated from stb r4, 0x3EC(r3)
-	_3EC = a1;
+	// _3EC = a1;
 }
 
 /*
@@ -1201,7 +1201,7 @@ void GoalItem::exitPiki()
  * Address:	800EB5B8
  * Size:	000008
  */
-u32 GoalItem::needShadow() { return 0x0; }
+bool GoalItem::needShadow() { return false; }
 
 /*
  * --INFO--
@@ -1290,7 +1290,7 @@ GoalItem::GoalItem(CreatureProp*, ItemShapeObject*, ItemShapeObject*, ItemShapeO
  * Address:	800EB6D0
  * Size:	00001C
  */
-void GoalItem::ignoreAtari(Creature*)
+bool GoalItem::ignoreAtari(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -1908,7 +1908,7 @@ void GoalItem::emitPiki()
  * Address:	800EBE28
  * Size:	000008
  */
-void GoalItem::getSize()
+f32 GoalItem::getSize()
 {
 	/*
 	.loc_0x0:
@@ -1922,7 +1922,7 @@ void GoalItem::getSize()
  * Address:	800EBE30
  * Size:	000008
  */
-void GoalItem::getiMass()
+f32 GoalItem::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -2440,25 +2440,11 @@ void GoalItem::getRouteIndex()
  * Address:	800EC4B0
  * Size:	000008
  */
-u32 GoalItem::isVisible() { return 0x1; }
+bool GoalItem::isVisible() { return true; }
 
 /*
  * --INFO--
  * Address:	800EC4B8
  * Size:	000008
  */
-u32 GoalItem::isAlive() { return 0x1; }
-
-/*
- * --INFO--
- * Address:	800EC4C0
- * Size:	000008
- */
-void GoalItem::@968 @invoke(zen::particleGenerator*, zen::particleMdl*)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x3C8
-	  b         -0x13E4
-	*/
-}
+bool GoalItem::isAlive() { return true; }

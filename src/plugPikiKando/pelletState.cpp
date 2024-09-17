@@ -1,14 +1,13 @@
-#include "types.h"
+#include "PelletState.h"
+#include "Suckable.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "pelletState"); }
 
 /*
  * --INFO--
@@ -356,29 +355,8 @@ void PelletStateMachine::init(Pellet*)
  * Size:	00004C
  */
 PelletUfoLoadState::PelletUfoLoadState()
+    : PelletState(PELSTATE_UfoLoad, "UFOLOAD")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0xDD4
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xD84
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x5
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r0, r5, 0xD34
-	  subi      r5, r13, 0x55F8
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xCE4
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -386,11 +364,7 @@ PelletUfoLoadState::PelletUfoLoadState()
  * Address:	8009A478
  * Size:	00000C
  */
-void PelletUfoLoadState::init(Pellet*)
-{
-	// Generated from stb r0, 0x10(r3)
-	_10 = 8;
-}
+void PelletUfoLoadState::init(Pellet*) { _10 = 8; }
 
 /*
  * --INFO--
@@ -485,29 +459,8 @@ void PelletUfoLoadState::cleanup(Pellet*)
  * Size:	00004C
  */
 PelletDeadState::PelletDeadState()
+    : PelletState(PELSTATE_Dead, "DEAD")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0xDD4
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xD84
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x4
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r0, r5, 0xD34
-	  subi      r5, r13, 0x55F0
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xC64
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -537,28 +490,8 @@ void PelletDeadState::cleanup(Pellet*) { }
  * Size:	000048
  */
 PelletNormalState::PelletNormalState()
+    : PelletState(PELSTATE_Normal, "NORMAL")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0xDD4
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xD84
-	  stw       r0, 0x0(r3)
-	  li        r0, 0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r6, r5, 0xD34
-	  subi      r5, r13, 0x55E8
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0xBE8
-	  stw       r6, 0x0(r3)
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -588,30 +521,8 @@ void PelletNormalState::cleanup(Pellet*) { }
  * Size:	000050
  */
 PelletSwallowedState::PelletSwallowedState()
+    : PelletState(PELSTATE_Swallowed, "SWALLOWED")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0xDD4
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xD84
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x3
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r0, r4, 0xD34
-	  addi      r5, r5, 0x9DC
-	  stw       r0, 0x0(r3)
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0xB68
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -677,29 +588,8 @@ void PelletSwallowedState::cleanup(Pellet*)
  * Size:	00004C
  */
 PelletAppearState::PelletAppearState()
+    : PelletState(PELSTATE_Appear, "APPEAR")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0xDD4
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xD84
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x2
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r0, r5, 0xD34
-	  subi      r5, r13, 0x55E0
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xAE4
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -832,33 +722,8 @@ void PelletAppearState::cleanup(Pellet*) { }
  * Size:	00005C
  */
 PelletGoalState::PelletGoalState()
+    : PelletState(PELSTATE_Goal, "GOAL")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0xDD4
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xD84
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r0, r5, 0xD34
-	  subi      r5, r13, 0x55D8
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xA64
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x7358(r2)
-	  stfs      f0, 0x2C(r3)
-	  stfs      f0, 0x28(r3)
-	  stfs      f0, 0x24(r3)
-	  blr
-	*/
 }
 
 /*

@@ -62,9 +62,14 @@ struct PaniItemAnimator : public PaniAnimator {
  * @brief TODO
  */
 struct PaniPelletAnimator : public PaniAnimator {
+	PaniPelletAnimator();
+
+	PaniMotionTable* createMotionTable();
+
 	// _30     = VTBL
 	// _00-_34 = PaniAnimator
-	// TODO: members
+	u8 _34[0x54 - 0x34]; // _34, unknown
+	                     // TODO: members
 };
 
 /**
@@ -126,6 +131,44 @@ struct PaniPikiAnimMgr {
 	static PaniMotionTable* motionTable;
 
 	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct PaniMotionInfo {
+	PaniMotionInfo(int);
+	PaniMotionInfo(int, PaniAnimKeyListener*);
+
+	void init(int, PaniAnimKeyListener*);
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct PaniMotion {
+	PaniMotion(int);
+
+	void init(int, int);
+
+	int _00; // _00
+	int _04; // _04
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct PaniMotionTable {
+	PaniMotionTable(int);
+
+	int _00;          // _00
+	PaniMotion** _04; // _04
 };
 
 #endif

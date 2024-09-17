@@ -2,11 +2,13 @@
 #define _STRING_H
 
 #include "types.h"
-#include "Stream.h"
+#include "stl/stdio.h"
 
-// definitely not the right place for this
-void sscanf(char*, char*, void*);
-
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
 struct String {
 	String() { init(64); }
 	String(char* str, int length) { init(str, length); }
@@ -27,6 +29,7 @@ struct String {
 	void calcHash(char*);
 	void calcHash();
 	void toInt(char*);
+
 	void init(int length)
 	{
 		mString = length ? new char[length + 1] : nullptr;

@@ -1,6 +1,6 @@
 #include "King.h"
 #include "NsMathF.h"
-#include "PaniMotion.h"
+#include "PaniAnimator.h"
 #include "Collision.h"
 #include "Dolphin/rand.h"
 

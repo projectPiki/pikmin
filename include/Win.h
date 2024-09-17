@@ -68,18 +68,4 @@ struct ContainerWin {
 	// TODO: members
 };
 
-/**
- * @brief TODO
- */
-struct SeWin : public GmWin {
-	virtual void open();              // _10
-	virtual void close();             // _14
-	virtual void update();            // _18
-	virtual void doRender(Graphics&); // _1C
-
-	// _00     = VTBL
-	// _00-_14 = GmWin?
-	// TODO: members
-};
-
 #endif

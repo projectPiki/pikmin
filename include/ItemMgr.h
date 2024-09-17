@@ -57,6 +57,16 @@ struct ItemObject : public ItemCreature {
  * @brief TODO.
  */
 struct ItemMgr : public PolyObjectMgr {
+
+	/**
+	 * @brief TODO.
+	 */
+	struct UseNode : public CoreNode {
+		// _00     = VTBL
+		// _00-_14 = CoreNode
+		// TODO: members
+	};
+
 	ItemMgr();
 
 	virtual ~ItemMgr();                // _48 (weak)

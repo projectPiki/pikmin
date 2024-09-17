@@ -9,6 +9,7 @@
 struct PaniAnimKeyEvent;
 struct PelletShapeObject;
 struct PelletView;
+struct Shape;
 
 /**
  * @brief TODO
@@ -136,6 +137,13 @@ struct PelletMgr : public MonoObjectMgr {
 	// _08     = VTBL 2
 	// _00-_28 = MonoObjectMgr?
 	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct PelletShapeObject {
+	PelletShapeObject(char*, Shape*, char*, char*, int);
 };
 
 #endif

@@ -1,4 +1,5 @@
-#include "types.h"
+#include "SoundMgr.h"
+#include "Boss.h"
 
 /*
  * --INFO--
@@ -1872,7 +1873,7 @@ void SeSystem::update(Graphics&, Vector3f&)
  * Address:	800A51C0
  * Size:	000008
  */
-u32 Boss::isBossBgm() { return 0x0; }
+bool Boss::isBossBgm() { return false; }
 
 /*
  * --INFO--

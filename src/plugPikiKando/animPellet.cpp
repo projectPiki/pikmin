@@ -1,4 +1,6 @@
-#include "types.h"
+#include "PelletAnimator.h"
+#include "Pellet.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -354,64 +356,17 @@ PelletShapeObject::PelletShapeObject(char*, Shape*, char*, char*, int)
  * Address:	8009996C
  * Size:	000038
  */
-PelletAnimator::PelletAnimator()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        0x358
-	  addi      r3, r31, 0x54
-	  bl        0x350
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+PelletAnimator::PelletAnimator() { }
 
 /*
  * --INFO--
  * Address:	800999A4
  * Size:	00006C
  */
-void PelletAnimator::init(AnimContext*, AnimContext*, AnimMgr*, PaniMotionTable*)
+void PelletAnimator::init(AnimContext* context1, AnimContext* context2, AnimMgr* mgr, PaniMotionTable* motionTable)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r7, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r6, 0
-	  addi      r6, r31, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r5, 0
-	  addi      r5, r30, 0
-	  stw       r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  bl        0x8574C
-	  addi      r4, r29, 0
-	  addi      r5, r30, 0
-	  addi      r6, r31, 0
-	  addi      r3, r28, 0x54
-	  bl        0x85738
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	_00.init(context1, mgr, motionTable);
+	_54.init(context2, mgr, motionTable);
 }
 
 /*
@@ -419,8 +374,14 @@ void PelletAnimator::init(AnimContext*, AnimContext*, AnimMgr*, PaniMotionTable*
  * Address:	........
  * Size:	000058
  */
-void PelletAnimator::startMotion(PaniMotionInfo*, PaniMotionInfo*)
+void PelletAnimator::startMotion(PaniMotionInfo* motionInfo1, PaniMotionInfo* motionInfo2)
 {
+	if (motionInfo1) {
+		_00.startMotion(*motionInfo1);
+	}
+	if (motionInfo2) {
+		_54.startMotion(*motionInfo2);
+	}
 	// UNUSED FUNCTION
 }
 
@@ -429,37 +390,14 @@ void PelletAnimator::startMotion(PaniMotionInfo*, PaniMotionInfo*)
  * Address:	80099A10
  * Size:	000058
  */
-void PelletAnimator::finishMotion(PaniMotionInfo*, PaniMotionInfo*)
+void PelletAnimator::finishMotion(PaniMotionInfo* motionInfo1, PaniMotionInfo* motionInfo2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  beq-      .loc_0x2C
-	  mr        r3, r30
-	  bl        0x857F8
-
-	.loc_0x2C:
-	  cmplwi    r31, 0
-	  beq-      .loc_0x40
-	  addi      r3, r30, 0x54
-	  addi      r4, r31, 0
-	  bl        0x857E4
-
-	.loc_0x40:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (motionInfo1) {
+		_00.finishMotion(*motionInfo1);
+	}
+	if (motionInfo2) {
+		_54.finishMotion(*motionInfo2);
+	}
 }
 
 /*
@@ -467,62 +405,14 @@ void PelletAnimator::finishMotion(PaniMotionInfo*, PaniMotionInfo*)
  * Address:	80099A68
  * Size:	000058
  */
-void PelletAnimator::startMotion(PaniMotionInfo&, PaniMotionInfo&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  beq-      .loc_0x2C
-	  mr        r3, r30
-	  bl        0x85730
-
-	.loc_0x2C:
-	  cmplwi    r31, 0
-	  beq-      .loc_0x40
-	  addi      r3, r30, 0x54
-	  addi      r4, r31, 0
-	  bl        0x8571C
-
-	.loc_0x40:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
+void PelletAnimator::startMotion(PaniMotionInfo& motionInfo1, PaniMotionInfo& motionInfo2) { startMotion(&motionInfo1, &motionInfo2); }
 
 /*
  * --INFO--
  * Address:	80099AC0
  * Size:	000028
  */
-void PelletAnimator::startMotion(PaniMotionInfo&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x18
-	  bl        0x856EC
-
-	.loc_0x18:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void PelletAnimator::startMotion(PaniMotionInfo& motionInfo) { startMotion(&motionInfo, nullptr); }
 
 /*
  * --INFO--
@@ -539,34 +429,10 @@ void PelletAnimator::finishMotion(PaniAnimKeyListener*)
  * Address:	80099AE8
  * Size:	00005C
  */
-void PelletAnimator::updateAnimation(f32, f32)
+void PelletAnimator::updateAnimation(f32 p1, f32 p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  fmr       f31, f2
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lwz       r12, 0x30(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r31, 0x54
-	  fmr       f1, f31
-	  lwz       r12, 0x84(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lfd       f31, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	_00.animate(p1);
+	_54.animate(p2);
 }
 
 /*
@@ -576,28 +442,8 @@ void PelletAnimator::updateAnimation(f32, f32)
  */
 void PelletAnimator::updateContext()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r12, 0x30(r31)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r31, 0x54
-	  lwz       r12, 0x84(r31)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_00.updateContext();
+	_54.updateContext();
 }
 
 /*
@@ -605,109 +451,17 @@ void PelletAnimator::updateContext()
  * Address:	80099B90
  * Size:	000148
  */
-void PaniPelletAnimator::createMotionTable()
+PaniMotionTable* PaniPelletAnimator::createMotionTable()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x8
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  bl        -0x52BA4
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x30
-	  li        r4, 0x7
-	  bl        0x8544C
-
-	.loc_0x30:
-	  li        r3, 0x8
-	  bl        -0x52BC0
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x4C
-	  li        r4, 0
-	  bl        0x853F0
-
-	.loc_0x4C:
-	  lwz       r4, 0x4(r31)
-	  li        r3, 0x8
-	  stw       r30, 0x0(r4)
-	  bl        -0x52BE4
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x70
-	  li        r4, 0x1
-	  bl        0x853CC
-
-	.loc_0x70:
-	  lwz       r4, 0x4(r31)
-	  li        r3, 0x8
-	  stw       r30, 0x4(r4)
-	  bl        -0x52C08
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x94
-	  li        r4, 0x2
-	  bl        0x853A8
-
-	.loc_0x94:
-	  lwz       r4, 0x4(r31)
-	  li        r3, 0x8
-	  stw       r30, 0x8(r4)
-	  bl        -0x52C2C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xB8
-	  li        r4, 0x3
-	  bl        0x85384
-
-	.loc_0xB8:
-	  lwz       r4, 0x4(r31)
-	  li        r3, 0x8
-	  stw       r30, 0xC(r4)
-	  bl        -0x52C50
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xDC
-	  li        r4, 0x4
-	  bl        0x85360
-
-	.loc_0xDC:
-	  lwz       r4, 0x4(r31)
-	  li        r3, 0x8
-	  stw       r30, 0x10(r4)
-	  bl        -0x52C74
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x100
-	  li        r4, 0x5
-	  bl        0x8533C
-
-	.loc_0x100:
-	  lwz       r4, 0x4(r31)
-	  li        r3, 0x8
-	  stw       r30, 0x14(r4)
-	  bl        -0x52C98
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x124
-	  li        r4, 0x6
-	  bl        0x85318
-
-	.loc_0x124:
-	  lwz       r4, 0x4(r31)
-	  mr        r3, r31
-	  stw       r30, 0x18(r4)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	PaniMotionTable* table = new PaniMotionTable(7);
+	table->_04[0]          = new PaniMotion(0);
+	table->_04[1]          = new PaniMotion(1);
+	table->_04[2]          = new PaniMotion(2);
+	table->_04[3]          = new PaniMotion(3);
+	table->_04[4]          = new PaniMotion(4);
+	table->_04[5]          = new PaniMotion(5);
+	table->_04[6]          = new PaniMotion(6);
+	return table;
 }
 
 /*
@@ -715,38 +469,4 @@ void PaniPelletAnimator::createMotionTable()
  * Address:	80099CD8
  * Size:	00003C
  */
-PaniPelletAnimator::PaniPelletAnimator()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        0x853F4
-	  lis       r3, 0x802B
-	  addi      r0, r3, 0x810
-	  stw       r0, 0x30(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80099D14
- * Size:	000008
- */
-void PelletAnimInfo::@4 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x4
-	  b         -0x57C
-	*/
-}
+PaniPelletAnimator::PaniPelletAnimator() { }

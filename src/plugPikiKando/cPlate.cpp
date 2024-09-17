@@ -1,4 +1,4 @@
-#include "types.h"
+#include "CPlate.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	800A5710
  * Size:	000014
  */
-void CPlate::getCreature(int)
+Creature* CPlate::getCreature(int)
 {
 	/*
 	.loc_0x0:
@@ -217,7 +217,7 @@ CPlate::Slot::Slot()
  * Address:	800A5980
  * Size:	000008
  */
-u32 CPlate::canNaviRunFast() { return 0x1; }
+bool CPlate::canNaviRunFast() { return true; }
 
 /*
  * --INFO--
@@ -1832,15 +1832,16 @@ void CPlate::render(Graphics&)
  * Address:	800A6D30
  * Size:	000008
  */
-u32 CPlate::getFirst() { return 0x0; }
+int CPlate::getFirst() { return 0; }
 
 /*
  * --INFO--
  * Address:	800A6D38
  * Size:	000008
  */
-void CPlate::getNext(int)
+int CPlate::getNext(int idx)
 {
+	return idx + 1;
 	/*
 	.loc_0x0:
 	  addi      r3, r4, 0x1
@@ -1853,7 +1854,7 @@ void CPlate::getNext(int)
  * Address:	800A6D40
  * Size:	000018
  */
-void CPlate::isDone(int)
+bool CPlate::isDone(int)
 {
 	/*
 	.loc_0x0:
@@ -1884,47 +1885,5 @@ void CPlate::read(RandomAccessStream&)
 	  addi      r1, r1, 0x8
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800A6D7C
- * Size:	000008
- */
-void CPlate::@8 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x28
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800A6D84
- * Size:	000008
- */
-void CPlate::@8 @render(Graphics&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x324
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800A6D8C
- * Size:	000008
- */
-void CPlate::@8 @update()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x364
 	*/
 }
