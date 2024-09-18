@@ -212,7 +212,6 @@ cflags_jaudio = [
 cflags_pikmin = [
     *cflags_base,
     "-fp_contract off",
-    "-common on",
     "-RTTI on",
 ]
 

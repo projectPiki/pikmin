@@ -6,6 +6,7 @@
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 #include "CreatureProp.h"
+#include "SimpleAI.h"
 
 namespace zen {
 struct particleGenerator;
@@ -72,6 +73,114 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 
 	// _00      = VTBL
 	// _00-_3C8 = Suckable
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct GoalAI : public SimpleAI {
+
+	/**
+	 * @brief TODO
+	 */
+	struct NotFinished : public SAICondition {
+
+		virtual bool satisfy(AICreature*); // _10
+
+		// _00     = VTBL
+		// _00-_14 = SAICondition
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct BootDone : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct BootEmit : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct BootInit : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct Effect : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct EmitPiki : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct EmitWait : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct WaitInit : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	GoalAI();
+
+	// _00     = VTBL
+	// _00-_?? = SimpleAI
 	// TODO: members
 };
 

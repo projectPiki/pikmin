@@ -1,6 +1,6 @@
 #include "Interactions.h"
 #include "Navi.h"
-#include "NaviProp.h"
+#include "NaviMgr.h"
 #include "NaviState.h"
 
 /*

@@ -3,8 +3,7 @@
 
 #include "types.h"
 #include "ItemMgr.h"
-
-struct SimpleAI;
+#include "SimpleAI.h"
 
 /*
  * @brief TODO
@@ -40,6 +39,54 @@ struct GemItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_304 = ItemCreature?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct GemAI : public SimpleAI {
+
+	/**
+	 * @brief TODO
+	 */
+	struct Die : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct RiseExec : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct RiseInit : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	GemAI();
+
+	// _00     = VTBL
+	// _00-_?? = SimpleAI
 	// TODO: members
 };
 

@@ -1,4 +1,5 @@
-#include "types.h"
+#include "PlantMgr.h"
+#include "Generator.h"
 
 /*
  * --INFO--
@@ -26,6 +27,7 @@ static void _Print(char*, ...)
  * Size:	0000C8
  */
 Plant::Plant()
+    : AICreature(nullptr)
 {
 	/*
 	.loc_0x0:
@@ -559,7 +561,7 @@ PlantAI::PlantAI()
  * Address:	8011A3A4
  * Size:	0000AC
  */
-void PlantAI::OpponentMove::satisfy(AICreature*)
+bool PlantAI::OpponentMove::satisfy(AICreature*)
 {
 	/*
 	.loc_0x0:
@@ -1123,7 +1125,7 @@ void PlantMgr::initialise()
  * Address:	8011AAAC
  * Size:	0000D8
  */
-void PlantMgr::createObject()
+Plant* PlantMgr::createObject()
 {
 	/*
 	.loc_0x0:
@@ -1334,6 +1336,7 @@ PlantShapeObject::PlantShapeObject(Shape*, char*, char*)
  * Size:	000068
  */
 GenObjectPlant::GenObjectPlant()
+    : GenObject('plnt', "")
 {
 	// UNUSED FUNCTION
 }
@@ -1343,7 +1346,7 @@ GenObjectPlant::GenObjectPlant()
  * Address:	8011ACCC
  * Size:	000078
  */
-void makeObjectPlant()
+static GenObjectPlant* makeObjectPlant()
 {
 	/*
 	.loc_0x0:
@@ -1537,7 +1540,7 @@ void GenObjectPlant::updateUseList(Generator*, int)
  * Address:	8011AEDC
  * Size:	000190
  */
-void GenObjectPlant::birth(BirthInfo&)
+void* GenObjectPlant::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:
@@ -1731,7 +1734,7 @@ PlantMgr::~PlantMgr()
  * Address:	8011B11C
  * Size:	000008
  */
-void Plant::getiMass()
+f32 Plant::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -1745,7 +1748,7 @@ void Plant::getiMass()
  * Address:	8011B124
  * Size:	000010
  */
-void Plant::isAlive()
+bool Plant::isAlive()
 {
 	/*
 	.loc_0x0:

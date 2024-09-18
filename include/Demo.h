@@ -75,4 +75,6 @@ struct DemoEventMgr {
 	// TODO: members
 };
 
+extern DemoEventMgr* demoEventMgr;
+
 #endif

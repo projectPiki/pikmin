@@ -1,4 +1,24 @@
-#include "types.h"
+#include "GameStat.h"
+
+GameStat::ColCounter GameStat::deadPikis;
+GameStat::ColCounter GameStat::fallPikis;
+
+GameStat::Counter GameStat::killTekis;
+GameStat::Counter GameStat::getPellets;
+
+GameStat::ColCounter GameStat::formationPikis;
+GameStat::ColCounter GameStat::freePikis;
+GameStat::ColCounter GameStat::workPikis;
+GameStat::ColCounter GameStat::mePikis;
+GameStat::ColCounter GameStat::containerPikis;
+GameStat::ColCounter GameStat::bornPikis;
+GameStat::ColCounter GameStat::victimPikis;
+GameStat::ColCounter GameStat::mapPikis;
+GameStat::ColCounter GameStat::allPikis;
+
+int GameStat::minPikis;
+int GameStat::maxPikis;
+bool GameStat::orimaDead;
 
 /*
  * --INFO--
@@ -27,51 +47,25 @@ static void _Print(char*, ...)
  */
 void GameStat::init()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x1E58
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x10(r3)
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x30F8(r13)
-	  stw       r0, 0x30FC(r13)
-	  stw       r0, 0x20(r3)
-	  stw       r0, 0x1C(r3)
-	  stw       r0, 0x18(r3)
-	  stw       r0, 0x2C(r3)
-	  stw       r0, 0x28(r3)
-	  stw       r0, 0x24(r3)
-	  stw       r0, 0x38(r3)
-	  stw       r0, 0x34(r3)
-	  stw       r0, 0x30(r3)
-	  stw       r0, 0x44(r3)
-	  stw       r0, 0x40(r3)
-	  stw       r0, 0x3C(r3)
-	  stw       r0, 0x50(r3)
-	  stw       r0, 0x4C(r3)
-	  stw       r0, 0x48(r3)
-	  stw       r0, 0x5C(r3)
-	  stw       r0, 0x58(r3)
-	  stw       r0, 0x54(r3)
-	  stw       r0, 0x68(r3)
-	  stw       r0, 0x64(r3)
-	  stw       r0, 0x60(r3)
-	  stw       r0, 0x74(r3)
-	  stw       r0, 0x70(r3)
-	  stw       r0, 0x6C(r3)
-	  stw       r0, 0x80(r3)
-	  stw       r0, 0x7C(r3)
-	  stw       r0, 0x78(r3)
-	  stw       r0, 0x3104(r13)
-	  stw       r0, 0x3100(r13)
-	  stb       r0, 0x3108(r13)
-	  blr
-	*/
+	deadPikis.init();
+	fallPikis.init();
+
+	killTekis.init();
+	getPellets.init();
+
+	formationPikis.init();
+	freePikis.init();
+	workPikis.init();
+	mePikis.init();
+	containerPikis.init();
+	bornPikis.init();
+	victimPikis.init();
+	mapPikis.init();
+	allPikis.init();
+
+	maxPikis  = 0;
+	minPikis  = 0;
+	orimaDead = false;
 }
 
 /*
@@ -81,6 +75,18 @@ void GameStat::init()
  */
 void GameStat::update()
 {
+	for (int i = 0; i < 3; i++) {
+		mapPikis(i) = formationPikis(i) + freePikis(i) + mePikis(i) + workPikis(i);
+	}
+
+	for (int i = 0; i < 3; i++) {
+		allPikis(i) = mapPikis(i) + containerPikis(i);
+	}
+
+	int total = allPikis(0) + allPikis(1) + allPikis(2);
+	if (total > maxPikis) {
+		maxPikis = total;
+	}
 	/*
 	.loc_0x0:
 	  lis       r3, 0x803D
@@ -161,54 +167,3 @@ void GameStat::ColCounter::dump(char*)
  * Size:	000004
  */
 void GameStat::dump() { }
-
-/*
- * --INFO--
- * Address:	80112628
- * Size:	00009C
- */
-void __sinit_gameStat_cpp(void)
-{
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x1E58
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x10(r3)
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x30F8(r13)
-	  stw       r0, 0x30FC(r13)
-	  stw       r0, 0x20(r3)
-	  stw       r0, 0x1C(r3)
-	  stw       r0, 0x18(r3)
-	  stw       r0, 0x2C(r3)
-	  stw       r0, 0x28(r3)
-	  stw       r0, 0x24(r3)
-	  stw       r0, 0x38(r3)
-	  stw       r0, 0x34(r3)
-	  stw       r0, 0x30(r3)
-	  stw       r0, 0x44(r3)
-	  stw       r0, 0x40(r3)
-	  stw       r0, 0x3C(r3)
-	  stw       r0, 0x50(r3)
-	  stw       r0, 0x4C(r3)
-	  stw       r0, 0x48(r3)
-	  stw       r0, 0x5C(r3)
-	  stw       r0, 0x58(r3)
-	  stw       r0, 0x54(r3)
-	  stw       r0, 0x68(r3)
-	  stw       r0, 0x64(r3)
-	  stw       r0, 0x60(r3)
-	  stw       r0, 0x74(r3)
-	  stw       r0, 0x70(r3)
-	  stw       r0, 0x6C(r3)
-	  stw       r0, 0x80(r3)
-	  stw       r0, 0x7C(r3)
-	  stw       r0, 0x78(r3)
-	  blr
-	*/
-}

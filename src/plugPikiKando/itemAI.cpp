@@ -1,4 +1,9 @@
-#include "types.h"
+#include "ItemAI.h"
+#include "PikiHeadItem.h"
+#include "BombItem.h"
+#include "GoalItem.h"
+#include "GemItem.h"
+#include "Collision.h"
 
 /*
  * --INFO--
@@ -3447,7 +3452,7 @@ GoalAI::GoalAI()
  * Address:	800F17A0
  * Size:	000028
  */
-void GoalAI::NotFinished::satisfy(AICreature*)
+bool GoalAI::NotFinished::satisfy(AICreature*)
 {
 	/*
 	.loc_0x0:
@@ -4585,7 +4590,7 @@ WaterAI::WaterAI()
  * Address:	800F25E8
  * Size:	000040
  */
-void WaterAI::CollideChar::satisfy(AICreature*)
+bool WaterAI::CollideChar::satisfy(AICreature*)
 {
 	/*
 	.loc_0x0:
@@ -4876,7 +4881,7 @@ void FallWaterAI::DisappearInit::act(AICreature*)
  * Address:	800F2924
  * Size:	000054
  */
-void CndBombable::satisfy(CollPart*)
+bool CndBombable::satisfy(CollPart*)
 {
 	/*
 	.loc_0x0:

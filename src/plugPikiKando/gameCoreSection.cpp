@@ -1,4 +1,4 @@
-#include "types.h"
+#include "GameCoreSection.h"
 
 /*
  * --INFO--
@@ -4787,7 +4787,7 @@ void GameCoreSection::update()
 void GameCoreSection::startContainerDemo()
 {
 	// Generated from stw r0, 0x34(r3)
-	_34 = 2;
+	// _34 = 2;
 }
 
 /*

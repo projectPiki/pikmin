@@ -4,8 +4,10 @@
 #include "types.h"
 #include "ItemMgr.h"
 #include "CreatureProp.h"
+#include "SimpleAI.h"
 
-struct SimpleAI;
+struct InteractBikkuri;
+struct InteractSwallow;
 
 /**
  * @brief TODO
@@ -39,6 +41,114 @@ struct BombItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct BombAI : public SimpleAI {
+
+	/**
+	 * @brief TODO
+	 */
+	struct BombExec : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct BombInit : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct DieExec : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct DieInit : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct MizuExec : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct MizuInit : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct SetExec : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	struct SetInit : public SAIAction {
+
+		virtual void act(AICreature*); // _08
+
+		// _00     = VTBL
+		// _00-_14 = SAIAction
+		// TODO: members
+	};
+
+	BombAI();
+
+	// _00     = VTBL
+	// _00-_?? = SimpleAI
 	// TODO: members
 };
 

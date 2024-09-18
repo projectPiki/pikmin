@@ -70,6 +70,16 @@ struct CndCollPart {
 	// TODO: members
 };
 
+/**
+ * @brief TODO
+ */
+struct CndBombable : public CndCollPart {
+	virtual bool satisfy(CollPart*); // _08 (weak)
+
+	// _00 = VTBL?
+	// TODO: members
+};
+
 enum ObjCollType {
 	OCT_Sphere   = 1,
 	OCT_Platform = 2,

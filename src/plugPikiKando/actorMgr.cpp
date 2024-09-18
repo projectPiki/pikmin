@@ -39,6 +39,7 @@ ActorMgr::ActorMgr(MapMgr*)
  */
 Creature* ActorMgr::createObject()
 {
+	return nullptr;
 	// UNUSED FUNCTION
 }
 

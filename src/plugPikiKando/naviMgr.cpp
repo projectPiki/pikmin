@@ -1,4 +1,4 @@
-#include "types.h"
+#include "NaviMgr.h"
 
 /*
  * --INFO--
@@ -147,7 +147,7 @@ void NaviMgr::init()
  * Address:	80117344
  * Size:	000060
  */
-void NaviMgr::createObject()
+Navi* NaviMgr::createObject()
 {
 	/*
 	.loc_0x0:
@@ -205,7 +205,7 @@ void NaviMgr::update()
  * Address:	801173C4
  * Size:	000074
  */
-void NaviMgr::getNavi()
+Navi* NaviMgr::getNavi()
 {
 	/*
 	.loc_0x0:
@@ -250,7 +250,7 @@ void NaviMgr::getNavi()
  * Address:	80117438
  * Size:	000018
  */
-void NaviMgr::getNavi(int)
+Navi* NaviMgr::getNavi(int)
 {
 	/*
 	.loc_0x0:
@@ -621,33 +621,5 @@ NaviMgr::~NaviMgr()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8011784C
- * Size:	000008
- */
-void NaviMgr::@8 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0xB8
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80117854
- * Size:	000008
- */
-void NaviMgr::@8 @update()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x4B4
 	*/
 }
