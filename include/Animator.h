@@ -240,6 +240,8 @@ struct Animator {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xB8.
  */
 struct AnimMgr : public CoreNode {
 	AnimMgr(Shape*, char*, int, char*);
@@ -255,7 +257,7 @@ struct AnimMgr : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	u8 _14[0xB8 - 0x14]; // _14, unknown
 };
 
 /**

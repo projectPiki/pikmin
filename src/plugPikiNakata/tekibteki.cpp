@@ -392,7 +392,7 @@ void BTeki::calcCircleDistanceStatic(Vector3f&, f32, Vector3f&, f32)
  * Address:	8014427C
  * Size:	000014
  */
-void BTeki::alwaysUpdatePlatform()
+bool BTeki::alwaysUpdatePlatform()
 {
 	/*
 	.loc_0x0:

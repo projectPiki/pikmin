@@ -1,4 +1,4 @@
-#include "types.h"
+#include "teki.h"
 
 /*
  * --INFO--
@@ -298,22 +298,5 @@ void NTeki::receiveMessage(TekiMessage&)
 	  addi      r1, r1, 0x28
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8014BD34
- * Size:	000014
- */
-void BTeki::@1132 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x46C
-	  b         -0x6B64
 	*/
 }

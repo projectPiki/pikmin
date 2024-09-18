@@ -1,4 +1,4 @@
-#include "types.h"
+#include "teki.h"
 
 /*
  * --INFO--
@@ -20,12 +20,14 @@ static void _Print(char*, ...)
 	// UNUSED FUNCTION
 }
 
+namespace TekiNakata {
+
 /*
  * --INFO--
  * Address:	8014B124
  * Size:	000244
  */
-void TekiNakata::makeTekiParameters(TekiMgr*)
+void makeTekiParameters(TekiMgr*)
 {
 	/*
 	.loc_0x0:
@@ -220,7 +222,7 @@ void TekiNakata::makeTekiParameters(TekiMgr*)
  * Address:	8014B368
  * Size:	000690
  */
-void TekiNakata::makeTekis(TekiMgr*)
+void makeTekis(TekiMgr*)
 {
 	/*
 	.loc_0x0:
@@ -758,3 +760,4 @@ void TekiNakata::makeTekis(TekiMgr*)
 	  blr
 	*/
 }
+} // namespace TekiNakata

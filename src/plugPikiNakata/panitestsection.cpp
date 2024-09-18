@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PaniTestSection.h"
 
 /*
  * --INFO--
@@ -1770,19 +1770,5 @@ void PaniTestSection::init()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8012159C
- * Size:	000008
- */
-void PaniTestNode::@32 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x20
-	  b         -0x7D4
 	*/
 }

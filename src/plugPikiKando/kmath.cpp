@@ -1,4 +1,4 @@
-#include "types.h"
+#include "KMath.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	801126C4
  * Size:	00005C
  */
-void isNan(f32)
+bool isNan(f32)
 {
 	/*
 	.loc_0x0:

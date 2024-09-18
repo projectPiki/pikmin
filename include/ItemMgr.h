@@ -4,14 +4,24 @@
 #include "types.h"
 #include "AICreature.h"
 #include "ObjectMgr.h"
+#include "CreatureNode.h"
 
 struct PelletShapeObject;
 
 /**
  * @brief TODO.
  */
+struct ItemShapeObject {
+	ItemShapeObject(Shape*, char*, char*);
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO.
+ */
 struct ItemCreature : public AICreature {
-	ItemCreature(int, CreatureProp*, Shape*);
+	ItemCreature(int objType, CreatureProp*, Shape*);
 
 	virtual void init(Vector3f&);           // _28
 	virtual f32 getHeight();                // _40
@@ -35,22 +45,6 @@ struct ItemCreature : public AICreature {
 	// _00      = VTBL
 	// _00-_304 = AICreature?
 	// TODO: members
-};
-
-/**
- * @brief TODO.
- */
-struct ItemObject : public ItemCreature {
-	ItemObject(int, Shape*); // unused/inlined
-
-	virtual bool isAtari();            // _84
-	virtual bool needShadow();         // _90
-	virtual void update();             // _E0
-	virtual void postUpdate(int, f32); // _E4
-
-	// _00      = VTBL
-	// _00-_304 = ItemCreature?
-	// TOD0: members
 };
 
 /**
@@ -94,6 +88,24 @@ struct ItemMgr : public PolyObjectMgr {
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_1C = PolyObjectMgr?
+	// TODO: members
+};
+
+/**
+ * @brief TODO.
+ */
+struct MeltingPotMgr : public CreatureNodeMgr {
+	MeltingPotMgr(ItemMgr*);
+
+	virtual ~MeltingPotMgr(); // _48 (weak)
+
+	void finalSetup();
+	void prepare(int);
+	void birth(int);
+
+	// _00     = VTBL 1
+	// _08     = VTBL 2
+	// _00-_28 = CreatureNodeMgr?
 	// TODO: members
 };
 

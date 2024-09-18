@@ -10,6 +10,7 @@
 #include "SearchSystem.h"
 #include "Vector.h"
 
+struct BirthInfo;
 struct GenObjectBoss;
 
 /**
@@ -191,6 +192,17 @@ struct Boss : public Creature {
 /**
  * @brief TODO
  */
+struct BossNode : public CoreNode {
+	BossNode();
+
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
 struct BossMgr : public ObjectMgr {
 	BossMgr();
 
@@ -235,6 +247,18 @@ struct BossMgr : public ObjectMgr {
 	// _08     = VTBL 2
 	// _00-_1C = ObjectMgr?
 	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct BossAnimationManager : public Node {
+	BossAnimationManager(BossMgr*);
+
+	// _00     = VTBL
+	// _00-_20 = Node
+	BossMgr* mBossMgr; // _20
+	                   // TODO: members
 };
 
 extern BossMgr* bossMgr;

@@ -2868,7 +2868,7 @@ bool Boss::needShadow()
  * Address:	8014FA08
  * Size:	000008
  */
-void Boss::getShadowSize()
+f32 Boss::getShadowSize()
 {
 	/*
 	.loc_0x0:

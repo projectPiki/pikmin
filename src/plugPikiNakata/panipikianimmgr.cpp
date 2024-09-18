@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PaniAnimator.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	000034
  */
-void PaniPikiAnimMgr::getMotionTable()
+PaniMotionTable* PaniPikiAnimMgr::getMotionTable()
 {
 	// UNUSED FUNCTION
 }

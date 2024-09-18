@@ -37,7 +37,7 @@ ActorMgr::ActorMgr(MapMgr*)
  * Address:	........
  * Size:	000050
  */
-void ActorMgr::createObject()
+Creature* ActorMgr::createObject()
 {
 	// UNUSED FUNCTION
 }

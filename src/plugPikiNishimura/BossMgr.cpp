@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Boss.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	8014FD88
  * Size:	00016C
  */
-void BossMgr::getCreature(int)
+Creature* BossMgr::getCreature(int)
 {
 	/*
 	.loc_0x0:
@@ -166,14 +166,14 @@ void BossMgr::getCreature(int)
  * Address:	8014FEF4
  * Size:	000008
  */
-u32 BossMgr::getFirst() { return 0x0; }
+int BossMgr::getFirst() { return 0; }
 
 /*
  * --INFO--
  * Address:	8014FEFC
  * Size:	000008
  */
-void BossMgr::getNext(int)
+int BossMgr::getNext(int)
 {
 	/*
 	.loc_0x0:
@@ -187,7 +187,7 @@ void BossMgr::getNext(int)
  * Address:	8014FF04
  * Size:	00004C
  */
-void BossMgr::isDone(int)
+bool BossMgr::isDone(int)
 {
 	/*
 	.loc_0x0:
@@ -222,7 +222,7 @@ void BossMgr::isDone(int)
  * Address:	8014FF50
  * Size:	000080
  */
-void BossMgr::getSize()
+int BossMgr::getSize()
 {
 	/*
 	.loc_0x0:
@@ -274,7 +274,7 @@ void BossMgr::getSize()
  * Address:	8014FFD0
  * Size:	000080
  */
-void BossMgr::getMax()
+int BossMgr::getMax()
 {
 	/*
 	.loc_0x0:
@@ -3382,7 +3382,7 @@ void BossMgr::refresh2d(Graphics&)
 void BossMgr::finalSetup()
 {
 	// Generated from stb r0, 0x2C(r3)
-	_2C = 1;
+	// _2C = 1;
 }
 
 /*
@@ -3441,19 +3441,5 @@ BossMgr::~BossMgr()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8015267C
- * Size:	000008
- */
-void BossMgr::@8 @update()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x378
 	*/
 }

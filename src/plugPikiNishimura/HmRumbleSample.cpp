@@ -1,15 +1,16 @@
-#include "HmRumble.h"
+#include "RumbleMgr.h"
+#include "Dolphin/pad.h"
 
 /*
  * --INFO--
  * Address:	8017D680
  * Size:	000014
  */
-RumbleSample::RumbleSample(int param_1)
+RumbleSample::RumbleSample(int chan)
 {
-	_00 = 0.0f;
-	_04 = 0.0f;
-	_08 = param_1;
+	_00      = 0.0f;
+	_04      = 0.0f;
+	mChannel = chan;
 }
 
 /*
@@ -17,17 +18,17 @@ RumbleSample::RumbleSample(int param_1)
  * Address:	........
  * Size:	000010
  */
-// void RumbleSample::init()
-// {
-// UNUSED FUNCTION
-// }
+void RumbleSample::init()
+{
+	// UNUSED FUNCTION
+}
 
 /*
  * --INFO--
  * Address:	8017D694
  * Size:	000028
  */
-void RumbleSample::simpleStop() { PADControlMotor(_08, 2); }
+void RumbleSample::simpleStop() { PADStopMotorHard(mChannel); }
 
 /*
  * --INFO--
@@ -39,11 +40,13 @@ void RumbleSample::simpleStart(f32 param_1)
 	_00 = param_1;
 	_04 += _00;
 	if (_00 <= 0.0f) {
-		PADControlMotor(_08, 2);
+		PADStopMotorHard(mChannel);
+
 	} else if (_04 < 1.0f) {
-		PADControlMotor(_08, 0);
+		PADStopMotor(mChannel);
+
 	} else {
 		_04 -= 1.0f;
-		PADControlMotor(_08, 1);
+		PADStartMotor(mChannel);
 	}
 }

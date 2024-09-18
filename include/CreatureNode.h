@@ -25,6 +25,11 @@ struct CreatureNodeMgr : public ObjectMgr {
 	virtual ~CreatureNodeMgr();         // _48
 	virtual int getSize();              // _60
 	virtual int getMax();               // _64
+
+	// _00     = VTBL 1
+	// _08     = VTBL 2
+	// _00-_28 = ObjectMgr
+	// TODO: members
 };
 
 #endif

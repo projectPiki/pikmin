@@ -1,4 +1,4 @@
-#include "types.h"
+#include "KusaItem.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800E5DD8
  * Size:	0000A4
  */
-KusaItem::KusaItem(CreatureProp*, Shape*)
+KusaItem::KusaItem(CreatureProp* props, Shape* shape)
+    : ItemCreature(0, props, shape)
 {
 	/*
 	.loc_0x0:
@@ -226,7 +227,7 @@ void KusaItem::doSave(RandomAccessStream&)
  * Address:	800E602C
  * Size:	00001C
  */
-void KusaItem::ignoreAtari(Creature*)
+bool KusaItem::ignoreAtari(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -247,7 +248,7 @@ void KusaItem::ignoreAtari(Creature*)
  * Address:	800E6048
  * Size:	000008
  */
-void KusaItem::getSize()
+f32 KusaItem::getSize()
 {
 	/*
 	.loc_0x0:
@@ -261,7 +262,7 @@ void KusaItem::getSize()
  * Address:	800E6050
  * Size:	000008
  */
-void KusaItem::getiMass()
+f32 KusaItem::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -394,7 +395,8 @@ void KusaItem::refresh(Graphics&)
  * Address:	800E61D4
  * Size:	0000D8
  */
-BoBaseItem::BoBaseItem(CreatureProp*, Shape*)
+BoBaseItem::BoBaseItem(CreatureProp* props, Shape* shape)
+    : ItemCreature(0, props, shape)
 {
 	/*
 	.loc_0x0:
@@ -517,7 +519,7 @@ void BoBaseItem::startAI(int)
  * Address:	800E6358
  * Size:	000030
  */
-void BoBaseItem::ignoreAtari(Creature*)
+bool BoBaseItem::ignoreAtari(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -545,7 +547,7 @@ void BoBaseItem::ignoreAtari(Creature*)
  * Address:	800E6388
  * Size:	000008
  */
-void BoBaseItem::getSize()
+f32 BoBaseItem::getSize()
 {
 	/*
 	.loc_0x0:
@@ -559,7 +561,7 @@ void BoBaseItem::getSize()
  * Address:	800E6390
  * Size:	000008
  */
-void BoBaseItem::getiMass()
+f32 BoBaseItem::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -797,7 +799,7 @@ void BoBaseItem::interactBuild(InteractBuild&)
  * Address:	800E6648
  * Size:	000008
  */
-void BoBaseItem::isAlive()
+bool BoBaseItem::isAlive()
 {
 	/*
 	.loc_0x0:
@@ -811,18 +813,18 @@ void BoBaseItem::isAlive()
  * Address:	800E6650
  * Size:	000008
  */
-u32 BoBaseItem::isVisible() { return 0x1; }
+bool BoBaseItem::isVisible() { return true; }
 
 /*
  * --INFO--
  * Address:	800E6658
  * Size:	000008
  */
-u32 KusaItem::isVisible() { return 0x1; }
+bool KusaItem::isVisible() { return true; }
 
 /*
  * --INFO--
  * Address:	800E6660
  * Size:	000008
  */
-u32 KusaItem::isAlive() { return 0x1; }
+bool KusaItem::isAlive() { return true; }

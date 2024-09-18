@@ -2,6 +2,7 @@
 #define _SEARCHSYSTEM_H
 
 #include "types.h"
+#include "Traversable.h"
 
 struct Creature;
 
@@ -19,13 +20,13 @@ struct SearchData {
 /**
  * @brief TODO
  */
-struct SearchBuffer {
+struct SearchBuffer : public Traversable {
 	SearchBuffer();
 
-	virtual void getCreature(int); // _08
-	virtual void getFirst();       // _0C
-	virtual void getNext(int);     // _10
-	virtual void isDone(int);      // _14
+	virtual Creature* getCreature(int); // _08
+	virtual int getFirst();             // _0C
+	virtual int getNext(int);           // _10
+	virtual bool isDone(int);           // _14
 
 	void init(SearchData*, int);
 	void clear();
@@ -35,10 +36,12 @@ struct SearchBuffer {
 
 	// unused/inlined:
 	void operator=(SearchBuffer&);
-	void getIndex();
+	void getIndex(Creature*);
 	void reset();
 	void update();
 
+	// _00     = VTBL
+	// _00-_08 = Traversable
 	// TODO: members
 };
 

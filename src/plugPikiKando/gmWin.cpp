@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Win.h"
+#include "Geometry.h"
 
 /*
  * --INFO--
@@ -58,7 +59,7 @@ void GmWin::moveHome(Vector2i&)
 void GmWin::open()
 {
 	// Generated from stw r0, 0x28(r3)
-	_28 = 4096;
+	// _28 = 4096;
 }
 
 /*

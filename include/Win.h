@@ -4,7 +4,10 @@
 #include "types.h"
 #include "CoreNode.h"
 
+struct Graphics;
+struct RectArea;
 struct Texture;
+struct Vector2i;
 
 /**
  * @brief TODO
@@ -27,22 +30,23 @@ struct GmWin : public CoreNode {
 
 	void open();
 	void close();
-	void render(struct Graphics&);
+	void render(Graphics&);
 	void placeCentre();
 	void print(Graphics&, int, int, char*);
 	void printcentre(Graphics&, int, char*);
 	void printright(Graphics&, int, char*);
 	void printleft(Graphics&, int, char*);
 	void printStart(Graphics&);
-	void texture(Graphics&, Texture*, int, int, int, int, struct RectArea);
-	void texturecentre(Graphics&, Texture*, int, int, int, struct RectArea);
-	void textureleft(Graphics&, Texture*, int, int, int, struct RectArea);
-	void textureright(Graphics&, Texture*, int, int, int, struct RectArea);
+	void texture(Graphics&, Texture*, int, int, int, int, RectArea);
+	void texturecentre(Graphics&, Texture*, int, int, int, RectArea);
+	void textureleft(Graphics&, Texture*, int, int, int, RectArea);
+	void textureright(Graphics&, Texture*, int, int, int, RectArea);
 
 	// unused/inlined:
 	void setRect(int, int);
-	void moveHome(struct Vector2i&);
+	void moveHome(Vector2i&);
 	void doRender(Graphics&);
+	void update();
 
 	// _00     = VTBL?
 	// _00-_14 = CoreNode?
@@ -63,7 +67,37 @@ struct ContainerWin {
 		// _00 = VTBL
 	};
 
+	// unused/inlined:
+	void doRender(Graphics&);
+	void setWin(int, int, Listener*);
+	void update();
 	void open();
+	void close();
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct ResultWin {
+	// unused/inlined:
+	void doRender(Graphics&);
+	void update();
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct GmWinMgr {
+	GmWinMgr();
+
+	void addWindow(GmWin*);
+	void update();
+	void render(Graphics&);
+	void getWindow(u32);
 
 	// TODO: members
 };

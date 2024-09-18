@@ -52,6 +52,12 @@ struct Controller : public Node {
 		reset(1);
 	}
 
+	Controller(int p1)
+	    : Node("<Controller>")
+	{
+		reset(p1);
+	}
+
 	void reset(u32);
 	void updateCont(u32 keyStatus);
 	void update();
@@ -62,7 +68,6 @@ struct Controller : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-
 	u32 mCurrentInput;        // _20
 	u32 mPrevInput;           // _24
 	u32 mInputPressed;        // _28

@@ -1294,4 +1294,23 @@ struct ActWeed : public Action, public PaniAnimKeyListener {
 	// TODO: members
 };
 
+/**
+ * @brief Almost completely stripped, uniqueInstance gets set to nullptr in pikiMgr.
+ */
+struct AiTable {
+
+	/**
+	 * @brief Completely stripped. Static member shows up stripped in map.
+	 */
+	struct Row {
+		static u32 numInputs;
+
+		// TODO: members
+	};
+
+	static AiTable* uniqueInstance;
+
+	// TODO: members
+};
+
 #endif

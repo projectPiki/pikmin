@@ -1,4 +1,4 @@
-#include "types.h"
+#include "BombItem.h"
 
 /*
  * --INFO--
@@ -83,7 +83,7 @@ void BombItem::collisionCallback(CollEvent&)
  * Address:	800EA238
  * Size:	000058
  */
-void BombItem::isVisible()
+bool BombItem::isVisible()
 {
 	/*
 	.loc_0x0:
@@ -123,14 +123,14 @@ void BombItem::isVisible()
  * Address:	800EA290
  * Size:	000008
  */
-u32 BombItem::needShadow() { return 0x0; }
+bool BombItem::needShadow() { return false; }
 
 /*
  * --INFO--
  * Address:	800EA298
  * Size:	000058
  */
-void BombItem::isAlive()
+bool BombItem::isAlive()
 {
 	/*
 	.loc_0x0:
@@ -170,7 +170,8 @@ void BombItem::isAlive()
  * Address:	800EA2F0
  * Size:	0000AC
  */
-BombItem::BombItem(CreatureProp*, ItemShapeObject*, SimpleAI*)
+BombItem::BombItem(CreatureProp* props, ItemShapeObject*, SimpleAI*)
+    : ItemCreature(0, props, nullptr)
 {
 	/*
 	.loc_0x0:
@@ -295,7 +296,7 @@ void BombItem::startAI(int)
  * Address:	800EA484
  * Size:	000008
  */
-void BombItem::getSize()
+f32 BombItem::getSize()
 {
 	/*
 	.loc_0x0:
@@ -309,7 +310,7 @@ void BombItem::getSize()
  * Address:	800EA48C
  * Size:	000008
  */
-void BombItem::getiMass()
+f32 BombItem::getiMass()
 {
 	/*
 	.loc_0x0:

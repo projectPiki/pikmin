@@ -49,12 +49,12 @@ struct ActorMgr : public MonoObjectMgr {
 
 	// unused/inlined:
 	~ActorMgr();
-	void createObject();
+	Creature* createObject();
 
 	// _00     = VTBL
 	// _00-_1C = MonoObjectMgr?
 	// TODO: members?
-	u8 _28[0x40 - 0x28];   // _28, unknown
+	u8 _38[0x40 - 0x38];   // _38, unknown
 	PikiShapeObject** _40; // _40
 	CreatureProp** _44;    // _44
 	SimpleAI** _48;        // _48

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "teki.h"
 
 /*
  * --INFO--
@@ -639,7 +639,7 @@ void TekiMgr::reset()
  * Address:	8014ACD4
  * Size:	000044
  */
-void TekiMgr::createObject()
+Teki* TekiMgr::createObject()
 {
 	/*
 	.loc_0x0:
@@ -969,7 +969,7 @@ void TekiMgr::setVisibleType(int, bool)
  * Address:	8014AFD4
  * Size:	000070
  */
-void TekiMgr::hasModel(int)
+bool TekiMgr::hasModel(int)
 {
 	/*
 	.loc_0x0:
@@ -1099,19 +1099,5 @@ TekiMgr::~TekiMgr()
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8014B11C
- * Size:	000008
- */
-void TekiMgr::@8 @update()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x698
 	*/
 }

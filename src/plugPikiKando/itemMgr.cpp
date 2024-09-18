@@ -1,5 +1,7 @@
-#include "types.h"
-#include "Vector.h"
+#include "ItemMgr.h"
+#include "BuildingItem.h"
+#include "Interactions.h"
+#include "PikiHeadItem.h"
 
 /*
  * --INFO--
@@ -26,7 +28,7 @@ static void _Print(char*, ...)
  * Address:	800F2978
  * Size:	000040
  */
-void BuildingItem::insideSafeArea(Vector3f&)
+bool BuildingItem::insideSafeArea(Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1337,6 +1339,7 @@ void ItemMgr::addUseList(int)
  * Size:	0009D8
  */
 ItemMgr::ItemMgr()
+    : PolyObjectMgr(0)
 {
 	/*
 	.loc_0x0:
@@ -3702,7 +3705,8 @@ void ItemMgr::initialise()
  * Address:	800F58AC
  * Size:	0000C8
  */
-ItemCreature::ItemCreature(int, CreatureProp*, Shape*)
+ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape*)
+    : AICreature(props)
 {
 	/*
 	.loc_0x0:
@@ -4348,7 +4352,7 @@ void ItemCreature::stimulate(Interaction&)
  * Address:	800F5F0C
  * Size:	000040
  */
-void InteractBuild::actItem(ItemCreature*)
+bool InteractBuild::actItem(ItemCreature*)
 {
 	/*
 	.loc_0x0:
@@ -4380,7 +4384,7 @@ void InteractBuild::actItem(ItemCreature*)
  * Address:	800F5F4C
  * Size:	000040
  */
-void InteractBikkuri::actItem(ItemCreature*)
+bool InteractBikkuri::actItem(ItemCreature*)
 {
 	/*
 	.loc_0x0:
@@ -4412,7 +4416,7 @@ void InteractBikkuri::actItem(ItemCreature*)
  * Address:	800F5F8C
  * Size:	000034
  */
-void InteractFlick::actItem(ItemCreature*)
+bool InteractFlick::actItem(ItemCreature*)
 {
 	/*
 	.loc_0x0:
@@ -4439,7 +4443,7 @@ void InteractFlick::actItem(ItemCreature*)
  * Address:	800F5FC0
  * Size:	000040
  */
-void InteractSwallow::actItem(ItemCreature*)
+bool InteractSwallow::actItem(ItemCreature*)
 {
 	/*
 	.loc_0x0:
@@ -4471,7 +4475,7 @@ void InteractSwallow::actItem(ItemCreature*)
  * Address:	800F6000
  * Size:	000040
  */
-void InteractPullout::actItem(ItemCreature*)
+bool InteractPullout::actItem(ItemCreature*)
 {
 	/*
 	.loc_0x0:
@@ -4503,7 +4507,7 @@ void InteractPullout::actItem(ItemCreature*)
  * Address:	800F6040
  * Size:	0002D4
  */
-void InteractBomb::actItem(ItemCreature*)
+bool InteractBomb::actItem(ItemCreature*)
 {
 	/*
 	.loc_0x0:
@@ -4772,7 +4776,7 @@ void BuildingItem::playEffect(int)
  * Address:	800F6374
  * Size:	000270
  */
-void InteractAttack::actItem(ItemCreature*)
+bool InteractAttack::actItem(ItemCreature*)
 {
 	/*
 	.loc_0x0:
@@ -4970,7 +4974,8 @@ void InteractAttack::actItem(ItemCreature*)
  * Address:	800F65E4
  * Size:	000144
  */
-BuildingItem::BuildingItem(int, CreatureProp*, ItemShapeObject*, SimpleAI*)
+BuildingItem::BuildingItem(int p1, CreatureProp* props, ItemShapeObject*, SimpleAI*)
+    : ItemCreature(p1, props, nullptr)
 {
 	/*
 	.loc_0x0:
@@ -5800,7 +5805,7 @@ void BuildingItem::doRestore(CreatureInf*)
  * Address:	800F6FF4
  * Size:	000068
  */
-void ItemMgr::birth(int)
+Creature* ItemMgr::birth(int)
 {
 	/*
 	.loc_0x0:
@@ -6267,7 +6272,7 @@ PikiHeadMgr::PikiHeadMgr(ItemMgr*)
  * Address:	800F7568
  * Size:	0000A0
  */
-void PikiHeadMgr::birth()
+Creature* PikiHeadMgr::birth()
 {
 	/*
 	.loc_0x0:
@@ -6325,7 +6330,7 @@ void PikiHeadMgr::birth()
  * Address:	800F7608
  * Size:	000060
  */
-void PikiHeadMgr::createObject()
+PikiHeadItem* PikiHeadMgr::createObject()
 {
 	/*
 	.loc_0x0:
@@ -6629,7 +6634,7 @@ MeltingPotMgr::~MeltingPotMgr()
  * Address:	800F7940
  * Size:	000008
  */
-void BuildingItem::getiMass()
+f32 BuildingItem::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -6643,18 +6648,4 @@ void BuildingItem::getiMass()
  * Address:	800F7948
  * Size:	000008
  */
-u32 BuildingItem::needShadow() { return 0x0; }
-
-/*
- * --INFO--
- * Address:	800F7950
- * Size:	000008
- */
-void ItemMgr::@8 @update()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x68C
-	*/
-}
+bool BuildingItem::needShadow() { return false; }

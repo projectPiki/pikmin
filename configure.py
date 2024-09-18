@@ -479,7 +479,7 @@ config.libs = [
             Object(NonMatching, "plugPikiKando/aiShoot.cpp"),
             Object(NonMatching, "plugPikiKando/aiWatch.cpp"),
             Object(NonMatching, "plugPikiKando/aiWeed.cpp"),
-            Object(NonMatching, "plugPikiKando/aiTable.cpp"),
+            Object(Matching, "plugPikiKando/aiTable.cpp"),
             Object(NonMatching, "plugPikiKando/aiAction.cpp"),
             Object(NonMatching, "plugPikiKando/pikiInf.cpp"),
             Object(NonMatching, "plugPikiKando/piki.cpp"),
@@ -606,7 +606,7 @@ config.libs = [
         "objects": [
             Object(NonMatching, "plugPikiNishimura/genBoss.cpp"),
             Object(NonMatching, "plugPikiNishimura/Boss.cpp"),
-            Object(NonMatching, "plugPikiNishimura/BossAnimMgr.cpp"),
+            Object(Matching, "plugPikiNishimura/BossAnimMgr.cpp"),
             Object(NonMatching, "plugPikiNishimura/BossCnd.cpp"),
             Object(NonMatching, "plugPikiNishimura/BossMgr.cpp"),
             Object(NonMatching, "plugPikiNishimura/BossShapeObj.cpp"),
@@ -909,7 +909,7 @@ config.libs = [
         "mw_version": "GC/1.2.5",
         "cflags": cflags_base,
         "objects": [
-            Object(NonMatching, "Runtime/PPCEABI/H/__mem.o"),
+            Object(NonMatching, "Runtime/PPCEABI/H/__mem.c"),
             Object(NonMatching, "Runtime/PPCEABI/H/__va_arg.c"),
             Object(NonMatching, "Runtime/PPCEABI/H/global_destructor_chain.c"),
             Object(NonMatching, "Runtime/PPCEABI/H/CPlusLibPPC.cp"),

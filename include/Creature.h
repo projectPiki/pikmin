@@ -198,7 +198,8 @@ struct Creature : public RefCountable, public EventTalker {
 	u8 _58[0x6C - 0x58];    // _58, TODO: work out members
 	EObjType mObjType;      // _6C, object type
 	Vector3f _70;           // _70
-	u8 _7C[0x94 - 0x7C];    // _7C, TODO: work out members
+	u8 _7C[0x88 - 0x7C];    // _7C, TODO: work out members
+	Vector3f _88;           // _88
 	Vector3f mPosition;     // _94
 	f32 mDirection;         // _A0
 	u8 _A4[0xC8 - 0xA4];    // _A4, TODO: work out members

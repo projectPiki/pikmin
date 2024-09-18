@@ -1,14 +1,14 @@
-#include "types.h"
+#include "Kontroller.h"
+#include "Dolphin/os.h"
+
+RamStream* controllerBuffer;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "Kontroller"); }
 
 /*
  * --INFO--
@@ -25,62 +25,12 @@ static void _Print(char*, ...)
  * Address:	80115B8C
  * Size:	0000CC
  */
-Kontroller::Kontroller(int)
+Kontroller::Kontroller(int p1)
+    : Controller(p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r5, 0x738C
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r28)
-	  addi      r0, r3, 0x737C
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r28)
-	  addi      r31, r3, 0x2D9C
-	  addi      r3, r28, 0
-	  stw       r30, 0x10(r28)
-	  addi      r4, r31, 0
-	  stw       r30, 0xC(r28)
-	  stw       r30, 0x8(r28)
-	  bl        -0xF0D14
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r28)
-	  addi      r3, r28, 0
-	  addi      r4, r31, 0
-	  bl        -0xD54C4
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x714C
-	  stw       r0, 0x0(r28)
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  bl        -0xD5268
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x2E24
-	  stw       r0, 0x0(r28)
-	  mr        r3, r28
-	  stw       r30, 0x50(r28)
-	  stw       r30, 0x54(r28)
-	  stw       r30, 0x58(r28)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	_50 = 0;
+	_54 = 0;
+	_58 = nullptr;
 }
 
 /*
@@ -88,31 +38,12 @@ Kontroller::Kontroller(int)
  * Address:	80115C58
  * Size:	000050
  */
-void Kontroller::save(RamStream*, int)
+void Kontroller::save(RamStream* stream, int p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  stw       r5, 0x54(r3)
-	  mr        r3, r4
-	  stw       r4, 0x58(r31)
-	  li        r4, 0
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x1
-	  stw       r0, 0x50(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	_54 = p2;
+	_58 = stream;
+	stream->setPosition(0);
+	_50 = 1;
 }
 
 /*
@@ -120,31 +51,12 @@ void Kontroller::save(RamStream*, int)
  * Address:	80115CA8
  * Size:	000050
  */
-void Kontroller::load(RamStream*, int)
+void Kontroller::load(RamStream* stream, int p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  stw       r5, 0x54(r3)
-	  mr        r3, r4
-	  stw       r4, 0x58(r31)
-	  li        r4, 0
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x2
-	  stw       r0, 0x50(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	_54 = p2;
+	_58 = stream;
+	stream->setPosition(0);
+	_50 = 2;
 }
 
 /*
@@ -164,6 +76,8 @@ void Kontroller::stop()
  */
 void Kontroller::update()
 {
+	switch (_50) {
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -276,14 +190,7 @@ void Kontroller::update()
  * Address:	80115E60
  * Size:	000008
  */
-void Kontroller::getSaveSize(int)
-{
-	/*
-	.loc_0x0:
-	  mulli     r3, r3, 0xC
-	  blr
-	*/
-}
+int Kontroller::getSaveSize(int p1) { return p1 * 12; }
 
 /*
  * --INFO--

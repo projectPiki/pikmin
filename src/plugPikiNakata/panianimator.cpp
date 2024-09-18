@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PaniAnimator.h"
 
 /*
  * --INFO--
@@ -302,7 +302,7 @@ void PaniAnimator::init(AnimContext*, AnimMgr*, PaniMotionTable*)
 void PaniAnimator::changeContext(AnimContext* a1)
 {
 	// Generated from stw r4, 0x4(r3)
-	_04 = a1;
+	// _04 = a1;
 }
 
 /*

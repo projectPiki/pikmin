@@ -1,4 +1,6 @@
-#include "types.h"
+#include "RumbleMgr.h"
+
+RumbleMgr* rumbleMgr;
 
 /*
  * --INFO--

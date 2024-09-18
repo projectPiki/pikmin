@@ -5,9 +5,20 @@
 #include "Suckable.h"
 #include "CreatureProp.h"
 
-struct UfoShapeObject;
 struct Piki;
 struct SimpleAI;
+
+/**
+ * @brief TODO
+ */
+struct UfoShapeObject {
+	UfoShapeObject(Shape*);
+
+	// TODO: members
+	Shape* mShape;              // _00
+	AnimMgr* mAnimMgr;          // _04
+	AnimContext* mAnimContexts; // _08, array of 8 contexts
+};
 
 /**
  * @brief TODO
@@ -92,6 +103,26 @@ struct UfoItem : public Suckable {
 
 	// _00      = VTBL
 	// _00-_3C8 = Suckable
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct UfoAnimator {
+	UfoAnimator();
+
+	void init(UfoShapeObject*, PaniMotionTable*);
+	void startMotion(int, PaniMotionInfo*);
+	void setMotionSpeed(int, f32);
+	void getMotionIndex(int);
+	void stopAllMotions();
+	void initFlagMotions(int);
+	void startFlagMotions(int);
+	void setMotionLastFrame(int);
+	void updateAnimation();
+	void updateContext();
+
 	// TODO: members
 };
 

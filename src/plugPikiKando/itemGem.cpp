@@ -1,4 +1,4 @@
-#include "types.h"
+#include "GemItem.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	00003C
  */
-void GemItem::ignoreAtari(Creature*)
+bool GemItem::ignoreAtari(Creature*)
 {
 	// UNUSED FUNCTION
 }
@@ -55,7 +55,8 @@ void GemItem::bounceCallback()
  * Address:	........
  * Size:	000108
  */
-GemItem::GemItem(CreatureProp*, int, Shape**, Shape**, Shape**, SimpleAI*, f32, int, int)
+GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, SimpleAI*, f32, int, int)
+    : ItemCreature(p2, props, shapes[0])
 {
 	// UNUSED FUNCTION
 }
@@ -212,7 +213,7 @@ void GemItem::finishPick()
  * Address:	........
  * Size:	000018
  */
-void GemItem::getSize()
+f32 GemItem::getSize()
 {
 	// UNUSED FUNCTION
 }
@@ -222,7 +223,7 @@ void GemItem::getSize()
  * Address:	........
  * Size:	000008
  */
-void GemItem::getiMass()
+f32 GemItem::getiMass()
 {
 	// UNUSED FUNCTION
 }
@@ -423,7 +424,7 @@ void GemItem::doKill()
  * Address:	........
  * Size:	000008
  */
-void GemItem::isAlive()
+bool GemItem::isAlive()
 {
 	// UNUSED FUNCTION
 }
@@ -446,5 +447,5 @@ void GemItem::setRouteTracer(RouteTracer*)
 void ItemCreature::finalSetup()
 {
 	// Generated from stb r0, 0x3C4(r3)
-	_3C4 = 1;
+	// _3C4 = 1;
 }

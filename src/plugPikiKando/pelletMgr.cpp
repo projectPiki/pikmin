@@ -5314,7 +5314,7 @@ void PelletMgr::getShapeObject(u32)
  * Address:	80098798
  * Size:	000054
  */
-void PelletMgr::createObject()
+Pellet* PelletMgr::createObject()
 {
 	/*
 	.loc_0x0:

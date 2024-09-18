@@ -1,4 +1,4 @@
-#include "types.h"
+#include "ItemObject.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	000074
  */
-ItemBall::ItemBall(Shape*, CreatureProp*)
+ItemBall::ItemBall(Shape* shape, CreatureProp* props)
+    : ItemCreature(0, props, shape)
 {
 	// UNUSED FUNCTION
 }
@@ -62,21 +63,22 @@ void ItemBall::startAI(int)
  * Address:	800F7994
  * Size:	000008
  */
-u32 ItemBall::isAlive() { return 0x1; }
+bool ItemBall::isAlive() { return true; }
 
 /*
  * --INFO--
  * Address:	800F799C
  * Size:	000008
  */
-u32 ItemBall::isVisible() { return 0x1; }
+bool ItemBall::isVisible() { return true; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00005C
  */
-ItemObject::ItemObject(int, Shape*)
+ItemObject::ItemObject(int p1, Shape* shape)
+    : ItemCreature(p1, nullptr, shape)
 {
 	// UNUSED FUNCTION
 }
@@ -93,7 +95,8 @@ void ItemObject::update() { }
  * Address:	800F79A8
  * Size:	00007C
  */
-BombGenItem::BombGenItem(Shape*)
+BombGenItem::BombGenItem(Shape* shape)
+    : ItemObject(0, shape)
 {
 	/*
 	.loc_0x0:
@@ -216,6 +219,7 @@ void BombGenItem::pick()
  * Size:	00006C
  */
 Fulcrum::Fulcrum()
+    : ItemObject(0, nullptr)
 {
 	/*
 	.loc_0x0:
@@ -255,6 +259,7 @@ Fulcrum::Fulcrum()
  * Size:	00006C
  */
 NaviDemoSunsetStart::NaviDemoSunsetStart()
+    : ItemObject(0, nullptr)
 {
 	/*
 	.loc_0x0:
@@ -294,6 +299,7 @@ NaviDemoSunsetStart::NaviDemoSunsetStart()
  * Size:	00006C
  */
 NaviDemoSunsetGoal::NaviDemoSunsetGoal()
+    : ItemObject(0, nullptr)
 {
 	/*
 	.loc_0x0:
@@ -332,7 +338,7 @@ NaviDemoSunsetGoal::NaviDemoSunsetGoal()
  * Address:	800F7C04
  * Size:	000008
  */
-u32 ItemObject::needShadow() { return 0x0; }
+bool ItemObject::needShadow() { return false; }
 
 /*
  * --INFO--
@@ -346,14 +352,14 @@ void ItemObject::postUpdate(int, f32) { }
  * Address:	800F7C10
  * Size:	000008
  */
-u32 ItemObject::isAtari() { return 0x0; }
+bool ItemObject::isAtari() { return false; }
 
 /*
  * --INFO--
  * Address:	800F7C18
  * Size:	000030
  */
-void BombGenItem::isAtari()
+bool BombGenItem::isAtari()
 {
 	/*
 	.loc_0x0:
@@ -381,14 +387,14 @@ void BombGenItem::isAtari()
  * Address:	800F7C48
  * Size:	000008
  */
-u32 BombGenItem::needFlick(Creature*) { return 0x0; }
+bool BombGenItem::needFlick(Creature*) { return false; }
 
 /*
  * --INFO--
  * Address:	800F7C50
  * Size:	000030
  */
-void BombGenItem::isVisible()
+bool BombGenItem::isVisible()
 {
 	/*
 	.loc_0x0:
@@ -416,7 +422,7 @@ void BombGenItem::isVisible()
  * Address:	800F7C80
  * Size:	000030
  */
-void BombGenItem::isAlive()
+bool BombGenItem::isAlive()
 {
 	/*
 	.loc_0x0:

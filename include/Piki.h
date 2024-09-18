@@ -120,7 +120,10 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
-	u8 _2BC[0x4F8 - 0x2BC]; // _2BC, TODO: work out members
+	u8 _2BC[0x3CC - 0x2BC]; // _2BC, TODO: work out members
+	int _3CC;               // _3CC, piki color?
+	int _3D0;               // _3D0, piki happa?
+	u8 _3D4[0x4F8 - 0x3D4]; // _3D4, unknown
 	TopAction* _4F8;        // _4F8, may be just Action*
 	u8 _4FC[0x585 - 0x4FC]; // _4FC, TODO: work out members
 };

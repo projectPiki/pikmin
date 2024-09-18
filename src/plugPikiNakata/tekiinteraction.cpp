@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Interactions.h"
+#include "teki.h"
 
 /*
  * --INFO--
@@ -35,7 +36,7 @@ TekiInteractionKey::TekiInteractionKey(int, Interaction*)
  * Address:	8014A40C
  * Size:	000044
  */
-void InteractAttack::actTeki(Teki*)
+bool InteractAttack::actTeki(Teki*)
 {
 	/*
 	.loc_0x0:
@@ -64,7 +65,7 @@ void InteractAttack::actTeki(Teki*)
  * Address:	8014A450
  * Size:	000090
  */
-void InteractBomb::actTeki(Teki*)
+bool InteractBomb::actTeki(Teki*)
 {
 	/*
 	.loc_0x0:
@@ -112,7 +113,7 @@ void InteractBomb::actTeki(Teki*)
  * Address:	8014A4E0
  * Size:	000044
  */
-void InteractHitEffect::actTeki(Teki*)
+bool InteractHitEffect::actTeki(Teki*)
 {
 	/*
 	.loc_0x0:
@@ -141,14 +142,14 @@ void InteractHitEffect::actTeki(Teki*)
  * Address:	8014A524
  * Size:	000008
  */
-u32 InteractSwallow::actTeki(Teki*) { return 0x1; }
+bool InteractSwallow::actTeki(Teki*) { return true; }
 
 /*
  * --INFO--
  * Address:	8014A52C
  * Size:	000058
  */
-void InteractPress::actTeki(Teki*)
+bool InteractPress::actTeki(Teki*)
 {
 	/*
 	.loc_0x0:
@@ -182,4 +183,4 @@ void InteractPress::actTeki(Teki*)
  * Address:	8014A584
  * Size:	000008
  */
-u32 InteractFlick::actTeki(Teki*) { return 0x1; }
+bool InteractFlick::actTeki(Teki*) { return true; }

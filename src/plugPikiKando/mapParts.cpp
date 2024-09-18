@@ -1,4 +1,4 @@
-#include "types.h"
+#include "MapMgr.h"
 
 /*
  * --INFO--
@@ -78,7 +78,8 @@ void MapParts::applyVelocity(Plane&, Vector3f&, Vector3f&)
  * Address:	8011851C
  * Size:	000078
  */
-MapEntity::MapEntity(Shape*)
+MapEntity::MapEntity(Shape* shape)
+    : MapParts(shape)
 {
 	/*
 	.loc_0x0:
@@ -196,7 +197,8 @@ void MapEntity::update()
  * Address:	80118694
  * Size:	0000D0
  */
-MapSlider::MapSlider(Shape*, int, int, f32, f32, f32, int)
+MapSlider::MapSlider(Shape* shape, int, int, f32, f32, f32, int)
+    : MapParts(shape)
 {
 	/*
 	.loc_0x0:

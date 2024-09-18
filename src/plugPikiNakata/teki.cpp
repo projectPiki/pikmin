@@ -1,4 +1,4 @@
-#include "types.h"
+#include "teki.h"
 
 /*
  * --INFO--
@@ -130,7 +130,7 @@ void YTeki::init(int)
 void BTeki::setTekiOptions(int a1)
 {
 	// Generated from stw r4, 0x410(r3)
-	_410 = a1;
+	// _410 = a1;
 }
 
 /*
@@ -141,7 +141,7 @@ void BTeki::setTekiOptions(int a1)
 void BTeki::clearTekiOptions()
 {
 	// Generated from stw r0, 0x410(r3)
-	_410 = 0;
+	// _410 = 0;
 }
 
 /*
@@ -184,7 +184,7 @@ void BTeki::clearAnimationKeyOption(int)
 void BTeki::setAnimationKeyOptions(int a1)
 {
 	// Generated from stw r4, 0x414(r3)
-	_414 = a1;
+	// _414 = a1;
 }
 
 /*
@@ -195,7 +195,7 @@ void BTeki::setAnimationKeyOptions(int a1)
 void BTeki::clearAnimationKeyOptions()
 {
 	// Generated from stw r0, 0x414(r3)
-	_414 = 0;
+	// _414 = 0;
 }
 
 /*
@@ -203,7 +203,7 @@ void BTeki::clearAnimationKeyOptions()
  * Address:	80143D48
  * Size:	000018
  */
-void BTeki::getShadowSize()
+f32 BTeki::getShadowSize()
 {
 	/*
 	.loc_0x0:
@@ -221,7 +221,7 @@ void BTeki::getShadowSize()
  * Address:	80143D60
  * Size:	00001C
  */
-void BTeki::isVisible()
+bool BTeki::isVisible()
 {
 	/*
 	.loc_0x0:
@@ -240,7 +240,7 @@ void BTeki::isVisible()
  * Address:	80143D7C
  * Size:	00001C
  */
-void BTeki::isOrganic()
+bool BTeki::isOrganic()
 {
 	/*
 	.loc_0x0:
@@ -259,7 +259,7 @@ void BTeki::isOrganic()
  * Address:	80143D98
  * Size:	00001C
  */
-void BTeki::isAtari()
+bool BTeki::isAtari()
 {
 	/*
 	.loc_0x0:
@@ -278,7 +278,7 @@ void BTeki::isAtari()
  * Address:	80143DB4
  * Size:	00001C
  */
-void BTeki::isAlive()
+bool BTeki::isAlive()
 {
 	/*
 	.loc_0x0:
@@ -297,7 +297,7 @@ void BTeki::isAlive()
  * Address:	80143DD0
  * Size:	00001C
  */
-void BTeki::needShadow()
+bool BTeki::needShadow()
 {
 	/*
 	.loc_0x0:
@@ -308,148 +308,5 @@ void BTeki::needShadow()
 	  subic     r0, r3, 0x1
 	  subfe     r3, r0, r3
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80143DEC
- * Size:	000014
- */
-void BTeki::@1336 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x538
-	  b         0x13E4
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80143E00
- * Size:	000008
- */
-void BTeki::@696 @viewGetScale()
-{
-	/*
-	.loc_0x0:
-	  subi      r4, r4, 0x2B8
-	  b         0x23C
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80143E08
- * Size:	000008
- */
-void BTeki::@696 @viewGetHeight()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         0x268
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80143E10
- * Size:	000008
- */
-void BTeki::@696 @viewGetBottomRadius()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         0x248
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80143E18
- * Size:	000008
- */
-void BTeki::@696 @viewDoAnimation()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         0x1AC
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80143E20
- * Size:	000008
- */
-void BTeki::@696 @viewFinishMotion()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         0x1D0
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80143E28
- * Size:	000008
- */
-void BTeki::@696 @viewSetMotionSpeed(f32)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         0x194
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80143E30
- * Size:	000008
- */
-void BTeki::@696 @viewStartTrembleMotion(f32)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         0x128
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80143E38
- * Size:	000008
- */
-void BTeki::@696 @viewDraw(Graphics&, Matrix4f&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         0x250
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80143E40
- * Size:	000008
- */
-void BTeki::@696 @viewKill()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         0x2EC
 	*/
 }

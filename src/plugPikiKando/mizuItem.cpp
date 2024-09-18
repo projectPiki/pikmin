@@ -1,4 +1,4 @@
-#include "types.h"
+#include "MizuItem.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800F7CB0
  * Size:	000068
  */
-MizuItem::MizuItem(int, CreatureProp*, ItemShapeObject*, SimpleAI*)
+MizuItem::MizuItem(int p1, CreatureProp* props, ItemShapeObject*, SimpleAI*)
+    : ItemCreature(p1, props, nullptr)
 {
 	/*
 	.loc_0x0:
@@ -105,7 +106,7 @@ void MizuItem::update()
  * Address:	800F7D88
  * Size:	000008
  */
-u32 MizuItem::needFlick(Creature*) { return 0x0; }
+bool MizuItem::needFlick(Creature*) { return false; }
 
 /*
  * --INFO--
@@ -166,7 +167,7 @@ void MizuItem::startAI(int)
  * Address:	800F7E20
  * Size:	00006C
  */
-void MizuItem::isAlive()
+bool MizuItem::isAlive()
 {
 	/*
 	.loc_0x0:

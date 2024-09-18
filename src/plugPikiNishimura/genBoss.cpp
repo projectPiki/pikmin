@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Generator.h"
 
 /*
  * --INFO--
@@ -465,7 +465,7 @@ void GenObjectBoss::updateUseList(Generator*, int)
  * Address:	8014D790
  * Size:	00013C
  */
-void GenObjectBoss::birth(BirthInfo&)
+void* GenObjectBoss::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

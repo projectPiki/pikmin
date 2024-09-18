@@ -1,4 +1,4 @@
-#include "types.h"
+#include "FishItem.h"
 
 /*
  * --INFO--
@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	0000B0
  */
 FishGenerator::FishGenerator()
+    : ItemCreature(0, nullptr, nullptr)
 {
 	/*
 	.loc_0x0:

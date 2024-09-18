@@ -44,6 +44,9 @@ struct PaniAnimator : public Animator {
 	void finishAnimation();
 	void getKeyValueByKeyType(int);
 
+	// unused/inlined:
+	void checkCounter_4DEBUG();
+
 	// _30     = VTBL
 	// _00-_34 = Animator
 	// TODO: members
@@ -53,6 +56,10 @@ struct PaniAnimator : public Animator {
  * @brief TODO
  */
 struct PaniItemAnimator : public PaniAnimator {
+	PaniItemAnimator();
+
+	PaniMotionTable* createMotionTable();
+
 	// _30     = VTBL
 	// _00-_34 = PaniAnimator
 	// TODO: members
@@ -76,6 +83,10 @@ struct PaniPelletAnimator : public PaniAnimator {
  * @brief TODO
  */
 struct PaniPikiAnimator : public PaniAnimator {
+	PaniPikiAnimator();
+
+	PaniMotionTable* createMotionTable();
+
 	// _30     = VTBL
 	// _00-_34 = PaniAnimator
 	// TODO: members
@@ -85,6 +96,10 @@ struct PaniPikiAnimator : public PaniAnimator {
  * @brief TODO
  */
 struct PaniPlantAnimator : public PaniAnimator {
+	PaniPlantAnimator();
+
+	PaniMotionTable* createMotionTable();
+
 	// _30     = VTBL
 	// _00-_34 = PaniAnimator
 	// TODO: members
@@ -96,6 +111,8 @@ struct PaniPlantAnimator : public PaniAnimator {
 struct PaniTekiAnimator : public PaniAnimator {
 	PaniTekiAnimator();
 
+	PaniMotionTable* createMotionTable();
+
 	// _30     = VTBL
 	// _00-_34 = PaniAnimator
 	// TODO: members
@@ -105,6 +122,10 @@ struct PaniTekiAnimator : public PaniAnimator {
  * @brief TODO
  */
 struct PaniUfoAnimator : public PaniAnimator {
+	PaniUfoAnimator();
+
+	PaniMotionTable* createMotionTable();
+
 	// _30     = VTBL
 	// _00-_34 = PaniAnimator
 	// TODO: members
@@ -152,6 +173,7 @@ struct PaniMotionInfo {
  */
 struct PaniMotion {
 	PaniMotion(int);
+	PaniMotion(int, int); // unused/inlined
 
 	void init(int, int);
 
@@ -169,6 +191,15 @@ struct PaniMotionTable {
 
 	int _00;          // _00
 	PaniMotion** _04; // _04
+};
+
+/**
+ * @brief TODO
+ */
+struct PaniSoundTable {
+	PaniSoundTable(int);
+
+	// TODO: members
 };
 
 #endif

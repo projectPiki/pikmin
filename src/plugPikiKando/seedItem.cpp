@@ -1,4 +1,4 @@
-#include "types.h"
+#include "SeedItem.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	800EDDD0
  * Size:	0000DC
  */
-SeedItem::SeedItem(CreatureProp*, Shape**)
+SeedItem::SeedItem(CreatureProp* props, Shape**)
+    : Creature(props)
 {
 	/*
 	.loc_0x0:
@@ -92,7 +93,7 @@ SeedItem::SeedItem(CreatureProp*, Shape**)
  * Address:	800EDEAC
  * Size:	000008
  */
-void SeedItem::getSize()
+f32 SeedItem::getSize()
 {
 	/*
 	.loc_0x0:
@@ -155,7 +156,7 @@ void SeedItem::startSown()
  * Address:	800EDEF8
  * Size:	000014
  */
-void SeedItem::isVisible()
+bool SeedItem::isVisible()
 {
 	/*
 	.loc_0x0:
@@ -172,7 +173,7 @@ void SeedItem::isVisible()
  * Address:	800EDF0C
  * Size:	000008
  */
-u32 SeedItem::isAtari() { return 0x0; }
+bool SeedItem::isAtari() { return false; }
 
 /*
  * --INFO--
@@ -510,7 +511,7 @@ void SeedItem::stimulate(Interaction&)
  * Address:	800EE310
  * Size:	000008
  */
-void SeedItem::getHeight()
+f32 SeedItem::getHeight()
 {
 	/*
 	.loc_0x0:
@@ -524,7 +525,7 @@ void SeedItem::getHeight()
  * Address:	800EE318
  * Size:	000008
  */
-void SeedItem::getiMass()
+f32 SeedItem::getiMass()
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "BossConditions.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	8014FAFC
  * Size:	000040
  */
-void CndIsAlive::satisfy(Creature*)
+bool CndIsAlive::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -57,7 +57,7 @@ void CndIsAlive::satisfy(Creature*)
  * Address:	8014FB3C
  * Size:	0000C8
  */
-void CndBossFlick::satisfy(Creature*)
+bool CndBossFlick::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -123,7 +123,7 @@ void CndBossFlick::satisfy(Creature*)
  * Address:	8014FC04
  * Size:	000070
  */
-void CndStickBossKill::satisfy(Creature*)
+bool CndStickBossKill::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -167,7 +167,7 @@ void CndStickBossKill::satisfy(Creature*)
  * Address:	8014FC74
  * Size:	00007C
  */
-void CndStickMouthKill::satisfy(Creature*)
+bool CndStickMouthKill::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -214,7 +214,7 @@ void CndStickMouthKill::satisfy(Creature*)
  * Address:	8014FCF0
  * Size:	000098
  */
-void CndBossCollKill::satisfy(Creature*)
+bool CndBossCollKill::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:

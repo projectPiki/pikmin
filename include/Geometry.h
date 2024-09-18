@@ -21,6 +21,14 @@ struct Cylinder {
 /**
  * @brief TODO
  */
+struct RectArea {
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
 struct Sphere {
 
 	// TODO: members

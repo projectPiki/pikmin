@@ -1,4 +1,4 @@
-#include "types.h"
+#include "SearchSystem.h"
 
 /*
  * --INFO--
@@ -1598,7 +1598,7 @@ void SearchBuffer::update()
  * Address:	800E42E0
  * Size:	00002C
  */
-void SearchBuffer::getCreature(int)
+Creature* SearchBuffer::getCreature(int)
 {
 	/*
 	.loc_0x0:
@@ -1625,14 +1625,14 @@ void SearchBuffer::getCreature(int)
  * Address:	800E430C
  * Size:	000008
  */
-u32 SearchBuffer::getFirst() { return 0x0; }
+int SearchBuffer::getFirst() { return 0; }
 
 /*
  * --INFO--
  * Address:	800E4314
  * Size:	000008
  */
-void SearchBuffer::getNext(int)
+int SearchBuffer::getNext(int)
 {
 	/*
 	.loc_0x0:
@@ -1646,7 +1646,7 @@ void SearchBuffer::getNext(int)
  * Address:	800E431C
  * Size:	00001C
  */
-void SearchBuffer::isDone(int)
+bool SearchBuffer::isDone(int)
 {
 	/*
 	.loc_0x0:

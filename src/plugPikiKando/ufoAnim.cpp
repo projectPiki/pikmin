@@ -1,4 +1,6 @@
-#include "types.h"
+#include "UfoItem.h"
+#include "sysNew.h"
+#include "Shape.h"
 
 /*
  * --INFO--
@@ -25,8 +27,22 @@ static void _Print(char*, ...)
  * Address:	800E97AC
  * Size:	000158
  */
-UfoShapeObject::UfoShapeObject(Shape*)
+UfoShapeObject::UfoShapeObject(Shape* shape)
 {
+	mAnimContexts = new AnimContext[8];
+	mShape        = shape;
+	char* path    = "objects/ufo/ufo0705.bin";
+	mAnimMgr      = new AnimMgr(shape, path, 0x8000, nullptr);
+	mAnimMgr->setName("ufo shape");
+
+	mShape->overrideAnim(0, &mAnimContexts[0]);
+	mShape->overrideAnim(38, &mAnimContexts[1]);
+	mShape->overrideAnim(36, &mAnimContexts[2]);
+	mShape->overrideAnim(19, &mAnimContexts[3]);
+	mShape->overrideAnim(32, &mAnimContexts[4]);
+	mShape->overrideAnim(37, &mAnimContexts[5]);
+	mShape->overrideAnim(29, &mAnimContexts[6]);
+	mShape->overrideAnim(53, &mAnimContexts[7]);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -122,32 +138,10 @@ UfoShapeObject::UfoShapeObject(Shape*)
 
 /*
  * --INFO--
- * Address:	800E9904
- * Size:	000028
- */
-AnimContext::AnimContext()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8023
-	  subi      r0, r4, 0x7730
-	  stw       r0, 0xC(r3)
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x65F0(r2)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x65EC(r2)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	800E992C
  * Size:	0002B0
  */
-void PaniUfoAnimator::createMotionTable()
+PaniMotionTable* PaniUfoAnimator::createMotionTable()
 {
 	/*
 	.loc_0x0:

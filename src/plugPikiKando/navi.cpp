@@ -2781,7 +2781,7 @@ void Navi::reset()
  * Address:	800FA690
  * Size:	00000C
  */
-void Navi::getSize()
+f32 Navi::getSize()
 {
 	/*
 	.loc_0x0:
@@ -11201,7 +11201,7 @@ bool Navi::mayIstick() { return 0x0; }
  * Address:	80101104
  * Size:	000008
  */
-void Navi::getShadowSize()
+f32 Navi::getShadowSize()
 {
 	/*
 	.loc_0x0:

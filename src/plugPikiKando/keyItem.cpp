@@ -1,4 +1,5 @@
-#include "types.h"
+#include "KeyItem.h"
+#include "DoorItem.h"
 
 /*
  * --INFO--
@@ -25,7 +26,8 @@ static void _Print(char*, ...)
  * Address:	800ED204
  * Size:	0000A8
  */
-KeyItem::KeyItem(CreatureProp*, Shape*)
+KeyItem::KeyItem(CreatureProp* props, Shape*)
+    : Creature(props)
 {
 	/*
 	.loc_0x0:
@@ -79,7 +81,7 @@ KeyItem::KeyItem(CreatureProp*, Shape*)
  * Address:	800ED2AC
  * Size:	000008
  */
-void KeyItem::getSize()
+f32 KeyItem::getSize()
 {
 	/*
 	.loc_0x0:
@@ -129,7 +131,7 @@ void KeyItem::init(Vector3f&)
 void KeyItem::startAI(int)
 {
 	// Generated from stw r0, 0x2B8(r3)
-	_2B8 = 0;
+	// _2B8 = 0;
 }
 
 /*
@@ -137,7 +139,7 @@ void KeyItem::startAI(int)
  * Address:	800ED314
  * Size:	000020
  */
-void KeyItem::isVisible()
+bool KeyItem::isVisible()
 {
 	/*
 	.loc_0x0:
@@ -274,7 +276,7 @@ void KeyItem::collisionCallback(CollEvent&) { }
  * Address:	800ED480
  * Size:	000008
  */
-void KeyItem::getiMass()
+f32 KeyItem::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -387,7 +389,8 @@ void KeyItem::refresh(Graphics&)
  * Address:	800ED5D4
  * Size:	000060
  */
-DoorItem::DoorItem(int, CreatureProp*, Shape*)
+DoorItem::DoorItem(int p1, CreatureProp* props, Shape* shape)
+    : ItemCreature(p1, props, shape)
 {
 	/*
 	.loc_0x0:
@@ -453,7 +456,7 @@ void DoorItem::becomeGate()
  * Address:	800ED654
  * Size:	00001C
  */
-void DoorItem::getSize()
+f32 DoorItem::getSize()
 {
 	/*
 	.loc_0x0:
@@ -512,7 +515,7 @@ void DoorItem::init(Vector3f&)
 void DoorItem::startAI(int)
 {
 	// Generated from stw r0, 0x3CC(r3)
-	_3CC = 0;
+	// _3CC = 0;
 }
 
 /*
@@ -578,7 +581,7 @@ void DoorItem::update()
  * Address:	800ED778
  * Size:	000020
  */
-void DoorItem::isVisible()
+bool DoorItem::isVisible()
 {
 	/*
 	.loc_0x0:
@@ -598,7 +601,7 @@ void DoorItem::isVisible()
  * Address:	800ED798
  * Size:	000008
  */
-void DoorItem::getiMass()
+f32 DoorItem::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -612,7 +615,7 @@ void DoorItem::getiMass()
  * Address:	800ED7A0
  * Size:	000020
  */
-void DoorItem::isAtari()
+bool DoorItem::isAtari()
 {
 	/*
 	.loc_0x0:
@@ -773,14 +776,14 @@ void DoorItem::refresh(Graphics&)
  * Address:	800ED9C4
  * Size:	000008
  */
-u32 DoorItem::isAlive() { return 0x1; }
+bool DoorItem::isAlive() { return true; }
 
 /*
  * --INFO--
  * Address:	800ED9CC
  * Size:	000008
  */
-void DoorItem::getHeight()
+f32 DoorItem::getHeight()
 {
 	/*
 	.loc_0x0:
@@ -794,7 +797,7 @@ void DoorItem::getHeight()
  * Address:	800ED9D4
  * Size:	000008
  */
-void KeyItem::getHeight()
+f32 KeyItem::getHeight()
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PaniAnimator.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	8011B148
  * Size:	000148
  */
-void PaniPlantAnimator::createMotionTable()
+PaniMotionTable* PaniPlantAnimator::createMotionTable()
 {
 	/*
 	.loc_0x0:

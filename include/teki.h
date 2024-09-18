@@ -8,8 +8,26 @@
 #include "PelletView.h"
 #include "Interactions.h"
 
+struct NTeki;
 struct Teki;
+struct TekiMgr;
 struct CollEvent;
+
+namespace TekiNakata {
+// Teki-making utility functions
+void makeTekiParameters(TekiMgr*);
+void makeTekis(TekiMgr*);
+
+} // namespace TekiNakata
+
+/**
+ * @brief TODO
+ */
+struct TekiInteractionKey {
+	TekiInteractionKey(int, Interaction*);
+
+	// TODO: members
+};
 
 /**
  * @brief TODO
@@ -32,13 +50,18 @@ struct TekiEvent {
  */
 struct TekiShapeObject {
 	TekiShapeObject(Shape*);
-	u32 _00;
+
+	u32 _00; // _00
+	         // TODO: members?
 };
 
 /**
  * @brief TODO
  */
 struct TekiMessage {
+	TekiMessage(int, NTeki*);
+
+	// TODO: members
 };
 
 /**
@@ -277,7 +300,7 @@ struct TekiMgr : public MonoObjectMgr {
 	virtual ~TekiMgr();              // _48
 	virtual void update();           // _4C
 	virtual void refresh(Graphics&); // _58
-	virtual void createObject();     // _80
+	virtual Teki* createObject();    // _80
 
 	void startStage();
 	void newTeki(int);

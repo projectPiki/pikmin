@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	0000C8
  */
 ActAttack::ActAttack(Piki* piki)
+    : AndAction(piki)
 {
 	/*
 	.loc_0x0:

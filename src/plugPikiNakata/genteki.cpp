@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Generator.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	8011B2CC
  * Size:	000040
  */
-void makeObjectTeki()
+static void makeObjectTeki()
 {
 	/*
 	.loc_0x0:
@@ -102,6 +102,7 @@ void GenObjectTeki::initialise()
  * Size:	00008C
  */
 GenObjectTeki::GenObjectTeki()
+    : GenObject('teki', "")
 {
 	/*
 	.loc_0x0:
@@ -283,7 +284,7 @@ void GenObjectTeki::updateUseList(Generator*, int)
  * Address:	8011B58C
  * Size:	000120
  */
-void GenObjectTeki::birth(BirthInfo&)
+void* GenObjectTeki::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

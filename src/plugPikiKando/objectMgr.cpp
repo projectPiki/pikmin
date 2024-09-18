@@ -1,3 +1,4 @@
+#include "ObjectMgr.h"
 #include "CreatureNode.h"
 
 /*
@@ -1620,7 +1621,7 @@ void MonoObjectMgr::getIndex(Creature*)
  * Address:	800E1474
  * Size:	0000AC
  */
-void MonoObjectMgr::birth()
+Creature* MonoObjectMgr::birth()
 {
 	/*
 	.loc_0x0:
@@ -3057,7 +3058,7 @@ void PolyObjectMgr::get(int)
  * Address:	800E2420
  * Size:	00011C
  */
-void PolyObjectMgr::birth(int)
+Creature* PolyObjectMgr::birth(int)
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,5 @@
-#include "types.h"
+#include "PikiMgr.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -25,7 +26,7 @@ static void _Print(char*, ...)
  * Address:	800CDCD0
  * Size:	0000BC
  */
-void PikiMgr::birth()
+Creature* PikiMgr::birth()
 {
 	/*
 	.loc_0x0:
@@ -104,8 +105,10 @@ void PikiMgr::getFormationPikis()
  * Address:	800CDD8C
  * Size:	000258
  */
-PikiMgr::PikiMgr(Navi*)
+PikiMgr::PikiMgr(Navi* navi)
 {
+	mNavi  = navi;
+	mParms = new PikiProp();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1168,7 +1171,7 @@ void PikiMgr::init()
  * Address:	800CED8C
  * Size:	00007C
  */
-void PikiMgr::createObject()
+ViewPiki* PikiMgr::createObject()
 {
 	/*
 	.loc_0x0:
@@ -1454,74 +1457,4 @@ void PikiMgr::dumpAll()
  * Address:	800CF054
  * Size:	000084
  */
-PikiMgr::~PikiMgr()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x6C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x746C
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x5C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x5038
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x5C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4F80
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-
-	.loc_0x5C:
-	  extsh.    r0, r4
-	  ble-      .loc_0x6C
-	  mr        r3, r31
-	  bl        -0x87F10
-
-	.loc_0x6C:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800CF0D8
- * Size:	000008
- */
-void PikiMgr::@8 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x294
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800CF0E0
- * Size:	000008
- */
-void PikiMgr::@8 @update()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0x2DC
-	*/
-}
+PikiMgr::~PikiMgr() { }

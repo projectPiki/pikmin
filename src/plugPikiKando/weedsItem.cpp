@@ -1,4 +1,4 @@
-#include "types.h"
+#include "WeedsItem.h"
 
 /*
  * --INFO--
@@ -495,7 +495,8 @@ void GrassGen::resolve()
  * Address:	800E4BD4
  * Size:	0000A0
  */
-RockGen::RockGen(Shape*, CreatureProp*)
+RockGen::RockGen(Shape* shape, CreatureProp* props)
+    : ItemCreature(0, props, shape)
 {
 	/*
 	.loc_0x0:
@@ -1030,7 +1031,7 @@ void RockGen::refresh(Graphics&)
  * Address:	800E5200
  * Size:	000008
  */
-void RockGen::getSize()
+f32 RockGen::getSize()
 {
 	/*
 	.loc_0x0:
@@ -1124,7 +1125,8 @@ void RockGen::getRandomPebble()
  * Address:	800E52E8
  * Size:	0000A0
  */
-GrassGen::GrassGen(Shape*, CreatureProp*)
+GrassGen::GrassGen(Shape* shape, CreatureProp* props)
+    : ItemCreature(0, props, shape)
 {
 	/*
 	.loc_0x0:
@@ -1552,7 +1554,7 @@ void GrassGen::refresh(Graphics&)
  * Address:	800E5808
  * Size:	000008
  */
-void GrassGen::getSize()
+f32 GrassGen::getSize()
 {
 	/*
 	.loc_0x0:
@@ -1646,7 +1648,8 @@ void GrassGen::getRandomGrass()
  * Address:	........
  * Size:	000078
  */
-WeedsGen::WeedsGen(Shape*, CreatureProp*)
+WeedsGen::WeedsGen(Shape* shape, CreatureProp* props)
+    : ItemCreature(0, props, shape)
 {
 	// UNUSED FUNCTION
 }
@@ -1804,6 +1807,7 @@ void WeedsGen::startAI(int)
  * Size:	000064
  */
 Weed::Weed()
+    : ItemCreature(0, nullptr, nullptr)
 {
 	// UNUSED FUNCTION
 }
@@ -2038,7 +2042,7 @@ void Weed::refresh(Graphics&)
  * Address:	800E5D58
  * Size:	000014
  */
-void Weed::isVisible()
+bool Weed::isVisible()
 {
 	/*
 	.loc_0x0:
@@ -2055,14 +2059,14 @@ void Weed::isVisible()
  * Address:	800E5D6C
  * Size:	000008
  */
-u32 Weed::isAlive() { return 0x1; }
+bool Weed::isAlive() { return true; }
 
 /*
  * --INFO--
  * Address:	800E5D74
  * Size:	000014
  */
-void Weed::isAtari()
+bool Weed::isAtari()
 {
 	/*
 	.loc_0x0:
@@ -2079,14 +2083,14 @@ void Weed::isAtari()
  * Address:	800E5D88
  * Size:	000008
  */
-u32 Weed::needFlick(Creature*) { return 0x0; }
+bool Weed::needFlick(Creature*) { return false; }
 
 /*
  * --INFO--
  * Address:	800E5D90
  * Size:	000014
  */
-void GrassGen::isAlive()
+bool GrassGen::isAlive()
 {
 	/*
 	.loc_0x0:
@@ -2103,21 +2107,21 @@ void GrassGen::isAlive()
  * Address:	800E5DA4
  * Size:	000008
  */
-u32 GrassGen::isVisible() { return 0x1; }
+bool GrassGen::isVisible() { return true; }
 
 /*
  * --INFO--
  * Address:	800E5DAC
  * Size:	000008
  */
-u32 GrassGen::needFlick(Creature*) { return 0x0; }
+bool GrassGen::needFlick(Creature*) { return false; }
 
 /*
  * --INFO--
  * Address:	800E5DB4
  * Size:	000014
  */
-void RockGen::isAlive()
+bool RockGen::isAlive()
 {
 	/*
 	.loc_0x0:
@@ -2134,11 +2138,11 @@ void RockGen::isAlive()
  * Address:	800E5DC8
  * Size:	000008
  */
-u32 RockGen::isVisible() { return 0x1; }
+bool RockGen::isVisible() { return true; }
 
 /*
  * --INFO--
  * Address:	800E5DD0
  * Size:	000008
  */
-u32 RockGen::needFlick(Creature*) { return 0x0; }
+bool RockGen::needFlick(Creature*) { return false; }

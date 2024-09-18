@@ -28,7 +28,11 @@ struct PelletConfig : public Parameters, public CoreNode {
 	PelletConfig();
 
 	virtual void read(RandomAccessStream&); // _18 (weak)
-	                                        // TODO: members
+
+	// _04     = VTBL
+	// _00-_04 = Parameters
+	// _04-_18 = CoreNode
+	// TODO: members
 };
 
 /**
@@ -56,7 +60,7 @@ struct Pellet : public DualCreature {
 	virtual void startWaterEffect();                     // _CC
 	virtual void finishWaterEffect();                    // _D0
 	virtual void update();                               // _E0
-	virtual void postUpdate(int, float);                 // _E4
+	virtual void postUpdate(int, f32);                   // _E4
 	virtual void refresh(Graphics&);                     // _EC
 	virtual void doAnimation();                          // _108
 	virtual void doKill();                               // _10C
@@ -104,11 +108,21 @@ struct Pellet : public DualCreature {
  * @brief TODO
  */
 struct PelletMgr : public MonoObjectMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	struct UseNode : public CoreNode {
+		// _00     = VTBL
+		// _00-_14 = CoreNode
+		// TODO: members
+	};
+
 	PelletMgr(MapMgr*);
 
 	virtual ~PelletMgr();                   // _48 (weak)
 	virtual void refresh(Graphics&);        // _58
-	virtual void createObject();            // _80
+	virtual Pellet* createObject();         // _80
 	virtual void read(RandomAccessStream&); // _84 (weak)
 
 	void getUfoIndexFromID(u32);
