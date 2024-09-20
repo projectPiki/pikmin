@@ -1,4 +1,5 @@
-#include "types.h"
+#include "nlib/Spline.h"
+#include "nlib/Array.h"
 
 /*
  * --INFO--
@@ -38,7 +39,7 @@ SplineInterpolator::SplineInterpolator(int, NPool<SplineSegment>*)
 void SplineInterpolator::reset()
 {
 	// Generated from stb r0, 0x10(r3)
-	_10 = 0;
+	// _10 = 0;
 }
 
 /*

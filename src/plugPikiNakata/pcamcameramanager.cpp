@@ -1,4 +1,8 @@
-#include "types.h"
+#include "Pcam/CameraManager.h"
+#include "Pcam/Camera.h"
+#include "Peve/Event.h"
+#include "Peve/Condition.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -25,8 +29,12 @@ static void _Print(char*, ...)
  * Address:	80123C54
  * Size:	0001F8
  */
-PcamCameraManager::PcamCameraManager(Camera*, Controller*)
+PcamCameraManager::PcamCameraManager(Camera* camera, Controller* controller)
+    : Node("PcamCameraManager")
 {
+	mCamera          = new PcamCamera(camera);
+	mController      = controller;
+	mVibrationEvents = new PeveEvent*[PCAMVIB_VibrationCount];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -252,125 +260,18 @@ void PcamCameraManager::finishMotion()
  */
 void PcamCameraManager::updateVibrationEvent()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x28(r3)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x80
-	  lwz       r3, 0x2C(r30)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r31, r3, r0
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x6C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, -0x1
-	  stw       r0, 0x28(r30)
-	  b         .loc_0x80
+	if (mCurrEventIndex < 0) {
+		return;
+	}
 
-	.loc_0x6C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
+	PeveEvent* event = mVibrationEvents[mCurrEventIndex];
+	if (event->isFinished()) {
+		event->finish();
+		mCurrEventIndex = PCAMVIB_NULL;
+		return;
+	}
 
-	.loc_0x80:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80123F58
- * Size:	000038
- */
-void PeveEvent::update()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x8(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80123F90
- * Size:	000004
- */
-void PeveCondition::update() { }
-
-/*
- * --INFO--
- * Address:	80123F94
- * Size:	000004
- */
-void PeveEvent::finish() { }
-
-/*
- * --INFO--
- * Address:	80123F98
- * Size:	000040
- */
-void PeveEvent::isFinished()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x8(r3)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x20
-	  li        r3, 0x1
-	  b         .loc_0x30
-
-	.loc_0x20:
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x30:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	event->update();
 }
 
 /*
@@ -380,6 +281,8 @@ void PeveEvent::isFinished()
  */
 void PcamCameraManager::startVibrationEvent(int, Vector3f&)
 {
+	PeveEvent* event = mVibrationEvents[mCurrEventIndex];
+	event->reset();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -480,41 +383,6 @@ void PcamCameraManager::startVibrationEvent(int, Vector3f&)
 	  blr
 	*/
 }
-
-/*
- * --INFO--
- * Address:	80124120
- * Size:	000038
- */
-void PeveEvent::reset()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x8(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80124158
- * Size:	000004
- */
-void PeveCondition::reset() { }
 
 /*
  * --INFO--

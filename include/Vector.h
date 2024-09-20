@@ -81,6 +81,8 @@ struct Vector3f {
 	f32 getY() { return y; }
 	f32 getZ() { return z; }
 
+	void input(Vector3f&);
+
 	// unused/inlined:
 	void rotateTranspose(Matrix4f&);
 	void rotate(Quat&);

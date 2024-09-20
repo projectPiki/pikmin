@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Pcam/MotionEvents.h"
 
 /*
  * --INFO--
@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	0000CC
  */
 PcamLongVibrationEvent::PcamLongVibrationEvent(PcamCamera*)
+    : PeveSerialEvent(2)
 {
 	/*
 	.loc_0x0:
@@ -328,6 +329,7 @@ void PcamDamageEvent::makePcamDamageEvent()
  * Size:	000064
  */
 PcamRandomMoveEvent::PcamRandomMoveEvent(PcamCamera*)
+    : PeveEvent(0)
 {
 	// UNUSED FUNCTION
 }
@@ -526,6 +528,7 @@ void PcamRandomMoveEvent::update()
  * Size:	0000C4
  */
 PcamSideVibrationEvent::PcamSideVibrationEvent(PcamCamera*)
+    : PeveEvent(0)
 {
 	/*
 	.loc_0x0:
@@ -687,47 +690,4 @@ void PcamSideVibrationEvent::finish()
 	  stfs      f0, 0x0(r3)
 	  blr
 	*/
-}
-
-/*
- * --INFO--
- * Address:	8012499C
- * Size:	000010
- */
-void PeveEvent::setEventOption(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC(r3)
-	  or        r0, r0, r4
-	  stw       r0, 0xC(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801249AC
- * Size:	000010
- */
-void PeveEvent::clearEventOption(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC(r3)
-	  andc      r0, r0, r4
-	  stw       r0, 0xC(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801249BC
- * Size:	000008
- */
-void PeveEvent::setEventOptions(int a1)
-{
-	// Generated from stw r4, 0xC(r3)
-	_0C = a1;
 }

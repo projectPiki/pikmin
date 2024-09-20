@@ -1,4 +1,4 @@
-#include "types.h"
+#include "UtEffect.h"
 
 /*
  * --INFO--
@@ -153,7 +153,7 @@ void SlimeEffect::emit(EffectParm&)
  * Address:	80113294
  * Size:	00009C
  */
-void SlimeEffect::invoke(zen::particleGenerator*, zen::particleMdl*)
+bool SlimeEffect::invoke(zen::particleGenerator*, zen::particleMdl*)
 {
 	/*
 	.loc_0x0:
@@ -2107,7 +2107,7 @@ void BurnEffect::kill()
  * Address:	80114AA4
  * Size:	000008
  */
-u32 BurnEffect::invoke(zen::particleGenerator*) { return 0x1; }
+bool BurnEffect::invoke(zen::particleGenerator*) { return true; }
 
 /*
  * --INFO--
@@ -2421,7 +2421,7 @@ void WhistleTemplate::kill()
  * Address:	80114E28
  * Size:	00034C
  */
-void WhistleTemplate::invoke(zen::particleGenerator*, zen::particleMdl*)
+bool WhistleTemplate::invoke(zen::particleGenerator*, zen::particleMdl*)
 {
 	/*
 	.loc_0x0:
@@ -2881,7 +2881,7 @@ void SimpleEffect::kill()
  * Address:	801153C0
  * Size:	000008
  */
-u32 NaviFue::invoke(zen::particleGenerator*) { return 0x1; }
+bool NaviFue::invoke(zen::particleGenerator*) { return true; }
 
 /*
  * --INFO--
@@ -3261,7 +3261,7 @@ void NaviWhistle::kill()
  * Address:	8011579C
  * Size:	000364
  */
-void NaviWhistle::invoke(zen::particleGenerator*, zen::particleMdl*)
+bool NaviWhistle::invoke(zen::particleGenerator*, zen::particleMdl*)
 {
 	/*
 	.loc_0x0:
@@ -3516,7 +3516,7 @@ void NaviWhistle::invoke(zen::particleGenerator*, zen::particleMdl*)
  * Address:	80115B00
  * Size:	000038
  */
-void GoalEffect::invoke(zen::particleGenerator*)
+bool GoalEffect::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
@@ -3565,47 +3565,5 @@ void GoalEffect::emit(EffectParm&)
 	  addi      r1, r1, 0x8
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80115B74
- * Size:	000008
- */
-void SlimeEffect::@4 @invoke(zen::particleGenerator*, zen::particleMdl*)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x4
-	  b         -0x28E4
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80115B7C
- * Size:	000008
- */
-void NaviWhistle::@4 @invoke(zen::particleGenerator*, zen::particleMdl*)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x4
-	  b         -0x3E4
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80115B84
- * Size:	000008
- */
-void WhistleTemplate::@4 @invoke(zen::particleGenerator*, zen::particleMdl*)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x4
-	  b         -0xD60
 	*/
 }

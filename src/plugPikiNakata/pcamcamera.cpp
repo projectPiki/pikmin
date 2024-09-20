@@ -1,4 +1,6 @@
-#include "types.h"
+#include "Pcam/Camera.h"
+#include "Creature.h"
+#include "ParaParameters.h"
 
 /*
  * --INFO--
@@ -96,7 +98,8 @@ void PcamControlInfo::init(bool, bool, bool, bool, bool, bool, bool, f32, f32, f
  * Address:	80121C0C
  * Size:	000134
  */
-PcamCamera::PcamCamera(Camera*)
+PcamCamera::PcamCamera(Camera* camera)
+    : NCamera(camera)
 {
 	/*
 	.loc_0x0:

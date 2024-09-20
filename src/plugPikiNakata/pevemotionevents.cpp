@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Peve/MotionEvents.h"
+#include "nlib/Geometry.h"
 
 /*
  * --INFO--
@@ -26,6 +27,7 @@ static void _Print(char*, ...)
  * Size:	000054
  */
 PeveWaitEvent::PeveWaitEvent()
+    : PeveEvent(0)
 {
 	// UNUSED FUNCTION
 }
@@ -46,6 +48,7 @@ void PeveWaitEvent::makeWaitEvent(f32)
  * Size:	000040
  */
 PeveAccelerationEvent::PeveAccelerationEvent()
+    : PeveEvent(0)
 {
 	/*
 	.loc_0x0:
@@ -439,6 +442,7 @@ void PeveHorizontalSinWaveEvent::update()
  * Size:	00005C
  */
 PeveCircleMoveEvent::PeveCircleMoveEvent()
+    : PeveEvent(0)
 {
 	/*
 	.loc_0x0:
@@ -723,6 +727,7 @@ void PeveCircleMoveEvent::calcAngle()
  * Size:	0000F0
  */
 PeveCircleMoveWatchEvent::PeveCircleMoveWatchEvent()
+    : PeveParallelEvent(0)
 {
 	// UNUSED FUNCTION
 }
@@ -743,6 +748,7 @@ void PeveCircleMoveWatchEvent::makeCircleMoveWatchEvent(f32, NVector3fIO*, NVect
  * Size:	000040
  */
 PeveFunctionCurveEvent::PeveFunctionCurveEvent()
+    : PeveEvent(0)
 {
 	// UNUSED FUNCTION
 }
@@ -844,6 +850,7 @@ void PeveFunctionCurveEvent::update()
  * Size:	000040
  */
 PeveHomingPositionEvent::PeveHomingPositionEvent()
+    : PeveEvent(0)
 {
 	// UNUSED FUNCTION
 }
@@ -951,6 +958,7 @@ void PeveHomingPositionEvent::update()
  * Size:	0000D0
  */
 PeveHomingPostureEvent::PeveHomingPostureEvent()
+    : PeveParallelEvent(0)
 {
 	// UNUSED FUNCTION
 }
@@ -972,6 +980,7 @@ void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition*, NVector3fIO*
  * Size:	00009C
  */
 PeveInterpolationEvent::PeveInterpolationEvent(int, NPool<SplineSegment>*)
+    : PeveEvent(0)
 {
 	// UNUSED FUNCTION
 }
@@ -1194,6 +1203,7 @@ void PeveInterpolationEvent::update()
  * Size:	00005C
  */
 PeveMoveEvent::PeveMoveEvent()
+    : PeveEvent(0)
 {
 	// UNUSED FUNCTION
 }
@@ -1251,6 +1261,7 @@ void PeveMoveEvent::reset()
  * Size:	00009C
  */
 PeveVibrationEvent::PeveVibrationEvent()
+    : PeveEvent(0)
 {
 	/*
 	.loc_0x0:
@@ -1425,7 +1436,7 @@ void PeveVibrationEvent::update()
  * Address:	80126DA0
  * Size:	000024
  */
-void PeveInterpolationEvent::isFinished()
+bool PeveInterpolationEvent::isFinished()
 {
 	/*
 	.loc_0x0:

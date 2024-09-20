@@ -1,14 +1,16 @@
-#include "types.h"
+#include "nlib/System.h"
+#include "nlib/Node.h"
+#include "sysNew.h"
+#include "Dolphin/os.h"
+
+System* NSystem::system;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "nlibsystem"); }
 
 /*
  * --INFO--
@@ -25,72 +27,13 @@ static void _Print(char*, ...)
  * Address:	8011E0F8
  * Size:	0000CC
  */
-NNode::NNode(int)
+NNode::NNode(int size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  mr.       r29, r4
-	  lis       r4, 0x802C
-	  stw       r28, 0x18(r1)
-	  addi      r0, r4, 0x4C14
-	  addi      r28, r3, 0
-	  stw       r0, 0x0(r3)
-	  ble-      .loc_0xA0
-	  li        r3, 0x10
-	  bl        -0xD712C
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0x98
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x4C44
-	  stw       r0, 0x0(r30)
-	  li        r31, 0
-	  stw       r29, 0x4(r30)
-	  stw       r31, 0x8(r30)
-	  lwz       r0, 0x4(r30)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0xD715C
-	  stw       r3, 0xC(r30)
-	  addi      r4, r31, 0
-	  addi      r5, r31, 0
-	  b         .loc_0x8C
-
-	.loc_0x7C:
-	  lwz       r3, 0xC(r30)
-	  addi      r4, r4, 0x1
-	  stwx      r31, r3, r5
-	  addi      r5, r5, 0x4
-
-	.loc_0x8C:
-	  lwz       r0, 0x4(r30)
-	  cmpw      r4, r0
-	  blt+      .loc_0x7C
-
-	.loc_0x98:
-	  stw       r30, 0x4(r28)
-	  b         .loc_0xA8
-
-	.loc_0xA0:
-	  li        r0, 0
-	  stw       r0, 0x4(r28)
-
-	.loc_0xA8:
-	  mr        r3, r28
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (size > 0) {
+		mNodeArray = new NArray<NNode>(size);
+	} else {
+		mNodeArray = nullptr;
+	}
 }
 
 /*
@@ -98,27 +41,11 @@ NNode::NNode(int)
  * Address:	8011E1C4
  * Size:	000038
  */
-void NNode::setChild(int, NNode*)
+void NNode::setChild(int idx, NNode* child)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mNodeArray) {
+		mNodeArray->set(idx, child);
+	}
 }
 
 /*
@@ -944,8 +871,9 @@ void NArray<NHeap>::get(int)
  * Address:	8011E89C
  * Size:	000008
  */
-void NSystem::initSystem(System*)
+void NSystem::initSystem(System* sys)
 {
+	system = sys;
 	/*
 	.loc_0x0:
 	  stw       r3, 0x3150(r13)

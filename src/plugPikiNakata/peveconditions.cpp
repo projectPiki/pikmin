@@ -1,4 +1,6 @@
-#include "types.h"
+#include "Peve/Condition.h"
+#include "nlib/System.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -65,47 +67,17 @@ void PeveDependenceCondition::construct(PeveCondition*)
  * Address:	80125C68
  * Size:	000048
  */
-PeveTimeCondition::PeveTimeCondition()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x73C
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x5F34
-	  stw       r0, 0x0(r31)
-	  mr        r3, r31
-	  lfs       f1, -0x5E00(r2)
-	  bl        .loc_0x48
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x48:
-	*/
-}
+PeveTimeCondition::PeveTimeCondition() { construct(0.0f); }
 
 /*
  * --INFO--
  * Address:	80125CB0
  * Size:	000010
  */
-void PeveTimeCondition::construct(f32)
+void PeveTimeCondition::construct(f32 limit)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x5E00(r2)
-	  stfs      f0, 0x4(r3)
-	  stfs      f1, 0x8(r3)
-	  blr
-	*/
+	mCurrTime = 0.0f;
+	mLimit    = limit;
 }
 
 /*
@@ -288,95 +260,49 @@ void PeveComparisonYCondition::update()
  * Address:	80125E6C
  * Size:	00000C
  */
-void PeveComparisonYCondition::reset()
-{
-	// Generated from stb r0, 0x4(r3)
-	_04 = 0;
-}
+void PeveComparisonYCondition::reset() { _04 = false; }
 
 /*
  * --INFO--
  * Address:	80125E78
  * Size:	000008
  */
-void PeveBooleanCondition::isMet()
-{
-	/*
-	.loc_0x0:
-	  lbz       r3, 0x4(r3)
-	  blr
-	*/
-}
+bool PeveBooleanCondition::isMet() { return _04; }
 
 /*
  * --INFO--
  * Address:	80125E80
  * Size:	00000C
  */
-void PeveDistanceCondition::reset()
-{
-	// Generated from stb r0, 0x4(r3)
-	_04 = 0;
-}
+void PeveDistanceCondition::reset() { _04 = false; }
 
 /*
  * --INFO--
  * Address:	80125E8C
  * Size:	00001C
  */
-void PeveTimeCondition::isMet()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  mfcr      r0
-	  rlwinm    r3,r0,3,31,31
-	  blr
-	*/
-}
+bool PeveTimeCondition::isMet() { return mCurrTime >= mLimit; }
 
 /*
  * --INFO--
  * Address:	80125EA8
  * Size:	00000C
  */
-void PeveTimeCondition::reset()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x5E00(r2)
-	  stfs      f0, 0x4(r3)
-	  blr
-	*/
-}
+void PeveTimeCondition::reset() { mCurrTime = 0.0f; }
 
 /*
  * --INFO--
  * Address:	80125EB4
  * Size:	000018
  */
-void PeveTimeCondition::update()
-{
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3150(r13)
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x28C(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4(r3)
-	  blr
-	*/
-}
+void PeveTimeCondition::update() { mCurrTime += NSystem::system->getFrameTime(); }
 
 /*
  * --INFO--
  * Address:	80125ECC
  * Size:	000030
  */
-void PeveDependenceCondition::isMet()
+bool PeveDependenceCondition::isMet()
 {
 	/*
 	.loc_0x0:

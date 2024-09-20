@@ -1,4 +1,6 @@
-#include "types.h"
+#include "Peve/Event.h"
+#include "Peve/Condition.h"
+#include "Peve/IO.h"
 
 /*
  * --INFO--
@@ -41,29 +43,11 @@ PeveCondition::PeveCondition()
  * Address:	80125550
  * Size:	000048
  */
-PeveEvent::PeveEvent(int)
+PeveEvent::PeveEvent(int count)
+    : NNode(count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x746C
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x5DD8
-	  stw       r0, 0x0(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stw       r0, 0x8(r31)
-	  stw       r0, 0xC(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mCondition = nullptr;
+	_0C        = 0;
 }
 
 /*
@@ -71,7 +55,8 @@ PeveEvent::PeveEvent(int)
  * Address:	........
  * Size:	000054
  */
-PeveParallelEvent::PeveParallelEvent(int)
+PeveParallelEvent::PeveParallelEvent(int count)
+    : PeveEvent(count)
 {
 	// UNUSED FUNCTION
 }
@@ -183,7 +168,7 @@ void PeveParallelEvent::update()
  * Address:	801256A0
  * Size:	00007C
  */
-void PeveParallelEvent::isFinished()
+bool PeveParallelEvent::isFinished()
 {
 	/*
 	.loc_0x0:
@@ -234,7 +219,8 @@ void PeveParallelEvent::isFinished()
  * Address:	8012571C
  * Size:	000054
  */
-PeveSerialEvent::PeveSerialEvent(int)
+PeveSerialEvent::PeveSerialEvent(int count)
+    : PeveEvent(count)
 {
 	/*
 	.loc_0x0:
@@ -378,7 +364,7 @@ void PeveSerialEvent::update()
  * Address:	801258A4
  * Size:	000074
  */
-void PeveSerialEvent::isFinished()
+bool PeveSerialEvent::isFinished()
 {
 	/*
 	.loc_0x0:
@@ -506,7 +492,7 @@ PeveCameraPostureIO::PeveCameraPostureIO()
 void PeveCameraPostureIO::construct(PcamCamera* a1)
 {
 	// Generated from stw r4, 0x4(r3)
-	_04 = a1;
+	// _04 = a1;
 }
 
 /*

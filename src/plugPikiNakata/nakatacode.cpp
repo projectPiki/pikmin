@@ -1,5 +1,5 @@
 #include "CodeInitializer.h"
-#include "NLibSystem.h"
+#include "nlib/System.h"
 #include "PaniAnimator.h"
 #include "system.h"
 #include "Teki.h"

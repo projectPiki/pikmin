@@ -1,4 +1,4 @@
-#include "types.h"
+#include "nlib/Function.h"
 
 /*
  * --INFO--
@@ -87,7 +87,7 @@ void NPolynomialFunction::mul2(NPolynomialFunction&, NPolynomialFunction&)
  * Address:	8011B70C
  * Size:	000114
  */
-void NPolynomialFunction::getValue(f32)
+f32 NPolynomialFunction::getValue(f32)
 {
 	/*
 	.loc_0x0:
@@ -228,7 +228,8 @@ void NPolynomialFunction::println()
  * Address:	........
  * Size:	000070
  */
-NLinearFunction::NLinearFunction(f32*)
+NLinearFunction::NLinearFunction(f32* p1)
+    : NPolynomialFunction(p1, 1)
 {
 	// UNUSED FUNCTION
 }
@@ -258,7 +259,8 @@ void NLinearFunction::makeLinearFunction(f32, f32, f32, f32)
  * Address:	8011B878
  * Size:	00007C
  */
-NClampLinearFunction::NClampLinearFunction(f32*)
+NClampLinearFunction::NClampLinearFunction(f32* p1)
+    : NLinearFunction(p1)
 {
 	/*
 	.loc_0x0:
@@ -389,7 +391,7 @@ void NClampLinearFunction::makeClampLinearFunction(f32, f32, f32, f32)
  * Address:	8011B9AC
  * Size:	000134
  */
-void NClampLinearFunction::getValue(f32)
+f32 NClampLinearFunction::getValue(f32)
 {
 	/*
 	.loc_0x0:
@@ -577,7 +579,7 @@ void NVibrationFunction::makeVibrationFunction(f32, f32, f32)
  * Address:	8011BB94
  * Size:	000044
  */
-void NVibrationFunction::getValue(f32)
+f32 NVibrationFunction::getValue(f32)
 {
 	/*
 	.loc_0x0:

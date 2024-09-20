@@ -1,5 +1,5 @@
 #include "types.h"
-#include "NakataMath.h"
+#include "nlib/Math.h"
 
 /*
  * --INFO--

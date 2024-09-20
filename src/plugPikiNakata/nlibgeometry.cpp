@@ -1,4 +1,6 @@
-#include "types.h"
+#include "nlib/Geometry.h"
+#include "nlib/Math.h"
+#include "Vector.h"
 
 /*
  * --INFO--
@@ -215,7 +217,7 @@ void NMatrix4f::construct(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32,
  * Address:	........
  * Size:	000030
  */
-NMatrix4f::NMatrix4f(f32 (*)[4])
+NMatrix4f::NMatrix4f(Mtx)
 {
 	// UNUSED FUNCTION
 }
@@ -225,7 +227,7 @@ NMatrix4f::NMatrix4f(f32 (*)[4])
  * Address:	........
  * Size:	000020
  */
-void NMatrix4f::construct(f32 (*)[4])
+void NMatrix4f::construct(Mtx)
 {
 	// UNUSED FUNCTION
 }
@@ -235,7 +237,7 @@ void NMatrix4f::construct(f32 (*)[4])
  * Address:	........
  * Size:	000090
  */
-void NMatrix4f::input(f32 (*)[4])
+void NMatrix4f::input(Mtx)
 {
 	// UNUSED FUNCTION
 }
@@ -245,7 +247,7 @@ void NMatrix4f::input(f32 (*)[4])
  * Address:	........
  * Size:	000090
  */
-void NMatrix4f::output(f32 (*)[4])
+void NMatrix4f::output(Mtx)
 {
 	// UNUSED FUNCTION
 }
@@ -1244,7 +1246,7 @@ void NPolar3f::negate()
  * Address:	........
  * Size:	000034
  */
-void NMathF::roundAngle(f32)
+f32 NMathF::roundAngle(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1898,7 +1900,8 @@ void NSpecialMatrix::construct(int)
  * Address:	........
  * Size:	00004C
  */
-NLowerMatrix::NLowerMatrix(f32*, int)
+NLowerMatrix::NLowerMatrix(f32* p1, int p2)
+    : NSpecialMatrix(p2)
 {
 	// UNUSED FUNCTION
 }
@@ -1938,7 +1941,8 @@ void NLowerMatrix::println()
  * Address:	........
  * Size:	00004C
  */
-NUpperMatrix::NUpperMatrix(f32*, f32*, int)
+NUpperMatrix::NUpperMatrix(f32* p1, f32* p2, int p3)
+    : NSpecialMatrix(p3)
 {
 	// UNUSED FUNCTION
 }
@@ -1978,7 +1982,8 @@ void NUpperMatrix::println()
  * Address:	........
  * Size:	00006C
  */
-LUMatrix::LUMatrix(f32*, f32*, f32*, int)
+LUMatrix::LUMatrix(f32*, f32*, f32*, int p4)
+    : NSpecialMatrix(p4)
 {
 	// UNUSED FUNCTION
 }
@@ -2038,7 +2043,7 @@ void LUMatrix::setDimension(int)
 void NSpecialMatrix::setDimension(int a1)
 {
 	// Generated from stw r4, 0x4(r3)
-	_04 = a1;
+	// _04 = a1;
 }
 
 /*
@@ -3210,7 +3215,7 @@ void NAlpha::reset()
  * Address:	8011D1E8
  * Size:	000198
  */
-void NAlpha::getValue(f32)
+f32 NAlpha::getValue(f32)
 {
 	/*
 	.loc_0x0:
