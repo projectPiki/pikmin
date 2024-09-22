@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/ReactionActions.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	8013EBD8
  * Size:	00001C
  */
-void TaiDeadAction::act(Teki&)
+bool TaiDeadAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -207,7 +207,7 @@ void TaiDyingAction::start(Teki&)
  * Address:	8013ED30
  * Size:	00004C
  */
-void TaiDyingAction::act(Teki&)
+bool TaiDyingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -257,7 +257,7 @@ void TaiDamageCountResetAction::start(Teki&)
  * Address:	8013ED88
  * Size:	000040
  */
-void TaiDamageCountAction::act(Teki&)
+bool TaiDamageCountAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -285,7 +285,7 @@ void TaiDamageCountAction::act(Teki&)
  * Address:	8013EDC8
  * Size:	000018
  */
-void TaiDamageScaleAction::act(Teki&)
+bool TaiDamageScaleAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -303,7 +303,7 @@ void TaiDamageScaleAction::act(Teki&)
  * Address:	8013EDE0
  * Size:	000024
  */
-void TaiDamageAction::act(Teki&)
+bool TaiDamageAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -326,7 +326,7 @@ void TaiDamageAction::act(Teki&)
  * Address:	8013EE04
  * Size:	000088
  */
-void TaiSimultaneousDamageAction::act(Teki&)
+bool TaiSimultaneousDamageAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -376,7 +376,7 @@ void TaiSimultaneousDamageAction::act(Teki&)
  * Address:	8013EE8C
  * Size:	0000D8
  */
-void TaiCounterattackSimultaneousDamageAction::act(Teki&)
+bool TaiCounterattackSimultaneousDamageAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -478,7 +478,7 @@ void TaiDamagingAction::start(Teki&)
  * Address:	8013EFA4
  * Size:	000020
  */
-void TaiDamagingAction::act(Teki&)
+bool TaiDamagingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -500,7 +500,7 @@ void TaiDamagingAction::act(Teki&)
  * Address:	8013EFC4
  * Size:	000098
  */
-void TaiTargetNearestAssailantAction::act(Teki&)
+bool TaiTargetNearestAssailantAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -558,7 +558,7 @@ void TaiTargetNearestAssailantAction::act(Teki&)
  * Address:	8013F05C
  * Size:	00013C
  */
-void TaiTargetNearestCollisionAction::actByEvent(TekiEvent&)
+bool TaiTargetNearestCollisionAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -661,7 +661,7 @@ void TaiTargetNearestCollisionAction::actByEvent(TekiEvent&)
  * Address:	8013F198
  * Size:	000040
  */
-void TaiStickedAction::act(Teki&)
+bool TaiStickedAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -689,7 +689,7 @@ void TaiStickedAction::act(Teki&)
  * Address:	8013F1D8
  * Size:	000050
  */
-void TaiSmashedAction::actByEvent(TekiEvent&)
+bool TaiSmashedAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -765,7 +765,7 @@ void TaiBeingPressedAction::start(Teki&)
  * Address:	8013F298
  * Size:	00001C
  */
-void TaiPressedAction::actByEvent(TekiEvent&)
+bool TaiPressedAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -805,7 +805,7 @@ void TaiWarnAction::start(Teki&)
  * Address:	8013F2D0
  * Size:	000034
  */
-void TaiDangerLifeAction::act(Teki&)
+bool TaiDangerLifeAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

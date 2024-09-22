@@ -17,6 +17,8 @@ struct TekiPersonality {
 	void reset();
 	void input(TekiPersonality&);
 
+	void getF(int);
+
 	// _00 = VTBL
 	// TODO: members
 };

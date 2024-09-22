@@ -1,4 +1,5 @@
-#include "types.h"
+#include "TAI/Chappy.h"
+#include "TekiConditions.h"
 
 /*
  * --INFO--
@@ -77,6 +78,7 @@ TaiChappySoundTable::TaiChappySoundTable()
  * Size:	0003A4
  */
 TaiChappyParameters::TaiChappyParameters()
+    : TekiParameters(0, 0) // TODO: fix later
 {
 	/*
 	.loc_0x0:
@@ -322,6 +324,7 @@ TaiChappyParameters::TaiChappyParameters()
  * Size:	0003A0
  */
 TaiBlackChappyParameters::TaiBlackChappyParameters()
+    : TekiParameters(0, 0) // TODO: fix later
 {
 	/*
 	.loc_0x0:
@@ -617,6 +620,7 @@ TaiCatfishSoundTable::TaiCatfishSoundTable()
  * Size:	00039C
  */
 TaiCatfishParameters::TaiCatfishParameters()
+    : TekiParameters(0, 0) // TODO: fix later
 {
 	/*
 	.loc_0x0:
@@ -860,6 +864,7 @@ TaiCatfishParameters::TaiCatfishParameters()
  * Size:	00156C
  */
 TaiChappyStrategy::TaiChappyStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix later
 {
 	/*
 	.loc_0x0:
@@ -2370,7 +2375,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters*)
  * Address:	8012A674
  * Size:	000148
  */
-void TaiChappyCryAction::act(Teki&)
+bool TaiChappyCryAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2468,7 +2473,7 @@ void TaiChappyCryAction::act(Teki&)
  * Address:	8012A7BC
  * Size:	000048
  */
-void TaiChappySmashedAction::actByEvent(TekiEvent&)
+bool TaiChappySmashedAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -2502,7 +2507,8 @@ void TaiChappySmashedAction::actByEvent(TekiEvent&)
  * Address:	8012A804
  * Size:	000058
  */
-TaiChappyLegEffectAction::TaiChappyLegEffectAction(f32)
+TaiChappyLegEffectAction::TaiChappyLegEffectAction(f32 p1)
+    : TaiJointEffectAction(p1, 0, 0, 0, 0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -2590,7 +2596,7 @@ void TaiChappyLegEffectAction::setType(Vector3f&, int, int)
  * Address:	8012A8EC
  * Size:	000084
  */
-void TekiOrCondition::satisfy(Creature*)
+bool TekiOrCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -2637,7 +2643,7 @@ void TekiOrCondition::satisfy(Creature*)
  * Address:	8012A970
  * Size:	000008
  */
-u32 TaiOnceAction::act(Teki&) { return 0x1; }
+bool TaiOnceAction::act(Teki&) { return true; }
 
 /*
  * --INFO--
@@ -2716,7 +2722,7 @@ void TaiAndAction::finish(Teki&)
  * Address:	8012AA38
  * Size:	000088
  */
-void TaiAndAction::act(Teki&)
+bool TaiAndAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

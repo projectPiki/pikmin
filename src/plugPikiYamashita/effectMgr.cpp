@@ -1,4 +1,5 @@
-#include "types.h"
+#include "EffectMgr.h"
+#include "Colour.h"
 
 /*
  * --INFO--

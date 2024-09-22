@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Aeffect.h"
 
 /*
  * --INFO--
@@ -149,7 +149,7 @@ void TAIAeffCloudOfDust::start(Teki&)
  * Address:	801D5FA8
  * Size:	000068
  */
-void TAIAeffCloudOfDust::act(Teki&)
+bool TAIAeffCloudOfDust::act(Teki&)
 {
 	/*
 	.loc_0x0:

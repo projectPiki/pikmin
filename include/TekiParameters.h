@@ -12,6 +12,8 @@ struct TekiParameters : public Node {
 
 	virtual void read(RandomAccessStream&); // _0C
 
+	void getF(int);
+
 	// _00     = VTBL
 	// _00-_20 = Node
 	// TODO: members

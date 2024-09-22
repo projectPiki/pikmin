@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/EffectActions.h"
 
 /*
  * --INFO--
@@ -97,7 +97,8 @@ void TaiStopGenParticleGeneratorAction::start(Teki&)
  * Address:	8012E638
  * Size:	00008C
  */
-TaiJointEffectAction::TaiJointEffectAction(f32, int, int, int, int, int)
+TaiJointEffectAction::TaiJointEffectAction(f32 p1, int p2, int p3, int p4, int p5, int p6)
+    : TAIAeffCloudOfDust(p1, p2, p3, p4, p5, p6)
 {
 	/*
 	.loc_0x0:

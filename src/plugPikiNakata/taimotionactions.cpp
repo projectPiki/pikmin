@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/MotionActions.h"
 
 /*
  * --INFO--
@@ -51,7 +51,7 @@ void TaiMotionAction::start(Teki&)
  * Address:	80134050
  * Size:	000020
  */
-void TaiMotionAction::act(Teki&)
+bool TaiMotionAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -160,7 +160,7 @@ void TaiContinuousMotionAction::start(Teki&)
  * Address:	8013416C
  * Size:	000074
  */
-void TaiContinuousMotionAction::act(Teki&)
+bool TaiContinuousMotionAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -265,7 +265,7 @@ void TaiFinishMotionAction::start(Teki&)
  * Address:	80134250
  * Size:	000020
  */
-void TaiAnimationKeyAction::act(Teki&)
+bool TaiAnimationKeyAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -302,7 +302,7 @@ void TaiCountLoopAction::start(Teki&)
  * Address:	8013427C
  * Size:	00003C
  */
-void TaiCountLoopAction::act(Teki&)
+bool TaiCountLoopAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -366,7 +366,7 @@ void TaiSwitchMotionAction::start(Teki&)
  * Address:	80134314
  * Size:	0000D4
  */
-void TaiOutsideKeyStopMoveAction::act(Teki&)
+bool TaiOutsideKeyStopMoveAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -442,7 +442,7 @@ void TaiStoppingMoveAction::start(Teki&) { }
  * Address:	801343EC
  * Size:	000064
  */
-void TaiStoppingMoveAction::act(Teki&)
+bool TaiStoppingMoveAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

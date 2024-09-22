@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TekiConditions.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	80149BC0
  * Size:	000054
  */
-void TekiPikiStateCondition::satisfy(Creature*)
+bool TekiPikiStateCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -62,7 +62,7 @@ void TekiPikiStateCondition::satisfy(Creature*)
  * Address:	80149C14
  * Size:	00002C
  */
-void TekiStateCondition::satisfy(Creature*)
+bool TekiStateCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -87,7 +87,7 @@ void TekiStateCondition::satisfy(Creature*)
  * Address:	80149C40
  * Size:	00002C
  */
-void TekiTypeCondition::satisfy(Creature*)
+bool TekiTypeCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -112,7 +112,7 @@ void TekiTypeCondition::satisfy(Creature*)
  * Address:	80149C6C
  * Size:	000030
  */
-void TekiFreeCondition::satisfy(Creature*)
+bool TekiFreeCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -136,7 +136,7 @@ void TekiFreeCondition::satisfy(Creature*)
  * Address:	80149C9C
  * Size:	000014
  */
-void TekiNaviCondition::satisfy(Creature*)
+bool TekiNaviCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -153,7 +153,7 @@ void TekiNaviCondition::satisfy(Creature*)
  * Address:	80149CB0
  * Size:	000020
  */
-void TekiNaviPikiCondition::satisfy(Creature*)
+bool TekiNaviPikiCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -173,7 +173,7 @@ void TekiNaviPikiCondition::satisfy(Creature*)
  * Address:	80149CD0
  * Size:	000024
  */
-void TekiPelletCondition::satisfy(Creature*)
+bool TekiPelletCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -194,7 +194,7 @@ void TekiPelletCondition::satisfy(Creature*)
  * Address:	80149CF4
  * Size:	0000A8
  */
-void TekiPositionDistanceCondition::satisfy(Creature*)
+bool TekiPositionDistanceCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -248,7 +248,7 @@ void TekiPositionDistanceCondition::satisfy(Creature*)
  * Address:	80149D9C
  * Size:	000070
  */
-void TekiPositionCircleDistanceCondition::satisfy(Creature*)
+bool TekiPositionCircleDistanceCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -288,7 +288,7 @@ void TekiPositionCircleDistanceCondition::satisfy(Creature*)
  * Address:	80149E0C
  * Size:	000070
  */
-void TekiPositionSphereDistanceCondition::satisfy(Creature*)
+bool TekiPositionSphereDistanceCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -328,7 +328,7 @@ void TekiPositionSphereDistanceCondition::satisfy(Creature*)
  * Address:	80149E7C
  * Size:	000014
  */
-void TekiStickingCondition::satisfy(Creature*)
+bool TekiStickingCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -345,7 +345,7 @@ void TekiStickingCondition::satisfy(Creature*)
  * Address:	80149E90
  * Size:	0000A8
  */
-void TekiRecognitionCondition::satisfy(Creature*)
+bool TekiRecognitionCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -403,7 +403,7 @@ void TekiRecognitionCondition::satisfy(Creature*)
  * Address:	80149F38
  * Size:	000014
  */
-void TekiCreaturePointerCondition::satisfy(Creature*)
+bool TekiCreaturePointerCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -420,7 +420,7 @@ void TekiCreaturePointerCondition::satisfy(Creature*)
  * Address:	80149F4C
  * Size:	0000E4
  */
-void TekiDistanceCondition::satisfy(Creature*)
+bool TekiDistanceCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -493,7 +493,7 @@ void TekiDistanceCondition::satisfy(Creature*)
  * Address:	8014A030
  * Size:	000070
  */
-void TekiSphereDistanceCondition::satisfy(Creature*)
+bool TekiSphereDistanceCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -537,7 +537,7 @@ void TekiSphereDistanceCondition::satisfy(Creature*)
  * Address:	8014A0A0
  * Size:	000018
  */
-void TekiStickerCondition::satisfy(Creature*)
+bool TekiStickerCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -555,7 +555,7 @@ void TekiStickerCondition::satisfy(Creature*)
  * Address:	8014A0B8
  * Size:	000144
  */
-void TekiLowerRangeCondition::satisfy(Creature*)
+bool TekiLowerRangeCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -652,7 +652,7 @@ void TekiLowerRangeCondition::satisfy(Creature*)
  * Address:	8014A1FC
  * Size:	000024
  */
-void TekiAttackableCondition::satisfy(Creature*)
+bool TekiAttackableCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -673,7 +673,7 @@ void TekiAttackableCondition::satisfy(Creature*)
  * Address:	8014A220
  * Size:	000024
  */
-void TekiVisibleCondition::satisfy(Creature*)
+bool TekiVisibleCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -694,7 +694,7 @@ void TekiVisibleCondition::satisfy(Creature*)
  * Address:	8014A244
  * Size:	00003C
  */
-void TekiVisibleHeightCondition::satisfy(Creature*)
+bool TekiVisibleHeightCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -723,7 +723,7 @@ void TekiVisibleHeightCondition::satisfy(Creature*)
  * Address:	8014A280
  * Size:	0000BC
  */
-void TekiLowerCondition::satisfy(Creature*)
+bool TekiLowerCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -782,7 +782,7 @@ void TekiLowerCondition::satisfy(Creature*)
  * Address:	8014A33C
  * Size:	00005C
  */
-void TekiAngleCondition::satisfy(Creature*)
+bool TekiAngleCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:

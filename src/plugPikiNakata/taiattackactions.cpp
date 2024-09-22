@@ -1,4 +1,8 @@
-#include "types.h"
+#include "Tai/AttackActions.h"
+#include "teki.h"
+#include "TekiPersonality.h"
+#include "TekiParameters.h"
+#include "TekiConditions.h"
 
 /*
  * --INFO--
@@ -25,7 +29,7 @@ static void _Print(char*, ...)
  * Address:	80127604
  * Size:	0000AC
  */
-void TaiAttackableNaviPikiAction::act(Teki&)
+bool TaiAttackableNaviPikiAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -88,7 +92,7 @@ void TaiAttackableNaviPikiAction::act(Teki&)
  * Address:	801276B0
  * Size:	00008C
  */
-void TaiAttackableNaviAction::act(Teki&)
+bool TaiAttackableNaviAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -143,7 +147,7 @@ void TaiAttackableNaviAction::act(Teki&)
  * Address:	8012773C
  * Size:	0000B8
  */
-void TaiAttackablePikiAction::act(Teki&)
+bool TaiAttackablePikiAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -255,7 +259,7 @@ void BTeki::setTekiOption(int)
  * Address:	80127844
  * Size:	000660
  */
-void TaiAnimationSwallowingAction::act(Teki&)
+bool TaiAnimationSwallowingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -890,7 +894,7 @@ void TaiAnimationSwallowingAction::finish(Teki&)
  * Address:	80128010
  * Size:	000088
  */
-void TaiBangingAction::actByEvent(TekiEvent&)
+bool TaiBangingAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -940,7 +944,7 @@ void TaiBangingAction::actByEvent(TekiEvent&)
  * Address:	80128098
  * Size:	0000D4
  */
-void TaiFlickAction::act(Teki&)
+bool TaiFlickAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1005,7 +1009,7 @@ void TaiFlickAction::act(Teki&)
  * Address:	8012816C
  * Size:	000028
  */
-void TaiTargetStickAction::act(Teki&)
+bool TaiTargetStickAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1083,7 +1087,7 @@ void TaiFlickingAction::finish(Teki&)
  * Address:	8012820C
  * Size:	00007C
  */
-void TaiFlickingAction::act(Teki&)
+bool TaiFlickingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1132,7 +1136,7 @@ void TaiFlickingAction::act(Teki&)
  * Address:	80128288
  * Size:	000058
  */
-void TaiFlickingUpperAction::act(Teki&)
+bool TaiFlickingUpperAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1168,7 +1172,7 @@ void TaiFlickingUpperAction::act(Teki&)
  * Address:	801282E0
  * Size:	000084
  */
-void TekiAndCondition::satisfy(Creature*)
+bool TekiAndCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -1215,7 +1219,7 @@ void TekiAndCondition::satisfy(Creature*)
  * Address:	80128364
  * Size:	00003C
  */
-void TekiNotCondition::satisfy(Creature*)
+bool TekiNotCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -1242,4 +1246,4 @@ void TekiNotCondition::satisfy(Creature*)
  * Address:	801283A0
  * Size:	000008
  */
-u32 TekiCondition::satisfy(Creature*) { return 0x1; }
+bool TekiCondition::satisfy(Creature*) { return true; }

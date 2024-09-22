@@ -1,0 +1,104 @@
+#ifndef _TAI_BASICACTIONS_H
+#define _TAI_BASICACTIONS_H
+
+#include "types.h"
+#include "TAI/Action.h"
+
+/**
+ * @brief TODO
+ */
+struct TaiActionStateAction : public TaiAction {
+	inline TaiActionStateAction() // TODO: this is a guess
+	    : TaiAction(0)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiSetOptionAction : public TaiAction {
+	inline TaiSetOptionAction() // TODO: this is a guess
+	    : TaiAction(0)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiPlaySoundAction : public TaiAction {
+	inline TaiPlaySoundAction() // TODO: this is a guess
+	    : TaiAction(0)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiStopSoundAction : public TaiAction {
+	inline TaiStopSoundAction() // TODO: this is a guess
+	    : TaiAction(0)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiTypeNaviWatchResultOnAction : public TaiAction {
+	inline TaiTypeNaviWatchResultOnAction() // TODO: this is a guess
+	    : TaiAction(0)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiNaviWatchResultOnAction : public TaiAction {
+	inline TaiNaviWatchResultOnAction() // TODO: this is a guess
+	    : TaiAction(0)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+#endif

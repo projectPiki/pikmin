@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/BasicActions.h"
 
 /*
  * --INFO--
@@ -40,7 +40,7 @@ void TaiActionStateAction::start(Teki&)
  * Address:	801283B4
  * Size:	000020
  */
-void TaiActionStateAction::act(Teki&)
+bool TaiActionStateAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
