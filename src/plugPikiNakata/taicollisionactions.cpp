@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/CollisionActions.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	8012E48C
  * Size:	000014
  */
-void TaiBounceAction::actByEvent(TekiEvent&)
+bool TaiBounceAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -42,7 +42,7 @@ void TaiBounceAction::actByEvent(TekiEvent&)
  * Address:	8012E4A0
  * Size:	000014
  */
-void TaiGroundCollisionAction::actByEvent(TekiEvent&)
+bool TaiGroundCollisionAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -59,7 +59,7 @@ void TaiGroundCollisionAction::actByEvent(TekiEvent&)
  * Address:	8012E4B4
  * Size:	000014
  */
-void TaiWallCollisionAction::actByEvent(TekiEvent&)
+bool TaiWallCollisionAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -76,7 +76,7 @@ void TaiWallCollisionAction::actByEvent(TekiEvent&)
  * Address:	8012E4C8
  * Size:	000014
  */
-void TaiCreatureCollisionAction::actByEvent(TekiEvent&)
+bool TaiCreatureCollisionAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -93,7 +93,7 @@ void TaiCreatureCollisionAction::actByEvent(TekiEvent&)
  * Address:	8012E4DC
  * Size:	00003C
  */
-void TaiPikiCollisionAction::actByEvent(TekiEvent&)
+bool TaiPikiCollisionAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -124,7 +124,7 @@ void TaiPikiCollisionAction::actByEvent(TekiEvent&)
  * Address:	8012E518
  * Size:	00003C
  */
-void TaiNaviCollisionAction::actByEvent(TekiEvent&)
+bool TaiNaviCollisionAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -155,7 +155,7 @@ void TaiNaviCollisionAction::actByEvent(TekiEvent&)
  * Address:	8012E554
  * Size:	000054
  */
-void TaiTekiTypeCollisionAction::actByEvent(TekiEvent&)
+bool TaiTekiTypeCollisionAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Palm.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TaiPalmSoundTable::TaiPalmSoundTable()
  * Size:	0001F4
  */
 TaiPalmParameters::TaiPalmParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -214,6 +215,7 @@ TaiPalmParameters::TaiPalmParameters()
  * Size:	0004F0
  */
 TaiPalmStrategy::TaiPalmStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1076,7 +1078,7 @@ void TaiPalmDyingAction::start(Teki&)
  * Address:	8013E838
  * Size:	000060
  */
-void TaiPalmDyingAction::act(Teki&)
+bool TaiPalmDyingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1191,7 +1193,7 @@ void TaiPalmGrowingAction::start(Teki&)
  * Address:	8013E964
  * Size:	000068
  */
-void TaiPalmGrowAction::act(Teki&)
+bool TaiPalmGrowAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1235,7 +1237,7 @@ void TaiPalmGrowAction::act(Teki&)
  * Address:	8013E9CC
  * Size:	000038
  */
-void TaiPalmFlowerDamageAction::act(Teki&)
+bool TaiPalmFlowerDamageAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1265,7 +1267,7 @@ void TaiPalmFlowerDamageAction::act(Teki&)
  * Address:	8013EA04
  * Size:	000034
  */
-void TaiPalmSunflowerAction::act(Teki&)
+bool TaiPalmSunflowerAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1336,7 +1338,7 @@ void TaiPalmChangingColorAction::start(Teki&) { }
  * Address:	8013EAA0
  * Size:	000090
  */
-void TaiPalmChangingColorAction::act(Teki&)
+bool TaiPalmChangingColorAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

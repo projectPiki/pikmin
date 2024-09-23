@@ -1,4 +1,5 @@
-#include "types.h"
+#include "TAI/TimerActions.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -45,7 +46,7 @@ void TaiTimerAction::start(Teki&)
  * Address:	801436F0
  * Size:	000028
  */
-void TaiTimerAction::act(Teki&)
+bool TaiTimerAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -197,7 +198,7 @@ void TaiResetTimerAction::resetTimer(Teki&)
  * Address:	80143888
  * Size:	000028
  */
-void TaiTimerElapsedAction::act(Teki&)
+bool TaiTimerElapsedAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -266,7 +267,7 @@ void TaiStartingTimerAction::start(Teki&)
  * Address:	80143934
  * Size:	000054
  */
-void StdSystem::getRand(f32)
+f32 StdSystem::getRand(f32)
 {
 	/*
 	.loc_0x0:
@@ -299,7 +300,7 @@ void StdSystem::getRand(f32)
  * Address:	80143988
  * Size:	000114
  */
-void TaiStartingTimerAction::act(Teki&)
+bool TaiStartingTimerAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

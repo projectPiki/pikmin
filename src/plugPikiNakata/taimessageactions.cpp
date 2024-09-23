@@ -1,12 +1,14 @@
-#include "types.h"
+#include "TAI/MessageActions.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "taimessageactions");
 	// UNUSED FUNCTION
 }
 
@@ -48,7 +50,7 @@ void TaiSendMessageAction::start(Teki&)
  * Address:	80131F24
  * Size:	000040
  */
-void TaiKeySendMessageAction::act(Teki&)
+bool TaiKeySendMessageAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

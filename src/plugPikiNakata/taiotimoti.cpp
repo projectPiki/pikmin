@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Otimoti.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TaiOtimotiSoundTable::TaiOtimotiSoundTable()
  * Size:	000540
  */
 TaiOtimotiParameters::TaiOtimotiParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -476,6 +477,7 @@ TaiBlackFrogSoundTable::TaiBlackFrogSoundTable()
  * Size:	00053C
  */
 TaiBlackFrogParameters::TaiBlackFrogParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -823,6 +825,7 @@ TaiBlackFrogParameters::TaiBlackFrogParameters()
  * Size:	00161C
  */
 TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -2700,7 +2703,7 @@ void TaiOtimotiStartDroppingWaterAction::start(Teki&)
  * Address:	8013CA9C
  * Size:	000128
  */
-void TaiOtimotiFlickAction::act(Teki&)
+bool TaiOtimotiFlickAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2794,7 +2797,7 @@ void TaiOtimotiFlickAction::act(Teki&)
  * Address:	8013CBC4
  * Size:	000148
  */
-void TaiOtimotiFailToJumpAction::act(Teki&)
+bool TaiOtimotiFailToJumpAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3178,7 +3181,7 @@ void TaiOtimotiJumpingAction::start(Teki&)
  * Address:	8013D124
  * Size:	000084
  */
-void TaiOtimotiJumpingAction::act(Teki&)
+bool TaiOtimotiJumpingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3314,7 +3317,7 @@ void TaiOtimotiAirWaitingAction::start(Teki&)
  * Address:	8013D2D4
  * Size:	000164
  */
-void TaiOtimotiAirWaitingAction::act(Teki&)
+bool TaiOtimotiAirWaitingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3470,7 +3473,7 @@ void TaiOtimotiDroppingAction::start(Teki&)
  * Address:	8013D4BC
  * Size:	00005C
  */
-void TaiOtimotiDroppingAction::act(Teki&)
+bool TaiOtimotiDroppingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3509,7 +3512,7 @@ void TaiOtimotiDroppingAction::act(Teki&)
  * Address:	8013D518
  * Size:	000060
  */
-void TaiOtimotiDroppingAction::actByEvent(TekiEvent&)
+bool TaiOtimotiDroppingAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -3572,7 +3575,7 @@ void TaiOtimotiPressingAction::start(Teki&)
  * Address:	8013D5AC
  * Size:	00005C
  */
-void TaiOtimotiPressingAction::act(Teki&)
+bool TaiOtimotiPressingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3611,7 +3614,7 @@ void TaiOtimotiPressingAction::act(Teki&)
  * Address:	8013D608
  * Size:	00021C
  */
-void TaiOtimotiPressingAction::actByEvent(TekiEvent&)
+bool TaiOtimotiPressingAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -3762,14 +3765,14 @@ void TaiOtimotiPressingAction::actByEvent(TekiEvent&)
  * Address:	8013D824
  * Size:	000008
  */
-u32 TaiOtimotiBouncingAction::act(Teki&) { return 0x1; }
+bool TaiOtimotiBouncingAction::act(Teki&) { return true; }
 
 /*
  * --INFO--
  * Address:	8013D82C
  * Size:	000008
  */
-u32 TaiOtimotiBouncingAction::actByEvent(TekiEvent&) { return 0x0; }
+bool TaiOtimotiBouncingAction::actByEvent(TekiEvent&) { return false; }
 
 /*
  * --INFO--
@@ -3783,7 +3786,7 @@ void TaiOtimotiAttackingAction::start(Teki&) { }
  * Address:	8013D838
  * Size:	0000B0
  */
-void TaiOtimotiAttackingAction::act(Teki&)
+bool TaiOtimotiAttackingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3847,7 +3850,7 @@ void TaiOtimotiAttackingAction::act(Teki&)
  * Address:	8013D8E8
  * Size:	000008
  */
-u32 TaiOtimotiAttackingAction::actByEvent(TekiEvent&) { return 0x0; }
+bool TaiOtimotiAttackingAction::actByEvent(TekiEvent&) { return false; }
 
 /*
  * --INFO--
@@ -3930,7 +3933,8 @@ void TaiOtimotiAttackingEffectAction::start(Teki&)
  * Address:	8013D9E0
  * Size:	000058
  */
-TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(f32)
+TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(f32 p1)
+    : TaiJointEffectAction(p1, 0, 0, 0, 0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:

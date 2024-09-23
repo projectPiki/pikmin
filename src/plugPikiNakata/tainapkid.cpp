@@ -1,4 +1,5 @@
-#include "types.h"
+#include "TAI/Napkid.h"
+#include "TekiConditions.h"
 
 /*
  * --INFO--
@@ -77,6 +78,7 @@ TaiNapkidSoundTable::TaiNapkidSoundTable()
  * Size:	000564
  */
 TaiNapkidParameters::TaiNapkidParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -434,6 +436,7 @@ TaiNapkidParameters::TaiNapkidParameters()
  * Size:	0022C4
  */
 TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -3158,7 +3161,7 @@ void TaiNapkidStrategy::drawDebugInfo(Teki&, Graphics&)
  * Address:	8013885C
  * Size:	0000BC
  */
-void TekiNapkidTargetPikiCondition::satisfy(Creature*)
+bool TekiNapkidTargetPikiCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -3227,7 +3230,7 @@ void TekiNapkidTargetPikiCondition::satisfy(Creature*)
  * Address:	80138918
  * Size:	0000A0
  */
-void TekiNapkidShortRangeCondition::satisfy(Creature*)
+bool TekiNapkidShortRangeCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -3320,7 +3323,7 @@ void TaiNapkidWanderingRouteAction::start(Teki&)
  * Address:	80138A0C
  * Size:	0000AC
  */
-void TaiNapkidWanderingRouteAction::act(Teki&)
+bool TaiNapkidWanderingRouteAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3449,7 +3452,7 @@ void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki&)
  * Address:	80138B60
  * Size:	0000B8
  */
-void TaiNapkidTargetPikiAction::act(Teki&)
+bool TaiNapkidTargetPikiAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3515,7 +3518,7 @@ void TaiNapkidTargetPikiAction::act(Teki&)
  * Address:	80138C18
  * Size:	0000A8
  */
-void TaiNapkidPikiLostAction::act(Teki&)
+bool TaiNapkidPikiLostAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3577,7 +3580,7 @@ void TaiNapkidPikiLostAction::act(Teki&)
  * Address:	80138CC0
  * Size:	000088
  */
-void TaiNapkidShortRangeAction::act(Teki&)
+bool TaiNapkidShortRangeAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3683,7 +3686,7 @@ void TaiNapkidStraightFlyingAction::start(Teki&)
  * Address:	80138DF0
  * Size:	000098
  */
-void TaiNapkidStraightFlyingAction::act(Teki&)
+bool TaiNapkidStraightFlyingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3942,7 +3945,7 @@ void TaiNapkidCirclingAction::finish(Teki&)
  * Address:	8013913C
  * Size:	000124
  */
-void TaiNapkidCirclingAction::act(Teki&)
+bool TaiNapkidCirclingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4031,7 +4034,7 @@ void TaiNapkidCirclingAction::act(Teki&)
  * Address:	80139260
  * Size:	000060
  */
-void TaiNapkidFlyingAction::act(Teki&)
+bool TaiNapkidFlyingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4067,7 +4070,7 @@ void TaiNapkidFlyingAction::act(Teki&)
  * Address:	801392C0
  * Size:	000024
  */
-void TaiNapkidAscendingAction::act(Teki&)
+bool TaiNapkidAscendingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4088,7 +4091,7 @@ void TaiNapkidAscendingAction::act(Teki&)
  * Address:	801392E4
  * Size:	00006C
  */
-void TaiNapkidApproachPikiAction::act(Teki&)
+bool TaiNapkidApproachPikiAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4133,7 +4136,7 @@ void TaiNapkidApproachPikiAction::act(Teki&)
  * Address:	80139350
  * Size:	000364
  */
-void TaiNapkidCatchingAction::act(Teki&)
+bool TaiNapkidCatchingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4495,7 +4498,7 @@ void TaiNapkidCatchDescendingAction::start(Teki&)
  * Address:	80139830
  * Size:	0002CC
  */
-void TaiNapkidCatchTracingAction::act(Teki&)
+bool TaiNapkidCatchTracingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -5035,7 +5038,7 @@ void TaiNapkidRisingAscendingAction::start(Teki&)
  * Address:	80139F88
  * Size:	0001D4
  */
-void TaiNapkidThrowingPikiAction::act(Teki&)
+bool TaiNapkidThrowingPikiAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -5184,7 +5187,7 @@ void TaiNapkidThrowingPikiAction::act(Teki&)
  * Address:	8013A15C
  * Size:	0000C4
  */
-void TaiNapkidFlickAction::act(Teki&)
+bool TaiNapkidFlickAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -5385,7 +5388,7 @@ void TaiNapkidFallingAction::start(Teki&)
  * Address:	8013A3C8
  * Size:	000008
  */
-u32 TaiNapkidFallingAction::act(Teki&) { return 0x0; }
+bool TaiNapkidFallingAction::act(Teki&) { return false; }
 
 /*
  * --INFO--

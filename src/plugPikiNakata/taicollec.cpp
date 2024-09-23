@@ -1,4 +1,5 @@
-#include "types.h"
+#include "TAI/Collec.h"
+#include "TekiConditions.h"
 
 /*
  * --INFO--
@@ -77,6 +78,7 @@ TaiCollecSoundTable::TaiCollecSoundTable()
  * Size:	000484
  */
 TaiCollecParameters::TaiCollecParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -378,6 +380,7 @@ TaiCollecParameters::TaiCollecParameters()
  * Size:	00179C
  */
 TaiCollecStrategy::TaiCollecStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -2252,7 +2255,7 @@ void TaiCollecStrategy::outputUndergroundPosition(Teki&, NVector3f&)
  * Address:	8012C9DC
  * Size:	0001F0
  */
-void TekiCollecTargetPelletCondition::satisfy(Creature*)
+bool TekiCollecTargetPelletCondition::satisfy(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -2454,7 +2457,7 @@ void TaiCollecImpassableAction::start(Teki&)
  * Address:	8012CC0C
  * Size:	0000AC
  */
-void TaiCollecImpassableAction::act(Teki&)
+bool TaiCollecImpassableAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2541,7 +2544,7 @@ void TaiCollecImpassableAction::resetPosition(Teki&)
  * Address:	8012CCE8
  * Size:	000070
  */
-void TaiCollecLetGoOfPelletAction::act(Teki&)
+bool TaiCollecLetGoOfPelletAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2587,7 +2590,7 @@ void TaiCollecLetGoOfPelletAction::act(Teki&)
  * Address:	8012CD58
  * Size:	000074
  */
-void TaiCollecLetGoOfPelletAction::actByEvent(TekiEvent&)
+bool TaiCollecLetGoOfPelletAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -2634,7 +2637,7 @@ void TaiCollecLetGoOfPelletAction::actByEvent(TekiEvent&)
  * Address:	8012CDCC
  * Size:	000158
  */
-void TaiCollecTargetPelletAction::act(Teki&)
+bool TaiCollecTargetPelletAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2740,7 +2743,7 @@ void TaiCollecTargetPelletAction::act(Teki&)
  * Address:	8012CF24
  * Size:	0000E0
  */
-void TaiCollecVisibleHeightPelletLostAction::act(Teki&)
+bool TaiCollecVisibleHeightPelletLostAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2820,7 +2823,7 @@ void TaiCollecVisibleHeightPelletLostAction::act(Teki&)
  * Address:	8012D004
  * Size:	000064
  */
-void TaiCollecVisibleHeightPelletLostTimerAction::act(Teki&)
+bool TaiCollecVisibleHeightPelletLostTimerAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2859,7 +2862,7 @@ void TaiCollecVisibleHeightPelletLostTimerAction::act(Teki&)
  * Address:	8012D068
  * Size:	0000FC
  */
-void TaiCollecPelletLostAction::act(Teki&)
+bool TaiCollecPelletLostAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2942,7 +2945,7 @@ void TaiCollecPelletLostAction::act(Teki&)
  * Address:	8012D164
  * Size:	0000BC
  */
-void TaiCollecPelletDisappearedAction::act(Teki&)
+bool TaiCollecPelletDisappearedAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3009,7 +3012,7 @@ void TaiCollecPelletDisappearedAction::act(Teki&)
  * Address:	8012D220
  * Size:	000110
  */
-void TaiCollecHoldPelletAction::act(Teki&)
+bool TaiCollecHoldPelletAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3212,7 +3215,7 @@ void TaiCollecCarryingAction::finish(Teki&)
  * Address:	8012D41C
  * Size:	0000B8
  */
-void TaiCollecCarryingAction::act(Teki&)
+bool TaiCollecCarryingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3318,7 +3321,7 @@ void TaiCollecBeingDraggedAction::finish(Teki&)
  * Address:	8012D524
  * Size:	0000A0
  */
-void TaiCollecWinCarryingAction::act(Teki&)
+bool TaiCollecWinCarryingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3376,7 +3379,7 @@ void TaiCollecWinCarryingAction::act(Teki&)
  * Address:	8012D5C4
  * Size:	0000A0
  */
-void TaiCollecDefeatCarryingAction::act(Teki&)
+bool TaiCollecDefeatCarryingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3434,7 +3437,7 @@ void TaiCollecDefeatCarryingAction::act(Teki&)
  * Address:	8012D664
  * Size:	00015C
  */
-void TaiCollecPutAction::act(Teki&)
+bool TaiCollecPutAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3637,7 +3640,7 @@ void TaiCollecPuttingPelletAction::finish(Teki&)
  * Address:	8012D8E0
  * Size:	0000BC
  */
-void TaiCollecPuttingPelletAction::act(Teki&)
+bool TaiCollecPuttingPelletAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3733,7 +3736,7 @@ void TaiCollecCarryingToNestAction::start(Teki&)
  * Address:	8012D9E0
  * Size:	000214
  */
-void TaiCollecCarryingToNestAction::act(Teki&)
+bool TaiCollecCarryingToNestAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3933,7 +3936,7 @@ void TaiCollecCarryingToNestAction::makePositionRoute(Teki&)
  * Address:	8012DC48
  * Size:	0000A0
  */
-void TaiCollecRouteImpassableAction::act(Teki&)
+bool TaiCollecRouteImpassableAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4014,7 +4017,7 @@ void TaiCollecRoundCarryAction::start(Teki&)
  * Address:	8012DCFC
  * Size:	0000E8
  */
-void TaiCollecRoundCarryAction::act(Teki&)
+bool TaiCollecRoundCarryAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4084,7 +4087,7 @@ void TaiCollecRoundCarryAction::act(Teki&)
  * Address:	8012DDE4
  * Size:	000064
  */
-void TaiCollecPelletStartContainerizedAction::act(Teki&)
+bool TaiCollecPelletStartContainerizedAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4127,7 +4130,7 @@ void TaiCollecPelletStartContainerizedAction::act(Teki&)
  * Address:	8012DE48
  * Size:	000058
  */
-void TaiCollecPelletFinishContainerizedAction::act(Teki&)
+bool TaiCollecPelletFinishContainerizedAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4167,7 +4170,7 @@ void TaiCollecPelletFinishContainerizedAction::act(Teki&)
  * Address:	8012DEA0
  * Size:	000078
  */
-void TaiCollecDeadFallingAction::act(Teki&)
+bool TaiCollecDeadFallingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4215,7 +4218,7 @@ void TaiCollecDeadFallingAction::act(Teki&)
  * Address:	8012DF18
  * Size:	000050
  */
-void TaiCollecFallingAction::act(Teki&)
+bool TaiCollecFallingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4251,7 +4254,7 @@ void TaiCollecFallingAction::act(Teki&)
  * Address:	8012DF68
  * Size:	00006C
  */
-void TaiCollecGetOutAction::act(Teki&)
+bool TaiCollecGetOutAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4292,7 +4295,8 @@ void TaiCollecGetOutAction::act(Teki&)
  * Address:	8012DFD4
  * Size:	000058
  */
-TaiCollecLegEffectAction::TaiCollecLegEffectAction(f32)
+TaiCollecLegEffectAction::TaiCollecLegEffectAction(f32 p1)
+    : TaiJointEffectAction(p1, 0, 0, 0, 0, 0)
 {
 	/*
 	.loc_0x0:
@@ -4381,6 +4385,7 @@ void TaiCollecLegEffectAction::setType(Vector3f&, int, int)
  * Size:	000088
  */
 TaiHollecParameters::TaiHollecParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -4427,6 +4432,7 @@ TaiHollecParameters::TaiHollecParameters()
  * Size:	0000C4
  */
 TaiHollecStrategy::TaiHollecStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -4644,7 +4650,7 @@ void TaiDependenceAction::finish(Teki&)
  * Address:	8012E3AC
  * Size:	000070
  */
-void TaiDependenceAction::act(Teki&)
+bool TaiDependenceAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4688,7 +4694,7 @@ void TaiDependenceAction::act(Teki&)
  * Address:	8012E41C
  * Size:	000070
  */
-void TaiDependenceAction::actByEvent(TekiEvent&)
+bool TaiDependenceAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:

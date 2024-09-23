@@ -97,6 +97,25 @@ struct TaiNotAction : public TaiAction {
 /**
  * @brief TODO
  */
+struct TaiDependenceAction : public TaiAction {
+	inline TaiDependenceAction() // TODO: this is a guess
+	    : TaiAction(0)
+	{
+	}
+
+	virtual void start(Teki&);           // _08
+	virtual void finish(Teki&);          // _0C
+	virtual bool act(Teki&);             // _10
+	virtual bool actByEvent(TekiEvent&); // _14
+
+	// _04 = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
 struct TaiState {
 	TaiState(int count);
 

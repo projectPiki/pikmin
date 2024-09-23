@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Shell.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TaiShellSoundTable::TaiShellSoundTable()
  * Size:	00018C
  */
 TaiShellParameters::TaiShellParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -188,6 +189,7 @@ TaiShellParameters::TaiShellParameters()
  * Size:	0004F4
  */
 TaiShellStrategy::TaiShellStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -818,7 +820,7 @@ void TaiShellStrategy::draw(Teki&, Graphics&)
  * Address:	80142A24
  * Size:	000038
  */
-void TaiShellSetPositionAction::act(Teki&)
+bool TaiShellSetPositionAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -890,7 +892,7 @@ void TaiShellSetPositionAction::setPosition(Teki&, Creature*)
  * Address:	80142AD4
  * Size:	0001A8
  */
-void TaiShellSaveItemPositionAction::act(Teki&)
+bool TaiShellSaveItemPositionAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1060,7 +1062,7 @@ void TaiShellSaveItemPositionAction::setPosition(Teki&, Creature*)
  * Address:	80142CF4
  * Size:	000104
  */
-void TaiShellNaviPikiInsideAction::act(Teki&)
+bool TaiShellNaviPikiInsideAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1137,7 +1139,7 @@ void TaiShellNaviPikiInsideAction::act(Teki&)
  * Address:	80142DF8
  * Size:	0001D0
  */
-void TaiShellEatAction::act(Teki&)
+bool TaiShellEatAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1317,6 +1319,7 @@ TaiPearlSoundTable::TaiPearlSoundTable()
  * Size:	000148
  */
 TaiPearlParameters::TaiPearlParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1411,6 +1414,7 @@ TaiPearlParameters::TaiPearlParameters()
  * Size:	00014C
  */
 TaiRocpearlParameters::TaiRocpearlParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1506,6 +1510,7 @@ TaiRocpearlParameters::TaiRocpearlParameters()
  * Size:	00036C
  */
 TaiPearlStrategy::TaiPearlStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:

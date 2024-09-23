@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Kinoko.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TaiKinokoSoundTable::TaiKinokoSoundTable()
  * Size:	000518
  */
 TaiKinokoParameters::TaiKinokoParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -415,6 +416,7 @@ TaiKinokoParameters::TaiKinokoParameters()
  * Size:	001298
  */
 TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -2052,7 +2054,7 @@ void TaiKinokoTurningOverAction::start(Teki&)
  * Address:	801317CC
  * Size:	000054
  */
-void TaiKinokoChargingSporesAction::act(Teki&)
+bool TaiKinokoChargingSporesAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2094,7 +2096,7 @@ void TaiKinokoDischargingSporesAction::start(Teki&) { }
  * Address:	80131824
  * Size:	000160
  */
-void TaiKinokoDischargingSporesAction::act(Teki&)
+bool TaiKinokoDischargingSporesAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2198,7 +2200,7 @@ void TaiKinokoDischargingSporesAction::act(Teki&)
  * Address:	80131984
  * Size:	0003D0
  */
-void TaiKinokoTerritoryRunningAwayAction::act(Teki&)
+bool TaiKinokoTerritoryRunningAwayAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2476,7 +2478,8 @@ void TaiKinokoTerritoryRunningAwayAction::act(Teki&)
  * Address:	80131D54
  * Size:	000058
  */
-TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(f32)
+TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(f32 p1)
+    : TaiJointEffectAction(p1, 0, 0, 0, 0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -2620,7 +2623,7 @@ void TaiNotAction::finish(Teki&)
  * Address:	80131EBC
  * Size:	00003C
  */
-void TaiNotAction::act(Teki&)
+bool TaiNotAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

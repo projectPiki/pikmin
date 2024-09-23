@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Iwagen.h"
 
 /*
  * --INFO--
@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	000108
  */
 TaiIwagonParameters::TaiIwagonParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -155,6 +156,7 @@ TaiIwagonSoundTable::TaiIwagonSoundTable()
  * Size:	0004C0
  */
 TaiIwagonStrategy::TaiIwagonStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -589,7 +591,7 @@ void TaiIwagonStrategy::start(Teki&)
  * Address:	8012EE28
  * Size:	000070
  */
-void TaiIwagonDustEffectAction::act(Teki&)
+bool TaiIwagonDustEffectAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -654,7 +656,7 @@ void TaiIwagonRollingAction::start(Teki&)
  * Address:	8012EEB4
  * Size:	000020
  */
-void TaiIwagonRollingAction::act(Teki&)
+bool TaiIwagonRollingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -675,6 +677,7 @@ void TaiIwagonRollingAction::act(Teki&)
  * Size:	000118
  */
 TaiIwagenParameters::TaiIwagenParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -757,6 +760,7 @@ TaiIwagenParameters::TaiIwagenParameters()
  * Size:	000210
  */
 TaiIwagenStrategy::TaiIwagenStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1034,7 +1038,7 @@ void TaiIwagenShootingAction::start(Teki&)
  * Address:	8012F334
  * Size:	000198
  */
-void TaiIwagenShootingAction::act(Teki&)
+bool TaiIwagenShootingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/JudgementActions.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	8012F4CC
  * Size:	000050
  */
-void TaiVisibleTargetAction::act(Teki&)
+bool TaiVisibleTargetAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -63,7 +63,7 @@ void TaiVisibleTargetAction::act(Teki&)
  * Address:	8012F51C
  * Size:	000050
  */
-void TaiContactTargetAction::act(Teki&)
+bool TaiContactTargetAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -101,7 +101,7 @@ void TaiContactTargetAction::act(Teki&)
  * Address:	8012F56C
  * Size:	000050
  */
-void TaiSeparateTargetAction::act(Teki&)
+bool TaiSeparateTargetAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -139,7 +139,7 @@ void TaiSeparateTargetAction::act(Teki&)
  * Address:	8012F5BC
  * Size:	000074
  */
-void TaiTargetLostAction::act(Teki&)
+bool TaiTargetLostAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -188,7 +188,7 @@ void TaiTargetLostAction::act(Teki&)
  * Address:	8012F630
  * Size:	0000BC
  */
-void TaiOutsideTerritoryAction::act(Teki&)
+bool TaiOutsideTerritoryAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -247,7 +247,7 @@ void TaiOutsideTerritoryAction::act(Teki&)
  * Address:	8012F6EC
  * Size:	0000C0
  */
-void TaiInsideTerritoryAction::act(Teki&)
+bool TaiInsideTerritoryAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -307,7 +307,7 @@ void TaiInsideTerritoryAction::act(Teki&)
  * Address:	8012F7AC
  * Size:	0000AC
  */
-void TaiTargetVisibleNaviPikiAction::act(Teki&)
+bool TaiTargetVisibleNaviPikiAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -370,7 +370,7 @@ void TaiTargetVisibleNaviPikiAction::act(Teki&)
  * Address:	8012F858
  * Size:	0000F0
  */
-void TaiTargetVisibleNaviAction::act(Teki&)
+bool TaiTargetVisibleNaviAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -450,7 +450,7 @@ void TaiTargetVisibleNaviAction::act(Teki&)
  * Address:	8012F948
  * Size:	000128
  */
-void TaiHasStickersInMouthAction::act(Teki&)
+bool TaiHasStickersInMouthAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -556,7 +556,7 @@ void TaiHasStickersInMouthAction::act(Teki&)
  * Address:	8012FA70
  * Size:	000128
  */
-void TaiHasStickersOnBodyAction::act(Teki&)
+bool TaiHasStickersOnBodyAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

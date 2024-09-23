@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Mizinko.h"
 
 /*
  * --INFO--
@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	0000B0
  */
 TaiMizigenParameters::TaiMizigenParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -82,6 +83,7 @@ TaiMizigenParameters::TaiMizigenParameters()
  * Size:	00017C
  */
 TaiMizigenStrategy::TaiMizigenStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -350,14 +352,14 @@ void TaiMizigenGeneratingAction::start(Teki&)
  * Address:	80132380
  * Size:	000008
  */
-u32 TaiMizigenGeneratingAction::act(Teki&) { return 0x1; }
+bool TaiMizigenGeneratingAction::act(Teki&) { return true; }
 
 /*
  * --INFO--
  * Address:	80132388
  * Size:	0000B8
  */
-void TaiMizigenNaviApprouchAction::act(Teki&)
+bool TaiMizigenNaviApprouchAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -422,6 +424,7 @@ void TaiMizigenNaviApprouchAction::act(Teki&)
  * Size:	000380
  */
 TaiMizinkoParameters::TaiMizinkoParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -709,6 +712,7 @@ TaiMizinkoSoundTable::TaiMizinkoSoundTable()
  * Size:	0008B4
  */
 TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1480,7 +1484,7 @@ void TaiMizinkoStrategy::draw(Teki&, Graphics&)
  * Address:	801332AC
  * Size:	000014
  */
-void TaiMizinkoStrategy::hasWater(Teki&)
+bool TaiMizinkoStrategy::hasWater(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1497,7 +1501,7 @@ void TaiMizinkoStrategy::hasWater(Teki&)
  * Address:	801332C0
  * Size:	00007C
  */
-void TaiMizinkoCryTimerAction::act(Teki&)
+bool TaiMizinkoCryTimerAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1574,7 +1578,7 @@ void TaiMizinkoMovingTimerAction::start(Teki&)
  * Address:	8013338C
  * Size:	000088
  */
-void TaiMizinkoFadingAction::act(Teki&)
+bool TaiMizinkoFadingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2224,7 +2228,7 @@ void TaiMizinkoComingAction::start(Teki&)
  * Address:	80133CF4
  * Size:	000104
  */
-void TaiMizinkoDropWaterAction::act(Teki&)
+bool TaiMizinkoDropWaterAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

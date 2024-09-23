@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/WaitActions.h"
 
 /*
  * --INFO--
@@ -65,7 +65,7 @@ void TaiWaitTurningAction::start(Teki&)
  * Address:	80143B0C
  * Size:	0000E4
  */
-void TaiWaitTurningAction::act(Teki&)
+bool TaiWaitTurningAction::act(Teki&)
 {
 	/*
 	.loc_0x0:

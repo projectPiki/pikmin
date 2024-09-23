@@ -90,6 +90,8 @@ struct StdSystem {
 	void findAnyAnimation(char*);
 	void findIndexAnimation(char*, int);
 
+	f32 getRand(f32);
+
 	static char* stringDup(char*);
 
 	bool mPending;                 // _00

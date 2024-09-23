@@ -46,8 +46,8 @@ PeveCondition::PeveCondition()
 PeveEvent::PeveEvent(int count)
     : NNode(count)
 {
-	mCondition = nullptr;
-	_0C        = 0;
+	mCondition    = nullptr;
+	mEventOptions = 0;
 }
 
 /*

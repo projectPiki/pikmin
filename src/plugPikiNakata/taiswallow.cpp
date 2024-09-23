@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Swallow.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TaiSwallowSoundTable::TaiSwallowSoundTable()
  * Size:	000448
  */
 TaiSwallowParameters::TaiSwallowParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -363,6 +364,7 @@ TaiSwallowParameters::TaiSwallowParameters()
  * Size:	00043C
  */
 TaiBlackSwallowParameters::TaiBlackSwallowParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -646,6 +648,7 @@ TaiBlackSwallowParameters::TaiBlackSwallowParameters()
  * Size:	0016EC
  */
 TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters*)
+    : TaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -2472,7 +2475,7 @@ void TaiSwallowStrategy::interact(Teki&, TekiInteractionKey&)
  * Address:	801415A0
  * Size:	000024
  */
-void TaiSwallowStrategy::isSleeping(Teki&)
+bool TaiSwallowStrategy::isSleeping(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2518,7 +2521,7 @@ void TaiSwallowStrategy::drawDebugInfo(Teki&, Graphics&)
  * Address:	801415F8
  * Size:	00001C
  */
-void TaiSwallowReceiveMessageAction::actByEvent(TekiEvent&)
+bool TaiSwallowReceiveMessageAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -2539,7 +2542,7 @@ void TaiSwallowReceiveMessageAction::actByEvent(TekiEvent&)
  * Address:	80141614
  * Size:	0001DC
  */
-void TaiSwallowTurningAction::act(Teki&)
+bool TaiSwallowTurningAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2732,7 +2735,7 @@ void TaiSwallowFlickingAction::finish(Teki&)
  * Address:	80141868
  * Size:	00007C
  */
-void TaiSwallowFlickingAction::act(Teki&)
+bool TaiSwallowFlickingAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2914,7 +2917,7 @@ void TaiSwallowFlickingAction::flick(Teki&)
  * Address:	80141AC0
  * Size:	0001F0
  */
-void TaiSwallowSwallowingFlickAction::act(Teki&)
+bool TaiSwallowSwallowingFlickAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3096,7 +3099,7 @@ void TaiSwallowSnoreAction::finish(Teki&)
  * Address:	80141D00
  * Size:	0000C4
  */
-void TaiSwallowNoticeAction::act(Teki&)
+bool TaiSwallowNoticeAction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3165,7 +3168,8 @@ void TaiSwallowNoticeAction::act(Teki&)
  * Address:	80141DC4
  * Size:	000058
  */
-TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(f32)
+TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(f32 p1)
+    : TaiJointEffectAction(p1, 0, 0, 0, 0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -3266,7 +3270,8 @@ void TaiSwallowLegEffectAction::setType(Vector3f&, int, int)
  * Address:	80141EE0
  * Size:	000054
  */
-TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(f32)
+TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(f32 p1)
+    : TaiJointEffectAction(p1, 0, 0, 0, 0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
