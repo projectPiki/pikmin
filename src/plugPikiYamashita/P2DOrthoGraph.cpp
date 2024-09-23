@@ -1,4 +1,4 @@
-#include "types.h"
+#include "P2D/Graph.h"
 
 /*
  * --INFO--
@@ -6,6 +6,7 @@
  * Size:	000088
  */
 P2DOrthoGraph::P2DOrthoGraph()
+    : P2DGrafContext(0, 0, 0, 0) // TODO: fix later
 {
 	// UNUSED FUNCTION
 }
@@ -15,7 +16,8 @@ P2DOrthoGraph::P2DOrthoGraph()
  * Address:	........
  * Size:	0000C8
  */
-P2DOrthoGraph::P2DOrthoGraph(const PUTRect&)
+P2DOrthoGraph::P2DOrthoGraph(const PUTRect& rect)
+    : P2DGrafContext(rect)
 {
 	// UNUSED FUNCTION
 }
@@ -25,7 +27,8 @@ P2DOrthoGraph::P2DOrthoGraph(const PUTRect&)
  * Address:	801AFCF0
  * Size:	0000C4
  */
-P2DOrthoGraph::P2DOrthoGraph(int, int, int, int)
+P2DOrthoGraph::P2DOrthoGraph(int p1, int p2, int p3, int p4)
+    : P2DGrafContext(p1, p2, p3, p4) // TODO: fix later
 {
 	/*
 	.loc_0x0:

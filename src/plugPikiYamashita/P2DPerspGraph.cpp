@@ -1,4 +1,4 @@
-#include "types.h"
+#include "P2D/Graph.h"
 
 /*
  * --INFO--
@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	000054
  */
 P2DPerspGraph::P2DPerspGraph()
+    : P2DGrafContext(0, 0, 0, 0) // TODO: fix later
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +36,8 @@ P2DPerspGraph::P2DPerspGraph()
  * Address:	........
  * Size:	000084
  */
-P2DPerspGraph::P2DPerspGraph(const PUTRect&, f32, f32, f32)
+P2DPerspGraph::P2DPerspGraph(const PUTRect& rect, f32, f32, f32)
+    : P2DGrafContext(rect) // TODO: fix later
 {
 	// UNUSED FUNCTION
 }
@@ -45,7 +47,8 @@ P2DPerspGraph::P2DPerspGraph(const PUTRect&, f32, f32, f32)
  * Address:	801B0190
  * Size:	000084
  */
-P2DPerspGraph::P2DPerspGraph(int, int, int, int, f32, f32, f32)
+P2DPerspGraph::P2DPerspGraph(int p1, int p2, int p3, int p4, f32, f32, f32)
+    : P2DGrafContext(p1, p2, p3, p4) // TODO: fix later
 {
 	/*
 	.loc_0x0:

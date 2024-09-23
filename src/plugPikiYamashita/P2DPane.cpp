@@ -1,4 +1,6 @@
-#include "types.h"
+#include "P2D/Pane.h"
+#include "PSU/LinkList.h"
+#include "PSU/Tree.h"
 
 /*
  * --INFO--
@@ -25,10 +27,10 @@ static void _Print(char*, ...)
  * Address:	801B069C
  * Size:	000008
  */
-void P2DPane::setCallBack(P2DPaneCallBack* a1)
+void P2DPane::setCallBack(P2DPaneCallBack* callback)
 {
 	// Generated from stw r4, 0x4(r3)
-	_04 = a1;
+	mCallBack = callback;
 }
 
 /*
@@ -358,7 +360,7 @@ P2DPane::P2DPane()
  * Address:	........
  * Size:	000074
  */
-void PSUTree<P2DPane>::~PSUTree()
+PSUTree<P2DPane>::~PSUTree()
 {
 	// UNUSED FUNCTION
 }
@@ -368,7 +370,7 @@ void PSUTree<P2DPane>::~PSUTree()
  * Address:	........
  * Size:	000058
  */
-void PSULink<P2DPane>::~PSULink()
+PSULink<P2DPane>::~PSULink()
 {
 	// UNUSED FUNCTION
 }
@@ -378,7 +380,7 @@ void PSULink<P2DPane>::~PSULink()
  * Address:	........
  * Size:	000058
  */
-void PSUList<P2DPane>::~PSUList()
+PSUList<P2DPane>::~PSUList()
 {
 	// UNUSED FUNCTION
 }

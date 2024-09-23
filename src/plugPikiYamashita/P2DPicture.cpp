@@ -1,4 +1,6 @@
-#include "types.h"
+#include "P2D/Picture.h"
+#include "P2D/Stream.h"
+#include "P2D/Util.h"
 
 /*
  * --INFO--

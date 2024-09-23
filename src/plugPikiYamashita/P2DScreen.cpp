@@ -1,4 +1,4 @@
-#include "types.h"
+#include "P2D/Screen.h"
 
 /*
  * --INFO--
@@ -334,7 +334,10 @@ void P2DScreen::makeHiearachyPanes(P2DPane*, RandomAccessStream*, bool, bool)
  * Address:	801B2ECC
  * Size:	000008
  */
-u32 P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*) { return 0x0; }
+void P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
+{
+	// return 0x0;
+}
 
 /*
  * --INFO--

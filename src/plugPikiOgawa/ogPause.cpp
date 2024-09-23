@@ -1,4 +1,5 @@
-#include "types.h"
+#include "zen/ogPause.h"
+#include "P2D/Graph.h"
 
 /*
  * --INFO--

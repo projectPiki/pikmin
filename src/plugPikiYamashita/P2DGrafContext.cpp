@@ -1,4 +1,5 @@
-#include "types.h"
+#include "P2D/Graph.h"
+#include "PUT/Geometry.h"
 
 /*
  * --INFO--
