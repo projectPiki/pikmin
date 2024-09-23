@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Mizu.h"
 
 /*
  * --INFO--
@@ -903,7 +903,7 @@ void MizuAi::update()
  * Address:	8017C218
  * Size:	0000B0
  */
-void MizuGenSpringPuffCallBack::invoke(zen::particleGenerator*)
+bool MizuGenSpringPuffCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:

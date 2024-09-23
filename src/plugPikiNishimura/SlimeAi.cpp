@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Slime.h"
 
 /*
  * --INFO--
@@ -6862,30 +6862,5 @@ void SlimeAi::update()
 	  blr
 
 	.loc_0x2D88:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8016A5FC
- * Size:	000034
- */
-void operator+(const Vector3f&, const Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x0(r4)
-	  lfs       f0, 0x0(r5)
-	  lfs       f3, 0x4(r4)
-	  lfs       f2, 0x4(r5)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r4)
-	  lfs       f1, 0x8(r5)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x0(r3)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x4(r3)
-	  stfs      f0, 0x8(r3)
-	  blr
 	*/
 }

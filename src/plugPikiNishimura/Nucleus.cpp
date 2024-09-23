@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Nucleus.h"
 
 /*
  * --INFO--
@@ -73,7 +73,8 @@ NucleusProp::NucleusProp()
  * Address:	8017A23C
  * Size:	000084
  */
-Nucleus::Nucleus(CreatureProp*)
+Nucleus::Nucleus(CreatureProp* props)
+    : Boss(props)
 {
 	/*
 	.loc_0x0:
@@ -122,7 +123,7 @@ Nucleus::Nucleus(CreatureProp*)
  * Address:	8017A2C0
  * Size:	000008
  */
-void Nucleus::getiMass()
+f32 Nucleus::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -357,51 +358,5 @@ void Nucleus::doAnimation()
 	  addi      r1, r1, 0x8
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8017A4EC
- * Size:	000050
- */
-void NucleusProp::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x11B970
-	  addi      r3, r30, 0x58
-	  addi      r4, r31, 0
-	  bl        -0x11B97C
-	  addi      r3, r30, 0x200
-	  addi      r4, r31, 0
-	  bl        -0x11B988
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8017A53C
- * Size:	000008
- */
-void NucleusProp::@492 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1EC
-	  b         -0x54
 	*/
 }

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "King.h"
 
 /*
  * --INFO--
@@ -73,7 +73,8 @@ KingBackProp::KingBackProp()
  * Address:	80179E98
  * Size:	00006C
  */
-KingBack::KingBack(CreatureProp*)
+KingBack::KingBack(CreatureProp* props)
+    : Boss(props)
 {
 	/*
 	.loc_0x0:
@@ -114,7 +115,7 @@ KingBack::KingBack(CreatureProp*)
  * Address:	80179F04
  * Size:	000008
  */
-void KingBack::getiMass()
+f32 KingBack::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -390,19 +391,5 @@ void KingBackProp::read(RandomAccessStream&)
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8017A1A4
- * Size:	000008
- */
-void KingBackProp::@492 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1EC
-	  b         -0x54
 	*/
 }

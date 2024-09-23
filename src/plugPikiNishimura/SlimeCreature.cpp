@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Slime.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	8016B278
  * Size:	000078
  */
-SlimeCreature::SlimeCreature(CreatureProp*)
+SlimeCreature::SlimeCreature(CreatureProp* props)
+    : Creature(props)
 {
 	/*
 	.loc_0x0:
@@ -111,7 +112,7 @@ void SlimeCreature::init(Vector3f&, Slime*)
  * Address:	8016B370
  * Size:	000008
  */
-void SlimeCreature::getSize()
+f32 SlimeCreature::getSize()
 {
 	/*
 	.loc_0x0:
@@ -125,7 +126,7 @@ void SlimeCreature::getSize()
  * Address:	8016B378
  * Size:	000008
  */
-void SlimeCreature::getiMass()
+f32 SlimeCreature::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -179,7 +180,7 @@ void SlimeCreature::doKill()
  * Address:	8016B3C0
  * Size:	000030
  */
-void SlimeCreature::isAlive()
+bool SlimeCreature::isAlive()
 {
 	/*
 	.loc_0x0:
@@ -203,7 +204,7 @@ void SlimeCreature::isAlive()
  * Address:	8016B3F0
  * Size:	000030
  */
-void SlimeCreature::isAtari()
+bool SlimeCreature::isAtari()
 {
 	/*
 	.loc_0x0:
@@ -227,7 +228,7 @@ void SlimeCreature::isAtari()
  * Address:	8016B420
  * Size:	000020
  */
-void SlimeCreature::ignoreAtari(Creature*)
+bool SlimeCreature::ignoreAtari(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -308,8 +309,4 @@ void SlimeCreature::setCentre(Vector3f&) { return; }
  * Address:	8016B49C
  * Size:	000008
  */
-BOOL SlimeCreature::isFixed()
-{
-	return TRUE;
-	return 0x1;
-}
+bool SlimeCreature::isFixed() { return TRUE; }

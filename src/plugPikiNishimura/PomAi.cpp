@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Pom.h"
 
 /*
  * --INFO--
@@ -2290,7 +2290,7 @@ void PomAi::update()
  * Address:	80179DE4
  * Size:	000024
  */
-void PomGenOpenStarCallBack::invoke(zen::particleGenerator*)
+bool PomGenOpenStarCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:

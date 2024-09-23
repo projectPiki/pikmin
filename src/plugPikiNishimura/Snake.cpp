@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Snake.h"
 
 /*
  * --INFO--
@@ -609,7 +609,8 @@ SnakeProp::SnakeProp()
  * Address:	8015ABB4
  * Size:	000104
  */
-Snake::Snake(CreatureProp*)
+Snake::Snake(CreatureProp* props)
+    : Boss(props)
 {
 	/*
 	.loc_0x0:
@@ -697,7 +698,7 @@ Snake::Snake(CreatureProp*)
 void Snake::setBossType(bool a1)
 {
 	// Generated from stb r4, 0x3BC(r3)
-	_3BC = a1;
+	// _3BC = a1;
 }
 
 /*
@@ -705,7 +706,7 @@ void Snake::setBossType(bool a1)
  * Address:	8015ACC0
  * Size:	00000C
  */
-void Snake::getCentreSize()
+f32 Snake::getCentreSize()
 {
 	/*
 	.loc_0x0:
@@ -720,7 +721,7 @@ void Snake::getCentreSize()
  * Address:	8015ACCC
  * Size:	000008
  */
-void Snake::getiMass()
+f32 Snake::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -1165,51 +1166,5 @@ void Snake::BoundSphereUpdater::getSize()
 	  addi      r1, r1, 0x40
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8015B198
- * Size:	000050
- */
-void SnakeProp::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0xFC61C
-	  addi      r3, r30, 0x58
-	  addi      r4, r31, 0
-	  bl        -0xFC628
-	  addi      r3, r30, 0x200
-	  addi      r4, r31, 0
-	  bl        -0xFC634
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8015B1E8
- * Size:	000008
- */
-void SnakeProp::@492 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1EC
-	  b         -0x54
 	*/
 }

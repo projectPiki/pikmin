@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Snake.h"
 
 /*
  * --INFO--
@@ -4298,7 +4298,7 @@ void SnakeBody::refresh(BossShapeObject*, Graphics&)
  * Address:	8016367C
  * Size:	000064
  */
-void SnakeGenBodyRotateCallBack::invoke(zen::particleGenerator*)
+bool SnakeGenBodyRotateCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
@@ -4343,7 +4343,7 @@ void SnakeGenBodyRotateCallBack::invoke(zen::particleGenerator*)
  * Address:	801636E0
  * Size:	000034
  */
-void SnakeGenBodyOnGroundCallBack::invoke(zen::particleGenerator*)
+bool SnakeGenBodyOnGroundCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:

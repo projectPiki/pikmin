@@ -1,4 +1,4 @@
-#include "types.h"
+#include "CoreNucleus.h"
 
 /*
  * --INFO--
@@ -222,7 +222,7 @@ void CoreNucleusAi::playSound(int) { }
 void CoreNucleusAi::setHitMotionStart()
 {
 	// Generated from stb r0, 0x4(r3)
-	_04 = 1;
+	// _04 = 1;
 }
 
 /*

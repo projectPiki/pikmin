@@ -3,6 +3,8 @@
 
 #include "types.h"
 #include "Boss.h"
+#include "zen/Callback.h"
+#include "zen/Particle.h"
 
 /**
  * @brief TODO.
@@ -108,12 +110,12 @@ struct KingProp : public BossProp, public CoreNode {
 
 	KingProp();
 
-	virtual void read(RandomAccessStream& input)
+	virtual void read(RandomAccessStream& input) // _08
 	{
 		mCreatureProps.Parameters::read(input);
 		mBossProps.Parameters::read(input);
 		mKingProps.Parameters::read(input);
-	}; // _08
+	};
 
 	// _54       = VTBL 1
 	// _1EC      = VTBL 2
@@ -227,7 +229,7 @@ struct KingDrawer : public Node {
 	virtual void draw(Graphics&); // _14
 
 	// _00     = VTBL
-	// _00-_1C = Node
+	// _00-_20 = Node
 	// TODO: members
 };
 
@@ -348,6 +350,76 @@ struct KingAi : public PaniAnimKeyListener {
 	Vector3f _2C; // _2C
 	Vector3f _38; // _38
 	Vector3f _44; // _44
+};
+
+/**
+ * @brief TODO
+ */
+struct KingGenDamageStarCallBack : public zen::CallBack1<zen::particleGenerator*> {
+	virtual bool invoke(zen::particleGenerator*); // _08
+
+	// _00     = VTBL?
+	// _00-_04 = zen::CallBack1?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct KingGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
+	KingGenRippleCallBack();
+
+	virtual bool invoke(zen::particleGenerator*); // _08
+
+	// _00     = VTBL?
+	// _00-_04 = zen::CallBack1?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
+	KingGenSalivaCallBack();
+
+	virtual bool invoke(zen::particleGenerator*); // _08
+
+	// _00     = VTBL?
+	// _00-_04 = zen::CallBack1?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct KingGenSalivaParticleCallBack : public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
+	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _08
+
+	// _00     = VTBL?
+	// _00-_04 = zen::CallBack2?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct KingGenSpitPartsParticleCallBack : public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
+	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _08
+
+	// _00     = VTBL?
+	// _00-_04 = zen::CallBack2?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct KingGenSpreadSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
+	virtual bool invoke(zen::particleGenerator*); // _08
+
+	// _00     = VTBL?
+	// _00-_04 = zen::CallBack1?
+	// TODO: members
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Snake.h"
 
 /*
  * --INFO--
@@ -4314,20 +4314,6 @@ void SnakeAi::initAppear(int)
 	  blr
 
 	.loc_0x5C8:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8015E6B4
- * Size:	000008
- */
-void Parm<f32>::operator()()
-{
-	/*
-	.loc_0x0:
-	  addi      r3, r3, 0xC
-	  blr
 	*/
 }
 

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Mizu.h"
 
 /*
  * --INFO--
@@ -73,7 +73,8 @@ MizuProp::MizuProp()
  * Address:	8017B464
  * Size:	000084
  */
-Mizu::Mizu(CreatureProp*)
+Mizu::Mizu(CreatureProp* props)
+    : Boss(props)
 {
 	/*
 	.loc_0x0:
@@ -122,7 +123,7 @@ Mizu::Mizu(CreatureProp*)
  * Address:	8017B4E8
  * Size:	00005C
  */
-void Mizu::attackDefaultPortion()
+bool Mizu::attackDefaultPortion()
 {
 	/*
 	.loc_0x0:
@@ -157,7 +158,7 @@ void Mizu::attackDefaultPortion()
  * Address:	8017B544
  * Size:	000008
  */
-void Mizu::getiMass()
+f32 Mizu::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -452,57 +453,11 @@ void Mizu::doAnimation()
  * Address:	8017B7F8
  * Size:	000008
  */
-void Mizu::isVisible()
+bool Mizu::isVisible()
 {
 	/*
 	.loc_0x0:
 	  lbz       r3, 0x3B9(r3)
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8017B800
- * Size:	000050
- */
-void MizuProp::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x11CC84
-	  addi      r3, r30, 0x58
-	  addi      r4, r31, 0
-	  bl        -0x11CC90
-	  addi      r3, r30, 0x200
-	  addi      r4, r31, 0
-	  bl        -0x11CC9C
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8017B850
- * Size:	000008
- */
-void MizuProp::@492 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1EC
-	  b         -0x54
 	*/
 }

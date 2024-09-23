@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Kogane.h"
 
 /*
  * --INFO--
@@ -2532,7 +2532,7 @@ void KoganeAi::update()
  * Address:	80177DB8
  * Size:	000028
  */
-void KoganeGenRippleCallBack::invoke(zen::particleGenerator*)
+bool KoganeGenRippleCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:

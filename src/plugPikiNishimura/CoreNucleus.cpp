@@ -1,4 +1,4 @@
-#include "types.h"
+#include "CoreNucleus.h"
 
 /*
  * --INFO--
@@ -73,7 +73,8 @@ CoreNucleusProp::CoreNucleusProp()
  * Address:	8017A9E4
  * Size:	000084
  */
-CoreNucleus::CoreNucleus(CreatureProp*)
+CoreNucleus::CoreNucleus(CreatureProp* props)
+    : Boss(props)
 {
 	/*
 	.loc_0x0:
@@ -122,7 +123,7 @@ CoreNucleus::CoreNucleus(CreatureProp*)
  * Address:	8017AA68
  * Size:	000008
  */
-void CoreNucleus::getiMass()
+f32 CoreNucleus::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -393,51 +394,5 @@ void CoreNucleus::collisionCallback(CollEvent&)
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8017ACEC
- * Size:	000050
- */
-void CoreNucleusProp::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x11C170
-	  addi      r3, r30, 0x58
-	  addi      r4, r31, 0
-	  bl        -0x11C17C
-	  addi      r3, r30, 0x200
-	  addi      r4, r31, 0
-	  bl        -0x11C188
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8017AD3C
- * Size:	000008
- */
-void CoreNucleusProp::@492 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1EC
-	  b         -0x54
 	*/
 }

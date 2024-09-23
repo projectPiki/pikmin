@@ -82,6 +82,16 @@ struct SlimeBody {
 	void update();
 	void refresh(BossShapeObject*, Graphics&);
 
+	// unused/inlined:
+	void traceCreaturePosition();
+	void makeCentrePosition();
+	void makeInnerPosition();
+	void makeMaxRadius();
+	void setSpherePosition();
+	void calcVertexScore(Vector3f*, Vector3f*, f32*);
+	void makeSlimeBody();
+	void setJointPosition(BossShapeObject*, Graphics&);
+
 	// TODO: members
 };
 
@@ -109,6 +119,79 @@ struct SlimeCreature : public Creature {
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
+	// TODO: members
+};
+
+/**
+ * @brief TODO.
+ */
+struct SlimeAi {
+	SlimeAi(Slime*);
+
+	void init(Slime*);
+	void addDamagePoint(f32);
+	void calcBubblePiki();
+	void calcStickersRatio();
+	void playExpandingSound();
+	void calcCollisionCheck();
+	void setLeaderNearerTarget();
+	void moveFlagCheck();
+	void makeFollowerVelocity();
+	void makeLeaderVelocity();
+	void setMidPointVelocity();
+	void calcContractDamage();
+	void contractCoreFlickPiki();
+	void contractSubFlickPiki();
+	void inCaseOfContract();
+	void makeTargetRandom();
+	void chaseNaviTransit();
+	void chasePikiTransit();
+	void targetLostTransit();
+	void appearTransit();
+	void initDie(int);
+	void appearState();
+	void update();
+
+	// unused/inlined:
+	void setEveryFrame();
+	void afterProcessing();
+	void setLeaderIndex();
+	void makeInterrelation();
+	void makeBodyThickness();
+	void makeTargetPosition();
+	void walkAllState();
+	void setDieGoal();
+	void setContractGoal();
+	void setExpansionGoal();
+	void setAppearGoal();
+	void bothEndsToGoal();
+	void bothEndsToAppearGoal();
+	void setVelocity(f32);
+	void motionFinishTransit();
+	void dieTransit();
+	void outSideChaseRangeTransit();
+	void inSideWaitRangeTransit();
+	void collisionContractTransit();
+	void dissolutionContractTransit();
+	void finishContractTransit();
+	void finishExpansionTransit();
+	void disAppearTransit();
+	void initWalk(int);
+	void initChase(int);
+	void initContract(int);
+	void initExpansion(int);
+	void initAppear(int);
+	void initDisAppear(int);
+	void dieState();
+	void walkRandomState();
+	void walkGoHomeState();
+	void chaseNaviState();
+	void chasePikiState();
+	void contractState();
+	void expansionState();
+	void stayState();
+	void disAppearState();
+
 	// TODO: members
 };
 

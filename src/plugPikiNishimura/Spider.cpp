@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Spider.h"
 
 /*
  * --INFO--
@@ -663,7 +663,8 @@ SpiderProp::SpiderProp()
  * Address:	8015315C
  * Size:	000140
  */
-Spider::Spider(CreatureProp*)
+Spider::Spider(CreatureProp* props)
+    : Boss(props)
 {
 	/*
 	.loc_0x0:
@@ -763,7 +764,7 @@ Spider::Spider(CreatureProp*)
  * Address:	8015329C
  * Size:	000008
  */
-void Spider::getiMass()
+f32 Spider::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -1236,57 +1237,11 @@ void SpiderDrawer::draw(Graphics&)
  * Address:	801537E0
  * Size:	000008
  */
-void Spider::isBossBgm()
+bool Spider::isBossBgm()
 {
 	/*
 	.loc_0x0:
 	  lbz       r3, 0x3B8(r3)
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801537E8
- * Size:	000050
- */
-void SpiderProp::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0xF4C6C
-	  addi      r3, r30, 0x58
-	  addi      r4, r31, 0
-	  bl        -0xF4C78
-	  addi      r3, r30, 0x200
-	  addi      r4, r31, 0
-	  bl        -0xF4C84
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80153838
- * Size:	000008
- */
-void SpiderProp::@492 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1EC
-	  b         -0x54
 	*/
 }

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "King.h"
 
 /*
  * --INFO--
@@ -2869,7 +2869,7 @@ void KingBody::refresh(BossShapeObject*, Graphics&)
  * Address:	8017538C
  * Size:	00019C
  */
-void KingGenSalivaCallBack::invoke(zen::particleGenerator*)
+bool KingGenSalivaCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
@@ -2992,7 +2992,7 @@ void KingGenSalivaCallBack::invoke(zen::particleGenerator*)
  * Address:	80175528
  * Size:	000080
  */
-void KingGenRippleCallBack::invoke(zen::particleGenerator*)
+bool KingGenRippleCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
@@ -3040,7 +3040,7 @@ void KingGenRippleCallBack::invoke(zen::particleGenerator*)
  * Address:	801755A8
  * Size:	0001AC
  */
-void KingGenSpitPartsParticleCallBack::invoke(zen::particleGenerator*, zen::particleMdl*)
+bool KingGenSpitPartsParticleCallBack::invoke(zen::particleGenerator*, zen::particleMdl*)
 {
 	/*
 	.loc_0x0:
@@ -3199,7 +3199,7 @@ void zen::zenList::remove()
  * Address:	8017578C
  * Size:	00002C
  */
-void KingGenDamageStarCallBack::invoke(zen::particleGenerator*)
+bool KingGenDamageStarCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
@@ -3224,7 +3224,7 @@ void KingGenDamageStarCallBack::invoke(zen::particleGenerator*)
  * Address:	801757B8
  * Size:	000200
  */
-void KingGenSalivaParticleCallBack::invoke(zen::particleGenerator*, zen::particleMdl*)
+bool KingGenSalivaParticleCallBack::invoke(zen::particleGenerator*, zen::particleMdl*)
 {
 	/*
 	.loc_0x0:
@@ -3368,7 +3368,7 @@ void KingGenSalivaParticleCallBack::invoke(zen::particleGenerator*, zen::particl
  * Address:	801759B8
  * Size:	000078
  */
-void KingGenSpreadSalivaCallBack::invoke(zen::particleGenerator*)
+bool KingGenSpreadSalivaCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:

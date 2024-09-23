@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Spider.h"
 
 /*
  * --INFO--
@@ -5770,7 +5770,7 @@ void SpiderLeg::refresh(BossShapeObject*, Graphics&)
  * Address:	8015A0FC
  * Size:	00003C
  */
-void SpiderGenHalfDeadCallBackJoint::invoke(zen::particleGenerator*)
+bool SpiderGenHalfDeadCallBackJoint::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
@@ -5801,7 +5801,7 @@ void SpiderGenHalfDeadCallBackJoint::invoke(zen::particleGenerator*)
  * Address:	8015A138
  * Size:	000168
  */
-void SpiderGenPerishCallBack::invoke(zen::particleGenerator*)
+bool SpiderGenPerishCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
@@ -5907,7 +5907,7 @@ void SpiderGenPerishCallBack::invoke(zen::particleGenerator*)
  * Address:	8015A2A0
  * Size:	000024
  */
-void SpiderGenRippleCallBack::invoke(zen::particleGenerator*)
+bool SpiderGenRippleCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:

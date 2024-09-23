@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Kogane.h"
 
 /*
  * --INFO--
@@ -241,7 +241,8 @@ KoganeProp::KoganeProp()
  * Address:	80175D60
  * Size:	000084
  */
-Kogane::Kogane(CreatureProp*)
+Kogane::Kogane(CreatureProp* props)
+    : Boss(props)
 {
 	/*
 	.loc_0x0:
@@ -290,7 +291,7 @@ Kogane::Kogane(CreatureProp*)
  * Address:	80175DE4
  * Size:	000008
  */
-void Kogane::getiMass()
+f32 Kogane::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -584,51 +585,5 @@ void Kogane::collisionCallback(CollEvent&)
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801760AC
- * Size:	000050
- */
-void KoganeProp::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x117530
-	  addi      r3, r30, 0x58
-	  addi      r4, r31, 0
-	  bl        -0x11753C
-	  addi      r3, r30, 0x200
-	  addi      r4, r31, 0
-	  bl        -0x117548
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801760FC
- * Size:	000008
- */
-void KoganeProp::@492 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1EC
-	  b         -0x54
 	*/
 }
