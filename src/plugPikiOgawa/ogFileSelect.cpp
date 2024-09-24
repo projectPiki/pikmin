@@ -1,4 +1,5 @@
-#include "types.h"
+#include "zen/ogFileSelect.h"
+#include "MemoryCard.h"
 
 /*
  * --INFO--

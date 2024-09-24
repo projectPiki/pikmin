@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "zen/CallBack.h"
+#include "P2D/Util.h"
 
 struct P2DGrafContext;
 struct P2DPane;
@@ -38,7 +39,7 @@ struct P2DPaneCallBack : public zen::CallBack1<P2DPane*>, public P2DPaneCallBack
 	inline P2DPaneCallBack(); // TODO: make this
 
 	virtual bool invoke(P2DPane*) = 0; // _08
-	virtual void draw(P2DPane*);       // _0C (weak)
+	virtual bool draw(P2DPane*);       // _0C (weak)
 
 	// TODO: members
 };
@@ -73,6 +74,7 @@ struct P2DPane {
 	void draw(int, int, const P2DGrafContext*, bool);
 	void clip(const PUTRect&);
 	void loadChildResource();
+	void rotate(P2DRotateAxis, f32);
 
 	// unused/inlined:
 	void init();
@@ -80,7 +82,7 @@ struct P2DPane {
 
 	// _00 = VTBL
 	P2DPaneCallBack* mCallBack; // _04
-	// TODO: members
+	                            // TODO: members
 };
 
 #endif

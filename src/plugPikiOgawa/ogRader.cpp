@@ -1,4 +1,6 @@
-#include "types.h"
+#include "zen/ogRader.h"
+#include "Vector.h"
+#include "P2D/Pane.h"
 
 /*
  * --INFO--

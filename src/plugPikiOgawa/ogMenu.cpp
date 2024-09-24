@@ -1,4 +1,5 @@
-#include "types.h"
+#include "zen/ogMenu.h"
+#include "P2D/Pane.h"
 
 /*
  * --INFO--

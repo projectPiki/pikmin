@@ -27,6 +27,13 @@ enum P2DWrapmode {
 /**
  * @brief TODO
  */
+enum P2DRotateAxis {
+
+};
+
+/**
+ * @brief TODO
+ */
 enum P2DTextBoxHBinding {
 
 };

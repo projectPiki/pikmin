@@ -1,4 +1,5 @@
 #include "zen/ogSub.h"
+#include "zen/Number.h"
 
 /*
  * --INFO--
@@ -3198,14 +3199,14 @@ void zen::cnvSpecialNumberHyphen(char*)
  * Address:	80180E54
  * Size:	000008
  */
-u32 P2DPaneCallBack::draw(P2DPane*) { return 0x1; }
+bool P2DPaneCallBack::draw(P2DPane*) { return true; }
 
 /*
  * --INFO--
  * Address:	80180E5C
  * Size:	0001F8
  */
-void zen::NumberPicCallBack<int>::invoke(P2DPane*)
+bool zen::NumberPicCallBack<int>::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:

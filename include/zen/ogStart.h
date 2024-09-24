@@ -1,17 +1,27 @@
-#ifndef _ZEN_OGSCRSTARTMGR_H
-#define _ZEN_OGSCRSTARTMGR_H
+#ifndef _ZEN_OGSTART_H
+#define _ZEN_OGSTART_H
 
-/*
+#include "types.h"
+
+struct Controller;
+struct Graphics;
+
+namespace zen {
+
+/**
  * @brief TODO
  */
-namespace zen {
 struct ogScrStartMgr {
 	ogScrStartMgr();
+
 	void start();
 	void stop();
 	void update(Controller*);
 	void draw(Graphics&);
+
+	// TODO: members
 };
+
 } // namespace zen
 
 #endif

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/ogGraph.h"
 
 /*
  * --INFO--
@@ -20,12 +20,14 @@ static void _Print(char*, ...)
 	// UNUSED FUNCTION
 }
 
+namespace zen {
+
 /*
  * --INFO--
  * Address:	80197F28
  * Size:	0000C4
  */
-zen::ogGraphMgr::ogGraphMgr(P2DScreen*)
+ogGraphMgr::ogGraphMgr(P2DScreen*)
 {
 	/*
 	.loc_0x0:
@@ -90,7 +92,7 @@ zen::ogGraphMgr::ogGraphMgr(P2DScreen*)
  * Address:	80197FEC
  * Size:	000304
  */
-void zen::ogGraphMgr::SetDummyLineData()
+void ogGraphMgr::SetDummyLineData()
 {
 	/*
 	.loc_0x0:
@@ -305,7 +307,7 @@ void zen::ogGraphMgr::SetDummyLineData()
  * Address:	801982F0
  * Size:	000320
  */
-void zen::ogGraphMgr::MakeData()
+void ogGraphMgr::MakeData()
 {
 	/*
 	.loc_0x0:
@@ -577,7 +579,7 @@ void zen::ogGraphMgr::MakeData()
  * Address:	80198610
  * Size:	00029C
  */
-void zen::setGraphGX(void*, int, u8)
+static void setGraphGX(void*, int, u8)
 {
 	/*
 	.loc_0x0:
@@ -782,7 +784,7 @@ void zen::setGraphGX(void*, int, u8)
  * Address:	801988AC
  * Size:	0000DC
  */
-void zen::ogGraphMgr::draw(u8)
+void ogGraphMgr::draw(u8)
 {
 	/*
 	.loc_0x0:
@@ -849,3 +851,4 @@ void zen::ogGraphMgr::draw(u8)
 	  blr
 	*/
 }
+} // namespace zen

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/TextColorCallBack.h"
 
 /*
  * --INFO--
@@ -161,7 +161,7 @@ void zen::TextColorCallBack::setTargetColor(Colour&, Colour&, f32)
  * Address:	80198EDC
  * Size:	000538
  */
-void zen::TextColorCallBack::invoke(P2DPane*)
+bool zen::TextColorCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
