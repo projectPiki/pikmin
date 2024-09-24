@@ -13,6 +13,9 @@ namespace zen {
 struct bBoardColourAnimData {
 	void set(u8*);
 
+	// unused/inlined:
+	~bBoardColourAnimData();
+
 	// TODO: members
 };
 

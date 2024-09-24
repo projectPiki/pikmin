@@ -1,4 +1,5 @@
-#include "types.h"
+#include "zen/DrawContainer.h"
+#include "zen/TexAnim.h"
 
 /*
  * --INFO--
@@ -5492,7 +5493,7 @@ void zen::DrawContainer::draw(Graphics&)
  * Address:	801BF194
  * Size:	000108
  */
-void zen::StickCallBack::invoke(P2DPane*)
+bool zen::StickCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -5588,7 +5589,7 @@ void zen::StickCallBack::invoke(P2DPane*)
  * Address:	801BF29C
  * Size:	000178
  */
-void zen::ArrowLRCallBack::invoke(P2DPane*)
+bool zen::ArrowLRCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -5718,7 +5719,7 @@ void zen::ArrowLRCallBack::invoke(P2DPane*)
  * Address:	801BF414
  * Size:	000160
  */
-void zen::ArrowCenterCallBack::invoke(P2DPane*)
+bool zen::ArrowCenterCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:

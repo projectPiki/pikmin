@@ -80,6 +80,9 @@ struct particleChildMdl : public particleMdlBase {
 struct particleMdlManager {
 	void init(u32, u32);
 
+	// unused/inlined:
+	~particleMdlManager();
+
 	// TODO: members
 };
 
@@ -179,6 +182,9 @@ struct particleLoader {
 	void load(char*, bool);
 	void pmFind(char*);
 
+	// unused/inlined:
+	~particleLoader();
+
 	// TODO: members
 };
 
@@ -193,6 +199,7 @@ struct simplePtclManager {
 	// unused/inlined:
 	void create(Texture*, s16, const Vector3f&, const Vector3f&, const Vector3f&, f32, f32, const Colour&, const Colour&,
 	            zen::CallBack1<zen::particleMdl*>*);
+	~simplePtclManager();
 
 	// TODO: members
 };

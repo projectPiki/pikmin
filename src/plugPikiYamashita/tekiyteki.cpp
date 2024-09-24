@@ -1,5 +1,6 @@
 #include "types.h"
 #include "teki.h"
+#include "TAI/EffectAttack.h"
 
 /*
  * --INFO--
@@ -289,7 +290,7 @@ void YTeki::exitCourse()
  * Address:	801A2A48
  * Size:	000080
  */
-void YTeki::isNaviWatch()
+bool YTeki::isNaviWatch()
 {
 	/*
 	.loc_0x0:
@@ -865,28 +866,28 @@ void YTeki::startNewMotion(int)
  * Address:	801A30C8
  * Size:	000008
  */
-u32 TAIeffectAttackEventCallBack::hitCreature(zen::particleGenerator*, TAIeffectAttackParam*, Creature*, Vector3f) { return 0x0; }
+bool TAIeffectAttackEventCallBack::hitCreature(zen::particleGenerator*, TAIeffectAttackParam*, Creature*, Vector3f) { return false; }
 
 /*
  * --INFO--
  * Address:	801A30D0
  * Size:	000008
  */
-u32 TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam*, Creature*, Vector3f) { return 0x0; }
+bool TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam*, Creature*, Vector3f) { return false; }
 
 /*
  * --INFO--
  * Address:	801A30D8
  * Size:	000008
  */
-u32 TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam*, Creature*) { return 0x0; }
+bool TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam*, Creature*) { return false; }
 
 /*
  * --INFO--
  * Address:	801A30E0
  * Size:	000008
  */
-u32 TAIeffectAttackEventCallBack::hitMap(TAIeffectAttackParam*) { return 0x0; }
+bool TAIeffectAttackEventCallBack::hitMap(TAIeffectAttackParam*) { return false; }
 
 /*
  * --INFO--
@@ -907,4 +908,4 @@ void TAIeffectAttackEventCallBack::ptclHitMap(zen::particleGenerator*, TAIeffect
  * Address:	801A30F0
  * Size:	000008
  */
-u32 TAIeffectAttackEventCallBack::hitCheckCulling(zen::particleGenerator*, TAIeffectAttackParam*, Creature*) { return 0x1; }
+bool TAIeffectAttackEventCallBack::hitCheckCulling(zen::particleGenerator*, TAIeffectAttackParam*, Creature*) { return true; }

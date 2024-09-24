@@ -274,6 +274,9 @@ struct YTeki : public NTeki {
 	void killStickToMouthPiki();
 	void startNewMotion(int);
 
+	// unused/inlined:
+	void getMapAttribute();
+
 	// _00       = VTBL
 	// _000-_46C = NTeki
 	u8 _46C[0x538 - 0x46C]; // _46C, TODO: work out members

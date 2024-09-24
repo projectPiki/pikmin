@@ -1,4 +1,9 @@
-#include "types.h"
+#include "GameCourseClearSection.h"
+#include "zen/DrawHurryUp.h"
+#include "zen/DrawContainer.h"
+#include "zen/particle.h"
+#include "zen/bBoardColourAnim.h"
+#include "Delegate.h"
 
 /*
  * --INFO--

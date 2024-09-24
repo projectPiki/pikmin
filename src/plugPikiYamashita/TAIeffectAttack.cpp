@@ -1,4 +1,5 @@
-#include "types.h"
+#include "TAI/EffectAttack.h"
+#include "Vector.h"
 
 /*
  * --INFO--
@@ -25,7 +26,7 @@ static void _Print(char*, ...)
  * Address:	801C4960
  * Size:	000038
  */
-void EventTypeCallBack::invoke(zen::particleGenerator*)
+bool EventTypeCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
@@ -318,7 +319,7 @@ void CylinderTypeCallBack::hitCheck(zen::particleGenerator*)
  * Address:	801C4D14
  * Size:	000384
  */
-void CylinderTypeCallBack::invoke(zen::particleGenerator*)
+bool CylinderTypeCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
@@ -967,7 +968,7 @@ void ConeTypeCallBack::hitCheck(zen::particleGenerator*)
  * Address:	801C55A0
  * Size:	000434
  */
-void ConeTypeCallBack::invoke(zen::particleGenerator*)
+bool ConeTypeCallBack::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
