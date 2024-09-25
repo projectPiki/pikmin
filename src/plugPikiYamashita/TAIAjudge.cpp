@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Ajudge.h"
 
 /*
  * --INFO--
@@ -32,7 +32,7 @@ void TAIAsearchWorkObject::start(Teki&) { }
  * Address:	801AD098
  * Size:	000200
  */
-void TAIAsearchWorkObject::act(Teki&)
+bool TAIAsearchWorkObject::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -190,7 +190,7 @@ void TAIAsearchWorkObject::act(Teki&)
  * Address:	801AD298
  * Size:	000084
  */
-void TAIAlessLife::act(Teki&)
+bool TAIAlessLife::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -239,7 +239,7 @@ void TAIAlessLife::act(Teki&)
  * Address:	801AD31C
  * Size:	000084
  */
-void TAIAmoreLife::act(Teki&)
+bool TAIAmoreLife::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -288,7 +288,7 @@ void TAIAmoreLife::act(Teki&)
  * Address:	801AD3A0
  * Size:	00006C
  */
-void TAIAjudgeOptionalRange::act(Teki&)
+bool TAIAjudgeOptionalRange::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -373,7 +373,7 @@ void TAIAjudgeOptionalRange::setTargetPositionCreature(Teki&)
  * Address:	801AD474
  * Size:	0000D0
  */
-void TAIAinsideOptionalRange::judgement(Teki&)
+bool TAIAinsideOptionalRange::judgement(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -437,7 +437,7 @@ void TAIAinsideOptionalRange::judgement(Teki&)
  * Address:	801AD544
  * Size:	0000D0
  */
-void TAIAoutsideOptionalRange::judgement(Teki&)
+bool TAIAoutsideOptionalRange::judgement(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -501,7 +501,7 @@ void TAIAoutsideOptionalRange::judgement(Teki&)
  * Address:	801AD614
  * Size:	0001D8
  */
-void TAIAcheckInsideRangePiki::act(Teki&)
+bool TAIAcheckInsideRangePiki::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -649,7 +649,7 @@ void TAIAcheckInsideRangePiki::act(Teki&)
  * Address:	801AD7EC
  * Size:	000008
  */
-void TAIAcheckInsideRangePiki::getPikiMax(Teki&)
+int TAIAcheckInsideRangePiki::getPikiMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -663,7 +663,7 @@ void TAIAcheckInsideRangePiki::getPikiMax(Teki&)
  * Address:	801AD7F4
  * Size:	000008
  */
-void TAIAcheckInsideRangePiki::getRange(Teki&)
+f32 TAIAcheckInsideRangePiki::getRange(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -677,7 +677,7 @@ void TAIAcheckInsideRangePiki::getRange(Teki&)
  * Address:	801AD7FC
  * Size:	000134
  */
-void TAIAinsideTerritoryRangeNavi::act(Teki&)
+bool TAIAinsideTerritoryRangeNavi::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -772,7 +772,7 @@ void TAIAinsideTerritoryRangeNavi::act(Teki&)
  * Address:	801AD930
  * Size:	0000FC
  */
-void TAIAoutsideTerritoryRangeNavi::act(Teki&)
+bool TAIAoutsideTerritoryRangeNavi::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -849,7 +849,7 @@ void TAIAoutsideTerritoryRangeNavi::act(Teki&)
  * Address:	801ADA2C
  * Size:	00008C
  */
-void TAIAvisibleNavi::act(Teki&)
+bool TAIAvisibleNavi::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -904,7 +904,7 @@ void TAIAvisibleNavi::act(Teki&)
  * Address:	801ADAB8
  * Size:	000164
  */
-void TAIAvisiblePiki::act(Teki&)
+bool TAIAvisiblePiki::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1037,7 +1037,7 @@ void TAIAattackableTarget::checkDist(Teki&)
  * Address:	801ADC1C
  * Size:	000080
  */
-void TAIAattackableTarget::checkAngle(Teki&)
+bool TAIAattackableTarget::checkAngle(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1085,7 +1085,7 @@ void TAIAattackableTarget::checkAngle(Teki&)
  * Address:	801ADC9C
  * Size:	00014C
  */
-void TAIAattackableTarget::judge(Teki&)
+bool TAIAattackableTarget::judge(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1190,7 +1190,7 @@ void TAIAattackableTarget::judge(Teki&)
  * Address:	801ADDE8
  * Size:	000098
  */
-void TAIAattackableTarget::act(Teki&)
+bool TAIAattackableTarget::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1242,7 +1242,7 @@ void TAIAattackableTarget::act(Teki&)
  * Address:	801ADE80
  * Size:	00004C
  */
-void TAIAunvisibleTarget::act(Teki&)
+bool TAIAunvisibleTarget::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1277,7 +1277,7 @@ void TAIAunvisibleTarget::act(Teki&)
  * Address:	801ADECC
  * Size:	0000A0
  */
-void TAIAstickingPiki::act(Teki&)
+bool TAIAstickingPiki::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1333,14 +1333,7 @@ void TAIAstickingPiki::act(Teki&)
  * Address:	801ADF6C
  * Size:	000008
  */
-void TAIAstickingPiki::getPikiNum(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x8(r3)
-	  blr
-	*/
-}
+int TAIAstickingPiki::getPikiNum(Teki&) { return mStickingPikiNum; }
 
 /*
  * --INFO--
@@ -1381,7 +1374,7 @@ void TAIAdistanceTarget::start(Teki&)
  * Address:	801ADFCC
  * Size:	0000E8
  */
-void TAIAdistanceTarget::act(Teki&)
+bool TAIAdistanceTarget::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1472,7 +1465,7 @@ void TAIAcheckTurnAngle::start(Teki&)
  * Address:	801AE0C8
  * Size:	0000D4
  */
-void TAIAcheckTurnAngle::act(Teki&)
+bool TAIAcheckTurnAngle::act(Teki&)
 {
 	/*
 	.loc_0x0:

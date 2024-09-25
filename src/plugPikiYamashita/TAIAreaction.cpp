@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Areaction.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	801A8490
  * Size:	000050
  */
-void TAIAhitCheckFlyingPiki::actByEvent(TekiEvent&)
+bool TAIAhitCheckFlyingPiki::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -61,7 +61,7 @@ void TAIAhitCheckFlyingPiki::actByEvent(TekiEvent&)
  * Address:	801A84E0
  * Size:	00001C
  */
-void TAIAdeadCheck::act(Teki&)
+bool TAIAdeadCheck::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -186,7 +186,7 @@ void TAIAdying::start(Teki&)
  * Address:	801A8624
  * Size:	0000AC
  */
-void TAIAdying::act(Teki&)
+bool TAIAdying::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -284,7 +284,7 @@ void TAIAdyingKabekui::start(Teki&)
  * Address:	801A8714
  * Size:	000144
  */
-void TAIAdyingKabekui::act(Teki&)
+bool TAIAdyingKabekui::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -426,7 +426,7 @@ void TAIAdyingCrushKabekui::start(Teki&)
  * Address:	801A889C
  * Size:	0000E0
  */
-void TAIAdamage::act(Teki&)
+bool TAIAdamage::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -502,14 +502,14 @@ void TAIAdamage::act(Teki&)
  * Address:	801A897C
  * Size:	000008
  */
-u32 TAIAdamage::judgeDamage(Teki&) { return 0x1; }
+bool TAIAdamage::judgeDamage(Teki&) { return true; }
 
 /*
  * --INFO--
  * Address:	801A8984
  * Size:	000048
  */
-void TAIAinWater::act(Teki&)
+bool TAIAinWater::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -541,7 +541,7 @@ void TAIAinWater::act(Teki&)
  * Address:	801A89CC
  * Size:	000068
  */
-void TAIAinWater::actByEvent(TekiEvent&)
+bool TAIAinWater::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -581,7 +581,7 @@ void TAIAinWater::actByEvent(TekiEvent&)
  * Address:	801A8A34
  * Size:	000100
  */
-void TAIAinWaterDamage::act(Teki&)
+bool TAIAinWaterDamage::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -671,7 +671,7 @@ void TAIAinWaterDamage::act(Teki&)
  * Address:	801A8B34
  * Size:	0000A8
  */
-void TAIAinWaterDamage::actByEvent(TekiEvent&)
+bool TAIAinWaterDamage::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:

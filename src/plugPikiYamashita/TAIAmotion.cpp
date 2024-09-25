@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Amotion.h"
 
 /*
  * --INFO--
@@ -25,20 +25,10 @@ static void _Print(char*, ...)
  * Address:	801ACC54
  * Size:	000024
  */
-TAIAmotion::TAIAmotion(int, int)
+TAIAmotion::TAIAmotion(int nextState, int p2)
+    : TaiAction(nextState)
 {
-	/*
-	.loc_0x0:
-	  lis       r6, 0x802C
-	  addi      r0, r6, 0x6620
-	  stw       r0, 0x4(r3)
-	  lis       r6, 0x802E
-	  subi      r0, r6, 0x31C
-	  stw       r4, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r5, 0x8(r3)
-	  blr
-	*/
+	_08 = p2;
 }
 
 /*
@@ -79,7 +69,7 @@ void TAIAmotion::start(Teki&)
  * Address:	801ACCC4
  * Size:	00001C
  */
-void TAIAmotion::act(Teki&)
+bool TAIAmotion::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -100,20 +90,10 @@ void TAIAmotion::act(Teki&)
  * Address:	801ACCE0
  * Size:	000024
  */
-TAIAreserveMotion::TAIAreserveMotion(int, int)
+TAIAreserveMotion::TAIAreserveMotion(int nextState, int p2)
+    : TaiAction(nextState)
 {
-	/*
-	.loc_0x0:
-	  lis       r6, 0x802C
-	  addi      r0, r6, 0x6620
-	  stw       r0, 0x4(r3)
-	  lis       r6, 0x802E
-	  subi      r0, r6, 0x344
-	  stw       r4, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r5, 0x8(r3)
-	  blr
-	*/
+	_08 = p2;
 }
 
 /*
@@ -262,7 +242,7 @@ void TAIAreserveMotion::start(Teki&)
  * Address:	801ACEB8
  * Size:	000088
  */
-void TAIAreserveMotion::act(Teki&)
+bool TAIAreserveMotion::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -341,7 +321,7 @@ void TAIAmotionLoop::start(Teki&)
  * Address:	801ACF74
  * Size:	000118
  */
-void TAIAmotionLoop::act(Teki&)
+bool TAIAmotionLoop::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -435,11 +415,4 @@ void TAIAmotionLoop::act(Teki&)
  * Address:	801AD08C
  * Size:	000008
  */
-void TAIAmotionLoop::getFrameMax(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0xC(r3)
-	  blr
-	*/
-}
+f32 TAIAmotionLoop::getFrameMax(Teki&) { return mFrameMax; }
