@@ -2871,7 +2871,7 @@ bool TAIApatrol::act(Teki&)
  * Address:	801AAD4C
  * Size:	000008
  */
-void TAIApatrol::getTimeout(Teki&)
+f32 TAIApatrol::getTimeout(Teki&)
 {
 	/*
 	.loc_0x0:

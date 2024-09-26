@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/DrawMenu.h"
 
 /*
  * --INFO--
@@ -641,7 +641,7 @@ void zen::DrawMenuTitle::setPane(P2DScreen*, P2DPane*, u32)
 void zen::DrawMenuTitle::start()
 {
 	// Generated from stw r0, 0x0(r3)
-	_00 = 1;
+	// _00 = 1;
 }
 
 /*
@@ -652,7 +652,7 @@ void zen::DrawMenuTitle::start()
 void zen::DrawMenuTitle::wait()
 {
 	// Generated from stw r0, 0x0(r3)
-	_00 = 0;
+	// _00 = 0;
 }
 
 /*
@@ -673,7 +673,7 @@ void zen::DrawMenuTitle::operation()
 void zen::DrawMenuTitle::end()
 {
 	// Generated from stw r0, 0x0(r3)
-	_00 = 3;
+	// _00 = 3;
 }
 
 /*
@@ -801,7 +801,8 @@ void zen::DrawMenuTitle::update(f32)
  * Address:	801C30FC
  * Size:	000AFC
  */
-zen::DrawMenu::DrawMenu(char*, bool, bool)
+zen::DrawMenu::DrawMenu(char* p1, bool p2, bool p3)
+    : DrawScreen(p1, nullptr, p2, p3)
 {
 	/*
 	.loc_0x0:

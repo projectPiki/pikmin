@@ -1,4 +1,6 @@
-#include "types.h"
+#include "zen/DrawCommon.h"
+#include "zen/Number.h"
+#include "PSU/Tree.h"
 
 /*
  * --INFO--
@@ -319,14 +321,14 @@ void zen::P2DPaneLibrary::makeResident(P2DPane*)
  * Address:	801BF8BC
  * Size:	000008
  */
-u32 PSUTree<P2DPane>::getEndChild() const { return 0x0; }
+PSUTree<P2DPane>* PSUTree<P2DPane>::getEndChild() const { return nullptr; }
 
 /*
  * --INFO--
  * Address:	801BF8C4
  * Size:	000014
  */
-void PSUTree<P2DPane>::getFirstChild() const
+PSUTree<P2DPane>* PSUTree<P2DPane>::getFirstChild() const
 {
 	/*
 	.loc_0x0:
@@ -882,7 +884,7 @@ zen::BalloonPane::BalloonPane(P2DPane*, f32)
  * Address:	801BFE2C
  * Size:	00039C
  */
-void zen::BalloonPane::invoke(P2DPane*)
+bool zen::BalloonPane::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:

@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct cmdqueue_ cmdqueue_;
+
 /*
  * --INFO--
  * Address:	8001B960
@@ -209,4 +211,7 @@ void Jal_FrameWork(void*)
  * Address:	8001BB20
  * Size:	00002C
  */
-void Jal_CmdQueue_Init(void) { Jac_RegisterPlayerCallback(Jal_FrameWork__FPv, 0); }
+void Jal_CmdQueue_Init(void)
+{
+	// Jac_RegisterPlayerCallback(Jal_FrameWork, 0);
+}

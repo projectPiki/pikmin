@@ -1,4 +1,5 @@
-#include "types.h"
+#include "TAI/Tamago.h"
+#include "ParaParameters.h"
 
 /*
  * --INFO--
@@ -77,6 +78,7 @@ TAItamagoSoundTable::TAItamagoSoundTable()
  * Size:	0002F4
  */
 TAItamagoParameters::TAItamagoParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -278,6 +280,7 @@ TAItamagoParameters::TAItamagoParameters()
  * Size:	0002DC
  */
 TAItamagoStrategy::TAItamagoStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -987,7 +990,7 @@ void TAItamagoAnimation::makeDefaultAnimations()
  * Address:	801D0B5C
  * Size:	000024
  */
-void TAIAcountStartTamago::act(Teki&)
+bool TAIAcountStartTamago::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1039,7 +1042,7 @@ void TAIAhatch::start(Teki&)
  * Address:	801D0BCC
  * Size:	000174
  */
-void TAIAhatch::act(Teki&)
+bool TAIAhatch::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1150,7 +1153,7 @@ void TAIAhatch::act(Teki&)
  * Address:	801D0D40
  * Size:	000010
  */
-void ParaParameters<int>::get(int)
+int ParaParameters<int>::get(int)
 {
 	/*
 	.loc_0x0:
@@ -1225,7 +1228,7 @@ void TAIAtimerReactionTamago::start(Teki&)
  * Address:	801D0E0C
  * Size:	00005C
  */
-void TAIAtimerReactionTamago::act(Teki&)
+bool TAIAtimerReactionTamago::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1264,7 +1267,7 @@ void TAIAtimerReactionTamago::act(Teki&)
  * Address:	801D0E68
  * Size:	000008
  */
-void TAIAtimerReactionTamago::getFrameMax(Teki&)
+f32 TAIAtimerReactionTamago::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1315,7 +1318,7 @@ void TAIAdyingTamago::start(Teki&)
  * Address:	801D0ED4
  * Size:	0000E8
  */
-void TAIAdyingTamago::act(Teki&)
+bool TAIAdyingTamago::act(Teki&)
 {
 	/*
 	.loc_0x0:

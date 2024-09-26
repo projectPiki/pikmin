@@ -1,6 +1,6 @@
 #include "GameCreditsSection.h"
 #include "system.h"
-#include "OnePlayerSection.h"
+#include "FlowController.h"
 
 /*
  * --INFO--

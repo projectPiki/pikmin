@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Dororo.h"
 
 /*
  * --INFO--
@@ -20,12 +20,13 @@ static void _Print(char*, ...)
 	// UNUSED FUNCTION
 }
 
+namespace {
 /*
  * --INFO--
  * Address:	........
  * Size:	000030
  */
-void @unnamed @ ::getCollPartPtr(Teki&, u32)
+void getCollPartPtr(Teki&, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +36,7 @@ void @unnamed @ ::getCollPartPtr(Teki&, u32)
  * Address:	801D0FBC
  * Size:	0001E4
  */
-void @unnamed @ ::setDororoEffect(Teki&)
+void setDororoEffect(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -188,10 +189,11 @@ void @unnamed @ ::setDororoEffect(Teki&)
  * Address:	........
  * Size:	0000DC
  */
-void @unnamed @ ::killDororoEffect(Teki&)
+void killDororoEffect(Teki&)
 {
 	// UNUSED FUNCTION
 }
+} // namespace
 
 /*
  * --INFO--
@@ -250,6 +252,7 @@ TAIdororoSoundTable::TAIdororoSoundTable()
  * Size:	0003C0
  */
 TAIdororoParameters::TAIdororoParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -502,6 +505,7 @@ TAIdororoParameters::TAIdororoParameters()
  * Size:	000AD0
  */
 TAIdororoStrategy::TAIdororoStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -2283,7 +2287,7 @@ void TAIAgravityDororo::start(Teki&)
  * Address:	801D2E34
  * Size:	000060
  */
-void TAIAgravityDororo::act(Teki&)
+bool TAIAgravityDororo::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2323,7 +2327,7 @@ void TAIAgravityDororo::act(Teki&)
  * Address:	801D2E94
  * Size:	0001D4
  */
-void TAIAcheckBarkDororo::act(Teki&)
+bool TAIAcheckBarkDororo::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2490,7 +2494,7 @@ void TAIAbarkDororo::start(Teki&)
  * Address:	801D3088
  * Size:	000390
  */
-void TAIAbarkDororo::act(Teki&)
+bool TAIAbarkDororo::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2809,7 +2813,7 @@ void TAIAtransformationDororo::start(Teki&)
  * Address:	801D3484
  * Size:	000298
  */
-void TAIAtransformationDororo::act(Teki&)
+bool TAIAtransformationDororo::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3042,7 +3046,7 @@ void TAIAbirthDororo::start(Teki&)
  * Address:	801D3768
  * Size:	0000D0
  */
-void TAIAbirthDororo::act(Teki&)
+bool TAIAbirthDororo::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3110,7 +3114,7 @@ void TAIAbirthDororo::act(Teki&)
  * Address:	801D3838
  * Size:	000128
  */
-void TAIAgoTargetPiki::act(Teki&)
+bool TAIAgoTargetPiki::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3204,7 +3208,7 @@ void TAIAgoTargetPiki::act(Teki&)
  * Address:	801D3960
  * Size:	000008
  */
-u32 TAIAgoTargetPiki::checkArrival(Teki&) { return 0x0; }
+bool TAIAgoTargetPiki::checkArrival(Teki&) { return false; }
 
 /*
  * --INFO--
@@ -3260,7 +3264,7 @@ void TAIAwaitDororo::start(Teki&)
  * Address:	801D39FC
  * Size:	000008
  */
-void TAIAwaitDororo::getWaitCounterMax(Teki&)
+f32 TAIAwaitDororo::getWaitCounterMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3307,7 +3311,7 @@ void TAIAflickingDororo::start(Teki&)
  * Address:	801D3A50
  * Size:	00005C
  */
-void TAIAflickingDororo::act(Teki&)
+bool TAIAflickingDororo::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3344,7 +3348,7 @@ void TAIAflickingDororo::act(Teki&)
  * Address:	801D3AAC
  * Size:	0000B8
  */
-void TAIAgoGoalPathDororo::getWalkVelocity(Teki&)
+f32 TAIAgoGoalPathDororo::getWalkVelocity(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3404,7 +3408,7 @@ void TAIAgoGoalPathDororo::getWalkVelocity(Teki&)
  * Address:	801D3B64
  * Size:	00087C
  */
-void TAIAkillTouchPiki::act(Teki&)
+bool TAIAkillTouchPiki::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4159,7 +4163,7 @@ void TAIAdyingDororo::start(Teki&)
  * Address:	801D4570
  * Size:	00022C
  */
-void TAIAdyingDororo::act(Teki&)
+bool TAIAdyingDororo::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4375,4 +4379,4 @@ void TAIAinitDororo::start(Teki&)
  * Address:	801D47F8
  * Size:	000008
  */
-u32 TAIAinitDororo::act(Teki&) { return 0x1; }
+bool TAIAinitDororo::act(Teki&) { return true; }

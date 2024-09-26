@@ -198,7 +198,7 @@ cflags_base = [
 if args.debug:
     cflags_base.extend(["-sym on", "-DDEBUG=1"])
 else:
-    cflags_base.append("-DNDEBUG=1")
+    cflags_base.extend(["-DNDEBUG=1", "-w off"]) # no I DO not want to talk about my car's extended warranty.
 
 # JAudio flags
 cflags_jaudio = [
@@ -213,6 +213,15 @@ cflags_pikmin = [
     *cflags_base,
     "-fp_contract off",
     "-RTTI on",
+]
+
+# Metrowerks library flags
+cflags_runtime = [
+    *cflags_base,
+    "-use_lmw_stmw on",
+    "-str reuse,readonly",
+    "-common off",
+    "-inline auto",
 ]
 
 config.linker_version = "GC/1.2.5"
@@ -799,7 +808,7 @@ config.libs = [
     DolphinLib(
         "db",
         [
-            Object(NonMatching, "db/db.c"),
+            Object(Matching, "db/db.c"),
         ]
     ),
     DolphinLib(
@@ -837,7 +846,7 @@ config.libs = [
     DolphinLib(
         "ai",
         [
-            Object(NonMatching, "ai/ai.c"),
+            Object(Matching, "ai/ai.c"),
         ]
     ),
     DolphinLib(
@@ -906,7 +915,7 @@ config.libs = [
     {
         "lib": "Runtime.PPCEABI.H",
         "mw_version": "GC/1.2.5",
-        "cflags": cflags_base,
+        "cflags": [*cflags_runtime, "-inline deferred"],
         "objects": [
             Object(NonMatching, "Runtime/PPCEABI/H/__mem.c"),
             Object(NonMatching, "Runtime/PPCEABI/H/__va_arg.c"),

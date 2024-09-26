@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Otama.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TAIotamaSoundTable::TAIotamaSoundTable()
  * Size:	00033C
  */
 TAIotamaParameters::TAIotamaParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -296,6 +297,7 @@ TAIotamaParameters::TAIotamaParameters()
  * Size:	000530
  */
 TAIotamaStrategy::TAIotamaStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1411,7 +1413,7 @@ void TAIArunAwayOtama::start(Teki&)
  * Address:	801EBDE0
  * Size:	0003D4
  */
-void TAIArunAwayOtama::act(Teki&)
+bool TAIArunAwayOtama::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1730,7 +1732,7 @@ void TAIAappealOtama::flick(Teki&)
  * Address:	801EC244
  * Size:	000094
  */
-void TAIAsetTargetOtama::act(Teki&)
+bool TAIAsetTargetOtama::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1843,7 +1845,7 @@ void TAIAwaitOtama::start(Teki&)
  * Address:	801EC398
  * Size:	0000E0
  */
-void TAIAwaitOtama::act(Teki&)
+bool TAIAwaitOtama::act(Teki&)
 {
 	/*
 	.loc_0x0:

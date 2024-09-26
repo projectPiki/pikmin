@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Beatle.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TAIbeatleSoundTable::TAIbeatleSoundTable()
  * Size:	000418
  */
 TAIbeatleParameters::TAIbeatleParameters()
+    : TekiParameters(0, 0) // TODO: members
 {
 	/*
 	.loc_0x0:
@@ -351,6 +352,7 @@ TAIbeatleParameters::TAIbeatleParameters()
  * Size:	000EF4
  */
 TAIbeatleStrategy::TAIbeatleStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1409,7 +1411,7 @@ TAIbeatleStrategy::TAIbeatleStrategy()
  * Address:	801C6D64
  * Size:	000140
  */
-void TAIbeatleStrategy::interact(Teki&, TekiInteractionKey&)
+bool TAIbeatleStrategy::interact(Teki&, TekiInteractionKey&)
 {
 	/*
 	.loc_0x0:
@@ -1829,7 +1831,7 @@ void TAIbeatleAnimation::makeDefaultAnimations()
  * Address:	801C72E4
  * Size:	000018
  */
-void TAIAcheckInsideRangePikiBeatle::getRange(Teki&)
+f32 TAIAcheckInsideRangePikiBeatle::getRange(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2029,7 +2031,7 @@ void TAIAflickingAfterMotionLoopBeatle::start(Teki&)
  * Address:	801C7504
  * Size:	0008D4
  */
-void TAIAflickingAfterMotionLoopBeatle::act(Teki&)
+bool TAIAflickingAfterMotionLoopBeatle::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2662,7 +2664,7 @@ void TAIAflickingAfterMotionLoopBeatle::act(Teki&)
  * Address:	801C7DD8
  * Size:	00001C
  */
-void TAIAflickingAfterMotionLoopBeatle::permitFlick(Teki&)
+bool TAIAflickingAfterMotionLoopBeatle::permitFlick(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2683,7 +2685,7 @@ void TAIAflickingAfterMotionLoopBeatle::permitFlick(Teki&)
  * Address:	801C7DF4
  * Size:	000018
  */
-void TAIAflickingAfterMotionLoopBeatle::getFrameMax(Teki&)
+f32 TAIAflickingAfterMotionLoopBeatle::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2759,7 +2761,7 @@ void TAIArockAttack::start(Teki&)
  * Address:	801C7EAC
  * Size:	0010B0
  */
-void TAIArockAttack::act(Teki&)
+bool TAIArockAttack::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3959,7 +3961,7 @@ void TAIAinsideOptionalRangeBeatle::setTargetPosition(Teki&)
  * Address:	801C8F7C
  * Size:	000018
  */
-void TAIAinsideOptionalRangeBeatle::getOptionalRange(Teki&)
+f32 TAIAinsideOptionalRangeBeatle::getOptionalRange(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3977,7 +3979,7 @@ void TAIAinsideOptionalRangeBeatle::getOptionalRange(Teki&)
  * Address:	801C8F94
  * Size:	0001F0
  */
-void TAIAvisiblePikiBeatle::act(Teki&)
+bool TAIAvisiblePikiBeatle::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4135,7 +4137,7 @@ void TAIAvisiblePikiBeatle::act(Teki&)
  * Address:	801C9184
  * Size:	000024
  */
-void TAIAdamageBeatle::judgeDamage(Teki&)
+bool TAIAdamageBeatle::judgeDamage(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4276,7 +4278,7 @@ void TAIAdyingBeatle::start(Teki&)
  * Address:	801C9308
  * Size:	00005C
  */
-void TAIAdyingBeatle::act(Teki&)
+bool TAIAdyingBeatle::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4425,4 +4427,4 @@ void TAIAinitBeatle::start(Teki&)
  * Address:	801C94C4
  * Size:	000008
  */
-u32 TAIAinitBeatle::act(Teki&) { return 0x1; }
+bool TAIAinitBeatle::act(Teki&) { return true; }

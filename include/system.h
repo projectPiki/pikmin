@@ -53,6 +53,24 @@ struct AddressNode : public CoreNode {
 
 /**
  * @brief TODO
+ */
+struct DirEntry : public CoreNode {
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct BinobjInfo : public GfxobjInfo {
+	// _1C     = VTBL
+	// _00-_20 = GfxobjInfo
+	// TODO: members
+};
+
+/**
+ * @brief TODO
  *
  * @note Size: 0x244.
  */

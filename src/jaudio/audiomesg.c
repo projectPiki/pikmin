@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct Jac_MessageQueue Jac_MessageQueue;
+
 /*
  * --INFO--
  * Address:	80008160

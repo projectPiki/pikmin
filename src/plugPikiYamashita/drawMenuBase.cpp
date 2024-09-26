@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/DrawMenu.h"
 
 /*
  * --INFO--
@@ -25,7 +25,8 @@ static void _Print(char*, ...)
  * Address:	801F014C
  * Size:	000438
  */
-zen::DrawMenuBase::DrawMenuBase(char*, bool, bool)
+zen::DrawMenuBase::DrawMenuBase(char* p1, bool p2, bool p3)
+    : DrawScreen(p1, nullptr, p2, p3)
 {
 	/*
 	.loc_0x0:
@@ -528,14 +529,14 @@ void zen::DrawMenuBase::start()
  * Address:	801F07E8
  * Size:	000008
  */
-u32 zen::DrawMenuBase::modeSleep(Controller*) { return 0x0; }
+bool zen::DrawMenuBase::modeSleep(Controller*) { return false; }
 
 /*
  * --INFO--
  * Address:	801F07F0
  * Size:	000214
  */
-void zen::DrawMenuBase::modeOperation(Controller*)
+bool zen::DrawMenuBase::modeOperation(Controller*)
 {
 	/*
 	.loc_0x0:

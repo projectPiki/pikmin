@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/MenuPanelMgr.h"
 
 /*
  * --INFO--
@@ -788,7 +788,7 @@ void zen::MenuPanelMgr::checkFinish()
  * Address:	801C9EF0
  * Size:	0003B8
  */
-void zen::MenuPanel::invoke(P2DPane*)
+bool zen::MenuPanel::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:

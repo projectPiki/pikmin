@@ -17,6 +17,9 @@
 
 //#include <errno.h>
 #include <math.h> /* for isfinite macro */
+#define fpclassify(x) ((sizeof(x) == sizeof(f32)) ? __fpclassifyf((f32)(x)) : __fpclassifyd((f64)(x)))
+#define isfinite(x)   ((fpclassify(x) > 2))
+
 static const f64
 
     two54
@@ -26,7 +29,7 @@ static const f64
 
 f64 ldexp(f64 x, int n)
 {
-	_INT32 k, hx, lx; /*- cc 020130 -*/
+	int k, hx, lx; /*- cc 020130 -*/
 	if (!isfinite(x) || x == 0.0)
 		return x;
 

@@ -1,4 +1,6 @@
-#include "types.h"
+#include "zen/DrawGameInfo.h"
+#include "PUT/Geometry.h"
+#include "zen/Number.h"
 
 /*
  * --INFO--
@@ -2202,7 +2204,7 @@ zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag)
  * Address:	801B8304
  * Size:	000220
  */
-void @unnamed @ ::DateCallBack::setTex()
+void DateCallBack::setTex()
 {
 	/*
 	.loc_0x0:
@@ -2362,7 +2364,7 @@ void @unnamed @ ::DateCallBack::setTex()
  * Address:	801B8524
  * Size:	000010
  */
-void PUTRect::getWidth() const
+s16 PUTRect::getWidth() const
 {
 	/*
 	.loc_0x0:
@@ -2378,7 +2380,7 @@ void PUTRect::getWidth() const
  * Address:	801B8534
  * Size:	000010
  */
-void PUTRect::getHeight() const
+s16 PUTRect::getHeight() const
 {
 	/*
 	.loc_0x0:
@@ -3130,7 +3132,7 @@ void zen::DrawGameInfo::isLowerFrameOut()
  * Address:	801B8D24
  * Size:	000224
  */
-void @unnamed @ ::DateCallBack::invoke(P2DPane*)
+bool DateCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -3293,7 +3295,7 @@ void @unnamed @ ::DateCallBack::invoke(P2DPane*)
  * Address:	801B8F48
  * Size:	000234
  */
-void @unnamed @ ::LifePinchCallBack::invoke(P2DPane*)
+bool LifePinchCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -3468,14 +3470,14 @@ void @unnamed @ ::LifePinchCallBack::invoke(P2DPane*)
  * Address:	801B917C
  * Size:	000008
  */
-u32 @unnamed @ ::LifeIconCallBack::invoke(P2DPane*) { return 0x1; }
+bool LifeIconCallBack::invoke(P2DPane*) { return true; }
 
 /*
  * --INFO--
  * Address:	801B9184
  * Size:	000028
  */
-void @unnamed @ ::LifeIconCallBack::draw(P2DPane*)
+bool LifeIconCallBack::draw(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -3497,7 +3499,7 @@ void @unnamed @ ::LifeIconCallBack::draw(P2DPane*)
  * Address:	801B91AC
  * Size:	00006C
  */
-void @unnamed @ ::NaviTexCallBack::invoke(P2DPane*)
+bool NaviTexCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -3542,7 +3544,7 @@ void @unnamed @ ::NaviTexCallBack::invoke(P2DPane*)
  * Address:	801B9218
  * Size:	000108
  */
-void @unnamed @ ::NaviIconCallBack::invoke(P2DPane*)
+bool NaviIconCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -3628,7 +3630,7 @@ void @unnamed @ ::NaviIconCallBack::invoke(P2DPane*)
  * Address:	801B9320
  * Size:	0002D4
  */
-void @unnamed @ ::MoonIconCallBack::invoke(P2DPane*)
+bool MoonIconCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -3851,7 +3853,7 @@ void @unnamed @ ::MoonIconCallBack::invoke(P2DPane*)
  * Address:	801B95F4
  * Size:	0002E4
  */
-void @unnamed @ ::SunIcon2CallBack::invoke(P2DPane*)
+bool SunIcon2CallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -4076,7 +4078,7 @@ void @unnamed @ ::SunIcon2CallBack::invoke(P2DPane*)
  * Address:	801B98D8
  * Size:	0001B8
  */
-void @unnamed @ ::SunIcon1CallBack::invoke(P2DPane*)
+bool SunIcon1CallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -4210,7 +4212,7 @@ void @unnamed @ ::SunIcon1CallBack::invoke(P2DPane*)
  * Address:	801B9A90
  * Size:	000078
  */
-void @unnamed @ ::SunCapsuleCallBack::invoke(P2DPane*)
+bool SunCapsuleCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -4256,7 +4258,7 @@ void @unnamed @ ::SunCapsuleCallBack::invoke(P2DPane*)
  * Address:	801B9B08
  * Size:	00014C
  */
-void @unnamed @ ::SunBaseCallBack::invoke(P2DPane*)
+bool SunBaseCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -4367,7 +4369,7 @@ void @unnamed @ ::SunBaseCallBack::invoke(P2DPane*)
  * Address:	801B9C54
  * Size:	000194
  */
-void @unnamed @ ::MapPikminWindowCallBack::invoke(P2DPane*)
+bool MapPikminWindowCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -4494,7 +4496,7 @@ void @unnamed @ ::MapPikminWindowCallBack::invoke(P2DPane*)
  * Address:	801B9DE8
  * Size:	000118
  */
-void @unnamed @ ::PikiIconCallBack::invoke(P2DPane*)
+bool PikiIconCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -4586,7 +4588,7 @@ void @unnamed @ ::PikiIconCallBack::invoke(P2DPane*)
  * Address:	801B9F00
  * Size:	0001F8
  */
-void zen::NumberPicCallBack<s16>::invoke(P2DPane*)
+bool zen::NumberPicCallBack<s16>::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -4761,19 +4763,5 @@ void zen::FigureTex<s16>::getNumber(s16&)
 	  bgelr-
 	  li        r3, 0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801BA134
- * Size:	000008
- */
-void @unnamed @ ::SunBaseCallBack::@16 @invoke(P2DPane*)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x10
-	  b         -0x630
 	*/
 }

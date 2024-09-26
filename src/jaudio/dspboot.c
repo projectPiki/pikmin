@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct STRUCT_DSP_TASK2 STRUCT_DSP_TASK2;
+
 /*
  * --INFO--
  * Address:	........

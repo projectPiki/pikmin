@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/DrawCM.h"
 
 /*
  * --INFO--
@@ -1203,14 +1203,14 @@ void zen::DrawCMresult::setMode(zen::DrawCMresult::modeFlag)
  * Address:	801EFB08
  * Size:	000008
  */
-u32 zen::DrawCMresult::modeSleep(Controller*) { return 0x0; }
+bool zen::DrawCMresult::modeSleep(Controller*) { return false; }
 
 /*
  * --INFO--
  * Address:	801EFB10
  * Size:	00004C
  */
-void zen::DrawCMresult::modeWaitAppear(Controller*)
+bool zen::DrawCMresult::modeWaitAppear(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1243,7 +1243,7 @@ void zen::DrawCMresult::modeWaitAppear(Controller*)
  * Address:	801EFB5C
  * Size:	0000D8
  */
-void zen::DrawCMresult::modeAppear(Controller*)
+bool zen::DrawCMresult::modeAppear(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1317,7 +1317,7 @@ void zen::DrawCMresult::modeAppear(Controller*)
  * Address:	801EFC34
  * Size:	0000FC
  */
-void zen::DrawCMresult::modeOperation(Controller*)
+bool zen::DrawCMresult::modeOperation(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1402,7 +1402,7 @@ void zen::DrawCMresult::modeOperation(Controller*)
  * Address:	801EFD30
  * Size:	0000A4
  */
-void zen::DrawCMresult::modeSave(Controller*)
+bool zen::DrawCMresult::modeSave(Controller*)
 {
 	/*
 	.loc_0x0:

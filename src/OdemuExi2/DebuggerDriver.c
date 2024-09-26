@@ -665,7 +665,7 @@ void DBInitInterrupts(void) // matches
 	(void)__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_2);
 	(void)__OSMaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 
-	DBGCallback = MWCallback;
+	// DBGCallback = MWCallback;
 
 	(void)__OSSetInterruptHandler(__OS_INTERRUPT_PI_DEBUG, DBGHandler);
 

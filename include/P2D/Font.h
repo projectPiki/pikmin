@@ -2,8 +2,18 @@
 #define _P2D_FONT_H
 
 #include "types.h"
+#include "GfxObject.h"
 
 struct Colour;
+
+/**
+ * @brief TODO
+ */
+struct FntobjInfo : public GfxobjInfo {
+	// _1C     = VTBL
+	// _00-_20 = GfxobjInfo
+	// TODO: members
+};
 
 /**
  * @brief TODO

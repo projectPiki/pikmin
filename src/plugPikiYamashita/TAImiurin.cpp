@@ -1,4 +1,5 @@
-#include "types.h"
+#include "TAI/Miurin.h"
+#include "ComplexCreature.h"
 
 /*
  * --INFO--
@@ -77,6 +78,7 @@ TAImiurinSoundTable::TAImiurinSoundTable()
  * Size:	000404
  */
 TAImiurinParameters::TAImiurinParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -346,6 +348,7 @@ TAImiurinParameters::TAImiurinParameters()
  * Size:	0019CC
  */
 TAImiurinStrategy::TAImiurinStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -2744,7 +2747,7 @@ void TAIAgroggyMiurin::start(Teki&)
  * Address:	801D8898
  * Size:	0000AC
  */
-void TAIAgroggyMiurin::act(Teki&)
+bool TAIAgroggyMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2888,7 +2891,7 @@ void TAIAangryMiurin::start(Teki&)
  * Address:	801D8A30
  * Size:	000150
  */
-void TAIAangryMiurin::act(Teki&)
+bool TAIAangryMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2990,7 +2993,7 @@ void TAIAangryMiurin::act(Teki&)
  * Address:	801D8B80
  * Size:	000010
  */
-void TAIAangryMiurin::getFlickDirection(Teki&)
+f32 TAIAangryMiurin::getFlickDirection(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3006,7 +3009,7 @@ void TAIAangryMiurin::getFlickDirection(Teki&)
  * Address:	801D8B90
  * Size:	0000A8
  */
-void TAIAcheckNaviMiurin::act(Teki&)
+bool TAIAcheckNaviMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3062,7 +3065,7 @@ void TAIAcheckNaviMiurin::act(Teki&)
  * Address:	801D8C38
  * Size:	0001D4
  */
-void TAIAcheckFlowerPikmin::act(Teki&)
+bool TAIAcheckFlowerPikmin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3237,7 +3240,7 @@ void TAIAsatisfyMiurin::start(Teki&)
  * Address:	801D8E44
  * Size:	000128
  */
-void TAIAsatisfyMiurin::act(Teki&)
+bool TAIAsatisfyMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3333,7 +3336,7 @@ void TAIAsatisfyMiurin::act(Teki&)
  * Address:	801D8F6C
  * Size:	0000E8
  */
-void TAIAwatchNaviMiurin::act(Teki&)
+bool TAIAwatchNaviMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3454,7 +3457,7 @@ void SmartPtr<Creature>::set(Creature*)
  * Address:	801D90B8
  * Size:	0000C4
  */
-void TAIAwatchNaviMiurin::actByEvent(TekiEvent&)
+bool TAIAwatchNaviMiurin::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:
@@ -3519,7 +3522,7 @@ void TAIAwatchNaviMiurin::actByEvent(TekiEvent&)
  * Address:	801D917C
  * Size:	000174
  */
-void TAIAoutsideTerritoryMiurin::act(Teki&)
+bool TAIAoutsideTerritoryMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3626,7 +3629,7 @@ void TAIAoutsideTerritoryMiurin::act(Teki&)
  * Address:	801D92F0
  * Size:	000010
  */
-void TAIAflickingMiurin::getFlickDirection(Teki&)
+f32 TAIAflickingMiurin::getFlickDirection(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3642,7 +3645,7 @@ void TAIAflickingMiurin::getFlickDirection(Teki&)
  * Address:	801D9300
  * Size:	000020
  */
-void TAIAflickCheckMiurin::act(Teki&)
+bool TAIAflickCheckMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3662,7 +3665,7 @@ void TAIAflickCheckMiurin::act(Teki&)
  * Address:	801D9320
  * Size:	000018
  */
-void TAIAflickCheckMiurin::getDamageCountLimit(Teki&)
+int TAIAflickCheckMiurin::getDamageCountLimit(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3680,7 +3683,7 @@ void TAIAflickCheckMiurin::getDamageCountLimit(Teki&)
  * Address:	801D9338
  * Size:	000018
  */
-void TAIAstickingPikiMiurin::getPikiNum(Teki&)
+int TAIAstickingPikiMiurin::getPikiNum(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3698,7 +3701,7 @@ void TAIAstickingPikiMiurin::getPikiNum(Teki&)
  * Address:	801D9350
  * Size:	000050
  */
-void TAIAcheckSatisfyMiurin::act(Teki&)
+bool TAIAcheckSatisfyMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3838,7 +3841,7 @@ void TAIAattackMiurin::start(Teki&)
  * Address:	801D94C8
  * Size:	000900
  */
-void TAIAattackMiurin::act(Teki&)
+bool TAIAattackMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4500,7 +4503,7 @@ void TAIAattackMiurin::act(Teki&)
  * Address:	801D9DC8
  * Size:	00005C
  */
-void TAIAattackPosture::act(Teki&)
+bool TAIAattackPosture::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4537,7 +4540,7 @@ void TAIAattackPosture::act(Teki&)
  * Address:	801D9E24
  * Size:	00005C
  */
-void TAIAattackableTargetMiurin::act(Teki&)
+bool TAIAattackableTargetMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4605,7 +4608,7 @@ void TAIAapproachTargetPriorityFaceDirMiurin::start(Teki&)
  * Address:	801D9ECC
  * Size:	000018
  */
-void TAIAapproachTargetPriorityFaceDirMiurin::getVelocity(Teki&)
+f32 TAIAapproachTargetPriorityFaceDirMiurin::getVelocity(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4654,7 +4657,7 @@ void TAIAturnFocusCreatureMiurin::start(Teki&)
  * Address:	801D9F30
  * Size:	000018
  */
-void TAIAturnFocusCreatureMiurin::getTurnVelocity(Teki&)
+f32 TAIAturnFocusCreatureMiurin::getTurnVelocity(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4697,7 +4700,7 @@ void TAIAdyingMiurin::start(Teki&)
  * Address:	801D9F7C
  * Size:	0000F0
  */
-void TAIAdyingMiurin::act(Teki&)
+bool TAIAdyingMiurin::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -4792,4 +4795,4 @@ void TAIAinitMiurin::start(Teki&)
  * Address:	801DA080
  * Size:	000008
  */
-u32 TAIAinitMiurin::act(Teki&) { return 0x1; }
+bool TAIAinitMiurin::act(Teki&) { return true; }

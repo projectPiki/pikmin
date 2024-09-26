@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/KabekuiA.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TAIkabekuiASoundTable::TAIkabekuiASoundTable()
  * Size:	00036C
  */
 TAIkabekuiAParameters::TAIkabekuiAParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -308,6 +309,7 @@ TAIkabekuiAParameters::TAIkabekuiAParameters()
  * Size:	000A84
  */
 TAIkabekuiAStrategy::TAIkabekuiAStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1627,7 +1629,7 @@ void TAIAshadowOn::start(Teki&)
  * Address:	801CB8C8
  * Size:	000018
  */
-void TAIAsleepKabekuiA::getFrameMax(Teki&)
+f32 TAIAsleepKabekuiA::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1645,7 +1647,7 @@ void TAIAsleepKabekuiA::getFrameMax(Teki&)
  * Address:	801CB8E0
  * Size:	000018
  */
-void TAIAdiveKabekuiA::getFrameMax(Teki&)
+f32 TAIAdiveKabekuiA::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1683,7 +1685,7 @@ void TAIAattackWorkObjectKabekuiA::start(Teki&)
  * Address:	801CB918
  * Size:	000020
  */
-void TAIAattackWorkObjectKabekuiA::act(Teki&)
+bool TAIAattackWorkObjectKabekuiA::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1703,7 +1705,7 @@ void TAIAattackWorkObjectKabekuiA::act(Teki&)
  * Address:	801CB938
  * Size:	000018
  */
-void TAIAattackWorkObjectKabekuiA::getDamage(Teki&)
+f32 TAIAattackWorkObjectKabekuiA::getDamage(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1721,7 +1723,7 @@ void TAIAattackWorkObjectKabekuiA::getDamage(Teki&)
  * Address:	801CB950
  * Size:	000018
  */
-void TAIAattackWorkObjectKabekuiA::getAttackPointRadius(Teki&)
+f32 TAIAattackWorkObjectKabekuiA::getAttackPointRadius(Teki&)
 {
 	/*
 	.loc_0x0:

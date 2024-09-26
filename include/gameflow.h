@@ -54,6 +54,15 @@ struct GameFlow : public Node {
 /**
  * @brief TODO
  */
+struct GameGenNode : public Node {
+	// _00     = VTBL
+	// _00-_20 = Node
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
 struct GameGenFlow : public Node {
 	virtual void update(); // _10
 

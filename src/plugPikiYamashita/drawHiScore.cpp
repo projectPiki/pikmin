@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/DrawHiScore.h"
 
 /*
  * --INFO--

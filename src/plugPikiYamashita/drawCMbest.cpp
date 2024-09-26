@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/DrawCM.h"
 
 /*
  * --INFO--
@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	801EE2E8
  * Size:	000130
  */
-void zen::DrawCMBpicObj::modeWait()
+bool zen::DrawCMBpicObj::modeWait()
 {
 	/*
 	.loc_0x0:
@@ -119,7 +119,7 @@ void zen::DrawCMBpicObj::modeWait()
  * Address:	801EE418
  * Size:	0000F4
  */
-void zen::DrawCMBpicObj::modeAppear()
+bool zen::DrawCMBpicObj::modeAppear()
 {
 	/*
 	.loc_0x0:
@@ -202,7 +202,7 @@ void zen::DrawCMBpicObj::modeAppear()
  * Address:	801EE50C
  * Size:	000008
  */
-u32 zen::DrawCMBpicObj::modeSleep() { return 0x0; }
+bool zen::DrawCMBpicObj::modeSleep() { return false; }
 
 /*
  * --INFO--
@@ -506,21 +506,21 @@ void zen::DrawCMbest::wait()
  * Address:	801EE860
  * Size:	000008
  */
-u32 zen::DrawCMbest::modeSleep() { return 0x0; }
+bool zen::DrawCMbest::modeSleep() { return false; }
 
 /*
  * --INFO--
  * Address:	801EE868
  * Size:	000008
  */
-u32 zen::DrawCMbest::modeWait() { return 0x0; }
+bool zen::DrawCMbest::modeWait() { return false; }
 
 /*
  * --INFO--
  * Address:	801EE870
  * Size:	00005C
  */
-void zen::DrawCMbest::modeAppear()
+bool zen::DrawCMbest::modeAppear()
 {
 	/*
 	.loc_0x0:

@@ -1,5 +1,8 @@
 #include "types.h"
 
+typedef struct Portargs_ Portargs_;
+typedef struct SEvent_ SEvent_;
+
 /*
  * --INFO--
  * Address:	........

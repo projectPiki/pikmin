@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct BgmControl_ BgmControl_;
+
 /*
  * --INFO--
  * Address:	80018980

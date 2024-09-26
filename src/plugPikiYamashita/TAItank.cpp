@@ -1,4 +1,5 @@
-#include "types.h"
+#include "TAI/Tank.h"
+#include "TAI/Areaction.h"
 
 /*
  * --INFO--
@@ -77,6 +78,7 @@ TAItankSoundTable::TAItankSoundTable()
  * Size:	000364
  */
 TAItankParameters::TAItankParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -306,6 +308,7 @@ TAItankParameters::TAItankParameters()
  * Size:	000C14
  */
 TAItankStrategy::TAItankStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1258,7 +1261,7 @@ void TAItankStrategy::act(Teki&)
  * Address:	801A46EC
  * Size:	0000C4
  */
-void TAItankStrategy::interact(Teki&, TekiInteractionKey&)
+bool TAItankStrategy::interact(Teki&, TekiInteractionKey&)
 {
 	/*
 	.loc_0x0:
@@ -1824,7 +1827,7 @@ void TAItankAnimation::makeDefaultAnimations()
  * Address:	801A4EAC
  * Size:	000008
  */
-u32 TAIAnoReaction::act(Teki&) { return 0x1; }
+bool TAIAnoReaction::act(Teki&) { return true; }
 
 /*
  * --INFO--
@@ -1846,14 +1849,14 @@ void TAIAinitTank::start(Teki&)
  * Address:	801A4EC0
  * Size:	000008
  */
-u32 TAIAinitTank::act(Teki&) { return 0x1; }
+bool TAIAinitTank::act(Teki&) { return true; }
 
 /*
  * --INFO--
  * Address:	801A4EC8
  * Size:	0000C8
  */
-void TAIAoutsideTerritory::act(Teki&)
+bool TAIAoutsideTerritory::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1915,7 +1918,7 @@ void TAIAoutsideTerritory::act(Teki&)
  * Address:	801A4F90
  * Size:	000010
  */
-void TAIAflickingTank::getFlickDirection(Teki&)
+f32 TAIAflickingTank::getFlickDirection(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1964,7 +1967,7 @@ void TAIAfireBreathTank::start(Teki&)
  * Address:	801A4FEC
  * Size:	000018
  */
-void TAIAfireBreathTank::getPreviousAnimSpeed(Teki&)
+f32 TAIAfireBreathTank::getPreviousAnimSpeed(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1982,7 +1985,7 @@ void TAIAfireBreathTank::getPreviousAnimSpeed(Teki&)
  * Address:	801A5004
  * Size:	000018
  */
-void TAIAfireBreathTank::getAttackAnimSpeed(Teki&)
+f32 TAIAfireBreathTank::getAttackAnimSpeed(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2000,7 +2003,7 @@ void TAIAfireBreathTank::getAttackAnimSpeed(Teki&)
  * Address:	801A501C
  * Size:	000288
  */
-void FireEffect::invoke(Teki&)
+bool FireEffect::invoke(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2178,7 +2181,7 @@ void FireEffect::invoke(Teki&)
  * Address:	801A52A4
  * Size:	000020
  */
-void TAIAstepBackTank::act(Teki&)
+bool TAIAstepBackTank::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2198,7 +2201,7 @@ void TAIAstepBackTank::act(Teki&)
  * Address:	801A52C4
  * Size:	000018
  */
-void TAIAstepBackTank::getVelocity(Teki&)
+f32 TAIAstepBackTank::getVelocity(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2236,7 +2239,7 @@ void TAIAoutsideOptionalRangeTank::setTargetPosition(Teki&)
  * Address:	801A52FC
  * Size:	000018
  */
-void TAIAoutsideOptionalRangeTank::getOptionalRange(Teki&)
+f32 TAIAoutsideOptionalRangeTank::getOptionalRange(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2254,7 +2257,7 @@ void TAIAoutsideOptionalRangeTank::getOptionalRange(Teki&)
  * Address:	801A5314
  * Size:	000020
  */
-void TAIAattackableAngleTarget::judge(Teki&)
+bool TAIAattackableAngleTarget::judge(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2274,7 +2277,7 @@ void TAIAattackableAngleTarget::judge(Teki&)
  * Address:	801A5334
  * Size:	000020
  */
-void TAIApatrolTank::act(Teki&)
+bool TAIApatrolTank::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2294,7 +2297,7 @@ void TAIApatrolTank::act(Teki&)
  * Address:	801A5354
  * Size:	000018
  */
-void TAIApatrolTank::getTimeout(Teki&)
+f32 TAIApatrolTank::getTimeout(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2312,7 +2315,7 @@ void TAIApatrolTank::getTimeout(Teki&)
  * Address:	801A536C
  * Size:	000018
  */
-void TAIAturnToTarget::getTurnVelocity(Teki&)
+f32 TAIAturnToTarget::getTurnVelocity(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2346,7 +2349,7 @@ void __sinit_TAItank_cpp(void)
  * Address:	801A5394
  * Size:	00006C
  */
-void TAIeffectAttackEventCallBackTank::hitCreature(TAIeffectAttackParam*, Creature*)
+bool TAIeffectAttackEventCallBackTank::hitCreature(TAIeffectAttackParam*, Creature*)
 {
 	/*
 	.loc_0x0:
@@ -2385,7 +2388,7 @@ void TAIeffectAttackEventCallBackTank::hitCreature(TAIeffectAttackParam*, Creatu
  * Address:	801A5400
  * Size:	000154
  */
-void TAIeffectAttackEventCallBackTank::hitMap(TAIeffectAttackParam*)
+bool TAIeffectAttackEventCallBackTank::hitMap(TAIeffectAttackParam*)
 {
 	/*
 	.loc_0x0:

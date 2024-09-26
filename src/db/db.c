@@ -2,6 +2,9 @@
 #include "Dolphin/db.h"
 #include "Dolphin/os.h"
 
+int DBVerbose;
+DBInterface* __DBInterface;
+
 /*
  * --INFO--
  * Address:	801FDAA8
@@ -29,7 +32,7 @@ void DBIsDebuggerPresent(void)
  * Address:	801FDAD0
  * Size:	000048
  */
-static void __DBExceptionDestinationAux(void)
+void __DBExceptionDestinationAux(void)
 {
 	u8 dummy[8];
 	OSContext* ctx = (void*)(OS_BASE_CACHED + *(u32*)0xC0); // WTF??
@@ -44,7 +47,7 @@ static void __DBExceptionDestinationAux(void)
  * Size:	000010
  */
 #ifdef __MWERKS__ // clang-format off
-ASM static void __DBExceptionDestination(void)
+ASM void __DBExceptionDestination(void)
 {
 	nofralloc
 	mfmsr r3
@@ -53,7 +56,7 @@ ASM static void __DBExceptionDestination(void)
 	b __DBExceptionDestinationAux
 }
 #else // clang-format on
-static void __DBExceptionDestination(void)
+void __DBExceptionDestination(void)
 {
 	asm("mfmsr %r3\n"
 	    "ori %r3, %r3, 0x30\n"

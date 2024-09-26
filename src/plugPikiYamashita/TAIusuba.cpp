@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Usuba.h"
 
 /*
  * --INFO--
@@ -36,6 +36,7 @@ TAIusubaSoundTable::TAIusubaSoundTable()
  * Size:	000294
  */
 TAIusubaParameters::TAIusubaParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -213,6 +214,7 @@ TAIusubaParameters::TAIusubaParameters()
  * Size:	0001D8
  */
 TAIusubaStrategy::TAIusubaStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	// UNUSED FUNCTION
 }
@@ -763,7 +765,7 @@ void TAIAflyUsuba::start(Teki&)
  * Address:	801EA9C0
  * Size:	0000B0
  */
-void TAIAflyUsuba::act(Teki&)
+bool TAIAflyUsuba::act(Teki&)
 {
 	/*
 	.loc_0x0:

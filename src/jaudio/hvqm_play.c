@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct StreamHeader_ StreamHeader;
+
 /*
  * --INFO--
  * Address:	8001DC80

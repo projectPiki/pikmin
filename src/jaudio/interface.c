@@ -1,4 +1,5 @@
 #include "types.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Mar.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TAImarSoundTable::TAImarSoundTable()
  * Size:	000440
  */
 TAImarParameters::TAImarParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -361,6 +362,7 @@ TAImarParameters::TAImarParameters()
  * Size:	000DE8
  */
 TAImarStrategy::TAImarStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1489,7 +1491,7 @@ void TAImarStrategy::act(Teki&)
  * Address:	801A6BEC
  * Size:	0000C4
  */
-void TAImarStrategy::interact(Teki&, TekiInteractionKey&)
+bool TAImarStrategy::interact(Teki&, TekiInteractionKey&)
 {
 	/*
 	.loc_0x0:
@@ -1810,7 +1812,7 @@ void TAIAinitMar::start(Teki&)
  * Address:	801A6FE8
  * Size:	000008
  */
-u32 TAIAinitMar::act(Teki&) { return 0x1; }
+bool TAIAinitMar::act(Teki&) { return true; }
 
 /*
  * --INFO--
@@ -1861,14 +1863,14 @@ void TAIAwatchNavi::start(Teki&)
  * Address:	801A7060
  * Size:	000008
  */
-u32 TAIAwatchNavi::act(Teki&) { return 0x1; }
+bool TAIAwatchNavi::act(Teki&) { return true; }
 
 /*
  * --INFO--
  * Address:	801A7068
  * Size:	000018
  */
-void TAIAflyingDistanceInTerritoryMar::getVelocity(Teki&)
+f32 TAIAflyingDistanceInTerritoryMar::getVelocity(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1886,7 +1888,7 @@ void TAIAflyingDistanceInTerritoryMar::getVelocity(Teki&)
  * Address:	801A7080
  * Size:	000018
  */
-void TAIAflyingDistanceInTerritoryMar::getOffset(Teki&)
+f32 TAIAflyingDistanceInTerritoryMar::getOffset(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1937,7 +1939,7 @@ void TAIAfireBreathMar::start(Teki&)
  * Address:	801A70E4
  * Size:	000020
  */
-void TAIAfireBreathMar::act(Teki&)
+bool TAIAfireBreathMar::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1957,7 +1959,7 @@ void TAIAfireBreathMar::act(Teki&)
  * Address:	801A7104
  * Size:	000008
  */
-void TAIAfireBreathMar::getPreviousAnimSpeed(Teki&)
+f32 TAIAfireBreathMar::getPreviousAnimSpeed(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1971,7 +1973,7 @@ void TAIAfireBreathMar::getPreviousAnimSpeed(Teki&)
  * Address:	801A710C
  * Size:	000018
  */
-void TAIAfireBreathMar::getAttackAnimSpeed(Teki&)
+f32 TAIAfireBreathMar::getAttackAnimSpeed(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1989,7 +1991,7 @@ void TAIAfireBreathMar::getAttackAnimSpeed(Teki&)
  * Address:	801A7124
  * Size:	000274
  */
-void BreathEffect::invoke(Teki&)
+bool BreathEffect::invoke(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2162,7 +2164,7 @@ void BreathEffect::invoke(Teki&)
  * Address:	801A7398
  * Size:	000238
  */
-void TAIAflyingDistanceMar::act(Teki&)
+bool TAIAflyingDistanceMar::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2336,7 +2338,7 @@ void TAIAflyingDistanceMar::act(Teki&)
  * Address:	801A75D0
  * Size:	000008
  */
-void TAIAflyingDistanceMar::getGoalAreaRange(Teki&)
+f32 TAIAflyingDistanceMar::getGoalAreaRange(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2350,7 +2352,7 @@ void TAIAflyingDistanceMar::getGoalAreaRange(Teki&)
  * Address:	801A75D8
  * Size:	000018
  */
-void TAIAflyingDistanceMar::getOffset(Teki&)
+f32 TAIAflyingDistanceMar::getOffset(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2368,7 +2370,7 @@ void TAIAflyingDistanceMar::getOffset(Teki&)
  * Address:	801A75F0
  * Size:	000008
  */
-void FlyingDistance::getOffset(Teki&)
+f32 FlyingDistance::getOffset(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2382,7 +2384,7 @@ void FlyingDistance::getOffset(Teki&)
  * Address:	801A75F8
  * Size:	000018
  */
-void TAIAtimerTakeOffMar::getFrameMax(Teki&)
+f32 TAIAtimerTakeOffMar::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2415,7 +2417,7 @@ void TAIAtimerReaction::start(Teki&)
  * Address:	801A761C
  * Size:	00005C
  */
-void TAIAtimerReaction::act(Teki&)
+bool TAIAtimerReaction::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2454,7 +2456,7 @@ void TAIAtimerReaction::act(Teki&)
  * Address:	801A7678
  * Size:	000008
  */
-void TAIAtimerReaction::getFrameMax(Teki&)
+f32 TAIAtimerReaction::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2533,7 +2535,7 @@ void TAIAtakeOffMar::startFlying(Teki&)
  * Address:	801A774C
  * Size:	000018
  */
-void TAIAstickingPikiMar::getPikiNum(Teki&)
+int TAIAstickingPikiMar::getPikiNum(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2558,7 +2560,7 @@ void TAIAstickingPiki::start(Teki&) { }
  * Address:	801A7768
  * Size:	000018
  */
-void TAIAflickCheckMar::getDamageCountLimit(Teki&)
+int TAIAflickCheckMar::getDamageCountLimit(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2671,7 +2673,7 @@ void TAIAlandingMar::landingEffect(Teki&)
  * Address:	801A78B4
  * Size:	000018
  */
-void TAIAstickingPikiMarFly::getPikiNum(Teki&)
+int TAIAstickingPikiMarFly::getPikiNum(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2767,7 +2769,7 @@ void TAIAflickingMar::flick(Teki&)
  * Address:	801A799C
  * Size:	000008
  */
-void TAIAflicking::getFlickDirection(Teki&)
+f32 TAIAflicking::getFlickDirection(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2796,7 +2798,7 @@ void TAIAflickCheckTimerMar::start(Teki&)
  * Address:	801A79B0
  * Size:	0000F0
  */
-void TAIAflickCheckTimerMar::act(Teki&)
+bool TAIAflickCheckTimerMar::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2874,7 +2876,7 @@ void TAIAflickCheckTimerMar::act(Teki&)
  * Address:	801A7AA0
  * Size:	000018
  */
-void TAIAflyingBaseMar::getFlyingStayVelocity(Teki&)
+f32 TAIAflyingBaseMar::getFlyingStayVelocity(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2922,7 +2924,7 @@ void TAIAdyingMar::start(Teki&)
  * Address:	801A7B00
  * Size:	0002D0
  */
-void TAIAdyingMar::act(Teki&)
+bool TAIAdyingMar::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -3142,7 +3144,7 @@ void __sinit_TAImar_cpp(void)
  * Address:	801A7DE0
  * Size:	000208
  */
-void TAIeffectAttackEventCallBackMar::hitCreature(zen::particleGenerator*, TAIeffectAttackParam*, Creature*, Vector3f)
+bool TAIeffectAttackEventCallBackMar::hitCreature(zen::particleGenerator*, TAIeffectAttackParam*, Creature*, Vector3f)
 {
 	/*
 	.loc_0x0:
@@ -3332,7 +3334,7 @@ void TAIeffectAttackEventCallBackMar::playEventSound(zen::particleGenerator*, TA
  * Address:	801A8028
  * Size:	000458
  */
-void TAIeffectAttackEventCallBackMar::hitMap(TAIeffectAttackParam*)
+bool TAIeffectAttackEventCallBackMar::hitMap(TAIeffectAttackParam*)
 {
 	/*
 	.loc_0x0:
@@ -3628,33 +3630,5 @@ void TAIeffectAttackEventCallBackMar::hitMap(TAIeffectAttackParam*)
 	  addi      r1, r1, 0x138
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801A8480
- * Size:	000008
- */
-void TAIAflyingDistanceMar::@8 @getOffset(Teki&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0xEAC
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801A8488
- * Size:	000008
- */
-void TAIAflyingDistanceInTerritoryMar::@12 @getOffset(Teki&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0xC
-	  b         -0x140C
 	*/
 }

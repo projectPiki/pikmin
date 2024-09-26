@@ -8,12 +8,13 @@
 #define ExceptionHookDestination 0x80000048
 #define IsDebuggerPresent        0x80000040
 
-// static int __DBInterface;
-
-struct DBInterface {
+typedef struct DBInterface {
 	u8 filler0[4];
 	u32 unk4;
-};
+} DBInterface;
+
+extern DBInterface* __DBInterface;
+extern int DBVerbose;
 
 void DBInit(void);
 void DBInitComm(vu8**, AmcEXICallback); // possibly not this type, but some similar construction
@@ -25,7 +26,7 @@ BOOL DBWrite(const void*, u32);
 void DBOpen();
 void DBClose();
 
-static void __DBExceptionDestination(void);
+void __DBExceptionDestination(void);
 void DBPrintf(const char* format, ...);
 
 #endif

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/KabekuiC.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
  * Size:	000478
  */
 TAIkabekuiCParameters::TAIkabekuiCParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -375,6 +376,7 @@ TAIkabekuiCParameters::TAIkabekuiCParameters()
  * Size:	00129C
  */
 TAIkabekuiCStrategy::TAIkabekuiCStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -2186,7 +2188,7 @@ void TAIkabekuiCAnimation::makeDefaultAnimations()
  * Address:	801CF5B4
  * Size:	000018
  */
-void TAIAsleepKabekuiC::getFrameMax(Teki&)
+f32 TAIAsleepKabekuiC::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2204,7 +2206,7 @@ void TAIAsleepKabekuiC::getFrameMax(Teki&)
  * Address:	801CF5CC
  * Size:	000018
  */
-void TAIAdiveKabekuiC::getFrameMax(Teki&)
+f32 TAIAdiveKabekuiC::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2242,7 +2244,7 @@ void TAIAattackWorkObjectKabekuiC::start(Teki&)
  * Address:	801CF604
  * Size:	000020
  */
-void TAIAattackWorkObjectKabekuiC::act(Teki&)
+bool TAIAattackWorkObjectKabekuiC::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2262,7 +2264,7 @@ void TAIAattackWorkObjectKabekuiC::act(Teki&)
  * Address:	801CF624
  * Size:	000018
  */
-void TAIAattackWorkObjectKabekuiC::getDamage(Teki&)
+f32 TAIAattackWorkObjectKabekuiC::getDamage(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2280,7 +2282,7 @@ void TAIAattackWorkObjectKabekuiC::getDamage(Teki&)
  * Address:	801CF63C
  * Size:	000018
  */
-void TAIAattackWorkObjectKabekuiC::getAttackPointRadius(Teki&)
+f32 TAIAattackWorkObjectKabekuiC::getAttackPointRadius(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2445,7 +2447,7 @@ void TAIAlandingKabekuiC::start(Teki&)
  * Address:	801CF828
  * Size:	0001E4
  */
-void TAIAlandingKabekuiC::act(Teki&)
+bool TAIAlandingKabekuiC::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2588,7 +2590,7 @@ void TAIAlandingKabekuiC::act(Teki&)
  * Address:	801CFA0C
  * Size:	000018
  */
-void TAIAmoreLifeKabekuiC::getLifePercentThreshold(Teki&)
+f32 TAIAmoreLifeKabekuiC::getLifePercentThreshold(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2606,7 +2608,7 @@ void TAIAmoreLifeKabekuiC::getLifePercentThreshold(Teki&)
  * Address:	801CFA24
  * Size:	000008
  */
-u32 TAIAcheckPikiFlyKabekuiC::act(Teki&) { return 0x0; }
+bool TAIAcheckPikiFlyKabekuiC::act(Teki&) { return false; }
 
 /*
  * --INFO--
@@ -2640,7 +2642,7 @@ void TAIAflyingMotionKabekuiC::start(Teki&)
  * Address:	801CFA68
  * Size:	00003C
  */
-void TAIAflyingBaseKabekuiC::getFlyingStayVelocity(Teki&)
+f32 TAIAflyingBaseKabekuiC::getFlyingStayVelocity(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2669,7 +2671,7 @@ void TAIAflyingBaseKabekuiC::getFlyingStayVelocity(Teki&)
  * Address:	801CFAA4
  * Size:	000028
  */
-void @unnamed @ ::rippleEffect::invoke(zen::particleGenerator*)
+bool rippleEffect::invoke(zen::particleGenerator*)
 {
 	/*
 	.loc_0x0:
@@ -2755,7 +2757,7 @@ void TAIAtakeOffKabekuiC::start(Teki&)
  * Address:	801CFB94
  * Size:	000230
  */
-void TAIAtakeOffKabekuiC::act(Teki&)
+bool TAIAtakeOffKabekuiC::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2917,7 +2919,7 @@ void TAIAtakeOffKabekuiC::act(Teki&)
  * Address:	801CFDC4
  * Size:	000018
  */
-void TAIAlessLifeKabekuiC::getLifePercentThreshold(Teki&)
+f32 TAIAlessLifeKabekuiC::getLifePercentThreshold(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2935,7 +2937,7 @@ void TAIAlessLifeKabekuiC::getLifePercentThreshold(Teki&)
  * Address:	801CFDDC
  * Size:	000018
  */
-void TAIAbiteForKabekuiC::getPikiAttackSize(Teki&)
+f32 TAIAbiteForKabekuiC::getPikiAttackSize(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2953,7 +2955,7 @@ void TAIAbiteForKabekuiC::getPikiAttackSize(Teki&)
  * Address:	801CFDF4
  * Size:	000018
  */
-void TAIAbiteForKabekuiC::getNaviAttackSize(Teki&)
+f32 TAIAbiteForKabekuiC::getNaviAttackSize(Teki&)
 {
 	/*
 	.loc_0x0:

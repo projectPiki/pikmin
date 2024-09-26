@@ -10,8 +10,8 @@ template <typename T>
 struct PSUTree {
 	~PSUTree();
 
-	void getFirstChild() const;
-	void getEndChild() const;
+	PSUTree<T>* getFirstChild() const;
+	PSUTree<T>* getEndChild() const;
 
 	// TODO: members
 };

@@ -1,4 +1,10 @@
-#include "types.h"
+#include "PowerPC_EABI_Support/Runtime/NMWException.h"
+#include "PowerPC_EABI_Support/Runtime/MWCPlusLib.h"
+
+typedef struct ThrowContext ThrowContext;
+typedef struct MWExceptionInfo MWExceptionInfo;
+typedef struct ex_specification ex_specification;
+typedef struct ex_deletepointercond ex_deletepointercond;
 
 /*
  * --INFO--
@@ -65,10 +71,10 @@ void __unexpected(void)
  * Address:	........
  * Size:	000084
  */
-void std::bad_exception::~bad_exception()
-{
-	// UNUSED FUNCTION
-}
+// std::bad_exception::~bad_exception()
+// {
+// 	// UNUSED FUNCTION
+// }
 
 /*
  * --INFO--
@@ -100,125 +106,125 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
- */
-void ExPPC_DeletePointer(ThrowContext *, const ex_deletepointer *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	00005C
+//  */
+// void ExPPC_DeletePointer(ThrowContext *, const ex_deletepointer *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
- */
-void ExPPC_DestroyMemberArray(ThrowContext *, const ex_destroymemberarray *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	0000BC
+//  */
+// void ExPPC_DestroyMemberArray(ThrowContext *, const ex_destroymemberarray *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
- */
-void ExPPC_DestroyMemberCond(ThrowContext *, const ex_destroymembercond *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	0000A4
+//  */
+// void ExPPC_DestroyMemberCond(ThrowContext *, const ex_destroymembercond *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
- */
-void ExPPC_DestroyBase(ThrowContext *, const ex_destroymember *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	000068
+//  */
+// void ExPPC_DestroyBase(ThrowContext *, const ex_destroymember *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
- */
-void ExPPC_DestroyMember(ThrowContext *, const ex_destroymember *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	000068
+//  */
+// void ExPPC_DestroyMember(ThrowContext *, const ex_destroymember *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
- */
-void ExPPC_DestroyLocalArray(ThrowContext *, const ex_destroylocalarray *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	000090
+//  */
+// void ExPPC_DestroyLocalArray(ThrowContext *, const ex_destroylocalarray *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
- */
-void ExPPC_DestroyLocalPointer(ThrowContext *, const ex_destroylocalpointer *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	000060
+//  */
+// void ExPPC_DestroyLocalPointer(ThrowContext *, const ex_destroylocalpointer *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
- */
-void ExPPC_DestroyLocalCond(ThrowContext *, const ex_destroylocalcond *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	00007C
+//  */
+// void ExPPC_DestroyLocalCond(ThrowContext *, const ex_destroylocalcond *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
- */
-void ExPPC_DestroyLocal(ThrowContext *, const ex_destroylocal *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	00003C
+//  */
+// void ExPPC_DestroyLocal(ThrowContext *, const ex_destroylocal *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001F0
- */
-void ExPPC_PopStackFrame(ThrowContext *, MWExceptionInfo *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	0001F0
+//  */
+// void ExPPC_PopStackFrame(ThrowContext *, MWExceptionInfo *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00021C
- */
-void ExPPC_NextAction(ActionIterator *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	00021C
+//  */
+// void ExPPC_NextAction(ActionIterator *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
- */
-void ExPPC_CurrentAction(const ActionIterator *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	000020
+//  */
+// void ExPPC_CurrentAction(const ActionIterator *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
 /*
  * --INFO--
@@ -240,15 +246,15 @@ void ExPPC_FindExceptionRecord(char *, MWExceptionInfo *)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
- */
-void ExPPC_FindExceptionFragment(char *, FragmentInfo *)
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	000098
+//  */
+// void ExPPC_FindExceptionFragment(char *, FragmentInfo *)
+// {
+// 	// UNUSED FUNCTION
+// }
 
 /*
  * --INFO--
@@ -312,12 +318,12 @@ void __register_fragment(void)
 */
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
- */
-void std::bad_exception::what() const
-{
-	// UNUSED FUNCTION
-}
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	00000C
+//  */
+// void std::bad_exception::what() const
+// {
+// 	// UNUSED FUNCTION
+// }

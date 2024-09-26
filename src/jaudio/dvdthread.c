@@ -1,4 +1,15 @@
-#include "types.h"
+#include "Dolphin/dvd.h"
+
+// from Animal Crossing
+typedef struct DVDCall_ {
+	u32 owner;
+	char fileName[64];
+	u32 dst;
+	u32 src;
+	u32 length;
+	u32* callbackStatus;
+	// Jac_DVDCallback callback;
+} DVDCall;
 
 /*
  * --INFO--

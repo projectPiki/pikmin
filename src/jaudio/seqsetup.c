@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct seqp_ seqp_;
+
 /*
  * --INFO--
  * Address:	80013DA0

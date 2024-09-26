@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/DamageEffect.h"
 
 /*
  * --INFO--

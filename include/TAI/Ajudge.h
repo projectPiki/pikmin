@@ -296,4 +296,35 @@ struct TAIAcheckTurnAngle : public TaiAction {
 	// TODO: members
 };
 
+/**
+ * @brief TODO
+ */
+struct TAIAoutsideTerritory : public TaiAction {
+	inline TAIAoutsideTerritory() // TODO: this is a guess
+	    : TaiAction(-1)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAattackableAngleTarget : public TAIAattackableTarget {
+	inline TAIAattackableAngleTarget() // TODO: this is a guess
+	{
+	}
+
+	virtual bool judge(Teki&); // _1C
+
+	// _04     = VTBL
+	// _00-_08 = TAIAattackableTarget?
+	// TODO: members
+};
+
 #endif

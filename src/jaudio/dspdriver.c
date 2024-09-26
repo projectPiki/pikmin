@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct dspch_ dspch_;
+
 /*
  * --INFO--
  * Address:	........

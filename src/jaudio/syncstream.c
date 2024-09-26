@@ -1,4 +1,10 @@
 #include "types.h"
+#include "Dolphin/dvd.h"
+
+typedef struct dspch_ dspch_;
+typedef struct DSPchannel_ DSPchannel_;
+typedef struct StreamCtrl_ StreamCtrl_;
+typedef struct BufControl_ BufControl_;
 
 /*
  * --INFO--

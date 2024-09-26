@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct Wave_;
+
 /*
  * --INFO--
  * Address:	8000B560

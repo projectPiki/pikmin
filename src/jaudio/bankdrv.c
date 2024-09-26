@@ -1,5 +1,14 @@
 #include "types.h"
 
+typedef struct Bank_ Bank_;
+typedef struct Inst_ Inst_;
+typedef struct Perc_ Perc_;
+typedef struct Voice_ Voice_;
+typedef struct Sense_ Sense_;
+typedef struct Rand_ Rand_;
+typedef struct Osc_ Osc_;
+typedef struct Oscbuf_ Oscbuf_;
+
 /*
  * --INFO--
  * Address:	8000CFC0

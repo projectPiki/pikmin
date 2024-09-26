@@ -1,5 +1,19 @@
 #include "types.h"
 
+typedef struct jc_ jc_;
+typedef struct Inst_ Inst_;
+typedef struct Pmap_ Pmap_;
+typedef struct Osc_ Osc_;
+typedef struct jcs_ jcs_;
+typedef struct CtrlWave_ CtrlWave_;
+typedef enum JCSTATUS {
+	// TODO: this
+} JCSTATUS;
+
+typedef enum SOUNDID_ {
+	// TODO: this
+} SOUNDID_;
+
 /*
  * --INFO--
  * Address:	80015140
@@ -1273,7 +1287,7 @@ void Gate_1Shot(jc_*, u8, u8, s32)
 void UpdatePause_1Shot(jc_*, u8 a1)
 {
 	// Generated from stb r4, 0x2(r3)
-	_02 = a1;
+	// _02 = a1;
 }
 
 /*

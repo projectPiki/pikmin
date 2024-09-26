@@ -61,6 +61,22 @@ struct TAIAgoTargetPriorityFaceDir : public TAIAreserveMotion {
 /**
  * @brief TODO
  */
+struct TAIAgoTargetPiki : public TAIAgoTargetPriorityFaceDir {
+	inline TAIAgoTargetPiki() // TODO: this is a guess
+	{
+	}
+
+	virtual bool act(Teki&);          // _10
+	virtual bool checkArrival(Teki&); // _1C
+
+	// _04     = VTBL
+	// _00-_0C = TAIAgoTargetPriorityFaceDir?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
 struct TAIAgoGoalPath : public TAIAgoTargetPriorityFaceDir {
 	inline TAIAgoGoalPath() // TODO: this is a guess
 	{
@@ -282,9 +298,9 @@ struct TAIAwait : public TAIAreserveMotion {
 struct TAIApatrol : public TAIAturnToTarget {
 	TAIApatrol(int, int, int, int, Vector3f*, int, bool);
 
-	virtual void start(Teki&);      // _08
-	virtual bool act(Teki&);        // _10
-	virtual void getTimeout(Teki&); // _20
+	virtual void start(Teki&);     // _08
+	virtual bool act(Teki&);       // _10
+	virtual f32 getTimeout(Teki&); // _20
 
 	// unused/inlined:
 	void changeStatus(int, Teki&);
@@ -520,6 +536,23 @@ struct TAIAtakeOff : public TAIAreserveMotion {
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAwatchNavi : public TaiAction {
+	inline TAIAwatchNavi() // TODO: this is a guess
+	    : TaiAction(-1)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
 	// TODO: members
 };
 

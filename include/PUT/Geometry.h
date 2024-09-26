@@ -22,6 +22,8 @@ struct PUTRect {
 	void resize(int, int);
 	void normalize();
 	void isEmpty() const;
+	s16 getWidth() const;
+	s16 getHeight() const;
 
 	// unused/inlined:
 	void add(const PUTPoint&);

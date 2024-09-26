@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/KabekuiB.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TAIkabekuiBSoundTable::TAIkabekuiBSoundTable()
  * Size:	0003C0
  */
 TAIkabekuiBParameters::TAIkabekuiBParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -329,6 +330,7 @@ TAIkabekuiBParameters::TAIkabekuiBParameters()
  * Size:	000E3C
  */
 TAIkabekuiBStrategy::TAIkabekuiBStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1838,7 +1840,7 @@ void TAIkabekuiBAnimation::makeDefaultAnimations()
  * Address:	801CD4E4
  * Size:	000018
  */
-void TAIAsleepKabekuiB::getFrameMax(Teki&)
+f32 TAIAsleepKabekuiB::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1856,7 +1858,7 @@ void TAIAsleepKabekuiB::getFrameMax(Teki&)
  * Address:	801CD4FC
  * Size:	000018
  */
-void TAIAdiveKabekuiB::getFrameMax(Teki&)
+f32 TAIAdiveKabekuiB::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1894,7 +1896,7 @@ void TAIAattackWorkObjectKabekuiB::start(Teki&)
  * Address:	801CD534
  * Size:	000020
  */
-void TAIAattackWorkObjectKabekuiB::act(Teki&)
+bool TAIAattackWorkObjectKabekuiB::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1914,7 +1916,7 @@ void TAIAattackWorkObjectKabekuiB::act(Teki&)
  * Address:	801CD554
  * Size:	000018
  */
-void TAIAattackWorkObjectKabekuiB::getDamage(Teki&)
+f32 TAIAattackWorkObjectKabekuiB::getDamage(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1932,7 +1934,7 @@ void TAIAattackWorkObjectKabekuiB::getDamage(Teki&)
  * Address:	801CD56C
  * Size:	000018
  */
-void TAIAattackWorkObjectKabekuiB::getAttackPointRadius(Teki&)
+f32 TAIAattackWorkObjectKabekuiB::getAttackPointRadius(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2059,7 +2061,7 @@ void TAIAattackWorkObjectKabekuiB::attackEffect(Teki&)
  * Address:	801CD6F0
  * Size:	000018
  */
-void TAIAbiteForKabekuiB::getPikiAttackSize(Teki&)
+f32 TAIAbiteForKabekuiB::getPikiAttackSize(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -2077,7 +2079,7 @@ void TAIAbiteForKabekuiB::getPikiAttackSize(Teki&)
  * Address:	801CD708
  * Size:	000018
  */
-void TAIAbiteForKabekuiB::getNaviAttackSize(Teki&)
+f32 TAIAbiteForKabekuiB::getNaviAttackSize(Teki&)
 {
 	/*
 	.loc_0x0:

@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct jaheap_ jaheap_;
+
 /*
  * --INFO--
  * Address:	........

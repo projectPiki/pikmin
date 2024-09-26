@@ -1,4 +1,5 @@
-#include "types.h"
+#include "zen/DrawWorldMap.h"
+#include "P2D/Pane.h"
 
 /*
  * --INFO--
@@ -2692,7 +2693,7 @@ void P2DPane::hide()
  * Address:	801DD740
  * Size:	00002C
  */
-@unnamed @ ::WorldMapTitleObj::WorldMapTitleObj()
+WorldMapTitleObj::WorldMapTitleObj()
 {
 	/*
 	.loc_0x0:
@@ -3478,7 +3479,7 @@ zen::WorldMapCursorOnyon::WorldMapCursorOnyon()
  * Address:	801DE1A0
  * Size:	000164
  */
-void @unnamed @ ::DrawWorldMapDateCallBack::setTex()
+void DrawWorldMapDateCallBack::setTex()
 {
 	/*
 	.loc_0x0:
@@ -3783,7 +3784,7 @@ zen::WorldMapWipe::WorldMapWipe()
  * Address:	801DE554
  * Size:	000188
  */
-void @unnamed @ ::WorldMapCoursePoint::setPane(P2DScreen*, u32, u32, u32, P2DScreen*, u32)
+void WorldMapCoursePoint::setPane(P2DScreen*, u32, u32, u32, P2DScreen*, u32)
 {
 	/*
 	.loc_0x0:
@@ -3899,7 +3900,7 @@ void @unnamed @ ::WorldMapCoursePoint::setPane(P2DScreen*, u32, u32, u32, P2DScr
  * Address:	801DE6DC
  * Size:	000038
  */
-@unnamed @ ::WorldMapCoursePoint::WorldMapCoursePoint()
+WorldMapCoursePoint::WorldMapCoursePoint()
 {
 	/*
 	.loc_0x0:
@@ -4834,7 +4835,7 @@ void zen::DrawWorldMap::update(Controller*)
  * Address:	801DF328
  * Size:	00025C
  */
-void @unnamed @ ::WorldMapTitleObj::update()
+void WorldMapTitleObj::update()
 {
 	/*
 	.loc_0x0:
@@ -9169,7 +9170,7 @@ void zen::WorldMapCursorMgr::updateOnyonPos(Vector3f*, Vector3f*, Vector3f*)
  * Address:	801E2DC4
  * Size:	000048
  */
-void @unnamed @ ::WorldMapCoursePoint::select()
+void WorldMapCoursePoint::select()
 {
 	/*
 	.loc_0x0:
@@ -14481,7 +14482,7 @@ void zen::DrawWorldMap::closeMapInfo()
  * Address:	801E751C
  * Size:	00020C
  */
-void zen::WorldMapPartsInfoMgr::setActiveMapNo(@unnamed @ ::WorldMapName)
+void zen::WorldMapPartsInfoMgr::setActiveMapNo(WorldMapName)
 {
 	/*
 	.loc_0x0:
@@ -14856,7 +14857,7 @@ void zen::DrawWorldMap::openMapInfo()
  * Address:	801E7948
  * Size:	000168
  */
-void @unnamed @ ::DrawWorldMapDateCallBack::invoke(P2DPane*)
+bool DrawWorldMapDateCallBack::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:

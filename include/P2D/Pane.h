@@ -75,6 +75,7 @@ struct P2DPane {
 	void clip(const PUTRect&);
 	void loadChildResource();
 	void rotate(P2DRotateAxis, f32);
+	void hide();
 
 	// unused/inlined:
 	void init();

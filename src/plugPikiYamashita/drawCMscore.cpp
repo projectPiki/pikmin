@@ -1,4 +1,5 @@
-#include "types.h"
+#include "zen/DrawCM.h"
+#include "zen/Number.h"
 
 /*
  * --INFO--
@@ -25,7 +26,7 @@ static void _Print(char*, ...)
  * Address:	801ED8AC
  * Size:	000150
  */
-void zen::DrawCMscoreObj::modeMove()
+bool zen::DrawCMscoreObj::modeMove()
 {
 	/*
 	.loc_0x0:
@@ -133,7 +134,7 @@ void zen::DrawCMscoreObj::modeMove()
  * Address:	801ED9FC
  * Size:	000008
  */
-u32 zen::DrawCMscoreObj::modeWait() { return 0x0; }
+bool zen::DrawCMscoreObj::modeWait() { return false; }
 
 /*
  * --INFO--
@@ -793,14 +794,14 @@ void zen::DrawCMscoreMgr::appear(f32)
  * Address:	801EE228
  * Size:	000008
  */
-u32 zen::DrawCMscoreMgr::modeSleep() { return 0x0; }
+bool zen::DrawCMscoreMgr::modeSleep() { return false; }
 
 /*
  * --INFO--
  * Address:	801EE230
  * Size:	00007C
  */
-void zen::DrawCMscoreMgr::modeAppear()
+bool zen::DrawCMscoreMgr::modeAppear()
 {
 	/*
 	.loc_0x0:
@@ -851,7 +852,7 @@ void zen::DrawCMscoreMgr::modeAppear()
  * Address:	801EE2AC
  * Size:	000014
  */
-void zen::DrawCMscoreMgr::modeWait()
+bool zen::DrawCMscoreMgr::modeWait()
 {
 	/*
 	.loc_0x0:

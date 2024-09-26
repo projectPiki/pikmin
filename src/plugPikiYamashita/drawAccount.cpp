@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/DrawAccount.h"
 
 /*
  * --INFO--
@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	001474
  */
 zen::DrawAccount::DrawAccount()
+    : DrawScreen(nullptr, nullptr, false, false)
 {
 	/*
 	.loc_0x0:

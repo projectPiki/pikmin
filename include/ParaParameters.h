@@ -36,7 +36,7 @@ struct ParaParameters {
 		}
 	}
 
-	void get(int);
+	T get(int);
 
 	inline void input(ParaParameters* other)
 	{

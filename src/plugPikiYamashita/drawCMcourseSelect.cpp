@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/DrawCM.h"
 
 /*
  * --INFO--
@@ -1313,4 +1313,4 @@ void zen::DrawCMCSmenu::update(Controller*)
  * Address:	801ED478
  * Size:	000008
  */
-u32 zen::DrawMenuBase::modeDefault(Controller*) { return 0x0; }
+bool zen::DrawMenuBase::modeDefault(Controller*) { return false; }

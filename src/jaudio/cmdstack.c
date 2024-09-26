@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct JPorthead_ JPorthead_;
+
 /*
  * --INFO--
  * Address:	8000E300

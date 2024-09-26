@@ -10,13 +10,14 @@ extern "C" {
 #endif // ifdef __cplusplus
 
 ///////// MESSAGE TYPES //////////
-typedef struct OSMessageQueue OSMessageQueue;
+typedef struct OSMesgQueue_s OSMesgQueue_s;
+typedef struct OSMesgQueue_s OSMessageQueue;
 
 // Useful typedef for messages.
 typedef void* OSMessage;
 
 // Struct for managing the message queue.
-struct OSMessageQueue {
+struct OSMesgQueue_s {
 	OSThreadQueue queueSend;    // _00
 	OSThreadQueue queueReceive; // _08
 	OSMessage* msgArray;        // _10, array of messages.

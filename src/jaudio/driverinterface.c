@@ -1,5 +1,10 @@
 #include "types.h"
 
+typedef struct jc_ jc_;
+typedef struct jcs_ jcs_;
+typedef struct PanMatrix_ PanMatrix_;
+typedef struct dspch_ dspch_;
+
 /*
  * --INFO--
  * Address:	80009400

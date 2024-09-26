@@ -2,8 +2,9 @@
 #include "jaudio/interleave.h"
 
 // static struct il_buf interleavebuf; // should be static; only extern for the sake of BSS order
-extern struct il_buf interleavebuf;
-static struct il_buf* buf = &interleavebuf;
+// extern struct il_buf interleavebuf;
+static il_buf interleavebuf;
+static il_buf* buf = &interleavebuf;
 
 /*
  * --INFO--
@@ -66,14 +67,14 @@ void Jac_SendStreamData(u8*, u32)
  * Address:	8001DB20
  * Size:	000020
  */
-BOOL Jac_CheckStreamFree__FUl(u32 p1) { return (buf->_18 >= p1) ? TRUE : FALSE; }
+BOOL Jac_CheckStreamFree(u32 p1) { return (buf->_18 >= p1) ? TRUE : FALSE; }
 
 /*
  * --INFO--
  * Address:	8001DB40
  * Size:	000020
  */
-BOOL Jac_CheckStreamRemain__FUl(u32 p1) { return (buf->_14 < p1) ? FALSE : TRUE; }
+BOOL Jac_CheckStreamRemain(u32 p1) { return (buf->_14 < p1) ? FALSE : TRUE; }
 
 /*
  * --INFO--
@@ -162,7 +163,7 @@ void Jac_GetStreamData(u8*, u32)
  * Address:	8001DC20
  * Size:	000044
  */
-void Jac_InitStreamData__FPUcUl(u8* param_1, u32 param_2)
+void Jac_InitStreamData(u8* param_1, u32 param_2)
 {
 	buf->_04 = param_1;
 	buf->_08 = param_2;

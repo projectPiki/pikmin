@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/HibaA.h"
 
 /*
  * --INFO--
@@ -77,6 +77,7 @@ TAIhibaASoundTable::TAIhibaASoundTable()
  * Size:	0002F8
  */
 TAIhibaAParameters::TAIhibaAParameters()
+    : TekiParameters(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -279,6 +280,7 @@ TAIhibaAParameters::TAIhibaAParameters()
  * Size:	0001E8
  */
 TAIhibaAStrategy::TAIhibaAStrategy()
+    : YaiStrategy(0, 0) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1091,7 +1093,7 @@ void TAIAfireAttackHibaA::start(Teki&)
  * Address:	801D5660
  * Size:	0002E4
  */
-void TAIAfireAttackHibaA::act(Teki&)
+bool TAIAfireAttackHibaA::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1298,7 +1300,7 @@ void TAIAfireAttackHibaA::act(Teki&)
  * Address:	801D5944
  * Size:	000018
  */
-void TAIAtimerReactionHibaA::getFrameMax(Teki&)
+f32 TAIAtimerReactionHibaA::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1353,7 +1355,7 @@ void TAIAinitHibaA::start(Teki&)
  * Address:	801D59C0
  * Size:	000008
  */
-u32 TAIAinitHibaA::act(Teki&) { return 0x1; }
+bool TAIAinitHibaA::act(Teki&) { return true; }
 
 /*
  * --INFO--
@@ -1376,7 +1378,7 @@ void __sinit_TAIhibaA_cpp(void)
  * Address:	801D59D8
  * Size:	000068
  */
-void TAIeffectAttackEventCallBackHibaA::hitCreature(TAIeffectAttackParam*, Creature*)
+bool TAIeffectAttackEventCallBackHibaA::hitCreature(TAIeffectAttackParam*, Creature*)
 {
 	/*
 	.loc_0x0:
@@ -1414,7 +1416,7 @@ void TAIeffectAttackEventCallBackHibaA::hitCreature(TAIeffectAttackParam*, Creat
  * Address:	801D5A40
  * Size:	000154
  */
-void TAIeffectAttackEventCallBackHibaA::hitMap(TAIeffectAttackParam*)
+bool TAIeffectAttackEventCallBackHibaA::hitMap(TAIeffectAttackParam*)
 {
 	/*
 	.loc_0x0:
@@ -1662,7 +1664,7 @@ void TAIeffectAttackEventCallBackHibaA::ptclHitMap(zen::particleGenerator*, TAIe
  * Address:	801D5D70
  * Size:	0000E0
  */
-void TAIeffectAttackEventCallBackHibaA::hitCheckCulling(zen::particleGenerator*, TAIeffectAttackParam*, Creature*)
+bool TAIeffectAttackEventCallBackHibaA::hitCheckCulling(zen::particleGenerator*, TAIeffectAttackParam*, Creature*)
 {
 	/*
 	.loc_0x0:

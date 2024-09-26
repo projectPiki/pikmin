@@ -1,4 +1,5 @@
-#include "types.h"
+#include "PowerPC_EABI_Support/Runtime/NMWException.h"
+#include "PowerPC_EABI_Support/Runtime/MWCPlusLib.h"
 
 /*
  * --INFO--
@@ -157,71 +158,37 @@ void __construct_array(void)
 */
 }
 
-/*
- * --INFO--
- * Address:	80214B70
- * Size:	0000B8
- */
-void __partial_array_destructor::~__partial_array_destructor()
-{
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x20(r1)
-  stw       r31, 0x1C(r1)
-  stw       r30, 0x18(r1)
-  addi      r30, r4, 0
-  stw       r29, 0x14(r1)
-  mr.       r29, r3
-  beq-      .loc_0x98
-  lwz       r4, 0x10(r29)
-  lwz       r0, 0x8(r29)
-  cmplw     r4, r0
-  bge-      .loc_0x88
-  lwz       r0, 0xC(r29)
-  cmplwi    r0, 0
-  beq-      .loc_0x88
-  lwz       r0, 0x4(r29)
-  lwz       r3, 0x0(r29)
-  mullw     r0, r0, r4
-  add       r31, r3, r0
-  b         .loc_0x7C
+class __partial_array_destructor {
+private:
+	void* p;
+	size_t size;
+	size_t n;
+	ConstructorDestructor dtor;
 
-.loc_0x54:
-  lwz       r0, 0x4(r29)
-  li        r4, -0x1
-  lwz       r12, 0xC(r29)
-  sub       r31, r31, r0
-  mtlr      r12
-  addi      r3, r31, 0
-  blrl
-  lwz       r3, 0x10(r29)
-  subi      r0, r3, 0x1
-  stw       r0, 0x10(r29)
+public:
+	size_t i;
 
-.loc_0x7C:
-  lwz       r0, 0x10(r29)
-  cmplwi    r0, 0
-  bne+      .loc_0x54
+	__partial_array_destructor(void* array, size_t elementsize, size_t nelements, ConstructorDestructor destructor)
+	{
+		p    = array;
+		size = elementsize;
+		n    = nelements;
+		dtor = destructor;
+		i    = n;
+	}
 
-.loc_0x88:
-  extsh.    r0, r30
-  ble-      .loc_0x98
-  mr        r3, r29
-  bl        -0x1CDA58
+	~__partial_array_destructor()
+	{
+		char* ptr;
 
-.loc_0x98:
-  lwz       r0, 0x24(r1)
-  mr        r3, r29
-  lwz       r31, 0x1C(r1)
-  lwz       r30, 0x18(r1)
-  mtlr      r0
-  lwz       r29, 0x14(r1)
-  addi      r1, r1, 0x20
-  blr
-*/
-}
+		if (i < n && dtor) {
+			for (ptr = (char*)p + size * i; i > 0; i--) {
+				ptr -= size;
+				DTORCALL_COMPLETE(dtor, ptr);
+			}
+		}
+	}
+};
 
 /*
  * --INFO--
@@ -336,7 +303,7 @@ void std::unexpected()
  * Address:	........
  * Size:	000010
  */
-void std::set_unexpected(void (*) ())
+unexpected_handler std::set_unexpected(void (*) ())
 {
 	// UNUSED FUNCTION
 }
@@ -356,27 +323,30 @@ void std::terminate()
  * Address:	........
  * Size:	000010
  */
-void std::set_terminate(void (*) ())
+terminate_handler std::set_terminate(void (*) ())
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
- */
-void std::duhandler()
-{
-	// UNUSED FUNCTION
+extern "C" {
+extern void abort();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+namespace std {
+/**
+ * @note Address: N/A
+ * @note Size: 0x28
  */
-void std::dthandler()
-{
-	// UNUSED FUNCTION
-}
+static void duhandler() { terminate(); }
+
+static unexpected_handler uhandler = duhandler;
+
+
+/**
+ * @note Address: N/A
+ * @note Size: 0x20
+ */
+static void dthandler() { abort(); }
+
+static terminate_handler thandler = dthandler;
+} // namespace std

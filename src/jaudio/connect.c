@@ -1,5 +1,10 @@
 #include "types.h"
 
+typedef struct WaveArchive_ WaveArchive_;
+typedef struct WaveArchiveBank_ WaveArchiveBank_;
+typedef struct Ctrl_ Ctrl_;
+typedef struct CtrlGroup_ CtrlGroup_;
+
 /*
  * --INFO--
  * Address:	8000C860

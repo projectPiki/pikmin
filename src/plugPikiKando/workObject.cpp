@@ -311,41 +311,6 @@ WorkObjectMgr::WorkObjectMgr()
 
 /*
  * --INFO--
- * Address:	8009B370
- * Size:	000054
- */
-ObjectMgr::~ObjectMgr()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x3C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4F80
-	  stw       r3, 0x0(r31)
-	  addi      r3, r3, 0x18
-	  extsh.    r0, r4
-	  stw       r3, 0x8(r31)
-	  ble-      .loc_0x3C
-	  mr        r3, r31
-	  bl        -0x541FC
-
-	.loc_0x3C:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	8009B3C4
  * Size:	000094
  */

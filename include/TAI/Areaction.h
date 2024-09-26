@@ -152,4 +152,102 @@ struct TAIAinWaterDamage : public TAIAinWater {
 	// TODO: members
 };
 
+/**
+ * @brief TODO
+ */
+struct TAIAnoReaction : public TaiAction {
+	inline TAIAnoReaction() // TODO: this is a guess
+	    : TaiAction(-1)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAtimerReaction : public TaiAction {
+	inline TAIAtimerReaction() // TODO: this is a guess
+	    : TaiAction(-1)
+	{
+	}
+
+	virtual void start(Teki&);      // _08
+	virtual bool act(Teki&);        // _10
+	virtual f32 getFrameMax(Teki&); // _1C
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAinvincibleOff : public TaiAction {
+	inline TAIAinvincibleOff() // TODO: this is a guess
+	    : TaiAction(-1)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAinvincibleOn : public TaiAction {
+	inline TAIAinvincibleOn() // TODO: this is a guess
+	    : TaiAction(-1)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAshadowOff : public TaiAction {
+	inline TAIAshadowOff() // TODO: this is a guess
+	    : TaiAction(-1)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAshadowOn : public TaiAction {
+	inline TAIAshadowOn() // TODO: this is a guess
+	    : TaiAction(-1)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
 #endif

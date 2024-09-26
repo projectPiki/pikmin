@@ -1,5 +1,7 @@
 #include "types.h"
 
+typedef struct FxlineConfig_ FxlineConfig_;
+
 /*
  * --INFO--
  * Address:	8000BCC0

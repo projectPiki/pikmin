@@ -1,4 +1,4 @@
-#include "types.h"
+#include "zen/DrawCM.h"
 
 /*
  * --INFO--
@@ -211,14 +211,14 @@ void zen::DrawCMtitleObj::appear(f32)
  * Address:	801ED6A0
  * Size:	000008
  */
-u32 zen::DrawCMtitleObj::modeSleep() { return 0x0; }
+bool zen::DrawCMtitleObj::modeSleep() { return false; }
 
 /*
  * --INFO--
  * Address:	801ED6A8
  * Size:	000120
  */
-void zen::DrawCMtitleObj::modeAppear()
+bool zen::DrawCMtitleObj::modeAppear()
 {
 	/*
 	.loc_0x0:
@@ -310,7 +310,7 @@ void zen::DrawCMtitleObj::modeAppear()
  * Address:	801ED7C8
  * Size:	0000E4
  */
-void zen::DrawCMtitleObj::modeWait()
+bool zen::DrawCMtitleObj::modeWait()
 {
 	/*
 	.loc_0x0:

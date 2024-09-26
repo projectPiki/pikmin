@@ -749,7 +749,7 @@ void PcamCamera::parameterUpdated()
  * Address:	801224D4
  * Size:	000010
  */
-void ParaParameters<f32>::get(int)
+f32 ParaParameters<f32>::get(int)
 {
 	/*
 	.loc_0x0:

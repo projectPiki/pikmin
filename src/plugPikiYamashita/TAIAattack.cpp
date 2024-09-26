@@ -1,4 +1,4 @@
-#include "types.h"
+#include "TAI/Aattack.h"
 
 /*
  * --INFO--
@@ -52,7 +52,7 @@ void TAIAattackWorkObject::start(Teki&)
  * Address:	801AE1D8
  * Size:	000254
  */
-void TAIAattackWorkObject::act(Teki&)
+bool TAIAattackWorkObject::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -229,7 +229,7 @@ void TAIAattackWorkObject::act(Teki&)
  * Address:	801AE42C
  * Size:	000008
  */
-void TAIAattackWorkObject::getAttackPointRadius(Teki&)
+f32 TAIAattackWorkObject::getAttackPointRadius(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -243,7 +243,7 @@ void TAIAattackWorkObject::getAttackPointRadius(Teki&)
  * Address:	801AE434
  * Size:	000124
  */
-void TAIAattackWorkObject::attackWorkObject(Teki&)
+bool TAIAattackWorkObject::attackWorkObject(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -341,7 +341,7 @@ void TAIAattackWorkObject::attackEffect(Teki&) { }
  * Address:	801AE55C
  * Size:	000008
  */
-void TAIAattackWorkObject::getDamage(Teki&)
+f32 TAIAattackWorkObject::getDamage(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -355,7 +355,7 @@ void TAIAattackWorkObject::getDamage(Teki&)
  * Address:	801AE564
  * Size:	000218
  */
-void TAIAattackWorkObject::setTargetPosition(Teki&)
+bool TAIAattackWorkObject::setTargetPosition(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -507,7 +507,7 @@ void TAIAattackWorkObject::setTargetPosition(Teki&)
  * Address:	801AE77C
  * Size:	000068
  */
-void TAIAattackWorkObject::getLastFinishedStageBridge(Bridge*)
+int TAIAattackWorkObject::getLastFinishedStageBridge(Bridge*)
 {
 	/*
 	.loc_0x0:
@@ -582,7 +582,7 @@ void TAIAflickingAfterMotionLoop::start(Teki&)
  * Address:	801AE828
  * Size:	00001C
  */
-void TAIAflickingAfterMotionLoop::permitFlick(Teki&)
+bool TAIAflickingAfterMotionLoop::permitFlick(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -603,7 +603,7 @@ void TAIAflickingAfterMotionLoop::permitFlick(Teki&)
  * Address:	801AE844
  * Size:	0000A0
  */
-void TAIAflickingAfterMotionLoop::act(Teki&)
+bool TAIAflickingAfterMotionLoop::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -659,7 +659,7 @@ void TAIAflickingAfterMotionLoop::act(Teki&)
  * Address:	801AE8E4
  * Size:	00008C
  */
-void TAIAtargetNavi::act(Teki&)
+bool TAIAtargetNavi::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -714,7 +714,7 @@ void TAIAtargetNavi::act(Teki&)
  * Address:	801AE970
  * Size:	000158
  */
-void TAIAtargetPiki::act(Teki&)
+bool TAIAtargetPiki::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -876,7 +876,7 @@ void TAIAfireBreath::start(Teki&)
  * Address:	801AEB40
  * Size:	000008
  */
-void TAIAfireBreath::getPreviousAnimSpeed(Teki&)
+f32 TAIAfireBreath::getPreviousAnimSpeed(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -890,7 +890,7 @@ void TAIAfireBreath::getPreviousAnimSpeed(Teki&)
  * Address:	801AEB48
  * Size:	0000D8
  */
-void TAIAfireBreath::act(Teki&)
+bool TAIAfireBreath::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -964,7 +964,7 @@ void TAIAfireBreath::act(Teki&)
  * Address:	801AEC20
  * Size:	000008
  */
-void TAIAfireBreath::getAttackAnimSpeed(Teki&)
+f32 TAIAfireBreath::getAttackAnimSpeed(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -978,7 +978,7 @@ void TAIAfireBreath::getAttackAnimSpeed(Teki&)
  * Address:	801AEC28
  * Size:	000128
  */
-void TAIAflickCheck::act(Teki&)
+bool TAIAflickCheck::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1070,14 +1070,7 @@ void TAIAflickCheck::act(Teki&)
  * Address:	801AED50
  * Size:	000008
  */
-void TAIAflickCheck::getDamageCountLimit(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x8(r3)
-	  blr
-	*/
-}
+int TAIAflickCheck::getDamageCountLimit(Teki&) { return mDamageCountLimit; }
 
 /*
  * --INFO--
@@ -1133,7 +1126,7 @@ void TAIAflicking::start(Teki&)
  * Address:	801AEDEC
  * Size:	000080
  */
-void TAIAflicking::act(Teki&)
+bool TAIAflicking::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1282,7 +1275,7 @@ void TAIAflickingReserveMotion::start(Teki&)
  * Address:	801AEF98
  * Size:	00009C
  */
-void TAIAflickingReserveMotion::act(Teki&)
+bool TAIAflickingReserveMotion::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1389,7 +1382,7 @@ void TAIAflickingReserveMotion::flick(Teki&)
  * Address:	801AF0CC
  * Size:	000008
  */
-void TAIAflickingReserveMotion::getFlickDirection(Teki&)
+f32 TAIAflickingReserveMotion::getFlickDirection(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1448,7 +1441,7 @@ void TAIAbiteForKabekui::start(Teki&)
  * Address:	801AF148
  * Size:	0000D0
  */
-void TAIAbiteForKabekui::act(Teki&)
+bool TAIAbiteForKabekui::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1526,7 +1519,7 @@ void TAIAbiteForKabekui::act(Teki&)
  * Address:	801AF218
  * Size:	0004B4
  */
-void TAIAbiteForKabekui::hitCheck(Teki&)
+bool TAIAbiteForKabekui::hitCheck(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1883,7 +1876,7 @@ void TAIAbiteForKabekui::hitCheck(Teki&)
  * Address:	801AF6CC
  * Size:	000008
  */
-void TAIAbiteForKabekui::getNaviAttackSize(Teki&)
+f32 TAIAbiteForKabekui::getNaviAttackSize(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1897,7 +1890,7 @@ void TAIAbiteForKabekui::getNaviAttackSize(Teki&)
  * Address:	801AF6D4
  * Size:	000008
  */
-void TAIAbiteForKabekui::getPikiAttackSize(Teki&)
+f32 TAIAbiteForKabekui::getPikiAttackSize(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1931,7 +1924,7 @@ void TAIAeatPiki::start(Teki&)
  * Address:	801AF6FC
  * Size:	000080
  */
-void TAIAeatPiki::act(Teki&)
+bool TAIAeatPiki::act(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1999,7 +1992,7 @@ void TAIAeatPiki::eatEffect(Teki&)
  * Address:	801AF7A4
  * Size:	000008
  */
-void TAIAflickingAfterMotionLoop::getFrameMax(Teki&)
+f32 TAIAflickingAfterMotionLoop::getFrameMax(Teki&)
 {
 	/*
 	.loc_0x0:

@@ -1,8 +1,27 @@
-#include "types.h"
 #include "gameflow.h"
+#include "Dolphin/os.h"
+#include "GlobalShape.h"
 
-static char file[] = __FILE__;
-static char name[] = "globalShape";
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	00009C
+ */
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "globalShape");
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000F4
+ */
+static void _Print(char*, ...)
+{
+	// UNUSED FUNCTION
+}
 
 namespace GlobalShape {
 
