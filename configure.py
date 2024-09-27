@@ -564,7 +564,7 @@ config.libs = [
             Object(NonMatching, "plugPikiNakata/nlibmath.cpp"),
             Object(NonMatching, "plugPikiNakata/nlibspline.cpp"),
             Object(NonMatching, "plugPikiNakata/nlibsystem.cpp"),
-            Object(NonMatching, "plugPikiNakata/panianimator.cpp"),
+            Object(Matching, "plugPikiNakata/panianimator.cpp"),
             Object(NonMatching, "plugPikiNakata/panipikianimmgr.cpp"),
             Object(NonMatching, "plugPikiNakata/panitekianimator.cpp"),
             Object(NonMatching, "plugPikiNakata/panitestsection.cpp"),

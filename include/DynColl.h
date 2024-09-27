@@ -29,9 +29,9 @@ struct DynCollObject : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 _20; // _20, unknown
-	u32 _24; // _24, maybe int?
-	u32 _28; // _28, unknown
+	u32 _20;       // _20, unknown
+	u32 _24;       // _24, maybe int?
+	Creature* _28; // _28
 };
 
 /**

@@ -18,6 +18,8 @@
 #define DEG2RAD        (1.0f / 180.0f)
 #define TORADIANS(val) (PI * (DEG2RAD * val))
 
+#define CHECK_BOUNDS_BOTH(min, val1, val2, max) (min <= val1 && val2 < max)
+
 f64 __fabs(f64);
 f32 __fabsf(f32);
 f64 __fnabs(f64);

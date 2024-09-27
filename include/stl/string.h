@@ -1,5 +1,5 @@
-#ifndef _STRING_H
-#define _STRING_H
+#ifndef _STL_STRING_H
+#define _STL_STRING_H
 
 #include "types.h"
 #include "mem.h"

@@ -145,7 +145,7 @@ void FastGrid::delAIGrid()
  * Address:	80094190
  * Size:	0001A8
  */
-void FastGrid::aiCulling()
+bool FastGrid::aiCulling()
 {
 	/*
 	.loc_0x0:
@@ -359,7 +359,7 @@ void FastGrid::aiCullingLarge(int)
  * Address:	800943F0
  * Size:	000130
  */
-void FastGrid::doCulling(const FastGrid&, f32)
+bool FastGrid::doCulling(const FastGrid&, f32)
 {
 	/*
 	.loc_0x0:

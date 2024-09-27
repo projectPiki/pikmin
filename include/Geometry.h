@@ -30,8 +30,8 @@ struct RectArea {
  * @brief TODO
  */
 struct Sphere {
-
-	// TODO: members
+	f32 mRadius;      // _00
+	Vector3f mCentre; // _04
 };
 
 /**

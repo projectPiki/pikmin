@@ -4307,7 +4307,7 @@ void ItemCreature::refresh(Graphics&)
  * Address:	800F5E98
  * Size:	000074
  */
-void ItemCreature::stimulate(Interaction&)
+bool ItemCreature::stimulate(Interaction&)
 {
 	/*
 	.loc_0x0:
@@ -5068,7 +5068,7 @@ BuildingItem::BuildingItem(int p1, CreatureProp* props, ItemShapeObject*, Simple
  * Address:	800F6728
  * Size:	000064
  */
-void BuildingItem::getBoundingSphereRadius()
+f32 BuildingItem::getBoundingSphereRadius()
 {
 	/*
 	.loc_0x0:

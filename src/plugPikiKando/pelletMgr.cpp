@@ -1696,7 +1696,7 @@ void Pellet::getBottomRadius()
  * Address:	80095EB0
  * Size:	00001C
  */
-void Pellet::getCentre()
+Vector3f Pellet::getCentre()
 {
 	/*
 	.loc_0x0:
@@ -4443,7 +4443,7 @@ void Pellet::collisionCallback(CollEvent&)
  * Address:	80097DA4
  * Size:	000074
  */
-void Pellet::stimulate(Interaction&)
+bool Pellet::stimulate(Interaction&)
 {
 	/*
 	.loc_0x0:

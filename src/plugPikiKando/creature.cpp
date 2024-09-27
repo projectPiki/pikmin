@@ -1,13 +1,31 @@
 #include "Creature.h"
 #include "SearchSystem.h"
+#include "PikiMacros.h"
+#include "Collision.h"
+#include "DynColl.h"
+#include "Geometry.h"
+#include "SoundMgr.h"
+#include "Generator.h"
+#include "Dolphin/os.h"
+#include "math.h"
+#include "BombItem.h"
+#include "RadarInfo.h"
+#include "AIPerf.h"
+
+static CollTriInfo* triList[0x200];
+
+static int numTris;
+static CollTriInfo* baseTri;
+static f32 checkRadius;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt);
 	// UNUSED FUNCTION
 }
 
@@ -36,16 +54,7 @@ void Creature::startFixPosition()
  * Address:	8008A040
  * Size:	000010
  */
-void Creature::finishFixPosition()
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r3)
-	  rlwinm    r0,r0,0,11,9
-	  stw       r0, 0xC8(r3)
-	  blr
-	*/
-}
+void Creature::finishFixPosition() { resetCreatureFlag(CF_FixPosition); }
 
 /*
  * --INFO--
@@ -66,67 +75,16 @@ bool Creature::isTerrible()
  * Address:	8008A098
  * Size:	0000D8
  */
-void Creature::load(RandomAccessStream&, bool)
+void Creature::load(RandomAccessStream& stream, bool p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  mr        r29, r3
-	  lwz       r3, 0x6C(r3)
-	  bl        0xA978
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r31,0,24,31
-	  beq-      .loc_0x90
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x94(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x98(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x9C(r29)
+	DEBUGPRINT(ObjType::getName(mObjType));
+	DEBUGPRINT(stream.getPosition());
+	if (p2) {
+		mPosition.read(stream);
+	}
 
-	.loc_0x90:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x54(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	doLoad(stream);
+	DEBUGPRINT(stream.getPosition());
 }
 
 /*
@@ -134,67 +92,16 @@ void Creature::load(RandomAccessStream&, bool)
  * Address:	8008A170
  * Size:	0000D8
  */
-void Creature::save(RandomAccessStream&, bool)
+void Creature::save(RandomAccessStream& stream, bool p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  mr        r29, r3
-	  lwz       r3, 0x6C(r3)
-	  bl        0xA8A0
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r31,0,24,31
-	  beq-      .loc_0x90
-	  mr        r3, r30
-	  lfs       f1, 0x94(r29)
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lfs       f1, 0x98(r29)
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lfs       f1, 0x9C(r29)
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
+	DEBUGPRINT(ObjType::getName(mObjType));
+	DEBUGPRINT(stream.getPosition());
+	if (p2) {
+		mPosition.write(stream);
+	}
 
-	.loc_0x90:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x50(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	doSave(stream);
+	DEBUGPRINT(stream.getPosition());
 }
 
 /*
@@ -202,20 +109,12 @@ void Creature::save(RandomAccessStream&, bool)
  * Address:	8008A248
  * Size:	00001C
  */
-void Creature::getCollidePlatformCreature()
+Creature* Creature::getCollidePlatformCreature()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x280(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x14
-	  lwz       r3, 0x28(r3)
-	  blr
-
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-	*/
+	if (_280) {
+		return _280->_28;
+	}
+	return nullptr;
 }
 
 /*
@@ -223,30 +122,12 @@ void Creature::getCollidePlatformCreature()
  * Address:	8008A264
  * Size:	000044
  */
-void Creature::getCollidePlatformNormal()
+Vector3f Creature::getCollidePlatformNormal()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x284(r4)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x28
-	  lfs       f0, -0x5E48(r13)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, -0x5E44(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x5E40(r13)
-	  stfs      f0, 0x8(r3)
-	  blr
-
-	.loc_0x28:
-	  lfs       f0, 0x0(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r4)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
+	if (!_284) {
+		return Vector3f(0.0, 0.0f, 0.0f);
+	}
+	return *_284;
 }
 
 /*
@@ -270,29 +151,9 @@ bool Creature::isBoss()
  */
 void Creature::enableStick()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x220(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  bl        -0x79C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x34
-	  lwz       r3, 0x220(r31)
-	  bl        -0x162C
-
-	.loc_0x34:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mCollInfo && mCollInfo->hasInfo()) {
+		mCollInfo->enableStick();
+	}
 }
 
 /*
@@ -302,29 +163,9 @@ void Creature::enableStick()
  */
 void Creature::disableStick()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x220(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  bl        -0x7E4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x34
-	  lwz       r3, 0x220(r31)
-	  bl        -0x1640
-
-	.loc_0x34:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mCollInfo && mCollInfo->hasInfo()) {
+		mCollInfo->disableStick();
+	}
 }
 
 /*
@@ -332,43 +173,12 @@ void Creature::disableStick()
  * Address:	8008A35C
  * Size:	000070
  */
-void Creature::getNearestCollPart(Vector3f&, u32)
+CollPart* Creature::getNearestCollPart(Vector3f& p1, u32 p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  mr        r29, r3
-	  lwz       r3, 0x220(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x50
-	  bl        -0x83C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x50
-	  lwz       r3, 0x220(r29)
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  bl        -0xC34
-	  b         .loc_0x54
-
-	.loc_0x50:
-	  li        r3, 0
-
-	.loc_0x54:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (mCollInfo && mCollInfo->hasInfo()) {
+		return mCollInfo->getNearestCollPart(p1, p2);
+	}
+	return nullptr;
 }
 
 /*
@@ -376,39 +186,13 @@ void Creature::getNearestCollPart(Vector3f&, u32)
  * Address:	8008A3CC
  * Size:	000060
  */
-void Creature::getRandomCollPart(u32)
+CollPart* Creature::getRandomCollPart(u32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x220(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x44
-	  bl        -0x8A4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x44
-	  lwz       r3, 0x220(r30)
-	  mr        r4, r31
-	  bl        -0xB1C
-	  b         .loc_0x48
+	if (mCollInfo && mCollInfo->hasInfo()) {
+		return mCollInfo->getRandomCollPart(p1);
+	}
 
-	.loc_0x44:
-	  li        r3, 0
-
-	.loc_0x48:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return nullptr;
 }
 
 /*
@@ -416,71 +200,20 @@ void Creature::getRandomCollPart(u32)
  * Address:	8008A42C
  * Size:	0000D8
  */
-void Creature::getBoundingSphereCentre()
+Vector3f Creature::getBoundingSphereCentre()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x28(r1)
-	  addi      r30, r3, 0
-	  lwz       r0, 0x220(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xA8
-	  mr        r3, r0
-	  bl        -0x908
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xA8
-	  lwz       r0, 0x6C(r31)
-	  cmpwi     r0, 0x36
-	  beq-      .loc_0x84
-	  cmpwi     r0, 0
-	  beq-      .loc_0x84
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,12,12
-	  beq-      .loc_0x84
-	  addi      r3, r31, 0x40
-	  bl        0x9D08
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x84
-	  lfs       f0, 0x94(r31)
-	  stfs      f0, 0x0(r30)
-	  lfs       f0, 0x98(r31)
-	  stfs      f0, 0x4(r30)
-	  lfs       f0, 0x9C(r31)
-	  stfs      f0, 0x8(r30)
-	  b         .loc_0xC0
+	u32 badCompiler;
 
-	.loc_0x84:
-	  lwz       r3, 0x220(r31)
-	  bl        -0xDAC
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x0(r30)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x4(r30)
-	  lfs       f0, 0xC(r3)
-	  stfs      f0, 0x8(r30)
-	  b         .loc_0xC0
+	if (mCollInfo && mCollInfo->hasInfo()) {
+		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_Unk19) && mGrid.aiCulling()) {
+			return mPosition;
+		}
 
-	.loc_0xA8:
-	  mr        r4, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r30
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
+		Sphere* sphere = mCollInfo->getBoundingSphere();
+		return sphere->mCentre;
+	}
 
-	.loc_0xC0:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	return getCentre();
 }
 
 /*
@@ -488,61 +221,20 @@ void Creature::getBoundingSphereCentre()
  * Address:	8008A504
  * Size:	0000B0
  */
-void Creature::getBoundingSphereRadius()
+f32 Creature::getBoundingSphereRadius()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x220(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x84
-	  bl        -0x9D8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x84
-	  lwz       r3, 0x220(r30)
-	  bl        -0xE30
-	  lwz       r0, 0x6C(r30)
-	  addi      r31, r3, 0
-	  cmpwi     r0, 0x36
-	  beq-      .loc_0x7C
-	  cmpwi     r0, 0
-	  beq-      .loc_0x7C
-	  lwz       r0, 0xC8(r30)
-	  rlwinm.   r0,r0,0,12,12
-	  beq-      .loc_0x7C
-	  addi      r3, r30, 0x40
-	  bl        0x9C2C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x7C
-	  lfs       f1, -0x7588(r2)
-	  lfs       f0, 0x0(r31)
-	  fmuls     f1, f1, f0
-	  b         .loc_0x98
+	u32 badCompiler;
 
-	.loc_0x7C:
-	  lfs       f1, 0x0(r31)
-	  b         .loc_0x98
+	if (mCollInfo && mCollInfo->hasInfo()) {
+		Sphere* sphere = mCollInfo->getBoundingSphere();
+		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_Unk19) && mGrid.aiCulling()) {
+			return 2.0f * sphere->mRadius;
+		}
 
-	.loc_0x84:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
+		return sphere->mRadius;
+	}
 
-	.loc_0x98:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return getCentreSize();
 }
 
 /*
@@ -550,27 +242,11 @@ void Creature::getBoundingSphereRadius()
  * Address:	8008A5B4
  * Size:	000038
  */
-void Creature::playEventSound(Creature*, int)
+void Creature::playEventSound(Creature* target, int soundID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x28
-	  lwz       r3, 0x2C(r4)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x28
-	  mr        r4, r5
-	  bl        0x197F8
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (target && target->mSeContext) {
+		target->mSeContext->playSound(soundID);
+	}
 }
 
 /*
@@ -578,27 +254,11 @@ void Creature::playEventSound(Creature*, int)
  * Address:	8008A5EC
  * Size:	000038
  */
-void Creature::stopEventSound(Creature*, int)
+void Creature::stopEventSound(Creature* target, int soundID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x28
-	  lwz       r3, 0x2C(r4)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x28
-	  mr        r4, r5
-	  bl        0x19894
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (target && target->mSeContext) {
+		target->mSeContext->stopSound(soundID);
+	}
 }
 
 /*
@@ -616,78 +276,22 @@ void Creature::insideSphere(Sphere&)
  * Address:	8008A624
  * Size:	0000F4
  */
-void Creature::getCentre()
+Vector3f Creature::getCentre()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  mr        r30, r4
-	  stw       r29, 0x44(r1)
-	  addi      r29, r3, 0
-	  lwz       r0, 0x220(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC0
-	  mr        r3, r0
-	  bl        -0xB04
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC0
-	  lis       r4, 0x6365
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r4, 0x6E74
-	  bl        -0xF5C
-	  lwz       r0, 0x6C(r30)
-	  addi      r31, r3, 0
-	  cmpwi     r0, 0x36
-	  beq-      .loc_0x9C
-	  cmpwi     r0, 0
-	  beq-      .loc_0x9C
-	  lwz       r0, 0xC8(r30)
-	  rlwinm.   r0,r0,0,12,12
-	  beq-      .loc_0x9C
-	  addi      r3, r30, 0x40
-	  bl        0x9AF8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x9C
-	  lfs       f0, 0x94(r30)
-	  stfs      f0, 0x0(r29)
-	  lfs       f0, 0x98(r30)
-	  stfs      f0, 0x4(r29)
-	  lfs       f0, 0x9C(r30)
-	  stfs      f0, 0x8(r29)
-	  b         .loc_0xD8
+	u32 badCompiler;
 
-	.loc_0x9C:
-	  cmplwi    r31, 0
-	  beq-      .loc_0xC0
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x0(r29)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x4(r29)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x8(r29)
-	  b         .loc_0xD8
+	if (mCollInfo && mCollInfo->hasInfo()) {
+		CollPart* spherePart = mCollInfo->getSphere('cent');
+		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_Unk19) && mGrid.aiCulling()) {
+			return mPosition;
+		}
+		if (spherePart) {
+			return spherePart->mBoundingSphere.mCentre;
+		}
+	}
 
-	.loc_0xC0:
-	  lfs       f1, 0x98(r30)
-	  lfs       f2, 0x9C(r30)
-	  lfs       f0, 0x94(r30)
-	  stfs      f0, 0x0(r29)
-	  stfs      f1, 0x4(r29)
-	  stfs      f2, 0x8(r29)
-
-	.loc_0xD8:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f pos = mPosition;
+	return pos;
 }
 
 /*
@@ -697,42 +301,13 @@ void Creature::getCentre()
  */
 f32 Creature::getCentreSize()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x220(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x4C
-	  bl        -0xBE8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x4C
-	  lis       r4, 0x6365
-	  lwz       r3, 0x220(r31)
-	  addi      r4, r4, 0x6E74
-	  bl        -0x1040
-	  cmplwi    r3, 0
-	  beq-      .loc_0x4C
-	  lfs       f1, 0x0(r3)
-	  b         .loc_0x60
-
-	.loc_0x4C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x60:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mCollInfo && mCollInfo->hasInfo()) {
+		CollPart* spherePart = mCollInfo->getSphere('cent');
+		if (spherePart) {
+			return spherePart->mBoundingSphere.mRadius;
+		}
+	}
+	return getSize();
 }
 
 /*
@@ -740,48 +315,32 @@ f32 Creature::getCentreSize()
  * Address:	8008A78C
  * Size:	00006C
  */
-void Creature::getStandType()
+int Creature::getStandType()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x28C(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x3C
-	  lwz       r3, 0x280(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  lwz       r0, 0x28(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2C
-	  li        r3, 0x1
-	  blr
+	if (_28C == 0) {
+		if (_280) {
+			if (_280->_28) {
+				// standing on a platform creature?
+				return STANDTYPE_Unk1;
+			}
+			// standing on a platform with no creature?
+			return STANDTYPE_Unk2;
+		}
+		// no platform, _2BC == 0
+		return STANDTYPE_Unk3;
+	}
 
-	.loc_0x2C:
-	  li        r3, 0x2
-	  blr
+	if (_280) {
+		if (_280->_28) {
+			// standing on a platform creature?
+			return STANDTYPE_Unk1;
+		}
+		// standing on a platform with no creature?
+		return STANDTYPE_Unk2;
+	}
 
-	.loc_0x34:
-	  li        r3, 0x3
-	  blr
-
-	.loc_0x3C:
-	  lwz       r3, 0x280(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x64
-	  lwz       r0, 0x28(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x5C
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x5C:
-	  li        r3, 0x2
-	  blr
-
-	.loc_0x64:
-	  li        r3, 0
-	  blr
-	*/
+	// no platform, _2BC != 0
+	return STANDTYPE_Unk0;
 }
 
 /*
@@ -805,21 +364,12 @@ SearchData::SearchData()
  * Address:	8008A854
  * Size:	000020
  */
-void Creature::getGeneratorID()
+u32 Creature::getGeneratorID()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x64(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x14
-	  lwz       r3, 0x58(r3)
-	  blr
-
-	.loc_0x14:
-	  lis       r3, 0x6E75
-	  addi      r3, r3, 0x6C6C
-	  blr
-	*/
+	if (mGenerator) {
+		return mGenerator->_58.getID();
+	}
+	return 'null';
 }
 
 /*
@@ -827,21 +377,10 @@ void Creature::getGeneratorID()
  * Address:	8008A874
  * Size:	000028
  */
-void Creature::stimulate(Interaction&)
+bool Creature::stimulate(Interaction& interaction)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x6C(r3)
-	  bl        0xA1B4
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DEBUGPRINT(ObjType::getName(mObjType));
+	return false;
 }
 
 /*
@@ -849,8 +388,45 @@ void Creature::stimulate(Interaction&)
  * Address:	8008A89C
  * Size:	000138
  */
-bool Creature::setStateGrabbed(Creature*)
+bool Creature::setStateGrabbed(Creature* p1)
 {
+	if (_2A8) {
+		return false;
+	}
+	if (_2A8) {
+		if (_2A8) {
+			_2A8->subCnt();
+			_2A8 = nullptr;
+		}
+	}
+
+	_2A8 = p1;
+	if (_2A8) {
+		_2A8->addCnt();
+	}
+
+	// what is going on with this
+	Creature** list = &_2AC;
+	if (_2AC) {
+		if (list[0]) {
+			list[0]->subCnt();
+			list[0] = nullptr;
+		}
+		list[0] = this;
+		if (list[0]) {
+			list[0]->addCnt();
+		}
+	}
+
+	_F0 = _E0;
+	_100.fromEuler(Vector3f(0.39269909f, 0.0f, 0.0f));
+	_110 = 0.0f;
+
+	if (mObjType != OBJTYPE_Bomb) {
+		dump();
+		p1->dump();
+	}
+	return true;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -955,39 +531,16 @@ bool Creature::setStateGrabbed(Creature*)
  */
 void Creature::resetStateGrabbed()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x2A8(r3)
-	  addi      r31, r3, 0x2AC
-	  lwz       r3, 0x2AC(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x38
-	  bl        0x5996C
-	  li        r0, 0
-	  stw       r0, 0x0(r31)
+	Creature** list = &_2A8->_2AC;
+	if (_2A8->_2AC) {
+		list[0]->subCnt();
+		list[0] = nullptr;
+	}
 
-	.loc_0x38:
-	  lwz       r3, 0x2A8(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x50
-	  bl        0x59954
-	  li        r0, 0
-	  stw       r0, 0x2A8(r30)
-
-	.loc_0x50:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (_2A8) {
+		_2A8->subCnt();
+		_2A8 = nullptr;
+	}
 }
 
 /*
@@ -995,30 +548,7 @@ void Creature::resetStateGrabbed()
  * Address:	8008AA3C
  * Size:	000048
  */
-void Creature::turnTo(Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lfs       f3, 0x0(r4)
-	  lfs       f1, 0x94(r3)
-	  lfs       f2, 0x8(r4)
-	  lfs       f0, 0x9C(r3)
-	  fsubs     f1, f3, f1
-	  fsubs     f2, f2, f0
-	  bl        0x190F90
-	  stfs      f1, 0xA0(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+void Creature::turnTo(Vector3f& targetDir) { mDirection = atan2f(targetDir.x - mPosition.x, targetDir.z - mPosition.z); }
 
 /*
  * --INFO--
@@ -1037,109 +567,47 @@ void Creature::adjustDistance(Vector3f&, f32)
  */
 void Creature::init()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r30, 0x1B8
-	  bl        0x593F4
-	  addi      r3, r30, 0x114
-	  bl        -0x4CCEC
-	  addi      r3, r30, 0x228
-	  bl        -0x4CCF4
-	  lfs       f1, -0x7584(r2)
-	  lis       r4, 0xFFF0
-	  lis       r3, 0xFFFE
-	  stfs      f1, 0xE0(r30)
-	  li        r31, 0
-	  li        r5, -0x1
-	  stfs      f1, 0xE4(r30)
-	  subi      r4, r4, 0x2901
-	  subi      r0, r3, 0x21
-	  stfs      f1, 0xE8(r30)
-	  mr        r3, r30
-	  lfs       f0, -0x756C(r2)
-	  stfs      f0, 0xEC(r30)
-	  stb       r31, 0x60(r30)
-	  stw       r31, 0xC8(r30)
-	  stw       r5, 0x1A0(r30)
-	  lwz       r5, 0xC8(r30)
-	  rlwinm    r5,r5,0,13,11
-	  stw       r5, 0xC8(r30)
-	  stw       r31, 0x21C(r30)
-	  lwz       r5, 0xC8(r30)
-	  ori       r5, r5, 0x1000
-	  stw       r5, 0xC8(r30)
-	  lwz       r5, 0xC8(r30)
-	  and       r4, r5, r4
-	  stw       r4, 0xC8(r30)
-	  stfs      f1, 0xD0(r30)
-	  stw       r31, 0x2A8(r30)
-	  stw       r31, 0x2AC(r30)
-	  lwz       r4, 0xC8(r30)
-	  and       r0, r4, r0
-	  stw       r0, 0xC8(r30)
-	  bl        0x5981C
-	  stb       r31, 0x2B4(r30)
-	  li        r0, -0x4D1
-	  lwz       r3, 0xC8(r30)
-	  ori       r3, r3, 0xC
-	  stw       r3, 0xC8(r30)
-	  lwz       r3, 0xC8(r30)
-	  and       r0, r3, r0
-	  stw       r0, 0xC8(r30)
-	  lfs       f0, -0x5E30(r13)
-	  stfs      f0, 0xBC(r30)
-	  lfs       f0, -0x5E2C(r13)
-	  stfs      f0, 0xC0(r30)
-	  lfs       f0, -0x5E28(r13)
-	  stfs      f0, 0xC4(r30)
-	  lfs       f0, -0x5E24(r13)
-	  stfs      f0, 0x1AC(r30)
-	  lfs       f0, -0x5E20(r13)
-	  stfs      f0, 0x1B0(r30)
-	  lfs       f0, -0x5E1C(r13)
-	  stfs      f0, 0x1B4(r30)
-	  stw       r31, 0x184(r30)
-	  stw       r31, 0x188(r30)
-	  stw       r31, 0x190(r30)
-	  stw       r31, 0x18C(r30)
-	  stw       r31, 0x180(r30)
-	  lwz       r0, 0xC8(r30)
-	  rlwinm    r0,r0,0,18,15
-	  stw       r0, 0xC8(r30)
-	  stw       r31, 0x154(r30)
-	  stw       r31, 0x158(r30)
-	  lfs       f0, -0x7584(r2)
-	  stfs      f0, 0x15C(r30)
-	  stw       r31, 0x164(r30)
-	  stw       r31, 0x160(r30)
-	  lwz       r0, 0x3044(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x168
-	  lwz       r0, 0x6C(r30)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x15C
-	  li        r0, 0x1
-	  stb       r0, 0x170(r30)
+	_1B8.invalidate();
+	_114.makeIdentity();
+	_228.makeIdentity();
+	_E0.set(0.0f, 0.0f, 0.0f, 1.0f);
+	_60            = 0;
+	mCreatureFlags = 0;
+	_1A0           = -1;
+	resetCreatureFlag(CF_Unk19);
+	_21C = 0;
+	setCreatureFlag(CF_Unk13);
+	resetCreatureFlag(CF_Unk9 | CF_Unk12 | CF_Unk14 | CF_Unk20);
+	_D0  = 0.0f;
+	_2A8 = nullptr;
+	_2AC = nullptr;
+	resetCreatureFlag(CF_Unk6 | CF_Unk17);
+	clearCnt();
+	_2B4 = 0;
 
-	.loc_0x15C:
-	  addi      r3, r30, 0x168
-	  lwz       r4, 0x3044(r13)
-	  bl        0x1A8BC
+	setCreatureFlag(CF_Unk3 | CF_Unk4);
+	resetCreatureFlag(CF_Unk5 | CF_Unk7 | CF_Unk8 | CF_Unk11);
+	_BC.set(0.0f, 0.0f, 0.0f);
+	_1AC.set(0.0f, 0.0f, 0.0f);
+	mStickTarget = nullptr;
+	_188         = 0;
+	_190         = 0;
+	_18C         = 0;
+	_180         = 0;
+	resetCreatureFlag(CF_StuckToObject | CF_StuckToMouth);
 
-	.loc_0x168:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_154 = 0;
+	_158 = 0;
+	_15C = 0.0f;
+	_164 = 0;
+	_160 = 0;
+	if (searchUpdateMgr) {
+		if (mObjType == OBJTYPE_Piki) {
+			_168.mIsActive = true;
+		}
+
+		_168.init(searchUpdateMgr);
+	}
 }
 
 /*
@@ -1147,36 +615,12 @@ void Creature::init()
  * Address:	8008AC04
  * Size:	000064
  */
-void Creature::init(Vector3f&)
+void Creature::init(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x19C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0
-	  stw       r0, 0x1A4(r30)
-	  lwz       r0, 0xC8(r30)
-	  rlwinm    r0,r0,0,17,15
-	  stw       r0, 0xC8(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Creature::init();
+	resetPosition(pos);
+	_1A4 = 0;
+	resetCreatureFlag(CF_StuckToMouth);
 }
 
 /*
@@ -1194,24 +638,10 @@ void Creature::getAtariType()
  * Address:	8008AC68
  * Size:	000034
  */
-void Creature::resetPosition(Vector3f&)
+void Creature::resetPosition(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r5, 0x94(r3)
-	  stw       r0, 0x98(r3)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x9C(r3)
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r5, 0x1AC(r3)
-	  stw       r0, 0x1B0(r3)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x1B4(r3)
-	  blr
-	*/
+	mPosition = pos;
+	_1AC      = pos;
 }
 
 /*
@@ -1221,28 +651,10 @@ void Creature::resetPosition(Vector3f&)
  */
 void Creature::detachGenerator()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x64(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x30
-	  mr        r4, r31
-	  bl        0x514DC
-	  li        r0, 0
-	  stw       r0, 0x64(r31)
-
-	.loc_0x30:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mGenerator) {
+		mGenerator->informDeath(this);
+		mGenerator = nullptr;
+	}
 }
 
 /*
@@ -1250,8 +662,70 @@ void Creature::detachGenerator()
  * Address:	8008ACE0
  * Size:	0001F8
  */
-void Creature::kill(bool)
+void Creature::kill(bool p1)
 {
+	finishWaterEffect();
+	detachGenerator();
+	if (_2AC) {
+		Creature* bomb = _2AC;
+		bomb->resetStateGrabbed();
+		if (bomb->mObjType == OBJTYPE_Bomb) {
+			AState<AICreature>* state = static_cast<BombItem*>(bomb)->getCurrState();
+			int currState             = state->getStateID();
+			if (currState != 1) {
+				MsgUser msg;
+				msg._00                            = MSG_User;
+				msg._04                            = 1;
+				static_cast<BombItem*>(bomb)->_2D0 = 1;
+				static_cast<BombItem*>(bomb)->mStateMachine->procMsg(static_cast<BombItem*>(bomb), &msg);
+			}
+		}
+	}
+
+	if (searchUpdateMgr) {
+		_168.exit();
+	}
+
+	if (mObjType == OBJTYPE_Piki || mObjType == OBJTYPE_Navi) {
+		mGrid.delAIGrid();
+	}
+
+	_1B8.clear();
+
+	if (mStickTarget) {
+		endStick();
+	}
+
+	if (_180) {
+		while (_180) {
+			if (_180->isCreatureFlag(CF_StuckToObject)) {
+				_180->endStickObject();
+
+			} else if (_180->isCreatureFlag(CF_StuckToMouth)) {
+				_180->endStickMouth();
+
+			} else {
+				_180->endStick();
+			}
+		}
+	}
+
+	if (_158) {
+		endRope();
+	}
+
+	if (_154) {
+		while (_154) {
+			_154->endRope();
+		}
+	}
+
+	doKill();
+	if (mSeContext) {
+		mSeContext->releaseEvent();
+	}
+
+	radarInfo->detachParts(this);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1425,186 +899,44 @@ void Creature::kill(bool)
  * Size:	0002C0
  */
 Creature::Creature(CreatureProp* props)
+    : _2A8(nullptr)
+    , _2AC(0)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r3, 0
-	  bl        0x59440
-	  addi      r3, r29, 0x8
-	  bl        0x90A8
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0xF2C
-	  stw       r0, 0x0(r29)
-	  addi      r3, r29, 0x40
-	  lfs       f0, -0x7584(r2)
-	  stfs      f0, 0x24(r29)
-	  stfs      f0, 0x20(r29)
-	  stfs      f0, 0x1C(r29)
-	  bl        0x9174
-	  lfs       f0, -0x7584(r2)
-	  addi      r3, r29, 0x168
-	  stfs      f0, 0x78(r29)
-	  stfs      f0, 0x74(r29)
-	  stfs      f0, 0x70(r29)
-	  stfs      f0, 0x84(r29)
-	  stfs      f0, 0x80(r29)
-	  stfs      f0, 0x7C(r29)
-	  stfs      f0, 0x90(r29)
-	  stfs      f0, 0x8C(r29)
-	  stfs      f0, 0x88(r29)
-	  stfs      f0, 0x9C(r29)
-	  stfs      f0, 0x98(r29)
-	  stfs      f0, 0x94(r29)
-	  stfs      f0, 0xAC(r29)
-	  stfs      f0, 0xA8(r29)
-	  stfs      f0, 0xA4(r29)
-	  stfs      f0, 0xB8(r29)
-	  stfs      f0, 0xB4(r29)
-	  stfs      f0, 0xB0(r29)
-	  stfs      f0, 0xC4(r29)
-	  stfs      f0, 0xC0(r29)
-	  stfs      f0, 0xBC(r29)
-	  stfs      f0, 0xDC(r29)
-	  stfs      f0, 0xD8(r29)
-	  stfs      f0, 0xD4(r29)
-	  stfs      f0, 0xE8(r29)
-	  stfs      f0, 0xE4(r29)
-	  stfs      f0, 0xE0(r29)
-	  stfs      f0, 0xF8(r29)
-	  stfs      f0, 0xF4(r29)
-	  stfs      f0, 0xF0(r29)
-	  stfs      f0, 0x108(r29)
-	  stfs      f0, 0x104(r29)
-	  stfs      f0, 0x100(r29)
-	  bl        0x1A490
-	  addi      r3, r29, 0x174
-	  bl        0x1A488
-	  lfs       f0, -0x7584(r2)
-	  addi      r3, r29, 0x1B8
-	  stfs      f0, 0x19C(r29)
-	  stfs      f0, 0x198(r29)
-	  stfs      f0, 0x194(r29)
-	  stfs      f0, 0x1B4(r29)
-	  stfs      f0, 0x1B0(r29)
-	  stfs      f0, 0x1AC(r29)
-	  bl        0x58C30
-	  addi      r3, r29, 0x1E0
-	  bl        -0x2F04C
-	  lfs       f1, -0x7584(r2)
-	  li        r31, 0
-	  li        r0, -0x1
-	  stfs      f1, 0x27C(r29)
-	  addi      r4, r1, 0x10
-	  addi      r3, r29, 0xE0
-	  stfs      f1, 0x278(r29)
-	  stfs      f1, 0x274(r29)
-	  stfs      f1, 0x2A4(r29)
-	  stfs      f1, 0x2A0(r29)
-	  stfs      f1, 0x29C(r29)
-	  stw       r31, 0x2A8(r29)
-	  stw       r31, 0x2AC(r29)
-	  stw       r0, 0x6C(r29)
-	  stw       r31, 0x2C(r29)
-	  stw       r31, 0xC8(r29)
-	  lwz       r0, 0xC8(r29)
-	  rlwinm    r0,r0,0,26,24
-	  stw       r0, 0xC8(r29)
-	  stw       r31, 0x220(r29)
-	  stw       r31, 0x28C(r29)
-	  stb       r31, 0x30(r29)
-	  lwz       r0, 0xC8(r29)
-	  rlwinm    r0,r0,0,16,14
-	  stw       r0, 0xC8(r29)
-	  stw       r31, 0x34(r29)
-	  stw       r31, 0x284(r29)
-	  stw       r31, 0x288(r29)
-	  stw       r31, 0x64(r29)
-	  lfs       f0, -0x5E18(r13)
-	  stfs      f0, 0xA4(r29)
-	  lfs       f0, -0x5E14(r13)
-	  stfs      f0, 0xA8(r29)
-	  lfs       f0, -0x5E10(r13)
-	  stfs      f0, 0xAC(r29)
-	  lfs       f0, -0x5E0C(r13)
-	  stfs      f0, 0xB0(r29)
-	  lfs       f0, -0x5E08(r13)
-	  stfs      f0, 0xB4(r29)
-	  lfs       f0, -0x5E04(r13)
-	  stfs      f0, 0xB8(r29)
-	  lfs       f0, -0x5E00(r13)
-	  stfs      f0, 0x70(r29)
-	  lfs       f0, -0x5DFC(r13)
-	  stfs      f0, 0x74(r29)
-	  lfs       f0, -0x5DF8(r13)
-	  stfs      f0, 0x78(r29)
-	  lfs       f0, -0x5DF4(r13)
-	  stfs      f0, 0x88(r29)
-	  lfs       f0, -0x5DF0(r13)
-	  stfs      f0, 0x8C(r29)
-	  lfs       f0, -0x5DEC(r13)
-	  stfs      f0, 0x90(r29)
-	  lfs       f0, -0x5DE8(r13)
-	  stfs      f0, 0x94(r29)
-	  lfs       f0, -0x5DE4(r13)
-	  stfs      f0, 0x98(r29)
-	  lfs       f0, -0x5DE0(r13)
-	  stfs      f0, 0x9C(r29)
-	  lfs       f0, -0x5DDC(r13)
-	  stfs      f0, 0x7C(r29)
-	  lfs       f0, -0x5DD8(r13)
-	  stfs      f0, 0x80(r29)
-	  lfs       f0, -0x5DD4(r13)
-	  stfs      f0, 0x84(r29)
-	  stfs      f1, 0xA0(r29)
-	  lfs       f0, -0x7568(r2)
-	  stfs      f0, 0x26C(r29)
-	  lfs       f0, -0x7564(r2)
-	  stfs      f0, 0x270(r29)
-	  stw       r30, 0x224(r29)
-	  stw       r31, 0x28(r29)
-	  lwz       r0, 0xC8(r29)
-	  rlwinm    r0,r0,0,23,21
-	  stw       r0, 0xC8(r29)
-	  lfs       f0, -0x5DD0(r13)
-	  lfs       f1, -0x5DCC(r13)
-	  stfs      f0, 0x10(r1)
-	  lfs       f0, -0x5DC8(r13)
-	  stfs      f1, 0x14(r1)
-	  stfs      f0, 0x18(r1)
-	  bl        -0x52E48
-	  lfs       f0, -0x5DC4(r13)
-	  li        r0, -0x22
-	  addi      r3, r29, 0
-	  stfs      f0, 0xD4(r29)
-	  lfs       f0, -0x5DC0(r13)
-	  stfs      f0, 0xD8(r29)
-	  lfs       f0, -0x5DBC(r13)
-	  stfs      f0, 0xDC(r29)
-	  lwz       r4, 0xC8(r29)
-	  and       r0, r4, r0
-	  stw       r0, 0xC8(r29)
-	  stw       r31, 0x2A8(r29)
-	  stw       r31, 0x2AC(r29)
-	  stb       r31, 0x2B4(r29)
-	  stw       r31, 0x280(r29)
-	  stw       r31, 0x290(r29)
-	  stw       r31, 0x298(r29)
-	  stw       r31, 0x2B0(r29)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mObjType       = OBJTYPE_INVALID;
+	mSeContext     = nullptr;
+	mCreatureFlags = 0;
+	resetCreatureFlag(CF_Unk7);
+	mCollInfo = nullptr;
+	_28C      = 0;
+	_30       = 0;
+	resetCreatureFlag(CF_Unk16);
+	_34        = 0;
+	_284       = 0;
+	_288       = 0;
+	mGenerator = nullptr;
+
+	_A4.set(0.0f, 0.0f, 0.0f);
+	_B0.set(0.0f, 0.0f, 0.0f);
+	_70.set(0.0f, 0.0f, 0.0f);
+	_88.set(0.0f, 0.0f, 0.0f);
+	mPosition.set(0.0f, 0.0f, 0.0f);
+	_7C.set(1.0f, 1.0f, 1.0f);
+	mDirection = 0.0f;
+	_26C       = 10.0f;
+	_270       = 16.0f;
+	mProps     = props;
+	_28        = 0;
+	resetCreatureFlag(CF_Unk10);
+	_E0.fromEuler(Vector3f(0.0f, 0.0f, 0.0f));
+	_D4.set(0.0f, 0.0f, 0.0f);
+	resetCreatureFlag(CF_Unk1 | CF_Unk6);
+	_2A8 = nullptr;
+	_2AC = 0;
+	_2B4 = 0;
+	_280 = 0;
+	_290 = 0;
+	_298 = 0;
+	_2B0 = 0;
 }
 
 /*
@@ -1614,39 +946,13 @@ Creature::Creature(CreatureProp* props)
  */
 void Creature::updateStatic()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x24
-	  bl        0x18D34
-
-	.loc_0x24:
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  bl        0x935C
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  li        r5, 0
-	  bl        0x93E8
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x108(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  bl        0x78C
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mSeContext) {
+		mSeContext->update();
+	}
+	mGrid.updateGrid(mPosition);
+	mGrid.updateAIGrid(mPosition, false);
+	doAnimation();
+	updateAI();
 }
 
 /*
@@ -2280,7 +1586,7 @@ void Creature::updateAI()
  * Address:	8008BA30
  * Size:	0000F0
  */
-void centreDist(Creature*, Creature*)
+f32 centreDist(Creature*, Creature*)
 {
 	/*
 	.loc_0x0:
@@ -2364,7 +1670,7 @@ void sphereDistQuick(Creature*, Creature*)
  * Address:	8008BB20
  * Size:	00011C
  */
-void sphereDist(Creature*, Creature*)
+f32 sphereDist(Creature*, Creature*)
 {
 	/*
 	.loc_0x0:
@@ -2959,8 +2265,12 @@ void Creature::collisionCheck(f32)
  * Address:	8008C324
  * Size:	0000A0
  */
-void Creature::getCatchPos(Creature*)
+Vector3f Creature::getCatchPos(Creature* target)
 {
+	f32 rad = 0.95f * getSize();
+
+	Vector3f catchPos = Vector3f(rad * sinf(mDirection), 0.0f, rad * cosf(mDirection)) + mPosition;
+	return catchPos;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3018,28 +2328,7 @@ bool Creature::needShadow() { return true; }
  * Address:	8008C3CC
  * Size:	000040
  */
-f32 Creature::getShadowSize()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x7C(r31)
-	  lwz       r0, 0x1C(r1)
-	  fmuls     f1, f0, f1
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+f32 Creature::getShadowSize() { return _7C.x * getSize(); }
 
 /*
  * --INFO--
@@ -3798,7 +3087,7 @@ void Creature::drawShadow(Graphics&)
  * Address:	8008CE7C
  * Size:	000094
  */
-void qdist2(Creature*, Creature*)
+f32 qdist2(Creature*, Creature*)
 {
 	/*
 	.loc_0x0:
@@ -3849,7 +3138,7 @@ void qdist2(Creature*, Creature*)
  * Address:	8008CF10
  * Size:	0000EC
  */
-void circleDist(Creature*, Creature*)
+f32 circleDist(Creature*, Creature*)
 {
 	/*
 	.loc_0x0:
@@ -4520,8 +3809,13 @@ void Creature::renderAtari(Graphics&)
  * Address:	8008D890
  * Size:	000054
  */
-void roughCull(Creature*, Creature*, f32)
+bool roughCull(Creature* p1, Creature* p2, f32 p3)
 {
+	if (AIPerf::useGrid && AIPerf::iteratorCull && p1->mGrid.doCulling(p2->mGrid, p3)) {
+		return true;
+	}
+
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4559,41 +3853,16 @@ void roughCull(Creature*, Creature*, f32)
  */
 void Creature::stickUpdate()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x158(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2C
-	  mr        r3, r31
-	  bl        0x4114
-	  b         .loc_0x5C
+	if (_158) {
+		updateStickRope();
+		return;
+	}
 
-	.loc_0x2C:
-	  lwz       r0, 0x184(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x5C
-	  mr        r3, r31
-	  bl        0x2630
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x54
-	  mr        r3, r31
-	  bl        0x34D4
-	  b         .loc_0x5C
-
-	.loc_0x54:
-	  mr        r3, r31
-	  bl        0x371C
-
-	.loc_0x5C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mStickTarget) {
+		if (isStickToPlatform()) {
+			updateStickPlatform();
+		} else {
+			updateStickNonPlatform();
+		}
+	}
 }

@@ -11,6 +11,7 @@ f64 nan(const char*);
 f32 cosf(f32 __x);
 f32 sinf(f32 __x);
 f32 tanf(f32 __x);
+f32 atan2f(f32 __x, f32 __y);
 
 #ifdef __cplusplus
 };

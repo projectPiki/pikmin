@@ -31,7 +31,7 @@ struct BuildingItem : public ItemCreature {
 	virtual void doRestore(CreatureInf*);     // _4C
 	virtual void doSave(RandomAccessStream&); // _50
 	virtual void doLoad(RandomAccessStream&); // _54
-	virtual void getBoundingSphereRadius();   // _64
+	virtual f32 getBoundingSphereRadius();    // _64
 	virtual bool isAlive();                   // _88
 	virtual bool needShadow();                // _90 (weak)
 	virtual void update();                    // _E0

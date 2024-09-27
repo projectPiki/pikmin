@@ -976,37 +976,12 @@ void SearchSystem::updateLoopOptimised()
  */
 SearchBuffer::SearchBuffer()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r1)
-	  subi      r0, r4, 0x2374
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  stw       r0, 0x0(r3)
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x4EC0
-	  stw       r31, 0x4(r30)
-	  addi      r3, r30, 0
-	  stw       r0, 0x0(r30)
-	  sth       r31, 0x1A(r30)
-	  stw       r31, 0x20(r30)
-	  sth       r31, 0x18(r30)
-	  stw       r31, 0x14(r30)
-	  bl        0x238
-	  stb       r31, 0x24(r30)
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_1A = 0;
+	_20 = 0;
+	_18 = 0;
+	_14 = nullptr;
+	invalidate();
+	_24 = 0;
 }
 
 /*
@@ -1014,8 +989,19 @@ SearchBuffer::SearchBuffer()
  * Address:	800E3C80
  * Size:	0001D8
  */
-void SearchBuffer::init(SearchData*, int)
+void SearchBuffer::init(SearchData* data, int p2)
 {
+	_1A = p2;
+	_14 = data;
+	for (int i = 0; i < p2; i++) {
+		_14[i].init();
+		// _14[i]._08 = 0;
+		// _14[i]._00 = nullptr;
+		// _14[i]._04 = 12800.0f;
+	}
+	_18 = 0;
+	_10 = 0;
+	invalidate();
 	/*
 	.loc_0x0:
 	  mflr      r0

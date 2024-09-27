@@ -7,6 +7,9 @@
 #include "SRT.h"
 #include "Matrix4f.h"
 #include "GfxObject.h"
+#include "Parameters.h"
+#include "Ayu.h"
+#include "string.h"
 
 struct AnimMgr;
 struct BaseShape;
@@ -87,8 +90,8 @@ struct AnimData : public CoreNode {
 	AnimData()
 	    : CoreNode("")
 	{
-		_24 = 0;
-		_38 = 0;
+		mAnimFlags = 0;
+		_38        = 0;
 	}
 
 	virtual void extractSRT(struct SRT&, int, AnimDataInfo*, f32);                  // _10
@@ -105,7 +108,7 @@ struct AnimData : public CoreNode {
 	DataChunk* mRotateDataBlock;      // _18
 	DataChunk* mTranslationDataBlock; // _1C
 	int _20;                          // _20
-	int _24;                          // _24
+	int mAnimFlags;                   // _24
 	int mNumJoints;                   // _28
 	int _2C;                          // _2C
 	int mNumFrames;                   // _30
@@ -159,18 +162,67 @@ struct AnmobjInfo : public GfxobjInfo {
 /**
  * @brief TODO
  */
+struct AnimKey {
+	AnimKey()
+	{
+		_00   = 0;
+		_04   = 0;
+		_06   = 0;
+		_07   = 0;
+		mPrev = mNext = nullptr;
+	}
+
+	inline void insertAfter(AnimKey* key)
+	{
+		key->mNext   = mNext;
+		key->mPrev   = this;
+		mNext->mPrev = key;
+		mNext        = key;
+	}
+
+	inline void add(AnimKey* key) { mPrev->insertAfter(key); }
+
+	inline f32 getKeyValue() { return _00; }
+
+	int _00;        // _00, unknown
+	s16 _04;        // _04
+	u8 _06;         // _06
+	u8 _07;         // _07
+	AnimKey* mPrev; // _08
+	AnimKey* mNext; // _0C
+};
+
+/**
+ * @brief TODO
+ */
 struct AnimInfo : public CoreNode {
+
+	/**
+	 * @brief Fabricated. Offsets relative to AnimInfo for convenience.
+	 */
+	struct AnimInfoParams : public Parameters {
+		inline AnimInfoParams()
+		    : mFlags(this, 2, 0, 0, "p00", nullptr)
+		    , mSpeed(this, 30.0f, 0.0f, 0.0f, "spd", nullptr)
+		{
+		}
+
+		// _14-_18 = Parameters
+		Parm<int> mFlags; // _18, p00
+		Parm<f32> mSpeed; // _28, spd
+	};
+
 	AnimInfo(AnimMgr*, AnimData*);
 
 	void checkAnimData();
 	void setIndex();
 	void setAnimFlags(u32);
-	void countAKeys();
-	void countIKeys();
-	void countEKeys();
-	void getInfoKey(int);
-	void getEventKey(int);
-	void getKeyValue(int);
+	int countAKeys();
+	int countIKeys();
+	int countEKeys();
+	AnimKey* getInfoKey(int);
+	AnimKey* getEventKey(int);
+	int getKeyValue(int);
 	void doread(RandomAccessStream&, int);
 	void updateAnimFlags();
 	void addKeyFrame();
@@ -180,7 +232,13 @@ struct AnimInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	AnimInfoParams mParams; // _14
+	AnimKey _38;            // _38
+	AnimKey mEventKeys;     // _48
+	AnimKey mInfoKeys;      // _58
+	AnimData* mData;        // _68
+	u8 _6C[0x4];            // _6C, unknown
+	AnimMgr* mMgr;          // _70
 };
 
 /**
@@ -205,32 +263,20 @@ struct AnimContext {
 /**
  * @brief TODO
  */
-struct AnimKey {
-	AnimKey();
-
-	u32 _00; // _00, unknown
-	u16 _04; // _04
-	u8 _06;  // _06
-	u8 _07;  // _07
-	u32 _08; // _08, unknown
-	u32 _0C; // _0C, unknown
-};
-
-/**
- * @brief TODO
- */
 struct Animator {
 	void startAnim(int, int, int, int);
 	void updateContext();
 
 	// _30 = VTBL
-	u8 _00[0x18]; // _00, unknown
-	int _18;      // _18
-	int _1C;      // _1C
-	int _20;      // _20
-	int _24;      // _24
-	u32 _28;      // _28, unknown
-	f32 _2C;      // _2C
+	AnimMgr* mMgr;         // _00
+	AnimContext* mContext; // _04
+	u8 _08[0x10];          // _08, unknown
+	int _18;               // _18
+	int _1C;               // _1C
+	int _20;               // _20
+	int _24;               // _24
+	AnimInfo* mAnimInfo;   // _28
+	f32 mCurrentFrame;     // _2C
 
 	virtual void changeContext(AnimContext*); // _08
 	virtual void animate(f32);                // _0C
@@ -244,20 +290,39 @@ struct Animator {
  * @note Size: 0xB8.
  */
 struct AnimMgr : public CoreNode {
+
+	/**
+	 * @brief Fabricated. Offsets relative to AnimMgr for convenience.
+	 */
+	struct AnimMgrParams : public Parameters {
+		inline AnimMgrParams()
+		    : _18(this, 2, 0, 0, "a00", nullptr)
+		    , _28(this, *(String*)(0), *(String*)(0), *(String*)(0), "a01", nullptr)
+		{
+		}
+
+		// _14-_18 = Parameters
+		Parm<int> _18;    // _18
+		Parm<String> _28; // _28
+	};
+
 	AnimMgr(Shape*, char*, int, char*);
 
 	virtual void read(RandomAccessStream&); // _0C
 
 	void loadAnims(char*, char*);
 	AnimInfo* addAnimation(char*, bool);
-	void countAnims();
+	int countAnims();
 
 	// unused/inlined:
 	void findAnim(int);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u8 _14[0xB8 - 0x14]; // _14, unknown
+	AnimMgrParams mParams; // _14
+	u8 _3C[0x4];           // _3C, unknown
+	AnimInfo mAnimList;    // _40, parent of list of animations
+	u8 _B4;                // _B4, unknown
 };
 
 /**

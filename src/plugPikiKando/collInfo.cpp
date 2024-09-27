@@ -3540,8 +3540,9 @@ void CollInfo::checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Ve
  * Address:	80089708
  * Size:	000008
  */
-void CollInfo::getBoundingSphere()
+Sphere* CollInfo::getBoundingSphere()
 {
+	return mBoundingSphere;
 	/*
 	.loc_0x0:
 	  lwz       r3, 0x4(r3)
@@ -3595,7 +3596,7 @@ CollPart* CollInfo::getSphere(u32)
  * Address:	80089770
  * Size:	00017C
  */
-void CollInfo::getNearestCollPart(Vector3f&, u32)
+CollPart* CollInfo::getNearestCollPart(Vector3f&, u32)
 {
 	/*
 	.loc_0x0:
@@ -3710,7 +3711,7 @@ void CollInfo::getNearestCollPart(Vector3f&, u32)
  * Address:	800898EC
  * Size:	000130
  */
-void CollInfo::getRandomCollPart(u32)
+CollPart* CollInfo::getRandomCollPart(u32)
 {
 	/*
 	.loc_0x0:

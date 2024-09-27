@@ -64,7 +64,17 @@ struct LifeGauge {
 	void countOn(Vector3f&, int, int);
 	void countOff();
 
-	// TODO: members
+	Vector3f _00; // _00
+	Vector3f _0C; // _0C
+	u32 _18;      // _18, unknown
+	u32 _1C;      // _1C, unknown
+	u8 _20;       // _20
+	f32 _24;      // _24
+	f32 _28;      // _28
+	f32 _2C;      // _2C
+	f32 _30;      // _30
+	f32 _34;      // _34
+	u32 _38;      // _38, unknown
 };
 
 extern LifeGaugeMgr* lgMgr;

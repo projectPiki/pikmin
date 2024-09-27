@@ -1,12 +1,14 @@
 #include "teki.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt);
 	// UNUSED FUNCTION
 }
 
@@ -25,55 +27,29 @@ static void _Print(char*, ...)
  * Address:	80143BF0
  * Size:	000084
  */
-Teki::Teki()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  beq-      .loc_0x30
-	  addi      r0, r31, 0x538
-	  lis       r3, 0x802B
-	  stw       r0, 0x2C0(r31)
-	  subi      r0, r3, 0x246C
-	  stw       r0, 0x538(r31)
-
-	.loc_0x30:
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        0x5EB2C
-	  lis       r3, 0x802D
-	  subi      r3, r3, 0x33D8
-	  stw       r3, 0x0(r31)
-	  addi      r6, r3, 0x1F4
-	  addi      r4, r3, 0x114
-	  lwz       r5, 0x2C0(r31)
-	  addi      r0, r31, 0x538
-	  addi      r3, r31, 0
-	  stw       r6, 0x0(r5)
-	  stw       r4, 0x2B8(r31)
-	  lwz       r4, 0x2C0(r31)
-	  sub       r0, r0, r4
-	  stw       r0, 0x4(r4)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+Teki::Teki() { }
 
 /*
  * --INFO--
  * Address:	80143C74
  * Size:	00008C
  */
-void YTeki::init(int)
+void YTeki::init(int p1)
 {
+	BTeki::init(p1);
+	_478    = 0.0f;
+	_498[0] = 0;
+	_498[1] = 0;
+	_498[2] = 0;
+	_498[3] = 0;
+	_498[4] = 0;
+	_498[5] = 0;
+	_498[6] = 0;
+	_498[7] = 0;
+
+	for (int i = 8; i > 0; i++) {
+		_498[i] = 0;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -127,76 +103,42 @@ void YTeki::init(int)
  * Address:	80143D00
  * Size:	000008
  */
-void BTeki::setTekiOptions(int a1)
-{
-	// Generated from stw r4, 0x410(r3)
-	// _410 = a1;
-}
+void BTeki::setTekiOptions(int opts) { mTekiOptions = opts; }
 
 /*
  * --INFO--
  * Address:	80143D08
  * Size:	00000C
  */
-void BTeki::clearTekiOptions()
-{
-	// Generated from stw r0, 0x410(r3)
-	// _410 = 0;
-}
+void BTeki::clearTekiOptions() { mTekiOptions = 0; }
 
 /*
  * --INFO--
  * Address:	80143D14
  * Size:	000010
  */
-void BTeki::setAnimationKeyOption(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x414(r3)
-	  or        r0, r0, r4
-	  stw       r0, 0x414(r3)
-	  blr
-	*/
-}
+void BTeki::setAnimationKeyOption(int opt) { mAnimKeyOptions |= opt; }
 
 /*
  * --INFO--
  * Address:	80143D24
  * Size:	000010
  */
-void BTeki::clearAnimationKeyOption(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x414(r3)
-	  andc      r0, r0, r4
-	  stw       r0, 0x414(r3)
-	  blr
-	*/
-}
+void BTeki::clearAnimationKeyOption(int opt) { mAnimKeyOptions &= ~opt; }
 
 /*
  * --INFO--
  * Address:	80143D34
  * Size:	000008
  */
-void BTeki::setAnimationKeyOptions(int a1)
-{
-	// Generated from stw r4, 0x414(r3)
-	// _414 = a1;
-}
+void BTeki::setAnimationKeyOptions(int opts) { mAnimKeyOptions = opts; }
 
 /*
  * --INFO--
  * Address:	80143D3C
  * Size:	00000C
  */
-void BTeki::clearAnimationKeyOptions()
-{
-	// Generated from stw r0, 0x414(r3)
-	// _414 = 0;
-}
+void BTeki::clearAnimationKeyOptions() { mAnimKeyOptions = 0; }
 
 /*
  * --INFO--
@@ -221,92 +163,32 @@ f32 BTeki::getShadowSize()
  * Address:	80143D60
  * Size:	00001C
  */
-bool BTeki::isVisible()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x410(r3)
-	  lwz       r0, -0x9D4(r13)
-	  and       r0, r3, r0
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
+bool BTeki::isVisible() { return isTekiOption(TEKI_OPTION_VISIBLE) != 0; }
 
 /*
  * --INFO--
  * Address:	80143D7C
  * Size:	00001C
  */
-bool BTeki::isOrganic()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x410(r3)
-	  lwz       r0, -0x9C0(r13)
-	  and       r0, r3, r0
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
+bool BTeki::isOrganic() { return isTekiOption(TEKI_OPTION_ORGANIC) != 0; }
 
 /*
  * --INFO--
  * Address:	80143D98
  * Size:	00001C
  */
-bool BTeki::isAtari()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x410(r3)
-	  lwz       r0, -0x9C8(r13)
-	  and       r0, r3, r0
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
+bool BTeki::isAtari() { return isTekiOption(TEKI_OPTION_ATARI) != 0; }
 
 /*
  * --INFO--
  * Address:	80143DB4
  * Size:	00001C
  */
-bool BTeki::isAlive()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x410(r3)
-	  lwz       r0, -0x9C4(r13)
-	  and       r0, r3, r0
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
+bool BTeki::isAlive() { return isTekiOption(TEKI_OPTION_ALIVE) != 0; }
 
 /*
  * --INFO--
  * Address:	80143DD0
  * Size:	00001C
  */
-bool BTeki::needShadow()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x410(r3)
-	  lwz       r0, -0x9D0(r13)
-	  and       r0, r3, r0
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
+bool BTeki::needShadow() { return isTekiOption(TEKI_OPTION_SHADOW_VISIBLE) != 0; }

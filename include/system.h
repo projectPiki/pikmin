@@ -85,7 +85,7 @@ struct StdSystem {
 	Texture* loadTexture(char*, bool);
 	void loadShape(char*, bool);
 	void findAnimation(char*);
-	void findAnyIndex(char*, char*);
+	int findAnyIndex(char*, char*);
 	void loadAnimation(Shape*, char*, bool);
 	void addAnimation(AnimData*, char*);
 	void addGfxObject(GfxobjInfo*);

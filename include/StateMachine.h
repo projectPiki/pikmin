@@ -24,6 +24,8 @@ struct AState : public Receiver<T> {
 	virtual void restart(T*);      // _48
 	virtual void transit(T*, int); // _4C
 
+	inline int getStateID() const { return mStateID; }
+
 	// _00 = VTBL
 	int mStateID; // _04
 	u32 _08;      // _08, unknown

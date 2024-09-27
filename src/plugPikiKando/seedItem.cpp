@@ -484,7 +484,7 @@ void SeedItem::refresh(Graphics&)
  * Address:	800EE2D4
  * Size:	00003C
  */
-void SeedItem::stimulate(Interaction&)
+bool SeedItem::stimulate(Interaction&)
 {
 	/*
 	.loc_0x0:

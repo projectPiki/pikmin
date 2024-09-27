@@ -2191,7 +2191,7 @@ void HinderRock::getVertex(int)
  * Address:	8009C998
  * Size:	000074
  */
-void HinderRock::stimulate(Interaction&)
+bool HinderRock::stimulate(Interaction&)
 {
 	/*
 	.loc_0x0:
@@ -3432,7 +3432,7 @@ Bridge::Bridge(Shape*, bool)
  * Address:	8009D9E0
  * Size:	000074
  */
-void Bridge::stimulate(Interaction&)
+bool Bridge::stimulate(Interaction&)
 {
 	/*
 	.loc_0x0:

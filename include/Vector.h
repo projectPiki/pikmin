@@ -35,6 +35,13 @@ struct Vector3f {
 		z = stream.readFloat();
 	}
 
+	inline void write(Stream& stream)
+	{
+		stream.writeFloat(x);
+		stream.writeFloat(y);
+		stream.writeFloat(z);
+	}
+
 	inline f32 distance(Vector3f& to)
 	{
 		Vector3f result;
@@ -118,7 +125,7 @@ struct Vector2f {
  * @note Size: 0x10.
  */
 struct Quat {
-	Quat();
+	Quat() { }
 
 	void fromMat3f(Matrix3f&);
 	void rotate(Vector3f&, f32);
@@ -132,6 +139,14 @@ struct Quat {
 
 	// unused/inlined:
 	void multiplyTo(Quat&, Quat&);
+
+	inline void set(f32 _x, f32 _y, f32 _z, f32 _s)
+	{
+		v.x = _x;
+		v.y = _y;
+		v.z = _z;
+		s   = _s;
+	}
 
 	Vector3f v; // _00, vector part
 	f32 s;      // _0C, scalar part

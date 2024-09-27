@@ -140,7 +140,7 @@ f32 SlimeCreature::getiMass()
  * Address:	8016B380
  * Size:	00001C
  */
-void SlimeCreature::getCentre()
+Vector3f SlimeCreature::getCentre()
 {
 	/*
 	.loc_0x0:

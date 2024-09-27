@@ -12,9 +12,9 @@ struct FastGrid {
 	void initAIGrid(u8);
 	void clearAIGrid();
 	void delAIGrid();
-	void aiCulling();
+	bool aiCulling();
 	void aiCullingLarge(int);
-	void doCulling(const FastGrid&, f32);
+	bool doCulling(const FastGrid&, f32);
 	void updateGrid(const struct Vector3f&);
 	void updateAIGrid(const Vector3f&, bool);
 

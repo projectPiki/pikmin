@@ -2639,7 +2639,7 @@ bool Piki::isRopable()
  * Address:	800C8538
  * Size:	00001C
  */
-void Piki::getCatchPos(Creature*)
+Vector3f Piki::getCatchPos(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -4697,7 +4697,7 @@ void StateMachine<Piki>::procMsg(Piki*, Msg*)
  * Address:	800C9EB8
  * Size:	000074
  */
-void Piki::stimulate(Interaction&)
+bool Piki::stimulate(Interaction&)
 {
 	/*
 	.loc_0x0:

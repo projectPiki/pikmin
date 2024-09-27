@@ -509,7 +509,7 @@ void StdSystem::findIndexAnimation(char*, int)
  * Address:	8003F44C
  * Size:	0000A4
  */
-void StdSystem::findAnyIndex(char*, char*)
+int StdSystem::findAnyIndex(char*, char*)
 {
 	/*
 	.loc_0x0:

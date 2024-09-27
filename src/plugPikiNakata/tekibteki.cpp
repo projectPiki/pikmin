@@ -2,6 +2,27 @@
 #include "teki.h"
 #include "Shape.h"
 
+int BTeki::TEKI_OPTION_VISIBLE            = 1 << 0;
+int BTeki::TEKI_OPTION_SHADOW_VISIBLE     = 1 << 1;
+int BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE = 1 << 2;
+int BTeki::TEKI_OPTION_ATARI              = 1 << 3;
+int BTeki::TEKI_OPTION_ALIVE              = 1 << 4;
+int BTeki::TEKI_OPTION_ORGANIC            = 1 << 5;
+int BTeki::TEKI_OPTION_MANUAL_ANIMATION   = 1 << 7;
+int BTeki::TEKI_OPTION_GRAVITATABLE       = 1 << 8;
+int BTeki::TEKI_OPTION_INVINCIBLE         = 1 << 9;
+int BTeki::TEKI_OPTION_PRESSED            = 1 << 10;
+int BTeki::TEKI_OPTION_DRAWED             = 1 << 13;
+int BTeki::TEKI_OPTION_SHAPE_VISIBLE      = 1 << 14;
+int BTeki::TEKI_OPTION_DAMAGE_COUNTABLE   = 1 << 15;
+
+int BTeki::ANIMATION_KEY_OPTION_FINISHED  = 1 << 0;
+int BTeki::ANIMATION_KEY_OPTION_ACTION_0  = 1 << 1;
+int BTeki::ANIMATION_KEY_OPTION_ACTION_1  = 1 << 2;
+int BTeki::ANIMATION_KEY_OPTION_ACTION_2  = 1 << 3;
+int BTeki::ANIMATION_KEY_OPTION_LOOPSTART = 1 << 5;
+int BTeki::ANIMATION_KEY_OPTION_LOOPEND   = 1 << 6;
+
 /*
  * --INFO--
  * Address:	........
@@ -27,36 +48,11 @@ static void _Print(char*, ...)
  * Address:	80143F5C
  * Size:	000064
  */
-void BTeki::viewStartTrembleMotion(f32)
+void BTeki::viewStartTrembleMotion(f32 motionSpeed)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0xE
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stfd      f31, 0x18(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x174(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0x80
-	  lwz       r12, 0x1CC(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f31, 0x3B4(r31)
-	  lwz       r0, 0x24(r1)
-	  lfd       f31, 0x18(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	startMotion(14);
+	setTekiOption(TEKIOPT_ManualAnimation);
+	mMotionSpeed = motionSpeed;
 }
 
 /*
@@ -64,30 +60,14 @@ void BTeki::viewStartTrembleMotion(f32)
  * Address:	80143FC0
  * Size:	000008
  */
-void BTeki::viewSetMotionSpeed(f32 speed) { mSetMotionSpeed = speed; }
+void BTeki::viewSetMotionSpeed(f32 speed) { mMotionSpeed = speed; }
 
 /*
  * --INFO--
  * Address:	80143FC8
  * Size:	00002C
  */
-void BTeki::viewDoAnimation()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x108(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void BTeki::viewDoAnimation() { doAnimation(); }
 
 /*
  * --INFO--
@@ -96,6 +76,7 @@ void BTeki::viewDoAnimation()
  */
 void BTeki::viewFinishMotion()
 {
+	_2CC->finishMotion(PaniMotionInfo(-1, this));
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2374,7 +2355,7 @@ void BTeki::updateTimers()
  * Address:	80145A88
  * Size:	000074
  */
-void BTeki::stimulate(Interaction&)
+bool BTeki::stimulate(Interaction&)
 {
 	/*
 	.loc_0x0:

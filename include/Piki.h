@@ -30,7 +30,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	virtual bool needShadow();                           // _90
 	virtual bool needFlick(Creature*);                   // _94
 	virtual bool ignoreAtari(Creature*);                 // _98
-	virtual void stimulate(Interaction&);                // _A0
+	virtual bool stimulate(Interaction&);                // _A0
 	virtual void sendMsg(Msg*);                          // _A4
 	virtual void collisionCallback(CollEvent&);          // _A8
 	virtual void bounceCallback();                       // _AC
@@ -42,7 +42,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	virtual bool isRopable();                            // _D4
 	virtual bool mayIstick();                            // _D8
 	virtual int getFormationPri();                       // _DC
-	virtual void getCatchPos(Creature*);                 // _100
+	virtual Vector3f getCatchPos(Creature*);             // _100
 	virtual void doAI();                                 // _104
 	virtual void doAnimation();                          // _108
 	virtual void doKill();                               // _10C

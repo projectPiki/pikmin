@@ -42,6 +42,9 @@ struct AIPerf {
 	void decGridShift(Menu&);
 	void toggleUpdateSearchBuffer(Menu&);
 
+	static int useGrid;
+	static bool iteratorCull;
+
 	// TODO: members
 };
 

@@ -103,7 +103,7 @@ struct SlimeCreature : public Creature {
 
 	virtual f32 getiMass();              // _38
 	virtual f32 getSize();               // _3C
-	virtual void getCentre();            // _58
+	virtual Vector3f getCentre();        // _58
 	virtual void setCentre(Vector3f&);   // _6C
 	virtual bool isAtari();              // _84
 	virtual bool isAlive();              // _88

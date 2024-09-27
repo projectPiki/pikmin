@@ -111,7 +111,7 @@ struct BossShapeObject {
 struct Boss : public Creature {
 	Boss(CreatureProp*);
 
-	virtual void getCentre();                          // _58
+	virtual Vector3f getCentre();                      // _58
 	virtual f32 getShadowSize();                       // _70
 	virtual bool isVisible();                          // _74
 	virtual bool isOrganic();                          // _78
@@ -120,7 +120,7 @@ struct Boss : public Creature {
 	virtual bool isFixed();                            // _8C
 	virtual bool needShadow();                         // _90
 	virtual bool ignoreAtari(Creature*);               // _98
-	virtual void stimulate(Interaction&);              // _A0
+	virtual bool stimulate(Interaction&);              // _A0
 	virtual void collisionCallback(CollEvent&);        // _A8
 	virtual void wallCallback(Plane&, DynCollObject*); // _B4
 	virtual void update();                             // _E0

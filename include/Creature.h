@@ -6,7 +6,11 @@
 #include "FastGrid.h"
 #include "ObjType.h"
 #include "RefCountable.h"
+#include "SearchSystem.h"
+#include "LifeGauge.h"
+#include "UpdateMgr.h"
 #include "Vector.h"
+#include "Matrix4f.h"
 
 struct CollInfo;
 struct CollTriInfo;
@@ -16,6 +20,7 @@ struct Condition;
 struct CreatureInf;
 struct CreatureProp;
 struct DynCollObject;
+struct Generator;
 struct Matrix4f;
 struct MoveTrace;
 struct Msg;
@@ -28,22 +33,38 @@ struct SeContext;
  * @brief TODO
  */
 enum CreatureFlags {
-	CF_Unk1         = 1 << 0,  // 0x1
-	CF_Unk2         = 1 << 1,  // 0x2
-	CF_Unk3         = 1 << 2,  // 0x4
-	CF_Unk4         = 1 << 3,  // 0x8
-	CF_Unk5         = 1 << 4,  // 0x10
-	CF_Unk6         = 1 << 5,  // 0x20
-	CF_Unk7         = 1 << 6,  // 0x40
-	CF_Unk8         = 1 << 7,  // 0x80
-	CF_Unk9         = 1 << 8,  // 0x100
-	CF_Unk10        = 1 << 9,  // 0x200
-	CF_Unk11        = 1 << 10, // 0x400
-	CF_Unk12        = 1 << 11, // 0x800
-	CF_Unk13        = 1 << 12, // 0x1000
-	CF_Unk14        = 1 << 13, // 0x2000
-	CF_Unk15        = 1 << 14, // 0x4000
-	CF_StuckToMouth = 1 << 15, // 0x8000
+	CF_Unk1          = 1 << 0,  // 0x1
+	CF_Unk2          = 1 << 1,  // 0x2
+	CF_Unk3          = 1 << 2,  // 0x4
+	CF_Unk4          = 1 << 3,  // 0x8
+	CF_Unk5          = 1 << 4,  // 0x10
+	CF_Unk6          = 1 << 5,  // 0x20
+	CF_Unk7          = 1 << 6,  // 0x40
+	CF_Unk8          = 1 << 7,  // 0x80
+	CF_Unk9          = 1 << 8,  // 0x100
+	CF_Unk10         = 1 << 9,  // 0x200
+	CF_Unk11         = 1 << 10, // 0x400
+	CF_Unk12         = 1 << 11, // 0x800
+	CF_Unk13         = 1 << 12, // 0x1000
+	CF_Unk14         = 1 << 13, // 0x2000
+	CF_StuckToObject = 1 << 14, // 0x4000, stuck to an object
+	CF_StuckToMouth  = 1 << 15, // 0x8000, stuck to mouth of some enemy
+	CF_Unk16         = 1 << 16, // 0x10000
+	CF_Unk17         = 1 << 17, // 0x20000
+	CF_Unk18         = 1 << 18, // 0x40000
+	CF_Unk19         = 1 << 19, // 0x80000
+	CF_Unk20         = 1 << 20, // 0x100000
+	CF_FixPosition   = 1 << 21, // 0x200000
+};
+
+/**
+ * @brief TODO
+ */
+enum CreatureStandType {
+	STANDTYPE_Unk0 = 0,
+	STANDTYPE_Unk1 = 1,
+	STANDTYPE_Unk2 = 2,
+	STANDTYPE_Unk3 = 3,
 };
 
 /**
@@ -72,10 +93,10 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual void doRestore(CreatureInf*);                     // _4C (weak)
 	virtual void doSave(struct RandomAccessStream&);          // _50 (weak)
 	virtual void doLoad(RandomAccessStream&);                 // _54 (weak)
-	virtual void getCentre();                                 // _58
+	virtual Vector3f getCentre();                             // _58
 	virtual f32 getCentreSize();                              // _5C
-	virtual void getBoundingSphereCentre();                   // _60
-	virtual void getBoundingSphereRadius();                   // _64
+	virtual Vector3f getBoundingSphereCentre();               // _60
+	virtual f32 getBoundingSphereRadius();                    // _64
 	virtual Vector3f getShadowPos();                          // _68 (weak)
 	virtual void setCentre(Vector3f&);                        // _6C (weak)
 	virtual f32 getShadowSize();                              // _70
@@ -90,7 +111,7 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual bool needFlick(Creature*);                        // _94 (weak)
 	virtual bool ignoreAtari(Creature*);                      // _98 (weak)
 	virtual bool isFree();                                    // _9C (weak)
-	virtual void stimulate(struct Interaction&);              // _A0
+	virtual bool stimulate(struct Interaction&);              // _A0
 	virtual void sendMsg(Msg*);                               // _A4 (weak)
 	virtual void collisionCallback(struct CollEvent&) { }     // _A8 (weak)
 	virtual void bounceCallback() { }                         // _AC (weak)
@@ -114,7 +135,7 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual void renderAtari(Graphics&);                      // _F4
 	virtual void drawShadow(Graphics&);                       // _F8
 	virtual void demoDraw(Graphics&, Matrix4f*);              // _FC
-	virtual void getCatchPos(Creature*);                      // _100
+	virtual Vector3f getCatchPos(Creature*);                  // _100
 	virtual void doAI();                                      // _104 (weak)
 	virtual void doAnimation();                               // _108 (weak)
 	virtual void doKill() = 0;                                // _10C
@@ -123,17 +144,17 @@ struct Creature : public RefCountable, public EventTalker {
 	void finishFixPosition();
 	void load(RandomAccessStream&, bool);
 	void save(RandomAccessStream&, bool);
-	void getCollidePlatformCreature();
-	void getCollidePlatformNormal();
+	Creature* getCollidePlatformCreature();
+	Vector3f getCollidePlatformNormal();
 	bool isBoss();
 	void enableStick();
 	void disableStick();
-	void getNearestCollPart(Vector3f&, u32);
-	void getRandomCollPart(u32);
+	CollPart* getNearestCollPart(Vector3f&, u32);
+	CollPart* getRandomCollPart(u32);
 	void playEventSound(Creature*, int);
 	void stopEventSound(Creature*, int);
-	void getStandType();
-	void getGeneratorID();
+	int getStandType();
+	u32 getGeneratorID();
 	bool setStateGrabbed(Creature*);
 	void resetStateGrabbed();
 	void turnTo(Vector3f&);
@@ -191,29 +212,81 @@ struct Creature : public RefCountable, public EventTalker {
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker
-	u8 _1C[0x2C - 0x1C];    // _1C, TODO: work out members
+	Vector3f _1C;           // _1C
+	u32 _28;                // _28, unknown
 	SeContext* mSeContext;  // _2C
-	u8 _30[0x40 - 0x30];    // _30, TODO: work out members
+	u8 _30;                 // _30
+	u32 _34;                // _34, unknown
+	u8 _38[0x40 - 0x38];    // _38, TODO: work out members
 	FastGrid mGrid;         // _40
-	u8 _58[0x6C - 0x58];    // _58, TODO: work out members
+	u8 _58[0x60 - 0x58];    // _58, TODO: work out members
+	u8 _60;                 // _60
+	Generator* mGenerator;  // _64
+	u8 _68[0x4];            // _68, unknown
 	EObjType mObjType;      // _6C, object type
 	Vector3f _70;           // _70
-	u8 _7C[0x88 - 0x7C];    // _7C, TODO: work out members
+	Vector3f _7C;           // _7C
 	Vector3f _88;           // _88
 	Vector3f mPosition;     // _94
 	f32 mDirection;         // _A0
-	u8 _A4[0xC8 - 0xA4];    // _A4, TODO: work out members
+	Vector3f _A4;           // _A4
+	Vector3f _B0;           // _B0
+	Vector3f _BC;           // _BC
 	u32 mCreatureFlags;     // _C8, bitflag
 	u32 _CC;                // _CC
 	f32 _D0;                // _D0
-	u8 _D4[0xE0 - 0xD4];    // _D4, TODO: work out members
+	Vector3f _D4;           // _D4
 	Quat _E0;               // _E0
-	u8 _F0[0x184 - 0xF0];   // _F0, TODO: work out members
+	Quat _F0;               // _F0
+	Quat _100;              // _100
+	f32 _110;               // _110
+	Matrix4f _114;          // _114
+	Creature* _154;         // _154
+	u32 _158;               // _158, maybe Rope* or RopeCreature*?
+	f32 _15C;               // _15C
+	u32 _160;               // _160, unknown
+	u32 _164;               // _164, unknown
+	UpdateContext _168;     // _168
+	UpdateContext _174;     // _174
+	Creature* _180;         // _180, unknown
 	Creature* mStickTarget; // _184, creature/object this creature is stuck to
-	u8 _188[0x220 - 0x188]; // _188, TODO: work out members
+	u32 _188;               // _188, unknown
+	u32 _18C;               // _18C, unknown
+	u32 _190;               // _190, unknown
+	Vector3f _194;          // _194
+	int _1A0;               // _1A0
+	u32 _1A4;               // _1A4
+	u8 _1A8[0x4];           // _1A8, unknown
+	Vector3f _1AC;          // _1AC
+	SearchBuffer _1B8;      // _1B8
+	LifeGauge mLifeGauge;   // _1E0
+	u32 _21C;               // _21C, unknown
 	CollInfo* mCollInfo;    // _220
 	CreatureProp* mProps;   // _224, creature properties
-	u8 _228[0x2B5 - 0x228]; // _228, TODO: work out members
+	Matrix4f _228;          // _228
+	u8 _268[0x26C - 0x268]; // _268, TODO: work out members
+	f32 _26C;               // _26C
+	f32 _270;               // _270
+	Vector3f _274;          // _274
+	DynCollObject* _280;    // _280
+	Vector3f* _284;         // _284, coll plat normal maybe?
+	u32 _288;               // _288, unknown
+	u32 _28C;               // _28C, unknown
+	u32 _290;               // _290, unknown
+	u8 _294[0x4];           // _294, unknown
+	u32 _298;               // _298, unknown
+	Vector3f _29C;          // _29C
+	Creature* _2A8;         // _2A8
+	Creature* _2AC;         // _2AC
+	u32 _2B0;               // _2B0, unknown
+	u8 _2B4;                // _2B4
 };
+
+// Global helper functions:
+f32 centreDist(Creature*, Creature*);
+f32 sphereDist(Creature*, Creature*);
+f32 qdist2(Creature*, Creature*);
+f32 circleDist(Creature*, Creature*);
+bool roughCull(Creature*, Creature*, f32);
 
 #endif

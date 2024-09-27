@@ -6,3 +6,5 @@
 #pragma diag_suppress 1767
 // disables the "first parameter of allocation function must be of type 'size_t" error
 #pragma diag_suppress 351
+// disables the "initial value of reference to non-const must be an lvalue" error
+#pragma diag_suppress 461

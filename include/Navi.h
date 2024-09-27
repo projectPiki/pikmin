@@ -28,7 +28,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	virtual bool isBuried();                             // _80
 	virtual bool isAtari();                              // _84
 	virtual bool ignoreAtari(Creature*);                 // _98
-	virtual void stimulate(Interaction&);                // _A0
+	virtual bool stimulate(Interaction&);                // _A0
 	virtual void sendMsg(Msg*);                          // _A4
 	virtual void collisionCallback(CollEvent&);          // _A8
 	virtual void bounceCallback();                       // _AC

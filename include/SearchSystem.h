@@ -12,6 +12,13 @@ struct Creature;
 struct SearchData {
 	SearchData();
 
+	inline void init()
+	{
+		_08 = 0;
+		_04 = 12800.0f;
+		_00 = nullptr;
+	}
+
 	Creature* _00; // _00
 	f32 _04;       // _04
 	u32 _08;       // _08, unknown
@@ -19,6 +26,8 @@ struct SearchData {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x28.
  */
 struct SearchBuffer : public Traversable {
 	SearchBuffer();
@@ -42,7 +51,14 @@ struct SearchBuffer : public Traversable {
 
 	// _00     = VTBL
 	// _00-_08 = Traversable
-	// TODO: members
+	u8 _08[0x8];     // _08, unknown
+	u32 _10;         // _10, unknown
+	SearchData* _14; // _14, unknown
+	s16 _18;         // _18
+	s16 _1A;         // _1A
+	u8 _1C[0x4];     // _1C, unknown
+	u32 _20;         // _20, unknown
+	u8 _24;          // _24
 };
 
 /**

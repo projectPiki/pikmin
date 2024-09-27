@@ -9225,7 +9225,7 @@ void Navi::procDamage(f32)
  * Address:	800FF968
  * Size:	000074
  */
-void Navi::stimulate(Interaction&)
+bool Navi::stimulate(Interaction&)
 {
 	/*
 	.loc_0x0:

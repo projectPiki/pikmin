@@ -23,6 +23,28 @@ void makeTekis(TekiMgr*);
 /**
  * @brief TODO
  */
+enum TekiOptions {
+	TEKIOPT_Visible          = 1 << 0,  // 0x1
+	TEKIOPT_ShadowVisible    = 1 << 1,  // 0x2
+	TEKIOPT_LifeGaugeVisible = 1 << 2,  // 0x4
+	TEKIOPT_Atari            = 1 << 3,  // 0x8
+	TEKIOPT_Alive            = 1 << 4,  // 0x10
+	TEKIOPT_Organic          = 1 << 5,  // 0x20
+	TEKIOPT_Unk6             = 1 << 6,  // 0x40
+	TEKIOPT_ManualAnimation  = 1 << 7,  // 0x80
+	TEKIOPT_Gravitatable     = 1 << 8,  // 0x100
+	TEKIOPT_Invincible       = 1 << 9,  // 0x200
+	TEKIOPT_Pressed          = 1 << 10, // 0x400
+	TEKIOPT_Unk11            = 1 << 11, // 0x800
+	TEKIOPT_Unk12            = 1 << 12, // 0x1000
+	TEKIOPT_Drawed           = 1 << 13, // 0x2000
+	TEKIOPT_ShapeVisible     = 1 << 14, // 0x4000
+	TEKIOPT_DamageCountable  = 1 << 15, // 0x8000
+};
+
+/**
+ * @brief TODO
+ */
 struct TekiInteractionKey {
 	TekiInteractionKey(int, Interaction*);
 
@@ -67,7 +89,7 @@ struct TekiMessage {
 /**
  * @brief TODO
  */
-struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyListener {
+struct BTeki : public Creature, virtual public PaniAnimKeyListener, public PelletView {
 	BTeki();
 
 	virtual bool alwaysUpdatePlatform();                 // _18
@@ -82,7 +104,7 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	virtual bool isAlive();                              // _88
 	virtual bool needShadow();                           // _90
 	virtual bool ignoreAtari(Creature*);                 // _98
-	virtual void stimulate(Interaction&);                // _A0
+	virtual bool stimulate(Interaction&);                // _A0
 	virtual void collisionCallback(CollEvent&);          // _A8
 	virtual void bounceCallback();                       // _AC
 	virtual void wallCallback(Plane&, DynCollObject*);   // _B4
@@ -221,12 +243,38 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	void outputWorldAnimationMatrix(Matrix4f&, int, Matrix4f&); // unused
 	void getCollisionCenter();                                  // unused
 
+	inline bool isTekiOption(int opt) const { return mTekiOptions & opt; }
+	inline bool isAnimKeyOption(int opt) const { return mAnimKeyOptions & opt; }
+
+	// this is basically two static enums smh
+	static int TEKI_OPTION_VISIBLE;
+	static int TEKI_OPTION_SHADOW_VISIBLE;
+	static int TEKI_OPTION_LIFE_GAUGE_VISIBLE;
+	static int TEKI_OPTION_ATARI;
+	static int TEKI_OPTION_ALIVE;
+	static int TEKI_OPTION_ORGANIC;
+	static int TEKI_OPTION_MANUAL_ANIMATION;
+	static int TEKI_OPTION_GRAVITATABLE;
+	static int TEKI_OPTION_INVINCIBLE;
+	static int TEKI_OPTION_PRESSED;
+	static int TEKI_OPTION_DRAWED;
+	static int TEKI_OPTION_SHAPE_VISIBLE;
+	static int TEKI_OPTION_DAMAGE_COUNTABLE;
+
+	static int ANIMATION_KEY_OPTION_FINISHED;
+	static int ANIMATION_KEY_OPTION_ACTION_0;
+	static int ANIMATION_KEY_OPTION_ACTION_1;
+	static int ANIMATION_KEY_OPTION_ACTION_2;
+	static int ANIMATION_KEY_OPTION_LOOPSTART;
+	static int ANIMATION_KEY_OPTION_LOOPEND;
+
 	// _00       = VTBL
 	// _000-_2B8 = Creature
 	// _2B8-_2C0 = PelletView
 	u8 _2C0[0x2C8 - 0x2C4]; // _2C0, TODO: work out members
 	void* _2C8;             // _2C8
-	u8 _2CC[0x31C - 0x2CC]; // _2CC, TODO: work out members
+	PaniAnimator* _2CC;     // _2CC
+	u8 _2D0[0x31C - 0x2D0]; // _2D0, TODO: work out members
 	u32 _31C;               // _31C
 	u8 _320[0x324 - 0x320]; // _320, TODO: work out members
 	int _324;               // _324, related to states
@@ -236,8 +284,11 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	u8 _338[0x388 - 0x338]; // _338, TODO: work out members
 	Vector3f _388;          // _388, possibly position
 	u8 _394[0x3B4 - 0x394]; // _394, TODO: work out members
-	f32 mSetMotionSpeed;    // _3B4
-	u8 _3B8[0x454 - 0x3B8]; // _3B8, TODO: work out members
+	f32 mMotionSpeed;       // _3B4
+	u8 _3B8[0x410 - 0x3B8]; // _3B8, TODO: work out members
+	int mTekiOptions;       // _410
+	int mAnimKeyOptions;    // _414
+	u8 _418[0x454 - 0x418]; // _418, TODO: work out members
 	                        // _454 = PaniAnimKeyListener
 };
 
@@ -279,7 +330,11 @@ struct YTeki : public NTeki {
 
 	// _00       = VTBL
 	// _000-_46C = NTeki
-	u8 _46C[0x538 - 0x46C]; // _46C, TODO: work out members
+	u8 _46C[0x478 - 0x46C]; // _46C, TODO: work out members
+	f32 _478;               // _478
+	u8 _47C[0x498 - 0x47C]; // _47C, TODO: work out members
+	u32 _498[8];            // _498, array of something, probably not u32s
+	u8 _4B8[0x538 - 0x4B8]; // _4B8, TODO: work out members
 	                        // _538 = PaniAnimKeyListener
 };
 

@@ -2,14 +2,19 @@
 #include "Ayu.h"
 #include "Parameters.h"
 #include "String.h"
+#include "stl/string.h"
+#include "system.h"
+#include "sysNew.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt);
 	// UNUSED FUNCTION
 }
 
@@ -40,82 +45,26 @@ void AnimInfo::initAnimData(AnimData*)
  */
 void AnimInfo::checkAnimData()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  mr        r29, r3
-	  addi      r0, r29, 0x38
-	  lwz       r5, 0x44(r3)
-	  b         .loc_0x48
+	AnimKey* key1 = _38.mNext;
+	for (key1; key1 != &_38; key1 = key1->mNext) {
+		if (key1->_00 > mData->mNumFrames - 1) {
+			key1->_00 = mData->mNumFrames - 1;
+		}
+	}
 
-	.loc_0x28:
-	  lwz       r3, 0x68(r29)
-	  lwz       r4, 0x0(r5)
-	  lwz       r3, 0x30(r3)
-	  subi      r3, r3, 0x1
-	  cmpw      r4, r3
-	  ble-      .loc_0x44
-	  stw       r3, 0x0(r5)
+	AnimKey* infoKey = mInfoKeys.mNext;
+	for (infoKey; infoKey != &mInfoKeys; infoKey = infoKey->mNext) {
+		if (infoKey->_00 >= countAKeys()) {
+			infoKey->_00 = countAKeys() - 1;
+		}
+	}
 
-	.loc_0x44:
-	  lwz       r5, 0xC(r5)
-
-	.loc_0x48:
-	  cmplw     r5, r0
-	  bne+      .loc_0x28
-	  lwz       r30, 0x64(r29)
-	  addi      r31, r29, 0x58
-	  b         .loc_0x84
-
-	.loc_0x5C:
-	  mr        r3, r29
-	  bl        0x364
-	  lwz       r0, 0x0(r30)
-	  cmpw      r0, r3
-	  blt-      .loc_0x80
-	  mr        r3, r29
-	  bl        0x350
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x0(r30)
-
-	.loc_0x80:
-	  lwz       r30, 0xC(r30)
-
-	.loc_0x84:
-	  cmplw     r30, r31
-	  bne+      .loc_0x5C
-	  lwz       r5, 0x54(r29)
-	  addi      r0, r29, 0x48
-	  b         .loc_0xB8
-
-	.loc_0x98:
-	  lwz       r3, 0x68(r29)
-	  lwz       r4, 0x0(r5)
-	  lwz       r3, 0x30(r3)
-	  subi      r3, r3, 0x1
-	  cmpw      r4, r3
-	  ble-      .loc_0xB4
-	  stw       r3, 0x0(r5)
-
-	.loc_0xB4:
-	  lwz       r5, 0xC(r5)
-
-	.loc_0xB8:
-	  cmplw     r5, r0
-	  bne+      .loc_0x98
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	AnimKey* eventKey = mEventKeys.mNext;
+	for (eventKey; eventKey != &mEventKeys; eventKey = eventKey->mNext) {
+		if (eventKey->_00 > mData->mNumFrames - 1) {
+			eventKey->_00 = mData->mNumFrames - 1;
+		}
+	}
 }
 
 /*
@@ -123,8 +72,39 @@ void AnimInfo::checkAnimData()
  * Address:	80050100
  * Size:	00027C
  */
-AnimInfo::AnimInfo(AnimMgr*, AnimData*)
+AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
+    : CoreNode("")
 {
+	initCore("");
+	mMgr      = mgr;
+	_38.mPrev = _38.mNext = &_38;
+	mInfoKeys.mPrev = mInfoKeys.mNext = &mInfoKeys;
+	mEventKeys.mPrev = mEventKeys.mNext = &mEventKeys;
+
+	int pos = strlen(data->mName) - 1;
+	for (pos; pos >= 0; pos--) {
+		if ((u8)data->mName[pos] == (u8)'/' || (u8)data->mName[pos] == (u8)'\\') {
+			break;
+		}
+	}
+
+	mName = StdSystem::stringDup(&data->mName[pos + 1]);
+	mData = data;
+
+	AnimKey* key1 = new AnimKey();
+	key1->_00     = 0;
+	_38.add(key1);
+
+	AnimKey* key2 = new AnimKey();
+	key2->_00     = mData->mNumFrames - 1;
+	_38.add(key2);
+
+	checkAnimData();
+
+	mParams.mFlags.mValue = 5;
+
+	updateAnimFlags();
+	setIndex();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -334,20 +314,10 @@ void AnimInfo::setIndex()
  * Address:	800503C4
  * Size:	000024
  */
-void AnimInfo::setAnimFlags(u32)
+void AnimInfo::setAnimFlags(u32 flags)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  stw       r4, 0x24(r3)
-	  bl        0x440
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mParams.mFlags.mValue = flags;
+	updateAnimFlags();
 }
 
 /*
@@ -355,24 +325,15 @@ void AnimInfo::setAnimFlags(u32)
  * Address:	800503E8
  * Size:	000024
  */
-void AnimInfo::countAKeys()
+int AnimInfo::countAKeys()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x44(r3)
-	  addi      r0, r3, 0x38
-	  li        r3, 0
-	  b         .loc_0x18
+	int count    = 0;
+	AnimKey* key = _38.mNext;
+	for (key; key != &_38; key = key->mNext) {
+		count++;
+	}
 
-	.loc_0x10:
-	  lwz       r4, 0xC(r4)
-	  addi      r3, r3, 0x1
-
-	.loc_0x18:
-	  cmplw     r4, r0
-	  bne+      .loc_0x10
-	  blr
-	*/
+	return count;
 }
 
 /*
@@ -380,24 +341,15 @@ void AnimInfo::countAKeys()
  * Address:	8005040C
  * Size:	000024
  */
-void AnimInfo::countIKeys()
+int AnimInfo::countIKeys()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x64(r3)
-	  addi      r0, r3, 0x58
-	  li        r3, 0
-	  b         .loc_0x18
+	int count    = 0;
+	AnimKey* key = mInfoKeys.mNext;
+	for (key; key != &mInfoKeys; key = key->mNext) {
+		count++;
+	}
 
-	.loc_0x10:
-	  lwz       r4, 0xC(r4)
-	  addi      r3, r3, 0x1
-
-	.loc_0x18:
-	  cmplw     r4, r0
-	  bne+      .loc_0x10
-	  blr
-	*/
+	return count;
 }
 
 /*
@@ -405,24 +357,15 @@ void AnimInfo::countIKeys()
  * Address:	80050430
  * Size:	000024
  */
-void AnimInfo::countEKeys()
+int AnimInfo::countEKeys()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x54(r3)
-	  addi      r0, r3, 0x48
-	  li        r3, 0
-	  b         .loc_0x18
+	int count    = 0;
+	AnimKey* key = mEventKeys.mNext;
+	for (key; key != &mEventKeys; key = key->mNext) {
+		count++;
+	}
 
-	.loc_0x10:
-	  lwz       r4, 0xC(r4)
-	  addi      r3, r3, 0x1
-
-	.loc_0x18:
-	  cmplw     r4, r0
-	  bne+      .loc_0x10
-	  blr
-	*/
+	return count;
 }
 
 /*
@@ -430,31 +373,17 @@ void AnimInfo::countEKeys()
  * Address:	80050454
  * Size:	000038
  */
-void AnimInfo::getInfoKey(int)
+AnimKey* AnimInfo::getInfoKey(int idx)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x64(r3)
-	  addi      r0, r3, 0x58
-	  li        r3, 0
-	  b         .loc_0x28
+	int i        = 0;
+	AnimKey* key = mInfoKeys.mNext;
+	for (key; key != &mInfoKeys; key = key->mNext, i++) {
+		if (i == idx) {
+			return key;
+		}
+	}
 
-	.loc_0x10:
-	  cmpw      r3, r4
-	  bne-      .loc_0x20
-	  mr        r3, r5
-	  blr
-
-	.loc_0x20:
-	  lwz       r5, 0xC(r5)
-	  addi      r3, r3, 0x1
-
-	.loc_0x28:
-	  cmplw     r5, r0
-	  bne+      .loc_0x10
-	  li        r3, 0
-	  blr
-	*/
+	return nullptr;
 }
 
 /*
@@ -462,31 +391,17 @@ void AnimInfo::getInfoKey(int)
  * Address:	8005048C
  * Size:	000038
  */
-void AnimInfo::getEventKey(int)
+AnimKey* AnimInfo::getEventKey(int idx)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x54(r3)
-	  addi      r0, r3, 0x48
-	  li        r3, 0
-	  b         .loc_0x28
+	int i        = 0;
+	AnimKey* key = mEventKeys.mNext;
+	for (key; key != &mEventKeys; key = key->mNext, i++) {
+		if (i == idx) {
+			return key;
+		}
+	}
 
-	.loc_0x10:
-	  cmpw      r3, r4
-	  bne-      .loc_0x20
-	  mr        r3, r5
-	  blr
-
-	.loc_0x20:
-	  lwz       r5, 0xC(r5)
-	  addi      r3, r3, 0x1
-
-	.loc_0x28:
-	  cmplw     r5, r0
-	  bne+      .loc_0x10
-	  li        r3, 0
-	  blr
-	*/
+	return nullptr;
 }
 
 /*
@@ -494,31 +409,17 @@ void AnimInfo::getEventKey(int)
  * Address:	800504C4
  * Size:	000038
  */
-void AnimInfo::getKeyValue(int)
+int AnimInfo::getKeyValue(int idx)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x44(r3)
-	  addi      r0, r3, 0x38
-	  li        r3, 0
-	  b         .loc_0x28
+	int i        = 0;
+	AnimKey* key = _38.mNext;
+	for (key; key != &_38; key = key->mNext, i++) {
+		if (i == idx) {
+			return key->_00;
+		}
+	}
 
-	.loc_0x10:
-	  cmpw      r3, r4
-	  bne-      .loc_0x20
-	  lwz       r3, 0x0(r5)
-	  blr
-
-	.loc_0x20:
-	  lwz       r5, 0xC(r5)
-	  addi      r3, r3, 0x1
-
-	.loc_0x28:
-	  cmplw     r5, r0
-	  bne+      .loc_0x10
-	  li        r3, 0
-	  blr
-	*/
+	return nullptr;
 }
 
 /*
@@ -745,39 +646,10 @@ void AnimInfo::doread(RandomAccessStream&, int)
 
 /*
  * --INFO--
- * Address:	800507F4
- * Size:	000020
- */
-AnimKey::AnimKey()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  sth       r0, 0x4(r3)
-	  stb       r0, 0x6(r3)
-	  stb       r0, 0x7(r3)
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	80050814
  * Size:	000010
  */
-void AnimInfo::updateAnimFlags()
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x24(r3)
-	  lwz       r3, 0x68(r3)
-	  stw       r0, 0x24(r3)
-	  blr
-	*/
-}
+void AnimInfo::updateAnimFlags() { mData->mAnimFlags = mParams.mFlags.mValue; }
 
 /*
  * --INFO--
@@ -786,43 +658,9 @@ void AnimInfo::updateAnimFlags()
  */
 void AnimInfo::addKeyFrame()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  li        r3, 0x10
-	  bl        -0x9838
-	  cmplwi    r3, 0
-	  beq-      .loc_0x40
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  sth       r0, 0x4(r3)
-	  stb       r0, 0x6(r3)
-	  stb       r0, 0x7(r3)
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x8(r3)
-
-	.loc_0x40:
-	  lwz       r4, 0x68(r31)
-	  lwz       r4, 0x30(r4)
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x0(r3)
-	  lwz       r5, 0x40(r31)
-	  lwz       r0, 0xC(r5)
-	  stw       r0, 0xC(r3)
-	  stw       r5, 0x8(r3)
-	  lwz       r4, 0xC(r5)
-	  stw       r3, 0x8(r4)
-	  stw       r3, 0xC(r5)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	AnimKey* keyFrame = new AnimKey();
+	keyFrame->_00     = mData->mNumFrames - 1;
+	_38.add(keyFrame);
 }
 
 /*
@@ -831,6 +669,7 @@ void AnimInfo::addKeyFrame()
  * Size:	000234
  */
 AnimMgr::AnimMgr(Shape*, char*, int, char*)
+    : mAnimList(this, nullptr)
 {
 	/*
 	.loc_0x0:
@@ -977,26 +816,6 @@ AnimMgr::AnimMgr(Shape*, char*, int, char*)
 	  blr
 
 	.loc_0x234:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80050AE4
- * Size:	000020
- */
-void* operator new[](u32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x9AEC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
 	*/
 }
 
@@ -1228,23 +1047,12 @@ void AnimMgr::findAnim(int)
  * Address:	80050D78
  * Size:	000020
  */
-void AnimMgr::countAnims()
+int AnimMgr::countAnims()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x50(r3)
-	  li        r3, 0
-	  b         .loc_0x14
+	int count = 0;
+	FOREACH_NODE(AnimInfo, mAnimList.mChild, anim) { count++; }
 
-	.loc_0xC:
-	  lwz       r4, 0xC(r4)
-	  addi      r3, r3, 0x1
-
-	.loc_0x14:
-	  cmplwi    r4, 0
-	  bne+      .loc_0xC
-	  blr
-	*/
+	return count;
 }
 
 /*
@@ -1836,11 +1644,7 @@ void Animator::animate(f32)
  * Address:	80051458
  * Size:	000008
  */
-void Animator::changeContext(AnimContext* a1)
-{
-	// Generated from stw r4, 0x4(r3)
-	// _04 = a1;
-}
+void Animator::changeContext(AnimContext* context) { mContext = context; }
 
 /*
  * --INFO--

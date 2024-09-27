@@ -10,6 +10,12 @@ struct PaniMotionTable;
  * @brief TODO
  */
 struct PaniAnimKeyEvent {
+	PaniAnimKeyEvent(int keyFrame, int value = -1)
+	{
+		mKeyFrame = keyFrame;
+		mValue    = value;
+	}
+
 	int mKeyFrame; // _00
 	int mValue;    // _04, used in KingAi for a couple different things - this struct might be differentiated for each use case? unsure.
 };
@@ -42,14 +48,27 @@ struct PaniAnimator : public Animator {
 	void checkConstantKey(int);
 	void checkEventKeys(f32, f32);
 	void finishAnimation();
-	void getKeyValueByKeyType(int);
+	f32 getKeyValueByKeyType(int);
 
 	// unused/inlined:
 	void checkCounter_4DEBUG();
 
+	inline int getInfoKeyValue(int idx) { return mAnimInfo->getInfoKey(idx)->_00; }
+	inline int getEventKeyValue(int idx) { return mAnimInfo->getEventKey(idx)->_00; }
+	inline f32 getKeyValue(int idx) { return mAnimInfo->getKeyValue(idx); }
+
+	static char* keyNames[6];
+
 	// _30     = VTBL
 	// _00-_34 = Animator
-	// TODO: members
+	PaniAnimKeyListener* mListener; // _34, unknown
+	int _38;                        // _38
+	u8 _3C[0x4];                    // _3C, unknown
+	u32 _40;                        // _40, unknown
+	int _44;                        // _44
+	bool mIsFinished;               // _48
+	u32 _4C;                        // _4C, unknown
+	PaniMotionTable* mMotionTable;  // _50
 };
 
 /**
@@ -163,7 +182,8 @@ struct PaniMotionInfo {
 
 	void init(int, PaniAnimKeyListener*);
 
-	// TODO: members
+	int _00;                        // _00
+	PaniAnimKeyListener* mListener; // _04
 };
 
 /**
@@ -189,7 +209,7 @@ struct PaniMotion {
 struct PaniMotionTable {
 	PaniMotionTable(int);
 
-	int _00;          // _00
+	int mMotionCount; // _00
 	PaniMotion** _04; // _04
 };
 
@@ -199,7 +219,8 @@ struct PaniMotionTable {
 struct PaniSoundTable {
 	PaniSoundTable(int);
 
-	// TODO: members
+	int mSoundCount; // _00
+	u32** _04;       // _04, array of some type of pointer
 };
 
 #endif

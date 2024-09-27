@@ -271,7 +271,7 @@ void acosf(void)
  * Address:	8021B9F8
  * Size:	0000D8
  */
-void atan2f(void)
+f32 atan2f(f32 __x, f32 __y)
 {
 	/*
 	.loc_0x0:

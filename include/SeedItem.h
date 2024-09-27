@@ -29,7 +29,7 @@ struct SeedItem : public Creature {
 	virtual f32 getHeight();              // _40
 	virtual bool isVisible();             // _74
 	virtual bool isAtari();               // _84
-	virtual void stimulate(Interaction&); // _A0
+	virtual bool stimulate(Interaction&); // _A0
 	virtual void update();                // _E0
 	virtual void refresh(Graphics&);      // _EC
 	virtual void doAI();                  // _104

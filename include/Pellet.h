@@ -48,13 +48,13 @@ struct Pellet : public DualCreature {
 	virtual f32 getCylinderHeight();                     // _44
 	virtual void doSave(RandomAccessStream&);            // _50
 	virtual void doLoad(RandomAccessStream&);            // _54
-	virtual void getCentre();                            // _58
+	virtual Vector3f getCentre();                        // _58
 	virtual bool isVisible();                            // _74
 	virtual bool isAtari();                              // _84
 	virtual bool isAlive();                              // _88
 	virtual bool ignoreAtari(Creature*);                 // _98
 	virtual bool isFree();                               // _9C
-	virtual void stimulate(Interaction&);                // _A0
+	virtual bool stimulate(Interaction&);                // _A0
 	virtual void collisionCallback(struct CollEvent&);   // _A8
 	virtual void bounceCallback();                       // _AC
 	virtual void startWaterEffect();                     // _CC

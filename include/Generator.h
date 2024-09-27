@@ -29,7 +29,7 @@ struct Factory {
 /**
  * @brief TODO
  */
-struct Generator {
+struct Generator : public Node {
 	Generator();
 	Generator(int);
 
@@ -49,8 +49,11 @@ struct Generator {
 	void updateUseList();
 
 	// _00     = VTBL
-	// _00-_14 = Node
-	// TODO: members
+	// _00-_20 = Node
+	u8 _20[0x58 - 0x20]; // _20, unknown
+	ID32 _58;            // _58, generator ID?
+	ID32 _64;            // _64
+	                     // TODO: members
 };
 
 /**

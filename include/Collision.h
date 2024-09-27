@@ -5,6 +5,7 @@
 #include "CoreNode.h"
 #include "Vector.h"
 #include "GfxObject.h"
+#include "Geometry.h"
 
 struct CmdStream;
 struct Creature;
@@ -44,7 +45,8 @@ struct CollPart {
 	void makeCylinder(struct Cylinder&);
 	void samePlatShape(Shape*);
 
-	// TODO: members
+	Sphere mBoundingSphere; // _00
+	                        // TODO: members
 };
 
 /**
@@ -147,10 +149,10 @@ struct CollInfo {
 	void checkCollisionRec(Creature*, int, Vector3f&);
 	void checkCollision(CollInfo*, CollPart**, CollPart**, Vector3f&);
 	void checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Vector3f&);
-	void getBoundingSphere();
+	Sphere* getBoundingSphere();
 	CollPart* getSphere(u32 id);
-	void getNearestCollPart(Vector3f&, u32);
-	void getRandomCollPart(u32);
+	CollPart* getNearestCollPart(Vector3f&, u32);
+	CollPart* getRandomCollPart(u32);
 	void getPlatform(DynCollObject*);
 	void updateInfo(Graphics&, bool);
 	bool hasInfo();
@@ -171,7 +173,9 @@ struct CollInfo {
 	void makeTubes(u32, int);
 	void getIndex(ObjCollInfo*);
 
-	u8 _00[0x14]; // _00, TODO: work out members;
+	u8 _00[0x4];             // _00, TODO: work out members;
+	Sphere* mBoundingSphere; // _04
+	u8 _08[0xC];             // _08, TODO: work out members;
 };
 
 /**

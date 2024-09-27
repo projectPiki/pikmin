@@ -2724,7 +2724,7 @@ bool InteractHitEffect::actBoss(Boss*)
  * Address:	8014F948
  * Size:	00006C
  */
-void Boss::stimulate(Interaction&)
+bool Boss::stimulate(Interaction&)
 {
 	/*
 	.loc_0x0:
@@ -2835,7 +2835,7 @@ bool Boss::ignoreAtari(Creature*) { return 0x0; }
  * Address:	8014F9E4
  * Size:	00001C
  */
-void Boss::getCentre()
+Vector3f Boss::getCentre()
 {
 	/*
 	.loc_0x0:

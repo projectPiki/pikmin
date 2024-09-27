@@ -6,6 +6,23 @@
 /**
  * @brief TODO
  */
+enum MsgType {
+	MSG_Bounce  = 0,
+	MSG_Hang    = 1,
+	MSG_Target  = 2,
+	MSG_Collide = 3,
+	MSG_Anim    = 4,
+	MSG_Damage  = 5,
+	MSG_Wall    = 6,
+	MSG_OffWall = 7,
+	MSG_Stick   = 8,
+	MSG_Ground  = 9,
+	MSG_User    = 10,
+};
+
+/**
+ * @brief TODO
+ */
 struct Msg {
 	u32 _00; // _00, maybe msg type?
 };
