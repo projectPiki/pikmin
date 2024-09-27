@@ -35,10 +35,8 @@ jobs:
       run: |
         python configure.py --map --version ${{ matrix.version }} \
             --binutils /binutils --compilers /compilers
-        ninja build/${{ matrix.version }}/progress.json
-      # TODO: Enable all_source and report.json
-      # ninja all_source build/${{ matrix.version }}/progress.json \
-      #     build/${{ matrix.version }}/report.json
+        ninja all_source build/${{ matrix.version }}/progress.json \
+            build/${{ matrix.version }}/report.json
 
     # Upload progress if we're on the main branch
     - name: Upload progress
