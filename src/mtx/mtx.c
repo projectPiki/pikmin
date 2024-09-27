@@ -16,9 +16,11 @@ void C_MTXIdentity(Mtx mtx)
 	mtx[0][0] = 1.0f;
 	mtx[0][1] = 0.0f;
 	mtx[0][2] = 0.0f;
+
 	mtx[1][0] = 0.0f;
 	mtx[1][1] = 1.0f;
 	mtx[1][2] = 0.0f;
+
 	mtx[2][0] = 0.0f;
 	mtx[2][1] = 0.0f;
 	mtx[2][2] = 1.0f;
@@ -392,39 +394,22 @@ void MTXRotAxisRad(void)
  * Address: 801FDDE0
  * Size:    00003C
  */
-void MTXTrans(Mtx m)
+void MTXTrans(Mtx m, f32 xT, f32 yT, f32 zT)
 {
 	m[0][0] = 1.0f;
 	m[0][1] = 0.0f;
 	m[0][2] = 0.0f;
-	m[0][3] = 0.0f;
+	m[0][3] = xT;
+
 	m[1][0] = 0.0f;
 	m[1][1] = 1.0f;
 	m[1][2] = 0.0f;
-	m[1][3] = 0.0f;
+	m[1][3] = yT;
+
 	m[2][0] = 0.0f;
 	m[2][1] = 0.0f;
 	m[2][2] = 1.0f;
-	m[2][3] = 0.0f;
-
-	/*
-	.loc_0x0:
-	  lfs       f4, -0x3D28(r2)
-	  stfs      f4, 0x0(r3)
-	  lfs       f0, -0x3D24(r2)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x8(r3)
-	  stfs      f1, 0xC(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f4, 0x14(r3)
-	  stfs      f0, 0x18(r3)
-	  stfs      f2, 0x1C(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x24(r3)
-	  stfs      f4, 0x28(r3)
-	  stfs      f3, 0x2C(r3)
-	  blr
-	*/
+	m[2][3] = zT;
 }
 
 /*
@@ -442,25 +427,22 @@ void MTXTransApply(void)
  * Address: 801FDE1C
  * Size:    000038
  */
-void MTXScale(void)
+void MTXScale(Mtx m, f32 xS, f32 yS, f32 zS)
 {
-	/*
-	.loc_0x0:
-	  stfs      f1, 0x0(r3)
-	  lfs       f0, -0x3D24(r2)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f2, 0x14(r3)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x24(r3)
-	  stfs      f3, 0x28(r3)
-	  stfs      f0, 0x2C(r3)
-	  blr
-	*/
+	m[0][0] = xS;
+	m[0][1] = 0.0f;
+	m[0][2] = 0.0f;
+	m[0][3] = 0.0f;
+
+	m[1][0] = 0.0f;
+	m[1][1] = yS;
+	m[1][2] = 0.0f;
+	m[1][3] = 0.0f;
+
+	m[2][0] = 0.0f;
+	m[2][1] = 0.0f;
+	m[2][2] = zS;
+	m[2][3] = 0.0f;
 }
 
 /*
@@ -508,8 +490,25 @@ void MTXLookAt(void)
  * Address: ........
  * Size:    000094
  */
-void MTXLightFrustum(void)
+void MTXLightFrustum(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 scaleS, f32 scaleT, f32 transS, f32 transT)
 {
+	// this is just here for the float ordering
+	f32 tmp;
+
+	tmp     = 1 / (r - l);
+	m[0][0] = (scaleS * (n * tmp));
+	m[0][1] = 0;
+	m[0][2] = (scaleS * (tmp * (r + l))) - transS;
+	m[0][3] = 0;
+	tmp     = 1 / (t - b);
+	m[1][0] = 0;
+	m[1][1] = (scaleT * (n * tmp));
+	m[1][2] = (scaleT * (tmp * (t + b))) - transT;
+	m[1][3] = 0;
+	m[2][0] = 0;
+	m[2][1] = 0;
+	m[2][2] = -1;
+	m[2][3] = 0;
 	// UNUSED FUNCTION
 }
 
@@ -518,8 +517,30 @@ void MTXLightFrustum(void)
  * Address: 801FDE54
  * Size:    0000CC
  */
-void MTXLightPerspective(void)
+void MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT)
 {
+	f32 angle;
+	f32 cot;
+
+	angle = fovY * 0.5f;
+	angle = MTXDegToRad(angle);
+
+	cot = 1.0f / tanf(angle);
+
+	m[0][0] = (cot / aspect) * scaleS;
+	m[0][1] = 0.0f;
+	m[0][2] = -transS;
+	m[0][3] = 0.0f;
+
+	m[1][0] = 0.0f;
+	m[1][1] = cot * scaleT;
+	m[1][2] = -transT;
+	m[1][3] = 0.0f;
+
+	m[2][0] = 0.0f;
+	m[2][1] = 0.0f;
+	m[2][2] = -1.0f;
+	m[2][3] = 0.0f;
 	/*
 	.loc_0x0:
 	  mflr      r0

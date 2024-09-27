@@ -224,6 +224,12 @@ cflags_runtime = [
     "-inline auto",
 ]
 
+# Dolphin mtx library flags
+cflags_mtx = [
+    *cflags_base,
+    "-fp_contract off",
+]
+
 config.linker_version = "GC/1.2.5"
 
 
@@ -811,23 +817,26 @@ config.libs = [
             Object(Matching, "db/db.c"),
         ]
     ),
-    DolphinLib(
-        "mtx",
-        [
+    {
+        "lib": "mtx",
+        "mw_version": "GC/1.2.5n",
+        "cflags": cflags_mtx,
+        "progress_category": "sdk",
+        "objects": [
             Object(NonMatching, "mtx/mtx.c"),
-            Object(NonMatching, "mtx/mtx44.c"),
-            Object(NonMatching, "mtx/vec.c"),
+            Object(Matching, "mtx/mtx44.c"),
+            Object(Matching, "mtx/vec.c"),
         ]
-    ),
+    },
     DolphinLib(
         "dvd",
         [
-            Object(NonMatching, "dvd/dvdlow.c"),
-            Object(NonMatching, "dvd/dvdfs.c"),
-            Object(NonMatching, "dvd/dvd.c"),
-            Object(NonMatching, "dvd/dvdqueue.c"),
+            Object(Matching, "dvd/dvdlow.c"),
+            Object(Matching, "dvd/dvdfs.c"),
+            Object(Matching, "dvd/dvd.c"),
+            Object(Matching, "dvd/dvdqueue.c"),
             Object(NonMatching, "dvd/dvderror.c"),
-            Object(NonMatching, "dvd/fstload.c"),
+            Object(Matching, "dvd/fstload.c"),
         ]
     ),
     DolphinLib(

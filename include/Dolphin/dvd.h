@@ -140,6 +140,7 @@ BOOL DVDChangeDir(char* dirName);
 s32 DVDConvertPathToEntrynum(char* path);
 
 // Other disk functions.
+void __DVDLowSetWAType(u32 type, u32 location);
 s32 DVDGetTransferredSize(DVDFileInfo* fileInfo);
 DVDDiskID* DVDGetCurrentDiskID();
 BOOL DVDCompareDiskID(DVDDiskID* id1, DVDDiskID* id2);

@@ -1,84 +1,102 @@
+#include "Dolphin/os.h"
+#include "Dolphin/hw_regs.h"
 #include "types.h"
+#include "Dolphin/dvd.h"
+#include "mem.h"
+
+// forward declarations for local functions, as needed:
+static void AlarmHandler(OSAlarm* alarm, OSContext* context);
+static void cbForCancelSync(s32 result, DVDCommandBlock* block);
+static void cbForStateBusy(u32 p1);
+static void cbForStateCheckID1(u32 p1);
+static void cbForStateCheckID2(u32 p1);
+static void cbForStateCheckID2a(u32 p1);
+static void cbForStateCheckID3(u32 p1);
+static void cbForStateCoverClosed(u32 p1);
+static void cbForStateMotorStopped(u32 p1);
+static void cbForStateReadingFST(u32 p1);
+static void cbForStateGettingError(u32 p1);
+static void cbForStateGoToRetry(u32 p1);
+static void cbForUnrecoveredError(u32 p1);
+static void cbForUnrecoveredErrorRetry(u32 p1);
+static void cbForCancelStreamSync(s32 result, DVDCommandBlock* block);
+static void defaultOptionalCommandChecker(DVDCommandBlock* block, DVDLowCallback cb);
+static void stateBusy(DVDCommandBlock*);
+static void stateCheckID2(DVDCommandBlock*);
+static void stateCheckID2a(DVDCommandBlock*);
+static void stateCheckID3(DVDCommandBlock*);
+static void stateCoverClosed();
+static void stateCoverClosed_CMD(DVDCommandBlock*);
+static void stateGettingError();
+static void stateGoToRetry();
+static void stateMotorStopped();
+static void stateReady();
+static void stateTimeout();
+
+// Functions from other files.
+void __DVDInterruptHandler(__OSInterrupt interrupt, OSContext* context);
+DVDCommandBlock* __DVDPopWaitingQueue();
+
+typedef void (*stateFunc)(DVDCommandBlock* block);
+stateFunc LastState;
+
+static u8 tmpBuffer[0x80] ATTRIBUTE_ALIGN(32);
+static DVDCommandBlock* executing;
+static DVDDiskID* currID;
+static OSBootInfo* bootInfo;
+static BOOL autoInvalidation        = TRUE;
+static volatile BOOL PauseFlag      = FALSE;
+static volatile BOOL PausingFlag    = FALSE;
+static volatile BOOL AutoFinishing  = FALSE;
+static volatile BOOL FatalErrorFlag = FALSE;
+static vu32 CurrCommand;
+static vu32 Canceling = FALSE;
+static DVDCBCallback CancelCallback;
+static vu32 ResumeFromHere = 0;
+static vu32 CancelLastError;
+static vu32 LastError;
+static vs32 NumInternalRetry = 0;
+static volatile BOOL ResetRequired;
+static volatile BOOL FirstTimeInBootrom = FALSE;
+
+static DVDCommandBlock DummyCommandBlock;
+static OSAlarm ResetAlarm;
+
+static BOOL DVDInitialized = FALSE;
 
 /*
  * --INFO--
  * Address:	801FF964
  * Size:	0000FC
  */
-void DVDInit(void)
+void DVDInit()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x802F
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  stw       r30, 0x8(r1)
-	  subi      r30, r3, 0x77E8
-	  lwz       r0, 0x32F8(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xE4
-	  bl        -0x98CC
-	  li        r31, 0x1
-	  stw       r31, 0x32F8(r13)
-	  bl        -0xA18
-	  bl        0x2568
-	  bl        -0x1874
-	  lis       r0, 0x8000
-	  lis       r3, 0x8020
-	  stw       r0, 0x32C0(r13)
-	  subi      r4, r3, 0x1E94
-	  stw       r0, 0x32BC(r13)
-	  li        r3, 0x15
-	  bl        -0x69F4
-	  li        r3, 0x400
-	  bl        -0x6620
-	  addi      r3, r13, 0x32B0
-	  bl        -0x3EF8
-	  lis       r3, 0xCC00
-	  li        r0, 0x2A
-	  stw       r0, 0x6000(r3)
-	  li        r0, 0
-	  stw       r0, 0x6004(r3)
-	  lwz       r3, 0x32C0(r13)
-	  addi      r3, r3, 0x20
-	  lwz       r3, 0x0(r3)
-	  addis     r0, r3, 0x1AE0
-	  cmplwi    r0, 0x7C22
-	  bne-      .loc_0xB8
-	  addi      r3, r30, 0
-	  crclr     6, 0x6
-	  bl        -0x8174
-	  addi      r3, r30, 0x18
-	  crclr     6, 0x6
-	  bl        -0x8180
-	  bl        0x2918
-	  b         .loc_0xE4
+	if (DVDInitialized) {
+		return;
+	}
 
-	.loc_0xB8:
-	  subis     r0, r3, 0xD15
-	  cmplwi    r0, 0xEA5E
-	  bne-      .loc_0xD4
-	  addi      r3, r30, 0x24
-	  crclr     6, 0x6
-	  bl        -0x81A0
-	  b         .loc_0xE4
-
-	.loc_0xD4:
-	  stw       r31, 0x32F4(r13)
-	  addi      r3, r30, 0x40
-	  crclr     6, 0x6
-	  bl        -0x81B4
-
-	.loc_0xE4:
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  lwz       r30, 0x8(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x10
-	  blr
-	*/
+	OSInitAlarm();
+	DVDInitialized = TRUE;
+	__DVDFSInit();
+	__DVDClearWaitingQueue();
+	__DVDInitWA();
+	bootInfo = (OSBootInfo*)OSPhysicalToCached(0x0000);
+	currID   = &(bootInfo->DVDDiskID);
+	__OSSetInterruptHandler(21, __DVDInterruptHandler);
+	__OSUnmaskInterrupts(0x400);
+	OSInitThreadQueue(&__DVDThreadQueue);
+	__DIRegs[DI_STATUS]       = 42;
+	__DIRegs[DI_COVER_STATUS] = 0;
+	if (bootInfo->magic == OS_BOOTINFO_MAGIC_JTAG) {
+		OSReport("app booted via JTAG\n");
+		OSReport("load fst\n");
+		__fstLoad();
+	} else if (bootInfo->magic == 0xD15EA5E) {
+		OSReport("app booted from bootrom\n");
+	} else {
+		FirstTimeInBootrom = TRUE;
+		OSReport("bootrom\n");
+	}
 }
 
 /*
@@ -86,32 +104,11 @@ void DVDInit(void)
  * Address:	801FFA60
  * Size:	000054
  */
-void stateReadingFST(void)
+static void stateReadingFST()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r1)
-	  subi      r0, r3, 0x5A0
-	  lis       r3, 0x803D
-	  stwu      r1, -0x8(r1)
-	  addi      r5, r3, 0x3100
-	  lis       r3, 0x8020
-	  stw       r0, 0x32FC(r13)
-	  subi      r6, r3, 0x54C
-	  lwz       r7, 0x32C0(r13)
-	  lwz       r4, 0x8(r5)
-	  lwz       r3, 0x38(r7)
-	  addi      r0, r4, 0x1F
-	  lwz       r5, 0x4(r5)
-	  rlwinm    r4,r0,0,0,26
-	  bl        -0x13BC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	LastState = (stateFunc)stateReadingFST;
+
+	DVDLowRead(bootInfo->FSTLocation, OSRoundUp32B(((u32*)tmpBuffer)[2]), ((u32*)tmpBuffer)[1], cbForStateReadingFST);
 }
 
 /*
@@ -119,51 +116,24 @@ void stateReadingFST(void)
  * Address:	801FFAB4
  * Size:	000080
  */
-void cbForStateReadingFST(void)
+static void cbForStateReadingFST(u32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bne-      .loc_0x28
-	  lwz       r3, 0x32B8(r13)
-	  li        r0, -0x1
-	  stw       r0, 0xC(r3)
-	  bl        0x108
-	  b         .loc_0x70
-
-	.loc_0x28:
-	  rlwinm.   r0,r3,0,31,31
-	  beq-      .loc_0x6C
-	  lis       r3, 0x803D
-	  lwz       r4, 0x32B8(r13)
-	  addi      r0, r3, 0x3180
-	  li        r3, 0
-	  stw       r0, 0x32B8(r13)
-	  stw       r3, 0x32EC(r13)
-	  stw       r3, 0xC(r4)
-	  lwz       r12, 0x28(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x64
-	  mtlr      r12
-	  li        r3, 0
-	  blrl
-
-	.loc_0x64:
-	  bl        0xE10
-	  b         .loc_0x70
-
-	.loc_0x6C:
-	  bl        0x158
-
-	.loc_0x70:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DVDCommandBlock* cmdBlock;
+	if (p1 == 0x10) {
+		executing->state = -1;
+		stateTimeout();
+	} else if ((p1 & 1) != 0) {
+		NumInternalRetry = 0;
+		cmdBlock         = executing;
+		executing        = &DummyCommandBlock;
+		cmdBlock->state  = 0;
+		if (cmdBlock->callback) {
+			(cmdBlock->callback)(0, cmdBlock);
+		}
+		stateReady();
+	} else {
+		stateGettingError();
+	}
 }
 
 /*
@@ -171,63 +141,30 @@ void cbForStateReadingFST(void)
  * Address:	801FFB34
  * Size:	0000A8
  */
-void cbForStateError(void)
+static void cbForStateError(u32 intType)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  bne-      .loc_0x2C
-	  lwz       r3, 0x32B8(r13)
-	  li        r0, -0x1
-	  stw       r0, 0xC(r3)
-	  bl        .loc_0xA8
-	  b         .loc_0x94
+	DVDCommandBlock* finished;
 
-	.loc_0x2C:
-	  lis       r3, 0x803D
-	  lwz       r31, 0x32B8(r13)
-	  addi      r0, r3, 0x3180
-	  li        r3, 0x1
-	  stw       r0, 0x32B8(r13)
-	  stw       r3, 0x32D0(r13)
-	  lwz       r12, 0x28(r31)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x60
-	  mtlr      r12
-	  addi      r4, r31, 0
-	  li        r3, -0x1
-	  blrl
+	if (intType == 16) {
+		executing->state = -1;
+		stateTimeout();
+		return;
+	}
 
-	.loc_0x60:
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x90
-	  lwz       r12, 0x32DC(r13)
-	  li        r0, 0
-	  stw       r0, 0x32D8(r13)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x90
-	  mtlr      r12
-	  addi      r4, r31, 0
-	  li        r3, 0
-	  blrl
+	FatalErrorFlag = TRUE;
+	finished       = executing;
+	executing      = &DummyCommandBlock;
+	if (finished->callback) {
+		(finished->callback)(-1, finished);
+	}
 
-	.loc_0x90:
-	  bl        0xD64
+	if (Canceling) {
+		Canceling = FALSE;
+		if (CancelCallback)
+			(CancelCallback)(0, finished);
+	}
 
-	.loc_0x94:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0xA8:
-	*/
+	stateReady();
 }
 
 /*
@@ -235,8 +172,10 @@ void cbForStateError(void)
  * Address:	........
  * Size:	00002C
  */
-void stateError(void)
+static void stateError(u32 error)
 {
+	__DVDStoreErrorCode(error);
+	DVDLowStopMotor(cbForStateError);
 	// UNUSED FUNCTION
 }
 
@@ -245,54 +184,11 @@ void stateError(void)
  * Address:	801FFBDC
  * Size:	00009C
  */
-void stateTimeout(void)
+static void stateTimeout()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x123
-	  stw       r0, 0x4(r1)
-	  addi      r3, r3, 0x4568
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  bl        0x2508
-	  bl        0x1CD4
-	  lis       r3, 0x803D
-	  lwz       r31, 0x32B8(r13)
-	  addi      r0, r3, 0x3180
-	  li        r3, 0x1
-	  stw       r0, 0x32B8(r13)
-	  stw       r3, 0x32D0(r13)
-	  lwz       r12, 0x28(r31)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x54
-	  mtlr      r12
-	  addi      r4, r31, 0
-	  li        r3, -0x1
-	  blrl
-
-	.loc_0x54:
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  lwz       r12, 0x32DC(r13)
-	  li        r0, 0
-	  stw       r0, 0x32D8(r13)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x84
-	  mtlr      r12
-	  addi      r4, r31, 0
-	  li        r3, 0
-	  blrl
-
-	.loc_0x84:
-	  bl        0xCC8
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
+	__DVDStoreErrorCode(0x1234568);
+	DVDReset();
+	cbForStateError(0);
 }
 
 /*
@@ -300,92 +196,44 @@ void stateTimeout(void)
  * Address:	801FFC78
  * Size:	000028
  */
-void stateGettingError(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r1)
-	  subi      r3, r3, 0x2AC
-	  stwu      r1, -0x8(r1)
-	  bl        -0x1120
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+static void stateGettingError() { DVDLowRequestError(cbForStateGettingError); }
 
 /*
  * --INFO--
  * Address:	801FFCA0
  * Size:	0000B4
  */
-void CategorizeError(void)
+static u32 CategorizeError(u32 error)
 {
-	/*
-	.loc_0x0:
-	  subis     r0, r3, 0x2
-	  cmplwi    r0, 0x400
-	  bne-      .loc_0x18
-	  stw       r3, 0x32E8(r13)
-	  li        r3, 0x1
-	  blr
+	if (error == 0x20400) {
+		LastError = error;
+		return 1;
+	}
 
-	.loc_0x18:
-	  rlwinm    r4,r3,0,8,31
-	  subis     r0, r4, 0x6
-	  cmplwi    r0, 0x2800
-	  beq-      .loc_0x40
-	  subis     r0, r4, 0x2
-	  cmplwi    r0, 0x3A00
-	  beq-      .loc_0x40
-	  subis     r0, r4, 0xB
-	  cmplwi    r0, 0x5A01
-	  bne-      .loc_0x48
+	error &= 0xffffff;
 
-	.loc_0x40:
-	  li        r3, 0
-	  blr
+	if ((error == 0x62800) || (error == 0x23a00) || (error == 0xb5a01)) {
+		return 0;
+	}
 
-	.loc_0x48:
-	  lwz       r3, 0x32EC(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x32EC(r13)
-	  lwz       r0, 0x32EC(r13)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x84
-	  lwz       r0, 0x32E8(r13)
-	  cmplw     r4, r0
-	  bne-      .loc_0x78
-	  stw       r4, 0x32E8(r13)
-	  li        r3, 0x1
-	  blr
+	++NumInternalRetry;
+	if (NumInternalRetry == 2) {
+		if (error == LastError) {
+			LastError = error;
+			return 1;
+		} else {
+			LastError = error;
+			return 2;
+		}
+	} else {
+		LastError = error;
 
-	.loc_0x78:
-	  stw       r4, 0x32E8(r13)
-	  li        r3, 0x2
-	  blr
-
-	.loc_0x84:
-	  subis     r0, r4, 0x3
-	  stw       r4, 0x32E8(r13)
-	  cmplwi    r0, 0x1100
-	  beq-      .loc_0xA4
-	  lwz       r3, 0x32B8(r13)
-	  lwz       r0, 0x8(r3)
-	  cmplwi    r0, 0x5
-	  bne-      .loc_0xAC
-
-	.loc_0xA4:
-	  li        r3, 0x2
-	  blr
-
-	.loc_0xAC:
-	  li        r3, 0x3
-	  blr
-	*/
+		if ((error == 0x31100) || (executing->command == 5)) {
+			return 2;
+		} else {
+			return 3;
+		}
+	}
 }
 
 /*
@@ -393,8 +241,26 @@ void CategorizeError(void)
  * Address:	........
  * Size:	00009C
  */
-void CheckCancel(void)
+static BOOL CheckCancel(u32 resume)
 {
+	DVDCommandBlock* finished;
+
+	if (Canceling) {
+		ResumeFromHere = resume;
+		Canceling      = FALSE;
+
+		finished  = executing;
+		executing = &DummyCommandBlock;
+
+		finished->state = 10;
+		if (finished->callback)
+			(*finished->callback)(-3, finished);
+		if (CancelCallback)
+			(CancelCallback)(0, finished);
+		stateReady();
+		return TRUE;
+	}
+	return FALSE;
 	// UNUSED FUNCTION
 }
 
@@ -403,214 +269,84 @@ void CheckCancel(void)
  * Address:	801FFD54
  * Size:	000294
  */
-void cbForStateGettingError(void)
+static void cbForStateGettingError(u32 intType)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  bne-      .loc_0x4C
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4568
-	  bl        0x2370
-	  bl        0x1B3C
-	  li        r3, 0
-	  bl        -0x264
-	  b         .loc_0x274
+	u32 error;
+	u32 status;
+	u32 errorCategory;
+	u32 resume;
 
-	.loc_0x4C:
-	  rlwinm.   r0,r3,0,30,30
-	  beq-      .loc_0x7C
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4567
-	  bl        0x2340
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x4CC
-	  bl        -0x12E8
-	  b         .loc_0x274
+	if (intType == 16) {
+		executing->state = -1;
+		stateTimeout();
+		return;
+	}
 
-	.loc_0x7C:
-	  lis       r3, 0xCC00
-	  lwz       r29, 0x6020(r3)
-	  addi      r3, r29, 0
-	  rlwinm    r28,r29,0,0,7
-	  bl        -0x140
-	  addi      r31, r3, 0
-	  cmplwi    r31, 0x1
-	  bne-      .loc_0xC0
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  addi      r3, r29, 0
-	  stw       r0, 0xC(r4)
-	  bl        0x22FC
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x4CC
-	  bl        -0x132C
-	  b         .loc_0x274
+	if (intType & 2) {
+		executing->state = -1;
+		stateError(0x1234567);
+		return;
+	}
 
-	.loc_0xC0:
-	  subi      r0, r31, 0x2
-	  cmplwi    r0, 0x1
-	  bgt-      .loc_0xD4
-	  li        r4, 0
-	  b         .loc_0x114
+	error  = __DIRegs[DI_MM_BUF];
+	status = error & 0xff000000;
 
-	.loc_0xD4:
-	  subis     r0, r28, 0x100
-	  cmplwi    r0, 0
-	  bne-      .loc_0xE8
-	  li        r4, 0x4
-	  b         .loc_0x114
+	errorCategory = CategorizeError(error);
 
-	.loc_0xE8:
-	  subis     r0, r28, 0x200
-	  cmplwi    r0, 0
-	  bne-      .loc_0xFC
-	  li        r4, 0x6
-	  b         .loc_0x114
+	if (errorCategory == 1) {
+		executing->state = -1;
+		stateError(error);
+		return;
+	}
 
-	.loc_0xFC:
-	  subis     r0, r28, 0x300
-	  cmplwi    r0, 0
-	  bne-      .loc_0x110
-	  li        r4, 0x3
-	  b         .loc_0x114
+	if ((errorCategory == 2) || (errorCategory == 3)) {
+		resume = 0;
+	} else {
+		if (status == 0x01000000)
+			resume = 4;
+		else if (status == 0x02000000)
+			resume = 6;
+		else if (status == 0x03000000)
+			resume = 3;
+		else
+			resume = 5;
+	}
 
-	.loc_0x110:
-	  li        r4, 0x5
+	if (CheckCancel(resume))
+		return;
 
-	.loc_0x114:
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x188
-	  lis       r3, 0x803D
-	  stw       r4, 0x32E0(r13)
-	  li        r0, 0
-	  lwz       r30, 0x32B8(r13)
-	  addi      r3, r3, 0x3180
-	  stw       r0, 0x32D8(r13)
-	  li        r0, 0xA
-	  stw       r3, 0x32B8(r13)
-	  stw       r0, 0xC(r30)
-	  lwz       r12, 0x28(r30)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x160
-	  mtlr      r12
-	  addi      r4, r30, 0
-	  li        r3, -0x3
-	  blrl
+	if (errorCategory == 2) {
+		__DVDStoreErrorCode(error);
+		stateGoToRetry();
+		return;
+	}
 
-	.loc_0x160:
-	  lwz       r12, 0x32DC(r13)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x17C
-	  mtlr      r12
-	  addi      r4, r30, 0
-	  li        r3, 0
-	  blrl
+	if (errorCategory == 3) {
+		if ((error & 0x00ffffff) == 0x00031100) {
+			DVDLowSeek(executing->offset, cbForUnrecoveredError);
+		} else {
+			LastState(executing);
+		}
+		return;
+	}
 
-	.loc_0x17C:
-	  bl        0xA58
-	  li        r0, 0x1
-	  b         .loc_0x18C
-
-	.loc_0x188:
-	  li        r0, 0
-
-	.loc_0x18C:
-	  cmpwi     r0, 0
-	  bne-      .loc_0x274
-	  cmplwi    r31, 0x2
-	  bne-      .loc_0x1AC
-	  mr        r3, r29
-	  bl        0x2208
-	  bl        0x1F0
-	  b         .loc_0x274
-
-	.loc_0x1AC:
-	  cmplwi    r31, 0x3
-	  bne-      .loc_0x1F0
-	  rlwinm    r3,r29,0,8,31
-	  subis     r0, r3, 0x3
-	  cmplwi    r0, 0x1100
-	  bne-      .loc_0x1DC
-	  lwz       r5, 0x32B8(r13)
-	  lis       r3, 0x8020
-	  subi      r4, r3, 0x18
-	  lwz       r3, 0x10(r5)
-	  bl        -0x15AC
-	  b         .loc_0x274
-
-	.loc_0x1DC:
-	  lwz       r12, 0x32FC(r13)
-	  lwz       r3, 0x32B8(r13)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x274
-
-	.loc_0x1F0:
-	  subis     r0, r28, 0x100
-	  cmplwi    r0, 0
-	  bne-      .loc_0x210
-	  lwz       r3, 0x32B8(r13)
-	  li        r0, 0x5
-	  stw       r0, 0xC(r3)
-	  bl        0x8C0
-	  b         .loc_0x274
-
-	.loc_0x210:
-	  subis     r0, r28, 0x200
-	  cmplwi    r0, 0
-	  bne-      .loc_0x230
-	  lwz       r3, 0x32B8(r13)
-	  li        r0, 0x3
-	  stw       r0, 0xC(r3)
-	  bl        0x734
-	  b         .loc_0x274
-
-	.loc_0x230:
-	  subis     r0, r28, 0x300
-	  cmplwi    r0, 0
-	  bne-      .loc_0x250
-	  lwz       r3, 0x32B8(r13)
-	  li        r0, 0x4
-	  stw       r0, 0xC(r3)
-	  bl        0x880
-	  b         .loc_0x274
-
-	.loc_0x250:
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4567
-	  bl        0x2144
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x4CC
-	  bl        -0x14E4
-
-	.loc_0x274:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	if (status == 0x01000000) {
+		executing->state = 5;
+		stateMotorStopped();
+		return;
+	} else if (status == 0x02000000) {
+		executing->state = 3;
+		stateCoverClosed();
+		return;
+	} else if (status == 0x03000000) {
+		executing->state = 4;
+		stateMotorStopped();
+		return;
+	} else {
+		executing->state = -1;
+		stateError(0x1234567);
+		return;
+	}
 }
 
 /*
@@ -618,52 +354,48 @@ void cbForStateGettingError(void)
  * Address:	801FFFE8
  * Size:	000068
  */
-void cbForUnrecoveredError(void)
+static void cbForUnrecoveredError(u32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bne-      .loc_0x3C
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4568
-	  bl        0x20EC
-	  bl        0x18B8
-	  li        r3, 0
-	  bl        -0x4E8
-	  b         .loc_0x58
+	if (p1 == 16) {
+		executing->state = -1;
+		stateTimeout();
+		return;
+	}
 
-	.loc_0x3C:
-	  rlwinm.   r0,r3,0,31,31
-	  beq-      .loc_0x4C
-	  bl        0xBC
-	  b         .loc_0x58
+	if (p1 & 1) {
+		stateGoToRetry();
+		return;
+	}
 
-	.loc_0x4C:
-	  lis       r3, 0x8020
-	  addi      r3, r3, 0x50
-	  bl        -0x14D0
-
-	.loc_0x58:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DVDLowRequestError(cbForUnrecoveredErrorRetry);
 }
 
+#pragma dont_inline on
 /*
  * --INFO--
  * Address:	80200050
  * Size:	000098
  */
-void cbForUnrecoveredErrorRetry(void)
+void cbForUnrecoveredErrorRetry(u32 p1)
 {
+	if (p1 == 0x10) {
+		executing->state = -1;
+		__DVDStoreErrorCode(0x1234568);
+		DVDReset();
+		cbForStateError(0);
+		return;
+	}
+
+	executing->state = -1;
+
+	if ((p1 & 2) != 0) {
+		__DVDStoreErrorCode(0x1234567);
+		DVDLowStopMotor(cbForStateError);
+		return;
+	}
+
+	__DVDStoreErrorCode(__DIRegs[DI_MM_BUF]);
+	DVDLowStopMotor(cbForStateError);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -712,143 +444,44 @@ void cbForUnrecoveredErrorRetry(void)
 	  blr
 	*/
 }
+#pragma dont_inline reset
 
 /*
  * --INFO--
  * Address:	802000E8
  * Size:	000028
  */
-void stateGoToRetry(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r1)
-	  addi      r3, r3, 0x110
-	  stwu      r1, -0x8(r1)
-	  bl        -0x161C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void stateGoToRetry() { DVDLowStopMotor(cbForStateGoToRetry); }
 
 /*
  * --INFO--
  * Address:	80200110
  * Size:	000158
  */
-void cbForStateGoToRetry(void)
+void cbForStateGoToRetry(u32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  bne-      .loc_0x40
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4568
-	  bl        0x1FC0
-	  bl        0x178C
-	  li        r3, 0
-	  bl        -0x614
-	  b         .loc_0x144
+	if (p1 == 16) {
+		executing->state = -1;
+		stateTimeout();
+		return;
+	}
 
-	.loc_0x40:
-	  rlwinm.   r0,r3,0,30,30
-	  beq-      .loc_0x70
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4567
-	  bl        0x1F90
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x4CC
-	  bl        -0x1698
-	  b         .loc_0x144
+	if (p1 & 2) {
+		executing->state = -1;
+		stateError(0x1234567);
+		return;
+	}
 
-	.loc_0x70:
-	  li        r0, 0
-	  stw       r0, 0x32EC(r13)
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x4
-	  beq-      .loc_0xA8
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x5
-	  beq-      .loc_0xA8
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xD
-	  beq-      .loc_0xA8
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xF
-	  bne-      .loc_0xB0
+	NumInternalRetry = 0;
 
-	.loc_0xA8:
-	  li        r0, 0x1
-	  stw       r0, 0x32F0(r13)
+	if ((CurrCommand == 4) || (CurrCommand == 5) || (CurrCommand == 13) || (CurrCommand == 15)) {
+		ResetRequired = TRUE;
+	}
 
-	.loc_0xB0:
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x128
-	  li        r0, 0x2
-	  lwz       r31, 0x32B8(r13)
-	  lis       r3, 0x803D
-	  stw       r0, 0x32E0(r13)
-	  addi      r0, r3, 0x3180
-	  li        r3, 0
-	  stw       r0, 0x32B8(r13)
-	  li        r0, 0xA
-	  stw       r3, 0x32D8(r13)
-	  stw       r0, 0xC(r31)
-	  lwz       r12, 0x28(r31)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x100
-	  mtlr      r12
-	  addi      r4, r31, 0
-	  li        r3, -0x3
-	  blrl
-
-	.loc_0x100:
-	  lwz       r12, 0x32DC(r13)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x11C
-	  mtlr      r12
-	  addi      r4, r31, 0
-	  li        r3, 0
-	  blrl
-
-	.loc_0x11C:
-	  bl        0x6FC
-	  li        r0, 0x1
-	  b         .loc_0x12C
-
-	.loc_0x128:
-	  li        r0, 0
-
-	.loc_0x12C:
-	  cmpwi     r0, 0
-	  bne-      .loc_0x144
-	  lwz       r3, 0x32B8(r13)
-	  li        r0, 0xB
-	  stw       r0, 0xC(r3)
-	  bl        0x5CC
-
-	.loc_0x144:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (!CheckCancel(2)) {
+		executing->state = 11;
+		stateMotorStopped();
+	}
 }
 
 /*
@@ -856,80 +489,29 @@ void cbForStateGoToRetry(void)
  * Address:	80200268
  * Size:	0000E4
  */
-void stateCheckID(void)
+static void stateCheckID()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  addi      r31, r3, 0x3100
-	  lwz       r0, 0x32D4(r13)
-	  cmpwi     r0, 0x3
-	  beq-      .loc_0x28
-	  b         .loc_0x94
-
-	.loc_0x28:
-	  lwz       r4, 0x32B8(r13)
-	  addi      r3, r31, 0
-	  li        r5, 0x1C
-	  lwz       r4, 0x24(r4)
-	  bl        0x15ECC
-	  cmpwi     r3, 0
-	  beq-      .loc_0x54
-	  lis       r3, 0x8020
-	  addi      r3, r3, 0x3B8
-	  bl        -0x17D4
-	  b         .loc_0xD0
-
-	.loc_0x54:
-	  lwz       r3, 0x32BC(r13)
-	  addi      r4, r31, 0
-	  li        r5, 0x20
-	  bl        -0x1FCEB4
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, 0x1
-	  addi      r3, r31, 0
-	  stw       r0, 0xC(r4)
-	  li        r4, 0x20
-	  bl        -0x9728
-	  lis       r4, 0x8020
-	  lwz       r3, 0x32B8(r13)
-	  addi      r0, r4, 0x380
-	  stw       r0, 0x32FC(r13)
-	  bl        0x8C
-	  b         .loc_0xD0
-
-	.loc_0x94:
-	  lwz       r4, 0x32BC(r13)
-	  addi      r3, r31, 0
-	  li        r5, 0x20
-	  bl        0x15E64
-	  cmpwi     r3, 0
-	  beq-      .loc_0xBC
-	  lis       r3, 0x8020
-	  addi      r3, r3, 0x3B8
-	  bl        -0x183C
-	  b         .loc_0xD0
-
-	.loc_0xBC:
-	  lis       r4, 0x8020
-	  lwz       r3, 0x32B8(r13)
-	  addi      r0, r4, 0x34C
-	  stw       r0, 0x32FC(r13)
-	  bl        .loc_0xE4
-
-	.loc_0xD0:
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-
-	.loc_0xE4:
-	*/
+	switch (CurrCommand) {
+	case 3:
+		if (memcmp(tmpBuffer, executing->id, 0x1C) != FALSE) {
+			DVDLowStopMotor(cbForStateCheckID1);
+		} else {
+			memcpy(currID, tmpBuffer, sizeof(DVDDiskID));
+			executing->state = 1;
+			DCInvalidateRange(tmpBuffer, sizeof(DVDBB2));
+			LastState = stateCheckID2;
+			stateCheckID2(executing);
+		}
+		break;
+	default:
+		if (memcmp(tmpBuffer, currID, sizeof(DVDDiskID)) != 0) {
+			DVDLowStopMotor(cbForStateCheckID1);
+		} else {
+			LastState = stateCheckID3;
+			stateCheckID3(executing);
+		}
+		break;
+	}
 }
 
 /*
@@ -937,143 +519,40 @@ void stateCheckID(void)
  * Address:	8020034C
  * Size:	000034
  */
-void stateCheckID3(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r1)
-	  addi      r5, r3, 0x570
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x32BC(r13)
-	  lbz       r3, 0x8(r4)
-	  li        r4, 0xA
-	  bl        -0x15B4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+static void stateCheckID3(DVDCommandBlock* cmdBlock) { DVDLowAudioBufferConfig(currID->streaming, 10, cbForStateCheckID3); }
 
 /*
  * --INFO--
  * Address:	80200380
  * Size:	000038
  */
-void stateCheckID2(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803D
-	  stw       r0, 0x4(r1)
-	  lis       r4, 0x8020
-	  addi      r6, r4, 0x4CC
-	  stwu      r1, -0x8(r1)
-	  addi      r3, r3, 0x3100
-	  li        r4, 0x20
-	  li        r5, 0x420
-	  bl        -0x1CC0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+static void stateCheckID2(DVDCommandBlock* block) { DVDLowRead(tmpBuffer, OSRoundUp32B(sizeof(DVDBB2)), 0x420, cbForStateCheckID2); }
 
 /*
  * --INFO--
  * Address:	802003B8
  * Size:	000114
  */
-void cbForStateCheckID1(void)
+void cbForStateCheckID1(u32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  bne-      .loc_0x40
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4568
-	  bl        0x1D18
-	  bl        0x14E4
-	  li        r3, 0
-	  bl        -0x8BC
-	  b         .loc_0x100
+	if (p1 == 16) {
+		executing->state = -1;
+		stateTimeout();
+		return;
+	}
 
-	.loc_0x40:
-	  rlwinm.   r0,r3,0,30,30
-	  beq-      .loc_0x70
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4567
-	  bl        0x1CE8
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x4CC
-	  bl        -0x1940
-	  b         .loc_0x100
+	if (p1 & 2) {
+		executing->state = -1;
+		stateError(0x1234567);
+		return;
+	}
 
-	.loc_0x70:
-	  li        r4, 0
-	  stw       r4, 0x32EC(r13)
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xE8
-	  li        r0, 0x1
-	  lwz       r31, 0x32B8(r13)
-	  stw       r0, 0x32E0(r13)
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x3180
-	  stw       r4, 0x32D8(r13)
-	  li        r0, 0xA
-	  stw       r3, 0x32B8(r13)
-	  stw       r0, 0xC(r31)
-	  lwz       r12, 0x28(r31)
-	  cmplwi    r12, 0
-	  beq-      .loc_0xC4
-	  mtlr      r12
-	  addi      r4, r31, 0
-	  li        r3, -0x3
-	  blrl
+	NumInternalRetry = 0;
 
-	.loc_0xC4:
-	  lwz       r12, 0x32DC(r13)
-	  cmplwi    r12, 0
-	  beq-      .loc_0xE0
-	  mtlr      r12
-	  addi      r4, r31, 0
-	  li        r3, 0
-	  blrl
-
-	.loc_0xE0:
-	  bl        0x490
-	  li        r4, 0x1
-
-	.loc_0xE8:
-	  cmpwi     r4, 0
-	  bne-      .loc_0x100
-	  lwz       r3, 0x32B8(r13)
-	  li        r0, 0x6
-	  stw       r0, 0xC(r3)
-	  bl        0x368
-
-	.loc_0x100:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (!CheckCancel(1)) {
+		executing->state = 6;
+		stateMotorStopped();
+	}
 }
 
 /*
@@ -1081,58 +560,21 @@ void cbForStateCheckID1(void)
  * Address:	802004CC
  * Size:	0000A4
  */
-void cbForStateCheckID2(void)
+void cbForStateCheckID2(u32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bne-      .loc_0x3C
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4568
-	  bl        0x1C08
-	  bl        0x13D4
-	  li        r3, 0
-	  bl        -0x9CC
-	  b         .loc_0x94
+	if (p1 == 16) {
+		executing->state = -1;
+		stateTimeout();
+		return;
+	}
 
-	.loc_0x3C:
-	  rlwinm.   r0,r3,0,31,31
-	  beq-      .loc_0x88
-	  lis       r3, 0x8020
-	  lwz       r7, 0x32C0(r13)
-	  subi      r0, r3, 0x5A0
-	  li        r4, 0
-	  stw       r0, 0x32FC(r13)
-	  lis       r3, 0x803D
-	  addi      r5, r3, 0x3100
-	  stw       r4, 0x32EC(r13)
-	  lis       r3, 0x8020
-	  lwz       r4, 0x8(r5)
-	  subi      r6, r3, 0x54C
-	  lwz       r3, 0x38(r7)
-	  addi      r0, r4, 0x1F
-	  lwz       r5, 0x4(r5)
-	  rlwinm    r4,r0,0,0,26
-	  bl        -0x1E68
-	  b         .loc_0x94
+	if (p1 & 1) {
+		NumInternalRetry = 0;
+		stateReadingFST();
 
-	.loc_0x88:
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x2AC
-	  bl        -0x19F0
-
-	.loc_0x94:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	} else {
+		stateGettingError();
+	}
 }
 
 /*
@@ -1140,86 +582,25 @@ void cbForStateCheckID2(void)
  * Address:	80200570
  * Size:	0000FC
  */
-void cbForStateCheckID3(void)
+static void cbForStateCheckID3(u32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  bne-      .loc_0x40
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4568
-	  bl        0x1B60
-	  bl        0x132C
-	  li        r3, 0
-	  bl        -0xA74
-	  b         .loc_0xE8
+	if (p1 == 16) {
+		executing->state = -1;
+		stateTimeout();
+		return;
+	}
 
-	.loc_0x40:
-	  rlwinm.   r0,r3,0,31,31
-	  beq-      .loc_0xDC
-	  li        r4, 0
-	  stw       r4, 0x32EC(r13)
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xBC
-	  stw       r4, 0x32E0(r13)
-	  lis       r3, 0x803D
-	  lwz       r31, 0x32B8(r13)
-	  addi      r3, r3, 0x3180
-	  stw       r4, 0x32D8(r13)
-	  li        r0, 0xA
-	  stw       r3, 0x32B8(r13)
-	  stw       r0, 0xC(r31)
-	  lwz       r12, 0x28(r31)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x98
-	  mtlr      r12
-	  addi      r4, r31, 0
-	  li        r3, -0x3
-	  blrl
+	if (p1 & 1) {
+		NumInternalRetry = 0;
 
-	.loc_0x98:
-	  lwz       r12, 0x32DC(r13)
-	  cmplwi    r12, 0
-	  beq-      .loc_0xB4
-	  mtlr      r12
-	  addi      r4, r31, 0
-	  li        r3, 0
-	  blrl
+		if (!CheckCancel(0)) {
+			executing->state = 1;
+			stateBusy(executing);
+		}
 
-	.loc_0xB4:
-	  bl        0x304
-	  li        r4, 0x1
-
-	.loc_0xBC:
-	  cmpwi     r4, 0
-	  bne-      .loc_0xE8
-	  lwz       r3, 0x32B8(r13)
-	  li        r0, 0x1
-	  stw       r0, 0xC(r3)
-	  lwz       r3, 0x32B8(r13)
-	  bl        0x52C
-	  b         .loc_0xE8
-
-	.loc_0xDC:
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x2AC
-	  bl        -0x1AE8
-
-	.loc_0xE8:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	} else {
+		stateGettingError();
+	}
 }
 
 /*
@@ -1227,28 +608,12 @@ void cbForStateCheckID3(void)
  * Address:	8020066C
  * Size:	000044
  */
-void AlarmHandler(void)
+static void AlarmHandler(OSAlarm* alarm, OSContext* context)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x1254
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x3100
-	  li        r4, 0x20
-	  bl        -0x9AD0
-	  lis       r4, 0x8020
-	  lwz       r3, 0x32B8(r13)
-	  addi      r0, r4, 0x77C
-	  stw       r0, 0x32FC(r13)
-	  bl        0xE0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DVDReset();
+	DCInvalidateRange(tmpBuffer, sizeof(DVDDiskID));
+	LastState = stateCoverClosed_CMD;
+	stateCoverClosed_CMD(executing);
 }
 
 /*
@@ -1256,72 +621,28 @@ void AlarmHandler(void)
  * Address:	802006B0
  * Size:	0000CC
  */
-void stateCoverClosed(void)
+static void stateCoverClosed()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  addi      r31, r3, 0x3100
-	  lwz       r0, 0x32D4(r13)
-	  cmpwi     r0, 0xD
-	  beq-      .loc_0x48
-	  bge-      .loc_0x3C
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x78
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x48
-	  b         .loc_0x78
-
-	.loc_0x3C:
-	  cmpwi     r0, 0xF
-	  beq-      .loc_0x48
-	  b         .loc_0x78
-
-	.loc_0x48:
-	  bl        0x180C
-	  lwz       r4, 0x32B8(r13)
-	  addi      r0, r31, 0x80
-	  stw       r0, 0x32B8(r13)
-	  lwz       r12, 0x28(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x70
-	  mtlr      r12
-	  li        r3, -0x4
-	  blrl
-
-	.loc_0x70:
-	  bl        0x208
-	  b         .loc_0xB8
-
-	.loc_0x78:
-	  bl        0x11A4
-	  addi      r3, r31, 0xB0
-	  bl        -0xA624
-	  lis       r3, 0x8000
-	  lwz       r0, 0xF8(r3)
-	  lis       r4, 0x1062
-	  lis       r3, 0x8020
-	  rlwinm    r0,r0,30,2,31
-	  addi      r4, r4, 0x4DD3
-	  mulhwu    r0, r4, r0
-	  rlwinm    r0,r0,26,6,31
-	  mulli     r6, r0, 0x47E
-	  addi      r7, r3, 0x66C
-	  addi      r3, r31, 0xB0
-	  li        r5, 0
-	  bl        -0xA3FC
-
-	.loc_0xB8:
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
+	DVDCommandBlock* cmdBlock;
+	switch (CurrCommand) {
+	case 4:
+	case 5:
+	case 13:
+	case 15:
+		__DVDClearWaitingQueue();
+		cmdBlock  = executing;
+		executing = &DummyCommandBlock;
+		if (cmdBlock->callback) {
+			(cmdBlock->callback)(-4, cmdBlock);
+		}
+		stateReady();
+		break;
+	default:
+		DVDReset();
+		OSCreateAlarm(&ResetAlarm);
+		OSSetAlarm(&ResetAlarm, OSMillisecondsToTicks(1150), AlarmHandler);
+		break;
+	}
 }
 
 /*
@@ -1329,69 +650,27 @@ void stateCoverClosed(void)
  * Address:	8020077C
  * Size:	000030
  */
-void stateCoverClosed_CMD(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803D
-	  stw       r0, 0x4(r1)
-	  lis       r4, 0x8020
-	  addi      r3, r3, 0x3100
-	  stwu      r1, -0x8(r1)
-	  addi      r4, r4, 0x7AC
-	  bl        -0x1D5C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void stateCoverClosed_CMD(DVDCommandBlock* cmdBlock) { DVDLowReadDiskID(tmpBuffer, cbForStateCoverClosed); }
 
 /*
  * --INFO--
  * Address:	802007AC
  * Size:	000070
  */
-void cbForStateCoverClosed(void)
+void cbForStateCoverClosed(u32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bne-      .loc_0x3C
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4568
-	  bl        0x1928
-	  bl        0x10F4
-	  li        r3, 0
-	  bl        -0xCAC
-	  b         .loc_0x60
+	if (p1 == 16) {
+		executing->state = -1;
+		stateTimeout();
+		return;
+	}
 
-	.loc_0x3C:
-	  rlwinm.   r0,r3,0,31,31
-	  beq-      .loc_0x54
-	  li        r0, 0
-	  stw       r0, 0x32EC(r13)
-	  bl        -0x590
-	  b         .loc_0x60
-
-	.loc_0x54:
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x2AC
-	  bl        -0x1C9C
-
-	.loc_0x60:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (p1 & 1) {
+		NumInternalRetry = 0;
+		stateCheckID();
+	} else {
+		stateGettingError();
+	}
 }
 
 /*
@@ -1399,102 +678,18 @@ void cbForStateCoverClosed(void)
  * Address:	8020081C
  * Size:	000028
  */
-void stateMotorStopped(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r1)
-	  addi      r3, r3, 0x844
-	  stwu      r1, -0x8(r1)
-	  bl        -0x1E20
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+static void stateMotorStopped() { DVDLowWaitCoverClose(cbForStateMotorStopped); }
 
 /*
  * --INFO--
  * Address:	80200844
  * Size:	0000E4
  */
-void cbForStateMotorStopped(void)
+void cbForStateMotorStopped(u32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0xCC00
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  lis       r4, 0x803D
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0x3100
-	  stw       r0, 0x6004(r3)
-	  li        r0, 0x3
-	  lwz       r3, 0x32B8(r13)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x32D4(r13)
-	  cmpwi     r0, 0xD
-	  beq-      .loc_0x60
-	  bge-      .loc_0x54
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x90
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x60
-	  b         .loc_0x90
-
-	.loc_0x54:
-	  cmpwi     r0, 0xF
-	  beq-      .loc_0x60
-	  b         .loc_0x90
-
-	.loc_0x60:
-	  bl        0x1660
-	  lwz       r4, 0x32B8(r13)
-	  addi      r0, r31, 0x80
-	  stw       r0, 0x32B8(r13)
-	  lwz       r12, 0x28(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x88
-	  mtlr      r12
-	  li        r3, -0x4
-	  blrl
-
-	.loc_0x88:
-	  bl        .loc_0xE4
-	  b         .loc_0xD0
-
-	.loc_0x90:
-	  bl        0xFF8
-	  addi      r3, r31, 0xB0
-	  bl        -0xA7D0
-	  lis       r3, 0x8000
-	  lwz       r0, 0xF8(r3)
-	  lis       r4, 0x1062
-	  lis       r3, 0x8020
-	  rlwinm    r0,r0,30,2,31
-	  addi      r4, r4, 0x4DD3
-	  mulhwu    r0, r4, r0
-	  rlwinm    r0,r0,26,6,31
-	  mulli     r6, r0, 0x47E
-	  addi      r7, r3, 0x66C
-	  addi      r3, r31, 0xB0
-	  li        r5, 0
-	  bl        -0xA5A8
-
-	.loc_0xD0:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0xE4:
-	*/
+	__DIRegs[DI_COVER_STATUS] = 0;
+	executing->state          = 3;
+	stateCoverClosed();
 }
 
 /*
@@ -1502,377 +697,174 @@ void cbForStateMotorStopped(void)
  * Address:	80200928
  * Size:	000248
  */
-void stateReady(void)
+void stateReady()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  addi      r31, r3, 0x3100
-	  bl        0x1704
-	  cmpwi     r3, 0
-	  bne-      .loc_0x30
-	  li        r0, 0
-	  stw       r0, 0x32B8(r13)
-	  b         .loc_0x234
+	DVDCommandBlock* finished;
 
-	.loc_0x30:
-	  lwz       r0, 0x32C4(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x50
-	  li        r3, 0x1
-	  li        r0, 0
-	  stw       r3, 0x32C8(r13)
-	  stw       r0, 0x32B8(r13)
-	  b         .loc_0x234
+	if (!__DVDCheckWaitingQueue()) {
+		executing = (DVDCommandBlock*)nullptr;
+		return;
+	}
 
-	.loc_0x50:
-	  bl        0x162C
-	  lwz       r0, 0x32D0(r13)
-	  stw       r3, 0x32B8(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x9C
-	  lwz       r3, 0x32B8(r13)
-	  li        r4, -0x1
-	  addi      r0, r31, 0x80
-	  stw       r4, 0xC(r3)
-	  lwz       r4, 0x32B8(r13)
-	  stw       r0, 0x32B8(r13)
-	  lwz       r12, 0x28(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x94
-	  mtlr      r12
-	  li        r3, -0x1
-	  blrl
+	if (PauseFlag) {
+		PausingFlag = TRUE;
+		executing   = (DVDCommandBlock*)nullptr;
+		return;
+	}
 
-	.loc_0x94:
-	  bl        .loc_0x0
-	  b         .loc_0x234
+	executing = __DVDPopWaitingQueue();
 
-	.loc_0x9C:
-	  lwz       r4, 0x32B8(r13)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x32D4(r13)
-	  lwz       r0, 0x32E0(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x224
-	  lwz       r0, 0x32E0(r13)
-	  cmplwi    r0, 0x7
-	  bgt-      .loc_0x218
-	  lis       r3, 0x802F
-	  subi      r3, r3, 0x779C
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  li        r0, 0x6
-	  lis       r3, 0x8020
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x844
-	  bl        -0x2000
-	  b         .loc_0x218
-	  li        r0, 0xB
-	  lis       r3, 0x8020
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x844
-	  bl        -0x2018
-	  b         .loc_0x218
-	  li        r0, 0x4
-	  lis       r3, 0x8020
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x844
-	  bl        -0x2030
-	  b         .loc_0x218
-	  li        r0, 0x7
-	  lis       r3, 0x8020
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x844
-	  bl        -0x2048
-	  b         .loc_0x218
-	  li        r0, 0x5
-	  lis       r3, 0x8020
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x844
-	  bl        -0x2060
-	  b         .loc_0x218
-	  li        r0, 0x3
-	  stw       r0, 0xC(r4)
-	  lwz       r0, 0x32D4(r13)
-	  cmpwi     r0, 0xD
-	  beq-      .loc_0x188
-	  bge-      .loc_0x17C
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x1B8
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x188
-	  b         .loc_0x1B8
+	if (FatalErrorFlag) {
+		executing->state = -1;
+		finished         = executing;
+		executing        = &DummyCommandBlock;
+		if (finished->callback) {
+			(finished->callback)(-1, finished);
+		}
+		stateReady();
+		return;
+	}
 
-	.loc_0x17C:
-	  cmpwi     r0, 0xF
-	  beq-      .loc_0x188
-	  b         .loc_0x1B8
+	CurrCommand = executing->command;
 
-	.loc_0x188:
-	  bl        0x1454
-	  lwz       r4, 0x32B8(r13)
-	  addi      r0, r31, 0x80
-	  stw       r0, 0x32B8(r13)
-	  lwz       r12, 0x28(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x1B0
-	  mtlr      r12
-	  li        r3, -0x4
-	  blrl
+	if (ResumeFromHere) {
+		switch (ResumeFromHere) {
+		case 1:
+			executing->state = 6;
+			stateMotorStopped();
+			break;
 
-	.loc_0x1B0:
-	  bl        .loc_0x0
-	  b         .loc_0x218
+		case 2:
+			executing->state = 11;
+			stateMotorStopped();
+			break;
 
-	.loc_0x1B8:
-	  bl        0xDEC
-	  addi      r3, r31, 0xB0
-	  bl        -0xA9DC
-	  lis       r3, 0x8000
-	  lwz       r0, 0xF8(r3)
-	  lis       r4, 0x1062
-	  lis       r3, 0x8020
-	  rlwinm    r0,r0,30,2,31
-	  addi      r4, r4, 0x4DD3
-	  mulhwu    r0, r4, r0
-	  rlwinm    r0,r0,26,6,31
-	  mulli     r6, r0, 0x47E
-	  addi      r7, r3, 0x66C
-	  addi      r3, r31, 0xB0
-	  li        r5, 0
-	  bl        -0xA7B4
-	  b         .loc_0x218
-	  li        r0, -0x1
-	  stw       r0, 0xC(r4)
-	  lwz       r3, 0x32E4(r13)
-	  bl        0x15CC
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x4CC
-	  bl        -0x205C
+		case 3:
+			executing->state = 4;
+			stateMotorStopped();
+			break;
 
-	.loc_0x218:
-	  li        r0, 0
-	  stw       r0, 0x32E0(r13)
-	  b         .loc_0x234
+		case 7:
+			executing->state = 7;
+			stateMotorStopped();
+			break;
 
-	.loc_0x224:
-	  li        r0, 0x1
-	  stw       r0, 0xC(r4)
-	  lwz       r3, 0x32B8(r13)
-	  bl        .loc_0x248
+		case 4:
+			executing->state = 5;
+			stateMotorStopped();
+			break;
 
-	.loc_0x234:
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
+		case 6:
+			executing->state = 3;
+			stateCoverClosed();
+			break;
 
-	.loc_0x248:
-	*/
+		case 5:
+			executing->state = -1;
+			stateError(CancelLastError);
+			break;
+		}
+
+		ResumeFromHere = 0;
+
+	} else {
+		executing->state = 1;
+		stateBusy(executing);
+	}
 }
+
+// idk why this file insists on doing this in the opposite order
+#define DVDMIN(a, b) (((a) > (b)) ? (b) : (a))
 
 /*
  * --INFO--
  * Address:	80200B70
  * Size:	0002C0
  */
-void stateBusy(void)
+void stateBusy(DVDCommandBlock* block)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8020
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0xB70
-	  mr        r7, r3
-	  stwu      r1, -0x8(r1)
-	  stw       r0, 0x32FC(r13)
-	  lwz       r0, 0x8(r3)
-	  cmplwi    r0, 0xF
-	  bgt-      .loc_0x2B0
-	  lis       r3, 0x802F
-	  subi      r3, r3, 0x777C
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6004(r3)
-	  addi      r5, r3, 0x6000
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r5)
-	  li        r0, 0x20
-	  addi      r4, r3, 0xE30
-	  stw       r0, 0x1C(r7)
-	  lwz       r3, 0x18(r7)
-	  bl        -0x2198
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  addi      r3, r3, 0x6000
-	  lwz       r0, 0x4(r3)
-	  lis       r4, 0x8
-	  stw       r0, 0x4(r3)
-	  lwz       r3, 0x20(r7)
-	  lwz       r0, 0x14(r7)
-	  sub       r0, r0, r3
-	  cmplw     r0, r4
-	  ble-      .loc_0x98
-	  b         .loc_0x9C
+	DVDCommandBlock* finished;
+	LastState = stateBusy;
+	switch (block->command) {
+	case 5:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		block->currTransferSize   = sizeof(DVDDiskID);
+		DVDLowReadDiskID(block->addr, cbForStateBusy);
+		break;
+	case 1:
+	case 4:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		block->currTransferSize   = DVDMIN(block->length - block->transferredSize, 0x80000);
+		DVDLowRead((void*)((u8*)block->addr + block->transferredSize), block->currTransferSize, block->offset + block->transferredSize,
+		           cbForStateBusy);
+		break;
 
-	.loc_0x98:
-	  mr        r4, r0
+	case 2:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		DVDLowSeek(block->offset, cbForStateBusy);
+		break;
 
-	.loc_0x9C:
-	  stw       r4, 0x1C(r7)
-	  lis       r3, 0x8020
-	  addi      r6, r3, 0xE30
-	  lwz       r5, 0x20(r7)
-	  lwz       r3, 0x18(r7)
-	  lwz       r0, 0x10(r7)
-	  add       r3, r3, r5
-	  lwz       r4, 0x1C(r7)
-	  add       r5, r0, r5
-	  bl        -0x254C
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6004(r3)
-	  addi      r5, r3, 0x6000
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r5)
-	  addi      r4, r3, 0xE30
-	  lwz       r3, 0x10(r7)
-	  bl        -0x22D8
-	  b         .loc_0x2B0
-	  lis       r3, 0x8020
-	  addi      r3, r3, 0xE30
-	  bl        -0x2184
-	  b         .loc_0x2B0
-	  lis       r3, 0x8020
-	  addi      r3, r3, 0xE30
-	  bl        -0x2194
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  addi      r3, r3, 0x6000
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x4(r3)
-	  lwz       r0, 0x32CC(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x148
-	  lwz       r5, 0x32B8(r13)
-	  li        r0, 0
-	  lis       r3, 0x8020
-	  stw       r0, 0x1C(r5)
-	  addi      r4, r3, 0xE30
-	  li        r3, 0
-	  bl        -0x1F84
-	  b         .loc_0x2B0
+	case 3:
+		DVDLowStopMotor(cbForStateBusy);
+		break;
 
-	.loc_0x148:
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, 0x1
-	  lis       r3, 0x8020
-	  stw       r0, 0x1C(r4)
-	  addi      r6, r3, 0xE30
-	  li        r3, 0
-	  lwz       r4, 0x14(r7)
-	  lwz       r5, 0x10(r7)
-	  bl        -0x2044
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6004(r3)
-	  addi      r4, r3, 0x6000
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r4)
-	  addi      r6, r3, 0xE30
-	  lis       r3, 0x1
-	  li        r4, 0
-	  li        r5, 0
-	  bl        -0x2070
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6004(r3)
-	  addi      r4, r3, 0x6000
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r4)
-	  li        r0, 0x1
-	  addi      r6, r3, 0xE30
-	  stw       r0, 0x32CC(r13)
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0
-	  bl        -0x20A4
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6004(r3)
-	  addi      r5, r3, 0x6000
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r5)
-	  addi      r4, r3, 0xE30
-	  li        r3, 0
-	  bl        -0x2030
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6004(r3)
-	  addi      r5, r3, 0x6000
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r5)
-	  addi      r4, r3, 0xE30
-	  lis       r3, 0x1
-	  bl        -0x2054
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6004(r3)
-	  addi      r5, r3, 0x6000
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r5)
-	  addi      r4, r3, 0xE30
-	  lis       r3, 0x2
-	  bl        -0x2078
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6004(r3)
-	  addi      r5, r3, 0x6000
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r5)
-	  addi      r4, r3, 0xE30
-	  lis       r3, 0x3
-	  bl        -0x209C
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6004(r3)
-	  addi      r4, r3, 0x6000
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r4)
-	  addi      r5, r3, 0xE30
-	  lwz       r3, 0x10(r7)
-	  lwz       r4, 0x14(r7)
-	  bl        -0x2038
-	  b         .loc_0x2B0
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6004(r3)
-	  addi      r5, r3, 0x6000
-	  lis       r3, 0x8020
-	  stw       r0, 0x4(r5)
-	  li        r0, 0x20
-	  addi      r4, r3, 0xE30
-	  stw       r0, 0x1C(r7)
-	  lwz       r3, 0x18(r7)
-	  bl        -0x2224
+	case 15:
+		DVDLowStopMotor(cbForStateBusy);
+		break;
 
-	.loc_0x2B0:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	case 6:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		if (AutoFinishing) {
+			executing->currTransferSize = 0;
+			DVDLowRequestAudioStatus(0, cbForStateBusy);
+		} else {
+			executing->currTransferSize = 1;
+			DVDLowAudioStream(0, block->length, block->offset, cbForStateBusy);
+		}
+		break;
+
+	case 7:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		DVDLowAudioStream(0x10000, 0, 0, cbForStateBusy);
+		break;
+
+	case 8:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		AutoFinishing             = TRUE;
+		DVDLowAudioStream(0, 0, 0, cbForStateBusy);
+		break;
+
+	case 9:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		DVDLowRequestAudioStatus(0, cbForStateBusy);
+		break;
+
+	case 10:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		DVDLowRequestAudioStatus(0x10000, cbForStateBusy);
+		break;
+
+	case 11:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		DVDLowRequestAudioStatus(0x20000, cbForStateBusy);
+		break;
+
+	case 12:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		DVDLowRequestAudioStatus(0x30000, cbForStateBusy);
+		break;
+
+	case 13:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		DVDLowAudioBufferConfig(block->offset, block->length, cbForStateBusy);
+		break;
+
+	case 14:
+		__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+		block->currTransferSize   = sizeof(DVDDriveInfo);
+		DVDLowInquiry(block->addr, cbForStateBusy);
+		break;
+	}
 }
 
 /*
@@ -1880,470 +872,158 @@ void stateBusy(void)
  * Address:	80200E30
  * Size:	0005D4
  */
-void cbForStateBusy(void)
+void cbForStateBusy(u32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0x10
-	  stw       r0, 0x4(r1)
-	  lis       r4, 0x803D
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0x3100
-	  stw       r30, 0x10(r1)
-	  bne-      .loc_0x4C
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4568
-	  bl        0x1294
-	  bl        0xA60
-	  li        r3, 0
-	  bl        -0x1340
-	  b         .loc_0x5BC
+	DVDCommandBlock* finished;
 
-	.loc_0x4C:
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x3
-	  beq-      .loc_0x64
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xF
-	  bne-      .loc_0x14C
+	if (p1 == 16) {
+		executing->state = -1;
+		stateTimeout();
+		return;
+	}
 
-	.loc_0x64:
-	  rlwinm.   r0,r3,0,30,30
-	  beq-      .loc_0x94
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4567
-	  bl        0x124C
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x4CC
-	  bl        -0x23DC
-	  b         .loc_0x5BC
+	if ((CurrCommand == 3) || (CurrCommand == 15)) {
+		if (p1 & 2) {
+			executing->state = -1;
+			stateError(0x1234567);
+			return;
+		}
 
-	.loc_0x94:
-	  li        r0, 0
-	  stw       r0, 0x32EC(r13)
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xF
-	  bne-      .loc_0xB0
-	  li        r0, 0x1
-	  stw       r0, 0x32F0(r13)
+		NumInternalRetry = 0;
 
-	.loc_0xB0:
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x124
-	  li        r0, 0x7
-	  lwz       r30, 0x32B8(r13)
-	  stw       r0, 0x32E0(r13)
-	  addi      r3, r31, 0x80
-	  li        r0, 0
-	  stw       r0, 0x32D8(r13)
-	  li        r0, 0xA
-	  stw       r3, 0x32B8(r13)
-	  stw       r0, 0xC(r30)
-	  lwz       r12, 0x28(r30)
-	  cmplwi    r12, 0
-	  beq-      .loc_0xFC
-	  mtlr      r12
-	  addi      r4, r30, 0
-	  li        r3, -0x3
-	  blrl
+		if (CurrCommand == 15) {
+			ResetRequired = TRUE;
+		}
 
-	.loc_0xFC:
-	  lwz       r12, 0x32DC(r13)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x118
-	  mtlr      r12
-	  addi      r4, r30, 0
-	  li        r3, 0
-	  blrl
+		if (CheckCancel(7)) {
+			return;
+		}
 
-	.loc_0x118:
-	  bl        -0x620
-	  li        r0, 0x1
-	  b         .loc_0x128
+		executing->state = 7;
+		stateMotorStopped();
+		return;
+	}
 
-	.loc_0x124:
-	  li        r0, 0
+	if ((CurrCommand == 1) || (CurrCommand == 4) || (CurrCommand == 5) || (CurrCommand == 14)) {
+		executing->transferredSize += executing->currTransferSize - __DIRegs[6];
+	}
 
-	.loc_0x128:
-	  cmpwi     r0, 0
-	  bne-      .loc_0x5BC
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, 0x7
-	  lis       r3, 0x8020
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x844
-	  bl        -0x2564
-	  b         .loc_0x5BC
+	if (p1 & 8) {
+		Canceling = FALSE;
+		finished  = executing;
+		executing = &DummyCommandBlock;
 
-	.loc_0x14C:
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x1
-	  beq-      .loc_0x17C
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x4
-	  beq-      .loc_0x17C
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x5
-	  beq-      .loc_0x17C
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xE
-	  bne-      .loc_0x1A0
+		finished->state = 10;
+		if (finished->callback) {
+			(*finished->callback)(-3, finished);
+		}
+		if (CancelCallback) {
+			(CancelCallback)(0, finished);
+		}
+		stateReady();
 
-	.loc_0x17C:
-	  lwz       r6, 0x32B8(r13)
-	  lis       r4, 0xCC00
-	  addi      r4, r4, 0x6000
-	  lwz       r4, 0x18(r4)
-	  lwz       r0, 0x1C(r6)
-	  lwz       r5, 0x20(r6)
-	  sub       r0, r0, r4
-	  add       r0, r5, r0
-	  stw       r0, 0x20(r6)
+		return;
+	}
 
-	.loc_0x1A0:
-	  rlwinm.   r0,r3,0,28,28
-	  beq-      .loc_0x204
-	  lwz       r30, 0x32B8(r13)
-	  addi      r3, r31, 0x80
-	  li        r0, 0
-	  stw       r0, 0x32D8(r13)
-	  li        r0, 0xA
-	  stw       r3, 0x32B8(r13)
-	  stw       r0, 0xC(r30)
-	  lwz       r12, 0x28(r30)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x1E0
-	  mtlr      r12
-	  addi      r4, r30, 0
-	  li        r3, -0x3
-	  blrl
+	if (p1 & 1) {
+		NumInternalRetry = 0;
 
-	.loc_0x1E0:
-	  lwz       r12, 0x32DC(r13)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x1FC
-	  mtlr      r12
-	  addi      r4, r30, 0
-	  li        r3, 0
-	  blrl
+		if (CheckCancel(0))
+			return;
 
-	.loc_0x1FC:
-	  bl        -0x704
-	  b         .loc_0x5BC
+		if ((CurrCommand == 1) || (CurrCommand == 4) || (CurrCommand == 5) || (CurrCommand == 14)) {
+			if (executing->transferredSize != executing->length) {
+				stateBusy(executing);
+				return;
+			}
 
-	.loc_0x204:
-	  rlwinm.   r0,r3,0,31,31
-	  beq-      .loc_0x48C
-	  li        r4, 0
-	  stw       r4, 0x32EC(r13)
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x27C
-	  stw       r4, 0x32E0(r13)
-	  addi      r3, r31, 0x80
-	  lwz       r30, 0x32B8(r13)
-	  li        r0, 0xA
-	  stw       r4, 0x32D8(r13)
-	  stw       r3, 0x32B8(r13)
-	  stw       r0, 0xC(r30)
-	  lwz       r12, 0x28(r30)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x258
-	  mtlr      r12
-	  addi      r4, r30, 0
-	  li        r3, -0x3
-	  blrl
+			finished  = executing;
+			executing = &DummyCommandBlock;
 
-	.loc_0x258:
-	  lwz       r12, 0x32DC(r13)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x274
-	  mtlr      r12
-	  addi      r4, r30, 0
-	  li        r3, 0
-	  blrl
+			finished->state = 0;
+			if (finished->callback) {
+				(finished->callback)((s32)finished->transferredSize, finished);
+			}
+			stateReady();
+		} else if ((CurrCommand == 9) || (CurrCommand == 10) || (CurrCommand == 11) || (CurrCommand == 12)) {
+			s32 result;
 
-	.loc_0x274:
-	  bl        -0x77C
-	  li        r4, 0x1
+			if ((CurrCommand == 11) || (CurrCommand == 10)) {
+				result = (s32)(__DIRegs[DI_MM_BUF] << 2);
+			} else {
+				result = (s32)__DIRegs[DI_MM_BUF];
+			}
+			finished  = executing;
+			executing = &DummyCommandBlock;
 
-	.loc_0x27C:
-	  cmpwi     r4, 0
-	  bne-      .loc_0x5BC
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x1
-	  beq-      .loc_0x2B4
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x4
-	  beq-      .loc_0x2B4
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x5
-	  beq-      .loc_0x2B4
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xE
-	  bne-      .loc_0x304
+			finished->state = 0;
+			if (finished->callback) {
+				(finished->callback)(result, finished);
+			}
+			stateReady();
+		} else if (CurrCommand == 6) {
+			if (executing->currTransferSize == 0) {
+				if (__DIRegs[DI_MM_BUF] & 1) {
+					finished  = executing;
+					executing = &DummyCommandBlock;
 
-	.loc_0x2B4:
-	  lwz       r3, 0x32B8(r13)
-	  lwz       r4, 0x20(r3)
-	  lwz       r0, 0x14(r3)
-	  cmplw     r4, r0
-	  beq-      .loc_0x2D0
-	  bl        -0x588
-	  b         .loc_0x5BC
+					finished->state = 9;
+					if (finished->callback) {
+						(finished->callback)(-2, finished);
+					}
+					stateReady();
+				} else {
+					AutoFinishing               = FALSE;
+					executing->currTransferSize = 1;
+					DVDLowAudioStream(0, executing->length, executing->offset, cbForStateBusy);
+				}
+			} else {
+				finished  = executing;
+				executing = &DummyCommandBlock;
 
-	.loc_0x2D0:
-	  addi      r0, r31, 0x80
-	  stw       r0, 0x32B8(r13)
-	  li        r0, 0
-	  addi      r4, r3, 0
-	  stw       r0, 0xC(r3)
-	  lwz       r12, 0x28(r3)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x2FC
-	  lwz       r3, 0x20(r4)
-	  mtlr      r12
-	  blrl
+				finished->state = 0;
+				if (finished->callback) {
+					(finished->callback)(0, finished);
+				}
+				stateReady();
+			}
+		} else {
+			finished  = executing;
+			executing = &DummyCommandBlock;
 
-	.loc_0x2FC:
-	  bl        -0x804
-	  b         .loc_0x5BC
+			finished->state = 0;
+			if (finished->callback) {
+				(finished->callback)(0, finished);
+			}
+			stateReady();
+		}
 
-	.loc_0x304:
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x9
-	  beq-      .loc_0x334
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xA
-	  beq-      .loc_0x334
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xB
-	  beq-      .loc_0x334
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xC
-	  bne-      .loc_0x398
+	} else {
+		if (CurrCommand == 14) {
+			executing->state = -1;
+			stateError(0x01234567);
+			return;
+		}
 
-	.loc_0x334:
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xB
-	  beq-      .loc_0x34C
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xA
-	  bne-      .loc_0x35C
+		if ((CurrCommand == 1 || CurrCommand == 4 || CurrCommand == 5 || CurrCommand == 14)
+		    && (executing->transferredSize == executing->length)) {
 
-	.loc_0x34C:
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6020(r3)
-	  rlwinm    r3,r0,2,0,29
-	  b         .loc_0x368
+			if (CheckCancel(0)) {
+				return;
+			}
+			finished  = executing;
+			executing = &DummyCommandBlock;
 
-	.loc_0x35C:
-	  lis       r3, 0xCC00
-	  addi      r3, r3, 0x6000
-	  lwz       r3, 0x20(r3)
+			finished->state = 0;
+			if (finished->callback) {
+				(finished->callback)((s32)finished->transferredSize, finished);
+			}
+			stateReady();
+			return;
+		}
 
-	.loc_0x368:
-	  lwz       r4, 0x32B8(r13)
-	  addi      r5, r31, 0x80
-	  li        r0, 0
-	  stw       r5, 0x32B8(r13)
-	  stw       r0, 0xC(r4)
-	  lwz       r12, 0x28(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x390
-	  mtlr      r12
-	  blrl
-
-	.loc_0x390:
-	  bl        -0x898
-	  b         .loc_0x5BC
-
-	.loc_0x398:
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x6
-	  bne-      .loc_0x458
-	  lwz       r4, 0x32B8(r13)
-	  addi      r5, r4, 0x1C
-	  lwz       r0, 0x1C(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x428
-	  lis       r3, 0xCC00
-	  lwz       r0, 0x6020(r3)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x3F8
-	  addi      r0, r31, 0x80
-	  stw       r0, 0x32B8(r13)
-	  li        r0, 0x9
-	  stw       r0, 0xC(r4)
-	  lwz       r12, 0x28(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x3F0
-	  mtlr      r12
-	  li        r3, -0x2
-	  blrl
-
-	.loc_0x3F0:
-	  bl        -0x8F8
-	  b         .loc_0x5BC
-
-	.loc_0x3F8:
-	  li        r0, 0
-	  stw       r0, 0x32CC(r13)
-	  li        r0, 0x1
-	  lis       r3, 0x8020
-	  stw       r0, 0x0(r5)
-	  addi      r6, r3, 0xE30
-	  li        r3, 0
-	  lwz       r5, 0x32B8(r13)
-	  lwz       r4, 0x14(r5)
-	  lwz       r5, 0x10(r5)
-	  bl        -0x25BC
-	  b         .loc_0x5BC
-
-	.loc_0x428:
-	  addi      r0, r31, 0x80
-	  stw       r0, 0x32B8(r13)
-	  li        r0, 0
-	  stw       r0, 0xC(r4)
-	  lwz       r12, 0x28(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x450
-	  mtlr      r12
-	  li        r3, 0
-	  blrl
-
-	.loc_0x450:
-	  bl        -0x958
-	  b         .loc_0x5BC
-
-	.loc_0x458:
-	  lwz       r4, 0x32B8(r13)
-	  addi      r3, r31, 0x80
-	  li        r0, 0
-	  stw       r3, 0x32B8(r13)
-	  stw       r0, 0xC(r4)
-	  lwz       r12, 0x28(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x484
-	  mtlr      r12
-	  li        r3, 0
-	  blrl
-
-	.loc_0x484:
-	  bl        -0x98C
-	  b         .loc_0x5BC
-
-	.loc_0x48C:
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xE
-	  bne-      .loc_0x4C0
-	  lwz       r4, 0x32B8(r13)
-	  li        r0, -0x1
-	  lis       r3, 0x123
-	  stw       r0, 0xC(r4)
-	  addi      r3, r3, 0x4567
-	  bl        0xE20
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x4CC
-	  bl        -0x2808
-	  b         .loc_0x5BC
-
-	.loc_0x4C0:
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x1
-	  beq-      .loc_0x4F0
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x4
-	  beq-      .loc_0x4F0
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0x5
-	  beq-      .loc_0x4F0
-	  lwz       r0, 0x32D4(r13)
-	  cmplwi    r0, 0xE
-	  bne-      .loc_0x5B0
-
-	.loc_0x4F0:
-	  lwz       r30, 0x32B8(r13)
-	  lwz       r3, 0x20(r30)
-	  lwz       r0, 0x14(r30)
-	  cmplw     r3, r0
-	  bne-      .loc_0x5B0
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x570
-	  li        r4, 0
-	  stw       r4, 0x32E0(r13)
-	  addi      r3, r31, 0x80
-	  li        r0, 0xA
-	  stw       r4, 0x32D8(r13)
-	  stw       r3, 0x32B8(r13)
-	  stw       r0, 0xC(r30)
-	  lwz       r12, 0x28(r30)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x548
-	  mtlr      r12
-	  addi      r4, r30, 0
-	  li        r3, -0x3
-	  blrl
-
-	.loc_0x548:
-	  lwz       r12, 0x32DC(r13)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x564
-	  mtlr      r12
-	  addi      r4, r30, 0
-	  li        r3, 0
-	  blrl
-
-	.loc_0x564:
-	  bl        -0xA6C
-	  li        r0, 0x1
-	  b         .loc_0x574
-
-	.loc_0x570:
-	  li        r0, 0
-
-	.loc_0x574:
-	  cmpwi     r0, 0
-	  bne-      .loc_0x5BC
-	  lwz       r4, 0x32B8(r13)
-	  addi      r3, r31, 0x80
-	  li        r0, 0
-	  stw       r3, 0x32B8(r13)
-	  stw       r0, 0xC(r4)
-	  lwz       r12, 0x28(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x5A8
-	  lwz       r3, 0x20(r4)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x5A8:
-	  bl        -0xAB0
-	  b         .loc_0x5BC
-
-	.loc_0x5B0:
-	  lis       r3, 0x8020
-	  subi      r3, r3, 0x2AC
-	  bl        -0x287C
-
-	.loc_0x5BC:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+		stateGettingError();
+	}
 }
 
 /*
@@ -2351,64 +1031,27 @@ void cbForStateBusy(void)
  * Address:	80201404
  * Size:	0000BC
  */
-void issueCommand(void)
+static BOOL issueCommand(s32 prio, DVDCommandBlock* block)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  lwz       r0, 0x2A18(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x58
-	  lwz       r3, 0x8(r30)
-	  cmplwi    r3, 0x1
-	  beq-      .loc_0x4C
-	  subi      r0, r3, 0x4
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x4C
-	  cmplwi    r3, 0xE
-	  bne-      .loc_0x58
+	BOOL level;
+	BOOL result;
 
-	.loc_0x4C:
-	  lwz       r3, 0x18(r30)
-	  lwz       r4, 0x14(r30)
-	  bl        -0xA8A0
+	if (autoInvalidation && (block->command == 1 || block->command == 4 || block->command == 5 || block->command == 14)) {
+		DCInvalidateRange(block->addr, block->length);
+	}
 
-	.loc_0x58:
-	  bl        -0x84E0
-	  li        r0, 0x2
-	  stw       r0, 0xC(r30)
-	  addi      r31, r3, 0
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  bl        0xAC8
-	  lwz       r0, 0x32B8(r13)
-	  addi      r30, r3, 0
-	  cmplwi    r0, 0
-	  bne-      .loc_0x94
-	  lwz       r0, 0x32C4(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x94
-	  bl        -0xB6C
+	level = OSDisableInterrupts();
 
-	.loc_0x94:
-	  mr        r3, r31
-	  bl        -0x84F8
-	  lwz       r0, 0x24(r1)
-	  mr        r3, r30
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	block->state = 2;
+	result       = __DVDPushWaitingQueue(prio, block);
+
+	if ((executing == (DVDCommandBlock*)nullptr) && (PauseFlag == FALSE)) {
+		stateReady();
+	}
+
+	OSRestoreInterrupts(level);
+
+	return result;
 }
 
 /*
@@ -2416,72 +1059,18 @@ void issueCommand(void)
  * Address:	802014C0
  * Size:	0000DC
  */
-void DVDReadAbsAsyncPrio(void)
+BOOL DVDReadAbsAsyncPrio(DVDCommandBlock* block, void* addr, s32 length, s32 offset, DVDCBCallback callback, s32 prio)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r8, 0
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  addi      r29, r3, 0
-	  stw       r0, 0x8(r3)
-	  li        r0, 0
-	  stw       r4, 0x18(r3)
-	  stw       r5, 0x14(r3)
-	  stw       r6, 0x10(r3)
-	  stw       r0, 0x20(r3)
-	  stw       r7, 0x28(r3)
-	  lwz       r0, 0x2A18(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x78
-	  lwz       r3, 0x8(r29)
-	  cmplwi    r3, 0x1
-	  beq-      .loc_0x6C
-	  subi      r0, r3, 0x4
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x6C
-	  cmplwi    r3, 0xE
-	  bne-      .loc_0x78
+	BOOL idle;
+	block->command         = 1;
+	block->addr            = addr;
+	block->length          = length;
+	block->offset          = offset;
+	block->transferredSize = 0;
+	block->callback        = callback;
 
-	.loc_0x6C:
-	  lwz       r3, 0x18(r29)
-	  lwz       r4, 0x14(r29)
-	  bl        -0xA97C
-
-	.loc_0x78:
-	  bl        -0x85BC
-	  li        r0, 0x2
-	  stw       r0, 0xC(r29)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  addi      r4, r29, 0
-	  bl        0x9EC
-	  lwz       r0, 0x32B8(r13)
-	  addi      r31, r3, 0
-	  cmplwi    r0, 0
-	  bne-      .loc_0xB4
-	  lwz       r0, 0x32C4(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xB4
-	  bl        -0xC48
-
-	.loc_0xB4:
-	  mr        r3, r30
-	  bl        -0x85D4
-	  lwz       r0, 0x3C(r1)
-	  mr        r3, r31
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  mtlr      r0
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  blr
-	*/
+	idle = issueCommand(prio, block);
+	return idle;
 }
 
 /*
@@ -2499,69 +1088,18 @@ void DVDSeekAbsAsyncPrio(void)
  * Address:	8020159C
  * Size:	0000D0
  */
-void DVDReadAbsAsyncForBS(void)
+BOOL DVDReadAbsAsyncForBS(DVDCommandBlock* block, void* addr, s32 length, s32 offset, DVDCBCallback callback)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x4
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x28(r1)
-	  stw       r0, 0x8(r3)
-	  li        r0, 0
-	  stw       r4, 0x18(r3)
-	  stw       r5, 0x14(r3)
-	  stw       r6, 0x10(r3)
-	  stw       r0, 0x20(r3)
-	  stw       r7, 0x28(r3)
-	  lwz       r0, 0x2A18(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x70
-	  lwz       r3, 0x8(r31)
-	  cmplwi    r3, 0x1
-	  beq-      .loc_0x64
-	  subi      r0, r3, 0x4
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x64
-	  cmplwi    r3, 0xE
-	  bne-      .loc_0x70
+	BOOL idle;
+	block->command         = 4;
+	block->addr            = addr;
+	block->length          = length;
+	block->offset          = offset;
+	block->transferredSize = 0;
+	block->callback        = callback;
 
-	.loc_0x64:
-	  lwz       r3, 0x18(r31)
-	  lwz       r4, 0x14(r31)
-	  bl        -0xAA50
-
-	.loc_0x70:
-	  bl        -0x8690
-	  li        r0, 0x2
-	  stw       r0, 0xC(r31)
-	  addi      r30, r3, 0
-	  addi      r4, r31, 0
-	  li        r3, 0x2
-	  bl        0x918
-	  lwz       r0, 0x32B8(r13)
-	  addi      r31, r3, 0
-	  cmplwi    r0, 0
-	  bne-      .loc_0xAC
-	  lwz       r0, 0x32C4(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xAC
-	  bl        -0xD1C
-
-	.loc_0xAC:
-	  mr        r3, r30
-	  bl        -0x86A8
-	  lwz       r0, 0x34(r1)
-	  mr        r3, r31
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x30
-	  blr
-	*/
+	idle = issueCommand(2, block);
+	return idle;
 }
 
 /*
@@ -2569,70 +1107,19 @@ void DVDReadAbsAsyncForBS(void)
  * Address:	8020166C
  * Size:	0000D4
  */
-void DVDReadDiskID(void)
+BOOL DVDReadDiskID(DVDCommandBlock* block, DVDDiskID* diskID, DVDCBCallback callback)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x5
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x20(r1)
-	  stw       r0, 0x8(r3)
-	  li        r3, 0x20
-	  li        r0, 0
-	  stw       r4, 0x18(r31)
-	  stw       r3, 0x14(r31)
-	  stw       r0, 0x10(r31)
-	  stw       r0, 0x20(r31)
-	  stw       r5, 0x28(r31)
-	  lwz       r0, 0x2A18(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x74
-	  lwz       r3, 0x8(r31)
-	  cmplwi    r3, 0x1
-	  beq-      .loc_0x68
-	  subi      r0, r3, 0x4
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x68
-	  cmplwi    r3, 0xE
-	  bne-      .loc_0x74
+	BOOL idle;
+	block->command = 5;
+	block->addr    = diskID;
+	block->length  = sizeof(DVDDiskID);
 
-	.loc_0x68:
-	  lwz       r3, 0x18(r31)
-	  lwz       r4, 0x14(r31)
-	  bl        -0xAB24
+	block->offset          = 0;
+	block->transferredSize = 0;
+	block->callback        = callback;
 
-	.loc_0x74:
-	  bl        -0x8764
-	  li        r0, 0x2
-	  stw       r0, 0xC(r31)
-	  addi      r30, r3, 0
-	  addi      r4, r31, 0
-	  li        r3, 0x2
-	  bl        0x844
-	  lwz       r0, 0x32B8(r13)
-	  addi      r31, r3, 0
-	  cmplwi    r0, 0
-	  bne-      .loc_0xB0
-	  lwz       r0, 0x32C4(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xB0
-	  bl        -0xDF0
-
-	.loc_0xB0:
-	  mr        r3, r30
-	  bl        -0x877C
-	  lwz       r0, 0x2C(r1)
-	  mr        r3, r31
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	idle = issueCommand(2, block);
+	return idle;
 }
 
 /*
@@ -2640,66 +1127,16 @@ void DVDReadDiskID(void)
  * Address:	80201740
  * Size:	0000C4
  */
-void DVDPrepareStreamAbsAsync(void)
+BOOL DVDPrepareStreamAbsAsync(DVDCommandBlock* block, u32 length, u32 offset, DVDCBCallback callback)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x6
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x20(r1)
-	  stw       r0, 0x8(r3)
-	  stw       r4, 0x14(r3)
-	  stw       r5, 0x10(r3)
-	  stw       r6, 0x28(r3)
-	  lwz       r0, 0x2A18(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x64
-	  lwz       r3, 0x8(r31)
-	  cmplwi    r3, 0x1
-	  beq-      .loc_0x58
-	  subi      r0, r3, 0x4
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x58
-	  cmplwi    r3, 0xE
-	  bne-      .loc_0x64
+	BOOL idle;
+	block->command  = 6;
+	block->length   = length;
+	block->offset   = offset;
+	block->callback = callback;
 
-	.loc_0x58:
-	  lwz       r3, 0x18(r31)
-	  lwz       r4, 0x14(r31)
-	  bl        -0xABE8
-
-	.loc_0x64:
-	  bl        -0x8828
-	  li        r0, 0x2
-	  stw       r0, 0xC(r31)
-	  addi      r30, r3, 0
-	  addi      r4, r31, 0
-	  li        r3, 0x1
-	  bl        0x780
-	  lwz       r0, 0x32B8(r13)
-	  addi      r31, r3, 0
-	  cmplwi    r0, 0
-	  bne-      .loc_0xA0
-	  lwz       r0, 0x32C4(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xA0
-	  bl        -0xEB4
-
-	.loc_0xA0:
-	  mr        r3, r30
-	  bl        -0x8840
-	  lwz       r0, 0x2C(r1)
-	  mr        r3, r31
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	idle = issueCommand(1, block);
+	return idle;
 }
 
 /*
@@ -2707,8 +1144,13 @@ void DVDPrepareStreamAbsAsync(void)
  * Address:	........
  * Size:	0000BC
  */
-void DVDCancelStreamAsync(void)
+BOOL DVDCancelStreamAsync(DVDCommandBlock* block, DVDCBCallback callback)
 {
+	BOOL idle;
+	block->command  = 7;
+	block->callback = callback;
+	idle            = issueCommand(1, block);
+	return idle;
 	// UNUSED FUNCTION
 }
 
@@ -2717,63 +1159,34 @@ void DVDCancelStreamAsync(void)
  * Address:	80201804
  * Size:	0000A0
  */
-void DVDCancelStream(void)
+BOOL DVDCancelStream(DVDCommandBlock* block)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x7
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  lis       r3, 0x8020
-	  stw       r0, 0x8(r30)
-	  addi      r0, r3, 0x18A4
-	  addi      r4, r30, 0
-	  stw       r0, 0x28(r30)
-	  li        r3, 0x1
-	  bl        -0x434
-	  cmpwi     r3, 0
-	  bne-      .loc_0x48
-	  li        r3, -0x1
-	  b         .loc_0x88
+	BOOL result;
+	s32 state;
+	BOOL enabled;
+	s32 retVal;
 
-	.loc_0x48:
-	  bl        -0x88D0
-	  mr        r31, r3
+	result = DVDCancelStreamAsync(block, cbForCancelStreamSync);
 
-	.loc_0x50:
-	  lwz       r3, 0xC(r30)
-	  addi      r0, r3, 0x1
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x68
-	  cmpwi     r3, 0xA
-	  bne-      .loc_0x70
+	if (result == FALSE) {
+		return -1;
+	}
 
-	.loc_0x68:
-	  lwz       r30, 0x20(r30)
-	  b         .loc_0x7C
+	enabled = OSDisableInterrupts();
 
-	.loc_0x70:
-	  addi      r3, r13, 0x32B0
-	  bl        -0x4EBC
-	  b         .loc_0x50
+	while (TRUE) {
+		state = ((volatile DVDCommandBlock*)block)->state;
 
-	.loc_0x7C:
-	  mr        r3, r31
-	  bl        -0x88E0
-	  mr        r3, r30
+		if (state == 0 || state == -1 || state == 10) {
+			retVal = (s32)block->transferredSize;
+			break;
+		}
 
-	.loc_0x88:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+		OSSleepThread(&__DVDThreadQueue);
+	}
+
+	OSRestoreInterrupts(enabled);
+	return retVal;
 }
 
 /*
@@ -2781,21 +1194,10 @@ void DVDCancelStream(void)
  * Address:	802018A4
  * Size:	000028
  */
-void cbForCancelStreamSync(void)
+static void cbForCancelStreamSync(s32 result, DVDCommandBlock* block)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  stw       r3, 0x20(r4)
-	  addi      r3, r13, 0x32B0
-	  bl        -0x4E10
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	block->transferredSize = (u32)result;
+	OSWakeupThread(&__DVDThreadQueue);
 }
 
 /*
@@ -2803,7 +1205,7 @@ void cbForCancelStreamSync(void)
  * Address:	........
  * Size:	0000BC
  */
-void DVDStopStreamAtEndAsync(void)
+static BOOL DVDStopStreamAtEndAsync(DVDCommandBlock* block, DVDCBCallback callback)
 {
 	// UNUSED FUNCTION
 }
@@ -2973,7 +1375,7 @@ void DVDChangeDiskAsyncForBS(void)
  * Address:	........
  * Size:	0000D0
  */
-void DVDChangeDiskAsync(void)
+BOOL DVDChangeDiskAsync(DVDCommandBlock*, DVDDiskID*, DVDCBCallback)
 {
 	// UNUSED FUNCTION
 }
@@ -2983,7 +1385,7 @@ void DVDChangeDiskAsync(void)
  * Address:	........
  * Size:	0000C8
  */
-void DVDChangeDisk(void)
+s32 DVDChangeDisk(DVDCommandBlock*, DVDDiskID*)
 {
 	// UNUSED FUNCTION
 }
@@ -3003,7 +1405,7 @@ void cbForChangeDiskSync(void)
  * Address:	........
  * Size:	0000D0
  */
-void DVDInquiryAsync(void)
+BOOL DVDInquiryAsync(DVDCommandBlock* block, DVDDriveInfo* info, DVDCBCallback callback)
 {
 	// UNUSED FUNCTION
 }
@@ -3033,28 +1435,13 @@ void cbForInquirySync(void)
  * Address:	802018CC
  * Size:	000044
  */
-void DVDReset(void)
+void DVDReset()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x2A84
-	  lis       r3, 0xCC00
-	  li        r0, 0x2A
-	  stw       r0, 0x6000(r3)
-	  addi      r4, r3, 0x6000
-	  li        r0, 0
-	  lwz       r3, 0x6004(r3)
-	  stw       r3, 0x4(r4)
-	  stw       r0, 0x32F0(r13)
-	  stw       r0, 0x32E0(r13)
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DVDLowReset();
+	__DIRegs[DI_STATUS]       = 42;
+	__DIRegs[DI_COVER_STATUS] = __DIRegs[DI_COVER_STATUS];
+	ResetRequired             = FALSE;
+	ResumeFromHere            = 0;
 }
 
 /*
@@ -3072,8 +1459,17 @@ void DVDResetRequired(void)
  * Address:	........
  * Size:	00004C
  */
-void DVDGetCommandBlockStatus(void)
+s32 DVDGetCommandBlockStatus(const DVDCommandBlock* block)
 {
+	int interrupts = OSDisableInterrupts();
+	int result;
+	if (block->state == 3) {
+		result = 1;
+	} else {
+		result = block->state;
+	}
+	OSRestoreInterrupts(interrupts);
+	return result;
 	// UNUSED FUNCTION
 }
 
@@ -3082,66 +1478,27 @@ void DVDGetCommandBlockStatus(void)
  * Address:	80201910
  * Size:	0000AC
  */
-void DVDGetDriveStatus(void)
+s32 DVDGetDriveStatus()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  bl        -0x89A8
-	  lwz       r0, 0x32D0(r13)
-	  addi      r30, r3, 0
-	  cmpwi     r0, 0
-	  beq-      .loc_0x30
-	  li        r31, -0x1
-	  b         .loc_0x88
-
-	.loc_0x30:
-	  lwz       r0, 0x32C8(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x44
-	  li        r31, 0x8
-	  b         .loc_0x88
-
-	.loc_0x44:
-	  lwz       r31, 0x32B8(r13)
-	  cmplwi    r31, 0
-	  bne-      .loc_0x58
-	  li        r31, 0
-	  b         .loc_0x88
-
-	.loc_0x58:
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3180
-	  cmplw     r31, r0
-	  bne-      .loc_0x70
-	  li        r31, 0
-	  b         .loc_0x88
-
-	.loc_0x70:
-	  bl        -0x8A04
-	  lwz       r31, 0xC(r31)
-	  cmpwi     r31, 0x3
-	  bne-      .loc_0x84
-	  li        r31, 0x1
-
-	.loc_0x84:
-	  bl        -0x89F0
-
-	.loc_0x88:
-	  mr        r3, r30
-	  bl        -0x89F8
-	  lwz       r0, 0x1C(r1)
-	  mr        r3, r31
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	int interrupts = OSDisableInterrupts();
+	int result;
+	if (FatalErrorFlag != FALSE) {
+		result = DVD_STATE_FATAL_ERROR;
+	} else {
+		if (PausingFlag != FALSE) {
+			result = DVD_STATE_PAUSING;
+		} else {
+			if (executing == nullptr) {
+				result = DVD_STATE_END;
+			} else if (executing == &DummyCommandBlock) {
+				result = DVD_STATE_END;
+			} else {
+				result = DVDGetCommandBlockStatus((struct DVDCommandBlock*)executing);
+			}
+		}
+	}
+	OSRestoreInterrupts(interrupts);
+	return result;
 }
 
 /*
@@ -3149,7 +1506,7 @@ void DVDGetDriveStatus(void)
  * Address:	........
  * Size:	000010
  */
-void DVDSetAutoInvalidation(void)
+int DVDSetAutoInvalidation(int newValue)
 {
 	// UNUSED FUNCTION
 }
@@ -3159,9 +1516,15 @@ void DVDSetAutoInvalidation(void)
  * Address:	........
  * Size:	00003C
  */
-void DVDPause(void)
+static void DVDPause()
 {
-	// UNUSED FUNCTION
+	BOOL level;
+	level     = OSDisableInterrupts();
+	PauseFlag = TRUE;
+	if (executing == (DVDCommandBlock*)NULL) {
+		PausingFlag = TRUE;
+	}
+	OSRestoreInterrupts(level);
 }
 
 /*
@@ -3169,9 +1532,16 @@ void DVDPause(void)
  * Address:	........
  * Size:	000050
  */
-void DVDResume(void)
+void DVDResume()
 {
-	// UNUSED FUNCTION
+	BOOL level;
+	level     = OSDisableInterrupts();
+	PauseFlag = FALSE;
+	if (PausingFlag) {
+		PausingFlag = FALSE;
+		stateReady();
+	}
+	OSRestoreInterrupts(level);
 }
 
 /*
@@ -3179,201 +1549,99 @@ void DVDResume(void)
  * Address:	802019BC
  * Size:	000270
  */
-void DVDCancelAsync(void)
+BOOL DVDCancelAsync(DVDCommandBlock* block, DVDCBCallback callback)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  bl        -0x8A60
-	  lwz       r4, 0xC(r29)
-	  addi      r31, r3, 0
-	  addi      r0, r4, 0x1
-	  cmplwi    r0, 0xC
-	  bgt-      .loc_0x248
-	  lis       r3, 0x802F
-	  subi      r3, r3, 0x773C
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  cmplwi    r30, 0
-	  beq-      .loc_0x248
-	  addi      r12, r30, 0
-	  mtlr      r12
-	  addi      r4, r29, 0
-	  li        r3, 0
-	  blrl
-	  b         .loc_0x248
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x8C
-	  mr        r3, r31
-	  bl        -0x8A98
-	  li        r3, 0
-	  b         .loc_0x254
+	BOOL enabled;
+	DVDLowCallback old;
 
-	.loc_0x8C:
-	  li        r0, 0x1
-	  stw       r30, 0x32DC(r13)
-	  stw       r0, 0x32D8(r13)
-	  lwz       r0, 0x8(r29)
-	  cmplwi    r0, 0x4
-	  beq-      .loc_0xAC
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x248
+	enabled = OSDisableInterrupts();
 
-	.loc_0xAC:
-	  bl        -0x2B58
-	  b         .loc_0x248
-	  mr        r3, r29
-	  bl        0x628
-	  li        r0, 0xA
-	  stw       r0, 0xC(r29)
-	  lwz       r12, 0x28(r29)
-	  cmplwi    r12, 0
-	  beq-      .loc_0xE0
-	  mtlr      r12
-	  addi      r4, r29, 0
-	  li        r3, -0x3
-	  blrl
+	switch (block->state) {
+	case -1:
+	case 0:
+	case 10:
+		if (callback)
+			(*callback)(0, block);
+		break;
 
-	.loc_0xE0:
-	  cmplwi    r30, 0
-	  beq-      .loc_0x248
-	  addi      r12, r30, 0
-	  mtlr      r12
-	  addi      r4, r29, 0
-	  li        r3, 0
-	  blrl
-	  b         .loc_0x248
-	  lwz       r0, 0x8(r29)
-	  cmpwi     r0, 0xD
-	  beq-      .loc_0x130
-	  bge-      .loc_0x124
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x150
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x130
-	  b         .loc_0x150
+	case 1:
+		if (Canceling) {
+			OSRestoreInterrupts(enabled);
+			return FALSE;
+		}
 
-	.loc_0x124:
-	  cmpwi     r0, 0xF
-	  beq-      .loc_0x130
-	  b         .loc_0x150
+		Canceling      = TRUE;
+		CancelCallback = callback;
+		if (block->command == 4 || block->command == 1) {
+			DVDLowBreak();
+		}
+		break;
 
-	.loc_0x130:
-	  cmplwi    r30, 0
-	  beq-      .loc_0x248
-	  addi      r12, r30, 0
-	  mtlr      r12
-	  addi      r4, r29, 0
-	  li        r3, 0
-	  blrl
-	  b         .loc_0x248
+	case 2:
+		__DVDDequeueWaitingQueue(block);
+		block->state = 10;
+		if (block->callback)
+			(block->callback)(-3, block);
+		if (callback)
+			(*callback)(0, block);
+		break;
 
-	.loc_0x150:
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x16C
-	  mr        r3, r31
-	  bl        -0x8B78
-	  li        r3, 0
-	  b         .loc_0x254
+	case 3:
+		switch (block->command) {
+		case 5:
+		case 4:
+		case 13:
+		case 15:
+			if (callback)
+				(*callback)(0, block);
+			break;
 
-	.loc_0x16C:
-	  li        r0, 0x1
-	  stw       r30, 0x32DC(r13)
-	  stw       r0, 0x32D8(r13)
-	  b         .loc_0x248
-	  bl        -0x2C14
-	  lis       r4, 0x8020
-	  addi      r0, r4, 0x844
-	  cmplw     r3, r0
-	  beq-      .loc_0x1A0
-	  mr        r3, r31
-	  bl        -0x8BAC
-	  li        r3, 0
-	  b         .loc_0x254
+		default:
+			if (Canceling) {
+				OSRestoreInterrupts(enabled);
+				return FALSE;
+			}
+			Canceling      = TRUE;
+			CancelCallback = callback;
+			break;
+		}
+		break;
 
-	.loc_0x1A0:
-	  lwz       r0, 0xC(r29)
-	  cmpwi     r0, 0x4
-	  bne-      .loc_0x1B4
-	  li        r0, 0x3
-	  stw       r0, 0x32E0(r13)
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+	case 11:
+		old = DVDLowClearCallback();
+		if (old != cbForStateMotorStopped) {
+			OSRestoreInterrupts(enabled);
+			return FALSE;
+		}
 
-	.loc_0x1B4:
-	  lwz       r0, 0xC(r29)
-	  cmpwi     r0, 0x5
-	  bne-      .loc_0x1C8
-	  li        r0, 0x4
-	  stw       r0, 0x32E0(r13)
+		if (block->state == 4)
+			ResumeFromHere = 3;
+		if (block->state == 5)
+			ResumeFromHere = 4;
+		if (block->state == 6)
+			ResumeFromHere = 1;
+		if (block->state == 11)
+			ResumeFromHere = 2;
+		if (block->state == 7)
+			ResumeFromHere = 7;
 
-	.loc_0x1C8:
-	  lwz       r0, 0xC(r29)
-	  cmpwi     r0, 0x6
-	  bne-      .loc_0x1DC
-	  li        r0, 0x1
-	  stw       r0, 0x32E0(r13)
+		block->state = 10;
+		if (block->callback) {
+			(block->callback)(-3, block);
+		}
+		if (callback) {
+			(callback)(0, block);
+		}
+		stateReady();
+		break;
+	}
 
-	.loc_0x1DC:
-	  lwz       r0, 0xC(r29)
-	  cmpwi     r0, 0xB
-	  bne-      .loc_0x1F0
-	  li        r0, 0x2
-	  stw       r0, 0x32E0(r13)
-
-	.loc_0x1F0:
-	  lwz       r0, 0xC(r29)
-	  cmpwi     r0, 0x7
-	  bne-      .loc_0x204
-	  li        r0, 0x7
-	  stw       r0, 0x32E0(r13)
-
-	.loc_0x204:
-	  li        r0, 0xA
-	  stw       r0, 0xC(r29)
-	  lwz       r12, 0x28(r29)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x228
-	  mtlr      r12
-	  addi      r4, r29, 0
-	  li        r3, -0x3
-	  blrl
-
-	.loc_0x228:
-	  cmplwi    r30, 0
-	  beq-      .loc_0x244
-	  addi      r12, r30, 0
-	  mtlr      r12
-	  addi      r4, r29, 0
-	  li        r3, 0
-	  blrl
-
-	.loc_0x244:
-	  bl        -0x12D8
-
-	.loc_0x248:
-	  mr        r3, r31
-	  bl        -0x8C64
-	  li        r3, 0x1
-
-	.loc_0x254:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	OSRestoreInterrupts(enabled);
+	return TRUE;
 }
 
 /*
@@ -3381,64 +1649,41 @@ void DVDCancelAsync(void)
  * Address:	80201C2C
  * Size:	0000AC
  */
-void DVDCancel(void)
+s32 DVDCancel(DVDCommandBlock* block)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8020
-	  stw       r0, 0x4(r1)
-	  addi      r4, r4, 0x1CD8
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x290
-	  cmpwi     r3, 0
-	  bne-      .loc_0x34
-	  li        r3, -0x1
-	  b         .loc_0x94
+	BOOL result;
+	s32 state;
+	u32 command;
+	BOOL enabled;
 
-	.loc_0x34:
-	  bl        -0x8CE4
-	  mr        r31, r3
+	result = DVDCancelAsync(block, cbForCancelSync);
 
-	.loc_0x3C:
-	  lwz       r3, 0xC(r30)
-	  addi      r0, r3, 0x1
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x88
-	  cmpwi     r3, 0xA
-	  beq-      .loc_0x88
-	  cmpwi     r3, 0x3
-	  bne-      .loc_0x7C
-	  lwz       r3, 0x8(r30)
-	  subi      r0, r3, 0x4
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x88
-	  cmplwi    r3, 0xD
-	  beq-      .loc_0x88
-	  cmplwi    r3, 0xF
-	  beq-      .loc_0x88
+	if (result == FALSE) {
+		return -1;
+	}
 
-	.loc_0x7C:
-	  addi      r3, r13, 0x32B0
-	  bl        -0x52F0
-	  b         .loc_0x3C
+	enabled = OSDisableInterrupts();
 
-	.loc_0x88:
-	  mr        r3, r31
-	  bl        -0x8D14
-	  li        r3, 0
+	for (;;) {
+		state = ((volatile DVDCommandBlock*)block)->state;
 
-	.loc_0x94:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+		if ((state == 0) || (state == -1) || (state == 10)) {
+			break;
+		}
+
+		if (state == 3) {
+			command = ((volatile DVDCommandBlock*)block)->command;
+
+			if ((command == 4) || (command == 5) || (command == 13) || (command == 15)) {
+				break;
+			}
+		}
+
+		OSSleepThread(&__DVDThreadQueue);
+	}
+
+	OSRestoreInterrupts(enabled);
+	return 0;
 }
 
 /*
@@ -3446,29 +1691,37 @@ void DVDCancel(void)
  * Address:	80201CD8
  * Size:	000024
  */
-void cbForCancelSync(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r13, 0x32B0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x5240
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+static void cbForCancelSync(s32 result, DVDCommandBlock* block) { OSWakeupThread(&__DVDThreadQueue); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000EC
  */
-void DVDCancelAllAsync(void)
+static BOOL DVDCancelAllAsync(DVDCBCallback callback)
 {
+	BOOL enabled;
+	DVDCommandBlock* p;
+	BOOL retVal;
+
+	enabled = OSDisableInterrupts();
+	DVDPause();
+
+	while ((p = __DVDPopWaitingQueue()) != 0) {
+		DVDCancelAsync(p, NULL);
+	}
+
+	if (executing)
+		retVal = DVDCancelAsync(executing, callback);
+	else {
+		retVal = TRUE;
+		if (callback)
+			(*callback)(0, NULL);
+	}
+
+	DVDResume();
+	OSRestoreInterrupts(enabled);
+	return retVal;
 	// UNUSED FUNCTION
 }
 
@@ -3477,7 +1730,7 @@ void DVDCancelAllAsync(void)
  * Address:	........
  * Size:	000138
  */
-void DVDCancelAll(void)
+s32 DVDCancelAll()
 {
 	// UNUSED FUNCTION
 }
@@ -3497,98 +1750,67 @@ void cbForCancelAllSync(void)
  * Address:	80201CFC
  * Size:	000008
  */
-void DVDGetCurrentDiskID(void)
-{
-	/*
-	.loc_0x0:
-	  lis       r3, 0x8000
-	  blr
-	*/
-}
+DVDDiskID* DVDGetCurrentDiskID() { return (DVDDiskID*)OSPhysicalToCached(0); }
 
 /*
  * --INFO--
  * Address:	80201D04
  * Size:	0000E4
  */
-void DVDCheckDisk(void)
+BOOL DVDCheckDisk()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  bl        -0x8D98
-	  lwz       r0, 0x32D0(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x28
-	  li        r4, -0x1
-	  b         .loc_0x6C
+	BOOL enabled;
+	s32 result;
+	s32 state;
+	u32 coverReg;
 
-	.loc_0x28:
-	  lwz       r0, 0x32C8(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x3C
-	  li        r4, 0x8
-	  b         .loc_0x6C
+	enabled = OSDisableInterrupts();
 
-	.loc_0x3C:
-	  lwz       r5, 0x32B8(r13)
-	  cmplwi    r5, 0
-	  bne-      .loc_0x50
-	  li        r4, 0
-	  b         .loc_0x6C
+	if (FatalErrorFlag) {
+		state = -1;
+	} else if (PausingFlag) {
+		state = 8;
+	} else {
+		if (executing == (DVDCommandBlock*)NULL) {
+			state = 0;
+		} else if (executing == &DummyCommandBlock) {
+			state = 0;
+		} else {
+			state = executing->state;
+		}
+	}
 
-	.loc_0x50:
-	  lis       r4, 0x803D
-	  addi      r0, r4, 0x3180
-	  cmplw     r5, r0
-	  bne-      .loc_0x68
-	  li        r4, 0
-	  b         .loc_0x6C
+	switch (state) {
+	case 1:
+	case 9:
+	case 10:
+	case 2:
+		result = TRUE;
+		break;
 
-	.loc_0x68:
-	  lwz       r4, 0xC(r5)
+	case -1:
+	case 11:
+	case 7:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+		result = FALSE;
+		break;
 
-	.loc_0x6C:
-	  addi      r0, r4, 0x1
-	  cmplwi    r0, 0xC
-	  bgt-      .loc_0xC8
-	  lis       r4, 0x802F
-	  subi      r4, r4, 0x7708
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r4, r0
-	  mtctr     r0
-	  bctr
-	  li        r31, 0x1
-	  b         .loc_0xC8
-	  li        r31, 0
-	  b         .loc_0xC8
-	  lis       r4, 0xCC00
-	  addi      r4, r4, 0x6000
-	  lwz       r4, 0x4(r4)
-	  rlwinm.   r0,r4,30,31,31
-	  bne-      .loc_0xBC
-	  rlwinm.   r0,r4,0,31,31
-	  beq-      .loc_0xC4
+	case 0:
+	case 8:
+		coverReg = __DIRegs[1];
+		if (((coverReg >> 2) & 1) || (coverReg & 1)) {
+			result = FALSE;
+		} else {
+			result = TRUE;
+		}
+	}
 
-	.loc_0xBC:
-	  li        r31, 0
-	  b         .loc_0xC8
+	OSRestoreInterrupts(enabled);
 
-	.loc_0xC4:
-	  li        r31, 0x1
-
-	.loc_0xC8:
-	  bl        -0x8E28
-	  lwz       r0, 0x14(r1)
-	  mr        r3, r31
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
+	return result;
 }
 
 /*
@@ -3596,100 +1818,23 @@ void DVDCheckDisk(void)
  * Address:	80201DE8
  * Size:	00011C
  */
-void __DVDPrepareResetAsync(void)
+void __DVDPrepareResetAsync(DVDCBCallback callback)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  stw       r29, 0x14(r1)
-	  bl        -0x8E88
-	  mr        r29, r3
-	  bl        .loc_0x11C
-	  lwz       r0, 0x32D8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3C
-	  stw       r30, 0x32DC(r13)
-	  b         .loc_0xF8
+	BOOL enabled;
 
-	.loc_0x3C:
-	  lwz       r3, 0x32B8(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x50
-	  li        r0, 0
-	  stw       r0, 0x28(r3)
+	enabled = OSDisableInterrupts();
 
-	.loc_0x50:
-	  bl        -0x8EBC
-	  mr        r31, r3
-	  bl        -0x8EC4
-	  lwz       r0, 0x32B8(r13)
-	  li        r4, 0x1
-	  stw       r4, 0x32C4(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x74
-	  stw       r4, 0x32C8(r13)
+	__DVDClearWaitingQueue();
 
-	.loc_0x74:
-	  bl        -0x8EB8
-	  b         .loc_0x84
+	if (Canceling) {
+		CancelCallback = callback;
+	} else {
+		if (executing) {
+			executing->callback = nullptr;
+		}
 
-	.loc_0x7C:
-	  li        r4, 0
-	  bl        -0x4AC
+		DVDCancelAllAsync(callback);
+	}
 
-	.loc_0x84:
-	  bl        0x138
-	  cmplwi    r3, 0
-	  bne+      .loc_0x7C
-	  lwz       r3, 0x32B8(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA8
-	  mr        r4, r30
-	  bl        -0x4CC
-	  b         .loc_0xC4
-
-	.loc_0xA8:
-	  cmplwi    r30, 0
-	  beq-      .loc_0xC4
-	  addi      r12, r30, 0
-	  mtlr      r12
-	  li        r3, 0
-	  li        r4, 0
-	  blrl
-
-	.loc_0xC4:
-	  bl        -0x8F30
-	  li        r4, 0
-	  stw       r4, 0x32C4(r13)
-	  mr        r30, r3
-	  lwz       r0, 0x32C8(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xE8
-	  stw       r4, 0x32C8(r13)
-	  bl        -0x15A4
-
-	.loc_0xE8:
-	  mr        r3, r30
-	  bl        -0x8F30
-	  mr        r3, r31
-	  bl        -0x8F38
-
-	.loc_0xF8:
-	  mr        r3, r29
-	  bl        -0x8F40
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  blr
-
-	.loc_0x11C:
-	*/
+	OSRestoreInterrupts(enabled);
 }

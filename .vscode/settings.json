@@ -18,6 +18,7 @@
         "*.cp": "cpp",
         "__mem.h": "c",
         "db.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "dvd.h": "c"
     }
 }

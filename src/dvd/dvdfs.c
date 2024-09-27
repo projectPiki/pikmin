@@ -1,38 +1,75 @@
-#include "types.h"
+#include "Dolphin/dvd.h"
+#include "Dolphin/os.h"
+
+typedef struct FSTEntry FSTEntry;
+
+struct FSTEntry {
+	uint isDirAndStringOff;
+	uint parentOrPosition;
+	uint nextEntryOrLength;
+};
+
+static OSBootInfo* BootInfo;
+static FSTEntry* FstStart;
+static char* FstStringStart;
+static u32 MaxEntryNum;
+static u32 currentDirectory = 0;
+OSThreadQueue __DVDThreadQueue;
+u32 __DVDLongFileNameFlag = 0;
+
+static void cbForReadAsync(s32 result, DVDCommandBlock* block);
+static void cbForReadSync(s32 result, DVDCommandBlock* block);
+static void cbForSeekAsync(s32 result, DVDCommandBlock* block);
+static void cbForSeekSync(s32 result, DVDCommandBlock* block);
+static void cbForPrepareStreamAsync(s32 result, DVDCommandBlock* block);
+static void cbForPrepareStreamSync(s32 result, DVDCommandBlock* block);
+
+#ifndef offsetof
+#define offsetof(type, memb) ((u32) & ((type*)0)->memb)
+#endif
 
 /*
  * --INFO--
  * Address:	801FEF80
  * Size:	000038
  */
-void __DVDFSInit(void)
+void __DVDFSInit()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x8000
-	  stw       r3, 0x3298(r13)
-	  lwz       r0, 0x38(r3)
-	  stw       r0, 0x329C(r13)
-	  lwz       r3, 0x329C(r13)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x32A4(r13)
-	  lwz       r0, 0x32A4(r13)
-	  mulli     r0, r0, 0xC
-	  add       r0, r3, r0
-	  stw       r0, 0x32A0(r13)
-	  blr
-	*/
+	BootInfo = (OSBootInfo*)OSPhysicalToCached(0);
+	FstStart = (FSTEntry*)BootInfo->FSTLocation;
+
+	if (FstStart) {
+		MaxEntryNum    = FstStart[0].nextEntryOrLength;
+		FstStringStart = (char*)&(FstStart[MaxEntryNum]);
+	}
 }
+
+/* For convenience */
+#define entryIsDir(i)   (((FstStart[i].isDirAndStringOff & 0xff000000) == 0) ? FALSE : TRUE)
+#define stringOff(i)    (FstStart[i].isDirAndStringOff & ~0xff000000)
+#define parentDir(i)    (FstStart[i].parentOrPosition)
+#define nextDir(i)      (FstStart[i].nextEntryOrLength)
+#define filePosition(i) (FstStart[i].parentOrPosition)
+#define fileLength(i)   (FstStart[i].nextEntryOrLength)
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-void isSame(void)
+static BOOL isSame(const char* path, const char* string)
 {
+	while ((u8)*string != '\0') {
+		if (tolower((u8)*path++) != tolower((u8)*string++)) {
+			return FALSE;
+		}
+	}
+
+	if (((u8)*path == '/') || ((u8)*path == '\0')) {
+		return TRUE;
+	}
+
+	return FALSE;
 	// UNUSED FUNCTION
 }
 
@@ -41,273 +78,104 @@ void isSame(void)
  * Address:	801FEFB8
  * Size:	0002E0
  */
-void DVDConvertPathToEntrynum(void)
+s32 DVDConvertPathToEntrynum(char* pathPtr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stmw      r20, 0x18(r1)
-	  mr        r23, r3
-	  lis       r3, 0x802F
-	  addi      r25, r23, 0
-	  subi      r31, r3, 0x7BA0
-	  lwz       r28, 0x32A8(r13)
+	const char* ptr;
+	char* stringPtr;
+	BOOL isDir;
+	u32 length;
+	u32 dirLookAt;
+	u32 i;
+	const char* origPathPtr = pathPtr;
+	const char* extentionStart;
+	BOOL illegal;
+	BOOL extention;
 
-	.loc_0x24:
-	  lbz       r0, 0x0(r23)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x38
-	  mr        r3, r28
-	  b         .loc_0x2CC
+	dirLookAt = currentDirectory;
 
-	.loc_0x38:
-	  cmplwi    r0, 0x2F
-	  bne-      .loc_0x4C
-	  li        r28, 0
-	  addi      r23, r23, 0x1
-	  b         .loc_0x24
+	while (1) {
 
-	.loc_0x4C:
-	  cmplwi    r0, 0x2E
-	  bne-      .loc_0xC0
-	  lbz       r0, 0x1(r23)
-	  cmplwi    r0, 0x2E
-	  bne-      .loc_0xA0
-	  lbz       r0, 0x2(r23)
-	  cmplwi    r0, 0x2F
-	  bne-      .loc_0x84
-	  mulli     r3, r28, 0xC
-	  lwz       r4, 0x329C(r13)
-	  addi      r0, r3, 0x4
-	  lwzx      r28, r4, r0
-	  addi      r23, r23, 0x3
-	  b         .loc_0x24
+		if ((u8)*pathPtr == '\0') {
+			return (s32)dirLookAt;
+		} else if ((u8)*pathPtr == '/') {
+			dirLookAt = 0;
+			pathPtr++;
+			continue;
+		} else if ((u8)*pathPtr == '.') {
+			if ((u8) * (pathPtr + 1) == '.') {
+				if ((u8) * (pathPtr + 2) == '/') {
+					dirLookAt = parentDir(dirLookAt);
+					pathPtr += 3;
+					continue;
+				} else if ((u8) * (pathPtr + 2) == '\0') {
+					return (s32)parentDir(dirLookAt);
+				}
+			} else if ((u8) * (pathPtr + 1) == '/') {
+				pathPtr += 2;
+				continue;
+			} else if ((u8) * (pathPtr + 1) == '\0') {
+				return (s32)dirLookAt;
+			}
+		}
 
-	.loc_0x84:
-	  cmplwi    r0, 0
-	  bne-      .loc_0xC0
-	  mulli     r0, r28, 0xC
-	  lwz       r3, 0x329C(r13)
-	  add       r3, r3, r0
-	  lwz       r3, 0x4(r3)
-	  b         .loc_0x2CC
+		if (__DVDLongFileNameFlag == 0) {
+			extention = FALSE;
+			illegal   = FALSE;
 
-	.loc_0xA0:
-	  cmplwi    r0, 0x2F
-	  bne-      .loc_0xB0
-	  addi      r23, r23, 0x2
-	  b         .loc_0x24
+			for (ptr = pathPtr; ((u8)*ptr != '\0') && ((u8)*ptr != '/'); ptr++) {
+				if ((u8)*ptr == '.') {
+					if ((ptr - pathPtr > 8) || (extention == TRUE)) {
+						illegal = TRUE;
+						break;
+					}
+					extention      = TRUE;
+					extentionStart = ptr + 1;
 
-	.loc_0xB0:
-	  cmplwi    r0, 0
-	  bne-      .loc_0xC0
-	  mr        r3, r28
-	  b         .loc_0x2CC
+				} else if ((u8)*ptr == ' ')
+					illegal = TRUE;
+			}
 
-	.loc_0xC0:
-	  lwz       r0, 0x32AC(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x16C
-	  addi      r20, r23, 0
-	  li        r4, 0
-	  li        r3, 0
-	  b         .loc_0x11C
+			if ((extention == TRUE) && (ptr - extentionStart > 3))
+				illegal = TRUE;
 
-	.loc_0xDC:
-	  cmplwi    r0, 0x2E
-	  bne-      .loc_0x10C
-	  sub       r0, r20, r23
-	  cmpwi     r0, 0x8
-	  bgt-      .loc_0xF8
-	  cmpwi     r4, 0x1
-	  bne-      .loc_0x100
+			if (illegal)
+				OSErrorLine(373,
+				            "DVDConvertEntrynumToPath(possibly DVDOpen or DVDChangeDir or DVDOpenDir): "
+				            "specified directory or file (%s) doesn't match standard 8.3 format. This is a "
+				            "temporary restriction and will be removed soon\n",
+				            origPathPtr);
+		} else {
+			for (ptr = pathPtr; ((u8)*ptr != '\0') && ((u8)*ptr != '/'); ptr++)
+				;
+		}
 
-	.loc_0xF8:
-	  li        r3, 0x1
-	  b         .loc_0x130
+		isDir  = ((u8)*ptr == '\0') ? FALSE : TRUE;
+		length = (u32)(ptr - pathPtr);
 
-	.loc_0x100:
-	  addi      r24, r20, 0x1
-	  li        r4, 0x1
-	  b         .loc_0x118
+		ptr = pathPtr;
 
-	.loc_0x10C:
-	  cmplwi    r0, 0x20
-	  bne-      .loc_0x118
-	  li        r3, 0x1
+		for (i = dirLookAt + 1; i < nextDir(dirLookAt); i = entryIsDir(i) ? nextDir(i) : (i + 1)) {
+			if ((entryIsDir(i) == FALSE) && (isDir == TRUE)) {
+				continue;
+			}
 
-	.loc_0x118:
-	  addi      r20, r20, 0x1
+			stringPtr = FstStringStart + stringOff(i);
 
-	.loc_0x11C:
-	  lbz       r0, 0x0(r20)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x130
-	  cmplwi    r0, 0x2F
-	  bne+      .loc_0xDC
+			if (isSame(ptr, stringPtr) == TRUE) {
+				goto next_hier;
+			}
+		}
 
-	.loc_0x130:
-	  cmpwi     r4, 0x1
-	  bne-      .loc_0x148
-	  sub       r0, r20, r24
-	  cmpwi     r0, 0x3
-	  ble-      .loc_0x148
-	  li        r3, 0x1
+		return -1;
 
-	.loc_0x148:
-	  cmpwi     r3, 0
-	  beq-      .loc_0x18C
-	  addi      r5, r31, 0
-	  crclr     6, 0x6
-	  addi      r6, r25, 0
-	  addi      r3, r13, 0x2A10
-	  li        r4, 0x175
-	  bl        -0x780C
-	  b         .loc_0x18C
+	next_hier:
+		if (!isDir) {
+			return (s32)i;
+		}
 
-	.loc_0x16C:
-	  mr        r20, r23
-	  b         .loc_0x178
-
-	.loc_0x174:
-	  addi      r20, r20, 0x1
-
-	.loc_0x178:
-	  lbz       r0, 0x0(r20)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x18C
-	  cmplwi    r0, 0x2F
-	  bne+      .loc_0x174
-
-	.loc_0x18C:
-	  lbz       r0, 0x0(r20)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1A0
-	  li        r30, 0
-	  b         .loc_0x1A4
-
-	.loc_0x1A0:
-	  li        r30, 0x1
-
-	.loc_0x1A4:
-	  mulli     r29, r28, 0xC
-	  sub       r27, r20, r23
-	  addi      r26, r28, 0x1
-	  b         .loc_0x290
-
-	.loc_0x1B4:
-	  mulli     r28, r26, 0xC
-	  lwzx      r4, r3, r28
-	  rlwinm.   r0,r4,0,0,7
-	  bne-      .loc_0x1CC
-	  li        r0, 0
-	  b         .loc_0x1D0
-
-	.loc_0x1CC:
-	  li        r0, 0x1
-
-	.loc_0x1D0:
-	  cmpwi     r0, 0
-	  bne-      .loc_0x1E0
-	  cmpwi     r30, 0x1
-	  beq-      .loc_0x258
-
-	.loc_0x1E0:
-	  lwz       r3, 0x32A0(r13)
-	  rlwinm    r0,r4,0,8,31
-	  addi      r21, r23, 0
-	  add       r20, r3, r0
-	  b         .loc_0x224
-
-	.loc_0x1F4:
-	  lbz       r3, 0x0(r20)
-	  addi      r20, r20, 0x1
-	  bl        0x16C28
-	  lbz       r0, 0x0(r21)
-	  addi      r22, r3, 0
-	  addi      r21, r21, 0x1
-	  mr        r3, r0
-	  bl        0x16C14
-	  cmpw      r3, r22
-	  beq-      .loc_0x224
-	  li        r0, 0
-	  b         .loc_0x250
-
-	.loc_0x224:
-	  lbz       r0, 0x0(r20)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x1F4
-	  lbz       r0, 0x0(r21)
-	  cmplwi    r0, 0x2F
-	  beq-      .loc_0x244
-	  cmplwi    r0, 0
-	  bne-      .loc_0x24C
-
-	.loc_0x244:
-	  li        r0, 0x1
-	  b         .loc_0x250
-
-	.loc_0x24C:
-	  li        r0, 0
-
-	.loc_0x250:
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x2AC
-
-	.loc_0x258:
-	  lwz       r0, 0x329C(r13)
-	  add       r3, r0, r28
-	  lwz       r0, 0x0(r3)
-	  rlwinm.   r0,r0,0,0,7
-	  bne-      .loc_0x274
-	  li        r0, 0
-	  b         .loc_0x278
-
-	.loc_0x274:
-	  li        r0, 0x1
-
-	.loc_0x278:
-	  cmpwi     r0, 0
-	  beq-      .loc_0x288
-	  lwz       r0, 0x8(r3)
-	  b         .loc_0x28C
-
-	.loc_0x288:
-	  addi      r0, r26, 0x1
-
-	.loc_0x28C:
-	  mr        r26, r0
-
-	.loc_0x290:
-	  lwz       r3, 0x329C(r13)
-	  addi      r0, r3, 0x8
-	  lwzx      r0, r29, r0
-	  cmplw     r26, r0
-	  blt+      .loc_0x1B4
-	  li        r3, -0x1
-	  b         .loc_0x2CC
-
-	.loc_0x2AC:
-	  cmpwi     r30, 0
-	  bne-      .loc_0x2BC
-	  mr        r3, r26
-	  b         .loc_0x2CC
-
-	.loc_0x2BC:
-	  add       r23, r27, r23
-	  addi      r28, r26, 0
-	  addi      r23, r23, 0x1
-	  b         .loc_0x24
-
-	.loc_0x2CC:
-	  lmw       r20, 0x18(r1)
-	  lwz       r0, 0x4C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+		dirLookAt = i;
+		pathPtr += length + 1;
+	}
 }
 
 /*
@@ -315,48 +183,18 @@ void DVDConvertPathToEntrynum(void)
  * Address:	801FF298
  * Size:	000074
  */
-void DVDFastOpen(void)
+BOOL DVDFastOpen(s32 entrynum, DVDFileInfo* fileInfo)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0
-	  blt-      .loc_0x3C
-	  lwz       r0, 0x32A4(r13)
-	  cmplw     r3, r0
-	  bge-      .loc_0x3C
-	  mulli     r6, r3, 0xC
-	  lwz       r3, 0x329C(r13)
-	  lwzx      r0, r3, r6
-	  rlwinm.   r0,r0,0,0,7
-	  bne-      .loc_0x30
-	  li        r0, 0
-	  b         .loc_0x34
+	if ((entrynum < 0) || (entrynum >= MaxEntryNum) || entryIsDir(entrynum)) {
+		return FALSE;
+	}
 
-	.loc_0x30:
-	  li        r0, 0x1
+	fileInfo->startAddr    = filePosition(entrynum);
+	fileInfo->length       = fileLength(entrynum);
+	fileInfo->callback     = (DVDCallback)NULL;
+	fileInfo->cBlock.state = DVD_STATE_END;
 
-	.loc_0x34:
-	  cmpwi     r0, 0
-	  beq-      .loc_0x44
-
-	.loc_0x3C:
-	  li        r3, 0
-	  blr
-
-	.loc_0x44:
-	  add       r3, r3, r6
-	  lwz       r5, 0x4(r3)
-	  li        r0, 0
-	  li        r3, 0x1
-	  stw       r5, 0x30(r4)
-	  lwz       r5, 0x329C(r13)
-	  add       r5, r5, r6
-	  lwz       r5, 0x8(r5)
-	  stw       r5, 0x34(r4)
-	  stw       r0, 0x38(r4)
-	  stw       r0, 0xC(r4)
-	  blr
-	*/
+	return TRUE;
 }
 
 /*
@@ -364,71 +202,29 @@ void DVDFastOpen(void)
  * Address:	801FF30C
  * Size:	0000C8
  */
-void DVDOpen(void)
+BOOL DVDOpen(char* fileName, DVDFileInfo* fileInfo)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x98(r1)
-	  stw       r31, 0x94(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x90(r1)
-	  addi      r30, r3, 0
-	  bl        -0x370
-	  cmpwi     r3, 0
-	  bge-      .loc_0x54
-	  addi      r3, r1, 0x10
-	  li        r4, 0x80
-	  bl        0x21C
-	  lis       r3, 0x802F
-	  crclr     6, 0x6
-	  subi      r3, r3, 0x7AD8
-	  addi      r4, r30, 0
-	  addi      r5, r1, 0x10
-	  bl        -0x7AC4
-	  li        r3, 0
-	  b         .loc_0xB0
+	s32 entry;
+	char currentDir[128];
 
-	.loc_0x54:
-	  mulli     r5, r3, 0xC
-	  lwz       r3, 0x329C(r13)
-	  lwzx      r0, r3, r5
-	  rlwinm.   r0,r0,0,0,7
-	  bne-      .loc_0x70
-	  li        r0, 0
-	  b         .loc_0x74
+	entry = DVDConvertPathToEntrynum(fileName);
 
-	.loc_0x70:
-	  li        r0, 0x1
+	if (0 > entry) {
+		DVDGetCurrentDir(currentDir, 128);
+		OSReport("Warning: DVDOpen(): file '%s' was not found under %s.\n", fileName, currentDir);
+		return FALSE;
+	}
 
-	.loc_0x74:
-	  cmpwi     r0, 0
-	  beq-      .loc_0x84
-	  li        r3, 0
-	  b         .loc_0xB0
+	if (entryIsDir(entry)) {
+		return FALSE;
+	}
 
-	.loc_0x84:
-	  add       r3, r3, r5
-	  lwz       r4, 0x4(r3)
-	  li        r0, 0
-	  li        r3, 0x1
-	  stw       r4, 0x30(r31)
-	  lwz       r4, 0x329C(r13)
-	  add       r4, r4, r5
-	  lwz       r4, 0x8(r4)
-	  stw       r4, 0x34(r31)
-	  stw       r0, 0x38(r31)
-	  stw       r0, 0xC(r31)
+	fileInfo->startAddr    = filePosition(entry);
+	fileInfo->length       = fileLength(entry);
+	fileInfo->callback     = (DVDCallback)NULL;
+	fileInfo->cBlock.state = DVD_STATE_END;
 
-	.loc_0xB0:
-	  lwz       r0, 0x9C(r1)
-	  lwz       r31, 0x94(r1)
-	  lwz       r30, 0x90(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x98
-	  blr
-	*/
+	return TRUE;
 }
 
 /*
@@ -436,20 +232,10 @@ void DVDOpen(void)
  * Address:	801FF3D4
  * Size:	000024
  */
-void DVDClose(void)
+BOOL DVDClose(DVDFileInfo* fileInfo)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x284C
-	  lwz       r0, 0xC(r1)
-	  li        r3, 0x1
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DVDCancel(&(fileInfo->cBlock));
+	return TRUE;
 }
 
 /*
@@ -457,9 +243,16 @@ void DVDClose(void)
  * Address:	........
  * Size:	000038
  */
-void myStrncpy(void)
+static u32 myStrncpy(char* dest, char* src, u32 maxlen)
 {
-	// UNUSED FUNCTION
+	u32 i = maxlen;
+
+	while ((i > 0) && ((u8)*src != 0)) {
+		*dest++ = *src++;
+		i--;
+	}
+
+	return (maxlen - i);
 }
 
 /*
@@ -467,123 +260,28 @@ void myStrncpy(void)
  * Address:	801FF3F8
  * Size:	000160
  */
-void entryToPath(void)
+static u32 entryToPath(u32 entry, char* path, u32 maxlen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x20(r1)
-	  bne-      .loc_0x34
-	  li        r3, 0
-	  b         .loc_0x140
+	char* name;
+	u32 loc;
 
-	.loc_0x34:
-	  lwz       r4, 0x329C(r13)
-	  mulli     r3, r3, 0xC
-	  lwz       r6, 0x32A0(r13)
-	  addi      r5, r4, 0x4
-	  lwzx      r0, r4, r3
-	  lwzx      r3, r5, r3
-	  rlwinm    r0,r0,0,8,31
-	  cmplwi    r3, 0
-	  add       r31, r6, r0
-	  bne-      .loc_0x64
-	  li        r3, 0
-	  b         .loc_0xE0
+	if (entry == 0) {
+		return 0;
+	}
 
-	.loc_0x64:
-	  mulli     r3, r3, 0xC
-	  lwzx      r0, r4, r3
-	  mr        r4, r29
-	  lwzx      r3, r5, r3
-	  addi      r5, r30, 0
-	  rlwinm    r0,r0,0,8,31
-	  add       r28, r6, r0
-	  bl        .loc_0x0
-	  cmplw     r3, r30
-	  bne-      .loc_0x90
-	  b         .loc_0xE0
+	name = FstStringStart + stringOff(entry);
 
-	.loc_0x90:
-	  addi      r0, r3, 0
-	  addi      r3, r3, 0x1
-	  li        r4, 0x2F
-	  sub       r6, r30, r3
-	  stbx      r4, r29, r0
-	  addi      r4, r6, 0
-	  add       r5, r29, r3
-	  b         .loc_0xC4
+	loc = entryToPath(parentDir(entry), path, maxlen);
 
-	.loc_0xB0:
-	  lbz       r0, 0x0(r28)
-	  addi      r28, r28, 0x1
-	  subi      r4, r4, 0x1
-	  stb       r0, 0x0(r5)
-	  addi      r5, r5, 0x1
+	if (loc == maxlen) {
+		return loc;
+	}
 
-	.loc_0xC4:
-	  cmplwi    r4, 0
-	  beq-      .loc_0xD8
-	  lbz       r0, 0x0(r28)
-	  cmplwi    r0, 0
-	  bne+      .loc_0xB0
+	*(path + loc++) = '/';
 
-	.loc_0xD8:
-	  sub       r0, r6, r4
-	  add       r3, r3, r0
+	loc += myStrncpy(path + loc, name, maxlen - loc);
 
-	.loc_0xE0:
-	  cmplw     r3, r30
-	  bne-      .loc_0xEC
-	  b         .loc_0x140
-
-	.loc_0xEC:
-	  addi      r0, r3, 0
-	  addi      r3, r3, 0x1
-	  li        r4, 0x2F
-	  sub       r7, r30, r3
-	  stbx      r4, r29, r0
-	  addi      r6, r31, 0
-	  addi      r4, r7, 0
-	  add       r5, r29, r3
-	  b         .loc_0x124
-
-	.loc_0x110:
-	  lbz       r0, 0x0(r6)
-	  addi      r6, r6, 0x1
-	  subi      r4, r4, 0x1
-	  stb       r0, 0x0(r5)
-	  addi      r5, r5, 0x1
-
-	.loc_0x124:
-	  cmplwi    r4, 0
-	  beq-      .loc_0x138
-	  lbz       r0, 0x0(r6)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x110
-
-	.loc_0x138:
-	  sub       r0, r7, r4
-	  add       r3, r3, r0
-
-	.loc_0x140:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  mtlr      r0
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  blr
-	*/
+	return loc;
 }
 
 /*
@@ -591,9 +289,28 @@ void entryToPath(void)
  * Address:	........
  * Size:	000154
  */
-void DVDConvertEntrynumToPath(void)
+static BOOL DVDConvertEntrynumToPath(s32 entrynum, char* path, u32 maxlen)
 {
-	// UNUSED FUNCTION
+	u32 loc;
+
+	loc = entryToPath((u32)entrynum, path, maxlen);
+
+	if (loc == maxlen) {
+		path[maxlen - 1] = '\0';
+		return FALSE;
+	}
+
+	if (entryIsDir(entrynum)) {
+		if (loc == maxlen - 1) {
+			path[loc] = '\0';
+			return FALSE;
+		}
+
+		path[loc++] = '/';
+	}
+
+	path[loc] = '\0';
+	return TRUE;
 }
 
 /*
@@ -601,82 +318,24 @@ void DVDConvertEntrynumToPath(void)
  * Address:	801FF558
  * Size:	0000C4
  */
-void DVDGetCurrentDir(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r4, 0
-	  addi      r5, r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  addi      r4, r29, 0
-	  lwz       r31, 0x32A8(r13)
-	  addi      r3, r31, 0
-	  bl        -0x190
-	  cmplw     r3, r30
-	  bne-      .loc_0x4C
-	  li        r0, 0
-	  add       r3, r29, r30
-	  stb       r0, -0x1(r3)
-	  b         .loc_0xA4
-
-	.loc_0x4C:
-	  mulli     r0, r31, 0xC
-	  lwz       r4, 0x329C(r13)
-	  lwzx      r0, r4, r0
-	  rlwinm.   r0,r0,0,0,7
-	  bne-      .loc_0x68
-	  li        r0, 0
-	  b         .loc_0x6C
-
-	.loc_0x68:
-	  li        r0, 0x1
-
-	.loc_0x6C:
-	  cmpwi     r0, 0
-	  beq-      .loc_0x98
-	  subi      r0, r30, 0x1
-	  cmplw     r3, r0
-	  bne-      .loc_0x8C
-	  li        r0, 0
-	  stbx      r0, r29, r3
-	  b         .loc_0xA4
-
-	.loc_0x8C:
-	  li        r0, 0x2F
-	  stbx      r0, r29, r3
-	  addi      r3, r3, 0x1
-
-	.loc_0x98:
-	  li        r0, 0
-	  stbx      r0, r29, r3
-	  li        r0, 0x1
-
-	.loc_0xA4:
-	  mr        r3, r0
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
-}
+BOOL DVDGetCurrentDir(char* path, u32 maxlen) { return DVDConvertEntrynumToPath((s32)currentDirectory, path, maxlen); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000060
  */
-void DVDChangeDir(void)
+BOOL DVDChangeDir(char* dirName)
 {
-	// UNUSED FUNCTION
+	s32 entry;
+	entry = DVDConvertPathToEntrynum(dirName);
+	if ((entry < 0) || (entryIsDir(entry) == FALSE)) {
+		return FALSE;
+	}
+
+	currentDirectory = (u32)entry;
+
+	return TRUE;
 }
 
 /*
@@ -684,67 +343,20 @@ void DVDChangeDir(void)
  * Address:	801FF61C
  * Size:	0000C0
  */
-void DVDReadAsyncPrio(void)
+BOOL DVDReadAsyncPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, DVDCallback callback, s32 prio)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r26, 0x20(r1)
-	  mr.       r29, r6
-	  addi      r26, r3, 0
-	  addi      r27, r4, 0
-	  addi      r28, r5, 0
-	  addi      r30, r7, 0
-	  addi      r31, r8, 0
-	  blt-      .loc_0x38
-	  lwz       r0, 0x34(r26)
-	  cmplw     r29, r0
-	  blt-      .loc_0x50
+	if (!((0 <= offset) && (offset < fileInfo->length))) {
+		OSErrorLine(735, "DVDReadAsync(): specified area is out of the file  ");
+	}
 
-	.loc_0x38:
-	  lis       r3, 0x802F
-	  crclr     6, 0x6
-	  subi      r5, r3, 0x7AA0
-	  addi      r3, r13, 0x2A10
-	  li        r4, 0x2DF
-	  bl        -0x7D58
+	if (!((0 <= offset + length) && (offset + length < fileInfo->length + DVD_MIN_TRANSFER_SIZE))) {
+		OSErrorLine(741, "DVDReadAsync(): specified area is out of the file  ");
+	}
 
-	.loc_0x50:
-	  add.      r4, r29, r28
-	  blt-      .loc_0x68
-	  lwz       r3, 0x34(r26)
-	  addi      r0, r3, 0x20
-	  cmplw     r4, r0
-	  blt-      .loc_0x80
+	fileInfo->callback = callback;
+	DVDReadAbsAsyncPrio(&(fileInfo->cBlock), addr, length, (s32)(fileInfo->startAddr + offset), cbForReadAsync, prio);
 
-	.loc_0x68:
-	  lis       r3, 0x802F
-	  crclr     6, 0x6
-	  subi      r5, r3, 0x7AA0
-	  addi      r3, r13, 0x2A10
-	  li        r4, 0x2E5
-	  bl        -0x7D88
-
-	.loc_0x80:
-	  stw       r30, 0x38(r26)
-	  lis       r3, 0x8020
-	  subi      r7, r3, 0x924
-	  lwz       r0, 0x30(r26)
-	  addi      r3, r26, 0
-	  addi      r4, r27, 0
-	  addi      r5, r28, 0
-	  addi      r8, r31, 0
-	  add       r6, r0, r29
-	  bl        0x1E00
-	  lmw       r26, 0x20(r1)
-	  li        r3, 0x1
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	return TRUE;
 }
 
 /*
@@ -752,25 +364,14 @@ void DVDReadAsyncPrio(void)
  * Address:	801FF6DC
  * Size:	000030
  */
-void cbForReadAsync(void)
+static void cbForReadAsync(s32 result, DVDCommandBlock* block)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x38(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x20
-	  mtlr      r12
-	  blrl
+	DVDFileInfo* fileInfo;
 
-	.loc_0x20:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	fileInfo = (DVDFileInfo*)((char*)block - offsetof(DVDFileInfo, cBlock));
+	if (fileInfo->callback) {
+		(fileInfo->callback)(result, fileInfo);
+	}
 }
 
 /*
@@ -778,103 +379,53 @@ void cbForReadAsync(void)
  * Address:	801FF70C
  * Size:	000118
  */
-void DVDReadPrio(void)
+s32 DVDReadPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, s32 prio)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r27, 0x24(r1)
-	  mr.       r29, r6
-	  addi      r31, r3, 0
-	  addi      r27, r4, 0
-	  addi      r28, r5, 0
-	  addi      r30, r7, 0
-	  blt-      .loc_0x34
-	  lwz       r0, 0x34(r31)
-	  cmplw     r29, r0
-	  blt-      .loc_0x4C
+	BOOL result;
+	DVDCommandBlock* block;
+	s32 state;
+	BOOL enabled;
+	s32 retVal;
 
-	.loc_0x34:
-	  lis       r3, 0x802F
-	  crclr     6, 0x6
-	  subi      r5, r3, 0x7A6C
-	  addi      r3, r13, 0x2A10
-	  li        r4, 0x325
-	  bl        -0x7E44
+	if (!((0 <= offset) && (offset < fileInfo->length))) {
+		OSErrorLine(805, "DVDRead(): specified area is out of the file  ");
+	}
 
-	.loc_0x4C:
-	  add.      r4, r29, r28
-	  blt-      .loc_0x64
-	  lwz       r3, 0x34(r31)
-	  addi      r0, r3, 0x20
-	  cmplw     r4, r0
-	  blt-      .loc_0x7C
+	if (!((0 <= offset + length) && (offset + length < fileInfo->length + DVD_MIN_TRANSFER_SIZE))) {
+		OSErrorLine(811, "DVDRead(): specified area is out of the file  ");
+	}
 
-	.loc_0x64:
-	  lis       r3, 0x802F
-	  crclr     6, 0x6
-	  subi      r5, r3, 0x7A6C
-	  addi      r3, r13, 0x2A10
-	  li        r4, 0x32B
-	  bl        -0x7E74
+	block = &(fileInfo->cBlock);
 
-	.loc_0x7C:
-	  lwz       r0, 0x30(r31)
-	  lis       r4, 0x8020
-	  subi      r7, r4, 0x7DC
-	  addi      r3, r31, 0
-	  addi      r4, r27, 0
-	  addi      r5, r28, 0
-	  addi      r8, r30, 0
-	  add       r6, r0, r29
-	  bl        0x1D18
-	  cmpwi     r3, 0
-	  bne-      .loc_0xB0
-	  li        r3, -0x1
-	  b         .loc_0x104
+	result = DVDReadAbsAsyncPrio(block, addr, length, (s32)(fileInfo->startAddr + offset), cbForReadSync, prio);
 
-	.loc_0xB0:
-	  bl        -0x6840
-	  mr        r30, r3
+	if (result == FALSE) {
+		return -1;
+	}
 
-	.loc_0xB8:
-	  lwz       r0, 0xC(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xCC
-	  lwz       r31, 0x20(r31)
-	  b         .loc_0xF8
+	enabled = OSDisableInterrupts();
 
-	.loc_0xCC:
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0xDC
-	  li        r31, -0x1
-	  b         .loc_0xF8
+	while (TRUE) {
+		state = ((volatile DVDCommandBlock*)block)->state;
 
-	.loc_0xDC:
-	  cmpwi     r0, 0xA
-	  bne-      .loc_0xEC
-	  li        r31, -0x3
-	  b         .loc_0xF8
+		if (state == DVD_STATE_END) {
+			retVal = (s32)block->transferredSize;
+			break;
+		}
+		if (state == DVD_STATE_FATAL_ERROR) {
+			retVal = DVD_RESULT_FATAL_ERROR;
+			break;
+		}
+		if (state == DVD_STATE_CANCELED) {
+			retVal = DVD_RESULT_CANCELED;
+			break;
+		}
 
-	.loc_0xEC:
-	  addi      r3, r13, 0x32B0
-	  bl        -0x2E40
-	  b         .loc_0xB8
+		OSSleepThread(&__DVDThreadQueue);
+	}
 
-	.loc_0xF8:
-	  mr        r3, r30
-	  bl        -0x6864
-	  mr        r3, r31
-
-	.loc_0x104:
-	  lmw       r27, 0x24(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	OSRestoreInterrupts(enabled);
+	return retVal;
 }
 
 /*
@@ -882,30 +433,22 @@ void DVDReadPrio(void)
  * Address:	801FF824
  * Size:	000024
  */
-void cbForReadSync(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r13, 0x32B0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x2D8C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void cbForReadSync(s32 result, DVDCommandBlock* block) { OSWakeupThread(&__DVDThreadQueue); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000098
  */
-void DVDSeekAsyncPrio(void)
+BOOL DVDSeekAsyncPrio(DVDFileInfo* fileInfo, s32 offset, DVDCallback callback, s32 prio)
 {
-	// UNUSED FUNCTION
+	if (!((0 <= offset) && (offset < fileInfo->length))) {
+		OSErrorLine(881, "DVDSeek(): offset is out of the file  ");
+	}
+
+	fileInfo->callback = callback;
+	DVDSeekAbsAsyncPrio(&fileInfo->cBlock, (u32)(char*)fileInfo->startAddr + offset, cbForSeekAsync, prio);
+	return TRUE;
 }
 
 /*
@@ -913,7 +456,7 @@ void DVDSeekAsyncPrio(void)
  * Address:	........
  * Size:	000030
  */
-void cbForSeekAsync(void)
+void cbForSeekAsync(s32 result, DVDCommandBlock* block)
 {
 	// UNUSED FUNCTION
 }
@@ -923,7 +466,7 @@ void cbForSeekAsync(void)
  * Address:	........
  * Size:	0000AC
  */
-void DVDSeekPrio(void)
+s32 DVDSeekPrio(DVDFileInfo* fileInfo, s32 offset, s32 prio)
 {
 	// UNUSED FUNCTION
 }
@@ -933,7 +476,7 @@ void DVDSeekPrio(void)
  * Address:	........
  * Size:	000024
  */
-void cbForSeekSync(void)
+void cbForSeekSync(s32 result, DVDCommandBlock* block)
 {
 	// UNUSED FUNCTION
 }
@@ -943,7 +486,7 @@ void cbForSeekSync(void)
  * Address:	........
  * Size:	000020
  */
-void DVDGetFileInfoStatus(void)
+s32 DVDGetFileInfoStatus(DVDFileInfo* fileInfo)
 {
 	// UNUSED FUNCTION
 }
@@ -953,7 +496,7 @@ void DVDGetFileInfoStatus(void)
  * Address:	........
  * Size:	000084
  */
-void DVDOpenDir(void)
+BOOL DVDOpenDir(char* dirName, DVDDir* dir)
 {
 	// UNUSED FUNCTION
 }
@@ -963,7 +506,7 @@ void DVDOpenDir(void)
  * Address:	........
  * Size:	0000A4
  */
-void DVDReadDir(void)
+BOOL DVDReadDir(DVDDir* dir, DVDDirEntry* dirent)
 {
 	// UNUSED FUNCTION
 }
@@ -973,7 +516,7 @@ void DVDReadDir(void)
  * Address:	........
  * Size:	000008
  */
-void DVDCloseDir(void)
+BOOL DVDCloseDir(DVDDir* dir)
 {
 	// UNUSED FUNCTION
 }
@@ -983,90 +526,48 @@ void DVDCloseDir(void)
  * Address:	........
  * Size:	00000C
  */
-void DVDGetFSTLocation(void)
+void* DVDGetFSTLocation()
 {
 	// UNUSED FUNCTION
 }
+
+#define RoundUp32KB(x)   (((u32)(x) + 32 * 1024 - 1) & ~(32 * 1024 - 1))
+#define Is32KBAligned(x) (((u32)(x) & (32 * 1024 - 1)) == 0)
 
 /*
  * --INFO--
  * Address:	801FF848
  * Size:	0000EC
  */
-void DVDPrepareStreamAsync(void)
+BOOL DVDPrepareStreamAsync(DVDFileInfo* fileInfo, u32 length, u32 offset, DVDCallback callback)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r27, 0x24(r1)
-	  addi      r29, r5, 0
-	  mr        r27, r3
-	  addi      r28, r4, 0
-	  addi      r30, r6, 0
-	  lwz       r7, 0x30(r3)
-	  lis       r3, 0x802F
-	  subi      r31, r3, 0x7BA0
-	  add       r0, r7, r29
-	  rlwinm.   r0,r0,0,17,31
-	  beq-      .loc_0x54
-	  addi      r6, r7, 0
-	  crclr     6, 0x6
-	  addi      r7, r29, 0
-	  addi      r5, r31, 0x18C
-	  addi      r3, r13, 0x2A10
-	  li        r4, 0x47E
-	  bl        -0x7F88
+	u32 start;
 
-	.loc_0x54:
-	  cmplwi    r28, 0
-	  bne-      .loc_0x64
-	  lwz       r0, 0x34(r27)
-	  sub       r28, r0, r29
+	start = fileInfo->startAddr + offset;
 
-	.loc_0x64:
-	  rlwinm.   r0,r28,0,17,31
-	  beq-      .loc_0x84
-	  addi      r6, r28, 0
-	  crclr     6, 0x6
-	  addi      r5, r31, 0x1F4
-	  addi      r3, r13, 0x2A10
-	  li        r4, 0x488
-	  bl        -0x7FB8
+	if (!Is32KBAligned(start)) {
+		OSErrorLine(1150,
+		            "DVDPrepareStreamAsync(): Specified start address (filestart(0x%x) + offset(0x%x)) is "
+		            "not 32KB aligned",
+		            fileInfo->startAddr, offset);
+	}
 
-	.loc_0x84:
-	  lwz       r3, 0x34(r27)
-	  cmplw     r29, r3
-	  bge-      .loc_0x9C
-	  add       r0, r29, r28
-	  cmplw     r0, r3
-	  ble-      .loc_0xB8
+	if (length == 0)
+		length = fileInfo->length - offset;
 
-	.loc_0x9C:
-	  addi      r6, r29, 0
-	  crclr     6, 0x6
-	  addi      r7, r28, 0
-	  addi      r5, r31, 0x24C
-	  addi      r3, r13, 0x2A10
-	  li        r4, 0x490
-	  bl        -0x7FEC
+	if (!Is32KBAligned(length)) {
+		OSErrorLine(1160, "DVDPrepareStreamAsync(): Specified length (0x%x) is not a multiple of 32768(32*1024)", length);
+	}
 
-	.loc_0xB8:
-	  stw       r30, 0x38(r27)
-	  lis       r3, 0x8020
-	  subi      r6, r3, 0x6CC
-	  lwz       r0, 0x30(r27)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0
-	  add       r5, r0, r29
-	  bl        0x1E24
-	  lmw       r27, 0x24(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	if (!((offset < fileInfo->length) && (offset + length <= fileInfo->length))) {
+		OSErrorLine(1168,
+		            "DVDPrepareStreamAsync(): The area specified (offset(0x%x), length(0x%x)) is out of "
+		            "the file",
+		            offset, length);
+	}
+
+	fileInfo->callback = callback;
+	return DVDPrepareStreamAbsAsync(&(fileInfo->cBlock), length, fileInfo->startAddr + offset, cbForPrepareStreamAsync);
 }
 
 /*
@@ -1074,25 +575,14 @@ void DVDPrepareStreamAsync(void)
  * Address:	801FF934
  * Size:	000030
  */
-void cbForPrepareStreamAsync(void)
+void cbForPrepareStreamAsync(s32 result, DVDCommandBlock* block)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x38(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x20
-	  mtlr      r12
-	  blrl
+	struct DVDFileInfo* fileInfo;
 
-	.loc_0x20:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	fileInfo = (struct DVDFileInfo*)&block->next;
+	if (fileInfo->callback) {
+		(fileInfo->callback)(result, fileInfo);
+	}
 }
 
 /*
@@ -1100,8 +590,65 @@ void cbForPrepareStreamAsync(void)
  * Address:	........
  * Size:	000144
  */
-void DVDPrepareStream(void)
+s32 DVDPrepareStream(DVDFileInfo* fileInfo, u32 length, u32 offset)
 {
+	BOOL result;
+	DVDCommandBlock* block;
+	s32 state;
+	BOOL enabled;
+	s32 retVal;
+	u32 start;
+
+	start = fileInfo->startAddr + offset;
+
+	if (!Is32KBAligned(start)) {
+		OSErrorLine(0x4BF,
+		            "DVDPrepareStream(): Specified start address (filestart(0x%x) + offset(0x%x)) is not "
+		            "32KB aligned",
+		            fileInfo->startAddr, offset);
+	}
+
+	if (length == 0)
+		length = fileInfo->length - offset;
+
+	if (!Is32KBAligned(length)) {
+		OSErrorLine(0x4C9, "DVDPrepareStream(): Specified length (0x%x) is not a multiple of 32768(32*1024)", length);
+	}
+
+	if (!((offset < fileInfo->length) && (offset + length <= fileInfo->length))) {
+		OSErrorLine(0x4D1, "DVDPrepareStream(): The area specified (offset(0x%x), length(0x%x)) is out of the file", offset, length);
+	}
+
+	block  = &(fileInfo->cBlock);
+	result = DVDPrepareStreamAbsAsync(block, length, start, cbForPrepareStreamSync);
+
+	if (result == FALSE) {
+		return -1;
+	}
+
+	enabled = OSDisableInterrupts();
+
+	while (1) {
+		state = ((volatile DVDCommandBlock*)block)->state;
+
+		if (state == DVD_STATE_END) {
+			retVal = 0;
+			break;
+		}
+		if (state == DVD_STATE_FATAL_ERROR) {
+			retVal = DVD_RESULT_FATAL_ERROR;
+			break;
+		}
+		if (state == DVD_STATE_CANCELED) {
+			retVal = DVD_RESULT_CANCELED;
+			break;
+		}
+
+		OSSleepThread(&__DVDThreadQueue);
+	}
+
+	OSRestoreInterrupts(enabled);
+	return retVal;
 	// UNUSED FUNCTION
 }
 
@@ -1110,7 +657,7 @@ void DVDPrepareStream(void)
  * Address:	........
  * Size:	000024
  */
-void cbForPrepareStreamSync(void)
+void cbForPrepareStreamSync(s32 result, DVDCommandBlock* block)
 {
 	// UNUSED FUNCTION
 }
@@ -1120,7 +667,7 @@ void cbForPrepareStreamSync(void)
  * Address:	........
  * Size:	00006C
  */
-void DVDGetTransferredSize(void)
+s32 DVDGetTransferredSize(DVDFileInfo* fileinfo)
 {
 	// UNUSED FUNCTION
 }
