@@ -1,113 +1,92 @@
-#include "types.h"
+#include "Dolphin/pad.h"
+#include "math.h"
+
+typedef struct PADClampRegion {
+	u8 minTrigger;
+	u8 maxTrigger;
+	s8 minStick;
+	s8 maxStick;
+	s8 xyStick;
+	s8 minSubstick;
+	s8 maxSubstick;
+	s8 xySubstick;
+} PADClampRegion;
+
+static PADClampRegion ClampRegion = {
+	// Triggers
+	30,
+	180,
+
+	// Left stick
+	15,
+	72,
+	40,
+
+	// Right stick
+	15,
+	59,
+	31,
+};
 
 /*
  * --INFO--
  * Address:	80203BCC
  * Size:	000130
  */
-void ClampStick(void)
+static void ClampStick(s8* px, s8* py, s8 max, s8 xy, s8 min)
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x0(r3)
-	  lbz       r12, 0x0(r4)
-	  extsb.    r0, r0
-	  extsb     r12, r12
-	  mr        r11, r0
-	  blt-      .loc_0x20
-	  li        r0, 0x1
-	  b         .loc_0x28
+	int x = *px;
+	int y = *py;
+	int signX;
+	int signY;
+	int d;
 
-	.loc_0x20:
-	  li        r0, -0x1
-	  neg       r11, r11
+	if (0 <= x) {
+		signX = 1;
+	} else {
+		signX = -1;
+		x     = -x;
+	}
 
-	.loc_0x28:
-	  cmpwi     r12, 0
-	  blt-      .loc_0x38
-	  li        r8, 0x1
-	  b         .loc_0x40
+	if (0 <= y) {
+		signY = 1;
+	} else {
+		signY = -1;
+		y     = -y;
+	}
 
-	.loc_0x38:
-	  li        r8, -0x1
-	  neg       r12, r12
+	if (x <= min) {
+		x = 0;
+	} else {
+		x -= min;
+	}
+	if (y <= min) {
+		y = 0;
+	} else {
+		y -= min;
+	}
 
-	.loc_0x40:
-	  extsb     r7, r7
-	  cmpw      r11, r7
-	  bgt-      .loc_0x54
-	  li        r11, 0
-	  b         .loc_0x58
+	if (x == 0 && y == 0) {
+		*px = *py = 0;
+		return;
+	}
 
-	.loc_0x54:
-	  sub       r11, r11, r7
+	if (xy * y <= xy * x) {
+		d = xy * x + (max - xy) * y;
+		if (xy * max < d) {
+			x = (s8)(xy * max * x / d);
+			y = (s8)(xy * max * y / d);
+		}
+	} else {
+		d = xy * y + (max - xy) * x;
+		if (xy * max < d) {
+			x = (s8)(xy * max * x / d);
+			y = (s8)(xy * max * y / d);
+		}
+	}
 
-	.loc_0x58:
-	  cmpw      r12, r7
-	  bgt-      .loc_0x68
-	  li        r12, 0
-	  b         .loc_0x6C
-
-	.loc_0x68:
-	  sub       r12, r12, r7
-
-	.loc_0x6C:
-	  cmpwi     r11, 0
-	  bne-      .loc_0x8C
-	  cmpwi     r12, 0
-	  bne-      .loc_0x8C
-	  li        r0, 0
-	  stb       r0, 0x0(r4)
-	  stb       r0, 0x0(r3)
-	  blr
-
-	.loc_0x8C:
-	  extsb     r6, r6
-	  mullw     r9, r6, r12
-	  mullw     r7, r6, r11
-	  cmpw      r9, r7
-	  bgt-      .loc_0xE0
-	  extsb     r9, r5
-	  sub       r5, r9, r6
-	  mullw     r5, r12, r5
-	  mullw     r9, r6, r9
-	  add       r7, r7, r5
-	  cmpw      r9, r7
-	  bge-      .loc_0x11C
-	  mullw     r6, r11, r9
-	  mullw     r5, r12, r9
-	  divw      r6, r6, r7
-	  divw      r5, r5, r7
-	  extsb     r6, r6
-	  extsb     r5, r5
-	  addi      r11, r6, 0
-	  addi      r12, r5, 0
-	  b         .loc_0x11C
-
-	.loc_0xE0:
-	  extsb     r7, r5
-	  sub       r5, r7, r6
-	  mullw     r5, r11, r5
-	  mullw     r10, r6, r7
-	  add       r7, r9, r5
-	  cmpw      r10, r7
-	  bge-      .loc_0x11C
-	  mullw     r6, r11, r10
-	  mullw     r5, r12, r10
-	  divw      r6, r6, r7
-	  divw      r5, r5, r7
-	  extsb     r6, r6
-	  extsb     r5, r5
-	  addi      r11, r6, 0
-	  addi      r12, r5, 0
-
-	.loc_0x11C:
-	  mullw     r5, r0, r11
-	  mullw     r0, r8, r12
-	  stb       r5, 0x0(r3)
-	  stb       r0, 0x0(r4)
-	  blr
-	*/
+	*px = (s8)(signX * x);
+	*py = (s8)(signY * y);
 }
 
 /*
@@ -115,8 +94,16 @@ void ClampStick(void)
  * Address:	........
  * Size:	000044
  */
-void ClampTrigger(void)
+static void ClampTrigger(u8* trigger, u8 min, u8 max)
 {
+	if (*trigger <= min) {
+		*trigger = 0;
+		return;
+	}
+	if (max < *trigger) {
+		*trigger = max;
+	}
+	*trigger -= min;
 	// UNUSED FUNCTION
 }
 
@@ -125,8 +112,19 @@ void ClampTrigger(void)
  * Address:	80203CFC
  * Size:	000108
  */
-void PADClamp(void)
+void PADClamp(PADStatus* status)
 {
+	int i;
+	for (i = 0; i < PAD_CHANMAX; i++, status++) {
+		if (status->err != PAD_ERR_NONE) {
+			continue;
+		}
+
+		ClampStick(&status->stickX, &status->stickY, ClampRegion.maxStick, ClampRegion.xyStick, ClampRegion.minStick);
+		ClampStick(&status->substickX, &status->substickY, ClampRegion.maxSubstick, ClampRegion.xySubstick, ClampRegion.minSubstick);
+		ClampTrigger(&status->triggerLeft, ClampRegion.minTrigger, ClampRegion.maxTrigger);
+		ClampTrigger(&status->triggerRight, ClampRegion.minTrigger, ClampRegion.maxTrigger);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

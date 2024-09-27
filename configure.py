@@ -842,7 +842,7 @@ config.libs = [
     DolphinLib(
         "vi",
         [
-            Object(NonMatching, "vi/vi.c"),
+            Object(Matching, "vi/vi.c"),
         ]
     ),
     DolphinLib(
