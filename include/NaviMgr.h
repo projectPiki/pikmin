@@ -41,7 +41,7 @@ struct NaviMgr : public MonoObjectMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_?? = MonoObjectMgr
+	// _00-_3C = MonoObjectMgr
 	// TODO: members
 };
 

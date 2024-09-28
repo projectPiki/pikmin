@@ -92,7 +92,7 @@ struct Light : public CoreNode {
 	u8 _6E;                      // _6E
 	u8 _6F;                      // _6F
 	u32 _70;                     // _70
-	u8 _74[0x80 - 0x74];         // _74, unknown - here to.....
+	u8 _74[0x80 - 0x74];         // _74, unknown
 	CullingPlane mCullPlanes[6]; // _80
 	u8 _188[0x1C8 - 0x188];      // _188, unknown
 	u8 _1C8;                     // _1C8
@@ -105,7 +105,7 @@ struct Light : public CoreNode {
 	Vector3f _208;               // _208
 	Vector3f _214;               // _214
 	Vector3f _220;               // _220
-	Vector3f _22C;               // _22C - .... here might be a struct, see Camera
+	Vector3f _22C;               // _22C
 	u8 _238[0x8];                // _238, unknown
 	f32 _240;                    // _240
 	f32 _244;                    // _244

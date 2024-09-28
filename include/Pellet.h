@@ -106,6 +106,8 @@ struct Pellet : public DualCreature {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x204.
  */
 struct PelletMgr : public MonoObjectMgr {
 
@@ -149,8 +151,9 @@ struct PelletMgr : public MonoObjectMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_28 = MonoObjectMgr?
+	// _00-_3C = MonoObjectMgr
 	// TODO: members
+	u8 _3C[0x204 - 0x3C]; // _3C, unknown
 };
 
 /**
@@ -159,5 +162,7 @@ struct PelletMgr : public MonoObjectMgr {
 struct PelletShapeObject {
 	PelletShapeObject(char*, Shape*, char*, char*, int);
 };
+
+extern PelletMgr* pelletMgr;
 
 #endif

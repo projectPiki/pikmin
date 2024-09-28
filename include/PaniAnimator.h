@@ -28,7 +28,6 @@ struct PaniAnimKeyListener {
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&) = 0; // _08
 
 	// _00 = VTBL
-	// TODO: members
 };
 
 /**
@@ -130,7 +129,7 @@ struct PaniPlantAnimator : public PaniAnimator {
 struct PaniTekiAnimator : public PaniAnimator {
 	PaniTekiAnimator();
 
-	PaniMotionTable* createMotionTable();
+	static PaniMotionTable* createMotionTable();
 
 	// _30     = VTBL
 	// _00-_34 = PaniAnimator

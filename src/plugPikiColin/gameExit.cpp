@@ -32,7 +32,7 @@ static void _Print(char*, ...)
 GameExitSection::GameExitSection()
 {
 	gsys->resetHeap(2, 1);
-	gsys->_19C = 0;
+	gsys->mCurrMemInfo = nullptr;
 	gsys->_214.initCore("");
 }
 

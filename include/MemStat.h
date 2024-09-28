@@ -24,11 +24,13 @@ struct MemInfoNode : public CoreNode {
 struct MemInfo : public MemInfoNode {
 	// _00     = VTBL
 	// _00-_14 = MemInfoNode?
-	// TODO: members
+	int mMemorySize; // _14
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xA0.
  */
 struct MemStat {
 	MemStat();
@@ -37,16 +39,26 @@ struct MemStat {
 	void start(char*);
 	void end(char*);
 	void print();
-	void getInfo(char*);
+	MemInfo* getInfo(char*);
 	void printInfoRec(MemInfo*, int);
-	void getInfoRec(char*, MemInfo*);
+	MemInfo* getInfoRec(char*, MemInfo*);
 
 	// unused/inlined:
 	void getMemorySize(char*);
 	void getRestMemory();
 
+	inline void addInfo(MemInfo* newInfo)
+	{
+		_1C[_9C] = _18;
+		_9C++;
+		_18 = newInfo;
+	}
+
 	// TODO: members
-	MemInfo mMemInfo; // _00
+	MemInfo _00;      // _00
+	MemInfo* _18;     // _18
+	MemInfo* _1C[32]; // _1C
+	int _9C;          // _9C
 };
 
 extern MemStat* memStat;

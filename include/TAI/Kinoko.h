@@ -4,13 +4,14 @@
 #include "types.h"
 #include "TAI/EffectActions.h"
 #include "TekiParameters.h"
+#include "PaniAnimator.h"
 
 /////////// Puffstool AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TaiKinokoSoundTable {
+struct TaiKinokoSoundTable : public PaniSoundTable {
 	TaiKinokoSoundTable();
 
 	// TODO: members

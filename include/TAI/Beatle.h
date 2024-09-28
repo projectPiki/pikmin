@@ -11,13 +11,14 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "PaniAnimator.h"
 
 /////////// Armored Cannon Beetle AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TAIbeatleSoundTable {
+struct TAIbeatleSoundTable : public PaniSoundTable {
 	TAIbeatleSoundTable();
 
 	// TODO: members

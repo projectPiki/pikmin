@@ -3,13 +3,8 @@
 
 #include "types.h"
 
-/**
- * @brief TODO
- */
-struct NakataCodeInitializer {
-	void init();
-
-	// TODO: work out members
+namespace NakataCodeInitializer {
+void init();
 };
 
 extern BOOL nakataDebugMode;

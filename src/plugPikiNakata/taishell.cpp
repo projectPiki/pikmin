@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	000084
  */
 TaiShellSoundTable::TaiShellSoundTable()
+    : PaniSoundTable(5)
 {
 	/*
 	.loc_0x0:
@@ -1268,6 +1269,7 @@ bool TaiShellEatAction::act(Teki&)
  * Size:	000084
  */
 TaiPearlSoundTable::TaiPearlSoundTable()
+    : PaniSoundTable(5)
 {
 	/*
 	.loc_0x0:

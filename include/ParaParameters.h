@@ -11,9 +11,17 @@ struct Stream;
  */
 template <typename T>
 struct ParaParameterInfo {
-	u32 _00; // _00, unknown
-	T _04;   // _04, maybe min or max?
-	T _08;   // _08, maybe min or max?
+
+	inline void set(char* name, T min, T max)
+	{
+		mName = name;
+		mMin  = min;
+		mMax  = max;
+	}
+
+	char* mName; // _00
+	T mMin;      // _04
+	T mMax;      // _08
 };
 
 /**
@@ -38,6 +46,8 @@ struct ParaParameters {
 
 	T get(int);
 
+	void set(int idx, T val) { mParameters[idx] = val; }
+
 	inline void input(ParaParameters* other)
 	{
 		for (int i = 0; i < mParaCount; i++) {
@@ -61,7 +71,12 @@ struct ParaParameters {
  * @brief TODO
  */
 struct ParaParameterInfoI : public ParaParameterInfo<int> {
-	ParaParameterInfoI();
+	ParaParameterInfoI()
+	{
+		mName = nullptr;
+		mMin  = 0;
+		mMax  = 0;
+	}
 
 	// TODO: members
 };
@@ -83,7 +98,12 @@ struct ParaParametersI : public ParaParameters<int> {
  * @brief TODO
  */
 struct ParaParameterInfoF : public ParaParameterInfo<f32> {
-	ParaParameterInfoF();
+	ParaParameterInfoF()
+	{
+		mName = nullptr;
+		mMin  = 0.0f;
+		mMax  = 0.0f;
+	}
 
 	// TODO: members
 };
@@ -109,6 +129,12 @@ struct ParaMultiParameters {
 
 	void input(ParaMultiParameters&);
 	void getF(int);
+
+	void getI(int);
+	void setF(int idx, f32 val) { mFloatParams->set(idx, val); }
+	void setI(int idx, int val) { mIntParams->set(idx, val); }
+
+	ParaParameterInfoI* getInfoI(int idx) { return static_cast<ParaParameterInfoI*>(&mIntParams->mParaInfo[idx]); }
 
 	// _08 = VTBL
 	ParaParametersI* mIntParams;   // _00

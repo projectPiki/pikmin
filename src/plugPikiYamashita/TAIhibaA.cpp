@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	000084
  */
 TAIhibaASoundTable::TAIhibaASoundTable()
+    : PaniSoundTable(7)
 {
 	/*
 	.loc_0x0:

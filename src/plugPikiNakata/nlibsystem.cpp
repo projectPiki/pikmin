@@ -937,7 +937,7 @@ void NSystem::randomInt(int)
  * Address:	8011E938
  * Size:	000034
  */
-void NSystem::getFreeHeap()
+int NSystem::getFreeHeap()
 {
 	/*
 	.loc_0x0:

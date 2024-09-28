@@ -27,6 +27,7 @@ static void _Print(char*, ...)
  * Size:	000084
  */
 TaiChappySoundTable::TaiChappySoundTable()
+    : PaniSoundTable(8)
 {
 	/*
 	.loc_0x0:
@@ -569,6 +570,7 @@ TaiBlackChappyParameters::TaiBlackChappyParameters()
  * Size:	000084
  */
 TaiCatfishSoundTable::TaiCatfishSoundTable()
+    : PaniSoundTable(3)
 {
 	/*
 	.loc_0x0:

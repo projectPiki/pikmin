@@ -201,6 +201,7 @@ void killDororoEffect(Teki&)
  * Size:	000084
  */
 TAIdororoSoundTable::TAIdororoSoundTable()
+    : PaniSoundTable(6)
 {
 	/*
 	.loc_0x0:

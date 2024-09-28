@@ -9,7 +9,6 @@
 struct FastGrid {
 	FastGrid();
 
-	void initAIGrid(u8);
 	void clearAIGrid();
 	void delAIGrid();
 	bool aiCulling();
@@ -22,6 +21,8 @@ struct FastGrid {
 	void addAIGrid();
 	void renderAIGrid2D(struct Graphics&);
 	void renderAIGrid(Graphics&);
+
+	static void initAIGrid(u8);
 
 	static u16 aiGridShift;
 	static u32 aiGridMap; // type unsure

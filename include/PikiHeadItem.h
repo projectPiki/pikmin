@@ -278,7 +278,7 @@ struct PikiHeadMgr : public MonoObjectMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_28 = MonoObjectMgr?
+	// _00-_3C = MonoObjectMgr
 	// TODO: members
 };
 

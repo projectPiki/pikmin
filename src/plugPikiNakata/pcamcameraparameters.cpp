@@ -706,41 +706,6 @@ PcamCameraParameters::PcamCameraParameters()
 
 /*
  * --INFO--
- * Address:	8012543C
- * Size:	000018
- */
-ParaParameterInfoF::ParaParameterInfoF()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x5EA8(r2)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80125454
- * Size:	000014
- */
-ParaParameterInfoI::ParaParameterInfoI()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r0, 0x8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	80125468
  * Size:	0000D8
  */

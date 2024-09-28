@@ -1,12 +1,33 @@
 #include "PaniTestSection.h"
+#include "AIConstant.h"
+#include "sysNew.h"
+#include "MemStat.h"
+#include "SoundMgr.h"
+#include "Dolphin/os.h"
+#include "CodeInitializer.h"
+#include "GlobalShape.h"
+#include "Piki.h"
+#include "FlowController.h"
+#include "MapMgr.h"
+#include "Route.h"
+#include "EffectMgr.h"
+#include "Pellet.h"
+#include "PikiMgr.h"
+#include "gameflow.h"
+#include "teki.h"
+#include "Collision.h"
+#include "Font.h"
+#include "Pcam/CameraManager.h"
+#include "Pcam/Camera.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "panitestsection");
 	// UNUSED FUNCTION
 }
 
@@ -27,6 +48,81 @@ static void _Print(char*, ...)
  */
 PaniTestNode::PaniTestNode()
 {
+	setName("PaniTestNode");
+	AIConstant::createInstance();
+	memStat     = new MemStat();
+	mController = new Controller();
+	seSystem    = new SeSystem();
+	NakataCodeInitializer::init();
+	mShadowTexture = gsys->loadTexture("effects/shadow.txe", true);
+	GlobalShape::init();
+	PikiShapeObject::init();
+	sprintf(flowCont._B0, "courses/test/animtest.mod");
+	mapMgr = new MapMgr(mController);
+	mapMgr->initShape();
+	routeMgr  = nullptr;
+	effectMgr = nullptr;
+	pelletMgr = new PelletMgr(mapMgr);
+	_390._54.set(0.0f, 500.0f, 0.0f);
+	_390._18 = 500.0f;
+	_390.update();
+	pikiMgr = new PikiMgr(nullptr);
+	pikiMgr->init();
+	pikiMgr->mMapMgr = mapMgr;
+	FastGrid::initAIGrid(9);
+	_674 = 300.0f;
+
+	_66C = 1;
+	pikiMgr->create(_66C);
+	_664 = new Piki*[_66C];
+
+	for (int i = 0; i < _66C; i++) {
+		_664[i] = static_cast<ViewPiki*>(pikiMgr->birth());
+		_664[i]->init(nullptr);
+		_664[i]->_7C.set(1.0f, 1.0f, 1.0f);
+		_664[i]->_88.set(0.0f, 0.0f, 0.0f);
+		_664[i]->mPosition.set(0.0f, 0.0f, 0.0f);
+		_664[i]->initColor(Red);
+	}
+
+	gameflow.addGenNode("pikiMgr", pikiMgr);
+
+	tekiMgr = new TekiMgr();
+	gameflow.addGenNode("tekiMgr", tekiMgr);
+
+	tekiMgr->create(TEKI_TypeCount);
+	_668 = new Teki*[TEKI_TypeCount];
+	tekiMgr->setUsingTypeTable(true);
+	tekiMgr->mUsingType[TEKI_Frog]    = true;
+	tekiMgr->mUsingType[TEKI_Swallob] = true;
+	tekiMgr->mUsingType[TEKI_Chappb]  = true;
+	tekiMgr->mUsingType[TEKI_Frow]    = true;
+
+	for (int i = 0; i < TEKI_TypeCount; i++) {
+		if (tekiMgr->mTekiParams[i]) {
+			_668[i] = tekiMgr->newTeki(i);
+			_668[i]->_2C8; // need to set some vectors(?) here, idk what it is though
+			_668[i]->reset();
+		} else {
+			_668[i] = nullptr;
+		}
+	}
+
+	mFocusTekiType = TEKI_Napkid;
+	tekiMgr->startStage();
+
+	_28 = 0;
+
+	Texture* fontTex = gsys->loadTexture("consFont.bti", true);
+	_30              = new Font();
+	_30->setTexture(fontTex, 16, 8);
+
+	gsys->setFade(1.0f, 3.0f);
+	mCamMgr = new PcamCameraManager(&_38, mController);
+	_688    = 30.0f;
+	_68C    = 0;
+
+	setTestMode(PANITEST_Teki);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -410,50 +506,21 @@ PaniTestNode::PaniTestNode()
  * Address:	8012044C
  * Size:	000084
  */
-void PaniTestNode::setTestMode(int)
+void PaniTestNode::setTestMode(int mode)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  stw       r4, 0x680(r3)
-	  li        r4, 0
-	  lwz       r0, 0x680(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x44
-	  bge-      .loc_0x54
-	  cmpwi     r0, 0
-	  bge-      .loc_0x38
-	  b         .loc_0x54
+	mTestMode           = mode;
+	Creature* camTarget = nullptr;
+	switch (mTestMode) {
+	case PANITEST_Piki:
+		camTarget = _664[0];
+		break;
+	case PANITEST_Teki:
+		camTarget = _668[mFocusTekiType];
+		break;
+	}
 
-	.loc_0x38:
-	  lwz       r3, 0x664(r31)
-	  lwz       r4, 0x0(r3)
-	  b         .loc_0x54
-
-	.loc_0x44:
-	  lwz       r0, 0x670(r31)
-	  lwz       r3, 0x668(r31)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r4, r3, r0
-
-	.loc_0x54:
-	  lwz       r3, 0x24(r31)
-	  li        r5, 0x1
-	  li        r6, 0
-	  lwz       r3, 0x20(r3)
-	  bl        0x18B8
-	  li        r0, 0
-	  stw       r0, 0x684(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mCamMgr->mCamera->startCamera(camTarget, 1, 0);
+	_684 = 0;
 }
 
 /*
@@ -1176,42 +1243,14 @@ void PaniTestNode::updateTekis()
  * Address:	80120DCC
  * Size:	00006C
  */
-void PaniTestNode::animationKeyUpdated(PaniAnimKeyEvent&)
+void PaniTestNode::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r4)
-	  stw       r0, 0x67C(r3)
-	  lwz       r0, 0x680(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x3C
-	  lwz       r3, 0x664(r3)
-	  lwz       r3, 0x0(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x124(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x5C
-
-	.loc_0x3C:
-	  lwz       r0, 0x670(r3)
-	  lwz       r3, 0x668(r3)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x184(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x5C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	_67C = event.mKeyFrame;
+	if (mTestMode == PANITEST_Piki) {
+		_664[0]->animationKeyUpdated(event);
+	} else { // mTestMode == PANITEST_Teki
+		_668[mFocusTekiType]->animationKeyUpdated(event);
+	}
 }
 
 /*
@@ -1680,50 +1719,14 @@ void PaniTestNode::draw(Graphics&)
  * Address:	801214BC
  * Size:	000034
  */
-void PaniTestNode::drawPiki(ViewPiki*, Graphics&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r3, r4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r4)
-	  mr        r4, r5
-	  lwz       r12, 0xEC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void PaniTestNode::drawPiki(ViewPiki* piki, Graphics& gfx) { piki->refresh(gfx); }
 
 /*
  * --INFO--
  * Address:	801214F0
  * Size:	000034
  */
-void PaniTestNode::drawTeki(Teki*, Graphics&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r3, r4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r4)
-	  mr        r4, r5
-	  lwz       r12, 0xEC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void PaniTestNode::drawTeki(Teki* teki, Graphics& gfx) { teki->refresh(gfx); }
 
 /*
  * --INFO--
@@ -1732,43 +1735,10 @@ void PaniTestNode::drawTeki(Teki*, Graphics&)
  */
 void PaniTestSection::init()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r1)
-	  addi      r4, r4, 0x4F10
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x10(r1)
-	  bl        -0xE0E08
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r0, 0x1F4(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x3C
-	  b         .loc_0x60
-
-	.loc_0x3C:
-	  li        r3, 0x694
-	  bl        -0xDA560
-	  mr.       r30, r3
-	  beq-      .loc_0x54
-	  mr        r3, r30
-	  bl        -0x167C
-
-	.loc_0x54:
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        -0xE0FA8
-
-	.loc_0x60:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Node::init("<PaniTestSection>");
+	switch (gameflow._1F4) {
+	case 0:
+		add(new PaniTestNode);
+		break;
+	}
 }

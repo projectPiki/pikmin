@@ -7,10 +7,10 @@
 /*
  * @brief TODO
  */
-struct TekiYamashita {
-	void makeTekiParameters(TekiMgr*);
-	void makeTekis(TekiMgr*);
-	void makeDefaultAnimations(); // unused
-};
+namespace TekiYamashita {
+void makeTekiParameters(TekiMgr*);
+void makeTekis(TekiMgr*);
+void makeDefaultAnimations(); // unused
+};                            // namespace TekiYamashita
 
 #endif

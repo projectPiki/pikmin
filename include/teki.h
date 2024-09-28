@@ -12,6 +12,10 @@ struct NTeki;
 struct Teki;
 struct TekiMgr;
 struct CollEvent;
+struct TekiAnimationManager;
+struct TekiStrategy;
+struct TekiStrategyTable;
+struct TekiParameters;
 
 namespace TekiNakata {
 // Teki-making utility functions
@@ -40,6 +44,49 @@ enum TekiOptions {
 	TEKIOPT_Drawed           = 1 << 13, // 0x2000
 	TEKIOPT_ShapeVisible     = 1 << 14, // 0x4000
 	TEKIOPT_DamageCountable  = 1 << 15, // 0x8000
+};
+
+/**
+ * @brief TODO
+ */
+enum TekiTypes {
+	TEKI_START    = 0,  // START OF VALID TEKI TYPES
+	TEKI_Frog     = 0,  // 0, Yellow Wollywog
+	TEKI_Iwagen   = 1,  // 1, Iwagen (unused enemy)
+	TEKI_Iwagon   = 2,  // 2, Rolling Boulder
+	TEKI_Chappy   = 3,  // 3, Dwarf Bulborb
+	TEKI_Swallow  = 4,  // 4, Spotty Bulborb
+	TEKI_Mizigen  = 5,  // 5, Honeywisp Spawner
+	TEKI_Qurione  = 6,  // 6, Honeywisp
+	TEKI_Palm     = 7,  // 7, Pellet Posy
+	TEKI_Collec   = 8,  // 8, Breadbug
+	TEKI_Kinoko   = 9,  // 9, Puffstool
+	TEKI_Shell    = 10, // 10, Pearly Clamclamp (shell)
+	TEKI_Napkid   = 11, // 11, Swooping Snitchbug
+	TEKI_Hollec   = 12, // 12, Breadbug Nest
+	TEKI_Pearl    = 13, // 13, Pearly Clamclamp (pearl)
+	TEKI_Rocpe    = 14, // 14, Pearly Clamclamp (ship part)
+	TEKI_Tank     = 15, // 15, Fiery Blowhog
+	TEKI_Mar      = 16, // 16, Puffy Blowhog
+	TEKI_Beatle   = 17, // 17, Armored Cannon Beetle
+	TEKI_KabekuiA = 18, // 18, Female Sheargrub
+	TEKI_KabekuiB = 19, // 19, Male Sheargrub
+	TEKI_KabekuiC = 20, // 20, Shearwig
+	TEKI_Tamago   = 21, // 21, Giant Egg (for Smoky Progg)
+	TEKI_Dororo   = 22, // 22, Smoky Progg
+	TEKI_HibaA    = 23, // 23, Fire Geyser
+	TEKI_Miurin   = 24, // 24, Mamuta
+	TEKI_Otama    = 25, // 25, Wogpole
+	TEKI_Usuba    = 26, // 26, Usuba (unused enemy, crashes)
+	TEKI_Yamash3  = 27, // 27, ? (unused enemy, crashes)
+	TEKI_Yamash4  = 28, // 28, ? (unused enemy, crashes)
+	TEKI_Yamash5  = 29, // 29, ? (unused enemy, crashes)
+	TEKI_Namazu   = 30, // 30, Water Dumple
+	TEKI_Chappb   = 31, // 31, Dwarf Bulbear
+	TEKI_Swallob  = 32, // 32, Spotty Bulbear
+	TEKI_Frow     = 33, // 33, Wollywog
+	TEKI_Nakata1  = 34, // 34, ? (unused enemy, crashes)
+	TEKI_TypeCount,     // 35
 };
 
 /**
@@ -351,28 +398,30 @@ struct Teki : public YTeki {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1B4.
  */
 struct TekiMgr : public MonoObjectMgr {
 	TekiMgr();
 
-	virtual ~TekiMgr();              // _48
+	virtual ~TekiMgr() { }           // _48
 	virtual void update();           // _4C
 	virtual void refresh(Graphics&); // _58
 	virtual Teki* createObject();    // _80
 
 	void startStage();
-	void newTeki(int);
+	Teki* newTeki(int);
 	void reset();
-	void getStrategy(int);
-	void getTekiParameters(int);
-	void getTekiShapeObject(int);
-	void getSoundTable(int);
+	TekiStrategy* getStrategy(int tekiType);
+	TekiParameters* getTekiParameters(int tekiType);
+	TekiShapeObject* getTekiShapeObject(int tekiType);
+	PaniSoundTable* getSoundTable(int tekiType);
 	void refresh2d(Graphics&);
 	void setUsingTypeTable(bool);
 	void setVisibleTypeTable(bool);
 	void setVisibleType(int, bool);
 	bool hasModel(int);
-	void getResultFlag(int);
+	int getResultFlag(int);
 
 	// unused/inlined:
 	void getTypeIndex(char*);
@@ -380,9 +429,25 @@ struct TekiMgr : public MonoObjectMgr {
 
 	static void initTekiMgr();
 
-	// _00     = VTBL
-	// _00-_1C = MonoObjectMgr?
+	static char* typeNames[TEKI_TypeCount];
+	static u32 typeIds[TEKI_TypeCount];
+
+	// _00     = VTBL 1
+	// _08     = VTBL 2
+	// _00-_3C = MonoObjectMgr
 	// TODO: members
+	TekiStrategyTable* mStrategyTable;            // _3C
+	PaniMotionTable* mMotionTable;                // _40
+	PaniSoundTable** mTekiSoundTables;            // _44
+	TekiAnimationManager* mTekiAnimMgr;           // _48
+	TekiParameters* mTekiParams[TEKI_TypeCount];  // _4C
+	TekiShapeObject* mTekiShapes[TEKI_TypeCount]; // _D8
+	bool mUsingType[TEKI_TypeCount];              // _164
+	u32 _188;                                     // _188, unknown
+	bool mVisibleType[TEKI_TypeCount];            // _18C
+	u32 _1B0;                                     // _1B0, unknown
 };
+
+extern TekiMgr* tekiMgr;
 
 #endif

@@ -7,6 +7,8 @@ struct Texture;
 
 /**
  * @brief TODO
+ *
+ * @note Maybe size 0x10? If not, need to change PaniTestNode
  */
 struct Font {
 	void setTexture(Texture*, int, int);
@@ -15,6 +17,7 @@ struct Font {
 	void stringWidth(char*);
 
 	// TODO: members
+	u8 _00[0x10]; // _00
 };
 
 /**

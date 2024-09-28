@@ -1,12 +1,22 @@
 #include "teki.h"
+#include "MemStat.h"
+#include "nlib/System.h"
+#include "TekiAnimationManager.h"
+#include "TekiStrategy.h"
+#include "sysNew.h"
+#include "TekiYamashita.h"
+#include "Dolphin/os.h"
+#include "TekiParameters.h"
+#include "PikiMacros.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "tekiMgr");
 	// UNUSED FUNCTION
 }
 
@@ -20,20 +30,90 @@ static void _Print(char*, ...)
 	// UNUSED FUNCTION
 }
 
+TekiMgr* tekiMgr;
+
+char* TekiMgr::typeNames[TEKI_TypeCount] = {
+	"frog",     // 0, Yellow Wollywog
+	"iwagen",   // 1, Iwagen (unused enemy)
+	"iwagon",   // 2, Rolling Boulder
+	"chappy",   // 3, Dwarf Bulborb
+	"swallow",  // 4, Spotty Bulborb
+	"mizigen",  // 5, Honeywisp Spawner
+	"qurione",  // 6, Honeywisp
+	"palm",     // 7, Pellet Posy
+	"collec",   // 8, Breadbug
+	"kinoko",   // 9, Puffstool
+	"shell",    // 10, Pearly Clamclamp (shell)
+	"napkid",   // 11, Swooping Snitchbug
+	"hollec",   // 12, Breadbug Nest
+	"pearl",    // 13, Pearly Clamclamp (pearl)
+	"rocpe",    // 14, Pearly Clamclamp (ship part)
+	"tank",     // 15, Fiery Blowhog
+	"mar",      // 16, Puffy Blowhog
+	"beatle",   // 17, Armored Cannon Beetle
+	"kabekuiA", // 18, Female Sheargrub
+	"kabekuiB", // 19, Male Sheargrub
+	"kabekuiC", // 20, Shearwig
+	"tamago",   // 21, Giant Egg (for Smoky Progg)
+	"dororo",   // 22, Smoky Progg
+	"hibaA",    // 23, Fire Geyser
+	"miurin",   // 24, Mamuta
+	"otama",    // 25, Wogpole
+	"usuba",    // 26, Usuba (unused enemy, crashes)
+	"yamash3",  // 27, ? (unused enemy, crashes)
+	"yamash4",  // 28, ? (unused enemy, crashes)
+	"yamash5",  // 29, ? (unused enemy, crashes)
+	"namazu",   // 30, Water Dumple
+	"chappb",   // 31, Dwarf Bulbear
+	"swallob",  // 32, Spotty Bulbear
+	"frow",     // 33, Wollywog
+	"nakata1",  // 34, ? (unused enemy, crashes)
+};
+
+u32 TekiMgr::typeIds[TEKI_TypeCount] = {
+	'tkfr', // 0, Yellow Wollywog
+	'tkig', // 1, Iwagen (unused enemy)
+	'tkiw', // 2, Rolling Boulder
+	'tkch', // 3, Dwarf Bulborb
+	'tksw', // 4, Spotty Bulborb
+	'tkmi', // 5, Honeywisp Spawner
+	'tkqu', // 6, Honeywisp
+	'tkpa', // 7, Pellet Posy
+	'tkco', // 8, Breadbug
+	'tkki', // 9, Puffstool
+	'tksh', // 10, Pearly Clamclamp (shell)
+	'tkna', // 11, Swooping Snitchbug
+	'tkho', // 12, Breadbug Nest
+	'tkpe', // 13, Pearly Clamclamp (pearl)
+	'tkro', // 14, Pearly Clamclamp (ship part)
+	'tkta', // 15, Fiery Blowhog
+	'tkma', // 16, Puffy Blowhog
+	'tkbe', // 17, Armored Cannon Beetle
+	'tkka', // 18, Female Sheargrub
+	'tkkb', // 19, Male Sheargrub
+	'tkkc', // 20, Shearwig
+	'tktm', // 21, Giant Egg (for Smoky Progg)
+	'tkdo', // 22, Smoky Progg
+	'tkhi', // 23, Fire Geyser
+	'tkmu', // 24, Mamuta
+	'tkot', // 25, Wogpole
+	'tkus', // 26, Usuba (unused enemy, crashes)
+	'tky3', // 27, ? (unused enemy, crashes)
+	'tky4', // 28, ? (unused enemy, crashes)
+	'tky5', // 29, ? (unused enemy, crashes)
+	'tknm', // 30, Water Dumple
+	'tkcb', // 31, Dwarf Bulbear
+	'tksb', // 32, Spotty Bulbear
+	'tkfw', // 33, Wollywog
+	'tkn1', // 34, ? (unused enemy, crashes)
+};
+
 /*
  * --INFO--
  * Address:	8014A58C
  * Size:	00000C
  */
-void TekiMgr::initTekiMgr()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x3160(r13)
-	  blr
-	*/
-}
+void TekiMgr::initTekiMgr() { tekiMgr = nullptr; }
 
 /*
  * --INFO--
@@ -52,6 +132,45 @@ void TekiMgr::getTypeIndex(char*)
  */
 TekiMgr::TekiMgr()
 {
+	memStat->start("tekiMgr");
+	int heapStartSize = NSystem::getFreeHeap();
+	mTekiAnimMgr      = new TekiAnimationManager(this);
+	mMotionTable      = PaniTekiAnimator::createMotionTable();
+	mStrategyTable    = new TekiStrategyTable(TEKI_TypeCount);
+	mTekiSoundTables  = new PaniSoundTable*[TEKI_TypeCount];
+	for (int i = 0; i < TEKI_TypeCount; i++) {
+		mTekiParams[i]      = nullptr;
+		mTekiSoundTables[i] = nullptr;
+		mTekiShapes[i]      = nullptr;
+	}
+
+	TekiNakata::makeTekiParameters(this);
+	TekiYamashita::makeTekiParameters(this);
+
+	for (int i = 0; i < TEKI_TypeCount; i++) {
+		if (mTekiParams[i]) {
+			char buf[128];
+			sprintf(buf, "tekipara/%s.bin", typeNames[i]);
+			mTekiParams[i]->load("", buf, 1);
+		}
+	}
+
+	setUsingTypeTable(false);
+	setVisibleTypeTable(true);
+	memStat->end("tekiMgr");
+
+	int heapEndSize = NSystem::getFreeHeap();
+
+	memStat->start("tekis");
+	int tekisHeapStartSize = NSystem::getFreeHeap();
+	create(80);
+	memStat->end("tekis");
+
+	int tekisHeapSize = tekisHeapStartSize - NSystem::getFreeHeap();
+	int heapSize      = heapStartSize - heapEndSize;
+
+	DEBUGPRINT((f32)tekisHeapSize);
+	DEBUGPRINT((f32)heapSize);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -416,20 +535,7 @@ void TekiMgr::startStage()
  * Address:	8014AA88
  * Size:	000020
  */
-void TekiMgr::update()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x6970C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void TekiMgr::update() { MonoObjectMgr::update(); }
 
 /*
  * --INFO--
@@ -495,7 +601,7 @@ void TekiMgr::refresh(Graphics&)
  * Address:	8014AB4C
  * Size:	00007C
  */
-void TekiMgr::newTeki(int)
+Teki* TekiMgr::newTeki(int)
 {
 	/*
 	.loc_0x0:
@@ -639,96 +745,35 @@ void TekiMgr::reset()
  * Address:	8014ACD4
  * Size:	000044
  */
-Teki* TekiMgr::createObject()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x540
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  bl        -0x103CE4
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x2C
-	  li        r4, 0x1
-	  bl        -0x710C
-
-	.loc_0x2C:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+Teki* TekiMgr::createObject() { return new Teki(); }
 
 /*
  * --INFO--
  * Address:	8014AD18
  * Size:	000014
  */
-void TekiMgr::getStrategy(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x3C(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwz       r3, 0x4(r3)
-	  lwzx      r3, r3, r0
-	  blr
-	*/
-}
+TekiStrategy* TekiMgr::getStrategy(int tekiType) { return mStrategyTable->mStrategies[tekiType]; }
 
 /*
  * --INFO--
  * Address:	8014AD2C
  * Size:	000010
  */
-void TekiMgr::getTekiParameters(int)
-{
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,2,0,29
-	  add       r3, r3, r0
-	  lwz       r3, 0x4C(r3)
-	  blr
-	*/
-}
+TekiParameters* TekiMgr::getTekiParameters(int tekiType) { return mTekiParams[tekiType]; }
 
 /*
  * --INFO--
  * Address:	8014AD3C
  * Size:	000010
  */
-void TekiMgr::getTekiShapeObject(int)
-{
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,2,0,29
-	  add       r3, r3, r0
-	  lwz       r3, 0xD8(r3)
-	  blr
-	*/
-}
+TekiShapeObject* TekiMgr::getTekiShapeObject(int tekiType) { return mTekiShapes[tekiType]; }
 
 /*
  * --INFO--
  * Address:	8014AD4C
  * Size:	000010
  */
-void TekiMgr::getSoundTable(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x44(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwzx      r3, r3, r0
-	  blr
-	*/
-}
+PaniSoundTable* TekiMgr::getSoundTable(int tekiType) { return mTekiSoundTables[tekiType]; }
 
 /*
  * --INFO--
@@ -832,55 +877,11 @@ void TekiMgr::refresh2d(Graphics&)
  * Address:	8014AE78
  * Size:	0000A8
  */
-void TekiMgr::setUsingTypeTable(bool)
+void TekiMgr::setUsingTypeTable(bool isUsingType)
 {
-	/*
-	.loc_0x0:
-	  stb       r4, 0x164(r3)
-	  li        r6, 0x20
-	  subfic    r0, r6, 0x23
-	  stb       r4, 0x165(r3)
-	  cmpwi     r6, 0x23
-	  mtctr     r0
-	  stb       r4, 0x166(r3)
-	  stb       r4, 0x167(r3)
-	  stb       r4, 0x168(r3)
-	  stb       r4, 0x169(r3)
-	  stb       r4, 0x16A(r3)
-	  stb       r4, 0x16B(r3)
-	  stb       r4, 0x16C(r3)
-	  stb       r4, 0x16D(r3)
-	  stb       r4, 0x16E(r3)
-	  stb       r4, 0x16F(r3)
-	  stb       r4, 0x170(r3)
-	  stb       r4, 0x171(r3)
-	  stb       r4, 0x172(r3)
-	  stb       r4, 0x173(r3)
-	  stb       r4, 0x174(r3)
-	  stb       r4, 0x175(r3)
-	  stb       r4, 0x176(r3)
-	  stb       r4, 0x177(r3)
-	  stb       r4, 0x178(r3)
-	  stb       r4, 0x179(r3)
-	  stb       r4, 0x17A(r3)
-	  stb       r4, 0x17B(r3)
-	  stb       r4, 0x17C(r3)
-	  stb       r4, 0x17D(r3)
-	  stb       r4, 0x17E(r3)
-	  stb       r4, 0x17F(r3)
-	  stb       r4, 0x180(r3)
-	  stb       r4, 0x181(r3)
-	  stb       r4, 0x182(r3)
-	  stb       r4, 0x183(r3)
-	  bgelr-
-
-	.loc_0x94:
-	  addi      r0, r6, 0x164
-	  stbx      r4, r3, r0
-	  addi      r6, r6, 0x1
-	  bdnz+     .loc_0x94
-	  blr
-	*/
+	for (int i = 0; i < TEKI_TypeCount; i++) {
+		mUsingType[i] = isUsingType;
+	}
 }
 
 /*
@@ -888,65 +889,18 @@ void TekiMgr::setUsingTypeTable(bool)
  * Address:	........
  * Size:	00000C
  */
-void TekiMgr::setUsingType(int, bool)
-{
-	// UNUSED FUNCTION
-}
+void TekiMgr::setUsingType(int tekiType, bool isUsing) { mUsingType[tekiType] = isUsing; }
 
 /*
  * --INFO--
  * Address:	8014AF20
  * Size:	0000A8
  */
-void TekiMgr::setVisibleTypeTable(bool)
+void TekiMgr::setVisibleTypeTable(bool isVisibleType)
 {
-	/*
-	.loc_0x0:
-	  stb       r4, 0x18C(r3)
-	  li        r6, 0x20
-	  subfic    r0, r6, 0x23
-	  stb       r4, 0x18D(r3)
-	  cmpwi     r6, 0x23
-	  mtctr     r0
-	  stb       r4, 0x18E(r3)
-	  stb       r4, 0x18F(r3)
-	  stb       r4, 0x190(r3)
-	  stb       r4, 0x191(r3)
-	  stb       r4, 0x192(r3)
-	  stb       r4, 0x193(r3)
-	  stb       r4, 0x194(r3)
-	  stb       r4, 0x195(r3)
-	  stb       r4, 0x196(r3)
-	  stb       r4, 0x197(r3)
-	  stb       r4, 0x198(r3)
-	  stb       r4, 0x199(r3)
-	  stb       r4, 0x19A(r3)
-	  stb       r4, 0x19B(r3)
-	  stb       r4, 0x19C(r3)
-	  stb       r4, 0x19D(r3)
-	  stb       r4, 0x19E(r3)
-	  stb       r4, 0x19F(r3)
-	  stb       r4, 0x1A0(r3)
-	  stb       r4, 0x1A1(r3)
-	  stb       r4, 0x1A2(r3)
-	  stb       r4, 0x1A3(r3)
-	  stb       r4, 0x1A4(r3)
-	  stb       r4, 0x1A5(r3)
-	  stb       r4, 0x1A6(r3)
-	  stb       r4, 0x1A7(r3)
-	  stb       r4, 0x1A8(r3)
-	  stb       r4, 0x1A9(r3)
-	  stb       r4, 0x1AA(r3)
-	  stb       r4, 0x1AB(r3)
-	  bgelr-
-
-	.loc_0x94:
-	  addi      r0, r6, 0x18C
-	  stbx      r4, r3, r0
-	  addi      r6, r6, 0x1
-	  bdnz+     .loc_0x94
-	  blr
-	*/
+	for (int i = 0; i < TEKI_TypeCount; i++) {
+		mVisibleType[i] = isVisibleType;
+	}
 }
 
 /*
@@ -954,15 +908,7 @@ void TekiMgr::setVisibleTypeTable(bool)
  * Address:	8014AFC8
  * Size:	00000C
  */
-void TekiMgr::setVisibleType(int, bool)
-{
-	/*
-	.loc_0x0:
-	  add       r3, r3, r4
-	  stb       r5, 0x18C(r3)
-	  blr
-	*/
-}
+void TekiMgr::setVisibleType(int tekiType, bool isVisible) { mVisibleType[tekiType] = isVisible; }
 
 /*
  * --INFO--
@@ -1017,87 +963,25 @@ bool TekiMgr::hasModel(int)
  * Address:	8014B044
  * Size:	000054
  */
-void TekiMgr::getResultFlag(int)
+int TekiMgr::getResultFlag(int tekiType)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0x8
-	  li        r3, 0
-	  bne-      .loc_0x14
-	  li        r3, 0x37
-	  blr
+	// TODO: make these ResultFlags enum values when we have that enum
+	int resFlag = 0;
+	if (tekiType == TEKI_Collec) {
+		resFlag = 55;
 
-	.loc_0x14:
-	  cmpwi     r4, 0x21
-	  bne-      .loc_0x24
-	  li        r3, 0x39
-	  blr
+	} else if (tekiType == TEKI_Frow) {
+		resFlag = 57;
 
-	.loc_0x24:
-	  cmpwi     r4, 0xA
-	  bne-      .loc_0x34
-	  li        r3, 0x36
-	  blr
+	} else if (tekiType == TEKI_Shell) {
+		resFlag = 54;
 
-	.loc_0x34:
-	  cmpwi     r4, 0x4
-	  bne-      .loc_0x44
-	  li        r3, 0x29
-	  blr
+	} else if (tekiType == TEKI_Swallow) {
+		resFlag = 41;
 
-	.loc_0x44:
-	  cmpwi     r4, 0x6
-	  bnelr-
-	  li        r3, 0x2C
-	  blr
-	*/
-}
+	} else if (tekiType == TEKI_Qurione) {
+		resFlag = 44;
+	}
 
-/*
- * --INFO--
- * Address:	8014B098
- * Size:	000084
- */
-TekiMgr::~TekiMgr()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x6C
-	  lis       r3, 0x802D
-	  subi      r3, r3, 0x2368
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x5C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x5038
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x5C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4F80
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-
-	.loc_0x5C:
-	  extsh.    r0, r4
-	  ble-      .loc_0x6C
-	  mr        r3, r31
-	  bl        -0x103F54
-
-	.loc_0x6C:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return resFlag;
 }

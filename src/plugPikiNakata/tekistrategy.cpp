@@ -95,9 +95,9 @@ void TekiStrategy::spawnCorpseParts(Teki&) { }
  */
 TekiStrategyTable::TekiStrategyTable(int count)
 {
-	mCount = count;
-	_04    = new u32[mCount];
+	mCount      = count;
+	mStrategies = new TekiStrategy*[mCount];
 	for (int i = 0; i < mCount; i++) {
-		_04[i] = 0;
+		mStrategies[i] = nullptr;
 	}
 }

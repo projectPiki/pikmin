@@ -11,6 +11,7 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "PaniAnimator.h"
 
 struct CollPart;
 
@@ -19,7 +20,7 @@ struct CollPart;
 /*
  * @brief TODO
  */
-struct TAImiurinSoundTable {
+struct TAImiurinSoundTable : public PaniSoundTable {
 	TAImiurinSoundTable();
 
 	// TODO: members

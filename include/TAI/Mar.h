@@ -11,13 +11,14 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "PaniAnimator.h"
 
 /////////// Puffy Blowhog AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TAImarSoundTable {
+struct TAImarSoundTable : public PaniSoundTable {
 	TAImarSoundTable();
 
 	// TODO: members

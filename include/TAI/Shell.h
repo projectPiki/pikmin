@@ -5,6 +5,7 @@
 #include "TAI/MotionActions.h"
 #include "TAI/EffectActions.h"
 #include "TekiParameters.h"
+#include "PaniAnimator.h"
 
 struct Creature;
 
@@ -13,7 +14,7 @@ struct Creature;
 /*
  * @brief TODO
  */
-struct TaiShellSoundTable {
+struct TaiShellSoundTable : public PaniSoundTable {
 	TaiShellSoundTable();
 
 	// TODO: members
@@ -118,7 +119,7 @@ struct TaiShellEatAction : public TaiAction {
 /*
  * @brief TODO
  */
-struct TaiPearlSoundTable {
+struct TaiPearlSoundTable : public PaniSoundTable {
 	TaiPearlSoundTable();
 
 	// TODO: members

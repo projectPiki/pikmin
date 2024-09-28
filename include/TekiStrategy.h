@@ -32,8 +32,8 @@ struct TekiStrategy {
 struct TekiStrategyTable {
 	TekiStrategyTable(int count);
 
-	int mCount; // _00
-	u32* _04;   // _04, array of unknown type - TekiStrategy* potentially?
+	int mCount;                 // _00
+	TekiStrategy** mStrategies; // _04
 };
 
 #endif

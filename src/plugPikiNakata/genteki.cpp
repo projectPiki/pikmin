@@ -1,13 +1,18 @@
 #include "Generator.h"
+#include "sysNew.h"
+#include "TekiPersonality.h"
+#include "Dolphin/os.h"
+#include "teki.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
-	// UNUSED FUNCTION
+	OSPanic(__FILE__, __LINE__, fmt, "敵を発生"); // 'spawn enemies'
+	                                              // UNUSED FUNCTION
 }
 
 /*
@@ -25,30 +30,7 @@ static void _Print(char*, ...)
  * Address:	8011B2CC
  * Size:	000040
  */
-static void makeObjectTeki()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x20
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  bl        -0xD42DC
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x28
-	  bl        0xA4
-
-	.loc_0x28:
-	  mr        r3, r31
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
-}
+static GenObjectTeki* makeObjectTeki() { return new GenObjectTeki(); }
 
 /*
  * --INFO--
@@ -102,48 +84,10 @@ void GenObjectTeki::initialise()
  * Size:	00008C
  */
 GenObjectTeki::GenObjectTeki()
-    : GenObject('teki', "")
+    : GenObject('teki', "敵を生む") // 'create enemies'
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r1)
-	  lis       r5, 0x802C
-	  addi      r6, r4, 0x40AC
-	  stwu      r1, -0x18(r1)
-	  lis       r4, 0x7465
-	  addi      r5, r5, 0x40A0
-	  stw       r31, 0x14(r1)
-	  addi      r4, r4, 0x6B69
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x40710
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5490
-	  lis       r3, 0x802C
-	  stw       r0, 0x4(r30)
-	  addi      r0, r3, 0x411C
-	  stw       r0, 0x4(r30)
-	  li        r0, 0
-	  li        r3, 0x38
-	  stw       r0, 0x1C(r30)
-	  bl        -0xD43E8
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x6C
-	  bl        0x31664
-
-	.loc_0x6C:
-	  stw       r31, 0x18(r30)
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mTekiType    = TEKI_Frog;
+	mPersonality = new TekiPersonality();
 }
 
 /*
@@ -151,52 +95,15 @@ GenObjectTeki::GenObjectTeki()
  * Address:	8011B420
  * Size:	000094
  */
-void GenObjectTeki::doRead(RandomAccessStream&)
+void GenObjectTeki::doRead(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r0, 0xC(r3)
-	  cmplwi    r0, 0x8
-	  bgt-      .loc_0x44
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x1C(r30)
-	  b         .loc_0x60
+	if (mVersion <= 8) {
+		mTekiType = input.readInt();
+	} else {
+		mTekiType = (u8)input.readByte();
+	}
 
-	.loc_0x44:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x1C(r30)
-
-	.loc_0x60:
-	  lwz       r3, 0x18(r30)
-	  mr        r4, r31
-	  lwz       r5, 0xC(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mPersonality->read(input, mVersion);
 }
 
 /*
@@ -204,37 +111,10 @@ void GenObjectTeki::doRead(RandomAccessStream&)
  * Address:	8011B4B4
  * Size:	000068
  */
-void GenObjectTeki::doWrite(RandomAccessStream&)
+void GenObjectTeki::doWrite(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r0, 0x1C(r30)
-	  lwz       r12, 0x28(r12)
-	  extsb     r4, r0
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x18(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	output.writeByte((char)mTekiType);
+	mPersonality->write(output);
 }
 
 /*
@@ -244,6 +124,15 @@ void GenObjectTeki::doWrite(RandomAccessStream&)
  */
 void GenObjectTeki::updateUseList(Generator*, int)
 {
+	if (mTekiType < TEKI_START || mTekiType >= TEKI_TypeCount) {
+		return;
+	}
+
+	tekiMgr->mUsingType[mTekiType] = true;
+
+	if (!tekiMgr->mTekiParams[mTekiType]) {
+		return;
+	}
 	/*
 	.loc_0x0:
 	  lwz       r4, 0x1C(r3)
@@ -284,7 +173,7 @@ void GenObjectTeki::updateUseList(Generator*, int)
  * Address:	8011B58C
  * Size:	000120
  */
-void* GenObjectTeki::birth(BirthInfo&)
+void* GenObjectTeki::birth(BirthInfo& info)
 {
 	/*
 	.loc_0x0:

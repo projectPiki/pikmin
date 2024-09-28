@@ -12,6 +12,7 @@
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"
+#include "PaniAnimator.h"
 
 /////////// Shearwig AI Actions ///////////
 
@@ -31,7 +32,7 @@ struct rippleEffect : public zen::CallBack1<zen::particleGenerator*> {
 /*
  * @brief TODO
  */
-struct TAIkabekuiCSoundTable {
+struct TAIkabekuiCSoundTable : public PaniSoundTable {
 	TAIkabekuiCSoundTable();
 
 	// TODO: members

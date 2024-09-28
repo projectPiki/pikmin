@@ -1,4 +1,6 @@
 #include "TekiPersonality.h"
+#include "sysNew.h"
+#include "ParaParameters.h"
 
 /*
  * --INFO--
@@ -27,6 +29,19 @@ static void _Print(char*, ...)
  */
 TekiPersonality::TekiPersonality()
 {
+	int i                         = INT_ParamCount;
+	ParaParameterInfoI* intParams = new ParaParameterInfoI[i];
+	intParams[0].set("PELLET_MIN_COUNT", -128, 127);
+	intParams[1].set("PELLET_MAX_COUNT", -128, 127);
+	intParams[2].set("WATER_MIN_COUNT", -128, 127);
+	intParams[3].set("WATER_MAX_COUNT", -128, 127);
+	intParams[4].set("WATER_MAX_COUNT", -128, 127);
+
+	ParaParameterInfoF* floatParams = new ParaParameterInfoF[i];
+	// some setup of these params
+
+	mParams = new ParaMultiParameters(5, intParams, 5, floatParams);
+	reset();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -169,84 +184,24 @@ TekiPersonality::TekiPersonality()
  */
 void TekiPersonality::reset()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x6E6F
-	  stw       r0, 0x4(r1)
-	  addi      r4, r4, 0x6E65
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x60(r1)
-	  li        r30, 0
-	  lfs       f0, -0x5D0(r13)
-	  stfs      f0, 0x4(r3)
-	  addi      r3, r31, 0x28
-	  lfs       f0, -0x5CC(r13)
-	  stfs      f0, 0x8(r31)
-	  lfs       f0, -0x5C8(r13)
-	  stfs      f0, 0xC(r31)
-	  lfs       f0, -0x5818(r2)
-	  stfs      f0, 0x1C(r31)
-	  lfs       f0, -0x5C4(r13)
-	  stfs      f0, 0x10(r31)
-	  lfs       f0, -0x5C0(r13)
-	  stfs      f0, 0x14(r31)
-	  lfs       f0, -0x5BC(r13)
-	  stfs      f0, 0x18(r31)
-	  stw       r30, 0x20(r31)
-	  stw       r30, 0x24(r31)
-	  bl        -0x108DFC
-	  lwz       r3, 0x34(r31)
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x0(r3)
-	  stw       r30, 0x0(r3)
-	  lwz       r3, 0x34(r31)
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x0(r3)
-	  stw       r30, 0x4(r3)
-	  lwz       r3, 0x34(r31)
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x0(r3)
-	  stw       r30, 0x8(r3)
-	  lwz       r3, 0x34(r31)
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x0(r3)
-	  stw       r30, 0xC(r3)
-	  lwz       r3, 0x34(r31)
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x0(r3)
-	  stw       r30, 0x10(r3)
-	  lwz       r3, 0x34(r31)
-	  lfs       f0, -0x5804(r2)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x0(r3)
-	  lwz       r3, 0x34(r31)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x4(r3)
-	  lwz       r3, 0x34(r31)
-	  lfs       f0, -0x5818(r2)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x8(r3)
-	  lwz       r3, 0x34(r31)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0xC(r3)
-	  lwz       r3, 0x34(r31)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x10(r3)
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	_04.set(0.0f, 0.0f, 0.0f);
+	_1C = 0.0f;
+	_10.set(0.0f, 0.0f, 0.0f);
+	_20 = 0;
+	_24 = 0;
+	mID.setID('none');
+
+	mParams->setI(0, 0);
+	mParams->setI(1, 0);
+	mParams->setI(2, 0);
+	mParams->setI(3, 0);
+	mParams->setI(4, 0);
+
+	mParams->setF(0, 1.0f);
+	mParams->setF(1, 1.0f);
+	mParams->setF(2, 0.0f);
+	mParams->setF(3, 0.0f);
+	mParams->setF(4, 0.0f);
 }
 
 /*

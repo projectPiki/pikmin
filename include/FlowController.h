@@ -15,7 +15,9 @@ struct FlowController {
 	void setStage(char*);
 
 	// TODO: members
-	u8 _00[0x244];          // _00, unknown
+	u8 _00[0xB0];           // _00, unknown
+	char _B0[0x10];         // _B0, i have no idea how big this array is, this is a guess for now
+	u8 _C0[0x244 - 0xC0];   // _B4, unknown
 	int _244;               // _244
 	u8 _248[0x24C - 0x248]; // _248, unknown
 	u32 _24C;               // _24C, unknown

@@ -4,6 +4,7 @@
 #include "system.h"
 #include "sysNew.h"
 #include "stl/string.h"
+#include "PikiMacros.h"
 
 /*
  * --INFO--
@@ -38,37 +39,38 @@ Texture::Texture()
 	mTextureData = nullptr;
 	_1C          = 0.0f;
 	_24          = new u32[8]; // this is (probably) not a u32 array, it's an object of size 0x20. TODO: work out WHAT object
-	                           /*
-	                           .loc_0x0:
-	                             mflr      r0
-	                             lis       r4, 0x8023
-	                             stw       r0, 0x4(r1)
-	                             subi      r0, r4, 0x6F50
-	                             li        r4, 0
-	                             stwu      r1, -0x18(r1)
-	                             stw       r31, 0x14(r1)
-	                             addi      r31, r3, 0
-	                             lis       r3, 0x8023
-	                             stw       r0, 0x0(r31)
-	                             subi      r0, r3, 0x6F98
-	                             li        r3, 0x20
-	                             stw       r0, 0x0(r31)
-	                             li        r0, -0x1
-	                             stw       r4, 0x30(r31)
-	                             stw       r4, 0x34(r31)
-	                             stw       r0, 0x20(r31)
-	                             stw       r4, 0x18(r31)
-	                             lfs       f0, -0x7BA0(r2)
-	                             stfs      f0, 0x1C(r31)
-	                             bl        0x2E20
-	                             stw       r3, 0x24(r31)
-	                             mr        r3, r31
-	                             lwz       r0, 0x1C(r1)
-	                             lwz       r31, 0x14(r1)
-	                             addi      r1, r1, 0x18
-	                             mtlr      r0
-	                             blr
-	                           */
+
+	/*
+	.loc_0x0:
+	  mflr      r0
+	  lis       r4, 0x8023
+	  stw       r0, 0x4(r1)
+	  subi      r0, r4, 0x6F50
+	  li        r4, 0
+	  stwu      r1, -0x18(r1)
+	  stw       r31, 0x14(r1)
+	  addi      r31, r3, 0
+	  lis       r3, 0x8023
+	  stw       r0, 0x0(r31)
+	  subi      r0, r3, 0x6F98
+	  li        r3, 0x20
+	  stw       r0, 0x0(r31)
+	  li        r0, -0x1
+	  stw       r4, 0x30(r31)
+	  stw       r4, 0x34(r31)
+	  stw       r0, 0x20(r31)
+	  stw       r4, 0x18(r31)
+	  lfs       f0, -0x7BA0(r2)
+	  stfs      f0, 0x1C(r31)
+	  bl        0x2E20
+	  stw       r3, 0x24(r31)
+	  mr        r3, r31
+	  lwz       r0, 0x1C(r1)
+	  lwz       r31, 0x14(r1)
+	  addi      r1, r1, 0x18
+	  mtlr      r0
+	  blr
+	*/
 }
 
 /*
@@ -201,12 +203,13 @@ void Texture::read(RandomAccessStream& input)
 void Texture::detach()
 {
 	_20 = -1; // needs to use r4?
-	          /*
-	          .loc_0x0:
-	            li        r4, -0x1
-	            stw       r4, 0x20(r3)
-	            blr
-	          */
+
+	/*
+	.loc_0x0:
+	  li        r4, -0x1
+	  stw       r4, 0x20(r3)
+	  blr
+	*/
 }
 
 /*

@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	000084
  */
 TAIusubaSoundTable::TAIusubaSoundTable()
+    : PaniSoundTable(2)
 {
 	// UNUSED FUNCTION
 }

@@ -661,6 +661,7 @@ TaiMizinkoParameters::TaiMizinkoParameters()
  * Size:	000084
  */
 TaiMizinkoSoundTable::TaiMizinkoSoundTable()
+    : PaniSoundTable(4)
 {
 	/*
 	.loc_0x0:

@@ -4,13 +4,14 @@
 #include "types.h"
 #include "TAI/MotionActions.h"
 #include "TekiParameters.h"
+#include "PaniAnimator.h"
 
 /////////// Snitchbug AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TaiNapkidSoundTable {
+struct TaiNapkidSoundTable : public PaniSoundTable {
 	TaiNapkidSoundTable();
 
 	// TODO: members

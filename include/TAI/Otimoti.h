@@ -4,13 +4,14 @@
 #include "types.h"
 #include "TAI/EffectActions.h"
 #include "TekiParameters.h"
+#include "PaniAnimator.h"
 
 /////////// Frog (Yellow and White) AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TaiOtimotiSoundTable {
+struct TaiOtimotiSoundTable : public PaniSoundTable {
 	TaiOtimotiSoundTable();
 
 	// TODO: members
@@ -30,7 +31,7 @@ struct TaiOtimotiParameters : public TekiParameters {
 /*
  * @brief TODO
  */
-struct TaiBlackFrogSoundTable {
+struct TaiBlackFrogSoundTable : public PaniSoundTable {
 	TaiBlackFrogSoundTable();
 
 	// TODO: members

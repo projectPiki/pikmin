@@ -5,13 +5,14 @@
 #include "TAI/MotionActions.h"
 #include "TAI/ReactionActions.h"
 #include "TekiParameters.h"
+#include "PaniAnimator.h"
 
 /////////// Pellet Posy AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TaiPalmSoundTable {
+struct TaiPalmSoundTable : public PaniSoundTable {
 	TaiPalmSoundTable();
 
 	// TODO: members

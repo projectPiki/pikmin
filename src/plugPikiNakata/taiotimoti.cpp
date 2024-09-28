@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	000084
  */
 TaiOtimotiSoundTable::TaiOtimotiSoundTable()
+    : PaniSoundTable(12)
 {
 	/*
 	.loc_0x0:
@@ -426,6 +427,7 @@ TaiOtimotiParameters::TaiOtimotiParameters()
  * Size:	000084
  */
 TaiBlackFrogSoundTable::TaiBlackFrogSoundTable()
+    : PaniSoundTable(10)
 {
 	/*
 	.loc_0x0:

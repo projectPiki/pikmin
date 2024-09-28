@@ -9,13 +9,14 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "PaniAnimator.h"
 
 /////////// Male Sheargrub AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TAIkabekuiBSoundTable {
+struct TAIkabekuiBSoundTable : public PaniSoundTable {
 	TAIkabekuiBSoundTable();
 
 	// TODO: members

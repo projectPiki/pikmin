@@ -105,6 +105,7 @@ TaiIwagonParameters::TaiIwagonParameters()
  * Size:	000084
  */
 TaiIwagonSoundTable::TaiIwagonSoundTable()
+    : PaniSoundTable(2)
 {
 	/*
 	.loc_0x0:

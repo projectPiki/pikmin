@@ -4,6 +4,7 @@
 #include "types.h"
 #include "TAI/Action.h"
 #include "TekiParameters.h"
+#include "PaniAnimator.h"
 
 /////////// Rock AI Actions ///////////
 
@@ -21,7 +22,7 @@ struct TaiIwagonParameters : public TekiParameters {
 /*
  * @brief TODO
  */
-struct TaiIwagonSoundTable {
+struct TaiIwagonSoundTable : public PaniSoundTable {
 	TaiIwagonSoundTable();
 
 	// TODO: members

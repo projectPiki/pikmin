@@ -6,6 +6,7 @@
 #include "TAI/MotionActions.h"
 #include "TAI/EffectActions.h"
 #include "TekiParameters.h"
+#include "PaniAnimator.h"
 
 struct NVector3f;
 
@@ -14,7 +15,7 @@ struct NVector3f;
 /*
  * @brief TODO
  */
-struct TaiCollecSoundTable {
+struct TaiCollecSoundTable : public PaniSoundTable {
 	TaiCollecSoundTable();
 
 	// TODO: members

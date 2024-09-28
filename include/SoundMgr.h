@@ -121,8 +121,10 @@ struct SeWin : public GmWin {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x78.
  */
 struct SeSystem {
 
@@ -163,8 +165,9 @@ struct SeSystem {
 	void isLoopType(int);
 
 	// TODO: members
+	u8 _00[0x78]; // _00, unknown
 };
 
-extern SeSystem* sySystem;
+extern SeSystem* seSystem;
 
 #endif

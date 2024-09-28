@@ -26,6 +26,7 @@ static void _Print(char*, ...)
  * Size:	000084
  */
 TaiSwallowSoundTable::TaiSwallowSoundTable()
+    : PaniSoundTable(8)
 {
 	/*
 	.loc_0x0:

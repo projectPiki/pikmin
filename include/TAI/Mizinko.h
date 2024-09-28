@@ -4,6 +4,7 @@
 #include "types.h"
 #include "TAI/TimerActions.h"
 #include "TekiParameters.h"
+#include "PaniAnimator.h"
 
 /////////// Honeywisp Spawner AI Actions ///////////
 
@@ -69,7 +70,7 @@ struct TaiMizigenNaviApprouchAction : public TaiAction {
 /*
  * @brief TODO
  */
-struct TaiMizinkoSoundTable {
+struct TaiMizinkoSoundTable : public PaniSoundTable {
 	TaiMizinkoSoundTable();
 
 	// TODO: members

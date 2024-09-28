@@ -145,4 +145,6 @@ struct EffectMgr : public CoreNode {
 	// TODO: members
 };
 
+extern EffectMgr* effectMgr;
+
 #endif

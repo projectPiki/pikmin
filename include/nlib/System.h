@@ -20,7 +20,7 @@ struct NHeap {
 namespace NSystem {
 void initSystem(System*);
 void randomInt(int);
-void getFreeHeap();
+int getFreeHeap();
 
 extern System* system;
 }; // namespace NSystem

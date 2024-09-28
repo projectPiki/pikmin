@@ -9,13 +9,14 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "PaniAnimator.h"
 
 /////////// Usuba (Unused Enemy) AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TAIusubaSoundTable {
+struct TAIusubaSoundTable : public PaniSoundTable {
 	TAIusubaSoundTable();
 
 	// TODO: members

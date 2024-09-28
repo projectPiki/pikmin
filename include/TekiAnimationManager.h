@@ -8,6 +8,8 @@ struct TekiMgr;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct TekiAnimationManager : public Node {
 	TekiAnimationManager(TekiMgr*);
@@ -15,8 +17,8 @@ struct TekiAnimationManager : public Node {
 	virtual void read(RandomAccessStream&); // _0C
 
 	// _00     = VTBL
-	// _00-_20 = Section?
-	// TODO: members
+	// _00-_20 = Node
+	TekiMgr* mTekiMgr; // _20
 };
 
 #endif

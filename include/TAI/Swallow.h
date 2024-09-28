@@ -5,13 +5,14 @@
 #include "TAI/MotionActions.h"
 #include "TAI/EffectActions.h"
 #include "TekiParameters.h"
+#include "PaniAnimator.h"
 
 /////////// (Big) Bulborb AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TaiSwallowSoundTable {
+struct TaiSwallowSoundTable : public PaniSoundTable {
 	TaiSwallowSoundTable();
 
 	// TODO: members

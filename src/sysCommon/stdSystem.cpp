@@ -58,8 +58,8 @@ StdSystem::StdSystem()
 	mLightFlares      = nullptr;
 
 	initSoftReset();
-	mDataRoot = "dataDir/";
-	_19C      = 0;
+	mDataRoot    = "dataDir/";
+	mCurrMemInfo = nullptr;
 }
 
 /*

@@ -9,13 +9,14 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "PaniAnimator.h"
 
 /////////// Giant Egg AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TAItamagoSoundTable {
+struct TAItamagoSoundTable : public PaniSoundTable {
 	TAItamagoSoundTable();
 
 	// TODO: members

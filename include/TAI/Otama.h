@@ -9,13 +9,14 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "PaniAnimator.h"
 
 /////////// Wolpole AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TAIotamaSoundTable {
+struct TAIotamaSoundTable : public PaniSoundTable {
 	TAIotamaSoundTable();
 
 	// TODO: members

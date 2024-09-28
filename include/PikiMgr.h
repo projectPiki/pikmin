@@ -35,6 +35,8 @@ struct PikiProp : public CreatureProp {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x74.
  */
 struct PikiMgr : public MonoObjectMgr {
 	PikiMgr(Navi*);
@@ -56,11 +58,15 @@ struct PikiMgr : public MonoObjectMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_28 = MonoObjectMgr?
-	u8 _28[0x68 - sizeof(MonoObjectMgr)]; // _28, update/remove once size of MonoObjectMgr is known
-	PikiProp* mParms;                     // _68
-	Navi* mNavi;                          // _6C
-	                                      // TODO: members
+	// _00-_3C = MonoObjectMgr
+	u8 _3C[0x4C - 0x3C]; // _3C
+	MapMgr* mMapMgr;     // _4C
+	u8 _50[0x68 - 0x50]; // _50, unknown
+	PikiProp* mParms;    // _68
+	Navi* mNavi;         // _6C
+	u8 _70[0x4];         // _70, unknown
 };
+
+extern PikiMgr* pikiMgr;
 
 #endif

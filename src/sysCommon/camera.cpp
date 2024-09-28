@@ -1,4 +1,6 @@
 #include "Camera.h"
+#include "Texture.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -35,8 +37,9 @@ void CullFrustum::vectorToWorldPlane(Vector3f&, CullingPlane&)
  * Address:	80041584
  * Size:	00006C
  */
-void CullFrustum::isPointVisible(Vector3f&, f32)
+bool CullFrustum::isPointVisible(Vector3f&, f32)
 {
+
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x4(r3)
@@ -1865,26 +1868,10 @@ void CullFrustum::calcVectors(Vector3f&, Vector3f&)
  * Address:	8004300C
  * Size:	00003C
  */
-void CullFrustum::calcLookAt(Vector3f&, Vector3f&, Vector3f*)
+void CullFrustum::calcLookAt(Vector3f& p1, Vector3f& p2, Vector3f* p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r31, 0x1E0
-	  bl        -0x47A4
-	  addi      r3, r31, 0x1E0
-	  addi      r4, r31, 0x220
-	  bl        -0x4BF4
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	_1E0.makeLookat(p1, p2, p3);
+	_1E0.inverse(&_220);
 }
 
 /*
@@ -2035,98 +2022,10 @@ void Camera::projectCamPoint(Vector3f&)
  */
 Camera::Camera()
 {
-	_155 = 0;
-	_164.set(0.0f, 0.0f, 0.0f);
-	_1CC = 60.0f;
-	_1D0 = 1.0f;
-	_1D4 = 1000.0f;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8003
-	  stw       r0, 0x4(r1)
-	  subi      r4, r4, 0x63B8
-	  li        r5, 0
-	  stwu      r1, -0x18(r1)
-	  li        r6, 0x2C
-	  li        r7, 0x6
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r31, 0xC
-	  bl        0x1D1880
-	  lfs       f2, -0x7BF8(r2)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stfs      f2, 0x160(r31)
-	  stfs      f2, 0x15C(r31)
-	  stfs      f2, 0x158(r31)
-	  stfs      f2, 0x16C(r31)
-	  stfs      f2, 0x168(r31)
-	  stfs      f2, 0x164(r31)
-	  stfs      f2, 0x178(r31)
-	  stfs      f2, 0x174(r31)
-	  stfs      f2, 0x170(r31)
-	  stfs      f2, 0x184(r31)
-	  stfs      f2, 0x180(r31)
-	  stfs      f2, 0x17C(r31)
-	  stfs      f2, 0x190(r31)
-	  stfs      f2, 0x18C(r31)
-	  stfs      f2, 0x188(r31)
-	  stfs      f2, 0x19C(r31)
-	  stfs      f2, 0x198(r31)
-	  stfs      f2, 0x194(r31)
-	  stfs      f2, 0x1A8(r31)
-	  stfs      f2, 0x1A4(r31)
-	  stfs      f2, 0x1A0(r31)
-	  stfs      f2, 0x1B4(r31)
-	  stfs      f2, 0x1B0(r31)
-	  stfs      f2, 0x1AC(r31)
-	  stfs      f2, 0x1C0(r31)
-	  stfs      f2, 0x1BC(r31)
-	  stfs      f2, 0x1B8(r31)
-	  stb       r0, 0x155(r31)
-	  lfs       f0, -0x7930(r13)
-	  stfs      f0, 0x164(r31)
-	  lfs       f0, -0x792C(r13)
-	  stfs      f0, 0x168(r31)
-	  lfs       f0, -0x7928(r13)
-	  stfs      f0, 0x16C(r31)
-	  lfs       f0, -0x7BC0(r2)
-	  stfs      f0, 0x1CC(r31)
-	  lfs       f1, -0x7BD4(r2)
-	  stfs      f1, 0x1D0(r31)
-	  lfs       f0, -0x7BBC(r2)
-	  stfs      f0, 0x1D4(r31)
-	  stfs      f2, 0x328(r31)
-	  stfs      f2, 0x324(r31)
-	  stfs      f2, 0x320(r31)
-	  stfs      f2, 0x334(r31)
-	  stfs      f2, 0x330(r31)
-	  stfs      f2, 0x32C(r31)
-	  stfs      f2, 0x340(r31)
-	  stfs      f2, 0x33C(r31)
-	  stfs      f2, 0x338(r31)
-	  lfs       f0, -0x78CC(r13)
-	  stfs      f0, 0x320(r31)
-	  lfs       f0, -0x78C8(r13)
-	  stfs      f0, 0x324(r31)
-	  lfs       f0, -0x78C4(r13)
-	  stfs      f0, 0x328(r31)
-	  lfs       f0, -0x78C0(r13)
-	  stfs      f0, 0x32C(r31)
-	  lfs       f0, -0x78BC(r13)
-	  stfs      f0, 0x330(r31)
-	  lfs       f0, -0x78B8(r13)
-	  stfs      f0, 0x334(r31)
-	  stfs      f1, 0x1C4(r31)
-	  lfs       f0, -0x7BB8(r2)
-	  stfs      f0, 0x344(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_320.set(0.0f, 4.363323f, 0.0f);
+	_32C.set(0.0f, 0.0f, 0.0f);
+	_1C4 = 1.0f;
+	_344 = 110.0f;
 }
 
 /*
@@ -2134,65 +2033,15 @@ Camera::Camera()
  * Address:	80043314
  * Size:	0000D0
  */
-void LightCamera::initLightmap(int, int)
+void LightCamera::initLightmap(int p1, int p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0x3C
-	  bl        0x3CC4
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x40
-	  bl        0xE44
-
-	.loc_0x40:
-	  xoris     r0, r29, 0x8000
-	  stw       r31, 0x358(r28)
-	  lis       r3, 0x4330
-	  stw       r0, 0x1C(r1)
-	  li        r0, 0x105
-	  lfd       f1, -0x7BC8(r2)
-	  mr        r4, r29
-	  stw       r3, 0x18(r1)
-	  lfs       f2, -0x7BD4(r2)
-	  mr        r5, r29
-	  lfd       f0, 0x18(r1)
-	  mr        r6, r30
-	  lwz       r3, 0x358(r28)
-	  fsubs     f0, f0, f1
-	  li        r7, 0
-	  fdivs     f0, f2, f0
-	  stfs      f0, 0x28(r3)
-	  lwz       r3, 0x358(r28)
-	  stfs      f0, 0x2C(r3)
-	  lwz       r3, 0x358(r28)
-	  sth       r0, 0x6(r3)
-	  lwz       r3, 0x358(r28)
-	  bl        0x11B8
-	  lis       r4, 0x8023
-	  lwz       r3, 0x2DEC(r13)
-	  subi      r5, r4, 0x7118
-	  lwz       r4, 0x358(r28)
-	  bl        -0x3BC8
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mLightMap      = new Texture();
+	f32 val        = 1.0f / f32(p1);
+	mLightMap->_28 = val;
+	mLightMap->_2C = val;
+	mLightMap->_06 = 0x105;
+	mLightMap->createBuffer(p1, p1, p2, nullptr);
+	gsys->addTexture(mLightMap, "internalLightmap");
 }
 
 /*

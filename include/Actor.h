@@ -52,9 +52,10 @@ struct ActorMgr : public MonoObjectMgr {
 	Creature* createObject();
 
 	// _00     = VTBL
-	// _00-_1C = MonoObjectMgr?
+	// _08     = VTBL
+	// _00-_3C = MonoObjectMgr
 	// TODO: members?
-	u8 _38[0x40 - 0x38];   // _38, unknown
+	u8 _3C[0x4];           // _3C, unknown
 	PikiShapeObject** _40; // _40
 	CreatureProp** _44;    // _44
 	SimpleAI** _48;        // _48

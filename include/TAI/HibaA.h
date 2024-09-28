@@ -8,13 +8,14 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "PaniAnimator.h"
 
 /////////// Fire Geyser AI Actions ///////////
 
 /*
  * @brief TODO
  */
-struct TAIhibaASoundTable {
+struct TAIhibaASoundTable : public PaniSoundTable {
 	TAIhibaASoundTable();
 
 	// TODO: members

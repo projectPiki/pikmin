@@ -11,6 +11,16 @@ struct Navi;
 /**
  * @brief TODO
  */
+enum PikiColor {
+	Red    = 0,
+	Yellow = 1,
+	Blue   = 2,
+	PikiColorCount, // 3
+};
+
+/**
+ * @brief TODO
+ */
 struct Piki : public Creature, public PaniAnimKeyListener {
 	Piki(CreatureProp*);
 
@@ -135,9 +145,10 @@ struct PikiShapeObject {
 	PikiShapeObject(Shape*);
 
 	void exitCourse();
-	void init();
 	void getAnimMgr();
 	void initOnce();
+
+	static void init();
 
 	// unused/inlined:
 	void create(int);

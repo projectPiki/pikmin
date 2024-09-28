@@ -182,4 +182,6 @@ struct RouteTracer {
 	// TODO: members
 };
 
+extern RouteMgr* routeMgr;
+
 #endif

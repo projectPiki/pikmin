@@ -48,7 +48,9 @@ struct ObjectMgr : public Traversable, public Node {
 };
 
 /**
- * @brief TODO.
+ * @brief TODO
+ *
+ * @note Size: 0x3C.
  */
 struct MonoObjectMgr : public ObjectMgr {
 	MonoObjectMgr();
@@ -83,6 +85,7 @@ struct MonoObjectMgr : public ObjectMgr {
 	int _2C;  // _2C
 	u32 _30;  // _30, unknown
 	int* _34; // _34
+	u32 _38;  // _38, unknown
 };
 
 /**

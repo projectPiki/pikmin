@@ -11,6 +11,7 @@
 struct Creature;
 struct MapMgr;
 struct Pellet;
+struct TekiPersonality;
 
 /**
  * @brief TODO
@@ -178,7 +179,7 @@ struct GenObject : public GenBase {
 	virtual void init(Generator*);               // _28
 	virtual void update(Generator*);             // _2C
 	virtual void render(Graphics&, Generator*);  // _30
-	virtual void* birth(BirthInfo&) = 0; // _34, this and inheritances probably produce a unified base class not void*, not sure what yet
+	virtual void* birth(BirthInfo&) = 0;         // _34
 
 	// _04     = VTBL
 	// _00-_18 = GenBase
@@ -383,6 +384,8 @@ struct GenObjectPlant : public GenObject {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct GenObjectTeki : public GenObject {
 	GenObjectTeki();
@@ -396,7 +399,8 @@ struct GenObjectTeki : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	// TODO: members
+	TekiPersonality* mPersonality; // _18
+	int mTekiType;                 // _1C
 };
 
 /**

@@ -171,6 +171,8 @@ struct MapRoom {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x4D4.
  */
 struct MapMgr {
 	MapMgr(Controller*);
@@ -202,6 +204,9 @@ struct MapMgr {
 	void closeCollTri(CollGroup*, CollTriInfo*);
 
 	// TODO: members
+	u8 _00[0x4D4]; // _4D4, unknown
 };
+
+extern MapMgr* mapMgr;
 
 #endif

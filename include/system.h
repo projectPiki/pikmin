@@ -27,6 +27,7 @@ struct OSThread;
 struct Shape;
 struct AnimData;
 struct AnimFrameCacher;
+struct MemInfo;
 
 /**
  * @brief TODO
@@ -112,6 +113,12 @@ struct StdSystem {
 
 	static char* stringDup(char*);
 
+	inline void setFade(f32 start, f32 end)
+	{
+		mFadeStart = start;
+		mFadeEnd   = end;
+	}
+
 	bool mPending;                 // _00
 	f32 mCurrentFade;              // _04
 	f32 mFadeStart;                // _08
@@ -136,7 +143,7 @@ struct StdSystem {
 	AyuHeap mHeaps[8];             // _54 (sys, ovl, app, load, teki, movie, message, lang)
 	int mActiveHeapIdx;            // _194
 	u32 _198;                      // _198, unknown
-	u32 _19C;                      // _19C
+	MemInfo* mCurrMemInfo;         // _19C
 
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.
 	// OR everything above this is a separate struct with some inheritance (doubt)
@@ -223,6 +230,7 @@ struct System : public StdSystem {
 	inline AtxRouter* getAtxRouter() { return mAtxRouter; }
 	inline void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
 	f32 getFrameTime() { return mDeltaTime; }
+	inline void setCurrMemInfo(MemInfo* info) { mCurrMemInfo = info; }
 
 	// _00      = VTBL
 	// _00-_248 = StdSystem

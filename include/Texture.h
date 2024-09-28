@@ -91,6 +91,8 @@ struct TexImg : public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x3C.
  */
 struct Texture : public GfxObject {
 	Texture();
@@ -121,10 +123,11 @@ struct Texture : public GfxObject {
 	f32 _1C;           // _1C
 	int _20;           // _20
 	void* _24;         // _24, pointer to something of size 0x20
-	int _28;           // _28
-	int _2C;           // _2C
+	f32 _28;           // _28
+	f32 _2C;           // _2C
 	int _30;           // _30
 	int _34;           // _34
+	u8 _38[0x4];       // _38, unknown
 };
 
 /**

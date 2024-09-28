@@ -27,6 +27,8 @@ enum PcamVibrationEventIDs {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct PcamCameraManager : public Node {
 	PcamCameraManager(Camera*, Controller*);
