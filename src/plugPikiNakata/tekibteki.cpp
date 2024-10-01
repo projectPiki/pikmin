@@ -1,6 +1,7 @@
 #include "types.h"
 #include "teki.h"
 #include "Shape.h"
+#include "sysNew.h"
 
 int BTeki::TEKI_OPTION_VISIBLE            = 1 << 0;
 int BTeki::TEKI_OPTION_SHADOW_VISIBLE     = 1 << 1;
@@ -267,57 +268,12 @@ void BTeki::doRestore(CreatureInf*)
  * Address:	8014416C
  * Size:	0000B0
  */
-TekiShapeObject::TekiShapeObject(Shape*)
+TekiShapeObject::TekiShapeObject(Shape* shape)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8023
-	  stw       r0, 0x4(r1)
-	  subi      r0, r5, 0x7730
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  stw       r0, 0x10(r3)
-	  li        r0, 0
-	  stw       r0, 0x4(r3)
-	  li        r3, 0xB8
-	  lfs       f0, -0x58B0(r2)
-	  stfs      f0, 0x8(r29)
-	  lfs       f0, -0x58AC(r2)
-	  stfs      f0, 0xC(r29)
-	  stw       r30, 0x0(r29)
-	  lwz       r4, 0x0(r29)
-	  stw       r0, 0x24(r4)
-	  bl        -0xFD1BC
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x7C
-	  lis       r5, 0x1
-	  subi      r6, r5, 0x8000
-	  addi      r4, r30, 0
-	  li        r5, 0
-	  li        r7, 0
-	  bl        -0xF3940
-
-	.loc_0x7C:
-	  stw       r31, 0x14(r29)
-	  addi      r5, r29, 0x4
-	  li        r4, 0
-	  lwz       r3, 0x0(r29)
-	  bl        -0x10F194
-	  mr        r3, r29
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mShape               = shape;
+	mShape->mFrameCacher = nullptr;
+	mAnimMgr             = new AnimMgr(shape, nullptr, 0x8000, nullptr);
+	mShape->overrideAnim(0, &mAnimContext);
 }
 
 /*
@@ -4739,7 +4695,7 @@ void BTeki::insideDirection(Vector3f&)
  * Address:	801476E0
  * Size:	000254
  */
-void BTeki::getClosestNaviPiki(Condition&, f32*)
+Creature* BTeki::getClosestNaviPiki(Condition&, f32*)
 {
 	/*
 	.loc_0x0:

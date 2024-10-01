@@ -52,7 +52,7 @@ enum CreatureFlags {
 	CF_Unk16         = 1 << 16, // 0x10000
 	CF_Unk17         = 1 << 17, // 0x20000
 	CF_Unk18         = 1 << 18, // 0x40000
-	CF_Unk19         = 1 << 19, // 0x80000
+	CF_Unk19         = 1 << 19, // 0x80000, use result flags maybe?
 	CF_Unk20         = 1 << 20, // 0x100000
 	CF_FixPosition   = 1 << 21, // 0x200000
 };
@@ -208,6 +208,8 @@ struct Creature : public RefCountable, public EventTalker {
 	inline void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
 	inline void resetCreatureFlag(u32 flag) { mCreatureFlags &= ~flag; }
 	inline bool isCreatureFlag(u32 flag) const { return mCreatureFlags & flag; }
+
+	inline Vector3f& getPosition() { return mPosition; }
 
 	// _00     = VTBL
 	// _00-_08 = RefCountable

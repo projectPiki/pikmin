@@ -18,7 +18,7 @@ struct TaiActionStateAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mStateID; // _08
 };
 
 /**
@@ -34,7 +34,8 @@ struct TaiSetOptionAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mOpt;    // _08
+	bool mDoSet; // _0C, true=set opt, false=clear opt
 };
 
 /**
@@ -50,7 +51,7 @@ struct TaiPlaySoundAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mSoundID; // _08
 };
 
 /**
@@ -66,7 +67,7 @@ struct TaiStopSoundAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mSoundID; // _08
 };
 
 /**
@@ -82,7 +83,6 @@ struct TaiTypeNaviWatchResultOnAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
@@ -98,7 +98,7 @@ struct TaiNaviWatchResultOnAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mResultFlag; // _08
 };
 
 #endif

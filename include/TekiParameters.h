@@ -6,6 +6,8 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x88.
  */
 struct TekiParameters : public Node {
 	TekiParameters(int, int);
@@ -16,7 +18,7 @@ struct TekiParameters : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
+	u8 _20[0x88 - 0x20]; // _20, unknown
 };
 
 #endif

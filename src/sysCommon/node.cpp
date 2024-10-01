@@ -1,5 +1,7 @@
-#include "types.h"
 #include "Node.h"
+#include "system.h"
+#include "stl/stdio.h"
+#include "Dolphin/os.h"
 
 NodeMgr* nodeMgr;
 
@@ -8,8 +10,9 @@ NodeMgr* nodeMgr;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "Node");
 	// UNUSED FUNCTION
 }
 
@@ -63,25 +66,25 @@ void CoreNode::del()
 		CoreNode* prev  = nullptr;
 
 		// Iterate through the children to find the one to delete
-		while (child) {
+		for (child; child; prev = child, child = child->mNext) {
 			if (child == this) {
 				if (prev) {
-					// If there's a previous child, bypass the current child
+					// don't break the list, link prev to next
 					prev->mNext = child->mNext;
-				} else {
-					// If there's no previous child, set the parent's child to the next child
-					mParent->mChild = child->mNext;
+
+					// Detach the current child
+					mNext   = nullptr;
+					mParent = nullptr;
+					return;
 				}
+				// If there's no previous child, set the parent's child to the next child
+				mParent->mChild = child->mNext;
 
 				// Detach the current child
 				mNext   = nullptr;
 				mParent = nullptr;
 				return;
 			}
-
-			// Move to the next child
-			prev  = child;
-			child = child->mNext;
 		}
 	}
 }
@@ -92,22 +95,9 @@ void CoreNode::del()
  */
 int CoreNode::getChildCount()
 {
-	return 0;
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x10(r3)
-	  li        r3, 0
-	  b         .loc_0x14
-
-	.loc_0xC:
-	  lwz       r4, 0xC(r4)
-	  addi      r3, r3, 0x1
-
-	.loc_0x14:
-	  cmplwi    r4, 0
-	  bne+      .loc_0xC
-	  blr
-	*/
+	int count = 0;
+	FOREACH_NODE(CoreNode, mChild, node) { count++; }
+	return count;
 }
 
 /*
@@ -115,52 +105,15 @@ int CoreNode::getChildCount()
  * Address:	800406A0
  * Size:	00009C
  */
-void CoreNode::load(char*, char*, u32)
+void CoreNode::load(char* p1, char* p2, u32 p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r6, r5, 0
-	  stw       r0, 0x4(r1)
-	  addi      r5, r4, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x7998
-	  stwu      r1, -0x120(r1)
-	  stw       r31, 0x11C(r1)
-	  stw       r30, 0x118(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x18
-	  bl        0x1D5ECC
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r1, 0x18
-	  li        r5, 0x1
-	  lwz       r12, 0x1A0(r3)
-	  li        r6, 0x1
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r31, r3
-	  beq-      .loc_0x84
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x84:
-	  lwz       r0, 0x124(r1)
-	  lwz       r31, 0x11C(r1)
-	  lwz       r30, 0x118(r1)
-	  addi      r1, r1, 0x120
-	  mtlr      r0
-	  blr
-	*/
+	char buf[256];
+	sprintf(buf, "%s%s", p1, p2);
+	BufferedInputStream* stream = gsys->openFile(buf, true, true);
+	if (stream) {
+		read(*stream);
+		stream->close();
+	}
 }
 
 /*
@@ -168,21 +121,11 @@ void CoreNode::load(char*, char*, u32)
  * Address:	8004073C
  * Size:	000028
  */
-void Node::init(char*)
+void Node::init(char* name)
 {
-	/*
-	.loc_0x0:
-	  li        r6, 0
-	  stw       r6, 0x10(r3)
-	  li        r5, 0x3
-	  li        r0, -0x1
-	  stw       r6, 0xC(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r5, 0x18(r3)
-	  stw       r0, 0x1C(r3)
-	  blr
-	*/
+	initCore(name);
+	mFlags = 0x1 | 0x2;
+	_1C    = -1;
 }
 
 /*
@@ -192,42 +135,13 @@ void Node::init(char*)
  */
 void Node::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  lwz       r31, 0x10(r3)
-	  b         .loc_0x50
-
-	.loc_0x18:
-	  lwz       r0, 0x18(r31)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x4C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x4C:
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x50:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x18
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	FOREACH_NODE(Node, mChild, node)
+	{
+		if (node->mFlags & 1) {
+			node->concat();
+			node->update();
+		}
+	}
 }
 
 /*
@@ -235,38 +149,9 @@ void Node::update()
  * Address:	800407D0
  * Size:	00005C
  */
-void Node::draw(Graphics&)
+void Node::draw(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r4
-	  lwz       r31, 0x10(r3)
-	  b         .loc_0x3C
-
-	.loc_0x20:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x3C:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x20
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	FOREACH_NODE(Node, mChild, node) { node->draw(gfx); }
 }
 
 /*
@@ -274,33 +159,18 @@ void Node::draw(Graphics&)
  * Address:	8004082C
  * Size:	00002C
  */
-void Node::render(Graphics&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void Node::render(Graphics& gfx) { draw(gfx); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000128
  */
-// SRTNode::SRTNode(char*)
-// {
-// 	// UNUSED FUNCTION
-// }
+SRTNode::SRTNode(char* name = "<SRTNode>")
+    : Node(name)
+{
+	// UNUSED FUNCTION
+}
 
 /*
  * --INFO--
@@ -309,46 +179,15 @@ void Node::render(Graphics&)
  */
 void SRTNode::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r31, 0x10(r3)
-	  b         .loc_0x5C
-
-	.loc_0x20:
-	  lwz       r0, 0x18(r31)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x58
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  addi      r4, r30, 0x20
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x58:
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x5C:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x20
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	// this feels like it should be SRTNode, but it's not
+	// if it were, SRTNode::concat would generate after this function rather than the end
+	FOREACH_NODE(Node, mChild, node)
+	{
+		if (node->mFlags & 1) {
+			node->concat(mWorldMtx);
+			node->update();
+		}
+	}
 }
 
 /*
@@ -356,44 +195,28 @@ void SRTNode::update()
  * Address:	800408D4
  * Size:	000064
  */
-void NodeMgr::Del(Node*)
+void NodeMgr::Del(Node* node)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x1
-	  cmplwi    r4, 0
-	  stb       r0, 0x0(r3)
-	  beqlr-
-	  lwz       r3, 0x8(r4)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r5, 0x10(r3)
-	  li        r3, 0
-	  b         .loc_0x58
+	mDelete = true;
+	if (!node) {
+		return;
+	}
+	if (!node->mParent) {
+		return;
+	}
 
-	.loc_0x28:
-	  cmplw     r5, r4
-	  bne-      .loc_0x50
-	  cmplwi    r3, 0
-	  beq-      .loc_0x44
-	  lwz       r0, 0xC(r5)
-	  stw       r0, 0xC(r3)
-	  blr
+	Node* child = static_cast<Node*>(node->mParent->mChild);
+	Node* prev  = nullptr;
+	for (child; child; prev = child, child = static_cast<Node*>(child->mNext)) {
+		if (child == node) {
+			if (prev) {
+				prev->mNext = child->mNext;
+				return;
+			}
 
-	.loc_0x44:
-	  lwz       r0, 0xC(r5)
-	  lwz       r3, 0x8(r4)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x50:
-	  mr        r3, r5
-	  lwz       r5, 0xC(r5)
-
-	.loc_0x58:
-	  cmplwi    r5, 0
-	  bne+      .loc_0x28
-	  blr
-	*/
+			node->mParent->mChild = child->mNext;
+		}
+	}
 }
 
 /*

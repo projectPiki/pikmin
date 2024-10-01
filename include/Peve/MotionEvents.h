@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Peve/Event.h"
 #include "nlib/Spline.h"
+#include "nlib/Geometry.h"
 
 struct NFunction3D;
 struct NPosture3DIO;
@@ -13,6 +14,8 @@ struct Vector3f;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct PeveAccelerationEvent : public PeveEvent {
 	PeveAccelerationEvent();
@@ -23,11 +26,13 @@ struct PeveAccelerationEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	// TODO: members
+	u8 _10[0xC]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x38.
  */
 struct PeveCircleMoveEvent : public PeveEvent {
 	PeveCircleMoveEvent();
@@ -41,7 +46,7 @@ struct PeveCircleMoveEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	// TODO: members
+	u8 _10[0x38 - 0x10]; // _10, unknown
 };
 
 /**
@@ -107,6 +112,8 @@ struct PeveHomingPostureEvent : public PeveParallelEvent {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x34.
  */
 struct PeveHorizontalSinWaveEvent : public PeveEvent {
 	PeveHorizontalSinWaveEvent()
@@ -121,7 +128,9 @@ struct PeveHorizontalSinWaveEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	// TODO: members
+	u8 _10[0x4];         // _10, unknown
+	NVector3f _14;       // _14
+	u8 _20[0x34 - 0x20]; // _20, unknown
 };
 
 /**
@@ -167,6 +176,8 @@ struct PeveMoveEvent : public PeveEvent {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x40.
  */
 struct PeveParabolaEvent : public PeveAccelerationEvent {
 	PeveParabolaEvent();
@@ -174,8 +185,8 @@ struct PeveParabolaEvent : public PeveAccelerationEvent {
 	void makeParabolaEvent(PeveCondition*, NVector3fIO*, NVector3f&, f32, f32);
 
 	// _00     = VTBL
-	// _00-_10 = PeveAccelerationEvent?
-	// TODO: members
+	// _00-_1C = PeveAccelerationEvent
+	u8 _1C[0x40 - 0x1C]; // _1C, unknown
 };
 
 /**

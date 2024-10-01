@@ -1,14 +1,13 @@
 #include "TAI/CollisionActions.h"
+#include "teki.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "taicollisionactions"); }
 
 /*
  * --INFO--
@@ -25,98 +24,43 @@ static void _Print(char*, ...)
  * Address:	8012E48C
  * Size:	000014
  */
-bool TaiBounceAction::actByEvent(TekiEvent&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r4)
-	  neg       r0, r0
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
+bool TaiBounceAction::actByEvent(TekiEvent& event) { return event._00 == 0; }
 
 /*
  * --INFO--
  * Address:	8012E4A0
  * Size:	000014
  */
-bool TaiGroundCollisionAction::actByEvent(TekiEvent&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r4)
-	  neg       r0, r0
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
+bool TaiGroundCollisionAction::actByEvent(TekiEvent& event) { return event._00 == 0; }
 
 /*
  * --INFO--
  * Address:	8012E4B4
  * Size:	000014
  */
-bool TaiWallCollisionAction::actByEvent(TekiEvent&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r4)
-	  subfic    r0, r0, 0x2
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
+bool TaiWallCollisionAction::actByEvent(TekiEvent& event) { return event._00 == 2; }
 
 /*
  * --INFO--
  * Address:	8012E4C8
  * Size:	000014
  */
-bool TaiCreatureCollisionAction::actByEvent(TekiEvent&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r4)
-	  subfic    r0, r0, 0x1
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
+bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event) { return event._00 == 1; }
 
 /*
  * --INFO--
  * Address:	8012E4DC
  * Size:	00003C
  */
-bool TaiPikiCollisionAction::actByEvent(TekiEvent&)
+bool TaiPikiCollisionAction::actByEvent(TekiEvent& event)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x14
-	  li        r3, 0
-	  blr
-
-	.loc_0x14:
-	  lwz       r3, 0x8(r4)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  blr
-
-	.loc_0x28:
-	  lwz       r0, 0x6C(r3)
-	  neg       r0, r0
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
+	if (event._00 != 1) {
+		return false;
+	}
+	if (!event._08) {
+		return false;
+	}
+	return event._08->mObjType == OBJTYPE_Piki;
 }
 
 /*
@@ -124,30 +68,15 @@ bool TaiPikiCollisionAction::actByEvent(TekiEvent&)
  * Address:	8012E518
  * Size:	00003C
  */
-bool TaiNaviCollisionAction::actByEvent(TekiEvent&)
+bool TaiNaviCollisionAction::actByEvent(TekiEvent& event)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x14
-	  li        r3, 0
-	  blr
-
-	.loc_0x14:
-	  lwz       r3, 0x8(r4)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  blr
-
-	.loc_0x28:
-	  lwz       r0, 0x6C(r3)
-	  subfic    r0, r0, 0x36
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
+	if (event._00 != 1) {
+		return false;
+	}
+	if (!event._08) {
+		return false;
+	}
+	return event._08->mObjType == OBJTYPE_Navi;
 }
 
 /*
@@ -155,36 +84,17 @@ bool TaiNaviCollisionAction::actByEvent(TekiEvent&)
  * Address:	8012E554
  * Size:	000054
  */
-bool TaiTekiTypeCollisionAction::actByEvent(TekiEvent&)
+bool TaiTekiTypeCollisionAction::actByEvent(TekiEvent& event)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x14
-	  li        r3, 0
-	  blr
+	if (event._00 != 1) {
+		return false;
+	}
+	if (!event._08) {
+		return false;
+	}
+	if (event._08->mObjType != OBJTYPE_Teki) {
+		return false;
+	}
 
-	.loc_0x14:
-	  lwz       r4, 0x8(r4)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  blr
-
-	.loc_0x28:
-	  lwz       r0, 0x6C(r4)
-	  cmpwi     r0, 0x37
-	  beq-      .loc_0x3C
-	  li        r3, 0
-	  blr
-
-	.loc_0x3C:
-	  lwz       r4, 0x320(r4)
-	  lwz       r0, 0x8(r3)
-	  sub       r0, r0, r4
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
+	return static_cast<Teki*>(event._08)->mTekiType == mTekiType;
 }

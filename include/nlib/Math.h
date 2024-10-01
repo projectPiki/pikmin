@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Dolphin/mtx.h"
+#include "system.h"
 
 namespace NMathF {
 f32 cos(f32)
@@ -38,6 +39,10 @@ f32 remainder(f32, f32);
 
 // unused/inlined:
 f32 roundAngle(f32);
+
+extern f32 pi;
+
+inline f32 getRandomAngle() { return 2.0f * StdSystem::getRand(1.0f) * pi; }
 } // namespace NMathF
 
 template <typename T>

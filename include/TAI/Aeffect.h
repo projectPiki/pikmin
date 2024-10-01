@@ -29,7 +29,13 @@ struct TAIAeffCloudOfDust : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int* _08;                            // _08, array of something
+	int _0C;                             // _0C
+	f32 _10;                             // _10
+	EffectMgr::effTypeTable mEffectType; // _14
+	int _18;                             // _18
+	int _1C;                             // _1C
+	bool _20;                            // _20
 };
 
 #endif

@@ -1,4 +1,15 @@
 #include "teki.h"
+#include "TAI/Otimoti.h"
+#include "TAI/Iwagen.h"
+#include "TAI/Chappy.h"
+#include "TAI/Swallow.h"
+#include "TAI/Mizinko.h"
+#include "TAI/Palm.h"
+#include "TAI/Collec.h"
+#include "TAI/Kinoko.h"
+#include "TAI/Shell.h"
+#include "TAI/Napkid.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -27,194 +38,27 @@ namespace TekiNakata {
  * Address:	8014B124
  * Size:	000244
  */
-void makeTekiParameters(TekiMgr*)
+void makeTekiParameters(TekiMgr* mgr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  li        r3, 0x88
-	  stw       r30, 0x10(r1)
-	  bl        -0x10413C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x30
-	  bl        -0x10BCC
-
-	.loc_0x30:
-	  stw       r30, 0x4C(r31)
-	  li        r3, 0x88
-	  bl        -0x104158
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x4C
-	  bl        -0x1C298
-
-	.loc_0x4C:
-	  stw       r30, 0x50(r31)
-	  li        r3, 0x88
-	  bl        -0x104174
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x68
-	  bl        -0x1CAC0
-
-	.loc_0x68:
-	  stw       r30, 0x54(r31)
-	  li        r3, 0x88
-	  bl        -0x104190
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x84
-	  bl        -0x22C00
-
-	.loc_0x84:
-	  stw       r30, 0x58(r31)
-	  li        r3, 0x88
-	  bl        -0x1041AC
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xA0
-	  bl        -0xBE38
-
-	.loc_0xA0:
-	  stw       r30, 0x5C(r31)
-	  li        r3, 0x88
-	  bl        -0x1041C8
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xBC
-	  bl        -0x19278
-
-	.loc_0xBC:
-	  stw       r30, 0x60(r31)
-	  li        r3, 0x88
-	  bl        -0x1041E4
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xD8
-	  bl        -0x18DB8
-
-	.loc_0xD8:
-	  stw       r30, 0x64(r31)
-	  li        r3, 0x88
-	  bl        -0x104200
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xF4
-	  bl        -0xD6DC
-
-	.loc_0xF4:
-	  stw       r30, 0x68(r31)
-	  li        r3, 0x88
-	  bl        -0x10421C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x110
-	  bl        -0x206EC
-
-	.loc_0x110:
-	  stw       r30, 0x6C(r31)
-	  li        r3, 0x88
-	  bl        -0x104238
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x12C
-	  bl        -0x1B630
-
-	.loc_0x12C:
-	  stw       r30, 0x70(r31)
-	  li        r3, 0x88
-	  bl        -0x104254
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x148
-	  bl        -0x9214
-
-	.loc_0x148:
-	  stw       r30, 0x74(r31)
-	  li        r3, 0x88
-	  bl        -0x104270
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x164
-	  bl        -0x155E0
-
-	.loc_0x164:
-	  stw       r30, 0x78(r31)
-	  li        r3, 0x88
-	  bl        -0x10428C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x180
-	  bl        -0x1D1E4
-
-	.loc_0x180:
-	  stw       r30, 0x7C(r31)
-	  li        r3, 0x88
-	  bl        -0x1042A8
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x19C
-	  bl        -0x8270
-
-	.loc_0x19C:
-	  stw       r30, 0x80(r31)
-	  li        r3, 0x88
-	  bl        -0x1042C4
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x1B8
-	  bl        -0x8144
-
-	.loc_0x1B8:
-	  stw       r30, 0x84(r31)
-	  li        r3, 0x88
-	  bl        -0x1042E0
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x1D4
-	  bl        -0x229AC
-
-	.loc_0x1D4:
-	  stw       r30, 0xC8(r31)
-	  li        r3, 0x88
-	  bl        -0x1042FC
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x1F0
-	  bl        -0xBB40
-
-	.loc_0x1F0:
-	  stw       r30, 0xCC(r31)
-	  li        r3, 0x88
-	  bl        -0x104318
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x20C
-	  bl        -0x107E4
-
-	.loc_0x20C:
-	  stw       r30, 0xD0(r31)
-	  li        r3, 0x88
-	  bl        -0x104334
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x228
-	  bl        -0x225DC
-
-	.loc_0x228:
-	  stw       r30, 0xC4(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mgr->mTekiParams[TEKI_Frog]    = new TaiOtimotiParameters();
+	mgr->mTekiParams[TEKI_Iwagen]  = new TaiIwagenParameters();
+	mgr->mTekiParams[TEKI_Iwagon]  = new TaiIwagonParameters();
+	mgr->mTekiParams[TEKI_Chappy]  = new TaiChappyParameters();
+	mgr->mTekiParams[TEKI_Swallow] = new TaiSwallowParameters();
+	mgr->mTekiParams[TEKI_Mizigen] = new TaiMizigenParameters();
+	mgr->mTekiParams[TEKI_Qurione] = new TaiMizinkoParameters();
+	mgr->mTekiParams[TEKI_Palm]    = new TaiPalmParameters();
+	mgr->mTekiParams[TEKI_Collec]  = new TaiCollecParameters();
+	mgr->mTekiParams[TEKI_Kinoko]  = new TaiKinokoParameters();
+	mgr->mTekiParams[TEKI_Shell]   = new TaiShellParameters();
+	mgr->mTekiParams[TEKI_Napkid]  = new TaiNapkidParameters();
+	mgr->mTekiParams[TEKI_Hollec]  = new TaiHollecParameters();
+	mgr->mTekiParams[TEKI_Pearl]   = new TaiPearlParameters();
+	mgr->mTekiParams[TEKI_Rocpe]   = new TaiRocpearlParameters();
+	mgr->mTekiParams[TEKI_Chappb]  = new TaiBlackChappyParameters();
+	mgr->mTekiParams[TEKI_Swallob] = new TaiBlackSwallowParameters();
+	mgr->mTekiParams[TEKI_Frow]    = new TaiBlackFrogParameters();
+	mgr->mTekiParams[TEKI_Namazu]  = new TaiCatfishParameters();
 }
 
 /*
@@ -222,8 +66,123 @@ void makeTekiParameters(TekiMgr*)
  * Address:	8014B368
  * Size:	000690
  */
-void makeTekis(TekiMgr*)
+void makeTekis(TekiMgr* mgr)
 {
+	if (mgr->mUsingType[TEKI_Frog]) {
+		TekiParameters* param                       = mgr->mTekiParams[TEKI_Frog];
+		mgr->mStrategyTable->mStrategies[TEKI_Frog] = new TaiOtimotiStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Frog]            = new TaiOtimotiSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Iwagen]) {
+		TekiParameters* param                         = mgr->mTekiParams[TEKI_Iwagen];
+		mgr->mStrategyTable->mStrategies[TEKI_Iwagen] = new TaiIwagenStrategy(param);
+		// no sound table.
+	}
+
+	if (mgr->mUsingType[TEKI_Iwagon]) {
+		TekiParameters* param                         = mgr->mTekiParams[TEKI_Iwagon];
+		mgr->mStrategyTable->mStrategies[TEKI_Iwagon] = new TaiIwagonStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Iwagon]            = new TaiIwagonSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Chappy]) {
+		TekiParameters* param                         = mgr->mTekiParams[TEKI_Chappy];
+		mgr->mStrategyTable->mStrategies[TEKI_Chappy] = new TaiChappyStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Chappy]            = new TaiChappySoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Swallow]) {
+		TekiParameters* param                          = mgr->mTekiParams[TEKI_Swallow];
+		mgr->mStrategyTable->mStrategies[TEKI_Swallow] = new TaiSwallowStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Swallow]            = new TaiSwallowSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Mizigen]) {
+		TekiParameters* param                          = mgr->mTekiParams[TEKI_Mizigen];
+		mgr->mStrategyTable->mStrategies[TEKI_Mizigen] = new TaiMizigenStrategy(param);
+		// no sound table.
+	}
+
+	if (mgr->mUsingType[TEKI_Qurione]) {
+		TekiParameters* param                          = mgr->mTekiParams[TEKI_Qurione];
+		mgr->mStrategyTable->mStrategies[TEKI_Qurione] = new TaiMizinkoStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Qurione]            = new TaiMizinkoSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Palm]) {
+		TekiParameters* param                       = mgr->mTekiParams[TEKI_Palm];
+		mgr->mStrategyTable->mStrategies[TEKI_Palm] = new TaiPalmStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Palm]            = new TaiPalmSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Collec]) {
+		TekiParameters* param                         = mgr->mTekiParams[TEKI_Collec];
+		mgr->mStrategyTable->mStrategies[TEKI_Collec] = new TaiCollecStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Collec]            = new TaiCollecSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Kinoko]) {
+		TekiParameters* param                         = mgr->mTekiParams[TEKI_Kinoko];
+		mgr->mStrategyTable->mStrategies[TEKI_Kinoko] = new TaiKinokoStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Kinoko]            = new TaiKinokoSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Shell]) {
+		TekiParameters* param                        = mgr->mTekiParams[TEKI_Shell];
+		mgr->mStrategyTable->mStrategies[TEKI_Shell] = new TaiShellStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Shell]            = new TaiShellSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Napkid]) {
+		TekiParameters* param                         = mgr->mTekiParams[TEKI_Napkid];
+		mgr->mStrategyTable->mStrategies[TEKI_Napkid] = new TaiNapkidStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Napkid]            = new TaiNapkidSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Hollec]) {
+		TekiParameters* param                         = mgr->mTekiParams[TEKI_Hollec];
+		mgr->mStrategyTable->mStrategies[TEKI_Hollec] = new TaiHollecStrategy(param);
+		// no sound table.
+	}
+
+	if (mgr->mUsingType[TEKI_Pearl] || mgr->mUsingType[TEKI_Shell]) {
+		mgr->mUsingType[TEKI_Pearl]                  = true;
+		TekiParameters* param                        = mgr->mTekiParams[TEKI_Pearl];
+		mgr->mStrategyTable->mStrategies[TEKI_Pearl] = new TaiPearlStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Pearl]            = new TaiPearlSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Rocpe] || mgr->mUsingType[TEKI_Shell]) {
+		mgr->mUsingType[TEKI_Rocpe]                  = true;
+		TekiParameters* param                        = mgr->mTekiParams[TEKI_Rocpe];
+		mgr->mStrategyTable->mStrategies[TEKI_Rocpe] = new TaiPearlStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Rocpe]            = new TaiPearlSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Chappb]) {
+		TekiParameters* param                         = mgr->mTekiParams[TEKI_Chappb];
+		mgr->mStrategyTable->mStrategies[TEKI_Chappb] = new TaiChappyStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Chappb]            = new TaiChappySoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Swallob]) {
+		TekiParameters* param                          = mgr->mTekiParams[TEKI_Swallob];
+		mgr->mStrategyTable->mStrategies[TEKI_Swallob] = new TaiSwallowStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Swallob]            = new TaiSwallowSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Frow]) {
+		TekiParameters* param                       = mgr->mTekiParams[TEKI_Frow];
+		mgr->mStrategyTable->mStrategies[TEKI_Frow] = new TaiOtimotiStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Frow]            = new TaiBlackFrogSoundTable();
+	}
+
+	if (mgr->mUsingType[TEKI_Namazu]) {
+		TekiParameters* param                         = mgr->mTekiParams[TEKI_Namazu];
+		mgr->mStrategyTable->mStrategies[TEKI_Namazu] = new TaiChappyStrategy(param);
+		mgr->mTekiSoundTables[TEKI_Namazu]            = new TaiCatfishSoundTable();
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

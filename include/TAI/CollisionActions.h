@@ -17,7 +17,6 @@ struct TaiBounceAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
@@ -33,7 +32,6 @@ struct TaiGroundCollisionAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
@@ -49,7 +47,6 @@ struct TaiWallCollisionAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
@@ -65,7 +62,6 @@ struct TaiCreatureCollisionAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
@@ -80,7 +76,6 @@ struct TaiPikiCollisionAction : public TaiCreatureCollisionAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiCreatureCollisionAction?
-	// TODO: members
 };
 
 /**
@@ -95,7 +90,6 @@ struct TaiNaviCollisionAction : public TaiCreatureCollisionAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiCreatureCollisionAction?
-	// TODO: members
 };
 
 /**
@@ -110,7 +104,7 @@ struct TaiTekiTypeCollisionAction : public TaiCreatureCollisionAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiCreatureCollisionAction?
-	// TODO: members
+	int mTekiType; // _08
 };
 
 #endif

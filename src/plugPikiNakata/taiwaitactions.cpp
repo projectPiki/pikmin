@@ -1,12 +1,17 @@
 #include "TAI/WaitActions.h"
+#include "teki.h"
+#include "Dolphin/os.h"
+#include "system.h"
+#include "nlib/Math.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "taiwaitactions");
 	// UNUSED FUNCTION
 }
 
@@ -25,39 +30,10 @@ static void _Print(char*, ...)
  * Address:	80143A9C
  * Size:	000070
  */
-void TaiWaitTurningAction::start(Teki&)
+void TaiWaitTurningAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r4
-	  bl        -0xFA98
-	  bl        0xD45BC
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x58C8(r2)
-	  stw       r0, 0x1C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x58D4(r2)
-	  stw       r0, 0x18(r1)
-	  lfs       f2, -0x58D8(r2)
-	  lfd       f1, 0x18(r1)
-	  lfs       f0, -0x58D0(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x1CA4(r13)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x394(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	TaiMotionAction::start(teki);
+	teki._394 = NMathF::getRandomAngle();
 }
 
 /*

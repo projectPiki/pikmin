@@ -19,7 +19,7 @@ struct TaiEffectAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mEffectType; // _08
 };
 
 /**
@@ -35,7 +35,7 @@ struct TaiStartGenParticleGeneratorAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int _08; // _08
 };
 
 /**
@@ -51,7 +51,7 @@ struct TaiStopGenParticleGeneratorAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int _08; // _08
 };
 
 /**

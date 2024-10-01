@@ -68,14 +68,11 @@ struct FaceNode : public CoreNode {
  * @brief TODO
  */
 struct SRTNode : public Node {
-	SRTNode(char* name = "<SRTNode>")
-	    : Node(name)
-	{
-	}
+	SRTNode(char* name); // unused/inlined
 
 	virtual void update();                                    // _10
-	virtual void concat() { }                                 // _1C (weak)
 	virtual void concat(Matrix4f&) { }                        // _28 (weak)
+	virtual void concat() { }                                 // _1C (weak)
 	virtual Matrix4f* getModelMatrix() { return &mWorldMtx; } // _2C (weak)
 
 	Vector3f& getPosition() { return mSRT.mTranslation; }

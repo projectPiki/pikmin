@@ -116,117 +116,59 @@ void Light::setLightDistAttn(f32 p1, f32 p2, int p3)
  * Address:	80029D40
  * Size:	000188
  */
-void Light::setLightSpot(f32, int)
+void Light::setLightSpot(f32 p1, int p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  lfs       f0, -0x7D70(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  beq-      .loc_0x38
-	  lfs       f0, -0x7D44(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x3C
+	if (p1 <= 0.0f || p1 > 90.0f) {
+		p2 = 0;
+	}
+	f32 cosTheta = cosf((PI * p1) / 180.0f);
+	f32 val38; // f5
+	f32 val3C; // f2
+	f32 val40; // f3
+	switch (p2) {
+	case 1:
+		val38 = -1000.0f * cosTheta;
+		val3C = 1000.0f;
+		val40 = 0.0f;
+		break;
+	case 2:
+		val38 = -cosTheta / (1.0f - cosTheta);
+		val3C = 1.0f / (1.0f - cosTheta);
+		val40 = 0.0f;
+		break;
+	case 3:
+		val38 = 0.0f;
+		val3C = -cosTheta / (1.0f - cosTheta);
+		val40 = 1.0f / (1.0f - cosTheta);
+		break;
+	case 4:
+		f32 tmp = SQUARE(1.0f - cosTheta);
+		val38   = (cosTheta * (cosTheta - 2.0f)) / tmp;
+		val3C   = 2.0f / tmp;
+		val40   = -1.0f / tmp;
+		break;
+	case 5:
+		val38 = -4.0f * cosTheta / SQUARE(1.0f - cosTheta);
+		val3C = 4.0f * (1.0f + cosTheta) / SQUARE(1.0f - cosTheta);
+		val40 = -4.0f / SQUARE(1.0f - cosTheta);
+		break;
+	case 6:
+		val38 = 1.0f - (2.0f * cosTheta * cosTheta) / SQUARE(1.0f - cosTheta);
+		val3C = 4.0f * cosTheta / SQUARE(1.0f - cosTheta);
+		val40 = -2.0f / SQUARE(1.0f - cosTheta);
+		break;
+	case 0:
+	default:
+		val38 = 1.0f;
+		val3C = 0.0f;
+		val40 = 0.0f;
+		break;
+	}
 
-	.loc_0x38:
-	  li        r31, 0
-
-	.loc_0x3C:
-	  lfs       f2, -0x7D40(r2)
-	  lfs       f0, -0x7D3C(r2)
-	  fmuls     f1, f2, f1
-	  fdivs     f1, f1, f0
-	  bl        0x1F1DC8
-	  cmplwi    r31, 0x6
-	  bgt-      .loc_0x150
-	  lis       r3, 0x8023
-	  subi      r3, r3, 0x7D54
-	  rlwinm    r0,r31,2,0,29
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  lfs       f0, -0x7D38(r2)
-	  lfs       f2, -0x7D64(r2)
-	  fmuls     f5, f0, f1
-	  lfs       f3, -0x7D70(r2)
-	  b         .loc_0x15C
-	  lfs       f0, -0x7D68(r2)
-	  fneg      f2, f1
-	  lfs       f3, -0x7D70(r2)
-	  fsubs     f1, f0, f1
-	  fdivs     f5, f2, f1
-	  fdivs     f2, f0, f1
-	  b         .loc_0x15C
-	  lfs       f0, -0x7D68(r2)
-	  fneg      f2, f1
-	  lfs       f5, -0x7D70(r2)
-	  fsubs     f1, f0, f1
-	  fdivs     f2, f2, f1
-	  fdivs     f3, f0, f1
-	  b         .loc_0x15C
-	  lfs       f0, -0x7D68(r2)
-	  lfs       f3, -0x7D34(r2)
-	  fsubs     f4, f0, f1
-	  lfs       f0, -0x7D30(r2)
-	  fsubs     f2, f1, f3
-	  fmuls     f4, f4, f4
-	  fmuls     f1, f1, f2
-	  fdivs     f2, f3, f4
-	  fdivs     f5, f1, f4
-	  fdivs     f3, f0, f4
-	  b         .loc_0x15C
-	  lfs       f0, -0x7D68(r2)
-	  lfs       f3, -0x7D2C(r2)
-	  fsubs     f4, f0, f1
-	  lfs       f2, -0x7D28(r2)
-	  fadds     f0, f0, f1
-	  fmuls     f1, f3, f1
-	  fmuls     f4, f4, f4
-	  fmuls     f0, f2, f0
-	  fdivs     f5, f1, f4
-	  fdivs     f2, f0, f4
-	  fdivs     f3, f3, f4
-	  b         .loc_0x15C
-	  lfs       f4, -0x7D68(r2)
-	  lfs       f0, -0x7D34(r2)
-	  fsubs     f5, f4, f1
-	  lfs       f2, -0x7D28(r2)
-	  fmuls     f3, f0, f1
-	  lfs       f0, -0x7D24(r2)
-	  fmuls     f2, f2, f1
-	  fmuls     f5, f5, f5
-	  fmuls     f1, f3, f1
-	  fdivs     f2, f2, f5
-	  fdivs     f1, f1, f5
-	  fdivs     f3, f0, f5
-	  fsubs     f5, f4, f1
-	  b         .loc_0x15C
-
-	.loc_0x150:
-	  lfs       f2, -0x7D70(r2)
-	  lfs       f5, -0x7D68(r2)
-	  fmr       f3, f2
-
-	.loc_0x15C:
-	  stfs      f5, 0x38(r30)
-	  li        r0, 0x1
-	  stfs      f2, 0x3C(r30)
-	  stfs      f3, 0x40(r30)
-	  stw       r0, 0x70(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	_38 = val38;
+	_3C = val3C;
+	_40 = val40;
+	_70 = 1;
 }
 
 /*
@@ -305,69 +247,4 @@ void Light::update()
 		_30 = _34 = 0.0f;
 		break;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x14(r3)
-	  rlwinm    r0,r0,0,24,31
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x6C
-	  bge-      .loc_0x34
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0x40
-	  b         .loc_0xBC
-
-	.loc_0x34:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0xBC
-	  b         .loc_0x98
-
-	.loc_0x40:
-	  lfs       f1, -0x7D68(r2)
-	  li        r0, 0x1
-	  stfs      f1, 0x2C(r31)
-	  lfs       f0, -0x7D70(r2)
-	  stfs      f0, 0x34(r31)
-	  stfs      f0, 0x30(r31)
-	  stfs      f1, 0x38(r31)
-	  stfs      f0, 0x40(r31)
-	  stfs      f0, 0x3C(r31)
-	  stw       r0, 0x70(r31)
-	  b         .loc_0xBC
-
-	.loc_0x6C:
-	  lfs       f1, 0x18(r31)
-	  mr        r3, r31
-	  lfs       f2, 0x1C(r31)
-	  lwz       r4, 0x24(r31)
-	  bl        -0x2E8
-	  lfs       f0, -0x7D68(r2)
-	  stfs      f0, 0x38(r31)
-	  lfs       f0, -0x7D70(r2)
-	  stfs      f0, 0x40(r31)
-	  stfs      f0, 0x3C(r31)
-	  b         .loc_0xBC
-
-	.loc_0x98:
-	  lfs       f1, 0x20(r31)
-	  mr        r3, r31
-	  lwz       r4, 0x28(r31)
-	  bl        -0x22C
-	  lfs       f0, -0x7D68(r2)
-	  stfs      f0, 0x2C(r31)
-	  lfs       f0, -0x7D70(r2)
-	  stfs      f0, 0x34(r31)
-	  stfs      f0, 0x30(r31)
-
-	.loc_0xBC:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }

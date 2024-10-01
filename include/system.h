@@ -8,6 +8,7 @@
 #include "Stream.h"
 #include "Controller.h"
 #include "Dolphin/dvd.h"
+#include "Dolphin/rand.h"
 
 struct Graphics;
 struct BaseApp;
@@ -109,7 +110,7 @@ struct StdSystem {
 	void findAnyAnimation(char*);
 	void findIndexAnimation(char*, int);
 
-	f32 getRand(f32);
+	static f32 getRand(f32 max) { return max * (f32(rand()) / 32767.0f); }
 
 	static char* stringDup(char*);
 

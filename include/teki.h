@@ -16,6 +16,10 @@ struct TekiAnimationManager;
 struct TekiStrategy;
 struct TekiStrategyTable;
 struct TekiParameters;
+struct PeveParabolaEvent;
+struct PeveAccelerationEvent;
+struct PeveCircleMoveEvent;
+struct PeveHorizontalSinWaveEvent;
 
 namespace TekiNakata {
 // Teki-making utility functions
@@ -120,8 +124,9 @@ struct TekiEvent {
 struct TekiShapeObject {
 	TekiShapeObject(Shape*);
 
-	u32 _00; // _00
-	         // TODO: members?
+	Shape* mShape;            // _00
+	AnimContext mAnimContext; // _04
+	AnimMgr* mAnimMgr;        // _14
 };
 
 /**
@@ -130,7 +135,8 @@ struct TekiShapeObject {
 struct TekiMessage {
 	TekiMessage(int, NTeki*);
 
-	// TODO: members
+	int _00;      // _00
+	NTeki* mTeki; // _04
 };
 
 /**
@@ -239,7 +245,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	void moveToward(Vector3f&, f32);
 	void turnToward(f32, f32);
 	void rotateTeki(f32);
-	void getClosestNaviPiki(Condition&, f32*);
+	Creature* getClosestNaviPiki(Condition&, f32*);
 	void attackTarget(Creature&, f32, f32, Condition&);
 	void outputHitCenter(Vector3f&);
 	void interactNaviPiki(Interaction&, Condition&);
@@ -290,6 +296,27 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	void outputWorldAnimationMatrix(Matrix4f&, int, Matrix4f&); // unused
 	void getCollisionCenter();                                  // unused
 
+	// whatever this code is, it comes up in a few spots to do with replacing creature targets
+	// it needs more inlining/to add more to the stack though
+	inline void removeTarget()
+	{
+		if (_418) {
+			_418->subCnt();
+			_418 = nullptr;
+		}
+	}
+
+	inline void addTarget(Creature* target)
+	{
+		if (_418) {
+			removeTarget();
+		}
+		_418 = target;
+		if (_418) {
+			_418->addCnt();
+		}
+	}
+
 	inline bool isTekiOption(int opt) const { return mTekiOptions & opt; }
 	inline bool isAnimKeyOption(int opt) const { return mAnimKeyOptions & opt; }
 
@@ -323,19 +350,22 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	PaniAnimator* _2CC;     // _2CC
 	u8 _2D0[0x31C - 0x2D0]; // _2D0, TODO: work out members
 	u32 _31C;               // _31C
-	u8 _320[0x324 - 0x320]; // _320, TODO: work out members
+	TekiTypes mTekiType;    // _320
 	int _324;               // _324, related to states
 	bool _328;              // _328, related to states
 	u8 _329[0x334 - 0x329]; // _329, TODO: work out members
 	int _334;               // _334, related to actions
-	u8 _338[0x388 - 0x338]; // _338, TODO: work out members
+	int _338;               // _338, unknown, state id of some description?
+	u8 _33C[0x388 - 0x33C]; // _33C, TODO: work out members
 	Vector3f _388;          // _388, possibly position
-	u8 _394[0x3B4 - 0x394]; // _394, TODO: work out members
+	f32 _394;               // _394
+	u8 _398[0x3B4 - 0x398]; // _398, TODO: work out members
 	f32 mMotionSpeed;       // _3B4
 	u8 _3B8[0x410 - 0x3B8]; // _3B8, TODO: work out members
 	int mTekiOptions;       // _410
 	int mAnimKeyOptions;    // _414
-	u8 _418[0x454 - 0x418]; // _418, TODO: work out members
+	Creature* _418;         // _418, maybe attack target?
+	u8 _41C[0x454 - 0x41C]; // _41C, TODO: work out members
 	                        // _454 = PaniAnimKeyListener
 };
 
@@ -350,8 +380,12 @@ struct NTeki : public BTeki {
 
 	// _00       = VTBL
 	// _000-_454 = BTeki
-	u8 _454[0x46C - 0x454]; // _454, TODO: work out members
-	                        // _46C = PaniAnimKeyListener
+	u8 _454[0x45C - 0x454];                    // _454, TODO: work out members
+	PeveParabolaEvent* mParabolaEvent;         // _45C
+	PeveAccelerationEvent* mAccelEvent;        // _460
+	PeveCircleMoveEvent* mCircleMoveEvent;     // _464
+	PeveHorizontalSinWaveEvent* mSinWaveEvent; // _468
+	                                           // _46C = PaniAnimKeyListener
 };
 
 /**

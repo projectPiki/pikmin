@@ -78,6 +78,17 @@ struct MonoObjectMgr : public ObjectMgr {
 	void getEmptyIndex();
 	void getIndex(Creature*);
 
+	inline bool isEnd(int idx)
+	{
+		if (isDone(idx)) {
+			return true;
+		}
+		if (!getCreature(idx)) {
+			return true;
+		}
+		return false;
+	}
+
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_28 = ObjectMgr

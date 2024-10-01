@@ -264,39 +264,6 @@ void TaiStartingTimerAction::start(Teki&)
 
 /*
  * --INFO--
- * Address:	80143934
- * Size:	000054
- */
-f32 StdSystem::getRand(f32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stfd      f31, 0x18(r1)
-	  fmr       f31, f1
-	  bl        0xD4728
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x58E0(r2)
-	  stw       r0, 0x14(r1)
-	  lis       r0, 0x4330
-	  lfs       f0, -0x58F0(r2)
-	  stw       r0, 0x10(r1)
-	  lfd       f1, 0x10(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f0, f1, f0
-	  fmuls     f1, f31, f0
-	  lwz       r0, 0x24(r1)
-	  lfd       f31, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	80143988
  * Size:	000114
  */

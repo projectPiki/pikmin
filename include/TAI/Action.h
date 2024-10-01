@@ -146,6 +146,7 @@ struct TaiStrategy : public TekiStrategy {
 	int mCount;         // _04, count of states
 	TaiState** mStates; // _08, array of mCount states
 	int _0C;            // _0C
+	u8 _10[0x4];        // _10, unknown
 };
 
 #endif

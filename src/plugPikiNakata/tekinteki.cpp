@@ -1,14 +1,14 @@
 #include "teki.h"
+#include "Peve/MotionEvents.h"
+#include "sysNew.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "tekinakata"); }
 
 /*
  * --INFO--
@@ -25,8 +25,10 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	00000C
  */
-TekiMessage::TekiMessage(int, NTeki*)
+TekiMessage::TekiMessage(int p1, NTeki* teki)
 {
+	_00   = p1;
+	mTeki = teki;
 	// UNUSED FUNCTION
 }
 
@@ -37,88 +39,10 @@ TekiMessage::TekiMessage(int, NTeki*)
  */
 NTeki::NTeki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x10(r1)
-	  beq-      .loc_0x34
-	  addi      r0, r31, 0x46C
-	  lis       r3, 0x802B
-	  stw       r0, 0x2C0(r31)
-	  subi      r0, r3, 0x246C
-	  stw       r0, 0x46C(r31)
-
-	.loc_0x34:
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x749C
-	  lis       r3, 0x802D
-	  subi      r3, r3, 0x2208
-	  stw       r3, 0x0(r31)
-	  addi      r6, r3, 0x1F4
-	  addi      r4, r3, 0x114
-	  lwz       r5, 0x2C0(r31)
-	  addi      r0, r31, 0x46C
-	  li        r3, 0x40
-	  stw       r6, 0x0(r5)
-	  stw       r4, 0x2B8(r31)
-	  lwz       r4, 0x2C0(r31)
-	  sub       r0, r0, r4
-	  stw       r0, 0x4(r4)
-	  bl        -0x104A68
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x88
-	  bl        -0x259A8
-
-	.loc_0x88:
-	  stw       r30, 0x45C(r31)
-	  li        r3, 0x1C
-	  bl        -0x104A84
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xA4
-	  bl        -0x25B94
-
-	.loc_0xA4:
-	  stw       r30, 0x460(r31)
-	  li        r3, 0x38
-	  bl        -0x104AA0
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xC0
-	  bl        -0x25724
-
-	.loc_0xC0:
-	  stw       r30, 0x464(r31)
-	  li        r3, 0x34
-	  bl        -0x104ABC
-	  mr.       r30, r3
-	  beq-      .loc_0xF4
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        -0x26584
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x63AC
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0x14
-	  bl        -0x2EC94
-
-	.loc_0xF4:
-	  stw       r30, 0x468(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mParabolaEvent   = new PeveParabolaEvent();
+	mAccelEvent      = new PeveAccelerationEvent();
+	mCircleMoveEvent = new PeveCircleMoveEvent();
+	mSinWaveEvent    = new PeveHorizontalSinWaveEvent();
 }
 
 /*
@@ -126,8 +50,19 @@ NTeki::NTeki()
  * Address:	8014BB0C
  * Size:	0001D4
  */
-void NTeki::sendMessage(int)
+void NTeki::sendMessage(int msg)
 {
+	TekiMgr* mgr = tekiMgr;
+	int currIdx  = mgr->getFirst();
+	for (currIdx; !mgr->isEnd(currIdx); currIdx = mgr->getNext(currIdx)) {
+		Creature* target = (currIdx == -1) ? mgr->getCreature(0) : mgr->getCreature(currIdx);
+		if (target != this) {
+			if (mPosition.distance(target->mPosition) <= 1.0f) {
+				TekiMessage tekiMessage(msg, this);
+				static_cast<NTeki*>(target)->receiveMessage(tekiMessage);
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -273,30 +208,4 @@ void NTeki::sendMessage(int)
  * Address:	8014BCE0
  * Size:	000054
  */
-void NTeki::receiveMessage(TekiMessage&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  addi      r5, r31, 0
-	  lwz       r6, 0x4(r4)
-	  addi      r3, r1, 0x10
-	  li        r4, 0x4
-	  bl        -0x1938
-	  lwz       r12, 0x0(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x1A0(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
+void NTeki::receiveMessage(TekiMessage& msg) { eventPerformed(TekiEvent(4, static_cast<Teki*>(this), msg.mTeki)); }
