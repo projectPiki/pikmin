@@ -495,7 +495,7 @@ config.libs = [
             Object(NonMatching, "plugPikiKando/aiWeed.cpp"),
             Object(Matching, "plugPikiKando/aiTable.cpp"),
             Object(NonMatching, "plugPikiKando/aiAction.cpp"),
-            Object(NonMatching, "plugPikiKando/pikiInf.cpp"),
+            Object(Matching, "plugPikiKando/pikiInf.cpp"),
             Object(NonMatching, "plugPikiKando/piki.cpp"),
             Object(Matching, "plugPikiKando/odoMeter.cpp"),
             Object(NonMatching, "plugPikiKando/pikidoKill.cpp"),

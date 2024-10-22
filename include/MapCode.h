@@ -6,24 +6,16 @@
 struct CollTriInfo;
 
 /**
- * @brief TODO
+ * @brief This used to be a struct, but these are all static methods, I don't think it's a struct.
  */
-struct MapCode {
-	u32 getAttribute(CollTriInfo*);
-	u32 getSlipCode(CollTriInfo*);
-	bool isBald(CollTriInfo*);
+namespace MapCode {
 
-	// unused/inlined
-	char* getAttributeName(int); // UNUSED
+u32 getAttribute(CollTriInfo*);
+u32 getSlipCode(CollTriInfo*);
+bool isBald(CollTriInfo*);
 
-	u32 _00; // _00
-	u32 _04; // _04
-	u32 _08; // _08
-	u32 _0C; // _0C
-	u32 _10; // _10
-	u32 _14; // _14
-	u32 _18; // _18
-	f32 _1C; // _1C
-};
+// unused/inlined
+char* getAttributeName(int); // UNUSED
+};                           // namespace MapCode
 
 #endif

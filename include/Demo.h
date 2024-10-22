@@ -9,6 +9,16 @@ struct Creature;
 /**
  * @brief TODO
  */
+enum EDemoFlags {
+	DEMOFLAG_Unk0 = 0,
+	DEMOFLAG_Unk1 = 1,
+	// ...
+	DEMOFLAG_Unk27 = 27,
+};
+
+/**
+ * @brief TODO
+ */
 struct DemoParms : public Node {
 
 	/**

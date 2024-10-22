@@ -1,5 +1,9 @@
 #include "OnePlayerSection.h"
 #include "FlowController.h"
+#include "CmdStream.h"
+#include "system.h"
+#include "sysNew.h"
+#include "stl/stdio.h"
 
 /*
  * --INFO--
@@ -43,111 +47,37 @@ void StageInfo::read(RandomAccessStream&) { }
  * Address:	80053160
  * Size:	000168
  */
-void StageInfo::parseGenerators(CmdStream*)
+void StageInfo::parseGenerators(CmdStream* commands)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r7, 0x8022
-	  stw       r0, 0x4(r1)
-	  lis       r6, 0x8022
-	  lis       r5, 0x802A
-	  stwu      r1, -0x38(r1)
-	  stmw      r26, 0x20(r1)
-	  addi      r28, r3, 0
-	  addi      r29, r4, 0
-	  addi      r30, r7, 0x738C
-	  addi      r31, r6, 0x737C
-	  addi      r27, r5, 0x68BC
-	  b         .loc_0x118
+	while (!commands->endOfCmds() && !commands->endOfSection()) {
+		commands->getToken(true);
+		if (!commands->isToken("genfile")) {
+			continue;
+		}
 
-	.loc_0x34:
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x120EC
-	  addi      r3, r29, 0
-	  subi      r4, r13, 0x7488
-	  bl        -0x11DD4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x118
-	  li        r3, 0x18
-	  bl        -0xC1B4
-	  addi      r26, r3, 0
-	  mr.       r0, r26
-	  beq-      .loc_0x8C
-	  stw       r30, 0x0(r26)
-	  li        r3, 0
-	  subi      r0, r13, 0x7480
-	  stw       r31, 0x0(r26)
-	  stw       r3, 0x10(r26)
-	  stw       r3, 0xC(r26)
-	  stw       r3, 0x8(r26)
-	  stw       r0, 0x4(r26)
-	  stw       r27, 0x0(r26)
+		GenFileInfo* fileInfo = new GenFileInfo;
 
-	.loc_0x8C:
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x12144
-	  bl        -0x12EB8
-	  stw       r3, 0x4(r26)
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x12158
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x18
-	  subi      r4, r13, 0x747C
-	  bl        0x1C4E7C
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x12174
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x14
-	  subi      r4, r13, 0x747C
-	  bl        0x1C4E60
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x12190
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x10
-	  subi      r4, r13, 0x747C
-	  bl        0x1C4E44
-	  lwz       r0, 0x18(r1)
-	  addi      r4, r26, 0
-	  addi      r3, r28, 0x90
-	  stb       r0, 0x14(r26)
-	  lwz       r0, 0x14(r1)
-	  stb       r0, 0x15(r26)
-	  lwz       r0, 0x10(r1)
-	  stb       r0, 0x16(r26)
-	  bl        -0x12C9C
+		fileInfo->setName(StdSystem::stringDup(commands->getToken(true)));
 
-	.loc_0x118:
-	  mr        r3, r29
-	  bl        -0x12524
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x138
-	  mr        r3, r29
-	  bl        -0x11E04
-	  rlwinm.   r0,r3,0,24,31
-	  beq+      .loc_0x34
+		u32 byte1;
+		sscanf(commands->getToken(true), "%d", &byte1);
 
-	.loc_0x138:
-	  mr        r3, r29
-	  bl        -0x12544
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x154
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x12200
+		u32 byte2;
+		sscanf(commands->getToken(true), "%d", &byte2);
 
-	.loc_0x154:
-	  lmw       r26, 0x20(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+		u32 byte3;
+		sscanf(commands->getToken(true), "%d", &byte3);
+
+		fileInfo->_14 = byte1;
+		fileInfo->_15 = byte2;
+		fileInfo->_16 = byte3;
+
+		mFileInfoList.add(fileInfo);
+	}
+
+	if (!commands->endOfCmds()) {
+		commands->getToken(true);
+	}
 }
 
 /*

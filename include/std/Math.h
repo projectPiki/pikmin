@@ -8,7 +8,7 @@
  */
 namespace std {
 
-void sqrtf(f32);
+f32 sqrtf(f32);
 void fmodf(f32, f32);
 
 } // namespace std

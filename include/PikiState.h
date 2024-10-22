@@ -41,7 +41,8 @@ enum PikiStateID {
 	PIKISTATE_Emotion      = 31,
 	PIKISTATE_UNUSED32     = 32, // unused
 	PIKISTATE_Pressed      = 33,
-	PIKISTATE_Count, // 34
+	PIKISTATE_Unk34        = 34,
+	PIKISTATE_Count, // 35?
 };
 
 /**

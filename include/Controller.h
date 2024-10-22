@@ -26,15 +26,24 @@ struct Controller : public Node {
 		PRESS_Y     = 0x800,
 		PRESS_START = 0x1000,
 
-		ANALOG_LEFT  = 0x1000000,
-		ANALOG_RIGHT = 0x2000000,
-		ANALOG_DOWN  = 0x4000000,
-		ANALOG_UP    = 0x8000000,
+		UNK_BTN14 = 0x2000,
+		UNK_BTN15 = 0x4000,
+		UNK_BTN16 = 0x8000,
 
 		CSTICK_LEFT  = 0x10000,
 		CSTICK_RIGHT = 0x20000,
 		CSTICK_DOWN  = 0x40000,
 		CSTICK_UP    = 0x80000,
+
+		UNK_BTN21 = 0x100000,
+		UNK_BTN22 = 0x200000,
+		UNK_BTN23 = 0x400000,
+		UNK_BTN24 = 0x800000,
+
+		ANALOG_LEFT  = 0x1000000,
+		ANALOG_RIGHT = 0x2000000,
+		ANALOG_DOWN  = 0x4000000,
+		ANALOG_UP    = 0x8000000,
 
 		PRESS_DPAD = (PRESS_DPAD_LEFT | PRESS_DPAD_RIGHT | PRESS_DPAD_DOWN | PRESS_DPAD_UP),
 
@@ -65,6 +74,10 @@ struct Controller : public Node {
 	f32 getMainStickY();
 	f32 getSubStickX();
 	f32 getSubStickY();
+
+	inline bool isCurrentInput(u32 button) { return mCurrentInput & button; }
+	inline bool isReleased(u32 button) { return mInputReleased & button; }
+	inline bool isPressed(u32 button) { return mInputPressed & button; }
 
 	// _00     = VTBL
 	// _00-_20 = Node

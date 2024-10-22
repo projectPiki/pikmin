@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Section.h"
+#include "BaseInf.h"
 
 struct CmdStream;
 
@@ -10,9 +11,16 @@ struct CmdStream;
  * @brief TODO
  */
 struct GenFileInfo : public CoreNode {
+	inline GenFileInfo()
+	    : CoreNode("")
+	{
+	}
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	u8 _14; // _14
+	u8 _15; // _15
+	u8 _16; // _16
 };
 
 /**
@@ -28,7 +36,13 @@ struct StageInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	u8 _14[0x20 - 0x14];       // _14, unknown
+	u32 _20;                   // _20, unknown
+	u16 _24;                   // _24
+	u16 _26;                   // _26
+	u16 _28;                   // _28
+	StageInf mStageInf;        // _2C
+	GenFileInfo mFileInfoList; // _90
 };
 
 /**

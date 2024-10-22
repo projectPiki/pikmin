@@ -1,4 +1,6 @@
 #include "PlayerState.h"
+#include "Generator.h"
+#include "FlowController.h"
 #include "sysNew.h"
 
 int PlayerState::totalUfoParts = 30;
@@ -101,8 +103,16 @@ bool PlayerState::isEnding()
  * Address:	8007F410
  * Size:	00019C
  */
-bool PlayerState::existUfoParts(u32)
+bool PlayerState::existUfoParts(u32 p1)
 {
+	if (hasUfoParts(p1)) {
+		return true;
+	}
+
+	if (generatorCache) {
+		return true;
+	}
+
 	return false;
 	/*
 	.loc_0x0:

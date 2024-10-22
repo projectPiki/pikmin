@@ -1,13 +1,14 @@
 #include "types.h"
 #include "MapCode.h"
 #include "math.h"
+#include "Collision.h"
 
 /*
  * --INFO--
  * Address:	80116080
  * Size:	00000C
  */
-u32 MapCode::getAttribute(CollTriInfo*) { return _00 >> 29; };
+u32 MapCode::getAttribute(CollTriInfo* triInfo) { return triInfo->mMapCode >> 29; };
 
 /*
  * --INFO--
@@ -25,10 +26,10 @@ char* MapCode::getAttributeName(int)
  * Address:	8011608C
  * Size:	00001C
  */
-u32 MapCode::getSlipCode(CollTriInfo*)
+u32 MapCode::getSlipCode(CollTriInfo* triInfo)
 {
-	if (this != (nullptr)) {
-		return _00 >> 27 & 3;
+	if (triInfo) {
+		return triInfo->mMapCode >> 27 & 3;
 	} else {
 		return 0;
 	}
@@ -39,7 +40,7 @@ u32 MapCode::getSlipCode(CollTriInfo*)
  * Address:	801160A8
  * Size:	000068
  */
-bool MapCode::isBald(CollTriInfo*)
+bool MapCode::isBald(CollTriInfo* triInfo)
 {
-	return (this != nullptr) ? (_1C < sinf(45 * PI / 180)) ? true : ((_00 >> 25 & 1) != 0) ? false : true : true;
+	return (triInfo) ? (triInfo->_18.y < sinf(45 * PI / 180)) ? true : ((triInfo->mMapCode >> 25 & 1) != 0) ? false : true : true;
 }

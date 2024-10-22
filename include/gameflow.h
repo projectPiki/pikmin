@@ -48,7 +48,9 @@ struct GameFlow : public Node {
 	int _1F4;               // _1F4
 	u8 _1F8[0x2B0 - 0x1F8]; // _1F8, unknown
 	u32 _2B0;               // _2B0, could be int
-	u8 _2B4[0x355 - 0x2B4]; // _2B4, unknown
+	u8 _2B4[0x2FC - 0x2B4]; // _2B4, unknown
+	u32 _2FC;               // _2FC, unknown, but same as 0x30 in CreatureInf
+	u8 _300[0x355 - 0x300]; // _2B4, unknown
 };
 
 /**

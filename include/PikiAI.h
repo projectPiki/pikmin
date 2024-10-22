@@ -60,8 +60,14 @@ struct Action : public Receiver<Piki> {
 	void procMsg(Msg*); // this isn't overridden in the vtable but it exists, idk.
 	void setChildren(int, ...);
 
+	inline Child* getChild(int idx) { return &mChildActions[idx]; }
+
+	inline void initialiseChildAction(Creature* creature) { getChild(mChildActionIdx)->initialise(creature); }
+
 	// _00 = VTBL
-	u8 _04[0x14 - 0x4]; // _04, TODO: work out members
+	Child* mChildActions; // _04
+	s16 mChildActionIdx;  // _08
+	u8 _0A[0x14 - 0xA];   // _0A, TODO: work out members
 };
 
 /**

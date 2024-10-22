@@ -621,4 +621,6 @@ struct GenAreaFactory : public Factory<GenArea> {
 	// TODO: members
 };
 
+extern GeneratorCache* generatorCache;
+
 #endif

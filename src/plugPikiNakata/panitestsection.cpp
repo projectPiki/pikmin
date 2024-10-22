@@ -82,7 +82,7 @@ PaniTestNode::PaniTestNode()
 		_664[i]->_7C.set(1.0f, 1.0f, 1.0f);
 		_664[i]->_88.set(0.0f, 0.0f, 0.0f);
 		_664[i]->mPosition.set(0.0f, 0.0f, 0.0f);
-		_664[i]->initColor(Red);
+		_664[i]->initColor(Blue);
 	}
 
 	gameflow.addGenNode("pikiMgr", pikiMgr);

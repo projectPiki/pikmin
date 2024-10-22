@@ -17,6 +17,17 @@ struct Stickers : public Traversable {
 
 	void calcNum();
 
+	inline bool isEnd(int i)
+	{
+		if (isDone(i)) {
+			return true;
+		}
+		if (!getCreature(i)) {
+			return true;
+		}
+		return false;
+	}
+
 	// _00     = VTBL
 	// _00-_08 = Traversable
 	// TODO: members

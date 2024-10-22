@@ -1491,54 +1491,14 @@ void CollPart::getTypeString()
  * Address:	80087EA0
  * Size:	00003C
  */
-void CollPart::getID()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r6, r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r3, r6, 0x4
-	  li        r5, 0x5
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x58(r4)
-	  lwzu      r0, 0x14(r4)
-	  stw       r0, 0x0(r6)
-	  addi      r4, r4, 0x4
-	  bl        0x18CAFC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+ID32 CollPart::getID() { return mCollInfo->mId; }
 
 /*
  * --INFO--
  * Address:	80087EDC
  * Size:	00003C
  */
-void CollPart::getCode()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r6, r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r3, r6, 0x4
-	  li        r5, 0x5
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x58(r4)
-	  lwzu      r0, 0x20(r4)
-	  stw       r0, 0x0(r6)
-	  addi      r4, r4, 0x4
-	  bl        0x18CAC0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+ID32 CollPart::getCode() { return mCollInfo->mCode; }
 
 /*
  * --INFO--

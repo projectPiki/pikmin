@@ -218,10 +218,11 @@ struct Creature : public RefCountable, public EventTalker {
 	u32 _28;                // _28, unknown
 	SeContext* mSeContext;  // _2C
 	u8 _30;                 // _30
-	u32 _34;                // _34, unknown
+	int _34;                // _34
 	u8 _38[0x40 - 0x38];    // _38, TODO: work out members
 	FastGrid mGrid;         // _40
-	u8 _58[0x60 - 0x58];    // _58, TODO: work out members
+	f32 mHealth;            // _58
+	u8 _5C[0x4];            // _5C, unknown
 	u8 _60;                 // _60
 	Generator* mGenerator;  // _64
 	u8 _68[0x4];            // _68, unknown
@@ -253,7 +254,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Creature* _180;         // _180, unknown
 	Creature* mStickTarget; // _184, creature/object this creature is stuck to
 	u32 _188;               // _188, unknown
-	u32 _18C;               // _18C, unknown
+	Creature* _18C;         // _18C, unknown
 	u32 _190;               // _190, unknown
 	Vector3f _194;          // _194
 	int _1A0;               // _1A0
@@ -273,7 +274,7 @@ struct Creature : public RefCountable, public EventTalker {
 	DynCollObject* _280;    // _280
 	Vector3f* _284;         // _284, coll plat normal maybe?
 	u32 _288;               // _288, unknown
-	u32 _28C;               // _28C, unknown
+	CollTriInfo* mFloorTri; // _28C
 	u32 _290;               // _290, unknown
 	u8 _294[0x4];           // _294, unknown
 	u32 _298;               // _298, unknown

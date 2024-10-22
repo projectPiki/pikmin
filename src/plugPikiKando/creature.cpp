@@ -317,7 +317,7 @@ f32 Creature::getCentreSize()
  */
 int Creature::getStandType()
 {
-	if (_28C == 0) {
+	if (!mFloorTri) {
 		if (_280) {
 			if (_280->_28) {
 				// standing on a platform creature?
@@ -907,7 +907,7 @@ Creature::Creature(CreatureProp* props)
 	mCreatureFlags = 0;
 	resetCreatureFlag(CF_Unk7);
 	mCollInfo = nullptr;
-	_28C      = 0;
+	mFloorTri = nullptr;
 	_30       = 0;
 	resetCreatureFlag(CF_Unk16);
 	_34        = 0;

@@ -4,6 +4,7 @@
 #include "types.h"
 #include "math.h"
 #include "Stream.h"
+#include "std/Math.h"
 
 struct Matrix3f;
 struct Quat;
@@ -79,6 +80,17 @@ struct Vector3f {
 
 	inline f32 squaredLength() const { return x * x + y * y + z * z; }
 	inline f32 length() const { return sqrtf(squaredLength()); }
+
+	// seems good according to InteractBomb::actPiki
+	inline void normalise()
+	{
+		f32 norm = std::sqrtf(x * x + y * y + z * z);
+		if (norm != 0.0f) {
+			x /= norm;
+			y /= norm;
+			z /= norm;
+		}
+	}
 
 	const f32 getX() const { return x; }
 	const f32 getY() const { return y; }

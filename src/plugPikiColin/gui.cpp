@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -25,129 +26,70 @@ static void _Print(char*, ...)
  * Address:	8005D6F8
  * Size:	0001C8
  */
-Menu::Menu(Controller*, Font*, bool)
+Menu::Menu(Controller* controller, Font* font, bool p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r7, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r7, 0x738C
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r31, r3, 0
-	  addi      r27, r4, 0
-	  lis       r3, 0x8022
-	  li        r30, 0
-	  addi      r28, r5, 0
-	  addi      r29, r6, 0
-	  subi      r4, r13, 0x6F40
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  addi      r3, r31, 0
-	  stw       r0, 0x0(r31)
-	  stw       r30, 0x10(r31)
-	  stw       r30, 0xC(r31)
-	  stw       r30, 0x8(r31)
-	  bl        -0x38874
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r31)
-	  addi      r3, r31, 0
-	  subi      r4, r13, 0x6F40
-	  bl        -0x1D024
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x79F4
-	  stw       r0, 0x0(r31)
-	  rlwinm    r0,r29,0,24,31
-	  li        r3, 0x28
-	  stw       r30, 0x54(r31)
-	  stw       r30, 0x4C(r31)
-	  stw       r30, 0x50(r31)
-	  stw       r30, 0x48(r31)
-	  stw       r30, 0x74(r31)
-	  stw       r30, 0x6C(r31)
-	  stw       r30, 0x70(r31)
-	  stw       r30, 0x68(r31)
-	  stw       r30, 0x84(r31)
-	  stw       r30, 0x7C(r31)
-	  stw       r30, 0x80(r31)
-	  stw       r30, 0x78(r31)
-	  stw       r27, 0x58(r31)
-	  stw       r0, 0x3C(r31)
-	  stw       r28, 0x9C(r31)
-	  stw       r30, 0x20(r31)
-	  stw       r30, 0xA8(r31)
-	  bl        -0x167B8
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xE8
-	  li        r4, 0
-	  li        r5, 0
-	  subi      r6, r13, 0x6F38
-	  li        r7, 0
-	  bl        .loc_0x1C8
+	_54 = 0;
+	_4C = 0;
+	_50 = 0;
+	_48 = 0;
 
-	.loc_0xE8:
-	  stw       r30, 0x2C(r31)
-	  lis       r3, 0x100
-	  li        r30, 0
-	  lwz       r5, 0x2C(r31)
-	  li        r12, 0xA0
-	  li        r11, 0x78
-	  stw       r5, 0x4(r5)
-	  li        r10, 0x6
-	  li        r9, 0xC
-	  lwz       r4, 0x2C(r31)
-	  li        r8, 0x20
-	  li        r7, 0x80
-	  stw       r5, 0x0(r4)
-	  li        r6, 0xC0
-	  li        r5, 0x40
-	  stw       r30, 0x40(r31)
-	  li        r4, 0x1
-	  addi      r0, r3, 0x1000
-	  stw       r30, 0x38(r31)
-	  mr        r3, r31
-	  stw       r30, 0x30(r31)
-	  stw       r30, 0x34(r31)
-	  stw       r12, 0x48(r31)
-	  stw       r11, 0x4C(r31)
-	  stw       r30, 0x50(r31)
-	  stw       r30, 0x54(r31)
-	  stw       r10, 0x78(r31)
-	  stw       r9, 0x7C(r31)
-	  stw       r10, 0x80(r31)
-	  stw       r9, 0x84(r31)
-	  stb       r8, 0x60(r31)
-	  stb       r8, 0x61(r31)
-	  stb       r7, 0x62(r31)
-	  stb       r6, 0x63(r31)
-	  stb       r8, 0x64(r31)
-	  stb       r8, 0x65(r31)
-	  stb       r8, 0x66(r31)
-	  stb       r5, 0x67(r31)
-	  lfs       f0, -0x7970(r2)
-	  stfs      f0, 0x44(r31)
-	  stw       r30, 0x5C(r31)
-	  stw       r30, 0x8C(r31)
-	  stw       r30, 0x88(r31)
-	  stw       r30, 0x94(r31)
-	  stb       r4, 0x98(r31)
-	  stb       r4, 0x99(r31)
-	  stw       r0, 0xA4(r31)
-	  stw       r30, 0xAC(r31)
-	  lfs       f0, -0x796C(r2)
-	  stfs      f0, 0xB0(r31)
-	  stw       r30, 0x28(r31)
-	  lwz       r0, 0x34(r1)
-	  lmw       r27, 0x1C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
+	_74 = 0;
+	_6C = 0;
+	_70 = 0;
+	_68 = 0;
 
-	.loc_0x1C8:
-	*/
+	_84 = 0;
+	_7C = 0;
+	_80 = 0;
+	_78 = 0;
+
+	mController = controller;
+	_3C         = p3;
+
+	mFont = font;
+	_20   = 0;
+	_A8   = 0;
+	_2C   = new MenuItem(0, 0, "menu", nullptr);
+
+	resetMenuItem(_2C);
+
+	_40 = 0;
+	_38 = 0;
+	_30 = nullptr;
+	_34 = nullptr;
+
+	_48 = 160;
+	_4C = 120;
+	_50 = 0;
+	_54 = 0;
+
+	_78 = 6;
+	_7C = 12;
+	_80 = 6;
+	_84 = 12;
+
+	_60.r = 32;
+	_60.g = 32;
+	_60.b = 128;
+	_60.a = 192;
+
+	_64.r = 32;
+	_64.g = 32;
+	_64.b = 32;
+	_64.a = 64;
+
+	_44 = PI;
+
+	_5C    = 0;
+	_8C    = 0;
+	_88    = 0;
+	_94    = 0;
+	_98    = 1;
+	_99    = 1;
+	_A4    = 0x1001000;
+	mState = STATE_Unk0;
+	_B0    = 0.0f;
+	_28    = 0;
 }
 
 /*
@@ -155,8 +97,12 @@ Menu::Menu(Controller*, Font*, bool)
  * Address:	........
  * Size:	00001C
  */
-void Menu::KeyEvent::insertAfter(Menu::KeyEvent*)
+void Menu::KeyEvent::insertAfter(Menu::KeyEvent* key)
 {
+	key->mNext   = mNext;
+	key->mPrev   = this;
+	mNext->mPrev = key;
+	mNext        = key;
 	// UNUSED FUNCTION
 }
 
@@ -175,8 +121,12 @@ void Menu::KeyEvent::remove()
  * Address:	........
  * Size:	00001C
  */
-void Menu::MenuItem::insertAfter(Menu::MenuItem*)
+void Menu::MenuItem::insertAfter(Menu::MenuItem* item)
 {
+	item->mNext  = mNext;
+	item->mPrev  = this;
+	mNext->mPrev = item;
+	mNext        = item;
 	// UNUSED FUNCTION
 }
 
@@ -195,9 +145,13 @@ void Menu::MenuItem::remove()
  * Address:	........
  * Size:	00001C
  */
-Menu::KeyEvent::KeyEvent(int, int, IDelegate1<Menu&>*)
+Menu::KeyEvent::KeyEvent(int p1, int p2, IDelegate1<Menu&>* delegate)
 {
-	// UNUSED FUNCTION
+	_08       = p1;
+	_0C       = p2;
+	mDelegate = delegate;
+
+	mPrev = mNext = nullptr;
 }
 
 /*
@@ -205,50 +159,18 @@ Menu::KeyEvent::KeyEvent(int, int, IDelegate1<Menu&>*)
  * Address:	8005D8C0
  * Size:	000094
  */
-Menu::MenuItem::MenuItem(int, int, char*, IDelegate1<Menu&>*)
+Menu::MenuItem::MenuItem(int p1, int p2, char* name, IDelegate1<Menu&>* delegate)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  li        r31, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  stb       r0, 0x14(r3)
-	  li        r3, 0x14
-	  stw       r6, 0x18(r30)
-	  stw       r5, 0x1C(r30)
-	  stw       r4, 0x20(r30)
-	  stw       r31, 0x4(r30)
-	  stw       r31, 0x0(r30)
-	  stw       r31, 0x8(r30)
-	  stw       r31, 0xC(r30)
-	  bl        -0x16900
-	  cmplwi    r3, 0
-	  beq-      .loc_0x64
-	  stw       r31, 0x8(r3)
-	  stw       r31, 0xC(r3)
-	  stw       r31, 0x10(r3)
-	  stw       r31, 0x4(r3)
-	  stw       r31, 0x0(r3)
+	_14   = true;
+	mName = name;
+	_1C   = p2;
+	_20   = p1;
+	mPrev = mNext = nullptr;
+	_08           = 0;
+	mMenu         = nullptr;
 
-	.loc_0x64:
-	  stw       r3, 0x24(r30)
-	  mr        r3, r30
-	  lwz       r5, 0x24(r30)
-	  stw       r5, 0x0(r5)
-	  lwz       r4, 0x24(r30)
-	  stw       r5, 0x4(r4)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mEventList = new KeyEvent(0, 0, nullptr);
+	resetKeyEvent(mEventList);
 }
 
 /*
@@ -276,67 +198,16 @@ void Menu::setOnExit(IDelegate1<Menu&>*)
  * Address:	8005D954
  * Size:	0000C8
  */
-void Menu::addKeyEvent(int, int, IDelegate1<Menu&>*)
+void Menu::addKeyEvent(int p1, int p2, IDelegate1<Menu&>* delegate)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r6, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0x14
-	  bl        -0x16980
-	  cmplwi    r3, 0
-	  beq-      .loc_0x54
-	  stw       r29, 0x8(r3)
-	  li        r0, 0
-	  stw       r30, 0xC(r3)
-	  stw       r31, 0x10(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r0, 0x0(r3)
+	KeyEvent* key = new KeyEvent(p1, p2, delegate);
 
-	.loc_0x54:
-	  lwz       r4, 0x34(r28)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x84
-	  lwz       r4, 0x24(r4)
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r5)
-	  stw       r0, 0x4(r3)
-	  stw       r5, 0x0(r3)
-	  lwz       r4, 0x4(r5)
-	  stw       r3, 0x0(r4)
-	  stw       r3, 0x4(r5)
-	  b         .loc_0xA8
+	if (_34) {
+		_34->mEventList->mPrev->insertAfter(key);
 
-	.loc_0x84:
-	  lwz       r4, 0x2C(r28)
-	  lwz       r4, 0x24(r4)
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r5)
-	  stw       r0, 0x4(r3)
-	  stw       r5, 0x0(r3)
-	  lwz       r4, 0x4(r5)
-	  stw       r3, 0x0(r4)
-	  stw       r3, 0x4(r5)
-
-	.loc_0xA8:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	} else {
+		_2C->mEventList->mPrev->insertAfter(key);
+	}
 }
 
 /*
@@ -351,31 +222,13 @@ void Menu::enterOption() { }
  * Address:	8005DA20
  * Size:	000048
  */
-void Menu::enterMenu(Menu*)
+Menu* Menu::enterMenu(Menu* menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r4
-	  addi      r3, r31, 0
-	  beq-      .loc_0x30
-	  lwz       r12, 0x0(r3)
-	  li        r4, 0
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x30:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Menu* ret = menu; // yes this is necessary
+	if (ret) {
+		ret->open(false);
+	}
+	return ret;
 }
 
 /*
@@ -383,30 +236,13 @@ void Menu::enterMenu(Menu*)
  * Address:	8005DA68
  * Size:	000044
  */
-void Menu::exitMenu(Menu*)
+Menu* Menu::exitMenu(Menu* menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r4
-	  addi      r3, r31, 0
-	  beq-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Menu* ret = menu;
+	if (ret) {
+		ret->close();
+	}
+	return ret;
 }
 
 /*
@@ -414,22 +250,13 @@ void Menu::exitMenu(Menu*)
  * Address:	8005DAAC
  * Size:	00002C
  */
-void Menu::open(bool)
+void Menu::open(bool p1)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x796C(r2)
-	  li        r0, 0x1
-	  stfs      f0, 0xB0(r3)
-	  stw       r0, 0xAC(r3)
-	  lwz       r0, 0x30(r3)
-	  cmplwi    r0, 0
-	  bnelr-
-	  lwz       r4, 0x2C(r3)
-	  lwz       r0, 0x4(r4)
-	  stw       r0, 0x30(r3)
-	  blr
-	*/
+	_B0    = 0.0;
+	mState = STATE_Unk1;
+	if (!_30) {
+		_30 = _2C->mNext;
+	}
 }
 
 /*
@@ -439,20 +266,11 @@ void Menu::open(bool)
  */
 void Menu::close()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x20(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x10
-	  stw       r0, 0x24(r3)
-
-	.loc_0x10:
-	  lfs       f0, -0x7968(r2)
-	  li        r0, 0x3
-	  stfs      f0, 0xB0(r3)
-	  stw       r0, 0xAC(r3)
-	  blr
-	*/
+	if (!_20) {
+		_24 = _20;
+	}
+	_B0    = 1.0f;
+	mState = STATE_Unk3;
 }
 
 /*
@@ -462,17 +280,9 @@ void Menu::close()
  */
 void Menu::resetOptions()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x40(r3)
-	  stw       r0, 0x30(r3)
-	  lwz       r4, 0x2C(r3)
-	  stw       r4, 0x4(r4)
-	  lwz       r3, 0x2C(r3)
-	  stw       r4, 0x0(r3)
-	  blr
-	*/
+	_40 = 0;
+	_30 = nullptr;
+	resetMenuItem(_2C);
 }
 
 /*
@@ -480,124 +290,20 @@ void Menu::resetOptions()
  * Address:	8005DB1C
  * Size:	000194
  */
-void Menu::addOption(int, char*, IDelegate1<Menu&>*, bool)
+void Menu::addOption(int p1, char* name, IDelegate1<Menu&>* delegate, bool p4)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stmw      r25, 0x34(r1)
-	  addi      r30, r3, 0
-	  addi      r25, r4, 0
-	  addi      r26, r5, 0
-	  addi      r31, r6, 0
-	  addi      r27, r7, 0
-	  li        r3, 0x28
-	  bl        -0x16B40
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x98
-	  li        r0, 0x1
-	  stb       r0, 0x14(r28)
-	  li        r29, 0
-	  li        r3, 0x14
-	  stw       r26, 0x18(r28)
-	  stw       r25, 0x1C(r28)
-	  stw       r0, 0x20(r28)
-	  stw       r29, 0x4(r28)
-	  stw       r29, 0x0(r28)
-	  stw       r29, 0x8(r28)
-	  stw       r29, 0xC(r28)
-	  bl        -0x16B7C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x84
-	  stw       r29, 0x8(r3)
-	  stw       r29, 0xC(r3)
-	  stw       r29, 0x10(r3)
-	  stw       r29, 0x4(r3)
-	  stw       r29, 0x0(r3)
+	_34      = new MenuItem(1, p1, name, delegate);
+	_34->_14 = p4;
+	_2C->mPrev->insertAfter(_34);
+	if (delegate) {
+		addKeyEvent(16, _A4, delegate);
+	}
 
-	.loc_0x84:
-	  stw       r3, 0x24(r28)
-	  lwz       r4, 0x24(r28)
-	  stw       r4, 0x0(r4)
-	  lwz       r3, 0x24(r28)
-	  stw       r4, 0x4(r3)
+	if (!_30 && _34->_14) {
+		_30 = _34;
+	}
 
-	.loc_0x98:
-	  stw       r28, 0x34(r30)
-	  cmplwi    r31, 0
-	  lwz       r3, 0x34(r30)
-	  stb       r27, 0x14(r3)
-	  lwz       r3, 0x2C(r30)
-	  lwz       r5, 0x34(r30)
-	  lwz       r4, 0x0(r3)
-	  lwz       r0, 0x4(r4)
-	  stw       r0, 0x4(r5)
-	  stw       r4, 0x0(r5)
-	  lwz       r3, 0x4(r4)
-	  stw       r5, 0x0(r3)
-	  stw       r5, 0x4(r4)
-	  beq-      .loc_0x154
-	  lwz       r29, 0xA4(r30)
-	  li        r3, 0x14
-	  bl        -0x16BF0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x100
-	  li        r0, 0x10
-	  stw       r0, 0x8(r3)
-	  li        r0, 0
-	  stw       r29, 0xC(r3)
-	  stw       r31, 0x10(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r0, 0x0(r3)
-
-	.loc_0x100:
-	  lwz       r4, 0x34(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x130
-	  lwz       r4, 0x24(r4)
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r5)
-	  stw       r0, 0x4(r3)
-	  stw       r5, 0x0(r3)
-	  lwz       r4, 0x4(r5)
-	  stw       r3, 0x0(r4)
-	  stw       r3, 0x4(r5)
-	  b         .loc_0x154
-
-	.loc_0x130:
-	  lwz       r4, 0x2C(r30)
-	  lwz       r4, 0x24(r4)
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r5)
-	  stw       r0, 0x4(r3)
-	  stw       r5, 0x0(r3)
-	  lwz       r4, 0x4(r5)
-	  stw       r3, 0x0(r4)
-	  stw       r3, 0x4(r5)
-
-	.loc_0x154:
-	  lwz       r0, 0x30(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x174
-	  lwz       r3, 0x34(r30)
-	  lbz       r0, 0x14(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x174
-	  stw       r3, 0x30(r30)
-
-	.loc_0x174:
-	  lwz       r3, 0x40(r30)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x40(r30)
-	  lwz       r0, 0x54(r1)
-	  lmw       r25, 0x34(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	_40++;
 }
 
 /*
@@ -605,120 +311,20 @@ void Menu::addOption(int, char*, IDelegate1<Menu&>*, bool)
  * Address:	8005DCB0
  * Size:	000184
  */
-void Menu::addMenu(Menu*, int, char*)
+void Menu::addMenu(Menu* menu, int p2, char* name)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stmw      r26, 0x30(r1)
-	  addi      r31, r3, 0
-	  addi      r26, r4, 0
-	  addi      r27, r5, 0
-	  addi      r28, r6, 0
-	  li        r3, 0x28
-	  bl        -0x16CD0
-	  addi      r29, r3, 0
-	  mr.       r0, r29
-	  beq-      .loc_0x98
-	  li        r0, 0x1
-	  stb       r0, 0x14(r29)
-	  li        r0, 0x2
-	  li        r30, 0
-	  stw       r28, 0x18(r29)
-	  li        r3, 0x14
-	  stw       r27, 0x1C(r29)
-	  stw       r0, 0x20(r29)
-	  stw       r30, 0x4(r29)
-	  stw       r30, 0x0(r29)
-	  stw       r30, 0x8(r29)
-	  stw       r30, 0xC(r29)
-	  bl        -0x16D10
-	  cmplwi    r3, 0
-	  beq-      .loc_0x84
-	  stw       r30, 0x8(r3)
-	  stw       r30, 0xC(r3)
-	  stw       r30, 0x10(r3)
-	  stw       r30, 0x4(r3)
-	  stw       r30, 0x0(r3)
+	_34        = new MenuItem(2, p2, name, nullptr);
+	_34->mMenu = menu;
+	menu->_20  = this;
+	_2C->mPrev->insertAfter(_34);
 
-	.loc_0x84:
-	  stw       r3, 0x24(r29)
-	  lwz       r4, 0x24(r29)
-	  stw       r4, 0x0(r4)
-	  lwz       r3, 0x24(r29)
-	  stw       r4, 0x4(r3)
+	addKeyEvent(16, _A4, nullptr);
 
-	.loc_0x98:
-	  stw       r29, 0x34(r31)
-	  li        r3, 0x14
-	  lwz       r4, 0x34(r31)
-	  stw       r26, 0xC(r4)
-	  stw       r31, 0x20(r26)
-	  lwz       r4, 0x2C(r31)
-	  lwz       r6, 0x34(r31)
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r5)
-	  stw       r0, 0x4(r6)
-	  stw       r5, 0x0(r6)
-	  lwz       r4, 0x4(r5)
-	  stw       r6, 0x0(r4)
-	  stw       r6, 0x4(r5)
-	  lwz       r30, 0xA4(r31)
-	  bl        -0x16D80
-	  cmplwi    r3, 0
-	  beq-      .loc_0xFC
-	  li        r0, 0x10
-	  stw       r0, 0x8(r3)
-	  li        r0, 0
-	  stw       r30, 0xC(r3)
-	  stw       r0, 0x10(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r0, 0x0(r3)
+	if (!_30) {
+		_30 = _34;
+	}
 
-	.loc_0xFC:
-	  lwz       r4, 0x34(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x12C
-	  lwz       r4, 0x24(r4)
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r5)
-	  stw       r0, 0x4(r3)
-	  stw       r5, 0x0(r3)
-	  lwz       r4, 0x4(r5)
-	  stw       r3, 0x0(r4)
-	  stw       r3, 0x4(r5)
-	  b         .loc_0x150
-
-	.loc_0x12C:
-	  lwz       r4, 0x2C(r31)
-	  lwz       r4, 0x24(r4)
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r5)
-	  stw       r0, 0x4(r3)
-	  stw       r5, 0x0(r3)
-	  lwz       r4, 0x4(r5)
-	  stw       r3, 0x0(r4)
-	  stw       r3, 0x4(r5)
-
-	.loc_0x150:
-	  lwz       r0, 0x30(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x164
-	  lwz       r0, 0x34(r31)
-	  stw       r0, 0x30(r31)
-
-	.loc_0x164:
-	  lwz       r3, 0x40(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x40(r31)
-	  lwz       r0, 0x4C(r1)
-	  lmw       r26, 0x30(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	_40++;
 }
 
 /*
@@ -726,111 +332,46 @@ void Menu::addMenu(Menu*, int, char*)
  * Address:	8005DE34
  * Size:	000150
  */
-void Menu::checkNewOption()
+bool Menu::checkNewOption()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x58(r3)
-	  lwz       r3, 0x2C(r3)
-	  rlwinm.   r0,r3,0,28,28
-	  bne-      .loc_0x2C
-	  rlwinm.   r0,r3,0,10,10
-	  beq-      .loc_0xAC
+	// i dont think these button enums are correct
+	if (mController->isReleased(Controller::PRESS_DPAD_UP) || mController->isReleased(Controller::UNK_BTN22)) {
+		_30->checkEvents(this, 2);
+		_30 = _30->mNext;
 
-	.loc_0x2C:
-	  lwz       r3, 0x30(r31)
-	  addi      r4, r31, 0
-	  li        r5, 0x2
-	  bl        0x3A8
-	  lwz       r3, 0x30(r31)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x30(r31)
-	  lwz       r3, 0x30(r31)
-	  lwz       r0, 0x2C(r31)
-	  cmplw     r3, r0
-	  bne-      .loc_0x84
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x30(r31)
-	  b         .loc_0x84
+		if (_30 == _2C) {
+			_30 = _30->mNext;
+		}
 
-	.loc_0x64:
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x30(r31)
-	  lwz       r3, 0x30(r31)
-	  lwz       r0, 0x2C(r31)
-	  cmplw     r3, r0
-	  bne-      .loc_0x84
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x30(r31)
+		while (!_30->mName || !_30->_14) {
+			_30 = _30->mNext;
+			if (_30 == _2C) {
+				_30 = _30->mNext;
+			}
+		}
 
-	.loc_0x84:
-	  lwz       r3, 0x30(r31)
-	  lwz       r0, 0x18(r3)
-	  cmplwi    r0, 0
-	  beq+      .loc_0x64
-	  lbz       r0, 0x14(r3)
-	  cmplwi    r0, 0
-	  beq+      .loc_0x64
-	  li        r0, 0x1
-	  stb       r0, 0x99(r31)
-	  b         .loc_0x138
+		_99 = 1;
 
-	.loc_0xAC:
-	  rlwinm.   r0,r3,0,29,29
-	  bne-      .loc_0xBC
-	  rlwinm.   r0,r3,0,12,12
-	  beq-      .loc_0x138
+	} else if (mController->isReleased(Controller::PRESS_DPAD_DOWN) || mController->isReleased(Controller::CSTICK_UP)) {
+		_30->checkEvents(this, 2);
 
-	.loc_0xBC:
-	  lwz       r3, 0x30(r31)
-	  addi      r4, r31, 0
-	  li        r5, 0x2
-	  bl        0x318
-	  lwz       r3, 0x30(r31)
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x30(r31)
-	  lwz       r3, 0x30(r31)
-	  lwz       r0, 0x2C(r31)
-	  cmplw     r3, r0
-	  bne-      .loc_0x114
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x30(r31)
-	  b         .loc_0x114
+		_30 = _30->mPrev;
 
-	.loc_0xF4:
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x30(r31)
-	  lwz       r3, 0x30(r31)
-	  lwz       r0, 0x2C(r31)
-	  cmplw     r3, r0
-	  bne-      .loc_0x114
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x30(r31)
+		if (_30 == _2C) {
+			_30 = _30->mPrev;
+		}
 
-	.loc_0x114:
-	  lwz       r3, 0x30(r31)
-	  lwz       r0, 0x18(r3)
-	  cmplwi    r0, 0
-	  beq+      .loc_0xF4
-	  lbz       r0, 0x14(r3)
-	  cmplwi    r0, 0
-	  beq+      .loc_0xF4
-	  li        r0, 0x1
-	  stb       r0, 0x99(r31)
+		while (!_30->mName || !_30->_14) {
+			_30 = _30->mPrev;
+			if (_30 == _2C) {
+				_30 = _30->mPrev;
+			}
+		}
 
-	.loc_0x138:
-	  lwz       r0, 0x2C(r1)
-	  li        r3, 0
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+		_99 = 1;
+	}
+
+	return false;
 }
 
 /*
@@ -838,229 +379,92 @@ void Menu::checkNewOption()
  * Address:	8005DF84
  * Size:	00001C
  */
-void Menu::checkSelectKey()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x58(r3)
-	  lwz       r0, 0x28(r3)
-	  rlwinm    r0,r0,0,19,19
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
+bool Menu::checkSelectKey() { return mController->isPressed(Controller::PRESS_START) != false; }
 
 /*
  * --INFO--
  * Address:	8005DFA0
  * Size:	00001C
  */
-void Menu::checkCancelKey()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x58(r3)
-	  lwz       r0, 0x28(r3)
-	  rlwinm    r0,r0,0,18,18
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
+bool Menu::checkCancelKey() { return mController->isPressed(Controller::UNK_BTN14) != false; }
 
 /*
  * --INFO--
  * Address:	8005DFBC
  * Size:	000258
  */
-void Menu::doUpdate(bool)
+Menu* Menu::doUpdate(bool p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  mr        r30, r3
-	  mr        r31, r30
-	  stw       r29, 0x44(r1)
-	  stw       r30, 0x24(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x7964(r2)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0x44(r30)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x44(r30)
-	  lwz       r0, 0xAC(r30)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0xE8
-	  bge-      .loc_0x5C
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0x68
-	  b         .loc_0x238
+	// there's totally a missing inline in here but idk where seems sensible so have some stack padding
+	u32 missingInlineBuf1;
+	u32 missingInlineBuf2;
 
-	.loc_0x5C:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x238
-	  b         .loc_0xA8
+	Menu* ret = this;
+	_24       = this;
+	_44 += 7.0f * gsys->getFrameTime();
 
-	.loc_0x68:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x7960(r2)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0xB0(r30)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0xB0(r30)
-	  lfs       f1, 0xB0(r30)
-	  lfs       f0, -0x7968(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x238
-	  stfs      f0, 0xB0(r30)
-	  li        r0, 0x2
-	  stw       r0, 0xAC(r30)
-	  b         .loc_0x238
+	switch (mState) {
+	case STATE_Unk1:
+		_B0 += 8.0f * gsys->getFrameTime();
+		if (_B0 >= 1.0f) {
+			_B0    = 1.0f;
+			mState = STATE_Unk2;
+		}
+		break;
+	case STATE_Unk3:
+		_B0 -= 8.0f * gsys->getFrameTime();
+		if (_B0 < 0.0f) {
+			_B0    = 0.0f;
+			mState = STATE_Unk0;
+			ret    = _28;
+		}
+		break;
+	case STATE_Unk2:
+		if (p1) {
+			_99 = 1;
+		}
+		checkNewOption();
 
-	.loc_0xA8:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x7960(r2)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0xB0(r30)
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0xB0(r30)
-	  lfs       f1, 0xB0(r30)
-	  lfs       f0, -0x796C(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x238
-	  stfs      f0, 0xB0(r30)
-	  li        r0, 0
-	  stw       r0, 0xAC(r30)
-	  lwz       r31, 0x28(r30)
-	  b         .loc_0x238
+		if (_98) {
+			if (_88) {
+				_88->invoke(*this);
+			}
+			_98 = 0;
+			_99 = 1;
+		}
 
-	.loc_0xE8:
-	  rlwinm.   r0,r4,0,24,31
-	  beq-      .loc_0xF8
-	  li        r0, 0x1
-	  stb       r0, 0x99(r30)
+		int flag = 0xFFFC;
+		if (_99) {
+			flag |= 0x1;
+			if (_94) {
+				_94->invoke(*this);
+			}
+			_44 = 0.0f;
+			_99 = 0;
+		}
 
-	.loc_0xF8:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0x98(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x148
-	  lwz       r3, 0x88(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x138
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
+		if (!_30->checkEvents(this, flag)) {
+			_2C->checkEvents(this, flag);
+		}
 
-	.loc_0x138:
-	  li        r0, 0
-	  stb       r0, 0x98(r30)
-	  li        r0, 0x1
-	  stb       r0, 0x99(r30)
+		if (_24 != this) {
+			_30->checkEvents(this, 2);
+			if (_8C) {
+				_8C->invoke(*this);
+			}
 
-	.loc_0x148:
-	  lbz       r0, 0x99(r30)
-	  lis       r3, 0x1
-	  subi      r29, r3, 0x4
-	  cmplwi    r0, 0
-	  beq-      .loc_0x190
-	  lwz       r3, 0x94(r30)
-	  ori       r29, r29, 0x1
-	  cmplwi    r3, 0
-	  beq-      .loc_0x180
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
+			if (_24) {
+				_24->open(false);
+				ret = _24;
+			} else {
+				close();
+			}
+			_28 = _24;
+		}
+		break;
+	}
 
-	.loc_0x180:
-	  lfs       f0, -0x796C(r2)
-	  li        r0, 0
-	  stfs      f0, 0x44(r30)
-	  stb       r0, 0x99(r30)
-
-	.loc_0x190:
-	  lwz       r3, 0x30(r30)
-	  addi      r4, r30, 0
-	  addi      r5, r29, 0
-	  bl        .loc_0x258
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x1B8
-	  lwz       r3, 0x2C(r30)
-	  addi      r4, r30, 0
-	  addi      r5, r29, 0
-	  bl        .loc_0x258
-
-	.loc_0x1B8:
-	  lwz       r0, 0x24(r30)
-	  cmplw     r0, r30
-	  beq-      .loc_0x238
-	  lwz       r3, 0x30(r30)
-	  addi      r4, r30, 0
-	  li        r5, 0x2
-	  bl        .loc_0x258
-	  lwz       r3, 0x8C(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1F4
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1F4:
-	  lwz       r3, 0x24(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x21C
-	  lwz       r12, 0x0(r3)
-	  li        r4, 0
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r31, 0x24(r30)
-	  b         .loc_0x230
-
-	.loc_0x21C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x230:
-	  lwz       r0, 0x24(r30)
-	  stw       r0, 0x28(r30)
-
-	.loc_0x238:
-	  mr        r3, r31
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-
-	.loc_0x258:
-	*/
+	return ret;
 }
 
 /*
@@ -1068,150 +472,58 @@ void Menu::doUpdate(bool)
  * Address:	8005E214
  * Size:	0001FC
  */
-void Menu::MenuItem::checkEvents(Menu*, int)
+bool Menu::MenuItem::checkEvents(Menu* menu, int flags)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stmw      r27, 0x34(r1)
-	  mr        r27, r3
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  lwz       r6, 0x24(r3)
-	  lis       r3, 0x802B
-	  subi      r31, r3, 0x7AC0
-	  lwz       r30, 0x4(r6)
-	  b         .loc_0x1D8
+	KeyEvent* key = mEventList->mNext;
+	for (key; key != mEventList; key = key->mNext) {
+		if (!(flags & key->_08)) {
+			continue;
+		}
 
-	.loc_0x30:
-	  lwz       r3, 0x8(r30)
-	  and.      r0, r29, r3
-	  beq-      .loc_0x1D4
-	  cmplwi    r3, 0x20
-	  bgt-      .loc_0x1D4
-	  rlwinm    r0,r3,2,0,29
-	  lwzx      r0, r31, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r3, 0x10(r30)
-	  mr        r4, r28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x1D4
-	  lwz       r3, 0x10(r30)
-	  mr        r4, r28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x1D4
-	  lwz       r3, 0x58(r28)
-	  lwz       r0, 0xC(r30)
-	  lwz       r3, 0x20(r3)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x1D4
-	  lwz       r3, 0x10(r30)
-	  mr        r4, r28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x1D4
-	  lwz       r3, 0x58(r28)
-	  lwz       r0, 0xC(r30)
-	  lwz       r3, 0x2C(r3)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x1D4
-	  lwz       r3, 0x10(r30)
-	  mr        r4, r28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x1
-	  b         .loc_0x1E8
-	  lwz       r3, 0x58(r28)
-	  lwz       r0, 0xC(r30)
-	  lwz       r3, 0x2C(r3)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x1D4
-	  lwz       r3, 0x30(r28)
-	  lwz       r0, 0x20(r3)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x1B4
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0
-	  li        r5, 0x2
-	  bl        .loc_0x0
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r28, 0x24(r28)
-	  li        r4, 0
-	  lwz       r3, 0x30(r28)
-	  lwz       r0, 0xC(r3)
-	  stw       r0, 0x28(r28)
-	  lwz       r3, 0x28(r28)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x28(r28)
-	  lwz       r0, 0x3C(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x198
-	  lwz       r3, 0x40(r28)
-	  lwz       r0, 0xA0(r28)
-	  mulli     r4, r3, 0xE
-	  lwz       r3, 0x4C(r28)
-	  srawi     r4, r4, 0x1
-	  addze     r4, r4
-	  mulli     r0, r0, 0xE
-	  sub       r3, r3, r4
-	  add       r0, r3, r0
-	  stw       r0, 0x4C(r5)
+		switch (key->_08) {
+		case 1:
+			key->mDelegate->invoke(*menu);
+			break;
+		case 2:
+			key->mDelegate->invoke(*menu);
+			break;
+		case 4:
+			if (menu->mController->isCurrentInput(key->_0C)) {
+				key->mDelegate->invoke(*menu);
+			}
+			break;
+		case 8:
+		case 0x20:
+			if (menu->mController->isReleased(key->_0C)) {
+				key->mDelegate->invoke(*menu);
+				return true;
+			}
+			break;
+		case 0x10:
+			if (menu->mController->isReleased(key->_0C)) {
+				if (menu->_30->_20 == 2) {
+					checkEvents(menu, 2);
+					menu->close();
+					menu->_24 = menu;
+					menu->_28 = menu->_30->mMenu;
+					menu->_28->open(false);
 
-	.loc_0x198:
-	  li        r0, 0x1
-	  stb       r0, 0x98(r28)
-	  li        r3, 0
-	  lwz       r4, 0x30(r28)
-	  lwz       r4, 0xC(r4)
-	  stb       r0, 0x98(r4)
-	  b         .loc_0x1E8
+					if (menu->_28->_3C) {
+						menu->_28->_4C = menu->_4C - (menu->_40 * 14) / 2 + menu->_A0 * 14;
+					}
+					menu->_98             = 1;
+					menu->_30->mMenu->_98 = 1;
+					return false;
+				}
 
-	.loc_0x1B4:
-	  lwz       r3, 0x10(r30)
-	  mr        r4, r28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x1
-	  b         .loc_0x1E8
+				key->mDelegate->invoke(*menu);
+				return true;
+			}
+			break;
+		}
+	}
 
-	.loc_0x1D4:
-	  lwz       r30, 0x4(r30)
-
-	.loc_0x1D8:
-	  lwz       r0, 0x24(r27)
-	  cmplw     r30, r0
-	  bne+      .loc_0x30
-	  li        r3, 0
-
-	.loc_0x1E8:
-	  lmw       r27, 0x34(r1)
-	  lwz       r0, 0x4C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -1650,36 +962,11 @@ void Menu::draw(Graphics&, f32)
  * Address:	8005EA1C
  * Size:	000064
  */
-void Menu::menuCloseMenu(Menu&)
+void Menu::menuCloseMenu(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  mr        r3, r31
-	  lwz       r0, 0x20(r4)
-	  stw       r0, 0x28(r4)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x28(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x50
-	  lwz       r12, 0x0(r3)
-	  li        r4, 0
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x50:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	menu._28 = menu._20;
+	menu.close();
+	if (menu._28) {
+		menu._28->open(false);
+	}
 }

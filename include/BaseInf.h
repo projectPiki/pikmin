@@ -68,20 +68,9 @@ struct CreatureInf : public BaseInf {
 	// _00-_2C = BaseInf
 	EObjType mObjType; // _2C
 	u32 _30;           // _30, unknown
-	u32 _34;           // _34, unknown
-	u8 _38[0x14];      // _38, unknown
-};
-
-/**
- * @brief TODO
- */
-struct StageInf {
-	void init();
-	void initGame();
-	void saveCard(RandomAccessStream&);
-	void loadCard(RandomAccessStream&);
-
-	// TODO: members
+	int _34;           // _34
+	int _38;           // _38
+	u8 _3C[0x10];      // _3C, unknown
 };
 
 /**
@@ -117,6 +106,20 @@ struct MonoInfMgr : public InfMgr {
 	// unused/inlined:
 	void saveCard(RandomAccessStream&);
 
+	inline void clearActiveList()
+	{
+		BaseInf* next;
+		BaseInf* inf;
+
+		inf = static_cast<BaseInf*>(mActiveList.mChild);
+		while (inf) {
+			next = static_cast<BaseInf*>(inf->mNext);
+			inf->del();
+			mFreeList.add(inf);
+			inf = next;
+		}
+	}
+
 	// _00     = VTBL
 	// _00-_04 = InfMgr
 	int mInfCount;       // _04
@@ -127,6 +130,8 @@ struct MonoInfMgr : public InfMgr {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x64.
  */
 struct BPikiInfMgr : public MonoInfMgr {
 	virtual BPikiInf* newInf(); // _1C
@@ -138,7 +143,6 @@ struct BPikiInfMgr : public MonoInfMgr {
 
 	// _00     = VTBL
 	// _00-_64 = MonoInfMgr
-	// TODO: members
 };
 
 /**
@@ -182,6 +186,20 @@ struct PikiInfMgr {
 
 	// TODO: members
 	int mPikiCounts[3][3]; // _00, indexed by color and happa maybe?
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x64.
+ */
+struct StageInf {
+	void init();
+	void initGame();
+	void saveCard(RandomAccessStream&);
+	void loadCard(RandomAccessStream&);
+
+	BPikiInfMgr mBPikiInfMgr; // _00
 };
 
 extern PikiInfMgr pikiInfMgr;

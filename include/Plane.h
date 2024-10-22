@@ -2,8 +2,7 @@
 #define _PLANE_H
 
 #include "types.h"
-
-struct Vector3f;
+#include "Vector.h"
 
 /**
  * @brief TODO
@@ -19,7 +18,8 @@ struct Plane {
 	void bounceVector(Vector3f&, f32);
 	void frictionVector(Vector3f&, f32);
 
-	// TODO: members - it'll be 4 f32s, just not sure if it'll be a Vector3f and a f32 or 4 f32s.
+	Vector3f mNormal; // _00
+	f32 mOffset;      // _10
 };
 
 #endif

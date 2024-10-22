@@ -9,6 +9,18 @@ struct Creature;
 /**
  * @brief TODO
  */
+enum EResultsFlags {
+	RESFLAG_Unk0 = 0,
+	RESFLAG_Unk1 = 1,
+	// ...
+	RESFLAG_Unk24 = 24,
+	// ...
+	RESFLAG_Unk39 = 39,
+};
+
+/**
+ * @brief TODO
+ */
 struct ResultFlags {
 
 	/**

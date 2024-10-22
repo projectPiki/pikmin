@@ -88,7 +88,7 @@ void Texture::offsetGLtoGX(int, int)
  * Address:	80044204
  * Size:	0000D4
  */
-u16 Texture::getAlpha(int p1, int p2)
+u8 Texture::getAlpha(int p1, int p2)
 {
 	switch (_04) {
 	case 5:

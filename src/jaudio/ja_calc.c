@@ -28,7 +28,7 @@ void sqrtf2(f32)
  * Address:	8000DC40
  * Size:	000064
  */
-void std::sqrtf(f32)
+f32 std::sqrtf(f32)
 {
 	/*
 	.loc_0x0:

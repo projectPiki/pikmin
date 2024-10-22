@@ -2,16 +2,22 @@
 #define _INTERACTIONS_H
 
 #include "types.h"
+#include "Vector.h"
 
 struct Boss;
 struct Bridge;
 struct Creature;
+struct CollPart;
 struct HinderRock;
 struct ItemCreature;
 struct Navi;
 struct Pellet;
 struct Piki;
 struct Teki;
+
+namespace zen {
+struct particleGenerator;
+}
 
 /**
  * @brief TODO
@@ -49,11 +55,12 @@ struct InteractAttack : public Interaction {
 	virtual bool actBoss(Boss*);         // _18
 	virtual bool actItem(ItemCreature*); // _28
 
-	void getDamagePortion();
+	int getDamagePortion();
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	f32 mDamage;         // _08
+	CollPart* mCollPart; // _0C
 };
 
 /**
@@ -83,7 +90,7 @@ struct InteractBomb : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	f32 _08; // _08, damage maybe?
 };
 
 /**
@@ -138,7 +145,8 @@ struct InteractBury : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	bool mMakeFlower; // _08, causes piki to be flowered
+	f32 _0C;          // _0C
 };
 
 /**
@@ -196,7 +204,9 @@ struct InteractFlick : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	f32 _08; // _08
+	f32 _0C; // _0C, maybe damage?
+	f32 _10; // _10
 };
 
 /**
@@ -264,7 +274,7 @@ struct InteractKill : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	int _08; // _08
 };
 
 /**
@@ -279,7 +289,7 @@ struct InteractPress : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	f32 mDamage; // _08
 };
 
 /**
@@ -314,13 +324,17 @@ struct InteractPush : public Interaction {
  * @brief TODO
  */
 struct InteractRelease : public Interaction {
-	inline InteractRelease(); // TODO: probably
+	inline InteractRelease(Creature* owner, f32 p2)
+	    : Interaction(owner)
+	{
+		_08 = p2;
+	}
 
 	virtual bool actCommon(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	f32 _08; // _08
 };
 
 /**
@@ -377,7 +391,8 @@ struct InteractSwallow : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	int _08;              // _08
+	CollPart* mMouthPart; // _0C
 };
 
 /**
@@ -431,7 +446,9 @@ struct InteractWind : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	u8 _08[0x4];                 // _08, unknown
+	Vector3f _0C;                // _0C
+	zen::particleGenerator* _18; // _18
 };
 
 #endif

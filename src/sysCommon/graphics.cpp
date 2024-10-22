@@ -2280,47 +2280,7 @@ void PVWTevColReg::animate(f32*, ShortColour&)
  * Address:	800276D8
  * Size:	000054
  */
-void Material::attach()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x2DEC(r13)
-	  lwz       r3, 0x24C(r5)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x2DEC(r13)
-	  mr        r4, r3
-	  lwz       r3, 0x24C(r5)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8002772C
- * Size:	000004
- */
-void Graphics::useDList(u32) { }
-
-/*
- * --INFO--
- * Address:	80027730
- * Size:	000008
- */
-u32 Graphics::compileMaterial(Material*) { return 0; }
+void Material::attach() { gsys->mGfx->useDList(gsys->mGfx->compileMaterial(this)); }
 
 /*
  * --INFO--
@@ -2731,8 +2691,28 @@ void PVWAnimInfo3<PVWKeyInfoU8>::read(RandomAccessStream&)
  * Address:	80027CB8
  * Size:	0002D0
  */
-void Font::setTexture(Texture*, int, int)
+void Font::setTexture(Texture* tex, int numRows, int numCols)
 {
+	mTexture    = tex;
+	mChars      = new FontChar[numRows * numCols];
+	mCharWidth  = mTexture->mWidth / numRows;
+	mCharHeight = mTexture->mHeight / numCols;
+
+	for (int i = 0; i < numCols; i++) {
+		for (int j = 0; j < numRows; j++) {
+			for (int k = 0; k < mCharWidth; k++) {
+				int count = 0;
+				for (int m = 0; m < mCharHeight - 1; m++) {
+					if (tex->getAlpha(k + (j * mCharWidth), m + (i * mCharHeight))) {
+						count++;
+					}
+				}
+				if (count != mCharHeight - 1) {
+					break;
+				}
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2967,20 +2947,9 @@ void Font::setTexture(Texture*, int, int)
  */
 FontChar::FontChar()
 {
-	/*
-	.loc_0x0:
-	  li        r4, 0
-	  stw       r4, 0x18(r3)
-	  li        r0, 0x8
-	  stw       r4, 0x10(r3)
-	  stw       r4, 0x14(r3)
-	  stw       r4, 0xC(r3)
-	  sth       r4, 0x2(r3)
-	  sth       r4, 0x0(r3)
-	  sth       r0, 0x6(r3)
-	  sth       r0, 0x4(r3)
-	  blr
-	*/
+	_0C = _14 = _10 = _18 = 0;
+	_00 = _02 = 0;
+	_04 = _06 = 8;
 }
 
 /*
@@ -2988,15 +2957,7 @@ FontChar::FontChar()
  * Address:	80027FB4
  * Size:	00000C
  */
-void Font::charToIndex(char)
-{
-	/*
-	.loc_0x0:
-	  rlwinm    r3,r4,0,24,31
-	  subi      r3, r3, 0x20
-	  blr
-	*/
-}
+int Font::charToIndex(char c) { return (c & 0xFF) - 0x20; }
 
 /*
  * --INFO--
@@ -3526,8 +3487,9 @@ void Graphics::resetMatrixBuffer()
  * Address:	80028514
  * Size:	00001C
  */
-void Graphics::getMatrices(int)
+void Graphics::getMatrices(int p1)
 {
+
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x38C(r3)
@@ -5250,11 +5212,7 @@ u32 Graphics::getDListRemainSize() { return 0x0; }
  * Address:	8002998C
  * Size:	000008
  */
-void Graphics::setLightcam(LightCamera* a1)
-{
-	// Generated from stw r4, 0x338(r3)
-	// _338 = a1;
-}
+void Graphics::setLightcam(LightCamera* cam) { mLightCam = cam; }
 
 /*
  * --INFO--

@@ -45,8 +45,11 @@ struct Graphics {
 	void calcBoxLighting(BoundBox&);
 
 	// _3B4 = VTBL
-	u8 _00[0x3A8];              // _00, TODO: work out members
+	u8 _00[0x10];               // _00, TODO: work out members
 	Light mLight;               // _10
+	u8 _25C[0x338 - 0x25C];     // _25C, unknown
+	LightCamera* mLightCam;     // _338
+	u8 _33C[0x3A8 - 0x33C];     // _33C, unknown
 	CachedShape* mCachedShapes; // _3A8
 	u32 mCachedShapeCount;      // _3AC
 	u8 _3B0[0x4];               // _3B0, unknown
@@ -56,8 +59,8 @@ struct Graphics {
 	virtual void getVerticalFilter(u8*);                                                          // _10
 	virtual u32 getDListPtr();                                                                    // _14
 	virtual u32 getDListRemainSize();                                                             // _18
-	virtual u32 compileMaterial(Material*);                                                       // _1C
-	virtual void useDList(u32);                                                                   // _20
+	virtual u32 compileMaterial(Material*) { return 0; }                                          // _1C
+	virtual void useDList(u32) { }                                                                // _20
 	virtual void initRender(int, int);                                                            // _24
 	virtual void resetCopyFilter() = 0;                                                           // _28
 	virtual void setAmbient();                                                                    // _2C

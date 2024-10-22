@@ -101,7 +101,7 @@ struct Texture : public GfxObject {
 	virtual void detach();          // _0C
 	virtual void makeResident() { } // _10 (weak)
 
-	u16 getAlpha(int, int);
+	u8 getAlpha(int, int);
 	void read(RandomAccessStream&);
 	void createBuffer(int, int, int, void*);
 	void grabBuffer(int, int, bool, bool);

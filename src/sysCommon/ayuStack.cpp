@@ -1,6 +1,7 @@
 #include "types.h"
 #include "Ayu.h"
 #include "system.h"
+#include "PikiMacros.h"
 
 /*
  * --INFO--
@@ -109,8 +110,9 @@ void* AyuStack::push(int requestedSize)
 		u32 previousSize;
 		u32 stackStart;
 		if (mStackTop != mInitialStackTop) {
-			previousSize = *(u32*)(mStackTop - 4);
-			stackStart   = mStackTop - previousSize - 8;
+			int tmp      = mStackTop - 8;
+			previousSize = *(u32*)(mStackTop - 8);
+			stackStart   = tmp;
 		} else {
 			previousSize = 0;
 			stackStart   = mStackTop;
@@ -118,8 +120,14 @@ void* AyuStack::push(int requestedSize)
 
 		mTotalSize += requestedSize + 8;
 		mStackTop += requestedSize + 8;
-		*(u32*)mStackLimit = requestedSize + 8;
-		checkStack();
+		*(u32*)(mStackTop - 8) = requestedSize + previousSize + 8;
+
+		if (mAllocType & 2) {
+			if (mStackTop - *(u32*)(mStackTop - 8) > mInitialStackTop) {
+				DEBUGPRINT(mStackTop);
+			}
+		}
+
 		return (void*)stackStart;
 	} else {
 		if (mStackLimit - (requestedSize + 8) < mStackTop) {
@@ -228,32 +236,16 @@ void* AyuStack::push(int requestedSize)
  */
 void AyuStack::pop()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x30
-	  lwz       r4, 0x14(r3)
-	  lwz       r0, 0x8(r3)
-	  lwz       r4, -0x8(r4)
-	  sub       r0, r0, r4
-	  stw       r0, 0x8(r3)
-	  lwz       r0, 0x14(r3)
-	  sub       r0, r0, r4
-	  stw       r0, 0x14(r3)
-	  blr
+	if (mAllocType == 2) {
+		u32 subVal = *(u32*)(mStackTop - 8);
+		mTotalSize -= subVal;
+		mStackTop -= subVal;
+		return;
+	}
 
-	.loc_0x30:
-	  lwz       r4, 0x18(r3)
-	  lwz       r0, 0x8(r3)
-	  lwz       r4, 0x0(r4)
-	  sub       r0, r0, r4
-	  stw       r0, 0x8(r3)
-	  lwz       r0, 0x18(r3)
-	  add       r0, r0, r4
-	  stw       r0, 0x18(r3)
-	  blr
-	*/
+	u32 diffVal = *(u32*)mStackLimit;
+	mTotalSize -= diffVal;
+	mStackLimit += diffVal;
 }
 
 /*
@@ -701,6 +693,7 @@ void AyuCache::amountFree()
  */
 bool AyuCache::isEmpty()
 {
+	// return mStackTop - _10 > 0;
 	/*
 	.loc_0x0:
 	  lwz       r4, 0x14(r3)

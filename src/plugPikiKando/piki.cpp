@@ -2658,7 +2658,7 @@ Vector3f Piki::getCatchPos(Creature*)
  * Address:	800C8554
  * Size:	00000C
  */
-void Piki::getState()
+int Piki::getState()
 {
 	/*
 	.loc_0x0:

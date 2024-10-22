@@ -7,15 +7,33 @@
 
 struct TopAction;
 struct Navi;
+struct PikiStateMachine;
+struct PikiProp;
 
 /**
  * @brief TODO
  */
 enum PikiColor {
-	Red    = 0,
-	Yellow = 1,
-	Blue   = 2,
+	Blue   = 0,
+	Red    = 1,
+	Yellow = 2,
 	PikiColorCount, // 3
+
+	PikiMinColor = Blue,
+	PikiMaxColor = Yellow,
+};
+
+/**
+ * @brief TODO
+ */
+enum PikiHappa {
+	Leaf   = 0,
+	Bud    = 1,
+	Flower = 2,
+	PikiHappaCount, // 3
+
+	PikiMinHappa = Leaf,
+	PikiMaxHappa = Flower,
 };
 
 /**
@@ -77,7 +95,6 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	bool isLooking();
 	void updateLook();
 	void demoCheck();
-	bool isSafeMePos(Vector3f&);
 	void startDemo();
 	void finishDemo();
 	void appearDemo();
@@ -96,7 +113,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	void endFire();
 	bool isTeki(Piki*);
 	void actOnSituaton(); // dev spelling
-	void getState();
+	int getState();
 	void graspSituation(Creature**);
 	void initColor(int);
 	void startKinoko();
@@ -111,6 +128,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	void startMotion(struct PaniMotionInfo&, PaniMotionInfo&);
 	void enableMotionBlend();
 	void checkBridgeWall(Creature*, Vector3f&);
+
+	static bool isSafeMePos(Vector3f&);
 
 	// unused/inlined:
 	void getPikiState();
@@ -127,15 +146,39 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	void setSpeed(f32);
 	void getCurrentMotionName();
 
+	// defined in PikiMgr.h to avoid include looping
+	inline PikiProp* getPikiProp();
+
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
-	u8 _2BC[0x3CC - 0x2BC]; // _2BC, TODO: work out members
-	int _3CC;               // _3CC, piki color?
-	int _3D0;               // _3D0, piki happa?
-	u8 _3D4[0x4F8 - 0x3D4]; // _3D4, unknown
-	TopAction* _4F8;        // _4F8, may be just Action*
-	u8 _4FC[0x585 - 0x4FC]; // _4FC, TODO: work out members
+	u8 _2BC[0x3CC - 0x2BC];      // _2BC, TODO: work out members
+	int _3CC;                    // _3CC, piki color?
+	int _3D0;                    // _3D0, piki happa?
+	u8 _3D4[0x424 - 0x3D4];      // _3D4, unknown
+	u8 _424;                     // _424
+	u16 _426;                    // _426
+	u8 _428[0x8];                // _428, unknown
+	u32 _430;                    // _430, unknown
+	u8 _434[0x48C - 0x434];      // _434, unknown
+	f32 _48C;                    // _48C
+	PikiStateMachine* mFSM;      // _490
+	u8 _494[0x4];                // _494, unknown
+	f32 _498;                    // _498
+	f32 _49C;                    // _49C, some form of angle?
+	u8 _4A0[4];                  // _4A0, unknown
+	CollPart* mSwallowMouthPart; // _4A4
+	Creature* _4A8;              // _4A8, maybe puffstool/kinoko leader?
+	u8 _4AC[0x4F8 - 0x4AC];      // _4AC, unknown
+	TopAction* _4F8;             // _4F8, may be just Action*
+	u16 _4FC;                    // _4FC
+	u32 _500;                    // _500, unknown
+	Navi* mNavi;                 // _504
+	u8 _508[0x8];                // _508, unknown
+	u16 mColor;                  // _510, red/yellow/blue
+	u8 _512[0x520 - 0x512];      // _4FC, TODO: work out members
+	int mHappa;                  // _520, leaf/bud/flower
+	u8 _524[0x585 - 0x524];      // _4FC, TODO: work out members
 };
 
 /**

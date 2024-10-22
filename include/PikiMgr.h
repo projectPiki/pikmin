@@ -69,4 +69,6 @@ struct PikiMgr : public MonoObjectMgr {
 
 extern PikiMgr* pikiMgr;
 
+inline PikiProp* Piki::getPikiProp() { return static_cast<PikiProp*>(mProps); }
+
 #endif
