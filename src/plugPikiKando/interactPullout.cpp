@@ -1,4 +1,7 @@
 #include "Interactions.h"
+#include "Piki.h"
+#include "Navi.h"
+#include "PikiState.h"
 
 /*
  * --INFO--
@@ -32,8 +35,22 @@ bool InteractPullout::actCommon(Creature*) { return true; }
  * Address:	8007CB40
  * Size:	0002BC
  */
-bool InteractPullout::actPiki(Piki*)
+bool InteractPullout::actPiki(Piki* piki)
 {
+	if (piki->getState() == PIKISTATE_Nukare) {
+		return false;
+	}
+
+	piki->mDirection = roundAng(mOwner->mDirection);
+	piki->_88.set(0.0f, piki->mDirection, 0.0f);
+	piki->mFSM->transit(piki, PIKISTATE_Nukare);
+
+	if (piki->mNavi->_7E5) {
+		piki->mPikiAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Nukare_Fast, piki), PaniMotionInfo(PIKIANIM_Nukare_Fast));
+	} else {
+		piki->mPikiAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Nukareru, piki), PaniMotionInfo(PIKIANIM_Nukareru));
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0

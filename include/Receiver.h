@@ -12,38 +12,38 @@ struct Receiver {
 
 	virtual void procMsg(T* target, Msg* msg) // _08 (weak)
 	{
-		switch (msg->_00) {
-		case 0:
+		switch (msg->mMsgType) {
+		case MSG_Bounce:
 			procBounceMsg(target, static_cast<MsgBounce*>(msg));
 			break;
-		case 8:
+		case MSG_Stick:
 			procStickMsg(target, static_cast<MsgStick*>(msg));
 			break;
-		case 1:
+		case MSG_Hang:
 			procHangMsg(target, static_cast<MsgHang*>(msg));
 			break;
-		case 2:
+		case MSG_Target:
 			procTargetMsg(target, static_cast<MsgTarget*>(msg));
 			break;
-		case 3:
+		case MSG_Collide:
 			procCollideMsg(target, static_cast<MsgCollide*>(msg));
 			break;
-		case 4:
+		case MSG_Anim:
 			procAnimMsg(target, static_cast<MsgAnim*>(msg));
 			break;
-		case 5:
+		case MSG_Damage:
 			procDamageMsg(target, static_cast<MsgDamage*>(msg));
 			break;
-		case 6:
+		case MSG_Wall:
 			procWallMsg(target, static_cast<MsgWall*>(msg));
 			break;
-		case 7:
+		case MSG_OffWall:
 			procOffWallMsg(target, static_cast<MsgOffWall*>(msg));
 			break;
-		case 10:
+		case MSG_User:
 			procUserMsg(target, static_cast<MsgUser*>(msg));
 			break;
-		case 9:
+		case MSG_Ground:
 			procGroundMsg(target, static_cast<MsgGround*>(msg));
 			break;
 		}

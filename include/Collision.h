@@ -119,6 +119,15 @@ struct CollPartUpdater {
 /**
  * @brief TODO
  */
+struct CollEvent {
+	u32 _00; // _00, unknown
+	u32 _04; // _04, unknown
+	u32 _08; // _08, unknown
+};
+
+/**
+ * @brief TODO
+ */
 struct CndCollPart {
 	virtual bool satisfy(CollPart*); // _08
 

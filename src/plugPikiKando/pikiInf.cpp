@@ -221,8 +221,7 @@ void BaseInf::loadCard(RandomAccessStream& card)
  */
 BPikiInf::BPikiInf()
 {
-	mPikiHappa = Leaf;
-	mPikiColor = Blue;
+	_2C = _2D = 0;
 	// UNUSED FUNCTION
 }
 
@@ -234,7 +233,7 @@ BPikiInf::BPikiInf()
 void BPikiInf::saveCard(RandomAccessStream& card)
 {
 	BaseInf::saveCard(card);
-	u8 byte = (mPikiHappa << 2) | mPikiColor;
+	u8 byte = (_2D << 2) | _2C;
 	card.writeByte(byte);
 }
 
@@ -246,9 +245,9 @@ void BPikiInf::saveCard(RandomAccessStream& card)
 void BPikiInf::loadCard(RandomAccessStream& card)
 {
 	BaseInf::loadCard(card);
-	u8 byte    = card.readByte();
-	mPikiColor = byte & 0x3;
-	mPikiHappa = (byte >> 2) & 0x3F;
+	u8 byte = card.readByte();
+	_2C     = byte & 0x3;
+	_2D     = (byte >> 2) & 0x3F;
 }
 
 /*
@@ -258,8 +257,8 @@ void BPikiInf::loadCard(RandomAccessStream& card)
  */
 void BPikiInf::doStore(Creature* piki)
 {
-	mPikiColor = static_cast<Piki*>(piki)->_3CC;
-	mPikiHappa = static_cast<Piki*>(piki)->_3D0;
+	_2C = static_cast<Piki*>(piki)->mPikiAnimMgr._58._20;
+	_2D = static_cast<Piki*>(piki)->mPikiAnimMgr._58._24;
 }
 
 /*
@@ -269,8 +268,8 @@ void BPikiInf::doStore(Creature* piki)
  */
 void BPikiInf::doRestore(Creature* piki)
 {
-	static_cast<Piki*>(piki)->_3CC = mPikiColor;
-	static_cast<Piki*>(piki)->_3D0 = mPikiHappa;
+	static_cast<Piki*>(piki)->mPikiAnimMgr._58._20 = _2C;
+	static_cast<Piki*>(piki)->mPikiAnimMgr._58._24 = _2D;
 }
 
 /*
@@ -400,7 +399,7 @@ int BPikiInfMgr::getPikiCount(int color)
 	int count = 0;
 	FOREACH_NODE(BPikiInf, mActiveList.mChild, currInf)
 	{
-		if (currInf->mPikiColor == color) {
+		if (currInf->_2C == color) {
 			count++;
 		}
 	}

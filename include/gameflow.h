@@ -43,7 +43,9 @@ struct GameFlow : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u8 _20[0x1F0 - 0x20];   // _20, unknown
+	u8 _20[0x1C8 - 0x20];   // _20, unknown
+	u32 _1C8;               // _1C8, maybe course open flags?
+	u8 _1CC[0x1F0 - 0x1CC]; // _1CC, unknown
 	u32 _1F0;               // _1F0, could be int
 	int _1F4;               // _1F4
 	u8 _1F8[0x2B0 - 0x1F8]; // _1F8, unknown

@@ -2,6 +2,7 @@
 #include "Msg.h"
 #include "Piki.h"
 #include "PikiAI.h"
+#include "PikiState.h"
 
 static char file[] = __FILE__;
 static char name[] = "interactEtc";
@@ -33,25 +34,9 @@ static void _Print(char*, ...)
  */
 bool InteractTalk::actPiki(Piki* piki)
 {
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x2
-	  stwu      r1, -0x18(r1)
-	  lwz       r3, 0x4(r3)
-	  stw       r0, 0x10(r1)
-	  stw       r3, 0x14(r1)
-	  lwz       r3, 0x4F8(r4)
-	  addi      r4, r1, 0x10
-	  bl        0x470C8
-	  li        r3, 0x1
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	MsgTarget msg(mOwner);
+	piki->_4F8->procMsg(&msg);
+	return true;
 }
 
 /*
@@ -61,88 +46,25 @@ bool InteractTalk::actPiki(Piki* piki)
  */
 bool InteractWarn::actPiki(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r4, 0
-	  addi      r3, r30, 0
-	  bl        0x4BB04
-	  addi      r31, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x48
-	  li        r3, 0
-	  b         .loc_0xEC
+	int state = piki->getState();
+	if (!piki->isAlive()) {
+		return false;
+	}
 
-	.loc_0x48:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x7C
-	  lbz       r0, 0x409(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x7C
-	  lhz       r0, 0x4FC(r30)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x84
+	if (piki->isKinoko() || !piki->_409 || piki->_4FC == 1) {
+		return false;
+	}
 
-	.loc_0x7C:
-	  li        r3, 0
-	  b         .loc_0xEC
+	if (state == PIKISTATE_Swallowed || state == PIKISTATE_Drown || state == PIKISTATE_LookAt || state == PIKISTATE_Pressed) {
+		return false;
+	}
 
-	.loc_0x84:
-	  cmpwi     r31, 0x8
-	  beq-      .loc_0xA4
-	  cmpwi     r31, 0x18
-	  beq-      .loc_0xA4
-	  cmpwi     r31, 0x1A
-	  beq-      .loc_0xA4
-	  cmpwi     r31, 0x21
-	  bne-      .loc_0xAC
+	if (piki->_2B4 == 0 && state != PIKISTATE_Flick) {
+		piki->mFSM->transit(piki, PIKISTATE_LookAt);
 
-	.loc_0xA4:
-	  li        r3, 0
-	  b         .loc_0xEC
+	} else {
+		piki->_4A0 = 1;
+	}
 
-	.loc_0xAC:
-	  lbz       r0, 0x2B4(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xE0
-	  cmpwi     r31, 0x16
-	  beq-      .loc_0xE0
-	  lwz       r3, 0x490(r30)
-	  addi      r4, r30, 0
-	  li        r5, 0x1A
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xE8
-
-	.loc_0xE0:
-	  li        r0, 0x1
-	  stb       r0, 0x4A0(r30)
-
-	.loc_0xE8:
-	  li        r3, 0x1
-
-	.loc_0xEC:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return true;
 }

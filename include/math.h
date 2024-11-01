@@ -66,4 +66,24 @@ static inline f32 sqrtf(f32 x)
 	return x;
 }
 
+#ifdef __cplusplus
+// Pikmin-specific global math functions
+struct Vector3f;
+struct BoundBox;
+struct KTri;
+struct KRect;
+struct KSegment;
+
+f32 roundAng(f32 angle);
+f32 angDist(f32 x, f32 z);
+f32 qdist2(f32 x0, f32 z0, f32 x1, f32 z1);
+f32 triRectDistance(Vector3f*, Vector3f*, Vector3f*, BoundBox&, bool);
+f32 distanceTriRect(KTri&, KRect&, f32*, f32*, f32*, f32*);
+f32 sqrDistance(KSegment&, KTri&, f32*, f32*, f32*);
+f32 sqrDistance(KSegment&, KSegment&, f32*, f32*);
+f32 sqrDistance(KSegment&, KRect&, f32*, f32*, f32*);
+f32 sqrDistance(KTri&, KRect&, f32*, f32*, f32*, f32*);
+f32 sqrDistance(Vector3f&, KTri&, f32*, f32*);
+#endif
+
 #endif // _MATH_H

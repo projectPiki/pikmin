@@ -428,7 +428,7 @@ bool InteractAttack::actPiki(Piki* piki)
 		piki->finishDamage();
 		piki->mFSM->transit(piki, PIKISTATE_Dying);
 	} else {
-		piki->startMotion(PaniMotionInfo(10, piki), PaniMotionInfo(10));
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Damage, piki), PaniMotionInfo(PIKIANIM_Damage));
 	}
 	return true;
 }
@@ -463,9 +463,9 @@ bool InteractSwallow::actPiki(Piki* piki)
 	piki->getState();
 
 	if (_08 == 0) {
-		piki->startMotion(PaniMotionInfo(70), PaniMotionInfo(70));
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Esa), PaniMotionInfo(PIKIANIM_Esa));
 	} else {
-		piki->startMotion(PaniMotionInfo(29), PaniMotionInfo(29));
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Fall), PaniMotionInfo(PIKIANIM_Fall));
 	}
 
 	piki->mFSM->transit(piki, PIKISTATE_Swallowed);
@@ -795,9 +795,7 @@ bool InteractPress::actPiki(Piki* piki)
 		Creature* bomb = piki->_2AC;
 		bomb->resetStateGrabbed();
 		if (bomb->mObjType == OBJTYPE_Bomb) {
-			MsgUser msg;
-			msg._00                            = MSG_User;
-			msg._04                            = 1;
+			MsgUser msg(1);
 			static_cast<BombItem*>(bomb)->_2D0 = 0;
 			static_cast<BombItem*>(bomb)->mStateMachine->procMsg(static_cast<BombItem*>(bomb), &msg);
 		}

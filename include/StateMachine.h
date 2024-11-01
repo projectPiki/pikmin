@@ -4,6 +4,9 @@
 #include "types.h"
 #include "Receiver.h"
 
+template <typename T>
+struct StateMachine;
+
 struct Msg;
 
 /**
@@ -13,7 +16,7 @@ template <typename T>
 struct AState : public Receiver<T> {
 	inline AState(int stateID)
 	    : mStateID(stateID)
-	    , _08(0)
+	    , mStateMachine(nullptr)
 	{
 	}
 
@@ -27,8 +30,8 @@ struct AState : public Receiver<T> {
 	inline int getStateID() const { return mStateID; }
 
 	// _00 = VTBL
-	int mStateID; // _04
-	u32 _08;      // _08, unknown
+	int mStateID;                   // _04
+	StateMachine<T>* mStateMachine; // _08
 };
 
 /**
@@ -46,9 +49,37 @@ struct StateMachine {
 	virtual void procMsg(T*, Msg*); // _10
 	virtual void transit(T*, int);  // _14
 
+	inline bool isValidState(AState<T>* state)
+	{
+		if (state->mStateID < 0 || state->mStateID >= mStateLimit) {
+			return false;
+		}
+
+		return true;
+	}
+
+	inline AState<T>* getState(int idx) { return mStates[idx]; }
+	inline void setState(int idx, AState<T>* state) { mStates[idx] = state; }
+
+	inline void appendState(AState<T>* state) { setState(mStateCount, state); }
+
+	inline void initState(AState<T>* state)
+	{
+		state->mStateMachine           = this;
+		mStateIDs[mStateCount]         = state->mStateID;
+		mStateIndexes[state->mStateID] = mStateCount;
+		mStateCount++;
+	}
+
+	inline bool isFull() { return mStateCount >= mStateLimit; }
+
 	// _00 = VTBL
-	u8 _04[0x18 - 0x4]; // _04, unknown
-	int _18;            // _18, state ID?
+	AState<T>** mStates; // _04
+	int mStateCount;     // _08
+	int mStateLimit;     // _0C
+	int* mStateIDs;      // _10, indexed by state index (load order)
+	int* mStateIndexes;  // _14, indexed by state IDs
+	int _18;             // _18, state ID?
 };
 
 #endif

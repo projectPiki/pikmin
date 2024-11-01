@@ -1,6 +1,6 @@
 #include "CodeInitializer.h"
 #include "nlib/System.h"
-#include "PaniAnimator.h"
+#include "PaniPikiAnimator.h"
 #include "system.h"
 #include "Teki.h"
 

@@ -4,10 +4,13 @@
 #include "types.h"
 #include "Demo.h"
 #include "ResultFlags.h"
-#include "PaniAnimator.h"
+#include "PaniPikiAnimator.h"
+#include "PelletAnimator.h"
+#include "Shape.h"
 
 struct Graphics;
 struct PelletShapeObject;
+struct PermanentEffect;
 struct Shape;
 
 /**
@@ -22,7 +25,7 @@ struct TimeGraph {
 
 		void set(int, int);
 
-		// TODO: members
+		int mNum[3]; // _00
 	};
 
 	TimeGraph(); // unused/inlined
@@ -58,8 +61,16 @@ struct PlayerState {
 		void startMotion(int, int);
 		void stopMotion();
 
-		// _00 = VTBL?
-		u8 _04[0xE0 - 0x4]; // _04, unknown
+		// _00 = VTBL
+		int _04;                         // _04
+		u32 _08;                         // _08
+		u32 _0C;                         // _0C
+		PelletAnimator mAnimator;        // _10
+		Vector3f _B8;                    // _B8
+		ShapeDynMaterials _C4;           // _C4
+		PelletShapeObject* mPelletShape; // _D4
+		f32 _D8;                         // _D8
+		u8 _DC;                          // _DC
 	};
 
 	PlayerState();
@@ -67,11 +78,11 @@ struct PlayerState {
 	bool isEnding();
 	bool existUfoParts(u32);
 	void initGame();
-	void courseOpen(int);
-	void happyEndable();
+	bool courseOpen(int);
+	bool happyEndable();
 	void setChallengeMode();
 	void getPartsGetCount(int);
-	void getCardUfoPartsCount();
+	int getCardUfoPartsCount();
 	void getTotalPikiCount(int);
 	void saveCard(RandomAccessStream&);
 	void loadCard(RandomAccessStream&);
@@ -86,7 +97,7 @@ struct PlayerState {
 	void initCourse();
 	void exitCourse();
 	void setNavi(bool);
-	void getFinalDeadPikis();
+	int getFinalDeadPikis();
 	void updateFinalResult();
 	int getCurrDay();
 	int getTotalDays();
@@ -119,25 +130,36 @@ struct PlayerState {
 	static int totalUfoParts;
 
 	// TODO: members
-	u8 _00[0x54];                 // _00, unknown
+	u8 _00[0x11];                 // _00, unknown
+	u8 _11;                       // _11
+	u8 _12[0x54 - 0x12];          // _12, unknown
 	DemoFlags mDemoFlags;         // _54
 	ResultFlags mResultFlags;     // _70
 	u8 _BC[0xC4 - 0xBC];          // _BC, unknown
 	PaniPikiAnimMgr mPikiAnimMgr; // _C4
-	u8 _C8[0x174 - 0xC8];         // _C8, adjust when size of PaniPikiAnimMgr is known
+	int _170;                     // _170
 	int mTotalParts;              // _174
 	UfoParts* mUfoParts;          // _178
 	int mCurrParts;               // _17C
-	u32 _180;                     // _180, unknown
+	int _180;                     // _180
 	u8 _184;                      // _184
-	u8 _185;                      // _185
+	bool _185;                    // _185
 	u8 _186;                      // _186
 	u8 _187;                      // _187
 	u8 _188;                      // _188
 	u8 _189;                      // _189
 	u8 _18A;                      // _18A
 	u8 _18B;                      // _18B
-	u8 _18C[0x1C0 - 0x18C];       // _18C, unknown
+	u8 _18C[0x1A0 - 0x18C];       // _18C, unknown
+	int _1A0;                     // _1A0, final dead pikis count?
+	u8 _1A4[0x1AC - 0x1A4];       // _1A4, unknown
+	u8 _1AC;                      // _1AC
+	u8 _1AD[0x1B4 - 0x1AD];       // _1AD, unknown
+	u8 _1B4;                      // _1B4
+	u8 _1B5;                      // _1B5
+	u8 _1B6;                      // _1B6
+	PermanentEffect* _1B8;        // _1B8
+	PermanentEffect* _1BC;        // _1BC
 	Vector3f _1C0;                // _1C0
 };
 

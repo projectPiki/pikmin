@@ -197,6 +197,11 @@ struct AnimKey {
  */
 struct AnimInfo : public CoreNode {
 
+	enum AnimInfoFlags {
+		FLAG_Unk1 = 0x1,
+		FLAG_Unk2 = 0x2,
+	};
+
 	/**
 	 * @brief Fabricated. Offsets relative to AnimInfo for convenience.
 	 */
@@ -229,6 +234,8 @@ struct AnimInfo : public CoreNode {
 
 	// unused/inlined:
 	void initAnimData(AnimData*);
+
+	inline f32 getAnimSpeed() { return mParams.mSpeed(); }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

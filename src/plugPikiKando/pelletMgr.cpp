@@ -5253,7 +5253,7 @@ void PelletMgr::newPellet(u32, PelletView*)
  * Address:	80098704
  * Size:	000094
  */
-void PelletMgr::getShapeObject(u32)
+PelletShapeObject* PelletMgr::getShapeObject(u32)
 {
 	/*
 	.loc_0x0:

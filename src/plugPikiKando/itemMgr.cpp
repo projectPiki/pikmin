@@ -3824,7 +3824,7 @@ void ItemCreature::setMotionSpeed(f32)
  * Address:	800F59EC
  * Size:	000008
  */
-void ItemCreature::getMotionSpeed()
+f32 ItemCreature::getMotionSpeed()
 {
 	/*
 	.loc_0x0:
@@ -3853,7 +3853,7 @@ void ItemCreature::stopMotion()
  * Address:	800F5A00
  * Size:	000008
  */
-void ItemCreature::getCurrentMotionCounter()
+f32 ItemCreature::getCurrentMotionCounter()
 {
 	/*
 	.loc_0x0:
@@ -3867,7 +3867,7 @@ void ItemCreature::getCurrentMotionCounter()
  * Address:	800F5A08
  * Size:	00002C
  */
-void ItemCreature::getCurrentMotionName()
+char* ItemCreature::getCurrentMotionName()
 {
 	/*
 	.loc_0x0:

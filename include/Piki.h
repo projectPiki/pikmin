@@ -3,7 +3,7 @@
 
 #include "types.h"
 #include "Creature.h"
-#include "PaniAnimator.h"
+#include "PaniPikiAnimator.h"
 
 struct TopAction;
 struct Navi;
@@ -152,33 +152,35 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
-	u8 _2BC[0x3CC - 0x2BC];      // _2BC, TODO: work out members
-	int _3CC;                    // _3CC, piki color?
-	int _3D0;                    // _3D0, piki happa?
-	u8 _3D4[0x424 - 0x3D4];      // _3D4, unknown
-	u8 _424;                     // _424
-	u16 _426;                    // _426
-	u8 _428[0x8];                // _428, unknown
-	u32 _430;                    // _430, unknown
-	u8 _434[0x48C - 0x434];      // _434, unknown
-	f32 _48C;                    // _48C
-	PikiStateMachine* mFSM;      // _490
-	u8 _494[0x4];                // _494, unknown
-	f32 _498;                    // _498
-	f32 _49C;                    // _49C, some form of angle?
-	u8 _4A0[4];                  // _4A0, unknown
-	CollPart* mSwallowMouthPart; // _4A4
-	Creature* _4A8;              // _4A8, maybe puffstool/kinoko leader?
-	u8 _4AC[0x4F8 - 0x4AC];      // _4AC, unknown
-	TopAction* _4F8;             // _4F8, may be just Action*
-	u16 _4FC;                    // _4FC
-	u32 _500;                    // _500, unknown
-	Navi* mNavi;                 // _504
-	u8 _508[0x8];                // _508, unknown
-	u16 mColor;                  // _510, red/yellow/blue
-	u8 _512[0x520 - 0x512];      // _4FC, TODO: work out members
-	int mHappa;                  // _520, leaf/bud/flower
-	u8 _524[0x585 - 0x524];      // _4FC, TODO: work out members
+	u8 _2BC[0x354 - 0x2BC];       // _2BC, TODO: work out members
+	PaniPikiAnimMgr mPikiAnimMgr; // _354
+	u8 _400[0x408 - 0x400];       // _400, unknown
+	u8 _408;                      // _408
+	u8 _409;                      // _409
+	u8 _40A[0x424 - 0x40A];       // _40A, unknown
+	u8 _424;                      // _424
+	u16 _426;                     // _426
+	u8 _428[0x8];                 // _428, unknown
+	u32 _430;                     // _430, unknown
+	u8 _434[0x48C - 0x434];       // _434, unknown
+	f32 _48C;                     // _48C
+	PikiStateMachine* mFSM;       // _490
+	u8 _494[0x4];                 // _494, unknown
+	f32 _498;                     // _498
+	f32 _49C;                     // _49C, some form of angle?
+	u8 _4A0;                      // _4A0
+	CollPart* mSwallowMouthPart;  // _4A4
+	Creature* _4A8;               // _4A8, maybe puffstool/kinoko leader?
+	u8 _4AC[0x4F8 - 0x4AC];       // _4AC, unknown
+	TopAction* _4F8;              // _4F8, may be just Action*
+	u16 _4FC;                     // _4FC
+	u32 _500;                     // _500, unknown
+	Navi* mNavi;                  // _504
+	u8 _508[0x8];                 // _508, unknown
+	u16 mColor;                   // _510, red/yellow/blue
+	u8 _512[0x520 - 0x512];       // _4FC, TODO: work out members
+	int mHappa;                   // _520, leaf/bud/flower
+	u8 _524[0x585 - 0x524];       // _4FC, TODO: work out members
 };
 
 /**

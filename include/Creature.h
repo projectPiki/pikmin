@@ -45,7 +45,7 @@ enum CreatureFlags {
 	CF_Unk10         = 1 << 9,  // 0x200
 	CF_Unk11         = 1 << 10, // 0x400
 	CF_Unk12         = 1 << 11, // 0x800
-	CF_Unk13         = 1 << 12, // 0x1000
+	CF_Free          = 1 << 12, // 0x1000
 	CF_Unk14         = 1 << 13, // 0x2000
 	CF_StuckToObject = 1 << 14, // 0x4000, stuck to an object
 	CF_StuckToMouth  = 1 << 15, // 0x8000, stuck to mouth of some enemy

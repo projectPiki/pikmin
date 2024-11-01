@@ -1,7 +1,13 @@
 #include "PlayerState.h"
 #include "Generator.h"
 #include "FlowController.h"
+#include "gameflow.h"
+#include "UtEffect.h"
+#include "OnePlayerSection.h"
+#include "Pellet.h"
 #include "sysNew.h"
+#include "Shape.h"
+#include "Piki.h"
 
 int PlayerState::totalUfoParts = 30;
 
@@ -636,24 +642,14 @@ PlayerState::PlayerState()
  * Address:	8007FAA8
  * Size:	00002C
  */
-void TimeGraph::PikiNum::set(int, int)
+void TimeGraph::PikiNum::set(int color, int num)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0
-	  blt-      .loc_0x1C
-	  cmpwi     r4, 0x2
-	  bgt-      .loc_0x1C
-	  rlwinm    r0,r4,2,0,29
-	  stwx      r5, r3, r0
-	  blr
+	if (color >= PikiMinColor && color <= PikiMaxColor) {
+		mNum[color] = num;
+		return;
+	}
 
-	.loc_0x1C:
-	  stw       r5, 0x8(r3)
-	  stw       r5, 0x4(r3)
-	  stw       r5, 0x0(r3)
-	  blr
-	*/
+	mNum[Blue] = mNum[Red] = mNum[Yellow] = num;
 }
 
 /*
@@ -661,69 +657,19 @@ void TimeGraph::PikiNum::set(int, int)
  * Address:	8007FAD4
  * Size:	000070
  */
-PlayerState::UfoParts::UfoParts()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r1)
-	  subi      r0, r4, 0x246C
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x802B
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x21F8
-	  addi      r3, r31, 0x10
-	  stw       r0, 0x0(r31)
-	  bl        0x19E68
-	  lfs       f0, -0x7620(r2)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stfs      f0, 0xC0(r31)
-	  stfs      f0, 0xBC(r31)
-	  stfs      f0, 0xB8(r31)
-	  stw       r0, 0xC4(r31)
-	  stw       r0, 0xC8(r31)
-	  stw       r0, 0xCC(r31)
-	  stw       r0, 0xD0(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+PlayerState::UfoParts::UfoParts() { }
 
 /*
  * --INFO--
  * Address:	8007FB44
  * Size:	000040
  */
-void PlayerState::courseOpen(int)
+bool PlayerState::courseOpen(int courseID)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0
-	  blt-      .loc_0x38
-	  cmpwi     r4, 0x5
-	  bgt-      .loc_0x38
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  li        r0, 0x1
-	  lwz       r3, 0x1C8(r3)
-	  slw       r0, r0, r4
-	  and       r0, r3, r0
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-
-	.loc_0x38:
-	  li        r3, 0
-	  blr
-	*/
+	if (courseID >= 0 && courseID <= 5) {
+		return (gameflow._1C8 & (1 << courseID)) != 0;
+	}
+	return false;
 }
 
 /*
@@ -731,19 +677,7 @@ void PlayerState::courseOpen(int)
  * Address:	8007FB84
  * Size:	00001C
  */
-void PlayerState::happyEndable()
-{
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x180(r3)
-	  li        r0, 0x19
-	  rlwinm    r4,r0,1,31,31
-	  srawi     r3, r5, 0x1F
-	  subc      r0, r5, r0
-	  adde      r3, r3, r4
-	  blr
-	*/
-}
+bool PlayerState::happyEndable() { return _180 >= 25; }
 
 /*
  * --INFO--
@@ -752,40 +686,16 @@ void PlayerState::happyEndable()
  */
 void PlayerState::setChallengeMode()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  stb       r0, 0x1B6(r3)
+	_1B6 = 1;
+	for (int i = 0; i < 63; i++) {
+		mDemoFlags.setFlagOnly(i);
+	}
 
-	.loc_0x24:
-	  addi      r3, r30, 0x54
-	  addi      r4, r31, 0
-	  bl        0x2B84
-	  addi      r31, r31, 0x1
-	  cmpwi     r31, 0x3F
-	  blt+      .loc_0x24
-	  li        r4, 0
-	  stb       r4, 0x185(r30)
-	  li        r3, 0xFF
-	  li        r0, 0x1
-	  stb       r3, 0x184(r30)
-	  stb       r4, 0x186(r30)
-	  stb       r3, 0x1AC(r30)
-	  stb       r0, 0x11(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_185 = 0;
+	_184 = 255;
+	_186 = 0;
+	_1AC = 255;
+	_11  = 1;
 }
 
 /*
@@ -828,14 +738,7 @@ void PlayerState::getCardPikiCount(int)
  * Address:	8007FC20
  * Size:	000008
  */
-void PlayerState::getCardUfoPartsCount()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x17C(r3)
-	  blr
-	*/
-}
+int PlayerState::getCardUfoPartsCount() { return mCurrParts; }
 
 /*
  * --INFO--
@@ -1455,31 +1358,15 @@ void PlayerState::loadCard(RandomAccessStream&)
  */
 bool PlayerState::isTutorial()
 {
-	return false;
-	/*
-	.loc_0x0:
-	  lis       r4, 0x803A
-	  subi      r4, r4, 0x24E0
-	  lwz       r4, 0xA8(r4)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x28
-	  lhz       r0, 0x26(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x28
-	  li        r3, 0
-	  blr
+	if (flowCont._A8 && flowCont._A8->_26) {
+		return false;
+	}
 
-	.loc_0x28:
-	  lbz       r0, 0x1B6(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3C
-	  li        r3, 0
-	  blr
+	if (_1B6) {
+		return false;
+	}
 
-	.loc_0x3C:
-	  lbz       r3, 0x185(r3)
-	  blr
-	*/
+	return _185;
 }
 
 /*
@@ -1489,21 +1376,8 @@ bool PlayerState::isTutorial()
  */
 bool PlayerState::isGameCourse()
 {
-	return false;
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  lwz       r4, 0xA8(r3)
-	  li        r3, 0
-	  lhz       r0, 0x24(r4)
-	  cmpwi     r0, 0
-	  bltlr-
-	  cmpwi     r0, 0x5
-	  bgelr-
-	  li        r3, 0x1
-	  blr
-	*/
+	int val = flowCont._A8->_24;
+	return (val >= 0 && val < 5);
 }
 
 /*
@@ -1651,41 +1525,15 @@ void PlayerState::init()
  * Address:	80080604
  * Size:	00005C
  */
-bool PlayerState::hasUfoParts(u32)
+bool PlayerState::hasUfoParts(u32 idx)
 {
+	for (int i = 0; i < mTotalParts; i++) {
+		if (idx == mUfoParts[i]._08) {
+			return mUfoParts[i]._DC != 0;
+		}
+	}
+
 	return false;
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x174(r3)
-	  li        r7, 0
-	  li        r5, 0
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x54
-
-	.loc_0x18:
-	  lwz       r6, 0x178(r3)
-	  addi      r0, r5, 0x8
-	  lwzx      r0, r6, r0
-	  cmplw     r4, r0
-	  bne-      .loc_0x48
-	  mulli     r0, r7, 0xE0
-	  add       r3, r6, r0
-	  lbz       r0, 0xDC(r3)
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-
-	.loc_0x48:
-	  addi      r5, r5, 0xE0
-	  addi      r7, r7, 0x1
-	  bdnz+     .loc_0x18
-
-	.loc_0x54:
-	  li        r3, 0
-	  blr
-	*/
 }
 
 /*
@@ -1976,52 +1824,19 @@ void PlayerState::exitCourse()
  * Address:	800809C4
  * Size:	000094
  */
-void PlayerState::setNavi(bool)
+void PlayerState::setNavi(bool p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,24,31
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  bne-      .loc_0x2C
-	  li        r0, 0
-	  stb       r0, 0x1B4(r30)
-	  b         .loc_0x7C
+	if (!p1) {
+		_1B4 = 0;
+		return;
+	}
 
-	.loc_0x2C:
-	  lbz       r0, 0x1B4(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x7C
-	  lwz       r3, 0x1B8(r30)
-	  bl        0x93AF8
-	  lwz       r3, 0x1BC(r30)
-	  bl        0x93AF0
-	  li        r0, 0x1
-	  stb       r0, 0x1B4(r30)
-	  addi      r3, r1, 0x10
-	  li        r4, 0x58
-	  bl        0x9E53C
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x58
-	  bl        0x9E52C
-	  addi      r4, r3, 0
-	  addi      r5, r31, 0
-	  addi      r3, r30, 0xC4
-	  bl        0x9F02C
-
-	.loc_0x7C:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (_1B4 == 0) {
+		_1B8->restart();
+		_1BC->restart();
+		_1B4 = 1;
+		mPikiAnimMgr.startMotion(PaniMotionInfo(88), PaniMotionInfo(88));
+	}
 }
 
 /*
@@ -2029,14 +1844,7 @@ void PlayerState::setNavi(bool)
  * Address:	80080A58
  * Size:	000008
  */
-void PlayerState::getFinalDeadPikis()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x1A0(r3)
-	  blr
-	*/
-}
+int PlayerState::getFinalDeadPikis() { return _1A0; }
 
 /*
  * --INFO--
@@ -2153,18 +1961,7 @@ void PlayerState::updateFinalResult()
  * Address:	80080BB0
  * Size:	000014
  */
-int PlayerState::getCurrDay()
-{
-	return 0;
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r3, 0x2FC(r3)
-	  subi      r3, r3, 0x1
-	  blr
-	*/
-}
+int PlayerState::getCurrDay() { return gameflow._2FC - 1; }
 
 /*
  * --INFO--
@@ -2258,30 +2055,14 @@ int PlayerState::getPikiHourCount(int, int)
  * Address:	80080C68
  * Size:	000008
  */
-int PlayerState::getTotalParts()
-{
-	return 0;
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x174(r3)
-	  blr
-	*/
-}
+int PlayerState::getTotalParts() { return mTotalParts; }
 
 /*
  * --INFO--
  * Address:	80080C70
  * Size:	000008
  */
-int PlayerState::getCurrParts()
-{
-	return 0;
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x17C(r3)
-	  blr
-	*/
-}
+int PlayerState::getCurrParts() { return mCurrParts; }
 
 /*
  * --INFO--
@@ -2300,36 +2081,19 @@ void PlayerState::getRestParts()
  */
 bool PlayerState::isUfoBroken()
 {
+	if (_1B6) {
+		return false;
+	}
+
+	if (mCurrParts > 0) {
+		return false;
+	}
+
+	if (flowCont._A8->_26 == 0) {
+		return true;
+	}
+
 	return false;
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x1B6(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x14
-	  li        r3, 0
-	  blr
-
-	.loc_0x14:
-	  lwz       r0, 0x17C(r3)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x28
-	  li        r3, 0
-	  blr
-
-	.loc_0x28:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  lwz       r3, 0xA8(r3)
-	  lhz       r0, 0x26(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x48
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x48:
-	  li        r3, 0
-	  blr
-	*/
 }
 
 /*
@@ -2337,66 +2101,26 @@ bool PlayerState::isUfoBroken()
  * Address:	80080CC8
  * Size:	0000C4
  */
-void PlayerState::registerUfoParts(int, u32, u32)
+void PlayerState::registerUfoParts(int p1, u32 p2, u32 p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stmw      r27, 0x34(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  addi      r30, r6, 0
-	  bl        0x18EA8
-	  lwz       r4, 0x301C(r13)
-	  stw       r3, 0x1F8(r4)
-	  lwz       r3, 0x170(r27)
-	  lwz       r0, 0x174(r27)
-	  cmpw      r3, r0
-	  blt-      .loc_0x54
-	  addi      r3, r1, 0x24
-	  addi      r4, r29, 0
-	  bl        -0x3CE78
-	  addi      r3, r1, 0x18
-	  addi      r4, r30, 0
-	  bl        -0x3CE84
+	pelletMgr->_1F8 = PaniPelletAnimator::createMotionTable();
+	if (_170 >= mTotalParts) {
+		ID32 id1(p2);
+		ID32 id2(p3);
+	}
 
-	.loc_0x54:
-	  lwz       r0, 0x170(r27)
-	  mr        r4, r29
-	  lwz       r3, 0x178(r27)
-	  mulli     r0, r0, 0xE0
-	  add       r31, r3, r0
-	  stw       r28, 0x4(r31)
-	  stw       r30, 0xC(r31)
-	  stw       r29, 0x8(r31)
-	  lwz       r3, 0x301C(r13)
-	  bl        0x179C4
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        .loc_0xC4
-	  cmplwi    r30, 0
-	  beq-      .loc_0xA4
-	  lwz       r3, 0x0(r30)
-	  addi      r4, r31, 0xC4
-	  li        r5, 0
-	  bl        -0x5143C
+	UfoParts* part           = &mUfoParts[_170];
+	part->_04                = p1;
+	part->_0C                = p3;
+	part->_08                = p2;
+	PelletShapeObject* shape = pelletMgr->getShapeObject(p2);
+	part->initAnim(shape);
 
-	.loc_0xA4:
-	  lwz       r3, 0x170(r27)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x170(r27)
-	  lwz       r0, 0x4C(r1)
-	  lmw       r27, 0x34(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
+	if (shape) {
+		shape->mShape->makeInstance(part->_C4, 0);
+	}
 
-	.loc_0xC4:
-	*/
+	_170++;
 }
 
 /*
@@ -2404,42 +2128,16 @@ void PlayerState::registerUfoParts(int, u32, u32)
  * Address:	80080D8C
  * Size:	000074
  */
-void PlayerState::UfoParts::initAnim(PelletShapeObject*)
+void PlayerState::UfoParts::initAnim(PelletShapeObject* shape)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  stw       r4, 0xD4(r3)
-	  beq-      .loc_0x60
-	  lwz       r8, 0xD4(r31)
-	  addi      r3, r31, 0x10
-	  lwz       r5, 0x301C(r13)
-	  lwz       r6, 0x4(r8)
-	  addi      r4, r8, 0x8
-	  lwz       r7, 0x1F8(r5)
-	  addi      r5, r8, 0x18
-	  bl        0x18BDC
-	  lfs       f0, -0x7620(r2)
-	  addi      r3, r1, 0x10
-	  li        r4, 0
-	  stfs      f0, 0xD8(r31)
-	  bl        0x9E17C
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x10
-	  bl        0x18CD8
+	mPelletShape = shape;
+	if (!shape) {
+		return;
+	}
 
-	.loc_0x60:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mAnimator.init(&mPelletShape->_08, &mPelletShape->_18, mPelletShape->mAnimMgr, pelletMgr->_1F8);
+	_D8 = 0.0f;
+	mAnimator.startMotion(PaniMotionInfo(0));
 }
 
 /*

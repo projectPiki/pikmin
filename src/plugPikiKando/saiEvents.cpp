@@ -46,28 +46,40 @@ void SAIEventInit()
  * Address:	8007CF58
  * Size:	000040
  */
-void SAIMotionDoneEvent::procAnimMsg(AICreature* creature, MsgAnim* msg) { creature->setEventFlag(mEventID, *msg->_04 == 0); }
+void SAIMotionDoneEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
+{
+	creature->setEventFlag(mEventID, msg->mKeyEvent->mKeyFrame == 0);
+}
 
 /*
  * --INFO--
  * Address:	8007CF98
  * Size:	000040
  */
-void SAIMotionAction0Event::procAnimMsg(AICreature* creature, MsgAnim* msg) { creature->setEventFlag(mEventID, *msg->_04 == 1); }
+void SAIMotionAction0Event::procAnimMsg(AICreature* creature, MsgAnim* msg)
+{
+	creature->setEventFlag(mEventID, msg->mKeyEvent->mKeyFrame == 1);
+}
 
 /*
  * --INFO--
  * Address:	8007CFD8
  * Size:	000040
  */
-void SAIMotionLoopStartEvent::procAnimMsg(AICreature* creature, MsgAnim* msg) { creature->setEventFlag(mEventID, *msg->_04 == 5); }
+void SAIMotionLoopStartEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
+{
+	creature->setEventFlag(mEventID, msg->mKeyEvent->mKeyFrame == 5);
+}
 
 /*
  * --INFO--
  * Address:	8007D018
  * Size:	000040
  */
-void SAIMotionLoopEndEvent::procAnimMsg(AICreature* creature, MsgAnim* msg) { creature->setEventFlag(mEventID, *msg->_04 == 6); }
+void SAIMotionLoopEndEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
+{
+	creature->setEventFlag(mEventID, msg->mKeyEvent->mKeyFrame == 6);
+}
 
 /*
  * --INFO--

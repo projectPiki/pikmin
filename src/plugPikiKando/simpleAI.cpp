@@ -1,4 +1,6 @@
 #include "SimpleAI.h"
+#include "PikiMacros.h"
+#include "sysNew.h"
 
 static char file[] = __FILE__;
 static char name[] = "simpleAI";
@@ -46,8 +48,14 @@ AICreature::AICreature(CreatureProp* props)
  * Address:	8007D310
  * Size:	00006C
  */
-void AICreature::collisionCallback(CollEvent&)
+void AICreature::collisionCallback(CollEvent& event)
 {
+	u32 thing = event._00;
+	MsgCollide msg(event);
+	_2BC = thing;
+	if (mStateMachine) {
+		mStateMachine->procMsg(this, &msg);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -89,35 +97,10 @@ void AICreature::collisionCallback(CollEvent&)
  */
 void AICreature::bounceCallback()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x38(r1)
-	  lfs       f0, -0x6294(r13)
-	  stw       r0, 0x24(r1)
-	  lfs       f1, -0x6290(r13)
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x628C(r13)
-	  stfs      f1, 0x2C(r1)
-	  stfs      f0, 0x30(r1)
-	  lwz       r3, 0x2E8(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x50
-	  lwz       r12, 0x0(r3)
-	  addi      r5, r1, 0x24
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x50:
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	MsgBounce msg(Vector3f(0.0f, 1.0f, 0.0f));
+	if (mStateMachine) {
+		mStateMachine->procMsg(this, &msg);
+	}
 }
 
 /*
@@ -125,77 +108,24 @@ void AICreature::bounceCallback()
  * Address:	8007D3DC
  * Size:	0000B4
  */
-void AICreature::animationKeyUpdated(PaniAnimKeyEvent&)
+void AICreature::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x6C(r3)
-	  stw       r0, 0x10(r1)
-	  subfic    r0, r3, 0x10
-	  stw       r31, 0x14(r1)
-	  lwz       r3, 0x2E8(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x54
-	  lwz       r12, 0x0(r3)
-	  addi      r4, r30, 0
-	  addi      r5, r1, 0x10
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
+	DEBUGPRINT(mObjType == OBJTYPE_Goal);
 
-	.loc_0x54:
-	  lwz       r0, 0x0(r31)
-	  cmpwi     r0, 0x7
-	  bne-      .loc_0x78
-	  mr        r3, r30
-	  lwz       r4, 0x4(r31)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x128(r12)
-	  mtlr      r12
-	  blrl
+	MsgAnim msg(&event);
 
-	.loc_0x78:
-	  lwz       r0, 0x0(r31)
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x9C
-	  mr        r3, r30
-	  lwz       r4, 0x4(r31)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x12C(r12)
-	  mtlr      r12
-	  blrl
+	if (mStateMachine) {
+		mStateMachine->procMsg(this, &msg);
+	}
 
-	.loc_0x9C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (event.mKeyFrame == 7) {
+		playSound(event.mValue);
+	}
+
+	if (event.mKeyFrame == 8) {
+		playEffect(event.mValue);
+	}
 }
-
-/*
- * --INFO--
- * Address:	8007D490
- * Size:	000004
- */
-void AICreature::playEffect(int) { }
-
-/*
- * --INFO--
- * Address:	8007D494
- * Size:	000004
- */
-void AICreature::playSound(int) { }
 
 /*
  * --INFO--
@@ -255,126 +185,39 @@ SimpleAI::SimpleAI() { }
  * Address:	8007D508
  * Size:	000068
  */
-void SimpleAI::procMsg(AICreature*, Msg*)
+void SimpleAI::procMsg(AICreature* creature, Msg* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r5
-	  stw       r30, 0x18(r1)
-	  addi      r30, r4, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  beq-      .loc_0x50
-	  lwz       r12, 0x0(r3)
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
+	AState<AICreature>* state = creature->getCurrState();
 
-	.loc_0x50:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (state) {
+		state->procMsg(creature, msg);
+	}
 }
-
-/*
- * --INFO--
- * Address:	8007D570
- * Size:	000008
- */
-AState<AICreature>* AICreature::getCurrState() { return mCurrentState; }
 
 /*
  * --INFO--
  * Address:	8007D578
  * Size:	0000E8
  */
-void SimpleAI::addState(int, int, SAIAction*, SAIAction*, SAIAction*)
+void SimpleAI::addState(int p1, int p2, SAIAction* p3, SAIAction* p4, SAIAction* p5)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stmw      r25, 0x34(r1)
-	  addi      r31, r3, 0
-	  addi      r25, r4, 0
-	  addi      r26, r5, 0
-	  addi      r27, r6, 0
-	  addi      r28, r7, 0
-	  addi      r29, r8, 0
-	  li        r3, 0x58
-	  bl        -0x365A0
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x44
-	  mr        r4, r25
-	  bl        0x430
+	u32 badCompiler; // god i tried really hard to get this working.
 
-	.loc_0x44:
-	  stw       r26, 0x48(r30)
-	  stw       r27, 0x4C(r30)
-	  stw       r28, 0x50(r30)
-	  stw       r29, 0x54(r30)
-	  lwz       r4, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  bge-      .loc_0xD4
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r4,2,0,29
-	  stwx      r30, r3, r0
-	  lwz       r3, 0x4(r30)
-	  cmpwi     r3, 0
-	  blt-      .loc_0x88
-	  lwz       r0, 0xC(r31)
-	  cmpw      r3, r0
-	  blt-      .loc_0x90
+	SAIState* state = new SAIState(p1);
+	state->_48      = p2;
+	state->_4C      = p3;
+	state->_50      = p4;
+	state->_54      = p5;
 
-	.loc_0x88:
-	  li        r0, 0
-	  b         .loc_0x94
+	if (isFull()) {
+		return;
+	}
 
-	.loc_0x90:
-	  li        r0, 0x1
+	appendState(state);
 
-	.loc_0x94:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0xD4
-	  stw       r31, 0x8(r30)
-	  lwz       r0, 0x8(r31)
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r0, 0x4(r30)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0xD4:
-	  lmw       r25, 0x34(r1)
-	  lwz       r0, 0x54(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	if (isValidState(state)) {
+		initState(state);
+	}
 }
 
 /*
@@ -382,79 +225,21 @@ void SimpleAI::addState(int, int, SAIAction*, SAIAction*, SAIAction*)
  * Address:	8007D660
  * Size:	0000F8
  */
-void SimpleAI::addArrow(int, SAIEvent*, int)
+SAIArrow* SimpleAI::addArrow(int p1, SAIEvent* event, int p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r27, 0x24(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  addi      r30, r6, 0
-	  li        r3, 0x34
-	  bl        -0x36680
-	  addi      r31, r3, 0
-	  mr.       r7, r31
-	  beq-      .loc_0x98
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  stw       r0, 0x0(r31)
-	  li        r0, 0
-	  lis       r3, 0x802B
-	  stw       r0, 0x10(r31)
-	  lis       r6, 0x802B
-	  subi      r4, r3, 0x28C0
-	  stw       r0, 0xC(r31)
-	  subi      r3, r6, 0x28CC
-	  lis       r5, 0x802B
-	  stw       r0, 0x8(r31)
-	  subi      r0, r5, 0x26D4
-	  stw       r3, 0x4(r31)
-	  addi      r3, r7, 0x20
-	  stw       r0, 0x0(r31)
-	  bl        -0x48728
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x26FC
-	  stw       r0, 0x20(r31)
-	  stw       r29, 0x18(r31)
-	  stw       r30, 0x14(r31)
+	u32 badCompiler;
 
-	.loc_0x98:
-	  lwz       r3, 0x14(r27)
-	  rlwinm    r0,r28,2,0,29
-	  addi      r4, r31, 0
-	  lwzx      r0, r3, r0
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0xB8
-	  li        r3, 0
-	  b         .loc_0xE4
+	SAIArrow* arrow = new SAIArrow("SAIArrow", event, p3);
+	int stateIdx    = mStateIndexes[p1];
+	if (stateIdx == -1) {
+		return nullptr;
+	}
 
-	.loc_0xB8:
-	  lwz       r3, 0x4(r27)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r27, r3, r0
-	  lwz       r0, 0x44(r27)
-	  addi      r3, r27, 0x10
-	  stw       r0, 0x1C(r31)
-	  bl        -0x3D158
-	  lwz       r4, 0x44(r27)
-	  addi      r3, r31, 0
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x44(r27)
-
-	.loc_0xE4:
-	  lmw       r27, 0x24(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	SAIState* state  = getState(stateIdx);
+	arrow->mArrowIdx = state->mArrowCount;
+	state->mRootArrow.add(arrow);
+	state->mArrowCount++;
+	return arrow;
 }
 
 /*
@@ -679,77 +464,15 @@ bool SAICondition::satisfy(AICreature*) { return true; }
  */
 SAIState::SAIState(int stateID)
     : AState<AICreature>(stateID)
+    , mRootArrow("SAIArrowRoot")
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r1)
-	  subi      r0, r5, 0x2950
-	  lis       r6, 0x802B
-	  stwu      r1, -0x20(r1)
-	  lis       r5, 0x8022
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x802B
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x27B4
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r31)
-	  subi      r0, r6, 0x2804
-	  stw       r4, 0x4(r31)
-	  lis       r4, 0x802B
-	  subi      r29, r4, 0x28E8
-	  stw       r30, 0x8(r31)
-	  addi      r4, r29, 0x28
-	  stw       r0, 0x0(r31)
-	  addi      r0, r5, 0x738C
-	  addi      r5, r29, 0x34
-	  stw       r0, 0x10(r31)
-	  addi      r0, r3, 0x737C
-	  lis       r3, 0x802B
-	  stw       r0, 0x10(r31)
-	  subi      r0, r3, 0x26D4
-	  addi      r3, r31, 0x30
-	  stw       r30, 0x20(r31)
-	  stw       r30, 0x1C(r31)
-	  stw       r30, 0x18(r31)
-	  stw       r5, 0x14(r31)
-	  stw       r0, 0x10(r31)
-	  bl        -0x48AC4
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x26FC
-	  stw       r0, 0x30(r31)
-	  li        r5, -0x1
-	  addi      r4, r29, 0x44
-	  stw       r5, 0x24(r31)
-	  addi      r0, r29, 0x54
-	  addi      r3, r31, 0
-	  stw       r30, 0x28(r31)
-	  stw       r30, 0x40(r31)
-	  stw       r30, 0x3C(r31)
-	  stw       r30, 0x38(r31)
-	  stw       r4, 0x34(r31)
-	  stw       r5, 0x48(r31)
-	  stw       r30, 0x54(r31)
-	  stw       r30, 0x50(r31)
-	  stw       r30, 0x4C(r31)
-	  stw       r30, 0x20(r31)
-	  stw       r30, 0x1C(r31)
-	  stw       r30, 0x18(r31)
-	  stw       r0, 0x14(r31)
-	  stw       r30, 0x44(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mRootArrow.mCondition.initCore("saiCondition");
+	_48 = -1;
+	_54 = 0;
+	_50 = 0;
+	_4C = 0;
+	mRootArrow.initCore("rootArrow");
+	mArrowCount = 0;
 }
 
 /*
@@ -981,27 +704,16 @@ void AICreature::finishMotion() { }
  * Address:	8007DCF4
  * Size:	000008
  */
-void AICreature::getCurrentMotionName()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r13, 0x6210
-	  blr
-	*/
-}
+char* AICreature::getCurrentMotionName() { return "noname"; }
 
 /*
  * --INFO--
  * Address:	8007DCFC
  * Size:	000008
  */
-void AICreature::getCurrentMotionCounter()
+f32 AICreature::getCurrentMotionCounter()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x768C(r2)
-	  blr
-	*/
+	return -123.4f; // lol
 }
 
 /*
@@ -1009,13 +721,9 @@ void AICreature::getCurrentMotionCounter()
  * Address:	8007DD04
  * Size:	000008
  */
-void AICreature::getMotionSpeed()
+f32 AICreature::getMotionSpeed()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x768C(r2)
-	  blr
-	*/
+	return -123.4f; // lol
 }
 
 /*
@@ -1079,57 +787,28 @@ void Creature::startAI(int) { }
  * Address:	8007DD38
  * Size:	000008
  */
-f32 Creature::getiMass()
-{
-	return 0.0f;
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x7688(r2)
-	  blr
-	*/
-}
+f32 Creature::getiMass() { return 100.0f; }
 
 /*
  * --INFO--
  * Address:	8007DD40
  * Size:	000008
  */
-f32 Creature::getSize()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x7684(r2)
-	  blr
-	*/
-}
+f32 Creature::getSize() { return 15.0f; }
 
 /*
  * --INFO--
  * Address:	8007DD48
  * Size:	000008
  */
-f32 Creature::getHeight()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x7690(r2)
-	  blr
-	*/
-}
+f32 Creature::getHeight() { return 0.0f; }
 
 /*
  * --INFO--
  * Address:	8007DD50
  * Size:	000008
  */
-f32 Creature::getCylinderHeight()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x7680(r2)
-	  blr
-	*/
-}
+f32 Creature::getCylinderHeight() { return 10.0f; }
 
 /*
  * --INFO--
@@ -1164,38 +843,14 @@ void Creature::doLoad(RandomAccessStream&) { }
  * Address:	8007DD68
  * Size:	00001C
  */
-Vector3f Creature::getShadowPos()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x94(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x98(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x9C(r4)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
-}
+Vector3f Creature::getShadowPos() { return mPosition; }
 
 /*
  * --INFO--
  * Address:	8007DD84
  * Size:	00001C
  */
-void Creature::setCentre(Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r5, 0x94(r3)
-	  stw       r0, 0x98(r3)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x9C(r3)
-	  blr
-	*/
-}
+void Creature::setCentre(Vector3f& centre) { mPosition = centre; }
 
 /*
  * --INFO--
@@ -1216,18 +871,7 @@ bool Creature::isBuried() { return false; }
  * Address:	8007DDB8
  * Size:	000018
  */
-bool Creature::isAlive()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x58(r3)
-	  lfs       f0, -0x7690(r2)
-	  fcmpo     cr0, f1, f0
-	  mfcr      r0
-	  rlwinm    r3,r0,2,31,31
-	  blr
-	*/
-}
+bool Creature::isAlive() { return mHealth > 0.0f; }
 
 /*
  * --INFO--
@@ -1255,18 +899,7 @@ bool Creature::ignoreAtari(Creature*) { return false; }
  * Address:	8007DDE8
  * Size:	000018
  */
-bool Creature::isFree()
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r3)
-	  rlwinm    r0,r0,0,19,19
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
+bool Creature::isFree() { return isCreatureFlag(CF_Free) != 0; }
 
 /*
  * --INFO--

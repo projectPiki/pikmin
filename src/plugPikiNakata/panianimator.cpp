@@ -33,24 +33,24 @@ char* PaniAnimator::keyNames[6] = {
  * Address:	8011EF58
  * Size:	000034
  */
-PaniMotionInfo::PaniMotionInfo(int p1) { init(p1, nullptr); }
+PaniMotionInfo::PaniMotionInfo(int motionIdx) { init(motionIdx, nullptr); }
 
 /*
  * --INFO--
  * Address:	8011EF8C
  * Size:	000030
  */
-PaniMotionInfo::PaniMotionInfo(int p1, PaniAnimKeyListener* listener) { init(p1, listener); }
+PaniMotionInfo::PaniMotionInfo(int motionIdx, PaniAnimKeyListener* listener) { init(motionIdx, listener); }
 
 /*
  * --INFO--
  * Address:	8011EFBC
  * Size:	00000C
  */
-void PaniMotionInfo::init(int p1, PaniAnimKeyListener* listener)
+void PaniMotionInfo::init(int motionIdx, PaniAnimKeyListener* listener)
 {
-	_00       = p1;
-	mListener = listener;
+	mMotionIdx = motionIdx;
+	mListener  = listener;
 }
 
 /*
@@ -90,10 +90,10 @@ void PaniMotion::init(int p1, int p2)
 PaniMotionTable::PaniMotionTable(int count)
 {
 	mMotionCount = count;
-	_04          = new PaniMotion*[mMotionCount];
+	mMotions     = new PaniMotion*[mMotionCount];
 
 	for (int i = 0; i < mMotionCount; i++) {
-		_04[i] = nullptr;
+		mMotions[i] = nullptr;
 	}
 }
 
@@ -105,10 +105,10 @@ PaniMotionTable::PaniMotionTable(int count)
 PaniSoundTable::PaniSoundTable(int count)
 {
 	mSoundCount = count;
-	_04         = new u32*[mSoundCount];
+	mSounds     = new u32*[mSoundCount];
 
 	for (int i = 0; i < mSoundCount; i++) {
-		_04[i] = 0;
+		mSounds[i] = 0;
 	}
 }
 
@@ -124,7 +124,7 @@ PaniAnimator::PaniAnimator()
 	mListener     = nullptr;
 	mAnimInfo     = nullptr;
 	mMotionTable  = nullptr;
-	_44           = -1;
+	mMotionIdx    = -1;
 	mCurrentFrame = 0.0f;
 }
 
@@ -173,12 +173,12 @@ void PaniAnimator::updateContext()
 void PaniAnimator::startMotion(PaniMotionInfo& info)
 {
 	if (mAnimInfo) {
-		_44         = info._00;
+		mMotionIdx  = info.mMotionIdx;
 		mListener   = info.mListener;
 		_38         = 0;
 		_40         = 0;
 		mIsFinished = false;
-		startAnim(2, mMotionTable->_04[_44]->_00, 0, 8);
+		startAnim(2, mMotionTable->mMotions[mMotionIdx]->_00, 0, 8);
 	}
 }
 
@@ -210,13 +210,13 @@ void PaniAnimator::finishMotion(PaniMotionInfo& info)
  * Address:	8011F2E0
  * Size:	00010C
  */
-void PaniAnimator::animate(f32 p1)
+void PaniAnimator::animate(f32 speed)
 {
 	if (!mAnimInfo) {
 		return;
 	}
 
-	if (p1 < 0.0f) {
+	if (speed < 0.0f) {
 		DEBUGPRINT(_38 < 0);
 	}
 
@@ -231,11 +231,11 @@ void PaniAnimator::animate(f32 p1)
 		return;
 	}
 
-	p1 *= NSystem::system->getFrameTime();
-	mCurrentFrame += p1;
+	speed *= NSystem::system->getFrameTime();
+	mCurrentFrame += speed;
 
 	checkConstantKeys();
-	checkEventKeys(mCurrentFrame - p1, mCurrentFrame);
+	checkEventKeys(mCurrentFrame - speed, mCurrentFrame);
 	if (mCurrentFrame >= keyVal2) {
 		mCurrentFrame = keyVal2;
 		finishAnimation();

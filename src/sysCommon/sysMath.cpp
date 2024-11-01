@@ -1438,7 +1438,7 @@ f32 roundAng(f32 x)
  * Address: 800385B4
  * Size:    000074
  */
-void angDist(f32, f32)
+f32 angDist(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1487,7 +1487,7 @@ void angDist(f32, f32)
  * Address: 80038628
  * Size:    000050
  */
-void qdist2(f32, f32, f32, f32)
+f32 qdist2(f32, f32, f32, f32)
 {
 	// f32 differenceX         = point2X - point1X;
 	// f32 absoluteDifferenceX = (differenceX < 0.0f) ? -differenceX : differenceX;
@@ -2245,7 +2245,7 @@ void pointInsideTri(KTri&, Vector3f&)
  * Address: 80039024
  * Size:    000260
  */
-void triRectDistance(Vector3f*, Vector3f*, Vector3f*, BoundBox&, bool)
+f32 triRectDistance(Vector3f*, Vector3f*, Vector3f*, BoundBox&, bool)
 {
 	/*
 	.loc_0x0:
@@ -2427,7 +2427,7 @@ void triRectDistance(Vector3f*, Vector3f*, Vector3f*, BoundBox&, bool)
  * Address: 80039284
  * Size:    0001A8
  */
-void distanceTriRect(KTri&, KRect&, f32*, f32*, f32*, f32*)
+f32 distanceTriRect(KTri&, KRect&, f32*, f32*, f32*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -2689,7 +2689,7 @@ KSegment::KSegment()
  * Address: 8003958C
  * Size:    0018C4
  */
-void sqrDistance(KSegment&, KTri&, f32*, f32*, f32*)
+f32 sqrDistance(KSegment&, KTri&, f32*, f32*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -4356,7 +4356,7 @@ void sqrDistance(KSegment&, KTri&, f32*, f32*, f32*)
  * Address: 8003AE50
  * Size:    000828
  */
-void sqrDistance(KSegment&, KSegment&, f32*, f32*)
+f32 sqrDistance(KSegment&, KSegment&, f32*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -4976,7 +4976,7 @@ void sqrDistance(KSegment&, KSegment&, f32*, f32*)
  * Address: 8003B678
  * Size:    001D9C
  */
-void sqrDistance(KSegment&, KRect&, f32*, f32*, f32*)
+f32 sqrDistance(KSegment&, KRect&, f32*, f32*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -6969,7 +6969,7 @@ void sqrDistance(KSegment&, KRect&, f32*, f32*, f32*)
  * Address: 8003D414
  * Size:    000468
  */
-void sqrDistance(KTri&, KRect&, f32*, f32*, f32*, f32*)
+f32 sqrDistance(KTri&, KRect&, f32*, f32*, f32*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -7283,7 +7283,7 @@ void sqrDistance(KTri&, KRect&, f32*, f32*, f32*, f32*)
  * Address: 8003D87C
  * Size:    000540
  */
-void sqrDistance(Vector3f&, KTri&, f32*, f32*)
+f32 sqrDistance(Vector3f&, KTri&, f32*, f32*)
 {
 	/*
 	.loc_0x0:

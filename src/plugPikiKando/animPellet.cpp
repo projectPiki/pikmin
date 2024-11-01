@@ -454,13 +454,13 @@ void PelletAnimator::updateContext()
 PaniMotionTable* PaniPelletAnimator::createMotionTable()
 {
 	PaniMotionTable* table = new PaniMotionTable(7);
-	table->_04[0]          = new PaniMotion(0);
-	table->_04[1]          = new PaniMotion(1);
-	table->_04[2]          = new PaniMotion(2);
-	table->_04[3]          = new PaniMotion(3);
-	table->_04[4]          = new PaniMotion(4);
-	table->_04[5]          = new PaniMotion(5);
-	table->_04[6]          = new PaniMotion(6);
+	table->mMotions[0]     = new PaniMotion(0);
+	table->mMotions[1]     = new PaniMotion(1);
+	table->mMotions[2]     = new PaniMotion(2);
+	table->mMotions[3]     = new PaniMotion(3);
+	table->mMotions[4]     = new PaniMotion(4);
+	table->mMotions[5]     = new PaniMotion(5);
+	table->mMotions[6]     = new PaniMotion(6);
 	return table;
 }
 

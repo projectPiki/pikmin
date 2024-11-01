@@ -61,8 +61,21 @@ struct MtxGroup {
  * @brief TODO
  */
 struct ShapeDynMaterials {
+	ShapeDynMaterials()
+	    : _00(0)
+	    , _04(0)
+	    , _08(0)
+	    , _0C(0)
+	{
+	}
+
 	void animate(f32*);
 	void updateContext();
+
+	u32 _00; // _00, unknown
+	u32 _04; // _04, unknown
+	u32 _08; // _08, unknown
+	u32 _0C; // _0C, unknown
 };
 
 /**

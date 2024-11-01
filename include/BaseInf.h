@@ -49,8 +49,8 @@ struct BPikiInf : public BaseInf {
 
 	// _00     = VTBL
 	// _00-_2C = BaseInf
-	u8 mPikiColor; // _2C
-	u8 mPikiHappa; // _2D
+	u8 _2C; // _2C
+	u8 _2D; // _2D
 };
 
 /**

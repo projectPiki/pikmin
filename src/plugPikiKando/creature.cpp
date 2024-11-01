@@ -576,7 +576,7 @@ void Creature::init()
 	_1A0           = -1;
 	resetCreatureFlag(CF_Unk19);
 	_21C = 0;
-	setCreatureFlag(CF_Unk13);
+	setCreatureFlag(CF_Free);
 	resetCreatureFlag(CF_Unk9 | CF_Unk12 | CF_Unk14 | CF_Unk20);
 	_D0  = 0.0f;
 	_2A8 = nullptr;
@@ -673,9 +673,7 @@ void Creature::kill(bool p1)
 			AState<AICreature>* state = static_cast<BombItem*>(bomb)->getCurrState();
 			int currState             = state->getStateID();
 			if (currState != 1) {
-				MsgUser msg;
-				msg._00                            = MSG_User;
-				msg._04                            = 1;
+				MsgUser msg(1);
 				static_cast<BombItem*>(bomb)->_2D0 = 1;
 				static_cast<BombItem*>(bomb)->mStateMachine->procMsg(static_cast<BombItem*>(bomb), &msg);
 			}
