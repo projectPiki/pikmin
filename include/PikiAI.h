@@ -6,10 +6,27 @@
 #include "Piki.h"
 #include "Receiver.h"
 #include "SlotChangeListner.h"
+#include "stl/stdio.h"
+
+struct Pebble;
+struct RockGen;
 
 namespace zen {
 struct particleGenerator;
 } // namespace zen
+
+/**
+ * @brief TODO
+ */
+enum ActionResults {
+	ACTOUT_Unk0    = 0,
+	ACTOUT_Unk1    = 1,
+	ACTOUT_Success = 2,
+};
+
+namespace Reaction {
+extern char* info[9];
+} // namespace Reaction
 
 /**
  * @brief TODO
@@ -21,21 +38,6 @@ struct Action : public Receiver<Piki> {
 	/**
 	 * @brief TODO
 	 */
-	struct Child {
-		Child();
-
-		~Child();
-
-		void initialise(Creature*);
-
-		// TODO: members
-		u32 _00; // _00, unknown
-		u32 _04; // _04, unknown
-	};
-
-	/**
-	 * @brief TODO
-	 */
 	struct Initialiser {
 		virtual void initialise(Action*); // _08 (weak)
 
@@ -43,19 +45,47 @@ struct Action : public Receiver<Piki> {
 		// TODO: members
 	};
 
+	/**
+	 * @brief TODO
+	 */
+	struct Child {
+		Child()
+		{
+			mAction      = nullptr;
+			mInitialiser = nullptr;
+		}
+
+		~Child()
+		{
+			if (mAction) {
+				delete mAction;
+			}
+
+			if (mInitialiser) {
+				delete mInitialiser;
+			}
+		}
+
+		void initialise(Creature*);
+
+		// TODO: members
+		Action* mAction;           // _00
+		Initialiser* mInitialiser; // _04
+	};
+
 	Action(Piki*, bool);
 
-	virtual void defaultInitialiser();   // _38 (weak)
-	virtual void dump();                 // _3C (weak)
-	virtual void draw(struct Graphics&); // _40 (weak)
-	virtual ~Action();                   // _44
-	virtual void init(Creature*);        // _48
-	virtual int exec();                  // _4C
-	virtual void cleanup();              // _50
-	virtual void resume();               // _54 (weak)
-	virtual void restart();              // _58 (weak)
-	virtual bool resumable();            // _5C (weak)
-	virtual void getInfo(char*);         // _60 (weak)
+	virtual void defaultInitialiser() { }                  // _38 (weak)
+	virtual void dump() { }                                // _3C (weak)
+	virtual void draw(struct Graphics&) { }                // _40 (weak)
+	virtual ~Action();                                     // _44
+	virtual void init(Creature*);                          // _48
+	virtual int exec();                                    // _4C
+	virtual void cleanup();                                // _50
+	virtual void resume() { }                              // _54 (weak)
+	virtual void restart() { }                             // _58 (weak)
+	virtual bool resumable() { return false; }             // _5C (weak)
+	virtual void getInfo(char* out) { sprintf(out, "-"); } // _60 (weak)
 
 	void procMsg(Msg*); // this isn't overridden in the vtable but it exists, idk.
 	void setChildren(int, ...);
@@ -65,9 +95,11 @@ struct Action : public Receiver<Piki> {
 	inline void initialiseChildAction(Creature* creature) { getChild(mChildActionIdx)->initialise(creature); }
 
 	// _00 = VTBL
-	Child* mChildActions; // _04
+	Child* mChildActions; // _04, array of mChildCount Children
 	s16 mChildActionIdx;  // _08
-	u8 _0A[0x14 - 0xA];   // _0A, TODO: work out members
+	s16 mChildCount;      // _0A
+	Piki* mActor;         // _0C
+	char* mName;          // _10
 };
 
 /**
@@ -79,13 +111,13 @@ struct AndAction : public Action {
 	{
 	}
 
-	virtual ~AndAction();         // _44 (weak)
+	virtual ~AndAction() { }      // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u32 _14; // _14, unknown
+	Creature* _14; // _14
 };
 
 /**
@@ -94,13 +126,13 @@ struct AndAction : public Action {
 struct OrAction : public Action {
 	inline OrAction(); // TODO: probably
 
-	virtual ~OrAction();          // _44 (weak)
+	virtual ~OrAction() { }       // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	Creature* _14; // _14
 };
 
 /**
@@ -110,12 +142,19 @@ struct TopAction : public Action {
 
 	/**
 	 * @brief TODO
+	 *
+	 * @note Size: 0x8.
 	 */
 	struct MotionListener : public PaniAnimKeyListener {
+		MotionListener(TopAction* action)
+		    : mAction(action)
+		{
+		}
+
 		virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
 		// _00 = VTBL
-		// TODO: members
+		TopAction* mAction; // _04
 	};
 
 	/**
@@ -129,8 +168,8 @@ struct TopAction : public Action {
 		void addBoredom(int, f32);
 		void update();
 
-		u32 _00;  // _00, unknown (pointer?)
-		u32 _04;  // _04, unknown (pointer?)
+		u32* _00; // _00, unknown (pointer?)
+		u32* _04; // _04, unknown (pointer?)
 		u8* _08;  // _08, array of size _10, might be bools
 		u32 _0C;  // _0C, unknown
 		int mCnt; // _10, count of objects in _00, _04, _08 arrays
@@ -150,7 +189,7 @@ struct TopAction : public Action {
 		void draw2d(Graphics&, int);
 
 		ObjBore* mObjects; // _00, array of mObjectCnt objects
-		u32 _04;           // _04, unknown (pointer?)
+		u32* _04;          // _04, unknown (pointer?)
 		u32 _08;           // _08, unknown
 		int mObjectCnt;    // _0C, number of mObjects
 		u32 _10;           // _10, unknown
@@ -158,14 +197,22 @@ struct TopAction : public Action {
 
 	TopAction(Piki*);
 
-	virtual void draw(Graphics&); // _40
+	virtual void getInfo(char* out) // _60
+	{
+		mChildActions[mChildActionIdx].mAction->getInfo(out);
+	}
+	virtual void draw(Graphics& gfx) // _40
+	{
+		if (_18) {
+			mChildActions[mChildActionIdx].mAction->draw(gfx);
+		}
+	}
 	virtual ~TopAction();         // _44
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void resume();        // _54
 	virtual void restart();       // _58
 	virtual bool resumable();     // _5C
-	virtual void getInfo(char*);  // _60
 
 	void abandon(zen::particleGenerator*);
 
@@ -174,7 +221,16 @@ struct TopAction : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	MotionListener* mListener; // _14
+	u8 _18;                    // _18
+	u8 _19;                    // _19
+	u8 _1A;                    // _1A
+	int _1C;                   // _1C
+	Creature* _20;             // _20
+	int _24;                   // _24
+	u32 _28;                   // _28, unknown
+	f32 _2C;                   // _2C
+	Boredom _30;               // _30
 };
 
 /**
@@ -207,6 +263,8 @@ struct ActAdjust : public Action {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x2C.
  */
 struct ActAttack : public AndAction, public PaniAnimKeyListener {
 	ActAttack(Piki*);
@@ -228,11 +286,13 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_18 = AndAction
 	// _18     = PaniAnimKeyListener
-	// TODO: members
+	u8 _1C[0x2C - 0x1C]; // _14, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct ActBoMake : public Action {
 	ActBoMake(Piki*);
@@ -248,8 +308,9 @@ struct ActBoMake : public Action {
 	void initWork();
 	int exeWork();
 
-	// _00 = VTBL
-	// TODO: members
+	// _00     = VTBL
+	// _00-_14 = Action
+	u8 _14[0x24 - 0x14]; // _14, unknown
 };
 
 /**
@@ -354,6 +415,8 @@ struct ActBoreTalk : public Action, public PaniAnimKeyListener {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x34.
  */
 struct ActBou : public Action {
 	ActBou(Piki*);
@@ -369,11 +432,13 @@ struct ActBou : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x34 - 0x14]; // _14, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x34.
  */
 struct ActBreakWall : public Action, public PaniAnimKeyListener {
 	ActBreakWall(Piki*);
@@ -393,11 +458,13 @@ struct ActBreakWall : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x34 - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct ActBridge : public Action, public PaniAnimKeyListener {
 	ActBridge(Piki*);
@@ -435,11 +502,13 @@ struct ActBridge : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x58 - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct ActChase : public Action {
 
@@ -462,11 +531,13 @@ struct ActChase : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x1C - 0x14]; // _14, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x88.
  */
 struct ActCrowd : public Action, public SlotChangeListner {
 	ActCrowd(Piki*);
@@ -494,12 +565,14 @@ struct ActCrowd : public Action, public SlotChangeListner {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _18     = SlotChangeListner
-	// TODO: members
+	// _14     = SlotChangeListner
+	u8 _18[0x88 - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct ActDecoy : public Action, public PaniAnimKeyListener {
 	ActDecoy(Piki*);
@@ -518,7 +591,7 @@ struct ActDecoy : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x20 - 0x18]; // _18, unknown
 };
 
 /**
@@ -550,6 +623,8 @@ struct ActDeliver : public AndAction {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct ActEnter : public Action {
 	ActEnter(Piki*);
@@ -569,11 +644,13 @@ struct ActEnter : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x30 - 0x14]; // _14, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct ActEscape : public Action {
 
@@ -597,11 +674,13 @@ struct ActEscape : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x30 - 0x14]; // _14, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct ActExit : public Action {
 	ActExit(Piki*);
@@ -614,7 +693,7 @@ struct ActExit : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x24 - 0x14]; // _14, unknown
 };
 
 /**
@@ -637,6 +716,8 @@ struct ActFlower : public Action, public PaniAnimKeyListener {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x34.
  */
 struct ActFormation : public Action, public PaniAnimKeyListener {
 	ActFormation(Piki*);
@@ -652,11 +733,13 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x34 - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x50.
  */
 struct ActFree : public Action, public PaniAnimKeyListener {
 	ActFree(Piki*);
@@ -675,7 +758,7 @@ struct ActFree : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x50 - 0x18]; // _18
 };
 
 /**
@@ -700,6 +783,8 @@ struct ActFreeSelect : public Action {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct ActGoto : public Action {
 
@@ -723,11 +808,13 @@ struct ActGoto : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x24 - 0x14]; // _14, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x4C.
  */
 struct ActGuard : public Action {
 	ActGuard(Piki*);
@@ -749,7 +836,7 @@ struct ActGuard : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x4C - 0x14]; // _14, unknown
 };
 
 /**
@@ -782,6 +869,8 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x38.
  */
 struct ActKinoko : public Action, public PaniAnimKeyListener {
 	ActKinoko(Piki*);
@@ -806,11 +895,13 @@ struct ActKinoko : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x38 - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct ActMine : public Action, public PaniAnimKeyListener {
 	ActMine(Piki*);
@@ -833,7 +924,7 @@ struct ActMine : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x30 - 0x18]; // _18, unknown
 };
 
 /**
@@ -867,6 +958,8 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct ActPickCreature : public AndAction {
 
@@ -885,11 +978,13 @@ struct ActPickCreature : public AndAction {
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	// TODO: members
+	u8 _18[0x1C - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct ActPickItem : public AndAction {
 	ActPickItem(Piki*);
@@ -903,11 +998,13 @@ struct ActPickItem : public AndAction {
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	// TODO: members
+	u8 _18[0x1C - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct ActPullout : public Action {
 	ActPullout(Piki*);
@@ -919,7 +1016,7 @@ struct ActPullout : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x1C - 0x14]; // _14, unknown
 };
 
 /**
@@ -942,6 +1039,8 @@ struct ActPulloutCreature : public Action, public PaniAnimKeyListener {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x50.
  */
 struct ActPush : public Action, public PaniAnimKeyListener {
 	ActPush(Piki*);
@@ -963,7 +1062,7 @@ struct ActPush : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x50 - 0x18]; // _18, unknown
 };
 
 /**
@@ -995,6 +1094,8 @@ struct ActPut : public Action {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct ActPutBomb : public Action, public PaniAnimKeyListener {
 	ActPutBomb(Piki*);
@@ -1024,11 +1125,13 @@ struct ActPutBomb : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x30 - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct ActPutItem : public Action {
 	ActPutItem(Piki*);
@@ -1043,11 +1146,13 @@ struct ActPutItem : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x24 - 0x14]; // _14, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x28.
  */
 struct ActRandomBoid : public Action {
 
@@ -1081,11 +1186,13 @@ struct ActRandomBoid : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x28 - 0x14]; // _14, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x3C.
  */
 struct ActRescue : public Action, public PaniAnimKeyListener {
 	ActRescue(Piki*);
@@ -1108,11 +1215,13 @@ struct ActRescue : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x3C - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct ActRope : public Action {
 	ActRope(Piki*);
@@ -1124,11 +1233,13 @@ struct ActRope : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x24 - 0x14]; // _14, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x28.
  */
 struct ActShoot : public AndAction {
 	ActShoot(Piki*);
@@ -1145,7 +1256,7 @@ struct ActShoot : public AndAction {
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	// TODO: members
+	u8 _18[0x28 - 0x18]; // _18, unknown
 };
 
 /**
@@ -1168,8 +1279,20 @@ struct ActShootCreature : public Action, public PaniAnimKeyListener {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x2C.
  */
 struct ActStone : public Action, public PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum State {
+		STATE_Approach = 0,
+		STATE_Adjust   = 1,
+		STATE_Attack   = 2,
+	};
+
 	ActStone(Piki*);
 
 	virtual ~ActStone();                                 // _44
@@ -1179,20 +1302,26 @@ struct ActStone : public Action, public PaniAnimKeyListener {
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
 	void initApproach();
-	void exeApproach();
+	int exeApproach();
 	void initAdjust();
-	void exeAdjust();
+	int exeAdjust();
 	void initAttack();
-	void exeAttack();
+	int exeAttack();
 
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u16 mState;          // _18
+	u8 _1A[0x20 - 0x1A]; // _18, unknown
+	Pebble* mCurrPebble; // _20, unknown
+	RockGen* mRockGen;   // _24
+	u8 _28;              // _28
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC0.
  */
 struct ActTransport : public Action, public PaniAnimKeyListener {
 	ActTransport(Piki*);
@@ -1234,11 +1363,13 @@ struct ActTransport : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0xC0 - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x2C.
  */
 struct ActWatch : public Action {
 
@@ -1272,11 +1403,13 @@ struct ActWatch : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	u8 _14[0x2C - 0x14]; // _14, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x2C.
  */
 struct ActWeed : public Action, public PaniAnimKeyListener {
 	ActWeed(Piki*);
@@ -1297,7 +1430,7 @@ struct ActWeed : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	u8 _18[0x2C - 0x18]; // _18, unknown
 };
 
 /**

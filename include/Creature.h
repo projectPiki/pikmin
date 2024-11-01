@@ -55,6 +55,7 @@ enum CreatureFlags {
 	CF_Unk19         = 1 << 19, // 0x80000, use result flags maybe?
 	CF_Unk20         = 1 << 20, // 0x100000
 	CF_FixPosition   = 1 << 21, // 0x200000
+	CF_Unk22         = 1 << 22, // 0x400000
 };
 
 /**

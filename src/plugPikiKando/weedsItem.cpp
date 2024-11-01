@@ -1045,7 +1045,7 @@ f32 RockGen::getSize()
  * Address:	800E5208
  * Size:	0000E0
  */
-void RockGen::getRandomPebble()
+Pebble* RockGen::getRandomPebble()
 {
 	/*
 	.loc_0x0:

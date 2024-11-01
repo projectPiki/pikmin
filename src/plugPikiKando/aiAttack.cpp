@@ -87,45 +87,6 @@ ActAttack::ActAttack(Piki* piki)
 
 /*
  * --INFO--
- * Address:	800A83B0
- * Size:	000064
- */
-AndAction::~AndAction()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x48
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x7ED0
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x1BA24
-	  extsh.    r0, r31
-	  ble-      .loc_0x48
-	  mr        r3, r30
-	  bl        -0x61248
-
-	.loc_0x48:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	800A8414
  * Size:	000150
  */

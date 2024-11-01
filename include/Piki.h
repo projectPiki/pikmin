@@ -154,7 +154,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	// _2B8     = PaniAnimKeyListener
 	u8 _2BC[0x354 - 0x2BC];       // _2BC, TODO: work out members
 	PaniPikiAnimMgr mPikiAnimMgr; // _354
-	u8 _400[0x408 - 0x400];       // _400, unknown
+	u8 _400;                      // _400
+	u8 _401[0x408 - 0x401];       // _401, unknown
 	u8 _408;                      // _408
 	u8 _409;                      // _409
 	u8 _40A[0x424 - 0x40A];       // _40A, unknown

@@ -1,4 +1,5 @@
 #include "PikiAI.h"
+#include "WeedsItem.h"
 
 /*
  * --INFO--
@@ -26,32 +27,8 @@ static void _Print(char*, ...)
  * Size:	000054
  */
 ActStone::ActStone(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        0x1D024
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x246C
-	  lis       r3, 0x802B
-	  stw       r0, 0x14(r31)
-	  addi      r3, r3, 0x4FB0
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x64
-	  addi      r3, r31, 0
-	  stw       r0, 0x14(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -59,35 +36,15 @@ ActStone::ActStone(Piki* piki)
  * Address:	800A6DE8
  * Size:	000058
  */
-void ActStone::init(Creature*)
+void ActStone::init(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  stw       r0, 0x20(r3)
-	  beq-      .loc_0x3C
-	  lwz       r0, 0x6C(r4)
-	  cmpwi     r0, 0x21
-	  bne-      .loc_0x3C
-	  stw       r4, 0x24(r31)
-	  lwz       r3, 0x24(r31)
-	  bl        0x3D87C
+	mCurrPebble = nullptr;
+	if (creature && creature->mObjType == OBJTYPE_RockGen) {
+		mRockGen = static_cast<RockGen*>(creature);
+		mRockGen->startWork();
+	}
 
-	.loc_0x3C:
-	  mr        r3, r31
-	  bl        0xD8
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	initApproach();
 }
 
 /*
@@ -97,52 +54,22 @@ void ActStone::init(Creature*)
  */
 int ActStone::exec()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x20(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x20
-	  li        r3, 0x2
-	  b         .loc_0x64
+	if (mCurrPebble == nullptr) {
+		return ACTOUT_Success;
+	}
 
-	.loc_0x20:
-	  lhz       r0, 0x18(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x50
-	  bge-      .loc_0x3C
-	  cmpwi     r0, 0
-	  bge-      .loc_0x48
-	  b         .loc_0x60
+	switch (mState) {
+	case STATE_Approach:
+		return exeApproach();
 
-	.loc_0x3C:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x60
-	  b         .loc_0x58
+	case STATE_Adjust:
+		return exeAdjust();
 
-	.loc_0x48:
-	  bl        0xFC
-	  b         .loc_0x64
+	case STATE_Attack:
+		return exeAttack();
+	}
 
-	.loc_0x50:
-	  bl        0x290
-	  b         .loc_0x64
-
-	.loc_0x58:
-	  bl        0x4E0
-	  b         .loc_0x64
-
-	.loc_0x60:
-	  li        r3, 0
-
-	.loc_0x64:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return ACTOUT_Unk0;
 }
 
 /*
@@ -152,30 +79,11 @@ int ActStone::exec()
  */
 void ActStone::cleanup()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0xC(r3)
-	  lwz       r0, 0xC8(r4)
-	  rlwinm    r0,r0,0,10,8
-	  stw       r0, 0xC8(r4)
-	  lwz       r4, 0xC(r3)
-	  lwz       r0, 0xC8(r4)
-	  rlwinm    r0,r0,0,11,9
-	  stw       r0, 0xC8(r4)
-	  lwz       r3, 0x24(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x3C
-	  bl        0x3D7C8
-
-	.loc_0x3C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mActor->resetCreatureFlag(CF_Unk22);
+	mActor->resetCreatureFlag(CF_FixPosition);
+	if (mRockGen) {
+		mRockGen->finishWork();
+	}
 }
 
 /*
@@ -185,46 +93,15 @@ void ActStone::cleanup()
  */
 void ActStone::initApproach()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x24(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x30
-	  bl        0x3E2E4
-	  stw       r3, 0x20(r30)
-	  b         .loc_0x38
+	if (mRockGen) {
+		mCurrPebble = mRockGen->getRandomPebble();
+	} else {
+		mCurrPebble = nullptr;
+	}
 
-	.loc_0x30:
-	  li        r0, 0
-	  stw       r0, 0x20(r30)
+	mState = STATE_Approach;
 
-	.loc_0x38:
-	  li        r0, 0
-	  sth       r0, 0x18(r30)
-	  addi      r3, r1, 0xC
-	  li        r4, 0x2
-	  bl        0x78010
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x14
-	  li        r4, 0x2
-	  bl        0x78000
-	  mr        r4, r3
-	  lwz       r3, 0xC(r30)
-	  mr        r5, r31
-	  bl        0x23A70
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mActor->startMotion(PaniMotionInfo(2), PaniMotionInfo(2));
 }
 
 /*
@@ -232,7 +109,7 @@ void ActStone::initApproach()
  * Address:	800A6F84
  * Size:	000190
  */
-void ActStone::exeApproach()
+int ActStone::exeApproach()
 {
 	/*
 	.loc_0x0:
@@ -358,18 +235,14 @@ void ActStone::exeApproach()
  * Address:	800A7114
  * Size:	00000C
  */
-void ActStone::initAdjust()
-{
-	// Generated from sth r0, 0x18(r3)
-	// _18 = 1;
-}
+void ActStone::initAdjust() { mState = STATE_Adjust; }
 
 /*
  * --INFO--
  * Address:	800A7120
  * Size:	0001C4
  */
-void ActStone::exeAdjust()
+int ActStone::exeAdjust()
 {
 	/*
 	.loc_0x0:
@@ -510,48 +383,10 @@ void ActStone::exeAdjust()
  */
 void ActStone::initAttack()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x2
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr.       r29, r3
-	  sth       r0, 0x18(r3)
-	  mr        r30, r29
-	  beq-      .loc_0x30
-	  addi      r30, r30, 0x14
-
-	.loc_0x30:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x13
-	  bl        0x77C3C
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x13
-	  bl        0x77C5C
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x23698
-	  li        r0, 0
-	  stb       r0, 0x28(r29)
-	  lwz       r3, 0xC(r29)
-	  lwz       r0, 0xC8(r3)
-	  oris      r0, r0, 0x40
-	  stw       r0, 0xC8(r3)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mState = STATE_Attack;
+	mActor->startMotion(PaniMotionInfo(19, this), PaniMotionInfo(19));
+	_28 = 0;
+	mActor->setCreatureFlag(CF_Unk22);
 }
 
 /*
@@ -559,7 +394,7 @@ void ActStone::initAttack()
  * Address:	800A7378
  * Size:	000174
  */
-void ActStone::exeAttack()
+int ActStone::exeAttack()
 {
 	/*
 	.loc_0x0:
@@ -930,71 +765,6 @@ ActStone::~ActStone()
 	  lwz       r31, 0x14(r1)
 	  lwz       r30, 0x10(r1)
 	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800A7864
- * Size:	000004
- */
-void Action::defaultInitialiser() { }
-
-/*
- * --INFO--
- * Address:	800A7868
- * Size:	000004
- */
-void Action::dump() { }
-
-/*
- * --INFO--
- * Address:	800A786C
- * Size:	000004
- */
-void Action::draw(Graphics&) { }
-
-/*
- * --INFO--
- * Address:	800A7870
- * Size:	000004
- */
-void Action::resume() { }
-
-/*
- * --INFO--
- * Address:	800A7874
- * Size:	000004
- */
-void Action::restart() { }
-
-/*
- * --INFO--
- * Address:	800A7878
- * Size:	000008
- */
-bool Action::resumable() { return false; }
-
-/*
- * --INFO--
- * Address:	800A7880
- * Size:	00002C
- */
-void Action::getInfo(char*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r4, 0
-	  stw       r0, 0x4(r1)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5098
-	  stwu      r1, -0x8(r1)
-	  bl        0x16ED00
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
 	  mtlr      r0
 	  blr
 	*/

@@ -72,7 +72,7 @@ struct RockGen : public ItemCreature {
 	void create(int, f32, int);
 	void setSizeAndNum(f32, int);
 	void killPebble();
-	void getRandomPebble();
+	Pebble* getRandomPebble();
 
 	// _00      = VTBL
 	// _00-_304 = ItemCreature?
