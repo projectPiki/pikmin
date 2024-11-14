@@ -27,8 +27,14 @@ struct LFInfo {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct LightFlare : public CoreNode {
+	LightFlare()
+	    : CoreNode("")
+	{
+	}
 
 	// unused/inlined:
 	void loadini(CmdStream*);
@@ -114,6 +120,8 @@ struct Light : public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x6C.
  */
 struct LightGroup : public CoreNode {
 	LightGroup()
@@ -122,17 +130,24 @@ struct LightGroup : public CoreNode {
 		mType       = 0;
 		mJointIndex = -1;
 		mTexture    = nullptr;
+
+		mFlares.initCore("");
+
+		mLightColour.set(255, 255, 255, 255);
+		mTexSource  = nullptr;
+		mHaloTex    = nullptr;
+		mFlareGroup = nullptr;
 	}
 
 #ifndef __MWERKS__
-	void addLight(struct Vector3f&, float);
+	void addLight(struct Vector3f&, f32);
 	void ageAddFlare(struct AgeServer&);
 	void ageChangeTexture(struct AgeServer&);
 	void ageDel(struct AgeServer&);
 
 	virtual void genAge(class AgeServer&);
 
-	void addLight(struct Vector3f&, float);
+	void addLight(struct Vector3f&, f32);
 	void saveini(char*, struct RandomAccessStream&);
 #endif
 

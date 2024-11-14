@@ -212,6 +212,12 @@ struct Creature : public RefCountable, public EventTalker {
 
 	inline Vector3f& getPosition() { return mPosition; }
 
+	inline bool isWall()
+	{
+		return mObjType == OBJTYPE_SluiceSoft || mObjType == OBJTYPE_SluiceHard || mObjType == OBJTYPE_SluiceBomb
+		    || mObjType == OBJTYPE_SluiceBombHard;
+	}
+
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker
@@ -226,7 +232,7 @@ struct Creature : public RefCountable, public EventTalker {
 	u8 _5C[0x4];            // _5C, unknown
 	u8 _60;                 // _60
 	Generator* mGenerator;  // _64
-	u8 _68[0x4];            // _68, unknown
+	u32 _68;                // _68, might be int
 	EObjType mObjType;      // _6C, object type
 	Vector3f _70;           // _70
 	Vector3f _7C;           // _7C
@@ -254,7 +260,7 @@ struct Creature : public RefCountable, public EventTalker {
 	UpdateContext _174;     // _174
 	Creature* _180;         // _180, unknown
 	Creature* mStickTarget; // _184, creature/object this creature is stuck to
-	u32 _188;               // _188, unknown
+	CollPart* _188;         // _188
 	Creature* _18C;         // _18C, unknown
 	u32 _190;               // _190, unknown
 	Vector3f _194;          // _194
@@ -292,5 +298,21 @@ f32 sphereDist(Creature*, Creature*);
 f32 qdist2(Creature*, Creature*);
 f32 circleDist(Creature*, Creature*);
 bool roughCull(Creature*, Creature*, f32);
+
+// these are the things that make the most sense so far, this code comes up in weird spots
+inline void resetCreature(Creature*& creature)
+{
+	if (creature) {
+		creature->subCnt();
+		creature = nullptr;
+	}
+}
+
+inline void postSetCreature(Creature*& creature)
+{
+	if (creature) {
+		creature->addCnt();
+	}
+}
 
 #endif

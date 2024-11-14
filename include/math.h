@@ -4,7 +4,15 @@
 #include "types.h"
 #include "PowerPC_EABI_Support/MSL_C/PPC_EABI/math_ppc.h"
 
-#define SQUARE(v)  ((v) * (v))
+#define SQUARE(v) ((v) * (v))
+
+// this needs fixing but idk how to do so
+static inline f32 quickABS(f32 x)
+{
+	u32 val = (*(u32*)&x & ~0x80000000);
+	return *(f32*)&val;
+}
+
 #define LONG_TAU   6.2831854820251465
 #define TAU        6.2831855f
 #define PI         3.1415927f
@@ -65,6 +73,8 @@ static inline f32 sqrtf(f32 x)
 	}
 	return x;
 }
+
+static inline f32 absF(f32 val) { return __fabs(val); }
 
 #ifdef __cplusplus
 // Pikmin-specific global math functions

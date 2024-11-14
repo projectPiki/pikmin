@@ -23,6 +23,8 @@ static void _Print(char*, ...)
 	// UNUSED FUNCTION
 }
 
+ItemMgr* itemMgr;
+
 /*
  * --INFO--
  * Address:	800F2978
@@ -3705,62 +3707,17 @@ void ItemMgr::initialise()
  * Address:	800F58AC
  * Size:	0000C8
  */
-ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape*)
+ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape* shape)
     : AICreature(props)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r6, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  addi      r4, r5, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  bl        -0x78668
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x1494
-	  stw       r3, 0x0(r29)
-	  addi      r0, r3, 0x114
-	  lis       r3, 0x8009
-	  stw       r0, 0x2B8(r29)
-	  subi      r4, r3, 0x5808
-	  addi      r3, r29, 0x30C
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x8
-	  bl        0x11F16C
-	  addi      r3, r29, 0x36C
-	  bl        0x27E8
-	  stw       r31, 0x308(r29)
-	  li        r0, 0x4
-	  addi      r3, r29, 0x1B8
-	  stw       r0, 0x68(r29)
-	  addi      r4, r29, 0x30C
-	  li        r5, 0x8
-	  lwz       r0, 0xC8(r29)
-	  rlwinm    r0,r0,0,23,21
-	  stw       r0, 0xC8(r29)
-	  lwz       r0, 0xC8(r29)
-	  ori       r0, r0, 0x1
-	  stw       r0, 0xC8(r29)
-	  bl        -0x11CC0
-	  stw       r30, 0x6C(r29)
-	  li        r0, 0
-	  addi      r3, r29, 0
-	  stw       r0, 0x3C0(r29)
-	  stw       r0, 0x2E8(r29)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mItemShape = shape;
+	_68        = 4;
+	resetCreatureFlag(CF_Unk10);
+	setCreatureFlag(CF_Unk1);
+	_1B8.init(mItemSearchData, 8);
+	mObjType         = (EObjType)objType;
+	mItemShapeObject = nullptr;
+	mStateMachine    = nullptr;
 }
 
 /*
@@ -3768,41 +3725,15 @@ ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape*)
  * Address:	800F5974
  * Size:	000070
  */
-void ItemCreature::init(Vector3f&)
+void ItemCreature::init(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x6AD84
-	  addi      r3, r31, 0x1B8
-	  addi      r4, r31, 0x30C
-	  li        r5, 0x3
-	  bl        -0x11D18
-	  lfs       f0, -0x63F0(r2)
-	  stfs      f0, 0x304(r31)
-	  lwz       r4, 0x3C0(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x54
-	  lwz       r6, 0x30AC(r13)
-	  addi      r3, r31, 0x36C
-	  lwz       r5, 0x4(r4)
-	  addi      r4, r4, 0x8
-	  lwz       r6, 0x90(r6)
-	  bl        0x29760
-
-	.loc_0x54:
-	  li        r0, 0x1
-	  stb       r0, 0x3C4(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Creature::init(pos);
+	_1B8.init(mItemSearchData, 3);
+	mMotionSpeed = 30.0f;
+	if (mItemShapeObject) {
+		mItemAnimator.init(&mItemShapeObject->_08, mItemShapeObject->mAnimMgr, itemMgr->mMotionTable);
+	}
+	_3C4 = 1;
 }
 
 /*
@@ -3810,57 +3741,28 @@ void ItemCreature::init(Vector3f&)
  * Address:	800F59E4
  * Size:	000008
  */
-void ItemCreature::setMotionSpeed(f32)
-{
-	/*
-	.loc_0x0:
-	  stfs      f1, 0x304(r3)
-	  blr
-	*/
-}
+void ItemCreature::setMotionSpeed(f32 speed) { mMotionSpeed = speed; }
 
 /*
  * --INFO--
  * Address:	800F59EC
  * Size:	000008
  */
-f32 ItemCreature::getMotionSpeed()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x304(r3)
-	  blr
-	*/
-}
+f32 ItemCreature::getMotionSpeed() { return mMotionSpeed; }
 
 /*
  * --INFO--
  * Address:	800F59F4
  * Size:	00000C
  */
-void ItemCreature::stopMotion()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x63F4(r2)
-	  stfs      f0, 0x304(r3)
-	  blr
-	*/
-}
+void ItemCreature::stopMotion() { mMotionSpeed = 0.0f; }
 
 /*
  * --INFO--
  * Address:	800F5A00
  * Size:	000008
  */
-f32 ItemCreature::getCurrentMotionCounter()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x398(r3)
-	  blr
-	*/
-}
+f32 ItemCreature::getCurrentMotionCounter() { return mItemAnimator.mCurrentFrame; }
 
 /*
  * --INFO--
@@ -3869,22 +3771,11 @@ f32 ItemCreature::getCurrentMotionCounter()
  */
 char* ItemCreature::getCurrentMotionName()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x3B0(r3)
-	  cmpwi     r0, 0
-	  bge-      .loc_0x14
-	  subi      r3, r13, 0x2FEC
-	  blr
+	if (mItemAnimator.mMotionIdx < 0) {
+		return "NULL";
+	}
 
-	.loc_0x14:
-	  lis       r3, 0x802C
-	  rlwinm    r4,r0,2,0,29
-	  subi      r0, r3, 0xF4
-	  add       r3, r0, r4
-	  lwz       r3, 0x0(r3)
-	  blr
-	*/
+	return PaniItemAnimator::motionLabels[mItemAnimator.mMotionIdx];
 }
 
 /*
@@ -3892,100 +3783,24 @@ char* ItemCreature::getCurrentMotionName()
  * Address:	800F5A34
  * Size:	000048
  */
-void ItemCreature::startMotion(int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr.       r31, r3
-	  addi      r5, r31, 0
-	  beq-      .loc_0x20
-	  addi      r5, r5, 0x2B8
-
-	.loc_0x20:
-	  addi      r3, r1, 0x10
-	  bl        0x29534
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x36C
-	  bl        0x2975C
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
+void ItemCreature::startMotion(int motionID) { mItemAnimator.startMotion(PaniMotionInfo(motionID, this)); }
 
 /*
  * --INFO--
  * Address:	800F5A7C
  * Size:	00004C
  */
-void ItemCreature::finishMotion()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr.       r31, r3
-	  addi      r5, r31, 0
-	  beq-      .loc_0x20
-	  addi      r5, r5, 0x2B8
-
-	.loc_0x20:
-	  addi      r3, r1, 0xC
-	  li        r4, -0x1
-	  bl        0x294E8
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x36C
-	  bl        0x29780
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
+void ItemCreature::finishMotion() { mItemAnimator.finishMotion(PaniMotionInfo(-1, this)); }
 
 /*
  * --INFO--
  * Address:	800F5AC8
  * Size:	000058
  */
-void ItemCreature::startMotion(int, f32)
+void ItemCreature::startMotion(int motionID, f32 frame)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stfd      f31, 0x28(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x24(r1)
-	  mr.       r31, r3
-	  mr        r5, r31
-	  beq-      .loc_0x28
-	  addi      r5, r5, 0x2B8
-
-	.loc_0x28:
-	  addi      r3, r1, 0x14
-	  bl        0x29498
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x36C
-	  bl        0x296C0
-	  stfs      f31, 0x398(r31)
-	  lwz       r0, 0x34(r1)
-	  lfd       f31, 0x28(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mItemAnimator.startMotion(PaniMotionInfo(motionID, this));
+	mItemAnimator.mCurrentFrame = frame;
 }
 
 /*
@@ -3993,36 +3808,10 @@ void ItemCreature::startMotion(int, f32)
  * Address:	800F5B20
  * Size:	00005C
  */
-void ItemCreature::finishMotion(f32)
+void ItemCreature::finishMotion(f32 frame)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x1C(r1)
-	  mr.       r31, r3
-	  mr        r5, r31
-	  beq-      .loc_0x28
-	  addi      r5, r5, 0x2B8
-
-	.loc_0x28:
-	  addi      r3, r1, 0x10
-	  li        r4, -0x1
-	  bl        0x2943C
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x36C
-	  bl        0x296D4
-	  stfs      f31, 0x398(r31)
-	  lwz       r0, 0x2C(r1)
-	  lfd       f31, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mItemAnimator.finishMotion(PaniMotionInfo(-1, this));
+	mItemAnimator.mCurrentFrame = frame;
 }
 
 /*
@@ -4032,6 +3821,7 @@ void ItemCreature::finishMotion(f32)
  */
 void ItemCreature::doKill()
 {
+	itemMgr->kill(this);
 	/*
 	.loc_0x0:
 	  mflr      r0

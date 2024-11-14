@@ -19,6 +19,9 @@
         "__mem.h": "c",
         "db.h": "c",
         "math.h": "c",
-        "dvd.h": "c"
+        "dvd.h": "c",
+        "math_api.h": "c",
+        "types.h": "c",
+        "math_ppc.h": "c"
     }
 }

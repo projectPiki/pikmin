@@ -525,7 +525,7 @@ config.libs = [
             Object(NonMatching, "plugPikiKando/itemMgr.cpp"),
             Object(NonMatching, "plugPikiKando/itemObject.cpp"),
             Object(NonMatching, "plugPikiKando/mizuItem.cpp"),
-            Object(NonMatching, "plugPikiKando/paniItemAnimator.cpp"),
+            Object(Matching, "plugPikiKando/paniItemAnimator.cpp"),
             Object(NonMatching, "plugPikiKando/genNavi.cpp"),
             Object(NonMatching, "plugPikiKando/navi.cpp"),
             Object(NonMatching, "plugPikiKando/naviState.cpp"),

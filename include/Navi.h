@@ -102,7 +102,11 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	// _000-_2B8 = Creature
 	// _2B8-_2BC = PaniAnimKeyListener
 	// _2BC-_2C4 = PelletView
-	u8 _2C4[0x7E4 - 0x2C4]; // _2C4, TODO: work out members
+	u8 _2C4[0x710 - 0x2C4]; // _2C4, TODO: work out members
+	u32 _710;               // _710, unknown
+	u8 _714[0x738 - 0x714]; // _714, TODO: work out members
+	f32 _738;               // _738
+	u8 _73C[0x7E4 - 0x73C]; // _73C, TODO: work out members
 	u8 _7E4;                // _7E4
 	u8 _7E5;                // _7E5
 	u8 _7E6[0xADC - 0x7E6]; // _7E6, TODO: work out members

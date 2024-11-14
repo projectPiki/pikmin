@@ -153,7 +153,10 @@ void Joint::recShowHierarchy()
  * Address:	........
  * Size:	000018
  */
-void Joint::overrideAnim(AnimContext* ctx) { mParentShape->mAnimOverrides[mIndex] = ctx; }
+void Joint::overrideAnim(AnimContext* ctx)
+{
+	// mParentShape->mAnimOverrides[mIndex] = ctx;
+}
 
 /*
  * --INFO--
@@ -3974,7 +3977,7 @@ AnimDck::AnimDck(BaseShape* model, int joints)
 	mAnimInfo  = new AnimDataInfo[mNumJoints];
 
 	for (int i = 0; i < joints; i++) {
-		mAnimInfo = (model->mJoints[i].mParentIndex == -1) ? nullptr : mAnimInfo + model->mJoints[i].mParentIndex;
+		// mAnimInfo = (model->mJoints[i].mParentIndex == -1) ? nullptr : mAnimInfo + model->mJoints[i].mParentIndex;
 	}
 	/*
 	.loc_0x0:
@@ -6414,204 +6417,63 @@ void ShapeDynMaterials::updateContext()
  */
 BaseShape::BaseShape()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r26, 0x10(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0x738C
-	  lis       r3, 0x8022
-	  addi      r26, r3, 0x737C
-	  lis       r3, 0x8023
-	  subi      r5, r3, 0x7CB0
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x7920
-	  stw       r30, 0x0(r29)
-	  li        r31, 0
-	  addi      r4, r5, 0
-	  stw       r26, 0x0(r29)
-	  addi      r3, r29, 0x7C
-	  stw       r31, 0x10(r29)
-	  stw       r31, 0xC(r29)
-	  stw       r31, 0x8(r29)
-	  stw       r5, 0x4(r29)
-	  stw       r0, 0x0(r29)
-	  stw       r30, 0x7C(r29)
-	  stw       r26, 0x7C(r29)
-	  stw       r31, 0x8C(r29)
-	  stw       r31, 0x88(r29)
-	  stw       r31, 0x84(r29)
-	  bl        -0xA514
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x7834
-	  stw       r0, 0x7C(r29)
-	  addi      r3, r29, 0xBC
-	  subi      r4, r13, 0x7CA8
-	  lfs       f0, -0x7D20(r2)
-	  stfs      f0, 0xA8(r29)
-	  stfs      f0, 0xA4(r29)
-	  stfs      f0, 0xA0(r29)
-	  stw       r30, 0xBC(r29)
-	  stw       r26, 0xBC(r29)
-	  stw       r31, 0xCC(r29)
-	  stw       r31, 0xC8(r29)
-	  stw       r31, 0xC4(r29)
-	  bl        -0xA550
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x7864
-	  stw       r0, 0xBC(r29)
-	  lis       r3, 0x8023
-	  li        r27, -0x1
-	  lfs       f0, -0x7D20(r2)
-	  subi      r28, r13, 0x7CA8
-	  li        r4, 0xFF
-	  stfs      f0, 0xDC(r29)
-	  subi      r0, r3, 0x7804
-	  addi      r3, r29, 0xFC
-	  stfs      f0, 0xD8(r29)
-	  stfs      f0, 0xD4(r29)
-	  stw       r31, 0x90(r29)
-	  stw       r31, 0x94(r29)
-	  stw       r27, 0x98(r29)
-	  stw       r31, 0x9C(r29)
-	  stw       r31, 0xCC(r29)
-	  stw       r31, 0xC8(r29)
-	  stw       r31, 0xC4(r29)
-	  stw       r28, 0xC0(r29)
-	  stb       r4, 0xAC(r29)
-	  stb       r4, 0xAD(r29)
-	  stb       r4, 0xAE(r29)
-	  stb       r4, 0xAF(r29)
-	  stw       r31, 0xB0(r29)
-	  stw       r31, 0xB8(r29)
-	  stw       r31, 0xE4(r29)
-	  stw       r30, 0xE8(r29)
-	  stw       r26, 0xE8(r29)
-	  stw       r31, 0xF8(r29)
-	  stw       r31, 0xF4(r29)
-	  stw       r31, 0xF0(r29)
-	  stw       r28, 0xEC(r29)
-	  stw       r0, 0xE8(r29)
-	  bl        0x149A8
-	  addi      r3, r29, 0x108
-	  bl        0x149A0
-	  lfs       f0, -0x7D20(r2)
-	  lis       r30, 0x6E6F
-	  addi      r3, r29, 0xFC
-	  stfs      f0, 0x124(r29)
-	  addi      r4, r30, 0x6E65
-	  stfs      f0, 0x120(r29)
-	  stfs      f0, 0x11C(r29)
-	  bl        0x149E8
-	  addi      r3, r29, 0x108
-	  addi      r4, r30, 0x6E65
-	  bl        0x149DC
-	  stw       r27, 0x118(r29)
-	  li        r30, 0x1
-	  addi      r3, r29, 0x178
-	  stw       r30, 0x114(r29)
-	  lfs       f0, -0x7CF0(r2)
-	  stfs      f0, 0x128(r29)
-	  lfs       f0, -0x7CD0(r13)
-	  stfs      f0, 0x11C(r29)
-	  lfs       f0, -0x7CCC(r13)
-	  stfs      f0, 0x120(r29)
-	  lfs       f0, -0x7CC8(r13)
-	  stfs      f0, 0x124(r29)
-	  stw       r31, 0x12C(r29)
-	  stw       r31, 0x134(r29)
-	  stw       r31, 0x130(r29)
-	  stw       r31, 0x138(r29)
-	  lfs       f0, -0x7D20(r2)
-	  stfs      f0, 0x148(r29)
-	  stfs      f0, 0x144(r29)
-	  stfs      f0, 0x140(r29)
-	  stfs      f0, 0x154(r29)
-	  stfs      f0, 0x150(r29)
-	  stfs      f0, 0x14C(r29)
-	  lfs       f0, -0x7CE8(r13)
-	  stfs      f0, 0x140(r29)
-	  lfs       f0, -0x7CE4(r13)
-	  stfs      f0, 0x144(r29)
-	  lfs       f0, -0x7CE0(r13)
-	  stfs      f0, 0x148(r29)
-	  lfs       f0, -0x7CDC(r13)
-	  stfs      f0, 0x14C(r29)
-	  lfs       f0, -0x7CD8(r13)
-	  stfs      f0, 0x150(r29)
-	  lfs       f0, -0x7CD4(r13)
-	  stfs      f0, 0x154(r29)
-	  bl        0x7080
-	  subi      r0, r13, 0x7C4C
-	  stw       r0, 0x4(r29)
-	  mr        r3, r29
-	  stw       r31, 0x28(r29)
-	  stw       r31, 0x2C(r29)
-	  stw       r31, 0x14(r29)
-	  stw       r31, 0x13C(r29)
-	  stb       r30, 0x2AC(r29)
-	  stw       r31, 0x38(r29)
-	  stw       r31, 0x3C(r29)
-	  stw       r31, 0x40(r29)
-	  stw       r31, 0x44(r29)
-	  stw       r31, 0x48(r29)
-	  stw       r31, 0x4C(r29)
-	  stw       r31, 0x50(r29)
-	  stw       r31, 0x54(r29)
-	  stw       r31, 0x30(r29)
-	  stw       r31, 0x34(r29)
-	  stw       r31, 0x58(r29)
-	  stw       r31, 0x5C(r29)
-	  stw       r31, 0x60(r29)
-	  stw       r31, 0x64(r29)
-	  stw       r31, 0x68(r29)
-	  stw       r31, 0x74(r29)
-	  stw       r31, 0x18(r29)
-	  stw       r31, 0x24(r29)
-	  stw       r31, 0xF8(r29)
-	  stw       r31, 0xF4(r29)
-	  stw       r31, 0xF0(r29)
-	  stw       r28, 0xEC(r29)
-	  stw       r31, 0x8C(r29)
-	  stw       r31, 0x88(r29)
-	  stw       r31, 0x84(r29)
-	  stw       r28, 0x80(r29)
-	  stw       r31, 0x188(r29)
-	  stw       r31, 0x184(r29)
-	  stw       r31, 0x180(r29)
-	  stw       r28, 0x17C(r29)
-	  stw       r31, 0x248(r29)
-	  stw       r31, 0x238(r29)
-	  stw       r31, 0x23C(r29)
-	  stw       r31, 0x244(r29)
-	  stw       r31, 0x26C(r29)
-	  stw       r31, 0x270(r29)
-	  stw       r31, 0x274(r29)
-	  stw       r31, 0x278(r29)
-	  stw       r31, 0x27C(r29)
-	  stw       r31, 0x280(r29)
-	  stw       r31, 0x284(r29)
-	  stw       r31, 0x288(r29)
-	  stw       r31, 0x290(r29)
-	  stw       r31, 0x298(r29)
-	  stw       r31, 0x29C(r29)
-	  stw       r31, 0x2A4(r29)
-	  stw       r31, 0x2A0(r29)
-	  stw       r31, 0x2A8(r29)
-	  stw       r31, 0x170(r29)
-	  stw       r31, 0x174(r29)
-	  stw       r31, 0x168(r29)
-	  stw       r31, 0x16C(r29)
-	  stw       r31, 0x164(r29)
-	  lwz       r0, 0x2C(r1)
-	  lmw       r26, 0x10(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	setName("noname");
+	_28  = 0;
+	_2C  = 0;
+	_14  = 0;
+	_13C = 0;
+	_2AC = 1;
+	_38  = 0;
+	_3C  = 0;
+	_40  = 0;
+	_44  = 0;
+	_48  = 0;
+	_4C  = 0;
+	_50  = 0;
+	_54  = 0;
+
+	_30 = 0;
+	_34 = 0;
+
+	_58 = 0;
+	_5C = 0;
+	_60 = 0;
+	_64 = 0;
+	_68 = 0;
+	_74 = 0;
+
+	_18 = 0;
+	_24 = 0;
+
+	mCollisionInfo.initCore("");
+	mLightGroup.initCore("");
+	mRouteGroup.initCore("");
+
+	_248 = 0;
+	_238 = 0;
+	_23C = 0;
+	_244 = 0;
+
+	_26C = 0;
+	_270 = 0;
+	_274 = 0;
+	_278 = 0;
+	_27C = 0;
+	_280 = 0;
+	_284 = 0;
+	_288 = 0;
+	_290 = 0;
+	_298 = 0;
+	_29C = 0;
+	_2A4 = 0;
+	_2A0 = 0;
+	_2A8 = 0;
+
+	_170 = 0;
+	_174 = 0;
+	_168 = 0;
+	_16C = 0;
+	_164 = 0;
 }
 
 /*

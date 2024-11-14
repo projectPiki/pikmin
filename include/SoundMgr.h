@@ -169,5 +169,6 @@ struct SeSystem {
 };
 
 extern SeSystem* seSystem;
+extern SeMgr* seMgr;
 
 #endif

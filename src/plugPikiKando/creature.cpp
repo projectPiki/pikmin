@@ -209,8 +209,8 @@ Vector3f Creature::getBoundingSphereCentre()
 			return mPosition;
 		}
 
-		Sphere* sphere = mCollInfo->getBoundingSphere();
-		return sphere->mCentre;
+		CollPart* bound = mCollInfo->getBoundingSphere();
+		return bound->mCentre;
 	}
 
 	return getCentre();
@@ -226,12 +226,12 @@ f32 Creature::getBoundingSphereRadius()
 	u32 badCompiler;
 
 	if (mCollInfo && mCollInfo->hasInfo()) {
-		Sphere* sphere = mCollInfo->getBoundingSphere();
+		CollPart* bound = mCollInfo->getBoundingSphere();
 		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_Unk19) && mGrid.aiCulling()) {
-			return 2.0f * sphere->mRadius;
+			return 2.0f * bound->mRadius;
 		}
 
-		return sphere->mRadius;
+		return bound->mRadius;
 	}
 
 	return getCentreSize();
@@ -286,7 +286,7 @@ Vector3f Creature::getCentre()
 			return mPosition;
 		}
 		if (spherePart) {
-			return spherePart->mBoundingSphere.mCentre;
+			return spherePart->mCentre;
 		}
 	}
 
@@ -304,7 +304,7 @@ f32 Creature::getCentreSize()
 	if (mCollInfo && mCollInfo->hasInfo()) {
 		CollPart* spherePart = mCollInfo->getSphere('cent');
 		if (spherePart) {
-			return spherePart->mBoundingSphere.mRadius;
+			return spherePart->mRadius;
 		}
 	}
 	return getSize();

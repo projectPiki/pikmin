@@ -40,7 +40,7 @@ struct BombItem : public ItemCreature {
 	virtual void renderBlast(Graphics&);        // _160
 
 	// _00      = VTBL
-	// _00-_3C8 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
 

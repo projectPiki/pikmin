@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	80116110
  * Size:	0000B0
  */
-void selectRandomly(Choice*, int)
+int selectRandomly(Choice*, int)
 {
 	/*
 	.loc_0x0:

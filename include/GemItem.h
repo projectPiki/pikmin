@@ -38,7 +38,7 @@ struct GemItem : public ItemCreature {
 	void finishPick();
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
 

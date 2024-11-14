@@ -8,6 +8,8 @@
 #include "SlotChangeListner.h"
 #include "stl/stdio.h"
 
+struct Bridge;
+struct BuildingItem;
 struct Pebble;
 struct RockGen;
 
@@ -19,9 +21,9 @@ struct particleGenerator;
  * @brief TODO
  */
 enum ActionResults {
-	ACTOUT_Unk0    = 0,
-	ACTOUT_Unk1    = 1,
-	ACTOUT_Success = 2,
+	ACTOUT_Continue = 0,
+	ACTOUT_Fail     = 1,
+	ACTOUT_Success  = 2,
 };
 
 namespace Reaction {
@@ -107,8 +109,9 @@ struct Action : public Receiver<Piki> {
  */
 struct AndAction : public Action {
 	inline AndAction(Piki* piki) // TODO: probably
-	    : Action(piki, false)
+	    : Action(piki, true)
 	{
+		_14 = nullptr; // this might be an argument in the ctor, who knows
 	}
 
 	virtual ~AndAction() { }      // _44 (weak)
@@ -245,20 +248,31 @@ struct ActAdjust : public Action {
 		virtual void initialise(Action*); // _08
 
 		// _00 = VTBL
-		// TODO: members
+		f32 _04; // _04, same as _14 in ActAdjust
+		int _08; // _08, same as _18 in ActAdjust
 	};
 
 	ActAdjust(Piki*);
 
-	virtual void defaultInitialiser(); // _38 (weak)
-	virtual ~ActAdjust();              // _44 (weak)
-	virtual void init(Creature*);      // _48
-	virtual int exec();                // _4C
-	virtual void cleanup();            // _50
+	virtual ~ActAdjust() { }          // _44 (weak)
+	virtual void defaultInitialiser() // _38 (weak)
+	{
+		_14 = 10.0f;
+		_18 = 8;
+	}
+	virtual void init(Creature*); // _48
+	virtual int exec();           // _4C
+	virtual void cleanup();       // _50
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	f32 _14;      // _14
+	int _18;      // _18
+	Vector3f _1C; // _1C
+	f32 _28;      // _28
+	f32 _2C;      // _2C
+	Vector3f _30; // _30
+	u8 _3C;       // _3C
 };
 
 /**
@@ -282,11 +296,20 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
 
 	// unused/inlined:
 	void decideTarget();
+	void startLost();
+
+	inline Creature* getTarget() { return _24; } // name is a guess
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
 	// _18     = PaniAnimKeyListener
-	u8 _1C[0x2C - 0x1C]; // _14, unknown
+	u8 _1C;        // _1C
+	u8 _1D;        // _1D
+	u8 _1E;        // _1E
+	u8 _1F;        // _1F
+	u32 _20;       // _20, unknown
+	Creature* _24; // _24
+	Creature* _28; // _28
 };
 
 /**
@@ -294,10 +317,19 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
  *
  * @note Size: 0x24.
  */
-struct ActBoMake : public Action {
+struct ActBoMake : public Action, public PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Approach = 0,
+		STATE_Work     = 1,
+	};
+
 	ActBoMake(Piki*);
 
-	virtual ~ActBoMake();                                // _44
+	virtual ~ActBoMake() { }                             // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -310,7 +342,10 @@ struct ActBoMake : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x24 - 0x14]; // _14, unknown
+	// _14     = PaniAnimKeyListener
+	u16 mState;             // _18, see StateID enum
+	Creature* mBuildObject; // _1C
+	u8 _20[0x24 - 0x20];    // _20, unknown
 };
 
 /**
@@ -320,7 +355,7 @@ struct ActBoreListen : public Action {
 	ActBoreListen(Piki*);
 
 	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
-	virtual ~ActBoreListen();                  // _44
+	virtual ~ActBoreListen() { }               // _44
 	virtual void init(Creature*);              // _48
 	virtual int exec();                        // _4C
 	virtual void cleanup();                    // _50
@@ -331,11 +366,13 @@ struct ActBoreListen : public Action {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
-struct ActBoreOneshot : public Action, public PaniAnimKeyListener {
+struct ActBoreOneshot : public Action, virtual PaniAnimKeyListener {
 	ActBoreOneshot(Piki*);
 
-	virtual ~ActBoreOneshot();                           // _44
+	virtual ~ActBoreOneshot() { }                        // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -345,17 +382,20 @@ struct ActBoreOneshot : public Action, public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _14     = PaniAnimKeyListener
-	// TODO: members
+	// _14     = PaniAnimKeyListener ptr
+	bool mIsAnimFinished; // _18
+	                      // _1C-_24 = PaniAnimKeyListener
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
-struct ActBoreRest : public Action, public PaniAnimKeyListener {
+struct ActBoreRest : public Action, virtual PaniAnimKeyListener {
 	ActBoreRest(Piki*);
 
-	virtual ~ActBoreRest();                              // _44
+	virtual ~ActBoreRest() { }                           // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -368,19 +408,37 @@ struct ActBoreRest : public Action, public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _14     = PaniAnimKeyListener
-	// TODO: members
+	// _14     = PaniAnimKeyListener ptr
+	u8 _18;  // _18
+	int _1C; // _1C
+	f32 _20; // _20, unknown
+	u8 _24;  // _24
+	u8 _25;  // _25
+	         // _28-_30 = PaniAnimKeyListener
 };
 
 /**
  * @brief TODO
  */
 struct ActBoreSelect : public Action {
+
+	/**
+	 * @brief TODO
+	 */
+	enum ChildID {
+		CHILD_NULL        = -1,
+		CHILD_Watch       = 0,
+		CHILD_BoreTalk    = 1,
+		CHILD_BoreOneshot = 2,
+		CHILD_BoreRest    = 3,
+		CHILD_COUNT, // 4
+	};
+
 	ActBoreSelect(Piki*);
 
 	virtual void procTargetMsg(Piki*, MsgTarget*); // _18
 	virtual void procAnimMsg(Piki*, MsgAnim*);     // _20
-	virtual ~ActBoreSelect();                      // _44
+	virtual ~ActBoreSelect() { }                   // _44
 	virtual void init(Creature*);                  // _48
 	virtual int exec();                            // _4C
 	virtual void cleanup();                        // _50
@@ -390,16 +448,22 @@ struct ActBoreSelect : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	f32 _14; // _14
+	u8 _18;  // _18
+	u8 _19;  // _19
+	u8 _1A;  // _1A
+	f32 _1C; // _1C
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
-struct ActBoreTalk : public Action, public PaniAnimKeyListener {
+struct ActBoreTalk : public Action, virtual PaniAnimKeyListener {
 	ActBoreTalk(Piki*);
 
-	virtual ~ActBoreTalk();                              // _44
+	virtual ~ActBoreTalk() { }                           // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -409,8 +473,12 @@ struct ActBoreTalk : public Action, public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _14     = PaniAnimKeyListener
-	// TODO: members
+	// _14     = PaniAnimKeyListener ptr
+	int _18;              // _18
+	Creature* mTarget;    // _1C
+	f32 _20;              // _20
+	bool mIsAnimFinished; // _24
+	                      // _28-_30 = PaniAnimKeyListener
 };
 
 /**
@@ -419,20 +487,33 @@ struct ActBoreTalk : public Action, public PaniAnimKeyListener {
  * @note Size: 0x34.
  */
 struct ActBou : public Action {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_GotoLeg = 0,
+		STATE_Climb   = 1,
+	};
+
 	ActBou(Piki*);
 
 	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
-	virtual ~ActBou();                               // _44 (weak)
+	virtual ~ActBou() { }                            // _44 (weak)
 	virtual void init(Creature*);                    // _48
 	virtual int exec();                              // _4C
 	virtual void cleanup();                          // _50
 
-	void gotoLeg();
-	void climb();
+	int gotoLeg();
+	int climb();
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x34 - 0x14]; // _14, unknown
+	u16 mState;               // _14
+	s16 _16;                  // _16
+	Vector3f _18;             // _18
+	Creature* mClimbingStick; // _24
+	Vector3f _28;             // _28
 };
 
 /**
@@ -441,24 +522,41 @@ struct ActBou : public Action {
  * @note Size: 0x34.
  */
 struct ActBreakWall : public Action, public PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 *
+	 * @note Size: 0x34.
+	 */
+	enum StateID {
+		STATE_GotoWall  = 0,
+		STATE_BreakWall = 1,
+	};
+
 	ActBreakWall(Piki*);
 
 	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
-	virtual ~ActBreakWall();                             // _44
+	virtual ~ActBreakWall() { }                          // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
-	void gotoWall();
+	int gotoWall();
 	void initBreakWall();
 	void startWorkMotion();
-	void breakWall();
+	int breakWall();
 
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x34 - 0x18]; // _18, unknown
+	BuildingItem* mWall; // _18
+	u16 mState;          // _1C
+	Vector3f _20;        // _20
+	u32 _2C;             // _2C, unknown, same as gameflow._300
+	u8 _30;              // _30
+	u8 _31;              // _31
+	u8 _32;              // _32
 };
 
 /**
@@ -466,26 +564,38 @@ struct ActBreakWall : public Action, public PaniAnimKeyListener {
  *
  * @note Size: 0x58.
  */
-struct ActBridge : public Action, public PaniAnimKeyListener {
+struct ActBridge : public Action, virtual PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Approach = 0,
+		STATE_Unk1     = 1, // one of these is detour
+		STATE_Go       = 2,
+		STATE_Unk3     = 3, // and one is climb. both unused
+		STATE_Work     = 4,
+	};
+
 	ActBridge(Piki*);
 
 	virtual void procWallMsg(Piki*, MsgWall*);           // _28
 	virtual void dump();                                 // _3C
-	virtual ~ActBridge();                                // _44
+	virtual ~ActBridge() { }                             // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
-	void newExeApproach();
+	int newExeApproach();
 	void newInitGo();
-	void newExeGo();
+	int newExeGo();
 	void newInitWork();
-	void newExeWork();
+	int newExeWork();
 
 	// unused/inlined:
-	void collideBridgeSurface();
-	void collideBridgeBlocker();
+	bool collideBridgeSurface();
+	bool collideBridgeBlocker();
 	void initDetour();
 	void exeDetour();
 	void initClimb();
@@ -501,8 +611,22 @@ struct ActBridge : public Action, public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _14     = PaniAnimKeyListener
-	u8 _18[0x58 - 0x18]; // _18, unknown
+	// _14     = PaniAnimKeyListener ptr
+	Bridge* mBridge; // _18, unknown
+	u16 mState;      // _1C
+	u32 _20;         // _20, unknown - same as _300 in gameflow
+	u32 _24;         // _24
+	u16 _28;         // _28
+	u16 _2A;         // _2A
+	f32 _2C;         // _2C
+	s16 mStageIdx;   // _30
+	u8 _32;          // _32
+	u8 _33;          // _33
+	Vector3f _34;    // _34
+	Vector3f _40;    // _40
+	u8 _4C;          // _4C
+	u8 _4D;          // _4D
+	                 // _50-_58 = PaniAnimKeyListener
 };
 
 /**
@@ -539,7 +663,7 @@ struct ActChase : public Action {
  *
  * @note Size: 0x88.
  */
-struct ActCrowd : public Action, public SlotChangeListner {
+struct ActCrowd : public Action, virtual SlotChangeListner {
 	ActCrowd(Piki*);
 
 	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
@@ -565,8 +689,9 @@ struct ActCrowd : public Action, public SlotChangeListner {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _14     = SlotChangeListner
-	u8 _18[0x88 - 0x18]; // _18, unknown
+	// _14     = SlotChangeListner ptr
+	u8 _18[0x80 - 0x18]; // _18, unknown
+	                     // _80-_88 = SlotChangeListner
 };
 
 /**
@@ -741,7 +866,7 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
  *
  * @note Size: 0x50.
  */
-struct ActFree : public Action, public PaniAnimKeyListener {
+struct ActFree : public Action, virtual PaniAnimKeyListener {
 	ActFree(Piki*);
 
 	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
@@ -757,18 +882,32 @@ struct ActFree : public Action, public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _14     = PaniAnimKeyListener
-	u8 _18[0x50 - 0x18]; // _18
+	// _14     = PaniAnimKeyListener ptr
+	u8 _18[0x48 - 0x18]; // _18
+	                     // _48-_50 = PaniAnimKeyListener
 };
 
 /**
  * @brief TODO
  */
 struct ActFreeSelect : public Action {
+
+	/**
+	 * @brief TODO
+	 */
+	enum ChildID {
+		CHILD_NULL        = -1,
+		CHILD_Watch       = 0,
+		CHILD_BoreTalk    = 1,
+		CHILD_BoreOneshot = 2,
+		CHILD_BoreRest    = 3,
+		CHILD_COUNT, // 4
+	};
+
 	ActFreeSelect(Piki*);
 
 	virtual void procTargetMsg(Piki*, MsgTarget*); // _18
-	virtual ~ActFreeSelect();                      // _44
+	virtual ~ActFreeSelect() { }                   // _44
 	virtual void init(Creature*);                  // _48
 	virtual int exec();                            // _4C
 	virtual void cleanup();                        // _50
@@ -778,7 +917,11 @@ struct ActFreeSelect : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	f32 _14; // _14, timer?
+	u8 _18;  // _18
+	u8 _19;  // _19
+	u8 _1A;  // _1A
+	f32 _1C; // _1C
 };
 
 /**
@@ -841,6 +984,8 @@ struct ActGuard : public Action {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 	ActJumpAttack(Piki*);
@@ -861,10 +1006,18 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 	void getAttackPos();
 	void getAttackSize();
 
+	inline Creature* getTarget() { return _24; } // name is a guess
+
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	int _18;             // _18
+	u8 _1C[0x20 - 0x1C]; // _1C, unknown
+	int _20;             // _20
+	Creature* _24;       // _24
+	CollPart* _28;       // _28
+	u8 _2C;              // _2C
+	u8 _2D;              // _2D
 };
 
 /**
@@ -872,21 +1025,32 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
  *
  * @note Size: 0x38.
  */
-struct ActKinoko : public Action, public PaniAnimKeyListener {
+struct ActKinoko : public Action, virtual PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Boid   = 0,
+		STATE_Attack = 1,
+		STATE_Jump   = 2,
+		STATE_Stick  = 3,
+	};
+
 	ActKinoko(Piki*);
 
-	virtual ~ActKinoko();                                // _44
+	virtual ~ActKinoko() { }                             // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
-	void exeStick();
-	void exeJump();
+	int exeStick();
+	int exeJump();
 	void initAttack();
-	void exeAttack();
+	int exeAttack();
 	void initBoid();
-	void exeBoid();
+	int exeBoid();
 
 	// unused/inlined:
 	void initStick();
@@ -894,8 +1058,12 @@ struct ActKinoko : public Action, public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _14     = PaniAnimKeyListener
-	u8 _18[0x38 - 0x18]; // _18, unknown
+	// _14     = PaniAnimKeyListener ptr
+	Creature* _18; // _18, unknown
+	int mState;    // _1C, unknown
+	u8 _20[0x4];   // _20, unknown
+	Vector3f _24;  // _24
+	               // _30-_38 = PaniAnimKeyListener
 };
 
 /**
@@ -903,7 +1071,7 @@ struct ActKinoko : public Action, public PaniAnimKeyListener {
  *
  * @note Size: 0x30.
  */
-struct ActMine : public Action, public PaniAnimKeyListener {
+struct ActMine : public Action, virtual PaniAnimKeyListener {
 	ActMine(Piki*);
 
 	virtual ~ActMine();                                  // _44 (weak)
@@ -923,8 +1091,9 @@ struct ActMine : public Action, public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _14     = PaniAnimKeyListener
-	u8 _18[0x30 - 0x18]; // _18, unknown
+	// _14     = PaniAnimKeyListener ptr
+	u8 _18[0x28 - 0x18]; // _18, unknown
+	                     // _28-_30 = PaniAnimKeyListener
 };
 
 /**
@@ -944,7 +1113,7 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 
 	ActPick(Piki*);
 
-	virtual ~ActPick();                                  // _44 (weak)
+	virtual ~ActPick() { }                               // _44 (weak)
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -953,7 +1122,8 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	Creature* mObject; // _18, thing to be picked up
+	u8 _1C;            // _1C
 };
 
 /**
@@ -1042,7 +1212,7 @@ struct ActPulloutCreature : public Action, public PaniAnimKeyListener {
  *
  * @note Size: 0x50.
  */
-struct ActPush : public Action, public PaniAnimKeyListener {
+struct ActPush : public Action, virtual PaniAnimKeyListener {
 	ActPush(Piki*);
 
 	virtual ~ActPush();                                  // _44 (weak)
@@ -1062,7 +1232,8 @@ struct ActPush : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x50 - 0x18]; // _18, unknown
+	u8 _18[0x48 - 0x18]; // _18, unknown
+	                     // _48-_50 = PaniAnimKeyListener
 };
 
 /**
@@ -1082,14 +1253,14 @@ struct ActPut : public Action {
 
 	ActPut(Piki*);
 
-	virtual ~ActPut();            // _44 (weak)
+	virtual ~ActPut() { }         // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// TODO: members
+	f32 _14; // _14
 };
 
 /**
@@ -1097,7 +1268,7 @@ struct ActPut : public Action {
  *
  * @note Size: 0x30.
  */
-struct ActPutBomb : public Action, public PaniAnimKeyListener {
+struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
 	ActPutBomb(Piki*);
 
 	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
@@ -1125,7 +1296,8 @@ struct ActPutBomb : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x30 - 0x18]; // _18, unknown
+	u8 _18[0x28 - 0x18]; // _18, unknown
+	                     // _28-_30 = PaniAnimKeyListener
 };
 
 /**
@@ -1194,7 +1366,7 @@ struct ActRandomBoid : public Action {
  *
  * @note Size: 0x3C.
  */
-struct ActRescue : public Action, public PaniAnimKeyListener {
+struct ActRescue : public Action, virtual PaniAnimKeyListener {
 	ActRescue(Piki*);
 
 	virtual ~ActRescue();                                // _44
@@ -1214,8 +1386,9 @@ struct ActRescue : public Action, public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _14     = PaniAnimKeyListener
-	u8 _18[0x3C - 0x18]; // _18, unknown
+	// _14     = PaniAnimKeyListener ptr
+	u8 _18[0x34 - 0x18]; // _18, unknown
+	                     // _34-_3C = PaniAnimKeyListener
 };
 
 /**
@@ -1323,7 +1496,7 @@ struct ActStone : public Action, public PaniAnimKeyListener {
  *
  * @note Size: 0xC0.
  */
-struct ActTransport : public Action, public PaniAnimKeyListener {
+struct ActTransport : public Action, virtual PaniAnimKeyListener {
 	ActTransport(Piki*);
 
 	virtual void draw(Graphics&);                        // _40
@@ -1362,8 +1535,20 @@ struct ActTransport : public Action, public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	// _14     = PaniAnimKeyListener
-	u8 _18[0xC0 - 0x18]; // _18, unknown
+	// _14     = PaniAnimKeyListener ptr
+	Pellet* mPellet;     // _18
+	u8 _1C[0x4];         // _1C, unknown
+	OdoMeter mOdometer;  // _20
+	Vector3f _30;        // _30
+	u8 _3C[0x4C - 0x3C]; // _3C, unknown
+	Vector3f _4C[4];     // _4C, probably CR spline points
+	Vector3f _7C;        // _7C
+	u8 _88[0x8];         // _88, unknown
+	Vector3f _90;        // _90
+	u8 _9C[0xA8 - 0x9C]; // _9C, unknown
+	int _A8;             // _A8
+	u8 _AC[0xB8 - 0xAC]; // _AC, unknown
+	                     // _B8-_C0 = PaniAnimKeyListener
 };
 
 /**
@@ -1393,7 +1578,7 @@ struct ActWatch : public Action {
 		// TODO: members
 	};
 
-	ActWatch(Piki*);
+	ActWatch(Piki* piki);
 
 	virtual ~ActWatch();          // _44 (weak)
 	virtual void init(Creature*); // _48

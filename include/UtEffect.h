@@ -257,6 +257,8 @@ struct UfoSuckEffect : public WhistleTemplate {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PermanentEffect {
 	PermanentEffect();
@@ -269,6 +271,7 @@ struct PermanentEffect {
 	void kill();
 
 	// TODO: members
+	u8 _00[0x10]; // _00, unknown
 };
 
 /**
@@ -278,8 +281,9 @@ struct UtEffectMgr {
 	UtEffectMgr();
 
 	void registerEffect(int, KEffect*);
-	void cast(int, EffectParm&);
 	void kill(int);
+
+	static void cast(int, EffectParm&);
 
 	// TODO: members
 };

@@ -184,7 +184,8 @@ struct MsgWall : public Msg {
 	}
 
 	// _00-_04 = Msg
-	// TODO: members
+	Vector3f* _04; // _04
+	               // TODO: members
 };
 
 #endif

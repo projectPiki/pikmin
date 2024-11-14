@@ -7,6 +7,8 @@
 
 struct InteractBuild;
 
+/////////// Climbing Stick Item ///////////
+
 /*
  * @brief TODO
  */
@@ -35,9 +37,11 @@ struct KusaItem : public ItemCreature {
 	virtual void refresh(Graphics&);          // _EC
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
+
+/////////// Stick Base Item (CUT/CRASHES) ///////////
 
 /*
  * @brief TODO
@@ -57,7 +61,7 @@ struct BoBaseItem : public ItemCreature {
 	void interactBuild(InteractBuild&);
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
 

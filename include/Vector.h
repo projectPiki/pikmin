@@ -24,6 +24,7 @@ struct Vector3f {
 	}
 
 	inline Vector3f operator*(const Vector3f& other) const { return Vector3f(x * other.x, y * other.y, z * other.z); }
+	inline Vector3f operator*(f32 scale) const { return Vector3f(x * scale, y * scale, z * scale); }
 	void rotate(struct Matrix4f&);
 	void rotateTo(Matrix4f&, Vector3f&);
 	void multMatrix(Matrix4f&);
@@ -50,6 +51,14 @@ struct Vector3f {
 		return result.length();
 	}
 
+	inline f32 distanceFrom(Vector3f& from)
+	{
+		x = x - from.x;
+		y = y - from.y;
+		z = z - from.z;
+		return length();
+	}
+
 	inline void sub2(Vector3f& a, Vector3f& b)
 	{
 		f32 newZ = a.getZ() - b.getZ();
@@ -72,25 +81,44 @@ struct Vector3f {
 		this->z *= other;
 	}
 
+	inline void operator+=(Vector3f& other)
+	{
+		this->x += other.x;
+		this->y += other.y;
+		this->z += other.z;
+	}
+
 	// NB: do NOT make an operator= definition, needs to use the default.
 
 	inline void set(const f32 val) { x = y = z = val; }
 
-	void div(f32); // weak
+	void div(f32 divisor) // weak
+	{
+		x /= divisor;
+		y /= divisor;
+		z /= divisor;
+	}
+
+	inline f32 dot(Vector3f& other) const { return x * other.x + y * other.y + z * other.z; }
 
 	inline f32 squaredLength() const { return x * x + y * y + z * z; }
-	inline f32 length() const { return sqrtf(squaredLength()); }
+	inline f32 squaredLength2D() const { return x * x + z * z; }
+	inline f32 length() const { return std::sqrtf(squaredLength()); }
+	inline f32 length2D() const { return std::sqrtf(squaredLength2D()); }
 
 	// seems good according to InteractBomb::actPiki
-	inline void normalise()
+	inline f32 normalise()
 	{
-		f32 norm = std::sqrtf(x * x + y * y + z * z);
+		f32 norm = length();
 		if (norm != 0.0f) {
 			x /= norm;
 			y /= norm;
 			z /= norm;
 		}
+		return norm;
 	}
+
+	inline f32 angSep(Vector3f& b) { return atan2f(b.x - x, b.z - z); }
 
 	const f32 getX() const { return x; }
 	const f32 getY() const { return y; }

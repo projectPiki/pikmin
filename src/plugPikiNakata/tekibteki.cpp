@@ -270,9 +270,9 @@ void BTeki::doRestore(CreatureInf*)
  */
 TekiShapeObject::TekiShapeObject(Shape* shape)
 {
-	mShape               = shape;
-	mShape->mFrameCacher = nullptr;
-	mAnimMgr             = new AnimMgr(shape, nullptr, 0x8000, nullptr);
+	mShape      = shape;
+	mShape->_24 = 0;
+	mAnimMgr    = new AnimMgr(shape, nullptr, 0x8000, nullptr);
 	mShape->overrideAnim(0, &mAnimContext);
 }
 

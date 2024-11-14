@@ -45,4 +45,6 @@ struct NaviMgr : public MonoObjectMgr {
 	// TODO: members
 };
 
+extern NaviMgr* naviMgr;
+
 #endif

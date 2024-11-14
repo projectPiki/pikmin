@@ -9,9 +9,12 @@ struct Vector3f;
 
 /**
  * @brief TODO
+ *
+ * @note Does NOT have an explicit ctor.
  */
 struct Choice {
-	// TODO: members
+	int mValue;  // _00
+	f32 mChance; // _04
 };
 
 /**
@@ -49,7 +52,7 @@ struct LoopChecker {
 };
 
 // utility functions
-void selectRandomly(Choice*, int);
+int selectRandomly(Choice* choiceList, int numChoices);
 void drawBatten(Graphics&, Vector3f&, f32);
 void drawBattenPole(Graphics&, Vector3f&, f32, char*);
 void drawArrow(Graphics&, Vector3f&, Vector3f&, f32);

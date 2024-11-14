@@ -14,7 +14,11 @@ struct PelletShapeObject;
 struct ItemShapeObject {
 	ItemShapeObject(Shape*, char*, char*);
 
-	// TODO: members
+	// TODO: members -  this is a guess based on PelletShapeObject
+	// + what gets accessed out of 0x3C0 in ItemCreature
+	Shape* mShape;     // _00
+	AnimMgr* mAnimMgr; // _04
+	AnimContext _08;   // _08
 };
 
 /**
@@ -44,7 +48,12 @@ struct ItemCreature : public AICreature {
 
 	// _00      = VTBL
 	// _00-_304 = AICreature?
-	// TODO: members
+	f32 mMotionSpeed;                  // _304
+	Shape* mItemShape;                 // _308
+	SearchData mItemSearchData[8];     // _30C
+	PaniItemAnimator mItemAnimator;    // _36C
+	ItemShapeObject* mItemShapeObject; // _3C0
+	u8 _3C4;                           // _3C4
 };
 
 /**
@@ -87,8 +96,9 @@ struct ItemMgr : public PolyObjectMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_1C = PolyObjectMgr?
-	// TODO: members
+	// _00-_28 = PolyObjectMgr?
+	u8 _28[0x90 - sizeof(PolyObjectMgr)]; // _28, unknown - fix offset when size of PolyObjectMgr is known
+	PaniMotionTable* mMotionTable;        // _90
 };
 
 /**
@@ -108,5 +118,7 @@ struct MeltingPotMgr : public CreatureNodeMgr {
 	// _00-_28 = CreatureNodeMgr?
 	// TODO: members
 };
+
+extern ItemMgr* itemMgr;
 
 #endif

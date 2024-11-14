@@ -4,6 +4,12 @@
 #include "types.h"
 #include "ItemMgr.h"
 #include "ObjectMgr.h"
+#include "Plane.h"
+#include "UtEffect.h"
+
+struct DynBuildShape;
+struct ShapeDynMaterials;
+struct WayPoint;
 
 /**
  * @brief TODO
@@ -14,15 +20,33 @@ struct WorkObject : public ItemCreature {
 	virtual bool isVisible();         // _74
 	virtual bool isAlive();           // _88
 	virtual void doKill();            // _10C
-	virtual void finalSetup();        // _158
+	virtual void finalSetup() { }     // _158
 	virtual bool isBridge();          // _15C
 	virtual bool isHinderRock();      // _160
 	virtual bool isFinished();        // _164
 	virtual bool workable(Vector3f&); // _168
 
 	// _00      = VTBL
-	// _00-_??? = ItemCreature?
-	// TODO: members
+	// _00-_3C8 = ItemCreature
+};
+
+/**
+ * @brief TODO
+ */
+struct WorkObjectNode : public CoreNode {
+	WorkObjectNode()
+	    : CoreNode("wo")
+	{
+	}
+
+	WorkObjectNode(WorkObject* object)
+	    : mObject(object)
+	{
+	}
+
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	WorkObject* mObject; // _14
 };
 
 /**
@@ -41,7 +65,7 @@ struct WorkObjectMgr : public ObjectMgr {
 
 	void finalSetup();
 	void loadShapes();
-	void birth(int, int);
+	WorkObject* birth(int, int);
 
 	// unused/inlined:
 	void getNameIndex(char*);
@@ -52,22 +76,16 @@ struct WorkObjectMgr : public ObjectMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_28 = ObjectMgr?
-	// TODO: members
+	// _00-_28 = ObjectMgr
+	WorkObjectNode mRootNode; // _28
+	Shape** mItemShapes;      // _40, array of 5 shapes
+	u8* _44;                  // _44, array of 5 bytes/bools
 };
 
 /**
  * @brief TODO
- */
-struct WorkObjectNode : public CoreNode {
-
-	// _00     = VTBL
-	// _00-_14 = CoreNode
-	// TODO: members
-};
-
-/**
- * @brief TODO
+ *
+ * @note Size: 0x428.
  */
 struct Bridge : public WorkObject {
 	Bridge(Shape*, bool);
@@ -86,29 +104,50 @@ struct Bridge : public WorkObject {
 	virtual bool isFinished();                // _164
 	virtual bool workable(Vector3f&);         // _168
 
-	void getFirstUnfinishedStage();
-	void getFirstFinishedStage();
+	int getFirstUnfinishedStage();
+	int getFirstFinishedStage();
 	void getJointIndex(int);
 	bool isStageFinished(int);
 	void flatten();
 	void setStageFinished(int, bool);
-	void getStagePos(int);
-	void getStageZ(int);
+	Vector3f getStagePos(int);
+	f32 getStageZ(int);
 	void getBridgePos(Vector3f&, f32&, f32&);
-	void getBridgeZVec();
-	void getBridgeXVec();
-	void getStartPos();
+	Vector3f getBridgeZVec();
+	Vector3f getBridgeXVec();
+	Vector3f getStartPos();
 	f32 getStageDepth();
 	f32 getStageWidth();
 	void startStageFinished(int, bool);
 
 	// _00      = VTBL
-	// _00-_??? = WorkObject?
-	// TODO: members
+	// _00-_3C8 = WorkObject
+	bool _3C8;                  // _3C8
+	s16 _3CA;                   // _3CA
+	u8 _3CC;                    // _3CC
+	u32* _3D0;                  // _3D0, unknown - array of something
+	u8 _3D4[0x4];               // _3D4, unknown
+	PermanentEffect _3D8;       // _3D8
+	PermanentEffect _3E8;       // _3E8
+	WayPoint* _3F8;             // _3F8
+	WayPoint* _3FC;             // _3FC
+	u8 _400;                    // _400
+	u8 _401[0x404 - 0x401];     // _401, unknown
+	int _404;                   // _404
+	DynBuildShape* mBuildShape; // _408
+	Shape* _40C;                // _40C
+	CollPart* _410;             // _410
+	ShapeDynMaterials* _414;    // _414, unknown
+	u32 _418;                   // _418, unknown
+	u32 _41C;                   // _41C, unknown
+	u32 _420;                   // _420, unknown
+	u8 _424;                    // _424
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x478.
  */
 struct HinderRock : public WorkObject {
 	HinderRock(Shape*);
@@ -138,8 +177,19 @@ struct HinderRock : public WorkObject {
 	void getTangentPos(f32);
 
 	// _00      = VTBL
-	// _00-_??? = WorkObject?
-	// TODO: members
+	// _00-_3C8 = WorkObject
+	u16 _3C8;                   // _3C8
+	Plane _3CC[4];              // _3CC
+	Vector3f _40C;              // _40C
+	u8 _418[0x438 - 0x418];     // _418, unknown
+	DynBuildShape* mBuildShape; // _434
+	Shape* _438;                // _438
+	u8 _43C[0x454 - 0x43C];     // _43C, unknown
+	u32 _448;                   // _448, unknown
+	u32 _44C;                   // _44C, unknown
+	u32 _450;                   // _450, unknown
+	Vector3f _454;              // _454
+	Vector3f _460[2];           // _460
 };
 
 #endif

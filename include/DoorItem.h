@@ -38,7 +38,7 @@ struct DoorItem : public ItemCreature {
 	void becomeGate();
 
 	// _00      = VTBL
-	// _00-_??? = ItemCreature
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
 

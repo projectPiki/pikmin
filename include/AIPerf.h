@@ -44,6 +44,8 @@ struct AIPerf {
 
 	static int useGrid;
 	static bool iteratorCull;
+	static int optLevel;
+	static bool bridgeFast;
 
 	// TODO: members
 };

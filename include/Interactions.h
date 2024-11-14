@@ -124,14 +124,20 @@ struct InteractBubble : public Interaction {
  * @brief TODO
  */
 struct InteractBuild : public Interaction {
-	inline InteractBuild(); // TODO: probably
+	inline InteractBuild(Creature* owner)
+	    : Interaction(owner)
+	{
+		_0C = 0;
+		_10 = 1.0f;
+	}
 
 	virtual bool actBridge(Bridge*);     // _24
 	virtual bool actItem(ItemCreature*); // _28
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	u32 _0C; // _0C, unknown
+	f32 _10; // _10
 };
 
 /**
@@ -239,7 +245,10 @@ struct InteractGeyzer : public Interaction {
  * @brief TODO
  */
 struct InteractGrab : public Interaction {
-	inline InteractGrab(); // TODO: probably
+	inline InteractGrab(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actCommon(Creature*); // _08
 
@@ -399,7 +408,10 @@ struct InteractSwallow : public Interaction {
  * @brief TODO
  */
 struct InteractTalk : public Interaction {
-	inline InteractTalk(); // TODO: probably
+	inline InteractTalk(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 

@@ -8,6 +8,8 @@ struct Creature;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct SearchData {
 	SearchData();

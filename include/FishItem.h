@@ -26,7 +26,7 @@ struct FishGenerator : public ItemCreature {
 	void moveFish(Fish*);
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
 

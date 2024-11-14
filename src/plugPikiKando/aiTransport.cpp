@@ -518,74 +518,11 @@ void ActTransport::calcNumStickers()
  * Size:	0000F4
  */
 ActTransport::ActTransport(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
+    , mPellet(nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r3, 0x8(r1)
-	  beq-      .loc_0x34
-	  lwz       r4, 0x8(r1)
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x246C
-	  addi      r3, r4, 0xB8
-	  stw       r3, 0x14(r4)
-	  stw       r0, 0xB8(r4)
-
-	.loc_0x34:
-	  lwz       r3, 0x8(r1)
-	  addi      r4, r5, 0
-	  li        r5, 0x1
-	  bl        0x14BA0
-	  lwz       r31, 0x8(r1)
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x5F84
-	  stw       r3, 0x0(r31)
-	  addi      r6, r3, 0x68
-	  addi      r4, r31, 0xB8
-	  lwz       r5, 0x14(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0x20
-	  stw       r6, 0x0(r5)
-	  lwz       r5, 0x14(r31)
-	  sub       r4, r4, r5
-	  stw       r4, 0x4(r5)
-	  stw       r0, 0x18(r31)
-	  bl        0x1E598
-	  lfs       f0, -0x7018(r2)
-	  lis       r3, 0x8003
-	  addi      r4, r3, 0x5B24
-	  stfs      f0, 0x38(r31)
-	  addi      r3, r31, 0x4C
-	  li        r5, 0
-	  stfs      f0, 0x34(r31)
-	  li        r6, 0xC
-	  li        r7, 0x4
-	  stfs      f0, 0x30(r31)
-	  bl        0x1657D8
-	  lfs       f0, -0x7018(r2)
-	  lis       r3, 0x802B
-	  addi      r4, r3, 0x5EC0
-	  stfs      f0, 0x84(r31)
-	  li        r0, -0x1
-	  addi      r3, r31, 0
-	  stfs      f0, 0x80(r31)
-	  stfs      f0, 0x7C(r31)
-	  stfs      f0, 0x98(r31)
-	  stfs      f0, 0x94(r31)
-	  stfs      f0, 0x90(r31)
-	  stw       r4, 0x10(r31)
-	  stw       r0, 0xA8(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mName = "Transport";
+	_A8   = -1;
 }
 
 /*

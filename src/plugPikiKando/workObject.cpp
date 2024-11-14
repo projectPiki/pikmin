@@ -2,6 +2,8 @@
 #include "Generator.h"
 #include "Interactions.h"
 #include "DynColl.h"
+#include "SoundMgr.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -28,16 +30,7 @@ static void _Print(char*, ...)
  * Address:	8009B104
  * Size:	000010
  */
-void HinderRock::beginPush()
-{
-	/*
-	.loc_0x0:
-	  lhz       r4, 0x3C8(r3)
-	  addi      r0, r4, 0x1
-	  sth       r0, 0x3C8(r3)
-	  blr
-	*/
-}
+void HinderRock::beginPush() { _3C8++; }
 
 /*
  * --INFO--
@@ -46,15 +39,9 @@ void HinderRock::beginPush()
  */
 void HinderRock::endPush()
 {
-	/*
-	.loc_0x0:
-	  lhz       r4, 0x3C8(r3)
-	  cmplwi    r4, 0
-	  beqlr-
-	  subi      r0, r4, 0x1
-	  sth       r0, 0x3C8(r3)
-	  blr
-	*/
+	if (_3C8) {
+		_3C8--;
+	}
 }
 
 /*
@@ -64,6 +51,7 @@ void HinderRock::endPush()
  */
 void WorkObjectMgr::finalSetup()
 {
+	TRAVERSELOOP(this, idx) { static_cast<WorkObject*>(getCreatureCheck(idx))->finalSetup(); }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -152,20 +140,15 @@ void WorkObjectMgr::finalSetup()
 
 /*
  * --INFO--
- * Address:	8009B238
- * Size:	000004
- */
-void WorkObject::finalSetup() { }
-
-/*
- * --INFO--
  * Address:	........
  * Size:	00008C
  */
 WorkObject::WorkObject()
-    : ItemCreature(0, nullptr, nullptr)
+    : ItemCreature(OBJTYPE_WorkObject, nullptr, nullptr)
 {
-	// UNUSED FUNCTION
+	mObjType   = OBJTYPE_WorkObject;
+	mSeContext = new SeContext();
+	mSeContext->setContext(this, 4);
 }
 
 /*
@@ -173,21 +156,7 @@ WorkObject::WorkObject()
  * Address:	8009B23C
  * Size:	000024
  */
-void WorkObject::doKill()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r3, 0x1E0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x3E198
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void WorkObject::doKill() { mLifeGauge.countOff(); }
 
 /*
  * --INFO--
@@ -236,77 +205,12 @@ void WorkObjectMgr::getShapeName(int)
  */
 WorkObjectMgr::WorkObjectMgr()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  subi      r4, r13, 0x555C
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  stw       r3, 0x8(r1)
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x2374
-	  lwz       r30, 0x8(r1)
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0x8
-	  stw       r31, 0x4(r30)
-	  bl        -0x662E0
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x8(r30)
-	  addi      r3, r30, 0x8
-	  subi      r4, r13, 0x555C
-	  bl        -0x5AB74
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4F80
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x18
-	  lis       r3, 0x802B
-	  stw       r0, 0x8(r30)
-	  addi      r4, r3, 0x1864
-	  lis       r3, 0x8022
-	  stw       r4, 0x0(r30)
-	  addi      r0, r4, 0x18
-	  lis       r4, 0x8022
-	  stw       r0, 0x8(r30)
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x802B
-	  stw       r0, 0x28(r30)
-	  addi      r0, r4, 0x737C
-	  subi      r4, r13, 0x5554
-	  stw       r0, 0x28(r30)
-	  addi      r0, r3, 0x1900
-	  li        r3, 0x14
-	  stw       r31, 0x38(r30)
-	  stw       r31, 0x34(r30)
-	  stw       r31, 0x30(r30)
-	  stw       r4, 0x2C(r30)
-	  stw       r0, 0x28(r30)
-	  bl        -0x54314
-	  stw       r3, 0x40(r30)
-	  li        r3, 0x5
-	  bl        -0x54320
-	  stw       r3, 0x44(r30)
-	  mr        r3, r30
-	  lwz       r4, 0x44(r30)
-	  stb       r31, 0x0(r4)
-	  lwz       r4, 0x44(r30)
-	  stb       r31, 0x1(r4)
-	  lwz       r4, 0x44(r30)
-	  stb       r31, 0x2(r4)
-	  lwz       r4, 0x44(r30)
-	  stb       r31, 0x3(r4)
-	  lwz       r4, 0x44(r30)
-	  stb       r31, 0x4(r4)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mItemShapes = new Shape*[5];
+	_44         = new u8[5];
+
+	for (int i = 0; i < 5; i++) {
+		_44[i] = 0;
+	}
 }
 
 /*
@@ -379,100 +283,30 @@ void WorkObjectMgr::addUseList(int)
  * Address:	8009B458
  * Size:	00012C
  */
-void WorkObjectMgr::birth(int, int)
+WorkObject* WorkObjectMgr::birth(int wObjType, int p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r4, 0x1
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r5,2,0,29
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r31, r3, 0
-	  addi      r27, r5, 0
-	  li        r29, 0
-	  lwz       r3, 0x40(r3)
-	  lwzx      r28, r3, r0
-	  beq-      .loc_0x88
-	  bge-      .loc_0xB0
-	  cmpwi     r4, 0
-	  bge-      .loc_0x40
-	  b         .loc_0xB0
+	WorkObject* object = nullptr;
+	Shape* shape       = mItemShapes[p2];
 
-	.loc_0x40:
-	  li        r3, 0x428
-	  bl        -0x54498
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x60
-	  addi      r4, r28, 0
-	  li        r5, 0x1
-	  bl        0x2268
+	switch (wObjType) {
+	case 0:
+		object                             = new Bridge(shape, true);
+		static_cast<Bridge*>(object)->_400 = p2;
+		if (p2 == 4) {
+			object->mGrid._14 = 3;
+		} else {
+			object->mGrid._14 = 1;
+		}
+		break;
+	case 1:
+		object            = new HinderRock(shape);
+		object->mGrid._14 = 1;
+		break;
+	}
 
-	.loc_0x60:
-	  cmpwi     r27, 0x4
-	  stb       r27, 0x400(r30)
-	  mr        r29, r30
-	  bne-      .loc_0x7C
-	  li        r0, 0x3
-	  sth       r0, 0x54(r30)
-	  b         .loc_0xB0
-
-	.loc_0x7C:
-	  li        r0, 0x1
-	  sth       r0, 0x54(r30)
-	  b         .loc_0xB0
-
-	.loc_0x88:
-	  li        r3, 0x478
-	  bl        -0x544E0
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xA4
-	  mr        r4, r28
-	  bl        0xA24
-
-	.loc_0xA4:
-	  li        r0, 0x1
-	  sth       r0, 0x54(r30)
-	  mr        r29, r30
-
-	.loc_0xB0:
-	  li        r3, 0x18
-	  bl        -0x54508
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x108
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x0(r30)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x0(r30)
-	  li        r0, 0
-	  lis       r4, 0x802B
-	  stw       r0, 0x10(r30)
-	  addi      r4, r4, 0x1024
-	  stw       r0, 0xC(r30)
-	  stw       r0, 0x8(r30)
-	  bl        -0x76678
-	  lis       r3, 0x802B
-	  addi      r0, r3, 0x1900
-	  stw       r0, 0x0(r30)
-	  stw       r29, 0x14(r30)
-
-	.loc_0x108:
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x28
-	  bl        -0x5AF90
-	  mr        r3, r29
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	WorkObjectNode* node = new WorkObjectNode(object);
+	mRootNode.add(node);
+	return object;
 }
 
 /*
@@ -1319,8 +1153,9 @@ void* GenObjectWorkObject::birth(BirthInfo&)
  * Address:	8009BF1C
  * Size:	000178
  */
-HinderRock::HinderRock(Shape*)
+HinderRock::HinderRock(Shape* shape)
 {
+	_438 = shape;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4123,7 +3958,7 @@ bool Bridge::isFinished()
  * Address:	8009E23C
  * Size:	000068
  */
-void Bridge::getFirstUnfinishedStage()
+int Bridge::getFirstUnfinishedStage()
 {
 	/*
 	.loc_0x0:
@@ -4169,7 +4004,7 @@ void Bridge::getFirstUnfinishedStage()
  * Address:	8009E2A4
  * Size:	000068
  */
-void Bridge::getFirstFinishedStage()
+int Bridge::getFirstFinishedStage()
 {
 	/*
 	.loc_0x0:
@@ -4749,7 +4584,7 @@ void Bridge::setStageFinished(int, bool)
  * Address:	8009E948
  * Size:	0000C8
  */
-void Bridge::getStagePos(int)
+Vector3f Bridge::getStagePos(int)
 {
 	/*
 	.loc_0x0:
@@ -4817,7 +4652,7 @@ void Bridge::getStagePos(int)
  * Address:	8009EA10
  * Size:	000064
  */
-void Bridge::getStageZ(int)
+f32 Bridge::getStageZ(int)
 {
 	/*
 	.loc_0x0:
@@ -4928,7 +4763,7 @@ void Bridge::getBridgePos(Vector3f&, f32&, f32&)
  * Address:	8009EB5C
  * Size:	000060
  */
-void Bridge::getBridgeZVec()
+Vector3f Bridge::getBridgeZVec()
 {
 	/*
 	.loc_0x0:
@@ -4964,7 +4799,7 @@ void Bridge::getBridgeZVec()
  * Address:	8009EBBC
  * Size:	000060
  */
-void Bridge::getBridgeXVec()
+Vector3f Bridge::getBridgeXVec()
 {
 	/*
 	.loc_0x0:
@@ -5000,7 +4835,7 @@ void Bridge::getBridgeXVec()
  * Address:	8009EC1C
  * Size:	0000FC
  */
-void Bridge::getStartPos()
+Vector3f Bridge::getStartPos()
 {
 	/*
 	.loc_0x0:

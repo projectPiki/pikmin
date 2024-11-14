@@ -1245,7 +1245,7 @@ void PaniTestNode::updateTekis()
  */
 void PaniTestNode::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	_67C = event.mKeyFrame;
+	_67C = event.mEventType;
 	if (mTestMode == PANITEST_Piki) {
 		_664[0]->animationKeyUpdated(event);
 	} else { // mTestMode == PANITEST_Teki

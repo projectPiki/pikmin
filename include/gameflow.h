@@ -52,7 +52,8 @@ struct GameFlow : public Node {
 	u32 _2B0;               // _2B0, could be int
 	u8 _2B4[0x2FC - 0x2B4]; // _2B4, unknown
 	u32 _2FC;               // _2FC, unknown, but same as 0x30 in CreatureInf
-	u8 _300[0x355 - 0x300]; // _2B4, unknown
+	u32 _300;               // _300, unknown
+	u8 _304[0x355 - 0x304]; // _304, unknown
 };
 
 /**

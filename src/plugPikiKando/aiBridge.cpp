@@ -1,14 +1,17 @@
 #include "PikiAI.h"
+#include "AIPerf.h"
+#include "EffectMgr.h"
+#include "gameflow.h"
+#include "Dolphin/os.h"
+#include "PikiMacros.h"
+#include "WorkObject.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "aiBridge"); }
 
 /*
  * --INFO--
@@ -26,56 +29,10 @@ static void _Print(char*, ...)
  * Size:	0000AC
  */
 ActBridge::ActBridge(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  beq-      .loc_0x30
-	  addi      r0, r31, 0x50
-	  lis       r3, 0x802B
-	  stw       r0, 0x14(r31)
-	  subi      r0, r3, 0x246C
-	  stw       r0, 0x50(r31)
-
-	.loc_0x30:
-	  addi      r3, r31, 0
-	  addi      r4, r5, 0
-	  li        r5, 0x1
-	  bl        0x16EF4
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x5C98
-	  stw       r3, 0x0(r31)
-	  addi      r6, r3, 0x68
-	  addi      r5, r31, 0x50
-	  lwz       r3, 0x14(r31)
-	  subi      r4, r13, 0x4E78
-	  li        r0, 0
-	  stw       r6, 0x0(r3)
-	  mr        r3, r31
-	  lwz       r6, 0x14(r31)
-	  sub       r5, r5, r6
-	  stw       r5, 0x4(r6)
-	  lfs       f0, -0x7098(r2)
-	  stfs      f0, 0x3C(r31)
-	  stfs      f0, 0x38(r31)
-	  stfs      f0, 0x34(r31)
-	  stfs      f0, 0x48(r31)
-	  stfs      f0, 0x44(r31)
-	  stfs      f0, 0x40(r31)
-	  stw       r4, 0x10(r31)
-	  stw       r0, 0x18(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mName   = "Bridge";
+	mBridge = nullptr;
 }
 
 /*
@@ -83,68 +40,22 @@ ActBridge::ActBridge(Piki* piki)
  * Address:	800ACF4C
  * Size:	0000DC
  */
-void ActBridge::init(Creature*)
+void ActBridge::init(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x2
-	  cmplwi    r4, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r3, 0
-	  stb       r5, 0x33(r3)
-	  stb       r5, 0x32(r3)
-	  lwz       r3, 0xC(r3)
-	  stb       r0, 0x408(r3)
-	  lwz       r3, 0xC(r30)
-	  stb       r5, 0x400(r3)
-	  stw       r5, 0x18(r30)
-	  beq-      .loc_0x74
-	  lwz       r0, 0x6C(r4)
-	  cmpwi     r0, 0x26
-	  bne-      .loc_0x74
-	  addi      r31, r4, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x74
-	  stw       r31, 0x18(r30)
+	_32 = _33    = 0;
+	mActor->_408 = 2;
+	mActor->_400 = 0;
+	mBridge      = nullptr;
 
-	.loc_0x74:
-	  li        r0, 0
-	  sth       r0, 0x1C(r30)
-	  bl        0x16B0A8
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x7088(r2)
-	  stw       r0, 0x24(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x7090(r2)
-	  stw       r0, 0x20(r1)
-	  lfs       f1, -0x7094(r2)
-	  lfd       f3, 0x20(r1)
-	  lfs       f0, -0x708C(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stb       r0, 0x4C(r30)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	if (creature && creature->mObjType == OBJTYPE_WorkObject) {
+		WorkObject* bridge = static_cast<WorkObject*>(creature);
+		if (bridge->isBridge()) {
+			mBridge = static_cast<Bridge*>(bridge);
+		}
+	}
+
+	mState = STATE_Approach;
+	_4C    = randFloat(4.0f);
 }
 
 /*
@@ -154,6 +65,10 @@ void ActBridge::init(Creature*)
  */
 void ActBridge::dump()
 {
+	const char* things[] = { "approach", "detour", "go", "work" };
+	DEBUGPRINT(things[0], things[1], things[2], things[3]);
+	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
+	Vector3f zVec     = mBridge->getBridgeZVec();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -191,8 +106,12 @@ void ActBridge::dump()
  * Address:	........
  * Size:	00006C
  */
-void ActBridge::collideBridgeSurface()
+bool ActBridge::collideBridgeSurface()
 {
+	Creature* platform = mActor->getCollidePlatformCreature();
+	if (platform && platform == mBridge) {
+		mActor->getCollidePlatformNormal();
+	}
 	// UNUSED FUNCTION
 }
 
@@ -201,9 +120,18 @@ void ActBridge::collideBridgeSurface()
  * Address:	........
  * Size:	0000B8
  */
-void ActBridge::collideBridgeBlocker()
+bool ActBridge::collideBridgeBlocker()
 {
-	// UNUSED FUNCTION
+	Creature* platform = mActor->getCollidePlatformCreature();
+	if (platform && platform == mBridge) {
+		Vector3f normal = mActor->getCollidePlatformNormal();
+		Vector3f zVec   = mBridge->getBridgeZVec();
+		if (normal.dot(zVec) < -0.8f) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /*
@@ -213,62 +141,25 @@ void ActBridge::collideBridgeBlocker()
  */
 int ActBridge::exec()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x18(r3)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x2C
-	  lwz       r4, 0xC(r3)
-	  li        r0, 0x1
-	  li        r3, 0x1
-	  stb       r0, 0x400(r4)
-	  b         .loc_0x84
+	if (!mBridge) {
+		mActor->_400 = 1;
+		return ACTOUT_Fail;
+	}
 
-	.loc_0x2C:
-	  lbz       r0, 0x3C8(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x80
-	  lhz       r0, 0x1C(r3)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x68
-	  bge-      .loc_0x54
-	  cmpwi     r0, 0
-	  beq-      .loc_0x60
-	  b         .loc_0x78
+	if (mBridge->_3C8) {
+		switch (mState) {
+		case STATE_Approach:
+			return newExeApproach();
+		case STATE_Go:
+			return newExeGo();
+		case STATE_Work:
+			return newExeWork();
+		default:
+			return ACTOUT_Continue;
+		}
+	}
 
-	.loc_0x54:
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x70
-	  b         .loc_0x78
-
-	.loc_0x60:
-	  bl        0x130
-	  b         .loc_0x84
-
-	.loc_0x68:
-	  bl        0x568
-	  b         .loc_0x84
-
-	.loc_0x70:
-	  bl        0x93C
-	  b         .loc_0x84
-
-	.loc_0x78:
-	  li        r3, 0
-	  b         .loc_0x84
-
-	.loc_0x80:
-	  li        r3, 0
-
-	.loc_0x84:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return ACTOUT_Continue;
 }
 
 /*
@@ -296,21 +187,10 @@ void ActBridge::exeDetour()
  * Address:	800AD128
  * Size:	000028
  */
-void ActBridge::procWallMsg(Piki*, MsgWall*)
+void ActBridge::procWallMsg(Piki* piki, MsgWall* msg)
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x4(r5)
-	  li        r0, 0x8
-	  lwz       r5, 0x0(r6)
-	  lwz       r4, 0x4(r6)
-	  stw       r5, 0x34(r3)
-	  stw       r4, 0x38(r3)
-	  lwz       r4, 0x8(r6)
-	  stw       r4, 0x3C(r3)
-	  stb       r0, 0x33(r3)
-	  blr
-	*/
+	_34 = *msg->_04;
+	_33 = 8;
 }
 
 /*
@@ -408,67 +288,23 @@ void ActBridge::doWork(int)
  * Address:	800AD150
  * Size:	0000B0
  */
-void ActBridge::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x6
-	  beq-      .loc_0x3C
-	  bge-      .loc_0x30
-	  cmpwi     r0, 0
-	  beq-      .loc_0x94
-	  b         .loc_0x9C
-
-	.loc_0x30:
-	  cmpwi     r0, 0x8
-	  beq-      .loc_0x48
-	  b         .loc_0x9C
-
-	.loc_0x3C:
-	  li        r0, 0x1
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x9C
-
-	.loc_0x48:
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0xC8(r3)
-	  rlwinm.   r0,r0,0,12,12
-	  bne-      .loc_0x9C
-	  lwz       r0, -0x5F04(r13)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x74
-	  addi      r3, r3, 0x174
-	  bl        -0x7D60
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x9C
-
-	.loc_0x74:
-	  lwz       r5, 0xC(r31)
-	  li        r4, 0x27
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  addi      r5, r5, 0x464
-	  li        r7, 0
-	  bl        0xEF95C
-	  b         .loc_0x9C
-
-	.loc_0x94:
-	  li        r0, 0x1
-	  stb       r0, 0x4D(r31)
-
-	.loc_0x9C:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler;
+	u32 badCompiler2;
+	switch (event.mEventType) {
+	case KEY_LoopEnd:
+		_24 = 1;
+		break;
+	case KEY_PlayEffect:
+		if (!mActor->isCreatureFlag(CF_Unk19) && (AIPerf::optLevel <= 0 || mActor->_174.updatable())) {
+			effectMgr->create(EffectMgr::EFF_Unk39, mActor->_464, nullptr, nullptr);
+		}
+		break;
+	case KEY_Done:
+		_4D = 1;
+		break;
+	}
 }
 
 /*
@@ -478,18 +314,8 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent&)
  */
 void ActBridge::cleanup()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0xC(r3)
-	  lwz       r0, 0xC8(r4)
-	  rlwinm    r0,r0,0,14,12
-	  stw       r0, 0xC8(r4)
-	  lwz       r3, 0xC(r3)
-	  lwz       r0, 0xC8(r3)
-	  rlwinm    r0,r0,0,25,23
-	  stw       r0, 0xC8(r3)
-	  blr
-	*/
+	mActor->resetCreatureFlag(CF_Unk18);
+	mActor->resetCreatureFlag(CF_Unk8);
 }
 
 /*
@@ -499,7 +325,8 @@ void ActBridge::cleanup()
  */
 void ActBridge::newInitApproach()
 {
-	// UNUSED FUNCTION
+	mState = STATE_Approach;
+	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
 /*
@@ -507,8 +334,60 @@ void ActBridge::newInitApproach()
  * Address:	800AD224
  * Size:	000360
  */
-void ActBridge::newExeApproach()
+int ActBridge::newExeApproach()
 {
+	if (!mBridge) {
+		mActor->_400 = 1;
+		return ACTOUT_Fail;
+	}
+
+	if (collideBridgeBlocker()) {
+		newInitGo();
+		return ACTOUT_Continue;
+	}
+
+	Vector3f direction = mBridge->getStartPos() - mActor->getPosition();
+	f32 dist           = direction.normalise();
+	if (dist < 300.0f) {
+		f32 p2;
+		f32 p1;
+		mBridge->getBridgePos(mActor->mPosition, p1, p2);
+		int currStage = mBridge->getFirstUnfinishedStage();
+		if (currStage == -1) {
+			return ACTOUT_Success;
+		}
+
+		p2 -= 20.0f + mBridge->getStageZ(currStage);
+
+		if (absF(p1) < 0.8f * (2.0f * mBridge->getStageWidth())) {
+			if (p2 <= 0.0f) {
+				Vector3f stagePos = mBridge->getStagePos(mStageIdx);
+				Vector3f zVec     = mBridge->getBridgeZVec();
+				direction         = zVec;
+				mActor->setSpeed(0.7f, direction);
+			} else {
+				mActor->_400 = 1;
+				return ACTOUT_Fail;
+			}
+		} else {
+			Vector3f newDir;
+			if (p2 > -10.0f) {
+				newDir = mBridge->getBridgeZVec();
+				newDir *= -1.0f;
+			} else {
+				newDir = mBridge->getBridgeXVec();
+				if (p1 > 0.0f) {
+					newDir *= -1.0f;
+				}
+			}
+			mActor->setSpeed(0.7f, newDir);
+		}
+	} else {
+		mActor->setSpeed(0.7f, direction);
+	}
+
+	return ACTOUT_Continue;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -765,71 +644,15 @@ void ActBridge::newExeApproach()
  */
 void ActBridge::newInitGo()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x2
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  addi      r29, r3, 0
-	  sth       r0, 0x1C(r3)
-	  lwz       r3, 0x18(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x7C
-	  bl        -0xF378
-	  extsh     r0, r3
-	  sth       r0, 0x30(r29)
-	  bl        0x16AAB0
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x7088(r2)
-	  stw       r0, 0x24(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x7090(r2)
-	  stw       r0, 0x20(r1)
-	  lfs       f1, -0x7094(r2)
-	  lfd       f3, 0x20(r1)
-	  lfs       f0, -0x7078(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x2C(r29)
-	  b         .loc_0x84
+	mState = STATE_Go;
+	if (mBridge) {
+		mStageIdx = mBridge->getFirstUnfinishedStage();
+		_2C       = randBalanced(0.5f);
+	} else {
+		mStageIdx = -1;
+	}
 
-	.loc_0x7C:
-	  li        r0, -0x1
-	  sth       r0, 0x30(r29)
-
-	.loc_0x84:
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x94
-	  lwz       r30, 0x14(r29)
-
-	.loc_0x94:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x2
-	  bl        0x71938
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x2
-	  bl        0x71958
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x1D394
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
 /*
@@ -837,8 +660,41 @@ void ActBridge::newInitGo()
  * Address:	800AD664
  * Size:	00030C
  */
-void ActBridge::newExeGo()
+int ActBridge::newExeGo()
 {
+	if (mStageIdx == -1) {
+		return ACTOUT_Success;
+	}
+
+	if (!mBridge) {
+		mActor->_400 = 1;
+		return ACTOUT_Fail;
+	}
+
+	if (mBridge->isStageFinished(mStageIdx)) {
+		newInitGo();
+		return ACTOUT_Continue;
+	}
+
+	if (collideBridgeBlocker()) {
+		newInitWork();
+		return ACTOUT_Continue;
+	}
+
+	collideBridgeSurface();
+
+	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
+	Vector3f xVec     = mBridge->getBridgeXVec();
+	xVec *= _2C * mBridge->getStageWidth();
+	stagePos += xVec;
+
+	Vector3f direction = stagePos - mActor->mPosition;
+	mBridge->getBridgeZVec();
+
+	direction.normalise();
+
+	mActor->setSpeed(0.70f, direction);
+	return ACTOUT_Continue;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1072,65 +928,21 @@ void ActBridge::newExeGo()
  */
 void ActBridge::newInitWork()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x4
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  addi      r29, r3, 0
-	  lis       r3, 0x803A
-	  sth       r0, 0x1C(r29)
-	  subi      r3, r3, 0x2848
-	  li        r0, 0
-	  lwz       r3, 0x300(r3)
-	  stw       r3, 0x20(r29)
-	  stw       r0, 0x24(r29)
-	  sth       r0, 0x28(r29)
-	  sth       r0, 0x2A(r29)
-	  lbz       r0, 0x4C(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xB4
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x60
-	  lwz       r30, 0x14(r29)
+	mState = STATE_Work;
+	_20    = gameflow._300;
+	_24    = 0;
+	_28    = 0;
+	_2A    = 0;
 
-	.loc_0x60:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x30
-	  bl        0x71580
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x30
-	  bl        0x715A0
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x1CFDC
-	  li        r0, 0
-	  stb       r0, 0x4D(r29)
-	  lbz       r0, -0x5F15(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB4
-	  lwz       r3, 0xC(r29)
-	  lwz       r0, 0xC8(r3)
-	  oris      r0, r0, 0x4
-	  stw       r0, 0xC8(r3)
+	if (_4C) {
+		return;
+	}
 
-	.loc_0xB4:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+	_4D = 0;
+	if (AIPerf::bridgeFast) {
+		mActor->setCreatureFlag(CF_Unk18);
+	}
 }
 
 /*
@@ -1138,8 +950,43 @@ void ActBridge::newInitWork()
  * Address:	800ADA40
  * Size:	000668
  */
-void ActBridge::newExeWork()
+int ActBridge::newExeWork()
 {
+	if (mBridge->isStageFinished(mStageIdx)) {
+		newInitGo();
+		mActor->resetCreatureFlag(CF_Unk18);
+		return ACTOUT_Continue;
+	}
+
+	if (collideBridgeBlocker()) {
+		_28 = 0;
+	} else {
+		mActor->_A4.set(0.0f, 0.0f, 0.0f);
+		_28++;
+		if (_28 > 3) {
+			mActor->resetCreatureFlag(CF_Unk18);
+		}
+		if (_28 > 15 && _4D) {
+			newInitApproach();
+			mActor->resetCreatureFlag(CF_Unk18);
+			return ACTOUT_Continue;
+		}
+	}
+
+	if (!mBridge->workable(mActor->mPosition)) {
+		mActor->_400 = 1;
+		mActor->resetCreatureFlag(CF_Unk18);
+		return ACTOUT_Fail;
+	}
+
+	if (_4C != 0) {
+		_4C--;
+		if (_4C == 0) {
+			newInitWork();
+			return ACTOUT_Continue;
+		}
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1594,52 +1441,6 @@ void ActBridge::newExeWork()
 	  lwz       r30, 0x158(r1)
 	  lwz       r29, 0x154(r1)
 	  addi      r1, r1, 0x190
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AE0A8
- * Size:	000080
- */
-ActBridge::~ActBridge()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x64
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x5C98
-	  stw       r3, 0x0(r30)
-	  addi      r6, r3, 0x68
-	  addi      r0, r30, 0x50
-	  lwz       r5, 0x14(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  stw       r6, 0x0(r5)
-	  lwz       r5, 0x14(r30)
-	  sub       r0, r0, r5
-	  stw       r0, 0x4(r5)
-	  bl        0x15D10
-	  extsh.    r0, r31
-	  ble-      .loc_0x64
-	  mr        r3, r30
-	  bl        -0x66F5C
-
-	.loc_0x64:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
 	*/

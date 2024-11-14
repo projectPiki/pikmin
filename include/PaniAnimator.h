@@ -6,18 +6,30 @@
 
 struct PaniMotionTable;
 
+enum KeyEventTypes {
+	KEY_Done       = 0,
+	KEY_Action0    = 1,
+	KEY_Action1    = 2,
+	KEY_Action2    = 3,
+	KEY_Action3    = 4,
+	KEY_LoopStart  = 5,
+	KEY_LoopEnd    = 6,
+	KEY_PlaySound  = 7,
+	KEY_PlayEffect = 8,
+};
+
 /**
  * @brief TODO
  */
 struct PaniAnimKeyEvent {
-	PaniAnimKeyEvent(int keyFrame, int value = -1)
+	PaniAnimKeyEvent(int eventType, int value = -1)
 	{
-		mKeyFrame = keyFrame;
-		mValue    = value;
+		mEventType = eventType;
+		mValue     = value;
 	}
 
-	int mKeyFrame; // _00
-	int mValue;    // _04, used in KingAi for a couple different things - this struct might be differentiated for each use case? unsure.
+	int mEventType; // _00
+	int mValue;     // _04, used in KingAi for a couple different things - this struct might be differentiated for each use case? unsure.
 };
 
 /**
@@ -78,11 +90,12 @@ struct PaniAnimator : public Animator {
 struct PaniItemAnimator : public PaniAnimator {
 	PaniItemAnimator();
 
-	PaniMotionTable* createMotionTable();
+	static PaniMotionTable* createMotionTable();
+
+	static char* motionLabels[15];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
-	// TODO: members
 };
 
 /**

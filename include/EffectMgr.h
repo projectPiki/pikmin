@@ -106,7 +106,14 @@ struct EffectMgr : public CoreNode {
 	 * @brief TODO
 	 */
 	enum effTypeTable {
-		// TODO: members
+		EFF_Unk1 = 1,
+		// ...
+		EFF_Unk39 = 39,
+		// ...
+		EFF_Unk47 = 47,
+		EFF_Unk48 = 48,
+		// ...
+		EFF_Unk69 = 69,
 	};
 
 	/**

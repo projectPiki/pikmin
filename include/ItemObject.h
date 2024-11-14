@@ -15,7 +15,7 @@ struct ItemBall : public ItemCreature {
 	virtual bool isAlive();    // _88
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TOD0: members
 };
 
@@ -31,7 +31,7 @@ struct ItemObject : public ItemCreature {
 	virtual void postUpdate(int, f32); // _E4
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TOD0: members
 };
 

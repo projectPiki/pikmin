@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Creature.h"
 #include "PaniPikiAnimator.h"
+#include "OdoMeter.h"
 
 struct TopAction;
 struct Navi;
@@ -152,7 +153,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
-	u8 _2BC[0x354 - 0x2BC];       // _2BC, TODO: work out members
+	OdoMeter mOdometer;           // _2BC
+	u8 _2CC[0x354 - 0x2CC];       // _2CC, TODO: work out members
 	PaniPikiAnimMgr mPikiAnimMgr; // _354
 	u8 _400;                      // _400
 	u8 _401[0x408 - 0x401];       // _401, unknown
@@ -163,7 +165,10 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u16 _426;                     // _426
 	u8 _428[0x8];                 // _428, unknown
 	u32 _430;                     // _430, unknown
-	u8 _434[0x48C - 0x434];       // _434, unknown
+	u8 _434[0x464 - 0x434];       // _434, unknown
+	Vector3f _464;                // _464
+	u8 _470;                      // _470
+	u8 _471[0x48C - 0x471];       // _471, unknown
 	f32 _48C;                     // _48C
 	PikiStateMachine* mFSM;       // _490
 	u8 _494[0x4];                 // _494, unknown
@@ -179,7 +184,10 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Navi* mNavi;                  // _504
 	u8 _508[0x8];                 // _508, unknown
 	u16 mColor;                   // _510, red/yellow/blue
-	u8 _512[0x520 - 0x512];       // _4FC, TODO: work out members
+	u8 _512[0x518 - 0x512];       // _4FC, TODO: work out members
+	u8 _518;                      // _518
+	u8 _519;                      // _519
+	u8 _51A[0x520 - 0x51A];       // _51A, unknown
 	int mHappa;                   // _520, leaf/bud/flower
 	u8 _524[0x585 - 0x524];       // _4FC, TODO: work out members
 };

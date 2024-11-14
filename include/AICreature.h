@@ -46,7 +46,7 @@ struct AICreature : public Creature, public PaniAnimKeyListener {
 	// _00       = VTBL
 	// _00-_2B8  = Creature
 	// _2B8-_2BC = PaniAnimKeyListener
-	u32 _2BC;                                // _2BC, unknown
+	Creature* _2BC;                          // _2BC
 	u8 _2C0[0x4];                            // _2C0, unknown
 	Vector3f _2C4;                           // _2C4, could just be floats
 	u32 _2D0;                                // _2D0, unknown

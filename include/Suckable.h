@@ -20,8 +20,7 @@ struct Suckable : public ItemCreature {
 	virtual void getRouteIndex() = 0;    // _170
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
-	u8 _304[0x3C8 - sizeof(ItemCreature)]; // _304, unknown
+	// _00-_3C8 = ItemCreature
 };
 
 #endif

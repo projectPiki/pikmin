@@ -25,45 +25,6 @@ void sqrtf2(f32)
 
 /*
  * --INFO--
- * Address:	8000DC40
- * Size:	000064
- */
-f32 std::sqrtf(f32)
-{
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x10(r1)
-	  lfs       f0, -0x7F60(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x5C
-	  fsqrte    f2, f1
-	  lfd       f4, -0x7F58(r2)
-	  lfd       f3, -0x7F50(r2)
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fnmsub    f0, f1, f0, f3
-	  fmul      f2, f2, f0
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fnmsub    f0, f1, f0, f3
-	  fmul      f2, f2, f0
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fnmsub    f0, f1, f0, f3
-	  fmul      f0, f2, f0
-	  fmul      f0, f1, f0
-	  frsp      f0, f0
-	  stfs      f0, 0xC(r1)
-	  lfs       f1, 0xC(r1)
-
-	.loc_0x5C:
-	  addi      r1, r1, 0x10
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	000020
  */

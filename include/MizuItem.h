@@ -29,7 +29,7 @@ struct MizuItem : public ItemCreature {
 	virtual void update();             // _E0
 
 	// _00      = VTBL
-	// _00-_??? = ItemCreature
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
 

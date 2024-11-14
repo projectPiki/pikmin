@@ -4,12 +4,19 @@
 #include "types.h"
 #include "zen/particle.h"
 #include "zen/CallBack.h"
+#include "Vector.h"
 
 /**
  * @brief TODO
  */
 struct EffectParm {
-	// TODO: members
+
+	Vector3f _00; // _00
+	Vector3f _0C; // _0C
+	u8 _18[0xC];  // _18, unknown
+	f32 _24;      // _24
+	u8 _28[0x4];  // _28, I think?
+	              // TODO: members
 };
 
 /**

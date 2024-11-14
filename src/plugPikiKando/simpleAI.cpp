@@ -50,9 +50,9 @@ AICreature::AICreature(CreatureProp* props)
  */
 void AICreature::collisionCallback(CollEvent& event)
 {
-	u32 thing = event._00;
+	Creature* collider = event.mCollider;
 	MsgCollide msg(event);
-	_2BC = thing;
+	_2BC = collider;
 	if (mStateMachine) {
 		mStateMachine->procMsg(this, &msg);
 	}
@@ -118,11 +118,11 @@ void AICreature::animationKeyUpdated(PaniAnimKeyEvent& event)
 		mStateMachine->procMsg(this, &msg);
 	}
 
-	if (event.mKeyFrame == 7) {
+	if (event.mEventType == KEY_PlaySound) {
 		playSound(event.mValue);
 	}
 
-	if (event.mKeyFrame == 8) {
+	if (event.mEventType == KEY_PlayEffect) {
 		playEffect(event.mValue);
 	}
 }

@@ -147,11 +147,11 @@ int AndAction::exec()
 		child->initialise(_14);
 		break;
 
-	case ACTOUT_Unk1:
-		return ACTOUT_Unk1;
+	case ACTOUT_Fail:
+		return ACTOUT_Fail;
 	}
 
-	return ACTOUT_Unk0;
+	return ACTOUT_Continue;
 }
 
 /*
@@ -178,18 +178,18 @@ int OrAction::exec()
 	case ACTOUT_Success:
 		return ACTOUT_Success;
 
-	case ACTOUT_Unk1:
+	case ACTOUT_Fail:
 		mChildActions[mChildActionIdx].mAction->cleanup();
 		mChildActionIdx++;
 		if (mChildActionIdx >= mChildCount) {
-			return ACTOUT_Unk1;
+			return ACTOUT_Fail;
 		}
 		Child* child = &mChildActions[mChildActionIdx];
 		child->initialise(_14);
-		return ACTOUT_Unk1;
+		return ACTOUT_Fail;
 	}
 
-	return ACTOUT_Unk0;
+	return ACTOUT_Continue;
 }
 
 /*
@@ -233,8 +233,8 @@ void Action::cleanup()
  */
 void TopAction::MotionListener::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	switch (event.mKeyFrame) {
-	case 0:
+	switch (event.mEventType) {
+	case KEY_Done:
 		mAction->_1A = 0;
 		mAction->mChildActions[mAction->mChildActionIdx].initialise(mAction->_20);
 		break;

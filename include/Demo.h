@@ -13,6 +13,8 @@ enum EDemoFlags {
 	DEMOFLAG_Unk0 = 0,
 	DEMOFLAG_Unk1 = 1,
 	// ...
+	DEMOFLAG_Unk9 = 9,
+	// ...
 	DEMOFLAG_Unk27 = 27,
 };
 

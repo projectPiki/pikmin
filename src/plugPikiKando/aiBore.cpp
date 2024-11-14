@@ -1,12 +1,23 @@
 #include "PikiAI.h"
+#include "UtilityKando.h"
+#include "teki.h"
+#include "ItemMgr.h"
+#include "Boss.h"
+#include "NaviMgr.h"
+#include "NaviState.h"
+#include "SoundMgr.h"
+#include "system.h"
+#include "sysNew.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt);
 	// UNUSED FUNCTION
 }
 
@@ -26,85 +37,11 @@ static void _Print(char*, ...)
  * Size:	000108
  */
 ActFreeSelect::ActFreeSelect(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  mr        r31, r4
-	  stw       r3, 0x10(r1)
-	  lwz       r3, 0x10(r1)
-	  bl        0x19894
-	  lis       r3, 0x802B
-	  lwz       r4, 0x10(r1)
-	  addi      r0, r3, 0x5930
-	  lis       r3, 0x802B
-	  stw       r0, 0x0(r4)
-	  addi      r0, r3, 0x55A4
-	  stw       r0, 0x10(r4)
-	  li        r3, 0x2C
-	  bl        -0x6355C
-	  mr.       r30, r3
-	  beq-      .loc_0x5C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x186E4
-
-	.loc_0x5C:
-	  li        r3, 0x30
-	  bl        -0x63578
-	  mr.       r29, r3
-	  beq-      .loc_0x7C
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  li        r4, 0x1
-	  bl        0xDFC
-
-	.loc_0x7C:
-	  li        r3, 0x24
-	  bl        -0x63598
-	  mr.       r28, r3
-	  beq-      .loc_0x9C
-	  addi      r3, r28, 0
-	  addi      r5, r31, 0
-	  li        r4, 0x1
-	  bl        0x12BC
-
-	.loc_0x9C:
-	  li        r3, 0x30
-	  bl        -0x635B8
-	  mr.       r27, r3
-	  beq-      .loc_0xBC
-	  addi      r3, r27, 0
-	  addi      r5, r31, 0
-	  li        r4, 0x1
-	  bl        0x146C
-
-	.loc_0xBC:
-	  stw       r27, 0x8(r1)
-	  li        r0, 0
-	  addi      r5, r30, 0
-	  crclr     6, 0x6
-	  stw       r0, 0xC(r1)
-	  mr        r7, r29
-	  lwz       r3, 0x10(r1)
-	  addi      r9, r28, 0
-	  li        r4, 0x4
-	  li        r6, 0
-	  li        r8, 0
-	  li        r10, 0
-	  bl        0x19D68
-	  lmw       r27, 0x1C(r1)
-	  lwz       r3, 0x10(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mName = "freebore";
+	setChildren(CHILD_COUNT, new ActWatch(piki), nullptr, new ActBoreTalk(piki), nullptr, new ActBoreOneshot(piki), nullptr,
+	            new ActBoreRest(piki), nullptr);
 }
 
 /*
@@ -112,74 +49,16 @@ ActFreeSelect::ActFreeSelect(Piki* piki)
  * Address:	800AA624
  * Size:	0000F4
  */
-void ActFreeSelect::init(Creature*)
+void ActFreeSelect::init(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  mr        r29, r3
-	  lwz       r30, 0xC(r3)
-	  cmplwi    r30, 0
-	  beq-      .loc_0x2C
-	  addi      r30, r30, 0x2B8
+	mActor->startMotion(PaniMotionInfo(PIKIANIM_Wait, mActor), PaniMotionInfo(PIKIANIM_Wait));
+	_14             = 2.0f + gsys->getFrameTime();
+	_18             = 1;
+	mChildActionIdx = CHILD_NULL;
 
-	.loc_0x2C:
-	  addi      r3, r1, 0x20
-	  li        r4, 0x3
-	  bl        0x74900
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x28
-	  li        r4, 0x3
-	  bl        0x74920
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x2035C
-	  lwz       r4, 0x2DEC(r13)
-	  li        r3, 0x1
-	  lfs       f1, -0x7108(r2)
-	  li        r0, -0x1
-	  lfs       f0, 0x28C(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r29)
-	  stb       r3, 0x18(r29)
-	  sth       r0, 0x8(r29)
-	  bl        0x16D9CC
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x70F0(r2)
-	  stw       r0, 0x34(r1)
-	  lis       r3, 0x4330
-	  lfs       f4, -0x7100(r2)
-	  li        r0, 0
-	  stw       r3, 0x30(r1)
-	  lfs       f3, -0x7104(r2)
-	  lfd       f0, 0x30(r1)
-	  lfs       f1, -0x70F8(r2)
-	  fsubs     f5, f0, f2
-	  lfs       f2, -0x70FC(r2)
-	  lfs       f0, -0x70F4(r2)
-	  fdivs     f4, f5, f4
-	  fmuls     f3, f3, f4
-	  fsubs     f1, f3, f1
-	  fmuls     f1, f2, f1
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0x1C(r29)
-	  stb       r0, 0x19(r29)
-	  stb       r0, 0x1A(r29)
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	_1C = PI * (randBalanced(0.5f)) / 3.0f;
+	_19 = 0;
+	_1A = 0;
 }
 
 /*
@@ -189,50 +68,19 @@ void ActFreeSelect::init(Creature*)
  */
 void ActFreeSelect::finishRest()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lha       r0, 0x8(r3)
-	  cmpwi     r0, 0x3
-	  beq-      .loc_0x30
-	  bge-      .loc_0x68
-	  cmpwi     r0, 0x2
-	  bge-      .loc_0x4C
-	  b         .loc_0x68
-
-	.loc_0x30:
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r0,3,0,28
-	  li        r4, 0x1
-	  lwzx      r3, r3, r0
-	  stb       r4, 0x18(r3)
-	  stb       r4, 0x19(r31)
-	  b         .loc_0x70
-
-	.loc_0x4C:
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r0,3,0,28
-	  lwzx      r3, r3, r0
-	  bl        0x1180
-	  li        r0, 0x1
-	  stb       r0, 0x19(r31)
-	  b         .loc_0x70
-
-	.loc_0x68:
-	  li        r0, 0x1
-	  stb       r0, 0x1A(r31)
-
-	.loc_0x70:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	switch (mChildActionIdx) {
+	case CHILD_BoreRest:
+		static_cast<ActBoreRest*>(mChildActions[mChildActionIdx].mAction)->_18 = 1;
+		_19                                                                    = 1;
+		break;
+	case CHILD_BoreOneshot:
+		static_cast<ActBoreOneshot*>(mChildActions[mChildActionIdx].mAction)->finish();
+		_19 = 1;
+		break;
+	default:
+		_1A = 1;
+		break;
+	}
 }
 
 /*
@@ -242,85 +90,27 @@ void ActFreeSelect::finishRest()
  */
 int ActFreeSelect::exec()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lbz       r0, 0x1A(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x28
-	  li        r3, 0x2
-	  b         .loc_0xF4
+	if (_1A) {
+		return ACTOUT_Success;
+	}
 
-	.loc_0x28:
-	  lbz       r0, 0x19(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x58
-	  lha       r0, 0x8(r31)
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r0,3,0,28
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xF4
+	if (_19) {
+		return mChildActions[mChildActionIdx].mAction->exec();
+	}
 
-	.loc_0x58:
-	  lbz       r0, 0x18(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB0
-	  lwz       r3, 0xC(r31)
-	  lfs       f0, -0x4F50(r13)
-	  stfsu     f0, 0xA4(r3)
-	  lfs       f0, -0x4F4C(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x4F48(r13)
-	  stfs      f0, 0x8(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x14(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x14(r31)
-	  lfs       f1, 0x14(r31)
-	  lfs       f0, -0x70E8(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xF0
-	  mr        r3, r31
-	  bl        0xDC
-	  b         .loc_0xF0
+	if (_18) {
+		mActor->_A4.set(0.0f, 0.0f, 0.0f);
+		_14 -= gsys->getFrameTime();
+		if (_14 < 0.0f) {
+			determine();
+		}
+	} else {
+		if (mChildActions[mChildActionIdx].mAction->exec()) {
+			init(nullptr);
+		}
+	}
 
-	.loc_0xB0:
-	  lha       r0, 0x8(r31)
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r0,3,0,28
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  cmpwi     r3, 0
-	  beq-      .loc_0xF0
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xF0:
-	  li        r3, 0
-
-	.loc_0xF4:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	return ACTOUT_Continue;
 }
 
 /*
@@ -335,45 +125,20 @@ void ActFreeSelect::cleanup() { }
  * Address:	800AA8A8
  * Size:	000078
  */
-void ActFreeSelect::procTargetMsg(Piki*, MsgTarget*)
+void ActFreeSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x18(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x40
-	  li        r0, 0
-	  stb       r0, 0x18(r3)
-	  sth       r0, 0x8(r3)
-	  lha       r0, 0x8(r3)
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r0,3,0,28
-	  lwz       r4, 0x4(r5)
-	  add       r3, r3, r0
-	  bl        0x19444
-	  b         .loc_0x68
+	if (_18) {
+		_18             = 0;
+		mChildActionIdx = CHILD_Watch;
+		mChildActions[mChildActionIdx].initialise(msg->mTarget);
+		return;
+	}
 
-	.loc_0x40:
-	  lha       r0, 0x8(r3)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x68
-	  lwz       r4, 0x4(r3)
-	  rlwinm    r3,r0,3,0,28
-	  li        r0, 0
-	  lwzx      r3, r4, r3
-	  stw       r0, 0x18(r3)
-	  lwz       r0, 0x4(r5)
-	  stw       r0, 0x1C(r3)
-
-	.loc_0x68:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mChildActionIdx == CHILD_BoreTalk) {
+		ActBoreTalk* boreTalk = static_cast<ActBoreTalk*>(mChildActions[mChildActionIdx].mAction);
+		boreTalk->_18         = 0;
+		boreTalk->mTarget     = msg->mTarget;
+	}
 }
 
 /*
@@ -383,6 +148,69 @@ void ActFreeSelect::procTargetMsg(Piki*, MsgTarget*)
  */
 void ActFreeSelect::determine()
 {
+	if (coinFlip()) {
+		_14 = 2.0f + gsys->getFrameTime();
+		return;
+	}
+
+	Choice choices[CHILD_COUNT] = {
+		{ CHILD_Watch, 0.2f },
+		{ CHILD_BoreTalk, 0.1f },
+		{ CHILD_BoreOneshot, 0.3f },
+		{ CHILD_BoreRest, 0.3f },
+	};
+
+	int randIdx = selectRandomly(choices, CHILD_COUNT);
+
+	if (mActor->_2AC) {
+		randIdx = CHILD_Watch;
+	}
+
+	_18             = 0;
+	mChildActionIdx = randIdx;
+
+	Creature* target = nullptr;
+
+	switch (randIdx) {
+	case CHILD_Watch:
+		Creature* nearestEnemy;
+		if (tekiMgr) {
+			nearestEnemy = tekiMgr->findClosest(mActor->mPosition, nullptr);
+		}
+
+		Creature* nearestItem = itemMgr->findClosest(mActor->mPosition, nullptr);
+		Creature* nearestNavi = naviMgr->findClosest(mActor->mPosition, nullptr);
+
+		Creature* nearestBoss = (bossMgr) ? bossMgr->findClosest(mActor->mPosition, nullptr) : nullptr;
+
+		if (nearestBoss) {
+			target = nearestBoss;
+			break;
+		}
+
+		// these are probably not distances, rename later
+		f32 enemyDist = (nearestEnemy) ? nearestEnemy->_70.length() : 0.0f;
+		f32 itemDist  = (nearestItem) ? nearestItem->_70.length() : 0.0f;
+		f32 naviDist  = (nearestNavi) ? nearestNavi->_70.length() : 0.0f;
+
+		if (enemyDist > itemDist && enemyDist > naviDist) {
+			target = nearestEnemy;
+			break;
+		}
+
+		if (itemDist > naviDist) {
+			target = nearestItem;
+			break;
+		}
+
+		target = nearestNavi;
+		break;
+	case CHILD_BoreTalk:
+		break;
+	}
+
+	mChildActions[mChildActionIdx].initialise(target);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -610,84 +438,11 @@ void ActFreeSelect::determine()
  * Size:	000104
  */
 ActBoreSelect::ActBoreSelect(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  mr        r31, r4
-	  stw       r3, 0x10(r1)
-	  lwz       r3, 0x10(r1)
-	  bl        0x191B8
-	  lis       r3, 0x802B
-	  lwz       r4, 0x10(r1)
-	  addi      r0, r3, 0x58A8
-	  stw       r0, 0x0(r4)
-	  subi      r0, r13, 0x4F44
-	  li        r3, 0x2C
-	  stw       r0, 0x10(r4)
-	  bl        -0x63C34
-	  mr.       r30, r3
-	  beq-      .loc_0x58
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x1800C
-
-	.loc_0x58:
-	  li        r3, 0x30
-	  bl        -0x63C50
-	  mr.       r29, r3
-	  beq-      .loc_0x78
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  li        r4, 0x1
-	  bl        0x724
-
-	.loc_0x78:
-	  li        r3, 0x24
-	  bl        -0x63C70
-	  mr.       r28, r3
-	  beq-      .loc_0x98
-	  addi      r3, r28, 0
-	  addi      r5, r31, 0
-	  li        r4, 0x1
-	  bl        0xBE4
-
-	.loc_0x98:
-	  li        r3, 0x30
-	  bl        -0x63C90
-	  mr.       r27, r3
-	  beq-      .loc_0xB8
-	  addi      r3, r27, 0
-	  addi      r5, r31, 0
-	  li        r4, 0x1
-	  bl        0xD94
-
-	.loc_0xB8:
-	  stw       r27, 0x8(r1)
-	  li        r0, 0
-	  addi      r5, r30, 0
-	  crclr     6, 0x6
-	  stw       r0, 0xC(r1)
-	  mr        r7, r29
-	  lwz       r3, 0x10(r1)
-	  addi      r9, r28, 0
-	  li        r4, 0x4
-	  li        r6, 0
-	  li        r8, 0
-	  li        r10, 0
-	  bl        0x19690
-	  lmw       r27, 0x1C(r1)
-	  lwz       r3, 0x10(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mName = "bore";
+	setChildren(CHILD_COUNT, new ActWatch(piki), nullptr, new ActBoreTalk(piki), nullptr, new ActBoreOneshot(piki), nullptr,
+	            new ActBoreRest(piki), nullptr);
 }
 
 /*
@@ -695,74 +450,16 @@ ActBoreSelect::ActBoreSelect(Piki* piki)
  * Address:	800AACFC
  * Size:	0000F4
  */
-void ActBoreSelect::init(Creature*)
+void ActBoreSelect::init(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  mr        r29, r3
-	  lwz       r30, 0xC(r3)
-	  cmplwi    r30, 0
-	  beq-      .loc_0x2C
-	  addi      r30, r30, 0x2B8
+	mActor->startMotion(PaniMotionInfo(PIKIANIM_Wait, mActor), PaniMotionInfo(PIKIANIM_Wait));
+	_14             = 2.0f + gsys->getFrameTime();
+	_18             = 1;
+	mChildActionIdx = CHILD_NULL;
 
-	.loc_0x2C:
-	  addi      r3, r1, 0x20
-	  li        r4, 0x3
-	  bl        0x74228
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x28
-	  li        r4, 0x3
-	  bl        0x74248
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x1FC84
-	  lwz       r4, 0x2DEC(r13)
-	  li        r3, 0x1
-	  lfs       f1, -0x7108(r2)
-	  li        r0, -0x1
-	  lfs       f0, 0x28C(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r29)
-	  stb       r3, 0x18(r29)
-	  sth       r0, 0x8(r29)
-	  bl        0x16D2F4
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x70F0(r2)
-	  stw       r0, 0x34(r1)
-	  lis       r3, 0x4330
-	  lfs       f4, -0x7100(r2)
-	  li        r0, 0
-	  stw       r3, 0x30(r1)
-	  lfs       f3, -0x7104(r2)
-	  lfd       f0, 0x30(r1)
-	  lfs       f1, -0x70F8(r2)
-	  fsubs     f5, f0, f2
-	  lfs       f2, -0x70FC(r2)
-	  lfs       f0, -0x70F4(r2)
-	  fdivs     f4, f5, f4
-	  fmuls     f3, f3, f4
-	  fsubs     f1, f3, f1
-	  fmuls     f1, f2, f1
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0x1C(r29)
-	  stb       r0, 0x19(r29)
-	  stb       r0, 0x1A(r29)
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	_1C = PI * (randBalanced(0.5f)) / 3.0f;
+	_19 = 0;
+	_1A = 0;
 }
 
 /*
@@ -770,11 +467,7 @@ void ActBoreSelect::init(Creature*)
  * Address:	800AADF0
  * Size:	00000C
  */
-void ActBoreSelect::stop()
-{
-	// Generated from stb r0, 0x1A(r3)
-	// _1A = 1;
-}
+void ActBoreSelect::stop() { _1A = 1; }
 
 /*
  * --INFO--
@@ -783,6 +476,41 @@ void ActBoreSelect::stop()
  */
 int ActBoreSelect::exec()
 {
+	if (_19) {
+		return mChildActions[mChildActionIdx].mAction->exec();
+	}
+
+	if (mActor->mNavi->_738 < 1.0f || _1A) {
+		if (mActor->mPikiAnimMgr._04.mMotionIdx == 3) {
+			return ACTOUT_Success;
+		}
+		if (mChildActionIdx == CHILD_BoreRest) {
+			static_cast<ActBoreRest*>(mChildActions[mChildActionIdx].mAction)->_18 = 1;
+			_19                                                                    = 1;
+			return ACTOUT_Continue;
+		}
+
+		if (mChildActionIdx == CHILD_BoreOneshot) {
+			static_cast<ActBoreOneshot*>(mChildActions[mChildActionIdx].mAction)->finish();
+			_19 = 1;
+			return ACTOUT_Continue;
+		}
+		return ACTOUT_Success;
+	}
+
+	if (_18) {
+		mActor->_A4.set(0.0f, 0.0f, 0.0f);
+		_14 -= gsys->getFrameTime();
+		if (_14 < 0.0f) {
+			determine();
+		}
+	} else {
+		if (mChildActions[mChildActionIdx].mAction->exec()) {
+			init(nullptr);
+		}
+	}
+
+	return ACTOUT_Continue;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -915,45 +643,20 @@ void ActBoreSelect::cleanup() { }
  * Address:	800AAF84
  * Size:	000078
  */
-void ActBoreSelect::procTargetMsg(Piki*, MsgTarget*)
+void ActBoreSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x18(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x40
-	  li        r0, 0
-	  stb       r0, 0x18(r3)
-	  sth       r0, 0x8(r3)
-	  lha       r0, 0x8(r3)
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r0,3,0,28
-	  lwz       r4, 0x4(r5)
-	  add       r3, r3, r0
-	  bl        0x18D68
-	  b         .loc_0x68
+	if (_18) {
+		_18             = 0;
+		mChildActionIdx = CHILD_Watch;
+		mChildActions[mChildActionIdx].initialise(msg->mTarget);
+		return;
+	}
 
-	.loc_0x40:
-	  lha       r0, 0x8(r3)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x68
-	  lwz       r4, 0x4(r3)
-	  rlwinm    r3,r0,3,0,28
-	  li        r0, 0
-	  lwzx      r3, r4, r3
-	  stw       r0, 0x18(r3)
-	  lwz       r0, 0x4(r5)
-	  stw       r0, 0x1C(r3)
-
-	.loc_0x68:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mChildActionIdx == CHILD_BoreTalk) {
+		ActBoreTalk* boreTalk = static_cast<ActBoreTalk*>(mChildActions[mChildActionIdx].mAction);
+		boreTalk->_18         = 0;
+		boreTalk->mTarget     = msg->mTarget;
+	}
 }
 
 /*
@@ -961,66 +664,18 @@ void ActBoreSelect::procTargetMsg(Piki*, MsgTarget*)
  * Address:	800AAFFC
  * Size:	0000BC
  */
-void ActBoreSelect::procAnimMsg(Piki*, MsgAnim*)
+void ActBoreSelect::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  addi      r29, r4, 0
-	  lha       r0, 0x8(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x4C
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r0,3,0,28
-	  addi      r4, r29, 0
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xA0
+	if (mChildActionIdx != CHILD_NULL) {
+		mChildActions[mChildActionIdx].mAction->procAnimMsg(piki, msg);
+		return;
+	}
 
-	.loc_0x4C:
-	  lwz       r3, 0x4(r5)
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x60
-	  b         .loc_0xA0
-
-	.loc_0x60:
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x70
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x70:
-	  addi      r3, r1, 0x14
-	  li        r4, 0x3
-	  bl        0x73EE4
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x3
-	  bl        0x73F04
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        0x1F940
-
-	.loc_0xA0:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_Done:
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Wait, piki), PaniMotionInfo(PIKIANIM_Wait));
+		break;
+	}
 }
 
 /*
@@ -1030,6 +685,68 @@ void ActBoreSelect::procAnimMsg(Piki*, MsgAnim*)
  */
 void ActBoreSelect::determine()
 {
+	if (coinFlip()) {
+		_14 = 2.0f + gsys->getFrameTime();
+		return;
+	}
+
+	Choice choices[CHILD_COUNT] = {
+		{ CHILD_Watch, 0.1f },
+		{ CHILD_BoreTalk, 0.5f },
+		{ CHILD_BoreOneshot, 0.3f },
+		{ CHILD_BoreRest, 0.1f },
+	};
+
+	int randIdx = selectRandomly(choices, CHILD_COUNT);
+
+	if (mActor->_2AC) {
+		randIdx = CHILD_Watch;
+	}
+
+	_18             = 0;
+	mChildActionIdx = randIdx;
+
+	Creature* target = nullptr;
+
+	switch (randIdx) {
+	case CHILD_Watch:
+		Creature* nearestEnemy;
+		if (tekiMgr) {
+			nearestEnemy = tekiMgr->findClosest(mActor->mPosition, nullptr);
+		}
+
+		Creature* nearestItem = itemMgr->findClosest(mActor->mPosition, nullptr);
+		Creature* nearestNavi = naviMgr->findClosest(mActor->mPosition, nullptr);
+
+		Creature* nearestBoss = (bossMgr) ? bossMgr->findClosest(mActor->mPosition, nullptr) : nullptr;
+
+		if (nearestBoss) {
+			target = nearestBoss;
+			break;
+		}
+
+		// these are probably not distances, rename later
+		f32 enemyDist = (nearestEnemy) ? nearestEnemy->_70.length() : 0.0f;
+		f32 itemDist  = (nearestItem) ? nearestItem->_70.length() : 0.0f;
+		f32 naviDist  = (nearestNavi) ? nearestNavi->_70.length() : 0.0f;
+
+		if (enemyDist > itemDist && enemyDist > naviDist) {
+			target = nearestEnemy;
+			break;
+		}
+
+		if (itemDist > naviDist) {
+			target = nearestItem;
+			break;
+		}
+
+		target = nearestNavi;
+		break;
+	case CHILD_BoreTalk:
+		break;
+	}
+
+	mChildActions[mChildActionIdx].initialise(target);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1257,45 +974,8 @@ void ActBoreSelect::determine()
  * Size:	000080
  */
 ActBoreTalk::ActBoreTalk(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  beq-      .loc_0x30
-	  addi      r0, r31, 0x28
-	  lis       r3, 0x802B
-	  stw       r0, 0x14(r31)
-	  subi      r0, r3, 0x246C
-	  stw       r0, 0x28(r31)
-
-	.loc_0x30:
-	  addi      r3, r31, 0
-	  addi      r4, r5, 0
-	  li        r5, 0x1
-	  bl        0x18A04
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x5804
-	  stw       r3, 0x0(r31)
-	  addi      r5, r3, 0x68
-	  addi      r0, r31, 0x28
-	  lwz       r4, 0x14(r31)
-	  mr        r3, r31
-	  stw       r5, 0x0(r4)
-	  lwz       r4, 0x14(r31)
-	  sub       r0, r0, r4
-	  stw       r0, 0x4(r4)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1303,8 +983,15 @@ ActBoreTalk::ActBoreTalk(Piki* piki)
  * Address:	800AB410
  * Size:	0000E8
  */
-void ActBoreTalk::init(Creature*)
+void ActBoreTalk::init(Creature* creature)
 {
+	mIsAnimFinished   = false;
+	_18               = 0;
+	SearchBuffer* buf = &mActor->_1B8;
+	int start         = buf->getFirst();
+	mTarget           = buf->getCreatureCheck(start);
+	mActor->startMotion(PaniMotionInfo(PIKIANIM_Asibumi, this), PaniMotionInfo(PIKIANIM_Asibumi));
+	mActor->enableMotionBlend();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1381,6 +1068,22 @@ void ActBoreTalk::init(Creature*)
  */
 void ActBoreTalk::startTalk()
 {
+	SearchBuffer* buf = &mActor->_1B8;
+	mActor->turnTo(mTarget->mPosition);
+	TRAVERSELOOP(buf, idx)
+	{
+		Creature* creature = buf->getCreatureCheck(idx);
+		creature->stimulate(InteractTalk(mActor));
+	}
+
+	mActor->startMotion(PaniMotionInfo(PIKIANIM_Chatting, this), PaniMotionInfo(PIKIANIM_Chatting));
+	mActor->enableMotionBlend();
+	_20 = randFloat(2.0f) + 5.0f;
+
+	if (mActor->_4FC == 1 && mActor->mNavi->_710 && mActor->mNavi->mCurrState->getStateID() != NAVISTATE_DemoSunset
+	    && mActor->mNavi->mCurrState->getStateID() != NAVISTATE_Dead) {
+		seMgr->setPikiNum(0);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1544,6 +1247,31 @@ void ActBoreTalk::startTalk()
  */
 int ActBoreTalk::exec()
 {
+	if (!mTarget) {
+		return ACTOUT_Fail;
+	}
+
+	if (_18 == 0) {
+		f32 angle          = angDist(mActor->mPosition.angSep(mTarget->mPosition), mActor->mDirection);
+		mActor->mDirection = roundAng(mActor->mDirection + 0.1f * angle);
+
+		// what is going on here, this should have a conversion and a clrlwi r0, r0, 1???
+		if (quickABS(angle) < 0.1f) {
+			_18 = 1;
+			startTalk();
+		}
+	}
+
+	if (mIsAnimFinished) {
+		return ACTOUT_Success;
+	}
+
+	_20 -= gsys->getFrameTime();
+	if (_20 < 0.0f) {
+		mActor->mPikiAnimMgr.finishMotion(this);
+	}
+
+	return ACTOUT_Continue;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1647,20 +1375,11 @@ void ActBoreTalk::cleanup() { }
  * Address:	800AB838
  * Size:	000024
  */
-void ActBoreTalk::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActBoreTalk::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x18(r3)
-	  cmpwi     r0, 0
-	  beqlr-
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0
-	  bnelr-
-	  li        r0, 0x1
-	  stb       r0, 0x24(r3)
-	  blr
-	*/
+	if (_18 && event.mEventType == KEY_Done) {
+		mIsAnimFinished = true;
+	}
 }
 
 /*
@@ -1669,7 +1388,7 @@ void ActBoreTalk::animationKeyUpdated(PaniAnimKeyEvent&)
  * Size:	000040
  */
 ActBoreListen::ActBoreListen(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
 	// UNUSED FUNCTION
 }
@@ -1708,45 +1427,8 @@ void ActBoreListen::procAnimMsg(Piki*, MsgAnim*) { }
  * Size:	000080
  */
 ActBoreOneshot::ActBoreOneshot(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  beq-      .loc_0x30
-	  addi      r0, r31, 0x1C
-	  lis       r3, 0x802B
-	  stw       r0, 0x14(r31)
-	  subi      r0, r3, 0x246C
-	  stw       r0, 0x1C(r31)
-
-	.loc_0x30:
-	  addi      r3, r31, 0
-	  addi      r4, r5, 0
-	  li        r5, 0x1
-	  bl        0x18524
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x56A8
-	  stw       r3, 0x0(r31)
-	  addi      r5, r3, 0x68
-	  addi      r0, r31, 0x1C
-	  lwz       r4, 0x14(r31)
-	  mr        r3, r31
-	  stw       r5, 0x0(r4)
-	  lwz       r4, 0x14(r31)
-	  sub       r0, r0, r4
-	  stw       r0, 0x4(r4)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1754,97 +1436,26 @@ ActBoreOneshot::ActBoreOneshot(Piki* piki)
  * Address:	800AB8F0
  * Size:	000038
  */
-void ActBoreOneshot::finish()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r4, r3, 0
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x1C
-	  lwz       r4, 0x14(r3)
-
-	.loc_0x1C:
-	  lwz       r3, 0xC(r3)
-	  addi      r3, r3, 0x354
-	  bl        0x741AC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void ActBoreOneshot::finish() { mActor->mPikiAnimMgr.finishMotion(this); }
 
 /*
  * --INFO--
  * Address:	800AB928
  * Size:	0000E0
  */
-void ActBoreOneshot::init(Creature*)
+void ActBoreOneshot::init(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x4
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  stw       r28, 0x40(r1)
-	  addi      r28, r3, 0
-	  lis       r3, 0x8022
-	  stb       r0, 0x18(r28)
-	  addi      r6, r3, 0x2480
-	  addi      r3, r1, 0x20
-	  lwz       r5, 0x0(r6)
-	  lwz       r0, 0x4(r6)
-	  stw       r5, 0x20(r1)
-	  stw       r0, 0x24(r1)
-	  lwz       r5, 0x8(r6)
-	  lwz       r0, 0xC(r6)
-	  stw       r5, 0x28(r1)
-	  stw       r0, 0x2C(r1)
-	  lwz       r5, 0x10(r6)
-	  lwz       r0, 0x14(r6)
-	  stw       r5, 0x30(r1)
-	  stw       r0, 0x34(r1)
-	  lwz       r5, 0x18(r6)
-	  lwz       r0, 0x1C(r6)
-	  stw       r5, 0x38(r1)
-	  stw       r0, 0x3C(r1)
-	  bl        0x6A770
-	  cmplwi    r28, 0
-	  addi      r29, r3, 0
-	  addi      r30, r28, 0
-	  beq-      .loc_0x90
-	  lwz       r30, 0x14(r28)
+	mIsAnimFinished   = false;
+	Choice choices[4] = {
+		{ PIKIANIM_Akubi, 0.35f },
+		{ PIKIANIM_Rinbow, 0.35f },
+		{ PIKIANIM_Sagasu2, 0.2f },
+		{ PIKIANIM_Iraira, 0.1f },
+	};
 
-	.loc_0x90:
-	  addi      r3, r1, 0x10
-	  addi      r4, r29, 0
-	  bl        0x73598
-	  addi      r31, r3, 0
-	  addi      r4, r29, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  bl        0x735B8
-	  mr        r4, r3
-	  lwz       r3, 0xC(r28)
-	  mr        r5, r31
-	  bl        0x1EFF4
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  lwz       r28, 0x40(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	int randAnim = selectRandomly(choices, 4);
+
+	mActor->startMotion(PaniMotionInfo(randAnim, this), PaniMotionInfo(randAnim));
 }
 
 /*
@@ -1854,18 +1465,11 @@ void ActBoreOneshot::init(Creature*)
  */
 int ActBoreOneshot::exec()
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x18(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x14
-	  li        r3, 0x2
-	  blr
+	if (mIsAnimFinished) {
+		return ACTOUT_Success;
+	}
 
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-	*/
+	return ACTOUT_Continue;
 }
 
 /*
@@ -1880,17 +1484,11 @@ void ActBoreOneshot::cleanup() { }
  * Address:	800ABA28
  * Size:	000018
  */
-void ActBoreOneshot::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActBoreOneshot::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0
-	  bnelr-
-	  li        r0, 0x1
-	  stb       r0, 0x18(r3)
-	  blr
-	*/
+	if (event.mEventType == KEY_Done) {
+		mIsAnimFinished = true;
+	}
 }
 
 /*
@@ -1899,45 +1497,8 @@ void ActBoreOneshot::animationKeyUpdated(PaniAnimKeyEvent&)
  * Size:	000080
  */
 ActBoreRest::ActBoreRest(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  beq-      .loc_0x30
-	  addi      r0, r31, 0x28
-	  lis       r3, 0x802B
-	  stw       r0, 0x14(r31)
-	  subi      r0, r3, 0x246C
-	  stw       r0, 0x28(r31)
-
-	.loc_0x30:
-	  addi      r3, r31, 0
-	  addi      r4, r5, 0
-	  li        r5, 0x1
-	  bl        0x18354
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x5608
-	  stw       r3, 0x0(r31)
-	  addi      r5, r3, 0x68
-	  addi      r0, r31, 0x28
-	  lwz       r4, 0x14(r31)
-	  mr        r3, r31
-	  stw       r5, 0x0(r4)
-	  lwz       r4, 0x14(r31)
-	  sub       r0, r0, r4
-	  stw       r0, 0x4(r4)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1945,48 +1506,13 @@ ActBoreRest::ActBoreRest(Piki* piki)
  * Address:	800ABAC0
  * Size:	00008C
  */
-void ActBoreRest::init(Creature*)
+void ActBoreRest::init(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  li        r31, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  stw       r31, 0x1C(r3)
-	  bl        .loc_0x8C
-	  bl        0x16C58C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x70F0(r2)
-	  stw       r0, 0x1C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x7100(r2)
-	  stw       r0, 0x18(r1)
-	  lfs       f2, -0x7104(r2)
-	  lfd       f1, 0x18(r1)
-	  lfs       f0, -0x70DC(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x70E4(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x20(r30)
-	  stb       r31, 0x25(r30)
-	  stb       r31, 0x24(r30)
-	  stb       r31, 0x18(r30)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-
-	.loc_0x8C:
-	*/
+	_1C = 0;
+	sitDown();
+	_20 = 5.0f + randFloat(4.0f);
+	_24 = _25 = 0;
+	_18       = 0;
 }
 
 /*
@@ -1996,77 +1522,16 @@ void ActBoreRest::init(Creature*)
  */
 void ActBoreRest::sitDown()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  mr        r29, r3
-	  lwz       r0, 0x1C(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x84
-	  bge-      .loc_0xCC
-	  cmpwi     r0, 0
-	  bge-      .loc_0x38
-	  b         .loc_0xCC
-
-	.loc_0x38:
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x48
-	  lwz       r30, 0x14(r29)
-
-	.loc_0x48:
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x32
-	  bl        0x733BC
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x24
-	  li        r4, 0x32
-	  bl        0x733DC
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x1EE18
-	  li        r0, 0x1
-	  stw       r0, 0x1C(r29)
-	  b         .loc_0xCC
-
-	.loc_0x84:
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x94
-	  lwz       r30, 0x14(r29)
-
-	.loc_0x94:
-	  addi      r3, r1, 0xC
-	  li        r4, 0x34
-	  bl        0x73370
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x14
-	  li        r4, 0x34
-	  bl        0x73390
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x1EDCC
-	  li        r0, 0x3
-	  stw       r0, 0x1C(r29)
-
-	.loc_0xCC:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	switch (_1C) {
+	case 0:
+		mActor->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
+		_1C = 1;
+		break;
+	case 1:
+		mActor->startMotion(PaniMotionInfo(PIKIANIM_Neru, this), PaniMotionInfo(PIKIANIM_Neru));
+		_1C = 3;
+		break;
+	}
 }
 
 /*
@@ -2076,7 +1541,16 @@ void ActBoreRest::sitDown()
  */
 void ActBoreRest::standUp()
 {
-	// UNUSED FUNCTION
+	switch (_1C) {
+	case 1:
+		mActor->mPikiAnimMgr.finishMotion(this);
+		_24 = 1;
+		break;
+	case 3:
+		mActor->mPikiAnimMgr.finishMotion(this);
+		_24 = 1;
+		break;
+	}
 }
 
 /*
@@ -2086,6 +1560,34 @@ void ActBoreRest::standUp()
  */
 int ActBoreRest::exec()
 {
+	if (_25) {
+		return ACTOUT_Success;
+	}
+
+	if (_18) {
+		if (!_24) {
+			if (_1C >= 1) {
+				standUp();
+				return ACTOUT_Continue;
+			}
+			return ACTOUT_Success;
+		}
+		return ACTOUT_Continue;
+	}
+
+	_20 -= gsys->getFrameTime();
+
+	if (!_24 && _20 < 0.0f) {
+		if (_1C <= 1 && coinFlip()) {
+			sitDown();
+		} else if (_1C >= 1) {
+			standUp();
+		}
+
+		_20 = 3.0f + randFloat(2.0f);
+	}
+
+	return ACTOUT_Continue;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2335,8 +1837,30 @@ void ActBoreRest::cleanup() { }
  * Address:	800ABF20
  * Size:	000104
  */
-void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
+	switch (event.mEventType) {
+	case KEY_Done:
+		if (_24) {
+			switch (_1C) {
+			case 1:
+				_24 = 0;
+				_1C = 0;
+				_25 = 1;
+				break;
+			case 3:
+				_24 = 0;
+				_1C = 1;
+				mActor->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
+				mActor->mPikiAnimMgr._04.mCurrentFrame = 30.0f;
+				mActor->mPikiAnimMgr._58.mCurrentFrame = 30.0f;
+				break;
+			}
+		}
+		break;
+	case KEY_LoopEnd:
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2414,261 +1938,6 @@ void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent&)
 	  lwz       r30, 0x40(r1)
 	  lwz       r29, 0x3C(r1)
 	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AC024
- * Size:	000080
- */
-ActBoreRest::~ActBoreRest()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x64
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x5608
-	  stw       r3, 0x0(r30)
-	  addi      r6, r3, 0x68
-	  addi      r0, r30, 0x28
-	  lwz       r5, 0x14(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  stw       r6, 0x0(r5)
-	  lwz       r5, 0x14(r30)
-	  sub       r0, r0, r5
-	  stw       r0, 0x4(r5)
-	  bl        0x17D94
-	  extsh.    r0, r31
-	  ble-      .loc_0x64
-	  mr        r3, r30
-	  bl        -0x64ED8
-
-	.loc_0x64:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AC0A4
- * Size:	000080
- */
-ActBoreOneshot::~ActBoreOneshot()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x64
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x56A8
-	  stw       r3, 0x0(r30)
-	  addi      r6, r3, 0x68
-	  addi      r0, r30, 0x1C
-	  lwz       r5, 0x14(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  stw       r6, 0x0(r5)
-	  lwz       r5, 0x14(r30)
-	  sub       r0, r0, r5
-	  stw       r0, 0x4(r5)
-	  bl        0x17D14
-	  extsh.    r0, r31
-	  ble-      .loc_0x64
-	  mr        r3, r30
-	  bl        -0x64F58
-
-	.loc_0x64:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AC124
- * Size:	000064
- */
-ActBoreListen::~ActBoreListen()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x48
-	  lis       r3, 0x802B
-	  addi      r0, r3, 0x5740
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x17CB0
-	  extsh.    r0, r31
-	  ble-      .loc_0x48
-	  mr        r3, r30
-	  bl        -0x64FBC
-
-	.loc_0x48:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AC188
- * Size:	000080
- */
-ActBoreTalk::~ActBoreTalk()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x64
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x5804
-	  stw       r3, 0x0(r30)
-	  addi      r6, r3, 0x68
-	  addi      r0, r30, 0x28
-	  lwz       r5, 0x14(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  stw       r6, 0x0(r5)
-	  lwz       r5, 0x14(r30)
-	  sub       r0, r0, r5
-	  stw       r0, 0x4(r5)
-	  bl        0x17C30
-	  extsh.    r0, r31
-	  ble-      .loc_0x64
-	  mr        r3, r30
-	  bl        -0x6503C
-
-	.loc_0x64:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AC208
- * Size:	000064
- */
-ActBoreSelect::~ActBoreSelect()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x48
-	  lis       r3, 0x802B
-	  addi      r0, r3, 0x58A8
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x17BCC
-	  extsh.    r0, r31
-	  ble-      .loc_0x48
-	  mr        r3, r30
-	  bl        -0x650A0
-
-	.loc_0x48:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AC26C
- * Size:	000064
- */
-ActFreeSelect::~ActFreeSelect()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x48
-	  lis       r3, 0x802B
-	  addi      r0, r3, 0x5930
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x17B68
-	  extsh.    r0, r31
-	  ble-      .loc_0x48
-	  mr        r3, r30
-	  bl        -0x65104
-
-	.loc_0x48:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
 	*/

@@ -48,7 +48,7 @@ void SAIEventInit()
  */
 void SAIMotionDoneEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
-	creature->setEventFlag(mEventID, msg->mKeyEvent->mKeyFrame == 0);
+	creature->setEventFlag(mEventID, msg->mKeyEvent->mEventType == KEY_Done);
 }
 
 /*
@@ -58,7 +58,7 @@ void SAIMotionDoneEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
  */
 void SAIMotionAction0Event::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
-	creature->setEventFlag(mEventID, msg->mKeyEvent->mKeyFrame == 1);
+	creature->setEventFlag(mEventID, msg->mKeyEvent->mEventType == KEY_Action0);
 }
 
 /*
@@ -68,7 +68,7 @@ void SAIMotionAction0Event::procAnimMsg(AICreature* creature, MsgAnim* msg)
  */
 void SAIMotionLoopStartEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
-	creature->setEventFlag(mEventID, msg->mKeyEvent->mKeyFrame == 5);
+	creature->setEventFlag(mEventID, msg->mKeyEvent->mEventType == KEY_LoopStart);
 }
 
 /*
@@ -78,7 +78,7 @@ void SAIMotionLoopStartEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
  */
 void SAIMotionLoopEndEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
-	creature->setEventFlag(mEventID, msg->mKeyEvent->mKeyFrame == 6);
+	creature->setEventFlag(mEventID, msg->mKeyEvent->mEventType == KEY_LoopEnd);
 }
 
 /*

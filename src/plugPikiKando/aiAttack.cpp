@@ -1,12 +1,22 @@
 #include "PikiAI.h"
+#include "PlayerState.h"
+#include "teki.h"
+#include "SoundMgr.h"
+#include "AIPerf.h"
+#include "EffectMgr.h"
+#include "PikiState.h"
+#include "AIConstant.h"
+#include "sysNew.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "aiAttack");
 	// UNUSED FUNCTION
 }
 
@@ -28,61 +38,11 @@ static void _Print(char*, ...)
 ActAttack::ActAttack(Piki* piki)
     : AndAction(piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  stw       r30, 0x10(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r30, 0x8(r1)
-	  addi      r3, r30, 0
-	  bl        0x1BAC0
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x7ED0
-	  stw       r0, 0x0(r30)
-	  li        r5, 0
-	  lis       r3, 0x802B
-	  stw       r5, 0x14(r30)
-	  subi      r0, r3, 0x246C
-	  lis       r3, 0x802B
-	  stw       r0, 0x18(r30)
-	  addi      r3, r3, 0x54E8
-	  addi      r4, r3, 0x64
-	  stw       r3, 0x0(r30)
-	  subi      r0, r13, 0x5008
-	  li        r3, 0x30
-	  stw       r4, 0x18(r30)
-	  stw       r5, 0x24(r30)
-	  stw       r0, 0x10(r30)
-	  bl        -0x61354
-	  mr.       r30, r3
-	  beq-      .loc_0x88
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x704
-
-	.loc_0x88:
-	  lwz       r3, 0x8(r1)
-	  addi      r5, r30, 0
-	  crclr     6, 0x6
-	  li        r4, 0x1
-	  li        r6, 0
-	  bl        0x1BFEC
-	  lwz       r3, 0x8(r1)
-	  li        r0, 0
-	  stw       r0, 0x24(r3)
-	  stb       r0, 0x1F(r3)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_24   = 0;
+	mName = "attack";
+	setChildren(1, new ActJumpAttack(piki), nullptr);
+	_24 = 0;
+	_1F = 0;
 }
 
 /*
@@ -90,109 +50,48 @@ ActAttack::ActAttack(Piki* piki)
  * Address:	800A8414
  * Size:	000150
  */
-void ActAttack::init(Creature*)
+void ActAttack::init(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  lwz       r5, 0x2F6C(r13)
-	  lbz       r0, 0x1B5(r5)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x134
-	  lwz       r3, 0xC(r31)
-	  li        r30, 0
-	  li        r0, 0x5
-	  stb       r30, 0x408(r3)
-	  lwz       r3, 0xC(r31)
-	  stb       r0, 0x400(r3)
-	  lwz       r3, 0xC(r31)
-	  bl        0x200F4
-	  cmplwi    r29, 0
-	  bne-      .loc_0x68
-	  stw       r30, 0x28(r31)
-	  stw       r30, 0x20(r31)
-	  stb       r30, 0x1F(r31)
-	  b         .loc_0x9C
+	u32 badCompiler;
+	if (playerState->_1B5) {
+		return;
+	}
 
-	.loc_0x68:
-	  lwz       r0, 0x6C(r29)
-	  cmpwi     r0, 0x36
-	  bne-      .loc_0x90
-	  stw       r29, 0x28(r31)
-	  li        r0, 0x1
-	  addi      r3, r31, 0
-	  stb       r0, 0x1F(r31)
-	  bl        0x230
-	  mr        r29, r3
-	  b         .loc_0x9C
+	mActor->_408 = 0;
+	mActor->_400 = 5;
+	mActor->getState(); // some debug thing probably
 
-	.loc_0x90:
-	  stw       r30, 0x28(r31)
-	  stw       r30, 0x20(r31)
-	  stb       r30, 0x1F(r31)
+	if (!creature) {
+		_28 = nullptr;
+		_20 = 0;
+		_1F = 0;
+	} else if (creature->mObjType == OBJTYPE_Navi) {
+		_28      = creature;
+		_1F      = 1;
+		creature = findTarget();
+	} else {
+		_28 = nullptr;
+		_20 = 0;
+		_1F = 0;
+	}
 
-	.loc_0x9C:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x120
-	  lwz       r3, 0x24(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xC0
-	  beq-      .loc_0xC0
-	  bl        0x3BEA4
-	  li        r0, 0
-	  stw       r0, 0x24(r31)
+	if (creature) {
+		if (_24) {
+			resetCreature(_24);
+		}
+		_24 = creature;
+		postSetCreature(_24);
 
-	.loc_0xC0:
-	  stw       r29, 0x24(r31)
-	  lwz       r3, 0x24(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xD4
-	  bl        0x3BE78
+		AndAction::init(creature);
+		if (creature->mObjType == OBJTYPE_Teki && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk9)
+		    && static_cast<Teki*>(creature)->mTekiType == TEKI_Palm) {
+			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk9);
+		}
+	}
 
-	.loc_0xD4:
-	  addi      r3, r31, 0
-	  addi      r4, r29, 0
-	  bl        0x1BA24
-	  lwz       r0, 0x6C(r29)
-	  cmpwi     r0, 0x37
-	  bne-      .loc_0x120
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x9
-	  addi      r3, r3, 0x54
-	  bl        -0x26048
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x120
-	  lwz       r0, 0x320(r29)
-	  cmpwi     r0, 0x7
-	  bne-      .loc_0x120
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x9
-	  addi      r3, r3, 0x54
-	  bl        -0x25DE0
-
-	.loc_0x120:
-	  lwz       r3, 0x3030(r13)
-	  bl        -0x4F30
-	  li        r0, 0
-	  stb       r0, 0x1C(r31)
-	  stb       r0, 0x1D(r31)
-
-	.loc_0x134:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	seMgr->joinBattle();
+	_1C = 0;
+	_1D = 0;
 }
 
 /*
@@ -200,94 +99,37 @@ void ActAttack::init(Creature*)
  * Address:	........
  * Size:	000084
  */
-// void ActAttack::startLost()
-// {
-// 	// UNUSED FUNCTION
-// }
+void ActAttack::startLost()
+{
+	// UNUSED FUNCTION
+}
 
 /*
  * --INFO--
  * Address:	800A8564
  * Size:	0000FC
  */
-void ActAttack::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x8
-	  beq-      .loc_0x48
-	  bge-      .loc_0xE8
-	  cmpwi     r0, 0
-	  beq-      .loc_0x30
-	  b         .loc_0xE8
-
-	.loc_0x30:
-	  lbz       r0, 0x1C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xE8
-	  li        r0, 0x1
-	  stb       r0, 0x1D(r31)
-	  b         .loc_0xE8
-
-	.loc_0x48:
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0xC8(r3)
-	  rlwinm.   r0,r0,0,12,12
-	  bne-      .loc_0xE8
-	  lwz       r0, -0x5F04(r13)
-	  cmpwi     r0, 0x1
-	  ble-      .loc_0x74
-	  addi      r3, r3, 0x174
-	  bl        -0x3174
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xE8
-
-	.loc_0x74:
-	  lwz       r3, 0xC(r31)
-	  lfsu      f0, 0x464(r3)
-	  stfs      f0, 0x18(r1)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x20(r1)
-	  lbz       r0, 0x1E(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB8
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x18
-	  li        r4, 0x45
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xF4524
-	  b         .loc_0xE8
-
-	.loc_0xB8:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x18
-	  li        r4, 0x2F
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xF4508
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x18
-	  li        r4, 0x30
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xF44F0
-
-	.loc_0xE8:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	switch (event.mEventType) {
+	case KEY_Done:
+		if (_1C) {
+			_1D = 1;
+		}
+		break;
+	case KEY_PlayEffect:
+		if (!mActor->isCreatureFlag(CF_Unk19) && (AIPerf::optLevel <= 1 || mActor->_174.updatable())) {
+			Vector3f vec(mActor->_464);
+			if (_1E) {
+				effectMgr->create(EffectMgr::EFF_Unk69, vec, nullptr, nullptr);
+			} else {
+				effectMgr->create(EffectMgr::EFF_Unk47, vec, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Unk48, vec, nullptr, nullptr);
+			}
+		}
+		break;
+	}
+	u32 badCompiler; // sigh
 }
 
 /*
@@ -295,11 +137,7 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800A8660
  * Size:	00000C
  */
-void ActAttack::resume()
-{
-	// Generated from stb r0, 0x1C(r3)
-	// _1C = 0;
-}
+void ActAttack::resume() { _1C = 0; }
 
 /*
  * --INFO--
@@ -308,32 +146,10 @@ void ActAttack::resume()
  */
 void ActAttack::restart()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x24(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x40
-	  lwz       r3, 0x3030(r13)
-	  bl        -0x5078
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r31
-	  lwz       r4, 0x24(r31)
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x40:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (_24) {
+		seMgr->leaveBattle();
+		init(getTarget());
+	}
 }
 
 /*
@@ -348,7 +164,9 @@ bool ActAttack::resumable() { return true; }
  * Address:	800A86C8
  * Size:	000008
  */
+#pragma dont_inline on
 Creature* ActAttack::findTarget() { return nullptr; }
+#pragma dont_inline reset
 
 /*
  * --INFO--
@@ -367,6 +185,87 @@ void ActAttack::decideTarget()
  */
 int ActAttack::exec()
 {
+	if (playerState->_1B5) {
+		return ACTOUT_Success;
+	}
+
+	if (_1C) {
+		mActor->_A4.set(0.0f, 0.0f, 0.0f);
+		if (_1D) {
+			return ACTOUT_Success;
+		}
+
+		return ACTOUT_Continue;
+	}
+
+	if (!_24) {
+		Creature* target = findTarget();
+		if (target) {
+			seMgr->leaveBattle();
+			init(target);
+			return ACTOUT_Continue;
+		}
+
+		return ACTOUT_Success;
+	}
+
+	if (!_24->isAlive()) {
+		if (mActor->mStickTarget) {
+			mActor->endStickObject();
+		}
+		return ACTOUT_Success;
+	}
+
+	if (_24->mObjType == OBJTYPE_Piki) {
+		Piki* targetPiki = static_cast<Piki*>(_24);
+		if (!targetPiki->isKinoko() || (targetPiki->isKinoko() && targetPiki->getState() == PIKISTATE_KinokoChange)) {
+			mActor->_400 = 7;
+			return ACTOUT_Success;
+		}
+	}
+
+	if (!mActor->mStickTarget && (_24->isCreatureFlag(CF_Unk7) || !_24->isVisible())) {
+		Creature* target = findTarget();
+		if (target) {
+			init(target);
+			return ACTOUT_Continue;
+		}
+		_1C = 1;
+		_1D = 0;
+		mActor->startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, this), PaniMotionInfo(PIKIANIM_Sagasu2));
+		return ACTOUT_Continue;
+	}
+
+	int andRet = AndAction::exec();
+	if (andRet != ACTOUT_Continue) {
+		if (_1F) {
+			if (findTarget() && andRet == ACTOUT_Success) {
+				seMgr->leaveBattle();
+				init(_28);
+				return ACTOUT_Success;
+			}
+			return ACTOUT_Success;
+		}
+
+		Creature* target = _24;
+		if (AIConstant::_instance->mConstants._C4() == 0) {
+			if (target->isAlive()) {
+				seMgr->leaveBattle();
+				init(target);
+				return ACTOUT_Continue;
+			}
+
+			target = findTarget();
+			if (target) {
+				seMgr->leaveBattle();
+				init(target);
+				return ACTOUT_Continue;
+			}
+		}
+		return ACTOUT_Success;
+	}
+
+	return andRet;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -624,36 +523,11 @@ int ActAttack::exec()
  */
 void ActAttack::cleanup()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0xC(r3)
-	  bl        -0x18AE4
-	  lwz       r3, 0x3030(r13)
-	  bl        -0x5414
-	  lwz       r3, 0xC(r31)
-	  bl        -0x181BC
-	  lwz       r3, 0x24(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x44
-	  bl        0x3B928
-	  li        r0, 0
-	  stw       r0, 0x24(r31)
-
-	.loc_0x44:
-	  lwz       r3, 0xC(r31)
-	  li        r0, 0
-	  stb       r0, 0x519(r3)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mActor->endClimb();
+	seMgr->leaveBattle();
+	mActor->endStickObject();
+	resetCreature(_24);
+	mActor->_519 = 0;
 }
 
 /*
@@ -662,35 +536,10 @@ void ActAttack::cleanup()
  * Size:	000060
  */
 ActJumpAttack::ActJumpAttack(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
+    , _24(nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        0x1B348
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x246C
-	  lis       r3, 0x802B
-	  stw       r0, 0x14(r31)
-	  addi      r3, r3, 0x5424
-	  stw       r3, 0x0(r31)
-	  addi      r3, r3, 0x64
-	  li        r0, 0
-	  stw       r3, 0x14(r31)
-	  mr        r3, r31
-	  stw       r0, 0x24(r31)
-	  stw       r0, 0x24(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_24 = nullptr; // lol
 }
 
 /*
@@ -698,8 +547,39 @@ ActJumpAttack::ActJumpAttack(Piki* piki)
  * Address:	800A8AD0
  * Size:	0001CC
  */
-void ActJumpAttack::init(Creature*)
+void ActJumpAttack::init(Creature* creature)
 {
+	u32 badCompiler; // hmm.
+	u32 badCompiler2;
+
+	mActor->_408 = 0;
+	mActor->_400 = 5;
+	if (creature) {
+		if (_24) {
+			resetCreature(_24);
+		}
+		_24 = creature;
+		postSetCreature(_24);
+	}
+	_18 = 0;
+	_2C = 0;
+	if (mActor->mStickTarget) {
+		if (mActor->_188 && mActor->_188->isClimbable()) {
+			mActor->startClimb();
+			_18 = 6;
+			mActor->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
+		} else {
+			_18 = 5;
+			_2D = 0;
+			mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+		}
+		_20 = 0;
+	} else {
+		mActor->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
+	}
+
+	_28 = creature->getNearestCollPart(mActor->mPosition, '*t**');
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -863,52 +743,13 @@ void ActJumpAttack::getAttackSize()
  * Address:	800A8C9C
  * Size:	00009C
  */
-void ActJumpAttack::procStickMsg(Piki*, MsgStick*)
+void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x5
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x28(r1)
-	  mr.       r28, r3
-	  stw       r0, 0x18(r3)
-	  li        r0, 0
-	  addi      r30, r28, 0
-	  stb       r0, 0x2D(r3)
-	  beq-      .loc_0x40
-	  addi      r30, r30, 0x14
-
-	.loc_0x40:
-	  addi      r3, r1, 0x14
-	  li        r4, 0x30
-	  bl        0x76274
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x30
-	  bl        0x76294
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        0x21CD0
-	  li        r0, 0
-	  stw       r0, 0x20(r28)
-	  stb       r0, 0x470(r29)
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	_18 = 5;
+	_2D = 0;
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+	_20        = 0;
+	piki->_470 = 0;
 }
 
 /*
@@ -916,18 +757,12 @@ void ActJumpAttack::procStickMsg(Piki*, MsgStick*)
  * Address:	800A8D38
  * Size:	00001C
  */
-void ActJumpAttack::procBounceMsg(Piki*, MsgBounce*)
+void ActJumpAttack::procBounceMsg(Piki* piki, MsgBounce* msg)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x18(r3)
-	  cmpwi     r0, 0x1
-	  bnelr-
-	  li        r0, 0
-	  stw       r0, 0x18(r3)
-	  stb       r0, 0x2C(r3)
-	  blr
-	*/
+	if (_18 == 1) {
+		_18 = 0;
+		_2C = 0;
+	}
 }
 
 /*
@@ -935,8 +770,67 @@ void ActJumpAttack::procBounceMsg(Piki*, MsgBounce*)
  * Address:	800A8D54
  * Size:	000268
  */
-void ActJumpAttack::procCollideMsg(Piki*, MsgCollide*)
+void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
+	// this definitely has inlines somewhere, the control flow is so wacky.
+
+	if (!_24 || !_24->isAlive() || piki->getState() == PIKISTATE_LookAt) {
+		return;
+	}
+
+	if (_24->mObjType == OBJTYPE_Piki && !static_cast<Piki*>(_24)->isKinoko()) {
+		_2C = 1;
+		return;
+	}
+
+	if (msg->mEvent.mCollider != _24) {
+		return;
+	}
+
+	if (_18 != 1) {
+		return;
+	}
+
+	if (piki->mStickTarget != nullptr) {
+		return;
+	}
+
+	if (msg->mEvent.mCollPart == 0) {
+		return;
+	}
+
+	if (msg->mEvent.mCollPart->mPartType == PART_Platform) {
+		if (msg->mEvent.mCollPart->isStickable()) {
+			piki->startStick(msg->mEvent.mCollider, msg->mEvent.mCollPart);
+		} else {
+			if (!msg->mEvent.mCollPart->isClimbable()) {
+				return;
+			}
+			piki->startStick(msg->mEvent.mCollider, msg->mEvent.mCollPart);
+		}
+	} else {
+		if (msg->mEvent.mCollPart->mPartType == PART_Collision || msg->mEvent.mCollPart->isTubeLike()) {
+			if (msg->mEvent.mCollPart->isStickable()) {
+				piki->startStickObject(msg->mEvent.mCollider, msg->mEvent.mCollPart, -1, 0.0f);
+			} else {
+				return;
+			}
+		}
+		return;
+	}
+
+	_18 = 5;
+	if (msg->mEvent.mCollPart && msg->mEvent.mCollPart->mPartType == PART_Platform && msg->mEvent.mCollPart->isClimbable()) {
+		piki->startClimb();
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
+		_18 = 6;
+	} else {
+		_2D = 0;
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+	}
+
+	_20        = 0;
+	piki->_470 = 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2176,30 +2070,8 @@ int ActJumpAttack::exec()
  */
 void ActJumpAttack::cleanup()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x24(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x2C
-	  bl        0x3A524
-	  li        r0, 0
-	  stw       r0, 0x24(r31)
-
-	.loc_0x2C:
-	  lwz       r3, 0xC(r31)
-	  li        r0, 0
-	  stb       r0, 0x470(r3)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	resetCreature(_24);
+	mActor->_470 = 0;
 }
 
 /*
@@ -2207,31 +2079,40 @@ void ActJumpAttack::cleanup()
  * Address:	800A9E74
  * Size:	00002C
  */
-void ActJumpAttack::attackHit()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x19
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x24(r3)
-	  lwz       r3, 0xC(r3)
-	  bl        -0x1F8D8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void ActJumpAttack::attackHit() { mActor->playEventSound(getTarget(), 25); }
 
 /*
  * --INFO--
  * Address:	800A9EA0
  * Size:	00012C
  */
-void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
+	switch (event.mEventType) {
+	case KEY_Action0:
+		_20 = 1;
+		break;
+	case KEY_Action1:
+		_20 = 0;
+		break;
+	case KEY_Done:
+		if (_18 == 1) {
+			_18 = 0;
+		}
+		_20 = 4;
+		break;
+	case KEY_PlayEffect:
+		if (!mActor->isCreatureFlag(CF_Unk19) && (AIPerf::optLevel <= 1 || mActor->_174.updatable())) {
+			Vector3f vec(mActor->_464);
+			if (_2D) {
+				effectMgr->create(EffectMgr::EFF_Unk69, vec, nullptr, nullptr);
+			} else {
+				effectMgr->create(EffectMgr::EFF_Unk47, vec, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Unk48, vec, nullptr, nullptr);
+			}
+		}
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

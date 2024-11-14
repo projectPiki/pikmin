@@ -20,6 +20,9 @@ struct Pebble {
 	Pebble();
 
 	// TODO: members
+	Vector3f mPosition; // _00
+	u8 _0C[0x2];        // _0C, unknown
+	u8 _0E;             // _0E
 };
 
 /*
@@ -45,7 +48,7 @@ struct GrassGen : public ItemCreature {
 	void getRandomGrass();
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
 
@@ -75,7 +78,7 @@ struct RockGen : public ItemCreature {
 	Pebble* getRandomPebble();
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
 
@@ -90,7 +93,7 @@ struct WeedsGen : public ItemCreature {
 	virtual void refresh(Graphics&); // _EC
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
 
@@ -111,7 +114,7 @@ struct Weed : public ItemCreature {
 	void interactPullout(Creature*);
 
 	// _00      = VTBL
-	// _00-_304 = ItemCreature?
+	// _00-_3C8 = ItemCreature
 	// TODO: members
 };
 

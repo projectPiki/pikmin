@@ -753,7 +753,7 @@ void ObjectMgr::refresh(Graphics&)
  * Address:	800E0A54
  * Size:	00025C
  */
-void ObjectMgr::findClosest(Vector3f&, Condition*)
+Creature* ObjectMgr::findClosest(Vector3f&, Condition*)
 {
 	/*
 	.loc_0x0:
@@ -938,7 +938,7 @@ void ObjectMgr::findClosest(Vector3f&, Condition*)
  * Address:	800E0CB0
  * Size:	000274
  */
-void ObjectMgr::findClosest(Vector3f&, f32, Condition*)
+Creature* ObjectMgr::findClosest(Vector3f&, f32, Condition*)
 {
 	/*
 	.loc_0x0:

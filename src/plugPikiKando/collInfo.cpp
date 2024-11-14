@@ -1,13 +1,18 @@
 #include "Collision.h"
 #include "Geometry.h"
+#include "PikiMacros.h"
+#include "Shape.h"
+#include "Dolphin/os.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "collInfo");
 	// UNUSED FUNCTION
 }
 
@@ -20,6 +25,18 @@ static void _Print(char*, ...)
 {
 	// UNUSED FUNCTION
 }
+
+Matrix4f invCamMat;
+
+static char* _typeStr[] = {
+	"COLLISION",   // PART_Collision
+	"BOUNDSPHERE", // PART_BoundSphere
+	"REFERENCE",   // PART_Reference
+	"PLATFORM",    // PART_Platform
+	"CYLINDER",    // PART_Cylinder
+	"TUBE",        // PART_Tube
+	"TUBE_CHILD",  // PART_TubeChild
+};
 
 /*
  * --INFO--
@@ -520,7 +537,7 @@ void Tube::getYRatio(f32)
  * Address:	8008738C
  * Size:	00033C
  */
-void Tube::collide(const Sphere&, Vector3f&, f32&)
+bool Tube::collide(const Sphere&, Vector3f&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -1147,99 +1164,31 @@ void CollPartUpdater::updateCollPart(CollPart*)
  */
 bool CollPart::isStickable()
 {
+	if (!mIsStickEnabled) {
+		return false;
+	}
+
+	if (mPartType == PART_Platform) {
+		if (getCode().match('c***', '*')) {
+			getCode();
+			getID();
+			return false;
+		}
+
+		if (!getCode().match('s***', '*')) {
+			return false;
+		}
+
+		return true;
+	}
+
+	if (isTubeLike() || mPartType == PART_Collision) {
+		if (getCode().match('s***', '*')) {
+			return true;
+		}
+	}
+
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  mr        r31, r3
-	  lbz       r0, 0x51(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  b         .loc_0x110
-
-	.loc_0x28:
-	  lbz       r3, 0x5C(r31)
-	  cmplwi    r3, 0x3
-	  bne-      .loc_0xB4
-	  addi      r3, r1, 0x3C
-	  addi      r4, r31, 0
-	  bl        0x2E0
-	  lis       r4, 0x632A
-	  addi      r3, r1, 0x3C
-	  addi      r4, r4, 0x2A2A
-	  li        r5, 0x2A
-	  bl        -0x43D28
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x7C
-	  addi      r3, r1, 0x30
-	  addi      r4, r31, 0
-	  bl        0x2B8
-	  addi      r3, r1, 0x24
-	  addi      r4, r31, 0
-	  bl        0x270
-	  li        r3, 0
-	  b         .loc_0x110
-
-	.loc_0x7C:
-	  addi      r3, r1, 0x18
-	  addi      r4, r31, 0
-	  bl        0x298
-	  lis       r4, 0x732A
-	  addi      r3, r1, 0x18
-	  addi      r4, r4, 0x2A2A
-	  li        r5, 0x2A
-	  bl        -0x43D70
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xAC
-	  li        r3, 0
-	  b         .loc_0x110
-
-	.loc_0xAC:
-	  li        r3, 0x1
-	  b         .loc_0x110
-
-	.loc_0xB4:
-	  subi      r0, r3, 0x5
-	  rlwinm    r0,r0,0,24,31
-	  cmplwi    r0, 0x1
-	  li        r0, 0x1
-	  ble-      .loc_0xCC
-	  li        r0, 0
-
-	.loc_0xCC:
-	  rlwinm.   r0,r0,0,24,31
-	  bne-      .loc_0xDC
-	  cmplwi    r3, 0
-	  bne-      .loc_0x10C
-
-	.loc_0xDC:
-	  addi      r3, r1, 0xC
-	  addi      r4, r31, 0
-	  bl        0x238
-	  lis       r4, 0x732A
-	  addi      r3, r1, 0xC
-	  addi      r4, r4, 0x2A2A
-	  li        r5, 0x2A
-	  bl        -0x43DD0
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x10C
-	  li        r3, 0x1
-	  b         .loc_0x110
-
-	.loc_0x10C:
-	  li        r3, 0
-
-	.loc_0x110:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1249,37 +1198,10 @@ bool CollPart::isStickable()
  */
 bool CollPart::isClimbable()
 {
+	if (mPartType == PART_Platform && getCode().match('c***', '*')) {
+		return true;
+	}
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  lbz       r0, 0x5C(r3)
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x48
-	  addi      r3, r1, 0xC
-	  bl        0x1D8
-	  lis       r4, 0x632A
-	  addi      r3, r1, 0xC
-	  addi      r4, r4, 0x2A2A
-	  li        r5, 0x2A
-	  bl        -0x43E30
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x48
-	  li        r3, 0x1
-	  b         .loc_0x4C
-
-	.loc_0x48:
-	  li        r3, 0
-
-	.loc_0x4C:
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1300,34 +1222,10 @@ bool CollPart::isDamagable()
  */
 bool CollPart::isBouncy()
 {
+	if (getCode().match('b***', '*')) {
+		return true;
+	}
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r4, r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  addi      r3, r1, 0xC
-	  bl        0x188
-	  lis       r4, 0x622A
-	  addi      r3, r1, 0xC
-	  addi      r4, r4, 0x2A2A
-	  li        r5, 0x2A
-	  bl        -0x43E80
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x3C
-	  li        r3, 0x1
-	  b         .loc_0x40
-
-	.loc_0x3C:
-	  li        r3, 0
-
-	.loc_0x40:
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1337,27 +1235,11 @@ bool CollPart::isBouncy()
  */
 int CollPart::getChildCount()
 {
-	return 0;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x58(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x20
-	  bl        -0x47728
-	  b         .loc_0x24
+	if (mCollInfo) {
+		return mCollInfo->getChildCount();
+	}
 
-	.loc_0x20:
-	  li        r3, -0x1
-
-	.loc_0x24:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return -1;
 }
 
 /*
@@ -1367,22 +1249,10 @@ int CollPart::getChildCount()
  */
 CollPart* CollPart::getChild()
 {
+	if (_54 != -1) {
+		return &mParentInfo->mCollParts[_54];
+	}
 	return nullptr;
-	/*
-	.loc_0x0:
-	  lha       r0, 0x54(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x20
-	  lwz       r3, 0x60(r3)
-	  mulli     r0, r0, 0x68
-	  lwz       r3, 0x4(r3)
-	  add       r3, r3, r0
-	  blr
-
-	.loc_0x20:
-	  li        r3, 0
-	  blr
-	*/
 }
 
 /*
@@ -1390,43 +1260,21 @@ CollPart* CollPart::getChild()
  * Address:	80087DEC
  * Size:	00005C
  */
-CollPart* CollPart::getChildAt(int)
+CollPart* CollPart::getChildAt(int idx)
 {
-	return nullptr;
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0
-	  lha       r0, 0x54(r3)
-	  mtctr     r4
-	  ble-      .loc_0x38
+	int currIdx = _54;
+	for (int i = 0; i < idx; i++) {
+		if (currIdx == -1) {
+			return nullptr;
+		}
+		currIdx = mParentInfo->mCollParts[currIdx]._52;
+	}
 
-	.loc_0x10:
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  blr
+	if (currIdx == -1) {
+		return nullptr;
+	}
 
-	.loc_0x20:
-	  mulli     r4, r0, 0x68
-	  lwz       r5, 0x60(r3)
-	  lwz       r5, 0x4(r5)
-	  addi      r0, r4, 0x52
-	  lhax      r0, r5, r0
-	  bdnz+     .loc_0x10
-
-	.loc_0x38:
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x48
-	  li        r3, 0
-	  blr
-
-	.loc_0x48:
-	  lwz       r3, 0x60(r3)
-	  mulli     r0, r0, 0x68
-	  lwz       r3, 0x4(r3)
-	  add       r3, r3, r0
-	  blr
-	*/
+	return &mParentInfo->mCollParts[currIdx];
 }
 
 /*
@@ -1447,24 +1295,12 @@ CollPart* CollPart::getNext()
  */
 CollPart::CollPart()
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x75C0(r2)
-	  li        r5, 0x1
-	  li        r4, -0x1
-	  stfs      f0, 0xC(r3)
-	  li        r0, 0
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stb       r5, 0x50(r3)
-	  sth       r4, 0x54(r3)
-	  sth       r4, 0x52(r3)
-	  stw       r0, 0x58(r3)
-	  stw       r0, 0x60(r3)
-	  stw       r0, 0x64(r3)
-	  stb       r5, 0x51(r3)
-	  blr
-	*/
+	_50 = 1;
+	_52 = _54       = -1;
+	mCollInfo       = nullptr;
+	mParentInfo     = nullptr;
+	_64             = 0;
+	mIsStickEnabled = true;
 }
 
 /*
@@ -1472,19 +1308,7 @@ CollPart::CollPart()
  * Address:	80087E84
  * Size:	00001C
  */
-void CollPart::getTypeString()
-{
-	/*
-	.loc_0x0:
-	  lbz       r4, 0x5C(r3)
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0xFAC
-	  rlwinm    r3,r4,2,0,29
-	  add       r3, r0, r3
-	  lwz       r3, 0x0(r3)
-	  blr
-	*/
-}
+char* CollPart::getTypeString() { return _typeStr[mPartType]; }
 
 /*
  * --INFO--
@@ -1505,100 +1329,15 @@ ID32 CollPart::getCode() { return mCollInfo->mCode; }
  * Address:	80087F18
  * Size:	000164
  */
-void CollPart::getMatrix()
+Matrix4f CollPart::getMatrix()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stw       r31, 0x9C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x98(r1)
-	  addi      r30, r3, 0
-	  lwz       r6, 0x10(r4)
-	  lis       r4, 0x803D
-	  lwz       r5, 0x14(r31)
-	  addi      r0, r4, 0x15B0
-	  mr        r3, r0
-	  stw       r6, 0x58(r1)
-	  addi      r4, r1, 0x58
-	  stw       r5, 0x5C(r1)
-	  addi      r5, r1, 0x18
-	  lwz       r6, 0x18(r31)
-	  lwz       r0, 0x1C(r31)
-	  stw       r6, 0x60(r1)
-	  stw       r0, 0x64(r1)
-	  lwz       r6, 0x20(r31)
-	  lwz       r0, 0x24(r31)
-	  stw       r6, 0x68(r1)
-	  stw       r0, 0x6C(r1)
-	  lwz       r6, 0x28(r31)
-	  lwz       r0, 0x2C(r31)
-	  stw       r6, 0x70(r1)
-	  stw       r0, 0x74(r1)
-	  lwz       r6, 0x30(r31)
-	  lwz       r0, 0x34(r31)
-	  stw       r6, 0x78(r1)
-	  stw       r0, 0x7C(r1)
-	  lwz       r6, 0x38(r31)
-	  lwz       r0, 0x3C(r31)
-	  stw       r6, 0x80(r1)
-	  stw       r0, 0x84(r1)
-	  lwz       r6, 0x40(r31)
-	  lwz       r0, 0x44(r31)
-	  stw       r6, 0x88(r1)
-	  stw       r0, 0x8C(r1)
-	  lwz       r6, 0x48(r31)
-	  lwz       r0, 0x4C(r31)
-	  stw       r6, 0x90(r1)
-	  stw       r0, 0x94(r1)
-	  bl        -0x49EF4
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x24(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x44(r1)
-	  lwz       r3, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r3, 0x0(r30)
-	  stw       r0, 0x4(r30)
-	  lwz       r3, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stw       r3, 0x8(r30)
-	  stw       r0, 0xC(r30)
-	  lwz       r3, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r3, 0x10(r30)
-	  stw       r0, 0x14(r30)
-	  lwz       r3, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r3, 0x18(r30)
-	  stw       r0, 0x1C(r30)
-	  lwz       r3, 0x38(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r3, 0x20(r30)
-	  stw       r0, 0x24(r30)
-	  lwz       r3, 0x40(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r3, 0x28(r30)
-	  stw       r0, 0x2C(r30)
-	  lwz       r3, 0x48(r1)
-	  lwz       r0, 0x4C(r1)
-	  stw       r3, 0x30(r30)
-	  stw       r0, 0x34(r30)
-	  lwz       r3, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r3, 0x38(r30)
-	  stw       r0, 0x3C(r30)
-	  lwz       r0, 0xA4(r1)
-	  lwz       r31, 0x9C(r1)
-	  lwz       r30, 0x98(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
+	Matrix4f collMat = mMatrix;
+	Matrix4f outMat;
+	invCamMat.multiplyTo(collMat, outMat);
+	outMat.mMtx[0][3] = mCentre.x;
+	outMat.mMtx[1][3] = mCentre.y;
+	outMat.mMtx[2][3] = mCentre.z;
+	return outMat;
 }
 
 /*
@@ -2454,7 +2193,7 @@ void CollPart::collide(CollPart*, Vector3f&)
  * Address:	80088B8C
  * Size:	0000A4
  */
-void CollPart::makeTube(Tube&)
+void CollPart::makeTube(Tube& tube)
 {
 	/*
 	.loc_0x0:
@@ -2549,55 +2288,19 @@ void CollPart::samePlatShape(Shape*)
  * Address:	80088C30
  * Size:	0000A0
  */
-CollInfo::CollInfo(int)
+CollInfo::CollInfo(int maxParts)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  stw       r0, 0x10(r3)
-	  sth       r0, 0xC(r3)
-	  bne-      .loc_0x40
-	  li        r0, 0xA
-	  sth       r0, 0xE(r30)
-	  li        r0, 0x1
-	  stb       r0, 0x0(r30)
-	  b         .loc_0x84
-
-	.loc_0x40:
-	  sth       r4, 0xE(r30)
-	  stb       r0, 0x0(r30)
-	  lhz       r31, 0xE(r30)
-	  mulli     r3, r31, 0x68
-	  addi      r3, r3, 0x8
-	  bl        -0x41C80
-	  lis       r4, 0x8008
-	  addi      r4, r4, 0x7E48
-	  addi      r7, r31, 0
-	  li        r5, 0
-	  li        r6, 0x68
-	  bl        0x18BF8C
-	  stw       r3, 0x4(r30)
-	  lhz       r0, 0xE(r30)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0x41CA8
-	  stw       r3, 0x8(r30)
-
-	.loc_0x84:
-	  mr        r3, r30
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mShape      = nullptr;
+	mPartsCount = 0;
+	if (maxParts == 0) {
+		mMaxParts = 10;
+		_00       = 1;
+	} else {
+		mMaxParts  = maxParts;
+		_00        = 0;
+		mCollParts = new CollPart[mMaxParts];
+		mPartIDs   = new u32[mMaxParts];
+	}
 }
 
 /*
@@ -2607,26 +2310,9 @@ CollInfo::CollInfo(int)
  */
 void CollInfo::enableStick()
 {
-	/*
-	.loc_0x0:
-	  li        r7, 0
-	  li        r6, 0
-	  li        r5, 0x1
-	  b         .loc_0x24
-
-	.loc_0x10:
-	  lwz       r4, 0x4(r3)
-	  addi      r0, r6, 0x51
-	  addi      r7, r7, 0x1
-	  stbx      r5, r4, r0
-	  addi      r6, r6, 0x68
-
-	.loc_0x24:
-	  lhz       r0, 0xC(r3)
-	  cmpw      r7, r0
-	  blt+      .loc_0x10
-	  blr
-	*/
+	for (int i = 0; i < mPartsCount; i++) {
+		mCollParts[i].mIsStickEnabled = true;
+	}
 }
 
 /*
@@ -2636,26 +2322,9 @@ void CollInfo::enableStick()
  */
 void CollInfo::disableStick()
 {
-	/*
-	.loc_0x0:
-	  li        r6, 0
-	  addi      r5, r6, 0
-	  li        r7, 0
-	  b         .loc_0x24
-
-	.loc_0x10:
-	  lwz       r4, 0x4(r3)
-	  addi      r0, r6, 0x51
-	  addi      r7, r7, 0x1
-	  stbx      r5, r4, r0
-	  addi      r6, r6, 0x68
-
-	.loc_0x24:
-	  lhz       r0, 0xC(r3)
-	  cmpw      r7, r0
-	  blt+      .loc_0x10
-	  blr
-	*/
+	for (int i = 0; i < mPartsCount; i++) {
+		mCollParts[i].mIsStickEnabled = false;
+	}
 }
 
 /*
@@ -2860,24 +2529,7 @@ void CollInfo::checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*)
  * Address:	80088F00
  * Size:	000028
  */
-void CollInfo::checkCollision(Creature*, Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r6, r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  stwu      r1, -0x8(r1)
-	  bl        .loc_0x28
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x28:
-	*/
-}
+void CollInfo::checkCollision(Creature* creature, Vector3f& p2) { checkCollisionRec(creature, 0, p2); }
 
 /*
  * --INFO--
@@ -3336,28 +2988,6 @@ void CollInfo::checkCollisionRec(Creature*, int, Vector3f&)
 
 /*
  * --INFO--
- * Address:	8008954C
- * Size:	000028
- */
-void Vector3f::div(f32)
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r3)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	80089574
  * Size:	000034
  */
@@ -3500,24 +3130,17 @@ void CollInfo::checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Ve
  * Address:	80089708
  * Size:	000008
  */
-Sphere* CollInfo::getBoundingSphere()
-{
-	return mBoundingSphere;
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x4(r3)
-	  blr
-	*/
-}
+CollPart* CollInfo::getBoundingSphere() { return &mCollParts[0]; }
 
 /*
  * --INFO--
  * Address:	80089710
  * Size:	000060
  */
-CollPart* CollInfo::getSphere(u32)
+CollPart* CollInfo::getSphere(u32 id)
 {
-	return nullptr;
+	int idx = getId2Index(id);
+	return mCollParts;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3888,26 +3511,32 @@ void CollInfo::updateInfo(Graphics&, bool)
  * Address:	80089B50
  * Size:	000014
  */
-bool CollInfo::hasInfo()
-{
-	return false;
-	/*
-	.loc_0x0:
-	  lhz       r0, 0xC(r3)
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
+bool CollInfo::hasInfo() { return mPartsCount != 0; }
 
 /*
  * --INFO--
  * Address:	80089B64
  * Size:	0000A4
  */
-void CollInfo::initInfo(Shape*, CollPart*, u32*)
+void CollInfo::initInfo(Shape* shape, CollPart* parts, u32* ids)
 {
+	if (_00) {
+		mCollParts = parts;
+		mPartIDs   = ids;
+
+		if (mCollParts && mPartIDs) {
+			DEBUGPRINT(_00 != 0, "wack");
+		}
+	}
+
+	for (int i = 0; i < mMaxParts; i++) {
+		mCollParts[i].mParentInfo = this;
+	}
+
+	mShape      = shape;
+	mPartsCount = 0;
+	createPart(&shape->mCollisionInfo, 0, true);
+	makeTree();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4244,34 +3873,15 @@ void CollInfo::createPart(ObjCollInfo*, int, bool)
  * Address:	80089EEC
  * Size:	000044
  */
-void CollInfo::getId2Index(u32)
+int CollInfo::getId2Index(u32 id)
 {
-	/*
-	.loc_0x0:
-	  lhz       r0, 0xC(r3)
-	  li        r7, 0
-	  li        r6, 0
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x3C
+	for (int i = 0; i < mPartsCount; i++) {
+		if (id == mPartIDs[i]) {
+			return i;
+		}
+	}
 
-	.loc_0x18:
-	  lwz       r5, 0x8(r3)
-	  lwzx      r0, r5, r6
-	  cmplw     r4, r0
-	  bne-      .loc_0x30
-	  mr        r3, r7
-	  blr
-
-	.loc_0x30:
-	  addi      r6, r6, 0x4
-	  addi      r7, r7, 0x1
-	  bdnz+     .loc_0x18
-
-	.loc_0x3C:
-	  li        r3, -0x1
-	  blr
-	*/
+	return -1;
 }
 
 /*

@@ -138,26 +138,26 @@ void KingAi::initAI(King* king)
  */
 void KingAi::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	switch (event.mKeyFrame) {
-	case 1:
+	switch (event.mEventType) {
+	case KEY_Action0:
 		keyAction0();
 		break;
-	case 2:
+	case KEY_Action1:
 		keyAction1();
 		break;
-	case 3:
+	case KEY_Action2:
 		keyAction2();
 		break;
-	case 6:
+	case KEY_LoopEnd:
 		keyLoopEnd();
 		break;
-	case 0:
+	case KEY_Done:
 		keyFinished();
 		break;
-	case 7:
+	case KEY_PlaySound:
 		playSound(event.mValue);
 		break;
-	case 8:
+	case KEY_PlayEffect:
 		createEffect(event.mValue);
 		break;
 	}

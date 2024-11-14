@@ -291,12 +291,12 @@ void PaniAnimator::checkConstantKey(int idx)
 
 	if (type == 0) {
 		if (mListener) {
-			PaniAnimKeyEvent event(5);
+			PaniAnimKeyEvent event(KEY_LoopStart);
 			mListener->animationKeyUpdated(event);
 		}
 	} else if (type == 1) {
 		if (mListener) {
-			PaniAnimKeyEvent event(6);
+			PaniAnimKeyEvent event(KEY_LoopEnd);
 			mListener->animationKeyUpdated(event);
 		}
 	}
@@ -324,11 +324,11 @@ void PaniAnimator::checkEventKeys(f32 p1, f32 p2)
 		f32 val2 = eventKey->getKeyValue();
 		f32 val1 = eventKey->getKeyValue();
 		if (p1 <= val1 && val2 < p2) {
-			int type = 0;
+			int type = KEY_Done;
 			if (eventKey->_04 == 0) {
-				type = 7;
+				type = KEY_PlaySound;
 			} else if (eventKey->_04 == 1) {
-				type = 8;
+				type = KEY_PlayEffect;
 			}
 
 			mListener->animationKeyUpdated(PaniAnimKeyEvent(type, eventKey->_06));
@@ -345,7 +345,7 @@ void PaniAnimator::finishAnimation()
 {
 	_38 = -1;
 	if (mListener) {
-		mListener->animationKeyUpdated(PaniAnimKeyEvent(0));
+		mListener->animationKeyUpdated(PaniAnimKeyEvent(KEY_Done));
 	}
 }
 

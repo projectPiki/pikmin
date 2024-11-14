@@ -1,4 +1,5 @@
 #include "PikiAI.h"
+#include "Navi.h"
 
 /*
  * --INFO--
@@ -26,54 +27,11 @@ static void _Print(char*, ...)
  * Size:	0000A4
  */
 ActKinoko::ActKinoko(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
+    , _18(0)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  beq-      .loc_0x30
-	  addi      r0, r31, 0x30
-	  lis       r3, 0x802B
-	  stw       r0, 0x14(r31)
-	  subi      r0, r3, 0x246C
-	  stw       r0, 0x30(r31)
-
-	.loc_0x30:
-	  addi      r3, r31, 0
-	  addi      r4, r5, 0
-	  li        r5, 0x1
-	  bl        0xF824
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x60DC
-	  stw       r3, 0x0(r31)
-	  addi      r6, r3, 0x68
-	  addi      r5, r31, 0x30
-	  lwz       r3, 0x14(r31)
-	  li        r4, 0
-	  subi      r0, r13, 0x4C08
-	  stw       r6, 0x0(r3)
-	  mr        r3, r31
-	  lwz       r6, 0x14(r31)
-	  sub       r5, r5, r6
-	  stw       r5, 0x4(r6)
-	  stw       r4, 0x18(r31)
-	  lfs       f0, -0x6F78(r2)
-	  stfs      f0, 0x2C(r31)
-	  stfs      f0, 0x28(r31)
-	  stfs      f0, 0x24(r31)
-	  stw       r0, 0x10(r31)
-	  stw       r4, 0x18(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mName = "kinoko";
+	_18   = 0;
 }
 
 /*
@@ -81,47 +39,18 @@ ActKinoko::ActKinoko(Piki* piki)
  * Address:	800B4614
  * Size:	000080
  */
-void ActKinoko::init(Creature*)
+void ActKinoko::init(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  mr.       r30, r4
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  lwz       r3, 0xC(r3)
-	  stb       r31, 0x408(r3)
-	  beq-      .loc_0x5C
-	  lwz       r3, 0x18(r29)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x48
-	  beq-      .loc_0x48
-	  bl        0x2FD18
-	  stw       r31, 0x18(r29)
+	mActor->_408 = 0;
+	if (creature) {
+		if (_18) {
+			resetCreature(_18);
+		}
+		_18 = creature;
+		postSetCreature(_18);
+	}
 
-	.loc_0x48:
-	  stw       r30, 0x18(r29)
-	  lwz       r3, 0x18(r29)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x5C
-	  bl        0x2FCF0
-
-	.loc_0x5C:
-	  li        r0, 0
-	  stw       r0, 0x1C(r29)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mState = STATE_Boid;
 }
 
 /*
@@ -131,52 +60,18 @@ void ActKinoko::init(Creature*)
  */
 int ActKinoko::exec()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x1C(r3)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x48
-	  bge-      .loc_0x2C
-	  cmpwi     r0, 0
-	  beq-      .loc_0x38
-	  bge-      .loc_0x40
-	  b         .loc_0x58
+	switch (mState) {
+	case STATE_Boid:
+		return exeBoid();
+	case STATE_Attack:
+		return exeAttack();
+	case STATE_Jump:
+		return exeJump();
+	case STATE_Stick:
+		return exeStick();
+	}
 
-	.loc_0x2C:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x58
-	  b         .loc_0x50
-
-	.loc_0x38:
-	  bl        0x630
-	  b         .loc_0x5C
-
-	.loc_0x40:
-	  bl        0x1E0
-	  b         .loc_0x5C
-
-	.loc_0x48:
-	  bl        0xA4
-	  b         .loc_0x5C
-
-	.loc_0x50:
-	  bl        .loc_0x6C
-	  b         .loc_0x5C
-
-	.loc_0x58:
-	  li        r3, 0
-
-	.loc_0x5C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x6C:
-	*/
+	return ACTOUT_Continue;
 }
 
 /*
@@ -194,49 +89,20 @@ void ActKinoko::initStick()
  * Address:	800B4700
  * Size:	000080
  */
-void ActKinoko::exeStick()
+int ActKinoko::exeStick()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0xC(r3)
-	  lwz       r0, 0x184(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x34
-	  mr        r3, r31
-	  bl        0x180
-	  li        r3, 0
-	  b         .loc_0x6C
+	if (!mActor->mStickTarget) {
+		initAttack();
+		return ACTOUT_Continue;
+	}
 
-	.loc_0x34:
-	  lwz       r3, 0x504(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x68
-	  lwz       r3, 0xC(r31)
-	  bl        -0x23EDC
-	  mr        r3, r31
-	  bl        0x318
-	  li        r3, 0
-	  b         .loc_0x6C
+	if (!mActor->mNavi->isAlive()) {
+		mActor->endStickObject();
+		initBoid();
+		return ACTOUT_Continue;
+	}
 
-	.loc_0x68:
-	  li        r3, 0
-
-	.loc_0x6C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return ACTOUT_Continue;
 }
 
 /*
@@ -254,8 +120,15 @@ void ActKinoko::initJump()
  * Address:	800B4780
  * Size:	000128
  */
-void ActKinoko::exeJump()
+int ActKinoko::exeJump()
 {
+	if (mActor->mFloorTri) {
+		initAttack();
+		return ACTOUT_Continue;
+	}
+
+	Vector3f pos = mActor->mNavi->mPosition;
+	if (pos.distanceFrom(mActor->mPosition) < 12.0f) { }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -350,18 +223,14 @@ void ActKinoko::exeJump()
  * Address:	800B48A8
  * Size:	00000C
  */
-void ActKinoko::initAttack()
-{
-	// Generated from stw r0, 0x1C(r3)
-	// _1C = 1;
-}
+void ActKinoko::initAttack() { mState = STATE_Attack; }
 
 /*
  * --INFO--
  * Address:	800B48B4
  * Size:	0001C0
  */
-void ActKinoko::exeAttack()
+int ActKinoko::exeAttack()
 {
 	/*
 	.loc_0x0:
@@ -681,7 +550,7 @@ void ActKinoko::initBoid()
  * Address:	800B4CFC
  * Size:	00085C
  */
-void ActKinoko::exeBoid()
+int ActKinoko::exeBoid()
 {
 	/*
 	.loc_0x0:
@@ -1335,49 +1204,3 @@ void ActKinoko::animationKeyUpdated(PaniAnimKeyEvent&)
  * Size:	000004
  */
 void ActKinoko::cleanup() { }
-
-/*
- * --INFO--
- * Address:	800B55F4
- * Size:	000080
- */
-ActKinoko::~ActKinoko()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x64
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x60DC
-	  stw       r3, 0x0(r30)
-	  addi      r6, r3, 0x68
-	  addi      r0, r30, 0x30
-	  lwz       r5, 0x14(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  stw       r6, 0x0(r5)
-	  lwz       r5, 0x14(r30)
-	  sub       r0, r0, r5
-	  stw       r0, 0x4(r5)
-	  bl        0xE7C4
-	  extsh.    r0, r31
-	  ble-      .loc_0x64
-	  mr        r3, r30
-	  bl        -0x6E4A8
-
-	.loc_0x64:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
