@@ -193,6 +193,8 @@ struct SAIState : public AState<AICreature> {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct SimpleAI : public StateMachine<AICreature> {
 	SimpleAI();
@@ -209,7 +211,6 @@ struct SimpleAI : public StateMachine<AICreature> {
 
 	// _00     = VTBL
 	// _00-_1C = StateMachine
-	// TODO: members
 };
 
 // Global functions and objects

@@ -44,7 +44,6 @@ struct ObjectMgr : public Traversable, public Node {
 	// _08     = VTBL 2
 	// _00-_08 = Traversable
 	// _08-_28 = Node
-	// TODO: members
 };
 
 /**
@@ -89,7 +88,9 @@ struct MonoObjectMgr : public ObjectMgr {
 };
 
 /**
- * @brief TODO.
+ * @brief TODO
+ *
+ * @note Size: 0x4C.
  */
 struct PolyObjectMgr : public ObjectMgr {
 	PolyObjectMgr(int);
@@ -111,7 +112,7 @@ struct PolyObjectMgr : public ObjectMgr {
 
 	void create(int);
 	void beginRegister();
-	void registerClass(int, Creature*, int);
+	void registerClass(int objType, Creature* object, int size);
 	void endRegister();
 	void get(int);
 	void searchSelf();
@@ -123,8 +124,16 @@ struct PolyObjectMgr : public ObjectMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_28 = ObjectMgr?
-	// TODO: members
+	// _00-_28 = ObjectMgr
+	int _28;     // _28
+	int mMax;    // _2C
+	int mSize;   // _30
+	u8 _34[0x4]; // _34, unknown
+	u32 _38;     // _38, unknown
+	int* _3C;    // _3C, indices maybe?
+	int _40;     // _40
+	u32 _44;     // _44, unknown
+	u32 _48;     // _48, unknown, pointer to some array of objects of size 0xC.
 };
 
 #endif

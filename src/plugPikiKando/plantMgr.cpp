@@ -1,13 +1,16 @@
 #include "PlantMgr.h"
 #include "Generator.h"
+#include "Dolphin/os.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "plantMgr");
 	// UNUSED FUNCTION
 }
 
@@ -21,6 +24,8 @@ static void _Print(char*, ...)
 	// UNUSED FUNCTION
 }
 
+PlantMgr* plantMgr;
+
 /*
  * --INFO--
  * Address:	80119D3C
@@ -29,61 +34,10 @@ static void _Print(char*, ...)
 Plant::Plant()
     : AICreature(nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x9CAEC
-	  lis       r3, 0x802C
-	  addi      r3, r3, 0x3E74
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x114
-	  addi      r3, r30, 0x310
-	  stw       r0, 0x2B8(r30)
-	  bl        0x151C
-	  lis       r3, 0x8009
-	  subi      r4, r3, 0x5808
-	  addi      r3, r30, 0x364
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x3
-	  bl        0xFACE0
-	  lfs       f0, -0x6038(r2)
-	  lis       r3, 0x1
-	  li        r4, 0x33
-	  stfs      f0, 0x390(r30)
-	  subi      r0, r3, 0x1
-	  li        r3, 0x14
-	  stfs      f0, 0x38C(r30)
-	  stfs      f0, 0x388(r30)
-	  stw       r4, 0x6C(r30)
-	  sth       r0, 0x304(r30)
-	  bl        -0xD2DB8
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x98
-	  li        r4, 0x8
-	  bl        -0x911A0
-
-	.loc_0x98:
-	  stw       r31, 0x220(r30)
-	  addi      r3, r30, 0x1B8
-	  addi      r4, r30, 0x364
-	  li        r5, 0x3
-	  bl        -0x36164
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mObjType  = OBJTYPE_Plant;
+	_304      = 0xFFFF;
+	mCollInfo = new CollInfo(8);
+	mSearchBuffer.init(mPlantSearchData, 3);
 }
 
 /*
@@ -91,32 +45,7 @@ Plant::Plant()
  * Address:	80119E04
  * Size:	000048
  */
-void Plant::startMotion(int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr.       r31, r3
-	  addi      r5, r31, 0
-	  beq-      .loc_0x20
-	  addi      r5, r5, 0x2B8
-
-	.loc_0x20:
-	  addi      r3, r1, 0x10
-	  bl        0x5164
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x310
-	  bl        0x538C
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
+void Plant::startMotion(int motionID) { mPlantAnimator.startMotion(PaniMotionInfo(motionID, this)); }
 
 /*
  * --INFO--
@@ -135,6 +64,8 @@ void Plant::reset(int)
  */
 void Plant::startAI(int)
 {
+	_30C = 0;
+	// plantMgr->
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -36,6 +36,8 @@ struct AState : public Receiver<T> {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 template <typename T>
 struct StateMachine {

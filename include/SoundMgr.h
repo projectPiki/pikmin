@@ -52,8 +52,10 @@ struct SeConstant : public Node {
 	SeParms mParms; // _20
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x28.
  */
 struct SeContext {
 	SeContext();

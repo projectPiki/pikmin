@@ -69,8 +69,10 @@ struct ControlerMgr {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct RumbleMgr {
 	RumbleMgr(bool, bool, bool, bool);
@@ -87,7 +89,7 @@ struct RumbleMgr {
 	void init();
 	void rumblePause(bool);
 
-	// TODO: members
+	u8 _00[0x30]; // _00, unknown
 };
 
 extern RumbleMgr* rumbleMgr;

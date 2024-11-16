@@ -567,7 +567,7 @@ void Creature::adjustDistance(Vector3f&, f32)
  */
 void Creature::init()
 {
-	_1B8.invalidate();
+	mSearchBuffer.invalidate();
 	_114.makeIdentity();
 	_228.makeIdentity();
 	_E0.set(0.0f, 0.0f, 0.0f, 1.0f);
@@ -688,7 +688,7 @@ void Creature::kill(bool p1)
 		mGrid.delAIGrid();
 	}
 
-	_1B8.clear();
+	mSearchBuffer.clear();
 
 	if (mStickTarget) {
 		endStick();

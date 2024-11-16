@@ -5,13 +5,20 @@
 #include "ObjectMgr.h"
 
 /**
- * @brief TODO.
+ * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct CreatureNode : public CoreNode {
+	inline CreatureNode()
+	    : CoreNode("cnode")
+	{
+		mCreature = nullptr;
+	}
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	Creature* mCreature; // _14
 };
 
 /**
@@ -29,7 +36,7 @@ struct CreatureNodeMgr : public ObjectMgr {
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_28 = ObjectMgr
-	// TODO: members
+	CreatureNode mRootNode; // _28
 };
 
 #endif

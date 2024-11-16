@@ -4,18 +4,27 @@
 #include "types.h"
 #include "ItemMgr.h"
 #include "CreatureProp.h"
+#include "UtEffect.h"
+#include "SoundMgr.h"
 
 struct ItemShapeObject;
 struct SimpleAI;
+struct WayPoint;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct BuildingItemProp : public CreatureProp {
+	inline BuildingItemProp()
+	{
+		mCreatureProps.mFriction.mValue     = 0.1f;
+		mCreatureProps.mBounceFactor.mValue = 0.8f;
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	// TODO: members
 };
 
 /**
@@ -24,7 +33,7 @@ struct BuildingItemProp : public CreatureProp {
  * @note Size: 0x8CC.
  */
 struct BuildingItem : public ItemCreature {
-	BuildingItem(int, CreatureProp*, ItemShapeObject*, SimpleAI*);
+	BuildingItem(int objType, CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai);
 
 	virtual bool insideSafeArea(Vector3f&);   // _10
 	virtual void startAI(int);                // _34
@@ -54,10 +63,22 @@ struct BuildingItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	u8 _3C8[0x440 - 0x3C8]; // _3C8, unknown
-	int _440;               // _440
-	int _444;               // _444
-	u8 _448[0x8CC - 0x448]; // _448, unknown
+	u32 _3C8;                 // _3C8, unknown
+	u32 _3CC;                 // _3CC, unknown
+	u32 _3D0;                 // _3D0, unknown
+	u32 _3D4;                 // _3D4, unknown
+	PermanentEffect _3D8;     // _3D8
+	PermanentEffect _3E8;     // _3E8
+	u8 _3F8[0x43C - 0x3F8];   // _3F8, unknown
+	u32 _43C;                 // _43C, unknown
+	int _440;                 // _440
+	int _444;                 // _444
+	Vector3f _448;            // _448
+	WayPoint* mWayPoint;      // _454
+	CollInfo mBuildCollision; // _458
+	CollPart mBuildParts[10]; // _46C
+	u8 _87C[0x8A4 - 0x87C];   // _87C, unknown
+	SeContext mBuildSFX;      // _8A4
 };
 
 #endif

@@ -22,8 +22,18 @@ struct Cylinder {
  * @brief TODO
  */
 struct RectArea {
+	inline RectArea(int x0, int y0, int x1, int y1)
+	{
+		mMinX = x0;
+		mMinY = y0;
+		mMaxX = x1;
+		mMaxY = y1;
+	}
 
-	// TODO: members
+	int mMinX; // _00
+	int mMinY; // _04
+	int mMaxX; // _08
+	int mMaxY; // _0C
 };
 
 /**

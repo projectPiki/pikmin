@@ -1,4 +1,5 @@
 #include "types.h"
+#include "jaudio/PikiBgm.h"
 
 typedef struct BgmControl_ BgmControl_;
 
@@ -897,7 +898,7 @@ void Jac_UpdateBgmCrossVol(BgmControl_*)
  * Address:	80019420
  * Size:	0000C4
  */
-void Jac_GameVolume(void)
+void Jac_GameVolume(u8 bgmVol, u8 seVol)
 {
 	/*
 	.loc_0x0:

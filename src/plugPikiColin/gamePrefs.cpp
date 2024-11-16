@@ -1,4 +1,6 @@
 #include "gameFlow.h"
+#include "OnePlayerSection.h"
+#include "jaudio/interface.h"
 
 /*
  * --INFO--
@@ -25,29 +27,21 @@ static void _Print(char*, ...)
  * Address:	80053C5C
  * Size:	000040
  */
-void PlayState::openStage(int)
+void PlayState::openStage(int stageID)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0
-	  bltlr-
-	  cmpwi     r4, 0x5
-	  bgtlr-
-	  li        r0, 0x1
-	  lwz       r5, 0x24(r3)
-	  slw       r6, r0, r4
-	  and.      r0, r5, r6
-	  bne-      .loc_0x30
-	  lis       r5, 0x803A
-	  subi      r5, r5, 0x2848
-	  stw       r4, 0x1D0(r5)
+	if (stageID < STAGE_START) {
+		return;
+	}
 
-	.loc_0x30:
-	  lwz       r0, 0x24(r3)
-	  or        r0, r0, r6
-	  stw       r0, 0x24(r3)
-	  blr
-	*/
+	if (stageID > STAGE_END) {
+		return;
+	}
+
+	if (!(mCourseOpenFlags & (1 << stageID))) {
+		gameflow._1D0 = stageID;
+	}
+
+	mCourseOpenFlags |= (1 << stageID);
 }
 
 /*
@@ -55,29 +49,13 @@ void PlayState::openStage(int)
  * Address:	80053C9C
  * Size:	000040
  */
-void GamePrefs::setBgmVol(u8)
+void GamePrefs::setBgmVol(u8 vol)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  rlwinm    r5,r4,0,24,31
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x1C(r3)
-	  cmplw     r5, r0
-	  beq-      .loc_0x24
-	  li        r0, 0x1
-	  stb       r0, 0x14(r3)
-
-	.loc_0x24:
-	  stb       r4, 0x1C(r3)
-	  lbz       r3, 0x1C(r3)
-	  bl        -0x3D3A8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (vol != mBgmVol) {
+		mIsChanged = true;
+	}
+	mBgmVol = vol;
+	Jac_SetBGMVolume(mBgmVol);
 }
 
 /*
@@ -85,29 +63,13 @@ void GamePrefs::setBgmVol(u8)
  * Address:	80053CDC
  * Size:	000040
  */
-void GamePrefs::setSfxVol(u8)
+void GamePrefs::setSfxVol(u8 vol)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  rlwinm    r5,r4,0,24,31
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x1D(r3)
-	  cmplw     r5, r0
-	  beq-      .loc_0x24
-	  li        r0, 0x1
-	  stb       r0, 0x14(r3)
-
-	.loc_0x24:
-	  stb       r4, 0x1D(r3)
-	  lbz       r3, 0x1D(r3)
-	  bl        -0x3D3C8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (vol != mSfxVol) {
+		mIsChanged = true;
+	}
+	mSfxVol = vol;
+	Jac_SetSEVolume(mSfxVol);
 }
 
 /*
@@ -899,8 +861,18 @@ void GamePrefs::fixSoundMode()
  * Address:	8005461C
  * Size:	000330
  */
-void GamePrefs::read(RandomAccessStream&)
+void GamePrefs::read(RandomAccessStream& input)
 {
+	_18           = input.readInt();
+	mBgmVol       = input.readByte();
+	mSfxVol       = input.readByte();
+	_22           = input.readByte();
+	mHiscores._00 = input.readInt();
+
+	for (int i = 0; i < 5; i++) {
+		mHiscores.mMinDayRecords[i]._00 = input.readInt();
+		mHiscores.mMinDayRecords[i]._04 = input.readInt();
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1153,72 +1125,16 @@ void GamePrefs::read(RandomAccessStream&)
  * Address:	8005494C
  * Size:	0000F4
  */
-void PlayState::write(RandomAccessStream&)
+void PlayState::write(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lbz       r4, 0x20(r30)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x23(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x21(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x22(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x14(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x18(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x1C(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x24(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	output.writeByte(_20);
+	output.writeByte(_23);
+	output.writeByte(_21);
+	output.writeByte(_22);
+	output.writeInt(_14);
+	output.writeInt(_18);
+	output.writeInt(_1C);
+	output.writeInt(mCourseOpenFlags);
 }
 
 /*
@@ -1226,70 +1142,14 @@ void PlayState::write(RandomAccessStream&)
  * Address:	80054A40
  * Size:	0000F4
  */
-void PlayState::read(RandomAccessStream&)
+void PlayState::read(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x20(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x23(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x21(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x22(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x14(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x18(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x1C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x24(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_20              = input.readByte();
+	_23              = input.readByte();
+	_21              = input.readByte();
+	_22              = input.readByte();
+	_14              = input.readInt();
+	_18              = input.readInt();
+	_1C              = input.readInt();
+	mCourseOpenFlags = input.readInt();
 }

@@ -45,10 +45,10 @@ void GameExitSection::update()
 {
 	gameflow._1F4 = 0;
 	if (flowCont._244) {
-		gameflow._1F0 = 2;
-		gameflow._2B0 = flowCont._244 + 3;
+		gameflow.mGameSectionID = SECTION_MovSample;
+		gameflow._2B0           = flowCont._244 + 3;
 	} else {
-		gameflow._1F0 = 1;
+		gameflow.mGameSectionID = SECTION_Titles;
 	}
 
 	gsys->mPending = true;

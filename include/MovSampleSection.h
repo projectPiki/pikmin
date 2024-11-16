@@ -6,13 +6,14 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct MovSampleSection : public Section {
 	virtual void init(); // _30
 
 	// _00     = VTBL
-	// _00-_?? = Section
-	// TODO: members
+	// _00-_20 = Section
 };
 
 /**

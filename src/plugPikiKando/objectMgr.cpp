@@ -1,13 +1,16 @@
 #include "ObjectMgr.h"
 #include "CreatureNode.h"
+#include "Creature.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "objectMgr");
 	// UNUSED FUNCTION
 }
 
@@ -38,6 +41,7 @@ void boundSphereDist(Creature*, Creature*)
  */
 void ObjectMgr::stickUpdate()
 {
+	TRAVERSELOOP(this, idx) { getCreatureCheck(idx)->stickUpdate(); }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -131,6 +135,13 @@ void ObjectMgr::stickUpdate()
  */
 void ObjectMgr::invalidateSearch()
 {
+	TRAVERSELOOP(this, idx)
+	{
+		Creature* creature = getCreatureCheck(idx);
+		if (creature->_168.updatable()) {
+			creature->mSearchBuffer.invalidate();
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -232,6 +243,7 @@ void ObjectMgr::invalidateSearch()
  */
 void ObjectMgr::update()
 {
+	TRAVERSELOOP(this, idx) { getCreatureCheck(idx)->update(); }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3254,39 +3266,18 @@ Creature* PolyObjectMgr::getCreature(int)
  */
 int PolyObjectMgr::getFirst()
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x2C(r3)
-	  li        r7, -0x1
-	  li        r8, 0
-	  cmpwi     r6, 0
-	  mtctr     r6
-	  li        r5, 0
-	  ble-      .loc_0x40
-
-	.loc_0x1C:
-	  lwz       r4, 0x3C(r3)
-	  lwzx      r0, r4, r5
-	  cmpwi     r0, 0
-	  blt-      .loc_0x34
-	  mr        r7, r8
-	  b         .loc_0x40
-
-	.loc_0x34:
-	  addi      r5, r5, 0x4
-	  addi      r8, r8, 0x1
-	  bdnz+     .loc_0x1C
-
-	.loc_0x40:
-	  cmpwi     r7, -0x1
-	  bne-      .loc_0x50
-	  mr        r3, r6
-	  blr
-
-	.loc_0x50:
-	  mr        r3, r7
-	  blr
-	*/
+	int next = -1;
+	for (int i = 0; i < mMax; i++) {
+		int candidate = _3C[i];
+		if (_3C[i] >= 0) {
+			next = i;
+			break;
+		}
+	}
+	if (next == -1) {
+		return mMax;
+	}
+	return next;
 }
 
 /*
@@ -3294,42 +3285,20 @@ int PolyObjectMgr::getFirst()
  * Address:	800E2658
  * Size:	00005C
  */
-int PolyObjectMgr::getNext(int)
+int PolyObjectMgr::getNext(int idx)
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x2C(r3)
-	  addi      r8, r4, 0x1
-	  rlwinm    r5,r8,2,0,29
-	  sub       r0, r6, r8
-	  cmpw      r8, r6
-	  mtctr     r0
-	  li        r7, -0x1
-	  bge-      .loc_0x44
-
-	.loc_0x20:
-	  lwz       r4, 0x3C(r3)
-	  lwzx      r0, r4, r5
-	  cmpwi     r0, 0
-	  blt-      .loc_0x38
-	  mr        r7, r8
-	  b         .loc_0x44
-
-	.loc_0x38:
-	  addi      r5, r5, 0x4
-	  addi      r8, r8, 0x1
-	  bdnz+     .loc_0x20
-
-	.loc_0x44:
-	  cmpwi     r7, -0x1
-	  bne-      .loc_0x54
-	  mr        r3, r6
-	  blr
-
-	.loc_0x54:
-	  mr        r3, r7
-	  blr
-	*/
+	int next = -1;
+	for (int i = idx + 1; i < mMax; i++) {
+		int candidate = _3C[i];
+		if (_3C[i] >= 0) {
+			next = i;
+			break;
+		}
+	}
+	if (next == -1) {
+		return mMax;
+	}
+	return next;
 }
 
 /*
@@ -3337,20 +3306,12 @@ int PolyObjectMgr::getNext(int)
  * Address:	800E26B4
  * Size:	00001C
  */
-bool PolyObjectMgr::isDone(int)
+bool PolyObjectMgr::isDone(int idx)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2C(r3)
-	  cmpw      r4, r0
-	  blt-      .loc_0x14
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-	*/
+	if (idx >= mMax) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -3927,55 +3888,18 @@ void ObjectMgr::search(ObjectMgr*)
  * Address:	800E2DBC
  * Size:	000088
  */
-Creature* CreatureNodeMgr::getCreature(int)
+Creature* CreatureNodeMgr::getCreature(int idx)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0
-	  lwz       r5, 0x38(r3)
-	  li        r6, 0
-	  ble-      .loc_0x70
-	  cmpwi     r4, 0x8
-	  subi      r3, r4, 0x8
-	  ble-      .loc_0x58
-	  addi      r0, r3, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r3, 0
-	  mtctr     r0
-	  ble-      .loc_0x58
+	CreatureNode* node = static_cast<CreatureNode*>(mRootNode.mChild);
+	for (int i = 0; i < idx; i++) {
+		node = static_cast<CreatureNode*>(node->mNext);
+	}
 
-	.loc_0x30:
-	  lwz       r3, 0xC(r5)
-	  addi      r6, r6, 0x8
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r5, 0xC(r3)
-	  bdnz+     .loc_0x30
+	if (!node) {
+		return nullptr;
+	}
 
-	.loc_0x58:
-	  sub       r0, r4, r6
-	  cmpw      r6, r4
-	  mtctr     r0
-	  bge-      .loc_0x70
-
-	.loc_0x68:
-	  lwz       r5, 0xC(r5)
-	  bdnz+     .loc_0x68
-
-	.loc_0x70:
-	  cmplwi    r5, 0
-	  bne-      .loc_0x80
-	  li        r3, 0
-	  blr
-
-	.loc_0x80:
-	  lwz       r3, 0x14(r5)
-	  blr
-	*/
+	return node->mCreature;
 }
 
 /*
@@ -3990,46 +3914,20 @@ int CreatureNodeMgr::getFirst() { return 0; }
  * Address:	800E2E4C
  * Size:	000008
  */
-int CreatureNodeMgr::getNext(int)
-{
-	/*
-	.loc_0x0:
-	  addi      r3, r4, 0x1
-	  blr
-	*/
-}
+int CreatureNodeMgr::getNext(int idx) { return idx + 1; }
 
 /*
  * --INFO--
  * Address:	800E2E54
  * Size:	000044
  */
-bool CreatureNodeMgr::isDone(int)
+bool CreatureNodeMgr::isDone(int idx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r3, 0x28
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  bl        -0xA27EC
-	  cmpw      r31, r3
-	  blt-      .loc_0x2C
-	  li        r3, 0x1
-	  b         .loc_0x30
+	if (idx >= mRootNode.getChildCount()) {
+		return true;
+	}
 
-	.loc_0x2C:
-	  li        r3, 0
-
-	.loc_0x30:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -4037,146 +3935,39 @@ bool CreatureNodeMgr::isDone(int)
  * Address:	800E2E98
  * Size:	000024
  */
-int CreatureNodeMgr::getSize()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r3, 0x28
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xA2828
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+int CreatureNodeMgr::getSize() { return mRootNode.getChildCount(); }
 
 /*
  * --INFO--
  * Address:	800E2EBC
  * Size:	00006C
  */
-CreatureNodeMgr::~CreatureNodeMgr()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x54
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x51A8
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x44
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4F80
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-
-	.loc_0x44:
-	  extsh.    r0, r4
-	  ble-      .loc_0x54
-	  mr        r3, r31
-	  bl        -0x9BD60
-
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+CreatureNodeMgr::~CreatureNodeMgr() { }
 
 /*
  * --INFO--
  * Address:	800E2F28
  * Size:	000008
  */
-int CreatureNodeMgr::getMax()
-{
-	/*
-	.loc_0x0:
-	  lis       r3, 0x1
-	  blr
-	*/
-}
+int CreatureNodeMgr::getMax() { return 0x10000; }
 
 /*
  * --INFO--
  * Address:	800E2F30
  * Size:	00006C
  */
-PolyObjectMgr::~PolyObjectMgr()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x54
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x50F4
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x44
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4F80
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-
-	.loc_0x44:
-	  extsh.    r0, r4
-	  ble-      .loc_0x54
-	  mr        r3, r31
-	  bl        -0x9BDD4
-
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+PolyObjectMgr::~PolyObjectMgr() { }
 
 /*
  * --INFO--
  * Address:	800E2F9C
  * Size:	000008
  */
-int PolyObjectMgr::getSize()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x30(r3)
-	  blr
-	*/
-}
+int PolyObjectMgr::getSize() { return mSize; }
 
 /*
  * --INFO--
  * Address:	800E2FA4
  * Size:	000008
  */
-int PolyObjectMgr::getMax()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C(r3)
-	  blr
-	*/
-}
+int PolyObjectMgr::getMax() { return mMax; }

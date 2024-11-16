@@ -30,13 +30,14 @@ struct BaseGameSection : public Node {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct Section : public Node {
 	virtual void init() = 0; // _30
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
 };
 
 #endif

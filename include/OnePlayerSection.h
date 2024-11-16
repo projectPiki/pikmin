@@ -8,6 +8,37 @@
 struct CmdStream;
 
 /**
+ * @brief IDs for each stage, as per stages.ini.
+ *
+ * @note There are also test maps and teki stages, but these don't have IDs.
+ */
+enum StageID {
+	STAGE_START,
+	STAGE_Practice  = STAGE_START, // Impact Site
+	STAGE_Forest    = 1,           // Forest of Hope
+	STAGE_Cave      = 2,           // Forest Navel
+	STAGE_Yakushima = 3,           // Distant Spring
+	STAGE_Last      = 4,           // Final Trial
+	STAGE_INVALID   = 5,           // default set on load, invalid
+	STAGE_END       = STAGE_INVALID,
+};
+
+/**
+ * @brief IDs for each stage, as per stages.ini.
+ *
+ * @note There are also test maps and teki stages, but these don't have IDs.
+ */
+enum ChalStageID {
+	CHALSTAGE_Practice  = 0, // Impact Site CM
+	CHALSTAGE_Forest    = 1, // Forest of Hope CM
+	CHALSTAGE_Cave      = 2, // Forest Navel CM
+	CHALSTAGE_Yakushima = 3, // Distant Spring CM
+	CHALSTAGE_Last      = 4, // Final Trial CM
+	// ...
+	CHALSTAGE_INVALID = 7, // default set on load, invalid
+};
+
+/**
  * @brief TODO
  */
 struct GenFileInfo : public CoreNode {
@@ -27,6 +58,16 @@ struct GenFileInfo : public CoreNode {
  * @brief TODO
  */
 struct StageInfo : public CoreNode {
+	inline StageInfo()
+	    : CoreNode("stageInfo")
+	{
+		mStageIndex  = 0;
+		mStageID     = STAGE_INVALID;
+		mChalStageID = CHALSTAGE_INVALID;
+		_20          = 0;
+		mFileInfoList.initCore("");
+	}
+
 	virtual void read(RandomAccessStream&); // _0C
 
 	void parseGenerators(CmdStream*);
@@ -36,24 +77,27 @@ struct StageInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u8 _14[0x20 - 0x14];       // _14, unknown
+	char* mStageName;          // _14
+	char* mFileName;           // _18
+	BOOL mIsVisible;           // _1C
 	u32 _20;                   // _20, unknown
-	u16 _24;                   // _24
-	u16 _26;                   // _26
-	u16 _28;                   // _28
+	u16 mStageIndex;           // _24, order stage is loaded in from file
+	u16 mStageID;              // _26, see StageID enum
+	u16 mChalStageID;          // _28, see ChalStageID enum
 	StageInf mStageInf;        // _2C
 	GenFileInfo mFileInfoList; // _90
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct OnePlayerSection : public Section {
 	virtual void init(); // _30
 
 	// _00     = VTBL
-	// _00-_20 = Section?
-	// TODO: members
+	// _00-_20 = Section
 };
 
 #endif

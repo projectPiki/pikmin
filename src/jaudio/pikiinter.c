@@ -1,4 +1,4 @@
-#include "types.h"
+#include "jaudio/PikiInter.h"
 
 typedef struct Portargs_ Portargs_;
 typedef struct SEvent_ SEvent_;

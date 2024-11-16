@@ -85,7 +85,7 @@ struct StdSystem {
 	int setHeap(int);
 	void findGfxObject(char*, u32);
 	Texture* loadTexture(char*, bool);
-	void loadShape(char*, bool);
+	Shape* loadShape(char*, bool);
 	void findAnimation(char*);
 	int findAnyIndex(char*, char*);
 	void loadAnimation(Shape*, char*, bool);

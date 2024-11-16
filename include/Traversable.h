@@ -25,19 +25,25 @@ struct Traversable {
 			return true;
 		}
 
-		if (getCreature(idx) == nullptr) {
+		if (!getCreature(idx)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	inline Creature* getCreatureCheck(int idx) { return (idx == -1) ? getCreature(0) : getCreature(idx); }
+	inline Creature* getCreatureCheck(int idx)
+	{
+		if (idx == -1) {
+			return getCreature(0);
+		}
+		return getCreature(idx);
+	}
 
 	// _00 = VTBL
 	u32 _04; // _04, unknown
 };
 
-#define TRAVERSELOOP(trav, idxname) for (int idxname = trav->getFirst(); !trav->isEnd(idxname); idxname = trav->getNext(idxname))
+#define TRAVERSELOOP(trav, idxname) for (int idxname = (trav)->getFirst(); !(trav)->isEnd(idxname); idxname = (trav)->getNext(idxname))
 
 #endif

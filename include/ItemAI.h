@@ -6,6 +6,8 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct SluiceAI : public SimpleAI {
 
@@ -84,8 +86,7 @@ struct SluiceAI : public SimpleAI {
 	SluiceAI();
 
 	// _00     = VTBL
-	// _00-_?? = SimpleAI
-	// TODO: members
+	// _00-_1C = SimpleAI
 };
 
 /**

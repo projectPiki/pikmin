@@ -1,12 +1,22 @@
 #include "GameCoreSection.h"
+#include "gameflow.h"
+#include "Omake.h"
+#include "Interface.h"
+#include "Dolphin/os.h"
+
+u16 GameCoreSection::pauseFlag;
+int GameCoreSection::textDemoState;
+u16 GameCoreSection::textDemoTimer;
+int GameCoreSection::textDemoIndex;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "gameCoreSection");
 	// UNUSED FUNCTION
 }
 
@@ -25,28 +35,7 @@ static void _Print(char*, ...)
  * Address:	8010CE6C
  * Size:	000040
  */
-void GameCoreSection::startTextDemo(Creature*, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  mr        r5, r4
-	  subi      r3, r3, 0x2848
-	  stwu      r1, -0x8(r1)
-	  li        r4, 0
-	  lwz       r3, 0x1E8(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void GameCoreSection::startTextDemo(Creature*, int p2) { gameflow._1E8->message(0, p2); }
 
 /*
  * --INFO--
@@ -55,78 +44,31 @@ void GameCoreSection::startTextDemo(Creature*, int)
  */
 void GameCoreSection::updateTextDemo()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  subi      r31, r3, 0x2848
-	  lwz       r0, 0x338(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xD8
-	  lwz       r0, 0x30CC(r13)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x40
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0x68
-	  b         .loc_0xD8
-
-	.loc_0x40:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0xD8
-	  b         .loc_0xB0
-
-	.loc_0x4C:
-	  li        r0, 0x3C
-	  lwz       r3, 0x2F20(r13)
-	  sth       r0, 0x30D0(r13)
-	  bl        -0x93AA0
-	  li        r0, 0x3
-	  stw       r0, 0x30CC(r13)
-	  b         .loc_0xD8
-
-	.loc_0x68:
-	  lhz       r4, 0x30D0(r13)
-	  lwz       r3, 0x2F20(r13)
-	  subi      r0, r4, 0x1
-	  sth       r0, 0x30D0(r13)
-	  bl        -0x93A70
-	  lhz       r0, 0x30D0(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xD8
-	  lwz       r3, 0x1E8(r31)
-	  li        r4, 0
-	  lwz       r5, 0x30D4(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x2
-	  stw       r0, 0x30CC(r13)
-	  b         .loc_0xD8
-
-	.loc_0xB0:
-	  lhz       r4, 0x30D0(r13)
-	  lwz       r3, 0x2F20(r13)
-	  subi      r0, r4, 0x1
-	  sth       r0, 0x30D0(r13)
-	  bl        -0x93AB8
-	  lhz       r0, 0x30D0(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xD8
-	  li        r0, 0
-	  stw       r0, 0x30CC(r13)
-
-	.loc_0xD8:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (gameflow._338) {
+		return;
+	}
+	switch (textDemoState) {
+	case 2:
+		textDemoTimer = 60;
+		attentionCamera->finish();
+		textDemoState = 3;
+		break;
+	case 1:
+		textDemoTimer--;
+		attentionCamera->update();
+		if (textDemoTimer == 0) {
+			gameflow._1E8->message(0, textDemoIndex);
+			textDemoState = 2;
+		}
+		break;
+	case 3:
+		textDemoTimer--;
+		attentionCamera->update();
+		if (textDemoTimer == 0) {
+			textDemoState = 0;
+		}
+		break;
+	}
 }
 
 /*

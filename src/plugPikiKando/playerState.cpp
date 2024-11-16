@@ -666,8 +666,8 @@ PlayerState::UfoParts::UfoParts() { }
  */
 bool PlayerState::courseOpen(int courseID)
 {
-	if (courseID >= 0 && courseID <= 5) {
-		return (gameflow._1C8 & (1 << courseID)) != 0;
+	if (courseID >= STAGE_START && courseID <= STAGE_END) {
+		return (gameflow.mPlayState.mCourseOpenFlags & (1 << courseID)) != 0;
 	}
 	return false;
 }
@@ -1358,7 +1358,7 @@ void PlayerState::loadCard(RandomAccessStream&)
  */
 bool PlayerState::isTutorial()
 {
-	if (flowCont._A8 && flowCont._A8->_26) {
+	if (flowCont._A8 && flowCont._A8->mStageID != STAGE_Practice) {
 		return false;
 	}
 
@@ -1376,7 +1376,7 @@ bool PlayerState::isTutorial()
  */
 bool PlayerState::isGameCourse()
 {
-	int val = flowCont._A8->_24;
+	int val = flowCont._A8->mStageIndex;
 	return (val >= 0 && val < 5);
 }
 
@@ -2089,7 +2089,7 @@ bool PlayerState::isUfoBroken()
 		return false;
 	}
 
-	if (flowCont._A8->_26 == 0) {
+	if (flowCont._A8->mStageID == STAGE_Practice) {
 		return true;
 	}
 

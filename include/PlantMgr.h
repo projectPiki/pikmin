@@ -37,8 +37,14 @@ struct Plant : public AICreature {
 	void reset(int);
 
 	// _00      = VTBL
-	// _00-_??? = AICreature?
-	// TODO: work out members
+	// _00-_304 = AICreature
+	u16 _304;                         // _304
+	f32 _308;                         // _308
+	u8 _30C;                          // _30C
+	PaniPlantAnimator mPlantAnimator; // _310
+	SearchData mPlantSearchData[3];   // _364
+	Vector3f _388;                    // _388
+	                                  // TODO: work out members
 };
 
 /**
@@ -118,8 +124,10 @@ struct PlantMgr : public CreatureNodeMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_?? = CreatureNodeMgr
+	// _00-_40 = CreatureNodeMgr
 	// TODO: members
 };
+
+extern PlantMgr* plantMgr;
 
 #endif

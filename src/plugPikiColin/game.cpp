@@ -1,17 +1,23 @@
 #include "OnePlayerSection.h"
 #include "FlowController.h"
 #include "CmdStream.h"
+#include "MemStat.h"
 #include "system.h"
 #include "sysNew.h"
 #include "stl/stdio.h"
+#include "stl/string.h"
+#include "Dolphin/os.h"
+
+FlowController flowCont;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "GameOnePlayer");
 	// UNUSED FUNCTION
 }
 
@@ -95,8 +101,78 @@ void FlowController::setStage(char*)
  * Address:	800532C8
  * Size:	000378
  */
-void FlowController::readMapList(char*)
+void FlowController::readMapList(char* fileName)
 {
+	mRootInfo.initCore("stages");
+	BufferedInputStream* file = gsys->openFile(fileName, true, true);
+	if (!file) {
+		return;
+	}
+
+	CmdStream* commands = new CmdStream(file);
+	u16 stageIdx        = 0;
+	while (!commands->endOfCmds() && !commands->endOfSection()) {
+		commands->getToken(true);
+		if (!commands->isToken("new_map")) {
+			continue;
+		}
+
+		memStat->start("stageInfo");
+
+		StageInfo* newStage   = new StageInfo();
+		newStage->mStageIndex = stageIdx;
+		newStage->mStageInf.init();
+		mRootInfo.add(newStage);
+		memStat->end("stageInfo");
+		stageIdx++;
+
+		commands->getToken(true);
+
+		newStage->mIsVisible = strcmp(commands->mCurrentToken, "visible") == 0 ? TRUE : FALSE;
+
+		commands->getToken(true);
+
+		while (!commands->endOfCmds() && !commands->endOfSection()) {
+			commands->getToken(true);
+			if (commands->isToken("name")) {
+				newStage->mStageName = StdSystem::stringDup(commands->getToken(true));
+				continue;
+			}
+
+			if (commands->isToken("id")) {
+				u32 stageID;
+				sscanf(commands->getToken(true), "%d", &stageID);
+				newStage->mStageID = stageID;
+				continue;
+			}
+
+			if (commands->isToken("chid")) {
+				u32 chID;
+				sscanf(commands->getToken(true), "%d", &chID);
+				newStage->mChalStageID = chID;
+				continue;
+			}
+
+			if (commands->isToken("file")) {
+				newStage->mFileName = StdSystem::stringDup(commands->getToken(true));
+				continue;
+			}
+
+			if (commands->isToken("generator")) {
+				commands->getToken(true);
+				newStage->parseGenerators(commands);
+			}
+		}
+
+		if (!commands->endOfCmds()) {
+			commands->getToken(true);
+		}
+	}
+
+	if (!commands->endOfCmds()) {
+		commands->getToken(true);
+	}
+	file->close();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -363,6 +439,9 @@ void FlowController::readMapList(char*)
  */
 void OnePlayerSection::init()
 {
+	Node::init("<OnePlayerSection>");
+	Section* section = nullptr;
+	while (!section) { }
 	/*
 	.loc_0x0:
 	  mflr      r0

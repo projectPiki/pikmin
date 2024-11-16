@@ -17,6 +17,8 @@ struct Colour {
 		a = other.a;
 	}
 
+	Colour(u8 _r, u8 _g, u8 _b, u8 _a) { set(_r, _g, _b, _a); }
+
 	void set(u8 _r, u8 _g, u8 _b, u8 _a)
 	{
 		r = _r;

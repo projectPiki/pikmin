@@ -10,6 +10,11 @@ struct Graphics;
  * @brief TODO
  */
 struct LoadIdler : public CoreNode {
+	LoadIdler()
+	    : CoreNode("")
+	{
+	}
+
 	virtual void init();          // _10 (weak)
 	virtual void draw(Graphics&); // _14 (weak)
 

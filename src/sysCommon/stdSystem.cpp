@@ -287,7 +287,7 @@ void StdSystem::findTexture(Texture*)
  * Address:	8003F204
  * Size:	0001A8
  */
-void StdSystem::loadShape(char*, bool)
+Shape* StdSystem::loadShape(char*, bool)
 {
 	/*
 	.loc_0x0:

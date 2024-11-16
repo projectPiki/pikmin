@@ -1838,7 +1838,7 @@ void Weed::startAI(int)
  * Address:	800E5AE8
  * Size:	0000CC
  */
-void Weed::interactPullout(Creature*)
+bool Weed::interactPullout(Creature*)
 {
 	/*
 	.loc_0x0:

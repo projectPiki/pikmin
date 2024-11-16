@@ -1,11 +1,11 @@
-#include "types.h"
+#include "jaudio/AICtrl.h"
 
 /*
  * --INFO--
  * Address:	80005720
  * Size:	00004C
  */
-void Jac_HeapSetup(void)
+void Jac_HeapSetup(u8*, s32)
 {
 	/*
 	.loc_0x0:
@@ -740,35 +740,21 @@ void Jac_RegisterDacCallback(void)
  * Address:	80005E80
  * Size:	000008
  */
-void Jac_SetOutputMode(void)
-{
-	/*
-	.loc_0x0:
-	  stw       r3, -0x7FE4(r13)
-	  blr
-	*/
-}
+void Jac_SetOutputMode(int mode) { JAC_SYSTEM_OUTPUT_MODE = mode; }
 
 /*
  * --INFO--
  * Address:	80005EA0
  * Size:	000008
  */
-void Jac_GetOutputMode(void)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, -0x7FE4(r13)
-	  blr
-	*/
-}
+int Jac_GetOutputMode() { return JAC_SYSTEM_OUTPUT_MODE; }
 
 /*
  * --INFO--
  * Address:	80005EC0
  * Size:	000034
  */
-void Jac_SetMixerLevel(void)
+void Jac_SetMixerLevel(f32, f32)
 {
 	/*
 	.loc_0x0:

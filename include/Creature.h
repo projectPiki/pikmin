@@ -221,75 +221,75 @@ struct Creature : public RefCountable, public EventTalker {
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker
-	Vector3f _1C;           // _1C
-	u32 _28;                // _28, unknown
-	SeContext* mSeContext;  // _2C
-	u8 _30;                 // _30
-	int _34;                // _34
-	u8 _38[0x40 - 0x38];    // _38, TODO: work out members
-	FastGrid mGrid;         // _40
-	f32 mHealth;            // _58
-	u8 _5C[0x4];            // _5C, unknown
-	u8 _60;                 // _60
-	Generator* mGenerator;  // _64
-	u32 _68;                // _68, might be int
-	EObjType mObjType;      // _6C, object type
-	Vector3f _70;           // _70
-	Vector3f _7C;           // _7C
-	Vector3f _88;           // _88
-	Vector3f mPosition;     // _94
-	f32 mDirection;         // _A0
-	Vector3f _A4;           // _A4
-	Vector3f _B0;           // _B0
-	Vector3f _BC;           // _BC
-	u32 mCreatureFlags;     // _C8, bitflag
-	u32 _CC;                // _CC
-	f32 _D0;                // _D0
-	Vector3f _D4;           // _D4
-	Quat _E0;               // _E0
-	Quat _F0;               // _F0
-	Quat _100;              // _100
-	f32 _110;               // _110
-	Matrix4f _114;          // _114
-	Creature* _154;         // _154
-	u32 _158;               // _158, maybe Rope* or RopeCreature*?
-	f32 _15C;               // _15C
-	u32 _160;               // _160, unknown
-	u32 _164;               // _164, unknown
-	UpdateContext _168;     // _168
-	UpdateContext _174;     // _174
-	Creature* _180;         // _180, unknown
-	Creature* mStickTarget; // _184, creature/object this creature is stuck to
-	CollPart* _188;         // _188
-	Creature* _18C;         // _18C, unknown
-	u32 _190;               // _190, unknown
-	Vector3f _194;          // _194
-	int _1A0;               // _1A0
-	u32 _1A4;               // _1A4
-	u8 _1A8[0x4];           // _1A8, unknown
-	Vector3f _1AC;          // _1AC
-	SearchBuffer _1B8;      // _1B8
-	LifeGauge mLifeGauge;   // _1E0
-	u32 _21C;               // _21C, unknown
-	CollInfo* mCollInfo;    // _220
-	CreatureProp* mProps;   // _224, creature properties
-	Matrix4f _228;          // _228
-	u8 _268[0x26C - 0x268]; // _268, TODO: work out members
-	f32 _26C;               // _26C
-	f32 _270;               // _270
-	Vector3f _274;          // _274
-	DynCollObject* _280;    // _280
-	Vector3f* _284;         // _284, coll plat normal maybe?
-	u32 _288;               // _288, unknown
-	CollTriInfo* mFloorTri; // _28C
-	u32 _290;               // _290, unknown
-	u8 _294[0x4];           // _294, unknown
-	u32 _298;               // _298, unknown
-	Vector3f _29C;          // _29C
-	Creature* _2A8;         // _2A8
-	Creature* _2AC;         // _2AC
-	u32 _2B0;               // _2B0, unknown
-	u8 _2B4;                // _2B4
+	Vector3f _1C;               // _1C
+	u32 _28;                    // _28, unknown
+	SeContext* mSeContext;      // _2C
+	u8 _30;                     // _30
+	int _34;                    // _34
+	u8 _38[0x40 - 0x38];        // _38, TODO: work out members
+	FastGrid mGrid;             // _40
+	f32 mHealth;                // _58
+	f32 _5C;                    // _5C
+	u8 _60;                     // _60
+	Generator* mGenerator;      // _64
+	u32 _68;                    // _68, might be int
+	EObjType mObjType;          // _6C, object type
+	Vector3f _70;               // _70
+	Vector3f _7C;               // _7C, maybe scale?
+	Vector3f _88;               // _88, maybe rotation?
+	Vector3f mPosition;         // _94
+	f32 mDirection;             // _A0
+	Vector3f _A4;               // _A4
+	Vector3f _B0;               // _B0
+	Vector3f _BC;               // _BC
+	u32 mCreatureFlags;         // _C8, bitflag
+	u32 _CC;                    // _CC
+	f32 _D0;                    // _D0
+	Vector3f _D4;               // _D4
+	Quat _E0;                   // _E0
+	Quat _F0;                   // _F0
+	Quat _100;                  // _100
+	f32 _110;                   // _110
+	Matrix4f _114;              // _114
+	Creature* _154;             // _154
+	u32 _158;                   // _158, maybe Rope* or RopeCreature*?
+	f32 _15C;                   // _15C
+	u32 _160;                   // _160, unknown
+	u32 _164;                   // _164, unknown
+	UpdateContext _168;         // _168
+	UpdateContext _174;         // _174
+	Creature* _180;             // _180, unknown
+	Creature* mStickTarget;     // _184, creature/object this creature is stuck to
+	CollPart* _188;             // _188
+	Creature* _18C;             // _18C, unknown
+	u32 _190;                   // _190, unknown
+	Vector3f _194;              // _194
+	int _1A0;                   // _1A0
+	u32 _1A4;                   // _1A4
+	u8 _1A8[0x4];               // _1A8, unknown
+	Vector3f _1AC;              // _1AC
+	SearchBuffer mSearchBuffer; // _1B8
+	LifeGauge mLifeGauge;       // _1E0
+	u32 _21C;                   // _21C, unknown
+	CollInfo* mCollInfo;        // _220
+	CreatureProp* mProps;       // _224, creature properties
+	Matrix4f _228;              // _228
+	u8 _268[0x26C - 0x268];     // _268, TODO: work out members
+	f32 _26C;                   // _26C
+	f32 _270;                   // _270
+	Vector3f _274;              // _274
+	DynCollObject* _280;        // _280
+	Vector3f* _284;             // _284, coll plat normal maybe?
+	u32 _288;                   // _288, unknown
+	CollTriInfo* mFloorTri;     // _28C
+	u32 _290;                   // _290, unknown
+	u8 _294[0x4];               // _294, unknown
+	u32 _298;                   // _298, unknown
+	Vector3f _29C;              // _29C
+	Creature* _2A8;             // _2A8
+	Creature* _2AC;             // _2AC
+	u32 _2B0;                   // _2B0, unknown
+	u8 _2B4;                    // _2B4
 };
 
 // Global helper functions:

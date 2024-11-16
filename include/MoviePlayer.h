@@ -25,6 +25,8 @@ struct MovieInfo : public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x174.
  */
 struct MoviePlayer {
 	MoviePlayer();
@@ -50,7 +52,7 @@ struct MoviePlayer {
 	void nextFrame();
 	void backFrame();
 
-	// TODO: members
+	u8 _00[0x174]; // _00, unknown
 };
 
 #endif

@@ -9,8 +9,15 @@ struct SimpleAI;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct MizuItemProp : public CreatureProp {
+	inline MizuItemProp()
+	{
+		mCreatureProps.mFriction.mValue     = 0.1f;
+		mCreatureProps.mBounceFactor.mValue = 0.8f;
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
@@ -19,6 +26,8 @@ struct MizuItemProp : public CreatureProp {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x3C8.
  */
 struct MizuItem : public ItemCreature {
 	MizuItem(int, CreatureProp*, ItemShapeObject*, SimpleAI*);
@@ -30,7 +39,6 @@ struct MizuItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TODO: members
 };
 
 #endif

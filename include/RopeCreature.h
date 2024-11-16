@@ -9,12 +9,18 @@ struct Shape;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct RopeProp : public CreatureProp {
+	inline RopeProp()
+	{
+		mCreatureProps.mFriction.mValue     = 0.1f;
+		mCreatureProps.mBounceFactor.mValue = 0.8f;
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	// TODO: members
 };
 
 /**
@@ -41,6 +47,8 @@ struct RopeCreature : public Creature {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x300.
  */
 struct RopeItem : public RopeCreature {
 	RopeItem(CreatureProp*, Shape*);
@@ -58,8 +66,8 @@ struct RopeItem : public RopeCreature {
 	void autoInit();
 
 	// _00      = VTBL
-	// _00-_2CC = RopeCreature
-	// TODO: members
+	// _00-_2D0 = RopeCreature
+	u8 _2D0[0x300 - 0x2D0]; // _2D0
 };
 
 #endif

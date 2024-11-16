@@ -9,16 +9,20 @@ struct Shape;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct SeedProp : public CreatureProp {
+	inline SeedProp() { mCreatureProps.mFriction.mValue = 0.1f; }
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x2FC
  */
 struct SeedItem : public Creature {
 	SeedItem(CreatureProp*, Shape**);
@@ -41,7 +45,7 @@ struct SeedItem : public Creature {
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	// TODO: members
+	u8 _2B8[0x2FC - 0x2B8]; // _2B8, unknown
 };
 
 #endif

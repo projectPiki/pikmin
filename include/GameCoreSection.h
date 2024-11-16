@@ -19,7 +19,6 @@ struct GameCoreSection : public Node {
 	virtual void update();        // _10
 	virtual void draw(Graphics&); // _14
 
-	void startTextDemo(Creature*, int);
 	void updateTextDemo();
 	void startMovie(u32, bool);
 	void endMovie(int);
@@ -38,10 +37,17 @@ struct GameCoreSection : public Node {
 	void draw1D(Graphics&);
 	void draw2D(Graphics&);
 
+	static void startTextDemo(Creature*, int);
+
 	// unused/inlined:
 	void hideTeki();
 	void hideAllPellet();
 	void hidePelletExceptSucked();
+
+	static u16 pauseFlag;
+	static int textDemoState;
+	static u16 textDemoTimer;
+	static int textDemoIndex;
 
 	// _00     = VTBL
 	// _00-_20 = Node

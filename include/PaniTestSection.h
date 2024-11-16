@@ -70,13 +70,14 @@ struct PaniTestNode : public Node, public PaniAnimKeyListener {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct PaniTestSection : public Section {
 	virtual void init(); // _30
 
 	// _00     = VTBL
 	// _00-_20 = Section
-	// TODO: members
 };
 
 #endif

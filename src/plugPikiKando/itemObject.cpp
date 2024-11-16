@@ -1,12 +1,14 @@
 #include "ItemObject.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "itemObject");
 	// UNUSED FUNCTION
 }
 
@@ -27,8 +29,8 @@ static void _Print(char*, ...)
  */
 ItemBall::ItemBall(Shape* shape, CreatureProp* props)
     : ItemCreature(0, props, shape)
+    , mBallCollision(0)
 {
-	// UNUSED FUNCTION
 }
 
 /*
@@ -38,24 +40,8 @@ ItemBall::ItemBall(Shape* shape, CreatureProp* props)
  */
 void ItemBall::startAI(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r4, r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x3C8
-	  addi      r5, r4, 0x3DC
-	  stwu      r1, -0x8(r1)
-	  addi      r6, r4, 0x7EC
-	  stw       r0, 0x220(r3)
-	  lwz       r3, 0x220(r3)
-	  lwz       r4, 0x308(r4)
-	  bl        -0x6DE1C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mCollInfo = &mBallCollision;
+	mCollInfo->initInfo(mItemShape, mBallParts, mPartIDs);
 }
 
 /*
@@ -77,10 +63,10 @@ bool ItemBall::isVisible() { return true; }
  * Address:	........
  * Size:	00005C
  */
-ItemObject::ItemObject(int p1, Shape* shape)
-    : ItemCreature(p1, nullptr, shape)
+ItemObject::ItemObject(int objType, Shape* shape)
+    : ItemCreature(objType, nullptr, shape)
 {
-	// UNUSED FUNCTION
+	mObjType = (EObjType)objType;
 }
 
 /*
@@ -96,42 +82,10 @@ void ItemObject::update() { }
  * Size:	00007C
  */
 BombGenItem::BombGenItem(Shape* shape)
-    : ItemObject(0, shape)
+    : ItemObject(OBJTYPE_BombGen, shape)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r6, r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r4, 0xD
-	  li        r5, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        -0x211C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x694
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x114
-	  lis       r3, 0x802C
-	  stw       r0, 0x2B8(r31)
-	  li        r0, 0xD
-	  subi      r3, r3, 0x7F0
-	  stw       r0, 0x6C(r31)
-	  addi      r5, r3, 0x114
-	  li        r4, -0x1
-	  stw       r3, 0x0(r31)
-	  li        r0, 0x1
-	  addi      r3, r31, 0
-	  stw       r5, 0x2B8(r31)
-	  sth       r4, 0x3C8(r31)
-	  sth       r0, 0x3CA(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_3C8 = -1;
+	_3CA = 1;
 }
 
 /*
@@ -139,27 +93,16 @@ BombGenItem::BombGenItem(Shape* shape)
  * Address:	800F7A24
  * Size:	000030
  */
-void BombGenItem::pickable()
+bool BombGenItem::pickable()
 {
-	/*
-	.loc_0x0:
-	  lha       r0, 0x3C8(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x14
-	  li        r3, 0x1
-	  blr
+	if (_3C8 == -1) {
+		return true;
+	}
+	if (_3CA > 0) {
+		return true;
+	}
 
-	.loc_0x14:
-	  lha       r0, 0x3CA(r3)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x28
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x28:
-	  li        r3, 0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -167,50 +110,20 @@ void BombGenItem::pickable()
  * Address:	800F7A54
  * Size:	00006C
  */
-void BombGenItem::pick()
+bool BombGenItem::pick()
 {
-	/*
-	.loc_0x0:
-	  lha       r4, 0x3C8(r3)
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x14
-	  li        r0, 0x1
-	  b         .loc_0x2C
+	if (!pickable()) {
+		return false;
+	}
+	if (_3C8 > 0) {
+		if (_3CA > 0) {
+			_3CA--;
+		} else {
+			return false;
+		}
+	}
 
-	.loc_0x14:
-	  lha       r0, 0x3CA(r3)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x28
-	  li        r0, 0x1
-	  b         .loc_0x2C
-
-	.loc_0x28:
-	  li        r0, 0
-
-	.loc_0x2C:
-	  rlwinm.   r0,r0,0,24,31
-	  bne-      .loc_0x3C
-	  li        r3, 0
-	  blr
-
-	.loc_0x3C:
-	  extsh.    r0, r4
-	  ble-      .loc_0x64
-	  lha       r4, 0x3CA(r3)
-	  cmpwi     r4, 0
-	  ble-      .loc_0x5C
-	  subi      r0, r4, 0x1
-	  sth       r0, 0x3CA(r3)
-	  b         .loc_0x64
-
-	.loc_0x5C:
-	  li        r3, 0
-	  blr
-
-	.loc_0x64:
-	  li        r3, 0x1
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -219,38 +132,8 @@ void BombGenItem::pick()
  * Size:	00006C
  */
 Fulcrum::Fulcrum()
-    : ItemObject(0, nullptr)
+    : ItemObject(OBJTYPE_Fulcrum, nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x11
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  li        r6, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        -0x2234
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x694
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x114
-	  lis       r3, 0x802C
-	  stw       r0, 0x2B8(r31)
-	  li        r0, 0x11
-	  subi      r4, r3, 0x994
-	  stw       r0, 0x6C(r31)
-	  addi      r0, r4, 0x114
-	  addi      r3, r31, 0
-	  stw       r4, 0x0(r31)
-	  stw       r0, 0x2B8(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -259,38 +142,8 @@ Fulcrum::Fulcrum()
  * Size:	00006C
  */
 NaviDemoSunsetStart::NaviDemoSunsetStart()
-    : ItemObject(0, nullptr)
+    : ItemObject(OBJTYPE_SunsetStart, nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x1B
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  li        r6, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        -0x22A0
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x694
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x114
-	  lis       r3, 0x802C
-	  stw       r0, 0x2B8(r31)
-	  li        r0, 0x1B
-	  subi      r4, r3, 0xB2C
-	  stw       r0, 0x6C(r31)
-	  addi      r0, r4, 0x114
-	  addi      r3, r31, 0
-	  stw       r4, 0x0(r31)
-	  stw       r0, 0x2B8(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -299,148 +152,6 @@ NaviDemoSunsetStart::NaviDemoSunsetStart()
  * Size:	00006C
  */
 NaviDemoSunsetGoal::NaviDemoSunsetGoal()
-    : ItemObject(0, nullptr)
+    : ItemObject(OBJTYPE_SunsetGoal, nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x1C
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  li        r6, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        -0x230C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x694
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x114
-	  lis       r3, 0x802C
-	  stw       r0, 0x2B8(r31)
-	  li        r0, 0x1C
-	  subi      r4, r3, 0xCD8
-	  stw       r0, 0x6C(r31)
-	  addi      r0, r4, 0x114
-	  addi      r3, r31, 0
-	  stw       r4, 0x0(r31)
-	  stw       r0, 0x2B8(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800F7C04
- * Size:	000008
- */
-bool ItemObject::needShadow() { return false; }
-
-/*
- * --INFO--
- * Address:	800F7C0C
- * Size:	000004
- */
-void ItemObject::postUpdate(int, f32) { }
-
-/*
- * --INFO--
- * Address:	800F7C10
- * Size:	000008
- */
-bool ItemObject::isAtari() { return false; }
-
-/*
- * --INFO--
- * Address:	800F7C18
- * Size:	000030
- */
-bool BombGenItem::isAtari()
-{
-	/*
-	.loc_0x0:
-	  lha       r0, 0x3C8(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x14
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x14:
-	  lha       r0, 0x3CA(r3)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x28
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x28:
-	  li        r3, 0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800F7C48
- * Size:	000008
- */
-bool BombGenItem::needFlick(Creature*) { return false; }
-
-/*
- * --INFO--
- * Address:	800F7C50
- * Size:	000030
- */
-bool BombGenItem::isVisible()
-{
-	/*
-	.loc_0x0:
-	  lha       r0, 0x3C8(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x14
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x14:
-	  lha       r0, 0x3CA(r3)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x28
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x28:
-	  li        r3, 0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800F7C80
- * Size:	000030
- */
-bool BombGenItem::isAlive()
-{
-	/*
-	.loc_0x0:
-	  lha       r0, 0x3C8(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x14
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x14:
-	  lha       r0, 0x3CA(r3)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x28
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x28:
-	  li        r3, 0
-	  blr
-	*/
 }

@@ -4,19 +4,31 @@
 #include "types.h"
 #include "ItemMgr.h"
 #include "CreatureProp.h"
+#include "Collision.h"
+
+namespace zen {
+struct particleGenerator;
+} // namespace zen
 
 struct InteractBuild;
+struct BoBaseItem;
 
 /////////// Climbing Stick Item ///////////
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct KusaItemProp : public CreatureProp {
+	inline KusaItemProp()
+	{
+		mCreatureProps.mFriction.mValue     = 0.1f;
+		mCreatureProps.mBounceFactor.mValue = 0.8f;
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	// TODO: members
 };
 
 /*
@@ -38,7 +50,11 @@ struct KusaItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TODO: members
+	CollInfo mKusaCollision; // _3C8
+	CollPart mKusaParts[10]; // _3DC
+	u32 mPartIDs[10];        // _7EC
+	Vector3f _814;           // _814
+	BoBaseItem* mBaseItem;   // _820
 };
 
 /////////// Stick Base Item (CUT/CRASHES) ///////////
@@ -58,11 +74,18 @@ struct BoBaseItem : public ItemCreature {
 	virtual void update();               // _E0
 	virtual void refresh(Graphics&);     // _EC
 
-	void interactBuild(InteractBuild&);
+	bool interactBuild(InteractBuild&);
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TODO: members
+	CollInfo mBaseCollision;          // _3C8
+	CollPart mBaseParts[10];          // _3DC
+	u32 mPartIDs[10];                 // _7EC
+	Vector3f _814;                    // _814
+	KusaItem* mStickItem;             // _820
+	bool _824;                        // _824
+	s8 _825;                          // _825
+	zen::particleGenerator* mPtclGen; // _828
 };
 
 #endif

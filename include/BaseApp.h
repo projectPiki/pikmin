@@ -39,4 +39,6 @@ struct BaseApp : public Node {
 	u32 mHeapIndex;                   // _50
 };
 
-#endif // _BASEAPP_H
+extern BaseApp* app;
+
+#endif

@@ -70,7 +70,10 @@ struct CreatureInf : public BaseInf {
 	u32 _30;           // _30, unknown
 	int _34;           // _34
 	int _38;           // _38
-	u8 _3C[0x10];      // _3C, unknown
+	int _3C;           // _40
+	int _40;           // _44
+	f32 _44;           // _44
+	f32 _48;           // _48
 };
 
 /**

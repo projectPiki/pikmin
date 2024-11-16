@@ -11,16 +11,24 @@ struct InteractSwallow;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct BombItemProp : public CreatureProp {
+	inline BombItemProp()
+	{
+		mCreatureProps.mFriction.mValue     = 0.1f;
+		mCreatureProps.mBounceFactor.mValue = 0.8f;
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x840.
  */
 struct BombItem : public ItemCreature {
 	BombItem(CreatureProp*, ItemShapeObject*, SimpleAI*);
@@ -41,11 +49,13 @@ struct BombItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TODO: members
+	u8 _3C8[0x840 - 0x3C8]; // _3C8, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct BombAI : public SimpleAI {
 
@@ -148,8 +158,7 @@ struct BombAI : public SimpleAI {
 	BombAI();
 
 	// _00     = VTBL
-	// _00-_?? = SimpleAI
-	// TODO: members
+	// _00-_1C = SimpleAI
 };
 
 #endif

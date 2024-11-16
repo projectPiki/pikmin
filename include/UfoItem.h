@@ -22,16 +22,24 @@ struct UfoShapeObject {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct UfoItemProp : public CreatureProp {
+	inline UfoItemProp()
+	{
+		mCreatureProps.mFriction.mValue     = 0.1f;
+		mCreatureProps.mBounceFactor.mValue = 0.8f;
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x5D0.
  */
 struct UfoItem : public Suckable {
 
@@ -103,7 +111,7 @@ struct UfoItem : public Suckable {
 
 	// _00      = VTBL
 	// _00-_3C8 = Suckable
-	// TODO: members
+	u8 _3C8[0x5D0 - 0x3C8]; // _3C8, unknown
 };
 
 /**

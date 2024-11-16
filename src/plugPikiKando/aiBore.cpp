@@ -987,7 +987,7 @@ void ActBoreTalk::init(Creature* creature)
 {
 	mIsAnimFinished   = false;
 	_18               = 0;
-	SearchBuffer* buf = &mActor->_1B8;
+	SearchBuffer* buf = &mActor->mSearchBuffer;
 	int start         = buf->getFirst();
 	mTarget           = buf->getCreatureCheck(start);
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Asibumi, this), PaniMotionInfo(PIKIANIM_Asibumi));
@@ -1068,7 +1068,7 @@ void ActBoreTalk::init(Creature* creature)
  */
 void ActBoreTalk::startTalk()
 {
-	SearchBuffer* buf = &mActor->_1B8;
+	SearchBuffer* buf = &mActor->mSearchBuffer;
 	mActor->turnTo(mTarget->mPosition);
 	TRAVERSELOOP(buf, idx)
 	{

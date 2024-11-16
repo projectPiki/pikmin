@@ -7781,7 +7781,7 @@ void MapMgr::getCollGroupList(f32, f32, bool)
  * Address:	80067F04
  * Size:	000164
  */
-void MapMgr::getMinY(f32, f32, bool)
+f32 MapMgr::getMinY(f32, f32, bool)
 {
 	/*
 	.loc_0x0:

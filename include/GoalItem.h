@@ -19,16 +19,24 @@ struct SimpleAI;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct GoalItemProp : public CreatureProp {
+	inline GoalItemProp()
+	{
+		mCreatureProps.mFriction.mValue     = 0.1f;
+		mCreatureProps.mBounceFactor.mValue = 0.8f;
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x494.
  */
 struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
 	GoalItem(CreatureProp*, ItemShapeObject*, ItemShapeObject*, ItemShapeObject*, SimpleAI*);
@@ -71,9 +79,12 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 
 	static u8 demoHideFlag;
 
-	// _00      = VTBL
-	// _00-_3C8 = Suckable
-	// TODO: members
+	// _00       = VTBL
+	// _00-_3C8  = Suckable
+	// _3C8-_3CC = zen::CallBack2
+	u8 _3CC[0x428 - 0x3CC]; // _3CC, unknown
+	u16 _428;               // _428, maybe color?
+	u8 _42A[0x494 - 0x42A]; // _42A, unknown
 };
 
 /**

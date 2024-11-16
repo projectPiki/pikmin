@@ -12,12 +12,18 @@ struct SimpleAI;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct PikiHeadItemProp : public CreatureProp {
+	inline PikiHeadItemProp()
+	{
+		mCreatureProps.mFriction.mValue     = 0.1f;
+		mCreatureProps.mBounceFactor.mValue = 0.8f;
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	// TODO: members
 };
 
 /**
@@ -42,8 +48,8 @@ struct PikiHeadItem : public ItemCreature {
 	void canPullout();
 	void setPermanentEffects(bool);
 	void setColor(int);
-	void interactBikkuri(InteractBikkuri&);
-	void interactSwallow(InteractSwallow&);
+	bool interactBikkuri(InteractBikkuri&);
+	bool interactSwallow(InteractSwallow&);
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
@@ -52,6 +58,8 @@ struct PikiHeadItem : public ItemCreature {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct PikiHeadAI : public SimpleAI {
 
@@ -262,12 +270,13 @@ struct PikiHeadAI : public SimpleAI {
 	PikiHeadAI();
 
 	// _00     = VTBL
-	// _00-_?? = SimpleAI
-	// TODO: members
+	// _00-_1C = SimpleAI
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x48.
  */
 struct PikiHeadMgr : public MonoObjectMgr {
 	PikiHeadMgr(ItemMgr*);
@@ -276,10 +285,14 @@ struct PikiHeadMgr : public MonoObjectMgr {
 	virtual Creature* birth();            // _78
 	virtual PikiHeadItem* createObject(); // _80
 
+	static u8 buryMode;
+
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_3C = MonoObjectMgr
-	// TODO: members
+	ItemMgr* mItemMgr;                // _3C
+	PikiHeadItemProp* mPikiHeadProps; // _40
+	PikiHeadAI* mPikiHeadAI;          // _44
 };
 
 #endif

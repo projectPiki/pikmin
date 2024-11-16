@@ -958,7 +958,7 @@ void PikiHeadItem::refresh(Graphics&)
  * Address:	800ECFF4
  * Size:	000108
  */
-void PikiHeadItem::interactBikkuri(InteractBikkuri&)
+bool PikiHeadItem::interactBikkuri(InteractBikkuri&)
 {
 	/*
 	.loc_0x0:
@@ -1040,7 +1040,7 @@ void PikiHeadItem::interactBikkuri(InteractBikkuri&)
  * Address:	800ED0FC
  * Size:	000100
  */
-void PikiHeadItem::interactSwallow(InteractSwallow&)
+bool PikiHeadItem::interactSwallow(InteractSwallow&)
 {
 	/*
 	.loc_0x0:

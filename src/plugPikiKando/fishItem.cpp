@@ -1,12 +1,17 @@
 #include "FishItem.h"
+#include "Graphics.h"
+#include "UtilityKando.h"
+#include "Dolphin/os.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt);
 	// UNUSED FUNCTION
 }
 
@@ -26,75 +31,11 @@ static void _Print(char*, ...)
  * Size:	0000B0
  */
 FishGenerator::FishGenerator()
-    : ItemCreature(0, nullptr, nullptr)
+    : ItemCreature(OBJTYPE_Fish, nullptr, nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x25
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  li        r6, 0
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bl        0xF220
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4180
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x114
-	  li        r3, 0x20
-	  stw       r0, 0x2B8(r30)
-	  li        r0, 0
-	  lfs       f0, -0x6670(r2)
-	  stfs      f0, 0x3DC(r30)
-	  stfs      f0, 0x3D8(r30)
-	  stfs      f0, 0x3D4(r30)
-	  stfs      f0, 0x3E8(r30)
-	  stfs      f0, 0x3E4(r30)
-	  stfs      f0, 0x3E0(r30)
-	  stw       r3, 0x3CC(r30)
-	  stw       r0, 0x3C8(r30)
-	  lwz       r31, 0x3CC(r30)
-	  mulli     r3, r31, 0x1C
-	  addi      r3, r3, 0x8
-	  bl        -0x9F6D8
-	  lis       r4, 0x800E
-	  addi      r4, r4, 0x6718
-	  addi      r7, r31, 0
-	  li        r5, 0
-	  li        r6, 0x1C
-	  bl        0x12E534
-	  stw       r3, 0x3D0(r30)
-	  mr        r3, r30
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800E6718
- * Size:	000020
- */
-Fish::Fish()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x6670(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0xC(r3)
-	  blr
-	*/
+	mMaxFish   = 32;
+	mFishCount = 0;
+	mFish      = new Fish[mMaxFish];
 }
 
 /*
@@ -104,6 +45,15 @@ Fish::Fish()
  */
 void FishGenerator::startAI(int)
 {
+	mFishCount = 32;
+	for (int i = 0; i < mFishCount; i++) {
+		Fish* fish      = &mFish[i];
+		f32 randMag     = randFloat(40.0f);
+		f32 randAngle   = 2.0f * randFloat(PI);
+		fish->mPosition = mPosition + Vector3f(randMag * sinf(randAngle), 4.0f, randMag * cosf(randAngle));
+		fish->_0C.set(0.0f, 0.0f, 0.0f);
+		fish->mDirection = 2.0f * randFloat(PI);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -229,99 +179,16 @@ void FishGenerator::startAI(int)
  */
 void FishGenerator::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r4, 0
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  addi      r29, r3, 0
-	  lfs       f0, -0x3730(r13)
-	  stfs      f0, 0x3D4(r3)
-	  lfs       f0, -0x372C(r13)
-	  stfs      f0, 0x3D8(r3)
-	  lfs       f0, -0x3728(r13)
-	  stfs      f0, 0x3DC(r3)
-	  b         .loc_0xA0
+	mSchoolCentre.set(0.0f, 0.0f, 0.0f);
+	for (int i = 0; i < mFishCount; i++) {
+		mSchoolCentre = mSchoolCentre + mFish[i].mPosition;
+	}
 
-	.loc_0x40:
-	  lwz       r0, 0x3D0(r29)
-	  addi      r5, r5, 0x1
-	  lfs       f1, 0x3D4(r29)
-	  add       r3, r0, r4
-	  lfs       f0, 0x0(r3)
-	  addi      r4, r4, 0x1C
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, 0x1C(r1)
-	  stfs      f0, 0x28(r1)
-	  lfs       f1, 0x3D8(r29)
-	  lfs       f0, 0x4(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x2C(r1)
-	  lfs       f1, 0x3DC(r29)
-	  lfs       f0, 0x8(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x30(r1)
-	  lwz       r3, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r3, 0x3D4(r29)
-	  stw       r0, 0x3D8(r29)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0x3DC(r29)
+	mSchoolCentre *= (1.0f / mFishCount);
 
-	.loc_0xA0:
-	  lwz       r0, 0x3C8(r29)
-	  cmpw      r5, r0
-	  blt+      .loc_0x40
-	  xoris     r0, r0, 0x8000
-	  lfd       f2, -0x6658(r2)
-	  stw       r0, 0x3C(r1)
-	  lis       r0, 0x4330
-	  li        r30, 0
-	  lfs       f3, -0x666C(r2)
-	  stw       r0, 0x38(r1)
-	  lfs       f0, 0x3D4(r29)
-	  mulli     r31, r30, 0x1C
-	  lfd       f1, 0x38(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f1, f3, f1
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x3D4(r29)
-	  lfs       f0, 0x3D8(r29)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x3D8(r29)
-	  lfs       f0, 0x3DC(r29)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x3DC(r29)
-	  b         .loc_0x118
-
-	.loc_0x100:
-	  lwz       r0, 0x3D0(r29)
-	  addi      r3, r29, 0
-	  add       r4, r0, r31
-	  bl        .loc_0x140
-	  addi      r31, r31, 0x1C
-	  addi      r30, r30, 0x1
-
-	.loc_0x118:
-	  lwz       r0, 0x3C8(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x100
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-
-	.loc_0x140:
-	*/
+	for (int i = 0; i < mFishCount; i++) {
+		moveFish(&mFish[i]);
+	}
 }
 
 /*
@@ -702,51 +569,11 @@ void FishGenerator::moveFish(Fish*)
  * Address:	800E6F80
  * Size:	000098
  */
-void FishGenerator::refresh(Graphics&)
+void FishGenerator::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  lis       r4, 0x803A
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  addi      r3, r29, 0
-	  lwz       r12, 0x3B4(r29)
-	  subi      r4, r4, 0x77C0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  li        r30, 0
-	  mulli     r31, r30, 0x1C
-	  b         .loc_0x6C
+	gfx.useMatrix(Matrix4f::ident, 0);
 
-	.loc_0x50:
-	  lwz       r0, 0x3D0(r28)
-	  mr        r3, r29
-	  lfs       f1, -0x6660(r2)
-	  add       r4, r0, r31
-	  bl        0x2F440
-	  addi      r31, r31, 0x1C
-	  addi      r30, r30, 0x1
-
-	.loc_0x6C:
-	  lwz       r0, 0x3C8(r28)
-	  cmpw      r30, r0
-	  blt+      .loc_0x50
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mFishCount; i++) {
+		drawBatten(gfx, mFish[i].mPosition, 2.0f);
+	}
 }

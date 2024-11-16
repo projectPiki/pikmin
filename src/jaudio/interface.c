@@ -1,5 +1,19 @@
 #include "types.h"
 #include "Dolphin/os.h"
+#include "jaudio/interface.h"
+#include "jaudio/PikiBgm.h"
+#include "jaudio/PikiDemo.h"
+#include "jaudio/VerySimple.h"
+#include "jaudio/PikiInter.h"
+
+static int process_stack[4];
+
+static BOOL vol_chg   = 0;
+static int stacklevel = 0;
+
+static u8 game_bgm_vol     = 8;
+static u8 game_se_vol      = 8;
+static int current_process = 0xFFFFFFFF;
 
 /*
  * --INFO--
@@ -26,15 +40,10 @@ void Jac_OutputMode(void)
  * Address:	80016920
  * Size:	000010
  */
-void Jac_SetBGMVolume(void)
+void Jac_SetBGMVolume(u8 vol)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x1
-	  stb       r3, -0x7FB0(r13)
-	  stw       r0, 0x2C48(r13)
-	  blr
-	*/
+	game_bgm_vol = vol;
+	vol_chg      = TRUE;
 }
 
 /*
@@ -42,15 +51,10 @@ void Jac_SetBGMVolume(void)
  * Address:	80016940
  * Size:	000010
  */
-void Jac_SetSEVolume(void)
+void Jac_SetSEVolume(u8 vol)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x1
-	  stb       r3, -0x7FAF(r13)
-	  stw       r0, 0x2C48(r13)
-	  blr
-	*/
+	game_se_vol = vol;
+	vol_chg     = TRUE;
 }
 
 /*
@@ -58,31 +62,15 @@ void Jac_SetSEVolume(void)
  * Address:	80016960
  * Size:	000048
  */
-void Jac_Gsync(void)
+void Jac_Gsync()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x2C48(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x2C
-	  li        r0, 0
-	  lbz       r3, -0x7FB0(r13)
-	  stw       r0, 0x2C48(r13)
-	  lbz       r4, -0x7FAF(r13)
-	  bl        0x2A98
-
-	.loc_0x2C:
-	  bl        0x3794
-	  bl        0x190
-	  bl        0xE0C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (vol_chg) {
+		vol_chg = FALSE;
+		Jac_GameVolume(game_bgm_vol, game_se_vol);
+	}
+	Jac_DemoEventUnPauseCheck();
+	Jac_SysSEDemoFadeCheck();
+	Jac_EventFrameCheck();
 }
 
 /*
@@ -110,8 +98,22 @@ void __print_thread(char*, OSThread*)
  * Address:	800169C0
  * Size:	00008C
  */
-void Jac_SetProcessStatus(void)
+void Jac_SetProcessStatus(u32 processStat)
 {
+	if (current_process != -1) {
+		if ((processStat & 1) == 1) {
+			if (current_process == processStat - 1 && stacklevel != 0) {
+				stacklevel--;
+				current_process = process_stack[stacklevel];
+				return;
+			}
+		} else if ((current_process & 1) == 0) {
+			process_stack[stacklevel] = current_process;
+			stacklevel++;
+		}
+	}
+
+	current_process = processStat;
 	/*
 	.loc_0x0:
 	  lwz       r6, -0x7FAC(r13)

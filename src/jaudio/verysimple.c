@@ -1,4 +1,4 @@
-#include "types.h"
+#include "jaudio/VerySimple.h"
 
 typedef struct seqp_ seqp_;
 

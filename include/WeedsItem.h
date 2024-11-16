@@ -25,8 +25,10 @@ struct Pebble {
 	u8 _0E;             // _0E
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x3E4.
  */
 struct GrassGen : public ItemCreature {
 	GrassGen(Shape*, CreatureProp*);
@@ -49,11 +51,13 @@ struct GrassGen : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TODO: members
+	u8 _3C8[0x3E4 - 0x3C8]; // _3C8, unknown
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x3E8
  */
 struct RockGen : public ItemCreature {
 	RockGen(Shape*, CreatureProp*);
@@ -79,7 +83,7 @@ struct RockGen : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TODO: members
+	u8 _3C8[0x3E8 - 0x3C8]; // _3C8, unknown
 };
 
 /*
@@ -111,7 +115,7 @@ struct Weed : public ItemCreature {
 	virtual void update();             // _E0
 	virtual void refresh(Graphics&);   // _EC
 
-	void interactPullout(Creature*);
+	bool interactPullout(Creature*);
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature

@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "ItemMgr.h"
+#include "Collision.h"
 
 /**
  * @brief TODO.
@@ -16,63 +17,105 @@ struct ItemBall : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TOD0: members
+	CollInfo mBallCollision; // _3C8
+	CollPart mBallParts[10]; // _3DC
+	u32 mPartIDs[10];        // _7EC
 };
 
 /**
- * @brief TODO.
+ * @brief TODO
+ *
+ * @note Size: 0x3C8.
  */
 struct ItemObject : public ItemCreature {
 	ItemObject(int, Shape*); // unused/inlined
 
-	virtual bool isAtari();            // _84
-	virtual bool needShadow();         // _90
-	virtual void update();             // _E0
-	virtual void postUpdate(int, f32); // _E4
+	virtual bool needShadow() { return false; } // _90
+	virtual void update();                      // _E0
+	virtual void postUpdate(int, f32) { }       // _E4
+	virtual bool isAtari() { return false; }    // _84
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TOD0: members
 };
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x3C8.
  */
 struct Fulcrum : public ItemObject {
 	Fulcrum();
 
 	// _00      = VTBL
-	// _00-_304 = ItemObject?
-	// TOD0: members
+	// _00-_3C8 = ItemObject
 };
 
 /**
- * @brief TODO.
+ * @brief TODO
+ *
+ * @note Size: 0x3CC.
  */
 struct BombGenItem : public ItemObject {
 	BombGenItem(Shape*);
 
-	virtual bool isVisible();          // _74
-	virtual bool isAtari();            // _84
-	virtual bool isAlive();            // _88
-	virtual bool needFlick(Creature*); // _94
+	virtual bool isAtari() // _84
+	{
+		if (_3C8 == -1) {
+			return true;
+		}
+		if (_3CA > 0) {
+			return true;
+		}
 
-	void pickable();
-	void pick();
+		return false;
+	}
+	virtual bool needFlick(Creature*) // _94
+	{
+		return false;
+	}
+	virtual bool isVisible() // _74
+	{
+		if (_3C8 == -1) {
+			return true;
+		}
+		if (_3CA > 0) {
+			return true;
+		}
+
+		return false;
+	}
+	virtual bool isAlive() // _88
+	{
+		if (_3C8 == -1) {
+			return true;
+		}
+		if (_3CA > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	bool pickable();
+	bool pick();
 
 	// _00      = VTBL
-	// _00-_304 = ItemObject?
-	// TOD0: members
+	// _00-_3C8 = ItemObject
+	s16 _3C8; // _3C8
+	s16 _3CA; // _3CA
 };
 
 /**
- * @brief TODO.
+ * @brief TODO
+ *
+ * @note Size: 0x3C8.
  */
 struct NaviDemoSunsetStart : public ItemObject {
 	NaviDemoSunsetStart();
 
 	// _00      = VTBL
-	// _00-_304 = ItemObject?
+	// _00-_3C8 = ItemObject
 	// TOD0: members
 };
 
@@ -83,7 +126,7 @@ struct NaviDemoSunsetGoal : public ItemObject {
 	NaviDemoSunsetGoal();
 
 	// _00      = VTBL
-	// _00-_304 = ItemObject?
+	// _00-_3C8 = ItemObject
 	// TOD0: members
 };
 

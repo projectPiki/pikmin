@@ -67,7 +67,7 @@ struct LifeGauge {
 	Vector3f _00; // _00
 	Vector3f _0C; // _0C
 	u32 _18;      // _18, unknown
-	u32 _1C;      // _1C, unknown
+	int _1C;      // _1C
 	u8 _20;       // _20
 	f32 _24;      // _24
 	f32 _28;      // _28

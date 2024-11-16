@@ -185,6 +185,8 @@ struct ShpobjInfo : public GfxobjInfo {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct CollInfo {
 	CollInfo(int);

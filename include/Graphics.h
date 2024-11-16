@@ -47,9 +47,16 @@ struct Graphics {
 	// _3B4 = VTBL
 	u8 _00[0x10];               // _00, TODO: work out members
 	Light mLight;               // _10
-	u8 _25C[0x338 - 0x25C];     // _25C, unknown
+	u8 _25C[0x2E4 - 0x25C];     // _25C, unknown
+	Camera* _2E4;               // _2E4
+	u8 _2E8[0x30C - 0x2E8];     // _2E8, unknown
+	int _30C;                   // _30C, maybe viewport width?
+	int _310;                   // _310, maybe viewport height?
+	u8 _314[0x338 - 0x314];     // _2E8, unknown
 	LightCamera* mLightCam;     // _338
-	u8 _33C[0x3A8 - 0x33C];     // _33C, unknown
+	u8 _33C[0x368 - 0x33C];     // _33C, unknown
+	Colour _368;                // _368
+	u8 _36C[0x3A8 - 0x36C];     // _36C, unknown
 	CachedShape* mCachedShapes; // _3A8
 	u32 mCachedShapeCount;      // _3AC
 	u8 _3B0[0x4];               // _3B0, unknown

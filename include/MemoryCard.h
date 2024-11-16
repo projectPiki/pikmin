@@ -20,6 +20,15 @@ struct CardQuickInfo {
  * @brief TODO
  */
 struct MemoryCard : public CoreNode {
+	inline MemoryCard()
+	    : CoreNode("memoryCard")
+	{
+		_3C = -1;
+		_34 = -1;
+		_38 = -1;
+		_40 = 0x26000;
+		_44 = 0;
+	}
 
 	void getOptionsOffset(int);
 	void getGameFileOffset(int);
@@ -71,7 +80,12 @@ struct MemoryCard : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	u8 _14[0x34 - 0x14]; // _14, unknown
+	int _34;             // _34
+	int _38;             // _38
+	int _3C;             // _3C
+	u32 _40;             // _40
+	u32 _44;             // _44, unknown
 };
 
 #endif

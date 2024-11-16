@@ -149,7 +149,7 @@ struct EffectMgr : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	zen::particleManager mPtclMgr; // _14
 };
 
 extern EffectMgr* effectMgr;

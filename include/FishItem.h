@@ -4,16 +4,20 @@
 #include "types.h"
 #include "ItemMgr.h"
 
-/*
- * @brief TODO
+/**
+ * @brief
+ *
+ * @note Size: 0x1C.
  */
 struct Fish {
-	Fish();
+	Fish() { }
 
-	// TODO: members
+	Vector3f mPosition; // _00
+	Vector3f _0C;       // _0C
+	f32 mDirection;     // _18
 };
 
-/*
+/**
  * @brief TODO
  */
 struct FishGenerator : public ItemCreature {
@@ -27,7 +31,11 @@ struct FishGenerator : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TODO: members
+	int mFishCount;         // _3C8
+	int mMaxFish;           // _3CC
+	Fish* mFish;            // _3D0
+	Vector3f mSchoolCentre; // _3D4
+	Vector3f _3E0;          // _3E0
 };
 
 #endif

@@ -7,16 +7,24 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct DoorProp : public CreatureProp {
+	inline DoorProp()
+	{
+		mCreatureProps.mFriction.mValue     = 0.1f;
+		mCreatureProps.mBounceFactor.mValue = 0.8f;
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x3D8.
  */
 struct DoorItem : public ItemCreature {
 	DoorItem(int p1, CreatureProp* props, Shape* shape);
@@ -39,7 +47,7 @@ struct DoorItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TODO: members
+	u8 _3C8[0x3D8 - 0x3C8]; // _3C8, unknown
 };
 
 #endif

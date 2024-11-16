@@ -1,15 +1,30 @@
 #include "gameflow.h"
+#include "Geometry.h"
 #include "LoadIdler.h"
+#include "BaseApp.h"
 #include "WorldClock.h"
+#include "MoviePlayer.h"
+#include "RumbleMgr.h"
+#include "NinLogoSection.h"
+#include "TitlesSection.h"
+#include "MovSampleSection.h"
+#include "OnePlayerSection.h"
+#include "PaniTestSection.h"
+#include "zen/ogTest.h"
 #include "Delegate.h"
+#include "sysNew.h"
+#include "Dolphin/os.h"
+
+GameFlow gameflow;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "GameFlow");
 	// UNUSED FUNCTION
 }
 
@@ -28,8 +43,26 @@ static void _Print(char*, ...)
  * Address:	80051478
  * Size:	000150
  */
-void GameLoadIdler::draw(Graphics&)
+void GameLoadIdler::draw(Graphics& gfx)
 {
+	GameFlow* flow = &gameflow;
+	gfx._368.set(48, 48, 48, 255);
+	gfx.setViewport(RectArea(0, 0, gfx._30C, gfx._310));
+	gfx.setScissor(RectArea(0, 0, gfx._30C, gfx._310));
+	gfx.setClearColour(Colour(0, 0, 0, 0));
+	gfx.clearBuffer(3, false);
+
+	Texture** tex = &flow->_310;
+	if (!flow->_310) {
+		return;
+	}
+	f32* f = &flow->_314;
+	flow->_314 += (1.0f / 300.0f);
+	if (flow->_314 > 1.0f) {
+		*f = 1.0f;
+	}
+
+	flow->drawLoadLogo(gfx, true, *tex, *f);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -943,21 +976,7 @@ void GameFlow::addFilterMenu(Menu*)
  * Address:	80051E84
  * Size:	000024
  */
-void GameFlow::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x20(r3)
-	  bl        0xCD04
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void GameFlow::read(RandomAccessStream& input) { mParameters->read(input); }
 
 /*
  * --INFO--
@@ -1110,8 +1129,65 @@ void GameFlow::setLoadBanner(char*)
  * Address:	80052088
  * Size:	00060C
  */
-void GameFlow::hardReset(BaseApp*)
+void GameFlow::hardReset(BaseApp* baseApp)
 {
+	app            = baseApp;
+	_1D4           = 0;
+	_350           = 0;
+	_35C           = 0;
+	_35D           = 0;
+	_35E           = 21;
+	_35F           = 22;
+	_360           = 21;
+	_361           = 0;
+	_362           = 0;
+	_1EC           = -1;
+	mGameSectionID = SECTION_NinLogo;
+	_1F4           = 0;
+	_200           = 0;
+	_2AC           = 0;
+	_2A8           = 0;
+
+	_208 = "archives/blo_eng.dir";
+	_20C = "dataDir/archives/blo_eng.arc";
+	_210 = "screen/eng_tex/screen.bun";
+	_214 = "screen/eng_blo/";
+	_218 = "screen/eng_tex/";
+	_21C = "archives/blo_eng.dir";
+	_220 = "dataDir/archives/blo_eng.arc";
+	_224 = "screen/eng_tex/screen.bun";
+	_228 = "screen/eng_blo/";
+	_22C = "screen/eng_tex/";
+
+	gsys->mBloDirectory = "screen/sys_blo/";
+	gsys->mTexDirectory = "screen/otona_tex/";
+
+	mParameters = new GamePrms();
+	_2EC        = 0.0f;
+	_2E8        = 0.0f;
+	_2FC        = 0;
+	_2F8        = 0;
+	_300        = 0;
+
+	_2DC = 24.0f;
+	_2E0 = 60.0f * mParameters->mDaySpeedFactor();
+	_2D8 = _2E0 / _2DC;
+	_304 = 1.0f;
+	_2BC = 0;
+
+	mMemoryCard.init();
+
+	mMoviePlayer = new MoviePlayer();
+	rumbleMgr    = new RumbleMgr(true, false, false, false);
+	rumbleMgr->reset();
+	rumbleMgr->rumbleOption(true);
+
+	mGamePrefs.Initialise();
+
+	mGenFlow = new GameGenFlow();
+
+	gsys->loadBundle("effects/pcr/effects.bun", false);
+	gsys->loadBundle("effects/tex/effects.bun", false);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1518,73 +1594,31 @@ void GameFlow::hardReset(BaseApp*)
 
 /*
  * --INFO--
- * Address:	80052694
- * Size:	0000C8
- */
-void GameHiscores::Initialise()
-{
-	/*
-	.loc_0x0:
-	  li        r5, 0
-	  stw       r5, 0x0(r3)
-	  li        r4, 0x1E
-	  li        r0, 0x270F
-	  stw       r5, 0x4(r3)
-	  stw       r4, 0x8(r3)
-	  stw       r5, 0x2C(r3)
-	  stw       r0, 0x40(r3)
-	  stw       r5, 0x68(r3)
-	  stw       r5, 0x68(r3)
-	  stw       r5, 0x68(r3)
-	  stw       r5, 0x68(r3)
-	  stw       r5, 0x68(r3)
-	  stw       r5, 0xC(r3)
-	  stw       r4, 0x10(r3)
-	  stw       r5, 0x30(r3)
-	  stw       r0, 0x44(r3)
-	  stw       r5, 0x7C(r3)
-	  stw       r5, 0x7C(r3)
-	  stw       r5, 0x7C(r3)
-	  stw       r5, 0x7C(r3)
-	  stw       r5, 0x7C(r3)
-	  stw       r5, 0x14(r3)
-	  stw       r4, 0x18(r3)
-	  stw       r5, 0x34(r3)
-	  stw       r0, 0x48(r3)
-	  stw       r5, 0x90(r3)
-	  stw       r5, 0x90(r3)
-	  stw       r5, 0x90(r3)
-	  stw       r5, 0x90(r3)
-	  stw       r5, 0x90(r3)
-	  stw       r5, 0x1C(r3)
-	  stw       r4, 0x20(r3)
-	  stw       r5, 0x38(r3)
-	  stw       r0, 0x4C(r3)
-	  stw       r5, 0xA4(r3)
-	  stw       r5, 0xA4(r3)
-	  stw       r5, 0xA4(r3)
-	  stw       r5, 0xA4(r3)
-	  stw       r5, 0xA4(r3)
-	  stw       r5, 0x24(r3)
-	  stw       r4, 0x28(r3)
-	  stw       r5, 0x3C(r3)
-	  stw       r0, 0x50(r3)
-	  stw       r5, 0xB8(r3)
-	  stw       r5, 0xB8(r3)
-	  stw       r5, 0xB8(r3)
-	  stw       r5, 0xB8(r3)
-	  stw       r5, 0xB8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	8005275C
  * Size:	000548
  */
 void GameFlow::softReset()
 {
+	switch (mGameSectionID) {
+	case SECTION_NinLogo:
+		mGameSection = new NinLogoSection();
+		break;
+	case SECTION_Titles:
+		mGameSection = new TitlesSection();
+		break;
+	case SECTION_MovSample:
+		mGameSection = new MovSampleSection();
+		break;
+	case SECTION_OnePlayer:
+		mGameSection = new OnePlayerSection();
+		break;
+	case SECTION_PaniTest:
+		mGameSection = new PaniTestSection();
+		break;
+	case SECTION_OgTest:
+		mGameSection = new zen::OgTestSection();
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1978,54 +2012,14 @@ void GameFlow::softReset()
 	*/
 }
 
-// /*
-//  * --INFO--
-//  * Address:	80052CA4
-//  * Size:	00006C
-//  */
-// Node::Node(char* name)
-// 	: CoreNode(name)
-// {
-// 	init(name);
-// 	/*
-// 	.loc_0x0:
-// 	  mflr      r0
-// 	  lis       r5, 0x8022
-// 	  stw       r0, 0x4(r1)
-// 	  addi      r0, r5, 0x738C
-// 	  li        r5, 0
-// 	  stwu      r1, -0x18(r1)
-// 	  stw       r31, 0x14(r1)
-// 	  addi      r31, r3, 0
-// 	  lis       r3, 0x8022
-// 	  stw       r0, 0x0(r31)
-// 	  addi      r0, r3, 0x737C
-// 	  lis       r3, 0x8023
-// 	  stw       r0, 0x0(r31)
-// 	  subi      r0, r3, 0x71E0
-// 	  mr        r3, r31
-// 	  stw       r5, 0x10(r31)
-// 	  stw       r5, 0xC(r31)
-// 	  stw       r5, 0x8(r31)
-// 	  stw       r4, 0x4(r31)
-// 	  stw       r0, 0x0(r31)
-// 	  bl        -0x125B8
-// 	  mr        r3, r31
-// 	  lwz       r0, 0x1C(r1)
-// 	  lwz       r31, 0x14(r1)
-// 	  addi      r1, r1, 0x18
-// 	  mtlr      r0
-// 	  blr
-// 	*/
-// }
-
 /*
  * --INFO--
  * Address:	80052D10
  * Size:	000024
  */
-void* GameFlow::loadShape(char*, bool)
+Shape* GameFlow::loadShape(char* filename, bool p2)
 {
+	return gsys->loadShape(filename, p2);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2328,118 +2322,5 @@ void __sinit_gameflow_cpp(void)
 	  blr
 
 	.loc_0x1CC:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80053090
- * Size:	000084
- */
-void GamePrefs::Initialise()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0x3
-	  stw       r0, 0x18(r3)
-	  li        r4, 0x8
-	  li        r0, 0x5
-	  stb       r4, 0x1C(r3)
-	  addi      r9, r3, 0x24
-	  mtctr     r0
-	  li        r5, 0
-	  stb       r4, 0x1D(r3)
-	  mr        r8, r9
-	  stw       r5, 0x108(r3)
-	  li        r4, 0x1E
-	  li        r0, 0x270F
-	  stb       r5, 0x1E(r3)
-	  stb       r5, 0x20(r3)
-	  stb       r5, 0x21(r3)
-	  stb       r5, 0x1F(r3)
-	  stb       r5, 0x22(r3)
-	  stb       r5, 0x14(r3)
-	  stw       r5, 0x24(r3)
-
-	.loc_0x50:
-	  stw       r5, 0x4(r9)
-	  stwu      r4, 0x8(r9)
-	  stw       r5, 0x50(r3)
-	  stw       r0, 0x64(r3)
-	  addi      r3, r3, 0x4
-	  stw       r5, 0x68(r8)
-	  stw       r5, 0x68(r8)
-	  stw       r5, 0x68(r8)
-	  stw       r5, 0x68(r8)
-	  stw       r5, 0x68(r8)
-	  addi      r8, r8, 0x14
-	  bdnz+     .loc_0x50
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80053114
- * Size:	00001C
- */
-GameRecChalCourse::GameRecChalCourse()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x14(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80053130
- * Size:	00000C
- */
-GameRecDeadPikmin::GameRecDeadPikmin()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0x270F
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8005313C
- * Size:	00000C
- */
-GameRecBornPikmin::GameRecBornPikmin()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80053148
- * Size:	000014
- */
-GameRecMinDay::GameRecMinDay()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1E
-	  stw       r0, 0x4(r3)
-	  blr
 	*/
 }

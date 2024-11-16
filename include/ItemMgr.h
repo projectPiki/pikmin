@@ -6,19 +6,30 @@
 #include "ObjectMgr.h"
 #include "CreatureNode.h"
 
+struct BuildingItemProp;
+struct GoalAI;
+struct GoalItem;
+struct GoalItemProp;
+struct KusaItemProp;
+struct MeltingPotMgr;
 struct PelletShapeObject;
+struct PikiHeadMgr;
+struct SluiceAI;
+struct UfoItem;
+struct UfoItemProp;
+struct UfoShapeObject;
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x18.
  */
 struct ItemShapeObject {
 	ItemShapeObject(Shape*, char*, char*);
 
-	// TODO: members -  this is a guess based on PelletShapeObject
-	// + what gets accessed out of 0x3C0 in ItemCreature
-	Shape* mShape;     // _00
-	AnimMgr* mAnimMgr; // _04
-	AnimContext _08;   // _08
+	Shape* mShape;            // _00
+	AnimMgr* mAnimMgr;        // _04
+	AnimContext mAnimContext; // _08
 };
 
 /**
@@ -47,7 +58,7 @@ struct ItemCreature : public AICreature {
 	virtual void finalSetup();             // _158 (weak)
 
 	// _00      = VTBL
-	// _00-_304 = AICreature?
+	// _00-_304 = AICreature
 	f32 mMotionSpeed;                  // _304
 	Shape* mItemShape;                 // _308
 	SearchData mItemSearchData[8];     // _30C
@@ -62,12 +73,16 @@ struct ItemCreature : public AICreature {
 struct ItemMgr : public PolyObjectMgr {
 
 	/**
-	 * @brief TODO.
+	 * @brief TODO
+	 *
+	 * @note Size: 0x18.
 	 */
 	struct UseNode : public CoreNode {
+		inline UseNode() { initCore("usageNode"); }
+
 		// _00     = VTBL
 		// _00-_14 = CoreNode
-		// TODO: members
+		int mType; // _14
 	};
 
 	ItemMgr();
@@ -79,9 +94,9 @@ struct ItemMgr : public PolyObjectMgr {
 	virtual void kill(Creature*);      // _7C
 	virtual void refresh2d(Graphics&); // _80
 
-	void getContainer(int);
-	void getNearestContainer(Vector3f&, f32);
-	void getUfo();
+	GoalItem* getContainer(int color);
+	GoalItem* getNearestContainer(Vector3f&, f32);
+	UfoItem* getUfo();
 	void addUseList(int);
 	PelletShapeObject* getPelletShapeObject(int, int);
 	void initialise();
@@ -90,19 +105,33 @@ struct ItemMgr : public PolyObjectMgr {
 	// unused/inlined:
 	void getMgr(int);
 	void getPikiNum();
-	void useObjType(int);
+	bool useObjType(int type);
 	void showInfo();
 	void getUfoShape();
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_28 = PolyObjectMgr?
-	u8 _28[0x90 - sizeof(PolyObjectMgr)]; // _28, unknown - fix offset when size of PolyObjectMgr is known
-	PaniMotionTable* mMotionTable;        // _90
+	// _00-_4C = PolyObjectMgr
+	Shape* _4C;                        // _4C
+	Shape* _50;                        // _50
+	Shape* _54;                        // _54
+	Shape* _58;                        // _58
+	Shape* _5C;                        // _5C
+	Shape* _60;                        // _60
+	PikiHeadMgr* mPikiHeadMgr;         // _64
+	MeltingPotMgr* mMeltingPotMgr;     // _68
+	UseNode mRootUseNode;              // _6C
+	u8 _84[0x4];                       // _84, unknown
+	ItemShapeObject** mItemShapes;     // _88, array of 11 ItemShapeObject*
+	UfoShapeObject* mUfoShape;         // _8C
+	PaniMotionTable* mItemMotionTable; // _90
+	PaniMotionTable* mUfoMotionTable;  // _94
 };
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x64.
  */
 struct MeltingPotMgr : public CreatureNodeMgr {
 	MeltingPotMgr(ItemMgr*);
@@ -110,13 +139,21 @@ struct MeltingPotMgr : public CreatureNodeMgr {
 	virtual ~MeltingPotMgr(); // _48 (weak)
 
 	void finalSetup();
-	void prepare(int);
-	void birth(int);
+	void prepare(int objType);
+	Creature* birth(int objType);
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_28 = CreatureNodeMgr?
-	// TODO: members
+	// _00-_40 = CreatureNodeMgr
+	ItemMgr* mItemMgr;             // _40
+	GoalItemProp* mGoalProps;      // _44
+	UfoItemProp* mUfoProps;        // _48
+	KusaItemProp* mKusaProps;      // _4C
+	BuildingItemProp* mBuildProps; // _50
+	GoalAI* mGoalAI;               // _54
+	SluiceAI* mSluiceAI;           // _58
+	Shape* mBouShape;              // _5C
+	Shape* mBoBaseShape;           // _60
 };
 
 extern ItemMgr* itemMgr;

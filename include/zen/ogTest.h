@@ -24,6 +24,8 @@ struct OgTestScreen : public Node {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct OgTestSection : public Section {
 	OgTestSection();
@@ -31,8 +33,7 @@ struct OgTestSection : public Section {
 	virtual void init(); // _30
 
 	// _00     = VTBL
-	// _00-_20 = Section?
-	// TODO: members
+	// _00-_20 = Section
 };
 
 } // namespace zen

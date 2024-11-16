@@ -6,6 +6,8 @@
 /**
  * @struct CmdStream
  * @brief Represents a command stream.
+ *
+ * @note Size: 0x11C.
  */
 struct CmdStream {
 	/**
@@ -100,6 +102,7 @@ struct CmdStream {
 	int mBufferUsed;           // _10C
 	int mBufferOffset;         // _110
 	int mCurrentPosition;      // _114
+	u8 _118[0x4];              // _118, unknown
 };
 
 #endif

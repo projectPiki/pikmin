@@ -125,4 +125,6 @@ struct TurbulenceFun {
 	void getValue(f32);
 };
 
+extern AttentionCamera* attentionCamera;
+
 #endif

@@ -14,6 +14,8 @@ struct StateMachine;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x304.
  */
 struct AICreature : public Creature, public PaniAnimKeyListener {
 	AICreature(CreatureProp*);
@@ -49,7 +51,7 @@ struct AICreature : public Creature, public PaniAnimKeyListener {
 	Creature* _2BC;                          // _2BC
 	u8 _2C0[0x4];                            // _2C0, unknown
 	Vector3f _2C4;                           // _2C4, could just be floats
-	u32 _2D0;                                // _2D0, unknown
+	int _2D0;                                // _2D0
 	u32 _2D4;                                // _2D4, unknown
 	f32 _2D8;                                // _2D8
 	u8 _2DC[0x8];                            // _2DC, unknown

@@ -1,4 +1,5 @@
 #include "types.h"
+#include "jaudio/PikiDemo.h"
 
 /*
  * --INFO--
@@ -21,7 +22,7 @@ void Jac_DemoSceneInit(void)
  * Address:	8001A100
  * Size:	000018
  */
-void Jac_DemoCheckFrameCall()
+static void Jac_DemoCheckFrameCall()
 {
 	/*
 	.loc_0x0:
@@ -212,7 +213,7 @@ void Jac_DemoCheckEvent(u8)
  * Address:	8001A2E0
  * Size:	00016C
  */
-void DoSequence(u32, u32)
+static void DoSequence(u32, u32)
 {
 	/*
 	.loc_0x0:

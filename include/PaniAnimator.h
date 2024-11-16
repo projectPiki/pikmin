@@ -120,7 +120,6 @@ struct PaniPlantAnimator : public PaniAnimator {
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
-	// TODO: members
 };
 
 /**
