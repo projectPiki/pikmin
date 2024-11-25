@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Vector.h"
 #include "ID32.h"
+#include "ParaParameters.h"
 
 struct RandomAccessStream;
 struct ParaMultiParameters;
@@ -35,7 +36,14 @@ struct TekiPersonality {
 	void reset();
 	void input(TekiPersonality&);
 
-	void getF(int);
+	f32 getF(int idx) { return mParams->getF(idx); }
+
+	inline void init()
+	{
+		_04.set(Vector3f(0.0f, 0.0f, 0.0f));
+		_10.set(Vector3f(0.0f, 0.0f, 0.0f));
+		_1C = 0.0f;
+	}
 
 	// _00 = VTBL
 	Vector3f _04;                 // _04

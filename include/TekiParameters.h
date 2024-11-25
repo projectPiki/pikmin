@@ -3,6 +3,8 @@
 
 #include "types.h"
 #include "Node.h"
+#include "ID32.h"
+#include "ParaParameters.h"
 
 /**
  * @brief TODO
@@ -10,7 +12,7 @@
  * @note Size: 0x88.
  */
 struct TekiParameters : public Node {
-	TekiParameters(int, int);
+	TekiParameters(int iParamNum, int fParamNum);
 
 	virtual void read(RandomAccessStream&); // _0C
 
@@ -18,7 +20,9 @@ struct TekiParameters : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u8 _20[0x88 - 0x20]; // _20, unknown
+	int _20;                          // _20
+	ID32 mParaIDs[8];                 // _24
+	ParaMultiParameters* mParameters; // _84
 };
 
 #endif

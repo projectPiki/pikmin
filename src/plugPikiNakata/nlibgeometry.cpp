@@ -37,55 +37,17 @@ NAxisAngle4f::NAxisAngle4f()
  * Address:	8011BC80
  * Size:	000058
  */
-NAxisAngle4f::NAxisAngle4f(NVector3f&, f32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bl        0x11B0
-	  fmr       f1, f31
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x58
-	  mr        r3, r30
-	  lwz       r0, 0x2C(r1)
-	  lfd       f31, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-
-	.loc_0x58:
-	*/
-}
+NAxisAngle4f::NAxisAngle4f(NVector3f& p1, f32 p2) { construct(p1, p2); }
 
 /*
  * --INFO--
  * Address:	8011BCD8
  * Size:	000020
  */
-void NAxisAngle4f::construct(NVector3f&, f32)
+void NAxisAngle4f::construct(NVector3f& p1, f32 p2)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r4)
-	  stfs      f0, 0x8(r3)
-	  stfs      f1, 0xC(r3)
-	  blr
-	*/
+	_00.input(p1);
+	_0C = p2;
 }
 
 /*
@@ -93,44 +55,7 @@ void NAxisAngle4f::construct(NVector3f&, f32)
  * Address:	8011BCF8
  * Size:	000080
  */
-NMatrix4f::NMatrix4f()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x2C
-	  lfs       f2, -0x5FF0(r2)
-	  stfs      f2, 0x8(r1)
-	  fmr       f3, f2
-	  fmr       f4, f2
-	  stfs      f2, 0xC(r1)
-	  fmr       f5, f2
-	  fmr       f7, f2
-	  lfs       f1, -0x5FEC(r2)
-	  fmr       f8, f2
-	  stfs      f1, 0x10(r1)
-	  fmr       f6, f1
-	  stfs      f2, 0x14(r1)
-	  stfs      f2, 0x18(r1)
-	  stfs      f2, 0x1C(r1)
-	  stfs      f2, 0x20(r1)
-	  stfs      f1, 0x24(r1)
-	  bl        0x48
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  bl        0xAC
-	  mr        r3, r31
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
-}
+NMatrix4f::NMatrix4f() { input(NMatrix4f(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)); }
 
 /*
  * --INFO--
@@ -147,59 +72,17 @@ NMatrix4f::NMatrix4f(Matrix4f&)
  * Address:	8011BD78
  * Size:	000020
  */
-void NMatrix4f::construct(Matrix4f&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x84
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void NMatrix4f::construct(Matrix4f& mat) { input(mat); }
 
 /*
  * --INFO--
  * Address:	8011BD98
  * Size:	000070
  */
-NMatrix4f::NMatrix4f(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32)
+NMatrix4f::NMatrix4f(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x12, f32 x13, f32 x20, f32 x21, f32 x22, f32 x23, f32 x30,
+                     f32 x31, f32 x32, f32 x33)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  mr        r31, r3
-	  lfs       f0, 0x60(r1)
-	  lfs       f9, 0x68(r1)
-	  stfs      f0, 0x8(r1)
-	  lfs       f0, 0x64(r1)
-	  stfs      f0, 0xC(r1)
-	  lfs       f0, 0x6C(r1)
-	  stfs      f9, 0x10(r1)
-	  lfs       f9, 0x70(r1)
-	  stfs      f0, 0x14(r1)
-	  lfs       f0, 0x74(r1)
-	  stfs      f9, 0x18(r1)
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, 0x78(r1)
-	  stfs      f0, 0x20(r1)
-	  lfs       f0, 0x7C(r1)
-	  stfs      f0, 0x24(r1)
-	  bl        0xAC
-	  mr        r3, r31
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	set(x00, x01, x02, x03, x10, x11, x12, x13, x20, x21, x22, x23, x30, x31, x32, x33);
 }
 
 /*
@@ -257,86 +140,35 @@ void NMatrix4f::output(Mtx)
  * Address:	8011BE08
  * Size:	000090
  */
-void NMatrix4f::input(Matrix4f&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r4)
-	  addi      r5, r4, 0x10
-	  addi      r6, r3, 0x10
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r4)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, 0xC(r4)
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, 0x10(r4)
-	  stfs      f0, 0x10(r3)
-	  lfs       f0, 0x14(r4)
-	  stfs      f0, 0x14(r3)
-	  lfs       f0, 0x18(r4)
-	  stfs      f0, 0x18(r3)
-	  lfs       f0, 0x1C(r4)
-	  stfs      f0, 0x1C(r3)
-	  lfsu      f0, 0x10(r5)
-	  stfsu     f0, 0x10(r6)
-	  lfs       f0, 0x4(r5)
-	  stfs      f0, 0x24(r3)
-	  lfs       f0, 0x8(r5)
-	  stfs      f0, 0x8(r6)
-	  lfs       f0, 0xC(r5)
-	  stfs      f0, 0xC(r6)
-	  lfsu      f0, 0x10(r5)
-	  stfs      f0, 0x10(r6)
-	  lfs       f0, 0x4(r5)
-	  stfs      f0, 0x14(r6)
-	  addi      r6, r6, 0x10
-	  lfs       f0, 0x8(r5)
-	  stfs      f0, 0x8(r6)
-	  lfs       f0, 0xC(r5)
-	  stfs      f0, 0xC(r6)
-	  blr
-	*/
-}
+void NMatrix4f::input(Matrix4f& mat) { NMathf::copyArray44(this->mMtx, mat.mMtx); }
 
 /*
  * --INFO--
  * Address:	8011BE98
  * Size:	00006C
  */
-void NMatrix4f::set(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32)
+void NMatrix4f::set(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x12, f32 x13, f32 x20, f32 x21, f32 x22, f32 x23, f32 x30,
+                    f32 x31, f32 x32, f32 x33)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x30(r1)
-	  stfs      f1, 0x0(r3)
-	  lfs       f11, 0x38(r1)
-	  stfs      f2, 0x4(r3)
-	  lfs       f10, 0x3C(r1)
-	  stfs      f3, 0x8(r3)
-	  lfs       f9, 0x40(r1)
-	  stfs      f4, 0xC(r3)
-	  lfs       f4, 0x44(r1)
-	  stfs      f5, 0x10(r3)
-	  lfs       f3, 0x48(r1)
-	  stfs      f6, 0x14(r3)
-	  lfs       f2, 0x4C(r1)
-	  stfs      f7, 0x18(r3)
-	  lfs       f1, 0x50(r1)
-	  stfs      f8, 0x1C(r3)
-	  lfs       f0, 0x54(r1)
-	  stfs      f11, 0x20(r3)
-	  stfs      f10, 0x24(r3)
-	  stfs      f9, 0x28(r3)
-	  stfs      f4, 0x2C(r3)
-	  stfs      f3, 0x30(r3)
-	  stfs      f2, 0x34(r3)
-	  stfs      f1, 0x38(r3)
-	  stfs      f0, 0x3C(r3)
-	  addi      r1, r1, 0x30
-	  blr
-	*/
+	mMtx[0][0] = x00;
+	mMtx[0][1] = x01;
+	mMtx[0][2] = x02;
+	mMtx[0][3] = x03;
+
+	mMtx[1][0] = x10;
+	mMtx[1][1] = x11;
+	mMtx[1][2] = x12;
+	mMtx[1][3] = x13;
+
+	mMtx[2][0] = x20;
+	mMtx[2][1] = x21;
+	mMtx[2][2] = x22;
+	mMtx[2][3] = x23;
+
+	mMtx[3][0] = x30;
+	mMtx[3][1] = x31;
+	mMtx[3][2] = x32;
+	mMtx[3][3] = x33;
 }
 
 /*
@@ -344,9 +176,11 @@ void NMatrix4f::set(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, 
  * Address:	........
  * Size:	000018
  */
-void NMatrix4f::setRow(int, f32, f32, f32)
+void NMatrix4f::setRow(int row, f32 x, f32 y, f32 z)
 {
-	// UNUSED FUNCTION
+	mMtx[row][0] = x;
+	mMtx[row][1] = y;
+	mMtx[row][2] = z;
 }
 
 /*
@@ -404,8 +238,11 @@ void NMatrix4f::setCol(int, f32, f32, f32)
  * Address:	........
  * Size:	000024
  */
-void NMatrix4f::inputCol(int, Vector3f&)
+void NMatrix4f::inputCol(int col, Vector3f& input)
 {
+	mMtx[0][col] = input.x;
+	mMtx[1][col] = input.y;
+	mMtx[2][col] = input.z;
 	// UNUSED FUNCTION
 }
 
@@ -424,20 +261,11 @@ void NMatrix4f::inputCol(int, Vector3f&, f32)
  * Address:	8011BF04
  * Size:	000024
  */
-void NMatrix4f::outputCol(int, Vector3f&)
+void NMatrix4f::outputCol(int col, Vector3f& output)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,2,0,29
-	  lfsx      f0, r3, r0
-	  add       r3, r3, r0
-	  stfs      f0, 0x0(r5)
-	  lfs       f0, 0x10(r3)
-	  stfs      f0, 0x4(r5)
-	  lfs       f0, 0x20(r3)
-	  stfs      f0, 0x8(r5)
-	  blr
-	*/
+	output.x = mMtx[0][col];
+	output.y = mMtx[1][col];
+	output.z = mMtx[2][col];
 }
 
 /*
@@ -495,20 +323,10 @@ void NMatrix4f::transpose()
  * Address:	8011BF28
  * Size:	000024
  */
-void NMatrix4f::makeIdentRow(int)
+void NMatrix4f::makeIdentRow(int row)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x5FF0(r2)
-	  rlwinm    r0,r4,4,0,27
-	  add       r4, r3, r0
-	  stfsx     f0, r3, r0
-	  stfs      f0, 0x4(r4)
-	  stfs      f0, 0x8(r4)
-	  lfs       f0, -0x5FEC(r2)
-	  stfs      f0, 0xC(r4)
-	  blr
-	*/
+	setRow(row, 0.0f, 0.0f, 0.0f);
+	mMtx[row][3] = 1.0f;
 }
 
 /*
@@ -536,75 +354,18 @@ NOrientation::NOrientation()
  * Address:	8011BF4C
  * Size:	000050
  */
-NOrientation::NOrientation(Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        0xEEC
-	  addi      r3, r30, 0xC
-	  bl        0xEE4
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x50
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x50:
-	*/
-}
+NOrientation::NOrientation(Vector3f& p1) { construct(p1); }
 
 /*
  * --INFO--
  * Address:	8011BF9C
  * Size:	000078
  */
-void NOrientation::construct(Vector3f&)
+void NOrientation::construct(Vector3f& p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r4
-	  stw       r30, 0x20(r1)
-	  mr        r30, r3
-	  addi      r3, r1, 0x10
-	  lfs       f1, -0x5FF0(r2)
-	  lfs       f2, -0x5FEC(r2)
-	  fmr       f3, f1
-	  bl        0xF14
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x0(r30)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x4(r30)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x8(r30)
-	  lfs       f0, 0x10(r1)
-	  stfs      f0, 0xC(r30)
-	  lfs       f0, 0x14(r1)
-	  stfs      f0, 0x10(r30)
-	  lfs       f0, 0x18(r1)
-	  stfs      f0, 0x14(r30)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f vert(0.0f, 1.0f, 0.0f);
+	_00.input(p1);
+	_0C.input(vert);
 }
 
 /*
@@ -634,6 +395,18 @@ void NOrientation::construct(Vector3f&, Vector3f&)
  */
 void NOrientation::normalize()
 {
+	if (_0C.isParallel(_00)) {
+		makeUp();
+	}
+
+	NVector3f left;
+	outputLeft(left);
+
+	NTransform3D transform;
+
+	transform.inputAxisAngle(NAxisAngle4f(left, NMathF::pi * 0.5f));
+	_0C.input(_00);
+	transform.transform(_0C);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -918,25 +691,6 @@ void NOrientation::makeUp()
 
 /*
  * --INFO--
- * Address:	8011C388
- * Size:	00001C
- */
-void Vector3f::input(Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r4)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	000124
  */
@@ -990,27 +744,7 @@ void NOrientation::println()
  * Address:	8011C3A4
  * Size:	00003C
  */
-NPolar3f::NPolar3f()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lfs       f2, -0x5FF0(r2)
-	  lfs       f1, -0x5FEC(r2)
-	  fmr       f3, f2
-	  bl        0x6C
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+NPolar3f::NPolar3f() { set(1.0f, 0.0f, 0.0f); }
 
 /*
  * --INFO--
@@ -1057,61 +791,25 @@ void NPolar3f::construct(NPolar3f&)
  * Address:	8011C3E0
  * Size:	000030
  */
-NPolar3f::NPolar3f(Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        .loc_0x30
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x30:
-	*/
-}
+NPolar3f::NPolar3f(Vector3f& point) { construct(point); }
 
 /*
  * --INFO--
  * Address:	8011C410
  * Size:	000020
  */
-void NPolar3f::construct(Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x24
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void NPolar3f::construct(Vector3f& point) { input(point); }
 
 /*
  * --INFO--
  * Address:	8011C430
  * Size:	000010
  */
-void NPolar3f::set(f32, f32, f32)
+void NPolar3f::set(f32 p1, f32 p2, f32 p3)
 {
-	/*
-	.loc_0x0:
-	  stfs      f1, 0x0(r3)
-	  stfs      f2, 0x4(r3)
-	  stfs      f3, 0x8(r3)
-	  blr
-	*/
+	_00 = p1;
+	_04 = p2;
+	_08 = p3;
 }
 
 /*
@@ -1129,8 +827,9 @@ void NPolar3f::input(NPolar3f&)
  * Address:	8011C440
  * Size:	0000A8
  */
-void NPolar3f::input(Vector3f&)
+void NPolar3f::input(Vector3f& point)
 {
+	set(point.length(), NMathF::atan2(point.length2D(), point.y), NMathF::atan2(point.x, point.z));
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1356,48 +1055,12 @@ void NPosture2D::outputAxisAngle(NAxisAngle4f&)
  * Address:	8011C58C
  * Size:	000094
  */
-void NPosture2D::readData(Stream&)
+void NPosture2D::readData(Stream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x4(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x8(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0xC(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x10(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_04 = input.readFloat();
+	_08 = input.readFloat();
+	_0C = input.readFloat();
+	_10 = input.readFloat();
 }
 
 /*
@@ -1417,49 +1080,10 @@ void NPosture2D::println()
  */
 NPosture3D::NPosture3D()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x4334
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  stw       r0, 0x0(r3)
-	  addi      r3, r31, 0x4
-	  bl        0x810
-	  addi      r3, r31, 0x10
-	  bl        0x808
-	  lfs       f1, -0x5FF0(r2)
-	  addi      r3, r1, 0x18
-	  fmr       f2, f1
-	  fmr       f3, f1
-	  bl        0x87C
-	  lfs       f0, 0x18(r1)
-	  addi      r3, r1, 0xC
-	  stfs      f0, 0x4(r31)
-	  lfs       f0, 0x1C(r1)
-	  stfs      f0, 0x8(r31)
-	  lfs       f0, 0x20(r1)
-	  stfs      f0, 0xC(r31)
-	  lfs       f1, -0x5FF0(r2)
-	  lfs       f3, -0x5FEC(r2)
-	  fmr       f2, f1
-	  bl        0x850
-	  lfs       f0, 0xC(r1)
-	  mr        r3, r31
-	  stfs      f0, 0x10(r31)
-	  lfs       f0, 0x10(r1)
-	  stfs      f0, 0x14(r31)
-	  lfs       f0, 0x14(r1)
-	  stfs      f0, 0x18(r31)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f vec1(0.0f, 0.0f, 0.0f);
+	_04.set(vec1);
+	NVector3f vec2(0.0f, 0.0f, 1.0f);
+	_10.set(vec2);
 }
 
 /*
@@ -1487,66 +1111,17 @@ void NPosture3D::construct(NPosture3D&)
  * Address:	8011C6C0
  * Size:	000070
  */
-NPosture3D::NPosture3D(Vector3f&, Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x802C
-	  stw       r0, 0x4(r1)
-	  addi      r0, r6, 0x4334
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  stw       r0, 0x0(r3)
-	  addi      r3, r29, 0x4
-	  bl        0x760
-	  addi      r3, r29, 0x10
-	  bl        0x758
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  bl        .loc_0x70
-	  mr        r3, r29
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-
-	.loc_0x70:
-	*/
-}
+NPosture3D::NPosture3D(Vector3f& p1, Vector3f& p2) { construct(p1, p2); }
 
 /*
  * --INFO--
  * Address:	8011C730
  * Size:	000034
  */
-void NPosture3D::construct(Vector3f&, Vector3f&)
+void NPosture3D::construct(Vector3f& p1, Vector3f& p2)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, 0x8(r4)
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, 0x0(r5)
-	  stfs      f0, 0x10(r3)
-	  lfs       f0, 0x4(r5)
-	  stfs      f0, 0x14(r3)
-	  lfs       f0, 0x8(r5)
-	  stfs      f0, 0x18(r3)
-	  blr
-	*/
+	_04.set(p1);
+	_10.set(p2);
 }
 
 /*
@@ -1984,6 +1559,8 @@ void NUpperMatrix::println()
  */
 LUMatrix::LUMatrix(f32*, f32*, f32*, int p4)
     : NSpecialMatrix(p4)
+    , _08(p4)
+    , _14(p4)
 {
 	// UNUSED FUNCTION
 }
@@ -2003,36 +1580,11 @@ void LUMatrix::construct(f32*, f32*, f32*, int)
  * Address:	8011C994
  * Size:	000064
  */
-void LUMatrix::setDimension(int)
+void LUMatrix::setDimension(int dim)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  stw       r31, 0x4(r3)
-	  addi      r3, r30, 0x8
-	  lwz       r12, 0x8(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r30, 0x14
-	  lwz       r12, 0x14(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mDimension = dim;
+	_08.setDimension(dim);
+	_14.setDimension(dim);
 }
 
 /*
@@ -2040,11 +1592,7 @@ void LUMatrix::setDimension(int)
  * Address:	8011C9F8
  * Size:	000008
  */
-void NSpecialMatrix::setDimension(int a1)
-{
-	// Generated from stw r4, 0x4(r3)
-	// _04 = a1;
-}
+void NSpecialMatrix::setDimension(int dim) { mDimension = dim; }
 
 /*
  * --INFO--
@@ -2081,92 +1629,7 @@ void LUMatrix::println()
  * Address:	8011CA00
  * Size:	000080
  */
-NTransform3D::NTransform3D()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x2C
-	  lfs       f2, -0x5FF0(r2)
-	  stfs      f2, 0x8(r1)
-	  fmr       f3, f2
-	  fmr       f4, f2
-	  stfs      f2, 0xC(r1)
-	  fmr       f5, f2
-	  fmr       f7, f2
-	  lfs       f1, -0x5FEC(r2)
-	  fmr       f8, f2
-	  stfs      f1, 0x10(r1)
-	  fmr       f6, f1
-	  stfs      f2, 0x14(r1)
-	  stfs      f2, 0x18(r1)
-	  stfs      f2, 0x1C(r1)
-	  stfs      f2, 0x20(r1)
-	  stfs      f1, 0x24(r1)
-	  bl        -0xBC0
-	  addi      r3, r31, 0
-	  addi      r4, r1, 0x2C
-	  bl        .loc_0x80
-	  mr        r3, r31
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-
-	.loc_0x80:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8011CA80
- * Size:	000088
- */
-void NMath<f32>::copyArray44(f32 (*)[4], f32 (*)[4])
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r4)
-	  addi      r6, r3, 0x10
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r4)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, 0xC(r4)
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, 0x10(r4)
-	  stfs      f0, 0x10(r3)
-	  lfs       f0, 0x14(r4)
-	  stfs      f0, 0x14(r3)
-	  lfs       f0, 0x18(r4)
-	  stfs      f0, 0x18(r3)
-	  lfs       f0, 0x1C(r4)
-	  stfs      f0, 0x1C(r3)
-	  lfs       f0, 0x20(r4)
-	  stfsu     f0, 0x10(r6)
-	  lfs       f0, 0x24(r4)
-	  stfs      f0, 0x24(r3)
-	  lfs       f0, 0x28(r4)
-	  stfs      f0, 0x28(r3)
-	  lfs       f0, 0x2C(r4)
-	  stfs      f0, 0xC(r6)
-	  lfs       f0, 0x30(r4)
-	  stfs      f0, 0x10(r6)
-	  lfs       f0, 0x34(r4)
-	  stfs      f0, 0x14(r6)
-	  lfs       f0, 0x38(r4)
-	  stfs      f0, 0x18(r6)
-	  lfs       f0, 0x3C(r4)
-	  stfs      f0, 0x1C(r6)
-	  blr
-	*/
-}
+NTransform3D::NTransform3D() { }
 
 /*
  * --INFO--
@@ -2507,13 +1970,8 @@ void NTransform3D::inputRotation(NAxisAngle4f&)
  */
 NVector::NVector()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  blr
-	*/
+	mValues = nullptr;
+	mSize   = 0;
 }
 
 /*
@@ -2521,33 +1979,18 @@ NVector::NVector()
  * Address:	........
  * Size:	000030
  */
-NVector::NVector(f32*, int)
-{
-	// UNUSED FUNCTION
-}
+NVector::NVector(f32* values, int size) { construct(values, size); }
 
 /*
  * --INFO--
  * Address:	8011CDD0
  * Size:	000028
  */
-void NVector::construct(f32*, int)
+void NVector::construct(f32* values, int size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  stw       r4, 0x0(r3)
-	  stw       r5, 0x4(r3)
-	  bl        .loc_0x28
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x28:
-	*/
+	mValues = values;
+	mSize   = size;
+	makeZero();
 }
 
 /*
@@ -2557,25 +2000,9 @@ void NVector::construct(f32*, int)
  */
 void NVector::makeZero()
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x5FF0(r2)
-	  li        r6, 0
-	  li        r5, 0
-	  b         .loc_0x20
-
-	.loc_0x10:
-	  lwz       r4, 0x0(r3)
-	  addi      r6, r6, 0x1
-	  stfsx     f0, r4, r5
-	  addi      r5, r5, 0x4
-
-	.loc_0x20:
-	  lwz       r0, 0x4(r3)
-	  cmpw      r6, r0
-	  blt+      .loc_0x10
-	  blr
-	*/
+	for (int i = 0; i < mSize; i++) {
+		mValues[i] = 0.0f;
+	}
 }
 
 /*
@@ -2656,173 +2083,49 @@ void NVector3f::printlnVector3f(Vector3f&)
  * Address:	8011CE54
  * Size:	00002C
  */
-NVector3f::NVector3f()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x5FF0(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, -0x1D38(r13)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, -0x1D34(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x1D30(r13)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
-}
+NVector3f::NVector3f() { set(0.0f, 0.0f, 0.0f); }
 
 /*
  * --INFO--
  * Address:	8011CE80
  * Size:	000040
  */
-NVector3f::NVector3f(Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lfs       f0, -0x5FF0(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r31)
-	  stfs      f0, 0x0(r31)
-	  bl        .loc_0x40
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x40:
-	*/
-}
+NVector3f::NVector3f(Vector3f& vec) { construct(vec); }
 
 /*
  * --INFO--
  * Address:	8011CEC0
  * Size:	00001C
  */
-void NVector3f::construct(Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r4)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
-}
+void NVector3f::construct(Vector3f& vec) { input(vec); }
 
 /*
  * --INFO--
  * Address:	8011CEDC
  * Size:	000040
  */
-NVector3f::NVector3f(f32, f32, f32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lfs       f0, -0x5FF0(r2)
-	  stfs      f0, 0x8(r31)
-	  stfs      f0, 0x4(r31)
-	  stfs      f0, 0x0(r31)
-	  bl        .loc_0x40
-	  mr        r3, r31
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-
-	.loc_0x40:
-	*/
-}
+NVector3f::NVector3f(f32 x, f32 y, f32 z) { construct(x, y, z); }
 
 /*
  * --INFO--
  * Address:	8011CF1C
  * Size:	000010
  */
-void NVector3f::construct(f32, f32, f32)
-{
-	/*
-	.loc_0x0:
-	  stfs      f1, 0x0(r3)
-	  stfs      f2, 0x4(r3)
-	  stfs      f3, 0x8(r3)
-	  blr
-	*/
-}
+void NVector3f::construct(f32 x, f32 y, f32 z) { set(x, y, z); }
 
 /*
  * --INFO--
  * Address:	8011CF2C
  * Size:	000040
  */
-NVector3f::NVector3f(Vector3f&, Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lfs       f0, -0x5FF0(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r31)
-	  stfs      f0, 0x0(r31)
-	  bl        .loc_0x40
-	  mr        r3, r31
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-
-	.loc_0x40:
-	*/
-}
+NVector3f::NVector3f(Vector3f& start, Vector3f& end) { construct(start, end); }
 
 /*
  * --INFO--
  * Address:	8011CF6C
  * Size:	000034
  */
-void NVector3f::construct(Vector3f&, Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x0(r5)
-	  lfs       f0, 0x0(r4)
-	  lfs       f3, 0x4(r5)
-	  lfs       f2, 0x4(r4)
-	  fsubs     f0, f1, f0
-	  lfs       f4, 0x8(r5)
-	  lfs       f1, 0x8(r4)
-	  fsubs     f2, f3, f2
-	  stfs      f0, 0x0(r3)
-	  fsubs     f0, f4, f1
-	  stfs      f2, 0x4(r3)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
-}
+void NVector3f::construct(Vector3f& start, Vector3f& end) { set(end.x - start.x, end.y - start.y, end.z - start.z); }
 
 /*
  * --INFO--
@@ -2839,18 +2142,9 @@ void NVector3f::interpolate(Vector3f&, Vector3f&, f32)
  * Address:	........
  * Size:	0000B4
  */
-void NVector3f::isZero()
+bool NVector3f::isZero()
 {
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
- */
-void NMath<f32>::absolute(f32)
-{
+	return (NMathf::absolute(x) != 0.0f && NMathf::absolute(y) != 0.0f && NMathf::absolute(z) != 0.0f);
 	// UNUSED FUNCTION
 }
 
@@ -2879,48 +2173,9 @@ void NVector3f::isVertical(Vector3f&)
  * Address:	8011CFA0
  * Size:	000074
  */
-void NVector3f::isParallel(Vector3f&)
+bool NVector3f::isParallel(Vector3f& vec)
 {
-	/*
-	.loc_0x0:
-	  lfs       f3, 0x0(r3)
-	  lfs       f2, 0x0(r4)
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x4(r4)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x8(r3)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x8(r4)
-	  lfs       f0, -0x5FF0(r2)
-	  fmuls     f3, f4, f3
-	  fadds     f1, f2, f1
-	  fadds     f2, f3, f1
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x3C
-	  b         .loc_0x40
-
-	.loc_0x3C:
-	  fneg      f2, f2
-
-	.loc_0x40:
-	  lfs       f1, -0x5FEC(r2)
-	  lfs       f0, -0x5FF0(r2)
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x58
-	  b         .loc_0x5C
-
-	.loc_0x58:
-	  fneg      f1, f1
-
-	.loc_0x5C:
-	  lfs       f0, -0x1CB0(r13)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  mfcr      r0
-	  rlwinm    r3,r0,3,31,31
-	  blr
-	*/
+	return NMathf::absolute(NMathf::absolute(x * vec.x + y * vec.y + z * vec.z) - 1.0f) <= NMathF::error;
 }
 
 /*
@@ -2985,9 +2240,11 @@ void NVector3f::println() { }
  * Address:	........
  * Size:	000028
  */
-void NVector3f::normalizeByLength(f32)
+void NVector3f::normalizeByLength(f32 length)
 {
-	// UNUSED FUNCTION
+	x /= length;
+	y /= length;
+	z /= length;
 }
 
 /*
@@ -2995,79 +2252,15 @@ void NVector3f::normalizeByLength(f32)
  * Address:	8011D018
  * Size:	0000E8
  */
-void NVector3f::normalizeCheck()
+bool NVector3f::normalizeCheck()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x8(r3)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x5FF0(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x88
-	  fsqrte    f1, f4
-	  lfd       f3, -0x5FE0(r2)
-	  lfd       f2, -0x5FD8(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x10(r1)
-	  lfs       f4, 0x10(r1)
+	f32 len = length();
+	if (NMathf::absolute(len) <= NMathF::error) {
+		return false;
+	}
 
-	.loc_0x88:
-	  lfs       f0, -0x5FF0(r2)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x9C
-	  fmr       f1, f4
-	  b         .loc_0xA0
-
-	.loc_0x9C:
-	  fneg      f1, f4
-
-	.loc_0xA0:
-	  lfs       f0, -0x1CB0(r13)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xB8
-	  li        r3, 0
-	  b         .loc_0xE0
-
-	.loc_0xB8:
-	  lfs       f0, 0x0(r3)
-	  fdivs     f0, f0, f4
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fdivs     f0, f0, f4
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fdivs     f0, f0, f4
-	  stfs      f0, 0x8(r3)
-	  li        r3, 0x1
-
-	.loc_0xE0:
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	normalizeByLength(len);
+	return true;
 }
 
 /*
@@ -3077,72 +2270,13 @@ void NVector3f::normalizeCheck()
  */
 void NVector3f::normalize()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x8(r3)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x5FF0(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x88
-	  fsqrte    f1, f4
-	  lfd       f3, -0x5FE0(r2)
-	  lfd       f2, -0x5FD8(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x10(r1)
-	  lfs       f4, 0x10(r1)
+	u32 badCompiler; // idek man.
+	f32 len = length();
+	if (NMathf::absolute(len) <= NMathF::error) {
+		return;
+	}
 
-	.loc_0x88:
-	  lfs       f0, -0x5FF0(r2)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x9C
-	  fmr       f1, f4
-	  b         .loc_0xA0
-
-	.loc_0x9C:
-	  fneg      f1, f4
-
-	.loc_0xA0:
-	  lfs       f0, -0x1CB0(r13)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  beq-      .loc_0xD4
-	  lfs       f0, 0x0(r3)
-	  fdivs     f0, f0, f4
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fdivs     f0, f0, f4
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fdivs     f0, f0, f4
-	  stfs      f0, 0x8(r3)
-
-	.loc_0xD4:
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	normalizeByLength(len);
 }
 
 /*
@@ -3200,23 +2334,41 @@ NAlpha::NAlpha()
  * Address:	8011D1DC
  * Size:	00000C
  */
-void NAlpha::reset()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  blr
-	*/
-}
+void NAlpha::reset() { _04 = _08; }
 
 /*
  * --INFO--
  * Address:	8011D1E8
  * Size:	000198
  */
-f32 NAlpha::getValue(f32)
+f32 NAlpha::getValue(f32 p1)
 {
+	if (NMathf::absolute(_0C) <= NMathF::error) {
+		_0C = 1.0f;
+	}
+
+	f32 val = (p1 - _08) / _0C;
+
+	switch (_10) {
+	case 0:
+		return val;
+	case 1:
+		return sinf(NMathF::pi + val * (NMathF::pi / 2)) - 1.0f;
+	case 2:
+		return sinf(val * (NMathF::pi / 2));
+	case 3:
+		if (val < 0.5f) {
+			return 0.5f * (1.0f - sinf((NMathF::pi / 2) + (2.0f * val) * (NMathF::pi / 2)));
+		}
+		return 0.5f + (0.5f * sinf((2.0f * (val - 0.5f)) * (NMathF::pi / 2)));
+	case 4:
+		if (val < 0.5f) {
+			return (0.5f * sinf((2.0f * val) * (NMathF::pi / 2)));
+		}
+		return 0.5f + 0.5f * (1.0f - sinf((NMathF::pi / 2) + (2.0f * (val - 0.5f)) * (NMathF::pi / 2)));
+	default:
+		return val;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3351,40 +2503,9 @@ f32 NAlpha::getValue(f32)
  * Address:	8011D380
  * Size:	00007C
  */
-void NAlpha::readData(Stream&)
+void NAlpha::readData(Stream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x8(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0xC(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x10(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_08 = input.readFloat();
+	_0C = input.readFloat();
+	_10 = input.readByte();
 }

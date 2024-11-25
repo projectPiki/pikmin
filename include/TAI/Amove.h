@@ -18,8 +18,8 @@ struct TAIAappearKabekui : public TAIAsetMotionSpeed {
 	virtual bool act(Teki&);   // _10
 
 	// _04     = VTBL
-	// _00-_0C = TAIAsetMotionSpeed?
-	// TODO: members
+	// _00-_10 = TAIAsetMotionSpeed
+	u8 _10; // _10
 };
 
 /**
@@ -199,11 +199,12 @@ struct TAIAturnToTarget : public TAIAreserveMotion {
 	virtual f32 getTurnVelocity(Teki&); // _1C
 
 	// unused/inlined:
-	void getTurnMotionIndex(Teki&);
+	int getTurnMotionIndex(Teki&);
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-	// TODO: members
+	int _0C; // _0C
+	int _10; // _10
 };
 
 /**

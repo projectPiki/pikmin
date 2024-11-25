@@ -4,10 +4,12 @@
 #include "types.h"
 #include "TekiStrategy.h"
 
+struct TaiState;
+
 /**
  * @brief TODO
  */
-struct YaiStrategy {
+struct YaiStrategy : public TekiStrategy {
 	YaiStrategy(int, int);
 
 	virtual void start(Teki&);               // _08
@@ -18,8 +20,10 @@ struct YaiStrategy {
 	void init(int, int);
 
 	// _00     = VTBL
-	// _00-_?? = TekiStrategy
-	// TODO: members
+	// _00-_04 = TekiStrategy
+	int _04;            // _04
+	TaiState** mStates; // _08, array of something
+	int _0C;            // _0C, _324 in teki
 };
 
 #endif

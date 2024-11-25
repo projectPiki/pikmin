@@ -7,6 +7,7 @@
 #include "PaniAnimator.h"
 #include "PelletView.h"
 #include "Interactions.h"
+#include "system.h"
 
 struct NTeki;
 struct Teki;
@@ -20,6 +21,7 @@ struct PeveParabolaEvent;
 struct PeveAccelerationEvent;
 struct PeveCircleMoveEvent;
 struct PeveHorizontalSinWaveEvent;
+struct TekiPersonality;
 
 namespace TekiNakata {
 // Teki-making utility functions
@@ -202,16 +204,19 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	virtual void playSound(int);                         // _1C0
 	virtual void stopSound(int);                         // _1C4
 	virtual void createTekiEffect(int);                  // _1C8
-	virtual void setTekiOption(int);                     // _1CC
-	virtual void clearTekiOption(int);                   // _1D0
-	virtual void setTekiOptions(int);                    // _1D4
-	virtual void clearTekiOptions();                     // _1D8
-	virtual void setAnimationKeyOption(int);             // _1DC
-	virtual void clearAnimationKeyOption(int);           // _1E0
-	virtual void setAnimationKeyOptions(int);            // _1E4
-	virtual void clearAnimationKeyOptions();             // _1E8
-	virtual void dieSoon();                              // _1EC
-	virtual void becomeCorpse();                         // _1F0
+	virtual void setTekiOption(int opt)                  // _1CC
+	{
+		mTekiOptions |= opt;
+	}
+	virtual void clearTekiOption(int);         // _1D0
+	virtual void setTekiOptions(int);          // _1D4
+	virtual void clearTekiOptions();           // _1D8
+	virtual void setAnimationKeyOption(int);   // _1DC
+	virtual void clearAnimationKeyOption(int); // _1E0
+	virtual void setAnimationKeyOptions(int);  // _1E4
+	virtual void clearAnimationKeyOptions();   // _1E8
+	virtual void dieSoon();                    // _1EC
+	virtual void becomeCorpse();               // _1F0
 
 	bool isPellet(int);
 	void calcCircleDistanceStatic(Vector3f&, f32, Vector3f&, f32);
@@ -240,7 +245,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	void visibleCreature(Creature&);
 	void separateCreature(Creature&);
 	void contactCreature(Creature&);
-	void attackableCreature(Creature&);
+	bool attackableCreature(Creature&);
 	void calcTargetAngle(Vector3f&);
 	void moveToward(Vector3f&, f32);
 	void turnToward(f32, f32);
@@ -317,8 +322,18 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 		}
 	}
 
+	inline void setMotionSpeed(f32 speed)
+	{
+		setTekiOption(TEKI_OPTION_MANUAL_ANIMATION);
+		mMotionSpeed = speed;
+	}
+
+	inline void setVisible() { setTekiOption(TEKI_OPTION_VISIBLE); }
+
 	inline bool isTekiOption(int opt) const { return mTekiOptions & opt; }
 	inline bool isAnimKeyOption(int opt) const { return mAnimKeyOptions & opt; }
+
+	inline int getStateID() { return _324; }
 
 	// this is basically two static enums smh
 	static int TEKI_OPTION_VISIBLE;
@@ -345,28 +360,31 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	// _00       = VTBL
 	// _000-_2B8 = Creature
 	// _2B8-_2C0 = PelletView
-	u8 _2C0[0x2C8 - 0x2C4]; // _2C0, TODO: work out members
-	void* _2C8;             // _2C8
-	PaniAnimator* _2CC;     // _2CC
-	u8 _2D0[0x31C - 0x2D0]; // _2D0, TODO: work out members
-	u32 _31C;               // _31C
-	TekiTypes mTekiType;    // _320
-	int _324;               // _324, related to states
-	bool _328;              // _328, related to states
-	u8 _329[0x334 - 0x329]; // _329, TODO: work out members
-	int _334;               // _334, related to actions
-	int _338;               // _338, unknown, state id of some description?
-	u8 _33C[0x388 - 0x33C]; // _33C, TODO: work out members
-	Vector3f _388;          // _388, possibly position
-	f32 _394;               // _394
-	u8 _398[0x3B4 - 0x398]; // _398, TODO: work out members
-	f32 mMotionSpeed;       // _3B4
-	u8 _3B8[0x410 - 0x3B8]; // _3B8, TODO: work out members
-	int mTekiOptions;       // _410
-	int mAnimKeyOptions;    // _414
-	Creature* _418;         // _418, maybe attack target?
-	u8 _41C[0x454 - 0x41C]; // _41C, TODO: work out members
-	                        // _454 = PaniAnimKeyListener
+	u8 _2C0[0x2C8 - 0x2C4];        // _2C0, TODO: work out members
+	TekiPersonality* mPersonality; // _2C8
+	PaniAnimator* mTekiAnimator;   // _2CC
+	u8 _2D0[0x31C - 0x2D0];        // _2D0, TODO: work out members
+	u32 _31C;                      // _31C
+	TekiTypes mTekiType;           // _320
+	int _324;                      // _324, related to states
+	bool _328;                     // _328, related to states
+	u8 _329[0x330 - 0x329];        // _329, TODO: work out members
+	int _330;                      // _330
+	int _334;                      // _334, related to actions
+	int _338;                      // _338, unknown, state id of some description?
+	u8 _33C[0x388 - 0x33C];        // _33C, TODO: work out members
+	Vector3f _388;                 // _388, possibly position
+	f32 _394;                      // _394
+	u8 _398[0x3A8 - 0x398];        // _398, TODO: work out members
+	int _3A8;                      // _3A8
+	u8 _3AC[0x3B4 - 0x3AC];        // _3AC, TODO: work out members
+	f32 mMotionSpeed;              // _3B4
+	u8 _3B8[0x410 - 0x3B8];        // _3B8, TODO: work out members
+	int mTekiOptions;              // _410
+	int mAnimKeyOptions;           // _414
+	Creature* _418;                // _418, maybe attack target?
+	u8 _41C[0x454 - 0x41C];        // _41C, TODO: work out members
+	                               // _454 = PaniAnimKeyListener
 };
 
 /**
@@ -409,13 +427,23 @@ struct YTeki : public NTeki {
 	// unused/inlined:
 	void getMapAttribute();
 
+	// see TAIAappearKabekui::start
+	inline void set4C8(u32 val) { _4C8 = (_4C8 & ~0xFFFFFFEF); }
+
+	inline f32 getMotionLoopTimer() { return _478; }                                            // name is a guess
+	inline void updateMotionLoopTimer() { _478 = getMotionLoopTimer() + gsys->getFrameTime(); } // name is a guess
+
 	// _00       = VTBL
 	// _000-_46C = NTeki
-	u8 _46C[0x478 - 0x46C]; // _46C, TODO: work out members
+	u8 _46C[0x470 - 0x46C]; // _46C, TODO: work out members
+	u32 _470;               // _470, unknown
+	u8 _474[0x4];           // _474, TODO: work out members
 	f32 _478;               // _478
 	u8 _47C[0x498 - 0x47C]; // _47C, TODO: work out members
 	u32 _498[8];            // _498, array of something, probably not u32s
-	u8 _4B8[0x538 - 0x4B8]; // _4B8, TODO: work out members
+	u8 _4B8[0x4C8 - 0x4B8]; // _4B8, TODO: work out members
+	u8 _4C8;                // _4C8, bitflag?
+	u8 _4C9[0x538 - 0x4C9]; // _4C9, TODO: work out members
 	                        // _538 = PaniAnimKeyListener
 };
 

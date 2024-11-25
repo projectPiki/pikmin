@@ -77,7 +77,7 @@ void BTeki::viewDoAnimation() { doAnimation(); }
  */
 void BTeki::viewFinishMotion()
 {
-	_2CC->finishMotion(PaniMotionInfo(-1, this));
+	mTekiAnimator->finishMotion(PaniMotionInfo(-1, this));
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4196,7 +4196,7 @@ void BTeki::contactCreature(Creature&)
  * Address:	8014714C
  * Size:	0001B4
  */
-void BTeki::attackableCreature(Creature&)
+bool BTeki::attackableCreature(Creature&)
 {
 	/*
 	.loc_0x0:

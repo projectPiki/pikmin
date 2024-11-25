@@ -1,4 +1,5 @@
 #include "TekiParameters.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -25,8 +26,26 @@ static void _Print(char*, ...)
  * Address:	8014BD48
  * Size:	000954
  */
-TekiParameters::TekiParameters(int, int)
+TekiParameters::TekiParameters(int iParamNum, int fParamNum)
 {
+	for (int i = 0; i < 8; i++) {
+		mParaIDs[i].setID('none');
+	}
+
+	ParaParameterInfoI* intParams = new ParaParameterInfoI[iParamNum];
+	// set all these params somehow
+
+	ParaParameterInfoF* f32Params = new ParaParameterInfoF[fParamNum];
+	// set all these params somehow
+
+	mParameters                           = new ParaMultiParameters(iParamNum, intParams, fParamNum, f32Params);
+	ParaMultiParameters* multiP           = mParameters;
+	multiP->mIntParams->mParameters[3]    = -1;
+	multiP->mFloatParams->mParameters[20] = 10.0f;
+	multiP->mFloatParams->mParameters[21] = 10.0f;
+	multiP->mFloatParams->mParameters[28] = 1000.0f;
+	multiP->mFloatParams->mParameters[44] = 16.0f;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -638,8 +657,22 @@ TekiParameters::TekiParameters(int, int)
  * Address:	8014C69C
  * Size:	0003C4
  */
-void TekiParameters::read(RandomAccessStream&)
+void TekiParameters::read(RandomAccessStream& input)
 {
+	_20                         = input.readInt();
+	ParaMultiParameters* multiP = mParameters;
+	if (_20 <= 7) {
+		for (int i = 0; i < 8; i++) {
+			mParaIDs[i].read(input);
+		}
+
+		input.readInt();
+		input.readInt();
+
+		for (int i = 0; i < 16; i++) {
+			multiP->mIntParams->mParameters[i] = input.readInt();
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

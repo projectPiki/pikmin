@@ -5,6 +5,7 @@
 #include "AICreature.h"
 #include "ObjectMgr.h"
 #include "CreatureNode.h"
+#include "SimpleAI.h"
 
 struct BuildingItemProp;
 struct GoalAI;
@@ -56,6 +57,8 @@ struct ItemCreature : public AICreature {
 	virtual void setMotionSpeed(f32);      // _14C
 	virtual void stopMotion();             // _150
 	virtual void finalSetup();             // _158 (weak)
+
+	inline SimpleAI* getAI() { return static_cast<SimpleAI*>(mStateMachine); }
 
 	// _00      = VTBL
 	// _00-_304 = AICreature

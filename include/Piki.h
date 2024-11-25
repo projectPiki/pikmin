@@ -22,6 +22,7 @@ enum PikiColor {
 
 	PikiMinColor = Blue,
 	PikiMaxColor = Yellow,
+	PIKI_Kinoko  = 3,
 };
 
 /**
@@ -189,7 +190,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u8 _519;                      // _519
 	u8 _51A[0x520 - 0x51A];       // _51A, unknown
 	int mHappa;                   // _520, leaf/bud/flower
-	u8 _524[0x585 - 0x524];       // _4FC, TODO: work out members
+	u8 _524[0x585 - 0x524];       // _524, TODO: work out members
 };
 
 /**
@@ -199,15 +200,21 @@ struct PikiShapeObject {
 	PikiShapeObject(Shape*);
 
 	void exitCourse();
-	void getAnimMgr();
-	void initOnce();
 
+	static AnimMgr* getAnimMgr();
 	static void init();
+	static void initOnce();
 
 	// unused/inlined:
 	void create(int);
 
-	// TODO: members
+	static bool firstTime;
+	static PikiShapeObject* _instances[4];
+
+	Shape* mShape;     // _00
+	AnimContext _04;   // _04
+	AnimContext _14;   // _14
+	AnimMgr* mAnimMgr; // _24
 };
 
 #endif

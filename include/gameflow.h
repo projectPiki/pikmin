@@ -363,7 +363,7 @@ struct GameFlow : public Node {
 	u32 _2FC;                     // _2FC, unknown, but same as 0x30 in CreatureInf
 	u32 _300;                     // _300, unknown
 	f32 _304;                     // _304
-	u8 _308[0x4];                 // _308, unknown
+	u32 _308;                     // _308, unknown
 	GameGenFlow* mGenFlow;        // _30C
 	Texture* _310;                // _310
 	f32 _314;                     // _314

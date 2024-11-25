@@ -1,4 +1,5 @@
 #include "ComplexCreature.h"
+#include "Collision.h"
 
 /*
  * --INFO--
@@ -29,13 +30,6 @@ ComplexCreature::ComplexCreature(int, CreatureProp*)
 {
 	// UNUSED FUNCTION
 }
-
-/*
- * --INFO--
- * Address:	8008A02C
- * Size:	00000C
- */
-SmartPtr<Creature>::SmartPtr() { mPtr = nullptr; }
 
 /*
  * --INFO--
@@ -94,19 +88,8 @@ void ComplexCreature::doAI()
  */
 void ComplexCreature::postUpdate(int, f32)
 {
+	// this is just here for the weak function generation
+	mCreatures[0].mPtr->bounceCallback();
+	mCreatures[0].mPtr->collisionCallback(CollEvent());
 	// UNUSED FUNCTION
 }
-
-// /*
-//  * --INFO--
-//  * Address:	8008A038
-//  * Size:	000004
-//  */
-// void Creature::collisionCallback(CollEvent&) { }
-
-// /*
-//  * --INFO--
-//  * Address:	8008A03C
-//  * Size:	000004
-//  */
-// void Creature::bounceCallback() { }

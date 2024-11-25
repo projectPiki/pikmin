@@ -3,6 +3,8 @@
 #include "TekiPersonality.h"
 #include "TekiParameters.h"
 #include "TekiConditions.h"
+#include "NaviMgr.h"
+#include "PikiMgr.h"
 #include "Dolphin/os.h"
 
 /*
@@ -54,52 +56,16 @@ bool TaiAttackableNaviPikiAction::act(Teki& teki)
  */
 bool TaiAttackableNaviAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r4
-	  lwz       r3, 0x3120(r13)
-	  bl        -0x10308
-	  addi      r31, r3, 0
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x1FA70
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x70
-	  lwz       r3, 0x418(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x54
-	  beq-      .loc_0x54
-	  bl        -0x4338C
-	  li        r0, 0
-	  stw       r0, 0x418(r30)
-
-	.loc_0x54:
-	  stw       r31, 0x418(r30)
-	  lwz       r3, 0x418(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x68
-	  bl        -0x433B8
-
-	.loc_0x68:
-	  li        r3, 0x1
-	  b         .loc_0x74
-
-	.loc_0x70:
-	  li        r3, 0
-
-	.loc_0x74:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Navi* navi = naviMgr->getNavi();
+	if (teki.attackableCreature(*navi)) {
+		if (teki._418) {
+			resetCreature(teki._418);
+		}
+		teki._418 = navi;
+		postSetCreature(teki._418);
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -107,65 +73,23 @@ bool TaiAttackableNaviAction::act(Teki& teki)
  * Address:	8012773C
  * Size:	0000B8
  */
-bool TaiAttackablePikiAction::act(Teki&)
+bool TaiAttackablePikiAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r1)
-	  subi      r0, r5, 0xF68
-	  lis       r5, 0x802C
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  addi      r4, r30, 0x94
-	  stw       r0, 0x18(r1)
-	  addi      r0, r5, 0x6964
-	  lis       r5, 0x802D
-	  lwz       r3, 0x3068(r13)
-	  stw       r0, 0x18(r1)
-	  subi      r0, r5, 0x2ABC
-	  stw       r0, 0x18(r1)
-	  addi      r5, r1, 0x18
-	  stw       r30, 0x1C(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x6C(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r31, r3
-	  bne-      .loc_0x6C
-	  li        r3, 0
-	  b         .loc_0xA0
+	TekiAttackableCondition cond(&teki);
+	Creature* nearest = pikiMgr->findClosest(teki.mPosition, &cond);
+	if (!nearest) {
+		return false;
+	}
 
-	.loc_0x6C:
-	  lwz       r3, 0x418(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x88
-	  beq-      .loc_0x88
-	  bl        -0x4344C
-	  li        r0, 0
-	  stw       r0, 0x418(r30)
-
-	.loc_0x88:
-	  stw       r31, 0x418(r30)
-	  lwz       r3, 0x418(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x9C
-	  bl        -0x43478
-
-	.loc_0x9C:
-	  li        r3, 0x1
-
-	.loc_0xA0:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (teki._418) {
+		resetCreature(teki._418);
+	}
+	teki._418 = nearest;
+	postSetCreature(teki._418);
+	// sigh
+	u32 badCompiler;
+	u32 badCompiler2;
+	return true;
 }
 
 /*
@@ -173,45 +97,11 @@ bool TaiAttackablePikiAction::act(Teki&)
  * Address:	801277F4
  * Size:	000040
  */
-void TaiAnimationSwallowingAction::start(Teki&)
+void TaiAnimationSwallowingAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x418(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x30
-	  mr        r3, r4
-	  lwz       r4, -0x9B4(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x1CC(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x30:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80127834
- * Size:	000010
- */
-void BTeki::setTekiOption(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x410(r3)
-	  or        r0, r0, r4
-	  stw       r0, 0x410(r3)
-	  blr
-	*/
+	if (teki._418) {
+		teki.setTekiOption(BTeki::TEKI_OPTION_INVINCIBLE);
+	}
 }
 
 /*
@@ -219,8 +109,14 @@ void BTeki::setTekiOption(int)
  * Address:	80127844
  * Size:	000660
  */
-bool TaiAnimationSwallowingAction::act(Teki&)
+bool TaiAnimationSwallowingAction::act(Teki& teki)
 {
+	if (teki.isAnimKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
+		teki.flickUpper();
+		Vector3f center;
+		teki.outputHitCenter(center);
+		TekiPikiStateCondition cond;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -697,34 +593,7 @@ bool TaiAnimationSwallowingAction::act(Teki&)
  * Address:	80127EA4
  * Size:	000010
  */
-void BTeki::clearTekiOption(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x410(r3)
-	  andc      r0, r0, r4
-	  stw       r0, 0x410(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80127EB4
- * Size:	000018
- */
-void TekiPersonality::getF(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x34(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfsx      f1, r3, r0
-	  blr
-	*/
-}
+void BTeki::clearTekiOption(int opt) { mTekiOptions &= ~opt; }
 
 /*
  * --INFO--
@@ -749,7 +618,7 @@ void TekiParameters::getF(int)
  * Address:	80127EE4
  * Size:	00012C
  */
-void TaiAnimationSwallowingAction::finish(Teki&)
+void TaiAnimationSwallowingAction::finish(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -904,7 +773,7 @@ bool TaiBangingAction::actByEvent(TekiEvent&)
  * Address:	80128098
  * Size:	0000D4
  */
-bool TaiFlickAction::act(Teki&)
+bool TaiFlickAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -969,7 +838,7 @@ bool TaiFlickAction::act(Teki&)
  * Address:	8012816C
  * Size:	000028
  */
-bool TaiTargetStickAction::act(Teki&)
+bool TaiTargetStickAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -993,7 +862,7 @@ bool TaiTargetStickAction::act(Teki&)
  * Address:	80128194
  * Size:	000044
  */
-void TaiFlickingAction::start(Teki&)
+void TaiFlickingAction::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1022,7 +891,7 @@ void TaiFlickingAction::start(Teki&)
  * Address:	801281D8
  * Size:	000034
  */
-void TaiFlickingAction::finish(Teki&)
+void TaiFlickingAction::finish(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1047,7 +916,7 @@ void TaiFlickingAction::finish(Teki&)
  * Address:	8012820C
  * Size:	00007C
  */
-bool TaiFlickingAction::act(Teki&)
+bool TaiFlickingAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1096,7 +965,7 @@ bool TaiFlickingAction::act(Teki&)
  * Address:	80128288
  * Size:	000058
  */
-bool TaiFlickingUpperAction::act(Teki&)
+bool TaiFlickingUpperAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:

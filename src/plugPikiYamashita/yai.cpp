@@ -1,4 +1,7 @@
 #include "YaiStrategy.h"
+#include "teki.h"
+#include "TAI/Action.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -25,69 +28,18 @@ static void _Print(char*, ...)
  * Address:	801E9654
  * Size:	000064
  */
-YaiStrategy::YaiStrategy(int, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  bl        -0x9C4D4
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x5AA8
-	  stw       r0, 0x0(r29)
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  bl        .loc_0x64
-	  mr        r3, r29
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-
-	.loc_0x64:
-	*/
-}
+YaiStrategy::YaiStrategy(int p1, int p2) { init(p1, p2); }
 
 /*
  * --INFO--
  * Address:	801E96B8
  * Size:	00004C
  */
-void YaiStrategy::init(int, int)
+void YaiStrategy::init(int p1, int p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r5
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  stw       r4, 0x4(r3)
-	  lwz       r0, 0x4(r3)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0x1A26DC
-	  stw       r3, 0x8(r30)
-	  stw       r31, 0xC(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	_04     = p1;
+	mStates = new TaiState*[_04]; // TODO: work out type
+	_0C     = p2;
 }
 
 /*
@@ -95,28 +47,10 @@ void YaiStrategy::init(int, int)
  * Address:	801E9704
  * Size:	000044
  */
-void YaiStrategy::start(Teki&)
+void YaiStrategy::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0xC(r3)
-	  stw       r0, 0x324(r4)
-	  lwz       r0, 0x324(r4)
-	  lwz       r3, 0x8(r3)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	teki._324 = _0C;
+	mStates[teki._324]->start(teki);
 }
 
 /*
@@ -124,8 +58,14 @@ void YaiStrategy::start(Teki&)
  * Address:	801E9748
  * Size:	0000AC
  */
-void YaiStrategy::act(Teki&)
+void YaiStrategy::act(Teki& teki)
 {
+	// what on earth did yamashita do
+	int stateID = teki._324;
+	if (mStates[teki._324]->act(teki)) {
+		mStates[stateID]->finish(teki);
+		mStates[teki._324]->start(teki);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -181,7 +121,7 @@ void YaiStrategy::act(Teki&)
  * Address:	801E97F4
  * Size:	0000AC
  */
-void YaiStrategy::eventPerformed(TekiEvent&)
+void YaiStrategy::eventPerformed(TekiEvent& event)
 {
 	/*
 	.loc_0x0:
@@ -238,17 +178,4 @@ void YaiStrategy::eventPerformed(TekiEvent&)
  * Address:	801E98A0
  * Size:	000020
  */
-void YaiStrategy::draw(Teki&, Graphics&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x9C6E8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void YaiStrategy::draw(Teki& teki, Graphics& gfx) { TekiStrategy::draw(teki, gfx); }

@@ -2,8 +2,9 @@
 #define _ACTOR_H
 
 #include "types.h"
-#include "Creature.h"
 #include "ObjectMgr.h"
+#include "AICreature.h"
+#include "PaniPikiAnimator.h"
 
 struct CreatureProp;
 struct MapMgr;
@@ -13,9 +14,9 @@ struct SimpleAI;
 /**
  * @brief TODO
  *
- * @note This HAS to inherit creature to be spawned by ActorMgr::birth, but it doesn't have a vtable??
+ * @note Fun fact: The vtable for this does spawn, but then gets stripped :')
  */
-struct Actor : public Creature {
+struct Actor : public AICreature {
 	Actor(); // unused/inlined
 
 	void setType(int, PikiShapeObject*, CreatureProp*, SimpleAI*);
@@ -32,18 +33,19 @@ struct Actor : public Creature {
 	void finishMotion();
 	void finishMotion(f32);
 
-	// TODO: members
+	// _00      = VTBL
+	// _00-_304 = AICreature
+	PaniPikiAnimMgr mPikiAnimMgr; // _304
+	PikiShapeObject* mPikiShape;  // _3B0
 };
 
 /**
  * @brief TODO
  *
- * @note Inheritance is a guess - it doesn't spawn a vtable, but it uses a virtual method?? MonoObjectMgr seems the best fit.
+ * @note This also spawns a vtable but it gets stripped.
  */
 struct ActorMgr : public MonoObjectMgr {
 	ActorMgr(MapMgr*); // unused/inlined
-
-	// how the hell doesn't this spawn a vtable.
 
 	Actor* newActor(int);
 
@@ -55,10 +57,10 @@ struct ActorMgr : public MonoObjectMgr {
 	// _08     = VTBL
 	// _00-_3C = MonoObjectMgr
 	// TODO: members?
-	u8 _3C[0x4];           // _3C, unknown
-	PikiShapeObject** _40; // _40
-	CreatureProp** _44;    // _44
-	SimpleAI** _48;        // _48
+	PaniMotionTable* mMotionTable; // _3C
+	PikiShapeObject** _40;         // _40
+	CreatureProp** _44;            // _44
+	SimpleAI** _48;                // _48
 };
 
 extern ActorMgr* actorMgr;

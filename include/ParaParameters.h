@@ -44,7 +44,7 @@ struct ParaParameters {
 		}
 	}
 
-	T get(int);
+	T get(int idx) { return mParameters[idx]; }
 
 	void set(int idx, T val) { mParameters[idx] = val; }
 
@@ -128,9 +128,9 @@ struct ParaMultiParameters {
 	ParaMultiParameters(int, ParaParameterInfoI*, int, ParaParameterInfoF*);
 
 	void input(ParaMultiParameters&);
-	void getF(int);
+	f32 getF(int idx) { return mFloatParams->get(idx); }
 
-	void getI(int);
+	int getI(int idx) { return mIntParams->get(idx); }
 	void setF(int idx, f32 val) { mFloatParams->set(idx, val); }
 	void setI(int idx, int val) { mIntParams->set(idx, val); }
 

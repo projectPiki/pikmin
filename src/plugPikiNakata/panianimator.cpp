@@ -105,7 +105,7 @@ PaniMotionTable::PaniMotionTable(int count)
 PaniSoundTable::PaniSoundTable(int count)
 {
 	mSoundCount = count;
-	mSounds     = new u32*[mSoundCount];
+	mSounds     = new PaniSound*[mSoundCount];
 
 	for (int i = 0; i < mSoundCount; i++) {
 		mSounds[i] = 0;

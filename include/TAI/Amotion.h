@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "TAI/Action.h"
+#include "teki.h"
 
 /**
  * @brief TODO
@@ -15,7 +16,7 @@ struct TAIAmotion : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08; // _08
+	int mMotionID; // _08
 };
 
 /**
@@ -29,7 +30,7 @@ struct TAIAreserveMotion : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08; // _08
+	int mMotionID; // _08
 };
 
 /**
@@ -41,9 +42,12 @@ struct TAIAmotionLoop : public TAIAreserveMotion {
 	{
 	}
 
-	virtual void start(Teki&);      // _08
-	virtual bool act(Teki&);        // _10
-	virtual f32 getFrameMax(Teki&); // _1C (weak)
+	virtual void start(Teki&);     // _08
+	virtual bool act(Teki&);       // _10
+	virtual f32 getFrameMax(Teki&) // _1C (weak)
+	{
+		return mFrameMax;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TaiAreserveMotion
@@ -59,11 +63,16 @@ struct TAIAsetMotionSpeed : public TAIAmotion {
 	{
 	}
 
-	virtual void start(Teki&); // _08
+	virtual void start(Teki& teki) // _08
+	{
+		u32 badCompiler;
+		TAIAmotion::start(teki);
+		teki.setMotionSpeed(mMotionSpeed);
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TaiAmotion
-	// TODO: members
+	f32 mMotionSpeed; // _0C
 };
 
 #endif

@@ -38,7 +38,11 @@ TekiPersonality::TekiPersonality()
 	intParams[4].set("WATER_MAX_COUNT", -128, 127);
 
 	ParaParameterInfoF* floatParams = new ParaParameterInfoF[i];
-	// some setup of these params
+	floatParams[0].set("SIZE", 0.1f, 10.0f);
+	floatParams[1].set("STRENGTH", 0.0f, 100.0f);
+	floatParams[2].set("TERRITORY_RANGE", 0.0f, 10000.0f);
+	floatParams[3].set("PELLET_APPEARANCE_PROBABILITY", 0.0f, 1.0f);
+	floatParams[4].set("WATER_APPEARANCE_PROBABILITY", 0.0f, 1.0f);
 
 	mParams = new ParaMultiParameters(5, intParams, 5, floatParams);
 	reset();

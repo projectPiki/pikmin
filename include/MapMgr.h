@@ -8,6 +8,7 @@
 #include "Material.h"
 
 struct Controller;
+struct CreatureCollPart;
 struct MoveTrace;
 
 /**
@@ -198,7 +199,7 @@ struct MapMgr {
 	void recTraceMove(CollGroup*, MoveTrace&, f32);
 	void traceMove(Creature*, MoveTrace&, f32);
 	void loadPlatshape(char*);
-	CollPart* requestCollPart(ObjCollInfo*, Creature*);
+	CreatureCollPart* requestCollPart(ObjCollInfo*, Creature*);
 
 	// unused/inlined:
 	void closeCollTri(CollGroup*, CollTriInfo*);

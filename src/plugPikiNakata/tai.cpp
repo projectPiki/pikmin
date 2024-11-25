@@ -53,47 +53,9 @@ void TaiSerialAction::start(Teki& teki)
 void TaiSerialAction::finish(Teki& teki)
 {
 	for (int i = 0; i < mCount; i++) {
-		mActionQueue[i]->finish(teki);
+		TaiAction* action = mActionQueue[i];
+		action->finish(teki);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  b         .loc_0x54
-
-	.loc_0x30:
-	  lwz       r3, 0xC(r28)
-	  mr        r4, r29
-	  lwzx      r3, r3, r31
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r31, 0x4
-	  addi      r30, r30, 0x1
-
-	.loc_0x54:
-	  lwz       r0, 0x8(r28)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -152,47 +114,9 @@ TaiState::TaiState(int count)
 void TaiState::start(Teki& teki)
 {
 	for (int i = 0; i < mCount; i++) {
-		mActions[i]->start(teki);
+		TaiAction* action = mActions[i];
+		action->start(teki);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  b         .loc_0x54
-
-	.loc_0x30:
-	  lwz       r3, 0x8(r28)
-	  mr        r4, r29
-	  lwzx      r3, r3, r31
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r31, 0x4
-	  addi      r30, r30, 0x1
-
-	.loc_0x54:
-	  lwz       r0, 0x4(r28)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -203,47 +127,9 @@ void TaiState::start(Teki& teki)
 void TaiState::finish(Teki& teki)
 {
 	for (int i = 0; i < mCount; i++) {
-		mActions[i]->finish(teki);
+		TaiAction* action = mActions[i];
+		action->finish(teki);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  b         .loc_0x54
-
-	.loc_0x30:
-	  lwz       r3, 0x8(r28)
-	  mr        r4, r29
-	  lwzx      r3, r3, r31
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r31, 0x4
-	  addi      r30, r30, 0x1
-
-	.loc_0x54:
-	  lwz       r0, 0x4(r28)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -253,11 +139,18 @@ void TaiState::finish(Teki& teki)
  */
 bool TaiState::act(Teki& teki)
 {
+	// this assembly is so weird. does this have a custom iterator??
 	for (int i = 0; i < mCount; i++) {
 		TaiAction* action = mActions[i];
 		if (action->act(teki) && action->hasNextState()) {
-			// something teki-related here
-			teki._334 = 0;
+			int& val     = teki._324;
+			int startVal = teki._324;
+			if (action->mNextState == -2) {
+				val = teki._330;
+			} else {
+				val = action->mNextState;
+			}
+			teki._330 = startVal;
 			return true;
 		}
 	}
@@ -349,8 +242,14 @@ bool TaiState::eventPerformed(TekiEvent& event)
 	for (int i = 0; i < mCount; i++) {
 		TaiAction* action = mActions[i];
 		if (action->actByEvent(event) && action->hasNextState()) {
-			// some teki-related thing
-			event.mTeki->_334 = 0;
+			int& val     = event.mTeki->_324;
+			int startVal = event.mTeki->_324;
+			if (action->mNextState == -2) {
+				val = event.mTeki->_330;
+			} else {
+				val = action->mNextState;
+			}
+			event.mTeki->_330 = startVal;
 			return true;
 		}
 	}

@@ -746,22 +746,6 @@ void PcamCamera::parameterUpdated()
 
 /*
  * --INFO--
- * Address:	801224D4
- * Size:	000010
- */
-f32 ParaParameters<f32>::get(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x0(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lfsx      f1, r3, r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	801224E4
  * Size:	000154
  */
@@ -1876,23 +1860,6 @@ void PcamCamera::getCurrentAngle()
 	  blr
 
 	.loc_0x60:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80123210
- * Size:	000014
- */
-void ParaMultiParameters::getF(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwz       r3, 0x0(r3)
-	  lfsx      f1, r3, r0
-	  blr
 	*/
 }
 

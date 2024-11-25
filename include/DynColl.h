@@ -36,6 +36,8 @@ struct DynCollObject : public Node {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x140.
  */
 struct DynCollShape : public DynCollObject {
 	DynCollShape(Shape* shape);
@@ -59,7 +61,8 @@ struct DynCollShape : public DynCollObject {
 	u8 _30[0x44 - 0x30];  // _30, unknown
 	BoundBox _44;         // _44
 	Matrix4f _5C;         // _5C
-	u8 _9C[0x11C - 0x9C]; // _9C, unknown
+	Matrix4f _9C;         // _9C
+	u8 _DC[0x11C - 0xDC]; // _CC, unknown
 	Vector3f _11C;        // _11C
 	Vector3f _128;        // _128
 	Vector3f _134;        // _134
@@ -67,6 +70,8 @@ struct DynCollShape : public DynCollObject {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x144.
  */
 struct DynCollObjBody : public DynCollShape {
 	DynCollObjBody() // TODO: fix this, it's implicit but required/this is just a guess
@@ -79,13 +84,15 @@ struct DynCollObjBody : public DynCollShape {
 	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
 	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
 
-	// _00     = VTBL
-	// _00-_?? = DynCollShape
-	// TODO: members
+	// _00      = VTBL
+	// _00-_140 = DynCollShape
+	u8 _140[0x4]; // _140, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x140.
  */
 struct DynBuildShape : public DynCollShape {
 	DynBuildShape() // TODO: fix this, it's implicit but required/this is just a guess
@@ -96,9 +103,8 @@ struct DynBuildShape : public DynCollShape {
 	virtual void update();           // _10
 	virtual void refresh(Graphics&); // _44
 
-	// _00     = VTBL
-	// _00-_?? = DynCollShape
-	// TODO: members
+	// _00      = VTBL
+	// _00-_140 = DynCollShape
 };
 
 #endif

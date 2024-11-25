@@ -17,6 +17,7 @@
 #include "teki.h"
 #include "Collision.h"
 #include "Font.h"
+#include "TekiPersonality.h"
 #include "Pcam/CameraManager.h"
 #include "Pcam/Camera.h"
 
@@ -101,7 +102,7 @@ PaniTestNode::PaniTestNode()
 	for (int i = 0; i < TEKI_TypeCount; i++) {
 		if (tekiMgr->mTekiParams[i]) {
 			_668[i] = tekiMgr->newTeki(i);
-			_668[i]->_2C8; // need to set some vectors(?) here, idk what it is though
+			_668[i]->mPersonality->init();
 			_668[i]->reset();
 		} else {
 			_668[i] = nullptr;

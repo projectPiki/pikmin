@@ -4,8 +4,8 @@
 #include "types.h"
 #include "Dolphin/mtx.h"
 #include "Vector.h"
+#include "Matrix4f.h"
 
-struct Matrix4f;
 struct Stream;
 struct NTransform3D;
 
@@ -25,7 +25,8 @@ struct NVector {
 	void input(NVector&);
 	void println();
 
-	// TODO: members
+	f32* mValues; // _00, array of size mSize
+	int mSize;    // _04
 };
 
 /**
@@ -40,16 +41,16 @@ struct NVector3f : public Vector3f {
 	void construct(Vector3f&);
 	void construct(f32, f32, f32);
 	void construct(Vector3f&, Vector3f&);
-	void isParallel(Vector3f&);
+	bool isParallel(Vector3f&);
 	void println();
-	void normalizeCheck();
+	bool normalizeCheck();
 	void normalize();
 
 	// unused/inlined:
 	void printVector3f(Vector3f&);
 	void printlnVector3f(Vector3f&);
 	void interpolate(Vector3f&, Vector3f&, f32);
-	void isZero();
+	bool isZero();
 	void equals(Vector3f&);
 	void isVertical(Vector3f&);
 	void makeUnitVector(Vector3f&, Vector3f&);
@@ -92,7 +93,7 @@ struct NVector3fIOClass : public NVector3fIO {
 /**
  * @brief TODO
  */
-struct NMatrix4f {
+struct NMatrix4f : public Matrix4f {
 	NMatrix4f();
 	NMatrix4f(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
 	NMatrix4f(Matrix4f&); // unused/inlined
@@ -124,7 +125,7 @@ struct NMatrix4f {
 	void transpose();
 	void println();
 
-	// TODO: members
+	// _00-_30 = Matrix4f
 };
 
 /**
@@ -138,7 +139,8 @@ struct NSpecialMatrix {
 	// unused/inlined:
 	void construct(int);
 
-	// TODO: members
+	// _00 = VTBL
+	int mDimension; // _04
 };
 
 /**
@@ -183,7 +185,11 @@ struct LUMatrix : public NSpecialMatrix {
 	void decompose();
 	void println();
 
-	// TODO: members
+	// _00 = VTBL
+	// _00-_08 = NSpecialMatrix
+	NSpecialMatrix _08; // _08, maybe NLowerMatrix?
+	u8 _10[0x4];        // _10, unknown
+	NSpecialMatrix _14; // _14, maybe NUpperMatrix?
 };
 
 /**
@@ -209,7 +215,8 @@ struct NOrientation {
 	void inputRotation(NTransform3D&);
 	void println();
 
-	// TODO: members
+	NVector3f _00; // _00
+	NVector3f _0C; // _0C
 };
 
 /**
@@ -236,7 +243,9 @@ struct NPolar3f {
 	void clampMeridian(f32);
 	void println();
 
-	// TODO: members
+	f32 _00; // _00
+	f32 _04; // _04
+	f32 _08; // _08
 };
 
 /**
@@ -248,7 +257,8 @@ struct NAxisAngle4f {
 
 	void construct(NVector3f&, f32);
 
-	// TODO: members
+	NVector3f _00; // _00
+	f32 _0C;       // _0C
 };
 
 /**
@@ -267,7 +277,11 @@ struct NPosture2D {
 	void outputAxisAngle(NAxisAngle4f&);
 	void println();
 
-	// TODO: members
+	// _00 = VTBL
+	f32 _04; // _04
+	f32 _08; // _08
+	f32 _0C; // _0C
+	f32 _10; // _10
 };
 
 /**
@@ -301,7 +315,9 @@ struct NPosture3D {
 	void calcDirection();
 	void println();
 
-	// TODO: members
+	// _00 = VTBL
+	NVector3f _04; // _04
+	NVector3f _10; // _10
 };
 
 /**
@@ -338,7 +354,7 @@ struct NTransform3D {
 	void inputRotation(Matrix4f&);
 	void inputRotation(NAxisAngle4f&);
 
-	// TODO: members
+	NMatrix4f mMtx; // _00
 };
 
 /**
@@ -358,7 +374,11 @@ struct NAlpha {
 	void fadeInOutValue(f32);
 	void fadeOutInValue(f32);
 
-	// TODO: members
+	// _00 = VTBL
+	f32 _04; // _04
+	f32 _08; // _08
+	f32 _0C; // _0C
+	u8 _10;  // _10
 };
 
 #endif

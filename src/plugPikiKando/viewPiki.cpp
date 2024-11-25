@@ -1,4 +1,7 @@
 #include "ViewPiki.h"
+#include "gameflow.h"
+#include "Shape.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -20,6 +23,9 @@ static void _Print(char*, ...)
 	// UNUSED FUNCTION
 }
 
+PikiShapeObject* PikiShapeObject::_instances[4];
+bool PikiShapeObject::firstTime = true;
+
 /*
  * --INFO--
  * Address:	800D8894
@@ -27,19 +33,8 @@ static void _Print(char*, ...)
  */
 void PikiShapeObject::exitCourse()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x1
-	  lis       r3, 0x803D
-	  stb       r0, -0x3B90(r13)
-	  addi      r3, r3, 0x1E48
-	  li        r0, 0
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x8(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
+	firstTime     = true;
+	_instances[0] = _instances[1] = _instances[2] = _instances[3] = nullptr;
 }
 
 /*
@@ -49,19 +44,8 @@ void PikiShapeObject::exitCourse()
  */
 void PikiShapeObject::init()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x1
-	  lis       r3, 0x803D
-	  stb       r0, -0x3B90(r13)
-	  addi      r3, r3, 0x1E48
-	  li        r0, 0
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x8(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
+	firstTime     = true;
+	_instances[0] = _instances[1] = _instances[2] = _instances[3] = nullptr;
 }
 
 /*
@@ -79,30 +63,13 @@ void PikiShapeObject::create(int)
  * Address:	800D88E4
  * Size:	00003C
  */
-void PikiShapeObject::getAnimMgr()
+AnimMgr* PikiShapeObject::getAnimMgr()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, -0x3B90(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1C
-	  bl        .loc_0x3C
+	if (firstTime) {
+		initOnce();
+	}
 
-	.loc_0x1C:
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x1E48
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x24(r3)
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x3C:
-	*/
+	return _instances[0]->mAnimMgr;
 }
 
 /*
@@ -112,130 +79,19 @@ void PikiShapeObject::getAnimMgr()
  */
 void PikiShapeObject::initOnce()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r1)
-	  lis       r3, 0x803D
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0x1E48
-	  li        r3, 0x28
-	  stw       r30, 0x10(r1)
-	  subi      r30, r4, 0x5CE0
-	  stw       r29, 0xC(r1)
-	  stw       r28, 0x8(r1)
-	  bl        -0x9194C
-	  addi      r29, r3, 0
-	  mr.       r28, r29
-	  beq-      .loc_0x60
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r4, r30, 0x2C
-	  li        r5, 0x1
-	  bl        -0x85C60
-	  addi      r4, r3, 0
-	  addi      r3, r28, 0
-	  bl        .loc_0x1B4
+	_instances[Blue]           = new PikiShapeObject(gameflow.loadShape("pikis/bluModel.mod", true));
+	_instances[Blue]->mAnimMgr = new AnimMgr(_instances[Blue]->mShape, "pikis/animMgr.bin", 0x8000, nullptr);
 
-	.loc_0x60:
-	  stw       r29, 0x0(r31)
-	  li        r3, 0xB8
-	  bl        -0x91984
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x94
-	  lwz       r4, 0x0(r31)
-	  lis       r6, 0x1
-	  addi      r5, r30, 0x40
-	  lwz       r4, 0x0(r4)
-	  subi      r6, r6, 0x8000
-	  li        r7, 0
-	  bl        -0x8810C
+	gameflow.addGenNode("pikiAnimMgr", _instances[Blue]->mAnimMgr);
 
-	.loc_0x94:
-	  lwz       r4, 0x0(r31)
-	  lis       r3, 0x803A
-	  subi      r29, r3, 0x2848
-	  stw       r28, 0x24(r4)
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0x54
-	  lwz       r5, 0x0(r31)
-	  lwz       r5, 0x24(r5)
-	  bl        -0x85C74
-	  li        r3, 0x28
-	  bl        -0x919D8
-	  mr.       r28, r3
-	  beq-      .loc_0xE4
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0x60
-	  li        r5, 0x1
-	  bl        -0x85CE4
-	  addi      r4, r3, 0
-	  addi      r3, r28, 0
-	  bl        .loc_0x1B4
+	_instances[Red]                   = new PikiShapeObject(gameflow.loadShape("pikis/redModel.mod", true));
+	_instances[Red]->mAnimMgr         = _instances[Blue]->mAnimMgr;
+	_instances[Yellow]                = new PikiShapeObject(gameflow.loadShape("pikis/yelModel.mod", true));
+	_instances[Yellow]->mAnimMgr      = _instances[Blue]->mAnimMgr;
+	_instances[PIKI_Kinoko]           = new PikiShapeObject(gameflow.loadShape("pikis/kinModel.mod", true));
+	_instances[PIKI_Kinoko]->mAnimMgr = _instances[Blue]->mAnimMgr;
 
-	.loc_0xE4:
-	  addi      r4, r31, 0x4
-	  stw       r28, 0x4(r31)
-	  li        r3, 0x28
-	  lwz       r5, 0x0(r31)
-	  lwz       r4, 0x0(r4)
-	  lwz       r0, 0x24(r5)
-	  stw       r0, 0x24(r4)
-	  bl        -0x91A1C
-	  mr.       r28, r3
-	  beq-      .loc_0x12C
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r4, r30, 0x74
-	  li        r5, 0x1
-	  bl        -0x85D2C
-	  addi      r4, r3, 0
-	  addi      r3, r28, 0
-	  bl        .loc_0x1B4
-
-	.loc_0x12C:
-	  addi      r4, r31, 0x8
-	  stw       r28, 0x8(r31)
-	  li        r3, 0x28
-	  lwz       r5, 0x0(r31)
-	  lwz       r4, 0x0(r4)
-	  lwz       r0, 0x24(r5)
-	  stw       r0, 0x24(r4)
-	  bl        -0x91A64
-	  mr.       r28, r3
-	  beq-      .loc_0x174
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r4, r30, 0x88
-	  li        r5, 0x1
-	  bl        -0x85D74
-	  addi      r4, r3, 0
-	  addi      r3, r28, 0
-	  bl        .loc_0x1B4
-
-	.loc_0x174:
-	  addi      r3, r31, 0xC
-	  stw       r28, 0xC(r31)
-	  li        r0, 0
-	  lwz       r4, 0x0(r31)
-	  lwz       r3, 0x0(r3)
-	  lwz       r4, 0x24(r4)
-	  stw       r4, 0x24(r3)
-	  stb       r0, -0x3B90(r13)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  lwz       r29, 0xC(r1)
-	  lwz       r28, 0x8(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x1B4:
-	*/
+	firstTime = false;
 }
 
 /*
@@ -243,50 +99,13 @@ void PikiShapeObject::initOnce()
  * Address:	800D8AD4
  * Size:	00009C
  */
-PikiShapeObject::PikiShapeObject(Shape*)
+PikiShapeObject::PikiShapeObject(Shape* shape)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8023
-	  stw       r0, 0x4(r1)
-	  subi      r0, r5, 0x7730
-	  li        r6, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r5, r31, 0x4
-	  stw       r0, 0x10(r3)
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  stw       r6, 0x4(r31)
-	  lfs       f1, -0x6818(r2)
-	  stfs      f1, 0x8(r31)
-	  lfs       f0, -0x6814(r2)
-	  stfs      f0, 0xC(r31)
-	  stw       r0, 0x20(r31)
-	  stw       r6, 0x14(r31)
-	  stfs      f1, 0x18(r31)
-	  stfs      f0, 0x1C(r31)
-	  stw       r4, 0x0(r31)
-	  li        r4, 0
-	  lwz       r0, 0x308(r3)
-	  lwz       r3, 0x0(r31)
-	  stw       r0, 0x24(r3)
-	  stw       r6, 0x24(r31)
-	  lwz       r3, 0x0(r31)
-	  bl        -0xA3AE0
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r31, 0x14
-	  li        r4, 0x1
-	  bl        -0xA3AF0
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mShape      = shape;
+	mShape->_24 = gameflow._308;
+	mAnimMgr    = nullptr;
+	mShape->overrideAnim(0, &_04);
+	mShape->overrideAnim(1, &_14);
 }
 
 /*
@@ -294,20 +113,7 @@ PikiShapeObject::PikiShapeObject(Shape*)
  * Address:	800D8B70
  * Size:	000020
  */
-bool ViewPiki::isKinoko()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x803D
-	  lwz       r5, 0x588(r3)
-	  addi      r3, r4, 0x1E48
-	  lwz       r0, 0xC(r3)
-	  sub       r0, r0, r5
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
+bool ViewPiki::isKinoko() { return mPikiShape == PikiShapeObject::_instances[PIKI_Kinoko]; }
 
 /*
  * --INFO--

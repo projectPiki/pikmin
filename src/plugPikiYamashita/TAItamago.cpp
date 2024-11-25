@@ -1151,22 +1151,6 @@ bool TAIAhatch::act(Teki&)
 
 /*
  * --INFO--
- * Address:	801D0D40
- * Size:	000010
- */
-int ParaParameters<int>::get(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x0(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwzx      r3, r3, r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	801D0D50
  * Size:	0000BC
  */

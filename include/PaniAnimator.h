@@ -65,6 +65,12 @@ struct PaniAnimator : public Animator {
 	void checkCounter_4DEBUG();
 
 	inline bool isFinished() const { return mIsFinished; }
+	inline f32 getCurrentFrame() const { return mCurrentFrame; }
+	inline void setCurrentFrame(f32 frame) { mCurrentFrame = frame; }
+
+	inline int getMotionID() { return mMotionIdx; }
+
+	inline int get38() { return _38; } // TODO: rename later
 
 	inline int getInfoKeyValue(int idx) { return mAnimInfo->getInfoKey(idx)->_00; }
 	inline int getEventKeyValue(int idx) { return mAnimInfo->getEventKey(idx)->_00; }
@@ -118,6 +124,8 @@ struct PaniPlantAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
+	static char* motionLabels[7];
+
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
 };
@@ -129,6 +137,8 @@ struct PaniTekiAnimator : public PaniAnimator {
 	PaniTekiAnimator();
 
 	static PaniMotionTable* createMotionTable();
+
+	static char* motionLabels[15];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
@@ -189,13 +199,27 @@ struct PaniMotionTable {
 };
 
 /**
+ * @brief Fabricated.
+ *
+ * @note Size: 0x4.
+ */
+struct PaniSound {
+	PaniSound(int soundID)
+	    : mSoundID(soundID)
+	{
+	}
+
+	int mSoundID; // _00
+};
+
+/**
  * @brief TODO
  */
 struct PaniSoundTable {
 	PaniSoundTable(int);
 
-	int mSoundCount; // _00
-	u32** mSounds;   // _04, array of some type of pointer
+	int mSoundCount;     // _00
+	PaniSound** mSounds; // _04, array of mSoundCount sounds
 };
 
 #endif

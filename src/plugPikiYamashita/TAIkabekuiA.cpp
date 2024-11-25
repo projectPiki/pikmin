@@ -1,4 +1,5 @@
 #include "TAI/KabekuiA.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -28,48 +29,9 @@ static void _Print(char*, ...)
 TAIkabekuiASoundTable::TAIkabekuiASoundTable()
     : PaniSoundTable(3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  bl        -0xAB254
-	  li        r30, 0
-	  li        r31, 0
-	  b         .loc_0x58
-
-	.loc_0x30:
-	  li        r3, 0x4
-	  bl        -0x1832D8
-	  cmplwi    r3, 0
-	  beq-      .loc_0x48
-	  addi      r0, r30, 0x7C
-	  stw       r0, 0x0(r3)
-
-	.loc_0x48:
-	  lwz       r4, 0x4(r29)
-	  addi      r30, r30, 0x1
-	  stwx      r3, r4, r31
-	  addi      r31, r31, 0x4
-
-	.loc_0x58:
-	  lwz       r0, 0x0(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  mr        r3, r29
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mSoundCount; i++) {
+		mSounds[i] = new PaniSound(i + 124);
+	}
 }
 
 /*
@@ -78,7 +40,7 @@ TAIkabekuiASoundTable::TAIkabekuiASoundTable()
  * Size:	00036C
  */
 TAIkabekuiAParameters::TAIkabekuiAParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 54) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -310,7 +272,7 @@ TAIkabekuiAParameters::TAIkabekuiAParameters()
  * Size:	000A84
  */
 TAIkabekuiAStrategy::TAIkabekuiAStrategy()
-    : YaiStrategy(0, 0) // TODO: fix
+    : YaiStrategy(11, 1) // TODO: fix
 {
 	/*
 	.loc_0x0:
@@ -1866,42 +1828,6 @@ void TAIAinvincibleOn::start(Teki&)
 	  blrl
 	  lwz       r0, 0xC(r1)
 	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CBB08
- * Size:	000060
- */
-void TAIAsetMotionSpeed::start(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bl        -0x1EEB0
-	  mr        r3, r31
-	  lfs       f31, 0xC(r30)
-	  lwz       r12, 0x0(r31)
-	  lwz       r4, -0x9BC(r13)
-	  lwz       r12, 0x1CC(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f31, 0x3B4(r31)
-	  lwz       r0, 0x2C(r1)
-	  lfd       f31, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x28
 	  mtlr      r0
 	  blr
 	*/

@@ -30,7 +30,7 @@ struct ViewPiki : public Piki {
 
 	// _00      = VTBL
 	// _00-_588 = Piki
-	// TODO: members
+	PikiShapeObject* mPikiShape; // _588
 };
 
 #endif

@@ -1,9 +1,7 @@
 #ifndef _NLIB_FUNCTION_H
 #define _NLIB_FUNCTION_H
 
-#include "types.h"
-
-struct NVector3f;
+#include "nlib/Geometry.h"
 
 /**
  * @brief TODO
@@ -11,7 +9,7 @@ struct NVector3f;
 struct NFunction {
 	virtual f32 getValue(f32) = 0; // _08
 
-	// TODO: members
+	// _00 = VTBL
 };
 
 /**
@@ -31,7 +29,9 @@ struct NPolynomialFunction : public NFunction {
 	void mul2(NPolynomialFunction&, NPolynomialFunction&);
 	void getCoefficient(int);
 
-	// TODO: members
+	// _00     = VTBL
+	// _00-_04 = NFunction
+	NVector _04; // _04
 };
 
 /**
@@ -44,7 +44,8 @@ struct NLinearFunction : public NPolynomialFunction {
 	void construct(f32*);
 	void makeLinearFunction(f32, f32, f32, f32);
 
-	// TODO: members
+	// _00     = VTBL
+	// _00-_0C = NPolynomialFunction
 };
 
 /**
@@ -59,7 +60,10 @@ struct NClampLinearFunction : public NLinearFunction {
 	void construct(f32*);
 	void makeClampLinearFunction(f32, f32, f32, f32);
 
-	// TODO: members
+	// _00     = VTBL
+	// _00-_0C = NLinearFunction
+	f32 _0C; // _0C
+	f32 _10; // _10
 };
 
 /**
@@ -72,7 +76,11 @@ struct NVibrationFunction : public NFunction {
 
 	void makeVibrationFunction(f32, f32, f32);
 
-	// TODO: members
+	// _00     = VTBL
+	// _00-_04 = NFunction
+	f32 mPhase;       // _04
+	f32 mAngularFreq; // _08
+	f32 mAmplitude;   // _0C
 };
 
 /**
@@ -86,7 +94,9 @@ struct NFunction3D {
 	// unused/inlined:
 	void construct(NFunction*, NFunction*, NFunction*);
 
-	// TODO: members
+	NFunction* _00; // _00
+	NFunction* _04; // _04
+	NFunction* _08; // _08
 };
 
 #endif

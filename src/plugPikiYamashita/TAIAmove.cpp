@@ -1,12 +1,15 @@
 #include "TAI/Amove.h"
+#include "nlib/Math.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "TAIAmove");
 	// UNUSED FUNCTION
 }
 
@@ -25,8 +28,14 @@ static void _Print(char*, ...)
  * Address:	801A8C2C
  * Size:	000094
  */
-void TAIAappearKabekui::start(Teki&)
+void TAIAappearKabekui::start(Teki& teki)
 {
+	TAIAmotion::start(teki);
+	teki.setMotionSpeed(mMotionSpeed);
+	teki.set4C8(0);
+	if (_10) {
+		teki.setVisible();
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -76,7 +85,7 @@ void TAIAappearKabekui::start(Teki&)
  * Address:	801A8CC0
  * Size:	0001A4
  */
-bool TAIAappearKabekui::act(Teki&)
+bool TAIAappearKabekui::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -207,7 +216,7 @@ bool TAIAappearKabekui::act(Teki&)
  * Address:	801A8E64
  * Size:	000140
  */
-void TAIAsetTargetPointWorkObject::start(Teki&)
+void TAIAsetTargetPointWorkObject::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -301,14 +310,14 @@ void TAIAsetTargetPointWorkObject::start(Teki&)
  * Address:	801A8FA4
  * Size:	000008
  */
-bool TAIAsetTargetPointWorkObject::act(Teki&) { return true; }
+bool TAIAsetTargetPointWorkObject::act(Teki& teki) { return true; }
 
 /*
  * --INFO--
  * Address:	801A8FAC
  * Size:	0001B0
  */
-void TAIAgoGoalPath::makePath(Teki&)
+void TAIAgoGoalPath::makePath(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -442,8 +451,11 @@ void TAIAgoGoalPath::makePath(Teki&)
  * Address:	801A915C
  * Size:	00004C
  */
-void TAIAgoGoalPath::start(Teki&)
+void TAIAgoGoalPath::start(Teki& teki)
 {
+	teki._470 = 0;
+	makePath(teki);
+	TAIAgoTargetPriorityFaceDir::start(teki);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -473,7 +485,7 @@ void TAIAgoGoalPath::start(Teki&)
  * Address:	801A91A8
  * Size:	000118
  */
-bool TAIAgoGoalPath::act(Teki&)
+bool TAIAgoGoalPath::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -565,7 +577,7 @@ bool TAIAgoGoalPath::act(Teki&)
  * Address:	801A92C0
  * Size:	0000EC
  */
-bool TAIAgoGoalPath::checkArrival(Teki&)
+bool TAIAgoGoalPath::checkArrival(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -640,7 +652,7 @@ bool TAIAgoGoalPath::checkArrival(Teki&)
  * Address:	801A93AC
  * Size:	000100
  */
-void TAIAsetTargetPointCircleRandom::start(Teki&)
+void TAIAsetTargetPointCircleRandom::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -716,14 +728,14 @@ void TAIAsetTargetPointCircleRandom::start(Teki&)
  * Address:	801A94AC
  * Size:	000008
  */
-bool TAIAsetTargetPointCircleRandom::act(Teki&) { return true; }
+bool TAIAsetTargetPointCircleRandom::act(Teki& teki) { return true; }
 
 /*
  * --INFO--
  * Address:	801A94B4
  * Size:	000020
  */
-void TAIAsetTargetPointCircle::start(Teki&)
+void TAIAsetTargetPointCircle::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -743,7 +755,7 @@ void TAIAsetTargetPointCircle::start(Teki&)
  * Address:	801A94D4
  * Size:	000024
  */
-bool TAIAsetTargetPointCircle::act(Teki&)
+bool TAIAsetTargetPointCircle::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -766,7 +778,7 @@ bool TAIAsetTargetPointCircle::act(Teki&)
  * Address:	801A94F8
  * Size:	000110
  */
-void TAIAsetTargetPointCircle::setTargetPoint(Teki&)
+void TAIAsetTargetPointCircle::setTargetPoint(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -846,7 +858,7 @@ void TAIAsetTargetPointCircle::setTargetPoint(Teki&)
  * Address:	801A9608
  * Size:	000038
  */
-void TAIAgoTarget::start(Teki&)
+void TAIAgoTarget::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -872,7 +884,7 @@ void TAIAgoTarget::start(Teki&)
  * Address:	801A9640
  * Size:	000108
  */
-bool TAIAgoTarget::act(Teki&)
+bool TAIAgoTarget::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -954,7 +966,7 @@ bool TAIAgoTarget::act(Teki&)
  * Address:	801A9748
  * Size:	000018
  */
-f32 TAIAgoTarget::getVelocity(Teki&)
+f32 TAIAgoTarget::getVelocity(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -972,7 +984,7 @@ f32 TAIAgoTarget::getVelocity(Teki&)
  * Address:	801A9760
  * Size:	000038
  */
-void TAIAgoTargetPriorityFaceDir::start(Teki&)
+void TAIAgoTargetPriorityFaceDir::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -998,7 +1010,7 @@ void TAIAgoTargetPriorityFaceDir::start(Teki&)
  * Address:	801A9798
  * Size:	00009C
  */
-bool TAIAgoTargetPriorityFaceDir::act(Teki&)
+bool TAIAgoTargetPriorityFaceDir::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1053,7 +1065,7 @@ bool TAIAgoTargetPriorityFaceDir::act(Teki&)
  * Address:	801A9834
  * Size:	0000B8
  */
-bool TAIAgoTargetPriorityFaceDir::checkArrival(Teki&)
+bool TAIAgoTargetPriorityFaceDir::checkArrival(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1111,7 +1123,7 @@ bool TAIAgoTargetPriorityFaceDir::checkArrival(Teki&)
  * Address:	801A98EC
  * Size:	000018
  */
-f32 TAIAgoTargetPriorityFaceDir::getWalkVelocity(Teki&)
+f32 TAIAgoTargetPriorityFaceDir::getWalkVelocity(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1129,7 +1141,7 @@ f32 TAIAgoTargetPriorityFaceDir::getWalkVelocity(Teki&)
  * Address:	801A9904
  * Size:	000038
  */
-void TAIAapproachTargetPriorityFaceDir::start(Teki&)
+void TAIAapproachTargetPriorityFaceDir::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1155,7 +1167,7 @@ void TAIAapproachTargetPriorityFaceDir::start(Teki&)
  * Address:	801A993C
  * Size:	000088
  */
-bool TAIAapproachTargetPriorityFaceDir::act(Teki&)
+bool TAIAapproachTargetPriorityFaceDir::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1207,7 +1219,7 @@ bool TAIAapproachTargetPriorityFaceDir::act(Teki&)
  * Address:	801A99C4
  * Size:	000018
  */
-f32 TAIAapproachTargetPriorityFaceDir::getVelocity(Teki&)
+f32 TAIAapproachTargetPriorityFaceDir::getVelocity(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1235,7 +1247,7 @@ void TAIAlookAround::setTargetDirection(Teki&, f32)
  * Address:	801A99DC
  * Size:	0000DC
  */
-void TAIAlookAround::start(Teki&)
+void TAIAlookAround::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1306,7 +1318,7 @@ void TAIAlookAround::start(Teki&)
  * Address:	801A9AB8
  * Size:	00031C
  */
-bool TAIAlookAround::act(Teki&)
+bool TAIAlookAround::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1557,8 +1569,15 @@ bool TAIAlookAround::act(Teki&)
  * Address:	........
  * Size:	00004C
  */
-void TAIAturnToTarget::getTurnMotionIndex(Teki&)
+int TAIAturnToTarget::getTurnMotionIndex(Teki& teki)
 {
+	Vector3f vec;
+	vec.sub2(teki._388, teki.mPosition);
+	teki._394 = NMathF::atan2Vec(vec);
+	if (angDist(teki._394, teki.mDirection) > 0.0f) {
+		return _0C;
+	}
+	return _10;
 	// UNUSED FUNCTION
 }
 
@@ -1567,8 +1586,16 @@ void TAIAturnToTarget::getTurnMotionIndex(Teki&)
  * Address:	801A9DD4
  * Size:	0000CC
  */
-void TAIAturnToTarget::start(Teki&)
+void TAIAturnToTarget::start(Teki& teki)
 {
+	teki.setCreatureFlag(CF_Unk11);
+	mMotionID = getTurnMotionIndex(teki);
+	// Vector3f vec;
+	// vec = teki._388 - teki.mPosition;
+	// teki._394 = NMathF::atan2(vec.x, vec.z);
+	// mMotionID = (angDist(teki._394, teki.mDirection) > 0.0f) ? _0C : _10;
+	TAIAreserveMotion::start(teki);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1634,7 +1661,7 @@ void TAIAturnToTarget::start(Teki&)
  * Address:	801A9EA0
  * Size:	0001E8
  */
-bool TAIAturnToTarget::act(Teki&)
+bool TAIAturnToTarget::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1788,7 +1815,7 @@ bool TAIAturnToTarget::act(Teki&)
  * Address:	801AA088
  * Size:	000078
  */
-void TAIAstop::start(Teki&)
+void TAIAstop::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1830,7 +1857,7 @@ void TAIAstop::start(Teki&)
  * Address:	801AA100
  * Size:	00005C
  */
-void TAIArandomWalk::start(Teki&)
+void TAIArandomWalk::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1865,7 +1892,7 @@ void TAIArandomWalk::start(Teki&)
  * Address:	801AA15C
  * Size:	0000E8
  */
-bool TAIArandomWalk::act(Teki&)
+bool TAIArandomWalk::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1939,7 +1966,7 @@ bool TAIArandomWalk::act(Teki&)
  * Address:	801AA244
  * Size:	000100
  */
-void TAIArandomWalk::makeTargetPosition(Teki&)
+void TAIArandomWalk::makeTargetPosition(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2015,7 +2042,7 @@ void TAIArandomWalk::makeTargetPosition(Teki&)
  * Address:	801AA344
  * Size:	000020
  */
-void TAIAturnOccasion::start(Teki&)
+void TAIAturnOccasion::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2035,7 +2062,7 @@ void TAIAturnOccasion::start(Teki&)
  * Address:	801AA364
  * Size:	0000B4
  */
-bool TAIAturnOccasion::act(Teki&)
+bool TAIAturnOccasion::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2096,7 +2123,7 @@ bool TAIAturnOccasion::act(Teki&)
  * Address:	801AA418
  * Size:	000118
  */
-void TAIAturnFocusCreature::start(Teki&)
+void TAIAturnFocusCreature::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2186,7 +2213,7 @@ void TAIAturnFocusCreature::start(Teki&)
  * Address:	801AA530
  * Size:	000078
  */
-bool TAIAturnFocusCreature::act(Teki&)
+bool TAIAturnFocusCreature::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2232,7 +2259,7 @@ bool TAIAturnFocusCreature::act(Teki&)
  * Address:	801AA5A8
  * Size:	000084
  */
-void TAIAwait::start(Teki&)
+void TAIAwait::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2277,7 +2304,7 @@ void TAIAwait::start(Teki&)
  * Address:	801AA62C
  * Size:	000098
  */
-bool TAIAwait::act(Teki&)
+bool TAIAwait::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2329,7 +2356,7 @@ bool TAIAwait::act(Teki&)
  * Address:	801AA6C4
  * Size:	000008
  */
-f32 TAIAwait::getWaitCounterMax(Teki&)
+f32 TAIAwait::getWaitCounterMax(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2343,7 +2370,7 @@ f32 TAIAwait::getWaitCounterMax(Teki&)
  * Address:	........
  * Size:	000058
  */
-void TAIApatrol::changeStatus(int, Teki&)
+void TAIApatrol::changeStatus(int, Teki& teki)
 {
 	// UNUSED FUNCTION
 }
@@ -2396,7 +2423,7 @@ TAIApatrol::TAIApatrol(int, int, int, int, Vector3f*, int, bool)
  * Address:	........
  * Size:	000070
  */
-void TAIApatrol::setTargetPosition(Teki&)
+void TAIApatrol::setTargetPosition(Teki& teki)
 {
 	// UNUSED FUNCTION
 }
@@ -2406,7 +2433,7 @@ void TAIApatrol::setTargetPosition(Teki&)
  * Address:	801AA748
  * Size:	0002B0
  */
-void TAIApatrol::start(Teki&)
+void TAIApatrol::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2614,7 +2641,7 @@ void TAIApatrol::start(Teki&)
  * Address:	801AA9F8
  * Size:	000354
  */
-bool TAIApatrol::act(Teki&)
+bool TAIApatrol::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2871,7 +2898,7 @@ bool TAIApatrol::act(Teki&)
  * Address:	801AAD4C
  * Size:	000008
  */
-f32 TAIApatrol::getTimeout(Teki&)
+f32 TAIApatrol::getTimeout(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2885,7 +2912,7 @@ f32 TAIApatrol::getTimeout(Teki&)
  * Address:	801AAD54
  * Size:	000038
  */
-void TAIAstepBack::start(Teki&)
+void TAIAstepBack::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -2911,7 +2938,7 @@ void TAIAstepBack::start(Teki&)
  * Address:	801AAD8C
  * Size:	000164
  */
-bool TAIAstepBack::act(Teki&)
+bool TAIAstepBack::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3018,7 +3045,7 @@ bool TAIAstepBack::act(Teki&)
  * Address:	801AAEF0
  * Size:	000018
  */
-f32 TAIAstepBack::getVelocity(Teki&)
+f32 TAIAstepBack::getVelocity(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3036,7 +3063,7 @@ f32 TAIAstepBack::getVelocity(Teki&)
  * Address:	801AAF08
  * Size:	000110
  */
-void TAIAturnHome::start(Teki&)
+void TAIAturnHome::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3120,7 +3147,7 @@ void TAIAturnHome::start(Teki&)
  * Address:	801AB018
  * Size:	0000C4
  */
-bool TAIAturnHome::act(Teki&)
+bool TAIAturnHome::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3185,7 +3212,7 @@ bool TAIAturnHome::act(Teki&)
  * Address:	801AB0DC
  * Size:	000038
  */
-void TAIAgoingHome::start(Teki&)
+void TAIAgoingHome::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3211,7 +3238,7 @@ void TAIAgoingHome::start(Teki&)
  * Address:	801AB114
  * Size:	0000F0
  */
-bool TAIAgoingHome::act(Teki&)
+bool TAIAgoingHome::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3287,7 +3314,7 @@ bool TAIAgoingHome::act(Teki&)
  * Address:	801AB204
  * Size:	000038
  */
-void TAIAgoingHomePriorityFaceDir::start(Teki&)
+void TAIAgoingHomePriorityFaceDir::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3313,7 +3340,7 @@ void TAIAgoingHomePriorityFaceDir::start(Teki&)
  * Address:	801AB23C
  * Size:	0000F0
  */
-bool TAIAgoingHomePriorityFaceDir::act(Teki&)
+bool TAIAgoingHomePriorityFaceDir::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3389,7 +3416,7 @@ bool TAIAgoingHomePriorityFaceDir::act(Teki&)
  * Address:	801AB32C
  * Size:	00002C
  */
-void TAIAflyingBase::start(Teki&)
+void TAIAflyingBase::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3412,7 +3439,7 @@ void TAIAflyingBase::start(Teki&)
  * Address:	801AB358
  * Size:	000078
  */
-bool TAIAflyingBase::act(Teki&)
+bool TAIAflyingBase::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3456,7 +3483,7 @@ bool TAIAflyingBase::act(Teki&)
  * Address:	801AB3D0
  * Size:	00003C
  */
-f32 TAIAflyingBase::getFlyingStayVelocity(Teki&)
+f32 TAIAflyingBase::getFlyingStayVelocity(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3485,7 +3512,7 @@ f32 TAIAflyingBase::getFlyingStayVelocity(Teki&)
  * Address:	........
  * Size:	000144
  */
-void TAIAflyingInTerritory::setTargetPosition(Teki&)
+void TAIAflyingInTerritory::setTargetPosition(Teki& teki)
 {
 	// UNUSED FUNCTION
 }
@@ -3495,7 +3522,7 @@ void TAIAflyingInTerritory::setTargetPosition(Teki&)
  * Address:	801AB40C
  * Size:	0001B0
  */
-void TAIAflyingInTerritory::start(Teki&)
+void TAIAflyingInTerritory::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3617,7 +3644,7 @@ void TAIAflyingInTerritory::start(Teki&)
  * Address:	801AB5BC
  * Size:	000430
  */
-bool TAIAflyingInTerritory::act(Teki&)
+bool TAIAflyingInTerritory::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3909,7 +3936,7 @@ bool TAIAflyingInTerritory::act(Teki&)
  * Address:	801AB9EC
  * Size:	000050
  */
-void TAIAflyingToGoal::start(Teki&)
+void TAIAflyingToGoal::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -3941,7 +3968,7 @@ void TAIAflyingToGoal::start(Teki&)
  * Address:	801ABA3C
  * Size:	000330
  */
-bool TAIAflyingToGoal::act(Teki&)
+bool TAIAflyingToGoal::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -4173,14 +4200,14 @@ bool TAIAflyingToGoal::act(Teki&)
  * Address:	801ABD6C
  * Size:	000008
  */
-bool TAIAflyingToGoal::goal(Teki&) { return true; }
+bool TAIAflyingToGoal::goal(Teki& teki) { return true; }
 
 /*
  * --INFO--
  * Address:	801ABD74
  * Size:	000018
  */
-f32 TAIAflyingToGoal::getVelocity(Teki&)
+f32 TAIAflyingToGoal::getVelocity(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -4198,7 +4225,7 @@ f32 TAIAflyingToGoal::getVelocity(Teki&)
  * Address:	801ABD8C
  * Size:	000080
  */
-void TAIAflyingDistanceInTerritory::start(Teki&)
+void TAIAflyingDistanceInTerritory::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -4242,7 +4269,7 @@ void TAIAflyingDistanceInTerritory::start(Teki&)
  * Address:	801ABE0C
  * Size:	000048
  */
-bool TAIAflyingDistanceInTerritory::act(Teki&)
+bool TAIAflyingDistanceInTerritory::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -4272,7 +4299,7 @@ bool TAIAflyingDistanceInTerritory::act(Teki&)
  * Address:	801ABE54
  * Size:	000348
  */
-bool TAIAflyingDistanceInTerritory::goal(Teki&)
+bool TAIAflyingDistanceInTerritory::goal(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -4510,7 +4537,7 @@ bool TAIAflyingDistanceInTerritory::goal(Teki&)
  * Address:	801AC19C
  * Size:	00003C
  */
-void TAIAflyingDistance::start(Teki&)
+void TAIAflyingDistance::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -4537,7 +4564,7 @@ void TAIAflyingDistance::start(Teki&)
  * Address:	801AC1D8
  * Size:	0003A0
  */
-bool TAIAflyingDistance::act(Teki&)
+bool TAIAflyingDistance::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -4825,7 +4852,7 @@ bool TAIAflyingDistance::act(Teki&)
  * Address:	801AC578
  * Size:	000020
  */
-f32 TAIAflyingDistance::getGoalAreaRange(Teki&)
+f32 TAIAflyingDistance::getGoalAreaRange(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -4845,7 +4872,7 @@ f32 TAIAflyingDistance::getGoalAreaRange(Teki&)
  * Address:	801AC598
  * Size:	000080
  */
-void TAIAdescent::start(Teki&)
+void TAIAdescent::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -4889,7 +4916,7 @@ void TAIAdescent::start(Teki&)
  * Address:	801AC618
  * Size:	0002BC
  */
-bool TAIAdescent::act(Teki&)
+bool TAIAdescent::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -5092,7 +5119,7 @@ bool TAIAdescent::act(Teki&)
  * Address:	801AC8D4
  * Size:	000018
  */
-f32 TAIAdescent::getFlyingVelocity(Teki&)
+f32 TAIAdescent::getFlyingVelocity(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -5110,7 +5137,7 @@ f32 TAIAdescent::getFlyingVelocity(Teki&)
  * Address:	801AC8EC
  * Size:	000008
  */
-f32 TAIAdescent::getForceDescentFrame(Teki&)
+f32 TAIAdescent::getForceDescentFrame(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -5124,7 +5151,7 @@ f32 TAIAdescent::getForceDescentFrame(Teki&)
  * Address:	801AC8F4
  * Size:	000090
  */
-void TAIAlanding::start(Teki&)
+void TAIAlanding::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -5172,7 +5199,7 @@ void TAIAlanding::start(Teki&)
  * Address:	801AC984
  * Size:	000110
  */
-bool TAIAlanding::act(Teki&)
+bool TAIAlanding::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -5262,14 +5289,14 @@ bool TAIAlanding::act(Teki&)
  * Address:	801ACA94
  * Size:	000004
  */
-void TAIAlanding::landingEffect(Teki&) { }
+void TAIAlanding::landingEffect(Teki& teki) { }
 
 /*
  * --INFO--
  * Address:	801ACA98
  * Size:	000090
  */
-void TAIAtakeOff::start(Teki&)
+void TAIAtakeOff::start(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -5317,7 +5344,7 @@ void TAIAtakeOff::start(Teki&)
  * Address:	801ACB28
  * Size:	000118
  */
-bool TAIAtakeOff::act(Teki&)
+bool TAIAtakeOff::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -5417,7 +5444,7 @@ bool TAIAtakeOff::act(Teki&)
  * Address:	801ACC40
  * Size:	000014
  */
-void TAIAtakeOff::startFlying(Teki&)
+void TAIAtakeOff::startFlying(Teki& teki)
 {
 	/*
 	.loc_0x0:

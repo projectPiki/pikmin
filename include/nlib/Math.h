@@ -4,9 +4,10 @@
 #include "types.h"
 #include "Dolphin/mtx.h"
 #include "system.h"
+#include "Vector.h"
 
 namespace NMathF {
-f32 cos(f32)
+static inline f32 cos(f32)
 {
 	/*
 	.loc_0x0:
@@ -20,7 +21,7 @@ f32 cos(f32)
 	  blr
 	*/
 }
-f32 sin(f32)
+static inline f32 sin(f32)
 {
 	/*
 	.loc_0x0:
@@ -40,15 +41,46 @@ f32 remainder(f32, f32);
 // unused/inlined:
 f32 roundAngle(f32);
 
+inline f32 atan2Vec(Vector3f vec) { return atan2(vec.x, vec.z); }
+
 extern f32 pi;
 
 inline f32 getRandomAngle() { return 2.0f * StdSystem::getRand(1.0f) * pi; }
+
+extern f32 error;
 } // namespace NMathF
 
 template <typename T>
 struct NMath {
-	void copyArray44(Mtx44, Mtx44);
-	void absolute(f32);
+	static void copyArray44(Mtx44 output, Mtx44 input)
+	{
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				output[i][j] = input[i][j];
+			}
+		}
+	}
+
+	static T absolute(T val)
+	{
+		if (val > 0) {
+			return val;
+		}
+		return -val;
+	}
+
+	static T clamp(T val, T lower, T upper)
+	{
+		if (val < lower) {
+			return lower;
+		}
+		if (val > upper) {
+			return upper;
+		}
+		return val;
+	}
 };
+
+typedef NMath<f32> NMathf;
 
 #endif

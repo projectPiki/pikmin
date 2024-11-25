@@ -43,6 +43,15 @@ struct Matrix4f {
 	void makeProjection(Vector3f&, struct Plane&);
 	void makeReflection(Plane&);
 
+	inline void set(Matrix4f& other)
+	{
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				mMtx[i][j] = other.mMtx[i][j];
+			}
+		}
+	}
+
 	static Matrix4f ident;
 
 	Mtx44 mMtx; // _00-_40

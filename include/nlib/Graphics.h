@@ -2,6 +2,7 @@
 #define _NLIB_GRAPHICS_H
 
 #include "types.h"
+#include "nlib/Geometry.h"
 
 struct Camera;
 
@@ -14,7 +15,10 @@ struct NCamera {
 	void makeMatrix();
 	void makeCamera();
 
-	// TODO: members
+	f32 _00;         // _00
+	Camera* mCamera; // _04
+	NVector3f _08;   // _08
+	NVector3f _14;   // _14
 };
 
 #endif

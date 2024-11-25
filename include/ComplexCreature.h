@@ -11,7 +11,7 @@
  */
 template <typename T>
 struct SmartPtr {
-	SmartPtr(); // should be weak
+	SmartPtr() { mPtr = nullptr; }
 
 	void set(T*);
 
@@ -33,7 +33,8 @@ struct ComplexCreature {
 	void doAI();
 	void postUpdate(int, f32);
 
-	// TODO: members
+	// just here to spawn the right weak functions, who knows what this actually was lol
+	SmartPtr<Creature> mCreatures[3]; // _00
 };
 
 #endif

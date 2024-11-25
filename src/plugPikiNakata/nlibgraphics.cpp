@@ -1,4 +1,6 @@
 #include "nlib/Graphics.h"
+#include "nlib/Math.h"
+#include "Camera.h"
 
 /*
  * --INFO--
@@ -25,44 +27,12 @@ static void _Print(char*, ...)
  * Address:	8011D95C
  * Size:	000084
  */
-NCamera::NCamera(Camera*)
+NCamera::NCamera(Camera* cam)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r30, 0x8
-	  bl        -0xB28
-	  addi      r3, r30, 0x14
-	  bl        -0xB30
-	  stw       r31, 0x4(r30)
-	  mr        r3, r30
-	  lfs       f0, -0x1CC8(r13)
-	  stfs      f0, 0x8(r30)
-	  lfs       f0, -0x1CC4(r13)
-	  stfs      f0, 0xC(r30)
-	  lfs       f0, -0x1CC0(r13)
-	  stfs      f0, 0x10(r30)
-	  lfs       f0, -0x1CBC(r13)
-	  stfs      f0, 0x14(r30)
-	  lfs       f0, -0x1CB8(r13)
-	  stfs      f0, 0x18(r30)
-	  lfs       f0, -0x1CB4(r13)
-	  stfs      f0, 0x1C(r30)
-	  lfs       f0, -0x5FC8(r2)
-	  stfs      f0, 0x0(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mCamera = cam;
+	_08.set(0.0f, 0.0f, 0.0f);
+	_14.set(0.0f, 0.0f, 1.0f);
+	_00 = 0.0f;
 }
 
 /*
@@ -72,6 +42,22 @@ NCamera::NCamera(Camera*)
  */
 void NCamera::makeMatrix()
 {
+	NVector3f& v3 = _14;
+	NVector3f& v2 = _08;
+	NVector3f vec(v2, v3);
+	vec.normalize();
+
+	NOrientation orient(vec);
+	orient.normalize();
+
+	NVector3f v1(orient._0C);
+
+	NAxisAngle4f angle(vec, _00);
+	NTransform3D transform;
+	transform.inputAxisAngle(angle);
+	transform.transform(v1);
+	v1.normalize();
+	mCamera->calcLookAt(v2, v3, &v1);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -136,45 +122,10 @@ void NCamera::makeMatrix()
  */
 void NCamera::makeCamera()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  addi      r4, r31, 0x14
-	  lwz       r5, 0x4(r3)
-	  addi      r3, r1, 0x18
-	  lfs       f0, 0x8(r31)
-	  addi      r6, r5, 0x164
-	  stfs      f0, 0x164(r5)
-	  addi      r5, r31, 0x8
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x4(r6)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x8(r6)
-	  bl        -0xBC4
-	  addi      r3, r1, 0xC
-	  addi      r4, r1, 0x18
-	  bl        -0x171C
-	  lfs       f1, -0x1CA4(r13)
-	  lfs       f0, -0x5FC4(r2)
-	  lfs       f2, 0x10(r1)
-	  fmuls     f0, f1, f0
-	  lwz       r3, 0x4(r31)
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x320(r3)
-	  lfs       f0, 0x14(r1)
-	  lwz       r3, 0x4(r31)
-	  stfs      f0, 0x324(r3)
-	  lfs       f0, -0x5FC8(r2)
-	  lwz       r3, 0x4(r31)
-	  stfs      f0, 0x328(r3)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mCamera->_164.set(_08);
+	NVector3f vec(_14, _08);
+	NPolar3f polar(vec);
+	mCamera->_320.x = polar._04 - NMathF::pi / 2;
+	mCamera->_320.y = polar._08;
+	mCamera->_320.z = 0.0f;
 }

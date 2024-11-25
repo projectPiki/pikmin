@@ -11,13 +11,18 @@
 struct Creature;
 struct MapMgr;
 struct Pellet;
+struct Generator;
+struct GenType;
 struct TekiPersonality;
 
 /**
  * @brief TODO
  */
 struct BirthInfo {
-	// TODO: members
+	Vector3f _00;          // _00
+	Vector3f _0C;          // _0C, maybe rotation?
+	Vector3f _18;          // _18
+	Generator* mGenerator; // _24
 };
 
 template <typename T>
@@ -51,7 +56,9 @@ struct Generator : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u8 _20[0x58 - 0x20]; // _20, unknown
+	u8 _20[0x28 - 0x20]; // _20, unknown
+	GenType* _28;        // _28
+	u8 _2C[0x58 - 0x2C]; // _2C, unknown
 	ID32 _58;            // _58, generator ID?
 	ID32 _64;            // _64
 	                     // TODO: members
@@ -423,6 +430,18 @@ struct GenObjectWorkObject : public GenObject {
 	// TODO: members
 };
 
+typedef GenObject* (*GenFunc)();
+
+/**
+ * @brief Fabricated. Need an array of something to go at 0x8 in GenObjectFactory
+ */
+struct GenObjectInfo {
+	u32 mID;              // _00
+	GenFunc mGenFunction; // _04
+	char* mName;          // _08
+	int _0C;              // _0C
+};
+
 /**
  * @brief TODO
  */
@@ -434,7 +453,9 @@ struct GenObjectFactory : public Factory<GenObject> {
 
 	static GenObjectFactory* factory;
 
-	// TODO: members
+	int mSpawnerCount;           // _00
+	int mMaxSpawners;            // _04
+	GenObjectInfo* mSpawnerInfo; // _08, array
 };
 
 /**

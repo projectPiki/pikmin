@@ -8,6 +8,8 @@ struct CollPart;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x148.
  */
 struct CreatureCollPart : public DynCollShape {
 	CreatureCollPart() // TODO: fix this, it's implicit but required/this is just a guess
@@ -15,13 +17,14 @@ struct CreatureCollPart : public DynCollShape {
 	{
 	}
 
-	virtual void update();                                    // _10 (weak)
+	virtual void update() { }                                 // _10 (weak)
 	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
-	virtual void refresh(Graphics&);                          // _44 (weak)
+	virtual void refresh(Graphics&) { }                       // _44 (weak)
 
-	// _00     = VTBL
-	// _00-_?? = DynCollShape
-	// TODO: members
+	// _00      = VTBL
+	// _00-_140 = DynCollShape
+	u8 _140[0x4]; // _140, unknown
+	int _144;     // _144, anim matrix ID?
 };
 
 /*
@@ -32,10 +35,9 @@ struct CreaturePlatMgr {
 	void release();
 	void update(Graphics&);
 
-	// TODO: members
-	Shape* _00;        // _00
-	CollPart* _04[16]; // _04
-	u32 _44;           // _44, count of something?
+	Shape* mPlatShape;                // _00
+	CreatureCollPart* mPlatParts[16]; // _04
+	int mPartCount;                   // _44
 };
 
 #endif
