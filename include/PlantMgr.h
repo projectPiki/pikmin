@@ -8,42 +8,68 @@
 struct MapMgr;
 
 /**
- * @brief TODO
+ * @brief Descriptions taken from translations or from Minty Meeo's documentation.
  */
-struct PlantShapeObject {
-	PlantShapeObject(Shape*, char*, char*);
-
-	// TODO: members
+enum PlantTypes {
+	PLANT_NULL     = -1,
+	PLANT_START    = 0,
+	PLANT_Clover   = 0,  // clover
+	PLANT_Chidome  = 1,  // red lawn marshpennywort (Hydrocotyle sibthorpioides)
+	PLANT_Hutaba   = 2,  // (really) short shoot
+	PLANT_Ine      = 3,  // tall grass
+	PLANT_Tanpopo  = 4,  // dandelion
+	PLANT_Ooinu_l  = 5,  // birdseye speedwell (Veronica persica), large
+	PLANT_Ooinu_s  = 6,  // birdseye speedwell (Veronica persica), small
+	PLANT_Mizukusa = 7,  // pygmy chain sword (Echinodorus Tenellus)
+	PLANT_Wakame_l = 8,  // shoot, large
+	PLANT_Wakame_s = 9,  // shoot, small
+	PLANT_KinokoLt = 10, // glowcap (kinoko light)
+	PLANT_Hae      = 11, // flies (yes flies are a plant in Pikmin)
+	PLANT_COUNT,         // 12
 };
 
 /**
  * @brief TODO
  */
+struct PlantShapeObject {
+	PlantShapeObject(Shape* shape, char* plantName, char* fileName);
+
+	Shape* mShape;            // _00
+	AnimMgr* mAnimMgr;        // _04
+	AnimContext mAnimContext; // _08
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x398.
+ */
 struct Plant : public AICreature {
 	Plant();
 
-	virtual void startAI(int);        // _34
-	virtual f32 getiMass();           // _38
-	virtual bool isAlive();           // _88
-	virtual void update();            // _E0
-	virtual void refresh(Graphics&);  // _EC
-	virtual void doAnimation();       // _108
-	virtual void doKill();            // _10C
-	virtual void startMotion(int);    // _130
-	virtual void setMotionSpeed(f32); // _14C
-	virtual void stopMotion();        // _150
+	virtual void startAI(int);                                       // _34
+	virtual f32 getiMass() { return 0.0f; }                          // _38
+	virtual bool isAlive() { return !_30C; }                         // _88
+	virtual void update();                                           // _E0
+	virtual void refresh(Graphics&);                                 // _EC
+	virtual void doAnimation();                                      // _108
+	virtual void doKill();                                           // _10C
+	virtual void startMotion(int);                                   // _130
+	virtual void setMotionSpeed(f32 speed) { mMotionSpeed = speed; } // _14C
+	virtual void stopMotion() { mMotionSpeed = 0.0f; }               // _150
 
 	// unused/inlined:
 	void reset(int);
 
 	// _00      = VTBL
 	// _00-_304 = AICreature
-	u16 _304;                         // _304
-	f32 _308;                         // _308
+	u16 mPlantType;                   // _304, see PlantTypes enum
+	f32 mMotionSpeed;                 // _308
 	u8 _30C;                          // _30C
 	PaniPlantAnimator mPlantAnimator; // _310
 	SearchData mPlantSearchData[3];   // _364
 	Vector3f _388;                    // _388
+	u8 _394;                          // _394
 	                                  // TODO: work out members
 };
 
@@ -54,6 +80,15 @@ struct PlantAI : public SimpleAI {
 
 	/**
 	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Wait  = 0,
+		STATE_Touch = 1,
+		STATE_COUNT, // 2
+	};
+
+	/**
+	 * @brief Condition to move from WaitInit to TouchInit.
 	 */
 	struct OpponentMove : public SAICondition {
 
@@ -91,7 +126,7 @@ struct PlantAI : public SimpleAI {
 	PlantAI();
 
 	// _00     = VTBL
-	// _00-_?? = SimpleAI
+	// _00-_1C = SimpleAI
 	// TODO: members
 };
 
@@ -104,28 +139,36 @@ struct PlantMgr : public CreatureNodeMgr {
 	 * @brief TODO
 	 */
 	struct UseNode : public CoreNode {
+		UseNode() { initCore("usageNode"); }
+
 		// _00     = VTBL
 		// _00-_14 = CoreNode
-		// TODO: members
+		int mPlantType; // _14
 	};
 
 	PlantMgr(MapMgr*);
 
-	virtual ~PlantMgr();           // _48
+	virtual ~PlantMgr() { }        // _48
 	virtual Plant* createObject(); // _78
 
 	void initialise();
-	void usePlantType(int);
+	bool usePlantType(int);
 
 	// unused/inlined:
-	void getPlantName(int);
+	char* getPlantName(int);
 	void addUseList(int);
-	void birth();
+	Plant* birth();
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_40 = CreatureNodeMgr
-	// TODO: members
+	PlantShapeObject** mPlantShapes;   // _40
+	PaniMotionTable* mMotionTable;     // _44
+	MapMgr* mMapMgr;                   // _48
+	UseNode mRootUseNode;              // _4C
+	PlantAI* mAI;                      // _64
+	CreatureProp* mPlantProps;         // _68
+	AnimFrameCacher* mAnimFrameCacher; // _6C
 };
 
 extern PlantMgr* plantMgr;

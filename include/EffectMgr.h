@@ -113,6 +113,8 @@ struct EffectMgr : public CoreNode {
 		EFF_Unk47 = 47,
 		EFF_Unk48 = 48,
 		// ...
+		EFF_Unk52 = 52,
+		// ...
 		EFF_Unk69 = 69,
 	};
 
@@ -137,14 +139,15 @@ struct EffectMgr : public CoreNode {
 	void draw(Graphics&);
 	void drawshapes(Graphics&);
 	void exit();
-	void create(EffectMgr::effTypeTable, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
-	            zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*);
-	void create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f&);
+	zen::particleGenerator* create(EffectMgr::effTypeTable, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
+	                               zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*);
+	zen::particleGenerator* create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f&);
 	void getShapeInst();
 	void killAllShapes();
 
 	// unused/inlined:
-	void create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32, zen::CallBack1<zen::particleMdl*>*);
+	zen::particleGenerator* create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32,
+	                               zen::CallBack1<zen::particleMdl*>*);
 	void putShapeInst(EffShpInst*);
 
 	// _00     = VTBL

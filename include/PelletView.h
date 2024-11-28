@@ -2,13 +2,16 @@
 #define _PELLETVIEW_H
 
 #include "types.h"
+#include "Vector.h"
+
+struct Pellet;
 
 /**
  * @brief TODO
  */
 struct PelletView {
 	inline PelletView()
-	    : _04(0)
+	    : mPellet(nullptr)
 	{
 	}
 
@@ -20,14 +23,14 @@ struct PelletView {
 	virtual void viewSetMotionSpeed(f32);                          // _1C (weak)
 	virtual void viewFinishMotion();                               // _20 (weak)
 	virtual void viewDoAnimation();                                // _24 (weak)
-	virtual void viewGetBottomRadius() = 0;                        // _28
-	virtual void viewGetHeight()       = 0;                        // _2C
-	virtual void viewGetScale();                                   // _30 (weak)
+	virtual f32 viewGetBottomRadius() = 0;                         // _28
+	virtual f32 viewGetHeight()       = 0;                         // _2C
+	virtual Vector3f viewGetScale();                               // _30 (weak)
 
-	void becomePellet(u32, struct Vector3f&, f32);
+	void becomePellet(u32, Vector3f&, f32);
 
 	// _00 = VTBL
-	u32 _04; // _04, unknown - probably Pellet* mPellet?
+	Pellet* mPellet; // _04
 };
 
 #endif

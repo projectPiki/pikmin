@@ -78,7 +78,7 @@ TaiKinokoSoundTable::TaiKinokoSoundTable()
  * Size:	000518
  */
 TaiKinokoParameters::TaiKinokoParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(22, 60)
 {
 	/*
 	.loc_0x0:

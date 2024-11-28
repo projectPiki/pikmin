@@ -9,6 +9,7 @@
 #include "string.h"
 #include "Ayu.h"
 
+struct AnimFrameCacher;
 struct BaseApp;
 struct GameQuickInfo;
 struct GameChalQuickInfo;
@@ -316,71 +317,71 @@ struct GameFlow : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	GamePrms* mParameters;        // _20
-	MemoryCard mMemoryCard;       // _24
-	u8 _6C[0x94 - 0x6C];          // _6C, unknown
-	GamePrefs mGamePrefs;         // _94
-	u8 _1A0[0x4];                 // _1A0, unknown - might be part of GamePrefs
-	PlayState mPlayState;         // _1A4
-	u8 _1CC[0x1D0 - 0x1CC];       // _1CC, unknown
-	u32 _1D0;                     // _1D0, most recently opened stage?
-	u32 _1D4;                     // _1D4, unknown
-	u8 _1D8[0x4];                 // _1D8, unknown
-	MoviePlayer* mMoviePlayer;    // _1DC
-	u8 _1E0[0x1E8 - 0x1E0];       // _1E0, unknown
-	GameInterface* _1E8;          // _1E8
-	int _1EC;                     // _1EC
-	int mGameSectionID;           // _1F0, see GameSectionID enum
-	int _1F4;                     // _1F4
-	u8 _1F8[0x200 - 0x1F8];       // _1F8, unknown
-	u32 _200;                     // _200, unknown
-	Section* mGameSection;        // _204
-	char* _208;                   // _208
-	char* _20C;                   // _20C
-	char* _210;                   // _210
-	char* _214;                   // _214
-	char* _218;                   // _218
-	char* _21C;                   // _21C
-	char* _220;                   // _220
-	char* _224;                   // _224
-	char* _228;                   // _228
-	char* _22C;                   // _22C
-	u8 _230[0x2A8 - 0x230];       // _230, unknown
-	u32 _2A8;                     // _2A8, unknown
-	u32 _2AC;                     // _2AC, unknown
-	u32 _2B0;                     // _2B0, could be int
-	u8 _2B4[0x2BC - 0x2B4];       // _2B4, unknown
-	u32 _2BC;                     // _2BC, unknown
-	u8 _2C0[0x2D8 - 0x2C0];       // _2C0, unknown
-	f32 _2D8;                     // _2D8
-	f32 _2DC;                     // _2DC
-	f32 _2E0;                     // _2E0
-	u8 _2E4[0x4];                 // _2E4, unknown
-	f32 _2E8;                     // _2E8
-	f32 _2EC;                     // _2EC
-	u8 _2F0[0x8];                 // _2F0, unknown
-	u32 _2F8;                     // _2F8, unknown
-	u32 _2FC;                     // _2FC, unknown, but same as 0x30 in CreatureInf
-	u32 _300;                     // _300, unknown
-	f32 _304;                     // _304
-	u32 _308;                     // _308, unknown
-	GameGenFlow* mGenFlow;        // _30C
-	Texture* _310;                // _310
-	f32 _314;                     // _314
-	u8 _318[0x31C - 0x318];       // _318, unknown
-	GameLoadIdler mGameLoadIdler; // _31C
-	u8 _330[0x338 - 0x330];       // _330, unknown
-	int _338;                     // _338
-	u8 _33C[0x350 - 0x33C];       // _33C, unknown
-	u32 _350;                     // _350, unknown
-	u8 _354[0x8];                 // _354, unknown
-	u8 _35C;                      // _35C, maybe Colour?
-	u8 _35D;                      // _35D
-	u8 _35E;                      // _35E
-	u8 _35F;                      // _35F
-	u8 _360;                      // _360
-	u8 _361;                      // _361
-	u8 _362;                      // _362
+	GamePrms* mParameters;         // _20
+	MemoryCard mMemoryCard;        // _24
+	u8 _6C[0x94 - 0x6C];           // _6C, unknown
+	GamePrefs mGamePrefs;          // _94
+	u8 _1A0[0x4];                  // _1A0, unknown - might be part of GamePrefs
+	PlayState mPlayState;          // _1A4
+	u8 _1CC[0x1D0 - 0x1CC];        // _1CC, unknown
+	u32 _1D0;                      // _1D0, most recently opened stage?
+	u32 _1D4;                      // _1D4, unknown
+	u8 _1D8[0x4];                  // _1D8, unknown
+	MoviePlayer* mMoviePlayer;     // _1DC
+	u8 _1E0[0x1E8 - 0x1E0];        // _1E0, unknown
+	GameInterface* _1E8;           // _1E8
+	int _1EC;                      // _1EC
+	int mGameSectionID;            // _1F0, see GameSectionID enum
+	int _1F4;                      // _1F4
+	u8 _1F8[0x200 - 0x1F8];        // _1F8, unknown
+	u32 _200;                      // _200, unknown
+	Section* mGameSection;         // _204
+	char* _208;                    // _208
+	char* _20C;                    // _20C
+	char* _210;                    // _210
+	char* _214;                    // _214
+	char* _218;                    // _218
+	char* _21C;                    // _21C
+	char* _220;                    // _220
+	char* _224;                    // _224
+	char* _228;                    // _228
+	char* _22C;                    // _22C
+	u8 _230[0x2A8 - 0x230];        // _230, unknown
+	u32 _2A8;                      // _2A8, unknown
+	u32 _2AC;                      // _2AC, unknown
+	u32 _2B0;                      // _2B0, could be int
+	u8 _2B4[0x2BC - 0x2B4];        // _2B4, unknown
+	u32 _2BC;                      // _2BC, unknown
+	u8 _2C0[0x2D8 - 0x2C0];        // _2C0, unknown
+	f32 _2D8;                      // _2D8
+	f32 _2DC;                      // _2DC
+	f32 _2E0;                      // _2E0
+	u8 _2E4[0x4];                  // _2E4, unknown
+	f32 _2E8;                      // _2E8
+	f32 _2EC;                      // _2EC
+	u8 _2F0[0x8];                  // _2F0, unknown
+	u32 _2F8;                      // _2F8, unknown
+	u32 _2FC;                      // _2FC, unknown, but same as 0x30 in CreatureInf
+	u32 _300;                      // _300, unknown
+	f32 _304;                      // _304
+	AnimFrameCacher* mFrameCacher; // _308
+	GameGenFlow* mGenFlow;         // _30C
+	Texture* _310;                 // _310
+	f32 _314;                      // _314
+	u8 _318[0x31C - 0x318];        // _318, unknown
+	GameLoadIdler mGameLoadIdler;  // _31C
+	u8 _330[0x338 - 0x330];        // _330, unknown
+	int _338;                      // _338
+	u8 _33C[0x350 - 0x33C];        // _33C, unknown
+	u32 _350;                      // _350, unknown
+	u8 _354[0x8];                  // _354, unknown
+	u8 _35C;                       // _35C, maybe Colour?
+	u8 _35D;                       // _35D
+	u8 _35E;                       // _35E
+	u8 _35F;                       // _35F
+	u8 _360;                       // _360
+	u8 _361;                       // _361
+	u8 _362;                       // _362
 };
 
 extern GameFlow gameflow;

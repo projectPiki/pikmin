@@ -40,7 +40,7 @@ TAIkabekuiASoundTable::TAIkabekuiASoundTable()
  * Size:	00036C
  */
 TAIkabekuiAParameters::TAIkabekuiAParameters()
-    : TekiParameters(20, 54) // TODO: fix
+    : TekiParameters(20, 54)
 {
 	/*
 	.loc_0x0:

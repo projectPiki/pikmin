@@ -386,7 +386,7 @@ struct GenObjectPlant : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	// TODO: members
+	int mPlantType; // _18
 };
 
 /**
@@ -439,7 +439,7 @@ struct GenObjectInfo {
 	u32 mID;              // _00
 	GenFunc mGenFunction; // _04
 	char* mName;          // _08
-	int _0C;              // _0C
+	u32 mVersion;         // _0C
 };
 
 /**

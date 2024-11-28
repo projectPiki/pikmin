@@ -77,7 +77,7 @@ struct NVector3fIO {
 	virtual void input(NVector3f&)  = 0; // _08
 	virtual void output(NVector3f&) = 0; // _0C
 
-	// TODO: members
+	// _00 = VTBL
 };
 
 /**
@@ -87,7 +87,9 @@ struct NVector3fIOClass : public NVector3fIO {
 	virtual void input(NVector3f&);  // _08
 	virtual void output(NVector3f&); // _0C
 
-	// TODO: members
+	// _00 = VTBL
+	// _00-_04 = NVector3fIO
+	NVector3f _04; // _04, maybe in NVector3fIO, no idea.
 };
 
 /**

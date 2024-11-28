@@ -42,7 +42,7 @@ bool InteractPullout::actPiki(Piki* piki)
 	}
 
 	piki->mDirection = roundAng(mOwner->mDirection);
-	piki->_88.set(0.0f, piki->mDirection, 0.0f);
+	piki->mRotation.set(0.0f, piki->mDirection, 0.0f);
 	piki->mFSM->transit(piki, PIKISTATE_Nukare);
 
 	if (piki->mNavi->_7E5) {

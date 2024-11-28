@@ -29,7 +29,7 @@ struct CreatureNodeMgr : public ObjectMgr {
 	virtual int getFirst();             // _0C
 	virtual int getNext(int);           // _10
 	virtual bool isDone(int);           // _14
-	virtual ~CreatureNodeMgr();         // _48
+	virtual ~CreatureNodeMgr() { }      // _48
 	virtual int getSize();              // _60
 	virtual int getMax();               // _64
 

@@ -44,7 +44,11 @@ bool TaiAttackableNaviPikiAction::act(Teki& teki)
 	// this needs? more inlines? somehow?
 	u32 badCompiler;
 	u32 badCompiler2;
-	teki.addTarget(naviPiki);
+	if (teki._418[0].mPtr) {
+		resetCreature(teki._418[0].mPtr);
+	}
+	teki._418[0].mPtr = naviPiki;
+	postSetCreature(teki._418[0].mPtr);
 
 	return true;
 }
@@ -58,11 +62,11 @@ bool TaiAttackableNaviAction::act(Teki& teki)
 {
 	Navi* navi = naviMgr->getNavi();
 	if (teki.attackableCreature(*navi)) {
-		if (teki._418) {
-			resetCreature(teki._418);
+		if (teki._418[0].mPtr) {
+			resetCreature(teki._418[0].mPtr);
 		}
-		teki._418 = navi;
-		postSetCreature(teki._418);
+		teki._418[0].mPtr = navi;
+		postSetCreature(teki._418[0].mPtr);
 		return true;
 	}
 	return false;
@@ -81,11 +85,11 @@ bool TaiAttackablePikiAction::act(Teki& teki)
 		return false;
 	}
 
-	if (teki._418) {
-		resetCreature(teki._418);
+	if (teki._418[0].mPtr) {
+		resetCreature(teki._418[0].mPtr);
 	}
-	teki._418 = nearest;
-	postSetCreature(teki._418);
+	teki._418[0].mPtr = nearest;
+	postSetCreature(teki._418[0].mPtr);
 	// sigh
 	u32 badCompiler;
 	u32 badCompiler2;
@@ -594,24 +598,6 @@ bool TaiAnimationSwallowingAction::act(Teki& teki)
  * Size:	000010
  */
 void BTeki::clearTekiOption(int opt) { mTekiOptions &= ~opt; }
-
-/*
- * --INFO--
- * Address:	80127ECC
- * Size:	000018
- */
-void TekiParameters::getF(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x84(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfsx      f1, r3, r0
-	  blr
-	*/
-}
 
 /*
  * --INFO--

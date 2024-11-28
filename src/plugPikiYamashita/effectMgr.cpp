@@ -1272,8 +1272,8 @@ void EffectMgr::exit()
  * Address:	8019CB38
  * Size:	000044
  */
-void EffectMgr::create(EffectMgr::effTypeTable, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
-                       zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
+zen::particleGenerator* EffectMgr::create(EffectMgr::effTypeTable, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
+                                          zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
 {
 	/*
 	.loc_0x0:
@@ -1331,7 +1331,7 @@ void EffectParticleRegistration::create(Vector3f&, zen::CallBack1<zen::particleG
  * Address:	8019CBBC
  * Size:	000044
  */
-void EffectMgr::create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f&)
+zen::particleGenerator* EffectMgr::create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1360,7 +1360,8 @@ void EffectMgr::create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f
  * Address:	........
  * Size:	000060
  */
-void EffectMgr::create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32, zen::CallBack1<zen::particleMdl*>*)
+zen::particleGenerator* EffectMgr::create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32,
+                                          zen::CallBack1<zen::particleMdl*>*)
 {
 	// UNUSED FUNCTION
 }

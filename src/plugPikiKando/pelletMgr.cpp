@@ -671,7 +671,7 @@ Pellet::Pellet()
  * Address:	800953AC
  * Size:	00003C
  */
-void Pellet::isUfoPartsID(u32)
+bool Pellet::isUfoPartsID(u32)
 {
 	/*
 	.loc_0x0:
@@ -1797,7 +1797,7 @@ f32 Pellet::getSize()
  * Address:	80095F8C
  * Size:	00001C
  */
-void PelletView::viewGetScale()
+Vector3f PelletView::viewGetScale()
 {
 	/*
 	.loc_0x0:

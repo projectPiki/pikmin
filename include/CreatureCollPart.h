@@ -31,6 +31,11 @@ struct CreatureCollPart : public DynCollShape {
  * @brief TODO
  */
 struct CreaturePlatMgr {
+	CreaturePlatMgr()
+	    : mPartCount(0)
+	{
+	}
+
 	void init(Creature*, MapMgr*, Shape*);
 	void release();
 	void update(Graphics&);

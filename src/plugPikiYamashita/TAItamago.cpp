@@ -79,7 +79,7 @@ TAItamagoSoundTable::TAItamagoSoundTable()
  * Size:	0002F4
  */
 TAItamagoParameters::TAItamagoParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 52)
 {
 	/*
 	.loc_0x0:

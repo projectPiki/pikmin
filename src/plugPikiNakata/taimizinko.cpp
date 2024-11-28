@@ -26,7 +26,7 @@ static void _Print(char*, ...)
  * Size:	0000B0
  */
 TaiMizigenParameters::TaiMizigenParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 50)
 {
 	/*
 	.loc_0x0:
@@ -424,7 +424,7 @@ bool TaiMizigenNaviApprouchAction::act(Teki&)
  * Size:	000380
  */
 TaiMizinkoParameters::TaiMizinkoParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 64)
 {
 	/*
 	.loc_0x0:

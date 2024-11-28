@@ -78,7 +78,7 @@ TaiSwallowSoundTable::TaiSwallowSoundTable()
  * Size:	000448
  */
 TaiSwallowParameters::TaiSwallowParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 56)
 {
 	/*
 	.loc_0x0:
@@ -365,7 +365,7 @@ TaiSwallowParameters::TaiSwallowParameters()
  * Size:	00043C
  */
 TaiBlackSwallowParameters::TaiBlackSwallowParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 56)
 {
 	/*
 	.loc_0x0:

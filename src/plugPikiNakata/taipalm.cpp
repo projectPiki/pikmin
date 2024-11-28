@@ -78,7 +78,7 @@ TaiPalmSoundTable::TaiPalmSoundTable()
  * Size:	0001F4
  */
 TaiPalmParameters::TaiPalmParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 53)
 {
 	/*
 	.loc_0x0:

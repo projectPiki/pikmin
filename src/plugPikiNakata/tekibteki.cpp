@@ -1,7 +1,19 @@
 #include "types.h"
 #include "teki.h"
+#include "CreatureProp.h"
 #include "Shape.h"
+#include "zen/particle.h"
+#include "Graphics.h"
+#include "BaseInf.h"
+#include "SoundMgr.h"
+#include "nlib/System.h"
+#include "MapMgr.h"
 #include "sysNew.h"
+#include "Pellet.h"
+#include "RadarInfo.h"
+#include "TekiStrategy.h"
+#include "PikiMacros.h"
+#include "EffectMgr.h"
 
 int BTeki::TEKI_OPTION_VISIBLE            = 1 << 0;
 int BTeki::TEKI_OPTION_SHADOW_VISIBLE     = 1 << 1;
@@ -17,12 +29,12 @@ int BTeki::TEKI_OPTION_DRAWED             = 1 << 13;
 int BTeki::TEKI_OPTION_SHAPE_VISIBLE      = 1 << 14;
 int BTeki::TEKI_OPTION_DAMAGE_COUNTABLE   = 1 << 15;
 
-int BTeki::ANIMATION_KEY_OPTION_FINISHED  = 1 << 0;
-int BTeki::ANIMATION_KEY_OPTION_ACTION_0  = 1 << 1;
-int BTeki::ANIMATION_KEY_OPTION_ACTION_1  = 1 << 2;
-int BTeki::ANIMATION_KEY_OPTION_ACTION_2  = 1 << 3;
-int BTeki::ANIMATION_KEY_OPTION_LOOPSTART = 1 << 5;
-int BTeki::ANIMATION_KEY_OPTION_LOOPEND   = 1 << 6;
+int BTeki::ANIMATION_KEY_OPTION_FINISHED  = 1 << KEY_Done;
+int BTeki::ANIMATION_KEY_OPTION_ACTION_0  = 1 << KEY_Action0;
+int BTeki::ANIMATION_KEY_OPTION_ACTION_1  = 1 << KEY_Action1;
+int BTeki::ANIMATION_KEY_OPTION_ACTION_2  = 1 << KEY_Action2;
+int BTeki::ANIMATION_KEY_OPTION_LOOPSTART = 1 << KEY_LoopStart;
+int BTeki::ANIMATION_KEY_OPTION_LOOPEND   = 1 << KEY_LoopEnd;
 
 /*
  * --INFO--
@@ -75,141 +87,40 @@ void BTeki::viewDoAnimation() { doAnimation(); }
  * Address:	80143FF4
  * Size:	00004C
  */
-void BTeki::viewFinishMotion()
-{
-	mTekiAnimator->finishMotion(PaniMotionInfo(-1, this));
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr.       r31, r3
-	  addi      r5, r31, 0
-	  beq-      .loc_0x20
-	  lwz       r5, 0x2C0(r31)
-
-	.loc_0x20:
-	  addi      r3, r1, 0xC
-	  li        r4, -0x1
-	  bl        -0x25090
-	  mr        r4, r3
-	  lwz       r3, 0x2CC(r31)
-	  bl        -0x24DF8
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
+void BTeki::viewFinishMotion() { mTekiAnimator->finishMotion(PaniMotionInfo(-1, this)); }
 
 /*
  * --INFO--
  * Address:	80144040
  * Size:	00001C
  */
-void BTeki::viewGetScale()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x7C(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x80(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x84(r4)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
-}
+Vector3f BTeki::viewGetScale() { return mScale; }
 
 /*
  * --INFO--
  * Address:	8014405C
  * Size:	000018
  */
-void BTeki::viewGetBottomRadius()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r3)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0x50(r3)
-	  blr
-	*/
-}
+f32 BTeki::viewGetBottomRadius() { return mTekiParams->getF(TPF_CorpseSize); }
 
 /*
  * --INFO--
  * Address:	80144074
  * Size:	000018
  */
-void BTeki::viewGetHeight()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r3)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0x54(r3)
-	  blr
-	*/
-}
+f32 BTeki::viewGetHeight() { return mTekiParams->getF(TPF_CorpseHeight); }
 
 /*
  * --INFO--
  * Address:	8014408C
  * Size:	0000A4
  */
-void BTeki::viewDraw(Graphics&, Matrix4f&)
+void BTeki::viewDraw(Graphics& gfx, Matrix4f& mat)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  li        r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  lis       r4, 0x803A
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x3B4(r30)
-	  subi      r4, r4, 0x77C0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2CC(r29)
-	  lwz       r12, 0x30(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2D0(r29)
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  lwz       r3, 0x0(r3)
-	  li        r6, 0
-	  bl        -0x10EDE4
-	  lwz       r3, 0x2D0(r29)
-	  mr        r4, r30
-	  lwz       r5, 0x2E4(r30)
-	  li        r6, 0
-	  lwz       r3, 0x0(r3)
-	  bl        -0x113CA4
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	gfx.useMatrix(Matrix4f::ident, 0);
+	mTekiAnimator->updateContext();
+	mTekiShape->mShape->updateAnim(gfx, mat, nullptr);
+	mTekiShape->mShape->drawshape(gfx, *gfx._2E4, nullptr);
 }
 
 /*
@@ -217,51 +128,21 @@ void BTeki::viewDraw(Graphics&, Matrix4f&)
  * Address:	80144130
  * Size:	000024
  */
-void BTeki::viewKill()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xB9460
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void BTeki::viewKill() { kill(false); }
 
 /*
  * --INFO--
  * Address:	80144154
  * Size:	00000C
  */
-void BTeki::doStore(CreatureInf*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x320(r3)
-	  stw       r0, 0x3C(r4)
-	  blr
-	*/
-}
+void BTeki::doStore(CreatureInf* info) { info->mTekiType = mTekiType; }
 
 /*
  * --INFO--
  * Address:	80144160
  * Size:	00000C
  */
-void BTeki::doRestore(CreatureInf*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x3C(r4)
-	  stw       r0, 0x320(r3)
-	  blr
-	*/
-}
+void BTeki::doRestore(CreatureInf* info) { mTekiType = (TekiTypes)info->mTekiType; }
 
 /*
  * --INFO--
@@ -270,9 +151,9 @@ void BTeki::doRestore(CreatureInf*)
  */
 TekiShapeObject::TekiShapeObject(Shape* shape)
 {
-	mShape      = shape;
-	mShape->_24 = 0;
-	mAnimMgr    = new AnimMgr(shape, nullptr, 0x8000, nullptr);
+	mShape               = shape;
+	mShape->mFrameCacher = nullptr;
+	mAnimMgr             = new AnimMgr(shape, nullptr, 0x8000, nullptr);
 	mShape->overrideAnim(0, &mAnimContext);
 }
 
@@ -281,47 +162,16 @@ TekiShapeObject::TekiShapeObject(Shape* shape)
  * Address:	8014421C
  * Size:	000010
  */
-bool BTeki::isPellet(int)
-{
-	/*
-	.loc_0x0:
-	  subfic    r0, r3, 0x34
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
+bool BTeki::isPellet(int objType) { return objType == OBJTYPE_Pellet; }
 
 /*
  * --INFO--
  * Address:	8014422C
  * Size:	000050
  */
-void BTeki::calcCircleDistanceStatic(Vector3f&, f32, Vector3f&, f32)
+f32 BTeki::calcCircleDistanceStatic(Vector3f& pos1, f32 rad1, Vector3f& pos2, f32 rad2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  fmr       f31, f2
-	  stfd      f30, 0x18(r1)
-	  fmr       f30, f1
-	  lfs       f1, 0x0(r3)
-	  lfs       f2, 0x8(r3)
-	  lfs       f3, 0x0(r4)
-	  lfs       f4, 0x8(r4)
-	  bl        -0x10BC30
-	  fsubs     f0, f1, f30
-	  lwz       r0, 0x2C(r1)
-	  lfd       f30, 0x18(r1)
-	  fsubs     f1, f0, f31
-	  lfd       f31, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	return qdist2(pos1.x, pos1.z, pos2.x, pos2.z) - rad1 - rad2;
 }
 
 /*
@@ -329,25 +179,17 @@ void BTeki::calcCircleDistanceStatic(Vector3f&, f32, Vector3f&, f32)
  * Address:	8014427C
  * Size:	000014
  */
-bool BTeki::alwaysUpdatePlatform()
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x320(r3)
-	  subfic    r0, r0, 0xA
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
+bool BTeki::alwaysUpdatePlatform() { return mTekiType == TEKI_Shell; }
 
 /*
  * --INFO--
  * Address:	80144290
  * Size:	0000A8
  */
-void BTeki::calcSphereDistanceStatic(Vector3f&, f32, Vector3f&, f32)
+f32 BTeki::calcSphereDistanceStatic(Vector3f& pos1, f32 rad1, Vector3f& pos2, f32 rad2)
 {
+	return pos1.distance(pos2) - rad1 - rad2; // not quite right
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -568,22 +410,7 @@ void BTeki::moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&)
  * Address:	80144570
  * Size:	000028
  */
-void BTeki::arrivedAt(f32, f32)
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x5898(r2)
-	  lwz       r3, 0x3150(r13)
-	  fmuls     f2, f0, f2
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f0, f2, f0
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  mfcr      r0
-	  rlwinm    r3,r0,3,31,31
-	  blr
-	*/
-}
+bool BTeki::arrivedAt(f32 p1, f32 p2) { return p1 <= 2.0f * p2 * NSystem::system->getFrameTime(); }
 
 /*
  * --INFO--
@@ -593,259 +420,19 @@ void BTeki::arrivedAt(f32, f32)
 BTeki::BTeki()
     : Creature(nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x70(r1)
-	  stw       r29, 0x6C(r1)
-	  stw       r28, 0x68(r1)
-	  beq-      .loc_0x3C
-	  addi      r0, r31, 0x454
-	  lis       r3, 0x802B
-	  stw       r0, 0x2C0(r31)
-	  subi      r0, r3, 0x246C
-	  stw       r0, 0x454(r31)
-
-	.loc_0x3C:
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0xB9704
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x3B0
-	  stw       r0, 0x2B8(r31)
-	  li        r30, 0
-	  lis       r3, 0x802D
-	  stw       r30, 0x2BC(r31)
-	  subi      r5, r3, 0x2E90
-	  lis       r4, 0x802C
-	  stw       r5, 0x0(r31)
-	  lis       r3, 0x802C
-	  addi      r7, r5, 0x1F4
-	  lwz       r6, 0x2C0(r31)
-	  addi      r5, r5, 0x114
-	  addi      r0, r31, 0x454
-	  stw       r7, 0x0(r6)
-	  addi      r28, r4, 0x5CEC
-	  addi      r29, r3, 0x5BF0
-	  stw       r5, 0x2B8(r31)
-	  addi      r3, r31, 0x35C
-	  lwz       r4, 0x2C0(r31)
-	  sub       r0, r0, r4
-	  stw       r0, 0x4(r4)
-	  stw       r30, 0x318(r31)
-	  stw       r28, 0x358(r31)
-	  stw       r29, 0x358(r31)
-	  bl        -0x277F0
-	  stw       r28, 0x368(r31)
-	  addi      r3, r31, 0x36C
-	  stw       r29, 0x368(r31)
-	  bl        -0x27800
-	  stw       r28, 0x378(r31)
-	  addi      r3, r31, 0x37C
-	  stw       r29, 0x378(r31)
-	  bl        -0x27810
-	  addi      r3, r31, 0x388
-	  bl        -0x27818
-	  addi      r3, r31, 0x398
-	  bl        -0x27820
-	  stw       r30, 0x3E0(r31)
-	  lis       r3, 0x8009
-	  subi      r4, r3, 0x5FD4
-	  stw       r30, 0x3E4(r31)
-	  addi      r3, r31, 0x418
-	  li        r5, 0
-	  stw       r30, 0x3E8(r31)
-	  li        r6, 0x4
-	  li        r7, 0x4
-	  stw       r30, 0x3EC(r31)
-	  bl        0xD03D0
-	  lis       r3, 0x8009
-	  subi      r4, r3, 0x5808
-	  addi      r3, r31, 0x42C
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x3
-	  bl        0xD03B4
-	  li        r0, 0x37
-	  stw       r0, 0x6C(r31)
-	  li        r0, 0x1
-	  li        r3, 0x58
-	  stw       r0, 0x1FC(r31)
-	  bl        -0xFD6D0
-	  mr.       r28, r3
-	  beq-      .loc_0x250
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x6C8
-	  stw       r0, 0x54(r28)
-	  addi      r3, r1, 0x44
-	  subi      r4, r13, 0x988
-	  stw       r30, 0x0(r28)
-	  bl        -0xF3C20
-	  lwz       r0, 0x44(r1)
-	  addi      r5, r1, 0x3C
-	  addi      r4, r28, 0
-	  stw       r0, 0x3C(r1)
-	  addi      r3, r28, 0x4
-	  bl        -0xE5C90
-	  lis       r3, 0x802A
-	  addi      r30, r3, 0x6098
-	  stw       r30, 0xC(r28)
-	  addi      r3, r1, 0x4C
-	  subi      r4, r13, 0x984
-	  lfs       f0, -0x5894(r2)
-	  stfs      f0, 0x10(r28)
-	  bl        -0xF3C58
-	  lwz       r0, 0x4C(r1)
-	  addi      r5, r1, 0x38
-	  addi      r4, r28, 0
-	  stw       r0, 0x38(r1)
-	  addi      r3, r28, 0x14
-	  bl        -0xE5CC8
-	  stw       r30, 0x1C(r28)
-	  addi      r3, r1, 0x54
-	  subi      r4, r13, 0x980
-	  lfs       f0, -0x5894(r2)
-	  stfs      f0, 0x20(r28)
-	  bl        -0xF3C88
-	  lwz       r0, 0x54(r1)
-	  addi      r5, r1, 0x34
-	  addi      r4, r28, 0
-	  stw       r0, 0x34(r1)
-	  addi      r3, r28, 0x24
-	  bl        -0xE5CF8
-	  stw       r30, 0x2C(r28)
-	  addi      r3, r1, 0x5C
-	  subi      r4, r13, 0x97C
-	  lfs       f0, -0x5890(r2)
-	  stfs      f0, 0x30(r28)
-	  bl        -0xF3CB8
-	  lwz       r0, 0x5C(r1)
-	  addi      r5, r1, 0x30
-	  addi      r4, r28, 0
-	  stw       r0, 0x30(r1)
-	  addi      r3, r28, 0x34
-	  bl        -0xE5D28
-	  stw       r30, 0x3C(r28)
-	  addi      r3, r1, 0x64
-	  subi      r4, r13, 0x978
-	  lfs       f0, -0x588C(r2)
-	  stfs      f0, 0x40(r28)
-	  bl        -0xF3CE8
-	  lwz       r0, 0x64(r1)
-	  addi      r5, r1, 0x2C
-	  addi      r4, r28, 0
-	  stw       r0, 0x2C(r1)
-	  addi      r3, r28, 0x44
-	  bl        -0xE5D58
-	  stw       r30, 0x4C(r28)
-	  lfs       f0, -0x5888(r2)
-	  stfs      f0, 0x50(r28)
-
-	.loc_0x250:
-	  stw       r28, 0x224(r31)
-	  li        r3, 0x38
-	  bl        -0xFD7EC
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x26C
-	  bl        0x8260
-
-	.loc_0x26C:
-	  stw       r28, 0x2C8(r31)
-	  li        r3, 0x54
-	  bl        -0xFD808
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x288
-	  bl        -0x24960
-
-	.loc_0x288:
-	  stw       r28, 0x2CC(r31)
-	  li        r3, 0x10
-	  bl        -0xFD824
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x2A4
-	  bl        -0x28D00
-
-	.loc_0x2A4:
-	  stw       r28, 0x428(r31)
-	  li        r0, 0x14
-	  stw       r0, 0x348(r31)
-	  lwz       r0, 0x348(r31)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0xFD84C
-	  stw       r3, 0x450(r31)
-	  li        r0, 0
-	  li        r3, 0x10
-	  stw       r0, 0x34C(r31)
-	  bl        -0xFD860
-	  stw       r3, 0x3D8(r31)
-	  li        r3, 0x14
-	  bl        -0xFD86C
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x2F0
-	  li        r4, 0x16
-	  bl        -0xBBC54
-
-	.loc_0x2F0:
-	  stw       r28, 0x220(r31)
-	  li        r3, 0x28
-	  bl        -0xFD88C
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x314
-	  addi      r4, r31, 0
-	  li        r5, 0x1
-	  bl        -0xA0BDC
-
-	.loc_0x314:
-	  stw       r28, 0x2C(r31)
-	  li        r3, 0x8
-	  bl        -0xFD8B0
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x370
-	  li        r0, 0x3
-	  stw       r0, 0x0(r28)
-	  lwz       r0, 0x0(r28)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0xFD8D0
-	  li        r5, 0
-	  stw       r3, 0x4(r28)
-	  addi      r6, r5, 0
-	  addi      r4, r5, 0
-	  b         .loc_0x364
-
-	.loc_0x354:
-	  lwz       r3, 0x4(r28)
-	  addi      r5, r5, 0x1
-	  stwx      r4, r3, r6
-	  addi      r6, r6, 0x4
-
-	.loc_0x364:
-	  lwz       r0, 0x0(r28)
-	  cmplw     r5, r0
-	  blt+      .loc_0x354
-
-	.loc_0x370:
-	  stw       r28, 0x3DC(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  lwz       r29, 0x6C(r1)
-	  lwz       r28, 0x68(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	mObjType       = OBJTYPE_Teki;
+	mLifeGauge._1C = 1;
+	mProps         = new CreatureProp();
+	mPersonality   = new TekiPersonality();
+	mTekiAnimator  = new PaniTekiAnimator();
+	_428           = new NVibrationFunction();
+	_348           = 20;
+	_450           = new u32[_348];
+	_34C           = 0;
+	_3D8           = new u32[4];
+	mCollInfo      = new CollInfo(22);
+	mSeContext     = new SeContext(this, 1);
+	_3DC           = new zen::PtclGenPack(3);
 }
 
 /*
@@ -853,36 +440,13 @@ BTeki::BTeki()
  * Address:	80144930
  * Size:	000064
  */
-void BTeki::init(int)
+void BTeki::init(int tekiType)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  stw       r4, 0x320(r3)
-	  lwz       r3, 0x3160(r13)
-	  lwz       r4, 0x320(r31)
-	  bl        0x63DC
-	  stw       r3, 0x2C4(r31)
-	  addi      r3, r31, 0x1B8
-	  addi      r4, r31, 0x42C
-	  li        r5, 0x3
-	  bl        -0x60CE4
-	  lwz       r4, 0xC8(r31)
-	  li        r0, -0x202
-	  addi      r3, r31, 0
-	  and       r0, r4, r0
-	  stw       r0, 0xC8(r31)
-	  bl        -0xB9EF8
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mTekiType   = (TekiTypes)tekiType;
+	mTekiParams = tekiMgr->getTekiParameters(mTekiType);
+	mSearchBuffer.init(mTekiSearchData, 3);
+	resetCreatureFlag(CF_Unk1 | CF_Unk10);
+	Creature::init();
 }
 
 /*
@@ -892,6 +456,98 @@ void BTeki::init(int)
  */
 void BTeki::reset()
 {
+	if (tekiOptUpdateMgr) {
+		_174.init(tekiOptUpdateMgr);
+	}
+
+	clearTekiOptions();
+	setTekiOption(TEKIOPT_Visible | TEKIOPT_ShadowVisible | TEKIOPT_LifeGaugeVisible | TEKIOPT_Atari | TEKIOPT_Alive | TEKIOPT_Organic
+	              | TEKIOPT_Unk11 | TEKIOPT_ShapeVisible | TEKIOPT_DamageCountable);
+
+	resetPosition(mPersonality->_04);
+	mDirection    = mPersonality->_1C;
+	_26C          = getSize();
+	_31C          = 0;
+	_324          = 0;
+	_330          = 0;
+	_338          = 0;
+	_334          = 0;
+	mHealth       = getParameterF(TPF_Life);
+	mStoredDamage = 0.0f;
+	_340          = 0.0f;
+	_344          = -1;
+	_3C0          = 0.0f;
+	_3BC          = 0;
+	_3A8          = -1;
+
+	clearAnimationKeyOptions();
+	_3B0         = 0;
+	mMotionSpeed = 0.0f;
+	_3AC         = 0.0f;
+
+	for (int i = 0; i < 4; i++) {
+		_418[i].mPtr = nullptr;
+	}
+
+	_350 = 'test';
+	_354 = -1;
+	_388.set(0.0f, 0.0f, 0.0f);
+	_394 = 0.0f;
+	_398.set(0.0f, 0.0f, 0.0f);
+	_3A4 = 0.0f;
+
+	mPellet = nullptr;
+
+	mTekiShape = tekiMgr->getTekiShapeObject(mTekiType);
+
+	if (!mTekiShape) {
+		clearTekiOption(TEKIOPT_Visible | TEKIOPT_ShadowVisible | TEKIOPT_LifeGaugeVisible | TEKIOPT_Atari | TEKIOPT_Alive
+		                | TEKIOPT_Organic);
+	} else {
+		mTekiShape->mShape->makeInstance(_3E0, 0);
+		mCollInfo->initInfo(mTekiShape->mShape, nullptr, nullptr);
+		mTekiAnimator->init(&mTekiShape->mAnimContext, mTekiShape->mAnimMgr, tekiMgr->mMotionTable);
+	}
+
+	if (mTekiShape && mTekiShape->mShape) {
+		mPlatMgr.init(this, mapMgr, mTekiShape->mShape);
+	}
+
+	for (int i = 0; i < _348; i++) {
+		_450[i] = 0;
+	}
+
+	for (int i = 0; i < 4; i++) {
+		_3D8[i] = 0;
+	}
+
+	_3C4 = 0.0f;
+	_3C8 = 0.0f;
+	_3CC = 0.0f;
+	_3D0 = 0.0f;
+	_3D4 = 0.0f;
+
+	_3F0 = -1;
+	_3F4 = -1;
+	_3F8 = -1;
+	_3FC = -1;
+	_400 = -1;
+	_404 = -1;
+	_408 = -1;
+	_40C = -1;
+
+	if (getParameterI(TPI_CullingType) == CULLAI_CullAIOffCamera) {
+		resetCreatureFlag(CF_AIAlwaysActive);
+	} else {
+		setCreatureFlag(CF_AIAlwaysActive);
+	}
+
+	mCollisionRadius = getParameterF(TPF_CollisionRadius);
+
+	prepareEffects();
+	reset70andA4();
+
+	getCentreSize();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1144,6 +800,26 @@ void BTeki::reset()
  */
 void BTeki::prepareEffects()
 {
+	if (!effectMgr) {
+		return;
+	}
+
+	for (int i = 0; i < 3; i++) {
+		zen::particleGenerator* ptcl
+		    = effectMgr->create((EffectMgr::effTypeTable)(i + EffectMgr::EFF_Unk52), Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+		if (!ptcl) {
+			DEBUGPRINT(ptcl->_F0);
+			break;
+		}
+
+		ptcl->_1DC = Vector3f(0.0f, 0.0f, 0.0f);
+		f32 val    = ptcl->_F0;
+		ptcl->setF0(val * getParameterF(TPF_RippleScale));
+		ptcl->setFlag(zen::PTCLGEN_GenStopped);
+		_3DC->setPtclGenPtr(i, ptcl);
+	}
+
+	_3DC->setEmitPosPtr(&getPosition());
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1245,43 +921,15 @@ void BTeki::setCorpsePartJoint(int, int)
  */
 void BTeki::startAI(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  bl        0x3AF4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x68
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2C8(r30)
-	  addi      r31, r3, 0x28
-	  lwz       r3, 0x28(r3)
-	  bl        -0xAFAC0
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x68
-	  lwz       r3, 0x2F28(r13)
-	  mr        r4, r30
-	  bl        -0xC9854
-	  lwz       r3, 0x301C(r13)
-	  lwz       r4, 0x0(r31)
-	  bl        -0xAC388
-
-	.loc_0x68:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	TekiStrategy* strat = getStrategy();
+	if (strat) {
+		strat->start(*static_cast<Teki*>(this));
+		ID32& id = mPersonality->mID;
+		if (Pellet::isUfoPartsID(id.mId)) {
+			radarInfo->attachParts(this);
+			pelletMgr->addUseList(id.mId);
+		}
+	}
 }
 
 /*
@@ -1291,51 +939,22 @@ void BTeki::startAI(int)
  */
 void BTeki::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  mr        r31, r3
-	  bl        -0xB9CB4
-	  lwz       r0, 0x31C(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x8C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x17C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f2, 0x58(r31)
-	  lfs       f0, -0x58B0(r2)
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x8C
-	  lwz       r4, 0x2C4(r31)
-	  lwz       r3, 0x3150(r13)
-	  lwz       r4, 0x84(r4)
-	  lfs       f0, 0x28C(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  lfs       f3, 0x0(r3)
-	  lfs       f1, 0x94(r3)
-	  fmuls     f1, f3, f1
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x58(r31)
-	  lfs       f0, 0x58(r31)
-	  fcmpo     cr0, f0, f3
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x8C
-	  stfs      f3, 0x58(r31)
+	// sigh
+	u32 badCompiler[6];
 
-	.loc_0x8C:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	Creature::update();
+	if (_31C == 0) {
+		updateTimers();
+		if (mHealth > 0.0f) {
+			f32 max = getParameterF(TPF_Life);
+			f32 inc = getParameterF(TPF_LifeRecoverRate);
+			mHealth += NSystem::system->getFrameTime() * (max * inc);
+
+			if (mHealth >= max) {
+				mHealth = max;
+			}
+		}
+	}
 }
 
 /*
@@ -1345,6 +964,20 @@ void BTeki::update()
  */
 void BTeki::doAnimation()
 {
+	if (!mTekiShape) {
+		return;
+	}
+	if (isTekiOption(TEKIOPT_ManualAnimation)) {
+		_3AC = mMotionSpeed;
+	} else if (!(mTekiAnimator->mAnimInfo->mParams.mFlags() & AnimInfo::FLAG_Unk2)) {
+		_3AC = mTekiAnimator->mAnimInfo->mParams.mSpeed();
+	} else if (isTekiOption(TEKIOPT_StoppingMove)) {
+		_3AC = _3B8;
+	} else {
+		_3AC = doGetVelocityAnimSpeed();
+	}
+
+	mTekiAnimator->animate(_3AC);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1415,38 +1048,11 @@ void BTeki::doAnimation()
  * Address:	80145010
  * Size:	000064
  */
-void BTeki::startMotion(int)
+void BTeki::startMotion(int motionID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr.       r31, r3
-	  addi      r5, r31, 0
-	  beq-      .loc_0x20
-	  lwz       r5, 0x2C0(r31)
-
-	.loc_0x20:
-	  addi      r3, r1, 0x10
-	  bl        -0x260A8
-	  mr        r4, r3
-	  lwz       r3, 0x2CC(r31)
-	  bl        -0x25E80
-	  li        r0, -0x1
-	  stw       r0, 0x3A8(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x1E8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mTekiAnimator->startMotion(PaniMotionInfo(motionID, this));
+	_3A8 = -1;
+	clearAnimationKeyOptions();
 }
 
 /*
@@ -1456,47 +1062,9 @@ void BTeki::startMotion(int)
  */
 void BTeki::startStoppingMove()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  subi      r4, r13, 0x9E4
-	  stw       r0, 0x4(r1)
-	  subi      r5, r13, 0x9E0
-	  subi      r6, r13, 0x9DC
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x18
-	  bl        -0x10DF7C
-	  addi      r3, r31, 0x70
-	  addi      r4, r1, 0x18
-	  addi      r5, r1, 0x1C
-	  addi      r6, r1, 0x20
-	  bl        -0xE7A20
-	  addi      r3, r1, 0xC
-	  subi      r4, r13, 0x9F0
-	  subi      r5, r13, 0x9EC
-	  subi      r6, r13, 0x9E8
-	  bl        -0x10DFA4
-	  addi      r3, r31, 0xA4
-	  addi      r4, r1, 0xC
-	  addi      r5, r1, 0x10
-	  addi      r6, r1, 0x14
-	  bl        -0xE7A48
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0x1000
-	  lwz       r12, 0x1CC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x3AC(r31)
-	  stfs      f0, 0x3B8(r31)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	reset70andA4();
+	setTekiOption(TEKIOPT_StoppingMove);
+	_3B8 = _3AC;
 }
 
 /*
@@ -1504,31 +1072,14 @@ void BTeki::startStoppingMove()
  * Address:	8014510C
  * Size:	000030
  */
-void BTeki::finishStoppingMove()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x1000
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x1D0(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void BTeki::finishStoppingMove() { clearTekiOption(TEKIOPT_StoppingMove); }
 
 /*
  * --INFO--
  * Address:	8014513C
  * Size:	0000A4
  */
-void BTeki::getVelocityAnimationSpeed(f32)
+f32 BTeki::getVelocityAnimationSpeed(f32)
 {
 	/*
 	.loc_0x0:
@@ -1583,49 +1134,20 @@ void BTeki::getVelocityAnimationSpeed(f32)
  * Address:	801451E0
  * Size:	000080
  */
-void BTeki::animationKeyUpdated(PaniAnimKeyEvent&)
+void BTeki::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x7
-	  bne-      .loc_0x30
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x4(r4)
-	  lwz       r12, 0x1BC(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x70
+	if (event.mEventType == KEY_PlaySound) {
+		playTableSound(event.mValue);
+		return;
+	}
 
-	.loc_0x30:
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x50
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x4(r4)
-	  lwz       r12, 0x1C8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x70
+	if (event.mEventType == KEY_PlayEffect) {
+		createTekiEffect(event.mValue);
+		return;
+	}
 
-	.loc_0x50:
-	  stw       r0, 0x3A8(r3)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r0, 0x0(r4)
-	  lwz       r12, 0x1DC(r12)
-	  slw       r4, r5, r0
-	  mtlr      r12
-	  blrl
-
-	.loc_0x70:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	_3A8 = event.mEventType;
+	setAnimationKeyOption(1 << event.mEventType);
 }
 
 /*
@@ -2436,23 +1958,12 @@ void BTeki::getTekiCollisionSize()
  */
 void BTeki::makeDamaged()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x58(r3)
-	  lfs       f0, 0x33C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x58(r3)
-	  lfs       f1, 0x58(r3)
-	  lfs       f0, -0x58B0(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x24
-	  stfs      f0, 0x58(r3)
+	mHealth -= mStoredDamage;
+	if (mHealth < 0.0f) {
+		mHealth = 0.0f;
+	}
 
-	.loc_0x24:
-	  lfs       f0, -0x58B0(r2)
-	  stfs      f0, 0x33C(r3)
-	  blr
-	*/
+	mStoredDamage = 0.0f;
 }
 
 /*
@@ -2493,21 +2004,7 @@ void BTeki::startDamageMotion(f32, f32)
  * Address:	80145C40
  * Size:	000024
  */
-void BTeki::releasePlatCollisions()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r3, 0x2D4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xB7AF0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void BTeki::releasePlatCollisions() { mPlatMgr.release(); }
 
 /*
  * --INFO--
@@ -3529,46 +3026,6 @@ void BTeki::spawnTeki(int)
 	  blr
 
 	.loc_0x250:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80146990
- * Size:	00001C
- * Should be weak.
- */
-void BTeki::getPersonalityF(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C8(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwz       r3, 0x34(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfsx      f1, r3, r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801469AC
- * Size:	00001C
- * Should be weak.
- */
-void BTeki::getParameterF(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfsx      f1, r3, r0
-	  blr
 	*/
 }
 
@@ -6320,23 +5777,7 @@ void BTeki::getGravity()
  * Address:	80148934
  * Size:	00002C
  */
-void BTeki::getStrategy()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x3160(r13)
-	  lwz       r4, 0x320(r4)
-	  bl        0x23CC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+TekiStrategy* BTeki::getStrategy() { return tekiMgr->getStrategy(mTekiType); }
 
 /*
  * --INFO--

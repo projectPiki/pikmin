@@ -79,7 +79,7 @@ TAImiurinSoundTable::TAImiurinSoundTable()
  * Size:	000404
  */
 TAImiurinParameters::TAImiurinParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(23, 54)
 {
 	/*
 	.loc_0x0:

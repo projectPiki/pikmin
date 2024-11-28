@@ -80,8 +80,8 @@ PaniTestNode::PaniTestNode()
 	for (int i = 0; i < _66C; i++) {
 		_664[i] = static_cast<ViewPiki*>(pikiMgr->birth());
 		_664[i]->init(nullptr);
-		_664[i]->_7C.set(1.0f, 1.0f, 1.0f);
-		_664[i]->_88.set(0.0f, 0.0f, 0.0f);
+		_664[i]->mScale.set(1.0f, 1.0f, 1.0f);
+		_664[i]->mRotation.set(0.0f, 0.0f, 0.0f);
 		_664[i]->mPosition.set(0.0f, 0.0f, 0.0f);
 		_664[i]->initColor(Blue);
 	}

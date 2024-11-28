@@ -114,9 +114,10 @@ struct MapObjectPart : public DynCollShape {
  * @brief TODO
  */
 struct MapParts : public DynCollShape {
-	MapParts(Shape* shape) // TODO: fix this, it's implicit but required/this is just a guess
+	MapParts(Shape* shape)
 	    : DynCollShape(shape)
 	{
+		_140 = nullptr;
 	}
 
 	virtual void read(RandomAccessStream&);                   // _0C
@@ -124,11 +125,14 @@ struct MapParts : public DynCollShape {
 	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
 	virtual void init();                                      // _48
 
-	void getShapeFile(int);
+	static char* getShapeFile(int);
 
-	// _00     = VTBL
-	// _00-_?? = DynCollShape
-	// TODO: members
+	static char* shapeFiles[4];
+
+	// _00      = VTBL
+	// _00-_140 = DynCollShape
+	Vector3f* _140; // _140, may also be a ptr to a struct with a Vector3f at _00.
+	Vector3f _144;  // _144
 };
 
 /**
@@ -139,8 +143,8 @@ struct MapEntity : public MapParts {
 
 	virtual void update(); // _10
 
-	// _00     = VTBL
-	// _00-_?? = MapParts
+	// _00      = VTBL
+	// _00-_150 = MapParts
 	// TODO: members
 };
 
@@ -154,9 +158,19 @@ struct MapSlider : public MapParts {
 	virtual void refresh(Graphics&); // _44
 	virtual void init();             // _48
 
-	// _00     = VTBL
-	// _00-_?? = MapParts
-	// TODO: members
+	// _00      = VTBL
+	// _00-_150 = MapParts
+	Vector3f _150; // _150
+	f32 _15C;      // _15C
+	int _160;      // _160
+	int _164;      // _164
+	f32 _168;      // _168
+	f32 _16C;      // _16C
+	f32 _170;      // _170
+	int _174;      // _174
+	int _178;      // _178
+	int _17C;      // _17C
+	f32 _180;      // _180
 };
 
 /**

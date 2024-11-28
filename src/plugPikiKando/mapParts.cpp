@@ -1,14 +1,12 @@
 #include "MapMgr.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "mapParts"); }
 
 /*
  * --INFO--
@@ -20,58 +18,26 @@ static void _Print(char*, ...)
 	// UNUSED FUNCTION
 }
 
+char* MapParts::shapeFiles[4] = {
+	"mapparts/cone.mod",
+	"mapparts/cylinder.mod",
+	"mapparts/cube.mod",
+	"mapparts/board.mod",
+};
+
 /*
  * --INFO--
  * Address:	801184A8
  * Size:	000018
  */
-void MapParts::getShapeFile(int)
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  rlwinm    r3,r3,2,0,29
-	  addi      r0, r4, 0x3248
-	  add       r3, r0, r3
-	  lwz       r3, 0x0(r3)
-	  blr
-	*/
-}
+char* MapParts::getShapeFile(int idx) { return shapeFiles[idx]; }
 
 /*
  * --INFO--
  * Address:	801184C0
  * Size:	00005C
  */
-void MapParts::applyVelocity(Plane&, Vector3f&, Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x40(r1)
-	  lfs       f1, 0x144(r3)
-	  lfs       f0, 0x0(r6)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x24(r1)
-	  lfs       f0, 0x24(r1)
-	  stfs      f0, 0x30(r1)
-	  lfs       f1, 0x148(r3)
-	  lfs       f0, 0x4(r6)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x34(r1)
-	  lfs       f1, 0x14C(r3)
-	  lfs       f0, 0x8(r6)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x38(r1)
-	  lwz       r4, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r4, 0x144(r3)
-	  stw       r0, 0x148(r3)
-	  lwz       r0, 0x38(r1)
-	  stw       r0, 0x14C(r3)
-	  addi      r1, r1, 0x40
-	  blr
-	*/
-}
+void MapParts::applyVelocity(Plane&, Vector3f&, Vector3f& p3) { _144 = _144 + p3; }
 
 /*
  * --INFO--
@@ -81,39 +47,7 @@ void MapParts::applyVelocity(Plane&, Vector3f&, Vector3f&)
 MapEntity::MapEntity(Shape* shape)
     : MapParts(shape)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0xB6548
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x349C
-	  stw       r0, 0x0(r31)
-	  lis       r3, 0x802C
-	  li        r4, 0
-	  lfs       f0, -0x6048(r2)
-	  addi      r0, r3, 0x33F4
-	  addi      r3, r31, 0
-	  stfs      f0, 0x14C(r31)
-	  stfs      f0, 0x148(r31)
-	  stfs      f0, 0x144(r31)
-	  stw       r4, 0x140(r31)
-	  stw       r0, 0x0(r31)
-	  lfs       f0, -0x2220(r13)
-	  stfs      f0, 0x144(r31)
-	  lfs       f0, -0x221C(r13)
-	  stfs      f0, 0x148(r31)
-	  lfs       f0, -0x2218(r13)
-	  stfs      f0, 0x14C(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_144.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -197,64 +131,16 @@ void MapEntity::update()
  * Address:	80118694
  * Size:	0000D0
  */
-MapSlider::MapSlider(Shape* shape, int, int, f32, f32, f32, int)
+MapSlider::MapSlider(Shape* shape, int p2, int p3, f32 p4, f32 p5, f32 p6, int p7)
     : MapParts(shape)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stfd      f31, 0x48(r1)
-	  fmr       f31, f3
-	  stfd      f30, 0x40(r1)
-	  fmr       f30, f2
-	  stfd      f29, 0x38(r1)
-	  fmr       f29, f1
-	  stw       r31, 0x34(r1)
-	  addi      r31, r7, 0
-	  stw       r30, 0x30(r1)
-	  addi      r30, r6, 0
-	  stw       r29, 0x2C(r1)
-	  addi      r29, r5, 0
-	  stw       r28, 0x28(r1)
-	  mr        r28, r3
-	  bl        -0xB66F0
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x349C
-	  stw       r0, 0x0(r28)
-	  lis       r3, 0x802C
-	  li        r4, 0
-	  lfs       f0, -0x6048(r2)
-	  addi      r0, r3, 0x3368
-	  addi      r3, r28, 0
-	  stfs      f0, 0x14C(r28)
-	  stfs      f0, 0x148(r28)
-	  stfs      f0, 0x144(r28)
-	  stw       r4, 0x140(r28)
-	  stw       r0, 0x0(r28)
-	  stfs      f0, 0x158(r28)
-	  stfs      f0, 0x154(r28)
-	  stfs      f0, 0x150(r28)
-	  stw       r29, 0x160(r28)
-	  stw       r30, 0x164(r28)
-	  stfs      f29, 0x168(r28)
-	  stfs      f30, 0x16C(r28)
-	  stfs      f31, 0x170(r28)
-	  stw       r31, 0x174(r28)
-	  stfs      f0, 0x15C(r28)
-	  lwz       r0, 0x54(r1)
-	  lfd       f31, 0x48(r1)
-	  lfd       f30, 0x40(r1)
-	  lfd       f29, 0x38(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	_160 = p2;
+	_164 = p3;
+	_168 = p4;
+	_16C = p5;
+	_170 = p6;
+	_174 = p7;
+	_15C = 0.0f;
 }
 
 /*
@@ -264,25 +150,12 @@ MapSlider::MapSlider(Shape* shape, int, int, f32, f32, f32, int)
  */
 void MapSlider::init()
 {
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x140(r3)
-	  cmplwi    r7, 0
-	  beqlr-
-	  lwz       r6, 0x0(r7)
-	  li        r4, 0x2
-	  lwz       r5, 0x4(r7)
-	  li        r0, 0x1
-	  stw       r6, 0x134(r3)
-	  stw       r5, 0x138(r3)
-	  lwz       r5, 0x8(r7)
-	  stw       r5, 0x13C(r3)
-	  lfs       f0, 0x168(r3)
-	  stfs      f0, 0x180(r3)
-	  stw       r4, 0x178(r3)
-	  stw       r0, 0x17C(r3)
-	  blr
-	*/
+	if (_140) {
+		_134 = *_140;
+		_180 = _168;
+		_178 = 2;
+		_17C = 1;
+	}
 }
 
 /*

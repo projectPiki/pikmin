@@ -78,7 +78,7 @@ TAImarSoundTable::TAImarSoundTable()
  * Size:	000440
  */
 TAImarParameters::TAImarParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(23, 57)
 {
 	/*
 	.loc_0x0:

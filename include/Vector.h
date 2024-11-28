@@ -141,6 +141,8 @@ struct Vector3f {
 		z = 1.0f;
 	}
 
+	void reset() { set(Vector3f(0.0f, 0.0f, 0.0f)); }
+
 	// unused/inlined:
 	void rotateTranspose(Matrix4f&);
 	void rotate(Quat&);

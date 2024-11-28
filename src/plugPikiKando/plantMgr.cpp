@@ -1,6 +1,11 @@
 #include "PlantMgr.h"
 #include "Generator.h"
+#include "Graphics.h"
+#include "gameflow.h"
+#include "CreatureProp.h"
 #include "Dolphin/os.h"
+#include "SoundMgr.h"
+#include "MapMgr.h"
 #include "sysNew.h"
 
 /*
@@ -34,9 +39,9 @@ PlantMgr* plantMgr;
 Plant::Plant()
     : AICreature(nullptr)
 {
-	mObjType  = OBJTYPE_Plant;
-	_304      = 0xFFFF;
-	mCollInfo = new CollInfo(8);
+	mObjType   = OBJTYPE_Plant;
+	mPlantType = PLANT_NULL;
+	mCollInfo  = new CollInfo(8);
 	mSearchBuffer.init(mPlantSearchData, 3);
 }
 
@@ -52,9 +57,16 @@ void Plant::startMotion(int motionID) { mPlantAnimator.startMotion(PaniMotionInf
  * Address:	........
  * Size:	000090
  */
-void Plant::reset(int)
+void Plant::reset(int plantType)
 {
-	// UNUSED FUNCTION
+	_394                    = 1;
+	mObjType                = OBJTYPE_Plant;
+	mPlantType              = plantType;
+	PlantShapeObject* shape = plantMgr->mPlantShapes[plantType];
+	mPlantAnimator.init(&shape->mAnimContext, shape->mAnimMgr, plantMgr->mMotionTable);
+	mMotionSpeed = 0.0f;
+	mCollInfo->initInfo(shape->mShape, nullptr, nullptr);
+	mStateMachine = plantMgr->mAI;
 }
 
 /*
@@ -64,59 +76,17 @@ void Plant::reset(int)
  */
 void Plant::startAI(int)
 {
-	_30C = 0;
-	// plantMgr->
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  stb       r0, 0x30C(r3)
-	  lwz       r5, 0x3140(r13)
-	  lwz       r0, 0x48(r5)
-	  stw       r0, 0x2F00(r13)
-	  lwz       r0, 0x68(r5)
-	  stw       r0, 0x224(r31)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x6038(r2)
-	  addi      r3, r1, 0x10
-	  li        r4, 0
-	  stfs      f0, 0x308(r31)
-	  bl        0x50B8
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x310
-	  bl        0x5314
-	  lwz       r3, 0x2F00(r13)
-	  li        r4, 0x1
-	  lfs       f1, 0x94(r31)
-	  lfs       f2, 0x9C(r31)
-	  bl        -0xB1FBC
-	  stfs      f1, 0x98(r31)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r3, 0x3140(r13)
-	  lwz       r3, 0x64(r3)
-	  bl        -0x9C780
-	  lhz       r0, 0x304(r31)
-	  cmplwi    r0, 0x7
-	  bne-      .loc_0xA4
-	  lfs       f0, -0x6034(r2)
-	  stfs      f0, 0x308(r31)
-
-	.loc_0xA4:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	_30C   = 0;
+	mapMgr = plantMgr->mMapMgr;
+	mProps = plantMgr->mPlantProps;
+	startMotion(0);
+	mMotionSpeed = 0.0f;
+	mPlantAnimator.startMotion(PaniMotionInfo(0));
+	mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	plantMgr->mAI->start(this, PlantAI::STATE_Wait);
+	if (mPlantType == PLANT_Mizukusa) {
+		mMotionSpeed = 30.0f;
+	}
 }
 
 /*
@@ -124,26 +94,7 @@ void Plant::startAI(int)
  * Address:	80119F04
  * Size:	000038
  */
-void Plant::doAnimation()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r4, r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r3, r4, 0x310
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x340(r4)
-	  lfs       f1, 0x308(r4)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void Plant::doAnimation() { mPlantAnimator.animate(mMotionSpeed); }
 
 /*
  * --INFO--
@@ -152,54 +103,16 @@ void Plant::doAnimation()
  */
 void Plant::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lbz       r0, 0x30C(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x90
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  bl        -0x85A44
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  li        r5, 0
-	  bl        -0x859B8
-	  lhz       r0, 0x304(r31)
-	  cmplwi    r0, 0xB
-	  beq-      .loc_0x60
-	  cmplwi    r0, 0x7
-	  beq-      .loc_0x60
-	  addi      r3, r31, 0x40
-	  bl        -0x85E00
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x90
+	if (_30C) {
+		return;
+	}
 
-	.loc_0x60:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x108(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3140(r13)
-	  mr        r4, r31
-	  lwz       r3, 0x64(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x90:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mGrid.updateGrid(mPosition);
+	mGrid.updateAIGrid(mPosition, false);
+	if (mPlantType == PLANT_Hae || mPlantType == PLANT_Mizukusa || !mGrid.aiCulling()) {
+		doAnimation();
+		plantMgr->mAI->exec(this);
+	}
 }
 
 /*
@@ -207,8 +120,34 @@ void Plant::update()
  * Address:	80119FE0
  * Size:	0003C0
  */
-void Plant::refresh(Graphics&)
+void Plant::refresh(Graphics& gfx)
 {
+	PlantShapeObject* shape = plantMgr->mPlantShapes[mPlantType];
+	if (!mPlantAnimator.mAnimInfo) {
+		return;
+	}
+
+	if (mCollInfo->hasInfo() && 2.0f * getBoundingSphereRadius() > 0.0f) {
+		// what the hell is going on in here
+
+		if (!_394) {
+			static_cast<SimpleAI*>(mStateMachine)->start(this, PlantAI::STATE_Wait);
+			_30C = 1;
+		}
+	} else {
+		_30C = 0;
+		_394 = 0;
+		_228.makeSRT(mScale, mRotation, mPosition);
+		Matrix4f mtx;
+		gfx._2E4->_1E0.multiplyTo(_228, mtx);
+
+		mPlantAnimator.updateContext();
+		shape->mShape->updateAnim(gfx, mtx, nullptr);
+
+		gfx.useMatrix(Matrix4f::ident, 0);
+		shape->mShape->drawshape(gfx, *gfx._2E4, nullptr);
+		mCollInfo->updateInfo(gfx, false);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -484,7 +423,12 @@ void Plant::doKill() { }
  */
 PlantAI::PlantAI()
 {
-	// UNUSED FUNCTION
+	OpponentMove* oppMove = new OpponentMove();
+	setup(STATE_COUNT);
+	addState(STATE_Wait, -1, new WaitInit(), nullptr, nullptr);
+	addState(STATE_Touch, -1, new TouchInit(), nullptr, nullptr);
+	addArrow(STATE_Wait, saiCollideEvent, STATE_Touch)->mCondition.add(oppMove);
+	addArrow(STATE_Touch, saiMotionDoneEvent, STATE_Wait);
 }
 
 /*
@@ -492,8 +436,16 @@ PlantAI::PlantAI()
  * Address:	8011A3A4
  * Size:	0000AC
  */
-bool PlantAI::OpponentMove::satisfy(AICreature*)
+bool PlantAI::OpponentMove::satisfy(AICreature* plant)
 {
+	// this stops inlining if you do it directly for some reason, but goes weird otherwise.
+	Vector3f* vec = &plant->_2BC->_70;
+	f32 dist      = vec->length();
+	if (dist > 40.0f) {
+		return true;
+	}
+
+	return false;
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x20(r1)
@@ -553,52 +505,17 @@ bool PlantAI::OpponentMove::satisfy(AICreature*)
  * Address:	8011A450
  * Size:	000094
  */
-void PlantAI::WaitInit::act(AICreature*)
+void PlantAI::WaitInit::act(AICreature* plant)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r4
-	  lhz       r0, 0x304(r4)
-	  cmplwi    r0, 0x7
-	  bne-      .loc_0x54
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, -0x6034(r2)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x14C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x80
+	u32 badCompiler;
 
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x150(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x80:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (static_cast<Plant*>(plant)->mPlantType == PLANT_Mizukusa) {
+		plant->startMotion(0);
+		plant->setMotionSpeed(30.0f);
+	} else {
+		plant->startMotion(0);
+		plant->stopMotion();
+	}
 }
 
 /*
@@ -606,40 +523,16 @@ void PlantAI::WaitInit::act(AICreature*)
  * Address:	8011A4E4
  * Size:	000064
  */
-void PlantAI::TouchInit::act(AICreature*)
+void PlantAI::TouchInit::act(AICreature* plant)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r4
-	  lhz       r0, 0x304(r4)
-	  cmplwi    r0, 0x7
-	  beq-      .loc_0x50
-	  lwz       r3, 0x2BC(r31)
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0x36
-	  bne-      .loc_0x38
-	  li        r3, 0x135
-	  bl        -0x7513C
+	u32 badCompiler;
+	if (static_cast<Plant*>(plant)->mPlantType != PLANT_Mizukusa) {
+		if (plant->_2BC->mObjType == OBJTYPE_Navi) {
+			SeSystem::playPlayerSe(0x135);
+		}
 
-	.loc_0x38:
-	  mr        r3, r31
-	  lfs       f1, -0x6034(r2)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x14C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x50:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+		plant->setMotionSpeed(30.0f);
+	}
 }
 
 /*
@@ -647,8 +540,20 @@ void PlantAI::TouchInit::act(AICreature*)
  * Address:	8011A548
  * Size:	000478
  */
-PlantMgr::PlantMgr(MapMgr*)
+PlantMgr::PlantMgr(MapMgr* mgr)
 {
+	mMapMgr = mgr;
+	gameflow.addGenNode("plantMgr", this);
+	mMotionTable = PaniPlantAnimator::createMotionTable();
+	mPlantShapes = new PlantShapeObject*[PLANT_COUNT];
+	for (int i = PLANT_START; i < PLANT_COUNT; i++) {
+		mPlantShapes[i] = nullptr;
+	}
+
+	mAI         = new PlantAI();
+	mPlantProps = new CreatureProp();
+
+	mAnimFrameCacher = new AnimFrameCacher(1000);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -964,15 +869,28 @@ PlantMgr::PlantMgr(MapMgr*)
 	*/
 }
 
+// see PlantTypes enum for more info on what these are
+static char* plantNames[PLANT_COUNT] = {
+	"clover",   // 0
+	"chidome",  // 1
+	"hutaba",   // 2
+	"ine",      // 3
+	"tanpopo",  // 4
+	"ooinu_l",  // 5
+	"ooinu_s",  // 6
+	"mizukusa", // 7
+	"wakame_l", // 8
+	"wakame_s", // 9
+	"kinokolt", // 10
+	"hae",      // 11
+};
+
 /*
  * --INFO--
  * Address:	........
  * Size:	000018
  */
-void PlantMgr::getPlantName(int)
-{
-	// UNUSED FUNCTION
-}
+char* PlantMgr::getPlantName(int plantType) { return plantNames[plantType]; }
 
 /*
  * --INFO--
@@ -981,74 +899,23 @@ void PlantMgr::getPlantName(int)
  */
 void PlantMgr::initialise()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r1)
-	  lis       r5, 0x802C
-	  stwu      r1, -0x330(r1)
-	  stmw      r25, 0x314(r1)
-	  addi      r28, r4, 0x390C
-	  lis       r4, 0x803A
-	  addi      r25, r3, 0
-	  subi      r31, r4, 0x2848
-	  addi      r30, r5, 0x393C
-	  li        r26, 0
-	  li        r27, 0
+	for (int i = PLANT_START; i < PLANT_COUNT; i++) {
+		if (!usePlantType(i)) {
+			continue;
+		}
 
-	.loc_0x34:
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0
-	  bl        0x188
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC4
-	  lwz       r29, 0x0(r28)
-	  addi      r4, r30, 0
-	  addi      r3, r1, 0x20C
-	  crclr     6, 0x6
-	  addi      r5, r29, 0
-	  bl        0xFBB7C
-	  addi      r5, r29, 0
-	  crclr     6, 0x6
-	  addi      r3, r1, 0x10C
-	  subi      r4, r13, 0x1ECC
-	  bl        0xFBB68
-	  addi      r5, r29, 0
-	  crclr     6, 0x6
-	  addi      r3, r1, 0xC
-	  subi      r4, r13, 0x1EC8
-	  bl        0xFBB54
-	  li        r3, 0x18
-	  bl        -0xD3A48
-	  mr.       r29, r3
-	  beq-      .loc_0xBC
-	  addi      r3, r31, 0
-	  addi      r4, r1, 0x20C
-	  li        r5, 0x1
-	  bl        -0xC7D54
-	  lwz       r5, 0x0(r28)
-	  mr        r4, r3
-	  addi      r3, r29, 0
-	  addi      r6, r1, 0xC
-	  bl        0x13C
+		char* name = plantNames[i];
+		char shapeFile[256];
+		sprintf(shapeFile, "objects/plants/%s.mod", name);
 
-	.loc_0xBC:
-	  lwz       r3, 0x40(r25)
-	  stwx      r29, r3, r27
+		char unused[256];
+		sprintf(unused, "%s", name);
 
-	.loc_0xC4:
-	  addi      r26, r26, 0x1
-	  cmpwi     r26, 0xC
-	  addi      r28, r28, 0x4
-	  addi      r27, r27, 0x4
-	  blt+      .loc_0x34
-	  lmw       r25, 0x314(r1)
-	  lwz       r0, 0x334(r1)
-	  addi      r1, r1, 0x330
-	  mtlr      r0
-	  blr
-	*/
+		char plantFileName[256];
+		sprintf(plantFileName, "%s.bin", name);
+
+		mPlantShapes[i] = new PlantShapeObject(gameflow.loadShape(shapeFile, true), plantNames[i], plantFileName);
+	}
 }
 
 /*
@@ -1056,99 +923,23 @@ void PlantMgr::initialise()
  * Address:	8011AAAC
  * Size:	0000D8
  */
-Plant* PlantMgr::createObject()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x398
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  bl        -0xD3AC0
-	  mr.       r31, r3
-	  beq-      .loc_0xBC
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x9D86C
-	  lis       r3, 0x802C
-	  addi      r3, r3, 0x3E74
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x114
-	  addi      r3, r31, 0x310
-	  stw       r0, 0x2B8(r31)
-	  bl        0x79C
-	  lis       r3, 0x8009
-	  subi      r4, r3, 0x5808
-	  addi      r3, r31, 0x364
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x3
-	  bl        0xF9F60
-	  lfs       f0, -0x6038(r2)
-	  lis       r3, 0x1
-	  li        r4, 0x33
-	  stfs      f0, 0x390(r31)
-	  subi      r0, r3, 0x1
-	  li        r3, 0x14
-	  stfs      f0, 0x38C(r31)
-	  stfs      f0, 0x388(r31)
-	  stw       r4, 0x6C(r31)
-	  sth       r0, 0x304(r31)
-	  bl        -0xD3B38
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xA8
-	  li        r4, 0x8
-	  bl        -0x91F20
-
-	.loc_0xA8:
-	  stw       r30, 0x220(r31)
-	  addi      r3, r31, 0x1B8
-	  addi      r4, r31, 0x364
-	  li        r5, 0x3
-	  bl        -0x36EE4
-
-	.loc_0xBC:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+Plant* PlantMgr::createObject() { return new Plant(); }
 
 /*
  * --INFO--
  * Address:	8011AB84
  * Size:	000030
  */
-void PlantMgr::usePlantType(int)
+bool PlantMgr::usePlantType(int type)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x5C(r3)
-	  b         .loc_0x20
+	FOREACH_NODE(UseNode, mRootUseNode.mChild, node)
+	{
+		if (node->mPlantType == type) {
+			return true;
+		}
+	}
 
-	.loc_0x8:
-	  lwz       r0, 0x14(r3)
-	  cmpw      r0, r4
-	  bne-      .loc_0x1C
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x1C:
-	  lwz       r3, 0xC(r3)
-
-	.loc_0x20:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x8
-	  li        r3, 0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -1156,8 +947,13 @@ void PlantMgr::usePlantType(int)
  * Address:	........
  * Size:	0000F4
  */
-void PlantMgr::addUseList(int)
+void PlantMgr::addUseList(int plantType)
 {
+	if (!usePlantType(plantType)) {
+		UseNode* node    = new UseNode();
+		node->mPlantType = plantType;
+		mRootUseNode.add(node);
+	}
 	// UNUSED FUNCTION
 }
 
@@ -1166,8 +962,12 @@ void PlantMgr::addUseList(int)
  * Address:	........
  * Size:	000150
  */
-void PlantMgr::birth()
+Plant* PlantMgr::birth()
 {
+	CreatureNode* cnode = new CreatureNode();
+	cnode->mCreature    = new Plant();
+	mRootNode.add(cnode);
+	return static_cast<Plant*>(cnode->mCreature);
 	// UNUSED FUNCTION
 }
 
@@ -1176,89 +976,20 @@ void PlantMgr::birth()
  * Address:	8011ABB4
  * Size:	000118
  */
-PlantShapeObject::PlantShapeObject(Shape*, char*, char*)
+PlantShapeObject::PlantShapeObject(Shape* shape, char* plantName, char* fileName)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r7, 0x8023
-	  stw       r0, 0x4(r1)
-	  subi      r0, r7, 0x7730
-	  stwu      r1, -0xA8(r1)
-	  stw       r31, 0xA4(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0xA0(r1)
-	  stw       r29, 0x9C(r1)
-	  mr.       r29, r5
-	  stw       r28, 0x98(r1)
-	  mr        r28, r4
-	  stw       r0, 0x14(r3)
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  lfs       f0, -0x6038(r2)
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, -0x6034(r2)
-	  stfs      f0, 0x10(r3)
-	  stw       r28, 0x0(r3)
-	  lwz       r4, 0x3140(r13)
-	  lwz       r3, 0x0(r3)
-	  lwz       r0, 0x6C(r4)
-	  stw       r0, 0x24(r3)
-	  beq-      .loc_0xB8
-	  lis       r3, 0x802C
-	  crclr     6, 0x6
-	  addi      r4, r3, 0x3954
-	  addi      r5, r6, 0
-	  addi      r3, r1, 0x18
-	  bl        0xFB96C
-	  li        r3, 0xB8
-	  bl        -0xD3C30
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xA8
-	  lis       r6, 0x1
-	  addi      r4, r28, 0
-	  addi      r5, r1, 0x18
-	  subi      r6, r6, 0x8000
-	  li        r7, 0
-	  bl        -0xCA3B4
+	mShape               = shape;
+	mShape->mFrameCacher = plantMgr->mAnimFrameCacher;
+	if (plantName) {
+		char buf[128];
+		sprintf(buf, "objects/plants/%s", fileName);
+		mAnimMgr        = new AnimMgr(shape, buf, 0x8000, nullptr);
+		mAnimMgr->mName = plantName;
+	} else {
+		mAnimMgr = new AnimMgr(shape, nullptr, 0, nullptr);
+	}
 
-	.loc_0xA8:
-	  stw       r30, 0x4(r31)
-	  lwz       r3, 0x4(r31)
-	  stw       r29, 0x4(r3)
-	  b         .loc_0xE4
-
-	.loc_0xB8:
-	  li        r3, 0xB8
-	  bl        -0xD3C6C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xE0
-	  addi      r4, r28, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0
-	  bl        -0xCA3EC
-
-	.loc_0xE0:
-	  stw       r30, 0x4(r31)
-
-	.loc_0xE4:
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r31, 0x8
-	  li        r4, 0
-	  bl        -0xE5C40
-	  mr        r3, r31
-	  lwz       r0, 0xAC(r1)
-	  lwz       r31, 0xA4(r1)
-	  lwz       r30, 0xA0(r1)
-	  lwz       r29, 0x9C(r1)
-	  lwz       r28, 0x98(r1)
-	  addi      r1, r1, 0xA8
-	  mtlr      r0
-	  blr
-	*/
+	mShape->overrideAnim(0, &mAnimContext);
 }
 
 /*
@@ -1267,9 +998,9 @@ PlantShapeObject::PlantShapeObject(Shape*, char*, char*)
  * Size:	000068
  */
 GenObjectPlant::GenObjectPlant()
-    : GenObject('plnt', "")
+    : GenObject('plnt', "create Plant")
 {
-	// UNUSED FUNCTION
+	mPlantType = PLANT_Clover;
 }
 
 /*
@@ -1277,44 +1008,7 @@ GenObjectPlant::GenObjectPlant()
  * Address:	8011ACCC
  * Size:	000078
  */
-static GenObjectPlant* makeObjectPlant()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x1C
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  bl        -0xD3CDC
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x60
-	  lis       r4, 0x802C
-	  lis       r5, 0x802C
-	  addi      r6, r4, 0x3974
-	  lis       r4, 0x706C
-	  addi      r5, r5, 0x3968
-	  addi      r4, r4, 0x6E74
-	  bl        -0x40054
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5490
-	  lis       r3, 0x802C
-	  stw       r0, 0x4(r31)
-	  addi      r0, r3, 0x39F8
-	  stw       r0, 0x4(r31)
-	  li        r0, 0
-	  stw       r0, 0x18(r31)
-
-	.loc_0x60:
-	  mr        r3, r31
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
-}
+static GenObject* makeObjectPlant() { return new GenObjectPlant(); }
 
 /*
  * --INFO--
@@ -1323,44 +1017,17 @@ static GenObjectPlant* makeObjectPlant()
  */
 void GenObjectPlant::initialise()
 {
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x3074(r13)
-	  lwz       r5, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  cmpw      r5, r0
-	  bgelr-
-	  lis       r4, 0x706C
-	  lwz       r3, 0x8(r7)
-	  addi      r4, r4, 0x6E74
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r6, 0x8012
-	  lis       r4, 0x802C
-	  lwz       r0, 0x0(r7)
-	  lis       r3, 0x7630
-	  lwz       r5, 0x8(r7)
-	  subi      r6, r6, 0x5334
-	  rlwinm    r0,r0,4,0,27
-	  add       r5, r5, r0
-	  stw       r6, 0x4(r5)
-	  addi      r5, r4, 0x3984
-	  addi      r4, r3, 0x2E30
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r7)
-	  blr
-	*/
+	GenObjectFactory* fact = GenObjectFactory::factory;
+	if (fact->mSpawnerCount >= fact->mMaxSpawners) {
+		return;
+	}
+
+	fact->mSpawnerInfo[fact->mSpawnerCount].mID          = 'plnt';
+	fact->mSpawnerInfo[fact->mSpawnerCount].mGenFunction = &makeObjectPlant;
+	fact->mSpawnerInfo[fact->mSpawnerCount].mName        = "Generate PLANT";
+	fact->mSpawnerInfo[fact->mSpawnerCount].mVersion     = 'v0.0';
+
+	fact->mSpawnerCount++;
 }
 
 /*
@@ -1368,220 +1035,35 @@ void GenObjectPlant::initialise()
  * Address:	8011ADD0
  * Size:	000040
  */
-void GenObjectPlant::doRead(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x4(r4)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x18(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+void GenObjectPlant::doRead(RandomAccessStream& input) { mPlantType = input.readInt(); }
 
 /*
  * --INFO--
  * Address:	8011AE10
  * Size:	0000CC
  */
-void GenObjectPlant::updateUseList(Generator*, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  lwz       r29, 0x3140(r13)
-	  lwz       r31, 0x18(r3)
-	  lwz       r3, 0x5C(r29)
-	  b         .loc_0x40
-
-	.loc_0x28:
-	  lwz       r0, 0x14(r3)
-	  cmpw      r0, r31
-	  bne-      .loc_0x3C
-	  li        r0, 0x1
-	  b         .loc_0x4C
-
-	.loc_0x3C:
-	  lwz       r3, 0xC(r3)
-
-	.loc_0x40:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x28
-	  li        r0, 0
-
-	.loc_0x4C:
-	  rlwinm.   r0,r0,0,24,31
-	  bne-      .loc_0xB0
-	  li        r3, 0x18
-	  bl        -0xD3E64
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0xA0
-	  lis       r3, 0x802C
-	  addi      r4, r3, 0x38C4
-	  addi      r3, r30, 0
-	  bl        -0xE5ECC
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x3C00
-	  stw       r0, 0x0(r30)
-	  li        r4, 0
-	  lis       r3, 0x802C
-	  stw       r4, 0x10(r30)
-	  addi      r0, r3, 0x38D0
-	  stw       r4, 0xC(r30)
-	  stw       r4, 0x8(r30)
-	  stw       r0, 0x4(r30)
-
-	.loc_0xA0:
-	  stw       r31, 0x14(r30)
-	  addi      r4, r30, 0
-	  addi      r3, r29, 0x4C
-	  bl        -0xDA8E4
-
-	.loc_0xB0:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
+void GenObjectPlant::updateUseList(Generator* gen, int) { plantMgr->addUseList(mPlantType); }
 
 /*
  * --INFO--
  * Address:	8011AEDC
  * Size:	000190
  */
-void* GenObjectPlant::birth(BirthInfo&)
+void* GenObjectPlant::birth(BirthInfo& info)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r27, 0x14(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  li        r3, 0x18
-	  lwz       r28, 0x3140(r13)
-	  bl        -0xD3EF8
-	  addi      r27, r3, 0
-	  mr.       r0, r27
-	  beq-      .loc_0x74
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r27)
-	  addi      r0, r3, 0x737C
-	  stw       r0, 0x0(r27)
-	  li        r29, 0
-	  addi      r3, r27, 0
-	  stw       r29, 0x10(r27)
-	  subi      r4, r13, 0x1F20
-	  stw       r29, 0xC(r27)
-	  stw       r29, 0x8(r27)
-	  bl        -0xF6068
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x102C
-	  stw       r0, 0x0(r27)
-	  stw       r29, 0x14(r27)
+	Plant* plant = plantMgr->birth();
+	if (plant) {
+		plant->init(info._00);
+		plant->mRotation  = info._0C;
+		plant->mDirection = plant->mRotation.y;
+		plant->reset(mPlantType);
+		plant->mGenerator = info.mGenerator;
+		plant->mHealth    = 1.0f;
+		plant->_5C        = plant->mHealth;
+		plant->startAI(PlantAI::STATE_Wait);
+	}
 
-	.loc_0x74:
-	  li        r3, 0x398
-	  bl        -0xD3F50
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x8C
-	  bl        -0x1228
-
-	.loc_0x8C:
-	  stw       r29, 0x14(r27)
-	  addi      r4, r27, 0
-	  addi      r3, r28, 0x28
-	  bl        -0xDA99C
-	  lwz       r29, 0x14(r27)
-	  cmplwi    r29, 0
-	  addi      r27, r29, 0
-	  beq-      .loc_0x178
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r31
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r6, 0xC(r31)
-	  li        r0, 0x1
-	  lwz       r5, 0x10(r31)
-	  li        r4, 0x33
-	  addi      r3, r29, 0x310
-	  stw       r6, 0x88(r29)
-	  stw       r5, 0x8C(r29)
-	  lwz       r5, 0x14(r31)
-	  stw       r5, 0x90(r29)
-	  lfs       f0, 0x8C(r29)
-	  stfs      f0, 0xA0(r29)
-	  lwz       r5, 0x18(r30)
-	  stb       r0, 0x394(r29)
-	  rlwinm    r0,r5,2,0,29
-	  stw       r4, 0x6C(r29)
-	  sth       r5, 0x304(r29)
-	  lwz       r5, 0x3140(r13)
-	  lwz       r4, 0x40(r5)
-	  lwz       r6, 0x44(r5)
-	  lwzx      r28, r4, r0
-	  lwz       r5, 0x4(r28)
-	  addi      r4, r28, 0x8
-	  bl        0x412C
-	  lfs       f0, -0x6038(r2)
-	  li        r5, 0
-	  li        r6, 0
-	  stfs      f0, 0x308(r29)
-	  lwz       r3, 0x220(r29)
-	  lwz       r4, 0x0(r28)
-	  bl        -0x914B0
-	  lwz       r5, 0x3140(r13)
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  lwz       r0, 0x64(r5)
-	  stw       r0, 0x2E8(r29)
-	  lwz       r0, 0x24(r31)
-	  stw       r0, 0x64(r29)
-	  lfs       f0, -0x6004(r2)
-	  stfs      f0, 0x58(r29)
-	  lfs       f0, 0x58(r29)
-	  stfs      f0, 0x5C(r29)
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x178:
-	  mr        r3, r29
-	  lmw       r27, 0x14(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	return plant;
 }
 
 /*
@@ -1591,130 +1073,7 @@ void* GenObjectPlant::birth(BirthInfo&)
  */
 void GenObjectPlant::render(Graphics&, Generator*)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3140(r13)
-	  lwz       r5, 0x18(r3)
-	  lwz       r3, 0x5C(r4)
-	  b         .loc_0x20
-
-	.loc_0x10:
-	  lwz       r0, 0x14(r3)
-	  cmpw      r0, r5
-	  beqlr-
-	  lwz       r3, 0xC(r3)
-
-	.loc_0x20:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x10
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8011B098
- * Size:	000084
- */
-PlantMgr::~PlantMgr()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x6C
-	  lis       r3, 0x802C
-	  addi      r3, r3, 0x3B08
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x5C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x51A8
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x5C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4F80
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-
-	.loc_0x5C:
-	  extsh.    r0, r4
-	  ble-      .loc_0x6C
-	  mr        r3, r31
-	  bl        -0xD3F54
-
-	.loc_0x6C:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8011B11C
- * Size:	000008
- */
-f32 Plant::getiMass()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6038(r2)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8011B124
- * Size:	000010
- */
-bool Plant::isAlive()
-{
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x30C(r3)
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8011B134
- * Size:	000008
- */
-void Plant::setMotionSpeed(f32)
-{
-	/*
-	.loc_0x0:
-	  stfs      f1, 0x308(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8011B13C
- * Size:	00000C
- */
-void Plant::stopMotion()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x6038(r2)
-	  stfs      f0, 0x308(r3)
-	  blr
-	*/
+	// remnants of some debug thing
+	if (plantMgr->usePlantType(mPlantType))
+		;
 }

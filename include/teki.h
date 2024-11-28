@@ -7,6 +7,13 @@
 #include "PaniAnimator.h"
 #include "PelletView.h"
 #include "Interactions.h"
+#include "nlib/Geometry.h"
+#include "nlib/Function.h"
+#include "ComplexCreature.h"
+#include "CreatureCollPart.h"
+#include "TekiParameters.h"
+#include "TekiPersonality.h"
+#include "Shape.h"
 #include "system.h"
 
 struct NTeki;
@@ -22,6 +29,11 @@ struct PeveAccelerationEvent;
 struct PeveCircleMoveEvent;
 struct PeveHorizontalSinWaveEvent;
 struct TekiPersonality;
+struct CreaturePlatMgr;
+
+namespace zen {
+struct PtclGenPack;
+} // namespace zen
 
 namespace TekiNakata {
 // Teki-making utility functions
@@ -46,7 +58,7 @@ enum TekiOptions {
 	TEKIOPT_Invincible       = 1 << 9,  // 0x200
 	TEKIOPT_Pressed          = 1 << 10, // 0x400
 	TEKIOPT_Unk11            = 1 << 11, // 0x800
-	TEKIOPT_Unk12            = 1 << 12, // 0x1000
+	TEKIOPT_StoppingMove     = 1 << 12, // 0x1000
 	TEKIOPT_Drawed           = 1 << 13, // 0x2000
 	TEKIOPT_ShapeVisible     = 1 << 14, // 0x4000
 	TEKIOPT_DamageCountable  = 1 << 15, // 0x8000
@@ -177,9 +189,9 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	virtual void viewFinishMotion();                     // _154
 	virtual void viewDraw(Graphics&, Matrix4f&);         // _158
 	virtual void viewKill();                             // _15C
-	virtual void viewGetScale();                         // _160
-	virtual void viewGetBottomRadius();                  // _164
-	virtual void viewGetHeight();                        // _168
+	virtual Vector3f viewGetScale();                     // _160
+	virtual f32 viewGetBottomRadius();                   // _164
+	virtual f32 viewGetHeight();                         // _168
 	virtual void init(int);                              // _16C
 	virtual void reset();                                // _170
 	virtual void startMotion(int);                       // _174
@@ -218,15 +230,11 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	virtual void dieSoon();                    // _1EC
 	virtual void becomeCorpse();               // _1F0
 
-	bool isPellet(int);
-	void calcCircleDistanceStatic(Vector3f&, f32, Vector3f&, f32);
-	void calcSphereDistanceStatic(Vector3f&, f32, Vector3f&, f32);
-	void moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&);
-	void arrivedAt(f32, f32);
+	bool arrivedAt(f32, f32);
 	void prepareEffects();
 	void startStoppingMove();
 	void finishStoppingMove();
-	void getVelocityAnimationSpeed(f32);
+	f32 getVelocityAnimationSpeed(f32);
 	void releasePlatCollisions();
 	void createDeadEffect();
 	void createSoulEffect();
@@ -235,9 +243,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	void spawnWaters(int);
 	void spawnCorpseParts();
 	void outputSpawnPosition(Vector3f&);
-	void getPersonalityF(int);
-	void getParameterF(int);
-	f32 getDirection() { return mDirection; } // weak function
 	void nearestAngleTarget(Creature*);
 	void cullableCenter(Creature&, f32);
 	void cullableSphere(Creature&, f32);
@@ -266,7 +271,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	void countPikis(Condition&);
 	void getFlickDamageCount(int);
 	void getGravity();
-	void getStrategy();
+	TekiStrategy* getStrategy();
 	void getSeaLevel();
 	void getYFromSeaLevel();
 	void makePositionRoute(Vector3f&, Vector3f&, bool);
@@ -301,26 +306,17 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	void outputWorldAnimationMatrix(Matrix4f&, int, Matrix4f&); // unused
 	void getCollisionCenter();                                  // unused
 
-	// whatever this code is, it comes up in a few spots to do with replacing creature targets
-	// it needs more inlining/to add more to the stack though
-	inline void removeTarget()
-	{
-		if (_418) {
-			_418->subCnt();
-			_418 = nullptr;
-		}
-	}
+	f32 getDirection() { return mDirection; }                                 // weak function
+	f32 getPersonalityF(int idx) { return mPersonality->mParams->getF(idx); } // weak
+	int getPersonalityI(int idx) { return mPersonality->mParams->getI(idx); } // weak
 
-	inline void addTarget(Creature* target)
-	{
-		if (_418) {
-			removeTarget();
-		}
-		_418 = target;
-		if (_418) {
-			_418->addCnt();
-		}
-	}
+	f32 getParameterF(int idx) { return mTekiParams->getF(idx); } // see TekiFloatParams enum
+	int getParameterI(int idx) { return mTekiParams->getI(idx); } // see TekiIntParams enum
+
+	static bool isPellet(int);
+	static f32 calcCircleDistanceStatic(Vector3f&, f32, Vector3f&, f32);
+	static f32 calcSphereDistanceStatic(Vector3f&, f32, Vector3f&, f32);
+	static void moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&);
 
 	inline void setMotionSpeed(f32 speed)
 	{
@@ -334,6 +330,10 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	inline bool isAnimKeyOption(int opt) const { return mAnimKeyOptions & opt; }
 
 	inline int getStateID() { return _324; }
+
+	inline f32 getParticleFactor() { return getParameterF(19); } // rename later when we know what this is
+
+	inline f32 doGetVelocityAnimSpeed() { return getVelocityAnimationSpeed(_A4.length()); }
 
 	// this is basically two static enums smh
 	static int TEKI_OPTION_VISIBLE;
@@ -360,31 +360,64 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	// _00       = VTBL
 	// _000-_2B8 = Creature
 	// _2B8-_2C0 = PelletView
-	u8 _2C0[0x2C8 - 0x2C4];        // _2C0, TODO: work out members
-	TekiPersonality* mPersonality; // _2C8
-	PaniAnimator* mTekiAnimator;   // _2CC
-	u8 _2D0[0x31C - 0x2D0];        // _2D0, TODO: work out members
-	u32 _31C;                      // _31C
-	TekiTypes mTekiType;           // _320
-	int _324;                      // _324, related to states
-	bool _328;                     // _328, related to states
-	u8 _329[0x330 - 0x329];        // _329, TODO: work out members
-	int _330;                      // _330
-	int _334;                      // _334, related to actions
-	int _338;                      // _338, unknown, state id of some description?
-	u8 _33C[0x388 - 0x33C];        // _33C, TODO: work out members
-	Vector3f _388;                 // _388, possibly position
-	f32 _394;                      // _394
-	u8 _398[0x3A8 - 0x398];        // _398, TODO: work out members
-	int _3A8;                      // _3A8
-	u8 _3AC[0x3B4 - 0x3AC];        // _3AC, TODO: work out members
-	f32 mMotionSpeed;              // _3B4
-	u8 _3B8[0x410 - 0x3B8];        // _3B8, TODO: work out members
-	int mTekiOptions;              // _410
-	int mAnimKeyOptions;           // _414
-	Creature* _418;                // _418, maybe attack target?
-	u8 _41C[0x454 - 0x41C];        // _41C, TODO: work out members
-	                               // _454 = PaniAnimKeyListener
+	// _2C0-_2C4 = ptr to PaniAnimKeyListener
+	TekiParameters* mTekiParams;     // _2C4
+	TekiPersonality* mPersonality;   // _2C8
+	PaniTekiAnimator* mTekiAnimator; // _2CC
+	TekiShapeObject* mTekiShape;     // _2D0
+	CreaturePlatMgr mPlatMgr;        // _2D4
+	int _31C;                        // _31C
+	TekiTypes mTekiType;             // _320
+	int _324;                        // _324, related to states
+	bool _328;                       // _328, related to states
+	u8 _329[0x330 - 0x329];          // _329, TODO: work out members
+	int _330;                        // _330
+	int _334;                        // _334, related to actions
+	int _338;                        // _338, unknown, state id of some description?
+	f32 mStoredDamage;               // _33C, damage waiting to be applied on next makeDamaged call
+	f32 _340;                        // _340
+	int _344;                        // _344
+	int _348;                        // _348, size of array at _450
+	u32 _34C;                        // _34C, unknown
+	u32 _350;                        // _350
+	int _354;                        // _354
+	NVector3fIOClass _358;           // _358
+	NVector3fIOClass _368;           // _368
+	NVector3fIOClass _378;           // _378
+	NVector3f _388;                  // _388, possibly position
+	f32 _394;                        // _394
+	NVector3f _398;                  // _398
+	f32 _3A4;                        // _3A4
+	int _3A8;                        // _3A8
+	f32 _3AC;                        // _3AC
+	u32 _3B0;                        // _3B0, unknown
+	f32 mMotionSpeed;                // _3B4
+	f32 _3B8;                        // _3B8
+	u32 _3BC;                        // _3BC, unknown
+	f32 _3C0;                        // _3C0
+	f32 _3C4;                        // _3C4
+	f32 _3C8;                        // _3C8
+	f32 _3CC;                        // _3CC
+	f32 _3D0;                        // _3D0
+	f32 _3D4;                        // _3D4
+	u32* _3D8;                       // _3D8, array of something, total size 0x10
+	zen::PtclGenPack* _3DC;          // _3DC
+	ShapeDynMaterials _3E0;          // _3E0, unknown
+	int _3F0;                        // _3F0
+	int _3F4;                        // _3F4
+	int _3F8;                        // _3F8
+	int _3FC;                        // _3FC
+	int _400;                        // _400
+	int _404;                        // _404
+	int _408;                        // _408
+	int _40C;                        // _40C
+	int mTekiOptions;                // _410
+	int mAnimKeyOptions;             // _414
+	SmartPtr<Creature> _418[4];      // _418
+	NVibrationFunction* _428;        // _428
+	SearchData mTekiSearchData[3];   // _42C
+	u32* _450;                       // _450, array of something, unsure what
+	                                 // _454 = PaniAnimKeyListener
 };
 
 /**

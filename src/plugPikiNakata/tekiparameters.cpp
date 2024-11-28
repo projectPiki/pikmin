@@ -38,13 +38,13 @@ TekiParameters::TekiParameters(int iParamNum, int fParamNum)
 	ParaParameterInfoF* f32Params = new ParaParameterInfoF[fParamNum];
 	// set all these params somehow
 
-	mParameters                           = new ParaMultiParameters(iParamNum, intParams, fParamNum, f32Params);
-	ParaMultiParameters* multiP           = mParameters;
-	multiP->mIntParams->mParameters[3]    = -1;
-	multiP->mFloatParams->mParameters[20] = 10.0f;
-	multiP->mFloatParams->mParameters[21] = 10.0f;
-	multiP->mFloatParams->mParameters[28] = 1000.0f;
-	multiP->mFloatParams->mParameters[44] = 16.0f;
+	mParameters                                            = new ParaMultiParameters(iParamNum, intParams, fParamNum, f32Params);
+	ParaMultiParameters* multiP                            = mParameters;
+	multiP->mIntParams->mParameters[TPI_SpawnType]         = -1;
+	multiP->mFloatParams->mParameters[TPF_CorpseSize]      = 10.0f;
+	multiP->mFloatParams->mParameters[TPF_CorpseHeight]    = 10.0f;
+	multiP->mFloatParams->mParameters[TPF_VisibleHeight]   = 1000.0f;
+	multiP->mFloatParams->mParameters[TPF_CollisionRadius] = 16.0f;
 
 	/*
 	.loc_0x0:

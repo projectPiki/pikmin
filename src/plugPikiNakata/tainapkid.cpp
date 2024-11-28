@@ -79,7 +79,7 @@ TaiNapkidSoundTable::TaiNapkidSoundTable()
  * Size:	000564
  */
 TaiNapkidParameters::TaiNapkidParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(21, 63)
 {
 	/*
 	.loc_0x0:

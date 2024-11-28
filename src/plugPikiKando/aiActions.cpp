@@ -485,7 +485,7 @@ int ActAdjust::exec()
 	mActor->_A4 = _30;
 	mActor->mDirection += _2C * gsys->getFrameTime();
 	mActor->mDirection = roundAng(mActor->mDirection);
-	mActor->_88.set(0.0f, mActor->mDirection, 0.0f);
+	mActor->mRotation.set(0.0f, mActor->mDirection, 0.0f);
 	_28 += gsys->getFrameTime();
 
 	if (_28 > f32(_18) * (1 / 30.0f)) {

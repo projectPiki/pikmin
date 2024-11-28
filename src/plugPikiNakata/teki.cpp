@@ -1,4 +1,5 @@
 #include "teki.h"
+#include "TekiParameters.h"
 #include "Dolphin/os.h"
 
 /*
@@ -145,18 +146,7 @@ void BTeki::clearAnimationKeyOptions() { mAnimKeyOptions = 0; }
  * Address:	80143D48
  * Size:	000018
  */
-f32 BTeki::getShadowSize()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r3)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0x48(r3)
-	  blr
-	*/
-}
+f32 BTeki::getShadowSize() { return mTekiParams->getF(TPF_ShadowSize); }
 
 /*
  * --INFO--

@@ -70,7 +70,6 @@ struct Pellet : public DualCreature {
 	virtual void doCreateColls(Graphics&);               // _11C
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _12C (weak)
 
-	void isUfoPartsID(u32);
 	void getState();
 	void setTrySound(bool);
 	void startPick();
@@ -100,6 +99,8 @@ struct Pellet : public DualCreature {
 	void initPellet(PelletView*, PelletConfig*);
 	void stopMotion();
 	void startAppear();
+
+	static bool isUfoPartsID(u32);
 
 	// _00      = VTBL
 	// _00-_43C = DualCreature?

@@ -73,6 +73,15 @@ struct StateMachine {
 		mStateCount++;
 	}
 
+	inline void setup(int limit)
+	{
+		mStateLimit   = limit;
+		mStateCount   = 0;
+		mStates       = new AState<T>*[mStateLimit];
+		mStateIDs     = new int[mStateLimit];
+		mStateIndexes = new int[mStateLimit];
+	}
+
 	inline bool isFull() { return mStateCount >= mStateLimit; }
 
 	// _00 = VTBL

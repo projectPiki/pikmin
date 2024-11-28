@@ -37,8 +37,9 @@ TAIusubaSoundTable::TAIusubaSoundTable()
  * Size:	000294
  */
 TAIusubaParameters::TAIusubaParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 50)
 {
+
 	/*
 	.loc_0x0:
 	  mflr      r0

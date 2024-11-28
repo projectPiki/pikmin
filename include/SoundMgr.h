@@ -157,7 +157,6 @@ struct SeSystem {
 	void exitCourse();
 	void playSysSe(int);
 	void stopSysSe(int);
-	void playPlayerSe(int);
 	void stopPlayerSe(int);
 
 	// unused/inlined:
@@ -165,6 +164,8 @@ struct SeSystem {
 	void getSoundName(int);
 	void getEventType(int);
 	void isLoopType(int);
+
+	static void playPlayerSe(int);
 
 	// TODO: members
 	u8 _00[0x78]; // _00, unknown

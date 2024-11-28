@@ -79,7 +79,7 @@ TaiCollecSoundTable::TaiCollecSoundTable()
  * Size:	000484
  */
 TaiCollecParameters::TaiCollecParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(21, 60)
 {
 	/*
 	.loc_0x0:
@@ -4386,7 +4386,7 @@ void TaiCollecLegEffectAction::setType(Vector3f&, int, int)
  * Size:	000088
  */
 TaiHollecParameters::TaiHollecParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 50)
 {
 	/*
 	.loc_0x0:

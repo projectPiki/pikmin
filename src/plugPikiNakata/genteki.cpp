@@ -48,7 +48,7 @@ void GenObjectTeki::initialise()
 	fact->mSpawnerInfo[fact->mSpawnerCount].mID          = 'teki';
 	fact->mSpawnerInfo[fact->mSpawnerCount].mGenFunction = &makeObjectTeki;
 	fact->mSpawnerInfo[fact->mSpawnerCount].mName        = "敵を発生"; // 'spawn enemies'
-	fact->mSpawnerInfo[fact->mSpawnerCount]._0C          = 10;
+	fact->mSpawnerInfo[fact->mSpawnerCount].mVersion     = 10;
 
 	fact->mSpawnerCount++;
 }
@@ -109,7 +109,7 @@ void GenObjectTeki::updateUseList(Generator*, int)
 		return;
 	}
 
-	int tekiType = tekiMgr->mTekiParams[mTekiType]->mParameters->mIntParams[0].mParameters[3];
+	int tekiType = tekiMgr->mTekiParams[mTekiType]->getI(TPI_SpawnType);
 	if (tekiType >= TEKI_START && tekiType < TEKI_TypeCount) {
 		tekiMgr->mUsingType[tekiType] = true;
 	}
@@ -138,7 +138,7 @@ void* GenObjectTeki::birth(BirthInfo& info)
 	teki->mPersonality->input(*mPersonality);
 	teki->reset();
 	teki->startAI(0);
-	teki->_88 = info._0C;
+	teki->mRotation = info._0C;
 	if (info.mGenerator->_28->_28()) {
 		teki->setCreatureFlag(CF_Unk16);
 	}

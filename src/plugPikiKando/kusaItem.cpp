@@ -51,7 +51,7 @@ void KusaItem::startAI(int)
 	mCollInfo = &mKusaCollision;
 	mCollInfo->initInfo(mItemShape, mKusaParts, mPartIDs);
 	mCollInfo->makeTubesChild('rope', 1);
-	_7C.set(0.0f, 0.0f, 0.0f);
+	mScale.set(0.0f, 0.0f, 0.0f);
 	_814      = mPosition;
 	_814.y    = mapMgr->getMinY(mPosition.x, mPosition.z, true);
 	mHealth   = 50.0f;
@@ -134,7 +134,7 @@ void KusaItem::refresh(Graphics& gfx)
 	Matrix4f camMat;
 	Matrix4f mat;
 	mat.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, mHealth - _5C, 0.0f));
-	_228.makeSRT(_7C, _88, mPosition);
+	_228.makeSRT(mScale, mRotation, mPosition);
 	_228.multiply(mat);
 
 	gfx._2E4->_1E0.multiplyTo(_228, camMat);
@@ -172,7 +172,7 @@ void BoBaseItem::startAI(int)
 	setCreatureFlag(CF_Unk10);
 	mCollInfo = &mBaseCollision;
 	mCollInfo->initInfo(mItemShape, mBaseParts, mPartIDs);
-	_7C.set(1.0f, 1.0f, 1.0f);
+	mScale.set(1.0f, 1.0f, 1.0f);
 	_814     = mPosition;
 	_814.y   = mapMgr->getMinY(mPosition.x, mPosition.z, true);
 	_824     = true;
@@ -247,7 +247,7 @@ void BoBaseItem::refresh(Graphics& gfx)
 {
 	if (_824 || (!_824 && _825 > 0)) {
 		Matrix4f camMat;
-		_228.makeSRT(_7C, _88, mPosition);
+		_228.makeSRT(mScale, mRotation, mPosition);
 
 		gfx._2E4->_1E0.multiplyTo(_228, camMat);
 		gfx.setLighting(true, nullptr);

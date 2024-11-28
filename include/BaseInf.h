@@ -31,7 +31,7 @@ struct BaseInf : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	Vector3f mPosition; // _14
-	Vector3f _20;       // _20
+	Vector3f mRotation; // _20
 };
 
 /**
@@ -70,8 +70,8 @@ struct CreatureInf : public BaseInf {
 	u32 _30;           // _30, unknown
 	int _34;           // _34
 	int _38;           // _38
-	int _3C;           // _40
-	int _40;           // _44
+	int mTekiType;     // _3C
+	int _40;           // _40
 	f32 _44;           // _44
 	f32 _48;           // _48
 };

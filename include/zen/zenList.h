@@ -9,6 +9,8 @@ namespace zen {
  * @brief TODO
  */
 struct zenList {
+	inline zenList() { mPrev = mNext = this; }
+
 	virtual void insertAfter(zenList*); // _08
 	virtual void remove();              // _0C
 
@@ -21,14 +23,29 @@ struct zenList {
  * @brief TODO
  */
 struct zenListManager {
-	zenListManager();
+	zenListManager()
+	{
+		_00           = &_04;
+		zenList* list = _00;
+		_00->mNext    = list;
+		_00->mPrev    = list;
+	}
 
-	void get();
+	zenList* get()
+	{
+		zenList* out = nullptr;
+		if (_00 != _00->mNext) {
+			out = _00->mNext;
+			out->remove();
+		}
+		return out;
+	}
 
 	// unused/inlined:
 	~zenListManager();
 
-	// TODO: members
+	zenList* _00; // _00
+	zenList _04;  // _04
 };
 
 } // namespace zen

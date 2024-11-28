@@ -577,7 +577,7 @@ void Creature::init()
 	resetCreatureFlag(CF_Unk19);
 	_21C = 0;
 	setCreatureFlag(CF_Free);
-	resetCreatureFlag(CF_Unk9 | CF_Unk12 | CF_Unk14 | CF_Unk20);
+	resetCreatureFlag(CF_Unk9 | CF_Unk12 | CF_Unk14 | CF_AIAlwaysActive);
 	_D0  = 0.0f;
 	_2A8 = nullptr;
 	_2AC = nullptr;
@@ -916,14 +916,14 @@ Creature::Creature(CreatureProp* props)
 	_A4.set(0.0f, 0.0f, 0.0f);
 	_B0.set(0.0f, 0.0f, 0.0f);
 	_70.set(0.0f, 0.0f, 0.0f);
-	_88.set(0.0f, 0.0f, 0.0f);
+	mRotation.set(0.0f, 0.0f, 0.0f);
 	mPosition.set(0.0f, 0.0f, 0.0f);
-	_7C.set(1.0f, 1.0f, 1.0f);
-	mDirection = 0.0f;
-	_26C       = 10.0f;
-	_270       = 16.0f;
-	mProps     = props;
-	_28        = 0;
+	mScale.set(1.0f, 1.0f, 1.0f);
+	mDirection       = 0.0f;
+	_26C             = 10.0f;
+	mCollisionRadius = 16.0f;
+	mProps           = props;
+	_28              = 0;
 	resetCreatureFlag(CF_Unk10);
 	_E0.fromEuler(Vector3f(0.0f, 0.0f, 0.0f));
 	_D4.set(0.0f, 0.0f, 0.0f);
@@ -2326,7 +2326,7 @@ bool Creature::needShadow() { return true; }
  * Address:	8008C3CC
  * Size:	000040
  */
-f32 Creature::getShadowSize() { return _7C.x * getSize(); }
+f32 Creature::getShadowSize() { return mScale.x * getSize(); }
 
 /*
  * --INFO--

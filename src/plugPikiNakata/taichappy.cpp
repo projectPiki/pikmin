@@ -79,7 +79,7 @@ TaiChappySoundTable::TaiChappySoundTable()
  * Size:	0003A4
  */
 TaiChappyParameters::TaiChappyParameters()
-    : TekiParameters(0, 0) // TODO: fix later
+    : TekiParameters(21, 53)
 {
 	/*
 	.loc_0x0:
@@ -325,7 +325,7 @@ TaiChappyParameters::TaiChappyParameters()
  * Size:	0003A0
  */
 TaiBlackChappyParameters::TaiBlackChappyParameters()
-    : TekiParameters(0, 0) // TODO: fix later
+    : TekiParameters(21, 53)
 {
 	/*
 	.loc_0x0:
@@ -622,7 +622,7 @@ TaiCatfishSoundTable::TaiCatfishSoundTable()
  * Size:	00039C
  */
 TaiCatfishParameters::TaiCatfishParameters()
-    : TekiParameters(0, 0) // TODO: fix later
+    : TekiParameters(21, 53)
 {
 	/*
 	.loc_0x0:

@@ -33,29 +33,29 @@ struct SeContext;
  * @brief TODO
  */
 enum CreatureFlags {
-	CF_Unk1          = 1 << 0,  // 0x1
-	CF_Unk2          = 1 << 1,  // 0x2
-	CF_Unk3          = 1 << 2,  // 0x4
-	CF_Unk4          = 1 << 3,  // 0x8
-	CF_Unk5          = 1 << 4,  // 0x10
-	CF_Unk6          = 1 << 5,  // 0x20
-	CF_Unk7          = 1 << 6,  // 0x40
-	CF_Unk8          = 1 << 7,  // 0x80
-	CF_Unk9          = 1 << 8,  // 0x100
-	CF_Unk10         = 1 << 9,  // 0x200
-	CF_Unk11         = 1 << 10, // 0x400
-	CF_Unk12         = 1 << 11, // 0x800
-	CF_Free          = 1 << 12, // 0x1000
-	CF_Unk14         = 1 << 13, // 0x2000
-	CF_StuckToObject = 1 << 14, // 0x4000, stuck to an object
-	CF_StuckToMouth  = 1 << 15, // 0x8000, stuck to mouth of some enemy
-	CF_Unk16         = 1 << 16, // 0x10000
-	CF_Unk17         = 1 << 17, // 0x20000
-	CF_Unk18         = 1 << 18, // 0x40000
-	CF_Unk19         = 1 << 19, // 0x80000, use result flags maybe?
-	CF_Unk20         = 1 << 20, // 0x100000
-	CF_FixPosition   = 1 << 21, // 0x200000
-	CF_Unk22         = 1 << 22, // 0x400000
+	CF_Unk1           = 1 << 0,  // 0x1
+	CF_Unk2           = 1 << 1,  // 0x2
+	CF_Unk3           = 1 << 2,  // 0x4
+	CF_Unk4           = 1 << 3,  // 0x8
+	CF_Unk5           = 1 << 4,  // 0x10
+	CF_Unk6           = 1 << 5,  // 0x20
+	CF_Unk7           = 1 << 6,  // 0x40
+	CF_Unk8           = 1 << 7,  // 0x80
+	CF_Unk9           = 1 << 8,  // 0x100
+	CF_Unk10          = 1 << 9,  // 0x200
+	CF_Unk11          = 1 << 10, // 0x400
+	CF_Unk12          = 1 << 11, // 0x800
+	CF_Free           = 1 << 12, // 0x1000
+	CF_Unk14          = 1 << 13, // 0x2000
+	CF_StuckToObject  = 1 << 14, // 0x4000, stuck to an object
+	CF_StuckToMouth   = 1 << 15, // 0x8000, stuck to mouth of some enemy
+	CF_Unk16          = 1 << 16, // 0x10000
+	CF_Unk17          = 1 << 17, // 0x20000
+	CF_Unk18          = 1 << 18, // 0x40000
+	CF_Unk19          = 1 << 19, // 0x80000, use result flags maybe?
+	CF_AIAlwaysActive = 1 << 20, // 0x100000, do not cull AI when off-camera
+	CF_FixPosition    = 1 << 21, // 0x200000
+	CF_Unk22          = 1 << 22, // 0x400000
 };
 
 /**
@@ -218,6 +218,12 @@ struct Creature : public RefCountable, public EventTalker {
 		    || mObjType == OBJTYPE_SluiceBombHard;
 	}
 
+	inline void reset70andA4()
+	{ // TODO: rename when we know what _70 and _A4 are
+		_70.reset();
+		_A4.reset();
+	}
+
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker
@@ -235,8 +241,8 @@ struct Creature : public RefCountable, public EventTalker {
 	u32 _68;                    // _68, might be int
 	EObjType mObjType;          // _6C, object type
 	Vector3f _70;               // _70
-	Vector3f _7C;               // _7C, maybe scale?
-	Vector3f _88;               // _88, maybe rotation?
+	Vector3f mScale;            // _7C
+	Vector3f mRotation;         // _88
 	Vector3f mPosition;         // _94
 	f32 mDirection;             // _A0
 	Vector3f _A4;               // _A4
@@ -276,7 +282,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Matrix4f _228;              // _228
 	u8 _268[0x26C - 0x268];     // _268, TODO: work out members
 	f32 _26C;                   // _26C
-	f32 _270;                   // _270
+	f32 mCollisionRadius;       // _270
 	Vector3f _274;              // _274
 	DynCollObject* _280;        // _280
 	Vector3f* _284;             // _284, coll plat normal maybe?

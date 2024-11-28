@@ -6442,8 +6442,8 @@ BaseShape::BaseShape()
 	_68 = 0;
 	_74 = 0;
 
-	_18 = 0;
-	_24 = 0;
+	_18          = 0;
+	mFrameCacher = nullptr;
 
 	mCollisionInfo.initCore("");
 	mLightGroup.initCore("");

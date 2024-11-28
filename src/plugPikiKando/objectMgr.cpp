@@ -3939,13 +3939,6 @@ int CreatureNodeMgr::getSize() { return mRootNode.getChildCount(); }
 
 /*
  * --INFO--
- * Address:	800E2EBC
- * Size:	00006C
- */
-CreatureNodeMgr::~CreatureNodeMgr() { }
-
-/*
- * --INFO--
  * Address:	800E2F28
  * Size:	000008
  */

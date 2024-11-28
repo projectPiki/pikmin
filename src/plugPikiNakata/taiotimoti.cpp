@@ -78,7 +78,7 @@ TaiOtimotiSoundTable::TaiOtimotiSoundTable()
  * Size:	000540
  */
 TaiOtimotiParameters::TaiOtimotiParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(21, 62)
 {
 	/*
 	.loc_0x0:
@@ -479,7 +479,7 @@ TaiBlackFrogSoundTable::TaiBlackFrogSoundTable()
  * Size:	00053C
  */
 TaiBlackFrogParameters::TaiBlackFrogParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(21, 62)
 {
 	/*
 	.loc_0x0:

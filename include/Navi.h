@@ -47,8 +47,8 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	virtual void doKill();                               // _10C
 	virtual void viewKill();                             // _154 (weak)
 	virtual void viewDraw(Graphics&, Matrix4f&);         // _158 (weak)
-	virtual void viewGetBottomRadius();                  // _15C (weak)
-	virtual void viewGetHeight();                        // _160 (weak)
+	virtual f32 viewGetBottomRadius();                   // _15C (weak)
+	virtual f32 viewGetHeight();                         // _160 (weak)
 	virtual void viewStartTrembleMotion(f32);            // _164 (weak)
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _168 (weak)
 

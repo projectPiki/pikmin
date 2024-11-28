@@ -78,7 +78,7 @@ TAIhibaASoundTable::TAIhibaASoundTable()
  * Size:	0002F8
  */
 TAIhibaAParameters::TAIhibaAParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 52)
 {
 	/*
 	.loc_0x0:

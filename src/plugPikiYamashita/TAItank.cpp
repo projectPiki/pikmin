@@ -79,7 +79,7 @@ TAItankSoundTable::TAItankSoundTable()
  * Size:	000364
  */
 TAItankParameters::TAItankParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 54)
 {
 	/*
 	.loc_0x0:

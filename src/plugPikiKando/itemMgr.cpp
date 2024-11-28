@@ -432,8 +432,8 @@ UfoItem* ItemMgr::getUfo()
  */
 ItemShapeObject::ItemShapeObject(Shape* shape, char* objName, char* file)
 {
-	mShape      = shape;
-	mShape->_24 = 0;
+	mShape               = shape;
+	mShape->mFrameCacher = nullptr;
 	char buf[128];
 	sprintf(buf, "objects/%s/%s", objName, file);
 	mAnimMgr = new AnimMgr(shape, buf, 0x8000, nullptr);
@@ -3827,10 +3827,10 @@ void BuildingItem::doLoad(RandomAccessStream& input)
  */
 void BuildingItem::doStore(CreatureInf* info)
 {
-	info->_44 = mHealth;
-	info->_48 = _5C;
-	info->_3C = _444;
-	info->_40 = _440;
+	info->_44       = mHealth;
+	info->_48       = _5C;
+	info->mTekiType = _444;
+	info->_40       = _440;
 }
 
 /*
@@ -3843,7 +3843,7 @@ void BuildingItem::doRestore(CreatureInf* info)
 	startAI(0);
 	mHealth = info->_44;
 	_5C     = info->_48;
-	_444    = info->_3C;
+	_444    = info->mTekiType;
 	_440    = info->_40;
 	if (_444 < _440) {
 		startMotion(_444);

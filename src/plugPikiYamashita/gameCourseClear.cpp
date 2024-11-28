@@ -1276,30 +1276,6 @@ zen::particleMdlManager::~particleMdlManager()
 
 /*
  * --INFO--
- * Address:	8019A458
- * Size:	000030
- */
-zen::zenListManager::zenListManager()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802D
-	  addi      r0, r4, 0x68DC
-	  stw       r0, 0x4(r3)
-	  addi      r0, r3, 0x4
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x8(r3)
-	  stw       r0, 0x0(r3)
-	  lwz       r5, 0x0(r3)
-	  stw       r5, 0x8(r5)
-	  lwz       r4, 0x0(r3)
-	  stw       r5, 0x4(r4)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	000040
  */

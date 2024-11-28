@@ -253,7 +253,7 @@ TAIdororoSoundTable::TAIdororoSoundTable()
  * Size:	0003C0
  */
 TAIdororoParameters::TAIdororoParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(21, 55)
 {
 	/*
 	.loc_0x0:

@@ -26,7 +26,7 @@ static void _Print(char*, ...)
  * Size:	000108
  */
 TaiIwagonParameters::TaiIwagonParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 50)
 {
 	/*
 	.loc_0x0:
@@ -678,7 +678,7 @@ bool TaiIwagonRollingAction::act(Teki&)
  * Size:	000118
  */
 TaiIwagenParameters::TaiIwagenParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 51)
 {
 	/*
 	.loc_0x0:

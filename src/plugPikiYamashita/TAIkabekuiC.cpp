@@ -78,7 +78,7 @@ TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
  * Size:	000478
  */
 TAIkabekuiCParameters::TAIkabekuiCParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 60)
 {
 	/*
 	.loc_0x0:

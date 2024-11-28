@@ -101,9 +101,9 @@ void PikiShapeObject::initOnce()
  */
 PikiShapeObject::PikiShapeObject(Shape* shape)
 {
-	mShape      = shape;
-	mShape->_24 = gameflow._308;
-	mAnimMgr    = nullptr;
+	mShape               = shape;
+	mShape->mFrameCacher = gameflow.mFrameCacher;
+	mAnimMgr             = nullptr;
 	mShape->overrideAnim(0, &_04);
 	mShape->overrideAnim(1, &_14);
 }

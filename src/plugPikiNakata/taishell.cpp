@@ -78,7 +78,7 @@ TaiShellSoundTable::TaiShellSoundTable()
  * Size:	00018C
  */
 TaiShellParameters::TaiShellParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(21, 51)
 {
 	/*
 	.loc_0x0:
@@ -1321,7 +1321,7 @@ TaiPearlSoundTable::TaiPearlSoundTable()
  * Size:	000148
  */
 TaiPearlParameters::TaiPearlParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 50)
 {
 	/*
 	.loc_0x0:
@@ -1416,7 +1416,7 @@ TaiPearlParameters::TaiPearlParameters()
  * Size:	00014C
  */
 TaiRocpearlParameters::TaiRocpearlParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 50)
 {
 	/*
 	.loc_0x0:

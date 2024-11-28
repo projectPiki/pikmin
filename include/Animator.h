@@ -334,12 +334,16 @@ struct AnimMgr : public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct AnimFrameCacher {
 	AnimFrameCacher(int);
 	void updateInfo(AnimCacheInfo*);
 	void removeOldest();
 	void cacheFrameSpace(int, AnimCacheInfo*);
+
+	u8 _00[0x18]; // _00, unknown
 };
 
 #endif

@@ -78,7 +78,7 @@ TAIotamaSoundTable::TAIotamaSoundTable()
  * Size:	00033C
  */
 TAIotamaParameters::TAIotamaParameters()
-    : TekiParameters(0, 0) // TODO: fix
+    : TekiParameters(20, 52)
 {
 	/*
 	.loc_0x0:

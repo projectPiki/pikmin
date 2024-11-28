@@ -78,7 +78,7 @@ TAIbeatleSoundTable::TAIbeatleSoundTable()
  * Size:	000418
  */
 TAIbeatleParameters::TAIbeatleParameters()
-    : TekiParameters(0, 0) // TODO: members
+    : TekiParameters(20, 55)
 {
 	/*
 	.loc_0x0:

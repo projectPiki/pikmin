@@ -136,7 +136,7 @@ void Navi::viewKill()
  * Address:	800F8408
  * Size:	000008
  */
-void Navi::viewGetBottomRadius()
+f32 Navi::viewGetBottomRadius()
 {
 	/*
 	.loc_0x0:
@@ -150,7 +150,7 @@ void Navi::viewGetBottomRadius()
  * Address:	800F8410
  * Size:	000008
  */
-void Navi::viewGetHeight()
+f32 Navi::viewGetHeight()
 {
 	/*
 	.loc_0x0:

@@ -161,7 +161,7 @@ BaseInf::BaseInf()
 {
 	initCore("baseInf");
 	mPosition.set(0.0f, 0.0f, 0.0f);
-	_20.set(0.0f, 0.0f, 0.0f);
+	mRotation.set(0.0f, 0.0f, 0.0f);
 	// UNUSED FUNCTION
 }
 
@@ -173,7 +173,7 @@ BaseInf::BaseInf()
 void BaseInf::store(Creature* owner)
 {
 	mPosition = owner->mPosition;
-	_20       = owner->_88;
+	mRotation = owner->mRotation;
 	doStore(owner);
 }
 
@@ -185,7 +185,7 @@ void BaseInf::store(Creature* owner)
 void BaseInf::restore(Creature* owner)
 {
 	owner->mPosition = mPosition;
-	owner->_88       = _20;
+	owner->mRotation = mRotation;
 	doRestore(owner);
 }
 
@@ -211,7 +211,7 @@ void BaseInf::loadCard(RandomAccessStream& card)
 	mPosition.x = card.readShort();
 	mPosition.y = card.readShort();
 	mPosition.z = card.readShort();
-	_20.set(0.0f, 0.0f, 0.0f);
+	mRotation.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
