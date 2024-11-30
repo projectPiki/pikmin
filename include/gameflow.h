@@ -326,7 +326,7 @@ struct GameFlow : public Node {
 	u8 _1CC[0x1D0 - 0x1CC];        // _1CC, unknown
 	u32 _1D0;                      // _1D0, most recently opened stage?
 	u32 _1D4;                      // _1D4, unknown
-	u8 _1D8[0x4];                  // _1D8, unknown
+	u32 _1D8;                      // _1D8, bitflag of some description
 	MoviePlayer* mMoviePlayer;     // _1DC
 	u8 _1E0[0x1E8 - 0x1E0];        // _1E0, unknown
 	GameInterface* _1E8;           // _1E8

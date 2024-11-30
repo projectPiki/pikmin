@@ -55,7 +55,8 @@ struct CPlate : public Traversable, public Node {
 	// _08 = VTBL 2
 	// _00-_08 = Traversable
 	// _08-_28 = Node
-	// TODO: members
+	u8 _28[0x78 - 0x28]; // _28, unknown
+	int _78;             // _78, number of pikis?
 };
 
 #endif

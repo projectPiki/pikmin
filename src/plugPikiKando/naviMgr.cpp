@@ -51,11 +51,11 @@ NaviMgr::NaviMgr()
 	memStat->end("navi shape");
 
 	memStat->start("navi shapeobject");
-	mNaviShapeObject = new PikiShapeObject(mNaviShape);
+	mNaviShapeObject[0] = new PikiShapeObject(mNaviShape);
 	memStat->end("navi shapeobject");
 
 	memStat->start("navi animmgr");
-	mNaviShapeObject->mAnimMgr = PikiShapeObject::getAnimMgr();
+	mNaviShapeObject[0]->mAnimMgr = PikiShapeObject::getAnimMgr();
 	memStat->end("navi animmgr");
 
 	mNaviID = 0;

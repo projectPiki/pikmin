@@ -1080,7 +1080,7 @@ void ActBoreTalk::startTalk()
 	mActor->enableMotionBlend();
 	_20 = randFloat(2.0f) + 5.0f;
 
-	if (mActor->_4FC == 1 && mActor->mNavi->_710 && mActor->mNavi->mCurrState->getStateID() != NAVISTATE_DemoSunset
+	if (mActor->_4FC == 1 && mActor->mNavi->mPlateMgr && mActor->mNavi->mCurrState->getStateID() != NAVISTATE_DemoSunset
 	    && mActor->mNavi->mCurrState->getStateID() != NAVISTATE_Dead) {
 		seMgr->setPikiNum(0);
 	}

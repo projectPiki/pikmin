@@ -5,8 +5,19 @@
 #include "Creature.h"
 #include "Node.h"
 #include "PaniAnimator.h"
+#include "PaniPikiAnimator.h"
 #include "PelletView.h"
+#include "MapMgr.h"
+#include "Piki.h"
 
+struct CPlate;
+struct BurnEffect;
+struct RippleEffect;
+struct PermanentEffect;
+struct SlimeEffect;
+struct Kontroller;
+struct NaviDrawer;
+struct NaviStateMachine;
 struct NaviState;
 struct Piki;
 
@@ -53,11 +64,11 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _168 (weak)
 
 	void demoCheck();
-	void isNuking();
+	bool isNuking();
 	void startMovieInf();
 	void incPlatePiki();
 	void decPlatePiki();
-	void getPlatePikis();
+	int getPlatePikis();
 	void startDayEnd();
 	void updateDayEnd(Vector3f&);
 	void enterAllPikis();
@@ -98,30 +109,119 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	void throwLocus(Vector3f&);
 	void renderParabola(Graphics&, f32, f32);
 
+	NaviState* getCurrState() { return mCurrState; }
+
 	// _00       = VTBL
 	// _000-_2B8 = Creature
-	// _2B8-_2BC = PaniAnimKeyListener
+	// _2B8-_2BC = ptr to PaniAnimKeyListener
 	// _2BC-_2C4 = PelletView
-	u8 _2C4[0x710 - 0x2C4]; // _2C4, TODO: work out members
-	u32 _710;               // _710, unknown
-	u8 _714[0x738 - 0x714]; // _714, TODO: work out members
-	f32 _738;               // _738
-	u8 _73C[0x7E4 - 0x73C]; // _73C, TODO: work out members
-	u8 _7E4;                // _7E4
-	u8 _7E5;                // _7E5
-	u8 _7E6[0xADC - 0x7E6]; // _7E6, TODO: work out members
-	NaviState* mCurrState;  // _ADC
+	OdoMeter mOdoMeter;                // _2C4
+	u32 _2D4;                          // _2D4
+	u32 _2D8;                          // _2D8
+	u32 _2DC;                          // _2DC
+	u8 _2E0;                           // _2E0
+	Kontroller* mKontroller;           // _2E4
+	u8 _2E8[0x2EC - 0x2E8];            // _2E8, unknown
+	u32 _2EC;                          // _2EC, unknown - maybe Vector3f*?
+	u8 _2F0;                           // _2F0
+	u8 _2F1[0x314 - 0x2F1];            // _2F1, unknown
+	BurnEffect* mBurnEffect;           // _314
+	RippleEffect* mRippleEffect;       // _318
+	SlimeEffect* mSlimeEffect;         // _31C
+	NaviStateMachine* mStateMachine;   // _320
+	ShadowCaster mShadowCaster;        // _324
+	NaviDrawer* mNaviDrawer;           // _6B8
+	u8 _6BC[0x4];                      // _6BC, unknown
+	int _6C0;                          // _6C0
+	ShapeDynMaterials mNaviDynMats;    // _6C4
+	Vector3f _6D4;                     // _6D4
+	u8 _6E0[0x4];                      // _6E0, unknown
+	Vector3f _6E4;                     // _6E4
+	Vector3f _6F0;                     // _6F0
+	u8 _6FC[0x700 - 0x6FC];            // _6FC, TODO: work out members
+	int _700;                          // _700
+	u8 _704[0x710 - 0x704];            // _704, TODO: work out members
+	CPlate* mPlateMgr;                 // _710, manages pikis in navi's party
+	u8 _714[0x4];                      // _714, TODO: work out members
+	u8 _718;                           // _718
+	u32 _71C;                          // _71C, unknown
+	u32 _720;                          // _720, unknown
+	u8 _724;                           // _724
+	u8 _725[0x72C - 0x725];            // _725, TODO: work out members
+	u32 _72C;                          // _72C, unknown
+	u32 _730;                          // _730, unknown
+	u32 _734;                          // _734, unknown
+	f32 _738;                          // _738
+	u8 _73C[0x4];                      // _73C, TODO: work out members
+	Vector3f _740;                     // _740
+	Vector3f _74C;                     // _74C
+	Vector3f _758;                     // _758
+	Vector3f _764;                     // _764
+	u32 _770;                          // _770, unknown
+	PermanentEffect* _774;             // _774
+	PermanentEffect* _778;             // _778
+	PermanentEffect* _77C;             // _77C
+	PermanentEffect* _780;             // _780
+	Vector3f _784;                     // _784
+	Vector3f _790;                     // _790
+	Vector3f _79C;                     // _79C
+	f32 _7A8;                          // _7A8
+	u8 _7AC[0x4];                      // _7AC, unknown
+	DynCollObject* _7B0;               // _7B0
+	int _7B4;                          // _7B4
+	u8 _7B8[0x7C4 - 0x7B8];            // _7B8, unknown
+	Vector3f _7C4;                     // _7C4
+	u8 _7D0[0x7D8 - 0x7D0];            // _7D0, TODO: work out members
+	u32 _7D8;                          // _7D8, unknown
+	u8 _7DC[0x4];                      // _7DC, unknown
+	int _7E0;                          // _7E0
+	u8 _7E4;                           // _7E4
+	u8 _7E5;                           // _7E5
+	u8 _7E6[0x7FC - 0x7E6];            // _7E6, TODO: work out members
+	u8 _7FC;                           // _7FC
+	f32 _800;                          // _800
+	u8 _804[0x8];                      // _804, unknown
+	u32 _80C;                          // _80C, unknown
+	u32 _810;                          // _810, unknown
+	f32 _814;                          // _814
+	f32 _818;                          // _818
+	Vector3f _81C;                     // _81C
+	u32 _828;                          // _828, unknown
+	PikiShapeObject* mNaviShapeObject; // _82C
+	u8 _830[0x4];                      // _830, unknown
+	PaniPikiAnimMgr mNaviAnimMgr;      // _834
+	SearchData mNaviSearchData[6];     // _8E0
+	u32 _928;                          // _928, unknown
+	int mNaviID;                       // _92C
+	u8 _930[0x8];                      // _930, unknown
+	Vector3f _938[32];                 // _938
+	f32 _AB8;                          // _AB8
+	u32 _ABC;                          // _ABC, unknown
+	u8 _AC0[0x4];                      // _AC0, unknown
+	f32 _AC4;                          // _AC4
+	u8 _AC8[0x4];                      // _AC8, unknown
+	u8 _ACC;                           // _ACC
+	u32 _AD0;                          // _AD0, unknown
+	u8 _AD4[0x4];                      // _AD4, unknown
+	f32 _AD8;                          // _AD8
+	NaviState* mCurrState;             // _ADC
 };
 
 /**
  * @brief TODO
  */
 struct NaviDrawer : public Node {
-	virtual void draw(Graphics&); // _14 (weak)
+	NaviDrawer(Navi* navi)
+	    : Node("")
+	{
+		mNavi = navi;
+	}
+
+	virtual void draw(Graphics& gfx) { mNavi->draw(gfx); } // _14 (weak)
 
 	// _00     = VTBL
-	// _00-_1C = Node
-	// TODO: members
+	// _00-_20 = Node
+	Navi* mNavi; // _20
 };
 
 #endif

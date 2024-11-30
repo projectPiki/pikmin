@@ -13,6 +13,7 @@ struct NaviState;
  * @brief TODO
  */
 enum NaviStateID {
+	NAVISTATE_NULL        = -1,
 	NAVISTATE_Walk        = 0,
 	NAVISTATE_Throw       = 1,
 	NAVISTATE_ThrowWait   = 2,

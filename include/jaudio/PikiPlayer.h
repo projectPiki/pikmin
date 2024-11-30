@@ -1,0 +1,30 @@
+#ifndef _JAUDIO_PIKIPLAYER_H
+#define _JAUDIO_PIKIPLAYER_H
+
+#include "types.h"
+
+//////////// JAUDIO PIKMIN DEMO FUNCTIONS (C++) ////////////
+void Jac_PauseOrimaSe();
+void Jac_UnPauseOrimaSe();
+void Jac_UpdatePikiGaya();
+
+////////////////////////////////////////////////////////////
+
+#ifdef __cplusplus
+extern "C" {
+#endif // ifdef __cplusplus
+
+//////////// JAUDIO PIKMIN DEMO FUNCTIONS (C) ////////////
+void Jac_Orima_Walk(u16 soundID, u32 p2); // args uncertain
+void Jac_Orima_Formation(void);           // args
+void Jac_PlayOrimaSe(void);               // args
+void Jac_StopOrimaSe(void);               // args
+void Jac_Piki_Number(void);               // args
+
+/////////////////////////////////////////////////////////
+
+#ifdef __cplusplus
+};
+#endif // ifdef __cplusplus
+
+#endif

@@ -1,11 +1,11 @@
-#include "types.h"
+#include "jaudio/PikiPlayer.h"
 
 /*
  * --INFO--
  * Address:	80018120
  * Size:	0000DC
  */
-void Jac_Orima_Walk(void)
+void Jac_Orima_Walk(u16 soundID, u32 p2)
 {
 	/*
 	.loc_0x0:

@@ -6,6 +6,14 @@
 /*
  * @brief TODO
  */
+enum KontMode {
+	KONT_Save = 0,
+	KONT_Load = 1,
+};
+
+/*
+ * @brief TODO
+ */
 struct KIOContext {
 	void set(int, u8*, int);
 	void write();
@@ -30,7 +38,7 @@ struct KIO {
 
 	static bool fbCopy;
 	static char* haltMessage;
-	static int kontMode;
+	static int kontMode; // see KontMode enum
 
 	// TODO: members
 	s32 mChannel;        // _00

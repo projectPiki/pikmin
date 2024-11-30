@@ -280,7 +280,7 @@ struct Creature : public RefCountable, public EventTalker {
 	CollInfo* mCollInfo;        // _220
 	CreatureProp* mProps;       // _224, creature properties
 	Matrix4f _228;              // _228
-	u8 _268[0x26C - 0x268];     // _268, TODO: work out members
+	f32 _268;                   // _268
 	f32 _26C;                   // _26C
 	f32 mCollisionRadius;       // _270
 	Vector3f _274;              // _274

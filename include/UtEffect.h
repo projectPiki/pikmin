@@ -17,12 +17,14 @@ struct BombEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct BombEffectLight : public KEffect {
 	virtual void emit(EffectParm&); // _2C
@@ -31,7 +33,7 @@ struct BombEffectLight : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
@@ -39,6 +41,13 @@ struct BombEffectLight : public KEffect {
  * @brief TODO
  */
 struct BurnEffect : public KEffect {
+	BurnEffect(Vector3f* vec)
+	{
+		_0C = vec;
+		_10 = 0;
+		_14 = 0;
+	}
+
 	virtual bool invoke(zen::particleGenerator*); // _08
 	virtual void emit(EffectParm&);               // _2C
 	virtual void kill();                          // _30
@@ -48,8 +57,10 @@ struct BurnEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
-	// TODO: members
+	// _00-_0C = KEffect
+	Vector3f* _0C; // _0C
+	u32 _10;       // _10, unknown
+	u32 _14;       // _14, unknown
 };
 
 /**
@@ -66,7 +77,7 @@ struct FreeLightEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
@@ -80,7 +91,7 @@ struct GoalEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
@@ -95,7 +106,7 @@ struct NaviFue : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
@@ -110,14 +121,22 @@ struct NaviWhistle : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct RippleEffect : public KEffect {
+	RippleEffect()
+	{
+		_0C = 0;
+		_10 = _14 = 0;
+	}
+
 	virtual void emit(EffectParm&); // _2C
 	virtual void kill();            // _30
 	virtual void stop();            // _34
@@ -126,8 +145,10 @@ struct RippleEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
-	// TODO: members
+	// _00-_0C = KEffect
+	u32 _0C; // _0C, unknown
+	u32 _10; // _10, unknown
+	u32 _14; // _14, unknown
 };
 
 /**
@@ -140,12 +161,14 @@ struct SimpleEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct SlimeEffect : public KEffect {
 	SlimeEffect();
@@ -159,8 +182,8 @@ struct SlimeEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
-	// TODO: members
+	// _00-_0C = KEffect
+	u8 _0C[0x14 - 0xC]; // _0C, unknown
 };
 
 /**
@@ -172,7 +195,7 @@ struct SmokeGrassEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
@@ -185,7 +208,7 @@ struct SmokeRockEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
@@ -198,7 +221,7 @@ struct SmokeSoilEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
@@ -211,7 +234,7 @@ struct SmokeTreeEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
@@ -225,7 +248,7 @@ struct UfoSuikomiEffect : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 
@@ -240,7 +263,7 @@ struct WhistleTemplate : public KEffect {
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = KEffect?
+	// _00-_0C = KEffect
 	// TODO: members
 };
 

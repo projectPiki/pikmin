@@ -21,6 +21,8 @@ struct EffectParm {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct KEffect : public zen::CallBack1<zen::particleGenerator*>,
                  public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>,
@@ -39,7 +41,6 @@ struct KEffect : public zen::CallBack1<zen::particleGenerator*>,
 	// _00-_04 = CallBack1<gen>
 	// _04-_08 = CallBack2<gen, mdl>
 	// _08-_0C = CallBack1<mdl>
-	// TODO: members
 };
 
 #endif

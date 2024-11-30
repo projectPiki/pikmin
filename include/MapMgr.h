@@ -63,6 +63,8 @@ struct SoftLight {
 
 /**
  * @brief TODO
+ *
+ * @note Size: at least 0x394.
  */
 struct ShadowCaster : public CoreNode {
 	ShadowCaster();
@@ -71,7 +73,10 @@ struct ShadowCaster : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	LightCamera _14; // _14
+	Vector3f _370;   // _370
+	Vector3f _37C;   // _37C
+	Vector3f _388;   // _388
 };
 
 /**

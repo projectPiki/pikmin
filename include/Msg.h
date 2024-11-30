@@ -124,13 +124,14 @@ struct MsgHang : public Msg {
  * @brief TODO
  */
 struct MsgOffWall : public Msg {
-	inline MsgOffWall()
+	inline MsgOffWall(DynCollObject* object)
 	    : Msg(MSG_OffWall)
+	    , mObject(object)
 	{
 	}
 
 	// _00-_04 = Msg
-	// TODO: members
+	DynCollObject* mObject; // _04
 };
 
 /**
