@@ -335,7 +335,7 @@ void Menu::addMenu(Menu* menu, int p2, char* name)
 bool Menu::checkNewOption()
 {
 	// i dont think these button enums are correct
-	if (mController->isReleased(Controller::PRESS_DPAD_UP) || mController->isReleased(Controller::UNK_BTN22)) {
+	if (mController->isReleased(KBBTN_CSTICK_DOWN) || mController->isReleased(KBBTN_MSTICK_DOWN)) {
 		_30->checkEvents(this, 2);
 		_30 = _30->mNext;
 
@@ -352,7 +352,7 @@ bool Menu::checkNewOption()
 
 		_99 = 1;
 
-	} else if (mController->isReleased(Controller::PRESS_DPAD_DOWN) || mController->isReleased(Controller::CSTICK_UP)) {
+	} else if (mController->isReleased(KBBTN_CSTICK_UP) || mController->isReleased(KBBTN_MSTICK_UP)) {
 		_30->checkEvents(this, 2);
 
 		_30 = _30->mPrev;
@@ -379,14 +379,14 @@ bool Menu::checkNewOption()
  * Address:	8005DF84
  * Size:	00001C
  */
-bool Menu::checkSelectKey() { return mController->isPressed(Controller::PRESS_START) != false; }
+bool Menu::checkSelectKey() { return mController->isPressed(KBBTN_A) != false; }
 
 /*
  * --INFO--
  * Address:	8005DFA0
  * Size:	00001C
  */
-bool Menu::checkCancelKey() { return mController->isPressed(Controller::UNK_BTN14) != false; }
+bool Menu::checkCancelKey() { return mController->isPressed(KBBTN_B) != false; }
 
 /*
  * --INFO--

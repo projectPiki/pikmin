@@ -13,6 +13,18 @@ struct RectArea;
 /**
  * @brief TODO
  */
+enum CorePauseFlags {
+	COREPAUSE_Unk1 = 0x1,
+	COREPAUSE_Unk2 = 0x2,
+	COREPAUSE_Unk3 = 0x4,
+	COREPAUSE_Unk4 = 0x8,
+	// ...
+	COREPAUSE_Unk16 = 0x8000,
+};
+
+/**
+ * @brief TODO
+ */
 struct GameCoreSection : public Node {
 	GameCoreSection(Controller*, MapMgr*, Camera&);
 
@@ -53,5 +65,11 @@ struct GameCoreSection : public Node {
 	// _00-_20 = Node
 	// TODO: members
 };
+
+inline void clearCorePauseFlag() { GameCoreSection::pauseFlag = 0; }
+
+inline void setCorePauseFlag(u32 flag) { GameCoreSection::pauseFlag = flag; }
+
+inline bool isCorePauseFlag(u32 flag) { return GameCoreSection::pauseFlag & flag; }
 
 #endif

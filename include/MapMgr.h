@@ -212,7 +212,7 @@ struct MapMgr {
 	void getLight(f32, f32);
 	void getCollGroupList(f32, f32, bool);
 	f32 getMinY(f32, f32, bool);
-	void getMaxY(f32, f32, bool);
+	f32 getMaxY(f32, f32, bool);
 	void getCurrTri(f32, f32, bool);
 	void findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&);
 	void recTraceMove(CollGroup*, MoveTrace&, f32);

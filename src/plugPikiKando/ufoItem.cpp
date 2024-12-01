@@ -1203,7 +1203,7 @@ void UfoItem::LightAnimator::update()
  * Address:	800E7E38
  * Size:	000064
  */
-void UfoItem::getGoalPos()
+Vector3f UfoItem::getGoalPos()
 {
 	/*
 	.loc_0x0:
@@ -1240,7 +1240,7 @@ void UfoItem::getGoalPos()
  * Address:	800E7E9C
  * Size:	000044
  */
-void UfoItem::getGoalPosRadius()
+f32 UfoItem::getGoalPosRadius()
 {
 	/*
 	.loc_0x0:
@@ -1269,7 +1269,7 @@ void UfoItem::getGoalPosRadius()
  * Address:	800E7EE0
  * Size:	000084
  */
-void UfoItem::getSuckPos()
+Vector3f UfoItem::getSuckPos()
 {
 	/*
 	.loc_0x0:
@@ -3228,7 +3228,7 @@ void UfoItem::demoDraw(Graphics&, Matrix4f*)
  * Address:	800E978C
  * Size:	000008
  */
-void UfoItem::getRouteIndex()
+s16 UfoItem::getRouteIndex()
 {
 	/*
 	.loc_0x0:

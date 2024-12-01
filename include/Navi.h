@@ -18,6 +18,7 @@ struct SlimeEffect;
 struct Kontroller;
 struct NaviDrawer;
 struct NaviStateMachine;
+struct GoalItem;
 struct NaviState;
 struct Piki;
 
@@ -120,9 +121,10 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u32 _2D8;                          // _2D8
 	u32 _2DC;                          // _2DC
 	u8 _2E0;                           // _2E0
+	bool mIsPellet;                    // _2E1, is lying down/carryable
 	Kontroller* mKontroller;           // _2E4
 	u8 _2E8[0x2EC - 0x2E8];            // _2E8, unknown
-	u32 _2EC;                          // _2EC, unknown - maybe Vector3f*?
+	Vector3f* mLookAtPosPtr;           // _2EC
 	u8 _2F0;                           // _2F0
 	u8 _2F1[0x314 - 0x2F1];            // _2F1, unknown
 	BurnEffect* mBurnEffect;           // _314
@@ -138,11 +140,13 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u8 _6E0[0x4];                      // _6E0, unknown
 	Vector3f _6E4;                     // _6E4
 	Vector3f _6F0;                     // _6F0
-	u8 _6FC[0x700 - 0x6FC];            // _6FC, TODO: work out members
+	u8 _6FC[0x4];                      // _6FC, unknown
 	int _700;                          // _700
-	u8 _704[0x710 - 0x704];            // _704, TODO: work out members
+	u8 _704[0x4];                      // _704, unknown
+	GoalItem* mGoalItem;               // _708
+	u8 _70C[0x4];                      // _70C, unknown
 	CPlate* mPlateMgr;                 // _710, manages pikis in navi's party
-	u8 _714[0x4];                      // _714, TODO: work out members
+	u8 _714[0x4];                      // _714, unknown
 	u8 _718;                           // _718
 	u32 _71C;                          // _71C, unknown
 	u32 _720;                          // _720, unknown

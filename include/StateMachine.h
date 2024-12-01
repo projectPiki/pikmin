@@ -20,14 +20,18 @@ struct AState : public Receiver<T> {
 	{
 	}
 
-	virtual void init(T*);         // _38
-	virtual void exec(T*);         // _3C
-	virtual void cleanup(T*);      // _40
-	virtual void resume(T*);       // _44
-	virtual void restart(T*);      // _48
-	virtual void transit(T*, int); // _4C
+	virtual void init(T*);                    // _38
+	virtual void exec(T*);                    // _3C
+	virtual void cleanup(T*);                 // _40
+	virtual void resume(T*);                  // _44
+	virtual void restart(T*);                 // _48
+	virtual void transit(T* obj, int stateID) // _4C
+	{
+		mStateMachine->transit(obj, stateID);
+	}
 
 	inline int getStateID() const { return mStateID; }
+	inline void setOwner(StateMachine<T>* owner) { mStateMachine = owner; }
 
 	// _00 = VTBL
 	int mStateID;                   // _04
@@ -83,6 +87,18 @@ struct StateMachine {
 	}
 
 	inline bool isFull() { return mStateCount >= mStateLimit; }
+
+	// name based off P2 function
+	inline void registerState(AState<T>* state)
+	{
+		if (isFull()) {
+			return;
+		}
+		appendState(state);
+		if (isValidState(state)) {
+			initState(state);
+		}
+	}
 
 	// _00 = VTBL
 	AState<T>** mStates; // _04

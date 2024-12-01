@@ -52,11 +52,11 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 	virtual void update();                                           // _E0
 	virtual void refresh(Graphics&);                                 // _EC
 	virtual void playEffect(int);                                    // _12C
-	virtual void getGoalPos();                                       // _15C
-	virtual void getGoalPosRadius();                                 // _160
-	virtual void getSuckPos();                                       // _164
+	virtual Vector3f getGoalPos();                                   // _15C
+	virtual f32 getGoalPosRadius();                                  // _160
+	virtual Vector3f getSuckPos();                                   // _164
 	virtual void suckMe(Pellet*);                                    // _168
-	virtual void getRouteIndex();                                    // _170
+	virtual s16 getRouteIndex();                                     // _170
 	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _180
 
 	void setFlowEffect(bool);

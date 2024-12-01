@@ -16,6 +16,8 @@ enum EResultsFlags {
 	RESFLAG_Unk24 = 24,
 	// ...
 	RESFLAG_Unk39 = 39,
+	// ...
+	RESFLAG_Unk42 = 42,
 };
 
 /**

@@ -56,19 +56,6 @@ enum NaviStateID {
 /**
  * @brief TODO
  */
-struct NaviStateMachine : public StateMachine<Navi> {
-	virtual void init(Navi*); // _08
-
-	NaviState* getNaviState(Navi*);
-
-	// _00     = VTBL
-	// _00-_1C = StateMachine
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
 struct NaviState : public AState<Navi> {
 	inline NaviState(int stateID)
 	    : AState(stateID)
@@ -85,6 +72,21 @@ struct NaviState : public AState<Navi> {
 /**
  * @brief TODO
  */
+struct NaviStateMachine : public StateMachine<Navi> {
+	virtual void init(Navi*); // _08
+
+	NaviState* getNaviState(Navi*);
+
+	// _00     = VTBL
+	// _00-_1C = StateMachine
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x1C.
+ */
 struct NaviAttackState : public NaviState {
 	NaviAttackState();
 
@@ -97,11 +99,13 @@ struct NaviAttackState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x1C - 0x10]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct NaviBuryState : public NaviState {
 	NaviBuryState();
@@ -115,10 +119,16 @@ struct NaviBuryState : public NaviState {
 	// _00     = VTBL
 	// _00-_10 = NaviState
 	Vector3f _10; // _10
+	u8 _1C;       // _1C
+	u8 _1D;       // _1D
+	u8 _1E;       // _1E
+	u8 _1F;       // _1F
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviClearState : public NaviState {
 	NaviClearState();
@@ -130,11 +140,12 @@ struct NaviClearState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct NaviContainerState : public NaviState, virtual public ContainerWin::Listener, virtual public GmWin::CloseListener {
 	NaviContainerState();
@@ -160,6 +171,8 @@ struct NaviContainerState : public NaviState, virtual public ContainerWin::Liste
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviDeadState : public NaviState {
 	NaviDeadState();
@@ -173,11 +186,12 @@ struct NaviDeadState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviDemoInfState : public NaviState {
 	NaviDemoInfState();
@@ -189,11 +203,12 @@ struct NaviDemoInfState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x40.
  */
 struct NaviDemoSunsetState : public NaviState {
 	NaviDemoSunsetState();
@@ -329,10 +344,13 @@ struct NaviDemoSunsetState : public NaviState {
 	Vector3f _20;                    // _20
 	u8 _2C[0xC];                     // _2C, unknown
 	DemoStateMachine* mStateMachine; // _38
+	u8 _3C[0x4];                     // _3C, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct NaviDemoWaitState : public NaviState {
 	NaviDemoWaitState();
@@ -344,11 +362,13 @@ struct NaviDemoWaitState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	Vector3f _10; // _10
+	Vector3f mLookAtPos; // _10
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct NaviFlickState : public NaviState {
 	NaviFlickState();
@@ -361,11 +381,13 @@ struct NaviFlickState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x24 - 0x10]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviFunbariState : public NaviState {
 	NaviFunbariState();
@@ -377,11 +399,12 @@ struct NaviFunbariState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct NaviGatherState : public NaviState {
 	NaviGatherState();
@@ -395,11 +418,13 @@ struct NaviGatherState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x1C - 0x10]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x34.
  */
 struct NaviGeyzerState : public NaviState {
 	NaviGeyzerState();
@@ -413,12 +438,15 @@ struct NaviGeyzerState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x10]; // _10, unknown
-	Vector3f _20; // _20
+	u8 _10[0x10];        // _10, unknown
+	Vector3f _20;        // _20
+	u8 _2C[0x34 - 0x2C]; // _2C, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct NaviIdleState : public NaviState {
 	NaviIdleState();
@@ -430,11 +458,13 @@ struct NaviIdleState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x8]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviIroIroState : public NaviState {
 	NaviIroIroState();
@@ -445,11 +475,12 @@ struct NaviIroIroState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviLockState : public NaviState {
 	NaviLockState();
@@ -460,11 +491,12 @@ struct NaviLockState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct NaviNukuAdjustState : public NaviState {
 	NaviNukuAdjustState();
@@ -485,6 +517,8 @@ struct NaviNukuAdjustState : public NaviState {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct NaviNukuState : public NaviState {
 	NaviNukuState();
@@ -497,11 +531,13 @@ struct NaviNukuState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x8]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct NaviPartsAccessState : public NaviState {
 	NaviPartsAccessState();
@@ -514,11 +550,13 @@ struct NaviPartsAccessState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size; 0x14.
  */
 struct NaviPelletState : public NaviState {
 	NaviPelletState();
@@ -531,11 +569,13 @@ struct NaviPelletState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	bool mIsFinished; // _10
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviPickState : public NaviState {
 	NaviPickState();
@@ -547,11 +587,12 @@ struct NaviPickState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct NaviPikiZeroState : public NaviState {
 	NaviPikiZeroState();
@@ -564,11 +605,13 @@ struct NaviPikiZeroState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x8]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviPressedState : public NaviState {
 	NaviPressedState();
@@ -580,11 +623,12 @@ struct NaviPressedState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct NaviPushPikiState : public NaviState {
 	NaviPushPikiState();
@@ -597,11 +641,13 @@ struct NaviPushPikiState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct NaviPushState : public NaviState {
 	NaviPushState();
@@ -614,11 +660,13 @@ struct NaviPushState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct NaviReleaseState : public NaviState {
 	NaviReleaseState();
@@ -630,11 +678,13 @@ struct NaviReleaseState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviRopeExitState : public NaviState {
 	NaviRopeExitState();
@@ -646,11 +696,12 @@ struct NaviRopeExitState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviRopeState : public NaviState {
 	NaviRopeState();
@@ -661,11 +712,12 @@ struct NaviRopeState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviSowState : public NaviState {
 	NaviSowState();
@@ -676,11 +728,12 @@ struct NaviSowState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x40.
  */
 struct NaviStartingState : public NaviState {
 	NaviStartingState();
@@ -701,7 +754,9 @@ struct NaviStartingState : public NaviState {
 };
 
 /**
- * @brief TODO
+ * @brief State when navi has puffmin stuck to it.
+ *
+ * @note Size: 0x24.
  */
 struct NaviStuckState : public NaviState {
 	NaviStuckState();
@@ -712,11 +767,15 @@ struct NaviStuckState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	Vector3f _10; // _10
+	Vector3f mPrevStickDir; // _10, last recorded main joystick direction
+	f32 mIdleTimer;         // _1C, resets recorded action attempts when this hits 0
+	int mActionCount;       // _20
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct NaviThrowState : public NaviState {
 	NaviThrowState();
@@ -729,11 +788,13 @@ struct NaviThrowState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x8]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x2C.
  */
 struct NaviThrowWaitState : public NaviState {
 	NaviThrowWaitState();
@@ -752,11 +813,13 @@ struct NaviThrowWaitState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x2C - 0x10]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct NaviUfoAccessState : public NaviState {
 	NaviUfoAccessState();
@@ -769,11 +832,13 @@ struct NaviUfoAccessState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct NaviUfoState : public NaviState {
 	NaviUfoState();
@@ -787,12 +852,17 @@ struct NaviUfoState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x4];  // _10, unknown
+	u16 _10;      // _10
+	u16 _12;      // _12
 	Vector3f _14; // _14
+	s8 _20;       // _20
+	u8 _21;       // _21
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct NaviWalkState : public NaviState {
 	NaviWalkState();
@@ -807,11 +877,16 @@ struct NaviWalkState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
+	u32 _10; // _10, unknown
+	f32 _14; // _14
+	int _18; // _18
+	f32 _1C; // _1C
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NaviWaterState : public NaviState {
 	NaviWaterState();
@@ -822,7 +897,6 @@ struct NaviWaterState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	// TODO: members
 };
 
 #endif

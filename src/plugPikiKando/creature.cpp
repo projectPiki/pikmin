@@ -583,7 +583,7 @@ void Creature::init()
 	_2AC = nullptr;
 	resetCreatureFlag(CF_Unk6 | CF_Unk17);
 	clearCnt();
-	_2B4 = 0;
+	mIsBeingDamaged = false;
 
 	setCreatureFlag(CF_Unk3 | CF_Unk4);
 	resetCreatureFlag(CF_Unk5 | CF_Unk7 | CF_Unk8 | CF_Unk11);
@@ -928,13 +928,13 @@ Creature::Creature(CreatureProp* props)
 	_E0.fromEuler(Vector3f(0.0f, 0.0f, 0.0f));
 	_D4.set(0.0f, 0.0f, 0.0f);
 	resetCreatureFlag(CF_Unk1 | CF_Unk6);
-	_2A8 = nullptr;
-	_2AC = 0;
-	_2B4 = 0;
-	_280 = 0;
-	_290 = 0;
-	_298 = 0;
-	_2B0 = 0;
+	_2A8            = nullptr;
+	_2AC            = 0;
+	mIsBeingDamaged = false;
+	_280            = 0;
+	_290            = 0;
+	_298            = 0;
+	_2B0            = 0;
 }
 
 /*

@@ -80,12 +80,12 @@ struct UfoItem : public Suckable {
 	virtual void refresh(Graphics&);                     // _EC
 	virtual void demoDraw(Graphics&, Matrix4f*);         // _FC
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _154
-	virtual void getGoalPos();                           // _15C
-	virtual void getGoalPosRadius();                     // _160
-	virtual void getSuckPos();                           // _164
+	virtual Vector3f getGoalPos();                       // _15C
+	virtual f32 getGoalPosRadius();                      // _160
+	virtual Vector3f getSuckPos();                       // _164
 	virtual void suckMe(Pellet*);                        // _168
 	virtual void finishSuck(Pellet*);                    // _16C
-	virtual void getRouteIndex();                        // _170
+	virtual s16 getRouteIndex();                         // _170
 
 	void setSpotTurn(bool);
 	void setSpotActive(bool);

@@ -1469,7 +1469,7 @@ void Jac_PrepareDemo(void)
  * Address:	8001B120
  * Size:	0000D0
  */
-void Jac_StartPartsFindDemo(void)
+void Jac_StartPartsFindDemo(u32 p1, int p2)
 {
 	/*
 	.loc_0x0:

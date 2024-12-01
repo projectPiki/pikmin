@@ -199,7 +199,13 @@ struct InteractFire : public Interaction {
  * @brief TODO
  */
 struct InteractFlick : public Interaction {
-	inline InteractFlick(); // TODO: probably
+	inline InteractFlick(Creature* owner, f32 p2, f32 p3, f32 p4)
+	    : Interaction(owner)
+	{
+		_08 = p2;
+		_0C = p3;
+		_10 = p4;
+	}
 
 	virtual bool actCommon(Creature*);   // _08
 	virtual bool actPiki(Piki*);         // _0C

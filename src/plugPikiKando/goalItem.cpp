@@ -831,7 +831,7 @@ void GoalItem::setFlightLight(bool a1)
  * Address:	800EB140
  * Size:	000024
  */
-void GoalItem::getSuckPos()
+Vector3f GoalItem::getSuckPos()
 {
 	/*
 	.loc_0x0:
@@ -2393,8 +2393,9 @@ void GoalItem::refresh(Graphics&)
  * Address:	800EC484
  * Size:	00001C
  */
-void GoalItem::getGoalPos()
+Vector3f GoalItem::getGoalPos()
 {
+	return mPosition;
 	/*
 	.loc_0x0:
 	  lfs       f0, 0x94(r4)
@@ -2412,7 +2413,7 @@ void GoalItem::getGoalPos()
  * Address:	800EC4A0
  * Size:	000008
  */
-void GoalItem::getGoalPosRadius()
+f32 GoalItem::getGoalPosRadius()
 {
 	/*
 	.loc_0x0:
@@ -2426,7 +2427,7 @@ void GoalItem::getGoalPosRadius()
  * Address:	800EC4A8
  * Size:	000008
  */
-void GoalItem::getRouteIndex()
+s16 GoalItem::getRouteIndex()
 {
 	/*
 	.loc_0x0:

@@ -6,54 +6,58 @@
 
 /**
  * @brief TODO
+ *
+ * @note I think these are more accurate based on Minty's notes.
+ */
+enum KeyboardButtons {
+	KBBTN_NULL = 0x0,
+
+	KBBTN_CSTICK_LEFT  = 0x1,
+	KBBTN_CSTICK_RIGHT = 0x2,
+	KBBTN_CSTICK_UP    = 0x4,
+	KBBTN_CSTICK_DOWN  = 0x8,
+
+	KBBTN_Unk5 = 0x10,
+	KBBTN_Unk6 = 0x20,
+	KBBTN_Unk7 = 0x40,
+	KBBTN_Unk8 = 0x80,
+
+	KBBTN_DPAD_LEFT  = 0x100, // not sure what direction this is
+	KBBTN_DPAD_RIGHT = 0x200, // not sure what direction this is
+	KBBTN_DPAD_UP    = 0x400, // not sure what direction this is
+	KBBTN_DPAD_DOWN  = 0x800, // not sure what direction this is
+
+	KBBTN_A = 0x1000,
+	KBBTN_B = 0x2000,
+	KBBTN_X = 0x4000,
+	KBBTN_Y = 0x8000,
+
+	KBBTN_Z = 0x10000,
+	KBBTN_L = 0x20000,
+	KBBTN_R = 0x40000,
+
+	KBBTN_MSTICK_UP    = 0x80000,
+	KBBTN_MSTICK_RIGHT = 0x100000,
+	KBBTN_MSTICK_DOWN  = 0x200000,
+	KBBTN_MSTICK_LEFT  = 0x400000,
+
+	KBBTN_UNK24 = 0x800000,
+
+	KBBTN_START = 0x1000000,
+
+	KBBTN_UNK26 = 0x2000000,
+	KBBTN_UNK27 = 0x4000000,
+	KBBTN_UNK28 = 0x8000000,
+	KBBTN_UNK29 = 0x10000000,
+	KBBTN_UNK30 = 0x20000000,
+	KBBTN_UNK31 = 0x40000000,
+	KBBTN_UNK32 = 0x80000000,
+};
+
+/**
+ * @brief TODO
  */
 struct Controller : public Node {
-	enum EButton {
-		False = 0x0,
-
-		PRESS_DPAD_LEFT  = 0x1,
-		PRESS_DPAD_RIGHT = 0x2,
-		PRESS_DPAD_DOWN  = 0x4,
-		PRESS_DPAD_UP    = 0x8,
-
-		PRESS_Z = 0x10,
-		PRESS_R = 0x20,
-		PRESS_L = 0x40,
-
-		PRESS_A     = 0x100,
-		PRESS_B     = 0x200,
-		PRESS_X     = 0x400,
-		PRESS_Y     = 0x800,
-		PRESS_START = 0x1000,
-
-		UNK_BTN14 = 0x2000,
-		UNK_BTN15 = 0x4000,
-		UNK_BTN16 = 0x8000,
-
-		CSTICK_LEFT  = 0x10000,
-		CSTICK_RIGHT = 0x20000,
-		CSTICK_DOWN  = 0x40000,
-		CSTICK_UP    = 0x80000,
-
-		UNK_BTN21 = 0x100000,
-		UNK_BTN22 = 0x200000,
-		UNK_BTN23 = 0x400000,
-		UNK_BTN24 = 0x800000,
-
-		ANALOG_LEFT  = 0x1000000,
-		ANALOG_RIGHT = 0x2000000,
-		ANALOG_DOWN  = 0x4000000,
-		ANALOG_UP    = 0x8000000,
-
-		PRESS_DPAD = (PRESS_DPAD_LEFT | PRESS_DPAD_RIGHT | PRESS_DPAD_DOWN | PRESS_DPAD_UP),
-
-		PRESS_LEFT  = (PRESS_DPAD_LEFT | ANALOG_LEFT),
-		PRESS_RIGHT = (PRESS_DPAD_RIGHT | ANALOG_RIGHT),
-		PRESS_DOWN  = (PRESS_DPAD_DOWN | ANALOG_DOWN),
-		PRESS_UP    = (PRESS_DPAD_UP | ANALOG_UP),
-
-		PRESS_ABXYLRZ = (PRESS_A | PRESS_B | PRESS_X | PRESS_Y | PRESS_L | PRESS_R | PRESS_Z),
-	};
 
 	Controller()
 	    : Node("<Controller>")
@@ -75,6 +79,7 @@ struct Controller : public Node {
 	f32 getSubStickX();
 	f32 getSubStickY();
 
+	// use KeyboardButtons enum
 	inline bool isCurrentInput(u32 button) { return mCurrentInput & button; }
 	inline bool isReleased(u32 button) { return mInputReleased & button; }
 	inline bool isPressed(u32 button) { return mInputPressed & button; }

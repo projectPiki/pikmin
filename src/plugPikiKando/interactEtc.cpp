@@ -59,7 +59,7 @@ bool InteractWarn::actPiki(Piki* piki)
 		return false;
 	}
 
-	if (piki->_2B4 == 0 && state != PIKISTATE_Flick) {
+	if (!piki->mIsBeingDamaged && state != PIKISTATE_Flick) {
 		piki->mFSM->transit(piki, PIKISTATE_LookAt);
 
 	} else {

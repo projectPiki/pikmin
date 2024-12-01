@@ -295,7 +295,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Creature* _2A8;             // _2A8
 	Creature* _2AC;             // _2AC
 	u32 _2B0;                   // _2B0, unknown
-	u8 _2B4;                    // _2B4
+	bool mIsBeingDamaged;       // _2B4
 };
 
 // Global helper functions:

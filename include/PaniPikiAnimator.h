@@ -140,6 +140,7 @@ struct PaniPikiAnimMgr {
 	inline f32 getAnimSpeed() { return mAnimSpeed; }
 	inline void setAnimSpeed(f32 speed) { mAnimSpeed = speed; }
 
+	inline PaniPikiAnimator* getAnimator() { return &_04; }      // name is a guess, rename later
 	inline PaniPikiAnimator* getBlendAnimator() { return &_58; } // name is a guess, rename later
 
 	static PaniMotionTable* motionTable;

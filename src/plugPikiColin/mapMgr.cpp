@@ -7910,7 +7910,7 @@ f32 MapMgr::getMinY(f32, f32, bool)
  * Address:	80068068
  * Size:	000170
  */
-void MapMgr::getMaxY(f32, f32, bool)
+f32 MapMgr::getMaxY(f32, f32, bool)
 {
 	/*
 	.loc_0x0:

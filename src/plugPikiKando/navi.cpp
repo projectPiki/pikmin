@@ -946,14 +946,14 @@ void Navi::startDamageEffect()
  */
 void Navi::finishDamage()
 {
-	_2B4 = 0;
+	mIsBeingDamaged = false;
 	if (getCurrState()) {
 		getCurrState()->restart(this);
 	}
 
 	if (mHealth <= 0.0f) {
 		mStateMachine->transit(this, NAVISTATE_Dead);
-		GameCoreSection::pauseFlag = 0x8005;
+		setCorePauseFlag(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 	} else {
 		if (!gameflow.mMoviePlayer->_124 && mHealth <= 0.25f * static_cast<NaviProp*>(mProps)->mNaviProps.mHealth()
 		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk29)) {
@@ -2273,7 +2273,7 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
 	MsgAnim msg(&event);
 	sendMsg(&msg);
 
-	if (_2B4 && event.mEventType == KEY_Done) {
+	if (mIsBeingDamaged && event.mEventType == KEY_Done) {
 		finishDamage();
 	}
 	/*
@@ -8900,8 +8900,8 @@ void Navi::renderParabola(Graphics&, f32, f32)
  */
 void Navi::finishLook()
 {
-	_2EC = 0;
-	_2F0 = 10;
+	mLookAtPosPtr = nullptr;
+	_2F0          = 10;
 }
 
 /*

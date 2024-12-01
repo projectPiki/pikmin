@@ -2575,7 +2575,7 @@ void ItemCreature::doAnimation()
  */
 void ItemCreature::update()
 {
-	if (mObjType == OBJTYPE_Ufo || (mObjType != OBJTYPE_Ufo && !(GameCoreSection::pauseFlag & 0x8000))) {
+	if (mObjType == OBJTYPE_Ufo || (mObjType != OBJTYPE_Ufo && !isCorePauseFlag(COREPAUSE_Unk16))) {
 		Creature::update();
 	}
 }
