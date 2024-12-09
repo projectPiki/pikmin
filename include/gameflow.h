@@ -372,7 +372,8 @@ struct GameFlow : public Node {
 	GameLoadIdler mGameLoadIdler;  // _31C
 	u8 _330[0x338 - 0x330];        // _330, unknown
 	int _338;                      // _338
-	u8 _33C[0x350 - 0x33C];        // _33C, unknown
+	u32 _33C;                      // _33C, unknown
+	u8 _340[0x350 - 0x340];        // _340, unknown
 	u32 _350;                      // _350, unknown
 	u8 _354[0x8];                  // _354, unknown
 	u8 _35C;                       // _35C, maybe Colour?

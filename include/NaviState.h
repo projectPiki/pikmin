@@ -164,9 +164,10 @@ struct NaviContainerState : public NaviState, virtual public ContainerWin::Liste
 	// _00-_10 = NaviState
 	// _10     = ContainerWin::Listener ptr
 	// _14     = GmWin::CloseListener ptr
-	u8 _18[0x8]; // _18, TODO: members
-	             // ContainerWin::Listener
-	             // GmWin::CloseListener
+	int _18; // _18
+	int _1C; // _1C
+	         // ContainerWin::Listener
+	         // GmWin::CloseListener
 };
 
 /**
@@ -381,7 +382,11 @@ struct NaviFlickState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x24 - 0x10]; // _10, unknown
+	u16 _10; // _10
+	f32 _14; // _14
+	f32 _18; // _18
+	f32 _1C; // _1C
+	f32 _20; // _20
 };
 
 /**
@@ -418,7 +423,9 @@ struct NaviGatherState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x1C - 0x10]; // _10, unknown
+	u16 _10; // _10
+	f32 _14; // _14
+	u8 _18;  // _18
 };
 
 /**
@@ -438,9 +445,13 @@ struct NaviGeyzerState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x10];        // _10, unknown
-	Vector3f _20;        // _20
-	u8 _2C[0x34 - 0x2C]; // _2C, unknown
+	u16 _10;      // _10
+	f32 _14;      // _14
+	f32 _18;      // _18
+	f32 _1C;      // _1C
+	Vector3f _20; // _20
+	f32 _2C;      // _2C
+	u8 _30;       // _30
 };
 
 /**
@@ -458,7 +469,8 @@ struct NaviIdleState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x8]; // _10, unknown
+	u8 _10[0x4];         // _10, unknown
+	bool mStopBeingIdle; // _14
 };
 
 /**

@@ -133,7 +133,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	NaviStateMachine* mStateMachine;   // _320
 	ShadowCaster mShadowCaster;        // _324
 	NaviDrawer* mNaviDrawer;           // _6B8
-	u8 _6BC[0x4];                      // _6BC, unknown
+	f32 _6BC;                          // _6BC
 	int _6C0;                          // _6C0
 	ShapeDynMaterials mNaviDynMats;    // _6C4
 	Vector3f _6D4;                     // _6D4
@@ -142,9 +142,9 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	Vector3f _6F0;                     // _6F0
 	u8 _6FC[0x4];                      // _6FC, unknown
 	int _700;                          // _700
-	u8 _704[0x4];                      // _704, unknown
+	f32 _704;                          // _704
 	GoalItem* mGoalItem;               // _708
-	u8 _70C[0x4];                      // _70C, unknown
+	u8 _70C;                           // _70C
 	CPlate* mPlateMgr;                 // _710, manages pikis in navi's party
 	u8 _714[0x4];                      // _714, unknown
 	u8 _718;                           // _718

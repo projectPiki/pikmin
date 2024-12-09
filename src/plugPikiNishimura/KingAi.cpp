@@ -2529,7 +2529,7 @@ void KingAi::setAttackPriority()
 		f32 boundedFactor = (factor < 0.0f) ? 0.0f : (factor > 1.0f) ? 1.0f : factor;
 
 		f32 chance = boundedFactor * kingProps->mKingProps._384() + (1.0f - boundedFactor) * kingProps->mKingProps._374(); // t02, t01
-		if (0.99999f * randWeightFloat(1.0f) < chance) {
+		if (randFloat(0.99999f) < chance) {
 			_08 = 0;
 			_18 = 0;
 			// mKing->_3C0->_05 = 0; // whatever this is

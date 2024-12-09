@@ -307,6 +307,7 @@ struct DVDStream : public RandomAccessStream {
 	bool mIsFileOpen;      // _4C, trigger to do DVDClose on close()
 };
 
+static inline f32 randFloat() { return System::getRand(1.0f); }
 static inline f32 randFloat(f32 max) { return max * System::getRand(1.0f); }
 static inline f32 randBalanced(f32 centre) { return System::getRand(1.0f) - centre; }
 static inline bool coinFlip() { return System::getRand(1.0f) > 0.5f; }

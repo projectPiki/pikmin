@@ -1,12 +1,48 @@
 #include "types.h"
+#include "hvqm4.h"
+
+/*
+
+Initial code attempts + comments + function arguments/naming guides taken from
+http://github.com/Tilka/hvqm4
+with many thanks.
+
+*/
+
+static int clipTable[0x80];
+static int divTable[0x10];
+static int mcdivTable[0x200];
+
+static u32 readTree_signed;
+static u32 readTree_scale;
+
+// forward declarations
+static u8 getByte(BitBuffer* buf);
+static s16 getBit(BitBuffer* buf);
 
 /*
  * --INFO--
  * Address:	8001EC3C
  * Size:	000360
  */
-void init_global_constants(void)
+static void init_global_constants()
 {
+	int i;
+	clipTable[0] = 0;
+	// this is wrong
+	for (i = 1; i < 0x80; i++) {
+		clipTable[i] = 0x1000 / i;
+	}
+
+	// these are right
+	divTable[0] = 0;
+	for (i = 1; i < 0x10; i++) {
+		divTable[i] = 0x1000 / (i * 16) * 16;
+	}
+	mcdivTable[0] = 0;
+	for (i = 1; i < 0x200; i++) {
+		mcdivTable[i] = 0x1000 / i;
+	}
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x18(r1)
@@ -277,9 +313,10 @@ void init_global_constants(void)
  * Address:	........
  * Size:	000014
  */
-void set_border(void)
+static void set_border(BlockData* dst)
 {
-	// UNUSED FUNCTION
+	dst->value = 0x7F;
+	dst->type  = 0xFF;
 }
 
 /*
@@ -287,90 +324,38 @@ void set_border(void)
  * Address:	8001EF9C
  * Size:	00011C
  */
-void setHVQPlaneDesc(void)
+static void setHVQPlaneDesc(SeqObj* seqObj, u32 planeIdx, u8 hSamp, u8 vSamp)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r5,0,24,31
-	  lwz       r7, 0x0(r3)
-	  mulli     r4, r4, 0x38
-	  cmplwi    r0, 0x2
-	  add       r4, r7, r4
-	  bne-      .loc_0x20
-	  li        r0, 0x1
-	  b         .loc_0x24
+	u32 mcb, pb;
+	HVQPlaneDesc* plane      = &seqObj->state->planes[planeIdx];
+	plane->width_shift       = (hSamp == 2) ? 1 : 0;
+	plane->width_in_samples  = seqObj->width >> plane->width_shift;
+	plane->height_shift      = (vSamp == 2) ? 1 : 0;
+	plane->height_in_samples = seqObj->height >> plane->height_shift;
+	plane->size_in_samples   = plane->width_in_samples * plane->height_in_samples;
 
-	.loc_0x20:
-	  li        r0, 0
+	// pixels per 2x2 block
+	plane->pb_per_mcb_x   = 2 >> plane->width_shift;                   // 1..2
+	plane->pb_per_mcb_y   = 2 >> plane->height_shift;                  // 1..2
+	plane->blocks_per_mcb = plane->pb_per_mcb_x * plane->pb_per_mcb_y; // 1..4
+	// number of 4x4 blocks
+	plane->h_blocks = seqObj->width / (hSamp * 4);
+	plane->v_blocks = seqObj->height / (vSamp * 4);
+	// number of 4x4 blocks + border
+	plane->h_blocks_safe = plane->h_blocks + 2;
+	plane->v_blocks_safe = plane->v_blocks + 2;
+	// offset of blocks in MCB
+	plane->mcb_offset[0] = 0;
+	plane->mcb_offset[3] = 1;
+	mcb                  = plane->h_blocks_safe;
+	plane->mcb_offset[1] = mcb;
+	plane->mcb_offset[2] = mcb + 1;
 
-	.loc_0x24:
-	  stb       r0, 0x30(r4)
-	  rlwinm    r0,r6,0,24,31
-	  cmplwi    r0, 0x2
-	  lhz       r7, 0x4(r3)
-	  lbz       r0, 0x30(r4)
-	  sraw      r0, r7, r0
-	  sth       r0, 0x28(r4)
-	  bne-      .loc_0x4C
-	  li        r0, 0x1
-	  b         .loc_0x50
-
-	.loc_0x4C:
-	  li        r0, 0
-
-	.loc_0x50:
-	  stb       r0, 0x31(r4)
-	  rlwinm    r8,r5,2,22,29
-	  rlwinm    r7,r6,2,22,29
-	  lhz       r9, 0x6(r3)
-	  li        r10, 0x2
-	  lbz       r0, 0x31(r4)
-	  li        r6, 0
-	  li        r5, 0x1
-	  sraw      r0, r9, r0
-	  sth       r0, 0x2A(r4)
-	  li        r0, 0x4
-	  lhz       r11, 0x28(r4)
-	  lhz       r9, 0x2A(r4)
-	  mullw     r9, r11, r9
-	  stw       r9, 0x2C(r4)
-	  lbz       r9, 0x30(r4)
-	  sraw      r9, r10, r9
-	  stb       r9, 0x32(r4)
-	  lbz       r9, 0x31(r4)
-	  sraw      r9, r10, r9
-	  stb       r9, 0x33(r4)
-	  lbz       r10, 0x32(r4)
-	  lbz       r9, 0x33(r4)
-	  mullw     r9, r10, r9
-	  stb       r9, 0x34(r4)
-	  lhz       r9, 0x4(r3)
-	  divw      r8, r9, r8
-	  sth       r8, 0x8(r4)
-	  lhz       r3, 0x6(r3)
-	  divw      r3, r3, r7
-	  sth       r3, 0xA(r4)
-	  lhz       r3, 0x8(r4)
-	  addi      r3, r3, 0x2
-	  sth       r3, 0xC(r4)
-	  lhz       r3, 0xA(r4)
-	  addi      r3, r3, 0x2
-	  sth       r3, 0xE(r4)
-	  sth       r6, 0x10(r4)
-	  sth       r5, 0x16(r4)
-	  lhz       r3, 0xC(r4)
-	  sth       r3, 0x12(r4)
-	  addi      r3, r3, 0x1
-	  sth       r3, 0x14(r4)
-	  stw       r6, 0x18(r4)
-	  stw       r0, 0x24(r4)
-	  lhz       r0, 0x28(r4)
-	  rlwinm    r3,r0,2,0,29
-	  stw       r3, 0x1C(r4)
-	  addi      r0, r3, 0x4
-	  stw       r0, 0x20(r4)
-	  blr
-	*/
+	plane->pb_offset[0] = 0;
+	plane->pb_offset[3] = 4;
+	pb                  = plane->width_in_samples << 2;
+	plane->pb_offset[1] = pb;
+	plane->pb_offset[2] = pb + 4;
 }
 
 /*
@@ -378,7 +363,7 @@ void setHVQPlaneDesc(void)
  * Address:	........
  * Size:	000030
  */
-void setCode(void)
+static void setCode(BitBuffer* dst, const void* src)
 {
 	// UNUSED FUNCTION
 }
@@ -388,7 +373,7 @@ void setCode(void)
  * Address:	8001F0B8
  * Size:	0002CC
  */
-void _readTree(void)
+static s16 _readTree(Tree* dst, BitBuffer* src)
 {
 	/*
 	.loc_0x0:
@@ -615,7 +600,7 @@ void _readTree(void)
  * Address:	8001F384
  * Size:	000064
  */
-void getByte(void)
+static u8 getByte(BitBuffer* buf)
 {
 	/*
 	.loc_0x0:
@@ -656,7 +641,7 @@ void getByte(void)
  * Address:	........
  * Size:	000140
  */
-void readTree(void)
+static void readTree(BitBufferWithTree* buf, u32 isSigned, u32 scale)
 {
 	// UNUSED FUNCTION
 }
@@ -666,7 +651,7 @@ void readTree(void)
  * Address:	........
  * Size:	000084
  */
-void decodeUOvfSym(void)
+static int decodeUOvfSym(BitBufferWithTree* buf, int max)
 {
 	// UNUSED FUNCTION
 }
@@ -676,7 +661,7 @@ void decodeUOvfSym(void)
  * Address:	8001F3E8
  * Size:	0002C4
  */
-void Ipic_BasisNumDec(void)
+static void Ipic_BasisNumDec(VideoState* state)
 {
 	/*
 	.loc_0x0:
@@ -925,7 +910,7 @@ void Ipic_BasisNumDec(void)
  * Address:	8001F6AC
  * Size:	00013C
  */
-void IpicDcvDec(void)
+static void IpicDcvDec(VideoState* state)
 {
 	/*
 	.loc_0x0:
@@ -1038,7 +1023,7 @@ void IpicDcvDec(void)
  * Address:	8001F7E8
  * Size:	000040
  */
-void getBit(void)
+static s16 getBit(BitBuffer* buf)
 {
 	/*
 	.loc_0x0:
@@ -1070,7 +1055,7 @@ void getBit(void)
  * Address:	8001F828
  * Size:	000070
  */
-void decodeHuff(void)
+static u32 decodeHuff(BitBufferWithTree* buf)
 {
 	/*
 	.loc_0x0:
@@ -1118,7 +1103,7 @@ void decodeHuff(void)
  * Address:	8001F898
  * Size:	0003A4
  */
-void MakeNest(void)
+static void MakeNest(VideoState* state, u16 nestX, u16 nestY)
 {
 	/*
 	.loc_0x0:
@@ -1427,7 +1412,7 @@ void MakeNest(void)
  * Address:	8001FC3C
  * Size:	000198
  */
-void WeightImBlock(void)
+static void WeightImBlock(u8* dst, u32 stride, u8 value, u8 top, u8 bottom, u8 left, u8 right)
 {
 	/*
 	.loc_0x0:
@@ -1541,7 +1526,7 @@ void WeightImBlock(void)
  * Address:	8001FDD4
  * Size:	000048
  */
-void OrgBlock(void)
+static void OrgBlock(VideoState* state, u8* dst, u32 dstStride, u32 planeIdx)
 {
 	/*
 	.loc_0x0:
@@ -1570,8 +1555,10 @@ void OrgBlock(void)
  * --INFO--
  * Address:	8001FE1C
  * Size:	0003D0
+ *
+ * @note: AOT = Adaptive Orthogonal Transform, apparently
  */
-void IntraAotBlock(void)
+static void IntraAotBlock(VideoState* state, u8* dst, u32 stride, u8 targetAverage, u8 blockType, u32 planeIdx)
 {
 	/*
 	.loc_0x0:
@@ -1837,7 +1824,7 @@ void IntraAotBlock(void)
  * Address:	800201EC
  * Size:	00047C
  */
-void GetAotBasis(void)
+static u32 GetAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, const u8* nestData, u32 nestStride, u32 planeIdx)
 {
 	/*
 	.loc_0x0:
@@ -2212,7 +2199,7 @@ void GetAotBasis(void)
  * Address:	80020668
  * Size:	000144
  */
-void IpicBlockDec(void)
+static void IpicBlockDec(VideoState* state, u8* dst, u32 stride, StackState* stackState)
 {
 	/*
 	.loc_0x0:
@@ -2323,7 +2310,7 @@ void IpicBlockDec(void)
  * Address:	800207AC
  * Size:	0000D4
  */
-void IpicLineDec(void)
+static void IpicLineDec(VideoState* state, u8* dst, u32 stride, StackState* stackState, u16 hBlocks)
 {
 	/*
 	.loc_0x0:
@@ -2392,7 +2379,7 @@ void IpicLineDec(void)
  * Address:	80020880
  * Size:	0000DC
  */
-void IpicPlaneDec(void)
+static void IpicPlaneDec(VideoState* state, int planeIdx, u8* dst)
 {
 	/*
 	.loc_0x0:
@@ -2463,7 +2450,7 @@ void IpicPlaneDec(void)
  * Address:	8002095C
  * Size:	00008C
  */
-void initMCHandler(void)
+static void initMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], void* present, void* past, void* future)
 {
 	/*
 	.loc_0x0:
@@ -2512,7 +2499,7 @@ void initMCHandler(void)
  * Address:	........
  * Size:	00004C
  */
-void resetMCHandler(void)
+static void resetMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], void* present)
 {
 	// UNUSED FUNCTION
 }
@@ -2521,8 +2508,10 @@ void resetMCHandler(void)
  * --INFO--
  * Address:	800209E8
  * Size:	00009C
+ *
+ * @note Copy 4x4 samples without interpolation.
  */
-void _MotionComp_00(void)
+static void _MotionComp_00(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
 {
 	/*
 	.loc_0x0:
@@ -2572,8 +2561,10 @@ void _MotionComp_00(void)
  * --INFO--
  * Address:	80020A84
  * Size:	0001AC
+ *
+ * @note Offset vertically by half a sample
  */
-void _MotionComp_01(void)
+static void _MotionComp_01(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
 {
 	/*
 	.loc_0x0:
@@ -2691,8 +2682,10 @@ void _MotionComp_01(void)
  * --INFO--
  * Address:	80020C30
  * Size:	00019C
+ *
+ * @note Offset vertically by half a sample
  */
-void _MotionComp_10(void)
+static void _MotionComp_10(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
 {
 	/*
 	.loc_0x0:
@@ -2806,8 +2799,10 @@ void _MotionComp_10(void)
  * --INFO--
  * Address:	80020DCC
  * Size:	0002AC
+ *
+ * @note Offset by half a sample in both directions
  */
-void _MotionComp_11(void)
+static void _MotionComp_11(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
 {
 	/*
 	.loc_0x0:
@@ -2989,8 +2984,10 @@ void _MotionComp_11(void)
  * --INFO--
  * Address:	80021078
  * Size:	000A00
+ *
+ * @note hpel = half-pixel offset. DX = horizontal, DY = vertical.
  */
-void MotionComp(void)
+static void MotionComp(void* dst, u32 dstStride, const void* src, u32 srcStride, u32 hpeldx, u32 hpeldy)
 {
 	/*
 	.loc_0x0:
@@ -3678,7 +3675,7 @@ void MotionComp(void)
  * Address:	80021A78
  * Size:	00041C
  */
-void decode_PB_cc(void)
+static void decode_PB_cc(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], u32 proc, u32 type)
 {
 	/*
 	.loc_0x0:
@@ -4017,7 +4014,8 @@ void decode_PB_cc(void)
  * Address:	80021E94
  * Size:	00086C
  */
-void PrediAotBlock(void)
+static void PrediAotBlock(VideoState* state, u8* dst, const u8* src, u32 stride, u8 blockType, u8* nestData, u32 hNestSize, u32 planeIdx,
+                          u32 hpeldx, u32 hpeldy)
 {
 	/*
 	.loc_0x0:
@@ -4650,7 +4648,7 @@ void PrediAotBlock(void)
  * Address:	80022700
  * Size:	0004C4
  */
-void GetMCAotBasis(void)
+static u32 GetMCAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, const u8* nestData, u32 nestStride, u32 planeIdx)
 {
 	/*
 	.loc_0x0:
@@ -5043,7 +5041,7 @@ void GetMCAotBasis(void)
  * Address:	80022BC4
  * Size:	000164
  */
-void MCBlockDecMCNest(void)
+static void MCBlockDecMCNest(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], int x, int y)
 {
 	/*
 	.loc_0x0:
@@ -5156,7 +5154,7 @@ void MCBlockDecMCNest(void)
  * Address:	80022D28
  * Size:	000158
  */
-void MCBlockDecDCNest(void)
+static void MCBlockDecDCNest(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT])
 {
 	/*
 	.loc_0x0:
@@ -5280,7 +5278,7 @@ void MCBlockDecDCNest(void)
  * Address:	........
  * Size:	0000C8
  */
-void initMCBproc(void)
+static void initMCBproc(BitBufferWithTree* buftree, RLDecoder* proc)
 {
 	// UNUSED FUNCTION
 }
@@ -5290,7 +5288,7 @@ void initMCBproc(void)
  * Address:	........
  * Size:	0000A4
  */
-void getMCBproc(void)
+static u32 getMCBproc(BitBufferWithTree* buftree, RLDecoder* proc)
 {
 	// UNUSED FUNCTION
 }
@@ -5300,7 +5298,7 @@ void getMCBproc(void)
  * Address:	........
  * Size:	000110
  */
-void initMCBtype(void)
+static void initMCBtype(BitBufferWithTree* buftree, RLDecoder* type)
 {
 	// UNUSED FUNCTION
 }
@@ -5310,7 +5308,7 @@ void initMCBtype(void)
  * Address:	........
  * Size:	0000F8
  */
-void getMCBtype(void)
+static u32 getMCBtype(BitBufferWithTree* buftree, RLDecoder* type)
 {
 	// UNUSED FUNCTION
 }
@@ -5320,7 +5318,7 @@ void getMCBtype(void)
  * Address:	80022E80
  * Size:	000430
  */
-void spread_PB_descMap(void)
+static void spread_PB_descMap(SeqObj* seqObj, MCPlane mcplanes[HVQM_PLANE_COUNT])
 {
 	/*
 	.loc_0x0:
@@ -5652,7 +5650,7 @@ void spread_PB_descMap(void)
  * Address:	800232B0
  * Size:	00043C
  */
-void BpicPlaneDec(void)
+static void BpicPlaneDec(SeqObj* seqObj, void* present, void* past, void* future)
 {
 	/*
 	.loc_0x0:
@@ -5987,40 +5985,19 @@ void BpicPlaneDec(void)
  * Address:	800236EC
  * Size:	000020
  */
-void HVQM4InitDecoder(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x4ABC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void HVQM4InitDecoder() { init_global_constants(); }
 
 /*
  * --INFO--
  * Address:	8002370C
  * Size:	000024
  */
-void HVQM4InitSeqObj(void)
+void HVQM4InitSeqObj(SeqObj* seqObj, VideoInfo* videoInfo)
 {
-	/*
-	.loc_0x0:
-	  lhz       r0, 0x0(r4)
-	  sth       r0, 0x4(r3)
-	  lhz       r0, 0x2(r4)
-	  sth       r0, 0x6(r3)
-	  lbz       r0, 0x4(r4)
-	  stb       r0, 0x8(r3)
-	  lbz       r0, 0x5(r4)
-	  stb       r0, 0x9(r3)
-	  blr
-	*/
+	seqObj->width  = videoInfo->hres;
+	seqObj->height = videoInfo->vres;
+	seqObj->h_samp = videoInfo->h_samp;
+	seqObj->v_samp = videoInfo->v_samp;
 }
 
 /*
@@ -6028,7 +6005,7 @@ void HVQM4InitSeqObj(void)
  * Address:	80023730
  * Size:	000074
  */
-void HVQM4BuffSize(void)
+u32 HVQM4BuffSize(SeqObj*)
 {
 	/*
 	.loc_0x0:
@@ -6077,7 +6054,7 @@ void HVQM4BuffSize(void)
  * Address:	800237A4
  * Size:	000464
  */
-void HVQM4SetBuffer(void)
+void HVQM4SetBuffer(SeqObj*, void*)
 {
 	/*
 	.loc_0x0:
@@ -6408,7 +6385,7 @@ void HVQM4SetBuffer(void)
  * Address:	80023C08
  * Size:	000510
  */
-void HVQM4DecodeIpic(void)
+void HVQM4DecodeIpic(SeqObj*, const u8*, void*)
 {
 	/*
 	.loc_0x0:
@@ -6826,30 +6803,14 @@ void HVQM4DecodeIpic(void)
  * Address:	80024118
  * Size:	000024
  */
-void HVQM4DecodePpic(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r7, r5
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        .loc_0x24
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x24:
-	*/
-}
+void HVQM4DecodePpic(SeqObj* seqObj, const u8* frame, void* present, void* past) { HVQM4DecodeBpic(seqObj, frame, present, past, present); }
 
 /*
  * --INFO--
  * Address:	8002413C
  * Size:	0005A8
  */
-void HVQM4DecodeBpic(void)
+void HVQM4DecodeBpic(SeqObj* seqObj, const u8* frame, void* present, void* past, void* future)
 {
 	/*
 	.loc_0x0:
