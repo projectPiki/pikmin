@@ -1,22 +1,11 @@
-#include "Dolphin/dvd.h"
-
-// from Animal Crossing
-typedef struct DVDCall_ {
-	u32 owner;
-	char fileName[64];
-	u32 dst;
-	u32 src;
-	u32 length;
-	u32* callbackStatus;
-	// Jac_DVDCallback callback;
-} DVDCall;
+#include "jaudio/dvdthread.h"
 
 /*
  * --INFO--
  * Address:	800073E0
  * Size:	000060
  */
-void GetCallStack()
+static void* GetCallStack()
 {
 	/*
 	.loc_0x0:
@@ -54,7 +43,7 @@ void GetCallStack()
  * Address:	80007440
  * Size:	00008C
  */
-void DVDReadMutex(DVDFileInfo*, void*, s32, s32, char*)
+static s32 DVDReadMutex(DVDFileInfo*, void*, s32, s32, char*)
 {
 	/*
 	.loc_0x0:
@@ -188,7 +177,7 @@ void DVDT_ExtendPath(char*, char*)
  * Address:	........
  * Size:	00007C
  */
-void DVDT_AddTaskHigh(s32 (*)(void*), void*, u32)
+s32 DVDT_AddTaskHigh(TaskCallback, void*, size_t)
 {
 	// UNUSED FUNCTION
 }
@@ -198,7 +187,7 @@ void DVDT_AddTaskHigh(s32 (*)(void*), void*, u32)
  * Address:	800075C0
  * Size:	00007C
  */
-void DVDT_AddTask(s32 (*)(void*), void*, u32)
+s32 DVDT_AddTask(TaskCallback, void*, size_t)
 {
 	/*
 	.loc_0x0:
@@ -272,7 +261,7 @@ void jac_dvdproc_init()
  * Address:	80007680
  * Size:	000088
  */
-void jac_dvdproc(void*)
+void* jac_dvdproc(void*)
 {
 	/*
 	.loc_0x0:
@@ -322,7 +311,7 @@ void jac_dvdproc(void*)
  * Address:	80007720
  * Size:	000048
  */
-void __DoError(DVDCall_*, u32)
+static void __DoError(DVDCall*, u32)
 {
 	/*
 	.loc_0x0:
@@ -356,7 +345,7 @@ void __DoError(DVDCall_*, u32)
  * Address:	80007780
  * Size:	000044
  */
-void __DoFinish(DVDCall_*, u32)
+static void __DoFinish(DVDCall*, u32)
 {
 	/*
 	.loc_0x0:
@@ -389,7 +378,7 @@ void __DoFinish(DVDCall_*, u32)
  * Address:	800077E0
  * Size:	000024
  */
-void __DVDT_CheckBack(void*)
+static void __DVDT_CheckBack(void*)
 {
 	/*
 	.loc_0x0:
@@ -410,7 +399,7 @@ void __DVDT_CheckBack(void*)
  * Address:	80007820
  * Size:	0000D0
  */
-void DVDT_LoadtoDRAM_Main(void*)
+s32 DVDT_LoadtoDRAM_Main(void*)
 {
 	/*
 	.loc_0x0:
@@ -482,7 +471,7 @@ void DVDT_LoadtoDRAM_Main(void*)
  * Address:	80007900
  * Size:	000084
  */
-void DVDT_LoadtoDRAM(u32, char*, u32, u32, u32, u32*, void (*)(u32))
+s32 DVDT_LoadtoDRAM(u32, char*, u32, u32, u32, u32*, Jac_DVDCallback)
 {
 	/*
 	.loc_0x0:
@@ -529,7 +518,7 @@ void DVDT_LoadtoDRAM(u32, char*, u32, u32, u32, u32*, void (*)(u32))
  * Address:	800079A0
  * Size:	000038
  */
-void __Alloc_DVDBuffer()
+static void __Alloc_DVDBuffer()
 {
 	/*
 	.loc_0x0:
@@ -557,7 +546,7 @@ void __Alloc_DVDBuffer()
  * Address:	800079E0
  * Size:	000030
  */
-void __WriteBufferSize(u8*, u32, u32)
+static void __WriteBufferSize(u8*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -583,7 +572,7 @@ void __WriteBufferSize(u8*, u32, u32)
  * Address:	80007A20
  * Size:	000040
  */
-void __UpdateBuffer()
+static void __UpdateBuffer()
 {
 	/*
 	.loc_0x0:
@@ -651,7 +640,7 @@ void DVDT_SetBuffer(u8*, u32, u32)
  * Address:	80007AC0
  * Size:	0000BC
  */
-void DVDT_CloseBuffer(u8*)
+s32 DVDT_CloseBuffer(u8*)
 {
 	/*
 	.loc_0x0:
@@ -730,7 +719,7 @@ void DVDT_GetCurrentBuffer(u8**)
  * Address:	80007B80
  * Size:	000010
  */
-void ARAM_DMAfinish(u32)
+static void ARAM_DMAfinish(u32)
 {
 	/*
 	.loc_0x0:
@@ -746,7 +735,7 @@ void ARAM_DMAfinish(u32)
  * Address:	80007BA0
  * Size:	00022C
  */
-void DVDT_LoadtoARAM_Main(void*)
+s32 DVDT_LoadtoARAM_Main(void*)
 {
 	/*
 	.loc_0x0:
@@ -919,7 +908,7 @@ void DVDT_LoadtoARAM_Main(void*)
  * Address:	80007DE0
  * Size:	000084
  */
-void DVDT_LoadtoARAM(u32, char*, u32, u32, u32, u32*, void (*)(u32))
+s32 DVDT_LoadtoARAM(u32, char*, u32, u32, u32, u32*, Jac_DVDCallback)
 {
 	/*
 	.loc_0x0:
@@ -1016,7 +1005,7 @@ void DVDT_DRAMtoARAM(u32, u32, u32, u32, u32*, void (*)(u32))
  * Address:	80007E80
  * Size:	000070
  */
-void DVDT_CheckFile(char*)
+s32 DVDT_CheckFile(char*)
 {
 	/*
 	.loc_0x0:
@@ -1060,7 +1049,7 @@ void DVDT_CheckFile(char*)
  * Address:	80007F00
  * Size:	000070
  */
-void DVDT_LoadFile(char*, u8*)
+s32 DVDT_LoadFile(char*, u8*)
 {
 	/*
 	.loc_0x0:
@@ -1106,7 +1095,7 @@ void DVDT_LoadFile(char*, u8*)
  * Address:	80007F80
  * Size:	000040
  */
-void DVDT_CheckPass(u32, u32*, void (*)(u32))
+void DVDT_CheckPass(u32, u32*, Jac_DVDCallback)
 {
 	/*
 	.loc_0x0:
@@ -1184,7 +1173,7 @@ void Jac_RegisterDVDErrorCallback(void (*)(char*, u8*))
  * Address:	80007FC0
  * Size:	000030
  */
-void Jac_RegisterExtFastOpen(char*)
+s32 Jac_RegisterExtFastOpen(char*)
 {
 	/*
 	.loc_0x0:
@@ -1208,7 +1197,7 @@ void Jac_RegisterExtFastOpen(char*)
  * Address:	80008000
  * Size:	000100
  */
-void Jac_RegisterFastOpen(char*)
+s32 Jac_RegisterFastOpen(char*)
 {
 	/*
 	.loc_0x0:
@@ -1298,7 +1287,7 @@ void Jac_RegisterFastOpen(char*)
  * Address:	80008100
  * Size:	000050
  */
-void Jac_DVDOpen(char*, DVDFileInfo*)
+BOOL Jac_DVDOpen(char*, DVDFileInfo*)
 {
 	/*
 	.loc_0x0:

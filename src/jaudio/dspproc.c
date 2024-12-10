@@ -1,11 +1,13 @@
-#include "types.h"
+#include "jaudio/dspproc.h"
+
+static u16 DSP_MIXERLEVEL = 0x4000;
 
 /*
  * --INFO--
  * Address:	800086C0
  * Size:	0000A8
  */
-void DSPSendCommands(u32*, u32)
+s32 DSPSendCommands(u32* commands, u32 count)
 {
 	/*
 	.loc_0x0:
@@ -71,7 +73,7 @@ void DSPSendCommands(u32*, u32)
  * Address:	80008780
  * Size:	000048
  */
-void DSPReleaseHalt()
+u32 DSPReleaseHalt()
 {
 	/*
 	.loc_0x0:
@@ -303,7 +305,7 @@ void Dadpcmtest(u32)
  * Address:	80008840
  * Size:	000048
  */
-void DsetupTable(u32, u32, u32, u32, u32)
+void DsetupTable(u32 cmd1, u32 cmd2, u32 cmd3, u32 cmd4, u32 cmd5)
 {
 	/*
 	.loc_0x0:
@@ -333,28 +335,14 @@ void DsetupTable(u32, u32, u32, u32, u32)
  * Address:	800088A0
  * Size:	000024
  */
-void DsetMixerLevel(f32)
-{
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  lfs       f0, -0x7FD0(r2)
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  sth       r0, -0x7FF0(r13)
-	  addi      r1, r1, 0x18
-	  blr
-	*/
-}
+void DsetMixerLevel(f32 level) { DSP_MIXERLEVEL = 4096.0f * level; }
 
 /*
  * --INFO--
  * Address:	800088E0
  * Size:	000048
  */
-void DsyncFrame(u32, u32, u32)
+void DsyncFrame(u32 subframes, u32 dspbufStart, u32 dspbufEnd)
 {
 	/*
 	.loc_0x0:
@@ -409,7 +397,7 @@ void DwaitFrame()
  * Address:	80008980
  * Size:	00003C
  */
-void DiplSec(u32)
+void DiplSec(u32 cmd)
 {
 	/*
 	.loc_0x0:
@@ -436,7 +424,7 @@ void DiplSec(u32)
  * Address:	800089C0
  * Size:	00003C
  */
-void DagbSec(u32)
+void DagbSec(u32 cmd)
 {
 	/*
 	.loc_0x0:

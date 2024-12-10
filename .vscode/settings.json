@@ -24,6 +24,10 @@
         "types.h": "c",
         "math_ppc.h": "c",
         "pikidemo.h": "c",
-        "mtx.h": "c"
+        "mtx.h": "c",
+        "aictrl.h": "c",
+        "dspbuf.h": "c",
+        "rate.h": "c",
+        "hw_regs.h": "c"
     }
 }

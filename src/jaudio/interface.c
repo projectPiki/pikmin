@@ -3,7 +3,7 @@
 #include "jaudio/interface.h"
 #include "jaudio/PikiBgm.h"
 #include "jaudio/PikiDemo.h"
-#include "jaudio/VerySimple.h"
+#include "jaudio/verysimple.h"
 #include "jaudio/PikiInter.h"
 
 static int process_stack[4];

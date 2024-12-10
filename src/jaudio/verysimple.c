@@ -1,13 +1,27 @@
-#include "jaudio/VerySimple.h"
+#include "jaudio/verysimple.h"
+#include "Dolphin/os.h"
+#include "PikiMacros.h"
 
 typedef struct seqp_ seqp_;
+
+static BOOL cmdqueue_reset;
+static u32 countdown_count;  // TODO: type uncertain
+static u32 pausemode;        // TODO: type uncertain
+static u32 container;        // TODO: type uncertain
+static u32 sys_voldown_flag; // TODO: type uncertain
+static BOOL boot_ok;
+static u32 count; // TODO: type uncertain
+static u8* lend_buffer;
+
+// forward declared statics
+static void __ResetCounter();
 
 /*
  * --INFO--
  * Address:	80016A60
  * Size:	00006C
  */
-void InitQueue()
+static BOOL InitQueue()
 {
 	/*
 	.loc_0x0:
@@ -50,14 +64,11 @@ void InitQueue()
  * Address:	80016AE0
  * Size:	00000C
  */
-void Jac_StopSe(void)
+void Jac_StopSe()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2C54(r13)
-	  cmpwi     r0, 0
-	  blr
-	*/
+	if (cmdqueue_reset) {
+		DEBUGPRINT(cmdqueue_reset != 0);
+	}
 }
 
 /*
@@ -65,16 +76,7 @@ void Jac_StopSe(void)
  * Address:	80016B00
  * Size:	000010
  */
-void Jac_PauseCheck(void)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C5C(r13)
-	  lwz       r0, 0x2C60(r13)
-	  or        r3, r3, r0
-	  blr
-	*/
-}
+BOOL Jac_PauseCheck() { return pausemode | container; }
 
 /*
  * --INFO--
@@ -91,7 +93,7 @@ void Jac_UpdateRocketParam(void)
  * Address:	80016B20
  * Size:	000068
  */
-void Jac_SysSEDemoFadeCheck(void)
+void Jac_SysSEDemoFadeCheck()
 {
 	/*
 	.loc_0x0:
@@ -133,7 +135,7 @@ void Jac_SysSEDemoFadeCheck(void)
  * Address:	80016BA0
  * Size:	0003A0
  */
-void Jac_PlaySystemSe(void)
+void Jac_PlaySystemSe()
 {
 	/*
 	.loc_0x0:
@@ -393,7 +395,7 @@ void Jac_PlaySystemSe(void)
  * Address:	80016F40
  * Size:	000070
  */
-void Jac_StopSystemSe(void)
+void Jac_StopSystemSe(s32 p1)
 {
 	/*
 	.loc_0x0:
@@ -451,7 +453,7 @@ void Jac_PlaySe(u32)
  * Address:	80016FC0
  * Size:	000050
  */
-void Jac_PlayInit()
+static void Jac_PlayInit()
 {
 	/*
 	.loc_0x0:
@@ -483,14 +485,14 @@ void Jac_PlayInit()
  * Address:	80017020
  * Size:	000004
  */
-void Jac_Archiver_Init() { }
+static void Jac_Archiver_Init() { }
 
 /*
  * --INFO--
  * Address:	80017040
  * Size:	0000AC
  */
-void TrackReceive(seqp_*, u16)
+static void TrackReceive(seqp_*, u16)
 {
 	/*
 	.loc_0x0:
@@ -551,7 +553,7 @@ void TrackReceive(seqp_*, u16)
  * Address:	80017100
  * Size:	00007C
  */
-void AuxBusInit()
+static void AuxBusInit()
 {
 	/*
 	.loc_0x0:
@@ -610,36 +612,21 @@ void Jac_SetThreadPriority(void)
  * Address:	80017180
  * Size:	00000C
  */
-void __BootSoundOK(u32)
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0x1
-	  stw       r0, 0x2C68(r13)
-	  blr
-	*/
-}
+static void __BootSoundOK(u32) { boot_ok = TRUE; }
 
 /*
  * --INFO--
  * Address:	800171A0
  * Size:	000008
  */
-void Jac_CheckBootOk(void)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C68(r13)
-	  blr
-	*/
-}
+BOOL Jac_CheckBootOk() { return boot_ok; }
 
 /*
  * --INFO--
  * Address:	800171C0
  * Size:	000144
  */
-void Jac_Start(void)
+void Jac_Start(void* heap, u32 heapSize, u32 aramSize)
 {
 	/*
 	.loc_0x0:
@@ -744,8 +731,14 @@ void Jac_StopSoundAll(void)
  * Address:	80017320
  * Size:	00004C
  */
-void Jac_Freeze_Precall(void)
+void Jac_Freeze_Precall()
 {
+	BOOL level = OSDisableInterrupts();
+	// jcs_* handle = Get_GlobalHandle();
+	// AllStop_1Shot(handle);
+	// FlushRelease_1Shot(handle);
+	OSRestoreInterrupts(level);
+	__ResetCounter();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -775,8 +768,11 @@ void Jac_Freeze_Precall(void)
  * Address:	80017380
  * Size:	000038
  */
-void Jac_Freeze(void)
+void Jac_Freeze()
 {
+	BOOL level = OSDisableInterrupts();
+	// StopAudioThread();
+	OSRestoreInterrupts(level);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -801,15 +797,7 @@ void Jac_Freeze(void)
  * Address:	800173C0
  * Size:	00000C
  */
-void __ResetCounter()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x2C6C(r13)
-	  blr
-	*/
-}
+static void __ResetCounter() { count = 0; }
 
 /*
  * --INFO--
@@ -826,8 +814,10 @@ void Jac_Silence_Check(void)
  * Address:	800173E0
  * Size:	000038
  */
-void Jac_AddDVDBuffer(void)
+void Jac_AddDVDBuffer(u8* buf, u32 p2)
 {
+	// DVDT_SetBuffer(buf, 1, p2);
+	lend_buffer = buf;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -852,8 +842,12 @@ void Jac_AddDVDBuffer(void)
  * Address:	80017420
  * Size:	000034
  */
-void Jac_BackDVDBuffer(void)
+void Jac_BackDVDBuffer()
 {
+	if (lend_buffer) {
+		// DVDT_CloseBuffer(lend_buffer);
+	}
+	lend_buffer = nullptr;
 	/*
 	.loc_0x0:
 	  mflr      r0

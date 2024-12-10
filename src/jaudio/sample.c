@@ -1,5 +1,12 @@
 #include "jaudio/sample.h"
 
+// unused typedefs
+typedef enum DECODER_FORMAT {
+	DECODE_Unk0,
+} DECODER_FORMAT;
+
+typedef struct SD_ SD_;
+
 /*
  * --INFO--
  * Address:	........

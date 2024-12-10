@@ -2,23 +2,19 @@
 #define _JAUDIO_DSPBUF_H
 
 #include "types.h"
+#include "jaudio/audiocommon.h"
 
-// Global functions:
+/////////// JAUDIO DSP BUFFER DEFINITIONS ///////////
+// Defines.
+#define DSPBUF_NUM 3
 
-// Unused structs?
+// Global functions (all C++, so no extern C wrap).
+u32 Jac_GetCurrentSCounter();
+s16* DspbufProcess(DSPBUF_EVENTS event);
+void UpdateDSP();
+s16* MixDsp(s32 numSamples);
+void DspFrameEnd();
 
-/**
- * @brief TODO
- */
-typedef enum DSPBUF_EVENTS {
-	// TODO: this
-} DSPBUF_EVENTS;
-
-/**
- * @brief TODO
- */
-typedef struct SD {
-	// TODO: this
-} SD_;
+/////////////////////////////////////////////////////
 
 #endif

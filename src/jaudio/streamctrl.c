@@ -1,4 +1,21 @@
-#include "types.h"
+#include "jaudio/streamctrl.h"
+
+char J_STREAMNAME[8][16] = {
+	"/stream00.adp", "/stream01.adp", "/stream02.adp", "/stream03.adp", "/stream04.adp", "/stream05.adp", "/stream06.adp", "/stream07.adp",
+};
+
+// clang-format off
+JSTREAM J_STREAM = {
+    JSTREAM_STATE_STOPPED,
+    JSTREAM_NO_TRACK_ID, JSTREAM_NO_TRACK_ID,
+    0.0f, 0,
+    0,
+    0,
+    0.0f, 0,
+    0.0f,
+    0
+};
+// clang-format on
 
 /*
  * --INFO--

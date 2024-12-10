@@ -1,12 +1,35 @@
-#include "jaudio/AICtrl.h"
+#include "jaudio/aictrl.h"
+#include "jaudio/audiostruct.h"
+#include "jaudio/memory.h"
+#include "Dolphin/os.h"
+
+u32 UNIVERSAL_DACCOUNTER = 0;
+
+static s16* dac[3];
+static ALHeap audio_hp;
+
+static BOOL audio_hp_exist           = FALSE;
+static s16* last_rsp_madep           = nullptr;
+static s16* use_rsp_madep            = nullptr;
+static BOOL vframe_work_running      = FALSE;
+static DACCallback DAC_CALLBACK_FUNC = nullptr;
+u32 JAC_VFRAME_COUNTER               = 0;
+static MixCallback ext_mixcallback   = nullptr;
+static u8 ext_mixmode                = MixMode_Mono;
 
 /*
  * --INFO--
  * Address:	80005720
  * Size:	00004C
  */
-void Jac_HeapSetup(u8*, s32)
+void Jac_HeapSetup(void* heap, s32 size)
 {
+	if (heap) {
+		Nas_HeapInit(&audio_hp, (u8*)heap, size);
+		audio_hp_exist = TRUE;
+	} else {
+		audio_hp_exist = FALSE;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -50,8 +73,21 @@ void GetAudioHeapRemain(void)
  * Address:	80005780
  * Size:	000080
  */
-void OSAlloc2(void)
+void* OSAlloc2(u32 size)
 {
+	void* alloc;
+	BOOL level = OSDisableInterrupts();
+	switch (audio_hp_exist) {
+	case FALSE:
+		alloc = OSAllocFromHeap(__OSCurrHeap, size);
+		break;
+	case TRUE:
+		alloc = Nas_HeapAlloc(&audio_hp, size);
+		break;
+	}
+
+	OSRestoreInterrupts(level);
+	return alloc;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -110,7 +146,7 @@ void OSFree2(void)
  * Address:	80005800
  * Size:	0000AC
  */
-void Jac_Init(void)
+void Jac_Init()
 {
 	/*
 	.loc_0x0:
@@ -219,7 +255,7 @@ void CheckHaltDSP(void)
  * Address:	800058C0
  * Size:	0000DC
  */
-void MixMonoTrack(s16*, s32, s16* (*)(s32))
+static void MixMonoTrack(s16*, s32, MixCallback)
 {
 	/*
 	.loc_0x0:
@@ -298,7 +334,7 @@ void MixMonoTrack(s16*, s32, s16* (*)(s32))
  * Address:	800059A0
  * Size:	0000DC
  */
-void MixMonoTrackWide(s16*, s32, s16* (*)(s32))
+static void MixMonoTrackWide(s16*, s32, MixCallback)
 {
 	/*
 	.loc_0x0:
@@ -377,7 +413,7 @@ void MixMonoTrackWide(s16*, s32, s16* (*)(s32))
  * Address:	80005A80
  * Size:	0000F8
  */
-void MixExtraTrack(s16*, s32, s16* (*)(s32))
+static void MixExtraTrack(s16*, s32, MixCallback)
 {
 	/*
 	.loc_0x0:
@@ -465,7 +501,7 @@ void MixExtraTrack(s16*, s32, s16* (*)(s32))
  * Address:	80005B80
  * Size:	00008C
  */
-void MixInterleaveTrack(s16*, s32, s16* (*)(s32))
+static void MixInterleaveTrack(s16*, s32, MixCallback)
 {
 	/*
 	.loc_0x0:
@@ -520,7 +556,7 @@ void MixInterleaveTrack(s16*, s32, s16* (*)(s32))
  * Address:	........
  * Size:	000010
  */
-void Jac_GetMixcallback(void)
+MixCallback Jac_GetMixcallback(u8* mixmode)
 {
 	// UNUSED FUNCTION
 }
@@ -530,7 +566,7 @@ void Jac_GetMixcallback(void)
  * Address:	........
  * Size:	00000C
  */
-void Jac_RegisterMixcallback(void)
+void Jac_RegisterMixcallback(MixCallback callback, u8 mixmode)
 {
 	// UNUSED FUNCTION
 }
@@ -540,7 +576,7 @@ void Jac_RegisterMixcallback(void)
  * Address:	80005C20
  * Size:	000188
  */
-void Jac_VframeWork(void)
+void Jac_VframeWork()
 {
 	/*
 	.loc_0x0:
@@ -666,7 +702,7 @@ void Jac_VframeWork(void)
  * Address:	80005DC0
  * Size:	0000A8
  */
-void Jac_UpdateDAC(void)
+void Jac_UpdateDAC()
 {
 	/*
 	.loc_0x0:

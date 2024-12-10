@@ -1,32 +1,33 @@
 #include "Dolphin/OS/OSThread.h"
+#include "jaudio/audiothread.h"
+#include "jaudio/dummyprobe.h"
+#include "jaudio/dspproc.h"
+
+OSThread jac_audioThread;
+u8 jac_audioStack[AUDIO_STACK_SIZE] ATTRIBUTE_ALIGN(32);
+OSThread jac_neosThread;
+OSThread jac_dvdThread;
+u8 jac_dvdStack[AUDIO_STACK_SIZE];
+
+static OSMessageQueue audioproc_mq;
+static OSMessage msgbuf[AUDIOPROC_MQ_BUF_COUNT];
+
+static u32 audioproc_mq_init;
+static int intcount;
 
 /*
  * --INFO--
  * Address:	800062C0
  * Size:	000008
  */
-void DspSyncCountClear(void)
-{
-	/*
-	.loc_0x0:
-	  stw       r3, 0x2B44(r13)
-	  blr
-	*/
-}
+void DspSyncCountClear(int count) { intcount = count; }
 
 /*
  * --INFO--
  * Address:	800062E0
  * Size:	000008
  */
-void DspSyncCountCheck(void)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2B44(r13)
-	  blr
-	*/
-}
+int DspSyncCountCheck() { return intcount; }
 
 /*
  * --INFO--
@@ -43,8 +44,13 @@ void Jac_GetDacRate(void)
  * Address:	80006300
  * Size:	000044
  */
-void DspSync()
+static void DspSync()
 {
+	if (audioproc_mq_init) {
+		OSSendMessage(&audioproc_mq, AUDIOPROC_MESSAGE_DSP_SYNC, OS_MESSAGE_NOBLOCK);
+	} else {
+		DSPReleaseHalt();
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -76,8 +82,13 @@ void DspSync()
  * Address:	80006360
  * Size:	000050
  */
-void StopAudioThread(void)
+void StopAudioThread()
 {
+	if (audioproc_mq_init) {
+		if (OSSendMessage(&audioproc_mq, AUDIOPROC_MESSAGE_3, OS_MESSAGE_NOBLOCK) == FALSE) {
+			OSCancelThread(&jac_audioThread);
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -110,8 +121,19 @@ void StopAudioThread(void)
  * Address:	800063C0
  * Size:	000080
  */
-void AudioSync()
+static void AudioSync()
 {
+	static BOOL first = TRUE;
+
+	if (first == FALSE) {
+		Probe_Finish(4);
+	}
+
+	first = FALSE;
+	Probe_Start(4, "UPDATE-DAC");
+	if (audioproc_mq_init) {
+		OSSendMessage(&audioproc_mq, AUDIOPROC_MESSAGE_UPDATE_DAC, OS_MESSAGE_NOBLOCK);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -170,7 +192,7 @@ void NeosSync()
  * Address:	80006440
  * Size:	000068
  */
-void __DspSync(s16, OSContext*)
+static void __DspSync(s16, OSContext*)
 {
 	/*
 	.loc_0x0:
@@ -208,7 +230,7 @@ void __DspSync(s16, OSContext*)
  * Address:	800064C0
  * Size:	000044
  */
-void __DspReg()
+static void __DspReg()
 {
 	/*
 	.loc_0x0:
@@ -237,7 +259,7 @@ void __DspReg()
  * Address:	80006520
  * Size:	000130
  */
-void audioproc(void*)
+static void audioproc(void*)
 {
 	/*
 	.loc_0x0:
@@ -336,30 +358,47 @@ void audioproc(void*)
 	*/
 }
 
+// GQR formats.
+#define OS_GQR_U8  (0x0004) // GQR 1
+#define OS_GQR_U16 (0x0005) // GQR 2
+#define OS_GQR_S8  (0x0006) // GQR 3
+#define OS_GQR_S16 (0x0007) // GQR 4
+
+// GQRs for fast casting.
+#define OS_FASTCAST_U8  (2)
+#define OS_FASTCAST_U16 (3)
+#define OS_FASTCAST_S8  (4)
+#define OS_FASTCAST_S16 (5)
+
 /*
  * --INFO--
  * Address:	80006660
  * Size:	000034
  */
-void OSInitFastCast(void)
+static void OSInitFastCast(void)
 {
-	/*
-	.loc_0x0:
-	  li        r3, 0x4
-	  oris      r3, r3, 0x4
-	  mtspr     914, r3
-	  li        r3, 0x5
-	  oris      r3, r3, 0x5
-	  mtspr     915, r3
-	  li        r3, 0x6
-	  oris      r3, r3, 0x6
-	  mtspr     916, r3
-	  li        r3, 0x7
-	  oris      r3, r3, 0x7
-	  mtspr     917, r3
-	  blr
-	*/
+#ifdef __MWERKS__ // clang-format off
+	asm {
+		li r3, OS_GQR_U8
+		oris r3, r3, OS_GQR_U8
+		mtspr 0x392, r3
+		li r3, OS_GQR_U16
+		oris r3, r3, OS_GQR_U16
+		mtspr 0x393, r3
+		li r3, OS_GQR_S8
+		oris r3, r3, OS_GQR_S8
+		mtspr 0x394, r3
+		li r3, OS_GQR_S16
+		oris r3, r3, OS_GQR_S16
+		mtspr 0x395, r3
+	}
+#endif // clang-format on
 }
+
+static BOOL priority_set = FALSE;
+static OSPriority pri    = 0;
+static OSPriority pri2   = 0;
+static OSPriority pri3   = 0;
 
 /*
  * --INFO--
@@ -376,7 +415,7 @@ void SetAudioThreadPriority(void)
  * Address:	800066A0
  * Size:	000124
  */
-void StartAudioThread(void)
+void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags)
 {
 	/*
 	.loc_0x0:

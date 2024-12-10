@@ -145,7 +145,7 @@ void Nas_HeapFree(ALHeap*)
  * Address:	80005640
  * Size:	00006C
  */
-void Nas_HeapAlloc(ALHeap*, s32)
+void* Nas_HeapAlloc(ALHeap*, s32)
 {
 	/*
 	.loc_0x0:

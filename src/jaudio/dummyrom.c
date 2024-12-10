@@ -1,4 +1,15 @@
+#include "jaudio/dummyrom.h"
+#include "jaudio/memory.h"
+#include "jaudio/audiocommon.h"
+#include "Dolphin/ar.h"
 #include "Dolphin/os.h"
+
+ALHeap aram_hp;
+u8* JAC_ARAM_DMA_BUFFER_TOP;
+
+static u32 AUDIO_ARAM_TOP;
+static u32 CARD_SECURITY_BUFFER;
+static u32 SELECTED_ARAM_SIZE;
 
 /*
  * --INFO--
@@ -45,14 +56,7 @@ void ARAMStartDMA(u32, u32, u32, u32, s32, u32*, void (*)())
  * Address:	800061A0
  * Size:	000008
  */
-void Jac_SetAudioARAMSize(u32)
-{
-	/*
-	.loc_0x0:
-	  stw       r3, 0x2B3C(r13)
-	  blr
-	*/
-}
+void Jac_SetAudioARAMSize(u32 size) { SELECTED_ARAM_SIZE = size; }
 
 /*
  * --INFO--
@@ -69,8 +73,12 @@ void ARAlloc2(u32)
  * Address:	800061C0
  * Size:	000058
  */
-void ARAllocFull(u32*)
+void ARAllocFull(u32* outSize)
 {
+	u32 freeSize = aram_hp.length - ((int)aram_hp.current - (int)aram_hp.base);
+
+	Nas_HeapAlloc(&aram_hp, freeSize - 32);
+	*outSize = freeSize - 32;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -103,8 +111,35 @@ void ARAllocFull(u32*)
  * Address:	80006220
  * Size:	000098
  */
-void Jac_InitARAM(u32)
+void Jac_InitARAM(u32 loadAudiorom)
 {
+	u32 aram_size = AUDIO_ARAM_SIZE;
+	volatile u32 audiorom_size;
+
+	if (SELECTED_ARAM_SIZE != 0) {
+		aram_size = SELECTED_ARAM_SIZE;
+	}
+
+	AUDIO_ARAM_TOP = ARGetBaseAddress();
+	if (loadAudiorom) {
+		// audiorom_size = Jac_CheckFile("/audiorom.img");
+		if (audiorom_size != 0) {
+			audiorom_size = ALIGN_NEXT(audiorom_size, 32);
+			// (void)audiorom_size; /* leftover from some debug print? */
+		}
+	} else {
+		audiorom_size = 0;
+	}
+
+	CARD_SECURITY_BUFFER = 0x40;
+	audiorom_size += AUDIO_ARAM_TOP;
+	JAC_ARAM_DMA_BUFFER_TOP = (u8*)audiorom_size;
+	audiorom_size += AUDIO_ARAM_HEAP_SIZE;
+	Nas_HeapInit(&aram_hp, (u8*)audiorom_size, aram_size - audiorom_size);
+
+	/* Probably leftovers from some debug print statement */
+	// (void)audiorom_size;
+	// (void)audiorom_size;
 	/*
 	.loc_0x0:
 	  mflr      r0

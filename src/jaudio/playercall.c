@@ -1,12 +1,19 @@
-#include "types.h"
+#include "jaudio/playercall.h"
+
+static PLAYER_CALL PLAYER_CALLLIST[16];
 
 /*
  * --INFO--
  * Address:	80007120
  * Size:	00002C
  */
-void ResetPlayerCallback(void)
+void ResetPlayerCallback()
 {
+	int i;
+
+	for (i = 0; i < 16; i++) {
+		PLAYER_CALLLIST[i].callback = nullptr;
+	}
 	/*
 	.loc_0x0:
 	  li        r3, 0
@@ -30,7 +37,7 @@ void ResetPlayerCallback(void)
  * Address:	80007160
  * Size:	000050
  */
-void Jac_CheckPlayerCallback(s32 (*)(void*), void*)
+s32 Jac_CheckPlayerCallback(PlayerCallBack, void*)
 {
 	/*
 	.loc_0x0:
@@ -76,7 +83,7 @@ void Jac_RejectPlayerCallback(void)
  * Address:	800071C0
  * Size:	000048
  */
-void Jac_RegisterDspPlayerCallback(void)
+s32 Jac_RegisterDspPlayerCallback(PlayerCallBack, void*)
 {
 	/*
 	.loc_0x0:
@@ -110,7 +117,7 @@ void Jac_RegisterDspPlayerCallback(void)
  * Address:	80007220
  * Size:	0000A4
  */
-void Jac_RegisterPlayerCallback(void)
+s32 Jac_RegisterPlayerCallback(PlayerCallBack, void*)
 {
 	/*
 	.loc_0x0:

@@ -2,19 +2,13 @@
 #define _JAUDIO_MEMORY_H
 
 #include "types.h"
-
-/**
- * @brief TODO
- */
-typedef struct ALHeap {
-	// TODO: members
-} ALHeap;
+#include "jaudio/audiostruct.h"
 
 // Global functions:
-void Nas_HeapAlloc(ALHeap*, s32);
+void* Nas_HeapAlloc(ALHeap*, s32);
 void Nas_HeapInit(ALHeap*, u8*, s32);
 
-// unused structs?
+// likely move these to audiostruct.h eventually/as required
 
 /**
  * @brief TODO
