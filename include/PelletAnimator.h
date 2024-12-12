@@ -48,8 +48,8 @@ struct PelletAnimator {
 	void startMotion(PaniMotionInfo*, PaniMotionInfo*);
 	void finishMotion(PaniAnimKeyListener*);
 
-	PaniPelletAnimator _00; // _00
-	PaniPelletAnimator _54; // _54
+	PaniPelletAnimator mAnimatorA; // _00
+	PaniPelletAnimator mAnimatorB; // _54
 };
 
 #endif

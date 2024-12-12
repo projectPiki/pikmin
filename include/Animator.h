@@ -165,10 +165,10 @@ struct AnmobjInfo : public GfxobjInfo {
 struct AnimKey {
 	AnimKey()
 	{
-		_00   = 0;
-		_04   = 0;
-		_06   = 0;
-		_07   = 0;
+		mKeyframeIndex = 0;
+		mEventKeyType  = 0;
+		mValue         = 0;
+		_07            = 0;
 		mPrev = mNext = nullptr;
 	}
 
@@ -182,14 +182,14 @@ struct AnimKey {
 
 	inline void add(AnimKey* key) { mPrev->insertAfter(key); }
 
-	inline f32 getKeyValue() { return _00; }
+	inline f32 getKeyValue() { return mKeyframeIndex; }
 
-	int _00;        // _00, unknown
-	s16 _04;        // _04
-	u8 _06;         // _06
-	u8 _07;         // _07
-	AnimKey* mPrev; // _08
-	AnimKey* mNext; // _0C
+	int mKeyframeIndex; // _00, unknown
+	s16 mEventKeyType;  // _04
+	u8 mValue;          // _06
+	u8 _07;             // _07
+	AnimKey* mPrev;     // _08
+	AnimKey* mNext;     // _0C
 };
 
 /**
@@ -247,7 +247,7 @@ struct AnimInfo : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	AnimInfoParams mParams; // _14
-	AnimKey _38;            // _38
+	AnimKey mAnimKeys;      // _38
 	AnimKey mEventKeys;     // _48
 	AnimKey mInfoKeys;      // _58
 	AnimData* mData;        // _68

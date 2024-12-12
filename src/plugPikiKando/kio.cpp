@@ -54,12 +54,12 @@ static void hioCallback() { kio->readMailbox(); }
  */
 KIO::KIO()
 {
-	_10         = 0;
-	kio         = this;
-	_0C         = new (0x20) u8[0x100]; // something goes here, probably not this
-	fbCopy      = false;
-	_11         = false;
-	haltMessage = nullptr;
+	mIsReady      = false;
+	kio           = this;
+	mHeaderBuffer = new (0x20) u8[0x100]; // something goes here, probably not this
+	fbCopy        = false;
+	mIsActive     = false;
+	haltMessage   = nullptr;
 }
 
 /*
@@ -71,12 +71,13 @@ void KIO::initialise()
 {
 	HIOEnumDevices(hioEnumCallback);
 	if (HIOInit(mChannel, hioCallback) == FALSE) {
-		_10 = 0;
-	} else {
-		_10 = 1;
-		readMailbox();
-		kontMode = 2;
+		mIsReady = false;
+		return;
 	}
+
+	mIsReady = true;
+	readMailbox();
+	kontMode = 2;
 }
 
 /*
@@ -93,23 +94,23 @@ void KIO::readMailbox()
 
 	switch (mail) {
 	case 0x100000:
-		kontMode = 0;
-		_11      = 0;
+		kontMode  = 0;
+		mIsActive = false;
 		break;
 	case 0x100002:
-		kontMode = 1;
-		_11      = 0;
+		kontMode  = 1;
+		mIsActive = false;
 		break;
 	case 0x100001:
-		kontMode = 2;
-		_11      = 0;
+		kontMode  = 2;
+		mIsActive = false;
 		break;
 	case 0x100006:
 		mContext.write();
 		break;
 	case 0x100003:
-		fbCopy = true;
-		_11    = 1;
+		fbCopy    = true;
+		mIsActive = true;
 		break;
 	default:
 		kontMode = 2;
@@ -122,9 +123,9 @@ void KIO::readMailbox()
  * Address:	80084520
  * Size:	000038
  */
-void KIO::startWrite(int p1, u8* p2, int p3)
+void KIO::startWrite(int p1, u8* bufferStart, int bufferSize)
 {
-	mContext.set(p1, p2, p3);
+	mContext.set(p1, bufferStart, bufferSize);
 	writeHeader();
 }
 
@@ -135,10 +136,13 @@ void KIO::startWrite(int p1, u8* p2, int p3)
  */
 void KIO::writeHeader()
 {
-	if (_10) {
-		DCFlushRange(_0C, 0x100);
+	if (mIsReady) {
+		// Set the header buffer
+		DCFlushRange(mHeaderBuffer, 0x100);
 
-		if (HIOWrite(0x500, _0C, 0x100) != FALSE) {
+		// Set the header buffer to the mailbox
+		if (HIOWrite(0x500, mHeaderBuffer, 0x100) != FALSE) {
+			// Signal the header is done
 			HIOWriteMailbox(0x100003);
 		}
 	}
@@ -159,13 +163,13 @@ void KIO::copyEfb(u8*, u16, u16)
  * Address:	800845BC
  * Size:	00001C
  */
-void KIOContext::set(int p1, u8* p2, int p3)
+void KIOContext::set(int p1, u8* bufferStart, int bufferSize)
 {
-	_00      = p3;
-	int* buf = (int*)kio->_0C;
-	buf[1]   = p3;
-	buf[0]   = p1;
-	_04      = p2;
+	mBufferSize  = bufferSize;
+	int* header  = (int*)kio->mHeaderBuffer;
+	header[1]    = bufferSize;
+	header[0]    = p1;
+	mBufferStart = bufferStart;
 }
 
 /*
@@ -175,27 +179,34 @@ void KIOContext::set(int p1, u8* p2, int p3)
  */
 void KIOContext::write()
 {
-	if (_00 <= 0) {
+	// Check if there is data left to write
+	if (mBufferSize <= 0) {
 		if (KIO::haltMessage) {
 			OSPanic(__FILE__, 166, KIO::haltMessage);
 		}
 		return;
 	}
 
-	s32 bufSize = _00;
-	if (_00 > 0x1FA00) {
-		bufSize = 0x1FA00;
+	// Limit the size of the write to 0x1FA00
+	s32 writeSize = mBufferSize;
+	if (mBufferSize > 0x1FA00) {
+		writeSize = 0x1FA00;
 	}
 
-	s32 size = bufSize;
-	if ((s32)bufSize % 32) {
-		size = (bufSize >> 5) * 0x20 + 0x20;
+	// Align the size to 32 bytes
+	s32 alignedSize = writeSize;
+	if ((s32)writeSize % 32) {
+		alignedSize = (writeSize >> 5) * 0x20 + 0x20;
 	}
 
-	DCFlushRange(_04, size);
-	if (HIOWrite(0x600, _04, size) != FALSE) {
-		HIOWriteMailbox(0x100004);
-		_04 = (void*)((u32)_04 + bufSize);
-		_00 -= bufSize;
+	// Flush the data cache and write the data
+	DCFlushRange(mBufferStart, alignedSize);
+	if (HIOWrite(0x600, mBufferStart, alignedSize) != FALSE) {
+		// Signal the write is done
+		HIOWriteMailbox(0x100000 | 0x4);
+
+		// Move the buffer pointer and decrease the buffer size
+		mBufferStart = (void*)((u32)mBufferStart + writeSize);
+		mBufferSize -= writeSize;
 	}
 }

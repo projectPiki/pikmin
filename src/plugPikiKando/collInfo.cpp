@@ -2293,13 +2293,13 @@ CollInfo::CollInfo(int maxParts)
 	mShape      = nullptr;
 	mPartsCount = 0;
 	if (maxParts == 0) {
-		mMaxParts = 10;
-		_00       = 1;
+		mMaxParts           = 10;
+		mUseDefaultMaxParts = 1;
 	} else {
-		mMaxParts  = maxParts;
-		_00        = 0;
-		mCollParts = new CollPart[mMaxParts];
-		mPartIDs   = new u32[mMaxParts];
+		mMaxParts           = maxParts;
+		mUseDefaultMaxParts = 0;
+		mCollParts          = new CollPart[mMaxParts];
+		mPartIDs            = new u32[mMaxParts];
 	}
 }
 
@@ -3520,12 +3520,13 @@ bool CollInfo::hasInfo() { return mPartsCount != 0; }
  */
 void CollInfo::initInfo(Shape* shape, CollPart* parts, u32* ids)
 {
-	if (_00) {
+	if (mUseDefaultMaxParts) {
 		mCollParts = parts;
 		mPartIDs   = ids;
 
+		// Why have you set default max parts and then set the collparts manually?
 		if (mCollParts && mPartIDs) {
-			DEBUGPRINT(_00 != 0, "wack");
+			DEBUGPRINT(mUseDefaultMaxParts != 0, "wack");
 		}
 	}
 

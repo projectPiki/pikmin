@@ -72,8 +72,8 @@ struct PaniAnimator : public Animator {
 
 	inline int get38() { return _38; } // TODO: rename later
 
-	inline int getInfoKeyValue(int idx) { return mAnimInfo->getInfoKey(idx)->_00; }
-	inline int getEventKeyValue(int idx) { return mAnimInfo->getEventKey(idx)->_00; }
+	inline int getInfoKeyValue(int idx) { return mAnimInfo->getInfoKey(idx)->mKeyframeIndex; }
+	inline int getEventKeyValue(int idx) { return mAnimInfo->getEventKey(idx)->mKeyframeIndex; }
 	inline f32 getKeyValue(int idx) { return mAnimInfo->getKeyValue(idx); }
 
 	static char* keyNames[6];

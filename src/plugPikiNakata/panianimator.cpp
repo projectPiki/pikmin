@@ -275,7 +275,7 @@ void PaniAnimator::checkConstantKeys()
  */
 void PaniAnimator::checkConstantKey(int idx)
 {
-	int type = mAnimInfo->getInfoKey(idx)->_06;
+	int type = mAnimInfo->getInfoKey(idx)->mValue;
 	if (mIsFinished == false) {
 		if (type == 0) {
 			_40 = idx;
@@ -312,7 +312,7 @@ void PaniAnimator::checkConstantKey(int idx)
  * Address:	8011F67C
  * Size:	000124
  */
-void PaniAnimator::checkEventKeys(f32 p1, f32 p2)
+void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 {
 	if (!mListener) {
 		return;
@@ -323,15 +323,15 @@ void PaniAnimator::checkEventKeys(f32 p1, f32 p2)
 
 		f32 val2 = eventKey->getKeyValue();
 		f32 val1 = eventKey->getKeyValue();
-		if (p1 <= val1 && val2 < p2) {
+		if (startKeyframe <= val1 && val2 < endKeyframe) {
 			int type = KEY_Done;
-			if (eventKey->_04 == 0) {
+			if (eventKey->mEventKeyType == 0) {
 				type = KEY_PlaySound;
-			} else if (eventKey->_04 == 1) {
+			} else if (eventKey->mEventKeyType == 1) {
 				type = KEY_PlayEffect;
 			}
 
-			mListener->animationKeyUpdated(PaniAnimKeyEvent(type, eventKey->_06));
+			mListener->animationKeyUpdated(PaniAnimKeyEvent(type, eventKey->mValue));
 		}
 	}
 }
@@ -358,8 +358,8 @@ f32 PaniAnimator::getKeyValueByKeyType(int type)
 {
 	u32 badCompiler;
 	for (int i = 0; i < mAnimInfo->countIKeys(); i++) {
-		if (type == mAnimInfo->getInfoKey(i)->_06) {
-			int keyIdx = mAnimInfo->getInfoKey(i)->_00;
+		if (type == mAnimInfo->getInfoKey(i)->mValue) {
+			int keyIdx = mAnimInfo->getInfoKey(i)->mKeyframeIndex;
 			return getKeyValue(keyIdx);
 		}
 	}

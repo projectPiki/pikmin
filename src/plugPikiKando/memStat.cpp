@@ -42,9 +42,9 @@ MemStat::MemStat() { reset(); }
  */
 void MemStat::reset()
 {
-	_00.initCore("infoList");
-	_18 = &_00;
-	_9C = 0;
+	mInfoListRoot.initCore("infoList");
+	mCurrentInfo = &mInfoListRoot;
+	mStatCount   = 0;
 }
 
 /*
@@ -62,9 +62,9 @@ void MemStat::start(char* name)
 	if (!info) {
 		info = new MemInfo;
 		info->setName(name);
-		info->mParent     = _18;
+		info->mParent     = mCurrentInfo;
 		info->mMemorySize = 0;
-		_18->add(info);
+		mCurrentInfo->add(info);
 	}
 
 	if (!info) {
@@ -72,7 +72,7 @@ void MemStat::start(char* name)
 	}
 
 	addInfo(info);
-	gsys->setCurrMemInfo(_18);
+	gsys->setCurrMemInfo(mCurrentInfo);
 }
 
 /*
@@ -83,10 +83,13 @@ void MemStat::start(char* name)
 void MemStat::end(char* name)
 {
 	if (memStat && getInfo(name)) {
-		_9C--;
-		DEBUGPRINT(_9C > 0); // i hate you i hate you i hate you i hate you
-		_18                = _1C[_9C];
-		gsys->mCurrMemInfo = _18;
+		// Remove the current info from the stack
+		mStatCount--;
+		DEBUGPRINT(mStatCount > 0);
+
+		// If the current info is not the root info, set the current info to the previous info
+		mCurrentInfo       = mPrevInfoStack[mStatCount];
+		gsys->mCurrMemInfo = mCurrentInfo;
 	}
 	/*
 	.loc_0x0:
@@ -153,7 +156,7 @@ void MemStat::getRestMemory()
 void MemStat::print()
 {
 	if (memStat) {
-		printInfoRec(static_cast<MemInfo*>(_00.mChild), 4);
+		printInfoRec(static_cast<MemInfo*>(mInfoListRoot.mChild), 4);
 	}
 }
 
@@ -162,7 +165,7 @@ void MemStat::print()
  * Address:	800868F4
  * Size:	000024
  */
-MemInfo* MemStat::getInfo(char* name) { return getInfoRec(name, &_00); }
+MemInfo* MemStat::getInfo(char* name) { return getInfoRec(name, &mInfoListRoot); }
 
 /*
  * --INFO--

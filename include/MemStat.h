@@ -49,16 +49,16 @@ struct MemStat {
 
 	inline void addInfo(MemInfo* newInfo)
 	{
-		_1C[_9C] = _18;
-		_9C++;
-		_18 = newInfo;
+		// Add the new info to the stack
+		mPrevInfoStack[mStatCount] = mCurrentInfo;
+		mStatCount++;
+		mCurrentInfo = newInfo;
 	}
 
-	// TODO: members
-	MemInfo _00;      // _00
-	MemInfo* _18;     // _18
-	MemInfo* _1C[32]; // _1C
-	int _9C;          // _9C
+	MemInfo mInfoListRoot;       // _00
+	MemInfo* mCurrentInfo;       // _18
+	MemInfo* mPrevInfoStack[32]; // _1C
+	int mStatCount;              // _9C
 };
 
 extern MemStat* memStat;

@@ -18,8 +18,8 @@ struct KIOContext {
 	void set(int, u8*, int);
 	void write();
 
-	int _00;   // _00
-	void* _04; // _04
+	int mBufferSize;    // _00
+	void* mBufferStart; // _04
 };
 
 /**
@@ -43,9 +43,9 @@ struct KIO {
 	// TODO: members
 	s32 mChannel;        // _00
 	KIOContext mContext; // _04
-	void* _0C;           // _0C, maybe an array of something?
-	u8 _10;              // _10
-	u8 _11;              // _11
+	void* mHeaderBuffer; // _0C, maybe an array of something?
+	bool mIsReady;       // _10
+	bool mIsActive;      // _11
 };
 
 extern KIO* kio;

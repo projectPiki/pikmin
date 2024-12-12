@@ -46,24 +46,24 @@ void AnimInfo::initAnimData(AnimData*)
  */
 void AnimInfo::checkAnimData()
 {
-	AnimKey* key1 = _38.mNext;
-	for (key1; key1 != &_38; key1 = key1->mNext) {
-		if (key1->_00 > mData->mNumFrames - 1) {
-			key1->_00 = mData->mNumFrames - 1;
+	AnimKey* key1 = mAnimKeys.mNext;
+	for (key1; key1 != &mAnimKeys; key1 = key1->mNext) {
+		if (key1->mKeyframeIndex > mData->mNumFrames - 1) {
+			key1->mKeyframeIndex = mData->mNumFrames - 1;
 		}
 	}
 
 	AnimKey* infoKey = mInfoKeys.mNext;
 	for (infoKey; infoKey != &mInfoKeys; infoKey = infoKey->mNext) {
-		if (infoKey->_00 >= countAKeys()) {
-			infoKey->_00 = countAKeys() - 1;
+		if (infoKey->mKeyframeIndex >= countAKeys()) {
+			infoKey->mKeyframeIndex = countAKeys() - 1;
 		}
 	}
 
 	AnimKey* eventKey = mEventKeys.mNext;
 	for (eventKey; eventKey != &mEventKeys; eventKey = eventKey->mNext) {
-		if (eventKey->_00 > mData->mNumFrames - 1) {
-			eventKey->_00 = mData->mNumFrames - 1;
+		if (eventKey->mKeyframeIndex > mData->mNumFrames - 1) {
+			eventKey->mKeyframeIndex = mData->mNumFrames - 1;
 		}
 	}
 }
@@ -77,8 +77,8 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
     : CoreNode("")
 {
 	initCore("");
-	mMgr      = mgr;
-	_38.mPrev = _38.mNext = &_38;
+	mMgr            = mgr;
+	mAnimKeys.mPrev = mAnimKeys.mNext = &mAnimKeys;
 	mInfoKeys.mPrev = mInfoKeys.mNext = &mInfoKeys;
 	mEventKeys.mPrev = mEventKeys.mNext = &mEventKeys;
 
@@ -92,13 +92,13 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
 	mName = StdSystem::stringDup(&data->mName[pos + 1]);
 	mData = data;
 
-	AnimKey* key1 = new AnimKey();
-	key1->_00     = 0;
-	_38.add(key1);
+	AnimKey* key1        = new AnimKey();
+	key1->mKeyframeIndex = 0;
+	mAnimKeys.add(key1);
 
-	AnimKey* key2 = new AnimKey();
-	key2->_00     = mData->mNumFrames - 1;
-	_38.add(key2);
+	AnimKey* key2        = new AnimKey();
+	key2->mKeyframeIndex = mData->mNumFrames - 1;
+	mAnimKeys.add(key2);
 
 	checkAnimData();
 
@@ -306,8 +306,8 @@ void AnimInfo::setAnimFlags(u32 flags)
 int AnimInfo::countAKeys()
 {
 	int count    = 0;
-	AnimKey* key = _38.mNext;
-	for (key; key != &_38; key = key->mNext) {
+	AnimKey* key = mAnimKeys.mNext;
+	for (key; key != &mAnimKeys; key = key->mNext) {
 		count++;
 	}
 
@@ -390,10 +390,10 @@ AnimKey* AnimInfo::getEventKey(int idx)
 int AnimInfo::getKeyValue(int idx)
 {
 	int i        = 0;
-	AnimKey* key = _38.mNext;
-	for (key; key != &_38; key = key->mNext, i++) {
+	AnimKey* key = mAnimKeys.mNext;
+	for (key; key != &mAnimKeys; key = key->mNext, i++) {
 		if (i == idx) {
-			return key->_00;
+			return key->mKeyframeIndex;
 		}
 	}
 
@@ -412,7 +412,7 @@ void AnimInfo::doread(RandomAccessStream& input, int p2)
 	mName = StdSystem::stringDup(str.mString);
 	mParams.read(input);
 
-	_38.mPrev = _38.mNext = &_38;
+	mAnimKeys.mPrev = mAnimKeys.mNext = &mAnimKeys;
 	mInfoKeys.mPrev = mInfoKeys.mNext = &mInfoKeys;
 	mEventKeys.mPrev = mEventKeys.mNext = &mEventKeys;
 
@@ -420,8 +420,8 @@ void AnimInfo::doread(RandomAccessStream& input, int p2)
 	if (numKeys) {
 		AnimKey* keys = new AnimKey[numKeys];
 		for (int i = 0; i < numKeys; i++) {
-			keys[i]._00 = input.readInt();
-			_38.add(&keys[i]);
+			keys[i].mKeyframeIndex = input.readInt();
+			mAnimKeys.add(&keys[i]);
 		}
 	}
 
@@ -430,10 +430,10 @@ void AnimInfo::doread(RandomAccessStream& input, int p2)
 		if (numKeys2) {
 			AnimKey* keys = new AnimKey[numKeys2];
 			for (int i = 0; i < numKeys2; i++) {
-				keys[i]._00 = input.readInt();
-				keys[i]._04 = input.readShort();
-				keys[i]._07 = input.readByte();
-				keys[i]._06 = input.readByte();
+				keys[i].mKeyframeIndex = input.readInt();
+				keys[i].mEventKeyType  = input.readShort();
+				keys[i]._07            = input.readByte();
+				keys[i].mValue         = input.readByte();
 				mInfoKeys.add(&keys[i]);
 			}
 		}
@@ -443,12 +443,12 @@ void AnimInfo::doread(RandomAccessStream& input, int p2)
 	if (numKeys3) {
 		AnimKey* keys = new AnimKey[numKeys3];
 		for (int i = 0; i < numKeys3; i++) {
-			keys[i]._00 = input.readInt();
-			keys[i]._04 = input.readShort();
-			keys[i]._07 = input.readByte();
-			keys[i]._06 = input.readByte();
-			if (keys[i]._04 >= 3) {
-				keys[i]._04 = 0;
+			keys[i].mKeyframeIndex = input.readInt();
+			keys[i].mEventKeyType  = input.readShort();
+			keys[i]._07            = input.readByte();
+			keys[i].mValue         = input.readByte();
+			if (keys[i].mEventKeyType >= 3) {
+				keys[i].mEventKeyType = 0;
 			}
 			mEventKeys.add(&keys[i]);
 		}
@@ -469,9 +469,9 @@ void AnimInfo::updateAnimFlags() { mData->mAnimFlags = mParams.mFlags.mValue; }
  */
 void AnimInfo::addKeyFrame()
 {
-	AnimKey* keyFrame = new AnimKey();
-	keyFrame->_00     = mData->mNumFrames - 1;
-	_38.add(keyFrame);
+	AnimKey* keyFrame        = new AnimKey();
+	keyFrame->mKeyframeIndex = mData->mNumFrames - 1;
+	mAnimKeys.add(keyFrame);
 }
 
 /*

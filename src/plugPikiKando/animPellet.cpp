@@ -365,8 +365,8 @@ PelletAnimator::PelletAnimator() { }
  */
 void PelletAnimator::init(AnimContext* context1, AnimContext* context2, AnimMgr* mgr, PaniMotionTable* motionTable)
 {
-	_00.init(context1, mgr, motionTable);
-	_54.init(context2, mgr, motionTable);
+	mAnimatorA.init(context1, mgr, motionTable);
+	mAnimatorB.init(context2, mgr, motionTable);
 }
 
 /*
@@ -377,10 +377,10 @@ void PelletAnimator::init(AnimContext* context1, AnimContext* context2, AnimMgr*
 void PelletAnimator::startMotion(PaniMotionInfo* motionInfo1, PaniMotionInfo* motionInfo2)
 {
 	if (motionInfo1) {
-		_00.startMotion(*motionInfo1);
+		mAnimatorA.startMotion(*motionInfo1);
 	}
 	if (motionInfo2) {
-		_54.startMotion(*motionInfo2);
+		mAnimatorB.startMotion(*motionInfo2);
 	}
 	// UNUSED FUNCTION
 }
@@ -393,10 +393,10 @@ void PelletAnimator::startMotion(PaniMotionInfo* motionInfo1, PaniMotionInfo* mo
 void PelletAnimator::finishMotion(PaniMotionInfo* motionInfo1, PaniMotionInfo* motionInfo2)
 {
 	if (motionInfo1) {
-		_00.finishMotion(*motionInfo1);
+		mAnimatorA.finishMotion(*motionInfo1);
 	}
 	if (motionInfo2) {
-		_54.finishMotion(*motionInfo2);
+		mAnimatorB.finishMotion(*motionInfo2);
 	}
 }
 
@@ -431,8 +431,8 @@ void PelletAnimator::finishMotion(PaniAnimKeyListener*)
  */
 void PelletAnimator::updateAnimation(f32 p1, f32 p2)
 {
-	_00.animate(p1);
-	_54.animate(p2);
+	mAnimatorA.animate(p1);
+	mAnimatorB.animate(p2);
 }
 
 /*
@@ -442,8 +442,8 @@ void PelletAnimator::updateAnimation(f32 p1, f32 p2)
  */
 void PelletAnimator::updateContext()
 {
-	_00.updateContext();
-	_54.updateContext();
+	mAnimatorA.updateContext();
+	mAnimatorB.updateContext();
 }
 
 /*
