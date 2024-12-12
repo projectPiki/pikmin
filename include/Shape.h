@@ -134,7 +134,7 @@ struct BaseShape : public CoreNode {
 	void loadDck(char*, RandomAccessStream&);
 	void importDck(char*, CmdStream*);
 	void loadDca(char*, RandomAccessStream&);
-	void loadAnimation(char*, bool);
+	AnimData* loadAnimation(char*, bool);
 	struct Matrix4f& getAnimMatrix(int);
 	void backupAnimOverrides(AnimContext**);
 	void restoreAnimOverrides();

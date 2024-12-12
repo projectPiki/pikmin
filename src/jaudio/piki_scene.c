@@ -1,12 +1,28 @@
-#include "types.h"
+#include "jaudio/PikiScene.h"
+#include "jaudio/PikiBgm.h"
+
+static u32 current_bgm;
+static u32 current_ready; // type
+static u32 now_loading;   // type
+static u32 first_load;    // type
+static u32 chgmode;       // type
+
+static u32 current_scene   = 0xFFFFFFFF;
+static u32 current_stage   = 0xFFFFFFFF;
+static u32 current_prepare = 0xFFFFFFFF;
+static u16 stream_level    = 8000;
+static u16 stream_se_level = 8000;
 
 /*
  * --INFO--
  * Address:	80019760
  * Size:	000038
  */
-void Jac_Delete_CurrentBgmWave(void)
+void Jac_Delete_CurrentBgmWave()
 {
+	Jac_StopBgm(0);
+	Jac_StopBgm(1);
+	// WaveScene_Close(current_bgm, 0);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -31,7 +47,7 @@ void Jac_Delete_CurrentBgmWave(void)
  * Address:	800197A0
  * Size:	000094
  */
-void __Loaded(u32)
+static void __Loaded(u32)
 {
 	/*
 	.loc_0x0:
@@ -90,35 +106,21 @@ void __Loaded(u32)
  * Address:	80019840
  * Size:	000008
  */
-void Jac_GetCurrentScene(void)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, -0x7F20(r13)
-	  blr
-	*/
-}
+u32 Jac_GetCurrentScene() { return current_scene; }
 
 /*
  * --INFO--
  * Address:	80019860
  * Size:	000008
  */
-void Jac_TellChgMode(void)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2D18(r13)
-	  blr
-	*/
-}
+u32 Jac_TellChgMode() { return chgmode; }
 
 /*
  * --INFO--
  * Address:	80019880
  * Size:	00045C
  */
-void Jac_SceneSetup(void)
+void Jac_SceneSetup(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -481,7 +483,7 @@ void Jac_SceneSetup(void)
  * Address:	80019CE0
  * Size:	0000FC
  */
-void Jac_SceneExit(void)
+void Jac_SceneExit(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -568,14 +570,10 @@ void Jac_SceneExit(void)
  * Address:	80019DE0
  * Size:	00000C
  */
-void Jac_SetStreamLevel(void)
+void Jac_SetStreamLevel(u16 streamLevel, u16 seLevel)
 {
-	/*
-	.loc_0x0:
-	  sth       r3, -0x7F14(r13)
-	  sth       r4, -0x7F12(r13)
-	  blr
-	*/
+	stream_level    = streamLevel;
+	stream_se_level = seLevel;
 }
 
 /*
@@ -583,7 +581,7 @@ void Jac_SetStreamLevel(void)
  * Address:	80019E00
  * Size:	000064
  */
-void Jac_UpdateStreamLevel(void)
+void Jac_UpdateStreamLevel()
 {
 	/*
 	.loc_0x0:
@@ -624,7 +622,7 @@ void Jac_UpdateStreamLevel(void)
  * Address:	80019E80
  * Size:	00007C
  */
-void MovieSync(u32, s32)
+static void MovieSync(u32, s32)
 {
 	/*
 	.loc_0x0:

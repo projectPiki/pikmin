@@ -28,6 +28,7 @@
         "aictrl.h": "c",
         "dspbuf.h": "c",
         "rate.h": "c",
-        "hw_regs.h": "c"
+        "hw_regs.h": "c",
+        "pikibgm.h": "c"
     }
 }

@@ -77,6 +77,8 @@ struct AyuStack {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x28.
  */
 struct AyuHeap : public AyuStack {
 	AyuHeap() { }

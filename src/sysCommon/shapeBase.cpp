@@ -13128,7 +13128,7 @@ void BaseShape::importDca(char*, CmdStream*)
  * Address:	80034DF4
  * Size:	0001C4
  */
-void BaseShape::loadAnimation(char*, bool)
+AnimData* BaseShape::loadAnimation(char*, bool)
 {
 	/*
 	.loc_0x0:

@@ -182,7 +182,7 @@ void Jac_FadeOutBgm(void)
  * Address:	80018B80
  * Size:	000054
  */
-void Jac_StopBgm(void)
+void Jac_StopBgm(u32)
 {
 	/*
 	.loc_0x0:

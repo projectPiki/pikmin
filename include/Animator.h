@@ -217,6 +217,13 @@ struct AnimInfo : public CoreNode {
 		Parm<f32> mSpeed; // _28, spd
 	};
 
+	AnimInfo()
+	    : CoreNode("")
+	{
+		mData = 0;
+		mMgr  = nullptr;
+	}
+
 	AnimInfo(AnimMgr*, AnimData*);
 
 	void checkAnimData();
@@ -244,7 +251,7 @@ struct AnimInfo : public CoreNode {
 	AnimKey mEventKeys;     // _48
 	AnimKey mInfoKeys;      // _58
 	AnimData* mData;        // _68
-	u8 _6C[0x4];            // _6C, unknown
+	int mIndex;             // _6C
 	AnimMgr* mMgr;          // _70
 };
 
@@ -277,7 +284,10 @@ struct Animator {
 	// _30 = VTBL
 	AnimMgr* mMgr;         // _00
 	AnimContext* mContext; // _04
-	u8 _08[0x10];          // _08, unknown
+	int _08;               // _08
+	int _0C;               // _0C
+	int _10;               // _10
+	int _14;               // _14
 	int _18;               // _18
 	int _1C;               // _1C
 	int _20;               // _20
@@ -304,7 +314,7 @@ struct AnimMgr : public CoreNode {
 	struct AnimMgrParams : public Parameters {
 		inline AnimMgrParams()
 		    : _18(this, 2, 0, 0, "a00", nullptr)
-		    , _28(this, *(String*)(0), *(String*)(0), *(String*)(0), "a01", nullptr)
+		    , _28(this, String("base dir", 0), String("", 0), String("", 0), "a01", nullptr)
 		{
 		}
 
@@ -322,14 +332,14 @@ struct AnimMgr : public CoreNode {
 	int countAnims();
 
 	// unused/inlined:
-	void findAnim(int);
+	AnimInfo* findAnim(int);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	AnimMgrParams mParams; // _14
-	u8 _3C[0x4];           // _3C, unknown
+	Shape* _3C;            // _3C
 	AnimInfo mAnimList;    // _40, parent of list of animations
-	u8 _B4;                // _B4, unknown
+	u32 _B4;               // _B4
 };
 
 /**

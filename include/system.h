@@ -31,6 +31,21 @@ struct AnimFrameCacher;
 struct MemInfo;
 
 /**
+ * @brief For mHeaps array in StdSystem.
+ */
+enum SystemHeapType {
+	SYSHEAP_Sys     = 0,
+	SYSHEAP_Ovl     = 1,
+	SYSHEAP_App     = 2,
+	SYSHEAP_Load    = 3,
+	SYSHEAP_Teki    = 4,
+	SYSHEAP_Movie   = 5,
+	SYSHEAP_Message = 6,
+	SYSHEAP_Lang    = 7,
+	SYSHEAP_COUNT, // 8
+};
+
+/**
  * @brief TODO
  */
 enum TimerState {
@@ -88,7 +103,7 @@ struct StdSystem {
 	Shape* loadShape(char*, bool);
 	void findAnimation(char*);
 	int findAnyIndex(char*, char*);
-	void loadAnimation(Shape*, char*, bool);
+	AnimData* loadAnimation(Shape*, char*, bool);
 	void addAnimation(AnimData*, char*);
 	void addGfxObject(GfxobjInfo*);
 	void attachObjs();
@@ -120,13 +135,19 @@ struct StdSystem {
 		mFadeEnd   = end;
 	}
 
+	inline void setDirectories(char* bloDir, char* texDir)
+	{
+		mBloDirectory = bloDir;
+		mTexDirectory = texDir;
+	}
+
 	bool mPending;                 // _00
 	f32 mCurrentFade;              // _04
 	f32 mFadeStart;                // _08
 	f32 mFadeEnd;                  // _0C
 	struct Font* mConsFont;        // _10
 	s32 mFrameRate;                // _14
-	TimerState mTimerState;        // _18
+	u32 mTimerState;               // _18, see TimerState enum
 	u32 mTogglePrint;              // _1C
 	u32 mToggleDebugInfo;          // _20
 	u32 mToggleDebugExtra;         // _24
@@ -141,7 +162,7 @@ struct StdSystem {
 	char* mTexDirectory;           // _48
 	char* mCurrentDirectory;       // _4C
 	char* mDataRoot;               // _50
-	AyuHeap mHeaps[8];             // _54 (sys, ovl, app, load, teki, movie, message, lang)
+	AyuHeap mHeaps[SYSHEAP_COUNT]; // _54 (54:sys, 7C:ovl, A4:app, CC:load, F4:teki, 11C:movie, 144:message, 16C:lang)
 	int mActiveHeapIdx;            // _194
 	u32 _198;                      // _198, unknown
 	MemInfo* mCurrMemInfo;         // _19C
@@ -178,7 +199,7 @@ struct StdSystem {
 	BaseShape* mCurrentShape; // _1FC
 	CoreNode _200;            // _200
 	CoreNode _214;            // _214
-	u32 _228;                 // _228
+	CoreNode* _228;           // _228
 	int mFlareCount;          // _22C
 	int mLfInfoCount;         // _230
 	LFInfo* mLfInfo;          // _234

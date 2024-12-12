@@ -145,8 +145,23 @@ void Nas_HeapFree(ALHeap*)
  * Address:	80005640
  * Size:	00006C
  */
-void* Nas_HeapAlloc(ALHeap*, s32)
+void* Nas_HeapAlloc(ALHeap* heap, s32 size)
 {
+	u32 roundedSize = ALIGN_NEXT(size, 32);
+	if (!heap->base) {
+		return nullptr;
+	}
+
+	u8* prev = heap->current;
+	if (prev + roundedSize <= heap->base + heap->length) {
+		heap->current = prev + roundedSize;
+	} else {
+		return nullptr;
+	}
+
+	heap->count++;
+	heap->last = prev;
+	return prev;
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x28(r1)
@@ -192,8 +207,20 @@ void* Nas_HeapAlloc(ALHeap*, s32)
  * Address:	800056C0
  * Size:	000058
  */
-void Nas_HeapInit(ALHeap*, u8*, s32)
+void Nas_HeapInit(ALHeap* heap, u8* p2, s32 p3)
 {
+	heap->count = 0;
+	if (!p2) {
+		heap->length  = 0;
+		heap->current = nullptr;
+		heap->last    = nullptr;
+	} else {
+		int len       = p3 - (p3 & 0x1F);
+		heap->base    = (u8*)ALIGN_NEXT((u32)p2, 32);
+		heap->current = heap->base;
+		heap->length  = len;
+		heap->last    = nullptr;
+	}
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x28(r1)

@@ -3,6 +3,7 @@
 #include "Parameters.h"
 #include "String.h"
 #include "stl/string.h"
+#include "Shape.h"
 #include "system.h"
 #include "sysNew.h"
 #include "Dolphin/os.h"
@@ -284,30 +285,7 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
  * Address:	8005037C
  * Size:	000048
  */
-void AnimInfo::setIndex()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x70(r31)
-	  lwz       r5, 0x68(r31)
-	  addi      r4, r4, 0x34
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x4(r4)
-	  lwz       r5, 0x4(r5)
-	  bl        -0x10F5C
-	  stw       r3, 0x6C(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
+void AnimInfo::setIndex() { mIndex = gsys->findAnyIndex(mMgr->mParams._28().mString, mData->mName); }
 
 /*
  * --INFO--
@@ -427,221 +405,54 @@ int AnimInfo::getKeyValue(int idx)
  * Address:	800504FC
  * Size:	0002F8
  */
-void AnimInfo::doread(RandomAccessStream&, int)
+void AnimInfo::doread(RandomAccessStream& input, int p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x58(r1)
-	  stmw      r26, 0x40(r1)
-	  addi      r31, r4, 0
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  addi      r29, r5, 0
-	  addi      r4, r1, 0x38
-	  stw       r0, 0x3C(r1)
-	  stw       r0, 0x38(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3C(r1)
-	  bl        -0x10200
-	  stw       r3, 0x4(r30)
-	  addi      r4, r31, 0
-	  addi      r3, r30, 0x14
-	  bl        0xE648
-	  addi      r3, r30, 0x38
-	  stw       r3, 0x44(r30)
-	  addi      r4, r30, 0x58
-	  addi      r0, r30, 0x48
-	  stw       r3, 0x40(r30)
-	  mr        r3, r31
-	  stw       r4, 0x64(r30)
-	  stw       r4, 0x60(r30)
-	  stw       r0, 0x54(r30)
-	  stw       r0, 0x50(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r27, r3
-	  beq-      .loc_0x110
-	  addi      r28, r27, 0
-	  rlwinm    r3,r27,4,0,27
-	  addi      r3, r3, 0x8
-	  bl        -0x959C
-	  lis       r4, 0x8005
-	  addi      r4, r4, 0x7F4
-	  addi      r7, r28, 0
-	  li        r5, 0
-	  li        r6, 0x10
-	  bl        0x1C4670
-	  addi      r28, r3, 0
-	  li        r26, 0
-	  b         .loc_0x108
+	String str(nullptr, 0);
+	input.readString(str);
+	mName = StdSystem::stringDup(str.mString);
+	mParams.read(input);
 
-	.loc_0xCC:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r28)
-	  addi      r26, r26, 0x1
-	  lwz       r4, 0x40(r30)
-	  lwz       r0, 0xC(r4)
-	  stw       r0, 0xC(r28)
-	  stw       r4, 0x8(r28)
-	  lwz       r3, 0xC(r4)
-	  stw       r28, 0x8(r3)
-	  stw       r28, 0xC(r4)
-	  addi      r28, r28, 0x10
+	_38.mPrev = _38.mNext = &_38;
+	mInfoKeys.mPrev = mInfoKeys.mNext = &mInfoKeys;
+	mEventKeys.mPrev = mEventKeys.mNext = &mEventKeys;
 
-	.loc_0x108:
-	  cmpw      r26, r27
-	  blt+      .loc_0xCC
+	int numKeys = input.readInt();
+	if (numKeys) {
+		AnimKey* keys = new AnimKey[numKeys];
+		for (int i = 0; i < numKeys; i++) {
+			keys[i]._00 = input.readInt();
+			_38.add(&keys[i]);
+		}
+	}
 
-	.loc_0x110:
-	  cmpwi     r29, 0x1
-	  blt-      .loc_0x1F4
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r26, r3
-	  beq-      .loc_0x1F4
-	  addi      r28, r26, 0
-	  rlwinm    r3,r26,4,0,27
-	  addi      r3, r3, 0x8
-	  bl        -0x9638
-	  lis       r4, 0x8005
-	  addi      r4, r4, 0x7F4
-	  addi      r7, r28, 0
-	  li        r5, 0
-	  li        r6, 0x10
-	  bl        0x1C45D4
-	  addi      r28, r3, 0
-	  li        r27, 0
-	  b         .loc_0x1EC
+	if (p2 >= 1) {
+		int numKeys2 = input.readInt();
+		if (numKeys2) {
+			AnimKey* keys = new AnimKey[numKeys2];
+			for (int i = 0; i < numKeys2; i++) {
+				keys[i]._00 = input.readInt();
+				keys[i]._04 = input.readShort();
+				keys[i]._07 = input.readByte();
+				keys[i]._06 = input.readByte();
+				mInfoKeys.add(&keys[i]);
+			}
+		}
+	}
 
-	.loc_0x168:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r28)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  sth       r3, 0x4(r28)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x7(r28)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x6(r28)
-	  addi      r27, r27, 0x1
-	  lwz       r4, 0x60(r30)
-	  lwz       r0, 0xC(r4)
-	  stw       r0, 0xC(r28)
-	  stw       r4, 0x8(r28)
-	  lwz       r3, 0xC(r4)
-	  stw       r28, 0x8(r3)
-	  stw       r28, 0xC(r4)
-	  addi      r28, r28, 0x10
-
-	.loc_0x1EC:
-	  cmpw      r27, r26
-	  blt+      .loc_0x168
-
-	.loc_0x1F4:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r26, r3
-	  beq-      .loc_0x2E4
-	  addi      r28, r26, 0
-	  rlwinm    r3,r26,4,0,27
-	  addi      r3, r3, 0x8
-	  bl        -0x9714
-	  lis       r4, 0x8005
-	  addi      r4, r4, 0x7F4
-	  addi      r7, r28, 0
-	  li        r5, 0
-	  li        r6, 0x10
-	  bl        0x1C44F8
-	  addi      r28, r3, 0
-	  li        r27, 0
-	  b         .loc_0x2DC
-
-	.loc_0x244:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r28)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  sth       r3, 0x4(r28)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x7(r28)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x6(r28)
-	  lha       r0, 0x4(r28)
-	  cmpwi     r0, 0x3
-	  blt-      .loc_0x2B8
-	  li        r0, 0
-	  sth       r0, 0x4(r28)
-
-	.loc_0x2B8:
-	  lwz       r4, 0x50(r30)
-	  addi      r27, r27, 0x1
-	  lwz       r0, 0xC(r4)
-	  stw       r0, 0xC(r28)
-	  stw       r4, 0x8(r28)
-	  lwz       r3, 0xC(r4)
-	  stw       r28, 0x8(r3)
-	  stw       r28, 0xC(r4)
-	  addi      r28, r28, 0x10
-
-	.loc_0x2DC:
-	  cmpw      r27, r26
-	  blt+      .loc_0x244
-
-	.loc_0x2E4:
-	  lmw       r26, 0x40(r1)
-	  lwz       r0, 0x5C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	int numKeys3 = input.readInt();
+	if (numKeys3) {
+		AnimKey* keys = new AnimKey[numKeys3];
+		for (int i = 0; i < numKeys3; i++) {
+			keys[i]._00 = input.readInt();
+			keys[i]._04 = input.readShort();
+			keys[i]._07 = input.readByte();
+			keys[i]._06 = input.readByte();
+			if (keys[i]._04 >= 3) {
+				keys[i]._04 = 0;
+			}
+			mEventKeys.add(&keys[i]);
+		}
+	}
 }
 
 /*
@@ -668,155 +479,13 @@ void AnimInfo::addKeyFrame()
  * Address:	800508A4
  * Size:	000234
  */
-AnimMgr::AnimMgr(Shape*, char*, int, char*)
-    : mAnimList(this, nullptr)
+AnimMgr::AnimMgr(Shape* shape, char* p2, int p3, char* p4)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r8, 0x8022
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xC0(r1)
-	  stmw      r22, 0x98(r1)
-	  addi      r22, r3, 0
-	  addi      r27, r8, 0x738C
-	  lis       r3, 0x8022
-	  addi      r28, r3, 0x737C
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x6034
-	  li        r29, 0
-	  lis       r8, 0x802A
-	  addi      r23, r4, 0
-	  addi      r4, r8, 0x5FCC
-	  addi      r3, r1, 0x54
-	  addi      r24, r5, 0
-	  stw       r27, 0x0(r22)
-	  addi      r5, r3, 0
-	  addi      r25, r6, 0
-	  stw       r28, 0x0(r22)
-	  addi      r26, r7, 0
-	  addi      r3, r22, 0x18
-	  stw       r29, 0x10(r22)
-	  stw       r29, 0xC(r22)
-	  stw       r29, 0x8(r22)
-	  stw       r4, 0x4(r22)
-	  addi      r4, r22, 0x14
-	  stw       r0, 0x0(r22)
-	  stw       r29, 0x14(r22)
-	  lwz       r0, -0x761C(r13)
-	  stw       r0, 0x5C(r1)
-	  lwz       r0, 0x5C(r1)
-	  stw       r0, 0x54(r1)
-	  bl        0xE154
-	  lis       r3, 0x802A
-	  addi      r30, r3, 0x60C4
-	  stw       r30, 0x20(r22)
-	  li        r31, 0x2
-	  lis       r3, 0x802A
-	  stw       r31, 0x24(r22)
-	  addi      r0, r3, 0x5FD8
-	  addi      r5, r1, 0x50
-	  lwz       r6, -0x7618(r13)
-	  addi      r3, r22, 0x28
-	  stw       r0, 0x6C(r1)
-	  addi      r4, r22, 0x14
-	  stw       r6, 0x94(r1)
-	  lwz       r0, 0x94(r1)
-	  stw       r29, 0x68(r1)
-	  stw       r0, 0x50(r1)
-	  bl        0xE110
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x606C
-	  stw       r0, 0x30(r22)
-	  li        r3, 0x41
-	  bl        0x160
-	  stw       r3, 0x38(r22)
-	  li        r0, 0x40
-	  lis       r3, 0x802A
-	  stw       r0, 0x34(r22)
-	  subi      r5, r13, 0x7628
-	  addi      r0, r3, 0x60F8
-	  lwz       r7, 0x68(r1)
-	  addi      r3, r1, 0x44
-	  lwz       r6, 0x6C(r1)
-	  subi      r4, r13, 0x7624
-	  stw       r7, 0x34(r22)
-	  stw       r6, 0x38(r22)
-	  stw       r27, 0x40(r22)
-	  stw       r28, 0x40(r22)
-	  stw       r29, 0x50(r22)
-	  stw       r29, 0x4C(r22)
-	  stw       r29, 0x48(r22)
-	  stw       r5, 0x44(r22)
-	  stw       r0, 0x40(r22)
-	  stw       r29, 0x54(r22)
-	  bl        .loc_0x234
-	  lwz       r0, 0x44(r1)
-	  addi      r27, r22, 0x54
-	  addi      r5, r1, 0x3C
-	  stw       r0, 0x3C(r1)
-	  addi      r4, r27, 0
-	  addi      r3, r22, 0x58
-	  bl        0xE08C
-	  stw       r30, 0x60(r22)
-	  addi      r3, r1, 0x4C
-	  subi      r4, r13, 0x7620
-	  stw       r31, 0x64(r22)
-	  bl        .loc_0x234
-	  lwz       r0, 0x4C(r1)
-	  addi      r5, r1, 0x38
-	  addi      r4, r27, 0
-	  stw       r0, 0x38(r1)
-	  addi      r3, r22, 0x68
-	  bl        0xE060
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x6098
-	  stw       r0, 0x70(r22)
-	  subi      r7, r13, 0x7630
-	  rlwinm    r6,r25,0,17,31
-	  lfs       f0, -0x7B20(r2)
-	  subi      r0, r13, 0x7614
-	  addi      r3, r22, 0
-	  stfs      f0, 0x74(r22)
-	  addi      r4, r24, 0
-	  addi      r5, r26, 0
-	  stw       r29, 0x78(r22)
-	  sth       r29, 0x7C(r22)
-	  stb       r29, 0x7E(r22)
-	  stb       r29, 0x7F(r22)
-	  stw       r29, 0x84(r22)
-	  stw       r29, 0x80(r22)
-	  stw       r29, 0x88(r22)
-	  sth       r29, 0x8C(r22)
-	  stb       r29, 0x8E(r22)
-	  stb       r29, 0x8F(r22)
-	  stw       r29, 0x94(r22)
-	  stw       r29, 0x90(r22)
-	  stw       r29, 0x98(r22)
-	  sth       r29, 0x9C(r22)
-	  stb       r29, 0x9E(r22)
-	  stb       r29, 0x9F(r22)
-	  stw       r29, 0xA4(r22)
-	  stw       r29, 0xA0(r22)
-	  stw       r29, 0xA8(r22)
-	  stw       r29, 0xB0(r22)
-	  stw       r7, 0x4(r22)
-	  stw       r23, 0x3C(r22)
-	  stw       r6, 0xB4(r22)
-	  stw       r29, 0x50(r22)
-	  stw       r29, 0x4C(r22)
-	  stw       r29, 0x48(r22)
-	  stw       r0, 0x44(r22)
-	  bl        0x48
-	  mr        r3, r22
-	  lmw       r22, 0x98(r1)
-	  lwz       r0, 0xC4(r1)
-	  addi      r1, r1, 0xC0
-	  mtlr      r0
-	  blr
-
-	.loc_0x234:
-	*/
+	setName("AnimMgr");
+	_3C = shape;
+	_B4 = p3 & 0x7FFF;
+	mAnimList.initCore("anims");
+	loadAnims(p2, p4);
 }
 
 /*
@@ -988,48 +657,11 @@ void AnimMgr::loadAnims(char*, char*)
  * Address:	80050CEC
  * Size:	00008C
  */
-AnimInfo* AnimMgr::addAnimation(char*, bool)
+AnimInfo* AnimMgr::addAnimation(char* p1, bool p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0x74
-	  bl        -0x9D14
-	  mr.       r31, r3
-	  beq-      .loc_0x5C
-	  lwz       r3, 0x2DEC(r13)
-	  mr        r5, r29
-	  lwz       r4, 0x3C(r28)
-	  mr        r6, r30
-	  bl        -0x11844
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0
-	  addi      r4, r28, 0
-	  bl        -0xC44
-
-	.loc_0x5C:
-	  addi      r4, r31, 0
-	  addi      r3, r28, 0x40
-	  bl        -0x10778
-	  mr        r3, r31
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	AnimInfo* info = new AnimInfo(this, gsys->loadAnimation(_3C, p1, p2));
+	mAnimList.add(info);
+	return info;
 }
 
 /*
@@ -1037,8 +669,23 @@ AnimInfo* AnimMgr::addAnimation(char*, bool)
  * Address:	........
  * Size:	0000A4
  */
-void AnimMgr::findAnim(int)
+AnimInfo* AnimMgr::findAnim(int idx)
 {
+	int i          = 0;
+	AnimInfo* info = static_cast<AnimInfo*>(mAnimList.mChild);
+	for (info; info; info = static_cast<AnimInfo*>(info->mNext), i++) {
+		if (i == idx) {
+			if (info->mData) {
+				break;
+			}
+			char buf[128];
+			sprintf(buf, "%s/%s", mParams._28().mString, info->mName);
+			info->mData             = _3C->loadAnimation(buf, true);
+			info->mData->mAnimFlags = info->mParams.mFlags();
+			return info;
+		}
+	}
+	return nullptr;
 	// UNUSED FUNCTION
 }
 
@@ -1060,135 +707,20 @@ int AnimMgr::countAnims()
  * Address:	80050D98
  * Size:	0001D8
  */
-void AnimMgr::read(RandomAccessStream&)
+void AnimMgr::read(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stfd      f31, 0x68(r1)
-	  stmw      r18, 0x30(r1)
-	  addi      r20, r4, 0
-	  addi      r19, r3, 0
-	  addi      r3, r20, 0
-	  lwz       r12, 0x4(r20)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r3, 0
-	  addi      r3, r20, 0
-	  lwz       r12, 0x4(r20)
-	  mr        r22, r0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r26, r3, 0
-	  addi      r4, r20, 0
-	  addi      r3, r19, 0x14
-	  bl        0xDDA8
-	  li        r0, 0
-	  stw       r0, 0x50(r19)
-	  lis       r7, 0x8022
-	  lis       r6, 0x8022
-	  stw       r0, 0x4C(r19)
-	  lis       r5, 0x802A
-	  lis       r4, 0x802A
-	  stw       r0, 0x48(r19)
-	  subi      r0, r13, 0x7628
-	  lis       r3, 0x802A
-	  stw       r0, 0x44(r19)
-	  addi      r27, r7, 0x738C
-	  addi      r28, r6, 0x737C
-	  lfs       f31, -0x7B20(r2)
-	  addi      r30, r5, 0x60F8
-	  addi      r24, r1, 0x1C
-	  addi      r31, r4, 0x60C4
-	  addi      r23, r1, 0x18
-	  addi      r18, r3, 0x6098
-	  li        r21, 0
-	  b         .loc_0x1B8
+	int val       = input.readInt();
+	int infoCount = input.readInt();
 
-	.loc_0xB0:
-	  li        r3, 0x74
-	  bl        -0x9E48
-	  mr.       r25, r3
-	  beq-      .loc_0x194
-	  stw       r27, 0x0(r25)
-	  li        r29, 0
-	  subi      r0, r13, 0x7628
-	  stw       r28, 0x0(r25)
-	  addi      r3, r1, 0x24
-	  subi      r4, r13, 0x7624
-	  stw       r29, 0x10(r25)
-	  stw       r29, 0xC(r25)
-	  stw       r29, 0x8(r25)
-	  stw       r0, 0x4(r25)
-	  stw       r30, 0x0(r25)
-	  stw       r29, 0x14(r25)
-	  bl        -0x3B0
-	  lwz       r0, 0x24(r1)
-	  addi      r5, r24, 0
-	  addi      r3, r25, 0x18
-	  stw       r0, 0x1C(r1)
-	  addi      r4, r25, 0x14
-	  bl        0xDBE0
-	  stw       r31, 0x20(r25)
-	  li        r0, 0x2
-	  addi      r3, r1, 0x2C
-	  stw       r0, 0x24(r25)
-	  subi      r4, r13, 0x7620
-	  bl        -0x3E0
-	  lwz       r0, 0x2C(r1)
-	  addi      r5, r23, 0
-	  addi      r3, r25, 0x28
-	  stw       r0, 0x18(r1)
-	  addi      r4, r25, 0x14
-	  bl        0xDBB0
-	  stw       r18, 0x30(r25)
-	  stfs      f31, 0x34(r25)
-	  stw       r29, 0x38(r25)
-	  sth       r29, 0x3C(r25)
-	  stb       r29, 0x3E(r25)
-	  stb       r29, 0x3F(r25)
-	  stw       r29, 0x44(r25)
-	  stw       r29, 0x40(r25)
-	  stw       r29, 0x48(r25)
-	  sth       r29, 0x4C(r25)
-	  stb       r29, 0x4E(r25)
-	  stb       r29, 0x4F(r25)
-	  stw       r29, 0x54(r25)
-	  stw       r29, 0x50(r25)
-	  stw       r29, 0x58(r25)
-	  sth       r29, 0x5C(r25)
-	  stb       r29, 0x5E(r25)
-	  stb       r29, 0x5F(r25)
-	  stw       r29, 0x64(r25)
-	  stw       r29, 0x60(r25)
-	  stw       r29, 0x68(r25)
-	  stw       r29, 0x70(r25)
+	mParams.read(input);
+	mAnimList.initCore("");
 
-	.loc_0x194:
-	  stw       r19, 0x70(r25)
-	  addi      r3, r25, 0
-	  addi      r4, r20, 0
-	  addi      r5, r22, 0
-	  bl        -0xA40
-	  addi      r3, r19, 0x40
-	  addi      r4, r25, 0
-	  bl        -0x10970
-	  addi      r21, r21, 0x1
-
-	.loc_0x1B8:
-	  cmpw      r21, r26
-	  blt+      .loc_0xB0
-	  lmw       r18, 0x30(r1)
-	  lwz       r0, 0x74(r1)
-	  lfd       f31, 0x68(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < infoCount; i++) {
+		AnimInfo* info = new AnimInfo();
+		info->mMgr     = this;
+		info->doread(input, val);
+		mAnimList.add(info);
+	}
 }
 
 /*
@@ -1196,8 +728,10 @@ void AnimMgr::read(RandomAccessStream&)
  * Address:	80050F70
  * Size:	00021C
  */
-void Animator::startAnim(int, int, int, int)
+void Animator::startAnim(int p1, int p2, int p3, int p4)
 {
+	mAnimInfo = mMgr->findAnim(p2);
+	if (p3 == -1) { }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1396,6 +930,7 @@ void Animator::finishLoop() { }
  */
 void Animator::finishOneShot()
 {
+	startAnim(_08, _0C, _10, _14);
 	/*
 	.loc_0x0:
 	  mflr      r0

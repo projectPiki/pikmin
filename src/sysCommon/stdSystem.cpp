@@ -572,7 +572,7 @@ int StdSystem::findAnyIndex(char*, char*)
  * Address:	8003F4F0
  * Size:	0000BC
  */
-void StdSystem::loadAnimation(Shape*, char*, bool)
+AnimData* StdSystem::loadAnimation(Shape*, char*, bool)
 {
 	/*
 	.loc_0x0:

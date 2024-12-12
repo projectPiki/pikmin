@@ -10,7 +10,7 @@ extern "C" {
 //////////// JAUDIO PIKMIN BGM FUNCTIONS ////////////
 void Jac_InitBgm(void);           // args
 void Jac_FadeOutBgm(void);        // args
-void Jac_StopBgm(void);           // args
+void Jac_StopBgm(u32);            // arg type unsure
 void Jac_ReadyBgm(void);          // args
 void Jac_PlayBgm(void);           // args
 void Jac_ChangeBgmMode(void);     // args

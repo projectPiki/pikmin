@@ -5,17 +5,24 @@
 #include "WorldClock.h"
 #include "MoviePlayer.h"
 #include "RumbleMgr.h"
+#include "Menu.h"
 #include "NinLogoSection.h"
 #include "TitlesSection.h"
 #include "MovSampleSection.h"
 #include "OnePlayerSection.h"
 #include "PaniTestSection.h"
 #include "zen/ogTest.h"
+#include "timers.h"
 #include "Delegate.h"
+#include "Texture.h"
+#include "jaudio/PikiScene.h"
 #include "sysNew.h"
 #include "Dolphin/os.h"
 
 GameFlow gameflow;
+BaseApp* app;
+
+static char* timopts[] = { " [off]", "  [on]", "[full]" };
 
 /*
  * --INFO--
@@ -346,53 +353,13 @@ void WorldClock::setClockSpd(f32)
  * Address:	8005181C
  * Size:	0000A8
  */
-void WorldClock::setTime(f32)
+void WorldClock::setTime(f32 p1)
 {
-	/*
-	.loc_0x0:
-	  fctiwz    f0, f1
-	  stwu      r1, -0x38(r1)
-	  lis       r4, 0x4330
-	  stfd      f0, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stfd      f0, 0x30(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x24(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r4, 0x20(r1)
-	  stw       r0, 0x20(r3)
-	  lfd       f0, 0x20(r1)
-	  lfd       f3, -0x7AF0(r2)
-	  lfs       f2, 0x0(r3)
-	  fsubs     f0, f0, f3
-	  fsubs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x14(r3)
-	  lfs       f2, -0x7AF8(r2)
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, 0x14(r3)
-	  fdivs     f1, f2, f1
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r0, 0x28(r3)
-	  lfs       f1, 0x14(r3)
-	  lfs       f0, 0x0(r3)
-	  lwz       r0, 0x20(r3)
-	  fdivs     f0, f1, f0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x14(r1)
-	  stw       r4, 0x10(r1)
-	  lfd       f1, 0x10(r1)
-	  fsubs     f1, f1, f3
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x18(r3)
-	  lfs       f0, 0x18(r3)
-	  stfs      f0, 0x10(r3)
-	  addi      r1, r1, 0x38
-	  blr
-	*/
+	_20 = p1;
+	_14 = _00 * (p1 - f32(int(p1)));
+	_28 = (60.0f / _00) * _14;
+	_18 = f32(_20) + (_14 / _00);
+	_10 = _18;
 }
 
 /*
@@ -498,47 +465,11 @@ void WorldClock::update(f32)
  * Address:	800519BC
  * Size:	000090
  */
-void GameFlow::menuToggleTimers(Menu&)
+void GameFlow::menuToggleTimers(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0xAAAB
-	  stw       r0, 0x4(r1)
-	  subi      r0, r3, 0x5555
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  lwz       r5, 0x2DEC(r13)
-	  lwzu      r3, 0x18(r5)
-	  addi      r3, r3, 0x1
-	  mulhwu    r0, r0, r3
-	  rlwinm    r0,r0,31,1,31
-	  mulli     r0, r0, 0x3
-	  sub       r0, r3, r0
-	  stw       r0, 0x0(r5)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r3, 0x34(r3)
-	  bl        -0x1107C
-	  lwz       r3, 0x2DEC(r13)
-	  lis       r4, 0x802A
-	  lwz       r6, 0x30(r31)
-	  lis       r5, 0x802A
-	  lwz       r0, 0x18(r3)
-	  lwz       r3, 0x18(r6)
-	  addi      r4, r4, 0x6150
-	  rlwinm    r6,r0,2,0,29
-	  crclr     6, 0x6
-	  addi      r0, r5, 0x6144
-	  add       r5, r0, r6
-	  lwz       r5, 0x0(r5)
-	  bl        0x1C4B64
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mTimerState = (gsys->mTimerState + 1) % 3;
+	gsys->mTimer->reset();
+	sprintf(menu._30->mName, "Toggle Timers %s", timopts[gsys->mTimerState]);
 }
 
 /*
@@ -546,39 +477,10 @@ void GameFlow::menuToggleTimers(Menu&)
  * Address:	80051A4C
  * Size:	000060
  */
-void GameFlow::menuTogglePrint(Menu&)
+void GameFlow::menuTogglePrint(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x1C(r3)
-	  xori      r0, r0, 0x1
-	  stw       r0, 0x1C(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x1C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  subi      r5, r13, 0x7598
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  subi      r5, r13, 0x7590
-
-	.loc_0x38:
-	  lwz       r6, 0x30(r4)
-	  lis       r3, 0x802A
-	  addi      r4, r3, 0x6164
-	  crclr     6, 0x6
-	  lwz       r3, 0x18(r6)
-	  bl        0x1C4B00
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mTogglePrint ^= 1;
+	sprintf(menu._30->mName, "Toggle Print %s", (gsys->mTogglePrint) ? " [on]" : "[off]");
 }
 
 /*
@@ -586,39 +488,10 @@ void GameFlow::menuTogglePrint(Menu&)
  * Address:	80051AAC
  * Size:	000060
  */
-void GameFlow::menuToggleDInfo(Menu&)
+void GameFlow::menuToggleDInfo(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x20(r3)
-	  xori      r0, r0, 0x1
-	  stw       r0, 0x20(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x20(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  subi      r5, r13, 0x7598
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  subi      r5, r13, 0x7590
-
-	.loc_0x38:
-	  lwz       r6, 0x30(r4)
-	  lis       r3, 0x802A
-	  addi      r4, r3, 0x6174
-	  crclr     6, 0x6
-	  lwz       r3, 0x18(r6)
-	  bl        0x1C4AA0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mToggleDebugInfo ^= 1;
+	sprintf(menu._30->mName, "Toggle DInfo %s", (gsys->mToggleDebugInfo) ? " [on]" : "[off]");
 }
 
 /*
@@ -626,39 +499,10 @@ void GameFlow::menuToggleDInfo(Menu&)
  * Address:	80051B0C
  * Size:	000060
  */
-void GameFlow::menuToggleDExtra(Menu&)
+void GameFlow::menuToggleDExtra(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x24(r3)
-	  xori      r0, r0, 0x1
-	  stw       r0, 0x24(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x24(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  subi      r5, r13, 0x7598
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  subi      r5, r13, 0x7590
-
-	.loc_0x38:
-	  lwz       r6, 0x30(r4)
-	  lis       r3, 0x802A
-	  addi      r4, r3, 0x6184
-	  crclr     6, 0x6
-	  lwz       r3, 0x18(r6)
-	  bl        0x1C4A40
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mToggleDebugExtra ^= 1;
+	sprintf(menu._30->mName, "Toggle DExtra %s", (gsys->mToggleDebugExtra) ? " [on]" : "[off]");
 }
 
 /*
@@ -666,39 +510,10 @@ void GameFlow::menuToggleDExtra(Menu&)
  * Address:	80051B6C
  * Size:	000060
  */
-void GameFlow::menuToggleBlur(Menu&)
+void GameFlow::menuToggleBlur(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x28(r3)
-	  xori      r0, r0, 0x1
-	  stw       r0, 0x28(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x28(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  subi      r5, r13, 0x7598
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  subi      r5, r13, 0x7590
-
-	.loc_0x38:
-	  lwz       r6, 0x30(r4)
-	  lis       r3, 0x802A
-	  addi      r4, r3, 0x6198
-	  crclr     6, 0x6
-	  lwz       r3, 0x18(r6)
-	  bl        0x1C49E0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mToggleBlur ^= 1;
+	sprintf(menu._30->mName, "Toggle Blur %s", (gsys->mToggleBlur) ? " [on]" : "[off]");
 }
 
 /*
@@ -706,39 +521,10 @@ void GameFlow::menuToggleBlur(Menu&)
  * Address:	80051BCC
  * Size:	000060
  */
-void GameFlow::menuToggleInfo(Menu&)
+void GameFlow::menuToggleInfo(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x2C(r3)
-	  xori      r0, r0, 0x1
-	  stw       r0, 0x2C(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x2C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  subi      r5, r13, 0x7598
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  subi      r5, r13, 0x7590
-
-	.loc_0x38:
-	  lwz       r6, 0x30(r4)
-	  lis       r3, 0x802A
-	  addi      r4, r3, 0x61A8
-	  crclr     6, 0x6
-	  lwz       r3, 0x18(r6)
-	  bl        0x1C4980
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mToggleFileInfo ^= 1;
+	sprintf(menu._30->mName, "Toggle FileInfo %s", (gsys->mToggleFileInfo) ? " [on]" : "[off]");
 }
 
 /*
@@ -746,39 +532,10 @@ void GameFlow::menuToggleInfo(Menu&)
  * Address:	80051C2C
  * Size:	000060
  */
-void GameFlow::menuToggleColls(Menu&)
+void GameFlow::menuToggleColls(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x30(r3)
-	  xori      r0, r0, 0x1
-	  stw       r0, 0x30(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x30(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  subi      r5, r13, 0x7598
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  subi      r5, r13, 0x7590
-
-	.loc_0x38:
-	  lwz       r6, 0x30(r4)
-	  lis       r3, 0x802A
-	  addi      r4, r3, 0x61BC
-	  crclr     6, 0x6
-	  lwz       r3, 0x18(r6)
-	  bl        0x1C4920
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mToggleColls ^= 1;
+	sprintf(menu._30->mName, "Toggle Colls %s", (gsys->mToggleColls) ? " [on]" : "[off]");
 }
 
 /*
@@ -791,56 +548,22 @@ void GameFlow::addOptionsMenu(Menu*)
 	// UNUSED FUNCTION
 }
 
+static char* filterNames[] = {
+	"custom",
+	"DF off",
+};
+
 /*
  * --INFO--
  * Address:	80051C8C
  * Size:	0000A0
  */
-void GameFlow::menuChangeFilter(Menu&)
+void GameFlow::menuChangeFilter(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  subi      r5, r13, 0x7578
-	  stw       r0, 0x4(r1)
-	  crclr     6, 0x6
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lwz       r0, 0x350(r3)
-	  lis       r3, 0x802A
-	  addi      r3, r3, 0x6220
-	  xori      r0, r0, 0x1
-	  stw       r0, 0x350(r31)
-	  lwz       r0, 0x350(r31)
-	  lwz       r6, 0x30(r4)
-	  addi      r4, r3, 0
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r3, 0x18(r6)
-	  lwzx      r5, r5, r0
-	  bl        0x1C48C4
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x350(r31)
-	  lwz       r3, 0x24C(r3)
-	  rlwinm    r4,r0,3,0,28
-	  lwz       r12, 0x3B4(r3)
-	  addi      r4, r4, 0x354
-	  add       r4, r31, r4
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r3, 0x24C(r3)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mFilterType ^= 1;
+	sprintf(menu._30->mName, "type = %s", filterNames[mFilterType]);
+	gsys->mGfx->setVerticalFilter(&mFilters[mFilterType * 8]);
+	gsys->mGfx->videoReset();
 }
 
 /*
@@ -848,58 +571,17 @@ void GameFlow::menuChangeFilter(Menu&)
  * Address:	80051D2C
  * Size:	0000AC
  */
-void GameFlow::menuIncreaseFilter(Menu&)
+void GameFlow::menuIncreaseFilter(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r5, 0x30(r4)
-	  lwz       r0, 0x1C(r5)
-	  add       r5, r31, r0
-	  lbzu      r3, 0x354(r5)
-	  cmplwi    r3, 0x80
-	  bge-      .loc_0x34
-	  addi      r0, r3, 0x1
-	  stb       r0, 0x0(r5)
+	if (mFilters[menu._30->_1C] < 128) {
+		mFilters[menu._30->_1C]++;
+	}
 
-	.loc_0x34:
-	  lwz       r5, 0x30(r4)
-	  lis       r3, 0x802A
-	  addi      r4, r3, 0x622C
-	  crclr     6, 0x6
-	  lwz       r0, 0x1C(r5)
-	  lwz       r3, 0x18(r5)
-	  add       r5, r31, r0
-	  lbz       r5, 0x354(r5)
-	  bl        0x1C4818
-	  lwz       r0, 0x350(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x98
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r31, 0x354
-	  lwz       r3, 0x24C(r3)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r3, 0x24C(r3)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x98:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	sprintf(menu._30->mName, "Filter setting %d", mFilters[menu._30->_1C]);
+	if (mFilterType == FILTER_Custom) {
+		gsys->mGfx->setVerticalFilter(mFilters);
+		gsys->mGfx->videoReset();
+	}
 }
 
 /*
@@ -907,58 +589,17 @@ void GameFlow::menuIncreaseFilter(Menu&)
  * Address:	80051DD8
  * Size:	0000AC
  */
-void GameFlow::menuDecreaseFilter(Menu&)
+void GameFlow::menuDecreaseFilter(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r5, 0x30(r4)
-	  lwz       r0, 0x1C(r5)
-	  add       r5, r31, r0
-	  lbzu      r3, 0x354(r5)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  subi      r0, r3, 0x1
-	  stb       r0, 0x0(r5)
+	if (mFilters[menu._30->_1C] != 0) {
+		mFilters[menu._30->_1C]--;
+	}
 
-	.loc_0x34:
-	  lwz       r5, 0x30(r4)
-	  lis       r3, 0x802A
-	  addi      r4, r3, 0x622C
-	  crclr     6, 0x6
-	  lwz       r0, 0x1C(r5)
-	  lwz       r3, 0x18(r5)
-	  add       r5, r31, r0
-	  lbz       r5, 0x354(r5)
-	  bl        0x1C476C
-	  lwz       r0, 0x350(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x98
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r31, 0x354
-	  lwz       r3, 0x24C(r3)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r3, 0x24C(r3)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x98:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	sprintf(menu._30->mName, "Filter setting %d", mFilters[menu._30->_1C]);
+	if (mFilterType == FILTER_Custom) {
+		gsys->mGfx->setVerticalFilter(mFilters);
+		gsys->mGfx->videoReset();
+	}
 }
 
 /*
@@ -985,6 +626,19 @@ void GameFlow::read(RandomAccessStream& input) { mParameters->read(input); }
  */
 void preloadLanguage()
 {
+	gsys->mCacher->purgeAll();
+	int heapIdx = gsys->mActiveHeapIdx;
+	gsys->setHeap(SYSHEAP_Lang);
+	gsys->resetHeap(SYSHEAP_Lang, 2);
+	gsys->getHeap(gsys->mActiveHeapIdx);
+	// gsys->_31C;
+	gsys->_200.initCore("");
+	gsys->_228 = &gsys->_200;
+	gsys->parseArchiveDirectory(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Dir], gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Arc]);
+	gsys->loadBundle(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Bun], true);
+	gsys->setDirectories(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Blo], gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Tex]);
+	gsys->getHeap(gsys->mActiveHeapIdx);
+	gsys->setHeap(heapIdx);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1076,52 +730,18 @@ void preloadLanguage()
  * Address:	80051FEC
  * Size:	00009C
  */
-void GameFlow::setLoadBanner(char*)
+Texture* GameFlow::setLoadBanner(char* texPath)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x2
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  li        r4, 0x3
-	  stw       r30, 0x10(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r30, 0x194(r3)
-	  bl        -0x12FE0
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0x3
-	  bl        -0x12FB8
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r31, 0
-	  li        r5, 0x1
-	  bl        -0x12F28
-	  lis       r4, 0x803A
-	  subi      r4, r4, 0x2848
-	  addi      r31, r4, 0x318
-	  stw       r3, 0x318(r4)
-	  lwz       r3, 0x318(r4)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x74
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
+	int heapIdx = gsys->mActiveHeapIdx;
+	gsys->resetHeap(SYSHEAP_Load, 2);
+	gsys->setHeap(SYSHEAP_Load);
+	gameflow._318 = gsys->loadTexture(texPath, true);
+	if (gameflow._318) {
+		gameflow._318->attach();
+	}
 
-	.loc_0x74:
-	  lwz       r3, 0x2DEC(r13)
-	  mr        r4, r30
-	  bl        -0x13000
-	  lwz       r3, 0x0(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	gsys->setHeap(heapIdx);
+	return gameflow._318;
 }
 
 /*
@@ -1133,7 +753,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 {
 	app            = baseApp;
 	_1D4           = 0;
-	_350           = 0;
+	mFilterType    = FILTER_Custom;
 	_35C           = 0;
 	_35D           = 0;
 	_35E           = 21;
@@ -1148,21 +768,23 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	_2AC           = 0;
 	_2A8           = 0;
 
-	_208 = "archives/blo_eng.dir";
-	_20C = "dataDir/archives/blo_eng.arc";
-	_210 = "screen/eng_tex/screen.bun";
-	_214 = "screen/eng_blo/";
-	_218 = "screen/eng_tex/";
-	_21C = "archives/blo_eng.dir";
-	_220 = "dataDir/archives/blo_eng.arc";
-	_224 = "screen/eng_tex/screen.bun";
-	_228 = "screen/eng_blo/";
-	_22C = "screen/eng_tex/";
+	mLangFilePaths[0][LANGFILE_Dir] = "archives/blo_eng.dir";
+	mLangFilePaths[0][LANGFILE_Arc] = "dataDir/archives/blo_eng.arc";
+	mLangFilePaths[0][LANGFILE_Bun] = "screen/eng_tex/screen.bun";
+	mLangFilePaths[0][LANGFILE_Blo] = "screen/eng_blo/";
+	mLangFilePaths[0][LANGFILE_Tex] = "screen/eng_tex/";
 
-	gsys->mBloDirectory = "screen/sys_blo/";
-	gsys->mTexDirectory = "screen/otona_tex/";
+	mLangFilePaths[1][LANGFILE_Dir] = "archives/blo_eng.dir";
+	mLangFilePaths[1][LANGFILE_Arc] = "dataDir/archives/blo_eng.arc";
+	mLangFilePaths[1][LANGFILE_Bun] = "screen/eng_tex/screen.bun";
+	mLangFilePaths[1][LANGFILE_Blo] = "screen/eng_blo/";
+	mLangFilePaths[1][LANGFILE_Tex] = "screen/eng_tex/";
+
+	gsys->setDirectories("screen/sys_blo/", "screen/otona_tex/");
 
 	mParameters = new GamePrms();
+	int size    = 0x8000;
+	f32 factor  = mParameters->mDaySpeedFactor();
 	_2EC        = 0.0f;
 	_2E8        = 0.0f;
 	_2FC        = 0;
@@ -1170,12 +792,35 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	_300        = 0;
 
 	_2DC = 24.0f;
-	_2E0 = 60.0f * mParameters->mDaySpeedFactor();
+	_2E0 = 60.0f * factor;
 	_2D8 = _2E0 / _2DC;
 	_304 = 1.0f;
 	_2BC = 0;
 
 	mMemoryCard.init();
+
+	gsys->mHeaps[SYSHEAP_Load].init("load", 2, new u8[size], size);
+	_318        = 0;
+	int heapIdx = gsys->mActiveHeapIdx;
+	gsys->resetHeap(SYSHEAP_Load, 2);
+	gsys->setHeap(SYSHEAP_Load);
+	gameflow._318 = gsys->loadTexture("intro/nintendo.bti", true);
+	if (gameflow._318) {
+		gameflow._318->attach();
+	}
+	gsys->setHeap(heapIdx);
+	_310 = gameflow._318;
+	_314 = 1.0f;
+	Jac_SceneSetup(0, 0);
+	_2D4 = 1;
+
+	gsys->startLoading(&mGameLoadIdler, true, 0);
+	_2CC = 0.0f;
+	_2C8 = 0.0f;
+	_2C4 = 0.0f;
+	_2D0 = 2;
+	load("parms/", "gamePrms.bin", 1);
+	_1D8 = 0;
 
 	mMoviePlayer = new MoviePlayer();
 	rumbleMgr    = new RumbleMgr(true, false, false, false);
@@ -2041,22 +1686,9 @@ Shape* GameFlow::loadShape(char* filename, bool p2)
  */
 void GameFlow::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x3178(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1C
-	  bl        0x12A4AC
-
-	.loc_0x1C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (rumbleMgr) {
+		rumbleMgr->update();
+	}
 }
 
 /*
@@ -2064,70 +1696,7 @@ void GameFlow::update()
  * Address:	80052D60
  * Size:	0000D0
  */
-void GameFlow::addGenNode(char*, CoreNode*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r5, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0x24
-	  bl        -0xBD88
-	  mr.       r31, r3
-	  beq-      .loc_0xA4
-	  cmplwi    r30, 0
-	  beq-      .loc_0x44
-	  b         .loc_0x48
-
-	.loc_0x44:
-	  lwz       r30, 0x4(r29)
-
-	.loc_0x48:
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  stw       r0, 0x0(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stw       r0, 0x10(r31)
-	  addi      r4, r30, 0
-	  stw       r0, 0xC(r31)
-	  stw       r0, 0x8(r31)
-	  bl        -0x2DF04
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        -0x126B4
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x63B0
-	  stw       r0, 0x0(r31)
-	  stw       r29, 0x20(r31)
-
-	.loc_0xA4:
-	  lwz       r3, 0x30C(r28)
-	  mr        r4, r31
-	  bl        -0x12834
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
+void GameFlow::addGenNode(char* name, CoreNode* node) { mGenFlow->add(new GameGenNode((name) ? name : node->mName, node)); }
 
 /*
  * --INFO--
@@ -2136,33 +1705,10 @@ void GameFlow::addGenNode(char*, CoreNode*)
  */
 void GameGenFlow::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803A
-	  stw       r0, 0x4(r1)
-	  subi      r5, r4, 0x2848
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x2BC(r5)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x2BC(r5)
-	  lwz       r4, 0x20(r5)
-	  lfs       f1, 0x304(r5)
-	  lfs       f0, 0x30(r4)
-	  lfs       f2, -0x7AF8(r2)
-	  fmuls     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x2E0(r5)
-	  lfs       f1, 0x2E0(r5)
-	  lfs       f0, 0x2DC(r5)
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0x2D8(r5)
-	  bl        -0x12718
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	gameflow._2BC++;
+	gameflow._2E0 = 60.0f * (gameflow._304 * gameflow.mParameters->mDaySpeedFactor());
+	gameflow._2D8 = gameflow._2E0 / gameflow._2DC;
+	Node::update();
 }
 
 /*
