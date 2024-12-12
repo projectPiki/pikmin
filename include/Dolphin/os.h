@@ -19,7 +19,7 @@ extern "C" {
 #include "Dolphin/OS/OSException.h"
 #include "Dolphin/OS/OSExi.h"
 #include "Dolphin/OS/OSExpansion.h"
-#include "Dolphin/OS/OSFastCast.h"
+// #include "Dolphin/OS/OSFastCast.h" // need to comment this out for jaudio bc paired single asm instructions mess with proc 750
 #include "Dolphin/OS/OSFont.h"
 #include "Dolphin/OS/OSInterrupt.h"
 #include "Dolphin/OS/OSMemory.h"

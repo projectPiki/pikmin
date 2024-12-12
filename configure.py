@@ -202,10 +202,32 @@ else:
 
 # JAudio flags
 cflags_jaudio = [
-    *cflags_base,
+    "-nodefaults",
+    "-proc 750",
+    "-align powerpc",
+    "-enum int",
+    "-fp hardware",
+    "-Cpp_exceptions off",
+    # "-W all",
+    "-O4,p",
+    "-inline auto",
+    '-pragma "cats off"',
+    '-pragma "warn_notinlined off"',
+    "-maxerrors 1",
+    "-nosyspath",
+    "-RTTI off",
+    "-fp_contract on",
+    "-str reuse",
+    "-multibyte",
+    "-i include",
+    "-i include/stl",
+    f"-i build/{config.version}/include",
+    f"-DVERSION={version_num}",
     "-common on",
     "-func_align 32",
     "-lang c++",
+    "-DNDEBUG=1", 
+    "-w off",
 ]
 
 # Game code flags
