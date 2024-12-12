@@ -90,7 +90,7 @@ struct InteractBomb : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	f32 _08; // _08, damage maybe?
+	f32 mDamage; // _08
 };
 
 /**
@@ -199,12 +199,12 @@ struct InteractFire : public Interaction {
  * @brief TODO
  */
 struct InteractFlick : public Interaction {
-	inline InteractFlick(Creature* owner, f32 p2, f32 p3, f32 p4)
+	inline InteractFlick(Creature* owner, f32 knockback, f32 damage, f32 angle)
 	    : Interaction(owner)
 	{
-		_08 = p2;
-		_0C = p3;
-		_10 = p4;
+		mKnockback = knockback;
+		mDamage    = damage;
+		mAngle     = angle;
 	}
 
 	virtual bool actCommon(Creature*);   // _08
@@ -216,9 +216,9 @@ struct InteractFlick : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	f32 _08; // _08
-	f32 _0C; // _0C, maybe damage?
-	f32 _10; // _10
+	f32 mKnockback; // _08
+	f32 mDamage;    // _0C, maybe damage?
+	f32 mAngle;     // _10
 };
 
 /**

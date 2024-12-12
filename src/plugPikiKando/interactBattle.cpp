@@ -62,15 +62,15 @@ bool InteractBomb::actPiki(Piki* piki)
 
 	piki->playEventSound(mOwner, 26);
 
-	piki->mHealth -= _08;
+	piki->mHealth -= mDamage;
 
 	// update this when PikiProp is filled out
 	piki->mLifeGauge.updValue(piki->mHealth, static_cast<PikiProp*>(piki->mProps)->mCreatureProps.mAcceleration());
 
 	Vector3f diff = mOwner->mPosition - piki->mPosition;
 	diff.normalise();
-	piki->_49C = atan2f(diff.x, diff.z);
-	piki->_498 = 180.0f;
+	piki->mRotationAngle = atan2f(diff.x, diff.z);
+	piki->_498           = 180.0f;
 
 	piki->mFSM->transit(piki, PIKISTATE_Flick);
 	return true;
@@ -302,18 +302,18 @@ bool InteractFlick::actPiki(Piki* piki)
 
 	piki->playEventSound(mOwner, 26);
 
-	piki->mHealth -= _0C;
+	piki->mHealth -= mDamage;
 
 	// update this when PikiProp is filled out
 	piki->mLifeGauge.updValue(piki->mHealth, static_cast<PikiProp*>(piki->mProps)->mCreatureProps.mAcceleration());
 
-	if (_10 < -10.0f) {
-		piki->_49C = piki->mDirection;
+	if (mAngle < -10.0f) {
+		piki->mRotationAngle = piki->mDirection;
 	} else {
-		piki->_49C = _10;
+		piki->mRotationAngle = mAngle;
 	}
 
-	piki->_498 = _08;
+	piki->_498 = mKnockback;
 	piki->mFSM->transit(piki, PIKISTATE_Flick);
 	return true;
 }

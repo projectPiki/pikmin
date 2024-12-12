@@ -17,9 +17,9 @@ struct RumbleSample {
 	// unused/inlined:
 	void init();
 
-	f32 _00;      // _00
-	f32 _04;      // _04
-	int mChannel; // _08
+	f32 mCurrentIntensity; // _00
+	f32 mTotalIntensity;   // _04
+	int mChannel;          // _08
 };
 
 /*

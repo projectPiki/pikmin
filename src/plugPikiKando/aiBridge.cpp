@@ -54,8 +54,8 @@ void ActBridge::init(Creature* creature)
 		}
 	}
 
-	mState = STATE_Approach;
-	_4C    = randFloat(4.0f);
+	mState         = STATE_Approach;
+	mActionCounter = randFloat(4.0f);
 }
 
 /*
@@ -349,18 +349,18 @@ int ActBridge::newExeApproach()
 	Vector3f direction = mBridge->getStartPos() - mActor->getPosition();
 	f32 dist           = direction.normalise();
 	if (dist < 300.0f) {
-		f32 p2;
-		f32 p1;
-		mBridge->getBridgePos(mActor->mPosition, p1, p2);
+		f32 bridgePosY;
+		f32 bridgePosX;
+		mBridge->getBridgePos(mActor->mPosition, bridgePosX, bridgePosY);
 		int currStage = mBridge->getFirstUnfinishedStage();
 		if (currStage == -1) {
 			return ACTOUT_Success;
 		}
 
-		p2 -= 20.0f + mBridge->getStageZ(currStage);
+		bridgePosY -= 20.0f + mBridge->getStageZ(currStage);
 
-		if (absF(p1) < 0.8f * (2.0f * mBridge->getStageWidth())) {
-			if (p2 <= 0.0f) {
+		if (absF(bridgePosX) < 0.8f * (2.0f * mBridge->getStageWidth())) {
+			if (bridgePosY <= 0.0f) {
 				Vector3f stagePos = mBridge->getStagePos(mStageIdx);
 				Vector3f zVec     = mBridge->getBridgeZVec();
 				direction         = zVec;
@@ -371,12 +371,12 @@ int ActBridge::newExeApproach()
 			}
 		} else {
 			Vector3f newDir;
-			if (p2 > -10.0f) {
+			if (bridgePosY > -10.0f) {
 				newDir = mBridge->getBridgeZVec();
 				newDir *= -1.0f;
 			} else {
 				newDir = mBridge->getBridgeXVec();
-				if (p1 > 0.0f) {
+				if (bridgePosX > 0.0f) {
 					newDir *= -1.0f;
 				}
 			}
@@ -928,13 +928,13 @@ int ActBridge::newExeGo()
  */
 void ActBridge::newInitWork()
 {
-	mState = STATE_Work;
-	_20    = gameflow._300;
-	_24    = 0;
-	_28    = 0;
-	_2A    = 0;
+	mState          = STATE_Work;
+	_20             = gameflow._300;
+	_24             = 0;
+	mCollisionCount = 0;
+	_2A             = 0;
 
-	if (_4C) {
+	if (mActionCounter) {
 		return;
 	}
 
@@ -952,6 +952,7 @@ void ActBridge::newInitWork()
  */
 int ActBridge::newExeWork()
 {
+	// If the bridge is finished, continue
 	if (mBridge->isStageFinished(mStageIdx)) {
 		newInitGo();
 		mActor->resetCreatureFlag(CF_Unk18);
@@ -959,14 +960,16 @@ int ActBridge::newExeWork()
 	}
 
 	if (collideBridgeBlocker()) {
-		_28 = 0;
+		mCollisionCount = 0;
 	} else {
 		mActor->_A4.set(0.0f, 0.0f, 0.0f);
-		_28++;
-		if (_28 > 3) {
+		mCollisionCount++;
+
+		if (mCollisionCount > 3) {
 			mActor->resetCreatureFlag(CF_Unk18);
 		}
-		if (_28 > 15 && _4D) {
+
+		if (mCollisionCount > 15 && _4D) {
 			newInitApproach();
 			mActor->resetCreatureFlag(CF_Unk18);
 			return ACTOUT_Continue;
@@ -979,9 +982,9 @@ int ActBridge::newExeWork()
 		return ACTOUT_Fail;
 	}
 
-	if (_4C != 0) {
-		_4C--;
-		if (_4C == 0) {
+	if (mActionCounter != 0) {
+		mActionCounter--;
+		if (mActionCounter == 0) {
 			newInitWork();
 			return ACTOUT_Continue;
 		}

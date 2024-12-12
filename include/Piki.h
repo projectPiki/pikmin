@@ -173,8 +173,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	f32 _48C;                     // _48C
 	PikiStateMachine* mFSM;       // _490
 	u8 _494[0x4];                 // _494, unknown
-	f32 _498;                     // _498
-	f32 _49C;                     // _49C, some form of angle?
+	f32 _498;                     // _498, knockback? impulse velocity magnitude?
+	f32 mRotationAngle;           // _49C
 	u8 _4A0;                      // _4A0
 	CollPart* mSwallowMouthPart;  // _4A4
 	Creature* _4A8;               // _4A8, maybe puffstool/kinoko leader?

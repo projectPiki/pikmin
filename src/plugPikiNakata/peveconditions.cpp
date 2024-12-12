@@ -260,21 +260,21 @@ void PeveComparisonYCondition::update()
  * Address:	80125E6C
  * Size:	00000C
  */
-void PeveComparisonYCondition::reset() { _04 = false; }
+void PeveComparisonYCondition::reset() { mValue = false; }
 
 /*
  * --INFO--
  * Address:	80125E78
  * Size:	000008
  */
-bool PeveBooleanCondition::isMet() { return _04; }
+bool PeveBooleanCondition::isMet() { return mValue; }
 
 /*
  * --INFO--
  * Address:	80125E80
  * Size:	00000C
  */
-void PeveDistanceCondition::reset() { _04 = false; }
+void PeveDistanceCondition::reset() { mValue = false; }
 
 /*
  * --INFO--

@@ -612,21 +612,21 @@ struct ActBridge : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	Bridge* mBridge; // _18, unknown
-	u16 mState;      // _1C
-	u32 _20;         // _20, unknown - same as _300 in gameflow
-	u32 _24;         // _24
-	u16 _28;         // _28
-	u16 _2A;         // _2A
-	f32 _2C;         // _2C
-	s16 mStageIdx;   // _30
-	u8 _32;          // _32
-	u8 _33;          // _33
-	Vector3f _34;    // _34
-	Vector3f _40;    // _40
-	u8 _4C;          // _4C
-	u8 _4D;          // _4D
-	                 // _50-_58 = PaniAnimKeyListener
+	Bridge* mBridge;     // _18, unknown
+	u16 mState;          // _1C
+	u32 _20;             // _20, unknown - same as _300 in gameflow
+	u32 _24;             // _24
+	u16 mCollisionCount; // _28
+	u16 _2A;             // _2A
+	f32 _2C;             // _2C
+	s16 mStageIdx;       // _30
+	u8 _32;              // _32
+	u8 _33;              // _33
+	Vector3f _34;        // _34
+	Vector3f _40;        // _40
+	u8 mActionCounter;   // _4C
+	u8 _4D;              // _4D
+	                     // _50-_58 = PaniAnimKeyListener
 };
 
 /**

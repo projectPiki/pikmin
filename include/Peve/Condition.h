@@ -32,7 +32,7 @@ struct PeveBooleanCondition : public PeveCondition {
 
 	// _00     = VTBL
 	// _00-_04 = PeveCondition
-	bool _04; // _04
+	bool mValue; // _04
 };
 
 /**
