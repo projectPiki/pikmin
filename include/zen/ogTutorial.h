@@ -9,6 +9,8 @@ struct P2DTextBox;
 
 namespace zen {
 
+struct ogScrMessageMgr;
+
 /**
  * @brief TODO
  */
@@ -32,8 +34,11 @@ struct ogScrTutorialMgr {
 	void backPage();
 	void setCursorXY(P2DTextBox*);
 
-	// TODO: members
+	ogScrMessageMgr* mMessageMgr; // _00
+	int _04;                      // _04
 };
+
+extern char** bloFiles_Tutorial[];
 
 } // namespace zen
 

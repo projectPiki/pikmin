@@ -145,8 +145,9 @@ void Nas_HeapFree(ALHeap*)
  * Address:	80005640
  * Size:	00006C
  */
-void* Nas_HeapAlloc(ALHeap* heap, s32 size)
+void* Nas_HeapAlloc(ALHeap* heap, volatile s32 size)
 {
+	u32 someInliningRequired[6];
 	u32 roundedSize = ALIGN_NEXT(size, 32);
 	if (!heap->base) {
 		return nullptr;

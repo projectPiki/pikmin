@@ -10,6 +10,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xA5F0.
  */
 struct ogScrMessageMgr {
 	ogScrMessageMgr(char*);
@@ -35,7 +37,9 @@ struct ogScrMessageMgr {
 	void ReadAllScreen();
 	void setScreenAlpha(u8);
 
-	// TODO: members
+	u8 _00[0x4E0];           // _00, unknown
+	u8 _4E0;                 // _4E0
+	u8 _4E1[0xA5F0 - 0x4E1]; // _4E1, unknown
 };
 
 } // namespace zen

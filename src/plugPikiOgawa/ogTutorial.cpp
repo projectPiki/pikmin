@@ -1,4 +1,8 @@
 #include "zen/ogTutorial.h"
+#include "sysNew.h"
+#include "zen/ogMessage.h"
+#include "PlayerState.h"
+#include "zen/ogSub.h"
 
 /*
  * --INFO--
@@ -27,43 +31,10 @@ static void _Print(char*, ...)
  */
 zen::ogScrTutorialMgr::ogScrTutorialMgr()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  subi      r3, r4, 0x5A10
-	  bl        -0x13BBB0
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x3C
-	  lis       r4, 0x802D
-	  addi      r4, r4, 0x3128
-	  bl        0x99D8
-
-	.loc_0x3C:
-	  stw       r31, 0x0(r30)
-	  lis       r3, 0x802D
-	  addi      r4, r3, 0x3DEC
-	  lwz       r3, 0x0(r30)
-	  bl        0x997C
-	  lwz       r3, 0x0(r30)
-	  li        r4, 0x1
-	  li        r0, -0x1
-	  stb       r4, 0x4E0(r3)
-	  mr        r3, r30
-	  stw       r0, 0x4(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mMessageMgr = new ogScrMessageMgr("screen/blo/tu_base.blo");
+	mMessageMgr->MakeAndSetPageInfo(bloFiles_Tutorial);
+	mMessageMgr->_4E0 = 1;
+	_04               = -1;
 }
 
 /*
@@ -150,25 +121,11 @@ void zen::ogScrTutorialMgr::update(Controller*)
  * Address:	80182CD0
  * Size:	000030
  */
-void zen::ogScrTutorialMgr::draw(Graphics&)
+void zen::ogScrTutorialMgr::draw(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x20
-	  lwz       r3, 0x0(r3)
-	  bl        0xA25C
-
-	.loc_0x20:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (_04 != -1) {
+		mMessageMgr->draw(gfx);
+	}
 }
 
 /*
