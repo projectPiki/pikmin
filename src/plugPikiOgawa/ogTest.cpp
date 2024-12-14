@@ -1,12 +1,35 @@
 #include "zen/ogTest.h"
+#include "sysNew.h"
+#include "Font.h"
+#include "Controller.h"
+#include "MemoryCard.h"
+#include "zen/ZenController.h"
+#include "zen/ogSub.h"
+#include "zen/ogMemChk.h"
+#include "zen/ogPause.h"
+#include "zen/ogResult.h"
+#include "zen/ogTitle.h"
+#include "zen/ogTutorial.h"
+#include "zen/ogMap.h"
+#include "zen/ogDiary.h"
+#include "zen/ogFileChkSel.h"
+#include "zen/ogTotalScore.h"
+#include "zen/ogStart.h"
+#include "zen/ogMessage.h"
+#include "FlowController.h"
+#include "Dolphin/os.h"
+#include "Geometry.h"
+#include "Graphics.h"
+#include "stl/stdio.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
+static void _Error(char* fmt, ...)
 {
+	OSPanic(__FILE__, __LINE__, fmt, "OgTestSection");
 	// UNUSED FUNCTION
 }
 
@@ -27,222 +50,47 @@ static void _Print(char*, ...)
  */
 zen::OgTestScreen::OgTestScreen()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stmw      r25, 0x3C(r1)
-	  addi      r31, r3, 0
-	  addi      r27, r4, 0x738C
-	  lis       r3, 0x8022
-	  addi      r28, r3, 0x737C
-	  lis       r4, 0x802D
-	  addi      r26, r4, 0x2468
-	  li        r29, 0
-	  addi      r3, r31, 0
-	  addi      r4, r13, 0x8E0
-	  stw       r27, 0x0(r31)
-	  stw       r28, 0x0(r31)
-	  stw       r29, 0x10(r31)
-	  stw       r29, 0xC(r31)
-	  stw       r29, 0x8(r31)
-	  bl        -0x1588BC
-	  lis       r3, 0x8023
-	  subi      r30, r3, 0x71E0
-	  stw       r30, 0x0(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r13, 0x8E0
-	  bl        -0x13D06C
-	  lis       r3, 0x802D
-	  addi      r0, r3, 0x2700
-	  stw       r0, 0x0(r31)
-	  addi      r3, r31, 0x34
-	  bl        -0x13A5F8
-	  addi      r0, r26, 0x1C
-	  stw       r0, 0x4(r31)
-	  li        r3, 0x50
-	  bl        -0x1367C8
-	  mr.       r25, r3
-	  beq-      .loc_0xDC
-	  stw       r27, 0x0(r25)
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0x2C
-	  stw       r28, 0x0(r25)
-	  stw       r29, 0x10(r25)
-	  stw       r29, 0xC(r25)
-	  stw       r29, 0x8(r25)
-	  bl        -0x158920
-	  stw       r30, 0x0(r25)
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0x2C
-	  bl        -0x13D0C8
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x714C
-	  stw       r0, 0x0(r25)
-	  addi      r3, r25, 0
-	  li        r4, 0x1
-	  bl        -0x13CE6C
+	u32 badCompiler[10];
 
-	.loc_0xDC:
-	  stw       r25, 0x28(r31)
-	  li        r3, 0
-	  li        r0, 0xE
-	  stw       r3, 0x20(r31)
-	  addi      r4, r26, 0x3C
-	  li        r5, 0x1
-	  stw       r0, 0x24(r31)
-	  sth       r3, 0x37E(r31)
-	  sth       r3, 0x380(r31)
-	  sth       r3, 0x384(r31)
-	  sth       r3, 0x386(r31)
-	  sth       r3, 0x388(r31)
-	  sth       r3, 0x38A(r31)
-	  stb       r3, 0x38C(r31)
-	  stb       r3, 0x38D(r31)
-	  sth       r3, 0x37C(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x13E75C
-	  addi      r25, r3, 0
-	  li        r3, 0x10
-	  bl        -0x13686C
-	  stw       r3, 0x30(r31)
-	  addi      r4, r25, 0
-	  li        r5, 0x15
-	  lwz       r3, 0x30(r31)
-	  li        r6, 0x2A
-	  bl        -0x155BD0
-	  lwz       r3, 0x2DEC(r13)
-	  li        r25, 0
-	  lfs       f0, -0x5108(r2)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, -0x5104(r2)
-	  stfs      f0, 0xC(r3)
+	setName("OgTestScreen");
+	mController      = new Controller();
+	_20              = 0;
+	mActiveMode      = TESTMODE_INACTIVE;
+	mTutorialMode    = 0;
+	mDiaryMode       = 0;
+	mMemChkMode      = 0;
+	mMapMode         = 0;
+	mSaveMode        = 0;
+	_38A             = 0;
+	mPauseMode       = false;
+	mFileChkSelMode  = false;
+	mSelectedMode    = TESTMODE_Title;
+	Texture* fontTex = gsys->loadTexture("bigFont.bti", true);
+	mFont            = new Font();
+	mFont->setTexture(fontTex, 21, 42);
+	gsys->setFade(1.0f, 3.0f);
 
-	.loc_0x160:
-	  addi      r3, r25, 0
-	  li        r4, -0x7B
-	  bl        0x28A0
-	  addi      r25, r25, 0x1
-	  cmpwi     r25, 0x64
-	  blt+      .loc_0x160
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x194(r3)
-	  bl        -0x13E8A4
-	  li        r3, 0x10C
-	  bl        -0x1368C8
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x19C
-	  bl        0xF770
+	for (int i = 0; i < 100; i++) {
+		setSpecialNumber(i, -123);
+	}
 
-	.loc_0x19C:
-	  stw       r25, 0x3A4(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x194(r3)
-	  bl        -0x13E8CC
-	  li        r3, 0x58
-	  bl        -0x1368F0
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x1C4
-	  bl        0x4A14
+	gsys->getHeap(gsys->mActiveHeapIdx);
 
-	.loc_0x1C4:
-	  stw       r25, 0x39C(r31)
-	  li        r3, 0x55C
-	  bl        -0x13690C
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x1E0
-	  bl        0x68C8
+	mMemChkMgr = new ogScrMemChkMgr();
 
-	.loc_0x1E0:
-	  stw       r25, 0x390(r31)
-	  li        r3, 0xA8
-	  bl        -0x136928
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x1FC
-	  bl        0x3754
+	gsys->getHeap(gsys->mActiveHeapIdx);
 
-	.loc_0x1FC:
-	  stw       r25, 0x394(r31)
-	  li        r3, 0x8
-	  bl        -0x136944
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x218
-	  bl        0x523C
-
-	.loc_0x218:
-	  stw       r25, 0x398(r31)
-	  li        r3, 0x30
-	  bl        -0x136960
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x234
-	  bl        0x5540
-
-	.loc_0x234:
-	  stw       r25, 0x3A0(r31)
-	  li        r3, 0x2F0
-	  bl        -0x13697C
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x250
-	  bl        0x1278C
-
-	.loc_0x250:
-	  stw       r25, 0x3B4(r31)
-	  li        r3, 0x18
-	  bl        -0x136998
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x26C
-	  bl        0x15BE8
-
-	.loc_0x26C:
-	  stw       r25, 0x3A8(r31)
-	  li        r3, 0x830
-	  bl        -0x1369B4
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x28C
-	  li        r4, 0
-	  bl        0x16838
-
-	.loc_0x28C:
-	  stw       r25, 0x3AC(r31)
-	  li        r3, 0x14
-	  bl        -0x1369D4
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x2A8
-	  bl        0x1AFA0
-
-	.loc_0x2A8:
-	  stw       r25, 0x3B0(r31)
-	  li        r3, 0x6C
-	  bl        -0x1369F0
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x2C8
-	  li        r4, 0
-	  bl        0x42908
-
-	.loc_0x2C8:
-	  stw       r25, 0x2C(r31)
-	  mr        r3, r31
-	  lfs       f0, -0x5100(r2)
-	  stfs      f0, 0x31B0(r13)
-	  lwz       r0, 0x5C(r1)
-	  lmw       r25, 0x3C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	mPauseMgr             = new ogScrPauseMgr();
+	mResultMgr            = new ogScrResultMgr();
+	mTitleMgr             = new ogScrTitleMgr();
+	mTutorialMgr          = new ogScrTutorialMgr();
+	mMapMgr               = new ogScrMapMgr();
+	mDrawSelectDiary      = new ogDrawSelectDiary();
+	mFileChkSelMgr        = new ogScrFileChkSelMgr();
+	mTotalScoreMgr        = new ogScrTotalScoreMgr(nullptr);
+	mStartMgr             = new ogScrStartMgr();
+	mZenController        = new ZenController(nullptr);
+	KeyRepeat::repeatTime = 0.5f;
 }
 
 /*
@@ -252,362 +100,168 @@ zen::OgTestScreen::OgTestScreen()
  */
 void zen::OgTestScreen::modeSelectSub()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x28(r3)
-	  lwz       r0, 0x28(r3)
-	  rlwinm.   r0,r0,0,12,12
-	  beq-      .loc_0x38
-	  lha       r3, 0x37C(r31)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x38
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x37C(r31)
+	if (mController->isPressed(KBBTN_MSTICK_UP) && mSelectedMode > TESTMODE_MIN) {
+		mSelectedMode--;
+	}
 
-	.loc_0x38:
-	  lwz       r3, 0x28(r31)
-	  lwz       r0, 0x28(r3)
-	  rlwinm.   r0,r0,0,10,10
-	  beq-      .loc_0x5C
-	  lha       r3, 0x37C(r31)
-	  cmpwi     r3, 0xA
-	  bge-      .loc_0x5C
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x37C(r31)
+	if (mController->isPressed(KBBTN_MSTICK_DOWN) && mSelectedMode < TESTMODE_MAX) {
+		mSelectedMode++;
+	}
 
-	.loc_0x5C:
-	  lha       r0, 0x37C(r31)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0xC0
-	  lwz       r4, 0x2C(r31)
-	  lis       r3, 0x10
-	  addi      r0, r3, 0x2
-	  lwz       r3, 0x4(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x94
-	  lha       r3, 0x37E(r31)
-	  cmpwi     r3, 0x98
-	  bge-      .loc_0x94
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x37E(r31)
+	if (mSelectedMode == TESTMODE_Tutorial) {
+		if (mZenController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152) {
+			mTutorialMode++;
+		}
 
-	.loc_0x94:
-	  lwz       r4, 0x2C(r31)
-	  lis       r3, 0x40
-	  addi      r0, r3, 0x1
-	  lwz       r3, 0x4(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0xC0
-	  lha       r3, 0x37E(r31)
-	  cmpwi     r3, 0
-	  ble-      .loc_0xC0
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x37E(r31)
+		if (mZenController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0) {
+			mTutorialMode--;
+		}
+	}
 
-	.loc_0xC0:
-	  lha       r0, 0x37C(r31)
-	  cmpwi     r0, 0x6
-	  bne-      .loc_0x124
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x10
-	  addi      r0, r3, 0x2
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0xF8
-	  lha       r3, 0x380(r31)
-	  cmpwi     r3, 0x1E
-	  bge-      .loc_0xF8
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x380(r31)
+	if (mSelectedMode == TESTMODE_Diary) {
+		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mDiaryMode < 30) {
+			mDiaryMode++;
+		}
 
-	.loc_0xF8:
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x40
-	  addi      r0, r3, 0x1
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x124
-	  lha       r3, 0x380(r31)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x124
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x380(r31)
+		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mDiaryMode > 0) {
+			mDiaryMode--;
+		}
+	}
 
-	.loc_0x124:
-	  lha       r0, 0x37C(r31)
-	  cmpwi     r0, 0x4
-	  bne-      .loc_0x188
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x10
-	  addi      r0, r3, 0x2
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x15C
-	  lha       r3, 0x384(r31)
-	  cmpwi     r3, 0x9
-	  bge-      .loc_0x15C
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x384(r31)
+	if (mSelectedMode == TESTMODE_MemChk) {
+		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mMemChkMode < 9) {
+			mMemChkMode++;
+		}
 
-	.loc_0x15C:
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x40
-	  addi      r0, r3, 0x1
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x188
-	  lha       r3, 0x384(r31)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x188
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x384(r31)
+		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mMemChkMode > 0) {
+			mMemChkMode--;
+		}
+	}
 
-	.loc_0x188:
-	  lha       r0, 0x37C(r31)
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x1EC
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x10
-	  addi      r0, r3, 0x2
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x1C0
-	  lha       r3, 0x386(r31)
-	  cmpwi     r3, 0x1
-	  bge-      .loc_0x1C0
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x386(r31)
+	if (mSelectedMode == TESTMODE_Map) {
+		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mMapMode < 1) {
+			mMapMode++;
+		}
 
-	.loc_0x1C0:
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x40
-	  addi      r0, r3, 0x1
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x1EC
-	  lha       r3, 0x386(r31)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x1EC
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x386(r31)
+		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mMapMode > 0) {
+			mMapMode--;
+		}
+	}
 
-	.loc_0x1EC:
-	  lha       r0, 0x37C(r31)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x250
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x10
-	  addi      r0, r3, 0x2
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x224
-	  lha       r3, 0x388(r31)
-	  cmpwi     r3, 0x7
-	  bge-      .loc_0x224
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x388(r31)
+	if (mSelectedMode == TESTMODE_Save) {
+		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mSaveMode < 7) {
+			mSaveMode++;
+		}
 
-	.loc_0x224:
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x40
-	  addi      r0, r3, 0x1
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x250
-	  lha       r3, 0x388(r31)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x250
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x388(r31)
+		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mSaveMode > 0) {
+			mSaveMode--;
+		}
+	}
 
-	.loc_0x250:
-	  lha       r0, 0x37C(r31)
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x29C
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x10
-	  addi      r0, r3, 0x2
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x27C
-	  li        r0, 0x1
-	  stb       r0, 0x38C(r31)
+	if (mSelectedMode == TESTMODE_Pause) {
+		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT)) {
+			mPauseMode = true;
+		}
 
-	.loc_0x27C:
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x40
-	  addi      r0, r3, 0x1
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x29C
-	  li        r0, 0
-	  stb       r0, 0x38C(r31)
+		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT)) {
+			mPauseMode = false;
+		}
+	}
 
-	.loc_0x29C:
-	  lha       r0, 0x37C(r31)
-	  cmpwi     r0, 0x5
-	  bne-      .loc_0x2E8
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x10
-	  addi      r0, r3, 0x2
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x2C8
-	  li        r0, 0x1
-	  stb       r0, 0x38D(r31)
+	if (mSelectedMode == TESTMODE_FileChkSel) {
+		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT)) {
+			mFileChkSelMode = true;
+		}
 
-	.loc_0x2C8:
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x40
-	  addi      r0, r3, 0x1
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x2E8
-	  li        r0, 0
-	  stb       r0, 0x38D(r31)
+		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT)) {
+			mFileChkSelMode = false;
+		}
+	}
 
-	.loc_0x2E8:
-	  lha       r0, 0x37C(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x334
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x10
-	  addi      r0, r3, 0x2
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x314
-	  li        r0, 0x1
-	  stb       r0, 0x38E(r31)
+	if (mSelectedMode == TESTMODE_Title) {
+		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT)) {
+			mTitleMode = true;
+		}
 
-	.loc_0x314:
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x40
-	  addi      r0, r3, 0x1
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x334
-	  li        r0, 0
-	  stb       r0, 0x38E(r31)
+		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT)) {
+			mTitleMode = false;
+		}
+	}
 
-	.loc_0x334:
-	  lha       r0, 0x37C(r31)
-	  cmpwi     r0, 0xC
-	  bne-      .loc_0x398
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x10
-	  addi      r0, r3, 0x2
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x36C
-	  lha       r3, 0x38A(r31)
-	  cmpwi     r3, 0x5
-	  bge-      .loc_0x36C
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x38A(r31)
+	if (mSelectedMode == 12) {
+		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && _38A < 5) {
+			_38A++;
+		}
 
-	.loc_0x36C:
-	  lwz       r4, 0x28(r31)
-	  lis       r3, 0x40
-	  addi      r0, r3, 0x1
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x398
-	  lha       r3, 0x38A(r31)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x398
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x38A(r31)
+		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && _38A > 0) {
+			_38A--;
+		}
+	}
 
-	.loc_0x398:
-	  lwz       r3, 0x28(r31)
-	  lwz       r0, 0x28(r3)
-	  rlwinm.   r0,r0,0,19,19
-	  beq-      .loc_0x4C8
-	  lha       r0, 0x37C(r31)
-	  cmplwi    r0, 0xB
-	  bgt-      .loc_0x4C8
-	  lis       r3, 0x802D
-	  addi      r3, r3, 0x24B0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r3, 0x394(r31)
-	  lbz       r4, 0x38E(r31)
-	  bl        0x3734
-	  li        r0, 0
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  lwz       r3, 0x398(r31)
-	  lha       r4, 0x37E(r31)
-	  bl        0x4EE4
-	  li        r0, 0x1
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  lwz       r3, 0x3B4(r31)
-	  bl        0x1271C
-	  li        r0, 0x6
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  lwz       r3, 0x39C(r31)
-	  lbz       r4, 0x38C(r31)
-	  bl        0x47F4
-	  li        r0, 0x8
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  lwz       r3, 0x3A0(r31)
-	  lha       r4, 0x386(r31)
-	  bl        0x4F80
-	  li        r0, 0x3
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  lwz       r3, 0x390(r31)
-	  bl        0x6660
-	  li        r0, 0x7
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  lwz       r3, 0x3A4(r31)
-	  lha       r4, 0x384(r31)
-	  bl        0x100C0
-	  li        r0, 0x4
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  lwz       r3, 0x3A8(r31)
-	  lbz       r4, 0x38D(r31)
-	  bl        0x15800
-	  li        r0, 0x5
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  lwz       r3, 0x3A8(r31)
-	  bl        0x1583C
-	  li        r0, 0x2
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  lwz       r3, 0x3AC(r31)
-	  bl        0x16D44
-	  li        r0, 0x9
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  li        r0, 0xB
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x4C8
-	  lwz       r3, 0x3B0(r31)
-	  bl        0x1AB94
-	  li        r0, 0xA
-	  stw       r0, 0x24(r31)
+	if (!mController->isPressed(KBBTN_A)) {
+		return;
+	}
 
-	.loc_0x4C8:
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	switch (mSelectedMode) {
+	case TESTMODE_Title:
+		mTitleMgr->start(mTitleMode);
+		mActiveMode = TESTMODE_Title;
+		break;
+
+	case TESTMODE_Tutorial:
+		mTutorialMgr->start((ogScrTutorialMgr::EnumTutorial)mTutorialMode);
+		mActiveMode = TESTMODE_Tutorial;
+		break;
+
+	case TESTMODE_Diary:
+		mDrawSelectDiary->start();
+		mActiveMode = TESTMODE_Diary;
+		break;
+
+	case 8:
+		mPauseMgr->start(mPauseMode);
+		mActiveMode = 8;
+		break;
+
+	case TESTMODE_Map:
+		mMapMgr->start(mMapMode);
+		mActiveMode = TESTMODE_Map;
+		break;
+
+	case TESTMODE_Result:
+		mResultMgr->start();
+		mActiveMode = TESTMODE_Result;
+		break;
+
+	case TESTMODE_MemChk:
+		mMemChkMgr->DebugStart(mMemChkMode);
+		mActiveMode = TESTMODE_MemChk;
+		break;
+
+	case TESTMODE_FileChkSel:
+		mFileChkSelMgr->start(mFileChkSelMode);
+		mActiveMode = TESTMODE_FileChkSel;
+		break;
+
+	case TESTMODE_Save:
+		mFileChkSelMgr->startSave();
+		mActiveMode = TESTMODE_Save;
+		break;
+
+	case TESTMODE_TotalScore:
+		mTotalScoreMgr->start();
+		mActiveMode = TESTMODE_TotalScore;
+		break;
+
+	case TESTMODE_Unused11:
+		mActiveMode = TESTMODE_Unused11;
+		break;
+
+	case TESTMODE_Start:
+		mStartMgr->start();
+		mActiveMode = TESTMODE_Start;
+		break;
+	}
 }
 
 /*
@@ -617,129 +271,55 @@ void zen::OgTestScreen::modeSelectSub()
  */
 void zen::OgTestScreen::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x28(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x28(r31)
-	  lwz       r3, 0x2C(r31)
-	  stw       r0, 0x0(r3)
-	  lwz       r3, 0x2C(r31)
-	  bl        0x42460
-	  lwz       r0, 0x24(r31)
-	  cmplwi    r0, 0xE
-	  bne-      .loc_0x50
-	  mr        r3, r31
-	  bl        -0x528
+	u32 badCompiler[8];
 
-	.loc_0x50:
-	  lwz       r3, 0x390(r31)
-	  lwz       r4, 0x28(r31)
-	  bl        0x6CB4
-	  cmpwi     r3, 0x7
-	  blt-      .loc_0x6C
-	  li        r0, 0xE
-	  stw       r0, 0x24(r31)
+	mController->update();
+	mZenController->setController(mController);
+	mZenController->update();
 
-	.loc_0x6C:
-	  lwz       r3, 0x394(r31)
-	  lwz       r4, 0x28(r31)
-	  bl        0x369C
-	  cmpwi     r3, 0x3
-	  blt-      .loc_0x88
-	  li        r0, 0xE
-	  stw       r0, 0x24(r31)
+	if (mActiveMode == TESTMODE_INACTIVE) {
+		modeSelectSub();
+	}
 
-	.loc_0x88:
-	  lwz       r3, 0x39C(r31)
-	  lwz       r4, 0x28(r31)
-	  bl        0x472C
-	  cmpwi     r3, 0x5
-	  blt-      .loc_0xA4
-	  li        r0, 0xE
-	  stw       r0, 0x24(r31)
+	if (mResultMgr->update(mController) >= 7) {
+		mActiveMode = TESTMODE_INACTIVE;
+	}
 
-	.loc_0xA4:
-	  lwz       r3, 0x3A0(r31)
-	  lwz       r4, 0x28(r31)
-	  bl        0x50C8
-	  cmpwi     r3, 0x4
-	  blt-      .loc_0xC0
-	  li        r0, 0xE
-	  stw       r0, 0x24(r31)
+	if (mTitleMgr->update(mController) >= 3) {
+		mActiveMode = TESTMODE_INACTIVE;
+	}
 
-	.loc_0xC0:
-	  lwz       r3, 0x398(r31)
-	  lwz       r4, 0x28(r31)
-	  bl        0x4C40
-	  cmpwi     r3, 0x4
-	  blt-      .loc_0xDC
-	  li        r0, 0xE
-	  stw       r0, 0x24(r31)
+	if (mPauseMgr->update(mController) >= 5) {
+		mActiveMode = TESTMODE_INACTIVE;
+	}
 
-	.loc_0xDC:
-	  lwz       r3, 0x3A4(r31)
-	  lwz       r4, 0x28(r31)
-	  bl        0x100EC
-	  cmpwi     r3, 0x13
-	  blt-      .loc_0xF8
-	  li        r0, 0xE
-	  stw       r0, 0x24(r31)
+	if (mMapMgr->update(mController) >= 4) {
+		mActiveMode = TESTMODE_INACTIVE;
+	}
 
-	.loc_0xF8:
-	  lwz       r3, 0x3B4(r31)
-	  lwz       r4, 0x28(r31)
-	  bl        0x12918
-	  cmpwi     r3, 0x4
-	  blt-      .loc_0x114
-	  li        r0, 0xE
-	  stw       r0, 0x24(r31)
+	if (mTutorialMgr->update(mController) >= 4) {
+		mActiveMode = TESTMODE_INACTIVE;
+	}
 
-	.loc_0x114:
-	  lwz       r3, 0x3AC(r31)
-	  lwz       r4, 0x28(r31)
-	  bl        0x16C24
-	  cmpwi     r3, 0x3
-	  blt-      .loc_0x130
-	  li        r0, 0xE
-	  stw       r0, 0x24(r31)
+	if (mMemChkMgr->update(mController) >= 19) {
+		mActiveMode = TESTMODE_INACTIVE;
+	}
 
-	.loc_0x130:
-	  lwz       r3, 0x3B0(r31)
-	  lwz       r4, 0x28(r31)
-	  bl        0x1AA9C
-	  cmpwi     r3, 0x3
-	  blt-      .loc_0x14C
-	  li        r0, 0xE
-	  stw       r0, 0x24(r31)
+	if (mDrawSelectDiary->update(mController) >= 4) {
+		mActiveMode = TESTMODE_INACTIVE;
+	}
 
-	.loc_0x14C:
-	  li        r0, 0
-	  stw       r0, 0x1C(r1)
-	  addi      r5, r1, 0x14
-	  lwz       r3, 0x3A8(r31)
-	  lwz       r4, 0x28(r31)
-	  bl        0x156DC
-	  cmpwi     r3, 0x1
-	  blt-      .loc_0x174
-	  li        r0, 0xE
-	  stw       r0, 0x24(r31)
+	if (mTotalScoreMgr->update(mController) >= 3) {
+		mActiveMode = TESTMODE_INACTIVE;
+	}
 
-	.loc_0x174:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	if (mStartMgr->update(mController) >= 3) {
+		mActiveMode = TESTMODE_INACTIVE;
+	}
+
+	if (mFileChkSelMgr->update(mController, CardQuickInfo()) >= 1) {
+		mActiveMode = TESTMODE_INACTIVE;
+	}
 }
 
 /*
@@ -747,8 +327,90 @@ void zen::OgTestScreen::update()
  * Address:	8017E094
  * Size:	0006A8
  */
-void zen::OgTestScreen::draw(Graphics&)
+void zen::OgTestScreen::draw(Graphics& gfx)
 {
+	gfx.setViewport(RectArea(0, 0, gfx._30C, gfx._310));
+	gfx.setScissor(RectArea(0, 0, gfx._30C, gfx._310));
+	gfx.setClearColour(Colour(0, 0, 0, 255));
+	gfx.clearBuffer(3, false);
+
+	Camera cam;
+	Matrix4f viewMat;
+	Vector3f vec1(0.0f, 0.0f, 250.0f);
+	Vector3f vec2(0.0f, 0.0f, 0.0f);
+	cam.calcVectors(vec1, vec2);
+	cam.update(f32(gfx._30C) / f32(gfx._310), 60.0f, 1.0f, 5000.0f);
+	gfx.setCamera(&cam);
+
+	gfx.calcViewMatrix(Matrix4f::ident, viewMat);
+
+	gfx.setPerspective(cam._260.mMtx, cam._1CC, cam._1C4, cam._1D0, cam._1D4, 1.0f);
+	gfx.useMatrix(gfx._2E4->_1E0, 0);
+
+	mResultMgr->draw(gfx);
+	mTitleMgr->draw(gfx);
+	mPauseMgr->draw(gfx);
+	mMapMgr->draw(gfx);
+	mTutorialMgr->draw(gfx);
+	mDrawSelectDiary->draw(gfx);
+	mFileChkSelMgr->draw(gfx);
+	mTotalScoreMgr->draw(gfx);
+	mStartMgr->draw(gfx);
+
+	if (mActiveMode == TESTMODE_INACTIVE) {
+		Matrix4f ortho;
+		gfx.setOrthogonal(ortho.mMtx, RectArea(0, 0, gfx._30C, gfx._310));
+		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.setAuxColour(Colour(255, 255, 0, 255));
+
+		char scrnSelectorText[128];
+		sprintf(scrnSelectorText, "２Ｄスクリーン・セレクター"); // '2D screen selector'
+		gfx.texturePrintf(mFont, 320 - mFont->stringWidth(scrnSelectorText) / 2, 20, scrnSelectorText);
+
+		gfx.setColour(Colour(200, 255, 255, 255), true);
+		gfx.setAuxColour(Colour(50, 50, 255, 255));
+
+		char optionsTexts[11][256];
+
+		sprintf(optionsTexts[0], "タイトル (%d)", mTitleMode);               // 'Title (%d)'
+		sprintf(optionsTexts[1], "チュートリアル (%d)", mTutorialMode);      // 'Tutorial (%d)'
+		sprintf(optionsTexts[2], "セーブセレクト (%d)", mSaveMode);          // 'Save Select (%d)'
+		sprintf(optionsTexts[3], "テスト (%d)", mMapMode);                   // 'Test (%d)'
+		sprintf(optionsTexts[4], "メモリーチェック(%d)", mMemChkMode);       // 'Memory check(%d)'
+		sprintf(optionsTexts[5], "チェック＆セレクト(%d)", mFileChkSelMode); // 'Check  and Select (%d)'
+		sprintf(optionsTexts[6], "日記 (%d)", mDiaryMode);                   // 'Diary (%d)'
+		sprintf(optionsTexts[7], "リザルト");                                // 'Results'
+		sprintf(optionsTexts[8], "ポーズ (%d)", mPauseMode);                 // 'Pause (%d)'
+		sprintf(optionsTexts[9], "トータル成績");                            // 'Total Score'
+		sprintf(optionsTexts[10], "スタート");                               // 'Start'
+
+		for (int i = 0; i < 11; i++) {
+			gfx.texturePrintf(mFont, 200, 30 * i + 60, optionsTexts[i]);
+		}
+
+		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.setAuxColour(Colour(255, 255, 255, 255));
+
+		char arrowText[256];
+		sprintf(arrowText, "＞");
+		gfx.texturePrintf(mFont, 170, 30 * mSelectedMode + 60, arrowText);
+	}
+
+	if (mActiveMode == TESTMODE_Tutorial) {
+		Matrix4f ortho;
+		gfx.setOrthogonal(ortho.mMtx, RectArea(0, 0, gfx._30C, gfx._310));
+		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.setAuxColour(Colour(255, 255, 150, 255));
+
+		ogScrMessageMgr* msgMgr = mTutorialMgr->mMessageMgr;
+		char tutorialText[256];
+		sprintf(tutorialText, "<<< チュ−トリアル >>> tx??の数(%d個)", msgMgr->_A59C); // '<<< Tutorial >>> Number of tx?? (%d)'
+		gfx.texturePrintf(mFont, 30, 20, tutorialText);
+		gfx.texturePrintf(mFont, 30, 40, *msgMgr->_1C[msgMgr->_4D0]);
+	}
+
+	mMemChkMgr->draw(gfx);
+	gfx.setLighting(false, nullptr);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1193,46 +855,10 @@ void zen::OgTestScreen::draw(Graphics&)
  */
 zen::OgTestSection::OgTestSection()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r4, r13, 0x8E0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        -0x14979C
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r13, 0x8E0
-	  bl        -0x13E030
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x642C
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x2668
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r31)
-	  addi      r4, r3, 0x25D8
-	  addi      r3, r31, 0
-	  bl        -0x13E058
-	  lwz       r4, 0x2DEC(r13)
-	  li        r0, 0x1
-	  lis       r3, 0x803A
-	  stw       r0, 0x14(r4)
-	  subi      r4, r3, 0x24E0
-	  li        r0, 0
-	  stw       r0, 0x24C(r4)
-	  mr        r3, r31
-	  stw       r0, 0x250(r4)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Node::init("<OgTestSection>");
+	gsys->mFrameRate = 1;
+	flowCont._24C    = 0;
+	flowCont._250    = 0;
 }
 
 /*
@@ -1242,41 +868,8 @@ zen::OgTestSection::OgTestSection()
  */
 void zen::OgTestSection::init()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x2
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  subi      r31, r4, 0x6800
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  bl        -0x1377F0
-	  lwz       r4, 0x2DEC(r13)
-	  addi      r6, r3, 0
-	  addi      r7, r31, 0
-	  addi      r3, r4, 0x144
-	  addi      r4, r13, 0x904
-	  li        r5, 0x2
-	  bl        -0x159F08
-	  li        r3, 0x3C0
-	  bl        -0x137814
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x5C
-	  bl        -0x10E4
-
-	.loc_0x5C:
-	  addi      r4, r31, 0
-	  addi      r3, r30, 0
-	  bl        -0x13E25C
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	int msgHeapSize = 0x19800;
+	gsys->mHeaps[SYSHEAP_Message].init("message", 2, new u8[msgHeapSize], msgHeapSize);
+	OgTestScreen* screen = new OgTestScreen();
+	add(screen);
 }

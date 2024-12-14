@@ -181,12 +181,12 @@ struct GenObject : public GenBase {
 	{
 	}
 
-	virtual u32 getLatestVersion();              // _20
-	virtual void updateUseList(Generator*, int); // _24
-	virtual void init(Generator*);               // _28
-	virtual void update(Generator*);             // _2C
-	virtual void render(Graphics&, Generator*);  // _30
-	virtual void* birth(BirthInfo&) = 0;         // _34
+	virtual u32 getLatestVersion();                 // _20
+	virtual void updateUseList(Generator*, int) { } // _24
+	virtual void init(Generator*) { }               // _28
+	virtual void update(Generator*) { }             // _2C
+	virtual void render(Graphics&, Generator*);     // _30
+	virtual void* birth(BirthInfo&) = 0;            // _34
 
 	// _04     = VTBL
 	// _00-_18 = GenBase
@@ -287,7 +287,9 @@ struct GenObjectMapObject : public GenObject {
 	virtual void render(Graphics&, Generator*); // _30
 	virtual void* birth(BirthInfo&);            // _34
 
-	void initialise(MapMgr*);
+	static void initialise(MapMgr*);
+
+	static MapMgr* mapMgr;
 
 	// _04     = VTBL
 	// _00-_18 = GenObject

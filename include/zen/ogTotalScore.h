@@ -12,18 +12,19 @@ namespace zen {
 /**
  * @brief TODO
  */
-enum TotalScoreType {
-
+struct TotalScoreType {
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x830.
  */
 struct ogScrTotalScoreMgr {
 	ogScrTotalScoreMgr(TotalScoreType*);
 
 	void start();
-	void update(Controller*);
+	int update(Controller*);
 	void draw(Graphics&);
 	void setRankInEffect();
 	void setRankInColor();
@@ -31,7 +32,7 @@ struct ogScrTotalScoreMgr {
 	// unused/inlined:
 	void setEffect(P2DPane*, int);
 
-	// TODO: members
+	u8 _00[0x830]; // _00, unknown
 };
 
 } // namespace zen

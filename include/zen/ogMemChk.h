@@ -1,5 +1,5 @@
-#ifndef _ZEN_OGMESSAGE_H
-#define _ZEN_OGMESSAGE_H
+#ifndef _ZEN_OGMEMCHK_H
+#define _ZEN_OGMEMCHK_H
 
 #include "types.h"
 
@@ -13,6 +13,8 @@ struct TypingTextMgr;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10C.
  */
 struct ogScrMemChkMgr {
 	ogScrMemChkMgr();
@@ -23,7 +25,7 @@ struct ogScrMemChkMgr {
 	void DispAcup(bool);
 	void start();
 	void DebugStart(int);
-	void update(Controller*);
+	int update(Controller*);
 	void draw(Graphics&);
 	void setErrorMessage();
 
@@ -39,7 +41,7 @@ struct ogScrMemChkMgr {
 	void checkErrNitaku(zen::ogNitakuMgr*, Controller*);
 	void setNoCard();
 
-	// TODO: members
+	u8 _00[0x10C]; // _00, unknown
 };
 
 } // namespace zen

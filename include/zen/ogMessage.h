@@ -37,9 +37,15 @@ struct ogScrMessageMgr {
 	void ReadAllScreen();
 	void setScreenAlpha(u8);
 
-	u8 _00[0x4E0];           // _00, unknown
-	u8 _4E0;                 // _4E0
-	u8 _4E1[0xA5F0 - 0x4E1]; // _4E1, unknown
+	u8 _00[0x1C];              // _00, unknown
+	char** _1C[1];             // _1C, unsure of array size
+	u8 _20[0x4D0 - 0x20];      // _20, unknown
+	s16 _4D0;                  // _4D0
+	u8 _4D2[0x4E0 - 0x4D2];    // _4D2, unknown
+	u8 _4E0;                   // _4E0
+	u8 _4E1[0xA59C - 0x4E1];   // _4E1, unknown
+	s16 _A59C;                 // _A59C
+	u8 _A59E[0xA5F0 - 0xA59E]; // _A59E, unknown
 };
 
 } // namespace zen

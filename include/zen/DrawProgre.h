@@ -27,15 +27,17 @@ struct DrawProgreMes {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct DrawProgre {
 	DrawProgre();
 
 	void start();
-	void update(Controller*);
+	int update(Controller*);
 	void draw(Graphics&);
 
-	// TODO: members
+	u8 _00[0x10]; // _00, unknown
 };
 
 } // namespace zen

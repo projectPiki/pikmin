@@ -80,7 +80,7 @@ struct CullFrustum {
 /**
  * @brief TODO
  *
- * @note Between 0x348 and 0x350 in size.
+ * @note Size: 0x348 (probably).
  */
 struct Camera : public CullFrustum {
 	Camera();
@@ -92,7 +92,7 @@ struct Camera : public CullFrustum {
 	void projectCamPoint(Vector3f&);
 
 	// _00-_1D8 = CullFrustum? Unsure on end point of that vs beginning of this, but after _260 and before _320
-	u8 _260[0x2A0 - 0x260]; // _260, unknown
+	Matrix4f _260;          // _260
 	Matrix4f _2A0;          // _2A0
 	u8 _2E0[0x320 - 0x2E0]; // _2E0, unknown
 	Vector3f _320;          // _320

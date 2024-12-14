@@ -1329,53 +1329,6 @@ void RigidBody::integrate(int, int, f32)
 
 /*
  * --INFO--
- * Address:	8004EEAC
- * Size:	00006C
- */
-void Matrix3f::identity()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x7B30(r2)
-	  li        r5, 0x8
-	  stfs      f0, 0x0(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x1C(r3)
-	  b         .loc_0x5C
-
-	.loc_0x2C:
-	  subfic    r0, r5, 0x9
-	  cmpwi     r5, 0x9
-	  mtctr     r0
-	  bge-      .loc_0x48
-
-	.loc_0x3C:
-	  stfs      f0, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  bdnz+     .loc_0x3C
-
-	.loc_0x48:
-	  lfs       f0, -0x7B34(r2)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0x0(r3)
-	  blr
-
-	.loc_0x5C:
-	  rlwinm    r0,r5,2,0,29
-	  add       r4, r3, r0
-	  b         .loc_0x2C
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	8004EF18
  * Size:	00034C
  */

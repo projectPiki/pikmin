@@ -50,6 +50,8 @@ struct ogDrawDiary {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x2F0.
  */
 struct ogDrawSelectDiary {
 	ogDrawSelectDiary();
@@ -57,10 +59,10 @@ struct ogDrawSelectDiary {
 	void start();
 	void setCursorAlpha();
 	void MoveCursor();
-	void update(Controller*);
+	int update(Controller*);
 	void draw(Graphics&);
 
-	// TODO: members
+	u8 _00[0x2F0]; // _00, unknown
 };
 
 } // namespace zen

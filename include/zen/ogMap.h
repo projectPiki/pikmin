@@ -11,15 +11,17 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct ogScrMapMgr {
 	ogScrMapMgr();
 
 	void start(s16);
-	void update(Controller*);
+	int update(Controller*);
 	void draw(Graphics&);
 
-	// TODO: members
+	u8 _00[0x30]; // _00, unknown
 };
 
 } // namespace zen

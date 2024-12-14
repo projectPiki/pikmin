@@ -228,7 +228,7 @@ zen::ogScrMapMgr::ogScrMapMgr()
  * Address:	80183080
  * Size:	00029C
  */
-void zen::ogScrMapMgr::update(Controller*)
+int zen::ogScrMapMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

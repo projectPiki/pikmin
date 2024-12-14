@@ -2954,21 +2954,6 @@ zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
 
 /*
  * --INFO--
- * Address:	80189FB4
- * Size:	00000C
- */
-CardQuickInfo::CardQuickInfo()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	000080
  */

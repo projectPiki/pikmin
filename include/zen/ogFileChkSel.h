@@ -11,20 +11,22 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct ogScrFileChkSelMgr {
 	ogScrFileChkSelMgr();
 
 	void start(bool);
 	void startSave();
-	void update(Controller*, CardQuickInfo&);
+	int update(Controller*, CardQuickInfo&);
 	void draw(Graphics&);
 
 	// unused/inlined:
 	void init();
 	void startSub();
 
-	// TODO: members
+	u8 _00[0x18]; // _00, unknown
 };
 
 } // namespace zen

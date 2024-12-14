@@ -13,6 +13,8 @@ struct ogScrMessageMgr;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct ogScrTutorialMgr {
 
@@ -25,7 +27,7 @@ struct ogScrTutorialMgr {
 
 	ogScrTutorialMgr();
 
-	void update(Controller*);
+	int update(Controller*);
 	void draw(Graphics&);
 	void start(zen::ogScrTutorialMgr::EnumTutorial);
 

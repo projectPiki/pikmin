@@ -3103,7 +3103,7 @@ void Font::charToIndex(u16)
  * Address:	80028134
  * Size:	0000E0
  */
-void Font::stringWidth(char*)
+int Font::stringWidth(char*)
 {
 	/*
 	.loc_0x0:

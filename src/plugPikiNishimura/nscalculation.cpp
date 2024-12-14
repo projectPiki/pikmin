@@ -447,11 +447,15 @@ void calcMtxDirect(const Matrix4f&, const Matrix4f&)
  */
 void calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			outMtx.mMtx[j][i] = inMtx.mMtx[j][i];
-		}
-	}
+	outMtx.mMtx[0] = inMtx.mMtx[0][0];
+	outMtx.mMtx[3] = inMtx.mMtx[1][0];
+	outMtx.mMtx[6] = inMtx.mMtx[2][0];
+	outMtx.mMtx[1] = inMtx.mMtx[0][1];
+	outMtx.mMtx[4] = inMtx.mMtx[1][1];
+	outMtx.mMtx[7] = inMtx.mMtx[2][1];
+	outMtx.mMtx[2] = inMtx.mMtx[0][2];
+	outMtx.mMtx[5] = inMtx.mMtx[1][2];
+	outMtx.mMtx[8] = inMtx.mMtx[2][2];
 }
 
 /*
@@ -461,10 +465,6 @@ void calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
  */
 void calcMat3toMat4(const Matrix3f& inMtx, Matrix4f& outMtx)
 {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			outMtx.mMtx[j][i] = inMtx.mMtx[j][i];
-		}
-	}
+	// UNUSED FUNCTION
 }
 } // namespace NsCalculation

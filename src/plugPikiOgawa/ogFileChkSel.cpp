@@ -196,7 +196,7 @@ void zen::ogScrFileChkSelMgr::startSave()
  * Address:	80193748
  * Size:	000198
  */
-void zen::ogScrFileChkSelMgr::update(Controller*, CardQuickInfo&)
+int zen::ogScrFileChkSelMgr::update(Controller*, CardQuickInfo&)
 {
 	/*
 	.loc_0x0:

@@ -228,6 +228,7 @@ cflags_jaudio = [
     "-lang c++",
     "-DNDEBUG=1", 
     "-w off",
+    "-use_lmw_stmw on",
 ]
 
 # Game code flags

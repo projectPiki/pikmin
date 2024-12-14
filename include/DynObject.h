@@ -4,28 +4,24 @@
 #include "types.h"
 #include "DynSimulator.h"
 
+struct DynCollObjBody;
 struct MapMgr;
-
-/**
- * @brief TODO
- *
- * @note Genuinely not sure where to put this, but here kind of makes sense?
- */
-struct WorldSpring {
-	WorldSpring();
-
-	u8 _00[0x4];  // _00, unknown
-	Vector3f _04; // _04
-};
 
 /**
  * @brief TODO
  */
 struct DynObjBody : public RigidBody {
-	DynObjBody(); // unused/inlined
+	DynObjBody()
+	{
+		// _1329C.resetBound();
+	} // unused/inlined
 
+	virtual void initDimensions(f32 x, f32 y, f32 z) // _30
+	{
+		_50.set(x, y, z);
+		_5C = (x / 2) * (y / 2) * (z / 2) * 0.000075f;
+	}
 	virtual void render(Graphics&);                           // _18
-	virtual void initDimensions(f32, f32, f32);               // _30
 	virtual void computeForces(int, f32);                     // _34
 	virtual void integrate(int, int, f32);                    // _38
 	virtual void initRender(int);                             // _5C
@@ -36,16 +32,19 @@ struct DynObjBody : public RigidBody {
 	void initBodyCollisions();
 	void readScript(MapMgr*, char*);
 
-	// _00     = VTBL
-	// _00-_?? = RigidBody?
-	// TODO: members
+	// _00        = VTBL
+	// _00-_132B4 = RigidBody?
+	u32 _132B4;             // _132B4, unknown
+	u8 _132B8[0x4];         // _132B8, unknown
+	Matrix4f _132BC;        // _132BC
+	DynCollObjBody* _132FC; // _132FC, probably
 };
 
 /**
  * @brief TODO
  */
 struct DynObjBridge : public DynObjBody {
-	virtual void applyGroundForces(int, CollGroup*); // _6C
+	virtual void applyGroundForces(int, CollGroup*) { } // _6C
 
 	// _00     = VTBL
 	// _00-_?? = DynObjBody?

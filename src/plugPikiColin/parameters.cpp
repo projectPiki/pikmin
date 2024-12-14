@@ -2,6 +2,7 @@
 #include "Colour.h"
 #include "CoreNode.h"
 #include "Parameters.h"
+#include "PikiMacros.h"
 #include "Stream.h"
 #include "String.h"
 #include "Vector.h"
@@ -36,17 +37,7 @@ static void _Print(char*, ...)
 BaseParm::BaseParm(Parameters* parm, ayuID id)
     : mID(nullptr)
 {
-	BaseParm* head = parm->mHead;
-	FOREACH_NODE(BaseParm, head, node) { }
-
-	BaseParm* lastNode = nullptr;
-	FOREACH_NODE(BaseParm, head, node) { lastNode = node; }
-
-	if (lastNode) {
-		lastNode->mNext = this;
-	} else {
-		parm->mHead = this;
-	}
+	parm->addToEnd(this);
 
 	mID   = (char*)id.mID;
 	mNext = nullptr;

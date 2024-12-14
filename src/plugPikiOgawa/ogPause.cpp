@@ -296,7 +296,7 @@ void zen::ogScrPauseMgr::start(bool)
  * Address:	801826C8
  * Size:	0003C0
  */
-void zen::ogScrPauseMgr::update(Controller*)
+int zen::ogScrPauseMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

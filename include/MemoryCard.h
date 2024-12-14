@@ -11,9 +11,10 @@ struct PlayState;
  * @brief TODO
  */
 struct CardQuickInfo {
-	CardQuickInfo();
+	CardQuickInfo() { _08 = 0; }
 
-	// TODO: members
+	u8 _00[0x8]; // _00, unknown
+	u32 _08;     // _08, unknown
 };
 
 /**

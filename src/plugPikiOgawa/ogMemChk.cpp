@@ -1357,7 +1357,7 @@ void zen::ogScrMemChkMgr::setNoCard()
  * Address:	8018E0DC
  * Size:	000EC4
  */
-void zen::ogScrMemChkMgr::update(Controller*)
+int zen::ogScrMemChkMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

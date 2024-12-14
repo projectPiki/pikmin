@@ -2,6 +2,7 @@
 #define _PARAMETERS_H
 
 #include "types.h"
+#include "PikiMacros.h"
 
 struct Parameters;
 
@@ -31,6 +32,25 @@ struct Parameters {
 
 	void write(RandomAccessStream&);
 	void read(RandomAccessStream&);
+
+	inline void addToEnd(BaseParm* newNode)
+	{
+		BaseParm* node;
+		for (node = mHead; node; node = node->mNext) {
+			DEBUGPRINT(node->mID);
+		}
+
+		BaseParm* last = nullptr;
+		for (node = mHead; node; node = node->mNext) {
+			last = node;
+		}
+
+		if (last) {
+			last->mNext = newNode;
+		} else {
+			mHead = newNode;
+		}
+	}
 
 	// unused/inlined:
 	void sizeInFile();

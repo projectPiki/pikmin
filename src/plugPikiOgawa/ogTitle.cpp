@@ -448,7 +448,7 @@ void zen::ogScrTitleMgr::start(bool)
  * Address:	8018161C
  * Size:	0009F8
  */
-void zen::ogScrTitleMgr::update(Controller*)
+int zen::ogScrTitleMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

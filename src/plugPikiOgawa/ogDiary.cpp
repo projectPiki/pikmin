@@ -1857,7 +1857,7 @@ void zen::ogDrawSelectDiary::MoveCursor()
  * Address:	80190924
  * Size:	000880
  */
-void zen::ogDrawSelectDiary::update(Controller*)
+int zen::ogDrawSelectDiary::update(Controller*)
 {
 	/*
 	.loc_0x0:

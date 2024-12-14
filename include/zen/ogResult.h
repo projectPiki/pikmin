@@ -18,6 +18,8 @@ enum EnumResult {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x55C.
  */
 struct ogScrResultMgr {
 	ogScrResultMgr();
@@ -25,7 +27,7 @@ struct ogScrResultMgr {
 
 	void ogScrResultMgrSub();
 	void start();
-	void update(Controller*);
+	int update(Controller*);
 	void draw(Graphics&);
 
 	// unused/inlined:
@@ -33,7 +35,7 @@ struct ogScrResultMgr {
 	void setEnumResultTable(EnumResult*);
 	void StartRESULT();
 
-	// TODO: members
+	u8 _00[0x55C]; // _00, unknown
 };
 
 } // namespace zen

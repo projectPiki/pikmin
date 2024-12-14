@@ -10,12 +10,14 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xA8.
  */
 struct ogScrTitleMgr {
 	ogScrTitleMgr();
 
 	void start(bool);
-	void update(Controller*);
+	int update(Controller*);
 	void draw(Graphics&);
 	void StereoOnOff(bool);
 	void DispBarBGM(bool);
@@ -25,7 +27,7 @@ struct ogScrTitleMgr {
 	void getGamePrefs();
 	void setGamePrefs();
 
-	// TODO: members
+	u8 _00[0xA8]; // _00, unknown
 };
 
 } // namespace zen

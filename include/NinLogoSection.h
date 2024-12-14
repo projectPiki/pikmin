@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Section.h"
+#include "Controller.h"
 
 struct Menu;
 
@@ -16,20 +17,6 @@ struct NinLogoSection : public Section {
 
 	// _00     = VTBL
 	// _00-_20 = Section
-};
-
-/**
- * @brief TODO
- */
-struct NinLogoSetupSection : public Node {
-	virtual void update();        // _10
-	virtual void draw(Graphics&); // _14
-
-	void drawMenu(Graphics&, Menu*, f32);
-
-	// _00     = VTBL
-	// _00-_20 = Node
-	// TODO: members
 };
 
 #endif

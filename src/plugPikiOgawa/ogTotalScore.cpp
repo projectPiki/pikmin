@@ -721,7 +721,7 @@ void zen::ogScrTotalScoreMgr::start()
  * Address:	80194C4C
  * Size:	000190
  */
-void zen::ogScrTotalScoreMgr::update(Controller*)
+int zen::ogScrTotalScoreMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

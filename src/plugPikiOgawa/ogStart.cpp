@@ -149,7 +149,7 @@ void zen::ogScrStartMgr::stop()
  * Address:	80198AE0
  * Size:	0001C0
  */
-void zen::ogScrStartMgr::update(Controller*)
+int zen::ogScrStartMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

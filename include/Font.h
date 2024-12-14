@@ -31,7 +31,7 @@ struct Font {
 	void setTexture(Texture*, int, int);
 	int charToIndex(char); // may not be int
 	void charToIndex(u16);
-	void stringWidth(char*);
+	int stringWidth(char*);
 
 	// TODO: members
 	Texture* mTexture; // _00
