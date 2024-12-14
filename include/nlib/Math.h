@@ -15,11 +15,9 @@ f32 remainder(f32, f32);
 
 // unused/inlined:
 f32 roundAngle(f32);
-
 inline f32 atan2Vec(Vector3f vec) { return atan2(vec.x, vec.z); }
 
 extern f32 pi;
-
 inline f32 getRandomAngle() { return 2.0f * StdSystem::getRand(1.0f) * pi; }
 
 extern f32 error;
@@ -54,6 +52,8 @@ struct NMath {
 		}
 		return val;
 	}
+
+	static bool isZero(f32 period) { return absolute(period) <= NMathF::error; }
 };
 
 typedef NMath<f32> NMathf;

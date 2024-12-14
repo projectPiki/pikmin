@@ -2255,7 +2255,7 @@ void NVector3f::normalizeByLength(f32 length)
 bool NVector3f::normalizeCheck()
 {
 	f32 len = length();
-	if (NMathf::absolute(len) <= NMathF::error) {
+	if (NMathf::isZero(len)) {
 		return false;
 	}
 
@@ -2270,13 +2270,16 @@ bool NVector3f::normalizeCheck()
  */
 void NVector3f::normalize()
 {
-	u32 badCompiler; // idek man.
 	f32 len = length();
-	if (NMathf::absolute(len) <= NMathF::error) {
+	if (NMathf::isZero(len)) {
+		f32 lenCopy = len;
+		PRINT("!normalize:zero:%f\n", lenCopy);
 		return;
 	}
 
-	normalizeByLength(len);
+	x /= len;
+	y /= len;
+	z /= len;
 }
 
 /*
@@ -2284,9 +2287,10 @@ void NVector3f::normalize()
  * Address:	........
  * Size:	00003C
  */
-void NAlpha::fadeInValue(f32)
+f32 NAlpha::fadeInValue(f32 x)
 {
-	// UNUSED FUNCTION
+	f32 hpi = NMathF::pi / 2;
+	return sinf(x * hpi);
 }
 
 /*
@@ -2294,9 +2298,10 @@ void NAlpha::fadeInValue(f32)
  * Address:	........
  * Size:	000030
  */
-void NAlpha::fadeOutValue(f32)
+f32 NAlpha::fadeOutValue(f32 x)
 {
-	// UNUSED FUNCTION
+	f32 hpi = NMathF::pi / 2;
+	return 1.0f - sinf((x * hpi) + hpi);
 }
 
 /*
@@ -2304,9 +2309,15 @@ void NAlpha::fadeOutValue(f32)
  * Address:	........
  * Size:	000080
  */
-void NAlpha::fadeInOutValue(f32)
+f32 NAlpha::fadeInOutValue(f32 x)
 {
-	// UNUSED FUNCTION
+	if (x < 0.5f) {
+		f32 function = (sinf((NMathF::pi / 2) + (2.0f * x) * (NMathF::pi / 2)));
+		return 0.5f * (1.0f - function);
+	}
+
+	f32 function = (sinf((2.0f * (x - 0.5f)) * (NMathF::pi / 2)));
+	return 0.5f + (0.5f * function);
 }
 
 /*
@@ -2314,9 +2325,13 @@ void NAlpha::fadeInOutValue(f32)
  * Address:	........
  * Size:	000080
  */
-void NAlpha::fadeOutInValue(f32)
+f32 NAlpha::fadeOutInValue(f32 x)
 {
-	// UNUSED FUNCTION
+	if (x < 0.5f) {
+		return (0.5f * sinf((2.0f * x) * (NMathF::pi / 2)));
+	}
+
+	return 0.5f + 0.5f * (1.0f - sinf((NMathF::pi / 2) + (2.0f * (x - 0.5f)) * (NMathF::pi / 2)));
 }
 
 /*
@@ -2334,168 +2349,38 @@ NAlpha::NAlpha()
  * Address:	8011D1DC
  * Size:	00000C
  */
-void NAlpha::reset() { _04 = _08; }
+void NAlpha::reset() { mValue = mOffset; }
 
 /*
  * --INFO--
- * Address:	8011D1E8
+ * Address:	8011D1E8 (1004BE90 in plugPiki)
  * Size:	000198
  */
-f32 NAlpha::getValue(f32 p1)
+f32 NAlpha::getValue(f32 input)
 {
-	if (NMathf::absolute(_0C) <= NMathF::error) {
-		_0C = 1.0f;
+	// If the scale is very small, set it to 1.0f
+	if (NMathf::isZero(mScale)) {
+		PRINT("?isZero(period)\n");
+		mScale = 1.0f;
 	}
 
-	f32 val = (p1 - _08) / _0C;
+	// Normalise the input value to the range [mOffset, mOffset + mScale]
+	f32 normalisedValue = (input - mOffset) / mScale;
 
-	switch (_10) {
-	case 0:
-		return val;
-	case 1:
-		return sinf(NMathF::pi + val * (NMathF::pi / 2)) - 1.0f;
-	case 2:
-		return sinf(val * (NMathF::pi / 2));
-	case 3:
-		if (val < 0.5f) {
-			return 0.5f * (1.0f - sinf((NMathF::pi / 2) + (2.0f * val) * (NMathF::pi / 2)));
-		}
-		return 0.5f + (0.5f * sinf((2.0f * (val - 0.5f)) * (NMathF::pi / 2)));
-	case 4:
-		if (val < 0.5f) {
-			return (0.5f * sinf((2.0f * val) * (NMathF::pi / 2)));
-		}
-		return 0.5f + 0.5f * (1.0f - sinf((NMathF::pi / 2) + (2.0f * (val - 0.5f)) * (NMathF::pi / 2)));
+	switch (mMode) {
+	case NAlphaMode::Linear:
+		return normalisedValue;
+	case NAlphaMode::FadeOut:
+		return fadeOutValue(normalisedValue);
+	case NAlphaMode::FadeIn:
+		return fadeInValue(normalisedValue);
+	case NAlphaMode::FadeInOut:
+		return fadeInOutValue(normalisedValue);
+	case NAlphaMode::FadeOutIn:
+		return fadeOutInValue(normalisedValue);
 	default:
-		return val;
+		return normalisedValue;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lfs       f2, 0xC(r3)
-	  lfs       f0, -0x5FF0(r2)
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x20
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  fneg      f2, f2
-
-	.loc_0x24:
-	  lfs       f0, -0x1CB0(r13)
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x3C
-	  lfs       f0, -0x5FEC(r2)
-	  stfs      f0, 0xC(r3)
-
-	.loc_0x3C:
-	  lfs       f0, 0x8(r3)
-	  lbz       r0, 0x10(r3)
-	  fsubs     f1, f1, f0
-	  lfs       f0, 0xC(r3)
-	  cmpwi     r0, 0x2
-	  fdivs     f1, f1, f0
-	  beq-      .loc_0xA4
-	  bge-      .loc_0x6C
-	  cmpwi     r0, 0
-	  beq-      .loc_0x188
-	  bge-      .loc_0x80
-	  b         .loc_0x188
-
-	.loc_0x6C:
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x124
-	  bge-      .loc_0x188
-	  b         .loc_0xBC
-	  b         .loc_0x188
-
-	.loc_0x80:
-	  lfs       f2, -0x1CA4(r13)
-	  lfs       f0, -0x5FE8(r2)
-	  fmuls     f2, f2, f0
-	  fmuls     f0, f1, f2
-	  fadds     f1, f2, f0
-	  bl        0xFEA6C
-	  lfs       f0, -0x5FEC(r2)
-	  fsubs     f1, f0, f1
-	  b         .loc_0x188
-
-	.loc_0xA4:
-	  lfs       f2, -0x1CA4(r13)
-	  lfs       f0, -0x5FE8(r2)
-	  fmuls     f0, f2, f0
-	  fmuls     f1, f1, f0
-	  bl        0xFEA4C
-	  b         .loc_0x188
-
-	.loc_0xBC:
-	  lfs       f3, -0x5FE8(r2)
-	  fcmpo     cr0, f1, f3
-	  bge-      .loc_0xF8
-	  lfs       f2, -0x1CA4(r13)
-	  lfs       f0, -0x5FD0(r2)
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f1
-	  fmuls     f0, f0, f2
-	  fadds     f1, f2, f0
-	  bl        0xFEA20
-	  lfs       f0, -0x5FEC(r2)
-	  lfs       f2, -0x5FE8(r2)
-	  fsubs     f0, f0, f1
-	  fmuls     f1, f2, f0
-	  b         .loc_0x188
-
-	.loc_0xF8:
-	  fsubs     f1, f1, f3
-	  lfs       f2, -0x5FD0(r2)
-	  lfs       f0, -0x1CA4(r13)
-	  fmuls     f1, f2, f1
-	  fmuls     f0, f0, f3
-	  fmuls     f1, f1, f0
-	  bl        0xFE9F0
-	  lfs       f2, -0x5FE8(r2)
-	  fmuls     f0, f2, f1
-	  fadds     f1, f2, f0
-	  b         .loc_0x188
-
-	.loc_0x124:
-	  lfs       f3, -0x5FE8(r2)
-	  fcmpo     cr0, f1, f3
-	  bge-      .loc_0x154
-	  lfs       f2, -0x5FD0(r2)
-	  lfs       f0, -0x1CA4(r13)
-	  fmuls     f1, f2, f1
-	  fmuls     f0, f0, f3
-	  fmuls     f1, f1, f0
-	  bl        0xFE9BC
-	  lfs       f0, -0x5FE8(r2)
-	  fmuls     f1, f0, f1
-	  b         .loc_0x188
-
-	.loc_0x154:
-	  fsubs     f0, f1, f3
-	  lfs       f2, -0x1CA4(r13)
-	  lfs       f1, -0x5FD0(r2)
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f1, f0
-	  fmuls     f0, f0, f2
-	  fadds     f1, f2, f0
-	  bl        0xFE990
-	  lfs       f0, -0x5FEC(r2)
-	  lfs       f2, -0x5FE8(r2)
-	  fsubs     f0, f0, f1
-	  fmuls     f0, f2, f0
-	  fadds     f1, f2, f0
-
-	.loc_0x188:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -2505,7 +2390,7 @@ f32 NAlpha::getValue(f32 p1)
  */
 void NAlpha::readData(Stream& input)
 {
-	_08 = input.readFloat();
-	_0C = input.readFloat();
-	_10 = input.readByte();
+	mOffset = input.readFloat();
+	mScale  = input.readFloat();
+	mMode   = input.readByte();
 }

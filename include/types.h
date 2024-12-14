@@ -34,6 +34,17 @@ typedef volatile f128 vf128;
 
 typedef u32 unknown;
 
+#ifdef __MWERKS__
+#define PRINT(...)
+#define ERROR(...)
+#else
+#define PRINT(...) _Print(__VA_ARGS__)
+#define ERROR(...) _Error(__VA_ARGS__)
+#endif
+
+#define WINDOWS_ONLY_START (#ifdef _WIN32)
+#define WINDOWS_ONLY_END   (#endif)
+
 #ifndef __cplusplus
 typedef u16 wchar_t;
 #endif

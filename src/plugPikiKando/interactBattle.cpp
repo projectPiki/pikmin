@@ -482,18 +482,21 @@ bool InteractSwallow::actPiki(Piki* piki)
 		return false;
 	}
 
-	bool check = false;
+	bool isPiki = false;
 	Stickers stickers(mOwner);
 	Stickers* stickPtr = &stickers;
 	for (int i = stickPtr->getFirst(); !stickPtr->isEnd(i); i = stickPtr->getNext(i)) {
 		Creature* stuck;
+
+		// On invalid index, get the first creature
 		if (i == -1) {
 			stuck = stickPtr->getCreature(0);
 		} else {
 			stuck = stickPtr->getCreature(i);
 		}
+
 		if (stuck == piki) {
-			check = true;
+			isPiki = true;
 		}
 
 		if (stuck->isCreatureFlag(CF_StuckToMouth)) {
@@ -501,7 +504,7 @@ bool InteractSwallow::actPiki(Piki* piki)
 		}
 	}
 
-	if (!check) {
+	if (!isPiki) {
 		Creature* target = mOwner->_180;
 		while (target) {
 			target = target->_18C;

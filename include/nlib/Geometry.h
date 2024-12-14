@@ -1,10 +1,11 @@
 #ifndef _NLIB_GEOMETRY_H
 #define _NLIB_GEOMETRY_H
 
-#include "types.h"
 #include "Dolphin/mtx.h"
-#include "Vector.h"
+#include "nlib/Math.h"
 #include "Matrix4f.h"
+#include "Vector.h"
+#include "types.h"
 
 struct Stream;
 struct NTransform3D;
@@ -359,6 +360,16 @@ struct NTransform3D {
 	NMatrix4f mMtx; // _00
 };
 
+struct NAlphaMode {
+	enum _ {
+		Linear    = 0,
+		FadeOut   = 1,
+		FadeIn    = 2,
+		FadeInOut = 3,
+		FadeOutIn = 4,
+	};
+};
+
 /**
  * @brief TODO
  */
@@ -370,17 +381,17 @@ struct NAlpha {
 	void reset();
 	f32 getValue(f32);
 
-	// unused/inlined:
-	void fadeInValue(f32);
-	void fadeOutValue(f32);
-	void fadeInOutValue(f32);
-	void fadeOutInValue(f32);
+	// inlined
+	f32 fadeInValue(f32 x);
+	f32 fadeOutValue(f32 x);
+	f32 fadeInOutValue(f32 x);
+	f32 fadeOutInValue(f32 x);
 
 	// _00 = VTBL
-	f32 _04; // _04
-	f32 _08; // _08
-	f32 _0C; // _0C
-	u8 _10;  // _10
+	f32 mValue;  // _04
+	f32 mOffset; // _08
+	f32 mScale;  // _0C, actually named 'period'
+	u8 mMode;    // _10
 };
 
 #endif
