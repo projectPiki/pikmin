@@ -10,20 +10,9 @@ struct Controller;
 struct Font;
 struct Light;
 
-/**
- * @brief TODO
- */
 struct Menu : public Node {
-
-	/**
-	 * @brief TODO
-	 */
-	enum MenuState {
-		STATE_Unk0 = 0,
-		STATE_Unk1 = 1,
-		STATE_Unk2 = 2,
-		STATE_Unk3 = 3,
-	};
+	DEFINE_ENUM_TYPE(MenuStateType, Idle = 0, FadeIn = 1, Open = 2, FadeOut = 3);
+	DEFINE_ENUM_TYPE(KeyEventType, Press = 1, Hold = 2, Input = 4, Release = 8, Navigate = 16, SpecialRelease = 32);
 
 	/**
 	 * @brief Linked list of key events.
@@ -37,19 +26,22 @@ struct Menu : public Node {
 		void insertAfter(KeyEvent*);
 		void remove();
 
-		KeyEvent* mPrev;              // _00
-		KeyEvent* mNext;              // _04
-		int _08;                      // _08
-		int _0C;                      // _0C
-		IDelegate1<Menu&>* mDelegate; // _10
+		KeyEvent* mPrev;               // _00
+		KeyEvent* mNext;               // _04
+		KeyEventType::Type mEventType; // _08
+		int mInputCode;                // _0C
+		IDelegate1<Menu&>* mDelegate;  // _10
 	};
 
+	DEFINE_ENUM_TYPE(MenuNavigationType, TopMenu = 1, SubMenu = 2);
+
 	/**
-	 * @brief TODO
+	 * @brief Represents an item in the menu.
 	 *
 	 * @note Size: 0x28.
 	 */
 	struct MenuItem {
+
 		MenuItem(int, int, char*, IDelegate1<Menu&>*);
 
 		bool checkEvents(Menu*, int);
@@ -64,16 +56,16 @@ struct Menu : public Node {
 			mEventList->mNext = key;
 		}
 
-		MenuItem* mPrev;      // _00
-		MenuItem* mNext;      // _04
-		u32 _08;              // _08, unknown
-		Menu* mMenu;          // _0C
-		u32 _10;              // _10, unknown
-		bool _14;             // _14
-		char* mName;          // _18
-		int _1C;              // _1C
-		int _20;              // _20
-		KeyEvent* mEventList; // _24
+		MenuItem* mPrev;                // _00
+		MenuItem* mNext;                // _04
+		u32 _08;                        // _08, unknown
+		Menu* mMenu;                    // _0C
+		u32 _10;                        // _10, unknown
+		bool mIsEnabled;                // _14
+		char* mName;                    // _18
+		int _1C;                        // _1C
+		MenuNavigationType::Type mType; // _20
+		KeyEvent* mEventList;           // _24
 	};
 
 	Menu(Controller*, Font*, bool);
@@ -101,50 +93,50 @@ struct Menu : public Node {
 
 	inline void resetMenuItem(MenuItem* item)
 	{
-		_2C->mNext = item;
-		_2C->mPrev = item;
+		mLastItem->mNext = item;
+		mLastItem->mPrev = item;
 	}
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Menu* _20;               // _20
-	Menu* _24;               // _24
-	Menu* _28;               // _28
-	MenuItem* _2C;           // _2C
-	MenuItem* _30;           // _30
-	MenuItem* _34;           // _34
-	u32 _38;                 // _38, unknown
-	int _3C;                 // _3C
-	int _40;                 // _40, option count?
-	f32 _44;                 // _44
-	u32 _48;                 // _48, unknown - struct from here...
-	int _4C;                 // _4C
-	u32 _50;                 // _50, unknown
-	u32 _54;                 // _54, unknown - to here?
-	Controller* mController; // _58
-	u32 _5C;                 // _5C, unknown
-	Colour _60;              // _60
-	Colour _64;              // _64
-	u32 _68;                 // _68, unknown - struct from here...
-	u32 _6C;                 // _6C, unknown
-	u32 _70;                 // _70, unknown
-	u32 _74;                 // _74, unknown - to here?
-	u32 _78;                 // _78, unknown - struct from here...
-	u32 _7C;                 // _7C, unknown
-	u32 _80;                 // _80, unknown
-	u32 _84;                 // _84, unknown - to here?
-	IDelegate1<Menu&>* _88;  // _88
-	IDelegate1<Menu&>* _8C;  // _8C
-	u8 _90[0x4];             // _90, unknown
-	IDelegate1<Menu&>* _94;  // _94
-	u8 _98;                  // _98
-	u8 _99;                  // _99
-	Font* mFont;             // _9C
-	int _A0;                 // _A0
-	int _A4;                 // _A4
-	u32 _A8;                 // _A8, unknown
-	int mState;              // _AC, see MenuState enum
-	f32 _B0;                 // _B0
+	Menu* mParentMenu;                          // _20
+	Menu* mPreviousMenu;                        // _24
+	Menu* mNextMenu;                            // _28
+	MenuItem* mLastItem;                        // _2C
+	MenuItem* mCurrentItem;                     // _30
+	MenuItem* mFirstItem;                       // _34
+	u32 _38;                                    // _38, unknown
+	int mUseCustomPosition;                     // _3C
+	int mMenuCount;                             // _40, option count?
+	f32 mAnimationProgress;                     // _44
+	u32 _48;                                    // _48, unknown - struct from here...
+	int mPositionOffsetY;                       // _4C
+	u32 _50;                                    // _50, unknown
+	u32 _54;                                    // _54, unknown - to here?
+	Controller* mController;                    // _58
+	u32 _5C;                                    // _5C, unknown
+	Colour mDiffuseColour;                      // _60
+	Colour mHighlightColour;                    // _64
+	u32 _68;                                    // _68, unknown - struct from here...
+	u32 _6C;                                    // _6C, unknown
+	u32 _70;                                    // _70, unknown
+	u32 _74;                                    // _74, unknown - to here?
+	u32 _78;                                    // _78, unknown - struct from here...
+	u32 _7C;                                    // _7C, unknown
+	u32 _80;                                    // _80, unknown
+	u32 _84;                                    // _84, unknown - to here?
+	IDelegate1<Menu&>* mOnStateChangeCallback;  // _88
+	IDelegate1<Menu&>* mOnMenuSwitchCallback;   // _8C
+	u8 _90[0x4];                                // _90, unknown
+	IDelegate1<Menu&>* mOnOptionChangeCallback; // _94
+	u8 _98;                                     // _98
+	bool isOptionSelected;                      // _99
+	Font* mFont;                                // _9C
+	int _A0;                                    // _A0
+	int mInputCode;                             // _A4
+	u32 _A8;                                    // _A8, unknown
+	int mState;                                 // _AC, see MenuState enum
+	f32 mOpeningFadeProgress;                   // _B0
 };
 
 /**

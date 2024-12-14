@@ -33,7 +33,7 @@ struct NinLogoSetupSection : public Node {
 			progresWindow = new zen::DrawProgre();
 			progresWindow->start();
 		}
-		_2C                     = 0;
+		mMenu                   = 0;
 		gameflow.mGamePrefs._1E = 1;
 		gsys->setFade(1.0f, 3.0f);
 	}
@@ -41,8 +41,8 @@ struct NinLogoSetupSection : public Node {
 	virtual void update() // _10
 	{
 		mController->update();
-		if (_2C) {
-			_2C = _2C->doUpdate(false);
+		if (mMenu) {
+			mMenu = mMenu->doUpdate(false);
 			return;
 		}
 
@@ -73,7 +73,7 @@ struct NinLogoSetupSection : public Node {
 	// _00-_20 = Node
 	u8 _20[0x28 - 0x20];     // _20, unknown
 	Controller* mController; // _28
-	Menu* _2C;               // _2C
+	Menu* mMenu;             // _2C
 	u8 _30[0x50 - 0x30];     // _30, unknown
 };
 

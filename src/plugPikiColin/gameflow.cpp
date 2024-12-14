@@ -469,7 +469,7 @@ void GameFlow::menuToggleTimers(Menu& menu)
 {
 	gsys->mTimerState = (gsys->mTimerState + 1) % 3;
 	gsys->mTimer->reset();
-	sprintf(menu._30->mName, "Toggle Timers %s", timopts[gsys->mTimerState]);
+	sprintf(menu.mCurrentItem->mName, "Toggle Timers %s", timopts[gsys->mTimerState]);
 }
 
 /*
@@ -480,7 +480,7 @@ void GameFlow::menuToggleTimers(Menu& menu)
 void GameFlow::menuTogglePrint(Menu& menu)
 {
 	gsys->mTogglePrint ^= 1;
-	sprintf(menu._30->mName, "Toggle Print %s", (gsys->mTogglePrint) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mName, "Toggle Print %s", (gsys->mTogglePrint) ? " [on]" : "[off]");
 }
 
 /*
@@ -491,7 +491,7 @@ void GameFlow::menuTogglePrint(Menu& menu)
 void GameFlow::menuToggleDInfo(Menu& menu)
 {
 	gsys->mToggleDebugInfo ^= 1;
-	sprintf(menu._30->mName, "Toggle DInfo %s", (gsys->mToggleDebugInfo) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mName, "Toggle DInfo %s", (gsys->mToggleDebugInfo) ? " [on]" : "[off]");
 }
 
 /*
@@ -502,7 +502,7 @@ void GameFlow::menuToggleDInfo(Menu& menu)
 void GameFlow::menuToggleDExtra(Menu& menu)
 {
 	gsys->mToggleDebugExtra ^= 1;
-	sprintf(menu._30->mName, "Toggle DExtra %s", (gsys->mToggleDebugExtra) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mName, "Toggle DExtra %s", (gsys->mToggleDebugExtra) ? " [on]" : "[off]");
 }
 
 /*
@@ -513,7 +513,7 @@ void GameFlow::menuToggleDExtra(Menu& menu)
 void GameFlow::menuToggleBlur(Menu& menu)
 {
 	gsys->mToggleBlur ^= 1;
-	sprintf(menu._30->mName, "Toggle Blur %s", (gsys->mToggleBlur) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mName, "Toggle Blur %s", (gsys->mToggleBlur) ? " [on]" : "[off]");
 }
 
 /*
@@ -524,7 +524,7 @@ void GameFlow::menuToggleBlur(Menu& menu)
 void GameFlow::menuToggleInfo(Menu& menu)
 {
 	gsys->mToggleFileInfo ^= 1;
-	sprintf(menu._30->mName, "Toggle FileInfo %s", (gsys->mToggleFileInfo) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mName, "Toggle FileInfo %s", (gsys->mToggleFileInfo) ? " [on]" : "[off]");
 }
 
 /*
@@ -535,7 +535,7 @@ void GameFlow::menuToggleInfo(Menu& menu)
 void GameFlow::menuToggleColls(Menu& menu)
 {
 	gsys->mToggleColls ^= 1;
-	sprintf(menu._30->mName, "Toggle Colls %s", (gsys->mToggleColls) ? " [on]" : "[off]");
+	sprintf(menu.mCurrentItem->mName, "Toggle Colls %s", (gsys->mToggleColls) ? " [on]" : "[off]");
 }
 
 /*
@@ -561,7 +561,7 @@ static char* filterNames[] = {
 void GameFlow::menuChangeFilter(Menu& menu)
 {
 	mFilterType ^= 1;
-	sprintf(menu._30->mName, "type = %s", filterNames[mFilterType]);
+	sprintf(menu.mCurrentItem->mName, "type = %s", filterNames[mFilterType]);
 	gsys->mGfx->setVerticalFilter(&mFilters[mFilterType * 8]);
 	gsys->mGfx->videoReset();
 }
@@ -573,11 +573,11 @@ void GameFlow::menuChangeFilter(Menu& menu)
  */
 void GameFlow::menuIncreaseFilter(Menu& menu)
 {
-	if (mFilters[menu._30->_1C] < 128) {
-		mFilters[menu._30->_1C]++;
+	if (mFilters[menu.mCurrentItem->_1C] < 128) {
+		mFilters[menu.mCurrentItem->_1C]++;
 	}
 
-	sprintf(menu._30->mName, "Filter setting %d", mFilters[menu._30->_1C]);
+	sprintf(menu.mCurrentItem->mName, "Filter setting %d", mFilters[menu.mCurrentItem->_1C]);
 	if (mFilterType == FILTER_Custom) {
 		gsys->mGfx->setVerticalFilter(mFilters);
 		gsys->mGfx->videoReset();
@@ -591,11 +591,11 @@ void GameFlow::menuIncreaseFilter(Menu& menu)
  */
 void GameFlow::menuDecreaseFilter(Menu& menu)
 {
-	if (mFilters[menu._30->_1C] != 0) {
-		mFilters[menu._30->_1C]--;
+	if (mFilters[menu.mCurrentItem->_1C] != 0) {
+		mFilters[menu.mCurrentItem->_1C]--;
 	}
 
-	sprintf(menu._30->mName, "Filter setting %d", mFilters[menu._30->_1C]);
+	sprintf(menu.mCurrentItem->mName, "Filter setting %d", mFilters[menu.mCurrentItem->_1C]);
 	if (mFilterType == FILTER_Custom) {
 		gsys->mGfx->setVerticalFilter(mFilters);
 		gsys->mGfx->videoReset();
@@ -751,6 +751,8 @@ Texture* GameFlow::setLoadBanner(char* texPath)
  */
 void GameFlow::hardReset(BaseApp* baseApp)
 {
+	PRINT("Doing HardReset!!\n");
+
 	app            = baseApp;
 	_1D4           = 0;
 	mFilterType    = FILTER_Custom;
@@ -799,6 +801,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 
 	mMemoryCard.init();
 
+	PRINT("load heap\n");
 	gsys->mHeaps[SYSHEAP_Load].init("load", 2, new u8[size], size);
 	_318        = 0;
 	int heapIdx = gsys->mActiveHeapIdx;
@@ -814,11 +817,17 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	Jac_SceneSetup(0, 0);
 	_2D4 = 1;
 
+	PRINT("starting loading\n");
 	gsys->startLoading(&mGameLoadIdler, true, 0);
+	PRINT("done starting loading\n");
+
 	_2CC = 0.0f;
 	_2C8 = 0.0f;
 	_2C4 = 0.0f;
 	_2D0 = 2;
+
+	PRINT("reading parms\n");
+	PRINT("load params\n");
 	load("parms/", "gamePrms.bin", 1);
 	_1D8 = 0;
 

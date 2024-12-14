@@ -1,4 +1,8 @@
 #include "Menu.h"
+#include "Dolphin/stl.h"
+#include "Geometry.h"
+#include "Graphics.h"
+#include "Font.h"
 #include "sysNew.h"
 
 /*
@@ -26,12 +30,12 @@ static void _Print(char*, ...)
  * Address:	8005D6F8
  * Size:	0001C8
  */
-Menu::Menu(Controller* controller, Font* font, bool p3)
+Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 {
-	_54 = 0;
-	_4C = 0;
-	_50 = 0;
-	_48 = 0;
+	_54              = 0;
+	mPositionOffsetY = 0;
+	_50              = 0;
+	_48              = 0;
 
 	_74 = 0;
 	_6C = 0;
@@ -43,53 +47,53 @@ Menu::Menu(Controller* controller, Font* font, bool p3)
 	_80 = 0;
 	_78 = 0;
 
-	mController = controller;
-	_3C         = p3;
+	mController        = controller;
+	mUseCustomPosition = useCustomPosition;
 
-	mFont = font;
-	_20   = 0;
-	_A8   = 0;
-	_2C   = new MenuItem(0, 0, "menu", nullptr);
+	mFont       = font;
+	mParentMenu = 0;
+	_A8         = 0;
+	mLastItem   = new MenuItem(0, 0, "menu", nullptr);
 
-	resetMenuItem(_2C);
+	resetMenuItem(mLastItem);
 
-	_40 = 0;
-	_38 = 0;
-	_30 = nullptr;
-	_34 = nullptr;
+	mMenuCount   = 0;
+	_38          = 0;
+	mCurrentItem = nullptr;
+	mFirstItem   = nullptr;
 
-	_48 = 160;
-	_4C = 120;
-	_50 = 0;
-	_54 = 0;
+	_48              = 160;
+	mPositionOffsetY = 120;
+	_50              = 0;
+	_54              = 0;
 
 	_78 = 6;
 	_7C = 12;
 	_80 = 6;
 	_84 = 12;
 
-	_60.r = 32;
-	_60.g = 32;
-	_60.b = 128;
-	_60.a = 192;
+	mDiffuseColour.r = 32;
+	mDiffuseColour.g = 32;
+	mDiffuseColour.b = 128;
+	mDiffuseColour.a = 192;
 
-	_64.r = 32;
-	_64.g = 32;
-	_64.b = 32;
-	_64.a = 64;
+	mHighlightColour.r = 32;
+	mHighlightColour.g = 32;
+	mHighlightColour.b = 32;
+	mHighlightColour.a = 64;
 
-	_44 = PI;
+	mAnimationProgress = PI;
 
-	_5C    = 0;
-	_8C    = 0;
-	_88    = 0;
-	_94    = 0;
-	_98    = 1;
-	_99    = 1;
-	_A4    = 0x1001000;
-	mState = STATE_Unk0;
-	_B0    = 0.0f;
-	_28    = 0;
+	_5C                     = 0;
+	mOnMenuSwitchCallback   = 0;
+	mOnStateChangeCallback  = 0;
+	mOnOptionChangeCallback = 0;
+	_98                     = 1;
+	isOptionSelected        = true;
+	mInputCode              = 0x1001000;
+	mState                  = MenuStateType::Idle;
+	mOpeningFadeProgress    = 0.0f;
+	mNextMenu               = 0;
 }
 
 /*
@@ -99,11 +103,11 @@ Menu::Menu(Controller* controller, Font* font, bool p3)
  */
 void Menu::KeyEvent::insertAfter(Menu::KeyEvent* key)
 {
-	key->mNext   = mNext;
-	key->mPrev   = this;
+	key->mNext = mNext;
+	key->mPrev = this;
+
 	mNext->mPrev = key;
 	mNext        = key;
-	// UNUSED FUNCTION
 }
 
 /*
@@ -123,11 +127,11 @@ void Menu::KeyEvent::remove()
  */
 void Menu::MenuItem::insertAfter(Menu::MenuItem* item)
 {
-	item->mNext  = mNext;
-	item->mPrev  = this;
+	item->mNext = mNext;
+	item->mPrev = this;
+
 	mNext->mPrev = item;
 	mNext        = item;
-	// UNUSED FUNCTION
 }
 
 /*
@@ -145,11 +149,11 @@ void Menu::MenuItem::remove()
  * Address:	........
  * Size:	00001C
  */
-Menu::KeyEvent::KeyEvent(int p1, int p2, IDelegate1<Menu&>* delegate)
+Menu::KeyEvent::KeyEvent(int eventType, int inputCode, IDelegate1<Menu&>* delegate)
 {
-	_08       = p1;
-	_0C       = p2;
-	mDelegate = delegate;
+	mEventType = (KeyEventType::Type)eventType;
+	mInputCode = inputCode;
+	mDelegate  = delegate;
 
 	mPrev = mNext = nullptr;
 }
@@ -159,12 +163,14 @@ Menu::KeyEvent::KeyEvent(int p1, int p2, IDelegate1<Menu&>* delegate)
  * Address:	8005D8C0
  * Size:	000094
  */
-Menu::MenuItem::MenuItem(int p1, int p2, char* name, IDelegate1<Menu&>* delegate)
+Menu::MenuItem::MenuItem(int type, int p2, char* name, IDelegate1<Menu&>* delegate)
 {
-	_14   = true;
-	mName = name;
+	mIsEnabled = true;
+	mName      = name;
+
 	_1C   = p2;
-	_20   = p1;
+	mType = (MenuNavigationType::Type)type;
+
 	mPrev = mNext = nullptr;
 	_08           = 0;
 	mMenu         = nullptr;
@@ -198,15 +204,15 @@ void Menu::setOnExit(IDelegate1<Menu&>*)
  * Address:	8005D954
  * Size:	0000C8
  */
-void Menu::addKeyEvent(int p1, int p2, IDelegate1<Menu&>* delegate)
+void Menu::addKeyEvent(int eventCode, int inputCode, IDelegate1<Menu&>* delegate)
 {
-	KeyEvent* key = new KeyEvent(p1, p2, delegate);
+	KeyEvent* key = new KeyEvent(eventCode, inputCode, delegate);
 
-	if (_34) {
-		_34->mEventList->mPrev->insertAfter(key);
+	if (mFirstItem) {
+		mFirstItem->mEventList->mPrev->insertAfter(key);
 
 	} else {
-		_2C->mEventList->mPrev->insertAfter(key);
+		mLastItem->mEventList->mPrev->insertAfter(key);
 	}
 }
 
@@ -252,10 +258,10 @@ Menu* Menu::exitMenu(Menu* menu)
  */
 void Menu::open(bool p1)
 {
-	_B0    = 0.0;
-	mState = STATE_Unk1;
-	if (!_30) {
-		_30 = _2C->mNext;
+	mOpeningFadeProgress = 0.0;
+	mState               = MenuStateType::FadeIn;
+	if (!mCurrentItem) {
+		mCurrentItem = mLastItem->mNext;
 	}
 }
 
@@ -266,11 +272,11 @@ void Menu::open(bool p1)
  */
 void Menu::close()
 {
-	if (!_20) {
-		_24 = _20;
+	if (!mParentMenu) {
+		mPreviousMenu = mParentMenu;
 	}
-	_B0    = 1.0f;
-	mState = STATE_Unk3;
+	mOpeningFadeProgress = 1.0f;
+	mState               = MenuStateType::FadeOut;
 }
 
 /*
@@ -280,9 +286,9 @@ void Menu::close()
  */
 void Menu::resetOptions()
 {
-	_40 = 0;
-	_30 = nullptr;
-	resetMenuItem(_2C);
+	mMenuCount   = 0;
+	mCurrentItem = nullptr;
+	resetMenuItem(mLastItem);
 }
 
 /*
@@ -292,18 +298,18 @@ void Menu::resetOptions()
  */
 void Menu::addOption(int p1, char* name, IDelegate1<Menu&>* delegate, bool p4)
 {
-	_34      = new MenuItem(1, p1, name, delegate);
-	_34->_14 = p4;
-	_2C->mPrev->insertAfter(_34);
+	mFirstItem             = new MenuItem(1, p1, name, delegate);
+	mFirstItem->mIsEnabled = p4;
+	mLastItem->mPrev->insertAfter(mFirstItem);
 	if (delegate) {
-		addKeyEvent(16, _A4, delegate);
+		addKeyEvent(16, mInputCode, delegate);
 	}
 
-	if (!_30 && _34->_14) {
-		_30 = _34;
+	if (!mCurrentItem && mFirstItem->mIsEnabled) {
+		mCurrentItem = mFirstItem;
 	}
 
-	_40++;
+	mMenuCount++;
 }
 
 /*
@@ -313,18 +319,18 @@ void Menu::addOption(int p1, char* name, IDelegate1<Menu&>* delegate, bool p4)
  */
 void Menu::addMenu(Menu* menu, int p2, char* name)
 {
-	_34        = new MenuItem(2, p2, name, nullptr);
-	_34->mMenu = menu;
-	menu->_20  = this;
-	_2C->mPrev->insertAfter(_34);
+	mFirstItem        = new MenuItem(2, p2, name, nullptr);
+	mFirstItem->mMenu = menu;
+	menu->mParentMenu = this;
+	mLastItem->mPrev->insertAfter(mFirstItem);
 
-	addKeyEvent(16, _A4, nullptr);
+	addKeyEvent(16, mInputCode, nullptr);
 
-	if (!_30) {
-		_30 = _34;
+	if (!mCurrentItem) {
+		mCurrentItem = mFirstItem;
 	}
 
-	_40++;
+	mMenuCount++;
 }
 
 /*
@@ -334,41 +340,48 @@ void Menu::addMenu(Menu* menu, int p2, char* name)
  */
 bool Menu::checkNewOption()
 {
-	// i dont think these button enums are correct
+	// If down is pressed
 	if (mController->isReleased(KBBTN_CSTICK_DOWN) || mController->isReleased(KBBTN_MSTICK_DOWN)) {
-		_30->checkEvents(this, 2);
-		_30 = _30->mNext;
+		mCurrentItem->checkEvents(this, KeyEventType::Hold);
 
-		if (_30 == _2C) {
-			_30 = _30->mNext;
+		// Move to the next menu item
+		mCurrentItem = mCurrentItem->mNext;
+
+		// If we're at the end of the list, go back to the start
+		if (mCurrentItem == mLastItem) {
+			mCurrentItem = mCurrentItem->mNext;
 		}
 
-		while (!_30->mName || !_30->_14) {
-			_30 = _30->mNext;
-			if (_30 == _2C) {
-				_30 = _30->mNext;
+		// Skip over any items that don't have a name or are disabled
+		while (!mCurrentItem->mName || !mCurrentItem->mIsEnabled) {
+			mCurrentItem = mCurrentItem->mNext;
+			if (mCurrentItem == mLastItem) {
+				mCurrentItem = mCurrentItem->mNext;
 			}
 		}
 
-		_99 = 1;
+		isOptionSelected = true;
 
 	} else if (mController->isReleased(KBBTN_CSTICK_UP) || mController->isReleased(KBBTN_MSTICK_UP)) {
-		_30->checkEvents(this, 2);
+		mCurrentItem->checkEvents(this, KeyEventType::Hold);
 
-		_30 = _30->mPrev;
+		// Move to the previous menu item (go up)
+		mCurrentItem = mCurrentItem->mPrev;
 
-		if (_30 == _2C) {
-			_30 = _30->mPrev;
+		// If we're at the start of the list, go to the end
+		if (mCurrentItem == mLastItem) {
+			mCurrentItem = mCurrentItem->mPrev;
 		}
 
-		while (!_30->mName || !_30->_14) {
-			_30 = _30->mPrev;
-			if (_30 == _2C) {
-				_30 = _30->mPrev;
+		// Skip over any items that don't have a name or are disabled
+		while (!mCurrentItem->mName || !mCurrentItem->mIsEnabled) {
+			mCurrentItem = mCurrentItem->mPrev;
+			if (mCurrentItem == mLastItem) {
+				mCurrentItem = mCurrentItem->mPrev;
 			}
 		}
 
-		_99 = 1;
+		isOptionSelected = true;
 	}
 
 	return false;
@@ -393,78 +406,82 @@ bool Menu::checkCancelKey() { return mController->isPressed(KBBTN_B) != false; }
  * Address:	8005DFBC
  * Size:	000258
  */
-Menu* Menu::doUpdate(bool p1)
+Menu* Menu::doUpdate(bool selectItem)
 {
 	// there's totally a missing inline in here but idk where seems sensible so have some stack padding
 	u32 missingInlineBuf1;
 	u32 missingInlineBuf2;
 
-	Menu* ret = this;
-	_24       = this;
-	_44 += 7.0f * gsys->getFrameTime();
+	Menu* resultMenu = this;
+	mPreviousMenu    = this;
+	mAnimationProgress += 7.0f * gsys->getFrameTime();
 
 	switch (mState) {
-	case STATE_Unk1:
-		_B0 += 8.0f * gsys->getFrameTime();
-		if (_B0 >= 1.0f) {
-			_B0    = 1.0f;
-			mState = STATE_Unk2;
+	case MenuStateType::FadeIn:
+		mOpeningFadeProgress += 8.0f * gsys->getFrameTime();
+		if (mOpeningFadeProgress >= 1.0f) {
+			mOpeningFadeProgress = 1.0f;
+			mState               = MenuStateType::Open;
 		}
 		break;
-	case STATE_Unk3:
-		_B0 -= 8.0f * gsys->getFrameTime();
-		if (_B0 < 0.0f) {
-			_B0    = 0.0f;
-			mState = STATE_Unk0;
-			ret    = _28;
+	case MenuStateType::FadeOut:
+		mOpeningFadeProgress -= 8.0f * gsys->getFrameTime();
+		if (mOpeningFadeProgress < 0.0f) {
+			mOpeningFadeProgress = 0.0f;
+			mState               = MenuStateType::Idle;
+			resultMenu           = mNextMenu;
 		}
 		break;
-	case STATE_Unk2:
-		if (p1) {
-			_99 = 1;
+	case MenuStateType::Open:
+		if (selectItem) {
+			isOptionSelected = true;
 		}
+
 		checkNewOption();
 
 		if (_98) {
-			if (_88) {
-				_88->invoke(*this);
+			if (mOnStateChangeCallback) {
+				mOnStateChangeCallback->invoke(*this);
 			}
-			_98 = 0;
-			_99 = 1;
+
+			_98              = 0;
+			isOptionSelected = true;
 		}
 
 		int flag = 0xFFFC;
-		if (_99) {
+		if (isOptionSelected) {
 			flag |= 0x1;
-			if (_94) {
-				_94->invoke(*this);
-			}
-			_44 = 0.0f;
-			_99 = 0;
-		}
-
-		if (!_30->checkEvents(this, flag)) {
-			_2C->checkEvents(this, flag);
-		}
-
-		if (_24 != this) {
-			_30->checkEvents(this, 2);
-			if (_8C) {
-				_8C->invoke(*this);
+			if (mOnOptionChangeCallback) {
+				mOnOptionChangeCallback->invoke(*this);
 			}
 
-			if (_24) {
-				_24->open(false);
-				ret = _24;
+			mAnimationProgress = 0.0f;
+			isOptionSelected   = false;
+		}
+
+		if (!mCurrentItem->checkEvents(this, flag)) {
+			mLastItem->checkEvents(this, flag);
+		}
+
+		if (mPreviousMenu != this) {
+			mCurrentItem->checkEvents(this, KeyEventType::Hold);
+			if (mOnMenuSwitchCallback) {
+				mOnMenuSwitchCallback->invoke(*this);
+			}
+
+			if (mPreviousMenu) {
+				mPreviousMenu->open(false);
+				resultMenu = mPreviousMenu;
 			} else {
 				close();
 			}
-			_28 = _24;
+
+			mNextMenu = mPreviousMenu;
 		}
 		break;
 	}
 
-	return ret;
+	return resultMenu;
 }
 
 /*
@@ -472,51 +489,60 @@ Menu* Menu::doUpdate(bool p1)
  * Address:	8005E214
  * Size:	0001FC
  */
-bool Menu::MenuItem::checkEvents(Menu* menu, int flags)
+bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 {
-	KeyEvent* key = mEventList->mNext;
-	for (key; key != mEventList; key = key->mNext) {
-		if (!(flags & key->_08)) {
+	KeyEvent* event = mEventList->mNext;
+	for (event; event != mEventList; event = event->mNext) {
+		// If the event type doesn't match the flags, skip it
+		if (!(events & event->mEventType)) {
 			continue;
 		}
 
-		switch (key->_08) {
-		case 1:
-			key->mDelegate->invoke(*menu);
+		switch (event->mEventType) {
+		case KeyEventType::Press:
+			event->mDelegate->invoke(*menu);
 			break;
-		case 2:
-			key->mDelegate->invoke(*menu);
+		case KeyEventType::Hold:
+			event->mDelegate->invoke(*menu);
 			break;
-		case 4:
-			if (menu->mController->isCurrentInput(key->_0C)) {
-				key->mDelegate->invoke(*menu);
+		case KeyEventType::Input:
+			if (menu->mController->isCurrentInput(event->mInputCode)) {
+				event->mDelegate->invoke(*menu);
 			}
 			break;
-		case 8:
-		case 0x20:
-			if (menu->mController->isReleased(key->_0C)) {
-				key->mDelegate->invoke(*menu);
+		case KeyEventType::Release:
+		case KeyEventType::SpecialRelease:
+			if (menu->mController->isReleased(event->mInputCode)) {
+				event->mDelegate->invoke(*menu);
 				return true;
 			}
 			break;
-		case 0x10:
-			if (menu->mController->isReleased(key->_0C)) {
-				if (menu->_30->_20 == 2) {
-					checkEvents(menu, 2);
-					menu->close();
-					menu->_24 = menu;
-					menu->_28 = menu->_30->mMenu;
-					menu->_28->open(false);
+		case KeyEventType::Navigate:
+			if (menu->mController->isReleased(event->mInputCode)) {
+				// If the current item is a submenu, open it
+				if (menu->mCurrentItem->mType == MenuNavigationType::SubMenu) {
+					checkEvents(menu, KeyEventType::Hold);
 
-					if (menu->_28->_3C) {
-						menu->_28->_4C = menu->_4C - (menu->_40 * 14) / 2 + menu->_A0 * 14;
+					// Close the current menu and open the next one
+					menu->close();
+					menu->mPreviousMenu = menu;
+					menu->mNextMenu     = menu->mCurrentItem->mMenu;
+					menu->mNextMenu->open(false);
+
+					// If the next menu has a custom position, set it
+					if (menu->mNextMenu->mUseCustomPosition) {
+						const int kMenuItemHeight = 14;
+
+						menu->mNextMenu->mPositionOffsetY
+						    = menu->mPositionOffsetY - (menu->mMenuCount * kMenuItemHeight) / 2 + menu->_A0 * kMenuItemHeight;
 					}
-					menu->_98             = 1;
-					menu->_30->mMenu->_98 = 1;
+
+					menu->_98                      = 1;
+					menu->mCurrentItem->mMenu->_98 = 1;
 					return false;
 				}
 
-				key->mDelegate->invoke(*menu);
+				event->mDelegate->invoke(*menu);
 				return true;
 			}
 			break;
@@ -531,8 +557,107 @@ bool Menu::MenuItem::checkEvents(Menu* menu, int flags)
  * Address:	8005E410
  * Size:	00060C
  */
-void Menu::draw(Graphics&, f32)
+void Menu::draw(Graphics& gfx, f32 fadePct)
 {
+	// Determine the maximum string width for the menu items
+	int maxStringWidth    = 0;
+	MenuItem* currentItem = mLastItem;
+	int baseYPosition     = mPositionOffsetY - (14 * mMenuCount / 2);
+
+	while (currentItem != mFirstItem) {
+		if (currentItem->mName) {
+			int stringWidth = mFont->stringWidth(currentItem->mName);
+			maxStringWidth  = MAX(maxStringWidth, stringWidth);
+		}
+		currentItem = currentItem->mPrev;
+	}
+
+	// Set up initial box dimensions based on the maximum string width
+	int boxWidth  = maxStringWidth + 16;
+	int boxHeight = 7 * mMenuCount;
+	int boxTop    = baseYPosition + boxHeight + 3;
+	int boxBottom = boxHeight + 14;
+
+	// Handle fade and animation progress
+	f32 progress     = mOpeningFadeProgress;
+	bool isAnimating = (progress != 1.0f);
+
+	// If the menu is animating, adjust the progress
+	if (isAnimating) {
+		if (mNextMenu && mNextMenu->mUseCustomPosition) {
+			progress = 0.5f * (0.5f + mOpeningFadeProgress);
+		} else {
+			boxWidth *= progress;
+		}
+	}
+
+	// Apply fade percentage multiplier
+	f32 fadeMultiplier = progress * fadePct;
+
+	// Use texture and set initial color for the menu box
+	gfx.useTexture(nullptr, 0);
+	gfx.setColour(mDiffuseColour, true);
+
+	// Adjust box width based on the fade progress
+	boxWidth *= fadeMultiplier;
+
+	// Draw the background menu box
+	RectArea menuBox(mPositionOffsetY - boxWidth, boxTop - boxBottom, mPositionOffsetY + boxWidth, boxTop + boxBottom);
+	gfx.fillRectangle(menuBox);
+
+	// Iterate through the menu items and draw each one
+	currentItem     = mLastItem;
+	int itemIndex   = 0;
+	int itemOffsetY = baseYPosition;
+
+	while (itemIndex < mMenuCount) {
+		if (currentItem->mName) {
+			// Determine the color for the current menu item
+			Colour itemColor;
+			if (currentItem == mCurrentItem) {
+				if (mState == MenuStateType::Open) {
+					mInputCode     = itemIndex;
+					float sineWave = sinf(mAnimationProgress);
+					itemColor      = Colour(static_cast<u8>(sineWave * 650.0f) + 64, static_cast<u8>(sineWave * 650.0f) + 64,
+					                        static_cast<u8>(sineWave * 650.0f) + 64, static_cast<u8>(fadeMultiplier));
+				} else {
+					itemColor = mDiffuseColour;
+				}
+			} else if (currentItem->mIsEnabled) {
+				itemColor = Colour(128, 128, 64, static_cast<u8>(fadeMultiplier));
+			} else {
+				itemColor = Colour(255, 255, 128, static_cast<u8>(fadeMultiplier));
+			}
+
+			// Apply the determined color
+			gfx.setColour(itemColor, true);
+
+			// Prepare and draw the label
+			char label[256];
+			snprintf(label, sizeof(label), "%s", currentItem->mName);
+
+			int labelWidth = mFont->stringWidth(label);
+			int labelX = (mState == MenuStateType::Open) ? (mPositionOffsetY - (maxStringWidth + 8)) : (mPositionOffsetY - labelWidth / 2);
+
+			gfx.texturePrintf(mFont, labelX, itemOffsetY, label);
+		}
+
+		// Move to the next menu item and adjust vertical position
+		currentItem = currentItem->mNext;
+		itemOffsetY += 14;
+		++itemIndex;
+	}
+
+	// Highlight the currently selected item with a rectangle
+	Colour selectedColor(128, 128, 128, 128);
+	gfx.setColour(selectedColor, true);
+
+	// Define the position of the selection rectangle
+	RectArea selectedRect(mPositionOffsetY - (maxStringWidth + 8) + 4, baseYPosition + 14 * mInputCode + 1,
+	                      mPositionOffsetY + maxStringWidth + 4, baseYPosition + 14 * (mInputCode + 1));
+
+	gfx.lineRectangle(selectedRect);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -964,9 +1089,9 @@ void Menu::draw(Graphics&, f32)
  */
 void Menu::menuCloseMenu(Menu& menu)
 {
-	menu._28 = menu._20;
+	menu.mNextMenu = menu.mParentMenu;
 	menu.close();
-	if (menu._28) {
-		menu._28->open(false);
+	if (menu.mNextMenu) {
+		menu.mNextMenu->open(false);
 	}
 }
