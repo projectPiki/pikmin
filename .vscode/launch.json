@@ -1,16 +1,11 @@
 {
-  // Use Ctrl+Shift+B to run build tasks.
-  // Or "Run Build Task" in the Command Palette.
   "version": "2.0.0",
-  "tasks": [
+  "configurations": [
     {
-      "label": "ninja",
-      "type": "shell",
-      "command": "ninja",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
-    },
+      "name": "F5 Anything: Custom Command",
+      "type": "f5anything",
+      "request": "launch",
+      "command": "ninja"
+    }
   ]
 }

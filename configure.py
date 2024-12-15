@@ -139,6 +139,7 @@ config.compilers_path = args.compilers
 config.generate_map = args.map
 config.non_matching = args.non_matching
 config.sjiswrap_path = args.sjiswrap
+config.generate_compile_commands = False
 config.progress = args.progress
 if not is_windows():
     config.wrapper = args.wrapper

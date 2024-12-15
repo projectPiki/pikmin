@@ -1,13 +1,12 @@
-#include "stl/string.h"
 #include "CmdStream.h"
 #include "Animator.h"
 #include "DebugLog.h"
 #include "Texture.h"
 #include "system.h"
-#include "sysNew.h"
 #include "types.h"
 #include "Light.h"
 #include "Shape.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -323,6 +322,17 @@ void StdSystem::addGfxObject(GfxobjInfo* other)
  */
 void StdSystem::attachObjs()
 {
+	if (mHasGfxObjects) {
+		for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
+			if (!info->mAttached) {
+				info->attach();
+				info->mAttached = true;
+			}
+		}
+
+		mHasGfxObjects = false;
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -287,7 +287,10 @@ struct System : public StdSystem {
 	int _258;                     // _258
 	u32 _25C;                     // _25C
 	u32 _260;                     // _260, unknown
-	u8 _264[0x274 - 0x264];       // _264, unknown
+	u32 _264;                     // _264
+	u32 _268;                     // _268
+	u32 _26C;                     // _26C
+	u32 _270;                     // _270
 	OSThread* mCurrentThread;     // _274
 	AtxRouter* mAtxRouter;        // _278
 	ControllerMgr mControllerMgr; // _27C
