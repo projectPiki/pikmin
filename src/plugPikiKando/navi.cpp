@@ -1011,7 +1011,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mNaviShapeObject = naviMgr->mNaviShapeObject[mNaviID];
 	mCollInfo        = new CollInfo(5);
 	mCollInfo->initInfo(mNaviShapeObject->mShape, nullptr, nullptr);
-	mNaviAnimMgr.init(mNaviShapeObject->mAnimMgr, &mNaviShapeObject->_14, &mNaviShapeObject->_04, naviMgr->mMotionTable);
+	mNaviAnimMgr.init(mNaviShapeObject->mAnimMgr, &mNaviShapeObject->mAnimatorB, &mNaviShapeObject->mAnimatorA, naviMgr->mMotionTable);
 	_ABC    = 0;
 	_AB8    = 0.0f;
 	_AC4    = 0.0f;
@@ -8874,7 +8874,7 @@ void Navi::swapMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 {
 	u32 badCompiler[4];
 
-	f32* frame1 = &mNaviAnimMgr._04.mCurrentFrame;
+	f32* frame1 = &mNaviAnimMgr.mAnimator.mCurrentFrame;
 	f32* frame2 = &mNaviAnimMgr._58.mCurrentFrame;
 	f32 val1    = *frame1;
 	f32 val2    = *frame2;

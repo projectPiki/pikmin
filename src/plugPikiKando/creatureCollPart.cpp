@@ -43,7 +43,7 @@ void CreaturePlatMgr::init(Creature* creature, MapMgr* map, Shape* shape)
 	mPlatShape = shape;
 	FOREACH_NODE(ObjCollInfo, mPlatShape->mCollisionInfo.mChild, collInfo)
 	{
-		if (collInfo->_48) {
+		if (collInfo->mIsEnabled) {
 			CreatureCollPart* part   = map->requestCollPart(collInfo, creature);
 			mPlatParts[mPartCount++] = part;
 		}
@@ -74,8 +74,9 @@ void CreaturePlatMgr::update(Graphics& gfx)
 {
 	for (int i = 0; i < mPartCount; i++) {
 		CreatureCollPart* part = mPlatParts[i];
-		part->_5C.inverse(&part->_9C);
-		Matrix4f mat = mPlatShape->getAnimMatrix(part->_144);
-		gfx._2E4->_220.multiplyTo(mat, part->_5C);
+		part->mTransformMtx.inverse(&part->mInverseMatrix);
+
+		Matrix4f mat = mPlatShape->getAnimMatrix(part->mAnimMatrixID);
+		gfx.mCamera->mInverseLookAtMtx.multiplyTo(mat, part->mTransformMtx);
 	}
 }

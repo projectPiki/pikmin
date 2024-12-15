@@ -120,7 +120,7 @@ void BTeki::viewDraw(Graphics& gfx, Matrix4f& mat)
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mTekiAnimator->updateContext();
 	mTekiShape->mShape->updateAnim(gfx, mat, nullptr);
-	mTekiShape->mShape->drawshape(gfx, *gfx._2E4, nullptr);
+	mTekiShape->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
 /*
@@ -464,11 +464,11 @@ void BTeki::reset()
 	setTekiOption(TEKIOPT_Visible | TEKIOPT_ShadowVisible | TEKIOPT_LifeGaugeVisible | TEKIOPT_Atari | TEKIOPT_Alive | TEKIOPT_Organic
 	              | TEKIOPT_Unk11 | TEKIOPT_ShapeVisible | TEKIOPT_DamageCountable);
 
-	resetPosition(mPersonality->_04);
-	mDirection    = mPersonality->_1C;
+	resetPosition(mPersonality->mPosition);
+	mDirection    = mPersonality->mFaceDirection;
 	_26C          = getSize();
 	_31C          = 0;
-	_324          = 0;
+	mStateID      = 0;
 	_330          = 0;
 	_338          = 0;
 	_334          = 0;
@@ -491,8 +491,8 @@ void BTeki::reset()
 
 	_350 = 'test';
 	_354 = -1;
-	_388.set(0.0f, 0.0f, 0.0f);
-	_394 = 0.0f;
+	mTargetPosition.set(0.0f, 0.0f, 0.0f);
+	mTargetAngle = 0.0f;
 	_398.set(0.0f, 0.0f, 0.0f);
 	_3A4 = 0.0f;
 

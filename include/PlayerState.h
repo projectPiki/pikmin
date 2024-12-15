@@ -62,15 +62,15 @@ struct PlayerState {
 		void stopMotion();
 
 		// _00 = VTBL
-		int _04;                         // _04
-		u32 _08;                         // _08
-		u32 _0C;                         // _0C
-		PelletAnimator mAnimator;        // _10
-		Vector3f _B8;                    // _B8
-		ShapeDynMaterials _C4;           // _C4
-		PelletShapeObject* mPelletShape; // _D4
-		f32 _D8;                         // _D8
-		u8 _DC;                          // _DC
+		int _04;                              // _04
+		u32 mModelID;                         // _08
+		u32 _0C;                              // _0C
+		PelletAnimator mAnimator;             // _10
+		Vector3f _B8;                         // _B8
+		ShapeDynMaterials mAnimatedMaterials; // _C4
+		PelletShapeObject* mPelletShape;      // _D4
+		f32 _D8;                              // _D8
+		u8 _DC;                               // _DC
 	};
 
 	PlayerState();
@@ -137,7 +137,7 @@ struct PlayerState {
 	ResultFlags mResultFlags;     // _70
 	u8 _BC[0xC4 - 0xBC];          // _BC, unknown
 	PaniPikiAnimMgr mPikiAnimMgr; // _C4
-	int _170;                     // _170
+	int mTotalRegisteredParts;    // _170
 	int mTotalParts;              // _174
 	UfoParts* mUfoParts;          // _178
 	int mCurrParts;               // _17C

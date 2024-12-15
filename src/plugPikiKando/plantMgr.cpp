@@ -139,13 +139,13 @@ void Plant::refresh(Graphics& gfx)
 		_394 = 0;
 		_228.makeSRT(mScale, mRotation, mPosition);
 		Matrix4f mtx;
-		gfx._2E4->_1E0.multiplyTo(_228, mtx);
+		gfx.mCamera->mLookAtMtx.multiplyTo(_228, mtx);
 
 		mPlantAnimator.updateContext();
 		shape->mShape->updateAnim(gfx, mtx, nullptr);
 
 		gfx.useMatrix(Matrix4f::ident, 0);
-		shape->mShape->drawshape(gfx, *gfx._2E4, nullptr);
+		shape->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 		mCollInfo->updateInfo(gfx, false);
 	}
 	/*
@@ -1053,8 +1053,8 @@ void* GenObjectPlant::birth(BirthInfo& info)
 {
 	Plant* plant = plantMgr->birth();
 	if (plant) {
-		plant->init(info._00);
-		plant->mRotation  = info._0C;
+		plant->init(info.mPosition);
+		plant->mRotation  = info.mRotation;
 		plant->mDirection = plant->mRotation.y;
 		plant->reset(mPlantType);
 		plant->mGenerator = info.mGenerator;

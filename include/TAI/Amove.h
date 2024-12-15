@@ -203,8 +203,8 @@ struct TAIAturnToTarget : public TAIAreserveMotion {
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-	int _0C; // _0C
-	int _10; // _10
+	int mLeftTurnAnimID;  // _0C
+	int mRightTurnAnimID; // _10
 };
 
 /**

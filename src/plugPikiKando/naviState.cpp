@@ -962,9 +962,9 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			f32 randAngle = 2.0f * randFloat(PI);
 			Vector3f dir(40.0f * sinf(randAngle), 0.0f, 40.0f * cosf(randAngle));
 			EffectParm parm;
-			parm._00 = navi->getPosition();
-			parm._0C = dir;
-			parm._24 = 80.0f;
+			parm.mPosition  = navi->getPosition();
+			parm.mDirection = dir;
+			parm._24        = 80.0f;
 			UtEffectMgr::cast(3, parm);
 			break;
 		case 3:
@@ -2314,8 +2314,8 @@ void NaviWalkState::procWallMsg(Navi* navi, MsgWall* msg)
 		_1C = 0.0f;
 	}
 
-	f32 x            = msg->_04->getX();
-	f32 z            = msg->_04->getZ();
+	f32 x            = msg->mWallNormal->getX();
+	f32 z            = msg->mWallNormal->getZ();
 	navi->mDirection = atan2f(-x, -z);
 }
 
@@ -3805,8 +3805,8 @@ void NaviFlickState::exec(Navi* navi)
 	}
 
 	if (_10 == 2) {
-		_14 -= gsys->getFrameTime();
-		if (_14 < 0.0f) {
+		mGetupAnimationTimer -= gsys->getFrameTime();
+		if (mGetupAnimationTimer < 0.0f) {
 			navi->startMotion(PaniMotionInfo(PIKIANIM_GetUp, navi), PaniMotionInfo(PIKIANIM_GetUp));
 			_10 = 3;
 		}
@@ -3836,8 +3836,8 @@ void NaviFlickState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			break;
 		}
 		if (_10 == 1) {
-			_10 = 2;
-			_14 = randFloat(0.1f);
+			_10                  = 2;
+			mGetupAnimationTimer = randFloat(0.1f);
 			break;
 		}
 		if (navi->mHealth <= 0.0f) {
@@ -4144,8 +4144,8 @@ void NaviGatherState::init(Navi* navi)
 
 	int effIDMaybe = (navi->mNaviID == 0) ? 1 : 2;
 	EffectParm parm;
-	parm._00 = navi->mPosition;
-	parm._24 = 1.0f;
+	parm.mPosition = navi->mPosition;
+	parm._24       = 1.0f;
 	UtEffectMgr::cast(effIDMaybe, parm);
 	UtEffectMgr::cast(7, parm);
 	_18 = 0;

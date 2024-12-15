@@ -188,9 +188,9 @@ TekiPersonality::TekiPersonality()
  */
 void TekiPersonality::reset()
 {
-	_04.set(0.0f, 0.0f, 0.0f);
-	_1C = 0.0f;
-	_10.set(0.0f, 0.0f, 0.0f);
+	mPosition.set(0.0f, 0.0f, 0.0f);
+	mFaceDirection = 0.0f;
+	mScale.set(0.0f, 0.0f, 0.0f);
 	_20 = 0;
 	_24 = 0;
 	mID.setID('none');

@@ -353,13 +353,13 @@ void WorldClock::setClockSpd(f32)
  * Address:	8005181C
  * Size:	0000A8
  */
-void WorldClock::setTime(f32 p1)
+void WorldClock::setTime(f32 time)
 {
-	_20 = p1;
-	_14 = _00 * (p1 - f32(int(p1)));
-	_28 = (60.0f / _00) * _14;
-	_18 = f32(_20) + (_14 / _00);
-	_10 = _18;
+	mCurrentTime      = time;
+	mFractionalTime   = mTimeScale * (time - f32(int(time)));
+	mMinutes          = (60.0f / mTimeScale) * mFractionalTime;
+	mTotalTime        = f32(mCurrentTime) + (mFractionalTime / mTimeScale);
+	mLastRecordedTime = mTotalTime;
 }
 
 /*
@@ -735,13 +735,13 @@ Texture* GameFlow::setLoadBanner(char* texPath)
 	int heapIdx = gsys->mActiveHeapIdx;
 	gsys->resetHeap(SYSHEAP_Load, 2);
 	gsys->setHeap(SYSHEAP_Load);
-	gameflow._318 = gsys->loadTexture(texPath, true);
-	if (gameflow._318) {
-		gameflow._318->attach();
+	gameflow.mLoadBannerTexture = gsys->loadTexture(texPath, true);
+	if (gameflow.mLoadBannerTexture) {
+		gameflow.mLoadBannerTexture->attach();
 	}
 
 	gsys->setHeap(heapIdx);
-	return gameflow._318;
+	return gameflow.mLoadBannerTexture;
 }
 
 /*
@@ -803,16 +803,16 @@ void GameFlow::hardReset(BaseApp* baseApp)
 
 	PRINT("load heap\n");
 	gsys->mHeaps[SYSHEAP_Load].init("load", 2, new u8[size], size);
-	_318        = 0;
-	int heapIdx = gsys->mActiveHeapIdx;
+	mLoadBannerTexture = 0;
+	int heapIdx        = gsys->mActiveHeapIdx;
 	gsys->resetHeap(SYSHEAP_Load, 2);
 	gsys->setHeap(SYSHEAP_Load);
-	gameflow._318 = gsys->loadTexture("intro/nintendo.bti", true);
-	if (gameflow._318) {
-		gameflow._318->attach();
+	gameflow.mLoadBannerTexture = gsys->loadTexture("intro/nintendo.bti", true);
+	if (gameflow.mLoadBannerTexture) {
+		gameflow.mLoadBannerTexture->attach();
 	}
 	gsys->setHeap(heapIdx);
-	_310 = gameflow._318;
+	_310 = gameflow.mLoadBannerTexture;
 	_314 = 1.0f;
 	Jac_SceneSetup(0, 0);
 	_2D4 = 1;

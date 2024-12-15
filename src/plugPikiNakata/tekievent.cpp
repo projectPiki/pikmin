@@ -20,9 +20,9 @@ TekiEvent::TekiEvent(int p1, Teki* teki, Creature* creature) { init(p1, teki, cr
  * Address:	8014A3FC
  * Size:	000010
  */
-void TekiEvent::init(int p1, Teki* teki, Creature* creature)
+void TekiEvent::init(int collisionType, Teki* teki, Creature* creature)
 {
-	_00   = p1;
-	mTeki = teki;
-	_08   = creature;
+	mCollisionType = (TekiEventType::Type)collisionType;
+	mTeki          = teki;
+	mOther         = creature;
 }

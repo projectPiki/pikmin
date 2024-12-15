@@ -211,10 +211,10 @@ struct PikiShapeObject {
 	static bool firstTime;
 	static PikiShapeObject* _instances[4];
 
-	Shape* mShape;     // _00
-	AnimContext _04;   // _04
-	AnimContext _14;   // _14
-	AnimMgr* mAnimMgr; // _24
+	Shape* mShape;          // _00
+	AnimContext mAnimatorA; // _04
+	AnimContext mAnimatorB; // _14
+	AnimMgr* mAnimMgr;      // _24
 };
 
 #endif

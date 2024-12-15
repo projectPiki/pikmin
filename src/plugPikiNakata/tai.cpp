@@ -143,8 +143,8 @@ bool TaiState::act(Teki& teki)
 	for (int i = 0; i < mCount; i++) {
 		TaiAction* action = mActions[i];
 		if (action->act(teki) && action->hasNextState()) {
-			int& val     = teki._324;
-			int startVal = teki._324;
+			int& val     = teki.mStateID;
+			int startVal = teki.mStateID;
 			if (action->mNextState == -2) {
 				val = teki._330;
 			} else {
@@ -242,8 +242,8 @@ bool TaiState::eventPerformed(TekiEvent& event)
 	for (int i = 0; i < mCount; i++) {
 		TaiAction* action = mActions[i];
 		if (action->actByEvent(event) && action->hasNextState()) {
-			int& val     = event.mTeki->_324;
-			int startVal = event.mTeki->_324;
+			int& val     = event.mTeki->mStateID;
+			int startVal = event.mTeki->mStateID;
 			if (action->mNextState == -2) {
 				val = event.mTeki->_330;
 			} else {
@@ -338,18 +338,18 @@ bool TaiState::eventPerformed(TekiEvent& event)
  * Address:	801273E4
  * Size:	000064
  */
-TaiStrategy::TaiStrategy(int p1, int p2) { init(p1, p2); }
+TaiStrategy::TaiStrategy(int stateCount, int stateID) { init(stateCount, stateID); }
 
 /*
  * --INFO--
  * Address:	80127448
  * Size:	00004C
  */
-void TaiStrategy::init(int count, int p2)
+void TaiStrategy::init(int stateCount, int stateID)
 {
-	mCount  = count;
-	mStates = new TaiState*[mCount];
-	_0C     = p2;
+	mStateCount = stateCount;
+	mStateList  = new TaiState*[mStateCount];
+	mStateID    = stateID;
 }
 
 /*
@@ -359,8 +359,8 @@ void TaiStrategy::init(int count, int p2)
  */
 void TaiStrategy::start(Teki& teki)
 {
-	teki._324 = _0C;
-	teki._328 = true;
+	teki.mStateID      = mStateID;
+	teki.mIsStateReady = true;
 }
 
 /*
@@ -370,15 +370,15 @@ void TaiStrategy::start(Teki& teki)
  */
 void TaiStrategy::act(Teki& teki)
 {
-	if (teki._328) {
-		mStates[teki._324]->start(teki);
-		teki._328 = false;
+	if (teki.mIsStateReady) {
+		mStateList[teki.mStateID]->start(teki);
+		teki.mIsStateReady = false;
 	}
 
-	int stateID = teki._324;
-	if (mStates[teki._324]->act(teki)) {
-		mStates[stateID]->finish(teki);
-		teki._328 = true;
+	int stateID = teki.mStateID;
+	if (mStateList[teki.mStateID]->act(teki)) {
+		mStateList[stateID]->finish(teki);
+		teki.mIsStateReady = true;
 	}
 	/*
 	.loc_0x0:
@@ -448,10 +448,10 @@ void TaiStrategy::act(Teki& teki)
 void TaiStrategy::eventPerformed(TekiEvent& event)
 {
 	Teki* teki  = event.mTeki;
-	int stateID = teki->_324;
-	if (mStates[teki->_324]->eventPerformed(event)) {
-		mStates[stateID]->finish(*teki);
-		teki->_328 = true;
+	int stateID = teki->mStateID;
+	if (mStateList[teki->mStateID]->eventPerformed(event)) {
+		mStateList[stateID]->finish(*teki);
+		teki->mIsStateReady = true;
 	}
 	/*
 	.loc_0x0:

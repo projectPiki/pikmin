@@ -33,7 +33,7 @@ static void _Print(char*, ...)
 void TaiWaitTurningAction::start(Teki& teki)
 {
 	TaiMotionAction::start(teki);
-	teki._394 = NMathF::getRandomAngle();
+	teki.mTargetAngle = NMathF::getRandomAngle();
 }
 
 /*

@@ -13,34 +13,37 @@
 struct OdoMeter {
 	OdoMeter();
 
-	void start(f32 argA, f32 argB);
-	bool moving(Vector3f& argA, Vector3f& argB);
+	void start(f32 startTime, f32 maxDistance);
+	bool moving(Vector3f& start, Vector3f& target);
 
-	inline void unknown1()
+	inline void updateTimer()
 	{
-		if (_04 > 0.0f) {
-			_04 -= gsys->mDeltaTime;
+		if (mRemainingTime > 0.0f) {
+			mRemainingTime -= gsys->mDeltaTime;
 		}
 	}
 
-	inline bool unknown2()
+	inline bool isMovementComplete()
 	{
-		if (_04 <= 0.0f) {
-			if (_00 < _08) {
-				_00 = 0.0f;
+		// If the time has run out
+		if (mRemainingTime <= 0.0f) {
+			// And we haven't surpassed the threshold
+			if (mTotalDistance < mMinAllowedDistance) {
+				mTotalDistance = 0.0f;
 				return false;
 			}
-			_04 = _0C;
-			_00 = 0.0f;
+
+			mRemainingTime = mResetTimeValue;
+			mTotalDistance = 0.0f;
 		}
+
 		return true;
 	}
 
-	// TODO: figure out what these actually are
-	f32 _00; // _00
-	f32 _04; // _04
-	f32 _08; // _08
-	f32 _0C; // _0C
+	f32 mTotalDistance;      // _00
+	f32 mRemainingTime;      // _04
+	f32 mMinAllowedDistance; // _08
+	f32 mResetTimeValue;     // _0C
 };
 
 #endif

@@ -382,11 +382,11 @@ struct NaviFlickState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u16 _10; // _10
-	f32 _14; // _14
-	f32 _18; // _18
-	f32 _1C; // _1C
-	f32 _20; // _20
+	u16 _10;                  // _10
+	f32 mGetupAnimationTimer; // _14
+	f32 _18;                  // _18
+	f32 _1C;                  // _1C
+	f32 _20;                  // _20
 };
 
 /**

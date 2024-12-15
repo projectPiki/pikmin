@@ -168,11 +168,11 @@ struct MsgUser : public Msg {
 	inline MsgUser(u32 val)
 	    : Msg(MSG_User)
 	{
-		_04 = val;
+		mUserID = val;
 	}
 
 	// _00-_04 = Msg
-	u32 _04; // _04, could be int
+	u32 mUserID; // _04, could be int
 };
 
 /**
@@ -185,8 +185,8 @@ struct MsgWall : public Msg {
 	}
 
 	// _00-_04 = Msg
-	Vector3f* _04; // _04
-	               // TODO: members
+	Vector3f* mWallNormal; // _04
+	                       // TODO: members
 };
 
 #endif

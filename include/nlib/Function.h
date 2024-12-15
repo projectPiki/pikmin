@@ -31,7 +31,7 @@ struct NPolynomialFunction : public NFunction {
 
 	// _00     = VTBL
 	// _00-_04 = NFunction
-	NVector _04; // _04
+	NVector mData; // _04
 };
 
 /**
@@ -62,8 +62,8 @@ struct NClampLinearFunction : public NLinearFunction {
 
 	// _00     = VTBL
 	// _00-_0C = NLinearFunction
-	f32 _0C; // _0C
-	f32 _10; // _10
+	f32 mMinValue; // _0C
+	f32 mMaxValue; // _10
 };
 
 /**
@@ -94,9 +94,9 @@ struct NFunction3D {
 	// unused/inlined:
 	void construct(NFunction*, NFunction*, NFunction*);
 
-	NFunction* _00; // _00
-	NFunction* _04; // _04
-	NFunction* _08; // _08
+	NFunction* mFunctionX; // _00
+	NFunction* mFunctionY; // _04
+	NFunction* mFunctionZ; // _08
 };
 
 #endif

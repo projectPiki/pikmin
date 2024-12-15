@@ -345,7 +345,7 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 	gfx.calcViewMatrix(Matrix4f::ident, viewMat);
 
 	gfx.setPerspective(cam._260.mMtx, cam._1CC, cam._1C4, cam._1D0, cam._1D4, 1.0f);
-	gfx.useMatrix(gfx._2E4->_1E0, 0);
+	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 
 	mResultMgr->draw(gfx);
 	mTitleMgr->draw(gfx);

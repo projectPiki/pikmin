@@ -54,7 +54,7 @@ struct Graphics {
 	u8 _04[0xC];                // _04, TODO: work out members
 	Light mLight;               // _10
 	u8 _25C[0x2E4 - 0x25C];     // _25C, unknown
-	Camera* _2E4;               // _2E4
+	Camera* mCamera;            // _2E4
 	u8 _2E8[0x30C - 0x2E8];     // _2E8, unknown
 	int _30C;                   // _30C, maybe viewport width?
 	int _310;                   // _310, maybe viewport height?

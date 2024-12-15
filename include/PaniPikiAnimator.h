@@ -135,19 +135,19 @@ struct PaniPikiAnimMgr {
 	// unused/inlined:
 	static PaniMotionTable* getMotionTable();
 
-	inline bool isFinished() const { return _04.isFinished(); }
+	inline bool isFinished() const { return mAnimator.isFinished(); }
 
 	inline f32 getAnimSpeed() { return mAnimSpeed; }
 	inline void setAnimSpeed(f32 speed) { mAnimSpeed = speed; }
 
-	inline PaniPikiAnimator* getAnimator() { return &_04; }      // name is a guess, rename later
-	inline PaniPikiAnimator* getBlendAnimator() { return &_58; } // name is a guess, rename later
+	inline PaniPikiAnimator* getAnimator() { return &mAnimator; } // name is a guess, rename later
+	inline PaniPikiAnimator* getBlendAnimator() { return &_58; }  // name is a guess, rename later
 
 	static PaniMotionTable* motionTable;
 
-	f32 mAnimSpeed;       // _00
-	PaniPikiAnimator _04; // _04
-	PaniPikiAnimator _58; // _58
+	f32 mAnimSpeed;             // _00
+	PaniPikiAnimator mAnimator; // _04
+	PaniPikiAnimator _58;       // _58
 };
 
 #endif

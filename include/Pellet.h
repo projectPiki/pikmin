@@ -156,9 +156,9 @@ struct PelletMgr : public MonoObjectMgr {
 	// _08     = VTBL 2
 	// _00-_3C = MonoObjectMgr
 	// TODO: members
-	u8 _3C[0x1F8 - 0x3C];   // _3C, unknown
-	PaniMotionTable* _1F8;  // _1F8
-	u8 _1FC[0x204 - 0x1FC]; // _1FC, unknown
+	u8 _3C[0x1F8 - 0x3C];             // _3C, unknown
+	PaniMotionTable* mUfoMotionTable; // _1F8
+	u8 _1FC[0x204 - 0x1FC];           // _1FC, unknown
 };
 
 /**
@@ -167,11 +167,11 @@ struct PelletMgr : public MonoObjectMgr {
 struct PelletShapeObject {
 	PelletShapeObject(char*, Shape*, char*, char*, int);
 
-	Shape* mShape;     // _00
-	AnimMgr* mAnimMgr; // _04
-	AnimContext _08;   // _08
-	AnimContext _18;   // _18
-	                   // TODO: members
+	Shape* mShape;          // _00
+	AnimMgr* mAnimMgr;      // _04
+	AnimContext mAnimatorA; // _08
+	AnimContext mAnimatorB; // _18
+	                        // TODO: members
 };
 
 extern PelletMgr* pelletMgr;

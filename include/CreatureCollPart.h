@@ -23,8 +23,8 @@ struct CreatureCollPart : public DynCollShape {
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	u8 _140[0x4]; // _140, unknown
-	int _144;     // _144, anim matrix ID?
+	u8 _140[0x4];      // _140, unknown
+	int mAnimMatrixID; // _144, anim matrix ID?
 };
 
 /*

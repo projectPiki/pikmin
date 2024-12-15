@@ -143,10 +143,10 @@ struct TaiStrategy : public TekiStrategy {
 
 	// _00 = VTBL
 	// _00-_04 = TekiStrategy
-	int mCount;         // _04, count of states
-	TaiState** mStates; // _08, array of mCount states
-	int _0C;            // _0C
-	u8 _10[0x4];        // _10, unknown
+	int mStateCount;       // _04, count of states
+	TaiState** mStateList; // _08, array of mCount states
+	int mStateID;          // _0C
+	u8 _10[0x4];           // _10, unknown
 };
 
 #endif

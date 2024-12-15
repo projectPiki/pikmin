@@ -289,9 +289,9 @@ struct Animator {
 	int _10;               // _10
 	int _14;               // _14
 	int _18;               // _18
-	int _1C;               // _1C
-	int _20;               // _20
-	int _24;               // _24
+	int mCurrentAnimID;    // _1C
+	int mStartKeyIndex;    // _20
+	int mEndKeyIndex;      // _24
 	AnimInfo* mAnimInfo;   // _28
 	f32 mCurrentFrame;     // _2C
 

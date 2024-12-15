@@ -30,9 +30,9 @@ static void _Print(char*, ...)
 NCamera::NCamera(Camera* cam)
 {
 	mCamera = cam;
-	_08.set(0.0f, 0.0f, 0.0f);
-	_14.set(0.0f, 0.0f, 1.0f);
-	_00 = 0.0f;
+	mEyePosition.set(0.0f, 0.0f, 0.0f);
+	mTargetPosition.set(0.0f, 0.0f, 1.0f);
+	mRotationAngle = 0.0f;
 }
 
 /*
@@ -42,22 +42,22 @@ NCamera::NCamera(Camera* cam)
  */
 void NCamera::makeMatrix()
 {
-	NVector3f& v3 = _14;
-	NVector3f& v2 = _08;
-	NVector3f vec(v2, v3);
-	vec.normalize();
+	NVector3f& target = mTargetPosition;
+	NVector3f& eye    = mEyePosition;
+	NVector3f direction(eye, target);
+	direction.normalize();
 
-	NOrientation orient(vec);
+	NOrientation orient(direction);
 	orient.normalize();
 
-	NVector3f v1(orient._0C);
+	NVector3f upVector(orient.mUpVector);
 
-	NAxisAngle4f angle(vec, _00);
+	NAxisAngle4f angle(direction, mRotationAngle);
 	NTransform3D transform;
 	transform.inputAxisAngle(angle);
-	transform.transform(v1);
-	v1.normalize();
-	mCamera->calcLookAt(v2, v3, &v1);
+	transform.transform(upVector);
+	upVector.normalize();
+	mCamera->calcLookAt(eye, target, &upVector);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -122,10 +122,12 @@ void NCamera::makeMatrix()
  */
 void NCamera::makeCamera()
 {
-	mCamera->_164.set(_08);
-	NVector3f vec(_14, _08);
-	NPolar3f polar(vec);
-	mCamera->_320.x = polar._04 - NMathF::pi / 2;
-	mCamera->_320.y = polar._08;
-	mCamera->_320.z = 0.0f;
+	mCamera->mPosition.set(mEyePosition);
+	NVector3f directionVec(mTargetPosition, mEyePosition);
+
+	// Calculate the rotation of the camera based on the direction
+	NPolar3f polar(directionVec);
+	mCamera->mRotation.x = polar.mInclination - NMathF::pi / 2;
+	mCamera->mRotation.y = polar.mAzimuth;
+	mCamera->mRotation.z = 0.0f;
 }

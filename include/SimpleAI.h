@@ -164,7 +164,7 @@ struct SAIUserEvent : public SAIEvent {
 
 	// _00     = VTBL
 	// _00-_08 = SAIEvent
-	u32 _08; // _08, maybe user id?
+	u32 mUserID; // _08
 };
 
 /**

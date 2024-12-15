@@ -11,12 +11,12 @@
  */
 struct EffectParm {
 
-	Vector3f _00; // _00
-	Vector3f _0C; // _0C
-	u8 _18[0xC];  // _18, unknown
-	f32 _24;      // _24
-	u8 _28[0x4];  // _28, I think?
-	              // TODO: members
+	Vector3f mPosition;  // _00
+	Vector3f mDirection; // _0C
+	u8 _18[0xC];         // _18, unknown
+	f32 _24;             // _24
+	u8 _28[0x4];         // _28, I think?
+	                     // TODO: members
 };
 
 /**

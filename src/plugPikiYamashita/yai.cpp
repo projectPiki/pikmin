@@ -28,18 +28,18 @@ static void _Print(char*, ...)
  * Address:	801E9654
  * Size:	000064
  */
-YaiStrategy::YaiStrategy(int p1, int p2) { init(p1, p2); }
+YaiStrategy::YaiStrategy(int stateCount, int stateID) { init(stateCount, stateID); }
 
 /*
  * --INFO--
  * Address:	801E96B8
  * Size:	00004C
  */
-void YaiStrategy::init(int p1, int p2)
+void YaiStrategy::init(int stateCount, int stateID)
 {
-	_04     = p1;
-	mStates = new TaiState*[_04]; // TODO: work out type
-	_0C     = p2;
+	mStateCount = stateCount;
+	mStateList  = new TaiState*[mStateCount]; // TODO: work out type
+	mStateID    = stateID;
 }
 
 /*
@@ -49,8 +49,8 @@ void YaiStrategy::init(int p1, int p2)
  */
 void YaiStrategy::start(Teki& teki)
 {
-	teki._324 = _0C;
-	mStates[teki._324]->start(teki);
+	teki.mStateID = mStateID;
+	mStateList[teki.mStateID]->start(teki);
 }
 
 /*
@@ -61,10 +61,10 @@ void YaiStrategy::start(Teki& teki)
 void YaiStrategy::act(Teki& teki)
 {
 	// what on earth did yamashita do
-	int stateID = teki._324;
-	if (mStates[teki._324]->act(teki)) {
-		mStates[stateID]->finish(teki);
-		mStates[teki._324]->start(teki);
+	int stateID = teki.mStateID;
+	if (mStateList[teki.mStateID]->act(teki)) {
+		mStateList[stateID]->finish(teki);
+		mStateList[teki.mStateID]->start(teki);
 	}
 	/*
 	.loc_0x0:

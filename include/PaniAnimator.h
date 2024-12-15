@@ -70,7 +70,7 @@ struct PaniAnimator : public Animator {
 
 	inline int getMotionID() { return mMotionIdx; }
 
-	inline int get38() { return _38; } // TODO: rename later
+	inline int get38() { return mCurrentKeyIndex; } // TODO: rename later
 
 	inline int getInfoKeyValue(int idx) { return mAnimInfo->getInfoKey(idx)->mKeyframeIndex; }
 	inline int getEventKeyValue(int idx) { return mAnimInfo->getEventKey(idx)->mKeyframeIndex; }
@@ -81,9 +81,9 @@ struct PaniAnimator : public Animator {
 	// _30     = VTBL
 	// _00-_34 = Animator
 	PaniAnimKeyListener* mListener; // _34, unknown
-	int _38;                        // _38
+	int mCurrentKeyIndex;           // _38
 	u8 _3C[0x4];                    // _3C, unknown
-	u32 _40;                        // _40, unknown
+	u32 mPreviousKeyIndex;          // _40, unknown
 	int mMotionIdx;                 // _44
 	bool mIsFinished;               // _48
 	u32 _4C;                        // _4C, unknown
@@ -182,8 +182,8 @@ struct PaniMotion {
 
 	void init(int, int);
 
-	int _00; // _00
-	int _04; // _04
+	int mAnimID; // _00
+	int _04;     // _04
 };
 
 /**

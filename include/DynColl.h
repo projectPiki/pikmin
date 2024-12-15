@@ -57,15 +57,15 @@ struct DynCollShape : public DynCollObject {
 
 	// _00     = VTBL
 	// _00-_2C = DynCollObject
-	Shape* mShape;        // _2C
-	u8 _30[0x44 - 0x30];  // _30, unknown
-	BoundBox _44;         // _44
-	Matrix4f _5C;         // _5C
-	Matrix4f _9C;         // _9C
-	u8 _DC[0x11C - 0xDC]; // _CC, unknown
-	Vector3f _11C;        // _11C
-	Vector3f _128;        // _128
-	Vector3f _134;        // _134
+	Shape* mShape;           // _2C
+	u8 _30[0x44 - 0x30];     // _30, unknown
+	BoundBox _44;            // _44
+	Matrix4f mTransformMtx;  // _5C
+	Matrix4f mInverseMatrix; // _9C
+	u8 _DC[0x11C - 0xDC];    // _CC, unknown
+	Vector3f _11C;           // _11C
+	Vector3f _128;           // _128
+	Vector3f _134;           // _134
 };
 
 /**

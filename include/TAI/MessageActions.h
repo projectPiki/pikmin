@@ -17,7 +17,7 @@ struct TaiKeySendMessageAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08;         // _08
+	int mMessage;    // _08
 	int mAnimKeyOpt; // _0C
 };
 
@@ -34,7 +34,7 @@ struct TaiSendMessageAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08; // _08
+	int mMessage; // _08
 };
 
 #endif

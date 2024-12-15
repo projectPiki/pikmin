@@ -66,7 +66,7 @@ struct ObjCollInfo : public CoreNode {
 		mCentrePosition.set(0.0f, 0.0f, 0.0f);
 		mParentShape  = nullptr;
 		mPlatformName = nullptr;
-		_48           = 0;
+		mIsEnabled    = 0;
 		mFlags        = OCF_None;
 	}
 
@@ -86,7 +86,7 @@ struct ObjCollInfo : public CoreNode {
 	Vector3f mCentrePosition; // _34
 	f32 mRadius;              // _40
 	BaseShape* mParentShape;  // _44
-	u32 _48;                  // _48
+	u32 mIsEnabled;           // _48
 	char* mPlatformName;      // _4C
 	ObjCollFlags mFlags;      // _50
 };
@@ -233,8 +233,7 @@ struct CollInfo {
 /**
  * @brief TODO
  */
-struct CollGroup {
-};
+struct CollGroup { };
 
 /**
  * @brief TODO

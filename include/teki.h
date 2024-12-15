@@ -116,6 +116,8 @@ struct TekiInteractionKey {
 	// TODO: members
 };
 
+DEFINE_ENUM_TYPE(TekiEventType, Ground = 0, Entity = 1, Wall = 2);
+
 /**
  * @brief TODO
  *
@@ -127,9 +129,9 @@ struct TekiEvent {
 
 	void init(int, Teki*, Creature*);
 
-	int _00;       // _00
-	Teki* mTeki;   // _04
-	Creature* _08; // _08
+	TekiEventType::Type mCollisionType; // _00
+	Teki* mTeki;                        // _04
+	Creature* mOther;                   // _08
 };
 
 /**
@@ -329,7 +331,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	inline bool isTekiOption(int opt) const { return mTekiOptions & opt; }
 	inline bool isAnimKeyOption(int opt) const { return mAnimKeyOptions & opt; }
 
-	inline int getStateID() { return _324; }
+	inline int getStateID() { return mStateID; }
 
 	inline f32 getParticleFactor() { return getParameterF(19); } // rename later when we know what this is
 
@@ -368,8 +370,8 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	CreaturePlatMgr mPlatMgr;        // _2D4
 	int _31C;                        // _31C
 	TekiTypes mTekiType;             // _320
-	int _324;                        // _324, related to states
-	bool _328;                       // _328, related to states
+	int mStateID;                    // _324, related to states
+	bool mIsStateReady;              // _328, related to states
 	u8 _329[0x330 - 0x329];          // _329, TODO: work out members
 	int _330;                        // _330
 	int _334;                        // _334, related to actions
@@ -384,8 +386,8 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	NVector3fIOClass _358;           // _358
 	NVector3fIOClass _368;           // _368
 	NVector3fIOClass _378;           // _378
-	NVector3f _388;                  // _388, possibly position
-	f32 _394;                        // _394
+	NVector3f mTargetPosition;       // _388, possibly position
+	f32 mTargetAngle;                // _394
 	NVector3f _398;                  // _398
 	f32 _3A4;                        // _3A4
 	int _3A8;                        // _3A8

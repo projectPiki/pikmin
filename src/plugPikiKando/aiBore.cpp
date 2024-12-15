@@ -52,13 +52,13 @@ ActFreeSelect::ActFreeSelect(Piki* piki)
 void ActFreeSelect::init(Creature* creature)
 {
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Wait, mActor), PaniMotionInfo(PIKIANIM_Wait));
-	_14             = 2.0f + gsys->getFrameTime();
-	_18             = 1;
+	mActionTimer    = 2.0f + gsys->getFrameTime();
+	mIsTimerActive  = 1;
 	mChildActionIdx = CHILD_NULL;
 
-	_1C = PI * (randBalanced(0.5f)) / 3.0f;
-	_19 = 0;
-	_1A = 0;
+	_1C                  = PI * (randBalanced(0.5f)) / 3.0f;
+	mIsChildActionActive = 0;
+	_1A                  = 0;
 }
 
 /*
@@ -71,11 +71,11 @@ void ActFreeSelect::finishRest()
 	switch (mChildActionIdx) {
 	case CHILD_BoreRest:
 		static_cast<ActBoreRest*>(mChildActions[mChildActionIdx].mAction)->_18 = 1;
-		_19                                                                    = 1;
+		mIsChildActionActive                                                   = 1;
 		break;
 	case CHILD_BoreOneshot:
 		static_cast<ActBoreOneshot*>(mChildActions[mChildActionIdx].mAction)->finish();
-		_19 = 1;
+		mIsChildActionActive = 1;
 		break;
 	default:
 		_1A = 1;
@@ -94,14 +94,14 @@ int ActFreeSelect::exec()
 		return ACTOUT_Success;
 	}
 
-	if (_19) {
+	if (mIsChildActionActive) {
 		return mChildActions[mChildActionIdx].mAction->exec();
 	}
 
-	if (_18) {
+	if (mIsTimerActive) {
 		mActor->_A4.set(0.0f, 0.0f, 0.0f);
-		_14 -= gsys->getFrameTime();
-		if (_14 < 0.0f) {
+		mActionTimer -= gsys->getFrameTime();
+		if (mActionTimer < 0.0f) {
 			determine();
 		}
 	} else {
@@ -127,8 +127,8 @@ void ActFreeSelect::cleanup() { }
  */
 void ActFreeSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 {
-	if (_18) {
-		_18             = 0;
+	if (mIsTimerActive) {
+		mIsTimerActive  = 0;
 		mChildActionIdx = CHILD_Watch;
 		mChildActions[mChildActionIdx].initialise(msg->mTarget);
 		return;
@@ -149,7 +149,7 @@ void ActFreeSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 void ActFreeSelect::determine()
 {
 	if (coinFlip()) {
-		_14 = 2.0f + gsys->getFrameTime();
+		mActionTimer = 2.0f + gsys->getFrameTime();
 		return;
 	}
 
@@ -166,7 +166,7 @@ void ActFreeSelect::determine()
 		randIdx = CHILD_Watch;
 	}
 
-	_18             = 0;
+	mIsTimerActive  = 0;
 	mChildActionIdx = randIdx;
 
 	Creature* target = nullptr;
@@ -453,13 +453,13 @@ ActBoreSelect::ActBoreSelect(Piki* piki)
 void ActBoreSelect::init(Creature* creature)
 {
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Wait, mActor), PaniMotionInfo(PIKIANIM_Wait));
-	_14             = 2.0f + gsys->getFrameTime();
-	_18             = 1;
+	mActionTimer    = 2.0f + gsys->getFrameTime();
+	mIsTimerActive  = 1;
 	mChildActionIdx = CHILD_NULL;
 
-	_1C = PI * (randBalanced(0.5f)) / 3.0f;
-	_19 = 0;
-	_1A = 0;
+	_1C                  = PI * (randBalanced(0.5f)) / 3.0f;
+	mIsChildActionActive = 0;
+	_1A                  = 0;
 }
 
 /*
@@ -476,32 +476,33 @@ void ActBoreSelect::stop() { _1A = 1; }
  */
 int ActBoreSelect::exec()
 {
-	if (_19) {
+	if (mIsChildActionActive) {
 		return mChildActions[mChildActionIdx].mAction->exec();
 	}
 
 	if (mActor->mNavi->_738 < 1.0f || _1A) {
-		if (mActor->mPikiAnimMgr._04.mMotionIdx == 3) {
+		if (mActor->mPikiAnimMgr.mAnimator.mMotionIdx == 3) {
 			return ACTOUT_Success;
 		}
+
 		if (mChildActionIdx == CHILD_BoreRest) {
 			static_cast<ActBoreRest*>(mChildActions[mChildActionIdx].mAction)->_18 = 1;
-			_19                                                                    = 1;
+			mIsChildActionActive                                                   = true;
 			return ACTOUT_Continue;
 		}
 
 		if (mChildActionIdx == CHILD_BoreOneshot) {
 			static_cast<ActBoreOneshot*>(mChildActions[mChildActionIdx].mAction)->finish();
-			_19 = 1;
+			mIsChildActionActive = true;
 			return ACTOUT_Continue;
 		}
 		return ACTOUT_Success;
 	}
 
-	if (_18) {
+	if (mIsTimerActive) {
 		mActor->_A4.set(0.0f, 0.0f, 0.0f);
-		_14 -= gsys->getFrameTime();
-		if (_14 < 0.0f) {
+		mActionTimer -= gsys->getFrameTime();
+		if (mActionTimer < 0.0f) {
 			determine();
 		}
 	} else {
@@ -645,8 +646,8 @@ void ActBoreSelect::cleanup() { }
  */
 void ActBoreSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 {
-	if (_18) {
-		_18             = 0;
+	if (mIsTimerActive) {
+		mIsTimerActive  = 0;
 		mChildActionIdx = CHILD_Watch;
 		mChildActions[mChildActionIdx].initialise(msg->mTarget);
 		return;
@@ -686,7 +687,7 @@ void ActBoreSelect::procAnimMsg(Piki* piki, MsgAnim* msg)
 void ActBoreSelect::determine()
 {
 	if (coinFlip()) {
-		_14 = 2.0f + gsys->getFrameTime();
+		mActionTimer = 2.0f + gsys->getFrameTime();
 		return;
 	}
 
@@ -703,7 +704,7 @@ void ActBoreSelect::determine()
 		randIdx = CHILD_Watch;
 	}
 
-	_18             = 0;
+	mIsTimerActive  = 0;
 	mChildActionIdx = randIdx;
 
 	Creature* target = nullptr;
@@ -1852,8 +1853,8 @@ void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent& event)
 				_24 = 0;
 				_1C = 1;
 				mActor->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
-				mActor->mPikiAnimMgr._04.mCurrentFrame = 30.0f;
-				mActor->mPikiAnimMgr._58.mCurrentFrame = 30.0f;
+				mActor->mPikiAnimMgr.mAnimator.mCurrentFrame = 30.0f;
+				mActor->mPikiAnimMgr._58.mCurrentFrame       = 30.0f;
 				break;
 			}
 		}

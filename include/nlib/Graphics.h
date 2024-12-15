@@ -15,10 +15,10 @@ struct NCamera {
 	void makeMatrix();
 	void makeCamera();
 
-	f32 _00;         // _00
-	Camera* mCamera; // _04
-	NVector3f _08;   // _08
-	NVector3f _14;   // _14
+	f32 mRotationAngle;        // _00
+	Camera* mCamera;           // _04
+	NVector3f mEyePosition;    // _08
+	NVector3f mTargetPosition; // _14
 };
 
 #endif

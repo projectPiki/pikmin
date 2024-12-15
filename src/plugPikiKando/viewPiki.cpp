@@ -104,8 +104,8 @@ PikiShapeObject::PikiShapeObject(Shape* shape)
 	mShape               = shape;
 	mShape->mFrameCacher = gameflow.mFrameCacher;
 	mAnimMgr             = nullptr;
-	mShape->overrideAnim(0, &_04);
-	mShape->overrideAnim(1, &_14);
+	mShape->overrideAnim(0, &mAnimatorA);
+	mShape->overrideAnim(1, &mAnimatorB);
 }
 
 /*

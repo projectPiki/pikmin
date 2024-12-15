@@ -37,17 +37,17 @@ NAxisAngle4f::NAxisAngle4f()
  * Address:	8011BC80
  * Size:	000058
  */
-NAxisAngle4f::NAxisAngle4f(NVector3f& p1, f32 p2) { construct(p1, p2); }
+NAxisAngle4f::NAxisAngle4f(NVector3f& axis, f32 angle) { construct(axis, angle); }
 
 /*
  * --INFO--
  * Address:	8011BCD8
  * Size:	000020
  */
-void NAxisAngle4f::construct(NVector3f& p1, f32 p2)
+void NAxisAngle4f::construct(NVector3f& axis, f32 angle)
 {
-	_00.input(p1);
-	_0C = p2;
+	mAxis.input(axis);
+	mAngle = angle;
 }
 
 /*
@@ -354,18 +354,18 @@ NOrientation::NOrientation()
  * Address:	8011BF4C
  * Size:	000050
  */
-NOrientation::NOrientation(Vector3f& p1) { construct(p1); }
+NOrientation::NOrientation(Vector3f& direction) { construct(direction); }
 
 /*
  * --INFO--
  * Address:	8011BF9C
  * Size:	000078
  */
-void NOrientation::construct(Vector3f& p1)
+void NOrientation::construct(Vector3f& direction)
 {
-	NVector3f vert(0.0f, 1.0f, 0.0f);
-	_00.input(p1);
-	_0C.input(vert);
+	NVector3f upVector(0.0f, 1.0f, 0.0f);
+	mDirection.input(direction);
+	mUpVector.input(upVector);
 }
 
 /*
@@ -395,7 +395,7 @@ void NOrientation::construct(Vector3f&, Vector3f&)
  */
 void NOrientation::normalize()
 {
-	if (_0C.isParallel(_00)) {
+	if (mUpVector.isParallel(mDirection)) {
 		makeUp();
 	}
 
@@ -405,8 +405,8 @@ void NOrientation::normalize()
 	NTransform3D transform;
 
 	transform.inputAxisAngle(NAxisAngle4f(left, NMathF::pi * 0.5f));
-	_0C.input(_00);
-	transform.transform(_0C);
+	mUpVector.input(mDirection);
+	transform.transform(mUpVector);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -805,11 +805,11 @@ void NPolar3f::construct(Vector3f& point) { input(point); }
  * Address:	8011C430
  * Size:	000010
  */
-void NPolar3f::set(f32 p1, f32 p2, f32 p3)
+void NPolar3f::set(f32 radius, f32 inclination, f32 azimuth)
 {
-	_00 = p1;
-	_04 = p2;
-	_08 = p3;
+	mRadius      = radius;
+	mInclination = inclination;
+	mAzimuth     = azimuth;
 }
 
 /*
@@ -1080,10 +1080,10 @@ void NPosture2D::println()
  */
 NPosture3D::NPosture3D()
 {
-	NVector3f vec1(0.0f, 0.0f, 0.0f);
-	_04.set(vec1);
-	NVector3f vec2(0.0f, 0.0f, 1.0f);
-	_10.set(vec2);
+	NVector3f dir(0.0f, 0.0f, 0.0f);
+	mDirection.set(dir);
+	NVector3f up(0.0f, 0.0f, 1.0f);
+	mUp.set(up);
 }
 
 /*
@@ -1111,17 +1111,17 @@ void NPosture3D::construct(NPosture3D&)
  * Address:	8011C6C0
  * Size:	000070
  */
-NPosture3D::NPosture3D(Vector3f& p1, Vector3f& p2) { construct(p1, p2); }
+NPosture3D::NPosture3D(Vector3f& dir, Vector3f& up) { construct(dir, up); }
 
 /*
  * --INFO--
  * Address:	8011C730
  * Size:	000034
  */
-void NPosture3D::construct(Vector3f& p1, Vector3f& p2)
+void NPosture3D::construct(Vector3f& dir, Vector3f& up)
 {
-	_04.set(p1);
-	_10.set(p2);
+	mDirection.set(dir);
+	mUp.set(up);
 }
 
 /*

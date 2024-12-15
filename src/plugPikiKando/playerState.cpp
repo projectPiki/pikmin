@@ -1528,7 +1528,7 @@ void PlayerState::init()
 bool PlayerState::hasUfoParts(u32 idx)
 {
 	for (int i = 0; i < mTotalParts; i++) {
-		if (idx == mUfoParts[i]._08) {
+		if (idx == mUfoParts[i].mModelID) {
 			return mUfoParts[i]._DC != 0;
 		}
 	}
@@ -2101,26 +2101,26 @@ bool PlayerState::isUfoBroken()
  * Address:	80080CC8
  * Size:	0000C4
  */
-void PlayerState::registerUfoParts(int p1, u32 p2, u32 p3)
+void PlayerState::registerUfoParts(int p1, u32 modelID, u32 p3)
 {
-	pelletMgr->_1F8 = PaniPelletAnimator::createMotionTable();
-	if (_170 >= mTotalParts) {
-		ID32 id1(p2);
+	pelletMgr->mUfoMotionTable = PaniPelletAnimator::createMotionTable();
+	if (mTotalRegisteredParts >= mTotalParts) {
+		ID32 id1(modelID);
 		ID32 id2(p3);
 	}
 
-	UfoParts* part           = &mUfoParts[_170];
+	UfoParts* part           = &mUfoParts[mTotalRegisteredParts];
 	part->_04                = p1;
 	part->_0C                = p3;
-	part->_08                = p2;
-	PelletShapeObject* shape = pelletMgr->getShapeObject(p2);
+	part->mModelID           = modelID;
+	PelletShapeObject* shape = pelletMgr->getShapeObject(modelID);
 	part->initAnim(shape);
 
 	if (shape) {
-		shape->mShape->makeInstance(part->_C4, 0);
+		shape->mShape->makeInstance(part->mAnimatedMaterials, 0);
 	}
 
-	_170++;
+	mTotalRegisteredParts++;
 }
 
 /*
@@ -2135,7 +2135,7 @@ void PlayerState::UfoParts::initAnim(PelletShapeObject* shape)
 		return;
 	}
 
-	mAnimator.init(&mPelletShape->_08, &mPelletShape->_18, mPelletShape->mAnimMgr, pelletMgr->_1F8);
+	mAnimator.init(&mPelletShape->mAnimatorA, &mPelletShape->mAnimatorB, mPelletShape->mAnimMgr, pelletMgr->mUfoMotionTable);
 	_D8 = 0.0f;
 	mAnimator.startMotion(PaniMotionInfo(0));
 }

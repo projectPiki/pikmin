@@ -40,15 +40,15 @@ struct TekiPersonality {
 
 	inline void init()
 	{
-		_04.set(Vector3f(0.0f, 0.0f, 0.0f));
-		_10.set(Vector3f(0.0f, 0.0f, 0.0f));
-		_1C = 0.0f;
+		mPosition.set(Vector3f(0.0f, 0.0f, 0.0f));
+		mScale.set(Vector3f(0.0f, 0.0f, 0.0f));
+		mFaceDirection = 0.0f;
 	}
 
 	// _00 = VTBL
-	Vector3f _04;                 // _04
-	Vector3f _10;                 // _10
-	f32 _1C;                      // _1C
+	Vector3f mPosition;           // _04
+	Vector3f mScale;              // _10
+	f32 mFaceDirection;           // _1C
 	u32 _20;                      // _20, unknown
 	u32 _24;                      // _24, unknown
 	ID32 mID;                     // _28

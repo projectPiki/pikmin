@@ -1870,8 +1870,8 @@ void CullFrustum::calcVectors(Vector3f&, Vector3f&)
  */
 void CullFrustum::calcLookAt(Vector3f& p1, Vector3f& p2, Vector3f* p3)
 {
-	_1E0.makeLookat(p1, p2, p3);
-	_1E0.inverse(&_220);
+	mLookAtMtx.makeLookat(p1, p2, p3);
+	mLookAtMtx.inverse(&mInverseLookAtMtx);
 }
 
 /*
@@ -2022,7 +2022,7 @@ void Camera::projectCamPoint(Vector3f&)
  */
 Camera::Camera()
 {
-	_320.set(0.0f, 4.363323f, 0.0f);
+	mRotation.set(0.0f, 4.363323f, 0.0f);
 	_32C.set(0.0f, 0.0f, 0.0f);
 	_1C4 = 1.0f;
 	_344 = 110.0f;

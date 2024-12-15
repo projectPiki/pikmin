@@ -28,8 +28,8 @@ static void _Print(char*, ...)
  */
 OdoMeter::OdoMeter()
 {
-	_00 = 0.0f;
-	_04 = 0.0f;
+	mTotalDistance = 0.0f;
+	mRemainingTime = 0.0f;
 }
 
 /*
@@ -37,12 +37,12 @@ OdoMeter::OdoMeter()
  * Address:	800CD814
  * Size:	000018
  */
-void OdoMeter::start(f32 argA, f32 argB)
+void OdoMeter::start(f32 startTime, f32 maxDistance)
 {
-	_0C = argA;
-	_04 = argA;
-	_08 = argB;
-	_00 = 0.0f;
+	mResetTimeValue     = startTime;
+	mRemainingTime      = startTime;
+	mMinAllowedDistance = maxDistance;
+	mTotalDistance      = 0.0f;
 }
 /*
  * --INFO--
@@ -50,23 +50,26 @@ void OdoMeter::start(f32 argA, f32 argB)
  * Size:	000124
  * TODO
  */
-bool OdoMeter::moving(Vector3f& argA, Vector3f& argB)
+bool OdoMeter::moving(Vector3f& startPosition, Vector3f& endPosition)
 {
-	Vector3f vec;
+	Vector3f direction;
 	f32 dummy[4]; // Match stack allocation
-	unknown1();
-	if (_00 < 100.0f) {
+
+	updateTimer();
+
+	if (mTotalDistance < 100.0f) {
 #ifdef __DECOMP_NON_MATCHING
 		Vector3f vec;
 		vec.sub2(argA, argB);
 		f32 distance = vec.length();
 #else
-		vec.y        = Vector3f_diffY(argA, argB);
-		vec.x        = Vector3f_diffX(argA, argB);
-		vec.z        = Vector3f_diffZ(argA, argB);
-		f32 distance = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+		direction.y  = Vector3f_diffY(startPosition, endPosition);
+		direction.x  = Vector3f_diffX(startPosition, endPosition);
+		direction.z  = Vector3f_diffZ(startPosition, endPosition);
+		f32 distance = sqrtf(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
 #endif
-		_00 += distance;
+		mTotalDistance += distance;
 	}
-	return unknown2();
+
+	return isMovementComplete();
 }

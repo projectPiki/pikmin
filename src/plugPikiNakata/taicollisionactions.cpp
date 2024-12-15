@@ -24,28 +24,28 @@ static void _Print(char*, ...)
  * Address:	8012E48C
  * Size:	000014
  */
-bool TaiBounceAction::actByEvent(TekiEvent& event) { return event._00 == 0; }
+bool TaiBounceAction::actByEvent(TekiEvent& event) { return event.mCollisionType == TekiEventType::Ground; }
 
 /*
  * --INFO--
  * Address:	8012E4A0
  * Size:	000014
  */
-bool TaiGroundCollisionAction::actByEvent(TekiEvent& event) { return event._00 == 0; }
+bool TaiGroundCollisionAction::actByEvent(TekiEvent& event) { return event.mCollisionType == TekiEventType::Ground; }
 
 /*
  * --INFO--
  * Address:	8012E4B4
  * Size:	000014
  */
-bool TaiWallCollisionAction::actByEvent(TekiEvent& event) { return event._00 == 2; }
+bool TaiWallCollisionAction::actByEvent(TekiEvent& event) { return event.mCollisionType == TekiEventType::Wall; }
 
 /*
  * --INFO--
  * Address:	8012E4C8
  * Size:	000014
  */
-bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event) { return event._00 == 1; }
+bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event) { return event.mCollisionType == TekiEventType::Entity; }
 
 /*
  * --INFO--
@@ -54,13 +54,15 @@ bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event) { return event._00
  */
 bool TaiPikiCollisionAction::actByEvent(TekiEvent& event)
 {
-	if (event._00 != 1) {
+	if (event.mCollisionType != TekiEventType::Entity) {
 		return false;
 	}
-	if (!event._08) {
+
+	if (!event.mOther) {
 		return false;
 	}
-	return event._08->mObjType == OBJTYPE_Piki;
+
+	return event.mOther->mObjType == OBJTYPE_Piki;
 }
 
 /*
@@ -70,13 +72,15 @@ bool TaiPikiCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiNaviCollisionAction::actByEvent(TekiEvent& event)
 {
-	if (event._00 != 1) {
+	if (event.mCollisionType != TekiEventType::Entity) {
 		return false;
 	}
-	if (!event._08) {
+
+	if (!event.mOther) {
 		return false;
 	}
-	return event._08->mObjType == OBJTYPE_Navi;
+
+	return event.mOther->mObjType == OBJTYPE_Navi;
 }
 
 /*
@@ -86,15 +90,17 @@ bool TaiNaviCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiTekiTypeCollisionAction::actByEvent(TekiEvent& event)
 {
-	if (event._00 != 1) {
-		return false;
-	}
-	if (!event._08) {
-		return false;
-	}
-	if (event._08->mObjType != OBJTYPE_Teki) {
+	if (event.mCollisionType != TekiEventType::Entity) {
 		return false;
 	}
 
-	return static_cast<Teki*>(event._08)->mTekiType == mTekiType;
+	if (!event.mOther) {
+		return false;
+	}
+
+	if (event.mOther->mObjType != OBJTYPE_Teki) {
+		return false;
+	}
+
+	return static_cast<Teki*>(event.mOther)->mTekiType == mTekiType;
 }

@@ -30,7 +30,7 @@ struct CullFrustum {
 	CullFrustum()
 	{
 		_155 = 0;
-		_164.set(0.0f, 0.0f, 0.0f);
+		mPosition.set(0.0f, 0.0f, 0.0f);
 		_1CC = 60.0f;
 		_1D0 = 1.0f;
 		_1D4 = 1000.0f;
@@ -59,7 +59,7 @@ struct CullFrustum {
 	u8 _154;                     // _154
 	u8 _155;                     // _155
 	Vector3f _158;               // _158
-	Vector3f _164;               // _164
+	Vector3f mPosition;          // _164
 	Vector3f _170;               // _170
 	Vector3f _17C;               // _17C
 	Vector3f _188;               // _188
@@ -73,8 +73,8 @@ struct CullFrustum {
 	f32 _1D0;                    // _1D0
 	f32 _1D4;                    // _1D4
 	u8 _1D8[0x8];                // _1D8, unknown
-	Matrix4f _1E0;               // _1E0
-	Matrix4f _220;               // _220
+	Matrix4f mLookAtMtx;         // _1E0
+	Matrix4f mInverseLookAtMtx;  // _220
 };
 
 /**
@@ -95,7 +95,7 @@ struct Camera : public CullFrustum {
 	Matrix4f _260;          // _260
 	Matrix4f _2A0;          // _2A0
 	u8 _2E0[0x320 - 0x2E0]; // _2E0, unknown
-	Vector3f _320;          // _320
+	Vector3f mRotation;     // _320
 	Vector3f _32C;          // _32C
 	Vector3f _338;          // _338
 	f32 _344;               // _344

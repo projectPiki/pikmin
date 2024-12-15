@@ -111,7 +111,7 @@ struct AndAction : public Action {
 	inline AndAction(Piki* piki) // TODO: probably
 	    : Action(piki, true)
 	{
-		_14 = nullptr; // this might be an argument in the ctor, who knows
+		mOtherCreature = nullptr; // this might be an argument in the ctor, who knows
 	}
 
 	virtual ~AndAction() { }      // _44 (weak)
@@ -120,7 +120,7 @@ struct AndAction : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	Creature* _14; // _14
+	Creature* mOtherCreature; // _14
 };
 
 /**
@@ -135,7 +135,7 @@ struct OrAction : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	Creature* _14; // _14
+	Creature* mOtherCreature; // _14
 };
 
 /**
@@ -448,11 +448,11 @@ struct ActBoreSelect : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	f32 _14; // _14
-	u8 _18;  // _18
-	u8 _19;  // _19
-	u8 _1A;  // _1A
-	f32 _1C; // _1C
+	f32 mActionTimer;        // _14
+	u8 mIsTimerActive;       // _18
+	u8 mIsChildActionActive; // _19
+	u8 _1A;                  // _1A
+	f32 _1C;                 // _1C
 };
 
 /**
@@ -917,11 +917,11 @@ struct ActFreeSelect : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	f32 _14; // _14, timer?
-	u8 _18;  // _18
-	u8 _19;  // _19
-	u8 _1A;  // _1A
-	f32 _1C; // _1C
+	f32 mActionTimer;        // _14, timer?
+	u8 mIsTimerActive;       // _18
+	u8 mIsChildActionActive; // _19
+	u8 _1A;                  // _1A
+	f32 _1C;                 // _1C
 };
 
 /**
@@ -1260,7 +1260,7 @@ struct ActPut : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	f32 _14; // _14
+	f32 mFailCountdownTimer; // _14
 };
 
 /**

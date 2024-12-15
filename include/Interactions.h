@@ -464,9 +464,9 @@ struct InteractWind : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	u8 _08[0x4];                 // _08, unknown
-	Vector3f _0C;                // _0C
-	zen::particleGenerator* _18; // _18
+	u8 _08[0x4];                            // _08, unknown
+	Vector3f _0C;                           // _0C
+	zen::particleGenerator* mWindParticles; // _18
 };
 
 #endif

@@ -255,7 +255,7 @@ bool InteractWind::actPiki(Piki* piki)
 		return false;
 	}
 
-	piki->_4F8->abandon(_18);
+	piki->_4F8->abandon(mWindParticles);
 	piki->mFSM->transit(piki, PIKISTATE_Flown);
 
 	piki->_70 = _0C;

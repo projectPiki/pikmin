@@ -77,9 +77,9 @@ void AyuStack::reset(int i)
 
 	if (i & 1) {
 		int prev = setAllocType(i);
-		gsys->invalidateObjs(mStackLimit, _10);
+		gsys->invalidateObjs(mStackLimit, mInitialStackLimit);
 
-		while (mStackLimit != _10) {
+		while (mStackLimit != mInitialStackLimit) {
 			pop();
 		}
 

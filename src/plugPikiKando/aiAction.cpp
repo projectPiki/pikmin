@@ -125,7 +125,7 @@ void AndAction::init(Creature* creature)
 {
 	mChildActionIdx = 0;
 	mChildActions[mChildActionIdx].initialise(creature);
-	_14 = creature;
+	mOtherCreature = creature;
 }
 
 /*
@@ -144,7 +144,7 @@ int AndAction::exec()
 			return ACTOUT_Success;
 		}
 		Child* child = &mChildActions[mChildActionIdx];
-		child->initialise(_14);
+		child->initialise(mOtherCreature);
 		break;
 
 	case ACTOUT_Fail:
@@ -163,7 +163,7 @@ void OrAction::init(Creature* creature)
 {
 	mChildActionIdx = 0;
 	mChildActions[mChildActionIdx].initialise(creature);
-	_14 = creature;
+	mOtherCreature = creature;
 }
 
 /*
@@ -185,7 +185,7 @@ int OrAction::exec()
 			return ACTOUT_Fail;
 		}
 		Child* child = &mChildActions[mChildActionIdx];
-		child->initialise(_14);
+		child->initialise(mOtherCreature);
 		return ACTOUT_Fail;
 	}
 

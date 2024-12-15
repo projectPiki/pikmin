@@ -132,13 +132,13 @@ void* GenObjectTeki::birth(BirthInfo& info)
 		return nullptr;
 	}
 
-	mPersonality->_04.set(info._00);
-	mPersonality->_10.set(info._18);
-	mPersonality->_1C = info._0C.y;
+	mPersonality->mPosition.set(info.mPosition);
+	mPersonality->mScale.set(info.mScale);
+	mPersonality->mFaceDirection = info.mRotation.y;
 	teki->mPersonality->input(*mPersonality);
 	teki->reset();
 	teki->startAI(0);
-	teki->mRotation = info._0C;
+	teki->mRotation = info.mRotation;
 	if (info.mGenerator->_28->_28()) {
 		teki->setCreatureFlag(CF_Unk16);
 	}

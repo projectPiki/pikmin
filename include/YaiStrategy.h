@@ -21,9 +21,9 @@ struct YaiStrategy : public TekiStrategy {
 
 	// _00     = VTBL
 	// _00-_04 = TekiStrategy
-	int _04;            // _04
-	TaiState** mStates; // _08, array of something
-	int _0C;            // _0C, _324 in teki
+	int mStateCount;       // _04
+	TaiState** mStateList; // _08, array of something
+	int mStateID;          // _0C, _324 in teki
 };
 
 #endif

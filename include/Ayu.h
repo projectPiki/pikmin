@@ -14,8 +14,7 @@ struct ayuID {
 	u32 mID; // _00
 };
 
-struct MemHead {
-};
+struct MemHead { };
 
 /**
  * @brief TODO
@@ -63,16 +62,16 @@ struct AyuStack {
 		return old;
 	}
 
-	s32 mAllocType;        // _00
-	int mSize;             // _04
-	int mTotalSize;        // _08
-	u32 mInitialStackTop;  // _0C
-	u32 _10;               // _10
-	u32 mStackTop;         // _14
-	u32 mStackLimit;       // _18
-	bool mProtectOverflow; // _1C
-	bool mIsActive;        // _1D
-	char* mName;           // _20
+	s32 mAllocType;         // _00
+	int mSize;              // _04
+	int mTotalSize;         // _08
+	u32 mInitialStackTop;   // _0C
+	u32 mInitialStackLimit; // _10
+	u32 mStackTop;          // _14
+	u32 mStackLimit;        // _18
+	bool mProtectOverflow;  // _1C
+	bool mIsActive;         // _1D
+	char* mName;            // _20
 };
 
 /**

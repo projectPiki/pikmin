@@ -107,4 +107,4 @@ void SAIGroundEvent::procGroundMsg(AICreature* creature, MsgGround*) { creature-
  * Address:	8007D0E8
  * Size:	000040
  */
-void SAIUserEvent::procUserMsg(AICreature* creature, MsgUser* msg) { creature->setEventFlag(mEventID, _08 == msg->_04); }
+void SAIUserEvent::procUserMsg(AICreature* creature, MsgUser* msg) { creature->setEventFlag(mEventID, mUserID == msg->mUserID); }

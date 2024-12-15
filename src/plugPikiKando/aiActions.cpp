@@ -194,7 +194,7 @@ void ActPut::Initialiser::initialise(Action*) { }
  * Address:	800A7D00
  * Size:	00000C
  */
-void ActPut::init(Creature*) { _14 = 0.5f; }
+void ActPut::init(Creature*) { mFailCountdownTimer = 0.5f; }
 
 /*
  * --INFO--
@@ -221,8 +221,8 @@ int ActPut::exec()
 		return ACTOUT_Success;
 	}
 
-	_14 -= gsys->getFrameTime();
-	if (_14 < 0.0f) {
+	mFailCountdownTimer -= gsys->getFrameTime();
+	if (mFailCountdownTimer < 0.0f) {
 		return ACTOUT_Fail;
 	}
 

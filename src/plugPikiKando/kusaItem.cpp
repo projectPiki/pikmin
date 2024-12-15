@@ -137,12 +137,12 @@ void KusaItem::refresh(Graphics& gfx)
 	_228.makeSRT(mScale, mRotation, mPosition);
 	_228.multiply(mat);
 
-	gfx._2E4->_1E0.multiplyTo(_228, camMat);
+	gfx.mCamera->mLookAtMtx.multiplyTo(_228, camMat);
 	gfx.setLighting(true, nullptr);
 	gfx.useMatrix(Matrix4f::ident, 0);
 
 	mItemShape->updateAnim(gfx, camMat, nullptr);
-	mItemShape->drawshape(gfx, *gfx._2E4, nullptr);
+	mItemShape->drawshape(gfx, *gfx.mCamera, nullptr);
 	mCollInfo->updateInfo(gfx, false);
 }
 
@@ -249,12 +249,12 @@ void BoBaseItem::refresh(Graphics& gfx)
 		Matrix4f camMat;
 		_228.makeSRT(mScale, mRotation, mPosition);
 
-		gfx._2E4->_1E0.multiplyTo(_228, camMat);
+		gfx.mCamera->mLookAtMtx.multiplyTo(_228, camMat);
 		gfx.setLighting(true, nullptr);
 		gfx.useMatrix(Matrix4f::ident, 0);
 
 		mItemShape->updateAnim(gfx, camMat, nullptr);
-		mItemShape->drawshape(gfx, *gfx._2E4, nullptr);
+		mItemShape->drawshape(gfx, *gfx.mCamera, nullptr);
 		mCollInfo->updateInfo(gfx, false);
 	}
 }

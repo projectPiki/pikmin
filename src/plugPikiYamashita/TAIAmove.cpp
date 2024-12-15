@@ -1571,14 +1571,15 @@ bool TAIAlookAround::act(Teki& teki)
  */
 int TAIAturnToTarget::getTurnMotionIndex(Teki& teki)
 {
-	Vector3f vec;
-	vec.sub2(teki._388, teki.mPosition);
-	teki._394 = NMathF::atan2Vec(vec);
-	if (angDist(teki._394, teki.mDirection) > 0.0f) {
-		return _0C;
+	Vector3f direction;
+	direction.sub2(teki.mTargetPosition, teki.mPosition);
+	teki.mTargetAngle = NMathF::atan2Vec(direction);
+
+	if (angDist(teki.mTargetAngle, teki.mDirection) > 0.0f) {
+		return mLeftTurnAnimID;
+	} else {
+		return mRightTurnAnimID;
 	}
-	return _10;
-	// UNUSED FUNCTION
 }
 
 /*

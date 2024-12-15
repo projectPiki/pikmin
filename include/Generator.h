@@ -19,9 +19,9 @@ struct TekiPersonality;
  * @brief TODO
  */
 struct BirthInfo {
-	Vector3f _00;          // _00
-	Vector3f _0C;          // _0C, maybe rotation?
-	Vector3f _18;          // _18
+	Vector3f mPosition;    // _00
+	Vector3f mRotation;    // _0C
+	Vector3f mScale;       // _18
 	Generator* mGenerator; // _24
 };
 

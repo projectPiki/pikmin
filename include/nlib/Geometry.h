@@ -218,8 +218,8 @@ struct NOrientation {
 	void inputRotation(NTransform3D&);
 	void println();
 
-	NVector3f _00; // _00
-	NVector3f _0C; // _0C
+	NVector3f mDirection; // _00
+	NVector3f mUpVector;  // _0C
 };
 
 /**
@@ -246,9 +246,9 @@ struct NPolar3f {
 	void clampMeridian(f32);
 	void println();
 
-	f32 _00; // _00
-	f32 _04; // _04
-	f32 _08; // _08
+	f32 mRadius;      // _00
+	f32 mInclination; // _04
+	f32 mAzimuth;     // _08
 };
 
 /**
@@ -260,8 +260,8 @@ struct NAxisAngle4f {
 
 	void construct(NVector3f&, f32);
 
-	NVector3f _00; // _00
-	f32 _0C;       // _0C
+	NVector3f mAxis; // _00
+	f32 mAngle;      // _0C
 };
 
 /**
@@ -319,8 +319,8 @@ struct NPosture3D {
 	void println();
 
 	// _00 = VTBL
-	NVector3f _04; // _04
-	NVector3f _10; // _10
+	NVector3f mDirection; // _04
+	NVector3f mUp;        // _10
 };
 
 /**

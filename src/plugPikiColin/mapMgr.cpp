@@ -744,7 +744,7 @@ DynCollShape::DynCollShape(Shape* shape)
 	_11C = Vector3f(1.0f, 1.0f, 1.0f);
 	_134 = Vector3f(0.0f, 0.0f, 0.0f);
 	_128 = _134;
-	_5C.makeIdentity();
+	mTransformMtx.makeIdentity();
 	/*
 	.loc_0x0:
 	  mflr      r0

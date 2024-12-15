@@ -28,7 +28,7 @@ static void _Print(char*, ...)
  * Address:	80131EF8
  * Size:	00002C
  */
-void TaiSendMessageAction::start(Teki& teki) { teki.sendMessage(_08); }
+void TaiSendMessageAction::start(Teki& teki) { teki.sendMessage(mMessage); }
 
 /*
  * --INFO--
@@ -38,7 +38,7 @@ void TaiSendMessageAction::start(Teki& teki) { teki.sendMessage(_08); }
 bool TaiKeySendMessageAction::act(Teki& teki)
 {
 	if (teki.isAnimKeyOption(mAnimKeyOpt)) {
-		teki.sendMessage(_08);
+		teki.sendMessage(mMessage);
 	}
 	return false;
 }

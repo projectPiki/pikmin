@@ -39,7 +39,7 @@ NPolynomialFunction::NPolynomialFunction(f32*, int)
  * Address:	8011B6E4
  * Size:	000028
  */
-void NPolynomialFunction::construct(f32* p1, int p2) { _04.construct(p1, p2 + 1); }
+void NPolynomialFunction::construct(f32* coefficients, int degree) { mData.construct(coefficients, degree + 1); }
 
 /*
  * --INFO--
@@ -58,8 +58,8 @@ NPolynomialFunction::NPolynomialFunction(f32*, NPolynomialFunction&)
  */
 void NPolynomialFunction::construct(f32*, NPolynomialFunction&)
 {
-	_04.mValues[0] = 0.0f; // need 0.0f to get used before getValue
-	                       // UNUSED FUNCTION
+	mData.mValues[0] = 0.0f; // need 0.0f to get used before getValue
+	                         // UNUSED FUNCTION
 }
 
 /*
@@ -81,8 +81,8 @@ f32 NPolynomialFunction::getValue(f32 p1)
 {
 	f32 factor = 1.0f;
 	f32 value  = 0.0f;
-	for (int i = 0; i < _04.mSize; i++) {
-		value += factor * _04.mValues[i];
+	for (int i = 0; i < mData.mSize; i++) {
+		value += factor * mData.mValues[i];
 		factor *= p1;
 	}
 	return value;
@@ -105,9 +105,9 @@ void NPolynomialFunction::getCoefficient(int)
  */
 void NPolynomialFunction::println()
 {
-	DEBUGPRINT(_04.mSize);
-	for (int i = 0; i < _04.mSize; i++) {
-		DEBUGPRINT(_04.mValues[i]);
+	DEBUGPRINT(mData.mSize);
+	for (int i = 0; i < mData.mSize; i++) {
+		DEBUGPRINT(mData.mValues[i]);
 	}
 }
 
@@ -158,25 +158,27 @@ NClampLinearFunction::NClampLinearFunction(f32* values)
  * Address:	8011B8F4
  * Size:	000028
  */
-void NClampLinearFunction::construct(f32* values) { _04.construct(values, 2); }
+void NClampLinearFunction::construct(f32* values) { mData.construct(values, 2); }
 
 /*
  * --INFO--
  * Address:	8011B91C
  * Size:	000090
  */
-void NClampLinearFunction::makeClampLinearFunction(f32 p1, f32 p2, f32 p3, f32 p4)
+void NClampLinearFunction::makeClampLinearFunction(f32 x1, f32 y1, f32 x2, f32 y2)
 {
-	if (NMathf::absolute(p3 - p1) <= NMathF::error) {
-		_04.mValues[1] = 1.0f;
+	if (NMathf::isZero(x2 - x1)) {
+		mData.mValues[1] = 1.0f;
 	} else {
-		_04.mValues[1] = (p4 - p2) / (p3 - p1);
+		// Slope is rise (y) over (/) run (x)
+		mData.mValues[1] = (y2 - y1) / (x2 - x1);
 	}
 
-	_04.mValues[0] = p2 - _04.mValues[1] * p1;
+	// Intercept
+	mData.mValues[0] = y1 - mData.mValues[1] * x1;
 
-	_0C = p2 < p4 ? p2 : p4;
-	_10 = p2 < p4 ? p4 : p2;
+	mMinValue = y1 < y2 ? y1 : y2;
+	mMaxValue = y1 < y2 ? y2 : y1;
 }
 
 /*
@@ -187,7 +189,7 @@ void NClampLinearFunction::makeClampLinearFunction(f32 p1, f32 p2, f32 p3, f32 p
 f32 NClampLinearFunction::getValue(f32 p1)
 {
 	f32 val = NPolynomialFunction::getValue(p1);
-	return NMathf::clamp(val, _0C, _10);
+	return NMathf::clamp(val, mMinValue, mMaxValue);
 }
 
 /*
@@ -198,8 +200,8 @@ f32 NClampLinearFunction::getValue(f32 p1)
 void NClampLinearFunction::println()
 {
 	NPolynomialFunction::println();
-	DEBUGPRINT(_0C);
-	DEBUGPRINT(_10);
+	DEBUGPRINT(mMinValue);
+	DEBUGPRINT(mMaxValue);
 }
 
 /*
@@ -262,4 +264,7 @@ void NFunction3D::construct(NFunction*, NFunction*, NFunction*)
  * Address:	8011BBD8
  * Size:	0000A8
  */
-void NFunction3D::outputPosition(f32 val, NVector3f& vec) { vec.set(_00->getValue(val), _04->getValue(val), _08->getValue(val)); }
+void NFunction3D::outputPosition(f32 val, NVector3f& vec)
+{
+	vec.set(mFunctionX->getValue(val), mFunctionY->getValue(val), mFunctionZ->getValue(val));
+}

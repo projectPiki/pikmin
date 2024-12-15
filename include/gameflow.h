@@ -392,7 +392,7 @@ struct GameFlow : public Node {
 	GameGenFlow* mGenFlow;                   // _30C
 	Texture* _310;                           // _310
 	f32 _314;                                // _314
-	Texture* _318;                           // _318
+	Texture* mLoadBannerTexture;             // _318
 	GameLoadIdler mGameLoadIdler;            // _31C
 	u8 _330[0x338 - 0x330];                  // _330, unknown
 	int _338;                                // _338

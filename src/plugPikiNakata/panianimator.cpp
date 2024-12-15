@@ -76,10 +76,10 @@ PaniMotion::PaniMotion(int p1, int p2)
  * Address:	8011EFFC
  * Size:	00000C
  */
-void PaniMotion::init(int p1, int p2)
+void PaniMotion::init(int id, int p2)
 {
-	_00 = p1;
-	_04 = p2;
+	mAnimID = id;
+	_04     = p2;
 }
 
 /*
@@ -119,13 +119,13 @@ PaniSoundTable::PaniSoundTable(int count)
  */
 PaniAnimator::PaniAnimator()
 {
-	_38           = -1;
-	mIsFinished   = false;
-	mListener     = nullptr;
-	mAnimInfo     = nullptr;
-	mMotionTable  = nullptr;
-	mMotionIdx    = -1;
-	mCurrentFrame = 0.0f;
+	mCurrentKeyIndex = -1;
+	mIsFinished      = false;
+	mListener        = nullptr;
+	mAnimInfo        = nullptr;
+	mMotionTable     = nullptr;
+	mMotionIdx       = -1;
+	mCurrentFrame    = 0.0f;
 }
 
 /*
@@ -173,12 +173,12 @@ void PaniAnimator::updateContext()
 void PaniAnimator::startMotion(PaniMotionInfo& info)
 {
 	if (mAnimInfo) {
-		mMotionIdx  = info.mMotionIdx;
-		mListener   = info.mListener;
-		_38         = 0;
-		_40         = 0;
-		mIsFinished = false;
-		startAnim(2, mMotionTable->mMotions[mMotionIdx]->_00, 0, 8);
+		mMotionIdx        = info.mMotionIdx;
+		mListener         = info.mListener;
+		mCurrentKeyIndex  = 0;
+		mPreviousKeyIndex = 0;
+		mIsFinished       = false;
+		startAnim(2, mMotionTable->mMotions[mMotionIdx]->mAnimID, 0, 8);
 	}
 }
 
@@ -201,7 +201,7 @@ void PaniAnimator::finishMotion(PaniMotionInfo& info)
 		mCurrentFrame = maxFrame;
 		finishAnimation();
 	} else {
-		startAnim(2, _1C, -1, 8);
+		startAnim(2, mCurrentAnimID, -1, 8);
 	}
 }
 
@@ -217,17 +217,17 @@ void PaniAnimator::animate(f32 speed)
 	}
 
 	if (speed < 0.0f) {
-		DEBUGPRINT(_38 < 0);
+		DEBUGPRINT(mCurrentKeyIndex < 0);
 	}
 
-	if (_38 < 0) {
+	if (mCurrentKeyIndex < 0) {
 		return;
 	}
 
-	f32 keyVal1 = (f32)mAnimInfo->getKeyValue(_20);
-	f32 keyVal2 = (f32)mAnimInfo->getKeyValue(_24);
-	if (keyVal1 > keyVal2) {
-		DEBUGPRINT(keyVal1 < keyVal2);
+	f32 startValue = (f32)mAnimInfo->getKeyValue(mStartKeyIndex);
+	f32 endValue   = (f32)mAnimInfo->getKeyValue(mEndKeyIndex);
+	if (startValue > endValue) {
+		DEBUGPRINT(startValue < endValue);
 		return;
 	}
 
@@ -236,8 +236,8 @@ void PaniAnimator::animate(f32 speed)
 
 	checkConstantKeys();
 	checkEventKeys(mCurrentFrame - speed, mCurrentFrame);
-	if (mCurrentFrame >= keyVal2) {
-		mCurrentFrame = keyVal2;
+	if (mCurrentFrame >= endValue) {
+		mCurrentFrame = endValue;
 		finishAnimation();
 	}
 }
@@ -249,7 +249,7 @@ void PaniAnimator::animate(f32 speed)
  */
 void PaniAnimator::checkConstantKeys()
 {
-	if (_38 < 0) {
+	if (mCurrentKeyIndex < 0) {
 		DEBUGPRINT(mAnimInfo->countIKeys());
 	}
 
@@ -257,14 +257,15 @@ void PaniAnimator::checkConstantKeys()
 		DEBUGPRINT(mAnimInfo->countIKeys());
 	}
 
-	for (_38; _38 < mAnimInfo->countIKeys(); _38++) {
-		int keyIdx = getInfoKeyValue(_38);
+	for (; mCurrentKeyIndex < mAnimInfo->countIKeys(); mCurrentKeyIndex++) {
+		int keyIdx = getInfoKeyValue(mCurrentKeyIndex);
 		f32 value  = getKeyValue(keyIdx);
 
 		if (mCurrentFrame < value) {
 			return;
 		}
-		checkConstantKey(_38);
+
+		checkConstantKey(mCurrentKeyIndex);
 	}
 }
 
@@ -276,16 +277,19 @@ void PaniAnimator::checkConstantKeys()
 void PaniAnimator::checkConstantKey(int idx)
 {
 	int type = mAnimInfo->getInfoKey(idx)->mValue;
-	if (mIsFinished == false) {
+
+	if (!mIsFinished) {
 		if (type == 0) {
-			_40 = idx;
+			mPreviousKeyIndex = idx;
 		} else if (type == 1) {
-			int keyIdx1 = getInfoKeyValue(_40);
-			int keyIdx2 = getInfoKeyValue(idx);
-			f32 keyVal1 = getKeyValue(keyIdx1);
-			f32 keyVal2 = getKeyValue(keyIdx2);
-			mCurrentFrame -= (keyVal2 - keyVal1);
-			_38 = _40;
+			int firstKeyID  = getInfoKeyValue(mPreviousKeyIndex);
+			int secondKeyID = getInfoKeyValue(idx);
+
+			f32 firstKeyValue  = getKeyValue(firstKeyID);
+			f32 secondKeyValue = getKeyValue(secondKeyID);
+
+			mCurrentFrame -= (secondKeyValue - firstKeyValue);
+			mCurrentKeyIndex = mPreviousKeyIndex;
 		}
 	}
 
@@ -343,7 +347,7 @@ void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
  */
 void PaniAnimator::finishAnimation()
 {
-	_38 = -1;
+	mCurrentKeyIndex = -1;
 	if (mListener) {
 		mListener->animationKeyUpdated(PaniAnimKeyEvent(KEY_Done));
 	}
