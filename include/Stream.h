@@ -2,6 +2,7 @@
 #define _STREAM_H
 
 #include "types.h"
+#include "stl/mem.h"
 
 /**
  * @brief TODO
@@ -94,13 +95,28 @@ struct BufferedInputStream : public RandomAccessStream {
  * @brief TODO
  */
 struct RamStream : public RandomAccessStream {
-	virtual void read(void*, int);  // _3C (weak)
-	virtual void write(void*, int); // _40 (weak)
-	virtual int getPending();       // _44 (weak)
-	virtual int getPosition();      // _58 (weak)
-	virtual void setPosition(int);  // _5C (weak)
-	virtual int getLength();        // _60 (weak)
-	virtual void setLength(int);    // _64 (weak)
+	inline RamStream(void* buffer, int size)
+	{
+		mBufferAddr = buffer;
+		mPosition   = 0;
+		mLength     = size;
+	}
+
+	virtual int getPending() { return mLength - mPosition; } // _44 (weak)
+	virtual void setPosition(int pos) { mPosition = pos; }   // _5C (weak)
+	virtual int getPosition() { return mPosition; }          // _58 (weak)
+	virtual int getLength() { return mLength; }              // _60 (weak)
+	virtual void setLength(int len) { mLength = len; }       // _64 (weak)
+	virtual void read(void* dest, int size)                  // _3C (weak)
+	{
+		memcpy(dest, (const void*)((int)mBufferAddr + mPosition), size);
+		mPosition += size;
+	}
+	virtual void write(void* src, int size) // _40 (weak)
+	{
+		memcpy((void*)((int)mBufferAddr + mPosition), src, size);
+		mPosition += size;
+	}
 
 	// _04     = VTBL
 	// _00-_08 = RandomAccessStream

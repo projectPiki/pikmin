@@ -66,6 +66,8 @@ struct Generator : public Node {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x84.
  */
 struct GeneratorCache {
 
@@ -106,7 +108,7 @@ struct GeneratorCache {
 	void dump();
 	void assertValid();
 
-	// TODO: members
+	u8 _00[0x84]; // _00, unknown
 };
 
 /**

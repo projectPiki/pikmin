@@ -43,7 +43,7 @@ GameExitSection::GameExitSection()
  */
 void GameExitSection::update()
 {
-	gameflow._1F4 = 0;
+	gameflow.mNextOnePlayerSectionID = ONEPLAYER_GameSetup;
 	if (flowCont._244) {
 		gameflow.mGameSectionID = SECTION_MovSample;
 		gameflow._2B0           = flowCont._244 + 3;

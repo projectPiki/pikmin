@@ -499,7 +499,7 @@ void CreatureInf::doStore(Creature* owner)
 			_34 = owner->_34;
 		} else {
 			_38 = 0;
-			_30 = gameflow._2FC;
+			_30 = gameflow.mWorldClock._24;
 			_34 = owner->_34;
 		}
 	}

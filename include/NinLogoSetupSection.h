@@ -9,6 +9,7 @@
 #include "Dolphin/os.h"
 #include "gameflow.h"
 #include "Graphics.h"
+#include "Geometry.h"
 #include "Menu.h"
 #include "sysNew.h"
 
@@ -65,9 +66,38 @@ struct NinLogoSetupSection : public Node {
 			gsys->mPending          = true;
 		}
 	}
-	virtual void draw(Graphics&); // _14
+	virtual void draw(Graphics& gfx) // _14
+	{
+		gfx.setViewport(RectArea(0, 0, gfx._30C, gfx._310));
+		gfx.setScissor(RectArea(0, 0, gfx._30C, gfx._310));
+		gfx.setClearColour(Colour(0, 0, 0, 0));
+		gfx.clearBuffer(3, false);
 
-	void drawMenu(Graphics&, Menu*, f32);
+		Matrix4f mtx;
+		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx._30C, gfx._310));
+		gfx.setColour(Colour(255, 255, 64, 255), true);
+		gfx.setAuxColour(Colour(255, 0, 64, 255));
+
+		if (mMenu) {
+			drawMenu(gfx, mMenu, 1.0f);
+		} else if (progresWindow) {
+			progresWindow->draw(gfx);
+		}
+
+		gameflow.drawLoadLogo(gfx, false, gameflow._310, gameflow._314);
+
+		// either this is a lot of inlines or there's a lot of debug stuff here.
+		u32 badCompiler[64];
+	}
+
+	void drawMenu(Graphics& gfx, Menu* menu, f32 p3)
+	{
+		if (menu->mUseCustomPosition) {
+			drawMenu(gfx, menu->mParentMenu, 0.5f * p3);
+		}
+
+		menu->draw(gfx, p3);
+	}
 
 	// _00     = VTBL
 	// _00-_20 = Node

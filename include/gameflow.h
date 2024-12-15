@@ -7,6 +7,7 @@
 #include "LoadIdler.h"
 #include "Parameters.h"
 #include "string.h"
+#include "WorldClock.h"
 #include "Ayu.h"
 
 struct AnimFrameCacher;
@@ -29,6 +30,24 @@ enum GameSectionID {
 	SECTION_OnePlayer = 3,
 	SECTION_PaniTest  = 4,
 	SECTION_OgTest    = 5,
+};
+
+/**
+ * @brief TODO
+ */
+enum OnePlayerSectionID {
+	ONEPLAYER_GameSetup       = 0,
+	ONEPLAYER_CardSelect      = 1,
+	ONEPLAYER_Unk2            = 2,
+	ONEPLAYER_Unk3            = 3,
+	ONEPLAYER_Unk4            = 4,
+	ONEPLAYER_IntroGame       = 5,
+	ONEPLAYER_MapSelect       = 6,
+	ONEPLAYER_NewPikiGame     = 7,
+	ONEPLAYER_GameCourseClear = 8,
+	ONEPLAYER_GameStageClear  = 9,
+	ONEPLAYER_GameCredits     = 10,
+	ONEPLAYER_GameExit        = 11,
 };
 
 /**
@@ -110,6 +129,17 @@ struct PlayState : public CoreNode {
 	virtual void write(RandomAccessStream&); // _10
 
 	void openStage(int);
+
+	inline void reset()
+	{
+		_20              = 1;
+		_1C              = -1;
+		_18              = -1;
+		_14              = -1;
+		_21              = 1;
+		_22              = 0;
+		mCourseOpenFlags = 1;
+	}
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
@@ -349,9 +379,9 @@ struct GameFlow : public Node {
 	MemoryCard mMemoryCard;                  // _24
 	u8 _6C[0x94 - 0x6C];                     // _6C, unknown
 	GamePrefs mGamePrefs;                    // _94
-	u8 _1A0[0x4];                            // _1A0, unknown - might be part of GamePrefs
+	u32 _1A0;                                // _1A0, unknown
 	PlayState mPlayState;                    // _1A4
-	u8 _1CC[0x1D0 - 0x1CC];                  // _1CC, unknown
+	int _1CC;                                // _1CC, maybe u32
 	u32 _1D0;                                // _1D0, most recently opened stage?
 	u32 _1D4;                                // _1D4, unknown
 	u32 _1D8;                                // _1D8, bitflag of some description
@@ -360,8 +390,9 @@ struct GameFlow : public Node {
 	GameInterface* _1E8;                     // _1E8
 	int _1EC;                                // _1EC
 	int mGameSectionID;                      // _1F0, see GameSectionID enum
-	int _1F4;                                // _1F4
-	u8 _1F8[0x200 - 0x1F8];                  // _1F8, unknown
+	int mNextOnePlayerSectionID;             // _1F4, see OnePlayerSectionID enum
+	u8 _1F8[0x4];                            // _1F8, unknown
+	int _1FC;                                // _1FC
 	u32 _200;                                // _200, unknown
 	Section* mGameSection;                   // _204
 	char* mLangFilePaths[2][LANGFILE_COUNT]; // _208
@@ -369,7 +400,8 @@ struct GameFlow : public Node {
 	int _2A8;                                // _2A8, related to language?
 	u32 _2AC;                                // _2AC, unknown
 	u32 _2B0;                                // _2B0, could be int
-	u8 _2B4[0x2BC - 0x2B4];                  // _2B4, unknown
+	int _2B4;                                // _2B4
+	u8 _2B8[0x4];                            // _2B8, unknown
 	u32 _2BC;                                // _2BC, unknown
 	u8 _2C0[0x4];                            // _2C0, unknown
 	f32 _2C4;                                // _2C4
@@ -377,16 +409,7 @@ struct GameFlow : public Node {
 	f32 _2CC;                                // _2CC
 	int _2D0;                                // _2D0
 	int _2D4;                                // _2D4
-	f32 _2D8;                                // _2D8
-	f32 _2DC;                                // _2DC
-	f32 _2E0;                                // _2E0
-	u8 _2E4[0x4];                            // _2E4, unknown
-	f32 _2E8;                                // _2E8
-	f32 _2EC;                                // _2EC
-	u8 _2F0[0x8];                            // _2F0, unknown
-	u32 _2F8;                                // _2F8, unknown
-	u32 _2FC;                                // _2FC, unknown, but same as 0x30 in CreatureInf
-	u32 _300;                                // _300, unknown
+	WorldClock mWorldClock;                  // _2D8
 	f32 _304;                                // _304
 	AnimFrameCacher* mFrameCacher;           // _308
 	GameGenFlow* mGenFlow;                   // _30C

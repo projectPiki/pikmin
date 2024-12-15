@@ -6,18 +6,19 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct GameSetupSection : public Section {
 	GameSetupSection();
 
-	virtual void update(); // _10
-	virtual void init();   // _30
+	virtual void update();  // _10
+	virtual void init() { } // _30
 
 	void preCacheShapes();
 
 	// _00     = VTBL
-	// _00-_20 = Section?
-	// TODO: members
+	// _00-_20 = Section
 };
 
 #endif

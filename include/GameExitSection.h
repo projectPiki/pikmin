@@ -6,6 +6,8 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct GameExitSection : public Section {
 	GameExitSection();
@@ -14,8 +16,7 @@ struct GameExitSection : public Section {
 	virtual void init() { } // _30 (weak)
 
 	// _00     = VTBL
-	// _00-_20 = Section?
-	// TODO: members
+	// _00-_20 = Section
 };
 
 #endif

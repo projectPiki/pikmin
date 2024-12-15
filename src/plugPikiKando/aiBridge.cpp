@@ -929,7 +929,7 @@ int ActBridge::newExeGo()
 void ActBridge::newInitWork()
 {
 	mState          = STATE_Work;
-	_20             = gameflow._300;
+	_20             = gameflow.mWorldClock.mMinutes;
 	_24             = 0;
 	mCollisionCount = 0;
 	_2A             = 0;

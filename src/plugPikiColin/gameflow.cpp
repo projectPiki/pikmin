@@ -16,6 +16,7 @@
 #include "Delegate.h"
 #include "Texture.h"
 #include "jaudio/PikiScene.h"
+#include "Graphics.h"
 #include "sysNew.h"
 #include "Dolphin/os.h"
 
@@ -753,22 +754,22 @@ void GameFlow::hardReset(BaseApp* baseApp)
 {
 	PRINT("Doing HardReset!!\n");
 
-	app            = baseApp;
-	_1D4           = 0;
-	mFilterType    = FILTER_Custom;
-	_35C           = 0;
-	_35D           = 0;
-	_35E           = 21;
-	_35F           = 22;
-	_360           = 21;
-	_361           = 0;
-	_362           = 0;
-	_1EC           = -1;
-	mGameSectionID = SECTION_NinLogo;
-	_1F4           = 0;
-	_200           = 0;
-	_2AC           = 0;
-	_2A8           = 0;
+	app                     = baseApp;
+	_1D4                    = 0;
+	mFilterType             = FILTER_Custom;
+	_35C                    = 0;
+	_35D                    = 0;
+	_35E                    = 21;
+	_35F                    = 22;
+	_360                    = 21;
+	_361                    = 0;
+	_362                    = 0;
+	_1EC                    = -1;
+	mGameSectionID          = SECTION_NinLogo;
+	mNextOnePlayerSectionID = ONEPLAYER_GameSetup;
+	_200                    = 0;
+	_2AC                    = 0;
+	_2A8                    = 0;
 
 	mLangFilePaths[0][LANGFILE_Dir] = "archives/blo_eng.dir";
 	mLangFilePaths[0][LANGFILE_Arc] = "dataDir/archives/blo_eng.arc";
@@ -787,17 +788,18 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	mParameters = new GamePrms();
 	int size    = 0x8000;
 	f32 factor  = mParameters->mDaySpeedFactor();
-	_2EC        = 0.0f;
-	_2E8        = 0.0f;
-	_2FC        = 0;
-	_2F8        = 0;
-	_300        = 0;
 
-	_2DC = 24.0f;
-	_2E0 = 60.0f * factor;
-	_2D8 = _2E0 / _2DC;
-	_304 = 1.0f;
-	_2BC = 0;
+	mWorldClock.mFractionalTime   = 0.0f;
+	mWorldClock.mLastRecordedTime = 0.0f;
+	mWorldClock._24               = 0;
+	mWorldClock.mCurrentTime      = 0;
+	mWorldClock.mMinutes          = 0;
+
+	mWorldClock._04        = 24.0f;
+	mWorldClock._08        = 60.0f * factor;
+	mWorldClock.mTimeScale = mWorldClock._08 / mWorldClock._04;
+	_304                   = 1.0f;
+	_2BC                   = 0;
 
 	mMemoryCard.init();
 
@@ -1715,8 +1717,8 @@ void GameFlow::addGenNode(char* name, CoreNode* node) { mGenFlow->add(new GameGe
 void GameGenFlow::update()
 {
 	gameflow._2BC++;
-	gameflow._2E0 = 60.0f * (gameflow._304 * gameflow.mParameters->mDaySpeedFactor());
-	gameflow._2D8 = gameflow._2E0 / gameflow._2DC;
+	gameflow.mWorldClock._08        = 60.0f * (gameflow._304 * gameflow.mParameters->mDaySpeedFactor());
+	gameflow.mWorldClock.mTimeScale = gameflow.mWorldClock._08 / gameflow.mWorldClock._04;
 	Node::update();
 }
 

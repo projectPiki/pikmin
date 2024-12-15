@@ -1,5 +1,5 @@
-#ifndef _GAMESTAGECLEARSECTION_H
-#define _GAMESTAGECLEARSECTION_H
+#ifndef _CARDSELECT_H
+#define _CARDSELECT_H
 
 #include "types.h"
 #include "Section.h"
@@ -9,8 +9,8 @@
  *
  * @note Size: 0x20.
  */
-struct GameStageClearSection : public Section {
-	GameStageClearSection();
+struct CardSelectSection : public Section {
+	CardSelectSection();
 
 	virtual void init() { } // _30 (weak)
 

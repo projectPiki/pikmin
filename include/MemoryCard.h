@@ -13,8 +13,12 @@ struct PlayState;
 struct CardQuickInfo {
 	CardQuickInfo() { _08 = 0; }
 
-	u8 _00[0x8]; // _00, unknown
-	u32 _08;     // _08, unknown
+	u32 _00;             // _00, unknown
+	u8 _04[0x4];         // _04, unknown
+	u32 _08;             // _08, unknown
+	int _0C;             // _0C, to do with day count?
+	u8 _10[0x24 - 0x10]; // _10, unknown
+	u32 _24;             // _24, unknown
 };
 
 /**

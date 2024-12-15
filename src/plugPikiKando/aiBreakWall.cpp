@@ -220,7 +220,7 @@ void ActBreakWall::initBreakWall()
 	_30 = randFloat(4.0f);
 	startWorkMotion();
 	mState = STATE_BreakWall;
-	_2C    = gameflow._300;
+	_2C    = gameflow.mWorldClock.mMinutes;
 }
 
 /*

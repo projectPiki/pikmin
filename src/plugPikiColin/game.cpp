@@ -4,6 +4,16 @@
 #include "MemStat.h"
 #include "system.h"
 #include "sysNew.h"
+#include "gameflow.h"
+#include "GameSetupSection.h"
+#include "CardSelectSection.h"
+#include "MapSelect.h"
+#include "IntroGameSection.h"
+#include "NewPikiGame.h"
+#include "GameCourseClearSection.h"
+#include "GameStageClearSection.h"
+#include "GameCreditsSection.h"
+#include "GameExitSection.h"
 #include "stl/stdio.h"
 #include "stl/string.h"
 #include "Dolphin/os.h"
@@ -432,6 +442,10 @@ void FlowController::readMapList(char* fileName)
 	*/
 }
 
+static char* levNames[] = {
+	"intro/map0.bti", "intro/map1.bti", "intro/map2.bti", "intro/map3.bti", "intro/map4.bti",
+};
+
 /*
  * --INFO--
  * Address:	80053640
@@ -440,8 +454,141 @@ void FlowController::readMapList(char* fileName)
 void OnePlayerSection::init()
 {
 	Node::init("<OnePlayerSection>");
+	u32 print        = gsys->mTogglePrint;
 	Section* section = nullptr;
-	while (!section) { }
+	while (!section) {
+		int sectionID = gameflow.mNextOnePlayerSectionID;
+		switch (sectionID) {
+		case ONEPLAYER_GameSetup:
+			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
+			if (gameflow._1FC >= 2 && gameflow._1FC <= 4) {
+				gameflow._310 = gameflow.setLoadBanner(levNames[gameflow._1FC]);
+				gameflow._314 = 0.0f;
+			} else {
+				gameflow._310 = nullptr;
+			}
+
+			section = new GameSetupSection();
+			gsys->endLoading();
+			break;
+
+		case ONEPLAYER_CardSelect:
+			section = new CardSelectSection();
+			break;
+
+		case ONEPLAYER_MapSelect:
+			section = new MapSelectSection();
+			break;
+
+		case ONEPLAYER_Unk2:
+			if (!gameflow._310) {
+				gameflow._310 = gameflow.setLoadBanner(levNames[sectionID]);
+			}
+			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
+			FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
+			{
+				if (strcmp(stage->mFileName, "stages/practice.ini") == 0) {
+					flowCont._A8 = stage;
+					sprintf(flowCont._130, "%s", stage->mFileName);
+					sprintf(flowCont._1B0, "%s", stage->mFileName);
+					break;
+				}
+			}
+
+			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
+			gameflow.mWorldClock._24         = 1;
+			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
+			gameflow._1FC                    = 3;
+			break;
+
+		case ONEPLAYER_Unk3:
+			if (!gameflow._310) {
+				gameflow._310 = gameflow.setLoadBanner(levNames[sectionID]);
+			}
+			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
+			FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
+			{
+				if (strcmp(stage->mFileName, "stages/stage1.ini") == 0) {
+					flowCont._A8 = stage;
+					sprintf(flowCont._130, "%s", stage->mFileName);
+					sprintf(flowCont._1B0, "%s", stage->mFileName);
+					break;
+				}
+			}
+
+			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
+			gameflow.mWorldClock._24         = 1;
+			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
+			gameflow._1FC                    = 4;
+			break;
+
+		case ONEPLAYER_Unk4:
+			if (!gameflow._310) {
+				gameflow._310 = gameflow.setLoadBanner(levNames[sectionID]);
+			}
+			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
+			FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
+			{
+				if (strcmp(stage->mFileName, "stages/play_3.ini") == 0) {
+					flowCont._A8 = stage;
+					sprintf(flowCont._130, "%s", stage->mFileName);
+					sprintf(flowCont._1B0, "%s", stage->mFileName);
+					break;
+				}
+			}
+
+			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
+			gameflow.mWorldClock._24         = 2;
+			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
+			gameflow._1FC                    = 10;
+			break;
+
+		case ONEPLAYER_IntroGame:
+			section = new IntroGameSection();
+			break;
+
+		case ONEPLAYER_NewPikiGame:
+			if (!gsys->_260) {
+				gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
+			}
+
+			Texture* tex = nullptr;
+			if (flowCont._A8->mStageID <= STAGE_LASTVALID) {
+				gameflow._310 = gameflow.setLoadBanner(levNames[flowCont._A8->mStageID]);
+				gameflow._314 = 0.0f;
+			} else {
+				gameflow._310 = tex;
+			}
+
+			section = new NewPikiGameSection();
+			break;
+
+		case ONEPLAYER_GameCourseClear:
+			section = new GameCourseClearSection();
+			break;
+
+		case ONEPLAYER_GameStageClear:
+			section = new GameStageClearSection();
+			break;
+
+		case ONEPLAYER_GameCredits:
+			gsys->startLoading(nullptr, true, 60);
+			section = new GameCreditsSection();
+			gsys->endLoading();
+			break;
+
+		case ONEPLAYER_GameExit:
+			section = new GameExitSection();
+			break;
+		}
+
+		if (gameflow.mNextOnePlayerSectionID != sectionID) {
+			section = nullptr;
+		}
+	}
+
+	add(section);
+	gsys->mTogglePrint = print;
 	/*
 	.loc_0x0:
 	  mflr      r0

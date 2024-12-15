@@ -1737,8 +1737,8 @@ void PaniTestNode::drawTeki(Teki* teki, Graphics& gfx) { teki->refresh(gfx); }
 void PaniTestSection::init()
 {
 	Node::init("<PaniTestSection>");
-	switch (gameflow._1F4) {
-	case 0:
+	switch (gameflow.mNextOnePlayerSectionID) {
+	case ONEPLAYER_GameSetup:
 		add(new PaniTestNode);
 		break;
 	}

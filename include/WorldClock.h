@@ -2,10 +2,6 @@
 #define _WORLDCLOCK_H
 
 #include "types.h"
-#include "CoreNode.h"
-#include "Graphics.h"
-#include "Matrix4f.h"
-#include "Animator.h"
 
 /**
  * @brief TODO
@@ -21,13 +17,15 @@ struct WorldClock {
 	void age(f32);
 
 	f32 mTimeScale;        // _00
-	u8 _04[0x10 - 0x4];    // _04, unknown
+	f32 _04;               // _04
+	f32 _08;               // _08
+	u8 _0C[0x4];           // _0C, unknown
 	f32 mLastRecordedTime; // _10
 	f32 mFractionalTime;   // _14
 	f32 mTotalTime;        // _18
 	u8 _1C[0x4];           // _1C, unknown
 	int mCurrentTime;      // _20
-	u8 _24[0x4];           // _24, unknown
+	int _24;               // _24, unknown, same as _30 in CreatureInf
 	int mMinutes;          // _28
 };
 

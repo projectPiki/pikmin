@@ -8,6 +8,8 @@ struct MapMgr;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct NewPikiGameSection : public Section {
 	NewPikiGameSection();
@@ -15,8 +17,7 @@ struct NewPikiGameSection : public Section {
 	virtual void init(); // _30
 
 	// _00     = VTBL
-	// _00-_20 = Section?
-	// TODO: members?
+	// _00-_20 = Section
 };
 
 /**

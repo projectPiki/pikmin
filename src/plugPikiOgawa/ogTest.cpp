@@ -271,8 +271,6 @@ void zen::OgTestScreen::modeSelectSub()
  */
 void zen::OgTestScreen::update()
 {
-	u32 badCompiler[8];
-
 	mController->update();
 	mZenController->setController(mController);
 	mZenController->update();

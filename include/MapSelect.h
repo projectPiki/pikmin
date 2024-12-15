@@ -8,6 +8,8 @@ struct Menu;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct MapSelectSection : public Section {
 	MapSelectSection();
@@ -15,8 +17,7 @@ struct MapSelectSection : public Section {
 	virtual void init(); // _30 (weak)
 
 	// _00     = VTBL
-	// _00-_20 = Section?
-	// TODO: members
+	// _00-_20 = Section
 };
 
 /**
