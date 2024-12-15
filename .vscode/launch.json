@@ -1,14 +1,16 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.2.0",
-  "configurations": [
+  // Use Ctrl+Shift+B to run build tasks.
+  // Or "Run Build Task" in the Command Palette.
+  "version": "2.0.0",
+  "tasks": [
     {
-      "name": "F5 Anything: Custom Command",
-      "type": "f5anything",
-      "request": "launch",
-      "command": "ninja"
-    }
+      "label": "ninja",
+      "type": "shell",
+      "command": "ninja",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
   ]
 }
