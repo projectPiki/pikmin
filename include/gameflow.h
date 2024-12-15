@@ -6,7 +6,7 @@
 #include "MemoryCard.h"
 #include "LoadIdler.h"
 #include "Parameters.h"
-#include "string.h"
+#include "String.h"
 #include "WorldClock.h"
 #include "Ayu.h"
 

@@ -1,6 +1,6 @@
 #include "types.h"
 #include "Stream.h"
-#include "string.h"
+#include "String.h"
 
 /*
  * --INFO--

@@ -83,7 +83,7 @@ _no_args:
 _end_of_parseargs:
 	bl DBInit
 	bl OSInit
-#if VERSION == 0
+#if BUILD_VERSION == 0
 	lis r4, 0x8000
 	addi r4, r4, 0x30e6
 	lhz r3, 0x0(r4)

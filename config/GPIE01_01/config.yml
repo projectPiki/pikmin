@@ -1,4 +1,5 @@
-object: orig/GPIE01_01/sys/main.dol
+object_base: orig/GPIE01_01
+object: sys/main.dol
 hash: 02204260b7efe8742d34572e58ba3dfecd92e4e9
 
 # Generated from dataDir/build.map

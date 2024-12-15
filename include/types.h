@@ -143,4 +143,10 @@ typedef unsigned long size_t;
 #define ASM
 #endif
 
+// Disable some clangd warnings
+#ifdef __clang__
+// Allow string literals to be converted to char*
+#pragma clang diagnostic ignored "-Wc++11-compat-deprecated-writable-strings"
+#endif
+
 #endif // _TYPES_H

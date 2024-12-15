@@ -9,7 +9,7 @@
 #include "Texture.h"
 #include "Vector.h"
 #include "CmdStream.h"
-#include "string.h"
+#include "String.h"
 #include "sysNew.h"
 #include "system.h"
 #include "PVW.h"

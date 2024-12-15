@@ -146,9 +146,6 @@ struct LightGroup : public CoreNode {
 	void ageDel(struct AgeServer&);
 
 	virtual void genAge(class AgeServer&);
-
-	void addLight(struct Vector3f&, f32);
-	void saveini(char*, struct RandomAccessStream&);
 #endif
 
 	void loadini(CmdStream*);

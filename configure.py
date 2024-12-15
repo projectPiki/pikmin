@@ -16,7 +16,15 @@ import argparse
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
-from tools.project import *
+
+from tools.project import (
+    Object,
+    ProgressCategory,
+    ProjectConfig,
+    calculate_progress,
+    generate_build,
+    is_windows,
+)
 
 # Game versions
 DEFAULT_VERSION = 4
@@ -110,6 +118,12 @@ parser.add_argument(
     action="store_true",
     help="builds equivalent (but non-matching) or modded objects",
 )
+parser.add_argument(
+    "--no-progress",
+    dest="progress",
+    action="store_false",
+    help="disable progress calculation",
+)
 args = parser.parse_args()
 
 config = ProjectConfig()
@@ -125,6 +139,7 @@ config.compilers_path = args.compilers
 config.generate_map = args.map
 config.non_matching = args.non_matching
 config.sjiswrap_path = args.sjiswrap
+config.progress = args.progress
 if not is_windows():
     config.wrapper = args.wrapper
 # Don't build asm unless we're --non-matching
@@ -134,9 +149,9 @@ if not config.non_matching:
 # Tool versions
 config.binutils_tag = "2.42-1"
 config.compilers_tag = "20240706"
-config.dtk_tag = "v0.9.6"
-config.objdiff_tag = "v2.0.0"
-config.sjiswrap_tag = "v1.1.1"
+config.dtk_tag = "v1.3.0"
+config.objdiff_tag = "v2.4.0"
+config.sjiswrap_tag = "v1.2.0"
 config.wibo_tag = "0.6.11"
 
 # Project
@@ -157,8 +172,13 @@ if args.debug:
     config.ldflags.append("-g")
 if args.map:
     config.ldflags.append("-mapunused")
+
 # Use for any additional files that should cause a re-configure when modified
 config.reconfig_deps = []
+
+# Optional numeric ID for decomp.me preset
+# Can be overridden in libraries or objects
+config.scratch_preset_id = 62  # Pikmin
 
 # Progress configuration
 config.progress_all = False
@@ -191,7 +211,8 @@ cflags_base = [
     "-i include",
     "-i include/stl",
     f"-i build/{config.version}/include",
-    f"-DVERSION={version_num}",
+    f"-DBUILD_VERSION={version_num}",
+    f"-DVERSION_{config.version}",
 ]
 
 # Debug flags
@@ -222,7 +243,8 @@ cflags_jaudio = [
     "-i include",
     "-i include/stl",
     f"-i build/{config.version}/include",
-    f"-DVERSION={version_num}",
+    f"-DBUILD_VERSION={version_num}",
+    f"-DVERSION_{config.version}",
     "-common on",
     "-func_align 32",
     "-lang c++",
@@ -273,6 +295,12 @@ def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
 Matching = True                   # Object matches and should be linked
 NonMatching = False               # Object does not match and should not be linked
 Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
+
+
+# Object is only matching for specific versions
+def MatchingFor(*versions):
+    return config.version in versions
+
 
 config.warn_missing_config = True
 config.warn_missing_source = False

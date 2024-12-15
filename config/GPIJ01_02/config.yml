@@ -1,4 +1,5 @@
-object: orig/GPIJ01_02/sys/main.dol
+object_base: orig/GPIJ01_02
+object: sys/main.dol
 hash: d87f92a733fc8fa5f65045730fe81a66b0c7d146
 
 # Generated from dataDir/build.map

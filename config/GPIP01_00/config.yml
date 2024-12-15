@@ -1,4 +1,5 @@
-object: orig/GPIP01_00/sys/main.dol
+object_base: orig/GPIP01_00
+object: sys/main.dol
 hash: e5794ffe8ac72c3ead3849edbd2f27ea5e0ed440
 
 # Generated from dataDir/build.map
