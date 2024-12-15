@@ -51,5 +51,5 @@ void GameExitSection::update()
 		gameflow.mGameSectionID = SECTION_Titles;
 	}
 
-	gsys->mPending = true;
+	gsys->softReset();
 }

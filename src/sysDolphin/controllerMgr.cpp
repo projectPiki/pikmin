@@ -150,7 +150,7 @@ void ControllerMgr::updateController(Controller* controller)
 {
 	u32 keyStatus = 0;
 
-#ifdef __WIN32__
+#ifdef _WIN32
 	if (keyDown('V'))
 		keyStatus |= 0x4000;
 	if (keyDown('N'))

@@ -14,7 +14,6 @@
     "files.associations": {
         "*.c.ctx": "c",
         "*.ctx": "cpp",
-        "source_location": "cpp",
         "*.cp": "cpp",
         "__mem.h": "c",
         "db.h": "c",

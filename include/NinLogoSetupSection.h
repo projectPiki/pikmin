@@ -63,18 +63,18 @@ struct NinLogoSetupSection : public Node {
 			}
 		} else {
 			gameflow.mGameSectionID = SECTION_Titles;
-			gsys->mPending          = true;
+			gsys->softReset();
 		}
 	}
 	virtual void draw(Graphics& gfx) // _14
 	{
-		gfx.setViewport(RectArea(0, 0, gfx._30C, gfx._310));
-		gfx.setScissor(RectArea(0, 0, gfx._30C, gfx._310));
+		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 		gfx.setClearColour(Colour(0, 0, 0, 0));
 		gfx.clearBuffer(3, false);
 
 		Matrix4f mtx;
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx._30C, gfx._310));
+		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 		gfx.setColour(Colour(255, 255, 64, 255), true);
 		gfx.setAuxColour(Colour(255, 0, 64, 255));
 

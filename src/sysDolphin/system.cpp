@@ -2132,11 +2132,12 @@ bool System::hasDebugInfo()
  * --INFO--
  * Address:	........
  * Size:	000030
+ * DEFINED IN HEADER
  */
-void System::halt(char*, int, char*)
-{
-	// UNUSED FUNCTION
-}
+// void System::halt(char*, int, char*)
+// {
+// 	// UNUSED FUNCTION
+// }
 
 /*
  * --INFO--

@@ -308,5 +308,5 @@ GameSetupSection::GameSetupSection()
 void GameSetupSection::update()
 {
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_CardSelect;
-	gsys->mPending                   = true;
+	gsys->softReset();
 }

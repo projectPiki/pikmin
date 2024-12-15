@@ -56,8 +56,8 @@ struct Graphics {
 	u8 _25C[0x2E4 - 0x25C];     // _25C, unknown
 	Camera* mCamera;            // _2E4
 	u8 _2E8[0x30C - 0x2E8];     // _2E8, unknown
-	int _30C;                   // _30C, maybe viewport width?
-	int _310;                   // _310, maybe viewport height?
+	int mScreenWidth;           // _30C, maybe viewport width?
+	int mScreenHeight;          // _310, maybe viewport height?
 	u8 _314[0x338 - 0x314];     // _2E8, unknown
 	LightCamera* mLightCam;     // _338
 	u8 _33C[0x368 - 0x33C];     // _33C, unknown

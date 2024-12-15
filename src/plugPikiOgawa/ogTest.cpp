@@ -327,8 +327,8 @@ void zen::OgTestScreen::update()
  */
 void zen::OgTestScreen::draw(Graphics& gfx)
 {
-	gfx.setViewport(RectArea(0, 0, gfx._30C, gfx._310));
-	gfx.setScissor(RectArea(0, 0, gfx._30C, gfx._310));
+	gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 	gfx.setClearColour(Colour(0, 0, 0, 255));
 	gfx.clearBuffer(3, false);
 
@@ -337,7 +337,7 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 	Vector3f vec1(0.0f, 0.0f, 250.0f);
 	Vector3f vec2(0.0f, 0.0f, 0.0f);
 	cam.calcVectors(vec1, vec2);
-	cam.update(f32(gfx._30C) / f32(gfx._310), 60.0f, 1.0f, 5000.0f);
+	cam.update(f32(gfx.mScreenWidth) / f32(gfx.mScreenHeight), 60.0f, 1.0f, 5000.0f);
 	gfx.setCamera(&cam);
 
 	gfx.calcViewMatrix(Matrix4f::ident, viewMat);
@@ -357,7 +357,7 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 
 	if (mActiveMode == TESTMODE_INACTIVE) {
 		Matrix4f ortho;
-		gfx.setOrthogonal(ortho.mMtx, RectArea(0, 0, gfx._30C, gfx._310));
+		gfx.setOrthogonal(ortho.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 		gfx.setColour(Colour(255, 255, 255, 255), true);
 		gfx.setAuxColour(Colour(255, 255, 0, 255));
 
@@ -396,7 +396,7 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 
 	if (mActiveMode == TESTMODE_Tutorial) {
 		Matrix4f ortho;
-		gfx.setOrthogonal(ortho.mMtx, RectArea(0, 0, gfx._30C, gfx._310));
+		gfx.setOrthogonal(ortho.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 		gfx.setColour(Colour(255, 255, 255, 255), true);
 		gfx.setAuxColour(Colour(255, 255, 150, 255));
 

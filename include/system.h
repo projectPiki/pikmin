@@ -9,6 +9,7 @@
 #include "Controller.h"
 #include "Dolphin/dvd.h"
 #include "Dolphin/rand.h"
+#include "Dolphin/os.h"
 
 struct Graphics;
 struct BaseApp;
@@ -129,6 +130,8 @@ struct StdSystem {
 
 	static char* stringDup(char*);
 
+	inline f32 getFade() { return mCurrentFade; }
+
 	inline void setFade(f32 start, f32 end)
 	{
 		mFadeStart = start;
@@ -141,8 +144,12 @@ struct StdSystem {
 		mTexDirectory = texDir;
 	}
 
-	bool mPending;                 // _00
-	f32 mCurrentFade;              // _04
+	inline void softReset() { mPending = true; }
+
+private:
+	bool mPending;    // _00
+	f32 mCurrentFade; // _04, use the functions!
+public:
 	f32 mFadeStart;                // _08
 	f32 mFadeEnd;                  // _0C
 	struct Font* mConsFont;        // _10
@@ -245,7 +252,17 @@ struct System : public StdSystem {
 	// unused/inlined:
 	void findAddress(u32);
 	bool hasDebugInfo();
-	void halt(char*, int, char*);
+	static void halt(char* file, int line, char* message)
+	{
+#ifdef _WIN32
+		char buffer[2048];
+		sprintf(buffer, "%s\n\nClick OK to quit now !", message);
+		MessageBox(NULL, buffer, "Error!", MB_ICONEXCLAMATION);
+		exit(0); // Failure!
+#else
+		OSPanic(file, line, message);
+#endif
+	}
 
 	static void* alloc(size_t);
 

@@ -266,16 +266,16 @@ struct GamePrefs : public CoreNode {
 
 	void Initialise()
 	{
-		_18        = 3;
-		mBgmVol    = 8;
-		mSfxVol    = 8;
-		_108       = 0;
-		_1E        = 0;
-		_20        = 0;
-		_21        = 0;
-		_1F        = 0;
-		_22        = 0;
-		mIsChanged = false;
+		_18             = 3;
+		mBgmVol         = 8;
+		mSfxVol         = 8;
+		_108            = 0;
+		_1E             = 0;
+		mSaveGameIndex  = 0;
+		mSpareSaveGames = 0;
+		_1F             = 0;
+		_22             = 0;
+		mIsChanged      = false;
 		mHiscores.Initialise();
 	}
 	void setBgmVol(u8);
@@ -296,8 +296,8 @@ struct GamePrefs : public CoreNode {
 	u8 mSfxVol;             // _1D
 	u8 _1E;                 // _1E
 	u8 _1F;                 // _1F
-	u8 _20;                 // _20
-	u8 _21;                 // _21
+	u8 mSaveGameIndex;      // _20
+	u8 mSpareSaveGames;     // _21
 	u8 _22;                 // _22
 	u8 _23;                 // _23
 	GameHiscores mHiscores; // _24
@@ -379,7 +379,7 @@ struct GameFlow : public Node {
 	MemoryCard mMemoryCard;                  // _24
 	u8 _6C[0x94 - 0x6C];                     // _6C, unknown
 	GamePrefs mGamePrefs;                    // _94
-	u32 _1A0;                                // _1A0, unknown
+	u32 mSaveGameCrc;                        // _1A0, unknown
 	PlayState mPlayState;                    // _1A4
 	int _1CC;                                // _1CC, maybe u32
 	u32 _1D0;                                // _1D0, most recently opened stage?
@@ -390,7 +390,7 @@ struct GameFlow : public Node {
 	GameInterface* _1E8;                     // _1E8
 	int _1EC;                                // _1EC
 	int mGameSectionID;                      // _1F0, see GameSectionID enum
-	int mNextOnePlayerSectionID;             // _1F4, see OnePlayerSectionID enum
+	s32 mNextOnePlayerSectionID;             // _1F4, see OnePlayerSectionID enum
 	u8 _1F8[0x4];                            // _1F8, unknown
 	int _1FC;                                // _1FC
 	u32 _200;                                // _200, unknown
@@ -400,7 +400,7 @@ struct GameFlow : public Node {
 	int _2A8;                                // _2A8, related to language?
 	u32 _2AC;                                // _2AC, unknown
 	u32 _2B0;                                // _2B0, could be int
-	int _2B4;                                // _2B4
+	int mIsChallengeMode;                    // _2B4
 	u8 _2B8[0x4];                            // _2B8, unknown
 	u32 _2BC;                                // _2BC, unknown
 	u8 _2C0[0x4];                            // _2C0, unknown

@@ -3,6 +3,7 @@
 #include "sysNew.h"
 #include "Creature.h"
 #include "Vector.h"
+#include "DebugLog.h"
 
 RadarInfo* radarInfo;
 
@@ -11,21 +12,14 @@ RadarInfo* radarInfo;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "radarInfo");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("radarInfo");
 
 /*
  * --INFO--
@@ -49,7 +43,7 @@ void RadarInfo::attachParts(Creature* part)
 	FOREACH_NODE(PartsInfo, mAlivePartsList.mChild, aliveInfo)
 	{
 		if (aliveInfo->mPart == part) {
-			// part is already attached, do nothing
+			PRINT("try to attach twice !\n");
 			return;
 		}
 	}

@@ -125,4 +125,7 @@ struct RamStream : public RandomAccessStream {
 	int mLength;       // _10
 };
 
+extern Stream* sysCon;
+extern Stream* errCon;
+
 #endif
