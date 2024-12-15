@@ -2,7 +2,7 @@
 #include "MemStat.h"
 #include "gameflow.h"
 #include "Dolphin/os.h"
-#include "PikiMacros.h"
+
 #include "sysNew.h"
 
 /*
@@ -111,7 +111,7 @@ Navi* NaviMgr::getNavi()
 Navi* NaviMgr::getNavi(int idx)
 {
 	if (idx >= _30) {
-		DEBUGPRINT(idx >= 0);
+		(idx >= 0);
 	}
 	return static_cast<Navi*>(_28[idx]);
 }

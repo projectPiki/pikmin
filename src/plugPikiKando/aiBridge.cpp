@@ -3,7 +3,7 @@
 #include "EffectMgr.h"
 #include "gameflow.h"
 #include "Dolphin/os.h"
-#include "PikiMacros.h"
+
 #include "WorkObject.h"
 
 /*
@@ -66,7 +66,7 @@ void ActBridge::init(Creature* creature)
 void ActBridge::dump()
 {
 	const char* things[] = { "approach", "detour", "go", "work" };
-	DEBUGPRINT(things[0], things[1], things[2], things[3]);
+	(things[0], things[1], things[2], things[3]);
 	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
 	Vector3f zVec     = mBridge->getBridgeZVec();
 	/*

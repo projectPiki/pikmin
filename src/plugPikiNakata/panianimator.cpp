@@ -1,28 +1,21 @@
 #include "PaniAnimator.h"
 #include "sysNew.h"
-#include "PikiMacros.h"
 #include "nlib/System.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "panianimator");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("panianimator");
 
 char* PaniAnimator::keyNames[6] = {
 	"loop start", "loop end", "action 0", "action 1", "action 2", "action 3",
@@ -198,6 +191,7 @@ void PaniAnimator::finishMotion(PaniMotionInfo& info)
 
 	f32 maxFrame = (f32)((!mAnimInfo) ? -1 : mAnimInfo->mData->mNumFrames);
 	if (mCurrentFrame >= maxFrame) {
+		PRINT("!!!finishMotion:%08x:%f,%f\n", this, mCurrentFrame, maxFrame);
 		mCurrentFrame = maxFrame;
 		finishAnimation();
 	} else {
@@ -217,7 +211,8 @@ void PaniAnimator::animate(f32 speed)
 	}
 
 	if (speed < 0.0f) {
-		DEBUGPRINT(mCurrentKeyIndex < 0);
+		mCurrentFrame;
+		PRINT("!animate:%08x:%f,%f\n", this, mCurrentFrame, speed);
 	}
 
 	if (mCurrentKeyIndex < 0) {
@@ -225,9 +220,10 @@ void PaniAnimator::animate(f32 speed)
 	}
 
 	f32 startValue = (f32)mAnimInfo->getKeyValue(mStartKeyIndex);
-	f32 endValue   = (f32)mAnimInfo->getKeyValue(mEndKeyIndex);
+	f32 endValue   = (f32)mAnimInfo->getKeyValue(mNextKeyInfoIndex);
 	if (startValue > endValue) {
-		DEBUGPRINT(startValue < endValue);
+		mCurrentFrame;
+		PRINT("!animate:%08x:to<from:%f,%f,%f\n", this, endValue, startValue, mCurrentFrame);
 		return;
 	}
 
@@ -250,11 +246,11 @@ void PaniAnimator::animate(f32 speed)
 void PaniAnimator::checkConstantKeys()
 {
 	if (mCurrentKeyIndex < 0) {
-		DEBUGPRINT(mAnimInfo->countIKeys());
+		ERROR("checkConstantKeys:nextKeyInfoIndex:%d,%d\n", mNextKeyInfoIndex, mAnimInfo->countIKeys());
 	}
 
 	if (mAnimInfo->countIKeys() > 16) {
-		DEBUGPRINT(mAnimInfo->countIKeys());
+		ERROR("checkConstantKeys:getKeyInfoCount():%d,%d\n", mNextKeyInfoIndex, mAnimInfo->countIKeys());
 	}
 
 	for (; mCurrentKeyIndex < mAnimInfo->countIKeys(); mCurrentKeyIndex++) {
@@ -333,6 +329,8 @@ void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 				type = KEY_PlaySound;
 			} else if (eventKey->mEventKeyType == 1) {
 				type = KEY_PlayEffect;
+			} else {
+				PRINT("!checkEventKeys:%08x:not supported event type:%d\n", this, eventKey->mEventKeyType);
 			}
 
 			mListener->animationKeyUpdated(PaniAnimKeyEvent(type, eventKey->mValue));
@@ -378,5 +376,8 @@ f32 PaniAnimator::getKeyValueByKeyType(int type)
  */
 void PaniAnimator::checkCounter_4DEBUG()
 {
-	// UNUSED FUNCTION
+	if (mCurrentFrame < 0.0f || mAnimInfo->mData->mNumFrames <= mCurrentFrame) {
+		PRINT("!checkCounter_4DEBUG:%08x:%d,%f/%f\n", this, mMotionIdx, mCurrentFrame, mAnimInfo->mData->mNumFrames);
+		ERROR("!checkCounter_4DEBUG:%08x:%d,%f/%f\n", this, mMotionIdx, mCurrentFrame, mAnimInfo->mData->mNumFrames);
+	}
 }

@@ -61,7 +61,6 @@ struct PaniAnimator : public Animator {
 	void finishAnimation();
 	f32 getKeyValueByKeyType(int);
 
-	// unused/inlined:
 	void checkCounter_4DEBUG();
 
 	inline bool isFinished() const { return mIsFinished; }

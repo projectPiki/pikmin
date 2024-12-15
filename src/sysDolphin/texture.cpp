@@ -4,7 +4,6 @@
 #include "system.h"
 #include "sysNew.h"
 #include "stl/string.h"
-#include "PikiMacros.h"
 
 /*
  * --INFO--

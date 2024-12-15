@@ -2,7 +2,6 @@
 #include "DynColl.h"
 #include "MapMgr.h"
 #include "Creature.h"
-#include "PikiMacros.h"
 
 /*
  * --INFO--

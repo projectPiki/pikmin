@@ -1,6 +1,6 @@
 #include "Collision.h"
 #include "Geometry.h"
-#include "PikiMacros.h"
+
 #include "Shape.h"
 #include "Dolphin/os.h"
 #include "sysNew.h"
@@ -3526,7 +3526,7 @@ void CollInfo::initInfo(Shape* shape, CollPart* parts, u32* ids)
 
 		// Why have you set default max parts and then set the collparts manually?
 		if (mCollParts && mPartIDs) {
-			DEBUGPRINT(mUseDefaultMaxParts != 0, "wack");
+			(mUseDefaultMaxParts != 0, "wack");
 		}
 	}
 

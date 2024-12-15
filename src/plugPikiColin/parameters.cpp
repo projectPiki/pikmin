@@ -2,7 +2,7 @@
 #include "Colour.h"
 #include "CoreNode.h"
 #include "Parameters.h"
-#include "PikiMacros.h"
+
 #include "Stream.h"
 #include "String.h"
 #include "Vector.h"

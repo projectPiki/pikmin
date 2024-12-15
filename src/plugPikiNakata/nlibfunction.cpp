@@ -1,28 +1,21 @@
 #include "nlib/Function.h"
 #include "nlib/Math.h"
-#include "PikiMacros.h"
 #include "Dolphin/os.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "nlibfunction");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("nlibfunction");
 
 /*
  * --INFO--
@@ -105,9 +98,10 @@ void NPolynomialFunction::getCoefficient(int)
  */
 void NPolynomialFunction::println()
 {
-	DEBUGPRINT(mData.mSize);
+	// TODO: figure out wtf the DLL is doing here
+	PRINT(mData.mSize);
 	for (int i = 0; i < mData.mSize; i++) {
-		DEBUGPRINT(mData.mValues[i]);
+		PRINT(mData.mValues[i]);
 	}
 }
 
@@ -197,12 +191,7 @@ f32 NClampLinearFunction::getValue(f32 p1)
  * Address:	8011BAE0
  * Size:	000058
  */
-void NClampLinearFunction::println()
-{
-	NPolynomialFunction::println();
-	DEBUGPRINT(mMinValue);
-	DEBUGPRINT(mMaxValue);
-}
+void NClampLinearFunction::println() { NPolynomialFunction::println(); }
 
 /*
  * --INFO--

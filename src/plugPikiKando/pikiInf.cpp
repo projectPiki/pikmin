@@ -2,8 +2,8 @@
 #include "Piki.h"
 #include "Dolphin/os.h"
 #include "sysNew.h"
-#include "PikiMacros.h"
 #include "gameflow.h"
+#include "DebugLog.h"
 
 PikiInfMgr pikiInfMgr;
 
@@ -12,21 +12,14 @@ PikiInfMgr pikiInfMgr;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt);
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("pikiInf");
 
 /*
  * --INFO--
@@ -68,12 +61,19 @@ void PikiInfMgr::saveCard(RandomAccessStream& output)
  */
 void PikiInfMgr::loadCard(RandomAccessStream& input)
 {
-	// i tried inlines but idek what else to try inlining.
-	u32 badCompiler;
+	// is this C? Kando, why did you do that?
+	int i, j;
 
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
 			mPikiCounts[i][j] = input.readInt();
+		}
+	}
+
+	PRINT("** loadCard (Container Piki Counts)\n");
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
+			PRINT("\tcolor%d:%d = %d pikis\n", i, j, mPikiCounts[i][j]);
 		}
 	}
 }
@@ -87,12 +87,13 @@ void PikiInfMgr::incPiki(Piki* piki)
 {
 	u16 color = piki->mColor;
 	if (color >= PikiMinColor && color <= PikiMaxColor) {
-		DEBUGPRINT("valid color: %d", piki->mColor);
+		// todo: COMEBACKHERE TODO TODO: TODO
+		piki->mColor;
 	}
 
 	int happa = piki->mHappa;
 	if (happa >= PikiMinHappa && happa <= PikiMaxHappa) {
-		DEBUGPRINT("valid happa: %d", piki->mHappa);
+		piki->mHappa;
 	}
 
 	mPikiCounts[color][happa]++;
@@ -114,12 +115,12 @@ void PikiInfMgr::decPiki(Piki* piki)
 {
 	u16 color = piki->mColor;
 	if (color >= PikiMinColor && color <= PikiMaxColor) {
-		DEBUGPRINT("valid color: %d", piki->mColor);
+		piki->mColor;
 	}
 
 	int happa = piki->mHappa;
 	if (happa >= PikiMinHappa && happa <= PikiMaxHappa) {
-		DEBUGPRINT("valid happa: %d", piki->mHappa);
+		piki->mHappa;
 	}
 
 	mPikiCounts[color][happa]--;
@@ -258,7 +259,7 @@ void BPikiInf::loadCard(RandomAccessStream& card)
 void BPikiInf::doStore(Creature* piki)
 {
 	_2C = static_cast<Piki*>(piki)->mPikiAnimMgr._58.mStartKeyIndex;
-	_2D = static_cast<Piki*>(piki)->mPikiAnimMgr._58.mEndKeyIndex;
+	_2D = static_cast<Piki*>(piki)->mPikiAnimMgr._58.mNextKeyInfoIndex;
 }
 
 /*
@@ -268,8 +269,8 @@ void BPikiInf::doStore(Creature* piki)
  */
 void BPikiInf::doRestore(Creature* piki)
 {
-	static_cast<Piki*>(piki)->mPikiAnimMgr._58.mStartKeyIndex = _2C;
-	static_cast<Piki*>(piki)->mPikiAnimMgr._58.mEndKeyIndex   = _2D;
+	static_cast<Piki*>(piki)->mPikiAnimMgr._58.mStartKeyIndex    = _2C;
+	static_cast<Piki*>(piki)->mPikiAnimMgr._58.mNextKeyInfoIndex = _2D;
 }
 
 /*
@@ -565,6 +566,9 @@ void StageInf::saveCard(RandomAccessStream& output)
 	output.writeInt(mBPikiInfMgr.getActiveNum());
 
 	FOREACH_NODE(BaseInf, mBPikiInfMgr.mActiveList.mChild, inf) { inf->saveCard(output); }
+
+	// TODO: Figure out how to do this.
+	PRINT(" SAVE CARD ***** %d です\n" /*, activeNum*/);
 }
 
 #pragma dont_inline on

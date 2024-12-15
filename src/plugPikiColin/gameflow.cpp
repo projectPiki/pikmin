@@ -19,6 +19,7 @@
 #include "Graphics.h"
 #include "sysNew.h"
 #include "Dolphin/os.h"
+#include "DebugLog.h"
 
 GameFlow gameflow;
 BaseApp* app;
@@ -30,21 +31,14 @@ static char* timopts[] = { " [off]", "  [on]", "[full]" };
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "GameFlow");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("GameFlow");
 
 /*
  * --INFO--

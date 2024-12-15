@@ -26,6 +26,8 @@ struct NVector {
 	void input(NVector&);
 	void println();
 
+	inline int getSize() { return mSize; }
+
 	f32* mValues; // _00, array of size mSize
 	int mSize;    // _04
 };

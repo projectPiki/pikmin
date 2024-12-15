@@ -1,28 +1,21 @@
 #include "ParaParameters.h"
 #include "Stream.h"
 #include "Dolphin/os.h"
-#include "PikiMacros.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "paraparameters");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("paraparameters");
 
 /*
  * --INFO--
@@ -66,7 +59,7 @@ void ParaParametersI::write(Stream& output)
 void ParaParametersI::print()
 {
 	for (int i = 0; i < mParaCount; i++) {
-		DEBUGPRINT(mParameters[i]);
+		PRINT("%s:%d\n", mParameters[i]);
 	}
 }
 
@@ -112,7 +105,7 @@ void ParaParametersF::write(Stream& output)
 void ParaParametersF::print()
 {
 	for (int i = 0; i < mParaCount; i++) {
-		DEBUGPRINT(mParameters[i]);
+		PRINT("%s:%f\n", mParameters[i]);
 	}
 }
 

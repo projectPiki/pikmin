@@ -152,6 +152,11 @@ struct AnimDck : public AnimData {
  * @brief TODO
  */
 struct AnmobjInfo : public GfxobjInfo {
+	AnmobjInfo()
+	    : mAnimation(nullptr)
+	{
+	}
+
 	virtual void detach(); // _0C
 
 	// _00     = VTBL?
@@ -291,7 +296,7 @@ struct Animator {
 	int _18;               // _18
 	int mCurrentAnimID;    // _1C
 	int mStartKeyIndex;    // _20
-	int mEndKeyIndex;      // _24
+	int mNextKeyInfoIndex; // _24
 	AnimInfo* mAnimInfo;   // _28
 	f32 mCurrentFrame;     // _2C
 

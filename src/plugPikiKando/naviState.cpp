@@ -16,7 +16,7 @@
 #include "NaviMgr.h"
 #include "Interface.h"
 #include "GameCoreSection.h"
-#include "PikiMacros.h"
+
 #include "jaudio/PikiDemo.h"
 #include "GoalItem.h"
 #include "UtEffect.h"
@@ -3858,7 +3858,7 @@ void NaviFlickState::procAnimMsg(Navi* navi, MsgAnim* msg)
 void NaviFlickState::cleanup(Navi* navi)
 {
 	if (navi->isAlive()) {
-		DEBUGPRINT(navi->mHealth);
+		(navi->mHealth);
 	}
 }
 
@@ -4098,7 +4098,7 @@ void NaviGeyzerState::procBounceMsg(Navi* navi, MsgBounce* msg)
 void NaviGeyzerState::cleanup(Navi* navi)
 {
 	if (navi->isAlive()) {
-		DEBUGPRINT(navi->mPosition.y);
+		(navi->mPosition.y);
 	}
 }
 

@@ -25,13 +25,6 @@
 		}                                          \
 	}
 
-#ifndef __MWERKS__
-#define PANIC(dest, name) (OSError(dest, name))
-#else
-#include "system.h"
-#define PANIC(dest, name) ()
-#endif
-
 // Size - 0x9C
 #define DEFINE_ERROR()                            \
 	static void _Error(const char* fmt, ...)      \
@@ -44,9 +37,9 @@
 		System::halt(__FILE__, __LINE__, buffer); \
 	}
 
-#ifndef _DEBUG
-#define PRINT(...)
-#define ERROR(...)
+#ifdef __MWERKS__
+#define PRINT(...) (__VA_ARGS__)
+#define ERROR(...) (__VA_ARGS__)
 #else
 #define PRINT(fmt, ...) _Print(fmt, __VA_ARGS__)
 #define ERROR(fmt, ...) _Error(fmt, __VA_ARGS__)

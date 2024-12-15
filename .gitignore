@@ -18,3 +18,4 @@ tools/powerpc
 *.dol
 *.bat
 newlines.py
+/decomp

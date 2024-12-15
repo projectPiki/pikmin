@@ -11,6 +11,10 @@
 #include "Dolphin/rand.h"
 #include "Dolphin/os.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 struct Graphics;
 struct BaseApp;
 struct CacheTexture;
@@ -87,6 +91,8 @@ struct BinobjInfo : public GfxobjInfo {
 	// TODO: members
 };
 
+DEFINE_ENUM_TYPE(SystemFlags, Shutdown = 0x80000000);
+
 /**
  * @brief TODO
  *
@@ -99,7 +105,7 @@ struct StdSystem {
 	AyuHeap* getHeap(int heapIdx);
 	void resetHeap(int, int);
 	int setHeap(int);
-	void findGfxObject(char*, u32);
+	GfxobjInfo* findGfxObject(char*, u32);
 	Texture* loadTexture(char*, bool);
 	Shape* loadShape(char*, bool);
 	void findAnimation(char*);
@@ -119,36 +125,36 @@ struct StdSystem {
 	void flushLFlares(Graphics&);
 	void loadBundle(char*, bool);
 
-	// unused/inlined
 	void getAppMemory(char*);
 	void findAnyGfxObject(char*, u32);
 	void findTexture(Texture*);
 	void findAnyAnimation(char*);
 	void findIndexAnimation(char*, int);
 
+	// Static functions
+	static char* stringDup(char*);
 	static f32 getRand(f32 max) { return max * (f32(rand()) / 32767.0f); }
 
-	static char* stringDup(char*);
-
+	// Inline functions
 	inline f32 getFade() { return mCurrentFade; }
-
 	inline void setFade(f32 start, f32 end)
 	{
 		mFadeStart = start;
 		mFadeEnd   = end;
 	}
-
 	inline void setDirectories(char* bloDir, char* texDir)
 	{
 		mBloDirectory = bloDir;
 		mTexDirectory = texDir;
 	}
-
+	inline void setDataRoot(char* dir) { mDataRoot = dir; }
 	inline void softReset() { mPending = true; }
+	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
 
 private:
+	// Use the functions!
 	bool mPending;    // _00
-	f32 mCurrentFade; // _04, use the functions!
+	f32 mCurrentFade; // _04
 public:
 	f32 mFadeStart;                // _08
 	f32 mFadeEnd;                  // _0C

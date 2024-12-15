@@ -1,7 +1,6 @@
 #include "types.h"
 #include "Ayu.h"
 #include "system.h"
-#include "PikiMacros.h"
 
 /*
  * --INFO--
@@ -124,7 +123,7 @@ void* AyuStack::push(int requestedSize)
 
 		if (mAllocType & 2) {
 			if (mStackTop - *(u32*)(mStackTop - 8) > mInitialStackTop) {
-				DEBUGPRINT(mStackTop);
+				(mStackTop);
 			}
 		}
 

@@ -7,7 +7,6 @@
 #include "TekiYamashita.h"
 #include "Dolphin/os.h"
 #include "TekiParameters.h"
-#include "PikiMacros.h"
 
 /*
  * --INFO--
@@ -169,8 +168,8 @@ TekiMgr::TekiMgr()
 	int tekisHeapSize = tekisHeapStartSize - NSystem::getFreeHeap();
 	int heapSize      = heapStartSize - heapEndSize;
 
-	DEBUGPRINT((f32)tekisHeapSize);
-	DEBUGPRINT((f32)heapSize);
+	((f32)tekisHeapSize);
+	((f32)heapSize);
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -3,7 +3,6 @@
 #include "system.h"
 #include "sysNew.h"
 #include "stl/string.h"
-#include "PikiMacros.h"
 
 MemStat* memStat;
 
@@ -85,7 +84,7 @@ void MemStat::end(char* name)
 	if (memStat && getInfo(name)) {
 		// Remove the current info from the stack
 		mStatCount--;
-		DEBUGPRINT(mStatCount > 0);
+		(mStatCount > 0);
 
 		// If the current info is not the root info, set the current info to the previous info
 		mCurrentInfo       = mPrevInfoStack[mStatCount];
@@ -181,9 +180,9 @@ void MemStat::printInfoRec(MemInfo* baseInfo, int idx)
 	}
 
 	if (baseInfo->mMemorySize >= 0x100000) {
-		DEBUGPRINT(f32(baseInfo->mMemorySize));
+		(f32(baseInfo->mMemorySize));
 	} else {
-		DEBUGPRINT(f32(baseInfo->mMemorySize));
+		(f32(baseInfo->mMemorySize));
 	}
 
 	if (baseInfo->mChild) {

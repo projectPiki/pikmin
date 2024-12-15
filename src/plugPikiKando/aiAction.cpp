@@ -2,7 +2,6 @@
 #include "sysNew.h"
 #include "Dolphin/os.h"
 #include "MemStat.h"
-#include "PikiMacros.h"
 
 /*
  * --INFO--
@@ -1218,7 +1217,7 @@ void TopAction::abandon(zen::particleGenerator* particle)
 	if (mChildActionIdx != -1) {
 		mChildActions[mChildActionIdx].mAction->cleanup();
 		if (mActor->isKinoko()) {
-			DEBUGPRINT(mChildActionIdx < -1);
+			(mChildActionIdx < -1);
 		}
 	}
 

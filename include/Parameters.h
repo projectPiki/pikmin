@@ -2,7 +2,6 @@
 #define _PARAMETERS_H
 
 #include "types.h"
-#include "PikiMacros.h"
 
 struct Parameters;
 
@@ -37,7 +36,7 @@ struct Parameters {
 	{
 		BaseParm* node;
 		for (node = mHead; node; node = node->mNext) {
-			DEBUGPRINT(node->mID);
+			node->mID;
 		}
 
 		BaseParm* last = nullptr;

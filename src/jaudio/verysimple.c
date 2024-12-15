@@ -1,6 +1,5 @@
 #include "jaudio/verysimple.h"
 #include "Dolphin/os.h"
-#include "PikiMacros.h"
 
 typedef struct seqp_ seqp_;
 
@@ -67,7 +66,7 @@ static BOOL InitQueue()
 void Jac_StopSe()
 {
 	if (cmdqueue_reset) {
-		DEBUGPRINT(cmdqueue_reset != 0);
+		(cmdqueue_reset != 0);
 	}
 }
 

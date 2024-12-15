@@ -1,6 +1,6 @@
 #include "Creature.h"
 #include "SearchSystem.h"
-#include "PikiMacros.h"
+
 #include "Collision.h"
 #include "DynColl.h"
 #include "Geometry.h"
@@ -77,14 +77,14 @@ bool Creature::isTerrible()
  */
 void Creature::load(RandomAccessStream& stream, bool p2)
 {
-	DEBUGPRINT(ObjType::getName(mObjType));
-	DEBUGPRINT(stream.getPosition());
+	(ObjType::getName(mObjType));
+	(stream.getPosition());
 	if (p2) {
 		mPosition.read(stream);
 	}
 
 	doLoad(stream);
-	DEBUGPRINT(stream.getPosition());
+	(stream.getPosition());
 }
 
 /*
@@ -94,14 +94,14 @@ void Creature::load(RandomAccessStream& stream, bool p2)
  */
 void Creature::save(RandomAccessStream& stream, bool p2)
 {
-	DEBUGPRINT(ObjType::getName(mObjType));
-	DEBUGPRINT(stream.getPosition());
+	(ObjType::getName(mObjType));
+	(stream.getPosition());
 	if (p2) {
 		mPosition.write(stream);
 	}
 
 	doSave(stream);
-	DEBUGPRINT(stream.getPosition());
+	(stream.getPosition());
 }
 
 /*
@@ -379,7 +379,7 @@ u32 Creature::getGeneratorID()
  */
 bool Creature::stimulate(Interaction& interaction)
 {
-	DEBUGPRINT(ObjType::getName(mObjType));
+	(ObjType::getName(mObjType));
 	return false;
 }
 

@@ -12,7 +12,6 @@
 #include "Pellet.h"
 #include "RadarInfo.h"
 #include "TekiStrategy.h"
-#include "PikiMacros.h"
 #include "EffectMgr.h"
 
 int BTeki::TEKI_OPTION_VISIBLE            = 1 << 0;
@@ -808,7 +807,7 @@ void BTeki::prepareEffects()
 		zen::particleGenerator* ptcl
 		    = effectMgr->create((EffectMgr::effTypeTable)(i + EffectMgr::EFF_Unk52), Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 		if (!ptcl) {
-			DEBUGPRINT(ptcl->_F0);
+			(ptcl->_F0);
 			break;
 		}
 

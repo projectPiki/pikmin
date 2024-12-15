@@ -1,5 +1,5 @@
 #include "SimpleAI.h"
-#include "PikiMacros.h"
+
 #include "sysNew.h"
 
 static char file[] = __FILE__;
@@ -110,7 +110,7 @@ void AICreature::bounceCallback()
  */
 void AICreature::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	DEBUGPRINT(mObjType == OBJTYPE_Goal);
+	(mObjType == OBJTYPE_Goal);
 
 	MsgAnim msg(&event);
 
