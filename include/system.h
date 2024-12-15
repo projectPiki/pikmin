@@ -108,7 +108,7 @@ struct StdSystem {
 	GfxobjInfo* findGfxObject(char*, u32);
 	Texture* loadTexture(char*, bool);
 	Shape* loadShape(char*, bool);
-	void findAnimation(char*);
+	AnimData* findAnimation(char*);
 	int findAnyIndex(char*, char*);
 	AnimData* loadAnimation(Shape*, char*, bool);
 	void addAnimation(AnimData*, char*);
@@ -117,7 +117,7 @@ struct StdSystem {
 	void detachObjs();
 	void invalidateObjs(u32, u32);
 	void addTexture(Texture*, char*);
-	void getShape(char*, char*, char*, bool);
+	Shape* getShape(char*, char*, char*, bool);
 	void initLFlares(int);
 	void resetLFlares();
 	LFInfo* getLFlareInfo();
@@ -183,7 +183,7 @@ public:
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.
 	// OR everything above this is a separate struct with some inheritance (doubt)
 	virtual void initSoftReset();                               // _08
-	virtual BufferedInputStream* openFile(char*, bool, bool);   // _0C
+	virtual RandomAccessStream* openFile(char*, bool, bool);    // _0C
 	virtual u32 copyRamToCache(u32, u32, u32) { return 0; }     // _10
 	virtual void copyCacheToRam(u32, u32, u32) { }              // _14
 	virtual void copyWaitUntilDone() { }                        // _18
@@ -229,16 +229,16 @@ public:
 struct System : public StdSystem {
 	System();
 
-	virtual void initSoftReset();                             // _08
-	virtual BufferedInputStream* openFile(char*, bool, bool); // _0C
-	virtual u32 copyRamToCache(u32, u32, u32);                // _10
-	virtual void copyCacheToRam(u32, u32, u32);               // _14
-	virtual void copyWaitUntilDone();                         // _18
-	virtual void copyCacheToTexture(CacheTexture*);           // _1C
-	virtual void parseArchiveDirectory(char*, char*);         // _24
-	virtual void sndPlaySe(u32);                              // _28
-	virtual void startLoading(LoadIdler*, bool, u32);         // _2C
-	virtual void endLoading();                                // _30
+	virtual void initSoftReset();                            // _08
+	virtual RandomAccessStream* openFile(char*, bool, bool); // _0C
+	virtual u32 copyRamToCache(u32, u32, u32);               // _10
+	virtual void copyCacheToRam(u32, u32, u32);              // _14
+	virtual void copyWaitUntilDone();                        // _18
+	virtual void copyCacheToTexture(CacheTexture*);          // _1C
+	virtual void parseArchiveDirectory(char*, char*);        // _24
+	virtual void sndPlaySe(u32);                             // _28
+	virtual void startLoading(LoadIdler*, bool, u32);        // _2C
+	virtual void endLoading();                               // _30
 
 	~System();
 

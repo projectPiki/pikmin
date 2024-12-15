@@ -47,7 +47,7 @@ void DVDStream::init()
  * Address:	800447DC
  * Size:	000254
  */
-BufferedInputStream* System::openFile(char*, bool, bool)
+RandomAccessStream* System::openFile(char*, bool, bool)
 {
 	/*
 	.loc_0x0:

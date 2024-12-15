@@ -109,7 +109,7 @@ void CoreNode::load(char* p1, char* p2, u32 p3)
 {
 	char buf[256];
 	sprintf(buf, "%s%s", p1, p2);
-	BufferedInputStream* stream = gsys->openFile(buf, true, true);
+	RandomAccessStream* stream = gsys->openFile(buf, true, true);
 	if (stream) {
 		read(*stream);
 		stream->close();

@@ -179,10 +179,6 @@ struct CndBombable : public CndCollPart {
 	// TODO: members
 };
 
-struct ShpobjInfo : public GfxobjInfo {
-	Shape* mTarget; // _20
-};
-
 /**
  * @brief TODO
  *
@@ -233,8 +229,7 @@ struct CollInfo {
 /**
  * @brief TODO
  */
-struct CollGroup {
-};
+struct CollGroup { };
 
 /**
  * @brief TODO

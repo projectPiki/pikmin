@@ -1,34 +1,27 @@
-#include "types.h"
-#include "system.h"
-#include "Texture.h"
-#include "Animator.h"
-#include "sysNew.h"
-#include "CmdStream.h"
 #include "stl/string.h"
+#include "CmdStream.h"
+#include "Animator.h"
+#include "DebugLog.h"
+#include "Texture.h"
+#include "system.h"
+#include "sysNew.h"
+#include "types.h"
 #include "Light.h"
-
-static char file[] = __FILE__;
-static char name[] = "StdSystem";
+#include "Shape.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("StdSystem");
 
 /*
  * --INFO--
@@ -58,7 +51,7 @@ StdSystem::StdSystem()
 	mLightFlares      = nullptr;
 
 	initSoftReset();
-	mDataRoot    = "dataDir/";
+	setDataRoot("dataDir/");
 	mCurrMemInfo = nullptr;
 }
 
@@ -114,55 +107,15 @@ void StdSystem::getAppMemory(char*)
  * Address:	8003F078
  * Size:	000090
  */
-void StdSystem::findGfxObject(char*, u32)
+GfxobjInfo* StdSystem::findGfxObject(char* str, u32 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0x1D0
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r5, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r4, 0
-	  lwz       r30, 0x1D4(r3)
-	  b         .loc_0x64
+	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
+		if (info->mId == id && !strcmp(info->mString, str)) {
+			return info;
+		}
+	}
 
-	.loc_0x30:
-	  addi      r3, r30, 0xC
-	  addi      r4, r29, 0
-	  bl        0x4F30
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x60
-	  lwz       r3, 0x8(r30)
-	  mr        r4, r28
-	  bl        0x1DA100
-	  cmpwi     r3, 0
-	  bne-      .loc_0x60
-	  mr        r3, r30
-	  b         .loc_0x70
-
-	.loc_0x60:
-	  lwz       r30, 0x4(r30)
-
-	.loc_0x64:
-	  cmplw     r30, r31
-	  bne+      .loc_0x30
-	  li        r3, 0
-
-	.loc_0x70:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	return nullptr;
 }
 
 /*
@@ -170,7 +123,7 @@ void StdSystem::findGfxObject(char*, u32)
  * Address:	........
  * Size:	00009C
  */
-void StdSystem::findAnyGfxObject(char*, u32)
+void StdSystem::findAnyGfxObject(char* str, u32 id)
 {
 	// UNUSED FUNCTION
 }
@@ -180,89 +133,22 @@ void StdSystem::findAnyGfxObject(char*, u32)
  * Address:	8003F108
  * Size:	0000F4
  */
-Texture* StdSystem::loadTexture(char*, bool)
+Texture* StdSystem::loadTexture(char* path, bool unk)
 {
-	return nullptr;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r26, 0x18(r1)
-	  mr        r26, r3
-	  addi      r27, r4, 0
-	  addi      r28, r5, 0
-	  addi      r31, r26, 0x1D0
-	  lis       r30, 0x5F74
-	  lwz       r29, 0x1D4(r3)
-	  b         .loc_0x5C
+	GfxobjInfo* foundObj = findGfxObject(path, '_tex');
+	if (foundObj) {
+		return (Texture*)((TexobjInfo*)foundObj)->mTexture;
+	}
 
-	.loc_0x2C:
-	  addi      r3, r29, 0xC
-	  addi      r4, r30, 0x6578
-	  bl        0x4EA4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x58
-	  lwz       r3, 0x8(r29)
-	  mr        r4, r27
-	  bl        0x1DA074
-	  cmpwi     r3, 0
-	  bne-      .loc_0x58
-	  b         .loc_0x68
+	Texture* loadedTex     = nullptr;
+	RandomAccessStream* fs = openFile(path, unk, true);
+	if (fs) {
+		loadedTex = new Texture();
+		loadedTex->read(*fs);
+		fs->close();
+	}
 
-	.loc_0x58:
-	  lwz       r29, 0x4(r29)
-
-	.loc_0x5C:
-	  cmplw     r29, r31
-	  bne+      .loc_0x2C
-	  li        r29, 0
-
-	.loc_0x68:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x78
-	  lwz       r3, 0x20(r29)
-	  b         .loc_0xE0
-
-	.loc_0x78:
-	  mr        r3, r26
-	  lwz       r12, 0x1A0(r26)
-	  addi      r4, r27, 0
-	  addi      r5, r28, 0
-	  lwz       r12, 0xC(r12)
-	  li        r29, 0
-	  li        r6, 0x1
-	  mtlr      r12
-	  blrl
-	  mr.       r30, r3
-	  beq-      .loc_0xDC
-	  li        r3, 0x3C
-	  bl        0x7E54
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0xBC
-	  bl        0x4FD4
-
-	.loc_0xBC:
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  bl        0x510C
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xDC:
-	  mr        r3, r29
-
-	.loc_0xE0:
-	  lmw       r26, 0x18(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	return loadedTex;
 }
 
 /*
@@ -270,7 +156,7 @@ Texture* StdSystem::loadTexture(char*, bool)
  * Address:	8003F1FC
  * Size:	000008
  */
-BufferedInputStream* StdSystem::openFile(char*, bool, bool) { return nullptr; }
+RandomAccessStream* StdSystem::openFile(char*, bool, bool) { return nullptr; }
 
 /*
  * --INFO--
@@ -287,137 +173,48 @@ void StdSystem::findTexture(Texture*)
  * Address:	8003F204
  * Size:	0001A8
  */
-Shape* StdSystem::loadShape(char*, bool)
+Shape* StdSystem::loadShape(char* path, bool mayExist)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r5,0,24,31
-	  stwu      r1, -0x130(r1)
-	  stmw      r26, 0x118(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  li        r31, 0
-	  beq-      .loc_0x7C
-	  lwz       r26, 0x1D4(r29)
-	  addi      r28, r29, 0x1D0
-	  lis       r27, 0x5F73
-	  b         .loc_0x64
+	Shape* result = nullptr;
+	if (mayExist) {
+		// If the shape may exist, try and look for it in the list
+		GfxobjInfo* foundInfo = findGfxObject(path, '_shp');
+		if (foundInfo) {
+			result = ((ShpobjInfo*)foundInfo)->mTarget;
+		}
+	}
 
-	.loc_0x34:
-	  addi      r3, r26, 0xC
-	  addi      r4, r27, 0x6870
-	  bl        0x4DA0
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x60
-	  lwz       r3, 0x8(r26)
-	  mr        r4, r30
-	  bl        0x1D9F70
-	  cmpwi     r3, 0
-	  bne-      .loc_0x60
-	  b         .loc_0x70
+	if (!result) {
+		char shapePathBuffer[256];
+		sprintf(shapePathBuffer, "%s", path);
 
-	.loc_0x60:
-	  lwz       r26, 0x4(r26)
+		// Isolate the first and second half of the path
+		char* remainingPath = nullptr;
+		for (int i = strlen(shapePathBuffer) - 1; i >= 0; i--) {
+			u8 target = '?';
+			if ((u8)path[i] != target) {
+				continue;
+			}
 
-	.loc_0x64:
-	  cmplw     r26, r28
-	  bne+      .loc_0x34
-	  li        r26, 0
+			remainingPath      = &shapePathBuffer[i + 1];
+			shapePathBuffer[i] = '\0';
+			break;
+		}
 
-	.loc_0x70:
-	  cmplwi    r26, 0
-	  beq-      .loc_0x7C
-	  lwz       r31, 0x20(r26)
+		// Get and add the shape
+		result = getShape(shapePathBuffer, path, remainingPath, true);
+		if (result) {
+			ShpobjInfo* newInfo = new ShpobjInfo();
+			newInfo->mString    = StdSystem::stringDup(path);
+			newInfo->mId.setID('_shp');
+			newInfo->mTarget = result;
+			addGfxObject(newInfo);
+		} else {
+			ERROR("Could not load shape : %s\n", path);
+		}
+	}
 
-	.loc_0x7C:
-	  cmplwi    r31, 0
-	  bne-      .loc_0x190
-	  addi      r5, r30, 0
-	  crclr     6, 0x6
-	  addi      r3, r1, 0x14
-	  subi      r4, r13, 0x7A04
-	  bl        0x1D7300
-	  li        r26, 0
-	  addi      r3, r1, 0x14
-	  bl        0x1DA168
-	  subic.    r4, r3, 0x1
-	  addi      r0, r4, 0x1
-	  mtctr     r0
-	  add       r3, r30, r4
-	  blt-      .loc_0xE8
-
-	.loc_0xB8:
-	  lbz       r0, 0x0(r3)
-	  cmplwi    r0, 0x3F
-	  bne-      .loc_0xDC
-	  addi      r3, r1, 0x14
-	  li        r0, 0
-	  addi      r26, r1, 0x15
-	  stbx      r0, r3, r4
-	  add       r26, r26, r4
-	  b         .loc_0xE8
-
-	.loc_0xDC:
-	  subi      r4, r4, 0x1
-	  subi      r3, r3, 0x1
-	  bdnz+     .loc_0xB8
-
-	.loc_0xE8:
-	  addi      r3, r29, 0
-	  addi      r5, r30, 0
-	  addi      r6, r26, 0
-	  addi      r4, r1, 0x14
-	  li        r7, 0x1
-	  bl        0x5DC
-	  mr.       r31, r3
-	  beq-      .loc_0x190
-	  li        r3, 0x24
-	  bl        0x7CF4
-	  mr.       r26, r3
-	  beq-      .loc_0x164
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x795C
-	  stw       r0, 0x1C(r26)
-	  addi      r3, r26, 0xC
-	  bl        0x4B30
-	  li        r28, 0
-	  stw       r28, 0x4(r26)
-	  lis       r4, 0x6E6F
-	  subi      r0, r13, 0x7A08
-	  stw       r28, 0x0(r26)
-	  addi      r3, r26, 0xC
-	  addi      r4, r4, 0x6E65
-	  stw       r0, 0x8(r26)
-	  bl        0x4B74
-	  lis       r3, 0x8023
-	  stw       r28, 0x18(r26)
-	  subi      r0, r3, 0x72E8
-	  stw       r0, 0x1C(r26)
-	  stw       r28, 0x20(r26)
-
-	.loc_0x164:
-	  mr        r3, r30
-	  bl        0xFD4
-	  stw       r3, 0x8(r26)
-	  lis       r4, 0x5F73
-	  addi      r3, r26, 0xC
-	  addi      r4, r4, 0x6870
-	  bl        0x4B44
-	  stw       r31, 0x20(r26)
-	  addi      r3, r29, 0
-	  addi      r4, r26, 0
-	  bl        0x2D4
-
-	.loc_0x190:
-	  mr        r3, r31
-	  lmw       r26, 0x118(r1)
-	  lwz       r0, 0x134(r1)
-	  addi      r1, r1, 0x130
-	  mtlr      r0
-	  blr
-	*/
+	return result;
 }
 
 /*
@@ -425,63 +222,10 @@ Shape* StdSystem::loadShape(char*, bool)
  * Address:	8003F3AC
  * Size:	0000A0
  */
-void StdSystem::findAnimation(char*)
+AnimData* StdSystem::findAnimation(char* path)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0x1D0
-	  stw       r30, 0x20(r1)
-	  lis       r30, 0x5F61
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
-	  addi      r28, r4, 0
-	  lwz       r29, 0x1D4(r3)
-	  b         .loc_0x60
-
-	.loc_0x30:
-	  addi      r3, r29, 0xC
-	  addi      r4, r30, 0x6E6D
-	  bl        0x4BFC
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x5C
-	  lwz       r3, 0x8(r29)
-	  mr        r4, r28
-	  bl        0x1D9DCC
-	  cmpwi     r3, 0
-	  bne-      .loc_0x5C
-	  b         .loc_0x6C
-
-	.loc_0x5C:
-	  lwz       r29, 0x4(r29)
-
-	.loc_0x60:
-	  cmplw     r29, r31
-	  bne+      .loc_0x30
-	  li        r29, 0
-
-	.loc_0x6C:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x7C
-	  lwz       r3, 0x20(r29)
-	  b         .loc_0x80
-
-	.loc_0x7C:
-	  li        r3, 0
-
-	.loc_0x80:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	GfxobjInfo* info = findGfxObject(path, '_anm');
+	return info ? ((AnmobjInfo*)info)->mAnimation : nullptr;
 }
 
 /*
@@ -509,62 +253,22 @@ void StdSystem::findIndexAnimation(char*, int)
  * Address:	8003F44C
  * Size:	0000A4
  */
-int StdSystem::findAnyIndex(char*, char*)
+int StdSystem::findAnyIndex(char* prefix, char* fullStr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r26, 0x18(r1)
-	  addi      r26, r4, 0
-	  addi      r27, r5, 0
-	  addi      r31, r3, 0x1D0
-	  li        r29, 0
-	  lis       r30, 0x5F61
-	  lwz       r28, 0x1D4(r3)
-	  b         .loc_0x84
+	int index = 0;
+	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
+		if (info->mId == '_anm') {
+			if (!strncmp(info->mString, prefix, strlen(prefix))) {
+				if (!strcmp(info->mString, fullStr)) {
+					return index;
+				}
 
-	.loc_0x2C:
-	  addi      r3, r28, 0xC
-	  addi      r4, r30, 0x6E6D
-	  bl        0x4B60
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x80
-	  mr        r3, r26
-	  bl        0x1D9F7C
-	  mr        r5, r3
-	  lwz       r3, 0x8(r28)
-	  mr        r4, r26
-	  bl        0x1D9CE4
-	  cmpwi     r3, 0
-	  bne-      .loc_0x80
-	  lwz       r3, 0x8(r28)
-	  mr        r4, r27
-	  bl        0x1D9D10
-	  cmpwi     r3, 0
-	  bne-      .loc_0x7C
-	  mr        r3, r29
-	  b         .loc_0x90
+				index++;
+			}
+		}
+	}
 
-	.loc_0x7C:
-	  addi      r29, r29, 0x1
-
-	.loc_0x80:
-	  lwz       r28, 0x4(r28)
-
-	.loc_0x84:
-	  cmplw     r28, r31
-	  bne+      .loc_0x2C
-	  li        r3, 0
-
-	.loc_0x90:
-	  lmw       r26, 0x18(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	return 0;
 }
 
 /*
@@ -572,74 +276,19 @@ int StdSystem::findAnyIndex(char*, char*)
  * Address:	8003F4F0
  * Size:	0000BC
  */
-AnimData* StdSystem::loadAnimation(Shape*, char*, bool)
+AnimData* StdSystem::loadAnimation(Shape* shape, char* path, bool unk)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r25, 0x24(r1)
-	  mr        r25, r3
-	  addi      r26, r4, 0
-	  addi      r27, r5, 0
-	  addi      r28, r6, 0
-	  addi      r31, r25, 0x1D0
-	  lis       r30, 0x5F61
-	  lwz       r29, 0x1D4(r3)
-	  b         .loc_0x60
+	GfxobjInfo* found = findGfxObject(path, '_anm');
+	if (found) {
+		return ((AnmobjInfo*)found)->mAnimation;
+	}
 
-	.loc_0x30:
-	  addi      r3, r29, 0xC
-	  addi      r4, r30, 0x6E6D
-	  bl        0x4AB8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x5C
-	  lwz       r3, 0x8(r29)
-	  mr        r4, r27
-	  bl        0x1D9C88
-	  cmpwi     r3, 0
-	  bne-      .loc_0x5C
-	  b         .loc_0x6C
+	AnimData* data = shape->loadAnimation(path, unk);
+	if (data) {
+		addAnimation(data, path);
+	}
 
-	.loc_0x5C:
-	  lwz       r29, 0x4(r29)
-
-	.loc_0x60:
-	  cmplw     r29, r31
-	  bne+      .loc_0x30
-	  li        r29, 0
-
-	.loc_0x6C:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x7C
-	  lwz       r3, 0x20(r29)
-	  b         .loc_0xA8
-
-	.loc_0x7C:
-	  addi      r3, r26, 0
-	  addi      r4, r27, 0
-	  addi      r5, r28, 0
-	  bl        -0xA784
-	  mr.       r29, r3
-	  beq-      .loc_0xA4
-	  addi      r3, r25, 0
-	  addi      r4, r29, 0
-	  addi      r5, r27, 0
-	  bl        .loc_0xBC
-
-	.loc_0xA4:
-	  mr        r3, r29
-
-	.loc_0xA8:
-	  lmw       r25, 0x24(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-
-	.loc_0xBC:
-	*/
+	return data;
 }
 
 /*
@@ -647,61 +296,13 @@ AnimData* StdSystem::loadAnimation(Shape*, char*, bool)
  * Address:	8003F5AC
  * Size:	0000B8
  */
-void StdSystem::addAnimation(AnimData*, char*)
+void StdSystem::addAnimation(AnimData* data, char* path)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  li        r3, 0x24
-	  bl        0x7A38
-	  mr.       r30, r3
-	  beq-      .loc_0x78
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x795C
-	  stw       r0, 0x1C(r30)
-	  addi      r3, r30, 0xC
-	  bl        0x4874
-	  li        r31, 0
-	  stw       r31, 0x4(r30)
-	  lis       r4, 0x6E6F
-	  subi      r0, r13, 0x7A08
-	  stw       r31, 0x0(r30)
-	  addi      r3, r30, 0xC
-	  addi      r4, r4, 0x6E65
-	  stw       r0, 0x8(r30)
-	  bl        0x48B8
-	  lis       r3, 0x8023
-	  stw       r31, 0x18(r30)
-	  subi      r0, r3, 0x7294
-	  stw       r0, 0x1C(r30)
-	  stw       r31, 0x20(r30)
-
-	.loc_0x78:
-	  mr        r3, r29
-	  bl        0xD18
-	  stw       r3, 0x8(r30)
-	  lis       r4, 0x5F61
-	  addi      r3, r30, 0xC
-	  addi      r4, r4, 0x6E6D
-	  bl        0x4888
-	  stw       r28, 0x20(r30)
-	  addi      r3, r27, 0
-	  addi      r4, r30, 0
-	  bl        .loc_0xB8
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-
-	.loc_0xB8:
-	*/
+	AnmobjInfo* newInfo = new AnmobjInfo();
+	newInfo->mString    = StdSystem::stringDup(path);
+	newInfo->mId.setID('_anm');
+	newInfo->mAnimation = data;
+	addGfxObject(newInfo);
 }
 
 /*
@@ -709,21 +310,10 @@ void StdSystem::addAnimation(AnimData*, char*)
  * Address:	8003F664
  * Size:	000028
  */
-void StdSystem::addGfxObject(GfxobjInfo*)
+void StdSystem::addGfxObject(GfxobjInfo* other)
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x1D4(r3)
-	  addi      r5, r3, 0x1D0
-	  li        r0, 0x1
-	  stw       r6, 0x4(r4)
-	  stw       r5, 0x0(r4)
-	  lwz       r5, 0x1D4(r3)
-	  stw       r4, 0x0(r5)
-	  stw       r4, 0x1D4(r3)
-	  stb       r0, 0x1F0(r3)
-	  blr
-	*/
+	mGfxobjInfo.insertAfter(other);
+	mHasGfxObjects = true;
 }
 
 /*
@@ -956,8 +546,9 @@ void StdSystem::initSoftReset()
  * Address:	8003F8DC
  * Size:	000108
  */
-void StdSystem::getShape(char*, char*, char*, bool)
+Shape* StdSystem::getShape(char*, char*, char*, bool)
 {
+	return nullptr;
 	/*
 	.loc_0x0:
 	  mflr      r0

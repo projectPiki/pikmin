@@ -114,7 +114,7 @@ void FlowController::setStage(char*)
 void FlowController::readMapList(char* fileName)
 {
 	mRootInfo.initCore("stages");
-	BufferedInputStream* file = gsys->openFile(fileName, true, true);
+	RandomAccessStream* file = gsys->openFile(fileName, true, true);
 	if (!file) {
 		return;
 	}

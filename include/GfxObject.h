@@ -19,6 +19,14 @@ struct GfxobjInfo {
 		mAttached = 0;
 	}
 
+	void insertAfter(GfxobjInfo* other)
+	{
+		other->mNext = mNext;
+		other->mPrev = this;
+		mNext->mPrev = other;
+		mNext        = other;
+	}
+
 	// _1C = VTBL
 	GfxobjInfo* mPrev; // _04
 	GfxobjInfo* mNext; // _08
@@ -39,6 +47,15 @@ struct GfxObject {
 	virtual void detach() { } // _0C
 
 	// TODO: members
+};
+
+struct ShpobjInfo : public GfxobjInfo {
+	ShpobjInfo()
+	    : mTarget(nullptr)
+	{
+	}
+
+	struct Shape* mTarget; // _20
 };
 
 #endif
