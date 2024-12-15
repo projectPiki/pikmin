@@ -1,4 +1,5 @@
-object: orig/DPIJ01/sys/main.dol
+object_base: orig/DPIJ01
+object: files/zz_pikmin_game/PikiDemo.tgc:sys/main.dol
 hash: 16aa58df2658f79b1dbb0f8500afd65399253267
 
 # Generated from dataDir/build.map

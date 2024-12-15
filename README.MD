@@ -78,11 +78,10 @@ Building
   git clone https://github.com/projectPiki/pikmin.git
   ```
 
-- Using [Dolphin Emulator](https://dolphin-emu.org/), extract your game's system data to `orig/GPIE01_01`. (Or the appropriate version folder.)
-  - Right-click the game in Dolphin's game list and select `Properties`.
-  - Go to the `Filesystem` tab and right-click `Disc` -> `Extract System Data`.
-![Dolphin filesystem extract](assets/dolphin-extract.png)
-  - After extraction, the following file should exist: `orig/GPIE01_01/sys/main.dol`.
+- Copy your game's disc image to `orig/GPIE01_01`. (Or the appropriate version folder.)
+  - Supported formats: ISO (GCM), RVZ, WIA, WBFS, CISO, NFS, GCZ, TGC
+  - After the initial build, the disc image can be deleted to save space.
+
 - Configure:
 
   ```sh
