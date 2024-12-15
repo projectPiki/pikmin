@@ -1,7 +1,7 @@
 #include "Animator.h"
 #include "Ayu.h"
 #include "Parameters.h"
-#include "string.h"
+#include "String.h"
 #include "stl/string.h"
 #include "Shape.h"
 #include "system.h"

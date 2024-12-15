@@ -9,7 +9,7 @@
 #include "GfxObject.h"
 #include "Parameters.h"
 #include "Ayu.h"
-#include "string.h"
+#include "String.h"
 
 struct AnimMgr;
 struct BaseShape;
