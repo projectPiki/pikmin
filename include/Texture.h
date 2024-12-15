@@ -112,28 +112,33 @@ struct Texture : public GfxObject {
 	void getRed(int, int);
 
 	// _00 = VTBL
-	u16 _04;           // _04
-	s16 _06;           // _06
-	u16 mWidth;        // _08
-	u16 mHeight;       // _0A
-	u32 mTileSizeX;    // _0C
-	u32 mTileSizeY;    // _10
-	void* mPixelData;  // _14
-	u32* mTextureData; // _18
-	f32 _1C;           // _1C
-	int _20;           // _20
-	void* _24;         // _24, pointer to something of size 0x20
-	f32 _28;           // _28
-	f32 _2C;           // _2C
-	int _30;           // _30
-	int _34;           // _34
-	u8 _38[0x4];       // _38, unknown
+	u16 _04;                  // _04
+	s16 _06;                  // _06
+	u16 mWidth;               // _08
+	u16 mHeight;              // _0A
+	u32 mTileSizeX;           // _0C
+	u32 mTileSizeY;           // _10
+	void* mPixelData;         // _14
+	u32* mTextureData;        // _18
+	f32 _1C;                  // _1C
+	int _20;                  // _20
+	void* _24;                // _24, pointer to something of size 0x20
+	f32 _28;                  // _28
+	f32 _2C;                  // _2C
+	u32 _30;                  // _30
+	int _34;                  // _34
+	struct TexobjInfo* mInfo; // _30
 };
 
 /**
  * @brief TODO
  */
 struct TexobjInfo : public GfxobjInfo {
+	TexobjInfo()
+	    : mTexture(nullptr)
+	{
+	}
+
 	virtual void attach() { mTexture->attach(); } // _08
 	virtual void detach() { mTexture->detach(); } // _0C
 

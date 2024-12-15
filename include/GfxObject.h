@@ -26,6 +26,12 @@ struct GfxobjInfo {
 		mNext        = other;
 	}
 
+	void remove()
+	{
+		mNext->mPrev = mPrev;
+		mPrev->mNext = mNext;
+	}
+
 	// _1C = VTBL
 	GfxobjInfo* mPrev; // _04
 	GfxobjInfo* mNext; // _08

@@ -50,11 +50,22 @@ struct LightFlare : public CoreNode {
  * @brief TODO
  */
 struct LFlareGroup : public CoreNode {
+	LFlareGroup()
+	    : CoreNode("lfgroup")
+	{
+		mTexture = nullptr;
+		_1C      = 0;
+		_20      = 0;
+		_24      = 1;
+	}
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
-	u8 _14[0x10]; // _14, unknown
-	u32 _24;      // _24, could be int
+	u32 _14;                  // _14
+	struct Texture* mTexture; // _18
+	u32 _1C;                  // _1C
+	u32 _20;                  // _20
+	u32 _24;                  // _24
 };
 
 /**

@@ -631,7 +631,7 @@ void preloadLanguage()
 	gsys->_228 = &gsys->_200;
 	gsys->parseArchiveDirectory(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Dir], gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Arc]);
 	gsys->loadBundle(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Bun], true);
-	gsys->setDirectories(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Blo], gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Tex]);
+	gsys->setTextureDirectories(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Blo], gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Tex]);
 	gsys->getHeap(gsys->mActiveHeapIdx);
 	gsys->setHeap(heapIdx);
 	/*
@@ -777,7 +777,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	mLangFilePaths[1][LANGFILE_Blo] = "screen/eng_blo/";
 	mLangFilePaths[1][LANGFILE_Tex] = "screen/eng_tex/";
 
-	gsys->setDirectories("screen/sys_blo/", "screen/otona_tex/");
+	gsys->setTextureDirectories("screen/sys_blo/", "screen/otona_tex/");
 
 	mParameters = new GamePrms();
 	int size    = 0x8000;

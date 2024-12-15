@@ -142,10 +142,15 @@ struct StdSystem {
 		mFadeStart = start;
 		mFadeEnd   = end;
 	}
-	inline void setDirectories(char* bloDir, char* texDir)
+	inline void setTextureDirectories(char* bloDir, char* texDir)
 	{
 		mBloDirectory = bloDir;
 		mTexDirectory = texDir;
+	}
+	inline void setTextureBase(char* base1, char* base2)
+	{
+		mTextureBase1 = base1;
+		mTextureBase2 = base2;
 	}
 	inline void setDataRoot(char* dir) { mDataRoot = dir; }
 	inline void softReset() { mPending = true; }

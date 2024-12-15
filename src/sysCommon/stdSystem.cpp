@@ -7,6 +7,7 @@
 #include "Light.h"
 #include "Shape.h"
 #include "sysNew.h"
+#include "Graphics.h"
 
 /*
  * --INFO--
@@ -322,6 +323,8 @@ void StdSystem::addGfxObject(GfxobjInfo* other)
  */
 void StdSystem::attachObjs()
 {
+	// TODO: WTF does gsys have to do with this?
+	// UNFINISHED ==================================================================================
 	if (mHasGfxObjects) {
 		for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
 			if (!info->mAttached) {
@@ -332,57 +335,6 @@ void StdSystem::attachObjs()
 
 		mHasGfxObjects = false;
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  mr        r28, r3
-	  lbz       r0, 0x1F0(r28)
-	  lwz       r3, 0x2DEC(r13)
-	  cmplwi    r0, 0
-	  lwz       r3, 0x26C(r3)
-	  beq-      .loc_0x7C
-	  lwz       r29, 0x1D4(r28)
-	  addi      r31, r28, 0x1D0
-	  li        r30, 0x1
-	  b         .loc_0x6C
-
-	.loc_0x44:
-	  lwz       r0, 0x18(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x68
-	  mr        r3, r29
-	  lwz       r12, 0x1C(r29)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r30, 0x18(r29)
-
-	.loc_0x68:
-	  lwz       r29, 0x4(r29)
-
-	.loc_0x6C:
-	  cmplw     r29, r31
-	  bne+      .loc_0x44
-	  li        r0, 0
-	  stb       r0, 0x1F0(r28)
-
-	.loc_0x7C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -392,49 +344,14 @@ void StdSystem::attachObjs()
  */
 void StdSystem::detachObjs()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  mr        r28, r3
-	  addi      r31, r28, 0x1D0
-	  lwz       r29, 0x1D4(r3)
-	  b         .loc_0x58
+	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
+		if (info->mAttached) {
+			info->detach();
+			info->mAttached = false;
+		}
+	}
 
-	.loc_0x30:
-	  lwz       r0, 0x18(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x54
-	  mr        r3, r29
-	  lwz       r12, 0x1C(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r30, 0x18(r29)
-
-	.loc_0x54:
-	  lwz       r29, 0x4(r29)
-
-	.loc_0x58:
-	  cmplw     r29, r31
-	  bne+      .loc_0x30
-	  li        r0, 0x1
-	  stb       r0, 0x1F0(r28)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mHasGfxObjects = true;
 }
 
 /*
@@ -442,8 +359,20 @@ void StdSystem::detachObjs()
  * Address:	8003F7B0
  * Size:	000048
  */
-void StdSystem::invalidateObjs(u32, u32)
+void StdSystem::invalidateObjs(u32 lowerBound, u32 upperBound)
 {
+	GfxobjInfo* currentInfo = mGfxobjInfo.mNext;
+	while (currentInfo != &mGfxobjInfo) {
+		GfxobjInfo* nextInfo = currentInfo->mNext;
+		u32 address          = reinterpret_cast<u32>(currentInfo);
+
+		if (address >= lowerBound && address < upperBound) {
+			currentInfo->remove();
+		}
+
+		currentInfo = nextInfo;
+	}
+
 	/*
 	.loc_0x0:
 	  lwz       r8, 0x1D4(r3)
@@ -478,66 +407,14 @@ void StdSystem::invalidateObjs(u32, u32)
  * Address:	8003F7F8
  * Size:	0000D4
  */
-void StdSystem::addTexture(Texture*, char*)
+void StdSystem::addTexture(Texture* texture, char* path)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  li        r3, 0x24
-	  bl        0x77EC
-	  mr.       r30, r3
-	  beq-      .loc_0x78
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x795C
-	  stw       r0, 0x1C(r30)
-	  addi      r3, r30, 0xC
-	  bl        0x4628
-	  li        r31, 0
-	  stw       r31, 0x4(r30)
-	  lis       r4, 0x6E6F
-	  subi      r0, r13, 0x7A08
-	  stw       r31, 0x0(r30)
-	  addi      r3, r30, 0xC
-	  addi      r4, r4, 0x6E65
-	  stw       r0, 0x8(r30)
-	  bl        0x466C
-	  lis       r3, 0x8023
-	  stw       r31, 0x18(r30)
-	  subi      r0, r3, 0x7310
-	  stw       r0, 0x1C(r30)
-	  stw       r31, 0x20(r30)
-
-	.loc_0x78:
-	  mr        r3, r29
-	  bl        0xACC
-	  stw       r3, 0x8(r30)
-	  lis       r4, 0x5F74
-	  addi      r3, r30, 0xC
-	  addi      r4, r4, 0x6578
-	  bl        0x463C
-	  stw       r28, 0x20(r30)
-	  addi      r3, r27, 0x1D0
-	  li        r0, 0x1
-	  stw       r30, 0x38(r28)
-	  lwz       r4, 0x1D4(r27)
-	  stw       r4, 0x4(r30)
-	  stw       r3, 0x0(r30)
-	  lwz       r3, 0x1D4(r27)
-	  stw       r30, 0x0(r3)
-	  stw       r30, 0x1D4(r27)
-	  stb       r0, 0x1F0(r27)
-	  lwz       r0, 0x34(r1)
-	  lmw       r27, 0x1C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	TexobjInfo* newInfo = new TexobjInfo();
+	newInfo->mString    = StdSystem::stringDup(path);
+	newInfo->mId.setID('_tex');
+	newInfo->mTexture = texture;
+	texture->mInfo    = newInfo;
+	addGfxObject(newInfo);
 }
 
 /*
@@ -556,84 +433,31 @@ void StdSystem::initSoftReset()
  * Address:	8003F8DC
  * Size:	000108
  */
-Shape* StdSystem::getShape(char*, char*, char*, bool)
+Shape* StdSystem::getShape(char* a2, char* shapeName, char* modelTexturePath, bool a5)
 {
-	return nullptr;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r26, 0x20(r1)
-	  mr        r26, r3
-	  mr        r28, r6
-	  addi      r27, r5, 0
-	  addi      r5, r7, 0
-	  li        r30, 0
-	  li        r6, 0x1
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r29, r3
-	  beq-      .loc_0x9C
-	  li        r3, 0x2B0
-	  bl        0x76E0
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x5C
-	  bl        0xCE20
+	Shape* result                  = nullptr;
+	RandomAccessStream* fileStream = gsys->openFile(a2, a5, true);
 
-	.loc_0x5C:
-	  stw       r31, 0x1FC(r26)
-	  addi      r30, r31, 0
-	  addi      r3, r27, 0
-	  bl        0x9FC
-	  stw       r3, 0x4(r31)
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
+	// Open the file and read the shape
+	if (fileStream) {
+		result        = new Shape();
+		mCurrentShape = result;
+		result->mName = StdSystem::stringDup(shapeName);
+		result->read(*fileStream);
+		fileStream->close();
+	}
 
-	.loc_0x9C:
-	  cmplwi    r30, 0
-	  beq-      .loc_0xF0
-	  lwz       r4, 0x2DEC(r13)
-	  subi      r31, r13, 0x7A08
-	  addi      r3, r30, 0
-	  stw       r31, 0x1F4(r4)
-	  stw       r28, 0x1F8(r4)
-	  bl        -0xF388
-	  mr        r3, r30
-	  bl        -0xBE9C
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0xC0F0
-	  lwz       r4, 0x2DEC(r13)
-	  mr        r3, r30
-	  stw       r31, 0x1F4(r4)
-	  stw       r31, 0x1F8(r4)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
+	// If the shape was loaded, resolve the texture names and initialise it
+	if (result) {
+		gsys->setTextureBase("", modelTexturePath);
+		result->resolveTextureNames();
+		result->initialise();
+		result->initIni(true);
+		gsys->setTextureBase("", "");
+		result->optimize();
+	}
 
-	.loc_0xF0:
-	  mr        r3, r30
-	  lmw       r26, 0x20(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	return result;
 }
 
 /*
@@ -675,76 +499,19 @@ LFInfo* StdSystem::getLFlareInfo()
  * Address:	8003FAAC
  * Size:	0000DC
  */
-LFlareGroup* StdSystem::registerLFlare(Texture*)
+LFlareGroup* StdSystem::registerLFlare(Texture* tex)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  mr        r30, r4
-	  stw       r29, 0x14(r1)
-	  mr        r29, r3
-	  lwz       r3, 0x238(r3)
-	  lwz       r3, 0x10(r3)
-	  b         .loc_0x40
+	for (LFlareGroup* activeFlareGroup = (LFlareGroup*)mLightFlares->mChild; activeFlareGroup;
+	     activeFlareGroup              = (LFlareGroup*)activeFlareGroup->mNext) {
+		if (activeFlareGroup->mTexture == tex) {
+			return activeFlareGroup;
+		}
+	}
 
-	.loc_0x2C:
-	  lwz       r0, 0x18(r3)
-	  cmplw     r0, r30
-	  bne-      .loc_0x3C
-	  b         .loc_0xC0
-
-	.loc_0x3C:
-	  lwz       r3, 0xC(r3)
-
-	.loc_0x40:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x2C
-	  li        r3, 0x28
-	  bl        0x750C
-	  addi      r31, r3, 0
-	  mr.       r0, r31
-	  beq-      .loc_0xAC
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  stw       r0, 0x0(r31)
-	  li        r5, 0
-	  lis       r3, 0x8023
-	  stw       r5, 0x10(r31)
-	  subi      r4, r13, 0x7A00
-	  subi      r3, r3, 0x736C
-	  stw       r5, 0xC(r31)
-	  li        r0, 0x1
-	  stw       r5, 0x8(r31)
-	  stw       r4, 0x4(r31)
-	  stw       r3, 0x0(r31)
-	  stw       r5, 0x18(r31)
-	  stw       r5, 0x1C(r31)
-	  stw       r5, 0x20(r31)
-	  stw       r0, 0x24(r31)
-
-	.loc_0xAC:
-	  stw       r30, 0x18(r31)
-	  mr        r4, r31
-	  lwz       r3, 0x238(r29)
-	  bl        0xA74
-	  mr        r3, r31
-
-	.loc_0xC0:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	LFlareGroup* newGroup = new LFlareGroup();
+	newGroup->mTexture    = tex;
+	mLightFlares->add(newGroup);
+	return newGroup;
 }
 
 /*
@@ -752,8 +519,9 @@ LFlareGroup* StdSystem::registerLFlare(Texture*)
  * Address:	8003FB88
  * Size:	00024C
  */
-void StdSystem::flushLFlares(Graphics&)
+void StdSystem::flushLFlares(Graphics& gfx)
 {
+
 	/*
 	.loc_0x0:
 	  mflr      r0
