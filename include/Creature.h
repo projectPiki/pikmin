@@ -224,6 +224,10 @@ struct Creature : public RefCountable, public EventTalker {
 		_A4.reset();
 	}
 
+	inline bool isStuckTo(Creature* creature) { return mStickTarget == creature; }
+
+	inline CollPart* getStickPart() { return _188; }
+
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker

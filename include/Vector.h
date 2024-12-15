@@ -74,6 +74,8 @@ struct Vector3f {
 		z = pZ;
 	}
 
+	inline void setUniform(f32 val) { set(val, val, val); }
+
 	inline void input(const Vector3f& other) { set(other.x, other.y, other.z); }
 
 	inline void set(Vector3f& other) { set(other.x, other.y, other.z); }

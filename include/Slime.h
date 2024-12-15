@@ -101,25 +101,27 @@ struct SlimeBody {
 struct SlimeCreature : public Creature {
 	SlimeCreature(CreatureProp*);
 
-	virtual f32 getiMass();              // _38
-	virtual f32 getSize();               // _3C
-	virtual Vector3f getCentre();        // _58
-	virtual void setCentre(Vector3f&);   // _6C
-	virtual bool isAtari();              // _84
-	virtual bool isAlive();              // _88
-	virtual bool isFixed();              // _8C
-	virtual bool ignoreAtari(Creature*); // _98
-	virtual void update();               // _E0
-	virtual void refresh(Graphics&);     // _EC
-	virtual void doAI();                 // _104
-	virtual void doAnimation();          // _108
-	virtual void doKill();               // _10C
+	virtual f32 getiMass();                 // _38
+	virtual f32 getSize();                  // _3C
+	virtual Vector3f getCentre();           // _58
+	virtual void setCentre(Vector3f&) { }   // _6C
+	virtual bool isAtari();                 // _84
+	virtual bool isAlive();                 // _88
+	virtual bool isFixed() { return true; } // _8C
+	virtual bool ignoreAtari(Creature*);    // _98
+	virtual void update();                  // _E0
+	virtual void refresh(Graphics&);        // _EC
+	virtual void doAI();                    // _104
+	virtual void doAnimation();             // _108
+	virtual void doKill();                  // _10C
 
 	void init(Vector3f&, Slime*);
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	// TODO: members
+	Slime* mSlime;             // _2B8
+	Vector3f _2BC;             // _2BC
+	SearchData mSearchData[3]; // _2C8
 };
 
 /**

@@ -14,8 +14,8 @@ struct BoundBox {
 	BoundBox()
 	{
 		// these get set to their "opposites" so the bounds can "pop" to a position
-		mMin.set(32768.0f, 32768.0f, 32768.0f);
-		mMax.set(-32768.0f, -32768.0f, -32768.0f);
+		mMin.setUniform(32768.0f);
+		mMax.setUniform(-32768.0f);
 	}
 
 	void expandBound(BoundBox& other)

@@ -83,11 +83,11 @@ struct BossProp : public CreatureProp {
 
 	BossProp();
 
-	virtual void read(RandomAccessStream& input)
+	virtual void read(RandomAccessStream& input) // _08
 	{
 		mCreatureProps.Parameters::read(input);
 		mBossProps.Parameters::read(input);
-	}; // _08
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
@@ -107,6 +107,8 @@ struct BossShapeObject {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x3B8.
  */
 struct Boss : public Creature {
 	Boss(CreatureProp*);
@@ -162,17 +164,24 @@ struct Boss : public Creature {
 	void checkInWater(Vector3f&);
 	void recoveryLife();
 
+	inline f32 getMotionSpeed() { return mMotionSpeed; }
+
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	u8 _2B8;                       // _2B8
 	u8 _2B9;                       // _2B9
-	u8 _2BA[0x2];                  // _2BA, unknown/padding
-	u8 _2BC[0x2C4 - 0x2BC];        // _2BC, unknown
+	u8 _2BA;                       // _2BA
+	u8 _2BB;                       // _2BB
+	u8 _2BC;                       // _2BC
+	u8 _2BD;                       // _2BD
+	u8 _2BE;                       // _2BE
+	u8 _2BF[0x2C4 - 0x2BF];        // _2BF, unknown
 	f32 mCurrentHealth;            // _2C4
 	f32 mMaxHealth;                // _2C8
 	u8 _2CC[0x2D8 - 0x2CC];        // _2CC, unknown
-	f32 _2D8;                      // _2D8
-	u8 _2DC[0x2E4 - 0x2DC];        // _2DC, unknown
+	f32 mMotionSpeed;              // _2D8
+	u8 _2DC[0x2E0 - 0x2DC];        // _2DC, unknown
+	f32 _2E0;                      // _2E0
 	u32 _2E4;                      // _2E4, maybe int?
 	u32 _2E8;                      // _2E8, maybe int?
 	u32 _2EC;                      // _2EC, maybe int?
@@ -184,7 +193,6 @@ struct Boss : public Creature {
 	Vector3f _328;                 // _328
 	u8 _334[0x8];                  // _334, unknown
 	PaniTekiAnimator mAnimator;    // _33C
-	u8 _370[0x390 - 0x370];        // _370, unknown
 	BossShapeObject* mShapeObject; // _390
 	SearchData mSearchData[3];     // _394
 };

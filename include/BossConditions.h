@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Condition.h"
+#include "ID32.h"
 
 /**
  * @brief TODO
@@ -25,7 +26,7 @@ struct CndBossFlick : public Condition {
 
 	// _00     = VTBL
 	// _00-_04 = Condition
-	// TODO: members
+	Creature* mBoss; // _04
 };
 
 /**
@@ -37,7 +38,7 @@ struct CndStickBossKill : public Condition {
 
 	// _00     = VTBL
 	// _00-_04 = Condition
-	// TODO: members
+	Creature* mBoss; // _04
 };
 
 /**
@@ -49,7 +50,7 @@ struct CndStickMouthKill : public Condition {
 
 	// _00     = VTBL
 	// _00-_04 = Condition
-	// TODO: members
+	Creature* mBoss; // _04
 };
 
 /**
@@ -61,7 +62,8 @@ struct CndBossCollKill : public Condition {
 
 	// _00     = VTBL
 	// _00-_04 = Condition
-	// TODO: members
+	Creature* mBoss; // _04
+	u32 mCollID;     // _08
 };
 
 #endif

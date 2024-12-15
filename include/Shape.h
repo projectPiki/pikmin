@@ -160,7 +160,7 @@ struct BaseShape : public CoreNode {
 	u32 _14;                       // _14, unknown
 	u32 _18;                       // _14, unknown
 	u8 _1C[0x24 - 0x1C];           // _18, unknown
-	AnimFrameCacher* mFrameCacher; // _24, unknown
+	AnimFrameCacher* mFrameCacher; // _24
 	u32 _28;                       // _28, unknown
 	u32 _2C;                       // _2C, unknown
 	u32 _30;                       // _30, unknown

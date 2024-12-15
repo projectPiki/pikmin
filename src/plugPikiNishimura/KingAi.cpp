@@ -46,11 +46,11 @@ void KingAi::initAI(King* king)
 	PaniMotionInfo motionInfo(3, this);
 	mKing->mAnimator.startMotion(motionInfo);
 
-	mKing->_2D8    = 30.0f;
-	_08            = 1;
-	_09            = 0;
-	CollPart* slt1 = mKing->mCollInfo->getSphere('slt1');
-	CollPart* slt2 = mKing->mCollInfo->getSphere('slt2');
+	mKing->mMotionSpeed = 30.0f;
+	_08                 = 1;
+	_09                 = 0;
+	CollPart* slt1      = mKing->mCollInfo->getSphere('slt1');
+	CollPart* slt2      = mKing->mCollInfo->getSphere('slt2');
 
 	_10 = slt1->getChildCount() + slt2->getChildCount();
 	_0C = 0;

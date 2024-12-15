@@ -27,8 +27,10 @@ struct CreatureCollPart : public DynCollShape {
 	int mAnimMatrixID; // _144, anim matrix ID?
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x48.
  */
 struct CreaturePlatMgr {
 	CreaturePlatMgr()

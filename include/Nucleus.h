@@ -4,6 +4,8 @@
 #include "types.h"
 #include "Boss.h"
 
+struct NucleusAi;
+
 /**
  * @brief TODO.
  */
@@ -58,11 +60,14 @@ struct Nucleus : public Boss {
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss?
-	// TODO: members
+	u8 _3B8[0x4];          // _3B8, unknown, maybe part of Boss?
+	NucleusAi* mNucleusAI; // _3BC
 };
 
 /**
- * @brief TODO.
+ * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct NucleusAi : public PaniAnimKeyListener {
 	NucleusAi(Nucleus*);
@@ -96,7 +101,8 @@ struct NucleusAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	// TODO: members
+	u32 _04;           // _04
+	Nucleus* mNucleus; // _08
 };
 
 #endif

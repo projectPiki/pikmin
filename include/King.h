@@ -5,6 +5,7 @@
 #include "Boss.h"
 #include "zen/Callback.h"
 #include "zen/Particle.h"
+#include "CreatureCollPart.h"
 
 /**
  * @brief TODO.
@@ -130,13 +131,18 @@ struct KingProp : public BossProp, public CoreNode {
 struct KingBackProp : public BossProp, public CoreNode {
 	KingBackProp();
 
-	virtual void read(RandomAccessStream&); // _08
+	virtual void read(RandomAccessStream& input) // _08
+	{
+		mCreatureProps.read(input);
+		mBossProps.read(input);
+		_200.read(input);
+	}
 
 	// _F8       = VTBL 1
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	// TODO: members
+	Parameters _200; // _200
 };
 
 /**
@@ -184,8 +190,8 @@ struct KingBack : public Boss {
 	virtual void drawShape(Graphics&); // _120
 
 	// _00      = VTBL
-	// _00-_2B8 = Boss?
-	// TODO: members
+	// _00-_3B8 = Boss
+	CreaturePlatMgr mPlatMgr; // _3B8
 };
 
 /**
