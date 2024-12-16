@@ -11,6 +11,7 @@
  */
 struct String {
 	String() { init(64); }
+	String(int length) { init(length); }
 	String(char* str, int length) { init(str, length); }
 
 	int getLength();

@@ -12829,7 +12829,7 @@ void BaseShape::calcBasePose(Matrix4f&)
  * Address:	80034A50
  * Size:	0000E8
  */
-void BaseShape::loadDck(char*, RandomAccessStream&)
+AnimData* BaseShape::loadDck(char*, RandomAccessStream&)
 {
 	/*
 	.loc_0x0:
@@ -12901,7 +12901,7 @@ void BaseShape::loadDck(char*, RandomAccessStream&)
  * Address:	80034B38
  * Size:	0001E0
  */
-void BaseShape::importDck(char*, CmdStream*)
+AnimData* BaseShape::importDck(char*, CmdStream*)
 {
 	/*
 	.loc_0x0:
@@ -13049,7 +13049,7 @@ void BaseShape::importDck(char*, CmdStream*)
  * Address:	80034D18
  * Size:	0000DC
  */
-void BaseShape::loadDca(char*, RandomAccessStream&)
+AnimData* BaseShape::loadDca(char*, RandomAccessStream&)
 {
 	/*
 	.loc_0x0:

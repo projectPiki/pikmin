@@ -3,6 +3,7 @@
 
 #include "CoreNode.h"
 #include "GfxObject.h"
+#include "Ayu.h"
 
 struct Texture;
 struct TexImg;
@@ -112,22 +113,20 @@ struct Texture : public GfxObject {
 	void getRed(int, int);
 
 	// _00 = VTBL
-	u16 _04;                  // _04
-	s16 _06;                  // _06
-	u16 mWidth;               // _08
-	u16 mHeight;              // _0A
-	u32 mTileSizeX;           // _0C
-	u32 mTileSizeY;           // _10
-	void* mPixelData;         // _14
-	u32* mTextureData;        // _18
-	f32 _1C;                  // _1C
-	int _20;                  // _20
-	void* _24;                // _24, pointer to something of size 0x20
-	f32 _28;                  // _28
-	f32 _2C;                  // _2C
-	u32 _30;                  // _30
-	int _34;                  // _34
-	struct TexobjInfo* mInfo; // _30
+	u16 _04;           // _04
+	s16 _06;           // _06
+	u16 mWidth;        // _08
+	u16 mHeight;       // _0A
+	u32 mTileSizeX;    // _0C
+	u32 mTileSizeY;    // _10
+	void* mPixelData;  // _14
+	u32* mTextureData; // _18
+	f32 _1C;           // _1C
+	int _20;           // _20
+	void* _24;         // _24, pointer to something of size 0x20
+	f32 _28;           // _28
+	f32 _2C;           // _2C
+	u32 _30;           // _30
 };
 
 /**
@@ -147,6 +146,27 @@ struct TexobjInfo : public GfxobjInfo {
 	GfxObject* mTexture; // _20,  yes this is a GfxObject*, not a Texture*
 };
 
+struct CacheInfo {
+	void insertAfter(CacheInfo* other)
+	{
+		other->mNext = mNext;
+		other->mPrev = this;
+
+		mNext->mPrev = other;
+		mNext        = other;
+	}
+
+	void remove()
+	{
+		mNext->mPrev = mPrev;
+		mPrev->mNext = mNext;
+	}
+
+	char* mName;      // _00
+	CacheInfo* mPrev; // _04
+	CacheInfo* mNext; // _08
+};
+
 /**
  * @brief TODO
  */
@@ -154,20 +174,39 @@ struct CacheTexture : public Texture {
 	virtual void makeResident(); // _10
 
 	// _00     = VTBL
-	// _00-_34 = Texture
-	// TODO: members
+	// _00-_3C = Texture
+	CacheInfo* mCacheInfo; // _3C
+};
+
+struct TexCacheInfo : CacheInfo {
+	TexCacheInfo() { initData(); }
+
+	void initData() { _10 = 0; }
+
+	// _00 - _0C = CacheInfo
+	u32 _0C; // _0C
+	u32 _10; // _10
 };
 
 /**
  * @brief TODO
  */
-struct TextureCacher {
+struct TextureCacher : public TexCacheInfo {
+	TextureCacher(u32 size)
+	{
+		mCache = new AyuCache(size);
+		mName  = "root";
+		mNext  = this;
+		mPrev  = this;
+	}
+
 	void updateInfo(CacheTexture*);
 	void purgeAll();
 	void removeOldest();
 	void cacheTexture(CacheTexture*);
 
-	// TODO: members
+	// _00 - _10 = TexCacheInfo
+	AyuCache* mCache; // _14
 };
 
 #endif

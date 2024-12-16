@@ -5132,6 +5132,14 @@ void Graphics::calcBoxLighting(BoundBox&)
  */
 void CacheTexture::makeResident()
 {
+	if (gsys->mCacher) {
+		if (mCacheInfo) {
+			gsys->mCacher->updateInfo(this);
+		} else {
+			gsys->mCacher->updateInfo(this);
+			gsys->copyCacheToTexture(this);
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

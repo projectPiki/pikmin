@@ -413,7 +413,7 @@ void StdSystem::addTexture(Texture* texture, char* path)
 	newInfo->mString    = StdSystem::stringDup(path);
 	newInfo->mId.setID('_tex');
 	newInfo->mTexture = texture;
-	texture->mInfo    = newInfo;
+	// texture->mInfo    = newInfo;
 	addGfxObject(newInfo);
 }
 
@@ -521,7 +521,6 @@ LFlareGroup* StdSystem::registerLFlare(Texture* tex)
  */
 void StdSystem::flushLFlares(Graphics& gfx)
 {
-
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -695,8 +694,69 @@ void StdSystem::flushLFlares(Graphics& gfx)
  * Address:	8003FDD4
  * Size:	000560
  */
-void StdSystem::loadBundle(char*, bool)
+void StdSystem::loadBundle(char* path, bool p3)
 {
+	RandomAccessStream* fileStream = openFile(path, true, true);
+	if (!fileStream) {
+		return;
+	}
+
+	int fileCount = fileStream->readInt();
+	for (int i = 0; i < fileCount; i++) {
+		int chunkType = fileStream->readInt();
+		int chunkSize = fileStream->readInt();
+
+		String fileName(0);
+		fileStream->readString(fileName);
+
+		switch (chunkType) {
+		case 0: // Binary Data
+		{
+			char* data = new char[chunkSize];
+			fileStream->read(data, chunkSize);
+
+			BinobjInfo* newInfo = new BinobjInfo();
+			newInfo->mString    = StdSystem::stringDup(fileName.mString);
+			newInfo->mId.setID('_bin');
+			newInfo->mData = data;
+			gsys->addGfxObject(newInfo);
+			break;
+		}
+		case 1: { // Texture
+			TexImg* newTexImg = new TexImg();
+			Texture* newTexture;
+
+			// There's some weird shit going on here
+			if (p3) {
+				newTexture = new Texture();
+				newTexImg->importTxe(newTexture, *fileStream);
+			} else {
+				newTexture = new Texture();
+				newTexImg->importBti(newTexture, *fileStream, nullptr);
+			}
+			gsys->addTexture(newTexture, fileName.mString);
+			break;
+		}
+		case 2: { // DCA Animation
+			AnimData* dcaAnim = mCurrentShape->loadDca(fileName.mString, *fileStream);
+			addAnimation(dcaAnim, fileName.mString);
+			break;
+		}
+		case 3: { // DCK Animation
+			AnimData* dckAnim = mCurrentShape->loadDck(fileName.mString, *fileStream);
+			addAnimation(dckAnim, fileName.mString);
+			break;
+		}
+
+		default: {
+			fileStream->setPosition(fileStream->getPosition() + chunkSize);
+			break;
+		}
+		}
+	}
+
+	fileStream->close();
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1102,7 +1162,7 @@ char* StdSystem::stringDup(char* str)
  * Address:	8004039C
  * Size:	000048
  */
-void TextureCacher::updateInfo(CacheTexture*)
+void TextureCacher::updateInfo(CacheTexture* cacheTex)
 {
 	/*
 	.loc_0x0:

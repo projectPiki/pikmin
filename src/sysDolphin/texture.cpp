@@ -32,8 +32,8 @@ static void _Print(char*, ...)
  */
 Texture::Texture()
 {
-	_30          = 0;
-	_34          = 0;
+	_30 = 0;
+	// _34          = 0;
 	_20          = -1;
 	mTextureData = nullptr;
 	_1C          = 0.0f;

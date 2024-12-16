@@ -131,9 +131,9 @@ struct BaseShape : public CoreNode {
 	void initialise();
 	void createCollisions(int);
 	void calcBasePose(struct Matrix4f&);
-	void loadDck(char*, RandomAccessStream&);
-	void importDck(char*, CmdStream*);
-	void loadDca(char*, RandomAccessStream&);
+	AnimData* loadDck(char*, RandomAccessStream&);
+	AnimData* importDck(char*, CmdStream*);
+	AnimData* loadDca(char*, RandomAccessStream&);
 	AnimData* loadAnimation(char*, bool);
 	struct Matrix4f& getAnimMatrix(int);
 	void backupAnimOverrides(AnimContext**);

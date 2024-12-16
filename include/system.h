@@ -86,9 +86,14 @@ struct DirEntry : public CoreNode {
  * @brief TODO
  */
 struct BinobjInfo : public GfxobjInfo {
+	BinobjInfo()
+	    : mData(nullptr)
+	{
+	}
+
 	// _1C     = VTBL
 	// _00-_20 = GfxobjInfo
-	// TODO: members
+	char* mData;
 };
 
 DEFINE_ENUM_TYPE(SystemFlags, Shutdown = 0x80000000);
@@ -214,7 +219,7 @@ public:
 	bool mHasGfxObjects;      // _1F0
 	char* mTextureBase1;      // _1F4
 	char* mTextureBase2;      // _1F8
-	BaseShape* mCurrentShape; // _1FC
+	Shape* mCurrentShape; // _1FC
 	CoreNode _200;            // _200
 	CoreNode _214;            // _214
 	CoreNode* _228;           // _228
