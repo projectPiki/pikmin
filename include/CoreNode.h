@@ -66,7 +66,7 @@ struct CoreNode : public ANode {
 	 * @brief Gets the name of the CoreNode.
 	 * @return The name of the CoreNode.
 	 */
-	char* getName() { return mName; }
+	char* Name() { return mName; }
 
 	/**
 	 * @brief Gets the number of child nodes of the CoreNode.

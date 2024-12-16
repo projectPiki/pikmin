@@ -2,27 +2,21 @@
 #include "AtxStream.h"
 #include "Age.h"
 #include "system.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* msg, ...)
-{
-	OSPanic(__FILE__, __LINE__, msg);
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("baseApp");
 
 /*
  * --INFO--
@@ -38,13 +32,6 @@ BaseApp::BaseApp()
 
 	nodeMgr->firstNode().add(this);
 }
-
-/*
- * --INFO--
- * Address:	80024ED4
- * Size:	000008
- */
-// void CoreNode::setName(char* name) { mName = name; }
 
 /*
  * --INFO--
@@ -87,7 +74,25 @@ int BaseApp::idleupdate()
  */
 void BaseApp::startAgeServer()
 {
-	// UNUSED FUNCTION
+#ifdef __MWERKS__
+	return;
+#endif
+
+	if (mAgeServer) {
+		return;
+	}
+
+	PRINT("Atx - Wants to open Age service\n");
+	AgeServer* newServer = new AgeServer();
+
+	if (newServer->Open()) {
+		mAgeServer = newServer;
+
+		char* windowName = Name();
+		mAgeServer->NewNodeWindow(windowName);
+		read(*(RandomAccessStream*)mAgeServer);
+		mAgeServer->Done();
+	}
 }
 
 /*
@@ -97,14 +102,16 @@ void BaseApp::startAgeServer()
  */
 void BaseApp::stopAgeServer()
 {
-#ifndef __MWERKS__
+#ifdef __MWERKS__
+	return;
+#endif
+
 	if (mAgeServer) {
-		_Print("Atx - Wants to close Age service\n");
+		PRINT("Atx - Wants to close Age service\n");
 		mAgeServer->mNetStream->writeInt(0xFFFF);
 		mAgeServer->mNetStream->flush();
 		mAgeServer = nullptr;
 	}
-#endif
 }
 
 /*
@@ -127,9 +134,7 @@ void BaseApp::softReset()
  */
 BaseApp::~BaseApp()
 {
-#ifndef __MWERKS__
-	_Print("default baseApp deconstructor\n");
-#endif
+	PRINT("default baseApp deconstructor\n");
 
 	if (mCommandStream) {
 		mCommandStream->mNetStream->writeInt(0xFFFF);
