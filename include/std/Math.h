@@ -26,7 +26,25 @@ inline f32 sqrtf(f32 x)
 	return x;
 }
 
-void fmodf(f32, f32);
+#ifdef __MWERKS__
+#define fabs(x)  __fabs(x)
+#define fabsf(x) __fabsf(x)
+#else
+double fabs(double x);
+float fabsf(float x);
+#endif
+
+inline float fmodf(float x, float m)
+{
+	float a = fabsf(m);
+	float b = fabsf(x);
+	if (a > b)
+		return x;
+	else {
+		long long c = (long long)(x / m);
+		return x - m * c;
+	}
+}
 
 } // namespace std
 

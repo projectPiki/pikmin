@@ -9,35 +9,34 @@
 #include "Texture.h"
 #include "Shape.h"
 #include "sysNew.h"
+#include "stl/math.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("Graphics");
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000094
  */
-void Colour::write(Stream&)
+void Colour::write(Stream& s)
 {
-	// UNUSED FUNCTION
+	r = s.readByte();
+	g = s.readByte();
+	b = s.readByte();
+	a = s.readByte();
 }
 
 /*
@@ -45,9 +44,10 @@ void Colour::write(Stream&)
  * Address:	........
  * Size:	000064
  */
-void PVWLightingInfo::read(RandomAccessStream&)
+void PVWLightingInfo::read(RandomAccessStream& s)
 {
-	// UNUSED FUNCTION
+	_00 = s.readInt();
+	_08 = s.readFloat();
 }
 
 /*
@@ -55,95 +55,28 @@ void PVWLightingInfo::read(RandomAccessStream&)
  * Address:	80025914
  * Size:	000120
  */
-void PVWPolygonColourInfo::animate(f32*, Colour&)
+void PVWPolygonColourInfo::animate(f32* data, Colour& col)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  stfd      f30, 0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x30(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x4(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x100
-	  cmplwi    r4, 0
-	  beq-      .loc_0x84
-	  stw       r0, 0x2C(r1)
-	  lis       r0, 0x4330
-	  lfs       f31, 0x0(r4)
-	  stw       r0, 0x28(r1)
-	  lfd       f1, -0x7DD0(r2)
-	  fabs      f2, f31
-	  lfd       f0, 0x28(r1)
-	  fsubs     f30, f0, f1
-	  fabs      f0, f30
-	  fcmpo     cr0, f0, f2
-	  ble-      .loc_0x68
-	  b         .loc_0x7C
+	// If there is no animation loaded, don't do anything
+	if (mTotalFrameCount == 0) {
+		return;
+	}
 
-	.loc_0x68:
-	  fdivs     f1, f31, f30
-	  bl        0x1EFA74
-	  bl        0x1EF9BC
-	  fmuls     f0, f30, f1
-	  fsubs     f31, f31, f0
+	if (data) {
+		mCurrentFrame = std::fmodf(data[0], mTotalFrameCount);
+	} else {
+		// If no new data is provided, increment the current frame
+		mCurrentFrame += gsys->getFrameTime() * (30.0f * mSpeed);
 
-	.loc_0x7C:
-	  stfs      f31, 0x1C(r30)
-	  b         .loc_0xE0
+		// Wrap around if we've reached the end of the animation
+		if (mCurrentFrame >= mTotalFrameCount - 1) {
+			mCurrentFrame = 0.0f;
+		}
+	}
 
-	.loc_0x84:
-	  lfs       f1, -0x7DD8(r2)
-	  lis       r0, 0x4330
-	  lfs       f0, 0x8(r30)
-	  lwz       r3, 0x2DEC(r13)
-	  fmuls     f1, f1, f0
-	  lfs       f2, 0x1C(r30)
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x1C(r30)
-	  lwz       r3, 0x4(r30)
-	  lfd       f1, -0x7DD0(r2)
-	  subi      r3, r3, 0x1
-	  lfs       f2, 0x1C(r30)
-	  stw       r3, 0x2C(r1)
-	  stw       r0, 0x28(r1)
-	  lfd       f0, 0x28(r1)
-	  fsubs     f0, f0, f1
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xE0
-	  lfs       f0, -0x7DD4(r2)
-	  stfs      f0, 0x1C(r30)
-
-	.loc_0xE0:
-	  lfs       f1, 0x1C(r30)
-	  addi      r4, r31, 0
-	  addi      r3, r30, 0xC
-	  bl        .loc_0x120
-	  lfs       f1, 0x1C(r30)
-	  addi      r4, r31, 0
-	  addi      r3, r30, 0x14
-	  bl        0x4BC
-
-	.loc_0x100:
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  lfd       f30, 0x38(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-
-	.loc_0x120:
-	*/
+	// Animate colour and transparency separately
+	mColourInfo.extract(mCurrentFrame, col);
+	mAlphaInfo.extract(mCurrentFrame, col);
 }
 
 /*
@@ -151,9 +84,28 @@ void PVWPolygonColourInfo::animate(f32*, Colour&)
  * Address:	........
  * Size:	0000A0
  */
-void subExtract(f32, struct AKeyInfo&, AKeyInfo&)
+f32 subExtract(f32 time, AKeyInfo& source, AKeyInfo& destination)
 {
-	// UNUSED FUNCTION
+	// Calculate differences and inverses
+	f32 delta    = destination.mKeyframePosition - source.mKeyframePosition;
+	f32 invDelta = 1.0f / delta;
+
+	// Compute common terms
+	f32 t  = (time - source.mKeyframePosition) * invDelta; // Normalized parameter
+	f32 t2 = t * t;                                        // t squared
+	f32 t3 = t2 * t;                                       // t cubed
+
+	// Hermite basis functions
+	f32 h00 = 2.0f * t3 - 3.0f * t2 + 1.0f;
+	f32 h10 = t3 - 2.0f * t2 + t;
+	f32 h01 = -2.0f * t3 + 3.0f * t2;
+	f32 h11 = t3 - t2;
+
+	// Compute the final interpolated value
+	return h00 * source.mValue +                  // Interpolation from b
+	       h01 * destination.mValue +             // Interpolation from c
+	       h10 * source.mStartTangent * delta +   // Tangent contribution from b
+	       h11 * destination.mEndTangent * delta; // Tangent contribution from c
 }
 
 /*
@@ -161,8 +113,46 @@ void subExtract(f32, struct AKeyInfo&, AKeyInfo&)
  * Address:	80025A34
  * Size:	000498
  */
-void PVWColourAnimInfo::extract(f32, Colour&)
+void PVWColourAnimInfo::extract(f32 value, Colour& target)
 {
+	// If there is no animation data, return without modification
+	if (mTotalFrameCount == 0) {
+		return;
+	}
+
+	// If there is only one frame, use its values directly
+	if (mTotalFrameCount == 1) {
+		target.r = static_cast<uint8_t>((_04[0] < 0.0f) ? 0.0f : (_04[0] > 255.0f ? 255.0f : _04[0]));
+		target.g = static_cast<uint8_t>((_04[1] < 0.0f) ? 0.0f : (_04[1] > 255.0f ? 255.0f : _04[1]));
+		target.b = static_cast<uint8_t>((_04[2] < 0.0f) ? 0.0f : (_04[2] > 255.0f ? 255.0f : _04[2]));
+		return;
+	}
+
+	// Find the two keyframes to interpolate between
+	int index = 0;
+	for (int i = 0; i < static_cast<int>(mTotalFrameCount) - 1; ++i) {
+		f32 startTime = _04[i * 4];
+		f32 endTime   = _04[(i + 1) * 4];
+		if (startTime <= value && value <= endTime) {
+			index = i;
+			break;
+		}
+	}
+
+	// Construct keyframe data for interpolation
+	AKeyInfo startKey(_04[index * 4], _04[index * 4 + 1], _04[index * 4 + 2], _04[index * 4 + 3]);
+	AKeyInfo endKey(_04[(index + 1) * 4], _04[(index + 1) * 4 + 1], _04[(index + 1) * 4 + 2], _04[(index + 1) * 4 + 3]);
+
+	// Interpolate each color channel
+	f32 r = subExtract(value, startKey, endKey);
+	f32 g = subExtract(value, startKey, endKey);
+	f32 b = subExtract(value, startKey, endKey);
+
+	// Clamp and assign to target
+	target.r = static_cast<u8>(r < 0.0f ? 0 : (r > 255.0f ? 255 : r));
+	target.g = static_cast<u8>(g < 0.0f ? 0 : (g > 255.0f ? 255 : g));
+	target.b = static_cast<u8>(b < 0.0f ? 0 : (b > 255.0f ? 255 : b));
+
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x1F8(r1)
