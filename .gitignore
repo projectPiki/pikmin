@@ -37,3 +37,9 @@ compile_commands.json
 tools/mwcc_compiler
 tools/dtk
 tools/powerpc
+*.id0
+*.id1
+*.id2
+*.nam
+*.idb
+*.til

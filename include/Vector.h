@@ -5,6 +5,7 @@
 #include "math.h"
 #include "Stream.h"
 #include "std/Math.h"
+#include "PowerPC_EABI_Support/MSL_C/PPC_EABI/math_ppc.h"
 
 struct Matrix3f;
 struct Quat;
