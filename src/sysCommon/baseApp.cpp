@@ -74,10 +74,7 @@ int BaseApp::idleupdate()
  */
 void BaseApp::startAgeServer()
 {
-#ifdef __MWERKS__
-	return;
-#endif
-
+#ifndef __MWERKS__
 	if (mAgeServer) {
 		return;
 	}
@@ -93,6 +90,7 @@ void BaseApp::startAgeServer()
 		read(*(RandomAccessStream*)mAgeServer);
 		mAgeServer->Done();
 	}
+#endif
 }
 
 /*
@@ -102,16 +100,14 @@ void BaseApp::startAgeServer()
  */
 void BaseApp::stopAgeServer()
 {
-#ifdef __MWERKS__
-	return;
-#endif
-
+#ifndef __MWERKS__
 	if (mAgeServer) {
 		PRINT("Atx - Wants to close Age service\n");
 		mAgeServer->mNetStream->writeInt(0xFFFF);
 		mAgeServer->mNetStream->flush();
 		mAgeServer = nullptr;
 	}
+#endif
 }
 
 /*
