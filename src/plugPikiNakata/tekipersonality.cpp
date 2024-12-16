@@ -1,26 +1,21 @@
 #include "TekiPersonality.h"
 #include "sysNew.h"
 #include "ParaParameters.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("tekipersonality");
 
 /*
  * --INFO--
@@ -31,20 +26,22 @@ TekiPersonality::TekiPersonality()
 {
 	int i                         = INT_ParamCount;
 	ParaParameterInfoI* intParams = new ParaParameterInfoI[i];
+
 	intParams[0].set("PELLET_MIN_COUNT", -128, 127);
 	intParams[1].set("PELLET_MAX_COUNT", -128, 127);
 	intParams[2].set("WATER_MIN_COUNT", -128, 127);
 	intParams[3].set("WATER_MAX_COUNT", -128, 127);
-	intParams[4].set("WATER_MAX_COUNT", -128, 127);
+	intParams[4].set("PARAMETER_0", -128, 127);
 
 	ParaParameterInfoF* floatParams = new ParaParameterInfoF[i];
+
 	floatParams[0].set("SIZE", 0.1f, 10.0f);
 	floatParams[1].set("STRENGTH", 0.0f, 100.0f);
 	floatParams[2].set("TERRITORY_RANGE", 0.0f, 10000.0f);
 	floatParams[3].set("PELLET_APPEARANCE_PROBABILITY", 0.0f, 1.0f);
 	floatParams[4].set("WATER_APPEARANCE_PROBABILITY", 0.0f, 1.0f);
 
-	mParams = new ParaMultiParameters(5, intParams, 5, floatParams);
+	mParams = new ParaMultiParameters(INT_ParamCount, intParams, 5, floatParams);
 	reset();
 	/*
 	.loc_0x0:
@@ -265,8 +262,69 @@ void TekiPersonality::input(TekiPersonality&)
  * Address:	8014CE24
  * Size:	0002F0
  */
-void TekiPersonality::read(RandomAccessStream&, int)
+void TekiPersonality::read(RandomAccessStream& input, int version)
 {
+	if (false) {
+		PRINT("TekiPersonality::read:%d\n", version);
+	}
+
+	ParaMultiParameters* params = mParams;
+
+	if (version <= 7) {
+		ERROR("TekiPersonality::read:too old version:%d\n", version);
+		_20 = input.readInt();
+		_24 = input.readInt();
+		mID.setID('none');
+		params->read(input);
+		return;
+	}
+
+	if (version <= 8) {
+		_20 = input.readInt();
+		_24 = input.readInt();
+		mID.read(input);		
+
+		for (int i = 0; i <= 2; i++) {
+			params->mIntParams->mParameters[i] = input.readInt();
+		}
+
+		params->setI(4, params->getI(2));
+		params->setI(2, 0);
+		params->setI(3, 0);
+		
+		for (int i = 0; i <= 3; i++) {
+			params->mFloatParams->mParameters[i] = input.readFloat();
+		}
+
+		params->setF(4, 0.0f);
+		return;
+	}
+
+	if (version <= 9) {
+		_20 = input.readByte();
+		_24 = input.readByte();
+		mID.read(input);
+
+		for (int i = 0; i <= 2; i++) {
+			params->mIntParams->mParameters[i] = input.readInt();
+		}
+
+		params->setI(4, params->getI(2));
+		params->setI(2, 0);
+		params->setI(3, 0);
+
+		for (int i = 0; i <= 3; i++) {
+			params->mFloatParams->mParameters[i] = input.readFloat();
+		}
+
+		params->setF(4, 0.0f);
+		return;
+	}
+
+	_20 = input.readByte();
+	_24 = input.readByte();
+	mID.read(input);
+	params->read(input);
 	/*
 	.loc_0x0:
 	  mflr      r0

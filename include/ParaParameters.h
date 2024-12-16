@@ -55,6 +55,13 @@ struct ParaParameters {
 		}
 	}
 
+	inline void readIn(RandomAccessStream& input, int count)
+	{
+		for (int i = 0; i <= count; i++) {
+			mParameters[i] = input.readInt();
+		}
+	}
+
 	// _0C = VTBL
 	T* mParameters;                  // _00
 	int mParaCount;                  // _04
@@ -105,6 +112,10 @@ struct ParaParameterInfoF : public ParaParameterInfo<f32> {
 		mMax  = 0.0f;
 	}
 
+	inline void set(char* name, f32 min, f32 max) {
+		ParaParameterInfo<f32>::set(name, min, max);
+	}
+
 	// TODO: members
 };
 
@@ -128,9 +139,10 @@ struct ParaMultiParameters {
 	ParaMultiParameters(int, ParaParameterInfoI*, int, ParaParameterInfoF*);
 
 	void input(ParaMultiParameters&);
-	f32 getF(int idx) { return mFloatParams->get(idx); }
 
+	f32 getF(int idx) { return mFloatParams->get(idx); }
 	int getI(int idx) { return mIntParams->get(idx); }
+
 	void setF(int idx, f32 val) { mFloatParams->set(idx, val); }
 	void setI(int idx, int val) { mIntParams->set(idx, val); }
 
@@ -146,5 +158,8 @@ struct ParaMultiParameters {
 	virtual void write(Stream&); // _0C
 	virtual void print();        // _10
 };
+
+#define PARA_SET_INT(_PARA, _NAME, _MIN, _MAX) \
+	(_PARA)->set(_NAME, _MIN, _MAX);
 
 #endif

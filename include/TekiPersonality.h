@@ -37,6 +37,7 @@ struct TekiPersonality {
 	void input(TekiPersonality&);
 
 	f32 getF(int idx) { return mParams->getF(idx); }
+	int getI(int idx) { return mParams->getI(idx); }
 
 	inline void init()
 	{
