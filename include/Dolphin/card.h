@@ -103,7 +103,6 @@ struct CARDDirCheck {
 };
 
 // Struct for CARD information (size 0x110).
-// NB: we had this as CARDBlock previously.
 struct CARDControl {
 	BOOL attached;                  // _00
 	s32 result;                     // _04
@@ -141,8 +140,8 @@ struct CARDControl {
 	CARDCallback eraseCallback;     // _D8
 	CARDCallback unlockCallback;    // _DC
 	OSAlarm alarm;                  // _E0, for timeout.
-	u32 cid;                        // _108
-	const DVDDiskID* diskID;        // _10C
+	                                // u32 cid;                        // _108
+	                                // const DVDDiskID* diskID;        // _10C
 };
 
 // CARD identification struct (size 0x200).
@@ -212,6 +211,7 @@ extern CARDControl __CARDBlock[2];
 
 // Other CARD information.
 extern DVDDiskID __CARDDiskNone;
+extern DVDDiskID* __CARDDiskID;
 extern u16 __CARDVendorID;
 extern u8 __CARDPermMask;
 
@@ -226,7 +226,9 @@ s32 CARDCheck(s32 channel);
 s32 CARDCheckExAsync(s32 channel, s32* xferBytes, CARDCallback callback);
 
 // CARD BIOS functions.
+s32 CARDGetResultCode(s32 channel);
 s32 CARDFreeBlocks(s32 channel, s32* byteNotUsed, s32* filesNotUsed);
+s32 CARDGetSectorSize(s32 channel, u32* size);
 
 // CARD mounting functions.
 BOOL CARDProbe(s32 channel);
@@ -236,6 +238,7 @@ s32 CARDMount(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCallback
 s32 CARDUnmount(s32 channel);
 
 // CARD formatting functions.
+s32 CARDFormatAsync(s32 channel, CARDCallback callback);
 s32 CARDFormat(s32 channel);
 
 // CARD open/close.
@@ -249,6 +252,15 @@ s32 CARDRead(CARDFileInfo* fileInfo, void* addr, s32 length, s32 offset);
 s32 CARDReadAsync(CARDFileInfo* fileInfo, void* addr, s32 length, s32 offset, CARDCallback callback);
 s32 CARDWrite(CARDFileInfo* fileInfo, void* addr, s32 length, s32 offset);
 s32 CARDWriteAsync(CARDFileInfo* fileInfo, void* addr, s32 length, s32 offset, CARDCallback callback);
+s32 CARDGetXferredBytes(s32 channel);
+
+// CARD delete functions.
+s32 CARDFastDeleteAsync(s32 channel, s32 fileNo, CARDCallback callback);
+s32 CARDFastDelete(s32 channel, s32 fileNo);
+
+// CARD rename functions.
+s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDCallback callback);
+s32 CARDRename(s32 channel, char* oldName, char* newName);
 
 // CARD status functions.
 s32 CARDGetStatus(s32 channel, s32 fileNo, CARDStat* state);
@@ -270,8 +282,10 @@ void __CARDExtHandler(s32 channel, OSContext* context);
 void __CARDExiHandler(s32 channel, OSContext* context);
 void __CARDTxHandler(s32 channel, OSContext* context);
 void __CARDUnlockedHandler(s32 channel, OSContext* context);
+void __CARDMountCallback(s32 channel, s32 result);
 
 // Other CARD BIOS functions.
+int __CARDReadNintendoID(s32 channel, u32* id);
 s32 __CARDEnableInterrupt(s32 channel, BOOL enable);
 s32 __CARDReadStatus(s32 channel, u8* status);
 s32 __CARDClearStatus(s32 channel);
@@ -285,9 +299,17 @@ s32 __CARDGetControlBlock(s32 channel, CARDControl** card);
 s32 __CARDPutControlBlock(CARDControl* card, s32 result);
 s32 __CARDSync(s32 channel);
 void __CARDCheckSum(void* data, int length, u16* checksum, u16* checksumInv);
+s32 __CARDVerify(CARDControl* card);
+s32 __CARDAccess(CARDDir* ent);
+s32 __CARDIsPublic(CARDDir* ent);
+BOOL __CardIsOpened(CARDControl* card, s32 fileNo);
+s32 __CARDRead(s32 channel, u32 addr, s32 length, void* dst, CARDCallback callback);
+s32 __CARDWrite(s32 channel, u32 addr, s32 length, void* dst, CARDCallback callback);
 
 CARDDirectoryBlock* __CARDGetDirBlock(CARDControl* card);
+s32 __CARDFreeBlock(s32 channel, u16 nBlock, CARDCallback callback);
 CARDFatBlock* __CARDGetFatBlock(CARDControl* card);
+s32 __CARDUpdateFatBlock(s32 channel, CARDFatBlock* fat, CARDCallback callback);
 
 ////////////////////////////////////////////
 

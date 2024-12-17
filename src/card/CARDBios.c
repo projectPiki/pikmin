@@ -1,102 +1,63 @@
-#include "types.h"
+#include "Dolphin/card.h"
+
+DVDDiskID* __CARDDiskID;
+DVDDiskID __CARDDiskNone;
+CARDControl __CARDBlock[2];
+
+static s32 Retry(s32 chan);
+static BOOL OnReset(BOOL f);
+
+static OSResetFunctionInfo ResetFunctionInfo = { OnReset, 127 };
+
+#define AD1(x)   ((u8)(((x) >> 17) & 0x7f))
+#define AD1EX(x) ((u8)(AD1(x) | 0x80));
+#define AD2(x)   ((u8)(((x) >> 9) & 0xff))
+#define AD3(x)   ((u8)(((x) >> 7) & 0x03))
+#define BA(x)    ((u8)((x)&0x7f))
 
 /*
  * --INFO--
  * Address:	80207E60
  * Size:	000004
  */
-void __CARDDefaultApiCallback(void) { }
+void __CARDDefaultApiCallback(s32, s32) { }
 
 /*
  * --INFO--
  * Address:	80207E64
  * Size:	000034
  */
-void __CARDSyncCallback(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mulli     r4, r3, 0x108
-	  stw       r0, 0x4(r1)
-	  lis       r3, 0x803D
-	  stwu      r1, -0x8(r1)
-	  addi      r0, r3, 0x3420
-	  add       r3, r0, r4
-	  addi      r3, r3, 0x8C
-	  bl        -0xB3DC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void __CARDSyncCallback(s32 channel, s32 result) { OSWakeupThread(&__CARDBlock[channel].threadQueue); }
 
 /*
  * --INFO--
  * Address:	80207E98
  * Size:	0000CC
  */
-void __CARDExtHandler(void)
+void __CARDExtHandler(s32 channel, OSContext* context)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  mulli     r4, r29, 0x108
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  add       r30, r0, r4
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xB0
-	  li        r31, 0
-	  stw       r31, 0x0(r30)
-	  li        r0, -0x3
-	  addi      r3, r29, 0
-	  stw       r0, 0x4(r30)
-	  li        r4, 0
-	  bl        -0xFBF0
-	  addi      r3, r30, 0xE0
-	  bl        -0x11ABC
-	  lwz       r0, 0xCC(r30)
-	  cmplwi    r0, 0
-	  mr        r12, r0
-	  beq-      .loc_0x80
-	  stw       r31, 0xCC(r30)
-	  mtlr      r12
-	  addi      r3, r29, 0
-	  li        r4, -0x3
-	  blrl
+	CARDControl* card;
+	CARDCallback callback;
 
-	.loc_0x80:
-	  lwz       r12, 0xC4(r30)
-	  cmplwi    r12, 0
-	  beq-      .loc_0xB0
-	  lwz       r0, 0x24(r30)
-	  cmpwi     r0, 0x7
-	  blt-      .loc_0xB0
-	  li        r0, 0
-	  mtlr      r12
-	  stw       r0, 0xC4(r30)
-	  addi      r3, r29, 0
-	  li        r4, -0x3
-	  blrl
+	card = &__CARDBlock[channel];
+	if (card->attached) {
+		card->attached = FALSE;
+		card->result   = CARD_RESULT_NOCARD;
+		EXISetExiCallback(channel, nullptr);
+		OSCancelAlarm(&card->alarm);
+		callback = card->exiCallback;
 
-	.loc_0xB0:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+		if (callback) {
+			card->exiCallback = nullptr;
+			callback(channel, CARD_RESULT_NOCARD);
+		}
+
+		callback = card->extCallback;
+		if (callback && CARD_MAX_MOUNT_STEP <= card->mountStep) {
+			card->extCallback = nullptr;
+			callback(channel, CARD_RESULT_NOCARD);
+		}
+	}
 }
 
 /*
@@ -104,93 +65,47 @@ void __CARDExtHandler(void)
  * Address:	80207F64
  * Size:	000118
  */
-void __CARDExiHandler(void)
+void __CARDExiHandler(s32 channel, OSContext* context)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  mulli     r4, r31, 0x108
-	  stw       r30, 0x20(r1)
-	  lis       r3, 0x803D
-	  stw       r29, 0x1C(r1)
-	  addi      r0, r3, 0x3420
-	  add       r30, r0, r4
-	  addi      r3, r30, 0xE0
-	  bl        -0x11B60
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xFC
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  li        r5, 0
-	  bl        -0xF274
-	  cmpwi     r3, 0
-	  bne-      .loc_0x60
-	  li        r29, -0x80
-	  b         .loc_0xD4
+	CARDControl* card;
+	CARDCallback callback;
+	u8 status;
+	s32 result;
 
-	.loc_0x60:
-	  addi      r3, r31, 0
-	  addi      r4, r1, 0x10
-	  bl        0x3A8
-	  mr.       r29, r3
-	  blt-      .loc_0xCC
-	  mr        r3, r31
-	  bl        0x488
-	  mr.       r29, r3
-	  blt-      .loc_0xCC
-	  lbz       r0, 0x10(r1)
-	  rlwinm.   r0,r0,0,27,28
-	  beq-      .loc_0x98
-	  li        r0, -0x5
-	  b         .loc_0x9C
+	card = &__CARDBlock[channel];
 
-	.loc_0x98:
-	  li        r0, 0
+	OSCancelAlarm(&card->alarm);
 
-	.loc_0x9C:
-	  mr        r29, r0
-	  cmpwi     r29, -0x5
-	  bne-      .loc_0xCC
-	  lwz       r3, 0xA8(r30)
-	  subic.    r0, r3, 0x1
-	  stw       r0, 0xA8(r30)
-	  ble-      .loc_0xCC
-	  mr        r3, r31
-	  bl        0x594
-	  mr.       r29, r3
-	  blt-      .loc_0xD4
-	  b         .loc_0xFC
+	if (!card->attached) {
+		return;
+	}
 
-	.loc_0xCC:
-	  mr        r3, r31
-	  bl        -0xF204
+	if (!EXILock(channel, 0, 0)) {
+		result = CARD_RESULT_FATAL_ERROR;
+		goto fatal;
+	}
 
-	.loc_0xD4:
-	  lwz       r0, 0xCC(r30)
-	  cmplwi    r0, 0
-	  mr        r12, r0
-	  beq-      .loc_0xFC
-	  li        r0, 0
-	  mtlr      r12
-	  stw       r0, 0xCC(r30)
-	  addi      r3, r31, 0
-	  addi      r4, r29, 0
-	  blrl
+	if ((result = __CARDReadStatus(channel, &status)) < 0 || (result = __CARDClearStatus(channel)) < 0) {
+		goto error;
+	}
 
-	.loc_0xFC:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  mtlr      r0
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	if ((result = (status & 0x18) ? CARD_RESULT_IOERROR : CARD_RESULT_READY) == CARD_RESULT_IOERROR && --card->retry > 0) {
+		result = Retry(channel);
+		if (result >= 0) {
+			return;
+		}
+		goto fatal;
+	}
+
+error:
+	EXIUnlock(channel);
+
+fatal:
+	callback = card->exiCallback;
+	if (callback) {
+		card->exiCallback = nullptr;
+		callback(channel, result);
+	}
 }
 
 /*
@@ -198,61 +113,20 @@ void __CARDExiHandler(void)
  * Address:	8020807C
  * Size:	0000A8
  */
-void __CARDTxHandler(void)
+void __CARDTxHandler(s32 channel, OSContext* context)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r27, 0x14(r1)
-	  addi      r27, r3, 0
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  mulli     r4, r27, 0x108
-	  addi      r3, r27, 0
-	  add       r29, r0, r4
-	  bl        -0xF89C
-	  cntlzw    r0, r3
-	  addi      r3, r27, 0
-	  rlwinm    r31,r0,27,5,31
-	  bl        -0xF284
-	  lwz       r0, 0xC8(r29)
-	  cmplwi    r0, 0
-	  mr        r28, r0
-	  beq-      .loc_0x94
-	  li        r30, 0
-	  cmpwi     r31, 0
-	  stw       r30, 0xC8(r29)
-	  bne-      .loc_0x70
-	  mr        r3, r27
-	  bl        -0xFD68
-	  cmpwi     r3, 0
-	  beq-      .loc_0x70
-	  li        r30, 0x1
+	CARDControl* card;
+	CARDCallback callback;
+	BOOL err;
 
-	.loc_0x70:
-	  cmpwi     r30, 0
-	  beq-      .loc_0x80
-	  li        r4, 0
-	  b         .loc_0x84
-
-	.loc_0x80:
-	  li        r4, -0x3
-
-	.loc_0x84:
-	  addi      r12, r28, 0
-	  mtlr      r12
-	  addi      r3, r27, 0
-	  blrl
-
-	.loc_0x94:
-	  lmw       r27, 0x14(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	card = &__CARDBlock[channel];
+	err  = !EXIDeselect(channel);
+	EXIUnlock(channel);
+	callback = card->txCallback;
+	if (callback) {
+		card->txCallback = nullptr;
+		callback(channel, (!err && EXIProbe(channel)) ? CARD_RESULT_READY : CARD_RESULT_NOCARD);
+	}
 }
 
 /*
@@ -260,50 +134,17 @@ void __CARDTxHandler(void)
  * Address:	80208124
  * Size:	000084
  */
-void __CARDUnlockedHandler(void)
+void __CARDUnlockedHandler(s32 channel, OSContext* context)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  mulli     r4, r30, 0x108
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  add       r3, r0, r4
-	  lwz       r0, 0xDC(r3)
-	  cmplwi    r0, 0
-	  mr        r31, r0
-	  beq-      .loc_0x6C
-	  li        r0, 0
-	  stw       r0, 0xDC(r3)
-	  mr        r3, r30
-	  bl        -0xFDF4
-	  cmpwi     r3, 0
-	  beq-      .loc_0x58
-	  li        r4, 0x1
-	  b         .loc_0x5C
+	CARDControl* card;
+	CARDCallback callback;
 
-	.loc_0x58:
-	  li        r4, -0x3
-
-	.loc_0x5C:
-	  addi      r12, r31, 0
-	  mtlr      r12
-	  addi      r3, r30, 0
-	  blrl
-
-	.loc_0x6C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	card     = &__CARDBlock[channel];
+	callback = card->unlockCallback;
+	if (callback) {
+		card->unlockCallback = nullptr;
+		callback(channel, EXIProbe(channel) ? CARD_RESULT_UNLOCKED : CARD_RESULT_NOCARD);
+	}
 }
 
 /*
@@ -311,88 +152,32 @@ void __CARDUnlockedHandler(void)
  * Address:	802081A8
  * Size:	00010C
  */
-void __CARDReadNintendoID(void)
+int __CARDReadNintendoID(s32 channel, u32* id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  li        r4, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  bl        -0xFAF4
-	  cmpwi     r3, 0
-	  bne-      .loc_0x3C
-	  li        r3, -0x3
-	  b         .loc_0xF0
+	BOOL err;
+	u32 cmd;
 
-	.loc_0x3C:
-	  li        r0, 0
-	  stw       r0, 0x10(r1)
-	  addi      r3, r29, 0
-	  addi      r4, r1, 0x10
-	  li        r5, 0x2
-	  li        r6, 0x1
-	  li        r7, 0
-	  bl        -0x10540
-	  cntlzw    r0, r3
-	  addi      r3, r29, 0
-	  rlwinm    r31,r0,27,5,31
-	  bl        -0x10168
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  or        r31, r31, r0
-	  li        r5, 0x4
-	  li        r6, 0
-	  li        r7, 0
-	  bl        -0x10574
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  addi      r3, r29, 0
-	  or        r31, r31, r0
-	  bl        -0x101A0
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  addi      r3, r29, 0
-	  or        r31, r31, r0
-	  bl        -0xFA54
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  or.       r31, r31, r0
-	  beq-      .loc_0xD0
-	  li        r3, -0x3
-	  b         .loc_0xF0
+	if (!EXISelect(channel, 0, 0)) {
+		return CARD_RESULT_NOCARD;
+	}
 
-	.loc_0xD0:
-	  lwz       r3, 0x0(r30)
-	  rlwinm.   r0,r3,0,0,15
-	  bne-      .loc_0xE4
-	  rlwinm.   r0,r3,0,30,31
-	  beq-      .loc_0xEC
+	cmd = 0;
+	err = 0;
+	err |= !EXIImm(channel, &cmd, 2, EXI_WRITE, nullptr);
+	err |= !EXISync(channel);
+	err |= !EXIImm(channel, id, 4, EXI_READ, nullptr);
+	err |= !EXISync(channel);
+	err |= !EXIDeselect(channel);
 
-	.loc_0xE4:
-	  li        r3, -0x2
-	  b         .loc_0xF0
+	if (err) {
+		return CARD_RESULT_NOCARD;
+	}
 
-	.loc_0xEC:
-	  li        r3, 0
+	if ((*id & 0xFFFF0000) || (*id & 3)) {
+		return CARD_RESULT_WRONGDEVICE;
+	}
 
-	.loc_0xF0:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  mtlr      r0
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	return CARD_RESULT_READY;
 }
 
 /*
@@ -400,69 +185,21 @@ void __CARDReadNintendoID(void)
  * Address:	802082B4
  * Size:	0000C0
  */
-void __CARDEnableInterrupt(void)
+s32 __CARDEnableInterrupt(s32 channel, BOOL enable)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  li        r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bl        -0xFBFC
-	  cmpwi     r3, 0
-	  bne-      .loc_0x38
-	  li        r3, -0x3
-	  b         .loc_0xA8
+	BOOL err;
+	u32 cmd;
 
-	.loc_0x38:
-	  cmpwi     r31, 0
-	  beq-      .loc_0x48
-	  lis       r0, 0x8101
-	  b         .loc_0x4C
+	if (!EXISelect(channel, 0, 4)) {
+		return CARD_RESULT_NOCARD;
+	}
 
-	.loc_0x48:
-	  lis       r0, 0x8100
-
-	.loc_0x4C:
-	  stw       r0, 0x10(r1)
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x10
-	  li        r5, 0x2
-	  li        r6, 0x1
-	  li        r7, 0
-	  bl        -0x10658
-	  cntlzw    r0, r3
-	  addi      r3, r30, 0
-	  rlwinm    r31,r0,27,5,31
-	  bl        -0x10280
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  addi      r3, r30, 0
-	  or        r31, r31, r0
-	  bl        -0xFB34
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  or.       r31, r31, r0
-	  beq-      .loc_0xA4
-	  li        r3, -0x3
-	  b         .loc_0xA8
-
-	.loc_0xA4:
-	  li        r3, 0
-
-	.loc_0xA8:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	cmd = enable ? 0x81010000 : 0x81000000;
+	err = FALSE;
+	err |= !EXIImm(channel, &cmd, 2, 1, nullptr);
+	err |= !EXISync(channel);
+	err |= !EXIDeselect(channel);
+	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
 }
 
 /*
@@ -470,77 +207,23 @@ void __CARDEnableInterrupt(void)
  * Address:	80208374
  * Size:	0000F0
  */
-void __CARDReadStatus(void)
+s32 __CARDReadStatus(s32 channel, u8* status)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  li        r4, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  bl        -0xFCC0
-	  cmpwi     r3, 0
-	  bne-      .loc_0x3C
-	  li        r3, -0x3
-	  b         .loc_0xD4
+	BOOL err;
+	u32 cmd;
 
-	.loc_0x3C:
-	  lis       r0, 0x8300
-	  stw       r0, 0x10(r1)
-	  addi      r3, r29, 0
-	  addi      r4, r1, 0x10
-	  li        r5, 0x2
-	  li        r6, 0x1
-	  li        r7, 0
-	  bl        -0x1070C
-	  cntlzw    r0, r3
-	  addi      r3, r29, 0
-	  rlwinm    r31,r0,27,5,31
-	  bl        -0x10334
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  or        r31, r31, r0
-	  li        r5, 0x1
-	  li        r6, 0
-	  li        r7, 0
-	  bl        -0x10740
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  addi      r3, r29, 0
-	  or        r31, r31, r0
-	  bl        -0x1036C
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  addi      r3, r29, 0
-	  or        r31, r31, r0
-	  bl        -0xFC20
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  or.       r31, r31, r0
-	  beq-      .loc_0xD0
-	  li        r3, -0x3
-	  b         .loc_0xD4
+	if (!EXISelect(channel, 0, 4)) {
+		return CARD_RESULT_NOCARD;
+	}
 
-	.loc_0xD0:
-	  li        r3, 0
-
-	.loc_0xD4:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  mtlr      r0
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	cmd = 0x83000000;
+	err = FALSE;
+	err |= !EXIImm(channel, &cmd, 2, 1, nullptr);
+	err |= !EXISync(channel);
+	err |= !EXIImm(channel, status, 1, 0, nullptr);
+	err |= !EXISync(channel);
+	err |= !EXIDeselect(channel);
+	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
 }
 
 /*
@@ -548,60 +231,22 @@ void __CARDReadStatus(void)
  * Address:	80208464
  * Size:	0000AC
  */
-void __CARDClearStatus(void)
+s32 __CARDClearStatus(s32 channel)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x4
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0xFDA8
-	  cmpwi     r3, 0
-	  bne-      .loc_0x34
-	  li        r3, -0x3
-	  b         .loc_0x94
+	BOOL err;
+	u32 cmd;
 
-	.loc_0x34:
-	  lis       r0, 0x8900
-	  stw       r0, 0xC(r1)
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0xC
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  li        r7, 0
-	  bl        -0x107F4
-	  cntlzw    r0, r3
-	  addi      r3, r30, 0
-	  rlwinm    r31,r0,27,5,31
-	  bl        -0x1041C
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  addi      r3, r30, 0
-	  or        r31, r31, r0
-	  bl        -0xFCD0
-	  cntlzw    r0, r3
-	  rlwinm    r0,r0,27,5,31
-	  or.       r31, r31, r0
-	  beq-      .loc_0x90
-	  li        r3, -0x3
-	  b         .loc_0x94
+	if (!EXISelect(channel, 0, 4)) {
+		return CARD_RESULT_NOCARD;
+	}
 
-	.loc_0x90:
-	  li        r3, 0
+	cmd = 0x89000000;
+	err = FALSE;
+	err |= !EXIImm(channel, &cmd, 1, 1, nullptr);
+	err |= !EXISync(channel);
+	err |= !EXIDeselect(channel);
 
-	.loc_0x94:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
 }
 
 /*
@@ -629,56 +274,28 @@ void __CARDWakeup(void)
  * Address:	80208510
  * Size:	0000A4
  */
-void TimeoutHandler(void)
+static void TimeoutHandler(OSAlarm* alarm, OSContext* context)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803D
-	  stw       r0, 0x4(r1)
-	  addi      r4, r4, 0x3420
-	  addi      r0, r4, 0xE0
-	  stwu      r1, -0x18(r1)
-	  cmplw     r3, r0
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r4, 0
-	  beq-      .loc_0x4C
-	  addi      r0, r4, 0x1E8
-	  cmplw     r3, r0
-	  addi      r4, r4, 0x108
-	  addi      r30, r4, 0
-	  li        r31, 0x1
-	  beq-      .loc_0x4C
-	  li        r31, 0x2
+	s32 channel;
+	CARDControl* card;
+	CARDCallback callback;
+	for (channel = 0; channel < 2; channel++) {
+		card = &__CARDBlock[channel];
+		if (alarm == &card->alarm) {
+			break;
+		}
+	}
 
-	.loc_0x4C:
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x8C
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x10278
-	  lwz       r0, 0xCC(r30)
-	  cmplwi    r0, 0
-	  mr        r12, r0
-	  beq-      .loc_0x8C
-	  li        r0, 0
-	  mtlr      r12
-	  stw       r0, 0xCC(r30)
-	  addi      r3, r31, 0
-	  li        r4, -0x5
-	  blrl
+	if (!card->attached) {
+		return;
+	}
 
-	.loc_0x8C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	EXISetExiCallback(channel, NULL);
+	callback = card->exiCallback;
+	if (callback) {
+		card->exiCallback = nullptr;
+		callback(channel, CARD_RESULT_IOERROR);
+	}
 }
 
 /*
@@ -686,9 +303,20 @@ void TimeoutHandler(void)
  * Address:	........
  * Size:	0000F8
  */
-void SetupTimeoutAlarm(void)
+static void SetupTimeoutAlarm(CARDControl* card)
 {
-	// UNUSED FUNCTION
+	OSCancelAlarm(&card->alarm);
+	switch (card->cmd[0]) {
+	case 0xF2:
+		OSSetAlarm(&card->alarm, OSMillisecondsToTicks(100), TimeoutHandler);
+		break;
+	case 0xF3:
+		break;
+	case 0xF4:
+	case 0xF1:
+		OSSetAlarm(&card->alarm, OSSecondsToTicks((OSTime)2) * (card->sectorSize / 0x2000), TimeoutHandler);
+		break;
+	}
 }
 
 /*
@@ -696,174 +324,43 @@ void SetupTimeoutAlarm(void)
  * Address:	802085B4
  * Size:	00022C
  */
-void Retry(void)
+static s32 Retry(s32 channel)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  mulli     r4, r30, 0x108
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  add       r31, r0, r4
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        -0xFF0C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x50
-	  mr        r3, r30
-	  bl        -0xF7C8
-	  li        r3, -0x3
-	  b         .loc_0x214
+	CARDControl* card;
+	card = &__CARDBlock[channel];
 
-	.loc_0x50:
-	  addi      r3, r31, 0xE0
-	  bl        -0x121D4
-	  lbz       r0, 0x94(r31)
-	  cmpwi     r0, 0xF3
-	  beq-      .loc_0x120
-	  bge-      .loc_0x78
-	  cmpwi     r0, 0xF1
-	  beq-      .loc_0xBC
-	  bge-      .loc_0x84
-	  b         .loc_0x120
+	if (!EXISelect(channel, 0, 4)) {
+		EXIUnlock(channel);
+		return CARD_RESULT_NOCARD;
+	}
 
-	.loc_0x78:
-	  cmpwi     r0, 0xF5
-	  bge-      .loc_0x120
-	  b         .loc_0xBC
+	SetupTimeoutAlarm(card);
 
-	.loc_0x84:
-	  lis       r3, 0x8000
-	  lwz       r0, 0xF8(r3)
-	  lis       r4, 0x1062
-	  lis       r3, 0x8021
-	  rlwinm    r0,r0,30,2,31
-	  addi      r4, r4, 0x4DD3
-	  mulhwu    r0, r4, r0
-	  rlwinm    r0,r0,26,6,31
-	  mulli     r6, r0, 0x64
-	  subi      r7, r3, 0x7AF0
-	  addi      r3, r31, 0xE0
-	  li        r5, 0
-	  bl        -0x12300
-	  b         .loc_0x120
+	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)) {
+		EXIDeselect(channel);
+		EXIUnlock(channel);
+		return CARD_RESULT_NOCARD;
+	}
 
-	.loc_0xBC:
-	  lis       r3, 0x8000
-	  lwz       r4, 0xC(r31)
-	  lwz       r0, 0xF8(r3)
-	  lis       r3, 0x8021
-	  srawi     r9, r4, 0xD
-	  rlwinm    r7,r0,30,2,31
-	  li        r0, 0x2
-	  li        r4, 0
-	  mullw     r8, r4, r0
-	  mulhwu    r6, r7, r0
-	  add       r8, r8, r6
-	  mullw     r5, r7, r0
-	  addze     r9, r9
-	  mullw     r6, r7, r4
-	  srawi     r0, r9, 0x1F
-	  mullw     r4, r0, r5
-	  mulhwu    r0, r9, r5
-	  subi      r7, r3, 0x7AF0
-	  add       r3, r8, r6
-	  add       r4, r4, r0
-	  mullw     r0, r9, r3
-	  mullw     r6, r9, r5
-	  addi      r3, r31, 0xE0
-	  add       r5, r4, r0
-	  bl        -0x12368
+	if (card->cmd[0] == 0x52 && !EXIImmEx(channel, card->workArea->header.buffer, card->latency, 1)) {
+		EXIDeselect(channel);
+		EXIUnlock(channel);
+		return CARD_RESULT_NOCARD;
+	}
 
-	.loc_0x120:
-	  lwz       r5, 0xA0(r31)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x94
-	  li        r6, 0x1
-	  bl        -0x107C8
-	  cmpwi     r3, 0
-	  bne-      .loc_0x154
-	  mr        r3, r30
-	  bl        -0xFEEC
-	  mr        r3, r30
-	  bl        -0xF8CC
-	  li        r3, -0x3
-	  b         .loc_0x214
+	if (card->mode == 0xffffffff) {
+		EXIDeselect(channel);
+		EXIUnlock(channel);
+		return CARD_RESULT_READY;
+	}
 
-	.loc_0x154:
-	  lbz       r0, 0x94(r31)
-	  cmplwi    r0, 0x52
-	  bne-      .loc_0x198
-	  lwz       r4, 0x80(r31)
-	  mr        r3, r30
-	  lwz       r5, 0x14(r31)
-	  li        r6, 0x1
-	  addi      r4, r4, 0x200
-	  bl        -0x1080C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x198
-	  mr        r3, r30
-	  bl        -0xFF30
-	  mr        r3, r30
-	  bl        -0xF910
-	  li        r3, -0x3
-	  b         .loc_0x214
+	if (!EXIDma(channel, card->buffer, (s32)((card->cmd[0] == 0x52) ? 512 : 128), card->mode, __CARDTxHandler)) {
+		EXIDeselect(channel);
+		EXIUnlock(channel);
+		return CARD_RESULT_NOCARD;
+	}
 
-	.loc_0x198:
-	  lwz       r3, 0xA4(r31)
-	  addis     r0, r3, 0x1
-	  cmplwi    r0, 0xFFFF
-	  bne-      .loc_0x1C0
-	  mr        r3, r30
-	  bl        -0xFF58
-	  mr        r3, r30
-	  bl        -0xF938
-	  li        r3, 0
-	  b         .loc_0x214
-
-	.loc_0x1C0:
-	  lbz       r0, 0x94(r31)
-	  cmplwi    r0, 0x52
-	  bne-      .loc_0x1D4
-	  li        r5, 0x200
-	  b         .loc_0x1D8
-
-	.loc_0x1D4:
-	  li        r5, 0x80
-
-	.loc_0x1D8:
-	  lis       r3, 0x8021
-	  lwz       r4, 0xB4(r31)
-	  subi      r7, r3, 0x7F84
-	  lwz       r6, 0xA4(r31)
-	  mr        r3, r30
-	  bl        -0x107E4
-	  cmpwi     r3, 0
-	  bne-      .loc_0x210
-	  mr        r3, r30
-	  bl        -0xFFA8
-	  mr        r3, r30
-	  bl        -0xF988
-	  li        r3, -0x3
-	  b         .loc_0x214
-
-	.loc_0x210:
-	  li        r3, 0
-
-	.loc_0x214:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	return CARD_RESULT_READY;
 }
 
 /*
@@ -871,91 +368,43 @@ void Retry(void)
  * Address:	802087E0
  * Size:	000110
  */
-void UnlockedCallback(void)
+static void UnlockedCallback(s32 channel, s32 result)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  mulli     r5, r31, 0x108
-	  stw       r30, 0x10(r1)
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  add       r30, r0, r5
-	  blt-      .loc_0x74
-	  lis       r3, 0x8021
-	  subi      r0, r3, 0x7820
-	  lis       r3, 0x8021
-	  stw       r0, 0xDC(r30)
-	  subi      r5, r3, 0x7EDC
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0xFAF0
-	  cmpwi     r3, 0
-	  bne-      .loc_0x60
-	  li        r4, 0
-	  b         .loc_0x74
+	CARDCallback callback;
+	CARDControl* card;
 
-	.loc_0x60:
-	  li        r0, 0
-	  stw       r0, 0xDC(r30)
-	  mr        r3, r31
-	  bl        -0x298
-	  mr        r4, r3
+	card = &__CARDBlock[channel];
+	if (result >= 0) {
+		card->unlockCallback = UnlockedCallback;
+		if (!EXILock(channel, 0, __CARDUnlockedHandler)) {
+			result = CARD_RESULT_READY;
+		} else {
+			card->unlockCallback = nullptr;
+			result               = Retry(channel);
+		}
+	}
 
-	.loc_0x74:
-	  cmpwi     r4, 0
-	  bge-      .loc_0xF8
-	  lbz       r0, 0x94(r30)
-	  cmpwi     r0, 0xF3
-	  beq-      .loc_0xF8
-	  bge-      .loc_0xA4
-	  cmpwi     r0, 0x52
-	  beq-      .loc_0xB0
-	  blt-      .loc_0xF8
-	  cmpwi     r0, 0xF1
-	  bge-      .loc_0xD8
-	  b         .loc_0xF8
+	if (result < 0) {
+		switch (card->cmd[0]) {
+		case 0x52:
+			callback = card->txCallback;
+			if (callback) {
+				card->txCallback = nullptr;
+				callback(channel, result);
+			}
 
-	.loc_0xA4:
-	  cmpwi     r0, 0xF5
-	  bge-      .loc_0xF8
-	  b         .loc_0xD8
-
-	.loc_0xB0:
-	  lwz       r0, 0xC8(r30)
-	  cmplwi    r0, 0
-	  mr        r12, r0
-	  beq-      .loc_0xF8
-	  li        r0, 0
-	  mtlr      r12
-	  stw       r0, 0xC8(r30)
-	  mr        r3, r31
-	  blrl
-	  b         .loc_0xF8
-
-	.loc_0xD8:
-	  lwz       r12, 0xCC(r30)
-	  cmplwi    r12, 0
-	  beq-      .loc_0xF8
-	  li        r0, 0
-	  mtlr      r12
-	  stw       r0, 0xCC(r30)
-	  mr        r3, r31
-	  blrl
-
-	.loc_0xF8:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+			break;
+		case 0xF2:
+		case 0xF4:
+		case 0xF1:
+			callback = card->exiCallback;
+			if (callback) {
+				card->exiCallback = nullptr;
+				callback(channel, result);
+			}
+			break;
+		}
+	}
 }
 
 /*
@@ -963,135 +412,39 @@ void UnlockedCallback(void)
  * Address:	802088F0
  * Size:	0001A0
  */
-void __CARDStart(void)
+static s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCallback)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  mulli     r6, r30, 0x108
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  add       r31, r0, r6
-	  lwz       r0, 0x0(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x3C
-	  li        r3, -0x3
-	  b         .loc_0x188
+	CARDControl* card;
+	s32 result;
 
-	.loc_0x3C:
-	  cmplwi    r4, 0
-	  beq-      .loc_0x48
-	  stw       r4, 0xC8(r31)
+	card = &__CARDBlock[channel];
+	if (!card->attached) {
+		result = CARD_RESULT_NOCARD;
+	} else {
 
-	.loc_0x48:
-	  cmplwi    r5, 0
-	  beq-      .loc_0x54
-	  stw       r5, 0xCC(r31)
+		if (txCallback) {
+			card->txCallback = txCallback;
+		}
+		if (exiCallback) {
+			card->exiCallback = exiCallback;
+		}
+		card->unlockCallback = UnlockedCallback;
+		if (!EXILock(channel, 0, __CARDUnlockedHandler)) {
+			result = CARD_RESULT_BUSY;
+		} else {
+			card->unlockCallback = nullptr;
 
-	.loc_0x54:
-	  lis       r3, 0x8021
-	  subi      r0, r3, 0x7820
-	  lis       r3, 0x8021
-	  stw       r0, 0xDC(r31)
-	  subi      r5, r3, 0x7EDC
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        -0xFC24
-	  cmpwi     r3, 0
-	  bne-      .loc_0x84
-	  li        r3, -0x1
-	  b         .loc_0x188
+			if (!EXISelect(channel, 0, 4)) {
+				EXIUnlock(channel);
+				result = CARD_RESULT_NOCARD;
+			} else {
+				SetupTimeoutAlarm(card);
+				result = CARD_RESULT_READY;
+			}
+		}
+	}
 
-	.loc_0x84:
-	  li        r0, 0
-	  stw       r0, 0xDC(r31)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  li        r5, 0x4
-	  bl        -0x102AC
-	  cmpwi     r3, 0
-	  bne-      .loc_0xB4
-	  mr        r3, r30
-	  bl        -0xFB68
-	  li        r3, -0x3
-	  b         .loc_0x188
-
-	.loc_0xB4:
-	  addi      r3, r31, 0xE0
-	  bl        -0x12574
-	  lbz       r0, 0x94(r31)
-	  cmpwi     r0, 0xF3
-	  beq-      .loc_0x184
-	  bge-      .loc_0xDC
-	  cmpwi     r0, 0xF1
-	  beq-      .loc_0x120
-	  bge-      .loc_0xE8
-	  b         .loc_0x184
-
-	.loc_0xDC:
-	  cmpwi     r0, 0xF5
-	  bge-      .loc_0x184
-	  b         .loc_0x120
-
-	.loc_0xE8:
-	  lis       r3, 0x8000
-	  lwz       r0, 0xF8(r3)
-	  lis       r4, 0x1062
-	  lis       r3, 0x8021
-	  rlwinm    r0,r0,30,2,31
-	  addi      r4, r4, 0x4DD3
-	  mulhwu    r0, r4, r0
-	  rlwinm    r0,r0,26,6,31
-	  mulli     r6, r0, 0x64
-	  subi      r7, r3, 0x7AF0
-	  addi      r3, r31, 0xE0
-	  li        r5, 0
-	  bl        -0x126A0
-	  b         .loc_0x184
-
-	.loc_0x120:
-	  lis       r3, 0x8000
-	  lwz       r4, 0xC(r31)
-	  lwz       r0, 0xF8(r3)
-	  lis       r3, 0x8021
-	  srawi     r9, r4, 0xD
-	  rlwinm    r7,r0,30,2,31
-	  li        r0, 0x2
-	  li        r4, 0
-	  mullw     r8, r4, r0
-	  mulhwu    r6, r7, r0
-	  add       r8, r8, r6
-	  mullw     r5, r7, r0
-	  addze     r9, r9
-	  mullw     r6, r7, r4
-	  srawi     r0, r9, 0x1F
-	  mullw     r4, r0, r5
-	  mulhwu    r0, r9, r5
-	  subi      r7, r3, 0x7AF0
-	  add       r3, r8, r6
-	  add       r4, r4, r0
-	  mullw     r0, r9, r3
-	  mullw     r6, r9, r5
-	  addi      r3, r31, 0xE0
-	  add       r5, r4, r0
-	  bl        -0x12708
-
-	.loc_0x184:
-	  li        r3, 0
-
-	.loc_0x188:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	return result;
 }
 
 /*
@@ -1099,99 +452,41 @@ void __CARDStart(void)
  * Address:	80208A90
  * Size:	000138
  */
-void __CARDReadSegment(void)
+s32 __CARDReadSegment(s32 channel, CARDCallback callback)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0x5
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  mulli     r5, r30, 0x108
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  add       r31, r0, r5
-	  li        r0, 0x52
-	  stb       r0, 0x94(r31)
-	  li        r0, 0
-	  addi      r3, r30, 0
-	  lwz       r5, 0xB0(r31)
-	  rlwinm    r5,r5,15,25,31
-	  stb       r5, 0x95(r31)
-	  li        r5, 0
-	  lwz       r7, 0xB0(r31)
-	  rlwinm    r7,r7,23,24,31
-	  stb       r7, 0x96(r31)
-	  lwz       r7, 0xB0(r31)
-	  rlwinm    r7,r7,25,30,31
-	  stb       r7, 0x97(r31)
-	  lwz       r7, 0xB0(r31)
-	  rlwinm    r7,r7,0,25,31
-	  stb       r7, 0x98(r31)
-	  stw       r6, 0xA0(r31)
-	  stw       r0, 0xA4(r31)
-	  stw       r0, 0xA8(r31)
-	  bl        -0x21C
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x90
-	  li        r3, 0
-	  b         .loc_0x120
+	CARDControl* card;
+	s32 result;
 
-	.loc_0x90:
-	  cmpwi     r3, 0
-	  bge-      .loc_0x9C
-	  b         .loc_0x120
+	card         = &__CARDBlock[channel];
+	card->cmd[0] = 0x52;
+	card->cmd[1] = AD1(card->addr);
+	card->cmd[2] = AD2(card->addr);
+	card->cmd[3] = AD3(card->addr);
+	card->cmd[4] = BA(card->addr);
+	card->cmdlen = 5;
+	card->mode   = 0;
+	card->retry  = 0;
 
-	.loc_0x9C:
-	  lwz       r5, 0xA0(r31)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x94
-	  li        r6, 0x1
-	  bl        -0x10C20
-	  cmpwi     r3, 0
-	  beq-      .loc_0xFC
-	  lwz       r4, 0x80(r31)
-	  mr        r3, r30
-	  lwz       r5, 0x14(r31)
-	  li        r6, 0x1
-	  addi      r4, r4, 0x200
-	  bl        -0x10C40
-	  cmpwi     r3, 0
-	  beq-      .loc_0xFC
-	  lis       r3, 0x8021
-	  lwz       r4, 0xB4(r31)
-	  subi      r7, r3, 0x7F84
-	  lwz       r6, 0xA4(r31)
-	  addi      r3, r30, 0
-	  li        r5, 0x200
-	  bl        -0x10BC4
-	  cmpwi     r3, 0
-	  bne-      .loc_0x11C
+	result = __CARDStart(channel, callback, 0);
+	if (result == CARD_RESULT_BUSY) {
+		return CARD_RESULT_READY;
+	}
 
-	.loc_0xFC:
-	  li        r0, 0
-	  stw       r0, 0xC8(r31)
-	  mr        r3, r30
-	  bl        -0x10390
-	  mr        r3, r30
-	  bl        -0xFD70
-	  li        r3, -0x3
-	  b         .loc_0x120
+	if (result < 0) {
+		return result;
+	}
 
-	.loc_0x11C:
-	  li        r3, 0
-
-	.loc_0x120:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)
+	    || !EXIImmEx(channel, card->workArea->header.buffer, card->latency,
+	                 1)
+	    || // XXX use DMA if possible
+	    !EXIDma(channel, card->buffer, 512, card->mode, __CARDTxHandler)) {
+		card->txCallback = 0;
+		EXIDeselect(channel);
+		EXIUnlock(channel);
+		return CARD_RESULT_NOCARD;
+	}
+	return CARD_RESULT_READY;
 }
 
 /*
@@ -1199,93 +494,35 @@ void __CARDReadSegment(void)
  * Address:	80208BC8
  * Size:	000120
  */
-void __CARDWritePage(void)
+s32 __CARDWritePage(s32 channel, CARDCallback callback)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r7, 0x5
-	  stw       r0, 0x4(r1)
-	  li        r6, 0x1
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  mulli     r5, r30, 0x108
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  add       r31, r0, r5
-	  li        r0, 0xF2
-	  stb       r0, 0x94(r31)
-	  addi      r5, r4, 0
-	  li        r0, 0x3
-	  lwz       r3, 0xB0(r31)
-	  li        r4, 0
-	  rlwinm    r3,r3,15,25,31
-	  stb       r3, 0x95(r31)
-	  addi      r3, r30, 0
-	  lwz       r8, 0xB0(r31)
-	  rlwinm    r8,r8,23,24,31
-	  stb       r8, 0x96(r31)
-	  lwz       r8, 0xB0(r31)
-	  rlwinm    r8,r8,25,30,31
-	  stb       r8, 0x97(r31)
-	  lwz       r8, 0xB0(r31)
-	  rlwinm    r8,r8,0,25,31
-	  stb       r8, 0x98(r31)
-	  stw       r7, 0xA0(r31)
-	  stw       r6, 0xA4(r31)
-	  stw       r0, 0xA8(r31)
-	  bl        -0x35C
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x98
-	  li        r3, 0
-	  b         .loc_0x108
+	CARDControl* card;
+	s32 result;
 
-	.loc_0x98:
-	  cmpwi     r3, 0
-	  bge-      .loc_0xA4
-	  b         .loc_0x108
+	card         = &__CARDBlock[channel];
+	card->cmd[0] = 0xF2;
+	card->cmd[1] = AD1(card->addr);
+	card->cmd[2] = AD2(card->addr);
+	card->cmd[3] = AD3(card->addr);
+	card->cmd[4] = BA(card->addr);
+	card->cmdlen = 5;
+	card->mode   = 1;
+	card->retry  = 3;
 
-	.loc_0xA4:
-	  lwz       r5, 0xA0(r31)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x94
-	  li        r6, 0x1
-	  bl        -0x10D60
-	  cmpwi     r3, 0
-	  beq-      .loc_0xE4
-	  lis       r3, 0x8021
-	  lwz       r4, 0xB4(r31)
-	  subi      r7, r3, 0x7F84
-	  lwz       r6, 0xA4(r31)
-	  addi      r3, r30, 0
-	  li        r5, 0x80
-	  bl        -0x10CE4
-	  cmpwi     r3, 0
-	  bne-      .loc_0x104
-
-	.loc_0xE4:
-	  li        r0, 0
-	  stw       r0, 0xCC(r31)
-	  mr        r3, r30
-	  bl        -0x104B0
-	  mr        r3, r30
-	  bl        -0xFE90
-	  li        r3, -0x3
-	  b         .loc_0x108
-
-	.loc_0x104:
-	  li        r3, 0
-
-	.loc_0x108:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	result = __CARDStart(channel, nullptr, callback);
+	if (result == CARD_RESULT_BUSY) {
+		return CARD_RESULT_READY;
+	}
+	if (result < 0) {
+		return result;
+	}
+	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1) || !EXIDma(channel, card->buffer, 128, card->mode, __CARDTxHandler)) {
+		card->exiCallback = nullptr;
+		EXIDeselect(channel);
+		EXIUnlock(channel);
+		return CARD_RESULT_NOCARD;
+	}
+	return CARD_RESULT_READY;
 }
 
 /*
@@ -1303,74 +540,38 @@ void __CARDErase(void)
  * Address:	80208CE8
  * Size:	0000DC
  */
-void __CARDEraseSector(void)
+s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  mulli     r6, r29, 0x108
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  add       r30, r0, r6
-	  li        r0, 0xF1
-	  stb       r0, 0x94(r30)
-	  rlwinm    r3,r4,15,25,31
-	  rlwinm    r0,r4,23,24,31
-	  stb       r3, 0x95(r30)
-	  li        r6, 0x3
-	  addi      r3, r29, 0
-	  stb       r0, 0x96(r30)
-	  li        r0, -0x1
-	  li        r4, 0
-	  stw       r6, 0xA0(r30)
-	  stw       r0, 0xA4(r30)
-	  stw       r6, 0xA8(r30)
-	  bl        -0x458
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x74
-	  li        r3, 0
-	  b         .loc_0xC0
+	CARDControl* card;
+	s32 result;
 
-	.loc_0x74:
-	  cmpwi     r3, 0
-	  bge-      .loc_0x80
-	  b         .loc_0xC0
+	card         = &__CARDBlock[channel];
+	card->cmd[0] = 0xF1;
+	card->cmd[1] = AD1(addr);
+	card->cmd[2] = AD2(addr);
+	card->cmdlen = 3;
+	card->mode   = -1;
+	card->retry  = 3;
 
-	.loc_0x80:
-	  lwz       r5, 0xA0(r30)
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0x94
-	  li        r31, 0
-	  li        r6, 0x1
-	  bl        -0x10E60
-	  cmpwi     r3, 0
-	  bne-      .loc_0xAC
-	  li        r0, 0
-	  stw       r0, 0xCC(r30)
-	  li        r31, -0x3
+	result = __CARDStart(channel, nullptr, callback);
 
-	.loc_0xAC:
-	  mr        r3, r29
-	  bl        -0x10590
-	  mr        r3, r29
-	  bl        -0xFF70
-	  mr        r3, r31
+	if (result == CARD_RESULT_BUSY) {
+		return CARD_RESULT_READY;
+	}
 
-	.loc_0xC0:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  mtlr      r0
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	if (result < 0) {
+		return result;
+	}
+
+	result = CARD_RESULT_READY;
+	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)) {
+		result            = CARD_RESULT_NOCARD;
+		card->exiCallback = nullptr;
+	}
+
+	EXIDeselect(channel);
+	EXIUnlock(channel);
+	return result;
 }
 
 /*
@@ -1380,51 +581,26 @@ void __CARDEraseSector(void)
  */
 void CARDInit(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  stw       r29, 0xC(r1)
-	  lwz       r0, 0x3408(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x74
-	  bl        -0x200868
-	  bl        -0x12D2C
-	  lis       r3, 0x803D
-	  addi      r30, r3, 0x3420
-	  li        r29, 0
-	  li        r31, -0x3
+	s32 channel;
 
-	.loc_0x3C:
-	  stw       r31, 0x4(r30)
-	  addi      r3, r30, 0x8C
-	  bl        -0xD334
-	  addi      r3, r30, 0xE0
-	  bl        -0x12D04
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x2
-	  addi      r30, r30, 0x108
-	  blt+      .loc_0x3C
-	  lis       r3, 0x8000
-	  bl        .loc_0x90
-	  lis       r3, 0x802F
-	  subi      r3, r3, 0x7450
-	  bl        -0xED74
+	if (__CARDDiskID) {
+		return;
+	}
 
-	.loc_0x74:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  lwz       r29, 0xC(r1)
-	  addi      r1, r1, 0x18
-	  blr
+	DSPInit();
+	OSInitAlarm();
 
-	.loc_0x90:
-	*/
+	for (channel = 0; channel < 2; channel++) {
+		CARDControl* card = &__CARDBlock[channel];
+
+		card->result = CARD_RESULT_NOCARD;
+		OSInitThreadQueue(&card->threadQueue);
+		OSCreateAlarm(&card->alarm);
+	}
+
+	__CARDSetDiskID((DVDDiskID*)OSPhysicalToCached(0x0));
+
+	OSRegisterResetFunction(&ResetFunctionInfo);
 }
 
 /*
@@ -1432,90 +608,37 @@ void CARDInit(void)
  * Address:	80208E54
  * Size:	00001C
  */
-void __CARDSetDiskID(void)
-{
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0
-	  beq-      .loc_0xC
-	  b         .loc_0x14
-
-	.loc_0xC:
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x3630
-
-	.loc_0x14:
-	  stw       r3, 0x3408(r13)
-	  blr
-	*/
-}
+void __CARDSetDiskID(const DVDDiskID* diskID) { __CARDDiskID = diskID ? diskID : &__CARDDiskNone; }
 
 /*
  * --INFO--
  * Address:	80208E70
  * Size:	0000B0
  */
-void __CARDGetControlBlock(void)
+s32 __CARDGetControlBlock(s32 channel, CARDControl** card)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  stw       r30, 0x10(r1)
-	  addi      r30, r4, 0
-	  blt-      .loc_0x34
-	  cmpwi     r31, 0x2
-	  bge-      .loc_0x34
-	  lwz       r0, 0x3408(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x3C
+	BOOL enabled;
+	s32 result;
+	CARDControl* reqCard;
 
-	.loc_0x34:
-	  li        r3, -0x80
-	  b         .loc_0x98
+	if (channel < 0 || channel >= 2 || __CARDDiskID == NULL) {
+		return CARD_RESULT_FATAL_ERROR;
+	}
 
-	.loc_0x3C:
-	  bl        -0xFF30
-	  mulli     r5, r31, 0x108
-	  lis       r4, 0x803D
-	  addi      r0, r4, 0x3420
-	  add       r4, r0, r5
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x64
-	  li        r31, -0x3
-	  b         .loc_0x90
-
-	.loc_0x64:
-	  lwz       r0, 0x4(r4)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x78
-	  li        r31, -0x1
-	  b         .loc_0x90
-
-	.loc_0x78:
-	  li        r0, -0x1
-	  stw       r0, 0x4(r4)
-	  li        r0, 0
-	  li        r31, 0
-	  stw       r0, 0xD0(r4)
-	  stw       r4, 0x0(r30)
-
-	.loc_0x90:
-	  bl        -0xFF5C
-	  mr        r3, r31
-
-	.loc_0x98:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	enabled = OSDisableInterrupts();
+	reqCard = &__CARDBlock[channel];
+	if (!reqCard->attached) {
+		result = CARD_RESULT_NOCARD;
+	} else if (reqCard->result == CARD_RESULT_BUSY) {
+		result = CARD_RESULT_BUSY;
+	} else {
+		reqCard->result      = CARD_RESULT_BUSY;
+		result               = CARD_RESULT_READY;
+		reqCard->apiCallback = nullptr;
+		*card                = reqCard;
+	}
+	OSRestoreInterrupts(enabled);
+	return result;
 }
 
 /*
@@ -1523,33 +646,16 @@ void __CARDGetControlBlock(void)
  * Address:	80208F20
  * Size:	000050
  */
-void __CARDPutControlBlock(void)
+s32 __CARDPutControlBlock(CARDControl* card, s32 result)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0xFFC0
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x30
-	  stw       r31, 0x4(r30)
+	BOOL enabled;
 
-	.loc_0x30:
-	  bl        -0xFFAC
-	  lwz       r0, 0x1C(r1)
-	  mr        r3, r31
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	enabled = OSDisableInterrupts();
+	if (card->attached) {
+		card->result = result;
+	}
+	OSRestoreInterrupts(enabled);
+	return result;
 }
 
 /*
@@ -1557,27 +663,16 @@ void __CARDPutControlBlock(void)
  * Address:	80208F70
  * Size:	000030
  */
-void CARDGetResultCode(void)
+s32 CARDGetResultCode(s32 channel)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0
-	  blt-      .loc_0x10
-	  cmpwi     r3, 0x2
-	  blt-      .loc_0x18
+	CARDControl* card;
 
-	.loc_0x10:
-	  li        r3, -0x80
-	  blr
+	if (channel < 0 || channel >= 2) {
+		return CARD_RESULT_FATAL_ERROR;
+	}
 
-	.loc_0x18:
-	  mulli     r4, r3, 0x108
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  add       r3, r0, r4
-	  lwz       r3, 0x4(r3)
-	  blr
-	*/
+	card = &__CARDBlock[channel];
+	return card->result;
 }
 
 /*
@@ -1585,105 +680,41 @@ void CARDGetResultCode(void)
  * Address:	80208FA0
  * Size:	000120
  */
-void CARDFreeBlocks(void)
+s32 CARDFreeBlocks(s32 channel, s32* byteNotUsed, s32* filesNotUsed)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  addi      r29, r4, 0
-	  addi      r4, r1, 0x18
-	  bl        -0x154
-	  cmpwi     r3, 0
-	  bge-      .loc_0x34
-	  b         .loc_0x104
+	CARDControl* card;
+	s32 result;
+	CARDFatBlock* fat;
+	CARDDirectoryBlock* dir;
+	CARDDir* ent;
+	u16 fileNo;
 
-	.loc_0x34:
-	  lwz       r3, 0x18(r1)
-	  bl        0x4D4
-	  mr        r30, r3
-	  lwz       r3, 0x18(r1)
-	  bl        0x8CC
-	  cmplwi    r30, 0
-	  beq-      .loc_0x58
-	  cmplwi    r3, 0
-	  bne-      .loc_0x80
+	result = __CARDGetControlBlock(channel, &card);
+	if (result < 0) {
+		return result;
+	}
 
-	.loc_0x58:
-	  lwz       r30, 0x18(r1)
-	  bl        -0x10080
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x74
-	  li        r0, -0x6
-	  stw       r0, 0x4(r30)
+	fat = __CARDGetFatBlock(card);
+	dir = __CARDGetDirBlock(card);
+	if (fat == nullptr || dir == nullptr) {
+		return __CARDPutControlBlock(card, CARD_RESULT_BROKEN);
+	}
 
-	.loc_0x74:
-	  bl        -0x10070
-	  li        r3, -0x6
-	  b         .loc_0x104
+	if (byteNotUsed) {
+		*byteNotUsed = (s32)(card->sectorSize * fat->freeBlocks);
+	}
 
-	.loc_0x80:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x9C
-	  lwz       r4, 0x18(r1)
-	  lhz       r0, 0x6(r30)
-	  lwz       r4, 0xC(r4)
-	  mullw     r0, r4, r0
-	  stw       r0, 0x0(r29)
+	if (filesNotUsed) {
+		*filesNotUsed = 0;
+		for (fileNo = 0; fileNo < CARD_MAX_FILE; fileNo++) {
+			ent = &dir->entries[fileNo];
+			if (ent->fileName[0] == 0xff) {
+				++*filesNotUsed;
+			}
+		}
+	}
 
-	.loc_0x9C:
-	  cmplwi    r31, 0
-	  beq-      .loc_0xE0
-	  li        r0, 0
-	  stw       r0, 0x0(r31)
-	  li        r5, 0
-	  b         .loc_0xD4
-
-	.loc_0xB4:
-	  lbz       r0, 0x8(r3)
-	  cmplwi    r0, 0xFF
-	  bne-      .loc_0xCC
-	  lwz       r4, 0x0(r31)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x0(r31)
-
-	.loc_0xCC:
-	  addi      r3, r3, 0x40
-	  addi      r5, r5, 0x1
-
-	.loc_0xD4:
-	  rlwinm    r0,r5,0,16,31
-	  cmplwi    r0, 0x7F
-	  blt+      .loc_0xB4
-
-	.loc_0xE0:
-	  lwz       r30, 0x18(r1)
-	  bl        -0x10108
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xFC
-	  li        r0, 0
-	  stw       r0, 0x4(r30)
-
-	.loc_0xFC:
-	  bl        -0x100F8
-	  li        r3, 0
-
-	.loc_0x104:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  mtlr      r0
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  blr
-	*/
+	return __CARDPutControlBlock(card, CARD_RESULT_READY);
 }
 
 /*
@@ -1711,44 +742,17 @@ void CARDGetMemSize(void)
  * Address:	802090C0
  * Size:	00006C
  */
-void CARDGetSectorSize(void)
+s32 CARDGetSectorSize(s32 channel, u32* size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  addi      r4, r1, 0x10
-	  bl        -0x268
-	  cmpwi     r3, 0
-	  bge-      .loc_0x28
-	  b         .loc_0x58
+	CARDControl* card;
+	s32 result;
 
-	.loc_0x28:
-	  lwz       r3, 0x10(r1)
-	  lwz       r0, 0xC(r3)
-	  stw       r0, 0x0(r31)
-	  lwz       r31, 0x10(r1)
-	  bl        -0x1017C
-	  lwz       r0, 0x0(r31)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x50
-	  li        r0, 0
-	  stw       r0, 0x4(r31)
-
-	.loc_0x50:
-	  bl        -0x1016C
-	  li        r3, 0
-
-	.loc_0x58:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	result = __CARDGetControlBlock(channel, &card);
+	if (result < 0) {
+		return result;
+	}
+	*size = card->sectorSize;
+	return __CARDPutControlBlock(card, 0);
 }
 
 /*
@@ -1756,59 +760,21 @@ void CARDGetSectorSize(void)
  * Address:	8020912C
  * Size:	000098
  */
-void __CARDSync(void)
+s32 __CARDSync(s32 channel)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  mulli     r4, r28, 0x108
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x3420
-	  add       r31, r0, r4
-	  bl        -0x101E0
-	  mr        r29, r3
-	  b         .loc_0x44
+	CARDControl* card;
+	s32 result;
+	BOOL enabled;
 
-	.loc_0x3C:
-	  addi      r3, r31, 0x8C
-	  bl        -0xC7B0
+	card    = &__CARDBlock[channel];
+	enabled = OSDisableInterrupts();
 
-	.loc_0x44:
-	  cmpwi     r28, 0
-	  blt-      .loc_0x54
-	  cmpwi     r28, 0x2
-	  blt-      .loc_0x5C
+	while ((result = CARDGetResultCode(channel)) == CARD_RESULT_BUSY) {
+		OSSleepThread(&card->threadQueue);
+	}
 
-	.loc_0x54:
-	  li        r0, -0x80
-	  b         .loc_0x60
-
-	.loc_0x5C:
-	  lwz       r0, 0x4(r31)
-
-	.loc_0x60:
-	  mr        r30, r0
-	  cmpwi     r30, -0x1
-	  beq+      .loc_0x3C
-	  mr        r3, r29
-	  bl        -0x101F8
-	  lwz       r0, 0x24(r1)
-	  mr        r3, r30
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	OSRestoreInterrupts(enabled);
+	return result;
 }
 
 /*
@@ -1816,35 +782,13 @@ void __CARDSync(void)
  * Address:	802091C4
  * Size:	000050
  */
-void OnReset(void)
+static BOOL OnReset(BOOL f)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bne-      .loc_0x3C
-	  li        r3, 0
-	  bl        0x2014
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x34
-	  li        r3, 0x1
-	  bl        0x2004
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x3C
+	if (!f) {
+		if (CARDUnmount(0) == CARD_RESULT_BUSY || CARDUnmount(1) == CARD_RESULT_BUSY) {
+			return FALSE;
+		}
+	}
 
-	.loc_0x34:
-	  li        r3, 0
-	  b         .loc_0x40
-
-	.loc_0x3C:
-	  li        r3, 0x1
-
-	.loc_0x40:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return TRUE;
 }
