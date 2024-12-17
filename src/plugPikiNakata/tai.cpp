@@ -1,26 +1,21 @@
 #include "TAI/Action.h"
 #include "teki.h"
 #include "sysNew.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000098
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("tai");
 
 /*
  * --INFO--
@@ -137,20 +132,28 @@ void TaiState::finish(Teki& teki)
  * Address:	801271E4
  * Size:	0000EC
  */
-bool TaiState::act(Teki& teki)
+bool TaiState::act(Teki& volatile teki)
 {
-	// this assembly is so weird. does this have a custom iterator??
-	for (int i = 0; i < mCount; i++) {
+	Teki* pTeki        = &teki;
+	volatile int count = 0;
+	for (int i = 0; count < mCount; i++, count++) {
 		TaiAction* action = mActions[i];
-		if (action->act(teki) && action->hasNextState()) {
-			int& val     = teki.mStateID;
-			int startVal = teki.mStateID;
+		if (action->act(*pTeki) && action->hasNextState()) {
+			if (true) {
+				// idk
+				int motionID = pTeki->mTekiAnimator->getMotionID();
+				PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)pTeki, i, pTeki->mStateID, action->mNextState, pTeki->_330,
+				      pTeki->mTekiType, motionID);
+			}
+
+			int& val     = pTeki->mStateID;
+			int startVal = pTeki->mStateID;
 			if (action->mNextState == -2) {
-				val = teki._330;
+				val = pTeki->_330;
 			} else {
 				val = action->mNextState;
 			}
-			teki._330 = startVal;
+			pTeki->_330 = startVal;
 			return true;
 		}
 	}
@@ -239,15 +242,24 @@ bool TaiState::act(Teki& teki)
  */
 bool TaiState::eventPerformed(TekiEvent& event)
 {
-	for (int i = 0; i < mCount; i++) {
+	// LOLLLLLLLLLLLLLLLLLLL
+	volatile int count = 0;
+	for (int i = 0; count < mCount; i++, count++) {
 		TaiAction* action = mActions[i];
 		if (action->actByEvent(event) && action->hasNextState()) {
-			int& val     = event.mTeki->mStateID;
+			Teki* volatile teki = event.mTeki;
+			if (true) {
+				// idk
+				int motionID = event.mTeki->mTekiAnimator->getMotionID();
+				PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)teki, i, event.mTeki->mStateID, action->mNextState,
+				      event.mTeki->_330, event.mTeki->mTekiType, motionID);
+			}
+
 			int startVal = event.mTeki->mStateID;
 			if (action->mNextState == -2) {
-				val = event.mTeki->_330;
+				event.mTeki->mStateID = event.mTeki->_330;
 			} else {
-				val = action->mNextState;
+				event.mTeki->mStateID = action->mNextState;
 			}
 			event.mTeki->_330 = startVal;
 			return true;
@@ -255,82 +267,6 @@ bool TaiState::eventPerformed(TekiEvent& event)
 	}
 
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  li        r31, 0
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x28(r1)
-	  addi      r28, r3, 0
-	  stw       r31, 0x24(r1)
-	  b         .loc_0xC0
-
-	.loc_0x30:
-	  lwz       r3, 0x8(r28)
-	  mr        r4, r29
-	  lwzx      r30, r3, r31
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xB0
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xB0
-	  lwz       r3, 0x4(r29)
-	  stw       r3, 0x20(r1)
-	  addi      r4, r3, 0x324
-	  lwz       r0, 0x0(r30)
-	  lwz       r5, 0x324(r3)
-	  cmpwi     r0, -0x2
-	  bne-      .loc_0x9C
-	  lwz       r0, 0x330(r3)
-	  stw       r0, 0x0(r4)
-	  b         .loc_0xA0
-
-	.loc_0x9C:
-	  stw       r0, 0x0(r4)
-
-	.loc_0xA0:
-	  lwz       r4, 0x4(r29)
-	  li        r3, 0x1
-	  stw       r5, 0x330(r4)
-	  b         .loc_0xD4
-
-	.loc_0xB0:
-	  lwz       r3, 0x24(r1)
-	  addi      r31, r31, 0x4
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x24(r1)
-
-	.loc_0xC0:
-	  lwz       r3, 0x24(r1)
-	  lwz       r0, 0x4(r28)
-	  cmpw      r3, r0
-	  blt+      .loc_0x30
-	  li        r3, 0
-
-	.loc_0xD4:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

@@ -3,7 +3,7 @@
 
 #include "types.h"
 #include "Dolphin/os.h"
-#include "Dolphin/AmcExi2Stubs.h"
+#include "Dolphin/AmcExi2.h"
 
 #define ExceptionHookDestination 0x80000048
 #define IsDebuggerPresent        0x80000040

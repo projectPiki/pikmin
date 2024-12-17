@@ -112,9 +112,7 @@ struct ParaParameterInfoF : public ParaParameterInfo<f32> {
 		mMax  = 0.0f;
 	}
 
-	inline void set(char* name, f32 min, f32 max) {
-		ParaParameterInfo<f32>::set(name, min, max);
-	}
+	inline void set(char* name, f32 min, f32 max) { ParaParameterInfo<f32>::set(name, min, max); }
 
 	// TODO: members
 };
@@ -158,8 +156,5 @@ struct ParaMultiParameters {
 	virtual void write(Stream&); // _0C
 	virtual void print();        // _10
 };
-
-#define PARA_SET_INT(_PARA, _NAME, _MIN, _MAX) \
-	(_PARA)->set(_NAME, _MIN, _MAX);
 
 #endif

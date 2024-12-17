@@ -282,7 +282,7 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
 	if (version <= 8) {
 		_20 = input.readInt();
 		_24 = input.readInt();
-		mID.read(input);		
+		mID.read(input);
 
 		for (int i = 0; i <= 2; i++) {
 			params->mIntParams->mParameters[i] = input.readInt();
@@ -291,7 +291,7 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
 		params->setI(4, params->getI(2));
 		params->setI(2, 0);
 		params->setI(3, 0);
-		
+
 		for (int i = 0; i <= 3; i++) {
 			params->mFloatParams->mParameters[i] = input.readFloat();
 		}

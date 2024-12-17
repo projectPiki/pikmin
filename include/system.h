@@ -219,7 +219,7 @@ public:
 	bool mHasGfxObjects;      // _1F0
 	char* mTextureBase1;      // _1F4
 	char* mTextureBase2;      // _1F8
-	Shape* mCurrentShape; // _1FC
+	Shape* mCurrentShape;     // _1FC
 	CoreNode _200;            // _200
 	CoreNode _214;            // _214
 	CoreNode* _228;           // _228

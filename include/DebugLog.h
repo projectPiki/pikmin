@@ -41,8 +41,8 @@
 #define PRINT(...) (__VA_ARGS__)
 #define ERROR(...) (__VA_ARGS__)
 #else
-#define PRINT(fmt, ...) _Print(fmt __VA_OPT__(,) __VA_ARGS__)
-#define ERROR(fmt, ...) _Error(fmt __VA_OPT__(,) __VA_ARGS__)
+#define PRINT(fmt, ...) _Print(fmt __VA_OPT__(, ) __VA_ARGS__)
+#define ERROR(fmt, ...) _Error(fmt __VA_OPT__(, ) __VA_ARGS__)
 #endif
 
 #endif // _DEBUGLOG_H

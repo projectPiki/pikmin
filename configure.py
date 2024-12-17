@@ -1082,8 +1082,8 @@ config.libs = [
         "progress_category" : "sdk",
         "cflags": cflags_base,
         "objects": [
-            Object(NonMatching, "amcExi2/AmcExi.c"),
-            Object(NonMatching, "amcExi2/AmcExi2Comm.c"),
+            Object(Matching, "amcExi2/AmcExi.c"),
+            Object(Matching, "amcExi2/AmcExi2Comm.c"),
         ],
     },
     {
