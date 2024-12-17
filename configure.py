@@ -939,7 +939,7 @@ config.libs = [
         [
             Object(Matching, "card/CARDBios.c"),
             Object(Matching, "card/CARDRdwr.c"),
-            Object(NonMatching, "card/CARDBlock.c"),
+            Object(Matching, "card/CARDBlock.c"),
             Object(Matching, "card/CARDDir.c"),
             Object(Matching, "card/CARDCheck.c"),
             Object(Matching, "card/CARDMount.c"),
