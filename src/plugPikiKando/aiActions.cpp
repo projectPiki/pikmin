@@ -2,27 +2,21 @@
 #include "Interactions.h"
 #include "system.h"
 #include "Dolphin/os.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "aiActions");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("aiActions");
 
 /*
  * --INFO--
@@ -41,7 +35,14 @@ ActPick::ActPick(Piki* piki)
  * Address:	800A7A78
  * Size:	000004
  */
-void ActPick::Initialiser::initialise(Action*) { }
+void ActPick::Initialiser::initialise(Action* action)
+{
+#ifdef __MWERKS__
+	ActPick* act = (ActPick*)action;
+	PRINT(" initialiser called ###################### \n");
+	act->mObject = mObject;
+#endif
+}
 
 /*
  * --INFO--
@@ -212,12 +213,13 @@ int ActPut::exec()
 {
 	mActor->_A4.set(0.0f, 0.0f, 0.0f);
 
-	Creature* obj = mActor->_2AC;
+	Creature* obj = mActor->get2AC();
 	if (!obj) {
 		return ACTOUT_Fail;
 	}
 
 	if (obj->stimulate(InteractRelease(mActor, 1.0f))) {
+		PRINT("release ?\n");
 		return ACTOUT_Success;
 	}
 

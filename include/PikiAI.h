@@ -1109,6 +1109,7 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 
 		// _00 = VTBL
 		// TODO: members
+		Creature* mObject; // _04
 	};
 
 	ActPick(Piki*);

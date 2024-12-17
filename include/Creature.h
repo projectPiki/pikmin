@@ -228,6 +228,8 @@ struct Creature : public RefCountable, public EventTalker {
 
 	inline CollPart* getStickPart() { return _188; }
 
+	inline Creature* get2AC() { return _2AC; }
+
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker
