@@ -41,7 +41,9 @@ struct Envelope {
 	// unused/inlined:
 	void read(RandomAccessStream&);
 
-	// TODO: members
+	s32 mIndexCount; // _00
+	s32* mIndices;   // _04
+	f32* mWeights;   // _08
 };
 
 /**
@@ -73,10 +75,10 @@ struct ShapeDynMaterials {
 	void animate(f32*);
 	void updateContext();
 
-	u32 _00; // _00, unknown
-	u32 _04; // _04, unknown
-	u32 _08; // _08, unknown
-	u32 _0C; // _0C, unknown
+	u32 _00; // _00
+	u32 _04; // _04
+	u32 _08; // _08
+	u32 _0C; // _0C
 };
 
 /**
@@ -142,7 +144,7 @@ struct BaseShape : public CoreNode {
 	void updateAnim(Graphics&, Matrix4f&, f32*);
 	void calcWeightedMatrices();
 	void makeNormalIndexes(u16*);
-	void calcJointWorldPos(Graphics&, int, struct Vector3f&);
+	f32 calcJointWorldPos(Graphics&, int, struct Vector3f&);
 	void calcJointWorldDir(Graphics&, int, Vector3f&);
 
 	// unused/inlined:
@@ -157,64 +159,66 @@ struct BaseShape : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 _14;                       // _14, unknown
-	u32 _18;                       // _14, unknown
-	u8 _1C[0x24 - 0x1C];           // _18, unknown
+	u32 mSystemFlags;              // _14
+	u32 _18;                       // _14
+	u32 _1C;                       // _1C
+	u32 _20;                       // _20
 	AnimFrameCacher* mFrameCacher; // _24
-	u32 _28;                       // _28, unknown
-	u32 _2C;                       // _2C, unknown
-	u32 _30;                       // _30, unknown
-	u32 _34;                       // _34, unknown
-	u32 _38;                       // _38, unknown
-	u32 _3C;                       // _3C, unknown
-	u32 _40;                       // _40, unknown
-	u32 _44;                       // _44, unknown
-	u32 _48;                       // _48, unknown
-	u32 _4C;                       // _4C, unknown
-	u32 _50;                       // _50, unknown
-	u32 _54;                       // _54, unknown
-	u32 _58;                       // _58, unknown
-	u32 _5C;                       // _5C, unknown
-	u32 _60;                       // _60, unknown
-	u32 _64;                       // _64, unknown
-	u32 _68;                       // _68, unknown
-	u8 _6C[0x74 - 0x6C];           // _6C, unknown
-	u32 _74;                       // _74, unknown
-	u8 _78[0x4];                   // _78, unknown
+	Matrix4f* mAnimMatrices;       // _28
+	u32 _2C;                       // _2C
+	s32 mEnvelopeCount;            // _30
+	Envelope* mEnvelopeList;       // _34
+	s32 mVtxMatrixCount;           // _38
+	VtxMatrix* mVtxMatrixList;     // _3C
+	s32 mMaterialCount;            // _40
+	Material* mMaterialList;       // _44
+	s32 mTevInfoCount;             // _48
+	PVWTevInfo* mTevInfoList;      // _4C
+	s32 mMeshCount;                // _50
+	Mesh* mMeshList;               // _54
+	s32 mJointCount;               // _58
+	Joint* mJointList;             // _5C
+	s32 mRouteGroupCount;          // _60
+	RouteGroup* mRouteGroupList;   // _64
+	s32 mTexAttrCount;             // _68
+	TexAttr* mTexAttrList;         // _6C
+	s32 _70;                       // _70
+	s32 mTextureCount;             // _74
+	TexImg* mTextureList;          // _78
 	LightGroup mLightGroup;        // _7C
 	ObjCollInfo mCollisionInfo;    // _E8
-	u32 _13C;                      // _13C, unknown
+	u32 _13C;                      // _13C
 	BoundBox _140;                 // _140
-	u8 _158[0x164 - 0x158];        // _158, unknown
-	u32 _164;                      // _164, unknown
-	u32 _168;                      // _168, unknown
-	u32 _16C;                      // _16C, unknown
-	u32 _170;                      // _170, unknown
-	u32 _174;                      // _174, unknown
+	u8 _158[0x164 - 0x158];        // _158
+	u32 _164;                      // _164
+	u32 _168;                      // _168
+	u32 _16C;                      // _16C
+	u32 _170;                      // _170
+	u32 _174;                      // _174
 	RouteGroup mRouteGroup;        // _178
-	u8 _18C[0x238 - 0x18C];        // _18C, unknown
-	u32 _238;                      // _238, unknown
-	u32 _23C;                      // _23C, unknown
-	u8 _240[0x4];                  // _240, unknown
-	u32 _244;                      // _244, unknown
-	u32 _248;                      // _248, unknown
-	u8 _24C[0x26C - 0x24C];        // _18C, unknown
-	u32 _26C;                      // _26C, unknown
-	u32 _270;                      // _270, unknown
-	u32 _274;                      // _274, unknown
-	u32 _278;                      // _278, unknown
-	u32 _27C;                      // _27C, unknown
-	u32 _280;                      // _280, unknown
-	u32 _284;                      // _284, unknown
-	u32 _288;                      // _288, unknown
-	u8 _28C[0x4];                  // _28C, unknown
-	u32 _290;                      // _290, unknown
-	u8 _294[0x4];                  // _294, unknown
-	u32 _298;                      // _298, unknown
-	u32 _29C;                      // _29C, unknown
-	u32 _2A0;                      // _2A0, unknown
-	u32 _2A4;                      // _2A4, unknown
-	u32 _2A8;                      // _2A8, unknown
+	u8 _18C[0x238 - 0x18C];        // _18C
+	u32 _238;                      // _238
+	u32 _23C;                      // _23C
+	u8 _240[0x4];                  // _240
+	u32 _244;                      // _244
+	u32 _248;                      // _248
+	u8 _24C[0x26C - 0x24C];        // _18C
+	u32 _26C;                      // _26C
+	u32 _270;                      // _270
+	u32 _274;                      // _274
+	u32 _278;                      // _278
+	u32 _27C;                      // _27C
+	u32 _280;                      // _280
+	u32 _284;                      // _284
+	u32 _288;                      // _288
+	u8 _28C[0x4];                  // _28C
+	u32 _290;                      // _290
+	u8 _294[0x4];                  // _294
+	u32 _298;                      // _298
+	u32 _29C;                      // _29C
+	u32 _2A0;                      // _2A0
+	u32 _2A4;                      // _2A4
+	u32 _2A8;                      // _2A8
 	u8 _2AC;                       // _2AC
 
 	// OLD - idk what this is from but it's not correct.
@@ -301,7 +305,7 @@ struct CachedShape {
 	// TODO: members
 	CachedShape* _00;   // _00, maybe prev and next?
 	CachedShape* _04;   // _04
-	u8 _08[0x18 - 0x8]; // _08, unknown
+	u8 _08[0x18 - 0x8]; // _08
 };
 
 #endif

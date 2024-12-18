@@ -8,6 +8,7 @@
  * @brief 4x4 Matrix.
  *
  * @note Size: 0x40.
+ * @note Is sometimes casted to Vector3f, (Vector3f&), be weary of this.
  */
 struct Matrix4f {
 	Matrix4f() { }   // probably
@@ -48,6 +49,15 @@ struct Matrix4f {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				mMtx[i][j] = other.mMtx[i][j];
+			}
+		}
+	}
+
+	inline void set(f32 value)
+	{
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				mMtx[i][j] = value;
 			}
 		}
 	}

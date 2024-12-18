@@ -28,7 +28,7 @@ struct MatobjInfo : public GfxobjInfo {
 
 	// _1C     = VTBL
 	// _00-_20 = GfxobjInfo
-	// TODO: members
+	Material* mTarget; // _24
 };
 
 /**

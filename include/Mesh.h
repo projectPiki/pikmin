@@ -16,13 +16,13 @@ struct Mesh : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int _14;                 // _14
-	int _18;                 // _18
-	int _1C;                 // _1C
-	int _20;                 // _20
+	int mMeshIndex;          // _14
+	int mFlags;              // _18
+	int mMtxDepIndex;        // _1C, matrix dependency index (index into MtxGroup)
+	int mMtxGroupCount;      // _20
 	MtxGroup* mMtxGroupList; // _24
-	int _28;                 // _28
-	int _2C;                 // _2C
+	Joint* mJointList;       // _28
+	int mVertexDescriptor;   // _2C
 };
 
 #endif

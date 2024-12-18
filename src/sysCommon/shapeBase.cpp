@@ -14,7 +14,8 @@
 #include "system.h"
 #include "PVW.h"
 #include "CinematicPlayer.h"
-
+#include "Graphics.h"
+#include "dolphin/mtx.h"
 /*
  * --INFO--
  * Address:	........
@@ -109,18 +110,18 @@ DispList::DispList()
  */
 void Mesh::read(RandomAccessStream& stream)
 {
-	_18 = stream.readInt();
-	_2C = stream.readInt();
-	_20 = stream.readInt();
+	mFlags            = stream.readInt();
+	mVertexDescriptor = stream.readInt();
+	mMtxGroupCount    = stream.readInt();
 
-	if (_20) {
-		mMtxGroupList = new MtxGroup[_20];
-		_1C           = 0;
-		for (int i = 0; i < _20; i++) {
+	if (mMtxGroupCount) {
+		mMtxGroupList = new MtxGroup[mMtxGroupCount];
+		mMtxDepIndex  = 0;
+		for (int i = 0; i < mMtxGroupCount; i++) {
 			mMtxGroupList[i].read(stream);
 
-			if (mMtxGroupList[i].mDependencyLength > _1C) {
-				_1C = mMtxGroupList[i].mDependencyLength;
+			if (mMtxGroupList[i].mDependencyLength > mMtxDepIndex) {
+				mMtxDepIndex = mMtxGroupList[i].mDependencyLength;
 			}
 		}
 	}
@@ -6418,29 +6419,29 @@ void ShapeDynMaterials::updateContext()
 BaseShape::BaseShape()
 {
 	setName("noname");
-	_28  = 0;
-	_2C  = 0;
-	_14  = 0;
-	_13C = 0;
-	_2AC = 1;
-	_38  = 0;
-	_3C  = 0;
-	_40  = 0;
-	_44  = 0;
-	_48  = 0;
-	_4C  = 0;
-	_50  = 0;
-	_54  = 0;
+	mAnimMatrices   = nullptr;
+	_2C             = 0;
+	mSystemFlags    = 0;
+	_13C            = 0;
+	_2AC            = 1;
+	mVtxMatrixCount = 0;
+	mVtxMatrixList  = nullptr;
+	mMaterialCount  = 0;
+	mMaterialList   = nullptr;
+	mTevInfoCount   = 0;
+	mTevInfoList    = nullptr;
+	mMeshCount      = 0;
+	mMeshList       = nullptr;
 
-	_30 = 0;
-	_34 = 0;
+	mEnvelopeCount = 0;
+	mEnvelopeList  = nullptr;
 
-	_58 = 0;
-	_5C = 0;
-	_60 = 0;
-	_64 = 0;
-	_68 = 0;
-	_74 = 0;
+	mJointCount      = 0;
+	mJointList       = nullptr;
+	mRouteGroupCount = 0;
+	mRouteGroupList  = nullptr;
+	mTexAttrCount    = 0;
+	mTextureCount    = 0;
 
 	_18          = 0;
 	mFrameCacher = nullptr;
@@ -13275,16 +13276,7 @@ AnimData* BaseShape::loadAnimation(char*, bool)
  * Address:	80034FE8
  * Size:	000010
  */
-Matrix4f& BaseShape::getAnimMatrix(int)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x28(r3)
-	  rlwinm    r0,r4,6,0,25
-	  add       r3, r3, r0
-	  blr
-	*/
-}
+Matrix4f& BaseShape::getAnimMatrix(int i) { return mAnimMatrices[i]; }
 
 /*
  * --INFO--
@@ -13838,6 +13830,23 @@ void BaseShape::updateAnim(Graphics&, Matrix4f&, f32*)
  */
 void BaseShape::calcWeightedMatrices()
 {
+	for (int i = 0; i < mEnvelopeCount; i++) {
+		Matrix4f& mtx = getAnimMatrix(mJointCount);
+		mtx.set(0.0f);
+
+		for (int j = 0; j < mEnvelopeList[i].mIndexCount; j++) {
+			int idx    = mEnvelopeList[i].mIndices[j];
+			int weight = mEnvelopeList[i].mWeights[j];
+
+			Matrix4f weighted;
+			Matrix4f& jointMtx = mJointList[idx].mAnimMatrix;
+			Matrix4f& shapeMtx = getAnimMatrix(idx);
+			shapeMtx.multiplyTo(jointMtx, weighted);
+
+			Matrix4f* mtx = &getAnimMatrix(mJointCount);
+			PSMTXConcat(mtx->mMtx, weighted.mMtx, mtx->mMtx);
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -13958,8 +13967,9 @@ void BaseShape::calcWeightedMatrices()
  * Address:	80035784
  * Size:	000140
  */
-void BaseShape::makeNormalIndexes(u16*)
+void BaseShape::makeNormalIndexes(u16* indices)
 {
+
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x30(r1)
@@ -14078,77 +14088,16 @@ void BaseShape::makeNormalIndexes(u16*)
  * Address:	800358C4
  * Size:	0000F8
  */
-void BaseShape::calcJointWorldPos(Graphics&, int, Vector3f&)
+f32 BaseShape::calcJointWorldPos(Graphics& gfx, int index, Vector3f& worldPos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r5, -0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r6, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r4, 0
-	  bne-      .loc_0x30
-	  lfs       f1, -0x7D20(r2)
-	  b         .loc_0xDC
+	if (index == -1) {
+		return 0.0f;
+	}
 
-	.loc_0x30:
-	  lwz       r4, 0x28(r3)
-	  rlwinm    r0,r5,6,0,25
-	  addi      r3, r30, 0
-	  add       r31, r4, r0
-	  addi      r4, r31, 0
-	  bl        0x1E44
-	  lwz       r4, 0x2E4(r29)
-	  addi      r3, r30, 0
-	  addi      r4, r4, 0x220
-	  bl        0x1E34
-	  lfs       f1, 0x0(r31)
-	  lfs       f0, 0x4(r31)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x8(r31)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x7D20(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xDC
-	  fsqrte    f2, f1
-	  lfd       f4, -0x7CC0(r2)
-	  lfd       f3, -0x7CB8(r2)
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f0, f1, f0
-	  fsub      f0, f3, f0
-	  fmul      f2, f2, f0
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f0, f1, f0
-	  fsub      f0, f3, f0
-	  fmul      f2, f2, f0
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f0, f1, f0
-	  fsub      f0, f3, f0
-	  fmul      f0, f2, f0
-	  fmul      f0, f1, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x18(r1)
-	  lfs       f1, 0x18(r1)
-
-	.loc_0xDC:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	Matrix4f& orig = getAnimMatrix(index);
+	worldPos.multMatrix(getAnimMatrix(index));
+	worldPos.multMatrix(gfx.mCamera->mInverseLookAtMtx);
+	return ((Vector3f&)orig).length();
 }
 
 /*
@@ -14156,37 +14105,16 @@ void BaseShape::calcJointWorldPos(Graphics&, int, Vector3f&)
  * Address:	800359BC
  * Size:	000060
  */
-void BaseShape::calcJointWorldDir(Graphics&, int, Vector3f&)
+void BaseShape::calcJointWorldDir(Graphics& gfx, int index, Vector3f& worldDir)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r5, -0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r6, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  beq-      .loc_0x48
-	  lwz       r4, 0x28(r3)
-	  rlwinm    r0,r5,6,0,25
-	  addi      r3, r31, 0
-	  add       r4, r4, r0
-	  bl        0x1C1C
-	  lwz       r4, 0x2E4(r30)
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x220
-	  bl        0x1C0C
+	if (index == -1) {
+		return;
+	}
 
-	.loc_0x48:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	getAnimMatrix(index);
+	Matrix4f& animMtx = getAnimMatrix(index);
+	worldDir.rotate(animMtx);
+	worldDir.rotate(gfx.mCamera->mInverseLookAtMtx);
 }
 
 /*
@@ -14214,24 +14142,7 @@ void BaseShape::findCollTri(Vector3f&, Vector3f&, Vector3f&, char*)
  * Address:	80035A1C
  * Size:	000030
  */
-void MatobjInfo::attach()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x20(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void MatobjInfo::attach() { mTarget->attach(); }
 
 /*
  * --INFO--
