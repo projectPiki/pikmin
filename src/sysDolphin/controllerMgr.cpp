@@ -1,9 +1,7 @@
 #include "types.h"
 #include "Controller.h"
 #include "Dolphin/pad.h"
-
-static char file[] = __FILE__;
-static char name[] = "ControllerMgr";
+#include "DebugLog.h"
 
 static PADStatus sControllerPad[4];
 static u32 padChannels[4] = { PAD_CHAN0_BIT, PAD_CHAN1_BIT, PAD_CHAN2_BIT, PAD_CHAN3_BIT };
@@ -13,20 +11,14 @@ static u32 padChannels[4] = { PAD_CHAN0_BIT, PAD_CHAN1_BIT, PAD_CHAN2_BIT, PAD_C
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("ControllerMgr");
 
 /*
  * --INFO--
@@ -35,6 +27,19 @@ static void _Print(char*, ...)
  */
 void ControllerMgr::update()
 {
+	PADRead(sControllerPad);
+	PADClamp(sControllerPad);
+	// u32 v0 = 0;
+	// if (byte_8039D40A == -1)
+	// 	v0 = padChannels[0];
+	// if (byte_8039D416 == -1)
+	// 	v0 |= padChannels[1];
+	// if (byte_8039D422 == -1)
+	// 	v0 |= padChannels[2];
+	// if (byte_8039D42E == -1)
+	// 	v0 |= padChannels[3];
+	// if (v0)
+	// 	PADReset(v0, &dword_802A56D8, &unk_8039D418);
 	/*
 	.loc_0x0:
 	  mflr      r0

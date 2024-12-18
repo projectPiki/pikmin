@@ -6,6 +6,7 @@
 #include "stl/string.h"
 #include "stl/stdio.h"
 #include "Stream.h"
+#include "system.h"
 
 #define DEFINE_PRINT(_NAME)                        \
 	static void _Print(char* fmt, ...)             \
