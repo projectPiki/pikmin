@@ -113,6 +113,8 @@ struct GeneratorCache {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x4.
  */
 struct GeneratorList {
 	GeneratorList();
@@ -120,10 +122,14 @@ struct GeneratorList {
 	void findGenerator(int);
 	void createRamGenerators();
 	void updateUseList();
+
+	u8 _00[0x4]; // _04, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x60.
  */
 struct GeneratorMgr : public Node {
 	GeneratorMgr();
@@ -142,8 +148,9 @@ struct GeneratorMgr : public Node {
 	void changeNaviPos();
 
 	// _00     = VTBL
-	// _00-_1C = Node
-	// TODO: members
+	// _00-_20 = Node
+	u8 _20[0x5C - 0x20]; // _20, unknown
+	u8 _5C;              // _5C
 };
 
 /**
@@ -206,7 +213,7 @@ struct GenObjectActor : public GenObject {
 	virtual void doRead(RandomAccessStream&); // _14
 	virtual void* birth(BirthInfo&);          // _34
 
-	void initialise();
+	static void initialise();
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -229,7 +236,8 @@ struct GenObjectBoss : public GenObject {
 	virtual void updateUseList(Generator*, int);         // _24
 	virtual void* birth(BirthInfo&);                     // _34
 
-	void initialise();
+	static void initialise();
+
 	void readParameters(RandomAccessStream&);
 	void writeParameters(RandomAccessStream&);
 
@@ -247,7 +255,7 @@ struct GenObjectDebug : public GenObject {
 	virtual void doRead(RandomAccessStream&); // _14
 	virtual void* birth(BirthInfo&);          // _34
 
-	void initialise();
+	static void initialise();
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -270,7 +278,7 @@ struct GenObjectItem : public GenObject {
 	virtual void updateUseList(Generator*, int);         // _24
 	virtual void* birth(BirthInfo&);                     // _34
 
-	void initialise();
+	static void initialise();
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -312,7 +320,7 @@ struct GenObjectMapParts : public GenObject {
 	virtual void render(Graphics&, Generator*); // _30
 	virtual void* birth(BirthInfo&);            // _34
 
-	void initialise(MapMgr*);
+	static void initialise(MapMgr*);
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -328,7 +336,7 @@ struct GenObjectNavi : public GenObject {
 	virtual void doRead(RandomAccessStream&); // _14
 	virtual void* birth(BirthInfo&);          // _34
 
-	void initialise();
+	static void initialise();
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -346,7 +354,7 @@ struct GenObjectPellet : public GenObject {
 	virtual void updateUseList(Generator*, int); // _24
 	virtual void* birth(BirthInfo&);             // _34
 
-	void initialise();
+	static void initialise();
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -386,7 +394,7 @@ struct GenObjectPlant : public GenObject {
 	virtual void render(Graphics&, Generator*);  // _30
 	virtual void* birth(BirthInfo&);             // _34
 
-	void initialise();
+	static void initialise();
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -406,7 +414,7 @@ struct GenObjectTeki : public GenObject {
 	virtual void updateUseList(Generator*, int); // _24
 	virtual void* birth(BirthInfo&);             // _34
 
-	void initialise();
+	static void initialise();
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -427,7 +435,7 @@ struct GenObjectWorkObject : public GenObject {
 	virtual void updateUseList(Generator*, int);         // _24
 	virtual void* birth(BirthInfo&);                     // _34
 
-	void initialise();
+	static void initialise();
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -647,5 +655,11 @@ struct GenAreaFactory : public Factory<GenArea> {
 };
 
 extern GeneratorCache* generatorCache;
+extern GeneratorList* generatorList;
+extern GeneratorMgr* generatorMgr;
+extern GeneratorMgr* onceGeneratorMgr;
+extern GeneratorMgr* dailyGeneratorMgr;
+extern GeneratorMgr* plantGeneratorMgr;
+extern GeneratorMgr* limitGeneratorMgr;
 
 #endif

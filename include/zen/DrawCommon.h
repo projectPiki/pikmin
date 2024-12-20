@@ -2,7 +2,7 @@
 #define _ZEN_DRAWCOMMON_H
 
 #include "types.h"
-#include "P2D/Pane.h"
+#include "P2D/Screen.h"
 
 struct Graphics;
 
@@ -24,29 +24,8 @@ struct DrawScreen {
 	// unused/inlined:
 	~DrawScreen();
 
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct P2DPaneLibrary {
-
-	void makeResident(P2DPane*);
-	void setFamilyAlpha(P2DPane*, u8);
-	void setAlpha(P2DPane*, u8);
-	void setFamilyMirror(P2DPane*, P2DMirror);
-	void getParentPane(P2DPane*);
-	void getWorldPos(P2DPane*, int*, int*);
-	void changeParent(P2DPane*, P2DPane*);
-
-	// unused/inlined:
-	void setMirror(P2DPane*, P2DMirror);
-	void printTag(P2DPane*);
-	void printUseTexName(P2DPane*, IDelegate1<char*>*);
-	void printUseTexName(char*, IDelegate1<char*>*);
-
-	// TODO: members
+	// _00 = VTBL
+	P2DScreen mPane; // _04
 };
 
 /**
@@ -62,6 +41,27 @@ struct BalloonPane : public P2DPaneCallBack {
 
 	// TODO: members
 };
+
+/**
+ * @brief TODO
+ *
+ * @note Might be a struct? I think it's a namespace.
+ */
+namespace P2DPaneLibrary {
+void makeResident(P2DPane*);
+void setFamilyAlpha(P2DPane*, u8);
+void setAlpha(P2DPane*, u8);
+void setFamilyMirror(P2DPane*, P2DMirror);
+void getParentPane(P2DPane*);
+void getWorldPos(P2DPane*, int*, int*);
+void changeParent(P2DPane*, P2DPane*);
+
+// unused/inlined:
+void setMirror(P2DPane*, P2DMirror);
+void printTag(P2DPane*);
+void printUseTexName(P2DPane*, IDelegate1<char*>*);
+void printUseTexName(char*, IDelegate1<char*>*);
+}; // namespace P2DPaneLibrary
 
 } // namespace zen
 

@@ -2361,38 +2361,6 @@ void DateCallBack::setTex()
 
 /*
  * --INFO--
- * Address:	801B8524
- * Size:	000010
- */
-s16 PUTRect::getWidth() const
-{
-	/*
-	.loc_0x0:
-	  lha       r4, 0x0(r3)
-	  lha       r0, 0x4(r3)
-	  sub       r3, r0, r4
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801B8534
- * Size:	000010
- */
-s16 PUTRect::getHeight() const
-{
-	/*
-	.loc_0x0:
-	  lha       r4, 0x2(r3)
-	  lha       r0, 0x6(r3)
-	  sub       r3, r0, r4
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	801B8544
  * Size:	00003C
  */

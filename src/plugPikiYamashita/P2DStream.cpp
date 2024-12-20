@@ -1,4 +1,5 @@
 #include "P2D/Stream.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -25,8 +26,26 @@ static void _Print(char*, ...)
  * Address:	801B3274
  * Size:	0000C4
  */
-void P2DStream::getResource(int)
+void* P2DStream::getResource(int)
 {
+	u8 resType = mStream->readByte();
+	u8 resSize = mStream->readByte();
+	u8 size    = resSize;
+	void* res  = nullptr;
+	if (resSize) {
+		res = new u8[resSize + 1];
+		switch (resType) {
+		case 0:
+		case 2:
+			mStream->read(res, resSize);
+			((u8*)res)[size & 0xFF] = 0;
+			break;
+		case 1:
+			break;
+		}
+	}
+
+	return res;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -92,8 +111,15 @@ void P2DStream::getResource(int)
  * Address:	801B3338
  * Size:	000090
  */
-void P2DStream::align(int)
+void P2DStream::align(int alignment)
 {
+	int pos     = mStream->getPosition();
+	int newPos  = alignment + pos;
+	u32 realign = ~(alignment - 1 | alignment - 1);
+	int diff    = (realign & (newPos - 1)) - pos;
+	for (int i = 0; i < diff; i++) {
+		mStream->readByte();
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

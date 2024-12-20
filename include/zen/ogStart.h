@@ -5,8 +5,21 @@
 
 struct Controller;
 struct Graphics;
+struct P2DPane;
+struct P2DScreen;
 
 namespace zen {
+
+/**
+ * @brief TODO
+ */
+enum ogScrStartState {
+	START_NULL      = -1,
+	START_Oscillate = 0,
+	START_FadeIn    = 1,
+	START_FadeOut   = 2,
+	START_Exit      = 3,
+};
 
 /**
  * @brief TODO
@@ -21,7 +34,11 @@ struct ogScrStartMgr {
 	int update(Controller*);
 	void draw(Graphics&);
 
-	u8 _00[0x14]; // _00, unknown
+	int mState;                   // _00, see ogScrStartState enum
+	int mExitState;               // _04, see ogScrStartState enum
+	P2DScreen* mPressStartScreen; // _08
+	P2DPane* mRootPane;           // _0C, pane 'root'
+	f32 mFadeTimer;               // _10, controls oscillating alpha level + fade in/out
 };
 
 } // namespace zen

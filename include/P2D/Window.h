@@ -7,6 +7,8 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x12C.
  */
 struct P2DWindow : public P2DPane {
 

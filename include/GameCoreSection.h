@@ -3,12 +3,21 @@
 
 #include "types.h"
 #include "Node.h"
+#include "Light.h"
 
 struct Camera;
 struct Controller;
 struct Creature;
+struct Font;
 struct MapMgr;
+struct Menu;
+struct Navi;
 struct RectArea;
+struct SearchSystem;
+
+namespace zen {
+struct DrawGameInfo;
+}
 
 /**
  * @brief TODO
@@ -63,7 +72,26 @@ struct GameCoreSection : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
+	Controller* mController;          // _20
+	u8 _24[0x4];                      // _24, unknown
+	u32 _28;                          // _28, unknown
+	u32 _2C;                          // _2C, unknown
+	u8 _30;                           // _30
+	u8 _31;                           // _31
+	u32 _34;                          // _34, unknown
+	u8 _38[0x4];                      // _38, unknown
+	Menu* _3C;                        // _3C, unknown
+	u8 _40[0x50 - 0x40];              // _40, unknown
+	u32 _50;                          // _50, unknown
+	SearchSystem* _54;                // _54
+	Navi* mNavi;                      // _58
+	u8 _5C[0x64 - 0x5C];              // _5C, unknown
+	MapMgr* mMapMgr;                  // _64
+	Texture* _68;                     // _68
+	Font* mBigFont;                   // _6C
+	Light _70;                        // _70
+	u8 _2BC[0x344 - 0x2BC];           // _2BC
+	zen::DrawGameInfo* mDrawGameInfo; // _344
 };
 
 inline void clearCorePauseFlag() { GameCoreSection::pauseFlag = 0; }

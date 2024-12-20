@@ -572,7 +572,7 @@ void P2DScreen::draw(int, int, const P2DGrafContext*)
  * Address:	801B31FC
  * Size:	000030
  */
-void P2DScreen::search(u32, bool)
+P2DPane* P2DScreen::search(u32, bool)
 {
 	/*
 	.loc_0x0:

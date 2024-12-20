@@ -474,7 +474,9 @@ struct YTeki : public NTeki {
 	u32 _470;               // _470, unknown
 	u8 _474[0x4];           // _474, TODO: work out members
 	f32 _478;               // _478
-	u8 _47C[0x498 - 0x47C]; // _47C, TODO: work out members
+	u8 _47C[0x490 - 0x47C]; // _47C, TODO: work out members
+	f32 _490;               // _490
+	u8 _494[0x4];           // _494, unknown
 	u32 _498[8];            // _498, array of something, probably not u32s
 	u8 _4B8[0x4C8 - 0x4B8]; // _4B8, TODO: work out members
 	u8 _4C8;                // _4C8, bitflag?

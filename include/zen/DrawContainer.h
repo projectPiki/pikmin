@@ -12,6 +12,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1E0.
  */
 struct DrawContainer {
 
@@ -36,7 +38,7 @@ struct DrawContainer {
 	void startStatus();
 	void endStatus();
 
-	// TODO: members
+	u8 _00[0x1E0]; // _00, unknown
 };
 
 /**
@@ -126,5 +128,7 @@ struct WindowPaneMgr {
 };
 
 } // namespace zen
+
+extern zen::DrawContainer* containerWindow;
 
 #endif

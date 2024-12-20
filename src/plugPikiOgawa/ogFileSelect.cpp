@@ -4231,7 +4231,7 @@ void zen::ogScrFileSelectMgr::quit()
  * Address:	8018AFB0
  * Size:	000A20
  */
-void zen::ogScrFileSelectMgr::update(Controller*, CardQuickInfo&)
+int zen::ogScrFileSelectMgr::update(Controller*, CardQuickInfo&)
 {
 	/*
 	.loc_0x0:

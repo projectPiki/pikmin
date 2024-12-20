@@ -152,7 +152,8 @@ struct DrawGameInfo {
 	 * @brief TODO
 	 */
 	enum playModeFlag {
-		// TODO: this
+		MODE_Story     = 0,
+		MODE_Challenge = 1,
 	};
 
 	DrawGameInfo(playModeFlag);

@@ -223,8 +223,15 @@ zen::NumberTex::NumberTex()
  * Address:	801BF7A4
  * Size:	000118
  */
-void zen::P2DPaneLibrary::makeResident(P2DPane*)
+void zen::P2DPaneLibrary::makeResident(P2DPane* pane)
 {
+	pane->makeResident();
+	PSUTree<P2DPane>* tree = pane->getPaneTree();
+	PSUTreeIterator<P2DPane> iterator(tree->getFirstChild());
+	while (iterator != tree->getEndChild()) {
+		makeResident(iterator.getObject());
+		++iterator;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -313,30 +320,6 @@ void zen::P2DPaneLibrary::makeResident(P2DPane*)
 	  blr
 
 	.loc_0x118:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801BF8BC
- * Size:	000008
- */
-PSUTree<P2DPane>* PSUTree<P2DPane>::getEndChild() const { return nullptr; }
-
-/*
- * --INFO--
- * Address:	801BF8C4
- * Size:	000014
- */
-PSUTree<P2DPane>* PSUTree<P2DPane>::getFirstChild() const
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x0(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  subi      r3, r3, 0xC
-	  blr
 	*/
 }
 

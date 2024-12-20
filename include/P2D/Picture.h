@@ -9,6 +9,8 @@ struct Texture;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x114.
  */
 struct P2DPicture : public P2DPane {
 	P2DPicture(P2DPane*, RandomAccessStream*, u16);

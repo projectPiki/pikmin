@@ -19,9 +19,9 @@ int Stream::readInt()
  * Address:	800250E8
  * Size:	000038
  */
-char Stream::readByte()
+u8 Stream::readByte()
 {
-	char c;
+	u8 c;
 	read(&c, sizeof(char));
 	return c;
 }

@@ -311,4 +311,6 @@ struct UtEffectMgr {
 	// TODO: members
 };
 
+extern UtEffectMgr* utEffectMgr;
+
 #endif

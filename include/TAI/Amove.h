@@ -440,10 +440,12 @@ struct TAIAflyingToGoal : public TAIAreserveMotion {
  */
 struct FlyingDistance {
 
-	virtual f32 getOffset(Teki&); // _08
-
-	// _00 = VTBL
+	// _0C = VTBL
+	f32 _00;     // _00
 	f32 mOffset; // _04
+	f32 _08;     // _08
+
+	virtual f32 getOffset(Teki&); // _08
 };
 
 /**
@@ -451,7 +453,7 @@ struct FlyingDistance {
  */
 struct TAIAflyingDistance : public TaiAction, public FlyingDistance {
 	inline TAIAflyingDistance() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(12)
 	{
 	}
 
@@ -462,8 +464,7 @@ struct TAIAflyingDistance : public TaiAction, public FlyingDistance {
 	// _04     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_08 = TaiAction
-	// _08-_10 = FlyingDistance
-	// TODO: members
+	// _08-_18 = FlyingDistance
 };
 
 /**

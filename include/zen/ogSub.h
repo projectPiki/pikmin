@@ -89,6 +89,21 @@ struct ogTexAnimSubMgr {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
+ */
+struct ogMsgCtrlTagMgr {
+	ogMsgCtrlTagMgr();
+
+	void CheckCtrlTag(char*, s16*, f32*);
+
+	u8 _00[0x18]; // _00, unknown
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x418.
  */
 struct TypingTextMgr {
 	TypingTextMgr(P2DTextBox*);
@@ -96,27 +111,22 @@ struct TypingTextMgr {
 	void start();
 	void update();
 
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct ogMsgCtrlTagMgr {
-	ogMsgCtrlTagMgr();
-
-	void CheckCtrlTag(char*, s16*, f32*);
-
-	// TODO: members
+	int _00;                      // _00
+	ogMsgCtrlTagMgr* mCtrlTagMgr; // _04
+	P2DTextBox* mTextBox;         // _08
+	char* mTextPtr;               // _0C
+	char mTextBuf[0x400];         // _10
+	f32 _410;                     // _410
+	u16 _414;                     // _414
 };
 
 // global utility functions
-void ogCheckInsCard();
-void calcPuruPuruScale(f32);
+bool ogCheckInsCard();
+f32 calcPuruPuruScale(f32);
 void setNumberTag(P2DScreen*, u32, int*, int);
 void setTextColor(P2DTextBox*, P2DPicture*);
 void getStringCVS(char*, char*, s16);
-void getSpecialNumber(int);
+int getSpecialNumber(int);
 void setSpecialNumber(int, int);
 void cnvSpecialNumber(char*);
 void cnvSpecialNumberHyphen(char*);

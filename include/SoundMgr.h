@@ -155,8 +155,6 @@ struct SeSystem {
 	void calcCameraPos(Vector3f&, Vector3f&);
 	void getJacID(int);
 	void exitCourse();
-	void playSysSe(int);
-	void stopSysSe(int);
 	void stopPlayerSe(int);
 
 	// unused/inlined:
@@ -165,6 +163,8 @@ struct SeSystem {
 	void getEventType(int);
 	void isLoopType(int);
 
+	static void playSysSe(int);
+	static void stopSysSe(int);
 	static void playPlayerSe(int);
 
 	// TODO: members

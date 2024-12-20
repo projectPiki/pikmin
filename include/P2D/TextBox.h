@@ -9,6 +9,8 @@ struct Texture;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x118.
  */
 struct P2DTextBox : public P2DPane {
 	P2DTextBox(P2DPane*, RandomAccessStream*, u16);
@@ -19,9 +21,14 @@ struct P2DTextBox : public P2DPane {
 	virtual void drawSelf(int, int);            // _2C
 	virtual void drawSelf(int, int, Matrix4f*); // _30
 
+	inline char* getText() const { return mText; }
+	inline void setText(char* text) { mText = text; }
+
 	// _00     = VTBL
-	// _00-_?? = P2DPane
-	// TODO: members
+	// _00-_EC = P2DPane
+	u8 _EC[0x10C - 0xEC]; // _EC, unknown
+	char* mText;          // _10C
+	                      // TODO: members
 };
 
 #endif

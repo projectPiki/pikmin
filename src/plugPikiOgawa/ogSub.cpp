@@ -1,87 +1,54 @@
 #include "zen/ogSub.h"
 #include "zen/Number.h"
+#include "P2D/TextBox.h"
+#include "gameflow.h"
+#include "DebugLog.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("OgSubSection");
+
+namespace zen {
+static char workString[0x400];
+
+static char wkstr[0x400]      = {};
+static char numStrBuf[0x100]  = {};
+static char formatStr[0x100]  = {};
+static int SpecialNumber[100] = {};
 
 /*
  * --INFO--
  * Address:	8017E850
  * Size:	00002C
  */
-void zen::ogCheckInsCard()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  subi      r3, r3, 0x2848
-	  addi      r3, r3, 0x24
-	  stwu      r1, -0x8(r1)
-	  bl        -0x108BE0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+bool zen::ogCheckInsCard() { return gameflow.mMemoryCard.isCardInserted(); }
 
 /*
  * --INFO--
  * Address:	8017E87C
  * Size:	000068
  */
-void zen::calcPuruPuruScale(f32)
+f32 zen::calcPuruPuruScale(f32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stfd      f31, 0x18(r1)
-	  lfs       f2, -0x50E8(r2)
-	  lfs       f0, -0x50E4(r2)
-	  fdivs     f1, f1, f2
-	  fcmpo     cr0, f1, f0
-	  fmr       f31, f1
-	  ble-      .loc_0x2C
-	  fmr       f31, f0
+	u32 badCompiler[2];
 
-	.loc_0x2C:
-	  lfs       f0, -0x50E0(r2)
-	  fmuls     f1, f0, f31
-	  bl        0x9D2A4
-	  lfs       f4, -0x50E4(r2)
-	  lfs       f3, -0x50DC(r2)
-	  fsubs     f2, f4, f31
-	  fadds     f0, f4, f1
-	  fmuls     f1, f3, f2
-	  fmuls     f0, f1, f0
-	  fadds     f1, f4, f0
-	  lwz       r0, 0x24(r1)
-	  lfd       f31, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	f32 val = (p1 / 0.5f);
+	if (val > 1.0f) {
+		val = 1.0f;
+	}
+	f32 cosVal = cosf(2.0f * TAU * val);
+	return 1.0f + (0.08f * (1.0f - val) * (1.0f + cosVal));
 }
 
 /*
@@ -1802,8 +1769,9 @@ void zen::movePicturePos(P2DPicture*, P2DPicture*)
  * Address:	8017FD40
  * Size:	000024
  */
-void P2DPane::move(int, int)
+void P2DPane::move(int x, int y)
 {
+	_18.move(x, y);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2127,27 +2095,13 @@ void zen::ogTexAnimMgr::update()
  * Address:	8018011C
  * Size:	000030
  */
-void zen::getSpecialNumber(int)
+int zen::getSpecialNumber(int idx)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0
-	  blt-      .loc_0x10
-	  cmpwi     r3, 0x63
-	  ble-      .loc_0x18
+	if (idx < 0 || idx > 99) {
+		return -1;
+	}
 
-	.loc_0x10:
-	  li        r3, -0x1
-	  blr
-
-	.loc_0x18:
-	  lis       r4, 0x802D
-	  rlwinm    r3,r3,2,0,29
-	  addi      r0, r4, 0x2D6C
-	  add       r3, r0, r3
-	  lwz       r3, 0x0(r3)
-	  blr
-	*/
+	return SpecialNumber[idx];
 }
 
 /*
@@ -2155,24 +2109,13 @@ void zen::getSpecialNumber(int)
  * Address:	8018014C
  * Size:	00002C
  */
-void zen::setSpecialNumber(int, int)
+void zen::setSpecialNumber(int idx, int value)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0
-	  bltlr-
-	  cmpwi     r3, 0x63
-	  ble-      .loc_0x14
-	  blr
+	if (idx < 0 || idx > 99) {
+		return;
+	}
 
-	.loc_0x14:
-	  lis       r5, 0x802D
-	  rlwinm    r3,r3,2,0,29
-	  addi      r0, r5, 0x2D6C
-	  add       r3, r0, r3
-	  stw       r4, 0x0(r3)
-	  blr
-	*/
+	SpecialNumber[idx] = value;
 }
 
 /*
@@ -2348,49 +2291,17 @@ void zen::cnvSpecialNumber(char*)
  * Address:	80180390
  * Size:	000090
  */
-zen::TypingTextMgr::TypingTextMgr(P2DTextBox*)
+zen::TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  crclr     6, 0x6
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  addi      r4, r13, 0x960
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  stw       r31, 0x8(r3)
-	  addi      r3, r30, 0x10
-	  lwz       r0, 0x10C(r31)
-	  stw       r0, 0xC(r30)
-	  bl        0x961D4
-	  li        r4, 0
-	  stw       r4, 0x0(r30)
-	  li        r3, 0x18
-	  lfs       f0, -0x50D8(r2)
-	  stfs      f0, 0x410(r30)
-	  sth       r4, 0x414(r30)
-	  lbz       r0, 0xC(r31)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r31)
-	  bl        -0x1393E8
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x70
-	  bl        0x98
+	mTextBox = textBox;
+	mTextPtr = textBox->getText();
+	sprintf(mTextBuf, "");
+	_00  = 0;
+	_410 = 0.0f;
+	_414 = 0;
 
-	.loc_0x70:
-	  stw       r31, 0x4(r30)
-	  mr        r3, r30
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	textBox->setFlag(0, 7, 1);
+	mCtrlTagMgr = new ogMsgCtrlTagMgr();
 }
 
 /*
@@ -2400,38 +2311,14 @@ zen::TypingTextMgr::TypingTextMgr(P2DTextBox*)
  */
 void zen::TypingTextMgr::start()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r4, r13, 0x960
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  crclr     6, 0x6
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0x1
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  stw       r31, 0x0(r3)
-	  addi      r3, r30, 0x10
-	  lfs       f0, -0x50D8(r2)
-	  stfs      f0, 0x410(r30)
-	  sth       r0, 0x414(r30)
-	  bl        0x9613C
-	  lwz       r4, 0x8(r30)
-	  addi      r0, r30, 0x10
-	  lbz       r3, 0xC(r4)
-	  rlwimi    r3,r31,7,24,24
-	  stb       r3, 0xC(r4)
-	  lwz       r3, 0x8(r30)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler;
+
+	_00  = 1;
+	_410 = 0.0f;
+	_414 = 0;
+	sprintf(mTextBuf, "");
+	mTextBox->setFlag(1, 7, 1);
+	mTextBox->setText(mTextBuf);
 }
 
 /*
@@ -3383,3 +3270,4 @@ void zen::FigureTex<int>::getNumber(int&)
 	  blr
 	*/
 }
+} // namespace zen

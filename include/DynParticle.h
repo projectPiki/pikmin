@@ -35,4 +35,6 @@ struct DynParticleHeap {
 	// TODO: members
 };
 
+extern DynParticleHeap* particleHeap;
+
 #endif

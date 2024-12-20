@@ -70,6 +70,8 @@ struct LFlareGroup : public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24C?
  */
 struct Light : public CoreNode {
 	Light();

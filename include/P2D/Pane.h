@@ -3,22 +3,23 @@
 
 #include "types.h"
 #include "zen/CallBack.h"
+#include "PSU/Tree.h"
+#include "PUT/Geometry.h"
+#include "Vector.h"
+#include "Matrix4f.h"
 #include "P2D/Util.h"
+#include "Delegate.h"
 
 struct P2DGrafContext;
 struct P2DPane;
-struct PUTRect;
-struct Matrix4f;
 struct RandomAccessStream;
-struct Vector3f;
 
 /**
  * @brief TODO
- *
- * @note Might be a struct?
  */
 enum P2DPaneType {
-
+	PANETYPE_Screen = 8,
+	PANETYPE_Unk16  = 16,
 };
 
 /**
@@ -46,6 +47,8 @@ struct P2DPaneCallBack : public zen::CallBack1<P2DPane*>, public P2DPaneCallBack
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xEC.
  */
 struct P2DPane {
 	P2DPane();
@@ -65,17 +68,27 @@ struct P2DPane {
 	virtual void resize(int, int);              // _28
 	virtual void drawSelf(int, int);            // _2C
 	virtual void drawSelf(int, int, Matrix4f*); // _30
-	virtual void search(u32, bool);             // _34
+	virtual P2DPane* search(u32, bool);         // _34
 	virtual void makeMatrix(int, int);          // _38
 
 	void setCallBack(P2DPaneCallBack*);
 	void printTagName(bool);
 	void update();
 	void draw(int, int, const P2DGrafContext*, bool);
-	void clip(const PUTRect&);
+	bool clip(const PUTRect&);
 	void loadChildResource();
 	void rotate(P2DRotateAxis, f32);
 	void hide();
+
+	inline u16 getPaneType() const { return mPaneType; }
+	inline PSUTree<P2DPane>* getPaneTree() { return &mPaneTree; }
+
+	// don't ask. pls fix later if there's a better way to generate this rlwimi
+	inline void setFlag(u32 newFlag, u32 shift, u32 size)
+	{
+		u32 flag = newFlag;
+		_0C      = __rlwimi((int)_0C, flag, shift, 32 - shift - size, 31 - shift);
+	}
 
 	// unused/inlined:
 	void init();
@@ -83,7 +96,23 @@ struct P2DPane {
 
 	// _00 = VTBL
 	P2DPaneCallBack* mCallBack; // _04
-	                            // TODO: members
+	u16 mPaneType;              // _08, see P2DPaneType enum
+	u16 _0A;                    // _0A, maybe?
+	u8 _0C;                     // _0C, flag of some description
+	u32 mTagName;               // _10, unknown
+	f32 mPaneZ;                 // _14
+	PUTRect _18;                // _18
+	PUTRect _20;                // _20
+	PUTRect _28;                // _28
+	PUTRect _30;                // _30
+	u8 _38[0x78 - 0x38];        // _38, unknown
+	Matrix4f _78;               // _78
+	u16 _B8;                    // _B8
+	u16 _BA;                    // _BA
+	f32 _BC;                    // _BC
+	Vector3f _C0;               // _C0
+	int mCullMode;              // _CC
+	PSUTree<P2DPane> mPaneTree; // _D0
 };
 
 #endif

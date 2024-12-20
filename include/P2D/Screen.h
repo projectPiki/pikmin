@@ -7,11 +7,21 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xF8.
  */
 struct P2DScreen : public P2DPane {
+	inline P2DScreen()
+	    : P2DPane(nullptr, PANETYPE_Screen, true, 'root', PUTRect(640, 480))
+	{
+		_EC = 0;
+		_F0 = 0;
+		_F4 = 0;
+	}
+
 	virtual void loadResource();                                   // _08
 	virtual ~P2DScreen();                                          // _10
-	virtual void search(u32, bool);                                // _34
+	virtual P2DPane* search(u32, bool);                            // _34
 	virtual void makeUserPane(u16, P2DPane*, RandomAccessStream*); // _3C
 
 	void update();
@@ -25,8 +35,10 @@ struct P2DScreen : public P2DPane {
 	void stop();
 
 	// _00     = VTBL
-	// _00-_?? = P2DPane
-	// TODO: members
+	// _00-_EC = P2DPane
+	u8 _EC;  // _EC
+	u32 _F0; // _F0, unknown
+	u32 _F4; // _F4, unknown
 };
 
 #endif

@@ -2,35 +2,46 @@
 #define _PUT_GEOMETRY_H
 
 #include "types.h"
+#include "Stream.h"
 
 /**
  * @brief TODO
  */
 struct PUTPoint {
-	// TODO: members
+	s16 x, y; // _00, _02
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct PUTRect {
-	void set(int, int, int, int);
-	void copy(const PUTRect&);
-	void add(int, int);
-	void intersect(const PUTRect&);
-	void move(int, int);
-	void resize(int, int);
+	PUTRect() { set(0, 0, 0, 0); }
+	PUTRect(int maxX, int maxY) { set(0, 0, maxX, maxY); }
+	PUTRect(int x0, int y0, int x1, int y1) { set(x0, y0, x1, y1); }
+
+	PUTRect(const PUTRect& other) { copy(other); }
+
+	void set(int x0, int y0, int x1, int y1);
+	void copy(const PUTRect& other);
+	void add(int x, int y);
+	bool intersect(const PUTRect& other);
+	void move(int newMinX, int newMinY);
+	void resize(int width, int height);
 	void normalize();
-	void isEmpty() const;
-	s16 getWidth() const;
-	s16 getHeight() const;
+	bool isEmpty() const;
+
+	int getWidth() const { return mMax.x - mMin.x; }
+	int getHeight() const { return mMax.y - mMin.y; }
 
 	// unused/inlined:
 	void add(const PUTPoint&);
 	void move(const PUTPoint&);
 	void reform(int, int, int, int);
 
-	// TODO: members
+	PUTPoint mMin; // _00
+	PUTPoint mMax; // _04
 };
 
 #endif

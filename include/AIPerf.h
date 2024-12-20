@@ -10,7 +10,6 @@ struct Menu;
  */
 struct AIPerf {
 	void clearCounts();
-	void addMenu(Menu*);
 	void toggleMoveType(Menu&);
 	void toggleGeneratorMode(Menu&);
 	void toggleBridge(Menu&);
@@ -30,6 +29,8 @@ struct AIPerf {
 	void fullfillPiki(Menu&);
 	void flowerPiki(Menu&);
 	void breakSluice(Menu&);
+
+	static void addMenu(Menu*);
 
 	// unused/inlined:
 	void toggleAIGrid(Menu&);

@@ -9,6 +9,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x154.
  */
 struct DrawHurryUp {
 
@@ -34,9 +36,11 @@ struct DrawHurryUp {
 	void brightShotStatus();
 	void brightStatus();
 
-	// TODO: members
+	u8 _00[0x154]; // _00, unknown
 };
 
 } // namespace zen
+
+extern zen::DrawHurryUp* hurryupWindow;
 
 #endif

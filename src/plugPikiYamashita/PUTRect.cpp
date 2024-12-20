@@ -5,20 +5,13 @@
  * Address:	801B3628
  * Size:	000024
  */
-void PUTRect::set(int, int, int, int)
+void PUTRect::set(int x0, int y0, int x1, int y1)
 {
-	/*
-	.loc_0x0:
-	  extsh     r0, r4
-	  sth       r0, 0x0(r3)
-	  extsh     r0, r5
-	  extsh     r4, r6
-	  sth       r0, 0x2(r3)
-	  extsh     r0, r7
-	  sth       r4, 0x4(r3)
-	  sth       r0, 0x6(r3)
-	  blr
-	*/
+	mMin.x = x0;
+	mMin.y = y0;
+
+	mMax.x = x1;
+	mMax.y = y1;
 }
 
 /*
@@ -26,20 +19,13 @@ void PUTRect::set(int, int, int, int)
  * Address:	801B364C
  * Size:	000024
  */
-void PUTRect::copy(const PUTRect&)
+void PUTRect::copy(const PUTRect& other)
 {
-	/*
-	.loc_0x0:
-	  lha       r0, 0x0(r4)
-	  sth       r0, 0x0(r3)
-	  lha       r0, 0x2(r4)
-	  sth       r0, 0x2(r3)
-	  lha       r0, 0x4(r4)
-	  sth       r0, 0x4(r3)
-	  lha       r0, 0x6(r4)
-	  sth       r0, 0x6(r3)
-	  blr
-	*/
+	mMin.x = other.mMin.x;
+	mMin.y = other.mMin.y;
+
+	mMax.x = other.mMax.x;
+	mMax.y = other.mMax.y;
 }
 
 /*
@@ -47,9 +33,13 @@ void PUTRect::copy(const PUTRect&)
  * Address:	........
  * Size:	000044
  */
-void PUTRect::add(const PUTPoint&)
+void PUTRect::add(const PUTPoint& point)
 {
-	// UNUSED FUNCTION
+	mMin.x += point.x;
+	mMax.x += point.x;
+
+	mMin.y += point.y;
+	mMax.y += point.y;
 }
 
 /*
@@ -57,24 +47,13 @@ void PUTRect::add(const PUTPoint&)
  * Address:	801B3670
  * Size:	000034
  */
-void PUTRect::add(int, int)
+void PUTRect::add(int x, int y)
 {
-	/*
-	.loc_0x0:
-	  lha       r0, 0x0(r3)
-	  add       r0, r0, r4
-	  sth       r0, 0x0(r3)
-	  lha       r0, 0x4(r3)
-	  add       r0, r0, r4
-	  sth       r0, 0x4(r3)
-	  lha       r0, 0x2(r3)
-	  add       r0, r0, r5
-	  sth       r0, 0x2(r3)
-	  lha       r0, 0x6(r3)
-	  add       r0, r0, r5
-	  sth       r0, 0x6(r3)
-	  blr
-	*/
+	mMin.x += x;
+	mMax.x += x;
+
+	mMin.y += y;
+	mMax.y += y;
 }
 
 /*
@@ -82,51 +61,27 @@ void PUTRect::add(int, int)
  * Address:	801B36A4
  * Size:	000080
  */
-void PUTRect::intersect(const PUTRect&)
+bool PUTRect::intersect(const PUTRect& other)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lha       r5, 0x0(r4)
-	  lha       r0, 0x0(r3)
-	  cmpw      r0, r5
-	  bge-      .loc_0x20
-	  sth       r5, 0x0(r3)
+	if (mMin.x < other.mMin.x) {
+		mMin.x = other.mMin.x;
+	}
 
-	.loc_0x20:
-	  lha       r0, 0x2(r3)
-	  lha       r5, 0x2(r4)
-	  cmpw      r0, r5
-	  bge-      .loc_0x34
-	  sth       r5, 0x2(r3)
+	if (mMin.y < other.mMin.y) {
+		mMin.y = other.mMin.y;
+	}
 
-	.loc_0x34:
-	  lha       r0, 0x4(r3)
-	  lha       r5, 0x4(r4)
-	  cmpw      r0, r5
-	  ble-      .loc_0x48
-	  sth       r5, 0x4(r3)
+	if (mMax.x > other.mMax.x) {
+		mMax.x = other.mMax.x;
+	}
 
-	.loc_0x48:
-	  lha       r0, 0x6(r3)
-	  lha       r4, 0x6(r4)
-	  cmpw      r0, r4
-	  ble-      .loc_0x5C
-	  sth       r4, 0x6(r3)
+	if (mMax.y > other.mMax.y) {
+		mMax.y = other.mMax.y;
+	}
 
-	.loc_0x5C:
-	  bl        0xC0
-	  rlwinm    r0,r3,0,24,31
-	  cntlzw    r0, r0
-	  rlwinm    r0,r0,27,5,31
-	  mr        r3, r0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	bool res = !isEmpty();
+	// probably debug things here
+	return res;
 }
 
 /*
@@ -134,9 +89,16 @@ void PUTRect::intersect(const PUTRect&)
  * Address:	........
  * Size:	000044
  */
-void PUTRect::move(const PUTPoint&)
+void PUTRect::move(const PUTPoint& point)
 {
-	// UNUSED FUNCTION
+	s16 width  = getWidth();
+	s16 height = getHeight();
+
+	mMin.x = point.x;
+	mMin.y = point.y;
+
+	mMax.x = mMin.x + width;
+	mMax.y = mMin.y + height;
 }
 
 /*
@@ -144,28 +106,16 @@ void PUTRect::move(const PUTPoint&)
  * Address:	801B3724
  * Size:	000044
  */
-void PUTRect::move(int, int)
+void PUTRect::move(int newMinX, int newMinY)
 {
-	/*
-	.loc_0x0:
-	  lha       r8, 0x0(r3)
-	  extsh     r4, r4
-	  lha       r7, 0x4(r3)
-	  extsh     r0, r5
-	  lha       r6, 0x2(r3)
-	  lha       r5, 0x6(r3)
-	  sub       r7, r7, r8
-	  sth       r4, 0x0(r3)
-	  sub       r4, r5, r6
-	  sth       r0, 0x2(r3)
-	  lha       r0, 0x0(r3)
-	  add       r0, r0, r7
-	  sth       r0, 0x4(r3)
-	  lha       r0, 0x2(r3)
-	  add       r0, r0, r4
-	  sth       r0, 0x6(r3)
-	  blr
-	*/
+	s16 width  = getWidth();
+	s16 height = getHeight();
+
+	mMin.x = newMinX;
+	mMin.y = newMinY;
+
+	mMax.x = mMin.x + width;
+	mMax.y = mMin.y + height;
 }
 
 /*
@@ -173,18 +123,10 @@ void PUTRect::move(int, int)
  * Address:	801B3768
  * Size:	00001C
  */
-void PUTRect::resize(int, int)
+void PUTRect::resize(int width, int height)
 {
-	/*
-	.loc_0x0:
-	  lha       r0, 0x0(r3)
-	  add       r0, r0, r4
-	  sth       r0, 0x4(r3)
-	  lha       r0, 0x2(r3)
-	  add       r0, r0, r5
-	  sth       r0, 0x6(r3)
-	  blr
-	*/
+	mMax.x = mMin.x + width;
+	mMax.y = mMin.y + height;
 }
 
 /*
@@ -204,26 +146,17 @@ void PUTRect::reform(int, int, int, int)
  */
 void PUTRect::normalize()
 {
-	/*
-	.loc_0x0:
-	  lha       r4, 0x0(r3)
-	  lha       r0, 0x4(r3)
-	  cmpw      r4, r0
-	  ble-      .loc_0x1C
-	  sth       r4, 0x4(r3)
-	  extsh     r0, r0
-	  sth       r0, 0x0(r3)
+	if (mMin.x > mMax.x) {
+		int max = mMax.x;
+		mMax.x  = mMin.x;
+		mMin.x  = max;
+	}
 
-	.loc_0x1C:
-	  lha       r4, 0x2(r3)
-	  lha       r0, 0x6(r3)
-	  cmpw      r4, r0
-	  blelr-
-	  sth       r4, 0x6(r3)
-	  extsh     r0, r0
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	if (mMin.y > mMax.y) {
+		int max = mMax.y;
+		mMax.y  = mMin.y;
+		mMin.y  = max;
+	}
 }
 
 /*
@@ -231,23 +164,4 @@ void PUTRect::normalize()
  * Address:	801B37C0
  * Size:	000030
  */
-void PUTRect::isEmpty() const
-{
-	/*
-	.loc_0x0:
-	  lha       r4, 0x0(r3)
-	  li        r5, 0x1
-	  lha       r0, 0x4(r3)
-	  cmpw      r4, r0
-	  bge-      .loc_0x28
-	  lha       r4, 0x2(r3)
-	  lha       r0, 0x6(r3)
-	  cmpw      r4, r0
-	  bge-      .loc_0x28
-	  li        r5, 0
-
-	.loc_0x28:
-	  mr        r3, r5
-	  blr
-	*/
-}
+bool PUTRect::isEmpty() const { return (mMin.x >= mMax.x) || (mMin.y >= mMax.y); }

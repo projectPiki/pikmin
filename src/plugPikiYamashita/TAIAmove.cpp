@@ -4567,6 +4567,29 @@ void TAIAflyingDistance::start(Teki& teki)
  */
 bool TAIAflyingDistance::act(Teki& teki)
 {
+	f32 moveSpeed = teki.mTekiParams->getF(TPF_RunVelocity);
+
+	Creature* tekiTarget = teki._418[0].mPtr;
+	if (tekiTarget) {
+		f32 heightDiff = teki.mPosition.y - tekiTarget->mPosition.y;
+		if (heightDiff < 0.0f) {
+			heightDiff = -heightDiff;
+		}
+
+		f32 tanVal = tanf(_00);
+		f32 offset = getOffset(teki);
+		f32 div    = heightDiff / tanVal;
+		Vector3f vec;
+
+		f32 minDist = div + offset;
+		f32 dist    = absVal(teki.getPosition().distance(tekiTarget->getPosition()) - (div + offset));
+		if (dist < getGoalAreaRange(teki)) {
+			teki._490 *= 27.0f * gsys->getFrameTime();
+		} else {
+		}
+	}
+
+	return true;
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -11,6 +11,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x11A4.
  */
 struct ogScrFileSelectMgr {
 
@@ -53,7 +55,7 @@ struct ogScrFileSelectMgr {
 	void OperateSelect(Controller*);
 	void KetteiEffectStart();
 	void TailEffectStart();
-	void update(Controller*, CardQuickInfo&);
+	int update(Controller*, CardQuickInfo&);
 	void draw(Graphics&);
 
 	// unused/inlined:
@@ -77,7 +79,7 @@ struct ogScrFileSelectMgr {
 	void MoveCpyCursor(int, f32);
 	void DeleteEffectStart();
 
-	// TODO: members
+	u8 _00[0x11A4]; // _00, unknown
 };
 
 } // namespace zen

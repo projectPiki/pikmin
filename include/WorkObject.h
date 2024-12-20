@@ -192,4 +192,6 @@ struct HinderRock : public WorkObject {
 	Vector3f _460[2];           // _460
 };
 
+extern WorkObjectMgr* workObjectMgr;
+
 #endif

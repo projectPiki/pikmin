@@ -52,4 +52,6 @@ struct PcamCameraManager : public Node {
 	PeveEvent** mVibrationEvents; // _2C, array of events indexed by mCurrEventIndex
 };
 
+extern PcamCameraManager* cameraMgr;
+
 #endif

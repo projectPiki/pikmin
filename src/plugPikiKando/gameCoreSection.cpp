@@ -1,6 +1,37 @@
 #include "GameCoreSection.h"
 #include "gameflow.h"
 #include "Omake.h"
+#include "Demo.h"
+#include "MemStat.h"
+#include "SoundMgr.h"
+#include "Generator.h"
+#include "zen/DrawContainer.h"
+#include "zen/DrawHurryUp.h"
+#include "zen/DrawAccount.h"
+#include "zen/DrawGameInfo.h"
+#include "CodeInitializer.h"
+#include "Pellet.h"
+#include "WorkObject.h"
+#include "sysNew.h"
+#include "Font.h"
+#include "DynParticle.h"
+#include "Menu.h"
+#include "AIPerf.h"
+#include "UpdateMgr.h"
+#include "AIConstant.h"
+#include "KeyConfig.h"
+#include "GlobalShape.h"
+#include "PikiInfo.h"
+#include "NaviMgr.h"
+#include "UtEffect.h"
+#include "Kontroller.h"
+#include "Boss.h"
+#include "teki.h"
+#include "ItemMgr.h"
+#include "PlantMgr.h"
+#include "Pcam/CameraManager.h"
+#include "PlayerState.h"
+#include "RadarInfo.h"
 #include "Interface.h"
 #include "Dolphin/os.h"
 
@@ -3807,8 +3838,179 @@ void GameCoreSection::finalSetup()
  * Address:	8010FE4C
  * Size:	0009A4
  */
-GameCoreSection::GameCoreSection(Controller*, MapMgr*, Camera&)
+GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& camera)
+    : Node("gamecore")
 {
+	_28           = 0;
+	textDemoState = 0;
+	pauseFlag     = 0;
+	_2C           = 0;
+	demoEventMgr  = new DemoEventMgr();
+	radarInfo     = new RadarInfo();
+	_34           = 0;
+	_31           = 0;
+
+	memStat->start("gamecore");
+	seSystem      = new SeSystem();
+	generatorList = new GeneratorList();
+
+	mController = controller;
+	mMapMgr     = mgr;
+
+	memStat->start("gui");
+	containerWindow = new zen::DrawContainer();
+	hurryupWindow   = new zen::DrawHurryUp();
+	accountWindow   = new zen::DrawAccount();
+	memStat->end("gui");
+
+	FastGrid::initAIGrid(7);
+	_70._18 = 500.0f;
+	NakataCodeInitializer::init();
+
+	if (!preloadUFO) {
+		memStat->start("pellet");
+		pelletMgr = new PelletMgr(mMapMgr);
+		gameflow.addGenNode("ペレットマネージャ", pelletMgr); // 'pellet manager'
+		memStat->end("pellet");
+	}
+
+	memStat->start("mapMgr");
+
+	memStat->start("workobj");
+	workObjectMgr = new WorkObjectMgr();
+	gameflow.addGenNode("仕事オブジェマネージャ", workObjectMgr); // 'work object manager'
+	memStat->end("workobj");
+
+	memStat->end("mapMgr");
+
+	_50      = 0;
+	_68      = gsys->loadTexture("effects/shadow.txe", true);
+	_68->_06 = 0x105;
+	mBigFont = new Font();
+	mBigFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 36);
+
+	memStat->start("dynamics");
+	particleHeap = new DynParticleHeap(0x400);
+	memStat->end("dynamics");
+
+	_3C                   = new Menu(mController, gsys->mConsFont, false);
+	_3C->_48              = glnWidth / 2;
+	_3C->mPositionOffsetY = glnHeight / 2;
+	AIPerf::addMenu(_3C);
+	GlobalShape::init();
+
+	pikiUpdateMgr = new UpdateMgr();
+	pikiUpdateMgr->create(10);
+
+	searchUpdateMgr = new UpdateMgr();
+	searchUpdateMgr->create(9);
+
+	pikiLookUpdateMgr = new UpdateMgr();
+	pikiLookUpdateMgr->create(20);
+
+	pikiOptUpdateMgr = new UpdateMgr();
+	pikiOptUpdateMgr->create(2);
+
+	tekiOptUpdateMgr = new UpdateMgr();
+	tekiOptUpdateMgr->create(3);
+
+	seMgr = new SeMgr();
+
+	AIConstant::createInstance();
+	gameflow.addGenNode("AI定数", AIConstant::_instance); // 'AI Constants'
+
+	KeyConfig::createInstance();
+	gameflow.addGenNode("Key Setting", KeyConfig::_instance);
+
+	_54 = new SearchSystem();
+
+	PikiShapeObject::init();
+	SAIEventInit();
+
+	pikiInfo = new PikiInfo();
+
+	memStat->start("navi");
+	naviMgr = new NaviMgr();
+	naviMgr->create(1);
+	mNavi = static_cast<Navi*>(naviMgr->birth());
+	gameflow.addGenNode("naviMgr", naviMgr);
+	memStat->end("navi");
+
+	utEffectMgr = new UtEffectMgr();
+
+	memStat->start("generator");
+	generatorMgr = new GeneratorMgr();
+	generatorMgr->setName("default");
+	gameflow.addGenNode("ジェネレータ(default)", generatorMgr); // 'generator (default)'
+
+	GenObjectDebug::initialise();
+	GenObjectItem::initialise();
+	GenObjectPellet::initialise();
+	GenObjectWorkObject::initialise();
+	GenObjectPlant::initialise();
+	GenObjectMapParts::initialise(mMapMgr);
+	GenObjectTeki::initialise();
+	GenObjectBoss::initialise();
+	GenObjectMapObject::initialise(mMapMgr);
+	GenObjectNavi::initialise();
+	GenObjectActor::initialise();
+
+	onceGeneratorMgr = new GeneratorMgr();
+	onceGeneratorMgr->setName("init");
+	gameflow.addGenNode("ジェネレータ(init)", onceGeneratorMgr); // 'generator (init)'
+
+	dailyGeneratorMgr = new GeneratorMgr();
+	dailyGeneratorMgr->setName("daily");
+	gameflow.addGenNode("ジェネレータ(daily)", dailyGeneratorMgr); // 'generator (daily)'
+
+	plantGeneratorMgr = new GeneratorMgr();
+	plantGeneratorMgr->setName("plant");
+	gameflow.addGenNode("ジェネレータ(plants)", plantGeneratorMgr); // 'generator (plants)'
+
+	limitGeneratorMgr      = new GeneratorMgr();
+	limitGeneratorMgr->_5C = 1;
+	limitGeneratorMgr->setName("limit");
+	gameflow.addGenNode("ジェネレータ(limit)", limitGeneratorMgr); // 'generator (limit)'
+	memStat->end("generator");
+
+	memStat->start("boss");
+	int prevBossHeap = gsys->setHeap(SYSHEAP_Teki);
+	bossMgr          = new BossMgr();
+	gsys->setHeap(prevBossHeap);
+	memStat->end("boss");
+	gameflow.addGenNode("bossMgr", bossMgr);
+
+	memStat->start("teki");
+	int prevTekiHeap = gsys->setHeap(SYSHEAP_Teki);
+	tekiMgr          = new TekiMgr();
+	gsys->setHeap(prevTekiHeap);
+	memStat->end("teki");
+	gameflow.addGenNode("tekiMgr", tekiMgr);
+
+	if (!preloadUFO) {
+		memStat->start("item");
+		itemMgr = new ItemMgr();
+		memStat->end("item");
+	}
+
+	memStat->start("mapMgr");
+	memStat->start("plant");
+	plantMgr = new PlantMgr(mMapMgr);
+	memStat->end("plant");
+	memStat->end("mapMgr");
+
+	mNavi->mNaviCamera = &camera;
+	mNavi->init();
+	camera.mPosition.x = 500.0f * sinf(camera.mRotation.x);
+	camera.mPosition.y = 140.0f;
+	camera.mPosition.z = 500.0f * cosf(camera.mRotation.x);
+	gsys->setFade(1.0f, 3.0f);
+	cameraMgr = new PcamCameraManager(&camera, mNavi->mKontroller);
+	gameflow.addGenNode("cameraMgr", cameraMgr);
+	memStat->end("gamecore");
+
+	mDrawGameInfo
+	    = new zen::DrawGameInfo(gameflow.mIsChallengeMode == FALSE ? zen::DrawGameInfo::MODE_Story : zen::DrawGameInfo::MODE_Challenge);
 	/*
 	.loc_0x0:
 	  mflr      r0

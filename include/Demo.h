@@ -76,6 +76,8 @@ struct DemoFlags {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1 (empty).
  */
 struct DemoEventMgr {
 	DemoEventMgr();
@@ -86,7 +88,7 @@ struct DemoEventMgr {
 	void getEventName(int, int);
 	void getSenderName(int);
 
-	// TODO: members
+	// no members
 };
 
 extern DemoEventMgr* demoEventMgr;

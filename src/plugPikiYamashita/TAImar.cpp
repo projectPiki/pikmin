@@ -1,4 +1,5 @@
 #include "TAI/Mar.h"
+#include "PikiMgr.h"
 
 /*
  * --INFO--
@@ -2165,8 +2166,44 @@ bool BreathEffect::invoke(Teki&)
  * Address:	801A7398
  * Size:	000238
  */
-bool TAIAflyingDistanceMar::act(Teki&)
+bool TAIAflyingDistanceMar::act(Teki& teki)
 {
+	bool baseActResult = TAIAflyingDistance::act(teki);
+
+	// if base flyingDistance act succeeds, check for puffy-specific act.
+	if (baseActResult) {
+		// the more pikis we find in range, the more likely this act succeeds (hyperbolic, for whatever reason, so min is 1)
+		int weight = 1;
+
+		// loop through all pikis on field.
+		PikiMgr* mgr = pikiMgr;
+		TRAVERSELOOP(mgr, idx)
+		{
+			Piki* piki = static_cast<Piki*>(mgr->getCreatureCheck(idx));
+
+			// if piki is within DangerTerritoryRange, increase chance of success by a small amount
+			if (piki->getPosition().distance(teki.getPosition()) < teki.mTekiParams->getF(TPF_DangerTerritoryRange)) {
+				weight++;
+			}
+		}
+
+		// higher weight = smaller rand range = higher chance of success
+		// work out the chance of this by taking the integral and finding the area under the distribution curve
+		// P(XY <= 1) bounded by XY = 1 => Y = 1/X. take into account max X = A, max Y = 30, where A = 100 / weight
+		// P(XY <= 1) = (ln(A) + ln(30) + 1) / (30 * A)
+		// so, for:
+		// - weight = 1 (no pikis in range), A = 100, chance of success is 0.3%
+		// - weight = 51 (50 pikis in range), A = 100/51, chance of success is 8.6%
+		// - weight = 101 (100 pikis in range), A = 100/101, chance of success is 14.8%
+		if (System::getRand(100.0f / f32(weight)) * System::getRand(30.0f) <= 1.0f) {
+			return true;
+		}
+
+		return false;
+	}
+
+	// if we're here, this always returns false.
+	return baseActResult;
 	/*
 	.loc_0x0:
 	  mflr      r0

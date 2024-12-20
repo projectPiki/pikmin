@@ -37,7 +37,7 @@ P2DPerspGraph::P2DPerspGraph()
  * Size:	000084
  */
 P2DPerspGraph::P2DPerspGraph(const PUTRect& rect, f32, f32, f32)
-    : P2DGrafContext(rect) // TODO: fix later
+    : P2DGrafContext(rect)
 {
 	// UNUSED FUNCTION
 }
@@ -47,47 +47,11 @@ P2DPerspGraph::P2DPerspGraph(const PUTRect& rect, f32, f32, f32)
  * Address:	801B0190
  * Size:	000084
  */
-P2DPerspGraph::P2DPerspGraph(int p1, int p2, int p3, int p4, f32, f32, f32)
-    : P2DGrafContext(p1, p2, p3, p4) // TODO: fix later
+P2DPerspGraph::P2DPerspGraph(int x0, int y0, int width, int height, f32 p5, f32 p6, f32 p7)
+    : P2DGrafContext(x0, y0, width, height)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  fmr       f31, f3
-	  stfd      f30, 0x38(r1)
-	  fmr       f30, f2
-	  stfd      f29, 0x30(r1)
-	  fmr       f29, f1
-	  stw       r31, 0x2C(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r3, 0x8(r1)
-	  bl        -0xA14
-	  lwz       r31, 0x8(r1)
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x698
-	  fmr       f1, f29
-	  fmr       f2, f30
-	  fmr       f3, f31
-	  stw       r0, 0x0(r31)
-	  mr        r3, r31
-	  bl        .loc_0x84
-	  li        r0, 0x2
-	  stw       r0, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  lfd       f30, 0x38(r1)
-	  lfd       f29, 0x30(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-
-	.loc_0x84:
-	*/
+	set(p5, p6, p7);
+	mGrafType = P2DGRAF_Persp;
 }
 
 /*
@@ -95,37 +59,12 @@ P2DPerspGraph::P2DPerspGraph(int p1, int p2, int p3, int p4, f32, f32, f32)
  * Address:	801B0214
  * Size:	000060
  */
-void P2DPerspGraph::set(f32, f32, f32)
+void P2DPerspGraph::set(f32 fovy, f32 p2, f32 p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stfd      f31, 0x28(r1)
-	  fmr       f31, f3
-	  stfd      f30, 0x20(r1)
-	  fmr       f30, f2
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  bl        .loc_0x60
-	  stfs      f30, 0xD8(r31)
-	  mr        r3, r31
-	  stfs      f31, 0xDC(r31)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x34(r1)
-	  lfd       f31, 0x28(r1)
-	  lfd       f30, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-
-	.loc_0x60:
-	*/
+	setFovy(fovy);
+	_D8 = p2;
+	_DC = p3;
+	setLookat();
 }
 
 /*
@@ -133,24 +72,14 @@ void P2DPerspGraph::set(f32, f32, f32)
  * Address:	801B0274
  * Size:	00002C
  */
-void P2DPerspGraph::setFovy(f32)
+void P2DPerspGraph::setFovy(f32 fovy)
 {
-	/*
-	.loc_0x0:
-	  stfs      f1, 0xD4(r3)
-	  lfs       f0, -0x4980(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x18
-	  stfs      f0, 0xD4(r3)
-	  blr
-
-	.loc_0x18:
-	  lfs       f0, -0x497C(r2)
-	  fcmpo     cr0, f1, f0
-	  blelr-
-	  stfs      f0, 0xD4(r3)
-	  blr
-	*/
+	mFovy = fovy;
+	if (fovy < 1.0f) {
+		mFovy = 1.0f;
+	} else if (fovy > 179.0f) {
+		mFovy = 179.0f;
+	}
 }
 
 /*
@@ -170,6 +99,7 @@ void P2DPerspGraph::getMatrix(Matrix4f&)
  */
 void P2DPerspGraph::setPort()
 {
+	P2DGrafContext::setPort();
 	/*
 	.loc_0x0:
 	  mflr      r0

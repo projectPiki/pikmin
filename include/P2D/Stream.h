@@ -2,18 +2,19 @@
 #define _P2D_STREAM_H
 
 #include "types.h"
+#include <Stream.h>
 
 /**
  * @brief TODO
  */
 struct P2DStream {
-	void getResource(int);
+	void* getResource(int);
 	void align(int);
 
 	// unused/inlined:
 	~P2DStream();
 
-	// TODO: members
+	RandomAccessStream* mStream; // _00
 };
 
 #endif

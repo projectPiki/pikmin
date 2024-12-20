@@ -1,5 +1,10 @@
 #include "zen/ogMap.h"
+#include "zen/ogSub.h"
+#include "P2D/Screen.h"
+#include "P2D/TextBox.h"
+#include "P2D/Graph.h"
 #include "std/Math.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -26,68 +31,26 @@ static void _Print(char*, ...)
  * Address:	80182DE0
  * Size:	0000D4
  */
-void zen::ogScrMapMgr::start(s16)
+void zen::ogScrMapMgr::start(s16 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r3
-	  sth       r4, 0x14(r3)
-	  stw       r0, 0x0(r3)
-	  lha       r0, 0x14(r3)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0xAC
-	  lwz       r0, 0xC(r31)
-	  lis       r3, 0x7069
-	  addi      r4, r3, 0x6331
-	  stw       r0, 0x4(r31)
-	  li        r5, 0x1
-	  lwz       r3, 0x4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x1C(r31)
-	  lis       r4, 0x4330
-	  lwz       r3, 0x1C(r31)
-	  lfd       f1, -0x5080(r2)
-	  lha       r0, 0x18(r3)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x34(r1)
-	  stw       r4, 0x30(r1)
-	  lfd       f0, 0x30(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x24(r31)
-	  lwz       r3, 0x1C(r31)
-	  lha       r0, 0x1A(r3)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x2C(r1)
-	  stw       r4, 0x28(r1)
-	  lfd       f0, 0x28(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x28(r31)
-	  lwz       r3, 0x10(r31)
-	  bl        -0x2A64
-	  b         .loc_0xB4
+	u32 badCompiler[6];
 
-	.loc_0xAC:
-	  lwz       r0, 0x8(r31)
-	  stw       r0, 0x4(r31)
+	_14    = p1;
+	mState = MAP_Unk1;
 
-	.loc_0xB4:
-	  li        r0, 0
-	  sth       r0, 0x2C(r31)
-	  sth       r0, 0x2E(r31)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	if (_14 == 1) {
+		_04   = mTest2Screen;
+		mPic1 = _04->search('pic1', true);
+		_24   = mPic1->_18.mMin.x;
+		_28   = mPic1->_18.mMin.y;
+		mTypingTextMgr->start();
+
+	} else {
+		_04 = mTestScreen;
+	}
+
+	_2C = 0;
+	_2E = 0;
 }
 
 /*
@@ -97,130 +60,18 @@ void zen::ogScrMapMgr::start(s16)
  */
 zen::ogScrMapMgr::ogScrMapMgr()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  li        r3, 0xF8
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  bl        -0x13BED0
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0x88
-	  addi      r29, r30, 0
-	  addi      r3, r1, 0x14
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x3072C
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x14
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x2DAB0
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r30)
-	  li        r0, 0
-	  stb       r0, 0xEC(r30)
-	  stw       r0, 0xF0(r30)
-	  stw       r0, 0xF4(r30)
+	mTestScreen = new P2DScreen();
+	mTestScreen->set("screen/blo/test.blo", true, true, true);
 
-	.loc_0x88:
-	  stw       r30, 0x8(r31)
-	  lis       r3, 0x802D
-	  addi      r4, r3, 0x4058
-	  lwz       r3, 0x8(r31)
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x2FCA8
-	  li        r3, 0xF8
-	  bl        -0x13BF5C
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0x114
-	  addi      r29, r30, 0
-	  addi      r3, r1, 0xC
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x306A0
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0xC
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x2DA24
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r30)
-	  li        r0, 0
-	  stb       r0, 0xEC(r30)
-	  stw       r0, 0xF0(r30)
-	  stw       r0, 0xF4(r30)
+	mTest2Screen = new P2DScreen();
+	mTest2Screen->set("screen/blo/test2.blo", true, true, true);
 
-	.loc_0x114:
-	  stw       r30, 0xC(r31)
-	  lis       r3, 0x802D
-	  addi      r4, r3, 0x406C
-	  lwz       r3, 0xC(r31)
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x2FC1C
-	  lwz       r3, 0xC(r31)
-	  lis       r4, 0x7478
-	  addi      r4, r4, 0x3030
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r29, r3, 0
-	  li        r3, 0x418
-	  bl        -0x13C00C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x174
-	  mr        r4, r29
-	  bl        -0x2C94
+	P2DTextBox* textBox = static_cast<P2DTextBox*>(mTest2Screen->search('tx00', true));
+	mTypingTextMgr      = new TypingTextMgr(textBox);
 
-	.loc_0x174:
-	  stw       r30, 0x10(r31)
-	  lis       r3, 0x6375
-	  addi      r4, r3, 0x7273
-	  lwz       r3, 0xC(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x20(r31)
-	  li        r0, -0x1
-	  addi      r3, r31, 0
-	  lfs       f0, -0x5078(r2)
-	  stfs      f0, 0x18(r31)
-	  stw       r0, 0x0(r31)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mCursorPane = mTest2Screen->search('curs', true);
+	_18         = 0.0f;
+	mState      = MAP_NULL;
 }
 
 /*
@@ -228,8 +79,37 @@ zen::ogScrMapMgr::ogScrMapMgr()
  * Address:	80183080
  * Size:	00029C
  */
-int zen::ogScrMapMgr::update(Controller*)
+int zen::ogScrMapMgr::update(Controller* controller)
 {
+	if (mState == MAP_NULL) {
+		return mState;
+	}
+
+	_18 += gsys->getFrameTime();
+	_04->update();
+
+	if (mState == MAP_Unk1) {
+		mState = MAP_Unk0;
+		return mState;
+	}
+
+	if (mState == MAP_Unk2) {
+		mState = MAP_Unk4;
+		return mState;
+	}
+
+	if (mState == MAP_Unk4) {
+		mState = MAP_NULL;
+		return mState;
+	}
+
+	if (controller->isPressed(KBBTN_B)) {
+		mState = MAP_Unk2;
+	}
+
+	if (_14 == 1) {
+		mTypingTextMgr->update();
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -477,46 +357,13 @@ int zen::ogScrMapMgr::update(Controller*)
  * Address:	8018337C
  * Size:	00008C
  */
-void zen::ogScrMapMgr::draw(Graphics&)
+void zen::ogScrMapMgr::draw(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x100(r1)
-	  stw       r31, 0xFC(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x78
-	  lfs       f1, -0x5068(r2)
-	  addi      r3, r1, 0x10
-	  lfs       f2, -0x5074(r2)
-	  li        r4, 0
-	  lfs       f3, -0x5064(r2)
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x2CDD4
-	  addi      r3, r1, 0x10
-	  bl        0x2CEDC
-	  lwz       r3, 0x4(r31)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x2FAFC
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x698
-	  lis       r3, 0x802E
-	  stw       r0, 0x10(r1)
-	  addi      r0, r3, 0x5D4
-	  stw       r0, 0x10(r1)
+	if (mState == MAP_NULL) {
+		return;
+	}
 
-	.loc_0x78:
-	  lwz       r0, 0x104(r1)
-	  lwz       r31, 0xFC(r1)
-	  addi      r1, r1, 0x100
-	  mtlr      r0
-	  blr
-	*/
+	P2DPerspGraph perspGraph(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
+	perspGraph.setPort();
+	_04->draw(0, 0, &perspGraph);
 }

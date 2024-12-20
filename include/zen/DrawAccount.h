@@ -17,6 +17,8 @@ struct AccountData {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x120.
  */
 struct DrawAccount : public DrawScreen {
 
@@ -29,9 +31,11 @@ struct DrawAccount : public DrawScreen {
 
 	// unused/inlined:
 
-	// TODO: members
+	u8 _00[0x120]; // _00, unknown
 };
 
 } // namespace zen
+
+extern zen::DrawAccount* accountWindow;
 
 #endif

@@ -123,7 +123,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u8 _2E0;                           // _2E0
 	bool mIsPellet;                    // _2E1, is lying down/carryable
 	Kontroller* mKontroller;           // _2E4
-	u8 _2E8[0x2EC - 0x2E8];            // _2E8, unknown
+	Camera* mNaviCamera;               // _2E8, could be CullFrustum*, but probably Camera*
 	Vector3f* mLookAtPosPtr;           // _2EC
 	u8 _2F0;                           // _2F0
 	u8 _2F1[0x314 - 0x2F1];            // _2F1, unknown

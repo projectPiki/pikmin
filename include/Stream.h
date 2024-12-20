@@ -16,7 +16,7 @@ struct Stream {
 	char* mPath; // _00
 
 	virtual int readInt();                      // _08
-	virtual char readByte();                    // _0C
+	virtual u8 readByte();                      // _0C
 	virtual s16 readShort();                    // _10
 	virtual f32 readFloat();                    // _14
 	virtual void readString(char*, int);        // _18
@@ -56,6 +56,14 @@ struct RandomAccessStream : public Stream {
 		for (int i = 0; i < resultAmount; i++) {
 			readByte();
 		}
+	}
+
+	inline BOOL checkInput()
+	{
+		if (readByte() == 0) {
+			return false;
+		}
+		return true;
 	}
 
 	// unused/inlined:
