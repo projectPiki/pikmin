@@ -12,6 +12,12 @@ extern "C" {
 typedef void (*AISCallback)(u32 count);
 typedef void (*AIDCallback)();
 
+#define AI_SAMPLERATE_32KHZ 0
+#define AI_SAMPLERATE_48KHZ 1
+
+#define AI_STREAM_START 1
+#define AI_STREAM_STOP  0
+
 /////////////// AI FUNCTIONS ///////////////
 AIDCallback AIRegisterDMACallback(AIDCallback callback);
 void AIInitDMA(u32 start_addr, u32 length);

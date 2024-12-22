@@ -115,6 +115,7 @@ s32 DVDReadPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, s32 p
 BOOL DVDReadAsyncPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, DVDCallback callback, s32 prio);
 BOOL DVDReadAbsAsyncPrio(DVDCommandBlock* block, void* addr, s32 length, s32 offset, DVDCBCallback callback, s32 prio);
 BOOL DVDClose(DVDFileInfo* fileInfo);
+BOOL DVDPrepareStreamAsync(DVDFileInfo* fileInfo, u32 length, u32 offset, DVDCallback callback);
 
 void DVDResume();
 void DVDReset();
@@ -147,6 +148,7 @@ BOOL DVDCompareDiskID(DVDDiskID* id1, DVDDiskID* id2);
 DVDLowCallback DVDLowClearCallback();
 
 BOOL DVDCancelStreamAsync(DVDCommandBlock* block, DVDCBCallback callback);
+BOOL DVDCancelStream(DVDCommandBlock* block);
 
 BOOL DVDCheckDisk();
 

@@ -1,6 +1,4 @@
-#include "types.h"
-
-typedef struct dspch_ dspch_;
+#include "jaudio/dspdriver.h"
 
 /*
  * --INFO--
@@ -150,7 +148,7 @@ void AllocDSPchannel(u32, u32)
  * Address:	8000AE80
  * Size:	0000DC
  */
-void DeAllocDSPchannel(dspch_*, u32)
+void DeAllocDSPchannel(DSPChannel*, u32)
 {
 	/*
 	.loc_0x0:
@@ -394,7 +392,7 @@ void GetLowerActiveDSPchannel()
  * Address:	8000B160
  * Size:	00007C
  */
-void ForceStopDSPchannel(dspch_*)
+void ForceStopDSPchannel(DSPChannel*)
 {
 	/*
 	.loc_0x0:
@@ -577,7 +575,7 @@ void BreakLowerActiveDSPchannel(u8)
  * Address:	........
  * Size:	000008
  */
-void UpdateDSPchannel(dspch_*)
+void UpdateDSPchannel(DSPChannel*)
 {
 	// UNUSED FUNCTION
 }

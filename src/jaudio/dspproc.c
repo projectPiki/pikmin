@@ -1,4 +1,6 @@
 #include "jaudio/dspproc.h"
+#include "Dolphin/dsp.h"
+#include "Dolphin/os.h"
 
 static u16 DSP_MIXERLEVEL = 0x4000;
 
@@ -9,63 +11,26 @@ static u16 DSP_MIXERLEVEL = 0x4000;
  */
 s32 DSPSendCommands(u32* commands, u32 count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  addi      r29, r4, 0
-	  bl        0x1FF73C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x3C
-	  lis       r3, 0x8022
-	  addi      r3, r3, 0x2040
-	  crclr     6, 0x6
-	  bl        0x1EF1A0
-	  li        r3, -0x1
-	  b         .loc_0x94
+	if (DSPCheckMailToDSP() != 0) {
+		OSReport("DSP Err:not received mail (to DSP) is remained \n");
+		return -1;
+	}
 
-	.loc_0x3C:
-	  bl        0x1FF728
-	  cmplwi    r3, 0
-	  beq-      .loc_0x60
-	  lis       r3, 0x8022
-	  addi      r3, r3, 0x2074
-	  crclr     6, 0x6
-	  bl        0x1EF17C
-	  li        r3, -0x1
-	  b         .loc_0x94
+	if (DSPCheckMailFromDSP() != 0) {
+		OSReport("DSP Err:not received mail (from DSP) is remained \n");
+		return -1;
+	}
 
-	.loc_0x60:
-	  li        r30, 0
-	  li        r31, 0
-	  b         .loc_0x88
+	int i;
 
-	.loc_0x6C:
-	  lwzx      r3, r28, r31
-	  bl        0x1FF71C
+	for (i = 0; i < count; i++) {
+		DSPSendMailToDSP(commands[i]);
 
-	.loc_0x74:
-	  bl        0x1FF6E0
-	  cmplwi    r3, 0
-	  bne+      .loc_0x74
-	  addi      r30, r30, 0x1
-	  addi      r31, r31, 0x4
+		while (DSPCheckMailToDSP() != 0)
+			;
+	}
 
-	.loc_0x88:
-	  cmplw     r30, r29
-	  blt+      .loc_0x6C
-	  li        r3, 0
-
-	.loc_0x94:
-	  lmw       r28, 0x10(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	return 0;
 }
 
 /*
@@ -75,31 +40,14 @@ s32 DSPSendCommands(u32* commands, u32 count)
  */
 u32 DSPReleaseHalt()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
+	while (DSPCheckMailToDSP() != 0)
+		;
+	DSPSendMailToDSP(0);
+	if (DSPCheckMailFromDSP() != 0) {
+		DSPReadMailFromDSP();
+	}
 
-	.loc_0xC:
-	  bl        0x1FF688
-	  cmplwi    r3, 0
-	  bne+      .loc_0xC
-	  li        r3, 0
-	  bl        0x1FF6B0
-	  bl        0x1FF684
-	  cmplwi    r3, 0
-	  beq-      .loc_0x30
-	  bl        0x1FF688
-
-	.loc_0x30:
-	  lis       r3, 0x8888
-	  lwz       r0, 0xC(r1)
-	  addi      r3, r3, 0x1357
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return 0x88881357;
 }
 
 /*
@@ -109,35 +57,18 @@ u32 DSPReleaseHalt()
  */
 void DSPWaitFinish()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8022
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  addi      r31, r3, 0x20A8
+	u32 mail;
+	while (TRUE) {
+		while (DSPCheckMailFromDSP() == 0)
+			;
 
-	.loc_0x18:
-	  bl        0x1FF62C
-	  cmplwi    r3, 0
-	  beq+      .loc_0x18
-	  bl        0x1FF630
-	  addis     r0, r3, 0x7778
-	  cmplwi    r0, 0x1357
-	  bne-      .loc_0x44
-	  addi      r3, r31, 0
-	  crclr     6, 0x6
-	  bl        0x1EF074
-	  b         .loc_0x18
+		mail = DSPReadMailFromDSP() + 0x77780000;
+		if (mail != 0x1357) {
+			return;
+		}
 
-	.loc_0x44:
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
+		OSReport("Error: DSP now in framework\n");
+	}
 }
 
 /*
@@ -307,27 +238,16 @@ void Dadpcmtest(u32)
  */
 void DsetupTable(u32 cmd1, u32 cmd2, u32 cmd3, u32 cmd4, u32 cmd5)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r3,0,16,31
-	  oris      r0, r0, 0x8100
-	  stwu      r1, -0x30(r1)
-	  stw       r0, 0x1C(r1)
-	  addi      r3, r1, 0x1C
-	  stw       r4, 0x20(r1)
-	  li        r4, 0x5
-	  stw       r5, 0x24(r1)
-	  stw       r6, 0x28(r1)
-	  stw       r7, 0x2C(r1)
-	  bl        -0x1B0
-	  bl        -0x94
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	u32 commands[5];
+
+	commands[0] = (cmd1 & 0xFFFF) | 0x81000000;
+	commands[1] = cmd2;
+	commands[2] = cmd3;
+	commands[3] = cmd4;
+	commands[4] = cmd5;
+
+	DSPSendCommands(commands, ARRAY_SIZE(commands));
+	DSPWaitFinish();
 }
 
 /*
@@ -344,27 +264,16 @@ void DsetMixerLevel(f32 level) { DSP_MIXERLEVEL = 4096.0f * level; }
  */
 void DsyncFrame(u32 subframes, u32 dspbufStart, u32 dspbufEnd)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  rlwinm    r6,r3,16,8,15
-	  stw       r0, 0x4(r1)
-	  oris      r6, r6, 0x8200
-	  stwu      r1, -0x20(r1)
-	  lhz       r0, -0x7FF0(r13)
-	  addi      r3, r1, 0x14
-	  or        r0, r6, r0
-	  stw       r0, 0x14(r1)
-	  stw       r4, 0x18(r1)
-	  li        r4, 0x3
-	  stw       r5, 0x1C(r1)
-	  bl        -0x250
-	  bl        -0x134
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	u32 commands[3];
+
+	u32 val = (subframes << 16 & 0xFF0000);
+	val |= 0x82000000;
+	commands[0] = val | DSP_MIXERLEVEL;
+	commands[1] = dspbufStart;
+	commands[2] = dspbufEnd;
+
+	DSPSendCommands(commands, ARRAY_SIZE(commands));
+	DSPWaitFinish();
 }
 
 /*
@@ -374,22 +283,11 @@ void DsyncFrame(u32 subframes, u32 dspbufStart, u32 dspbufEnd)
  */
 void DwaitFrame()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x1
-	  stw       r0, 0x4(r1)
-	  lis       r0, 0x8000
-	  stwu      r1, -0x10(r1)
-	  stw       r0, 0x8(r1)
-	  addi      r3, r1, 0x8
-	  bl        -0x29C
-	  bl        -0x180
-	  lwz       r0, 0x14(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
+	u32 commands[1];
+
+	commands[0] = 0x80000000;
+	DSPSendCommands(commands, ARRAY_SIZE(commands));
+	DSPWaitFinish();
 }
 
 /*
@@ -399,24 +297,13 @@ void DwaitFrame()
  */
 void DiplSec(u32 cmd)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8B00
-	  stw       r0, 0x4(r1)
-	  addi      r0, r5, 0x8
-	  li        r4, 0x2
-	  stwu      r1, -0x18(r1)
-	  stw       r0, 0x10(r1)
-	  stw       r3, 0x14(r1)
-	  addi      r3, r1, 0x10
-	  bl        -0x2E4
-	  bl        -0x1C8
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	u32 commands[2];
+	u32 badCompiler;
+
+	commands[0] = 0x8B000008;
+	commands[1] = cmd;
+	DSPSendCommands(commands, ARRAY_SIZE(commands));
+	DSPWaitFinish();
 }
 
 /*
@@ -426,22 +313,11 @@ void DiplSec(u32 cmd)
  */
 void DagbSec(u32 cmd)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8C00
-	  stw       r0, 0x4(r1)
-	  addi      r0, r5, 0x8
-	  li        r4, 0x2
-	  stwu      r1, -0x20(r1)
-	  stw       r0, 0x18(r1)
-	  stw       r3, 0x1C(r1)
-	  addi      r3, r1, 0x18
-	  bl        -0x324
-	  bl        -0x208
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	u32 commands[2];
+	u32 badCompiler[3];
+
+	commands[0] = 0x8C000008;
+	commands[1] = cmd;
+	DSPSendCommands(commands, ARRAY_SIZE(commands));
+	DSPWaitFinish();
 }

@@ -1,7 +1,16 @@
 #include "jaudio/aictrl.h"
 #include "jaudio/audiostruct.h"
 #include "jaudio/memory.h"
+#include "jaudio/rate.h"
+#include "jaudio/sample.h"
+#include "jaudio/dummyprobe.h"
+#include "jaudio/dspbuf.h"
+#include "jaudio/audiocommon.h"
+#include "jaudio/streamctrl.h"
+#include "jaudio/dspproc.h"
+#include "jaudio/driverinterface.h"
 #include "Dolphin/os.h"
+#include "Dolphin/ai.h"
 
 u32 UNIVERSAL_DACCOUNTER = 0;
 
@@ -30,32 +39,6 @@ void Jac_HeapSetup(void* heap, s32 size)
 	} else {
 		audio_hp_exist = FALSE;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r5, r4, 0
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x34
-	  lis       r6, 0x802F
-	  addi      r4, r3, 0
-	  subi      r3, r6, 0x69B4
-	  bl        -0x84
-	  li        r0, 0x1
-	  stw       r0, 0x2B04(r13)
-	  b         .loc_0x3C
-
-	.loc_0x34:
-	  li        r0, 0
-	  stw       r0, 0x2B04(r13)
-
-	.loc_0x3C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -73,7 +56,7 @@ void GetAudioHeapRemain(void)
  * Address:	80005780
  * Size:	000080
  */
-void* OSAlloc2(u32 size)
+void* OSAlloc2(volatile u32 size)
 {
 	void* alloc;
 	BOOL level = OSDisableInterrupts();
@@ -88,47 +71,6 @@ void* OSAlloc2(u32 size)
 
 	OSRestoreInterrupts(level);
 	return alloc;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stmw      r30, 0x10(r1)
-	  stw       r3, 0x8(r1)
-	  bl        0x1F37E8
-	  lwz       r0, 0x2B04(r13)
-	  addi      r30, r3, 0
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x60
-	  cmpwi     r0, 0
-	  bge-      .loc_0x38
-	  b         .loc_0x60
-
-	.loc_0x38:
-	  lwz       r3, 0x29D8(r13)
-	  lwz       r4, 0x8(r1)
-	  bl        0x1F0FEC
-	  mr        r31, r3
-	  b         .loc_0x60
-
-	.loc_0x4C:
-	  lis       r3, 0x802F
-	  lwz       r4, 0x8(r1)
-	  subi      r3, r3, 0x69B4
-	  bl        -0x198
-	  mr        r31, r3
-
-	.loc_0x60:
-	  mr        r3, r30
-	  bl        0x1F37C0
-	  mr        r3, r31
-	  lmw       r30, 0x10(r1)
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -148,56 +90,18 @@ void OSFree2(void)
  */
 void Jac_Init()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x802F
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x28(r1)
-	  stmw      r30, 0x20(r1)
-	  subi      r31, r3, 0x69C0
-	  stw       r0, 0x18(r1)
-	  b         .loc_0x6C
+	volatile int i;
+	for (i = 0; i < 3; i++) {
+		void* alloc   = OSAlloc2(DAC_SIZE * 2);
+		s16** thisDac = &dac[i];
+		*thisDac      = (s16*)alloc;
+		Jac_bzero(*thisDac, DAC_SIZE * 2);
+		DCStoreRange(*thisDac, DAC_SIZE * 2);
+	}
 
-	.loc_0x24:
-	  lwz       r0, -0x7FF4(r13)
-	  rlwinm    r3,r0,1,0,30
-	  bl        -0xAC
-	  lwz       r0, 0x18(r1)
-	  rlwinm    r0,r0,2,0,29
-	  add       r30, r31, r0
-	  stw       r3, 0x0(r30)
-	  lwz       r0, -0x7FF4(r13)
-	  lwz       r3, 0x0(r30)
-	  rlwinm    r4,r0,1,0,30
-	  bl        0x874
-	  lwz       r0, -0x7FF4(r13)
-	  lwz       r3, 0x0(r30)
-	  rlwinm    r4,r0,1,0,30
-	  bl        0x1F13C0
-	  lwz       r3, 0x18(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x18(r1)
-
-	.loc_0x6C:
-	  lwz       r0, 0x18(r1)
-	  cmpwi     r0, 0x3
-	  blt+      .loc_0x24
-	  li        r3, 0
-	  bl        0x200BE4
-	  lis       r3, 0x802F
-	  lwz       r0, -0x7FF4(r13)
-	  subi      r3, r3, 0x69C0
-	  lwz       r3, 0x8(r3)
-	  rlwinm    r4,r0,1,0,30
-	  bl        0x2007B4
-	  lwz       r0, 0x2C(r1)
-	  lmw       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	AIInit(nullptr);
+	AIInitDMA((u32)dac[2], DAC_SIZE * 2);
+	u32 badCompiler[4];
 }
 
 /*
@@ -255,8 +159,46 @@ void CheckHaltDSP(void)
  * Address:	800058C0
  * Size:	0000DC
  */
-static void MixMonoTrack(s16*, s32, MixCallback)
+static void MixMonoTrack(s16* track, s32 nSamples, MixCallback callback)
 {
+	Probe_Start(5, "MONO-MIX");
+
+	s16* monoTrack = (*callback)(nSamples);
+	int mix;
+
+	if (monoTrack != nullptr) {
+		Probe_Finish(5);
+
+		s16* dst_p = track;
+		s16* src_p = monoTrack;
+
+		for (s32 i = 0; i < nSamples; i++) {
+			mix = dst_p[0] + src_p[0];
+			if (mix < S16_MIN) {
+				mix = S16_MIN + 1;
+			}
+
+			if (mix > S16_MAX) {
+				mix = S16_MAX;
+			}
+
+			dst_p[0] = (s16)mix;
+
+			mix = dst_p[1] + src_p[0];
+			if (mix < S16_MIN) {
+				mix = S16_MIN + 1;
+			}
+
+			if (mix > S16_MAX) {
+				mix = S16_MAX;
+			}
+
+			dst_p[1] = (s16)mix;
+
+			dst_p += 2;
+			src_p++;
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -334,8 +276,46 @@ static void MixMonoTrack(s16*, s32, MixCallback)
  * Address:	800059A0
  * Size:	0000DC
  */
-static void MixMonoTrackWide(s16*, s32, MixCallback)
+static void MixMonoTrackWide(s16* track, s32 nSamples, MixCallback callback)
 {
+	Probe_Start(5, "MONO(W)-MIX");
+
+	s16* monoTrack = (*callback)(nSamples);
+	int mix;
+
+	if (monoTrack != nullptr) {
+		Probe_Finish(5);
+
+		s16* dst_p = track;
+		s16* src_p = monoTrack;
+
+		for (s32 i = 0; i < nSamples; i++) {
+			mix = dst_p[0] + src_p[0];
+			if (mix < S16_MIN) {
+				mix = S16_MIN + 1;
+			}
+
+			if (mix > S16_MAX) {
+				mix = S16_MAX;
+			}
+
+			dst_p[0] = (s16)mix;
+
+			mix = dst_p[1] - src_p[0];
+			if (mix < S16_MIN) {
+				mix = S16_MIN + 1;
+			}
+
+			if (mix > S16_MAX) {
+				mix = S16_MAX;
+			}
+
+			dst_p[1] = (s16)mix;
+
+			dst_p += 2;
+			src_p++;
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -413,8 +393,51 @@ static void MixMonoTrackWide(s16*, s32, MixCallback)
  * Address:	80005A80
  * Size:	0000F8
  */
-static void MixExtraTrack(s16*, s32, MixCallback)
+static void MixExtraTrack(s16* track, s32 nSamples, MixCallback callback)
 {
+	Probe_Start(5, "DSPMIX");
+
+	s16* extraTrack = (*callback)(nSamples);
+	int mix;
+
+	if (extraTrack != nullptr) {
+		Probe_Finish(5);
+		Probe_Start(6, "MIXING");
+
+		s16* dst_p  = track;
+		s16* src0_p = extraTrack + JAC_FRAMESAMPLES;
+		s16* src1_p = extraTrack;
+
+		for (s32 i = 0; i < nSamples; i++) {
+			mix = dst_p[0] + src0_p[0];
+			if (mix < S16_MIN) {
+				mix = S16_MIN + 1;
+			}
+
+			if (mix > S16_MAX) {
+				mix = S16_MAX;
+			}
+
+			dst_p[0] = (s16)mix;
+
+			mix = dst_p[1] + src1_p[0];
+			if (mix < S16_MIN) {
+				mix = S16_MIN + 1;
+			}
+
+			if (mix > S16_MAX) {
+				mix = S16_MAX;
+			}
+
+			dst_p[1] = (s16)mix;
+
+			dst_p += 2;
+			src0_p++;
+			src1_p++;
+		}
+
+		Probe_Finish(6);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -501,8 +524,31 @@ static void MixExtraTrack(s16*, s32, MixCallback)
  * Address:	80005B80
  * Size:	00008C
  */
-static void MixInterleaveTrack(s16*, s32, MixCallback)
+static void MixInterleaveTrack(s16* track, s32 nSamples, MixCallback callback)
 {
+	s16* interleaveTrack = (*callback)(nSamples);
+	int mix;
+
+	if (interleaveTrack != nullptr) {
+		s16* track_p = track;
+		s32 max      = nSamples * 2;
+
+		for (s32 i = 0; i < max; i++) {
+			mix = track_p[0] + interleaveTrack[0];
+			if (mix < S16_MIN) {
+				mix = S16_MIN + 1;
+			}
+
+			if (mix > S16_MAX) {
+				mix = S16_MAX;
+			}
+
+			track_p[0] = (s16)mix;
+
+			track_p++;
+			interleaveTrack++;
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -578,6 +624,40 @@ void Jac_RegisterMixcallback(MixCallback callback, u8 mixmode)
  */
 void Jac_VframeWork()
 {
+	static u32 dacp = 0;
+
+	JAC_VFRAME_COUNTER++;
+
+	s16* mixedTrack = MixDsp(DAC_SIZE / 2);
+	Jac_imixcopy(&mixedTrack[JAC_FRAMESAMPLES], &mixedTrack[0], dac[dacp], DAC_SIZE / 2);
+
+	if (ext_mixcallback != nullptr) {
+		switch (ext_mixmode) {
+		case MixMode_Mono:
+			MixMonoTrack(dac[dacp], DAC_SIZE / 2, ext_mixcallback);
+			break;
+		case MixMode_MonoWide:
+			MixMonoTrackWide(dac[dacp], DAC_SIZE / 2, ext_mixcallback);
+			break;
+		case MixMode_Extra:
+			MixExtraTrack(dac[dacp], DAC_SIZE / 2, ext_mixcallback);
+			break;
+		case MixMode_Interleave:
+			MixInterleaveTrack(dac[dacp], DAC_SIZE / 2, ext_mixcallback);
+			break;
+		}
+	}
+
+	BOOL enable = OSDisableInterrupts();
+	DCStoreRange(dac[dacp], DAC_SIZE * 2);
+	OSRestoreInterrupts(enable);
+
+	last_rsp_madep = dac[dacp];
+	dacp++;
+	if (dacp == 3) {
+		dacp = 0;
+	}
+	vframe_work_running = FALSE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -704,6 +784,27 @@ void Jac_VframeWork()
  */
 void Jac_UpdateDAC()
 {
+	if (use_rsp_madep == nullptr) {
+		use_rsp_madep  = last_rsp_madep;
+		last_rsp_madep = nullptr;
+	}
+
+	if (use_rsp_madep != nullptr) {
+		AIInitDMA((u32)use_rsp_madep, DAC_SIZE * 2);
+		use_rsp_madep = nullptr;
+	} else {
+		UNIVERSAL_DACCOUNTER++;
+	}
+
+	if (last_rsp_madep == nullptr && vframe_work_running == FALSE) {
+		Jac_VframeWork();
+	}
+
+	StreamMain();
+
+	if (DAC_CALLBACK_FUNC != nullptr) {
+		(*DAC_CALLBACK_FUNC)(last_rsp_madep, DAC_SIZE / 2);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -790,22 +891,8 @@ int Jac_GetOutputMode() { return JAC_SYSTEM_OUTPUT_MODE; }
  * Address:	80005EC0
  * Size:	000034
  */
-void Jac_SetMixerLevel(f32, f32)
+void Jac_SetMixerLevel(f32 channelLevel, f32 dspLevel)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stfd      f31, 0x10(r1)
-	  fmr       f31, f2
-	  bl        0x352C
-	  fmr       f1, f31
-	  bl        0x29C4
-	  lwz       r0, 0x1C(r1)
-	  lfd       f31, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Channel_SetMixerLevel(channelLevel);
+	DsetMixerLevel(dspLevel);
 }

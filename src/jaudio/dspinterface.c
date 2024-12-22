@@ -1,6 +1,5 @@
 #include "types.h"
-
-typedef struct Wave_;
+#include "jaudio/dspinterface.h"
 
 /*
  * --INFO--

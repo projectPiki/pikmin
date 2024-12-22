@@ -1,27 +1,17 @@
 #include "types.h"
 #include "std/Math.h"
+#include "jaudio/calc.h"
+#include "Dolphin/math.h"
+#include "stl/math.h"
+
+static f32 SINTABLE[257];
 
 /*
  * --INFO--
  * Address:	8000DC20
  * Size:	000020
  */
-void sqrtf2(f32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        .loc_0x20
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x20:
-	*/
-}
+f32 sqrtf2(f32 x) { return std::sqrtf(x); }
 
 /*
  * --INFO--
@@ -38,21 +28,7 @@ void cosf2(f32)
  * Address:	8000DCC0
  * Size:	000024
  */
-void atanf2(f32, f32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x20DA1C
-	  frsp      f1, f1
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+f32 atanf2(f32 x, f32 y) { return atan2(x, y); }
 
 /*
  * --INFO--
@@ -71,6 +47,9 @@ void sinf2(f32)
  */
 void Jac_InitSinTable()
 {
+	for (u32 i = 0; i < 257; i++) {
+		SINTABLE[i] = sinf(HALF_PI * f32(i) * 0.00390625f);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -117,22 +96,4 @@ void Jac_InitSinTable()
  * Address:	8000DDA0
  * Size:	000034
  */
-void sinf3(f32)
-{
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  lis       r3, 0x8031
-	  subi      r0, r3, 0x2520
-	  lfs       f0, -0x7F38(r2)
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x10(r1)
-	  lwz       r3, 0x14(r1)
-	  rlwinm    r3,r3,2,0,29
-	  add       r3, r0, r3
-	  lfs       f1, 0x0(r3)
-	  addi      r1, r1, 0x18
-	  blr
-	*/
-}
+f32 sinf3(f32 x) { return SINTABLE[int(256.0f * x)]; }

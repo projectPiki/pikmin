@@ -1,4 +1,4 @@
-#include "types.h"
+#include "jaudio/driverinterface.h"
 
 typedef struct jc_ jc_;
 typedef struct jcs_ jcs_;

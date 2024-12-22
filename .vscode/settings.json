@@ -29,6 +29,11 @@
         "rate.h": "c",
         "hw_regs.h": "c",
         "pikibgm.h": "c",
-        "ai.h": "c"
+        "ai.h": "c",
+        "audiostruct.h": "c",
+        "stackchecker.h": "c",
+        "dvdthread.h": "c",
+        "ipldec.h": "c",
+        "dsp.h": "c"
     },
 }
