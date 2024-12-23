@@ -1,5 +1,5 @@
-#ifndef _MATH_H
-#define _MATH_H
+#ifndef _STL_MATH_H
+#define _STL_MATH_H
 
 #include "types.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
@@ -44,9 +44,12 @@ f64 tan(f64);
 f32 tanf(f32);
 
 f64 acos(f64);
+f32 acosf(f32);
 f64 asin(f64);
 f64 atan(f64);
+f32 atanf(f32);
 f64 atan2(f64, f64);
+f32 atan2f(f32, f32);
 
 f64 ceil(f64);
 f64 floor(f64);

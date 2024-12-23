@@ -2,6 +2,8 @@
 #include "math.h"
 #include "Plane.h"
 #include "Camera.h"
+#include "Matrix3f.h"
+#include "stl/math.h"
 #include "Collision.h"
 #include "BoundBox.h"
 #include "KMath.h"
@@ -93,59 +95,29 @@ void Plane::frictionVector(Vector3f&, f32)
  */
 void CullingPlane::CheckMinMaxDir()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x24
-	  li        r0, 0x3
-	  stw       r0, 0x10(r3)
-	  li        r0, 0
-	  stw       r0, 0x1C(r3)
-	  b         .loc_0x34
+	if (_00.x < 0.0f) {
+		_10 = 3;
+		_1C = 0;
+	} else {
+		_10 = 0;
+		_1C = 3;
+	}
 
-	.loc_0x24:
-	  li        r0, 0
-	  stw       r0, 0x10(r3)
-	  li        r0, 0x3
-	  stw       r0, 0x1C(r3)
+	if (_00.y < 0.0f) {
+		_14 = 4;
+		_20 = 1;
+	} else {
+		_14 = 1;
+		_20 = 4;
+	}
 
-	.loc_0x34:
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x58
-	  li        r0, 0x4
-	  stw       r0, 0x14(r3)
-	  li        r0, 0x1
-	  stw       r0, 0x20(r3)
-	  b         .loc_0x68
-
-	.loc_0x58:
-	  li        r0, 0x1
-	  stw       r0, 0x14(r3)
-	  li        r0, 0x4
-	  stw       r0, 0x20(r3)
-
-	.loc_0x68:
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x8C
-	  li        r0, 0x5
-	  stw       r0, 0x18(r3)
-	  li        r0, 0x2
-	  stw       r0, 0x24(r3)
-	  blr
-
-	.loc_0x8C:
-	  li        r0, 0x2
-	  stw       r0, 0x18(r3)
-	  li        r0, 0x5
-	  stw       r0, 0x24(r3)
-	  blr
-	*/
+	if (_00.z < 0.0f) {
+		_18 = 5;
+		_24 = 2;
+	} else {
+		_18 = 2;
+		_24 = 5;
+	}
 }
 
 /*
@@ -163,54 +135,14 @@ void Vector3f::rotateTranspose(Matrix4f&)
  * Address: 8003760C
  * Size:    0000AC
  */
-void Vector3f::rotate(Matrix4f&)
+void Vector3f::rotate(Matrix4f& mtx)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  lfs       f0, -0x7C60(r2)
-	  stfs      f0, 0x18(r1)
-	  stfs      f0, 0x14(r1)
-	  stfs      f0, 0x10(r1)
-	  lfs       f1, 0x0(r4)
-	  lfs       f4, 0x0(r3)
-	  lfs       f0, 0x4(r4)
-	  lfs       f3, 0x4(r3)
-	  fmuls     f1, f1, f4
-	  lfs       f2, 0x8(r4)
-	  fmuls     f0, f0, f3
-	  lfs       f5, 0x8(r3)
-	  fmuls     f2, f2, f5
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x10(r1)
-	  lfs       f1, 0x10(r4)
-	  lfs       f0, 0x14(r4)
-	  lfs       f2, 0x18(r4)
-	  fmuls     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fmuls     f2, f2, f5
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x14(r1)
-	  lfs       f1, 0x20(r4)
-	  lfs       f0, 0x24(r4)
-	  lfs       f2, 0x28(r4)
-	  fmuls     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fmuls     f2, f2, f5
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x18(r1)
-	  lwz       r4, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r4, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  lwz       r0, 0x18(r1)
-	  stw       r0, 0x8(r3)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	Vector3f vec;
+	vec.x = mtx.mMtx[0][0] * x + mtx.mMtx[0][1] * y + mtx.mMtx[0][2] * z;
+	vec.y = mtx.mMtx[1][0] * x + mtx.mMtx[1][1] * y + mtx.mMtx[1][2] * z;
+	vec.z = mtx.mMtx[2][0] * x + mtx.mMtx[2][1] * y + mtx.mMtx[2][2] * z;
+
+	*this = vec;
 }
 
 /*
@@ -218,48 +150,11 @@ void Vector3f::rotate(Matrix4f&)
  * Address: 800376B8
  * Size:    000094
  */
-void Vector3f::rotateTo(Matrix4f&, Vector3f&)
+void Vector3f::rotateTo(Matrix4f& mtx, Vector3f& outVec)
 {
-	/*
-	.loc_0x0:
-	  lfs       f3, 0x0(r4)
-	  lfs       f2, 0x0(r3)
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x8(r4)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r3)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x0(r5)
-	  lfs       f3, 0x10(r4)
-	  lfs       f2, 0x0(r3)
-	  lfs       f1, 0x14(r4)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x18(r4)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r3)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4(r5)
-	  lfs       f3, 0x20(r4)
-	  lfs       f2, 0x0(r3)
-	  lfs       f1, 0x24(r4)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x28(r4)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r3)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x8(r5)
-	  blr
-	*/
+	outVec.x = mtx.mMtx[0][0] * x + mtx.mMtx[0][1] * y + mtx.mMtx[0][2] * z;
+	outVec.y = mtx.mMtx[1][0] * x + mtx.mMtx[1][1] * y + mtx.mMtx[1][2] * z;
+	outVec.z = mtx.mMtx[2][0] * x + mtx.mMtx[2][1] * y + mtx.mMtx[2][2] * z;
 }
 
 /*
@@ -267,60 +162,13 @@ void Vector3f::rotateTo(Matrix4f&, Vector3f&)
  * Address: 8003774C
  * Size:    0000C4
  */
-void Vector3f::multMatrix(Matrix4f&)
+void Vector3f::multMatrix(Matrix4f& mtx)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  lfs       f0, -0x7C60(r2)
-	  stfs      f0, 0x18(r1)
-	  stfs      f0, 0x14(r1)
-	  stfs      f0, 0x10(r1)
-	  lfs       f1, 0x0(r4)
-	  lfs       f5, 0x0(r3)
-	  lfs       f0, 0x4(r4)
-	  lfs       f4, 0x4(r3)
-	  fmuls     f1, f1, f5
-	  lfs       f2, 0x8(r4)
-	  fmuls     f0, f0, f4
-	  lfs       f6, 0x8(r3)
-	  lfs       f3, 0xC(r4)
-	  fmuls     f2, f2, f6
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x10(r1)
-	  lfs       f1, 0x10(r4)
-	  lfs       f0, 0x14(r4)
-	  lfs       f2, 0x18(r4)
-	  fmuls     f1, f1, f5
-	  fmuls     f0, f0, f4
-	  lfs       f3, 0x1C(r4)
-	  fmuls     f2, f2, f6
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x14(r1)
-	  lfs       f1, 0x20(r4)
-	  lfs       f0, 0x24(r4)
-	  lfs       f2, 0x28(r4)
-	  fmuls     f1, f1, f5
-	  fmuls     f0, f0, f4
-	  lfs       f3, 0x2C(r4)
-	  fmuls     f2, f2, f6
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x18(r1)
-	  lwz       r4, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r4, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  lwz       r0, 0x18(r1)
-	  stw       r0, 0x8(r3)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	Vector3f vec;
+	vec.x = mtx.mMtx[0][0] * x + mtx.mMtx[0][1] * y + mtx.mMtx[0][2] * z + mtx.mMtx[0][3];
+	vec.y = mtx.mMtx[1][0] * x + mtx.mMtx[1][1] * y + mtx.mMtx[1][2] * z + mtx.mMtx[1][3];
+	vec.z = mtx.mMtx[2][0] * x + mtx.mMtx[2][1] * y + mtx.mMtx[2][2] * z + mtx.mMtx[2][3];
+	*this = vec;
 }
 
 /*
@@ -328,54 +176,11 @@ void Vector3f::multMatrix(Matrix4f&)
  * Address: 80037810
  * Size:    0000AC
  */
-void Vector3f::multMatrixTo(Matrix4f&, Vector3f&)
+void Vector3f::multMatrixTo(Matrix4f& mtx, Vector3f& outVec)
 {
-	/*
-	.loc_0x0:
-	  lfs       f3, 0x0(r4)
-	  lfs       f2, 0x0(r3)
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x8(r4)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r3)
-	  lfs       f4, 0xC(r4)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  fadds     f0, f4, f0
-	  stfs      f0, 0x0(r5)
-	  lfs       f3, 0x10(r4)
-	  lfs       f2, 0x0(r3)
-	  lfs       f1, 0x14(r4)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x18(r4)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r3)
-	  lfs       f4, 0x1C(r4)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  fadds     f0, f4, f0
-	  stfs      f0, 0x4(r5)
-	  lfs       f3, 0x20(r4)
-	  lfs       f2, 0x0(r3)
-	  lfs       f1, 0x24(r4)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x28(r4)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r3)
-	  lfs       f4, 0x2C(r4)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  fadds     f0, f4, f0
-	  stfs      f0, 0x8(r5)
-	  blr
-	*/
+	outVec.x = mtx.mMtx[0][0] * x + mtx.mMtx[0][1] * y + mtx.mMtx[0][2] * z + mtx.mMtx[0][3];
+	outVec.y = mtx.mMtx[1][0] * x + mtx.mMtx[1][1] * y + mtx.mMtx[1][2] * z + mtx.mMtx[1][3];
+	outVec.z = mtx.mMtx[2][0] * x + mtx.mMtx[2][1] * y + mtx.mMtx[2][2] * z + mtx.mMtx[2][3];
 }
 
 /*
@@ -403,372 +208,83 @@ void Vector3f::rotateInverse(Quat&)
  * Address: 800378BC
  * Size:    0004E4
  */
-void Quat::fromMat3f(Matrix3f&)
+void Quat::fromMat3f(Matrix3f& mtx)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x28(r1)
-	  lfs       f4, 0x0(r4)
-	  lfs       f0, 0x10(r4)
-	  lfs       f2, 0x20(r4)
-	  fadds     f7, f4, f0
-	  lfs       f5, -0x7C5C(r2)
-	  fadds     f1, f0, f2
-	  lfs       f3, -0x7C50(r2)
-	  fadds     f0, f2, f4
-	  fadds     f4, f2, f7
-	  lfs       f6, -0x7C54(r2)
-	  fmuls     f2, f3, f1
-	  fmuls     f1, f3, f0
-	  fadds     f4, f5, f4
-	  fmuls     f0, f3, f7
-	  fmuls     f4, f6, f4
-	  fsubs     f2, f4, f2
-	  fsubs     f6, f4, f1
-	  fsubs     f7, f4, f0
-	  fcmpo     cr0, f4, f2
-	  fmr       f5, f2
-	  ble-      .loc_0x90
-	  fcmpo     cr0, f4, f6
-	  ble-      .loc_0x78
-	  fcmpo     cr0, f4, f7
-	  ble-      .loc_0x70
-	  li        r0, 0
-	  b         .loc_0xC4
+	f32 diag = mtx.mMtx[0] + mtx.mMtx[4] + mtx.mMtx[8];
+	f32 a    = 0.25f * (1.0f + diag);                  // f4
+	f32 b    = a - 0.5f * (mtx.mMtx[4] + mtx.mMtx[8]); // f2, f5
+	f32 c    = a - 0.5f * (mtx.mMtx[8] + mtx.mMtx[0]); // f6
+	f32 d    = a - 0.5f * (mtx.mMtx[0] + mtx.mMtx[4]); // f7
 
-	.loc_0x70:
-	  li        r0, 0x3
-	  b         .loc_0xC4
+	int type;
+	if (a > b) {
+		if (a > c) {
+			if (a > d) {
+				type = 0;
+			} else {
+				type = 3;
+			}
+		} else if (c > d) {
+			type = 2;
+		} else {
+			type = 3;
+		}
+	} else if (b > c) {
+		if (b > d) {
+			type = 1;
+		} else {
+			type = 3;
+		}
+	} else if (c > d) {
+		type = 2;
+	} else {
+		type = 3;
+	}
 
-	.loc_0x78:
-	  fcmpo     cr0, f6, f7
-	  ble-      .loc_0x88
-	  li        r0, 0x2
-	  b         .loc_0xC4
+	switch (type) {
+	case 0: {
+		s     = std::sqrtf(a);
+		f32 t = 1.0f / s;
+		v.x   = t * (mtx.mMtx[7] - mtx.mMtx[5]);
+		v.y   = t * (mtx.mMtx[2] - mtx.mMtx[6]);
+		v.z   = t * (mtx.mMtx[3] - mtx.mMtx[1]);
+	} break;
+	case 1: {
+		v.x   = std::sqrtf(b);
+		f32 t = 1.0f / v.x;
+		s     = t * (mtx.mMtx[7] - mtx.mMtx[5]);
+		v.y   = t * (mtx.mMtx[1] + mtx.mMtx[3]);
+		v.z   = t * (mtx.mMtx[2] + mtx.mMtx[6]);
+	} break;
+	case 2: {
+		v.y   = std::sqrtf(c);
+		f32 t = 1.0f / v.y;
+		s     = t * (mtx.mMtx[2] - mtx.mMtx[6]);
+		v.z   = t * (mtx.mMtx[5] + mtx.mMtx[7]);
+		v.x   = t * (mtx.mMtx[3] + mtx.mMtx[1]);
+	} break;
+	case 3: {
+		v.z   = std::sqrtf(d);
+		f32 t = 1.0f / v.z;
+		s     = t * (mtx.mMtx[3] - mtx.mMtx[1]);
+		v.x   = t * (mtx.mMtx[6] + mtx.mMtx[2]);
+		v.y   = t * (mtx.mMtx[7] + mtx.mMtx[5]);
+	} break;
+	}
 
-	.loc_0x88:
-	  li        r0, 0x3
-	  b         .loc_0xC4
+	if (s < 0.0f) {
+		s   = -s;
+		v.x = -v.x;
+		v.y = -v.y;
+		v.z = -v.z;
+	}
 
-	.loc_0x90:
-	  fcmpo     cr0, f5, f6
-	  ble-      .loc_0xB0
-	  fcmpo     cr0, f5, f7
-	  ble-      .loc_0xA8
-	  li        r0, 0x1
-	  b         .loc_0xC4
+	f32 n = 1.0f / std::sqrtf(SQUARE(s) + SQUARE(v.x) + SQUARE(v.y) + SQUARE(v.z));
 
-	.loc_0xA8:
-	  li        r0, 0x3
-	  b         .loc_0xC4
-
-	.loc_0xB0:
-	  fcmpo     cr0, f6, f7
-	  ble-      .loc_0xC0
-	  li        r0, 0x2
-	  b         .loc_0xC4
-
-	.loc_0xC0:
-	  li        r0, 0x3
-
-	.loc_0xC4:
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x264
-	  bge-      .loc_0xE0
-	  cmpwi     r0, 0
-	  beq-      .loc_0xEC
-	  bge-      .loc_0x1A8
-	  b         .loc_0x3D8
-
-	.loc_0xE0:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x3D8
-	  b         .loc_0x320
-
-	.loc_0xEC:
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x154
-	  fsqrte    f1, f4
-	  lfd       f3, -0x7C48(r2)
-	  lfd       f2, -0x7C40(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x20(r1)
-	  lfs       f0, 0x20(r1)
-	  b         .loc_0x158
-
-	.loc_0x154:
-	  fmr       f0, f4
-
-	.loc_0x158:
-	  stfs      f0, 0xC(r3)
-	  lfs       f2, -0x7C54(r2)
-	  lfs       f0, 0xC(r3)
-	  lfs       f1, 0x1C(r4)
-	  fdivs     f2, f2, f0
-	  lfs       f0, 0x14(r4)
-	  fsubs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x0(r3)
-	  lfs       f1, 0x8(r4)
-	  lfs       f0, 0x18(r4)
-	  fsubs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x4(r3)
-	  lfs       f1, 0xC(r4)
-	  lfs       f0, 0x4(r4)
-	  fsubs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x8(r3)
-	  b         .loc_0x3D8
-
-	.loc_0x1A8:
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f5, f0
-	  ble-      .loc_0x210
-	  fsqrte    f1, f5
-	  lfd       f3, -0x7C48(r2)
-	  lfd       f2, -0x7C40(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f5, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f5, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f5, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f5, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, 0x1C(r1)
-	  b         .loc_0x214
-
-	.loc_0x210:
-	  fmr       f0, f5
-
-	.loc_0x214:
-	  stfs      f0, 0x0(r3)
-	  lfs       f2, -0x7C54(r2)
-	  lfs       f0, 0x0(r3)
-	  lfs       f1, 0x1C(r4)
-	  fdivs     f2, f2, f0
-	  lfs       f0, 0x14(r4)
-	  fsubs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0xC(r3)
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0xC(r4)
-	  fadds     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x4(r3)
-	  lfs       f1, 0x8(r4)
-	  lfs       f0, 0x18(r4)
-	  fadds     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x8(r3)
-	  b         .loc_0x3D8
-
-	.loc_0x264:
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f6, f0
-	  ble-      .loc_0x2CC
-	  fsqrte    f1, f6
-	  lfd       f3, -0x7C48(r2)
-	  lfd       f2, -0x7C40(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f6, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f6, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f6, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f6, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x18(r1)
-	  lfs       f0, 0x18(r1)
-	  b         .loc_0x2D0
-
-	.loc_0x2CC:
-	  fmr       f0, f6
-
-	.loc_0x2D0:
-	  stfs      f0, 0x4(r3)
-	  lfs       f2, -0x7C54(r2)
-	  lfs       f0, 0x4(r3)
-	  lfs       f1, 0x8(r4)
-	  fdivs     f2, f2, f0
-	  lfs       f0, 0x18(r4)
-	  fsubs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0xC(r3)
-	  lfs       f1, 0x14(r4)
-	  lfs       f0, 0x1C(r4)
-	  fadds     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x8(r3)
-	  lfs       f1, 0xC(r4)
-	  lfs       f0, 0x4(r4)
-	  fadds     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x0(r3)
-	  b         .loc_0x3D8
-
-	.loc_0x320:
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f7, f0
-	  ble-      .loc_0x388
-	  fsqrte    f1, f7
-	  lfd       f3, -0x7C48(r2)
-	  lfd       f2, -0x7C40(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f7, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f7, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f7, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f7, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x14(r1)
-	  lfs       f0, 0x14(r1)
-	  b         .loc_0x38C
-
-	.loc_0x388:
-	  fmr       f0, f7
-
-	.loc_0x38C:
-	  stfs      f0, 0x8(r3)
-	  lfs       f2, -0x7C54(r2)
-	  lfs       f0, 0x8(r3)
-	  lfs       f1, 0xC(r4)
-	  fdivs     f2, f2, f0
-	  lfs       f0, 0x4(r4)
-	  fsubs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0xC(r3)
-	  lfs       f1, 0x18(r4)
-	  lfs       f0, 0x8(r4)
-	  fadds     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x0(r3)
-	  lfs       f1, 0x1C(r4)
-	  lfs       f0, 0x14(r4)
-	  fadds     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x4(r3)
-
-	.loc_0x3D8:
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x414
-	  fneg      f0, f1
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, 0x0(r3)
-	  fneg      f0, f0
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fneg      f0, f0
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fneg      f0, f0
-	  stfs      f0, 0x8(r3)
-
-	.loc_0x414:
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x0(r3)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x4(r3)
-	  fmuls     f0, f0, f0
-	  lfs       f3, 0x8(r3)
-	  fmuls     f2, f2, f2
-	  fadds     f1, f1, f0
-	  lfs       f0, -0x7C60(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x4A4
-	  fsqrte    f1, f4
-	  lfd       f3, -0x7C48(r2)
-	  lfd       f2, -0x7C40(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x10(r1)
-	  lfs       f4, 0x10(r1)
-
-	.loc_0x4A4:
-	  lfs       f1, -0x7C5C(r2)
-	  lfs       f0, 0xC(r3)
-	  fdivs     f1, f1, f4
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, 0x0(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x8(r3)
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	s *= n;
+	v.x *= n;
+	v.y *= n;
+	v.z *= n;
 }
 
 /*
@@ -776,54 +292,15 @@ void Quat::fromMat3f(Matrix3f&)
  * Address: 80037DA0
  * Size:    0000A4
  */
-void Quat::rotate(Vector3f&, f32)
+void Quat::rotate(Vector3f& axis, f32 angle)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stfd      f31, 0x38(r1)
-	  stfd      f30, 0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r3, 0
-	  lfs       f0, -0x7C50(r2)
-	  fmuls     f30, f0, f1
-	  fmr       f1, f30
-	  bl        0x1E3F18
-	  fmr       f31, f1
-	  fmr       f1, f30
-	  bl        0x1E3D78
-	  lfs       f4, 0x8(r31)
-	  mr        r3, r30
-	  lfs       f3, 0x4(r31)
-	  addi      r4, r1, 0x14
-	  lfs       f2, 0x0(r31)
-	  lfs       f0, -0x7C60(r2)
-	  fmuls     f3, f3, f31
-	  fmuls     f2, f2, f31
-	  stfs      f0, 0x1C(r1)
-	  fmuls     f4, f4, f31
-	  stfs      f0, 0x18(r1)
-	  stfs      f0, 0x14(r1)
-	  stfs      f2, 0x14(r1)
-	  stfs      f3, 0x18(r1)
-	  stfs      f4, 0x1C(r1)
-	  stfs      f1, 0x20(r1)
-	  bl        .loc_0xA4
-	  lwz       r0, 0x44(r1)
-	  lfd       f31, 0x38(r1)
-	  lfd       f30, 0x30(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
+	f32 theta  = 0.5f * angle;
+	f32 sinVal = sinf(theta);
+	f32 cosVal = cosf(theta);
 
-	.loc_0xA4:
-	*/
+	Quat quat(axis.x * sinVal, axis.y * sinVal, axis.z * sinVal, cosVal);
+
+	multiply(quat);
 }
 
 /*
@@ -831,70 +308,14 @@ void Quat::rotate(Vector3f&, f32)
  * Address: 80037E44
  * Size:    0000EC
  */
-void Quat::multiply(Quat&)
+void Quat::multiply(Quat& other)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x30(r1)
-	  stfd      f31, 0x28(r1)
-	  stfd      f30, 0x20(r1)
-	  lfs       f0, -0x7C60(r2)
-	  stfs      f0, 0x18(r1)
-	  stfs      f0, 0x14(r1)
-	  stfs      f0, 0x10(r1)
-	  lfs       f11, 0xC(r4)
-	  lfs       f8, 0xC(r3)
-	  lfs       f9, 0x0(r4)
-	  lfs       f10, 0x0(r3)
-	  fmuls     f3, f11, f8
-	  lfs       f13, 0x4(r4)
-	  fmuls     f0, f9, f8
-	  fmuls     f2, f9, f10
-	  lfs       f31, 0x4(r3)
-	  lfs       f12, 0x8(r3)
-	  fmuls     f1, f11, f10
-	  fsubs     f7, f3, f2
-	  fmuls     f4, f13, f31
-	  lfs       f30, 0x8(r4)
-	  fadds     f5, f1, f0
-	  fmuls     f6, f13, f12
-	  fsubs     f7, f7, f4
-	  fmuls     f4, f30, f12
-	  fadds     f6, f6, f5
-	  fmuls     f5, f30, f31
-	  fsubs     f7, f7, f4
-	  fmuls     f3, f11, f31
-	  fmuls     f2, f13, f8
-	  fmuls     f1, f11, f12
-	  stfs      f7, 0x1C(r1)
-	  fmuls     f0, f30, f8
-	  fadds     f3, f3, f2
-	  fmuls     f4, f30, f10
-	  fsubs     f5, f6, f5
-	  fmuls     f2, f9, f31
-	  fadds     f0, f1, f0
-	  fadds     f4, f4, f3
-	  stfs      f5, 0x10(r1)
-	  fmuls     f3, f9, f12
-	  fadds     f1, f2, f0
-	  fmuls     f0, f13, f10
-	  fsubs     f2, f4, f3
-	  fsubs     f0, f1, f0
-	  stfs      f2, 0x14(r1)
-	  stfs      f0, 0x18(r1)
-	  lwz       r4, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r4, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  lwz       r4, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lfd       f31, 0x28(r1)
-	  lfd       f30, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  blr
-	*/
+	Quat tmp;
+	tmp.s   = other.s * s - other.v.x * v.x - other.v.y * v.y - other.v.z * v.z;
+	tmp.v.x = (other.v.y * v.z + (other.s * v.x + other.v.x * s)) - other.v.z * v.y;
+	tmp.v.y = (other.v.z * v.x + (other.s * v.y + other.v.y * s)) - other.v.x * v.z;
+	tmp.v.z = (other.v.x * v.y + (other.s * v.z + other.v.z * s)) - other.v.y * v.x;
+	*this   = tmp;
 }
 
 /*
@@ -914,64 +335,11 @@ void Quat::multiplyTo(Quat&, Quat&)
  */
 void Quat::normalise()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x10(r1)
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x8(r3)
-	  fmuls     f0, f0, f0
-	  lfs       f3, 0xC(r3)
-	  fmuls     f2, f2, f2
-	  fadds     f1, f1, f0
-	  lfs       f0, -0x7C60(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x94
-	  fsqrte    f1, f4
-	  lfd       f3, -0x7C48(r2)
-	  lfd       f2, -0x7C40(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0xC(r1)
-	  lfs       f4, 0xC(r1)
-
-	.loc_0x94:
-	  lfs       f1, -0x7C5C(r2)
-	  lfs       f0, 0x0(r3)
-	  fdivs     f1, f1, f4
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, 0xC(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xC(r3)
-	  addi      r1, r1, 0x10
-	  blr
-	*/
+	f32 factor = 1.0f / std::sqrtf(v.x * v.x + v.y * v.y + v.z * v.z + s * s);
+	v.x *= factor;
+	v.y *= factor;
+	v.z *= factor;
+	s *= factor;
 }
 
 /*
@@ -979,43 +347,19 @@ void Quat::normalise()
  * Address: 80038004
  * Size:    000080
  */
-void Quat::genVectorX(Vector3f&)
+void Quat::genVectorX(Vector3f& outVec)
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fmuls     f1, f1, f1
-	  lfs       f4, -0x7C58(r2)
-	  fmuls     f0, f0, f0
-	  lfs       f2, -0x7C5C(r2)
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f4, f0
-	  fsubs     f1, f2, f1
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x0(r4)
-	  lfs       f3, 0x0(r3)
-	  lfs       f2, 0x4(r3)
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x8(r3)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fmuls     f1, f4, f2
-	  fmuls     f0, f4, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4(r4)
-	  lfs       f3, 0x0(r3)
-	  lfs       f2, 0x8(r3)
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fmuls     f1, f4, f2
-	  fmuls     f0, f4, f0
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x8(r4)
-	  blr
-	*/
+	f32 yy   = v.y * v.y;
+	f32 zz   = v.z * v.z;
+	outVec.x = (1.0f - 2.0f * yy) - (2.0f * zz);
+
+	f32 xy   = v.x * v.y;
+	f32 sz   = s * v.z;
+	outVec.y = 2.0f * xy + 2.0f * sz;
+
+	f32 xz   = v.x * v.z;
+	f32 sy   = s * v.y;
+	outVec.z = 2.0f * xz - 2.0f * sy;
 }
 
 /*
@@ -1023,43 +367,19 @@ void Quat::genVectorX(Vector3f&)
  * Address: 80038084
  * Size:    000080
  */
-void Quat::genVectorY(Vector3f&)
+void Quat::genVectorY(Vector3f& outVec)
 {
-	/*
-	.loc_0x0:
-	  lfs       f3, 0x0(r3)
-	  lfs       f2, 0x4(r3)
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x8(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f4, -0x7C58(r2)
-	  fmuls     f0, f1, f0
-	  fmuls     f1, f4, f2
-	  fmuls     f0, f4, f0
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x0(r4)
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, 0x8(r3)
-	  fmuls     f1, f1, f1
-	  lfs       f2, -0x7C5C(r2)
-	  fmuls     f0, f0, f0
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f4, f0
-	  fsubs     f1, f2, f1
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4(r4)
-	  lfs       f3, 0x4(r3)
-	  lfs       f2, 0x8(r3)
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x0(r3)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fmuls     f1, f4, f2
-	  fmuls     f0, f4, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x8(r4)
-	  blr
-	*/
+	f32 xy   = v.x * v.y;
+	f32 sz   = s * v.z;
+	outVec.x = 2.0f * xy - 2.0f * sz;
+
+	f32 xx   = v.x * v.x;
+	f32 zz   = v.z * v.z;
+	outVec.y = (1.0f - 2.0f * xx) - (2.0f * zz);
+
+	f32 yz   = v.y * v.z;
+	f32 sx   = s * v.x;
+	outVec.z = 2.0f * yz + 2.0f * sx;
 }
 
 /*
@@ -1067,43 +387,19 @@ void Quat::genVectorY(Vector3f&)
  * Address: 80038104
  * Size:    000080
  */
-void Quat::genVectorZ(Vector3f&)
+void Quat::genVectorZ(Vector3f& outVec)
 {
-	/*
-	.loc_0x0:
-	  lfs       f3, 0x0(r3)
-	  lfs       f2, 0x8(r3)
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f4, -0x7C58(r2)
-	  fmuls     f0, f1, f0
-	  fmuls     f1, f4, f2
-	  fmuls     f0, f4, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x0(r4)
-	  lfs       f3, 0x4(r3)
-	  lfs       f2, 0x8(r3)
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x0(r3)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fmuls     f1, f4, f2
-	  fmuls     f0, f4, f0
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4(r4)
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f1, f1, f1
-	  lfs       f2, -0x7C5C(r2)
-	  fmuls     f0, f0, f0
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f4, f0
-	  fsubs     f1, f2, f1
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x8(r4)
-	  blr
-	*/
+	f32 xz   = v.x * v.z;
+	f32 sy   = s * v.y;
+	outVec.x = 2.0f * xz + 2.0f * sy;
+
+	f32 yz   = v.y * v.z;
+	f32 sx   = s * v.x;
+	outVec.y = 2.0f * yz - 2.0f * sx;
+
+	f32 xx   = v.x * v.x;
+	f32 yy   = v.y * v.y;
+	outVec.z = (1.0f - 2.0f * xx) - (2.0f * yy);
 }
 
 /*
@@ -1111,110 +407,36 @@ void Quat::genVectorZ(Vector3f&)
  * Address: 80038184
  * Size:    000164
  */
-void Quat::slerp(Quat&, f32, int)
+void Quat::slerp(Quat& other, f32 t, int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stfd      f31, 0x38(r1)
-	  stfd      f30, 0x30(r1)
-	  fmr       f30, f1
-	  stfd      f29, 0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  mr        r30, r4
-	  stw       r29, 0x1C(r1)
-	  mr        r29, r3
-	  lfs       f4, 0x0(r3)
-	  lfs       f3, 0x0(r4)
-	  lfs       f2, 0x4(r3)
-	  lfs       f1, 0x4(r4)
-	  fmuls     f3, f4, f3
-	  lfs       f4, 0x8(r3)
-	  fmuls     f1, f2, f1
-	  lfs       f2, 0x8(r4)
-	  lfs       f6, 0xC(r3)
-	  fmuls     f2, f4, f2
-	  lfs       f5, 0xC(r4)
-	  fadds     f1, f3, f1
-	  lfd       f0, -0x7C38(r2)
-	  fmuls     f3, f6, f5
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x84
-	  fneg      f1, f1
-	  li        r31, 0x1
-	  b         .loc_0x88
+	f32 dot = v.x * other.v.x + v.y * other.v.y + v.z * other.v.z + s * other.s;
+	BOOL isNegative;
+	if (dot < 0.0) {
+		dot        = -dot;
+		isNegative = TRUE;
+	} else {
+		isNegative = FALSE;
+	}
 
-	.loc_0x84:
-	  li        r31, 0
+	f32 tComp;
+	if (1.0f - dot < 0.000001) {
+		tComp = 1.0f - t;
+	} else {
+		f32 acosVal = acosf(dot);
+		f32 sinVal  = sinf(acosVal);
+		f32 ang     = t * acosVal;
+		tComp       = sinf(acosVal - ang) / sinVal;
+		t           = sinf(ang) / sinVal;
+	}
 
-	.loc_0x88:
-	  lfs       f3, -0x7C5C(r2)
-	  lfd       f0, -0x7C30(r2)
-	  fsubs     f2, f3, f1
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0xA4
-	  fsubs     f31, f3, f30
-	  b         .loc_0xD0
+	if (isNegative) {
+		t = -t;
+	}
 
-	.loc_0xA4:
-	  bl        0x1E378C
-	  fmr       f31, f1
-	  bl        0x1E3AB8
-	  fmuls     f29, f30, f31
-	  fmr       f30, f1
-	  fsubs     f1, f31, f29
-	  bl        0x1E3AA8
-	  fdivs     f31, f1, f30
-	  fmr       f1, f29
-	  bl        0x1E3A9C
-	  fdivs     f30, f1, f30
-
-	.loc_0xD0:
-	  cmpwi     r31, 0
-	  beq-      .loc_0xDC
-	  fneg      f30, f30
-
-	.loc_0xDC:
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f30, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x0(r29)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r30)
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f30, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4(r29)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x8(r30)
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f30, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x8(r29)
-	  lfs       f1, 0xC(r29)
-	  lfs       f0, 0xC(r30)
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f30, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r29)
-	  lwz       r0, 0x44(r1)
-	  lfd       f31, 0x38(r1)
-	  lfd       f30, 0x30(r1)
-	  lfd       f29, 0x28(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	v.x = tComp * v.x + t * other.v.x;
+	v.y = tComp * v.y + t * other.v.y;
+	v.z = tComp * v.z + t * other.v.z;
+	s   = tComp * s + t * other.s;
 }
 
 /*
@@ -1222,8 +444,22 @@ void Quat::slerp(Quat&, f32, int)
  * Address: 800382E8
  * Size:    0002A0
  */
-void Quat::fromEuler(Vector3f&)
+void Quat::fromEuler(Vector3f& angles)
 {
+	f32 psi   = 0.5f * angles.x;
+	f32 theta = 0.5f * angles.y;
+	f32 phi   = 0.5f * angles.z;
+
+	f32 sinPsi = sinf(psi); // f30
+	f32 cosPsi = cosf(psi); // f27
+
+	f32 sinTheta = sinf(theta); // f28
+	f32 cosTheta = cosf(theta); // f29
+
+	f32 sinPhi = sinf(phi); // f31
+	f32 cosPhi = cosf(phi); // f1
+
+	normalise();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1415,22 +651,6 @@ f32 roundAng(f32 x)
 	}
 
 	return x;
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x14
-	  lfs       f0, -0x7C28(r2)
-	  fadds     f1, f1, f0
-
-	.loc_0x14:
-	  lfs       f0, -0x7C28(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bnelr-
-	  fsubs     f1, f1, f0
-	  blr
-	*/
 }
 
 /*
@@ -1438,48 +658,14 @@ f32 roundAng(f32 x)
  * Address: 800385B4
  * Size:    000074
  */
-f32 angDist(f32, f32)
+f32 angDist(f32 angle1, f32 angle2)
 {
-	/*
-	.loc_0x0:
-	  fsubs     f2, f1, f2
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x18
-	  lfs       f0, -0x7C28(r2)
-	  fadds     f2, f2, f0
+	f32 angle = roundAng(angle1 - angle2);
 
-	.loc_0x18:
-	  lfs       f0, -0x7C28(r2)
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x2C
-	  fsubs     f2, f2, f0
-
-	.loc_0x2C:
-	  lfs       f0, -0x7C24(r2)
-	  fmr       f1, f2
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0x1, 0x2
-	  bnelr-
-	  lfs       f1, -0x7C28(r2)
-	  lfs       f0, -0x7C60(r2)
-	  fsubs     f2, f1, f2
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x58
-	  fadds     f2, f2, f1
-
-	.loc_0x58:
-	  lfs       f0, -0x7C28(r2)
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x6C
-	  fsubs     f2, f2, f0
-
-	.loc_0x6C:
-	  fneg      f1, f2
-	  blr
-	*/
+	if (angle >= PI) {
+		angle = -roundAng(TAU - angle);
+	}
+	return angle;
 }
 
 /*
@@ -1487,48 +673,21 @@ f32 angDist(f32, f32)
  * Address: 80038628
  * Size:    000050
  */
-f32 qdist2(f32, f32, f32, f32)
+f32 qdist2(f32 x0, f32 y0, f32 x1, f32 y1)
 {
-	// f32 differenceX         = point2X - point1X;
-	// f32 absoluteDifferenceX = (differenceX < 0.0f) ? -differenceX : differenceX;
+	x1 -= x0;
+	if (x1 < 0.0f) {
+		x1 = -x1;
+	}
 
-	// f32 differenceY         = point2Y - point1Y;
-	// f32 absoluteDifferenceY = (differenceY < 0.0f) ? -differenceY : differenceY;
+	y1 -= y0;
+	if (y1 < 0.0f) {
+		y1 = -y1;
+	}
 
-	// f32 minimumDifference = (absoluteDifferenceX <= absoluteDifferenceY) ? absoluteDifferenceX : absoluteDifferenceY;
+	f32 min = (x1 > y1) ? y1 : x1;
 
-	// return absoluteDifferenceX + absoluteDifferenceY - minimumDifference * 0.5f;
-	/*
-	.loc_0x0:
-	  fsubs     f3, f3, f1
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f3, f0
-	  bge-      .loc_0x14
-	  fneg      f3, f3
-
-	.loc_0x14:
-	  fsubs     f1, f4, f2
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x28
-	  fneg      f1, f1
-
-	.loc_0x28:
-	  fcmpo     cr0, f3, f1
-	  ble-      .loc_0x38
-	  fmr       f2, f1
-	  b         .loc_0x3C
-
-	.loc_0x38:
-	  fmr       f2, f3
-
-	.loc_0x3C:
-	  lfs       f0, -0x7C50(r2)
-	  fadds     f1, f3, f1
-	  fmuls     f0, f0, f2
-	  fsubs     f1, f1, f0
-	  blr
-	*/
+	return (x1 + y1) - (0.5f * min);
 }
 
 /*
@@ -2553,8 +1712,16 @@ f32 distanceTriRect(KTri&, KRect&, f32*, f32*, f32*, f32*)
  * Address: 8003942C
  * Size:    000070
  */
-void KRect::inside(Vector3f&)
+bool KRect::inside(Vector3f& point)
 {
+	f32 minX = _00.x;
+	f32 minZ = _00.z;
+	f32 maxX = _00.x + _0C.x + _18.x;
+	f32 maxZ = _00.z + _0C.z + _18.z;
+	if (point.x >= minX && point.x <= maxX && point.z >= minZ && point.z <= maxZ) {
+		return true;
+	}
+	return false;
 	/*
 	.loc_0x0:
 	  lfs       f4, 0x8(r3)
@@ -2595,23 +1762,7 @@ void KRect::inside(Vector3f&)
  * Address: 8003949C
  * Size:    00002C
  */
-KTri::KTri()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x7C60(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  blr
-	*/
-}
+KTri::KTri() { }
 
 /*
  * --INFO--
@@ -2620,58 +1771,9 @@ KTri::KTri()
  */
 void KTri::set(Vector3f& vecA, Vector3f& vecB, Vector3f& vecC)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x60(r1)
-	  lwz       r7, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r7, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x8(r3)
-	  lfs       f1, 0x0(r5)
-	  lfs       f0, 0x0(r4)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x3C(r1)
-	  lfs       f0, 0x3C(r1)
-	  stfs      f0, 0x54(r1)
-	  lfs       f1, 0x4(r5)
-	  lfs       f0, 0x4(r4)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x58(r1)
-	  lfs       f1, 0x8(r5)
-	  lfs       f0, 0x8(r4)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x5C(r1)
-	  lwz       r5, 0x54(r1)
-	  lwz       r0, 0x58(r1)
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x10(r3)
-	  lwz       r0, 0x5C(r1)
-	  stw       r0, 0x14(r3)
-	  lfs       f1, 0x0(r6)
-	  lfs       f0, 0x0(r4)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x30(r1)
-	  lfs       f0, 0x30(r1)
-	  stfs      f0, 0x48(r1)
-	  lfs       f1, 0x4(r6)
-	  lfs       f0, 0x4(r4)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4C(r1)
-	  lfs       f1, 0x8(r6)
-	  lfs       f0, 0x8(r4)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x50(r1)
-	  lwz       r4, 0x48(r1)
-	  lwz       r0, 0x4C(r1)
-	  stw       r4, 0x18(r3)
-	  stw       r0, 0x1C(r3)
-	  lwz       r0, 0x50(r1)
-	  stw       r0, 0x20(r3)
-	  addi      r1, r1, 0x60
-	  blr
-	*/
+	_00 = vecA;
+	_0C = vecB - vecA;
+	_18 = vecC - vecA;
 }
 
 /*
@@ -2683,6 +1785,8 @@ KSegment::KSegment()
 {
 	// UNUSED FUNCTION
 }
+
+f32 gs_fTolerance = 0.00001f;
 
 /*
  * --INFO--

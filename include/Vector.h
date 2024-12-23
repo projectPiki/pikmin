@@ -183,6 +183,8 @@ struct Vector2f {
 struct Quat {
 	Quat() { }
 
+	Quat(f32 _x, f32 _y, f32 _z, f32 _s) { set(_x, _y, _z, _s); }
+
 	void fromMat3f(Matrix3f&);
 	void rotate(Vector3f&, f32);
 	void multiply(Quat&);
@@ -204,8 +206,8 @@ struct Quat {
 		s   = _s;
 	}
 
-	Vector3f v; // _00, vector part
-	f32 s;      // _0C, scalar part
+	Vector3f v; // _00, vector/imaginary part
+	f32 s;      // _0C, scalar/real part
 };
 
 inline Vector3f operator-(const Vector3f& a, const Vector3f& b) { return Vector3f(a.x - b.x, a.y - b.y, a.z - b.z); }

@@ -20,7 +20,14 @@ struct CullingPlane {
 
 	// TODO: members
 	Vector3f _00; // _00
-	u8 _0C[0x20]; // _0C, unknown
+	u8 _0C[0x4];  // _0C, unknown
+	int _10;      // _10
+	int _14;      // _10
+	int _18;      // _10
+	int _1C;      // _10
+	int _20;      // _10
+	int _24;      // _24
+	u8 _28[0x4];  // _28, unknown
 };
 
 /**

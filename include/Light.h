@@ -9,6 +9,7 @@
 
 struct CmdStream;
 struct Graphics;
+struct Shape;
 struct Texture;
 
 /**
@@ -17,12 +18,16 @@ struct Texture;
  * @note Size: 0x2C.
  */
 struct LFInfo {
-	LFInfo() { _28 = 0; }
+	LFInfo() { mPrevInfo = nullptr; }
 
-	u8 _00[0x4];         // _00, unknown
-	Vector3f _04;        // _04
-	u8 _10[0x28 - 0x10]; // _10, unknown
-	u32 _28;             // _28
+	Colour mColour;     // _00
+	Vector3f mFlarePos; // _04
+	Vector2f _10;       // _10
+	f32 _18;            // _18
+	f32 _1C;            // _1C
+	f32 _20;            // _20
+	f32 _24;            // _24
+	LFInfo* mPrevInfo;  // _28
 };
 
 /**
@@ -55,7 +60,7 @@ struct LFlareGroup : public CoreNode {
 	{
 		mTexture = nullptr;
 		_1C      = 0;
-		_20      = 0;
+		mLFInfo  = nullptr;
 		_24      = 1;
 	}
 
@@ -64,7 +69,7 @@ struct LFlareGroup : public CoreNode {
 	u32 _14;                  // _14
 	struct Texture* mTexture; // _18
 	u32 _1C;                  // _1C
-	u32 _20;                  // _20
+	LFInfo* mLFInfo;          // _20
 	u32 _24;                  // _24
 };
 
@@ -167,11 +172,13 @@ struct LightGroup : public CoreNode {
 	// unused/inlined:
 	void saveini(char*, RandomAccessStream&);
 
+	inline LFlareGroup* getLFlareGroup() { return mFlareGroup; }
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	int mFlags;               // _14
 	int mType;                // _18
-	int mJointIndex;          // _1C
+	u32 mJointIndex;          // _1C
 	Texture* mTexture;        // _20
 	Vector3f mDirection;      // _24
 	Colour mLightColour;      // _30
@@ -179,7 +186,7 @@ struct LightGroup : public CoreNode {
 	s8* mMatSource;           // _38
 	Texture* mHaloTex;        // _3C
 	LightFlare mFlares;       // _40
-	int _64;                  // _64
+	Shape* _64;               // _64
 	LFlareGroup* mFlareGroup; // _68
 };
 

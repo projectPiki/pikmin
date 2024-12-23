@@ -23,9 +23,18 @@ struct KTri {
  * @brief TODO
  */
 struct KRect {
-	void inside(Vector3f&);
+	bool inside(Vector3f&);
 
-	// TODO: members
+	Vector3f _00; // _00
+	Vector3f _0C; // _0C
+	Vector3f _18; // _18
+	              // f32 _0C; // _0C
+	              // u8 _10[0x4]; // _10, unknown
+	              // f32 _14; // _14
+	              // f32 _18; // _18
+	              // u8 _1C[0x4]; // _1C, unknown
+	              // f32 _20; // _20
+	              // TODO: members
 };
 
 /**
