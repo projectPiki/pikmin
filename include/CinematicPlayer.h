@@ -3,6 +3,9 @@
 
 #include "types.h"
 #include "CoreNode.h"
+#include "Animator.h"
+#include "Camera.h"
+#include "Light.h"
 
 struct CmdStream;
 struct Graphics;
@@ -18,7 +21,13 @@ struct SceneData : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	DataChunk* mCameraAnimations; // _14
+	DataChunk* mLightAnimations;  // _18
+	CamDataInfo* mCameraData;     // _1C
+	LightDataInfo* mLightData;    // _20
+	u32 mNumFrames;               // _24
+	u32 mNumCameras;              // _28
+	u32 mNumLights;               // _2C
 };
 
 /**

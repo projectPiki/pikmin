@@ -10,6 +10,8 @@
 #include "Parameters.h"
 #include "Ayu.h"
 #include "String.h"
+#include "Texture.h"
+#include "CmdStream.h"
 
 struct AnimMgr;
 struct BaseShape;
@@ -42,6 +44,35 @@ struct DataChunk {
 		}
 	}
 
+	void getData(CmdStream* stream)
+	{
+		stream->getToken(true);
+		int dataSize   = 0;
+		int tokenCount = 0;
+
+		while (!stream->endOfCmds() && !stream->endOfSection()) {
+			if ((tokenCount & 7) == 0) {
+				stream->getToken(true);
+				if (stream->isToken("size")) {
+					const char* token = stream->getToken(true);
+					sscanf(token, "%d", &dataSize);
+					setDataSize(dataSize);
+					stream->getToken(true);
+				}
+			}
+
+			const char* token = stream->getToken(true);
+			float value;
+			sscanf(token, "%f", &value);
+			addData(value);
+			++tokenCount;
+		}
+
+		if (!stream->endOfCmds()) {
+			stream->getToken(true);
+		}
+	}
+
 	int mDataIndex; // _00
 	int mDataSize;  // _04
 	f32* mData;     // _08
@@ -50,11 +81,20 @@ struct DataChunk {
 /**
  * @brief TODO
  */
-struct AnimCacheInfo {
+struct AnimCacheInfo : CacheInfo {
 	AnimCacheInfo();
-	void updateContext();
 
-	u8 _00[0x1c];
+	void initData()
+	{
+		_14 = 0;
+		_10 = 0;
+	}
+
+	// _00 - _0C = CacheInfo
+	u32 _0C; // _0C
+	u32 _10; // _10
+	u32 _14; // _14
+	u32 _18; // _18
 };
 
 /**
@@ -94,6 +134,13 @@ struct AnimData : public CoreNode {
 		_38        = 0;
 	}
 
+	AnimData(char* name)
+	    : CoreNode(name)
+	{
+		mAnimFlags = 0;
+		_38        = 0;
+	}
+
 	virtual void extractSRT(struct SRT&, int, AnimDataInfo*, f32);                  // _10
 	virtual void makeAnimSRT(int, struct Matrix4f*, Matrix4f*, AnimDataInfo*, f32); // _14
 	virtual void detach();                                                          // _18
@@ -114,6 +161,8 @@ struct AnimData : public CoreNode {
 	int mNumFrames;                   // _30
 	BaseShape* mModel;                // _34
 	int _38;                          // _38
+	int _3C;                          // _3C
+	AnimCacheInfo* mAnimInfoList;     // _40
 };
 
 /**

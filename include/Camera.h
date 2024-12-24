@@ -135,9 +135,22 @@ struct LightCamera : public Camera {
 
 /**
  * @brief TODO
+ * @note Size: 0x3F8.
  */
 struct CamDataInfo {
 	void update(f32, Matrix4f&);
+
+	Vector3f _00;   // _00
+	Vector3f _0C;   // _0C
+	Vector3f _18;   // _18
+	u32 _24;        // _24
+	u32 _28;        // _28
+	char _2C;       // _2C
+	u32 _30[9];     // _30, sizeof 0x24
+	u32 _54[21];    // _54, sizeof 0x54
+	Camera mCamera; // _A8
+	f32 _3F0;       // _3F0
+	f32 _3F4;       // _3F4
 };
 
 #endif

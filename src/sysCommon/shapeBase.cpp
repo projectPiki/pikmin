@@ -16,34 +16,35 @@
 #include "CinematicPlayer.h"
 #include "Graphics.h"
 #include "dolphin/mtx.h"
+#include "DebugLog.h"
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("shapeBase")
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000DC
  */
-void Envelope::read(RandomAccessStream&)
+void Envelope::read(RandomAccessStream& stream)
 {
-	// UNUSED FUNCTION
+	mIndexCount = stream.readInt();
+	mIndices    = new s32[mIndexCount];
+	mWeights    = new f32[mIndexCount];
+	for (int i = 0; i < mIndexCount; i++) {
+		mIndices[i] = stream.readInt();
+		mWeights[i] = stream.readFloat();
+	}
 }
 
 /*
@@ -54,10 +55,13 @@ void Envelope::read(RandomAccessStream&)
  */
 void DispList::read(RandomAccessStream& stream)
 {
-	mFlags = stream.readInt();
-	_28    = stream.readInt();
+	// Match stack size with the original function
+	u32 badCompiler;
 
+	mFlags      = stream.readInt();
+	_28         = stream.readInt();
 	mDataLength = stream.readInt();
+
 	stream.skipPadding(0x20);
 
 	mData = new (0x20) char[mDataLength];
@@ -146,7 +150,13 @@ MtxGroup::MtxGroup()
  */
 void Joint::recShowHierarchy()
 {
-	// UNUSED FUNCTION
+	for (Joint* joint = this; joint != nullptr; joint = static_cast<Joint*>(joint->mNext)) {
+		PRINT("got joint %08x\n", this);
+
+		if (joint->mChild) {
+			static_cast<Joint*>(joint->mChild)->recShowHierarchy();
+		}
+	}
 }
 
 /*
@@ -154,10 +164,7 @@ void Joint::recShowHierarchy()
  * Address:	........
  * Size:	000018
  */
-void Joint::overrideAnim(AnimContext* ctx)
-{
-	// mParentShape->mAnimOverrides[mIndex] = ctx;
-}
+void Joint::overrideAnim(AnimContext* ctx) { mParentShape->mAnimContextList[mIndex] = ctx; }
 
 /*
  * --INFO--
@@ -166,11 +173,11 @@ void Joint::overrideAnim(AnimContext* ctx)
  */
 void Joint::recOverrideAnim(AnimContext* ctx)
 {
-	for (Joint* i = this; i; i = static_cast<Joint*>(i->mNext)) {
-		i->overrideAnim(ctx);
+	for (Joint* joint = this; joint != nullptr; joint = static_cast<Joint*>(joint->mNext)) {
+		joint->overrideAnim(ctx);
 
-		if (i->mChild) {
-			static_cast<Joint*>(i->mChild)->recOverrideAnim(ctx);
+		if (joint->mChild) {
+			static_cast<Joint*>(joint->mChild)->recOverrideAnim(ctx);
 		}
 	}
 }
@@ -182,14 +189,17 @@ void Joint::recOverrideAnim(AnimContext* ctx)
  */
 void Joint::read(RandomAccessStream& stream)
 {
+	// Match stack size with the original function
+	u32 badCompiler;
+
 	mParentIndex = stream.readInt();
 
 	int flags      = stream.readInt();
 	mUseVolume     = flags & 0x1;
 	mUseLightGroup = (flags & 0x4000) != 0;
 
-	mBounds.mMax.read(stream);
 	mBounds.mMin.read(stream);
+	mBounds.mMax.read(stream);
 	stream.readFloat();
 
 	mScale.read(stream);
@@ -318,8 +328,10 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 		}
 		offset += dataSize;
 	}
-	if (!isActive)
+
+	if (!isActive) {
 		return data.mData[(param.mEntryNum - 1) * dataSize + param.mDataOffset + 1];
+	}
 
 	float frameStart = data.mData[offset];
 	float frameEnd   = data.mData[offset + dataSize];
@@ -494,6 +506,8 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
  */
 void CamDataInfo::update(f32, Matrix4f&)
 {
+
+	mCamera.calcLookAt(mCamera.mEyePosition, mCamera.mTargetPosition, nullptr);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -944,8 +958,85 @@ void LightDataInfo::update(f32)
  * Address:	8002AF30
  * Size:	000D4C
  */
-void SceneData::parse(CmdStream*)
+void SceneData::parse(CmdStream* stream)
 {
+	mCameraAnimations = nullptr;
+	mLightAnimations  = nullptr;
+
+	while (!stream->endOfCmds() && !stream->endOfSection()) {
+		stream->getToken(true);
+
+		if (stream->isToken("<SCENE_KEY_ANM_INFO>")) {
+			stream->getToken(true);
+			getAnimInfo(stream);
+		} else if (stream->isToken("<KEY_CAMERA_ANM>")) {
+			mCameraAnimations = new DataChunk();
+			mCameraAnimations->getData(stream);
+		} else if (stream->isToken("<KEY_CAMERA_TABLE>")) {
+			stream->getToken(true);
+
+			int index = -1;
+			if (stream->isToken("index")) {
+				sscanf(stream->getToken(true), "%d", &index);
+			} else if (stream->isToken("name")) {
+				stream->getToken(true);
+			} else if (stream->isToken("cam_pos_x")) {
+				// WTF?
+			} else if (stream->isToken("cam_pos_y")) {
+				// WTF?
+			} else if (stream->isToken("cam_pos_z")) {
+				// WTF?
+			} else if (stream->isToken("cam_lat_x")) {
+				// WTF?
+			} else if (stream->isToken("cam_lat_y")) {
+				// WTF?
+			} else if (stream->isToken("cam_lat_z")) {
+				// WTF?
+			} else if (stream->isToken("cam_twist")) {
+				// WTF?
+			} else if (stream->isToken("cam_fovy")) {
+				// WTF?
+			} else if (stream->isToken("cam_near")) {
+				// WTF?
+			} else if (stream->isToken("cam_far")) {
+				// WTF?
+			}
+
+			if (!stream->endOfCmds()) {
+				stream->getToken(true);
+			}
+		} else if (stream->isToken("<KEY_DIFFUSE_LIGHT_ANM>")) {
+			mLightAnimations = new DataChunk();
+			mLightAnimations->getData(stream);
+		} else if (stream->isToken("<KEY_DIFFUSE_LIGHT_TABLE>")) {
+			stream->getToken(true);
+
+			int index = -1;
+			if (stream->isToken("index")) {
+				sscanf(stream->getToken(true), "%d", &index);
+			} else if (stream->isToken("name")) {
+				stream->getToken(true);
+			} else if (stream->isToken("light_pos_x")) {
+				// WTF?
+			} else if (stream->isToken("light_pos_y")) {
+				// WTF?
+			} else if (stream->isToken("light_pos_z")) {
+				// WTF?
+			} else if (stream->isToken("light_r_param")) {
+				// WTF?
+			} else if (stream->isToken("light_g_param")) {
+				// WTF?
+			} else if (stream->isToken("light_b_param")) {
+				// WTF?
+			} else if (stream->isToken("light_visible")) {
+				// WTF?
+			}
+
+			if (!stream->endOfCmds()) {
+				stream->getToken(true);
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2504,6 +2595,9 @@ void AnimData::makeAnimSRT(int, Matrix4f*, Matrix4f*, AnimDataInfo*, f32)
  */
 void AnimData::detach()
 {
+	for (int i = 0; i < mNumFrames; i++) {
+		mAnimInfoList[i].initData();
+	}
 	/*
 	.loc_0x0:
 	  li        r7, 0
@@ -2533,26 +2627,14 @@ void AnimData::detach()
  * Address:	........
  * Size:	00005C
  */
-void AnimData::initData()
-{
-	// UNUSED FUNCTION
-}
+void AnimData::initData() { mAnimInfoList = new AnimCacheInfo[mNumFrames]; }
 
 /*
  * --INFO--
  * Address:	8002C448
  * Size:	000010
  */
-AnimCacheInfo::AnimCacheInfo()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x10(r3)
-	  blr
-	*/
-}
+AnimCacheInfo::AnimCacheInfo() { initData(); }
 
 /*
  * --INFO--
@@ -3041,25 +3123,7 @@ void AnimDca::read(RandomAccessStream&)
  * Address:	8002CA88
  * Size:	000034
  */
-AnimDataInfo::AnimDataInfo()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x7D20(r2)
-	  li        r0, 0
-	  stfs      f0, 0xBC(r3)
-	  stfs      f0, 0xB8(r3)
-	  stfs      f0, 0xB4(r3)
-	  stfs      f0, 0xC8(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xD4(r3)
-	  stfs      f0, 0xD0(r3)
-	  stfs      f0, 0xCC(r3)
-	  sth       r0, 0xD8(r3)
-	  blr
-	*/
-}
+AnimDataInfo::AnimDataInfo() { mFlags = 0; }
 
 /*
  * --INFO--
