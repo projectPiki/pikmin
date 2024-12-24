@@ -1393,7 +1393,7 @@ void DGXGraphics::setAmbient()
  * Address:	80048484
  * Size:	0001D0
  */
-void DGXGraphics::setLighting(bool, PVWLightingInfo*)
+bool DGXGraphics::setLighting(bool, PVWLightingInfo*)
 {
 	/*
 	.loc_0x0:
@@ -1774,7 +1774,7 @@ void DGXGraphics::setLight(Light*, int)
  * Address:	80048998
  * Size:	000098
  */
-void DGXGraphics::setPerspective(f32 (*)[4], f32, f32, f32, f32, f32)
+void DGXGraphics::setPerspective(Mtx, f32, f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1824,7 +1824,7 @@ void DGXGraphics::setPerspective(f32 (*)[4], f32, f32, f32, f32, f32)
  * Address:	80048A30
  * Size:	00019C
  */
-void DGXGraphics::setOrthogonal(f32 (*)[4], RectArea&)
+void DGXGraphics::setOrthogonal(Mtx, RectArea&)
 {
 	/*
 	.loc_0x0:

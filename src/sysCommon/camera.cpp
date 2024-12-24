@@ -1,5 +1,7 @@
 #include "Camera.h"
 #include "Texture.h"
+#include "Graphics.h"
+#include "Geometry.h"
 #include "sysNew.h"
 
 /*
@@ -27,9 +29,10 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	0000C4
  */
-void CullFrustum::vectorToWorldPlane(Vector3f&, CullingPlane&)
+void CullFrustum::vectorToWorldPlane(Vector3f& vec, CullingPlane& worldPlane)
 {
-	// UNUSED FUNCTION
+	projectVector(vec, worldPlane.mPlane.mNormal);
+	worldPlane.mPlane.mOffset = worldPlane.mPlane.mNormal.dot(mEyePosition);
 }
 
 /*
@@ -37,45 +40,16 @@ void CullFrustum::vectorToWorldPlane(Vector3f&, CullingPlane&)
  * Address:	80041584
  * Size:	00006C
  */
-bool CullFrustum::isPointVisible(Vector3f&, f32)
+bool CullFrustum::isPointVisible(Vector3f& point, f32 cutoff)
 {
+	for (int i = 0; i < _04; i++) {
+		Plane* plane = _114[i];
+		if (point.x * plane->mNormal.x + point.y * plane->mNormal.y + point.z * plane->mNormal.z - plane->mOffset < -cutoff) {
+			return false;
+		}
+	}
 
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x4(r3)
-	  fneg      f5, f1
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x64
-
-	.loc_0x14:
-	  lwz       r5, 0x114(r3)
-	  lfs       f3, 0x0(r4)
-	  lfs       f2, 0x0(r5)
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0x4(r5)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x8(r4)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x8(r5)
-	  lfs       f0, 0xC(r5)
-	  fmuls     f3, f4, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f5
-	  bge-      .loc_0x5C
-	  li        r3, 0
-	  blr
-
-	.loc_0x5C:
-	  addi      r3, r3, 0x4
-	  bdnz+     .loc_0x14
-
-	.loc_0x64:
-	  li        r3, 0x1
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -83,8 +57,140 @@ bool CullFrustum::isPointVisible(Vector3f&, f32)
  * Address:	800415F0
  * Size:	000FBC
  */
-void CullFrustum::draw(Graphics&)
+void CullFrustum::draw(Graphics& gfx)
 {
+	gfx._324              = 0;
+	bool prevLightSetting = gfx.setLighting(false, nullptr);
+	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
+	gfx.useTexture(nullptr, 0);
+	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setAuxColour(Colour(255, 255, 255, 255));
+	gfx.drawLine(mEyePosition, mTargetPosition);
+
+	f32 targetDist = mEyePosition.distance(mTargetPosition);
+	f32 tanTheta   = sinf(PI * (_1CC / 2) / 180.0f) * targetDist / cosf(PI * (_1CC / 2) / 180.0f);
+
+	f32 divTanTheta = tanTheta / _1C4;
+	f32 roundedTan  = divTanTheta * _1C4;
+
+	Vector3f vec1(-roundedTan, tanTheta, 0.0f);
+	Vector3f vec2(roundedTan, tanTheta, 0.0f);
+	Vector3f vec3(roundedTan, -tanTheta, 0.0f);
+	Vector3f vec4(-roundedTan, -tanTheta, 0.0f);
+
+	Vector3f targ1(vec1.dot(mViewXAxis) + mTargetPosition.x, vec1.dot(mViewYAxis) + mTargetPosition.y,
+	               vec1.dot(mViewZAxis) + mTargetPosition.z);
+	Vector3f targ2(vec2.dot(mViewXAxis) + mTargetPosition.x, vec2.dot(mViewYAxis) + mTargetPosition.y,
+	               vec2.dot(mViewZAxis) + mTargetPosition.z);
+	Vector3f targ3(vec3.dot(mViewXAxis) + mTargetPosition.x, vec3.dot(mViewYAxis) + mTargetPosition.y,
+	               vec3.dot(mViewZAxis) + mTargetPosition.z);
+	Vector3f targ4(vec4.dot(mViewXAxis) + mTargetPosition.x, vec4.dot(mViewYAxis) + mTargetPosition.y,
+	               vec4.dot(mViewZAxis) + mTargetPosition.z);
+
+	Vector3f dir;
+	dir.sub2(mTargetPosition, mEyePosition);
+	dir.normalise();
+	dir.multiply(_1D0);
+	dir.add(mEyePosition);
+
+	f32 invDist = _1D0 / mTargetPosition.distance(mEyePosition);
+	f32 divDist = divTanTheta * invDist;
+	f32 tanDist = tanTheta * invDist;
+
+	Vector3f vec5(-divDist, tanDist, 0.0f);
+	Vector3f vec6(divDist, tanDist, 0.0f);
+	Vector3f vec7(divDist, -tanDist, 0.0f);
+	Vector3f vec8(-divDist, -tanDist, 0.0f);
+
+	Vector3f dir1(vec5.dot(mViewXAxis) + dir.x, vec5.dot(mViewYAxis) + dir.y, vec5.dot(mViewZAxis) + dir.z);
+	Vector3f dir2(vec6.dot(mViewXAxis) + dir.x, vec6.dot(mViewYAxis) + dir.y, vec6.dot(mViewZAxis) + dir.z);
+	Vector3f dir3(vec7.dot(mViewXAxis) + dir.x, vec7.dot(mViewYAxis) + dir.y, vec7.dot(mViewZAxis) + dir.z);
+	Vector3f dir4(vec8.dot(mViewXAxis) + dir.x, vec8.dot(mViewYAxis) + dir.y, vec8.dot(mViewZAxis) + dir.z);
+
+	Vector3f odir;
+	odir.sub2(mTargetPosition, mEyePosition);
+	odir.normalise();
+	odir.multiply(_1D4);
+	odir.add(mEyePosition);
+
+	f32 oinvDist = _1D4 / mTargetPosition.distance(mEyePosition);
+	f32 odivDist = roundedTan * invDist;
+	f32 otanDist = tanTheta * invDist;
+
+	Vector3f vec9(-odivDist, otanDist, 0.0f);
+	Vector3f vec10(odivDist, otanDist, 0.0f);
+	Vector3f vec11(odivDist, -otanDist, 0.0f);
+	Vector3f vec12(-odivDist, -otanDist, 0.0f);
+
+	Vector3f odir1(vec9.dot(mViewXAxis) + odir.x, vec9.dot(mViewYAxis) + odir.y, vec9.dot(mViewZAxis) + odir.z);
+	Vector3f odir2(vec10.dot(mViewXAxis) + odir.x, vec10.dot(mViewYAxis) + odir.y, vec10.dot(mViewZAxis) + odir.z);
+	Vector3f odir3(vec11.dot(mViewXAxis) + odir.x, vec11.dot(mViewYAxis) + odir.y, vec11.dot(mViewZAxis) + odir.z);
+	Vector3f odir4(vec12.dot(mViewXAxis) + odir.x, vec12.dot(mViewYAxis) + odir.y, vec12.dot(mViewZAxis) + odir.z);
+
+	gfx.setColour(Colour(32, 255, 32, 128), true);
+	gfx.drawLine(dir1, dir2);
+	gfx.drawLine(dir2, dir3);
+	gfx.drawLine(dir3, dir4);
+	gfx.drawLine(dir4, dir1);
+
+	gfx.drawLine(dir1, targ1);
+	gfx.drawLine(dir2, targ2);
+	gfx.drawLine(dir3, targ3);
+	gfx.drawLine(dir4, targ4);
+
+	gfx.drawLine(targ1, targ2);
+	gfx.drawLine(targ2, targ3);
+	gfx.drawLine(targ3, targ4);
+	gfx.drawLine(targ4, targ1);
+
+	gfx.setColour(Colour(255, 32, 32, 128), true);
+	gfx.drawLine(odir1, odir2);
+	gfx.drawLine(odir2, odir3);
+	gfx.drawLine(odir3, odir4);
+	gfx.drawLine(odir4, odir1);
+
+	gfx.drawLine(odir1, targ1);
+	gfx.drawLine(odir2, targ2);
+	gfx.drawLine(odir3, targ3);
+	gfx.drawLine(odir4, targ4);
+
+	gfx.setColour(Colour(255, 0, 0, 16), true);
+	Vector3f vec3Block1[4];
+	Vector2f vec2Block1[4];
+	vec2Block1[0].set(0.0f, 0.0f);
+	vec2Block1[1].set(0.0f, 0.0f);
+	vec2Block1[2].set(0.0f, 0.0f);
+	vec2Block1[3].set(0.0f, 0.0f);
+
+	vec3Block1[0] = dir2;
+	vec3Block1[1] = dir1;
+	vec3Block1[2] = odir1;
+	vec3Block1[3] = odir2;
+	gfx.drawOneTri(vec3Block1, nullptr, vec2Block1, 4);
+
+	gfx.setColour(Colour(255, 0, 32, 16), true);
+	vec3Block1[0] = dir3;
+	vec3Block1[1] = dir2;
+	vec3Block1[2] = odir2;
+	vec3Block1[3] = odir3;
+	gfx.drawOneTri(vec3Block1, nullptr, vec2Block1, 4);
+
+	gfx.setColour(Colour(255, 0, 0, 16), true);
+	vec3Block1[0] = dir4;
+	vec3Block1[1] = dir3;
+	vec3Block1[2] = odir3;
+	vec3Block1[3] = odir4;
+	gfx.drawOneTri(vec3Block1, nullptr, vec2Block1, 4);
+
+	gfx.setColour(Colour(255, 0, 32, 16), true);
+	vec3Block1[0] = dir1;
+	vec3Block1[1] = dir4;
+	vec3Block1[2] = odir4;
+	vec3Block1[3] = odir1;
+	gfx.drawOneTri(vec3Block1, nullptr, vec2Block1, 4);
+
+	gfx.setLighting(prevLightSetting, nullptr);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1106,302 +1212,45 @@ void CullFrustum::draw(Graphics&)
  * Address:	800425AC
  * Size:	00046C
  */
-void CullFrustum::updateViewPlanes(f32, f32, f32, f32)
+void CullFrustum::updateViewPlanes(f32 p1, f32 p2, f32 p3, f32 p4)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  fabs      f1, f1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xC0(r1)
-	  stfd      f31, 0xB8(r1)
-	  stfd      f30, 0xB0(r1)
-	  stfd      f29, 0xA8(r1)
-	  stfd      f28, 0xA0(r1)
-	  fmr       f28, f4
-	  stfd      f27, 0x98(r1)
-	  fmr       f27, f3
-	  stfd      f26, 0x90(r1)
-	  fmr       f26, f2
-	  stw       r31, 0x8C(r1)
-	  stw       r30, 0x88(r1)
-	  mr        r30, r3
-	  lfs       f0, 0x1DC(r3)
-	  lfs       f31, 0x1D8(r3)
-	  fdivs     f29, f0, f1
-	  lfs       f30, -0x7BF8(r2)
-	  lwz       r0, 0x8(r3)
-	  mulli     r3, r0, 0x2C
-	  addi      r31, r3, 0xC
-	  fmuls     f1, f29, f29
-	  add       r31, r30, r31
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f31, f31
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x349E0
-	  lfs       f0, -0x7BF8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x90
-	  fdivs     f29, f29, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f31, f31, f1
+	u32 badCompiler[4];
 
-	.loc_0x90:
-	  lfs       f1, 0x17C(r30)
-	  mr        r3, r31
-	  lfs       f0, 0x180(r30)
-	  fmuls     f1, f29, f1
-	  lfs       f2, 0x184(r30)
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f31, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x0(r31)
-	  lfs       f1, 0x188(r30)
-	  lfs       f0, 0x18C(r30)
-	  lfs       f2, 0x190(r30)
-	  fmuls     f1, f29, f1
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f31, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x4(r31)
-	  lfs       f1, 0x194(r30)
-	  lfs       f0, 0x198(r30)
-	  lfs       f2, 0x19C(r30)
-	  fmuls     f1, f29, f1
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f31, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x8(r31)
-	  lfs       f3, 0x0(r31)
-	  lfs       f2, 0x164(r30)
-	  lfs       f1, 0x4(r31)
-	  lfs       f0, 0x168(r30)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x8(r31)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x16C(r30)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r31)
-	  bl        -0xB170
-	  li        r0, 0x1
-	  fabs      f3, f26
-	  stb       r0, 0x28(r31)
-	  lfs       f0, 0x1DC(r30)
-	  lfs       f30, -0x7BF8(r2)
-	  fneg      f1, f0
-	  lfs       f29, 0x1D8(r30)
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f29, f29
-	  fdivs     f31, f1, f3
-	  fmuls     f1, f31, f31
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x34AD4
-	  lfs       f0, -0x7BF8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x184
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	CullingPlane* planes = &mCullPlanes[_08];
+	Vector3f vec;
+	vec.x = _1DC / absF(p1);
+	vec.y = 0.0f;
+	vec.z = _1D8;
+	vec.normalise();
+	vectorToWorldPlane(vec, planes[0]);
+	planes[0].CheckMinMaxDir();
+	planes[0]._28 = 1;
 
-	.loc_0x184:
-	  lfs       f1, 0x17C(r30)
-	  addi      r3, r31, 0x2C
-	  lfs       f0, 0x180(r30)
-	  fmuls     f1, f31, f1
-	  lfs       f2, 0x184(r30)
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f29, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x2C(r31)
-	  lfs       f1, 0x188(r30)
-	  lfs       f0, 0x18C(r30)
-	  lfs       f2, 0x190(r30)
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f29, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x30(r31)
-	  lfs       f1, 0x194(r30)
-	  lfs       f0, 0x198(r30)
-	  lfs       f2, 0x19C(r30)
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f29, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x34(r31)
-	  lfs       f3, 0x2C(r31)
-	  lfs       f2, 0x164(r30)
-	  lfs       f1, 0x30(r31)
-	  lfs       f0, 0x168(r30)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x34(r31)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x16C(r30)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x38(r31)
-	  bl        -0xB264
-	  li        r0, 0x1
-	  fabs      f3, f27
-	  stb       r0, 0x54(r31)
-	  lfs       f0, 0x1DC(r30)
-	  lfs       f31, -0x7BF8(r2)
-	  fneg      f0, f0
-	  lfs       f29, 0x1D8(r30)
-	  fmuls     f1, f31, f31
-	  fmuls     f2, f29, f29
-	  fmuls     f30, f0, f3
-	  fmuls     f0, f30, f30
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x34BC8
-	  lfs       f0, -0x7BF8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x278
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	vec.x = -_1DC / absF(p2);
+	vec.y = 0.0f;
+	vec.z = _1D8;
+	vec.normalise();
+	vectorToWorldPlane(vec, planes[1]);
+	planes[1].CheckMinMaxDir();
+	planes[1]._28 = 1;
 
-	.loc_0x278:
-	  lfs       f1, 0x17C(r30)
-	  addi      r3, r31, 0x58
-	  lfs       f0, 0x180(r30)
-	  fmuls     f1, f31, f1
-	  lfs       f2, 0x184(r30)
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f29, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x58(r31)
-	  lfs       f1, 0x188(r30)
-	  lfs       f0, 0x18C(r30)
-	  lfs       f2, 0x190(r30)
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f29, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x5C(r31)
-	  lfs       f1, 0x194(r30)
-	  lfs       f0, 0x198(r30)
-	  lfs       f2, 0x19C(r30)
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f29, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x60(r31)
-	  lfs       f3, 0x58(r31)
-	  lfs       f2, 0x164(r30)
-	  lfs       f1, 0x5C(r31)
-	  lfs       f0, 0x168(r30)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x60(r31)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x16C(r30)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x64(r31)
-	  bl        -0xB358
-	  li        r0, 0x1
-	  fabs      f1, f28
-	  stb       r0, 0x80(r31)
-	  lfs       f0, 0x1DC(r30)
-	  lfs       f31, -0x7BF8(r2)
-	  fmuls     f30, f0, f1
-	  lfs       f29, 0x1D8(r30)
-	  fmuls     f1, f31, f31
-	  fmuls     f2, f29, f29
-	  fmuls     f0, f30, f30
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x34CB8
-	  lfs       f0, -0x7BF8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x368
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	vec.x = 0.0f;
+	vec.y = absF(p3) * -_1DC;
+	vec.z = _1D8;
+	vec.normalise();
+	vectorToWorldPlane(vec, planes[2]);
+	planes[2].CheckMinMaxDir();
+	planes[2]._28 = 1;
 
-	.loc_0x368:
-	  lfs       f1, 0x17C(r30)
-	  addi      r3, r31, 0x84
-	  lfs       f0, 0x180(r30)
-	  fmuls     f1, f31, f1
-	  lfs       f2, 0x184(r30)
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f29, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x84(r31)
-	  lfs       f1, 0x188(r30)
-	  lfs       f0, 0x18C(r30)
-	  lfs       f2, 0x190(r30)
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f29, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x88(r31)
-	  lfs       f1, 0x194(r30)
-	  lfs       f0, 0x198(r30)
-	  lfs       f2, 0x19C(r30)
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f30, f0
-	  fmuls     f2, f29, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x8C(r31)
-	  lfs       f3, 0x84(r31)
-	  lfs       f2, 0x164(r30)
-	  lfs       f1, 0x88(r31)
-	  lfs       f0, 0x168(r30)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x8C(r31)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x16C(r30)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x90(r31)
-	  bl        -0xB448
-	  lis       r3, 0x2E8C
-	  addi      r4, r30, 0xC
-	  addi      r0, r31, 0xB0
-	  sub       r0, r0, r4
-	  subi      r3, r3, 0x5D17
-	  mulhw     r0, r3, r0
-	  srawi     r0, r0, 0x3
-	  li        r4, 0x1
-	  rlwinm    r3,r0,1,31,31
-	  stb       r4, 0xAC(r31)
-	  add       r0, r0, r3
-	  stw       r0, 0x0(r30)
-	  lwz       r0, 0xC4(r1)
-	  lfd       f31, 0xB8(r1)
-	  lfd       f30, 0xB0(r1)
-	  lfd       f29, 0xA8(r1)
-	  lfd       f28, 0xA0(r1)
-	  lfd       f27, 0x98(r1)
-	  lfd       f26, 0x90(r1)
-	  lwz       r31, 0x8C(r1)
-	  lwz       r30, 0x88(r1)
-	  addi      r1, r1, 0xC0
-	  mtlr      r0
-	  blr
-	*/
+	vec.x = 0.0f;
+	vec.y = absF(p4) * _1DC;
+	vec.z = _1D8;
+	vec.normalise();
+	vectorToWorldPlane(vec, planes[3]);
+	planes[3].CheckMinMaxDir();
+	planes[3]._28 = 1;
+
+	_00 = &planes[4] - mCullPlanes;
 }
 
 /*
@@ -1411,152 +1260,24 @@ void CullFrustum::updateViewPlanes(f32, f32, f32, f32)
  */
 void CullFrustum::createViewPlanes()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  stw       r30, 0x68(r1)
-	  stw       r29, 0x64(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r29, 0xC
-	  stw       r0, 0x0(r3)
-	  lfs       f1, -0x7BF0(r2)
-	  lfs       f0, 0x1CC(r3)
-	  lfs       f2, -0x7BF4(r2)
-	  fmuls     f1, f1, f0
-	  lfs       f0, -0x7BEC(r2)
-	  fmuls     f1, f2, f1
-	  fdivs     f1, f1, f0
-	  bl        0x1D928C
-	  stfs      f1, 0x1D8(r29)
-	  lfs       f1, -0x7BF0(r2)
-	  lfs       f0, 0x1CC(r29)
-	  lfs       f2, -0x7BF4(r2)
-	  fmuls     f1, f1, f0
-	  lfs       f0, -0x7BEC(r2)
-	  fmuls     f1, f2, f1
-	  fdivs     f1, f1, f0
-	  bl        0x1D90D4
-	  stfs      f1, 0x1DC(r29)
-	  mr        r3, r30
-	  lfs       f4, -0x78F4(r13)
-	  lfs       f1, 0x17C(r29)
-	  lfs       f3, -0x78F0(r13)
-	  lfs       f0, 0x180(r29)
-	  fmuls     f1, f4, f1
-	  lfs       f5, -0x78EC(r13)
-	  fmuls     f0, f3, f0
-	  lfs       f2, 0x184(r29)
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x0(r30)
-	  lfs       f1, 0x188(r29)
-	  lfs       f0, 0x18C(r29)
-	  lfs       f2, 0x190(r29)
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f3, f0
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x4(r30)
-	  lfs       f1, 0x194(r29)
-	  lfs       f0, 0x198(r29)
-	  lfs       f2, 0x19C(r29)
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f3, f0
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x8(r30)
-	  lfs       f3, 0x0(r30)
-	  lfs       f2, 0x164(r29)
-	  lfs       f1, 0x4(r30)
-	  lfs       f0, 0x168(r29)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x8(r30)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x16C(r29)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r30)
-	  lfs       f1, 0xC(r30)
-	  lfs       f0, 0x1D0(r29)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r30)
-	  bl        -0xB5D8
-	  li        r31, 0x1
-	  stb       r31, 0x28(r30)
-	  addi      r3, r30, 0x2C
-	  lfs       f4, -0x78E8(r13)
-	  lfs       f1, 0x17C(r29)
-	  lfs       f3, -0x78E4(r13)
-	  lfs       f0, 0x180(r29)
-	  fmuls     f1, f4, f1
-	  lfs       f5, -0x78E0(r13)
-	  fmuls     f0, f3, f0
-	  lfs       f2, 0x184(r29)
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x2C(r30)
-	  lfs       f1, 0x188(r29)
-	  lfs       f0, 0x18C(r29)
-	  lfs       f2, 0x190(r29)
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f3, f0
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x30(r30)
-	  lfs       f1, 0x194(r29)
-	  lfs       f0, 0x198(r29)
-	  lfs       f2, 0x19C(r29)
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f3, f0
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x34(r30)
-	  lfs       f3, 0x2C(r30)
-	  lfs       f2, 0x164(r29)
-	  lfs       f1, 0x30(r30)
-	  lfs       f0, 0x168(r29)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x34(r30)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x16C(r29)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x38(r30)
-	  lfs       f1, 0x38(r30)
-	  lfs       f0, -0x7BD8(r2)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x38(r30)
-	  bl        -0xB6A0
-	  addi      r0, r30, 0x58
-	  stb       r31, 0x54(r30)
-	  lis       r3, 0x2E8C
-	  sub       r0, r0, r30
-	  subi      r3, r3, 0x5D17
-	  mulhw     r0, r3, r0
-	  srawi     r0, r0, 0x3
-	  rlwinm    r3,r0,1,31,31
-	  add       r0, r0, r3
-	  stw       r0, 0x8(r29)
-	  lwz       r0, 0x74(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  lwz       r29, 0x64(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	CullingPlane* planes = mCullPlanes;
+	Vector3f vec;
+	_00  = 0;
+	_1D8 = sinf(PI * (0.5f * _1CC) / 180.0f);
+	_1DC = cosf(PI * (0.5f * _1CC) / 180.0f);
+	vectorToWorldPlane(Vector3f(0.0f, 0.0f, 1.0f), planes[0]);
+	planes[0].mPlane.mOffset += _1D0;
+	planes[0].CheckMinMaxDir();
+	planes[0]._28 = 1;
+
+	vectorToWorldPlane(Vector3f(0.0f, 0.0f, -1.0f), planes[1]);
+	planes[1].mPlane.mOffset -= 2600.0f;
+	planes[1].CheckMinMaxDir();
+	planes[1]._28 = 1;
+
+	_08 = &planes[2] - mCullPlanes;
+
+	FORCE_DONT_INLINE;
 }
 
 /*
@@ -1576,7 +1297,20 @@ void CullFrustum::additionalPlanes(CullFrustum*)
  */
 void CullFrustum::createVecs()
 {
-	// UNUSED FUNCTION
+	// col1 = x axis after transforming
+	mViewXAxis.x = mLookAtMtx.mMtx[0][0];
+	mViewXAxis.y = mLookAtMtx.mMtx[1][0];
+	mViewXAxis.z = -mLookAtMtx.mMtx[2][0];
+
+	// col2 = y axis after transforming
+	mViewYAxis.x = mLookAtMtx.mMtx[0][1];
+	mViewYAxis.y = mLookAtMtx.mMtx[1][1];
+	mViewYAxis.z = -mLookAtMtx.mMtx[2][1];
+
+	// col3 = z axis after transforming
+	mViewZAxis.x = mLookAtMtx.mMtx[0][2];
+	mViewZAxis.y = mLookAtMtx.mMtx[1][2];
+	mViewZAxis.z = -mLookAtMtx.mMtx[2][2];
 }
 
 /*
@@ -1586,7 +1320,17 @@ void CullFrustum::createVecs()
  */
 void CullFrustum::createInvVecs()
 {
-	// UNUSED FUNCTION
+	mInvXAxis.x = mLookAtMtx.mMtx[0][0];
+	mInvXAxis.y = mLookAtMtx.mMtx[0][1];
+	mInvXAxis.z = mLookAtMtx.mMtx[0][2];
+
+	mInvYAxis.x = mLookAtMtx.mMtx[1][0];
+	mInvYAxis.y = mLookAtMtx.mMtx[1][1];
+	mInvYAxis.z = mLookAtMtx.mMtx[1][2];
+
+	mInvZAxis.x = -mLookAtMtx.mMtx[2][0];
+	mInvZAxis.y = -mLookAtMtx.mMtx[2][1];
+	mInvZAxis.z = -mLookAtMtx.mMtx[2][2];
 }
 
 /*
@@ -1594,99 +1338,25 @@ void CullFrustum::createInvVecs()
  * Address:	80042C54
  * Size:	000150
  */
-void CullFrustum::update(f32, f32, f32, f32)
+void CullFrustum::update(f32 p1, f32 p2, f32 p3, f32 p4)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  stfs      f1, 0x1C4(r3)
-	  lfs       f0, -0x7BD4(r2)
-	  stfs      f0, 0x1C8(r31)
-	  stfs      f2, 0x1CC(r31)
-	  stfs      f3, 0x1D0(r31)
-	  stfs      f4, 0x1D4(r31)
-	  lfs       f0, 0x1E0(r31)
-	  stfs      f0, 0x17C(r31)
-	  lfs       f0, 0x1F0(r31)
-	  stfs      f0, 0x180(r31)
-	  lfs       f0, 0x200(r31)
-	  fneg      f0, f0
-	  stfs      f0, 0x184(r31)
-	  lfs       f0, 0x1E4(r31)
-	  stfs      f0, 0x188(r31)
-	  lfs       f0, 0x1F4(r31)
-	  stfs      f0, 0x18C(r31)
-	  lfs       f0, 0x204(r31)
-	  fneg      f0, f0
-	  stfs      f0, 0x190(r31)
-	  lfs       f0, 0x1E8(r31)
-	  stfs      f0, 0x194(r31)
-	  lfs       f0, 0x1F8(r31)
-	  stfs      f0, 0x198(r31)
-	  lfs       f0, 0x208(r31)
-	  fneg      f0, f0
-	  stfs      f0, 0x19C(r31)
-	  lfs       f0, 0x1E0(r31)
-	  stfs      f0, 0x1A0(r31)
-	  lfs       f0, 0x1E4(r31)
-	  stfs      f0, 0x1A4(r31)
-	  lfs       f0, 0x1E8(r31)
-	  stfs      f0, 0x1A8(r31)
-	  lfs       f0, 0x1F0(r31)
-	  stfs      f0, 0x1AC(r31)
-	  lfs       f0, 0x1F4(r31)
-	  stfs      f0, 0x1B0(r31)
-	  lfs       f0, 0x1F8(r31)
-	  stfs      f0, 0x1B4(r31)
-	  lfs       f0, 0x200(r31)
-	  fneg      f0, f0
-	  stfs      f0, 0x1B8(r31)
-	  lfs       f0, 0x204(r31)
-	  fneg      f0, f0
-	  stfs      f0, 0x1BC(r31)
-	  lfs       f0, 0x208(r31)
-	  fneg      f0, f0
-	  stfs      f0, 0x1C0(r31)
-	  bl        -0x310
-	  lfs       f4, 0x1C8(r31)
-	  mr        r3, r31
-	  lfs       f1, 0x1C4(r31)
-	  fneg      f3, f4
-	  fneg      f2, f1
-	  bl        -0x794
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  b         .loc_0x114
+	_1C4 = p1;
+	_1C8 = 1.0f;
+	_1CC = p2;
+	_1D0 = p3;
+	_1D4 = p4;
 
-	.loc_0x100:
-	  addi      r0, r3, 0xC
-	  stw       r0, 0x114(r4)
-	  addi      r3, r3, 0x2C
-	  addi      r4, r4, 0x4
-	  addi      r5, r5, 0x1
+	createVecs();
+	createInvVecs();
+	createViewPlanes();
+	updateViewPlanes(_1C4, -_1C4, -_1C8, _1C8);
 
-	.loc_0x114:
-	  lwz       r0, 0x0(r31)
-	  cmpw      r5, r0
-	  blt+      .loc_0x100
-	  stw       r0, 0x4(r31)
-	  lfs       f0, -0x78DC(r13)
-	  stfs      f0, 0x158(r31)
-	  lfs       f0, -0x78D8(r13)
-	  stfs      f0, 0x15C(r31)
-	  lfs       f0, -0x78D4(r13)
-	  stfs      f0, 0x160(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < _00; i++) {
+		_114[i] = &mCullPlanes[i].mPlane;
+	}
+
+	_04 = _00;
+	_158.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -1694,173 +1364,38 @@ void CullFrustum::update(f32, f32, f32, f32)
  * Address:	80042DA4
  * Size:	000268
  */
-void CullFrustum::calcVectors(Vector3f&, Vector3f&)
+void CullFrustum::calcVectors(Vector3f& eyePos, Vector3f& targetPos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r3
-	  lwz       r6, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r6, 0x164(r3)
-	  stw       r0, 0x168(r3)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x16C(r3)
-	  lwz       r3, 0x0(r5)
-	  lwz       r0, 0x4(r5)
-	  stw       r3, 0x170(r31)
-	  stw       r0, 0x174(r31)
-	  lwz       r0, 0x8(r5)
-	  stw       r0, 0x178(r31)
-	  lfs       f1, 0x164(r31)
-	  lfs       f0, 0x170(r31)
-	  fcmpu     cr0, f1, f0
-	  bne-      .loc_0x70
-	  lfs       f0, 0x16C(r31)
-	  lfs       f1, 0x178(r31)
-	  fcmpu     cr0, f0, f1
-	  bne-      .loc_0x70
-	  lfs       f0, -0x7BD0(r2)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x178(r31)
+	u32 badCompiler[4];
 
-	.loc_0x70:
-	  lfs       f1, 0x164(r31)
-	  lfs       f0, 0x170(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x194(r31)
-	  lfs       f1, 0x168(r31)
-	  lfs       f0, 0x174(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x198(r31)
-	  lfs       f1, 0x16C(r31)
-	  lfs       f0, 0x178(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x19C(r31)
-	  lfs       f1, 0x194(r31)
-	  lfs       f0, 0x198(r31)
-	  lfs       f2, 0x19C(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x35224
-	  lfs       f0, -0x7BF8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0xF4
-	  lfs       f0, 0x194(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x194(r31)
-	  lfs       f0, 0x198(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x198(r31)
-	  lfs       f0, 0x19C(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x19C(r31)
+	mEyePosition    = eyePos;
+	mTargetPosition = targetPos;
 
-	.loc_0xF4:
-	  lfs       f1, 0x194(r31)
-	  lfs       f0, 0x19C(r31)
-	  fneg      f1, f1
-	  stfs      f0, 0x17C(r31)
-	  lfs       f0, -0x78D0(r13)
-	  stfs      f0, 0x180(r31)
-	  stfs      f1, 0x184(r31)
-	  lfs       f1, 0x17C(r31)
-	  lfs       f0, 0x180(r31)
-	  lfs       f2, 0x184(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x35294
-	  lfs       f0, -0x7BF8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x164
-	  lfs       f0, 0x17C(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x17C(r31)
-	  lfs       f0, 0x180(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x180(r31)
-	  lfs       f0, 0x184(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x184(r31)
+	// make sure eye pos and target pos aren't exactly the same, since we need a direction to point the camera
+	if (mEyePosition.x == mTargetPosition.x && mEyePosition.z == mTargetPosition.z) {
+		mTargetPosition.z += 0.0001f;
+	}
 
-	.loc_0x164:
-	  lwz       r3, 0x194(r31)
-	  lwz       r0, 0x198(r31)
-	  stw       r3, 0x188(r31)
-	  stw       r0, 0x18C(r31)
-	  lwz       r0, 0x19C(r31)
-	  stw       r0, 0x190(r31)
-	  lfs       f1, 0x190(r31)
-	  lfs       f6, 0x180(r31)
-	  lfs       f5, 0x17C(r31)
-	  lfs       f7, 0x18C(r31)
-	  fmuls     f0, f1, f6
-	  lfs       f3, 0x184(r31)
-	  fmuls     f4, f1, f5
-	  lfs       f2, 0x188(r31)
-	  fmuls     f1, f7, f3
-	  fmuls     f3, f2, f3
-	  fmuls     f2, f2, f6
-	  fsubs     f0, f1, f0
-	  fmuls     f1, f7, f5
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x188(r31)
-	  fsubs     f0, f2, f1
-	  stfs      f3, 0x18C(r31)
-	  stfs      f0, 0x190(r31)
-	  lfs       f1, 0x188(r31)
-	  lfs       f0, 0x18C(r31)
-	  lfs       f2, 0x190(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x35348
-	  lfs       f0, -0x7BF8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x218
-	  lfs       f0, 0x188(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x188(r31)
-	  lfs       f0, 0x18C(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x18C(r31)
-	  lfs       f0, 0x190(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x190(r31)
+	// construct target view direction
+	mViewZAxis.x = mEyePosition.x - mTargetPosition.x;
+	mViewZAxis.y = mEyePosition.y - mTargetPosition.y;
+	mViewZAxis.z = mEyePosition.z - mTargetPosition.z;
+	mViewZAxis.normalise();
 
-	.loc_0x218:
-	  addi      r3, r31, 0x1E0
-	  addi      r4, r31, 0x164
-	  addi      r5, r31, 0x17C
-	  addi      r6, r31, 0x188
-	  addi      r7, r31, 0x194
-	  bl        -0x4450
-	  addi      r3, r31, 0x1E0
-	  addi      r4, r31, 0x220
-	  bl        -0x4BA0
-	  lfs       f1, -0x7BD4(r2)
-	  mr        r3, r31
-	  lfs       f2, 0x1CC(r31)
-	  lfs       f3, 0x1D0(r31)
-	  lfs       f4, 0x1D4(r31)
-	  bl        -0x3A0
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	// construct perpendicular direction manually
+	mViewXAxis.set(mViewZAxis.z, 0.0f, -mViewZAxis.x);
+	mViewXAxis.normalise();
+
+	// calculate vertical direction by crossing z and x
+	mViewYAxis = mViewZAxis;
+	mViewYAxis.cross(mViewXAxis);
+	mViewYAxis.normalise();
+
+	// construct lookat matrices
+	mLookAtMtx.makeLookat(mEyePosition, mViewXAxis, mViewYAxis, mViewZAxis);
+	mLookAtMtx.inverse(&mInverseLookAtMtx);
+
+	update(1.0f, _1CC, _1D0, _1D4);
 }
 
 /*
@@ -1899,110 +1434,26 @@ void Camera::camReflect(Camera&, Plane&)
  * Address:	80043048
  * Size:	00017C
  */
-void Camera::projectWorldPoint(Graphics&, Vector3f&)
+f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r6, r3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r5
-	  stw       r30, 0x38(r1)
-	  mr        r30, r4
-	  lfs       f4, 0x2D0(r3)
-	  lfs       f3, 0x0(r5)
-	  lfs       f2, 0x2D4(r3)
-	  lfs       f1, 0x4(r5)
-	  fmuls     f3, f4, f3
-	  lfs       f4, 0x2D8(r3)
-	  fmuls     f1, f2, f1
-	  lfs       f2, 0x8(r5)
-	  lfs       f5, 0x2DC(r3)
-	  fmuls     f2, f4, f2
-	  lfs       f0, -0x7BF8(r2)
-	  fadds     f1, f3, f1
-	  fadds     f1, f2, f1
-	  fadds     f1, f5, f1
-	  fcmpo     cr0, f1, f0
-	  fmr       f31, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x74
-	  fmr       f1, f31
-	  b         .loc_0x160
+	f32 dist = _2A0.mMtx[3][0] * point.x + _2A0.mMtx[3][1] * point.y + _2A0.mMtx[3][2] * point.z + _2A0.mMtx[3][3];
+	if (dist <= 0.0f) {
+		return dist;
+	}
 
-	.loc_0x74:
-	  addi      r3, r31, 0
-	  addi      r4, r6, 0x2A0
-	  bl        -0xB978
-	  lfs       f1, -0x7BD4(r2)
-	  lis       r3, 0x4330
-	  lfs       f0, 0x0(r31)
-	  fdivs     f1, f1, f31
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x0(r31)
-	  lfs       f0, 0x4(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x4(r31)
-	  lfs       f0, 0x8(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x8(r31)
-	  lwz       r0, 0x30C(r30)
-	  lfd       f3, -0x7BC8(r2)
-	  xoris     r0, r0, 0x8000
-	  lfs       f2, -0x7BF0(r2)
-	  stw       r0, 0x34(r1)
-	  lfs       f1, 0x0(r31)
-	  stw       r3, 0x30(r1)
-	  lfd       f0, 0x30(r1)
-	  fsubs     f0, f0, f3
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x0(r31)
-	  lwz       r0, 0x310(r30)
-	  lfs       f1, 0x4(r31)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x2C(r1)
-	  stw       r3, 0x28(r1)
-	  lfd       f0, 0x28(r1)
-	  fsubs     f0, f0, f3
-	  fmuls     f0, f0, f2
-	  fneg      f0, f0
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x4(r31)
-	  lwz       r0, 0x30C(r30)
-	  lfs       f1, 0x0(r31)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x24(r1)
-	  stw       r3, 0x20(r1)
-	  lfd       f0, 0x20(r1)
-	  fsubs     f0, f0, f3
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x0(r31)
-	  lwz       r0, 0x310(r30)
-	  lfs       f1, 0x4(r31)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x1C(r1)
-	  stw       r3, 0x18(r1)
-	  lfd       f0, 0x18(r1)
-	  fsubs     f0, f0, f3
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4(r31)
-	  lfs       f1, 0x8(r31)
+	point.multMatrix(_2A0);
+	f32 norm = 1.0f / dist;
+	point.x *= norm;
+	point.y *= norm;
+	point.z *= norm;
 
-	.loc_0x160:
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	point.x *= gfx.mScreenWidth / 2.0f;
+	point.y *= -(gfx.mScreenHeight / 2.0f);
+
+	point.x += gfx.mScreenWidth / 2.0f;
+	point.y += gfx.mScreenHeight / 2.0f;
+
+	return point.z;
 }
 
 /*
@@ -2049,8 +1500,46 @@ void LightCamera::initLightmap(int p1, int p2)
  * Address:	800433E4
  * Size:	000508
  */
-void LightCamera::calcProjection(Graphics&, bool, Node*)
+void LightCamera::calcProjection(Graphics& gfx, bool p2, Node* p3)
 {
+	f32 targetDist = mEyePosition.distance(mTargetPosition);
+	f32 tanTheta   = sinf(PI * _1CC / 180.0f) / cosf(PI * _1CC / 180.0f);
+	_354           = tanTheta * targetDist;
+	_350           = _354;
+
+	Vector3f vec(_350 * (1.0f / tanTheta), _354 * (1.0f / tanTheta), 1.0f);
+	Vector3f dir;
+	dir.sub2(mEyePosition, mTargetPosition);
+
+	_348 = dir.length() / vec.x;
+	_34C = dir.length() / vec.y;
+
+	_35C.set(0.5f * _348, 0.5f * _34C, 1.0f);
+
+	if (mLightMap && p3) {
+		_348 = 0.5f * (_348 - 1.0f);
+		_34C = 0.5f * (_34C - 1.0f);
+
+		f32 width  = 2.0f * mLightMap->mWidth;
+		f32 height = 2.0f * mLightMap->mHeight;
+		gfx.setPerspective(_260.mMtx, _1CC, _1C4, 30.0f, _1D4, 1.0f);
+
+		gfx.setViewport(RectArea(-(width * _348), -(height * _34C), width + (int(width * _348)), height + (int(height * _34C))));
+
+		Camera* cam = gfx.mCamera;
+		gfx.setClearColour(Colour(0, 0, 0, 0));
+		gfx.clearBuffer(3, 0);
+
+		gfx.setScissor(RectArea(4, 4, int(width) - 4, int(height) - 4));
+		gfx.setFog(false);
+		gfx.setLighting(false, nullptr);
+		gfx.setCamera(cam);
+		gfx.useTexture(nullptr, 0);
+		p3->draw(gfx);
+
+		mLightMap->grabBuffer(mLightMap->mWidth, mLightMap->mHeight, true, true);
+		gfx.setCamera(cam);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

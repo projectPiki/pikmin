@@ -25,7 +25,7 @@ struct Vector3f {
 	}
 
 	inline Vector3f operator*(const Vector3f& other) const { return Vector3f(x * other.x, y * other.y, z * other.z); }
-	inline Vector3f operator*(f32 scale) const { return Vector3f(x * scale, y * scale, z * scale); }
+	inline Vector3f operator*(const f32& scale) const { return Vector3f(x * scale, y * scale, z * scale); }
 	void rotate(struct Matrix4f&);
 	void rotateTo(Matrix4f&, Vector3f&);
 	void multMatrix(Matrix4f&);
@@ -60,13 +60,7 @@ struct Vector3f {
 		return length();
 	}
 
-	inline void sub2(Vector3f& a, Vector3f& b)
-	{
-		f32 newZ = a.getZ() - b.getZ();
-		f32 newY = a.getY() - b.getY();
-		f32 newX = a.getX() - b.getX();
-		set(newX, newY, newZ);
-	}
+	inline void sub2(Vector3f& a, Vector3f& b) { set(a.getX() - b.getX(), a.getY() - b.getY(), a.getZ() - b.getZ()); }
 
 	inline void set(const f32& pX, const f32& pY, const f32& pZ)
 	{
@@ -110,7 +104,7 @@ struct Vector3f {
 
 	inline f32 squaredLength() const { return x * x + y * y + z * z; }
 	inline f32 squaredLength2D() const { return x * x + z * z; }
-	inline f32 length() const { return std::sqrtf(squaredLength()); }
+	inline f32 length() const { return std::sqrtf(x * x + y * y + z * z); }
 	inline f32 length2D() const { return std::sqrtf(squaredLength2D()); }
 
 	// seems good according to InteractBomb::actPiki
@@ -146,6 +140,63 @@ struct Vector3f {
 
 	void reset() { set(Vector3f(0.0f, 0.0f, 0.0f)); }
 
+	void lerpTo(Vector3f& other, f32 t, Vector3f& outVec)
+	{
+		outVec.x = (other.x - x) * t + x;
+		outVec.y = (other.y - y) * t + y;
+		outVec.z = (other.z - z) * t + z;
+	}
+
+	void bounce(Vector3f& surface, f32 elasticity)
+	{
+		f32 dp = -dot(surface) * elasticity;
+		if (dp > 0.0f) {
+			x = dp * surface.x + x;
+			y = dp * surface.y + y;
+			z = dp * surface.z + z;
+		}
+	}
+
+	bool isSame(Vector3f& other)
+	{
+		if (absF(x - other.x) < 0.0001f && absF(y - other.y) < 0.0001f && absF(z - other.z) < 0.0001f) {
+			return true;
+		}
+		return false;
+	}
+
+	void cross(Vector3f& vec1, Vector3f& vec2)
+	{
+		x = vec1.y * vec2.z - vec1.z * vec2.y;
+		y = vec1.z * vec2.x - vec1.x * vec2.z;
+		z = vec1.x * vec2.y - vec1.y * vec2.x;
+	}
+
+	void cross(Vector3f& vec2)
+	{
+		Vector3f tmp;
+		tmp.x = y * vec2.z - z * vec2.y;
+		tmp.y = z * vec2.x - x * vec2.z;
+		tmp.z = x * vec2.y - y * vec2.x;
+		x     = tmp.x;
+		y     = tmp.y;
+		z     = tmp.z;
+	}
+
+	void multiply(f32 scale)
+	{
+		x *= scale;
+		y *= scale;
+		z *= scale;
+	}
+
+	void add(Vector3f& other)
+	{
+		x += other.x;
+		y += other.y;
+		z += other.z;
+	}
+
 	// unused/inlined:
 	void rotateTranspose(Matrix4f&);
 	void rotate(Quat&);
@@ -171,6 +222,12 @@ inline Vector3f cross(Vector3f& vec1, Vector3f& vec2)
 struct Vector2f {
 	Vector2f() { }
 	Vector2f(const f32& x, const f32& y);
+
+	void set(f32 _x, f32 _y)
+	{
+		x = _x;
+		y = _y;
+	}
 
 	f32 x, y; // _00, _04
 };

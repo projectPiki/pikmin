@@ -95,7 +95,7 @@ void Plane::frictionVector(Vector3f&, f32)
  */
 void CullingPlane::CheckMinMaxDir()
 {
-	if (_00.x < 0.0f) {
+	if (mPlane.mNormal.x < 0.0f) {
 		_10 = 3;
 		_1C = 0;
 	} else {
@@ -103,7 +103,7 @@ void CullingPlane::CheckMinMaxDir()
 		_1C = 3;
 	}
 
-	if (_00.y < 0.0f) {
+	if (mPlane.mNormal.y < 0.0f) {
 		_14 = 4;
 		_20 = 1;
 	} else {
@@ -111,7 +111,7 @@ void CullingPlane::CheckMinMaxDir()
 		_20 = 4;
 	}
 
-	if (_00.z < 0.0f) {
+	if (mPlane.mNormal.z < 0.0f) {
 		_18 = 5;
 		_24 = 2;
 	} else {
@@ -323,9 +323,12 @@ void Quat::multiply(Quat& other)
  * Address: ........
  * Size:    000104
  */
-void Quat::multiplyTo(Quat&, Quat&)
+void Quat::multiplyTo(Quat& other, Quat& outQuat)
 {
-	// UNUSED FUNCTION
+	outQuat.s   = other.s * s - other.v.x * v.x - other.v.y * v.y - other.v.z * v.z;
+	outQuat.v.x = (other.v.y * v.z + (other.s * v.x + other.v.x * s)) - other.v.z * v.y;
+	outQuat.v.y = (other.v.z * v.x + (other.s * v.y + other.v.y * s)) - other.v.x * v.z;
+	outQuat.v.z = (other.v.x * v.y + (other.s * v.z + other.v.z * s)) - other.v.y * v.x;
 }
 
 /*
@@ -446,19 +449,28 @@ void Quat::slerp(Quat& other, f32 t, int)
  */
 void Quat::fromEuler(Vector3f& angles)
 {
+	Quat psiQ;
+	Quat thetaQ;
+	Quat phiQ;
 	f32 psi   = 0.5f * angles.x;
 	f32 theta = 0.5f * angles.y;
 	f32 phi   = 0.5f * angles.z;
 
-	f32 sinPsi = sinf(psi); // f30
-	f32 cosPsi = cosf(psi); // f27
+	f32 sinPsi = sinf(psi);
+	f32 cosPsi = cosf(psi);
 
-	f32 sinTheta = sinf(theta); // f28
-	f32 cosTheta = cosf(theta); // f29
+	f32 sinTheta = sinf(theta);
+	f32 cosTheta = cosf(theta);
 
-	f32 sinPhi = sinf(phi); // f31
-	f32 cosPhi = cosf(phi); // f1
+	f32 sinPhi = sinf(phi);
+	f32 cosPhi = cosf(phi);
 
+	psiQ.set(sinPsi, 0.0f, 0.00, cosPsi);
+	thetaQ.set(0.0f, sinTheta, 0.0f, cosTheta);
+	phiQ.set(0.0f, 0.0f, sinPhi, cosPhi);
+
+	psiQ.multiplyTo(thetaQ, *this);
+	multiplyTo(phiQ, *this);
 	normalise();
 	/*
 	.loc_0x0:
@@ -1326,8 +1338,32 @@ void BoundBox::draw(Graphics&)
  * Address: 80038F3C
  * Size:    0000E8
  */
-void pointInsideTri(KTri&, Vector3f&)
+bool pointInsideTri(KTri& tri, Vector3f& point)
 {
+	Vector3f A;
+	A           = tri.mVertA;
+	Vector3f AB = A + tri.mSideAB;
+	Vector3f AC = A + tri.mSideAC;
+
+	Vector3f B = AB - A;
+	Vector3f C = AC - AB;
+	Vector3f D = A - AC;
+
+	if (B.z * (point.x - A.x) - B.x * (point.z - A.z) > 0.0f) {
+		return false;
+	}
+
+	if (C.z * (point.x - AB.x) - C.x * (point.z - AB.z) > 0.0f) {
+		return false;
+	}
+
+	if (D.z * (point.x - AC.x) - D.x * (point.z - AC.z) > 0.0f) {
+		return false;
+	}
+
+	FORCE_DONT_INLINE;
+
+	return true;
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x200(r1)
@@ -1404,8 +1440,67 @@ void pointInsideTri(KTri&, Vector3f&)
  * Address: 80039024
  * Size:    000260
  */
-f32 triRectDistance(Vector3f*, Vector3f*, Vector3f*, BoundBox&, bool)
+f32 triRectDistance(Vector3f* vecA, Vector3f* vecB, Vector3f* vecC, BoundBox& box, bool p5)
 {
+	// project triangle points down onto plane
+	Vector3f A(*vecA); // 0x148
+	Vector3f B(*vecB); // 0x13C
+	Vector3f C(*vecC); // 0x130
+
+	A.y = B.y = C.y = 0.0f;
+
+	KTri tri;
+	KRect rect;
+
+	tri.set(A, B, C);
+
+	// set rectangle points from XZ of bounding box, projected down to plane
+	Vector3f botLeft;  // 0xDC
+	Vector3f topLeft;  // 0xD0
+	Vector3f botRight; // 0xC4
+	Vector3f topRight; // 0xB8
+
+	botLeft   = box.mMin;
+	botLeft.y = 0.0f;
+
+	Vector3f boxDiffXZ(box.mMax.x - box.mMin.x, 0.0f, box.mMax.z - box.mMin.z);
+
+	topLeft  = botLeft + Vector3f(boxDiffXZ.x, 0.0f, 0.0f);
+	botRight = botLeft + Vector3f(0.0f, 0.0f, boxDiffXZ.z);
+	topRight = botLeft + boxDiffXZ;
+
+	rect.mBotTri.set(botLeft, topLeft, botRight);
+
+	if (rect.inside(A)) {
+		return 0.0f;
+	}
+	if (rect.inside(B)) {
+		return 0.0f;
+	}
+	if (rect.inside(C)) {
+		return 0.0f;
+	}
+
+	if (pointInsideTri(tri, botLeft)) {
+		return 0.0f;
+	}
+
+	if (pointInsideTri(tri, topLeft)) {
+		return 0.0f;
+	}
+
+	if (pointInsideTri(tri, botRight)) {
+		return 0.0f;
+	}
+
+	if (pointInsideTri(tri, topRight)) {
+		return 0.0f;
+	}
+
+	f32 a, b, c, d;
+	u32 badCompiler[7];
+	return distanceTriRect(tri, rect, &a, &b, &c, &d);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1586,8 +1681,20 @@ f32 triRectDistance(Vector3f*, Vector3f*, Vector3f*, BoundBox&, bool)
  * Address: 80039284
  * Size:    0001A8
  */
-f32 distanceTriRect(KTri&, KRect&, f32*, f32*, f32*, f32*)
+f32 distanceTriRect(KTri& tri, KRect& rect, f32* p3, f32* p4, f32* p5, f32* p6)
 {
+	f32 sqrDist = sqrDistance(tri, rect, p3, p4, p5, p6);
+
+	Vector3f vec;
+	vec = tri.mVertA + tri.mSideAB * *p3 + tri.mSideAC * *p4;
+
+	if (rect.inside(vec)) {
+		return 0.0f;
+	}
+
+	u32 badCompiler[4];
+	return std::sqrtf(sqrDist);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1714,11 +1821,10 @@ f32 distanceTriRect(KTri&, KRect&, f32*, f32*, f32*, f32*)
  */
 bool KRect::inside(Vector3f& point)
 {
-	f32 minX = _00.x;
-	f32 minZ = _00.z;
-	f32 maxX = _00.x + _0C.x + _18.x;
-	f32 maxZ = _00.z + _0C.z + _18.z;
-	if (point.x >= minX && point.x <= maxX && point.z >= minZ && point.z <= maxZ) {
+	Vector3f botLeft(mBotTri.mVertA);
+	Vector3f topRight(mBotTri.mVertA.x + mBotTri.mSideAB.x + mBotTri.mSideAC.x, 0.0f,
+	                  mBotTri.mVertA.z + mBotTri.mSideAB.z + mBotTri.mSideAC.z);
+	if (point.x >= botLeft.x && point.x <= topRight.x && point.z >= botLeft.z && point.z <= topRight.z) {
 		return true;
 	}
 	return false;
@@ -1769,11 +1875,11 @@ KTri::KTri() { }
  * Address: 800394C8
  * Size:    0000C4
  */
-void KTri::set(Vector3f& vecA, Vector3f& vecB, Vector3f& vecC)
+void KTri::set(Vector3f& pointA, Vector3f& pointB, Vector3f& pointC)
 {
-	_00 = vecA;
-	_0C = vecB - vecA;
-	_18 = vecC - vecA;
+	mVertA  = pointA;
+	mSideAB = pointB - pointA;
+	mSideAC = pointC - pointA;
 }
 
 /*

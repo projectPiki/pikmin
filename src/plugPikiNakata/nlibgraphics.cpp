@@ -122,7 +122,7 @@ void NCamera::makeMatrix()
  */
 void NCamera::makeCamera()
 {
-	mCamera->mPosition.set(mEyePosition);
+	mCamera->mEyePosition.set(mEyePosition);
 	NVector3f directionVec(mTargetPosition, mEyePosition);
 
 	// Calculate the rotation of the camera based on the direction

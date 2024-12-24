@@ -58,8 +58,8 @@ f64 __setflm(f64);
 
 static inline f32 sqrtf(f32 x)
 {
-	static const f64 _half  = .5;
-	static const f64 _three = 3.0;
+	const f64 _half  = .5;
+	const f64 _three = 3.0;
 
 	vf32 y;
 	if (x > 0.0f) {
@@ -74,7 +74,7 @@ static inline f32 sqrtf(f32 x)
 	return x;
 }
 
-static inline f32 absF(f32 val) { return __fabs(val); }
+static inline f32 absF(f32 val) { return (f32)__fabsf(val); }
 
 static inline f32 absVal(f32 val) { return (val < 0.0f) ? -val : val; }
 

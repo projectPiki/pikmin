@@ -127,6 +127,7 @@ struct Texture : public GfxObject {
 	f32 _28;           // _28
 	f32 _2C;           // _2C
 	u32 _30;           // _30
+	u8 _34[0x8];       // _34, unknown
 };
 
 /**

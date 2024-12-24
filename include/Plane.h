@@ -6,9 +6,11 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct Plane {
-	Plane();
+	Plane() { }
 
 	// unused/inlined:
 	bool equal(Plane&);
@@ -19,7 +21,7 @@ struct Plane {
 	void frictionVector(Vector3f&, f32);
 
 	Vector3f mNormal; // _00
-	f32 mOffset;      // _10
+	f32 mOffset;      // _0C
 };
 
 #endif

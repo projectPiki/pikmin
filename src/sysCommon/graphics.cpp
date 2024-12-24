@@ -3217,23 +3217,6 @@ CollTriInfo::CollTriInfo()
 
 /*
  * --INFO--
- * Address:	8002826C
- * Size:	000014
- */
-Plane::Plane()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x7DD4(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	80028280
  * Size:	000034
  */

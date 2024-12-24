@@ -12,29 +12,21 @@ struct Matrix4f;
 struct KTri {
 	KTri();
 
-	void set(Vector3f&, Vector3f&, Vector3f&);
+	void set(Vector3f& pointA, Vector3f& pointB, Vector3f& pointC);
 
-	Vector3f _00; // _00
-	Vector3f _0C; // _0C
-	Vector3f _18; // _18
+	// set clockwise
+	Vector3f mVertA;  // _00, vertex
+	Vector3f mSideAB; // _0C, line from vertex A to vertex B
+	Vector3f mSideAC; // _18, line from vertex A to vertex C
 };
 
 /**
  * @brief TODO
  */
 struct KRect {
-	bool inside(Vector3f&);
+	bool inside(Vector3f& point);
 
-	Vector3f _00; // _00
-	Vector3f _0C; // _0C
-	Vector3f _18; // _18
-	              // f32 _0C; // _0C
-	              // u8 _10[0x4]; // _10, unknown
-	              // f32 _14; // _14
-	              // f32 _18; // _18
-	              // u8 _1C[0x4]; // _1C, unknown
-	              // f32 _20; // _20
-	              // TODO: members
+	KTri mBotTri; // _00, bottom left point, left side, bottom side
 };
 
 /**
@@ -44,7 +36,8 @@ struct KSegment {
 	// unused/inlined:
 	KSegment();
 
-	// TODO: members
+	Vector3f mPoint;     // _00
+	Vector3f mDirection; // _0C
 };
 
 // Global utility functions:

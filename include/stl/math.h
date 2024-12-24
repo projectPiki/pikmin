@@ -110,37 +110,8 @@ f64 __setflm(f64);
 
 inline f128 fabsl(f128 x) { return __fabs((f64)x); }
 
-/**
- * kludges for emulating inlined f versions of funcs.
- * Replace these with tanf/sinf/cosf once we have library support in the build chain.
- * If my theory is correct, those functions will become inlined by code using libDolphin as a library.
- */
-
-inline f32 tanf_kludge(f32 __x) { return tan((f64)__x); }
-inline f32 sinf_kludge(f32 __x) { return sin((f64)__x); }
-inline f32 cosf_kludge(f32 __x) { return cos((f64)__x); }
-
 #ifdef __cplusplus
 };
 #endif // ifdef __cplusplus
-
-static inline f32 dolsqrtf(f32 x)
-{
-	static const f64 _half  = .5;
-	static const f64 _three = 3.0;
-	vf32 y;
-	if (x > 0.0f) {
-
-		f64 guess = __frsqrte((f64)x);                            // returns an approximation to
-		guess     = _half * guess * (_three - guess * guess * x); // now have 12 sig bits
-		guess     = _half * guess * (_three - guess * guess * x); // now have 24 sig bits
-		guess     = _half * guess * (_three - guess * guess * x); // now have 32 sig bits
-		y         = (f32)(x * guess);
-		return y;
-	}
-	return x;
-}
-
-static inline f32 scaleValue(f32 scale, f32 value) { return scale * value; }
 
 #endif

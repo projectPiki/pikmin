@@ -67,4 +67,8 @@ struct Matrix4f {
 	Mtx44 mMtx; // _00-_40
 };
 
+// this is a weird place to put these, but they get initialised in matMath.cpp, so?
+extern f32 sintable[0x1000];
+extern f32 costable[0x1000];
+
 #endif

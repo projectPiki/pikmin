@@ -57,9 +57,11 @@ struct Graphics {
 	Camera* mCamera;            // _2E4
 	u32 _2E8;                   // _2E8
 	u8 _2EC[0x30C - 0x2EC];     // _2EC, unknown
-	int mScreenWidth;           // _30C, maybe viewport width?
-	int mScreenHeight;          // _310, maybe viewport height?
-	u8 _314[0x338 - 0x314];     // _2E8, unknown
+	int mScreenWidth;           // _30C
+	int mScreenHeight;          // _310
+	u8 _314[0x324 - 0x314];     // _2E8, unknown
+	u32 _324;                   // _324, unknown
+	u8 _328[0x338 - 0x328];     // _328, unknown
 	LightCamera* mLightCam;     // _338
 	u8 _33C[0x368 - 0x33C];     // _33C, unknown
 	Colour _368;                // _368
@@ -78,7 +80,7 @@ struct Graphics {
 	virtual void initRender(int, int);                                                     // _24
 	virtual void resetCopyFilter() = 0;                                                    // _28
 	virtual void setAmbient();                                                             // _2C
-	virtual void setLighting(bool, PVWLightingInfo*)          = 0;                         // _30
+	virtual bool setLighting(bool, PVWLightingInfo*)          = 0;                         // _30
 	virtual void setLight(Light*, int)                        = 0;                         // _34
 	virtual void clearBuffer(int, bool)                       = 0;                         // _38
 	virtual void setPerspective(Mtx, f32, f32, f32, f32, f32) = 0;                         // _3C
@@ -145,7 +147,7 @@ struct DGXGraphics : public Graphics {
 	virtual void initRender(int, int);                                                 // _24
 	virtual void resetCopyFilter();                                                    // _28
 	virtual void setAmbient();                                                         // _2C
-	virtual void setLighting(bool, PVWLightingInfo*);                                  // _30
+	virtual bool setLighting(bool, PVWLightingInfo*);                                  // _30
 	virtual void setLight(Light*, int);                                                // _34
 	virtual void clearBuffer(int, bool);                                               // _38
 	virtual void setPerspective(Mtx, f32, f32, f32, f32, f32);                         // _3C
