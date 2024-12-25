@@ -117,7 +117,7 @@ struct AnimDataInfo {
 	AnimParam mRotation[3];    // _24, x y and z
 	AnimParam mTranslation[3]; // _48, x y and z
 	int mGroupIndex;           // _6C
-	int mParentJntIndex;       // _70
+	AnimDataInfo* mParentInfo; // _70
 	Matrix4f mMtx;             // _74
 	SRT mSRT;                  // _B4
 	u16 mFlags;                // _D8

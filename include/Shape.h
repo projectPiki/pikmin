@@ -74,10 +74,10 @@ struct ShapeDynMaterials {
 	void animate(f32*);
 	void updateContext();
 
-	u32 _00; // _00
-	u32 _04; // _04
-	u32 _08; // _08
-	u32 _0C; // _0C
+	u32 _00;       // _00
+	u32 _04;       // _04
+	Material* _08; // _08
+	u32 _0C;       // _0C
 };
 
 /**
@@ -117,7 +117,7 @@ struct BaseShape : public CoreNode {
 	virtual void update();                  // _14
 	virtual void render(struct Graphics&);  // _18
 	virtual void render2d(Graphics&);       // _1C
-	virtual void makeRouteGroup();          // _20
+	virtual RouteGroup* makeRouteGroup();   // _20
 
 	void importIni(RandomAccessStream&);
 	void countMaterials(Joint*, u32);
@@ -177,8 +177,8 @@ struct BaseShape : public CoreNode {
 	Mesh* mMeshList;                  // _54
 	s32 mJointCount;                  // _58
 	Joint* mJointList;                // _5C
-	s32 mRouteGroupCount;             // _60
-	RouteGroup* mRouteGroupList;      // _64
+	s32 _60;                          // _60
+	s32* _64;                         // _64
 	s32 mTexAttrCount;                // _68
 	TexAttr* mTexAttrList;            // _6C
 	s32 _70;                          // _70
@@ -215,7 +215,7 @@ struct BaseShape : public CoreNode {
 	u8 _294[0x4];                     // _294
 	u32 _298;                         // _298
 	u32 _29C;                         // _29C
-	u32 _2A0;                         // _2A0
+	Texture* _2A0;                    // _2A0
 	u32 _2A4;                         // _2A4
 	u32 _2A8;                         // _2A8
 	u8 _2AC;                          // _2AC

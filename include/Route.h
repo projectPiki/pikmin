@@ -14,20 +14,6 @@ struct MapMgr;
 /**
  * @brief TODO
  */
-struct RoutePoint : public CoreNode {
-	RoutePoint();
-
-	void loadini(CmdStream*);
-
-	// unused/inlined:
-	void refresh(Graphics&);
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
 struct EditNode : public CoreNode {
 	virtual void msgCommand(DataMsg&) { }      // _10 (weak)
 	virtual void render2d(Graphics&, int&) {}; // _14 (weak)
@@ -39,6 +25,42 @@ struct EditNode : public CoreNode {
 
 /**
  * @brief TODO
+ */
+struct RouteLink : public CoreNode {
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	u32 mLinkIndex; // _14
+};
+
+/**
+ * @brief TODO
+ */
+struct RoutePoint : public CoreNode {
+	RoutePoint();
+
+	void loadini(CmdStream*);
+
+	// unused/inlined:
+	void refresh(Graphics&);
+
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	u32 _14;         // _14
+	u32 _18;         // _18
+	u32 _1C;         // _1C
+	u32 _20;         // _20
+	u32 _24;         // _24
+	u32 _28;         // _28
+	u32 _2C;         // _2C
+	u32 _30;         // _30
+	u32 _34;         // _34
+	u32 _38;         // _38
+	RouteLink mLink; // _3C
+};
+
+/**
+ * @brief TODO
+ * @note Size: 0xC0.
  */
 struct RouteGroup : public EditNode {
 	RouteGroup();
@@ -53,16 +75,13 @@ struct RouteGroup : public EditNode {
 
 	// _00     = VTBL
 	// _00-_14 = EditNode?
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct RouteLink : public CoreNode {
-	// _00     = VTBL
-	// _00-_14 = CoreNode
-	// TODO: members
+	Colour mColour;          // _14
+	char mRouteName[0x40];   // _18
+	u32 _58;                 // _58
+	char _5C[8];             // _5C
+	BaseShape* mParentShape; // _64
+	RoutePoint mPoint;       // _68
+	u32 _BC;                 // _BC
 };
 
 /**
@@ -87,8 +106,7 @@ struct WayPoint {
  * @brief TODO
  */
 struct RouteMgr : public Node {
-	struct Group {
-	};
+	struct Group { };
 
 	RouteMgr();
 

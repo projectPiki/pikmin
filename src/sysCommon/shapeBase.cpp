@@ -3,6 +3,7 @@
 #include "Joint.h"
 #include "Mesh.h"
 #include "Shape.h"
+#include "timers.h"
 #include "Colour.h"
 #include "Material.h"
 #include "Collision.h"
@@ -22,7 +23,9 @@
 Vector3f fnVerts[0x200];
 Vector2f fnNorms[0x200];
 Texture* fnTexs = nullptr;
-int matUsed     = 0;
+int* matUsed;
+int matIndex;
+int usedIndex;
 
 /*
  * --INFO--
@@ -4010,15 +4013,14 @@ void AnimDca::getAnimInfo(CmdStream*)
  */
 AnimDck::AnimDck(BaseShape* model, int joints)
 {
-	// TODO: https://decomp.me/scratch/SFdPs
 	mModel     = model;
 	mNumJoints = joints;
 	mNumFrames = 0;
 	mAnimInfo  = new AnimDataInfo[mNumJoints];
 
 	for (int i = 0; i < joints; i++) {
-		int parentIndex              = model->mJointList[i].mParentIndex;
-		mAnimInfo[i].mParentJntIndex = parentIndex == -1 ? 0 : mAnimInfo[parentIndex].mParentJntIndex;
+		int parentIndex          = model->mJointList[i].mParentIndex;
+		mAnimInfo[i].mParentInfo = parentIndex == -1 ? nullptr : &mAnimInfo[parentIndex];
 	}
 }
 
@@ -4502,7 +4504,7 @@ void AnimDck::parse(CmdStream* stream)
 				} else if (stream->isToken("parent")) {
 					sscanf(stream->getToken(true), "%d", temp);
 					stream->getToken(true);
-					mAnimInfo[temp[0]].mParentJntIndex = (temp[1] == -1) ? 0 : mAnimInfo[temp[1]].mParentJntIndex;
+					mAnimInfo[temp[0]].mParentInfo = (temp[1] == -1) ? 0 : mAnimInfo[temp[1]].mParentInfo;
 				} else if (stream->isToken("child")) {
 					stream->getToken(true);
 					stream->getToken(true);
@@ -6101,33 +6103,11 @@ void BaseShape::importIni(RandomAccessStream&)
  * Address:	8002F04C
  * Size:	000050
  */
-void BaseShape::makeRouteGroup()
+RouteGroup* BaseShape::makeRouteGroup()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  li        r3, 0xC0
-	  bl        0x17F9C
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x30
-	  bl        0x7580
-
-	.loc_0x30:
-	  stw       r30, 0x64(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	RouteGroup* newGroup   = new RouteGroup;
+	newGroup->mParentShape = this;
+	return newGroup;
 }
 
 /*
@@ -6135,8 +6115,19 @@ void BaseShape::makeRouteGroup()
  * Address:	8002F09C
  * Size:	0000F4
  */
-void ShapeDynMaterials::animate(f32*)
+void ShapeDynMaterials::animate(f32* data)
 {
+#ifndef __MWERKS__
+	gsys->mTimer->_start("shpDynMats", true);
+#endif
+
+	for (int i = 0; i < _04; i++) {
+		Material& m = _08[i]; // Guess, guess, guessing
+	}
+
+#ifndef __MWERKS__
+	gsys->mTimer->_stop("shpDynMats");
+#endif
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -6398,12 +6389,12 @@ BaseShape::BaseShape()
 	mEnvelopeCount = 0;
 	mEnvelopeList  = nullptr;
 
-	mJointCount      = 0;
-	mJointList       = nullptr;
-	mRouteGroupCount = 0;
-	mRouteGroupList  = nullptr;
-	mTexAttrCount    = 0;
-	mTextureCount    = 0;
+	mJointCount   = 0;
+	mJointList    = nullptr;
+	_60           = 0;
+	_64           = nullptr;
+	mTexAttrCount = 0;
+	mTextureCount = 0;
 
 	mCurrentAnimContext = 0;
 	mFrameCacher        = nullptr;
@@ -6444,8 +6435,10 @@ BaseShape::BaseShape()
  * Address:	8002F684
  * Size:	00016C
  */
-void BaseShape::countMaterials(Joint*, u32)
+void BaseShape::countMaterials(Joint* pJnt, u32 a3)
 {
+	int* mat = &matUsed[matIndex];
+	for (int i = 0; i < mMaterialCount; i++) { }
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x20(r1)
@@ -11578,6 +11571,30 @@ void BaseShape::initIni(bool)
  */
 void BaseShape::initialise()
 {
+	for (int i = 0; i < mTexAttrCount; i++) {
+		if ((mTexAttrList[i].mTextureIndex & 0x8000) != 0) {
+			if (!mTexAttrList[i].mTexture) {
+				mTexAttrList[i].mTexture = _2A0;
+			}
+		} else {
+			mTexAttrList[i].mImage         = &mTextureList[i];
+			mTexAttrList[i].mImage->mIndex = mTexAttrList[i].mTextureIndex & 0x7FFF;
+			mTexAttrList[i].initImage();
+		}
+	}
+
+	mCurrentAnimContext = new AnimContext();
+
+	importDck(nullptr, nullptr);
+	calcBasePose(Matrix4f::ident);
+	if (mJointCount) {
+		mAnimContextList = new AnimContext*[mJointCount];
+
+		for (int i = 0; i < mJointCount; i++) {
+			mAnimContextList[i] = mCurrentAnimContext;
+		}
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
