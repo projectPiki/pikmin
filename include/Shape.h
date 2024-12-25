@@ -158,67 +158,67 @@ struct BaseShape : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 mSystemFlags;               // _14
-	u32 _18;                        // _18, current animation
-	AnimContext** mAnimContextList; // _1C
-	u32 _20;                        // _20
-	AnimFrameCacher* mFrameCacher;  // _24
-	Matrix4f* mAnimMatrices;        // _28
-	u32 _2C;                        // _2C
-	s32 mEnvelopeCount;             // _30
-	Envelope* mEnvelopeList;        // _34
-	s32 mVtxMatrixCount;            // _38
-	VtxMatrix* mVtxMatrixList;      // _3C
-	s32 mMaterialCount;             // _40
-	Material* mMaterialList;        // _44
-	s32 mTevInfoCount;              // _48
-	PVWTevInfo* mTevInfoList;       // _4C
-	s32 mMeshCount;                 // _50
-	Mesh* mMeshList;                // _54
-	s32 mJointCount;                // _58
-	Joint* mJointList;              // _5C
-	s32 mRouteGroupCount;           // _60
-	RouteGroup* mRouteGroupList;    // _64
-	s32 mTexAttrCount;              // _68
-	TexAttr* mTexAttrList;          // _6C
-	s32 _70;                        // _70
-	s32 mTextureCount;              // _74
-	TexImg* mTextureList;           // _78
-	LightGroup mLightGroup;         // _7C
-	ObjCollInfo mCollisionInfo;     // _E8
-	u32 _13C;                       // _13C
-	BoundBox _140;                  // _140
-	u8 _158[0x164 - 0x158];         // _158
-	u32 _164;                       // _164
-	u32 _168;                       // _168
-	u32 _16C;                       // _16C
-	u32 _170;                       // _170
-	u32 _174;                       // _174
-	RouteGroup mRouteGroup;         // _178
-	u8 _18C[0x238 - 0x18C];         // _18C
-	u32 _238;                       // _238
-	u32 _23C;                       // _23C
-	u8 _240[0x4];                   // _240
-	u32 _244;                       // _244
-	u32 _248;                       // _248
-	u8 _24C[0x26C - 0x24C];         // _18C
-	u32 _26C;                       // _26C
-	u32 _270;                       // _270
-	u32 _274;                       // _274
-	u32 _278;                       // _278
-	u32 _27C;                       // _27C
-	u32 _280;                       // _280
-	u32 _284;                       // _284
-	u32 _288;                       // _288
-	u8 _28C[0x4];                   // _28C
-	u32 _290;                       // _290
-	u8 _294[0x4];                   // _294
-	u32 _298;                       // _298
-	u32 _29C;                       // _29C
-	u32 _2A0;                       // _2A0
-	u32 _2A4;                       // _2A4
-	u32 _2A8;                       // _2A8
-	u8 _2AC;                        // _2AC
+	u32 mSystemFlags;                 // _14
+	AnimContext* mCurrentAnimContext; // _18, current animation
+	AnimContext** mAnimContextList;   // _1C
+	u32 _20;                          // _20
+	AnimFrameCacher* mFrameCacher;    // _24
+	Matrix4f* mAnimMatrices;          // _28
+	u32 _2C;                          // _2C
+	s32 mEnvelopeCount;               // _30
+	Envelope* mEnvelopeList;          // _34
+	s32 mVtxMatrixCount;              // _38
+	VtxMatrix* mVtxMatrixList;        // _3C
+	s32 mMaterialCount;               // _40
+	Material* mMaterialList;          // _44
+	s32 mTevInfoCount;                // _48
+	PVWTevInfo* mTevInfoList;         // _4C
+	s32 mMeshCount;                   // _50
+	Mesh* mMeshList;                  // _54
+	s32 mJointCount;                  // _58
+	Joint* mJointList;                // _5C
+	s32 mRouteGroupCount;             // _60
+	RouteGroup* mRouteGroupList;      // _64
+	s32 mTexAttrCount;                // _68
+	TexAttr* mTexAttrList;            // _6C
+	s32 _70;                          // _70
+	s32 mTextureCount;                // _74
+	TexImg* mTextureList;             // _78
+	LightGroup mLightGroup;           // _7C
+	ObjCollInfo mCollisionInfo;       // _E8
+	u32 _13C;                         // _13C
+	BoundBox _140;                    // _140
+	u8 _158[0x164 - 0x158];           // _158
+	u32 _164;                         // _164
+	u32 _168;                         // _168
+	u32 _16C;                         // _16C
+	u32 _170;                         // _170
+	u32 _174;                         // _174
+	RouteGroup mRouteGroup;           // _178
+	u8 _18C[0x238 - 0x18C];           // _18C
+	u32 _238;                         // _238
+	u32 _23C;                         // _23C
+	u8 _240[0x4];                     // _240
+	u32 _244;                         // _244
+	u32 _248;                         // _248
+	u8 _24C[0x26C - 0x24C];           // _18C
+	u32 _26C;                         // _26C
+	u32 _270;                         // _270
+	u32 _274;                         // _274
+	u32 _278;                         // _278
+	u32 _27C;                         // _27C
+	u32 _280;                         // _280
+	u32 _284;                         // _284
+	u32 _288;                         // _288
+	u8 _28C[0x4];                     // _28C
+	u32 _290;                         // _290
+	u8 _294[0x4];                     // _294
+	u32 _298;                         // _298
+	u32 _29C;                         // _29C
+	u32 _2A0;                         // _2A0
+	u32 _2A4;                         // _2A4
+	u32 _2A8;                         // _2A8
+	u8 _2AC;                          // _2AC
 
 	// OLD - idk what this is from but it's not correct.
 	// s32 mSystemUsed;                   // _14

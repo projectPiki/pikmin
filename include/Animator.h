@@ -12,6 +12,7 @@
 #include "String.h"
 #include "Texture.h"
 #include "CmdStream.h"
+#include "system.h"
 
 struct AnimMgr;
 struct BaseShape;
@@ -161,7 +162,7 @@ struct AnimData : public CoreNode {
 	int mNumFrames;                   // _30
 	BaseShape* mModel;                // _34
 	int _38;                          // _38
-	int _3C;                          // _3C
+	AnimDataInfo* mAnimInfo;          // _3C
 	AnimCacheInfo* mAnimInfoList;     // _40
 };
 
@@ -169,6 +170,11 @@ struct AnimData : public CoreNode {
  * @brief TODO
  */
 struct AnimDca : public AnimData {
+	AnimDca(char* name)
+	    : AnimData(StdSystem::stringDup(name))
+	{
+	}
+
 	virtual void read(RandomAccessStream&); // _0C
 
 	void parse(CmdStream*);
@@ -183,6 +189,10 @@ struct AnimDca : public AnimData {
  */
 struct AnimDck : public AnimData {
 	AnimDck(BaseShape*, int);
+	AnimDck(char* name)
+	    : AnimData(StdSystem::stringDup(name))
+	{
+	}
 
 	virtual void read(RandomAccessStream&);                                  // _0C
 	virtual void extractSRT(SRT&, int, AnimDataInfo*, f32);                  // _10
@@ -192,9 +202,7 @@ struct AnimDck : public AnimData {
 	void getAnimInfo(CmdStream*);
 
 	// _00     = VTBL
-	// _00-_38 = AnimData
-	AnimDataInfo* mAnimInfo;   // _3C
-	AnimCacheInfo* mCacheInfo; // _40
+	// _00-_44 = AnimData
 };
 
 /**

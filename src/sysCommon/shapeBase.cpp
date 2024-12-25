@@ -17,6 +17,13 @@
 #include "Graphics.h"
 #include "dolphin/mtx.h"
 #include "DebugLog.h"
+
+// TODO: This is wrong, see sinit
+Vector3f fnVerts[0x200];
+Vector2f fnNorms[0x200];
+Texture* fnTexs = nullptr;
+int matUsed     = 0;
+
 /*
  * --INFO--
  * Address:	........
@@ -1992,55 +1999,21 @@ void SceneData::parse(CmdStream* stream)
  * Address:	8002BC7C
  * Size:	0000A0
  */
-void DataChunk::addData(f32)
+void DataChunk::addData(f32 data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x0(r3)
-	  lwz       r0, 0x4(r30)
-	  cmpw      r3, r0
-	  blt-      .loc_0x6C
-	  addi      r0, r3, 0x800
-	  stw       r0, 0x4(r30)
-	  lwz       r0, 0x4(r30)
-	  rlwinm    r3,r0,2,0,29
-	  bl        0x1B348
-	  lwz       r0, 0x0(r30)
-	  addi      r31, r3, 0
-	  cmpwi     r0, 0
-	  beq-      .loc_0x60
-	  lwz       r4, 0x8(r30)
-	  rlwinm    r5,r0,2,0,29
-	  bl        -0x288C4
+	if (mDataIndex >= mDataSize) {
+		mDataSize      = mDataIndex + 0x800;
+		float* newData = new float[mDataSize];
 
-	.loc_0x60:
-	  lwz       r3, 0x8(r30)
-	  bl        0x1B4CC
-	  stw       r31, 0x8(r30)
+		if (mDataIndex) {
+			memcpy(newData, mData, mDataIndex * sizeof(float));
+		}
 
-	.loc_0x6C:
-	  lwz       r3, 0x0(r30)
-	  lwz       r4, 0x8(r30)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r30)
-	  rlwinm    r0,r3,2,0,29
-	  stfsx     f31, r4, r0
-	  lwz       r0, 0x2C(r1)
-	  lfd       f31, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+		delete[] mData;
+		mData = newData;
+	}
+
+	mData[mDataIndex++] = data;
 }
 
 /*
@@ -2643,6 +2616,7 @@ AnimCacheInfo::AnimCacheInfo() { initData(); }
  */
 void AnimData::checkMask()
 {
+	FORCE_DONT_INLINE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4042,86 +4016,9 @@ AnimDck::AnimDck(BaseShape* model, int joints)
 	mAnimInfo  = new AnimDataInfo[mNumJoints];
 
 	for (int i = 0; i < joints; i++) {
-		// mAnimInfo = (model->mJoints[i].mParentIndex == -1) ? nullptr : mAnimInfo + model->mJoints[i].mParentIndex;
+		int parentIndex              = model->mJointList[i].mParentIndex;
+		mAnimInfo[i].mParentJntIndex = parentIndex == -1 ? 0 : mAnimInfo[parentIndex].mParentJntIndex;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r6, 0x738C
-	  lis       r6, 0x8023
-	  stwu      r1, -0x38(r1)
-	  subi      r7, r13, 0x7CA8
-	  subi      r6, r6, 0x775C
-	  stmw      r27, 0x24(r1)
-	  addi      r29, r3, 0
-	  lis       r3, 0x8022
-	  li        r31, 0
-	  addi      r30, r4, 0
-	  addi      r27, r5, 0
-	  stw       r0, 0x0(r29)
-	  addi      r0, r3, 0x737C
-	  lis       r3, 0x8023
-	  stw       r0, 0x0(r29)
-	  subi      r0, r3, 0x77B8
-	  stw       r31, 0x10(r29)
-	  stw       r31, 0xC(r29)
-	  stw       r31, 0x8(r29)
-	  stw       r7, 0x4(r29)
-	  stw       r6, 0x0(r29)
-	  stw       r31, 0x24(r29)
-	  stw       r31, 0x38(r29)
-	  stw       r0, 0x0(r29)
-	  stw       r30, 0x34(r29)
-	  stw       r27, 0x28(r29)
-	  stw       r31, 0x30(r29)
-	  lwz       r28, 0x28(r29)
-	  mulli     r3, r28, 0xDC
-	  addi      r3, r3, 0x8
-	  bl        0x198E4
-	  lis       r4, 0x8003
-	  subi      r4, r4, 0x3578
-	  addi      r7, r28, 0
-	  li        r5, 0
-	  li        r6, 0xDC
-	  bl        0x1E74F0
-	  cmpwi     r27, 0
-	  mtctr     r27
-	  stw       r3, 0x3C(r29)
-	  mr        r5, r31
-	  ble-      .loc_0xF4
-
-	.loc_0xB4:
-	  lwz       r3, 0x5C(r30)
-	  addi      r0, r31, 0x18
-	  lwzx      r0, r3, r0
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0xD0
-	  li        r4, 0
-	  b         .loc_0xDC
-
-	.loc_0xD0:
-	  mulli     r0, r0, 0xDC
-	  lwz       r3, 0x3C(r29)
-	  add       r4, r3, r0
-
-	.loc_0xDC:
-	  lwz       r3, 0x3C(r29)
-	  addi      r0, r5, 0x70
-	  addi      r5, r5, 0xDC
-	  stwx      r4, r3, r0
-	  addi      r31, r31, 0x11C
-	  bdnz+     .loc_0xB4
-
-	.loc_0xF4:
-	  mr        r3, r29
-	  lmw       r27, 0x24(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -4154,9 +4051,9 @@ void AnimDck::read(RandomAccessStream& stream)
 	for (int i = 0; i < mNumJoints; i++) {
 		mAnimInfo[i].mGroupIndex = stream.readInt();
 
-		int parentIndex              = stream.readInt();
-		parentIndex                  = (parentIndex == -1) ? parentIndex : mAnimInfo[parentIndex].mParentJntIndex;
-		mAnimInfo[i].mParentJntIndex = parentIndex;
+		int parentIndex = stream.readInt();
+		// parentIndex                  = (parentIndex == -1) ? parentIndex : mAnimInfo[parentIndex].mParentJntIndex;
+		// mAnimInfo[i].mParentJntIndex = parentIndex;
 
 		// Read scale parameters (3 entries for x, y, and z)
 		for (int j = 0; j < 3; j++) {
@@ -4184,7 +4081,7 @@ void AnimDck::read(RandomAccessStream& stream)
 	}
 
 	checkMask();
-	mCacheInfo = new AnimCacheInfo[mNumFrames];
+	mAnimInfoList = new AnimCacheInfo[mNumFrames];
 
 	/*
 	.loc_0x0:
@@ -4676,7 +4573,7 @@ void AnimDck::parse(CmdStream* stream)
 	}
 
 	checkMask();
-	mCacheInfo = new AnimCacheInfo[mNumFrames];
+	mAnimInfoList = new AnimCacheInfo[mNumFrames];
 
 	/*
 	.loc_0x0:
@@ -6507,8 +6404,8 @@ BaseShape::BaseShape()
 	mTexAttrCount    = 0;
 	mTextureCount    = 0;
 
-	_18          = 0;
-	mFrameCacher = nullptr;
+	mCurrentAnimContext = 0;
+	mFrameCacher        = nullptr;
 
 	mCollisionInfo.initCore("");
 	mLightGroup.initCore("");
@@ -12894,71 +12791,18 @@ void BaseShape::calcBasePose(Matrix4f&)
  * Address:	80034A50
  * Size:	0000E8
  */
-AnimData* BaseShape::loadDck(char*, RandomAccessStream&)
+AnimData* BaseShape::loadDck(char* name, RandomAccessStream& s)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  li        r3, 0x44
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
-	  addi      r28, r5, 0
-	  bl        0x12588
-	  mr.       r29, r3
-	  beq-      .loc_0x94
-	  mr        r3, r30
-	  bl        0xB8B4
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x0(r29)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x0(r29)
-	  li        r30, 0
-	  addi      r4, r3, 0
-	  stw       r30, 0x10(r29)
-	  addi      r3, r29, 0
-	  stw       r30, 0xC(r29)
-	  stw       r30, 0x8(r29)
-	  bl        -0xFBEC
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x775C
-	  stw       r0, 0x0(r29)
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x77B8
-	  stw       r30, 0x24(r29)
-	  stw       r30, 0x38(r29)
-	  stw       r0, 0x0(r29)
+	AnimDck* pDck = new AnimDck(name);
+	pDck->mModel  = this;
+	pDck->read(s);
+	if (pDck->mNumJoints != mJointCount) {
+		PRINT("(%s) NUMJOINTS DOES NOT MATCH, THINGS MIGHT GO WRONG!!!\n", name);
+	}
 
-	.loc_0x94:
-	  stw       r31, 0x34(r29)
-	  mr        r3, r29
-	  mr        r4, r28
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x18(r31)
-	  mr        r3, r29
-	  stw       r29, 0x0(r4)
-	  lfs       f0, -0x7D20(r2)
-	  lwz       r4, 0x18(r31)
-	  stfs      f0, 0x4(r4)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mCurrentAnimContext->mData         = pDck;
+	mCurrentAnimContext->mCurrentFrame = 0.0f;
+	return pDck;
 }
 
 /*
@@ -13114,68 +12958,17 @@ AnimData* BaseShape::importDck(char*, CmdStream*)
  * Address:	80034D18
  * Size:	0000DC
  */
-AnimData* BaseShape::loadDca(char*, RandomAccessStream&)
+AnimData* BaseShape::loadDca(char* name, RandomAccessStream& s)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r5, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0x44
-	  bl        0x122C0
-	  mr.       r30, r3
-	  beq-      .loc_0x94
-	  mr        r3, r31
-	  bl        0xB5EC
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x0(r30)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x0(r30)
-	  li        r31, 0
-	  addi      r4, r3, 0
-	  stw       r31, 0x10(r30)
-	  addi      r3, r30, 0
-	  stw       r31, 0xC(r30)
-	  stw       r31, 0x8(r30)
-	  bl        -0xFEB4
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x775C
-	  stw       r0, 0x0(r30)
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x777C
-	  stw       r31, 0x24(r30)
-	  stw       r31, 0x38(r30)
-	  stw       r0, 0x0(r30)
+	AnimDca* pDca = new AnimDca(name);
+	pDca->mModel  = this;
+	pDca->read(s);
+	if (pDca->mNumJoints != mJointCount) {
+		PRINT("(%s) NUMJOINTS DOES NOT MATCH, THINGS MIGHT GO WRONG!!!\n", name);
+	}
 
-	.loc_0x94:
-	  stw       r28, 0x34(r30)
-	  mr        r3, r30
-	  mr        r4, r29
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x18(r28)
-	  mr        r3, r30
-	  stw       r30, 0x0(r4)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mCurrentAnimContext->mData = pDca;
+	return pDca;
 }
 
 /*
@@ -13193,8 +12986,38 @@ void BaseShape::importDca(char*, CmdStream*)
  * Address:	80034DF4
  * Size:	0001C4
  */
-AnimData* BaseShape::loadAnimation(char*, bool)
+AnimData* BaseShape::loadAnimation(char* name, bool a3)
 {
+	RandomAccessStream* pRas = gsys->openFile(name, a3, true);
+	if (!pRas) {
+		PRINT("failed to open %s\n", name);
+		return nullptr;
+	}
+
+	CmdStream* pCmdStream = new CmdStream(pRas);
+	if (!pCmdStream) {
+		return nullptr;
+	}
+
+	int i = strlen(name) - 1;
+	while (i >= 0 && name[i] != '.') {
+		i--;
+	}
+
+	if (!strcmp(&name[i], ".dck")) {
+		importDck(name, pCmdStream);
+	} else if (!strcmp(&name[i], ".dca")) {
+		importDca(name, pCmdStream);
+	}
+
+	pRas->close();
+
+	if (!mCurrentAnimContext->mData) {
+		PRINT("returning NULL anim!!\n");
+	}
+
+	return mCurrentAnimContext->mData;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
