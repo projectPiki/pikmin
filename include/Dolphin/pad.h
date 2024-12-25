@@ -23,6 +23,8 @@ typedef struct PADStatus {
 
 #define PAD_MAX_CONTROLLERS 4
 
+#define PAD_MIN_STICK_READ 32
+
 #define PAD_BUTTON_LEFT  0x0001
 #define PAD_BUTTON_RIGHT 0x0002
 #define PAD_BUTTON_DOWN  0x0004

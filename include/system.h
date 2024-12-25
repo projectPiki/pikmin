@@ -187,7 +187,7 @@ public:
 	char* mDataRoot;               // _50
 	AyuHeap mHeaps[SYSHEAP_COUNT]; // _54 (54:sys, 7C:ovl, A4:app, CC:load, F4:teki, 11C:movie, 144:message, 16C:lang)
 	int mActiveHeapIdx;            // _194
-	u32 _198;                      // _198, unknown
+	int _198;                      // _198
 	MemInfo* mCurrMemInfo;         // _19C
 
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.

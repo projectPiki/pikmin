@@ -1,5 +1,7 @@
 #include "types.h"
 #include "sysNew.h"
+#include "MemStat.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
@@ -16,18 +18,49 @@ static void _Error(char*, ...)
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("");
 
 /*
  * --INFO--
  * Address:	80047004
  * Size:	000164
  */
-void* System::alloc(u32)
+void* System::alloc(u32 size)
 {
+	void* result = nullptr;
+	if (size & 0x3) {
+		size = (size + 3) & ~0x3;
+	}
+
+	if (gsys->mActiveHeapIdx >= 0) {
+		result = gsys->mHeaps[gsys->mActiveHeapIdx].push(size);
+		if (!result) {
+			PRINT("new[] %d failed in heap '%s'", gsys->mActiveHeapIdx, size);
+		}
+
+		if (size == 0 || gsys->_198) {
+			u32 print          = gsys->mTogglePrint;
+			gsys->mTogglePrint = 1;
+			gsys->mTogglePrint = print != 0;
+		}
+
+		MemInfo* info = gsys->mCurrMemInfo;
+		while (info) {
+			info->mMemorySize += size;
+			info = static_cast<MemInfo*>(info->mParent);
+		}
+
+		if ((u32)result & 0x3) {
+			PRINT("idek man", (u32)result);
+		}
+
+		int length = size / 4;
+		for (int i = 0; i < length; i++) {
+			((u32*)result)[i] = 0;
+		}
+	}
+
+	return result;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -157,8 +190,10 @@ void* operator new(u32, int)
  * Address:	80047168
  * Size:	000044
  */
-void* operator new[](u32, int)
+void* operator new[](u32 size, int alignment)
 {
+	// this is what this SHOULD be, but it's doing the subtraction in a weird order
+	return (void*)(ALIGN_NEXT((u32)System::alloc(size + alignment), alignment));
 	/*
 	.loc_0x0:
 	  mflr      r0

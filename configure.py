@@ -429,7 +429,7 @@ config.libs = [
             Object(NonMatching, "sysDolphin/texture.cpp"),
             Object(NonMatching, "sysDolphin/system.cpp"),
             Object(NonMatching, "sysDolphin/sysNew.cpp"),
-            Object(NonMatching, "sysDolphin/controllerMgr.cpp"),
+            Object(Matching, "sysDolphin/controllerMgr.cpp"),
             Object(NonMatching, "sysDolphin/dgxGraphics.cpp"),
             Object(Matching, "sysDolphin/gameApp.cpp"),
         ],

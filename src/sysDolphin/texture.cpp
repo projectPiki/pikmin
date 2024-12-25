@@ -3,6 +3,8 @@
 #include "Stream.h"
 #include "system.h"
 #include "sysNew.h"
+#include "Dolphin/gx.h"
+#include "DebugLog.h"
 #include "stl/string.h"
 
 /*
@@ -10,20 +12,18 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("Texture");
+
+static u32 gxTexFmts[] = {
+	GX_TF_RGB565, GX_TF_CMPR, GX_TF_RGB5A3, GX_TF_I4, GX_TF_I8, GX_TF_IA4, GX_TF_IA8, GX_TF_RGBA8, GX_TF_Z8,
+};
 
 /*
  * --INFO--
@@ -32,44 +32,12 @@ static void _Print(char*, ...)
  */
 Texture::Texture()
 {
-	_30 = 0;
-	// _34          = 0;
+	_30          = 0;
+	_34          = 0;
 	_20          = -1;
 	mTextureData = nullptr;
 	_1C          = 0.0f;
 	_24          = new u32[8]; // this is (probably) not a u32 array, it's an object of size 0x20. TODO: work out WHAT object
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8023
-	  stw       r0, 0x4(r1)
-	  subi      r0, r4, 0x6F50
-	  li        r4, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8023
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x6F98
-	  li        r3, 0x20
-	  stw       r0, 0x0(r31)
-	  li        r0, -0x1
-	  stw       r4, 0x30(r31)
-	  stw       r4, 0x34(r31)
-	  stw       r0, 0x20(r31)
-	  stw       r4, 0x18(r31)
-	  lfs       f0, -0x7BA0(r2)
-	  stfs      f0, 0x1C(r31)
-	  bl        0x2E20
-	  stw       r3, 0x24(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -87,15 +55,15 @@ void Texture::offsetGLtoGX(int, int)
  * Address:	80044204
  * Size:	0000D4
  */
-u8 Texture::getAlpha(int p1, int p2)
+u8 Texture::getAlpha(int x, int y)
 {
 	switch (_04) {
 	case 5:
 		// needs work
-		return ((u8*)mPixelData)[(p1 % mTileSizeX) * mTileSizeY + mWidth % mTileSizeX] & 0xF0;
+		return ((u8*)mPixelData)[(x % mTileSizeX) * mTileSizeX + (y % mTileSizeY) * mTileSizeY] & 0xF0;
 	default:
 		// needs work
-		u16 alpha = ((u16*)mPixelData)[(p1 % mTileSizeX) * mTileSizeY + mWidth % mTileSizeX];
+		u16 alpha = ((u16*)mPixelData)[(x % mTileSizeX) * mTileSizeY + mWidth % mTileSizeX];
 		if (alpha & 0x8000) {
 			return 255;
 		}

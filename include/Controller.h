@@ -71,7 +71,7 @@ struct Controller : public Node {
 		reset(p1);
 	}
 
-	void reset(u32);
+	void reset(u32 playerNum);
 	void updateCont(u32 keyStatus);
 	void update();
 	f32 getMainStickX();
@@ -92,7 +92,7 @@ struct Controller : public Node {
 	u32 mInputReleased;       // _2C
 	u32 mButtonState;         // _30
 	u32 mButtonMask;          // _34
-	u32 _38;                  // _38
+	u32 mPlayerNum;           // _38, 1 => use controller port 0, etc
 	u32 _3C;                  // _3C
 	u32 mInputDelay;          // _40
 	bool mIsControllerFrozen; // _44
@@ -100,10 +100,10 @@ struct Controller : public Node {
 	s8 mMainStickY;           // _46
 	s8 mSubStickX;            // _47
 	s8 mSubStickY;            // _48
-	s8 _49;                   // _49
-	s8 _4A;                   // _4A
-	s8 _4B;                   // _4B
-	s8 _4C;                   // _4C
+	s8 mAnalogA;              // _49
+	s8 mAnalogB;              // _4A
+	s8 mTriggerL;             // _4B
+	s8 mTriggerR;             // _4C
 };
 
 /**

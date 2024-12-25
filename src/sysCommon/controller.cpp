@@ -23,11 +23,11 @@ DEFINE_PRINT("");
  * Address:	800409B0
  * Size:	000024
  */
-void Controller::reset(u32 arg1)
+void Controller::reset(u32 playerNum)
 {
 	_3C                 = -1;
 	mIsControllerFrozen = false;
-	_38                 = arg1;
+	mPlayerNum          = playerNum;
 	mInputDelay         = 0;
 	mCurrentInput       = 0;
 	mPrevInput          = 0;
