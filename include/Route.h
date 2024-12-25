@@ -4,12 +4,14 @@
 #include "types.h"
 #include "Vector.h"
 #include "Node.h"
+#include "Colour.h"
 
 struct Creature;
 struct CmdStream;
 struct DataMsg;
 struct Graphics;
 struct MapMgr;
+struct BaseShape;
 
 /**
  * @brief TODO
