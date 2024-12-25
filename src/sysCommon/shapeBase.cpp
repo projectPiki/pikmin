@@ -4010,6 +4010,7 @@ void AnimDca::getAnimInfo(CmdStream*)
  */
 AnimDck::AnimDck(BaseShape* model, int joints)
 {
+	// TODO: https://decomp.me/scratch/SFdPs
 	mModel     = model;
 	mNumJoints = joints;
 	mNumFrames = 0;
