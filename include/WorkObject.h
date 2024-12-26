@@ -7,9 +7,9 @@
 #include "Plane.h"
 #include "UtEffect.h"
 #include "Route.h"
+#include "Shape.h"
 
 struct DynBuildShape;
-struct ShapeDynMaterials;
 
 /**
  * @brief TODO
@@ -125,23 +125,20 @@ struct Bridge : public WorkObject {
 	bool _3C8;                  // _3C8
 	s16 _3CA;                   // _3CA
 	u8 _3CC;                    // _3CC
-	u32* _3D0;                  // _3D0, unknown - array of something
-	u8 _3D4[0x4];               // _3D4, unknown
+	u32* _3D0;                  // _3D0, stage items?
+	Joint** mStageJoints;       // _3D4, unknown
 	PermanentEffect _3D8;       // _3D8
 	PermanentEffect _3E8;       // _3E8
 	WayPoint* _3F8;             // _3F8
 	WayPoint* _3FC;             // _3FC
 	u8 _400;                    // _400
 	u8 _401[0x404 - 0x401];     // _401, unknown
-	int _404;                   // _404
+	int mStageCount;            // _404
 	DynBuildShape* mBuildShape; // _408
 	Shape* _40C;                // _40C
 	CollPart* _410;             // _410
-	ShapeDynMaterials* _414;    // _414, unknown
-	u32 _418;                   // _418, unknown
-	u32 _41C;                   // _41C, unknown
-	u32 _420;                   // _420, unknown
-	u8 _424;                    // _424
+	ShapeDynMaterials _414;     // _414
+	u8 _424;                    // _424, flags (3 = final setup)
 };
 
 /**

@@ -5,26 +5,21 @@
 #include "Dolphin/os.h"
 #include "sysNew.h"
 
+#include "DebugLog.h"
+
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "collInfo");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("collInfo");
 
 Matrix4f invCamMat;
 
@@ -3524,9 +3519,9 @@ void CollInfo::initInfo(Shape* shape, CollPart* parts, u32* ids)
 		mCollParts = parts;
 		mPartIDs   = ids;
 
-		// Why have you set default max parts and then set the collparts manually?
-		if (mCollParts && mPartIDs) {
-			(mUseDefaultMaxParts != 0, "wack");
+		if (!mCollParts || !mPartIDs) {
+			PRINT("inplae : initInfo(%x,%x,%x)\n", shape, mCollParts, mPartIDs);
+			ERROR("sorry\n");
 		}
 	}
 

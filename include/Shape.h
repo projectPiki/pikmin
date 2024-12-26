@@ -61,6 +61,7 @@ struct MtxGroup {
 
 /**
  * @brief TODO
+ * @note Size: 0x10.
  */
 struct ShapeDynMaterials {
 	ShapeDynMaterials()

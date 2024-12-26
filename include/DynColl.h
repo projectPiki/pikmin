@@ -95,8 +95,8 @@ struct DynCollObjBody : public DynCollShape {
  * @note Size: 0x140.
  */
 struct DynBuildShape : public DynCollShape {
-	DynBuildShape() // TODO: fix this, it's implicit but required/this is just a guess
-	    : DynCollShape(nullptr)
+	DynBuildShape(Shape* s) // TODO: fix this, it's implicit but required/this is just a guess
+	    : DynCollShape(s)
 	{
 	}
 
