@@ -6,10 +6,10 @@
 #include "ObjectMgr.h"
 #include "Plane.h"
 #include "UtEffect.h"
+#include "Route.h"
 
 struct DynBuildShape;
 struct ShapeDynMaterials;
-struct WayPoint;
 
 /**
  * @brief TODO
@@ -181,13 +181,19 @@ struct HinderRock : public WorkObject {
 	u16 _3C8;                   // _3C8
 	Plane _3CC[4];              // _3CC
 	Vector3f _40C;              // _40C
-	u8 _418[0x438 - 0x418];     // _418, unknown
+	u32 _418;                   // _418
+	u32 _41C;                   // _41C
+	u32 _420;                   // _420
+	WayPoint _424;              // _424
+	u32 _430;                   // _430
 	DynBuildShape* mBuildShape; // _434
 	Shape* _438;                // _438
-	u8 _43C[0x454 - 0x43C];     // _43C, unknown
-	u32 _448;                   // _448, unknown
-	u32 _44C;                   // _44C, unknown
-	u32 _450;                   // _450, unknown
+	u8 _43C;                    // _43C
+	f32 _440;                   // _440
+	u32 _444;                   // _444
+	u32 _448;                   // _448
+	u32 _44C;                   // _44C
+	u32 _450;                   // _450
 	Vector3f _454;              // _454
 	Vector3f _460[2];           // _460
 };

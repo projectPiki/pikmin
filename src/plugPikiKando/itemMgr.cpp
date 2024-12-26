@@ -468,7 +468,7 @@ MeltingPotMgr::MeltingPotMgr(ItemMgr* mgr)
  */
 void MeltingPotMgr::finalSetup()
 {
-	TRAVERSELOOP(this, idx)
+	CREATURE_ITERATOR(this, idx)
 	{
 		Creature* creature = getCreatureCheck(idx);
 		if (creature->isWall()) {
@@ -3310,7 +3310,7 @@ BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* it
     , _3CC(0)
     , _3D0(0)
     , _3D4(0)
-    , _43C(0)
+    , _440(0)
     , mBuildCollision(0)
 {
 	mItemShapeObject = itemShape;

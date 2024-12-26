@@ -4,26 +4,41 @@
 #include "DynColl.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
+#include "gameflow.h"
+#include "DebugLog.h"
+#include "MapMgr.h"
+
+char* files[] = { "objects/bridge/brd_test.mod", "objects/bridge/slp_u_4.mod", "objects/bridge/slp_d_4.mod",
+	              "objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod" };
+
+struct GenObjInfo {
+	s32 mType;
+	char* mName;
+};
+
+GenObjInfo info[] = {
+	{ 0, "bridge test" },
+	{ 1, "move stone" },
+	{ 2, "..." },
+};
+
+GenObjInfo shpInfo[] = {
+	{ 0, "bridge 4" }, { 1, "slope up 4" }, { 2, "slope down 4" }, { 3, "stone 10" }, { 4, "bridge 13" }, { 5, "meck" },
+};
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("workObject");
 
 /*
  * --INFO--
@@ -51,7 +66,7 @@ void HinderRock::endPush()
  */
 void WorkObjectMgr::finalSetup()
 {
-	TRAVERSELOOP(this, idx) { static_cast<WorkObject*>(getCreatureCheck(idx))->finalSetup(); }
+	CREATURE_ITERATOR(this, idx) { static_cast<WorkObject*>(getCreatureCheck(idx))->finalSetup(); }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -220,52 +235,15 @@ WorkObjectMgr::WorkObjectMgr()
  */
 void WorkObjectMgr::loadShapes()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r1)
-	  lis       r4, 0x803A
-	  addi      r0, r5, 0x1010
-	  stwu      r1, -0x28(r1)
-	  stmw      r26, 0x10(r1)
-	  li        r27, 0
-	  li        r28, 0
-	  rlwinm    r6,r27,2,0,29
-	  add       r29, r0, r6
-	  addi      r26, r3, 0
-	  addi      r31, r28, 0
-	  subi      r30, r4, 0x2848
-
-	.loc_0x38:
-	  lwz       r3, 0x44(r26)
-	  lbzx      r0, r3, r27
-	  cmplwi    r0, 0
-	  beq-      .loc_0x64
-	  lwz       r4, 0x0(r29)
-	  addi      r3, r30, 0
-	  li        r5, 0x1
-	  bl        -0x48708
-	  lwz       r4, 0x40(r26)
-	  stwx      r3, r4, r28
-	  b         .loc_0x6C
-
-	.loc_0x64:
-	  lwz       r3, 0x40(r26)
-	  stwx      r31, r3, r28
-
-	.loc_0x6C:
-	  addi      r27, r27, 0x1
-	  cmpwi     r27, 0x5
-	  addi      r29, r29, 0x4
-	  addi      r28, r28, 0x4
-	  blt+      .loc_0x38
-	  lmw       r26, 0x10(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < 5; i++) {
+		if (_44[i]) {
+			PRINT("LOADING SHAPE FOR %d\n", i);
+			mItemShapes[i] = gameflow.loadShape(files[i], true);
+		} else {
+			PRINT("SHAPE NOT REQUIRED %d\n", i);
+			mItemShapes[i] = nullptr;
+		}
+	}
 }
 
 /*
@@ -703,171 +681,106 @@ void GenObjectWorkObject::initialise()
 	*/
 }
 
+// 10120600 in plugPiki.dll
+int WorkObject_GetTypeFromInfo(char* name)
+{
+	// mType == 2 is the end
+	for (GenObjInfo* i = info; i->mType != 2; i++) {
+		if (!strcmp(i->mName, name)) {
+			return i->mType;
+		}
+	}
+
+	return -1;
+}
+
+// 101206D0 in plugPiki.dll
+s32 WorkObject_GetTypeFromShapeInfo(char* name)
+{
+	// mType == 5 is the end
+	for (GenObjInfo* i = shpInfo; i->mType != 5; i++) {
+		if (!strcmp(i->mName, name)) {
+			return i->mType;
+		}
+	}
+
+	return -1;
+}
+
 /*
  * --INFO--
  * Address:	8009B9BC
  * Size:	00020C
  */
-void GenObjectWorkObject::doRead(RandomAccessStream&)
+void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x120(r1)
-	  stw       r31, 0x11C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x118(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x114(r1)
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xBC
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x58(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x5C(r30)
-	  lwz       r0, 0x58(r30)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x1F0
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x60(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x64(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x68(r30)
-	  b         .loc_0x1F0
+	if (Generator::ramMode) {
+		mObjectType = stream.readShort();
+		mShapeType  = stream.readShort();
 
-	.loc_0xBC:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  addi      r4, r1, 0x10
-	  li        r5, 0x100
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r3, 0x802B
-	  addi      r29, r3, 0xEF8
-	  b         .loc_0x104
+		// MOVE STONE (hinderrock)
+		if (mObjectType == 1) {
+			_60.x = stream.readFloat();
+			_60.y = stream.readFloat();
+			_60.z = stream.readFloat();
+		}
 
-	.loc_0xE4:
-	  lwz       r3, 0x4(r29)
-	  addi      r4, r1, 0x10
-	  bl        0x17D71C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x100
-	  lwz       r0, 0x0(r29)
-	  b         .loc_0x114
+		return;
+	}
 
-	.loc_0x100:
-	  addi      r29, r29, 0x8
+	char name[256];
+	stream.readString(name, sizeof(name));
+	mObjectType = WorkObject_GetTypeFromInfo(name);
 
-	.loc_0x104:
-	  lwz       r0, 0x0(r29)
-	  cmpwi     r0, 0x2
-	  bne+      .loc_0xE4
-	  li        r0, -0x1
+	if (mObjectType == -1) {
+		PRINT("ItemGenerator * %s is not item\n", name);
+		ERROR("HENDANA\n");
+	}
 
-	.loc_0x114:
-	  stw       r0, 0x58(r30)
-	  lwz       r3, 0xC(r30)
-	  subis     r0, r3, 0x7630
-	  cmplwi    r0, 0x2E32
-	  beq-      .loc_0x130
-	  cmplwi    r0, 0x2E33
-	  bne-      .loc_0x18C
+	if (mVersion == 'v0.2' || mVersion == 'v0.3') {
+		stream.readString(name, sizeof(name));
+		mShapeType = WorkObject_GetTypeFromShapeInfo(name);
 
-	.loc_0x130:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  addi      r4, r1, 0x10
-	  li        r5, 0x100
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r3, 0x802B
-	  addi      r29, r3, 0xF50
-	  b         .loc_0x178
+		if (mShapeType == -1) {
+			PRINT("SHAPE NOT FOUND * %s \n", name);
+			ERROR("HENDANA\n");
+		}
+	}
 
-	.loc_0x158:
-	  lwz       r3, 0x4(r29)
-	  addi      r4, r1, 0x10
-	  bl        0x17D6A8
-	  cmpwi     r3, 0
-	  bne-      .loc_0x174
-	  lwz       r0, 0x0(r29)
-	  b         .loc_0x188
+	// MOVE STONE (hinderrock)
+	if (mVersion == 'v0.3' && mObjectType == 1) {
+		PRINT("READING HINDERROCK !!!!!!!!!!!!!!!!!!!!!!!!!! *******\n");
+		_60.x = stream.readFloat();
+		_60.y = stream.readFloat();
+		_60.z = stream.readFloat();
+		PRINT("POS (%.1f %.1f %.1f)\n", _60.x, _60.y, _60.z);
+	}
+}
 
-	.loc_0x174:
-	  addi      r29, r29, 0x8
+// 10120670 in plugPiki.dll
+char* WorkObject_GetNameFromType(int type)
+{
+	// mType == 2 is the end
+	for (GenObjInfo* i = info; i->mType != 2; i++) {
+		if (i->mType == type) {
+			return i->mName;
+		}
+	}
 
-	.loc_0x178:
-	  lwz       r0, 0x0(r29)
-	  cmpwi     r0, 0x5
-	  bne+      .loc_0x158
-	  li        r0, -0x1
+	return nullptr;
+}
 
-	.loc_0x188:
-	  stw       r0, 0x5C(r30)
+// 101206D0 in plugPiki.dll
+char* WorkObject_GetNameFromShapeType(int type)
+{
+	// mType == 5 is the end
+	for (GenObjInfo* i = info; i->mType != 5; i++) {
+		if (i->mType == type) {
+			return i->mName;
+		}
+	}
 
-	.loc_0x18C:
-	  lwz       r3, 0xC(r30)
-	  subis     r0, r3, 0x7630
-	  cmplwi    r0, 0x2E33
-	  bne-      .loc_0x1F0
-	  lwz       r0, 0x58(r30)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x1F0
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x60(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x64(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x68(r30)
-
-	.loc_0x1F0:
-	  lwz       r0, 0x124(r1)
-	  lwz       r31, 0x11C(r1)
-	  lwz       r30, 0x118(r1)
-	  lwz       r29, 0x114(r1)
-	  addi      r1, r1, 0x120
-	  mtlr      r0
-	  blr
-	*/
+	return nullptr;
 }
 
 /*
@@ -875,140 +788,33 @@ void GenObjectWorkObject::doRead(RandomAccessStream&)
  * Address:	8009BBC8
  * Size:	0001B4
  */
-void GenObjectWorkObject::doWrite(RandomAccessStream&)
+void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB8
-	  mr        r3, r31
-	  lwz       r0, 0x58(r30)
-	  lwz       r12, 0x4(r31)
-	  extsh     r4, r0
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r0, 0x5C(r30)
-	  lwz       r12, 0x4(r31)
-	  extsh     r4, r0
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x58(r30)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x19C
-	  mr        r3, r31
-	  lfs       f1, 0x60(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x64(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x68(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x19C
+	if (Generator::ramMode) {
+		stream.writeShort(mObjectType);
+		stream.writeShort(mShapeType);
 
-	.loc_0xB8:
-	  lis       r3, 0x802B
-	  lwz       r0, 0x58(r30)
-	  addi      r3, r3, 0xEF8
-	  b         .loc_0xDC
+		// MOVE STONE (hinderrock)
+		if (mObjectType == 1) {
+			stream.writeFloat(_60.x);
+			stream.writeFloat(_60.y);
+			stream.writeFloat(_60.z);
+		}
 
-	.loc_0xC8:
-	  cmpw      r4, r0
-	  bne-      .loc_0xD8
-	  lwz       r4, 0x4(r3)
-	  b         .loc_0xEC
+		return;
+	}
 
-	.loc_0xD8:
-	  addi      r3, r3, 0x8
+	stream.writeString(WorkObject_GetNameFromType(mObjectType));
+	stream.writeString(WorkObject_GetNameFromShapeType(mShapeType));
 
-	.loc_0xDC:
-	  lwz       r4, 0x0(r3)
-	  cmpwi     r4, 0x2
-	  bne+      .loc_0xC8
-	  li        r4, 0
+	// MOVE STONE (hinderrock)
+	if (mObjectType == 1) {
+		PRINT("WRITING HINDERROCK !!!!!!!!!!!!!!!!!!!!!!!!!! *******\n");
 
-	.loc_0xEC:
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r3, 0x802B
-	  lwz       r0, 0x5C(r30)
-	  addi      r3, r3, 0xF50
-	  b         .loc_0x124
-
-	.loc_0x110:
-	  cmpw      r4, r0
-	  bne-      .loc_0x120
-	  lwz       r4, 0x4(r3)
-	  b         .loc_0x134
-
-	.loc_0x120:
-	  addi      r3, r3, 0x8
-
-	.loc_0x124:
-	  lwz       r4, 0x0(r3)
-	  cmpwi     r4, 0x5
-	  bne+      .loc_0x110
-	  li        r4, 0
-
-	.loc_0x134:
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x58(r30)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x19C
-	  mr        r3, r31
-	  lfs       f1, 0x60(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x64(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x68(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x19C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+		stream.writeFloat(_60.x);
+		stream.writeFloat(_60.y);
+		stream.writeFloat(_60.z);
+	}
 }
 
 /*
@@ -1312,8 +1118,26 @@ bool HinderRock::insideSafeArea(Vector3f&)
  * Address:	8009C108
  * Size:	000164
  */
-void HinderRock::doLoad(RandomAccessStream&)
+void HinderRock::doLoad(RandomAccessStream& stream)
 {
+	_43C = stream.readByte();
+	_418 = 0;
+	_3C8 = 0;
+
+	_440 = 0.0f;
+
+	if (_43C == 2) {
+		mPosition   = _40C;
+		mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, false);
+		for (int i = 0; i < 10; ++i) { }
+		_424.setFlag(true);
+	}
+
+	Vector3f scale(1.0f, 1.0f, 1.0f);
+	mTransformMatrix.makeSRT(scale, mRotation, mPosition);
+
+	DynBuildShape* shape = mBuildShape;
+	// TODO: wtf?
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1419,8 +1243,10 @@ void HinderRock::doLoad(RandomAccessStream&)
  * Address:	8009C26C
  * Size:	000040
  */
-void HinderRock::doSave(RandomAccessStream&)
+void HinderRock::doSave(RandomAccessStream& stream)
 {
+	stream.writeByte((u32)_438);
+
 	/*
 	.loc_0x0:
 	  mflr      r0

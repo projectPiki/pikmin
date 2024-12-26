@@ -41,7 +41,7 @@ void boundSphereDist(Creature*, Creature*)
  */
 void ObjectMgr::stickUpdate()
 {
-	TRAVERSELOOP(this, idx) { getCreatureCheck(idx)->stickUpdate(); }
+	CREATURE_ITERATOR(this, idx) { getCreatureCheck(idx)->stickUpdate(); }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -135,7 +135,7 @@ void ObjectMgr::stickUpdate()
  */
 void ObjectMgr::invalidateSearch()
 {
-	TRAVERSELOOP(this, idx)
+	CREATURE_ITERATOR(this, idx)
 	{
 		Creature* creature = getCreatureCheck(idx);
 		if (creature->_168.updatable()) {
@@ -243,7 +243,7 @@ void ObjectMgr::invalidateSearch()
  */
 void ObjectMgr::update()
 {
-	TRAVERSELOOP(this, idx) { getCreatureCheck(idx)->update(); }
+	CREATURE_ITERATOR(this, idx) { getCreatureCheck(idx)->update(); }
 	/*
 	.loc_0x0:
 	  mflr      r0

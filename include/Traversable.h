@@ -44,6 +44,6 @@ struct Traversable {
 	u32 _04; // _04, unknown
 };
 
-#define TRAVERSELOOP(trav, idxname) for (int idxname = (trav)->getFirst(); !(trav)->isEnd(idxname); idxname = (trav)->getNext(idxname))
+#define CREATURE_ITERATOR(trav, idxname) for (int idxname = (trav)->getFirst(); !(trav)->isEnd(idxname); idxname = (trav)->getNext(idxname))
 
 #endif

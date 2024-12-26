@@ -569,7 +569,7 @@ void Creature::init()
 {
 	mSearchBuffer.invalidate();
 	_114.makeIdentity();
-	_228.makeIdentity();
+	mTransformMatrix.makeIdentity();
 	_E0.set(0.0f, 0.0f, 0.0f, 1.0f);
 	_60            = 0;
 	mCreatureFlags = 0;

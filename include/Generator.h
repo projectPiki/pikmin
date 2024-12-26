@@ -39,6 +39,8 @@ struct Generator : public Node {
 	Generator();
 	Generator(int);
 
+	static bool ramMode;
+
 	virtual void read(struct RandomAccessStream&); // _0C
 	virtual void update();                         // _10
 	virtual void render(struct Graphics&);         // _18
@@ -439,7 +441,19 @@ struct GenObjectWorkObject : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	// TODO: members
+	u32 _18;         // _18
+	u32 _1C;         // _1C
+	u32 _20;         // _20
+	u32 _24;         // _24
+	u8 _28[12];      // _28
+	u32 _34;         // _34
+	u8 _38[12];      // _38
+	u32 _44;         // _44
+	u8 _48[12];      // _48
+	f32 _54;         // _54
+	s32 mObjectType; // _58
+	u32 mShapeType;  // _5C
+	Vector3f _60;    // _60, hinderrock position (or just position?)
 };
 
 typedef GenObject* (*GenFunc)();

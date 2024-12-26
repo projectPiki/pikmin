@@ -104,10 +104,10 @@ void KingBack::update()
  */
 void KingBack::refresh(Graphics& gfx)
 {
-	_228.makeSRT(mScale, mRotation, mPosition);
+	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
 
 	Matrix4f mtx;
-	gfx.mCamera->mLookAtMtx.multiplyTo(_228, mtx);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx);
 	mAnimator.updateContext();
 	mShapeObject->mShape->updateAnim(gfx, mtx, nullptr);
 	mCollInfo->updateInfo(gfx, false);

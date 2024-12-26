@@ -340,7 +340,7 @@ void NaviStuckState::exec(Navi* navi)
 			// after a certain amount of recorded actions, try and flick a puffmin
 			Stickers stickers(navi);
 			Stickers* stickersPtr = &stickers;
-			TRAVERSELOOP(stickersPtr, idx)
+			CREATURE_ITERATOR(stickersPtr, idx)
 			{
 				Creature* stuck = stickersPtr->getCreatureCheck(idx);
 				// 50/50 chance to flick a given puffmin
@@ -2811,7 +2811,7 @@ void NaviContainerState::init(Navi* navi)
 	rumbleMgr->stop();
 	int pikisInParty = 0;
 	CPlate* plate    = navi->mPlateMgr;
-	TRAVERSELOOP(plate, idx)
+	CREATURE_ITERATOR(plate, idx)
 	{
 		Piki* piki = static_cast<Piki*>(plate->getCreatureCheck(idx));
 		if (piki->mColor == navi->mGoalItem->_428) {

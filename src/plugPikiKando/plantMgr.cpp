@@ -137,9 +137,9 @@ void Plant::refresh(Graphics& gfx)
 	} else {
 		_30C = 0;
 		_394 = 0;
-		_228.makeSRT(mScale, mRotation, mPosition);
+		mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
 		Matrix4f mtx;
-		gfx.mCamera->mLookAtMtx.multiplyTo(_228, mtx);
+		gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx);
 
 		mPlantAnimator.updateContext();
 		shape->mShape->updateAnim(gfx, mtx, nullptr);

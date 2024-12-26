@@ -1071,7 +1071,7 @@ void ActBoreTalk::startTalk()
 {
 	SearchBuffer* buf = &mActor->mSearchBuffer;
 	mActor->turnTo(mTarget->mPosition);
-	TRAVERSELOOP(buf, idx)
+	CREATURE_ITERATOR(buf, idx)
 	{
 		Creature* creature = buf->getCreatureCheck(idx);
 		creature->stimulate(InteractTalk(mActor));

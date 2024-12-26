@@ -134,10 +134,10 @@ void KusaItem::refresh(Graphics& gfx)
 	Matrix4f camMat;
 	Matrix4f mat;
 	mat.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, mHealth - _5C, 0.0f));
-	_228.makeSRT(mScale, mRotation, mPosition);
-	_228.multiply(mat);
+	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+	mTransformMatrix.multiply(mat);
 
-	gfx.mCamera->mLookAtMtx.multiplyTo(_228, camMat);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, camMat);
 	gfx.setLighting(true, nullptr);
 	gfx.useMatrix(Matrix4f::ident, 0);
 
@@ -247,9 +247,9 @@ void BoBaseItem::refresh(Graphics& gfx)
 {
 	if (_824 || (!_824 && _825 > 0)) {
 		Matrix4f camMat;
-		_228.makeSRT(mScale, mRotation, mPosition);
+		mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
 
-		gfx.mCamera->mLookAtMtx.multiplyTo(_228, camMat);
+		gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, camMat);
 		gfx.setLighting(true, nullptr);
 		gfx.useMatrix(Matrix4f::ident, 0);
 

@@ -285,7 +285,7 @@ struct Creature : public RefCountable, public EventTalker {
 	u32 _21C;                   // _21C, unknown
 	CollInfo* mCollInfo;        // _220
 	CreatureProp* mProps;       // _224, creature properties
-	Matrix4f _228;              // _228
+	Matrix4f mTransformMatrix;  // _228
 	f32 _268;                   // _268
 	f32 _26C;                   // _26C
 	f32 mCollisionRadius;       // _270

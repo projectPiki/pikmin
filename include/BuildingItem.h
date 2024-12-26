@@ -69,8 +69,6 @@ struct BuildingItem : public ItemCreature {
 	u32 _3D4;                 // _3D4, unknown
 	PermanentEffect _3D8;     // _3D8
 	PermanentEffect _3E8;     // _3E8
-	u8 _3F8[0x43C - 0x3F8];   // _3F8, unknown
-	u32 _43C;                 // _43C, unknown
 	int _440;                 // _440
 	int _444;                 // _444
 	Vector3f _448;            // _448

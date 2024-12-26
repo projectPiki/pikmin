@@ -4,23 +4,21 @@
 #include "sysNew.h"
 #include "stl/mem.h"
 #include "Dolphin/os.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "streamBufferedInput"); }
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("streamBufferedInput");
 
 /*
  * --INFO--

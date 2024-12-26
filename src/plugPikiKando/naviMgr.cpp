@@ -123,7 +123,7 @@ Navi* NaviMgr::getNavi(int idx)
  */
 void NaviMgr::refresh2d(Graphics& gfx)
 {
-	TRAVERSELOOP(this, idx) { getCreatureCheck(idx)->refresh2d(gfx); }
+	CREATURE_ITERATOR(this, idx) { getCreatureCheck(idx)->refresh2d(gfx); }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -221,7 +221,7 @@ void NaviMgr::refresh2d(Graphics& gfx)
  */
 void NaviMgr::renderCircle(Graphics& gfx)
 {
-	TRAVERSELOOP(this, idx) { static_cast<Navi*>(getCreatureCheck(idx))->renderCircle(gfx); }
+	CREATURE_ITERATOR(this, idx) { static_cast<Navi*>(getCreatureCheck(idx))->renderCircle(gfx); }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -316,7 +316,7 @@ void NaviMgr::renderCircle(Graphics& gfx)
  */
 void NaviMgr::drawShadow(Graphics& gfx)
 {
-	TRAVERSELOOP(this, idx) { getCreatureCheck(idx)->drawShadow(gfx); }
+	CREATURE_ITERATOR(this, idx) { getCreatureCheck(idx)->drawShadow(gfx); }
 	/*
 	.loc_0x0:
 	  mflr      r0

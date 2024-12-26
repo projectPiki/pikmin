@@ -2177,7 +2177,7 @@ bool TAIAflyingDistanceMar::act(Teki& teki)
 
 		// loop through all pikis on field.
 		PikiMgr* mgr = pikiMgr;
-		TRAVERSELOOP(mgr, idx)
+		CREATURE_ITERATOR(mgr, idx)
 		{
 			Piki* piki = static_cast<Piki*>(mgr->getCreatureCheck(idx));
 
