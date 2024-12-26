@@ -1788,63 +1788,31 @@ void HinderRock::updatePlanes()
  * Address:	8009C8F8
  * Size:	0000A0
  */
-void HinderRock::getVertex(int)
+Vector3f HinderRock::getVertex(int vtx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r5, 0x2
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  beq-      .loc_0x54
-	  bge-      .loc_0x30
-	  cmpwi     r5, 0
-	  beq-      .loc_0x3C
-	  bge-      .loc_0x48
-	  b         .loc_0x68
+	u32 id;
+	switch (vtx) {
+	case 0:
+		id = 'vtx0';
+		break;
+	case 1:
+		id = 'vtx1';
+		break;
+	case 2:
+		id = 'vtx2';
+		break;
+	case 3:
+		id = 'vtx3';
+	default:
+		break;
+	}
 
-	.loc_0x30:
-	  cmpwi     r5, 0x4
-	  bge-      .loc_0x68
-	  b         .loc_0x60
+	CollPart* part = mCollInfo->getSphere(id);
+	if (!part) {
+		ERROR("no vtx%d collpart !\n", vtx);
+	}
 
-	.loc_0x3C:
-	  lis       r3, 0x7674
-	  addi      r0, r3, 0x7830
-	  b         .loc_0x68
-
-	.loc_0x48:
-	  lis       r3, 0x7674
-	  addi      r0, r3, 0x7831
-	  b         .loc_0x68
-
-	.loc_0x54:
-	  lis       r3, 0x7674
-	  addi      r0, r3, 0x7832
-	  b         .loc_0x68
-
-	.loc_0x60:
-	  lis       r3, 0x7674
-	  addi      r0, r3, 0x7833
-
-	.loc_0x68:
-	  lwz       r3, 0x220(r4)
-	  mr        r4, r0
-	  bl        -0x13258
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x0(r31)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x4(r31)
-	  lfs       f0, 0xC(r3)
-	  stfs      f0, 0x8(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	return part->mCentre;
 }
 
 /*

@@ -170,7 +170,7 @@ struct HinderRock : public WorkObject {
 	void getXVector();
 	void getPlaneFlag(Vector3f&);
 	void updatePlanes();
-	void getVertex(int);
+	Vector3f getVertex(int);
 
 	// unused/inlined:
 	void getPlaneIndex(Vector3f&);
