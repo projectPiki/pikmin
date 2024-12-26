@@ -135,6 +135,8 @@ struct particleGenerator : public zenList {
 
 	inline void setF0(f32 val) { _F0 = val; } // unsure what this does, rename later
 
+	inline void setA0(Vector3f& vec) { _A0 = vec; }
+
 	// _00     = VTBL
 	// _00-_0C = zenList
 	// TODO: members

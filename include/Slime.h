@@ -318,7 +318,8 @@ struct SlimeAi {
 	void stayState();
 	void disAppearState();
 
-	u8 _00[0x24]; // _00, unknown
+	u8 _00[0x20];  // _00, unknown
+	Slime* mSlime; // _20
 };
 
 #endif

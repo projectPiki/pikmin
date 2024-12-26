@@ -5,6 +5,10 @@
 #include "Boss.h"
 #include "zen/Callback.h"
 #include "zen/Particle.h"
+#include "Shape.h"
+
+struct PomAi;
+struct ShapeDynMaterials;
 
 /**
  * @brief TODO.
@@ -18,10 +22,34 @@ struct PomProp : public BossProp, public CoreNode {
 	 */
 	struct PomProperties : public Parameters {
 		inline PomProperties() // TODO
+		    : mSquashAmount(this, 0.2f, 0.0f, 0.0f, "s00", nullptr)
+		    , mSquashPersistence(this, 0.5f, 0.0f, 0.0f, "s01", nullptr)
+		    , mSquashMultiplier(this, 0.15f, 0.0f, 0.0f, "s02", nullptr)
+		    , mCloseWaitTime(this, 10.0f, 0.0f, 0.0f, "p00", nullptr)
+		    , mDischargeAngle(this, 180.0f, 0.0f, 0.0f, "p10", nullptr)
+		    , mMaxPikiPerCycle(this, 10, 0, 0, "i00", nullptr)
+		    , mMinCycles(this, 10, 0, 0, "i10", nullptr)
+		    , mMaxCycles(this, 10, 0, 0, "i11", nullptr)
+		    , mDoAnimLoopWhenClosed(this, FALSE, FALSE, TRUE, "i20", nullptr)
+		    , mDoKillSameColorPiki(this, FALSE, FALSE, TRUE, "i90", nullptr)
+		    , mStickOrSwallow(this, 1, 0, 1, "i91", nullptr)
+		    , mOpenOnInteractionOnly(this, FALSE, FALSE, TRUE, "i92", nullptr)
 		{
 		}
 
 		// _200-_204 = Parameters
+		Parm<f32> mSquashAmount;           // _204, s00
+		Parm<f32> mSquashPersistence;      // _214, s01
+		Parm<f32> mSquashMultiplier;       // _224, s02
+		Parm<f32> mCloseWaitTime;          // _234, p00
+		Parm<f32> mDischargeAngle;         // _244, p10
+		Parm<int> mMaxPikiPerCycle;        // _254, i00
+		Parm<int> mMinCycles;              // _264, i10
+		Parm<int> mMaxCycles;              // _274, i11
+		Parm<BOOL> mDoAnimLoopWhenClosed;  // _284, i20
+		Parm<BOOL> mDoKillSameColorPiki;   // _294, i90
+		Parm<int> mStickOrSwallow;         // _2A4, i91 - 0=stick and attack, 1=swallowed
+		Parm<BOOL> mOpenOnInteractionOnly; // _2B4, i92 - 0=open immediately, 1=open after interacting
 	};
 
 	PomProp();
@@ -62,12 +90,17 @@ struct Pom : public Boss {
 	inline PomProp* getPomProp() { return static_cast<PomProp*>(mProps); }
 
 	// _00      = VTBL
-	// _00-_3B8 = Boss?
-	// TODO: members
+	// _00-_3B8 = Boss
+	u8 _3B8;                        // _3B8
+	int mColor;                     // _3BC
+	PomAi* mPomAi;                  // _3C0
+	ShapeDynMaterials mDynMaterial; // _3C4
 };
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x24.
  */
 struct PomAi : public PaniAnimKeyListener {
 	PomAi(Pom*);
@@ -120,7 +153,7 @@ struct PomAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	// TODO: members
+	u8 _04[0x24 - 0x4]; // _04, unknown
 };
 
 /**

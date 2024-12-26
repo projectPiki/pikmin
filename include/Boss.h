@@ -167,22 +167,26 @@ struct Boss : public Creature {
 	inline f32 getMotionSpeed() { return mMotionSpeed; }
 	inline f32 setMotionSpeed(f32 speed) { mMotionSpeed = speed; }
 
+	inline void set2B8(u8 val) { _2B8 = val; }
+	inline void set2BB(u8 val) { _2BB = val; }
+	inline void set2BD(u8 val) { _2BD = val; }
+	inline void set2BE(u8 val) { _2BE = val; }
+
 	inline int getCurrStateID() { return _2E4; }
-	inline void set2E4(int val) // name these better later
-	{
-		_2E4 = val;
-	}
-	inline void set2E8(int val) // name these better later
-	{
-		_2E8 = val;
-	}
+	inline void set2E0(f32 val) { _2E0 = val; }  // name these better later
+	inline void set2E4(int val) { _2E4 = val; }  // name these better later
+	inline void set2E8(int val) { _2E8 = val; }  // name these better later
+	inline void set2EC(int val) { _2EC = val; }  // name these better later
+	inline void set2D4(f32 val) { _2D4 = val; }  // name these better later
+	inline void inc2EC(int amt) { _2EC += amt; } // name these better later
 
 	// these names are a guess
-	inline f32 getDamage() { return _2C0; }
-	inline bool isDamagePending() { return _2C0 > 0.0f ? true : false; }
-	inline void resetDamage() { _2C0 = 0.0f; }
+	inline f32 getDamage() { return mDamage; }
+	inline void setDamage(f32 damage) { mDamage = damage; }
+	inline void addDamage(f32 damage) { mDamage += damage; }
 
 	inline bool isDead() { return !(mCurrentHealth > 0.0f); }
+	inline bool hasHealth() { return mCurrentHealth > 0.0f; }
 
 	inline bool is2BD() { return _2BD; }
 
@@ -195,7 +199,8 @@ struct Boss : public Creature {
 	u8 _2BC;                       // _2BC
 	bool _2BD;                     // _2BD
 	u8 _2BE;                       // _2BE
-	f32 _2C0;                      // _2C0
+	u8 _2BF;                       // _2BF
+	f32 mDamage;                   // _2C0
 	f32 mCurrentHealth;            // _2C4
 	f32 mMaxHealth;                // _2C8
 	u8 _2CC[0x2D4 - 0x2CC];        // _2CC, unknown
@@ -250,7 +255,7 @@ struct BossMgr : public ObjectMgr {
 	void constructBoss();
 	void initSlime(int);
 	void init(int, int);
-	void create(int, BirthInfo&, GenObjectBoss*);
+	Boss* create(int, BirthInfo&, GenObjectBoss*);
 	void kill(Creature*);
 	void refresh2d(Graphics&);
 	void finalSetup();

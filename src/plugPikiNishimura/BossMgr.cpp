@@ -1965,7 +1965,7 @@ void BossMgr::init(int, int)
  * Address:	801513E4
  * Size:	000DB4
  */
-void BossMgr::create(int, BirthInfo&, GenObjectBoss*)
+Boss* BossMgr::create(int, BirthInfo&, GenObjectBoss*)
 {
 	/*
 	.loc_0x0:

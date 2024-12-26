@@ -90,9 +90,9 @@ struct NucleusAi : public PaniAnimKeyListener {
 	void setBossPosition();
 	void setSlimeDamagePoint();
 	void afterProcessing();
-	void dieTransit();
-	void isMotionFinishTransit();
-	void damageTransit();
+	bool dieTransit();
+	bool isMotionFinishTransit();
+	bool damageTransit();
 	void initDie(int);
 	void initDamage(int);
 	void initFollow(int);

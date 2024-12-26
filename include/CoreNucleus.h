@@ -93,10 +93,10 @@ struct CoreNucleusAi : public PaniAnimKeyListener {
 	void setBossPosition();
 	void setSlimeDamagePoint();
 	void afterProcessing();
-	void dieTransit();
-	void isMotionFinishTransit();
-	void damageTransit();
-	void hitMotionStartTransit();
+	bool dieTransit();
+	bool isMotionFinishTransit();
+	bool damageTransit();
+	bool hitMotionStartTransit();
 	void initDie(int);
 	void initDamage(int);
 	void initFollow(int);
@@ -110,7 +110,7 @@ struct CoreNucleusAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	u8 _04;             // _04
+	bool _04;           // _04
 	CoreNucleus* mCore; // _08
 };
 

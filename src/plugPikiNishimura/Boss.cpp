@@ -1,4 +1,5 @@
 #include "Boss.h"
+#include "Stickers.h"
 #include "Interactions.h"
 
 /*
@@ -1870,20 +1871,8 @@ void Boss::flickPikiTransit()
  */
 int Boss::getStickPikiCount()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r4, r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  addi      r3, r1, 0xC
-	  bl        -0xBE3DC
-	  lwz       r3, 0x14(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	Stickers stickers(this);
+	return stickers.getCount();
 }
 
 /*

@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Animator.h"
 
+struct PaniMotion;
 struct PaniMotionTable;
 
 enum KeyEventTypes {
@@ -44,6 +45,35 @@ struct PaniAnimKeyListener {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct PaniMotion {
+	PaniMotion(int);
+	PaniMotion(int, int); // unused/inlined
+
+	void init(int, int);
+
+	int mAnimID; // _00
+	int _04;     // _04
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct PaniMotionTable {
+	PaniMotionTable(int);
+
+	inline PaniMotion* getMotion(int motionIdx) { return mMotions[motionIdx]; }
+
+	int mMotionCount;      // _00
+	PaniMotion** mMotions; // _04
+};
+
+/**
+ * @brief TODO
  */
 struct PaniAnimator : public Animator {
 	PaniAnimator();
@@ -68,6 +98,8 @@ struct PaniAnimator : public Animator {
 	inline void setCurrentFrame(f32 frame) { mCurrentFrame = frame; }
 
 	inline int getMotionID() { return mMotionIdx; }
+
+	inline PaniMotion* getMotion(int motionIdx) { return mMotionTable->getMotion(motionIdx); }
 
 	inline int get38() { return mCurrentKeyIndex; } // TODO: rename later
 
@@ -168,33 +200,6 @@ struct PaniMotionInfo {
 
 	int mMotionIdx;                 // _00
 	PaniAnimKeyListener* mListener; // _04
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x8.
- */
-struct PaniMotion {
-	PaniMotion(int);
-	PaniMotion(int, int); // unused/inlined
-
-	void init(int, int);
-
-	int mAnimID; // _00
-	int _04;     // _04
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x8.
- */
-struct PaniMotionTable {
-	PaniMotionTable(int);
-
-	int mMotionCount;      // _00
-	PaniMotion** mMotions; // _04
 };
 
 /**

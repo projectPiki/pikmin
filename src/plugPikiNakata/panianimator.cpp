@@ -171,7 +171,7 @@ void PaniAnimator::startMotion(PaniMotionInfo& info)
 		mCurrentKeyIndex  = 0;
 		mPreviousKeyIndex = 0;
 		mIsFinished       = false;
-		startAnim(2, mMotionTable->mMotions[mMotionIdx]->mAnimID, 0, 8);
+		startAnim(2, getMotion(mMotionIdx)->mAnimID, 0, 8);
 	}
 }
 

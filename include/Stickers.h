@@ -28,10 +28,13 @@ struct Stickers : public Traversable {
 		return false;
 	}
 
+	inline int getCount() { return mCount; }
+
 	// _00     = VTBL
 	// _00-_08 = Traversable
 	// TODO: members
-	int mCount; // _08
+	int mCount;       // _08
+	Creature* mOwner; // _0C
 };
 
 #endif

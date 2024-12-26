@@ -30,14 +30,14 @@ namespace NsCalculation {
  * Size:	0000C0
  * Aside from arg order and defines, identical to Pikmin 2's NsMathExp::calcLagrange
  */
-void calcLagrange(f32 p2, const Vector3f* p_vec, Vector3f& new_vec)
-// calculates Lagrange, stores in new_vec
+void calcLagrange(f32 t, const Vector3f* controlPts, Vector3f& outPoint)
 {
-#define p2_sub1 (p2 - 1.0f)
-#define p2_sub2 (p2 - 2.0f)
-	new_vec.x = p2_sub1 * (p_vec[2].x * 0.5f * p2) + (p2_sub2 * (p_vec[0].x * 0.5f * p2_sub1) - (p2_sub2 * (p_vec[1].x * p2)));
-	new_vec.y = p2_sub1 * (p_vec[2].y * 0.5f * p2) + (p2_sub2 * (p_vec[0].y * 0.5f * p2_sub1) - (p2_sub2 * (p_vec[1].y * p2)));
-	new_vec.z = p2_sub1 * (p_vec[2].z * 0.5f * p2) + (p2_sub2 * (p_vec[0].z * 0.5f * p2_sub1) - (p2_sub2 * (p_vec[1].z * p2)));
+	outPoint.x = (t - 2.0f) * (controlPts[0].x * 0.5f * (t - 1.0f)) - ((t - 2.0f) * (controlPts[1].x * t))
+	           + (t - 1.0f) * (controlPts[2].x * 0.5f * t);
+	outPoint.y = (t - 2.0f) * (controlPts[0].y * 0.5f * (t - 1.0f)) - ((t - 2.0f) * (controlPts[1].y * t))
+	           + (t - 1.0f) * (controlPts[2].y * 0.5f * t);
+	outPoint.z = (t - 2.0f) * (controlPts[0].z * 0.5f * (t - 1.0f)) - ((t - 2.0f) * (controlPts[1].z * t))
+	           + (t - 1.0f) * (controlPts[2].z * 0.5f * t);
 }
 
 /*
@@ -45,116 +45,21 @@ void calcLagrange(f32 p2, const Vector3f* p_vec, Vector3f& new_vec)
  * Address:	8017C388
  * Size:	00019C
  */
-void calcMatrix(const Vector3f&, const Vector3f&, const Vector3f&, const Vector3f&, Matrix4f&)
+void calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const Vector3f& zVec, const Vector3f& transVec, Matrix4f& mtx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x90(r1)
-	  stfd      f31, 0x88(r1)
-	  stfd      f30, 0x80(r1)
-	  stfd      f29, 0x78(r1)
-	  stfd      f28, 0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  mr        r31, r7
-	  stw       r30, 0x68(r1)
-	  mr        r30, r6
-	  lfs       f2, 0x8(r7)
-	  lfs       f0, 0x18(r7)
-	  fmuls     f3, f2, f2
-	  lfs       f1, 0x28(r7)
-	  fmuls     f0, f0, f0
-	  lfs       f5, 0x0(r3)
-	  fmuls     f4, f1, f1
-	  fadds     f3, f3, f0
-	  lfs       f29, 0x0(r7)
-	  lfs       f30, 0x10(r7)
-	  lfs       f31, 0x20(r7)
-	  lfs       f2, 0x4(r7)
-	  lfs       f1, 0x14(r7)
-	  fadds     f28, f4, f3
-	  lfs       f0, 0x24(r7)
-	  stfs      f5, 0x0(r7)
-	  lfs       f3, 0x4(r3)
-	  stfs      f3, 0x10(r7)
-	  lfs       f3, 0x8(r3)
-	  stfs      f3, 0x20(r7)
-	  lfs       f3, 0x0(r4)
-	  stfs      f3, 0x4(r7)
-	  lfs       f3, 0x4(r4)
-	  stfs      f3, 0x14(r7)
-	  lfs       f3, 0x8(r4)
-	  stfs      f3, 0x24(r7)
-	  lfs       f3, 0x0(r5)
-	  stfs      f3, 0x8(r7)
-	  lfs       f3, 0x4(r5)
-	  stfs      f3, 0x18(r7)
-	  lfs       f3, 0x8(r5)
-	  stfs      f3, 0x28(r7)
-	  lfs       f3, -0x513C(r2)
-	  fcmpo     cr0, f28, f3
-	  ble-      .loc_0x110
-	  fsqrte    f4, f28
-	  lfd       f6, -0x5138(r2)
-	  lfd       f5, -0x5130(r2)
-	  fmul      f3, f4, f4
-	  fmul      f4, f6, f4
-	  fmul      f3, f28, f3
-	  fsub      f3, f5, f3
-	  fmul      f4, f4, f3
-	  fmul      f3, f4, f4
-	  fmul      f4, f6, f4
-	  fmul      f3, f28, f3
-	  fsub      f3, f5, f3
-	  fmul      f4, f4, f3
-	  fmul      f3, f4, f4
-	  fmul      f4, f6, f4
-	  fmul      f3, f28, f3
-	  fsub      f3, f5, f3
-	  fmul      f3, f4, f3
-	  fmul      f3, f28, f3
-	  frsp      f3, f3
-	  stfs      f3, 0x28(r1)
-	  lfs       f28, 0x28(r1)
+	Vector3f inXVec, inYVec, inZVec;
 
-	.loc_0x110:
-	  fmuls     f2, f2, f2
-	  fmuls     f1, f1, f1
-	  fmuls     f3, f0, f0
-	  fadds     f0, f2, f1
-	  fadds     f1, f3, f0
-	  bl        -0x16E86C
-	  fmuls     f2, f29, f29
-	  fmuls     f0, f30, f30
-	  fmuls     f3, f31, f31
-	  fmr       f29, f1
-	  fadds     f0, f2, f0
-	  fadds     f1, f3, f0
-	  bl        -0x16E888
-	  stfs      f1, 0x38(r1)
-	  addi      r4, r1, 0x38
-	  addi      r3, r31, 0
-	  stfs      f29, 0x3C(r1)
-	  stfs      f28, 0x40(r1)
-	  bl        -0x13DD24
-	  lfs       f0, 0x0(r30)
-	  stfs      f0, 0xC(r31)
-	  lfs       f0, 0x4(r30)
-	  stfs      f0, 0x1C(r31)
-	  lfs       f0, 0x8(r30)
-	  stfs      f0, 0x2C(r31)
-	  lwz       r0, 0x94(r1)
-	  lfd       f31, 0x88(r1)
-	  lfd       f30, 0x80(r1)
-	  lfd       f29, 0x78(r1)
-	  lfd       f28, 0x70(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
+	mtx.getColumn(0, inXVec);
+	mtx.getColumn(1, inYVec);
+	mtx.getColumn(2, inZVec);
+
+	mtx.setColumn(0, xVec);
+	mtx.setColumn(1, yVec);
+	mtx.setColumn(2, zVec);
+
+	mtx.scale(Vector3f(inXVec.length(), inYVec.length(), inZVec.length()));
+
+	mtx.setTranslation(transVec);
 }
 
 /*
@@ -188,8 +93,10 @@ void calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f
 	f32 distanceTopMiddle    = SQUARE(topToMiddleDistance);
 	f32 distanceMiddleBottom = SQUARE(middleToBottomDistance);
 
-	Vector3f targetXyz         = bottomPosition;
-	Vector3f topToTargetVector = bottomPosition - topPosition;
+	Vector3f topToTargetVector;
+	topToTargetVector.x = bottomPosition.x - topPosition.x;
+	topToTargetVector.y = bottomPosition.y - topPosition.y;
+	topToTargetVector.z = bottomPosition.z - topPosition.z;
 
 	f32 distanceTopToTarget = topToTargetVector.squaredLength();
 	if (!(distanceTopToTarget < 0.000001f)) {
@@ -198,17 +105,17 @@ void calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f
 		Vector3f scaledTopToTarget(factor * topToTargetVector.x + topPosition.x, factor * topToTargetVector.y + topPosition.y,
 		                           factor * topToTargetVector.z + topPosition.z);
 
-		Vector3f offsetFromTop = scaledTopToTarget - topPosition;
-
-		f32 distanceAdjustment = distanceTopMiddle - SQUARE(offsetFromTop.x) - SQUARE(offsetFromTop.y) - SQUARE(offsetFromTop.z);
+		f32 distanceAdjustment = distanceTopMiddle - SQUARE(scaledTopToTarget.x - topPosition.x)
+		                       - SQUARE(scaledTopToTarget.y - topPosition.y) - SQUARE(scaledTopToTarget.z - topPosition.z);
 
 		if (!(distanceAdjustment <= 0.0f)) {
-			Vector3f cross1 = cross(middleJointPos, topToTargetVector);
-			middleJointPos  = cross(cross1, topToTargetVector);
+			Vector3f cross1(middleJointPos);
+			cross1.cross(topToTargetVector);
+			middleJointPos.cross(cross1, topToTargetVector);
 
 			f32 outSqr = middleJointPos.squaredLength();
 			if (outSqr != 0.0f) {
-				f32 len               = sqrtf(distanceAdjustment / outSqr);
+				f32 len               = std::sqrtf(distanceAdjustment / outSqr);
 				bottomJointPosition.x = len * middleJointPos.x + cross1.x;
 				bottomJointPosition.y = len * middleJointPos.y + cross1.y;
 				bottomJointPosition.z = len * middleJointPos.z + cross1.z;
@@ -217,12 +124,13 @@ void calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f
 		}
 	}
 
-	f32 dtm           = sqrtf(distanceTopMiddle);
-	f32 dmb           = sqrtf(distanceMiddleBottom);
+	f32 dtm           = std::sqrtf(distanceTopMiddle);
+	f32 dmb           = std::sqrtf(distanceMiddleBottom);
 	f32 distanceRatio = dtm / (dtm + dmb);
 
-	bottomJointPosition = Vector3f(distanceRatio * targetXyz.x + topPosition.x, distanceRatio * targetXyz.y + topPosition.y,
-	                               distanceRatio * targetXyz.z + topPosition.z);
+	bottomJointPosition.x = distanceRatio * topToTargetVector.x + topPosition.x;
+	bottomJointPosition.y = distanceRatio * topToTargetVector.y + topPosition.y;
+	bottomJointPosition.z = distanceRatio * topToTargetVector.z + topPosition.z;
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x68(r1)
@@ -450,9 +358,11 @@ void calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 	outMtx.mMtx[0] = inMtx.mMtx[0][0];
 	outMtx.mMtx[3] = inMtx.mMtx[1][0];
 	outMtx.mMtx[6] = inMtx.mMtx[2][0];
+
 	outMtx.mMtx[1] = inMtx.mMtx[0][1];
 	outMtx.mMtx[4] = inMtx.mMtx[1][1];
 	outMtx.mMtx[7] = inMtx.mMtx[2][1];
+
 	outMtx.mMtx[2] = inMtx.mMtx[0][2];
 	outMtx.mMtx[5] = inMtx.mMtx[1][2];
 	outMtx.mMtx[8] = inMtx.mMtx[2][2];

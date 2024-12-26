@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Dolphin/mtx.h"
+#include "Vector.h"
 
 /**
  * @brief 4x4 Matrix.
@@ -11,7 +12,7 @@
  * @note Is sometimes casted to Vector3f, (Vector3f&), be weary of this.
  */
 struct Matrix4f {
-	Matrix4f() { }   // probably
+	Matrix4f() { }
 	Matrix4f(Mtx44); // stripped, only in matMath.cpp
 
 	void makeIdentity();
@@ -60,6 +61,38 @@ struct Matrix4f {
 				mMtx[i][j] = value;
 			}
 		}
+	}
+
+	void getRow(int rowNum, Vector3f& row) { row.set(mMtx[rowNum][0], mMtx[rowNum][1], mMtx[rowNum][2]); }
+
+	void getColumn(int colNum, Vector3f& col) { col.set(mMtx[0][colNum], mMtx[1][colNum], mMtx[2][colNum]); }
+
+	void setRow(int rowNum, const Vector3f& row)
+	{
+		mMtx[rowNum][0] = row.x;
+		mMtx[rowNum][1] = row.y;
+		mMtx[rowNum][2] = row.z;
+	}
+
+	void setColumn(int colNum, const Vector3f& col)
+	{
+		mMtx[0][colNum] = col.x;
+		mMtx[1][colNum] = col.y;
+		mMtx[2][colNum] = col.z;
+	}
+
+	void setTranslation(const Vector3f& trans)
+	{
+		mMtx[0][3] = trans.x;
+		mMtx[1][3] = trans.y;
+		mMtx[2][3] = trans.z;
+	}
+
+	void setTranslation(f32 x, f32 y, f32 z)
+	{
+		mMtx[0][3] = x;
+		mMtx[1][3] = y;
+		mMtx[2][3] = z;
 	}
 
 	static Matrix4f ident;

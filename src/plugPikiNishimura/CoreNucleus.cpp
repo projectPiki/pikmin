@@ -62,10 +62,10 @@ void CoreNucleus::init(Vector3f& pos)
 {
 	mCollisionRadius = 20.0f;
 	mScale.set(0.0f, 0.0f, 0.0f);
-	_2B8 = 0;
-	_2BB = 0;
-	_2BE = 1;
-	_2E0 = 40.0f;
+	set2B8(0);
+	set2BB(0);
+	set2BE(1);
+	set2E0(40.0f);
 	mCoreAi->initAI(this);
 }
 
