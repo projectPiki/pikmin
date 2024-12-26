@@ -36,9 +36,9 @@ struct BossProp : public CreatureProp {
 		    , _DC(this, 1.0f, 0.0f, 0.0f, "b12", nullptr)
 		    , _EC(this, 5000.0f, 0.0f, 0.0f, "c00", nullptr)
 		    , _FC(this, 30.0f, 0.0f, 0.0f, "c01", nullptr)
-		    , _10C(this, 1.0f, 0.0f, 0.0f, "d00", nullptr)
-		    , _11C(this, 100.0f, 0.0f, 0.0f, "d01", nullptr)
-		    , _12C(this, 0.0f, 0.0f, 0.0f, "d02", nullptr)
+		    , mFlickChance(this, 1.0f, 0.0f, 0.0f, "d00", nullptr)
+		    , mFlickKnockback(this, 100.0f, 0.0f, 0.0f, "d01", nullptr)
+		    , mFlickDamage(this, 0.0f, 0.0f, 0.0f, "d02", nullptr)
 		    , mRenderSphereRadius(this, 10.0f, 0.0f, 0.0f, "p00", nullptr)
 		    , mRenderSphereHeight(this, 0.0f, 0.0f, 0.0f, "p00", nullptr)
 		    , _15C(this, 1, 0, 0, "i10", nullptr)
@@ -55,30 +55,30 @@ struct BossProp : public CreatureProp {
 
 		// _58-_5C = Parameters
 		Parm<f32> mTerritoryRadius;    // _5C, b00
-		Parm<f32> _6C;                 // _6C, b01
-		Parm<f32> _7C;                 // _7C, b02 - seeking radius?
-		Parm<f32> _8C;                 // _8C, b03 - private radius?
+		Parm<f32> _6C;                 // _6C, b01 - weight area?
+		Parm<f32> _7C;                 // _7C, b02 - search radius?
+		Parm<f32> _8C;                 // _8C, b03 - search angle?
 		Parm<f32> mMaxHealth;          // _9C, b10
-		Parm<f32> _AC;                 // _AC, b13 - related to AI seeking?
-		Parm<f32> _BC;                 // _BC, b11
-		Parm<f32> _CC;                 // _CC, b14
-		Parm<f32> _DC;                 // _DC, b12
-		Parm<f32> _EC;                 // _EC, c00
-		Parm<f32> _FC;                 // _FC, c01
-		Parm<f32> _10C;                // _10C, d00
-		Parm<f32> _11C;                // _11C, d01
-		Parm<f32> _12C;                // _12C, d02
+		Parm<f32> _AC;                 // _AC, b13 - recovery time?
+		Parm<f32> _BC;                 // _BC, b11 - recovery rate?
+		Parm<f32> _CC;                 // _CC, b14 - special attack effect?
+		Parm<f32> _DC;                 // _DC, b12 - bomb effectiveness?
+		Parm<f32> _EC;                 // _EC, c00 - life gauge scale?
+		Parm<f32> _FC;                 // _FC, c01 - life gauge height?
+		Parm<f32> mFlickChance;        // _10C, d00
+		Parm<f32> mFlickKnockback;     // _11C, d01
+		Parm<f32> mFlickDamage;        // _12C, d02
 		Parm<f32> mRenderSphereRadius; // _13C, p00
 		Parm<f32> mRenderSphereHeight; // _14C, p01
-		Parm<int> _15C;                // _15C, i10
-		Parm<int> _16C;                // _16C, i00
-		Parm<int> _17C;                // _17C, i01
-		Parm<int> _18C;                // _18C, i02
-		Parm<int> _19C;                // _19C, i03
-		Parm<int> _1AC;                // _1AC, i04
-		Parm<int> _1BC;                // _1BC, i05
-		Parm<int> _1CC;                // _1CC, i06
-		Parm<int> _1DC;                // _1DC, i90
+		Parm<int> _15C;                // _15C, i10, special damage count?
+		Parm<int> _16C;                // _16C, i00, flick piki count 1?
+		Parm<int> _17C;                // _17C, i01, flick piki count 2?
+		Parm<int> _18C;                // _18C, i02, flick piki count 3?
+		Parm<int> _19C;                // _19C, i03, flick damage count 1?
+		Parm<int> _1AC;                // _1AC, i04, flick damage count 2?
+		Parm<int> _1BC;                // _1BC, i05, flick damage count 3?
+		Parm<int> _1CC;                // _1CC, i06, flick damage count 4?
+		Parm<int> _1DC;                // _1DC, i90, AI culling type (0=Cull off camera, 1=AI always on)?
 	};
 
 	BossProp();
@@ -155,7 +155,7 @@ struct Boss : public Creature {
 	int getStickNoMouthPikiCount();
 	void killStickToMouthPiki();
 	void getMapAttribute(Vector3f&);
-	void insideAndInSearch();
+	bool insideAndInSearch();
 	void updateBoss();
 	void refreshViewCulling(Graphics&);
 
@@ -165,6 +165,26 @@ struct Boss : public Creature {
 	void recoveryLife();
 
 	inline f32 getMotionSpeed() { return mMotionSpeed; }
+	inline f32 setMotionSpeed(f32 speed) { mMotionSpeed = speed; }
+
+	inline int getCurrStateID() { return _2E4; }
+	inline void set2E4(int val) // name these better later
+	{
+		_2E4 = val;
+	}
+	inline void set2E8(int val) // name these better later
+	{
+		_2E8 = val;
+	}
+
+	// these names are a guess
+	inline f32 getDamage() { return _2C0; }
+	inline bool isDamagePending() { return _2C0 > 0.0f ? true : false; }
+	inline void resetDamage() { _2C0 = 0.0f; }
+
+	inline bool isDead() { return !(mCurrentHealth > 0.0f); }
+
+	inline bool is2BD() { return _2BD; }
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
@@ -173,12 +193,13 @@ struct Boss : public Creature {
 	u8 _2BA;                       // _2BA
 	u8 _2BB;                       // _2BB
 	u8 _2BC;                       // _2BC
-	u8 _2BD;                       // _2BD
+	bool _2BD;                     // _2BD
 	u8 _2BE;                       // _2BE
-	u8 _2BF[0x2C4 - 0x2BF];        // _2BF, unknown
+	f32 _2C0;                      // _2C0
 	f32 mCurrentHealth;            // _2C4
 	f32 mMaxHealth;                // _2C8
-	u8 _2CC[0x2D8 - 0x2CC];        // _2CC, unknown
+	u8 _2CC[0x2D4 - 0x2CC];        // _2CC, unknown
+	f32 _2D4;                      // _2D4
 	f32 mMotionSpeed;              // _2D8
 	u8 _2DC[0x2E0 - 0x2DC];        // _2DC, unknown
 	f32 _2E0;                      // _2E0
@@ -253,8 +274,8 @@ struct BossMgr : public ObjectMgr {
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
-	// _00-_1C = ObjectMgr?
-	// TODO: members
+	// _00-_28 = ObjectMgr
+	int _28; // _28, unknown - number of slimecreatures? number of bosses?
 };
 
 /**

@@ -110,14 +110,18 @@ struct InteractBreak : public Interaction {
  * @brief TODO
  */
 struct InteractBubble : public Interaction {
-	inline InteractBubble(); // TODO: probably
+	inline InteractBubble(Creature* owner, f32 p2)
+	    : Interaction(owner)
+	{
+		_08 = p2;
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 	virtual bool actNavi(Navi*); // _14
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	f32 _08; // _08
 };
 
 /**
@@ -217,7 +221,7 @@ struct InteractFlick : public Interaction {
 	// _00     = VTBL
 	// _00-_08 = Interaction
 	f32 mKnockback; // _08
-	f32 mDamage;    // _0C, maybe damage?
+	f32 mDamage;    // _0C
 	f32 mAngle;     // _10
 };
 

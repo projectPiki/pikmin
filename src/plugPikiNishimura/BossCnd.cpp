@@ -48,7 +48,7 @@ bool CndBossFlick::satisfy(Creature* target)
 	u32 badCompiler[2];
 
 	if (target && target->isAlive() && !target->isCreatureFlag(CF_StuckToMouth) && target->isStuckTo(mBoss)) {
-		if (randFloat(0.99999899) < static_cast<BossProp*>(mBoss->mProps)->mBossProps._10C()) {
+		if (randFloat(0.999999f) < static_cast<BossProp*>(mBoss->mProps)->mBossProps.mFlickChance()) {
 			return true;
 		}
 	}

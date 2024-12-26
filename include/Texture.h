@@ -3,21 +3,27 @@
 
 #include "CoreNode.h"
 #include "GfxObject.h"
+#include "Dolphin/gx.h"
 #include "Ayu.h"
 
 struct Texture;
 struct TexImg;
 struct Colour;
 
+/**
+ * @brief TODO
+ */
 enum TexImgFormat {
 	TEX_FMT_RGB565 = 0,
-	TEX_FMT_S3TC,
-	TEX_FMT_RGB5A3,
-	TEX_FMT_I4,
-	TEX_FMT_I8,
-	TEX_FMT_IA4,
-	TEX_FMT_IA8,
-	TEX_FMT_RGBA8,
+	TEX_FMT_S3TC   = 1,
+	TEX_FMT_RGB5A3 = 2,
+	TEX_FMT_I4     = 3,
+	TEX_FMT_I8     = 4,
+	TEX_FMT_IA4    = 5,
+	TEX_FMT_IA8    = 6,
+	TEX_FMT_RGBA8  = 7,
+	TEX_FMT_Z8     = 8,
+	TEX_FMT_COUNT, // 9
 };
 
 /**
@@ -65,11 +71,12 @@ struct TexImg : public CoreNode {
 		mPixelData = nullptr;
 	}
 
-	void calcDataSize(int, int, int);
 	void read(RandomAccessStream&);
-	void getTileSize(int, u32&, u32&);
 	void importBti(Texture*, RandomAccessStream&, u8*);
 	void importTxe(Texture*, RandomAccessStream&);
+
+	static int calcDataSize(int texFmt, int width, int height);
+	static void getTileSize(int texFmt, u32& tileSizeX, u32& tileSizeY);
 
 	// unused/inlined:
 	void convFormat(u32);
@@ -96,36 +103,52 @@ struct TexImg : public CoreNode {
  * @note Size: 0x3C.
  */
 struct Texture : public GfxObject {
+	/**
+	 * @brief TODO
+	 */
+	enum TexFlags {
+		TEX_CLAMP_S  = 1 << 0, //  0x1
+		TEX_MIRROR_S = 1 << 1, // 0x2
+		TEX_Unk2     = 1 << 2, // 0x4
+		TEX_Unk3     = 1 << 3, // 0x8
+		TEX_Unk4     = 1 << 4, // 0x10
+		TEX_Unk5     = 1 << 5, // 0x20
+		TEX_Unk6     = 1 << 6, // 0x40
+		TEX_Unk7     = 1 << 7, // 0x80
+		TEX_CLAMP_T  = 1 << 8, // 0x100
+		TEX_MIRROR_T = 1 << 9, // 0x200
+	};
+
 	Texture();
 
 	virtual void attach();          // _08
 	virtual void detach();          // _0C
 	virtual void makeResident() { } // _10 (weak)
 
-	u8 getAlpha(int, int);
-	void read(RandomAccessStream&);
-	void createBuffer(int, int, int, void*);
-	void grabBuffer(int, int, bool, bool);
-	void decodeData(TexImg*);
+	u8 getAlpha(int x, int y);
+	void read(RandomAccessStream& input);
+	void createBuffer(int width, int height, int texFmt, void* buf);
+	void grabBuffer(int width, int height, bool doClear, bool useMIPmap);
+	void decodeData(TexImg* texImg);
 
 	// unused/inlined:
 	void offsetGLtoGX(int, int);
 	void getRed(int, int);
 
 	// _00 = VTBL
-	u16 _04;           // _04
-	s16 _06;           // _06
+	u16 mTexFormat;    // _04, see TexImgFormat enum
+	u16 mTexFlags;     // _06
 	u16 mWidth;        // _08
 	u16 mHeight;       // _0A
 	u32 mTileSizeX;    // _0C
 	u32 mTileSizeY;    // _10
 	void* mPixelData;  // _14
 	u32* mTextureData; // _18
-	f32 _1C;           // _1C
-	int _20;           // _20
-	void* _24;         // _24, pointer to something of size 0x20
-	f32 _28;           // _28
-	f32 _2C;           // _2C
+	f32 mLODBias;      // _1C
+	u32 _20;           // _20, -1 if detached, 0 if attached
+	GXTexObj* mTexObj; // _24
+	f32 mWidthFactor;  // _28, 1.0f / width
+	f32 mHeigthFactor; // _2C, 1.0f / height
 	u32 _30;           // _30
 	u32 _34;           // _34, unknown
 	u8 _38[0x4];       // _38, unknown

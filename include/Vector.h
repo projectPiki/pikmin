@@ -60,7 +60,7 @@ struct Vector3f {
 		return length();
 	}
 
-	inline void sub2(Vector3f& a, Vector3f& b) { set(a.getX() - b.getX(), a.getY() - b.getY(), a.getZ() - b.getZ()); }
+	inline void sub2(Vector3f& a, Vector3f& b) { set(a.x - b.x, a.y - b.y, a.z - b.z); }
 
 	inline void set(const f32& pX, const f32& pY, const f32& pZ)
 	{
@@ -196,6 +196,15 @@ struct Vector3f {
 		y += other.y;
 		z += other.z;
 	}
+
+	void sub(Vector3f& other)
+	{
+		x -= other.x;
+		y -= other.y;
+		z -= other.z;
+	}
+
+	void add2(Vector3f& a, Vector3f& b) { set(a.x + b.x, a.y + b.y, a.z + b.z); }
 
 	// unused/inlined:
 	void rotateTranspose(Matrix4f&);

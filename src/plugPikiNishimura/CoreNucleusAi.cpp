@@ -1,84 +1,41 @@
 #include "CoreNucleus.h"
+#include "Slime.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("CoreNucleusAi");
 
 /*
  * --INFO--
  * Address:	8017AD44
  * Size:	000020
  */
-CoreNucleusAi::CoreNucleusAi(CoreNucleus*)
-{
-	/*
-	.loc_0x0:
-	  lis       r5, 0x802B
-	  subi      r0, r5, 0x246C
-	  lis       r5, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r5, 0x15DC
-	  stw       r0, 0x0(r3)
-	  stw       r4, 0x8(r3)
-	  blr
-	*/
-}
+CoreNucleusAi::CoreNucleusAi(CoreNucleus* core) { mCore = core; }
 
 /*
  * --INFO--
  * Address:	8017AD64
  * Size:	000074
  */
-void CoreNucleusAi::initAI(CoreNucleus*)
+void CoreNucleusAi::initAI(CoreNucleus* core)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x2
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  addi      r5, r31, 0
-	  stw       r4, 0x8(r3)
-	  li        r4, 0x2
-	  lwz       r6, 0x8(r3)
-	  addi      r3, r1, 0x1C
-	  stw       r0, 0x2E4(r6)
-	  lwz       r6, 0x8(r31)
-	  stw       r0, 0x2E8(r6)
-	  bl        -0x5BE10
-	  lwz       r5, 0x8(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x5BBEC
-	  lfs       f0, -0x5180(r2)
-	  li        r0, 0
-	  lwz       r3, 0x8(r31)
-	  stfs      f0, 0x2D8(r3)
-	  stb       r0, 0x4(r31)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	setCore(core);
+	mCore->set2E4(2);
+	mCore->set2E8(2);
+	mCore->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mCore->setMotionSpeed(30.0f);
+	_04 = 0;
 }
 
 /*
@@ -86,58 +43,25 @@ void CoreNucleusAi::initAI(CoreNucleus*)
  * Address:	8017ADD8
  * Size:	00007C
  */
-void CoreNucleusAi::animationKeyUpdated(PaniAnimKeyEvent&)
+void CoreNucleusAi::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x2C
-	  cmpwi     r0, 0
-	  beq-      .loc_0x5C
-	  bge-      .loc_0x44
-	  b         .loc_0x6C
-
-	.loc_0x2C:
-	  cmpwi     r0, 0x7
-	  beq-      .loc_0x64
-	  bge-      .loc_0x6C
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x54
-	  b         .loc_0x6C
-
-	.loc_0x44:
-	  bl        .loc_0x7C
-	  b         .loc_0x6C
-
-	.loc_0x4C:
-	  bl        0x34
-	  b         .loc_0x6C
-
-	.loc_0x54:
-	  bl        0x30
-	  b         .loc_0x6C
-
-	.loc_0x5C:
-	  bl        0x3C
-	  b         .loc_0x6C
-
-	.loc_0x64:
-	  lwz       r4, 0x4(r4)
-	  bl        0x40
-
-	.loc_0x6C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x7C:
-	*/
+	switch (event.mEventType) {
+	case KEY_Action0:
+		keyAction0();
+		break;
+	case KEY_Action1:
+		keyAction1();
+		break;
+	case KEY_LoopEnd:
+		keyLoopEnd();
+		break;
+	case KEY_Done:
+		keyFinished();
+		break;
+	case KEY_PlaySound:
+		playSound(event.mValue);
+		break;
+	}
 }
 
 /*
@@ -179,33 +103,14 @@ void CoreNucleusAi::keyAction3()
  * Address:	8017AE5C
  * Size:	000014
  */
-void CoreNucleusAi::keyLoopEnd()
-{
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x8(r3)
-	  lwz       r3, 0x2EC(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2EC(r4)
-	  blr
-	*/
-}
+void CoreNucleusAi::keyLoopEnd() { mCore->_2EC++; }
 
 /*
  * --INFO--
  * Address:	8017AE70
  * Size:	000010
  */
-void CoreNucleusAi::keyFinished()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x8(r3)
-	  li        r0, 0x1
-	  stb       r0, 0x2BD(r3)
-	  blr
-	*/
-}
+void CoreNucleusAi::keyFinished() { mCore->_2BD = 1; }
 
 /*
  * --INFO--
@@ -219,11 +124,7 @@ void CoreNucleusAi::playSound(int) { }
  * Address:	8017AE84
  * Size:	00000C
  */
-void CoreNucleusAi::setHitMotionStart()
-{
-	// Generated from stb r0, 0x4(r3)
-	// _04 = 1;
-}
+void CoreNucleusAi::setHitMotionStart() { _04 = 1; }
 
 /*
  * --INFO--

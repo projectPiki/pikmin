@@ -4,6 +4,9 @@
 #include "types.h"
 #include "Boss.h"
 
+struct CoreNucleusAi;
+struct Slime;
+
 /**
  * @brief TODO.
  */
@@ -44,7 +47,7 @@ struct CoreNucleusProp : public BossProp, public CoreNode {
 struct CoreNucleus : public Boss {
 	CoreNucleus(CreatureProp*);
 
-	virtual void init(Vector3f&);               // _28
+	virtual void init(Vector3f& pos);           // _28
 	virtual f32 getiMass();                     // _38
 	virtual void collisionCallback(CollEvent&); // _A8
 	virtual void update();                      // _E0
@@ -58,12 +61,16 @@ struct CoreNucleus : public Boss {
 	inline CoreNucleusProp* getCoreNucleusProp() { return static_cast<CoreNucleusProp*>(mProps); }
 
 	// _00      = VTBL
-	// _00-_3B8 = Boss?
-	// TODO: members
+	// _00-_3B8 = Boss
+	u8 _3B8[0x4];           // _3B8, unknown
+	Slime* mSlime;          // _3BC
+	CoreNucleusAi* mCoreAi; // _3C0
 };
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0xC.
  */
 struct CoreNucleusAi : public PaniAnimKeyListener {
 	CoreNucleusAi(CoreNucleus*);
@@ -99,9 +106,12 @@ struct CoreNucleusAi : public PaniAnimKeyListener {
 	void followState();
 	void hitState();
 
+	inline void setCore(CoreNucleus* core) { mCore = core; }
+
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	// TODO: members
+	u8 _04;             // _04
+	CoreNucleus* mCore; // _08
 };
 
 #endif

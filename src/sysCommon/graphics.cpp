@@ -3649,7 +3649,7 @@ void TexImg::formatName(u32)
  * Address:	8002876C
  * Size:	00009C
  */
-void TexImg::calcDataSize(int, int, int)
+int TexImg::calcDataSize(int, int, int)
 {
 	/*
 	.loc_0x0:

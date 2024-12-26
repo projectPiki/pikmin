@@ -1484,14 +1484,14 @@ Camera::Camera()
  * Address:	80043314
  * Size:	0000D0
  */
-void LightCamera::initLightmap(int p1, int p2)
+void LightCamera::initLightmap(int size, int texFmt)
 {
-	mLightMap      = new Texture();
-	f32 val        = 1.0f / f32(p1);
-	mLightMap->_28 = val;
-	mLightMap->_2C = val;
-	mLightMap->_06 = 0x105;
-	mLightMap->createBuffer(p1, p1, p2, nullptr);
+	mLightMap                = new Texture();
+	f32 sizeFactor           = 1.0f / f32(size);
+	mLightMap->mWidthFactor  = sizeFactor;
+	mLightMap->mHeigthFactor = sizeFactor;
+	mLightMap->mTexFlags     = (Texture::TEX_CLAMP_S | Texture::TEX_Unk2 | Texture::TEX_CLAMP_T);
+	mLightMap->createBuffer(size, size, texFmt, nullptr);
 	gsys->addTexture(mLightMap, "internalLightmap");
 }
 

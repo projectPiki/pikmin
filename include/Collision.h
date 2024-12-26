@@ -139,15 +139,18 @@ struct CollPart {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct CollPartUpdater {
-	virtual void getPos()  = 0; // _08
-	virtual void getSize() = 0; // _0C
+	virtual Vector3f getPos() = 0; // _08
+	virtual f32 getSize()     = 0; // _0C
 
 	void updateCollPart(CollPart*);
 
-	// _00 = VTBL?
-	// TODO: members
+	// _00 = VTBL
+	ID32 _04; // _04
+	ID32 _10; // _10
 };
 
 /**

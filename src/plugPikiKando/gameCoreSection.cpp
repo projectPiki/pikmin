@@ -3883,10 +3883,10 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 
 	memStat->end("mapMgr");
 
-	_50      = 0;
-	_68      = gsys->loadTexture("effects/shadow.txe", true);
-	_68->_06 = 0x105;
-	mBigFont = new Font();
+	_50            = 0;
+	_68            = gsys->loadTexture("effects/shadow.txe", true);
+	_68->mTexFlags = (Texture::TEX_CLAMP_S | Texture::TEX_Unk2 | Texture::TEX_CLAMP_T);
+	mBigFont       = new Font();
 	mBigFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 36);
 
 	memStat->start("dynamics");

@@ -82,8 +82,8 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual bool doDoAI();                                    // _1C (weak)
 	virtual void setRouteTracer(RouteTracer*);                // _20 (weak)
 	virtual void init();                                      // _24
-	virtual void init(Vector3f&);                             // _28
-	virtual void resetPosition(Vector3f&);                    // _2C
+	virtual void init(Vector3f& pos);                         // _28
+	virtual void resetPosition(Vector3f& pos);                // _2C
 	virtual void initParam(int);                              // _30 (weak)
 	virtual void startAI(int);                                // _34 (weak)
 	virtual f32 getiMass();                                   // _38 (weak)

@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Boss.h"
 
+struct Slime;
 struct NucleusAi;
 
 /**
@@ -60,7 +61,7 @@ struct Nucleus : public Boss {
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss?
-	u8 _3B8[0x4];          // _3B8, unknown, maybe part of Boss?
+	Slime* mSlime;         // _3B8
 	NucleusAi* mNucleusAI; // _3BC
 };
 
@@ -101,8 +102,8 @@ struct NucleusAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	u32 _04;           // _04
-	Nucleus* mNucleus; // _08
+	int mStickPikiCount; // _04
+	Nucleus* mNucleus;   // _08
 };
 
 #endif

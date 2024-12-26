@@ -1,84 +1,42 @@
 #include "Nucleus.h"
+#include "Slime.h"
+#include "EffectMgr.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("NucleusAi");
 
 /*
  * --INFO--
  * Address:	8017A544
  * Size:	000020
  */
-NucleusAi::NucleusAi(Nucleus*)
-{
-	/*
-	.loc_0x0:
-	  lis       r5, 0x802B
-	  subi      r0, r5, 0x246C
-	  lis       r5, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r5, 0x1314
-	  stw       r0, 0x0(r3)
-	  stw       r4, 0x8(r3)
-	  blr
-	*/
-}
+NucleusAi::NucleusAi(Nucleus* nucleus) { mNucleus = nucleus; }
 
 /*
  * --INFO--
  * Address:	8017A564
  * Size:	000074
  */
-void NucleusAi::initAI(Nucleus*)
+void NucleusAi::initAI(Nucleus* nucleus)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x2
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  addi      r5, r31, 0
-	  stw       r4, 0x8(r3)
-	  li        r4, 0x2
-	  lwz       r6, 0x8(r3)
-	  addi      r3, r1, 0x1C
-	  stw       r0, 0x2E4(r6)
-	  lwz       r6, 0x8(r31)
-	  stw       r0, 0x2E8(r6)
-	  bl        -0x5B610
-	  lwz       r5, 0x8(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x5B3EC
-	  lfs       f0, -0x51A0(r2)
-	  li        r0, 0
-	  lwz       r3, 0x8(r31)
-	  stfs      f0, 0x2D8(r3)
-	  stw       r0, 0x4(r31)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mNucleus = nucleus;
+	mNucleus->set2E4(2);
+	mNucleus->set2E8(2);
+	mNucleus->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mNucleus->setMotionSpeed(30.0f);
+	mStickPikiCount = 0;
 }
 
 /*
@@ -86,58 +44,25 @@ void NucleusAi::initAI(Nucleus*)
  * Address:	8017A5D8
  * Size:	00007C
  */
-void NucleusAi::animationKeyUpdated(PaniAnimKeyEvent&)
+void NucleusAi::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x2C
-	  cmpwi     r0, 0
-	  beq-      .loc_0x5C
-	  bge-      .loc_0x44
-	  b         .loc_0x6C
-
-	.loc_0x2C:
-	  cmpwi     r0, 0x7
-	  beq-      .loc_0x64
-	  bge-      .loc_0x6C
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x54
-	  b         .loc_0x6C
-
-	.loc_0x44:
-	  bl        .loc_0x7C
-	  b         .loc_0x6C
-
-	.loc_0x4C:
-	  bl        0x34
-	  b         .loc_0x6C
-
-	.loc_0x54:
-	  bl        0x30
-	  b         .loc_0x6C
-
-	.loc_0x5C:
-	  bl        0x3C
-	  b         .loc_0x6C
-
-	.loc_0x64:
-	  lwz       r4, 0x4(r4)
-	  bl        0x40
-
-	.loc_0x6C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x7C:
-	*/
+	switch (event.mEventType) {
+	case KEY_Action0:
+		keyAction0();
+		break;
+	case KEY_Action1:
+		keyAction1();
+		break;
+	case KEY_LoopEnd:
+		keyLoopEnd();
+		break;
+	case KEY_Done:
+		keyFinished();
+		break;
+	case KEY_PlaySound:
+		playSound(event.mValue);
+		break;
+	}
 }
 
 /*
@@ -179,33 +104,14 @@ void NucleusAi::keyAction3()
  * Address:	8017A65C
  * Size:	000014
  */
-void NucleusAi::keyLoopEnd()
-{
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x8(r3)
-	  lwz       r3, 0x2EC(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2EC(r4)
-	  blr
-	*/
-}
+void NucleusAi::keyLoopEnd() { mNucleus->_2EC++; }
 
 /*
  * --INFO--
  * Address:	8017A670
  * Size:	000010
  */
-void NucleusAi::keyFinished()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x8(r3)
-	  li        r0, 0x1
-	  stb       r0, 0x2BD(r3)
-	  blr
-	*/
-}
+void NucleusAi::keyFinished() { mNucleus->_2BD = 1; }
 
 /*
  * --INFO--
@@ -231,7 +137,8 @@ void NucleusAi::setEveryFrame()
  */
 void NucleusAi::setBossPosition()
 {
-	// UNUSED FUNCTION
+	mNucleus->mPosition.x = mNucleus->mSlime->_3DC.x;
+	mNucleus->mPosition.z = mNucleus->mSlime->_3DC.z;
 }
 
 /*
@@ -239,10 +146,7 @@ void NucleusAi::setBossPosition()
  * Address:	........
  * Size:	000030
  */
-void NucleusAi::setSlimeDamagePoint()
-{
-	// UNUSED FUNCTION
-}
+void NucleusAi::setSlimeDamagePoint() { mNucleus->mSlime->mSlimeAi->addDamagePoint(mNucleus->getDamage()); }
 
 /*
  * --INFO--
@@ -289,9 +193,17 @@ void NucleusAi::damageTransit()
  * Address:	........
  * Size:	0000D8
  */
-void NucleusAi::initDie(int)
+void NucleusAi::initDie(int val)
 {
-	// UNUSED FUNCTION
+	mNucleus->set2E8(val);
+	mNucleus->_2BD = 0;
+	mNucleus->_2EC = 0;
+	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
+	mNucleus->_2D4 = 0.0f;
+	effectMgr->create(EffectMgr::EFF_Unk57, mNucleus->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Unk56, mNucleus->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Unk55, mNucleus->mPosition, nullptr, nullptr);
+	mNucleus->doKill();
 }
 
 /*
@@ -299,9 +211,12 @@ void NucleusAi::initDie(int)
  * Address:	........
  * Size:	000064
  */
-void NucleusAi::initDamage(int)
+void NucleusAi::initDamage(int val)
 {
-	// UNUSED FUNCTION
+	mNucleus->set2E8(val);
+	mNucleus->_2BD = 0;
+	mNucleus->_2EC = 0;
+	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
 }
 
 /*
@@ -309,9 +224,12 @@ void NucleusAi::initDamage(int)
  * Address:	........
  * Size:	000064
  */
-void NucleusAi::initFollow(int)
+void NucleusAi::initFollow(int val)
 {
-	// UNUSED FUNCTION
+	mNucleus->set2E8(val);
+	mNucleus->_2BD = 0;
+	mNucleus->_2EC = 0;
+	mNucleus->mAnimator.startMotion(PaniMotionInfo(2, this));
 }
 
 /*
@@ -319,30 +237,21 @@ void NucleusAi::initFollow(int)
  * Address:	........
  * Size:	000004
  */
-void NucleusAi::dieState()
-{
-	// UNUSED FUNCTION
-}
+void NucleusAi::dieState() { }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void NucleusAi::damageState()
-{
-	// UNUSED FUNCTION
-}
+void NucleusAi::damageState() { }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void NucleusAi::followState()
-{
-	// UNUSED FUNCTION
-}
+void NucleusAi::followState() { }
 
 /*
  * --INFO--
@@ -351,6 +260,30 @@ void NucleusAi::followState()
  */
 void NucleusAi::update()
 {
+	// still somehow needs more inlines (and a lot of them)
+	mStickPikiCount = mNucleus->getStickPikiCount();
+	setBossPosition();
+	setSlimeDamagePoint();
+	switch (mNucleus->getCurrStateID()) {
+	case 0: // dead?
+		break;
+	case 1: // damaged?
+		if (mNucleus->isDead()) {
+			initDie(0);
+		} else if (mNucleus->is2BD()) {
+			initFollow(2);
+		}
+		break;
+	case 2: // following?
+		if (mNucleus->isDead()) {
+			initDie(0);
+		} else if (mNucleus->isDamagePending()) {
+			initDamage(1);
+		}
+		break;
+	}
+
+	mNucleus->resetDamage();
 	/*
 	.loc_0x0:
 	  mflr      r0

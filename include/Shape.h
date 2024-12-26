@@ -186,7 +186,7 @@ struct BaseShape : public CoreNode {
 	TexImg* mTextureList;             // _78
 	LightGroup mLightGroup;           // _7C
 	ObjCollInfo mCollisionInfo;       // _E8
-	u32 _13C;                         // _13C
+	u32 _13C;                         // _13C, flag of some kind?
 	BoundBox _140;                    // _140
 	u8 _158[0x164 - 0x158];           // _158
 	u32 _164;                         // _164

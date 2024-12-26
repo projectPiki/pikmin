@@ -2193,7 +2193,7 @@ void Boss::getMapAttribute(Vector3f&)
  * Address:	8014F3C0
  * Size:	00006C
  */
-void Boss::insideAndInSearch()
+bool Boss::insideAndInSearch()
 {
 	/*
 	.loc_0x0:
