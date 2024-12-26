@@ -1059,7 +1059,7 @@ void* GenObjectPlant::birth(BirthInfo& info)
 		plant->reset(mPlantType);
 		plant->mGenerator = info.mGenerator;
 		plant->mHealth    = 1.0f;
-		plant->_5C        = plant->mHealth;
+		plant->mMaxHealth = plant->mHealth;
 		plant->startAI(PlantAI::STATE_Wait);
 	}
 

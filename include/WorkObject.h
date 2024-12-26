@@ -125,14 +125,13 @@ struct Bridge : public WorkObject {
 	bool _3C8;                  // _3C8
 	s16 _3CA;                   // _3CA
 	u8 _3CC;                    // _3CC
-	u32* _3D0;                  // _3D0, stage items?
+	f32* mStageProgressList;    // _3D0, stage items?
 	Joint** mStageJoints;       // _3D4, unknown
 	PermanentEffect _3D8;       // _3D8
 	PermanentEffect _3E8;       // _3E8
 	WayPoint* _3F8;             // _3F8
 	WayPoint* _3FC;             // _3FC
 	u8 _400;                    // _400
-	u8 _401[0x404 - 0x401];     // _401, unknown
 	int mStageCount;            // _404
 	DynBuildShape* mBuildShape; // _408
 	Shape* _40C;                // _40C

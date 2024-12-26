@@ -7,6 +7,7 @@
 #include "gameflow.h"
 #include "DebugLog.h"
 #include "MapMgr.h"
+#include "RumbleMgr.h"
 
 char* files[] = { "objects/bridge/brd_test.mod", "objects/bridge/slp_u_4.mod", "objects/bridge/slp_d_4.mod",
 	              "objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod" };
@@ -2890,7 +2891,7 @@ Bridge::Bridge(Shape* shape, bool a3)
 		ERROR("numStage is 0 \n");
 	}
 
-	_3D0 = new u32[mStageCount];
+	mStageProgressList = new f32[mStageCount];
 }
 
 /*
@@ -2898,44 +2899,13 @@ Bridge::Bridge(Shape* shape, bool a3)
  * Address:	8009D9E0
  * Size:	000074
  */
-bool Bridge::stimulate(Interaction&)
+bool Bridge::stimulate(Interaction& i)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x44
-	  li        r3, 0
-	  b         .loc_0x5C
+	if (!i.actCommon((Creature*)this)) {
+		return false;
+	}
 
-	.loc_0x44:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x5C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return i.actBridge(this);
 }
 
 /*
@@ -2943,8 +2913,23 @@ bool Bridge::stimulate(Interaction&)
  * Address:	8009DA54
  * Size:	0000E4
  */
-void Bridge::refresh(Graphics&)
+void Bridge::refresh(Graphics& gfx)
 {
+	Matrix4f animMtx;
+	// gfx.something multiply to, something
+	_40C->updateAnim(gfx, animMtx, nullptr);
+	mBuildShape->mTransformMtx.inverse(&mBuildShape->mInverseMatrix);
+	_414.animate(nullptr);
+	mBuildShape->updateContext();
+	// _40C->drawshape(gfx, )
+
+	if (!_3C8) {
+		mCollInfo->updateInfo(gfx, false);
+	}
+
+	if (_424) {
+		_424--;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3930,8 +3915,65 @@ void Bridge::dump()
  * Address:	8009E5B4
  * Size:	000394
  */
-void Bridge::setStageFinished(int, bool)
+void Bridge::setStageFinished(int stageIndex, bool isFinished)
 {
+	FORCE_DONT_INLINE;
+	// Very wrong. Do Not Use.
+
+	if (_3C8) {
+
+		Joint* target   = mStageJoints[stageIndex];
+		int targetIndex = target->mIndex;
+		int v6          = -1;
+		if (stageIndex < mStageCount - 1) { }
+		int v9 = 2 * stageIndex - 1;
+		if (isFinished) {
+			mBuildShape->jointVisible(target->mIndex, false);
+			mBuildShape->jointVisible(targetIndex, true);
+			if (v6 != -1) {
+				mBuildShape->jointVisible(v6, true);
+			}
+		} else {
+			if (v9 > 0) {
+				if (mBuildShape->_38[mStageJoints[v9]->mIndex]) {
+					mBuildShape->jointVisible(target->mIndex, true);
+				} else {
+					mBuildShape->jointVisible(target->mIndex, false);
+				}
+			} else {
+				mBuildShape->jointVisible(target->mIndex, true);
+			}
+			mBuildShape->jointVisible(targetIndex, false);
+			if (v6 != -1) {
+				mBuildShape->jointVisible(v6, false);
+			}
+		}
+
+		for (int i = 0; i < mStageCount; ++i) {
+			if (mBuildShape->_38[mStageJoints[v9]->mIndex] && mBuildShape->_38[mStageJoints[v9 + 1]->mIndex]) {
+				mBuildShape->jointVisible(i, false);
+			}
+		}
+
+		int firstUnfinishedStage = -1;
+		for (int i = 0; i < mStageCount; ++i) {
+			if (mBuildShape->_38[mStageJoints[v9]->mIndex] == 0) {
+				firstUnfinishedStage = i;
+				break;
+			}
+		}
+
+		if (firstUnfinishedStage != -1) {
+			Vector3f scaledBridgeZVec = getBridgeZVec();
+			Vector3f scalar(20.0f, 20.0f, 20.0f);
+			scaledBridgeZVec = scaledBridgeZVec * scalar;
+			mPosition        = getStagePos(firstUnfinishedStage) - scaledBridgeZVec;
+		}
+	} else {
+		int jointIndex = _410->getChildAt(stageIndex)->mCollInfo->mJointIndex;
+		mBuildShape->jointVisible(jointIndex, isFinished);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4322,71 +4364,13 @@ f32 Bridge::getStageZ(int)
  * Address:	8009EA74
  * Size:	0000E8
  */
-void Bridge::getBridgePos(Vector3f&, f32&, f32&)
+void Bridge::getBridgePos(Vector3f& origin, f32& xProjection, f32& zProjection)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stfd      f31, 0x98(r1)
-	  stfd      f30, 0x90(r1)
-	  stw       r31, 0x8C(r1)
-	  addi      r31, r6, 0
-	  stw       r30, 0x88(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x84(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x80(r1)
-	  addi      r28, r3, 0
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x5C
-	  bl        0x16C
-	  lfs       f3, 0x8(r29)
-	  mr        r4, r28
-	  lfs       f2, 0x64(r1)
-	  addi      r3, r1, 0x50
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x5C(r1)
-	  fsubs     f31, f3, f2
-	  fsubs     f30, f1, f0
-	  bl        0xE8
-	  lfs       f2, 0x50(r1)
-	  mr        r4, r28
-	  lfs       f1, -0x732C(r2)
-	  addi      r3, r1, 0x44
-	  lfs       f0, 0x54(r1)
-	  lfs       f3, 0x58(r1)
-	  fmuls     f2, f30, f2
-	  fmuls     f0, f1, f0
-	  fmuls     f1, f31, f3
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x0(r30)
-	  bl        .loc_0xE8
-	  lfs       f2, 0x44(r1)
-	  lfs       f1, -0x732C(r2)
-	  lfs       f0, 0x48(r1)
-	  fmuls     f2, f30, f2
-	  lfs       f3, 0x4C(r1)
-	  fmuls     f0, f1, f0
-	  fmuls     f1, f31, f3
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x0(r31)
-	  lwz       r0, 0xA4(r1)
-	  lfd       f31, 0x98(r1)
-	  lfd       f30, 0x90(r1)
-	  lwz       r31, 0x8C(r1)
-	  lwz       r30, 0x88(r1)
-	  lwz       r29, 0x84(r1)
-	  lwz       r28, 0x80(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
+	Vector3f diff = origin - getStartPos();
+	diff.y        = 0.0f;
 
-	.loc_0xE8:
-	*/
+	xProjection = diff.dot(getBridgeXVec());
+	zProjection = diff.dot(getBridgeZVec());
 }
 
 /*
@@ -4396,33 +4380,9 @@ void Bridge::getBridgePos(Vector3f&, f32&, f32&)
  */
 Vector3f Bridge::getBridgeZVec()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  stfd      f30, 0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  lfs       f30, 0x8C(r4)
-	  fmr       f1, f30
-	  bl        0x17CFD4
-	  fmr       f31, f1
-	  fmr       f1, f30
-	  bl        0x17D15C
-	  lfs       f0, -0x54E0(r13)
-	  stfs      f1, 0x0(r31)
-	  stfs      f0, 0x4(r31)
-	  stfs      f31, 0x8(r31)
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  lfd       f30, 0x38(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	f32 yRot = mRotation.y;
+	Vector3f zvec(cosf(yRot), 0.0f, sinf(yRot));
+	return zvec;
 }
 
 /*
@@ -4432,33 +4392,9 @@ Vector3f Bridge::getBridgeZVec()
  */
 Vector3f Bridge::getBridgeXVec()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  stfd      f30, 0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  lfs       f30, 0x8C(r4)
-	  fmr       f1, f30
-	  bl        0x17D108
-	  fneg      f31, f1
-	  fmr       f1, f30
-	  bl        0x17CF68
-	  lfs       f0, -0x54DC(r13)
-	  stfs      f1, 0x0(r31)
-	  stfs      f0, 0x4(r31)
-	  stfs      f31, 0x8(r31)
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  lfd       f30, 0x38(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	f32 yRot = mRotation.y;
+	Vector3f xvec(cosf(yRot), 0.0f, -sinf(yRot));
+	return xvec;
 }
 
 /*
@@ -4468,6 +4404,20 @@ Vector3f Bridge::getBridgeXVec()
  */
 Vector3f Bridge::getStartPos()
 {
+	// Get the rotation around the Y-axis
+	f32 rotY = mRotation.y;
+
+	// Calculate the direction vector based on the rotation
+	Vector3f directionVector(sinf(rotY), 0.0f, cosf(rotY));
+
+	// Scale the direction vector by 20.0f
+	Vector3f scaledDirection = directionVector;
+	scaledDirection.multiply(20.0f);
+
+	// Calculate the start position based on the direction vector and the bridge's position
+	Vector3f startPos(scaledDirection.x, scaledDirection.y, scaledDirection.z);
+	startPos.sub(mPosition);
+	return startPos;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4541,38 +4491,37 @@ Vector3f Bridge::getStartPos()
  * Address:	8009ED18
  * Size:	000008
  */
-f32 Bridge::getStageDepth()
-{
-	return 0.0f;
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x72DC(r2)
-	  blr
-	*/
-}
+f32 Bridge::getStageDepth() { return 20.0f; }
 
 /*
  * --INFO--
  * Address:	8009ED20
  * Size:	000008
  */
-f32 Bridge::getStageWidth()
-{
-	return 0.0f;
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x72D8(r2)
-	  blr
-	*/
-}
+f32 Bridge::getStageWidth() { return 150.0f; }
 
 /*
  * --INFO--
  * Address:	8009ED28
  * Size:	000424
  */
-void Bridge::startStageFinished(int, bool)
+void Bridge::startStageFinished(int a2, bool a3)
 {
+	FORCE_DONT_INLINE;
+
+	if (!a3) {
+		setStageFinished(a2, a3);
+		_3CC = 0;
+		return;
+	}
+
+	rumbleMgr->start(7, 0, mPosition);
+
+	if (a2 > 0) {
+
+	} else {
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4866,54 +4815,20 @@ void Bridge::startStageFinished(int, bool)
  * Address:	8009F14C
  * Size:	0000A0
  */
-bool InteractBuild::actBridge(Bridge*)
+bool InteractBuild::actBridge(Bridge* bridge)
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  lwz       r0, 0x8(r3)
-	  addi      r3, r30, 0
-	  lwz       r5, 0x3D0(r4)
-	  rlwinm    r0,r0,2,0,29
-	  add       r31, r5, r0
-	  li        r5, 0xAD
-	  bl        -0x14BD0
-	  lfs       f1, 0x0(r31)
-	  lfs       f0, 0xC(r29)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x0(r31)
-	  lfs       f0, 0x0(r31)
-	  lfs       f1, 0x5C(r30)
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x80
-	  stfs      f1, 0x0(r31)
-	  lbz       r0, 0x3CC(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x80
-	  lwz       r4, 0x8(r29)
-	  addi      r3, r30, 0
-	  li        r5, 0x1
-	  bl        -0x4A0
+	f32& buildProgress = bridge->mStageProgressList[mCurrentStage];
+	bridge->playEventSound(bridge, 173);
 
-	.loc_0x80:
-	  lwz       r0, 0x24(r1)
-	  li        r3, 0x1
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	buildProgress += mProgressRate;
+	if (buildProgress >= bridge->mMaxHealth) {
+		buildProgress = bridge->mMaxHealth;
+		if (!bridge->_3CC) {
+			bridge->startStageFinished(mCurrentStage, true);
+		}
+	}
+
+	return true;
 }
 
 /*

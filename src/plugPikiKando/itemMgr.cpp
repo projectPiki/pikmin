@@ -3788,7 +3788,7 @@ void BuildingItem::doKill()
 void BuildingItem::doSave(RandomAccessStream& output)
 {
 	output.writeFloat(mHealth);
-	output.writeFloat(_5C);
+	output.writeFloat(mMaxHealth);
 	output.writeInt(_444);
 	output.writeInt(_440);
 	output.writeInt(_2D0);
@@ -3801,11 +3801,11 @@ void BuildingItem::doSave(RandomAccessStream& output)
  */
 void BuildingItem::doLoad(RandomAccessStream& input)
 {
-	mHealth = input.readFloat();
-	_5C     = input.readFloat();
-	_444    = input.readInt();
-	_440    = input.readInt();
-	_2D0    = input.readInt();
+	mHealth    = input.readFloat();
+	mMaxHealth = input.readFloat();
+	_444       = input.readInt();
+	_440       = input.readInt();
+	_2D0       = input.readInt();
 	if (_444 < _440) {
 		startMotion(_444);
 		mWayPoint->setFlag(false);
@@ -3828,7 +3828,7 @@ void BuildingItem::doLoad(RandomAccessStream& input)
 void BuildingItem::doStore(CreatureInf* info)
 {
 	info->_44       = mHealth;
-	info->_48       = _5C;
+	info->_48       = mMaxHealth;
 	info->mTekiType = _444;
 	info->_40       = _440;
 }
@@ -3841,10 +3841,10 @@ void BuildingItem::doStore(CreatureInf* info)
 void BuildingItem::doRestore(CreatureInf* info)
 {
 	startAI(0);
-	mHealth = info->_44;
-	_5C     = info->_48;
-	_444    = info->mTekiType;
-	_440    = info->_40;
+	mHealth    = info->_44;
+	mMaxHealth = info->_48;
+	_444       = info->mTekiType;
+	_440       = info->_40;
 	if (_444 < _440) {
 		startMotion(_444);
 		mWayPoint->setFlag(false);

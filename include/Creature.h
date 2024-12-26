@@ -241,7 +241,7 @@ struct Creature : public RefCountable, public EventTalker {
 	u8 _38[0x40 - 0x38];        // _38, TODO: work out members
 	FastGrid mGrid;             // _40
 	f32 mHealth;                // _58
-	f32 _5C;                    // _5C
+	f32 mMaxHealth;             // _5C
 	u8 _60;                     // _60
 	Generator* mGenerator;      // _64
 	u32 _68;                    // _68, might be int

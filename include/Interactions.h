@@ -131,8 +131,8 @@ struct InteractBuild : public Interaction {
 	inline InteractBuild(Creature* owner)
 	    : Interaction(owner)
 	{
-		_0C = 0;
-		_10 = 1.0f;
+		mCurrentStage = 0;
+		mProgressRate = 1.0f;
 	}
 
 	virtual bool actBridge(Bridge*);     // _24
@@ -140,8 +140,8 @@ struct InteractBuild : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	u32 _0C; // _0C, unknown
-	f32 _10; // _10
+	u32 mCurrentStage; // _0C, unknown
+	f32 mProgressRate; // _10
 };
 
 /**

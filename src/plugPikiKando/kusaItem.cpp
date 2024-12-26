@@ -52,11 +52,11 @@ void KusaItem::startAI(int)
 	mCollInfo->initInfo(mItemShape, mKusaParts, mPartIDs);
 	mCollInfo->makeTubesChild('rope', 1);
 	mScale.set(0.0f, 0.0f, 0.0f);
-	_814      = mPosition;
-	_814.y    = mapMgr->getMinY(mPosition.x, mPosition.z, true);
-	mHealth   = 50.0f;
-	_5C       = 200.0f;
-	mBaseItem = static_cast<BoBaseItem*>(itemMgr->birth(OBJTYPE_BoBase));
+	_814       = mPosition;
+	_814.y     = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	mHealth    = 50.0f;
+	mMaxHealth = 200.0f;
+	mBaseItem  = static_cast<BoBaseItem*>(itemMgr->birth(OBJTYPE_BoBase));
 
 	if (mBaseItem) {
 		mBaseItem->init(_814);
@@ -73,7 +73,7 @@ void KusaItem::startAI(int)
 void KusaItem::doLoad(RandomAccessStream& input)
 {
 	mHealth = input.readFloat();
-	if (mHealth >= _5C) {
+	if (mHealth >= mMaxHealth) {
 		mBaseItem->_824 = false;
 	}
 }
@@ -133,7 +133,7 @@ void KusaItem::refresh(Graphics& gfx)
 {
 	Matrix4f camMat;
 	Matrix4f mat;
-	mat.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, mHealth - _5C, 0.0f));
+	mat.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, mHealth - mMaxHealth, 0.0f));
 	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
 	mTransformMatrix.multiply(mat);
 
