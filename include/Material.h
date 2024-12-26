@@ -4,9 +4,11 @@
 #include "Stream.h"
 #include "CoreNode.h"
 #include "GfxObject.h"
+#include "PVW.h"
 
 /**
  * @brief TODO
+ * @note Size: 0x9C.
  */
 struct Material : public CoreNode {
 	Material();
@@ -14,9 +16,24 @@ struct Material : public CoreNode {
 	virtual void read(RandomAccessStream&); // _0C
 	virtual void attach();                  // _10
 
+	Colour& Colour() { return (::Colour&)mColourInfo; }
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	u32 mIndex;                       // _14
+	u32 mFlags;                       // _18 (PVW & 1, TEX & 2, XLU & 4)
+	u32 mTextureIndex;                // _1C
+	u32 _20;                          // _20
+	u32 _24;                          // _24
+	u32 _28;                          // _28
+	PVWPolygonColourInfo mColourInfo; // _2C [0x20]
+	PVWLightingInfo mLightingInfo;    // _4C [0x0C]
+	PVWPeInfo mPeInfo;                // _58 [0x10]
+	PVWTextureInfo mTextureInfo;      // _68 [0x24]
+	u32 _8C;                          // _8C
+	ShortColour* _90;                 // _90
+	u32 mDisplayListSize;             // _94
+	u32* mDisplayListPtr;             // _98
 };
 
 /**

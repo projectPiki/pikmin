@@ -41,11 +41,27 @@ struct Node : public CoreNode {
  * @brief TODO
  */
 struct FaceNode : public CoreNode {
-	inline FaceNode()
+	FaceNode()
 	    : CoreNode("face")
 	{
 	}
-	inline FaceNode(int) { }
+
+	FaceNode(int a2)
+	{
+		_14 = a2;
+		_18 = 0;
+		_1C = 0;
+		_20 = 0;
+		_24 = 0;
+		_28 = 0;
+		_2C = 0;
+		_30 = 0;
+		_34 = 0;
+		_38 = 0;
+		_3C = 0;
+		_40 = 0;
+		_44 = 0;
+	}
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

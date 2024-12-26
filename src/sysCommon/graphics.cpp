@@ -85,28 +85,9 @@ void PVWPolygonColourInfo::animate(f32* data, Colour& col)
  * Address:	........
  * Size:	0000A0
  */
-f32 subExtract(f32 time, AKeyInfo& source, AKeyInfo& destination)
+f32 subExtract(f32 time, void* source, void* destination)
 {
-	// Calculate differences and inverses
-	f32 delta    = destination.mKeyframePosition - source.mKeyframePosition;
-	f32 invDelta = 1.0f / delta;
-
-	// Compute common terms
-	f32 t  = (time - source.mKeyframePosition) * invDelta; // Normalized parameter
-	f32 t2 = t * t;                                        // t squared
-	f32 t3 = t2 * t;                                       // t cubed
-
-	// Hermite basis functions
-	f32 h00 = 2.0f * t3 - 3.0f * t2 + 1.0f;
-	f32 h10 = t3 - 2.0f * t2 + t;
-	f32 h01 = -2.0f * t3 + 3.0f * t2;
-	f32 h11 = t3 - t2;
-
-	// Compute the final interpolated value
-	return h00 * source.mValue +                  // Interpolation from b
-	       h01 * destination.mValue +             // Interpolation from c
-	       h10 * source.mStartTangent * delta +   // Tangent contribution from b
-	       h11 * destination.mEndTangent * delta; // Tangent contribution from c
+	// TODO
 }
 
 /*
@@ -120,40 +101,6 @@ void PVWColourAnimInfo::extract(f32 value, Colour& target)
 	if (mTotalFrameCount == 0) {
 		return;
 	}
-
-	// If there is only one frame, use its values directly
-	if (mTotalFrameCount == 1) {
-		target.r = static_cast<uint8_t>((_04[0] < 0.0f) ? 0.0f : (_04[0] > 255.0f ? 255.0f : _04[0]));
-		target.g = static_cast<uint8_t>((_04[1] < 0.0f) ? 0.0f : (_04[1] > 255.0f ? 255.0f : _04[1]));
-		target.b = static_cast<uint8_t>((_04[2] < 0.0f) ? 0.0f : (_04[2] > 255.0f ? 255.0f : _04[2]));
-		return;
-	}
-
-	// Find the two keyframes to interpolate between
-	int index = 0;
-	for (int i = 0; i < static_cast<int>(mTotalFrameCount) - 1; ++i) {
-		f32 startTime = _04[i * 4];
-		f32 endTime   = _04[(i + 1) * 4];
-		if (startTime <= value && value <= endTime) {
-			index = i;
-			break;
-		}
-	}
-
-	// Construct keyframe data for interpolation
-	AKeyInfo startKey(_04[index * 4], _04[index * 4 + 1], _04[index * 4 + 2], _04[index * 4 + 3]);
-	AKeyInfo endKey(_04[(index + 1) * 4], _04[(index + 1) * 4 + 1], _04[(index + 1) * 4 + 2], _04[(index + 1) * 4 + 3]);
-
-	// Interpolate each color channel
-	f32 r = subExtract(value, startKey, endKey);
-	f32 g = subExtract(value, startKey, endKey);
-	f32 b = subExtract(value, startKey, endKey);
-
-	// Clamp and assign to target
-	target.r = static_cast<u8>(r < 0.0f ? 0 : (r > 255.0f ? 255 : r));
-	target.g = static_cast<u8>(g < 0.0f ? 0 : (g > 255.0f ? 255 : g));
-	target.b = static_cast<u8>(b < 0.0f ? 0 : (b > 255.0f ? 255 : b));
-
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x1F8(r1)

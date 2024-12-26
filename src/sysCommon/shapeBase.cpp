@@ -23,7 +23,7 @@
 Vector3f fnVerts[0x200];
 Vector2f fnNorms[0x200];
 Texture* fnTexs = nullptr;
-int* matUsed;
+Material* matUsed[256];
 int matIndex;
 int usedIndex;
 
@@ -6437,8 +6437,7 @@ BaseShape::BaseShape()
  */
 void BaseShape::countMaterials(Joint* pJnt, u32 a3)
 {
-	int* mat = &matUsed[matIndex];
-	for (int i = 0; i < mMaterialCount; i++) { }
+	for (int i = 0; i < _60; i++) { }
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x20(r1)
@@ -6918,6 +6917,20 @@ PVWTevColReg::PVWTevColReg()
 	  stfs      f0, 0x20(r3)
 	  blr
 	*/
+}
+
+Material::Material()
+    : CoreNode("material")
+{
+	mIndex = 0;
+	_28    = 0;
+	_24    = 0;
+	_20    = 0;
+	_28    = 0;
+	mFlags = 0x100;
+	Colour().set(0xFF, 0xFF, 0xFF, 0xFF);
+	_8C             = 0;
+	mDisplayListPtr = nullptr;
 }
 
 /*
@@ -10826,67 +10839,10 @@ void BaseShape::read(RandomAccessStream&)
  * Size:	0000E4
  */
 Joint::Joint()
+    : CoreNode(nullptr)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8022
-	  addi      r9, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r9, 0x0(r3)
-	  addi      r8, r4, 0x737C
-	  stw       r8, 0x0(r3)
-	  li        r7, 0
-	  lis       r5, 0x8023
-	  stw       r7, 0x10(r3)
-	  subi      r6, r5, 0x76DC
-	  lis       r4, 0x8023
-	  stw       r7, 0xC(r3)
-	  subi      r5, r13, 0x7CA4
-	  subi      r4, r4, 0x7700
-	  stw       r7, 0x8(r3)
-	  li        r0, 0x1
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x0(r3)
-	  lfs       f0, -0x7D20(r2)
-	  stfs      f0, 0x2C(r3)
-	  stfs      f0, 0x28(r3)
-	  stfs      f0, 0x24(r3)
-	  stfs      f0, 0x38(r3)
-	  stfs      f0, 0x34(r3)
-	  stfs      f0, 0x30(r3)
-	  stfs      f0, 0x44(r3)
-	  stfs      f0, 0x40(r3)
-	  stfs      f0, 0x3C(r3)
-	  stfs      f0, 0xD4(r3)
-	  stfs      f0, 0xD0(r3)
-	  stfs      f0, 0xCC(r3)
-	  stfs      f0, 0xE0(r3)
-	  stfs      f0, 0xDC(r3)
-	  stfs      f0, 0xD8(r3)
-	  lfs       f0, -0x7CE8(r13)
-	  stfs      f0, 0xCC(r3)
-	  lfs       f0, -0x7CE4(r13)
-	  stfs      f0, 0xD0(r3)
-	  lfs       f0, -0x7CE0(r13)
-	  stfs      f0, 0xD4(r3)
-	  lfs       f0, -0x7CDC(r13)
-	  stfs      f0, 0xD8(r3)
-	  lfs       f0, -0x7CD8(r13)
-	  stfs      f0, 0xDC(r3)
-	  lfs       f0, -0x7CD4(r13)
-	  stfs      f0, 0xE0(r3)
-	  stw       r9, 0xE4(r3)
-	  stw       r8, 0xE4(r3)
-	  stw       r7, 0xF4(r3)
-	  stw       r7, 0xF0(r3)
-	  stw       r7, 0xEC(r3)
-	  stw       r5, 0xE8(r3)
-	  stw       r4, 0xE4(r3)
-	  stw       r7, 0x108(r3)
-	  stw       r0, 0x20(r3)
-	  stw       r7, 0x10C(r3)
-	  blr
-	*/
+	mFlags = 1;
+	_10C   = 0;
 }
 
 /*
@@ -10895,31 +10851,11 @@ Joint::Joint()
  * Size:	000054
  */
 Mesh::Mesh()
+    : CoreNode("mesh")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x0(r3)
-	  li        r7, 0
-	  lis       r4, 0x8023
-	  stw       r7, 0x10(r3)
-	  subi      r5, r4, 0x76B8
-	  subi      r6, r13, 0x7C34
-	  stw       r7, 0xC(r3)
-	  li        r4, -0x1
-	  li        r0, 0x1
-	  stw       r7, 0x8(r3)
-	  stw       r6, 0x4(r3)
-	  stw       r5, 0x0(r3)
-	  stw       r7, 0x28(r3)
-	  stw       r4, 0x18(r3)
-	  stw       r0, 0x2C(r3)
-	  blr
-	*/
+	mJointList        = nullptr;
+	mFlags            = -1;
+	mVertexDescriptor = 1;
 }
 
 /*
@@ -10929,14 +10865,9 @@ Mesh::Mesh()
  */
 Envelope::Envelope()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r0, 0x8(r3)
-	  blr
-	*/
+	mIndexCount = 0;
+	mIndices    = nullptr;
+	mWeights    = nullptr;
 }
 
 /*
