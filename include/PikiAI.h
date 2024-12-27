@@ -93,6 +93,14 @@ struct Action : public Receiver<Piki> {
 	void setChildren(int, ...);
 
 	inline Child* getChild(int idx) { return &mChildActions[idx]; }
+	inline Child* getCurrentChild()
+	{
+		if (mChildActionIdx == -1) {
+			return nullptr;
+		} else {
+			return &mChildActions[mChildActionIdx];
+		}
+	}
 
 	inline void initialiseChildAction(Creature* creature) { getChild(mChildActionIdx)->initialise(creature); }
 
@@ -1544,7 +1552,8 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
 	u8 _3C[0x4C - 0x3C]; // _3C, unknown
 	Vector3f _4C[4];     // _4C, probably CR spline points
 	Vector3f _7C;        // _7C
-	u8 _88[0x8];         // _88, unknown
+	u32 _88;             // _88
+	int mSlotIndex;      // _8C
 	Vector3f _90;        // _90
 	u8 _9C[0xA8 - 0x9C]; // _9C, unknown
 	int _A8;             // _A8

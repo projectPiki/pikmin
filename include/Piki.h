@@ -151,11 +151,73 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	// defined in PikiMgr.h to avoid include looping
 	inline PikiProp* getPikiProp();
 
+	// 100AEBD0 in plugPiki
+	inline void setPositionA(Vector3f* other)
+	{
+		_33C = other;
+
+		_340 = 0;
+		_330 = 0;
+
+		// _338 is a counter
+		if (_338) {
+			subCnt();
+			_338 = 0;
+		}
+	}
+
+	inline void resetVariables()
+	{
+		_33C = 0;
+		_348 = 0.0f;
+		_344 = 0.0f;
+		_340 = 0;
+		_330 = 0;
+
+		if (_338) {
+			subCnt();
+			_338 = 0;
+		}
+	}
+
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
 	OdoMeter mOdometer;           // _2BC
-	u8 _2CC[0x354 - 0x2CC];       // _2CC, TODO: work out members
+	u32 _2C0;                     // _2C0
+	u32 _2C4;                     // _2C4
+	u32 _2C8;                     // _2C8
+	u32 _2CC;                     // _2CC
+	u32 _2D0;                     // _2D0
+	u32 _2D4;                     // _2D4
+	u32 _2D8;                     // _2D8
+	u32 _2DC;                     // _2DC
+	u32 _2E0;                     // _2E0
+	u32 _2E4;                     // _2E4
+	u32 _2E8;                     // _2E8
+	u32 _2EC;                     // _2EC
+	u32 _2F0;                     // _2F0
+	u32 _2F4;                     // _2F4
+	u32 _2F8;                     // _2F8
+	u32 _308;                     // _308
+	u32 _30C;                     // _30C
+	u32 _310;                     // _310
+	u32 _314;                     // _314
+	u32 _318;                     // _318
+	u32 _31C;                     // _31C
+	u32 _320;                     // _320
+	u32 _324;                     // _324
+	u32 _328;                     // _328
+	u32 _32C;                     // _32C
+	u8 _330;                      // _330
+	u32 _334;                     // _334
+	u32 _338;                     // _338
+	Vector3f* _33C;               // _33C
+	u8 _340;                      // _340
+	f32 _344;                     // _344
+	f32 _348;                     // _348
+	u32 _34C;                     // _34C
+	u32 _350;                     // _350
 	PaniPikiAnimMgr mPikiAnimMgr; // _354
 	u8 _400;                      // _400
 	u8 _401[0x408 - 0x401];       // _401, unknown

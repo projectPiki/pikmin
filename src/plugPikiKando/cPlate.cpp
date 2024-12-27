@@ -42,151 +42,151 @@ Creature* CPlate::getCreature(int)
  * Address:	800A5724
  * Size:	00022C
  */
-CPlate::CPlate(MapMgr*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r1)
-	  subi      r0, r4, 0x2374
-	  subi      r4, r13, 0x51B8
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  li        r31, 0
-	  stw       r30, 0x50(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x4C(r1)
-	  stw       r0, 0x0(r3)
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x738C
-	  stw       r31, 0x4(r30)
-	  lis       r3, 0x8022
-	  stw       r0, 0x8(r30)
-	  addi      r0, r3, 0x737C
-	  addi      r3, r30, 0x8
-	  stw       r0, 0x8(r30)
-	  stw       r31, 0x18(r30)
-	  stw       r31, 0x14(r30)
-	  stw       r31, 0x10(r30)
-	  bl        -0x808AC
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x8(r30)
-	  addi      r3, r30, 0x8
-	  subi      r4, r13, 0x51B8
-	  bl        -0x6505C
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x4EA4
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x18
-	  addi      r5, r1, 0x2C
-	  stw       r0, 0x8(r30)
-	  addi      r3, r30, 0x2C
-	  addi      r4, r30, 0x28
-	  stw       r31, 0x28(r30)
-	  lwz       r0, -0x51B0(r13)
-	  stw       r0, 0x34(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r0, 0x2C(r1)
-	  bl        -0x46D50
-	  lis       r3, 0x802A
-	  addi      r29, r3, 0x6098
-	  stw       r29, 0x34(r30)
-	  addi      r5, r1, 0x28
-	  addi      r3, r30, 0x3C
-	  lfs       f0, -0x7240(r2)
-	  addi      r4, r30, 0x28
-	  stfs      f0, 0x38(r30)
-	  lwz       r0, -0x51AC(r13)
-	  stw       r0, 0x3C(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r0, 0x28(r1)
-	  bl        -0x46D84
-	  stw       r29, 0x44(r30)
-	  addi      r5, r1, 0x24
-	  addi      r3, r30, 0x4C
-	  lfs       f0, -0x723C(r2)
-	  addi      r4, r30, 0x28
-	  stfs      f0, 0x48(r30)
-	  lwz       r0, -0x51A8(r13)
-	  stw       r0, 0x44(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x24(r1)
-	  bl        -0x46DB0
-	  stw       r29, 0x54(r30)
-	  li        r0, 0x6E
-	  lfs       f0, -0x7238(r2)
-	  stfs      f0, 0x58(r30)
-	  lfs       f1, -0x7234(r2)
-	  stfs      f1, 0x64(r30)
-	  stfs      f1, 0x60(r30)
-	  stfs      f1, 0x5C(r30)
-	  stfs      f1, 0x90(r30)
-	  stfs      f1, 0x8C(r30)
-	  stfs      f1, 0x88(r30)
-	  stfs      f1, 0x9C(r30)
-	  stfs      f1, 0x98(r30)
-	  stfs      f1, 0x94(r30)
-	  stfs      f1, 0xA8(r30)
-	  stfs      f1, 0xA4(r30)
-	  stfs      f1, 0xA0(r30)
-	  stfs      f1, 0xB8(r30)
-	  stfs      f1, 0xB4(r30)
-	  stfs      f1, 0xB0(r30)
-	  stw       r0, 0x84(r30)
-	  lfs       f0, -0x7230(r2)
-	  stfs      f0, 0x6C(r30)
-	  stfs      f0, 0x68(r30)
-	  lfs       f0, -0x51D0(r13)
-	  stfs      f0, 0x88(r30)
-	  lfs       f0, -0x51CC(r13)
-	  stfs      f0, 0x8C(r30)
-	  lfs       f0, -0x51C8(r13)
-	  stfs      f0, 0x90(r30)
-	  stfs      f1, 0xAC(r30)
-	  lwz       r29, 0x84(r30)
-	  rlwinm    r3,r29,5,0,26
-	  addi      r3, r3, 0x8
-	  bl        -0x5E8B8
-	  lis       r4, 0x800A
-	  addi      r4, r4, 0x5950
-	  addi      r7, r29, 0
-	  li        r5, 0
-	  li        r6, 0x20
-	  bl        0x16F354
-	  stw       r3, 0x80(r30)
-	  lis       r3, 0x802B
-	  addi      r5, r3, 0x4E3C
-	  stw       r31, 0x74(r30)
-	  li        r0, 0x1
-	  addi      r3, r30, 0x8
-	  stw       r31, 0x78(r30)
-	  subi      r4, r13, 0x51A4
-	  li        r6, 0x1
-	  stw       r31, 0x7C(r30)
-	  stb       r31, 0xC8(r30)
-	  stb       r0, 0xC9(r30)
-	  bl        -0x65268
-	  lfs       f0, -0x51C4(r13)
-	  mr        r3, r30
-	  stfs      f0, 0xB0(r30)
-	  lfs       f0, -0x51C0(r13)
-	  stfs      f0, 0xB4(r30)
-	  lfs       f0, -0x51BC(r13)
-	  stfs      f0, 0xB8(r30)
-	  stw       r31, 0xC4(r30)
-	  stw       r31, 0xC0(r30)
-	  stw       r31, 0xBC(r30)
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
-}
+// CPlate::CPlate(MapMgr* mgr)
+// {
+/*
+.loc_0x0:
+  mflr      r0
+  lis       r4, 0x802B
+  stw       r0, 0x4(r1)
+  subi      r0, r4, 0x2374
+  subi      r4, r13, 0x51B8
+  stwu      r1, -0x58(r1)
+  stw       r31, 0x54(r1)
+  li        r31, 0
+  stw       r30, 0x50(r1)
+  addi      r30, r3, 0
+  stw       r29, 0x4C(r1)
+  stw       r0, 0x0(r3)
+  lis       r3, 0x8022
+  addi      r0, r3, 0x738C
+  stw       r31, 0x4(r30)
+  lis       r3, 0x8022
+  stw       r0, 0x8(r30)
+  addi      r0, r3, 0x737C
+  addi      r3, r30, 0x8
+  stw       r0, 0x8(r30)
+  stw       r31, 0x18(r30)
+  stw       r31, 0x14(r30)
+  stw       r31, 0x10(r30)
+  bl        -0x808AC
+  lis       r3, 0x8023
+  subi      r0, r3, 0x71E0
+  stw       r0, 0x8(r30)
+  addi      r3, r30, 0x8
+  subi      r4, r13, 0x51B8
+  bl        -0x6505C
+  lis       r3, 0x802B
+  addi      r3, r3, 0x4EA4
+  stw       r3, 0x0(r30)
+  addi      r0, r3, 0x18
+  addi      r5, r1, 0x2C
+  stw       r0, 0x8(r30)
+  addi      r3, r30, 0x2C
+  addi      r4, r30, 0x28
+  stw       r31, 0x28(r30)
+  lwz       r0, -0x51B0(r13)
+  stw       r0, 0x34(r1)
+  lwz       r0, 0x34(r1)
+  stw       r0, 0x2C(r1)
+  bl        -0x46D50
+  lis       r3, 0x802A
+  addi      r29, r3, 0x6098
+  stw       r29, 0x34(r30)
+  addi      r5, r1, 0x28
+  addi      r3, r30, 0x3C
+  lfs       f0, -0x7240(r2)
+  addi      r4, r30, 0x28
+  stfs      f0, 0x38(r30)
+  lwz       r0, -0x51AC(r13)
+  stw       r0, 0x3C(r1)
+  lwz       r0, 0x3C(r1)
+  stw       r0, 0x28(r1)
+  bl        -0x46D84
+  stw       r29, 0x44(r30)
+  addi      r5, r1, 0x24
+  addi      r3, r30, 0x4C
+  lfs       f0, -0x723C(r2)
+  addi      r4, r30, 0x28
+  stfs      f0, 0x48(r30)
+  lwz       r0, -0x51A8(r13)
+  stw       r0, 0x44(r1)
+  lwz       r0, 0x44(r1)
+  stw       r0, 0x24(r1)
+  bl        -0x46DB0
+  stw       r29, 0x54(r30)
+  li        r0, 0x6E
+  lfs       f0, -0x7238(r2)
+  stfs      f0, 0x58(r30)
+  lfs       f1, -0x7234(r2)
+  stfs      f1, 0x64(r30)
+  stfs      f1, 0x60(r30)
+  stfs      f1, 0x5C(r30)
+  stfs      f1, 0x90(r30)
+  stfs      f1, 0x8C(r30)
+  stfs      f1, 0x88(r30)
+  stfs      f1, 0x9C(r30)
+  stfs      f1, 0x98(r30)
+  stfs      f1, 0x94(r30)
+  stfs      f1, 0xA8(r30)
+  stfs      f1, 0xA4(r30)
+  stfs      f1, 0xA0(r30)
+  stfs      f1, 0xB8(r30)
+  stfs      f1, 0xB4(r30)
+  stfs      f1, 0xB0(r30)
+  stw       r0, 0x84(r30)
+  lfs       f0, -0x7230(r2)
+  stfs      f0, 0x6C(r30)
+  stfs      f0, 0x68(r30)
+  lfs       f0, -0x51D0(r13)
+  stfs      f0, 0x88(r30)
+  lfs       f0, -0x51CC(r13)
+  stfs      f0, 0x8C(r30)
+  lfs       f0, -0x51C8(r13)
+  stfs      f0, 0x90(r30)
+  stfs      f1, 0xAC(r30)
+  lwz       r29, 0x84(r30)
+  rlwinm    r3,r29,5,0,26
+  addi      r3, r3, 0x8
+  bl        -0x5E8B8
+  lis       r4, 0x800A
+  addi      r4, r4, 0x5950
+  addi      r7, r29, 0
+  li        r5, 0
+  li        r6, 0x20
+  bl        0x16F354
+  stw       r3, 0x80(r30)
+  lis       r3, 0x802B
+  addi      r5, r3, 0x4E3C
+  stw       r31, 0x74(r30)
+  li        r0, 0x1
+  addi      r3, r30, 0x8
+  stw       r31, 0x78(r30)
+  subi      r4, r13, 0x51A4
+  li        r6, 0x1
+  stw       r31, 0x7C(r30)
+  stb       r31, 0xC8(r30)
+  stb       r0, 0xC9(r30)
+  bl        -0x65268
+  lfs       f0, -0x51C4(r13)
+  mr        r3, r30
+  stfs      f0, 0xB0(r30)
+  lfs       f0, -0x51C0(r13)
+  stfs      f0, 0xB4(r30)
+  lfs       f0, -0x51BC(r13)
+  stfs      f0, 0xB8(r30)
+  stw       r31, 0xC4(r30)
+  stw       r31, 0xC0(r30)
+  stw       r31, 0xBC(r30)
+  lwz       r0, 0x5C(r1)
+  lwz       r31, 0x54(r1)
+  lwz       r30, 0x50(r1)
+  lwz       r29, 0x4C(r1)
+  addi      r1, r1, 0x58
+  mtlr      r0
+  blr
+*/
+// }
 
 /*
  * --INFO--

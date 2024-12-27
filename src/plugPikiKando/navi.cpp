@@ -1,44 +1,43 @@
+#include "CPlate.h"
+#include "DebugLog.h"
+#include "GameCoreSection.h"
+#include "gameflow.h"
+#include "Graphics.h"
 #include "Interactions.h"
+#include "Interface.h"
+#include "jaudio/PikiPlayer.h"
+#include "KIO.h"
+#include "Kontroller.h"
+#include "MapCode.h"
+#include "MemStat.h"
+#include "MoviePlayer.h"
 #include "Navi.h"
 #include "NaviMgr.h"
 #include "NaviState.h"
-#include "Shape.h"
 #include "Pellet.h"
-#include "MemStat.h"
-#include "Graphics.h"
-#include "sysNew.h"
-#include "CPlate.h"
-#include "KIO.h"
-#include "UtEffect.h"
-#include "GameCoreSection.h"
-#include "MoviePlayer.h"
+#include "Piki.h"
+#include "PikiAI.h"
+#include "PikiMgr.h"
+#include "PikiState.h"
 #include "PlayerState.h"
-#include "gameflow.h"
-#include "Interface.h"
-#include "Kontroller.h"
-#include "MapCode.h"
-#include "jaudio/PikiPlayer.h"
+#include "Shape.h"
+#include "StateMachine.h"
+#include "sysNew.h"
+#include "UtEffect.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt);
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("navi");
 
 /*
  * --INFO--
@@ -101,11 +100,7 @@ bool Navi::isNuking()
  * Address:	........
  * Size:	00008C
  */
-void Navi::startMovie(bool)
-{
-	mStateMachine->transit(this, NAVISTATE_DemoWait);
-	// UNUSED FUNCTION
-}
+void Navi::startMovie(bool) { mStateMachine->transit(this, NAVISTATE_DemoWait); }
 
 /*
  * --INFO--
@@ -188,7 +183,11 @@ void AState<Navi>::cleanup(Navi*) { }
  * Address:	800F84F8
  * Size:	000038
  */
-void Navi::startMovieInf() { mStateMachine->transit(this, NAVISTATE_DemoInf); }
+void Navi::startMovieInf()
+{
+	PRINT("************ NAVI => DEMO_INF STATE \n");
+	mStateMachine->transit(this, NAVISTATE_DemoInf);
+}
 
 /*
  * --INFO--
@@ -232,9 +231,72 @@ void Navi::startDayEnd() { _6C0 = 1; }
  * --INFO--
  * Address:	800F8570
  * Size:	000410
+ * @note: 	100A1AD0 in plugPiki.dll
  */
-void Navi::updateDayEnd(Vector3f&)
+void Navi::updateDayEnd(Vector3f& pos)
 {
+	// There are inlines in this function but fuck it.
+	u32 i_wont_do_the_inlines[11];
+
+	if (_6C0) {
+		_6C0 = 0;
+
+		mPosition = pos;
+		_790      = pos;
+		mPlateMgr->update();
+		makeCStick(false);
+
+		PRINT("********* UPDATE DAY END ** 1ST FRAME\n");
+		PRINT("******** FORMATION =====================\n");
+
+		int pikiCount = 0;
+		PikiMgr* mgr  = pikiMgr;
+		CREATURE_ITERATOR(mgr, idx)
+		{
+			Piki* piki = static_cast<Piki*>(mgr->getCreatureCheck(idx));
+			piki->mFSM->transit(piki, 0);
+
+			if (piki->_4FC != 11) {
+				piki->changeMode(1, piki->mNavi);
+				piki->resetVariables(); // 100AEC30 in plugPiki
+				piki->setPositionA(&piki->mNavi->mPosition);
+				pikiCount++;
+
+				if (piki->_4FC != 1) {
+					ERROR("nandeyanen!");
+				}
+
+				// Complete guess, fuck it.
+				s32 slotID = ((ActTransport*)piki->_4F8->getCurrentChild())->mSlotIndex;
+				if (slotID == -1) {
+					ERROR("slotID = -1 desse\n");
+				}
+
+				// Issues here
+				CPlate::Slot* currentSlot = &piki->mNavi->mPlateMgr->mSlotList[slotID];
+				piki->mPosition           = piki->mNavi->mPlateMgr->_94 + currentSlot->_00;
+				piki->mPosition.y         = mapMgr->getMinY(piki->mPosition.x, piki->mPosition.z, true);
+			}
+		}
+
+		PRINT("(( UPDATE DAY END)) %d pikis : formation\n", pikiCount);
+		PRINT("** END IF\n");
+	}
+
+	mPlateMgr->update();
+	mKontroller->mSubStickY = 0;
+	mKontroller->mSubStickX = 0;
+
+	makeCStick(false);
+
+	_790      = mPosition;
+	mPosition = pos;
+
+	_70           = pos - _790;
+	f32 length    = _70.length();
+	f32 frameTime = 1.0f / gsys->getFrameTime();
+	_70.multiply(frameTime);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
