@@ -2,32 +2,24 @@
 #include "Colour.h"
 #include "CoreNode.h"
 #include "Parameters.h"
-
 #include "Stream.h"
 #include "String.h"
 #include "Vector.h"
-
-static char filename[] = __FILE__;
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("");
 
 /*
  * --INFO--

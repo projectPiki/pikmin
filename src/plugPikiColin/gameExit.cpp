@@ -2,27 +2,21 @@
 #include "gameflow.h"
 #include "FlowController.h"
 #include "system.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "GameExit");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("GameExit");
 
 /*
  * --INFO--
@@ -33,6 +27,7 @@ GameExitSection::GameExitSection()
 {
 	gsys->resetHeap(2, 1);
 	gsys->mCurrMemInfo = nullptr;
+	PRINT("clearing aram directory!\n");
 	gsys->_214.initCore("");
 }
 

@@ -12,27 +12,21 @@
 #include "Kontroller.h"
 #include "GlobalShape.h"
 #include "BaseInf.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, "GameSetup", fmt);
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("GameSetup");
 
 static char* shapeList[10][2] = {
 	{ "objects/pellets/white1.mod", "objects/pellets/white1.anm" },
@@ -96,6 +90,7 @@ static char* arambundleList[][2] = {
  */
 void GameSetupSection::preCacheShapes()
 {
+	/// VVV this looks like inline
 	gsys->_214.initCore("");
 	gsys->_228 = &gsys->_214;
 
@@ -106,25 +101,22 @@ void GameSetupSection::preCacheShapes()
 	u32 print          = gsys->mTogglePrint;
 	gsys->mTogglePrint = 1;
 	gsys->mTogglePrint = print;
+	/// ^^^ to me
 
-	char** shapeListPtr = shapeList[0];
-	while (shapeListPtr[0]) {
-		Shape* shape = gameflow.loadShape(shapeListPtr[0], true);
-		if (shapeListPtr[1]) {
+	for (char** mainShapePair = shapeList[0]; mainShapePair[0]; mainShapePair += 2) {
+		Shape* shape = gameflow.loadShape(mainShapePair[0], true);
+		if (mainShapePair[1]) {
 			gsys->mCurrentShape = shape;
-			gsys->loadBundle(shapeListPtr[1], false);
+			gsys->loadBundle(mainShapePair[1], false);
 		}
-		shapeListPtr += 2;
 	}
 
-	char** shapeList2Ptr = shapeList2[0];
-	while (shapeList2Ptr[0]) {
-		Shape* shape = gameflow.loadShape(shapeList2Ptr[0], true);
-		if (shapeList2Ptr[1]) {
+	for (char** ufoPartPair = shapeList2[0]; ufoPartPair[0]; ufoPartPair += 2) {
+		Shape* shape = gameflow.loadShape(ufoPartPair[0], true);
+		if (ufoPartPair[1]) {
 			gsys->mCurrentShape = shape;
-			gsys->loadBundle(shapeList2Ptr[1], false);
+			gsys->loadBundle(ufoPartPair[1], false);
 		}
-		shapeList2Ptr += 2;
 	}
 	/*
 	.loc_0x0:
@@ -307,6 +299,7 @@ GameSetupSection::GameSetupSection()
  */
 void GameSetupSection::update()
 {
+	PRINT("reset!\n");
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_CardSelect;
 	gsys->softReset();
 }
