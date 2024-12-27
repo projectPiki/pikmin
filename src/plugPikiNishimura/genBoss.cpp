@@ -15,10 +15,7 @@ DEFINE_ERROR();
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("");
 
 /*
  * --INFO--
@@ -122,7 +119,7 @@ void GenObjectBoss::readParameters(RandomAccessStream& input)
 void GenObjectBoss::writeParameters(RandomAccessStream& output)
 {
 	// this is too much compression, just write them as words goddamn it!
-	volatile union GenFlags {
+	union GenFlags {
 		u32 w;
 		u8 b[4];
 	} flags;

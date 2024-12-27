@@ -11,10 +11,7 @@
  * Address:	........
  * Size:	000098
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
