@@ -242,13 +242,17 @@ struct InteractFlute : public Interaction {
  * @brief TODO
  */
 struct InteractGeyzer : public Interaction {
-	inline InteractGeyzer(); // TODO: probably
+	inline InteractGeyzer(Creature* owner, Vector3f& p2)
+	    : Interaction(owner)
+	    , _08(p2)
+	{
+	}
 
 	virtual bool actNavi(Navi*); // _14
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	Vector3f _08; // _08
 };
 
 /**

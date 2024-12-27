@@ -125,6 +125,12 @@ struct EffectMgr : public CoreNode {
 		EFF_Unk69 = 69,
 		// ...
 		EFF_Unk89 = 89,
+		// ...
+		EFF_Unk193 = 193,
+		EFF_Unk194 = 194,
+		EFF_Unk195 = 195,
+		EFF_Unk196 = 196,
+		EFF_Unk197 = 197,
 	};
 
 	/**
@@ -158,6 +164,12 @@ struct EffectMgr : public CoreNode {
 	zen::particleGenerator* create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32,
 	                               zen::CallBack1<zen::particleMdl*>*);
 	void putShapeInst(EffShpInst*);
+
+	inline void killGenerator(zen::CallBack1<zen::particleGenerator*>* cb1, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2,
+	                          bool p3)
+	{
+		mPtclMgr.killGenerator(cb1, cb2, p3);
+	}
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

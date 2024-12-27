@@ -133,9 +133,13 @@ struct particleGenerator : public zenList {
 	inline void resetFlag(u32 flag) { mGeneratorFlags &= ~flag; }
 	inline bool isFlag(u32 flag) { return mGeneratorFlags & flag; }
 
+	inline void start() { mGeneratorFlags &= ~PTCLGEN_GenStopped; }
+	inline void stop() { mGeneratorFlags |= PTCLGEN_GenStopped; }
+
 	inline void setF0(f32 val) { _F0 = val; } // unsure what this does, rename later
 
 	inline void setA0(Vector3f& vec) { _A0 = vec; }
+	inline void set1DC(Vector3f& vec) { _1DC = vec; }
 
 	// _00     = VTBL
 	// _00-_0C = zenList

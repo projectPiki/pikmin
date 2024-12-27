@@ -1,69 +1,35 @@
 #include "Mizu.h"
+#include "EffectMgr.h"
+#include "SoundMgr.h"
+#include "NaviMgr.h"
+#include "Interactions.h"
+#include "MapMgr.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("MizuAi");
 
 /*
  * --INFO--
  * Address:	8017B858
  * Size:	000080
  */
-MizuAi::MizuAi(Mizu*)
+MizuAi::MizuAi(Mizu* mizu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r1)
-	  subi      r0, r5, 0x246C
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x18B4
-	  li        r3, 0x8
-	  stw       r0, 0x0(r31)
-	  li        r0, 0
-	  stw       r4, 0x4(r31)
-	  stw       r0, 0xC(r31)
-	  stw       r0, 0x8(r31)
-	  bl        -0x134894
-	  cmplwi    r3, 0
-	  beq-      .loc_0x64
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x1914
-	  stw       r0, 0x0(r3)
-
-	.loc_0x64:
-	  stw       r3, 0x10(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mMizu = mizu;
+	_08 = _0C     = nullptr;
+	mPuffCallBack = new MizuGenSpringPuffCallBack();
 }
 
 /*
@@ -71,57 +37,16 @@ MizuAi::MizuAi(Mizu*)
  * Address:	8017B8D8
  * Size:	0000B8
  */
-void MizuAi::initMizu(Mizu*)
+void MizuAi::initMizu(Mizu* mizu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  li        r7, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  stw       r4, 0x4(r3)
-	  li        r4, 0xC2
-	  lwz       r5, 0x4(r3)
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  bl        0x21230
-	  stw       r3, 0xC(r31)
-	  li        r4, 0xC1
-	  li        r6, 0
-	  lwz       r5, 0x4(r31)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  bl        0x21210
-	  stw       r3, 0x8(r31)
-	  li        r0, 0
-	  addi      r5, r31, 0
-	  lwz       r6, 0x4(r31)
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x2
-	  stw       r0, 0x2E4(r6)
-	  lwz       r6, 0x4(r31)
-	  stw       r0, 0x2E8(r6)
-	  bl        -0x5C9C4
-	  lwz       r5, 0x4(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x5C7A0
-	  lfs       f0, -0x5160(r2)
-	  mr        r3, r31
-	  lwz       r5, 0x4(r31)
-	  li        r4, 0
-	  stfs      f0, 0x2D8(r5)
-	  bl        0x150
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mMizu = mizu;
+	_0C   = effectMgr->create(EffectMgr::EFF_Unk194, mMizu->mPosition, nullptr, nullptr);
+	_08   = effectMgr->create(EffectMgr::EFF_Unk193, mMizu->mPosition, nullptr, nullptr);
+	mMizu->set2E4(0);
+	mMizu->set2E8(0);
+	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mMizu->setMotionSpeed(30.0f);
+	initWait(0);
 }
 
 /*
@@ -129,57 +54,16 @@ void MizuAi::initMizu(Mizu*)
  * Address:	8017B990
  * Size:	0000B8
  */
-void MizuAi::initGeyzer(Mizu*)
+void MizuAi::initGeyzer(Mizu* geyzer)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  li        r7, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  stw       r4, 0x4(r3)
-	  li        r4, 0xC2
-	  lwz       r5, 0x4(r3)
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  bl        0x21178
-	  stw       r3, 0xC(r31)
-	  li        r4, 0xC1
-	  li        r6, 0
-	  lwz       r5, 0x4(r31)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  bl        0x21158
-	  stw       r3, 0x8(r31)
-	  li        r0, 0x1
-	  addi      r5, r31, 0
-	  lwz       r6, 0x4(r31)
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x2
-	  stw       r0, 0x2E4(r6)
-	  lwz       r6, 0x4(r31)
-	  stw       r0, 0x2E8(r6)
-	  bl        -0x5CA7C
-	  lwz       r5, 0x4(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x5C858
-	  lfs       f0, -0x5160(r2)
-	  mr        r3, r31
-	  lwz       r5, 0x4(r31)
-	  li        r4, 0x1
-	  stfs      f0, 0x2D8(r5)
-	  bl        0x154
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mMizu = geyzer;
+	_0C   = effectMgr->create(EffectMgr::EFF_Unk194, mMizu->mPosition, nullptr, nullptr);
+	_08   = effectMgr->create(EffectMgr::EFF_Unk193, mMizu->mPosition, nullptr, nullptr);
+	mMizu->set2E4(1);
+	mMizu->set2E8(1);
+	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mMizu->setMotionSpeed(30.0f);
+	initReady(1);
 }
 
 /*
@@ -194,46 +78,19 @@ void MizuAi::animationKeyUpdated(PaniAnimKeyEvent&) { }
  * Address:	8017BA4C
  * Size:	00007C
  */
-void MizuAi::killCallBackEffect(bool)
+void MizuAi::killCallBackEffect(bool p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x8(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  bl        0x25188
-	  li        r0, 0
-	  stw       r0, 0x8(r30)
+	if (_08) {
+		_08->forceFinish();
+		_08 = nullptr;
+	}
 
-	.loc_0x34:
-	  lwz       r3, 0xC(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x4C
-	  bl        0x25170
-	  li        r0, 0
-	  stw       r0, 0xC(r30)
+	if (_0C) {
+		_0C->forceFinish();
+		_0C = nullptr;
+	}
 
-	.loc_0x4C:
-	  lwz       r3, 0x3180(r13)
-	  mr        r6, r31
-	  lwz       r4, 0x10(r30)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x25BB0
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	effectMgr->killGenerator(mPuffCallBack, nullptr, p1);
 }
 
 /*
@@ -243,7 +100,10 @@ void MizuAi::killCallBackEffect(bool)
  */
 void MizuAi::setEveryFrame()
 {
-	// UNUSED FUNCTION
+	Vector3f& vec      = mMizu->get300();
+	mMizu->mPosition.x = vec.x;
+	mMizu->mPosition.y = vec.y;
+	mMizu->mPosition.z = vec.z;
 }
 
 /*
@@ -253,7 +113,13 @@ void MizuAi::setEveryFrame()
  */
 void MizuAi::naviGeyzerJump()
 {
-	// UNUSED FUNCTION
+	Vector3f dir(sinf(mMizu->mDirection), 0.0f, cosf(mMizu->mDirection));
+	dir.multiply(static_cast<BossProp*>(mMizu->mProps)->mBossProps.mTerritoryRadius());
+	Vector3f targetPos = mMizu->mPosition + dir;
+	targetPos.y        = mapMgr->getMinY(targetPos.x, targetPos.z, true);
+
+	Navi* navi = naviMgr->getNavi();
+	navi->stimulate(InteractGeyzer(mMizu, targetPos));
 }
 
 /*
@@ -261,92 +127,43 @@ void MizuAi::naviGeyzerJump()
  * Address:	........
  * Size:	000028
  */
-void MizuAi::readyTransit()
-{
-	// UNUSED FUNCTION
-}
+bool MizuAi::readyTransit() { return (mMizu->get2F0() >= static_cast<BossProp*>(mMizu->mProps)->mBossProps._1CC()) ? true : false; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000020
  */
-void MizuAi::jetTransit()
-{
-	// UNUSED FUNCTION
-}
+bool MizuAi::jetTransit() { return mMizu->_3B8 != 0 ? true : false; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void MizuAi::waitTransit()
-{
-	// UNUSED FUNCTION
-}
+bool MizuAi::waitTransit() { return (mMizu->get2D4() > 4.0f) ? true : false; }
 
 /*
  * --INFO--
  * Address:	8017BAC8
  * Size:	0000BC
  */
-void MizuAi::initWait(int)
+void MizuAi::initWait(int stateID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r3
-	  addi      r5, r31, 0
-	  lwz       r6, 0x4(r3)
-	  addi      r3, r1, 0x2C
-	  stw       r4, 0x2E8(r6)
-	  li        r4, 0x2
-	  bl        -0x5CB64
-	  lwz       r5, 0x4(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x5C940
-	  lwz       r3, 0x4(r31)
-	  li        r4, 0x1
-	  li        r0, 0
-	  stb       r4, 0x3B8(r3)
-	  lwz       r3, 0x4(r31)
-	  stb       r4, 0x3B9(r3)
-	  lwz       r3, 0x4(r31)
-	  stb       r4, 0x2B8(r3)
-	  lwz       r3, 0x4(r31)
-	  stb       r4, 0x2BB(r3)
-	  lfs       f0, -0x5158(r2)
-	  lwz       r3, 0x4(r31)
-	  stfs      f0, 0x2D4(r3)
-	  lwz       r3, 0x4(r31)
-	  stw       r0, 0x2F0(r3)
-	  lwz       r3, 0xC(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x90
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x8
-	  stw       r0, 0x80(r3)
-
-	.loc_0x90:
-	  lwz       r3, 0x8(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA8
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x8
-	  stw       r0, 0x80(r3)
-
-	.loc_0xA8:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	mMizu->set2E8(stateID);
+	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mMizu->_3B8 = 1;
+	mMizu->_3B9 = true;
+	mMizu->set2B8(1);
+	mMizu->set2BB(1);
+	mMizu->set2D4(0.0f);
+	mMizu->set2F0(0);
+	if (_0C) {
+		_0C->stop();
+	}
+	if (_08) {
+		_08->stop();
+	}
 }
 
 /*
@@ -354,69 +171,26 @@ void MizuAi::initWait(int)
  * Address:	8017BB84
  * Size:	0000D0
  */
-void MizuAi::initReady(int)
+void MizuAi::initReady(int stateID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r3
-	  addi      r5, r31, 0
-	  lwz       r6, 0x4(r3)
-	  addi      r3, r1, 0x2C
-	  stw       r4, 0x2E8(r6)
-	  li        r4, 0x2
-	  bl        -0x5CC20
-	  lwz       r5, 0x4(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x5C9FC
-	  lwz       r3, 0x4(r31)
-	  li        r0, 0
-	  stb       r0, 0x3B8(r3)
-	  lwz       r3, 0x4(r31)
-	  stb       r0, 0x3B9(r3)
-	  lwz       r3, 0x4(r31)
-	  stb       r0, 0x2B8(r3)
-	  lwz       r3, 0x4(r31)
-	  stb       r0, 0x2BB(r3)
-	  lfs       f0, -0x5158(r2)
-	  lwz       r3, 0x4(r31)
-	  stfs      f0, 0x2D4(r3)
-	  lwz       r3, 0x4(r31)
-	  stw       r0, 0x2F0(r3)
-	  lwz       r3, 0xC(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x8C
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,29,27
-	  stw       r0, 0x80(r3)
+	mMizu->set2E8(stateID);
+	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mMizu->_3B8 = 0;
+	mMizu->_3B9 = false;
+	mMizu->set2B8(0);
+	mMizu->set2BB(0);
+	mMizu->set2D4(0.0f);
+	mMizu->set2F0(0);
+	if (_0C) {
+		_0C->start();
+	}
+	if (_08) {
+		_08->start();
+	}
 
-	.loc_0x8C:
-	  lwz       r3, 0x8(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA4
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,29,27
-	  stw       r0, 0x80(r3)
-
-	.loc_0xA4:
-	  lwz       r3, 0x4(r31)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xBC
-	  li        r4, 0xA8
-	  bl        -0xD7E6C
-
-	.loc_0xBC:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	if (mMizu->mSeContext) {
+		mMizu->mSeContext->playSound(0xA8);
+	}
 }
 
 /*
@@ -424,174 +198,39 @@ void MizuAi::initReady(int)
  * Address:	8017BC54
  * Size:	00026C
  */
-void MizuAi::initJet(int)
+void MizuAi::initJet(int stateID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xC0(r1)
-	  stfd      f31, 0xB8(r1)
-	  stfd      f30, 0xB0(r1)
-	  stfd      f29, 0xA8(r1)
-	  stw       r31, 0xA4(r1)
-	  mr        r31, r3
-	  addi      r5, r31, 0
-	  lwz       r6, 0x4(r3)
-	  addi      r3, r1, 0x98
-	  stw       r4, 0x2E8(r6)
-	  li        r4, 0xA
-	  bl        -0x5CCFC
-	  lwz       r5, 0x4(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x5CAD8
-	  lwz       r3, 0x4(r31)
-	  li        r4, 0x1
-	  li        r0, 0
-	  stb       r4, 0x3B8(r3)
-	  lwz       r3, 0x4(r31)
-	  stb       r0, 0x3B9(r3)
-	  lwz       r3, 0x4(r31)
-	  stb       r0, 0x2B8(r3)
-	  lwz       r3, 0x4(r31)
-	  stb       r0, 0x2BB(r3)
-	  lfs       f0, -0x5158(r2)
-	  lwz       r3, 0x4(r31)
-	  stfs      f0, 0x2D4(r3)
-	  lwz       r3, 0x4(r31)
-	  stw       r0, 0x2F0(r3)
-	  lwz       r3, 0x4(r31)
-	  lfs       f1, 0xA0(r3)
-	  bl        0x9FE74
-	  lwz       r3, 0x4(r31)
-	  fmr       f31, f1
-	  lfs       f1, 0xA0(r3)
-	  bl        0x9FFF8
-	  lwz       r4, 0x4(r31)
-	  addi      r6, r1, 0x2C
-	  lfs       f3, 0x860(r13)
-	  addi      r5, r1, 0x28
-	  lwz       r3, 0x224(r4)
-	  lfs       f0, 0x9C(r4)
-	  addi      r7, r4, 0x94
-	  lfs       f2, 0x68(r3)
-	  addi      r4, r1, 0x24
-	  addi      r3, r1, 0x58
-	  fmuls     f4, f31, f2
-	  fmuls     f3, f3, f2
-	  fmuls     f1, f1, f2
-	  fadds     f0, f0, f4
-	  stfs      f0, 0x2C(r1)
-	  lfs       f0, 0x4(r7)
-	  fadds     f0, f0, f3
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, 0x0(r7)
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x24(r1)
-	  bl        -0x144C2C
-	  lfs       f30, 0x58(r1)
-	  li        r4, 0x1
-	  lfs       f29, 0x60(r1)
-	  fmr       f1, f30
-	  lwz       r3, 0x2F00(r13)
-	  fmr       f2, f29
-	  bl        -0x113E60
-	  fmr       f31, f1
-	  lwz       r3, 0x3120(r13)
-	  bl        -0x649AC
-	  lis       r4, 0x802B
-	  lwz       r5, 0x4(r31)
-	  subi      r0, r4, 0x3064
-	  stw       r0, 0x64(r1)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x174
-	  stw       r5, 0x68(r1)
-	  addi      r4, r1, 0x64
-	  stw       r0, 0x64(r1)
-	  stfs      f30, 0x6C(r1)
-	  stfs      f31, 0x70(r1)
-	  stfs      f29, 0x74(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0xC(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x178
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x8
-	  stw       r0, 0x80(r3)
+	mMizu->set2E8(stateID);
+	mMizu->mAnimator.startMotion(PaniMotionInfo(10, this));
+	mMizu->_3B8 = 1;
+	mMizu->_3B9 = false;
+	mMizu->set2B8(0);
+	mMizu->set2BB(0);
+	mMizu->set2D4(0.0f);
+	mMizu->set2F0(0);
+	naviGeyzerJump();
 
-	.loc_0x178:
-	  lwz       r3, 0x8(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x190
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x8
-	  stw       r0, 0x80(r3)
+	if (_0C) {
+		_0C->stop();
+	}
 
-	.loc_0x190:
-	  lwz       r5, 0x4(r31)
-	  li        r4, 0xC4
-	  lwz       r3, 0x3180(r13)
-	  li        r7, 0
-	  lwz       r6, 0x10(r31)
-	  addi      r5, r5, 0x94
-	  bl        0x20D3C
-	  lwz       r5, 0x4(r31)
-	  li        r4, 0xC3
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  addi      r5, r5, 0x94
-	  li        r7, 0
-	  bl        0x20D20
-	  lwz       r4, 0x10(r31)
-	  cmplwi    r3, 0
-	  stw       r3, 0x4(r4)
-	  beq-      .loc_0x208
-	  lfs       f0, 0x864(r13)
-	  lfs       f1, 0x868(r13)
-	  stfs      f0, 0x8C(r1)
-	  lfs       f0, 0x86C(r13)
-	  stfs      f1, 0x90(r1)
-	  stfs      f0, 0x94(r1)
-	  lwz       r4, 0x8C(r1)
-	  lwz       r0, 0x90(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x94(r1)
-	  stw       r0, 0x1E4(r3)
+	if (_08) {
+		_08->stop();
+	}
 
-	.loc_0x208:
-	  lwz       r5, 0x4(r31)
-	  li        r4, 0xC5
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  addi      r5, r5, 0x94
-	  li        r7, 0
-	  bl        0x20CC4
-	  lwz       r3, 0x4(r31)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x24C
-	  li        r4, 0xA8
-	  bl        -0xD7FE8
-	  lwz       r3, 0x4(r31)
-	  li        r4, 0xA9
-	  lwz       r3, 0x2C(r3)
-	  bl        -0xD80CC
+	effectMgr->create(EffectMgr::EFF_Unk196, mMizu->mPosition, mPuffCallBack, nullptr);
+	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Unk195, mMizu->mPosition, nullptr, nullptr);
+	mPuffCallBack->setPtcl(ptcl);
+	if (ptcl) {
+		ptcl->set1DC(Vector3f(1.0f, 0.0f, 0.0f));
+	}
 
-	.loc_0x24C:
-	  lwz       r0, 0xC4(r1)
-	  lfd       f31, 0xB8(r1)
-	  lfd       f30, 0xB0(r1)
-	  lfd       f29, 0xA8(r1)
-	  lwz       r31, 0xA4(r1)
-	  addi      r1, r1, 0xC0
-	  mtlr      r0
-	  blr
-	*/
+	effectMgr->create(EffectMgr::EFF_Unk197, mMizu->mPosition, nullptr, nullptr);
+
+	if (mMizu->mSeContext) {
+		mMizu->mSeContext->stopSound(0xA8);
+		mMizu->mSeContext->playSound(0xA9);
+	}
 }
 
 /*
@@ -599,10 +238,7 @@ void MizuAi::initJet(int)
  * Address:	........
  * Size:	000004
  */
-void MizuAi::waitState()
-{
-	// UNUSED FUNCTION
-}
+void MizuAi::waitState() { }
 
 /*
  * --INFO--
@@ -611,7 +247,22 @@ void MizuAi::waitState()
  */
 void MizuAi::readyState()
 {
-	// UNUSED FUNCTION
+	if (!mMizu->_3B8) {
+		Navi* navi = naviMgr->getNavi();
+		if (absVal(mMizu->mPosition.x - navi->mPosition.x) < 7.5f && absVal(mMizu->mPosition.z - navi->mPosition.z) < 7.5f
+		    && absVal(mMizu->mPosition.y - navi->mPosition.y) < 10.0f) {
+			mMizu->_3B8 = 1;
+		}
+
+		if (mMizu->get2D4() > 3.0f) {
+			mMizu->set2D4(0.0f);
+			if (mMizu->mSeContext) {
+				mMizu->mSeContext->playSound(0xA8);
+			}
+		} else {
+			mMizu->inc2D4(gsys->getFrameTime());
+		}
+	}
 }
 
 /*
@@ -619,10 +270,7 @@ void MizuAi::readyState()
  * Address:	........
  * Size:	00001C
  */
-void MizuAi::jetState()
-{
-	// UNUSED FUNCTION
-}
+void MizuAi::jetState() { mMizu->inc2D4(gsys->getFrameTime()); }
 
 /*
  * --INFO--
@@ -631,6 +279,28 @@ void MizuAi::jetState()
  */
 void MizuAi::update()
 {
+	setEveryFrame();
+
+	switch (mMizu->getCurrStateID()) {
+	case 0:
+		waitState();
+		if (readyTransit()) {
+			initReady(1);
+		}
+		break;
+	case 1:
+		readyState();
+		if (jetTransit()) {
+			initJet(2);
+		}
+		break;
+	case 2:
+		jetState();
+		if (waitTransit()) {
+			initReady(1);
+		}
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

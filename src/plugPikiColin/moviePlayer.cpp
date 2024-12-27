@@ -35,7 +35,7 @@ void MovieInfo::update()
  * Address:	........
  * Size:	000074
  */
-void MovieInfo::setCamera(Graphics&)
+bool MovieInfo::setCamera(Graphics&)
 {
 	// UNUSED FUNCTION
 }

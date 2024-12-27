@@ -5,6 +5,7 @@
 #include "Creature.h"
 #include "CreatureProp.h"
 #include "ID32.h"
+#include "Plane.h"
 #include "PaniAnimator.h"
 #include "ObjectMgr.h"
 #include "SearchSystem.h"
@@ -202,12 +203,19 @@ struct Boss : public Creature {
 	inline void set2BE(u8 val) { _2BE = val; }
 
 	inline int getCurrStateID() { return _2E4; }
-	inline void set2E0(f32 val) { _2E0 = val; }  // name these better later
-	inline void set2E4(int val) { _2E4 = val; }  // name these better later
-	inline void set2E8(int val) { _2E8 = val; }  // name these better later
-	inline void set2EC(int val) { _2EC = val; }  // name these better later
+	inline void set2E0(f32 val) { _2E0 = val; } // name these better later
+	inline void set2E4(int val) { _2E4 = val; } // name these better later
+	inline void set2E8(int val) { _2E8 = val; } // name these better later
+	inline void set2EC(int val) { _2EC = val; } // name these better later
+
+	inline f32 get2D4() { return _2D4; }         // name these better later
 	inline void set2D4(f32 val) { _2D4 = val; }  // name these better later
+	inline void inc2D4(f32 val) { _2D4 += val; } // name these better later
+
 	inline void inc2EC(int amt) { _2EC += amt; } // name these better later
+
+	inline int get2F0() { return _2F0; }
+	inline void set2F0(int val) { _2F0 = val; } // name these better later
 
 	inline void set2F4(u32 val) { _2F4 = val; } // name these better later
 	inline void set2F8(u32 val) { _2F8 = val; } // name these better later
@@ -222,6 +230,8 @@ struct Boss : public Creature {
 	inline bool hasHealth() { return mCurrentHealth > 0.0f; }
 
 	inline bool is2BD() { return _2BD; }
+
+	inline Vector3f& get300() { return _300; }
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
@@ -244,7 +254,7 @@ struct Boss : public Creature {
 	u32 _2E4;                      // _2E4, maybe int?
 	u32 _2E8;                      // _2E8, maybe int?
 	u32 _2EC;                      // _2EC, maybe int?
-	u8 _2F0[0x4];                  // _2F0, unknown
+	int _2F0;                      // _2F0
 	u32 _2F4;                      // _2F4, unknown, same as _1C in GenObjectBoss
 	u32 _2F8;                      // _2F8, unknown, same as _20 in GenObjectBoss
 	u32 _2FC;                      // _2F4, unknown, same as _24 in GenObjectBoss
@@ -252,8 +262,8 @@ struct Boss : public Creature {
 	Vector3f _30C;                 // _30C
 	u8 _318[0x4];                  // _318, unknown
 	ID32 mPelletID;                // _31C
-	Vector3f _328;                 // _328
-	u8 _334[0x8];                  // _334, unknown
+	Plane _328;                    // _328
+	u8 _338[0x4];                  // _338, unknown
 	PaniTekiAnimator mAnimator;    // _33C
 	BossShapeObject* mShapeObject; // _390
 	SearchData mSearchData[3];     // _394

@@ -76,7 +76,13 @@ static inline f32 sqrtf(f32 x)
 
 static inline f32 absF(f32 val) { return (f32)__fabsf(val); }
 
-static inline f32 absVal(f32 val) { return (val < 0.0f) ? -val : val; }
+static inline f32 absVal(f32 val)
+{
+	if (val > 0.0f) {
+		return val;
+	}
+	return -val;
+}
 
 #ifdef __cplusplus
 // Pikmin-specific global math functions

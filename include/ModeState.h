@@ -15,7 +15,7 @@ struct ModeState {
 	{
 	}
 
-	virtual ModeState* update(u32&);    // _08
+	virtual void update(u32&);          // _08
 	virtual void postRender(Graphics&); // _0C
 	virtual void postUpdate();          // _10
 
@@ -55,7 +55,7 @@ struct IntroModeState : public ModeState {
 	{
 	}
 
-	virtual ModeState* update(u32&);    // _08
+	virtual void update(u32&);          // _08
 	virtual void postRender(Graphics&); // _0C
 
 	// _00     = VTBL

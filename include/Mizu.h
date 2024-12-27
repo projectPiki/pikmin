@@ -74,6 +74,19 @@ struct Mizu : public Boss {
 };
 
 /**
+ * @brief TODO
+ */
+struct MizuGenSpringPuffCallBack : public zen::CallBack1<zen::particleGenerator*> {
+	virtual bool invoke(zen::particleGenerator*); // _08
+
+	inline void setPtcl(zen::particleGenerator* ptcl) { mPtcl = ptcl; }
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1?
+	zen::particleGenerator* mPtcl; // _04, maybe in zen::CallBack1?
+};
+
+/**
  * @brief TODO.
  *
  * @note Size: 0x14.
@@ -94,29 +107,19 @@ struct MizuAi : public PaniAnimKeyListener {
 	// unused/inlined:
 	void setEveryFrame();
 	void naviGeyzerJump();
-	void readyTransit();
-	void jetTransit();
-	void waitTransit();
+	bool readyTransit();
+	bool jetTransit();
+	bool waitTransit();
 	void waitState();
 	void readyState();
 	void jetState();
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	u8 _04[0x14 - 0x4]; // _04, unknown
-};
-
-/**
- * @brief TODO
- */
-struct MizuGenSpringPuffCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	MizuGenSpringPuffCallBack();
-
-	virtual bool invoke(zen::particleGenerator*); // _08
-
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
+	Mizu* mMizu;                              // _04
+	zen::particleGenerator* _08;              // _08
+	zen::particleGenerator* _0C;              // _0C
+	MizuGenSpringPuffCallBack* mPuffCallBack; // _10
 };
 
 #endif

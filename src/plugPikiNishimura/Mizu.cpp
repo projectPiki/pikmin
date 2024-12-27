@@ -70,8 +70,8 @@ f32 Mizu::getiMass() { return 0.0001f; }
 void Mizu::initMizu(Vector3f&)
 {
 	mCollisionRadius = 10.0f;
-	_2BE             = 1;
-	_2E0             = 20.0f;
+	set2BE(1);
+	set2E0(20.0f);
 	mMizuAi->initMizu(this);
 }
 
@@ -83,8 +83,8 @@ void Mizu::initMizu(Vector3f&)
 void Mizu::initGeyzer(Vector3f&)
 {
 	mCollisionRadius = 10.0f;
-	_2BE             = 1;
-	_2E0             = 20.0f;
+	set2BE(1);
+	set2E0(20.0f);
 	mMizuAi->initGeyzer(this);
 }
 
@@ -95,8 +95,8 @@ void Mizu::initGeyzer(Vector3f&)
  */
 void Mizu::doKill()
 {
-	_2B8 = 0;
-	_2B9 = 0;
+	set2B8(0);
+	set2B9(0);
 	mMizuAi->killCallBackEffect(false);
 	bossMgr->kill(this);
 }

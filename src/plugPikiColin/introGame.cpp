@@ -226,15 +226,15 @@ IntroGameSection::IntroGameSection()
  * Address:	8005B0B4
  * Size:	000080
  */
-ModeState* IntroModeState::update(u32& a2)
+void IntroModeState::update(u32& a2)
 {
 	a2 = 1;
 	if (!gameflow.mMoviePlayer->_124) {
 		PRINT("quitting!\n");
 		// TODO: this has regswap issues.
-		return new QuittingModeState(_04);
+		// return new QuittingModeState(_04);
 	}
-	return this;
+	// return this;
 }
 
 /*
