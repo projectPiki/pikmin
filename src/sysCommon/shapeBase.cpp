@@ -517,7 +517,7 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 void CamDataInfo::update(f32, Matrix4f&)
 {
 
-	mCamera.calcLookAt(mCamera.mEyePosition, mCamera.mTargetPosition, nullptr);
+	mCamera.calcLookAt(mCamera.mPosition, mCamera.mFocus, nullptr);
 	/*
 	.loc_0x0:
 	  mflr      r0

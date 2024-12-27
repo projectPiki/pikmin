@@ -37,10 +37,10 @@ struct CullFrustum {
 	CullFrustum()
 	{
 		_155 = 0;
-		mEyePosition.set(0.0f, 0.0f, 0.0f);
-		_1CC = 60.0f;
-		_1D0 = 1.0f;
-		_1D4 = 1000.0f;
+		mPosition.set(0.0f, 0.0f, 0.0f);
+		mFov  = 60.0f;
+		mNear = 1.0f;
+		mFar  = 1000.0f;
 	}
 
 	bool isPointVisible(Vector3f&, f32);
@@ -74,8 +74,8 @@ struct CullFrustum {
 	u8 _154;                     // _154
 	u8 _155;                     // _155
 	Vector3f _158;               // _158
-	Vector3f mEyePosition;       // _164
-	Vector3f mTargetPosition;    // _170
+	Vector3f mPosition;          // _164
+	Vector3f mFocus;             // _170, aka Target Position
 	Vector3f mViewXAxis;         // _17C
 	Vector3f mViewYAxis;         // _188
 	Vector3f mViewZAxis;         // _194
@@ -84,9 +84,9 @@ struct CullFrustum {
 	Vector3f mInvZAxis;          // _1B8
 	f32 _1C4;                    // _1C4
 	f32 _1C8;                    // _1C8
-	f32 _1CC;                    // _1CC
-	f32 _1D0;                    // _1D0
-	f32 _1D4;                    // _1D4
+	f32 mFov;                    // _1CC
+	f32 mNear;                   // _1D0
+	f32 mFar;                    // _1D4
 	f32 _1D8;                    // _1D8
 	f32 _1DC;                    // _1DC
 	Matrix4f mLookAtMtx;         // _1E0

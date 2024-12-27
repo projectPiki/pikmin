@@ -1047,7 +1047,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	memStat->start("naviCaster");
 	mShadowCaster.initCore("");
 	mNaviDrawer            = new NaviDrawer(this);
-	mShadowCaster._14._1CC = 20.0f;
+	mShadowCaster._14.mFov = 20.0f;
 	memStat->end("naviCaster");
 
 	memStat->start("naviEff");

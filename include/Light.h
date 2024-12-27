@@ -190,8 +190,16 @@ struct LightGroup : public CoreNode {
 	LFlareGroup* mFlareGroup; // _68
 };
 
+// clang-format off
+DEFINE_ENUM_TYPE(
+	LightPoolFlags,
+	DrawFrustum = 1,
+);
+// clang-format on
+
 /**
  * @brief TODO
+ * @note 1001F2A0 in plugPiki.dll might allude to some members.
  */
 struct LightPool : public Node {
 	LightPool();
@@ -200,7 +208,52 @@ struct LightPool : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
+	Light mLight;   // _20 (0x24C)
+	u32 _26C;       // _26C
+	u32 _270;       // _270
+	u32 _274;       // _274
+	u32 _278;       // _278
+	u32 _27C;       // _27C
+	u32 _280;       // _280
+	u32 _284;       // _284
+	u32 _288;       // _288
+	u32 _28C;       // _28C
+	u32 _290;       // _290
+	u32 _294;       // _294
+	u32 _298;       // _298
+	u32 _29C;       // _29C
+	u32 _2A0;       // _2A0
+	u32 _2A4;       // _2A4
+	u32 _2A8;       // _2A8
+	u32 _2AC;       // _2AC
+	u32 _2B0;       // _2B0
+	u32 _2B4;       // _2B4
+	u32 _2B8;       // _2B8
+	u32 _2BC;       // _2BC
+	u32 _2C0;       // _2C0
+	u32 _2C4;       // _2C4
+	u32 _2C8;       // _2C8
+	u32 _2CC;       // _2CC
+	u32 _2D0;       // _2D0
+	u32 _2D4;       // _2D4
+	u32 _2D8;       // _2D8
+	u32 _2DC;       // _2DC
+	u32 _2E0;       // _2E0
+	u32 _2E4;       // _2E4
+	u32 _2E8;       // _2E8
+	u32 _2EC;       // _2EC
+	u32 _2F0;       // _2F0
+	Camera mCamera; // _2F4 (0x348)
+	u32 _63C;       // _63C
+	u32 _640;       // _640
+	u32 _644;       // _644
+	u32 _648;       // _648
+	u32 _64C;       // _64C
+	Vector3f _650;  // _650
+	float _65C;     // _65C
+	Colour mColour; // _660
+	u8 _664[8];     // _664
+	u8 mFlags;      // _66C, use LightPoolFlags
 };
 
 /**

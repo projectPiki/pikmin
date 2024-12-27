@@ -32,7 +32,7 @@ static void _Print(char*, ...)
 void CullFrustum::vectorToWorldPlane(Vector3f& vec, CullingPlane& worldPlane)
 {
 	projectVector(vec, worldPlane.mPlane.mNormal);
-	worldPlane.mPlane.mOffset = worldPlane.mPlane.mNormal.dot(mEyePosition);
+	worldPlane.mPlane.mOffset = worldPlane.mPlane.mNormal.dot(mPosition);
 }
 
 /*
@@ -65,10 +65,10 @@ void CullFrustum::draw(Graphics& gfx)
 	gfx.useTexture(nullptr, 0);
 	gfx.setColour(Colour(255, 255, 255, 255), true);
 	gfx.setAuxColour(Colour(255, 255, 255, 255));
-	gfx.drawLine(mEyePosition, mTargetPosition);
+	gfx.drawLine(mPosition, mFocus);
 
-	f32 targetDist = mEyePosition.distance(mTargetPosition);
-	f32 tanTheta   = sinf(PI * (_1CC / 2) / 180.0f) * targetDist / cosf(PI * (_1CC / 2) / 180.0f);
+	f32 targetDist = mPosition.distance(mFocus);
+	f32 tanTheta   = sinf(PI * (mFov / 2) / 180.0f) * targetDist / cosf(PI * (mFov / 2) / 180.0f);
 
 	f32 divTanTheta = tanTheta / _1C4;
 	f32 roundedTan  = divTanTheta * _1C4;
@@ -78,22 +78,18 @@ void CullFrustum::draw(Graphics& gfx)
 	Vector3f vec3(roundedTan, -tanTheta, 0.0f);
 	Vector3f vec4(-roundedTan, -tanTheta, 0.0f);
 
-	Vector3f targ1(vec1.dot(mViewXAxis) + mTargetPosition.x, vec1.dot(mViewYAxis) + mTargetPosition.y,
-	               vec1.dot(mViewZAxis) + mTargetPosition.z);
-	Vector3f targ2(vec2.dot(mViewXAxis) + mTargetPosition.x, vec2.dot(mViewYAxis) + mTargetPosition.y,
-	               vec2.dot(mViewZAxis) + mTargetPosition.z);
-	Vector3f targ3(vec3.dot(mViewXAxis) + mTargetPosition.x, vec3.dot(mViewYAxis) + mTargetPosition.y,
-	               vec3.dot(mViewZAxis) + mTargetPosition.z);
-	Vector3f targ4(vec4.dot(mViewXAxis) + mTargetPosition.x, vec4.dot(mViewYAxis) + mTargetPosition.y,
-	               vec4.dot(mViewZAxis) + mTargetPosition.z);
+	Vector3f targ1(vec1.dot(mViewXAxis) + mFocus.x, vec1.dot(mViewYAxis) + mFocus.y, vec1.dot(mViewZAxis) + mFocus.z);
+	Vector3f targ2(vec2.dot(mViewXAxis) + mFocus.x, vec2.dot(mViewYAxis) + mFocus.y, vec2.dot(mViewZAxis) + mFocus.z);
+	Vector3f targ3(vec3.dot(mViewXAxis) + mFocus.x, vec3.dot(mViewYAxis) + mFocus.y, vec3.dot(mViewZAxis) + mFocus.z);
+	Vector3f targ4(vec4.dot(mViewXAxis) + mFocus.x, vec4.dot(mViewYAxis) + mFocus.y, vec4.dot(mViewZAxis) + mFocus.z);
 
 	Vector3f dir;
-	dir.sub2(mTargetPosition, mEyePosition);
+	dir.sub2(mFocus, mPosition);
 	dir.normalise();
-	dir.multiply(_1D0);
-	dir.add(mEyePosition);
+	dir.multiply(mNear);
+	dir.add(mPosition);
 
-	f32 invDist = _1D0 / mTargetPosition.distance(mEyePosition);
+	f32 invDist = mNear / mFocus.distance(mPosition);
 	f32 divDist = divTanTheta * invDist;
 	f32 tanDist = tanTheta * invDist;
 
@@ -108,12 +104,12 @@ void CullFrustum::draw(Graphics& gfx)
 	Vector3f dir4(vec8.dot(mViewXAxis) + dir.x, vec8.dot(mViewYAxis) + dir.y, vec8.dot(mViewZAxis) + dir.z);
 
 	Vector3f odir;
-	odir.sub2(mTargetPosition, mEyePosition);
+	odir.sub2(mFocus, mPosition);
 	odir.normalise();
-	odir.multiply(_1D4);
-	odir.add(mEyePosition);
+	odir.multiply(mFar);
+	odir.add(mPosition);
 
-	f32 oinvDist = _1D4 / mTargetPosition.distance(mEyePosition);
+	f32 oinvDist = mFar / mFocus.distance(mPosition);
 	f32 odivDist = roundedTan * invDist;
 	f32 otanDist = tanTheta * invDist;
 
@@ -1263,10 +1259,10 @@ void CullFrustum::createViewPlanes()
 	CullingPlane* planes = mCullPlanes;
 	Vector3f vec;
 	_00  = 0;
-	_1D8 = sinf(PI * (0.5f * _1CC) / 180.0f);
-	_1DC = cosf(PI * (0.5f * _1CC) / 180.0f);
+	_1D8 = sinf(PI * (0.5f * mFov) / 180.0f);
+	_1DC = cosf(PI * (0.5f * mFov) / 180.0f);
 	vectorToWorldPlane(Vector3f(0.0f, 0.0f, 1.0f), planes[0]);
-	planes[0].mPlane.mOffset += _1D0;
+	planes[0].mPlane.mOffset += mNear;
 	planes[0].CheckMinMaxDir();
 	planes[0]._28 = 1;
 
@@ -1340,11 +1336,11 @@ void CullFrustum::createInvVecs()
  */
 void CullFrustum::update(f32 p1, f32 p2, f32 p3, f32 p4)
 {
-	_1C4 = p1;
-	_1C8 = 1.0f;
-	_1CC = p2;
-	_1D0 = p3;
-	_1D4 = p4;
+	_1C4  = p1;
+	_1C8  = 1.0f;
+	mFov  = p2;
+	mNear = p3;
+	mFar  = p4;
 
 	createVecs();
 	createInvVecs();
@@ -1368,18 +1364,18 @@ void CullFrustum::calcVectors(Vector3f& eyePos, Vector3f& targetPos)
 {
 	u32 badCompiler[4];
 
-	mEyePosition    = eyePos;
-	mTargetPosition = targetPos;
+	mPosition = eyePos;
+	mFocus    = targetPos;
 
 	// make sure eye pos and target pos aren't exactly the same, since we need a direction to point the camera
-	if (mEyePosition.x == mTargetPosition.x && mEyePosition.z == mTargetPosition.z) {
-		mTargetPosition.z += 0.0001f;
+	if (mPosition.x == mFocus.x && mPosition.z == mFocus.z) {
+		mFocus.z += 0.0001f;
 	}
 
 	// construct target view direction
-	mViewZAxis.x = mEyePosition.x - mTargetPosition.x;
-	mViewZAxis.y = mEyePosition.y - mTargetPosition.y;
-	mViewZAxis.z = mEyePosition.z - mTargetPosition.z;
+	mViewZAxis.x = mPosition.x - mFocus.x;
+	mViewZAxis.y = mPosition.y - mFocus.y;
+	mViewZAxis.z = mPosition.z - mFocus.z;
 	mViewZAxis.normalise();
 
 	// construct perpendicular direction manually
@@ -1392,10 +1388,10 @@ void CullFrustum::calcVectors(Vector3f& eyePos, Vector3f& targetPos)
 	mViewYAxis.normalise();
 
 	// construct lookat matrices
-	mLookAtMtx.makeLookat(mEyePosition, mViewXAxis, mViewYAxis, mViewZAxis);
+	mLookAtMtx.makeLookat(mPosition, mViewXAxis, mViewYAxis, mViewZAxis);
 	mLookAtMtx.inverse(&mInverseLookAtMtx);
 
-	update(1.0f, _1CC, _1D0, _1D4);
+	update(1.0f, mFov, mNear, mFar);
 }
 
 /*
@@ -1502,14 +1498,14 @@ void LightCamera::initLightmap(int size, int texFmt)
  */
 void LightCamera::calcProjection(Graphics& gfx, bool p2, Node* p3)
 {
-	f32 targetDist = mEyePosition.distance(mTargetPosition);
-	f32 tanTheta   = sinf(PI * _1CC / 180.0f) / cosf(PI * _1CC / 180.0f);
+	f32 targetDist = mPosition.distance(mFocus);
+	f32 tanTheta   = sinf(PI * mFov / 180.0f) / cosf(PI * mFov / 180.0f);
 	_354           = tanTheta * targetDist;
 	_350           = _354;
 
 	Vector3f vec(_350 * (1.0f / tanTheta), _354 * (1.0f / tanTheta), 1.0f);
 	Vector3f dir;
-	dir.sub2(mEyePosition, mTargetPosition);
+	dir.sub2(mPosition, mFocus);
 
 	_348 = dir.length() / vec.x;
 	_34C = dir.length() / vec.y;
@@ -1522,7 +1518,7 @@ void LightCamera::calcProjection(Graphics& gfx, bool p2, Node* p3)
 
 		f32 width  = 2.0f * mLightMap->mWidth;
 		f32 height = 2.0f * mLightMap->mHeight;
-		gfx.setPerspective(_260.mMtx, _1CC, _1C4, 30.0f, _1D4, 1.0f);
+		gfx.setPerspective(_260.mMtx, mFov, _1C4, 30.0f, mFar, 1.0f);
 
 		gfx.setViewport(RectArea(-(width * _348), -(height * _34C), width + (int(width * _348)), height + (int(height * _34C))));
 

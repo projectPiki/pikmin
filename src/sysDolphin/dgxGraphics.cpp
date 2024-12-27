@@ -3991,7 +3991,7 @@ void DGXGraphics::setBlendMode(u8, u8, u8)
  * Address:	8004A4CC
  * Size:	000438
  */
-void DGXGraphics::setCBlending(int)
+int DGXGraphics::setCBlending(int)
 {
 	/*
 	.loc_0x0:

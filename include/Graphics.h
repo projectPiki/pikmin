@@ -92,7 +92,7 @@ struct Graphics {
 	virtual void setBlendMode(u8, u8, u8);                                                 // _54
 	virtual void setCullFront(int)                                                    = 0; // _58
 	virtual void setDepth(bool)                                                       = 0; // _5C
-	virtual void setCBlending(int)                                                    = 0; // _60
+	virtual int setCBlending(int)                                                     = 0; // _60
 	virtual void setPointSize(f32)                                                    = 0; // _64
 	virtual void setLineWidth(f32)                                                    = 0; // _68
 	virtual void setCamera(Camera*)                                                   = 0; // _6C
@@ -158,7 +158,7 @@ struct DGXGraphics : public Graphics {
 	virtual void setBlendMode(u8, u8, u8);                                             // _54
 	virtual void setCullFront(int);                                                    // _58
 	virtual void setDepth(bool);                                                       // _5C
-	virtual void setCBlending(int);                                                    // _60
+	virtual int setCBlending(int);                                                     // _60
 	virtual void setPointSize(f32);                                                    // _64 (weak)
 	virtual void setLineWidth(f32);                                                    // _68
 	virtual void setCamera(Camera*);                                                   // _6C

@@ -1,25 +1,21 @@
 #include "Light.h"
 #include "Camera.h"
+#include "Graphics.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("lightPool");
 
 /*
  * --INFO--
@@ -28,100 +24,23 @@ static void _Print(char*, ...)
  */
 LightPool::LightPool()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x738C
-	  subi      r4, r13, 0x658C
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r30)
-	  addi      r0, r3, 0x737C
-	  addi      r3, r30, 0
-	  stw       r0, 0x0(r30)
-	  stw       r31, 0x10(r30)
-	  stw       r31, 0xC(r30)
-	  stw       r31, 0x8(r30)
-	  bl        -0x4E2D8
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0
-	  subi      r4, r13, 0x658C
-	  bl        -0x32A88
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x603C
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0x20
-	  bl        -0x49790
-	  addi      r3, r30, 0x2F4
-	  bl        -0x3001C
-	  lfs       f0, -0x7788(r2)
-	  stfs      f0, 0x658(r30)
-	  stfs      f0, 0x654(r30)
-	  stfs      f0, 0x650(r30)
-	  stw       r31, 0x64C(r30)
-	  bl        0x1A4E78
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x7770(r2)
-	  stw       r0, 0x14(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x7780(r2)
-	  li        r6, 0x1
-	  stw       r0, 0x10(r1)
-	  lfs       f1, -0x7784(r2)
-	  li        r5, 0xFF
-	  lfd       f3, 0x10(r1)
-	  li        r4, 0x40
-	  lfs       f0, -0x777C(r2)
-	  fsubs     f3, f3, f4
-	  li        r0, 0x80
-	  addi      r3, r30, 0
-	  fdivs     f2, f3, f2
-	  fmuls     f2, f1, f2
-	  fmuls     f0, f0, f2
-	  stfs      f0, 0x65C(r30)
-	  lfs       f0, -0x65B0(r13)
-	  stfs      f0, 0x458(r30)
-	  lfs       f0, -0x65AC(r13)
-	  stfs      f0, 0x45C(r30)
-	  lfs       f0, -0x65A8(r13)
-	  stfs      f0, 0x460(r30)
-	  lfs       f0, -0x65A4(r13)
-	  stfs      f0, 0x464(r30)
-	  lfs       f0, -0x65A0(r13)
-	  stfs      f0, 0x468(r30)
-	  lfs       f0, -0x659C(r13)
-	  stfs      f0, 0x46C(r30)
-	  lfs       f0, -0x6598(r13)
-	  stfs      f0, 0x614(r30)
-	  lfs       f0, -0x6594(r13)
-	  stfs      f0, 0x618(r30)
-	  lfs       f0, -0x6590(r13)
-	  stfs      f0, 0x61C(r30)
-	  lfs       f0, -0x7778(r2)
-	  stfs      f0, 0x4C0(r30)
-	  stfs      f1, 0x4C4(r30)
-	  lfs       f0, -0x7774(r2)
-	  stfs      f0, 0x4C8(r30)
-	  stb       r6, 0x66C(r30)
-	  stb       r5, 0x660(r30)
-	  stb       r5, 0x661(r30)
-	  stb       r4, 0x662(r30)
-	  stb       r0, 0x663(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+#ifndef __MWERKS__
+	_650.set(0.0f);
+#endif
+
+	_64C = 0;
+
+	_65C = TAU * randFloat();
+
+	mCamera.mPosition.set(0.0f, 50.0f, 0.0f);
+	mCamera.mFocus.set(0.0f, 10.0f, 0.0f);
+	mCamera.mRotation.set(0.0f, 0.0f, 0.0f);
+	mCamera.mFov  = 5.0f;
+	mCamera.mNear = 1.0f;
+	mCamera.mFar  = 200.0f;
+
+	mFlags = 1;
+	mColour.set(0xFF, 0xFF, 64, 0x80);
 }
 
 /*
@@ -129,8 +48,21 @@ LightPool::LightPool()
  * Address:	800732D0
  * Size:	0005F8
  */
-void LightPool::draw(Graphics&)
+void LightPool::draw(Graphics& gfx)
 {
+	gfx.useMatrix(mCamera.mInverseLookAtMtx, 0);
+	int oldBlend = gfx.setCBlending(3);
+	gfx.setDepth(false);
+
+	// Damn.
+
+	gfx.setCBlending(oldBlend);
+	gfx.setDepth(true);
+	if (mFlags & LightPoolFlags::DrawFrustum) {
+		gfx.setFog(false);
+		mCamera.draw(gfx);
+		gfx.setFog(true);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
