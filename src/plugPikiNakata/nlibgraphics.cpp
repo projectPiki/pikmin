@@ -1,26 +1,21 @@
 #include "nlib/Graphics.h"
 #include "nlib/Math.h"
 #include "Camera.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("");
 
 /*
  * --INFO--
@@ -30,7 +25,7 @@ static void _Print(char*, ...)
 NCamera::NCamera(Camera* cam)
 {
 	mCamera = cam;
-	mEyePosition.set(0.0f, 0.0f, 0.0f);
+	mPosition.set(0.0f, 0.0f, 0.0f);
 	mTargetPosition.set(0.0f, 0.0f, 1.0f);
 	mRotationAngle = 0.0f;
 }
@@ -43,7 +38,7 @@ NCamera::NCamera(Camera* cam)
 void NCamera::makeMatrix()
 {
 	NVector3f& target = mTargetPosition;
-	NVector3f& eye    = mEyePosition;
+	NVector3f& eye    = mPosition;
 	NVector3f direction(eye, target);
 	direction.normalize();
 
@@ -122,8 +117,8 @@ void NCamera::makeMatrix()
  */
 void NCamera::makeCamera()
 {
-	mCamera->mEyePosition.set(mEyePosition);
-	NVector3f directionVec(mTargetPosition, mEyePosition);
+	mCamera->mPosition.set(mPosition);
+	NVector3f directionVec(mTargetPosition, mPosition);
 
 	// Calculate the rotation of the camera based on the direction
 	NPolar3f polar(directionVec);

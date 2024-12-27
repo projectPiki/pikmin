@@ -17,7 +17,7 @@ struct NCamera {
 
 	f32 mRotationAngle;        // _00
 	Camera* mCamera;           // _04
-	NVector3f mEyePosition;    // _08
+	NVector3f mPosition;       // _08
 	NVector3f mTargetPosition; // _14
 };
 
