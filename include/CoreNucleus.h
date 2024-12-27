@@ -43,6 +43,8 @@ struct CoreNucleusProp : public BossProp, public CoreNode {
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x3C8.
  */
 struct CoreNucleus : public Boss {
 	CoreNucleus(CreatureProp*);
@@ -65,6 +67,7 @@ struct CoreNucleus : public Boss {
 	u8 _3B8[0x4];           // _3B8, unknown
 	Slime* mSlime;          // _3BC
 	CoreNucleusAi* mCoreAi; // _3C0
+	u8 _3C4[0x4];           // _3C4, unknown
 };
 
 /**

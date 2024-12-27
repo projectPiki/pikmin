@@ -8,6 +8,8 @@
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x554.
  */
 struct SpiderProp : public BossProp, public CoreNode {
 
@@ -22,6 +24,7 @@ struct SpiderProp : public BossProp, public CoreNode {
 		}
 
 		// _200-_204 = Parameters
+		u8 _204[0x554 - 0x204]; // _204, TODO: fill in
 	};
 
 	SpiderProp();
@@ -42,6 +45,8 @@ struct SpiderProp : public BossProp, public CoreNode {
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x764
  */
 struct Spider : public Boss {
 	Spider(CreatureProp*);
@@ -62,8 +67,8 @@ struct Spider : public Boss {
 	inline SpiderProp* getSpiderProp() { return static_cast<SpiderProp*>(mProps); }
 
 	// _00      = VTBL
-	// _00-_3B8 = Boss?
-	// TODO: members
+	// _00-_3B8 = Boss
+	u8 _3B8[0x764 - 0x3B8]; // _3B8, unknown
 };
 
 /*

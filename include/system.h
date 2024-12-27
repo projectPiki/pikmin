@@ -285,7 +285,6 @@ struct System : public StdSystem {
 	inline AtxRouter* getAtxRouter() { return mAtxRouter; }
 	inline void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
 	f32 getFrameTime() { return mDeltaTime; }
-	inline void setCurrMemInfo(MemInfo* info) { mCurrMemInfo = info; }
 
 	// _00      = VTBL
 	// _00-_248 = StdSystem

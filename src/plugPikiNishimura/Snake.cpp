@@ -1076,7 +1076,7 @@ void Snake::doAnimation()
  * Address:	8015B070
  * Size:	000074
  */
-void Snake::BoundSphereUpdater::getPos()
+Vector3f Snake::BoundSphereUpdater::getPos()
 {
 	/*
 	.loc_0x0:
@@ -1117,7 +1117,7 @@ void Snake::BoundSphereUpdater::getPos()
  * Address:	8015B0E4
  * Size:	0000B4
  */
-void Snake::BoundSphereUpdater::getSize()
+f32 Snake::BoundSphereUpdater::getSize()
 {
 	/*
 	.loc_0x0:

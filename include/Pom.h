@@ -70,6 +70,8 @@ struct PomProp : public BossProp, public CoreNode {
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x3D4.
  */
 struct Pom : public Boss {
 	Pom(CreatureProp*);

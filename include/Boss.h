@@ -11,7 +11,35 @@
 #include "Vector.h"
 
 struct BirthInfo;
+struct BossMgr;
 struct GenObjectBoss;
+
+/**
+ * @brief TODO
+ *
+ * @note This needs fixing still.
+ */
+enum BossID {
+	BOSS_IDSTART     = 0,
+	BOSS_Spider      = 0,
+	BOSS_Snake       = 1,
+	BOSS_Slime       = 2,
+	BOSS_King        = 3,
+	BOSS_Kogane      = 4,
+	BOSS_Pom         = 5,
+	BOSS_KingBack    = 6,
+	BOSS_Nucleus     = 7,
+	BOSS_CoreNucleus = 8,
+	BOSS_BoxSnake    = 9,
+	BOSS_Mizu        = 10,
+	BOSS_Geyzer      = 11,
+	BOSS_IDCOUNT, // 12
+
+	// when processing IDs, some bosses use different IDs, idk.
+	BOSS_BoxSnakeMake = 7, // create, createBoss
+	BOSS_MizuMake     = 8, // create
+	BOSS_GeyzerMake   = 9, // create
+};
 
 /**
  * @brief TODO
@@ -168,6 +196,7 @@ struct Boss : public Creature {
 	inline f32 setMotionSpeed(f32 speed) { mMotionSpeed = speed; }
 
 	inline void set2B8(u8 val) { _2B8 = val; }
+	inline void set2B9(u8 val) { _2B9 = val; }
 	inline void set2BB(u8 val) { _2BB = val; }
 	inline void set2BD(u8 val) { _2BD = val; }
 	inline void set2BE(u8 val) { _2BE = val; }
@@ -179,6 +208,10 @@ struct Boss : public Creature {
 	inline void set2EC(int val) { _2EC = val; }  // name these better later
 	inline void set2D4(f32 val) { _2D4 = val; }  // name these better later
 	inline void inc2EC(int amt) { _2EC += amt; } // name these better later
+
+	inline void set2F4(u32 val) { _2F4 = val; } // name these better later
+	inline void set2F8(u32 val) { _2F8 = val; } // name these better later
+	inline void set2FC(u32 val) { _2FC = val; } // name these better later
 
 	// these names are a guess
 	inline f32 getDamage() { return mDamage; }
@@ -211,11 +244,14 @@ struct Boss : public Creature {
 	u32 _2E4;                      // _2E4, maybe int?
 	u32 _2E8;                      // _2E8, maybe int?
 	u32 _2EC;                      // _2EC, maybe int?
-	u8 _2F0[0x300 - 0x2F0];        // _2F0, unknown
+	u8 _2F0[0x4];                  // _2F0, unknown
+	u32 _2F4;                      // _2F4, unknown, same as _1C in GenObjectBoss
+	u32 _2F8;                      // _2F8, unknown, same as _20 in GenObjectBoss
+	u32 _2FC;                      // _2F4, unknown, same as _24 in GenObjectBoss
 	Vector3f _300;                 // _300
 	Vector3f _30C;                 // _30C
 	u8 _318[0x4];                  // _318, unknown
-	ID32 mID;                      // _31C
+	ID32 mPelletID;                // _31C
 	Vector3f _328;                 // _328
 	u8 _334[0x8];                  // _334, unknown
 	PaniTekiAnimator mAnimator;    // _33C
@@ -227,11 +263,24 @@ struct Boss : public Creature {
  * @brief TODO
  */
 struct BossNode : public CoreNode {
-	BossNode();
+	BossNode() { }
+
+	BossNode(Boss* boss) { mBoss = boss; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	Boss* mBoss; // _14
+};
+
+/**
+ * @brief TODO
+ */
+struct BossAnimationManager : public Node {
+	BossAnimationManager(BossMgr*);
+
+	// _00     = VTBL
+	// _00-_20 = Node
+	BossMgr* mBossMgr; // _20
 };
 
 /**
@@ -244,7 +293,7 @@ struct BossMgr : public ObjectMgr {
 	virtual int getFirst();             // _0C
 	virtual int getNext(int);           // _10
 	virtual bool isDone(int);           // _14
-	virtual ~BossMgr();                 // _48
+	virtual ~BossMgr() { }              // _48
 	virtual void update();              // _4C
 	virtual void refresh(Graphics&);    // _58
 	virtual int getSize();              // _60
@@ -259,11 +308,11 @@ struct BossMgr : public ObjectMgr {
 	void kill(Creature*);
 	void refresh2d(Graphics&);
 	void finalSetup();
-	void getBossShapeObject(int);
+	BossShapeObject* getBossShapeObject(int bossID);
 
 	// unused/inlined:
-	void useBoss(int);
-	void getUseCount(int);
+	bool useBoss(int bossID);
+	int getUseCount(int bossID);
 	void animatorInit(Boss*);
 	void initSpider(int);
 	void initSnake(int);
@@ -275,24 +324,22 @@ struct BossMgr : public ObjectMgr {
 	void initMizu(int);
 	void initGeyzer(int);
 	void setBossParam(Boss*, GenObjectBoss*);
-	void createBoss(int);
+	Boss* createBoss(int);
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_28 = ObjectMgr
-	int _28; // _28, unknown - number of slimecreatures? number of bosses?
-};
-
-/**
- * @brief TODO
- */
-struct BossAnimationManager : public Node {
-	BossAnimationManager(BossMgr*);
-
-	// _00     = VTBL
-	// _00-_20 = Node
-	BossMgr* mBossMgr; // _20
-	                   // TODO: members
+	int _28;                         // _28, number of slimecreatures? number of bosses?
+	bool mForceUpdate;               // _2C
+	int* mActiveBossCounts;          // _30, indexed by BossID enum
+	int* mInitialisedBossCounts;     // _34, indexed by BossID enum
+	BossNode* mActiveNodes;          // _38, array of 12 BossNode lists, indexed by BossID enum
+	BossNode* mFreeNodes;            // _3C, array of 12 BossNode lists, indexed by BossID enum
+	int* mUseCounts;                 // _40, indexed by BossID enum
+	BossAnimationManager* mAnimMgr;  // _44
+	BossShapeObject** mShapeObjects; // _48, indexed by BossID enum
+	BossProp** mBossProps;           // _4C, indexed by BossID enum
+	PaniMotionTable* mMotionTable;   // _50
 };
 
 extern BossMgr* bossMgr;

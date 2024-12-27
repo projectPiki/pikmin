@@ -230,6 +230,9 @@ struct Creature : public RefCountable, public EventTalker {
 
 	inline Creature* get2AC() { return _2AC; }
 
+	// name is a guess, but this exists for whatever reason
+	inline bool doAlwaysUpdate() { return !isCreatureFlag(CF_Unk19); }
+
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker

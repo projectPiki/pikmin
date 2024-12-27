@@ -83,238 +83,27 @@ void PelletMgr::getUfoIDFromIndex(int)
  * Size:	000390
  */
 PelletConfig::PelletConfig()
+    : mPelletName(this, String("new", 0), String("", 0), String("", 0), "x99", nullptr)
+    , mPelletType(this, PELTYPE_Blue, 0, 0, "p00", nullptr)
+    , mPelletColor(this, PELCOLOR_NULL, 0, 0, "p09", nullptr)
+    , mCarryMinPikis(this, 1, 0, 0, "p01", nullptr)
+    , mCarryMaxPikis(this, 1, 0, 0, "p02", nullptr)
+    , _90(this, 0, 0, 0, "p03", nullptr)
+    , _A0(this, 10.0f, 0.0f, 0.0f, "p04", nullptr)
+    , _B0(this, 4.0f, 0.0f, 0.0f, "p05", nullptr)
+    , _C0(this, 4, 0, 0, "p08", nullptr)
+    , mMatchingOnyonSeeds(this, 1, 0, 0, "p06", nullptr)
+    , mNonMatchingOnyonSeeds(this, 1, 0, 0, "p07", nullptr)
+    , mPelletScale(this, 1.0f, 0.0f, 0.0f, "p10", nullptr)
+    , mCarryInfoHeight(this, 30.0f, 0.0f, 0.0f, "p11", nullptr)
+    , _110(this, 6, 0, 0, "p12", nullptr)
+    , mBounceSoundID(this, 0xFFFFFFFF, 0, 0, "p13", nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x150(r1)
-	  stmw      r26, 0x138(r1)
-	  addi      r30, r3, 0
-	  li        r31, 0
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x8022
-	  addi      r5, r1, 0x8C
-	  stw       r31, 0x0(r30)
-	  stw       r0, 0x4(r30)
-	  addi      r0, r3, 0x737C
-	  lis       r3, 0x802B
-	  stw       r0, 0x4(r30)
-	  addi      r7, r3, 0x650
-	  subi      r3, r4, 0x5C
-	  stw       r31, 0x14(r30)
-	  addi      r6, r7, 0x8
-	  subi      r0, r13, 0x58F0
-	  stw       r31, 0x10(r30)
-	  addi      r4, r30, 0
-	  stw       r31, 0xC(r30)
-	  stw       r3, 0x8(r30)
-	  addi      r3, r30, 0x18
-	  stw       r7, 0x134(r30)
-	  stw       r6, 0x4(r30)
-	  lwz       r6, -0x58F4(r13)
-	  stw       r0, 0x12C(r1)
-	  stw       r6, 0x100(r1)
-	  lwz       r0, 0x100(r1)
-	  stw       r31, 0x128(r1)
-	  stw       r0, 0x8C(r1)
-	  bl        -0x36178
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x606C
-	  stw       r0, 0x20(r30)
-	  li        r3, 0x41
-	  bl        -0x4DC08
-	  stw       r3, 0x28(r30)
-	  li        r0, 0x40
-	  addi      r3, r30, 0x2C
-	  stw       r0, 0x24(r30)
-	  lwz       r4, 0x128(r1)
-	  lwz       r0, 0x12C(r1)
-	  stw       r4, 0x24(r30)
-	  stw       r0, 0x28(r30)
-	  bl        -0x50DD4
-	  addi      r3, r30, 0x38
-	  bl        -0x50DDC
-	  addi      r3, r30, 0x44
-	  bl        -0x50DE4
-	  lwz       r0, -0x58EC(r13)
-	  addi      r5, r1, 0x88
-	  addi      r4, r30, 0
-	  stw       r0, 0xF8(r1)
-	  addi      r3, r30, 0x50
-	  lwz       r0, 0xF8(r1)
-	  stw       r0, 0x88(r1)
-	  bl        -0x361E0
-	  lis       r3, 0x802A
-	  addi      r28, r3, 0x60C4
-	  stw       r28, 0x58(r30)
-	  addi      r5, r1, 0x84
-	  addi      r4, r30, 0
-	  stw       r31, 0x5C(r30)
-	  addi      r3, r30, 0x60
-	  lwz       r0, -0x58E8(r13)
-	  stw       r0, 0xF0(r1)
-	  lwz       r0, 0xF0(r1)
-	  stw       r0, 0x84(r1)
-	  bl        -0x36210
-	  stw       r28, 0x68(r30)
-	  li        r29, -0x1
-	  addi      r5, r1, 0x80
-	  stw       r29, 0x6C(r30)
-	  mr        r4, r30
-	  addi      r3, r30, 0x70
-	  lwz       r0, -0x58E4(r13)
-	  stw       r0, 0xE8(r1)
-	  lwz       r0, 0xE8(r1)
-	  stw       r0, 0x80(r1)
-	  bl        -0x3623C
-	  stw       r28, 0x78(r30)
-	  li        r26, 0x1
-	  addi      r5, r1, 0x7C
-	  stw       r26, 0x7C(r30)
-	  mr        r4, r30
-	  addi      r3, r30, 0x80
-	  lwz       r0, -0x58E0(r13)
-	  stw       r0, 0xE0(r1)
-	  lwz       r0, 0xE0(r1)
-	  stw       r0, 0x7C(r1)
-	  bl        -0x36268
-	  stw       r28, 0x88(r30)
-	  addi      r5, r1, 0x78
-	  addi      r4, r30, 0
-	  stw       r26, 0x8C(r30)
-	  addi      r3, r30, 0x90
-	  lwz       r0, -0x58DC(r13)
-	  stw       r0, 0xD8(r1)
-	  lwz       r0, 0xD8(r1)
-	  stw       r0, 0x78(r1)
-	  bl        -0x36290
-	  stw       r28, 0x98(r30)
-	  addi      r5, r1, 0x74
-	  addi      r4, r30, 0
-	  stw       r31, 0x9C(r30)
-	  addi      r3, r30, 0xA0
-	  lwz       r0, -0x58D8(r13)
-	  stw       r0, 0xD0(r1)
-	  lwz       r0, 0xD0(r1)
-	  stw       r0, 0x74(r1)
-	  bl        -0x362B8
-	  lis       r3, 0x802A
-	  addi      r27, r3, 0x6098
-	  stw       r27, 0xA8(r30)
-	  addi      r5, r1, 0x70
-	  addi      r4, r30, 0
-	  lfs       f0, -0x73F8(r2)
-	  addi      r3, r30, 0xB0
-	  stfs      f0, 0xAC(r30)
-	  lwz       r0, -0x58D4(r13)
-	  stw       r0, 0xC8(r1)
-	  lwz       r0, 0xC8(r1)
-	  stw       r0, 0x70(r1)
-	  bl        -0x362EC
-	  stw       r27, 0xB8(r30)
-	  addi      r5, r1, 0x6C
-	  addi      r4, r30, 0
-	  lfs       f0, -0x73F4(r2)
-	  addi      r3, r30, 0xC0
-	  stfs      f0, 0xBC(r30)
-	  lwz       r0, -0x58D0(r13)
-	  stw       r0, 0xC0(r1)
-	  lwz       r0, 0xC0(r1)
-	  stw       r0, 0x6C(r1)
-	  bl        -0x36318
-	  stw       r28, 0xC8(r30)
-	  li        r0, 0x4
-	  addi      r5, r1, 0x68
-	  stw       r0, 0xCC(r30)
-	  mr        r4, r30
-	  addi      r3, r30, 0xD0
-	  lwz       r0, -0x58CC(r13)
-	  stw       r0, 0xB8(r1)
-	  lwz       r0, 0xB8(r1)
-	  stw       r0, 0x68(r1)
-	  bl        -0x36344
-	  stw       r28, 0xD8(r30)
-	  addi      r5, r1, 0x64
-	  addi      r4, r30, 0
-	  stw       r26, 0xDC(r30)
-	  addi      r3, r30, 0xE0
-	  lwz       r0, -0x58C8(r13)
-	  stw       r0, 0xB0(r1)
-	  lwz       r0, 0xB0(r1)
-	  stw       r0, 0x64(r1)
-	  bl        -0x3636C
-	  stw       r28, 0xE8(r30)
-	  addi      r5, r1, 0x60
-	  addi      r4, r30, 0
-	  stw       r26, 0xEC(r30)
-	  addi      r3, r30, 0xF0
-	  lwz       r0, -0x58C4(r13)
-	  stw       r0, 0xA8(r1)
-	  lwz       r0, 0xA8(r1)
-	  stw       r0, 0x60(r1)
-	  bl        -0x36394
-	  stw       r27, 0xF8(r30)
-	  addi      r5, r1, 0x5C
-	  addi      r4, r30, 0
-	  lfs       f0, -0x73F0(r2)
-	  addi      r3, r30, 0x100
-	  stfs      f0, 0xFC(r30)
-	  lwz       r0, -0x58C0(r13)
-	  stw       r0, 0xA0(r1)
-	  lwz       r0, 0xA0(r1)
-	  stw       r0, 0x5C(r1)
-	  bl        -0x363C0
-	  stw       r27, 0x108(r30)
-	  addi      r5, r1, 0x58
-	  addi      r4, r30, 0
-	  lfs       f0, -0x73EC(r2)
-	  addi      r3, r30, 0x110
-	  stfs      f0, 0x10C(r30)
-	  lwz       r0, -0x58BC(r13)
-	  stw       r0, 0x98(r1)
-	  lwz       r0, 0x98(r1)
-	  stw       r0, 0x58(r1)
-	  bl        -0x363EC
-	  stw       r28, 0x118(r30)
-	  li        r0, 0x6
-	  addi      r5, r1, 0x54
-	  stw       r0, 0x11C(r30)
-	  mr        r4, r30
-	  addi      r3, r30, 0x120
-	  lwz       r0, -0x58B8(r13)
-	  stw       r0, 0x90(r1)
-	  lwz       r0, 0x90(r1)
-	  stw       r0, 0x54(r1)
-	  bl        -0x36418
-	  stw       r28, 0x128(r30)
-	  lis       r26, 0x6E6F
-	  addi      r3, r30, 0x2C
-	  stw       r29, 0x12C(r30)
-	  addi      r4, r26, 0x6E65
-	  bl        -0x50FEC
-	  addi      r3, r30, 0x38
-	  addi      r4, r26, 0x6E65
-	  bl        -0x50FF8
-	  addi      r3, r30, 0x44
-	  addi      r4, r26, 0x6E65
-	  bl        -0x51004
-	  stw       r31, 0x14(r30)
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x50
-	  stw       r31, 0x10(r30)
-	  mr        r3, r30
-	  stw       r31, 0xC(r30)
-	  stw       r0, 0x8(r30)
-	  stw       r29, 0x130(r30)
-	  lwz       r0, 0x154(r1)
-	  lmw       r26, 0x138(r1)
-	  addi      r1, r1, 0x150
-	  mtlr      r0
-	  blr
-	*/
+	_2C.setID('none');
+	_38.setID('none');
+	_44.setID('none');
+	initCore("pelletConfig");
+	_130 = -1;
 }
 
 /*
@@ -5675,7 +5464,7 @@ void PelletMgr::getConfigIndex(u32)
  * Address:	80098C88
  * Size:	00009C
  */
-void PelletMgr::getConfigFromIdx(int)
+PelletConfig* PelletMgr::getConfigFromIdx(int)
 {
 	/*
 	.loc_0x0:
@@ -5748,7 +5537,7 @@ void PelletMgr::getConfigIdAt(int)
  * Address:	80098D24
  * Size:	000038
  */
-void PelletMgr::getConfig(u32)
+PelletConfig* PelletMgr::getConfig(u32)
 {
 	/*
 	.loc_0x0:

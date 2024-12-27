@@ -682,7 +682,7 @@ config.libs = [
             Object(NonMatching, "plugPikiNishimura/Boss.cpp"),
             Object(Matching, "plugPikiNishimura/BossAnimMgr.cpp"),
             Object(Matching, "plugPikiNishimura/BossCnd.cpp"),
-            Object(NonMatching, "plugPikiNishimura/BossMgr.cpp"),
+            Object(Matching, "plugPikiNishimura/BossMgr.cpp"),
             Object(Matching, "plugPikiNishimura/BossShapeObj.cpp"),
             Object(NonMatching, "plugPikiNishimura/Spider.cpp"),
             Object(NonMatching, "plugPikiNishimura/SpiderAi.cpp"),

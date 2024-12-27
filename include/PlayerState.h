@@ -127,9 +127,10 @@ struct PlayerState {
 	void getRestParts();
 	void lostUfoParts(u32);
 
+	inline bool is184(u32 flag) { return _184 & (1 << flag); }
+
 	static int totalUfoParts;
 
-	// TODO: members
 	u8 _00[0x11];                 // _00, unknown
 	u8 _11;                       // _11
 	u8 _12[0x54 - 0x12];          // _12, unknown
@@ -146,7 +147,7 @@ struct PlayerState {
 	bool _185;                    // _185
 	u8 _186;                      // _186
 	u8 _187;                      // _187
-	u8 _188;                      // _188
+	u8 _188;                      // _188, might be piki discovery flag?
 	u8 _189;                      // _189
 	u8 _18A;                      // _18A
 	u8 _18B;                      // _18B

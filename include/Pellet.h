@@ -16,6 +16,33 @@ struct Shape;
 /**
  * @brief TODO
  */
+enum PelletType {
+	// Easier to label this separate, these will also have PelletColor as -1
+	PELTYPE_Corpse = 0,
+
+	// Blue, Red, Yellow pellets
+	PELTYPE_Blue   = 0,
+	PELTYPE_Red    = 1,
+	PELTYPE_Yellow = 2,
+
+	// Ship parts
+	PELTYPE_UfoPart = 3,
+};
+
+/**
+ * @brief TODO
+ */
+enum PelletColor {
+	PELCOLOR_NULL = -1,
+
+	PELCOLOR_Blue   = 0,
+	PELCOLOR_Red    = 1,
+	PELCOLOR_Yellow = 2,
+};
+
+/**
+ * @brief TODO
+ */
 struct PelletProp : public CreatureProp {
 
 	// _54     = VTBL
@@ -25,16 +52,38 @@ struct PelletProp : public CreatureProp {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x138.
  */
 struct PelletConfig : public Parameters, public CoreNode {
 	PelletConfig();
 
-	virtual void read(RandomAccessStream&); // _18 (weak)
-
 	// _04     = VTBL
 	// _00-_04 = Parameters
 	// _04-_18 = CoreNode
-	// TODO: members
+	Parm<String> mPelletName;         // _18, x99
+	ID32 _2C;                         // _2C
+	ID32 _38;                         // _38
+	ID32 _44;                         // _44
+	Parm<int> mPelletType;            // _50, p00
+	Parm<int> mPelletColor;           // _60, p09
+	Parm<int> mCarryMinPikis;         // _70, p01
+	Parm<int> mCarryMaxPikis;         // _80, p02
+	Parm<int> _90;                    // _90, p03 - maybe model rotation when sucking into onyon?
+	Parm<f32> _A0;                    // _A0, p04 - dynParm1?
+	Parm<f32> _B0;                    // _B0, p05 - dynParm2?
+	Parm<int> _C0;                    // _C0, p08 - dynCollNums?
+	Parm<int> mMatchingOnyonSeeds;    // _D0, p06 - null produces fireworks
+	Parm<int> mNonMatchingOnyonSeeds; // _E0, p07 - null produces fireworks
+	Parm<f32> mPelletScale;           // _F0, p10
+	Parm<f32> mCarryInfoHeight;       // _100, p11
+	Parm<int> _110;                   // _110, p12 - soundID of some description
+	Parm<int> mBounceSoundID;         // _120, p13
+	u32 _130;                         // _130, maybe int?
+
+	// this has to be down here or the second VTBL spawns at 0x18 (should spawn at 0x134)
+
+	virtual void read(RandomAccessStream&); // _18 (weak)
 };
 
 /**
@@ -140,8 +189,8 @@ struct PelletMgr : public MonoObjectMgr {
 	void addUseList(u32);
 	void initShapeInfos();
 	void getConfigIndex(u32);
-	void getConfigFromIdx(int);
-	void getConfig(u32);
+	PelletConfig* getConfigFromIdx(int);
+	PelletConfig* getConfig(u32);
 	void readConfigs(RandomAccessStream&);
 	void readAnimInfos(RandomAccessStream&);
 	void initTekiNakaParts();

@@ -19,7 +19,7 @@ DEFINE_ERROR();
  * Address:	........
  * Size:	0000F0
  */
-DEFINE_PRINT("memStat");
+DEFINE_PRINT(nullptr);
 
 /*
  * --INFO--
@@ -60,12 +60,18 @@ void MemStat::start(char* name)
 		mCurrentInfo->add(info);
 	}
 
-	if (!info) {
-		return;
-	}
+	if (info) {
+		mPrevInfoStack[mStatCount] = mCurrentInfo;
+		mStatCount++;
+		if (mStatCount == 32) {
+			ERROR("%s:start", name);
+		}
+		mCurrentInfo       = info;
+		gsys->mCurrMemInfo = mCurrentInfo;
 
-	addInfo(info);
-	gsys->setCurrMemInfo(mCurrentInfo);
+	} else {
+		PRINT("no info !!\n");
+	}
 }
 
 /*
@@ -75,14 +81,16 @@ void MemStat::start(char* name)
  */
 void MemStat::end(char* name)
 {
-	if (memStat && getInfo(name)) {
-		// Remove the current info from the stack
-		mStatCount--;
-		(mStatCount > 0);
-
-		// If the current info is not the root info, set the current info to the previous info
-		mCurrentInfo       = mPrevInfoStack[mStatCount];
-		gsys->mCurrMemInfo = mCurrentInfo;
+	if (memStat) {
+		MemInfo* info = getInfo(name);
+		if (info) {
+			// Remove the current info from the stack
+			mStatCount--;
+			mCurrentInfo       = mPrevInfoStack[mStatCount];
+			gsys->mCurrMemInfo = mCurrentInfo;
+		} else {
+			PRINT("no INFOOO\n", name);
+		}
 	}
 	/*
 	.loc_0x0:

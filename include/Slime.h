@@ -5,6 +5,8 @@
 #include "Boss.h"
 #include "Collision.h"
 
+struct CoreNucleus;
+struct Nucleus;
 struct SlimeAi;
 struct SlimeBody;
 struct SlimeCreature;
@@ -186,7 +188,8 @@ struct Slime : public Boss {
 	Vector3f _3DC;                                // _3DC
 	Vector3f _3E8;                                // _3E8
 	SlimeCreature** mSlimeCreatures;              // _3F4
-	u8 _3F8[0x8];                                 // _3F8, unknown
+	Nucleus* mNucleus;                            // _3F8
+	CoreNucleus* mCore;                           // _3FC
 	SlimeAi* mSlimeAi;                            // _400
 	SlimeBody* mSlimeBody;                        // _404
 };

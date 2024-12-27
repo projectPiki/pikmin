@@ -67,6 +67,7 @@ struct PaniMotionTable {
 	PaniMotionTable(int);
 
 	inline PaniMotion* getMotion(int motionIdx) { return mMotions[motionIdx]; }
+	inline void addMotion(int motionIdx, PaniMotion* motion) { mMotions[motionIdx] = motion; }
 
 	int mMotionCount;      // _00
 	PaniMotion** mMotions; // _04

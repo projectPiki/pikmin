@@ -147,6 +147,8 @@ struct KingBackProp : public BossProp, public CoreNode {
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x7A4.
  */
 struct King : public Boss {
 	King(CreatureProp*);
@@ -168,13 +170,15 @@ struct King : public Boss {
 	inline KingProp* getKingProp() { return static_cast<KingProp*>(mProps); }
 
 	// _00      = VTBL
-	// _00-_3B8 = Boss?
-	// TODO: members
-	bool mIsBossBgm; // _3B8
+	// _00-_3B8 = Boss
+	bool mIsBossBgm;        // _3B8
+	u8 _3B9[0x7A4 - 0x3B9]; // _3B9, unknown
 };
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x400.
  */
 struct KingBack : public Boss {
 	KingBack(CreatureProp*);

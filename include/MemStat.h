@@ -36,8 +36,8 @@ struct MemStat {
 	MemStat();
 
 	void reset();
-	void start(char*);
-	void end(char*);
+	void start(char* name);
+	void end(char* name);
 	void print();
 	MemInfo* getInfo(char*);
 	void printInfoRec(MemInfo*, int);
@@ -46,14 +46,6 @@ struct MemStat {
 	// unused/inlined:
 	void getMemorySize(char*);
 	void getRestMemory();
-
-	inline void addInfo(MemInfo* newInfo)
-	{
-		// Add the new info to the stack
-		mPrevInfoStack[mStatCount] = mCurrentInfo;
-		mStatCount++;
-		mCurrentInfo = newInfo;
-	}
 
 	MemInfo mInfoListRoot;       // _00
 	MemInfo* mCurrentInfo;       // _18

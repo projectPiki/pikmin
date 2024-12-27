@@ -59,9 +59,9 @@ void Nucleus::init(Vector3f&)
 {
 	mCollisionRadius = 20.0f;
 	mScale.set(0.0f, 0.0f, 0.0f);
-	_2B8 = 0;
-	_2BE = 1;
-	_2E0 = 30.0f;
+	set2B8(0);
+	set2BE(1);
+	set2E0(30.0f);
 	mNucleusAI->initAI(this);
 }
 
@@ -72,8 +72,8 @@ void Nucleus::init(Vector3f&)
  */
 void Nucleus::doKill()
 {
-	_2B8 = 0;
-	_2B9 = 0;
+	set2B8(0);
+	set2B9(0);
 	bossMgr->kill(this);
 }
 

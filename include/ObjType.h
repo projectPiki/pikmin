@@ -56,7 +56,8 @@ enum EObjType {
 	OBJTYPE_Kogane    = 45,
 	OBJTYPE_Pom       = 46,
 	OBJTYPE_KingBack  = 47,
-	OBJTYPE_Mizu      = 49,
+	OBJTYPE_Nucleus   = 48, // both Nucleus and CoreNucleus
+	OBJTYPE_Mizu      = 49, // both Mizu and Geyzer
 	OBJTYPE_XXX3      = 50,
 	OBJTYPE_BossEnd   = OBJTYPE_XXX3,
 

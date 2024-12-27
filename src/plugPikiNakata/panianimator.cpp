@@ -51,16 +51,16 @@ void PaniMotionInfo::init(int motionIdx, PaniAnimKeyListener* listener)
  * Address:	8011EFC8
  * Size:	000034
  */
-PaniMotion::PaniMotion(int p1) { init(p1, 1); }
+PaniMotion::PaniMotion(int animID) { init(animID, 1); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000030
  */
-PaniMotion::PaniMotion(int p1, int p2)
+PaniMotion::PaniMotion(int animID, int p2)
 {
-	init(p1, p2);
+	init(animID, p2);
 	// UNUSED FUNCTION
 }
 

@@ -221,7 +221,7 @@ struct CollInfo {
 	void makeTubes(u32, int);
 	void getIndex(ObjCollInfo*);
 
-	u8 mUseDefaultMaxParts; // _00, TODO: work out members;
+	u8 mUseDefaultMaxParts; // _00
 	CollPart* mCollParts;   // _04, array of size mMaxParts
 	u32* mPartIDs;          // _08, array of size mMaxParts
 	u16 mPartsCount;        // _0C, number of parts in array

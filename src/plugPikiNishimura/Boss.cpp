@@ -404,7 +404,6 @@ BossProp::BossProp()
  */
 Boss::Boss(CreatureProp* props)
     : Creature(props)
-    , mID()
 {
 	/*
 	.loc_0x0:

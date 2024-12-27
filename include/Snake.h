@@ -9,6 +9,8 @@
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x504
  */
 struct SnakeProp : public BossProp, public CoreNode {
 
@@ -23,6 +25,7 @@ struct SnakeProp : public BossProp, public CoreNode {
 		}
 
 		// _200-_204 = Parameters
+		u8 _204[0x504 - 0x204]; // _204, TODO: fill in
 	};
 
 	SnakeProp();
@@ -43,6 +46,8 @@ struct SnakeProp : public BossProp, public CoreNode {
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x3DC.
  */
 struct Snake : public Boss {
 
@@ -51,11 +56,11 @@ struct Snake : public Boss {
 	 */
 	struct BoundSphereUpdater : public CollPartUpdater {
 
-		virtual void getPos();  // _08
-		virtual void getSize(); // _0C
+		virtual Vector3f getPos(); // _08
+		virtual f32 getSize();     // _0C
 
-		// _00     = VTBL?
-		// _00-_04 = CollPartUpdater?
+		// _00     = VTBL
+		// _00-_1C = CollPartUpdater
 		// TODO: members
 	};
 
@@ -78,8 +83,8 @@ struct Snake : public Boss {
 	inline SnakeProp* getSnakeProp() { return static_cast<SnakeProp*>(mProps); }
 
 	// _00      = VTBL
-	// _00-_3B8 = Boss?
-	// TODO: members
+	// _00-_3B8 = Boss
+	u8 _3B8[0x3DC - 0x3B8]; // _3B8, unknown
 };
 
 /*
