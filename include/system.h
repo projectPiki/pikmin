@@ -160,6 +160,7 @@ struct StdSystem {
 	inline void setDataRoot(char* dir) { mDataRoot = dir; }
 	inline void softReset() { mPending = true; }
 	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
+	inline bool getPending() { return mPending; }
 
 private:
 	// Use the functions!

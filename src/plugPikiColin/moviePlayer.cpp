@@ -1331,7 +1331,7 @@ void MoviePlayer::getLookAtPos(Vector3f&)
  * Address:	80077D1C
  * Size:	000100
  */
-void MoviePlayer::setCamera(Graphics&)
+bool MoviePlayer::setCamera(Graphics&)
 {
 	/*
 	.loc_0x0:

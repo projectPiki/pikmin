@@ -15,7 +15,7 @@ struct MovieInfo : public CoreNode {
 
 	// unused/inlined:
 	void update();
-	void setCamera(Graphics&);
+	bool setCamera(Graphics&);
 	void refresh(Graphics&);
 
 	// _00     = VTBL
@@ -41,7 +41,7 @@ struct MoviePlayer {
 	void update();
 	void skipScene(int);
 	void getLookAtPos(Vector3f&);
-	void setCamera(Graphics&);
+	bool setCamera(Graphics&);
 	void addLights(Graphics&);
 	void refresh(Graphics&);
 

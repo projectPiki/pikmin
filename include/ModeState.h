@@ -4,23 +4,34 @@
 #include "types.h"
 
 struct Graphics;
+struct Controller;
 
 /**
  * @brief TODO
  */
 struct ModeState {
-	virtual void update(u32&);          // _08
+	ModeState(Controller* c)
+	    : _04(c)
+	{
+	}
+
+	virtual ModeState* update(u32&);    // _08
 	virtual void postRender(Graphics&); // _0C
 	virtual void postUpdate();          // _10
 
-	// _00 = VTBL?
-	// TODO: members?
+	// _00 = VTBL
+	Controller* _04;
 };
 
 /**
  * @brief TODO
  */
 struct DayOverModeState : public ModeState {
+	DayOverModeState(Controller* c)
+	    : ModeState(c)
+	{
+	}
+
 	virtual void update(u32&);          // _08
 	virtual void postRender(Graphics&); // _0C
 
@@ -39,18 +50,27 @@ struct DayOverModeState : public ModeState {
  * @brief TODO
  */
 struct IntroModeState : public ModeState {
-	virtual void update(u32&);          // _08
+	IntroModeState(Controller* c)
+	    : ModeState(c)
+	{
+	}
+
+	virtual ModeState* update(u32&);    // _08
 	virtual void postRender(Graphics&); // _0C
 
-	// _00     = VTBL?
-	// _00-_04 = ModeState?
-	// TODO: members
+	// _00     = VTBL
+	// _00-_04 = ModeState
 };
 
 /**
  * @brief TODO
  */
 struct IntroGameModeState : public ModeState {
+	IntroGameModeState(Controller* c)
+	    : ModeState(c)
+	{
+	}
+
 	virtual void update(u32&);          // _08
 	virtual void postRender(Graphics&); // _0C
 
@@ -63,6 +83,11 @@ struct IntroGameModeState : public ModeState {
  * @brief TODO
  */
 struct MessageModeState : public ModeState {
+	MessageModeState(Controller* c)
+	    : ModeState(c)
+	{
+	}
+
 	virtual void update(u32&);          // _08
 	virtual void postRender(Graphics&); // _0C
 
@@ -75,18 +100,27 @@ struct MessageModeState : public ModeState {
  * @brief TODO
  */
 struct QuittingModeState : public ModeState {
+	QuittingModeState(Controller* c)
+	    : ModeState(c)
+	{
+	}
+
 	virtual void update(u32&); // _08
 	virtual void postUpdate(); // _10
 
 	// _00     = VTBL?
 	// _00-_04 = ModeState?
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct QuittingGameModeState : public ModeState {
+	QuittingGameModeState(Controller* c)
+	    : ModeState(c)
+	{
+	}
+
 	virtual void update(u32&); // _08
 	virtual void postUpdate(); // _10
 
@@ -99,6 +133,11 @@ struct QuittingGameModeState : public ModeState {
  * @brief TODO
  */
 struct RunningModeState : public ModeState {
+	RunningModeState(Controller* c)
+	    : ModeState(c)
+	{
+	}
+
 	virtual void update(u32&);          // _08
 	virtual void postRender(Graphics&); // _0C
 

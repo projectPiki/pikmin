@@ -1,25 +1,29 @@
 #include "ModeState.h"
 #include "IntroGameSection.h"
+#include "system.h"
+#include "MoviePlayer.h"
+#include "MemStat.h"
+#include "MapMgr.h"
+#include "gameflow.h"
+#include "Graphics.h"
+#include "jaudio/PikiScene.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("introGame");
+
+static IntroGameSetupSection* igss;
 
 /*
  * --INFO--
@@ -28,6 +32,16 @@ static void _Print(char*, ...)
  */
 IntroGameSection::IntroGameSection()
 {
+	Node::init("<IntroGameSection>");
+	gsys->mFrameRate = 2;
+
+	mapMgr = nullptr;
+	igss   = nullptr;
+
+	gsys->startLoading(0, true, 60);
+	igss = new IntroGameSetupSection();
+	add(igss);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -212,47 +226,15 @@ IntroGameSection::IntroGameSection()
  * Address:	8005B0B4
  * Size:	000080
  */
-void IntroModeState::update(u32&)
+ModeState* IntroModeState::update(u32& a2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803A
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  stw       r0, 0x0(r4)
-	  subi      r4, r5, 0x2848
-	  lwz       r4, 0x1DC(r4)
-	  lbz       r0, 0x124(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x68
-	  li        r3, 0x8
-	  bl        -0x140E8
-	  cmplwi    r3, 0
-	  beq-      .loc_0x6C
-	  lis       r4, 0x802A
-	  lwz       r5, 0x0(r31)
-	  addi      r0, r4, 0x7ECC
-	  stw       r0, 0x4(r3)
-	  lis       r4, 0x802B
-	  subi      r0, r4, 0x7FD8
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  b         .loc_0x6C
-
-	.loc_0x68:
-	  mr        r3, r31
-
-	.loc_0x6C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	a2 = 1;
+	if (!gameflow.mMoviePlayer->_124) {
+		PRINT("quitting!\n");
+		// TODO: this has regswap issues.
+		return new QuittingModeState(_04);
+	}
+	return this;
 }
 
 /*
@@ -267,14 +249,10 @@ void IntroModeState::postRender(Graphics&) { }
  * Address:	8005B138
  * Size:	00000C
  */
-void QuittingModeState::update(u32&)
+void QuittingModeState::update(u32& a)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r4)
-	  blr
-	*/
+	PRINT("quitter updating!\n");
+	a = 0;
 }
 
 /*
@@ -284,34 +262,16 @@ void QuittingModeState::update(u32&)
  */
 void QuittingModeState::postUpdate()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lbz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x4C
-	  lwz       r3, 0x2FE8(r13)
-	  bl        0x2B5AC
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  li        r0, 0x7
-	  stw       r0, 0x1F4(r3)
-	  li        r3, 0xD
-	  li        r4, 0
-	  bl        -0x414A0
-	  lwz       r3, 0x2DEC(r13)
-	  li        r0, 0x1
-	  stb       r0, 0x0(r3)
+	if (!gsys->getPending()) {
+		PRINT("sending softreset!\n");
 
-	.loc_0x4C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+		memStat->reset();
+		gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
+#ifdef __MWERKS__
+		Jac_SceneExit(13, 0);
+#endif
+		gsys->softReset();
+	}
 }
 
 /*
@@ -319,32 +279,20 @@ void QuittingModeState::postUpdate()
  * Address:	8005B1A0
  * Size:	000030
  */
-void IntroGameSetupSection::update()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x24(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void IntroGameSetupSection::update() { mController->update(); }
 
 /*
  * --INFO--
  * Address:	8005B1D0
  * Size:	0004BC
  */
-void IntroGameSetupSection::draw(Graphics&)
+void IntroGameSetupSection::draw(Graphics& gfx)
 {
+	gameflow.mMoviePlayer->update();
+	if (!gameflow.mMoviePlayer->setCamera(gfx)) {
+		gfx.setCamera(&_50);
+		_50.update(gfx.mScreenWidth / gfx.mScreenHeight, gfx.mScreenHeight, 100.0f, _398);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
