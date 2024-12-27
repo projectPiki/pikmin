@@ -1,26 +1,21 @@
 #include "Boss.h"
 #include "Shape.h"
 #include "sysNew.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("BossShapeObj");
 
 /*
  * --INFO--
@@ -33,10 +28,12 @@ BossShapeObject::BossShapeObject(Shape* shape, char* bossName)
 	mShape->mFrameCacher = nullptr;
 
 	if (bossName) {
+		PRINT("########## AnimMgr Construct Start -> %s\n", bossName);
 		char binFileName[128];
 		sprintf(binFileName, "bosses/%s/anims.bin", bossName);
 		mAnimMgr        = new AnimMgr(shape, binFileName, 0x8000, nullptr);
 		mAnimMgr->mName = bossName;
+		PRINT("########## AnimMgr Construct END\n");
 	} else {
 		mAnimMgr = new AnimMgr(shape, nullptr, 0, nullptr);
 	}
