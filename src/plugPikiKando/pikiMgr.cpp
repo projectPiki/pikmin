@@ -1,5 +1,7 @@
 #include "PikiMgr.h"
 #include "sysNew.h"
+#include "gameflow.h"
+#include "MemStat.h"
 
 /*
  * --INFO--
@@ -108,7 +110,23 @@ void PikiMgr::getFormationPikis()
 PikiMgr::PikiMgr(Navi* navi)
 {
 	mNavi  = navi;
-	mParms = new PikiProp();
+	mPikiParms = new PikiProp();
+
+	
+
+	mLeafModel = gameflow.loadShape("pikis/happas/leaf.mod", true);
+	mBudModel = gameflow.loadShape("pikis/happas/bud.mod", true);
+	mFlowerModel = gameflow.loadShape("pikis/happas/flower.mod", true);
+	load("parms/", "pikiMgr.bin", 1);
+	memStat->start("piki mtable");
+	mMotionTable = PaniPikiAnimator::createMotionTable();
+	memStat->end("piki mtable");
+
+	_5C = _54 = _58 = 0;
+	_72 = _70 = 7;
+	
+
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1155,6 +1173,8 @@ PikiProp::Parms::Parms()
  */
 void PikiMgr::init()
 {
+
+	_60 = 0;
 	/*
 	.loc_0x0:
 	  li        r0, 0
@@ -1173,6 +1193,10 @@ void PikiMgr::init()
  */
 ViewPiki* PikiMgr::createObject()
 {
+	memStat->start("pikiNew");
+	ViewPiki* piki = new ViewPiki(mPikiParms);
+	memStat->end("pikiNew");
+	return piki;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1226,40 +1250,15 @@ void PikiMgr::lostAllPikis()
  * Address:	800CEE08
  * Size:	000020
  */
-void PikiMgr::update()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x12574
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void PikiMgr::update() {MonoObjectMgr::update();}
 
 /*
  * --INFO--
  * Address:	800CEE28
  * Size:	000020
  */
-void PikiMgr::refresh(Graphics&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x124C4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void PikiMgr::refresh(Graphics& graphics) {MonoObjectMgr::refresh(graphics);}
+
 
 /*
  * --INFO--
@@ -1276,24 +1275,7 @@ void PikiMgr::refresh2d(Graphics&)
  * Address:	800CEE48
  * Size:	000030
  */
-void PikiMgr::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x68(r3)
-	  lwz       r12, 0x54(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void PikiMgr::read(RandomAccessStream& input) {mPikiParms->read(input);}
 
 /*
  * --INFO--
