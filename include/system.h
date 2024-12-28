@@ -18,8 +18,10 @@
 struct Graphics;
 struct BaseApp;
 struct CacheTexture;
+struct TextureCacher;
 struct LoadIdler;
 struct Timers;
+struct Font;
 struct BaseShape;
 struct CoreNode;
 struct LFInfo;
@@ -169,7 +171,7 @@ private:
 public:
 	f32 mFadeStart;                // _08
 	f32 mFadeEnd;                  // _0C
-	struct Font* mConsFont;        // _10
+	Font* mConsFont;               // _10
 	s32 mFrameRate;                // _14
 	u32 mTimerState;               // _18, see TimerState enum
 	u32 mTogglePrint;              // _1C
@@ -178,8 +180,8 @@ public:
 	u32 mToggleBlur;               // _28
 	u32 mToggleFileInfo;           // _2C
 	u32 mToggleColls;              // _30
-	struct Timers* mTimer;         // _34
-	struct TextureCacher* mCacher; // _38
+	Timers* mTimer;                // _34
+	TextureCacher* mCacher;        // _38
 	u32 mMatrixCount;              // _3C
 	Matrix4f* mMatrices;           // _40
 	char* mBloDirectory;           // _44

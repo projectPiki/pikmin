@@ -10,6 +10,7 @@ struct Nucleus;
 struct SlimeAi;
 struct SlimeBody;
 struct SlimeCreature;
+struct Slime;
 
 /**
  * @brief TODO.
@@ -87,13 +88,80 @@ struct SlimeProp : public BossProp, public CoreNode {
 
 	SlimeProp();
 
-	virtual void read(RandomAccessStream&); // _08
+	virtual void read(RandomAccessStream& input) // _08
+	{
+		mCreatureProps.read(input);
+		mBossProps.read(input);
+		mSlimeProps.read(input);
+	}
 
 	// _F8       = VTBL 1
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
 	SlimeProperties mSlimeProps; // _200
+};
+
+/**
+ * @brief TODO.
+ *
+ * @note Size: 0x20.
+ */
+struct SlimeBody {
+	SlimeBody(Slime*);
+
+	void init(Slime*);
+	void sortPosition(Vector3f*, Vector3f*, Vector3f*);
+	void update();
+	void refresh(BossShapeObject*, Graphics&);
+
+	// unused/inlined:
+	void traceCreaturePosition();
+	void makeCentrePosition();
+	void makeInnerPosition();
+	void makeMaxRadius();
+	void setSpherePosition();
+	f32 calcVertexScore(Vector3f*, Vector3f*, f32*);
+	void makeSlimeBody();
+	void setJointPosition(BossShapeObject*, Graphics&);
+
+	Slime* mSlime;       // _00
+	f32 mMaxRadius;      // _04
+	Vector3f* _08;       // _08
+	Vector3f* _0C;       // _0C
+	Vector3f* _10;       // _10
+	u16* mNormalIndexes; // _14, normal index mapped by vertex index
+	int* _18;            // _18
+	Vector3f* _1C;       // _1C
+};
+
+/**
+ * @brief TODO.
+ */
+struct SlimeCreature : public Creature {
+	SlimeCreature(CreatureProp*);
+
+	virtual f32 getiMass();                 // _38
+	virtual f32 getSize();                  // _3C
+	virtual Vector3f getCentre();           // _58
+	virtual void setCentre(Vector3f&) { }   // _6C
+	virtual bool isAtari();                 // _84
+	virtual bool isAlive();                 // _88
+	virtual bool isFixed() { return true; } // _8C
+	virtual bool ignoreAtari(Creature*);    // _98
+	virtual void update();                  // _E0
+	virtual void refresh(Graphics&);        // _EC
+	virtual void doAI();                    // _104
+	virtual void doAnimation();             // _108
+	virtual void doKill();                  // _10C
+
+	void init(Vector3f&, Slime*);
+
+	// _00      = VTBL
+	// _00-_2B8 = Creature
+	Slime* mSlime;             // _2B8
+	Vector3f _2BC;             // _2BC
+	SearchData mSearchData[3]; // _2C8
 };
 
 /**
@@ -109,8 +177,22 @@ struct Slime : public Boss {
 	struct BoundSphereUpdater : public CollPartUpdater {
 		BoundSphereUpdater(Slime* slime) { mSlime = slime; }
 
-		virtual Vector3f getPos(); // _08
-		virtual f32 getSize();     // _0C
+		virtual Vector3f getPos() { return mSlime->mPosition; } // _08
+		virtual f32 getSize()                                   // _0C
+		{
+			mSize = 0.0f;
+			for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
+				if (mSlime->mSlimeCreatures[i]) {
+					f32 dist = mSlime->mPosition.distance(mSlime->mSlimeCreatures[i]->mPosition);
+					if (dist > mSize) {
+						mSize = dist;
+					}
+				}
+			}
+
+			mSize += 75.0f;
+			return mSize;
+		}
 
 		// _00     = VTBL
 		// _00-_1C = CollPartUpdater
@@ -126,8 +208,60 @@ struct Slime : public Boss {
 	struct CollideSphereUpdater : public CollPartUpdater {
 		CollideSphereUpdater() { }
 
-		virtual Vector3f getPos(); // _08
-		virtual f32 getSize();     // _0C
+		virtual Vector3f getPos() { return mCreature->mPosition; } // _08
+		virtual f32 getSize()                                      // _0C
+		{
+			Vector3f adjustVecs[4];
+
+			adjustVecs[0].set(1.0f, 0.0f, 0.0f);
+			adjustVecs[1].set(0.0f, 0.0f, 1.0f);
+			adjustVecs[2] = adjustVecs[0].negate();
+			adjustVecs[3] = adjustVecs[1].negate();
+
+			f32 minDist = 12800.0f;
+			for (int i = 0; i < 4; i++) {
+
+				// weightPos is kind of the centre of mass?
+				Vector3f weightPos = mCreature->mPosition
+				                   + Vector3f::scale(static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._364(),
+				                                     adjustVecs[i]); // max radius compensation
+
+				Vector3f farPos  = weightPos;
+				Vector3f nearPos = mCreature->mPosition;
+
+				// iterate like 10 times to jiggle the weightPos closer to the middle of the 4 stick slimes
+				for (int j = 0; j < static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps.mMaxSortCount(); j++) { // number of sorts?
+					f32 score = 0.0f;
+
+					weightPos.x = (farPos.x + nearPos.x) / 2.0f;
+					weightPos.y = (farPos.y + nearPos.y) / 2.0f;
+					weightPos.z = (farPos.z + nearPos.z) / 2.0f;
+
+					for (int k = 0; k < 4; k++) {
+						// why this isn't a vector distance, i have no clue.
+						f32 x = weightPos.x - mSlime->mSlimeCreatures[k]->mPosition.x;
+						f32 y = weightPos.y - mSlime->mSlimeCreatures[k]->mPosition.y;
+						f32 z = weightPos.z - mSlime->mSlimeCreatures[k]->mPosition.z;
+						score += mSlime->_3D4 / std::sqrtf(SQUARE(x) + SQUARE(y) + SQUARE(z));
+					}
+
+					// closer to other stick slimes = higher score
+					if (score > static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._384()) { // vertex position score?
+						nearPos.set(weightPos);
+					} else {
+						farPos.set(weightPos);
+					}
+				}
+
+				// keep track of smallest distance from this piece of slime
+				f32 dist = weightPos.distance(mCreature->mPosition);
+				if (minDist > dist) {
+					minDist = dist;
+				}
+			}
+
+			return minDist - 15.0f;
+		}
 
 		inline void init(Slime* slime, SlimeCreature* creature)
 		{
@@ -149,8 +283,10 @@ struct Slime : public Boss {
 	struct TubeSphereUpdater : public CollPartUpdater {
 		TubeSphereUpdater() { }
 
-		virtual Vector3f getPos(); // _08
-		virtual f32 getSize();     // _0C
+		virtual Vector3f getPos() { return mSphere->mCentre; } // _08
+		virtual f32 getSize() { return mSphere->mRadius; }     // _0C
+
+		inline void setSphere(CollPart* sphere) { mSphere = sphere; }
 
 		// _00     = VTBL
 		// _00-_1C = CollPartUpdater
@@ -192,61 +328,6 @@ struct Slime : public Boss {
 	CoreNucleus* mCore;                           // _3FC
 	SlimeAi* mSlimeAi;                            // _400
 	SlimeBody* mSlimeBody;                        // _404
-};
-
-/**
- * @brief TODO.
- *
- * @note Size: 0x20.
- */
-struct SlimeBody {
-	SlimeBody(Slime*);
-
-	void init(Slime*);
-	void sortPosition(Vector3f*, Vector3f*, Vector3f*);
-	void update();
-	void refresh(BossShapeObject*, Graphics&);
-
-	// unused/inlined:
-	void traceCreaturePosition();
-	void makeCentrePosition();
-	void makeInnerPosition();
-	void makeMaxRadius();
-	void setSpherePosition();
-	void calcVertexScore(Vector3f*, Vector3f*, f32*);
-	void makeSlimeBody();
-	void setJointPosition(BossShapeObject*, Graphics&);
-
-	u8 _00[0x20]; // _00, unknown
-};
-
-/**
- * @brief TODO.
- */
-struct SlimeCreature : public Creature {
-	SlimeCreature(CreatureProp*);
-
-	virtual f32 getiMass();                 // _38
-	virtual f32 getSize();                  // _3C
-	virtual Vector3f getCentre();           // _58
-	virtual void setCentre(Vector3f&) { }   // _6C
-	virtual bool isAtari();                 // _84
-	virtual bool isAlive();                 // _88
-	virtual bool isFixed() { return true; } // _8C
-	virtual bool ignoreAtari(Creature*);    // _98
-	virtual void update();                  // _E0
-	virtual void refresh(Graphics&);        // _EC
-	virtual void doAI();                    // _104
-	virtual void doAnimation();             // _108
-	virtual void doKill();                  // _10C
-
-	void init(Vector3f&, Slime*);
-
-	// _00      = VTBL
-	// _00-_2B8 = Creature
-	Slime* mSlime;             // _2B8
-	Vector3f _2BC;             // _2BC
-	SearchData mSearchData[3]; // _2C8
 };
 
 /**

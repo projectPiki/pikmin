@@ -14,6 +14,7 @@ struct Creature;
 struct DynCollObject;
 struct ObjCollInfo;
 struct CollInfo;
+struct CollPart;
 struct Shape;
 struct BaseShape;
 struct RoomInfo;
@@ -94,6 +95,22 @@ struct ObjCollInfo : public CoreNode {
 /**
  * @brief TODO
  *
+ * @note Size: 0x1C.
+ */
+struct CollPartUpdater {
+	virtual Vector3f getPos() = 0; // _08
+	virtual f32 getSize()     = 0; // _0C
+
+	void updateCollPart(CollPart*);
+
+	// _00 = VTBL
+	ID32 _04; // _04
+	ID32 _10; // _10
+};
+
+/**
+ * @brief TODO
+ *
  * @note Size: 0x68.
  */
 struct CollPart {
@@ -124,33 +141,17 @@ struct CollPart {
 
 	inline bool isTubeLike() { return mPartType == PART_Tube || mPartType == PART_TubeChild; } // based on P2, maybe isTubeLike? who knows
 
-	f32 mRadius;            // _00
-	Vector3f mCentre;       // _04
-	Matrix4f mMatrix;       // _10
-	u8 _50;                 // _50
-	bool mIsStickEnabled;   // _51
-	s16 _52;                // _52
-	s16 _54;                // _54
-	ObjCollInfo* mCollInfo; // _58
-	u8 mPartType;           // _5C
-	CollInfo* mParentInfo;  // _60
-	u32 _64;                // _64, unknown
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x1C.
- */
-struct CollPartUpdater {
-	virtual Vector3f getPos() = 0; // _08
-	virtual f32 getSize()     = 0; // _0C
-
-	void updateCollPart(CollPart*);
-
-	// _00 = VTBL
-	ID32 _04; // _04
-	ID32 _10; // _10
+	f32 mRadius;                   // _00
+	Vector3f mCentre;              // _04
+	Matrix4f mMatrix;              // _10
+	u8 _50;                        // _50
+	bool mIsStickEnabled;          // _51
+	s16 _52;                       // _52
+	s16 _54;                       // _54
+	ObjCollInfo* mCollInfo;        // _58
+	u8 mPartType;                  // _5C
+	CollInfo* mParentInfo;         // _60
+	CollPartUpdater* mPartUpdater; // _64
 };
 
 /**

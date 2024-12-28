@@ -25,7 +25,6 @@ struct EventListener : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
 };
 
 /**

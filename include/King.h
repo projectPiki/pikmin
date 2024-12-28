@@ -6,6 +6,11 @@
 #include "zen/Callback.h"
 #include "zen/Particle.h"
 #include "CreatureCollPart.h"
+#include "MapMgr.h"
+
+struct KingAi;
+struct KingBody;
+struct KingDrawer;
 
 /**
  * @brief TODO.
@@ -171,8 +176,12 @@ struct King : public Boss {
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss
-	bool mIsBossBgm;        // _3B8
-	u8 _3B9[0x7A4 - 0x3B9]; // _3B9, unknown
+	bool mIsBossBgm;            // _3B8
+	KingAi* mKingAi;            // _3BC
+	KingBody* mKingBody;        // _3C0
+	CreaturePlatMgr mPlatMgr;   // _3C4
+	ShadowCaster mShadowCaster; // _40C
+	KingDrawer* mKingDrawer;    // _7A0
 };
 
 /**
@@ -200,6 +209,8 @@ struct KingBack : public Boss {
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x110.
  */
 struct KingBody {
 	KingBody(King*);
@@ -229,22 +240,32 @@ struct KingBody {
 	void returnJoint(BossShapeObject*, Graphics&, Matrix4f*);
 
 	// TODO: members
+	u8 _00[0x110]; // _00, unknown
 };
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x24.
  */
 struct KingDrawer : public Node {
+	inline KingDrawer(King* king)
+	    : Node("")
+	{
+		mKing = king;
+	}
 
 	virtual void draw(Graphics&); // _14
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
+	King* mKing; // _20
 };
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x50.
  */
 struct KingAi : public PaniAnimKeyListener {
 	KingAi(King*);
@@ -346,20 +367,20 @@ struct KingAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	King* mKing;  // _04
-	u8 _08;       // _08, might be bool
-	u8 _09;       // _09, might be bool
-	u32 _0C;      // _0C, unknown
-	u32 _10;      // _10, might be int
-	u8 _14[0x4];  // _14, unknown
-	u32 _18;      // _18, unknown
-	u32 _1C;      // _1C, unknown
-	int _20;      // _20
-	f32 _24;      // _24
-	f32 _28;      // _28
-	Vector3f _2C; // _2C
-	Vector3f _38; // _38
-	Vector3f _44; // _44
+	King* mKing;            // _04
+	u8 _08;                 // _08, might be bool
+	u8 _09;                 // _09, might be bool
+	u32 _0C;                // _0C, unknown
+	u32 _10;                // _10, might be int
+	u8 _14[0x4];            // _14, unknown
+	u32 _18;                // _18, unknown
+	int mBombDamageCounter; // _1C
+	int _20;                // _20
+	f32 _24;                // _24
+	f32 _28;                // _28
+	Vector3f _2C;           // _2C
+	Vector3f _38;           // _38
+	Vector3f _44;           // _44
 };
 
 /**

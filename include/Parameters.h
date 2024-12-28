@@ -76,6 +76,8 @@ struct Parm : public BaseParm {
 
 	inline T& operator()() { return mValue; }
 
+	inline void setValue(T val) { mValue = val; }
+
 	// _08     = VTBL
 	// _00-_0C = BaseParm
 	T mValue; // _0C

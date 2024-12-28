@@ -29,8 +29,8 @@
  */
 void Timers::reset()
 {
-	mWord0 = 0;
-	mWord8 = 0;
+	_00 = 0;
+	_08 = 0;
 }
 
 /*

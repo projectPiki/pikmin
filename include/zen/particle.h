@@ -35,6 +35,17 @@ enum ParticleGeneratorFlags {
  * @brief TODO
  */
 struct particleMdlBase : public zenList {
+	inline particleMdlBase()
+	{
+		_0C.set(0.0f, 0.0f, 0.0f);
+		_18.set(0.0f, 0.0f, 0.0f);
+		_24 = 1.0f;
+		_28 = 0;
+		_29 = 0;
+		_2A = 0;
+		_2B = 0;
+	}
+
 	virtual void remove(); // _0C
 
 	// unused/inlined:
@@ -42,7 +53,13 @@ struct particleMdlBase : public zenList {
 
 	// _00     = VTBL
 	// _00-_0C = zenList
-	// TODO: members
+	Vector3f _0C; // _0C
+	Vector3f _18; // _18
+	f32 _24;      // _24
+	u8 _28;       // _28
+	u8 _29;       // _29
+	u8 _2A;       // _2A
+	u8 _2B;       // _2B
 };
 
 /*
@@ -136,6 +153,8 @@ struct particleGenerator : public zenList {
 	inline void start() { mGeneratorFlags &= ~PTCLGEN_GenStopped; }
 	inline void stop() { mGeneratorFlags |= PTCLGEN_GenStopped; }
 
+	inline bool isFlag4() { return mGeneratorFlags & PTCLGEN_Unk3; }
+
 	inline void setF0(f32 val) { _F0 = val; } // unsure what this does, rename later
 
 	inline void setA0(Vector3f& vec) { _A0 = vec; }
@@ -147,7 +166,9 @@ struct particleGenerator : public zenList {
 	Vector3f _0C;           // _0C
 	Vector3f* mEmitPosPtr;  // _18
 	Vector3f _1C;           // _1C
-	u8 _28[0x80 - 0x28];    // _28, unknown
+	zenListManager _28;     // _28
+	zenListManager _38;     // _38
+	u8 _48[0x80 - 0x48];    // _48, unknown
 	u32 mGeneratorFlags;    // _80
 	u32 _84;                // _84, unknown
 	u8 _88[0x94 - 0x88];    // _88, unknown

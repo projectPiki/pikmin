@@ -196,9 +196,8 @@ struct BaseShape : public CoreNode {
 	u32 _170;                         // _170
 	u32 _174;                         // _174
 	RouteGroup mRouteGroup;           // _178
-	u8 _18C[0x238 - 0x18C];           // _18C
-	u32 _238;                         // _238
-	u32 _23C;                         // _23C
+	s32 mVertexCount;                 // _238 - from here down might match the names/types from _27C on from the DLL?
+	Vector3f* mVertexList;            // _23C
 	u8 _240[0x4];                     // _240
 	u32 _244;                         // _244
 	u32 _248;                         // _248
@@ -211,8 +210,8 @@ struct BaseShape : public CoreNode {
 	u32 _280;                         // _280
 	u32 _284;                         // _284
 	u32 _288;                         // _288
-	u8 _28C[0x4];                     // _28C
-	u32 _290;                         // _290
+	s32 mNormalCount;                 // _28C
+	Vector3f* mNormals;               // _290
 	u8 _294[0x4];                     // _294
 	u32 _298;                         // _298
 	u32 _29C;                         // _29C
@@ -262,7 +261,7 @@ struct BaseShape : public CoreNode {
 	// s32 mBaseRoomCount;                // _1B4
 	// BaseRoomInfo* mRoomInfoList;       // _1B8
 	// u8 _1BC[0xC0];                     // _1BC
-	// s32 mVertexCount;                  // _27C
+	// s32 mVertexCount;                  // _27C - maybe these match above from _238?
 	// Vector3f* mVertexList;             // _280
 	// s32 mVertexColourCount;            // _284
 	// Colour* mVertexColourList;         // _288

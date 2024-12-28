@@ -44,6 +44,8 @@ enum BossID {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1EC.
  */
 struct BossProp : public CreatureProp {
 
@@ -199,6 +201,7 @@ struct Boss : public Creature {
 	inline void set2B8(u8 val) { _2B8 = val; }
 	inline void set2B9(u8 val) { _2B9 = val; }
 	inline void set2BB(u8 val) { _2BB = val; }
+	inline void set2BC(u8 val) { _2BC = val; }
 	inline void set2BD(u8 val) { _2BD = val; }
 	inline void set2BE(u8 val) { _2BE = val; }
 
@@ -251,8 +254,8 @@ struct Boss : public Creature {
 	f32 mMotionSpeed;              // _2D8
 	u8 _2DC[0x2E0 - 0x2DC];        // _2DC, unknown
 	f32 _2E0;                      // _2E0
-	u32 _2E4;                      // _2E4, maybe int?
-	u32 _2E8;                      // _2E8, maybe int?
+	int _2E4;                      // _2E4
+	int _2E8;                      // _2E8
 	u32 _2EC;                      // _2EC, maybe int?
 	int _2F0;                      // _2F0
 	u32 _2F4;                      // _2F4, unknown, same as _1C in GenObjectBoss
@@ -339,7 +342,7 @@ struct BossMgr : public ObjectMgr {
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_28 = ObjectMgr
-	int _28;                         // _28, number of slimecreatures? number of bosses?
+	int mSlimeCreatureCount;         // _28, this is always 4, idk why it's a variable
 	bool mForceUpdate;               // _2C
 	int* mActiveBossCounts;          // _30, indexed by BossID enum
 	int* mInitialisedBossCounts;     // _34, indexed by BossID enum

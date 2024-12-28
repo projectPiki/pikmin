@@ -33,7 +33,6 @@ struct Font {
 	void charToIndex(u16);
 	int stringWidth(char*);
 
-	// TODO: members
 	Texture* mTexture; // _00
 	int mCharWidth;    // _04
 	int mCharHeight;   // _08

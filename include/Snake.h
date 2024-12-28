@@ -7,6 +7,9 @@
 #include "zen/Callback.h"
 #include "zen/Particle.h"
 
+struct SnakeAi;
+struct SnakeBody;
+
 /**
  * @brief TODO.
  *
@@ -55,13 +58,16 @@ struct Snake : public Boss {
 	 * @brief TODO.
 	 */
 	struct BoundSphereUpdater : public CollPartUpdater {
+		inline BoundSphereUpdater(Snake* snake) { mSnake = snake; }
 
 		virtual Vector3f getPos(); // _08
 		virtual f32 getSize();     // _0C
 
 		// _00     = VTBL
 		// _00-_1C = CollPartUpdater
-		// TODO: members
+		Snake* mSnake; // _1C
+		f32 mSize;     // _20
+		Vector3f _24;  // _24
 	};
 
 	Snake(CreatureProp*);
@@ -84,11 +90,19 @@ struct Snake : public Boss {
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss
-	u8 _3B8[0x3DC - 0x3B8]; // _3B8, unknown
+	BoundSphereUpdater* mBoundsUpdater; // _3B8
+	bool mBossType;                     // _3BC
+	f32 _3C0;                           // _3C0
+	f32 _3C4;                           // _3C4
+	SnakeAi* mSnakeAi;                  // _3C8
+	SnakeBody* mSnakeBody;              // _3CC
+	Vector3f _3D0;                      // _3D0
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x890.
  */
 struct SnakeBody {
 	SnakeBody(Snake*);
@@ -129,10 +143,13 @@ struct SnakeBody {
 	void setDeadScale(Matrix4f*);
 
 	// TODO: members
+	u8 _00[0x890]; // _00, unknown
 };
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x50.
  */
 struct SnakeAi : public PaniAnimKeyListener {
 	SnakeAi(Snake*);
@@ -203,7 +220,7 @@ struct SnakeAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	// TODO: members
+	u8 _04[0x50 - 0x4]; // _04, unknown
 };
 
 /**

@@ -130,7 +130,7 @@ BossMgr::BossMgr()
 	mShapeObjects          = new BossShapeObject*[BOSS_IDCOUNT];
 	mBossProps             = new BossProp*[BOSS_IDCOUNT];
 	mUseCounts             = new int[BOSS_IDCOUNT];
-	_28                    = 4;
+	mSlimeCreatureCount    = 4;
 	mForceUpdate           = true;
 
 	for (int i = 0; i < BOSS_IDCOUNT; i++) {

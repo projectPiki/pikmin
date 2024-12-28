@@ -134,7 +134,7 @@ bool MizuAi::readyTransit() { return (mMizu->get2F0() >= static_cast<BossProp*>(
  * Address:	........
  * Size:	000020
  */
-bool MizuAi::jetTransit() { return mMizu->_3B8 != 0 ? true : false; }
+bool MizuAi::jetTransit() { return mMizu->_3B8 ? true : false; }
 
 /*
  * --INFO--
@@ -573,8 +573,31 @@ void MizuAi::update()
  * Address:	8017C218
  * Size:	0000B0
  */
-bool MizuGenSpringPuffCallBack::invoke(zen::particleGenerator*)
+bool MizuGenSpringPuffCallBack::invoke(zen::particleGenerator* ptcl)
 {
+	if (mPtcl) {
+		if (mPtcl->isFlag4()) {
+			Vector3f* posPtr = (mPtcl->mEmitPosPtr) ? mPtcl->mEmitPosPtr : &mPtcl->_0C;
+
+			Vector3f pos(*posPtr);
+			zen::zenList* listStart = mPtcl->_28._00;
+			zen::zenList* list      = listStart->mNext;
+			while (list != listStart) {
+				zen::zenList* next = list->mNext;
+				f32 mdlY           = static_cast<zen::particleMdlBase*>(list)->_0C.y + static_cast<zen::particleMdlBase*>(list)->_18.y;
+				if (mdlY > pos.y) {
+					pos.y = mdlY;
+				}
+				list = next;
+			}
+			ptcl->_0C = pos;
+
+		} else {
+			mPtcl = nullptr;
+		}
+	}
+
+	return true;
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x40(r1)

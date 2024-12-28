@@ -53,7 +53,6 @@ struct Graphics {
 	int _00;                    // _00
 	u8 _04[0xC];                // _04, TODO: work out members
 	Light mLight;               // _10
-	u8 _25C[0x2E4 - 0x25C];     // _25C, unknown
 	Camera* mCamera;            // _2E4
 	u32 _2E8;                   // _2E8
 	u8 _2EC[0x30C - 0x2EC];     // _2EC, unknown

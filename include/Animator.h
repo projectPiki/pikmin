@@ -82,7 +82,7 @@ struct DataChunk {
 /**
  * @brief TODO
  */
-struct AnimCacheInfo : CacheInfo {
+struct AnimCacheInfo : public CacheInfo {
 	AnimCacheInfo();
 
 	void initData()

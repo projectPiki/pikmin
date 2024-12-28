@@ -90,7 +90,6 @@ struct GameCoreSection : public Node {
 	Texture* _68;                     // _68
 	Font* mBigFont;                   // _6C
 	Light _70;                        // _70
-	u8 _2BC[0x344 - 0x2BC];           // _2BC
 	zen::DrawGameInfo* mDrawGameInfo; // _344
 };
 

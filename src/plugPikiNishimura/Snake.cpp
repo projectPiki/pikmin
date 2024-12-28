@@ -612,82 +612,10 @@ SnakeProp::SnakeProp()
 Snake::Snake(CreatureProp* props)
     : Boss(props)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  stw       r30, 0x10(r1)
-	  bl        -0xCD54
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x8CC
-	  stw       r0, 0x0(r31)
-	  li        r3, 0x14
-	  lfs       f0, -0x55B0(r2)
-	  stfs      f0, 0x3D8(r31)
-	  stfs      f0, 0x3D4(r31)
-	  stfs      f0, 0x3D0(r31)
-	  bl        -0x113BEC
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x54
-	  li        r4, 0x18
-	  bl        -0xD1FD4
-
-	.loc_0x54:
-	  stw       r30, 0x220(r31)
-	  li        r3, 0x30
-	  bl        -0x113C0C
-	  mr.       r30, r3
-	  beq-      .loc_0xA4
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x760
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0x4
-	  bl        -0x116DD0
-	  addi      r3, r30, 0x10
-	  bl        -0x116DD8
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x770
-	  stw       r0, 0x0(r30)
-	  lfs       f0, -0x55B0(r2)
-	  stfs      f0, 0x2C(r30)
-	  stfs      f0, 0x28(r30)
-	  stfs      f0, 0x24(r30)
-	  stw       r31, 0x1C(r30)
-
-	.loc_0xA4:
-	  stw       r30, 0x3B8(r31)
-	  li        r3, 0x50
-	  bl        -0x113C5C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xC4
-	  mr        r4, r31
-	  bl        0x57C
-
-	.loc_0xC4:
-	  stw       r30, 0x3C8(r31)
-	  li        r3, 0x890
-	  bl        -0x113C7C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xE4
-	  mr        r4, r31
-	  bl        0x529C
-
-	.loc_0xE4:
-	  stw       r30, 0x3CC(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mCollInfo      = new CollInfo(24);
+	mBoundsUpdater = new BoundSphereUpdater(this);
+	mSnakeAi       = new SnakeAi(this);
+	mSnakeBody     = new SnakeBody(this);
 }
 
 /*
@@ -695,97 +623,39 @@ Snake::Snake(CreatureProp* props)
  * Address:	8015ACB8
  * Size:	000008
  */
-void Snake::setBossType(bool a1)
-{
-	// Generated from stb r4, 0x3BC(r3)
-	// _3BC = a1;
-}
+void Snake::setBossType(bool type) { mBossType = type; }
 
 /*
  * --INFO--
  * Address:	8015ACC0
  * Size:	00000C
  */
-f32 Snake::getCentreSize()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x3B8(r3)
-	  lfs       f1, 0x20(r3)
-	  blr
-	*/
-}
+f32 Snake::getCentreSize() { return mBoundsUpdater->mSize; }
 
 /*
  * --INFO--
  * Address:	8015ACCC
  * Size:	000008
  */
-f32 Snake::getiMass()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x559C(r2)
-	  blr
-	*/
-}
+f32 Snake::getiMass() { return 0.0001f; }
 
 /*
  * --INFO--
  * Address:	8015ACD4
  * Size:	0000B8
  */
-void Snake::init(Vector3f&)
+void Snake::init(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r4, r30, 0
-	  lfs       f0, -0x55E8(r2)
-	  stfs      f0, 0x270(r3)
-	  lfs       f0, -0x55CC(r2)
-	  stfs      f0, 0x2E0(r3)
-	  stb       r0, 0x3BC(r3)
-	  lfs       f0, 0x8C(r3)
-	  stfs      f0, 0x3C0(r3)
-	  lfs       f0, -0x55B0(r2)
-	  stfs      f0, 0x3C4(r3)
-	  lwz       r3, 0x0(r31)
-	  lwz       r0, 0x4(r31)
-	  stw       r3, 0x3D0(r30)
-	  stw       r0, 0x3D4(r30)
-	  lwz       r0, 0x8(r31)
-	  stw       r0, 0x3D8(r30)
-	  lwz       r3, 0x3C8(r30)
-	  bl        0x588
-	  lwz       r3, 0x3CC(r30)
-	  addi      r4, r31, 0
-	  addi      r5, r30, 0
-	  bl        0x5340
-	  lis       r4, 0x626E
-	  lwz       r3, 0x220(r30)
-	  lwz       r5, 0x3B8(r30)
-	  addi      r4, r4, 0x6473
-	  bl        -0xD10A4
-	  lis       r4, 0x7475
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r4, 0x6265
-	  li        r5, 0x7
-	  bl        -0xD1168
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mCollisionRadius = 15.0f;
+	set2E0(30.0f);
+	mBossType = true;
+	_3C0      = mRotation.y;
+	_3C4      = 0.0f;
+	_3D0      = pos;
+	mSnakeAi->initAI(this);
+	mSnakeBody->init(pos, this);
+	mCollInfo->setUpdater('bnds', mBoundsUpdater);
+	mCollInfo->makeTubesChild('tube', 7);
 }
 
 /*
@@ -795,28 +665,10 @@ void Snake::init(Vector3f&)
  */
 void Snake::doKill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  stb       r0, 0x2B8(r3)
-	  stb       r0, 0x2B9(r3)
-	  lwz       r3, 0x3CC(r3)
-	  bl        0x5114
-	  lwz       r3, 0x3168(r13)
-	  mr        r4, r31
-	  bl        -0x8C28
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	set2B8(0);
+	set2B9(0);
+	mSnakeBody->killCallBackEffect(false);
+	bossMgr->kill(this);
 }
 
 /*
@@ -824,22 +676,7 @@ void Snake::doKill()
  * Address:	8015ADD8
  * Size:	000028
  */
-void Snake::exitCourse()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x3CC(r3)
-	  bl        0x50DC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void Snake::exitCourse() { mSnakeBody->killCallBackEffect(true); }
 
 /*
  * --INFO--
@@ -848,34 +685,10 @@ void Snake::exitCourse()
  */
 void Snake::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x104(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  bl        -0xCDE2C
-	  lwz       r4, 0x2DEC(r13)
-	  mr        r3, r31
-	  lfs       f1, 0x28C(r4)
-	  bl        -0xCC85C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x108(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	doAI();
+	moveVelocity();
+	moveNew(gsys->getFrameTime());
+	doAnimation();
 }
 
 /*
@@ -1020,21 +833,7 @@ void Snake::refresh2d(Graphics&)
  * Address:	8015AFF8
  * Size:	000024
  */
-void Snake::doAI()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x3C8(r3)
-	  bl        0x3864
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void Snake::doAI() { mSnakeAi->update(); }
 
 /*
  * --INFO--

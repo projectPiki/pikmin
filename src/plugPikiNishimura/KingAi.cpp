@@ -52,13 +52,13 @@ void KingAi::initAI(King* king)
 	CollPart* slt1      = mKing->mCollInfo->getSphere('slt1');
 	CollPart* slt2      = mKing->mCollInfo->getSphere('slt2');
 
-	_10 = slt1->getChildCount() + slt2->getChildCount();
-	_0C = 0;
-	_18 = 0;
-	_1C = 0;
-	_20 = 0;
-	_24 = 0.0f;
-	_28 = PI * (mKing->getKingProp()->mKingProps._3C4() / 360.0f);
+	_10                = slt1->getChildCount() + slt2->getChildCount();
+	_0C                = 0;
+	_18                = 0;
+	mBombDamageCounter = 0;
+	_20                = 0;
+	_24                = 0.0f;
+	_28                = PI * (mKing->getKingProp()->mKingProps._3C4() / 360.0f);
 	/*
 	.loc_0x0:
 	  mflr      r0

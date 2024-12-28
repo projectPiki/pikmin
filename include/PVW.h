@@ -132,7 +132,7 @@ struct PVWAlphaAnimInfo {
  * @brief A class that contains information about a polygon's colour during animation.
  * @note Size: 0x20.
  */
-struct PVWPolygonColourInfo : Colour {
+struct PVWPolygonColourInfo : public Colour {
 	PVWPolygonColourInfo() { mCurrentFrame = 0.0f; }
 
 	void animate(f32*, Colour&);

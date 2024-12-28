@@ -40,8 +40,7 @@ void SlimeCreature::init(Vector3f& pos, Slime* slime)
 	mPosition        = pos;
 	_2BC             = pos;
 	Creature::init();
-	setCreatureFlag(CF_Unk7);
-	resetCreatureFlag(CF_Unk2);
+	setFlag40UnsetFlag2();
 }
 
 /*
@@ -131,4 +130,4 @@ void SlimeCreature::update()
  * Address:	8016B494
  * Size:	000004
  */
-void SlimeCreature::refresh(Graphics&) { return; }
+void SlimeCreature::refresh(Graphics&) { }

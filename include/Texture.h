@@ -203,7 +203,7 @@ struct CacheTexture : public Texture {
 	CacheInfo* mCacheInfo; // _3C
 };
 
-struct TexCacheInfo : CacheInfo {
+struct TexCacheInfo : public CacheInfo {
 	TexCacheInfo() { initData(); }
 
 	void initData() { _10 = 0; }

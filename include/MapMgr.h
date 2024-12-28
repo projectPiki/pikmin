@@ -9,6 +9,7 @@
 
 struct Controller;
 struct CreatureCollPart;
+struct DayMgr;
 struct MoveTrace;
 
 /**
@@ -64,7 +65,7 @@ struct SoftLight {
 /**
  * @brief TODO
  *
- * @note Size: at least 0x394.
+ * @note Size: 0x394.
  */
 struct ShadowCaster : public CoreNode {
 	ShadowCaster();
@@ -73,9 +74,9 @@ struct ShadowCaster : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	LightCamera _14; // _14
-	Vector3f _37C;   // _37C
-	Vector3f _388;   // _388
+	LightCamera mLightCamera; // _14
+	Vector3f _37C;            // _37C
+	Vector3f _388;            // _388
 };
 
 /**
@@ -179,6 +180,8 @@ struct MapSlider : public MapParts {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct MapRoom {
 	MapRoom();
@@ -222,8 +225,33 @@ struct MapMgr {
 	// unused/inlined:
 	void closeCollTri(CollGroup*, CollTriInfo*);
 
-	// TODO: members
-	u8 _00[0x4D4]; // _4D4, unknown
+	Controller* mController;               // _00
+	DayMgr* mDayMgr;                       // _04
+	Vector3f _08;                          // _08
+	MapRoom* mMapRooms;                    // _14, array of 256 MapRooms
+	u8 _18[0x64 - 0x18];                   // _18, unknown
+	ShapeDynMaterials mDynMaterials;       // _64
+	u8 _74[0x88 - 0x74];                   // _74, unknown
+	DynCollShape* mCollShape;              // _88
+	u8 _8C[0x4];                           // _8C, unknown
+	BoundBox _90;                          // _90
+	u8 _A8[0xB4 - 0xA8];                   // _A8, unknown
+	Vector3f _B4;                          // _B4
+	BoundBox _C0;                          // _C0
+	BoundBox _D8;                          // _D8
+	u8 _F0[0x114 - 0xF0];                  // _F0, unknown
+	ShadowCaster mShadowCaster;            // _114
+	u8 _4A8[0x4];                          // _4A8, unknown
+	MapShadMatHandler* mMapShadMatHandler; // _4AC
+	MapProjMatHandler* mMapProjMatHandler; // _4B0
+	Texture* _4B4;                         // _4B4
+	Texture* _4B8;                         // _4B8
+	int _4BC;                              // _4BC
+	f32 _4C0;                              // _4C0
+	f32 _4C4;                              // _4C4
+	f32 _4C8;                              // _4C8
+	f32 _4CC;                              // _4CC
+	CreatureCollPart* _4D0;                // _4D0
 };
 
 extern MapMgr* mapMgr;

@@ -107,14 +107,11 @@ struct Vector3f {
 	inline f32 length() const { return std::sqrtf(x * x + y * y + z * z); }
 	inline f32 length2D() const { return std::sqrtf(squaredLength2D()); }
 
-	// seems good according to InteractBomb::actPiki
 	inline f32 normalise()
 	{
 		f32 norm = length();
 		if (norm != 0.0f) {
-			x /= norm;
-			y /= norm;
-			z /= norm;
+			div(norm);
 		}
 		return norm;
 	}
@@ -204,7 +201,18 @@ struct Vector3f {
 		z -= other.z;
 	}
 
+	void sub(Vector3f& a, Vector3f& b)
+	{
+		x = a.x - b.x;
+		y = a.y - b.y;
+		z = a.z - b.z;
+	}
+
 	void add2(Vector3f& a, Vector3f& b) { set(a.x + b.x, a.y + b.y, a.z + b.z); }
+
+	Vector3f negate() { return Vector3f(-x, -y, -z); }
+
+	static Vector3f scale(f32& scale, Vector3f& vec) { return vec * scale; }
 
 	// unused/inlined:
 	void rotateTranspose(Matrix4f&);

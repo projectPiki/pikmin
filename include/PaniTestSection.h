@@ -53,7 +53,6 @@ struct PaniTestNode : public Node, public PaniAnimKeyListener {
 	Texture* mShadowTexture;    // _388
 	u8 _38C[0x4];               // _38C, unknown
 	Light _390;                 // _390
-	u8 _5DC[0x664 - 0x5DC];     // _5DC, unknown
 	Piki** _664;                // _664
 	Teki** _668;                // _668
 	int _66C;                   // _66C, number of Piki* in _664 array
