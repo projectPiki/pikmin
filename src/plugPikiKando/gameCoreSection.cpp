@@ -3864,7 +3864,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	memStat->end("gui");
 
 	FastGrid::initAIGrid(7);
-	_70._18 = 500.0f;
+	_70.mDistancedRange = 500.0f;
 	NakataCodeInitializer::init();
 
 	if (!preloadUFO) {

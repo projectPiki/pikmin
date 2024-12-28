@@ -94,18 +94,18 @@ struct Light : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 _14;                     // _14
-	f32 _18;                     // _18
-	f32 _1C;                     // _1C
-	f32 _20;                     // _20
-	u32 _24;                     // _24
-	u32 _28;                     // _28
-	f32 _2C;                     // _2C
-	f32 _30;                     // _30
-	f32 _34;                     // _34
-	f32 _38;                     // _38
-	f32 _3C;                     // _3C
-	f32 _40;                     // _40
+	u32 mLightType;              // _14
+	f32 mDistancedRange;         // _18
+	f32 mAttenuation;            // _1C
+	f32 mSpotAngle;              // _20
+	u32 mMode;                   // _24
+	u32 mSpotMode;               // _28
+	f32 mConstantAttn;           // _2C
+	f32 mLinearAttn;             // _30
+	f32 mQuadAttn;               // _34
+	f32 mSpotConstTerm;          // _38
+	f32 mSpotLinearTerm;         // _3C
+	f32 mSpotQuadTerm;           // _40
 	f32 _44;                     // _44
 	f32 _48;                     // _48
 	u8 _4C[0x8];                 // _4C, unknown
@@ -115,7 +115,7 @@ struct Light : public CoreNode {
 	u8 _6D;                      // _6D
 	u8 _6E;                      // _6E
 	u8 _6F;                      // _6F
-	u32 _70;                     // _70
+	u32 mLightValuesSet;         // _70
 	u8 _74[0x80 - 0x74];         // _74, unknown
 	CullingPlane mCullPlanes[6]; // _80
 	u8 _188[0x1C8 - 0x188];      // _188, unknown

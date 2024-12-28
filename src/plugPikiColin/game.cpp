@@ -17,6 +17,7 @@
 #include "stl/stdio.h"
 #include "stl/string.h"
 #include "Dolphin/os.h"
+#include "DebugLog.h"
 
 FlowController flowCont;
 
@@ -25,21 +26,14 @@ FlowController flowCont;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "GameOnePlayer");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("GameOnePlayer");
 
 /*
  * --INFO--
