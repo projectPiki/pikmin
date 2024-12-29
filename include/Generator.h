@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Node.h"
+#include "Actor.h"
 #include "Parameters.h"
 #include "Ayu.h"
 #include "Vector.h"
@@ -210,6 +211,7 @@ struct GenObjectActor : public GenObject {
 	inline GenObjectActor()
 	    : GenObject('actr', "create actor")
 	{
+		mActorId = nullptr;
 	}
 
 	virtual void doRead(RandomAccessStream&); // _14
@@ -219,7 +221,7 @@ struct GenObjectActor : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	// TODO: members
+	u32 mActorId; // _18
 };
 
 /**

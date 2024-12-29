@@ -602,7 +602,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/panipikianimator.cpp"),
             Object(Matching, "plugPikiKando/actor.cpp"),
             Object(Matching, "plugPikiKando/actorMgr.cpp"),
-            Object(NonMatching, "plugPikiKando/genActor.cpp"),
+            Object(Matching, "plugPikiKando/genActor.cpp"),
             Object(Matching, "plugPikiKando/pikiInfo.cpp"),
             Object(NonMatching, "plugPikiKando/plantMgr.cpp"),
             Object(Matching, "plugPikiKando/paniPlantAnimator.cpp"),
