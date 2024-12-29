@@ -587,7 +587,7 @@ void Creature::init()
 
 	setCreatureFlag(CF_IsOnGround | CF_Unk4);
 	resetCreatureFlag(CF_Unk5 | CF_Unk7 | CF_Unk8 | CF_Unk11);
-	_BC.set(0.0f, 0.0f, 0.0f);
+	mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	_1AC.set(0.0f, 0.0f, 0.0f);
 	mStickTarget = nullptr;
 	_188         = 0;

@@ -21,27 +21,21 @@
 #include "GoalItem.h"
 #include "UtEffect.h"
 #include "CPlate.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "naviState");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("naviState");
 
 /*
  * --INFO--
@@ -155,6 +149,9 @@ void NaviPelletState::exec(Navi* navi)
 		if (navi->mPellet) {
 			navi->mPellet->kill(false);
 		}
+
+		PRINT("GETUP MOTION START\n");
+
 		navi->mIsPellet = false;
 		navi->startMotion(PaniMotionInfo(PIKIANIM_GetUp, navi), PaniMotionInfo(PIKIANIM_GetUp));
 	}
@@ -170,6 +167,7 @@ void NaviPelletState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Done:
 		if (mIsFinished) {
+			PRINT("exit pellet state\n");
 			transit(navi, NAVISTATE_Walk);
 		}
 		break;
@@ -186,6 +184,7 @@ void NaviPelletState::cleanup(Navi* navi)
 	if (navi->mPellet) {
 		navi->mPellet->kill(false);
 	}
+
 	navi->mIsPellet = false;
 }
 
@@ -227,13 +226,17 @@ void NaviDemoWaitState::exec(Navi* navi)
 	gameflow.mMoviePlayer->getLookAtPos(mLookAtPos);
 	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	navi->_BC.set(0.0f, 0.0f, 0.0f);
+	navi->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	if (!gameflow.mMoviePlayer->_124) {
 		navi->_774->restart();
 		navi->_778->restart();
+
+		PRINT("RETURN TO WALK : MOVIE END \n");
 		if (navi->mIsBeingDamaged) {
+			// wtf do i even do here
 			navi->finishDamage();
 		}
+
 		transit(navi, NAVISTATE_Walk);
 	}
 }
@@ -248,6 +251,11 @@ void NaviDemoWaitState::cleanup(Navi* navi)
 	navi->finishLook();
 	f32 minY = mapMgr->getMinY(navi->mPosition.x, navi->mPosition.z, true);
 	f32 maxY = mapMgr->getMaxY(navi->mPosition.x, navi->mPosition.z, true);
+
+	PRINT("navi(%.1f %.1f %.1f) : map(%.1f %.1f %.1f)\n", navi->mPosition.x, navi->mPosition.y, navi->mPosition.z, navi->mPosition.x, minY,
+	      navi->mPosition.z);
+
+	PRINT("** %.1f ===> %.1f %.1f\n", navi->mPosition.y, minY, maxY);
 
 	if (maxY > navi->mPosition.y || minY > navi->mPosition.y) {
 		// don't clip navi into the ground
@@ -2437,7 +2445,7 @@ void NaviUfoState::exec(Navi* navi)
 
 	if (_10 == 1) {
 		navi->mVelocity.set(0.0f, 0.0f, 0.0f);
-		navi->_BC.set(0.0f, 0.0f, 0.0f);
+		navi->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 		navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	}
 
@@ -2979,6 +2987,8 @@ void NaviContainerState::init(Navi* navi)
  */
 void NaviContainerState::informWin(int p1)
 {
+	PRINT("GOT CONTAINER %d MESSAGE ****\n", p1);
+
 	if (p1 > 0) {
 		_18 = 1;
 		_1C = p1;

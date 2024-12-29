@@ -1,25 +1,21 @@
 #include "types.h"
 #include "system.h"
 #include "odoMeter.h"
+#include "DebugLog.h"
+
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("odoMeter");
 
 /*
  * --INFO--
@@ -48,28 +44,32 @@ void OdoMeter::start(f32 startTime, f32 maxDistance)
  * --INFO--
  * Address:	800CD82C
  * Size:	000124
- * TODO
  */
 bool OdoMeter::moving(Vector3f& startPosition, Vector3f& endPosition)
 {
-	Vector3f direction;
-	f32 dummy[4]; // Match stack allocation
-
-	updateTimer();
+	if (mRemainingTime > 0.0f) {
+		mRemainingTime -= gsys->getFrameTime();
+	}
 
 	if (mTotalDistance < 100.0f) {
-#ifdef __DECOMP_NON_MATCHING
-		Vector3f vec;
-		vec.sub2(argA, argB);
-		f32 distance = vec.length();
-#else
-		direction.y  = Vector3f_diffY(startPosition, endPosition);
-		direction.x  = Vector3f_diffX(startPosition, endPosition);
-		direction.z  = Vector3f_diffZ(startPosition, endPosition);
-		f32 distance = sqrtf(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
-#endif
+		Vector3f positionDifference = startPosition - endPosition;
+		f32 distance                = positionDifference.length();
 		mTotalDistance += distance;
 	}
 
-	return isMovementComplete();
+	if (mRemainingTime <= 0.0f) {
+		PRINT("------ timer up -------- : trip %f\n", mTotalDistance);
+
+		if (mTotalDistance < mMinAllowedDistance) {
+			PRINT("zannen !\n");
+			mTotalDistance = 0.0f;
+			return false;
+		}
+
+		PRINT("re-calc again\n");
+		mRemainingTime = mResetTimeValue;
+		mTotalDistance = 0.0f;
+	}
+
+	return true;
 }
