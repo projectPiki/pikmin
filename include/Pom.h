@@ -8,6 +8,7 @@
 #include "Shape.h"
 
 struct PomAi;
+struct PomGenOpenStarCallBack;
 struct ShapeDynMaterials;
 
 /**
@@ -33,23 +34,23 @@ struct PomProp : public BossProp, public CoreNode {
 		    , mDoAnimLoopWhenClosed(this, FALSE, FALSE, TRUE, "i20", nullptr)
 		    , mDoKillSameColorPiki(this, FALSE, FALSE, TRUE, "i90", nullptr)
 		    , mStickOrSwallow(this, 1, 0, 1, "i91", nullptr)
-		    , mOpenOnInteractionOnly(this, FALSE, FALSE, TRUE, "i92", nullptr)
+		    , mOpenOnInteractionOnly(this, 0, 0, 1, "i92", nullptr)
 		{
 		}
 
 		// _200-_204 = Parameters
-		Parm<f32> mSquashAmount;           // _204, s00
-		Parm<f32> mSquashPersistence;      // _214, s01
-		Parm<f32> mSquashMultiplier;       // _224, s02
-		Parm<f32> mCloseWaitTime;          // _234, p00
-		Parm<f32> mDischargeAngle;         // _244, p10
-		Parm<int> mMaxPikiPerCycle;        // _254, i00
-		Parm<int> mMinCycles;              // _264, i10
-		Parm<int> mMaxCycles;              // _274, i11
-		Parm<BOOL> mDoAnimLoopWhenClosed;  // _284, i20
-		Parm<BOOL> mDoKillSameColorPiki;   // _294, i90
-		Parm<int> mStickOrSwallow;         // _2A4, i91 - 0=stick and attack, 1=swallowed
-		Parm<BOOL> mOpenOnInteractionOnly; // _2B4, i92 - 0=open immediately, 1=open after interacting
+		Parm<f32> mSquashAmount;          // _204, s00
+		Parm<f32> mSquashPersistence;     // _214, s01
+		Parm<f32> mSquashMultiplier;      // _224, s02
+		Parm<f32> mCloseWaitTime;         // _234, p00
+		Parm<f32> mDischargeAngle;        // _244, p10
+		Parm<int> mMaxPikiPerCycle;       // _254, i00
+		Parm<int> mMinCycles;             // _264, i10
+		Parm<int> mMaxCycles;             // _274, i11
+		Parm<BOOL> mDoAnimLoopWhenClosed; // _284, i20
+		Parm<BOOL> mDoKillSameColorPiki;  // _294, i90
+		Parm<int> mStickOrSwallow;        // _2A4, i91 - 0=stick and attack, 1=swallowed
+		Parm<int> mOpenOnInteractionOnly; // _2B4, i92 - 0=open immediately, 1=open after interacting
 	};
 
 	PomProp();
@@ -155,20 +156,31 @@ struct PomAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	u8 _04[0x24 - 0x4]; // _04, unknown
+	Pom* mPom;                                 // _04
+	u8 _08;                                    // _08
+	u8 _09;                                    // _09
+	u8 _0A;                                    // _0A
+	u32 _0C;                                   // _0C, unknown
+	u32 _10;                                   // _10, unknown
+	int _14;                                   // _14
+	f32 _18;                                   // _18
+	f32 _1C;                                   // _1C
+	PomGenOpenStarCallBack* mOpenStarCallBack; // _20
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct PomGenOpenStarCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	PomGenOpenStarCallBack();
+	PomGenOpenStarCallBack() { }
 
 	virtual bool invoke(zen::particleGenerator*); // _08
 
 	// _00     = VTBL?
 	// _00-_04 = zen::CallBack1?
-	// TODO: members
+	u8 _04[4]; // _04, unknown
 };
 
 #endif

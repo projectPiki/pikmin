@@ -28,6 +28,6 @@ bool isBald(CollTriInfo*);
 
 // unused/inlined
 char* getAttributeName(int); // UNUSED
-}; // namespace MapCode
+};                           // namespace MapCode
 
 #endif

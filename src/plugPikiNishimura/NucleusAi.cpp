@@ -32,8 +32,8 @@ NucleusAi::NucleusAi(Nucleus* nucleus) { mNucleus = nucleus; }
 void NucleusAi::initAI(Nucleus* nucleus)
 {
 	mNucleus = nucleus;
-	mNucleus->set2E4(2);
-	mNucleus->set2E8(2);
+	mNucleus->setCurrStateID(2);
+	mNucleus->setNextStateID(2);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(2, this));
 	mNucleus->setMotionSpeed(30.0f);
 	mStickPikiCount = 0;
@@ -98,14 +98,14 @@ void NucleusAi::keyAction3() { }
  * Address:	8017A65C
  * Size:	000014
  */
-void NucleusAi::keyLoopEnd() { mNucleus->_2EC++; }
+void NucleusAi::keyLoopEnd() { mNucleus->incAnimLoopCounter(1); }
 
 /*
  * --INFO--
  * Address:	8017A670
  * Size:	000010
  */
-void NucleusAi::keyFinished() { mNucleus->_2BD = 1; }
+void NucleusAi::keyFinished() { mNucleus->setMotionFinished(1); }
 
 /*
  * --INFO--
@@ -163,7 +163,7 @@ bool NucleusAi::dieTransit() { return !mNucleus->hasHealth(); }
  * Address:	........
  * Size:	00000C
  */
-bool NucleusAi::isMotionFinishTransit() { return mNucleus->is2BD(); }
+bool NucleusAi::isMotionFinishTransit() { return mNucleus->isMotionFinished(); }
 
 /*
  * --INFO--
@@ -179,9 +179,9 @@ bool NucleusAi::damageTransit() { return (mNucleus->getDamage() > 0.0f) ? true :
  */
 void NucleusAi::initDie(int val)
 {
-	mNucleus->set2E8(val);
-	mNucleus->set2BD(0);
-	mNucleus->set2EC(0);
+	mNucleus->setNextStateID(val);
+	mNucleus->setMotionFinished(0);
+	mNucleus->setAnimLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
 	mNucleus->set2D4(0.0f);
 	effectMgr->create(EffectMgr::EFF_Unk57, mNucleus->mPosition, nullptr, nullptr);
@@ -197,9 +197,9 @@ void NucleusAi::initDie(int val)
  */
 void NucleusAi::initDamage(int val)
 {
-	mNucleus->set2E8(val);
-	mNucleus->set2BD(0);
-	mNucleus->set2EC(0);
+	mNucleus->setNextStateID(val);
+	mNucleus->setMotionFinished(0);
+	mNucleus->setAnimLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
 }
 
@@ -210,9 +210,9 @@ void NucleusAi::initDamage(int val)
  */
 void NucleusAi::initFollow(int val)
 {
-	mNucleus->set2E8(val);
-	mNucleus->set2BD(0);
-	mNucleus->set2EC(0);
+	mNucleus->setNextStateID(val);
+	mNucleus->setMotionFinished(0);
+	mNucleus->setAnimLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(2, this));
 }
 

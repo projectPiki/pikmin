@@ -108,7 +108,8 @@ struct WayPoint {
  * @brief TODO
  */
 struct RouteMgr : public Node {
-	struct Group { };
+	struct Group {
+	};
 
 	RouteMgr();
 

@@ -24,7 +24,7 @@ static void FormatCallback(s32 channel, s32 result)
 	} else if (card->mountStep < 2 * CARD_NUM_SYSTEM_BLOCK) {
 		int step = card->mountStep - CARD_NUM_SYSTEM_BLOCK;
 		result   = __CARDWrite(channel, (u32)card->sectorSize * step, CARD_SYSTEM_BLOCK_SIZE,
-		                       (u8*)card->workArea + (CARD_SYSTEM_BLOCK_SIZE * step), FormatCallback);
+                             (u8*)card->workArea + (CARD_SYSTEM_BLOCK_SIZE * step), FormatCallback);
 		if (result >= 0) {
 			return;
 		}

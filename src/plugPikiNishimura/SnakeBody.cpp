@@ -1,24 +1,20 @@
 #include "Snake.h"
+#include "sysNew.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("SnakeBody");
 
 /*
  * --INFO--
@@ -221,101 +217,12 @@ void SnakeBody::killCallBackEffect(bool)
  * Address:	8015FF30
  * Size:	000158
  */
-SnakeBody::SnakeBody(Snake*)
+SnakeBody::SnakeBody(Snake* snake)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r6, 0xC
-	  li        r7, 0x8
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8003
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0x5B24
-	  addi      r3, r31, 0x5C
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  addi      r4, r30, 0
-	  lfs       f0, -0x554C(r2)
-	  stfs      f0, 0x58(r31)
-	  stfs      f0, 0x54(r31)
-	  stfs      f0, 0x50(r31)
-	  bl        0xB4AF4
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0xBC
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x6
-	  bl        0xB4ADC
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x104
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x20
-	  bl        0xB4AC4
-	  lis       r3, 0x8004
-	  subi      r30, r3, 0xFE4
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x284
-	  li        r5, 0
-	  li        r6, 0x40
-	  li        r7, 0x8
-	  bl        0xB4AA4
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x484
-	  li        r5, 0
-	  li        r6, 0x40
-	  li        r7, 0x8
-	  bl        0xB4A8C
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x684
-	  li        r5, 0
-	  li        r6, 0x40
-	  li        r7, 0x8
-	  bl        0xB4A74
-	  stw       r29, 0x0(r31)
-	  li        r3, 0x8
-	  bl        -0x119004
-	  cmplwi    r3, 0
-	  beq-      .loc_0xFC
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x4E0
-	  stw       r0, 0x0(r3)
-
-	.loc_0xFC:
-	  stw       r3, 0x884(r31)
-	  li        r3, 0x8
-	  bl        -0x119030
-	  cmplwi    r3, 0
-	  beq-      .loc_0x128
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x518
-	  stw       r0, 0x0(r3)
-
-	.loc_0x128:
-	  stw       r3, 0x888(r31)
-	  li        r3, 0x1C
-	  bl        -0x11905C
-	  stw       r3, 0x88C(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mSnake            = snake;
+	mOnGroundCallBack = new SnakeGenBodyOnGroundCallBack();
+	mRotateCallBack   = new SnakeGenBodyRotateCallBack();
+	_88C              = new u32[7];
 }
 
 /*

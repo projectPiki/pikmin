@@ -1,24 +1,19 @@
 #include "Spider.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("SpiderLeg");
 
 /*
  * --INFO--
@@ -1433,8 +1428,12 @@ void SpiderLeg::setLegScaleParam(int)
  * Address:	80156AF0
  * Size:	000154
  */
-SpiderLeg::SpiderLeg(Spider*)
+SpiderLeg::SpiderLeg(Spider* spider)
 {
+	mSpider                 = spider;
+	mHalfDeadCallBackJoints = new SpiderGenHalfDeadCallBackJoint[4];
+	mPerishCallBacks        = new SpiderGenPerishCallBack[12];
+	mRippleCallBacks        = new SpiderGenRippleCallBack[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1521,63 +1520,6 @@ SpiderLeg::SpiderLeg(Spider*)
 	  lwz       r29, 0x14(r1)
 	  addi      r1, r1, 0x20
 	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80156C44
- * Size:	00001C
- */
-SpiderGenRippleCallBack::SpiderGenRippleCallBack()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x978
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80156C60
- * Size:	00001C
- */
-SpiderGenPerishCallBack::SpiderGenPerishCallBack()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x9A8
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80156C7C
- * Size:	00001C
- */
-SpiderGenHalfDeadCallBackJoint::SpiderGenHalfDeadCallBackJoint()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x9D8
-	  stw       r0, 0x0(r3)
 	  blr
 	*/
 }

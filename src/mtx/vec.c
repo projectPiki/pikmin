@@ -1,5 +1,5 @@
 #include "Dolphin/vec.h"
-#include "math.h"
+#include "Dolphin/math.h"
 
 #pragma - fp_contract off
 

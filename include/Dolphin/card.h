@@ -385,8 +385,8 @@ s32 __CARDUpdateFatBlock(s32 channel, CARDFatBlock* fat, CARDCallback callback);
 #define CARD_MAX_MOUNT_STEP (CARD_NUM_SYSTEM_BLOCK + 2)
 
 // Useful conversion macros.
-#define TRUNC(n, a)  (((u32)(n)) & ~((a) - 1))
-#define OFFSET(n, a) (((u32)(n)) & ((a) - 1))
+#define TRUNC(n, a)  (((u32)(n)) & ~((a)-1))
+#define OFFSET(n, a) (((u32)(n)) & ((a)-1))
 
 #define CARDIsValidBlockNo(card, iBlock) (CARD_NUM_SYSTEM_BLOCK <= (iBlock) && (iBlock) < (card)->cBlock)
 

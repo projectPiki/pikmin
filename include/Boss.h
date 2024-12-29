@@ -65,8 +65,8 @@ struct BossProp : public CreatureProp {
 		    , _BC(this, 0.0f, 0.0f, 0.0f, "b11", nullptr)
 		    , _CC(this, 1.0f, 0.0f, 0.0f, "b14", nullptr)
 		    , _DC(this, 1.0f, 0.0f, 0.0f, "b12", nullptr)
-		    , _EC(this, 5000.0f, 0.0f, 0.0f, "c00", nullptr)
-		    , _FC(this, 30.0f, 0.0f, 0.0f, "c01", nullptr)
+		    , mLifeGaugeScale(this, 5000.0f, 0.0f, 0.0f, "c00", nullptr)
+		    , mLifeGaugeHeight(this, 30.0f, 0.0f, 0.0f, "c01", nullptr)
 		    , mFlickChance(this, 1.0f, 0.0f, 0.0f, "d00", nullptr)
 		    , mFlickKnockback(this, 100.0f, 0.0f, 0.0f, "d01", nullptr)
 		    , mFlickDamage(this, 0.0f, 0.0f, 0.0f, "d02", nullptr)
@@ -94,8 +94,8 @@ struct BossProp : public CreatureProp {
 		Parm<f32> _BC;                 // _BC, b11 - recovery rate?
 		Parm<f32> _CC;                 // _CC, b14 - special attack effect?
 		Parm<f32> _DC;                 // _DC, b12 - bomb effectiveness?
-		Parm<f32> _EC;                 // _EC, c00 - life gauge scale?
-		Parm<f32> _FC;                 // _FC, c01 - life gauge height?
+		Parm<f32> mLifeGaugeScale;     // _EC, c00
+		Parm<f32> mLifeGaugeHeight;    // _FC, c01
 		Parm<f32> mFlickChance;        // _10C, d00
 		Parm<f32> mFlickKnockback;     // _11C, d01
 		Parm<f32> mFlickDamage;        // _12C, d02
@@ -202,20 +202,26 @@ struct Boss : public Creature {
 	inline void set2B9(u8 val) { _2B9 = val; }
 	inline void set2BB(u8 val) { _2BB = val; }
 	inline void set2BC(u8 val) { _2BC = val; }
-	inline void set2BD(u8 val) { _2BD = val; }
+
+	inline void setMotionFinished(bool isFinished) { mIsMotionFinished = isFinished; }
+	inline bool isMotionFinished() { return mIsMotionFinished; }
+
 	inline void set2BE(u8 val) { _2BE = val; }
 
-	inline int getCurrStateID() { return _2E4; }
+	inline int getCurrStateID() { return mCurrentStateID; }
+	inline void setCurrStateID(int stateID) { mCurrentStateID = stateID; }
+
+	inline int getNextStateID() { return mNextStateID; }
+	inline void setNextStateID(int stateID) { mNextStateID = stateID; }
+
 	inline void set2E0(f32 val) { _2E0 = val; } // name these better later
-	inline void set2E4(int val) { _2E4 = val; } // name these better later
-	inline void set2E8(int val) { _2E8 = val; } // name these better later
-	inline void set2EC(int val) { _2EC = val; } // name these better later
+
+	inline void setAnimLoopCounter(int val) { mAnimLoopCounter = val; }  // name these better later
+	inline void incAnimLoopCounter(int amt) { mAnimLoopCounter += amt; } // name these better later
 
 	inline f32 get2D4() { return _2D4; }         // name these better later
 	inline void set2D4(f32 val) { _2D4 = val; }  // name these better later
 	inline void inc2D4(f32 val) { _2D4 += val; } // name these better later
-
-	inline void inc2EC(int amt) { _2EC += amt; } // name these better later
 
 	inline int get2F0() { return _2F0; }
 	inline void set2F0(int val) { _2F0 = val; } // name these better later
@@ -229,10 +235,7 @@ struct Boss : public Creature {
 	inline void setDamage(f32 damage) { mDamage = damage; }
 	inline void addDamage(f32 damage) { mDamage += damage; }
 
-	inline bool isDead() { return !(mCurrentHealth > 0.0f); }
 	inline bool hasHealth() { return mCurrentHealth > 0.0f; }
-
-	inline bool is2BD() { return _2BD; }
 
 	inline Vector3f& get300() { return _300; }
 
@@ -243,7 +246,7 @@ struct Boss : public Creature {
 	u8 _2BA;                       // _2BA
 	u8 _2BB;                       // _2BB
 	u8 _2BC;                       // _2BC
-	bool _2BD;                     // _2BD
+	bool mIsMotionFinished;        // _2BD
 	u8 _2BE;                       // _2BE
 	u8 _2BF;                       // _2BF
 	f32 mDamage;                   // _2C0
@@ -254,9 +257,9 @@ struct Boss : public Creature {
 	f32 mMotionSpeed;              // _2D8
 	u8 _2DC[0x2E0 - 0x2DC];        // _2DC, unknown
 	f32 _2E0;                      // _2E0
-	int _2E4;                      // _2E4
-	int _2E8;                      // _2E8
-	u32 _2EC;                      // _2EC, maybe int?
+	int mCurrentStateID;           // _2E4
+	int mNextStateID;              // _2E8
+	int mAnimLoopCounter;          // _2EC
 	int _2F0;                      // _2F0
 	u32 _2F4;                      // _2F4, unknown, same as _1C in GenObjectBoss
 	u32 _2F8;                      // _2F8, unknown, same as _20 in GenObjectBoss

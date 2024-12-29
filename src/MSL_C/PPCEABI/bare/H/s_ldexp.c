@@ -15,8 +15,6 @@
 
 #include "fdlibm.h"
 
-// #include <errno.h>
-#include <math.h> /* for isfinite macro */
 #define fpclassify(x) ((sizeof(x) == sizeof(f32)) ? __fpclassifyf((f32)(x)) : __fpclassifyd((f64)(x)))
 #define isfinite(x)   ((fpclassify(x) > 2))
 

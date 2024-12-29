@@ -11,6 +11,6 @@ namespace TekiYamashita {
 void makeTekiParameters(TekiMgr*);
 void makeTekis(TekiMgr*);
 void makeDefaultAnimations(); // unused
-}; // namespace TekiYamashita
+};                            // namespace TekiYamashita
 
 #endif

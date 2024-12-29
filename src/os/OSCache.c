@@ -323,13 +323,13 @@ ASM void ICFlashInvalidate(void) {
 
 	blr
 #endif // clang-format on
-	   /*
-	   .loc_0x0:
-	     mfspr     r3, 0x3F0
-	     ori       r3, r3, 0x800
-	     mtspr     1008, r3
-	     blr
-	   */
+	/*
+	.loc_0x0:
+	  mfspr     r3, 0x3F0
+	  ori       r3, r3, 0x800
+	  mtspr     1008, r3
+	  blr
+	*/
 }
 
 /*
@@ -350,14 +350,14 @@ ASM void ICEnable(void)
 
 	blr
 #endif // clang-format on
-	   /*
-	   .loc_0x0:
-	     isync
-	     mfspr     r3, 0x3F0
-	     ori       r3, r3, 0x8000
-	     mtspr     1008, r3
-	     blr
-	   */
+	/*
+	.loc_0x0:
+	  isync
+	  mfspr     r3, 0x3F0
+	  ori       r3, r3, 0x8000
+	  mtspr     1008, r3
+	  blr
+	*/
 }
 
 /*

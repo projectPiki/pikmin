@@ -84,6 +84,15 @@ static inline f32 absVal(f32 val)
 	return -val;
 }
 
+static inline int absVal(int val)
+{
+	return (val > 0) ? val : -val;
+	// if (val > 0) {
+	// 	return val;
+	// }
+	// return -val;
+}
+
 #ifdef __cplusplus
 // Pikmin-specific global math functions
 struct Vector3f;
