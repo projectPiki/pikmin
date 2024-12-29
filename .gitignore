@@ -33,6 +33,7 @@ compile_commands.json
 # Miscellaneous
 /*.txt
 *.exe
+!clang-format.exe
 /decomp
 tools/mwcc_compiler
 tools/dtk
