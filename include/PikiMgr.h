@@ -12,7 +12,7 @@ struct Navi;
  * @brief TODO
  */
 struct PikiProp : public CreatureProp {
-	PikiProp() { mCreatureProps.mFriction.mValue = 0.1f; }
+	PikiProp() { mCreatureProps.mFriction.setValue(0.1f); }
 
 	/**
 	 * @brief TODO
@@ -51,6 +51,9 @@ struct PikiMgr : public MonoObjectMgr {
 	void init();
 	void dumpAll();
 
+	static u8 meNukiMode;
+	static u8 meBirthMode;
+
 	// unused/inlined:
 	void getFormationPikis();
 	void lostAllPikis();
@@ -59,21 +62,21 @@ struct PikiMgr : public MonoObjectMgr {
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_3C = MonoObjectMgr
-	Shape* mLeafModel; // _3C
-	Shape* mBudModel; // _40
-	Shape* mFlowerModel; // _44
-	u32 _48; // _48, unknown
-	MapMgr* mMapMgr;     // _4C
-	u32 _50; // _50, unknown
-	u32 _54; // _54, unknown
-	u32 _58; // _58, unknown
-	u32 _5C; // _5c, unknown
-	u32 _60; // _60, unknown
+	Shape* mLeafModel;             // _3C
+	Shape* mBudModel;              // _40
+	Shape* mFlowerModel;           // _44
+	Shape* mPikiShape;             // _48
+	MapMgr* mMapMgr;               // _4C
+	u32 _50;                       // _50
+	u32 _54;                       // _54
+	u32 _58;                       // _58
+	u32 _5C;                       // _5C
+	u32 _60;                       // _60
 	PaniMotionTable* mMotionTable; // _64
-	PikiProp* mPikiParms;    // _68
-	Navi* mNavi;         // _6C
-	s16 _70;         // _70, unknown
-	s16 _72;         // _72, unknown
+	PikiProp* mPikiParms;          // _68
+	Navi* mNavi;                   // _6C
+	s16 _70;                       // _70
+	s16 _72;                       // _72
 };
 
 extern PikiMgr* pikiMgr;

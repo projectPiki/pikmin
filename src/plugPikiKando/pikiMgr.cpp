@@ -2,26 +2,27 @@
 #include "sysNew.h"
 #include "gameflow.h"
 #include "MemStat.h"
+#include "PikiAi.h"
+#include "GameStat.h"
+#include "DebugLog.h"
+
+PikiMgr* pikiMgr;
+u8 PikiMgr::meNukiMode;
+u8 PikiMgr::meBirthMode;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("");
 
 /*
  * --INFO--
@@ -30,6 +31,7 @@ static void _Print(char*, ...)
  */
 Creature* PikiMgr::birth()
 {
+	// GameStat::mapPikis.
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -109,23 +111,26 @@ void PikiMgr::getFormationPikis()
  */
 PikiMgr::PikiMgr(Navi* navi)
 {
-	mNavi  = navi;
+	mNavi      = navi;
 	mPikiParms = new PikiProp();
 
-	
-
-	mLeafModel = gameflow.loadShape("pikis/happas/leaf.mod", true);
-	mBudModel = gameflow.loadShape("pikis/happas/bud.mod", true);
+	mLeafModel   = gameflow.loadShape("pikis/happas/leaf.mod", true);
+	mBudModel    = gameflow.loadShape("pikis/happas/bud.mod", true);
 	mFlowerModel = gameflow.loadShape("pikis/happas/flower.mod", true);
+
+	PRINT("loading pikiMgr.bin ...\n");
 	load("parms/", "pikiMgr.bin", 1);
+	PRINT("done\n");
+
 	memStat->start("piki mtable");
 	mMotionTable = PaniPikiAnimator::createMotionTable();
 	memStat->end("piki mtable");
 
-	_5C = _54 = _58 = 0;
-	_72 = _70 = 7;
-	
-
+	_58 = 0;
+	_54 = 0;
+	_5C = 0;
+	_70 = 7;
+	_72 = 7;
 
 	/*
 	.loc_0x0:
@@ -1173,17 +1178,10 @@ PikiProp::Parms::Parms()
  */
 void PikiMgr::init()
 {
-
-	_60 = 0;
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x3058(r13)
-	  stw       r0, 0x60(r3)
-	  stb       r0, 0x306E(r13)
-	  stb       r0, 0x306D(r13)
-	  blr
-	*/
+	AiTable::uniqueInstance = 0;
+	_60                     = 0;
+	PikiMgr::meNukiMode     = 0;
+	PikiMgr::meBirthMode    = 0;
 }
 
 /*
@@ -1195,44 +1193,9 @@ ViewPiki* PikiMgr::createObject()
 {
 	memStat->start("pikiNew");
 	ViewPiki* piki = new ViewPiki(mPikiParms);
+	piki->init(mPikiShape, mMapMgr, mNavi);
 	memStat->end("pikiNew");
 	return piki;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  subi      r4, r13, 0x4050
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x2FE8(r13)
-	  bl        -0x48674
-	  li        r3, 0x59C
-	  bl        -0x87DB0
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x40
-	  lwz       r4, 0x68(r30)
-	  bl        0x9EF0
-
-	.loc_0x40:
-	  lwz       r4, 0x48(r30)
-	  mr        r3, r31
-	  lwz       r5, 0x4C(r30)
-	  lwz       r6, 0x6C(r30)
-	  bl        0x9FF0
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x4050
-	  bl        -0x485A0
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1250,15 +1213,14 @@ void PikiMgr::lostAllPikis()
  * Address:	800CEE08
  * Size:	000020
  */
-void PikiMgr::update() {MonoObjectMgr::update();}
+void PikiMgr::update() { MonoObjectMgr::update(); }
 
 /*
  * --INFO--
  * Address:	800CEE28
  * Size:	000020
  */
-void PikiMgr::refresh(Graphics& graphics) {MonoObjectMgr::refresh(graphics);}
-
+void PikiMgr::refresh(Graphics& graphics) { MonoObjectMgr::refresh(graphics); }
 
 /*
  * --INFO--
@@ -1275,35 +1237,17 @@ void PikiMgr::refresh2d(Graphics&)
  * Address:	800CEE48
  * Size:	000030
  */
-void PikiMgr::read(RandomAccessStream& input) {mPikiParms->read(input);}
+void PikiMgr::read(RandomAccessStream& input) { mPikiParms->read(input); }
 
 /*
  * --INFO--
  * Address:	800CEE78
  * Size:	000044
  */
-void PikiProp::read(RandomAccessStream&)
+void PikiProp::read(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x702FC
-	  addi      r3, r30, 0x58
-	  addi      r4, r31, 0
-	  bl        -0x70308
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mCreatureProps.read(stream);
+	mPikiParms.read(stream);
 }
 
 /*
