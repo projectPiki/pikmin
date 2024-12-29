@@ -7,7 +7,6 @@
  * Address:	80005560
  * Size:	000088
  */
-
 void main()
 {
 	int filler[2];

@@ -26,8 +26,7 @@ struct MapObjAnimator : public Animator {
 /**
  * @brief Stripped struct used in one ctor, but needed for genning a weak ctor
  */
-struct MapAnimShapeObject : public Shape {
-};
+struct MapAnimShapeObject : public Shape { };
 
 /**
  * @brief TODO

@@ -6,7 +6,7 @@ static SIPacket Packet[SI_MAX_CHAN];
 static OSAlarm Alarm[SI_MAX_CHAN];
 
 // useful macros.
-#define ROUND(n, a) (((u32)(n) + (a)-1) & ~((a)-1))
+#define ROUND(n, a) (((u32)(n) + (a) - 1) & ~((a) - 1))
 
 // forward-declared static functions.
 static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u32 inputBytes, SICallback callback);

@@ -12,8 +12,7 @@ namespace zen {
 /**
  * @brief TODO
  */
-struct TotalScoreType {
-};
+struct TotalScoreType { };
 
 /**
  * @brief TODO
