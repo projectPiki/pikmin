@@ -1,6 +1,10 @@
 #include "Pom.h"
+#include "Piki.h"
+#include "PikiState.h"
 #include "EffectMgr.h"
 #include "SoundMgr.h"
+#include "Stickers.h"
+#include "PlayerState.h"
 #include "DebugLog.h"
 
 static u32 pomSE[] = {
@@ -190,130 +194,19 @@ void PomAi::killCallBackEffect(bool p1)
  * Address:	80178994
  * Size:	0001B4
  */
-void PomAi::collidePetal(Creature*)
+void PomAi::collidePetal(Creature* collider)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x38(r1)
-	  mr        r30, r3
-	  lbz       r0, 0x8(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x19C
-	  lwz       r3, 0x4(r30)
-	  lwz       r0, 0x2E4(r3)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0xE4
-	  lfs       f1, 0x368(r3)
-	  lfs       f0, -0x51F4(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xE4
-	  lfs       f1, 0x70(r31)
-	  lfs       f0, 0x74(r31)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x78(r31)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x5204(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0xCC
-	  fsqrte    f1, f4
-	  lfd       f3, -0x51F0(r2)
-	  lfd       f2, -0x51E8(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x28(r1)
-	  lfs       f4, 0x28(r1)
+	if (_08) {
+		return;
+	}
 
-	.loc_0xCC:
-	  lfs       f0, -0x51E0(r2)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0xE4
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x1B4
+	if (mPom->getCurrStateID() == 2 && mPom->mAnimator.mCurrentFrame > 27.0f && collider->mVelocity.length() > 75.0f) {
+		setCollideSound(collider);
+	}
 
-	.loc_0xE4:
-	  lwz       r3, 0x4(r30)
-	  lbz       r0, 0x2BD(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x19C
-	  lwz       r0, 0x2E4(r3)
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x19C
-	  lfs       f1, 0x70(r31)
-	  lfs       f0, 0x74(r31)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x78(r31)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x5204(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x184
-	  fsqrte    f1, f4
-	  lfd       f3, -0x51F0(r2)
-	  lfd       f2, -0x51E8(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x24(r1)
-	  lfs       f4, 0x24(r1)
-
-	.loc_0x184:
-	  lfs       f0, -0x51E0(r2)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x19C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x1B4
-
-	.loc_0x19C:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-
-	.loc_0x1B4:
-	*/
+	if (mPom->isMotionFinished() && mPom->getCurrStateID() == 3 && collider->mVelocity.length() > 75.0f) {
+		setCollideSound(collider);
+	}
 }
 
 /*
@@ -321,39 +214,18 @@ void PomAi::collidePetal(Creature*)
  * Address:	80178B48
  * Size:	000060
  */
-void PomAi::setCollideSound(Creature*)
+void PomAi::setCollideSound(Creature* collider)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0x1
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  stb       r31, 0x8(r3)
-	  lwz       r0, 0x6C(r4)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x44
-	  mr        r3, r4
-	  bl        -0xB0624
-	  cmpwi     r3, 0xE
-	  beq-      .loc_0x48
-	  stb       r31, 0x9(r30)
-	  b         .loc_0x48
+	_08 = 1;
 
-	.loc_0x44:
-	  stb       r31, 0x9(r30)
-
-	.loc_0x48:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	// don't trigger collision sound for pikis flying into flower
+	if (collider->mObjType == OBJTYPE_Piki) {
+		if (static_cast<Piki*>(collider)->getState() != PIKISTATE_Flying) {
+			_09 = 1;
+		}
+	} else {
+		_09 = 1;
+	}
 }
 
 /*
@@ -363,7 +235,10 @@ void PomAi::setCollideSound(Creature*)
  */
 void PomAi::setEveryFrame()
 {
-	// UNUSED FUNCTION
+	checkSwayAndScale();
+	calcSwayAndScale();
+	setInitPosition();
+	resultFlagOn();
 }
 
 /*
@@ -373,7 +248,15 @@ void PomAi::setEveryFrame()
  */
 void PomAi::checkSwayAndScale()
 {
-	// UNUSED FUNCTION
+	int stickPikiCount = mPom->getStickPikiCount();
+	if (stickPikiCount > _0C) {
+		_18 -= static_cast<PomProp*>(mPom->mProps)->mPomProps.mSquashAmount();
+		effectMgr->create(EffectMgr::EFF_Unk121, mPom->mPosition, nullptr, nullptr);
+		playSound(5);
+		resultFlagSeen();
+	}
+
+	_0C = stickPikiCount;
 }
 
 /*
@@ -383,7 +266,14 @@ void PomAi::checkSwayAndScale()
  */
 void PomAi::calcSwayAndScale()
 {
-	// UNUSED FUNCTION
+	_1C += _18;
+	mPom->mScale.x = 1.0f - _1C;
+	mPom->mScale.y = 1.0f + _1C;
+	mPom->mScale.z = 1.0f - _1C;
+
+	_18 *= static_cast<PomProp*>(mPom->mProps)->mPomProps.mSquashPersistence();
+
+	_18 += static_cast<PomProp*>(mPom->mProps)->mPomProps.mSquashMultiplier() * -_1C;
 }
 
 /*
@@ -393,7 +283,10 @@ void PomAi::calcSwayAndScale()
  */
 void PomAi::setInitPosition()
 {
-	// UNUSED FUNCTION
+	Vector3f& pos     = mPom->get300();
+	mPom->mPosition.x = pos.x;
+	mPom->mPosition.y = pos.y;
+	mPom->mPosition.z = pos.z;
 }
 
 /*
@@ -401,152 +294,30 @@ void PomAi::setInitPosition()
  * Address:	80178BA8
  * Size:	0001D4
  */
-void PomAi::killStickPiki()
+int PomAi::killStickPiki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stmw      r27, 0x3C(r1)
-	  mr        r28, r3
-	  li        r29, 0
-	  lwz       r4, 0x4(r3)
-	  addi      r3, r1, 0x28
-	  bl        -0xE7F44
-	  addi      r31, r1, 0x28
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x160
+	int killedPikiCount = 0;
+	Stickers stickers(mPom);
 
-	.loc_0x44:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x6C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-	  b         .loc_0x88
+	Iterator iter(&stickers, 0);
+	CI_LOOP(iter)
+	{
+		Creature* stuck = iter.getCreature();
+		if (stuck && stuck->isAlive() && stuck->mObjType == OBJTYPE_Piki) {
+			Piki* piki = static_cast<Piki*>(iter.getCreature());
+			if (static_cast<PomProp*>(mPom->mProps)->mPomProps.mDoKillSameColorPiki() && piki->mColor == mPom->mColor) {
+				piki->kill(false);
+			} else {
+				piki->set584();
+				piki->kill(false);
+				killedPikiCount++;
+			}
 
-	.loc_0x6C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
+			iter.removeFromSearch();
+		}
+	}
 
-	.loc_0x88:
-	  cmplwi    r27, 0
-	  addi      r3, r27, 0
-	  beq-      .loc_0x144
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x144
-	  lwz       r0, 0x6C(r27)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x144
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0xDC
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xF4
-
-	.loc_0xDC:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xF4:
-	  lwz       r5, 0x4(r28)
-	  lwz       r4, 0x224(r5)
-	  lwz       r0, 0x2A0(r4)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x124
-	  lhz       r4, 0x510(r3)
-	  lwz       r0, 0x3BC(r5)
-	  cmpw      r4, r0
-	  bne-      .loc_0x124
-	  li        r4, 0
-	  bl        -0xEDFE4
-	  b         .loc_0x138
-
-	.loc_0x124:
-	  li        r0, 0x1
-	  stb       r0, 0x584(r3)
-	  li        r4, 0
-	  bl        -0xEDFF8
-	  addi      r29, r29, 0x1
-
-	.loc_0x138:
-	  cmpwi     r30, 0
-	  blt-      .loc_0x144
-	  subi      r30, r30, 0x1
-
-	.loc_0x144:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x160:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x188
-	  li        r0, 0x1
-	  b         .loc_0x1B4
-
-	.loc_0x188:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x1B0
-	  li        r0, 0x1
-	  b         .loc_0x1B4
-
-	.loc_0x1B0:
-	  li        r0, 0
-
-	.loc_0x1B4:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x44
-	  mr        r3, r29
-	  lmw       r27, 0x3C(r1)
-	  lwz       r0, 0x54(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	return killedPikiCount;
 }
 
 /*
@@ -885,7 +656,9 @@ void PomAi::calcPetalStickers()
  */
 void PomAi::resultFlagOn()
 {
-	// UNUSED FUNCTION
+	if (mPom->insideAndInSearch()) {
+		playerState->mResultFlags.setOn(RESFLAG_Unk45);
+	}
 }
 
 /*
@@ -893,38 +666,30 @@ void PomAi::resultFlagOn()
  * Address:	........
  * Size:	00002C
  */
-void PomAi::resultFlagSeen()
-{
-	// UNUSED FUNCTION
-}
+void PomAi::resultFlagSeen() { playerState->mResultFlags.setSeen(RESFLAG_Unk45); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-void PomAi::isMotionFinishTransit()
-{
-	// UNUSED FUNCTION
-}
+bool PomAi::isMotionFinishTransit() { return mPom->isMotionFinished(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000020
  */
-void PomAi::deadTransit()
-{
-	// UNUSED FUNCTION
-}
+bool PomAi::deadTransit() { return _10 >= _14; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void PomAi::petalOpenTransit()
+bool PomAi::petalOpenTransit()
 {
+
 	// UNUSED FUNCTION
 }
 
@@ -933,17 +698,14 @@ void PomAi::petalOpenTransit()
  * Address:	........
  * Size:	000008
  */
-void PomAi::petalShakeTransit()
-{
-	// UNUSED FUNCTION
-}
+bool PomAi::petalShakeTransit() { return _08; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000070
  */
-void PomAi::petalCloseTransit()
+bool PomAi::petalCloseTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -953,7 +715,7 @@ void PomAi::petalCloseTransit()
  * Address:	........
  * Size:	0001BC
  */
-void PomAi::dischargeTransit()
+bool PomAi::dischargeTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -1368,6 +1130,54 @@ void PomAi::dischargeState()
  */
 void PomAi::update()
 {
+	setEveryFrame();
+	switch (mPom->getCurrStateID()) {
+	case 0:
+		dieState();
+		break;
+	case 1:
+		waitState();
+		if (petalOpenTransit()) {
+			initPetalOpen(2);
+		}
+		break;
+	case 2:
+		openState();
+		if (petalCloseTransit()) {
+			initPetalClose(4);
+		} else if (petalShakeTransit()) {
+			initPetalShake(3);
+		}
+		break;
+	case 3:
+		shakeState();
+		if (petalCloseTransit()) {
+			initPetalClose(4);
+		} else if (petalShakeTransit()) {
+			initPetalShake(3);
+		}
+		break;
+	case 4:
+		closeState();
+		if (isMotionFinishTransit()) {
+			if (dischargeTransit()) {
+				initDischarge(5);
+			} else {
+				initWait(1);
+			}
+		}
+		break;
+	case 5:
+		dischargeState();
+		if (isMotionFinishTransit()) {
+			if (deadTransit()) {
+				initDie(0);
+			} else {
+				initWait(1);
+			}
+		}
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

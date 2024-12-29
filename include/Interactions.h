@@ -289,7 +289,11 @@ struct InteractHitEffect : public Interaction {
  * @brief TODO
  */
 struct InteractKill : public Interaction {
-	inline InteractKill(); // TODO: probably
+	inline InteractKill(Creature* owner, int p2)
+	    : Interaction(owner)
+	{
+		_08 = p2;
+	}
 
 	virtual bool actPiki(Piki*);     // _0C
 	virtual bool actNavi(Navi*);     // _14

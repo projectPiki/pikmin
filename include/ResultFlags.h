@@ -19,6 +19,8 @@ enum EResultsFlags {
 	// ...
 	RESFLAG_Unk42 = 42,
 	// ...
+	RESFLAG_Unk45 = 45,
+	// ...
 	RESFLAG_Unk50 = 50,
 };
 
@@ -48,7 +50,7 @@ struct ResultFlags {
 	void getDayDocument(int, int&);
 	void getDocument(int&);
 	void dump();
-	void getFlag(int);
+	bool getFlag(int);
 	void setFlag(int, u8);
 
 	u16 _00;     // _00

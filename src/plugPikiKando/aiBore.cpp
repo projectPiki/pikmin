@@ -1071,11 +1071,9 @@ void ActBoreTalk::startTalk()
 {
 	SearchBuffer* buf = &mActor->mSearchBuffer;
 	mActor->turnTo(mTarget->mPosition);
-	CREATURE_ITERATOR(buf, idx)
-	{
-		Creature* creature = buf->getCreatureCheck(idx);
-		creature->stimulate(InteractTalk(mActor));
-	}
+
+	Iterator iter(buf, nullptr);
+	CI_LOOP(iter) { iter.getCreature()->stimulate(InteractTalk(mActor)); }
 
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Chatting, this), PaniMotionInfo(PIKIANIM_Chatting));
 	mActor->enableMotionBlend();

@@ -1,24 +1,19 @@
 #include "ResultFlags.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("resultFlag");
 
 /*
  * --INFO--
@@ -414,33 +409,11 @@ void ResultFlags::loadCard(RandomAccessStream&)
  * Address:	80083A00
  * Size:	000050
  */
-void ResultFlags::setOn(int)
+void ResultFlags::setOn(int flag)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        0x384
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x38
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  li        r5, 0x1
-	  bl        0x39C
-
-	.loc_0x38:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (!getFlag(flag)) {
+		setFlag(flag, 1);
+	}
 }
 
 /*
@@ -448,21 +421,7 @@ void ResultFlags::setOn(int)
  * Address:	80083A50
  * Size:	000024
  */
-void ResultFlags::setSeen(int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x2
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x370
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void ResultFlags::setSeen(int flag) { setFlag(flag, 2); }
 
 /*
  * --INFO--
@@ -780,7 +739,7 @@ void ResultFlags::dump()
  * Address:	80083DA0
  * Size:	000030
  */
-void ResultFlags::getFlag(int)
+bool ResultFlags::getFlag(int)
 {
 	/*
 	.loc_0x0:

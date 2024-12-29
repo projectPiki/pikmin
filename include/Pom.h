@@ -119,7 +119,7 @@ struct PomAi : public PaniAnimKeyListener {
 	void killCallBackEffect(bool);
 	void collidePetal(Creature*);
 	void setCollideSound(Creature*);
-	void killStickPiki();
+	int killStickPiki();
 	void createPikiHead();
 	void calcPetalStickers();
 	void initWait(int);
@@ -131,7 +131,7 @@ struct PomAi : public PaniAnimKeyListener {
 	void keyAction3();
 	void setEveryFrame();
 	void resultFlagOn();
-	void isMotionFinishTransit();
+	bool isMotionFinishTransit();
 	void initDie(int);
 	void dieState();
 	void checkSwayAndScale();
@@ -140,11 +140,11 @@ struct PomAi : public PaniAnimKeyListener {
 	void emitPomOpenEffect(u32);
 	void createPomOpenEffect();
 	void resultFlagSeen();
-	void deadTransit();
-	void petalOpenTransit();
-	void petalShakeTransit();
-	void petalCloseTransit();
-	void dischargeTransit();
+	bool deadTransit();
+	bool petalOpenTransit();
+	bool petalShakeTransit();
+	bool petalCloseTransit();
+	bool dischargeTransit();
 	void initPetalOpen(int);
 	void initPetalShake(int);
 	void initPetalClose(int);
@@ -160,7 +160,7 @@ struct PomAi : public PaniAnimKeyListener {
 	u8 _08;                                    // _08
 	u8 _09;                                    // _09
 	u8 _0A;                                    // _0A
-	u32 _0C;                                   // _0C, unknown
+	int _0C;                                   // _0C
 	u32 _10;                                   // _10, unknown
 	int _14;                                   // _14
 	f32 _18;                                   // _18

@@ -212,6 +212,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 		}
 	}
 
+	inline void set584() { _584 = 1; } // rename later
+
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
@@ -295,7 +297,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u8 _519;                      // _519
 	u8 _51A[0x520 - 0x51A];       // _51A
 	int mHappa;                   // _520, leaf/bud/flower
-	u8 _524[0x585 - 0x524];       // _524
+	u8 _524[0x584 - 0x524];       // _524
+	u8 _584;                      // _584, unknown
 };
 
 /**

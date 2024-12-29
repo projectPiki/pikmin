@@ -1,143 +1,44 @@
 #include "Creature.h"
 #include "Iterator.h"
 #include "Stickers.h"
+#include "Interactions.h"
+#include "Condition.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("CreatureStick");
 
 /*
  * --INFO--
  * Address:	8008F9C4
  * Size:	000160
  */
-void Creature::interactStickers(Creature*, Interaction&, Condition*)
+void Creature::interactStickers(Creature* stuckTo, Interaction& interaction, Condition* condition)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stmw      r27, 0x44(r1)
-	  addi      r27, r5, 0
-	  addi      r28, r6, 0
-	  addi      r3, r1, 0x2C
-	  bl        0x12A4
-	  addi      r31, r1, 0x2C
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0xF0
+	Stickers stuckList(stuckTo);
+	Iterator iter(&stuckList, 0);
+	iter.first();
+	while (!iter.isDone()) {
+		Creature* stuck = iter.getCreature();
+		if (!condition || condition->satisfy(stuck)) {
+			if (stuck->stimulate(interaction)) {
+				iter.removeFromSearch();
+			}
+		}
 
-	.loc_0x40:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x64
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x7C
-
-	.loc_0x64:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x7C:
-	  cmplwi    r28, 0
-	  addi      r29, r3, 0
-	  beq-      .loc_0xA8
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xD4
-
-	.loc_0xA8:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r27
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xD4
-	  cmpwi     r30, 0
-	  blt-      .loc_0xD4
-	  subi      r30, r30, 0x1
-
-	.loc_0xD4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0xF0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x118
-	  li        r0, 0x1
-	  b         .loc_0x144
-
-	.loc_0x118:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x140
-	  li        r0, 0x1
-	  b         .loc_0x144
-
-	.loc_0x140:
-	  li        r0, 0
-
-	.loc_0x144:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x40
-	  lmw       r27, 0x44(r1)
-	  lwz       r0, 0x5C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+		iter.next();
+	}
 }
 
 /*
@@ -145,320 +46,10 @@ void Creature::interactStickers(Creature*, Interaction&, Condition*)
  * Address:	8008FB24
  * Size:	000174
  */
-void Creature::killStickers(Creature*, Condition*, int)
+void Creature::killStickers(Creature* stuckTo, Condition* cond, int p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x802B
-	  stw       r0, 0x4(r1)
-	  subi      r0, r3, 0x3064
-	  lis       r3, 0x802B
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  addi      r30, r5, 0
-	  stw       r0, 0x34(r1)
-	  subi      r0, r3, 0x328C
-	  addi      r3, r1, 0x18
-	  stw       r4, 0x38(r1)
-	  stw       r0, 0x34(r1)
-	  stw       r6, 0x3C(r1)
-	  bl        0x1124
-	  addi      r0, r1, 0x18
-	  stw       r0, 0x2C(r1)
-	  li        r0, 0
-	  addi      r3, r1, 0x28
-	  stw       r0, 0x30(r1)
-	  bl        0x244
-	  b         .loc_0x100
-
-	.loc_0x5C:
-	  lwz       r4, 0x28(r1)
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x84
-	  lwz       r3, 0x2C(r1)
-	  li        r4, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x98
-
-	.loc_0x84:
-	  lwz       r3, 0x2C(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x98:
-	  cmplwi    r30, 0
-	  addi      r31, r3, 0
-	  beq-      .loc_0xC4
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xF8
-
-	.loc_0xC4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  addi      r4, r1, 0x34
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xF8
-	  lwz       r3, 0x28(r1)
-	  cmpwi     r3, 0
-	  blt-      .loc_0xF8
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x28(r1)
-
-	.loc_0xF8:
-	  addi      r3, r1, 0x28
-	  bl        .loc_0x174
-
-	.loc_0x100:
-	  lwz       r3, 0x2C(r1)
-	  lwz       r4, 0x28(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x128
-	  li        r0, 0x1
-	  b         .loc_0x154
-
-	.loc_0x128:
-	  lwz       r3, 0x2C(r1)
-	  lwz       r4, 0x28(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x150
-	  li        r0, 0x1
-	  b         .loc_0x154
-
-	.loc_0x150:
-	  li        r0, 0
-
-	.loc_0x154:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x5C
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-
-	.loc_0x174:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8008FC98
- * Size:	000124
- */
-void Iterator::next()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x8(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xF4
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r31)
-	  b         .loc_0x94
-
-	.loc_0x40:
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r3
-	  lwz       r3, 0x8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x110
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r31)
-
-	.loc_0x94:
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xBC
-	  li        r0, 0x1
-	  b         .loc_0xE8
-
-	.loc_0xBC:
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0xE4
-	  li        r0, 0x1
-	  b         .loc_0xE8
-
-	.loc_0xE4:
-	  li        r0, 0
-
-	.loc_0xE8:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x40
-	  b         .loc_0x110
-
-	.loc_0xF4:
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r31)
-
-	.loc_0x110:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8008FDBC
- * Size:	00011C
- */
-void Iterator::first()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x8(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xF0
-	  lwz       r3, 0x4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r31)
-	  b         .loc_0x90
-
-	.loc_0x3C:
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r3
-	  lwz       r3, 0x8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x108
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r31)
-
-	.loc_0x90:
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xB8
-	  li        r0, 0x1
-	  b         .loc_0xE4
-
-	.loc_0xB8:
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0xE0
-	  li        r0, 0x1
-	  b         .loc_0xE4
-
-	.loc_0xE0:
-	  li        r0, 0
-
-	.loc_0xE4:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x3C
-	  b         .loc_0x108
-
-	.loc_0xF0:
-	  lwz       r3, 0x4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r31)
-
-	.loc_0x108:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	InteractKill kill(stuckTo, p3);
+	interactStickers(stuckTo, kill, cond);
 }
 
 /*
