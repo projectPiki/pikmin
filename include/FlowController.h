@@ -5,6 +5,7 @@
 #include "OnePlayerSection.h"
 
 struct StageInfo;
+struct Navi;
 
 /**
  * @brief TODO
@@ -30,7 +31,7 @@ struct FlowController {
 	char _B0[0x80];         // _B0
 	char _130[0x80];        // _130, stage file name?
 	char _1B0[0x80];        // _1B0
-	u32 _230;               // _230, unknown
+	int _230;               // _230, unknown
 	u8 _234[0x244 - 0x234]; // _234, unknown
 	int _244;               // _244
 	u32 _248;               // _248, unknown

@@ -103,7 +103,6 @@ struct PaniAnimator : public Animator {
 	inline PaniMotion* getMotion(int motionIdx) { return mMotionTable->getMotion(motionIdx); }
 
 	inline int get38() { return mCurrentKeyIndex; } // TODO: rename later
-
 	inline int getInfoKeyValue(int idx) { return mAnimInfo->getInfoKey(idx)->mKeyframeIndex; }
 	inline int getEventKeyValue(int idx) { return mAnimInfo->getEventKey(idx)->mKeyframeIndex; }
 	inline f32 getKeyValue(int idx) { return mAnimInfo->getKeyValue(idx); }

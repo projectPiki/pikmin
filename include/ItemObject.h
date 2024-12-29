@@ -61,14 +61,7 @@ struct BombGenItem : public ItemObject {
 
 	virtual bool isAtari() // _84
 	{
-		if (_3C8 == -1) {
-			return true;
-		}
-		if (_3CA > 0) {
-			return true;
-		}
-
-		return false;
+		return isValid();
 	}
 	virtual bool needFlick(Creature*) // _94
 	{
@@ -76,29 +69,28 @@ struct BombGenItem : public ItemObject {
 	}
 	virtual bool isVisible() // _74
 	{
-		if (_3C8 == -1) {
-			return true;
-		}
-		if (_3CA > 0) {
-			return true;
-		}
-
-		return false;
+		return isValid();
 	}
 	virtual bool isAlive() // _88
 	{
-		if (_3C8 == -1) {
-			return true;
-		}
-		if (_3CA > 0) {
-			return true;
-		}
-
-		return false;
+		return isValid();
 	}
 
 	bool pickable();
 	bool pick();
+
+	inline bool isValid()
+	{
+		if (_3C8 == -1) {
+			return true;
+		}
+
+		if (_3CA > 0) {
+			return true;
+		}
+
+		return false;
+	}
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemObject

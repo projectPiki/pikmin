@@ -32,6 +32,10 @@ struct GameStat {
 
 		inline int& operator()(int idx) { return mCounts[idx]; }
 
+		inline int getTotal() { return mCounts[0] + mCounts[1] + mCounts[2]; }
+
+		inline void set(int idx, int val) { mCounts[idx] = val; }
+
 		// unused/inlined:
 		void dump(char*);
 
@@ -40,7 +44,7 @@ struct GameStat {
 
 	void init();
 	void update();
-	void dump();
+	static void dump();
 
 	static ColCounter deadPikis;
 	static ColCounter fallPikis;

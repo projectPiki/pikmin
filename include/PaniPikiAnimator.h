@@ -105,10 +105,19 @@ enum PikiNaviAnim {
  * @brief TODO
  */
 struct PaniPikiAnimator : public PaniAnimator {
-	PaniPikiAnimator();
-
 	static PaniMotionTable* createMotionTable();
 	static char* motionLabels[90];
+
+	PaniPikiAnimator();
+
+	char* getCurrentMotionName()
+	{
+		if (mMotionIdx >= 0) {
+			return motionLabels[mMotionIdx];
+		} else {
+			return "NULL";
+		}
+	}
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
@@ -135,19 +144,20 @@ struct PaniPikiAnimMgr {
 	// unused/inlined:
 	static PaniMotionTable* getMotionTable();
 
-	inline bool isFinished() const { return mAnimator.isFinished(); }
+	inline bool isFinished() const { return mLowerAnimator.isFinished(); }
 
 	inline f32 getAnimSpeed() { return mAnimSpeed; }
 	inline void setAnimSpeed(f32 speed) { mAnimSpeed = speed; }
 
-	inline PaniPikiAnimator* getAnimator() { return &mAnimator; } // name is a guess, rename later
-	inline PaniPikiAnimator* getBlendAnimator() { return &_58; }  // name is a guess, rename later
+	// Names taken from linker file
+	inline PaniPikiAnimator& getLowerAnimator() { return mLowerAnimator; }
+	inline PaniPikiAnimator& getUpperAnimator() { return mUpperAnimator; }
 
 	static PaniMotionTable* motionTable;
 
-	f32 mAnimSpeed;             // _00
-	PaniPikiAnimator mAnimator; // _04
-	PaniPikiAnimator _58;       // _58
+	f32 mAnimSpeed;                  // _00
+	PaniPikiAnimator mLowerAnimator; // _04
+	PaniPikiAnimator mUpperAnimator; // _58
 };
 
 #endif

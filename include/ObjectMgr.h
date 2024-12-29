@@ -80,11 +80,11 @@ struct MonoObjectMgr : public ObjectMgr {
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_28 = ObjectMgr
-	Creature** _28; // _28, array of objects
-	int _2C;        // _2C
-	int _30;        // _30
-	int* _34;       // _34
-	u32 _38;        // _38, unknown
+	Creature** mObjectList; // _28, array of objects
+	int mMaxElements;       // _2C
+	int mSize;              // _30
+	int* _34;               // _34
+	u32 _38;                // _38, unknown
 };
 
 /**

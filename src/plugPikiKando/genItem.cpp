@@ -504,7 +504,7 @@ void GenObjectItem::updateUseList(Generator*, int)
  * Address:	800EE8A0
  * Size:	000448
  */
-void* GenObjectItem::birth(BirthInfo&)
+Creature* GenObjectItem::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

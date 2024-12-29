@@ -715,7 +715,7 @@ void GenObjectMapParts::render(Graphics&, Generator*)
  * Address:	80118228
  * Size:	00027C
  */
-void* GenObjectMapParts::birth(BirthInfo&)
+Creature* GenObjectMapParts::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

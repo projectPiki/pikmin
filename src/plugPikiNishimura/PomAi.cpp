@@ -299,7 +299,7 @@ int PomAi::killStickPiki()
 	int killedPikiCount = 0;
 	Stickers stickers(mPom);
 
-	Iterator iter(&stickers, 0);
+	Iterator iter(&stickers);
 	CI_LOOP(iter)
 	{
 		Creature* stuck = iter.getCreature();

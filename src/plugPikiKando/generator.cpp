@@ -3789,7 +3789,7 @@ void GenObjectPiki::ramLoadParameters(RandomAccessStream&)
  * Address:	800DDDB8
  * Size:	000214
  */
-void* GenObjectPiki::birth(BirthInfo&)
+Creature* GenObjectPiki::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

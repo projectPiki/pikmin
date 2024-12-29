@@ -1,26 +1,20 @@
 #include "ItemObject.h"
 #include "Dolphin/os.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "itemObject");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("itemObject");
 
 /*
  * --INFO--
@@ -93,17 +87,7 @@ BombGenItem::BombGenItem(Shape* shape)
  * Address:	800F7A24
  * Size:	000030
  */
-bool BombGenItem::pickable()
-{
-	if (_3C8 == -1) {
-		return true;
-	}
-	if (_3CA > 0) {
-		return true;
-	}
-
-	return false;
-}
+bool BombGenItem::pickable() { return isValid(); }
 
 /*
  * --INFO--
@@ -115,9 +99,10 @@ bool BombGenItem::pick()
 	if (!pickable()) {
 		return false;
 	}
+
 	if (_3C8 > 0) {
 		if (_3CA > 0) {
-			_3CA--;
+			PRINT("BOMB LEFT %d\n", _3CA--);
 		} else {
 			return false;
 		}

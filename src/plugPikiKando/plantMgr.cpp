@@ -1049,7 +1049,7 @@ void GenObjectPlant::updateUseList(Generator* gen, int) { plantMgr->addUseList(m
  * Address:	8011AEDC
  * Size:	000190
  */
-void* GenObjectPlant::birth(BirthInfo& info)
+Creature* GenObjectPlant::birth(BirthInfo& info)
 {
 	Plant* plant = plantMgr->birth();
 	if (plant) {

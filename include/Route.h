@@ -11,7 +11,9 @@ struct CmdStream;
 struct DataMsg;
 struct Graphics;
 struct MapMgr;
+struct Plane;
 struct BaseShape;
+struct PathFinder;
 
 /**
  * @brief TODO
@@ -114,7 +116,7 @@ struct RouteMgr : public Node {
 
 	virtual void update(); // _10
 
-	void getPathFinder(u32);
+	PathFinder* getPathFinder(u32);
 	void getNumWayPoints(u32);
 	void getSafePosition(u32, Vector3f&);
 	void findNearestEdge(WayPoint**, WayPoint**, u32, Vector3f&, bool, bool, bool);

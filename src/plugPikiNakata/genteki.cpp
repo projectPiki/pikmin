@@ -120,7 +120,7 @@ void GenObjectTeki::updateUseList(Generator*, int)
  * Address:	8011B58C
  * Size:	000120
  */
-void* GenObjectTeki::birth(BirthInfo& info)
+Creature* GenObjectTeki::birth(BirthInfo& info)
 {
 	// TODO: work out the right inlines for this
 	u32 badCompiler;

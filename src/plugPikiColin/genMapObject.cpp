@@ -78,13 +78,7 @@ void GenObjectMapObject::render(Graphics&, Generator*) { }
  * Address:	8005D264
  * Size:	000008
  */
-void* GenObjectMapObject::birth(BirthInfo&)
-{
-	if (false) {
-		return new DynObjBridge();
-	}
-	return nullptr;
-}
+Creature* GenObjectMapObject::birth(BirthInfo&) { return nullptr; }
 
 // I hate these, but things will NOT spawn in the correct order without them.
 static DynObjBody* fakeFunc() { return new DynObjBody(); }

@@ -258,8 +258,8 @@ void BPikiInf::loadCard(RandomAccessStream& card)
  */
 void BPikiInf::doStore(Creature* piki)
 {
-	_2C = static_cast<Piki*>(piki)->mPikiAnimMgr._58.mStartKeyIndex;
-	_2D = static_cast<Piki*>(piki)->mPikiAnimMgr._58.mNextKeyInfoIndex;
+	_2C = static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mStartKeyIndex;
+	_2D = static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mNextKeyInfoIndex;
 }
 
 /*
@@ -269,8 +269,8 @@ void BPikiInf::doStore(Creature* piki)
  */
 void BPikiInf::doRestore(Creature* piki)
 {
-	static_cast<Piki*>(piki)->mPikiAnimMgr._58.mStartKeyIndex    = _2C;
-	static_cast<Piki*>(piki)->mPikiAnimMgr._58.mNextKeyInfoIndex = _2D;
+	static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mStartKeyIndex    = _2C;
+	static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mNextKeyInfoIndex = _2D;
 }
 
 /*

@@ -110,10 +110,10 @@ Navi* NaviMgr::getNavi()
  */
 Navi* NaviMgr::getNavi(int idx)
 {
-	if (idx >= _30) {
+	if (idx >= mSize) {
 		(idx >= 0);
 	}
-	return static_cast<Navi*>(_28[idx]);
+	return static_cast<Navi*>(mObjectList[idx]);
 }
 
 /*
@@ -123,95 +123,8 @@ Navi* NaviMgr::getNavi(int idx)
  */
 void NaviMgr::refresh2d(Graphics& gfx)
 {
-	CREATURE_ITERATOR(this, idx) { getCreatureCheck(idx)->refresh2d(gfx); }
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  mr        r29, r4
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0xA4
-
-	.loc_0x38:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x5C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x74
-
-	.loc_0x5C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x74:
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r29
-	  lwz       r12, 0xF0(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0xA4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xCC
-	  li        r0, 0x1
-	  b         .loc_0xF8
-
-	.loc_0xCC:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0xF4
-	  li        r0, 0x1
-	  b         .loc_0xF8
-
-	.loc_0xF4:
-	  li        r0, 0
-
-	.loc_0xF8:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x38
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	Iterator iter(this);
+	CI_LOOP(iter) { iter.getCreature()->refresh2d(gfx); }
 }
 
 /*
@@ -221,92 +134,8 @@ void NaviMgr::refresh2d(Graphics& gfx)
  */
 void NaviMgr::renderCircle(Graphics& gfx)
 {
-	CREATURE_ITERATOR(this, idx) { static_cast<Navi*>(getCreatureCheck(idx))->renderCircle(gfx); }
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  mr        r29, r4
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x98
-
-	.loc_0x38:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x5C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x74
-
-	.loc_0x5C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x74:
-	  mr        r4, r29
-	  bl        -0x18038
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x98:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC0
-	  li        r0, 0x1
-	  b         .loc_0xEC
-
-	.loc_0xC0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0xE8
-	  li        r0, 0x1
-	  b         .loc_0xEC
-
-	.loc_0xE8:
-	  li        r0, 0
-
-	.loc_0xEC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x38
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	Iterator iter(this);
+	CI_LOOP(iter) { static_cast<Navi*>(iter.getCreature())->renderCircle(gfx); }
 }
 
 /*
@@ -316,95 +145,8 @@ void NaviMgr::renderCircle(Graphics& gfx)
  */
 void NaviMgr::drawShadow(Graphics& gfx)
 {
-	CREATURE_ITERATOR(this, idx) { getCreatureCheck(idx)->drawShadow(gfx); }
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  mr        r29, r4
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0xA4
-
-	.loc_0x38:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x5C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x74
-
-	.loc_0x5C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x74:
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r29
-	  lwz       r12, 0xF8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0xA4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xCC
-	  li        r0, 0x1
-	  b         .loc_0xF8
-
-	.loc_0xCC:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0xF4
-	  li        r0, 0x1
-	  b         .loc_0xF8
-
-	.loc_0xF4:
-	  li        r0, 0
-
-	.loc_0xF8:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x38
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	Iterator iter(this);
+	CI_LOOP(iter) { iter.getCreature()->drawShadow(gfx); }
 }
 
 /*

@@ -48,8 +48,8 @@ void PaniPikiAnimMgr::init(AnimMgr* mgr, AnimContext* context1, AnimContext* con
 	}
 
 	PaniMotionTable* sTable = getMotionTable();
-	mAnimator.init(context1, mgr, sTable);
-	_58.init(context2, mgr, sTable);
+	mLowerAnimator.init(context1, mgr, sTable);
+	mUpperAnimator.init(context2, mgr, sTable);
 
 	mAnimSpeed = 30.0f;
 }
@@ -61,8 +61,8 @@ void PaniPikiAnimMgr::init(AnimMgr* mgr, AnimContext* context1, AnimContext* con
  */
 void PaniPikiAnimMgr::changeContext(AnimContext* context1, AnimContext* context2)
 {
-	mAnimator.changeContext(context1);
-	_58.changeContext(context2);
+	mLowerAnimator.changeContext(context1);
+	mUpperAnimator.changeContext(context2);
 }
 
 /*
@@ -73,10 +73,10 @@ void PaniPikiAnimMgr::changeContext(AnimContext* context1, AnimContext* context2
 void PaniPikiAnimMgr::startMotion(PaniMotionInfo* motion1, PaniMotionInfo* motion2)
 {
 	if (motion1) {
-		mAnimator.startMotion(*motion1);
+		mLowerAnimator.startMotion(*motion1);
 	}
 	if (motion2) {
-		_58.startMotion(*motion2);
+		mUpperAnimator.startMotion(*motion2);
 	}
 }
 
@@ -88,10 +88,10 @@ void PaniPikiAnimMgr::startMotion(PaniMotionInfo* motion1, PaniMotionInfo* motio
 void PaniPikiAnimMgr::finishMotion(PaniMotionInfo* motion1, PaniMotionInfo* motion2)
 {
 	if (motion1) {
-		mAnimator.finishMotion(*motion1);
+		mLowerAnimator.finishMotion(*motion1);
 	}
 	if (motion2) {
-		_58.finishMotion(*motion2);
+		mUpperAnimator.finishMotion(*motion2);
 	}
 }
 
@@ -122,25 +122,25 @@ void PaniPikiAnimMgr::updateAnimation(f32 speed)
 	u32 badCompiler; // i tried really hard to get the inlines to work, i promise
 
 	if (isFinished()) {
-		if (mAnimSpeed < mAnimator.mAnimInfo->mParams.mSpeed()) {
-			setAnimSpeed(mAnimator.mAnimInfo->mParams.mSpeed());
+		if (mAnimSpeed < mLowerAnimator.mAnimInfo->mParams.mSpeed()) {
+			setAnimSpeed(mLowerAnimator.mAnimInfo->mParams.mSpeed());
 		}
 	} else {
 		setAnimSpeed(speed);
 	}
 
 	f32 currSpeed = mAnimSpeed;
-	if (!(mAnimator.mAnimInfo->mParams.mFlags() & AnimInfo::FLAG_Unk2)) {
-		setAnimSpeed(mAnimator.mAnimInfo->mParams.mSpeed());
+	if (!(mLowerAnimator.mAnimInfo->mParams.mFlags() & AnimInfo::FLAG_Unk2)) {
+		setAnimSpeed(mLowerAnimator.mAnimInfo->mParams.mSpeed());
 	}
 
-	mAnimator.animate(mAnimSpeed);
+	mLowerAnimator.animate(mAnimSpeed);
 
-	if (!(_58.mAnimInfo->mParams.mFlags() & AnimInfo::FLAG_Unk2)) {
-		setAnimSpeed(_58.mAnimInfo->mParams.mSpeed());
+	if (!(mUpperAnimator.mAnimInfo->mParams.mFlags() & AnimInfo::FLAG_Unk2)) {
+		setAnimSpeed(mUpperAnimator.mAnimInfo->mParams.mSpeed());
 	}
 
-	_58.animate(currSpeed);
+	mUpperAnimator.animate(currSpeed);
 }
 
 /*
@@ -150,6 +150,6 @@ void PaniPikiAnimMgr::updateAnimation(f32 speed)
  */
 void PaniPikiAnimMgr::updateContext()
 {
-	mAnimator.updateContext();
-	_58.updateContext();
+	mLowerAnimator.updateContext();
+	mUpperAnimator.updateContext();
 }

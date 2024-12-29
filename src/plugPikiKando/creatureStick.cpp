@@ -27,17 +27,15 @@ DEFINE_PRINT("CreatureStick");
 void Creature::interactStickers(Creature* stuckTo, Interaction& interaction, Condition* condition)
 {
 	Stickers stuckList(stuckTo);
-	Iterator iter(&stuckList, 0);
-	iter.first();
-	while (!iter.isDone()) {
+	Iterator iter(&stuckList);
+	CI_LOOP(iter)
+	{
 		Creature* stuck = iter.getCreature();
 		if (!condition || condition->satisfy(stuck)) {
 			if (stuck->stimulate(interaction)) {
 				iter.removeFromSearch();
 			}
 		}
-
-		iter.next();
 	}
 }
 

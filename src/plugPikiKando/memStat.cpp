@@ -19,7 +19,7 @@ DEFINE_ERROR();
  * Address:	........
  * Size:	0000F0
  */
-DEFINE_PRINT(nullptr);
+DEFINE_PRINT("");
 
 /*
  * --INFO--
@@ -81,16 +81,18 @@ void MemStat::start(char* name)
  */
 void MemStat::end(char* name)
 {
-	if (memStat) {
-		MemInfo* info = getInfo(name);
-		if (info) {
-			// Remove the current info from the stack
-			mStatCount--;
-			mCurrentInfo       = mPrevInfoStack[mStatCount];
-			gsys->mCurrMemInfo = mCurrentInfo;
-		} else {
-			PRINT("no INFOOO\n", name);
-		}
+	if (!memStat) {
+		return;
+	}
+
+	MemInfo* info = getInfo(name);
+	if (info) {
+		// Remove the current info from the stack
+		mStatCount--;
+		mCurrentInfo       = mPrevInfoStack[mStatCount];
+		gsys->mCurrMemInfo = mCurrentInfo;
+	} else {
+		PRINT("no INFOOO\n", name);
 	}
 	/*
 	.loc_0x0:

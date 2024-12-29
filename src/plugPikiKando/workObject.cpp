@@ -67,91 +67,8 @@ void HinderRock::endPush()
  */
 void WorkObjectMgr::finalSetup()
 {
-	CREATURE_ITERATOR(this, idx) { static_cast<WorkObject*>(getCreatureCheck(idx))->finalSetup(); }
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  stw       r30, 0x20(r1)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x98
-
-	.loc_0x30:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x54
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x6C
-
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x6C:
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x158(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x98:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC0
-	  li        r0, 0x1
-	  b         .loc_0xEC
-
-	.loc_0xC0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0xE8
-	  li        r0, 0x1
-	  b         .loc_0xEC
-
-	.loc_0xE8:
-	  li        r0, 0
-
-	.loc_0xEC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x30
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	Iterator iter(this);
+	CI_LOOP(iter) { static_cast<WorkObject*>(iter.getCreature())->finalSetup(); }
 }
 
 /*
@@ -843,7 +760,7 @@ void GenObjectWorkObject::updateUseList(Generator*, int)
  * Address:	8009BD9C
  * Size:	000180
  */
-void* GenObjectWorkObject::birth(BirthInfo&)
+Creature* GenObjectWorkObject::birth(BirthInfo&)
 {
 	return nullptr;
 	/*

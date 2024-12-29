@@ -1,24 +1,20 @@
 #include "Piki.h"
+#include "Route.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("pikidoKill");
 
 /*
  * --INFO--
@@ -27,6 +23,25 @@ static void _Print(char*, ...)
  */
 void Piki::doKill()
 {
+	if (_2D0) {
+		routeMgr->getPathFinder('test')->releaseHandle(_2D0);
+		_2D0 = 0;
+		_2D4 = 0;
+	}
+
+	_338 = 0;
+
+	if (_424) {
+		_428.kill();
+		_424 = 0;
+	}
+
+	_428._00->kill();
+	_428._04->kill();
+	_428._08->kill();
+
+	if (pikiUpdateMgr) { }
+
 	/*
 	.loc_0x0:
 	  mflr      r0

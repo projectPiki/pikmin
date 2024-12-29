@@ -230,7 +230,7 @@ void GenObjectBoss::updateUseList(Generator*, int count)
  * Address:	8014D790
  * Size:	00013C
  */
-void* GenObjectBoss::birth(BirthInfo& info)
+Creature* GenObjectBoss::birth(BirthInfo& info)
 {
 	Boss* boss = nullptr;
 	if (_18 == 0) {

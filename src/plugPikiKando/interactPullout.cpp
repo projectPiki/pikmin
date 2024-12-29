@@ -1,27 +1,24 @@
 #include "Interactions.h"
 #include "Piki.h"
+#include "PikiMgr.h"
 #include "Navi.h"
 #include "PikiState.h"
+#include "stl/math.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("interactPullout");
 
 /*
  * --INFO--
@@ -38,18 +35,43 @@ bool InteractPullout::actCommon(Creature*) { return true; }
 bool InteractPullout::actPiki(Piki* piki)
 {
 	if (piki->getState() == PIKISTATE_Nukare) {
+		PRINT(" ---- %x is being pulling out\n", piki);
 		return false;
 	}
 
+	PRINT(" ##### %x pulls out piki %x\n", mOwner, piki);
 	piki->mDirection = roundAng(mOwner->mDirection);
 	piki->mRotation.set(0.0f, piki->mDirection, 0.0f);
-	piki->mFSM->transit(piki, PIKISTATE_Nukare);
+	PRINT("nukarePiki:faceDir = %.1f\n", piki->mDirection);
 
+	piki->mFSM->transit(piki, PIKISTATE_Nukare);
 	if (piki->mNavi->_7E5) {
 		piki->mPikiAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Nukare_Fast, piki), PaniMotionInfo(PIKIANIM_Nukare_Fast));
 	} else {
 		piki->mPikiAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Nukareru, piki), PaniMotionInfo(PIKIANIM_Nukareru));
 	}
+
+	Vector3f diff = piki->mPosition - mOwner->mPosition;
+
+	f32 scale    = 1.0f;
+	f32 xyzAngle = 43.838402f * scale;
+	f32 angle    = mOwner->mDirection;
+	Vector3f offset(cosf(angle) * -15.0f * scale, 0.0f, sinf(angle) * 15.0f * scale);
+
+	diff.add(offset);
+
+	f32 strength = 1.0f;
+	if (piki->_4B8 == 1) {
+		// strength = piki->getPikiProp()->mPikiParms
+	} else if (piki->_4B8 == 2) {
+		// strength = ...
+	} else {
+		// strength = ...
+	}
+
+	diff = diff * strength;
+
+	piki->_4AC = diff;
 
 	/*
 	.loc_0x0:

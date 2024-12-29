@@ -56,7 +56,7 @@ void GenObjectActor::doRead(RandomAccessStream& stream) { mActorId = stream.read
  * Address:	80119C74
  * Size:	000070
  */
-void* GenObjectActor::birth(BirthInfo& info)
+Creature* GenObjectActor::birth(BirthInfo& info)
 {
 	Actor* newActor = actorMgr->newActor(0);
 	newActor->init(info.mPosition);

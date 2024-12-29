@@ -2174,15 +2174,17 @@ bool TAIAflyingDistanceMar::act(Teki& teki)
 	if (baseActResult) {
 		// the more pikis we find in range, the more likely this act succeeds (hyperbolic, for whatever reason, so min is 1)
 		int weight = 1;
+		int stackFixerUpperVariable[2];
 
 		// loop through all pikis on field.
-		PikiMgr* mgr = pikiMgr;
-		CREATURE_ITERATOR(mgr, idx)
+		Iterator iter(pikiMgr);
+		CI_LOOP(iter)
 		{
-			Piki* piki = static_cast<Piki*>(mgr->getCreatureCheck(idx));
+			Creature* piki = iter.getCreature();
 
 			// if piki is within DangerTerritoryRange, increase chance of success by a small amount
-			if (piki->getPosition().distance(teki.getPosition()) < teki.mTekiParams->getF(TPF_DangerTerritoryRange)) {
+			f32 distance = piki->getPosition().distance(teki.getPosition());
+			if (distance < teki.mTekiParams->getF(TPF_DangerTerritoryRange)) {
 				weight++;
 			}
 		}
@@ -2195,7 +2197,8 @@ bool TAIAflyingDistanceMar::act(Teki& teki)
 		// - weight = 1 (no pikis in range), A = 100, chance of success is 0.3%
 		// - weight = 51 (50 pikis in range), A = 100/51, chance of success is 8.6%
 		// - weight = 101 (100 pikis in range), A = 100/101, chance of success is 14.8%
-		if (System::getRand(100.0f / f32(weight)) * System::getRand(30.0f) <= 1.0f) {
+		f32 successChance = System::getRand(100.0f / weight) * System::getRand(30.0f);
+		if (successChance <= 1.0f) {
 			return true;
 		}
 

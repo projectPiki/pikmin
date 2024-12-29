@@ -1,4 +1,5 @@
 #include "GameStat.h"
+#include "DebugLog.h"
 
 GameStat::ColCounter GameStat::deadPikis;
 GameStat::ColCounter GameStat::fallPikis;
@@ -25,20 +26,14 @@ bool GameStat::orimaDead;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("gameStat");
 
 /*
  * --INFO--
@@ -76,69 +71,17 @@ void GameStat::init()
 void GameStat::update()
 {
 	for (int i = 0; i < 3; i++) {
-		mapPikis(i) = formationPikis(i) + freePikis(i) + mePikis(i) + workPikis(i);
+		mapPikis.set(i, formationPikis(i) + freePikis(i) + mePikis(i) + workPikis(i));
 	}
 
 	for (int i = 0; i < 3; i++) {
-		allPikis(i) = mapPikis(i) + containerPikis(i);
+		allPikis.set(i, mapPikis(i) + containerPikis(i));
 	}
 
-	int total = allPikis(0) + allPikis(1) + allPikis(2);
+	int total = allPikis.getTotal();
 	if (total > maxPikis) {
-		maxPikis = total;
+		maxPikis = allPikis.getTotal();
 	}
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803D
-	  addi      r5, r3, 0x1E58
-	  lwz       r0, 0x24(r5)
-	  lwz       r3, 0x3C(r5)
-	  lwz       r4, 0x30(r5)
-	  add       r0, r0, r3
-	  lwz       r3, 0x18(r5)
-	  add       r0, r0, r4
-	  add       r0, r3, r0
-	  stw       r0, 0x6C(r5)
-	  lwz       r3, 0x40(r5)
-	  lwz       r0, 0x28(r5)
-	  lwz       r4, 0x34(r5)
-	  add       r0, r0, r3
-	  lwz       r3, 0x1C(r5)
-	  add       r0, r0, r4
-	  add       r0, r3, r0
-	  stw       r0, 0x70(r5)
-	  lwz       r3, 0x44(r5)
-	  lwz       r0, 0x2C(r5)
-	  lwz       r4, 0x38(r5)
-	  add       r0, r0, r3
-	  lwz       r3, 0x20(r5)
-	  add       r0, r0, r4
-	  add       r0, r3, r0
-	  stw       r0, 0x74(r5)
-	  addi      r4, r5, 0x80
-	  lwz       r3, 0x6C(r5)
-	  lwz       r0, 0x48(r5)
-	  add       r0, r3, r0
-	  stw       r0, 0x78(r5)
-	  lwz       r3, 0x70(r5)
-	  lwz       r0, 0x4C(r5)
-	  add       r0, r3, r0
-	  stw       r0, 0x7C(r5)
-	  lwz       r3, 0x74(r5)
-	  lwz       r0, 0x50(r5)
-	  add       r0, r3, r0
-	  stw       r0, 0x80(r5)
-	  lwz       r4, 0x0(r4)
-	  lwz       r0, 0x7C(r5)
-	  lwz       r3, 0x78(r5)
-	  add       r4, r0, r4
-	  lwz       r0, 0x3104(r13)
-	  add       r4, r3, r4
-	  cmpw      r4, r0
-	  blelr-
-	  stw       r4, 0x3104(r13)
-	  blr
-	*/
 }
 
 /*
@@ -146,19 +89,16 @@ void GameStat::update()
  * Address:	........
  * Size:	000004
  */
-void GameStat::Counter::dump(char*)
-{
-	// UNUSED FUNCTION
-}
+void GameStat::Counter::dump(char* name) { PRINT("<%s> %d\n", name, mCount); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void GameStat::ColCounter::dump(char*)
+void GameStat::ColCounter::dump(char* name)
 {
-	// UNUSED FUNCTION
+	PRINT("<%s> %d (%d + %d + %d)\n", name, mCounts[2] + mCounts[1] + mCounts[0], mCounts[0], mCounts[1], mCounts[2]);
 }
 
 /*
@@ -166,4 +106,19 @@ void GameStat::ColCounter::dump(char*)
  * Address:	80112624
  * Size:	000004
  */
-void GameStat::dump() { }
+void GameStat::dump()
+{
+	PRINT("******** GAMESTAT DUMP **********\n");
+	deadPikis.dump("deadPikis");
+	fallPikis.dump("fallPikis");
+	formationPikis.dump("formation");
+	freePikis.dump("free");
+	workPikis.dump("work");
+	mePikis.dump("me");
+	containerPikis.dump("container");
+	bornPikis.dump("born");
+	victimPikis.dump("victim");
+	mapPikis.dump("map");
+	allPikis.dump("all");
+	PRINT("==================================\n");
+}

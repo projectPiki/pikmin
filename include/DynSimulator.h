@@ -85,32 +85,31 @@ struct RigidBody : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Vector3f _20;                 // _20
-	Vector3f _2C;                 // _2C
-	Vector3f _38;                 // _38
-	Vector3f _44;                 // _44
-	Vector3f _50;                 // _50
-	f32 _5C;                      // _5C
-	u8 _60[0x4];                  // _60, unknown
-	Matrix3f _64;                 // _64
-	u8 _88[0x4];                  // _88, unknown
-	u32 _8C;                      // _8C, unknown
-	u32 _90;                      // _90, unknown
-	Vector3f _94[0x400];          // _94
-	u8 _3094[0x4094 - 0x3094];    // _3094, unknown
-	u32 _4094;                    // _4094, unknown
-	WorldSpring _4098[0x8];       // _4098
-	configuration _4118[0x2];     // _4118
-	Vector3f _A230;               // _A230
-	Vector3f _A23C;               // _A23C
-	Vector3f _A248[0x800];        // _A248
-	Vector3f _10248[2];           // _10248
-	u8 _10260[0x13248 - 0x10260]; // _10260
-	Vector3f _13248[2];           // _13248
-	Vector3f _13260;              // _13260
-	Quat _1326C[2];               // _1326C
-	Quat _1328C;                  // _1328C
-	BoundBox _1329C;              // _1329C
+	Vector3f _20;              // _20
+	Vector3f _2C;              // _2C
+	Vector3f _38;              // _38
+	Vector3f _44;              // _44
+	Vector3f _50;              // _50
+	f32 _5C;                   // _5C
+	u8 _60[0x4];               // _60, unknown
+	Matrix3f _64;              // _64
+	u8 _88[0x4];               // _88, unknown
+	u32 _8C;                   // _8C, unknown
+	u32 _90;                   // _90, unknown
+	Vector3f _94[0x400];       // _94
+	u8 _3094[0x4094 - 0x3094]; // _3094, unknown
+	u32 _4094;                 // _4094, unknown
+	WorldSpring _4098[0x8];    // _4098
+	configuration _4118[0x2];  // _4118
+	Vector3f _A230;            // _A230
+	Vector3f _A23C;            // _A23C
+	Vector3f _A248[0x800];     // _A248
+	Vector3f _10248[0x400];    // _10248
+	Vector3f _13248[2];        // _13248
+	Vector3f _13260;           // _13260
+	Quat _1326C[2];            // _1326C
+	Quat _1328C;               // _1328C
+	BoundBox _1329C;           // _1329C
 };
 
 /**

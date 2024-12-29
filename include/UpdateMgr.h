@@ -16,6 +16,8 @@ struct UpdateContext {
 	void init(UpdateMgr*);
 	void exit();
 
+	inline bool isActive() { return mIsActive; }
+
 	UpdateMgr* mMgr;   // _00
 	int mMgrSlotIndex; // _04, what slot is client in in mMgr?
 	bool mIsActive;    // _08

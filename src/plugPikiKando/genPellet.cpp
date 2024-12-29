@@ -234,7 +234,7 @@ void GenObjectPellet::updateUseList(Generator*, int)
  * Address:	80099F2C
  * Size:	000100
  */
-void* GenObjectPellet::birth(BirthInfo&)
+Creature* GenObjectPellet::birth(BirthInfo&)
 {
 	/*
 	.loc_0x0:

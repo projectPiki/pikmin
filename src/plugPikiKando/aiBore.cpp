@@ -481,7 +481,7 @@ int ActBoreSelect::exec()
 	}
 
 	if (mActor->mNavi->_738 < 1.0f || _1A) {
-		if (mActor->mPikiAnimMgr.mAnimator.mMotionIdx == 3) {
+		if (mActor->mPikiAnimMgr.mLowerAnimator.mMotionIdx == 3) {
 			return ACTOUT_Success;
 		}
 
@@ -1072,7 +1072,7 @@ void ActBoreTalk::startTalk()
 	SearchBuffer* buf = &mActor->mSearchBuffer;
 	mActor->turnTo(mTarget->mPosition);
 
-	Iterator iter(buf, nullptr);
+	Iterator iter(buf);
 	CI_LOOP(iter) { iter.getCreature()->stimulate(InteractTalk(mActor)); }
 
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Chatting, this), PaniMotionInfo(PIKIANIM_Chatting));
@@ -1851,8 +1851,8 @@ void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent& event)
 				_24 = 0;
 				_1C = 1;
 				mActor->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
-				mActor->mPikiAnimMgr.mAnimator.mCurrentFrame = 30.0f;
-				mActor->mPikiAnimMgr._58.mCurrentFrame       = 30.0f;
+				mActor->mPikiAnimMgr.mLowerAnimator.mCurrentFrame = 30.0f;
+				mActor->mPikiAnimMgr.mUpperAnimator.mCurrentFrame = 30.0f;
 				break;
 			}
 		}

@@ -949,8 +949,9 @@ void PathFinder::selectWay(PathFinder::Buffer&, int, PathFinder::Buffer*, int, b
  * Address:	800A0010
  * Size:	000048
  */
-void RouteMgr::getPathFinder(u32)
+PathFinder* RouteMgr::getPathFinder(u32)
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  mflr      r0

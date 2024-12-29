@@ -1,5 +1,6 @@
 #include "UpdateMgr.h"
 #include "sysNew.h"
+#include "DebugLog.h"
 
 UpdateMgr* pikiUpdateMgr;
 UpdateMgr* searchUpdateMgr;
@@ -12,20 +13,14 @@ UpdateMgr* tekiOptUpdateMgr;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("updateMgr");
 
 /*
  * --INFO--
@@ -190,18 +185,13 @@ void UpdateMgr::addClient(UpdateContext* client)
  */
 void UpdateMgr::removeClient(UpdateContext* client)
 {
-	if (client->mMgrSlotIndex >= 0) {
-		// this is probably a leftover from some debug assert
-		if (client->mMgrSlotIndex > mSlotCount) {
-			// this is just to force the comparison above to spawn
-			if (client->mIsActive) {
-				;
-			}
-		}
+	if (client->mMgrSlotIndex < 0 || client->mMgrSlotIndex >= mSlotCount) {
+		PRINT("c->index is out of bounds [%d-%d] ; c->index = %d \n", 0, mSlotCount, client->mMgrSlotIndex);
+		ERROR("mail to uja\n");
 	}
 
 	mClientSlotList[client->mMgrSlotIndex]--;
-	if (client->mIsActive) {
+	if (client->isActive()) {
 		mActiveClientSlotList[client->mMgrSlotIndex]--;
 	}
 

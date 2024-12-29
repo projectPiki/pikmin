@@ -1,7 +1,9 @@
 #include "Event.h"
+#include "DebugLog.h"
 
-static char file[] = __FILE__;
-static char name[] = "eventListener";
+DEFINE_ERROR();
+
+DEFINE_PRINT("eventListener");
 
 /*
  * --INFO--

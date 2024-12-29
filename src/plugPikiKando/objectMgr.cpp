@@ -41,91 +41,8 @@ void boundSphereDist(Creature*, Creature*)
  */
 void ObjectMgr::stickUpdate()
 {
-	CREATURE_ITERATOR(this, idx) { getCreatureCheck(idx)->stickUpdate(); }
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  stw       r30, 0x20(r1)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x98
-
-	.loc_0x30:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x54
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x6C
-
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x6C:
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xE8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x98:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC0
-	  li        r0, 0x1
-	  b         .loc_0xEC
-
-	.loc_0xC0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0xE8
-	  li        r0, 0x1
-	  b         .loc_0xEC
-
-	.loc_0xE8:
-	  li        r0, 0
-
-	.loc_0xEC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x30
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	Iterator iter(this);
+	CI_LOOP(iter) { iter.getCreature()->stickUpdate(); }
 }
 
 /*
@@ -135,105 +52,14 @@ void ObjectMgr::stickUpdate()
  */
 void ObjectMgr::invalidateSearch()
 {
-	CREATURE_ITERATOR(this, idx)
+	Iterator iter(this);
+	CI_LOOP(iter)
 	{
-		Creature* creature = getCreatureCheck(idx);
-		if (creature->_168.updatable()) {
-			creature->mSearchBuffer.invalidate();
+		Creature* c = iter.getCreature();
+		if (c->_168.updatable()) {
+			c->mSearchBuffer.invalidate();
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  mr        r30, r3
-	  stw       r29, 0x24(r1)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-	  b         .loc_0xAC
-
-	.loc_0x34:
-	  cmpwi     r29, -0x1
-	  bne-      .loc_0x5C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r31, r3
-	  b         .loc_0x78
-
-	.loc_0x5C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r31, r3
-
-	.loc_0x78:
-	  addi      r3, r31, 0x168
-	  bl        -0x3AF58
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x90
-	  addi      r3, r31, 0x1B8
-	  bl        0x3AD4
-
-	.loc_0x90:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-
-	.loc_0xAC:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xD4
-	  li        r0, 0x1
-	  b         .loc_0x100
-
-	.loc_0xD4:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0xFC
-	  li        r0, 0x1
-	  b         .loc_0x100
-
-	.loc_0xFC:
-	  li        r0, 0
-
-	.loc_0x100:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x34
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -243,91 +69,8 @@ void ObjectMgr::invalidateSearch()
  */
 void ObjectMgr::update()
 {
-	CREATURE_ITERATOR(this, idx) { getCreatureCheck(idx)->update(); }
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  stw       r30, 0x20(r1)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x98
-
-	.loc_0x30:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x54
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x6C
-
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x6C:
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xE0(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x98:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC0
-	  li        r0, 0x1
-	  b         .loc_0xEC
-
-	.loc_0xC0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0xE8
-	  li        r0, 0x1
-	  b         .loc_0xEC
-
-	.loc_0xE8:
-	  li        r0, 0
-
-	.loc_0xEC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x30
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	Iterator iter(this);
+	CI_LOOP(iter) { iter.getCreature()->update(); }
 }
 
 /*
@@ -1875,20 +1618,13 @@ int MonoObjectMgr::getNext(int)
  * Address:	800E1694
  * Size:	00001C
  */
-bool MonoObjectMgr::isDone(int)
+bool MonoObjectMgr::isDone(int index)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2C(r3)
-	  cmpw      r4, r0
-	  blt-      .loc_0x14
-	  li        r3, 0x1
-	  blr
+	if (index >= mMaxElements) {
+		return true;
+	}
 
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-	*/
+	return false;
 }
 
 /*

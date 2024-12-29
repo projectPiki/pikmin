@@ -6132,30 +6132,14 @@ PelletMgr::~PelletMgr()
  * Address:	80099360
  * Size:	000008
  */
-int MonoObjectMgr::getSize()
-{
-	return 0;
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x30(r3)
-	  blr
-	*/
-}
+int MonoObjectMgr::getSize() { return mSize; }
 
 /*
  * --INFO--
  * Address:	80099368
  * Size:	000008
  */
-int MonoObjectMgr::getMax()
-{
-	return 0;
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C(r3)
-	  blr
-	*/
-}
+int MonoObjectMgr::getMax() { return mMaxElements; }
 
 /*
  * --INFO--

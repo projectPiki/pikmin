@@ -235,9 +235,6 @@ void Navi::startDayEnd() { _6C0 = 1; }
  */
 void Navi::updateDayEnd(Vector3f& pos)
 {
-	// There are inlines in this function but fuck it.
-	u32 i_wont_do_the_inlines[11];
-
 	if (_6C0) {
 		_6C0 = 0;
 
@@ -250,10 +247,11 @@ void Navi::updateDayEnd(Vector3f& pos)
 		PRINT("******** FORMATION =====================\n");
 
 		int pikiCount = 0;
-		PikiMgr* mgr  = pikiMgr;
-		CREATURE_ITERATOR(mgr, idx)
+
+		Iterator iter(pikiMgr);
+		CI_LOOP(iter)
 		{
-			Piki* piki = static_cast<Piki*>(mgr->getCreatureCheck(idx));
+			Piki* piki = static_cast<Piki*>(iter.getCreature());
 			piki->mFSM->transit(piki, 0);
 
 			if (piki->mMode != 11) {
@@ -1604,9 +1602,9 @@ void Navi::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
  */
 void Navi::enableMotionBlend()
 {
-	_7E0 = mNaviAnimMgr.getBlendAnimator()->getMotionID();
-	mNaviAnimMgr.getBlendAnimator()->startMotion(PaniMotionInfo(PIKIANIM_Nigeru));
-	mNaviAnimMgr.getBlendAnimator()->mCurrentFrame = 10.0f;
+	_7E0 = mNaviAnimMgr.getUpperAnimator().getMotionID();
+	mNaviAnimMgr.getUpperAnimator().startMotion(PaniMotionInfo(PIKIANIM_Nigeru));
+	mNaviAnimMgr.getUpperAnimator().mCurrentFrame = 10.0f;
 }
 
 /*
@@ -8936,8 +8934,8 @@ void Navi::swapMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 {
 	u32 badCompiler[4];
 
-	f32* frame1 = &mNaviAnimMgr.mAnimator.mCurrentFrame;
-	f32* frame2 = &mNaviAnimMgr._58.mCurrentFrame;
+	f32* frame1 = &mNaviAnimMgr.mLowerAnimator.mCurrentFrame;
+	f32* frame2 = &mNaviAnimMgr.mUpperAnimator.mCurrentFrame;
 	f32 val1    = *frame1;
 	f32 val2    = *frame2;
 	mNaviAnimMgr.startMotion(motion1, motion2);

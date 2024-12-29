@@ -342,20 +342,28 @@ void NaviStuckState::exec(Navi* navi)
 	    - hit the A button
 	    - hit the B button
 	*/
-	if (currStickDir.dot(mPrevStickDir) < -0.3f || navi->mKontroller->isPressed(KBBTN_A) || navi->mKontroller->isPressed(KBBTN_B)) {
+	f32 stickMovement = currStickDir.dot(mPrevStickDir);
+	if (stickMovement < -0.3f || navi->mKontroller->isPressed(KBBTN_A) || navi->mKontroller->isPressed(KBBTN_B)) {
 		mActionCount++;
-		if (mActionCount > static_cast<NaviProp*>(navi->mProps)->mNaviProps.mMinKinokoFlickActions()) {
+
+		NaviProp::NaviParms& naviParms = static_cast<NaviProp*>(navi->mProps)->mNaviProps;
+		s32 minFlickActions            = naviParms.mMinKinokoFlickActions();
+		if (mActionCount > minFlickActions) {
 			// after a certain amount of recorded actions, try and flick a puffmin
 			Stickers stickers(navi);
-			Stickers* stickersPtr = &stickers;
-			CREATURE_ITERATOR(stickersPtr, idx)
+			Iterator iter(&stickers);
+			CI_LOOP(iter)
 			{
-				Creature* stuck = stickersPtr->getCreatureCheck(idx);
-				// 50/50 chance to flick a given puffmin
-				if (stuck && coinFlip() && stuck->stimulate(InteractFlick(navi, 220.0f, 5.0f, -1000.0f))) {
+				Creature* stuck = iter.getCreature(); // 50/50 chance to flick a given puffmin
+				if (!stuck || !coinFlip()) {
+					continue;
+				}
+
+				if (stuck->stimulate(InteractFlick(navi, 220.0f, 5.0f, -1000.0f))) {
 					playerState->mResultFlags.setOn(RESFLAG_Unk42);
-					if (idx >= 0) {
-						idx--;
+
+					if (iter.mIndex >= 0) {
+						iter.mIndex--;
 					}
 				}
 			}
@@ -680,10 +688,10 @@ void NaviBuryState::exec(Navi* navi)
 			_10 = stick;
 			if (_1C == 1) {
 				_1C           = 2;
-				f32 frame1Val = navi->mNaviAnimMgr.getAnimator()->mCurrentFrame;
+				f32 frame1Val = navi->mNaviAnimMgr.getLowerAnimator().mCurrentFrame;
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GFuri2, navi), PaniMotionInfo(PIKIANIM_GFuri2));
-				navi->mNaviAnimMgr.getAnimator()->mCurrentFrame = frame1Val;
-				navi->mNaviAnimMgr._58.mCurrentFrame            = frame1Val;
+				navi->mNaviAnimMgr.getLowerAnimator().mCurrentFrame = frame1Val;
+				navi->mNaviAnimMgr.mUpperAnimator.mCurrentFrame     = frame1Val;
 			}
 		}
 		break;
@@ -2818,10 +2826,11 @@ void NaviContainerState::init(Navi* navi)
 	navi->_70C = 1;
 	rumbleMgr->stop();
 	int pikisInParty = 0;
-	CPlate* plate    = navi->mPlateMgr;
-	CREATURE_ITERATOR(plate, idx)
+
+	Iterator iter(navi->mPlateMgr);
+	CI_LOOP(iter)
 	{
-		Piki* piki = static_cast<Piki*>(plate->getCreatureCheck(idx));
+		Piki* piki = (Piki*)iter.getCreature();
 		if (piki->mColor == navi->mGoalItem->_428) {
 			pikisInParty++;
 		}
@@ -3295,8 +3304,8 @@ void NaviPickState::procAnimMsg(Navi* navi, MsgAnim*) { }
 void NaviPickState::init(Navi* navi)
 {
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Pick), PaniMotionInfo(PIKIANIM_Run));
-	navi->mNaviAnimMgr.getAnimator()->mCurrentFrame      = 11.0f;
-	navi->mNaviAnimMgr.getBlendAnimator()->mCurrentFrame = 11.0f;
+	navi->mNaviAnimMgr.getLowerAnimator().mCurrentFrame = 11.0f;
+	navi->mNaviAnimMgr.getUpperAnimator().mCurrentFrame = 11.0f;
 	navi->enableMotionBlend();
 }
 

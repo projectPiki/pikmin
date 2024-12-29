@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Creature.h"
 #include "PaniPikiAnimator.h"
+#include "UtEffect.h"
 #include "OdoMeter.h"
 
 struct TopAction;
@@ -223,7 +224,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u32 _2C8;                     // _2C8
 	u32 _2CC;                     // _2CC
 	u32 _2D0;                     // _2D0
-	u32 _2D4;                     // _2D4
+	u8 _2D4;                      // _2D4
 	u32 _2D8;                     // _2D8
 	u32 _2DC;                     // _2DC
 	u32 _2E0;                     // _2E0
@@ -245,7 +246,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u32 _32C;                     // _32C
 	u8 _330;                      // _330
 	u32 _334;                     // _334
-	u32 _338;                     // _338
+	u32 _338;                     // _338, this is a struct, wtf? (10055D50 in plugPiki sets this to 0)
 	Vector3f* _33C;               // _33C
 	u8 _340;                      // _340
 	f32 _344;                     // _344
@@ -260,9 +261,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u8 _40A[0x424 - 0x40A];       // _40A
 	u8 _424;                      // _424
 	u16 _426;                     // _426
-	u8 _428[0x8];                 // _428
-	u32 _430;                     // _430
-	u32 _434;                     // _434
+	PermanentEffect _428;         // _428
 	u32 _438;                     // _438
 	u32 mPlayerId;                // _43C
 	u32 _440;                     // _440
@@ -285,7 +284,23 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u8 _4A0;                      // _4A0
 	CollPart* mSwallowMouthPart;  // _4A4
 	Creature* _4A8;               // _4A8, maybe puffstool/kinoko leader?
-	u8 _4AC[0x4F8 - 0x4AC];       // _4AC
+	Vector3f _4AC;                // _4AC
+	u32 _4B8;                     // _4B8
+	u32 _4BC;                     // _4BC
+	u32 _4C0;                     // _4C0
+	u32 _4C4;                     // _4C4
+	u32 _4C8;                     // _4C8
+	u32 _4CC;                     // _4CC
+	u32 _4D0;                     // _4D0
+	u32 _4D4;                     // _4D4
+	u32 _4D8;                     // _4D8
+	u32 _4DC;                     // _4DC
+	u32 _4E0;                     // _4E0
+	u32 _4E4;                     // _4E4
+	u32 _4E8;                     // _4E8
+	u32 _4EC;                     // _4EC
+	u32 _4F0;                     // _4F0
+	u32 _4F4;                     // _4F4
 	TopAction* _4F8;              // _4F8, may be just Action*
 	u16 mMode;                    // _4FC, use PikiMode enum
 	u32 _500;                     // _500

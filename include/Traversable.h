@@ -53,10 +53,10 @@ struct Traversable {
 };
 
 /**
- * @brief TODO.
+ * @brief An iterator for traversing a Traversable object.
  */
 struct Iterator {
-	Iterator(Traversable* trav, Condition* condition)
+	Iterator(Traversable* trav, Condition* condition = nullptr)
 	{
 		mTrav      = trav;
 		mCondition = condition;
@@ -127,8 +127,6 @@ struct Iterator {
 	Traversable* mTrav;    // _04
 	Condition* mCondition; // _08
 };
-
-#define CREATURE_ITERATOR(trav, idxname) for (int idxname = (trav)->getFirst(); !(trav)->isEnd(idxname); idxname = (trav)->getNext(idxname))
 
 #define CI_LOOP(iter) for (iter.first(); !iter.isDone(); iter.next())
 
