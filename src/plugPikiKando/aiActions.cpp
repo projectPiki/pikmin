@@ -104,11 +104,11 @@ int ActPick::exec()
 {
 	u32 badCompiler;
 	u32 badCompiler2;
-	mActor->_A4.set(0.0f, 0.0f, 0.0f);
+	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	if (_1C) {
 		if (!mActor->_2AC) {
 			mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
-			mActor->_400 = 1;
+			mActor->mEmotion = 1;
 			return ACTOUT_Fail;
 		}
 
@@ -211,7 +211,7 @@ void ActPut::cleanup() { }
  */
 int ActPut::exec()
 {
-	mActor->_A4.set(0.0f, 0.0f, 0.0f);
+	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
 	Creature* obj = mActor->get2AC();
 	if (!obj) {
@@ -483,8 +483,8 @@ int ActAdjust::exec()
 		return ACTOUT_Fail;
 	}
 
-	mActor->_70 = _30;
-	mActor->_A4 = _30;
+	mActor->mVelocity       = _30;
+	mActor->mTargetVelocity = _30;
 	mActor->mDirection += _2C * gsys->getFrameTime();
 	mActor->mDirection = roundAng(mActor->mDirection);
 	mActor->mRotation.set(0.0f, mActor->mDirection, 0.0f);

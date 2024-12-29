@@ -439,7 +439,7 @@ PlantAI::PlantAI()
 bool PlantAI::OpponentMove::satisfy(AICreature* plant)
 {
 	// this stops inlining if you do it directly for some reason, but goes weird otherwise.
-	Vector3f* vec = &plant->_2BC->_70;
+	Vector3f* vec = &plant->_2BC->mVelocity;
 	f32 dist      = vec->length();
 	if (dist > 40.0f) {
 		return true;

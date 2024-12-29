@@ -299,7 +299,7 @@ DynCreature::DynCreature()
 	_2DC.set(0.0f, 0.0f, 0.0f);
 	_2B8.set(0.0f, 0.0f, 0.0f);
 	_2C4.set(0.0f, 0.0f, 0.0f);
-	_70.set(0.0f, 0.0f, 0.0f);
+	mVelocity.set(0.0f, 0.0f, 0.0f);
 	_438 |= 0x1;
 	/*
 	.loc_0x0:

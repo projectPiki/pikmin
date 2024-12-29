@@ -48,7 +48,7 @@ bool InteractGrab::actCommon(Creature* creature)
 bool InteractRelease::actCommon(Creature* creature)
 {
 	creature->resetStateGrabbed();
-	creature->_70       = mOwner->_70 + Vector3f(0.0f, 100.0f * _08, 0.0f);
+	creature->mVelocity = mOwner->mVelocity + Vector3f(0.0f, 100.0f * _08, 0.0f);
 	creature->mPosition = mOwner->getCatchPos(creature) + Vector3f(0.0f, 8.0f, 0.0f);
 	return true;
 }

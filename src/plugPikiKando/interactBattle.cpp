@@ -251,15 +251,15 @@ bool InteractWind::actPiki(Piki* piki)
 		return false;
 	}
 
-	if ((int)piki->_4FC == 11 || (int)piki->_4FC == 12) {
+	if ((int)piki->mMode == 11 || (int)piki->mMode == 12) {
 		return false;
 	}
 
 	piki->_4F8->abandon(mWindParticles);
 	piki->mFSM->transit(piki, PIKISTATE_Flown);
 
-	piki->_70 = _0C;
-	piki->_A4 = _0C;
+	piki->mVelocity       = _0C;
+	piki->mTargetVelocity = _0C;
 
 	return true;
 }
@@ -422,7 +422,7 @@ bool InteractAttack::actPiki(Piki* piki)
 		piki->mFSM->transit(piki, PIKISTATE_Normal);
 	}
 
-	piki->_A4.set(0.0f, 0.0f, 0.0f);
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
 	if (piki->mHealth <= 0.0f) {
 		piki->finishDamage();
@@ -451,7 +451,7 @@ bool InteractSwallow::actPiki(Piki* piki)
 	piki->_4F8->abandon(nullptr);
 	piki->_4F8->mChildActionIdx = 15;
 	piki->_4F8->initialiseChildAction(nullptr);
-	piki->_4FC = 0;
+	piki->mMode = 0;
 	if (!mMouthPart) {
 		piki->playEventSound(mOwner, 22);
 		piki->kill(false);
@@ -811,7 +811,7 @@ bool InteractPress::actPiki(Piki* piki)
 	piki->mHealth -= mDamage;
 	// update when PikiProps is filled out
 	piki->mLifeGauge.updValue(piki->mHealth, static_cast<PikiProp*>(piki->mProps)->mCreatureProps.mAcceleration());
-	piki->_A4.set(0.0f, 0.0f, 0.0f);
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	return true;
 	/*
 	.loc_0x0:

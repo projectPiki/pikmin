@@ -51,7 +51,7 @@ bool InteractWarn::actPiki(Piki* piki)
 		return false;
 	}
 
-	if (piki->isKinoko() || !piki->_409 || piki->_4FC == 1) {
+	if (piki->isKinoko() || !piki->mIsCallable || piki->mMode == 1) {
 		return false;
 	}
 

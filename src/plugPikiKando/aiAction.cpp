@@ -38,7 +38,7 @@ char* info[9] = {
 void Action::procMsg(Msg* msg)
 {
 	u32 badCompiler;
-	if (mActor->isCreatureFlag(CF_Unk12)) {
+	if (mActor->isCreatureFlag(CF_IsAiDisabled)) {
 		return;
 	}
 
@@ -59,8 +59,8 @@ void Action::procMsg(Msg* msg)
 void Action::Child::initialise(Creature* creature)
 {
 	if (mAction) {
-		mAction->mActor->_400 = 10;
-		mAction->mActor->_408 = 2;
+		mAction->mActor->mEmotion = 10;
+		mAction->mActor->_408     = 2;
 	}
 
 	if (mAction) {

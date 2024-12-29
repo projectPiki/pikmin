@@ -135,8 +135,8 @@ int ActBou::gotoLeg()
 {
 	if (mActor->_188) {
 		mState = STATE_Climb;
-		mActor->_70.set(0.0f, 0.0f, 0.0f);
-		mActor->_A4.set(0.0f, 0.0f, 0.0f);
+		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
+		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mActor->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
 
 		mActor->setCreatureFlag(CF_Unk8);
@@ -151,7 +151,7 @@ int ActBou::gotoLeg()
 	}
 
 	if (--_16 <= 0) {
-		mActor->_400 = 1;
+		mActor->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
@@ -463,9 +463,9 @@ int ActBou::climb()
 		return ACTOUT_Fail;
 	}
 
-	_28         = mActor->mPosition;
-	f32 mag     = (22.0f + randFloat(4.0f));
-	mActor->_70 = _18 * mag;
+	_28               = mActor->mPosition;
+	f32 mag           = (22.0f + randFloat(4.0f));
+	mActor->mVelocity = _18 * mag;
 	return ACTOUT_Continue;
 }
 
@@ -476,8 +476,8 @@ int ActBou::climb()
  */
 void ActBou::cleanup()
 {
-	mActor->_70 = _18 * 150.0f;
-	mActor->_A4 = mActor->_70;
+	mActor->mVelocity       = _18 * 150.0f;
+	mActor->mTargetVelocity = mActor->mVelocity;
 	mActor->endStickObject();
 	mActor->resetCreatureFlag(CF_Unk8);
 	/*

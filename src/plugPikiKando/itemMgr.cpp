@@ -2587,7 +2587,7 @@ void ItemCreature::update()
  */
 void ItemCreature::doAI()
 {
-	if (mStateMachine && !isCreatureFlag(CF_Unk12)) {
+	if (mStateMachine && !isCreatureFlag(CF_IsAiDisabled)) {
 		mStateMachine->exec(this);
 	}
 }

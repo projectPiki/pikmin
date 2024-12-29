@@ -577,7 +577,7 @@ void Creature::init()
 	resetCreatureFlag(CF_Unk19);
 	_21C = 0;
 	setCreatureFlag(CF_Free);
-	resetCreatureFlag(CF_Unk9 | CF_Unk12 | CF_Unk14 | CF_AIAlwaysActive);
+	resetCreatureFlag(CF_Unk9 | CF_IsAiDisabled | CF_Unk14 | CF_AIAlwaysActive);
 	_D0  = 0.0f;
 	_2A8 = nullptr;
 	_2AC = nullptr;
@@ -585,7 +585,7 @@ void Creature::init()
 	clearCnt();
 	mIsBeingDamaged = false;
 
-	setCreatureFlag(CF_Unk3 | CF_Unk4);
+	setCreatureFlag(CF_IsOnGround | CF_Unk4);
 	resetCreatureFlag(CF_Unk5 | CF_Unk7 | CF_Unk8 | CF_Unk11);
 	_BC.set(0.0f, 0.0f, 0.0f);
 	_1AC.set(0.0f, 0.0f, 0.0f);
@@ -913,9 +913,9 @@ Creature::Creature(CreatureProp* props)
 	_288       = 0;
 	mGenerator = nullptr;
 
-	_A4.set(0.0f, 0.0f, 0.0f);
+	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	_B0.set(0.0f, 0.0f, 0.0f);
-	_70.set(0.0f, 0.0f, 0.0f);
+	mVelocity.set(0.0f, 0.0f, 0.0f);
 	mRotation.set(0.0f, 0.0f, 0.0f);
 	mPosition.set(0.0f, 0.0f, 0.0f);
 	mScale.set(1.0f, 1.0f, 1.0f);

@@ -57,8 +57,8 @@ void ActAttack::init(Creature* creature)
 		return;
 	}
 
-	mActor->_408 = 0;
-	mActor->_400 = 5;
+	mActor->_408     = 0;
+	mActor->mEmotion = 5;
 	mActor->getState(); // some debug thing probably
 
 	if (!creature) {
@@ -190,7 +190,7 @@ int ActAttack::exec()
 	}
 
 	if (_1C) {
-		mActor->_A4.set(0.0f, 0.0f, 0.0f);
+		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		if (_1D) {
 			return ACTOUT_Success;
 		}
@@ -219,7 +219,7 @@ int ActAttack::exec()
 	if (_24->mObjType == OBJTYPE_Piki) {
 		Piki* targetPiki = static_cast<Piki*>(_24);
 		if (!targetPiki->isKinoko() || (targetPiki->isKinoko() && targetPiki->getState() == PIKISTATE_KinokoChange)) {
-			mActor->_400 = 7;
+			mActor->mEmotion = 7;
 			return ACTOUT_Success;
 		}
 	}
@@ -552,8 +552,8 @@ void ActJumpAttack::init(Creature* creature)
 	u32 badCompiler; // hmm.
 	u32 badCompiler2;
 
-	mActor->_408 = 0;
-	mActor->_400 = 5;
+	mActor->_408     = 0;
+	mActor->mEmotion = 5;
 	if (creature) {
 		if (_24) {
 			resetCreature(_24);
@@ -748,8 +748,8 @@ void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
 	_18 = 5;
 	_2D = 0;
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
-	_20        = 0;
-	piki->_470 = 0;
+	_20                = 0;
+	piki->mWantToStick = 0;
 }
 
 /*
@@ -829,8 +829,8 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 	}
 
-	_20        = 0;
-	piki->_470 = 0;
+	_20                = 0;
+	piki->mWantToStick = 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2071,7 +2071,7 @@ int ActJumpAttack::exec()
 void ActJumpAttack::cleanup()
 {
 	resetCreature(_24);
-	mActor->_470 = 0;
+	mActor->mWantToStick = 0;
 }
 
 /*

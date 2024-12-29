@@ -117,7 +117,7 @@ int ActStone::exeApproach()
 	u32 badCompiler3;
 	u32 badCompiler4;
 	if (!mCurrPebble || mCurrPebble->_0E == 0) {
-		mActor->_400 = 1;
+		mActor->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
@@ -271,7 +271,7 @@ int ActStone::exeAdjust()
 	u32 badCompiler3;
 	u32 badCompiler4;
 	if (!mCurrPebble || mCurrPebble->_0E == 0) {
-		mActor->_400 = 1;
+		mActor->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
@@ -281,8 +281,8 @@ int ActStone::exeAdjust()
 
 	if (dist < 20.0f) {
 		initAttack();
-		mActor->_A4.set(0.0f, 0.0f, 0.0f);
-		mActor->_70.set(0.0f, 0.0f, 0.0f);
+		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
 		return ACTOUT_Continue;
 	}
 
@@ -448,8 +448,8 @@ int ActStone::exeAttack()
 		return ACTOUT_Continue;
 	}
 
-	mActor->_A4.set(0.0f, 0.0f, 0.0f);
-	mActor->_70.set(0.0f, 0.0f, 0.0f);
+	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
 	if (_28) {
 		initAttack();
 		return ACTOUT_Continue;

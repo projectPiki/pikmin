@@ -45,9 +45,9 @@ ActBreakWall::ActBreakWall(Piki* piki)
  */
 void ActBreakWall::init(Creature* creature)
 {
-	_31          = 0;
-	mActor->_408 = 2;
-	mActor->_400 = 0;
+	_31              = 0;
+	mActor->_408     = 2;
+	mActor->mEmotion = 0;
 
 	if (creature->isWall()) {
 		mWall = static_cast<BuildingItem*>(creature);
@@ -55,10 +55,10 @@ void ActBreakWall::init(Creature* creature)
 		mWall = nullptr;
 	}
 
-	mState       = STATE_GotoWall;
-	_32          = 0;
-	mActor->_470 = 0;
-	_30          = randFloat(4.0f);
+	mState               = STATE_GotoWall;
+	_32                  = 0;
+	mActor->mWantToStick = 0;
+	_30                  = randFloat(4.0f);
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 

@@ -1,23 +1,21 @@
 #include "PikiAI.h"
 #include "Interactions.h"
 #include "Dolphin/os.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "aiBoMake"); }
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("aiBoMake");
 
 /*
  * --INFO--
@@ -52,11 +50,12 @@ void ActBoMake::init(Creature* creature)
 int ActBoMake::exec()
 {
 	if (!mBuildObject) {
+		PRINT("done!\n");
 		return ACTOUT_Fail;
 	}
 
 	if (!mBuildObject->isAlive()) {
-		mActor->_400 = 0;
+		mActor->mEmotion = 0;
 		return ACTOUT_Success;
 	}
 

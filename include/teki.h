@@ -335,7 +335,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 
 	inline f32 getParticleFactor() { return getParameterF(19); } // rename later when we know what this is
 
-	inline f32 doGetVelocityAnimSpeed() { return getVelocityAnimationSpeed(_A4.length()); }
+	inline f32 doGetVelocityAnimSpeed() { return getVelocityAnimationSpeed(mTargetVelocity.length()); }
 
 	// this is basically two static enums smh
 	static int TEKI_OPTION_VISIBLE;

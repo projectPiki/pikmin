@@ -544,7 +544,7 @@ void BTeki::reset()
 	mCollisionRadius = getParameterF(TPF_CollisionRadius);
 
 	prepareEffects();
-	reset70andA4();
+	resetVelocity();
 
 	getCentreSize();
 	/*
@@ -1061,7 +1061,7 @@ void BTeki::startMotion(int motionID)
  */
 void BTeki::startStoppingMove()
 {
-	reset70andA4();
+	resetVelocity();
 	setTekiOption(TEKIOPT_StoppingMove);
 	_3B8 = _3AC;
 }

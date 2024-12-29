@@ -256,13 +256,13 @@ void Navi::updateDayEnd(Vector3f& pos)
 			Piki* piki = static_cast<Piki*>(mgr->getCreatureCheck(idx));
 			piki->mFSM->transit(piki, 0);
 
-			if (piki->_4FC != 11) {
+			if (piki->mMode != 11) {
 				piki->changeMode(1, piki->mNavi);
 				piki->resetVariables(); // 100AEC30 in plugPiki
 				piki->setPositionA(&piki->mNavi->mPosition);
 				pikiCount++;
 
-				if (piki->_4FC != 1) {
+				if (piki->mMode != 1) {
 					ERROR("nandeyanen!");
 				}
 
@@ -292,10 +292,10 @@ void Navi::updateDayEnd(Vector3f& pos)
 	_790      = mPosition;
 	mPosition = pos;
 
-	_70           = pos - _790;
-	f32 length    = _70.length();
+	mVelocity     = pos - _790;
+	f32 length    = mVelocity.length();
 	f32 frameTime = 1.0f / gsys->getFrameTime();
-	_70.multiply(frameTime);
+	mVelocity.multiply(frameTime);
 
 	/*
 	.loc_0x0:
@@ -1051,7 +1051,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	memStat->end("naviCaster");
 
 	memStat->start("naviEff");
-	mBurnEffect   = new BurnEffect(&_70);
+	mBurnEffect   = new BurnEffect(&mVelocity);
 	mRippleEffect = new RippleEffect();
 	_774          = new PermanentEffect();
 	_778          = new PermanentEffect();
@@ -1089,8 +1089,8 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mScale.makeIdentity();
 	mRotation.set(0.0f, 0.0f, 0.0f);
 	mPosition.set(0.0f, 0.0f, 0.0f);
-	_70.set(0.0f, 0.0f, 0.0f);
-	_A4.set(0.0f, 0.0f, 0.0f);
+	mVelocity.set(0.0f, 0.0f, 0.0f);
+	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	_268        = 0.0f;
 	mKontroller = new Kontroller(naviID + 1);
 	_26C        = 20.0f;

@@ -99,7 +99,7 @@ int ActFreeSelect::exec()
 	}
 
 	if (mIsTimerActive) {
-		mActor->_A4.set(0.0f, 0.0f, 0.0f);
+		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mActionTimer -= gsys->getFrameTime();
 		if (mActionTimer < 0.0f) {
 			determine();
@@ -189,9 +189,9 @@ void ActFreeSelect::determine()
 		}
 
 		// these are probably not distances, rename later
-		f32 enemyDist = (nearestEnemy) ? nearestEnemy->_70.length() : 0.0f;
-		f32 itemDist  = (nearestItem) ? nearestItem->_70.length() : 0.0f;
-		f32 naviDist  = (nearestNavi) ? nearestNavi->_70.length() : 0.0f;
+		f32 enemyDist = (nearestEnemy) ? nearestEnemy->mVelocity.length() : 0.0f;
+		f32 itemDist  = (nearestItem) ? nearestItem->mVelocity.length() : 0.0f;
+		f32 naviDist  = (nearestNavi) ? nearestNavi->mVelocity.length() : 0.0f;
 
 		if (enemyDist > itemDist && enemyDist > naviDist) {
 			target = nearestEnemy;
@@ -500,7 +500,7 @@ int ActBoreSelect::exec()
 	}
 
 	if (mIsTimerActive) {
-		mActor->_A4.set(0.0f, 0.0f, 0.0f);
+		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mActionTimer -= gsys->getFrameTime();
 		if (mActionTimer < 0.0f) {
 			determine();
@@ -727,9 +727,9 @@ void ActBoreSelect::determine()
 		}
 
 		// these are probably not distances, rename later
-		f32 enemyDist = (nearestEnemy) ? nearestEnemy->_70.length() : 0.0f;
-		f32 itemDist  = (nearestItem) ? nearestItem->_70.length() : 0.0f;
-		f32 naviDist  = (nearestNavi) ? nearestNavi->_70.length() : 0.0f;
+		f32 enemyDist = (nearestEnemy) ? nearestEnemy->mVelocity.length() : 0.0f;
+		f32 itemDist  = (nearestItem) ? nearestItem->mVelocity.length() : 0.0f;
+		f32 naviDist  = (nearestNavi) ? nearestNavi->mVelocity.length() : 0.0f;
 
 		if (enemyDist > itemDist && enemyDist > naviDist) {
 			target = nearestEnemy;
@@ -1081,7 +1081,7 @@ void ActBoreTalk::startTalk()
 	mActor->enableMotionBlend();
 	_20 = randFloat(2.0f) + 5.0f;
 
-	if (mActor->_4FC == 1 && mActor->mNavi->mPlateMgr && mActor->mNavi->mCurrState->getStateID() != NAVISTATE_DemoSunset
+	if (mActor->mMode == 1 && mActor->mNavi->mPlateMgr && mActor->mNavi->mCurrState->getStateID() != NAVISTATE_DemoSunset
 	    && mActor->mNavi->mCurrState->getStateID() != NAVISTATE_Dead) {
 		seMgr->setPikiNum(0);
 	}

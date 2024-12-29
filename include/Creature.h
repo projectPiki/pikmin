@@ -35,7 +35,7 @@ struct SeContext;
 enum CreatureFlags {
 	CF_Unk1           = 1 << 0,  // 0x1
 	CF_Unk2           = 1 << 1,  // 0x2
-	CF_Unk3           = 1 << 2,  // 0x4
+	CF_IsOnGround     = 1 << 2,  // 0x4
 	CF_Unk4           = 1 << 3,  // 0x8
 	CF_Unk5           = 1 << 4,  // 0x10
 	CF_Unk6           = 1 << 5,  // 0x20
@@ -44,7 +44,7 @@ enum CreatureFlags {
 	CF_Unk9           = 1 << 8,  // 0x100
 	CF_Unk10          = 1 << 9,  // 0x200
 	CF_Unk11          = 1 << 10, // 0x400
-	CF_Unk12          = 1 << 11, // 0x800
+	CF_IsAiDisabled   = 1 << 11, // 0x800, aka aiSTOP
 	CF_Free           = 1 << 12, // 0x1000
 	CF_Unk14          = 1 << 13, // 0x2000
 	CF_StuckToObject  = 1 << 14, // 0x4000, stuck to an object
@@ -218,10 +218,10 @@ struct Creature : public RefCountable, public EventTalker {
 		    || mObjType == OBJTYPE_SluiceBombHard;
 	}
 
-	inline void reset70andA4()
-	{ // TODO: rename when we know what _70 and _A4 are
-		_70.reset();
-		_A4.reset();
+	inline void resetVelocity()
+	{
+		mVelocity.reset();
+		mTargetVelocity.reset();
 	}
 
 	inline bool isStuckTo(Creature* creature) { return mStickTarget == creature; }
@@ -254,13 +254,13 @@ struct Creature : public RefCountable, public EventTalker {
 	u8 _60;                     // _60
 	Generator* mGenerator;      // _64
 	u32 _68;                    // _68, might be int
-	EObjType mObjType;          // _6C, object type
-	Vector3f _70;               // _70
+	EObjType mObjType;          // _6C
+	Vector3f mVelocity;         // _70
 	Vector3f mScale;            // _7C
 	Vector3f mRotation;         // _88
 	Vector3f mPosition;         // _94
 	f32 mDirection;             // _A0
-	Vector3f _A4;               // _A4
+	Vector3f mTargetVelocity;   // _A4
 	Vector3f _B0;               // _B0
 	Vector3f _BC;               // _BC
 	u32 mCreatureFlags;         // _C8, bitflag

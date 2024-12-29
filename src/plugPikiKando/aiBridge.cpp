@@ -42,10 +42,10 @@ ActBridge::ActBridge(Piki* piki)
  */
 void ActBridge::init(Creature* creature)
 {
-	_32 = _33    = 0;
-	mActor->_408 = 2;
-	mActor->_400 = 0;
-	mBridge      = nullptr;
+	_32 = _33        = 0;
+	mActor->_408     = 2;
+	mActor->mEmotion = 0;
+	mBridge          = nullptr;
 
 	if (creature && creature->mObjType == OBJTYPE_WorkObject) {
 		WorkObject* bridge = static_cast<WorkObject*>(creature);
@@ -142,7 +142,7 @@ bool ActBridge::collideBridgeBlocker()
 int ActBridge::exec()
 {
 	if (!mBridge) {
-		mActor->_400 = 1;
+		mActor->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
@@ -337,7 +337,7 @@ void ActBridge::newInitApproach()
 int ActBridge::newExeApproach()
 {
 	if (!mBridge) {
-		mActor->_400 = 1;
+		mActor->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
@@ -366,7 +366,7 @@ int ActBridge::newExeApproach()
 				direction         = zVec;
 				mActor->setSpeed(0.7f, direction);
 			} else {
-				mActor->_400 = 1;
+				mActor->mEmotion = 1;
 				return ACTOUT_Fail;
 			}
 		} else {
@@ -667,7 +667,7 @@ int ActBridge::newExeGo()
 	}
 
 	if (!mBridge) {
-		mActor->_400 = 1;
+		mActor->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
@@ -962,7 +962,7 @@ int ActBridge::newExeWork()
 	if (collideBridgeBlocker()) {
 		mCollisionCount = 0;
 	} else {
-		mActor->_A4.set(0.0f, 0.0f, 0.0f);
+		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mCollisionCount++;
 
 		if (mCollisionCount > 3) {
@@ -977,7 +977,7 @@ int ActBridge::newExeWork()
 	}
 
 	if (!mBridge->workable(mActor->mPosition)) {
-		mActor->_400 = 1;
+		mActor->mEmotion = 1;
 		mActor->resetCreatureFlag(CF_Unk18);
 		return ACTOUT_Fail;
 	}

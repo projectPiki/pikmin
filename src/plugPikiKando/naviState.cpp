@@ -129,7 +129,7 @@ void NaviPelletState::init(Navi* navi)
  */
 void NaviPelletState::exec(Navi* navi)
 {
-	navi->_70.set(0.0f, 0.0f, 0.0f);
+	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	if (!mIsFinished && navi->mPellet) {
 		navi->mPosition = navi->mPellet->mPosition;
 	}
@@ -210,8 +210,8 @@ void NaviDemoWaitState::init(Navi* navi)
 	navi->mLookAtPosPtr = &mLookAtPos;
 	navi->_2F0          = 0;
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
-	navi->_70.set(0.0f, 0.0f, 0.0f);
-	navi->_A4.set(0.0f, 0.0f, 0.0f);
+	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
+	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	if (navi->mGoalItem) {
 		navi->mGoalItem->setSpotActive(false);
 	}
@@ -225,8 +225,8 @@ void NaviDemoWaitState::init(Navi* navi)
 void NaviDemoWaitState::exec(Navi* navi)
 {
 	gameflow.mMoviePlayer->getLookAtPos(mLookAtPos);
-	navi->_70.set(0.0f, 0.0f, 0.0f);
-	navi->_A4.set(0.0f, 0.0f, 0.0f);
+	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
+	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->_BC.set(0.0f, 0.0f, 0.0f);
 	if (!gameflow.mMoviePlayer->_124) {
 		navi->_774->restart();
@@ -280,7 +280,7 @@ void NaviDemoInfState::init(Navi* navi) { }
  * Address:	80102D64
  * Size:	00001C
  */
-void NaviDemoInfState::exec(Navi* navi) { navi->_70.set(0.0f, 0.0f, 0.0f); }
+void NaviDemoInfState::exec(Navi* navi) { navi->mVelocity.set(0.0f, 0.0f, 0.0f); }
 
 /*
  * --INFO--
@@ -638,8 +638,8 @@ void NaviBuryState::init(Navi* navi)
 	effectMgr->create(EffectMgr::EFF_Unk50, navi->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Unk51, navi->mPosition, nullptr, nullptr);
 	_10.set(0.0f, 0.0f, 0.0f);
-	navi->_70.set(0.0f, 0.0f, 0.0f);
-	navi->_A4.set(0.0f, 0.0f, 0.0f);
+	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
+	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	_1F = 150;
 }
 
@@ -2406,8 +2406,8 @@ void NaviUfoState::exec(Navi* navi)
 			}
 			_21     = 1;
 			f32 rot = angDist(roundAng(-ufo->mDirection), navi->mDirection);
-			navi->_70.set(0.0f, 0.0f, 0.0f);
-			navi->_A4.set(0.0f, 0.0f, 0.0f);
+			navi->mVelocity.set(0.0f, 0.0f, 0.0f);
+			navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			if (absF(rot) < 0.15707964f) {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 				_10 = 1;
@@ -2425,20 +2425,20 @@ void NaviUfoState::exec(Navi* navi)
 			navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 			_10 = 1;
 			effectMgr->create(EffectMgr::EFF_Unk0, navi->mPosition, nullptr, nullptr);
-			navi->_70.set(0.0f, 0.0f, 0.0f);
-			navi->_A4.set(0.0f, 0.0f, 0.0f);
+			navi->mVelocity.set(0.0f, 0.0f, 0.0f);
+			navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			return;
 		} else {
-			_14       = navi->mPosition;
-			navi->_70 = dirToGoal * 60.0f;
-			navi->_A4 = dirToGoal * 60.0f;
+			_14                   = navi->mPosition;
+			navi->mVelocity       = dirToGoal * 60.0f;
+			navi->mTargetVelocity = dirToGoal * 60.0f;
 		}
 	}
 
 	if (_10 == 1) {
-		navi->_70.set(0.0f, 0.0f, 0.0f);
+		navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 		navi->_BC.set(0.0f, 0.0f, 0.0f);
-		navi->_A4.set(0.0f, 0.0f, 0.0f);
+		navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	}
 
 	if (_10 == 2 && --_12 == 0) {
@@ -3529,8 +3529,8 @@ void NaviRopeExitState::init(Navi* navi)
 	navi->endRope();
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Jump, navi), PaniMotionInfo(PIKIANIM_Jump));
 	f32 angle = navi->mDirection;
-	navi->_70.set(50.0f * sinf(angle), 200.0f, 50.0f * cosf(angle));
-	navi->_A4 = navi->_70;
+	navi->mVelocity.set(50.0f * sinf(angle), 200.0f, 50.0f * cosf(angle));
+	navi->mTargetVelocity = navi->mVelocity;
 }
 
 /*
@@ -3581,7 +3581,7 @@ void NaviFunbariState::init(Navi* navi)
  * Address:	80105C7C
  * Size:	00001C
  */
-void NaviFunbariState::exec(Navi* navi) { navi->_A4.set(0.0f, 0.0f, 0.0f); }
+void NaviFunbariState::exec(Navi* navi) { navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f); }
 
 /*
  * --INFO--
@@ -3703,11 +3703,11 @@ NaviFlickState::NaviFlickState()
  */
 void NaviFlickState::init(Navi* navi)
 {
-	_10         = 0;
-	_18         = navi->mDirection;
-	_1C         = 0.1f * randFloat(PI);
-	navi->_70.y = 0.0f;
-	_20         = navi->_704 + 0.1f * navi->_704 * randFloat();
+	_10               = 0;
+	_18               = navi->mDirection;
+	_1C               = 0.1f * randFloat(PI);
+	navi->mVelocity.y = 0.0f;
+	_20               = navi->_704 + 0.1f * navi->_704 * randFloat();
 	navi->startMotion(PaniMotionInfo(PIKIANIM_JHit, navi), PaniMotionInfo(PIKIANIM_JHit));
 	/*
 	.loc_0x0:
@@ -3797,10 +3797,10 @@ void NaviFlickState::init(Navi* navi)
 void NaviFlickState::exec(Navi* navi)
 {
 	if (_10 == 0) {
-		f32 speed        = _20;
-		navi->_70.x      = -speed * sinf(_18);
-		navi->_70.z      = -speed * cosf(_18);
-		navi->mDirection = roundAng(navi->mDirection + _1C);
+		f32 speed         = _20;
+		navi->mVelocity.x = -speed * sinf(_18);
+		navi->mVelocity.z = -speed * cosf(_18);
+		navi->mDirection  = roundAng(navi->mDirection + _1C);
 		return;
 	}
 
@@ -3810,15 +3810,15 @@ void NaviFlickState::exec(Navi* navi)
 			navi->startMotion(PaniMotionInfo(PIKIANIM_GetUp, navi), PaniMotionInfo(PIKIANIM_GetUp));
 			_10 = 3;
 		}
-		navi->_70.x = navi->_70.x * 0.9f;
-		navi->_70.z = navi->_70.z * 0.9f;
-		navi->_A4.set(0.0f, 0.0f, 0.0f);
+		navi->mVelocity.x = navi->mVelocity.x * 0.9f;
+		navi->mVelocity.z = navi->mVelocity.z * 0.9f;
+		navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		return;
 	}
 
-	navi->_70.x = navi->_70.x * 0.9f;
-	navi->_70.z = navi->_70.z * 0.9f;
-	navi->_A4.set(0.0f, 0.0f, 0.0f);
+	navi->mVelocity.x = navi->mVelocity.x * 0.9f;
+	navi->mVelocity.z = navi->mVelocity.z * 0.9f;
+	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
 /*

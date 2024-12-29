@@ -38,6 +38,38 @@ enum PikiHappa {
 	PikiMaxHappa = Flower,
 };
 
+// clang-format off
+DEFINE_ENUM_TYPE(
+	PikiMode,
+
+    FreeMode = 0, 
+    FormationMode,
+    AttackMode,
+    NukuMode,
+    GuardMode,
+    PickMode,
+    DecoyMode,
+    ArrowMode,
+    CarryMode,
+    TransportMode,
+    RopeMode,
+    EnterMode,
+    ExitMode,
+    BreakwallMode,
+    MineMode,
+    KinokoMode,
+    BridgeMode,
+    PushstoneMode,
+    PutbombMode,
+    RescueMode,
+    WeedMode,
+    PebbleMode,
+    BomakeMode,
+    BoMode,
+    WarriorMode
+);
+// clang-format on
+
 /**
  * @brief TODO
  */
@@ -219,40 +251,51 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u32 _34C;                     // _34C
 	u32 _350;                     // _350
 	PaniPikiAnimMgr mPikiAnimMgr; // _354
-	u8 _400;                      // _400
-	u8 _401[0x408 - 0x401];       // _401, unknown
+	u8 mEmotion;                  // _400
+	u8 _401[0x408 - 0x401];       // _401
 	u8 _408;                      // _408
-	u8 _409;                      // _409
-	u8 _40A[0x424 - 0x40A];       // _40A, unknown
+	bool mIsCallable;             // _409
+	u8 _40A[0x424 - 0x40A];       // _40A
 	u8 _424;                      // _424
 	u16 _426;                     // _426
-	u8 _428[0x8];                 // _428, unknown
-	u32 _430;                     // _430, unknown
-	u8 _434[0x464 - 0x434];       // _434, unknown
+	u8 _428[0x8];                 // _428
+	u32 _430;                     // _430
+	u32 _434;                     // _434
+	u32 _438;                     // _438
+	u32 mPlayerId;                // _43C
+	u32 _440;                     // _440
+	u32 _444;                     // _444
+	u32 _448;                     // _448
+	u32 _44C;                     // _44C
+	u32 _450;                     // _450
+	u32 _454;                     // _454
+	u32 _458;                     // _458
+	u32 _45C;                     // _45C
+	u32 _460;                     // _460
 	Vector3f _464;                // _464
-	u8 _470;                      // _470
-	u8 _471[0x48C - 0x471];       // _471, unknown
+	u8 mWantToStick;              // _470
+	u8 _471[0x48C - 0x471];       // _471
 	f32 _48C;                     // _48C
 	PikiStateMachine* mFSM;       // _490
-	u8 _494[0x4];                 // _494, unknown
+	u8 _494[0x4];                 // _494
 	f32 _498;                     // _498, knockback? impulse velocity magnitude?
 	f32 mRotationAngle;           // _49C
 	u8 _4A0;                      // _4A0
 	CollPart* mSwallowMouthPart;  // _4A4
 	Creature* _4A8;               // _4A8, maybe puffstool/kinoko leader?
-	u8 _4AC[0x4F8 - 0x4AC];       // _4AC, unknown
+	u8 _4AC[0x4F8 - 0x4AC];       // _4AC
 	TopAction* _4F8;              // _4F8, may be just Action*
-	u16 _4FC;                     // _4FC
-	u32 _500;                     // _500, unknown
+	u16 mMode;                    // _4FC, use PikiMode enum
+	u32 _500;                     // _500
 	Navi* mNavi;                  // _504
-	u8 _508[0x8];                 // _508, unknown
+	u8 _508[0x8];                 // _508
 	u16 mColor;                   // _510, red/yellow/blue
-	u8 _512[0x518 - 0x512];       // _4FC, TODO: work out members
+	u8 _512[0x518 - 0x512];       // _4FC
 	u8 _518;                      // _518
 	u8 _519;                      // _519
-	u8 _51A[0x520 - 0x51A];       // _51A, unknown
+	u8 _51A[0x520 - 0x51A];       // _51A
 	int mHappa;                   // _520, leaf/bud/flower
-	u8 _524[0x585 - 0x524];       // _524, TODO: work out members
+	u8 _524[0x585 - 0x524];       // _524
 };
 
 /**
