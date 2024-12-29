@@ -1,66 +1,35 @@
 #include "Pom.h"
+#include "EffectMgr.h"
+#include "SoundMgr.h"
+#include "DebugLog.h"
+
+static u32 pomSE[] = {
+	0x54, 0x9D, 0x9E, 0x9F, 0xA0, 0xA1,
+};
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("PomAi");
 
 /*
  * --INFO--
  * Address:	80178558
  * Size:	000074
  */
-PomAi::PomAi(Pom*)
+PomAi::PomAi(Pom* pom)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r1)
-	  subi      r0, r5, 0x246C
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0xD94
-	  li        r3, 0x8
-	  stw       r0, 0x0(r31)
-	  stw       r4, 0x4(r31)
-	  bl        -0x131588
-	  cmplwi    r3, 0
-	  beq-      .loc_0x58
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0xDF0
-	  stw       r0, 0x0(r3)
-
-	.loc_0x58:
-	  stw       r3, 0x20(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mPom              = pom;
+	mOpenStarCallBack = new PomGenOpenStarCallBack;
 }
 
 /*
@@ -68,120 +37,35 @@ PomAi::PomAi(Pom*)
  * Address:	801785CC
  * Size:	000194
  */
-void PomAi::initAI(Pom*)
+void PomAi::initAI(Pom* pom)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x98(r1)
-	  stw       r31, 0x94(r1)
-	  mr        r31, r3
-	  stw       r30, 0x90(r1)
-	  stw       r4, 0x4(r3)
-	  lwz       r4, 0x4(r3)
-	  lwz       r3, 0x224(r4)
-	  lwz       r0, 0x2C0(r3)
-	  cmpwi     r0, 0x2
-	  bge-      .loc_0x78
-	  li        r0, 0x2
-	  stw       r0, 0x2E4(r4)
-	  addi      r5, r31, 0
-	  addi      r3, r1, 0x70
-	  lwz       r6, 0x4(r31)
-	  li        r4, 0xA
-	  stw       r0, 0x2E8(r6)
-	  bl        -0x5968C
-	  lwz       r5, 0x4(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x59468
-	  lwz       r3, 0x4(r31)
-	  bl        -0xEE364
-	  lfs       f0, -0x5218(r2)
-	  lwz       r3, 0x4(r31)
-	  stfs      f0, 0x368(r3)
-	  b         .loc_0xB0
+	mPom = pom;
+	if (static_cast<PomProp*>(mPom->mProps)->mPomProps.mOpenOnInteractionOnly() < 2) {
+		mPom->setCurrStateID(2);
+		mPom->setNextStateID(2);
+		mPom->mAnimator.startMotion(PaniMotionInfo(10, this));
+		mPom->enableStick();
+		mPom->mAnimator.setCurrentFrame(28.0f);
+	} else {
+		mPom->setCurrStateID(1);
+		mPom->setNextStateID(1);
+		mPom->mAnimator.startMotion(PaniMotionInfo(2, this));
+		mPom->disableStick();
+	}
 
-	.loc_0x78:
-	  li        r0, 0x1
-	  stw       r0, 0x2E4(r4)
-	  addi      r5, r31, 0
-	  addi      r3, r1, 0x68
-	  lwz       r6, 0x4(r31)
-	  li        r4, 0x2
-	  stw       r0, 0x2E8(r6)
-	  bl        -0x596D4
-	  lwz       r5, 0x4(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x594B0
-	  lwz       r3, 0x4(r31)
-	  bl        -0xEE364
+	mPom->setMotionSpeed(30.0f);
+	_08 = 1;
+	_09 = 0;
+	_0A = 0;
+	_0C = 0;
+	_10 = 0;
 
-	.loc_0xB0:
-	  lfs       f0, -0x5214(r2)
-	  li        r3, 0x1
-	  lwz       r4, 0x4(r31)
-	  li        r0, 0
-	  stfs      f0, 0x2D8(r4)
-	  stb       r3, 0x8(r31)
-	  stb       r0, 0x9(r31)
-	  stb       r0, 0xA(r31)
-	  stw       r0, 0xC(r31)
-	  stw       r0, 0x10(r31)
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0x224(r3)
-	  addi      r3, r4, 0x270
-	  lwz       r0, 0x280(r4)
-	  lwz       r3, 0x0(r3)
-	  sub       r3, r0, r3
-	  addic.    r30, r3, 0x1
-	  ble-      .loc_0xFC
-	  b         .loc_0x100
-
-	.loc_0xFC:
-	  neg       r30, r30
-
-	.loc_0x100:
-	  bl        0x9F9A4
-	  xoris     r0, r3, 0x8000
-	  lwz       r3, 0x4(r31)
-	  stw       r0, 0x8C(r1)
-	  lis       r4, 0x4330
-	  xoris     r0, r30, 0x8000
-	  lwz       r3, 0x224(r3)
-	  stw       r4, 0x88(r1)
-	  lfd       f4, -0x5200(r2)
-	  lfd       f0, 0x88(r1)
-	  stw       r0, 0x84(r1)
-	  fsubs     f1, f0, f4
-	  lfs       f0, -0x520C(r2)
-	  stw       r4, 0x80(r1)
-	  lfs       f2, -0x5210(r2)
-	  fdivs     f3, f1, f0
-	  lfd       f0, 0x80(r1)
-	  lfs       f1, -0x5208(r2)
-	  lwz       r3, 0x270(r3)
-	  fsubs     f0, f0, f4
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f1, f0
-	  fmuls     f0, f0, f2
-	  fctiwz    f0, f0
-	  stfd      f0, 0x78(r1)
-	  lwz       r0, 0x7C(r1)
-	  add       r0, r3, r0
-	  stw       r0, 0x14(r31)
-	  lfs       f0, -0x5204(r2)
-	  stfs      f0, 0x1C(r31)
-	  stfs      f0, 0x18(r31)
-	  lwz       r0, 0x9C(r1)
-	  lwz       r31, 0x94(r1)
-	  lwz       r30, 0x90(r1)
-	  addi      r1, r1, 0x98
-	  mtlr      r0
-	  blr
-	*/
+	// splitting this monstrosity up into temps would be better. however, that destroys the stack :')
+	_14 = static_cast<PomProp*>(mPom->mProps)->mPomProps.mMinCycles()
+	    + int(randFloat(absVal(static_cast<PomProp*>(mPom->mProps)->mPomProps.mMaxCycles()
+	                           - static_cast<PomProp*>(mPom->mProps)->mPomProps.mMinCycles() + 1)));
+	_1C = 0.0f;
+	_18 = 0.0f;
 }
 
 /*
@@ -189,58 +73,25 @@ void PomAi::initAI(Pom*)
  * Address:	80178760
  * Size:	00007C
  */
-void PomAi::animationKeyUpdated(PaniAnimKeyEvent&)
+void PomAi::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x2C
-	  cmpwi     r0, 0
-	  beq-      .loc_0x5C
-	  bge-      .loc_0x44
-	  b         .loc_0x6C
-
-	.loc_0x2C:
-	  cmpwi     r0, 0x7
-	  beq-      .loc_0x64
-	  bge-      .loc_0x6C
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x54
-	  b         .loc_0x6C
-
-	.loc_0x44:
-	  bl        .loc_0x7C
-	  b         .loc_0x6C
-
-	.loc_0x4C:
-	  bl        0x74
-	  b         .loc_0x6C
-
-	.loc_0x54:
-	  bl        0x88
-	  b         .loc_0x6C
-
-	.loc_0x5C:
-	  bl        0x94
-	  b         .loc_0x6C
-
-	.loc_0x64:
-	  lwz       r4, 0x4(r4)
-	  bl        0x150
-
-	.loc_0x6C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x7C:
-	*/
+	switch (event.mEventType) {
+	case KEY_Action0:
+		keyAction0();
+		break;
+	case KEY_Action1:
+		keyAction1();
+		break;
+	case KEY_LoopEnd:
+		keyLoopEnd();
+		break;
+	case KEY_Done:
+		keyFinished();
+		break;
+	case KEY_PlaySound:
+		playSound(event.mValue);
+		break;
+	}
 }
 
 /*
@@ -250,30 +101,11 @@ void PomAi::animationKeyUpdated(PaniAnimKeyEvent&)
  */
 void PomAi::keyAction0()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x4(r3)
-	  lwz       r0, 0x2E4(r4)
-	  cmpwi     r0, 0x5
-	  bne-      .loc_0x24
-	  bl        0x584
-	  b         .loc_0x34
-
-	.loc_0x24:
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x34
-	  mr        r3, r4
-	  bl        -0xEE540
-
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mPom->getCurrStateID() == 5) {
+		createPikiHead();
+	} else if (mPom->getCurrStateID() == 2) {
+		mPom->enableStick();
+	}
 }
 
 /*
@@ -283,16 +115,9 @@ void PomAi::keyAction0()
  */
 void PomAi::keyAction1()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x4(r3)
-	  lwz       r0, 0x2E4(r4)
-	  cmpwi     r0, 0x2
-	  bnelr-
-	  li        r0, 0
-	  stb       r0, 0xA(r3)
-	  blr
-	*/
+	if (mPom->getCurrStateID() == 2) {
+		_0A = 0;
+	}
 }
 
 /*
@@ -300,37 +125,21 @@ void PomAi::keyAction1()
  * Address:	........
  * Size:	000004
  */
-void PomAi::keyAction2()
-{
-	// UNUSED FUNCTION
-}
+void PomAi::keyAction2() { }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void PomAi::keyAction3()
-{
-	// UNUSED FUNCTION
-}
+void PomAi::keyAction3() { }
 
 /*
  * --INFO--
  * Address:	8017883C
  * Size:	000014
  */
-void PomAi::keyLoopEnd()
-{
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x4(r3)
-	  lwz       r3, 0x2EC(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2EC(r4)
-	  blr
-	*/
-}
+void PomAi::keyLoopEnd() { mPom->incAnimLoopCounter(1); }
 
 /*
  * --INFO--
@@ -339,63 +148,18 @@ void PomAi::keyLoopEnd()
  */
 void PomAi::keyFinished()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x4(r3)
-	  lwz       r0, 0x2E4(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xA8
-	  li        r0, 0
-	  stb       r0, 0x2B8(r3)
-	  li        r4, 0x3F
-	  li        r6, 0
-	  lwz       r3, 0x4(r31)
-	  li        r7, 0
-	  stb       r0, 0x2B9(r3)
-	  lwz       r5, 0x4(r31)
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  bl        0x2429C
-	  lwz       r5, 0x4(r31)
-	  li        r4, 0x3E
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  addi      r5, r5, 0x94
-	  li        r7, 0
-	  bl        0x24280
-	  lwz       r5, 0x4(r31)
-	  li        r4, 0x3D
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  addi      r5, r5, 0x94
-	  li        r7, 0
-	  bl        0x24264
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        .loc_0xC8
-	  lwz       r3, 0x4(r31)
-	  li        r5, 0x1
-	  lfs       f1, -0x51F8(r2)
-	  addi      r4, r3, 0x94
-	  bl        -0x2A7E4
+	if (mPom->getCurrStateID() == 0) {
+		mPom->set2B8(0);
+		mPom->set2B9(0);
+		effectMgr->create(EffectMgr::EFF_Unk63, mPom->mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Unk62, mPom->mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Unk61, mPom->mPosition, nullptr, nullptr);
 
-	.loc_0xA8:
-	  lwz       r3, 0x4(r31)
-	  li        r0, 0x1
-	  stb       r0, 0x2BD(r3)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
+		playSound(0);
+		mPom->createPellet(mPom->mPosition, 150.0f, true);
+	}
 
-	.loc_0xC8:
-	*/
+	mPom->setMotionFinished(1);
 }
 
 /*
@@ -403,30 +167,11 @@ void PomAi::keyFinished()
  * Address:	80178918
  * Size:	000044
  */
-void PomAi::playSound(int)
+void PomAi::playSound(int pomSoundID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  lis       r5, 0x802D
-	  rlwinm    r4,r4,2,0,29
-	  addi      r0, r5, 0xD18
-	  add       r4, r0, r4
-	  lwz       r4, 0x0(r4)
-	  bl        -0xD4B78
-
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mPom->mSeContext) {
+		mPom->mSeContext->playSound(pomSE[pomSoundID]);
+	}
 }
 
 /*
@@ -434,25 +179,10 @@ void PomAi::playSound(int)
  * Address:	8017895C
  * Size:	000038
  */
-void PomAi::killCallBackEffect(bool)
+void PomAi::killCallBackEffect(bool p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r6, r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x20(r3)
-	  lwz       r3, 0x3180(r13)
-	  mr        r4, r0
-	  addi      r3, r3, 0x14
-	  bl        0x28CDC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	PomGenOpenStarCallBack* cb = mOpenStarCallBack;
+	effectMgr->mPtclMgr.killGenerator(cb, nullptr, p1);
 }
 
 /*

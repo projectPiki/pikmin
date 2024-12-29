@@ -38,9 +38,9 @@ KingAi::KingAi(King* king) { mKing = king; }
  */
 void KingAi::initAI(King* king)
 {
-	mKing       = king;
-	mKing->_2E4 = 16;
-	mKing->_2E8 = 16;
+	mKing                  = king;
+	mKing->mCurrentStateID = 16;
+	mKing->mNextStateID    = 16;
 
 	// something weird with this
 	PaniMotionInfo motionInfo(3, this);
@@ -427,7 +427,7 @@ void KingAi::keyAction3()
  * Address:	8016C784
  * Size:	000014
  */
-void KingAi::keyLoopEnd() { mKing->_2EC++; }
+void KingAi::keyLoopEnd() { mKing->incAnimLoopCounter(1); }
 
 /*
  * --INFO--

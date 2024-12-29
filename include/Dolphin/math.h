@@ -32,6 +32,24 @@ f32 tanf(f32);
 f64 atan(f64);
 f64 atan2(f64, f64);
 
+static inline f32 sqrtf(f32 x)
+{
+	const f64 _half  = .5;
+	const f64 _three = 3.0;
+
+	vf32 y;
+	if (x > 0.0f) {
+
+		f64 guess = __frsqrte((f64)x);                            // returns an approximation to
+		guess     = _half * guess * (_three - guess * guess * x); // now have 12 sig bits
+		guess     = _half * guess * (_three - guess * guess * x); // now have 24 sig bits
+		guess     = _half * guess * (_three - guess * guess * x); // now have 32 sig bits
+		y         = (f32)(x * guess);
+		return y;
+	}
+	return x;
+}
+
 #ifdef __cplusplus
 };
 #endif // ifdef __cplusplus

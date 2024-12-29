@@ -34,8 +34,7 @@ static f64
 #ifdef __STDC__
 f64 frexp(f64 x, int* eptr)
 #else
-f64 frexp(x, eptr)
-f64 x;
+f64 frexp(x, eptr) f64 x;
 int* eptr;
 #endif
 {

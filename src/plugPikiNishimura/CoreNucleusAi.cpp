@@ -32,8 +32,8 @@ CoreNucleusAi::CoreNucleusAi(CoreNucleus* core) { mCore = core; }
 void CoreNucleusAi::initAI(CoreNucleus* core)
 {
 	mCore = core;
-	mCore->set2E4(2);
-	mCore->set2E8(2);
+	mCore->setCurrStateID(2);
+	mCore->setNextStateID(2);
 	mCore->mAnimator.startMotion(PaniMotionInfo(2, this));
 	mCore->setMotionSpeed(30.0f);
 	_04 = 0;
@@ -104,14 +104,14 @@ void CoreNucleusAi::keyAction3()
  * Address:	8017AE5C
  * Size:	000014
  */
-void CoreNucleusAi::keyLoopEnd() { mCore->_2EC++; }
+void CoreNucleusAi::keyLoopEnd() { mCore->incAnimLoopCounter(1); }
 
 /*
  * --INFO--
  * Address:	8017AE70
  * Size:	000010
  */
-void CoreNucleusAi::keyFinished() { mCore->set2BD(1); }
+void CoreNucleusAi::keyFinished() { mCore->setMotionFinished(1); }
 
 /*
  * --INFO--
@@ -175,7 +175,7 @@ bool CoreNucleusAi::dieTransit() { return !mCore->hasHealth(); }
  * Address:	........
  * Size:	00000C
  */
-bool CoreNucleusAi::isMotionFinishTransit() { return mCore->is2BD(); }
+bool CoreNucleusAi::isMotionFinishTransit() { return mCore->isMotionFinished(); }
 
 /*
  * --INFO--
@@ -198,9 +198,9 @@ bool CoreNucleusAi::hitMotionStartTransit() { return _04; }
  */
 void CoreNucleusAi::initDie(int val)
 {
-	mCore->set2E8(val);
-	mCore->set2BD(0);
-	mCore->set2EC(0);
+	mCore->setNextStateID(val);
+	mCore->setMotionFinished(0);
+	mCore->setAnimLoopCounter(0);
 	mCore->mAnimator.startMotion(PaniMotionInfo(1, this));
 	mCore->set2D4(0.0f);
 	effectMgr->create(EffectMgr::EFF_Unk57, mCore->mPosition, nullptr, nullptr);
@@ -216,9 +216,9 @@ void CoreNucleusAi::initDie(int val)
  */
 void CoreNucleusAi::initDamage(int val)
 {
-	mCore->set2E8(val);
-	mCore->set2BD(0);
-	mCore->set2EC(0);
+	mCore->setNextStateID(val);
+	mCore->setMotionFinished(0);
+	mCore->setAnimLoopCounter(0);
 	mCore->mAnimator.startMotion(PaniMotionInfo(1, this));
 }
 
@@ -229,8 +229,8 @@ void CoreNucleusAi::initDamage(int val)
  */
 void CoreNucleusAi::initFollow(int val)
 {
-	mCore->set2E8(val);
-	mCore->set2BD(0);
+	mCore->setNextStateID(val);
+	mCore->setMotionFinished(0);
 	mCore->mAnimator.startMotion(PaniMotionInfo(2, this));
 	_04 = 0;
 }
@@ -242,8 +242,8 @@ void CoreNucleusAi::initFollow(int val)
  */
 void CoreNucleusAi::initHit(int val)
 {
-	mCore->set2E8(val);
-	mCore->set2BD(0);
+	mCore->setNextStateID(val);
+	mCore->setMotionFinished(0);
 	mCore->mAnimator.startMotion(PaniMotionInfo(10, this));
 	Vector3f ptclPos(sinf(mCore->mDirection), 0.0f, cosf(mCore->mDirection));
 	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Unk89, mCore->mPosition, nullptr, nullptr);
