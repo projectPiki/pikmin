@@ -233,8 +233,7 @@ struct CollInfo {
 /**
  * @brief TODO
  */
-struct CollGroup {
-};
+struct CollGroup { };
 
 /**
  * @brief TODO

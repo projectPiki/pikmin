@@ -21,8 +21,7 @@ struct PVWKeyInfoU8 {
 /**
  * @brief TODO
  */
-struct PVWKeyInfoS10 {
-};
+struct PVWKeyInfoS10 { };
 
 struct PVWKeyInfoF32 {
 	f32 _00; // _00
@@ -193,8 +192,7 @@ struct PVWTextureInfo {
 /**
  * @brief TODO
  */
-struct PVWTevInfo {
-};
+struct PVWTevInfo { };
 
 /**
  * @brief TODO

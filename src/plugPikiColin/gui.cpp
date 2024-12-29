@@ -619,7 +619,7 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 					mInputCode     = itemIndex;
 					float sineWave = sinf(mAnimationProgress);
 					itemColor      = Colour(static_cast<u8>(sineWave * 650.0f) + 64, static_cast<u8>(sineWave * 650.0f) + 64,
-                                       static_cast<u8>(sineWave * 650.0f) + 64, static_cast<u8>(fadeMultiplier));
+					                        static_cast<u8>(sineWave * 650.0f) + 64, static_cast<u8>(fadeMultiplier));
 				} else {
 					itemColor = mDiffuseColour;
 				}
