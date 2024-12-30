@@ -1485,7 +1485,7 @@ void LightCamera::initLightmap(int size, int texFmt)
 	mLightMap                = new Texture();
 	f32 sizeFactor           = 1.0f / f32(size);
 	mLightMap->mWidthFactor  = sizeFactor;
-	mLightMap->mHeigthFactor = sizeFactor;
+	mLightMap->mHeightFactor = sizeFactor;
 	mLightMap->mTexFlags     = (Texture::TEX_CLAMP_S | Texture::TEX_Unk2 | Texture::TEX_CLAMP_T);
 	mLightMap->createBuffer(size, size, texFmt, nullptr);
 	gsys->addTexture(mLightMap, "internalLightmap");

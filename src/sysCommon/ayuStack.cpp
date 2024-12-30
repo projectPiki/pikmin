@@ -454,7 +454,7 @@ void linkChunk(MemHead*, u32, MemHead*)
  * Address:	80024B7C
  * Size:	000120
  */
-void AyuCache::mallocL(u32)
+void* AyuCache::mallocL(u32)
 {
 	/*
 	.loc_0x0:
@@ -670,7 +670,7 @@ bool AyuCache::isEmpty() { return (u32*)_14 == &_10; }
  * Address:	80024DC8
  * Size:	000034
  */
-void AyuCache::largestBlockFree()
+u32 AyuCache::largestBlockFree()
 {
 	/*
 	.loc_0x0:

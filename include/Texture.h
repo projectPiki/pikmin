@@ -9,6 +9,7 @@
 struct Texture;
 struct TexImg;
 struct Colour;
+struct TexobjInfo;
 
 /**
  * @brief TODO
@@ -148,11 +149,13 @@ struct Texture : public GfxObject {
 	u32 _20;           // _20, -1 if detached, 0 if attached
 	GXTexObj* mTexObj; // _24
 	f32 mWidthFactor;  // _28, 1.0f / width
-	f32 mHeigthFactor; // _2C, 1.0f / height
+	f32 mHeightFactor; // _2C, 1.0f / height
 	u32 _30;           // _30
 	u32 _34;           // _34, unknown
-	u8 _38[0x4];       // _38, unknown
+	TexobjInfo* mInfo; // _38
 };
+
+struct Texture;
 
 /**
  * @brief TODO
@@ -193,24 +196,38 @@ struct CacheInfo {
 };
 
 /**
- * @brief TODO
+ * @note Size: 0x14
  */
-struct CacheTexture : public Texture {
-	virtual void makeResident(); // _10
-
-	// _00     = VTBL
-	// _00-_3C = Texture
-	CacheInfo* mCacheInfo; // _3C
-};
-
 struct TexCacheInfo : public CacheInfo {
 	TexCacheInfo() { initData(); }
 
 	void initData() { _10 = 0; }
 
 	// _00 - _0C = CacheInfo
-	u32 _0C; // _0C
-	u32 _10; // _10
+	TexobjInfo* _0C; // _0C
+	u32 _10;         // _10
+};
+
+/**
+ * @brief TODO
+ * @note Size: 0x4C
+ */
+struct CacheTexture : public Texture {
+	CacheTexture()
+	{
+		mCacheInfo = nullptr;
+		mTexImage  = 0;
+		_40        = 0;
+	}
+
+	virtual void makeResident(); // _10
+
+	// _00     = VTBL
+	// _00-_3C = Texture
+	TexCacheInfo* mCacheInfo; // _3C
+	TexCacheInfo* _40;        // _40
+	TexImg* mTexImage;        // _44
+	u32 _48;                  // _48
 };
 
 /**

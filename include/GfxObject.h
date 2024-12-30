@@ -32,7 +32,7 @@ struct GfxobjInfo {
 		mPrev->mNext = mNext;
 	}
 
-	// _1C = VTBL
+	// _00 = VTBL
 	GfxobjInfo* mPrev; // _04
 	GfxobjInfo* mNext; // _08
 	char* mString;     // _0C

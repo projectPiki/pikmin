@@ -296,7 +296,7 @@ struct System : public StdSystem {
 	u32 _260;                     // _260, unknown
 	u32 _264;                     // _264
 	u32 _268;                     // _268
-	u32 _26C;                     // _26C
+	vu32 _26C;                    // _26C
 	u32 _270;                     // _270
 	OSThread* mCurrentThread;     // _274
 	AtxRouter* mAtxRouter;        // _278

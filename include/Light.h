@@ -90,7 +90,7 @@ struct LFlareGroup : public CoreNode {
 	// _00-_14 = CoreNode
 	u32 _14;                  // _14
 	struct Texture* mTexture; // _18
-	u32 _1C;                  // _1C
+	struct Material* _1C;     // _1C
 	LFInfo* mLFInfo;          // _20
 	u32 _24;                  // _24
 };

@@ -241,7 +241,7 @@ void Texture::createBuffer(int width, int height, int texFmt, void* buf)
 	mPixelData = (buf) ? buf : new (0x20) u8[(dataSize / 2) * 2];
 
 	mWidthFactor  = 1.0f / mWidth;
-	mHeigthFactor = 1.0f / mHeight;
+	mHeightFactor = 1.0f / mHeight;
 
 	DCStoreRange(mPixelData, dataSize);
 

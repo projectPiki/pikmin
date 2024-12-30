@@ -54,7 +54,7 @@ struct Graphics {
 	u8 _04[0xC];                // _04, TODO: work out members
 	Light mLight;               // _10
 	Camera* mCamera;            // _2E4
-	u32 _2E8;                   // _2E8
+	u32* _2E8;                  // _2E8
 	u8 _2EC[0x30C - 0x2EC];     // _2EC, unknown
 	int mScreenWidth;           // _30C
 	int mScreenHeight;          // _310
@@ -64,7 +64,21 @@ struct Graphics {
 	LightCamera* mLightCam;     // _338
 	u8 _33C[0x368 - 0x33C];     // _33C, unknown
 	Colour _368;                // _368
-	u8 _36C[0x3A8 - 0x36C];     // _36C, unknown
+	u32 _36C;                   // _36C
+	u32 _370;                   // _370
+	u32 _374;                   // _374
+	u32 _378;                   // _378
+	u32 _37C;                   // _37C
+	u32 _380;                   // _380
+	u32 _384;                   // _384
+	u32 _388;                   // _388
+	u32 _38C;                   // _38C
+	u32 _390;                   // _390
+	u32 _394;                   // _394
+	u32 _398;                   // _398
+	u32 _39C;                   // _39C
+	u32 _3A0;                   // _3A0
+	u32 _3A4;                   // _3A4
 	CachedShape* mCachedShapes; // _3A8
 	u32 mCachedShapeCount;      // _3AC
 	u8 _3B0[0x4];               // _3B0, unknown
@@ -214,7 +228,6 @@ struct DGXGraphics : public Graphics {
 
 	// _3B4      = VTBL
 	// _000-_3B8 = Graphics
-	// TODO: members
 };
 
 /**

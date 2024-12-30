@@ -23,10 +23,10 @@ struct AyuCache {
 	AyuCache(u32);
 
 	void init(u32, u32);
-	void mallocL(u32);
+	void* mallocL(u32);
 	void cacheFree(void*);
 	bool isEmpty();
-	void largestBlockFree();
+	u32 largestBlockFree();
 
 	void getIndex();
 	void releaseIndex(int);
