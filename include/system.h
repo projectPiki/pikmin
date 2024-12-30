@@ -11,10 +11,6 @@
 #include "Dolphin/rand.h"
 #include "Dolphin/os.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
 struct Graphics;
 struct BaseApp;
 struct CacheTexture;
@@ -274,14 +270,12 @@ struct System : public StdSystem {
 	bool hasDebugInfo();
 	static void halt(char* file, int line, char* message)
 	{
-#ifdef _WIN32
-		char buffer[2048];
-		sprintf(buffer, "%s\n\nClick OK to quit now !", message);
-		MessageBox(NULL, buffer, "Error!", MB_ICONEXCLAMATION);
-		exit(0); // Failure!
-#else
+		// char buffer[2048];
+		// sprintf(buffer, "%s\n\nClick OK to quit now !", message);
+		// MessageBox(NULL, buffer, "Error!", MB_ICONEXCLAMATION);
+		// exit(0); // Failure!
+
 		OSPanic(file, line, message);
-#endif
 	}
 
 	static void* alloc(size_t);

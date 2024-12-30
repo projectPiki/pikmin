@@ -33,7 +33,19 @@ struct AyuCache {
 	void deleteIdAll(u32);
 	void amountFree();
 
-	// TODO: members
+	u32 _00;     // _00
+	u32 _04;     // _04
+	u32 _08;     // _08
+	s8 _0C;      // _0C
+	u32 _10;     // _10
+	u32 _14;     // _14
+	u32 _18;     // _18
+	u32 _1C;     // _1C
+	u32 _20;     // _20
+	u32 _24;     // _24
+	u32 _28;     // _28
+	u8 _2C[256]; // _2C
+	u32 _12C;    // _12C
 };
 
 /**
@@ -44,7 +56,7 @@ struct AyuStack {
 
 	bool checkOverflow();
 	inline void checkStack();
-	void create(char*, int, void*, int, bool);
+	void create(char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled);
 	int getFree();
 	int getMaxFree();
 	int getSize();
@@ -82,10 +94,10 @@ struct AyuStack {
 struct AyuHeap : public AyuStack {
 	AyuHeap() { }
 
-	void init(char*, int, void*, int);
+	void init(char* name, int allocType, void* stackTop, int stackSize);
 
 	// _00-_24 = AyuStack
-	int _24; // _24
+	u8 _24; // _24
 };
 
 #endif

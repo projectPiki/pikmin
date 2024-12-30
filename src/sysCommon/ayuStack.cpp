@@ -1,35 +1,42 @@
 #include "types.h"
 #include "Ayu.h"
 #include "system.h"
+#include "sysNew.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("AyuStack");
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000070
  */
-void AyuStack::create(char*, int, void*, int, bool)
+void AyuStack::create(char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled)
 {
-	// UNUSED FUNCTION
+	mAllocType         = allocType;
+	mIsActive          = true;
+	mName              = name;
+	mInitialStackTop   = (u32)stackTop;
+	mInitialStackLimit = mInitialStackTop + stackSize;
+	mSize              = mInitialStackLimit - mInitialStackTop;
+	mProtectOverflow   = isProtectionEnabled;
+	if (mProtectOverflow) {
+		((u32*)mInitialStackTop)[0] = 0x12345678;
+	}
+
+	reset();
 }
 
 /*
@@ -39,7 +46,9 @@ void AyuStack::create(char*, int, void*, int, bool)
  */
 void AyuStack::reset()
 {
-	// UNUSED FUNCTION
+	mStackTop   = mInitialStackTop;
+	mStackLimit = mInitialStackLimit;
+	mTotalSize  = 0;
 }
 
 /*
@@ -49,11 +58,9 @@ void AyuStack::reset()
  */
 void AyuStack::checkStack()
 {
-#ifndef __MWERKS__
 	if (mAllocType & 2 && mStackTop - *((u32*)mStackTop - 2) != mInitialStackTop) {
-		_Error("trashed memory stack (%s)\n", mName);
+		ERROR("trashed memory stack (%s)\n", mName);
 	}
-#endif
 }
 
 /*
@@ -252,42 +259,10 @@ void AyuStack::pop()
  * Address:	80024908
  * Size:	000074
  */
-void AyuHeap::init(char*, int, void*, int)
+void AyuHeap::init(char* name, int allocType, void* stackTop, int stackSize)
 {
-	/*
-	.loc_0x0:
-	  stw       r5, 0x0(r3)
-	  li        r5, 0x1
-	  li        r0, 0
-	  stb       r5, 0x1D(r3)
-	  stw       r4, 0x20(r3)
-	  stw       r6, 0xC(r3)
-	  lwz       r4, 0xC(r3)
-	  add       r4, r4, r7
-	  stw       r4, 0x10(r3)
-	  lwz       r5, 0xC(r3)
-	  lwz       r4, 0x10(r3)
-	  sub       r4, r4, r5
-	  stw       r4, 0x4(r3)
-	  stb       r0, 0x1C(r3)
-	  lbz       r0, 0x1C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x54
-	  lis       r5, 0x1234
-	  lwz       r4, 0xC(r3)
-	  addi      r0, r5, 0x5678
-	  stw       r0, 0x0(r4)
-
-	.loc_0x54:
-	  lwz       r4, 0xC(r3)
-	  li        r0, 0
-	  stw       r4, 0x14(r3)
-	  lwz       r4, 0x10(r3)
-	  stw       r4, 0x18(r3)
-	  stw       r0, 0x8(r3)
-	  stb       r0, 0x24(r3)
-	  blr
-	*/
+	create(name, allocType, stackTop, stackSize, false);
+	_24 = 0;
 }
 
 /*
@@ -295,39 +270,13 @@ void AyuHeap::init(char*, int, void*, int)
  * Address:	8002497C
  * Size:	000068
  */
-AyuCache::AyuCache(u32)
+AyuCache::AyuCache(u32 cacheSize)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x4330
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x1F
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  rlwinm    r31,r0,0,0,26
-	  srawi     r0, r31, 0x2
-	  stw       r4, 0x14(r1)
-	  addze     r0, r0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  rlwinm    r3,r0,2,0,29
-	  stw       r5, 0x10(r1)
-	  bl        0x22650
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  add       r5, r4, r31
-	  bl        .loc_0x68
-	  mr        r3, r30
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
+	PRINT("Creating cache of size %.2f k\n", cacheSize / 1024.0f);
 
-	.loc_0x68:
-	*/
+	s32 alignedSize = OSRoundUp32B(cacheSize);
+	u32 bufAddr     = (u32) new char[(alignedSize / 4) * 4];
+	init(bufAddr, bufAddr + alignedSize);
 }
 
 /*
@@ -335,8 +284,32 @@ AyuCache::AyuCache(u32)
  * Address:	800249E4
  * Size:	000198
  */
-void AyuCache::init(u32, u32)
+void AyuCache::init(u32 a2, u32 a3)
 {
+	_24            = 0;
+	_28            = a3 - a2;
+	_20            = 0;
+	_14            = _10;
+	_18            = _10;
+	((u32*)_10)[0] = 0;
+	_1C            = 0x87654321;
+
+	u32* ptr = (u32*)a2;
+	ptr[1]   = (u32)this;
+	ptr[2]   = (u32)this;
+	ptr[0]   = ((a3 - a2) >> 4) - 0x1000001;
+	ptr[3]   = 0x87654321;
+
+	_04 = a2;
+	_08 = a2;
+	_00 = 0xFF000000;
+
+	for (int i = 0; i < 32; i++) {
+		_2C[i] = 0;
+	}
+
+	_12C = 0;
+
 	/*
 	.loc_0x0:
 	  li        r8, 0
@@ -690,19 +663,7 @@ void AyuCache::amountFree()
  * Address:	80024DB0
  * Size:	000018
  */
-bool AyuCache::isEmpty()
-{
-	// return mStackTop - _10 > 0;
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x14(r3)
-	  addi      r0, r3, 0x10
-	  sub       r0, r0, r4
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
+bool AyuCache::isEmpty() { return (u32*)_14 == &_10; }
 
 /*
  * --INFO--

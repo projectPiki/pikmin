@@ -9,7 +9,7 @@
  * @brief 4x4 Matrix.
  *
  * @note Size: 0x40.
- * @note Is sometimes casted to Vector3f, (Vector3f&), be weary of this.
+ * @note Is sometimes casted to Vector3f*, (Vector3f&), be weary of this.
  */
 struct Matrix4f {
 	Matrix4f() { }

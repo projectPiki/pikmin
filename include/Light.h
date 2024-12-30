@@ -6,6 +6,7 @@
 #include "Vector.h"
 #include "Camera.h"
 #include "Colour.h"
+#include "system.h"
 
 struct CmdStream;
 struct Graphics;
@@ -22,11 +23,9 @@ struct LFInfo {
 
 	Colour mColour;     // _00
 	Vector3f mFlarePos; // _04
-	Vector2f _10;       // _10
-	f32 _18;            // _18
-	f32 _1C;            // _1C
-	f32 _20;            // _20
-	f32 _24;            // _24
+	Vector2f mSize;     // _10
+	Vector2f _18;       // _18
+	Vector2f _20;       // _20
 	LFInfo* mPrevInfo;  // _28
 };
 
@@ -62,6 +61,29 @@ struct LFlareGroup : public CoreNode {
 		_1C      = 0;
 		mLFInfo  = nullptr;
 		_24      = 1;
+	}
+
+	void addLFlare(Colour& color, Vector3f& pos, Vector2f& size, Vector2f* a5, Vector2f* a6)
+	{
+		LFInfo* info = gsys->getLFlareInfo();
+		if (info) {
+			info->mColour   = color;
+			info->mFlarePos = pos;
+			info->mSize     = size;
+
+			if (a5 && a6) {
+				info->_18.x = a5->x;
+				info->_18.y = a5->y;
+				info->_20.x = a6->x;
+				info->_20.y = a6->y;
+			} else {
+				info->_18.set(0.0f, 0.0f);
+				info->_20.set(1.0f, 1.0f);
+			}
+
+			info->mPrevInfo = mLFInfo;
+			mLFInfo         = info;
+		}
 	}
 
 	// _00     = VTBL
@@ -187,7 +209,7 @@ struct LightGroup : public CoreNode {
 	s8* mMatSource;           // _38
 	Texture* mHaloTex;        // _3C
 	LightFlare mFlares;       // _40
-	Shape* _64;               // _64
+	Shape* mParentShape;      // _64
 	LFlareGroup* mFlareGroup; // _68
 };
 

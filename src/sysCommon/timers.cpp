@@ -1,26 +1,19 @@
-#include "types.h"
-
 #include "timers.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-// void _Error(char *, ...)
-// {
-// UNUSED FUNCTION
-// }
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-// void _Print(char *, ...)
-// {
-// UNUSED FUNCTION
-// }
+DEFINE_PRINT("Timers")
 
 /*
  * --INFO--
@@ -29,8 +22,8 @@
  */
 void Timers::reset()
 {
-	_00 = 0;
-	_08 = 0;
+	mTimerInf = nullptr;
+	_08       = 0;
 }
 
 /*
@@ -45,24 +38,21 @@ void Timers::newFrame() { mFrameCount++; }
  * Address:	800409A4
  * Size:	000004
  */
-void Timers::_start(char*, bool) { return; }
+void Timers::_start(char*, bool) { }
 
 /*
  * --INFO--
  * Address:	800409A8
  * Size:	000004
  */
-void Timers::_stop(char*) { return; }
+void Timers::_stop(char*) { }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void Timers::showTimes()
-{
-	// UNUSED FUNCTION
-}
+void Timers::showTimes() { }
 
 /*
  * --INFO--

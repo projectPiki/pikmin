@@ -238,7 +238,11 @@ inline Vector3f cross(Vector3f& vec1, Vector3f& vec2)
  */
 struct Vector2f {
 	Vector2f() { }
-	Vector2f(const f32& x, const f32& y);
+	Vector2f(const f32& _x, const f32& _y)
+	{
+		x = _x;
+		y = _y;
+	}
 
 	void set(f32 _x, f32 _y)
 	{
