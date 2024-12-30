@@ -168,39 +168,44 @@ struct particleGenerator : public zenList {
 
 	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
 
+	Vector3f& getEmitPos() { return (mEmitPosPtr) ? *mEmitPosPtr : mEmitPos; }
+	void setEmitPos(Vector3f& pos) { mEmitPos = pos; }
+
+	zenListManager& getPtclMdlListManager() { return mPtclMdlListManager; }
+
 	// _00     = VTBL
 	// _00-_0C = zenList
 	// TODO: members
-	Vector3f _0C;           // _0C
-	Vector3f* mEmitPosPtr;  // _18
-	Vector3f _1C;           // _1C
-	zenListManager _28;     // _28
-	zenListManager _38;     // _38
-	u8 _48[0x80 - 0x48];    // _48, unknown
-	u32 mGeneratorFlags;    // _80
-	u32 _84;                // _84, unknown
-	u8 _88[0x94 - 0x88];    // _88, unknown
-	Vector3f _94;           // _94
-	Vector3f _A0;           // _A0
-	Vector3f _AC;           // _AC
-	u8 _B8[0xF0 - 0xB8];    // _B8, unknown
-	f32 _F0;                // _F0
-	u8 _F4[0x12C - 0xF4];   // _F4, unknown
-	Vector3f _12C;          // _12C
-	Vector3f _138;          // _138
-	Vector3f _144;          // _144
-	u8 _150[0x160 - 0x150]; // _150, unknown
-	Vector3f _160;          // _160
-	u8 _16C[0x4];           // _16C, unknown
-	Vector3f _170;          // _170
-	u8 _17C[0x4];           // _17C, unknown
-	Vector3f _180;          // _180
-	u8 _18C[0x8];           // _18C, unknown
-	Vector3f _194;          // _194
-	u8 _1A0[0x1D4 - 0x1A0]; // _1A0, unknown
-	u32 _1D4;               // _1D4, unknown
-	u32 _1D8;               // _1D8, unknown
-	Vector3f _1DC;          // _1DC
+	Vector3f mEmitPos;                  // _0C
+	Vector3f* mEmitPosPtr;              // _18
+	Vector3f _1C;                       // _1C
+	zenListManager mPtclMdlListManager; // _28
+	zenListManager _38;                 // _38
+	u8 _48[0x80 - 0x48];                // _48, unknown
+	u32 mGeneratorFlags;                // _80
+	u32 _84;                            // _84, unknown
+	u8 _88[0x94 - 0x88];                // _88, unknown
+	Vector3f _94;                       // _94
+	Vector3f _A0;                       // _A0
+	Vector3f _AC;                       // _AC
+	u8 _B8[0xF0 - 0xB8];                // _B8, unknown
+	f32 _F0;                            // _F0
+	u8 _F4[0x12C - 0xF4];               // _F4, unknown
+	Vector3f _12C;                      // _12C
+	Vector3f _138;                      // _138
+	Vector3f _144;                      // _144
+	u8 _150[0x160 - 0x150];             // _150, unknown
+	Vector3f _160;                      // _160
+	u8 _16C[0x4];                       // _16C, unknown
+	Vector3f _170;                      // _170
+	u8 _17C[0x4];                       // _17C, unknown
+	Vector3f _180;                      // _180
+	u8 _18C[0x8];                       // _18C, unknown
+	Vector3f _194;                      // _194
+	u8 _1A0[0x1D4 - 0x1A0];             // _1A0, unknown
+	u32 _1D4;                           // _1D4, unknown
+	u32 _1D8;                           // _1D8, unknown
+	Vector3f _1DC;                      // _1DC
 };
 
 /*

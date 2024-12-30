@@ -41,6 +41,10 @@ struct zenListManager {
 		return out;
 	}
 
+	zenList* getBottomList() { return _00; }
+
+	zenList* getTopList() { return _00->mNext; }
+
 	// unused/inlined:
 	~zenListManager();
 
