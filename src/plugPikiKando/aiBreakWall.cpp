@@ -49,7 +49,7 @@ void ActBreakWall::init(Creature* creature)
 	mActor->_408     = 2;
 	mActor->mEmotion = 0;
 
-	if (creature->isWall()) {
+	if (creature->isSluice()) {
 		mWall = static_cast<BuildingItem*>(creature);
 	} else {
 		mWall = nullptr;

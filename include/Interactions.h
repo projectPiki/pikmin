@@ -407,7 +407,12 @@ struct InteractSuck : public Interaction {
  * @brief TODO
  */
 struct InteractSwallow : public Interaction {
-	inline InteractSwallow(); // TODO: probably
+	inline InteractSwallow(Creature* owner, CollPart* mouthPart, int p3)
+	    : Interaction(owner)
+	{
+		_08        = p3;
+		mMouthPart = mouthPart;
+	}
 
 	virtual bool actCommon(Creature*);   // _08
 	virtual bool actPiki(Piki*);         // _0C

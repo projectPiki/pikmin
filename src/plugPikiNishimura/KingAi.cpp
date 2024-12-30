@@ -1,5 +1,5 @@
 #include "King.h"
-#include "NsMathF.h"
+#include "NsMath.h"
 #include "PaniAnimator.h"
 #include "Collision.h"
 #include "Dolphin/rand.h"
@@ -46,11 +46,11 @@ void KingAi::initAI(King* king)
 	PaniMotionInfo motionInfo(3, this);
 	mKing->mAnimator.startMotion(motionInfo);
 
-	mKing->mMotionSpeed = 30.0f;
-	_08                 = 1;
-	_09                 = 0;
-	CollPart* slt1      = mKing->mCollInfo->getSphere('slt1');
-	CollPart* slt2      = mKing->mCollInfo->getSphere('slt2');
+	mKing->mAnimTimer = 30.0f;
+	_08               = 1;
+	_09               = 0;
+	CollPart* slt1    = mKing->mCollInfo->getSphere('slt1');
+	CollPart* slt2    = mKing->mCollInfo->getSphere('slt2');
 
 	_10                = slt1->getChildCount() + slt2->getChildCount();
 	_0C                = 0;
@@ -427,7 +427,7 @@ void KingAi::keyAction3()
  * Address:	8016C784
  * Size:	000014
  */
-void KingAi::keyLoopEnd() { mKing->incAnimLoopCounter(1); }
+void KingAi::keyLoopEnd() { mKing->addLoopCounter(1); }
 
 /*
  * --INFO--

@@ -2,7 +2,7 @@
 #include "MemStat.h"
 #include "gameflow.h"
 #include "Dolphin/os.h"
-
+#include "DebugLog.h"
 #include "sysNew.h"
 
 /*
@@ -10,21 +10,14 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "naviiMgr");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("naviMgr");
 
 NaviMgr* naviMgr;
 
@@ -67,10 +60,7 @@ NaviMgr::NaviMgr()
  * Address:	........
  * Size:	000004
  */
-void NaviMgr::init()
-{
-	// UNUSED FUNCTION
-}
+void NaviMgr::init() { }
 
 /*
  * --INFO--
@@ -98,9 +88,9 @@ void NaviMgr::update() { MonoObjectMgr::update(); }
  */
 Navi* NaviMgr::getNavi()
 {
-	u32 badCompiler[4];
-
-	return static_cast<Navi*>(getCreatureCheck(getFirst()));
+	Iterator iter(this);
+	iter.first();
+	return static_cast<Navi*>(*iter);
 }
 
 /*
@@ -124,7 +114,7 @@ Navi* NaviMgr::getNavi(int idx)
 void NaviMgr::refresh2d(Graphics& gfx)
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { iter.getCreature()->refresh2d(gfx); }
+	CI_LOOP(iter) { (*iter)->refresh2d(gfx); }
 }
 
 /*
@@ -135,7 +125,7 @@ void NaviMgr::refresh2d(Graphics& gfx)
 void NaviMgr::renderCircle(Graphics& gfx)
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { static_cast<Navi*>(iter.getCreature())->renderCircle(gfx); }
+	CI_LOOP(iter) { static_cast<Navi*>(*iter)->renderCircle(gfx); }
 }
 
 /*
@@ -146,7 +136,7 @@ void NaviMgr::renderCircle(Graphics& gfx)
 void NaviMgr::drawShadow(Graphics& gfx)
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { iter.getCreature()->drawShadow(gfx); }
+	CI_LOOP(iter) { (*iter)->drawShadow(gfx); }
 }
 
 /*

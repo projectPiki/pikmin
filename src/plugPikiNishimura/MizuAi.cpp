@@ -42,10 +42,10 @@ void MizuAi::initMizu(Mizu* mizu)
 	mMizu = mizu;
 	_0C   = effectMgr->create(EffectMgr::EFF_Unk194, mMizu->mPosition, nullptr, nullptr);
 	_08   = effectMgr->create(EffectMgr::EFF_Unk193, mMizu->mPosition, nullptr, nullptr);
-	mMizu->setCurrStateID(0);
-	mMizu->setNextStateID(0);
+	mMizu->setCurrentState(0);
+	mMizu->setNextState(0);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
-	mMizu->setMotionSpeed(30.0f);
+	mMizu->setAnimTimer(30.0f);
 	initWait(0);
 }
 
@@ -59,10 +59,10 @@ void MizuAi::initGeyzer(Mizu* geyzer)
 	mMizu = geyzer;
 	_0C   = effectMgr->create(EffectMgr::EFF_Unk194, mMizu->mPosition, nullptr, nullptr);
 	_08   = effectMgr->create(EffectMgr::EFF_Unk193, mMizu->mPosition, nullptr, nullptr);
-	mMizu->setCurrStateID(1);
-	mMizu->setNextStateID(1);
+	mMizu->setCurrentState(1);
+	mMizu->setNextState(1);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
-	mMizu->setMotionSpeed(30.0f);
+	mMizu->setAnimTimer(30.0f);
 	initReady(1);
 }
 
@@ -100,10 +100,10 @@ void MizuAi::killCallBackEffect(bool p1)
  */
 void MizuAi::setEveryFrame()
 {
-	Vector3f& vec      = mMizu->get300();
-	mMizu->mPosition.x = vec.x;
-	mMizu->mPosition.y = vec.y;
-	mMizu->mPosition.z = vec.z;
+	Vector3f* vec      = mMizu->getInitPosition();
+	mMizu->mPosition.x = vec->x;
+	mMizu->mPosition.y = vec->y;
+	mMizu->mPosition.z = vec->z;
 }
 
 /*
@@ -127,7 +127,10 @@ void MizuAi::naviGeyzerJump()
  * Address:	........
  * Size:	000028
  */
-bool MizuAi::readyTransit() { return (mMizu->get2F0() >= static_cast<BossProp*>(mMizu->mProps)->mBossProps._1CC()) ? true : false; }
+bool MizuAi::readyTransit()
+{
+	return (mMizu->getFlickDamageCount() >= static_cast<BossProp*>(mMizu->mProps)->mBossProps._1CC()) ? true : false;
+}
 
 /*
  * --INFO--
@@ -150,14 +153,14 @@ bool MizuAi::waitTransit() { return (mMizu->get2D4() > 4.0f) ? true : false; }
  */
 void MizuAi::initWait(int stateID)
 {
-	mMizu->setNextStateID(stateID);
+	mMizu->setNextState(stateID);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
 	mMizu->_3B8 = 1;
 	mMizu->_3B9 = true;
-	mMizu->set2B8(1);
-	mMizu->set2BB(1);
+	mMizu->setIsAlive(1);
+	mMizu->setIsOrganic(1);
 	mMizu->set2D4(0.0f);
-	mMizu->set2F0(0);
+	mMizu->setFlickDamageCount(0);
 	if (_0C) {
 		_0C->stop();
 	}
@@ -173,14 +176,14 @@ void MizuAi::initWait(int stateID)
  */
 void MizuAi::initReady(int stateID)
 {
-	mMizu->setNextStateID(stateID);
+	mMizu->setNextState(stateID);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
 	mMizu->_3B8 = 0;
 	mMizu->_3B9 = false;
-	mMizu->set2B8(0);
-	mMizu->set2BB(0);
+	mMizu->setIsAlive(0);
+	mMizu->setIsOrganic(0);
 	mMizu->set2D4(0.0f);
-	mMizu->set2F0(0);
+	mMizu->setFlickDamageCount(0);
 	if (_0C) {
 		_0C->start();
 	}
@@ -200,14 +203,14 @@ void MizuAi::initReady(int stateID)
  */
 void MizuAi::initJet(int stateID)
 {
-	mMizu->setNextStateID(stateID);
+	mMizu->setNextState(stateID);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(10, this));
 	mMizu->_3B8 = 1;
 	mMizu->_3B9 = false;
-	mMizu->set2B8(0);
-	mMizu->set2BB(0);
+	mMizu->setIsAlive(0);
+	mMizu->setIsOrganic(0);
 	mMizu->set2D4(0.0f);
-	mMizu->set2F0(0);
+	mMizu->setFlickDamageCount(0);
 	naviGeyzerJump();
 
 	if (_0C) {
@@ -260,7 +263,7 @@ void MizuAi::readyState()
 				mMizu->mSeContext->playSound(0xA8);
 			}
 		} else {
-			mMizu->inc2D4(gsys->getFrameTime());
+			mMizu->add2D4(gsys->getFrameTime());
 		}
 	}
 }
@@ -270,7 +273,7 @@ void MizuAi::readyState()
  * Address:	........
  * Size:	00001C
  */
-void MizuAi::jetState() { mMizu->inc2D4(gsys->getFrameTime()); }
+void MizuAi::jetState() { mMizu->add2D4(gsys->getFrameTime()); }
 
 /*
  * --INFO--
@@ -281,7 +284,7 @@ void MizuAi::update()
 {
 	setEveryFrame();
 
-	switch (mMizu->getCurrStateID()) {
+	switch (mMizu->getCurrentState()) {
 	case 0:
 		waitState();
 		if (readyTransit()) {

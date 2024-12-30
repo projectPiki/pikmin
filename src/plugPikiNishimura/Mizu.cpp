@@ -70,8 +70,8 @@ f32 Mizu::getiMass() { return 0.0001f; }
 void Mizu::initMizu(Vector3f&)
 {
 	mCollisionRadius = 10.0f;
-	set2BE(1);
-	set2E0(20.0f);
+	setShadowNeed(1);
+	setShadowSize(20.0f);
 	mMizuAi->initMizu(this);
 }
 
@@ -83,8 +83,8 @@ void Mizu::initMizu(Vector3f&)
 void Mizu::initGeyzer(Vector3f&)
 {
 	mCollisionRadius = 10.0f;
-	set2BE(1);
-	set2E0(20.0f);
+	setShadowNeed(1);
+	setShadowSize(20.0f);
 	mMizuAi->initGeyzer(this);
 }
 
@@ -95,8 +95,8 @@ void Mizu::initGeyzer(Vector3f&)
  */
 void Mizu::doKill()
 {
-	set2B8(0);
-	set2B9(0);
+	setIsAlive(0);
+	setIsAtari(0);
 	mMizuAi->killCallBackEffect(false);
 	bossMgr->kill(this);
 }
@@ -160,6 +160,6 @@ void Mizu::doAI() { mMizuAi->update(); }
 void Mizu::doAnimation()
 {
 	if (mShapeObject) {
-		mAnimator.animate(getMotionSpeed());
+		mAnimator.animate(getAnimTimer());
 	}
 }

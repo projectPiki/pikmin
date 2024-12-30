@@ -62,10 +62,10 @@ void CoreNucleus::init(Vector3f& pos)
 {
 	mCollisionRadius = 20.0f;
 	mScale.set(0.0f, 0.0f, 0.0f);
-	set2B8(0);
-	set2BB(0);
-	set2BE(1);
-	set2E0(40.0f);
+	setIsAlive(0);
+	setIsOrganic(0);
+	setShadowNeed(1);
+	setShadowSize(40.0f);
 	mCoreAi->initAI(this);
 }
 
@@ -76,8 +76,8 @@ void CoreNucleus::init(Vector3f& pos)
  */
 void CoreNucleus::doKill()
 {
-	_2B8 = 0;
-	_2B9 = 0;
+	mIsAlive = 0;
+	mIsAtari = 0;
 	bossMgr->kill(this);
 }
 
@@ -136,7 +136,7 @@ void CoreNucleus::doAI() { mCoreAi->update(); }
 void CoreNucleus::doAnimation()
 {
 	if (mShapeObject) {
-		mAnimator.animate(getMotionSpeed());
+		mAnimator.animate(getAnimTimer());
 	}
 }
 

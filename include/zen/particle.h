@@ -146,11 +146,16 @@ struct particleGenerator : public zenList {
 	void pmIntpManual(f32*, f32*);
 	void pmIntpLinear(f32*, f32*);
 
+	// might be pmSwitchOff and pmSwitchOn
 	inline void setFlag(u32 flag) { mGeneratorFlags |= flag; }
 	inline void resetFlag(u32 flag) { mGeneratorFlags &= ~flag; }
+
 	inline bool isFlag(u32 flag) { return mGeneratorFlags & flag; }
 
+	// might be startGen
 	inline void start() { mGeneratorFlags &= ~PTCLGEN_GenStopped; }
+
+	// might be stopGen
 	inline void stop() { mGeneratorFlags |= PTCLGEN_GenStopped; }
 
 	inline bool isFlag4() { return mGeneratorFlags & PTCLGEN_Unk3; }
@@ -159,6 +164,9 @@ struct particleGenerator : public zenList {
 
 	inline void setA0(Vector3f& vec) { _A0 = vec; }
 	inline void set1DC(Vector3f& vec) { _1DC = vec; }
+	inline void finish() { mGeneratorFlags |= PTCLGEN_GenFinished; }
+
+	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
 
 	// _00     = VTBL
 	// _00-_0C = zenList

@@ -2250,7 +2250,7 @@ void NVector3f::normalizeByLength(f32 length)
 bool NVector3f::normalizeCheck()
 {
 	f32 len = length();
-	if (NMathf::isZero(len)) {
+	if (NMathF::isZero(len)) {
 		return false;
 	}
 
@@ -2266,7 +2266,7 @@ bool NVector3f::normalizeCheck()
 void NVector3f::normalize()
 {
 	f32 len = length();
-	if (NMathf::isZero(len)) {
+	if (NMathF::isZero(len)) {
 		f32 lenCopy = len;
 		PRINT("!normalize:zero:%f\n", lenCopy);
 		return;
@@ -2354,7 +2354,7 @@ void NAlpha::reset() { mValue = mOffset; }
 f32 NAlpha::getValue(f32 input)
 {
 	// If the scale is very small, set it to 1.0f
-	if (NMathf::isZero(mScale)) {
+	if (NMathF::isZero(mScale)) {
 		PRINT("?isZero(period)\n");
 		mScale = 1.0f;
 	}

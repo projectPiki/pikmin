@@ -68,7 +68,7 @@ void HinderRock::endPush()
 void WorkObjectMgr::finalSetup()
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { static_cast<WorkObject*>(iter.getCreature())->finalSetup(); }
+	CI_LOOP(iter) { static_cast<WorkObject*>(*iter)->finalSetup(); }
 }
 
 /*

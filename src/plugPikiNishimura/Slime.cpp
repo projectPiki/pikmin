@@ -80,7 +80,7 @@ f32 Slime::getiMass() { return 0.0001f; }
 void Slime::init(Vector3f& pos)
 {
 	mCollisionRadius = 20.0f;
-	set2BB(0);
+	setIsOrganic(0);
 	_3C4 = 1;
 	_3C5 = 0;
 	_3C8 = 0;
@@ -129,8 +129,8 @@ void Slime::init(Vector3f& pos)
  */
 void Slime::doKill()
 {
-	set2B8(0);
-	set2B9(0);
+	setIsAlive(0);
+	setIsAtari(0);
 	bossMgr->kill(this);
 }
 

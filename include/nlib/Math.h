@@ -2,26 +2,9 @@
 #define _NLIB_MATH_H
 
 #include "types.h"
+#include "Vector.h"
 #include "Dolphin/mtx.h"
 #include "system.h"
-#include "Vector.h"
-
-namespace NMathF {
-inline f32 cos(f32 x) { return cosf(x); }
-inline f32 sin(f32 x) { return sinf(x); }
-
-f32 atan2(f32, f32);
-f32 remainder(f32, f32);
-
-// unused/inlined:
-f32 roundAngle(f32);
-inline f32 atan2Vec(Vector3f vec) { return atan2(vec.x, vec.z); }
-
-extern f32 pi;
-inline f32 getRandomAngle() { return 2.0f * StdSystem::getRand(1.0f) * pi; }
-
-extern f32 error;
-} // namespace NMathF
 
 template <typename T>
 struct NMath {
@@ -42,7 +25,7 @@ struct NMath {
 		return -val;
 	}
 
-	static T clamp(T val, T lower, T upper)
+	static T clampMinMax(T val, T lower, T upper)
 	{
 		if (val < lower) {
 			return lower;
@@ -53,9 +36,56 @@ struct NMath {
 		return val;
 	}
 
-	static bool isZero(f32 period) { return absolute(period) <= NMathF::error; }
+	// inlines to make, per the DLL:
+	static f32 maxValue(f32, f32);
+	static f32 minValue(f32, f32);
 };
 
 typedef NMath<f32> NMathf;
+
+struct NMathF {
+
+	static f32 error;
+	static f32 const pi;
+	static f32 const degreePerRadian;
+	static f32 const radianPerDegree;
+
+	static f32 cos(f32 x) { return cosf(x); }
+	static f32 sin(f32 x) { return sinf(x); }
+
+	static f32 atan2(f32, f32);
+	static f32 remainder(f32, f32);
+
+	// unused/inlined:
+	static f32 roundAngle(f32);
+
+	// inlines from DLL, to be created:
+	static f32 angleDifference(f32, f32);
+	static f32 calcNearerDirection(f32, f32);
+	static f32 d2r(f32);
+	static f32 interpolate(f32, f32, f32);
+	static f32 length(f32, f32);
+	static f32 r2d(f32);
+	static f32 rangeRandom(f32, f32);
+	static f32 rateRandom(f32, f32);
+	static f32 sqrt(f32);
+	static f32 tan(f32);
+	static int quotient(f32, f32);
+	static bool equals(f32, f32);
+	static bool isPositive(f32);
+	static bool isZero(f32 value) { return NMathf::absolute(value) <= error; }
+	static bool occurred(f32);
+
+	// this is fake.
+	static inline f32 atan2Vec(Vector3f vec) { return atan2(vec.x, vec.z); }
+
+	// this is fake or needs renaming
+	static inline f32 getRandomAngle() { return 2.0f * StdSystem::getRand(1.0f) * pi; }
+};
+
+struct NMathI {
+	static int rangeRandom(int, int);
+	static bool checkBit(int, int);
+};
 
 #endif

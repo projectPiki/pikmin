@@ -59,7 +59,7 @@ f32 King::getiMass() { return 0.0001f; }
  */
 void King::bombDamageCounter(CollPart*)
 {
-	if (getCurrStateID() == 5) {
+	if (getCurrentState() == 5) {
 		mKingAi->mBombDamageCounter++;
 	}
 }
@@ -72,9 +72,9 @@ void King::bombDamageCounter(CollPart*)
 void King::init(Vector3f&)
 {
 	mCollisionRadius = 50.0f;
-	set2BC(1);
-	set2BB(0);
-	set2E0(150.0f);
+	setInvincible(1);
+	setIsOrganic(0);
+	setShadowSize(150.0f);
 	mIsBossBgm = false;
 	mKingAi->initAI(this);
 	mKingBody->init(this);
@@ -89,8 +89,8 @@ void King::init(Vector3f&)
  */
 void King::doKill()
 {
-	set2B8(0);
-	set2B9(0);
+	setIsAlive(0);
+	setIsAtari(0);
 	mIsBossBgm = false;
 	mKingBody->killCallBackEffect(false);
 	mPlatMgr.release();
@@ -186,7 +186,7 @@ void King::doAnimation()
 {
 	mKingBody->update();
 	if (mShapeObject) {
-		mAnimator.animate(getMotionSpeed());
+		mAnimator.animate(getAnimTimer());
 	}
 }
 

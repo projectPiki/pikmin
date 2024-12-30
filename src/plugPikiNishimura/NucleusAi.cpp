@@ -32,10 +32,10 @@ NucleusAi::NucleusAi(Nucleus* nucleus) { mNucleus = nucleus; }
 void NucleusAi::initAI(Nucleus* nucleus)
 {
 	mNucleus = nucleus;
-	mNucleus->setCurrStateID(2);
-	mNucleus->setNextStateID(2);
+	mNucleus->setCurrentState(2);
+	mNucleus->setNextState(2);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(2, this));
-	mNucleus->setMotionSpeed(30.0f);
+	mNucleus->setAnimTimer(30.0f);
 	mStickPikiCount = 0;
 }
 
@@ -98,14 +98,14 @@ void NucleusAi::keyAction3() { }
  * Address:	8017A65C
  * Size:	000014
  */
-void NucleusAi::keyLoopEnd() { mNucleus->incAnimLoopCounter(1); }
+void NucleusAi::keyLoopEnd() { mNucleus->addLoopCounter(1); }
 
 /*
  * --INFO--
  * Address:	8017A670
  * Size:	000010
  */
-void NucleusAi::keyFinished() { mNucleus->setMotionFinished(1); }
+void NucleusAi::keyFinished() { mNucleus->setMotionFinish(1); }
 
 /*
  * --INFO--
@@ -142,35 +142,35 @@ void NucleusAi::setBossPosition()
  * Address:	........
  * Size:	000030
  */
-void NucleusAi::setSlimeDamagePoint() { mNucleus->mSlime->mSlimeAi->addDamagePoint(mNucleus->getDamage()); }
+void NucleusAi::setSlimeDamagePoint() { mNucleus->mSlime->mSlimeAi->addDamagePoint(mNucleus->getDamagePoint()); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000010
  */
-void NucleusAi::afterProcessing() { mNucleus->setDamage(0.0f); }
+void NucleusAi::afterProcessing() { mNucleus->setDamagePoint(0.0f); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool NucleusAi::dieTransit() { return !mNucleus->hasHealth(); }
+bool NucleusAi::dieTransit() { return !mNucleus->getAlive(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-bool NucleusAi::isMotionFinishTransit() { return mNucleus->isMotionFinished(); }
+bool NucleusAi::isMotionFinishTransit() { return mNucleus->getMotionFinish(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool NucleusAi::damageTransit() { return (mNucleus->getDamage() > 0.0f) ? true : false; }
+bool NucleusAi::damageTransit() { return (mNucleus->getDamagePoint() > 0.0f) ? true : false; }
 
 /*
  * --INFO--
@@ -179,9 +179,9 @@ bool NucleusAi::damageTransit() { return (mNucleus->getDamage() > 0.0f) ? true :
  */
 void NucleusAi::initDie(int val)
 {
-	mNucleus->setNextStateID(val);
-	mNucleus->setMotionFinished(0);
-	mNucleus->setAnimLoopCounter(0);
+	mNucleus->setNextState(val);
+	mNucleus->setMotionFinish(0);
+	mNucleus->setLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
 	mNucleus->set2D4(0.0f);
 	effectMgr->create(EffectMgr::EFF_Unk57, mNucleus->mPosition, nullptr, nullptr);
@@ -197,9 +197,9 @@ void NucleusAi::initDie(int val)
  */
 void NucleusAi::initDamage(int val)
 {
-	mNucleus->setNextStateID(val);
-	mNucleus->setMotionFinished(0);
-	mNucleus->setAnimLoopCounter(0);
+	mNucleus->setNextState(val);
+	mNucleus->setMotionFinish(0);
+	mNucleus->setLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
 }
 
@@ -210,9 +210,9 @@ void NucleusAi::initDamage(int val)
  */
 void NucleusAi::initFollow(int val)
 {
-	mNucleus->setNextStateID(val);
-	mNucleus->setMotionFinished(0);
-	mNucleus->setAnimLoopCounter(0);
+	mNucleus->setNextState(val);
+	mNucleus->setMotionFinish(0);
+	mNucleus->setLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(2, this));
 }
 
@@ -246,7 +246,7 @@ void NucleusAi::update()
 {
 	setEveryFrame();
 
-	switch (mNucleus->getCurrStateID()) {
+	switch (mNucleus->getCurrentState()) {
 	case 0: // dead?
 		dieState();
 		break;

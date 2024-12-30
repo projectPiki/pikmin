@@ -801,7 +801,7 @@ void Boss::createPellet(Vector3f&, f32, bool)
  * Address:	8014E3B0
  * Size:	000164
  */
-void Boss::changeDirection(f32)
+bool Boss::changeDirection(f32)
 {
 	/*
 	.loc_0x0:
@@ -1110,7 +1110,7 @@ void Boss::makeTargetRandom(f32)
  * Address:	8014E70C
  * Size:	0002D0
  */
-void Boss::chaseNaviTransit()
+bool Boss::chaseNaviTransit()
 {
 	/*
 	.loc_0x0:
@@ -1324,7 +1324,7 @@ void Boss::chaseNaviTransit()
  * Address:	8014E9DC
  * Size:	0002DC
  */
-void Boss::chasePikiTransit()
+bool Boss::chasePikiTransit()
 {
 	/*
 	.loc_0x0:
@@ -1541,7 +1541,7 @@ void Boss::chasePikiTransit()
  * Address:	8014ECB8
  * Size:	000158
  */
-void Boss::targetLostTransit()
+bool Boss::targetLostTransit()
 {
 	/*
 	.loc_0x0:
@@ -1649,7 +1649,7 @@ void Boss::targetLostTransit()
  * Address:	8014EE10
  * Size:	000060
  */
-void Boss::inSideWaitRangeTransit()
+bool Boss::inSideWaitRangeTransit()
 {
 	/*
 	.loc_0x0:
@@ -1689,7 +1689,7 @@ void Boss::inSideWaitRangeTransit()
  * Address:	8014EE70
  * Size:	000060
  */
-void Boss::outSideChaseRangeTransit()
+bool Boss::outSideChaseRangeTransit()
 {
 	/*
 	.loc_0x0:
@@ -1800,7 +1800,7 @@ bool Boss::inSearchAngle(Creature*)
  * Address:	8014EF94
  * Size:	0000B8
  */
-void Boss::flickPikiTransit()
+bool Boss::flickPikiTransit()
 {
 	/*
 	.loc_0x0:
@@ -2137,7 +2137,7 @@ void Boss::killStickToMouthPiki()
  * Address:	........
  * Size:	000050
  */
-void Boss::checkInWater(Vector3f&)
+bool Boss::checkInWater(Vector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -2147,7 +2147,7 @@ void Boss::checkInWater(Vector3f&)
  * Address:	8014F370
  * Size:	000050
  */
-void Boss::getMapAttribute(Vector3f&)
+int Boss::getMapAttribute(Vector3f&)
 {
 	/*
 	.loc_0x0:

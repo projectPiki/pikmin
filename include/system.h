@@ -377,11 +377,6 @@ static inline bool coinFlip() { return System::getRand(1.0f) > 0.5f; }
 
 // these match according to the plugPiki DLL - move inlines down as they get verified
 static inline f32 randFloat() { return System::getRand(1.0f); }
-static inline f32 randFloat(int val)
-{
-	f32 fVal = val * 0.99999f;
-	return System::getRand(1.0f) * fVal;
-}
 
 extern "C" void OSPanic(const char* filename, int line, const char* msg, ...);
 

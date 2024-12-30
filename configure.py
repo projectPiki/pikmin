@@ -700,7 +700,7 @@ config.libs = [
             Object(Matching, "plugPikiNishimura/Kogane.cpp"),
             Object(NonMatching, "plugPikiNishimura/KoganeAi.cpp"),
             Object(Matching, "plugPikiNishimura/Pom.cpp"),
-            Object(NonMatching, "plugPikiNishimura/PomAi.cpp"),
+            Object(Matching, "plugPikiNishimura/PomAi.cpp"),
             Object(Matching, "plugPikiNishimura/KingBack.cpp"),
             Object(Matching, "plugPikiNishimura/Nucleus.cpp"),
             Object(Matching, "plugPikiNishimura/NucleusAi.cpp"),

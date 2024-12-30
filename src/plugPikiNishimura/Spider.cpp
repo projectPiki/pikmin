@@ -60,8 +60,8 @@ f32 Spider::getiMass() { return 0.1f; }
 void Spider::init(Vector3f&)
 {
 	mCollisionRadius = 64.0f;
-	set2BC(1);
-	set2BB(0);
+	setInvincible(1);
+	setIsOrganic(0);
 	mIsBossBgm = false;
 	_3B9       = 1;
 	_3BA       = 0;
@@ -85,8 +85,8 @@ void Spider::init(Vector3f&)
 void Spider::doKill()
 {
 	mIsBossBgm = false;
-	set2B8(0);
-	set2B9(0);
+	setIsAlive(0);
+	setIsAtari(0);
 	mSpiderLeg->killCallBackEffect(false);
 	mShadowCaster.del();
 	bossMgr->kill(this);
@@ -169,7 +169,7 @@ void Spider::doAI() { mSpiderAi->update(); }
 void Spider::doAnimation()
 {
 	if (mShapeObject) {
-		mAnimator.animate(getMotionSpeed());
+		mAnimator.animate(getAnimTimer());
 	}
 }
 

@@ -47,7 +47,7 @@ struct PomProp : public BossProp, public CoreNode {
 		Parm<int> mMaxPikiPerCycle;       // _254, i00
 		Parm<int> mMinCycles;             // _264, i10
 		Parm<int> mMaxCycles;             // _274, i11
-		Parm<BOOL> mDoAnimLoopWhenClosed; // _284, i20
+		Parm<int> mDoAnimLoopWhenClosed;  // _284, i20
 		Parm<BOOL> mDoKillSameColorPiki;  // _294, i90
 		Parm<int> mStickOrSwallow;        // _2A4, i91 - 0=stick and attack, 1=swallowed
 		Parm<int> mOpenOnInteractionOnly; // _2B4, i92 - 0=open immediately, 1=open after interacting
@@ -94,7 +94,7 @@ struct Pom : public Boss {
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss
-	u8 _3B8;                        // _3B8
+	bool _3B8;                      // _3B8
 	int mColor;                     // _3BC
 	PomAi* mPomAi;                  // _3C0
 	ShapeDynMaterials mDynMaterial; // _3C4
@@ -157,11 +157,11 @@ struct PomAi : public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	Pom* mPom;                                 // _04
-	u8 _08;                                    // _08
+	bool _08;                                  // _08
 	u8 _09;                                    // _09
-	u8 _0A;                                    // _0A
+	bool _0A;                                  // _0A
 	int _0C;                                   // _0C
-	u32 _10;                                   // _10, unknown
+	int _10;                                   // _10
 	int _14;                                   // _14
 	f32 _18;                                   // _18
 	f32 _1C;                                   // _1C
@@ -176,11 +176,20 @@ struct PomAi : public PaniAnimKeyListener {
 struct PomGenOpenStarCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	PomGenOpenStarCallBack() { }
 
-	virtual bool invoke(zen::particleGenerator*); // _08
+	virtual bool invoke(zen::particleGenerator* ptcl) // _08
+	{
+		if (*_04 == false) {
+			ptcl->finish();
+		}
+		return true;
+	}
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack1?
-	u8 _04[4]; // _04, unknown
+	// helpful name, thanks DLL.
+	void set(bool* val) { _04 = val; }
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1
+	bool* _04; // _04, points to _0A in PomAi?
 };
 
 #endif

@@ -59,9 +59,9 @@ void Nucleus::init(Vector3f&)
 {
 	mCollisionRadius = 20.0f;
 	mScale.set(0.0f, 0.0f, 0.0f);
-	set2B8(0);
-	set2BE(1);
-	set2E0(30.0f);
+	setIsAlive(0);
+	setShadowNeed(1);
+	setShadowSize(30.0f);
 	mNucleusAI->initAI(this);
 }
 
@@ -72,8 +72,8 @@ void Nucleus::init(Vector3f&)
  */
 void Nucleus::doKill()
 {
-	set2B8(0);
-	set2B9(0);
+	setIsAlive(0);
+	setIsAtari(0);
 	bossMgr->kill(this);
 }
 
@@ -132,6 +132,6 @@ void Nucleus::doAI() { mNucleusAI->update(); }
 void Nucleus::doAnimation()
 {
 	if (mShapeObject) {
-		mAnimator.animate(getMotionSpeed());
+		mAnimator.animate(getAnimTimer());
 	}
 }

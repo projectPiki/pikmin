@@ -161,7 +161,7 @@ void NClampLinearFunction::construct(f32* values) { mData.construct(values, 2); 
  */
 void NClampLinearFunction::makeClampLinearFunction(f32 x1, f32 y1, f32 x2, f32 y2)
 {
-	if (NMathf::isZero(x2 - x1)) {
+	if (NMathF::isZero(x2 - x1)) {
 		mData.mValues[1] = 1.0f;
 	} else {
 		// Slope is rise (y) over (/) run (x)
@@ -183,7 +183,7 @@ void NClampLinearFunction::makeClampLinearFunction(f32 x1, f32 y1, f32 x2, f32 y
 f32 NClampLinearFunction::getValue(f32 p1)
 {
 	f32 val = NPolynomialFunction::getValue(p1);
-	return NMathf::clamp(val, mMinValue, mMaxValue);
+	return NMathf::clampMinMax(val, mMinValue, mMaxValue);
 }
 
 /*

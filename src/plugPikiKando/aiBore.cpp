@@ -986,11 +986,11 @@ ActBoreTalk::ActBoreTalk(Piki* piki)
  */
 void ActBoreTalk::init(Creature* creature)
 {
-	mIsAnimFinished   = false;
-	_18               = 0;
-	SearchBuffer* buf = &mActor->mSearchBuffer;
-	int start         = buf->getFirst();
-	mTarget           = buf->getCreatureCheck(start);
+	mIsAnimFinished = false;
+	_18             = 0;
+	Iterator iter(&mActor->mSearchBuffer);
+	iter.first();
+	mTarget = *iter;
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Asibumi, this), PaniMotionInfo(PIKIANIM_Asibumi));
 	mActor->enableMotionBlend();
 	/*
@@ -1073,7 +1073,7 @@ void ActBoreTalk::startTalk()
 	mActor->turnTo(mTarget->mPosition);
 
 	Iterator iter(buf);
-	CI_LOOP(iter) { iter.getCreature()->stimulate(InteractTalk(mActor)); }
+	CI_LOOP(iter) { (*iter)->stimulate(InteractTalk(mActor)); }
 
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Chatting, this), PaniMotionInfo(PIKIANIM_Chatting));
 	mActor->enableMotionBlend();

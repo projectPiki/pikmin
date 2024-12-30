@@ -212,7 +212,7 @@ struct Creature : public RefCountable, public EventTalker {
 
 	inline Vector3f& getPosition() { return mPosition; }
 
-	inline bool isWall()
+	bool isSluice()
 	{
 		return mObjType == OBJTYPE_SluiceSoft || mObjType == OBJTYPE_SluiceHard || mObjType == OBJTYPE_SluiceBomb
 		    || mObjType == OBJTYPE_SluiceBombHard;
@@ -238,6 +238,9 @@ struct Creature : public RefCountable, public EventTalker {
 		setCreatureFlag(CF_Unk7);
 		resetCreatureFlag(CF_Unk2);
 	}
+
+	// probably?
+	bool isGrabbed() { return isCreatureFlag(CF_StuckToMouth); }
 
 	// _00     = VTBL
 	// _00-_08 = RefCountable

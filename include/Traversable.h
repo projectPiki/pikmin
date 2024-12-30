@@ -20,34 +20,6 @@ struct Traversable {
 	virtual int getNext(int)           = 0; // _10
 	virtual bool isDone(int)           = 0; // _14
 
-	inline bool isEnd(int idx)
-	{
-		if (isDone(idx)) {
-			return true;
-		}
-
-		if (!getCreature(idx)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	inline Creature* getCreatureCheck(int idx)
-	{
-		if (idx == -1) {
-			return getCreature(0);
-		}
-		return getCreature(idx);
-	}
-
-	static inline void removeIndex(int& idx)
-	{
-		if (idx >= 0) {
-			idx--;
-		}
-	}
-
 	// _00 = VTBL
 	u32 _04; // _04, unknown
 };
@@ -62,33 +34,13 @@ struct Iterator {
 		mCondition = condition;
 	}
 
-	bool isDone()
-	{
-		if (mTrav->isDone(mIndex)) {
-			return true;
-		}
-
-		if (!mTrav->getCreature(mIndex)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	Creature* getCreature()
+	Creature* operator*()
 	{
 		if (mIndex == -1) {
 			return mTrav->getCreature(0);
 		}
 
 		return mTrav->getCreature(mIndex);
-	}
-
-	void removeFromSearch()
-	{
-		if (mIndex >= 0) {
-			mIndex--;
-		}
 	}
 
 	void first()
@@ -121,6 +73,26 @@ struct Iterator {
 		}
 
 		mIndex = mTrav->getNext(mIndex);
+	}
+
+	void dec()
+	{
+		if (mIndex >= 0) {
+			mIndex--;
+		}
+	}
+
+	bool isDone()
+	{
+		if (mTrav->isDone(mIndex)) {
+			return true;
+		}
+
+		if (!mTrav->getCreature(mIndex)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	int mIndex;            // _00

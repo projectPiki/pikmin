@@ -169,110 +169,141 @@ struct Boss : public Creature {
 	void initBoss(struct BirthInfo&, int);
 	void calcFlickPiki();
 	void createPellet(Vector3f&, f32, bool);
-	void changeDirection(f32);
+	bool changeDirection(f32);
 	void stopMovement();
 	void calcBossDamage();
 	void makeTargetCreature();
 	void makeTargetRandom(f32);
-	void chaseNaviTransit();
-	void chasePikiTransit();
-	void targetLostTransit();
-	void inSideWaitRangeTransit();
-	void outSideChaseRangeTransit();
+	bool chaseNaviTransit();
+	bool chasePikiTransit();
+	bool targetLostTransit();
+	bool inSideWaitRangeTransit();
+	bool outSideChaseRangeTransit();
 	bool inSearchAngle(Creature*);
-	void flickPikiTransit();
+	bool flickPikiTransit();
 	int getStickPikiCount();
 	int getStickMouthPikiCount();
 	int getStickNoMouthPikiCount();
 	void killStickToMouthPiki();
-	void getMapAttribute(Vector3f&);
+	int getMapAttribute(Vector3f&);
 	bool insideAndInSearch();
 	void updateBoss();
 	void refreshViewCulling(Graphics&);
 
 	// unused/inlined:
 	void towardFaceDirection(f32);
-	void checkInWater(Vector3f&);
+	bool checkInWater(Vector3f&);
 	void recoveryLife();
 
-	inline f32 getMotionSpeed() { return mMotionSpeed; }
-	inline f32 setMotionSpeed(f32 speed) { mMotionSpeed = speed; }
+	f32 getAnimTimer() { return mAnimTimer; }
+	void addAnimTimer(f32 val) { mAnimTimer += val; }
+	void setAnimTimer(f32 val) { mAnimTimer = val; }
 
-	inline void set2B8(u8 val) { _2B8 = val; }
-	inline void set2B9(u8 val) { _2B9 = val; }
-	inline void set2BB(u8 val) { _2BB = val; }
-	inline void set2BC(u8 val) { _2BC = val; }
+	void setIsAlive(bool val) { mIsAlive = val; }
+	void setIsAtari(bool val) { mIsAtari = val; }
+	void setIsOrganic(bool val) { mIsOrganic = val; }
+	void setInvincible(bool val) { mIsInvincible = val; }
 
-	inline void setMotionFinished(bool isFinished) { mIsMotionFinished = isFinished; }
-	inline bool isMotionFinished() { return mIsMotionFinished; }
+	void setMotionFinish(bool isFinished) { mIsMotionFinished = isFinished; }
+	bool getMotionFinish() { return mIsMotionFinished; }
 
-	inline void set2BE(u8 val) { _2BE = val; }
+	void setShadowNeed(bool val) { mNeedShadow = val; }
+	void setOnWall(bool val) { mIsOnWall = val; }
 
-	inline int getCurrStateID() { return mCurrentStateID; }
-	inline void setCurrStateID(int stateID) { mCurrentStateID = stateID; }
+	Creature* getTargetCreature() { return mTargetCreature; }
+	void setTargetCreature(Creature* target) { mTargetCreature = target; }
+	Vector3f* getTargetPosition() { return &mTargetPosition; }
+	void setTargetPosition(Vector3f& pos) { mTargetPosition = pos; } // probably? check if it's set when we use it first
 
-	inline int getNextStateID() { return mNextStateID; }
-	inline void setNextStateID(int stateID) { mNextStateID = stateID; }
+	int getCurrentState() { return mCurrentStateID; }
+	void setCurrentState(int stateID) { mCurrentStateID = stateID; }
 
-	inline void set2E0(f32 val) { _2E0 = val; } // name these better later
+	int getNextState() { return mNextStateID; }
+	void setNextState(int stateID) { mNextStateID = stateID; }
 
-	inline void setAnimLoopCounter(int val) { mAnimLoopCounter = val; }  // name these better later
-	inline void incAnimLoopCounter(int amt) { mAnimLoopCounter += amt; } // name these better later
+	void setShadowSize(f32 size) { mShadowSize = size; }
 
+	int getLoopCounter() { return mAnimLoopCounter; }
+	void setLoopCounter(int val) { mAnimLoopCounter = val; }
+	void addLoopCounter(int amt) { mAnimLoopCounter += amt; }
+
+	int getFlickDamageCount() { return mFlickDamageCount; }
+	void setFlickDamageCount(int val) { mFlickDamageCount = val; }
+	void addFlickDamageCount(int amt) { mFlickDamageCount += amt; }
+
+	int getItemColour() { return mItemColour; }
+	void setItemIndex(int val) { mItemIndex = val; }
+	void setItemColour(int val) { mItemColour = val; }
+	void setItemCount(int val) { mItemCount = val; }
+
+	f32 getDamagePoint() { return mDamage; }
+	void setDamagePoint(f32 damage) { mDamage = damage; }
+	void addDamagePoint(f32 damage) { mDamage += damage; }
+
+	bool getAlive() { return mCurrentHealth > 0.0f; }
+
+	Vector3f* getInitPosition() { return &mInitPosition; }
+	void setInitPosition(Vector3f& pos) { mInitPosition = pos; } // check if this is set later when first used
+
+	// attack timer??
+	inline f32 get2D0() { return _2D0; }         // name these better later
+	inline void set2D0(f32 val) { _2D0 = val; }  // name these better later
+	inline void add2D0(f32 val) { _2D0 += val; } // name these better later
+
+	// walk timer??
 	inline f32 get2D4() { return _2D4; }         // name these better later
 	inline void set2D4(f32 val) { _2D4 = val; }  // name these better later
-	inline void inc2D4(f32 val) { _2D4 += val; } // name these better later
+	inline void add2D4(f32 val) { _2D4 += val; } // name these better later
 
-	inline int get2F0() { return _2F0; }
-	inline void set2F0(int val) { _2F0 = val; } // name these better later
+	/*
+	    list of inlines to create/assign:
+	    f32 getAttackTimer();
+	    void addAttackTimer(f32);
+	    void setAttackTimer(f32);
 
-	inline void set2F4(u32 val) { _2F4 = val; } // name these better later
-	inline void set2F8(u32 val) { _2F8 = val; } // name these better later
-	inline void set2FC(u32 val) { _2FC = val; } // name these better later
+	    f32 getCurrentLife();
+	    f32 getMaxLife();
 
-	// these names are a guess
-	inline f32 getDamage() { return mDamage; }
-	inline void setDamage(f32 damage) { mDamage = damage; }
-	inline void addDamage(f32 damage) { mDamage += damage; }
-
-	inline bool hasHealth() { return mCurrentHealth > 0.0f; }
-
-	inline Vector3f& get300() { return _300; }
+	    f32 getWalkTimer();
+	    void addWalkTimer(f32);
+	    void setWalkTimer(f32);
+	*/
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	u8 _2B8;                       // _2B8
-	u8 _2B9;                       // _2B9
-	u8 _2BA;                       // _2BA
-	u8 _2BB;                       // _2BB
-	u8 _2BC;                       // _2BC
-	bool mIsMotionFinished;        // _2BD
-	u8 _2BE;                       // _2BE
-	u8 _2BF;                       // _2BF
-	f32 mDamage;                   // _2C0
-	f32 mCurrentHealth;            // _2C4
-	f32 mMaxHealth;                // _2C8
-	u8 _2CC[0x2D4 - 0x2CC];        // _2CC, unknown
-	f32 _2D4;                      // _2D4
-	f32 mMotionSpeed;              // _2D8
-	u8 _2DC[0x2E0 - 0x2DC];        // _2DC, unknown
-	f32 _2E0;                      // _2E0
-	int mCurrentStateID;           // _2E4
-	int mNextStateID;              // _2E8
-	int mAnimLoopCounter;          // _2EC
-	int _2F0;                      // _2F0
-	u32 _2F4;                      // _2F4, unknown, same as _1C in GenObjectBoss
-	u32 _2F8;                      // _2F8, unknown, same as _20 in GenObjectBoss
-	u32 _2FC;                      // _2F4, unknown, same as _24 in GenObjectBoss
-	Vector3f _300;                 // _300
-	Vector3f _30C;                 // _30C
-	u8 _318[0x4];                  // _318, unknown
-	ID32 mPelletID;                // _31C
-	Plane _328;                    // _328
-	u8 _338[0x4];                  // _338, unknown
-	PaniTekiAnimator mAnimator;    // _33C
-	BossShapeObject* mShapeObject; // _390
-	SearchData mSearchData[3];     // _394
+	bool mIsAlive;                  // _2B8
+	bool mIsAtari;                  // _2B9
+	bool mIsVisible;                // _2BA
+	bool mIsOrganic;                // _2BB
+	bool mIsInvincible;             // _2BC
+	bool mIsMotionFinished;         // _2BD
+	bool mNeedShadow;               // _2BE
+	bool mIsOnWall;                 // _2BF
+	f32 mDamage;                    // _2C0
+	f32 mCurrentHealth;             // _2C4
+	f32 mMaxHealth;                 // _2C8
+	f32 _2CC;                       // _2CC
+	f32 _2D0;                       // _2D0, either mAttackTimer or mWalkTimer, unsure
+	f32 _2D4;                       // _2D4, either mAttackTimer or mWalkTimer, unsure
+	f32 mAnimTimer;                 // _2D8
+	f32 _2DC;                       // _2DC
+	f32 mShadowSize;                // _2E0
+	int mCurrentStateID;            // _2E4
+	int mNextStateID;               // _2E8
+	int mAnimLoopCounter;           // _2EC
+	int mFlickDamageCount;          // _2F0
+	int mItemIndex;                 // _2F4
+	int mItemColour;                // _2F8
+	int mItemCount;                 // _2FC
+	Vector3f mInitPosition;         // _300
+	Vector3f mTargetPosition;       // _30C
+	Creature* mTargetCreature;      // _318
+	ID32 mPelletID;                 // _31C
+	Plane mWallPlane;               // _328
+	DynCollObject* mWallCollObject; // _338
+	PaniTekiAnimator mAnimator;     // _33C
+	BossShapeObject* mShapeObject;  // _390
+	SearchData mSearchData[3];      // _394
 };
 
 /**

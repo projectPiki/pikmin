@@ -354,7 +354,7 @@ void NaviStuckState::exec(Navi* navi)
 			Iterator iter(&stickers);
 			CI_LOOP(iter)
 			{
-				Creature* stuck = iter.getCreature(); // 50/50 chance to flick a given puffmin
+				Creature* stuck = *iter; // 50/50 chance to flick a given puffmin
 				if (!stuck || !coinFlip()) {
 					continue;
 				}
@@ -2830,7 +2830,7 @@ void NaviContainerState::init(Navi* navi)
 	Iterator iter(navi->mPlateMgr);
 	CI_LOOP(iter)
 	{
-		Piki* piki = (Piki*)iter.getCreature();
+		Piki* piki = (Piki*)*iter;
 		if (piki->mColor == navi->mGoalItem->_428) {
 			pikisInParty++;
 		}

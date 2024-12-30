@@ -30,10 +30,10 @@ void Creature::interactStickers(Creature* stuckTo, Interaction& interaction, Con
 	Iterator iter(&stuckList);
 	CI_LOOP(iter)
 	{
-		Creature* stuck = iter.getCreature();
+		Creature* stuck = *iter;
 		if (!condition || condition->satisfy(stuck)) {
 			if (stuck->stimulate(interaction)) {
-				iter.removeFromSearch();
+				iter.dec();
 			}
 		}
 	}

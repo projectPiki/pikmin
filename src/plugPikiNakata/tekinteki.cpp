@@ -52,10 +52,10 @@ NTeki::NTeki()
  */
 void NTeki::sendMessage(int msg)
 {
-	TekiMgr* mgr = tekiMgr;
-	int currIdx  = mgr->getFirst();
-	for (currIdx; !mgr->isEnd(currIdx); currIdx = mgr->getNext(currIdx)) {
-		Creature* target = (currIdx == -1) ? mgr->getCreature(0) : mgr->getCreature(currIdx);
+	Iterator iter(tekiMgr);
+	CI_LOOP(iter)
+	{
+		Creature* target = *iter;
 		if (target != this) {
 			if (mPosition.distance(target->mPosition) <= 1.0f) {
 				TekiMessage tekiMessage(msg, this);

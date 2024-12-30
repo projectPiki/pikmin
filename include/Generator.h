@@ -233,11 +233,11 @@ struct GenObjectBoss : public GenObject {
 	inline GenObjectBoss()
 	    : GenObject('boss', "ボスを生む") // 'generate a boss'
 	{
-		_18 = 0;
-		_1C = 0;
-		_20 = 0;
-		_24 = 0;
-		_28 = -1;
+		_18         = 0;
+		mItemIndex  = 0;
+		mItemColour = 0;
+		mItemCount  = 0;
+		_28         = -1;
 	}
 
 	virtual void doWrite(RandomAccessStream&);           // _08
@@ -254,11 +254,11 @@ struct GenObjectBoss : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	int _18; // _18
-	u32 _1C; // _1C, unknown
-	u32 _20; // _20, unknown
-	u32 _24; // _24, unknown
-	int _28; // _28
+	int _18;         // _18
+	int mItemIndex;  // _1C, unknown
+	int mItemColour; // _20, unknown
+	int mItemCount;  // _24, unknown
+	int _28;         // _28
 };
 
 /**

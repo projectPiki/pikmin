@@ -59,10 +59,10 @@ f32 Pom::getiMass() { return 0.0001f; }
 void Pom::init(Vector3f&)
 {
 	mCollisionRadius = 20.0f;
-	_2BB             = 0;
-	_2BC             = 1;
-	_2BE             = 1;
-	_2E0             = 50.0f;
+	mIsOrganic       = 0;
+	mIsInvincible    = 1;
+	mNeedShadow      = 1;
+	mShadowSize      = 50.0f;
 	_3B8             = 0;
 	mPomAi->initAI(this);
 }
@@ -89,8 +89,8 @@ void Pom::setColor(int color)
  */
 void Pom::doKill()
 {
-	_2B8 = 0;
-	_2B9 = 0;
+	mIsAlive = 0;
+	mIsAtari = 0;
 	mPomAi->killCallBackEffect(false);
 	bossMgr->kill(this);
 }
@@ -161,7 +161,7 @@ void Pom::doAI() { mPomAi->update(); }
 void Pom::doAnimation()
 {
 	if (mShapeObject) {
-		mAnimator.animate(getMotionSpeed());
+		mAnimator.animate(getAnimTimer());
 	}
 }
 

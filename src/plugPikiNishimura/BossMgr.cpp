@@ -529,9 +529,9 @@ void BossMgr::initGeyzer(int count)
  */
 void BossMgr::setBossParam(Boss* boss, GenObjectBoss* genBoss)
 {
-	boss->set2FC(genBoss->_24);
-	boss->set2F4(genBoss->_1C);
-	boss->set2F8(genBoss->_20);
+	boss->setItemCount(genBoss->mItemCount);
+	boss->setItemIndex(genBoss->mItemIndex);
+	boss->setItemColour(genBoss->mItemColour);
 
 	PelletConfig* config = pelletMgr->getConfigFromIdx(genBoss->_28);
 	if (config) {
@@ -693,13 +693,13 @@ Boss* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBoss)
 		break;
 
 	case BOSS_Pom:
-		if (playerState->is184(genBoss->_20)) {
+		if (playerState->is184(genBoss->mItemColour)) {
 			boss = createBoss(BOSS_Pom);
 			if (boss) {
 				boss->initBoss(birthInfo, OBJTYPE_Pom);
 				boss->init(birthInfo.mPosition);
 				setBossParam(boss, genBoss);
-				static_cast<Pom*>(boss)->setColor(genBoss->_20);
+				static_cast<Pom*>(boss)->setColor(genBoss->mItemColour);
 			}
 		}
 		break;

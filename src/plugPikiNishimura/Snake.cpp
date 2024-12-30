@@ -72,7 +72,7 @@ f32 Snake::getiMass() { return 0.0001f; }
 void Snake::init(Vector3f& pos)
 {
 	mCollisionRadius = 15.0f;
-	set2E0(30.0f);
+	setShadowSize(30.0f);
 	mBossType = true;
 	_3C0      = mRotation.y;
 	_3C4      = 0.0f;
@@ -90,8 +90,8 @@ void Snake::init(Vector3f& pos)
  */
 void Snake::doKill()
 {
-	set2B8(0);
-	set2B9(0);
+	setIsAlive(0);
+	setIsAtari(0);
 	mSnakeBody->killCallBackEffect(false);
 	bossMgr->kill(this);
 }
@@ -172,7 +172,7 @@ void Snake::doAI() { mSnakeAi->update(); }
 void Snake::doAnimation()
 {
 	if (mShapeObject) {
-		mAnimator.animate(getMotionSpeed());
+		mAnimator.animate(getAnimTimer());
 	}
 
 	mSnakeBody->update();

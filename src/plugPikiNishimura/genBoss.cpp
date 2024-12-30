@@ -57,10 +57,10 @@ void GenObjectBoss::doRead(RandomAccessStream& input)
 	}
 
 	if (mVersion < 2) {
-		_18 = input.readInt();
-		_1C = input.readInt();
-		_20 = input.readInt();
-		_24 = input.readInt();
+		_18         = input.readInt();
+		mItemIndex  = input.readInt();
+		mItemColour = input.readInt();
+		mItemCount  = input.readInt();
 		ID32 id;
 		id.read(input);
 		return;
@@ -103,12 +103,12 @@ void GenObjectBoss::readParameters(RandomAccessStream& input)
 		u8 b[4];
 	} flags;
 
-	flags.w = input.readInt();
-	_18     = flags.b[3] & 0xF;
-	_1C     = (flags.b[3] >> 4) & 0x3;
-	_20     = (flags.b[3] >> 6) & 0x3;
-	_24     = flags.b[2] & 0xF;
-	_28     = (flags.w >> 12) - 1;
+	flags.w     = input.readInt();
+	_18         = flags.b[3] & 0xF;
+	mItemIndex  = (flags.b[3] >> 4) & 0x3;
+	mItemColour = (flags.b[3] >> 6) & 0x3;
+	mItemCount  = flags.b[2] & 0xF;
+	_28         = (flags.w >> 12) - 1;
 }
 
 /*
@@ -126,9 +126,9 @@ void GenObjectBoss::writeParameters(RandomAccessStream& output)
 
 	flags.w    = 0;
 	flags.b[3] = (_18 & 0xF) | (flags.b[3] & 0xFFFFFFF0);
-	flags.b[3] = ((_1C << 4) & 0x30) | (flags.b[3] & 0xFFFFFFCF);
-	flags.b[3] = ((_20 << 6) & 0xC0) | (flags.b[3] & 0xFFFFFF3F);
-	flags.b[2] = (_24 & 0xF) | (flags.b[2] & 0xFFFFFFF0);
+	flags.b[3] = ((mItemIndex << 4) & 0x30) | (flags.b[3] & 0xFFFFFFCF);
+	flags.b[3] = ((mItemColour << 6) & 0xC0) | (flags.b[3] & 0xFFFFFF3F);
+	flags.b[2] = (mItemCount & 0xF) | (flags.b[2] & 0xFFFFFFF0);
 	flags.w    = (((_28 + 1) << 12) & ~0xFFF) | (flags.w & ~0xFFFFF000);
 
 	output.writeInt(flags.w);

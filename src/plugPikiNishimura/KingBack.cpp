@@ -57,8 +57,8 @@ f32 KingBack::getiMass() { return 0.0001f; }
 void KingBack::init(Vector3f&)
 {
 	mCollisionRadius = 20.0f;
-	_2BB             = 0;
-	_2BC             = 1;
+	mIsOrganic       = 0;
+	mIsInvincible    = 1;
 	mPlatMgr.init(this, mapMgr, mShapeObject->mShape);
 }
 
@@ -124,7 +124,7 @@ void KingBack::drawShape(Graphics& gfx)
  * Address:	8017A0F4
  * Size:	00001C
  */
-void KingBack::doAI() { mPosition.set(_300); }
+void KingBack::doAI() { mPosition.set(mInitPosition); }
 
 /*
  * --INFO--
@@ -134,6 +134,6 @@ void KingBack::doAI() { mPosition.set(_300); }
 void KingBack::doAnimation()
 {
 	if (mShapeObject) {
-		mAnimator.animate(getMotionSpeed());
+		mAnimator.animate(getAnimTimer());
 	}
 }

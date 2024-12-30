@@ -251,7 +251,7 @@ void Navi::updateDayEnd(Vector3f& pos)
 		Iterator iter(pikiMgr);
 		CI_LOOP(iter)
 		{
-			Piki* piki = static_cast<Piki*>(iter.getCreature());
+			Piki* piki = static_cast<Piki*>(*iter);
 			piki->mFSM->transit(piki, 0);
 
 			if (piki->mMode != 11) {

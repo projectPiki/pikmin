@@ -74,9 +74,10 @@ GoalItem* ItemMgr::getContainer(int color)
 	if (!mgr) {
 		return nullptr;
 	}
-
-	for (int idx = mgr->getFirst(); !mgr->isEnd(idx); idx = mgr->getNext(idx)) {
-		Creature* creature = (idx == -1) ? mgr->getCreature(0) : mgr->getCreature(idx);
+	Iterator iter(mgr);
+	CI_LOOP(iter)
+	{
+		Creature* creature = *iter;
 		if (creature->mObjType == OBJTYPE_Goal) {
 			GoalItem* goal = static_cast<GoalItem*>(creature);
 			if (goal->_428 == color) {
@@ -201,8 +202,10 @@ GoalItem* ItemMgr::getNearestContainer(Vector3f& pos, f32 radius)
 
 	f32 minDist    = radius;
 	GoalItem* goal = nullptr;
-	for (int idx = mgr->getFirst(); !mgr->isEnd(idx); idx = mgr->getNext(idx)) {
-		Creature* creature = (idx == -1) ? mgr->getCreature(0) : mgr->getCreature(idx);
+	Iterator iter(mgr);
+	CI_LOOP(iter)
+	{
+		Creature* creature = *iter;
 		if (creature->mObjType == OBJTYPE_Goal) {
 			GoalItem* newGoal = static_cast<GoalItem*>(creature);
 			f32 dist          = qdist2(creature->mPosition.x, creature->mPosition.z, pos.x, pos.z);
@@ -323,10 +326,10 @@ GoalItem* ItemMgr::getNearestContainer(Vector3f& pos, f32 radius)
  */
 UfoItem* ItemMgr::getUfo()
 {
-	MeltingPotMgr* mgr = mMeltingPotMgr;
-
-	for (int idx = mgr->getFirst(); !mgr->isEnd(idx); idx = mgr->getNext(idx)) {
-		Creature* creature = (idx == -1) ? mgr->getCreature(0) : mgr->getCreature(idx);
+	Iterator iter(mMeltingPotMgr);
+	CI_LOOP(iter)
+	{
+		Creature* creature = *iter;
 		if (creature->mObjType == OBJTYPE_Ufo) {
 			return static_cast<UfoItem*>(creature);
 		}
@@ -471,8 +474,8 @@ void MeltingPotMgr::finalSetup()
 	Iterator iter(this);
 	CI_LOOP(iter)
 	{
-		Creature* creature = iter.getCreature();
-		if (creature->isWall()) {
+		Creature* creature = *iter;
+		if (creature->isSluice()) {
 			GoalItem* goal = static_cast<GoalItem*>(creature);
 			goal->finalSetup();
 		}

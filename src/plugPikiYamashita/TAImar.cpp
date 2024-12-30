@@ -2180,7 +2180,7 @@ bool TAIAflyingDistanceMar::act(Teki& teki)
 		Iterator iter(pikiMgr);
 		CI_LOOP(iter)
 		{
-			Creature* piki = iter.getCreature();
+			Creature* piki = *iter;
 
 			// if piki is within DangerTerritoryRange, increase chance of success by a small amount
 			f32 distance = piki->getPosition().distance(teki.getPosition());

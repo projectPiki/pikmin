@@ -2,17 +2,14 @@
 #include "CreatureNode.h"
 #include "Creature.h"
 #include "Dolphin/os.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "objectMgr");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
@@ -42,7 +39,7 @@ void boundSphereDist(Creature*, Creature*)
 void ObjectMgr::stickUpdate()
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { iter.getCreature()->stickUpdate(); }
+	CI_LOOP(iter) { (*iter)->stickUpdate(); }
 }
 
 /*
@@ -55,7 +52,7 @@ void ObjectMgr::invalidateSearch()
 	Iterator iter(this);
 	CI_LOOP(iter)
 	{
-		Creature* c = iter.getCreature();
+		Creature* c = *iter;
 		if (c->_168.updatable()) {
 			c->mSearchBuffer.invalidate();
 		}
@@ -70,7 +67,7 @@ void ObjectMgr::invalidateSearch()
 void ObjectMgr::update()
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { iter.getCreature()->update(); }
+	CI_LOOP(iter) { (*iter)->update(); }
 }
 
 /*

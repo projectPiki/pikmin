@@ -60,10 +60,10 @@ f32 Kogane::getiMass() { return 0.1f; }
 void Kogane::init(Vector3f&)
 {
 	mCollisionRadius = 25.0f;
-	_2BB             = 0;
-	_2BC             = 1;
-	_2BE             = 0;
-	_2E0             = 20.0f;
+	mIsOrganic       = 0;
+	mIsInvincible    = 1;
+	mNeedShadow      = 0;
+	mShadowSize      = 20.0f;
 	_3B9             = 0;
 	_3B8             = 0;
 	mKoganeAi->initAI(this);
@@ -76,8 +76,8 @@ void Kogane::init(Vector3f&)
  */
 void Kogane::doKill()
 {
-	_2B8 = 0;
-	_2B9 = 0;
+	mIsAlive = 0;
+	mIsAtari = 0;
 	mKoganeAi->killCallBackEffect(false);
 	bossMgr->kill(this);
 }
@@ -130,7 +130,7 @@ void Kogane::drawShape(Graphics& gfx)
 void Kogane::doAI()
 {
 	mKoganeAi->update();
-	_2BF = 0;
+	mIsOnWall = 0;
 }
 
 /*
@@ -141,7 +141,7 @@ void Kogane::doAI()
 void Kogane::doAnimation()
 {
 	if (mShapeObject) {
-		mAnimator.animate(getMotionSpeed());
+		mAnimator.animate(getAnimTimer());
 	}
 }
 

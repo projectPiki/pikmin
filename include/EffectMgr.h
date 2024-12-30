@@ -113,6 +113,7 @@ struct EffectMgr : public CoreNode {
 		// ...
 		EFF_Unk47 = 47,
 		EFF_Unk48 = 48,
+		EFF_Unk49 = 49,
 		// ...
 		EFF_Unk50 = 50,
 		EFF_Unk51 = 51,
