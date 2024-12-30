@@ -216,7 +216,7 @@ struct Boss : public Creature {
 	Creature* getTargetCreature() { return mTargetCreature; }
 	void setTargetCreature(Creature* target) { mTargetCreature = target; }
 	Vector3f* getTargetPosition() { return &mTargetPosition; }
-	void setTargetPosition(Vector3f& pos) { mTargetPosition = pos; } // probably? check if it's set when we use it first
+	void setTargetPosition(Vector3f& pos) { mTargetPosition = pos; }
 
 	int getCurrentState() { return mCurrentStateID; }
 	void setCurrentState(int stateID) { mCurrentStateID = stateID; }

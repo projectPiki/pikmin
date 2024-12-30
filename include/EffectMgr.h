@@ -106,8 +106,18 @@ struct EffectMgr : public CoreNode {
 	 * @brief TODO
 	 */
 	enum effTypeTable {
+		EFF_NULL = -1,
 		EFF_Unk0 = 0,
 		EFF_Unk1 = 1,
+		// ...
+		EFF_Unk12 = 12,
+		EFF_Unk13 = 13,
+		EFF_Unk14 = 14,
+		EFF_Unk15 = 15,
+		EFF_Unk16 = 16,
+		EFF_Unk17 = 17,
+		EFF_Unk18 = 18,
+		EFF_Unk19 = 19,
 		// ...
 		EFF_Unk39 = 39,
 		// ...
@@ -129,8 +139,11 @@ struct EffectMgr : public CoreNode {
 		// ...
 		EFF_Unk69 = 69,
 		// ...
+		EFF_Unk87 = 87,
+		EFF_Unk88 = 88,
 		EFF_Unk89 = 89,
 		// ...
+		EFF_Unk120 = 120,
 		EFF_Unk121 = 121,
 		// ...
 		EFF_Unk193 = 193,

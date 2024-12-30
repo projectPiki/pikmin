@@ -8,7 +8,7 @@ struct PaniMotion;
 struct PaniMotionTable;
 
 enum KeyEventTypes {
-	KEY_Done       = 0,
+	KEY_Finished   = 0,
 	KEY_Action0    = 1,
 	KEY_Action1    = 2,
 	KEY_Action2    = 3,

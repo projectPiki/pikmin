@@ -324,7 +324,7 @@ void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 		f32 val2 = eventKey->getKeyValue();
 		f32 val1 = eventKey->getKeyValue();
 		if (startKeyframe <= val1 && val2 < endKeyframe) {
-			int type = KEY_Done;
+			int type = KEY_Finished;
 			if (eventKey->mEventKeyType == 0) {
 				type = KEY_PlaySound;
 			} else if (eventKey->mEventKeyType == 1) {
@@ -347,7 +347,7 @@ void PaniAnimator::finishAnimation()
 {
 	mCurrentKeyIndex = -1;
 	if (mListener) {
-		mListener->animationKeyUpdated(PaniAnimKeyEvent(KEY_Done));
+		mListener->animationKeyUpdated(PaniAnimKeyEvent(KEY_Finished));
 	}
 }
 

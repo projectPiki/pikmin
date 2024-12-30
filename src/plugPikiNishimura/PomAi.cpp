@@ -72,8 +72,8 @@ void PomAi::initAI(Pom* pom)
 
 	// splitting this monstrosity up into temps would be better. however, that destroys the stack :')
 	_14 = static_cast<PomProp*>(mPom->mProps)->mPomProps.mMinCycles()
-	    + NsMathI::getRand(absVal(static_cast<PomProp*>(mPom->mProps)->mPomProps.mMaxCycles()
-	                              - static_cast<PomProp*>(mPom->mProps)->mPomProps.mMinCycles() + 1));
+	    + NsMathI::getRand(NsLibMath<int>::abs(static_cast<PomProp*>(mPom->mProps)->mPomProps.mMaxCycles()
+	                                           - static_cast<PomProp*>(mPom->mProps)->mPomProps.mMinCycles() + 1));
 	_1C = 0.0f;
 	_18 = 0.0f;
 }
@@ -95,7 +95,7 @@ void PomAi::animationKeyUpdated(PaniAnimKeyEvent& event)
 	case KEY_LoopEnd:
 		keyLoopEnd();
 		break;
-	case KEY_Done:
+	case KEY_Finished:
 		keyFinished();
 		break;
 	case KEY_PlaySound:

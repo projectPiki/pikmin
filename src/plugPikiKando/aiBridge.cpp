@@ -301,7 +301,7 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
 			effectMgr->create(EffectMgr::EFF_Unk39, mActor->_464, nullptr, nullptr);
 		}
 		break;
-	case KEY_Done:
+	case KEY_Finished:
 		_4D = 1;
 		break;
 	}

@@ -144,7 +144,7 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
 	case KEY_Action1:
 		_32 = 0;
 		break;
-	case KEY_Done:
+	case KEY_Finished:
 		_30 = randFloat(4.0f);
 		startWorkMotion();
 		_32 = 0;

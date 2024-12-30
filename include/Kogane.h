@@ -5,8 +5,19 @@
 #include "Boss.h"
 #include "zen/Callback.h"
 #include "zen/Particle.h"
+#include "EffectMgr.h"
 
 struct KoganeAi;
+struct KoganeGenRippleCallBack;
+
+/**
+ * @brief TODO.
+ */
+enum KoganeDropTypes {
+	KOGANEDROP_1Pellet = 0,
+	KOGANEDROP_5Pellet = 1,
+	KOGANEDROP_Nectar  = 2,
+};
 
 /**
  * @brief TODO.
@@ -95,8 +106,8 @@ struct Kogane : public Boss {
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss
-	u8 _3B8;             // _3B8
-	u8 _3B9;             // _3B9
+	bool mIsAppear;      // _3B8
+	bool _3B9;           // _3B9
 	KoganeAi* mKoganeAi; // _3BC
 };
 
@@ -124,7 +135,7 @@ struct KoganeAi : public PaniAnimKeyListener {
 	void birthItemPellet(int);
 	void birthItemWater(int, f32);
 	void createPellet();
-	void appearTransit();
+	bool appearTransit();
 	void initCreate(int);
 	void update();
 
@@ -137,12 +148,12 @@ struct KoganeAi : public PaniAnimKeyListener {
 	void makeTargetRandom();
 	void makeStopMoving();
 	void resultFlagOn();
-	void dieTransit();
-	void isMotionFinishTransit();
-	void startWalkTransit();
-	void stopWalkTransit();
-	void changeTargetTransit();
-	void createPelletTransit();
+	bool dieTransit();
+	bool isMotionFinishTransit();
+	bool startWalkTransit();
+	bool stopWalkTransit();
+	bool changeTargetTransit();
+	bool createPelletTransit();
 	void initDie(int);
 	void initAppear(int);
 	void initWalkRandom(int, bool);
@@ -154,20 +165,35 @@ struct KoganeAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	u8 _04[0x20 - 0x4]; // _04, unknown
+	u8 _04;                                   // _04
+	KoganeGenRippleCallBack* mRippleCallBack; // _08
+	Kogane* mKogane;                          // _0C
+	int mDropCount;                           // _10
+	EffectMgr::effTypeTable mEffectType;      // _14
+	f32 _18;                                  // _18
+	f32 _1C;                                  // _1C
 };
 
 /**
  * @brief TODO
  */
 struct KoganeGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	KoganeGenRippleCallBack();
+	KoganeGenRippleCallBack() { }
 
-	virtual bool invoke(zen::particleGenerator*); // _08
+	virtual bool invoke(zen::particleGenerator* ptcl) // _08
+	{
+		if (!mKogane->mKoganeAi->_04) {
+			ptcl->finish();
+		}
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
+		return true;
+	}
+
+	void set(Kogane* kogane) { mKogane = kogane; }
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1
+	Kogane* mKogane; // _04
 };
 
 #endif

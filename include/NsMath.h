@@ -28,7 +28,8 @@ void calcVectorTrans(const Vector3f&, int, Matrix4f&);
 template <typename T>
 struct NsLibMath {
 	// these exist for int and float
-	T abs(T);
+	static inline T abs(T val) { return (val > 0) ? val : -val; }
+
 	T revice(T, T, T);
 
 	// these just exist for float
@@ -54,8 +55,15 @@ inline f32 calcNearerDirection(f32 from, f32 to)
 	return to;
 }
 
-// things to make according to the DLL:
+// i cannot get these two to both work in every case they need to be in. stack seems better with the getRand1
+// but dies when trying to pass something straight from a Parm<f32>::operator() call.
 inline f32 getRand(f32 val) { return System::getRand(1.0f) * (val * 0.99999899f); }
+
+inline f32 getRand1(f32 val)
+{
+	f32 fval = val * 0.99999899f;
+	return System::getRand(1.0f) * fval;
+}
 
 inline f32 roundAngle(f32 angle)
 {

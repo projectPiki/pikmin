@@ -673,7 +673,7 @@ void ActBoreSelect::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 
 	switch (msg->mKeyEvent->mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Wait, piki), PaniMotionInfo(PIKIANIM_Wait));
 		break;
 	}
@@ -1376,7 +1376,7 @@ void ActBoreTalk::cleanup() { }
  */
 void ActBoreTalk::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	if (_18 && event.mEventType == KEY_Done) {
+	if (_18 && event.mEventType == KEY_Finished) {
 		mIsAnimFinished = true;
 	}
 }
@@ -1485,7 +1485,7 @@ void ActBoreOneshot::cleanup() { }
  */
 void ActBoreOneshot::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	if (event.mEventType == KEY_Done) {
+	if (event.mEventType == KEY_Finished) {
 		mIsAnimFinished = true;
 	}
 }
@@ -1839,7 +1839,7 @@ void ActBoreRest::cleanup() { }
 void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 		if (_24) {
 			switch (_1C) {
 			case 1:

@@ -76,21 +76,13 @@ static inline f32 sqrtf(f32 x)
 
 static inline f32 absF(f32 val) { return (f32)__fabsf(val); }
 
+// TODO: probably change this to zen::abs in some zenMath library later
 static inline f32 absVal(f32 val)
 {
 	if (val > 0.0f) {
 		return val;
 	}
 	return -val;
-}
-
-static inline int absVal(int val)
-{
-	return (val > 0) ? val : -val;
-	// if (val > 0) {
-	// 	return val;
-	// }
-	// return -val;
 }
 
 #ifdef __cplusplus

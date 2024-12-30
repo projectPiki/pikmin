@@ -2333,7 +2333,7 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
 	MsgAnim msg(&event);
 	sendMsg(&msg);
 
-	if (mIsBeingDamaged && event.mEventType == KEY_Done) {
+	if (mIsBeingDamaged && event.mEventType == KEY_Finished) {
 		finishDamage();
 	}
 	/*

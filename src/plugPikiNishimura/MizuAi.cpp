@@ -3,6 +3,7 @@
 #include "SoundMgr.h"
 #include "NaviMgr.h"
 #include "Interactions.h"
+#include "NsMath.h"
 #include "MapMgr.h"
 #include "DebugLog.h"
 
@@ -252,8 +253,9 @@ void MizuAi::readyState()
 {
 	if (!mMizu->_3B8) {
 		Navi* navi = naviMgr->getNavi();
-		if (absVal(mMizu->mPosition.x - navi->mPosition.x) < 7.5f && absVal(mMizu->mPosition.z - navi->mPosition.z) < 7.5f
-		    && absVal(mMizu->mPosition.y - navi->mPosition.y) < 10.0f) {
+		if (NsLibMath<f32>::abs(mMizu->mPosition.x - navi->mPosition.x) < 7.5f
+		    && NsLibMath<f32>::abs(mMizu->mPosition.z - navi->mPosition.z) < 7.5f
+		    && NsLibMath<f32>::abs(mMizu->mPosition.y - navi->mPosition.y) < 10.0f) {
 			mMizu->_3B8 = 1;
 		}
 

@@ -165,7 +165,7 @@ void NaviPelletState::exec(Navi* navi)
 void NaviPelletState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 		if (mIsFinished) {
 			PRINT("exit pellet state\n");
 			transit(navi, NAVISTATE_Walk);
@@ -938,7 +938,7 @@ void NaviBuryState::exec(Navi* navi)
 void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 	case KEY_LoopEnd:
 		switch (_1C) {
 		case 0:
@@ -2800,7 +2800,7 @@ void NaviUfoState::cleanup(Navi* navi)
  */
 void NaviUfoState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
-	if (msg->mKeyEvent->mEventType == KEY_Done && _10 == 1) {
+	if (msg->mKeyEvent->mEventType == KEY_Finished && _10 == 1) {
 		_10 = 2;
 		_12 = 10;
 	}
@@ -3610,7 +3610,7 @@ void NaviFunbariState::exec(Navi* navi) { navi->mTargetVelocity.set(0.0f, 0.0f, 
 void NaviFunbariState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 		transit(navi, NAVISTATE_Walk);
 		break;
 	}
@@ -3688,7 +3688,7 @@ void NaviIdleState::exec(Navi* navi)
 void NaviIdleState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 		if (mStopBeingIdle) {
 			transit(navi, NAVISTATE_Walk);
 		} else {
@@ -3848,7 +3848,7 @@ void NaviFlickState::exec(Navi* navi)
 void NaviFlickState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 		if (_10 == 0) {
 			navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_JKoke, navi), PaniMotionInfo(PIKIANIM_JKoke));
 			_10 = 1;
@@ -4076,7 +4076,7 @@ void NaviGeyzerState::exec(Navi* navi)
 void NaviGeyzerState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 		if (_10 == 1) {
 			navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_JKoke, navi), PaniMotionInfo(PIKIANIM_JKoke));
 			_10 = 2;

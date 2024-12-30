@@ -112,7 +112,7 @@ void ActAttack::startLost()
 void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 		if (_1C) {
 			_1D = 1;
 		}
@@ -2095,7 +2095,7 @@ void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 	case KEY_Action1:
 		_20 = 0;
 		break;
-	case KEY_Done:
+	case KEY_Finished:
 		if (_18 == 1) {
 			_18 = 0;
 		}

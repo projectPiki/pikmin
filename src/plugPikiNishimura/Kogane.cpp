@@ -65,7 +65,7 @@ void Kogane::init(Vector3f&)
 	mNeedShadow      = 0;
 	mShadowSize      = 20.0f;
 	_3B9             = 0;
-	_3B8             = 0;
+	mIsAppear        = false;
 	mKoganeAi->initAI(this);
 }
 

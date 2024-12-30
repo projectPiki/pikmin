@@ -233,7 +233,7 @@ void Action::cleanup()
 void TopAction::MotionListener::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 		mAction->_1A = 0;
 		mAction->mChildActions[mAction->mChildActionIdx].initialise(mAction->_20);
 		break;

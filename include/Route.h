@@ -121,7 +121,7 @@ struct RouteMgr : public Node {
 	void getSafePosition(u32, Vector3f&);
 	void findNearestEdge(WayPoint**, WayPoint**, u32, Vector3f&, bool, bool, bool);
 	void findNearestEdgeAvoidOff(WayPoint**, WayPoint**, u32, Vector3f&, bool, bool, bool);
-	void findNearestWayPoint(u32, Vector3f&, bool);
+	WayPoint* findNearestWayPoint(u32, Vector3f&, bool);
 	void findNearestOffWayPoint(u32, Vector3f&, bool);
 	void createOffPlane(u32, Plane&, WayPoint*);
 	void findNearestWayPointAll(u32, Vector3f&);

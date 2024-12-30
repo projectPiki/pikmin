@@ -59,7 +59,7 @@ void ActPick::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 		break;
 
-	case KEY_Done:
+	case KEY_Finished:
 		_1C = 1;
 		break;
 	}

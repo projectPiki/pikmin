@@ -2264,7 +2264,7 @@ void RouteMgr::findNearestEdgeAvoidOff(WayPoint**, WayPoint**, u32, Vector3f&, b
  * Address:	800A10E8
  * Size:	00016C
  */
-void RouteMgr::findNearestWayPoint(u32, Vector3f&, bool)
+WayPoint* RouteMgr::findNearestWayPoint(u32, Vector3f&, bool)
 {
 	/*
 	.loc_0x0:

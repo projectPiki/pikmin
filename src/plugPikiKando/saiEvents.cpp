@@ -46,7 +46,7 @@ void SAIEventInit()
  */
 void SAIMotionDoneEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
-	creature->setEventFlag(mEventID, msg->mKeyEvent->mEventType == KEY_Done);
+	creature->setEventFlag(mEventID, msg->mKeyEvent->mEventType == KEY_Finished);
 }
 
 /*

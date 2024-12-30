@@ -189,7 +189,7 @@ void ActBoMake::cleanup() { mActor->endStickObject(); }
 void ActBoMake::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
-	case KEY_Done:
+	case KEY_Finished:
 		break;
 	case KEY_Action0:
 		InteractBuild build(mActor);

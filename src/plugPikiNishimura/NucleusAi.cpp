@@ -56,7 +56,7 @@ void NucleusAi::animationKeyUpdated(PaniAnimKeyEvent& event)
 	case KEY_LoopEnd:
 		keyLoopEnd();
 		break;
-	case KEY_Done:
+	case KEY_Finished:
 		keyFinished();
 		break;
 	case KEY_PlaySound:
