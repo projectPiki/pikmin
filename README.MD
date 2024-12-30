@@ -1,24 +1,30 @@
 Pikmin  
-[![Build Status]][actions] ![Code Progress] ![Data Progress] [![Discord Badge]][discord]
+[![Build Status]][actions] [![Code Progress]][progress] [![Data Progress]][progress] [![Linked Progress]][progress] [![Discord Badge]][discord]
 =============
 
 [Build Status]: https://github.com/projectPiki/pikmin/actions/workflows/build.yml/badge.svg
 [actions]: https://github.com/projectPiki/pikmin/actions/workflows/build.yml
-[Code Progress]: https://img.shields.io/endpoint?label=Code&url=https%3A%2F%2Fprogress.deco.mp%2Fdata%2Fpikmin%2FGPIE01_01%2Fdol%2F%3Fmode%3Dshield%26measure%3Dcode
-[Data Progress]: https://img.shields.io/endpoint?label=Data&url=https%3A%2F%2Fprogress.deco.mp%2Fdata%2Fpikmin%2FGPIE01_01%2Fdol%2F%3Fmode%3Dshield%26measure%3Ddata
+[Code Progress]: https://decomp.dev/projectPiki/pikmin.svg?mode=shield&measure=code&label=Code&category=all
+[Data Progress]: https://decomp.dev/projectPiki/pikmin.svg?mode=shield&measure=data&label=Data&category=all
+[Linked Progress]: https://decomp.dev/projectPiki/pikmin.svg?mode=shield&measure=complete_code&label=Linked%20Code&category=all
 [Discord Badge]: https://img.shields.io/discord/933849697485983765?color=%237289DA&logo=discord&logoColor=%23FFFFFF
 [discord]: https://discord.gg/CWKqYMePX8
+[progress]: https://decomp.dev/projectPiki/pikmin
 
-A work-in-progress decompilation of Pikmin.
+A work-in-progress decompilation of Pikmin (GameCube, 2001).
 
-Supported versions:
+Supported versions (active):
 
+- `GPIE01_01`: USA (Rev 1)
+
+Supported versions (to be worked on):
 - `DPIJ01`: PikiDemo / Jitsuen-you Sample
 - `GPIJ01_01`: Japan (Rev 1)
 - `GPIJ01_02`: Japan (Rev 2)
 - `GPIE01_00`: USA (Rev 0)
-- `GPIE01_01`: USA (Rev 1)
 - `GPIP01_00`: Europe (Rev 0)
+
+Note: this repository contains **no game assets** - an existing copy of the game is required.
 
 Index
 -----
@@ -104,4 +110,3 @@ Download the latest release from [encounter/objdiff](https://github.com/encounte
 
 Select an object from the left sidebar to begin diffing. Changes to the project will rebuild automatically: changes to source files, headers, `configure.py`, `splits.txt` or `symbols.txt`.
 
-![objdiff project configuration](assets/objdiff.png)
