@@ -720,23 +720,12 @@ LifeGauge::LifeGauge()
  * Address:	8005C074
  * Size:	000030
  */
-void LifeGauge::updValue(f32, f32)
+void LifeGauge::updValue(f32 currHealth, f32 maxHealth)
 {
-	/*
-	.loc_0x0:
-	  fdivs     f0, f1, f2
-	  stfs      f0, 0x2C(r3)
-	  lfs       f0, 0x2C(r3)
-	  lfs       f1, -0x79DC(r2)
-	  fcmpo     cr0, f0, f1
-	  bgelr-
-	  lfs       f0, 0x24(r3)
-	  fcmpu     cr0, f1, f0
-	  beqlr-
-	  li        r0, 0x1
-	  stw       r0, 0x18(r3)
-	  blr
-	*/
+	mHealthRatio = currHealth / maxHealth;
+	if (mHealthRatio < 1.0f && _24 != 1.0f) {
+		_18 = 1;
+	}
 }
 
 /*

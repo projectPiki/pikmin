@@ -9,6 +9,7 @@ struct CollTriInfo;
  * @brief TODO.
  */
 enum MapAttributes {
+	ATTR_NULL = -1,
 	ATTR_Unk0 = 0,
 	ATTR_Unk1 = 1,
 	ATTR_Unk2 = 2,

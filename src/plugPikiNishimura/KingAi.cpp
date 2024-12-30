@@ -2524,8 +2524,8 @@ void KingAi::setAttackPriority()
 {
 	_08                 = 1;
 	KingProp* kingProps = mKing->getKingProp();
-	if (mKing->mCurrentHealth < mKing->mMaxHealth * kingProps->mKingProps._364()) { // t00
-		f32 factor        = (f32)_20 * kingProps->mKingProps._394();                // t03
+	if (mKing->mCurrentLife < mKing->mMaxLife * kingProps->mKingProps._364()) { // t00
+		f32 factor        = (f32)_20 * kingProps->mKingProps._394();            // t03
 		f32 boundedFactor = (factor < 0.0f) ? 0.0f : (factor > 1.0f) ? 1.0f : factor;
 
 		f32 chance = boundedFactor * kingProps->mKingProps._384() + (1.0f - boundedFactor) * kingProps->mKingProps._374(); // t02, t01
@@ -2739,40 +2739,6 @@ void KingAi::inJumpAngle(Creature*)
 void KingAi::jumpAttackInArea(Creature*, Vector3f*)
 {
 	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	8016E2AC
- * Size:	000048
- */
-void NsMathF::calcNearerDirection(f32, f32)
-{
-	/*
-	.loc_0x0:
-	  fcmpo     cr0, f2, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x28
-	  fsubs     f3, f2, f1
-	  lfs       f1, -0x537C(r2)
-	  fsubs     f0, f1, f3
-	  fcmpo     cr0, f0, f3
-	  bge-      .loc_0x40
-	  fsubs     f2, f2, f1
-	  b         .loc_0x40
-
-	.loc_0x28:
-	  fsubs     f3, f1, f2
-	  lfs       f1, -0x537C(r2)
-	  fsubs     f0, f1, f3
-	  fcmpo     cr0, f0, f3
-	  bge-      .loc_0x40
-	  fadds     f2, f2, f1
-
-	.loc_0x40:
-	  fmr       f1, f2
-	  blr
-	*/
 }
 
 /*

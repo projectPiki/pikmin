@@ -811,7 +811,7 @@ void BossMgr::update()
 
 			node->mBoss->updateBoss();
 			if (static_cast<BossProp*>(node->mBoss->mProps)->mBossProps._1DC() == 0 || !node->mBoss->mGrid.aiCulling()
-			    || node->mBoss->doAlwaysUpdate()) {
+			    || node->mBoss->aiCullable()) {
 				node->mBoss->update();
 			}
 
@@ -845,11 +845,11 @@ void BossMgr::refresh(Graphics& gfx)
 		{
 			node->mBoss->refreshViewCulling(gfx);
 			if (static_cast<BossProp*>(node->mBoss->mProps)->mBossProps._1DC() == 0 || !node->mBoss->mGrid.aiCulling()
-			    || node->mBoss->doAlwaysUpdate()) {
+			    || node->mBoss->aiCullable()) {
 				node->mBoss->refresh(gfx);
 			}
 
-			if (node->mBoss->doAlwaysUpdate()) {
+			if (node->mBoss->aiCullable()) {
 				node->mBoss->drawShape(gfx);
 			}
 		}
@@ -866,7 +866,7 @@ void BossMgr::refresh2d(Graphics& gfx)
 	for (int i = BOSS_IDSTART; i < BOSS_IDCOUNT; i++) {
 		FOREACH_NODE(BossNode, mActiveNodes[i].mChild, node)
 		{
-			if (node->mBoss->doAlwaysUpdate()) {
+			if (node->mBoss->aiCullable()) {
 				node->mBoss->refresh2d(gfx);
 			}
 		}

@@ -236,7 +236,7 @@ void SlimeBody::update()
 	makeCentrePosition();
 	makeInnerPosition();
 	makeMaxRadius();
-	if (mSlime->doAlwaysUpdate() && mSlime->_3D4 > 0.0f) {
+	if (mSlime->aiCullable() && mSlime->_3D4 > 0.0f) {
 		setSpherePosition();
 		makeSlimeBody();
 	}

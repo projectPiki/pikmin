@@ -205,7 +205,7 @@ Vector3f Creature::getBoundingSphereCentre()
 	u32 badCompiler;
 
 	if (mCollInfo && mCollInfo->hasInfo()) {
-		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_Unk19) && mGrid.aiCulling()) {
+		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_IsAICullingActive) && mGrid.aiCulling()) {
 			return mPosition;
 		}
 
@@ -227,7 +227,7 @@ f32 Creature::getBoundingSphereRadius()
 
 	if (mCollInfo && mCollInfo->hasInfo()) {
 		CollPart* bound = mCollInfo->getBoundingSphere();
-		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_Unk19) && mGrid.aiCulling()) {
+		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_IsAICullingActive) && mGrid.aiCulling()) {
 			return 2.0f * bound->mRadius;
 		}
 
@@ -282,7 +282,7 @@ Vector3f Creature::getCentre()
 
 	if (mCollInfo && mCollInfo->hasInfo()) {
 		CollPart* spherePart = mCollInfo->getSphere('cent');
-		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_Unk19) && mGrid.aiCulling()) {
+		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_IsAICullingActive) && mGrid.aiCulling()) {
 			return mPosition;
 		}
 		if (spherePart) {
@@ -574,7 +574,7 @@ void Creature::init()
 	_60            = 0;
 	mCreatureFlags = 0;
 	_1A0           = -1;
-	resetCreatureFlag(CF_Unk19);
+	resetCreatureFlag(CF_IsAICullingActive);
 	_21C = 0;
 	setCreatureFlag(CF_Free);
 	resetCreatureFlag(CF_Unk9 | CF_IsAiDisabled | CF_Unk14 | CF_AIAlwaysActive);
@@ -590,7 +590,7 @@ void Creature::init()
 	mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	_1AC.set(0.0f, 0.0f, 0.0f);
 	mStickTarget = nullptr;
-	_188         = 0;
+	mStickPart   = 0;
 	_190         = 0;
 	_18C         = 0;
 	_180         = 0;

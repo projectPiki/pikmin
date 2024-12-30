@@ -679,7 +679,7 @@ config.libs = [
         "host": True,
         "objects": [
             Object(NonMatching, "plugPikiNishimura/genBoss.cpp"),
-            Object(NonMatching, "plugPikiNishimura/Boss.cpp"),
+            Object(Matching, "plugPikiNishimura/Boss.cpp"),
             Object(Matching, "plugPikiNishimura/BossAnimMgr.cpp"),
             Object(Matching, "plugPikiNishimura/BossCnd.cpp"),
             Object(Matching, "plugPikiNishimura/BossMgr.cpp"),

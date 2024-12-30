@@ -33,29 +33,29 @@ struct SeContext;
  * @brief TODO
  */
 enum CreatureFlags {
-	CF_Unk1           = 1 << 0,  // 0x1
-	CF_Unk2           = 1 << 1,  // 0x2
-	CF_IsOnGround     = 1 << 2,  // 0x4
-	CF_Unk4           = 1 << 3,  // 0x8
-	CF_Unk5           = 1 << 4,  // 0x10
-	CF_Unk6           = 1 << 5,  // 0x20
-	CF_Unk7           = 1 << 6,  // 0x40
-	CF_Unk8           = 1 << 7,  // 0x80
-	CF_Unk9           = 1 << 8,  // 0x100
-	CF_Unk10          = 1 << 9,  // 0x200
-	CF_Unk11          = 1 << 10, // 0x400
-	CF_IsAiDisabled   = 1 << 11, // 0x800, aka aiSTOP
-	CF_Free           = 1 << 12, // 0x1000
-	CF_Unk14          = 1 << 13, // 0x2000
-	CF_StuckToObject  = 1 << 14, // 0x4000, stuck to an object
-	CF_StuckToMouth   = 1 << 15, // 0x8000, stuck to mouth of some enemy
-	CF_Unk16          = 1 << 16, // 0x10000
-	CF_Unk17          = 1 << 17, // 0x20000
-	CF_Unk18          = 1 << 18, // 0x40000
-	CF_Unk19          = 1 << 19, // 0x80000, use result flags maybe?
-	CF_AIAlwaysActive = 1 << 20, // 0x100000, do not cull AI when off-camera
-	CF_FixPosition    = 1 << 21, // 0x200000
-	CF_Unk22          = 1 << 22, // 0x400000
+	CF_Unk1              = 1 << 0,  // 0x1
+	CF_Unk2              = 1 << 1,  // 0x2
+	CF_IsOnGround        = 1 << 2,  // 0x4
+	CF_Unk4              = 1 << 3,  // 0x8
+	CF_Unk5              = 1 << 4,  // 0x10
+	CF_Unk6              = 1 << 5,  // 0x20
+	CF_Unk7              = 1 << 6,  // 0x40
+	CF_Unk8              = 1 << 7,  // 0x80
+	CF_Unk9              = 1 << 8,  // 0x100
+	CF_Unk10             = 1 << 9,  // 0x200
+	CF_Unk11             = 1 << 10, // 0x400
+	CF_IsAiDisabled      = 1 << 11, // 0x800, aka aiSTOP
+	CF_Free              = 1 << 12, // 0x1000
+	CF_Unk14             = 1 << 13, // 0x2000
+	CF_StuckToObject     = 1 << 14, // 0x4000, stuck to an object
+	CF_StuckToMouth      = 1 << 15, // 0x8000, stuck to mouth of some enemy
+	CF_Unk16             = 1 << 16, // 0x10000
+	CF_Unk17             = 1 << 17, // 0x20000
+	CF_Unk18             = 1 << 18, // 0x40000
+	CF_IsAICullingActive = 1 << 19, // 0x80000, creature is off camera
+	CF_AIAlwaysActive    = 1 << 20, // 0x100000, do not cull AI when off-camera
+	CF_FixPosition       = 1 << 21, // 0x200000
+	CF_Unk22             = 1 << 22, // 0x400000
 };
 
 /**
@@ -206,17 +206,12 @@ struct Creature : public RefCountable, public EventTalker {
 	void startStickObjectPellet(Pellet*, int, f32);
 	void isStickLeader();
 
-	inline void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
-	inline void resetCreatureFlag(u32 flag) { mCreatureFlags &= ~flag; }
-	inline bool isCreatureFlag(u32 flag) const { return mCreatureFlags & flag; }
+	// these are setFlag/resetFlag/isFlag in the DLL, but this is clearer.
+	void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
+	void resetCreatureFlag(u32 flag) { mCreatureFlags &= ~flag; }
+	bool isCreatureFlag(u32 flag) const { return mCreatureFlags & flag; }
 
 	inline Vector3f& getPosition() { return mPosition; }
-
-	bool isSluice()
-	{
-		return mObjType == OBJTYPE_SluiceSoft || mObjType == OBJTYPE_SluiceHard || mObjType == OBJTYPE_SluiceBomb
-		    || mObjType == OBJTYPE_SluiceBombHard;
-	}
 
 	inline void resetVelocity()
 	{
@@ -226,21 +221,29 @@ struct Creature : public RefCountable, public EventTalker {
 
 	inline bool isStuckTo(Creature* creature) { return mStickTarget == creature; }
 
-	inline CollPart* getStickPart() { return _188; }
-
 	inline Creature* get2AC() { return _2AC; }
 
-	// name is a guess, but this exists for whatever reason
-	inline bool doAlwaysUpdate() { return !isCreatureFlag(CF_Unk19); }
-
-	inline void setFlag40UnsetFlag2() // name this better later PLEASE
+	inline void setFlag40UnsetFlag2() // name this better later PLEASE - definitely a DLL inline
 	{
 		setCreatureFlag(CF_Unk7);
 		resetCreatureFlag(CF_Unk2);
 	}
 
-	// probably?
+	// probably this name - definitely a DLL inline
 	bool isGrabbed() { return isCreatureFlag(CF_StuckToMouth); }
+
+	void disableAICulling() { resetCreatureFlag(CF_IsAICullingActive); }
+	void enableAICulling() { setCreatureFlag(CF_IsAICullingActive); }
+	bool aiCullable() { return !isCreatureFlag(CF_IsAICullingActive); }
+
+	CollPart* getStickPart() { return mStickPart; }
+	Creature* getStickObject() { return mStickTarget; }
+
+	bool isSluice()
+	{
+		return mObjType == OBJTYPE_SluiceSoft || mObjType == OBJTYPE_SluiceHard || mObjType == OBJTYPE_SluiceBomb
+		    || mObjType == OBJTYPE_SluiceBombHard;
+	}
 
 	// _00     = VTBL
 	// _00-_08 = RefCountable
@@ -284,7 +287,7 @@ struct Creature : public RefCountable, public EventTalker {
 	UpdateContext _174;         // _174
 	Creature* _180;             // _180, unknown
 	Creature* mStickTarget;     // _184, creature/object this creature is stuck to
-	CollPart* _188;             // _188
+	CollPart* mStickPart;       // _188
 	Creature* _18C;             // _18C, unknown
 	u32 _190;                   // _190, unknown
 	Vector3f _194;              // _194

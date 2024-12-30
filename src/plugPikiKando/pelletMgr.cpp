@@ -4873,7 +4873,7 @@ void PelletMgr::registerUfoParts()
  * Address:	80098538
  * Size:	000078
  */
-void PelletMgr::newNumberPellet(int, int)
+Pellet* PelletMgr::newNumberPellet(int, int)
 {
 	/*
 	.loc_0x0:
@@ -4929,7 +4929,7 @@ void PelletMgr::newNumberPellet(int, int)
  * Address:	800985B0
  * Size:	000154
  */
-void PelletMgr::newPellet(u32, PelletView*)
+Pellet* PelletMgr::newPellet(u32, PelletView*)
 {
 	/*
 	.loc_0x0:

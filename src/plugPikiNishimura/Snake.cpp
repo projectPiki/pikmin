@@ -151,9 +151,9 @@ void Snake::drawShape(Graphics& gfx)
  */
 void Snake::refresh2d(Graphics& gfx)
 {
-	mLifeGauge._00 = mPosition;
-	mLifeGauge._00.y += static_cast<SnakeProp*>(mProps)->mBossProps.mLifeGaugeHeight();
-	mLifeGauge._34 = static_cast<SnakeProp*>(mProps)->mBossProps.mLifeGaugeScale() * _3C4 / gfx.mCamera->mNear;
+	mLifeGauge.mPosition = mPosition;
+	mLifeGauge.mPosition.y += static_cast<SnakeProp*>(mProps)->mBossProps.mLifeGaugeHeight();
+	mLifeGauge.mScale = static_cast<SnakeProp*>(mProps)->mBossProps.mLifeGaugeScale() * _3C4 / gfx.mCamera->mNear;
 	mLifeGauge.refresh(gfx);
 }
 

@@ -54,7 +54,7 @@ bool InteractBomb::actPiki(Piki* piki)
 		return false;
 	}
 
-	if (!piki->isCreatureFlag(CF_Unk19) && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk27)) {
+	if (!piki->isCreatureFlag(CF_IsAICullingActive) && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk27)) {
 		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk27);
 	}
 
@@ -749,13 +749,6 @@ bool InteractSwallow::actPiki(Piki* piki)
 	  blr
 	*/
 }
-
-/*
- * --INFO--
- * Address:	8007C698
- * Size:	000008
- */
-bool Condition::satisfy(Creature*) { return true; }
 
 /*
  * --INFO--

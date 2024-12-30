@@ -75,7 +75,7 @@ void TaiStopSoundAction::start(Teki& teki) { teki.stopSound(mSoundID); }
  */
 void TaiTypeNaviWatchResultOnAction::start(Teki& teki)
 {
-	if (!teki.isCreatureFlag(CF_Unk19)) {
+	if (!teki.isCreatureFlag(CF_IsAICullingActive)) {
 		playerState->mResultFlags.setOn(tekiMgr->getResultFlag(teki.mTekiType));
 	}
 }
@@ -87,7 +87,7 @@ void TaiTypeNaviWatchResultOnAction::start(Teki& teki)
  */
 void TaiNaviWatchResultOnAction::start(Teki& teki)
 {
-	if (!teki.isCreatureFlag(CF_Unk19)) {
+	if (!teki.isCreatureFlag(CF_IsAICullingActive)) {
 		playerState->mResultFlags.setOn(mResultFlag);
 	}
 }

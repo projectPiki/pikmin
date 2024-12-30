@@ -150,7 +150,7 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
 		_32 = 0;
 		break;
 	case KEY_PlayEffect:
-		if (!mActor->isCreatureFlag(CF_Unk19) && (AIPerf::optLevel <= 0 || mActor->_174.updatable())) {
+		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mActor->_174.updatable())) {
 			Vector3f vec = mActor->_464;
 			EffectParm parm;
 			parm.mPosition = vec;

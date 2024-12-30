@@ -9,7 +9,9 @@ struct Creature;
  * @brief TODO
  */
 struct Condition {
-	virtual bool satisfy(Creature*); // _08
+	Condition() { }
+
+	virtual bool satisfy(Creature*) { return true; } // _08
 
 	// _00 = VTBL
 };

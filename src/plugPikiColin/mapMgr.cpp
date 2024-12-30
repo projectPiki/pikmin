@@ -8041,7 +8041,7 @@ f32 MapMgr::getMaxY(f32, f32, bool)
  * Address:	800681D8
  * Size:	00015C
  */
-void MapMgr::getCurrTri(f32, f32, bool)
+CollTriInfo* MapMgr::getCurrTri(f32, f32, bool)
 {
 	/*
 	.loc_0x0:

@@ -118,7 +118,7 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 		break;
 	case KEY_PlayEffect:
-		if (!mActor->isCreatureFlag(CF_Unk19) && (AIPerf::optLevel <= 1 || mActor->_174.updatable())) {
+		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 1 || mActor->_174.updatable())) {
 			Vector3f vec(mActor->_464);
 			if (_1E) {
 				effectMgr->create(EffectMgr::EFF_Unk69, vec, nullptr, nullptr);
@@ -564,7 +564,7 @@ void ActJumpAttack::init(Creature* creature)
 	_18 = 0;
 	_2C = 0;
 	if (mActor->mStickTarget) {
-		if (mActor->_188 && mActor->_188->isClimbable()) {
+		if (mActor->mStickPart && mActor->mStickPart->isClimbable()) {
 			mActor->startClimb();
 			_18 = 6;
 			mActor->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
@@ -2102,7 +2102,7 @@ void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		_20 = 4;
 		break;
 	case KEY_PlayEffect:
-		if (!mActor->isCreatureFlag(CF_Unk19) && (AIPerf::optLevel <= 1 || mActor->_174.updatable())) {
+		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 1 || mActor->_174.updatable())) {
 			Vector3f vec(mActor->_464);
 			if (_2D) {
 				effectMgr->create(EffectMgr::EFF_Unk69, vec, nullptr, nullptr);

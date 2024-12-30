@@ -90,7 +90,8 @@ struct InteractBomb : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	f32 mDamage; // _08
+	f32 mDamage;         // _08
+	CollPart* mCollPart; // _0C
 };
 
 /**
@@ -282,7 +283,9 @@ struct InteractHitEffect : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	Vector3f _08;        // _08
+	Vector3f _14;        // _14
+	CollPart* mCollPart; // _20
 };
 
 /**

@@ -37,24 +37,43 @@ struct NsLibMath {
 };
 
 namespace NsMathF {
-void calcNearerDirection(f32, f32);
-
-// things to make according to the DLL:
-inline f32 getRand(f32 val)
+inline f32 calcNearerDirection(f32 from, f32 to)
 {
-	f32 boundedVal = val * 0.99999899f;
-	return System::getRand(1.0f) * boundedVal;
+	if (to >= from) {
+		f32 diff = to - from;
+		if (TAU - diff < diff) {
+			to -= TAU;
+		}
+	} else {
+		f32 diff = from - to;
+		if (TAU - diff < diff) {
+			to += TAU;
+		}
+	}
+
+	return to;
 }
 
-inline f32 roundAngle(f32);
+// things to make according to the DLL:
+inline f32 getRand(f32 val) { return System::getRand(1.0f) * (val * 0.99999899f); }
+
+inline f32 roundAngle(f32 angle)
+{
+	if (angle < 0.0f) {
+		return angle + TAU;
+	}
+
+	if (angle >= TAU) {
+		return angle - TAU;
+	}
+
+	return angle;
+}
 } // namespace NsMathF
 
 namespace NsMathI {
-inline int getRand(int val)
-{
-	f32 fVal = val * 0.99999899f;
-	return System::getRand(1.0f) * fVal;
-}
+// this isn't correct according to the DLL, but this matches the best for stack in Boss and PomAi
+inline int getRand(int val) { return NsMathF::getRand(val); }
 inline int intLoop(int, int, int);
 } // namespace NsMathI
 

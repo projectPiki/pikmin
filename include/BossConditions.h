@@ -14,13 +14,16 @@ struct CndIsAlive : public Condition {
 
 	// _00     = VTBL
 	// _00-_04 = Condition
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct CndBossFlick : public Condition {
+	CndBossFlick(Creature* boss)
+	    : mBoss(boss)
+	{
+	}
 
 	virtual bool satisfy(Creature*); // _08
 
@@ -45,6 +48,7 @@ struct CndStickBossKill : public Condition {
  * @brief TODO
  */
 struct CndStickMouthKill : public Condition {
+	CndStickMouthKill(Creature* boss) { mBoss = boss; }
 
 	virtual bool satisfy(Creature*); // _08
 

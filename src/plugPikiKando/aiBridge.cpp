@@ -297,7 +297,7 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
 		_24 = 1;
 		break;
 	case KEY_PlayEffect:
-		if (!mActor->isCreatureFlag(CF_Unk19) && (AIPerf::optLevel <= 0 || mActor->_174.updatable())) {
+		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mActor->_174.updatable())) {
 			effectMgr->create(EffectMgr::EFF_Unk39, mActor->_464, nullptr, nullptr);
 		}
 		break;

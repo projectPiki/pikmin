@@ -133,7 +133,7 @@ int ActBou::exec()
  */
 int ActBou::gotoLeg()
 {
-	if (mActor->_188) {
+	if (mActor->mStickPart) {
 		mState = STATE_Climb;
 		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
 		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -142,7 +142,7 @@ int ActBou::gotoLeg()
 		mActor->setCreatureFlag(CF_Unk8);
 		mActor->finishLook();
 		Tube tube;
-		mActor->_188->makeTube(tube);
+		mActor->mStickPart->makeTube(tube);
 		Vector3f vec1;
 		Vector3f vec2;
 		tube.getPosGradient(mActor->mPosition, mActor->_194.x, vec1, vec2);
@@ -455,7 +455,7 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
  */
 int ActBou::climb()
 {
-	if (!mActor->_188) {
+	if (!mActor->mStickPart) {
 		return ACTOUT_Fail;
 	}
 

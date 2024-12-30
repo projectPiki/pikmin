@@ -38,6 +38,11 @@ enum PelletColor {
 	PELCOLOR_Blue   = 0,
 	PELCOLOR_Red    = 1,
 	PELCOLOR_Yellow = 2,
+
+	PELCOLOR_MIN  = PELCOLOR_Blue,
+	PELCOLOUR_MAX = PELCOLOR_Yellow,
+
+	PELCOLOUR_COUNT,
 };
 
 /**
@@ -183,8 +188,8 @@ struct PelletMgr : public MonoObjectMgr {
 	void getUfoIDFromIndex(int);
 	void decomposeNumberPellet(u32, int&, int&);
 	void registerUfoParts();
-	void newNumberPellet(int, int);
-	void newPellet(u32, PelletView*);
+	Pellet* newNumberPellet(int, int);
+	Pellet* newPellet(u32, PelletView*);
 	PelletShapeObject* getShapeObject(u32);
 	void addUseList(u32);
 	void initShapeInfos();

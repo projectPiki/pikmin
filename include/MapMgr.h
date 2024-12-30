@@ -214,7 +214,7 @@ struct MapMgr {
 	void getCollGroupList(f32, f32, bool);
 	f32 getMinY(f32, f32, bool);
 	f32 getMaxY(f32, f32, bool);
-	void getCurrTri(f32, f32, bool);
+	CollTriInfo* getCurrTri(f32, f32, bool);
 	void findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&);
 	void recTraceMove(CollGroup*, MoveTrace&, f32);
 	void traceMove(Creature*, MoveTrace&, f32);

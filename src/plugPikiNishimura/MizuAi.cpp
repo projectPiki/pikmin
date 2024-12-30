@@ -129,7 +129,7 @@ void MizuAi::naviGeyzerJump()
  */
 bool MizuAi::readyTransit()
 {
-	return (mMizu->getFlickDamageCount() >= static_cast<BossProp*>(mMizu->mProps)->mBossProps._1CC()) ? true : false;
+	return (mMizu->getFlickDamageCount() >= static_cast<BossProp*>(mMizu->mProps)->mBossProps.mFlickDamageCountD()) ? true : false;
 }
 
 /*

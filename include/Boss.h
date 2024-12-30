@@ -57,59 +57,59 @@ struct BossProp : public CreatureProp {
 	struct Properties : public Parameters {
 		inline Properties()
 		    : mTerritoryRadius(this, 200.0f, 0.0f, 0.0f, "b00", nullptr)
-		    , _6C(this, 100.0f, 0.0f, 0.0f, "b01", nullptr)
-		    , _7C(this, 100.0f, 0.0f, 0.0f, "b02", nullptr)
-		    , _8C(this, 360.0f, 0.0f, 0.0f, "b03", nullptr)
+		    , mMaxWaitRadius(this, 100.0f, 0.0f, 0.0f, "b01", nullptr)
+		    , mSearchRadius(this, 100.0f, 0.0f, 0.0f, "b02", nullptr)
+		    , mSearchAngle(this, 360.0f, 0.0f, 0.0f, "b03", nullptr)
 		    , mMaxHealth(this, 1000.0f, 0.0f, 0.0f, "b10", nullptr)
-		    , _AC(this, 1.0f, 0.0f, 0.0f, "b13", nullptr)
-		    , _BC(this, 0.0f, 0.0f, 0.0f, "b11", nullptr)
+		    , mLifeRecoveryTime(this, 1.0f, 0.0f, 0.0f, "b13", nullptr)
+		    , mLifeRecoveryRate(this, 0.0f, 0.0f, 0.0f, "b11", nullptr)
 		    , _CC(this, 1.0f, 0.0f, 0.0f, "b14", nullptr)
-		    , _DC(this, 1.0f, 0.0f, 0.0f, "b12", nullptr)
+		    , mBombDamageMultiplier(this, 1.0f, 0.0f, 0.0f, "b12", nullptr)
 		    , mLifeGaugeScale(this, 5000.0f, 0.0f, 0.0f, "c00", nullptr)
 		    , mLifeGaugeHeight(this, 30.0f, 0.0f, 0.0f, "c01", nullptr)
 		    , mFlickChance(this, 1.0f, 0.0f, 0.0f, "d00", nullptr)
 		    , mFlickKnockback(this, 100.0f, 0.0f, 0.0f, "d01", nullptr)
 		    , mFlickDamage(this, 0.0f, 0.0f, 0.0f, "d02", nullptr)
 		    , mRenderSphereRadius(this, 10.0f, 0.0f, 0.0f, "p00", nullptr)
-		    , mRenderSphereHeight(this, 0.0f, 0.0f, 0.0f, "p00", nullptr)
+		    , mRenderSphereHeight(this, 0.0f, 0.0f, 0.0f, "p01", nullptr)
 		    , _15C(this, 1, 0, 0, "i10", nullptr)
-		    , _16C(this, 10, 0, 0, "i00", nullptr)
-		    , _17C(this, 20, 0, 0, "i01", nullptr)
-		    , _18C(this, 30, 0, 0, "i02", nullptr)
-		    , _19C(this, 10, 0, 0, "i03", nullptr)
-		    , _1AC(this, 50, 0, 0, "i04", nullptr)
-		    , _1BC(this, 100, 0, 0, "i05", nullptr)
-		    , _1CC(this, 200, 0, 0, "i06", nullptr)
+		    , mFlickPikiCountAB(this, 10, 0, 0, "i00", nullptr)
+		    , mFlickPikiCountBC(this, 20, 0, 0, "i01", nullptr)
+		    , mFlickPikiCountCD(this, 30, 0, 0, "i02", nullptr)
+		    , mFlickDamageCountA(this, 10, 0, 0, "i03", nullptr)
+		    , mFlickDamageCountB(this, 50, 0, 0, "i04", nullptr)
+		    , mFlickDamageCountC(this, 100, 0, 0, "i05", nullptr)
+		    , mFlickDamageCountD(this, 200, 0, 0, "i06", nullptr)
 		    , _1DC(this, 1, 0, 0, "i90", nullptr)
 		{
 		}
 
 		// _58-_5C = Parameters
-		Parm<f32> mTerritoryRadius;    // _5C, b00
-		Parm<f32> _6C;                 // _6C, b01 - weight area?
-		Parm<f32> _7C;                 // _7C, b02 - search radius?
-		Parm<f32> _8C;                 // _8C, b03 - search angle?
-		Parm<f32> mMaxHealth;          // _9C, b10
-		Parm<f32> _AC;                 // _AC, b13 - recovery time?
-		Parm<f32> _BC;                 // _BC, b11 - recovery rate?
-		Parm<f32> _CC;                 // _CC, b14 - special attack effect?
-		Parm<f32> _DC;                 // _DC, b12 - bomb effectiveness?
-		Parm<f32> mLifeGaugeScale;     // _EC, c00
-		Parm<f32> mLifeGaugeHeight;    // _FC, c01
-		Parm<f32> mFlickChance;        // _10C, d00
-		Parm<f32> mFlickKnockback;     // _11C, d01
-		Parm<f32> mFlickDamage;        // _12C, d02
-		Parm<f32> mRenderSphereRadius; // _13C, p00
-		Parm<f32> mRenderSphereHeight; // _14C, p01
-		Parm<int> _15C;                // _15C, i10, special damage count?
-		Parm<int> _16C;                // _16C, i00, flick piki count 1?
-		Parm<int> _17C;                // _17C, i01, flick piki count 2?
-		Parm<int> _18C;                // _18C, i02, flick piki count 3?
-		Parm<int> _19C;                // _19C, i03, flick damage count 1?
-		Parm<int> _1AC;                // _1AC, i04, flick damage count 2?
-		Parm<int> _1BC;                // _1BC, i05, flick damage count 3?
-		Parm<int> _1CC;                // _1CC, i06, flick damage count 4?
-		Parm<int> _1DC;                // _1DC, i90, AI culling type (0=Cull off camera, 1=AI always on)?
+		Parm<f32> mTerritoryRadius;      // _5C, b00
+		Parm<f32> mMaxWaitRadius;        // _6C, b01
+		Parm<f32> mSearchRadius;         // _7C, b02
+		Parm<f32> mSearchAngle;          // _8C, b03
+		Parm<f32> mMaxHealth;            // _9C, b10
+		Parm<f32> mLifeRecoveryTime;     // _AC, b13, recover (rate * max health) every n seconds
+		Parm<f32> mLifeRecoveryRate;     // _BC, b11, fraction of max health to recover every time
+		Parm<f32> _CC;                   // _CC, b14 - special attack effect?
+		Parm<f32> mBombDamageMultiplier; // _DC, b12
+		Parm<f32> mLifeGaugeScale;       // _EC, c00
+		Parm<f32> mLifeGaugeHeight;      // _FC, c01
+		Parm<f32> mFlickChance;          // _10C, d00
+		Parm<f32> mFlickKnockback;       // _11C, d01
+		Parm<f32> mFlickDamage;          // _12C, d02
+		Parm<f32> mRenderSphereRadius;   // _13C, p00
+		Parm<f32> mRenderSphereHeight;   // _14C, p01
+		Parm<int> _15C;                  // _15C, i10, special damage count?
+		Parm<int> mFlickPikiCountAB;     // _16C, i00, this amount and above, use damage threshold B
+		Parm<int> mFlickPikiCountBC;     // _17C, i01, this amount and above, use damage threshold C
+		Parm<int> mFlickPikiCountCD;     // _18C, i02, this amount and above, use damage threshold D
+		Parm<int> mFlickDamageCountA;    // _19C, i03, damage count to cause flick with n < AB stickers
+		Parm<int> mFlickDamageCountB;    // _1AC, i04, damage count to cause flick with AB <= n < BC stickers
+		Parm<int> mFlickDamageCountC;    // _1BC, i05, damage count to cause flick with BC <= n < CD stickers
+		Parm<int> mFlickDamageCountD;    // _1CC, i06, damage count to cause flick with n >= CD stickers
+		Parm<int> _1DC;                  // _1DC, i90, AI culling type (0=Cull off camera, 1=AI always on)?
 	};
 
 	BossProp();
@@ -144,27 +144,27 @@ struct BossShapeObject {
 struct Boss : public Creature {
 	Boss(CreatureProp*);
 
-	virtual Vector3f getCentre();                      // _58
-	virtual f32 getShadowSize();                       // _70
-	virtual bool isVisible();                          // _74
-	virtual bool isOrganic();                          // _78
-	virtual bool isAtari();                            // _84
-	virtual bool isAlive();                            // _88
-	virtual bool isFixed();                            // _8C
-	virtual bool needShadow();                         // _90
-	virtual bool ignoreAtari(Creature*);               // _98
-	virtual bool stimulate(Interaction&);              // _A0
-	virtual void collisionCallback(CollEvent&);        // _A8
-	virtual void wallCallback(Plane&, DynCollObject*); // _B4
-	virtual void update();                             // _E0
-	virtual void refresh(Graphics&);                   // _EC
-	virtual void refresh2d(Graphics&);                 // _F0
-	virtual void doKill();                             // _10C
-	virtual void exitCourse();                         // _110
-	virtual bool isBossBgm();                          // _114
-	virtual bool attackDefaultPortion();               // _118
-	virtual void bombDamageCounter(CollPart*);         // _11C
-	virtual void drawShape(Graphics&);                 // _120
+	virtual bool isAlive() { return mIsAlive; }           // _88
+	virtual bool isAtari() { return mIsAtari; }           // _84
+	virtual bool isVisible() { return mIsVisible; }       // _74
+	virtual bool isOrganic() { return mIsOrganic; }       // _78
+	virtual bool isFixed() { return true; }               // _8C
+	virtual bool ignoreAtari(Creature*) { return false; } // _98
+	virtual Vector3f getCentre() { return mPosition; }    // _58
+	virtual bool needShadow() { return mNeedShadow; }     // _90
+	virtual f32 getShadowSize() { return mShadowSize; }   // _70
+	virtual bool stimulate(Interaction&);                 // _A0
+	virtual void wallCallback(Plane&, DynCollObject*);    // _B4
+	virtual void update() { }                             // _E0
+	virtual void refresh(Graphics&) { }                   // _EC
+	virtual void refresh2d(Graphics&);                    // _F0
+	virtual void doKill() { }                             // _10C
+	virtual void exitCourse() { }                         // _110
+	virtual void collisionCallback(CollEvent&) { }        // _A8
+	virtual bool isBossBgm();                             // _114
+	virtual bool attackDefaultPortion() { return false; } // _118
+	virtual void bombDamageCounter(CollPart*) { }         // _11C
+	virtual void drawShape(Graphics&);                    // _120
 
 	void initBoss(struct BirthInfo&, int);
 	void calcFlickPiki();
@@ -204,6 +204,9 @@ struct Boss : public Creature {
 	void setIsOrganic(bool val) { mIsOrganic = val; }
 	void setInvincible(bool val) { mIsInvincible = val; }
 
+	bool getInvincible() { return mIsInvincible; }
+	bool getOnWall() { return mIsOnWall; }
+
 	void setMotionFinish(bool isFinished) { mIsMotionFinished = isFinished; }
 	bool getMotionFinish() { return mIsMotionFinished; }
 
@@ -240,10 +243,13 @@ struct Boss : public Creature {
 	void setDamagePoint(f32 damage) { mDamage = damage; }
 	void addDamagePoint(f32 damage) { mDamage += damage; }
 
-	bool getAlive() { return mCurrentHealth > 0.0f; }
+	bool getAlive() { return mCurrentLife > 0.0f; }
 
 	Vector3f* getInitPosition() { return &mInitPosition; }
 	void setInitPosition(Vector3f& pos) { mInitPosition = pos; } // check if this is set later when first used
+
+	f32 getCurrentLife() { return mCurrentLife; }
+	f32 getMaxLife() { return mMaxLife; }
 
 	// attack timer??
 	inline f32 get2D0() { return _2D0; }         // name these better later
@@ -261,9 +267,6 @@ struct Boss : public Creature {
 	    void addAttackTimer(f32);
 	    void setAttackTimer(f32);
 
-	    f32 getCurrentLife();
-	    f32 getMaxLife();
-
 	    f32 getWalkTimer();
 	    void addWalkTimer(f32);
 	    void setWalkTimer(f32);
@@ -280,13 +283,13 @@ struct Boss : public Creature {
 	bool mNeedShadow;               // _2BE
 	bool mIsOnWall;                 // _2BF
 	f32 mDamage;                    // _2C0
-	f32 mCurrentHealth;             // _2C4
-	f32 mMaxHealth;                 // _2C8
-	f32 _2CC;                       // _2CC
+	f32 mCurrentLife;               // _2C4, current health (but there's a creature variable for that too)
+	f32 mMaxLife;                   // _2C8, max health (but there's a creature variable for that too)
+	f32 mLifeRecoveryTimer;         // _2CC
 	f32 _2D0;                       // _2D0, either mAttackTimer or mWalkTimer, unsure
 	f32 _2D4;                       // _2D4, either mAttackTimer or mWalkTimer, unsure
 	f32 mAnimTimer;                 // _2D8
-	f32 _2DC;                       // _2DC
+	f32 mSearchAngle;               // _2DC
 	f32 mShadowSize;                // _2E0
 	int mCurrentStateID;            // _2E4
 	int mNextStateID;               // _2E8
