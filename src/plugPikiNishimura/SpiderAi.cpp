@@ -1,44 +1,28 @@
 #include "Spider.h"
+#include "DebugLog.h"
+
+static u32 spiderSE[] = { 0x29, 0x2A, 0x2B, 0x2C, 0x2D };
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("SpiderAi");
 
 /*
  * --INFO--
  * Address:	80153840
  * Size:	000020
  */
-SpiderAi::SpiderAi(Spider*)
-{
-	/*
-	.loc_0x0:
-	  lis       r5, 0x802B
-	  subi      r0, r5, 0x246C
-	  lis       r5, 0x802D
-	  stw       r0, 0x0(r3)
-	  subi      r0, r5, 0xAF4
-	  stw       r0, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  blr
-	*/
-}
+SpiderAi::SpiderAi(Spider* spider) { mSpider = spider; }
 
 /*
  * --INFO--
@@ -995,6 +979,7 @@ void SpiderAi::appearState()
  */
 void SpiderAi::update()
 {
+	setEveryFrame();
 	/*
 	.loc_0x0:
 	  mflr      r0

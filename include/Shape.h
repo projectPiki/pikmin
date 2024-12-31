@@ -113,12 +113,12 @@ struct DlobjInfo : public GfxobjInfo {
 struct BaseShape : public CoreNode {
 	BaseShape();
 
-	virtual void read(RandomAccessStream&); // _0C
-	virtual void optimize();                // _10
-	virtual void update();                  // _14
-	virtual void render(struct Graphics&);  // _18
-	virtual void render2d(Graphics&);       // _1C
-	virtual RouteGroup* makeRouteGroup();   // _20
+	virtual void read(RandomAccessStream&);   // _0C
+	virtual void optimize() { }               // _10
+	virtual void update() { }                 // _14
+	virtual void render(struct Graphics&) { } // _18
+	virtual void render2d(Graphics&) { }      // _1C
+	virtual RouteGroup* makeRouteGroup();     // _20
 
 	void importIni(RandomAccessStream&);
 	void countMaterials(Joint*, u32);

@@ -154,13 +154,6 @@ Texture* StdSystem::loadTexture(char* path, bool unk)
 
 /*
  * --INFO--
- * Address:	8003F1FC
- * Size:	000008
- */
-RandomAccessStream* StdSystem::openFile(char*, bool, bool) { return nullptr; }
-
-/*
- * --INFO--
  * Address:	........
  * Size:	000034
  */

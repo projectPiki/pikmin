@@ -40,8 +40,8 @@ struct GfxobjInfo {
 	u32 mAttached;     // _1C, check type/name later
 
 	// vtable
-	virtual void attach(); // _08
-	virtual void detach(); // _0C
+	virtual void attach() { } // _08
+	virtual void detach() { } // _0C
 };
 
 /**

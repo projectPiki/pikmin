@@ -340,7 +340,8 @@ struct SpiderAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	u8 _04[0x8]; // _04, unknown
+	Spider* mSpider; // _04
+	u8 _08;          // _08
 };
 
 /**

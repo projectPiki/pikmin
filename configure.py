@@ -410,7 +410,7 @@ config.libs = [
             Object(NonMatching, "sysCommon/shpRoutes.cpp"),
             Object(NonMatching, "sysCommon/sysMath.cpp"),
             Object(NonMatching, "sysCommon/matMath.cpp"),
-            Object(NonMatching, "sysCommon/stdSystem.cpp"),
+            Object(Matching, "sysCommon/stdSystem.cpp"),
             Object(Matching, "sysCommon/node.cpp"),
             Object(Matching, "sysCommon/timers.cpp"),
             Object(Matching, "sysCommon/controller.cpp"),

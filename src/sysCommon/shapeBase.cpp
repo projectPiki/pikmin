@@ -13975,62 +13975,6 @@ void BaseShape::findCollTri(Vector3f&, Vector3f&, Vector3f&, char*)
 
 /*
  * --INFO--
- * Address:	80035A1C
- * Size:	000030
- */
-void MatobjInfo::attach() { mTarget->attach(); }
-
-/*
- * --INFO--
- * Address:	80035A4C
- * Size:	000004
- */
-void MatobjInfo::detach() { }
-
-/*
- * --INFO--
- * Address:	80035A50
- * Size:	000004
- */
-void GfxobjInfo::attach() { }
-
-/*
- * --INFO--
- * Address:	80035A54
- * Size:	000004
- */
-void GfxobjInfo::detach() { }
-
-/*
- * --INFO--
- * Address:	80035A58
- * Size:	000004
- */
-void BaseShape::optimize() { }
-
-/*
- * --INFO--
- * Address:	80035A5C
- * Size:	000004
- */
-void BaseShape::update() { }
-
-/*
- * --INFO--
- * Address:	80035A60
- * Size:	000004
- */
-void BaseShape::render(Graphics&) { }
-
-/*
- * --INFO--
- * Address:	80035A64
- * Size:	000004
- */
-void BaseShape::render2d(Graphics&) { }
-
-/*
- * --INFO--
  * Address:	80035A68
  * Size:	000004
  */

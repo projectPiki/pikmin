@@ -40,8 +40,8 @@ struct Material : public CoreNode {
  * @brief TODO
  */
 struct MatobjInfo : public GfxobjInfo {
-	virtual void attach(); // _08
-	virtual void detach(); // _0C
+	virtual void attach() { mTarget->attach(); } // _08
+	virtual void detach() { }                    // _0C
 
 	// _1C     = VTBL
 	// _00-_20 = GfxobjInfo
