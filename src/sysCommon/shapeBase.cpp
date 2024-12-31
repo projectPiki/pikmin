@@ -4053,7 +4053,7 @@ void AnimDck::read(RandomAccessStream& stream)
 		mAnimInfo[i].mGroupIndex = stream.readInt();
 
 		int parentIndex          = stream.readInt();
-		mAnimInfo[i].mParentInfo = parentIndex == -1 ? 0 : mAnimInfo[parentIndex].mParentInfo;
+		mAnimInfo[i].mParentInfo = parentIndex == -1 ? 0 : &mAnimInfo[parentIndex];
 
 		// Read scale parameters (3 entries for x, y, and z)
 		for (int j = 0; j < 3; j++) {
@@ -4081,7 +4081,7 @@ void AnimDck::read(RandomAccessStream& stream)
 	}
 
 	checkMask();
-	mAnimInfoList = new AnimCacheInfo[mNumFrames];
+	initData();
 
 	/*
 	.loc_0x0:

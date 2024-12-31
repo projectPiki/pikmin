@@ -39,8 +39,9 @@ struct DataChunk {
 
 	void read(RandomAccessStream& stream)
 	{
-		setDataSize(stream.readInt());
-		for (int i = 0; i < mDataSize; i++) {
+		int dataSize = stream.readInt();
+		setDataSize(dataSize);
+		for (int i = 0; i < dataSize; i++) {
 			mData[i] = stream.readFloat();
 		}
 	}
