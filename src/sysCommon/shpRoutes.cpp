@@ -1,34 +1,32 @@
 #include "Route.h"
+#include "CmdStream.h"
+#include "Graphics.h"
+#include "sysNew.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("shpRoutes")
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000A8
  */
-RoutePoint::RoutePoint()
-{
-	// UNUSED FUNCTION
-}
+// RoutePoint::RoutePoint()
+// {
+// 	// UNUSED FUNCTION
+// }
 
 /*
  * --INFO--
@@ -45,122 +43,27 @@ void RoutePoint::refresh(Graphics&)
  * Address:	80036474
  * Size:	000184
  */
-void RoutePoint::loadini(CmdStream*)
+void RoutePoint::loadini(CmdStream* s)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  b         .loc_0x130
+	while (!s->endOfCmds() && !s->endOfSection()) {
+		s->getToken(true);
 
-	.loc_0x20:
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0xAC14
-	  addi      r3, r31, 0
-	  subi      r4, r13, 0x7ABC
-	  bl        0xAF2C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x60
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0xABF4
-	  crclr     6, 0x6
-	  addi      r5, r30, 0x38
-	  subi      r4, r13, 0x7AC0
-	  bl        0x1E1BC8
-	  b         .loc_0x130
+		if (s->isToken("index")) {
+			sscanf(s->getToken(true), "%d", &mIndex);
+		} else if (s->isToken("pos")) {
+			sscanf(s->getToken(true), "%f", &mPosition.x);
+			sscanf(s->getToken(true), "%f", &mPosition.y);
+			sscanf(s->getToken(true), "%f", &mPosition.z);
+		} else if (s->isToken("state")) {
+			sscanf(s->getToken(true), "%d", &mState);
+		} else if (s->isToken("width")) {
+			sscanf(s->getToken(true), "%f", &mWidth);
+		}
+	}
 
-	.loc_0x60:
-	  addi      r3, r31, 0
-	  subi      r4, r13, 0x7AB4
-	  bl        0xAEF8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xCC
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0xABC0
-	  crclr     6, 0x6
-	  addi      r5, r30, 0x28
-	  subi      r4, r13, 0x7AB0
-	  bl        0x1E1B94
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0xABA4
-	  crclr     6, 0x6
-	  addi      r5, r30, 0x2C
-	  subi      r4, r13, 0x7AB0
-	  bl        0x1E1B78
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0xAB88
-	  crclr     6, 0x6
-	  addi      r5, r30, 0x30
-	  subi      r4, r13, 0x7AB0
-	  bl        0x1E1B5C
-	  b         .loc_0x130
-
-	.loc_0xCC:
-	  addi      r3, r31, 0
-	  subi      r4, r13, 0x7AAC
-	  bl        0xAE8C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x100
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0xAB54
-	  crclr     6, 0x6
-	  addi      r5, r30, 0x34
-	  subi      r4, r13, 0x7AC0
-	  bl        0x1E1B28
-	  b         .loc_0x130
-
-	.loc_0x100:
-	  addi      r3, r31, 0
-	  subi      r4, r13, 0x7AA4
-	  bl        0xAE58
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x130
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0xAB20
-	  crclr     6, 0x6
-	  addi      r5, r30, 0x24
-	  subi      r4, r13, 0x7AB0
-	  bl        0x1E1AF4
-
-	.loc_0x130:
-	  mr        r3, r31
-	  bl        0xA7B0
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x150
-	  mr        r3, r31
-	  bl        0xAED0
-	  rlwinm.   r0,r3,0,24,31
-	  beq+      .loc_0x20
-
-	.loc_0x150:
-	  mr        r3, r31
-	  bl        0xA790
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x16C
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0xAAD4
-
-	.loc_0x16C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (!s->endOfCmds()) {
+		s->getToken(true);
+	}
 }
 
 /*
@@ -169,107 +72,12 @@ void RoutePoint::loadini(CmdStream*)
  * Size:	000184
  */
 RouteGroup::RouteGroup()
+    : EditNode("")
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r9, r4, 0x738C
-	  lis       r5, 0x8023
-	  stwu      r1, -0x28(r1)
-	  subi      r7, r5, 0x74A4
-	  lis       r4, 0x8023
-	  stw       r31, 0x24(r1)
-	  subi      r6, r4, 0x74BC
-	  subi      r31, r13, 0x7AC4
-	  stw       r30, 0x20(r1)
-	  li        r30, 0
-	  subi      r5, r13, 0x7AC8
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  lis       r3, 0x8022
-	  stw       r9, 0x0(r29)
-	  addi      r8, r3, 0x737C
-	  lis       r3, 0x8023
-	  stw       r8, 0x0(r29)
-	  subi      r0, r3, 0x743C
-	  addi      r3, r29, 0xA4
-	  stw       r30, 0x10(r29)
-	  subi      r4, r13, 0x7AC8
-	  stw       r30, 0xC(r29)
-	  stw       r30, 0x8(r29)
-	  stw       r31, 0x4(r29)
-	  stw       r7, 0x0(r29)
-	  stw       r6, 0x0(r29)
-	  stw       r9, 0x68(r29)
-	  stw       r8, 0x68(r29)
-	  stw       r30, 0x78(r29)
-	  stw       r30, 0x74(r29)
-	  stw       r30, 0x70(r29)
-	  stw       r5, 0x6C(r29)
-	  stw       r0, 0x68(r29)
-	  lfs       f0, -0x7C88(r2)
-	  stfs      f0, 0x98(r29)
-	  stfs      f0, 0x94(r29)
-	  stfs      f0, 0x90(r29)
-	  stw       r9, 0xA4(r29)
-	  stw       r8, 0xA4(r29)
-	  stw       r30, 0xB4(r29)
-	  stw       r30, 0xB0(r29)
-	  stw       r30, 0xAC(r29)
-	  bl        -0x117DC
-	  lis       r3, 0x8023
-	  crclr     6, 0x6
-	  subi      r0, r3, 0x746C
-	  stw       r0, 0xA4(r29)
-	  lis       r5, 0x6E6F
-	  lis       r3, 0x8023
-	  stw       r30, 0xB8(r29)
-	  subi      r4, r3, 0x75E4
-	  li        r6, 0x1
-	  stw       r30, 0xB4(r29)
-	  addi      r0, r5, 0x6E65
-	  addi      r3, r29, 0x18
-	  stw       r30, 0xB0(r29)
-	  stw       r30, 0xAC(r29)
-	  stw       r31, 0xA8(r29)
-	  lfs       f0, -0x7C84(r2)
-	  stfs      f0, 0x88(r29)
-	  stw       r30, 0xA0(r29)
-	  stw       r6, 0x9C(r29)
-	  lfs       f0, -0x7C80(r2)
-	  stfs      f0, 0x8C(r29)
-	  stw       r0, 0x58(r29)
-	  lbz       r0, 0x58(r29)
-	  stb       r0, 0x5C(r29)
-	  lbz       r0, 0x59(r29)
-	  stb       r0, 0x5D(r29)
-	  lbz       r0, 0x5A(r29)
-	  stb       r0, 0x5E(r29)
-	  lbz       r0, 0x5B(r29)
-	  stb       r0, 0x5F(r29)
-	  stb       r30, 0x60(r29)
-	  bl        0x1DFE68
-	  stw       r30, 0x78(r29)
-	  li        r4, 0xFF
-	  li        r0, 0xC0
-	  stw       r30, 0x74(r29)
-	  mr        r3, r29
-	  stw       r30, 0x70(r29)
-	  stw       r31, 0x6C(r29)
-	  stb       r4, 0x14(r29)
-	  stb       r4, 0x15(r29)
-	  stb       r4, 0x16(r29)
-	  stb       r0, 0x17(r29)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	setID('none');
+	sprintf(mRouteName, "sample route");
+	mPointListRoot.initCore("");
+	mColour.set(0xFF, 0xFF, 0xFF, 0xC0);
 }
 
 /*
@@ -931,320 +739,76 @@ void RouteGroup::refresh(Graphics&, EditNode*)
  * Address:	80037138
  * Size:	000060
  */
-void RouteGroup::render2d(Graphics&, int&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r8, r3, 0
-	  stw       r0, 0x4(r1)
-	  mr        r0, r4
-	  mr        r3, r0
-	  crclr     6, 0x6
-	  stwu      r1, -0x8(r1)
-	  addi      r8, r8, 0x18
-	  lwz       r7, 0x2DEC(r13)
-	  lwz       r6, 0x0(r5)
-	  lwz       r4, 0x10(r7)
-	  addi      r6, r6, 0xC
-	  stw       r6, 0x0(r5)
-	  lis       r5, 0x8023
-	  subi      r7, r5, 0x75D4
-	  lwz       r12, 0x3B4(r3)
-	  li        r5, 0
-	  lwz       r12, 0xEC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void RouteGroup::render2d(Graphics& gfx, int& p3) { gfx.texturePrintf(gsys->mConsFont, 0, p3 += 12, "route [ %s ]", mRouteName); }
 
 /*
  * --INFO--
  * Address:	80037198
  * Size:	0003CC
  */
-void RouteGroup::loadini(CmdStream*)
+void RouteGroup::loadini(CmdStream* s)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x8022
-	  stw       r0, 0x4(r1)
-	  lis       r5, 0x8022
-	  lis       r7, 0x8023
-	  stwu      r1, -0x78(r1)
-	  stfd      f31, 0x70(r1)
-	  stfd      f30, 0x68(r1)
-	  stfd      f29, 0x60(r1)
-	  stmw      r22, 0x38(r1)
-	  mr        r28, r3
-	  lis       r3, 0x8023
-	  addi      r29, r4, 0
-	  addi      r27, r6, 0x738C
-	  addi      r26, r5, 0x737C
-	  subi      r25, r3, 0x746C
-	  subi      r24, r7, 0x743C
-	  addi      r31, r28, 0x58
-	  addi      r30, r28, 0x5C
-	  lfs       f29, -0x7C88(r2)
-	  lfs       f30, -0x7C84(r2)
-	  lfs       f31, -0x7C80(r2)
-	  b         .loc_0x370
+	while (!s->endOfCmds() && !s->endOfSection()) {
+		s->getToken(true);
 
-	.loc_0x5C:
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9EB4
-	  addi      r3, r29, 0
-	  subi      r4, r13, 0x7A88
-	  bl        0xA1CC
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xBC
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9E94
-	  addi      r4, r3, 0
-	  crclr     6, 0x6
-	  addi      r3, r28, 0x5C
-	  bl        0x1DF36C
-	  lbz       r0, 0x0(r30)
-	  stb       r0, 0x0(r31)
-	  lbz       r0, 0x1(r30)
-	  stb       r0, 0x1(r31)
-	  lbz       r0, 0x2(r30)
-	  stb       r0, 0x2(r31)
-	  lbz       r0, 0x3(r30)
-	  stb       r0, 0x3(r31)
-	  b         .loc_0x370
+		if (s->isToken("id")) {
+			sprintf(mStringID, s->getToken(true));
+			updateID();
+		} else if (s->isToken("name")) {
+			sprintf(mRouteName, s->getToken(true));
+		} else if (s->isToken("colour")) {
+			int r;
+			sscanf(s->getToken(true), "%d", &r);
+			int g;
+			sscanf(s->getToken(true), "%d", &g);
+			int b;
+			sscanf(s->getToken(true), "%d", &b);
+			int a;
+			sscanf(s->getToken(true), "%d", &a);
 
-	.loc_0xBC:
-	  addi      r3, r29, 0
-	  subi      r4, r13, 0x7A84
-	  bl        0xA178
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xF0
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9E40
-	  addi      r4, r3, 0
-	  crclr     6, 0x6
-	  addi      r3, r28, 0x18
-	  bl        0x1DF318
-	  b         .loc_0x370
+			mColour.set(r, g, b, 0x61);
+		} else if (s->isToken("point")) {
+			s->getToken(true);
+			RoutePoint* point = new RoutePoint();
+			point->loadini(s);
+			mPointListRoot.add(point);
+		} else if (s->isToken("link")) {
+			s->getToken(true);
 
-	.loc_0xF0:
-	  addi      r3, r29, 0
-	  subi      r4, r13, 0x7A7C
-	  bl        0xA144
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x198
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9E0C
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x34
-	  subi      r4, r13, 0x7AC0
-	  bl        0x1E0DE0
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9DF0
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x30
-	  subi      r4, r13, 0x7AC0
-	  bl        0x1E0DC4
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9DD4
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x2C
-	  subi      r4, r13, 0x7AC0
-	  bl        0x1E0DA8
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9DB8
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x28
-	  subi      r4, r13, 0x7AC0
-	  bl        0x1E0D8C
-	  lwz       r3, 0x34(r1)
-	  li        r0, 0x61
-	  lwz       r5, 0x2C(r1)
-	  lwz       r4, 0x30(r1)
-	  stb       r3, 0x14(r28)
-	  stb       r4, 0x15(r28)
-	  stb       r5, 0x16(r28)
-	  stb       r0, 0x17(r28)
-	  b         .loc_0x370
+			int sourceId;
+			sscanf(s->getToken(true), "%d", &sourceId);
+			int destId;
+			sscanf(s->getToken(true), "%d", &destId);
 
-	.loc_0x198:
-	  addi      r3, r29, 0
-	  subi      r4, r13, 0x7A74
-	  bl        0xA09C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x26C
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9D64
-	  li        r3, 0x54
-	  bl        0xFCB0
-	  addi      r23, r3, 0
-	  mr.       r3, r23
-	  beq-      .loc_0x24C
-	  stw       r27, 0x0(r23)
-	  li        r22, 0
-	  subi      r0, r13, 0x7AC8
-	  stw       r26, 0x0(r23)
-	  addi      r3, r3, 0x3C
-	  subi      r4, r13, 0x7AC8
-	  stw       r22, 0x10(r23)
-	  stw       r22, 0xC(r23)
-	  stw       r22, 0x8(r23)
-	  stw       r0, 0x4(r23)
-	  stw       r24, 0x0(r23)
-	  stfs      f29, 0x30(r23)
-	  stfs      f29, 0x2C(r23)
-	  stfs      f29, 0x28(r23)
-	  stw       r27, 0x3C(r23)
-	  stw       r26, 0x3C(r23)
-	  stw       r22, 0x4C(r23)
-	  stw       r22, 0x48(r23)
-	  stw       r22, 0x44(r23)
-	  bl        -0x124DC
-	  stw       r25, 0x3C(r23)
-	  subi      r3, r13, 0x7AC4
-	  li        r0, 0x1
-	  stw       r22, 0x50(r23)
-	  stw       r22, 0x4C(r23)
-	  stw       r22, 0x48(r23)
-	  stw       r22, 0x44(r23)
-	  stw       r3, 0x40(r23)
-	  stfs      f30, 0x20(r23)
-	  stw       r22, 0x38(r23)
-	  stw       r0, 0x34(r23)
-	  stfs      f31, 0x24(r23)
+			// Link the source and destination points
+			if (sourceId != destId) {
+				RoutePoint* sourcePoint      = nullptr;
+				RoutePoint* destinationPoint = nullptr;
 
-	.loc_0x24C:
-	  addi      r22, r23, 0
-	  addi      r3, r22, 0
-	  addi      r4, r29, 0
-	  bl        -0xF7C
-	  addi      r3, r28, 0x68
-	  addi      r4, r22, 0
-	  bl        0x91DC
-	  b         .loc_0x370
+				FOREACH_NODE(RoutePoint, mPointListRoot.mChild, c)
+				{
+					if (c->mIndex == sourceId) {
+						sourcePoint = c;
+					}
+					if (c->mIndex == destId) {
+						destinationPoint = c;
+					}
+				}
 
-	.loc_0x26C:
-	  addi      r3, r29, 0
-	  subi      r4, r13, 0x7A6C
-	  bl        0x9FC8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x370
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9C90
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9C84
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x24
-	  subi      r4, r13, 0x7AC0
-	  bl        0x1E0C58
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9C68
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x20
-	  subi      r4, r13, 0x7AC0
-	  bl        0x1E0C3C
-	  lwz       r0, 0x24(r1)
-	  lwz       r3, 0x20(r1)
-	  cmpw      r0, r3
-	  beq-      .loc_0x364
-	  lwz       r5, 0x78(r28)
-	  li        r23, 0
-	  li        r22, 0
-	  b         .loc_0x304
+				if (sourcePoint && destinationPoint) {
+					RouteLink* link = new RouteLink();
+					link->mPoint    = destinationPoint;
+					sourcePoint->mLink.add(link);
+				}
+			}
 
-	.loc_0x2E4:
-	  lwz       r4, 0x38(r5)
-	  cmpw      r4, r0
-	  bne-      .loc_0x2F4
-	  mr        r23, r5
+			s->getToken(true);
+		}
+	}
 
-	.loc_0x2F4:
-	  cmpw      r4, r3
-	  bne-      .loc_0x300
-	  mr        r22, r5
-
-	.loc_0x300:
-	  lwz       r5, 0xC(r5)
-
-	.loc_0x304:
-	  cmplwi    r5, 0
-	  bne+      .loc_0x2E4
-	  cmplwi    r23, 0
-	  beq-      .loc_0x364
-	  cmplwi    r22, 0
-	  beq-      .loc_0x364
-	  li        r3, 0x18
-	  bl        0xFB4C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x354
-	  stw       r27, 0x0(r3)
-	  li        r4, 0
-	  subi      r0, r13, 0x7AC8
-	  stw       r26, 0x0(r3)
-	  stw       r4, 0x10(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r25, 0x0(r3)
-	  stw       r4, 0x14(r3)
-
-	.loc_0x354:
-	  stw       r22, 0x14(r3)
-	  addi      r4, r3, 0
-	  addi      r3, r23, 0x3C
-	  bl        0x90E0
-
-	.loc_0x364:
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9BAC
-
-	.loc_0x370:
-	  mr        r3, r29
-	  bl        0x984C
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x390
-	  mr        r3, r29
-	  bl        0x9F6C
-	  rlwinm.   r0,r3,0,24,31
-	  beq+      .loc_0x5C
-
-	.loc_0x390:
-	  mr        r3, r29
-	  bl        0x982C
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x3AC
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x9B70
-
-	.loc_0x3AC:
-	  lmw       r22, 0x38(r1)
-	  lwz       r0, 0x7C(r1)
-	  lfd       f31, 0x70(r1)
-	  lfd       f30, 0x68(r1)
-	  lfd       f29, 0x60(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	if (!s->endOfCmds()) {
+		s->getToken(true);
+	}
 }
 
 /*

@@ -14,11 +14,17 @@ struct MapMgr;
 struct Plane;
 struct BaseShape;
 struct PathFinder;
+struct RoutePoint;
 
 /**
  * @brief TODO
  */
 struct EditNode : public CoreNode {
+	EditNode(char* name)
+	    : CoreNode(name)
+	{
+	}
+
 	virtual void msgCommand(DataMsg&) { }      // _10 (weak)
 	virtual void render2d(Graphics&, int&) {}; // _14 (weak)
 
@@ -31,16 +37,30 @@ struct EditNode : public CoreNode {
  * @brief TODO
  */
 struct RouteLink : public CoreNode {
+	RouteLink()
+	    : CoreNode("rp")
+	{
+		mPoint = 0;
+	}
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 mLinkIndex; // _14
+	RoutePoint* mPoint; // _14
 };
 
 /**
  * @brief TODO
  */
 struct RoutePoint : public CoreNode {
-	RoutePoint();
+	RoutePoint()
+	    : CoreNode("rp")
+	{
+		mLink.initCore("");
+		_20    = 8.0f;
+		mIndex = 0;
+		mState = 1;
+		mWidth = 10.0f;
+	}
 
 	void loadini(CmdStream*);
 
@@ -49,17 +69,15 @@ struct RoutePoint : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 _14;         // _14
-	u32 _18;         // _18
-	u32 _1C;         // _1C
-	u32 _20;         // _20
-	u32 _24;         // _24
-	u32 _28;         // _28
-	u32 _2C;         // _2C
-	u32 _30;         // _30
-	u32 _34;         // _34
-	u32 _38;         // _38
-	RouteLink mLink; // _3C
+	u32 _14;            // _14
+	u32 _18;            // _18
+	u32 _1C;            // _1C
+	f32 _20;            // _20
+	f32 mWidth;         // _24
+	Vector3f mPosition; // _28
+	u32 mState;         // _34
+	int mIndex;         // _38
+	RouteLink mLink;    // _3C
 };
 
 /**
@@ -74,18 +92,37 @@ struct RouteGroup : public EditNode {
 	void refresh(Graphics&, EditNode*);
 	void loadini(CmdStream*);
 
+	inline void setID(u32 id)
+	{
+		mIntID = id;
+
+		for (int i = 0; i < 4; i++) {
+			mStringID[i] = reinterpret_cast<char*>(&mIntID)[i];
+		}
+
+		mStringID[4] = '\0';
+	}
+
+	inline void updateID()
+	{
+		char* str = reinterpret_cast<char*>(&mIntID);
+		for (int i = 0; i < 4; i++) {
+			str[i] = mStringID[i];
+		}
+	}
+
 	// unused/inlined:
 	void saveini(char*, RandomAccessStream&);
 
 	// _00     = VTBL
 	// _00-_14 = EditNode?
-	Colour mColour;          // _14
-	char mRouteName[0x40];   // _18
-	u32 _58;                 // _58
-	char _5C[8];             // _5C
-	BaseShape* mParentShape; // _64
-	RoutePoint mPoint;       // _68
-	u32 _BC;                 // _BC
+	Colour mColour;            // _14
+	char mRouteName[0x40];     // _18
+	u32 mIntID;                // _58, yep, this isn't an ID32...
+	char mStringID[8];         // _5C
+	BaseShape* mParentShape;   // _64
+	RoutePoint mPointListRoot; // _68
+	u32 _BC;                   // _BC
 };
 
 /**

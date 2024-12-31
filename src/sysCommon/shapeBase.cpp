@@ -4031,8 +4031,6 @@ AnimDck::AnimDck(BaseShape* model, int joints)
  */
 void AnimDck::read(RandomAccessStream& stream)
 {
-	// This section reads a dck file in binary format
-
 	// Read the number of joints and frames
 	mNumJoints = stream.readInt();
 	mNumFrames = stream.readInt();
@@ -4054,9 +4052,8 @@ void AnimDck::read(RandomAccessStream& stream)
 	for (int i = 0; i < mNumJoints; i++) {
 		mAnimInfo[i].mGroupIndex = stream.readInt();
 
-		int parentIndex = stream.readInt();
-		// parentIndex                  = (parentIndex == -1) ? parentIndex : mAnimInfo[parentIndex].mParentJntIndex;
-		// mAnimInfo[i].mParentJntIndex = parentIndex;
+		int parentIndex          = stream.readInt();
+		mAnimInfo[i].mParentInfo = parentIndex == -1 ? 0 : mAnimInfo[parentIndex].mParentInfo;
 
 		// Read scale parameters (3 entries for x, y, and z)
 		for (int j = 0; j < 3; j++) {

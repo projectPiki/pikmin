@@ -107,6 +107,19 @@ struct Vector3f {
 	inline f32 length() const { return std::sqrtf(x * x + y * y + z * z); }
 	inline f32 length2D() const { return std::sqrtf(squaredLength2D()); }
 
+	inline void CP(Vector3f& other)
+	{
+		Vector3f tmp;
+		tmp.x = y * other.z - z * other.y;
+		tmp.y = z * other.x - x * other.z;
+		tmp.z = x * other.y - y * other.x;
+		x     = tmp.x;
+		y     = tmp.y;
+		z     = tmp.z;
+	}
+
+	inline f32 DP(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
+
 	inline f32 normalise()
 	{
 		f32 norm = length();
