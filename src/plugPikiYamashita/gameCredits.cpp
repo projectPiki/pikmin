@@ -1,27 +1,21 @@
 #include "GameCreditsSection.h"
 #include "system.h"
 #include "FlowController.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "GameCreditsSection");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("GameCreditsSection");
 
 /*
  * --INFO--
@@ -31,7 +25,7 @@ static void _Print(char*, ...)
 GameCreditsSection::GameCreditsSection()
 {
 	Node::init("<GameCreditsSection>");
-	gsys->mFrameRate = 1;
-	flowCont._24C    = 0;
-	flowCont._250    = 0;
+	gsys->setFrameClamp(1);
+	flowCont._24C = 0;
+	flowCont._250 = 0;
 }

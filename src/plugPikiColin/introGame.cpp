@@ -33,7 +33,7 @@ static IntroGameSetupSection* igss;
 IntroGameSection::IntroGameSection()
 {
 	Node::init("<IntroGameSection>");
-	gsys->mFrameRate = 2;
+	gsys->setFrameClamp(2);
 
 	mapMgr = nullptr;
 	igss   = nullptr;

@@ -1,22 +1,20 @@
 #include "GameStageClearSection.h"
 #include "system.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "GameStageClearSection"); }
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("GameStageClearSection");
 
 /*
  * --INFO--
@@ -26,5 +24,5 @@ static void _Print(char*, ...)
 GameStageClearSection::GameStageClearSection()
 {
 	Node::init("<GameStageClearSection>");
-	gsys->mFrameRate = 1;
+	gsys->setFrameClamp(1);
 }

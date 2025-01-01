@@ -160,6 +160,7 @@ struct StdSystem {
 	inline void softReset() { mPending = true; }
 	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
 	inline bool getPending() { return mPending; }
+	inline void setFrameClamp(s32 frameRate) { mFrameRate = frameRate; }
 
 private:
 	// Use the functions!

@@ -187,8 +187,8 @@ struct CardSelectSetupSection : public Node {
 CardSelectSection::CardSelectSection()
 {
 	Node::init("<CardSelectSection>");
-	gsys->mFrameRate = 1;
-	flowCont._A8     = nullptr;
+	gsys->setFrameClamp(1);
+	flowCont._A8 = nullptr;
 	playerState->initGame();
 	generatorCache->initGame();
 	pikiInfMgr.initGame();

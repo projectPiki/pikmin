@@ -854,9 +854,9 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 zen::OgTestSection::OgTestSection()
 {
 	Node::init("<OgTestSection>");
-	gsys->mFrameRate = 1;
-	flowCont._24C    = 0;
-	flowCont._250    = 0;
+	gsys->setFrameClamp(1);
+	flowCont._24C = 0;
+	flowCont._250 = 0;
 }
 
 /*
