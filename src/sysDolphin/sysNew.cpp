@@ -18,7 +18,7 @@ static void _Error(char*, ...)
  * Address:	........
  * Size:	0000F0
  */
-DEFINE_PRINT("");
+DEFINE_PRINT(nullptr);
 
 /*
  * --INFO--
