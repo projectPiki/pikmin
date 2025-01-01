@@ -3,11 +3,13 @@
 
 #include "types.h"
 
+struct Texture;
+
 namespace zen {
 
 // global utility functions:
 void makePathName(const char*, const char*, char*);
-void loadTexExp(const char*, bool, bool);
+::Texture* loadTexExp(const char*, bool, bool);
 
 } // namespace zen
 
