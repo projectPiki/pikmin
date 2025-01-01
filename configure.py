@@ -829,7 +829,7 @@ config.libs = [
             Object(NonMatching, "plugPikiYamashita/damageEffect.cpp"),
             Object(NonMatching, "plugPikiYamashita/alphaWipe.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawUfoParts.cpp"),
-            Object(NonMatching, "plugPikiYamashita/zenSys.cpp"),
+            Object(Matching, "plugPikiYamashita/zenSys.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawSaveMes.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawSaveFailure.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawFinalResult.cpp"),

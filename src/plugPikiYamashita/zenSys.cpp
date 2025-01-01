@@ -33,7 +33,7 @@ void zen::makePathName(const char* directoryPath, const char* fileName, char* ou
 	outputPath[0] = '\0';
 
 	int sourceLength = strlen(directoryPath);
-	strcpy(outputPath, directoryPath);
+	strcat(outputPath, directoryPath);
 	for (j = 0; j < i; ++j) {
 		outputPath[j + sourceLength] = buffer[i - j - 1];
 	}
