@@ -70,14 +70,14 @@ void Boss::initBoss(BirthInfo& birthInfo, int objType)
 	mNeedShadow        = false;
 	mIsOnWall          = false;
 	mDamage            = 0.0f;
-	f32 maxHealth      = static_cast<BossProp*>(mProps)->mBossProps.mMaxHealth();
+	f32 maxHealth      = BOSS_PROP.mMaxHealth();
 	mMaxLife           = maxHealth;
 	mCurrentLife       = maxHealth;
 	mAnimTimer         = 0.0f;
 	_2D4               = 0.0f;
 	_2D0               = 0.0f;
 	mLifeRecoveryTimer = 0.0f;
-	mSearchAngle       = PI * (static_cast<BossProp*>(mProps)->mBossProps.mSearchAngle() / 360.0f);
+	mSearchAngle       = PI * (BOSS_PROP.mSearchAngle() / 360.0f);
 	mShadowSize        = 0.0f;
 	mAnimLoopCounter   = 0;
 	mFlickDamageCount  = 0;
@@ -93,10 +93,7 @@ void Boss::initBoss(BirthInfo& birthInfo, int objType)
  */
 void Boss::calcFlickPiki()
 {
-	interactStickers(this,
-	                 InteractFlick(this, static_cast<BossProp*>(mProps)->mBossProps.mFlickKnockback(),
-	                               static_cast<BossProp*>(mProps)->mBossProps.mFlickDamage(), -1000.0f),
-	                 &CndBossFlick(this));
+	interactStickers(this, InteractFlick(this, BOSS_PROP.mFlickKnockback(), BOSS_PROP.mFlickDamage(), -1000.0f), &CndBossFlick(this));
 
 	mFlickDamageCount = 0;
 }
@@ -244,7 +241,7 @@ void Boss::makeTargetRandom(f32 p1)
 	if (_2D0 > 5.0f || qdist2(mPosition.x, mPosition.z, mTargetPosition.x, mTargetPosition.z) < p1) {
 		f32 randAngle = NsMathF::getRand(TAU);
 		Vector3f vec;
-		f32 randDist = NsMathF::getRand(static_cast<BossProp*>(mProps)->mBossProps.mMaxWaitRadius());
+		f32 randDist = NsMathF::getRand(BOSS_PROP.mMaxWaitRadius());
 		vec.set(randDist * sinf(randAngle) + mInitPosition.x, 0.0f, randDist * cosf(randAngle) + mInitPosition.z);
 		mTargetPosition.x = vec.x;
 		mTargetPosition.y = vec.y;
@@ -276,10 +273,10 @@ bool Boss::chaseNaviTransit()
 		Creature* navi = *iter;
 		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()) {
 			f32 quickDist = qdist2(mPosition.x, mPosition.z, navi->mPosition.x, navi->mPosition.z);
-			if (quickDist < static_cast<BossProp*>(mProps)->mBossProps.mSearchRadius() && quickDist < minDist && inSearchAngle(navi)) {
+			if (quickDist < BOSS_PROP.mSearchRadius() && quickDist < minDist && inSearchAngle(navi)) {
 				// we're actually close, so do things properly
 				f32 naviDist = mPosition.distance(navi->mPosition);
-				if (naviDist < static_cast<BossProp*>(mProps)->mBossProps.mSearchRadius() && naviDist < minDist) {
+				if (naviDist < BOSS_PROP.mSearchRadius() && naviDist < minDist) {
 					minDist = naviDist;
 					target  = navi;
 				}
@@ -314,10 +311,10 @@ bool Boss::chasePikiTransit()
 		Creature* piki = *iter;
 		if (piki->isAlive() && piki->isVisible() && !piki->isBuried() && piki->getStickObject() != this) {
 			f32 quickDist = qdist2(mPosition.x, mPosition.z, piki->mPosition.x, piki->mPosition.z);
-			if (quickDist < static_cast<BossProp*>(mProps)->mBossProps.mSearchRadius() && quickDist < minDist && inSearchAngle(piki)) {
+			if (quickDist < BOSS_PROP.mSearchRadius() && quickDist < minDist && inSearchAngle(piki)) {
 				// we're actually close, so do things properly
 				f32 pikiDist = mPosition.distance(piki->mPosition);
-				if (pikiDist < static_cast<BossProp*>(mProps)->mBossProps.mSearchRadius() && pikiDist < minDist) {
+				if (pikiDist < BOSS_PROP.mSearchRadius() && pikiDist < minDist) {
 					minDist = pikiDist;
 					target  = piki;
 				}
@@ -352,7 +349,7 @@ bool Boss::targetLostTransit()
 			return true;
 		}
 
-		if (mPosition.distance(mTargetCreature->mPosition) > static_cast<BossProp*>(mProps)->mBossProps.mSearchRadius()) {
+		if (mPosition.distance(mTargetCreature->mPosition) > BOSS_PROP.mSearchRadius()) {
 			mTargetCreature = nullptr;
 			return true;
 		}
@@ -368,7 +365,7 @@ bool Boss::targetLostTransit()
  */
 bool Boss::inSideWaitRangeTransit()
 {
-	if (qdist2(mPosition.x, mPosition.z, mInitPosition.x, mInitPosition.z) < static_cast<BossProp*>(mProps)->mBossProps.mMaxWaitRadius()) {
+	if (qdist2(mPosition.x, mPosition.z, mInitPosition.x, mInitPosition.z) < BOSS_PROP.mMaxWaitRadius()) {
 		mTargetCreature = nullptr;
 		return true;
 	}
@@ -382,8 +379,7 @@ bool Boss::inSideWaitRangeTransit()
  */
 bool Boss::outSideChaseRangeTransit()
 {
-	if (qdist2(mPosition.x, mPosition.z, mInitPosition.x, mInitPosition.z)
-	    > static_cast<BossProp*>(mProps)->mBossProps.mTerritoryRadius()) {
+	if (qdist2(mPosition.x, mPosition.z, mInitPosition.x, mInitPosition.z) > BOSS_PROP.mTerritoryRadius()) {
 		mTargetCreature = nullptr;
 		return true;
 	}
@@ -421,22 +417,22 @@ bool Boss::flickPikiTransit()
 {
 	int stickPikiNum = getStickNoMouthPikiCount();
 
-	if (stickPikiNum >= static_cast<BossProp*>(mProps)->mBossProps.mFlickPikiCountCD()) {
-		if (mFlickDamageCount >= static_cast<BossProp*>(mProps)->mBossProps.mFlickDamageCountD()) {
+	if (stickPikiNum >= BOSS_PROP.mFlickPikiCountCD()) {
+		if (mFlickDamageCount >= BOSS_PROP.mFlickDamageCountD()) {
 			return true;
 		}
 
-	} else if (stickPikiNum >= static_cast<BossProp*>(mProps)->mBossProps.mFlickPikiCountBC()) {
-		if (mFlickDamageCount >= static_cast<BossProp*>(mProps)->mBossProps.mFlickDamageCountC()) {
+	} else if (stickPikiNum >= BOSS_PROP.mFlickPikiCountBC()) {
+		if (mFlickDamageCount >= BOSS_PROP.mFlickDamageCountC()) {
 			return true;
 		}
 
-	} else if (stickPikiNum >= static_cast<BossProp*>(mProps)->mBossProps.mFlickPikiCountAB()) {
-		if (mFlickDamageCount >= static_cast<BossProp*>(mProps)->mBossProps.mFlickDamageCountB()) {
+	} else if (stickPikiNum >= BOSS_PROP.mFlickPikiCountAB()) {
+		if (mFlickDamageCount >= BOSS_PROP.mFlickDamageCountB()) {
 			return true;
 		}
 
-	} else if (mFlickDamageCount >= static_cast<BossProp*>(mProps)->mBossProps.mFlickDamageCountA()) {
+	} else if (mFlickDamageCount >= BOSS_PROP.mFlickDamageCountA()) {
 		return true;
 	}
 
@@ -535,8 +531,7 @@ bool Boss::insideAndInSearch()
 {
 	if (aiCullable()) {
 		Navi* navi = naviMgr->getNavi();
-		if (qdist2(mPosition.x, mPosition.z, navi->mPosition.x, navi->mPosition.z)
-		    < static_cast<BossProp*>(mProps)->mBossProps.mSearchRadius()) {
+		if (qdist2(mPosition.x, mPosition.z, navi->mPosition.x, navi->mPosition.z) < BOSS_PROP.mSearchRadius()) {
 			return true;
 		}
 	}
@@ -551,11 +546,10 @@ bool Boss::insideAndInSearch()
  */
 void Boss::recoveryLife()
 {
-	if (mCurrentLife > 0.0f && mCurrentLife < mMaxLife && static_cast<BossProp*>(mProps)->mBossProps.mLifeRecoveryRate() > 0.0f
-	    && static_cast<BossProp*>(mProps)->mBossProps.mLifeRecoveryTime() > 0.0f) {
+	if (mCurrentLife > 0.0f && mCurrentLife < mMaxLife && BOSS_PROP.mLifeRecoveryRate() > 0.0f && BOSS_PROP.mLifeRecoveryTime() > 0.0f) {
 		mLifeRecoveryTimer += gsys->getFrameTime();
-		if (mLifeRecoveryTimer > static_cast<BossProp*>(mProps)->mBossProps.mLifeRecoveryTime()) {
-			mCurrentLife += static_cast<BossProp*>(mProps)->mBossProps.mLifeRecoveryRate() * mMaxLife;
+		if (mLifeRecoveryTimer > BOSS_PROP.mLifeRecoveryTime()) {
+			mCurrentLife += BOSS_PROP.mLifeRecoveryRate() * mMaxLife;
 			if (mCurrentLife > mMaxLife) {
 				mCurrentLife = mMaxLife;
 			}
@@ -591,8 +585,8 @@ void Boss::updateBoss()
 void Boss::refreshViewCulling(Graphics& gfx)
 {
 	Vector3f point(mPosition);
-	point.y += static_cast<BossProp*>(mProps)->mBossProps.mRenderSphereHeight();
-	if (!gfx.mCamera->isPointVisible(point, static_cast<BossProp*>(mProps)->mBossProps.mRenderSphereRadius())) {
+	point.y += BOSS_PROP.mRenderSphereHeight();
+	if (!gfx.mCamera->isPointVisible(point, BOSS_PROP.mRenderSphereRadius())) {
 		enableAICulling();
 	} else {
 		disableAICulling();
@@ -614,8 +608,8 @@ void Boss::drawShape(Graphics&) { }
 void Boss::refresh2d(Graphics& gfx)
 {
 	mLifeGauge.mPosition = mPosition;
-	mLifeGauge.mPosition.y += static_cast<BossProp*>(mProps)->mBossProps.mLifeGaugeHeight();
-	mLifeGauge.mScale = static_cast<BossProp*>(mProps)->mBossProps.mLifeGaugeScale() / gfx.mCamera->mNear;
+	mLifeGauge.mPosition.y += BOSS_PROP.mLifeGaugeHeight();
+	mLifeGauge.mScale = BOSS_PROP.mLifeGaugeScale() / gfx.mCamera->mNear;
 	mLifeGauge.refresh(gfx);
 }
 
@@ -650,8 +644,8 @@ bool InteractAttack::actBoss(Boss* boss)
 			return true;
 
 		case 2:
-			boss->addFlickDamageCount(static_cast<BossProp*>(boss->mProps)->mBossProps._15C());
-			boss->addDamagePoint(mDamage * static_cast<BossProp*>(boss->mProps)->mBossProps._CC());
+			boss->addFlickDamageCount(C_BOSS_PROP(boss)._15C());
+			boss->addDamagePoint(mDamage * C_BOSS_PROP(boss)._CC());
 			return true;
 
 		default:
@@ -686,7 +680,7 @@ bool InteractFlick::actBoss(Boss* boss)
 bool InteractBomb::actBoss(Boss* boss)
 {
 	if (boss->getAlive() && !boss->getInvincible()) {
-		boss->addDamagePoint(static_cast<BossProp*>(boss->mProps)->mBossProps.mBombDamageMultiplier() * mDamage);
+		boss->addDamagePoint(C_BOSS_PROP(boss).mBombDamageMultiplier() * mDamage);
 		if (mCollPart) {
 			boss->bombDamageCounter(mCollPart);
 		}

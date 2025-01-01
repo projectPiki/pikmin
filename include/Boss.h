@@ -15,6 +15,9 @@ struct BirthInfo;
 struct BossMgr;
 struct GenObjectBoss;
 
+#define BOSS_PROP         (static_cast<BossProp*>(mProps)->mBossProps)
+#define C_BOSS_PROP(boss) (static_cast<BossProp*>((boss)->mProps)->mBossProps)
+
 /**
  * @brief TODO
  *

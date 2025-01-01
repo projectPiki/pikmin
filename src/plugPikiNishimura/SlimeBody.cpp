@@ -87,9 +87,9 @@ void SlimeBody::init(Slime* slime)
 void SlimeBody::traceCreaturePosition()
 {
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
-		_08[i].multiply(static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._394());
+		_08[i].multiply(C_SLIME_PROP(mSlime)._394());
 		Vector3f diff = mSlime->mSlimeCreatures[i]->mPosition - _0C[i];
-		diff.multiply(static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._3A4());
+		diff.multiply(C_SLIME_PROP(mSlime)._3A4());
 		_08[i].add(diff);
 		_0C[i].add(_08[i]);
 	}
@@ -119,7 +119,7 @@ void SlimeBody::makeInnerPosition()
 {
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
 		_10[i].sub(_0C[i], mSlime->mPosition);
-		_10[i].y += static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._334();
+		_10[i].y += C_SLIME_PROP(mSlime)._334();
 	}
 }
 
@@ -138,7 +138,7 @@ void SlimeBody::makeMaxRadius()
 		}
 	}
 
-	mMaxRadius += static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._364();
+	mMaxRadius += C_SLIME_PROP(mSlime)._364();
 }
 
 /*
@@ -186,13 +186,13 @@ void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, Vector3f*
 	Vector3f targetNormal(vertical->x, vertical->y, vertical->z);
 	f32 totalScore; // fun fact: declaring this here is load bearing for stack placement.
 	f32 creatureScores[4];
-	for (int i = 0; i < static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps.mMaxSortCount(); i++) {
+	for (int i = 0; i < C_SLIME_PROP(mSlime).mMaxSortCount(); i++) {
 		outVertex->x = (minNormal.x + targetNormal.x) / 2.0f;
 		outVertex->y = (minNormal.y + targetNormal.y) / 2.0f;
 		outVertex->z = (minNormal.z + targetNormal.z) / 2.0f;
 
 		totalScore = calcVertexScore(outVertex, creatureNormals, creatureScores);
-		if (totalScore > static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._384()) {
+		if (totalScore > C_SLIME_PROP(mSlime)._384()) {
 			targetNormal.set(*outVertex);
 		} else {
 			minNormal.set(*outVertex);
@@ -219,7 +219,7 @@ void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, Vector3f*
  */
 void SlimeBody::makeSlimeBody()
 {
-	Vector3f up(0.0f, static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._334(), 0.0f);
+	Vector3f up(0.0f, C_SLIME_PROP(mSlime)._334(), 0.0f);
 	for (int i = 0; i < mSlime->mShapeObject->mShape->mVertexCount; i++) {
 		sortPosition(&mSlime->mShapeObject->mShape->mVertexList[i], &mSlime->mShapeObject->mShape->mNormals[mNormalIndexes[i]], &up);
 	}

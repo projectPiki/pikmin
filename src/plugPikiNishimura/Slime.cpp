@@ -87,7 +87,7 @@ void Slime::init(Vector3f& pos)
 	_3CC = bossMgr->mSlimeCreatureCount - 1;
 	_3D0 = 0.0f;
 	_3D4 = 0.0f;
-	_3D8 = static_cast<SlimeProp*>(mProps)->mSlimeProps._354(); // body thickness?
+	_3D8 = SLIME_PROP._354(); // body thickness?
 	_3DC = pos;
 	_3E8 = pos;
 
@@ -217,8 +217,7 @@ void Slime::collisionCallback(CollEvent& event)
 				InteractBubble bubble(this, 200.0f);
 				event.mCollider->stimulate(bubble);
 			} else if (event.mCollider->mObjType == OBJTYPE_Navi) {
-				InteractFlick flick(this, static_cast<SlimeProp*>(mProps)->mBossProps.mFlickKnockback(),
-				                    static_cast<SlimeProp*>(mProps)->mBossProps.mFlickDamage(), -1000.0f);
+				InteractFlick flick(this, BOSS_PROP.mFlickKnockback(), BOSS_PROP.mFlickDamage(), -1000.0f);
 				event.mCollider->stimulate(flick);
 			}
 

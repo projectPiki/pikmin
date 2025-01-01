@@ -13,6 +13,9 @@ struct SnakeBody;
 struct SnakeGenBodyOnGroundCallBack;
 struct SnakeGenBodyRotateCallBack;
 
+#define SNAKE_PROP          (static_cast<SnakeProp*>(mProps)->mSnakeProps)
+#define C_SNAKE_PROP(snake) (static_cast<SnakeProp*>((snake)->mProps)->mSnakeProps)
+
 /**
  * @brief TODO.
  *

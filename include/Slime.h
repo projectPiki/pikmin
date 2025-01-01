@@ -12,6 +12,9 @@ struct SlimeBody;
 struct SlimeCreature;
 struct Slime;
 
+#define SLIME_PROP          (static_cast<SlimeProp*>(mProps)->mSlimeProps)
+#define C_SLIME_PROP(slime) (static_cast<SlimeProp*>((slime)->mProps)->mSlimeProps)
+
 /**
  * @brief TODO.
  */

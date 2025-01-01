@@ -11,6 +11,9 @@ struct PomAi;
 struct PomGenOpenStarCallBack;
 struct ShapeDynMaterials;
 
+#define POM_PROP        (static_cast<PomProp*>(mProps)->mPomProps)
+#define C_POM_PROP(pom) (static_cast<PomProp*>((pom)->mProps)->mPomProps)
+
 /**
  * @brief TODO.
  */

@@ -14,6 +14,24 @@ struct SpiderGenHalfDeadCallBackJoint;
 struct SpiderGenPerishCallBack;
 struct SpiderGenRippleCallBack;
 
+#define SPIDER_PROP           (static_cast<SpiderProp*>(mProps)->mSpiderProps)
+#define C_SPIDER_PROP(spider) (static_cast<SpiderProp*>((spider)->mProps)->mSpiderProps)
+
+/**
+ * @brief TODO.
+ */
+enum SpiderAIStateID {
+	SPIDERAI_Die        = 0,
+	SPIDERAI_WalkRandom = 1,
+	SPIDERAI_ChaseNavi  = 2,
+	SPIDERAI_ChasePiki  = 3,
+	SPIDERAI_WalkGoHome = 4,
+	SPIDERAI_ShakeOff   = 5,
+	SPIDERAI_Wait       = 6,
+	SPIDERAI_Start      = 7,
+	SPIDERAI_Appear     = 8,
+};
+
 /**
  * @brief TODO.
  *
@@ -64,80 +82,80 @@ struct SpiderProp : public BossProp, public CoreNode {
 		    , _414(this, 0.5f, 0.0f, 2.0f, "p73", "")
 		    , _424(this, 0.9f, 0.0f, 1.0f, "p74", "")
 		    , _434(this, 1.6f, 0.0f, 3.0f, "p75", "")
-		    , _444(this, 180.0f, 0.0f, 500.0f, "c00", "")
-		    , _454(this, 0.05f, 0.0f, 10.0f, "c01", "")
-		    , _464(this, 5.9f, 0.0f, 10.0f, "t00", "Dead Bomb Effect")
-		    , _474(this, 6.0f, 0.0f, 10.0f, "s00", "Dead Scale Start")
-		    , _484(this, 0.1f, 0.1f, 10.0f, "s01", "Dead Scale Timing")
-		    , _494(this, 0.1f, 0.1f, 10.0f, "s02", "Dead Scale Time")
+		    , mSpawnTriggerDist(this, 180.0f, 0.0f, 500.0f, "c00", "")
+		    , mDropTimer(this, 0.05f, 0.0f, 10.0f, "c01", "")
+		    , mDeadBombEffectDelay(this, 5.9f, 0.0f, 10.0f, "t00", "Dead Bomb Effect")
+		    , mDeadScaleStartDelay(this, 6.0f, 0.0f, 10.0f, "s00", "Dead Scale Start")
+		    , mDeadScaleStageDelay(this, 0.1f, 0.1f, 10.0f, "s01", "Dead Scale Timing")
+		    , mDeadMotionDelay(this, 0.1f, 0.1f, 10.0f, "s02", "Dead Scale Time")
 		    , _4A4(this, 100.0f, 0.0f, 500.0f, "s10", "Stick Heiht Modify")
 		    , _4B4(this, 100.0f, 0.0f, 500.0f, "s11", "Map Heiht Modify")
 		    , _4C4(this, 150.0f, 0.0f, 300.0f, "s30", "Target Centre")
 		    , _4D4(this, 0.5f, 0.0f, 1.0f, "s31", "Cent Leg Dist(Min)")
 		    , _4E4(this, 0.75f, 0.0f, 1.0f, "s32", "Cent Leg Dist(Max)")
-		    , _4F4(this, 1, 1, 10, "i00", "")
-		    , _504(this, 2, 1, 10, "i01", "")
-		    , _514(this, 2, 1, 10, "i02", "")
-		    , _524(this, 4, 1, 10, "i03", "")
-		    , _534(this, 1, 0, 1, "i10", "")
-		    , _544(this, 1, 0, 1, "i20", "Erase Shape")
+		    , mMinWaitCycles(this, 1, 1, 10, "i00", "")
+		    , mMaxWaitCycles(this, 2, 1, 10, "i01", "")
+		    , mMinWalkCycles(this, 2, 1, 10, "i02", "")
+		    , mMaxWalkCycles(this, 4, 1, 10, "i03", "")
+		    , mDoDropFromSky(this, 1, 0, 1, "i10", "")
+		    , mDoFinalKillEffects(this, 1, 0, 1, "i20", "Erase Shape")
 		{
 		}
 
 		// _200-_204 = Parameters
-		Parm<f32> _204; // _204
-		Parm<f32> _214; // _214
-		Parm<f32> _224; // _224
-		Parm<f32> _234; // _234
-		Parm<f32> _244; // _244
-		Parm<f32> _254; // _254
-		Parm<f32> _264; // _264
-		Parm<f32> _274; // _274
-		Parm<f32> _284; // _284
-		Parm<f32> _294; // _294
-		Parm<f32> _2A4; // _2A4
-		Parm<f32> _2B4; // _2B4
-		Parm<f32> _2C4; // _2C4
-		Parm<f32> _2D4; // _2D4
-		Parm<f32> _2E4; // _2E4
-		Parm<f32> _2F4; // _2F4
-		Parm<f32> _304; // _304
-		Parm<f32> _314; // _314
-		Parm<f32> _324; // _324
-		Parm<f32> _334; // _334
-		Parm<f32> _344; // _344
-		Parm<f32> _354; // _354
-		Parm<f32> _364; // _364
-		Parm<f32> _374; // _374
-		Parm<f32> _384; // _384
-		Parm<f32> _394; // _394
-		Parm<f32> _3A4; // _3A4
-		Parm<f32> _3B4; // _3B4
-		Parm<f32> _3C4; // _3C4
-		Parm<f32> _3D4; // _3D4
-		Parm<f32> _3E4; // _3E4
-		Parm<f32> _3F4; // _3F4
-		Parm<f32> _404; // _404
-		Parm<f32> _414; // _414
-		Parm<f32> _424; // _424
-		Parm<f32> _434; // _434
-		Parm<f32> _444; // _444
-		Parm<f32> _454; // _454
-		Parm<f32> _464; // _464
-		Parm<f32> _474; // _474
-		Parm<f32> _484; // _484
-		Parm<f32> _494; // _494
-		Parm<f32> _4A4; // _494
-		Parm<f32> _4B4; // _494
-		Parm<f32> _4C4; // _494
-		Parm<f32> _4D4; // _494
-		Parm<f32> _4E4; // _494
-		Parm<int> _4F4; // _4A4
-		Parm<int> _504; // _4B4
-		Parm<int> _514; // _4C4
-		Parm<int> _524; // _4D4
-		Parm<int> _534; // _4E4
-		Parm<int> _544; // _4F4
+		Parm<f32> _204;                 // _204, p10 - normal foot raising speed?
+		Parm<f32> _214;                 // _214, p11 - related to above?
+		Parm<f32> _224;                 // _224, p12 - lowest speed?
+		Parm<f32> _234;                 // _234, p13 - normal foot lowering speed?
+		Parm<f32> _244;                 // _244, p14 - related to above?
+		Parm<f32> _254;                 // _254, p15 - maximum speed?
+		Parm<f32> _264;                 // _264, p20 - normal foot raising height?
+		Parm<f32> _274;                 // _274, p21 - foot sink?
+		Parm<f32> _284;                 // _284, p22 - minimum altitude?
+		Parm<f32> _294;                 // _294, p23 - head dip factor (per pikmin)?
+		Parm<f32> _2A4;                 // _2A4, p24 - head dip limit?
+		Parm<f32> _2B4;                 // _2B4, p30 - stepping dist (min)?
+		Parm<f32> _2C4;                 // _2C4, p31 - stepping dist (max)?
+		Parm<f32> _2D4;                 // _2D4, p32 - feet spread radius (min)?
+		Parm<f32> _2E4;                 // _2E4, p33 - feet spread radius (max)?
+		Parm<f32> _2F4;                 // _2F4, p34 - body rotation angle (min)?
+		Parm<f32> _304;                 // _304, p35 - body rotation angle (max)?
+		Parm<f32> _314;                 // _314, p40 - min delay between stomps?
+		Parm<f32> _324;                 // _324, p50 - hitbox size of stomping feet?
+		Parm<f32> _334;                 // _334, p51 - damage to navi from stomp?
+		Parm<f32> _344;                 // _344, p52 - damage to piki from stomp?
+		Parm<f32> _354;                 // _354, p53 - step shake chance?
+		Parm<f32> _364;                 // _364, p54 - step shake knockback?
+		Parm<f32> _374;                 // _374, p55 - step shake damage?
+		Parm<f32> _384;                 // _384, p56 - vibration?
+		Parm<f32> _394;                 // _394, p57 - max vibration?
+		Parm<f32> _3A4;                 // _3A4, p60 - body spring?
+		Parm<f32> _3B4;                 // _3B4, p61 - spoke takeover value?
+		Parm<f32> _3C4;                 // _3C4, p62 - max body sway?
+		Parm<f32> _3D4;                 // _3D4, p63 - weight shift (on ground)?
+		Parm<f32> _3E4;                 // _3E4, p70 - 1:knee shaking speed?
+		Parm<f32> _3F4;                 // _3F4, p71 - 1:knee shaking time?
+		Parm<f32> _404;                 // _404, p72 - 1:knee shaking amount?
+		Parm<f32> _414;                 // _414, p73 - 2:spring of waist twist
+		Parm<f32> _424;                 // _424, p74 - 2:transfer value of spring
+		Parm<f32> _434;                 // _434, p75 - 2:waist rotation amount?
+		Parm<f32> mSpawnTriggerDist;    // _444, c00, radius to trigger boss to fall
+		Parm<f32> mDropTimer;           // _454, c01, time taken to fall from sky
+		Parm<f32> mDeadBombEffectDelay; // _464, t00 - dead bomb effect delay
+		Parm<f32> mDeadScaleStartDelay; // _474, s00 - base start delay
+		Parm<f32> mDeadScaleStageDelay; // _484, s01 - creates "stages" of start, start + stage, start + 2*stage, etc.
+		Parm<f32> mDeadMotionDelay;     // _494, s02 - extra delay time after above to do death anim/code kill
+		Parm<f32> _4A4;                 // _4A4, s10 - stick height modify?
+		Parm<f32> _4B4;                 // _4B4, s11 - map height modify?
+		Parm<f32> _4C4;                 // _4C4, s30 - target centre?
+		Parm<f32> _4D4;                 // _4D4, s31 - cent leg dist (min)?
+		Parm<f32> _4E4;                 // _4E4, s32 - cent leg dist (max)?
+		Parm<int> mMinWaitCycles;       // _4F4, i00 - num wait cycles (min)?
+		Parm<int> mMaxWaitCycles;       // _504, i01 - num wait cycles (max)?
+		Parm<int> mMinWalkCycles;       // _514, i02 - num walks (min)?
+		Parm<int> mMaxWalkCycles;       // _524, i03 - num walks (max)?
+		Parm<BOOL> mDoDropFromSky;      // _534, i10 - installation location (0:place 1:sky)?
+		Parm<BOOL> mDoFinalKillEffects; // _544, i20 - if this is false, beady just. never fully dies.
 	};
 
 	SpiderProp();
@@ -185,11 +203,11 @@ struct Spider : public Boss {
 	u8 _3B9;                     // _3B9
 	u8 _3BA;                     // _3BA
 	u8 _3BB;                     // _3BB
-	u32 _3BC;                    // _3BC, unknown
+	int _3BC;                    // _3BC
 	SpiderAi* mSpiderAi;         // _3C0
 	SpiderLeg* mSpiderLeg;       // _3C4
-	u8 _3C8;                     // _3C8
-	u8 _3C9;                     // _3C9
+	bool mIsAppear;              // _3C8
+	bool mHasShadow;             // _3C9
 	ShadowCaster mShadowCaster;  // _3CC
 	SpiderDrawer* mSpiderDrawer; // _760
 };
@@ -258,7 +276,11 @@ struct SpiderLeg {
 	void checkMotionFinished();
 
 	Spider* mSpider;                                         // _00
-	u8 _04[0xFC - 0x4];                                      // _04, unknown
+	u8 _04;                                                  // _04
+	u8 _05;                                                  // _05
+	u8 _06;                                                  // _06
+	u8 _07;                                                  // _07
+	u8 _08[0xFC - 0x8];                                      // _08, unknown
 	Vector3f _FC[4];                                         // _FC
 	Vector3f _12C[12];                                       // _12C
 	Vector3f _1BC[12];                                       // _1BC
@@ -305,7 +327,7 @@ struct SpiderAi : public PaniAnimKeyListener {
 	void keyLoopEnd();
 	void keyFinished();
 	void playSound(int);
-	void appearTransit();
+	bool appearTransit();
 	void dieState();
 	void update();
 
@@ -317,14 +339,14 @@ struct SpiderAi : public PaniAnimKeyListener {
 	void checkHalfDead();
 	void resultFlagOn();
 	void resultFlagSeen();
-	void dieTransit();
-	void isMotionFinishTransit();
-	void outSideChaseRangeTransit();
-	void inSideWaitRangeTransit();
-	void chaseNaviTransit();
-	void chasePikiTransit();
-	void shakeOffTransit();
-	void targetLostTransit();
+	bool dieTransit();
+	bool isMotionFinishTransit();
+	bool outSideChaseRangeTransit();
+	bool inSideWaitRangeTransit();
+	bool chaseNaviTransit();
+	bool chasePikiTransit();
+	bool shakeOffTransit();
+	bool targetLostTransit();
 	void initDie(int);
 	void initWalk(int);
 	void initShakeOff(int);
@@ -341,7 +363,7 @@ struct SpiderAi : public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	Spider* mSpider; // _04
-	u8 _08;          // _08
+	bool _08;        // _08
 };
 
 /**

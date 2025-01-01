@@ -70,17 +70,17 @@ void GameStat::init()
  */
 void GameStat::update()
 {
-	for (int i = 0; i < 3; i++) {
-		mapPikis.set(i, formationPikis(i) + freePikis(i) + mePikis(i) + workPikis(i));
+	for (int i = PikiMinColor; i < PikiColorCount; i++) {
+		mapPikis.set(i, formationPikis[i] + freePikis[i] + mePikis[i] + workPikis[i]);
 	}
 
-	for (int i = 0; i < 3; i++) {
-		allPikis.set(i, mapPikis(i) + containerPikis(i));
+	for (int i = PikiMinColor; i < PikiColorCount; i++) {
+		allPikis.set(i, mapPikis[i] + containerPikis[i]);
 	}
 
-	int total = allPikis.getTotal();
+	int total = allPikis;
 	if (total > maxPikis) {
-		maxPikis = allPikis.getTotal();
+		maxPikis = allPikis;
 	}
 }
 
@@ -98,7 +98,7 @@ void GameStat::Counter::dump(char* name) { PRINT("<%s> %d\n", name, mCount); }
  */
 void GameStat::ColCounter::dump(char* name)
 {
-	PRINT("<%s> %d (%d + %d + %d)\n", name, mCounts[2] + mCounts[1] + mCounts[0], mCounts[0], mCounts[1], mCounts[2]);
+	PRINT("<%s> %d (%d + %d + %d)\n", name, int(mCounts), mCounts[Blue], mCounts[Red], mCounts[Yellow]);
 }
 
 /*

@@ -10,6 +10,9 @@
 struct KoganeAi;
 struct KoganeGenRippleCallBack;
 
+#define KOGANE_PROP           (static_cast<KoganeProp*>(mProps)->mKoganeProps)
+#define C_KOGANE_PROP(kogane) (static_cast<KoganeProp*>((kogane)->mProps)->mKoganeProps)
+
 /**
  * @brief TODO.
  */

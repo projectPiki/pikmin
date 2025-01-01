@@ -69,7 +69,7 @@ void Spider::init(Vector3f&)
 	_3BC       = 0;
 	mSpiderAi->initAI(this);
 	mSpiderLeg->init(this);
-	_3C9                            = 0;
+	mHasShadow                      = false;
 	mShadowCaster.mLightCamera.mFov = 35.0f;
 	mCollInfo->makeTubesChild('leg1', 3);
 	mCollInfo->makeTubesChild('leg2', 3);

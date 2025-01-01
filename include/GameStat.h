@@ -2,6 +2,7 @@
 #define _GAMESTAT_H
 
 #include "types.h"
+#include "Piki.h"
 
 /**
  * @brief TODO
@@ -12,9 +13,13 @@ struct GameStat {
 	 * @brief TODO
 	 */
 	struct Counter {
-		inline Counter() { mCount = 0; }
+		Counter() { mCount = 0; }
 
-		inline void init() { mCount = 0; }
+		void init() { mCount = 0; }
+
+		void inc() { mCount++; }
+
+		operator int() { return mCount; }
 
 		// unused/inlined:
 		void dump(char*);
@@ -26,20 +31,22 @@ struct GameStat {
 	 * @brief TODO
 	 */
 	struct ColCounter {
-		inline ColCounter() { mCounts[0] = mCounts[1] = mCounts[2] = 0; }
+		ColCounter() { mCounts[Blue] = mCounts[Red] = mCounts[Yellow] = 0; }
 
-		inline void init() { mCounts[0] = mCounts[1] = mCounts[2] = 0; }
+		void init() { mCounts[Blue] = mCounts[Red] = mCounts[Yellow] = 0; }
 
-		inline int& operator()(int idx) { return mCounts[idx]; }
+		operator int() { return mCounts[Blue] + mCounts[Red] + mCounts[Yellow]; }
+		int operator[](int color) { return mCounts[color]; }
 
-		inline int getTotal() { return mCounts[0] + mCounts[1] + mCounts[2]; }
-
-		inline void set(int idx, int val) { mCounts[idx] = val; }
+		void set(int color, int val) { mCounts[color] = val; }
+		void add(int color, int amt) { mCounts[color] += amt; }
+		void dec(int color) { mCounts[color]--; }
+		void inc(int color) { mCounts[color]++; }
 
 		// unused/inlined:
 		void dump(char*);
 
-		int mCounts[3]; // _00, indexed by piki color, probably
+		int mCounts[PikiColorCount]; // _00, indexed by piki color
 	};
 
 	void init();

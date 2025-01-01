@@ -810,8 +810,7 @@ void BossMgr::update()
 			next = static_cast<BossNode*>(node->mNext);
 
 			node->mBoss->updateBoss();
-			if (static_cast<BossProp*>(node->mBoss->mProps)->mBossProps._1DC() == 0 || !node->mBoss->mGrid.aiCulling()
-			    || node->mBoss->aiCullable()) {
+			if (C_BOSS_PROP(node->mBoss)._1DC() == 0 || !node->mBoss->mGrid.aiCulling() || node->mBoss->aiCullable()) {
 				node->mBoss->update();
 			}
 
@@ -844,8 +843,7 @@ void BossMgr::refresh(Graphics& gfx)
 		FOREACH_NODE(BossNode, mActiveNodes[i].mChild, node)
 		{
 			node->mBoss->refreshViewCulling(gfx);
-			if (static_cast<BossProp*>(node->mBoss->mProps)->mBossProps._1DC() == 0 || !node->mBoss->mGrid.aiCulling()
-			    || node->mBoss->aiCullable()) {
+			if (C_BOSS_PROP(node->mBoss)._1DC() == 0 || !node->mBoss->mGrid.aiCulling() || node->mBoss->aiCullable()) {
 				node->mBoss->refresh(gfx);
 			}
 

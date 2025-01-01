@@ -112,6 +112,9 @@ struct ItemMgr : public PolyObjectMgr {
 	void showInfo();
 	void getUfoShape();
 
+	MeltingPotMgr* getMeltingPotMgr() { return mMeltingPotMgr; }
+	PikiHeadMgr* getPikiHeadMgr() { return mPikiHeadMgr; }
+
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_4C = PolyObjectMgr

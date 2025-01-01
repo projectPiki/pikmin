@@ -115,7 +115,7 @@ void MizuAi::setEveryFrame()
 void MizuAi::naviGeyzerJump()
 {
 	Vector3f dir(sinf(mMizu->mDirection), 0.0f, cosf(mMizu->mDirection));
-	dir.multiply(static_cast<BossProp*>(mMizu->mProps)->mBossProps.mTerritoryRadius());
+	dir.multiply(C_BOSS_PROP(mMizu).mTerritoryRadius());
 	Vector3f targetPos = mMizu->mPosition + dir;
 	targetPos.y        = mapMgr->getMinY(targetPos.x, targetPos.z, true);
 
@@ -128,10 +128,7 @@ void MizuAi::naviGeyzerJump()
  * Address:	........
  * Size:	000028
  */
-bool MizuAi::readyTransit()
-{
-	return (mMizu->getFlickDamageCount() >= static_cast<BossProp*>(mMizu->mProps)->mBossProps.mFlickDamageCountD()) ? true : false;
-}
+bool MizuAi::readyTransit() { return (mMizu->getFlickDamageCount() >= C_BOSS_PROP(mMizu).mFlickDamageCountD()) ? true : false; }
 
 /*
  * --INFO--

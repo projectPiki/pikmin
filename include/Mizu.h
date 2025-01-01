@@ -10,13 +10,13 @@ struct MizuAi;
 
 /**
  * @brief TODO.
+ *
+ * @note Size: 0x204.
  */
 struct MizuProp : public BossProp, public CoreNode {
 
 	/**
-	 * @brief TODO.
-	 *
-	 * @note Offset comments are relative to MizuProp for ease of use.
+	 * @brief Mizu genuinely doesn't have any specific properties, but still needs this. Go figure.
 	 */
 	struct MizuProperties : public Parameters {
 		inline MizuProperties() // TODO

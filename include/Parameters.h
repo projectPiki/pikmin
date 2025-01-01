@@ -75,6 +75,7 @@ struct Parm : public BaseParm {
 	virtual void read(RandomAccessStream&);         // _10
 
 	inline T& operator()() { return mValue; }
+	inline void operator()(f32 val) { mValue = val; }
 
 	inline void setValue(T val) { mValue = val; }
 

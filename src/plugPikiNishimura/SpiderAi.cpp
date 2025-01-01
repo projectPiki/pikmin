@@ -1,4 +1,15 @@
 #include "Spider.h"
+#include "RumbleMgr.h"
+#include "Pcam/CameraManager.h"
+#include "SoundMgr.h"
+#include "ItemMgr.h"
+#include "NaviMgr.h"
+#include "PikiMgr.h"
+#include "PikiHeadItem.h"
+#include "GameStat.h"
+#include "EffectMgr.h"
+#include "PlayerState.h"
+#include "NsMath.h"
 #include "DebugLog.h"
 
 static u32 spiderSE[] = { 0x29, 0x2A, 0x2B, 0x2C, 0x2D };
@@ -29,57 +40,22 @@ SpiderAi::SpiderAi(Spider* spider) { mSpider = spider; }
  * Address:	80153860
  * Size:	0000A8
  */
-void SpiderAi::initAI(Spider*)
+void SpiderAi::initAI(Spider* spider)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x7
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r3
-	  addi      r5, r31, 0
-	  stw       r4, 0x4(r3)
-	  li        r4, 0x3
-	  lwz       r6, 0x4(r3)
-	  addi      r3, r1, 0x34
-	  stw       r0, 0x2E4(r6)
-	  lwz       r6, 0x4(r31)
-	  stw       r0, 0x2E8(r6)
-	  bl        -0x3490C
-	  lwz       r5, 0x4(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x346E8
-	  li        r4, 0
-	  stb       r4, 0x8(r31)
-	  lwz       r5, 0x4(r31)
-	  lwz       r3, 0x224(r5)
-	  lwz       r0, 0x540(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x70
-	  stb       r4, 0x3C8(r5)
-	  b         .loc_0x94
-
-	.loc_0x70:
-	  li        r0, 0x1
-	  stb       r0, 0x3C8(r5)
-	  lwz       r4, 0x4(r31)
-	  lwz       r3, 0x224(r4)
-	  lfs       f0, 0x460(r3)
-	  stfs      f0, 0x2D8(r4)
-	  lfs       f0, -0x56E0(r2)
-	  lwz       r3, 0x4(r31)
-	  stfs      f0, 0x368(r3)
-
-	.loc_0x94:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	mSpider = spider;
+	mSpider->setCurrentState(7);
+	mSpider->setNextState(7);
+	mSpider->mAnimator.startMotion(PaniMotionInfo(3, this));
+	_08 = false;
+	if (C_SPIDER_PROP(mSpider).mDoDropFromSky()) {
+		// drop from sky, so don't fall yet
+		mSpider->mIsAppear = false;
+	} else {
+		// start in place, so mark as fallen
+		mSpider->mIsAppear = true;
+		mSpider->setAnimTimer(C_SPIDER_PROP(mSpider).mDropTimer());
+		mSpider->mAnimator.setCurrentFrame(20.0f);
+	}
 }
 
 /*
@@ -87,58 +63,25 @@ void SpiderAi::initAI(Spider*)
  * Address:	80153908
  * Size:	00007C
  */
-void SpiderAi::animationKeyUpdated(PaniAnimKeyEvent&)
+void SpiderAi::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x2C
-	  cmpwi     r0, 0
-	  beq-      .loc_0x5C
-	  bge-      .loc_0x44
-	  b         .loc_0x6C
-
-	.loc_0x2C:
-	  cmpwi     r0, 0x7
-	  beq-      .loc_0x64
-	  bge-      .loc_0x6C
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x54
-	  b         .loc_0x6C
-
-	.loc_0x44:
-	  bl        .loc_0x7C
-	  b         .loc_0x6C
-
-	.loc_0x4C:
-	  bl        0xD8
-	  b         .loc_0x6C
-
-	.loc_0x54:
-	  bl        0xF0
-	  b         .loc_0x6C
-
-	.loc_0x5C:
-	  bl        0xFC
-	  b         .loc_0x6C
-
-	.loc_0x64:
-	  lwz       r4, 0x4(r4)
-	  bl        0x100
-
-	.loc_0x6C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x7C:
-	*/
+	switch (event.mEventType) {
+	case KEY_Action0:
+		keyAction0();
+		break;
+	case KEY_Action1:
+		keyAction1();
+		break;
+	case KEY_LoopEnd:
+		keyLoopEnd();
+		break;
+	case KEY_Finished:
+		keyFinished();
+		break;
+	case KEY_PlaySound:
+		playSound(event.mValue);
+		break;
+	}
 }
 
 /*
@@ -148,55 +91,19 @@ void SpiderAi::animationKeyUpdated(PaniAnimKeyEvent&)
  */
 void SpiderAi::keyAction0()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x4(r3)
-	  lwz       r0, 0x2E4(r4)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x64
-	  li        r0, 0
-	  stb       r0, 0x2B8(r4)
-	  lis       r3, 0x7461
-	  addi      r4, r3, 0x6D61
-	  lwz       r3, 0x4(r31)
-	  lwz       r3, 0x220(r3)
-	  bl        -0xCA2B0
-	  lfs       f0, -0x56DC(r2)
-	  addi      r4, r3, 0x4
-	  lwz       r6, 0x58(r3)
-	  li        r5, 0x1
-	  stfs      f0, 0x40(r6)
-	  lwz       r3, 0x4(r31)
-	  lfs       f1, -0x56D8(r2)
-	  bl        -0x58D0
-	  b         .loc_0x94
+	int currState = mSpider->getCurrentState();
+	if (currState == 0) {
+		mSpider->setIsAlive(false);
+		CollPart* body           = mSpider->mCollInfo->getSphere('tama');
+		body->mCollInfo->mRadius = 0.0f;
+		mSpider->createPellet(body->mCentre, 200.0f, true);
+		return;
+	}
 
-	.loc_0x64:
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x94
-	  lwz       r3, 0x3178(r13)
-	  addi      r6, r4, 0x94
-	  li        r4, 0x5
-	  li        r5, 0
-	  bl        0x293D4
-	  lwz       r5, 0x4(r31)
-	  li        r4, 0x2
-	  lwz       r3, 0x30D8(r13)
-	  addi      r5, r5, 0x94
-	  bl        -0x2FA3C
-
-	.loc_0x94:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (currState == 8) {
+		rumbleMgr->start(5, 0, mSpider->mPosition);
+		cameraMgr->startVibrationEvent(2, mSpider->mPosition);
+	}
 }
 
 /*
@@ -206,17 +113,9 @@ void SpiderAi::keyAction0()
  */
 void SpiderAi::keyAction1()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x4(r3)
-	  lwz       r0, 0x2E4(r3)
-	  cmpwi     r0, 0x8
-	  bnelr-
-	  lwz       r3, 0x3C4(r3)
-	  li        r0, 0
-	  stb       r0, 0x5(r3)
-	  blr
-	*/
+	if (mSpider->getCurrentState() == 8) {
+		mSpider->mSpiderLeg->_05 = 0;
+	}
 }
 
 /*
@@ -224,83 +123,39 @@ void SpiderAi::keyAction1()
  * Address:	........
  * Size:	000004
  */
-void SpiderAi::keyAction2()
-{
-	// UNUSED FUNCTION
-}
+void SpiderAi::keyAction2() { }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void SpiderAi::keyAction3()
-{
-	// UNUSED FUNCTION
-}
+void SpiderAi::keyAction3() { }
 
 /*
  * --INFO--
  * Address:	80153A4C
  * Size:	000014
  */
-void SpiderAi::keyLoopEnd()
-{
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x4(r3)
-	  lwz       r3, 0x2EC(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2EC(r4)
-	  blr
-	*/
-}
+void SpiderAi::keyLoopEnd() { mSpider->addLoopCounter(1); }
 
 /*
  * --INFO--
  * Address:	80153A60
  * Size:	000010
  */
-void SpiderAi::keyFinished()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x4(r3)
-	  li        r0, 0x1
-	  stb       r0, 0x2BD(r3)
-	  blr
-	*/
-}
+void SpiderAi::keyFinished() { mSpider->setMotionFinish(true); }
 
 /*
  * --INFO--
  * Address:	80153A70
  * Size:	000044
  */
-void SpiderAi::playSound(int)
+void SpiderAi::playSound(int spiderSoundID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  lis       r5, 0x802D
-	  rlwinm    r4,r4,2,0,29
-	  subi      r0, r5, 0xB68
-	  add       r4, r0, r4
-	  lwz       r4, 0x0(r4)
-	  bl        -0xAFCD0
-
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mSpider->mSeContext) {
+		mSpider->mSeContext->playSound(spiderSE[spiderSoundID]);
+	}
 }
 
 /*
@@ -310,7 +165,12 @@ void SpiderAi::playSound(int)
  */
 void SpiderAi::setEveryFrame()
 {
-	// UNUSED FUNCTION
+	if (mSpider->getDamagePoint() > 0.0f) {
+		mSpider->calcBossDamage();
+	}
+
+	checkFlickPiki();
+	checkHalfDead();
 }
 
 /*
@@ -320,7 +180,13 @@ void SpiderAi::setEveryFrame()
  */
 void SpiderAi::checkFlickPiki()
 {
-	// UNUSED FUNCTION
+	if (!_08 && mSpider->getAlive()) {
+		_08 = mSpider->flickPikiTransit();
+	}
+
+	if (_08) {
+		mSpider->addLoopCounter(1);
+	}
 }
 
 /*
@@ -330,7 +196,14 @@ void SpiderAi::checkFlickPiki()
  */
 void SpiderAi::checkHalfDead()
 {
-	// UNUSED FUNCTION
+	if (mSpider->getCurrentLife() < 0.35f * mSpider->getMaxLife()) {
+		if (!mSpider->_3BA) {
+			mSpider->_3BA = 1;
+			mSpider->mSpiderLeg->createHalfDeadEffect();
+		}
+	} else {
+		mSpider->_3BA = 0;
+	}
 }
 
 /*
@@ -340,7 +213,9 @@ void SpiderAi::checkHalfDead()
  */
 void SpiderAi::resultFlagOn()
 {
-	// UNUSED FUNCTION
+	if (mSpider->insideAndInSearch()) {
+		playerState->mResultFlags.setOn(RESFLAG_Unk46);
+	}
 }
 
 /*
@@ -348,330 +223,128 @@ void SpiderAi::resultFlagOn()
  * Address:	........
  * Size:	00002C
  */
-void SpiderAi::resultFlagSeen()
-{
-	// UNUSED FUNCTION
-}
+void SpiderAi::resultFlagSeen() { playerState->mResultFlags.setSeen(RESFLAG_Unk46); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::dieTransit()
-{
-	// UNUSED FUNCTION
-}
+bool SpiderAi::dieTransit() { return !mSpider->getAlive(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-void SpiderAi::isMotionFinishTransit()
-{
-	// UNUSED FUNCTION
-}
+bool SpiderAi::isMotionFinishTransit() { return mSpider->getMotionFinish(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::outSideChaseRangeTransit()
-{
-	// UNUSED FUNCTION
-}
+bool SpiderAi::outSideChaseRangeTransit() { return mSpider->outSideChaseRangeTransit(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::inSideWaitRangeTransit()
-{
-	// UNUSED FUNCTION
-}
+bool SpiderAi::inSideWaitRangeTransit() { return mSpider->inSideWaitRangeTransit(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::chaseNaviTransit()
-{
-	// UNUSED FUNCTION
-}
+bool SpiderAi::chaseNaviTransit() { return mSpider->chaseNaviTransit(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::chasePikiTransit()
-{
-	// UNUSED FUNCTION
-}
+bool SpiderAi::chasePikiTransit() { return mSpider->chasePikiTransit(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00002C
  */
-void SpiderAi::shakeOffTransit()
-{
-	// UNUSED FUNCTION
-}
+bool SpiderAi::shakeOffTransit() { return mSpider->getMotionFinish() && _08; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::targetLostTransit()
-{
-	// UNUSED FUNCTION
-}
+bool SpiderAi::targetLostTransit() { return mSpider->targetLostTransit(); }
 
 /*
  * --INFO--
  * Address:	80153AB4
  * Size:	0002FC
  */
-void SpiderAi::appearTransit()
+bool SpiderAi::appearTransit()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB8(r1)
-	  stmw      r26, 0xA0(r1)
-	  mr        r28, r3
-	  lwz       r3, 0x4(r3)
-	  lbz       r0, 0x3C8(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x2A0
-	  lwz       r31, 0x3120(r13)
-	  addi      r29, r3, 0x300
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x244
+	// if beady hasn't appeared yet, see if we should trigger him
+	if (!mSpider->mIsAppear) {
 
-	.loc_0x48:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x6C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x84
+		// grab his spawn position
+		Vector3f* initPos = mSpider->getInitPosition();
 
-	.loc_0x6C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
+		// loop through all captains on the field (just 1 in reality)
+		Iterator iterNavi(naviMgr);
+		CI_LOOP(iterNavi)
+		{
+			Creature* navi = *iterNavi;
 
-	.loc_0x84:
-	  mr        r26, r3
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x228
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x228
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x228
-	  lfs       f1, 0x0(r29)
-	  lfs       f2, 0x8(r29)
-	  lfs       f3, 0x94(r26)
-	  lfs       f4, 0x9C(r26)
-	  bl        -0x11B574
-	  lwz       r4, 0x4(r28)
-	  lwz       r3, 0x224(r4)
-	  lfs       f0, 0x450(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x228
-	  li        r0, 0x1
-	  stb       r0, 0x3C8(r4)
-	  lwz       r3, 0x4(r28)
-	  stb       r0, 0x3B8(r3)
-	  lwz       r3, 0x30AC(r13)
-	  lwz       r27, 0x64(r3)
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r26, r3
-	  b         .loc_0x1C8
+			// if navi is alive, visible, not buried, and
+			// within the trigger radius (only 2D, and roughly),
+			// make beady drop + start the music
+			if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
+			    && qdist2(initPos->x, initPos->z, navi->mPosition.x, navi->mPosition.z) < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
+				mSpider->mIsAppear  = true;
+				mSpider->mIsBossBgm = true;
 
-	.loc_0x134:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x158
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x170
+				// check if we should get the easy-mode long fall timer
+				Iterator iterPikiHead(itemMgr->getPikiHeadMgr());
+				CI_LOOP(iterPikiHead)
+				{
+					// ARE YOU KIDDING ME - IT WAS A TYPO ALL ALONG
+					// THIS SHOULD BE *iterPikiHead BUT NO, THEY USED THE WRONG ITERATOR
+					// THIS LOOP ONLY RUNS AT ALL IF THERE'S A NON-NULL PIKIHEAD INDEX
+					// SO YOU NEED A SPROUT.
+					// BUT THE DISTANCE CHECK IS AGAINST THE CAPTAIN BY MISTAKE
+					Creature* sproutButActuallyNavi = *iterNavi; // TYPO.
 
-	.loc_0x158:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
+					// if sprout (!!NAVI!!) is within trigger radius, make beady fall slower.
+					// because of the typo, if this loop runs, this is always true.
+					if (sproutButActuallyNavi
+					    && qdist2(initPos->x, initPos->z, sproutButActuallyNavi->mPosition.x, sproutButActuallyNavi->mPosition.z)
+					           < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
+						// change fall time from 0.05s to 5s
+						C_SPIDER_PROP(mSpider).mDropTimer() = 5.0f;
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
 
-	.loc_0x170:
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1AC
-	  lfs       f1, 0x0(r29)
-	  lfs       f2, 0x8(r29)
-	  lfs       f3, 0x94(r3)
-	  lfs       f4, 0x9C(r3)
-	  bl        -0x11B614
-	  lwz       r3, 0x4(r28)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x450(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x1AC
-	  lfs       f0, -0x56D0(r2)
-	  stfs      f0, 0x460(r3)
-	  b         .loc_0x2A0
+	// if we're falling, inc the anim timer
+	if (mSpider->mIsAppear) {
+		mSpider->addAnimTimer(gsys->getFrameTime());
 
-	.loc_0x1AC:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r26
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r26, r3
+		// if we've fallen for the allocated time (fast or slow), say we're on the ground
+		if (mSpider->getAnimTimer() > C_SPIDER_PROP(mSpider).mDropTimer()) {
+			return true;
+		}
+	}
 
-	.loc_0x1C8:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r26
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1F0
-	  li        r0, 0x1
-	  b         .loc_0x21C
-
-	.loc_0x1F0:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r26
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x218
-	  li        r0, 0x1
-	  b         .loc_0x21C
-
-	.loc_0x218:
-	  li        r0, 0
-
-	.loc_0x21C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x134
-	  b         .loc_0x2A0
-
-	.loc_0x228:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x244:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x26C
-	  li        r0, 0x1
-	  b         .loc_0x298
-
-	.loc_0x26C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x294
-	  li        r0, 0x1
-	  b         .loc_0x298
-
-	.loc_0x294:
-	  li        r0, 0
-
-	.loc_0x298:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x48
-
-	.loc_0x2A0:
-	  lwz       r4, 0x4(r28)
-	  lbz       r0, 0x3C8(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2E4
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x2D8(r4)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x2D8(r4)
-	  lwz       r4, 0x4(r28)
-	  lwz       r3, 0x224(r4)
-	  lfs       f1, 0x2D8(r4)
-	  lfs       f0, 0x460(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x2E4
-	  li        r3, 0x1
-	  b         .loc_0x2E8
-
-	.loc_0x2E4:
-	  li        r3, 0
-
-	.loc_0x2E8:
-	  lmw       r26, 0xA0(r1)
-	  lwz       r0, 0xBC(r1)
-	  addi      r1, r1, 0xB8
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -679,9 +352,15 @@ void SpiderAi::appearTransit()
  * Address:	........
  * Size:	000098
  */
-void SpiderAi::initDie(int)
+void SpiderAi::initDie(int nextState)
 {
-	// UNUSED FUNCTION
+	mSpider->setNextState(nextState);
+	mSpider->setMotionFinish(true);
+	mSpider->setTargetCreature(nullptr);
+	mSpider->mAnimator.startMotion(PaniMotionInfo(0, this));
+	mSpider->set2D4(0.0f);
+	mSpider->mSpiderLeg->_07 = 1;
+	resultFlagSeen();
 }
 
 /*
@@ -689,9 +368,19 @@ void SpiderAi::initDie(int)
  * Address:	........
  * Size:	000110
  */
-void SpiderAi::initWalk(int)
+void SpiderAi::initWalk(int nextState)
 {
-	// UNUSED FUNCTION
+	mSpider->setNextState(nextState);
+	if (mSpider->getMotionFinish()) {
+		mSpider->setMotionFinish(false);
+		mSpider->setTargetCreature(nullptr);
+		mSpider->_3BC
+		    = C_SPIDER_PROP(mSpider).mMinWalkCycles()
+		    + NsMathI::getRand(NsLibMath<int>::abs(C_SPIDER_PROP(mSpider).mMaxWalkCycles() - C_SPIDER_PROP(mSpider).mMinWalkCycles()) + 1)
+		    - 1;
+		mSpider->mSpiderLeg->initParm(0);
+		mSpider->setLoopCounter(0);
+	}
 }
 
 /*
@@ -699,9 +388,14 @@ void SpiderAi::initWalk(int)
  * Address:	........
  * Size:	0000C8
  */
-void SpiderAi::initShakeOff(int)
+void SpiderAi::initShakeOff(int nextState)
 {
-	// UNUSED FUNCTION
+	mSpider->setNextState(nextState);
+	mSpider->setMotionFinish(false);
+	mSpider->setTargetCreature(nullptr);
+	mSpider->mSpiderLeg->initParm(NsMathI::getRand(2) + 1);
+	mSpider->setLoopCounter(0);
+	resultFlagOn();
 }
 
 /*
@@ -709,9 +403,16 @@ void SpiderAi::initShakeOff(int)
  * Address:	........
  * Size:	0000C0
  */
-void SpiderAi::initAppear(int)
+void SpiderAi::initAppear(int nextState)
 {
-	// UNUSED FUNCTION
+	mSpider->setNextState(nextState);
+	mSpider->setMotionFinish(false);
+	mSpider->mIsBossBgm = true;
+	mSpider->setInvincible(false);
+	mSpider->setIsOrganic(true);
+	mSpider->setAnimTimer(30.0f);
+	mSpider->mRotation.y += NsMathF::getRand(PI) - HALF_PI;
+	mSpider->mDirection = mSpider->mRotation.y;
 }
 
 /*
@@ -719,9 +420,16 @@ void SpiderAi::initAppear(int)
  * Address:	........
  * Size:	000114
  */
-void SpiderAi::initWait(int)
+void SpiderAi::initWait(int nextState)
 {
-	// UNUSED FUNCTION
+	mSpider->setNextState(nextState);
+	mSpider->_3BC
+	    = C_SPIDER_PROP(mSpider).mMinWaitCycles()
+	    + NsMathI::getRand(NsLibMath<int>::abs(C_SPIDER_PROP(mSpider).mMaxWaitCycles() - C_SPIDER_PROP(mSpider).mMinWaitCycles()) + 1) - 1;
+	mSpider->setLoopCounter(0);
+	mSpider->setMotionFinish(false);
+	mSpider->setTargetCreature(nullptr);
+	mSpider->mAnimator.startMotion(PaniMotionInfo(2, this));
 }
 
 /*
@@ -731,175 +439,46 @@ void SpiderAi::initWait(int)
  */
 void SpiderAi::dieState()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA8(r1)
-	  stfd      f31, 0xA0(r1)
-	  stw       r31, 0x9C(r1)
-	  addi      r31, r1, 0x78
-	  stw       r30, 0x98(r1)
-	  mr        r30, r3
-	  stw       r29, 0x94(r1)
-	  lwz       r3, 0x4(r3)
-	  lfs       f1, -0x56DC(r2)
-	  lwz       r4, 0x224(r3)
-	  lfs       f31, 0x2D4(r3)
-	  lfs       f0, 0x490(r4)
-	  lfs       f2, 0x480(r4)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x78(r1)
-	  lwz       r3, 0x4(r30)
-	  lfs       f3, -0x56CC(r2)
-	  lwz       r3, 0x224(r3)
-	  lfs       f2, -0x56A8(r2)
-	  lfs       f0, 0x490(r3)
-	  lfs       f4, 0x480(r3)
-	  fmuls     f0, f3, f0
-	  lfs       f1, -0x56A4(r2)
-	  fadds     f0, f4, f0
-	  stfs      f0, 0x7C(r1)
-	  lwz       r3, 0x4(r30)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x490(r3)
-	  lfs       f3, 0x480(r3)
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x80(r1)
-	  lwz       r3, 0x4(r30)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x490(r3)
-	  lfs       f2, 0x480(r3)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x84(r1)
-	  lfs       f0, 0x84(r1)
-	  fcmpo     cr0, f31, f0
-	  bge-      .loc_0x108
-	  bl        0xC420C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x56C0(r2)
-	  stw       r0, 0x8C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x56C8(r2)
-	  stw       r0, 0x88(r1)
-	  lfs       f2, -0x56CC(r2)
-	  lfd       f0, 0x88(r1)
-	  lfs       f1, -0x56C4(r2)
-	  fsubs     f4, f0, f4
-	  lfs       f0, -0x56A0(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f2
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x108
-	  lwz       r3, 0x4(r30)
-	  li        r4, 0x1
-	  lwz       r3, 0x3C4(r3)
-	  bl        0x219C
+	f32 timings[4];
+	f32 timer = mSpider->get2D4();
+	for (int i = 0; i < 4; i++) {
+		timings[i] = C_SPIDER_PROP(mSpider).mDeadScaleStartDelay() + i * C_SPIDER_PROP(mSpider).mDeadScaleStageDelay();
+	}
 
-	.loc_0x108:
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x224(r4)
-	  lfs       f0, 0x470(r3)
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x13C
-	  lbz       r0, 0x3BB(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x13C
-	  lwz       r3, 0x3C4(r4)
-	  bl        0x20B4
-	  lwz       r3, 0x4(r30)
-	  li        r0, 0
-	  stb       r0, 0x3BB(r3)
+	if (timer < timings[3] && NsMathF::getRand(1.0f) < 0.2f) {
+		mSpider->mSpiderLeg->createSmallSparkEffect(1);
+	}
 
-	.loc_0x13C:
-	  lfs       f0, 0x78(r1)
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x1A0
-	  lwz       r3, 0x4(r30)
-	  lbz       r0, 0x3B9(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x174
-	  lwz       r3, 0x3C4(r3)
-	  bl        0x24C8
-	  lwz       r3, 0x4(r30)
-	  li        r0, 0
-	  stb       r0, 0x3B9(r3)
-	  lwz       r3, 0x4(r30)
-	  stb       r0, 0x2B9(r3)
+	if (timer > C_SPIDER_PROP(mSpider).mDeadBombEffectDelay() && mSpider->_3BB) {
+		mSpider->mSpiderLeg->createDeadBombEffect();
+		mSpider->_3BB = 0;
+	}
 
-	.loc_0x174:
-	  lwz       r4, 0x4(r30)
-	  lfs       f1, 0x84(r1)
-	  lwz       r3, 0x224(r4)
-	  lfs       f2, -0x569C(r2)
-	  lfs       f0, 0x4A0(r3)
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x1A0
-	  li        r0, 0
-	  stb       r0, 0x2BD(r4)
+	if (timer > timings[0]) {
+		if (mSpider->_3B9) {
+			mSpider->mSpiderLeg->createPerishEffect();
+			mSpider->_3B9 = 0;
+			mSpider->setIsAtari(false);
+		}
 
-	.loc_0x1A0:
-	  lwz       r3, 0x4(r30)
-	  lwz       r3, 0x224(r3)
-	  lwz       r0, 0x550(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x228
-	  li        r29, 0
+		if (timer > C_SPIDER_PROP(mSpider).mDeadMotionDelay() + timings[3] + 0.5f) {
+			mSpider->setMotionFinish(false);
+		}
+	}
 
-	.loc_0x1B8:
-	  lfs       f0, 0x0(r31)
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x1D4
-	  lwz       r3, 0x4(r30)
-	  mr        r4, r29
-	  lwz       r3, 0x3C4(r3)
-	  bl        0x2938
+	if (C_SPIDER_PROP(mSpider).mDoFinalKillEffects()) {
+		for (int i = 0; i < 4; i++) {
+			if (timer > timings[i]) {
+				mSpider->mSpiderLeg->setLegScaleParam(i);
+			}
+		}
+		if (timer > C_SPIDER_PROP(mSpider).mDeadMotionDelay() + timings[3] + 1.5f) {
+			GameStat::killTekis.inc();
+			mSpider->doKill();
+		}
+	}
 
-	.loc_0x1D4:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x4
-	  addi      r31, r31, 0x4
-	  blt+      .loc_0x1B8
-	  lwz       r3, 0x4(r30)
-	  lfs       f1, 0x84(r1)
-	  lwz       r3, 0x224(r3)
-	  lfs       f2, -0x5698(r2)
-	  lfs       f0, 0x4A0(r3)
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x228
-	  lwz       r3, 0x30F8(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x30F8(r13)
-	  lwz       r3, 0x4(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x228:
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x2D4(r4)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x2D4(r4)
-	  lwz       r0, 0xAC(r1)
-	  lfd       f31, 0xA0(r1)
-	  lwz       r31, 0x9C(r1)
-	  lwz       r30, 0x98(r1)
-	  lwz       r29, 0x94(r1)
-	  addi      r1, r1, 0xA8
-	  mtlr      r0
-	  blr
-	*/
+	mSpider->add2D4(gsys->getFrameTime());
 }
 
 /*
@@ -907,10 +486,7 @@ void SpiderAi::dieState()
  * Address:	........
  * Size:	000028
  */
-void SpiderAi::walkRandomState()
-{
-	// UNUSED FUNCTION
-}
+void SpiderAi::walkRandomState() { mSpider->makeTargetRandom(30.0f); }
 
 /*
  * --INFO--
@@ -919,7 +495,8 @@ void SpiderAi::walkRandomState()
  */
 void SpiderAi::walkGoHomeState()
 {
-	// UNUSED FUNCTION
+	Vector3f* initPos = mSpider->getInitPosition();
+	mSpider->setTargetPosition(*initPos);
 }
 
 /*
@@ -927,30 +504,21 @@ void SpiderAi::walkGoHomeState()
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::chaseNaviState()
-{
-	// UNUSED FUNCTION
-}
+void SpiderAi::chaseNaviState() { mSpider->makeTargetCreature(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::chasePikiState()
-{
-	// UNUSED FUNCTION
-}
+void SpiderAi::chasePikiState() { mSpider->makeTargetCreature(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::shakeOffState()
-{
-	// UNUSED FUNCTION
-}
+void SpiderAi::shakeOffState() { mSpider->makeTargetCreature(); }
 
 /*
  * --INFO--
@@ -959,7 +527,9 @@ void SpiderAi::shakeOffState()
  */
 void SpiderAi::waitState()
 {
-	// UNUSED FUNCTION
+	if (mSpider->getLoopCounter() >= mSpider->_3BC) {
+		mSpider->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+	}
 }
 
 /*
@@ -969,7 +539,12 @@ void SpiderAi::waitState()
  */
 void SpiderAi::appearState()
 {
-	// UNUSED FUNCTION
+	if (!mSpider->mHasShadow) {
+		if (mSpider->mCollInfo->getBoundingSphere()->mCentre.y < mSpider->mPosition.y + 1200.0f) {
+			mSpider->mHasShadow = true;
+			mapMgr->mShadowCaster.add(&mSpider->mShadowCaster);
+		}
+	}
 }
 
 /*
@@ -980,6 +555,112 @@ void SpiderAi::appearState()
 void SpiderAi::update()
 {
 	setEveryFrame();
+	switch (mSpider->getCurrentState()) {
+	case SPIDERAI_Die:
+		dieState();
+		break;
+
+	case SPIDERAI_WalkRandom:
+		walkRandomState();
+		if (dieTransit()) {
+			initDie(SPIDERAI_Die);
+		} else if (shakeOffTransit()) {
+			initShakeOff(SPIDERAI_ShakeOff);
+		} else if (isMotionFinishTransit()) {
+			initWait(SPIDERAI_Wait);
+		} else if (chaseNaviTransit()) {
+			initWalk(SPIDERAI_ChaseNavi);
+		} else if (chasePikiTransit()) {
+			initWalk(SPIDERAI_ChasePiki);
+		}
+		break;
+
+	case SPIDERAI_ChaseNavi:
+		chaseNaviState();
+		if (dieTransit()) {
+			initDie(SPIDERAI_Die);
+		} else if (shakeOffTransit()) {
+			initShakeOff(SPIDERAI_ShakeOff);
+		} else if (isMotionFinishTransit()) {
+			initWait(SPIDERAI_Wait);
+		} else if (outSideChaseRangeTransit()) {
+			initWalk(SPIDERAI_WalkGoHome);
+		} else if (targetLostTransit()) {
+			initWalk(SPIDERAI_WalkRandom);
+		} else if (chasePikiTransit()) {
+			initWalk(SPIDERAI_ChasePiki);
+		}
+		break;
+
+	case SPIDERAI_ChasePiki:
+		chasePikiState();
+		if (dieTransit()) {
+			initDie(SPIDERAI_Die);
+		} else if (shakeOffTransit()) {
+			initShakeOff(SPIDERAI_ShakeOff);
+		} else if (isMotionFinishTransit()) {
+			initWait(SPIDERAI_Wait);
+		} else if (outSideChaseRangeTransit()) {
+			initWalk(SPIDERAI_WalkGoHome);
+		} else if (targetLostTransit()) {
+			initWalk(SPIDERAI_WalkRandom);
+		} else if (chaseNaviTransit()) {
+			initWalk(SPIDERAI_ChaseNavi);
+		} else if (chasePikiTransit()) {
+			initWalk(SPIDERAI_ChasePiki);
+		}
+		break;
+
+	case SPIDERAI_WalkGoHome:
+		walkGoHomeState();
+		if (dieTransit()) {
+			initDie(SPIDERAI_Die);
+		} else if (shakeOffTransit()) {
+			initShakeOff(SPIDERAI_ShakeOff);
+		} else if (isMotionFinishTransit()) {
+			initWait(SPIDERAI_Wait);
+		} else if (inSideWaitRangeTransit()) {
+			initWalk(SPIDERAI_WalkRandom);
+		}
+		break;
+
+	case SPIDERAI_ShakeOff:
+		shakeOffState();
+		if (isMotionFinishTransit()) {
+			if (dieTransit()) {
+				initDie(SPIDERAI_Die);
+			} else {
+				initWalk(SPIDERAI_WalkRandom);
+			}
+		}
+		break;
+
+	case SPIDERAI_Start:
+		if (appearTransit()) {
+			initAppear(SPIDERAI_Appear);
+		}
+		break;
+
+	case SPIDERAI_Appear:
+		appearState();
+		if (dieTransit()) {
+			initDie(SPIDERAI_Die);
+		} else if (isMotionFinishTransit()) {
+			initWalk(SPIDERAI_WalkRandom);
+		}
+		break;
+
+	case SPIDERAI_Wait:
+		waitState();
+		if (dieTransit()) {
+			initDie(SPIDERAI_Die);
+		} else if (shakeOffTransit()) {
+			initShakeOff(SPIDERAI_ShakeOff);
+		} else if (isMotionFinishTransit()) {
+			initWalk(SPIDERAI_WalkRandom);
+		}
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
