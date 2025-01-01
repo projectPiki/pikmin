@@ -98,7 +98,8 @@ void calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f
 	topToTargetVector.y = bottomPosition.y - topPosition.y;
 	topToTargetVector.z = bottomPosition.z - topPosition.z;
 
-	f32 distanceTopToTarget = topToTargetVector.squaredLength();
+	f32 distanceTopToTarget
+	    = topToTargetVector.x * topToTargetVector.x + topToTargetVector.y * topToTargetVector.y + topToTargetVector.z * topToTargetVector.z;
 	if (!(distanceTopToTarget < 0.000001f)) {
 		f32 factor = (0.5f / distanceTopToTarget) * (distanceTopToTarget + (distanceTopMiddle - distanceMiddleBottom));
 
@@ -110,10 +111,10 @@ void calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f
 
 		if (!(distanceAdjustment <= 0.0f)) {
 			Vector3f cross1(middleJointPos);
-			cross1.cross(topToTargetVector);
+			cross1.CP(topToTargetVector);
 			middleJointPos.cross(cross1, topToTargetVector);
 
-			f32 outSqr = middleJointPos.squaredLength();
+			f32 outSqr = middleJointPos.x * middleJointPos.x + middleJointPos.y * middleJointPos.y + middleJointPos.z * middleJointPos.z;
 			if (outSqr != 0.0f) {
 				f32 len               = std::sqrtf(distanceAdjustment / outSqr);
 				bottomJointPosition.x = len * middleJointPos.x + cross1.x;

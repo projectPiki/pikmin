@@ -669,7 +669,7 @@ void NaviBuryState::exec(Navi* navi)
 	Vector3f stick(navi->mKontroller->getMainStickX(), 0.0f, navi->mKontroller->getMainStickY());
 	navi->reviseController(stick);
 
-	f32 stickMag = stick.length2D();
+	f32 stickMag = stick.length();
 
 	switch (_1C) {
 	case 0:
@@ -2330,8 +2330,8 @@ void NaviWalkState::procWallMsg(Navi* navi, MsgWall* msg)
 		_1C = 0.0f;
 	}
 
-	f32 x            = msg->mWallNormal->getX();
-	f32 z            = msg->mWallNormal->getZ();
+	f32 x            = msg->mWallNormal->x;
+	f32 z            = msg->mWallNormal->z;
 	navi->mDirection = atan2f(-x, -z);
 }
 

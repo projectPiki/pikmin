@@ -824,7 +824,7 @@ void NPolar3f::input(NPolar3f&)
  */
 void NPolar3f::input(Vector3f& point)
 {
-	set(point.length(), NMathF::atan2(point.length2D(), point.y), NMathF::atan2(point.x, point.z));
+	set(point.length(), NMathF::atan2(point.length(), point.y), NMathF::atan2(point.x, point.z));
 	/*
 	.loc_0x0:
 	  mflr      r0

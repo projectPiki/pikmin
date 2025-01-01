@@ -127,8 +127,7 @@ int ActKinoko::exeJump()
 		return ACTOUT_Continue;
 	}
 
-	Vector3f pos = mActor->mNavi->mPosition;
-	if (pos.distanceFrom(mActor->mPosition) < 12.0f) { }
+	if (mActor->mNavi->mPosition.distance(mActor->mPosition) < 12.0f) { }
 	/*
 	.loc_0x0:
 	  mflr      r0

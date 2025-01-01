@@ -218,16 +218,15 @@ struct Slime : public Boss {
 
 			adjustVecs[0].set(1.0f, 0.0f, 0.0f);
 			adjustVecs[1].set(0.0f, 0.0f, 1.0f);
-			adjustVecs[2] = adjustVecs[0].negate();
-			adjustVecs[3] = adjustVecs[1].negate();
+			adjustVecs[2] = -adjustVecs[0];
+			adjustVecs[3] = -adjustVecs[1];
 
 			f32 minDist = 12800.0f;
 			for (int i = 0; i < 4; i++) {
 
 				// weightPos is kind of the centre of mass?
 				Vector3f weightPos = mCreature->mPosition
-				                   + Vector3f::scale(static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._364(),
-				                                     adjustVecs[i]); // max radius compensation
+				                   + static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._364() * adjustVecs[i]; // max radius compensation
 
 				Vector3f farPos  = weightPos;
 				Vector3f nearPos = mCreature->mPosition;

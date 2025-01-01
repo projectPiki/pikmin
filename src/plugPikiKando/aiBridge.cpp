@@ -373,11 +373,11 @@ int ActBridge::newExeApproach()
 			Vector3f newDir;
 			if (bridgePosY > -10.0f) {
 				newDir = mBridge->getBridgeZVec();
-				newDir *= -1.0f;
+				newDir.negate();
 			} else {
 				newDir = mBridge->getBridgeXVec();
 				if (bridgePosX > 0.0f) {
-					newDir *= -1.0f;
+					newDir.negate();
 				}
 			}
 			mActor->setSpeed(0.7f, newDir);
@@ -685,8 +685,8 @@ int ActBridge::newExeGo()
 
 	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
 	Vector3f xVec     = mBridge->getBridgeXVec();
-	xVec *= _2C * mBridge->getStageWidth();
-	stagePos += xVec;
+	xVec.multiply(_2C * mBridge->getStageWidth());
+	stagePos.add(xVec);
 
 	Vector3f direction = stagePos - mActor->mPosition;
 	mBridge->getBridgeZVec();

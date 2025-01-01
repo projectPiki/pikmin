@@ -215,8 +215,8 @@ struct Creature : public RefCountable, public EventTalker {
 
 	inline void resetVelocity()
 	{
-		mVelocity.reset();
-		mTargetVelocity.reset();
+		mVelocity.set(Vector3f(0.0f, 0.0f, 0.0f));
+		mTargetVelocity.set(Vector3f(0.0f, 0.0f, 0.0f));
 	}
 
 	inline bool isStuckTo(Creature* creature) { return mStickTarget == creature; }

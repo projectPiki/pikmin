@@ -235,7 +235,7 @@ void calcImpulse(Vector3f&, f32, Vector3f&, Matrix4f&, Vector3f&, Vector3f&)
  * Address:	8011296C
  * Size:	0001C0
  */
-void CRSpline(f32, Vector3f*)
+Vector3f CRSpline(f32, Vector3f*)
 {
 	/*
 	.loc_0x0:
@@ -359,7 +359,7 @@ void CRSpline(f32, Vector3f*)
  * Address:	80112B2C
  * Size:	0001B8
  */
-void CRSplineTangent(f32, Vector3f*)
+Vector3f CRSplineTangent(f32, Vector3f*)
 {
 	/*
 	.loc_0x0:
@@ -481,7 +481,7 @@ void CRSplineTangent(f32, Vector3f*)
  * Address:	80112CE4
  * Size:	00022C
  */
-void getThrowVelocity(Vector3f&, f32, Vector3f&, Vector3f&)
+Vector3f getThrowVelocity(Vector3f&, f32, Vector3f&, Vector3f&)
 {
 	/*
 	.loc_0x0:

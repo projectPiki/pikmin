@@ -44,9 +44,9 @@ struct KSegment {
 bool isNan(f32);
 void makePostureMatrix(Vector3f&, Vector3f&, Vector3f&, Matrix4f&);
 void calcImpulse(Vector3f&, f32, Vector3f&, Matrix4f&, Vector3f&, Vector3f&);
-void CRSpline(f32, Vector3f*);
-void CRSplineTangent(f32, Vector3f*);
-void getThrowVelocity(Vector3f&, f32, Vector3f&, Vector3f&);
+Vector3f CRSpline(f32, Vector3f*);
+Vector3f CRSplineTangent(f32, Vector3f*);
+Vector3f getThrowVelocity(Vector3f&, f32, Vector3f&, Vector3f&);
 void getCameraSafeAngle(Vector3f&, f32, f32);
 
 #endif

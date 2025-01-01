@@ -1384,7 +1384,7 @@ void CullFrustum::calcVectors(Vector3f& eyePos, Vector3f& targetPos)
 
 	// calculate vertical direction by crossing z and x
 	mViewYAxis = mViewZAxis;
-	mViewYAxis.cross(mViewXAxis);
+	mViewYAxis.CP(mViewXAxis);
 	mViewYAxis.normalise();
 
 	// construct lookat matrices

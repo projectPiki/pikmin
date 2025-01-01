@@ -1251,7 +1251,8 @@ int ActBoreTalk::exec()
 	}
 
 	if (_18 == 0) {
-		f32 angle          = angDist(mActor->mPosition.angSep(mTarget->mPosition), mActor->mDirection);
+		f32 ang            = atan2f(mActor->mPosition.x - mTarget->mPosition.x, mActor->mPosition.z - mTarget->mPosition.z);
+		f32 angle          = angDist(ang, mActor->mDirection);
 		mActor->mDirection = roundAng(mActor->mDirection + 0.1f * angle);
 
 		// what is going on here, this should have a conversion and a clrlwi r0, r0, 1???

@@ -122,7 +122,8 @@ int ActStone::exeApproach()
 	}
 
 	Vector3f direction = mCurrPebble->mPosition - mActor->mPosition;
-	f32 dist           = direction.length2D();
+	direction.y        = 0.0f;
+	f32 dist           = direction.length();
 	direction.normalise();
 
 	if (dist <= 20.0f) {
@@ -276,7 +277,8 @@ int ActStone::exeAdjust()
 	}
 
 	Vector3f direction = mCurrPebble->mPosition - mActor->mPosition;
-	f32 dist           = direction.length2D();
+	direction.y        = 0.0f;
+	f32 dist           = direction.length();
 	direction.normalise();
 
 	if (dist < 20.0f) {

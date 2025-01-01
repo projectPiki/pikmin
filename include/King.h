@@ -11,6 +11,12 @@
 struct KingAi;
 struct KingBody;
 struct KingDrawer;
+struct KingGenSalivaCallBack;
+struct KingGenSpreadSalivaCallBack;
+struct KingGenSalivaParticleCallBack;
+struct KingGenDamageStarCallBack;
+struct KingGenRippleCallBack;
+struct KingGenSpitPartsParticleCallBack;
 
 /**
  * @brief TODO.
@@ -239,8 +245,35 @@ struct KingBody {
 	void checkBlendingParm(Matrix4f*);
 	void returnJoint(BossShapeObject*, Graphics&, Matrix4f*);
 
-	// TODO: members
-	u8 _00[0x110]; // _00, unknown
+	King* mKing;                                                  // _00
+	u8 _04;                                                       // _04
+	u8 _05;                                                       // _05
+	u8 _06;                                                       // _06
+	u8 _07[2];                                                    // _07
+	u8 _09[2];                                                    // _09
+	u8 _0B[2];                                                    // _0B
+	int _10[2];                                                   // _10
+	f32 _18;                                                      // _18
+	f32 _1C;                                                      // _1C
+	f32 _20;                                                      // _20
+	Vector3f _24[2];                                              // _24
+	Vector3f _3C[2];                                              // _3C
+	Vector3f _54;                                                 // _54
+	Vector3f _60;                                                 // _60
+	Vector3f _6C;                                                 // _6C
+	Vector3f _78[2];                                              // _78
+	Vector3f _90[2];                                              // _90
+	Vector3f _A8[4];                                              // _A8
+	Vector3f _D8;                                                 // _D8
+	Vector3f _E4;                                                 // _E4
+	Matrix4f* _F0;                                                // _F0
+	Matrix4f* _F4;                                                // _F4
+	KingGenSalivaCallBack* mSalivaCallBacks;                      // _F8
+	KingGenSpreadSalivaCallBack* mSpreadSalivaCallBack;           // _FC
+	KingGenSalivaParticleCallBack* mSalivaParticleCallBack;       // _100
+	KingGenDamageStarCallBack* mDamageStarCallBack;               // _104
+	KingGenRippleCallBack* mRippleCallBacks;                      // _108
+	KingGenSpitPartsParticleCallBack* mSpitPartsParticleCallBack; // _10C
 };
 
 /**
@@ -385,72 +418,94 @@ struct KingAi : public PaniAnimKeyListener {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct KingGenDamageStarCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator*); // _08
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
+	void set(King* king) { mKing = king; }
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1
+	King* mKing; // _04
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct KingGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	KingGenRippleCallBack();
-
 	virtual bool invoke(zen::particleGenerator*); // _08
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1
+	u8 _04[0x10 - 0x4]; // _04, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	KingGenSalivaCallBack();
-
 	virtual bool invoke(zen::particleGenerator*); // _08
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
+	void set(Vector3f* p1, Vector3f* p2, King* king)
+	{
+		_04   = p1;
+		_08   = p2;
+		mKing = king;
+	}
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1
+	Vector3f* _04; // _04
+	Vector3f* _08; // _08
+	King* mKing;   // _0C
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct KingGenSalivaParticleCallBack : public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
 	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _08
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack2?
-	// TODO: members
+	void set(King* king) { mKing = king; }
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack2
+	King* mKing; // _04
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x4.
  */
 struct KingGenSpitPartsParticleCallBack : public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
 	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _08
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack2?
-	// TODO: members
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack2
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct KingGenSpreadSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator*); // _08
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
+	void set(King* king) { mKing = king; }
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1
+	King* mKing; // _04
 };
 
 #endif

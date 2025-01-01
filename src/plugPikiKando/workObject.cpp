@@ -3882,9 +3882,8 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 
 		if (firstUnfinishedStage != -1) {
 			Vector3f scaledBridgeZVec = getBridgeZVec();
-			Vector3f scalar(20.0f, 20.0f, 20.0f);
-			scaledBridgeZVec = scaledBridgeZVec * scalar;
-			mPosition        = getStagePos(firstUnfinishedStage) - scaledBridgeZVec;
+			scaledBridgeZVec          = scaledBridgeZVec * 20.0f;
+			mPosition                 = getStagePos(firstUnfinishedStage) - scaledBridgeZVec;
 		}
 	} else {
 		int jointIndex = _410->getChildAt(stageIndex)->mCollInfo->mJointIndex;
@@ -4974,13 +4973,6 @@ bool InteractBreak::actBridge(Bridge*)
 	.loc_0x2E8:
 	*/
 }
-
-/*
- * --INFO--
- * Address:	8009F4D4
- * Size:	00002C
- */
-Vector3f operator*(const Vector3f& a, const f32& b) { return Vector3f(a.x * b, a.y * b, a.z * b); }
 
 /*
  * --INFO--

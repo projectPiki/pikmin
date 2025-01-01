@@ -184,7 +184,7 @@ void FishGenerator::update()
 		mSchoolCentre = mSchoolCentre + mFish[i].mPosition;
 	}
 
-	mSchoolCentre *= (1.0f / mFishCount);
+	mSchoolCentre.scale(1.0f / mFishCount);
 
 	for (int i = 0; i < mFishCount; i++) {
 		moveFish(&mFish[i]);

@@ -675,7 +675,7 @@ void KoganeAi::initCreate(int nextState)
 	f32 perpDir = mKogane->mDirection + HALF_PI;
 	Vector3f vec1(sinf(mKogane->mDirection), 0.0f, cosf(mKogane->mDirection));
 	Vector3f vec2(sinf(perpDir), 0.0f, cosf(perpDir));
-	Vector3f vec3 = vec2.negate();
+	Vector3f vec3 = -vec2;
 
 	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_Unk89, mKogane->mPosition, nullptr, nullptr);
 	if (ptcl1) {

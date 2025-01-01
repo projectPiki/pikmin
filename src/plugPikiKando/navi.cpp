@@ -1084,7 +1084,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	_80C = 0;
 	startMotion(PaniMotionInfo(2, this), PaniMotionInfo(2));
 
-	mScale.makeIdentity();
+	mScale.set(1.0f, 1.0f, 1.0f);
 	mRotation.set(0.0f, 0.0f, 0.0f);
 	mPosition.set(0.0f, 0.0f, 0.0f);
 	mVelocity.set(0.0f, 0.0f, 0.0f);

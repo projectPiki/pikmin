@@ -1,24 +1,20 @@
 #include "King.h"
+#include "EffectMgr.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("KingBody");
 
 /*
  * --INFO--
@@ -27,7 +23,22 @@ static void _Print(char*, ...)
  */
 void KingBody::setSalivaEffect()
 {
-	// UNUSED FUNCTION
+	mSalivaCallBacks[0].set(&_A8[1], &_A8[2], mKing);
+	mSalivaParticleCallBack->set(mKing);
+	effectMgr->create(EffectMgr::EFF_Unk116, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[0], mSalivaParticleCallBack);
+
+	mSalivaCallBacks[1].set(&_A8[0], &_A8[3], mKing);
+	effectMgr->create(EffectMgr::EFF_Unk116, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[1], mSalivaParticleCallBack);
+
+	mSalivaCallBacks[2].set(&_A8[0], &_A8[1], mKing);
+	effectMgr->create(EffectMgr::EFF_Unk117, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[2], mSalivaParticleCallBack);
+
+	mSpreadSalivaCallBack->set(mKing);
+	zen::particleGenerator* ptcl
+	    = effectMgr->create(EffectMgr::EFF_Unk118, Vector3f(0.0f, 0.0f, 0.0f), mSpreadSalivaCallBack, mSalivaParticleCallBack);
+	if (ptcl) {
+		ptcl->setEmitPosPtr(&_D8);
+	}
 }
 
 /*
@@ -37,68 +48,16 @@ void KingBody::setSalivaEffect()
  */
 void KingBody::setSeedFlashEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r1, 0x14
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  li        r29, 0
-	  mulli     r0, r29, 0xC
-	  stw       r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  lwz       r4, 0x0(r3)
-	  lwz       r3, 0x104(r3)
-	  add       r30, r28, r0
-	  stw       r4, 0x4(r3)
+	mDamageStarCallBack->set(mKing);
 
-	.loc_0x3C:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r30, 0x78
-	  li        r4, 0x2F
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x29D64
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r30, 0x78
-	  li        r4, 0x30
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x29D4C
-	  lfs       f0, 0x348(r13)
-	  mr        r5, r31
-	  lfs       f1, 0x34C(r13)
-	  li        r4, 0x68
-	  stfs      f0, 0x14(r1)
-	  lfs       f0, 0x350(r13)
-	  li        r7, 0
-	  stfs      f1, 0x18(r1)
-	  lwz       r3, 0x3180(r13)
-	  stfs      f0, 0x1C(r1)
-	  lwz       r6, 0x104(r28)
-	  bl        0x29D1C
-	  cmplwi    r3, 0
-	  beq-      .loc_0xAC
-	  addi      r0, r30, 0x78
-	  stw       r0, 0x18(r3)
-
-	.loc_0xAC:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x2
-	  addi      r30, r30, 0xC
-	  blt+      .loc_0x3C
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < 2; i++) {
+		effectMgr->create(EffectMgr::EFF_Unk47, _78[i], nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Unk48, _78[i], nullptr, nullptr);
+		zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Unk104, Vector3f(0.0f, 0.0f, 0.0f), mDamageStarCallBack, nullptr);
+		if (ptcl) {
+			ptcl->setEmitPosPtr(&_78[i]);
+		}
+	}
 }
 
 /*
@@ -108,168 +67,26 @@ void KingBody::setSeedFlashEffect()
  */
 void KingBody::setEatBombEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x98(r1)
-	  stfd      f31, 0x90(r1)
-	  stw       r31, 0x8C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x88(r1)
-	  stw       r29, 0x84(r1)
-	  stw       r28, 0x80(r1)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xA0(r3)
-	  bl        0xA8CC8
-	  lwz       r3, 0x0(r31)
-	  fmr       f31, f1
-	  lfs       f1, 0xA0(r3)
-	  bl        0xA8E4C
-	  stfs      f1, 0x74(r1)
-	  addi      r6, r1, 0x24
-	  lfs       f0, 0x354(r13)
-	  addi      r5, r1, 0x20
-	  addi      r4, r1, 0x1C
-	  stfs      f0, 0x78(r1)
-	  addi      r3, r1, 0x50
-	  stfs      f31, 0x7C(r1)
-	  lfs       f1, 0x7C(r1)
-	  lfs       f2, 0x358(r13)
-	  lfs       f0, 0x74(r1)
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f2
-	  stfs      f1, 0x24(r1)
-	  lfs       f1, 0x78(r1)
-	  fmuls     f1, f1, f2
-	  stfs      f0, 0x1C(r1)
-	  stfs      f1, 0x20(r1)
-	  bl        -0x13BDCC
-	  lfs       f1, 0x6C(r31)
-	  addi      r5, r1, 0x68
-	  lfs       f0, 0x50(r1)
-	  li        r4, 0x7B
-	  lfs       f3, 0x70(r31)
-	  lfs       f2, 0x54(r1)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x74(r31)
-	  li        r6, 0
-	  lfs       f1, 0x58(r1)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x68(r1)
-	  fadds     f0, f4, f1
-	  lwz       r3, 0x3180(r13)
-	  li        r7, 0
-	  stfs      f2, 0x6C(r1)
-	  stfs      f0, 0x70(r1)
-	  bl        0x29C08
-	  cmplwi    r3, 0
-	  beq-      .loc_0xF4
-	  lwz       r4, 0x74(r1)
-	  lwz       r0, 0x78(r1)
-	  stw       r4, 0xA0(r3)
-	  stw       r0, 0xA4(r3)
-	  lwz       r0, 0x7C(r1)
-	  stw       r0, 0xA8(r3)
+	Vector3f dir(sinf(mKing->mDirection), 0.0f, cosf(mKing->mDirection));
+	Vector3f effectPos            = _6C + 50.0f * dir;
+	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_Unk123, effectPos, nullptr, nullptr);
+	if (ptcl1) {
+		ptcl1->setA0(dir);
+	}
+	zen::particleGenerator* ptcl2 = effectMgr->create(EffectMgr::EFF_Unk122, effectPos, nullptr, nullptr);
+	if (ptcl2) {
+		ptcl2->setA0(dir);
+	}
 
-	.loc_0xF4:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x68
-	  li        r4, 0x7A
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x29BD0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x12C
-	  lwz       r4, 0x74(r1)
-	  lwz       r0, 0x78(r1)
-	  stw       r4, 0xA0(r3)
-	  stw       r0, 0xA4(r3)
-	  lwz       r0, 0x7C(r1)
-	  stw       r0, 0xA8(r3)
+	mDamageStarCallBack->set(mKing);
+	for (int i = 0; i < 2; i++) {
+		zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Unk124, _90[i], nullptr, nullptr);
+		if (ptcl) {
+			ptcl->setA0(dir);
+		}
+	}
 
-	.loc_0x12C:
-	  li        r28, 0
-	  lwz       r4, 0x0(r31)
-	  mulli     r0, r28, 0xC
-	  lwz       r3, 0x104(r31)
-	  stw       r4, 0x4(r3)
-	  add       r29, r31, r0
-
-	.loc_0x144:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r29, 0x90
-	  li        r4, 0x7C
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x29B80
-	  cmplwi    r3, 0
-	  beq-      .loc_0x17C
-	  lwz       r4, 0x74(r1)
-	  lwz       r0, 0x78(r1)
-	  stw       r4, 0xA0(r3)
-	  stw       r0, 0xA4(r3)
-	  lwz       r0, 0x7C(r1)
-	  stw       r0, 0xA8(r3)
-
-	.loc_0x17C:
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x2
-	  addi      r29, r29, 0xC
-	  blt+      .loc_0x144
-	  li        r30, 0
-	  lwz       r4, 0x0(r31)
-	  mulli     r0, r30, 0xC
-	  lwz       r3, 0x104(r31)
-	  stw       r4, 0x4(r3)
-	  add       r28, r31, r0
-	  addi      r29, r1, 0x3C
-
-	.loc_0x1A8:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r28, 0x78
-	  li        r4, 0x2F
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x29B1C
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r28, 0x78
-	  li        r4, 0x30
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x29B04
-	  lfs       f0, 0x348(r13)
-	  mr        r5, r29
-	  lfs       f1, 0x34C(r13)
-	  li        r4, 0x68
-	  stfs      f0, 0x3C(r1)
-	  lfs       f0, 0x350(r13)
-	  li        r7, 0
-	  stfs      f1, 0x40(r1)
-	  lwz       r3, 0x3180(r13)
-	  stfs      f0, 0x44(r1)
-	  lwz       r6, 0x104(r31)
-	  bl        0x29AD4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x218
-	  addi      r0, r28, 0x78
-	  stw       r0, 0x18(r3)
-
-	.loc_0x218:
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x2
-	  addi      r28, r28, 0xC
-	  blt+      .loc_0x1A8
-	  lwz       r0, 0x9C(r1)
-	  lfd       f31, 0x90(r1)
-	  lwz       r31, 0x8C(r1)
-	  lwz       r30, 0x88(r1)
-	  lwz       r29, 0x84(r1)
-	  lwz       r28, 0x80(r1)
-	  addi      r1, r1, 0x98
-	  mtlr      r0
-	  blr
-	*/
+	setSeedFlashEffect();
 }
 
 /*
@@ -593,70 +410,19 @@ void KingBody::createUfoParts()
  * Address:	8017350C
  * Size:	0000DC
  */
-void KingBody::killCallBackEffect(bool)
+void KingBody::killCallBackEffect(bool p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
+	int i;
+	for (i = 0; i < 3; i++) {
+		effectMgr->killGenerator(&mSalivaCallBacks[i], mSalivaParticleCallBack, p1);
+	}
 
-	.loc_0x2C:
-	  lwz       r0, 0xF8(r28)
-	  mr        r6, r29
-	  lwz       r3, 0x3180(r13)
-	  lwz       r5, 0x100(r28)
-	  add       r4, r0, r31
-	  addi      r3, r3, 0x14
-	  bl        0x2E10C
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x3
-	  addi      r31, r31, 0x10
-	  blt+      .loc_0x2C
-	  lwz       r3, 0x3180(r13)
-	  mr        r6, r29
-	  lwz       r5, 0x100(r28)
-	  lwz       r4, 0xFC(r28)
-	  addi      r3, r3, 0x14
-	  bl        0x2E0E4
-	  lwz       r3, 0x3180(r13)
-	  mr        r6, r29
-	  lwz       r4, 0x104(r28)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x2E0CC
-	  li        r30, 0
-	  addi      r31, r30, 0
+	effectMgr->killGenerator(mSpreadSalivaCallBack, mSalivaParticleCallBack, p1);
+	effectMgr->killGenerator(mDamageStarCallBack, nullptr, p1);
 
-	.loc_0x90:
-	  lwz       r0, 0x108(r28)
-	  mr        r6, r29
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  add       r4, r0, r31
-	  addi      r3, r3, 0x14
-	  bl        0x2E0A8
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x2
-	  addi      r31, r31, 0x10
-	  blt+      .loc_0x90
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (i = 0; i < 2; i++) {
+		effectMgr->killGenerator(&mRippleCallBacks[i], nullptr, p1);
+	}
 }
 
 /*
@@ -666,198 +432,14 @@ void KingBody::killCallBackEffect(bool)
  */
 KingBody::KingBody(King*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8003
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  li        r6, 0xC
-	  stwu      r1, -0x18(r1)
-	  li        r7, 0x2
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r31, 0x24
-	  stw       r30, 0x10(r1)
-	  addi      r30, r4, 0x5B24
-	  addi      r4, r30, 0
-	  bl        0xA1454
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x3C
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x2
-	  bl        0xA143C
-	  lfs       f1, -0x5320(r2)
-	  mr        r4, r30
-	  addi      r3, r31, 0x78
-	  stfs      f1, 0x5C(r31)
-	  fmr       f0, f1
-	  li        r5, 0
-	  stfs      f1, 0x58(r31)
-	  li        r6, 0xC
-	  li        r7, 0x2
-	  stfs      f1, 0x54(r31)
-	  stfs      f1, 0x68(r31)
-	  stfs      f1, 0x64(r31)
-	  stfs      f1, 0x60(r31)
-	  stfs      f0, 0x74(r31)
-	  stfs      f0, 0x70(r31)
-	  stfs      f0, 0x6C(r31)
-	  bl        0xA13F8
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x90
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x2
-	  bl        0xA13E0
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0xA8
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x4
-	  bl        0xA13C8
-	  lfs       f0, -0x5320(r2)
-	  li        r3, 0x1088
-	  stfs      f0, 0xE0(r31)
-	  stfs      f0, 0xDC(r31)
-	  stfs      f0, 0xD8(r31)
-	  stfs      f0, 0xEC(r31)
-	  stfs      f0, 0xE8(r31)
-	  stfs      f0, 0xE4(r31)
-	  bl        -0x12C6C8
-	  lis       r4, 0x8004
-	  subi      r30, r4, 0xFE4
-	  addi      r4, r30, 0
-	  li        r5, 0
-	  li        r6, 0x40
-	  li        r7, 0x42
-	  bl        0xA1540
-	  stw       r3, 0xF0(r31)
-	  li        r3, 0x1088
-	  bl        -0x12C6F0
-	  addi      r4, r30, 0
-	  li        r5, 0
-	  li        r6, 0x40
-	  li        r7, 0x42
-	  bl        0xA1520
-	  stw       r3, 0xF4(r31)
-	  li        r3, 0x38
-	  bl        -0x12C710
-	  lis       r4, 0x8017
-	  addi      r4, r4, 0x3840
-	  li        r5, 0
-	  li        r6, 0x10
-	  li        r7, 0x3
-	  bl        0xA14FC
-	  stw       r3, 0xF8(r31)
-	  li        r3, 0x8
-	  bl        -0x12C734
-	  cmplwi    r3, 0
-	  beq-      .loc_0x174
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x6F4
-	  stw       r0, 0x0(r3)
-
-	.loc_0x174:
-	  stw       r3, 0xFC(r31)
-	  li        r3, 0x8
-	  bl        -0x12C760
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1A0
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x6B4
-	  stw       r0, 0x0(r3)
-
-	.loc_0x1A0:
-	  stw       r3, 0x100(r31)
-	  li        r3, 0x8
-	  bl        -0x12C78C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1CC
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x67C
-	  stw       r0, 0x0(r3)
-
-	.loc_0x1CC:
-	  stw       r3, 0x104(r31)
-	  li        r3, 0x28
-	  bl        -0x12C7B8
-	  lis       r4, 0x8017
-	  addi      r4, r4, 0x3824
-	  li        r5, 0
-	  li        r6, 0x10
-	  li        r7, 0x2
-	  bl        0xA1454
-	  stw       r3, 0x108(r31)
-	  li        r3, 0x4
-	  bl        -0x12C7DC
-	  cmplwi    r3, 0
-	  beq-      .loc_0x21C
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x648
-	  stw       r0, 0x0(r3)
-
-	.loc_0x21C:
-	  stw       r3, 0x10C(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80173824
- * Size:	00001C
- */
-KingGenRippleCallBack::KingGenRippleCallBack()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5CC
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80173840
- * Size:	00001C
- */
-KingGenSalivaCallBack::KingGenSalivaCallBack()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x59C
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
+	_F0                        = new Matrix4f[66];
+	_F4                        = new Matrix4f[66];
+	mSalivaCallBacks           = new KingGenSalivaCallBack[3];
+	mSpreadSalivaCallBack      = new KingGenSpreadSalivaCallBack;
+	mSalivaParticleCallBack    = new KingGenSalivaParticleCallBack;
+	mDamageStarCallBack        = new KingGenDamageStarCallBack;
+	mRippleCallBacks           = new KingGenRippleCallBack[2];
+	mSpitPartsParticleCallBack = new KingGenSpitPartsParticleCallBack;
 }
 
 /*
@@ -865,8 +447,26 @@ KingGenSalivaCallBack::KingGenSalivaCallBack()
  * Address:	8017385C
  * Size:	00023C
  */
-void KingBody::init(King*)
+void KingBody::init(King* king)
 {
+	mKing = king;
+	_04   = 0;
+	_1C   = 0.0f;
+	_20   = 0.0f;
+	_05   = 0;
+	_06   = 0;
+
+	for (int i = 0; i < 2; i++) {
+		_09[i] = 1;
+		_07[i] = 1;
+		_0B[i] = 0;
+		_10[i] = -1;
+		_24[i].set(0.0f, 0.0f, 0.0f);
+		_3C[i].set(0.0f, 0.0f, 0.0f);
+	}
+
+	_54.set(0.0f, 0.0f, 0.0f);
+	setSalivaEffect();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1022,8 +622,13 @@ void KingBody::init(King*)
  * Address:	80173A98
  * Size:	000028
  */
-void KingBody::initBlending(f32)
+void KingBody::initBlending(f32 p1)
 {
+	if (_1C > 0.0f) {
+		_04 = 1;
+	}
+
+	_18 = p1;
 	/*
 	.loc_0x0:
 	  lfs       f2, 0x1C(r3)

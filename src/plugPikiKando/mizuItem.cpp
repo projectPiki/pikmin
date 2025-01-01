@@ -62,7 +62,9 @@ bool MizuItem::needFlick(Creature*) { return false; }
 void MizuItem::startAI(int)
 {
 	u32 badCompiler;
-	mScale.makeIdentity();
+	mScale.x = 1.0f;
+	mScale.y = 1.0f;
+	mScale.z = 1.0f;
 	mItemAnimator.startMotion(PaniMotionInfo(0));
 
 	switch (mObjType) {
