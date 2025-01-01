@@ -80,8 +80,8 @@ struct MizuGenSpringPuffCallBack : public zen::CallBack1<zen::particleGenerator*
 	virtual bool invoke(zen::particleGenerator* ptcl) // _08
 	{
 		if (mPtcl) {
-			if (mPtcl->isFlag4()) {
-				Vector3f pos(mPtcl->getEmitPos());
+			if (mPtcl->checkActive()) {
+				Vector3f pos(mPtcl->getGPos());
 				zen::zenListManager& mdlMgr = mPtcl->getPtclMdlListManager();
 
 				// these should be zenListManager inlines but that breaks stack. Maybe fix later.

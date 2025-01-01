@@ -248,7 +248,7 @@ void CoreNucleusAi::initHit(int val)
 	Vector3f ptclPos(sinf(mCore->mDirection), 0.0f, cosf(mCore->mDirection));
 	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Unk89, mCore->mPosition, nullptr, nullptr);
 	if (ptcl) {
-		ptcl->setA0(ptclPos);
+		ptcl->setEmitDir(ptclPos);
 	}
 }
 

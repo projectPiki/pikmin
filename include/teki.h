@@ -308,13 +308,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	void outputWorldAnimationMatrix(Matrix4f&, int, Matrix4f&); // unused
 	void getCollisionCenter();                                  // unused
 
-	f32 getDirection() { return mDirection; }                                 // weak function
-	f32 getPersonalityF(int idx) { return mPersonality->mParams->getF(idx); } // weak
-	int getPersonalityI(int idx) { return mPersonality->mParams->getI(idx); } // weak
-
-	f32 getParameterF(int idx) { return mTekiParams->getF(idx); } // see TekiFloatParams enum
-	int getParameterI(int idx) { return mTekiParams->getI(idx); } // see TekiIntParams enum
-
 	static bool isPellet(int);
 	static f32 calcCircleDistanceStatic(Vector3f&, f32, Vector3f&, f32);
 	static f32 calcSphereDistanceStatic(Vector3f&, f32, Vector3f&, f32);
@@ -336,6 +329,25 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	inline f32 getParticleFactor() { return getParameterF(19); } // rename later when we know what this is
 
 	inline f32 doGetVelocityAnimSpeed() { return getVelocityAnimationSpeed(mTargetVelocity.length()); }
+
+	// these are all correct name-wise according to the map or the DLL.
+	f32 getDirection() { return mDirection; }                                 // weak function
+	f32 getPersonalityF(int idx) { return mPersonality->mParams->getF(idx); } // weak
+	int getPersonalityI(int idx) { return mPersonality->mParams->getI(idx); } // weak
+
+	f32 getParameterF(int idx) { return mTekiParams->getF(idx); } // see TekiFloatParams enum
+	int getParameterI(int idx) { return mTekiParams->getI(idx); } // see TekiIntParams enum
+
+	void outputDirectionVector(Vector3f& outDir) { BTeki::outputDirectionVector(getDirection(), outDir); }
+
+	void clearCreaturePointers()
+	{
+		for (int i = 0; i < 4; i++) {
+			_418[i].reset();
+		}
+	}
+
+	static void outputDirectionVector(f32 angle, Vector3f& outVec) { outVec.set(NMathF::sin(angle), 0.0f, NMathF::cos(angle)); }
 
 	// this is basically two static enums smh
 	static int TEKI_OPTION_VISIBLE;
@@ -402,7 +414,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	f32 _3CC;                        // _3CC
 	f32 _3D0;                        // _3D0
 	f32 _3D4;                        // _3D4
-	u32* _3D8;                       // _3D8, array of something, total size 0x10
+	zen::particleGenerator** _3D8;   // _3D8
 	zen::PtclGenPack* _3DC;          // _3DC
 	ShapeDynMaterials _3E0;          // _3E0, unknown
 	int _3F0;                        // _3F0

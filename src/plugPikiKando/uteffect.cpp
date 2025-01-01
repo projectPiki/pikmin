@@ -2244,27 +2244,6 @@ void UfoSuikomiEffect::emit(EffectParm&)
 
 /*
  * --INFO--
- * Address:	80114C70
- * Size:	00001C
- */
-void zen::particleGenerator::getGPos()
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x18(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x14
-	  mr        r3, r0
-	  blr
-
-	.loc_0x14:
-	  addi      r3, r3, 0xC
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	80114C8C
  * Size:	00004C
  */

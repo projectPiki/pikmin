@@ -160,10 +160,10 @@ void MizuAi::initWait(int stateID)
 	mMizu->set2D4(0.0f);
 	mMizu->setFlickDamageCount(0);
 	if (_0C) {
-		_0C->stop();
+		_0C->stopGen();
 	}
 	if (_08) {
-		_08->stop();
+		_08->stopGen();
 	}
 }
 
@@ -183,10 +183,10 @@ void MizuAi::initReady(int stateID)
 	mMizu->set2D4(0.0f);
 	mMizu->setFlickDamageCount(0);
 	if (_0C) {
-		_0C->start();
+		_0C->startGen();
 	}
 	if (_08) {
-		_08->start();
+		_08->startGen();
 	}
 
 	if (mMizu->mSeContext) {
@@ -212,11 +212,11 @@ void MizuAi::initJet(int stateID)
 	naviGeyzerJump();
 
 	if (_0C) {
-		_0C->stop();
+		_0C->stopGen();
 	}
 
 	if (_08) {
-		_08->stop();
+		_08->stopGen();
 	}
 
 	effectMgr->create(EffectMgr::EFF_Unk196, mMizu->mPosition, mPuffCallBack, nullptr);

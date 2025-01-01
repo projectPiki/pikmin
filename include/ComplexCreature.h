@@ -13,7 +13,29 @@ template <typename T>
 struct SmartPtr {
 	SmartPtr() { mPtr = nullptr; }
 
-	void set(T*);
+	void set(T* creature)
+	{
+		if (mPtr) {
+			reset();
+		}
+		mPtr = creature;
+		if (mPtr) {
+			mPtr->addCnt();
+		}
+	}
+
+	void reset()
+	{
+		if (mPtr) {
+			mPtr->subCnt();
+			mPtr = nullptr;
+		}
+	}
+
+	// also need:
+	// void clear();
+	// bool isNull();
+	// T* getPtr();
 
 	T* mPtr; // _00
 };

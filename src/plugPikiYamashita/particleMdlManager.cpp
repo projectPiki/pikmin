@@ -163,61 +163,10 @@ zen::particleChildMdl::~particleChildMdl()
  */
 zen::particleChildMdl::particleChildMdl()
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802D
-	  addi      r0, r4, 0x68DC
-	  stw       r0, 0x0(r3)
-	  lis       r5, 0x802E
-	  subi      r6, r5, 0x27B8
-	  stw       r3, 0x8(r3)
-	  lis       r4, 0x802E
-	  li        r5, 0
-	  stw       r3, 0x4(r3)
-	  subi      r0, r4, 0x277C
-	  stw       r6, 0x0(r3)
-	  lfs       f1, -0x4C18(r2)
-	  stfs      f1, 0x14(r3)
-	  stfs      f1, 0x10(r3)
-	  stfs      f1, 0xC(r3)
-	  stfs      f1, 0x20(r3)
-	  stfs      f1, 0x1C(r3)
-	  stfs      f1, 0x18(r3)
-	  lfs       f0, 0x1118(r13)
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, 0x111C(r13)
-	  stfs      f0, 0x10(r3)
-	  lfs       f0, 0x1120(r13)
-	  stfs      f0, 0x14(r3)
-	  lfs       f0, 0x1124(r13)
-	  stfs      f0, 0x18(r3)
-	  lfs       f0, 0x1128(r13)
-	  stfs      f0, 0x1C(r3)
-	  lfs       f0, 0x112C(r13)
-	  stfs      f0, 0x20(r3)
-	  lfs       f0, -0x4C14(r2)
-	  stfs      f0, 0x24(r3)
-	  stb       r5, 0x28(r3)
-	  stb       r5, 0x29(r3)
-	  stb       r5, 0x2A(r3)
-	  stb       r5, 0x2B(r3)
-	  stw       r0, 0x0(r3)
-	  stfs      f1, 0x2C(r3)
-	  stb       r5, 0x31(r3)
-	  stb       r5, 0x30(r3)
-	  stb       r5, 0x32(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
- */
-zen::particleMdlBase::~particleMdlBase()
-{
-	// UNUSED FUNCTION
+	_2C = 0.0f;
+	_31 = 0;
+	_30 = 0;
+	_32 = 0;
 }
 
 /*
@@ -225,39 +174,7 @@ zen::particleMdlBase::~particleMdlBase()
  * Address:	801A1A08
  * Size:	00005C
  */
-zen::particleMdl::~particleMdl()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x44
-	  lis       r3, 0x802E
-	  subi      r0, r3, 0x27D8
-	  stw       r0, 0x0(r31)
-	  beq-      .loc_0x34
-	  lis       r3, 0x802E
-	  subi      r0, r3, 0x27B8
-	  stw       r0, 0x0(r31)
-
-	.loc_0x34:
-	  extsh.    r0, r4
-	  ble-      .loc_0x44
-	  mr        r3, r31
-	  bl        -0x15A89C
-
-	.loc_0x44:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+zen::particleMdl::~particleMdl() { }
 
 /*
  * --INFO--
@@ -266,107 +183,28 @@ zen::particleMdl::~particleMdl()
  */
 zen::particleMdl::particleMdl()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802E
-	  stw       r0, 0x4(r1)
-	  subi      r5, r4, 0x27B8
-	  li        r4, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  stw       r3, 0x8(r1)
-	  lis       r3, 0x802D
-	  addi      r0, r3, 0x68DC
-	  lwz       r30, 0x8(r1)
-	  lis       r3, 0x802E
-	  subi      r6, r3, 0x27D8
-	  stw       r0, 0x0(r30)
-	  li        r0, 0x1
-	  addi      r3, r30, 0x6C
-	  stw       r30, 0x8(r30)
-	  stw       r30, 0x4(r30)
-	  stw       r5, 0x0(r30)
-	  li        r5, 0x1
-	  lfs       f2, -0x4C18(r2)
-	  stfs      f2, 0x14(r30)
-	  stfs      f2, 0x10(r30)
-	  stfs      f2, 0xC(r30)
-	  stfs      f2, 0x20(r30)
-	  stfs      f2, 0x1C(r30)
-	  stfs      f2, 0x18(r30)
-	  lfs       f0, 0x1118(r13)
-	  stfs      f0, 0xC(r30)
-	  lfs       f0, 0x111C(r13)
-	  stfs      f0, 0x10(r30)
-	  lfs       f0, 0x1120(r13)
-	  stfs      f0, 0x14(r30)
-	  lfs       f0, 0x1124(r13)
-	  stfs      f0, 0x18(r30)
-	  lfs       f0, 0x1128(r13)
-	  stfs      f0, 0x1C(r30)
-	  lfs       f0, 0x112C(r13)
-	  stfs      f0, 0x20(r30)
-	  lfs       f1, -0x4C14(r2)
-	  stfs      f1, 0x24(r30)
-	  stb       r31, 0x28(r30)
-	  stb       r31, 0x29(r30)
-	  stb       r31, 0x2A(r30)
-	  stb       r31, 0x2B(r30)
-	  stw       r6, 0x0(r30)
-	  stfs      f2, 0x3C(r30)
-	  stfs      f2, 0x38(r30)
-	  stfs      f2, 0x34(r30)
-	  stfs      f2, 0x48(r30)
-	  stfs      f2, 0x44(r30)
-	  stfs      f2, 0x40(r30)
-	  stfs      f2, 0x64(r30)
-	  stfs      f2, 0x60(r30)
-	  stfs      f2, 0x5C(r30)
-	  stfs      f2, 0x6C(r30)
-	  stb       r31, 0x70(r30)
-	  sth       r0, 0x72(r30)
-	  stw       r31, 0x74(r30)
-	  sth       r31, 0x2E(r30)
-	  sth       r31, 0x2C(r30)
-	  stfs      f2, 0x30(r30)
-	  lfs       f0, 0x1130(r13)
-	  stfs      f0, 0x34(r30)
-	  lfs       f0, 0x1134(r13)
-	  stfs      f0, 0x38(r30)
-	  lfs       f0, 0x1138(r13)
-	  stfs      f0, 0x3C(r30)
-	  stfs      f2, 0x54(r30)
-	  stfs      f2, 0x50(r30)
-	  stfs      f2, 0x50(r30)
-	  lfs       f0, 0x113C(r13)
-	  stfs      f0, 0x5C(r30)
-	  lfs       f0, 0x1140(r13)
-	  stfs      f0, 0x60(r30)
-	  lfs       f0, 0x1144(r13)
-	  stfs      f0, 0x64(r30)
-	  sth       r31, 0x58(r30)
-	  sth       r31, 0x5A(r30)
-	  stfs      f1, 0x64(r30)
-	  stb       r31, 0x4C(r30)
-	  stb       r31, 0x68(r30)
-	  stb       r31, 0x69(r30)
-	  stb       r31, 0x6A(r30)
-	  stb       r31, 0x6B(r30)
-	  bl        .loc_0x180
-	  stw       r31, 0x78(r30)
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x180:
-	*/
+	_6C._00       = 0.0f;
+	_6C._04       = 0;
+	_6C._06       = 1;
+	_6C.mAnimData = nullptr;
+	_2E           = 0;
+	_2C           = 0;
+	_30           = 0.0f;
+	_34.set(0.0f, 0.0f, 0.0f);
+	_54 = 0.0f;
+	_50 = 0.0f;
+	_50 = 0.0f;
+	_5C.set(0.0f, 0.0f, 0.0f);
+	_58   = 0;
+	_5A   = 0;
+	_5C.z = 1.0f;
+	_4C   = 0;
+	_68   = 0;
+	_69   = 0;
+	_6A   = 0;
+	_6B   = 0;
+	_6C.init(nullptr, 1);
+	_78 = 0;
 }
 
 /*
@@ -374,33 +212,20 @@ zen::particleMdl::particleMdl()
  * Address:	801A1BE4
  * Size:	000048
  */
-void zen::bBoardColourAnim::init(zen::bBoardColourAnimData*, s16)
+void zen::bBoardColourAnim::init(zen::bBoardColourAnimData* data, s16 p2)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x4C18(r2)
-	  li        r0, 0
-	  stfs      f0, 0x0(r3)
-	  stb       r0, 0x4(r3)
-	  stw       r4, 0x8(r3)
-	  lwz       r4, 0x8(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x40
-	  lbz       r0, 0x2(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  sth       r5, 0x6(r3)
-	  blr
-
-	.loc_0x34:
-	  lbz       r0, 0x1(r4)
-	  sth       r0, 0x6(r3)
-	  blr
-
-	.loc_0x40:
-	  sth       r5, 0x6(r3)
-	  blr
-	*/
+	_00       = 0.0f;
+	_04       = 0;
+	mAnimData = data;
+	if (mAnimData) {
+		if (mAnimData->_02) {
+			_06 = p2;
+		} else {
+			_06 = mAnimData->_01;
+		}
+	} else {
+		_06 = p2;
+	}
 }
 
 /*

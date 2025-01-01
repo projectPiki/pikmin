@@ -679,15 +679,15 @@ void KoganeAi::initCreate(int nextState)
 
 	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_Unk89, mKogane->mPosition, nullptr, nullptr);
 	if (ptcl1) {
-		ptcl1->setA0(vec1);
+		ptcl1->setEmitDir(vec1);
 	}
 	zen::particleGenerator* ptcl2 = effectMgr->create(EffectMgr::EFF_Unk88, mKogane->mPosition, nullptr, nullptr);
 	if (ptcl2) {
-		ptcl2->setA0(vec2);
+		ptcl2->setEmitDir(vec2);
 	}
 	zen::particleGenerator* ptcl3 = effectMgr->create(EffectMgr::EFF_Unk87, mKogane->mPosition, nullptr, nullptr);
 	if (ptcl3) {
-		ptcl3->setA0(vec3);
+		ptcl3->setEmitDir(vec3);
 	}
 
 	rumbleMgr->start(15, 0, mKogane->mPosition);

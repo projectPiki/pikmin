@@ -193,7 +193,7 @@ void zen::particleGenerator::init(u8*, Texture*, Texture*, Vector3f&, zen::parti
  * Address:	8019CF58
  * Size:	000154
  */
-void zen::particleGenerator::update(f32)
+bool zen::particleGenerator::update(f32)
 {
 	/*
 	.loc_0x0:
@@ -1254,7 +1254,7 @@ void zen::particleGenerator::pmSetDDF(u8*)
  * Address:	........
  * Size:	000074
  */
-void zen::particleGenerator::pmIntpManual(f32*, f32*)
+f32 zen::particleGenerator::pmIntpManual(f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -1264,7 +1264,7 @@ void zen::particleGenerator::pmIntpManual(f32*, f32*)
  * Address:	........
  * Size:	0000A0
  */
-void zen::particleGenerator::pmIntpLinear(f32*, f32*)
+f32 zen::particleGenerator::pmIntpLinear(f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -4747,7 +4747,7 @@ void zen::particleGenerator::forceFinish()
  * Address:	801A0CC8
  * Size:	000034
  */
-void zen::particleGenerator::finish(zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
+bool zen::particleGenerator::finish(zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
 {
 	/*
 	.loc_0x0:
@@ -4774,7 +4774,7 @@ void zen::particleGenerator::finish(zen::CallBack1<zen::particleGenerator*>*, ze
  * Address:	801A0CFC
  * Size:	0000F0
  */
-void zen::particleGenerator::forceFinish(zen::CallBack1<zen::particleGenerator*>*,
+bool zen::particleGenerator::forceFinish(zen::CallBack1<zen::particleGenerator*>*,
                                          zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
 {
 	/*
@@ -4859,7 +4859,7 @@ void zen::particleGenerator::forceFinish(zen::CallBack1<zen::particleGenerator*>
  * Address:	801A0DEC
  * Size:	000070
  */
-void zen::particleGenerator::pmGetParticle()
+zen::particleMdl* zen::particleGenerator::pmGetParticle()
 {
 	/*
 	.loc_0x0:
@@ -4903,7 +4903,7 @@ void zen::particleGenerator::pmGetParticle()
  * Address:	801A0EB0
  * Size:	000074
  */
-void zen::particleGenerator::pmGetParticleChild()
+zen::particleChildMdl* zen::particleGenerator::pmGetParticleChild()
 {
 	/*
 	.loc_0x0:

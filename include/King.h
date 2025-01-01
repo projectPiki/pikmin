@@ -251,7 +251,7 @@ struct KingBody {
 	u8 _06;                                                       // _06
 	u8 _07[2];                                                    // _07
 	u8 _09[2];                                                    // _09
-	u8 _0B[2];                                                    // _0B
+	bool _0B[2];                                                  // _0B
 	int _10[2];                                                   // _10
 	f32 _18;                                                      // _18
 	f32 _1C;                                                      // _1C
@@ -439,9 +439,18 @@ struct KingGenDamageStarCallBack : public zen::CallBack1<zen::particleGenerator*
 struct KingGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator*); // _08
 
+	void set(King* king, Vector3f* p2, bool* p3)
+	{
+		mKing = king;
+		_0C   = p2;
+		_04   = p3;
+	}
+
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	u8 _04[0x10 - 0x4]; // _04, unknown
+	bool* _04;     // _04
+	King* mKing;   // _08
+	Vector3f* _0C; // _0C
 };
 
 /**
@@ -450,7 +459,29 @@ struct KingGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
  * @note Size: 0x10.
  */
 struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	virtual bool invoke(zen::particleGenerator*); // _08
+	virtual bool invoke(zen::particleGenerator* ptcl) // _08
+	{
+		Vector3f midPt = *_04 + *_08;
+		midPt.multiply(0.5f);
+
+		Vector3f dir = *_04 - *_08;
+		dir.normalise();
+
+		ptcl->setEmitPos(midPt);
+		ptcl->setEmitDir(dir);
+
+		if (mKing->mKingBody->_05) {
+			ptcl->startGen();
+		} else {
+			ptcl->stopGen();
+		}
+
+		if (!mKing->getAlive()) {
+			ptcl->finish();
+		}
+
+		return true;
+	}
 
 	void set(Vector3f* p1, Vector3f* p2, King* king)
 	{
@@ -499,7 +530,21 @@ struct KingGenSpitPartsParticleCallBack : public zen::CallBack2<zen::particleGen
  * @note Size: 0x8.
  */
 struct KingGenSpreadSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	virtual bool invoke(zen::particleGenerator*); // _08
+	virtual bool invoke(zen::particleGenerator* ptcl) // _08
+	{
+		ptcl->setEmitDir(mKing->mKingBody->_60);
+		if (mKing->mKingBody->_06) {
+			ptcl->startGen();
+		} else {
+			ptcl->stopGen();
+		}
+
+		if (!mKing->getAlive()) {
+			ptcl->finish();
+		}
+
+		return true;
+	}
 
 	void set(King* king) { mKing = king; }
 

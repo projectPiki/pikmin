@@ -428,7 +428,7 @@ BTeki::BTeki()
 	_348           = 20;
 	_450           = new u32[_348];
 	_34C           = 0;
-	_3D8           = new u32[4];
+	_3D8           = new zen::particleGenerator*[4];
 	mCollInfo      = new CollInfo(22);
 	mSeContext     = new SeContext(this, 1);
 	_3DC           = new zen::PtclGenPack(3);
@@ -807,14 +807,14 @@ void BTeki::prepareEffects()
 		zen::particleGenerator* ptcl
 		    = effectMgr->create((EffectMgr::effTypeTable)(i + EffectMgr::EFF_Unk52), Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 		if (!ptcl) {
-			(ptcl->_F0);
+			(ptcl->mScaleSize);
 			break;
 		}
 
 		ptcl->_1DC = Vector3f(0.0f, 0.0f, 0.0f);
-		f32 val    = ptcl->_F0;
-		ptcl->setF0(val * getParameterF(TPF_RippleScale));
-		ptcl->setFlag(zen::PTCLGEN_GenStopped);
+		f32 val    = ptcl->mScaleSize;
+		ptcl->setScaleSize(val * getParameterF(TPF_RippleScale));
+		ptcl->pmSwitchOn(zen::PTCLGEN_GenStopped);
 		_3DC->setPtclGenPtr(i, ptcl);
 	}
 
@@ -1489,54 +1489,13 @@ void BTeki::dieSoon()
  */
 void BTeki::becomeCorpse()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x3D8(r3)
-	  lwz       r4, 0x0(r4)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x28
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r4)
+	for (int i = 0; i < 4; i++) {
+		if (_3D8[i]) {
+			_3D8[i]->finish();
+		}
+	}
 
-	.loc_0x28:
-	  lwz       r4, 0x3D8(r3)
-	  lwz       r4, 0x4(r4)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x44
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r4)
-
-	.loc_0x44:
-	  lwz       r4, 0x3D8(r3)
-	  lwz       r4, 0x8(r4)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x60
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r4)
-
-	.loc_0x60:
-	  lwz       r4, 0x3D8(r3)
-	  lwz       r4, 0xC(r4)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x7C
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r4)
-
-	.loc_0x7C:
-	  lwz       r3, 0x3DC(r3)
-	  bl        0x94A2C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	_3DC->finish();
 }
 
 /*

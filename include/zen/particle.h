@@ -3,6 +3,8 @@
 
 #include "types.h"
 #include "zen/zenList.h"
+#include "zen/CallBack.h"
+#include "zen/bBoardColourAnim.h"
 #include "Dolphin/mtx.h"
 #include "sysNew.h"
 
@@ -12,11 +14,6 @@ struct Texture;
 struct Vector3f;
 
 namespace zen {
-template <typename A>
-struct CallBack1;
-
-template <typename A, typename B>
-struct CallBack2;
 
 struct particleMdl;
 struct particleMdlManager;
@@ -25,14 +22,16 @@ struct particleMdlManager;
  * @brief TODO
  */
 enum ParticleGeneratorFlags {
-	PTCLGEN_Unk1        = 0x1,
-	PTCLGEN_GenFinished = 0x2,
-	PTCLGEN_Unk3        = 0x4,
-	PTCLGEN_GenStopped  = 0x8,
+	PTCLGEN_Stop       = 0x1,
+	PTCLGEN_Finished   = 0x2,
+	PTCLGEN_Active     = 0x4,
+	PTCLGEN_GenStopped = 0x8,
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x2C.
  */
 struct particleMdlBase : public zenList {
 	inline particleMdlBase()
@@ -49,7 +48,11 @@ struct particleMdlBase : public zenList {
 	virtual void remove(); // _0C
 
 	// unused/inlined:
-	~particleMdlBase();
+	~particleMdlBase() { }
+
+	// todo: make these
+	void InitParam();
+	Vector3f getPos() { return _0C + _18; }
 
 	// _00     = VTBL
 	// _00-_0C = zenList
@@ -72,9 +75,28 @@ struct particleMdl : public particleMdlBase {
 
 	~particleMdl();
 
+	// todo: make this
+	void InitParam();
+
 	// _00     = VTBL
-	// _00-_0C = particleMdlBase?
-	// TODO: members
+	// _00-_2C = particleMdlBase
+	s16 _2C;              // _2C
+	s16 _2E;              // _2E
+	f32 _30;              // _30
+	Vector3f _34;         // _34
+	Vector3f _40;         // _40
+	u8 _4C;               // _4C
+	f32 _50;              // _50
+	f32 _54;              // _54
+	s16 _58;              // _58
+	s16 _5A;              // _5A
+	Vector3f _5C;         // _5C
+	u8 _68;               // _68
+	u8 _69;               // _69
+	u8 _6A;               // _6A
+	u8 _6B;               // _6B
+	bBoardColourAnim _6C; // _6C
+	u32 _78;              // _78, unknown
 };
 
 /*
@@ -88,8 +110,11 @@ struct particleChildMdl : public particleMdlBase {
 	~particleChildMdl();
 
 	// _00     = VTBL
-	// _00-_0C = particleMdlBase?
-	// TODO: members
+	// _00-_2C = particleMdlBase
+	f32 _2C; // _2C
+	u8 _30;  // _30
+	u8 _31;  // _31
+	u8 _32;  // _32
 };
 
 /*
@@ -100,6 +125,14 @@ struct particleMdlManager {
 
 	// unused/inlined:
 	~particleMdlManager();
+
+	// TODO: make these
+	int getSleepPtclChildNum();
+	int getSleepPtclNum();
+	void putPtcl(zenList*);
+	void putPtclChild(zenList*);
+	zenList* getPtcl();
+	zenList* getPtclChild();
 
 	// TODO: members
 };
@@ -114,10 +147,9 @@ struct particleGenerator : public zenList {
 
 	~particleGenerator();
 
-	void getGPos();
 	void init(u8*, Texture*, Texture*, Vector3f&, particleMdlManager*, CallBack1<particleGenerator*>*,
 	          CallBack2<particleGenerator*, particleMdl*>*);
-	void update(f32);
+	bool update(f32);
 	void draw(Graphics&);
 	void pmSetDDF(u8*);
 	void SetPtclsLife();
@@ -137,75 +169,121 @@ struct particleGenerator : public zenList {
 	void updatePtclChildren(f32);
 	void drawPtclChildren(Graphics&);
 	void forceFinish();
-	void finish(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
-	void forceFinish(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
-	void pmGetParticle();
-	void pmGetParticleChild();
+	bool finish(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
+	bool forceFinish(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
+	particleMdl* pmGetParticle();
+	particleChildMdl* pmGetParticleChild();
 
 	// unused/inlined:
-	void pmIntpManual(f32*, f32*);
-	void pmIntpLinear(f32*, f32*);
+	f32 pmIntpManual(f32*, f32*);
+	f32 pmIntpLinear(f32*, f32*);
 
-	// might be pmSwitchOff and pmSwitchOn
-	inline void setFlag(u32 flag) { mGeneratorFlags |= flag; }
-	inline void resetFlag(u32 flag) { mGeneratorFlags &= ~flag; }
-
-	inline bool isFlag(u32 flag) { return mGeneratorFlags & flag; }
-
-	// might be startGen
-	inline void start() { mGeneratorFlags &= ~PTCLGEN_GenStopped; }
-
-	// might be stopGen
-	inline void stop() { mGeneratorFlags |= PTCLGEN_GenStopped; }
-
-	inline bool isFlag4() { return mGeneratorFlags & PTCLGEN_Unk3; }
-
-	inline void setF0(f32 val) { _F0 = val; } // unsure what this does, rename later
-
-	inline void setA0(Vector3f& vec) { _A0 = vec; }
 	inline void set1DC(Vector3f& vec) { _1DC = vec; }
-	inline void finish() { mGeneratorFlags |= PTCLGEN_GenFinished; }
 
-	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
+	// these are correct from the DLL
 
-	Vector3f& getEmitPos() { return (mEmitPosPtr) ? *mEmitPosPtr : mEmitPos; }
-	void setEmitPos(Vector3f& pos) { mEmitPos = pos; }
+	void pmSwitchOn(u32 flag) { mGeneratorFlags |= flag; }
+	void pmSwitchOff(u32 flag) { mGeneratorFlags &= ~flag; }
 
 	zenListManager& getPtclMdlListManager() { return mPtclMdlListManager; }
 
+	void setEmitPos(Vector3f& pos) { _0C = pos; }
+	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
+	void setEmitDir(Vector3f& vec) { mEmitDir = vec; }
+	void setCallBack(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2)
+	{
+		mCallBack1 = cb1;
+		if (cb1) {
+			mCallBack1->invoke(this);
+		}
+		mCallBack2 = cb2;
+	}
+
+	Vector3f& getGPos() { return (mEmitPosPtr) ? *mEmitPosPtr : _0C; }
+
+	f32 getScaleSize() { return mScaleSize; }
+	void setScaleSize(f32 scale) { mScaleSize = scale; }
+
+	void start() { mGeneratorFlags &= ~PTCLGEN_Stop; }
+	void stop() { mGeneratorFlags |= PTCLGEN_Stop; }
+	void startGen() { mGeneratorFlags &= ~PTCLGEN_GenStopped; }
+	void stopGen() { mGeneratorFlags |= PTCLGEN_GenStopped; }
+	void finish() { mGeneratorFlags |= PTCLGEN_Finished; }
+
+	bool checkStop() { return mGeneratorFlags & PTCLGEN_Stop; }
+	bool checkEmit() { return !(mGeneratorFlags & PTCLGEN_Finished); }
+	bool checkActive() { return mGeneratorFlags & PTCLGEN_Active; }
+	bool checkStopGen() { return mGeneratorFlags & PTCLGEN_GenStopped; }
+
+	/*
+	    These are still to be made/assigned from the DLL:
+
+	    void visible();
+	    void invisible();
+
+	    void killParticle(particleMdl*);
+
+	    void setAirField(Vector3f&, bool);
+	    void setEmitVelocity(Vector3f&);
+	    void setGravityField(Vector3f&, bool);
+	    void setOrientedConstZAxis(bool);
+	    void setOrientedNormalVector(Vector3f&);
+	    void setVortexField(Vector3f, f32, f32, f32, f32, bool);
+
+	    void setFreqFrm(f32);
+	    void setInitVel(f32);
+	    void setNewtonField(Vector3f, f32, bool);
+
+	    f32 getFreqFrm();
+	    f32 getInitVel();
+	    f32 getNewtonFieldFrc();
+
+	    void pmGetArbitUnitVec(Vector3f&);
+	    void pmPutParticle(zenList*);
+	    void pmPutParticleChild(zenList*);
+	    void pmSwitch(bool, u32);
+
+	    s16 getCurrentFrame();
+	    s16 getMaxFrame();
+
+	    Vector3f& getEmitPos();
+
+	    u32 getControlFlag();
+	*/
+
 	// _00     = VTBL
 	// _00-_0C = zenList
-	// TODO: members
-	Vector3f mEmitPos;                  // _0C
-	Vector3f* mEmitPosPtr;              // _18
-	Vector3f _1C;                       // _1C
-	zenListManager mPtclMdlListManager; // _28
-	zenListManager _38;                 // _38
-	u8 _48[0x80 - 0x48];                // _48, unknown
-	u32 mGeneratorFlags;                // _80
-	u32 _84;                            // _84, unknown
-	u8 _88[0x94 - 0x88];                // _88, unknown
-	Vector3f _94;                       // _94
-	Vector3f _A0;                       // _A0
-	Vector3f _AC;                       // _AC
-	u8 _B8[0xF0 - 0xB8];                // _B8, unknown
-	f32 _F0;                            // _F0
-	u8 _F4[0x12C - 0xF4];               // _F4, unknown
-	Vector3f _12C;                      // _12C
-	Vector3f _138;                      // _138
-	Vector3f _144;                      // _144
-	u8 _150[0x160 - 0x150];             // _150, unknown
-	Vector3f _160;                      // _160
-	u8 _16C[0x4];                       // _16C, unknown
-	Vector3f _170;                      // _170
-	u8 _17C[0x4];                       // _17C, unknown
-	Vector3f _180;                      // _180
-	u8 _18C[0x8];                       // _18C, unknown
-	Vector3f _194;                      // _194
-	u8 _1A0[0x1D4 - 0x1A0];             // _1A0, unknown
-	u32 _1D4;                           // _1D4, unknown
-	u32 _1D8;                           // _1D8, unknown
-	Vector3f _1DC;                      // _1DC
+	Vector3f _0C;                                            // _0C
+	Vector3f* mEmitPosPtr;                                   // _18
+	Vector3f _1C;                                            // _1C
+	zenListManager mPtclMdlListManager;                      // _28
+	zenListManager _38;                                      // _38
+	u8 _48[0x80 - 0x48];                                     // _48, unknown
+	u32 mGeneratorFlags;                                     // _80
+	u32 _84;                                                 // _84, unknown
+	u8 _88[0x94 - 0x88];                                     // _88, unknown
+	Vector3f _94;                                            // _94
+	Vector3f mEmitDir;                                       // _A0
+	Vector3f _AC;                                            // _AC
+	u8 _B8[0xF0 - 0xB8];                                     // _B8, unknown
+	f32 mScaleSize;                                          // _F0
+	u8 _F4[0x12C - 0xF4];                                    // _F4, unknown
+	Vector3f _12C;                                           // _12C
+	Vector3f _138;                                           // _138
+	Vector3f _144;                                           // _144
+	u8 _150[0x160 - 0x150];                                  // _150, unknown
+	Vector3f _160;                                           // _160
+	u8 _16C[0x4];                                            // _16C, unknown
+	Vector3f _170;                                           // _170
+	u8 _17C[0x4];                                            // _17C, unknown
+	Vector3f _180;                                           // _180
+	u8 _18C[0x8];                                            // _18C, unknown
+	Vector3f _194;                                           // _194
+	u8 _1A0[0x1D0 - 0x1A0];                                  // _1A0, unknown
+	u32 _1D0;                                                // _1D0, unknown
+	CallBack1<particleGenerator*>* mCallBack1;               // _1D4
+	CallBack2<particleGenerator*, particleMdl*>* mCallBack2; // _1D8
+	Vector3f _1DC;                                           // _1DC
 };
 
 /*

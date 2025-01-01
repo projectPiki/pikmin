@@ -81,7 +81,7 @@ void PtclGenPack::startGen()
 
 	for (i = 0; i < mLimit; i++, genList++) {
 		if (*genList) {
-			(*genList)->resetFlag(PTCLGEN_GenStopped);
+			(*genList)->startGen();
 		}
 	}
 }
@@ -97,7 +97,7 @@ void PtclGenPack::stopGen()
 	particleGenerator** genList = mGeneratorList;
 	for (i = 0; i < mLimit; i++, genList++) {
 		if (*genList) {
-			(*genList)->setFlag(PTCLGEN_GenStopped);
+			(*genList)->stopGen();
 		}
 	}
 	return;
@@ -134,11 +134,10 @@ void PtclGenPack::finish()
 	particleGenerator** genList = mGeneratorList;
 	for (i = 0; i < mLimit; i++, genList++) {
 		if (*genList) {
-			(*genList)->mGeneratorFlags |= 2;
+			(*genList)->finish();
 			*genList = nullptr;
 		}
 	}
-	return;
 }
 
 /*
@@ -170,7 +169,7 @@ bool PtclGenPack::checkStopGen()
 	particleGenerator** genList = mGeneratorList;
 
 	for (i = 0; i < mLimit; i++, genList++) {
-		if ((*genList) && (!(*genList)->isFlag(PTCLGEN_GenStopped))) {
+		if ((*genList) && (!(*genList)->checkStopGen())) {
 			return false;
 		}
 	}
