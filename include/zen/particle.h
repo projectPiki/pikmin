@@ -173,10 +173,10 @@ struct particleMdlManager {
 	int getSleepPtclNum() { return mSleepPtclList.getListNum(); }
 	int getSleepPtclChildNum() { return mSleepPtclChildList.getListNum(); }
 
-	// TODO: make these
-	void putPtcl(zenList*);
-	void putPtclChild(zenList*);
+	void putPtcl(zenList* ptcl) { mSleepPtclList.put(ptcl); }
+	void putPtclChild(zenList* child) { mSleepPtclChildList.put(child); }
 
+	// TODO: make these
 	zenList* getPtcl();
 	zenList* getPtclChild();
 
@@ -280,13 +280,15 @@ struct particleGenerator : public zenList {
 	bool checkActive() { return mGeneratorFlags & PTCLGEN_Active; }
 	bool checkStopGen() { return mGeneratorFlags & PTCLGEN_GenStopped; }
 
+	void killParticle(particleMdl* ptcl) { pmPutParticle(ptcl); }
+	void pmPutParticle(zenList* ptcl) { mMdlMgr->putPtcl(ptcl); }
+	void pmPutParticleChild(zenList* child) { mMdlMgr->putPtclChild(child); }
+
 	/*
 	    These are still to be made/assigned from the DLL:
 
 	    void visible();
 	    void invisible();
-
-	    void killParticle(particleMdl*);
 
 	    void setAirField(Vector3f&, bool);
 	    void setEmitVelocity(Vector3f&);
@@ -304,8 +306,6 @@ struct particleGenerator : public zenList {
 	    f32 getNewtonFieldFrc();
 
 	    void pmGetArbitUnitVec(Vector3f&);
-	    void pmPutParticle(zenList*);
-	    void pmPutParticleChild(zenList*);
 	    void pmSwitch(bool, u32);
 
 	    s16 getCurrentFrame();
@@ -348,7 +348,7 @@ struct particleGenerator : public zenList {
 	u8 _18C[0x8];                                            // _18C, unknown
 	Vector3f _194;                                           // _194
 	u8 _1A0[0x1D0 - 0x1A0];                                  // _1A0, unknown
-	u32 _1D0;                                                // _1D0, unknown
+	particleMdlManager* mMdlMgr;                             // _1D0
 	CallBack1<particleGenerator*>* mCallBack1;               // _1D4
 	CallBack2<particleGenerator*, particleMdl*>* mCallBack2; // _1D8
 	Vector3f _1DC;                                           // _1DC

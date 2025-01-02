@@ -6,6 +6,7 @@
 #include "zen/Callback.h"
 #include "zen/Particle.h"
 #include "CreatureCollPart.h"
+#include "EffectMgr.h"
 #include "MapMgr.h"
 
 struct KingAi;
@@ -246,17 +247,17 @@ struct KingBody {
 	void returnJoint(BossShapeObject*, Graphics&, Matrix4f*);
 
 	King* mKing;                                                  // _00
-	u8 _04;                                                       // _04
+	bool _04;                                                     // _04
 	u8 _05;                                                       // _05
 	u8 _06;                                                       // _06
-	u8 _07[2];                                                    // _07
-	u8 _09[2];                                                    // _09
-	bool _0B[2];                                                  // _0B
-	int _10[2];                                                   // _10
-	f32 _18;                                                      // _18
-	f32 _1C;                                                      // _1C
+	bool mIsFootOnGround[2];                                      // _07
+	bool _09[2];                                                  // _09
+	bool mIsFootGeneratingRipples[2];                             // _0B
+	int mFootMapAttr[2];                                          // _10
+	f32 mBlendingRate;                                            // _18
+	f32 mBlendingRatio;                                           // _1C
 	f32 _20;                                                      // _20
-	Vector3f _24[2];                                              // _24
+	Vector3f mFootPos[2];                                         // _24
 	Vector3f _3C[2];                                              // _3C
 	Vector3f _54;                                                 // _54
 	Vector3f _60;                                                 // _60
@@ -422,7 +423,13 @@ struct KingAi : public PaniAnimKeyListener {
  * @note Size: 0x8.
  */
 struct KingGenDamageStarCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	virtual bool invoke(zen::particleGenerator*); // _08
+	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
+	{
+		if (mKing->getCurrentState() != 1 && mKing->getCurrentState() != 2) {
+			ptclGen->finish();
+		}
+		return true;
+	}
 
 	void set(King* king) { mKing = king; }
 
@@ -437,20 +444,29 @@ struct KingGenDamageStarCallBack : public zen::CallBack1<zen::particleGenerator*
  * @note Size: 0x10.
  */
 struct KingGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	virtual bool invoke(zen::particleGenerator*); // _08
-
-	void set(King* king, Vector3f* p2, bool* p3)
+	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
-		mKing = king;
-		_0C   = p2;
-		_04   = p3;
+		Vector3f emitPos(*mRippleEmitPos);
+		emitPos.y = mKing->mPosition.y;
+		ptclGen->setEmitPos(emitPos);
+		if (!mKing->getAlive() || !*_04) {
+			ptclGen->finish();
+		}
+		return true;
+	}
+
+	void set(King* king, Vector3f* emitPos, bool* p3)
+	{
+		mKing          = king;
+		mRippleEmitPos = emitPos;
+		_04            = p3;
 	}
 
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	bool* _04;     // _04
-	King* mKing;   // _08
-	Vector3f* _0C; // _0C
+	bool* _04;                // _04
+	King* mKing;              // _08
+	Vector3f* mRippleEmitPos; // _0C
 };
 
 /**
@@ -503,7 +519,32 @@ struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
  * @note Size: 0x8.
  */
 struct KingGenSalivaParticleCallBack : public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
-	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _08
+	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _08
+	{
+		if (ptcl->_2E == 0) {
+			ptcl->_34.x += (mKing->mKingBody->_D8.x - mKing->mKingBody->_E4.x) / 2.0f;
+			ptcl->_34.z += (mKing->mKingBody->_D8.z - mKing->mKingBody->_E4.z) / 2.0f;
+		}
+
+		Vector3f ptclPos = ptcl->getPos();
+		f32 minY         = mapMgr->getMinY(ptclPos.x, ptclPos.z, true);
+
+		if (minY > ptclPos.y) {
+			CollTriInfo* currTri = mapMgr->getCurrTri(ptclPos.x, ptclPos.z, true);
+			if (currTri) {
+				Vector3f norm(currTri->_28[0].mNormal);
+				norm.multiply(0.01f);
+				ptclPos.y = minY;
+				ptclGen->killParticle(ptcl);
+				zen::particleGenerator* newGen = effectMgr->create(EffectMgr::EFF_Unk119, ptclPos, nullptr, nullptr);
+				if (newGen) {
+					newGen->set1DC(currTri->_18);
+					newGen->setEmitDir(norm);
+				}
+			}
+		}
+		return true;
+	}
 
 	void set(King* king) { mKing = king; }
 
@@ -518,7 +559,26 @@ struct KingGenSalivaParticleCallBack : public zen::CallBack2<zen::particleGenera
  * @note Size: 0x4.
  */
 struct KingGenSpitPartsParticleCallBack : public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
-	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _08
+	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _08
+	{
+		Vector3f ptclPos = ptcl->getPos();
+		f32 minY         = mapMgr->getMinY(ptclPos.x, ptclPos.z, true);
+		if (minY > ptclPos.y) {
+			CollTriInfo* currTri = mapMgr->getCurrTri(ptclPos.x, ptclPos.z, true);
+			if (currTri) {
+				Vector3f norm(currTri->_28[0].mNormal);
+				norm.multiply(0.01f);
+				ptclPos.y = minY;
+				ptclGen->killParticle(ptcl);
+				zen::particleGenerator* newGen = effectMgr->create(EffectMgr::EFF_Unk119, ptclPos, nullptr, nullptr);
+				if (newGen) {
+					newGen->set1DC(currTri->_18);
+					newGen->setEmitDir(norm);
+				}
+			}
+		}
+		return true;
+	}
 
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack2

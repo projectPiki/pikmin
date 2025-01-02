@@ -18,10 +18,17 @@ void calcMat3toMat4(const Matrix3f&, Matrix4f&);
 
 // other existing (inline) functions according to the DLL:
 f32 calcInnerRatio(const Vector3f&, const Vector3f&);
-void calcMtxBotIdent(Matrix4f&);
 void calcMtxTrans(const Matrix4f&, int, Vector3f&);
 void calcOuterPro(const Vector3f&, const Vector3f&, Vector3f&);
 void calcVectorTrans(const Vector3f&, int, Matrix4f&);
+
+static inline void calcMtxBotIdent(Matrix4f& mtx)
+{
+	mtx.mMtx[3][0] = 0.0f;
+	mtx.mMtx[3][1] = 0.0f;
+	mtx.mMtx[3][2] = 0.0f;
+	mtx.mMtx[3][3] = 1.0f;
+}
 } // namespace NsCalculation
 
 // these exist in the DLL "map"
