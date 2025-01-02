@@ -35,49 +35,78 @@ enum ParticleGeneratorFlags {
  * @note Size: 0x2C.
  */
 struct particleMdlBase : public zenList {
-	inline particleMdlBase()
+	inline particleMdlBase() { InitParam(); }
+
+	virtual void remove() // _0C
+	{
+		zenList::remove();
+		InitParam();
+	}
+
+	~particleMdlBase() { }
+
+	Vector3f getPos() { return _0C + _18; }
+
+	void InitParam()
 	{
 		_0C.set(0.0f, 0.0f, 0.0f);
 		_18.set(0.0f, 0.0f, 0.0f);
 		_24 = 1.0f;
-		_28 = 0;
-		_29 = 0;
-		_2A = 0;
-		_2B = 0;
+		_28.set(0, 0, 0, 0);
 	}
-
-	virtual void remove(); // _0C
-
-	// unused/inlined:
-	~particleMdlBase() { }
-
-	// todo: make these
-	void InitParam();
-	Vector3f getPos() { return _0C + _18; }
 
 	// _00     = VTBL
 	// _00-_0C = zenList
 	Vector3f _0C; // _0C
 	Vector3f _18; // _18
 	f32 _24;      // _24
-	u8 _28;       // _28
-	u8 _29;       // _29
-	u8 _2A;       // _2A
-	u8 _2B;       // _2B
+	Colour _28;   // _28
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x80.
  */
 struct particleMdl : public particleMdlBase {
-	particleMdl();
+	particleMdl()
+	{
+		_6C._00       = 0.0f;
+		_6C._04       = 0;
+		_6C._06       = 1;
+		_6C.mAnimData = nullptr;
+		InitParam();
+	}
 
-	virtual void remove(); // _0C
+	virtual void remove() // _0C
+	{
+		particleMdlBase::remove();
+		InitParam();
+	}
 
-	~particleMdl();
+	~particleMdl() { }
 
-	// todo: make this
-	void InitParam();
+	void InitParam()
+	{
+		_2E = 0;
+		_2C = 0;
+		_30 = 0.0f;
+		_34.set(0.0f, 0.0f, 0.0f);
+		_54 = 0.0f;
+		_50 = 0.0f;
+		_50 = 0.0f;
+		_5C.set(0.0f, 0.0f, 0.0f);
+		_58   = 0;
+		_5A   = 0;
+		_5C.z = 1.0f;
+		_4C   = 0;
+		_68   = 0;
+		_69   = 0;
+		_6A   = 0;
+		_6B   = 0;
+		_6C.init(nullptr, 1);
+		_78 = 0;
+	}
 
 	// _00     = VTBL
 	// _00-_2C = particleMdlBase
@@ -98,17 +127,29 @@ struct particleMdl : public particleMdlBase {
 	u8 _6B;               // _6B
 	bBoardColourAnim _6C; // _6C
 	u32 _78;              // _78, unknown
+	u8 _7C[0x4];          // _7C, unknown
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x34.
  */
 struct particleChildMdl : public particleMdlBase {
-	particleChildMdl();
+	particleChildMdl()
+	{
+		_2C = 0.0f;
+		_31 = 0;
+		_30 = 0;
+		_32 = 0;
+	}
 
-	virtual void remove(); // _0C
+	virtual void remove() // _0C
+	{
+		particleMdlBase::remove();
+	}
 
-	~particleChildMdl();
+	~particleChildMdl() { }
 
 	// _00     = VTBL
 	// _00-_2C = particleMdlBase
@@ -129,8 +170,8 @@ struct particleMdlManager {
 	// unused/inlined:
 	~particleMdlManager();
 
-	int getSleepPtclNum() { return mPtclList.getListNum(); }
-	int getSleepPtclChildNum() { return mPtclChildList.getListNum(); }
+	int getSleepPtclNum() { return mSleepPtclList.getListNum(); }
+	int getSleepPtclChildNum() { return mSleepPtclChildList.getListNum(); }
 
 	// TODO: make these
 	void putPtcl(zenList*);
@@ -139,10 +180,10 @@ struct particleMdlManager {
 	zenList* getPtcl();
 	zenList* getPtclChild();
 
-	zenListManager mPtclList;      // _00
-	zenListManager mPtclChildList; // _10
-	u32 _20;                       // _20, unknown
-	u32 _24;                       // _24, unknown
+	zenListManager mSleepPtclList;      // _00
+	zenListManager mSleepPtclChildList; // _10
+	particleMdl* mPtclList;             // _20
+	particleChildMdl* mChildPtclList;   // _24
 };
 
 /**

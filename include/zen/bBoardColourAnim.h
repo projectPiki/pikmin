@@ -41,7 +41,21 @@ struct bBoardColourAnimData {
  */
 struct bBoardColourAnim {
 	void update(f32, Colour*, Colour*);
-	void init(zen::bBoardColourAnimData*, s16);
+	void init(zen::bBoardColourAnimData* data, s16 p2)
+	{
+		_00       = 0.0f;
+		_04       = 0;
+		mAnimData = data;
+		if (mAnimData) {
+			if (mAnimData->_02) {
+				_06 = p2;
+			} else {
+				_06 = mAnimData->_01;
+			}
+		} else {
+			_06 = p2;
+		}
+	}
 
 	f32 _00;                         // _00
 	u8 _04;                          // _04
