@@ -139,6 +139,8 @@ struct EffectMgr : public CoreNode {
 		// ...
 		EFF_Unk69 = 69,
 		// ...
+		EFF_Unk85 = 85,
+		// ...
 		EFF_Unk87 = 87,
 		EFF_Unk88 = 88,
 		EFF_Unk89 = 89,
@@ -157,6 +159,15 @@ struct EffectMgr : public CoreNode {
 		EFF_Unk123 = 123,
 		EFF_Unk124 = 124,
 		EFF_Unk125 = 125,
+		// ...
+		EFF_Unk128 = 128,
+		EFF_Unk129 = 129,
+		EFF_Unk130 = 130,
+		EFF_Unk131 = 131,
+		EFF_Unk132 = 132,
+		EFF_Unk133 = 133,
+		EFF_Unk134 = 134,
+		EFF_Unk135 = 135,
 		// ...
 		EFF_Unk193 = 193,
 		EFF_Unk194 = 194,

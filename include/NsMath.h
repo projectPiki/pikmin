@@ -19,8 +19,14 @@ void calcMat3toMat4(const Matrix3f&, Matrix4f&);
 // other existing (inline) functions according to the DLL:
 f32 calcInnerRatio(const Vector3f&, const Vector3f&);
 void calcMtxTrans(const Matrix4f&, int, Vector3f&);
-void calcOuterPro(const Vector3f&, const Vector3f&, Vector3f&);
 void calcVectorTrans(const Vector3f&, int, Matrix4f&);
+
+static void calcOuterPro(const Vector3f& vec1, const Vector3f& vec2, Vector3f& outVec)
+{
+	outVec.x = vec1.y * vec2.z - vec1.z * vec2.y;
+	outVec.y = vec1.z * vec2.x - vec1.x * vec2.z;
+	outVec.z = vec1.x * vec2.y - vec1.y * vec2.x;
+}
 
 static inline void calcMtxBotIdent(Matrix4f& mtx)
 {

@@ -1,5 +1,11 @@
 #include "Snake.h"
-#include "sysNew.h"
+#include "MapCode.h"
+#include "EffectMgr.h"
+#include "SoundMgr.h"
+#include "NsMath.h"
+#include "Pellet.h"
+#include "MapMgr.h"
+#include "RumbleMgr.h"
 #include "DebugLog.h"
 
 /*
@@ -23,155 +29,43 @@ DEFINE_PRINT("SnakeBody");
  */
 void SnakeBody::setBodyOnGroundEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x80
-	  stw       r0, 0x4(r1)
-	  li        r7, 0
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x0(r3)
-	  lwz       r3, 0x884(r3)
-	  stw       r0, 0x4(r3)
-	  lwz       r5, 0x0(r31)
-	  lwz       r3, 0x3180(r13)
-	  lwz       r6, 0x884(r31)
-	  addi      r5, r5, 0x94
-	  bl        0x3CE58
-	  cmplwi    r3, 0
-	  beq-      .loc_0x50
-	  lwz       r4, 0x0(r31)
-	  addi      r0, r4, 0x94
-	  stw       r0, 0x18(r3)
+	mOnGroundCallBack->set(mSnake);
+	zen::particleGenerator* groundPtclGen = effectMgr->create(EffectMgr::EFF_Unk128, mSnake->mPosition, mOnGroundCallBack, nullptr);
+	if (groundPtclGen) {
+		groundPtclGen->setEmitPosPtr(&mSnake->mPosition);
+	}
 
-	.loc_0x50:
-	  lwz       r0, 0x0(r31)
-	  li        r4, 0x81
-	  lwz       r3, 0x888(r31)
-	  li        r7, 0
-	  stw       r0, 0x4(r3)
-	  lwz       r5, 0x0(r31)
-	  lwz       r3, 0x3180(r13)
-	  lwz       r6, 0x888(r31)
-	  addi      r5, r5, 0x94
-	  bl        0x3CE1C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x8C
-	  lwz       r4, 0x0(r31)
-	  addi      r0, r4, 0x94
-	  stw       r0, 0x18(r3)
+	mRotateCallBack->set(mSnake);
+	zen::particleGenerator* rotatePtclGen = effectMgr->create(EffectMgr::EFF_Unk129, mSnake->mPosition, mRotateCallBack, nullptr);
+	if (rotatePtclGen) {
+		rotatePtclGen->setEmitPosPtr(&mSnake->mPosition);
+	}
 
-	.loc_0x8C:
-	  lwz       r3, 0x0(r31)
-	  addi      r4, r3, 0x94
-	  bl        -0x109CC
-	  cmpwi     r3, 0x5
-	  bne-      .loc_0x20C
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0x55
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  addi      r5, r5, 0x94
-	  li        r7, 0
-	  bl        0x3CDD8
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0xE
-	  lwz       r3, 0x3180(r13)
-	  li        r7, 0
-	  lwz       r6, 0x884(r31)
-	  addi      r5, r5, 0x94
-	  bl        0x3CDBC
-	  cmplwi    r3, 0
-	  beq-      .loc_0x12C
-	  lwz       r4, 0x0(r31)
-	  addi      r0, r4, 0x94
-	  stw       r0, 0x18(r3)
-	  lfs       f0, -0x48(r13)
-	  lfs       f1, -0x44(r13)
-	  stfs      f0, 0x54(r1)
-	  lfs       f0, -0x40(r13)
-	  stfs      f1, 0x58(r1)
-	  stfs      f0, 0x5C(r1)
-	  lwz       r4, 0x54(r1)
-	  lwz       r0, 0x58(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x5C(r1)
-	  stw       r0, 0x1E4(r3)
-	  lfs       f1, -0x5550(r2)
-	  lfs       f0, 0xF0(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xF0(r3)
-
-	.loc_0x12C:
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0xC
-	  lwz       r3, 0x3180(r13)
-	  li        r7, 0
-	  lwz       r6, 0x884(r31)
-	  addi      r5, r5, 0x94
-	  bl        0x3CD4C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x19C
-	  lwz       r4, 0x0(r31)
-	  addi      r0, r4, 0x94
-	  stw       r0, 0x18(r3)
-	  lfs       f0, -0x3C(r13)
-	  lfs       f1, -0x38(r13)
-	  stfs      f0, 0x48(r1)
-	  lfs       f0, -0x34(r13)
-	  stfs      f1, 0x4C(r1)
-	  stfs      f0, 0x50(r1)
-	  lwz       r4, 0x48(r1)
-	  lwz       r0, 0x4C(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x50(r1)
-	  stw       r0, 0x1E4(r3)
-	  lfs       f1, -0x5550(r2)
-	  lfs       f0, 0xF0(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xF0(r3)
-
-	.loc_0x19C:
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0xD
-	  lwz       r3, 0x3180(r13)
-	  li        r7, 0
-	  lwz       r6, 0x884(r31)
-	  addi      r5, r5, 0x94
-	  bl        0x3CCDC
-	  cmplwi    r3, 0
-	  beq-      .loc_0x20C
-	  lwz       r4, 0x0(r31)
-	  addi      r0, r4, 0x94
-	  stw       r0, 0x18(r3)
-	  lfs       f0, -0x30(r13)
-	  lfs       f1, -0x2C(r13)
-	  stfs      f0, 0x3C(r1)
-	  lfs       f0, -0x28(r13)
-	  stfs      f1, 0x40(r1)
-	  stfs      f0, 0x44(r1)
-	  lwz       r4, 0x3C(r1)
-	  lwz       r0, 0x40(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x1E4(r3)
-	  lfs       f1, -0x5550(r2)
-	  lfs       f0, 0xF0(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xF0(r3)
-
-	.loc_0x20C:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	// water?
+	if (mSnake->getMapAttribute(mSnake->mPosition) == ATTR_Unk5) {
+		effectMgr->create(EffectMgr::EFF_Unk85, mSnake->mPosition, nullptr, nullptr);
+		zen::particleGenerator* waterPtclGen1 = effectMgr->create(EffectMgr::EFF_Unk14, mSnake->mPosition, mOnGroundCallBack, nullptr);
+		if (waterPtclGen1) {
+			waterPtclGen1->setEmitPosPtr(&mSnake->mPosition);
+			waterPtclGen1->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+			f32 f0 = waterPtclGen1->getScaleSize();
+			waterPtclGen1->setScaleSize(3.0f * f0);
+		}
+		zen::particleGenerator* waterPtclGen2 = effectMgr->create(EffectMgr::EFF_Unk12, mSnake->mPosition, mOnGroundCallBack, nullptr);
+		if (waterPtclGen2) {
+			waterPtclGen2->setEmitPosPtr(&mSnake->mPosition);
+			waterPtclGen2->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+			f32 f0 = waterPtclGen2->getScaleSize();
+			waterPtclGen2->setScaleSize(3.0f * f0);
+		}
+		zen::particleGenerator* waterPtclGen3 = effectMgr->create(EffectMgr::EFF_Unk13, mSnake->mPosition, mOnGroundCallBack, nullptr);
+		if (waterPtclGen3) {
+			waterPtclGen3->setEmitPosPtr(&mSnake->mPosition);
+			waterPtclGen3->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+			f32 f0 = waterPtclGen3->getScaleSize();
+			waterPtclGen3->setScaleSize(3.0f * f0);
+		}
+	}
 }
 
 /*
@@ -179,37 +73,10 @@ void SnakeBody::setBodyOnGroundEffect()
  * Address:	8015FEC8
  * Size:	000068
  */
-void SnakeBody::killCallBackEffect(bool)
+void SnakeBody::killCallBackEffect(bool doForceFinish)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  addi      r6, r31, 0
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x3180(r13)
-	  lwz       r0, 0x884(r30)
-	  addi      r3, r3, 0x14
-	  mr        r4, r0
-	  bl        0x41760
-	  lwz       r3, 0x3180(r13)
-	  mr        r6, r31
-	  lwz       r4, 0x888(r30)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x41748
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	effectMgr->killGenerator(mOnGroundCallBack, nullptr, doForceFinish);
+	effectMgr->killGenerator(mRotateCallBack, nullptr, doForceFinish);
 }
 
 /*
@@ -222,7 +89,7 @@ SnakeBody::SnakeBody(Snake* snake)
 	mSnake            = snake;
 	mOnGroundCallBack = new SnakeGenBodyOnGroundCallBack();
 	mRotateCallBack   = new SnakeGenBodyRotateCallBack();
-	_88C              = new u32[7];
+	mHeadPtclGens     = new zen::particleGenerator*[7];
 }
 
 /*
@@ -230,50 +97,23 @@ SnakeBody::SnakeBody(Snake* snake)
  * Address:	80160088
  * Size:	00009C
  */
-void SnakeBody::init(Vector3f&, Snake*)
+void SnakeBody::init(Vector3f&, Snake* snake)
 {
-	/*
-	.loc_0x0:
-	  stw       r5, 0x0(r3)
-	  li        r5, 0
-	  li        r0, 0x7
-	  stb       r5, 0x4(r3)
-	  stb       r5, 0x5(r3)
-	  lfs       f0, -0x554C(r2)
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x14(r3)
-	  lwz       r4, 0x88C(r3)
-	  stw       r5, 0x0(r4)
-	  stfs      f0, 0x18(r3)
-	  lwz       r4, 0x88C(r3)
-	  stw       r5, 0x4(r4)
-	  stfs      f0, 0x1C(r3)
-	  lwz       r4, 0x88C(r3)
-	  stw       r5, 0x8(r4)
-	  stfs      f0, 0x20(r3)
-	  lwz       r4, 0x88C(r3)
-	  stw       r5, 0xC(r4)
-	  stfs      f0, 0x24(r3)
-	  lwz       r4, 0x88C(r3)
-	  stw       r5, 0x10(r4)
-	  stfs      f0, 0x28(r3)
-	  lwz       r4, 0x88C(r3)
-	  stw       r5, 0x14(r4)
-	  stfs      f0, 0x2C(r3)
-	  lwz       r4, 0x88C(r3)
-	  stw       r5, 0x18(r4)
-	  lfs       f0, -0x5548(r2)
-	  stfs      f0, 0x30(r3)
-	  stfs      f0, 0x34(r3)
-	  stfs      f0, 0x38(r3)
-	  stfs      f0, 0x3C(r3)
-	  stfs      f0, 0x40(r3)
-	  stfs      f0, 0x44(r3)
-	  stfs      f0, 0x48(r3)
-	  stfs      f0, 0x4C(r3)
-	  stw       r0, 0x8(r3)
-	  blr
-	*/
+	mSnake         = snake;
+	_04            = 0;
+	_05            = 0;
+	mBlendingRatio = 0.0f;
+
+	for (int i = 0; i < 7; i++) {
+		_14[i]           = 0.0f;
+		mHeadPtclGens[i] = nullptr;
+	}
+
+	for (int i = 0; i < 8; i++) {
+		_30[i] = 1.0f;
+	}
+
+	_08 = 7;
 }
 
 /*
@@ -281,23 +121,14 @@ void SnakeBody::init(Vector3f&, Snake*)
  * Address:	80160124
  * Size:	000028
  */
-void SnakeBody::initBlending(f32)
+void SnakeBody::initBlending(f32 blendRate)
 {
-	/*
-	.loc_0x0:
-	  lfs       f2, 0xC(r3)
-	  lfs       f0, -0x554C(r2)
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x18
-	  li        r0, 0x1
-	  stb       r0, 0x5(r3)
+	if (mBlendingRatio > 0.0f) {
+		_05 = 1;
+	}
 
-	.loc_0x18:
-	  lfs       f0, -0x5544(r2)
-	  stfs      f0, 0xC(r3)
-	  stfs      f1, 0x10(r3)
-	  blr
-	*/
+	mBlendingRatio = 0.00001f;
+	mBlendingRate  = blendRate;
 }
 
 /*
@@ -307,7 +138,16 @@ void SnakeBody::initBlending(f32)
  */
 void SnakeBody::updateBlendingRatio()
 {
-	// UNUSED FUNCTION
+	if (mBlendingRatio > 0.0f) {
+		if (mBlendingRatio == 0.00001f && mSnake->getNextState() >= 2 && mSnake->getNextState() <= 3 && mSnake->mSeContext) {
+			mSnake->mSeContext->playSound(0x38);
+		}
+
+		mBlendingRatio += gsys->getFrameTime() * mBlendingRate;
+		if (mBlendingRatio > 1.0f) {
+			mBlendingRatio = 0.0f;
+		}
+	}
 }
 
 /*
@@ -317,7 +157,8 @@ void SnakeBody::updateBlendingRatio()
  */
 void SnakeBody::setInitializePosition()
 {
-	// UNUSED FUNCTION
+	mSnake->mPosition.x = mSnake->getInitPosition()->x;
+	mSnake->mPosition.z = mSnake->getInitPosition()->z;
 }
 
 /*
@@ -327,6 +168,13 @@ void SnakeBody::setInitializePosition()
  */
 void SnakeBody::copyAnimPosition()
 {
+	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 4; j++) {
+				_284[i].getColumn(j, _104[i][j]);
+			}
+		}
+	}
 	// UNUSED FUNCTION
 }
 
@@ -337,7 +185,12 @@ void SnakeBody::copyAnimPosition()
  */
 void SnakeBody::makeHeadDirection()
 {
-	// UNUSED FUNCTION
+	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+		Vector3f* targetPos = mSnake->getTargetPosition();
+		_104[7][0].sub(*targetPos, _104[7][3]);
+		NsCalculation::calcOuterPro(_104[7][0], _104[7][1], _104[7][2]);
+		NsCalculation::calcOuterPro(_104[7][2], _104[7][0], _104[7][1]);
+	}
 }
 
 /*
@@ -347,217 +200,21 @@ void SnakeBody::makeHeadDirection()
  */
 void SnakeBody::makeTurnVelocity()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x1A0(r1)
-	  stfd      f31, 0x198(r1)
-	  stfd      f30, 0x190(r1)
-	  stfd      f29, 0x188(r1)
-	  stfd      f28, 0x180(r1)
-	  stfd      f27, 0x178(r1)
-	  stfd      f26, 0x170(r1)
-	  stfd      f25, 0x168(r1)
-	  stfd      f24, 0x160(r1)
-	  stfd      f23, 0x158(r1)
-	  stfd      f22, 0x150(r1)
-	  stfd      f21, 0x148(r1)
-	  stmw      r26, 0x130(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x0(r3)
-	  lwz       r0, 0x2E4(r3)
-	  cmpwi     r0, 0x2
-	  blt-      .loc_0x2D8
-	  cmpwi     r0, 0x3
-	  bgt-      .loc_0x2D8
-	  lfs       f1, 0x280(r31)
-	  addi      r6, r1, 0x58
-	  lfs       f0, 0x1F0(r31)
-	  addi      r5, r1, 0x54
-	  addi      r4, r1, 0x50
-	  fadds     f0, f1, f0
-	  addi      r3, r1, 0xE4
-	  stfs      f0, 0x58(r1)
-	  lfs       f1, 0x27C(r31)
-	  lfs       f0, 0x1EC(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x54(r1)
-	  lfs       f1, 0x278(r31)
-	  lfs       f0, 0x1E8(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x50(r1)
-	  bl        -0x1290C8
-	  lfs       f1, 0xEC(r1)
-	  addi      r6, r1, 0x74
-	  lfs       f0, 0x130(r31)
-	  addi      r5, r1, 0x70
-	  lfs       f2, 0xE8(r1)
-	  fadds     f0, f1, f0
-	  lfs       f1, 0xE4(r1)
-	  addi      r4, r1, 0x6C
-	  addi      r3, r1, 0xF0
-	  stfs      f0, 0x74(r1)
-	  lfs       f0, 0x12C(r31)
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x70(r1)
-	  lfs       f0, 0x128(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x6C(r1)
-	  bl        -0x12910C
-	  lfs       f1, -0x5548(r2)
-	  addi      r6, r1, 0x68
-	  lfs       f0, -0x24(r13)
-	  addi      r5, r1, 0x64
-	  lfs       f2, 0xF8(r1)
-	  fdivs     f3, f1, f0
-	  lfs       f1, 0xF4(r1)
-	  lfs       f0, 0xF0(r1)
-	  addi      r4, r1, 0x60
-	  addi      r3, r1, 0xFC
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  fmuls     f0, f0, f3
-	  stfs      f2, 0x68(r1)
-	  stfs      f1, 0x64(r1)
-	  stfs      f0, 0x60(r1)
-	  bl        -0x129150
-	  lwz       r3, 0x0(r31)
-	  lfs       f30, 0xFC(r1)
-	  addi      r4, r3, 0x30C
-	  lfs       f2, 0x30C(r3)
-	  lfsu      f3, 0x94(r3)
-	  lfs       f0, 0x4(r4)
-	  lfs       f1, 0x4(r3)
-	  fsubs     f27, f3, f2
-	  lfs       f2, 0x8(r3)
-	  fsubs     f26, f1, f0
-	  lfs       f0, 0x8(r4)
-	  fmuls     f1, f27, f27
-	  fsubs     f25, f2, f0
-	  lfs       f29, 0x100(r1)
-	  fmuls     f0, f26, f26
-	  lfs       f28, 0x104(r1)
-	  fmuls     f2, f25, f25
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x15267C
-	  lfs       f0, -0x554C(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x18C
-	  fdivs     f27, f27, f1
-	  fdivs     f26, f26, f1
-	  fdivs     f25, f25, f1
-
-	.loc_0x18C:
-	  lfs       f31, -0x554C(r2)
-	  addi      r30, r31, 0x30
-	  lfs       f24, -0x5540(r2)
-	  li        r26, 0x1
-
-	.loc_0x19C:
-	  lfs       f0, 0x128(r30)
-	  subi      r27, r26, 0x1
-	  lfs       f1, 0x12C(r30)
-	  fsubs     f21, f0, f30
-	  lfs       f0, 0x130(r30)
-	  fsubs     f22, f1, f29
-	  fsubs     f23, f0, f28
-	  fmuls     f1, f21, f21
-	  fmuls     f0, f22, f22
-	  fmuls     f2, f23, f23
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x1526D8
-	  fcmpu     cr0, f31, f1
-	  beq-      .loc_0x1E4
-	  fdivs     f21, f21, f1
-	  fdivs     f22, f22, f1
-	  fdivs     f23, f23, f1
-
-	.loc_0x1E4:
-	  fadds     f0, f27, f21
-	  mulli     r0, r27, 0xC
-	  fadds     f2, f26, f22
-	  fadds     f1, f25, f23
-	  stfs      f0, 0xA4(r1)
-	  add       r3, r31, r0
-	  lfs       f3, 0xA4(r1)
-	  addi      r28, r3, 0xBC
-	  lfs       f0, 0x254(r31)
-	  addi      r29, r3, 0xC0
-	  addi      r27, r3, 0xC4
-	  fsubs     f0, f3, f0
-	  stfs      f0, 0x98(r1)
-	  lfs       f0, 0x98(r1)
-	  stfs      f0, 0xCC(r1)
-	  lfs       f0, 0x258(r31)
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0xD0(r1)
-	  lfs       f0, 0x25C(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xD4(r1)
-	  lwz       r3, 0xCC(r1)
-	  lwz       r0, 0xD0(r1)
-	  stw       r3, 0x0(r28)
-	  stw       r0, 0x4(r28)
-	  lwz       r0, 0xD4(r1)
-	  stw       r0, 0x8(r28)
-	  stfs      f31, 0x0(r29)
-	  lfs       f1, 0x0(r28)
-	  lfs       f0, 0x0(r29)
-	  lfs       f2, 0x0(r27)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x152780
-	  fcmpu     cr0, f31, f1
-	  beq-      .loc_0x2A4
-	  lfs       f0, 0x0(r28)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r28)
-	  lfs       f0, 0x0(r29)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r29)
-	  lfs       f0, 0x0(r27)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r27)
-
-	.loc_0x2A4:
-	  lfs       f0, 0x0(r28)
-	  addi      r26, r26, 0x1
-	  cmpwi     r26, 0x7
-	  fmuls     f0, f0, f24
-	  addi      r30, r30, 0x30
-	  stfs      f0, 0x0(r28)
-	  lfs       f0, 0x0(r29)
-	  fmuls     f0, f0, f24
-	  stfs      f0, 0x0(r29)
-	  lfs       f0, 0x0(r27)
-	  fmuls     f0, f0, f24
-	  stfs      f0, 0x0(r27)
-	  blt+      .loc_0x19C
-
-	.loc_0x2D8:
-	  lmw       r26, 0x130(r1)
-	  lwz       r0, 0x1A4(r1)
-	  lfd       f31, 0x198(r1)
-	  lfd       f30, 0x190(r1)
-	  lfd       f29, 0x188(r1)
-	  lfd       f28, 0x180(r1)
-	  lfd       f27, 0x178(r1)
-	  lfd       f26, 0x170(r1)
-	  lfd       f25, 0x168(r1)
-	  lfd       f24, 0x160(r1)
-	  lfd       f23, 0x158(r1)
-	  lfd       f22, 0x150(r1)
-	  lfd       f21, 0x148(r1)
-	  addi      r1, r1, 0x1A0
-	  mtlr      r0
-	  blr
-	*/
+	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+		Vector3f tmpVec;
+		Vector3f avg = (_104[7][3] + _104[4][3] + _104[0][3]) / 3.0f;
+		Vector3f dir = mSnake->mPosition - *mSnake->getTargetPosition();
+		dir.normalise();
+		for (int i = 1; i < 7; i++) {
+			int j = i - 1;
+			tmpVec.sub(_104[i][3], avg);
+			tmpVec.normalise();
+			_BC[j]   = dir + tmpVec - _104[7][0];
+			_BC[j].y = 0.0f;
+			_BC[j].normalise();
+			_BC[j].multiply(10.0f);
+		}
+	}
 }
 
 /*
@@ -567,7 +224,13 @@ void SnakeBody::makeTurnVelocity()
  */
 void SnakeBody::makeNewPosition()
 {
-	// UNUSED FUNCTION
+	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+		for (int i = 1; i < 7; i++) {
+			_104[i][3].x += _5C[i + 7].x;
+			_104[i][3].y += _5C[i + 7].y;
+			_104[i][3].z += _5C[i + 7].z;
+		}
+	}
 }
 
 /*
@@ -577,6 +240,46 @@ void SnakeBody::makeNewPosition()
  */
 void SnakeBody::makeResultPosition()
 {
+	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+		Vector3f vec1;
+		Vector3f vec2;
+		Vector3f vec3;
+
+		Vector3f vecArray[7];
+		for (int i = 0; i < 10; i++) {
+			int j;
+			for (j = 1; j < 7; j++) {
+				int prev = j - 1;
+				int next = j + 1;
+				vec1.x   = _104[j][3].x - _BC[4 * prev].x;
+				vec1.y   = _104[j][3].y - _BC[4 * prev].y;
+				vec1.z   = _104[j][3].z - _BC[4 * prev].z;
+				vec1.normalise();
+
+				vec2.x = vec1.x * _14[prev] + _104[prev][3].x;
+				vec2.y = vec1.y * _14[prev] + _104[prev][3].y;
+				vec2.z = vec1.z * _14[prev] + _104[prev][3].z;
+
+				vec1.x = _104[j][3].x - _104[next][3].x;
+				vec1.y = _104[j][3].y - _104[next][3].y;
+				vec1.z = _104[j][3].z - _104[next][3].z;
+				vec1.normalise();
+
+				vec3.x = vec1.x * _14[j] + _104[next][3].x;
+				vec3.y = vec1.y * _14[j] + _104[next][3].y;
+				vec3.z = vec1.z * _14[j] + _104[next][3].z;
+
+				vecArray[j].x = (vec2.x + vec3.x) * 0.5f;
+				vecArray[j].y = (vec2.y + vec3.y) * 0.5f;
+				vecArray[j].z = (vec2.z + vec3.z) * 0.5f;
+			}
+			for (j = 1; j < 7; j++) {
+				_104[j][3].x = vecArray[j].x;
+				_104[j][3].y = vecArray[j].y;
+				_104[j][3].z = vecArray[j].z;
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -788,243 +491,30 @@ void SnakeBody::makeResultPosition()
  */
 void SnakeBody::makeVectorMatrix()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stfd      f31, 0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  mr        r29, r3
-	  lwz       r3, 0x0(r3)
-	  lwz       r0, 0x2E4(r3)
-	  cmpwi     r0, 0x2
-	  blt-      .loc_0x348
-	  cmpwi     r0, 0x3
-	  bgt-      .loc_0x348
-	  lfs       f31, -0x554C(r2)
-	  addi      r31, r29, 0
-	  li        r30, 0
+	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+		for (int i = 0; i < 8; i++) {
+			if (i < 7) {
+				_104[i][0].sub(_104[i + 1][3], _104[i][3]);
+			}
 
-	.loc_0x44:
-	  cmpwi     r30, 0x7
-	  bge-      .loc_0x7C
-	  lfs       f1, 0x158(r31)
-	  lfs       f0, 0x128(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x104(r31)
-	  lfs       f1, 0x15C(r31)
-	  lfs       f0, 0x12C(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x108(r31)
-	  lfs       f1, 0x160(r31)
-	  lfs       f0, 0x130(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x10C(r31)
+			if (i > 0) {
+				_104[i][2] = _BC[4 * i + 4];
+				NsCalculation::calcOuterPro(_104[i][2], _104[i][0], _104[i][1]);
+				NsCalculation::calcOuterPro(_104[i][0], _104[i][1], _104[i][2]);
 
-	.loc_0x7C:
-	  cmpwi     r30, 0
-	  ble-      .loc_0x160
-	  lwz       r3, 0xEC(r31)
-	  lwz       r0, 0xF0(r31)
-	  stw       r3, 0x11C(r31)
-	  stw       r0, 0x120(r31)
-	  lwz       r0, 0xF4(r31)
-	  stw       r0, 0x124(r31)
-	  lfs       f3, 0x120(r31)
-	  lfs       f2, 0x10C(r31)
-	  lfs       f1, 0x124(r31)
-	  lfs       f0, 0x108(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x110(r31)
-	  lfs       f3, 0x124(r31)
-	  lfs       f2, 0x104(r31)
-	  lfs       f1, 0x11C(r31)
-	  lfs       f0, 0x10C(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x114(r31)
-	  lfs       f3, 0x11C(r31)
-	  lfs       f2, 0x108(r31)
-	  lfs       f1, 0x120(r31)
-	  lfs       f0, 0x104(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x118(r31)
-	  lfs       f3, 0x108(r31)
-	  lfs       f2, 0x118(r31)
-	  lfs       f1, 0x10C(r31)
-	  lfs       f0, 0x114(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x11C(r31)
-	  lfs       f3, 0x10C(r31)
-	  lfs       f2, 0x110(r31)
-	  lfs       f1, 0x104(r31)
-	  lfs       f0, 0x118(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x120(r31)
-	  lfs       f3, 0x104(r31)
-	  lfs       f2, 0x114(r31)
-	  lfs       f1, 0x108(r31)
-	  lfs       f0, 0x110(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x124(r31)
-	  b         .loc_0x248
+			} else {
+				_104[i][2].x = cosf(mSnake->mDirection);
+				_104[i][2].y = 0.0f;
+				_104[i][2].z = -sinf(mSnake->mDirection);
+				NsCalculation::calcOuterPro(_104[i][2], _104[i][0], _104[i][1]);
+				NsCalculation::calcOuterPro(_104[i][0], _104[i][1], _104[i][2]);
+			}
 
-	.loc_0x160:
-	  lwz       r3, 0x0(r29)
-	  lfs       f1, 0xA0(r3)
-	  bl        0xBB294
-	  stfs      f1, 0x11C(r31)
-	  stfs      f31, 0x120(r31)
-	  lwz       r3, 0x0(r29)
-	  lfs       f1, 0xA0(r3)
-	  bl        0xBB414
-	  fneg      f0, f1
-	  stfs      f0, 0x124(r31)
-	  lfs       f3, 0x120(r31)
-	  lfs       f2, 0x10C(r31)
-	  lfs       f1, 0x124(r31)
-	  lfs       f0, 0x108(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x110(r31)
-	  lfs       f3, 0x124(r31)
-	  lfs       f2, 0x104(r31)
-	  lfs       f1, 0x11C(r31)
-	  lfs       f0, 0x10C(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x114(r31)
-	  lfs       f3, 0x11C(r31)
-	  lfs       f2, 0x108(r31)
-	  lfs       f1, 0x120(r31)
-	  lfs       f0, 0x104(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x118(r31)
-	  lfs       f3, 0x108(r31)
-	  lfs       f2, 0x118(r31)
-	  lfs       f1, 0x10C(r31)
-	  lfs       f0, 0x114(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x11C(r31)
-	  lfs       f3, 0x10C(r31)
-	  lfs       f2, 0x110(r31)
-	  lfs       f1, 0x104(r31)
-	  lfs       f0, 0x118(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x120(r31)
-	  lfs       f3, 0x104(r31)
-	  lfs       f2, 0x114(r31)
-	  lfs       f1, 0x108(r31)
-	  lfs       f0, 0x110(r31)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x124(r31)
-
-	.loc_0x248:
-	  lfs       f1, 0x104(r31)
-	  lfs       f0, 0x108(r31)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x10C(r31)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x152D80
-	  fcmpu     cr0, f31, f1
-	  beq-      .loc_0x298
-	  lfs       f0, 0x104(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x104(r31)
-	  lfs       f0, 0x108(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x108(r31)
-	  lfs       f0, 0x10C(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x10C(r31)
-
-	.loc_0x298:
-	  lfs       f1, 0x110(r31)
-	  lfs       f0, 0x114(r31)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x118(r31)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x152DD0
-	  fcmpu     cr0, f31, f1
-	  beq-      .loc_0x2E8
-	  lfs       f0, 0x110(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x110(r31)
-	  lfs       f0, 0x114(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x114(r31)
-	  lfs       f0, 0x118(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x118(r31)
-
-	.loc_0x2E8:
-	  lfs       f1, 0x11C(r31)
-	  lfs       f0, 0x120(r31)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x124(r31)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x152E20
-	  fcmpu     cr0, f31, f1
-	  beq-      .loc_0x338
-	  lfs       f0, 0x11C(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x11C(r31)
-	  lfs       f0, 0x120(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x120(r31)
-	  lfs       f0, 0x124(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x124(r31)
-
-	.loc_0x338:
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x8
-	  addi      r31, r31, 0x30
-	  blt+      .loc_0x44
-
-	.loc_0x348:
-	  lwz       r0, 0x54(r1)
-	  lfd       f31, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+			_104[i][0].normalise();
+			_104[i][1].normalise();
+			_104[i][2].normalise();
+		}
+	}
 }
 
 /*
@@ -1032,9 +522,21 @@ void SnakeBody::makeVectorMatrix()
  * Address:	........
  * Size:	0000F4
  */
-void SnakeBody::createDeadPellet(Vector3f&, int)
+void SnakeBody::createDeadPellet(Vector3f& pelletPos, int itemIdx)
 {
-	// UNUSED FUNCTION
+	if (itemIdx >= 0) {
+		int itemColour = mSnake->getItemColour();
+		if (itemColour > PELCOLOUR_MAX || itemColour < PELCOLOR_MIN) {
+			itemColour = NsMathI::getRand(3);
+		}
+
+		Pellet* newPellet = pelletMgr->newNumberPellet(itemColour, itemIdx);
+		if (newPellet) {
+			newPellet->init(pelletPos);
+			newPellet->mVelocity.set(0.0f, 100.0f, 0.0f);
+			newPellet->startAI(0);
+		}
+	}
 }
 
 /*
@@ -1044,170 +546,28 @@ void SnakeBody::createDeadPellet(Vector3f&, int)
  */
 void SnakeBody::createDeadHeadEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stfd      f31, 0x58(r1)
-	  stw       r31, 0x54(r1)
-	  mr        r31, r3
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  lfs       f0, -0x554C(r2)
-	  stfs      f0, 0x30(r1)
-	  stfs      f0, 0x2C(r1)
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x553C(r2)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xA0(r3)
-	  fsubs     f31, f1, f0
-	  fmr       f1, f31
-	  bl        0xBB1E4
-	  lwz       r0, 0x8(r31)
-	  lfs       f0, -0x5528(r2)
-	  mulli     r0, r0, 0xC
-	  fmuls     f2, f0, f1
-	  fmr       f1, f31
-	  add       r3, r31, r0
-	  lfs       f0, 0x5C(r3)
-	  fadds     f0, f0, f2
-	  stfs      f0, 0x28(r1)
-	  lwz       r0, 0x8(r31)
-	  mulli     r0, r0, 0xC
-	  add       r3, r31, r0
-	  lfs       f0, 0x60(r3)
-	  stfs      f0, 0x2C(r1)
-	  bl        0xBB014
-	  lwz       r0, 0x8(r31)
-	  addi      r5, r1, 0x28
-	  lfs       f0, -0x5528(r2)
-	  li        r4, 0x84
-	  mulli     r0, r0, 0xC
-	  fmuls     f1, f0, f1
-	  add       r3, r31, r0
-	  lfs       f0, 0x64(r3)
-	  li        r6, 0
-	  li        r7, 0
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x30(r1)
-	  lwz       r3, 0x3180(r13)
-	  bl        0x3BFC0
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x83
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x3BFA8
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x82
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x3BF90
-	  lwz       r3, 0x3178(r13)
-	  addi      r6, r1, 0x28
-	  li        r4, 0xE
-	  li        r5, 0
-	  bl        0x1C218
-	  lwz       r4, 0x0(r31)
-	  lwz       r3, 0x224(r4)
-	  lwz       r30, 0x4F0(r3)
-	  cmpwi     r30, 0
-	  blt-      .loc_0x1C8
-	  lwz       r4, 0x2F8(r4)
-	  cmpwi     r4, 0x2
-	  bgt-      .loc_0x128
-	  cmpwi     r4, 0
-	  bge-      .loc_0x16C
+	Vector3f vec;
+	f32 angle = mSnake->mDirection - 0.5f;
+	vec.x     = 30.0f * sinf(angle) + _5C[_08].x;
+	vec.y     = 0.0f + _5C[_08].y;
+	vec.z     = 30.0f * cosf(angle) + _5C[_08].z;
+	effectMgr->create(EffectMgr::EFF_Unk132, vec, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Unk131, vec, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Unk130, vec, nullptr, nullptr);
+	rumbleMgr->start(14, 0, vec);
 
-	.loc_0x128:
-	  bl        0xB7488
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x5530(r2)
-	  stw       r0, 0x44(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x5538(r2)
-	  stw       r0, 0x40(r1)
-	  lfs       f1, -0x5548(r2)
-	  lfd       f3, 0x40(r1)
-	  lfs       f0, -0x5534(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x38(r1)
-	  lwz       r4, 0x3C(r1)
+	createDeadPellet(vec, C_SNAKE_PROP(mSnake)._4E4());
 
-	.loc_0x16C:
-	  lwz       r3, 0x301C(r13)
-	  mr        r5, r30
-	  bl        -0xC86FC
-	  mr.       r30, r3
-	  beq-      .loc_0x1C8
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r1, 0x28
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x20(r13)
-	  mr        r3, r30
-	  li        r4, 0
-	  stfs      f0, 0x70(r30)
-	  lfs       f0, -0x1C(r13)
-	  stfs      f0, 0x74(r30)
-	  lfs       f0, -0x18(r13)
-	  stfs      f0, 0x78(r30)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
+	for (int i = 0; i < 7; i++) {
+		mHeadPtclGens[i] = effectMgr->create(EffectMgr::EFF_Unk134, vec, nullptr, nullptr);
+		if (mHeadPtclGens[i]) {
+			mHeadPtclGens[i]->stopGen();
+		}
+	}
 
-	.loc_0x1C8:
-	  li        r29, 0
-	  li        r30, 0
-
-	.loc_0x1D0:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x86
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x3BE94
-	  lwz       r4, 0x88C(r31)
-	  stwx      r3, r4, r30
-	  lwz       r3, 0x88C(r31)
-	  lwzx      r3, r3, r30
-	  cmplwi    r3, 0
-	  beq-      .loc_0x20C
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x8
-	  stw       r0, 0x80(r3)
-
-	.loc_0x20C:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x7
-	  addi      r30, r30, 0x4
-	  blt+      .loc_0x1D0
-	  lwz       r3, 0x0(r31)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x234
-	  li        r4, 0x83
-	  bl        -0xBCF20
-
-	.loc_0x234:
-	  lwz       r0, 0x64(r1)
-	  lfd       f31, 0x58(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	if (mSnake->mSeContext) {
+		mSnake->mSeContext->playSound(0x83);
+	}
 }
 
 /*
@@ -1217,166 +577,31 @@ void SnakeBody::createDeadHeadEffect()
  */
 void SnakeBody::createDeadBodyEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x48(r1)
-	  lfs       f0, -0x554C(r2)
-	  stfs      f0, 0x34(r1)
-	  stfs      f0, 0x30(r1)
-	  stfs      f0, 0x2C(r1)
-	  lfs       f2, -0x553C(r2)
-	  lwz       r3, 0x8(r3)
-	  addi      r0, r3, 0x1
-	  mulli     r5, r0, 0xC
-	  mulli     r0, r3, 0xC
-	  add       r5, r31, r5
-	  add       r3, r31, r0
-	  lfs       f1, 0x5C(r5)
-	  lfs       f0, 0x5C(r3)
-	  fadds     f0, f1, f0
-	  fmuls     f0, f0, f2
-	  stfs      f0, 0x2C(r1)
-	  lwz       r0, 0x8(r31)
-	  lfs       f1, 0x60(r5)
-	  mulli     r0, r0, 0xC
-	  add       r3, r31, r0
-	  lfs       f0, 0x60(r3)
-	  fadds     f0, f1, f0
-	  fmuls     f0, f0, f2
-	  stfs      f0, 0x30(r1)
-	  lwz       r0, 0x8(r31)
-	  lfs       f1, 0x64(r5)
-	  mulli     r0, r0, 0xC
-	  add       r3, r31, r0
-	  lfs       f0, 0x64(r3)
-	  fadds     f0, f1, f0
-	  fmuls     f0, f0, f2
-	  stfs      f0, 0x34(r1)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x2C(r1)
-	  lfs       f2, 0x34(r1)
-	  bl        -0xF8EB8
-	  lfs       f0, 0x30(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xBC
-	  stfs      f1, 0x30(r1)
+	Vector3f vec;
+	int next = _08 + 1;
+	vec.x    = (_5C[next].x + _5C[_08].x) / 2.0f;
+	vec.y    = (_5C[next].y + _5C[_08].y) / 2.0f;
+	vec.z    = (_5C[next].z + _5C[_08].z) / 2.0f;
 
-	.loc_0xBC:
-	  lwz       r0, 0x8(r31)
-	  lwz       r3, 0x88C(r31)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r4, r3, r0
-	  cmplwi    r4, 0
-	  beq-      .loc_0x108
-	  lwz       r3, 0x2C(r1)
-	  lwz       r0, 0x30(r1)
-	  stw       r3, 0xC(r4)
-	  stw       r0, 0x10(r4)
-	  lwz       r0, 0x34(r1)
-	  stw       r0, 0x14(r4)
-	  lwz       r0, 0x8(r31)
-	  lwz       r3, 0x88C(r31)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r3, r3, r0
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,29,27
-	  stw       r0, 0x80(r3)
+	f32 minY = mapMgr->getMinY(vec.x, vec.z, true);
+	if (minY > vec.y) {
+		vec.y = minY;
+	}
 
-	.loc_0x108:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x2C
-	  li        r4, 0x85
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x3BD08
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x2C
-	  li        r4, 0x87
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x3BCF0
-	  lwz       r3, 0x3178(r13)
-	  addi      r6, r1, 0x2C
-	  li        r4, 0xF
-	  li        r5, 0
-	  bl        0x1BF78
-	  lwz       r4, 0x0(r31)
-	  lwz       r3, 0x224(r4)
-	  lwz       r30, 0x500(r3)
-	  cmpwi     r30, 0
-	  blt-      .loc_0x214
-	  lwz       r4, 0x2F8(r4)
-	  cmpwi     r4, 0x2
-	  bgt-      .loc_0x174
-	  cmpwi     r4, 0
-	  bge-      .loc_0x1B8
+	if (mHeadPtclGens[_08]) {
+		mHeadPtclGens[_08]->setEmitPos(vec);
+		mHeadPtclGens[_08]->startGen();
+	}
 
-	.loc_0x174:
-	  bl        0xB71E8
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x5530(r2)
-	  stw       r0, 0x44(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x5538(r2)
-	  stw       r0, 0x40(r1)
-	  lfs       f1, -0x5548(r2)
-	  lfd       f3, 0x40(r1)
-	  lfs       f0, -0x5534(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x38(r1)
-	  lwz       r4, 0x3C(r1)
+	effectMgr->create(EffectMgr::EFF_Unk133, vec, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Unk135, vec, nullptr, nullptr);
+	rumbleMgr->start(15, 0, vec);
 
-	.loc_0x1B8:
-	  lwz       r3, 0x301C(r13)
-	  mr        r5, r30
-	  bl        -0xC899C
-	  mr.       r30, r3
-	  beq-      .loc_0x214
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r1, 0x2C
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x20(r13)
-	  mr        r3, r30
-	  li        r4, 0
-	  stfs      f0, 0x70(r30)
-	  lfs       f0, -0x1C(r13)
-	  stfs      f0, 0x74(r30)
-	  lfs       f0, -0x18(r13)
-	  stfs      f0, 0x78(r30)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
+	createDeadPellet(vec, C_SNAKE_PROP(mSnake)._4F4());
 
-	.loc_0x214:
-	  lwz       r3, 0x0(r31)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x22C
-	  li        r4, 0x96
-	  bl        -0xBD16C
-
-	.loc_0x22C:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	if (mSnake->mSeContext) {
+		mSnake->mSeContext->playSound(0x96);
+	}
 }
 
 /*
@@ -1386,6 +611,15 @@ void SnakeBody::createDeadBodyEffect()
  */
 void SnakeBody::makeDeadPattern01()
 {
+	bool prev = _04;
+	_04       = true;
+	if (_08 == 7) {
+
+	} else {
+	}
+
+	mSnake->add2D0(gsys->getFrameTime());
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1528,7 +762,9 @@ void SnakeBody::makeDeadPattern02()
  */
 void SnakeBody::makeDeadScaleParms()
 {
-	// UNUSED FUNCTION
+	if (mSnake->getCurrentState() == 0 && mSnake->getMotionFinish()) {
+		makeDeadPattern01();
+	}
 }
 
 /*
@@ -1538,6 +774,15 @@ void SnakeBody::makeDeadScaleParms()
  */
 void SnakeBody::update()
 {
+	updateBlendingRatio();
+	setInitializePosition();
+	copyAnimPosition();
+	makeHeadDirection();
+	makeTurnVelocity();
+	makeNewPosition();
+	makeResultPosition();
+	makeVectorMatrix();
+	makeDeadScaleParms();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3563,8 +2808,19 @@ void SnakeBody::returnJoint(BossShapeObject*, Graphics&, Matrix4f*)
  * Address:	80162CC4
  * Size:	0009B8
  */
-void SnakeBody::refresh(BossShapeObject*, Graphics&)
+void SnakeBody::refresh(BossShapeObject* shapeObj, Graphics& gfx)
 {
+	Matrix4f animMatrices[8];
+	makeAnimation(shapeObj, gfx);
+	makeBodySize();
+	makeHeadPosition();
+	makeBodyMatrix();
+	makeAnimMatrix();
+	caseOfMatrix(animMatrices);
+	checkBlendingParm(animMatrices);
+	makeBlending(animMatrices);
+	setDeadScale(animMatrices);
+	returnJoint(shapeObj, gfx, animMatrices);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4196,80 +3452,6 @@ void SnakeBody::refresh(BossShapeObject*, Graphics&)
 	  lfd       f30, 0x2D0(r1)
 	  addi      r1, r1, 0x2E0
 	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8016367C
- * Size:	000064
- */
-bool SnakeGenBodyRotateCallBack::invoke(zen::particleGenerator*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x4(r3)
-	  lwz       r5, 0x3C8(r5)
-	  lbz       r0, 0x4(r5)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x24
-	  lwz       r0, 0x80(r4)
-	  rlwinm    r0,r0,0,29,27
-	  stw       r0, 0x80(r4)
-	  b         .loc_0x30
-
-	.loc_0x24:
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x8
-	  stw       r0, 0x80(r4)
-
-	.loc_0x30:
-	  lwz       r3, 0x4(r3)
-	  lfs       f0, -0x554C(r2)
-	  lfs       f1, 0x2C4(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x50
-	  lwz       r0, 0x2E8(r3)
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x5C
-
-	.loc_0x50:
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r4)
-
-	.loc_0x5C:
-	  li        r3, 0x1
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801636E0
- * Size:	000034
- */
-bool SnakeGenBodyOnGroundCallBack::invoke(zen::particleGenerator*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x4(r3)
-	  lfs       f0, -0x554C(r2)
-	  lfs       f1, 0x2C4(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x20
-	  lwz       r0, 0x2E8(r3)
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x2C
-
-	.loc_0x20:
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r4)
-
-	.loc_0x2C:
-	  li        r3, 0x1
 	  blr
 	*/
 }

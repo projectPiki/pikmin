@@ -65,7 +65,12 @@ struct Matrix4f {
 
 	void getRow(int rowNum, Vector3f& row) { row.set(mMtx[rowNum][0], mMtx[rowNum][1], mMtx[rowNum][2]); }
 
-	void getColumn(int colNum, Vector3f& col) { col.set(mMtx[0][colNum], mMtx[1][colNum], mMtx[2][colNum]); }
+	void getColumn(int colNum, Vector3f& col)
+	{
+		col.x = mMtx[0][colNum];
+		col.y = mMtx[1][colNum];
+		col.z = mMtx[2][colNum];
+	}
 
 	void setRow(int rowNum, const Vector3f& row)
 	{

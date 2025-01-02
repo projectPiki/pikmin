@@ -192,17 +192,23 @@ struct SnakeBody {
 	void setDeadScale(Matrix4f*);
 
 	Snake* mSnake;                                   // _00
-	u8 _04[0x50 - 0x4];                              // _04, unknown
+	bool _04;                                        // _04
+	u8 _05;                                          // _05
+	int _08;                                         // _08
+	f32 mBlendingRatio;                              // _0C
+	f32 mBlendingRate;                               // _10
+	f32 _14[7];                                      // _14
+	f32 _30[8];                                      // _30
 	Vector3f _50;                                    // _50
 	Vector3f _5C[8];                                 // _5C
 	Vector3f _BC[6];                                 // _BC
-	Vector3f _104[32];                               // _104
+	Vector3f _104[8][4];                             // _104
 	Matrix4f _284[8];                                // _284
 	Matrix4f _484[8];                                // _484
 	Matrix4f _684[8];                                // _684
 	SnakeGenBodyOnGroundCallBack* mOnGroundCallBack; // _884
 	SnakeGenBodyRotateCallBack* mRotateCallBack;     // _888
-	u32* _88C;                                       // _88C, array or ptr to something with no ctor, size 0x1C?
+	zen::particleGenerator** mHeadPtclGens;          // _88C
 };
 
 /**
@@ -343,33 +349,54 @@ struct SnakeAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	u8 _04[0x50 - 0x4]; // _04, unknown
+	u8 _04;             // _04
+	u8 _05[0x50 - 0x5]; // _05, unknown
 };
 
 /**
  * @brief TODO
  */
 struct SnakeGenBodyOnGroundCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	SnakeGenBodyOnGroundCallBack() { }
+	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
+	{
+		if (!mSnake->getAlive() || mSnake->getNextState() == 8) {
+			ptclGen->finish();
+		}
 
-	virtual bool invoke(zen::particleGenerator*); // _08
+		return true;
+	}
+
+	void set(Snake* snake) { mSnake = snake; }
 
 	// _00     = VTBL
-	// _00-_04 = zen::CallBack1?
-	u8 _04[4]; // _04, unknown
+	// _00-_04 = zen::CallBack1
+	Snake* mSnake; // _04
 };
 
 /**
  * @brief TODO
  */
 struct SnakeGenBodyRotateCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	SnakeGenBodyRotateCallBack() { }
+	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
+	{
+		if (mSnake->mSnakeAi->_04) {
+			ptclGen->startGen();
+		} else {
+			ptclGen->stopGen();
+		}
 
-	virtual bool invoke(zen::particleGenerator*); // _08
+		if (!mSnake->getAlive() || mSnake->getNextState() == 8) {
+			ptclGen->finish();
+		}
+
+		return true;
+	}
+
+	void set(Snake* snake) { mSnake = snake; }
 
 	// _00     = VTBL
-	// _00-_04 = zen::CallBack1?
-	u8 _04[4]; // _04, unknown
+	// _00-_04 = zen::CallBack1
+	Snake* mSnake; // _04
 };
 
 #endif

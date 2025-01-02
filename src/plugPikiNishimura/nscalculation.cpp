@@ -2,6 +2,7 @@
 #include "Vector.h"
 #include "Matrix3f.h"
 #include "Matrix4f.h"
+#include "NsMath.h"
 
 /*
  * --INFO--
@@ -90,48 +91,52 @@ void calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
 void calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f32 topToMiddleDistance, f32 middleToBottomDistance,
                   Vector3f& middleJointPos, Vector3f& bottomJointPosition)
 {
-	f32 distanceTopMiddle    = SQUARE(topToMiddleDistance);
-	f32 distanceMiddleBottom = SQUARE(middleToBottomDistance);
+	Vector3f botToTop;
+	Vector3f adjBotToTop;
+	Vector3f adjTop;
 
-	Vector3f topToTargetVector;
-	topToTargetVector.x = bottomPosition.x - topPosition.x;
-	topToTargetVector.y = bottomPosition.y - topPosition.y;
-	topToTargetVector.z = bottomPosition.z - topPosition.z;
+	f32 topMidSqr = SQUARE(topToMiddleDistance);
+	f32 midBotSqr = SQUARE(middleToBottomDistance);
 
-	f32 distanceTopToTarget
-	    = topToTargetVector.x * topToTargetVector.x + topToTargetVector.y * topToTargetVector.y + topToTargetVector.z * topToTargetVector.z;
-	if (!(distanceTopToTarget < 0.000001f)) {
-		f32 factor = (0.5f / distanceTopToTarget) * (distanceTopToTarget + (distanceTopMiddle - distanceMiddleBottom));
+	botToTop.x = bottomPosition.x - topPosition.x;
+	botToTop.y = bottomPosition.y - topPosition.y;
+	botToTop.z = bottomPosition.z - topPosition.z;
 
-		Vector3f scaledTopToTarget(factor * topToTargetVector.x + topPosition.x, factor * topToTargetVector.y + topPosition.y,
-		                           factor * topToTargetVector.z + topPosition.z);
+	f32 topBotSqr = botToTop.x * botToTop.x + botToTop.y * botToTop.y + botToTop.z * botToTop.z;
+	if (!(topBotSqr < 0.000001f)) {
+		f32 factor = (0.5f / topBotSqr) * (topMidSqr - midBotSqr + topBotSqr);
+		adjTop.x   = factor * botToTop.x + topPosition.x;
+		adjTop.y   = factor * botToTop.y + topPosition.y;
+		adjTop.z   = factor * botToTop.z + topPosition.z;
 
-		f32 distanceAdjustment = distanceTopMiddle - SQUARE(scaledTopToTarget.x - topPosition.x)
-		                       - SQUARE(scaledTopToTarget.y - topPosition.y) - SQUARE(scaledTopToTarget.z - topPosition.z);
+		adjBotToTop.x = adjTop.x - topPosition.x;
+		adjBotToTop.y = adjTop.y - topPosition.y;
+		adjBotToTop.z = adjTop.z - topPosition.z;
 
-		if (!(distanceAdjustment <= 0.0f)) {
-			Vector3f cross1(middleJointPos);
-			cross1.CP(topToTargetVector);
-			middleJointPos.cross(cross1, topToTargetVector);
-
-			f32 outSqr = middleJointPos.x * middleJointPos.x + middleJointPos.y * middleJointPos.y + middleJointPos.z * middleJointPos.z;
-			if (outSqr != 0.0f) {
-				f32 len               = std::sqrtf(distanceAdjustment / outSqr);
-				bottomJointPosition.x = len * middleJointPos.x + cross1.x;
-				bottomJointPosition.y = len * middleJointPos.y + cross1.y;
-				bottomJointPosition.z = len * middleJointPos.z + cross1.z;
+		f32 adjSqr = topMidSqr - SQUARE(adjBotToTop.x) - SQUARE(adjBotToTop.y) - SQUARE(adjBotToTop.z);
+		if (!(adjSqr <= 0.0f)) {
+			NsCalculation::calcOuterPro(middleJointPos, botToTop, adjBotToTop);
+			NsCalculation::calcOuterPro(botToTop, adjBotToTop, middleJointPos);
+			f32 midJointSqr
+			    = middleJointPos.x * middleJointPos.x + middleJointPos.y * middleJointPos.y + middleJointPos.z * middleJointPos.z;
+			if (midJointSqr != 0.0f) {
+				f32 rootVal           = std::sqrtf(adjSqr / midJointSqr);
+				bottomJointPosition.x = rootVal * middleJointPos.x + adjTop.x;
+				bottomJointPosition.y = rootVal * middleJointPos.y + adjTop.y;
+				bottomJointPosition.z = rootVal * middleJointPos.z + adjTop.z;
 				return;
 			}
 		}
 	}
 
-	f32 dtm           = std::sqrtf(distanceTopMiddle);
-	f32 dmb           = std::sqrtf(distanceMiddleBottom);
-	f32 distanceRatio = dtm / (dtm + dmb);
+	f32 topMid2 = std::sqrtf(SQUARE(topToMiddleDistance));
+	f32 midBot2 = std::sqrtf(midBotSqr);
 
-	bottomJointPosition.x = distanceRatio * topToTargetVector.x + topPosition.x;
-	bottomJointPosition.y = distanceRatio * topToTargetVector.y + topPosition.y;
-	bottomJointPosition.z = distanceRatio * topToTargetVector.z + topPosition.z;
+	f32 rootVal           = topMid2 / (topMid2 + midBot2);
+	bottomJointPosition.x = rootVal * botToTop.x + topPosition.x;
+	bottomJointPosition.y = rootVal * botToTop.y + topPosition.y;
+	bottomJointPosition.z = rootVal * botToTop.z + topPosition.z;
+
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x68(r1)
@@ -344,7 +349,7 @@ void calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f
  * Address:	........
  * Size:	0001E8
  */
-void calcMtxDirect(const Matrix4f&, const Matrix4f&)
+int calcMtxDirect(const Matrix4f&, const Matrix4f&)
 {
 	// UNUSED FUNCTION
 }
