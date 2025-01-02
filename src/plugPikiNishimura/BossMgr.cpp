@@ -533,7 +533,7 @@ void BossMgr::setBossParam(Boss* boss, GenObjectBoss* genBoss)
 	boss->setItemIndex(genBoss->mItemIndex);
 	boss->setItemColour(genBoss->mItemColour);
 
-	PelletConfig* config = pelletMgr->getConfigFromIdx(genBoss->_28);
+	PelletConfig* config = pelletMgr->getConfigFromIdx(genBoss->mPelletConfigIdx);
 	if (config) {
 		boss->mPelletID.mId = config->_2C.mId;
 	} else {
