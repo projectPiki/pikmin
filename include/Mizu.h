@@ -77,25 +77,25 @@ struct Mizu : public Boss {
  * @brief TODO
  */
 struct MizuGenSpringPuffCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	virtual bool invoke(zen::particleGenerator* ptcl) // _08
+	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		if (mPtcl) {
 			if (mPtcl->checkActive()) {
 				Vector3f pos(mPtcl->getGPos());
 				zen::zenListManager& mdlMgr = mPtcl->getPtclMdlListManager();
 
-				// these should be zenListManager inlines but that breaks stack. Maybe fix later.
-				zen::zenList* listStart = mdlMgr._00;
-				zen::zenList* list      = listStart->mNext;
+				zen::zenList* listStart = mdlMgr.getOrigin();
+				zen::zenList* list      = mdlMgr.getTopList();
 				while (list != listStart) {
-					zen::zenList* next = list->mNext;
-					f32 mdlY           = static_cast<zen::particleMdlBase*>(list)->_0C.y + static_cast<zen::particleMdlBase*>(list)->_18.y;
+					zen::zenList* next        = list->mNext;
+					zen::particleMdlBase* mdl = (zen::particleMdlBase*)list;
+					f32 mdlY                  = mdl->_0C.y + mdl->_18.y;
 					if (mdlY > pos.y) {
 						pos.y = mdlY;
 					}
 					list = next;
 				}
-				ptcl->setEmitPos(pos);
+				ptclGen->setEmitPos(pos);
 
 			} else {
 				mPtcl = nullptr;

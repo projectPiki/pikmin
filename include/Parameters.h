@@ -2,6 +2,7 @@
 #define _PARAMETERS_H
 
 #include "types.h"
+#include "Ayu.h"
 
 struct Parameters;
 

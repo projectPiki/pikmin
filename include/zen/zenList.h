@@ -9,10 +9,20 @@ namespace zen {
  * @brief TODO
  */
 struct zenList {
-	inline zenList() { mPrev = mNext = this; }
+	zenList() { mPrev = mNext = this; }
 
-	virtual void insertAfter(zenList*); // _08
-	virtual void remove();              // _0C
+	virtual void insertAfter(zenList* newList) // _08
+	{
+		newList->mNext = mNext;
+		newList->mPrev = this;
+		mNext->mPrev   = newList;
+		mNext          = newList;
+	}
+	virtual void remove() // _0C
+	{
+		mNext->mPrev = mPrev;
+		mPrev->mNext = mNext;
+	}
 
 	// _00 = VTBL
 	zenList* mPrev; // _04
@@ -25,31 +35,60 @@ struct zenList {
 struct zenListManager {
 	zenListManager()
 	{
-		_00           = &_04;
-		zenList* list = _00;
-		_00->mNext    = list;
-		_00->mPrev    = list;
+		mOrigin = &mList;
+		init();
 	}
+
+	// these are all the inlines/member functions according to the DLL.
+
+	void init() { mOrigin->mPrev = mOrigin->mNext = mOrigin; }
 
 	zenList* get()
 	{
 		zenList* out = nullptr;
-		if (_00 != _00->mNext) {
-			out = _00->mNext;
+		if (mOrigin != mOrigin->mNext) {
+			out = mOrigin->mNext;
 			out->remove();
 		}
 		return out;
 	}
 
-	zenList* getBottomList() { return _00; }
+	void put(zenList* list)
+	{
+		list->remove();
+		mOrigin->insertAfter(list);
+	}
 
-	zenList* getTopList() { return _00->mNext; }
+	zenList* getOrigin() { return mOrigin; }
+	zenList* getTopList() { return mOrigin->mNext; }
+	zenList* getBottomList() { return mOrigin->mPrev; }
 
-	// unused/inlined:
-	~zenListManager();
+	void merge(zenListManager* other)
+	{
+		zenList* list = other->getTopList();
+		if (list != other->getOrigin()) {
+			zenList* end          = other->getBottomList();
+			list->mPrev           = mOrigin->mPrev->mNext;
+			mOrigin->mPrev->mNext = list;
+			mOrigin->mPrev        = end;
+			end->mNext            = mOrigin;
+			other->init();
+		}
+	}
 
-	zenList* _00; // _00
-	zenList _04;  // _04
+	int getListNum()
+	{
+		int count = 0;
+		for (zenList* list = getTopList(); list != getOrigin(); list = list->mNext) {
+			count++;
+		}
+		return count;
+	}
+
+	~zenListManager() { }
+
+	zenList* mOrigin; // _00
+	zenList mList;    // _04
 };
 
 } // namespace zen

@@ -4678,6 +4678,13 @@ void zen::particleGenerator::drawPtclChildren(Graphics&)
  */
 void zen::particleGenerator::forceFinish()
 {
+	finish();
+	while (true) {
+		particleMdl* child = (particleMdl*)mPtclMdlListManager.getOrigin();
+		if (child == (particleMdl*)mPtclMdlListManager.getTopList()) {
+			break;
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

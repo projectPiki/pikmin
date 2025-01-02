@@ -6,6 +6,7 @@
 #include "zen/CallBack.h"
 #include "zen/bBoardColourAnim.h"
 #include "Dolphin/mtx.h"
+#include "Colour.h"
 #include "sysNew.h"
 
 struct Colour;
@@ -18,7 +19,7 @@ namespace zen {
 struct particleMdl;
 struct particleMdlManager;
 
-/*
+/**
  * @brief TODO
  */
 enum ParticleGeneratorFlags {
@@ -65,7 +66,7 @@ struct particleMdlBase : public zenList {
 	u8 _2B;       // _2B
 };
 
-/*
+/**
  * @brief TODO
  */
 struct particleMdl : public particleMdlBase {
@@ -117,35 +118,51 @@ struct particleChildMdl : public particleMdlBase {
 	u8 _32;  // _32
 };
 
-/*
+/**
  * @brief TODO
  */
 struct particleMdlManager {
+	// particleMdlManager();
+
 	void init(u32, u32);
 
 	// unused/inlined:
 	~particleMdlManager();
 
+	int getSleepPtclNum() { return mPtclList.getListNum(); }
+	int getSleepPtclChildNum() { return mPtclChildList.getListNum(); }
+
 	// TODO: make these
-	int getSleepPtclChildNum();
-	int getSleepPtclNum();
 	void putPtcl(zenList*);
 	void putPtclChild(zenList*);
+
 	zenList* getPtcl();
 	zenList* getPtclChild();
 
-	// TODO: members
+	zenListManager mPtclList;      // _00
+	zenListManager mPtclChildList; // _10
+	u32 _20;                       // _20, unknown
+	u32 _24;                       // _24, unknown
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x200.
  */
 struct particleGenerator : public zenList {
-	particleGenerator();
+	particleGenerator()
+	{
+		ClearPtclsStatus(nullptr, nullptr);
+		mCallBack1      = nullptr;
+		mCallBack2      = nullptr;
+		_84             = 0;
+		mGeneratorFlags = 0;
+	}
 
 	virtual void remove(); // _0C
 
-	~particleGenerator();
+	~particleGenerator() { }
 
 	void init(u8*, Texture*, Texture*, Vector3f&, particleMdlManager*, CallBack1<particleGenerator*>*,
 	          CallBack2<particleGenerator*, particleMdl*>*);
@@ -178,6 +195,7 @@ struct particleGenerator : public zenList {
 	f32 pmIntpManual(f32*, f32*);
 	f32 pmIntpLinear(f32*, f32*);
 
+	// either setEmitVelocity or setOrientedNormalVector
 	inline void set1DC(Vector3f& vec) { _1DC = vec; }
 
 	// these are correct from the DLL
@@ -187,9 +205,9 @@ struct particleGenerator : public zenList {
 
 	zenListManager& getPtclMdlListManager() { return mPtclMdlListManager; }
 
-	void setEmitPos(Vector3f& pos) { _0C = pos; }
+	void setEmitPos(Vector3f& pos) { mEmitPos = pos; }
 	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
-	void setEmitDir(Vector3f& vec) { mEmitDir = vec; }
+	void setEmitDir(Vector3f& dir) { mEmitDir = dir; }
 	void setCallBack(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2)
 	{
 		mCallBack1 = cb1;
@@ -199,7 +217,13 @@ struct particleGenerator : public zenList {
 		mCallBack2 = cb2;
 	}
 
-	Vector3f& getGPos() { return (mEmitPosPtr) ? *mEmitPosPtr : _0C; }
+	Vector3f& getGPos()
+	{
+		if (mEmitPosPtr) {
+			return *mEmitPosPtr;
+		}
+		return mEmitPos;
+	}
 
 	f32 getScaleSize() { return mScaleSize; }
 	void setScaleSize(f32 scale) { mScaleSize = scale; }
@@ -253,12 +277,13 @@ struct particleGenerator : public zenList {
 
 	// _00     = VTBL
 	// _00-_0C = zenList
-	Vector3f _0C;                                            // _0C
+	Vector3f mEmitPos;                                       // _0C
 	Vector3f* mEmitPosPtr;                                   // _18
 	Vector3f _1C;                                            // _1C
 	zenListManager mPtclMdlListManager;                      // _28
 	zenListManager _38;                                      // _38
-	u8 _48[0x80 - 0x48];                                     // _48, unknown
+	bBoardColourAnimData mAnimData;                          // _48
+	u8 _58[0x80 - 0x58];                                     // _58, unknown
 	u32 mGeneratorFlags;                                     // _80
 	u32 _84;                                                 // _84, unknown
 	u8 _88[0x94 - 0x88];                                     // _88, unknown
@@ -267,7 +292,9 @@ struct particleGenerator : public zenList {
 	Vector3f _AC;                                            // _AC
 	u8 _B8[0xF0 - 0xB8];                                     // _B8, unknown
 	f32 mScaleSize;                                          // _F0
-	u8 _F4[0x12C - 0xF4];                                    // _F4, unknown
+	u8 _F4[0x120 - 0xF4];                                    // _F4, unknown
+	Colour _120;                                             // _120
+	u8 _124[0x8];                                            // _124, unknown
 	Vector3f _12C;                                           // _12C
 	Vector3f _138;                                           // _138
 	Vector3f _144;                                           // _144
@@ -284,33 +311,10 @@ struct particleGenerator : public zenList {
 	CallBack1<particleGenerator*>* mCallBack1;               // _1D4
 	CallBack2<particleGenerator*, particleMdl*>* mCallBack2; // _1D8
 	Vector3f _1DC;                                           // _1DC
+	u8 _1E8[0x200 - 0x1E8];                                  // _1E8
 };
 
-/*
- * @brief TODO
- */
-struct particleManager {
-	void init(u32, u32, u32, f32);
-	void createGenerator(u8*, Texture*, Texture*, Vector3f&, CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
-	void update();
-	void draw(Graphics&);
-	void cullingDraw(Graphics&);
-	void killAllGenarator(bool);
-	void killGenerator(particleGenerator*, bool);
-	void killGenerator(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*, bool);
-	void pmCheckList(particleGenerator*);
-	void pmGetPtclGen();
-
-	// unused/inlined:
-	~particleManager();
-	void calcActiveList();
-	void debugUpdate();
-	void debugDraw(Graphics&);
-
-	// TODO: members
-};
-
-/*
+/**
  * @brief TODO
  */
 struct PCRData : public zenList {
@@ -320,7 +324,7 @@ struct PCRData : public zenList {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct particleLoader {
@@ -333,10 +337,12 @@ struct particleLoader {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct simplePtclManager {
+	// simplePtclManager();
+
 	void update(f32);
 	void draw(Graphics&);
 	void forceFinish();
@@ -346,10 +352,70 @@ struct simplePtclManager {
 	            zen::CallBack1<zen::particleMdl*>*);
 	~simplePtclManager();
 
-	// TODO: members
+	void init(particleMdlManager* mdlMgr) { mMdlMgr = mdlMgr; }
+
+	// remaining DLL functions:
+	// particleMdl* pmGetParticle();
+	// void pmPutParticle(zenList*);
+
+	zenListManager _00;          // _00
+	particleMdlManager* mMdlMgr; // _10
 };
 
-/*
+/**
+ * @brief TODO
+ */
+struct particleManager {
+	// particleManager();
+
+	void init(u32 numPtclGens, u32 numParticles, u32 numChildParticles, f32 p4);
+	particleGenerator* createGenerator(u8*, Texture*, Texture*, Vector3f&, CallBack1<particleGenerator*>*,
+	                                   CallBack2<particleGenerator*, particleMdl*>*);
+	void update();
+	void draw(Graphics& gfx);
+	void cullingDraw(Graphics& gfx);
+	void killAllGenarator(bool doForceFinish); // dev typo
+	void killGenerator(particleGenerator* gen, bool doForceFinish);
+	void killGenerator(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2, bool doForceFinish);
+	bool pmCheckList(particleGenerator* testGen);
+	particleGenerator* pmGetPtclGen();
+
+	// unused/inlined:
+	~particleManager();
+	void calcActiveList();
+	void debugUpdate();
+	void debugDraw(Graphics&);
+
+	void pmPutPtclGen(zenList* gen) { _20.put(gen); }
+
+	// remaining DLL functions:
+	// particleMdl* createParticle(Texture*, s16, Vector3f&, Vector3f&, Vector3f&, float, float, Colour, Colour, CallBack1<particleMdl*>*);
+
+	static const f32 DEFAULT_FRAME_RATE;
+	static const u16 MAX_PTCLGENS_NUM;
+	static const u16 MAX_PTCLS_NUM;
+	static const u16 MAX_PTCL_CHILD_NUM;
+
+	zenListManager _00;               // _00
+	zenListManager _10;               // _10
+	zenListManager _20;               // _20
+	particleGenerator* mPtclGenList;  // _30, array of up to 0x1000 particleGenerators
+	particleMdlManager mMdlMgr;       // _34
+	u8 _5C[4];                        // _5C, unknown, might be in particleMdlManager
+	simplePtclManager mSimplePtclMgr; // _60
+	u32 mMaxPtclGens;                 // _74
+	u32 mMaxParticles;                // _78
+	u32 mMaxChildParticles;           // _7C
+	u32 mActivePtclGenCount;          // _80, current active ptcl gen count
+	u32 mActiveParticleCount;         // _84, current active particle count
+	u32 mActiveChildParticleCount;    // _88, current active child particle count
+	u32 mMaxUsedPtclGenCount;         // _8C, max amount of ptcl gens used so far
+	u32 mMaxUsedParticleCount;        // _90, max amount of particles used so far
+	u32 mMaxUsedChildParticleCount;   // _94, max amount of child particles used so far
+	f32 _98;                          // _98
+};
+
+/**
  * @brief TODO
  */
 struct PtclGenPack {

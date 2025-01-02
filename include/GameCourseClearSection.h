@@ -3,6 +3,8 @@
 
 #include "types.h"
 #include "Section.h"
+#include "Parameters.h"
+#include "zen/particle.h"
 
 struct Menu;
 struct Font;
@@ -11,6 +13,24 @@ struct Font;
  * @brief TODO
  */
 struct GameCourseClearScreen : public Node {
+
+	/**
+	 * @brief TODO
+	 *
+	 * @note Name according to the DLL list. Offsets relative to screen for convenience.
+	 */
+	struct Parms : public Parameters {
+		Parms()
+		    : _24(this, 300.0f, 0.0f, 1000.0f, "p00", "floatテストだぴょ−ン") // 'float test'
+		    , _34(this, 1, 0, 100, "i00", "intテストだぴょ−ン")               // 'int test'
+		{
+		}
+
+		// _20-_24 = Parameters
+		Parm<f32> _24; // _24, p00
+		Parm<int> _34; // _34, i00
+	};
+
 	virtual void read(RandomAccessStream&); // _0C
 	virtual void update();                  // _10
 	virtual void draw(Graphics&);           // _14
@@ -19,7 +39,9 @@ struct GameCourseClearScreen : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
+	Parms mCourseClearParms;                  // _20
+	u8 _44[0x10];                             // _44, unknown
+	zen::particleManager mCourseClearPtclMgr; // _54
 };
 
 /**

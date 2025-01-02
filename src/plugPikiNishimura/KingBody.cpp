@@ -2257,44 +2257,6 @@ bool KingGenSpitPartsParticleCallBack::invoke(zen::particleGenerator*, zen::part
 
 /*
  * --INFO--
- * Address:	80175754
- * Size:	00001C
- */
-void zen::zenList::insertAfter(zen::zenList*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x8(r4)
-	  stw       r3, 0x4(r4)
-	  lwz       r5, 0x8(r3)
-	  stw       r4, 0x4(r5)
-	  stw       r4, 0x8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80175770
- * Size:	00001C
- */
-void zen::zenList::remove()
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x4(r3)
-	  lwz       r4, 0x8(r3)
-	  stw       r0, 0x4(r4)
-	  lwz       r0, 0x8(r3)
-	  lwz       r3, 0x4(r3)
-	  stw       r0, 0x8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	8017578C
  * Size:	00002C
  */
