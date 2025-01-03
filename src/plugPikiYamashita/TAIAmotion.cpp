@@ -76,7 +76,7 @@ void TAIAreserveMotion::start(Teki& teki)
 			return;
 		}
 
-		if (teki.mTekiAnimator->getCurrentFrame() >= f32(teki.mTekiAnimator->mAnimInfo->mData->mNumFrames - 2)) {
+		if (teki.mTekiAnimator->getCounter() >= f32(teki.mTekiAnimator->mAnimInfo->mData->mNumFrames - 2)) {
 			teki.mTekiAnimator->startMotion(PaniMotionInfo(mMotionID, &teki));
 			return;
 		}
@@ -85,14 +85,14 @@ void TAIAreserveMotion::start(Teki& teki)
 		return;
 	}
 
-	if (teki.mTekiAnimator->getCurrentFrame() >= f32(teki.mTekiAnimator->mAnimInfo->mData->mNumFrames - 2)) {
+	if (teki.mTekiAnimator->getCounter() >= f32(teki.mTekiAnimator->mAnimInfo->mData->mNumFrames - 2)) {
 		teki.mTekiAnimator->startMotion(PaniMotionInfo(mMotionID, &teki));
 	}
 
 	if (teki.mTekiAnimator->mIsFinished) {
-		f32 frame = teki.mTekiAnimator->getCurrentFrame();
+		f32 frame = teki.mTekiAnimator->getCounter();
 		teki.mTekiAnimator->startMotion(PaniMotionInfo(mMotionID, &teki));
-		teki.mTekiAnimator->setCurrentFrame(frame);
+		teki.mTekiAnimator->setCounter(frame);
 	}
 }
 

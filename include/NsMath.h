@@ -43,11 +43,15 @@ struct NsLibMath {
 	// these exist for int and float
 	static inline T abs(T val) { return (val > 0) ? val : -val; }
 
-	T revice(T, T, T);
+	static T revice(T a, T b, T c);
 
 	// these just exist for float
 	T lagrange3(const T*, T);
-	T toGoal(T, T, T);
+
+	static T toGoal(T start, T goal, T step)
+	{
+		return (NsLibMath::abs(start - goal) < step) ? goal : (start < goal) ? start + step : start - step;
+	}
 };
 
 namespace NsMathF {

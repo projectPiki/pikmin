@@ -55,7 +55,7 @@ void PomAi::initAI(Pom* pom)
 		mPom->setNextState(2);
 		mPom->mAnimator.startMotion(PaniMotionInfo(10, this));
 		mPom->enableStick();
-		mPom->mAnimator.setCurrentFrame(28.0f);
+		mPom->mAnimator.setCounter(28.0f);
 	} else {
 		mPom->setCurrentState(1);
 		mPom->setNextState(1);
@@ -205,7 +205,7 @@ void PomAi::collidePetal(Creature* collider)
 		return;
 	}
 
-	if (mPom->getCurrentState() == 2 && mPom->mAnimator.mCurrentFrame > 27.0f && collider->mVelocity.length() > 75.0f) {
+	if (mPom->getCurrentState() == 2 && mPom->mAnimator.mAnimationCounter > 27.0f && collider->mVelocity.length() > 75.0f) {
 		setCollideSound(collider);
 	}
 

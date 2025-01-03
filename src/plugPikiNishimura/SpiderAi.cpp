@@ -54,7 +54,7 @@ void SpiderAi::initAI(Spider* spider)
 		// start in place, so mark as fallen
 		mSpider->mIsAppear = true;
 		mSpider->setAnimTimer(C_SPIDER_PROP(mSpider).mDropTimer());
-		mSpider->mAnimator.setCurrentFrame(20.0f);
+		mSpider->mAnimator.setCounter(20.0f);
 	}
 }
 

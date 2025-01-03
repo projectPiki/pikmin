@@ -1602,9 +1602,9 @@ void Navi::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
  */
 void Navi::enableMotionBlend()
 {
-	_7E0 = mNaviAnimMgr.getUpperAnimator().getMotionID();
+	_7E0 = mNaviAnimMgr.getUpperAnimator().getCurrentMotionIndex();
 	mNaviAnimMgr.getUpperAnimator().startMotion(PaniMotionInfo(PIKIANIM_Nigeru));
-	mNaviAnimMgr.getUpperAnimator().mCurrentFrame = 10.0f;
+	mNaviAnimMgr.getUpperAnimator().mAnimationCounter = 10.0f;
 }
 
 /*
@@ -8934,8 +8934,8 @@ void Navi::swapMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 {
 	u32 badCompiler[4];
 
-	f32* frame1 = &mNaviAnimMgr.mLowerAnimator.mCurrentFrame;
-	f32* frame2 = &mNaviAnimMgr.mUpperAnimator.mCurrentFrame;
+	f32* frame1 = &mNaviAnimMgr.mLowerAnimator.mAnimationCounter;
+	f32* frame2 = &mNaviAnimMgr.mUpperAnimator.mAnimationCounter;
 	f32 val1    = *frame1;
 	f32 val2    = *frame2;
 	mNaviAnimMgr.startMotion(motion1, motion2);

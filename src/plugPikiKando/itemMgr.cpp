@@ -2389,7 +2389,7 @@ void ItemCreature::stopMotion() { mMotionSpeed = 0.0f; }
  * Address:	800F5A00
  * Size:	000008
  */
-f32 ItemCreature::getCurrentMotionCounter() { return mItemAnimator.mCurrentFrame; }
+f32 ItemCreature::getCurrentMotionCounter() { return mItemAnimator.mAnimationCounter; }
 
 /*
  * --INFO--
@@ -2427,7 +2427,7 @@ void ItemCreature::finishMotion() { mItemAnimator.finishMotion(PaniMotionInfo(-1
 void ItemCreature::startMotion(int motionID, f32 frame)
 {
 	mItemAnimator.startMotion(PaniMotionInfo(motionID, this));
-	mItemAnimator.mCurrentFrame = frame;
+	mItemAnimator.mAnimationCounter = frame;
 }
 
 /*
@@ -2438,7 +2438,7 @@ void ItemCreature::startMotion(int motionID, f32 frame)
 void ItemCreature::finishMotion(f32 frame)
 {
 	mItemAnimator.finishMotion(PaniMotionInfo(-1, this));
-	mItemAnimator.mCurrentFrame = frame;
+	mItemAnimator.mAnimationCounter = frame;
 }
 
 /*

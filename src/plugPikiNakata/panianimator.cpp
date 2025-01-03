@@ -112,13 +112,13 @@ PaniSoundTable::PaniSoundTable(int count)
  */
 PaniAnimator::PaniAnimator()
 {
-	mCurrentKeyIndex = -1;
-	mIsFinished      = false;
-	mListener        = nullptr;
-	mAnimInfo        = nullptr;
-	mMotionTable     = nullptr;
-	mMotionIdx       = -1;
-	mCurrentFrame    = 0.0f;
+	mCurrentKeyIndex  = -1;
+	mIsFinished       = false;
+	mListener         = nullptr;
+	mAnimInfo         = nullptr;
+	mMotionTable      = nullptr;
+	mMotionIdx        = -1;
+	mAnimationCounter = 0.0f;
 }
 
 /*
@@ -128,11 +128,11 @@ PaniAnimator::PaniAnimator()
  */
 void PaniAnimator::init(AnimContext* context, AnimMgr* mgr, PaniMotionTable* table)
 {
-	mContext      = context;
-	mMgr          = mgr;
-	mAnimInfo     = nullptr;
-	mCurrentFrame = 0.0f;
-	mMotionTable  = table;
+	mContext          = context;
+	mMgr              = mgr;
+	mAnimInfo         = nullptr;
+	mAnimationCounter = 0.0f;
+	mMotionTable      = table;
 	if (mgr->countAnims()) {
 		startAnim(2, 0, 0, 8);
 	}
@@ -154,7 +154,7 @@ void PaniAnimator::updateContext()
 {
 	if (mAnimInfo) {
 		mContext->mData         = mAnimInfo->mData;
-		mContext->mCurrentFrame = mCurrentFrame;
+		mContext->mCurrentFrame = mAnimationCounter;
 	}
 }
 
@@ -190,9 +190,9 @@ void PaniAnimator::finishMotion(PaniMotionInfo& info)
 	mIsFinished = true;
 
 	f32 maxFrame = (f32)((!mAnimInfo) ? -1 : mAnimInfo->mData->mNumFrames);
-	if (mCurrentFrame >= maxFrame) {
-		PRINT("!!!finishMotion:%08x:%f,%f\n", this, mCurrentFrame, maxFrame);
-		mCurrentFrame = maxFrame;
+	if (mAnimationCounter >= maxFrame) {
+		PRINT("!!!finishMotion:%08x:%f,%f\n", this, mAnimationCounter, maxFrame);
+		mAnimationCounter = maxFrame;
 		finishAnimation();
 	} else {
 		startAnim(2, mCurrentAnimID, -1, 8);
@@ -211,8 +211,8 @@ void PaniAnimator::animate(f32 speed)
 	}
 
 	if (speed < 0.0f) {
-		mCurrentFrame;
-		PRINT("!animate:%08x:%f,%f\n", this, mCurrentFrame, speed);
+		mAnimationCounter;
+		PRINT("!animate:%08x:%f,%f\n", this, mAnimationCounter, speed);
 	}
 
 	if (mCurrentKeyIndex < 0) {
@@ -222,18 +222,18 @@ void PaniAnimator::animate(f32 speed)
 	f32 startValue = (f32)mAnimInfo->getKeyValue(mStartKeyIndex);
 	f32 endValue   = (f32)mAnimInfo->getKeyValue(mNextKeyInfoIndex);
 	if (startValue > endValue) {
-		mCurrentFrame;
-		PRINT("!animate:%08x:to<from:%f,%f,%f\n", this, endValue, startValue, mCurrentFrame);
+		mAnimationCounter;
+		PRINT("!animate:%08x:to<from:%f,%f,%f\n", this, endValue, startValue, mAnimationCounter);
 		return;
 	}
 
 	speed *= NSystem::system->getFrameTime();
-	mCurrentFrame += speed;
+	mAnimationCounter += speed;
 
 	checkConstantKeys();
-	checkEventKeys(mCurrentFrame - speed, mCurrentFrame);
-	if (mCurrentFrame >= endValue) {
-		mCurrentFrame = endValue;
+	checkEventKeys(mAnimationCounter - speed, mAnimationCounter);
+	if (mAnimationCounter >= endValue) {
+		mAnimationCounter = endValue;
 		finishAnimation();
 	}
 }
@@ -257,7 +257,7 @@ void PaniAnimator::checkConstantKeys()
 		int keyIdx = getInfoKeyValue(mCurrentKeyIndex);
 		f32 value  = getKeyValue(keyIdx);
 
-		if (mCurrentFrame < value) {
+		if (mAnimationCounter < value) {
 			return;
 		}
 
@@ -284,7 +284,7 @@ void PaniAnimator::checkConstantKey(int idx)
 			f32 firstKeyValue  = getKeyValue(firstKeyID);
 			f32 secondKeyValue = getKeyValue(secondKeyID);
 
-			mCurrentFrame -= (secondKeyValue - firstKeyValue);
+			mAnimationCounter -= (secondKeyValue - firstKeyValue);
 			mCurrentKeyIndex = mPreviousKeyIndex;
 		}
 	}
@@ -376,8 +376,8 @@ f32 PaniAnimator::getKeyValueByKeyType(int type)
  */
 void PaniAnimator::checkCounter_4DEBUG()
 {
-	if (mCurrentFrame < 0.0f || mAnimInfo->mData->mNumFrames <= mCurrentFrame) {
-		PRINT("!checkCounter_4DEBUG:%08x:%d,%f/%f\n", this, mMotionIdx, mCurrentFrame, mAnimInfo->mData->mNumFrames);
-		ERROR("!checkCounter_4DEBUG:%08x:%d,%f/%f\n", this, mMotionIdx, mCurrentFrame, mAnimInfo->mData->mNumFrames);
+	if (mAnimationCounter < 0.0f || mAnimInfo->mData->mNumFrames <= mAnimationCounter) {
+		PRINT("!checkCounter_4DEBUG:%08x:%d,%f/%f\n", this, mMotionIdx, mAnimationCounter, mAnimInfo->mData->mNumFrames);
+		ERROR("!checkCounter_4DEBUG:%08x:%d,%f/%f\n", this, mMotionIdx, mAnimationCounter, mAnimInfo->mData->mNumFrames);
 	}
 }

@@ -66,11 +66,11 @@ struct SnakeProp : public BossProp, public CoreNode {
 		    , _414(this, 1.0f, 0.0f, 30.0f, "t10", "Chase Blend Ratio")
 		    , _424(this, 2.5f, 0.0f, 10.0f, "q00", "Dive Time")
 		    , _434(this, 0.0f, 0.0f, 10.0f, "q02", "Under Time")
-		    , _444(this, 10.0f, 0.0f, 100.0f, "s00", "Head Scale Speed")
-		    , _454(this, 1.0f, 0.0f, 10.0f, "s01", "Head Scale Timer")
-		    , _464(this, 5.0f, 0.0f, 100.0f, "s02", "Body Scale Speed")
-		    , _474(this, 0.75f, 0.0f, 10.0f, "s03", "Body Scale Timer")
-		    , _484(this, 0.1f, 0.0f, 1.0f, "s04", "Body Timer Up Ratio")
+		    , mDeadHeadScaleSpeed(this, 10.0f, 0.0f, 100.0f, "s00", "Head Scale Speed")
+		    , mDeadHeadScaleTimer(this, 1.0f, 0.0f, 10.0f, "s01", "Head Scale Timer")
+		    , mDeadBodyScaleSpeed(this, 5.0f, 0.0f, 100.0f, "s02", "Body Scale Speed")
+		    , mDeadBodyScaleTimer(this, 0.75f, 0.0f, 10.0f, "s03", "Body Scale Timer")
+		    , mDeadBodyScaleSegmentRatio(this, 0.1f, 0.0f, 1.0f, "s04", "Body Timer Up Ratio")
 		    , _494(this, 0.7f, 0.0f, 1.0f, "s10", "Normal Appear Type")
 		    , _4A4(this, 5, 0, 100, "i10", "Struggle Piki(Min)")
 		    , _4B4(this, 20, 0, 100, "i11", "Struggle Piki(Max)")
@@ -82,54 +82,54 @@ struct SnakeProp : public BossProp, public CoreNode {
 		}
 
 		// _200-_204 = Parameters
-		Parm<f32> _204; // _204
-		Parm<f32> _214; // _214
-		Parm<f32> _224; // _224
-		Parm<f32> _234; // _234
-		Parm<f32> _244; // _244
-		Parm<f32> _254; // _254
-		Parm<f32> _264; // _264
-		Parm<f32> _274; // _274
-		Parm<f32> _284; // _284
-		Parm<f32> _294; // _294
-		Parm<f32> _2A4; // _2A4
-		Parm<f32> _2B4; // _2B4
-		Parm<f32> _2C4; // _2C4
-		Parm<f32> _2D4; // _2D4
-		Parm<f32> _2E4; // _2E4
-		Parm<f32> _2F4; // _2F4
-		Parm<f32> _304; // _304
-		Parm<f32> _314; // _314
-		Parm<f32> _324; // _324
-		Parm<f32> _334; // _334
-		Parm<f32> _344; // _344
-		Parm<f32> _354; // _354
-		Parm<f32> _364; // _364
-		Parm<f32> _374; // _374
-		Parm<f32> _384; // _384
-		Parm<f32> _394; // _394
-		Parm<f32> _3A4; // _3A4
-		Parm<f32> _3B4; // _3B4
-		Parm<f32> _3C4; // _3C4
-		Parm<f32> _3D4; // _3D4
-		Parm<f32> _3E4; // _3E4
-		Parm<f32> _3F4; // _3F4
-		Parm<f32> _404; // _404
-		Parm<f32> _414; // _414
-		Parm<f32> _424; // _424
-		Parm<f32> _434; // _434
-		Parm<f32> _444; // _444
-		Parm<f32> _454; // _454
-		Parm<f32> _464; // _464
-		Parm<f32> _474; // _474
-		Parm<f32> _484; // _484
-		Parm<f32> _494; // _494
-		Parm<int> _4A4; // _4A4
-		Parm<int> _4B4; // _4B4
-		Parm<int> _4C4; // _4C4
-		Parm<int> _4D4; // _4D4
-		Parm<int> _4E4; // _4E4
-		Parm<int> _4F4; // _4F4
+		Parm<f32> _204;                       // _204
+		Parm<f32> _214;                       // _214
+		Parm<f32> _224;                       // _224
+		Parm<f32> _234;                       // _234
+		Parm<f32> _244;                       // _244
+		Parm<f32> _254;                       // _254
+		Parm<f32> _264;                       // _264
+		Parm<f32> _274;                       // _274
+		Parm<f32> _284;                       // _284
+		Parm<f32> _294;                       // _294
+		Parm<f32> _2A4;                       // _2A4
+		Parm<f32> _2B4;                       // _2B4
+		Parm<f32> _2C4;                       // _2C4
+		Parm<f32> _2D4;                       // _2D4
+		Parm<f32> _2E4;                       // _2E4
+		Parm<f32> _2F4;                       // _2F4
+		Parm<f32> _304;                       // _304
+		Parm<f32> _314;                       // _314
+		Parm<f32> _324;                       // _324
+		Parm<f32> _334;                       // _334
+		Parm<f32> _344;                       // _344
+		Parm<f32> _354;                       // _354
+		Parm<f32> _364;                       // _364
+		Parm<f32> _374;                       // _374
+		Parm<f32> _384;                       // _384
+		Parm<f32> _394;                       // _394
+		Parm<f32> _3A4;                       // _3A4
+		Parm<f32> _3B4;                       // _3B4
+		Parm<f32> _3C4;                       // _3C4
+		Parm<f32> _3D4;                       // _3D4
+		Parm<f32> _3E4;                       // _3E4
+		Parm<f32> _3F4;                       // _3F4
+		Parm<f32> _404;                       // _404
+		Parm<f32> _414;                       // _414
+		Parm<f32> _424;                       // _424
+		Parm<f32> _434;                       // _434
+		Parm<f32> mDeadHeadScaleSpeed;        // _444
+		Parm<f32> mDeadHeadScaleTimer;        // _454
+		Parm<f32> mDeadBodyScaleSpeed;        // _464
+		Parm<f32> mDeadBodyScaleTimer;        // _474
+		Parm<f32> mDeadBodyScaleSegmentRatio; // _484
+		Parm<f32> _494;                       // _494
+		Parm<int> _4A4;                       // _4A4
+		Parm<int> _4B4;                       // _4B4
+		Parm<int> _4C4;                       // _4C4
+		Parm<int> _4D4;                       // _4D4
+		Parm<int> _4E4;                       // _4E4
+		Parm<int> _4F4;                       // _4F4
 	};
 
 	SnakeProp();
@@ -194,7 +194,7 @@ struct SnakeBody {
 	Snake* mSnake;                                   // _00
 	bool _04;                                        // _04
 	u8 _05;                                          // _05
-	int _08;                                         // _08
+	int mDeadEffectSegmentIndex;                     // _08
 	f32 mBlendingRatio;                              // _0C
 	f32 mBlendingRate;                               // _10
 	f32 _14[7];                                      // _14
@@ -208,7 +208,7 @@ struct SnakeBody {
 	Matrix4f _684[8];                                // _684
 	SnakeGenBodyOnGroundCallBack* mOnGroundCallBack; // _884
 	SnakeGenBodyRotateCallBack* mRotateCallBack;     // _888
-	zen::particleGenerator** mHeadPtclGens;          // _88C
+	zen::particleGenerator** mDeadPtclGens;          // _88C
 };
 
 /**
@@ -350,7 +350,18 @@ struct SnakeAi : public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	u8 _04;             // _04
-	u8 _05[0x50 - 0x5]; // _05, unknown
+	u8 _05[0x14 - 0x5]; // _05, unknown
+	int _14;            // _14
+	u32* _18;           // _18, unknown, array of 5 pointers/values
+	u32* _1C;           // _1C, unknown, array of 5 pointers/values
+	u32* _20;           // _20, unknown, array of 5 pointers/values
+	u32* _24;           // _24, unknown, array of 5 pointers/values
+	u32* _28;           // _28, unknown, array of 5 pointers/values
+	u32* _2C;           // _2C, unknown, array of 5 pointers/values
+	Vector3f* _30;      // _30, array of 5 vectors
+	Vector3f _34;       // _34
+	Vector3f _40;       // _40
+	Snake* mSnake;      // _4C
 };
 
 /**

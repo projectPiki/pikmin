@@ -23,14 +23,22 @@ enum KeyEventTypes {
  * @brief TODO
  */
 struct PaniAnimKeyEvent {
-	PaniAnimKeyEvent(int eventType, int value = -1)
+	PaniAnimKeyEvent(int eventType)
+	{
+		mEventType = eventType;
+		mValue     = -1;
+	}
+
+	PaniAnimKeyEvent(int eventType, int value)
 	{
 		mEventType = eventType;
 		mValue     = value;
 	}
 
+	// void init(int eventType, int value);
+
 	int mEventType; // _00
-	int mValue;     // _04, used in KingAi for a couple different things - this struct might be differentiated for each use case? unsure.
+	int mValue;     // _04
 };
 
 /**
@@ -66,8 +74,8 @@ struct PaniMotion {
 struct PaniMotionTable {
 	PaniMotionTable(int);
 
-	inline PaniMotion* getMotion(int motionIdx) { return mMotions[motionIdx]; }
-	inline void addMotion(int motionIdx, PaniMotion* motion) { mMotions[motionIdx] = motion; }
+	PaniMotion* getMotion(int motionIdx) { return mMotions[motionIdx]; }
+	void setMotion(int motionIdx, PaniMotion* motion) { mMotions[motionIdx] = motion; }
 
 	int mMotionCount;      // _00
 	PaniMotion** mMotions; // _04
@@ -94,18 +102,39 @@ struct PaniAnimator : public Animator {
 
 	void checkCounter_4DEBUG();
 
-	inline bool isFinished() const { return mIsFinished; }
-	inline f32 getCurrentFrame() const { return mCurrentFrame; }
-	inline void setCurrentFrame(f32 frame) { mCurrentFrame = frame; }
-
-	inline int getMotionID() { return mMotionIdx; }
-
-	inline PaniMotion* getMotion(int motionIdx) { return mMotionTable->getMotion(motionIdx); }
-
+	// TODO: either match these inlines to DLL ones in the list below, or remove.
 	inline int get38() { return mCurrentKeyIndex; } // TODO: rename later
 	inline int getInfoKeyValue(int idx) { return mAnimInfo->getInfoKey(idx)->mKeyframeIndex; }
 	inline int getEventKeyValue(int idx) { return mAnimInfo->getEventKey(idx)->mKeyframeIndex; }
-	inline f32 getKeyValue(int idx) { return mAnimInfo->getKeyValue(idx); }
+
+	// these are all DLL inlines
+	bool isFinished() { return mIsFinished; }
+
+	f32 getCounter() { return mAnimationCounter; }
+	void setCounter(f32 frame) { mAnimationCounter = frame; }
+
+	f32 getKeyValue(int idx) { return mAnimInfo->getKeyValue(idx); }
+
+	int getCurrentMotionIndex() { return mMotionIdx; }
+
+	PaniMotion* getMotion(int motionIdx) { return mMotionTable->getMotion(motionIdx); }
+
+	/*
+	    remaining DLL inlines:
+	    bool getCurrentOption(int);
+	    bool isFinishing();
+
+	    AnimKey* getEventKey(int);
+
+	    f32 getAnimationSpeed();
+	    f32 getKeyValueByKeyType(int);
+
+	    int getEventKeyCount();
+	    int getFrameCount();
+	    int getKeyIndex(int);
+	    int getKeyInfoCount();
+	    int getKeyType(int);
+	*/
 
 	static char* keyNames[6];
 
@@ -221,6 +250,10 @@ struct PaniSound {
  */
 struct PaniSoundTable {
 	PaniSoundTable(int);
+
+	// DLL inlines to do:
+	// PaniSound* getSound(int);
+	// int getSize();
 
 	int mSoundCount;     // _00
 	PaniSound** mSounds; // _04, array of mSoundCount sounds

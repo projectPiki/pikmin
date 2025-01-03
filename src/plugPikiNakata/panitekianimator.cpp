@@ -45,21 +45,21 @@ char* PaniTekiAnimator::motionLabels[15] = {
 PaniMotionTable* PaniTekiAnimator::createMotionTable()
 {
 	PaniMotionTable* table = new PaniMotionTable(15);
-	table->addMotion(0, new PaniMotion(0));
-	table->addMotion(1, new PaniMotion(1));
-	table->addMotion(2, new PaniMotion(2));
-	table->addMotion(3, new PaniMotion(3));
-	table->addMotion(4, new PaniMotion(4));
-	table->addMotion(5, new PaniMotion(5));
-	table->addMotion(6, new PaniMotion(6));
-	table->addMotion(7, new PaniMotion(7));
-	table->addMotion(8, new PaniMotion(8));
-	table->addMotion(9, new PaniMotion(9));
-	table->addMotion(10, new PaniMotion(10));
-	table->addMotion(11, new PaniMotion(11));
-	table->addMotion(12, new PaniMotion(12));
-	table->addMotion(13, new PaniMotion(13));
-	table->addMotion(14, new PaniMotion(14));
+	table->setMotion(0, new PaniMotion(0));
+	table->setMotion(1, new PaniMotion(1));
+	table->setMotion(2, new PaniMotion(2));
+	table->setMotion(3, new PaniMotion(3));
+	table->setMotion(4, new PaniMotion(4));
+	table->setMotion(5, new PaniMotion(5));
+	table->setMotion(6, new PaniMotion(6));
+	table->setMotion(7, new PaniMotion(7));
+	table->setMotion(8, new PaniMotion(8));
+	table->setMotion(9, new PaniMotion(9));
+	table->setMotion(10, new PaniMotion(10));
+	table->setMotion(11, new PaniMotion(11));
+	table->setMotion(12, new PaniMotion(12));
+	table->setMotion(13, new PaniMotion(13));
+	table->setMotion(14, new PaniMotion(14));
 
 	return table;
 }

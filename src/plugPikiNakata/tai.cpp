@@ -141,7 +141,7 @@ bool TaiState::act(Teki& volatile teki)
 		if (action->act(*pTeki) && action->hasNextState()) {
 			if (true) {
 				// idk
-				int motionID = pTeki->mTekiAnimator->getMotionID();
+				int motionID = pTeki->mTekiAnimator->getCurrentMotionIndex();
 				PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)pTeki, i, pTeki->mStateID, action->mNextState, pTeki->_330,
 				      pTeki->mTekiType, motionID);
 			}
@@ -250,7 +250,7 @@ bool TaiState::eventPerformed(TekiEvent& event)
 			Teki* volatile teki = event.mTeki;
 			if (true) {
 				// idk
-				int motionID = event.mTeki->mTekiAnimator->getMotionID();
+				int motionID = event.mTeki->mTekiAnimator->getCurrentMotionIndex();
 				PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)teki, i, event.mTeki->mStateID, action->mNextState,
 				      event.mTeki->_330, event.mTeki->mTekiType, motionID);
 			}

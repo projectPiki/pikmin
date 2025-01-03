@@ -105,9 +105,6 @@ enum PikiNaviAnim {
  * @brief TODO
  */
 struct PaniPikiAnimator : public PaniAnimator {
-	static PaniMotionTable* createMotionTable();
-	static char* motionLabels[90];
-
 	PaniPikiAnimator();
 
 	char* getCurrentMotionName()
@@ -118,6 +115,9 @@ struct PaniPikiAnimator : public PaniAnimator {
 			return "NULL";
 		}
 	}
+
+	static PaniMotionTable* createMotionTable();
+	static char* motionLabels[90];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
@@ -144,14 +144,17 @@ struct PaniPikiAnimMgr {
 	// unused/inlined:
 	static PaniMotionTable* getMotionTable();
 
-	inline bool isFinished() const { return mLowerAnimator.isFinished(); }
-
+	// these are fake according to the DLL
+	inline bool isFinished() { return mLowerAnimator.isFinished(); }
 	inline f32 getAnimSpeed() { return mAnimSpeed; }
 	inline void setAnimSpeed(f32 speed) { mAnimSpeed = speed; }
 
 	// Names taken from linker file
-	inline PaniPikiAnimator& getLowerAnimator() { return mLowerAnimator; }
-	inline PaniPikiAnimator& getUpperAnimator() { return mUpperAnimator; }
+	PaniPikiAnimator& getLowerAnimator() { return mLowerAnimator; }
+	PaniPikiAnimator& getUpperAnimator() { return mUpperAnimator; }
+
+	// remaining DLL inlines:
+	// static void initPaniPikiAnimMgr();
 
 	static PaniMotionTable* motionTable;
 

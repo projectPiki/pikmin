@@ -344,6 +344,10 @@ struct Animator {
 	void startAnim(int, int, int, int);
 	void updateContext();
 
+	// DLL inlines to make:
+	// (maybe) Animator();
+	// void init(AnimContext*, AnimMgr*);
+
 	// _30 = VTBL
 	AnimMgr* mMgr;         // _00
 	AnimContext* mContext; // _04
@@ -356,7 +360,7 @@ struct Animator {
 	int mStartKeyIndex;    // _20
 	int mNextKeyInfoIndex; // _24
 	AnimInfo* mAnimInfo;   // _28
-	f32 mCurrentFrame;     // _2C
+	f32 mAnimationCounter; // _2C
 
 	virtual void changeContext(AnimContext*); // _08
 	virtual void animate(f32);                // _0C
