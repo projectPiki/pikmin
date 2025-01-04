@@ -1,5 +1,25 @@
 #include "Spider.h"
+#include "EffectMgr.h"
+#include "Graphics.h"
+#include "NsMath.h"
+#include "RumbleMgr.h"
+#include "SoundMgr.h"
 #include "DebugLog.h"
+
+namespace Kumo {
+static int leg_index[4][3] = {
+	{ 12, 11, 10 },
+	{ 15, 14, 13 },
+	{ 6, 5, 4 },
+	{ 9, 8, 7 },
+};
+
+static int legId[3][3] = {
+	{ 3, 2, 0 },
+	{ 1, -1, 2 },
+	{ 3, 0, 1 },
+};
+} // namespace Kumo
 
 /*
  * --INFO--
@@ -20,9 +40,20 @@ DEFINE_PRINT("SpiderLeg");
  * Address:	........
  * Size:	0000A8
  */
-void SpiderLeg::setHalfDeadEffect(u32, int, int)
+void SpiderLeg::setHalfDeadEffect(u32 legCollPartID, int jointIdx, int legNum)
 {
-	// UNUSED FUNCTION
+	CollPart* legPart = mSpider->mCollInfo->getSphere(legCollPartID);
+	for (int i = 0; i < 3; i++) {
+		CollPart* child = legPart->getChild();
+		if (!child) {
+			return;
+		}
+		if (i == jointIdx) {
+			mHalfDeadCallBackJoints[legNum].set(&legPart->mCentre, mSpider);
+			effectMgr->create(EffectMgr::EFF_Unk184, mSpider->mPosition, &mHalfDeadCallBackJoints[legNum], nullptr);
+		}
+		legPart = child;
+	}
 }
 
 /*
@@ -30,116 +61,28 @@ void SpiderLeg::setHalfDeadEffect(u32, int, int)
  * Address:	80155A08
  * Size:	000184
  */
-void SpiderLeg::setHalfDeadFallEffect(u32)
+void SpiderLeg::setHalfDeadFallEffect(u32 legCollPartID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x98(r1)
-	  stfd      f31, 0x90(r1)
-	  stfd      f30, 0x88(r1)
-	  stmw      r27, 0x74(r1)
-	  mr        r27, r3
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x220(r3)
-	  bl        -0xCC31C
-	  lfs       f31, -0x5690(r2)
-	  addi      r30, r3, 0
-	  lfs       f30, -0x568C(r2)
-	  li        r29, 0
+	CollPart* legPart = mSpider->mCollInfo->getSphere(legCollPartID);
+	for (int i = 0; i < 3; i++) {
+		CollPart* child = legPart->getChild();
+		if (!child) {
+			return;
+		}
 
-	.loc_0x38:
-	  mr        r3, r30
-	  bl        -0xCDC80
-	  mr.       r28, r3
-	  beq-      .loc_0x168
-	  lwz       r5, 0x0(r27)
-	  li        r4, 0xB7
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  addi      r5, r5, 0x94
-	  li        r7, 0
-	  bl        0x470D0
-	  mr.       r31, r3
-	  beq-      .loc_0x158
-	  lfs       f2, 0x4(r28)
-	  lfs       f0, 0x4(r30)
-	  lfs       f7, 0x8(r28)
-	  lfs       f6, 0x8(r30)
-	  fadds     f1, f2, f0
-	  lfs       f5, 0xC(r28)
-	  fsubs     f2, f2, f0
-	  lfs       f4, 0xC(r30)
-	  fadds     f0, f7, f6
-	  stfs      f1, 0x60(r1)
-	  fadds     f3, f5, f4
-	  fsubs     f1, f7, f6
-	  stfs      f0, 0x64(r1)
-	  fsubs     f0, f5, f4
-	  stfs      f3, 0x68(r1)
-	  lfs       f3, 0x60(r1)
-	  fmuls     f3, f3, f31
-	  stfs      f3, 0x60(r1)
-	  lfs       f3, 0x64(r1)
-	  fmuls     f3, f3, f31
-	  stfs      f3, 0x64(r1)
-	  lfs       f3, 0x68(r1)
-	  fmuls     f3, f3, f31
-	  stfs      f3, 0x68(r1)
-	  stfs      f2, 0x54(r1)
-	  stfs      f1, 0x58(r1)
-	  stfs      f0, 0x5C(r1)
-	  lfs       f1, 0x54(r1)
-	  lfs       f0, 0x58(r1)
-	  lfs       f2, 0x5C(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x147EC0
-	  fcmpu     cr0, f30, f1
-	  beq-      .loc_0x128
-	  lfs       f0, 0x54(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x54(r1)
-	  lfs       f0, 0x58(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x58(r1)
-	  lfs       f0, 0x5C(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x5C(r1)
+		zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Unk183, mSpider->mPosition, nullptr, nullptr);
+		if (ptclGen) {
+			Vector3f midPt = child->mCentre + legPart->mCentre;
+			midPt.multiply(0.5f);
+			Vector3f dir = child->mCentre - legPart->mCentre;
+			dir.normalise();
 
-	.loc_0x128:
-	  lwz       r3, 0x60(r1)
-	  lwz       r0, 0x64(r1)
-	  stw       r3, 0xC(r31)
-	  stw       r0, 0x10(r31)
-	  lwz       r0, 0x68(r1)
-	  stw       r0, 0x14(r31)
-	  lwz       r3, 0x54(r1)
-	  lwz       r0, 0x58(r1)
-	  stw       r3, 0xA0(r31)
-	  stw       r0, 0xA4(r31)
-	  lwz       r0, 0x5C(r1)
-	  stw       r0, 0xA8(r31)
+			ptclGen->setEmitPos(midPt);
+			ptclGen->setEmitDir(dir);
+		}
 
-	.loc_0x158:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r30, r28, 0
-	  blt+      .loc_0x38
-
-	.loc_0x168:
-	  lmw       r27, 0x74(r1)
-	  lwz       r0, 0x9C(r1)
-	  lfd       f31, 0x90(r1)
-	  lfd       f30, 0x88(r1)
-	  addi      r1, r1, 0x98
-	  mtlr      r0
-	  blr
-	*/
+		legPart = child;
+	}
 }
 
 /*
@@ -147,140 +90,34 @@ void SpiderLeg::setHalfDeadFallEffect(u32)
  * Address:	80155B8C
  * Size:	0001DC
  */
-void SpiderLeg::setDeadBombEffect(u32)
+void SpiderLeg::setDeadBombEffect(u32 legCollPartID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stfd      f31, 0x80(r1)
-	  stfd      f30, 0x78(r1)
-	  stw       r31, 0x74(r1)
-	  stw       r30, 0x70(r1)
-	  stw       r29, 0x6C(r1)
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x220(r3)
-	  bl        -0xCC4A4
-	  lfs       f31, -0x5690(r2)
-	  addi      r31, r3, 0
-	  lfs       f30, -0x568C(r2)
-	  li        r30, 0
+	CollPart* legPart = mSpider->mCollInfo->getSphere(legCollPartID);
+	for (int i = 0; i < 3; i++) {
+		CollPart* child = legPart->getChild();
+		if (!child) {
+			return;
+		}
 
-	.loc_0x3C:
-	  mr        r3, r31
-	  bl        -0xCDE08
-	  mr.       r29, r3
-	  beq-      .loc_0x1B8
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r31)
-	  lfs       f3, 0x8(r29)
-	  lfs       f2, 0x8(r31)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0xC(r29)
-	  lfs       f1, 0xC(r31)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x5C(r1)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x60(r1)
-	  stfs      f0, 0x64(r1)
-	  lfs       f0, 0x5C(r1)
-	  fmuls     f0, f0, f31
-	  stfs      f0, 0x5C(r1)
-	  lfs       f0, 0x60(r1)
-	  fmuls     f0, f0, f31
-	  stfs      f0, 0x60(r1)
-	  lfs       f0, 0x64(r1)
-	  fmuls     f0, f0, f31
-	  stfs      f0, 0x64(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r31)
-	  lfs       f3, 0x8(r29)
-	  lfs       f2, 0x8(r31)
-	  fsubs     f0, f1, f0
-	  lfs       f4, 0xC(r29)
-	  lfs       f1, 0xC(r31)
-	  fsubs     f2, f3, f2
-	  stfs      f0, 0x50(r1)
-	  fsubs     f0, f4, f1
-	  stfs      f2, 0x54(r1)
-	  stfs      f0, 0x58(r1)
-	  lfs       f1, 0x50(r1)
-	  lfs       f0, 0x54(r1)
-	  lfs       f2, 0x58(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x14803C
-	  fcmpu     cr0, f30, f1
-	  beq-      .loc_0x120
-	  lfs       f0, 0x50(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x50(r1)
-	  lfs       f0, 0x54(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x54(r1)
-	  lfs       f0, 0x58(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x58(r1)
+		Vector3f midPt = child->mCentre + legPart->mCentre;
+		midPt.multiply(0.5f);
+		Vector3f dir = child->mCentre - legPart->mCentre;
+		dir.normalise();
 
-	.loc_0x120:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x5C
-	  li        r4, 0xBA
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x46E78
-	  cmplwi    r3, 0
-	  beq-      .loc_0x158
-	  lwz       r4, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r4, 0xA0(r3)
-	  stw       r0, 0xA4(r3)
-	  lwz       r0, 0x58(r1)
-	  stw       r0, 0xA8(r3)
+		zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_Unk186, midPt, nullptr, nullptr);
+		if (ptclGen1) {
+			ptclGen1->setEmitDir(dir);
+		}
 
-	.loc_0x158:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x5C
-	  li        r4, 0xB9
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x46E40
-	  cmplwi    r3, 0
-	  beq-      .loc_0x190
-	  lwz       r4, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r4, 0xA0(r3)
-	  stw       r0, 0xA4(r3)
-	  lwz       r0, 0x58(r1)
-	  stw       r0, 0xA8(r3)
+		zen::particleGenerator* ptclGen2 = effectMgr->create(EffectMgr::EFF_Unk185, midPt, nullptr, nullptr);
+		if (ptclGen2) {
+			ptclGen2->setEmitDir(dir);
+		}
 
-	.loc_0x190:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x4
-	  li        r4, 0xBD
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x46E08
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x3
-	  addi      r31, r29, 0
-	  blt+      .loc_0x3C
+		effectMgr->create(EffectMgr::EFF_Unk189, legPart->mCentre, nullptr, nullptr);
 
-	.loc_0x1B8:
-	  lwz       r0, 0x8C(r1)
-	  lfd       f31, 0x80(r1)
-	  lfd       f30, 0x78(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  lwz       r29, 0x6C(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+		legPart = child;
+	}
 }
 
 /*
@@ -288,9 +125,18 @@ void SpiderLeg::setDeadBombEffect(u32)
  * Address:	........
  * Size:	000094
  */
-void SpiderLeg::setSmallSparkEffect(u32, int*)
+void SpiderLeg::setSmallSparkEffect(u32 legCollPartID, int* p2)
 {
-	// UNUSED FUNCTION
+	CollPart* legPart = mSpider->mCollInfo->getSphere(legCollPartID);
+	for (int i = 0; i < 3; i++) {
+		if (p2[i]) {
+			effectMgr->create(EffectMgr::EFF_Unk190, legPart->mCentre, nullptr, nullptr);
+		}
+		legPart = legPart->getChild();
+		if (!legPart) {
+			break;
+		}
+	}
 }
 
 /*
@@ -298,9 +144,20 @@ void SpiderLeg::setSmallSparkEffect(u32, int*)
  * Address:	........
  * Size:	0000C8
  */
-void SpiderLeg::setPerishEffect(u32, int)
+void SpiderLeg::setPerishEffect(u32 legCollPartID, int p2)
 {
-	// UNUSED FUNCTION
+	CollPart* legPart = mSpider->mCollInfo->getSphere(legCollPartID);
+	for (int i = 0; i < 3; i++) {
+		CollPart* child = legPart->getChild();
+		if (!child) {
+			return;
+		}
+
+		mPerishCallBacks[i + p2].set(&child->mCentre, &legPart->mCentre, mSpider);
+		effectMgr->create(EffectMgr::EFF_Unk192, mSpider->mPosition, &mPerishCallBacks[i + p2], nullptr);
+		effectMgr->create(EffectMgr::EFF_Unk191, mSpider->mPosition, &mPerishCallBacks[i + p2], nullptr);
+		legPart = child;
+	}
 }
 
 /*
@@ -310,171 +167,10 @@ void SpiderLeg::setPerishEffect(u32, int)
  */
 void SpiderLeg::createHalfDeadEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  stw       r28, 0x20(r1)
-	  lwz       r5, 0x0(r3)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6731
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCC688
-	  addi      r28, r3, 0
-	  li        r29, 0
-
-	.loc_0x3C:
-	  mr        r3, r28
-	  bl        -0xCDFE4
-	  mr.       r30, r3
-	  beq-      .loc_0x94
-	  cmpwi     r29, 0x1
-	  bne-      .loc_0x84
-	  lwz       r5, 0x0(r31)
-	  addi      r0, r28, 0x4
-	  lwz       r3, 0x680(r31)
-	  li        r4, 0xB8
-	  li        r7, 0
-	  stw       r0, 0x4(r3)
-	  stw       r5, 0x8(r3)
-	  lwz       r5, 0x0(r31)
-	  lwz       r3, 0x3180(r13)
-	  lwz       r6, 0x680(r31)
-	  addi      r5, r5, 0x94
-	  bl        0x46D50
-
-	.loc_0x84:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r28, r30, 0
-	  blt+      .loc_0x3C
-
-	.loc_0x94:
-	  lwz       r5, 0x0(r31)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6732
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCC6FC
-	  addi      r30, r3, 0
-	  li        r29, 0
-
-	.loc_0xB0:
-	  mr        r3, r30
-	  bl        -0xCE058
-	  mr.       r28, r3
-	  beq-      .loc_0x110
-	  cmpwi     r29, 0x2
-	  bne-      .loc_0x100
-	  lwz       r3, 0x680(r31)
-	  addi      r0, r30, 0x4
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0xB8
-	  addi      r3, r3, 0xC
-	  stw       r0, 0x4(r3)
-	  li        r7, 0
-	  stw       r5, 0x8(r3)
-	  lwz       r5, 0x0(r31)
-	  lwz       r6, 0x680(r31)
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  addi      r6, r6, 0xC
-	  bl        0x46CD4
-
-	.loc_0x100:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r30, r28, 0
-	  blt+      .loc_0xB0
-
-	.loc_0x110:
-	  lwz       r5, 0x0(r31)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6733
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCC778
-	  addi      r30, r3, 0
-	  li        r29, 0
-
-	.loc_0x12C:
-	  mr        r3, r30
-	  bl        -0xCE0D4
-	  mr.       r28, r3
-	  beq-      .loc_0x18C
-	  cmpwi     r29, 0x1
-	  bne-      .loc_0x17C
-	  lwz       r3, 0x680(r31)
-	  addi      r0, r30, 0x4
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0xB8
-	  addi      r3, r3, 0x18
-	  stw       r0, 0x4(r3)
-	  li        r7, 0
-	  stw       r5, 0x8(r3)
-	  lwz       r5, 0x0(r31)
-	  lwz       r6, 0x680(r31)
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  addi      r6, r6, 0x18
-	  bl        0x46C58
-
-	.loc_0x17C:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r30, r28, 0
-	  blt+      .loc_0x12C
-
-	.loc_0x18C:
-	  lwz       r5, 0x0(r31)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6734
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCC7F4
-	  addi      r30, r3, 0
-	  li        r29, 0
-
-	.loc_0x1A8:
-	  mr        r3, r30
-	  bl        -0xCE150
-	  mr.       r28, r3
-	  beq-      .loc_0x208
-	  cmpwi     r29, 0x2
-	  bne-      .loc_0x1F8
-	  lwz       r3, 0x680(r31)
-	  addi      r0, r30, 0x4
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0xB8
-	  addi      r3, r3, 0x24
-	  stw       r0, 0x4(r3)
-	  li        r7, 0
-	  stw       r5, 0x8(r3)
-	  lwz       r5, 0x0(r31)
-	  lwz       r6, 0x680(r31)
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  addi      r6, r6, 0x24
-	  bl        0x46BDC
-
-	.loc_0x1F8:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r30, r28, 0
-	  blt+      .loc_0x1A8
-
-	.loc_0x208:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	setHalfDeadEffect('leg1', 1, 0);
+	setHalfDeadEffect('leg2', 2, 1);
+	setHalfDeadEffect('leg3', 1, 2);
+	setHalfDeadEffect('leg4', 2, 3);
 }
 
 /*
@@ -482,9 +178,20 @@ void SpiderLeg::createHalfDeadEffect()
  * Address:	........
  * Size:	000090
  */
-void SpiderLeg::createHalfDeadFallEffect(int)
+void SpiderLeg::createHalfDeadFallEffect(int idx)
 {
-	// UNUSED FUNCTION
+	if (idx == 0) {
+		setHalfDeadFallEffect('leg3');
+	}
+	if (idx == 1) {
+		setHalfDeadFallEffect('leg4');
+	}
+	if (idx == 2) {
+		setHalfDeadFallEffect('leg2');
+	}
+	if (idx == 3) {
+		setHalfDeadFallEffect('leg1');
+	}
 }
 
 /*
@@ -494,59 +201,16 @@ void SpiderLeg::createHalfDeadFallEffect(int)
  */
 void SpiderLeg::createDeadBombEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  lis       r31, 0x6C65
-	  addi      r4, r31, 0x6731
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x424
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x6732
-	  bl        -0x430
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x6733
-	  bl        -0x43C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x6734
-	  bl        -0x448
-	  lwz       r5, 0x0(r30)
-	  lis       r3, 0x7461
-	  addi      r4, r3, 0x6D61
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCC8D8
-	  mr        r4, r3
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r4, 0x4
-	  li        r4, 0xBD
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x46B34
-	  lwz       r6, 0x0(r30)
-	  li        r4, 0x5
-	  lwz       r3, 0x3178(r13)
-	  li        r5, 0
-	  addi      r6, r6, 0x94
-	  bl        0x26DB8
-	  lwz       r3, 0x0(r30)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA8
-	  li        r4, 0x2C
-	  bl        -0xB2264
-
-	.loc_0xA8:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	setDeadBombEffect('leg1');
+	setDeadBombEffect('leg2');
+	setDeadBombEffect('leg3');
+	setDeadBombEffect('leg4');
+	CollPart* body = mSpider->mCollInfo->getSphere('tama');
+	effectMgr->create(EffectMgr::EFF_Unk189, body->mCentre, nullptr, nullptr);
+	rumbleMgr->start(5, 0, mSpider->mPosition);
+	if (mSpider->mSeContext) {
+		mSpider->mSeContext->playSound(0x2C);
+	}
 }
 
 /*
@@ -554,278 +218,33 @@ void SpiderLeg::createDeadBombEffect()
  * Address:	80156050
  * Size:	000384
  */
-void SpiderLeg::createSmallSparkEffect(int)
+void SpiderLeg::createSmallSparkEffect(int count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r6, r5, 0x26A0
-	  cmpwi     r4, 0x1
-	  stwu      r1, -0x98(r1)
-	  stfd      f31, 0x90(r1)
-	  stfd      f30, 0x88(r1)
-	  stfd      f29, 0x80(r1)
-	  stfd      f28, 0x78(r1)
-	  stmw      r27, 0x64(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x0(r6)
-	  lwz       r0, 0x4(r6)
-	  stw       r5, 0x20(r1)
-	  stw       r0, 0x24(r1)
-	  lwz       r3, 0x8(r6)
-	  lwz       r0, 0xC(r6)
-	  stw       r3, 0x28(r1)
-	  stw       r0, 0x2C(r1)
-	  lwz       r3, 0x10(r6)
-	  lwz       r0, 0x14(r6)
-	  stw       r3, 0x30(r1)
-	  stw       r0, 0x34(r1)
-	  lwz       r3, 0x18(r6)
-	  lwz       r0, 0x1C(r6)
-	  stw       r3, 0x38(r1)
-	  stw       r0, 0x3C(r1)
-	  lwz       r3, 0x20(r6)
-	  lwz       r0, 0x24(r6)
-	  stw       r3, 0x40(r1)
-	  stw       r0, 0x44(r1)
-	  lwz       r3, 0x28(r6)
-	  lwz       r0, 0x2C(r6)
-	  stw       r3, 0x48(r1)
-	  stw       r0, 0x4C(r1)
-	  bge-      .loc_0x9C
-	  li        r4, 0x1
-	  b         .loc_0xA8
+	int legVals[12] = {
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	};
 
-	.loc_0x9C:
-	  cmpwi     r4, 0xB
-	  ble-      .loc_0xA8
-	  li        r4, 0xB
+	int boundedCount = NsMathI::intLoop(count, 1, 11);
+	for (int i = 0; i < boundedCount; i++) {
+		legVals[i] = 1;
+	}
 
-	.loc_0xA8:
-	  cmpwi     r4, 0
-	  li        r5, 0
-	  ble-      .loc_0x12C
-	  cmpwi     r4, 0x8
-	  subi      r3, r4, 0x8
-	  ble-      .loc_0x350
-	  addi      r0, r3, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r3, 0
-	  mtctr     r0
-	  addi      r3, r1, 0x20
-	  li        r0, 0x1
-	  ble-      .loc_0x350
+	// shuffle
+	for (int i = 0; i < 12; i++) {
+		int rand      = NsMathI::getRand1(12);
+		int tmp       = legVals[i];
+		legVals[i]    = legVals[rand];
+		legVals[rand] = tmp;
+	}
 
-	.loc_0xDC:
-	  stw       r0, 0x0(r3)
-	  addi      r5, r5, 0x8
-	  stw       r0, 0x4(r3)
-	  stw       r0, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x10(r3)
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x18(r3)
-	  stw       r0, 0x1C(r3)
-	  addi      r3, r3, 0x20
-	  bdnz+     .loc_0xDC
-	  b         .loc_0x350
+	setSmallSparkEffect('leg1', &legVals[0]);
+	setSmallSparkEffect('leg2', &legVals[3]);
+	setSmallSparkEffect('leg3', &legVals[6]);
+	setSmallSparkEffect('leg4', &legVals[9]);
 
-	.loc_0x10C:
-	  sub       r0, r4, r5
-	  cmpw      r5, r4
-	  mtctr     r0
-	  li        r0, 0x1
-	  bge-      .loc_0x12C
-
-	.loc_0x120:
-	  stw       r0, 0x0(r3)
-	  addi      r3, r3, 0x4
-	  bdnz+     .loc_0x120
-
-	.loc_0x12C:
-	  addi      r31, r1, 0x20
-	  lfd       f28, -0x5668(r2)
-	  lfs       f29, -0x5674(r2)
-	  mr        r28, r31
-	  lfs       f30, -0x5678(r2)
-	  li        r27, 0
-	  lfs       f31, -0x5670(r2)
-	  lis       r29, 0x4330
-
-	.loc_0x14C:
-	  bl        0xC1ED4
-	  xoris     r0, r3, 0x8000
-	  lwz       r4, 0x0(r28)
-	  stw       r0, 0x5C(r1)
-	  addi      r27, r27, 0x1
-	  addi      r3, r1, 0x20
-	  stw       r29, 0x58(r1)
-	  cmpwi     r27, 0xC
-	  lfd       f0, 0x58(r1)
-	  fsubs     f0, f0, f28
-	  fdivs     f0, f0, f29
-	  fmuls     f0, f30, f0
-	  fmuls     f0, f31, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x0(r28)
-	  addi      r28, r28, 0x4
-	  stw       r4, 0x0(r3)
-	  blt+      .loc_0x14C
-	  lwz       r5, 0x0(r30)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6731
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCCAF8
-	  addi      r28, r3, 0
-	  addi      r27, r31, 0
-	  li        r29, 0
-
-	.loc_0x1C8:
-	  lwz       r0, 0x0(r27)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x1EC
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r28, 0x4
-	  li        r4, 0xBE
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x46900
-
-	.loc_0x1EC:
-	  mr        r3, r28
-	  bl        -0xCE47C
-	  mr.       r28, r3
-	  beq-      .loc_0x20C
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r27, r27, 0x4
-	  blt+      .loc_0x1C8
-
-	.loc_0x20C:
-	  lwz       r5, 0x0(r30)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6732
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCCB5C
-	  addi      r29, r3, 0
-	  addi      r27, r31, 0
-	  li        r28, 0
-
-	.loc_0x22C:
-	  lwz       r0, 0xC(r27)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x250
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r29, 0x4
-	  li        r4, 0xBE
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x4689C
-
-	.loc_0x250:
-	  mr        r3, r29
-	  bl        -0xCE4E0
-	  mr.       r29, r3
-	  beq-      .loc_0x270
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x3
-	  addi      r27, r27, 0x4
-	  blt+      .loc_0x22C
-
-	.loc_0x270:
-	  lwz       r5, 0x0(r30)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6733
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCCBC0
-	  addi      r29, r3, 0
-	  addi      r27, r31, 0
-	  li        r28, 0
-
-	.loc_0x290:
-	  lwz       r0, 0x18(r27)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x2B4
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r29, 0x4
-	  li        r4, 0xBE
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x46838
-
-	.loc_0x2B4:
-	  mr        r3, r29
-	  bl        -0xCE544
-	  mr.       r29, r3
-	  beq-      .loc_0x2D4
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x3
-	  addi      r27, r27, 0x4
-	  blt+      .loc_0x290
-
-	.loc_0x2D4:
-	  lwz       r5, 0x0(r30)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6734
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCCC24
-	  addi      r29, r3, 0
-	  li        r28, 0
-
-	.loc_0x2F0:
-	  lwz       r0, 0x24(r31)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x314
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r29, 0x4
-	  li        r4, 0xBE
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x467D8
-
-	.loc_0x314:
-	  mr        r3, r29
-	  bl        -0xCE5A4
-	  mr.       r29, r3
-	  beq-      .loc_0x334
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x3
-	  addi      r31, r31, 0x4
-	  blt+      .loc_0x2F0
-
-	.loc_0x334:
-	  lwz       r3, 0x0(r30)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x360
-	  li        r4, 0x2D
-	  bl        -0xB25C8
-	  b         .loc_0x360
-
-	.loc_0x350:
-	  rlwinm    r0,r5,2,0,29
-	  addi      r3, r1, 0x20
-	  add       r3, r3, r0
-	  b         .loc_0x10C
-
-	.loc_0x360:
-	  lmw       r27, 0x64(r1)
-	  lwz       r0, 0x9C(r1)
-	  lfd       f31, 0x90(r1)
-	  lfd       f30, 0x88(r1)
-	  lfd       f29, 0x80(r1)
-	  lfd       f28, 0x78(r1)
-	  addi      r1, r1, 0x98
-	  mtlr      r0
-	  blr
-	*/
+	if (mSpider->mSeContext) {
+		mSpider->mSeContext->playSound(0x2D);
+	}
 }
 
 /*
@@ -835,199 +254,10 @@ void SpiderLeg::createSmallSparkEffect(int)
  */
 void SpiderLeg::createPerishEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stmw      r27, 0x34(r1)
-	  mr        r31, r3
-	  lwz       r5, 0x0(r3)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6731
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCCCE8
-	  li        r29, 0
-	  addi      r28, r3, 0
-	  addi      r27, r29, 0
-
-	.loc_0x34:
-	  mr        r3, r28
-	  bl        -0xCE648
-	  mr.       r30, r3
-	  beq-      .loc_0xB8
-	  lwz       r4, 0x684(r31)
-	  addi      r3, r30, 0x4
-	  lwz       r6, 0x0(r31)
-	  addi      r0, r28, 0x4
-	  add       r5, r4, r27
-	  stw       r3, 0x4(r5)
-	  li        r4, 0xC0
-	  li        r7, 0
-	  stw       r0, 0x8(r5)
-	  stw       r6, 0xC(r5)
-	  lwz       r5, 0x0(r31)
-	  lwz       r0, 0x684(r31)
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  add       r6, r0, r27
-	  bl        0x466E4
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0xBF
-	  lwz       r0, 0x684(r31)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  add       r6, r0, r27
-	  bl        0x466C4
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r28, r30, 0
-	  addi      r27, r27, 0x10
-	  blt+      .loc_0x34
-
-	.loc_0xB8:
-	  lwz       r5, 0x0(r31)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6732
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCCD8C
-	  addi      r30, r3, 0
-	  li        r29, 0
-
-	.loc_0xD4:
-	  mr        r3, r30
-	  bl        -0xCE6E8
-	  mr.       r28, r3
-	  beq-      .loc_0x15C
-	  addi      r0, r29, 0x3
-	  lwz       r3, 0x684(r31)
-	  rlwinm    r27,r0,4,0,27
-	  lwz       r5, 0x0(r31)
-	  add       r3, r3, r27
-	  addi      r0, r28, 0x4
-	  stw       r0, 0x4(r3)
-	  addi      r0, r30, 0x4
-	  li        r4, 0xC0
-	  stw       r0, 0x8(r3)
-	  li        r7, 0
-	  stw       r5, 0xC(r3)
-	  lwz       r5, 0x0(r31)
-	  lwz       r0, 0x684(r31)
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  add       r6, r0, r27
-	  bl        0x4663C
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0xBF
-	  lwz       r0, 0x684(r31)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  add       r6, r0, r27
-	  bl        0x4661C
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r30, r28, 0
-	  blt+      .loc_0xD4
-
-	.loc_0x15C:
-	  lwz       r5, 0x0(r31)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6733
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCCE30
-	  addi      r30, r3, 0
-	  li        r29, 0
-
-	.loc_0x178:
-	  mr        r3, r30
-	  bl        -0xCE78C
-	  mr.       r28, r3
-	  beq-      .loc_0x200
-	  addi      r0, r29, 0x6
-	  lwz       r3, 0x684(r31)
-	  rlwinm    r27,r0,4,0,27
-	  lwz       r5, 0x0(r31)
-	  add       r3, r3, r27
-	  addi      r0, r28, 0x4
-	  stw       r0, 0x4(r3)
-	  addi      r0, r30, 0x4
-	  li        r4, 0xC0
-	  stw       r0, 0x8(r3)
-	  li        r7, 0
-	  stw       r5, 0xC(r3)
-	  lwz       r5, 0x0(r31)
-	  lwz       r0, 0x684(r31)
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  add       r6, r0, r27
-	  bl        0x46598
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0xBF
-	  lwz       r0, 0x684(r31)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  add       r6, r0, r27
-	  bl        0x46578
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r30, r28, 0
-	  blt+      .loc_0x178
-
-	.loc_0x200:
-	  lwz       r5, 0x0(r31)
-	  lis       r3, 0x6C65
-	  addi      r4, r3, 0x6734
-	  lwz       r3, 0x220(r5)
-	  bl        -0xCCED4
-	  addi      r30, r3, 0
-	  li        r29, 0
-
-	.loc_0x21C:
-	  mr        r3, r30
-	  bl        -0xCE830
-	  mr.       r28, r3
-	  beq-      .loc_0x2A4
-	  addi      r0, r29, 0x9
-	  lwz       r3, 0x684(r31)
-	  rlwinm    r27,r0,4,0,27
-	  lwz       r5, 0x0(r31)
-	  add       r3, r3, r27
-	  addi      r0, r28, 0x4
-	  stw       r0, 0x4(r3)
-	  addi      r0, r30, 0x4
-	  li        r4, 0xC0
-	  stw       r0, 0x8(r3)
-	  li        r7, 0
-	  stw       r5, 0xC(r3)
-	  lwz       r5, 0x0(r31)
-	  lwz       r0, 0x684(r31)
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  add       r6, r0, r27
-	  bl        0x464F4
-	  lwz       r5, 0x0(r31)
-	  li        r4, 0xBF
-	  lwz       r0, 0x684(r31)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r5, 0x94
-	  add       r6, r0, r27
-	  bl        0x464D4
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r30, r28, 0
-	  blt+      .loc_0x21C
-
-	.loc_0x2A4:
-	  lmw       r27, 0x34(r1)
-	  lwz       r0, 0x4C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	setPerishEffect('leg1', 0);
+	setPerishEffect('leg2', 3);
+	setPerishEffect('leg3', 6);
+	setPerishEffect('leg4', 9);
 }
 
 /*
@@ -1035,100 +265,29 @@ void SpiderLeg::createPerishEffect()
  * Address:	8015668C
  * Size:	00014C
  */
-void SpiderLeg::createRippleEffect(int)
+void SpiderLeg::createRippleEffect(int legNum)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  li        r7, 0
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r4, 0
-	  mulli     r4, r31, 0x24
-	  stw       r30, 0x38(r1)
-	  addi      r30, r3, 0
-	  add       r3, r30, r4
-	  lfs       f0, 0x12C(r3)
-	  addi      r5, r4, 0x12C
-	  add       r5, r30, r5
-	  stfs      f0, 0x2C(r1)
-	  li        r4, 0x43
-	  lfs       f0, 0x130(r3)
-	  stfs      f0, 0x30(r1)
-	  lfs       f1, 0x134(r3)
-	  lfs       f0, -0x5660(r2)
-	  stfs      f1, 0x34(r1)
-	  lfs       f1, 0x30(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x30(r1)
-	  lwz       r3, 0x3180(r13)
-	  bl        0x46448
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x2C
-	  li        r4, 0x55
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x46430
-	  addi      r0, r31, 0xD
-	  lwz       r3, 0x688(r30)
-	  rlwinm    r31,r31,3,0,28
-	  add       r4, r30, r0
-	  addi      r0, r31, 0x4
-	  stwx      r4, r3, r0
-	  addi      r5, r1, 0x2C
-	  li        r4, 0xE
-	  lwz       r0, 0x688(r30)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  add       r6, r0, r31
-	  bl        0x463FC
-	  cmplwi    r3, 0
-	  beq-      .loc_0xCC
-	  lfs       f1, -0x565C(r2)
-	  lfs       f0, 0xF0(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xF0(r3)
+	Vector3f footPos(_12C[legNum][0]);
+	footPos.y -= 5.0f;
+	effectMgr->create(EffectMgr::EFF_Unk67, _12C[legNum][0], nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Unk85, footPos, nullptr, nullptr);
+	mRippleCallBacks[legNum].set(&_0D[legNum]);
 
-	.loc_0xCC:
-	  lwz       r0, 0x688(r30)
-	  addi      r5, r1, 0x2C
-	  lwz       r3, 0x3180(r13)
-	  li        r4, 0xC
-	  add       r6, r0, r31
-	  li        r7, 0
-	  bl        0x463C8
-	  cmplwi    r3, 0
-	  beq-      .loc_0x100
-	  lfs       f1, -0x565C(r2)
-	  lfs       f0, 0xF0(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xF0(r3)
-
-	.loc_0x100:
-	  lwz       r0, 0x688(r30)
-	  addi      r5, r1, 0x2C
-	  lwz       r3, 0x3180(r13)
-	  li        r4, 0xD
-	  add       r6, r0, r31
-	  li        r7, 0
-	  bl        0x46394
-	  cmplwi    r3, 0
-	  beq-      .loc_0x134
-	  lfs       f1, -0x565C(r2)
-	  lfs       f0, 0xF0(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xF0(r3)
-
-	.loc_0x134:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_Unk14, footPos, &mRippleCallBacks[legNum], nullptr);
+	if (ptclGen1) {
+		f32 scale = ptclGen1->getScaleSize();
+		ptclGen1->setScaleSize(3.0f * scale);
+	}
+	zen::particleGenerator* ptclGen2 = effectMgr->create(EffectMgr::EFF_Unk12, footPos, &mRippleCallBacks[legNum], nullptr);
+	if (ptclGen2) {
+		f32 scale = ptclGen2->getScaleSize();
+		ptclGen2->setScaleSize(3.0f * scale);
+	}
+	zen::particleGenerator* ptclGen3 = effectMgr->create(EffectMgr::EFF_Unk13, footPos, &mRippleCallBacks[legNum], nullptr);
+	if (ptclGen3) {
+		f32 scale = ptclGen3->getScaleSize();
+		ptclGen3->setScaleSize(3.0f * scale);
+	}
 }
 
 /*
@@ -1136,73 +295,18 @@ void SpiderLeg::createRippleEffect(int)
  * Address:	801567D8
  * Size:	0000E0
  */
-void SpiderLeg::killCallBackEffect(bool)
+void SpiderLeg::killCallBackEffect(bool doForceFinish)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-
-	.loc_0x2C:
-	  lwz       r0, 0x680(r28)
-	  mr        r6, r29
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  add       r4, r0, r31
-	  addi      r3, r3, 0x14
-	  bl        0x4AE40
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x4
-	  addi      r31, r31, 0xC
-	  blt+      .loc_0x2C
-	  li        r30, 0
-	  addi      r31, r30, 0
-
-	.loc_0x60:
-	  lwz       r0, 0x684(r28)
-	  mr        r6, r29
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  add       r4, r0, r31
-	  addi      r3, r3, 0x14
-	  bl        0x4AE0C
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0xC
-	  addi      r31, r31, 0x10
-	  blt+      .loc_0x60
-	  li        r30, 0
-	  addi      r31, r30, 0
-
-	.loc_0x94:
-	  lwz       r0, 0x688(r28)
-	  mr        r6, r29
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  add       r4, r0, r31
-	  addi      r3, r3, 0x14
-	  bl        0x4ADD8
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x4
-	  addi      r31, r31, 0x8
-	  blt+      .loc_0x94
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	int i;
+	for (i = 0; i < 4; i++) {
+		effectMgr->killGenerator(&mHalfDeadCallBackJoints[i], nullptr, doForceFinish);
+	}
+	for (i = 0; i < 12; i++) {
+		effectMgr->killGenerator(&mPerishCallBacks[i], nullptr, doForceFinish);
+	}
+	for (i = 0; i < 4; i++) {
+		effectMgr->killGenerator(&mRippleCallBacks[i], nullptr, doForceFinish);
+	}
 }
 
 /*
@@ -1210,8 +314,19 @@ void SpiderLeg::killCallBackEffect(bool)
  * Address:	801568B8
  * Size:	000238
  */
-void SpiderLeg::setLegScaleParam(int)
+void SpiderLeg::setLegScaleParam(int jointIdx)
 {
+	f32 stepTime = 1.0f / C_SPIDER_PROP(mSpider).mDeadMotionDelay();
+	if (jointIdx < 3) {
+		for (int i = 0; i < 4; i++) {
+			_20[Kumo::leg_index[i][jointIdx]]
+			    = NsLibMath<f32>::toGoal(_20[Kumo::leg_index[i][jointIdx]], 0.0f, gsys->getFrameTime() * stepTime);
+		}
+	} else {
+		for (int i = 0; i < 4; i++) {
+			_20[i] = NsLibMath<f32>::toGoal(_20[i], 0.0f, gsys->getFrameTime() * stepTime);
+		}
+	}
 	/*
 	.loc_0x0:
 	  lwz       r5, 0x0(r3)
@@ -1434,94 +549,6 @@ SpiderLeg::SpiderLeg(Spider* spider)
 	mHalfDeadCallBackJoints = new SpiderGenHalfDeadCallBackJoint[4];
 	mPerishCallBacks        = new SpiderGenPerishCallBack[12];
 	mRippleCallBacks        = new SpiderGenRippleCallBack[4];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8003
-	  stw       r0, 0x4(r1)
-	  li        r6, 0xC
-	  li        r7, 0x4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r31, 0xFC
-	  stw       r30, 0x18(r1)
-	  addi      r30, r5, 0x5B24
-	  li        r5, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  addi      r4, r30, 0
-	  bl        0xBDF44
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x12C
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0xC
-	  bl        0xBDF2C
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x1BC
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0xC
-	  bl        0xBDF14
-	  lfs       f1, -0x568C(r2)
-	  lis       r3, 0x8004
-	  subi      r4, r3, 0xFE4
-	  stfs      f1, 0x254(r31)
-	  fmr       f0, f1
-	  addi      r3, r31, 0x280
-	  stfs      f1, 0x250(r31)
-	  li        r5, 0
-	  li        r6, 0x40
-	  stfs      f1, 0x24C(r31)
-	  li        r7, 0x10
-	  stfs      f1, 0x260(r31)
-	  stfs      f1, 0x25C(r31)
-	  stfs      f1, 0x258(r31)
-	  stfs      f0, 0x26C(r31)
-	  stfs      f0, 0x268(r31)
-	  stfs      f0, 0x264(r31)
-	  stfs      f1, 0x278(r31)
-	  stfs      f1, 0x274(r31)
-	  stfs      f1, 0x270(r31)
-	  bl        0xBDEC0
-	  stw       r29, 0x0(r31)
-	  li        r3, 0x38
-	  bl        -0x10FBB8
-	  lis       r4, 0x8015
-	  addi      r4, r4, 0x6C7C
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x4
-	  bl        0xBE054
-	  stw       r3, 0x680(r31)
-	  li        r3, 0xC8
-	  bl        -0x10FBDC
-	  lis       r4, 0x8015
-	  addi      r4, r4, 0x6C60
-	  li        r5, 0
-	  li        r6, 0x10
-	  li        r7, 0xC
-	  bl        0xBE030
-	  stw       r3, 0x684(r31)
-	  li        r3, 0x28
-	  bl        -0x10FC00
-	  lis       r4, 0x8015
-	  addi      r4, r4, 0x6C44
-	  li        r5, 0
-	  li        r6, 0x8
-	  li        r7, 0x4
-	  bl        0xBE00C
-	  stw       r3, 0x688(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1529,115 +556,28 @@ SpiderLeg::SpiderLeg(Spider* spider)
  * Address:	80156C98
  * Size:	000190
  */
-void SpiderLeg::init(Spider*)
+void SpiderLeg::init(Spider* spider)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  stw       r4, 0x0(r3)
-	  li        r4, 0
-	  bl        .loc_0x190
-	  li        r0, 0x1
-	  stb       r0, 0x5(r31)
-	  li        r3, 0
-	  li        r0, 0x2
-	  stb       r3, 0x8(r31)
-	  mtctr     r0
-	  addi      r6, r31, 0
-	  lfs       f0, -0x230(r13)
-	  addi      r7, r31, 0
-	  li        r9, 0
-	  stfs      f0, 0x258(r31)
-	  lfs       f0, -0x22C(r13)
-	  stfs      f0, 0x25C(r31)
-	  lfs       f0, -0x228(r13)
-	  stfs      f0, 0x260(r31)
-	  lwz       r4, 0x0(r31)
-	  lwz       r3, 0x94(r4)
-	  lwz       r0, 0x98(r4)
-	  stw       r3, 0x264(r31)
-	  stw       r0, 0x268(r31)
-	  lwz       r0, 0x9C(r4)
-	  stw       r0, 0x26C(r31)
+	mSpider = spider;
+	initParm(0);
+	_05 = 1;
+	_08 = 0;
+	_258.set(0.0f, 0.0f, 0.0f);
+	_264 = mSpider->mPosition;
 
-	.loc_0x78:
-	  li        r5, 0
-	  stw       r5, 0xE8(r6)
-	  add       r8, r31, r9
-	  addi      r9, r9, 0x1
-	  stb       r5, 0x11(r8)
-	  stb       r5, 0xD(r8)
-	  add       r8, r31, r9
-	  addi      r9, r9, 0x1
-	  lwz       r3, 0x0(r31)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x270(r3)
-	  stfs      f0, 0xD0(r6)
-	  lwz       r4, 0x0(r31)
-	  lwz       r3, 0x94(r4)
-	  lwz       r0, 0x98(r4)
-	  stw       r3, 0x12C(r7)
-	  stw       r0, 0x130(r7)
-	  lwz       r0, 0x9C(r4)
-	  stw       r0, 0x134(r7)
-	  lwz       r3, 0x12C(r7)
-	  lwz       r0, 0x130(r7)
-	  stw       r3, 0x1BC(r7)
-	  stw       r0, 0x1C0(r7)
-	  lwz       r0, 0x134(r7)
-	  stw       r0, 0x1C4(r7)
-	  stw       r5, 0xEC(r6)
-	  stb       r5, 0x11(r8)
-	  stb       r5, 0xD(r8)
-	  lwz       r3, 0x0(r31)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x270(r3)
-	  stfs      f0, 0xD4(r6)
-	  addi      r6, r6, 0x8
-	  lwz       r4, 0x0(r31)
-	  lwz       r3, 0x94(r4)
-	  lwz       r0, 0x98(r4)
-	  stw       r3, 0x150(r7)
-	  stw       r0, 0x154(r7)
-	  lwz       r0, 0x9C(r4)
-	  stw       r0, 0x158(r7)
-	  lwz       r3, 0x150(r7)
-	  lwz       r0, 0x154(r7)
-	  stw       r3, 0x1E0(r7)
-	  stw       r0, 0x1E4(r7)
-	  lwz       r0, 0x158(r7)
-	  stw       r0, 0x1E8(r7)
-	  addi      r7, r7, 0x48
-	  bdnz+     .loc_0x78
-	  lfs       f0, -0x5678(r2)
-	  stfs      f0, 0x20(r31)
-	  stfs      f0, 0x24(r31)
-	  stfs      f0, 0x28(r31)
-	  stfs      f0, 0x2C(r31)
-	  stfs      f0, 0x30(r31)
-	  stfs      f0, 0x34(r31)
-	  stfs      f0, 0x38(r31)
-	  stfs      f0, 0x3C(r31)
-	  stfs      f0, 0x40(r31)
-	  stfs      f0, 0x44(r31)
-	  stfs      f0, 0x48(r31)
-	  stfs      f0, 0x4C(r31)
-	  stfs      f0, 0x50(r31)
-	  stfs      f0, 0x54(r31)
-	  stfs      f0, 0x58(r31)
-	  stfs      f0, 0x5C(r31)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
+	for (int i = 0; i < 4; i++) {
+		_E8[i] = 0;
+		_11[i] = 0;
+		_0D[i] = false;
+		_D0[i] = C_SPIDER_PROP(mSpider)._264();
 
-	.loc_0x190:
-	*/
+		_12C[i][0] = mSpider->mPosition;
+		_1BC[i][0] = _12C[i][0];
+	}
+
+	for (int i = 0; i < 16; i++) {
+		_20[i] = 1.0f;
+	}
 }
 
 /*
@@ -1645,47 +585,28 @@ void SpiderLeg::init(Spider*)
  * Address:	80156E28
  * Size:	000090
  */
-void SpiderLeg::initParm(int)
+void SpiderLeg::initParm(int p1)
 {
-	/*
-	.loc_0x0:
-	  stw       r4, 0xF8(r3)
-	  li        r4, 0x1
-	  li        r0, 0
-	  stb       r4, 0x4(r3)
-	  stb       r0, 0x6(r3)
-	  stb       r4, 0x8(r3)
-	  stb       r0, 0x7(r3)
-	  stb       r0, 0x1E(r3)
-	  stb       r0, 0x1D(r3)
-	  stb       r0, 0x9(r3)
-	  stb       r0, 0x15(r3)
-	  stb       r0, 0x19(r3)
-	  lfs       f0, -0x568C(r2)
-	  stfs      f0, 0xA8(r3)
-	  stfs      f0, 0x60(r3)
-	  stb       r0, 0xA(r3)
-	  stb       r0, 0x16(r3)
-	  stb       r0, 0x1A(r3)
-	  stfs      f0, 0xAC(r3)
-	  stfs      f0, 0x64(r3)
-	  stb       r0, 0xB(r3)
-	  stb       r0, 0x17(r3)
-	  stb       r0, 0x1B(r3)
-	  stfs      f0, 0xB0(r3)
-	  stfs      f0, 0x68(r3)
-	  stb       r0, 0xC(r3)
-	  stb       r0, 0x18(r3)
-	  stb       r0, 0x1C(r3)
-	  stfs      f0, 0xB4(r3)
-	  stfs      f0, 0x6C(r3)
-	  stb       r4, 0x15(r3)
-	  stfs      f0, 0xCC(r3)
-	  stfs      f0, 0xC8(r3)
-	  stfs      f0, 0x84(r3)
-	  stfs      f0, 0x80(r3)
-	  blr
-	*/
+	_F8 = p1;
+	_04 = 1;
+	_06 = 0;
+	_08 = 1;
+	_07 = 0;
+	_1E = 0;
+	_1D = 0;
+	for (int i = 0; i < 4; i++) {
+		_09[i] = 0;
+		_15[i] = 0;
+		_19[i] = 0;
+		_A8[i] = 0.0f;
+		_60[i] = 0.0f;
+	}
+
+	_15[0] = 1;
+	_CC    = 0.0f;
+	_C8    = 0.0f;
+	_84    = 0.0f;
+	_80    = 0.0f;
 }
 
 /*
@@ -1695,6 +616,23 @@ void SpiderLeg::initParm(int)
  */
 void SpiderLeg::setLegParameter()
 {
+	if (mSpider->getAlive()) {
+		_E0 = mSpider->getStickPikiCount() * C_SPIDER_PROP(mSpider)._294();
+		if (_E0 > C_SPIDER_PROP(mSpider)._2A4()) {
+			_E0 = C_SPIDER_PROP(mSpider)._2A4();
+		}
+	} else {
+		_E0 = 0.0f;
+	}
+
+	for (int i = 0; i < 4; i++) {
+		f32 goal = C_SPIDER_PROP(mSpider)._264() - _E8[i] * C_SPIDER_PROP(mSpider)._274() - 0.5f * _E0;
+		_D0[i]   = NsLibMath<f32>::toGoal(_D0[i], goal, C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime());
+
+		if (_D0[i] < C_SPIDER_PROP(mSpider)._284()) {
+			_D0[i] = C_SPIDER_PROP(mSpider)._284();
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5703,166 +4641,6 @@ void SpiderLeg::refresh(BossShapeObject*, Graphics&)
 	  lfd       f29, 0x148(r1)
 	  addi      r1, r1, 0x160
 	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8015A0FC
- * Size:	00003C
- */
-bool SpiderGenHalfDeadCallBackJoint::invoke(zen::particleGenerator*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x18(r4)
-	  lwz       r3, 0x8(r3)
-	  lbz       r0, 0x3BA(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x28
-	  lfs       f1, 0x2C4(r3)
-	  lfs       f0, -0x568C(r2)
-	  fcmpo     cr0, f1, f0
-	  bgt-      .loc_0x34
-
-	.loc_0x28:
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r4)
-
-	.loc_0x34:
-	  li        r3, 0x1
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8015A138
- * Size:	000168
- */
-bool SpiderGenPerishCallBack::invoke(zen::particleGenerator*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x78(r1)
-	  mr        r30, r3
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x8(r3)
-	  lfs       f1, 0x0(r4)
-	  lfs       f0, 0x0(r3)
-	  lfs       f3, 0x4(r4)
-	  lfs       f2, 0x4(r3)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r4)
-	  lfs       f1, 0x8(r3)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x68(r1)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x6C(r1)
-	  stfs      f0, 0x70(r1)
-	  lfs       f0, 0x68(r1)
-	  lfs       f1, -0x5690(r2)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x68(r1)
-	  lfs       f0, 0x6C(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x6C(r1)
-	  lfs       f0, 0x70(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x70(r1)
-	  lfs       f1, 0x0(r4)
-	  lfs       f0, 0x0(r3)
-	  lfs       f3, 0x4(r4)
-	  lfs       f2, 0x4(r3)
-	  fsubs     f0, f1, f0
-	  lfs       f4, 0x8(r4)
-	  lfs       f1, 0x8(r3)
-	  fsubs     f2, f3, f2
-	  stfs      f0, 0x5C(r1)
-	  fsubs     f0, f4, f1
-	  stfs      f2, 0x60(r1)
-	  stfs      f0, 0x64(r1)
-	  lfs       f1, 0x5C(r1)
-	  lfs       f0, 0x60(r1)
-	  lfs       f2, 0x64(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x14C5C4
-	  lfs       f0, -0x568C(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x100
-	  lfs       f0, 0x5C(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x5C(r1)
-	  lfs       f0, 0x60(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x60(r1)
-	  lfs       f0, 0x64(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x64(r1)
-
-	.loc_0x100:
-	  lwz       r3, 0x68(r1)
-	  lwz       r0, 0x6C(r1)
-	  stw       r3, 0xC(r31)
-	  stw       r0, 0x10(r31)
-	  lwz       r0, 0x70(r1)
-	  stw       r0, 0x14(r31)
-	  lwz       r3, 0x5C(r1)
-	  lwz       r0, 0x60(r1)
-	  stw       r3, 0xA0(r31)
-	  stw       r0, 0xA4(r31)
-	  lwz       r0, 0x64(r1)
-	  stw       r0, 0xA8(r31)
-	  lwz       r3, 0xC(r30)
-	  lbz       r0, 0x2BD(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x14C
-	  lwz       r0, 0x80(r31)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r31)
-
-	.loc_0x14C:
-	  lwz       r0, 0x84(r1)
-	  li        r3, 0x1
-	  lwz       r31, 0x7C(r1)
-	  lwz       r30, 0x78(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8015A2A0
- * Size:	000024
- */
-bool SpiderGenRippleCallBack::invoke(zen::particleGenerator*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x4(r3)
-	  lbz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1C
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r4)
-
-	.loc_0x1C:
-	  li        r3, 0x1
 	  blr
 	*/
 }

@@ -280,10 +280,32 @@ struct SpiderLeg {
 	u8 _05;                                                  // _05
 	u8 _06;                                                  // _06
 	u8 _07;                                                  // _07
-	u8 _08[0xFC - 0x8];                                      // _08, unknown
+	u8 _08;                                                  // _08
+	u8 _09[4];                                               // _09
+	bool _0D[4];                                             // _0D
+	u8 _11[4];                                               // _11
+	u8 _15[4];                                               // _15
+	u8 _19[4];                                               // _19
+	u8 _1D;                                                  // _1D
+	u8 _1E;                                                  // _1E
+	f32 _20[16];                                             // _20
+	f32 _60[4];                                              // _60
+	u8 _70[0x80 - 0x70];                                     // _70, unknown
+	f32 _80;                                                 // _80
+	f32 _84;                                                 // _84
+	u8 _88[0xA8 - 0x88];                                     // _88
+	f32 _A8[4];                                              // _A8
+	u8 _B8[0xC8 - 0xB8];                                     // _B8, unknown
+	f32 _C8;                                                 // _C8
+	f32 _CC;                                                 // _CC
+	f32 _D0[4];                                              // _D0
+	f32 _E0;                                                 // _E0
+	u8 _E4[4];                                               // _E4, unknown
+	int _E8[4];                                              // _E8
+	int _F8;                                                 // _F8
 	Vector3f _FC[4];                                         // _FC
-	Vector3f _12C[12];                                       // _12C
-	Vector3f _1BC[12];                                       // _1BC
+	Vector3f _12C[4][3];                                     // _12C
+	Vector3f _1BC[4][3];                                     // _1BC
 	Vector3f _24C;                                           // _24C
 	Vector3f _258;                                           // _258
 	Vector3f _264;                                           // _264
@@ -372,13 +394,26 @@ struct SpiderAi : public PaniAnimKeyListener {
  * @note Size: 0xC.
  */
 struct SpiderGenHalfDeadCallBackJoint : public zen::CallBack1<zen::particleGenerator*> {
-	SpiderGenHalfDeadCallBackJoint() { }
+	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
+	{
+		ptclGen->setEmitPosPtr(_04);
+		if (!mSpider->_3BA || !mSpider->getAlive()) {
+			ptclGen->finish();
+		}
 
-	virtual bool invoke(zen::particleGenerator*); // _08
+		return true;
+	}
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack1?
-	u8 _04[8]; // _04, unknown
+	void set(Vector3f* p1, Spider* spider)
+	{
+		_04     = p1;
+		mSpider = spider;
+	}
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1
+	Vector3f* _04;   // _04
+	Spider* mSpider; // _08
 };
 
 /**
@@ -387,13 +422,36 @@ struct SpiderGenHalfDeadCallBackJoint : public zen::CallBack1<zen::particleGener
  * @note Size: 0x10.
  */
 struct SpiderGenPerishCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	SpiderGenPerishCallBack() { }
+	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
+	{
+		Vector3f midPt = *_04 + *_08;
+		midPt.multiply(0.5f);
 
-	virtual bool invoke(zen::particleGenerator*); // _08
+		Vector3f dir = *_04 - *_08;
+		dir.normalise();
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack1?
-	u8 _04[0xC]; // _04, unknown
+		ptclGen->setEmitPos(midPt);
+		ptclGen->setEmitDir(dir);
+
+		if (!mSpider->getMotionFinish()) {
+			ptclGen->finish();
+		}
+
+		return true;
+	}
+
+	void set(Vector3f* p1, Vector3f* p2, Spider* spider)
+	{
+		_04     = p1;
+		_08     = p2;
+		mSpider = spider;
+	}
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1
+	Vector3f* _04;   // _04
+	Vector3f* _08;   // _08
+	Spider* mSpider; // _0C
 };
 
 /**
@@ -402,13 +460,20 @@ struct SpiderGenPerishCallBack : public zen::CallBack1<zen::particleGenerator*> 
  * @note Size: 0x8.
  */
 struct SpiderGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
-	SpiderGenRippleCallBack() { }
+	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
+	{
+		if (!*_04) {
+			ptclGen->finish();
+		}
 
-	virtual bool invoke(zen::particleGenerator*); // _08
+		return true;
+	}
 
-	// _00     = VTBL?
-	// _00-_04 = zen::CallBack1?
-	u8 _04[4]; // _04, unknown
+	void set(bool* p1) { _04 = p1; }
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1
+	bool* _04; // _04
 };
 
 #endif

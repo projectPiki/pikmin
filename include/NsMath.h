@@ -21,7 +21,7 @@ f32 calcInnerRatio(const Vector3f&, const Vector3f&);
 void calcMtxTrans(const Matrix4f&, int, Vector3f&);
 void calcVectorTrans(const Vector3f&, int, Matrix4f&);
 
-static void calcOuterPro(const Vector3f& vec1, const Vector3f& vec2, Vector3f& outVec)
+static inline void calcOuterPro(const Vector3f& vec1, const Vector3f& vec2, Vector3f& outVec)
 {
 	outVec.x = vec1.y * vec2.z - vec1.z * vec2.y;
 	outVec.y = vec1.z * vec2.x - vec1.x * vec2.z;
@@ -99,7 +99,12 @@ inline f32 roundAngle(f32 angle)
 namespace NsMathI {
 // this isn't correct according to the DLL, but this matches the best for stack in Boss and PomAi
 inline int getRand(int val) { return NsMathF::getRand(val); }
-inline int intLoop(int, int, int);
+inline int getRand1(int val) { return System::getRand(1.0f) * (val * 0.99999899f); }
+
+// this COULD be revice instead, but i haven't seen a float version yet. TBD.
+// just bounds value in [min,max]
+inline int intLoop(int value, int min, int max) { return (value < min) ? min : (value > max) ? max : value; }
+
 } // namespace NsMathI
 
 #endif
