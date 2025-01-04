@@ -52,24 +52,24 @@ struct Joint : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mIndex;              // _14
-	int mParentIndex;        // _18
-	int mType;               // _1C
-	int mFlags;              // _20
-	Vector3f mScale;         // _24
-	Vector3f mRotation;      // _30
-	Vector3f mTranslation;   // _3C
-	Matrix4f mAnimMatrix;    // _48
-	Matrix4f _88;            // _88
-	bool mIsBillboard;       // _C8
-	bool mUseVolume;         // _C9
-	bool mUseLightGroup;     // _CA
-	BoundBox mBounds;        // _CC
-	MatPoly mMatPoly;        // _E4
-	int _10C;                // _10C
-	int mMatPolyCount;       // _110
-	int _114;                // _114
-	BaseShape* mParentShape; // _118
+	int mIndex;                  // _14
+	int mParentIndex;            // _18
+	int mType;                   // _1C
+	int mFlags;                  // _20
+	Vector3f mScale;             // _24
+	Vector3f mRotation;          // _30
+	Vector3f mTranslation;       // _3C
+	Matrix4f mAnimMatrix;        // _48
+	Matrix4f mInverseAnimMatrix; // _88
+	bool mIsBillboard;           // _C8
+	bool mUseVolume;             // _C9
+	bool mUseLightGroup;         // _CA
+	BoundBox mBounds;            // _CC
+	MatPoly mMatPoly;            // _E4
+	int _10C;                    // _10C
+	int mMatPolyCount;           // _110
+	int _114;                    // _114
+	BaseShape* mParentShape;     // _118
 };
 
 #endif

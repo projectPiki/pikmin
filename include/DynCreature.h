@@ -30,7 +30,7 @@ struct DynCreature : public Creature {
 	// _00-_2B8 = Creature
 	Vector3f _2B8;          // _2B8
 	Vector3f _2C4;          // _2C4
-	f32 _2D0;               // _2D0
+	f32 mPickOffset;        // _2D0
 	u16 _2D4;               // _2D4, might be s16
 	u32 _2D8;               // _2D8, unknown
 	Vector3f _2DC;          // _2DC

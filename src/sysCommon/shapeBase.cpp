@@ -12633,103 +12633,20 @@ void BaseShape::createCollisions(int)
  * Address:	80034900
  * Size:	000150
  */
-void BaseShape::calcBasePose(Matrix4f&)
+void BaseShape::calcBasePose(Matrix4f& target)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x90(r1)
-	  stfd      f31, 0x88(r1)
-	  stw       r31, 0x84(r1)
-	  li        r31, 0
-	  stw       r30, 0x80(r1)
-	  li        r30, 0
-	  stw       r29, 0x7C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x78(r1)
-	  addi      r28, r3, 0
-	  lfs       f31, -0x7D20(r2)
-	  b         .loc_0x120
+	for (int i = 0; i < mJointCount; i++) {
+		SRT srt;
+		srt.mScale       = mJointList[i].mScale;
+		srt.mRotation    = mJointList[i].mRotation;
+		srt.mTranslation = mJointList[i].mTranslation;
 
-	.loc_0x38:
-	  stfs      f31, 0x58(r1)
-	  addi      r4, r31, 0x24
-	  addi      r3, r31, 0x30
-	  stfs      f31, 0x54(r1)
-	  addi      r0, r31, 0x3C
-	  stfs      f31, 0x50(r1)
-	  stfs      f31, 0x64(r1)
-	  stfs      f31, 0x60(r1)
-	  stfs      f31, 0x5C(r1)
-	  stfs      f31, 0x70(r1)
-	  stfs      f31, 0x6C(r1)
-	  stfs      f31, 0x68(r1)
-	  lwz       r5, 0x5C(r28)
-	  add       r6, r5, r4
-	  lwz       r5, 0x0(r6)
-	  lwz       r4, 0x4(r6)
-	  stw       r5, 0x50(r1)
-	  stw       r4, 0x54(r1)
-	  lwz       r4, 0x8(r6)
-	  stw       r4, 0x58(r1)
-	  lwz       r4, 0x5C(r28)
-	  add       r5, r4, r3
-	  lwz       r4, 0x0(r5)
-	  lwz       r3, 0x4(r5)
-	  stw       r4, 0x5C(r1)
-	  stw       r3, 0x60(r1)
-	  lwz       r3, 0x8(r5)
-	  stw       r3, 0x64(r1)
-	  lwz       r3, 0x5C(r28)
-	  add       r4, r3, r0
-	  lwz       r3, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r3, 0x68(r1)
-	  stw       r0, 0x6C(r1)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x70(r1)
-	  lwz       r4, 0x5C(r28)
-	  add       r5, r4, r31
-	  lwz       r0, 0x18(r5)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0xE4
-	  mr        r0, r29
-	  b         .loc_0xF0
-
-	.loc_0xE4:
-	  mulli     r3, r0, 0x11C
-	  addi      r0, r3, 0x48
-	  add       r0, r4, r0
-
-	.loc_0xF0:
-	  addi      r3, r5, 0x48
-	  mr        r4, r0
-	  addi      r5, r1, 0x10
-	  addi      r6, r1, 0x50
-	  bl        0x9890
-	  lwz       r0, 0x5C(r28)
-	  add       r4, r0, r31
-	  addi      r3, r4, 0x48
-	  addi      r4, r4, 0x88
-	  bl        0x9A28
-	  addi      r31, r31, 0x11C
-	  addi      r30, r30, 0x1
-
-	.loc_0x120:
-	  lwz       r0, 0x58(r28)
-	  cmpw      r30, r0
-	  blt+      .loc_0x38
-	  lwz       r0, 0x94(r1)
-	  lfd       f31, 0x88(r1)
-	  lwz       r31, 0x84(r1)
-	  lwz       r30, 0x80(r1)
-	  lwz       r29, 0x7C(r1)
-	  lwz       r28, 0x78(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
+		int parentIndex = mJointList[i].mParentIndex;
+		Matrix4f basePose;
+		Matrix4f* t = parentIndex == -1 ? &target : &mJointList[parentIndex].mAnimMatrix;
+		mJointList[i].mAnimMatrix.makeConcatSRT(t, basePose, srt);
+		mJointList[i].mAnimMatrix.inverse(&mJointList[i].mInverseAnimMatrix);
+	}
 }
 
 /*

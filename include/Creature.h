@@ -271,10 +271,10 @@ struct Creature : public RefCountable, public EventTalker {
 	Vector3f mVolatileVelocity; // _BC
 	u32 mCreatureFlags;         // _C8, bitflag
 	u32 _CC;                    // _CC
-	f32 _D0;                    // _D0
+	f32 mAbsPickOffset;         // _D0
 	Vector3f _D4;               // _D4
 	Quat _E0;                   // _E0
-	Quat _F0;                   // _F0
+	Quat mPreGrabRotation;      // _F0
 	Quat _100;                  // _100
 	f32 _110;                   // _110
 	Matrix4f _114;              // _114

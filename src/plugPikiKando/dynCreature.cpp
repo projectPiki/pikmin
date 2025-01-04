@@ -292,10 +292,10 @@ void DynParticleHeap::releaseOne(DynParticle*)
 DynCreature::DynCreature()
     : Creature(nullptr) // temporary for compiler happiness- probably not nullptr
 {
-	_2D8 = 0;
-	_2D4 = 0;
-	_2F4 = 0.0f;
-	_2D0 = 0.0f;
+	_2D8        = 0;
+	_2D4        = 0;
+	_2F4        = 0.0f;
+	mPickOffset = 0.0f;
 	_2DC.set(0.0f, 0.0f, 0.0f);
 	_2B8.set(0.0f, 0.0f, 0.0f);
 	_2C4.set(0.0f, 0.0f, 0.0f);
@@ -375,8 +375,8 @@ DynCreature::DynCreature()
 void DynCreature::enablePickOffset(f32 offset)
 {
 	SET_FLAG(mCreatureFlags, 0x100);
-	_D0  = offset;
-	_2D0 = -offset;
+	mAbsPickOffset = offset;
+	mPickOffset    = -offset;
 }
 
 /*
@@ -387,7 +387,7 @@ void DynCreature::enablePickOffset(f32 offset)
 void DynCreature::disablePickOffset()
 {
 	RESET_FLAG(mCreatureFlags, 0x100);
-	_2D0 = 0.0f;
+	mPickOffset = 0.0f;
 }
 
 /*

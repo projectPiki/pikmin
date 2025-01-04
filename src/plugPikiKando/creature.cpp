@@ -418,7 +418,7 @@ bool Creature::setStateGrabbed(Creature* p1)
 		}
 	}
 
-	_F0 = _E0;
+	mPreGrabRotation = _E0;
 	_100.fromEuler(Vector3f(0.39269909f, 0.0f, 0.0f));
 	_110 = 0.0f;
 
@@ -578,9 +578,9 @@ void Creature::init()
 	_21C = 0;
 	setCreatureFlag(CF_Free);
 	resetCreatureFlag(CF_Unk9 | CF_IsAiDisabled | CF_Unk14 | CF_AIAlwaysActive);
-	_D0  = 0.0f;
-	_2A8 = nullptr;
-	_2AC = nullptr;
+	mAbsPickOffset = 0.0f;
+	_2A8           = nullptr;
+	_2AC           = nullptr;
 	resetCreatureFlag(CF_Unk6 | CF_Unk17);
 	clearCnt();
 	mIsBeingDamaged = false;
