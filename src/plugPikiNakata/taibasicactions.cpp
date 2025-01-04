@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	801283A8
  * Size:	00000C
  */
-void TaiActionStateAction::start(Teki& teki) { teki._338 = 0; }
+void TaiActionStateAction::start(Teki& teki) { teki.mActionStateId = 0; }
 
 /*
  * --INFO--
@@ -34,7 +34,7 @@ void TaiActionStateAction::start(Teki& teki) { teki._338 = 0; }
  */
 bool TaiActionStateAction::act(Teki& teki)
 {
-	if (teki._338 == mStateID) {
+	if (teki.mActionStateId == mStateID) {
 		return true;
 	}
 	return false;

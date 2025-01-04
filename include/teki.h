@@ -343,7 +343,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	void clearCreaturePointers()
 	{
 		for (int i = 0; i < 4; i++) {
-			_418[i].reset();
+			mTargetCreatures[i].reset();
 		}
 	}
 
@@ -375,63 +375,63 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	// _000-_2B8 = Creature
 	// _2B8-_2C0 = PelletView
 	// _2C0-_2C4 = ptr to PaniAnimKeyListener
-	TekiParameters* mTekiParams;     // _2C4
-	TekiPersonality* mPersonality;   // _2C8
-	PaniTekiAnimator* mTekiAnimator; // _2CC
-	TekiShapeObject* mTekiShape;     // _2D0
-	CreaturePlatMgr mPlatMgr;        // _2D4
-	int _31C;                        // _31C
-	TekiTypes mTekiType;             // _320
-	int mStateID;                    // _324, related to states
-	bool mIsStateReady;              // _328, related to states
-	u8 _329[0x330 - 0x329];          // _329, TODO: work out members
-	int _330;                        // _330
-	int _334;                        // _334, related to actions
-	int _338;                        // _338, unknown, state id of some description?
-	f32 mStoredDamage;               // _33C, damage waiting to be applied on next makeDamaged call
-	f32 _340;                        // _340
-	int _344;                        // _344
-	int _348;                        // _348, size of array at _450
-	u32 _34C;                        // _34C, unknown
-	u32 _350;                        // _350
-	int _354;                        // _354
-	NVector3fIOClass _358;           // _358
-	NVector3fIOClass _368;           // _368
-	NVector3fIOClass _378;           // _378
-	NVector3f mTargetPosition;       // _388, possibly position
-	f32 mTargetAngle;                // _394
-	NVector3f _398;                  // _398
-	f32 _3A4;                        // _3A4
-	int _3A8;                        // _3A8
-	f32 _3AC;                        // _3AC
-	u32 _3B0;                        // _3B0, unknown
-	f32 mMotionSpeed;                // _3B4
-	f32 _3B8;                        // _3B8
-	u32 _3BC;                        // _3BC, unknown
-	f32 _3C0;                        // _3C0
-	f32 _3C4;                        // _3C4
-	f32 _3C8;                        // _3C8
-	f32 _3CC;                        // _3CC
-	f32 _3D0;                        // _3D0
-	f32 _3D4;                        // _3D4
-	zen::particleGenerator** _3D8;   // _3D8
-	zen::PtclGenPack* _3DC;          // _3DC
-	ShapeDynMaterials _3E0;          // _3E0, unknown
-	int _3F0;                        // _3F0
-	int _3F4;                        // _3F4
-	int _3F8;                        // _3F8
-	int _3FC;                        // _3FC
-	int _400;                        // _400
-	int _404;                        // _404
-	int _408;                        // _408
-	int _40C;                        // _40C
-	int mTekiOptions;                // _410
-	int mAnimKeyOptions;             // _414
-	SmartPtr<Creature> _418[4];      // _418
-	NVibrationFunction* _428;        // _428
-	SearchData mTekiSearchData[3];   // _42C
-	u32* _450;                       // _450, array of something, unsure what
-	                                 // _454 = PaniAnimKeyListener
+	TekiParameters* mTekiParams;                  // _2C4
+	TekiPersonality* mPersonality;                // _2C8
+	PaniTekiAnimator* mTekiAnimator;              // _2CC
+	TekiShapeObject* mTekiShape;                  // _2D0
+	CreaturePlatMgr mPlatMgr;                     // _2D4
+	int mIsDead;                                  // _31C
+	TekiTypes mTekiType;                          // _320
+	int mStateID;                                 // _324
+	bool mIsStateReady;                           // _328
+	u8 _329[0x330 - 0x329];                       // _329, TODO: work out members
+	int mPreviousStateId;                         // _330
+	int mCurrentQueueId;                          // _334
+	int mActionStateId;                           // _338
+	f32 mStoredDamage;                            // _33C, damage waiting to be applied on next makeDamaged call
+	f32 _340;                                     // _340
+	int _344;                                     // _344
+	int _348;                                     // _348, size of array at _450
+	u32 _34C;                                     // _34C, unknown
+	u32 _350;                                     // _350
+	int _354;                                     // _354
+	NVector3fIOClass _358;                        // _358
+	NVector3fIOClass _368;                        // _368
+	NVector3fIOClass _378;                        // _378
+	NVector3f mTargetPosition;                    // _388, possibly position
+	f32 mTargetAngle;                             // _394
+	NVector3f _398;                               // _398
+	f32 _3A4;                                     // _3A4
+	int mCurrentAnimEvent;                        // _3A8
+	f32 mAnimationSpeed;                          // _3AC
+	u32 _3B0;                                     // _3B0, unknown
+	f32 mMotionSpeed;                             // _3B4
+	f32 mPreStopAnimationSpeed;                   // _3B8
+	u32 _3BC;                                     // _3BC, unknown
+	f32 _3C0;                                     // _3C0
+	f32 _3C4;                                     // _3C4
+	f32 _3C8;                                     // _3C8
+	f32 _3CC;                                     // _3CC
+	f32 _3D0;                                     // _3D0
+	f32 _3D4;                                     // _3D4
+	zen::particleGenerator** mParticleGenerators; // _3D8
+	zen::PtclGenPack* mParticleGenPack;           // _3DC
+	ShapeDynMaterials mDynamicMaterials;          // _3E0, unknown
+	int _3F0;                                     // _3F0
+	int _3F4;                                     // _3F4
+	int _3F8;                                     // _3F8
+	int _3FC;                                     // _3FC
+	int _400;                                     // _400
+	int _404;                                     // _404
+	int _408;                                     // _408
+	int _40C;                                     // _40C
+	int mTekiOptions;                             // _410
+	int mAnimKeyOptions;                          // _414
+	SmartPtr<Creature> mTargetCreatures[4];       // _418
+	NVibrationFunction* mVibrationController;     // _428
+	SearchData mTekiSearchData[3];                // _42C
+	u32* _450;                                    // _450, array of something, unsure what
+	                                              // _454 = PaniAnimKeyListener
 };
 
 /**

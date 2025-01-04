@@ -4569,7 +4569,7 @@ bool TAIAflyingDistance::act(Teki& teki)
 {
 	f32 moveSpeed = teki.mTekiParams->getF(TPF_RunVelocity);
 
-	Creature* tekiTarget = teki._418[0].mPtr;
+	Creature* tekiTarget = teki.mTargetCreatures[0].mPtr;
 	if (tekiTarget) {
 		f32 heightDiff = teki.mPosition.y - tekiTarget->mPosition.y;
 		if (heightDiff < 0.0f) {

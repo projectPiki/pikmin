@@ -36,8 +36,8 @@ TaiSerialAction::TaiSerialAction(int nextState, int count)
  */
 void TaiSerialAction::start(Teki& teki)
 {
-	teki._334 = 0;
-	mActionQueue[teki._334]->start(teki);
+	teki.mCurrentQueueId = 0;
+	mActionQueue[teki.mCurrentQueueId]->start(teki);
 }
 
 /*
@@ -60,12 +60,12 @@ void TaiSerialAction::finish(Teki& teki)
  */
 bool TaiSerialAction::act(Teki& teki)
 {
-	if (mActionQueue[teki._334]->act(teki)) {
-		if (teki._334 == mCount - 1) {
+	if (mActionQueue[teki.mCurrentQueueId]->act(teki)) {
+		if (teki.mCurrentQueueId == mCount - 1) {
 			return true;
 		}
-		teki._334++;
-		mActionQueue[teki._334]->start(teki);
+		teki.mCurrentQueueId++;
+		mActionQueue[teki.mCurrentQueueId]->start(teki);
 	}
 
 	return false;
@@ -79,12 +79,12 @@ bool TaiSerialAction::act(Teki& teki)
 bool TaiSerialAction::actByEvent(TekiEvent& event)
 {
 	Teki* teki = event.mTeki;
-	if (mActionQueue[teki->_334]->actByEvent(event)) {
-		if (teki->_334 == mCount - 1) {
+	if (mActionQueue[teki->mCurrentQueueId]->actByEvent(event)) {
+		if (teki->mCurrentQueueId == mCount - 1) {
 			return true;
 		}
-		teki->_334++;
-		mActionQueue[teki->_334]->start(*event.mTeki);
+		teki->mCurrentQueueId++;
+		mActionQueue[teki->mCurrentQueueId]->start(*event.mTeki);
 	}
 
 	return false;
@@ -142,18 +142,18 @@ bool TaiState::act(Teki& volatile teki)
 			if (true) {
 				// idk
 				int motionID = pTeki->mTekiAnimator->getCurrentMotionIndex();
-				PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)pTeki, i, pTeki->mStateID, action->mNextState, pTeki->_330,
-				      pTeki->mTekiType, motionID);
+				PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)pTeki, i, pTeki->mStateID, action->mNextState,
+				      pTeki->mPreviousStateId, pTeki->mTekiType, motionID);
 			}
 
 			int& val     = pTeki->mStateID;
 			int startVal = pTeki->mStateID;
 			if (action->mNextState == -2) {
-				val = pTeki->_330;
+				val = pTeki->mPreviousStateId;
 			} else {
 				val = action->mNextState;
 			}
-			pTeki->_330 = startVal;
+			pTeki->mPreviousStateId = startVal;
 			return true;
 		}
 	}
@@ -252,16 +252,16 @@ bool TaiState::eventPerformed(TekiEvent& event)
 				// idk
 				int motionID = event.mTeki->mTekiAnimator->getCurrentMotionIndex();
 				PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)teki, i, event.mTeki->mStateID, action->mNextState,
-				      event.mTeki->_330, event.mTeki->mTekiType, motionID);
+				      event.mTeki->mPreviousStateId, event.mTeki->mTekiType, motionID);
 			}
 
 			int startVal = event.mTeki->mStateID;
 			if (action->mNextState == -2) {
-				event.mTeki->mStateID = event.mTeki->_330;
+				event.mTeki->mStateID = event.mTeki->mPreviousStateId;
 			} else {
 				event.mTeki->mStateID = action->mNextState;
 			}
-			event.mTeki->_330 = startVal;
+			event.mTeki->mPreviousStateId = startVal;
 			return true;
 		}
 	}

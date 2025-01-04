@@ -8,7 +8,7 @@
  * @brief TODO
  */
 struct P2DStream {
-	void* getResource(int);
+	char* getResource(int);
 	void align(int);
 
 	// unused/inlined:

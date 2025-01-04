@@ -419,19 +419,19 @@ bool BTeki::arrivedAt(f32 p1, f32 p2) { return p1 <= 2.0f * p2 * NSystem::system
 BTeki::BTeki()
     : Creature(nullptr)
 {
-	mObjType       = OBJTYPE_Teki;
-	mLifeGauge._1C = 1;
-	mProps         = new CreatureProp();
-	mPersonality   = new TekiPersonality();
-	mTekiAnimator  = new PaniTekiAnimator();
-	_428           = new NVibrationFunction();
-	_348           = 20;
-	_450           = new u32[_348];
-	_34C           = 0;
-	_3D8           = new zen::particleGenerator*[4];
-	mCollInfo      = new CollInfo(22);
-	mSeContext     = new SeContext(this, 1);
-	_3DC           = new zen::PtclGenPack(3);
+	mObjType             = OBJTYPE_Teki;
+	mLifeGauge._1C       = 1;
+	mProps               = new CreatureProp();
+	mPersonality         = new TekiPersonality();
+	mTekiAnimator        = new PaniTekiAnimator();
+	mVibrationController = new NVibrationFunction();
+	_348                 = 20;
+	_450                 = new u32[_348];
+	_34C                 = 0;
+	mParticleGenerators  = new zen::particleGenerator*[4];
+	mCollInfo            = new CollInfo(22);
+	mSeContext           = new SeContext(this, 1);
+	mParticleGenPack     = new zen::PtclGenPack(3);
 }
 
 /*
@@ -464,28 +464,28 @@ void BTeki::reset()
 	              | TEKIOPT_Unk11 | TEKIOPT_ShapeVisible | TEKIOPT_DamageCountable);
 
 	resetPosition(mPersonality->mPosition);
-	mDirection    = mPersonality->mFaceDirection;
-	_26C          = getSize();
-	_31C          = 0;
-	mStateID      = 0;
-	_330          = 0;
-	_338          = 0;
-	_334          = 0;
-	mHealth       = getParameterF(TPF_Life);
-	mStoredDamage = 0.0f;
-	_340          = 0.0f;
-	_344          = -1;
-	_3C0          = 0.0f;
-	_3BC          = 0;
-	_3A8          = -1;
+	mDirection        = mPersonality->mFaceDirection;
+	_26C              = getSize();
+	mIsDead           = 0;
+	mStateID          = 0;
+	mPreviousStateId  = 0;
+	mActionStateId    = 0;
+	mCurrentQueueId   = 0;
+	mHealth           = getParameterF(TPF_Life);
+	mStoredDamage     = 0.0f;
+	_340              = 0.0f;
+	_344              = -1;
+	_3C0              = 0.0f;
+	_3BC              = 0;
+	mCurrentAnimEvent = -1;
 
 	clearAnimationKeyOptions();
-	_3B0         = 0;
-	mMotionSpeed = 0.0f;
-	_3AC         = 0.0f;
+	_3B0            = 0;
+	mMotionSpeed    = 0.0f;
+	mAnimationSpeed = 0.0f;
 
 	for (int i = 0; i < 4; i++) {
-		_418[i].mPtr = nullptr;
+		mTargetCreatures[i].mPtr = nullptr;
 	}
 
 	_350 = 'test';
@@ -503,7 +503,7 @@ void BTeki::reset()
 		clearTekiOption(TEKIOPT_Visible | TEKIOPT_ShadowVisible | TEKIOPT_LifeGaugeVisible | TEKIOPT_Atari | TEKIOPT_Alive
 		                | TEKIOPT_Organic);
 	} else {
-		mTekiShape->mShape->makeInstance(_3E0, 0);
+		mTekiShape->mShape->makeInstance(mDynamicMaterials, 0);
 		mCollInfo->initInfo(mTekiShape->mShape, nullptr, nullptr);
 		mTekiAnimator->init(&mTekiShape->mAnimContext, mTekiShape->mAnimMgr, tekiMgr->mMotionTable);
 	}
@@ -517,7 +517,7 @@ void BTeki::reset()
 	}
 
 	for (int i = 0; i < 4; i++) {
-		_3D8[i] = 0;
+		mParticleGenerators[i] = 0;
 	}
 
 	_3C4 = 0.0f;
@@ -815,10 +815,10 @@ void BTeki::prepareEffects()
 		f32 val    = ptcl->mScaleSize;
 		ptcl->setScaleSize(val * getParameterF(TPF_RippleScale));
 		ptcl->pmSwitchOn(zen::PTCLGEN_GenStopped);
-		_3DC->setPtclGenPtr(i, ptcl);
+		mParticleGenPack->setPtclGenPtr(i, ptcl);
 	}
 
-	_3DC->setEmitPosPtr(&getPosition());
+	mParticleGenPack->setEmitPosPtr(&getPosition());
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -942,7 +942,7 @@ void BTeki::update()
 	u32 badCompiler[6];
 
 	Creature::update();
-	if (_31C == 0) {
+	if (mIsDead == 0) {
 		updateTimers();
 		if (mHealth > 0.0f) {
 			f32 max = getParameterF(TPF_Life);
@@ -967,16 +967,16 @@ void BTeki::doAnimation()
 		return;
 	}
 	if (isTekiOption(TEKIOPT_ManualAnimation)) {
-		_3AC = mMotionSpeed;
+		mAnimationSpeed = mMotionSpeed;
 	} else if (!(mTekiAnimator->mAnimInfo->mParams.mFlags() & AnimInfo::FLAG_Unk2)) {
-		_3AC = mTekiAnimator->mAnimInfo->mParams.mSpeed();
+		mAnimationSpeed = mTekiAnimator->mAnimInfo->mParams.mSpeed();
 	} else if (isTekiOption(TEKIOPT_StoppingMove)) {
-		_3AC = _3B8;
+		mAnimationSpeed = mPreStopAnimationSpeed;
 	} else {
-		_3AC = doGetVelocityAnimSpeed();
+		mAnimationSpeed = doGetVelocityAnimSpeed();
 	}
 
-	mTekiAnimator->animate(_3AC);
+	mTekiAnimator->animate(mAnimationSpeed);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1050,7 +1050,7 @@ void BTeki::doAnimation()
 void BTeki::startMotion(int motionID)
 {
 	mTekiAnimator->startMotion(PaniMotionInfo(motionID, this));
-	_3A8 = -1;
+	mCurrentAnimEvent = -1;
 	clearAnimationKeyOptions();
 }
 
@@ -1063,7 +1063,7 @@ void BTeki::startStoppingMove()
 {
 	resetVelocity();
 	setTekiOption(TEKIOPT_StoppingMove);
-	_3B8 = _3AC;
+	mPreStopAnimationSpeed = mAnimationSpeed;
 }
 
 /*
@@ -1145,7 +1145,7 @@ void BTeki::animationKeyUpdated(PaniAnimKeyEvent& event)
 		return;
 	}
 
-	_3A8 = event.mEventType;
+	mCurrentAnimEvent = event.mEventType;
 	setAnimationKeyOption(1 << event.mEventType);
 }
 
@@ -1304,7 +1304,7 @@ void BTeki::doAI()
  * Address:	80145440
  * Size:	00000C
  */
-void BTeki::die() { _31C = 1; }
+void BTeki::die() { mIsDead = 1; }
 
 /*
  * --INFO--
@@ -1490,12 +1490,12 @@ void BTeki::dieSoon()
 void BTeki::becomeCorpse()
 {
 	for (int i = 0; i < 4; i++) {
-		if (_3D8[i]) {
-			_3D8[i]->finish();
+		if (mParticleGenerators[i]) {
+			mParticleGenerators[i]->finish();
 		}
 	}
 
-	_3DC->finish();
+	mParticleGenPack->finish();
 }
 
 /*

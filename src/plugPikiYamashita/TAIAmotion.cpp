@@ -45,7 +45,7 @@ void TAIAmotion::start(Teki& teki) { teki.mTekiAnimator->startMotion(PaniMotionI
  */
 bool TAIAmotion::act(Teki& teki)
 {
-	if (teki._3A8 == 0) {
+	if (teki.mCurrentAnimEvent == 0) {
 		return true;
 	}
 
@@ -104,9 +104,9 @@ void TAIAreserveMotion::start(Teki& teki)
 bool TAIAreserveMotion::act(Teki& teki)
 {
 	if (mMotionID != teki.mTekiAnimator->mMotionIdx) {
-		if (teki.mTekiAnimator->get38() < 0) {
+		if (teki.mTekiAnimator->getCurrentKeyIndex() < 0) {
 			teki.mTekiAnimator->startMotion(PaniMotionInfo(mMotionID, &teki));
-			teki._3A8 = 9;
+			teki.mCurrentAnimEvent = 9;
 			return true;
 		}
 		return false;

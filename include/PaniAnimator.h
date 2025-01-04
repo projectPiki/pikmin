@@ -103,7 +103,7 @@ struct PaniAnimator : public Animator {
 	void checkCounter_4DEBUG();
 
 	// TODO: either match these inlines to DLL ones in the list below, or remove.
-	inline int get38() { return mCurrentKeyIndex; } // TODO: rename later
+	inline int getCurrentKeyIndex() { return mCurrentKeyIndex; }
 	inline int getInfoKeyValue(int idx) { return mAnimInfo->getInfoKey(idx)->mKeyframeIndex; }
 	inline int getEventKeyValue(int idx) { return mAnimInfo->getEventKey(idx)->mKeyframeIndex; }
 
