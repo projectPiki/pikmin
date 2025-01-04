@@ -290,17 +290,17 @@ struct SpiderLeg {
 	u8 _1E;                                                  // _1E
 	f32 _20[16];                                             // _20
 	f32 _60[4];                                              // _60
-	u8 _70[0x80 - 0x70];                                     // _70, unknown
+	f32 _70[4];                                              // _70
 	f32 _80;                                                 // _80
 	f32 _84;                                                 // _84
-	u8 _88[0xA8 - 0x88];                                     // _88
+	f32 _88[4][2];                                           // _88
 	f32 _A8[4];                                              // _A8
 	u8 _B8[0xC8 - 0xB8];                                     // _B8, unknown
 	f32 _C8;                                                 // _C8
 	f32 _CC;                                                 // _CC
 	f32 _D0[4];                                              // _D0
 	f32 _E0;                                                 // _E0
-	u8 _E4[4];                                               // _E4, unknown
+	f32 _E4;                                                 // _E4
 	int _E8[4];                                              // _E8
 	int _F8;                                                 // _F8
 	Vector3f _FC[4];                                         // _FC
@@ -310,7 +310,7 @@ struct SpiderLeg {
 	Vector3f _258;                                           // _258
 	Vector3f _264;                                           // _264
 	Quat _270;                                               // _270
-	Matrix4f _280[16];                                       // _280
+	Matrix4f _280[4][4];                                     // _280
 	SpiderGenHalfDeadCallBackJoint* mHalfDeadCallBackJoints; // _680
 	SpiderGenPerishCallBack* mPerishCallBacks;               // _684
 	SpiderGenRippleCallBack* mRippleCallBacks;               // _688

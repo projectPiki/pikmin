@@ -311,7 +311,11 @@ struct InteractKill : public Interaction {
  * @brief TODO
  */
 struct InteractPress : public Interaction {
-	inline InteractPress(); // TODO: probably
+	inline InteractPress(Creature* owner, f32 damage)
+	    : Interaction(owner)
+	{
+		mDamage = damage;
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 	virtual bool actTeki(Teki*); // _10

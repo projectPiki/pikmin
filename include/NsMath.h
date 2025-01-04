@@ -8,7 +8,7 @@
 namespace NsCalculation {
 void calcLagrange(f32, const Vector3f*, Vector3f&);
 void calcMatrix(const Vector3f&, const Vector3f&, const Vector3f&, const Vector3f&, Matrix4f&);
-void calcJointPos(const Vector3f&, const Vector3f&, Vector3f&, Vector3f&);
+void calcJointPos(const Vector3f&, const Vector3f&, f32, f32, Vector3f&, Vector3f&);
 void calcMat4toMat3(const Matrix4f&, Matrix3f&);
 
 // unused/inlined:
@@ -43,7 +43,7 @@ struct NsLibMath {
 	// these exist for int and float
 	static inline T abs(T val) { return (val > 0) ? val : -val; }
 
-	static T revice(T a, T b, T c);
+	static T revice(T value, T min, T max) { return (value < min) ? min : (value > max) ? max : value; }
 
 	// these just exist for float
 	T lagrange3(const T*, T);
@@ -103,8 +103,10 @@ inline int getRand1(int val) { return System::getRand(1.0f) * (val * 0.99999899f
 
 // this COULD be revice instead, but i haven't seen a float version yet. TBD.
 // just bounds value in [min,max]
-inline int intLoop(int value, int min, int max) { return (value < min) ? min : (value > max) ? max : value; }
-
+inline int intLoop(int value, int min, int max)
+{
+	return (value < min) ? max + value - min + 1 : (value > max) ? min + value - max - 1 : value;
+}
 } // namespace NsMathI
 
 #endif
