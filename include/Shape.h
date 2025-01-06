@@ -31,6 +31,8 @@ struct DispList;
 struct PVWTevInfo;
 struct LFlareGroup;
 struct AnimFrameCacher;
+struct Joint;
+struct Joint::MatPoly;
 
 /**
  * @brief TODO

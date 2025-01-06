@@ -11,6 +11,7 @@ struct AnimContext;
 struct Material;
 struct BaseShape;
 struct Mesh;
+struct Joint;
 
 /**
  * @brief TODO
