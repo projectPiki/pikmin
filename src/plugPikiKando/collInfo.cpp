@@ -761,7 +761,7 @@ bool Tube::collide(const Sphere&, Vector3f&, f32&)
  * Address:	800876C8
  * Size:	0000E4
  */
-void Cylinder::getPosRatio(const Vector3f&)
+f32 Cylinder::getPosRatio(const Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1177,7 +1177,7 @@ bool CollPart::isStickable()
 		return true;
 	}
 
-	if (isTubeLike() || mPartType == PART_Collision) {
+	if (isTubeType() || mPartType == PART_Collision) {
 		if (getCode().match('s***', '*')) {
 			return true;
 		}
@@ -1683,7 +1683,7 @@ void CollPart::update(Graphics&, bool)
  * Address:	........
  * Size:	0001A4
  */
-void CollPart::collide(Creature*, Vector3f&)
+bool CollPart::collide(Creature*, Vector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -1693,7 +1693,7 @@ void CollPart::collide(Creature*, Vector3f&)
  * Address:	........
  * Size:	000158
  */
-void CollPart::collide(Vector3f&, f32, Vector3f&)
+bool CollPart::collide(Vector3f&, f32, Vector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -1703,7 +1703,7 @@ void CollPart::collide(Vector3f&, f32, Vector3f&)
  * Address:	80088520
  * Size:	00066C
  */
-void CollPart::collide(CollPart*, Vector3f&)
+bool CollPart::collide(CollPart*, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -2273,7 +2273,7 @@ void CollPart::makeCylinder(Cylinder&)
  * Address:	........
  * Size:	000048
  */
-void CollPart::samePlatShape(Shape*)
+bool CollPart::samePlatShape(Shape*)
 {
 	// UNUSED FUNCTION
 }
@@ -2524,14 +2524,14 @@ void CollInfo::checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*)
  * Address:	80088F00
  * Size:	000028
  */
-void CollInfo::checkCollision(Creature* creature, Vector3f& p2) { checkCollisionRec(creature, 0, p2); }
+CollPart* CollInfo::checkCollision(Creature* creature, Vector3f& p2) { return checkCollisionRec(creature, 0, p2); }
 
 /*
  * --INFO--
  * Address:	80088F28
  * Size:	000624
  */
-void CollInfo::checkCollisionRec(Creature*, int, Vector3f&)
+CollPart* CollInfo::checkCollisionRec(Creature*, int, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -2986,7 +2986,7 @@ void CollInfo::checkCollisionRec(Creature*, int, Vector3f&)
  * Address:	80089574
  * Size:	000034
  */
-void CollInfo::checkCollision(CollInfo*, CollPart**, CollPart**, Vector3f&)
+bool CollInfo::checkCollision(CollInfo*, CollPart**, CollPart**, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -3360,7 +3360,7 @@ CollPart* CollInfo::getRandomCollPart(u32)
  * Address:	80089A1C
  * Size:	0000D0
  */
-void CollInfo::getPlatform(DynCollObject*)
+CollPart* CollInfo::getPlatform(DynCollObject*)
 {
 	/*
 	.loc_0x0:

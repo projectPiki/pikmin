@@ -2,12 +2,14 @@
 #define _COMPLEXCREATURE_H
 
 #include "types.h"
-#include "Creature.h"
+
+struct Creature;
+struct CreatureProp;
 
 /**
  * @brief TODO
  *
- * @note Mostly stripped, very few references left. Necessary for complexCreature.cpp though.
+ * @note Mostly stripped, but necessary. This is the complete set of inlines from the DLL.
  */
 template <typename T>
 struct SmartPtr {
@@ -32,10 +34,11 @@ struct SmartPtr {
 		}
 	}
 
-	// also need:
-	// void clear();
-	// bool isNull();
-	// T* getPtr();
+	T* getPtr() { return mPtr; }
+
+	bool isNull() { return mPtr == nullptr; }
+
+	void clear() { mPtr = nullptr; }
 
 	T* mPtr; // _00
 };

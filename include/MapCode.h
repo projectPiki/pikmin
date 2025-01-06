@@ -24,8 +24,8 @@ enum MapAttributes {
  */
 namespace MapCode {
 
-u32 getAttribute(CollTriInfo*);
-u32 getSlipCode(CollTriInfo*);
+int getAttribute(CollTriInfo*);
+int getSlipCode(CollTriInfo*);
 bool isBald(CollTriInfo*);
 
 // unused/inlined

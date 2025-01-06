@@ -2782,8 +2782,8 @@ Bridge::Bridge(Shape* shape, bool a3)
 	_40C->mSystemFlags |= 0x10;
 	_40C->mSystemFlags |= 0x4;
 
-	mBuildShape      = new DynBuildShape(shape);
-	mBuildShape->_28 = this;
+	mBuildShape            = new DynBuildShape(shape);
+	mBuildShape->mCreature = this;
 
 	if (_3C8) {
 		mStageCount  = shape->mJointList->getChildCount() / 2;

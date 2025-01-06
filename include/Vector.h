@@ -81,7 +81,7 @@ struct Vector3f {
 	// TODO: void normalize();
 
 	// TODO: check if this is correct or if one of these needs adjusting
-	f32 DP(Vector3f& other) const { return x * other.x + y * other.y + z * other.z; }
+	f32 DP(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
 	f32 dot(Vector3f& other) const { return x * other.x + y * other.y + z * other.z; }
 
 	void CP(Vector3f& other)

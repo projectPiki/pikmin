@@ -30,8 +30,9 @@ struct AState : public Receiver<T> {
 		mStateMachine->transit(obj, stateID);
 	}
 
-	inline int getStateID() const { return mStateID; }
-	inline void setOwner(StateMachine<T>* owner) { mStateMachine = owner; }
+	// only inlines according to the DLL
+	int getID() { return mStateID; }
+	void setMachine(StateMachine<T>* owner) { mStateMachine = owner; }
 
 	// _00 = VTBL
 	int mStateID;                   // _04

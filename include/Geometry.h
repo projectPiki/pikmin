@@ -10,12 +10,20 @@ struct Sphere;
  * @brief TODO
  */
 struct Cylinder {
+	Cylinder(Vector3f& p1, Vector3f& p2, f32 p3)
+	    : _00(p1)
+	    , _0C(p2)
+	    , _18(p3)
+	{
+	}
 
 	void get2dDist(Vector3f&);
 	void collide(const Sphere&, Vector3f&, f32&);
-	void getPosRatio(const Vector3f&);
+	f32 getPosRatio(const Vector3f&);
 
-	// TODO: members
+	Vector3f _00; // _00
+	Vector3f _0C; // _0C
+	f32 _18;      // _18
 };
 
 /**
@@ -46,8 +54,8 @@ struct Sphere {
 	{
 	}
 
-	Vector3f mCentre; // _04
-	f32 mRadius;      // _00
+	Vector3f mCentre; // _00
+	f32 mRadius;      // _04
 };
 
 /**

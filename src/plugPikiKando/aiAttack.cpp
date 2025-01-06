@@ -795,23 +795,23 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 		return;
 	}
 
-	if (msg->mEvent.mCollPart == 0) {
+	if (msg->mEvent.mColliderPart == 0) {
 		return;
 	}
 
-	if (msg->mEvent.mCollPart->mPartType == PART_Platform) {
-		if (msg->mEvent.mCollPart->isStickable()) {
-			piki->startStick(msg->mEvent.mCollider, msg->mEvent.mCollPart);
+	if (msg->mEvent.mColliderPart->mPartType == PART_Platform) {
+		if (msg->mEvent.mColliderPart->isStickable()) {
+			piki->startStick(msg->mEvent.mCollider, msg->mEvent.mColliderPart);
 		} else {
-			if (!msg->mEvent.mCollPart->isClimbable()) {
+			if (!msg->mEvent.mColliderPart->isClimbable()) {
 				return;
 			}
-			piki->startStick(msg->mEvent.mCollider, msg->mEvent.mCollPart);
+			piki->startStick(msg->mEvent.mCollider, msg->mEvent.mColliderPart);
 		}
 	} else {
-		if (msg->mEvent.mCollPart->mPartType == PART_Collision || msg->mEvent.mCollPart->isTubeLike()) {
-			if (msg->mEvent.mCollPart->isStickable()) {
-				piki->startStickObject(msg->mEvent.mCollider, msg->mEvent.mCollPart, -1, 0.0f);
+		if (msg->mEvent.mColliderPart->mPartType == PART_Collision || msg->mEvent.mColliderPart->isTubeType()) {
+			if (msg->mEvent.mColliderPart->isStickable()) {
+				piki->startStickObject(msg->mEvent.mCollider, msg->mEvent.mColliderPart, -1, 0.0f);
 			} else {
 				return;
 			}
@@ -820,7 +820,7 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 
 	_18 = 5;
-	if (msg->mEvent.mCollPart && msg->mEvent.mCollPart->mPartType == PART_Platform && msg->mEvent.mCollPart->isClimbable()) {
+	if (msg->mEvent.mColliderPart && msg->mEvent.mColliderPart->mPartType == PART_Platform && msg->mEvent.mColliderPart->isClimbable()) {
 		piki->startClimb();
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
 		_18 = 6;

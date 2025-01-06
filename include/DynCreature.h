@@ -26,6 +26,17 @@ struct DynCreature : public Creature {
 	void calcModelMatrix(Matrix4f&);
 	void simulate2(f32);
 
+	f32 getPickOffset() { return mPickOffset; }
+
+	// DLL inlines to make:
+	// bool isDynFlag(int);
+	// void resetDynFlag(int);
+	// void setDynFlag(int);
+	// f32 getPickOffset();
+	// u8 getGroundFlag();
+	// void disableFriction();
+	// void enableFriction();
+
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	Vector3f _2B8;          // _2B8

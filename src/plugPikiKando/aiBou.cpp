@@ -48,7 +48,7 @@ void ActBou::init(Creature* creature)
 	mState = STATE_GotoLeg;
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 
-	if (mActor->_2AC) {
+	if (mActor->mGrabbedCreature.mPtr) {
 		mActor->_408 = 3;
 	} else {
 		mActor->_408 = 2;
@@ -316,7 +316,7 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 		return;
 	}
 
-	if (!msg->mEvent.mCollPart) {
+	if (!msg->mEvent.mColliderPart) {
 		return;
 	}
 
@@ -330,7 +330,7 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 	Sphere sphere(centre, radius);
 	Tube tube;
 
-	msg->mEvent.mCollPart->makeTube(tube);
+	msg->mEvent.mColliderPart->makeTube(tube);
 
 	tube.getYRatio(10.0f + mClimbingStick->mPosition.y);
 
@@ -338,7 +338,7 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 	f32 f;
 	if (tube.collide(sphere, vec, f)) {
 		_16 = 120;
-		mActor->startStickObject(msg->mEvent.mCollider, msg->mEvent.mCollPart, -1, 0.0f);
+		mActor->startStickObject(msg->mEvent.mCollider, msg->mEvent.mColliderPart, -1, 0.0f);
 		mActor->finishLook();
 
 		mActor->mOdometer.start(1.0f, 5.0f);

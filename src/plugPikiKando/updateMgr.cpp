@@ -73,7 +73,7 @@ void UpdateContext::exit()
 		mMgr->removeClient(this);
 		mMgr = nullptr;
 	}
-	mIsActive = false;
+	mIsPiki = false;
 }
 
 /*
@@ -171,7 +171,7 @@ void UpdateMgr::addClient(UpdateContext* client)
 	mClientSlotList[slotIdx]++;
 
 	// if client is active, assign to active slot as well
-	if (client->mIsActive) {
+	if (client->mIsPiki) {
 		mActiveClientSlotList[slotIdx]++;
 	}
 
@@ -191,7 +191,7 @@ void UpdateMgr::removeClient(UpdateContext* client)
 	}
 
 	mClientSlotList[client->mMgrSlotIndex]--;
-	if (client->isActive()) {
+	if (client->isPiki()) {
 		mActiveClientSlotList[client->mMgrSlotIndex]--;
 	}
 

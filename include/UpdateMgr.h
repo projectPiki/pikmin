@@ -16,11 +16,13 @@ struct UpdateContext {
 	void init(UpdateMgr*);
 	void exit();
 
-	inline bool isActive() { return mIsActive; }
+	// these are the two DLL inlines
+	bool isPiki() { return mIsPiki; }
+	void setPiki(bool isPiki) { mIsPiki = isPiki; }
 
 	UpdateMgr* mMgr;   // _00
 	int mMgrSlotIndex; // _04, what slot is client in in mMgr?
-	bool mIsActive;    // _08
+	bool mIsPiki;      // _08
 };
 
 /**

@@ -87,8 +87,6 @@ struct ID32 {
 	 */
 	void write(RandomAccessStream& stream);
 
-	inline u32 getID() const { return mId; }
-
 	u32 mId;           // _00
 	char mStringID[5]; // _04
 };

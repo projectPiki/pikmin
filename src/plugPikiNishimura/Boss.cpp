@@ -463,7 +463,7 @@ int Boss::getStickMouthPikiCount()
 	CI_LOOP(iter)
 	{
 		Creature* stuck = *iter;
-		if (stuck->isAlive() && stuck->isGrabbed()) {
+		if (stuck->isAlive() && stuck->isStickToMouth()) {
 			count++;
 		}
 	}
@@ -483,7 +483,7 @@ int Boss::getStickNoMouthPikiCount()
 	CI_LOOP(iter)
 	{
 		Creature* stuck = *iter;
-		if (stuck->isAlive() && !stuck->isGrabbed()) {
+		if (stuck->isAlive() && !stuck->isStickToMouth()) {
 			count++;
 		}
 	}

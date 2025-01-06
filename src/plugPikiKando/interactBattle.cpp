@@ -160,9 +160,9 @@ bool InteractSpore::actPiki(Piki* piki)
 	// if not a puffmin, make a puffmin
 	if (!piki->isKinoko()) {
 		Creature* kinoko = mOwner;
-		if (piki->_2AC) {
+		if (piki->mGrabbedCreature.mPtr) {
 			InteractRelease release(piki, 1.0f);
-			piki->_2AC->stimulate(release);
+			piki->mGrabbedCreature.mPtr->stimulate(release);
 		}
 
 		piki->_4A8 = kinoko;
@@ -505,9 +505,9 @@ bool InteractSwallow::actPiki(Piki* piki)
 	}
 
 	if (!isPiki) {
-		Creature* target = mOwner->_180;
+		Creature* target = mOwner->mStickListHead;
 		while (target) {
-			target = target->_18C;
+			target = target->mNextSticker;
 		}
 	}
 
@@ -788,7 +788,7 @@ bool InteractPress::actPiki(Piki* piki)
 	}
 	piki->playEventSound(mOwner, 27);
 	if (piki->hasBomb()) {
-		Creature* bomb = piki->_2AC;
+		Creature* bomb = piki->mGrabbedCreature.mPtr;
 		bomb->resetStateGrabbed();
 		if (bomb->mObjType == OBJTYPE_Bomb) {
 			MsgUser msg(1);

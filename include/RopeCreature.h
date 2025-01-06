@@ -35,7 +35,7 @@ struct RopeCreature : public Creature {
 	virtual void doKill() = 0;       // _10C
 
 	void setRope(Creature*);
-	void getRopePos(f32);
+	Vector3f getRopePos(f32);
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature

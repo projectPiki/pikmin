@@ -226,7 +226,7 @@ void RopeCreature::update()
  * Address:	80094978
  * Size:	0000B4
  */
-void RopeCreature::getRopePos(f32)
+Vector3f RopeCreature::getRopePos(f32)
 {
 	/*
 	.loc_0x0:

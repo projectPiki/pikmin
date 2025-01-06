@@ -1,16 +1,22 @@
 #include "Creature.h"
 #include "SearchSystem.h"
-
 #include "Collision.h"
 #include "DynColl.h"
 #include "Geometry.h"
 #include "SoundMgr.h"
+#include "Graphics.h"
+#include "AIConstant.h"
+#include "CreatureProp.h"
 #include "Generator.h"
 #include "Dolphin/os.h"
 #include "math.h"
+#include "Pellet.h"
+#include "timers.h"
 #include "BombItem.h"
 #include "RadarInfo.h"
 #include "AIPerf.h"
+#include "MapCode.h"
+#include "DebugLog.h"
 
 static CollTriInfo* triList[0x200];
 
@@ -23,21 +29,14 @@ static f32 checkRadius;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt);
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("Creature");
 
 /*
  * --INFO--
@@ -46,7 +45,8 @@ static void _Print(char*, ...)
  */
 void Creature::startFixPosition()
 {
-	// UNUSED FUNCTION
+	mFixedPosition = mPosition;
+	setCreatureFlag(CF_FixPosition);
 }
 
 /*
@@ -61,30 +61,26 @@ void Creature::finishFixPosition() { resetCreatureFlag(CF_FixPosition); }
  * Address:	8008A050
  * Size:	000048
  */
-bool Creature::isTerrible()
-{
-	bool terror = true;
-	if (mObjType != OBJTYPE_Teki && !isBoss()) {
-		terror = false;
-	}
-	return terror;
-}
+bool Creature::isTerrible() { return isTeki() || isBoss(); }
 
 /*
  * --INFO--
  * Address:	8008A098
  * Size:	0000D8
  */
-void Creature::load(RandomAccessStream& stream, bool p2)
+void Creature::load(RandomAccessStream& stream, bool doLoadPosition)
 {
-	(ObjType::getName(mObjType));
-	(stream.getPosition());
-	if (p2) {
-		mPosition.read(stream);
+	PRINT("* loading creature %s\n", ObjType::getName(mObjType));
+	int startPos = stream.getPosition();
+	if (doLoadPosition) {
+		// idk why they didn't use the Vector3f::read inline here, but they didn't
+		mPosition.x = stream.readFloat();
+		mPosition.y = stream.readFloat();
+		mPosition.z = stream.readFloat();
 	}
 
 	doLoad(stream);
-	(stream.getPosition());
+	PRINT("******** done : %d\n", stream.getPosition() - startPos);
 }
 
 /*
@@ -92,16 +88,19 @@ void Creature::load(RandomAccessStream& stream, bool p2)
  * Address:	8008A170
  * Size:	0000D8
  */
-void Creature::save(RandomAccessStream& stream, bool p2)
+void Creature::save(RandomAccessStream& stream, bool doSavePosition)
 {
-	(ObjType::getName(mObjType));
-	(stream.getPosition());
-	if (p2) {
-		mPosition.write(stream);
+	PRINT("* saving creature %s\n", ObjType::getName(mObjType));
+	int startPos = stream.getPosition();
+	if (doSavePosition) {
+		// idk why they didn't use the Vector3f::write inline here but they didn't
+		stream.writeFloat(mPosition.x);
+		stream.writeFloat(mPosition.y);
+		stream.writeFloat(mPosition.z);
 	}
 
 	doSave(stream);
-	(stream.getPosition());
+	PRINT("******** done : %d\n", stream.getPosition() - startPos);
 }
 
 /*
@@ -111,8 +110,8 @@ void Creature::save(RandomAccessStream& stream, bool p2)
  */
 Creature* Creature::getCollidePlatformCreature()
 {
-	if (_280) {
-		return _280->_28;
+	if (mCollPlatform) {
+		return mCollPlatform->mCreature;
 	}
 	return nullptr;
 }
@@ -124,10 +123,10 @@ Creature* Creature::getCollidePlatformCreature()
  */
 Vector3f Creature::getCollidePlatformNormal()
 {
-	if (!_284) {
+	if (!mCollPlatNormal) {
 		return Vector3f(0.0, 0.0f, 0.0f);
 	}
-	return *_284;
+	return *mCollPlatNormal;
 }
 
 /*
@@ -153,6 +152,8 @@ void Creature::enableStick()
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
 		mCollInfo->enableStick();
+	} else {
+		PRINT("enableStick * nothing is done\n");
 	}
 }
 
@@ -165,6 +166,8 @@ void Creature::disableStick()
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
 		mCollInfo->disableStick();
+	} else {
+		PRINT("disableStick * nothing is done\n");
 	}
 }
 
@@ -202,10 +205,8 @@ CollPart* Creature::getRandomCollPart(u32 p1)
  */
 Vector3f Creature::getBoundingSphereCentre()
 {
-	u32 badCompiler;
-
 	if (mCollInfo && mCollInfo->hasInfo()) {
-		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_IsAICullingActive) && mGrid.aiCulling()) {
+		if (mObjType != OBJTYPE_Navi && !isPiki() && !aiCullable() && mGrid.aiCulling()) {
 			return mPosition;
 		}
 
@@ -223,11 +224,9 @@ Vector3f Creature::getBoundingSphereCentre()
  */
 f32 Creature::getBoundingSphereRadius()
 {
-	u32 badCompiler;
-
 	if (mCollInfo && mCollInfo->hasInfo()) {
 		CollPart* bound = mCollInfo->getBoundingSphere();
-		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_IsAICullingActive) && mGrid.aiCulling()) {
+		if (mObjType != OBJTYPE_Navi && !isPiki() && !aiCullable() && mGrid.aiCulling()) {
 			return 2.0f * bound->mRadius;
 		}
 
@@ -266,9 +265,13 @@ void Creature::stopEventSound(Creature* target, int soundID)
  * Address:	........
  * Size:	0000C4
  */
-void Creature::insideSphere(Sphere&)
+bool Creature::insideSphere(Sphere& sphere)
 {
-	// UNUSED FUNCTION
+	Vector3f diff = sphere.mCentre - mPosition;
+	if (diff.length() <= sphere.mRadius) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -278,11 +281,9 @@ void Creature::insideSphere(Sphere&)
  */
 Vector3f Creature::getCentre()
 {
-	u32 badCompiler;
-
 	if (mCollInfo && mCollInfo->hasInfo()) {
 		CollPart* spherePart = mCollInfo->getSphere('cent');
-		if (mObjType != OBJTYPE_Navi && mObjType != OBJTYPE_Piki && isCreatureFlag(CF_IsAICullingActive) && mGrid.aiCulling()) {
+		if (mObjType != OBJTYPE_Navi && !isPiki() && !aiCullable() && mGrid.aiCulling()) {
 			return mPosition;
 		}
 		if (spherePart) {
@@ -318,29 +319,29 @@ f32 Creature::getCentreSize()
 int Creature::getStandType()
 {
 	if (!mFloorTri) {
-		if (_280) {
-			if (_280->_28) {
+		if (mCollPlatform) {
+			if (mCollPlatform->mCreature) {
 				// standing on a platform creature?
-				return STANDTYPE_Unk1;
+				return STANDTYPE_TekiPlatform;
 			}
 			// standing on a platform with no creature?
-			return STANDTYPE_Unk2;
+			return STANDTYPE_Platform;
 		}
 		// no platform, _2BC == 0
-		return STANDTYPE_Unk3;
+		return STANDTYPE_Air;
 	}
 
-	if (_280) {
-		if (_280->_28) {
+	if (mCollPlatform) {
+		if (mCollPlatform->mCreature) {
 			// standing on a platform creature?
-			return STANDTYPE_Unk1;
+			return STANDTYPE_TekiPlatform;
 		}
 		// standing on a platform with no creature?
-		return STANDTYPE_Unk2;
+		return STANDTYPE_Platform;
 	}
 
 	// no platform, _2BC != 0
-	return STANDTYPE_Unk0;
+	return STANDTYPE_Ground;
 }
 
 /*
@@ -349,13 +350,9 @@ int Creature::getStandType()
  * Size:	00005C
  */
 SearchData::SearchData()
-    : _00(nullptr)
-    , _08(0)
 {
-	if (_00) {
-		_00->subCnt();
-		_00 = nullptr;
-	}
+	_08 = 0;
+	_00.reset();
 	_04 = 12800.0f;
 }
 
@@ -367,7 +364,7 @@ SearchData::SearchData()
 u32 Creature::getGeneratorID()
 {
 	if (mGenerator) {
-		return mGenerator->_58.getID();
+		return mGenerator->_58.mId;
 	}
 	return 'null';
 }
@@ -379,7 +376,7 @@ u32 Creature::getGeneratorID()
  */
 bool Creature::stimulate(Interaction& interaction)
 {
-	(ObjType::getName(mObjType));
+	PRINT("objType=%s creature %x got interaction %x\n", ObjType::getName(mObjType), &interaction);
 	return false;
 }
 
@@ -388,140 +385,27 @@ bool Creature::stimulate(Interaction& interaction)
  * Address:	8008A89C
  * Size:	000138
  */
-bool Creature::setStateGrabbed(Creature* p1)
+bool Creature::setStateGrabbed(Creature* holder)
 {
-	if (_2A8) {
+	if (isGrabbed()) {
+		// we're already being held by something
 		return false;
 	}
-	if (_2A8) {
-		if (_2A8) {
-			_2A8->subCnt();
-			_2A8 = nullptr;
-		}
-	}
 
-	_2A8 = p1;
-	if (_2A8) {
-		_2A8->addCnt();
-	}
-
-	// what is going on with this
-	Creature** list = &_2AC;
-	if (_2AC) {
-		if (list[0]) {
-			list[0]->subCnt();
-			list[0] = nullptr;
-		}
-		list[0] = this;
-		if (list[0]) {
-			list[0]->addCnt();
-		}
-	}
-
+	mHoldingCreature.set(holder);
+	holder->mGrabbedCreature.set(this);
 	mPreGrabRotation = _E0;
 	_100.fromEuler(Vector3f(0.39269909f, 0.0f, 0.0f));
 	_110 = 0.0f;
 
+	PRINT("setStateGrabbed : this=%x c=%x\n", this, holder);
 	if (mObjType != OBJTYPE_Bomb) {
+		PRINT("*** THIS IS NOT BOMB !!\n");
 		dump();
-		p1->dump();
+		holder->dump();
 	}
+
 	return true;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x2C(r1)
-	  mr        r29, r3
-	  lwz       r3, 0x2A8(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  li        r3, 0
-	  b         .loc_0x11C
-
-	.loc_0x34:
-	  beq-      .loc_0x48
-	  beq-      .loc_0x48
-	  bl        0x59A94
-	  li        r0, 0
-	  stw       r0, 0x2A8(r29)
-
-	.loc_0x48:
-	  stw       r30, 0x2A8(r29)
-	  lwz       r3, 0x2A8(r29)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x5C
-	  bl        0x59A68
-
-	.loc_0x5C:
-	  lwz       r0, 0x2AC(r30)
-	  addi      r31, r30, 0x2AC
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  lwz       r3, 0x0(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x84
-	  bl        0x59A58
-	  li        r0, 0
-	  stw       r0, 0x0(r31)
-
-	.loc_0x84:
-	  stw       r29, 0x0(r31)
-	  lwz       r3, 0x0(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x98
-	  bl        0x59A2C
-
-	.loc_0x98:
-	  lwz       r5, 0xE0(r29)
-	  addi      r4, r1, 0x18
-	  lwz       r0, 0xE4(r29)
-	  addi      r3, r29, 0x100
-	  stw       r5, 0xF0(r29)
-	  stw       r0, 0xF4(r29)
-	  lwz       r5, 0xE8(r29)
-	  lwz       r0, 0xEC(r29)
-	  stw       r5, 0xF8(r29)
-	  stw       r0, 0xFC(r29)
-	  lfs       f0, -0x5E3C(r13)
-	  lfs       f1, -0x5E38(r13)
-	  stfs      f0, 0x18(r1)
-	  lfs       f0, -0x5E34(r13)
-	  stfs      f1, 0x1C(r1)
-	  stfs      f0, 0x20(r1)
-	  bl        -0x5268C
-	  lfs       f0, -0x7584(r2)
-	  stfs      f0, 0x110(r29)
-	  lwz       r0, 0x6C(r29)
-	  cmpwi     r0, 0xE
-	  beq-      .loc_0x118
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xC8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x118:
-	  li        r3, 0x1
-
-	.loc_0x11C:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -531,16 +415,9 @@ bool Creature::setStateGrabbed(Creature* p1)
  */
 void Creature::resetStateGrabbed()
 {
-	Creature** list = &_2A8->_2AC;
-	if (_2A8->_2AC) {
-		list[0]->subCnt();
-		list[0] = nullptr;
-	}
-
-	if (_2A8) {
-		_2A8->subCnt();
-		_2A8 = nullptr;
-	}
+	mHoldingCreature.getPtr()->mGrabbedCreature.reset();
+	mHoldingCreature.reset();
+	PRINT("## resetStateGrabbed\n");
 }
 
 /*
@@ -555,9 +432,12 @@ void Creature::turnTo(Vector3f& targetDir) { mDirection = atan2f(targetDir.x - m
  * Address:	........
  * Size:	0000FC
  */
-void Creature::adjustDistance(Vector3f&, f32)
+void Creature::adjustDistance(Vector3f& targetPos, f32 targetDist)
 {
-	// UNUSED FUNCTION
+	Vector3f sep = targetPos - mPosition;
+	f32 dist     = sep.length();
+	sep          = (targetDist / dist) * sep;
+	mPosition    = targetPos - sep;
 }
 
 /*
@@ -571,16 +451,16 @@ void Creature::init()
 	_114.makeIdentity();
 	mTransformMatrix.makeIdentity();
 	_E0.set(0.0f, 0.0f, 0.0f, 1.0f);
-	_60            = 0;
-	mCreatureFlags = 0;
-	_1A0           = -1;
-	resetCreatureFlag(CF_IsAICullingActive);
+	_60              = 0;
+	mCreatureFlags   = 0;
+	mPelletStickSlot = -1;
+	disableAICulling();
 	_21C = 0;
 	setCreatureFlag(CF_Free);
-	resetCreatureFlag(CF_Unk9 | CF_IsAiDisabled | CF_Unk14 | CF_AIAlwaysActive);
+	resetCreatureFlag(CF_Unk9 | CF_IsAiDisabled | CF_IsClimbing | CF_AIAlwaysActive);
 	mAbsPickOffset = 0.0f;
-	_2A8           = nullptr;
-	_2AC           = nullptr;
+	mHoldingCreature.clear();
+	mGrabbedCreature.clear();
 	resetCreatureFlag(CF_Unk6 | CF_Unk17);
 	clearCnt();
 	mIsBeingDamaged = false;
@@ -590,20 +470,21 @@ void Creature::init()
 	mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	_1AC.set(0.0f, 0.0f, 0.0f);
 	mStickTarget = nullptr;
-	mStickPart   = 0;
-	_190         = 0;
-	_18C         = 0;
-	_180         = 0;
+	mStickPart   = nullptr;
+
+	mPrevSticker   = nullptr;
+	mNextSticker   = nullptr;
+	mStickListHead = nullptr;
 	resetCreatureFlag(CF_StuckToObject | CF_StuckToMouth);
 
-	_154 = 0;
-	_158 = 0;
-	_15C = 0.0f;
-	_164 = 0;
-	_160 = 0;
+	mRopeListHead   = nullptr;
+	mRope           = nullptr;
+	mRopeRatio      = 0.0f;
+	mPrevRopeHolder = nullptr;
+	mNextRopeHolder = nullptr;
 	if (searchUpdateMgr) {
-		if (mObjType == OBJTYPE_Piki) {
-			_168.mIsActive = true;
+		if (isPiki()) {
+			_168.setPiki(true);
 		}
 
 		_168.init(searchUpdateMgr);
@@ -628,9 +509,9 @@ void Creature::init(Vector3f& pos)
  * Address:	........
  * Size:	000008
  */
-void Creature::getAtariType()
+int Creature::getAtariType()
 {
-	// UNUSED FUNCTION
+	return 0; // from the DLL - lol.
 }
 
 /*
@@ -665,17 +546,21 @@ void Creature::detachGenerator()
 void Creature::kill(bool p1)
 {
 	finishWaterEffect();
+
+	if (mObjType == OBJTYPE_Teki) {
+		PRINT("TEKI DIED ************************************\n");
+	}
+
 	detachGenerator();
-	if (_2AC) {
-		Creature* bomb = _2AC;
+
+	if (isHolding()) {
+		Creature* bomb = getHoldCreature();
 		bomb->resetStateGrabbed();
-		if (bomb->mObjType == OBJTYPE_Bomb) {
-			AState<AICreature>* state = static_cast<BombItem*>(bomb)->getCurrState();
-			int currState             = state->getStateID();
-			if (currState != 1) {
+		if (static_cast<AICreature*>(bomb)->mObjType == OBJTYPE_Bomb) {
+			if (static_cast<AICreature*>(bomb)->getCurrState()->getID() != 1) {
 				MsgUser msg(1);
-				static_cast<BombItem*>(bomb)->_2D0 = 1;
-				static_cast<BombItem*>(bomb)->mStateMachine->procMsg(static_cast<BombItem*>(bomb), &msg);
+				static_cast<AICreature*>(bomb)->_2D0 = 1;
+				static_cast<AICreature*>(bomb)->mStateMachine->procMsg(static_cast<AICreature*>(bomb), &msg);
 			}
 		}
 	}
@@ -694,27 +579,32 @@ void Creature::kill(bool p1)
 		endStick();
 	}
 
-	if (_180) {
-		while (_180) {
-			if (_180->isCreatureFlag(CF_StuckToObject)) {
-				_180->endStickObject();
+	if (mStickListHead) {
+		PRINT("%x(type%d) died : release all stickers ..\n", this, mObjType);
+		while (mStickListHead) {
+			if (mStickListHead->isCreatureFlag(CF_StuckToObject)) {
+				PRINT("stick off object\n");
+				mStickListHead->endStickObject();
 
-			} else if (_180->isCreatureFlag(CF_StuckToMouth)) {
-				_180->endStickMouth();
+			} else if (mStickListHead->isCreatureFlag(CF_StuckToMouth)) {
+				PRINT("stick off mouth\n");
+				mStickListHead->endStickMouth();
 
 			} else {
-				_180->endStick();
+				PRINT("stick off\n");
+				mStickListHead->endStick();
 			}
 		}
+		PRINT("done\n");
 	}
 
-	if (_158) {
+	if (mRope) {
 		endRope();
 	}
 
-	if (_154) {
-		while (_154) {
-			_154->endRope();
+	if (mRopeListHead) {
+		while (mRopeListHead) {
+			mRopeListHead->endRope();
 		}
 	}
 
@@ -897,8 +787,6 @@ void Creature::kill(bool p1)
  * Size:	0002C0
  */
 Creature::Creature(CreatureProp* props)
-    : _2A8(nullptr)
-    , _2AC(0)
 {
 	mObjType       = OBJTYPE_INVALID;
 	mSeContext     = nullptr;
@@ -907,11 +795,13 @@ Creature::Creature(CreatureProp* props)
 	mCollInfo = nullptr;
 	mFloorTri = nullptr;
 	_30       = 0;
-	resetCreatureFlag(CF_Unk16);
-	_34        = 0;
-	_284       = 0;
-	_288       = 0;
-	mGenerator = nullptr;
+
+	disableFlag10000();
+	setRebirthDay(0);
+
+	mCollPlatNormal = nullptr;
+	_288            = 0;
+	mGenerator      = nullptr;
 
 	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	_B0.set(0.0f, 0.0f, 0.0f);
@@ -919,19 +809,24 @@ Creature::Creature(CreatureProp* props)
 	mRotation.set(0.0f, 0.0f, 0.0f);
 	mPosition.set(0.0f, 0.0f, 0.0f);
 	mScale.set(1.0f, 1.0f, 1.0f);
+
 	mDirection       = 0.0f;
 	_26C             = 10.0f;
 	mCollisionRadius = 16.0f;
 	mProps           = props;
 	_28              = 0;
 	resetCreatureFlag(CF_Unk10);
+
 	_E0.fromEuler(Vector3f(0.0f, 0.0f, 0.0f));
 	_D4.set(0.0f, 0.0f, 0.0f);
+
 	resetCreatureFlag(CF_Unk1 | CF_Unk6);
-	_2A8            = nullptr;
-	_2AC            = 0;
+
+	mHoldingCreature.clear();
+	mGrabbedCreature.clear();
+
 	mIsBeingDamaged = false;
-	_280            = 0;
+	mCollPlatform   = nullptr;
 	_290            = 0;
 	_298            = 0;
 	_2B0            = 0;
@@ -960,409 +855,129 @@ void Creature::updateStatic()
  */
 void Creature::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA8(r1)
-	  stfd      f31, 0xA0(r1)
-	  stfd      f30, 0x98(r1)
-	  stfd      f29, 0x90(r1)
-	  stfd      f28, 0x88(r1)
-	  stw       r31, 0x84(r1)
-	  mr        r31, r3
-	  stw       r30, 0x80(r1)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x38
-	  bl        0x18CB0
+	if (mSeContext) {
+		mSeContext->update();
+	}
 
-	.loc_0x38:
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  bl        0x92D8
-	  lwz       r0, 0x6C(r31)
-	  li        r30, 0
-	  cmpwi     r0, 0
-	  beq-      .loc_0x5C
-	  cmpwi     r0, 0x36
-	  bne-      .loc_0x60
+	mGrid.updateGrid(mPosition);
+	bool isPikiOrNavi = false;
+	if (mObjType == OBJTYPE_Piki || mObjType == OBJTYPE_Navi) {
+		isPikiOrNavi = true;
+	}
 
-	.loc_0x5C:
-	  li        r30, 0x1
+	mGrid.updateAIGrid(mPosition, isPikiOrNavi);
 
-	.loc_0x60:
-	  addi      r5, r30, 0
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  bl        0x9348
-	  rlwinm.   r0,r30,0,24,31
-	  bne-      .loc_0xA0
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,11,11
-	  bne-      .loc_0xA0
-	  addi      r3, r31, 0x40
-	  bl        0x8F00
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xA0
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,12,12
-	  bne-      .loc_0x558
+	// in the DLL this ONE TIME doesn't use the isCreatureFlag inline
+	// but it doesn't affect anything (for now) so i'm adding it in
+	if (!isPikiOrNavi && !isCreatureFlag(CF_AIAlwaysActive) && mGrid.aiCulling() && !aiCullable()) {
+		return;
+	}
+	_1A4 = 0;
+	_1A8 = 0;
 
-	.loc_0xA0:
-	  li        r0, 0
-	  stw       r0, 0x1A4(r31)
-	  stw       r0, 0x1A8(r31)
-	  lwz       r0, 0x2B0(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xD4
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x108(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  bl        0x6A4
+	if (!_2B0) {
+		doAnimation();
+		updateAI();
+	}
 
-	.loc_0xD4:
-	  lwz       r0, 0x2A8(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x558
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,16,16
-	  beq-      .loc_0x12C
-	  lwz       r4, 0x180(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x110
-	  lwz       r3, 0x94(r4)
-	  lwz       r0, 0x98(r4)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x9C(r4)
-	  stw       r0, 0x9C(r31)
+	if (!mHoldingCreature.isNull()) {
+		return;
+	}
 
-	.loc_0x110:
-	  lwz       r0, 0x184(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x558
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,17,15
-	  stw       r0, 0xC8(r31)
-	  b         .loc_0x558
+	if (isCreatureFlag(CF_StuckToMouth)) {
+		if (mStickListHead) {
+			mPosition = mStickListHead->mPosition;
+		}
+		if (!mStickTarget) {
+			resetCreatureFlag(CF_StuckToMouth);
+			PRINT("MOUTH RESET\n");
+		}
+		return;
+	}
 
-	.loc_0x12C:
-	  lwz       r0, 0x158(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x140
-	  mr        r3, r31
-	  bl        0x66D8
+	if (mRope) {
+		updateStickRope();
+	}
 
-	.loc_0x140:
-	  mr        r3, r31
-	  bl        0x3180
-	  lwz       r0, 0x184(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x17C
-	  mr        r3, r31
-	  bl        0x4BF0
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x170
-	  mr        r3, r31
-	  bl        0x5A94
-	  b         .loc_0x558
+	moveAttach();
 
-	.loc_0x170:
-	  mr        r3, r31
-	  bl        0x5CDC
-	  b         .loc_0x558
+	if (mStickTarget) {
+		if (isStickToPlatform()) {
+			updateStickPlatform();
+		} else {
+			updateStickNonPlatform();
+		}
+		return;
+	}
 
-	.loc_0x17C:
-	  lwz       r3, 0x28C(r31)
-	  li        r0, -0x1
-	  cmplwi    r3, 0
-	  beq-      .loc_0x194
-	  bl        0x8ACEC
-	  mr        r0, r3
+	int attr = ATTR_NULL;
+	if (mFloorTri) {
+		attr = MapCode::getAttribute(mFloorTri);
+	}
 
-	.loc_0x194:
-	  cmpwi     r0, 0x5
-	  bne-      .loc_0x1E0
-	  lbz       r0, 0x60(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1BC
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
+	if (attr == ATTR_Unk5) {
+		if (_60 == 0) {
+			startWaterEffect();
+		}
 
-	.loc_0x1BC:
-	  lbz       r3, 0x60(r31)
-	  addi      r0, r3, 0x1
-	  stb       r0, 0x60(r31)
-	  lbz       r0, 0x60(r31)
-	  cmplwi    r0, 0xF0
-	  ble-      .loc_0x208
-	  li        r0, 0xF0
-	  stb       r0, 0x60(r31)
-	  b         .loc_0x208
+		_60++;
 
-	.loc_0x1E0:
-	  lbz       r0, 0x60(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x208
-	  li        r0, 0
-	  stb       r0, 0x60(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xD0(r12)
-	  mtlr      r12
-	  blrl
+		if (_60 > 240) {
+			_60 = 240;
+		}
+	} else {
+		if (_60 != 0) {
+			_60 = 0;
+			finishWaterEffect();
+		}
+	}
 
-	.loc_0x208:
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,13,13
-	  bne-      .loc_0x558
-	  lwz       r4, 0x2DEC(r13)
-	  mr        r3, r31
-	  lfs       f0, 0x70(r31)
-	  lfs       f31, 0x28C(r4)
-	  stfs      f0, 0x74(r1)
-	  fmr       f1, f31
-	  lfs       f0, 0x74(r31)
-	  stfs      f0, 0x78(r1)
-	  lfs       f0, 0x78(r31)
-	  stfs      f0, 0x7C(r1)
-	  lwz       r4, 0xBC(r31)
-	  lwz       r0, 0xC0(r31)
-	  stw       r4, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0xC4(r31)
-	  stw       r0, 0x78(r31)
-	  bl        0x3180
-	  lfs       f1, 0xBC(r31)
-	  lfs       f0, 0xC0(r31)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0xC4(r31)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x7584(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x2DC
-	  fsqrte    f1, f4
-	  lfd       f3, -0x7580(r2)
-	  lfd       f2, -0x7578(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x4C(r1)
-	  lfs       f4, 0x4C(r1)
+	if (isCreatureFlag(CF_Unk18)) {
+		return;
+	}
 
-	.loc_0x2DC:
-	  lfs       f0, -0x7584(r2)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x344
-	  lwz       r3, 0xC8(r31)
-	  rlwinm.   r0,r3,0,9,9
-	  beq-      .loc_0x344
-	  rlwinm.   r0,r3,0,10,10
-	  beq-      .loc_0x344
-	  lwz       r3, 0x28C(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x344
-	  bl        0x8AB7C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x344
-	  lfs       f1, -0x7560(r2)
-	  bl        0x1907C8
-	  lwz       r3, 0x28C(r31)
-	  lfs       f0, 0x1C(r3)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x344
-	  lwz       r3, 0x94(r31)
-	  lwz       r0, 0x98(r31)
-	  stw       r3, 0x1C(r31)
-	  stw       r0, 0x20(r31)
-	  lwz       r0, 0x9C(r31)
-	  stw       r0, 0x24(r31)
+	f32 stepTime = gsys->getFrameTime();
+	Vector3f vel(mVelocity);
+	mVelocity = mVolatileVelocity;
+	moveNew(stepTime);
 
-	.loc_0x344:
-	  lwz       r4, 0x74(r1)
-	  fmr       f1, f31
-	  lwz       r0, 0x78(r1)
-	  mr        r3, r31
-	  stw       r4, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0x7C(r1)
-	  stw       r0, 0x78(r31)
-	  bl        0x3070
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,9,9
-	  beq-      .loc_0x534
-	  lwz       r3, 0x28C(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x474
-	  bl        0x8AB04
-	  cmpwi     r3, 0
-	  bne-      .loc_0x474
-	  lfs       f1, -0x7560(r2)
-	  bl        0x190750
-	  lwz       r3, 0x28C(r31)
-	  lfs       f0, 0x1C(r3)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x474
-	  lfs       f1, 0xA4(r31)
-	  lfs       f0, 0xA8(r31)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0xAC(r31)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x7584(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x428
-	  fsqrte    f1, f4
-	  lfd       f3, -0x7580(r2)
-	  lfd       f2, -0x7578(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x48(r1)
-	  lfs       f4, 0x48(r1)
+	if (mVolatileVelocity.length() > 0.0f && isCreatureFlag(CF_Unk22) && isCreatureFlag(CF_FixPosition) && mFloorTri
+	    && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->_18.y > sinf(THIRD_PI)) {
+		mFixedPosition = mPosition;
+	}
 
-	.loc_0x428:
-	  lfs       f0, -0x755C(r2)
-	  fcmpo     cr0, f4, f0
-	  bge-      .loc_0x464
-	  lwz       r3, 0xC8(r31)
-	  rlwinm.   r0,r3,0,10,10
-	  bne-      .loc_0x480
-	  oris      r0, r3, 0x20
-	  stw       r0, 0xC8(r31)
-	  lwz       r3, 0x94(r31)
-	  lwz       r0, 0x98(r31)
-	  stw       r3, 0x1C(r31)
-	  stw       r0, 0x20(r31)
-	  lwz       r0, 0x9C(r31)
-	  stw       r0, 0x24(r31)
-	  b         .loc_0x480
+	mVelocity = vel;
+	moveNew(stepTime);
 
-	.loc_0x464:
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,11,9
-	  stw       r0, 0xC8(r31)
-	  b         .loc_0x480
+	if (isCreatureFlag(CF_Unk22)) {
+		if (mFloorTri && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->_18.y > sinf(THIRD_PI)) {
+			if (mTargetVelocity.length() < 0.01f) {
+				if (!isCreatureFlag(CF_FixPosition)) {
+					setCreatureFlag(CF_FixPosition);
+					mFixedPosition = mPosition;
+				}
+			} else {
+				resetCreatureFlag(CF_FixPosition);
+			}
+		} else {
+			resetCreatureFlag(CF_FixPosition);
+		}
 
-	.loc_0x474:
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,11,9
-	  stw       r0, 0xC8(r31)
+		if (isCreatureFlag(CF_FixPosition)) {
+			Vector3f fixedDir = mFixedPosition - mPosition;
+			f32 dist          = fixedDir.normalise();
+			if (!(dist < 30.0f)) {
+				dist = 0.0f;
+			}
+			if (dist > 0.0f) {
+				vel       = (10.0f * dist) * fixedDir;
+				mVelocity = vel;
+			}
+		}
+	}
 
-	.loc_0x480:
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,10,10
-	  beq-      .loc_0x534
-	  lfs       f3, 0x1C(r31)
-	  lfs       f2, 0x94(r31)
-	  lfs       f1, 0x20(r31)
-	  lfs       f0, 0x98(r31)
-	  fsubs     f30, f3, f2
-	  lfs       f2, 0x24(r31)
-	  fsubs     f29, f1, f0
-	  lfs       f0, 0x9C(r31)
-	  fmuls     f1, f30, f30
-	  fsubs     f28, f2, f0
-	  fmuls     f0, f29, f29
-	  fmuls     f2, f28, f28
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x7DA8C
-	  lfs       f0, -0x7584(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x4E0
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
-	  fdivs     f28, f28, f1
-
-	.loc_0x4E0:
-	  lfs       f0, -0x7558(r2)
-	  fcmpo     cr0, f1, f0
-	  blt-      .loc_0x4F0
-	  lfs       f1, -0x7584(r2)
-
-	.loc_0x4F0:
-	  lfs       f0, -0x7584(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x534
-	  lfs       f0, -0x7568(r2)
-	  fmuls     f0, f0, f1
-	  fmuls     f2, f30, f0
-	  fmuls     f1, f29, f0
-	  fmuls     f0, f28, f0
-	  stfs      f2, 0x74(r1)
-	  stfs      f1, 0x78(r1)
-	  stfs      f0, 0x7C(r1)
-	  lwz       r3, 0x74(r1)
-	  lwz       r0, 0x78(r1)
-	  stw       r3, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0x7C(r1)
-	  stw       r0, 0x78(r31)
-
-	.loc_0x534:
-	  lfs       f0, -0x5DB8(r13)
-	  fmr       f1, f31
-	  mr        r3, r31
-	  stfs      f0, 0xBC(r31)
-	  lfs       f0, -0x5DB4(r13)
-	  stfs      f0, 0xC0(r31)
-	  lfs       f0, -0x5DB0(r13)
-	  stfs      f0, 0xC4(r31)
-	  bl        0x2B70
-
-	.loc_0x558:
-	  lwz       r0, 0xAC(r1)
-	  lfd       f31, 0xA0(r1)
-	  lfd       f30, 0x98(r1)
-	  lfd       f29, 0x90(r1)
-	  lfd       f28, 0x88(r1)
-	  lwz       r31, 0x84(r1)
-	  lwz       r30, 0x80(r1)
-	  addi      r1, r1, 0xA8
-	  mtlr      r0
-	  blr
-	*/
+	mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
+	moveRotation(stepTime);
 }
 
 /*
@@ -1370,150 +985,50 @@ void Creature::update()
  * Address:	8008B788
  * Size:	0001F4
  */
-void Creature::postUpdate(int, f32)
+void Creature::postUpdate(int, f32 p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x4C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  lwz       r0, 0x6C(r3)
-	  li        r3, 0
-	  cmpwi     r0, 0
-	  beq-      .loc_0x3C
-	  cmpwi     r0, 0x36
-	  bne-      .loc_0x40
+	bool isPikiOrNavi = false;
+	if (mObjType == OBJTYPE_Piki || mObjType == OBJTYPE_Navi) {
+		isPikiOrNavi = true;
+	}
 
-	.loc_0x3C:
-	  li        r3, 0x1
+	if (!isPikiOrNavi && mGrid.aiCulling() && !aiCullable()) {
+		return;
+	}
 
-	.loc_0x40:
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x64
-	  addi      r3, r31, 0x40
-	  bl        0x89BC
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x64
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,12,12
-	  bne-      .loc_0x1D4
+	if (!mHoldingCreature.isNull()) {
+		return;
+	}
 
-	.loc_0x64:
-	  lwz       r0, 0x2A8(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1D4
-	  mr        r3, r31
-	  fmr       f1, f31
-	  bl        0x43C
-	  lwz       r3, 0x280(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x164
-	  lwz       r0, 0x28(r3)
-	  cmplwi    r0, 0
-	  mr        r30, r0
-	  beq-      .loc_0x164
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x164
-	  lwz       r3, 0x220(r30)
-	  li        r29, 0
-	  cmplwi    r3, 0
-	  beq-      .loc_0xE0
-	  bl        -0x1CFC
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xE0
-	  lwz       r3, 0x220(r30)
-	  lwz       r4, 0x280(r31)
-	  bl        -0x1E44
-	  mr        r29, r3
+	collisionCheck(p2);
 
-	.loc_0xE0:
-	  stw       r30, 0x28(r1)
-	  li        r0, 0
-	  addi      r3, r30, 0
-	  stw       r31, 0x34(r1)
-	  stw       r0, 0x38(r1)
-	  stw       r29, 0x2C(r1)
-	  stw       r29, 0x3C(r1)
-	  stw       r0, 0x30(r1)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x130
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r1, 0x34
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
+	if (mCollPlatform) {
+		Creature* platCreature = mCollPlatform->mCreature;
+		if (platCreature && platCreature->isAlive()) {
+			CollPart* platPart = nullptr;
+			if (platCreature->mCollInfo && platCreature->mCollInfo->hasInfo()) {
+				platPart = platCreature->mCollInfo->getPlatform(mCollPlatform);
+			}
 
-	.loc_0x130:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x164
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  addi      r4, r1, 0x28
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
+			CollEvent event1(this, nullptr, platPart);
+			CollEvent event2(platCreature, platPart, nullptr);
 
-	.loc_0x164:
-	  lwz       r3, 0x94(r31)
-	  lwz       r0, 0x98(r31)
-	  stw       r3, 0x1AC(r31)
-	  stw       r0, 0x1B0(r31)
-	  lwz       r0, 0x9C(r31)
-	  stw       r0, 0x1B4(r31)
-	  lwz       r30, 0x2AC(r31)
-	  cmplwi    r30, 0
-	  beq-      .loc_0x1D4
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r31
-	  mr        r5, r30
-	  lwz       r12, 0x100(r12)
-	  addi      r3, r1, 0x1C
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x1C(r1)
-	  lwz       r0, 0x20(r1)
-	  stw       r3, 0x94(r30)
-	  stw       r0, 0x98(r30)
-	  lwz       r0, 0x24(r1)
-	  stw       r0, 0x9C(r30)
-	  lwz       r3, 0x88(r31)
-	  lwz       r0, 0x8C(r31)
-	  stw       r3, 0x88(r30)
-	  stw       r0, 0x8C(r30)
-	  lwz       r0, 0x90(r31)
-	  stw       r0, 0x90(r30)
+			if (platCreature->isAlive()) {
+				platCreature->collisionCallback(event1);
+			}
+			if (isAlive()) {
+				collisionCallback(event2);
+			}
+		}
+	}
 
-	.loc_0x1D4:
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	_1AC = mPosition;
+
+	if (getHoldCreature()) {
+		Creature* held  = getHoldCreature();
+		held->mPosition = getCatchPos(held);
+		held->mRotation = mRotation;
+	}
 }
 
 /*
@@ -1523,60 +1038,21 @@ void Creature::postUpdate(int, f32)
  */
 void Creature::updateAI()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x2A8(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xA0
-	  lbz       r0, 0x2B4(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x68
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,20,20
-	  bne-      .loc_0x68
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x68
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x104(r12)
-	  mtlr      r12
-	  blrl
+	if (!mHoldingCreature.isNull()) {
+		return;
+	}
 
-	.loc_0x68:
-	  lwz       r3, 0xC8(r31)
-	  rlwinm.   r0,r3,0,25,25
-	  bne-      .loc_0x7C
-	  rlwinm.   r0,r3,0,29,29
-	  beq-      .loc_0xA0
+	if (!mIsBeingDamaged && !isCreatureFlag(CF_IsAiDisabled) && doDoAI()) {
+		doAI();
+	}
 
-	.loc_0x7C:
-	  rlwinm.   r0,r3,0,26,26
-	  bne-      .loc_0xA0
-	  lbz       r0, 0x2B4(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xA0
-	  rlwinm.   r0,r3,0,20,20
-	  bne-      .loc_0xA0
-	  mr        r3, r31
-	  bl        0x15E4
+	if (!isCreatureFlag(CF_Unk7) && !isCreatureFlag(CF_IsOnGround)) {
+		return;
+	}
 
-	.loc_0xA0:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (!isCreatureFlag(CF_Unk6) && !mIsBeingDamaged && !isCreatureFlag(CF_IsAiDisabled)) {
+		moveVelocity();
+	}
 }
 
 /*
@@ -1584,73 +1060,10 @@ void Creature::updateAI()
  * Address:	8008BA30
  * Size:	0000F0
  */
-f32 centreDist(Creature*, Creature*)
+f32 centreDist(Creature* c1, Creature* c2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x2C
-	  lwz       r12, 0x0(r4)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r31
-	  lwz       r12, 0x0(r31)
-	  addi      r3, r1, 0x38
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f3, 0x3C(r1)
-	  lfs       f2, 0x30(r1)
-	  lfs       f1, 0x38(r1)
-	  lfs       f0, 0x2C(r1)
-	  fsubs     f3, f3, f2
-	  lfs       f2, 0x40(r1)
-	  fsubs     f4, f1, f0
-	  lfs       f0, 0x34(r1)
-	  fmuls     f1, f3, f3
-	  fsubs     f3, f2, f0
-	  lfs       f0, -0x7584(r2)
-	  fmuls     f2, f4, f4
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xDC
-	  fsqrte    f2, f1
-	  lfd       f4, -0x7580(r2)
-	  lfd       f3, -0x7578(r2)
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f0, f1, f0
-	  fsub      f0, f3, f0
-	  fmul      f2, f2, f0
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f0, f1, f0
-	  fsub      f0, f3, f0
-	  fmul      f2, f2, f0
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f0, f1, f0
-	  fsub      f0, f3, f0
-	  fmul      f0, f2, f0
-	  fmul      f0, f1, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x28(r1)
-	  lfs       f1, 0x28(r1)
-
-	.loc_0xDC:
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f sep = c1->getCentre() - c2->getCentre();
+	return sep.length();
 }
 
 /*
@@ -1658,9 +1071,12 @@ f32 centreDist(Creature*, Creature*)
  * Address:	........
  * Size:	0000DC
  */
-void sphereDistQuick(Creature*, Creature*)
+f32 sphereDistQuick(Creature* c1, Creature* c2)
 {
-	// UNUSED FUNCTION
+	Vector3f c1Cent = c1->getCentre();
+	Vector3f c2Cent = c2->getCentre();
+	f32 dist        = qdist3(c1Cent.x, c1Cent.y, c1Cent.z, c2Cent.x, c2Cent.y, c2Cent.z);
+	return dist - (c1->getCentreSize() + c2->getCentreSize());
 }
 
 /*
@@ -1668,82 +1084,10 @@ void sphereDistQuick(Creature*, Creature*)
  * Address:	8008BB20
  * Size:	00011C
  */
-f32 sphereDist(Creature*, Creature*)
+f32 sphereDist(Creature* c1, Creature* c2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stfd      f31, 0x78(r1)
-	  stfd      f30, 0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x68(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x54
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r3, r1, 0x48
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f2, 0x48(r1)
-	  lfs       f0, 0x54(r1)
-	  lfs       f1, 0x4C(r1)
-	  fsubs     f2, f2, f0
-	  lfs       f0, 0x58(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f2, 0x24(r1)
-	  lfs       f1, 0x24(r1)
-	  stfs      f1, 0x3C(r1)
-	  stfs      f0, 0x40(r1)
-	  lfs       f1, 0x50(r1)
-	  lfs       f0, 0x5C(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x44(r1)
-	  lfs       f0, 0x3C(r1)
-	  stfs      f0, 0x30(r1)
-	  lfs       f0, 0x40(r1)
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, 0x44(r1)
-	  stfs      f0, 0x38(r1)
-	  lfs       f1, 0x30(r1)
-	  lfs       f0, 0x34(r1)
-	  lfs       f2, 0x38(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x7DFA0
-	  mr        r3, r31
-	  fmr       f30, f1
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  fmr       f31, f1
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  fadds     f0, f1, f31
-	  lwz       r0, 0x84(r1)
-	  lfd       f31, 0x78(r1)
-	  lwz       r31, 0x6C(r1)
-	  fsubs     f1, f30, f0
-	  lfd       f30, 0x70(r1)
-	  lwz       r30, 0x68(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	f32 dist = centreDist(c1, c2);
+	return dist - (c1->getCentreSize() + c2->getCentreSize());
 }
 
 /*
@@ -1751,511 +1095,91 @@ f32 sphereDist(Creature*, Creature*)
  * Address:	8008BC3C
  * Size:	0006E8
  */
-void Creature::collisionCheck(f32)
+void Creature::collisionCheck(f32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x120(r1)
-	  stfd      f31, 0x118(r1)
-	  stfd      f30, 0x110(r1)
-	  fmr       f30, f1
-	  stfd      f29, 0x108(r1)
-	  stfd      f28, 0x100(r1)
-	  stfd      f27, 0xF8(r1)
-	  stmw      r25, 0xDC(r1)
-	  mr        r31, r3
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x6C0
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x84(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x6C0
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,26,26
-	  bne-      .loc_0x6C0
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0xF68
-	  lis       r3, 0x802C
-	  stw       r0, 0xAC(r1)
-	  subi      r0, r3, 0x5A14
-	  stw       r0, 0xAC(r1)
-	  addi      r30, r31, 0x1B8
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r29, r1, 0xAC
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-	  b         .loc_0xFC
+	if (!isAlive()) {
+		return;
+	}
 
-	.loc_0xA8:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x0(r29)
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x158
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
+	if (!isAtari()) {
+		return;
+	}
 
-	.loc_0xFC:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x124
-	  li        r0, 0x1
-	  b         .loc_0x150
+	if (isCreatureFlag(CF_Unk6)) {
+		return;
+	}
 
-	.loc_0x124:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x14C
-	  li        r0, 0x1
-	  b         .loc_0x150
+	Iterator iter(&mSearchBuffer, &CndIsAtari());
+	CI_LOOP(iter)
+	{
+		Creature* collider = *iter;
 
-	.loc_0x14C:
-	  li        r0, 0
+		// don't worry about dead creatures.
+		if (!collider->isAlive()) {
+			continue;
+		}
 
-	.loc_0x150:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0xA8
+		// ignore held creatures (such as bombs)
+		if (isHolding() && getHoldCreature() == collider) {
+			continue;
+		}
 
-	.loc_0x158:
-	  lfs       f29, -0x7554(r2)
-	  lfs       f31, -0x7584(r2)
-	  b         .loc_0x664
+		// ignore creatures holding us (such as if we're a bomb)
+		if (isGrabbed() && getHolder() == collider) {
+			continue;
+		}
 
-	.loc_0x164:
-	  cmpwi     r27, -0x1
-	  bne-      .loc_0x18C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-	  b         .loc_0x1A8
+		if (!isGrabbed() && !collider->isGrabbed()) {
+			CollInfo* ourInfo      = nullptr;
+			CollInfo* colliderInfo = nullptr;
+			Vector3f collisionVec;
+			if (mCollInfo && mCollInfo->hasInfo()) {
+				ourInfo = mCollInfo;
+			}
 
-	.loc_0x18C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
+			if (collider->mCollInfo && collider->mCollInfo->hasInfo()) {
+				colliderInfo = collider->mCollInfo;
+			}
 
-	.loc_0x1A8:
-	  lwz       r12, 0x0(r28)
-	  mr        r3, r28
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x56C
-	  lwz       r0, 0x2AC(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1D8
-	  cmplw     r0, r28
-	  beq-      .loc_0x56C
+			if (!ourInfo && !colliderInfo) {
+				// neither of us have collision information. great. treat us both as spheres.
+				if (centreDist(this, collider) < getSize() + collider->getSize()) {
+					collisionVec = getCentre() - collider->getCentre();
+					f32 dist     = collisionVec.normalise();
+					collisionVec = -(getCentreSize() + collider->getCentreSize() - dist) * collisionVec;
+					respondColl(collider, p1, nullptr, nullptr, collisionVec);
+				}
+				continue;
+			}
 
-	.loc_0x1D8:
-	  lwz       r4, 0x2A8(r31)
-	  neg       r0, r4
-	  cntlzw    r0, r0
-	  rlwinm    r0,r0,27,24,31
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  rlwinm.   r0,r0,27,24,31
-	  beq-      .loc_0x200
-	  cmplw     r4, r28
-	  beq-      .loc_0x56C
+			if (ourInfo && !colliderInfo) {
+				// we have our collision, but not the incoming object's collision.
+				CollPart* collisionPart = ourInfo->checkCollision(collider, collisionVec);
+				if (collisionPart) {
+					respondColl(collider, p1, collisionPart, nullptr, collisionVec);
+				}
+				continue;
+			}
 
-	.loc_0x200:
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x56C
-	  lwz       r0, 0x2A8(r28)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x56C
-	  stfs      f31, 0xC8(r1)
-	  li        r26, 0
-	  li        r25, 0
-	  stfs      f31, 0xC4(r1)
-	  stfs      f31, 0xC0(r1)
-	  lwz       r3, 0x220(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x244
-	  bl        -0x2320
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x244
-	  lwz       r26, 0x220(r31)
+			if (!ourInfo && colliderInfo) {
+				// we have the incoming object info, but none for us.
+				CollPart* collisionPart = colliderInfo->checkCollision(this, collisionVec);
+				if (collisionPart) {
+					collisionVec.multiply(-1.0f);
+					respondColl(collider, p1, nullptr, collisionPart, collisionVec);
+				}
+				continue;
+			}
+			u32 badCompiler; // there's an extra variable *somewhere* but idk where.
 
-	.loc_0x244:
-	  lwz       r0, 0x220(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x264
-	  lwz       r3, 0x220(r28)
-	  bl        -0x2340
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x264
-	  lwz       r25, 0x220(r28)
-
-	.loc_0x264:
-	  cmplwi    r26, 0
-	  bne-      .loc_0x484
-	  cmplwi    r25, 0
-	  bne-      .loc_0x484
-	  mr        r4, r28
-	  lwz       r12, 0x0(r28)
-	  addi      r3, r1, 0x88
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r31
-	  lwz       r12, 0x0(r31)
-	  addi      r3, r1, 0x7C
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f2, 0x7C(r1)
-	  lfs       f0, 0x88(r1)
-	  lfs       f1, 0x80(r1)
-	  fsubs     f2, f2, f0
-	  lfs       f0, 0x8C(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f2, 0x44(r1)
-	  lfs       f1, 0x44(r1)
-	  stfs      f1, 0x70(r1)
-	  stfs      f0, 0x74(r1)
-	  lfs       f1, 0x84(r1)
-	  lfs       f0, 0x90(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x78(r1)
-	  lfs       f0, 0x70(r1)
-	  stfs      f0, 0x64(r1)
-	  lfs       f0, 0x74(r1)
-	  stfs      f0, 0x68(r1)
-	  lfs       f0, 0x78(r1)
-	  stfs      f0, 0x6C(r1)
-	  lfs       f1, 0x64(r1)
-	  lfs       f0, 0x68(r1)
-	  lfs       f2, 0x6C(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x7E310
-	  mr        r3, r28
-	  fmr       f28, f1
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  fmr       f27, f1
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-	  fadds     f0, f1, f27
-	  fcmpo     cr0, f28, f0
-	  bge-      .loc_0x56C
-	  mr        r4, r28
-	  lwz       r12, 0x0(r28)
-	  addi      r3, r1, 0x94
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r31
-	  lwz       r12, 0x0(r31)
-	  addi      r3, r1, 0xA0
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f2, 0xA0(r1)
-	  lfs       f0, 0x94(r1)
-	  lfs       f1, 0xA4(r1)
-	  fsubs     f2, f2, f0
-	  lfs       f0, 0x98(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f2, 0xC0(r1)
-	  stfs      f0, 0xC4(r1)
-	  lfs       f1, 0xA8(r1)
-	  lfs       f0, 0x9C(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xC8(r1)
-	  lfs       f1, 0xC0(r1)
-	  lfs       f0, 0xC4(r1)
-	  lfs       f2, 0xC8(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x7E3D0
-	  fmr       f27, f1
-	  fcmpu     cr0, f31, f27
-	  beq-      .loc_0x408
-	  lfs       f0, 0xC0(r1)
-	  fdivs     f0, f0, f27
-	  stfs      f0, 0xC0(r1)
-	  lfs       f0, 0xC4(r1)
-	  fdivs     f0, f0, f27
-	  stfs      f0, 0xC4(r1)
-	  lfs       f0, 0xC8(r1)
-	  fdivs     f0, f0, f27
-	  stfs      f0, 0xC8(r1)
-
-	.loc_0x408:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  fmr       f28, f1
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  fadds     f4, f1, f28
-	  lfs       f0, 0xC0(r1)
-	  lfs       f2, 0xC4(r1)
-	  fmr       f1, f30
-	  lfs       f3, 0xC8(r1)
-	  fsubs     f4, f4, f27
-	  addi      r3, r31, 0
-	  addi      r4, r28, 0
-	  addi      r7, r1, 0xC0
-	  fneg      f4, f4
-	  li        r5, 0
-	  li        r6, 0
-	  fmuls     f0, f0, f4
-	  fmuls     f5, f2, f4
-	  fmuls     f2, f3, f4
-	  stfs      f0, 0xC0(r1)
-	  stfs      f5, 0xC4(r1)
-	  stfs      f2, 0xC8(r1)
-	  bl        0x189C
-	  b         .loc_0x56C
-
-	.loc_0x484:
-	  cmplwi    r26, 0
-	  beq-      .loc_0x4C8
-	  cmplwi    r25, 0
-	  bne-      .loc_0x4C8
-	  addi      r3, r26, 0
-	  addi      r4, r28, 0
-	  addi      r5, r1, 0xC0
-	  bl        -0x31DC
-	  mr.       r5, r3
-	  beq-      .loc_0x56C
-	  fmr       f1, f30
-	  addi      r3, r31, 0
-	  addi      r4, r28, 0
-	  addi      r7, r1, 0xC0
-	  li        r6, 0
-	  bl        0x1858
-	  b         .loc_0x56C
-
-	.loc_0x4C8:
-	  cmplwi    r26, 0
-	  bne-      .loc_0x530
-	  cmplwi    r25, 0
-	  beq-      .loc_0x530
-	  addi      r3, r25, 0
-	  addi      r4, r31, 0
-	  addi      r5, r1, 0xC0
-	  bl        -0x3220
-	  mr.       r6, r3
-	  beq-      .loc_0x56C
-	  lfs       f0, 0xC0(r1)
-	  fmr       f1, f30
-	  mr        r3, r31
-	  fmuls     f0, f0, f29
-	  addi      r4, r28, 0
-	  addi      r7, r1, 0xC0
-	  li        r5, 0
-	  stfs      f0, 0xC0(r1)
-	  lfs       f0, 0xC4(r1)
-	  fmuls     f0, f0, f29
-	  stfs      f0, 0xC4(r1)
-	  lfs       f0, 0xC8(r1)
-	  fmuls     f0, f0, f29
-	  stfs      f0, 0xC8(r1)
-	  bl        0x17F0
-	  b         .loc_0x56C
-
-	.loc_0x530:
-	  addi      r3, r26, 0
-	  addi      r4, r25, 0
-	  addi      r5, r1, 0xB4
-	  addi      r6, r1, 0xB0
-	  addi      r7, r1, 0xC0
-	  bl        -0x2C0C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x56C
-	  fmr       f1, f30
-	  lwz       r5, 0xB4(r1)
-	  lwz       r6, 0xB0(r1)
-	  addi      r3, r31, 0
-	  addi      r4, r28, 0
-	  addi      r7, r1, 0xC0
-	  bl        0x17B0
-
-	.loc_0x56C:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x648
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-	  b         .loc_0x5E8
-
-	.loc_0x594:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x0(r29)
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x664
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-
-	.loc_0x5E8:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x610
-	  li        r0, 0x1
-	  b         .loc_0x63C
-
-	.loc_0x610:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x638
-	  li        r0, 0x1
-	  b         .loc_0x63C
-
-	.loc_0x638:
-	  li        r0, 0
-
-	.loc_0x63C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x594
-	  b         .loc_0x664
-
-	.loc_0x648:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-
-	.loc_0x664:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x68C
-	  li        r0, 0x1
-	  b         .loc_0x6B8
-
-	.loc_0x68C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x6B4
-	  li        r0, 0x1
-	  b         .loc_0x6B8
-
-	.loc_0x6B4:
-	  li        r0, 0
-
-	.loc_0x6B8:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x164
-
-	.loc_0x6C0:
-	  lmw       r25, 0xDC(r1)
-	  lwz       r0, 0x124(r1)
-	  lfd       f31, 0x118(r1)
-	  lfd       f30, 0x110(r1)
-	  lfd       f29, 0x108(r1)
-	  lfd       f28, 0x100(r1)
-	  lfd       f27, 0xF8(r1)
-	  addi      r1, r1, 0x120
-	  mtlr      r0
-	  blr
-	*/
+			// we have info for both of us, so pass it off to CollInfo to do the work
+			CollPart* ourPart;
+			CollPart* colliderPart;
+			if (ourInfo->checkCollision(colliderInfo, &ourPart, &colliderPart, collisionVec)) {
+				respondColl(collider, p1, ourPart, colliderPart, collisionVec);
+			}
+		}
+	}
 }
 
 /*
@@ -2265,9 +1189,10 @@ void Creature::collisionCheck(f32)
  */
 Vector3f Creature::getCatchPos(Creature* target)
 {
+	Vector3f catchPos;
 	f32 rad = 0.95f * getSize();
 
-	Vector3f catchPos = Vector3f(rad * sinf(mDirection), 0.0f, rad * cosf(mDirection)) + mPosition;
+	catchPos = Vector3f(rad * sinf(mDirection), 0.0f, rad * cosf(mDirection)) + mPosition;
 	return catchPos;
 	/*
 	.loc_0x0:
@@ -2319,7 +1244,13 @@ Vector3f Creature::getCatchPos(Creature* target)
  * Address:	8008C3C4
  * Size:	000008
  */
-bool Creature::needShadow() { return true; }
+bool Creature::needShadow()
+{
+	if (mObjType == OBJTYPE_Piki) {
+		PRINT(" ????????? piki uses Creature::needShadow \n"); // lol
+	}
+	return true;
+}
 
 /*
  * --INFO--
@@ -2343,7 +1274,7 @@ void showTri(Graphics&, Vector3f&, CollTriInfo*)
  * Address:	8008C40C
  * Size:	0002B4
  */
-void recTraceShadowTris(Graphics&, Vector3f&, CollTriInfo*)
+static void recTraceShadowTris(Graphics&, Vector3f&, CollTriInfo*)
 {
 	/*
 	.loc_0x0:
@@ -3085,50 +2016,11 @@ void Creature::drawShadow(Graphics&)
  * Address:	8008CE7C
  * Size:	000094
  */
-f32 qdist2(Creature*, Creature*)
+f32 qdist2(Creature* c1, Creature* c2)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  lfs       f3, 0x94(r3)
-	  lfs       f0, 0x94(r4)
-	  lfs       f2, 0x9C(r3)
-	  lfs       f1, 0x9C(r4)
-	  fsubs     f3, f3, f0
-	  lfs       f0, -0x7584(r2)
-	  fsubs     f1, f2, f1
-	  fmuls     f2, f3, f3
-	  fmuls     f1, f1, f1
-	  fadds     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x8C
-	  fsqrte    f2, f1
-	  lfd       f4, -0x7580(r2)
-	  lfd       f3, -0x7578(r2)
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f0, f1, f0
-	  fsub      f0, f3, f0
-	  fmul      f2, f2, f0
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f0, f1, f0
-	  fsub      f0, f3, f0
-	  fmul      f2, f2, f0
-	  fmul      f0, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f0, f1, f0
-	  fsub      f0, f3, f0
-	  fmul      f0, f2, f0
-	  fmul      f0, f1, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x10(r1)
-	  lfs       f1, 0x10(r1)
-
-	.loc_0x8C:
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	f32 xDiff = c1->mPosition.x - c2->mPosition.x;
+	f32 zDiff = c1->mPosition.z - c2->mPosition.z;
+	return std::sqrtf(SQUARE(xDiff) + SQUARE(zDiff));
 }
 
 /*
@@ -3136,70 +2028,10 @@ f32 qdist2(Creature*, Creature*)
  * Address:	8008CF10
  * Size:	0000EC
  */
-f32 circleDist(Creature*, Creature*)
+f32 circleDist(Creature* c1, Creature* c2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stfd      f30, 0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r4
-	  stw       r30, 0x40(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x10
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r31
-	  lwz       r12, 0x0(r31)
-	  addi      r3, r1, 0x1C
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r3, r1, 0x28
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r3, r1, 0x34
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, 0x34(r1)
-	  lfs       f2, 0x30(r1)
-	  lfs       f3, 0x1C(r1)
-	  lfs       f4, 0x18(r1)
-	  bl        -0x54978
-	  mr        r3, r31
-	  fmr       f30, f1
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  fmr       f31, f1
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  fsubs     f0, f30, f1
-	  lwz       r0, 0x5C(r1)
-	  lfd       f30, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  fsubs     f1, f0, f31
-	  lfd       f31, 0x50(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	f32 dist = qdist2(c1->getCentre().x, c1->getCentre().z, c2->getCentre().x, c2->getCentre().z);
+	return dist - c1->getCentreSize() - c2->getCentreSize();
 }
 
 /*
@@ -3209,6 +2041,54 @@ f32 circleDist(Creature*, Creature*)
  */
 void Creature::moveVelocity()
 {
+	u32 badCompiler[6]; // this is a placeholder, something else has to get tweaked for this to match
+
+	Vector3f vel(mTargetVelocity);
+	Vector3f vec(0.0f, 0.0f, 0.0f);
+
+	if (mFloorTri) {
+		Vector3f normal(mFloorTri->_18);
+		f32 speed = vel.length();
+		vel       = vel - vel.DP(normal) * normal;
+		vel.normalise();
+		vel = vel * speed;
+
+		int slipCode = MapCode::getSlipCode(mFloorTri);
+		if (slipCode == 0) {
+			if (speed < 0.1f) {
+				Vector3f tmp1(0.0f, -(AIConstant::_instance->mConstants._24() * gsys->getFrameTime()), 0.0f);
+				tmp1 = tmp1 - (tmp1.DP(normal) * normal);
+				vec  = -tmp1;
+				vec  = vec * 1.0f;
+			}
+		} else {
+
+			Vector3f tmp1(0.0f, -(AIConstant::_instance->mConstants._24() * gsys->getFrameTime()), 0.0f);
+			tmp1 = tmp1 - (tmp1.DP(normal) * normal);
+			tmp1.normalise();
+
+			f32 factor;
+			if (slipCode == 2) {
+				factor = AIConstant::_instance->mConstants._144();
+			} else {
+				factor = AIConstant::_instance->mConstants._134();
+			}
+
+			if (mObjType == OBJTYPE_Navi) {
+				PRINT("navi slip!\n");
+			}
+
+			vec = tmp1 * AIConstant::_instance->mConstants._24() * gsys->getFrameTime() * factor;
+		}
+	}
+
+	Vector3f vec2;
+	vec2 = vel + _B0 - mVelocity;
+	vec2.length();
+
+	mVelocity = mVelocity + vec2 * gsys->getFrameTime() / mProps->mCreatureProps.mAcceleration();
+	mVelocity = mVelocity + vec;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3571,15 +2451,56 @@ void Creature::moveVelocity()
  * Address:	8008D53C
  * Size:	000008
  */
-u8 Creature::getAvoid(Vector3f&, Vector3f&) { return 0; }
+bool Creature::getAvoid(Vector3f&, Vector3f&) { return false; }
 
 /*
  * --INFO--
  * Address:	8008D544
  * Size:	00034C
  */
-void Creature::renderAtari(Graphics&)
+void Creature::renderAtari(Graphics& gfx)
 {
+	u32 badCompiler[6]; // something needs adjusting.
+
+	if (mObjType != OBJTYPE_Pellet) {
+		Matrix4f mtx1;
+		Matrix4f mtx2;
+
+		mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), mPosition);
+		gfx.mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);
+		gfx.setColour(Colour(0, 255, 0, 255), true);
+		gfx.drawSphere(Vector3f(0.0f, -mAbsPickOffset, 0.0f), mCollisionRadius, mtx2);
+		return;
+	}
+
+	if (static_cast<Pellet*>(this)->isUfoParts()) {
+		f32 halfHeight = 0.5f * getCylinderHeight();
+		f32 pickOffs   = -static_cast<Pellet*>(this)->getPickOffset();
+
+		Vector3f pos(0.0f, halfHeight, 0.0f);
+		Matrix4f mtx;
+		mtx.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), _E0, Vector3f(1.0f, 1.0f, 1.0f));
+		pos.multMatrix(mtx);
+		pos = pos + mPosition;
+
+		Matrix4f mtx2;
+		Matrix4f mtx3;
+
+		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), pos);
+		gfx.mCamera->mLookAtMtx.multiplyTo(mtx2, mtx3);
+
+		gfx.setColour(Colour(255, 0, 0, 255), true);
+		gfx.drawSphere(Vector3f(0.0f, 0.0f, 0.0f), halfHeight + pickOffs, mtx3);
+		return;
+	}
+
+	// pellet but not a ufo part
+	Matrix4f mtx1;
+	Matrix4f mtx2;
+	mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), mPosition);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);
+	gfx.setColour(Colour(0, 255, 0, 255), true);
+	gfx.drawSphere(Vector3f(0.0f, -mAbsPickOffset, 0.0f), mCollisionRadius, mtx2);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3809,39 +2730,11 @@ void Creature::renderAtari(Graphics&)
  */
 bool roughCull(Creature* p1, Creature* p2, f32 p3)
 {
-	if (AIPerf::useGrid && AIPerf::iteratorCull && p1->mGrid.doCulling(p2->mGrid, p3)) {
+	if (AIPerf::useGrid && AIPerf::iteratorCull && p1->roughCulling(p2, p3)) {
 		return true;
 	}
 
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, -0x5F10(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x40
-	  lbz       r0, -0x5F06(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x40
-	  addi      r3, r3, 0x40
-	  addi      r4, r4, 0x40
-	  bl        0x6B34
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x40
-	  li        r3, 0x1
-	  b         .loc_0x44
-
-	.loc_0x40:
-	  li        r3, 0
-
-	.loc_0x44:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -3851,7 +2744,7 @@ bool roughCull(Creature* p1, Creature* p2, f32 p3)
  */
 void Creature::stickUpdate()
 {
-	if (_158) {
+	if (mRope) {
 		updateStickRope();
 		return;
 	}

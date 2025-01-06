@@ -787,7 +787,7 @@ NaviProp::NaviProp()
  */
 bool Navi::isBuried()
 {
-	if (getCurrState()->getStateID() == NAVISTATE_Bury) {
+	if (getCurrState()->getID() == NAVISTATE_Bury) {
 		return true;
 	}
 	return false;
@@ -800,7 +800,7 @@ bool Navi::isBuried()
  */
 bool Navi::isVisible()
 {
-	if (getCurrState()->getStateID() == NAVISTATE_Dead) {
+	if (getCurrState()->getID() == NAVISTATE_Dead) {
 		return false;
 	}
 	return true;
@@ -813,7 +813,7 @@ bool Navi::isVisible()
  */
 bool Navi::isRopable()
 {
-	if (getCurrState()->getStateID() == NAVISTATE_RopeExit) {
+	if (getCurrState()->getID() == NAVISTATE_RopeExit) {
 		return false;
 	}
 	return true;

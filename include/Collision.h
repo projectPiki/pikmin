@@ -127,19 +127,32 @@ struct CollPart {
 	ID32 getCode();
 	Matrix4f getMatrix();
 	void update(struct Graphics&, bool);
-	void collide(CollPart*, struct Vector3f&);
+	bool collide(CollPart*, struct Vector3f&);
 	void makeTube(struct Tube&);
 
 	// unused/inlined:
 	bool isDamagable();
 	CollPart* getNext();
-	void collide(Creature*, Vector3f&);
-	void collide(Vector3f&, f32, Vector3f&);
+	bool collide(Creature*, Vector3f&);
+	bool collide(Vector3f&, f32, Vector3f&);
 	void makeSphere(struct Sphere&);
 	void makeCylinder(struct Cylinder&);
-	void samePlatShape(Shape*);
+	bool samePlatShape(Shape*);
 
-	inline bool isTubeLike() { return mPartType == PART_Tube || mPartType == PART_TubeChild; } // based on P2, maybe isTubeLike? who knows
+	bool isTubeType() { return mPartType == PART_Tube || mPartType == PART_TubeChild; } // based on P2, maybe isTubeLike? who knows
+
+	bool isPlatformType() { return mPartType == PART_Platform; }
+
+	/*
+	    DLL inlines to make:
+	    bool isBouncySphereType();
+	    bool isCollisionType();
+	    bool isPlatformType();
+	    bool isReferenceType();
+	    bool isSphereType();
+
+	    Matrix4f getJointMatrix();
+	*/
 
 	f32 mRadius;                   // _00
 	Vector3f mCentre;              // _04
@@ -158,9 +171,16 @@ struct CollPart {
  * @brief TODO
  */
 struct CollEvent {
-	Creature* mCollider; // _00
-	CollPart* mCollPart; // _04
-	u32 _08;             // _08, unknown
+	CollEvent(Creature* collider, CollPart* colliderPart, CollPart* selfPart)
+	{
+		mCollider     = collider;
+		mColliderPart = colliderPart;
+		mSelfPart     = selfPart;
+	}
+
+	Creature* mCollider;     // _00
+	CollPart* mColliderPart; // _04
+	CollPart* mSelfPart;     // _08
 };
 
 /**
@@ -194,15 +214,15 @@ struct CollInfo {
 	void enableStick();
 	void disableStick();
 	void checkCollisionSpecial(Vector3f&, f32, CndCollPart*);
-	void checkCollision(Creature*, Vector3f&);
-	void checkCollisionRec(Creature*, int, Vector3f&);
-	void checkCollision(CollInfo*, CollPart**, CollPart**, Vector3f&);
+	CollPart* checkCollision(Creature*, Vector3f&);
+	CollPart* checkCollisionRec(Creature*, int, Vector3f&);
+	bool checkCollision(CollInfo*, CollPart**, CollPart**, Vector3f&);
 	void checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Vector3f&);
 	CollPart* getBoundingSphere();
 	CollPart* getSphere(u32 id);
 	CollPart* getNearestCollPart(Vector3f&, u32);
 	CollPart* getRandomCollPart(u32);
-	void getPlatform(DynCollObject*);
+	CollPart* getPlatform(DynCollObject*);
 	void updateInfo(Graphics&, bool);
 	bool hasInfo();
 	void initInfo(Shape*, CollPart*, u32*);

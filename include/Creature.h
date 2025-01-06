@@ -46,7 +46,7 @@ enum CreatureFlags {
 	CF_Unk11             = 1 << 10, // 0x400
 	CF_IsAiDisabled      = 1 << 11, // 0x800, aka aiSTOP
 	CF_Free              = 1 << 12, // 0x1000
-	CF_Unk14             = 1 << 13, // 0x2000
+	CF_IsClimbing        = 1 << 13, // 0x2000
 	CF_StuckToObject     = 1 << 14, // 0x4000, stuck to an object
 	CF_StuckToMouth      = 1 << 15, // 0x8000, stuck to mouth of some enemy
 	CF_Unk16             = 1 << 16, // 0x10000
@@ -62,10 +62,10 @@ enum CreatureFlags {
  * @brief TODO
  */
 enum CreatureStandType {
-	STANDTYPE_Unk0 = 0,
-	STANDTYPE_Unk1 = 1,
-	STANDTYPE_Unk2 = 2,
-	STANDTYPE_Unk3 = 3,
+	STANDTYPE_Ground       = 0, // on a floor tri, no platform
+	STANDTYPE_TekiPlatform = 1, // on a platform which has an associated creature
+	STANDTYPE_Platform     = 2, // on a platform with no associated creature
+	STANDTYPE_Air          = 3, // no floor tri or platform
 };
 
 /**
@@ -165,12 +165,12 @@ struct Creature : public RefCountable, public EventTalker {
 	void updateAI();
 	void collisionCheck(f32);
 	void moveVelocity();
-	u8 getAvoid(Vector3f&, Vector3f&);
+	bool getAvoid(Vector3f&, Vector3f&);
 	void respondColl(Creature*, f32, CollPart*, CollPart*, const Vector3f&);
 	void moveRotation(f32);
 	void moveAttach();
 	void moveNew(f32);
-	void getNearestPlane(CollTriInfo*);
+	Plane* getNearestPlane(CollTriInfo*);
 	void interactStickers(Creature*, Interaction&, Condition*);
 	void killStickers(Creature*, Condition*, int);
 	void startClimb();
@@ -182,9 +182,9 @@ struct Creature : public RefCountable, public EventTalker {
 	void startStickObjectTube(Creature*, CollPart*);
 	void startStickObject(Creature*, CollPart*, int, f32);
 	void endStickObject();
-	void startStick(Creature*, CollPart*);
+	bool startStick(Creature*, CollPart*);
 	void endStick();
-	void startRope(RopeCreature*, f32);
+	bool startRope(RopeCreature*, f32);
 	void endRope();
 	void updateStickPlatform();
 	void updateStickNonPlatform();
@@ -195,33 +195,35 @@ struct Creature : public RefCountable, public EventTalker {
 
 	// unused/inlined:
 	void startFixPosition();
-	void insideSphere(struct Sphere&);
+	bool insideSphere(struct Sphere&);
 	void adjustDistance(Vector3f&, f32);
-	void getAtariType();
-	void checkForward(Vector3f&, f32, f32&);
-	void getNextTri(CollTriInfo*, Vector3f&, int&);
+	int getAtariType();
+	CollTriInfo* checkForward(Vector3f&, f32, f32&);
+	CollTriInfo* getNextTri(CollTriInfo*, Vector3f&, int&);
 	void renderCollTriInfo(Graphics&, CollTriInfo*, Colour&);
-	void isStickToSphere();
+	bool isStickToSphere();
 	void adjustStickObject(Vector3f&);
 	void startStickObjectPellet(Pellet*, int, f32);
-	void isStickLeader();
+	bool isStickLeader();
 
-	// these are setFlag/resetFlag/isFlag in the DLL, but this is clearer.
-	void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
-	void resetCreatureFlag(u32 flag) { mCreatureFlags &= ~flag; }
-	bool isCreatureFlag(u32 flag) const { return mCreatureFlags & flag; }
-
-	inline Vector3f& getPosition() { return mPosition; }
-
+	// fake according to the DLL
 	inline void resetVelocity()
 	{
 		mVelocity.set(Vector3f(0.0f, 0.0f, 0.0f));
 		mTargetVelocity.set(Vector3f(0.0f, 0.0f, 0.0f));
 	}
 
+	// this is apparently fake, or not a creature inline?
 	inline bool isStuckTo(Creature* creature) { return mStickTarget == creature; }
 
-	inline Creature* get2AC() { return _2AC; }
+	// these are setFlag/resetFlag/isFlag in the DLL, but this is clearer.
+	void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
+	void resetCreatureFlag(u32 flag) { mCreatureFlags &= ~flag; }
+	bool isCreatureFlag(u32 flag) { return mCreatureFlags & flag; }
+
+	Vector3f& getPosition() { return mPosition; }
+
+	inline void disableFlag10000() { resetCreatureFlag(CF_Unk16); } // this should be one of the disable inlines
 
 	inline void setFlag40UnsetFlag2() // name this better later PLEASE - definitely a DLL inline
 	{
@@ -229,12 +231,20 @@ struct Creature : public RefCountable, public EventTalker {
 		resetCreatureFlag(CF_Unk2);
 	}
 
-	// probably this name - definitely a DLL inline
-	bool isGrabbed() { return isCreatureFlag(CF_StuckToMouth); }
-
 	void disableAICulling() { resetCreatureFlag(CF_IsAICullingActive); }
 	void enableAICulling() { setCreatureFlag(CF_IsAICullingActive); }
 	bool aiCullable() { return !isCreatureFlag(CF_IsAICullingActive); }
+
+	// we're grabbed if we're held by something
+	bool isGrabbed() { return !mHoldingCreature.isNull(); }
+	Creature* getHolder() { return mHoldingCreature.getPtr(); }
+
+	// we're holding if we've grabbed something
+	bool isHolding() { return !mGrabbedCreature.isNull(); }
+	Creature* getHoldCreature() { return mGrabbedCreature.getPtr(); }
+
+	// idk why this is a BOOL and not bool but go figure
+	BOOL isStickToMouth() { return isCreatureFlag(CF_StuckToMouth); }
 
 	CollPart* getStickPart() { return mStickPart; }
 	Creature* getStickObject() { return mStickTarget; }
@@ -245,78 +255,132 @@ struct Creature : public RefCountable, public EventTalker {
 		    || mObjType == OBJTYPE_SluiceBombHard;
 	}
 
+	bool isTeki() { return mObjType == OBJTYPE_Teki; }
+
+	bool isPiki() { return mObjType == OBJTYPE_Piki; }
+
+	void setRebirthDay(int day) { mRebirthDay = day; }
+
+	bool roughCulling(Creature* other, f32 p2) { return mGrid.doCulling(other->mGrid, p2); }
+
+	/*
+	    DLL inlines to assign/make:
+	    bool insideView();
+	    bool isAIActive();
+	    bool isDamaged();
+	    bool isHolding();
+	    bool isObjType(int);
+	    bool isStickTo();
+	    bool roughCulling(Creature*, f32);
+
+	    Creature* getHoldCreature();
+	    Creature* getHolder();
+
+	    f32 calcDistance(Creature&);
+
+	    int getRebirthDay();
+	    BOOL isFlying();
+	    BOOL isStickToMouth();
+
+	    void disableFaceDirAdjust();
+	    void disableFixPos();
+	    void disableGravity();
+	    void disableGroundOffset();
+	    void enableAirResist(f32);
+	    void enableFaceDirAdjust();
+	    void enableFixPos();
+	    void enableGravity();
+	    void enableGroundOffset(f32);
+	    void finishFix();
+	    void finishFlying();
+	    void inputPosition(Vector3f&);
+	    void outputPosition(Vector3f&);
+	    void resetStateDamaged();
+	    void restartAI();
+	    void setCarryOver();
+	    void setFree(bool);
+	    void setInsideView();
+	    void setOutsideView();
+	    void setStateDamaged();
+	    void startFix();
+	    void startFlying();
+	    void stopAI();
+	    void unsetCarryOver();
+
+	*/
+
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker
-	Vector3f _1C;               // _1C
-	u32 _28;                    // _28, unknown
-	SeContext* mSeContext;      // _2C
-	u8 _30;                     // _30
-	int _34;                    // _34
-	u8 _38[0x40 - 0x38];        // _38, TODO: work out members
-	FastGrid mGrid;             // _40
-	f32 mHealth;                // _58
-	f32 mMaxHealth;             // _5C
-	u8 _60;                     // _60
-	Generator* mGenerator;      // _64
-	u32 _68;                    // _68, might be int
-	EObjType mObjType;          // _6C
-	Vector3f mVelocity;         // _70
-	Vector3f mScale;            // _7C
-	Vector3f mRotation;         // _88
-	Vector3f mPosition;         // _94
-	f32 mDirection;             // _A0
-	Vector3f mTargetVelocity;   // _A4
-	Vector3f _B0;               // _B0
-	Vector3f mVolatileVelocity; // _BC
-	u32 mCreatureFlags;         // _C8, bitflag
-	u32 _CC;                    // _CC
-	f32 mAbsPickOffset;         // _D0
-	Vector3f _D4;               // _D4
-	Quat _E0;                   // _E0
-	Quat mPreGrabRotation;      // _F0
-	Quat _100;                  // _100
-	f32 _110;                   // _110
-	Matrix4f _114;              // _114
-	Creature* _154;             // _154
-	u32 _158;                   // _158, maybe Rope* or RopeCreature*?
-	f32 _15C;                   // _15C
-	u32 _160;                   // _160, unknown
-	u32 _164;                   // _164, unknown
-	UpdateContext _168;         // _168
-	UpdateContext _174;         // _174
-	Creature* _180;             // _180, unknown
-	Creature* mStickTarget;     // _184, creature/object this creature is stuck to
-	CollPart* mStickPart;       // _188
-	Creature* _18C;             // _18C, unknown
-	u32 _190;                   // _190, unknown
-	Vector3f _194;              // _194
-	int _1A0;                   // _1A0
-	u32 _1A4;                   // _1A4
-	u8 _1A8[0x4];               // _1A8, unknown
-	Vector3f _1AC;              // _1AC
-	SearchBuffer mSearchBuffer; // _1B8
-	LifeGauge mLifeGauge;       // _1E0
-	u32 _21C;                   // _21C, unknown
-	CollInfo* mCollInfo;        // _220
-	CreatureProp* mProps;       // _224, creature properties
-	Matrix4f mTransformMatrix;  // _228
-	f32 _268;                   // _268
-	f32 _26C;                   // _26C
-	f32 mCollisionRadius;       // _270
-	Vector3f _274;              // _274
-	DynCollObject* _280;        // _280
-	Vector3f* _284;             // _284, coll plat normal maybe?
-	u32 _288;                   // _288, unknown
-	CollTriInfo* mFloorTri;     // _28C
-	u32 _290;                   // _290, unknown
-	u8 _294[0x4];               // _294, unknown
-	u32 _298;                   // _298, unknown
-	Vector3f _29C;              // _29C
-	Creature* _2A8;             // _2A8
-	Creature* _2AC;             // _2AC
-	u32 _2B0;                   // _2B0, unknown
-	bool mIsBeingDamaged;       // _2B4
+	Vector3f mFixedPosition;             // _1C
+	u32 _28;                             // _28, unknown
+	SeContext* mSeContext;               // _2C
+	u8 _30;                              // _30
+	int mRebirthDay;                     // _34
+	u8 _38[0x40 - 0x38];                 // _38, TODO: work out members
+	FastGrid mGrid;                      // _40
+	f32 mHealth;                         // _58
+	f32 mMaxHealth;                      // _5C
+	u8 _60;                              // _60
+	Generator* mGenerator;               // _64
+	u32 _68;                             // _68, might be int
+	EObjType mObjType;                   // _6C
+	Vector3f mVelocity;                  // _70
+	Vector3f mScale;                     // _7C, NB: these 3 vectors are an SRT according to DLL
+	Vector3f mRotation;                  // _88, but I really don't want that extra level to access these
+	Vector3f mPosition;                  // _94, just a heads up in case it becomes important
+	f32 mDirection;                      // _A0
+	Vector3f mTargetVelocity;            // _A4
+	Vector3f _B0;                        // _B0
+	Vector3f mVolatileVelocity;          // _BC
+	u32 mCreatureFlags;                  // _C8, bitflag
+	u32 _CC;                             // _CC
+	f32 mAbsPickOffset;                  // _D0
+	Vector3f _D4;                        // _D4
+	Quat _E0;                            // _E0
+	Quat mPreGrabRotation;               // _F0
+	Quat _100;                           // _100
+	f32 _110;                            // _110
+	Matrix4f _114;                       // _114
+	Creature* mRopeListHead;             // _154, first holder in list of holders holding onto this rope
+	RopeCreature* mRope;                 // _158
+	f32 mRopeRatio;                      // _15C, how far along the rope are we
+	Creature* mNextRopeHolder;           // _160, rope holder after this one in the rope list
+	Creature* mPrevRopeHolder;           // _164, rope holder before this one in the rope list
+	UpdateContext _168;                  // _168
+	UpdateContext _174;                  // _174
+	Creature* mStickListHead;            // _180, first sticker in list of stickers stuck to this creature
+	Creature* mStickTarget;              // _184, creature/object this creature is stuck to
+	CollPart* mStickPart;                // _188
+	Creature* mNextSticker;              // _18C, sticker after this one in the sticker list
+	Creature* mPrevSticker;              // _190, sticker before this one in the sticker list
+	Vector3f _194;                       // _194
+	int mPelletStickSlot;                // _1A0
+	u32 _1A4;                            // _1A4
+	u32 _1A8;                            // _1A8, unknown
+	Vector3f _1AC;                       // _1AC
+	SearchBuffer mSearchBuffer;          // _1B8
+	LifeGauge mLifeGauge;                // _1E0
+	u32 _21C;                            // _21C, unknown
+	CollInfo* mCollInfo;                 // _220
+	CreatureProp* mProps;                // _224, creature properties
+	Matrix4f mTransformMatrix;           // _228
+	f32 _268;                            // _268
+	f32 _26C;                            // _26C
+	f32 mCollisionRadius;                // _270
+	Vector3f _274;                       // _274, this is actually a wrapper around a Vector3f in the DLL, but idk what yet.
+	DynCollObject* mCollPlatform;        // _280
+	Vector3f* mCollPlatNormal;           // _284
+	u32 _288;                            // _288, unknown
+	CollTriInfo* mFloorTri;              // _28C
+	u32 _290;                            // _290, unknown
+	u8 _294[0x4];                        // _294, unknown
+	u32 _298;                            // _298, unknown
+	Vector3f _29C;                       // _29C
+	SmartPtr<Creature> mHoldingCreature; // _2A8, what is holding this creature (e.g. what piki if this is a bomb)
+	SmartPtr<Creature> mGrabbedCreature; // _2AC, what is this creature holding (e.g. what bomb if this is a piki)
+	u32 _2B0;                            // _2B0, unknown
+	bool mIsBeingDamaged;                // _2B4
 };
 
 // Global helper functions:
@@ -326,6 +390,7 @@ f32 qdist2(Creature*, Creature*);
 f32 circleDist(Creature*, Creature*);
 bool roughCull(Creature*, Creature*, f32);
 
+// these are probably SmartPtr inlines, or creature inlines - TODO: fix.
 // these are the things that make the most sense so far, this code comes up in weird spots
 inline void resetCreature(Creature*& creature)
 {

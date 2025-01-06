@@ -494,14 +494,14 @@ void CreatureInf::doStore(Creature* owner)
 	_38      = owner->isCreatureFlag(CF_Unk16) != 0;
 	owner->doStore(this);
 
-	if (owner->_34 > 0) {
+	if (owner->mRebirthDay > 0) {
 		if (owner->isAlive()) {
 			_38 = 1;
-			_34 = owner->_34;
+			_34 = owner->mRebirthDay;
 		} else {
 			_38 = 0;
 			_30 = gameflow.mWorldClock._24;
-			_34 = owner->_34;
+			_34 = owner->mRebirthDay;
 		}
 	}
 }

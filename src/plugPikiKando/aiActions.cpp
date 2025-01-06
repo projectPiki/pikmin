@@ -106,7 +106,7 @@ int ActPick::exec()
 	u32 badCompiler2;
 	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	if (_1C) {
-		if (!mActor->_2AC) {
+		if (!mActor->mGrabbedCreature.mPtr) {
 			mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 			mActor->mEmotion = 1;
 			return ACTOUT_Fail;
@@ -213,7 +213,7 @@ int ActPut::exec()
 {
 	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
-	Creature* obj = mActor->get2AC();
+	Creature* obj = mActor->mGrabbedCreature.mPtr;
 	if (!obj) {
 		return ACTOUT_Fail;
 	}

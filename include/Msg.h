@@ -85,13 +85,12 @@ struct MsgCollide : public Msg {
  * @brief TODO
  */
 struct MsgDamage : public Msg {
-	inline MsgDamage()
+	inline MsgDamage() // this never gets called, funnily enough
 	    : Msg(MSG_Damage)
 	{
 	}
 
 	// _00-_04 = Msg
-	// TODO: members
 };
 
 /**
@@ -104,20 +103,18 @@ struct MsgGround : public Msg {
 	}
 
 	// _00-_04 = Msg
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct MsgHang : public Msg {
-	inline MsgHang()
+	inline MsgHang() // this also never gets called
 	    : Msg(MSG_Hang)
 	{
 	}
 
 	// _00-_04 = Msg
-	// TODO: members
 };
 
 /**
@@ -144,7 +141,6 @@ struct MsgStick : public Msg {
 	}
 
 	// _00-_04 = Msg
-	// TODO: members
 };
 
 /**
@@ -165,28 +161,30 @@ struct MsgTarget : public Msg {
  * @brief TODO
  */
 struct MsgUser : public Msg {
-	inline MsgUser(u32 val)
+	inline MsgUser(int val)
 	    : Msg(MSG_User)
 	{
 		mUserID = val;
 	}
 
 	// _00-_04 = Msg
-	u32 mUserID; // _04, could be int
+	int mUserID; // _04
 };
 
 /**
  * @brief TODO
  */
 struct MsgWall : public Msg {
-	inline MsgWall()
+	inline MsgWall(Plane& plane, DynCollObject* wall)
 	    : Msg(MSG_Wall)
 	{
+		mWallNormal = &plane.mNormal;
+		mWall       = wall;
 	}
 
 	// _00-_04 = Msg
-	Vector3f* mWallNormal; // _04
-	                       // TODO: members
+	Vector3f* mWallNormal; // _04, might be Plane*?
+	DynCollObject* mWall;  // _08
 };
 
 #endif

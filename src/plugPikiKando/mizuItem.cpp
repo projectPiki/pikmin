@@ -84,7 +84,7 @@ void MizuItem::startAI(int)
  */
 bool MizuItem::isAlive()
 {
-	int stateID = getCurrState()->getStateID();
+	int stateID = getCurrState()->getID();
 	if (mObjType == OBJTYPE_FallWater) {
 		return false;
 	}

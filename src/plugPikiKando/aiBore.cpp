@@ -162,7 +162,7 @@ void ActFreeSelect::determine()
 
 	int randIdx = selectRandomly(choices, CHILD_COUNT);
 
-	if (mActor->_2AC) {
+	if (mActor->mGrabbedCreature.mPtr) {
 		randIdx = CHILD_Watch;
 	}
 
@@ -700,7 +700,7 @@ void ActBoreSelect::determine()
 
 	int randIdx = selectRandomly(choices, CHILD_COUNT);
 
-	if (mActor->_2AC) {
+	if (mActor->mGrabbedCreature.mPtr) {
 		randIdx = CHILD_Watch;
 	}
 
@@ -1079,8 +1079,8 @@ void ActBoreTalk::startTalk()
 	mActor->enableMotionBlend();
 	_20 = randFloat(2.0f) + 5.0f;
 
-	if (mActor->mMode == 1 && mActor->mNavi->mPlateMgr && mActor->mNavi->mCurrState->getStateID() != NAVISTATE_DemoSunset
-	    && mActor->mNavi->mCurrState->getStateID() != NAVISTATE_Dead) {
+	if (mActor->mMode == 1 && mActor->mNavi->mPlateMgr && mActor->mNavi->mCurrState->getID() != NAVISTATE_DemoSunset
+	    && mActor->mNavi->mCurrState->getID() != NAVISTATE_Dead) {
 		seMgr->setPikiNum(0);
 	}
 	/*

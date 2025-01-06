@@ -143,6 +143,6 @@ Creature* GenObjectTeki::birth(BirthInfo& info)
 		teki->setCreatureFlag(CF_Unk16);
 	}
 
-	teki->_34 = info.mGenerator->_28->_18();
+	teki->mRebirthDay = info.mGenerator->_28->_18();
 	return teki;
 }

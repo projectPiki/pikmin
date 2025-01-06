@@ -707,7 +707,7 @@ f32 qdist2(f32 x0, f32 y0, f32 x1, f32 y1)
  * Address: ........
  * Size:    000080
  */
-void qdist3(f32, f32, f32, f32, f32, f32)
+f32 qdist3(f32, f32, f32, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }

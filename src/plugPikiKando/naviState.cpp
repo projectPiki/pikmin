@@ -328,7 +328,7 @@ void NaviStuckState::init(Navi* navi)
  */
 void NaviStuckState::exec(Navi* navi)
 {
-	if (!navi->_180) {
+	if (!navi->mStickListHead) {
 		transit(navi, NAVISTATE_Walk);
 		return;
 	}

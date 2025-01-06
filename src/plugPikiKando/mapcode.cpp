@@ -8,7 +8,7 @@
  * Address:	80116080
  * Size:	00000C
  */
-u32 MapCode::getAttribute(CollTriInfo* triInfo) { return triInfo->mMapCode >> 29; };
+int MapCode::getAttribute(CollTriInfo* triInfo) { return triInfo->mMapCode >> 29; };
 
 /*
  * --INFO--
@@ -26,7 +26,7 @@ char* MapCode::getAttributeName(int)
  * Address:	8011608C
  * Size:	00001C
  */
-u32 MapCode::getSlipCode(CollTriInfo* triInfo)
+int MapCode::getSlipCode(CollTriInfo* triInfo)
 {
 	if (triInfo) {
 		return triInfo->mMapCode >> 27 & 3;

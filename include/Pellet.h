@@ -101,7 +101,7 @@ struct Pellet : public DualCreature {
 	virtual void startAI(int);                           // _34
 	virtual f32 getiMass();                              // _38
 	virtual f32 getSize();                               // _3C
-	virtual f32 getCylinderHeight();                     // _44
+	virtual f32 getCylinderHeight();                     // _44V
 	virtual void doSave(RandomAccessStream&);            // _50
 	virtual void doLoad(RandomAccessStream&);            // _54
 	virtual Vector3f getCentre();                        // _58
@@ -156,9 +156,12 @@ struct Pellet : public DualCreature {
 
 	static bool isUfoPartsID(u32);
 
+	// this is the only DLL inline that takes no argument and returns a bool
+	bool isUfoParts() { return mIsUfoPart; }
+
 	// _00      = VTBL
 	// _00-_43C = DualCreature?
-	// TODO: members
+	bool mIsUfoPart; // _43C
 };
 
 /**

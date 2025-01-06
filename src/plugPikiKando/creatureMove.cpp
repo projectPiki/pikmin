@@ -1215,7 +1215,7 @@ void Creature::moveNew(f32)
  * Address:	........
  * Size:	0002E8
  */
-void Creature::checkForward(Vector3f&, f32, f32&)
+CollTriInfo* Creature::checkForward(Vector3f&, f32, f32&)
 {
 	// UNUSED FUNCTION
 }
@@ -1225,7 +1225,7 @@ void Creature::checkForward(Vector3f&, f32, f32&)
  * Address:	........
  * Size:	000130
  */
-void Creature::getNextTri(CollTriInfo*, Vector3f&, int&)
+CollTriInfo* Creature::getNextTri(CollTriInfo*, Vector3f&, int&)
 {
 	// UNUSED FUNCTION
 }
@@ -1235,7 +1235,7 @@ void Creature::getNextTri(CollTriInfo*, Vector3f&, int&)
  * Address:	8008F33C
  * Size:	000100
  */
-void Creature::getNearestPlane(CollTriInfo*)
+Plane* Creature::getNearestPlane(CollTriInfo*)
 {
 	/*
 	.loc_0x0:

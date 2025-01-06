@@ -70,7 +70,7 @@ void ActBreakWall::init(Creature* creature)
 void ActBreakWall::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	if (piki->getState() != PIKISTATE_LookAt && msg->mEvent.mCollider == mWall && mState != STATE_BreakWall
-	    && msg->mEvent.mCollPart->getID() == 'gate' && !piki->mStickTarget) {
+	    && msg->mEvent.mColliderPart->getID() == 'gate' && !piki->mStickTarget) {
 		_20 = piki->mPosition;
 		initBreakWall();
 	}

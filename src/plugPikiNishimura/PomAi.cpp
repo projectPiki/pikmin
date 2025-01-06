@@ -410,10 +410,10 @@ void PomAi::calcPetalStickers()
 		CI_LOOP(iter)
 		{
 			Creature* stuck = *iter;
-			if (stuck && stuck->isAlive() && !stuck->isGrabbed()) {
+			if (stuck && stuck->isAlive() && !stuck->isStickToMouth()) {
 				CollPart* childPart = slotPart->getChildAt(0);
 				InteractSwallow swallow(mPom, childPart, 0);
-				bool res = stuck->stimulate(swallow); // necessary for stack
+				stuck->stimulate(swallow);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 #include "ComplexCreature.h"
+#include "Creature.h"
 #include "Collision.h"
 
 /*
@@ -90,6 +91,6 @@ void ComplexCreature::postUpdate(int, f32)
 {
 	// this is just here for the weak function generation
 	mCreatures[0].mPtr->bounceCallback();
-	mCreatures[0].mPtr->collisionCallback(CollEvent());
+	mCreatures[0].mPtr->collisionCallback(CollEvent(nullptr, nullptr, nullptr));
 	// UNUSED FUNCTION
 }

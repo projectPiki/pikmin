@@ -17,9 +17,9 @@ struct DynCollObject : public Node {
 	DynCollObject()
 	    : Node("")
 	{
-		_20 = 0;
-		_24 = -1;
-		_28 = 0;
+		_20       = 0;
+		_24       = -1;
+		mCreature = nullptr;
 	}
 
 	virtual void adjust(Creature*);                           // _30
@@ -29,9 +29,9 @@ struct DynCollObject : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 _20;       // _20, unknown
-	u32 _24;       // _24, maybe int?
-	Creature* _28; // _28
+	u32 _20;             // _20, unknown
+	u32 _24;             // _24, maybe int?
+	Creature* mCreature; // _28
 };
 
 /**

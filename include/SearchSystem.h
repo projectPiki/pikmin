@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Traversable.h"
+#include "ComplexCreature.h"
 
 struct Creature;
 
@@ -18,12 +19,11 @@ struct SearchData {
 	{
 		_08 = 0;
 		_04 = 12800.0f;
-		_00 = nullptr;
 	}
 
-	Creature* _00; // _00
-	f32 _04;       // _04
-	u32 _08;       // _08, unknown
+	SmartPtr<Creature> _00; // _00
+	f32 _04;                // _04
+	u32 _08;                // _08, unknown
 };
 
 /**

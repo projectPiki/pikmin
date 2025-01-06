@@ -2,7 +2,10 @@
 #include "Iterator.h"
 #include "Stickers.h"
 #include "Interactions.h"
+#include "Collision.h"
+#include "RopeCreature.h"
 #include "Condition.h"
+#include "Pellet.h"
 #include "DebugLog.h"
 
 /*
@@ -18,6 +21,8 @@ DEFINE_ERROR();
  * Size:	0000F4
  */
 DEFINE_PRINT("CreatureStick");
+
+char* _standType[] = { "GROUND", "TEKIPLAT", "PLAT", "AIR" };
 
 /*
  * --INFO--
@@ -57,39 +62,12 @@ void Creature::killStickers(Creature* stuckTo, Condition* cond, int p3)
  */
 void Creature::startClimb()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x184(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x48
-	  lwz       r3, 0x188(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x48
-	  bl        -0x8220
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x48
-	  lwz       r0, 0xC8(r31)
-	  ori       r0, r0, 0x2000
-	  stw       r0, 0xC8(r31)
-	  b         .loc_0x54
-
-	.loc_0x48:
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,19,17
-	  stw       r0, 0xC8(r31)
-
-	.loc_0x54:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mStickTarget && mStickPart && mStickPart->isClimbable()) {
+		setCreatureFlag(CF_IsClimbing);
+	} else {
+		PRINT("CANNOT CLIMB !\n");
+		resetCreatureFlag(CF_IsClimbing);
+	}
 }
 
 /*
@@ -97,16 +75,7 @@ void Creature::startClimb()
  * Address:	8008FF40
  * Size:	000010
  */
-void Creature::endClimb()
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r3)
-	  rlwinm    r0,r0,0,19,17
-	  stw       r0, 0xC8(r3)
-	  blr
-	*/
-}
+void Creature::endClimb() { resetCreatureFlag(CF_IsClimbing); }
 
 /*
  * --INFO--
@@ -115,34 +84,14 @@ void Creature::endClimb()
  */
 bool Creature::isStickToPlatform()
 {
+	if (mStickTarget) {
+		CollPart* part = mStickPart;
+		if ((part && part->isPlatformType()) || (!part && !isCreatureFlag(CF_StuckToObject))) {
+			return true;
+		}
+	}
+
 	return false;
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x184(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x40
-	  lwz       r4, 0x188(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x24
-	  lbz       r0, 0x5C(r4)
-	  cmplwi    r0, 0x3
-	  beq-      .loc_0x38
-
-	.loc_0x24:
-	  cmplwi    r4, 0
-	  bne-      .loc_0x40
-	  lwz       r0, 0xC8(r3)
-	  rlwinm.   r0,r0,0,17,17
-	  bne-      .loc_0x40
-
-	.loc_0x38:
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x40:
-	  li        r3, 0
-	  blr
-	*/
 }
 
 /*
@@ -150,10 +99,7 @@ bool Creature::isStickToPlatform()
  * Address:	........
  * Size:	000054
  */
-void Creature::isStickToSphere()
-{
-	// UNUSED FUNCTION
-}
+bool Creature::isStickToSphere() { return !isStickToPlatform(); }
 
 /*
  * --INFO--
@@ -170,48 +116,23 @@ void Creature::adjustStickObject(Vector3f&)
  * Address:	8008FF98
  * Size:	000084
  */
-void Creature::startStickMouth(Creature*, CollPart*)
+void Creature::startStickMouth(Creature* mouthOwner, CollPart* mouthPart)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  mr        r29, r3
-	  lwz       r0, 0xC8(r3)
-	  rlwinm    r0,r0,0,17,15
-	  stw       r0, 0xC8(r3)
-	  lwz       r0, 0x184(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x44
-	  mr        r3, r29
-	  bl        0xA04
+	resetCreatureFlag(CF_StuckToMouth);
+	if (mStickTarget) {
+		PRINT("startStickMouth:already stuck to %s : endStick\n", mStickPart->mCollInfo->mId.mStringID);
+		endStick();
+	}
 
-	.loc_0x44:
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  bl        0x8FC
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x68
-	  lwz       r0, 0xC8(r29)
-	  ori       r0, r0, 0x8000
-	  stw       r0, 0xC8(r29)
-
-	.loc_0x68:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (startStick(mouthOwner, mouthPart)) {
+		if (mObjType == OBJTYPE_Rope) {
+			PRINT("stick to mouth!!\n");
+		}
+		setCreatureFlag(CF_StuckToMouth);
+	} else {
+		PRINT("stick mouth failed !!\n");
+		ERROR("karl gotti!\n");
+	}
 }
 
 /*
@@ -221,25 +142,9 @@ void Creature::startStickMouth(Creature*, CollPart*)
  */
 void Creature::endStickMouth()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        0x848
-	  mr        r3, r31
-	  bl        0x9A4
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,17,15
-	  stw       r0, 0xC8(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	endStickObject();
+	endStick();
+	resetCreatureFlag(CF_StuckToMouth);
 }
 
 /*
@@ -247,219 +152,33 @@ void Creature::endStickMouth()
  * Address:	8009005C
  * Size:	000310
  */
-void Creature::startStickObjectSphere(Creature*, CollPart*, f32)
+void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 stickDist)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x1A8(r1)
-	  stfd      f31, 0x1A0(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x19C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x198(r1)
-	  mr.       r30, r5
-	  stw       r29, 0x194(r1)
-	  addi      r29, r4, 0
-	  beq-      .loc_0x40
-	  addi      r3, r1, 0x150
-	  lwz       r4, 0x188(r31)
-	  bl        -0x817C
-	  b         .loc_0x54
+	Matrix4f objMatrix;
+	Matrix4f invObjMatrix;
+	Vector3f vec; // unused lol
 
-	.loc_0x40:
-	  addi      r3, r1, 0x150
-	  addi      r4, r29, 0x7C
-	  addi      r5, r29, 0x88
-	  addi      r6, r29, 0x94
-	  bl        -0x51FB8
+	if (stickPart) {
+		objMatrix = mStickPart->getMatrix(); // should this be uh. stickPart->getMatrix()??
+	} else {
+		objMatrix.makeSRT(obj->mScale, obj->mRotation, obj->mPosition);
+	}
 
-	.loc_0x54:
-	  addi      r3, r1, 0x150
-	  addi      r4, r1, 0x110
-	  bl        -0x51C7C
-	  lwz       r3, 0x94(r31)
-	  cmplwi    r30, 0
-	  lwz       r0, 0x98(r31)
-	  stw       r3, 0x194(r31)
-	  stw       r0, 0x198(r31)
-	  lwz       r0, 0x9C(r31)
-	  stw       r0, 0x19C(r31)
-	  beq-      .loc_0x1AC
-	  lfs       f1, 0x194(r31)
-	  lfs       f0, 0x4(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xB0(r1)
-	  lfs       f0, 0xB0(r1)
-	  stfs      f0, 0xF8(r1)
-	  lfs       f1, 0x198(r31)
-	  lfs       f0, 0x8(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xFC(r1)
-	  lfs       f1, 0x19C(r31)
-	  lfs       f0, 0xC(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x100(r1)
-	  lwz       r3, 0xF8(r1)
-	  lwz       r0, 0xFC(r1)
-	  stw       r3, 0x194(r31)
-	  stw       r0, 0x198(r31)
-	  lwz       r0, 0x100(r1)
-	  stw       r0, 0x19C(r31)
-	  lfs       f1, 0x194(r31)
-	  lfs       f0, 0x198(r31)
-	  lfs       f2, 0x19C(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x8250C
-	  lfs       f0, -0x74C8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x124
-	  lfs       f0, 0x194(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x194(r31)
-	  lfs       f0, 0x198(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x198(r31)
-	  lfs       f0, 0x19C(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x19C(r31)
+	objMatrix.inverse(&invObjMatrix);
 
-	.loc_0x124:
-	  lfs       f1, 0x0(r30)
-	  lfs       f0, 0x194(r31)
-	  fadds     f3, f1, f31
-	  lfs       f1, 0x198(r31)
-	  lfs       f2, 0x19C(r31)
-	  fmuls     f0, f0, f3
-	  fmuls     f4, f1, f3
-	  fmuls     f1, f2, f3
-	  stfs      f0, 0xA8(r1)
-	  lfs       f0, 0xA8(r1)
-	  stfs      f0, 0xE0(r1)
-	  stfs      f4, 0xE4(r1)
-	  stfs      f1, 0xE8(r1)
-	  lfs       f1, 0xE0(r1)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x9C(r1)
-	  lfs       f0, 0x9C(r1)
-	  stfs      f0, 0xEC(r1)
-	  lfs       f1, 0xE4(r1)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xF0(r1)
-	  lfs       f1, 0xE8(r1)
-	  lfs       f0, 0xC(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xF4(r1)
-	  lwz       r3, 0xEC(r1)
-	  lwz       r0, 0xF0(r1)
-	  stw       r3, 0x194(r31)
-	  stw       r0, 0x198(r31)
-	  lwz       r0, 0xF4(r1)
-	  stw       r0, 0x19C(r31)
-	  b         .loc_0x2E4
+	_194 = mPosition;
 
-	.loc_0x1AC:
-	  lfs       f1, 0x194(r31)
-	  lfs       f0, 0x94(r29)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x90(r1)
-	  lfs       f0, 0x90(r1)
-	  stfs      f0, 0xD4(r1)
-	  lfs       f1, 0x198(r31)
-	  lfs       f0, 0x98(r29)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xD8(r1)
-	  lfs       f1, 0x19C(r31)
-	  lfs       f0, 0x9C(r29)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xDC(r1)
-	  lwz       r3, 0xD4(r1)
-	  lwz       r0, 0xD8(r1)
-	  stw       r3, 0x194(r31)
-	  stw       r0, 0x198(r31)
-	  lwz       r0, 0xDC(r1)
-	  stw       r0, 0x19C(r31)
-	  lfs       f1, 0x194(r31)
-	  lfs       f0, 0x198(r31)
-	  lfs       f2, 0x19C(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x82638
-	  lfs       f0, -0x74C8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x250
-	  lfs       f0, 0x194(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x194(r31)
-	  lfs       f0, 0x198(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x198(r31)
-	  lfs       f0, 0x19C(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x19C(r31)
+	if (stickPart) {
+		_194 = _194 - stickPart->mCentre;
+		_194.normalise();
+		_194 = _194 * (stickPart->mRadius + stickDist) + stickPart->mCentre;
+	} else {
+		_194 = _194 - obj->mPosition;
+		_194.normalise();
+		_194 = _194 * (obj->getCentreSize() + stickDist) + obj->mPosition;
+	}
 
-	.loc_0x250:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  fadds     f3, f31, f1
-	  lfs       f0, 0x194(r31)
-	  lfs       f1, 0x198(r31)
-	  lfs       f2, 0x19C(r31)
-	  fmuls     f0, f0, f3
-	  fmuls     f4, f1, f3
-	  fmuls     f1, f2, f3
-	  stfs      f0, 0x88(r1)
-	  lfs       f0, 0x88(r1)
-	  stfs      f0, 0xBC(r1)
-	  stfs      f4, 0xC0(r1)
-	  stfs      f1, 0xC4(r1)
-	  lfs       f1, 0xBC(r1)
-	  lfs       f0, 0x94(r29)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x7C(r1)
-	  lfs       f0, 0x7C(r1)
-	  stfs      f0, 0xC8(r1)
-	  lfs       f1, 0xC0(r1)
-	  lfs       f0, 0x98(r29)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xCC(r1)
-	  lfs       f1, 0xC4(r1)
-	  lfs       f0, 0x9C(r29)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xD0(r1)
-	  lwz       r3, 0xC8(r1)
-	  lwz       r0, 0xCC(r1)
-	  stw       r3, 0x194(r31)
-	  stw       r0, 0x198(r31)
-	  lwz       r0, 0xD0(r1)
-	  stw       r0, 0x19C(r31)
-
-	.loc_0x2E4:
-	  addi      r3, r31, 0x194
-	  addi      r4, r1, 0x110
-	  bl        -0x58BFC
-	  lwz       r0, 0x1AC(r1)
-	  lfd       f31, 0x1A0(r1)
-	  lwz       r31, 0x19C(r1)
-	  lwz       r30, 0x198(r1)
-	  lwz       r29, 0x194(r1)
-	  addi      r1, r1, 0x1A8
-	  mtlr      r0
-	  blr
-	*/
+	_194.multMatrix(invObjMatrix);
 }
 
 /*
@@ -858,38 +577,18 @@ void Creature::startStickObject(Creature*, CollPart*, int, f32)
  */
 void Creature::endStickObject()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x1A0(r3)
-	  cmpwi     r4, -0x1
-	  beq-      .loc_0x34
-	  lwz       r0, 0x184(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  mr        r3, r0
-	  bl        0x5A5C
+	if (mPelletStickSlot != -1 && mStickTarget) {
+		if (mStickTarget->mObjType != OBJTYPE_Pellet) {
+			ERROR("stick to non-pellet!\n");
+		}
+		Pellet* pellet = static_cast<Pellet*>(mStickTarget);
+		pellet->stickOffSlot(mPelletStickSlot);
+	}
 
-	.loc_0x34:
-	  li        r0, -0x1
-	  stw       r0, 0x1A0(r31)
-	  mr        r3, r31
-	  bl        0x124
-	  li        r0, 0
-	  stw       r0, 0x188(r31)
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,18,16
-	  stw       r0, 0xC8(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mPelletStickSlot = -1;
+	endStick();
+	mStickPart = nullptr;
+	resetCreatureFlag(CF_StuckToObject);
 }
 
 /*
@@ -897,85 +596,44 @@ void Creature::endStickObject()
  * Address:	800908E4
  * Size:	0000F8
  */
-void Creature::startStick(Creature*, CollPart*)
+bool Creature::startStick(Creature* stickTarget, CollPart* stickPart)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  li        r31, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  stw       r31, 0x188(r3)
-	  lwz       r0, 0xC8(r3)
-	  rlwinm    r0,r0,0,18,16
-	  stw       r0, 0xC8(r3)
-	  lwz       r0, 0x184(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x50
-	  li        r3, 0
-	  b         .loc_0xD8
+	mStickPart = nullptr;
+	resetCreatureFlag(CF_StuckToObject);
+	if (mStickTarget) {
+		PRINT("already stick to something !\n");
+		return false;
+	}
 
-	.loc_0x50:
-	  mr        r3, r28
-	  bl        -0x61AC
-	  stw       r29, 0x184(r28)
-	  lwz       r0, 0x180(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x78
-	  stw       r28, 0x180(r29)
-	  stw       r31, 0x190(r28)
-	  stw       r31, 0x18C(r28)
-	  b         .loc_0xA0
+	PRINT("piki%x :::: stick ! : standType = %s\n", _standType[getStandType()]);
 
-	.loc_0x78:
-	  mr        r3, r0
-	  b         .loc_0x84
+	mStickTarget = stickTarget;
+	if (!stickTarget->mStickListHead) {
+		stickTarget->mStickListHead = this;
+		mPrevSticker                = nullptr;
+		mNextSticker                = nullptr;
+	} else {
+		Creature* prevSticker;
+		for (prevSticker = stickTarget->mStickListHead; prevSticker->mNextSticker; prevSticker = prevSticker->mNextSticker) {
+			;
+		}
+		prevSticker->mNextSticker = this;
+		mPrevSticker              = prevSticker;
+		mNextSticker              = nullptr;
+	}
 
-	.loc_0x80:
-	  mr        r3, r0
+	if (!mStickTarget) {
+		PRINT("error !\n");
+	}
+	if (!mStickTarget) {
+		PRINT("error2 !\n");
+	}
 
-	.loc_0x84:
-	  lwz       r0, 0x18C(r3)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x80
-	  stw       r28, 0x18C(r3)
-	  li        r0, 0
-	  stw       r3, 0x190(r28)
-	  stw       r0, 0x18C(r28)
+	mStickPart = stickPart;
 
-	.loc_0xA0:
-	  stw       r30, 0x188(r28)
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0xC4(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0xBC(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x1
-
-	.loc_0xD8:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	stickToCallback(stickTarget);
+	stickTarget->stickCallback(this);
+	return true;
 }
 
 /*
@@ -983,9 +641,13 @@ void Creature::startStick(Creature*, CollPart*)
  * Address:	........
  * Size:	000028
  */
-void Creature::isStickLeader()
+bool Creature::isStickLeader()
 {
-	// UNUSED FUNCTION
+	if (mStickTarget && !mPrevSticker) {
+		return true;
+	}
+
+	return false;
 }
 
 /*
@@ -995,78 +657,37 @@ void Creature::isStickLeader()
  */
 void Creature::endStick()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  stw       r31, 0x284(r3)
-	  lwz       r3, 0x184(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xD4
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r30
-	  lwz       r12, 0xC0(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x190(r30)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x68
-	  lwz       r0, 0x18C(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x68
-	  lwz       r3, 0x184(r30)
-	  stw       r31, 0x180(r3)
-	  stw       r31, 0x184(r30)
-	  b         .loc_0xCC
+	mCollPlatNormal = nullptr;
+	if (!mStickTarget) {
+		return;
+	}
 
-	.loc_0x68:
-	  cmplwi    r3, 0
-	  bne-      .loc_0x98
-	  lwz       r4, 0x18C(r30)
-	  li        r0, 0
-	  lwz       r3, 0x184(r30)
-	  stw       r4, 0x180(r3)
-	  stw       r0, 0x184(r30)
-	  lwz       r3, 0x18C(r30)
-	  stw       r0, 0x190(r3)
-	  stw       r0, 0x190(r30)
-	  stw       r0, 0x18C(r30)
-	  b         .loc_0xCC
+	mStickTarget->offstickCallback(this);
+	if (!mPrevSticker && !mNextSticker) {
+		mStickTarget->mStickListHead = nullptr;
+		mStickTarget                 = nullptr;
+		PRINT("course 1 : only\n");
 
-	.loc_0x98:
-	  li        r0, 0
-	  stw       r0, 0x184(r30)
-	  lwz       r0, 0x18C(r30)
-	  lwz       r3, 0x190(r30)
-	  stw       r0, 0x18C(r3)
-	  lwz       r3, 0x18C(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xC0
-	  lwz       r0, 0x190(r30)
-	  stw       r0, 0x190(r3)
+	} else if (!mPrevSticker) {
+		mStickTarget->mStickListHead = mNextSticker;
+		mStickTarget                 = nullptr;
+		mNextSticker->mPrevSticker   = nullptr;
+		mPrevSticker                 = nullptr;
+		mNextSticker                 = nullptr;
+		PRINT("course 2 : top\n");
 
-	.loc_0xC0:
-	  li        r0, 0
-	  stw       r0, 0x190(r30)
-	  stw       r0, 0x18C(r30)
+	} else {
+		mStickTarget               = nullptr;
+		mPrevSticker->mNextSticker = mNextSticker;
+		if (mNextSticker) {
+			mNextSticker->mPrevSticker = mPrevSticker;
+		}
+		mPrevSticker = nullptr;
+		mNextSticker = nullptr;
+		PRINT("course 3 : prev and next\n");
+	}
 
-	.loc_0xCC:
-	  li        r0, 0
-	  stw       r0, 0x280(r30)
-
-	.loc_0xD4:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mCollPlatform = nullptr;
 }
 
 /*
@@ -1074,96 +695,38 @@ void Creature::endStick()
  * Address:	80090AC8
  * Size:	000124
  */
-void Creature::startRope(RopeCreature*, f32)
+bool Creature::startRope(RopeCreature* rope, f32 ropeRatio)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stfd      f31, 0x48(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x44(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x40(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r30, 0x114
-	  bl        -0x52D34
-	  lwz       r0, 0x158(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x40
-	  li        r3, 0
-	  b         .loc_0x108
+	_114.makeIdentity();
+	if (mRope) {
+		PRINT("already hold on to something !\n");
+		return false;
+	}
 
-	.loc_0x40:
-	  stw       r31, 0x158(r30)
-	  addi      r3, r1, 0x20
-	  addi      r4, r30, 0x94
-	  lwz       r5, 0x2B8(r31)
-	  lfs       f1, 0x94(r31)
-	  lfs       f0, -0x74AC(r2)
-	  stfs      f1, 0x20(r1)
-	  lfs       f1, 0x98(r31)
-	  stfs      f1, 0x24(r1)
-	  lfs       f1, 0x9C(r31)
-	  stfs      f1, 0x28(r1)
-	  lfsu      f1, 0x94(r5)
-	  stfs      f1, 0x2C(r1)
-	  lfs       f1, 0x4(r5)
-	  stfs      f1, 0x30(r1)
-	  lfs       f1, 0x8(r5)
-	  stfs      f1, 0x34(r1)
-	  stfs      f0, 0x38(r1)
-	  bl        -0x9488
-	  stfs      f1, 0x15C(r30)
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0x14
-	  lfs       f1, 0x15C(r30)
-	  bl        0x3E14
-	  lwz       r3, 0x14(r1)
-	  lwz       r0, 0x18(r1)
-	  stw       r3, 0x94(r30)
-	  stw       r0, 0x98(r30)
-	  lwz       r0, 0x1C(r1)
-	  stw       r0, 0x9C(r30)
-	  lwz       r0, 0x154(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xD8
-	  stw       r30, 0x154(r31)
-	  li        r0, 0
-	  stw       r0, 0x164(r30)
-	  stw       r0, 0x160(r30)
-	  b         .loc_0x100
+	mRope = rope;
 
-	.loc_0xD8:
-	  mr        r3, r0
-	  b         .loc_0xE4
+	Cylinder cylinder(rope->mPosition, rope->_2B8->mPosition, 2.0f);
+	mRopeRatio = cylinder.getPosRatio(mPosition);
+	mPosition  = rope->getRopePos(mRopeRatio);
 
-	.loc_0xE0:
-	  mr        r3, r0
+	if (!rope->mRopeListHead) {
+		rope->mRopeListHead = this;
+		mPrevRopeHolder     = nullptr;
+		mNextRopeHolder     = nullptr;
 
-	.loc_0xE4:
-	  lwz       r0, 0x160(r3)
-	  cmplwi    r0, 0
-	  bne+      .loc_0xE0
-	  stw       r30, 0x160(r3)
-	  li        r0, 0
-	  stw       r3, 0x164(r30)
-	  stw       r0, 0x160(r30)
+	} else {
+		Creature* prevHolder = rope->mRopeListHead;
+		for (prevHolder; prevHolder->mNextRopeHolder; prevHolder = prevHolder->mNextRopeHolder) {
+			;
+		}
+		prevHolder->mNextRopeHolder = this;
+		mPrevRopeHolder             = prevHolder;
+		mNextRopeHolder             = nullptr;
+	}
 
-	.loc_0x100:
-	  stfs      f31, 0x15C(r30)
-	  li        r3, 0x1
+	mRopeRatio = ropeRatio;
 
-	.loc_0x108:
-	  lwz       r0, 0x54(r1)
-	  lfd       f31, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -1173,53 +736,34 @@ void Creature::startRope(RopeCreature*, f32)
  */
 void Creature::endRope()
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x158(r3)
-	  cmplwi    r5, 0
-	  beqlr-
-	  lwz       r4, 0x164(r3)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x34
-	  lwz       r0, 0x160(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x34
-	  li        r0, 0
-	  stw       r0, 0x154(r5)
-	  stw       r0, 0x158(r3)
-	  blr
+	if (!mRope) {
+		return;
+	}
 
-	.loc_0x34:
-	  cmplwi    r4, 0
-	  bne-      .loc_0x60
-	  lwz       r4, 0x160(r3)
-	  li        r0, 0
-	  stw       r4, 0x154(r5)
-	  stw       r0, 0x158(r3)
-	  lwz       r4, 0x160(r3)
-	  stw       r0, 0x164(r4)
-	  stw       r0, 0x164(r3)
-	  stw       r0, 0x160(r3)
-	  blr
+	PRINT("endRope called ! : %x\n", this);
 
-	.loc_0x60:
-	  li        r0, 0
-	  stw       r0, 0x158(r3)
-	  lwz       r0, 0x160(r3)
-	  lwz       r4, 0x164(r3)
-	  stw       r0, 0x160(r4)
-	  lwz       r4, 0x160(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x88
-	  lwz       r0, 0x164(r3)
-	  stw       r0, 0x164(r4)
+	if (!mPrevRopeHolder && !mNextRopeHolder) {
+		mRope->mRopeListHead = nullptr;
+		mRope                = nullptr;
+		return;
+	}
 
-	.loc_0x88:
-	  li        r0, 0
-	  stw       r0, 0x164(r3)
-	  stw       r0, 0x160(r3)
-	  blr
-	*/
+	if (!mPrevRopeHolder) {
+		mRope->mRopeListHead             = mNextRopeHolder;
+		mRope                            = nullptr;
+		mNextRopeHolder->mPrevRopeHolder = nullptr;
+		mPrevRopeHolder                  = nullptr;
+		mNextRopeHolder                  = nullptr;
+		return;
+	}
+
+	mRope                            = nullptr;
+	mPrevRopeHolder->mNextRopeHolder = mNextRopeHolder;
+	if (mNextRopeHolder) {
+		mNextRopeHolder->mPrevRopeHolder = mPrevRopeHolder;
+	}
+	mPrevRopeHolder = nullptr;
+	mNextRopeHolder = nullptr;
 }
 
 /*
@@ -1241,9 +785,9 @@ Stickers::Stickers(Creature* owner)
 void Stickers::calcNum()
 {
 	mCount          = 0;
-	Creature* stuck = mOwner->_180;
+	Creature* stuck = mOwner->mStickListHead;
 	while (stuck) {
-		stuck = stuck->_18C;
+		stuck = stuck->mNextSticker;
 		mCount++;
 	}
 }
@@ -1253,77 +797,22 @@ void Stickers::calcNum()
  * Address:	80090D0C
  * Size:	0000CC
  */
-Creature* Stickers::getCreature(int)
+Creature* Stickers::getCreature(int idx)
 {
+	int startCount = mCount;
+	calcNum();
+	if (startCount > mCount && idx >= mCount) {
+		idx = mCount - 1;
+	}
+
+	Creature* stuck = mOwner->mStickListHead;
+	for (int i = 0; i < idx; i++) {
+		stuck = stuck->mNextSticker;
+	}
+	if (stuck) {
+		return stuck;
+	}
 	return nullptr;
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x8(r3)
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  lwz       r5, 0xC(r3)
-	  lwz       r6, 0x180(r5)
-	  b         .loc_0x28
-
-	.loc_0x18:
-	  lwz       r5, 0x8(r3)
-	  lwz       r6, 0x18C(r6)
-	  addi      r0, r5, 0x1
-	  stw       r0, 0x8(r3)
-
-	.loc_0x28:
-	  cmplwi    r6, 0
-	  bne+      .loc_0x18
-	  lwz       r5, 0x8(r3)
-	  cmpw      r7, r5
-	  ble-      .loc_0x48
-	  cmpw      r4, r5
-	  blt-      .loc_0x48
-	  subi      r4, r5, 0x1
-
-	.loc_0x48:
-	  lwz       r3, 0xC(r3)
-	  cmpwi     r4, 0
-	  li        r6, 0
-	  lwz       r3, 0x180(r3)
-	  ble-      .loc_0xBC
-	  cmpwi     r4, 0x8
-	  subi      r5, r4, 0x8
-	  ble-      .loc_0xA4
-	  addi      r0, r5, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r5, 0
-	  mtctr     r0
-	  ble-      .loc_0xA4
-
-	.loc_0x7C:
-	  lwz       r3, 0x18C(r3)
-	  addi      r6, r6, 0x8
-	  lwz       r3, 0x18C(r3)
-	  lwz       r3, 0x18C(r3)
-	  lwz       r3, 0x18C(r3)
-	  lwz       r3, 0x18C(r3)
-	  lwz       r3, 0x18C(r3)
-	  lwz       r3, 0x18C(r3)
-	  lwz       r3, 0x18C(r3)
-	  bdnz+     .loc_0x7C
-
-	.loc_0xA4:
-	  sub       r0, r4, r6
-	  cmpw      r6, r4
-	  mtctr     r0
-	  bge-      .loc_0xBC
-
-	.loc_0xB4:
-	  lwz       r3, 0x18C(r3)
-	  bdnz+     .loc_0xB4
-
-	.loc_0xBC:
-	  cmplwi    r3, 0
-	  bnelr-
-	  li        r3, 0
-	  blr
-	*/
 }
 
 /*
