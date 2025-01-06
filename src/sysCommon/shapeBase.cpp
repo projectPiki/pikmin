@@ -6389,7 +6389,7 @@ BaseShape::BaseShape()
 	mJointCount        = 0;
 	mJointList         = nullptr;
 	mTotalMatpolyCount = 0;
-	_64                = nullptr;
+	mMatpolyList       = nullptr;
 	mTexAttrCount      = 0;
 	mTextureCount      = 0;
 
