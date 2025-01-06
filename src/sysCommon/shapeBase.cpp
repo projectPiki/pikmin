@@ -6386,12 +6386,12 @@ BaseShape::BaseShape()
 	mEnvelopeCount = 0;
 	mEnvelopeList  = nullptr;
 
-	mJointCount   = 0;
-	mJointList    = nullptr;
-	_60           = 0;
-	_64           = nullptr;
-	mTexAttrCount = 0;
-	mTextureCount = 0;
+	mJointCount        = 0;
+	mJointList         = nullptr;
+	mTotalMatpolyCount = 0;
+	_64                = nullptr;
+	mTexAttrCount      = 0;
+	mTextureCount      = 0;
 
 	mCurrentAnimContext = 0;
 	mFrameCacher        = nullptr;
@@ -6434,7 +6434,7 @@ BaseShape::BaseShape()
  */
 void BaseShape::countMaterials(Joint* pJnt, u32 a3)
 {
-	for (int i = 0; i < _60; i++) { }
+	for (int i = 0; i < mTotalMatpolyCount; i++) { }
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x20(r1)
@@ -12642,9 +12642,9 @@ void BaseShape::calcBasePose(Matrix4f& target)
 		srt.mTranslation = mJointList[i].mTranslation;
 
 		int parentIndex = mJointList[i].mParentIndex;
-		Matrix4f basePose;
-		Matrix4f* t = parentIndex == -1 ? &target : &mJointList[parentIndex].mAnimMatrix;
-		mJointList[i].mAnimMatrix.makeConcatSRT(t, basePose, srt);
+		Matrix4f initialPose;
+		Matrix4f* currentMatrix = parentIndex == -1 ? &target : &mJointList[parentIndex].mAnimMatrix;
+		mJointList[i].mAnimMatrix.makeConcatSRT(currentMatrix, initialPose, srt);
 		mJointList[i].mAnimMatrix.inverse(&mJointList[i].mInverseAnimMatrix);
 	}
 }

@@ -20,15 +20,15 @@ struct Joint : public CoreNode {
 		MatPoly()
 		    : CoreNode("matpoly")
 		{
-			_24 = 0;
+			mJointList = 0;
 		}
 
 		MatPoly(Material* mat, Mesh* mesh)
 		    : CoreNode("matpoly")
 		{
-			mMaterial = mat;
-			mMesh     = mesh;
-			_24       = 0;
+			mMaterial  = mat;
+			mMesh      = mesh;
+			mJointList = 0;
 		}
 
 		// CoreNode _00 - _14
@@ -36,7 +36,7 @@ struct Joint : public CoreNode {
 		Mesh* mMesh;         // _18
 		int mIndex;          // _1C
 		int mMeshIndex;      // _20
-		int _24;             // _24
+		Joint* mJointList;   // _24
 	};
 
 	Joint();

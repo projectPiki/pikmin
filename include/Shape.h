@@ -178,8 +178,8 @@ struct BaseShape : public CoreNode {
 	Mesh* mMeshList;                  // _54
 	s32 mJointCount;                  // _58
 	Joint* mJointList;                // _5C
-	s32 _60;                          // _60
-	s32* _64;                         // _64
+	s32 mTotalMatpolyCount;           // _60
+	Joint::MatPoly** mMatpolyList;    // _64
 	s32 mTexAttrCount;                // _68
 	TexAttr* mTexAttrList;            // _6C
 	s32 _70;                          // _70
