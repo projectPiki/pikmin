@@ -4,6 +4,12 @@
 #include "types.h"
 #include "Vector.h"
 
+// passing this as the flick angle = flick directly away from enemy
+#define FLICK_BACKWARDS_ANGLE (-1000.0f)
+
+// any angle below this will flick directly away from enemy
+#define FLICK_BACKWARDS_THRESHOLD (-10.0f)
+
 struct Boss;
 struct Bridge;
 struct Creature;
@@ -82,8 +88,9 @@ struct InteractBikkuri : public Interaction {
 struct InteractBomb : public Interaction {
 	inline InteractBomb(); // TODO: probably
 
-	virtual bool actPiki(Piki*);         // _0C
+	// need this to not be in order, otherwise vtable generates in interactBattle
 	virtual bool actTeki(Teki*);         // _10
+	virtual bool actPiki(Piki*);         // _0C
 	virtual bool actNavi(Navi*);         // _14
 	virtual bool actBoss(Boss*);         // _18
 	virtual bool actItem(ItemCreature*); // _28
@@ -489,7 +496,7 @@ struct InteractWind : public Interaction {
 	// _00     = VTBL
 	// _00-_08 = Interaction
 	u8 _08[0x4];                            // _08, unknown
-	Vector3f _0C;                           // _0C
+	Vector3f mVelocity;                     // _0C
 	zen::particleGenerator* mWindParticles; // _18
 };
 

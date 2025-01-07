@@ -33,11 +33,6 @@ DEFINE_PRINT("interactBattle");
  */
 bool InteractBomb::actPiki(Piki* piki)
 {
-	// maybe the vector distance angle calc is a bigger inline? seems to work as-is though
-	u32 badCompiler;
-	u32 badCompiler2;
-	u32 badCompiler3;
-
 	if (!piki->isAlive()) {
 		return false;
 	}
@@ -51,7 +46,7 @@ bool InteractBomb::actPiki(Piki* piki)
 		return false;
 	}
 
-	if (!piki->isCreatureFlag(CF_IsAICullingActive) && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk27)) {
+	if (piki->aiCullable() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk27)) {
 		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk27);
 	}
 
@@ -62,7 +57,7 @@ bool InteractBomb::actPiki(Piki* piki)
 	piki->mHealth -= mDamage;
 
 	// update this when PikiProp is filled out
-	piki->mLifeGauge.updValue(piki->mHealth, static_cast<PikiProp*>(piki->mProps)->mCreatureProps.mAcceleration());
+	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiHealth());
 
 	Vector3f diff = mOwner->mPosition - piki->mPosition;
 	diff.normalise();
@@ -90,6 +85,7 @@ bool InteractBury::actPiki(Piki* piki)
 
 	if (mMakeFlower && piki->mHappa < Flower) {
 		piki->mHappa = Flower;
+		PRINT("miurin %d\n", piki->mHappa);
 	}
 
 	piki->mFSM->transit(piki, PIKISTATE_Bury);
@@ -157,15 +153,18 @@ bool InteractSpore::actPiki(Piki* piki)
 	// if not a puffmin, make a puffmin
 	if (!piki->isKinoko()) {
 		Creature* kinoko = mOwner;
-		if (piki->mGrabbedCreature.mPtr) {
+
+		// if we're holding a bomb, drop it
+		if (piki->isHolding()) {
 			InteractRelease release(piki, 1.0f);
-			piki->mGrabbedCreature.mPtr->stimulate(release);
+			Creature* bomb = piki->getHoldCreature();
+			bomb->stimulate(release);
 		}
 
 		piki->_4A8 = kinoko;
 		piki->_4F8->abandon(nullptr);
 		piki->_4F8->mChildActionIdx = 22;
-		piki->_4F8->initialiseChildAction(kinoko);
+		piki->_4F8->mChildActions[piki->_4F8->mChildActionIdx].initialise(kinoko);
 		piki->mFSM->transit(piki, PIKISTATE_KinokoChange);
 		return true;
 	}
@@ -244,19 +243,20 @@ bool InteractWind::actPiki(Piki* piki)
 	}
 
 	// can't get blown away if stuck to a creature
-	if (piki->mStickTarget) {
+	if (piki->isStickTo()) {
 		return false;
 	}
 
-	if ((int)piki->mMode == 11 || (int)piki->mMode == 12) {
+	int pikiMode = piki->mMode;
+	if (pikiMode == PikiMode::EnterMode || pikiMode == PikiMode::ExitMode) {
 		return false;
 	}
 
 	piki->_4F8->abandon(mWindParticles);
 	piki->mFSM->transit(piki, PIKISTATE_Flown);
 
-	piki->mVelocity       = _0C;
-	piki->mTargetVelocity = _0C;
+	piki->mVelocity       = mVelocity;
+	piki->mTargetVelocity = mVelocity;
 
 	return true;
 }
@@ -268,13 +268,12 @@ bool InteractWind::actPiki(Piki* piki)
  */
 bool InteractFlick::actCommon(Creature* creature)
 {
-	u32 badCompiler;
-	if (creature->isCreatureFlag(CF_StuckToMouth)) {
+	if (creature->isStickToMouth()) {
 		creature->endStickMouth();
 	}
 
 	// if stuck to something, end stick
-	if (creature->mStickTarget) {
+	if (creature->isStickTo()) {
 		creature->endStickObject();
 		creature->endStick();
 	}
@@ -294,6 +293,7 @@ bool InteractFlick::actPiki(Piki* piki)
 	}
 
 	if (piki->getState() == PIKISTATE_Flick) {
+		PRINT("already flicked\n");
 		return false;
 	}
 
@@ -301,10 +301,9 @@ bool InteractFlick::actPiki(Piki* piki)
 
 	piki->mHealth -= mDamage;
 
-	// update this when PikiProp is filled out
-	piki->mLifeGauge.updValue(piki->mHealth, static_cast<PikiProp*>(piki->mProps)->mCreatureProps.mAcceleration());
+	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiHealth());
 
-	if (mAngle < -10.0f) {
+	if (mAngle < FLICK_BACKWARDS_THRESHOLD) {
 		piki->mRotationAngle = piki->mDirection;
 	} else {
 		piki->mRotationAngle = mAngle;
@@ -401,6 +400,7 @@ bool InteractAttack::actPiki(Piki* piki)
 
 	int state = piki->getState();
 	if (state == PIKISTATE_Dying || state == PIKISTATE_Dead) {
+		PRINT("DYING or DEAD \n");
 		return false;
 	}
 
@@ -412,8 +412,7 @@ bool InteractAttack::actPiki(Piki* piki)
 	piki->startDamage();
 	piki->mHealth -= mDamage;
 
-	// update this when PikiProp is filled out
-	piki->mLifeGauge.updValue(piki->mHealth, static_cast<PikiProp*>(piki->mProps)->mCreatureProps.mAcceleration());
+	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiHealth());
 
 	if (state == PIKISTATE_Unk34) {
 		piki->mFSM->transit(piki, PIKISTATE_Normal);
@@ -572,111 +571,25 @@ bool InteractPress::actPiki(Piki* piki)
 	}
 	piki->playEventSound(mOwner, 27);
 	if (piki->hasBomb()) {
-		Creature* bomb = piki->mGrabbedCreature.mPtr;
+		Creature* bomb = piki->getHoldCreature();
 		bomb->resetStateGrabbed();
 		if (bomb->mObjType == OBJTYPE_Bomb) {
 			MsgUser msg(1);
-			static_cast<BombItem*>(bomb)->_2D0 = 0;
-			static_cast<BombItem*>(bomb)->mStateMachine->procMsg(static_cast<BombItem*>(bomb), &msg);
+			BombItem* bombItem = static_cast<BombItem*>(bomb);
+			bombItem->_2D0     = 0;
+			bombItem->mStateMachine->procMsg(bombItem, &msg);
+			PRINT("bomb immediately\n");
 		}
 	}
 
 	piki->changeMode(0, piki->mNavi);
 	piki->mFSM->transit(piki, PIKISTATE_Pressed);
-	// update when PikiProps is filled out
-	piki->_48C = static_cast<PikiProp*>(piki->mProps)->mCreatureProps.mAcceleration();
+
+	piki->_48C = C_PIKI_PROP(piki)._15C();
 	piki->mHealth -= mDamage;
-	// update when PikiProps is filled out
-	piki->mLifeGauge.updValue(piki->mHealth, static_cast<PikiProp*>(piki->mProps)->mCreatureProps.mAcceleration());
+	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiHealth());
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	return true;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x34(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r30, 0
-	  bl        0x4BE1C
-	  cmpwi     r3, 0x21
-	  bne-      .loc_0x38
-	  li        r3, 0
-	  b         .loc_0x11C
-
-	.loc_0x38:
-	  lwz       r4, 0x4(r29)
-	  addi      r3, r30, 0
-	  li        r5, 0x1B
-	  bl        0xDE5C
-	  mr        r3, r30
-	  bl        0x4B710
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xA4
-	  lwz       r31, 0x2AC(r30)
-	  mr        r3, r31
-	  bl        0xE260
-	  lwz       r0, 0x6C(r31)
-	  cmpwi     r0, 0xE
-	  bne-      .loc_0xA4
-	  li        r0, 0xA
-	  stw       r0, 0x24(r1)
-	  li        r0, 0x1
-	  addi      r4, r31, 0
-	  stw       r0, 0x28(r1)
-	  li        r0, 0
-	  addi      r5, r1, 0x24
-	  stw       r0, 0x2D0(r31)
-	  lwz       r3, 0x2E8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xA4:
-	  lwz       r5, 0x504(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x50A08
-	  lwz       r3, 0x490(r30)
-	  addi      r4, r30, 0
-	  li        r5, 0x21
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x224(r30)
-	  addi      r3, r30, 0x1E0
-	  lfs       f0, 0x168(r4)
-	  stfs      f0, 0x48C(r30)
-	  lfs       f1, 0x58(r30)
-	  lfs       f0, 0x8(r29)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x58(r30)
-	  lwz       r4, 0x224(r30)
-	  lfs       f1, 0x58(r30)
-	  lfs       f2, 0xB8(r4)
-	  bl        -0x2079C
-	  lfs       f0, -0x63E4(r13)
-	  li        r3, 0x1
-	  stfs      f0, 0xA4(r30)
-	  lfs       f0, -0x63E0(r13)
-	  stfs      f0, 0xA8(r30)
-	  lfs       f0, -0x63DC(r13)
-	  stfs      f0, 0xAC(r30)
-
-	.loc_0x11C:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -684,4 +597,4 @@ bool InteractPress::actPiki(Piki* piki)
  * Address:	8007C84C
  * Size:	000008
  */
-bool InteractFlute::actTeki(Teki*) { return 0x1; }
+bool InteractFlute::actTeki(Teki*) { return true; }

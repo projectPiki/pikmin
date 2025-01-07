@@ -1403,7 +1403,7 @@ void SpiderLeg::stepShakeOffPiki(int legNum)
 				    && boundPart->getChildAt(i)->getID().mId == piki->getStickPart()->getID().mId) {
 					if (NsMathF::getRand1(1.0f) < C_SPIDER_PROP(mSpider)._354()) {
 						f32 damage = C_SPIDER_PROP(mSpider)._374();
-						piki->stimulate(InteractFlick(mSpider, C_SPIDER_PROP(mSpider)._364(), damage, -1000.0f));
+						piki->stimulate(InteractFlick(mSpider, C_SPIDER_PROP(mSpider)._364(), damage, FLICK_BACKWARDS_ANGLE));
 						iter.dec();
 					}
 				}

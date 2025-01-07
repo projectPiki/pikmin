@@ -217,7 +217,7 @@ void Slime::collisionCallback(CollEvent& event)
 				InteractBubble bubble(this, 200.0f);
 				event.mCollider->stimulate(bubble);
 			} else if (event.mCollider->mObjType == OBJTYPE_Navi) {
-				InteractFlick flick(this, BOSS_PROP.mFlickKnockback(), BOSS_PROP.mFlickDamage(), -1000.0f);
+				InteractFlick flick(this, BOSS_PROP.mFlickKnockback(), BOSS_PROP.mFlickDamage(), FLICK_BACKWARDS_ANGLE);
 				event.mCollider->stimulate(flick);
 			}
 

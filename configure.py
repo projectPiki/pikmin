@@ -476,7 +476,7 @@ config.libs = [
         "objects": [
             Object(NonMatching, "plugPikiKando/omake.cpp"),
             Object(Matching, "plugPikiKando/radarInfo.cpp"),
-            Object(NonMatching, "plugPikiKando/interactBattle.cpp"),
+            Object(Matching, "plugPikiKando/interactBattle.cpp"),
             Object(Matching, "plugPikiKando/interactGrab.cpp"),
             Object(Matching, "plugPikiKando/interactEtc.cpp"),
             Object(NonMatching, "plugPikiKando/interactPullout.cpp"),

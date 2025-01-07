@@ -93,7 +93,8 @@ void Boss::initBoss(BirthInfo& birthInfo, int objType)
  */
 void Boss::calcFlickPiki()
 {
-	interactStickers(this, InteractFlick(this, BOSS_PROP.mFlickKnockback(), BOSS_PROP.mFlickDamage(), -1000.0f), &CndBossFlick(this));
+	interactStickers(this, InteractFlick(this, BOSS_PROP.mFlickKnockback(), BOSS_PROP.mFlickDamage(), FLICK_BACKWARDS_ANGLE),
+	                 &CndBossFlick(this));
 
 	mFlickDamageCount = 0;
 }
