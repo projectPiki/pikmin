@@ -4197,7 +4197,7 @@ PikiHeadItem* PikiHeadMgr::createObject()
  * Address:	800F7668
  * Size:	00014C
  */
-void ItemMgr::getContainerExitCount()
+int ItemMgr::getContainerExitCount()
 {
 	/*
 	.loc_0x0:

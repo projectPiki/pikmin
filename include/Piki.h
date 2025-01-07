@@ -219,9 +219,6 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
 	OdoMeter mOdometer;           // _2BC
-	u32 _2C0;                     // _2C0
-	u32 _2C4;                     // _2C4
-	u32 _2C8;                     // _2C8
 	u32 _2CC;                     // _2CC
 	u32 _2D0;                     // _2D0
 	u8 _2D4;                      // _2D4
@@ -234,6 +231,9 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u32 _2F0;                     // _2F0
 	u32 _2F4;                     // _2F4
 	u32 _2F8;                     // _2F8
+	u32 _2FC;                     // _2FC
+	u32 _300;                     // _300
+	u32 _304;                     // _304
 	u32 _308;                     // _308
 	u32 _30C;                     // _30C
 	u32 _310;                     // _310

@@ -248,6 +248,7 @@ struct Creature : public RefCountable, public EventTalker {
 
 	CollPart* getStickPart() { return mStickPart; }
 	Creature* getStickObject() { return mStickTarget; }
+	bool isStickTo() { return mStickTarget != nullptr; }
 
 	bool isSluice()
 	{
@@ -260,6 +261,7 @@ struct Creature : public RefCountable, public EventTalker {
 	bool isPiki() { return mObjType == OBJTYPE_Piki; }
 
 	void setRebirthDay(int day) { mRebirthDay = day; }
+	int getRebirthDay() { return mRebirthDay; }
 
 	bool roughCulling(Creature* other, f32 p2) { return mGrid.doCulling(other->mGrid, p2); }
 
@@ -270,15 +272,9 @@ struct Creature : public RefCountable, public EventTalker {
 	    bool isDamaged();
 	    bool isHolding();
 	    bool isObjType(int);
-	    bool isStickTo();
-	    bool roughCulling(Creature*, f32);
-
-	    Creature* getHoldCreature();
-	    Creature* getHolder();
 
 	    f32 calcDistance(Creature&);
 
-	    int getRebirthDay();
 	    BOOL isFlying();
 	    BOOL isStickToMouth();
 

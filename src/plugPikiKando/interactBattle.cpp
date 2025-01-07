@@ -10,24 +10,21 @@
 #include "Stickers.h"
 #include "Navi.h"
 #include "BombItem.h"
-#include "Dolphin/os.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "interactBattle"); }
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("interactBattle");
 
 /*
  * --INFO--
@@ -447,16 +444,21 @@ bool InteractSwallow::actCommon(Creature*) { return true; }
  */
 bool InteractSwallow::actPiki(Piki* piki)
 {
-	piki->isAlive();
+	if (!piki->isAlive()) {
+		ERROR("try to swallow dead piki!\n");
+	}
+
 	piki->_4F8->abandon(nullptr);
 	piki->_4F8->mChildActionIdx = 15;
-	piki->_4F8->initialiseChildAction(nullptr);
+	piki->_4F8->mChildActions[piki->_4F8->mChildActionIdx].initialise(nullptr);
 	piki->mMode = 0;
 	if (!mMouthPart) {
 		piki->playEventSound(mOwner, 22);
 		piki->kill(false);
 		return true;
 	}
+
+	PRINT("piki swallowed (CollPart=%x:%s)\n", mMouthPart, mMouthPart->mCollInfo->mId.mStringID);
 
 	piki->mSwallowMouthPart = mMouthPart;
 
@@ -470,284 +472,66 @@ bool InteractSwallow::actPiki(Piki* piki)
 
 	piki->mFSM->transit(piki, PIKISTATE_Swallowed);
 
-	if (piki->mStickTarget && !piki->isCreatureFlag(CF_StuckToMouth)) {
+	if (piki->isStickTo() && !piki->isStickToMouth()) {
+		PRINT("*** Before stickMouth : stick off\n");
 		piki->endStickObject();
 		piki->endStick();
 	}
 
 	piki->startStickMouth(mOwner, mMouthPart);
 
-	if (!piki->isCreatureFlag(CF_StuckToMouth)) {
+	if (!piki->isStickToMouth()) {
+		PRINT("**** STICK MOUTH FAILED *****************\n");
 		piki->mSwallowMouthPart = nullptr;
 		return false;
 	}
 
-	bool isPiki = false;
-	Stickers stickers(mOwner);
-	Stickers* stickPtr = &stickers;
-	for (int i = stickPtr->getFirst(); !stickPtr->isEnd(i); i = stickPtr->getNext(i)) {
-		Creature* stuck;
+	PRINT("nakata check +++++++++++++++++++++\n");
 
-		// On invalid index, get the first creature
-		if (i == -1) {
-			stuck = stickPtr->getCreature(0);
-		} else {
-			stuck = stickPtr->getCreature(i);
-		}
+	Stickers stuckList(mOwner);
+	Iterator iter(&stuckList);
+	bool isPiki = false;
+	CI_LOOP(iter)
+	{
+		Creature* stuck = *iter;
 
 		if (stuck == piki) {
 			isPiki = true;
 		}
 
-		if (stuck->isCreatureFlag(CF_StuckToMouth)) {
-			stuck->isCreatureFlag(CF_StuckToMouth);
+		if (stuck->isStickToMouth()) {
+			PRINT("object %x (type %d) is stick to my mouth\n", stuck, stuck->mObjType);
 		}
 	}
+
+	PRINT("--------------------------\n");
 
 	if (!isPiki) {
-		Creature* target = mOwner->mStickListHead;
-		while (target) {
-			target = target->mNextSticker;
+		PRINT("WHY=============??\n");
+		PRINT("p->_stickObject = %x sender = %x\n", piki->mStickTarget, mOwner);
+		PRINT("CHAPPY no stickers ==\n");
+		for (Creature* stuck = mOwner->mStickListHead; stuck; stuck = stuck->mNextSticker) {
+			PRINT(" %x : flags=%x\n", stuck, stuck->mCreatureFlags);
 		}
+
+		ERROR("sorry\n");
 	}
 
-	piki->playEventSound(mOwner, 22);
+	if (!piki->isCreatureFlag(CF_StuckToMouth)) {
+		ERROR("FL_STICK_MOUTH is false\n"); // OOOOH THIS IS HOW THEY NAMED THE FLAGS
+	}
+
+	PRINT("play dead sound!\n");
+	piki->playEventSound(mOwner, 0x16);
 
 	if (piki->_426) {
 		piki->_426 = 0;
-		// piki->_430->_30();
+		piki->_428._08->kill();
 		piki->_424 = 0;
 	}
 
 	piki->_426 = 0;
 	return true;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stmw      r27, 0x64(r1)
-	  addi      r31, r4, 0
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x4F8(r31)
-	  li        r4, 0
-	  bl        0x48F68
-	  lwz       r3, 0x4F8(r31)
-	  li        r0, 0xF
-	  li        r4, 0
-	  sth       r0, 0x8(r3)
-	  lwz       r3, 0x4F8(r31)
-	  lha       r0, 0x8(r3)
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r0,3,0,28
-	  add       r3, r3, r0
-	  bl        0x47920
-	  li        r0, 0
-	  sth       r0, 0x4FC(r31)
-	  lwz       r0, 0xC(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x98
-	  lwz       r4, 0x4(r30)
-	  addi      r3, r31, 0
-	  li        r5, 0x16
-	  bl        0xE18C
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        0xE8AC
-	  li        r3, 0x1
-	  b         .loc_0x2DC
-
-	.loc_0x98:
-	  mr        r3, r31
-	  stw       r0, 0x4A4(r31)
-	  bl        0x4C10C
-	  lwz       r0, 0x8(r30)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xE0
-	  addi      r3, r1, 0x30
-	  li        r4, 0x46
-	  bl        0xA2AF8
-	  addi      r29, r3, 0
-	  addi      r3, r1, 0x38
-	  li        r4, 0x46
-	  bl        0xA2AE8
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        0x4E558
-	  b         .loc_0x10C
-
-	.loc_0xE0:
-	  addi      r3, r1, 0x20
-	  li        r4, 0x1D
-	  bl        0xA2AC8
-	  addi      r29, r3, 0
-	  addi      r3, r1, 0x28
-	  li        r4, 0x1D
-	  bl        0xA2AB8
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        0x4E528
-
-	.loc_0x10C:
-	  lwz       r3, 0x490(r31)
-	  addi      r4, r31, 0
-	  li        r5, 0x8
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x184(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x150
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,16,16
-	  bne-      .loc_0x150
-	  mr        r3, r31
-	  bl        0x1438C
-	  mr        r3, r31
-	  bl        0x144E8
-
-	.loc_0x150:
-	  lwz       r4, 0x4(r30)
-	  mr        r3, r31
-	  lwz       r5, 0xC(r30)
-	  bl        0x13A94
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,16,16
-	  bne-      .loc_0x17C
-	  li        r0, 0
-	  stw       r0, 0x4A4(r31)
-	  li        r3, 0
-	  b         .loc_0x2DC
-
-	.loc_0x17C:
-	  addi      r3, r1, 0x50
-	  lwz       r4, 0x4(r30)
-	  bl        0x14758
-	  addi      r29, r1, 0x50
-	  addi      r3, r29, 0
-	  lwz       r12, 0x0(r29)
-	  li        r27, 0
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-	  b         .loc_0x218
-
-	.loc_0x1AC:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0x1D0
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x1E8
-
-	.loc_0x1D0:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1E8:
-	  cmplw     r3, r31
-	  bne-      .loc_0x1F4
-	  li        r27, 0x1
-
-	.loc_0x1F4:
-	  lwz       r0, 0xC8(r3)
-	  rlwinm.   r0,r0,0,16,16
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x218:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x240
-	  li        r0, 0x1
-	  b         .loc_0x26C
-
-	.loc_0x240:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x268
-	  li        r0, 0x1
-	  b         .loc_0x26C
-
-	.loc_0x268:
-	  li        r0, 0
-
-	.loc_0x26C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x1AC
-	  rlwinm.   r0,r27,0,24,31
-	  bne-      .loc_0x294
-	  lwz       r3, 0x4(r30)
-	  lwz       r3, 0x180(r3)
-	  b         .loc_0x28C
-
-	.loc_0x288:
-	  lwz       r3, 0x18C(r3)
-
-	.loc_0x28C:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x288
-
-	.loc_0x294:
-	  lwz       r4, 0x4(r30)
-	  addi      r3, r31, 0
-	  li        r5, 0x16
-	  bl        0xDF6C
-	  lhz       r0, 0x426(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2D0
-	  li        r30, 0
-	  sth       r30, 0x426(r31)
-	  lwz       r3, 0x430(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r30, 0x424(r31)
-
-	.loc_0x2D0:
-	  li        r0, 0
-	  sth       r0, 0x426(r31)
-	  li        r3, 0x1
-
-	.loc_0x2DC:
-	  lmw       r27, 0x64(r1)
-	  lwz       r0, 0x7C(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

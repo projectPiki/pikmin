@@ -103,7 +103,7 @@ struct ItemMgr : public PolyObjectMgr {
 	void addUseList(int);
 	PelletShapeObject* getPelletShapeObject(int, int);
 	void initialise();
-	void getContainerExitCount();
+	int getContainerExitCount();
 
 	// unused/inlined:
 	void getMgr(int);

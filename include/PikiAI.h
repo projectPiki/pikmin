@@ -1637,12 +1637,14 @@ struct AiTable {
 	 * @brief Completely stripped. Static member shows up stripped in map.
 	 */
 	struct Row {
-		static u32 numInputs;
+		static int numInputs;
 
 		// TODO: members
 	};
 
 	static AiTable* uniqueInstance;
+
+	static void init() { uniqueInstance = nullptr; }
 
 	// TODO: members
 };
