@@ -83,6 +83,8 @@ struct ShapeDynMaterials {
 	u32 _0C;       // _0C
 };
 
+DEFINE_ENUM_TYPE(DisplayListFlags, Front = 0, Other = 1, Both = 2, Stripped = 0x1000000);
+
 /**
  * @brief TODO
  */
@@ -97,8 +99,8 @@ struct DispList : public CoreNode {
 	int mDataLength;    // _18
 	char* mData;        // _1C
 	int _20;            // _20
-	int _24;            // _24
-	int _28;            // _28
+	int mNodeCount;     // _24
+	int mFaceCount;     // _28
 	FaceNode mFaceNode; // _2C
 };
 

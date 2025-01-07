@@ -46,38 +46,38 @@ struct FaceNode : public CoreNode {
 	{
 	}
 
-	FaceNode(int a2)
+	FaceNode(int faceCount)
 	{
-		_14 = a2;
-		_18 = 0;
-		_1C = 0;
-		_20 = 0;
-		_24 = 0;
-		_28 = 0;
-		_2C = 0;
-		_30 = 0;
-		_34 = 0;
-		_38 = 0;
-		_3C = 0;
-		_40 = 0;
-		_44 = 0;
+		mFaceCount        = faceCount;
+		mMtxIdx           = 0;
+		mVtxIdx           = 0;
+		mColIdx           = 0;
+		mNrmIdx           = 0;
+		mTexCoords[0]     = 0;
+		mMtxGroupIndex    = 0;
+		mMtxGroupCount    = 0;
+		mNumMatrices      = 0;
+		_38               = 0;
+		mDisplayListFlags = 0;
+		mCurrentFaceIndex = 0;
+		mHasMatrixData    = 0;
 	}
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int _14; // _14
-	int _18; // _18
-	int _1C; // _1C
-	int _20; // _20
-	int _24; // _24
-	int _28; // _28
-	int _2C; // _2C
-	int _30; // _30
-	int _34; // _34
-	int _38; // _38
-	int _3C; // _3C
-	int _40; // _40
-	int _44; // _44
+	int mFaceCount;        // _14
+	int* mMtxIdx;          // _18
+	int* mVtxIdx;          // _1C
+	int* mColIdx;          // _20
+	int* mNrmIdx;          // _24
+	int* mTexCoords[8];    // _28
+	int mMtxGroupIndex;    // _2C
+	int mMtxGroupCount;    // _30
+	int mNumMatrices;      // _34
+	int _38;               // _38
+	int mDisplayListFlags; // _3C
+	int mCurrentFaceIndex; // _40
+	int mHasMatrixData;    // _44
 };
 
 /**

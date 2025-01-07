@@ -69,7 +69,7 @@ void DispList::read(RandomAccessStream& stream)
 	u32 badCompiler;
 
 	mFlags      = stream.readInt();
-	_28         = stream.readInt();
+	mFaceCount  = stream.readInt();
 	mDataLength = stream.readInt();
 
 	stream.skipPadding(0x20);
@@ -111,10 +111,10 @@ DispList::DispList()
 {
 	mFaceNode.initCore("");
 
-	_24    = 0;
-	_28    = 0;
-	mFlags = 0;
-	_20    = -1;
+	mNodeCount = 0;
+	mFaceCount = 0;
+	mFlags     = 0;
+	_20        = -1;
 }
 
 /*
