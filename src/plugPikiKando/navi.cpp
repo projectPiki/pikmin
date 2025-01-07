@@ -104,82 +104,6 @@ void Navi::startMovie(bool) { mStateMachine->transit(this, NAVISTATE_DemoWait); 
 
 /*
  * --INFO--
- * Address:	800F8440
- * Size:	0000B0
- */
-void StateMachine<Navi>::transit(Navi*, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r5,2,0,29
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  mr        r29, r4
-	  stw       r28, 0x18(r1)
-	  mr        r28, r3
-	  lwz       r31, 0xADC(r4)
-	  lwz       r3, 0x14(r3)
-	  cmplwi    r31, 0
-	  lwzx      r30, r3, r0
-	  mr        r3, r31
-	  beq-      .loc_0x5C
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r29
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x4(r31)
-	  stw       r0, 0x18(r28)
-
-	.loc_0x5C:
-	  lwz       r0, 0xC(r28)
-	  cmpw      r30, r0
-	  blt-      .loc_0x6C
-
-	.loc_0x68:
-	  b         .loc_0x68
-
-	.loc_0x6C:
-	  lwz       r3, 0x4(r28)
-	  rlwinm    r0,r30,2,0,29
-	  addi      r4, r29, 0
-	  lwzx      r3, r3, r0
-	  stw       r3, 0xADC(r29)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800F84F0
- * Size:	000004
- */
-void AState<Navi>::init(Navi*) { }
-
-/*
- * --INFO--
- * Address:	800F84F4
- * Size:	000004
- */
-void AState<Navi>::cleanup(Navi*) { }
-
-/*
- * --INFO--
  * Address:	800F84F8
  * Size:	000038
  */
@@ -831,13 +755,6 @@ void Navi::startDamage()
 
 /*
  * --INFO--
- * Address:	800F9828
- * Size:	000004
- */
-void AState<Navi>::resume(Navi*) { }
-
-/*
- * --INFO--
  * Address:	800F9834
  * Size:	000234
  */
@@ -1024,13 +941,6 @@ void Navi::finishDamage()
 
 	_2D4 = _2D8 = _2DC = 0;
 }
-
-/*
- * --INFO--
- * Address:	800F9B88
- * Size:	000004
- */
-void AState<Navi>::restart(Navi*) { }
 
 /*
  * --INFO--
@@ -3962,42 +3872,6 @@ void Navi::doAI()
 	mStateMachine->exec(this);
 	_7B4 = 0;
 }
-
-/*
- * --INFO--
- * Address:	800FC7BC
- * Size:	00003C
- */
-void StateMachine<Navi>::exec(Navi*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0xADC(r4)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800FC7F8
- * Size:	000004
- */
-void AState<Navi>::exec(Navi*) { }
 
 /*
  * --INFO--
@@ -7562,38 +7436,6 @@ void Navi::sendMsg(Msg* msg) { mStateMachine->procMsg(this, msg); }
 
 /*
  * --INFO--
- * Address:	800FF7E8
- * Size:	00003C
- */
-void StateMachine<Navi>::procMsg(Navi* navi, Msg* msg)
-{
-	if (navi->mCurrState) {
-		navi->mCurrState->procMsg(navi, msg);
-	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0xADC(r4)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	000004
  */
@@ -9491,10 +9333,3 @@ bool Navi::mayIstick() { return false; }
  * Size:	000008
  */
 f32 Navi::getShadowSize() { return 20.0f; }
-
-/*
- * --INFO--
- * Address:	8010110C
- * Size:	000004
- */
-void StateMachine<Navi>::init(Navi*) { }

@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Creature.h"
 #include "PaniPikiAnimator.h"
+#include "StateMachine.h"
 #include "UtEffect.h"
 #include "OdoMeter.h"
 
@@ -218,6 +219,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 
 	inline void set584() { _584 = 1; } // rename later
 
+	AState<Piki>* getCurrState() { return nullptr; } // fix this later
+
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
@@ -288,7 +291,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	CollPart* mSwallowMouthPart;  // _4A4
 	Creature* _4A8;               // _4A8, maybe puffstool/kinoko leader?
 	Vector3f _4AC;                // _4AC
-	u32 _4B8;                     // _4B8
+	int _4B8;                     // _4B8
 	u32 _4BC;                     // _4BC
 	u32 _4C0;                     // _4C0
 	u32 _4C4;                     // _4C4

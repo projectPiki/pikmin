@@ -26,36 +26,10 @@ struct SAICondition : public CoreNode {
 	{
 	}
 
-	virtual bool satisfy(AICreature*); // _10 (weak)
+	virtual bool satisfy(AICreature*) { return true; } // _10 (weak)
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-};
-
-/**
- * @brief TODO
- */
-struct SAIArrow : public CoreNode {
-	inline SAIArrow(char* name, SAIEvent* event, int p3)
-	    : CoreNode(name)
-	{
-		_18 = event;
-		_14 = p3;
-	}
-
-	inline SAIArrow(char* name)
-	    : CoreNode(name)
-	{
-		_14 = -1;
-		_18 = nullptr;
-	}
-
-	// _00     = VTBL
-	// _00-_14 = CoreNode
-	int _14;                 // _14
-	SAIEvent* _18;           // _18
-	int mArrowIdx;           // _1C
-	SAICondition mCondition; // _20
 };
 
 /**
@@ -68,6 +42,13 @@ struct SAIEvent : public Receiver<AICreature> {
 	    : mEventID(-1)
 	{
 	}
+
+	void setFlag(AICreature* creature, bool value) { creature->setEventFlag(mEventID, value); }
+	void setContext(int eventID) { mEventID = eventID; }
+
+	// TODO: these are DLL inlines, need to make them
+	bool satisfy(AICreature* creature) { return creature->checkEventFlag(mEventID); }
+	void reset();
 
 	// _00 = VTBL
 	int mEventID; // _04
@@ -163,7 +144,42 @@ struct SAIUserEvent : public SAIEvent {
 
 	// _00     = VTBL
 	// _00-_08 = SAIEvent
-	u32 mUserID; // _08
+	int mUserID; // _08
+};
+
+/**
+ * @brief TODO
+ */
+struct SAIArrow : public CoreNode {
+	SAIArrow(SAIEvent* event, int nextState)
+	    : CoreNode("SAIArrow")
+	{
+		mEvent       = event;
+		mNextStateID = nextState;
+	}
+
+	SAIArrow()
+	    : CoreNode("SAIArrowRoot")
+	{
+		mNextStateID = -1;
+		mEvent       = nullptr;
+	}
+
+	// TODO: these are DLL inlines, need to make them
+	SAIArrow* addCondition(SAICondition*);
+	void setEventContext()
+	{
+		if (mEvent) {
+			mEvent->setContext(mArrowIdx);
+		}
+	}
+
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	int mNextStateID;        // _14
+	SAIEvent* mEvent;        // _18
+	int mArrowIdx;           // _1C
+	SAICondition mCondition; // _20
 };
 
 /**
@@ -175,19 +191,19 @@ struct SAIState : public AState<AICreature> {
 	SAIState(int);
 
 	virtual void procMsg(AICreature*, Msg*); // _08
-	virtual void init(AICreature*);          // _38
 	virtual void exec(AICreature*);          // _3C
+	virtual void init(AICreature*);          // _38
 	virtual void cleanup(AICreature*);       // _40
 
 	// _00     = VTBL
 	// _00-_0C = AState
-	char* mName;         // _0C, probably
-	SAIArrow mRootArrow; // _10
-	int mArrowCount;     // _44
-	int _48;             // _48
-	SAIAction* _4C;      // _4C
-	SAIAction* _50;      // _50
-	SAIAction* _54;      // _54
+	char* mName;               // _0C, probably
+	SAIArrow mRootArrow;       // _10
+	int mArrowCount;           // _44
+	int mMotionIdx;            // _48
+	SAIAction* mInitAction;    // _4C, action to perform on state init
+	SAIAction* mExecAction;    // _50, action to perform on state exec
+	SAIAction* mCleanupAction; // _54, action to perform on state exit
 };
 
 /**
@@ -198,8 +214,8 @@ struct SAIState : public AState<AICreature> {
 struct SimpleAI : public StateMachine<AICreature> {
 	SimpleAI();
 
-	virtual void exec(AICreature*);          // _0C
 	virtual void procMsg(AICreature*, Msg*); // _10
+	virtual void exec(AICreature*);          // _0C
 
 	void addState(int, int, SAIAction*, SAIAction*, SAIAction*);
 	SAIArrow* addArrow(int, SAIEvent*, int);

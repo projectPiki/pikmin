@@ -5,6 +5,8 @@
 #include "Creature.h"
 #include "Matrix4f.h"
 
+struct DynParticle;
+
 /**
  * @brief TODO
  */
@@ -28,32 +30,36 @@ struct DynCreature : public Creature {
 
 	f32 getPickOffset() { return mPickOffset; }
 
+	bool isDynFlag(int flag) { return mDynFlag & flag; }
+	void setDynFlag(int flag) { mDynFlag |= flag; }
+	void resetDynFlag(int flag) { mDynFlag &= ~flag; }
+
+	// might be disableFriction
+	void enableFriction() { setDynFlag(1); }
+
+	// might be enableFriction
+	void disableFriction() { resetDynFlag(1); }
+
 	// DLL inlines to make:
-	// bool isDynFlag(int);
-	// void resetDynFlag(int);
-	// void setDynFlag(int);
-	// f32 getPickOffset();
 	// u8 getGroundFlag();
-	// void disableFriction();
-	// void enableFriction();
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	Vector3f _2B8;          // _2B8
-	Vector3f _2C4;          // _2C4
-	f32 mPickOffset;        // _2D0
-	u16 _2D4;               // _2D4, might be s16
-	u32 _2D8;               // _2D8, unknown
-	Vector3f _2DC;          // _2DC
-	Vector3f _2E8;          // _2E8
-	f32 _2F4;               // _2F4
-	Matrix4f _2F8;          // _2F8
-	Matrix4f _338;          // _338
-	Matrix4f _378;          // _378
-	Matrix4f _3B8;          // _3B8
-	u8 _3F8[0x438 - 0x3F8]; // _3F8, unknown
-	u8 _438;                // _438, flag of some kind?
-	u8 _439;                // _439
+	Vector3f _2B8;              // _2B8
+	Vector3f _2C4;              // _2C4
+	f32 mPickOffset;            // _2D0
+	u16 mParticleCount;         // _2D4, might be s16
+	DynParticle* mParticleList; // _2D8
+	Vector3f _2DC;              // _2DC
+	Vector3f _2E8;              // _2E8
+	f32 _2F4;                   // _2F4
+	Matrix4f _2F8;              // _2F8
+	Matrix4f _338;              // _338
+	Matrix4f mInertiaTensor;    // _378
+	Matrix4f mInvInertiaTensor; // _3B8
+	Matrix4f _3F8;              // _3F8
+	u8 mDynFlag;                // _438
+	u8 _439;                    // _439
 };
 
 #endif

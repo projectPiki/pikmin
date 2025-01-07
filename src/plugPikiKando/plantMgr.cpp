@@ -7,27 +7,21 @@
 #include "SoundMgr.h"
 #include "MapMgr.h"
 #include "sysNew.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "plantMgr");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("plantMgr");
 
 PlantMgr* plantMgr;
 
@@ -424,7 +418,7 @@ void Plant::doKill() { }
 PlantAI::PlantAI()
 {
 	OpponentMove* oppMove = new OpponentMove();
-	setup(STATE_COUNT);
+	create(STATE_COUNT);
 	addState(STATE_Wait, -1, new WaitInit(), nullptr, nullptr);
 	addState(STATE_Touch, -1, new TouchInit(), nullptr, nullptr);
 	addArrow(STATE_Wait, saiCollideEvent, STATE_Touch)->mCondition.add(oppMove);

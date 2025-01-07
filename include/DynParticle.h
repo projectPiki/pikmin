@@ -6,6 +6,8 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xAC.
  */
 struct DynParticle : public CoreNode {
 	DynParticle();
@@ -17,10 +19,17 @@ struct DynParticle : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u8 _14[0x48 - 0x14]; // _14, unknown
-	int mIsFree;         // _48
-	u8 _4C[0x90 - 0x4C]; // _4C, unknown
-	f32 _90;             // _90
+	f32 _14;                    // _14
+	Vector3f _18;               // _18
+	Vector3f _24;               // _24
+	Vector3f _30;               // _30
+	Vector3f _3C;               // _3C
+	int mIsFree;                // _48
+	DynParticle* mNextParticle; // _4C, maybe child particle?
+	Matrix4f _50;               // _50
+	f32 _90;                    // _90
+	Vector3f _94;               // _94
+	Vector3f _A0;               // _A0
 };
 
 /**
@@ -29,10 +38,13 @@ struct DynParticle : public CoreNode {
 struct DynParticleHeap {
 	DynParticleHeap(int);
 
-	void getFreeOne();
+	DynParticle* getFreeOne();
 	void releaseOne(DynParticle*);
 
-	// TODO: members
+	DynParticle mFreeParticleList; // _00
+	DynParticle mUsedParticleList; // _AC
+	int mNumParticles;             // _158
+	DynParticle* mHeap;            // _15C
 };
 
 extern DynParticleHeap* particleHeap;

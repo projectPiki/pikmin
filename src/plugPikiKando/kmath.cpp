@@ -115,7 +115,7 @@ void makePostureMatrix(Vector3f&, Vector3f&, Vector3f&, Matrix4f&)
  * Address:	801127BC
  * Size:	0001B0
  */
-void calcImpulse(Vector3f&, f32, Vector3f&, Matrix4f&, Vector3f&, Vector3f&)
+f32 calcImpulse(Vector3f&, f32, Vector3f&, Matrix4f&, Vector3f&, Vector3f&)
 {
 	/*
 	.loc_0x0:

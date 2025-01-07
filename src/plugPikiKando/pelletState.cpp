@@ -1,5 +1,6 @@
 #include "PelletState.h"
 #include "Suckable.h"
+#include "Pellet.h"
 #include "Dolphin/os.h"
 
 /*

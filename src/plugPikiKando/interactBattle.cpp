@@ -577,7 +577,7 @@ bool InteractPress::actPiki(Piki* piki)
 			MsgUser msg(1);
 			BombItem* bombItem = static_cast<BombItem*>(bomb);
 			bombItem->_2D0     = 0;
-			bombItem->mStateMachine->procMsg(bombItem, &msg);
+			static_cast<SimpleAI*>(bombItem->mStateMachine)->procMsg(bombItem, &msg);
 			PRINT("bomb immediately\n");
 		}
 	}

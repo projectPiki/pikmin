@@ -20,30 +20,30 @@ struct StateMachine;
 struct AICreature : public Creature, public PaniAnimKeyListener {
 	AICreature(CreatureProp*);
 
-	virtual void collisionCallback(CollEvent&);                          // _A8
-	virtual void bounceCallback();                                       // _AC
-	virtual void refresh(Graphics&) = 0;                                 // _EC
-	virtual void doKill()           = 0;                                 // _10C
-	virtual AState<AICreature>* getCurrState() { return mCurrentState; } // _120 (weak)
-	virtual void setCurrState(AState<AICreature>*);                      // _124 (weak)
-	virtual void playSound(int) { }                                      // _128 (weak)
-	virtual void playEffect(int) { }                                     // _12C (weak)
-	virtual void startMotion(int);                                       // _130 (weak)
-	virtual void finishMotion();                                         // _134 (weak)
-	virtual void finishMotion(f32);                                      // _138 (weak)
-	virtual void startMotion(int, f32);                                  // _13C (weak)
-	virtual char* getCurrentMotionName();                                // _140 (weak)
-	virtual f32 getCurrentMotionCounter();                               // _144 (weak)
-	virtual f32 getMotionSpeed();                                        // _148 (weak)
-	virtual void setMotionSpeed(f32);                                    // _14C (weak)
-	virtual void stopMotion();                                           // _150 (weak)
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&);                 // _154 (weak)
+	virtual void collisionCallback(CollEvent&);                                     // _A8
+	virtual void bounceCallback();                                                  // _AC
+	virtual void refresh(Graphics&) = 0;                                            // _EC
+	virtual void doKill()           = 0;                                            // _10C
+	virtual AState<AICreature>* getCurrState() { return mCurrentState; }            // _120 (weak)
+	virtual void setCurrState(AState<AICreature>* state) { mCurrentState = state; } // _124 (weak)
+	virtual void playSound(int) { }                                                 // _128 (weak)
+	virtual void playEffect(int) { }                                                // _12C (weak)
+	virtual void startMotion(int) { }                                               // _130 (weak)
+	virtual void finishMotion() { }                                                 // _134 (weak)
+	virtual void finishMotion(f32) { }                                              // _138 (weak)
+	virtual void startMotion(int, f32) { }                                          // _13C (weak)
+	virtual char* getCurrentMotionName() { return "noname"; }                       // _140 (weak)
+	virtual f32 getCurrentMotionCounter() { return -123.4f; }                       // _144 (weak)
+	virtual f32 getMotionSpeed() { return -123.4f; }                                // _148 (weak)
+	virtual void setMotionSpeed(f32) { }                                            // _14C (weak)
+	virtual void stopMotion() { }                                                   // _150 (weak)
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&);                            // _154 (weak)
 
 	void clearEventFlags();
 	void setEventFlag(int, bool);
 
 	// unused/inlined:
-	void checkEventFlag(int);
+	bool checkEventFlag(int);
 
 	// _00       = VTBL
 	// _00-_2B8  = Creature

@@ -6,12 +6,24 @@
 #include "CreatureProp.h"
 #include "ObjectMgr.h"
 #include "Animator.h"
+#include "StateMachine.h"
 
 struct PaniAnimKeyEvent;
 struct PaniMotionTable;
 struct PelletShapeObject;
 struct PelletView;
 struct Shape;
+
+/**
+ * @brief TODO
+ */
+struct NumberPel {
+	int mPelletColor; // _00
+	int mPelletType;  // _04
+	u32 mPelletID;    // _08
+};
+
+extern NumberPel numberPellets[13];
 
 /**
  * @brief TODO
@@ -27,6 +39,17 @@ enum PelletType {
 
 	// Ship parts
 	PELTYPE_UfoPart = 3,
+};
+
+/**
+ * @brief TODO
+ */
+enum NumPelletType {
+	NUMPEL_NULL         = -1,
+	NUMPEL_OnePellet    = 0,
+	NUMPEL_FivePellet   = 1,
+	NUMPEL_TenPellet    = 2,
+	NUMPEL_TwentyPellet = 3,
 };
 
 /**
@@ -124,23 +147,23 @@ struct Pellet : public DualCreature {
 	virtual void doCreateColls(Graphics&);               // _11C
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _12C (weak)
 
-	void getState();
+	int getState();
 	void setTrySound(bool);
 	void startPick();
 	void finishPick();
 	void startGoal();
 	void doCarry(Creature*, Vector3f&, u16);
-	void getBottomRadius();
-	void startStickTeki(Creature*, f32);
+	f32 getBottomRadius();
+	bool startStickTeki(Creature*, f32);
 	void endStickTeki(Creature*);
-	void winnable(int);
-	void stickSlot(int);
+	bool winnable(int);
+	bool stickSlot(int);
 	void stickOffSlot(int);
-	void getMinFreeSlotIndex();
-	void getNearestFreeSlotIndex(Vector3f&);
-	void getRandomFreeSlotIndex();
-	void getSlotLocalPos(int, f32);
-	void getSlotGlobalPos(int, f32);
+	int getMinFreeSlotIndex();
+	int getNearestFreeSlotIndex(Vector3f&);
+	int getRandomFreeSlotIndex();
+	Vector3f getSlotLocalPos(int, f32);
+	Vector3f getSlotGlobalPos(int, f32);
 	void setSlotFlag(int);
 	void resetSlotFlag(int);
 	void isSlotFlag(int);
@@ -158,6 +181,16 @@ struct Pellet : public DualCreature {
 
 	// this is the only DLL inline that takes no argument and returns a bool
 	bool isUfoParts() { return mIsUfoPart; }
+
+	AState<Pellet>* getCurrState() { return nullptr; } // TODO: fix later
+	void setCurrState(AState<Pellet>* state) { }       // TODO: fix later
+
+	// DLL inlines to do:
+	bool isMotionFlag(u8);
+	void setMotionFlag(u8);
+
+	bool isSlotFree(int);
+	int getNearestFreeSlotIndex();
 
 	// _00      = VTBL
 	// _00-_43C = DualCreature?
@@ -184,19 +217,17 @@ struct PelletMgr : public MonoObjectMgr {
 
 	virtual ~PelletMgr();                   // _48 (weak)
 	virtual void refresh(Graphics&);        // _58
-	virtual Pellet* createObject();         // _80
+	virtual Creature* createObject();       // _80
 	virtual void read(RandomAccessStream&); // _84 (weak)
 
-	void getUfoIndexFromID(u32);
-	void getUfoIDFromIndex(int);
-	void decomposeNumberPellet(u32, int&, int&);
+	bool decomposeNumberPellet(u32, int&, int&);
 	void registerUfoParts();
 	Pellet* newNumberPellet(int, int);
 	Pellet* newPellet(u32, PelletView*);
 	PelletShapeObject* getShapeObject(u32);
 	void addUseList(u32);
 	void initShapeInfos();
-	void getConfigIndex(u32);
+	int getConfigIndex(u32);
 	PelletConfig* getConfigFromIdx(int);
 	PelletConfig* getConfig(u32);
 	void readConfigs(RandomAccessStream&);
@@ -206,8 +237,18 @@ struct PelletMgr : public MonoObjectMgr {
 	void refresh2d(Graphics&);
 
 	// unused/inlined:
-	void useShape(u32);
-	void getConfigIdAt(int);
+	bool useShape(u32);
+	ID32 getConfigIdAt(int);
+
+	static int getUfoIndexFromID(u32 ufoID);
+	static u32 getUfoIDFromIndex(int);
+
+	// DLL inlines to make:
+	bool isMovieFlag(u16);
+	int getNumConfigs();
+	void setMovieFlags(u16);
+	void writeAnimInfos(RandomAccessStream&);
+	void writeConfigs(RandomAccessStream&);
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
@@ -232,5 +273,6 @@ struct PelletShapeObject {
 };
 
 extern PelletMgr* pelletMgr;
+extern bool SmartTurnOver;
 
 #endif

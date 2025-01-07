@@ -110,7 +110,8 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	void throwLocus(Vector3f&);
 	void renderParabola(Graphics&, f32, f32);
 
-	NaviState* getCurrState() { return mCurrState; }
+	AState<Navi>* getCurrState() { return mCurrState; }
+	void setCurrState(AState<Navi>* state) { mCurrState = state; }
 
 	// _00       = VTBL
 	// _000-_2B8 = Creature
@@ -208,7 +209,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u32 _AD0;                          // _AD0, unknown
 	u8 _AD4[0x4];                      // _AD4, unknown
 	f32 _AD8;                          // _AD8
-	NaviState* mCurrState;             // _ADC
+	AState<Navi>* mCurrState;          // _ADC
 };
 
 /**

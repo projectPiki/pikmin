@@ -20,11 +20,11 @@ struct AState : public Receiver<T> {
 	{
 	}
 
-	virtual void init(T*);                    // _38
-	virtual void exec(T*);                    // _3C
-	virtual void cleanup(T*);                 // _40
-	virtual void resume(T*);                  // _44
-	virtual void restart(T*);                 // _48
+	virtual void init(T*) { }                 // _38
+	virtual void exec(T*) { }                 // _3C
+	virtual void cleanup(T*) { }              // _40
+	virtual void resume(T*) { }               // _44
+	virtual void restart(T*) { }              // _48
 	virtual void transit(T* obj, int stateID) // _4C
 	{
 		mStateMachine->transit(obj, stateID);
@@ -51,34 +51,68 @@ struct StateMachine {
 	{
 	}
 
-	virtual void init(T*);          // _08
-	virtual void exec(T*);          // _0C
-	virtual void procMsg(T*, Msg*); // _10
-	virtual void transit(T*, int);  // _14
-
-	inline bool isValidState(AState<T>* state)
+	virtual void init(T*) { }    // _08
+	virtual void exec(T* target) // _0C
 	{
-		if (state->mStateID < 0 || state->mStateID >= mStateLimit) {
+		AState<T>* state = target->getCurrState();
+		if (state) {
+			state->exec(target);
+		}
+	}
+	virtual void procMsg(T* target, Msg* msg) // _10
+	{
+		AState<T>* state = target->getCurrState();
+		if (state) {
+			state->procMsg(target, msg);
+		}
+	}
+	virtual void transit(T* target, int nextStateID) // _14
+	{
+		isValidID(nextStateID);
+		int nextStateIdx = mStateIndexes[nextStateID];
+		AState<T>* state = target->getCurrState();
+		if (state) {
+			state->cleanup(target);
+			_18 = state->getID();
+		}
+
+		if (nextStateIdx >= mStateLimit) {
+			// you were bad and sent a bad ID to transit to
+			// time to get locked in the spinny wheel of death
+			while (true) {
+				;
+			}
+		}
+
+		state = mStates[nextStateIdx];
+		target->setCurrState(state);
+		state->init(target);
+	}
+
+	bool isValidID(int stateID)
+	{
+		if (stateID < 0 || stateID >= mStateLimit) {
 			return false;
 		}
 
 		return true;
 	}
 
-	inline AState<T>* getState(int idx) { return mStates[idx]; }
-	inline void setState(int idx, AState<T>* state) { mStates[idx] = state; }
-
-	inline void appendState(AState<T>* state) { setState(mStateCount, state); }
-
-	inline void initState(AState<T>* state)
+	void registerState(AState<T>* state)
 	{
-		state->mStateMachine           = this;
-		mStateIDs[mStateCount]         = state->mStateID;
-		mStateIndexes[state->mStateID] = mStateCount;
-		mStateCount++;
+		if (mStateCount < mStateLimit) {
+			mStates[mStateCount] = state;
+
+			if (isValidID(state->getID())) {
+				state->setMachine(this);
+				mStateIDs[mStateCount]        = state->getID();
+				mStateIndexes[state->getID()] = mStateCount;
+				mStateCount++;
+			}
+		}
 	}
 
-	inline void setup(int limit)
+	void create(int limit)
 	{
 		mStateLimit   = limit;
 		mStateCount   = 0;
@@ -87,19 +121,16 @@ struct StateMachine {
 		mStateIndexes = new int[mStateLimit];
 	}
 
-	inline bool isFull() { return mStateCount >= mStateLimit; }
+	/*
+	    ONLY DLL inlines:
 
-	// name based off P2 function
-	inline void registerState(AState<T>* state)
-	{
-		if (isFull()) {
-			return;
-		}
-		appendState(state);
-		if (isValidState(state)) {
-			initState(state);
-		}
-	}
+	    int getCurrID(T*);
+
+	    int getLastStateID(); // only for piki
+	    char* getCurrName(T*); // only for piki
+	    void restart(T*); // only for navi and piki
+	    void resume(T*); // only for navi and piki
+	*/
 
 	// _00 = VTBL
 	AState<T>** mStates; // _04

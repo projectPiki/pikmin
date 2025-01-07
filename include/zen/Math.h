@@ -2,6 +2,7 @@
 #define _ZEN_MATH_H
 
 #include "types.h"
+#include "stl/math.h"
 
 struct Vector3f;
 struct Matrix3f;
@@ -22,6 +23,9 @@ void GetMatrix(const Quat&, Matrix4f&);
 void GetRotate(const Quat&, Vector3f&);
 
 } // namespace ZenQuat
+
+// DLL inlines:
+inline f32 Abs(f32 val) { return fabsf(val); }
 
 } // namespace zen
 

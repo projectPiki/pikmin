@@ -457,8 +457,8 @@ void Creature::init()
 	disableAICulling();
 	_21C = 0;
 	setCreatureFlag(CF_Free);
-	resetCreatureFlag(CF_Unk9 | CF_IsAiDisabled | CF_IsClimbing | CF_AIAlwaysActive);
-	mAbsPickOffset = 0.0f;
+	resetCreatureFlag(CF_GroundOffsetEnabled | CF_IsAiDisabled | CF_IsClimbing | CF_AIAlwaysActive);
+	mGroundOffset = 0.0f;
 	mHoldingCreature.clear();
 	mGrabbedCreature.clear();
 	resetCreatureFlag(CF_Unk6 | CF_Unk17);
@@ -2469,7 +2469,7 @@ void Creature::renderAtari(Graphics& gfx)
 		mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), mPosition);
 		gfx.mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);
 		gfx.setColour(Colour(0, 255, 0, 255), true);
-		gfx.drawSphere(Vector3f(0.0f, -mAbsPickOffset, 0.0f), mCollisionRadius, mtx2);
+		gfx.drawSphere(Vector3f(0.0f, -mGroundOffset, 0.0f), mCollisionRadius, mtx2);
 		return;
 	}
 
@@ -2500,7 +2500,7 @@ void Creature::renderAtari(Graphics& gfx)
 	mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), mPosition);
 	gfx.mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);
 	gfx.setColour(Colour(0, 255, 0, 255), true);
-	gfx.drawSphere(Vector3f(0.0f, -mAbsPickOffset, 0.0f), mCollisionRadius, mtx2);
+	gfx.drawSphere(Vector3f(0.0f, -mGroundOffset, 0.0f), mCollisionRadius, mtx2);
 	/*
 	.loc_0x0:
 	  mflr      r0

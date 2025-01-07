@@ -105,8 +105,9 @@ void __mtfsb0(int);
 void __mtfsb1(int);
 f64 __setflm(f64);
 
-#define FABS(x) (f32) __fabs(x)
-#define fabs(x) __fabs(x)
+#define FABS(x)  (f32) __fabs(x)
+#define fabs(x)  __fabs(x)
+#define fabsf(x) __fabsf(x)
 
 inline f128 fabsl(f128 x) { return __fabs((f64)x); }
 

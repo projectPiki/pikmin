@@ -42,7 +42,7 @@ DEFINE_PRINT("naviState");
  * Address:	80101140
  * Size:	000008
  */
-NaviState* NaviStateMachine::getNaviState(Navi* navi) { return navi->mCurrState; }
+NaviState* NaviStateMachine::getNaviState(Navi* navi) { return static_cast<NaviState*>(navi->mCurrState); }
 
 /*
  * --INFO--
@@ -51,10 +51,7 @@ NaviState* NaviStateMachine::getNaviState(Navi* navi) { return navi->mCurrState;
  */
 void NaviStateMachine::init(Navi* navi)
 {
-	// this is probably from some debug stuff?
-	u32 badCompiler[0x48];
-
-	setup(NAVISTATE_Count);
+	create(NAVISTATE_Count);
 	registerState(new NaviWalkState());
 	registerState(new NaviStuckState());
 	registerState(new NaviFlickState());

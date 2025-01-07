@@ -44,10 +44,7 @@ void SAIEventInit()
  * Address:	8007CF58
  * Size:	000040
  */
-void SAIMotionDoneEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
-{
-	creature->setEventFlag(mEventID, msg->mKeyEvent->mEventType == KEY_Finished);
-}
+void SAIMotionDoneEvent::procAnimMsg(AICreature* creature, MsgAnim* msg) { setFlag(creature, msg->mKeyEvent->mEventType == KEY_Finished); }
 
 /*
  * --INFO--
@@ -56,7 +53,7 @@ void SAIMotionDoneEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
  */
 void SAIMotionAction0Event::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
-	creature->setEventFlag(mEventID, msg->mKeyEvent->mEventType == KEY_Action0);
+	setFlag(creature, msg->mKeyEvent->mEventType == KEY_Action0);
 }
 
 /*
@@ -66,7 +63,7 @@ void SAIMotionAction0Event::procAnimMsg(AICreature* creature, MsgAnim* msg)
  */
 void SAIMotionLoopStartEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
-	creature->setEventFlag(mEventID, msg->mKeyEvent->mEventType == KEY_LoopStart);
+	setFlag(creature, msg->mKeyEvent->mEventType == KEY_LoopStart);
 }
 
 /*
@@ -76,7 +73,7 @@ void SAIMotionLoopStartEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
  */
 void SAIMotionLoopEndEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
 {
-	creature->setEventFlag(mEventID, msg->mKeyEvent->mEventType == KEY_LoopEnd);
+	setFlag(creature, msg->mKeyEvent->mEventType == KEY_LoopEnd);
 }
 
 /*
@@ -84,25 +81,25 @@ void SAIMotionLoopEndEvent::procAnimMsg(AICreature* creature, MsgAnim* msg)
  * Address:	8007D058
  * Size:	000030
  */
-void SAIBounceEvent::procBounceMsg(AICreature* creature, MsgBounce*) { creature->setEventFlag(mEventID, true); }
+void SAIBounceEvent::procBounceMsg(AICreature* creature, MsgBounce*) { setFlag(creature, true); }
 
 /*
  * --INFO--
  * Address:	8007D088
  * Size:	000030
  */
-void SAICollideEvent::procCollideMsg(AICreature* creature, MsgCollide*) { creature->setEventFlag(mEventID, true); }
+void SAICollideEvent::procCollideMsg(AICreature* creature, MsgCollide*) { setFlag(creature, true); }
 
 /*
  * --INFO--
  * Address:	8007D0B8
  * Size:	000030
  */
-void SAIGroundEvent::procGroundMsg(AICreature* creature, MsgGround*) { creature->setEventFlag(mEventID, true); }
+void SAIGroundEvent::procGroundMsg(AICreature* creature, MsgGround*) { setFlag(creature, true); }
 
 /*
  * --INFO--
  * Address:	8007D0E8
  * Size:	000040
  */
-void SAIUserEvent::procUserMsg(AICreature* creature, MsgUser* msg) { creature->setEventFlag(mEventID, mUserID == msg->mUserID); }
+void SAIUserEvent::procUserMsg(AICreature* creature, MsgUser* msg) { setFlag(creature, mUserID == msg->mUserID); }
