@@ -16,7 +16,7 @@ struct Material : public CoreNode {
 	virtual void read(RandomAccessStream&); // _0C
 	virtual void attach();                  // _10
 
-	Colour& Colour() { return (::Colour&)mColourInfo; }
+	Colour& Colour() { return mColourInfo.mColour; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

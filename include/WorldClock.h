@@ -25,7 +25,7 @@ struct WorldClock {
 	f32 mTotalTime;        // _18
 	u8 _1C[0x4];           // _1C, unknown
 	int mCurrentTime;      // _20
-	int _24;               // _24, unknown, same as _30 in CreatureInf
+	int mCurrentDay;       // _24
 	int mMinutes;          // _28
 };
 

@@ -1,36 +1,29 @@
 #include "gameflow.h"
-#include "Dolphin/os.h"
 #include "GlobalShape.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "globalShape");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("globalShape");
 
 namespace GlobalShape {
 
-void* arrowShape;
-void* markerShape;
-void* axisShape;
-void* enShape;
-void* markerShape2;
-void* cursorShape;
+Shape* arrowShape;
+Shape* markerShape;
+Shape* axisShape;
+Shape* enShape;
+Shape* markerShape2;
+Shape* cursorShape;
 
 void exitCourse()
 {

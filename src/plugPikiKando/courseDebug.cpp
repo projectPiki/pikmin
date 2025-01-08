@@ -49,20 +49,7 @@ static GenObject* makeObjectDebug() { return new GenObjectDebug(); }
  * Address:	800865D4
  * Size:	00008C
  */
-void GenObjectDebug::initialise()
-{
-	GenObjectFactory* fact = GenObjectFactory::factory;
-	if (fact->mSpawnerCount >= fact->mMaxSpawners) {
-		return;
-	}
-
-	fact->mSpawnerInfo[fact->mSpawnerCount].mID          = 'debg';
-	fact->mSpawnerInfo[fact->mSpawnerCount].mGenFunction = &makeObjectDebug;
-	fact->mSpawnerInfo[fact->mSpawnerCount].mName        = "Debug Switches";
-	fact->mSpawnerInfo[fact->mSpawnerCount].mVersion     = 'v0.0';
-
-	fact->mSpawnerCount++;
-}
+void GenObjectDebug::initialise() { GenObjectFactory::factory->registerMember('debg', &makeObjectDebug, "Debug Switches", 'v0.0'); }
 
 /*
  * --INFO--
@@ -84,10 +71,3 @@ Creature* GenObjectDebug::birth(BirthInfo&)
 	CourseDebug::pelletDebug  = mPelletDebug();
 	return nullptr;
 }
-
-/*
- * --INFO--
- * Address:	8008668C
- * Size:	000004
- */
-void GenObject::render(Graphics&, Generator*) { }

@@ -257,7 +257,7 @@ void DynCreature::update()
 void DynCreature::simulate(f32 timeStep)
 {
 	_2DC.set(0.0f, 0.0f, 0.0f);
-	_439 = 0;
+	mGroundFlag = 0;
 
 	Matrix4f rotMtx;
 	Matrix4f tmpMtx;
@@ -314,7 +314,7 @@ void DynCreature::simulate(f32 timeStep)
 
 		f32 heightDiff = minY - (ptcl->_94.y - ptcl->_90);
 		if (ptcl->_94.y - minY < ptcl->_90) {
-			_439 |= (1 << ptclNum);
+			mGroundFlag |= (1 << ptclNum);
 			count2++;
 
 			Vector3f normal;

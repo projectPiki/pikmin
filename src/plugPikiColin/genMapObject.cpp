@@ -45,18 +45,8 @@ GenObjectMapObject::GenObjectMapObject()
  */
 void GenObjectMapObject::initialise(MapMgr* mgr)
 {
-	mapMgr                 = mgr;
-	GenObjectFactory* fact = GenObjectFactory::factory;
-	if (fact->mSpawnerCount >= fact->mMaxSpawners) {
-		return;
-	}
-
-	fact->mSpawnerInfo[fact->mSpawnerCount].mID          = 'mobj';
-	fact->mSpawnerInfo[fact->mSpawnerCount].mGenFunction = &makeObjectMapObject;
-	fact->mSpawnerInfo[fact->mSpawnerCount].mName        = "create MAP OBJECT";
-	fact->mSpawnerInfo[fact->mSpawnerCount].mVersion     = 'v0.0';
-
-	fact->mSpawnerCount++;
+	mapMgr = mgr;
+	GenObjectFactory::factory->registerMember('mobj', &makeObjectMapObject, "create MAP OBJECT", 'v0.0');
 }
 
 /*

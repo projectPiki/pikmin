@@ -14,57 +14,106 @@ struct MapMgr;
 struct Pellet;
 struct Generator;
 struct GenType;
+struct GenArea;
+struct GenObject;
+struct GeneratorMgr;
 struct TekiPersonality;
 
 /**
  * @brief TODO
  */
+enum GenCarryOverFlags {
+	GENCARRY_Unk1         = 1 << 0, // 0x1
+	GENCARRY_Unk2         = 1 << 1, // 0x2
+	GENCARRY_Unk3         = 1 << 2, // 0x4
+	GENCARRY_SavePosition = 1 << 3, // 0x8
+};
+
+/**
+ * @brief TODO
+ */
 struct BirthInfo {
+	void set(Vector3f& pos, Vector3f& rot, Vector3f& scale, Generator* gen)
+	{
+		mPosition  = pos;
+		mRotation  = rot;
+		mScale     = scale;
+		mGenerator = gen;
+	}
+
 	Vector3f mPosition;    // _00
 	Vector3f mRotation;    // _0C
 	Vector3f mScale;       // _18
 	Generator* mGenerator; // _24
 };
 
-template <typename T>
-struct Factory {
-	T* create(u32);
-
-	// TODO: members
-};
-
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
-struct Generator : public Node {
-	Generator();
-	Generator(int);
+template <typename T>
+struct Factory {
+	typedef T* (*GenFunc)();
 
-	static bool ramMode;
+	struct Member {
+		u32 mID;              // _00
+		GenFunc mGenFunction; // _04
+		char* mName;          // _08
+		u32 mVersion;         // _0C
+	};
 
-	virtual void read(struct RandomAccessStream&); // _0C
-	virtual void update();                         // _10
-	virtual void render(struct Graphics&);         // _18
+	Factory(int maxSpawners)
+	{
+		mSpawnerInfo  = new Member[maxSpawners];
+		mMaxSpawners  = maxSpawners;
+		mSpawnerCount = 0;
+	}
 
-	bool isExpired();
-	void loadCreature(RandomAccessStream&);
-	void saveCreature(RandomAccessStream&);
-	void init();
-	void informDeath(Creature*);
-	void write(RandomAccessStream&);
+	T* create(u32 id)
+	{
+		for (int i = 0; i < mSpawnerCount; i++) {
+			if (id == mSpawnerInfo[i].mID) {
+				return mSpawnerInfo[i].mGenFunction();
+			}
+		}
+		return nullptr;
+	}
 
-	// unused/inlined:
-	~Generator();
-	void updateUseList();
+	void registerMember(u32 id, GenFunc func, char* name, u32 version)
+	{
+		if (mSpawnerCount >= mMaxSpawners) {
+			return;
+		}
 
-	// _00     = VTBL
-	// _00-_20 = Node
-	u8 _20[0x28 - 0x20]; // _20, unknown
-	GenType* _28;        // _28
-	u8 _2C[0x58 - 0x2C]; // _2C, unknown
-	ID32 _58;            // _58, generator ID?
-	ID32 _64;            // _64
-	                     // TODO: members
+		mSpawnerInfo[mSpawnerCount].mID          = id;
+		mSpawnerInfo[mSpawnerCount].mGenFunction = func;
+		mSpawnerInfo[mSpawnerCount].mName        = name;
+		mSpawnerInfo[mSpawnerCount].mVersion     = version;
+
+		mSpawnerCount++;
+	}
+
+	u32 _getLatestVersion(u32 id)
+	{
+		for (int i = 0; i < mSpawnerCount; i++) {
+			if (id == mSpawnerInfo[i].mID) {
+				return mSpawnerInfo[i].mVersion;
+			}
+		}
+
+		return id;
+	}
+
+	// DLL inlines to make:
+	// bool isDone(Member*);
+	// Member* first();
+	// Member* next();
+
+	int mSpawnerCount;    // _00
+	int mMaxSpawners;     // _04
+	Member* mSpawnerInfo; // _08, array
+	u8 _0C[0x4];          // _0C, unknown
 };
 
 /**
@@ -126,34 +175,7 @@ struct GeneratorList {
 	void createRamGenerators();
 	void updateUseList();
 
-	u8 _00[0x4]; // _04, unknown
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x60.
- */
-struct GeneratorMgr : public Node {
-	GeneratorMgr();
-
-	virtual void update();          // _10
-	virtual void render(Graphics&); // _18
-
-	void init();
-	void setDayLimit(int);
-	void updateUseList();
-	void read(RandomAccessStream&, bool);
-
-	// unused/inlined:
-	void write(RandomAccessStream&);
-	void setNaviPos();
-	void changeNaviPos();
-
-	// _00     = VTBL
-	// _00-_20 = Node
-	u8 _20[0x5C - 0x20]; // _20, unknown
-	u8 _5C;              // _5C
+	Generator* mGenListHead; // _00
 };
 
 /**
@@ -197,7 +219,7 @@ struct GenObject : public GenBase {
 	virtual void updateUseList(Generator*, int) { } // _24
 	virtual void init(Generator*) { }               // _28
 	virtual void update(Generator*) { }             // _2C
-	virtual void render(Graphics&, Generator*);     // _30
+	virtual void render(Graphics&, Generator*) { }  // _30
 	virtual Creature* birth(BirthInfo&) = 0;        // _34
 
 	// _04     = VTBL
@@ -386,8 +408,8 @@ struct GenObjectPellet : public GenObject {
 struct GenObjectPiki : public GenObject {
 	inline GenObjectPiki()
 	    : GenObject('piki', "create PIKI")
-	    , _18(this, 0, 0, 0, "p00", nullptr)
-	    , _28(this, 0, 0, 0, "p01", nullptr)
+	    , mSpawnState(this, 0, 0, 2, "p00", nullptr)
+	    , mSpawnColor(this, 0, 0, 3, "p01", nullptr)
 	{
 	}
 
@@ -397,8 +419,8 @@ struct GenObjectPiki : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	Parm<int> _18; // _18, p00
-	Parm<int> _28; // _2C, p01
+	Parm<int> mSpawnState; // _18, p00, 0:buried, 1:free, 2:team
+	Parm<int> mSpawnColor; // _2C, p01, 0-2:blue/red/yellow, 3:random
 };
 
 /**
@@ -472,32 +494,22 @@ struct GenObjectWorkObject : public GenObject {
 	Vector3f _60;    // _60, hinderrock position (or just position?)
 };
 
-typedef GenObject* (*GenFunc)();
-
-/**
- * @brief Fabricated. Need an array of something to go at 0x8 in GenObjectFactory
- */
-struct GenObjectInfo {
-	u32 mID;              // _00
-	GenFunc mGenFunction; // _04
-	char* mName;          // _08
-	u32 mVersion;         // _0C
-};
-
 /**
  * @brief TODO
  */
 struct GenObjectFactory : public Factory<GenObject> {
+	GenObjectFactory()
+	    : Factory<GenObject>(12)
+	{
+	}
 
 	// unused/inlined:
-	void getProduct(u32);
-	void createInstance();
+	static GenObject* getProduct(u32 id);
+	static void createInstance();
 
 	static GenObjectFactory* factory;
 
-	int mSpawnerCount;           // _00
-	int mMaxSpawners;            // _04
-	GenObjectInfo* mSpawnerInfo; // _08, array
+	// _00-_0C = Factory
 };
 
 /**
@@ -514,9 +526,9 @@ struct GenType : public GenBase {
 	virtual void ramSaveParameters(RandomAccessStream&);   // _0C
 	virtual void ramLoadParameters(RandomAccessStream&);   // _10
 	virtual u32 getLatestVersion();                        // _20
-	virtual void init(Generator*);                         // _24
-	virtual void update(Generator*);                       // _28
-	virtual void render(Graphics&, Generator*);            // _2C
+	virtual void init(Generator*) { }                      // _24
+	virtual void update(Generator*) { }                    // _28
+	virtual void render(Graphics&, Generator*) { }         // _2C
 	virtual void setBirthInfo(BirthInfo&, Generator*) = 0; // _30
 	virtual int getMaxCount()                         = 0; // _34
 
@@ -587,7 +599,7 @@ struct GenTypeOne : public GenType {
 	virtual void init(Generator*);                       // _24
 	virtual void render(Graphics&, Generator*);          // _2C
 	virtual void setBirthInfo(BirthInfo&, Generator*);   // _30
-	virtual int getMaxCount();                           // _34
+	virtual int getMaxCount() { return 1; }              // _34
 
 	// _04     = VTBL
 	// _00-_38 = GenType
@@ -600,10 +612,14 @@ struct GenTypeOne : public GenType {
  * @brief TODO
  */
 struct GenTypeFactory : public Factory<GenType> {
+	GenTypeFactory()
+	    : Factory<GenType>(6)
+	{
+	}
 
 	// unused/inlined:
-	void getProduct(u32);
-	void createInstance();
+	static GenType* getProduct(u32 id);
+	static void createInstance();
 
 	static GenTypeFactory* factory;
 
@@ -619,14 +635,14 @@ struct GenArea : public GenBase {
 	{
 	}
 
-	virtual void doWrite(RandomAccessStream&);  // _08
-	virtual void doRead(RandomAccessStream&);   // _14
-	virtual u32 getLatestVersion();             // _20
-	virtual void init(Generator*);              // _24
-	virtual void update(Generator*);            // _28
-	virtual void render(Graphics&, Generator*); // _2C
-	virtual void getPos(Generator*) = 0;        // _30
-	virtual f32 getRadius();                    // _34
+	virtual void doWrite(RandomAccessStream&);     // _08
+	virtual void doRead(RandomAccessStream&);      // _14
+	virtual u32 getLatestVersion();                // _20
+	virtual void init(Generator*) { }              // _24
+	virtual void update(Generator*) { }            // _28
+	virtual void render(Graphics&, Generator*) { } // _2C
+	virtual Vector3f getPos(Generator*) = 0;       // _30
+	virtual f32 getRadius() { return 0.0f; }       // _34
 
 	// _04     = VTBL
 	// _00-_18 = GenBase
@@ -646,8 +662,8 @@ struct GenAreaCircle : public GenArea {
 	virtual void ramSaveParameters(RandomAccessStream&); // _0C
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
 	virtual void render(Graphics&, Generator*);          // _2C
-	virtual void getPos(Generator*);                     // _30
-	virtual f32 getRadius();                             // _34
+	virtual Vector3f getPos(Generator*);                 // _30
+	virtual f32 getRadius() { return mRadius(); }        // _34
 
 	// _04     = VTBL
 	// _00-_24 = GenArea
@@ -664,7 +680,7 @@ struct GenAreaPoint : public GenArea {
 	}
 
 	virtual void render(Graphics&, Generator*); // _2C
-	virtual void getPos(Generator*);            // _30
+	virtual Vector3f getPos(Generator*);        // _30
 
 	// _04     = VTBL
 	// _00-_24 = GenArea
@@ -674,14 +690,118 @@ struct GenAreaPoint : public GenArea {
  * @brief TODO
  */
 struct GenAreaFactory : public Factory<GenArea> {
+	GenAreaFactory()
+	    : Factory<GenArea>(6)
+	{
+	}
 
 	// unused/inlined:
-	void getProduct(u32);
-	void createInstance();
+	static GenArea* getProduct(u32 id);
+	static void createInstance();
 
 	static GenAreaFactory* factory;
 
 	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct Generator : public Node {
+	Generator();
+	Generator(int);
+
+	virtual void read(struct RandomAccessStream&); // _0C
+	virtual void update();                         // _10
+	virtual void render(struct Graphics&);         // _18
+
+	bool isExpired();
+	void loadCreature(RandomAccessStream&);
+	void saveCreature(RandomAccessStream&);
+	void init();
+	void informDeath(Creature*);
+	void write(RandomAccessStream&);
+
+	// unused/inlined:
+	~Generator();
+	void updateUseList();
+
+	static bool ramMode;
+
+	void setDayLimit(int limit) { mDayLimit = limit; }
+	Vector3f getPos() { return mGenPosition + mGenOffset; }
+
+	int getRebirthDay() { return mGenType->_18(); }
+
+	// DLL inlines to make:
+	// void changeNaviPos();
+	// void setNaviPos();
+	// void setOffset(Vector3f&);
+	// void setPos(Vector3f&);
+	// bool readFromRam();
+	// int isCarryOver();
+
+	// _00     = VTBL
+	// _00-_20 = Node
+	GenArea* mGenArea;              // _20
+	u32 mGenAreaID;                 // _24
+	GenType* mGenType;              // _28
+	u32 mGenTypeID;                 // _2C
+	GenObject* mGenObject;          // _30
+	u32 mGenObjectID;               // _34
+	char mMemo[0x20];               // _38
+	ID32 mGeneratorName;            // _58
+	ID32 mGeneratorVersion;         // _64
+	u32 _70;                        // _70
+	u32 mCarryOverFlags;            // _74, see GenCarryOverFlags enum
+	Generator* mPrevGenerator;      // _78, prev generator in GeneratorMgr list
+	Generator* mNextGenerator;      // _7C, next generator in GeneratorMgr list
+	GeneratorMgr* mMgr;             // _80
+	Creature* mLatestSpawnCreature; // _84, most recently spawned creature
+	int mAliveCount;                // _88
+	int mLatestSpawnDay;            // _8C, most recent spawn date
+	int mRespawnInterval;           // _90, number of days before respawning
+	int mDayLimit;                  // _94, will stop spawning after this day
+	Vector3f mGenPosition;          // _98
+	Vector3f mGenOffset;            // _A4
+	u8 _B0;                         // _B0
+	u32 _B4;                        // _B4, unknown
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x60.
+ */
+struct GeneratorMgr : public Node {
+	GeneratorMgr();
+
+	virtual void update();          // _10
+	virtual void render(Graphics&); // _18
+
+	void init();
+	void setDayLimit(int);
+	void updateUseList();
+	void read(RandomAccessStream&, bool);
+
+	// unused/inlined:
+	void write(RandomAccessStream&);
+	void setNaviPos();
+	void changeNaviPos();
+
+	// DLL inlines:
+	void setLimitGenerator(bool val) { mIsLimitGenerator = val; }
+
+	// _00     = VTBL
+	// _00-_20 = Node
+	Generator* mGenListHead; // _20
+	ID32 _24;                // _24
+	ID32 _30;                // _30
+	int mGenCount;           // _3C, number of generators in list
+	ID32 _40;                // _40
+	Vector3f mNaviPos;       // _4C
+	f32 mNaviDirection;      // _58
+	bool mIsLimitGenerator;  // _5C
 };
 
 extern GeneratorCache* generatorCache;

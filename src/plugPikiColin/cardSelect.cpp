@@ -78,7 +78,7 @@ struct CardSelectSetupSection : public Node {
 				if (!gameflow.mIsChallengeMode) {
 					PRINT("NORMAL MODE!!!\n");
 
-					gameflow.mWorldClock._24 = 1;
+					gameflow.mWorldClock.mCurrentDay = 1;
 					if (gameflow.mGamePrefs._1E) {
 						gameflow.mMemoryCard.loadCurrentGame();
 						if (gameflow.mPlayState._20 == 1) {
@@ -159,8 +159,8 @@ struct CardSelectSetupSection : public Node {
 				PRINT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 				PRINT("using save game file %d (crc = %08x) with %d as the spare\n", gameflow.mGamePrefs.mSaveGameIndex,
 				      gameflow.mSaveGameCrc, gameflow.mGamePrefs.mSpareSaveGames);
-				gameflow.mWorldClock._24 = card._0C;
-				mFadeState               = 1;
+				gameflow.mWorldClock.mCurrentDay = card._0C;
+				mFadeState                       = 1;
 				gsys->setFade(0.0f, 3.0f);
 			}
 		}

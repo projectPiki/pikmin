@@ -179,22 +179,19 @@ struct Pellet : public DualCreature {
 
 	static bool isUfoPartsID(u32);
 
-	// this is the only DLL inline that takes no argument and returns a bool
-	bool isUfoParts() { return mIsUfoPart; }
-
 	AState<Pellet>* getCurrState() { return nullptr; } // TODO: fix later
 	void setCurrState(AState<Pellet>* state) { }       // TODO: fix later
 
 	// DLL inlines to do:
 	bool isMotionFlag(u8);
 	void setMotionFlag(u8);
+	bool isUfoParts();
 
 	bool isSlotFree(int);
 	int getNearestFreeSlotIndex();
 
 	// _00      = VTBL
-	// _00-_43C = DualCreature?
-	bool mIsUfoPart; // _43C
+	// _00-_440 = DualCreature
 };
 
 /**

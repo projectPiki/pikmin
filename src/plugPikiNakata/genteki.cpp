@@ -38,20 +38,7 @@ static GenObject* makeObjectTeki() { return new GenObjectTeki(); }
  * Address:	8011B30C
  * Size:	000088
  */
-void GenObjectTeki::initialise()
-{
-	GenObjectFactory* fact = GenObjectFactory::factory;
-	if (fact->mSpawnerCount >= fact->mMaxSpawners) {
-		return;
-	}
-
-	fact->mSpawnerInfo[fact->mSpawnerCount].mID          = 'teki';
-	fact->mSpawnerInfo[fact->mSpawnerCount].mGenFunction = &makeObjectTeki;
-	fact->mSpawnerInfo[fact->mSpawnerCount].mName        = "敵を発生"; // 'spawn enemies'
-	fact->mSpawnerInfo[fact->mSpawnerCount].mVersion     = 10;
-
-	fact->mSpawnerCount++;
-}
+void GenObjectTeki::initialise() { GenObjectFactory::factory->registerMember('teki', &makeObjectTeki, "敵を発生", 10); }
 
 /*
  * --INFO--
@@ -139,10 +126,10 @@ Creature* GenObjectTeki::birth(BirthInfo& info)
 	teki->reset();
 	teki->startAI(0);
 	teki->mRotation = info.mRotation;
-	if (info.mGenerator->_28->_28()) {
+	if (info.mGenerator->mGenType->_28()) {
 		teki->setCreatureFlag(CF_Unk16);
 	}
 
-	teki->mRebirthDay = info.mGenerator->_28->_18();
+	teki->mRebirthDay = info.mGenerator->mGenType->_18();
 	return teki;
 }

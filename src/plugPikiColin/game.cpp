@@ -490,7 +490,7 @@ void OnePlayerSection::init()
 			}
 
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
-			gameflow.mWorldClock._24         = 1;
+			gameflow.mWorldClock.mCurrentDay = 1;
 			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
 			gameflow._1FC                    = 3;
 			break;
@@ -511,7 +511,7 @@ void OnePlayerSection::init()
 			}
 
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
-			gameflow.mWorldClock._24         = 1;
+			gameflow.mWorldClock.mCurrentDay = 1;
 			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
 			gameflow._1FC                    = 4;
 			break;
@@ -532,7 +532,7 @@ void OnePlayerSection::init()
 			}
 
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
-			gameflow.mWorldClock._24         = 2;
+			gameflow.mWorldClock.mCurrentDay = 2;
 			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
 			gameflow._1FC                    = 10;
 			break;

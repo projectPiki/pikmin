@@ -67,7 +67,7 @@ struct CreatureInf : public BaseInf {
 	// _00     = VTBL
 	// _00-_2C = BaseInf
 	EObjType mObjType; // _2C
-	u32 _30;           // _30, unknown
+	int mCurrentDay;   // _30, or something related to it, maybe last seen day etc
 	int _34;           // _34
 	int _38;           // _38
 	int mTekiType;     // _3C

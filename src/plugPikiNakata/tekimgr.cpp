@@ -69,7 +69,7 @@ char* TekiMgr::typeNames[TEKI_TypeCount] = {
 	"nakata1",  // 34, ? (unused enemy, crashes)
 };
 
-u32 TekiMgr::typeIds[TEKI_TypeCount] = {
+int TekiMgr::typeIds[TEKI_TypeCount] = {
 	'tkfr', // 0, Yellow Wollywog
 	'tkig', // 1, Iwagen (unused enemy)
 	'tkiw', // 2, Rolling Boulder
@@ -119,7 +119,7 @@ void TekiMgr::initTekiMgr() { tekiMgr = nullptr; }
  * Address:	........
  * Size:	00007C
  */
-void TekiMgr::getTypeIndex(char*)
+int TekiMgr::getTypeIndex(char*)
 {
 	// UNUSED FUNCTION
 }

@@ -29,20 +29,7 @@ static GenObject* makeObjectBoss() { return new GenObjectBoss(); }
  * Address:	8014D35C
  * Size:	000088
  */
-void GenObjectBoss::initialise()
-{
-	GenObjectFactory* fact = GenObjectFactory::factory;
-	if (fact->mSpawnerCount >= fact->mMaxSpawners) {
-		return;
-	}
-
-	fact->mSpawnerInfo[fact->mSpawnerCount].mID          = 'boss';
-	fact->mSpawnerInfo[fact->mSpawnerCount].mGenFunction = &makeObjectBoss;
-	fact->mSpawnerInfo[fact->mSpawnerCount].mName        = "ボスを発生"; // 'generate a boss'
-	fact->mSpawnerInfo[fact->mSpawnerCount].mVersion     = 2;
-
-	fact->mSpawnerCount++;
-}
+void GenObjectBoss::initialise() { GenObjectFactory::factory->registerMember('boss', &makeObjectBoss, "ボスを発生", 2); }
 
 /*
  * --INFO--

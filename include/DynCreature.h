@@ -34,14 +34,13 @@ struct DynCreature : public Creature {
 	void setDynFlag(int flag) { mDynFlag |= flag; }
 	void resetDynFlag(int flag) { mDynFlag &= ~flag; }
 
+	u8 getGroundFlag() { return mGroundFlag; }
+
 	// might be disableFriction
 	void enableFriction() { setDynFlag(1); }
 
 	// might be enableFriction
 	void disableFriction() { resetDynFlag(1); }
-
-	// DLL inlines to make:
-	// u8 getGroundFlag();
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
@@ -59,7 +58,7 @@ struct DynCreature : public Creature {
 	Matrix4f mInvInertiaTensor; // _3B8
 	Matrix4f _3F8;              // _3F8
 	u8 mDynFlag;                // _438
-	u8 _439;                    // _439
+	u8 mGroundFlag;             // _439
 };
 
 #endif

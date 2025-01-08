@@ -258,12 +258,12 @@ GameSetupSection::GameSetupSection()
 	memStat->start("setup");
 
 	gameflow.mPlayState.reset();
-	gameflow.mWorldClock._24 = 1;
-	flowCont._248            = 0;
-	flowCont._254            = 0;
-	flowCont._258            = 0;
-	flowCont._24C            = 0;
-	flowCont._250            = 0;
+	gameflow.mWorldClock.mCurrentDay = 1;
+	flowCont._248                    = 0;
+	flowCont._254                    = 0;
+	flowCont._258                    = 0;
+	flowCont._24C                    = 0;
+	flowCont._250                    = 0;
 	flowCont.readMapList("stages/stages.ini");
 	flowCont._244 = 0;
 	preCacheShapes();

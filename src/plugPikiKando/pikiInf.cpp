@@ -465,8 +465,8 @@ void CreatureInfMgr::getRestoreFun(int)
  */
 CreatureInf::CreatureInf()
 {
-	mObjType = OBJTYPE_INVALID;
-	_30 = _34 = 0;
+	mObjType    = OBJTYPE_INVALID;
+	mCurrentDay = _34 = 0;
 	// UNUSED FUNCTION
 }
 
@@ -488,10 +488,10 @@ void CreatureInf::doStore(Creature* owner)
 	u32 badCompiler;
 	u32 badCompiler2;
 
-	mObjType = owner->mObjType;
-	_34      = 0;
-	_30      = -1;
-	_38      = owner->isCreatureFlag(CF_Unk16) != 0;
+	mObjType    = owner->mObjType;
+	_34         = 0;
+	mCurrentDay = -1;
+	_38         = owner->isCreatureFlag(CF_Unk16) != 0;
 	owner->doStore(this);
 
 	if (owner->mRebirthDay > 0) {
@@ -499,9 +499,9 @@ void CreatureInf::doStore(Creature* owner)
 			_38 = 1;
 			_34 = owner->mRebirthDay;
 		} else {
-			_38 = 0;
-			_30 = gameflow.mWorldClock._24;
-			_34 = owner->mRebirthDay;
+			_38         = 0;
+			mCurrentDay = gameflow.mWorldClock.mCurrentDay;
+			_34         = owner->mRebirthDay;
 		}
 	}
 }

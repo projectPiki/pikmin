@@ -1,6 +1,13 @@
 #include "Generator.h"
 #include "Graphics.h"
-#include "system.h"
+#include "gameflow.h"
+#include "NaviMgr.h"
+#include "GlobalShape.h"
+#include "PikiMgr.h"
+#include "teki.h"
+#include "PikiHeadItem.h"
+#include "GameStat.h"
+#include "DebugLog.h"
 #include "sysNew.h"
 
 /*
@@ -8,16 +15,39 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "generator"); }
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
+DEFINE_PRINT("generator");
+
+bool Generator::ramMode;
+GenObjectFactory* GenObjectFactory::factory;
+GenTypeFactory* GenTypeFactory::factory;
+GenAreaFactory* GenAreaFactory::factory;
+GeneratorMgr* generatorMgr;
+GeneratorMgr* plantGeneratorMgr;
+GeneratorMgr* dailyGeneratorMgr;
+GeneratorMgr* onceGeneratorMgr;
+GeneratorMgr* limitGeneratorMgr;
+GeneratorList* generatorList;
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000088
+ */
+void writeID(RandomAccessStream& output, u32 id)
 {
-	// UNUSED FUNCTION
+	u8* outID = reinterpret_cast<u8*>(&id);
+
+	output.writeByte(outID[3]);
+	output.writeByte(outID[2]);
+	output.writeByte(outID[1]);
+	output.writeByte(outID[0]);
 }
 
 /*
@@ -25,19 +55,16 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	000088
  */
-void writeID(RandomAccessStream&, u32)
+u32 readID(RandomAccessStream& input)
 {
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
- */
-void readID(RandomAccessStream&)
-{
-	// UNUSED FUNCTION
+	// the stack is wrong here somehow.
+	u32 outID;
+	u8* id = reinterpret_cast<u8*>(&outID);
+	id[3]  = input.readByte();
+	id[2]  = input.readByte();
+	id[1]  = input.readByte();
+	id[0]  = input.readByte();
+	return outID;
 }
 
 /*
@@ -45,10 +72,7 @@ void readID(RandomAccessStream&)
  * Address:	........
  * Size:	000004
  */
-void printID(u32)
-{
-	// UNUSED FUNCTION
-}
+void printID(u32) { }
 
 /*
  * --INFO--
@@ -78,20 +102,25 @@ GenBase::GenBase(u32 id, char* type, char* name)
  * Address:	........
  * Size:	00009C
  */
-void GenBase::writeVersion(RandomAccessStream&)
-{
-	// UNUSED FUNCTION
-}
+void GenBase::writeVersion(RandomAccessStream& output) { writeID(output, getLatestVersion()); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00016C
  */
-void GenBase::write(RandomAccessStream&)
+void GenBase::write(RandomAccessStream& output)
 {
-	getLatestVersion();
-	// UNUSED FUNCTION
+	writeID(output, mID);
+	if (!Generator::ramMode) {
+		writeVersion(output);
+	}
+	doWrite(output);
+	if (Generator::ramMode) {
+		ramSaveParameters(output);
+	} else {
+		Parameters::write(output);
+	}
 }
 
 /*
@@ -113,10 +142,7 @@ void GenBase::ramLoadParameters(RandomAccessStream& input) { Parameters::read(in
  * Address:	........
  * Size:	00009C
  */
-void GenBase::readVersion(RandomAccessStream&)
-{
-	// UNUSED FUNCTION
-}
+void GenBase::readVersion(RandomAccessStream& input) { mVersion = readID(input); }
 
 /*
  * --INFO--
@@ -125,8 +151,19 @@ void GenBase::readVersion(RandomAccessStream&)
  */
 void GenBase::read(RandomAccessStream& input)
 {
+	if (!Generator::ramMode) {
+		readVersion(input);
+	} else {
+		mVersion = getLatestVersion();
+	}
+
 	doRead(input);
-	// UNUSED FUNCTION
+
+	if (Generator::ramMode) {
+		ramLoadParameters(input);
+	} else {
+		Parameters::read(input);
+	}
 }
 
 /*
@@ -134,17 +171,14 @@ void GenBase::read(RandomAccessStream& input)
  * Address:	800DAD34
  * Size:	0000FC
  */
-static GenObjectPiki* makeObjectPiki() { return new GenObjectPiki; }
+static GenObject* makeObjectPiki() { return new GenObjectPiki; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000070
  */
-void GenObjectFactory::getProduct(u32)
-{
-	// UNUSED FUNCTION
-}
+GenObject* GenObjectFactory::getProduct(u32 id) { return factory->create(id); }
 
 /*
  * --INFO--
@@ -153,7 +187,10 @@ void GenObjectFactory::getProduct(u32)
  */
 void GenObjectFactory::createInstance()
 {
-	// UNUSED FUNCTION
+	if (!factory) {
+		factory = new GenObjectFactory();
+		factory->registerMember('piki', &makeObjectPiki, "create PIKI", 'v0.0');
+	}
 }
 
 /*
@@ -161,162 +198,35 @@ void GenObjectFactory::createInstance()
  * Address:	800DAE30
  * Size:	000050
  */
-u32 GenObject::getLatestVersion()
-{
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x3074(r13)
-	  li        r4, 0
-	  lwz       r3, 0x8(r3)
-	  mr        r5, r4
-	  lwz       r0, 0x0(r7)
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  blelr-
-
-	.loc_0x20:
-	  lwz       r6, 0x8(r7)
-	  lwzx      r0, r6, r5
-	  cmplw     r3, r0
-	  bne-      .loc_0x40
-	  rlwinm    r0,r4,4,0,27
-	  add       r3, r6, r0
-	  lwz       r3, 0xC(r3)
-	  blr
-
-	.loc_0x40:
-	  addi      r5, r5, 0x10
-	  addi      r4, r4, 0x1
-	  bdnz+     .loc_0x20
-	  blr
-	*/
-}
+u32 GenObject::getLatestVersion() { return GenObjectFactory::factory->_getLatestVersion(mID); }
 
 /*
  * --INFO--
  * Address:	800DAE80
  * Size:	00017C
  */
-static GenTypeOne* makeTypeOne() { return new GenTypeOne; }
+static GenType* makeTypeOne() { return new GenTypeOne; }
 
 /*
  * --INFO--
  * Address:	800DAFFC
  * Size:	000130
  */
-static GenTypeAtOnce* makeTypeAtOnce() { return new GenTypeAtOnce; }
+static GenType* makeTypeAtOnce() { return new GenTypeAtOnce; }
 
 /*
  * --INFO--
  * Address:	800DB12C
  * Size:	00015C
  */
-static GenTypeInitRand* makeTypeInitRand()
-{
-	return new GenTypeInitRand;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x58
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  bl        -0x94144
-	  mr.       r30, r3
-	  beq-      .loc_0x13C
-	  li        r31, 0
-	  lis       r3, 0x802C
-	  stw       r31, 0x0(r30)
-	  subi      r0, r3, 0x542C
-	  lis       r3, 0x6972
-	  stw       r0, 0x4(r30)
-	  addi      r0, r3, 0x6E64
-	  lis       r3, 0x802C
-	  stw       r0, 0x8(r30)
-	  subi      r0, r3, 0x59AC
-	  lis       r3, 0x802C
-	  stw       r0, 0x10(r30)
-	  subi      r0, r3, 0x597C
-	  lis       r3, 0x5F5F
-	  stw       r0, 0x14(r30)
-	  addi      r0, r3, 0x5F5F
-	  lis       r3, 0x802C
-	  stw       r0, 0xC(r30)
-	  subi      r0, r3, 0x54C8
-	  stw       r0, 0x4(r30)
-	  addi      r3, r1, 0x2C
-	  subi      r4, r13, 0x3A68
-	  bl        -0x8A6D4
-	  lwz       r0, 0x2C(r1)
-	  addi      r5, r1, 0x1C
-	  addi      r4, r30, 0
-	  stw       r0, 0x1C(r1)
-	  addi      r3, r30, 0x18
-	  bl        -0x7C744
-	  lis       r3, 0x802A
-	  addi      r29, r3, 0x60C4
-	  stw       r29, 0x20(r30)
-	  addi      r3, r1, 0x34
-	  subi      r4, r13, 0x3A64
-	  stw       r31, 0x24(r30)
-	  bl        -0x8A708
-	  lwz       r0, 0x34(r1)
-	  addi      r5, r1, 0x18
-	  addi      r4, r30, 0
-	  stw       r0, 0x18(r1)
-	  addi      r3, r30, 0x28
-	  bl        -0x7C778
-	  stw       r29, 0x30(r30)
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x57A4
-	  stw       r31, 0x34(r30)
-	  addi      r5, r1, 0x24
-	  addi      r4, r30, 0
-	  stw       r0, 0x4(r30)
-	  addi      r3, r30, 0x38
-	  lwz       r0, -0x3A70(r13)
-	  stw       r0, 0x3C(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r0, 0x24(r1)
-	  bl        -0x7C7AC
-	  stw       r29, 0x40(r30)
-	  li        r0, 0x1
-	  addi      r5, r1, 0x20
-	  stw       r0, 0x44(r30)
-	  mr        r4, r30
-	  addi      r3, r30, 0x48
-	  lwz       r0, -0x3A6C(r13)
-	  stw       r0, 0x44(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x20(r1)
-	  bl        -0x7C7D8
-	  stw       r29, 0x50(r30)
-	  li        r0, 0x5
-	  stw       r0, 0x54(r30)
-
-	.loc_0x13C:
-	  mr        r3, r30
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
-}
+static GenType* makeTypeInitRand() { return new GenTypeInitRand; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000070
  */
-void GenTypeFactory::getProduct(u32)
-{
-	// UNUSED FUNCTION
-}
+GenType* GenTypeFactory::getProduct(u32 id) { return factory->create(id); }
 
 /*
  * --INFO--
@@ -325,7 +235,12 @@ void GenTypeFactory::getProduct(u32)
  */
 void GenTypeFactory::createInstance()
 {
-	// UNUSED FUNCTION
+	if (!factory) {
+		factory = new GenTypeFactory();
+		factory->registerMember('1one', &makeTypeOne, "１つだけ", 'v0.0');
+		factory->registerMember('aton', &makeTypeAtOnce, "一定数最初から", 'v0.0');
+		factory->registerMember('irnd', &makeTypeInitRand, "ランダムで最初から", 'v0.0');
+	}
 }
 
 /*
@@ -333,74 +248,17 @@ void GenTypeFactory::createInstance()
  * Address:	800DB288
  * Size:	000050
  */
-u32 GenType::getLatestVersion()
-{
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x3078(r13)
-	  li        r4, 0
-	  lwz       r3, 0x8(r3)
-	  mr        r5, r4
-	  lwz       r0, 0x0(r7)
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  blelr-
-
-	.loc_0x20:
-	  lwz       r6, 0x8(r7)
-	  lwzx      r0, r6, r5
-	  cmplw     r3, r0
-	  bne-      .loc_0x40
-	  rlwinm    r0,r4,4,0,27
-	  add       r3, r6, r0
-	  lwz       r3, 0xC(r3)
-	  blr
-
-	.loc_0x40:
-	  addi      r5, r5, 0x10
-	  addi      r4, r4, 0x1
-	  bdnz+     .loc_0x20
-	  blr
-	*/
-}
+u32 GenType::getLatestVersion() { return GenTypeFactory::factory->_getLatestVersion(mID); }
 
 /*
  * --INFO--
  * Address:	800DB2D8
  * Size:	00006C
  */
-void GenType::ramSaveParameters(RandomAccessStream&)
+void GenType::ramSaveParameters(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r0, 0x24(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x34(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	output.writeByte(_18());
+	output.writeByte(_28());
 }
 
 /*
@@ -408,38 +266,10 @@ void GenType::ramSaveParameters(RandomAccessStream&)
  * Address:	800DB344
  * Size:	00006C
  */
-void GenType::ramLoadParameters(RandomAccessStream&)
+void GenType::ramLoadParameters(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x24(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x34(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	_18() = input.readByte();
+	_28() = input.readByte();
 }
 
 /*
@@ -447,59 +277,12 @@ void GenType::ramLoadParameters(RandomAccessStream&)
  * Address:	800DB3B0
  * Size:	0000C0
  */
-void GenTypeOne::ramSaveParameters(RandomAccessStream&)
+void GenTypeOne::ramSaveParameters(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r0, 0x24(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x34(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x44(r30)
-	  lwz       r12, 0x2C(r12)
-	  extsh     r4, r0
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x54(r30)
-	  lwz       r12, 0x2C(r12)
-	  extsh     r4, r0
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x64(r30)
-	  lwz       r12, 0x2C(r12)
-	  extsh     r4, r0
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	GenType::ramSaveParameters(output);
+	output.writeShort(_38());
+	output.writeShort(_48());
+	output.writeShort(_58());
 }
 
 /*
@@ -507,59 +290,12 @@ void GenTypeOne::ramSaveParameters(RandomAccessStream&)
  * Address:	800DB470
  * Size:	0000C0
  */
-void GenTypeOne::ramLoadParameters(RandomAccessStream&)
+void GenTypeOne::ramLoadParameters(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x24(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x34(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x44(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x54(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x64(r30)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	GenType::ramLoadParameters(input);
+	_38() = input.readShort();
+	_48() = input.readShort();
+	_58() = input.readShort();
 }
 
 /*
@@ -567,45 +303,10 @@ void GenTypeOne::ramLoadParameters(RandomAccessStream&)
  * Address:	800DB530
  * Size:	000088
  */
-void GenTypeAtOnce::ramSaveParameters(RandomAccessStream&)
+void GenTypeAtOnce::ramSaveParameters(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r0, 0x24(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x34(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x44(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	GenType::ramSaveParameters(output);
+	output.writeByte(mMaxCount());
 }
 
 /*
@@ -613,45 +314,10 @@ void GenTypeAtOnce::ramSaveParameters(RandomAccessStream&)
  * Address:	800DB5B8
  * Size:	000088
  */
-void GenTypeAtOnce::ramLoadParameters(RandomAccessStream&)
+void GenTypeAtOnce::ramLoadParameters(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x24(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x34(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x44(r30)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	GenType::ramLoadParameters(input);
+	mMaxCount() = input.readByte();
 }
 
 /*
@@ -659,52 +325,11 @@ void GenTypeAtOnce::ramLoadParameters(RandomAccessStream&)
  * Address:	800DB640
  * Size:	0000A4
  */
-void GenTypeInitRand::ramSaveParameters(RandomAccessStream&)
+void GenTypeInitRand::ramSaveParameters(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r0, 0x24(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x34(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x44(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x54(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	GenType::ramSaveParameters(output);
+	output.writeByte(_38());
+	output.writeByte(mMaxCount());
 }
 
 /*
@@ -712,52 +337,11 @@ void GenTypeInitRand::ramSaveParameters(RandomAccessStream&)
  * Address:	800DB6E4
  * Size:	0000A4
  */
-void GenTypeInitRand::ramLoadParameters(RandomAccessStream&)
+void GenTypeInitRand::ramLoadParameters(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x24(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x34(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x44(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x54(r30)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	GenType::ramLoadParameters(input);
+	_38()       = input.readByte();
+	mMaxCount() = input.readByte();
 }
 
 /*
@@ -765,42 +349,11 @@ void GenTypeInitRand::ramLoadParameters(RandomAccessStream&)
  * Address:	800DB788
  * Size:	00007C
  */
-void GenArea::doWrite(RandomAccessStream&)
+void GenArea::doWrite(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lfs       f1, 0x18(r30)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x1C(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x20(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	output.writeFloat(_18.x);
+	output.writeFloat(_18.y);
+	output.writeFloat(_18.z);
 }
 
 /*
@@ -808,42 +361,11 @@ void GenArea::doWrite(RandomAccessStream&)
  * Address:	800DB804
  * Size:	00007C
  */
-void GenArea::doRead(RandomAccessStream&)
+void GenArea::doRead(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x18(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x1C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x20(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_18.x = input.readFloat();
+	_18.y = input.readFloat();
+	_18.z = input.readFloat();
 }
 
 /*
@@ -851,24 +373,21 @@ void GenArea::doRead(RandomAccessStream&)
  * Address:	800DB880
  * Size:	0000D8
  */
-static GenAreaCircle* makeCircleArea() { return new GenAreaCircle; }
+static GenArea* makeCircleArea() { return new GenAreaCircle; }
 
 /*
  * --INFO--
  * Address:	800DB958
  * Size:	000098
  */
-static GenAreaPoint* makePointArea() { return new GenAreaPoint; }
+static GenArea* makePointArea() { return new GenAreaPoint; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000070
  */
-void GenAreaFactory::getProduct(u32)
-{
-	// UNUSED FUNCTION
-}
+GenArea* GenAreaFactory::getProduct(u32 id) { return factory->create(id); }
 
 /*
  * --INFO--
@@ -877,7 +396,12 @@ void GenAreaFactory::getProduct(u32)
  */
 void GenAreaFactory::createInstance()
 {
-	// UNUSED FUNCTION
+	if (!factory) {
+		factory = new GenAreaFactory();
+		factory->registerMember('pint', &makePointArea, "at a point", 'v0.0');
+		factory->registerMember('circ', &makeCircleArea, "distribute in a circle", 'v0.0');
+		u32 v = factory->_getLatestVersion('circ');
+	}
 }
 
 /*
@@ -885,100 +409,21 @@ void GenAreaFactory::createInstance()
  * Address:	800DB9F0
  * Size:	000050
  */
-u32 GenArea::getLatestVersion()
-{
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x307C(r13)
-	  li        r4, 0
-	  lwz       r3, 0x8(r3)
-	  mr        r5, r4
-	  lwz       r0, 0x0(r7)
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  blelr-
-
-	.loc_0x20:
-	  lwz       r6, 0x8(r7)
-	  lwzx      r0, r6, r5
-	  cmplw     r3, r0
-	  bne-      .loc_0x40
-	  rlwinm    r0,r4,4,0,27
-	  add       r3, r6, r0
-	  lwz       r3, 0xC(r3)
-	  blr
-
-	.loc_0x40:
-	  addi      r5, r5, 0x10
-	  addi      r4, r4, 0x1
-	  bdnz+     .loc_0x20
-	  blr
-	*/
-}
+u32 GenArea::getLatestVersion() { return GenAreaFactory::factory->_getLatestVersion(mID); }
 
 /*
  * --INFO--
  * Address:	800DBA40
  * Size:	000040
  */
-void GenAreaCircle::ramSaveParameters(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  lfs       f0, 0x30(r3)
-	  mr        r3, r4
-	  lwz       r12, 0x4(r4)
-	  fctiwz    f0, f0
-	  lwz       r12, 0x2C(r12)
-	  stfd      f0, 0x10(r1)
-	  mtlr      r12
-	  lwz       r4, 0x14(r1)
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+void GenAreaCircle::ramSaveParameters(RandomAccessStream& output) { output.writeShort(mRadius()); }
 
 /*
  * --INFO--
  * Address:	800DBA80
  * Size:	000060
  */
-void GenAreaCircle::ramLoadParameters(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x4(r4)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  lfd       f1, -0x6788(r2)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x1C(r1)
-	  lis       r0, 0x4330
-	  stw       r0, 0x18(r1)
-	  lfd       f0, 0x18(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x30(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
+void GenAreaCircle::ramLoadParameters(RandomAccessStream& input) { mRadius() = input.readShort(); }
 
 /*
  * --INFO--
@@ -987,101 +432,26 @@ void GenAreaCircle::ramLoadParameters(RandomAccessStream&)
  */
 Generator::Generator()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x738C
-	  subi      r4, r13, 0x3A50
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8022
-	  stw       r30, 0x10(r1)
-	  li        r30, 0
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  addi      r3, r31, 0
-	  stw       r0, 0x0(r31)
-	  stw       r30, 0x10(r31)
-	  stw       r30, 0xC(r31)
-	  stw       r30, 0x8(r31)
-	  bl        -0xB6C54
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r31)
-	  addi      r3, r31, 0
-	  subi      r4, r13, 0x3A50
-	  bl        -0x9B404
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5584
-	  stw       r0, 0x0(r31)
-	  addi      r3, r31, 0x58
-	  bl        -0x97CF8
-	  addi      r3, r31, 0x64
-	  bl        -0x97D00
-	  lfs       f0, -0x6790(r2)
-	  lis       r6, 0x7069
-	  lis       r3, 0x316F
-	  stfs      f0, 0xA0(r31)
-	  lis       r4, 0x2020
-	  addi      r7, r6, 0x6E74
-	  stfs      f0, 0x9C(r31)
-	  addi      r5, r3, 0x6E65
-	  addi      r0, r6, 0x6B69
-	  stfs      f0, 0x98(r31)
-	  addi      r3, r31, 0x58
-	  addi      r4, r4, 0x2020
-	  stfs      f0, 0xAC(r31)
-	  stfs      f0, 0xA8(r31)
-	  stfs      f0, 0xA4(r31)
-	  stw       r30, 0x20(r31)
-	  stw       r7, 0x24(r31)
-	  stw       r30, 0x28(r31)
-	  stw       r5, 0x2C(r31)
-	  lfs       f0, -0x3A5C(r13)
-	  stfs      f0, 0x98(r31)
-	  lfs       f0, -0x3A58(r13)
-	  stfs      f0, 0x9C(r31)
-	  lfs       f0, -0x3A54(r13)
-	  stfs      f0, 0xA0(r31)
-	  stw       r30, 0x30(r31)
-	  stw       r0, 0x34(r31)
-	  stw       r30, 0x74(r31)
-	  bl        -0x97D0C
-	  lis       r4, 0x7630
-	  addi      r3, r31, 0x64
-	  addi      r4, r4, 0x2E30
-	  bl        -0x97D1C
-	  addi      r3, r31, 0x38
-	  subi      r4, r13, 0x3A48
-	  bl        0x13D76C
-	  stw       r30, 0x7C(r31)
-	  lis       r3, 0x803A
-	  subi      r6, r13, 0x3A40
-	  stw       r30, 0x78(r31)
-	  li        r5, 0x1
-	  subi      r4, r3, 0x2848
-	  stw       r30, 0x84(r31)
-	  li        r0, -0x1
-	  addi      r3, r31, 0
-	  stw       r30, 0x88(r31)
-	  stw       r30, 0x10(r31)
-	  stw       r30, 0xC(r31)
-	  stw       r30, 0x8(r31)
-	  stw       r6, 0x4(r31)
-	  stb       r5, 0xB0(r31)
-	  lwz       r4, 0x2FC(r4)
-	  stw       r4, 0x8C(r31)
-	  stw       r0, 0x94(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mGenArea   = nullptr;
+	mGenAreaID = 'pint';
+	mGenType   = nullptr;
+	mGenTypeID = '1one';
+	mGenPosition.set(0.0f, 0.0f, 0.0f);
+	mGenObject      = nullptr;
+	mGenObjectID    = 'piki';
+	mCarryOverFlags = 0;
+	mGeneratorName.setID('    ');
+	mGeneratorVersion.setID('v0.0');
+
+	strcpy(mMemo, "unset");
+	mNextGenerator       = nullptr;
+	mPrevGenerator       = 0;
+	mLatestSpawnCreature = 0;
+	mAliveCount          = 0;
+	initCore("");
+	_B0             = 1;
+	mLatestSpawnDay = gameflow.mWorldClock.mCurrentDay;
+	setDayLimit(-1);
 }
 
 /*
@@ -1091,94 +461,22 @@ Generator::Generator()
  */
 Generator::Generator(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x738C
-	  subi      r4, r13, 0x3A50
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8022
-	  stw       r30, 0x10(r1)
-	  li        r30, 0
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  addi      r3, r31, 0
-	  stw       r0, 0x0(r31)
-	  stw       r30, 0x10(r31)
-	  stw       r30, 0xC(r31)
-	  stw       r30, 0x8(r31)
-	  bl        -0xB6DC4
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r31)
-	  addi      r3, r31, 0
-	  subi      r4, r13, 0x3A50
-	  bl        -0x9B574
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5584
-	  stw       r0, 0x0(r31)
-	  addi      r3, r31, 0x58
-	  bl        -0x97E68
-	  addi      r3, r31, 0x64
-	  bl        -0x97E70
-	  lfs       f0, -0x6790(r2)
-	  lis       r6, 0x7069
-	  lis       r3, 0x316F
-	  stfs      f0, 0xA0(r31)
-	  lis       r4, 0x2020
-	  addi      r7, r6, 0x6E74
-	  stfs      f0, 0x9C(r31)
-	  addi      r5, r3, 0x6E65
-	  addi      r0, r6, 0x6B69
-	  stfs      f0, 0x98(r31)
-	  addi      r3, r31, 0x58
-	  addi      r4, r4, 0x2020
-	  stfs      f0, 0xAC(r31)
-	  stfs      f0, 0xA8(r31)
-	  stfs      f0, 0xA4(r31)
-	  stw       r30, 0x20(r31)
-	  stw       r7, 0x24(r31)
-	  stw       r30, 0x28(r31)
-	  stw       r5, 0x2C(r31)
-	  lfs       f0, -0x3A3C(r13)
-	  stfs      f0, 0x98(r31)
-	  lfs       f0, -0x3A38(r13)
-	  stfs      f0, 0x9C(r31)
-	  lfs       f0, -0x3A34(r13)
-	  stfs      f0, 0xA0(r31)
-	  stw       r30, 0x30(r31)
-	  stw       r0, 0x34(r31)
-	  bl        -0x97E78
-	  lis       r4, 0x7630
-	  addi      r3, r31, 0x64
-	  addi      r4, r4, 0x2E30
-	  bl        -0x97E88
-	  addi      r3, r31, 0x38
-	  subi      r4, r13, 0x3A48
-	  bl        0x13D600
-	  stw       r30, 0x7C(r31)
-	  subi      r5, r13, 0x3A40
-	  li        r4, 0x1
-	  stw       r30, 0x78(r31)
-	  li        r0, -0x1
-	  addi      r3, r31, 0
-	  stw       r30, 0x10(r31)
-	  stw       r30, 0xC(r31)
-	  stw       r30, 0x8(r31)
-	  stw       r5, 0x4(r31)
-	  stb       r4, 0xB0(r31)
-	  stw       r0, 0x94(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mGenArea   = nullptr;
+	mGenAreaID = 'pint';
+	mGenType   = nullptr;
+	mGenTypeID = '1one';
+	mGenPosition.set(0.0f, 0.0f, 0.0f);
+	mGenObject   = nullptr;
+	mGenObjectID = 'piki';
+	mGeneratorName.setID('    ');
+	mGeneratorVersion.setID('v0.0');
+
+	strcpy(mMemo, "unset");
+	mNextGenerator = nullptr;
+	mPrevGenerator = 0;
+	initCore("");
+	_B0 = 1;
+	setDayLimit(-1);
 }
 
 /*
@@ -1186,10 +484,7 @@ Generator::Generator(int)
  * Address:	........
  * Size:	000054
  */
-Generator::~Generator()
-{
-	// UNUSED FUNCTION
-}
+Generator::~Generator() { mNextGenerator = nullptr; }
 
 /*
  * --INFO--
@@ -1198,7 +493,11 @@ Generator::~Generator()
  */
 void Generator::updateUseList()
 {
-	// UNUSED FUNCTION
+	if (!isExpired()) {
+		if (mGenObject) {
+			mGenObject->updateUseList(this, 1);
+		}
+	}
 }
 
 /*
@@ -1208,27 +507,17 @@ void Generator::updateUseList()
  */
 bool Generator::isExpired()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x94(r3)
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x14
-	  li        r3, 0
-	  blr
+	if (mDayLimit == -1) {
+		return false;
+	}
 
-	.loc_0x14:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r0, 0x2FC(r3)
-	  cmpw      r4, r0
-	  bge-      .loc_0x30
-	  li        r3, 0x1
-	  blr
+	PRINT("CHECK EXPIRATION * DAYLIMIT = %d CURR DAY = %d\n", mDayLimit, gameflow.mWorldClock.mCurrentDay);
 
-	.loc_0x30:
-	  li        r3, 0
-	  blr
-	*/
+	if (mDayLimit < gameflow.mWorldClock.mCurrentDay) {
+		return true;
+	}
+
+	return false;
 }
 
 /*
@@ -1236,82 +525,31 @@ bool Generator::isExpired()
  * Address:	800DBDDC
  * Size:	000104
  */
-void Generator::loadCreature(RandomAccessStream&)
+void Generator::loadCreature(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x48(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x30(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xEC
-	  lfs       f0, -0x6790(r2)
-	  stfs      f0, 0x24(r1)
-	  stfs      f0, 0x20(r1)
-	  stfs      f0, 0x1C(r1)
-	  stfs      f0, 0x30(r1)
-	  stfs      f0, 0x2C(r1)
-	  stfs      f0, 0x28(r1)
-	  stfs      f0, 0x3C(r1)
-	  stfs      f0, 0x38(r1)
-	  stfs      f0, 0x34(r1)
-	  lwz       r3, 0x28(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x74
-	  lwz       r12, 0x4(r3)
-	  addi      r5, r30, 0
-	  addi      r4, r1, 0x1C
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
+	if (mGenObject) {
+		BirthInfo info;
+		if (mGenType) {
+			mGenType->setBirthInfo(info, this);
+		}
 
-	.loc_0x74:
-	  lwz       r4, 0x30(r30)
-	  addi      r3, r1, 0x10
-	  lwz       r4, 0x8(r4)
-	  bl        -0x97FC8
-	  lwz       r3, 0x30(r30)
-	  addi      r4, r1, 0x1C
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x84(r30)
-	  lwz       r3, 0x84(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xEC
-	  stw       r30, 0x64(r3)
-	  lwz       r3, 0x88(r30)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x88(r30)
-	  lwz       r0, 0x74(r30)
-	  rlwinm.   r0,r0,0,28,28
-	  beq-      .loc_0xDC
-	  lwz       r3, 0x84(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x1
-	  bl        -0x51E18
-	  b         .loc_0xEC
+		ID32 objID(mGenObject->mID);
+		PRINT("genObject = %s\n", objID.mStringID);
+		mLatestSpawnCreature = mGenObject->birth(info);
+		if (mLatestSpawnCreature) {
+			mLatestSpawnCreature->mGenerator = this;
+			mAliveCount++;
+			if (mCarryOverFlags & GENCARRY_SavePosition) {
+				mLatestSpawnCreature->load(input, true);
+			} else {
+				mLatestSpawnCreature->load(input, false);
+			}
 
-	.loc_0xDC:
-	  lwz       r3, 0x84(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  bl        -0x51E2C
-
-	.loc_0xEC:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+			PRINT("*** LOAD SUCCEEDED\n");
+		} else {
+			PRINT("*** NO CREATURE IS LOADED\n");
+		}
+	}
 }
 
 /*
@@ -1319,45 +557,20 @@ void Generator::loadCreature(RandomAccessStream&)
  * Address:	800DBEE0
  * Size:	000078
  */
-void Generator::saveCreature(RandomAccessStream&)
+void Generator::saveCreature(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x84(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x60
-	  lwz       r3, 0x6C(r3)
-	  bl        -0x474D4
-	  lwz       r0, 0x74(r30)
-	  rlwinm.   r0,r0,0,28,28
-	  beq-      .loc_0x50
-	  lwz       r3, 0x84(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x1
-	  bl        -0x51DB8
-	  b         .loc_0x60
+	if (mLatestSpawnCreature) {
+		PRINT("SAVING CREATURE %s\n", ObjType::getName(mLatestSpawnCreature->mObjType));
 
-	.loc_0x50:
-	  lwz       r3, 0x84(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  bl        -0x51DCC
-
-	.loc_0x60:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+		if (mCarryOverFlags & GENCARRY_SavePosition) {
+			mLatestSpawnCreature->save(output, true);
+		} else {
+			mLatestSpawnCreature->save(output, false);
+		}
+		PRINT("OK\n");
+	} else {
+		ERROR("save creature failed!\n");
+	}
 }
 
 /*
@@ -1367,246 +580,102 @@ void Generator::saveCreature(RandomAccessStream&)
  */
 void Generator::init()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stfd      f31, 0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r3
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  lwz       r4, 0x94(r3)
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x34
-	  li        r0, 0
-	  b         .loc_0x54
+	// we're past our day limit, do nothing.
+	if (isExpired()) {
+		PRINT("*** OK ! NOTHING IS MADE\n");
+		mAliveCount = 0;
+		return;
+	}
 
-	.loc_0x34:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r0, 0x2FC(r3)
-	  cmpw      r4, r0
-	  bge-      .loc_0x50
-	  li        r0, 0x1
-	  b         .loc_0x54
+	if (!ramMode) {
+		mAliveCount = 0;
 
-	.loc_0x50:
-	  li        r0, 0
+	} else if (!(mCarryOverFlags & GENCARRY_Unk3)) {
+		// do nothing.
+		mAliveCount = 0;
+		return;
+	}
 
-	.loc_0x54:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x68
-	  li        r0, 0
-	  stw       r0, 0x88(r31)
-	  b         .loc_0x21C
+	mLatestSpawnCreature = nullptr;
 
-	.loc_0x68:
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x80
-	  li        r0, 0
-	  stw       r0, 0x88(r31)
-	  b         .loc_0x98
+	if (mGenArea) {
+		mGenArea->init(this);
+	}
 
-	.loc_0x80:
-	  lwz       r0, 0x74(r31)
-	  rlwinm.   r0,r0,0,29,29
-	  bne-      .loc_0x98
-	  li        r0, 0
-	  stw       r0, 0x88(r31)
-	  b         .loc_0x21C
+	if (mGenObject) {
+		mGenObject->init(this);
+	}
 
-	.loc_0x98:
-	  li        r0, 0
-	  stw       r0, 0x84(r31)
-	  lwz       r3, 0x20(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xC0
-	  lwz       r12, 0x4(r3)
-	  mr        r4, r31
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
+	if (ramMode && (mCarryOverFlags & GENCARRY_Unk3)) {
+		if (gameflow.mWorldClock.mCurrentDay >= mLatestSpawnDay + mRespawnInterval) {
+			// we're due to respawn afresh.
+			PRINT("****** RESET DAY (curr=%d / save=%d interval=%d)\n", gameflow.mWorldClock.mCurrentDay, mLatestSpawnDay,
+			      mRespawnInterval);
+			// set our latest spawn day
+			mLatestSpawnDay = gameflow.mWorldClock.mCurrentDay;
 
-	.loc_0xC0:
-	  lwz       r3, 0x30(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xE0
-	  lwz       r12, 0x4(r3)
-	  mr        r4, r31
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
+			// spawn afresh based on spawn type
+			if (mGenType) {
+				mAliveCount = 0;
+				mGenType->init(this);
+			}
+			return;
+		}
 
-	.loc_0xE0:
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1F0
-	  lwz       r0, 0x74(r31)
-	  rlwinm.   r0,r0,0,29,29
-	  beq-      .loc_0x1F0
-	  lis       r4, 0x803A
-	  lwz       r3, 0x8C(r31)
-	  subi      r4, r4, 0x2848
-	  lwz       r0, 0x90(r31)
-	  lwz       r4, 0x2FC(r4)
-	  add       r0, r3, r0
-	  cmpw      r4, r0
-	  blt-      .loc_0x14C
-	  stw       r4, 0x8C(r31)
-	  lwz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x21C
-	  li        r0, 0
-	  stw       r0, 0x88(r31)
-	  mr        r4, r31
-	  lwz       r3, 0x28(r31)
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x21C
+		PRINT("****** NUM FUKKATU (curr=%d / save=%d interval=%d) count=%d\n", gameflow.mWorldClock.mCurrentDay, mLatestSpawnDay,
+		      mRespawnInterval, mAliveCount);
 
-	.loc_0x14C:
-	  lwz       r30, 0x88(r31)
-	  li        r0, 0
-	  li        r29, 0
-	  stw       r0, 0x88(r31)
-	  lfs       f31, -0x6790(r2)
-	  b         .loc_0x1E4
+		// respawn just however many we had alive last time
+		int count   = mAliveCount;
+		mAliveCount = 0;
 
-	.loc_0x164:
-	  stfs      f31, 0x14(r1)
-	  addi      r5, r31, 0
-	  addi      r4, r1, 0xC
-	  stfs      f31, 0x10(r1)
-	  stfs      f31, 0xC(r1)
-	  stfs      f31, 0x20(r1)
-	  stfs      f31, 0x1C(r1)
-	  stfs      f31, 0x18(r1)
-	  stfs      f31, 0x2C(r1)
-	  stfs      f31, 0x28(r1)
-	  stfs      f31, 0x24(r1)
-	  lwz       r3, 0x28(r31)
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x30(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1E0
-	  lwz       r12, 0x4(r3)
-	  addi      r4, r1, 0xC
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1E0
-	  stw       r31, 0x64(r3)
-	  lwz       r4, 0x88(r31)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x88(r31)
-	  stw       r3, 0x84(r31)
+		for (int i = 0; i < count; i++) {
+			BirthInfo info;
+			mGenType->setBirthInfo(info, this);
 
-	.loc_0x1E0:
-	  addi      r29, r29, 0x1
+			// spawn the creature
+			if (mGenObject) {
+				Creature* spawn = mGenObject->birth(info);
+				if (spawn) {
+					spawn->mGenerator = this;
+					mAliveCount++;
+					mLatestSpawnCreature = spawn;
+				}
+			}
+		}
+		return;
+	}
 
-	.loc_0x1E4:
-	  cmpw      r29, r30
-	  blt+      .loc_0x164
-	  b         .loc_0x21C
-
-	.loc_0x1F0:
-	  lwz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x21C
-	  li        r0, 0
-	  stw       r0, 0x88(r31)
-	  mr        r4, r31
-	  lwz       r3, 0x28(r31)
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x21C:
-	  lwz       r0, 0x54(r1)
-	  lfd       f31, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	// if we made it here, ramMode == false
+	if (mGenType) {
+		mAliveCount = 0;
+		mGenType->init(this);
+	}
 }
-
-/*
- * --INFO--
- * Address:	800DC194
- * Size:	000004
- */
-void GenType::init(Generator*) { }
-
-/*
- * --INFO--
- * Address:	800DC198
- * Size:	000004
- */
-void GenArea::init(Generator*) { }
 
 /*
  * --INFO--
  * Address:	800DC19C
  * Size:	000088
  */
-void Generator::informDeath(Creature*)
+void Generator::informDeath(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x84(r3)
-	  cmplw     r31, r0
-	  bne-      .loc_0x30
-	  li        r0, 0
-	  stw       r0, 0x84(r30)
+	if (creature == mLatestSpawnCreature) {
+		mLatestSpawnCreature = nullptr;
+	}
 
-	.loc_0x30:
-	  lwz       r3, 0x88(r30)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x88(r30)
-	  lwz       r3, 0x6C(r31)
-	  cmpwi     r3, 0x37
-	  bne-      .loc_0x4C
-	  bl        -0x477AC
+	mAliveCount--;
 
-	.loc_0x4C:
-	  lwz       r0, 0x88(r30)
-	  cmpwi     r0, 0
-	  bgt-      .loc_0x70
-	  li        r0, 0
-	  lis       r3, 0x803A
-	  stw       r0, 0x88(r30)
-	  subi      r3, r3, 0x2848
-	  lwz       r0, 0x2FC(r3)
-	  stw       r0, 0x8C(r30)
+	if (creature->mObjType == OBJTYPE_Teki) {
+		int count = mAliveCount;
+		PRINT("GENERATOR * CREATURE(%s/%s) DEAD : %d\n", ObjType::getName(creature->mObjType),
+		      TekiMgr::getTypeName(static_cast<Teki*>(creature)->mTekiType), count);
+	}
 
-	.loc_0x70:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (mAliveCount <= 0) {
+		mAliveCount     = 0;
+		mLatestSpawnDay = gameflow.mWorldClock.mCurrentDay;
+	}
 }
 
 /*
@@ -1621,8 +690,41 @@ void Generator::update() { }
  * Address:	800DC228
  * Size:	0001AC
  */
-void Generator::render(Graphics&)
+void Generator::render(Graphics& gfx)
 {
+	if (gsys->mToggleDebugInfo) {
+		Matrix4f mtx1;
+		Matrix4f mtx2;
+
+		Vector3f scale;
+		f32 s = 0.5f;
+		scale.set(s, s, s);
+
+		mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), getPos());
+
+		gfx.calcViewMatrix(mtx1, mtx2);
+		gfx.useMatrix(mtx2, 0);
+		Colour colour;
+		colour.set(255, 125, 0, 255);
+
+		GlobalShape::markerShape->mMaterialList->mColourInfo.mColour = colour;
+		GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
+
+		if (mGenArea) {
+			mGenArea->render(gfx, this);
+		}
+
+		if (mGenObject) {
+			mGenObject->render(gfx, this);
+		}
+
+		if (mGenType) {
+			mGenType->render(gfx, this);
+		}
+	}
+
+	// idk, something weird is going on with the getPos inline.
+	u32 badCompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1743,25 +845,87 @@ void Generator::render(Graphics&)
 
 /*
  * --INFO--
- * Address:	800DC3D4
- * Size:	000004
- */
-void GenType::render(Graphics&, Generator*) { }
-
-/*
- * --INFO--
- * Address:	800DC3D8
- * Size:	000004
- */
-void GenArea::render(Graphics&, Generator*) { }
-
-/*
- * --INFO--
  * Address:	800DC3DC
  * Size:	000734
  */
-void Generator::read(RandomAccessStream&)
+void Generator::read(RandomAccessStream& input)
 {
+	mGeneratorName.read(input);
+	if (!ramMode) {
+		mGeneratorVersion.read(input);
+		_70 = readID(input);
+	}
+
+	mCarryOverFlags = input.readInt();
+
+	// this isn't even printed or tested in the DLL lol, it just. sits here.
+	mGeneratorVersion != 'v0.0';
+
+	if (!ramMode) {
+		for (int i = 0; i < 0x20; i++) {
+			mMemo[i] = input.readByte();
+		}
+	} else {
+		mAliveCount      = input.readShort();
+		mLatestSpawnDay  = input.readShort();
+		mRespawnInterval = input.readShort();
+		mDayLimit        = input.readShort();
+
+		PRINT("****** GENERATOR READ @ %d (count=%d saveday=%d interval=%d limit=%d)\n", input.getPosition(), mAliveCount, mLatestSpawnDay,
+		      mRespawnInterval, mDayLimit);
+	}
+
+	if (ramMode) {
+		mGenPosition.x = input.readShort();
+		mGenPosition.y = input.readShort();
+		mGenPosition.z = input.readShort();
+	} else {
+		mGenPosition.x = input.readFloat();
+		mGenPosition.y = input.readFloat();
+		mGenPosition.z = input.readFloat();
+	}
+
+	if (ramMode) {
+		mGenOffset.set(0.0f, 0.0f, 0.0f);
+	} else {
+		mGenOffset.x = input.readFloat();
+		mGenOffset.y = input.readFloat();
+		mGenOffset.z = input.readFloat();
+	}
+
+	mGenObject = nullptr;
+	int objID  = readID(input);
+	mGenObject = GenObjectFactory::getProduct(objID);
+
+	if (mGenObject) {
+		mGenObject->read(input);
+	} else {
+		PRINT("unknown genObject id : %x\n", objID);
+		printID(objID);
+	}
+
+	mGenArea   = nullptr;
+	int areaID = readID(input);
+	mGenArea   = GenAreaFactory::getProduct(areaID);
+
+	if (mGenArea) {
+		mGenArea->read(input);
+	} else {
+		PRINT("unknown area id : %x\n", areaID);
+		printID(areaID);
+	}
+
+	mGenType   = nullptr;
+	int typeID = readID(input);
+	mGenType   = GenTypeFactory::getProduct(typeID);
+
+	if (mGenType) {
+		mGenType->read(input);
+	} else {
+		PRINT("unknown genType id : %x\n", typeID);
+		printID(typeID);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2272,664 +1436,70 @@ void Generator::read(RandomAccessStream&)
 
 /*
  * --INFO--
- * Address:	800DCB10
- * Size:	00006C
- */
-GenType* Factory<GenType>::create(u32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r7, 0
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x58
-
-	.loc_0x24:
-	  lwz       r6, 0x8(r3)
-	  lwzx      r0, r6, r5
-	  cmplw     r4, r0
-	  bne-      .loc_0x4C
-	  rlwinm    r0,r7,4,0,27
-	  add       r3, r6, r0
-	  lwz       r12, 0x4(r3)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x5C
-
-	.loc_0x4C:
-	  addi      r5, r5, 0x10
-	  addi      r7, r7, 0x1
-	  bdnz+     .loc_0x24
-
-	.loc_0x58:
-	  li        r3, 0
-
-	.loc_0x5C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800DCB7C
- * Size:	00006C
- */
-GenArea* Factory<GenArea>::create(u32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r7, 0
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x58
-
-	.loc_0x24:
-	  lwz       r6, 0x8(r3)
-	  lwzx      r0, r6, r5
-	  cmplw     r4, r0
-	  bne-      .loc_0x4C
-	  rlwinm    r0,r7,4,0,27
-	  add       r3, r6, r0
-	  lwz       r12, 0x4(r3)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x5C
-
-	.loc_0x4C:
-	  addi      r5, r5, 0x10
-	  addi      r7, r7, 0x1
-	  bdnz+     .loc_0x24
-
-	.loc_0x58:
-	  li        r3, 0
-
-	.loc_0x5C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800DCBE8
- * Size:	00006C
- */
-GenObject* Factory<GenObject>::create(u32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r7, 0
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x58
-
-	.loc_0x24:
-	  lwz       r6, 0x8(r3)
-	  lwzx      r0, r6, r5
-	  cmplw     r4, r0
-	  bne-      .loc_0x4C
-	  rlwinm    r0,r7,4,0,27
-	  add       r3, r6, r0
-	  lwz       r12, 0x4(r3)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x5C
-
-	.loc_0x4C:
-	  addi      r5, r5, 0x10
-	  addi      r7, r7, 0x1
-	  bdnz+     .loc_0x24
-
-	.loc_0x58:
-	  li        r3, 0
-
-	.loc_0x5C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	800DCC54
  * Size:	000760
  */
-void Generator::write(RandomAccessStream&)
+void Generator::write(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x98(r1)
-	  stw       r31, 0x94(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x90(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r30, 0x58
-	  stw       r29, 0x8C(r1)
-	  bl        -0x98C70
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xA8
-	  addi      r3, r30, 0x64
-	  addi      r4, r31, 0
-	  bl        -0x98C88
-	  lwz       r0, 0x70(r30)
-	  mr        r3, r31
-	  stw       r0, 0x38(r1)
-	  lwz       r12, 0x4(r31)
-	  lbz       r4, 0x3B(r1)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x3A(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x39(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x38(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
+	PRINT("** generator write start : %x\n", this);
 
-	.loc_0xA8:
-	  mr        r3, r31
-	  lwz       r4, 0x74(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xFC
-	  li        r29, 0
+	mGeneratorName.write(output);
 
-	.loc_0xD0:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  addi      r0, r29, 0x38
-	  lbzx      r4, r30, r0
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x20
-	  blt+      .loc_0xD0
-	  b         .loc_0x184
+	if (!ramMode) {
+		mGeneratorVersion.write(output);
+		writeID(output, _70);
+	}
 
-	.loc_0xFC:
-	  mr        r3, r31
-	  lwz       r0, 0x88(r30)
-	  lwz       r12, 0x4(r31)
-	  extsh     r4, r0
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r0, 0x8C(r30)
-	  lwz       r12, 0x4(r31)
-	  extsh     r4, r0
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x28(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r0, 0x24(r4)
-	  lwz       r12, 0x2C(r12)
-	  extsh     r4, r0
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r0, 0x94(r30)
-	  lwz       r12, 0x4(r31)
-	  extsh     r4, r0
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
+	output.writeInt(mCarryOverFlags);
 
-	.loc_0x184:
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x294
-	  lfs       f0, 0x98(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lis       r29, 0x4330
-	  fctiwz    f0, f0
-	  lwz       r12, 0x2C(r12)
-	  lfd       f2, -0x6788(r2)
-	  stfd      f0, 0x80(r1)
-	  mtlr      r12
-	  lfs       f0, 0xA4(r30)
-	  lwz       r0, 0x84(r1)
-	  extsh     r0, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x7C(r1)
-	  stw       r29, 0x78(r1)
-	  lfd       f1, 0x78(r1)
-	  fsubs     f1, f1, f2
-	  fadds     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x70(r1)
-	  lwz       r4, 0x74(r1)
-	  blrl
-	  lfs       f0, 0x9C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  fctiwz    f1, f0
-	  lfd       f2, -0x6788(r2)
-	  lwz       r12, 0x2C(r12)
-	  lfs       f0, 0xA8(r30)
-	  stfd      f1, 0x68(r1)
-	  mtlr      r12
-	  lwz       r0, 0x6C(r1)
-	  extsh     r0, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x64(r1)
-	  stw       r29, 0x60(r1)
-	  lfd       f1, 0x60(r1)
-	  fsubs     f1, f1, f2
-	  fadds     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x58(r1)
-	  lwz       r4, 0x5C(r1)
-	  blrl
-	  lfs       f0, 0xA0(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  fctiwz    f1, f0
-	  lfd       f2, -0x6788(r2)
-	  lwz       r12, 0x2C(r12)
-	  lfs       f0, 0xAC(r30)
-	  stfd      f1, 0x50(r1)
-	  mtlr      r12
-	  lwz       r0, 0x54(r1)
-	  extsh     r0, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x4C(r1)
-	  stw       r29, 0x48(r1)
-	  lfd       f1, 0x48(r1)
-	  fsubs     f1, f1, f2
-	  fadds     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x40(r1)
-	  lwz       r4, 0x44(r1)
-	  blrl
-	  b         .loc_0x324
+	if (!ramMode) {
+		for (int i = 0; i < 0x20; i++) {
+			output.writeByte(mMemo[i]);
+		}
+	} else {
+		PRINT("**** WRITE CREATE COUNT !! %d\n", mAliveCount);
+		output.writeShort(mAliveCount);
+		output.writeShort(mLatestSpawnDay);
+		output.writeShort(getRebirthDay());
+		output.writeShort(mDayLimit);
+		PRINT("****** GENERATOR WRITE @ %d (count=%d saveday=%d interval=%d limit=%d)\n", output.getPosition(), mAliveCount,
+		      mLatestSpawnDay, getRebirthDay(), mDayLimit);
+	}
 
-	.loc_0x294:
-	  mr        r3, r31
-	  lfs       f1, 0x98(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x9C(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0xA0(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0xA4(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0xA8(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0xAC(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
+	if (ramMode) {
+		// yeesh
+		output.writeShort(s16(mGenPosition.x) + mGenOffset.x);
+		output.writeShort(s16(mGenPosition.y) + mGenOffset.y);
+		output.writeShort(s16(mGenPosition.z) + mGenOffset.z);
+	} else {
+		output.writeFloat(mGenPosition.x);
+		output.writeFloat(mGenPosition.y);
+		output.writeFloat(mGenPosition.z);
+		output.writeFloat(mGenOffset.x);
+		output.writeFloat(mGenOffset.y);
+		output.writeFloat(mGenOffset.z);
+	}
 
-	.loc_0x324:
-	  lwz       r29, 0x30(r30)
-	  cmplwi    r29, 0
-	  beq-      .loc_0x46C
-	  lwz       r0, 0x8(r29)
-	  mr        r3, r31
-	  stw       r0, 0x2C(r1)
-	  lwz       r12, 0x4(r31)
-	  lbz       r4, 0x2F(r1)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x2E(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x2D(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x2C(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x41C
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x20(r1)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lbz       r4, 0x23(r1)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x22(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x21(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x20(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
+	if (mGenObject) {
+		mGenObject->write(output);
+	} else {
+		output.writeInt(0);
+	}
 
-	.loc_0x41C:
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  mr        r4, r31
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x45C
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  mr        r4, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x484
+	if (mGenArea) {
+		mGenArea->write(output);
+	} else {
+		output.writeInt(0);
+	}
 
-	.loc_0x45C:
-	  addi      r3, r29, 0
-	  addi      r4, r31, 0
-	  bl        -0x7E5CC
-	  b         .loc_0x484
-
-	.loc_0x46C:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  li        r4, 0
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x484:
-	  lwz       r29, 0x20(r30)
-	  cmplwi    r29, 0
-	  beq-      .loc_0x5CC
-	  lwz       r0, 0x8(r29)
-	  mr        r3, r31
-	  stw       r0, 0x28(r1)
-	  lwz       r12, 0x4(r31)
-	  lbz       r4, 0x2B(r1)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x2A(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x29(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x28(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x57C
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x1C(r1)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lbz       r4, 0x1F(r1)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x1E(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x1D(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x1C(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x57C:
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  mr        r4, r31
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x5BC
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  mr        r4, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x5E4
-
-	.loc_0x5BC:
-	  addi      r3, r29, 0
-	  addi      r4, r31, 0
-	  bl        -0x7E72C
-	  b         .loc_0x5E4
-
-	.loc_0x5CC:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  li        r4, 0
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x5E4:
-	  lwz       r29, 0x28(r30)
-	  cmplwi    r29, 0
-	  beq-      .loc_0x72C
-	  lwz       r0, 0x8(r29)
-	  mr        r3, r31
-	  stw       r0, 0x24(r1)
-	  lwz       r12, 0x4(r31)
-	  lbz       r4, 0x27(r1)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x26(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x25(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x24(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x6DC
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x18(r1)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lbz       r4, 0x1B(r1)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x1A(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x19(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x18(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x6DC:
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  mr        r4, r31
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x71C
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  mr        r4, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x744
-
-	.loc_0x71C:
-	  addi      r3, r29, 0
-	  addi      r4, r31, 0
-	  bl        -0x7E88C
-	  b         .loc_0x744
-
-	.loc_0x72C:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  li        r4, 0
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x744:
-	  lwz       r0, 0x9C(r1)
-	  lwz       r31, 0x94(r1)
-	  lwz       r30, 0x90(r1)
-	  lwz       r29, 0x8C(r1)
-	  addi      r1, r1, 0x98
-	  mtlr      r0
-	  blr
-	*/
+	if (mGenType) {
+		mGenType->write(output);
+	} else {
+		output.writeInt(0);
+	}
 }
+
+char* coStrings[] = { "なし", "常に" };
 
 /*
  * --INFO--
@@ -2937,357 +1507,20 @@ void Generator::write(RandomAccessStream&)
  * Size:	000514
  */
 GeneratorMgr::GeneratorMgr()
+    : Node("genMgr")
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x738C
-	  subi      r5, r13, 0x39FC
-	  stwu      r1, -0x40(r1)
-	  lis       r4, 0x802C
-	  stw       r31, 0x3C(r1)
-	  subi      r31, r4, 0x59E0
-	  subi      r4, r13, 0x39FC
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  addi      r29, r3, 0
-	  lis       r3, 0x8022
-	  stw       r28, 0x30(r1)
-	  li        r28, 0
-	  stw       r0, 0x0(r29)
-	  addi      r0, r3, 0x737C
-	  lis       r3, 0x8023
-	  stw       r0, 0x0(r29)
-	  subi      r0, r3, 0x71E0
-	  addi      r3, r29, 0
-	  stw       r28, 0x10(r29)
-	  stw       r28, 0xC(r29)
-	  stw       r28, 0x8(r29)
-	  stw       r5, 0x4(r29)
-	  stw       r0, 0x0(r29)
-	  bl        -0x9CCE4
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x55DC
-	  stw       r0, 0x0(r29)
-	  addi      r3, r29, 0x24
-	  bl        -0x995D8
-	  addi      r3, r29, 0x30
-	  bl        -0x995E0
-	  addi      r3, r29, 0x40
-	  bl        -0x995E8
-	  lfs       f1, -0x6790(r2)
-	  lis       r30, 0x7630
-	  addi      r3, r29, 0x24
-	  stfs      f1, 0x54(r29)
-	  addi      r4, r30, 0x2E31
-	  stfs      f1, 0x50(r29)
-	  stfs      f1, 0x4C(r29)
-	  lfs       f0, -0x3A08(r13)
-	  stfs      f0, 0x4C(r29)
-	  lfs       f0, -0x3A04(r13)
-	  stfs      f0, 0x50(r29)
-	  lfs       f0, -0x3A00(r13)
-	  stfs      f0, 0x54(r29)
-	  stfs      f1, 0x58(r29)
-	  stw       r28, 0x3C(r29)
-	  stw       r28, 0x20(r29)
-	  bl        -0x995C4
-	  addi      r3, r29, 0x30
-	  addi      r4, r30, 0x2E30
-	  bl        -0x995D0
-	  lwz       r0, 0x3074(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1A0
-	  li        r3, 0x10
-	  bl        -0x964A4
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0x11C
-	  li        r3, 0xC0
-	  bl        -0x964B8
-	  stw       r3, 0x8(r30)
-	  li        r0, 0xC
-	  stw       r0, 0x4(r30)
-	  stw       r28, 0x0(r30)
+	mNaviPos.set(0.0f, 0.0f, 0.0f);
+	mNaviDirection = 0.0f;
+	mGenCount      = 0;
+	mGenListHead   = nullptr;
+	_24.setID('v0.1');
+	_30.setID('v0.0');
 
-	.loc_0x11C:
-	  stw       r30, 0x3074(r13)
-	  lwz       r5, 0x0(r30)
-	  lwz       r0, 0x4(r30)
-	  cmpw      r5, r0
-	  bge-      .loc_0x1A0
-	  lis       r4, 0x7069
-	  lwz       r3, 0x8(r30)
-	  addi      r4, r4, 0x6B69
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r4, 0x800E
-	  lis       r3, 0x7630
-	  lwz       r0, 0x0(r30)
-	  subi      r6, r4, 0x52CC
-	  lwz       r4, 0x8(r30)
-	  addi      r5, r31, 0x28
-	  rlwinm    r0,r0,4,0,27
-	  add       r4, r4, r0
-	  stw       r6, 0x4(r4)
-	  addi      r4, r3, 0x2E30
-	  lwz       r0, 0x0(r30)
-	  lwz       r3, 0x8(r30)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r30)
-	  lwz       r3, 0x8(r30)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r30)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r30)
-
-	.loc_0x1A0:
-	  lwz       r0, 0x307C(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x318
-	  li        r3, 0x10
-	  bl        -0x96560
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0x1DC
-	  li        r3, 0x60
-	  bl        -0x96574
-	  stw       r3, 0x8(r30)
-	  li        r3, 0x6
-	  li        r0, 0
-	  stw       r3, 0x4(r30)
-	  stw       r0, 0x0(r30)
-
-	.loc_0x1DC:
-	  stw       r30, 0x307C(r13)
-	  lwz       r5, 0x0(r30)
-	  lwz       r0, 0x4(r30)
-	  cmpw      r5, r0
-	  bge-      .loc_0x260
-	  lis       r4, 0x7069
-	  lwz       r3, 0x8(r30)
-	  addi      r4, r4, 0x6E74
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r4, 0x800E
-	  lis       r3, 0x7630
-	  lwz       r0, 0x0(r30)
-	  subi      r6, r4, 0x46A8
-	  lwz       r4, 0x8(r30)
-	  addi      r5, r31, 0xCC
-	  rlwinm    r0,r0,4,0,27
-	  add       r4, r4, r0
-	  stw       r6, 0x4(r4)
-	  addi      r4, r3, 0x2E30
-	  lwz       r0, 0x0(r30)
-	  lwz       r3, 0x8(r30)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r30)
-	  lwz       r3, 0x8(r30)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r30)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r30)
-
-	.loc_0x260:
-	  lwz       r7, 0x307C(r13)
-	  lwz       r5, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  cmpw      r5, r0
-	  bge-      .loc_0x2E4
-	  lis       r4, 0x6369
-	  lwz       r3, 0x8(r7)
-	  addi      r4, r4, 0x7263
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r4, 0x800E
-	  lis       r3, 0x7630
-	  lwz       r0, 0x0(r7)
-	  subi      r6, r4, 0x4780
-	  lwz       r4, 0x8(r7)
-	  addi      r5, r31, 0xD8
-	  rlwinm    r0,r0,4,0,27
-	  add       r4, r4, r0
-	  stw       r6, 0x4(r4)
-	  addi      r4, r3, 0x2E30
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r7)
-
-	.loc_0x2E4:
-	  lwz       r5, 0x307C(r13)
-	  li        r4, 0
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x318
-
-	.loc_0x2FC:
-	  lwz       r3, 0x8(r5)
-	  lwzx      r3, r3, r4
-	  subis     r0, r3, 0x6369
-	  cmplwi    r0, 0x7263
-	  beq-      .loc_0x318
-	  addi      r4, r4, 0x10
-	  bdnz+     .loc_0x2FC
-
-	.loc_0x318:
-	  lwz       r0, 0x3078(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x4E0
-	  li        r3, 0x10
-	  bl        -0x966D8
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0x354
-	  li        r3, 0x60
-	  bl        -0x966EC
-	  stw       r3, 0x8(r30)
-	  li        r3, 0x6
-	  li        r0, 0
-	  stw       r3, 0x4(r30)
-	  stw       r0, 0x0(r30)
-
-	.loc_0x354:
-	  stw       r30, 0x3078(r13)
-	  lwz       r5, 0x0(r30)
-	  lwz       r0, 0x4(r30)
-	  cmpw      r5, r0
-	  bge-      .loc_0x3D8
-	  lis       r4, 0x316F
-	  lwz       r3, 0x8(r30)
-	  addi      r4, r4, 0x6E65
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r4, 0x800E
-	  lis       r3, 0x7630
-	  lwz       r0, 0x0(r30)
-	  subi      r6, r4, 0x5180
-	  lwz       r4, 0x8(r30)
-	  addi      r5, r31, 0x80
-	  rlwinm    r0,r0,4,0,27
-	  add       r4, r4, r0
-	  stw       r6, 0x4(r4)
-	  addi      r4, r3, 0x2E30
-	  lwz       r0, 0x0(r30)
-	  lwz       r3, 0x8(r30)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r30)
-	  lwz       r3, 0x8(r30)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r30)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r30)
-
-	.loc_0x3D8:
-	  lwz       r7, 0x3078(r13)
-	  lwz       r5, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  cmpw      r5, r0
-	  bge-      .loc_0x45C
-	  lis       r4, 0x6174
-	  lwz       r3, 0x8(r7)
-	  addi      r4, r4, 0x6F6E
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r4, 0x800E
-	  lis       r3, 0x7630
-	  lwz       r0, 0x0(r7)
-	  subi      r6, r4, 0x5004
-	  lwz       r4, 0x8(r7)
-	  addi      r5, r31, 0x8C
-	  rlwinm    r0,r0,4,0,27
-	  add       r4, r4, r0
-	  stw       r6, 0x4(r4)
-	  addi      r4, r3, 0x2E30
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r7)
-
-	.loc_0x45C:
-	  lwz       r7, 0x3078(r13)
-	  lwz       r5, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  cmpw      r5, r0
-	  bge-      .loc_0x4E0
-	  lis       r4, 0x6972
-	  lwz       r3, 0x8(r7)
-	  addi      r4, r4, 0x6E64
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r4, 0x800E
-	  lis       r3, 0x7630
-	  lwz       r0, 0x0(r7)
-	  subi      r6, r4, 0x4ED4
-	  lwz       r4, 0x8(r7)
-	  addi      r5, r31, 0x9C
-	  rlwinm    r0,r0,4,0,27
-	  add       r4, r4, r0
-	  stw       r6, 0x4(r4)
-	  addi      r4, r3, 0x2E30
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r7)
-
-	.loc_0x4E0:
-	  li        r0, 0
-	  stb       r0, 0x5C(r29)
-	  addi      r0, r31, 0xF8
-	  addi      r3, r29, 0
-	  stw       r0, 0x4(r29)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  lwz       r28, 0x30(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	GenObjectFactory::createInstance();
+	GenAreaFactory::createInstance();
+	GenTypeFactory::createInstance();
+	setLimitGenerator(false);
+	setName("GeneratorMgr");
 }
 
 /*
@@ -3297,29 +1530,9 @@ GeneratorMgr::GeneratorMgr()
  */
 void GeneratorMgr::init()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  lwz       r31, 0x20(r3)
-	  b         .loc_0x24
-
-	.loc_0x18:
-	  mr        r3, r31
-	  bl        -0x198C
-	  lwz       r31, 0x7C(r31)
-
-	.loc_0x24:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x18
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (Generator* gen = mGenListHead; gen; gen = gen->mNextGenerator) {
+		gen->init();
+	}
 }
 
 /*
@@ -3327,22 +1540,11 @@ void GeneratorMgr::init()
  * Address:	800DD908
  * Size:	00001C
  */
-void GeneratorMgr::setDayLimit(int)
+void GeneratorMgr::setDayLimit(int limit)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x20(r3)
-	  b         .loc_0x10
-
-	.loc_0x8:
-	  stw       r4, 0x94(r3)
-	  lwz       r3, 0x7C(r3)
-
-	.loc_0x10:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x8
-	  blr
-	*/
+	for (Generator* gen = mGenListHead; gen; gen = gen->mNextGenerator) {
+		gen->setDayLimit(limit);
+	}
 }
 
 /*
@@ -3352,61 +1554,9 @@ void GeneratorMgr::setDayLimit(int)
  */
 void GeneratorMgr::updateUseList()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803A
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  subi      r31, r4, 0x2848
-	  stw       r30, 0x10(r1)
-	  lwz       r30, 0x20(r3)
-	  b         .loc_0x80
-
-	.loc_0x24:
-	  lwz       r3, 0x94(r30)
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x38
-	  li        r0, 0
-	  b         .loc_0x50
-
-	.loc_0x38:
-	  lwz       r0, 0x2FC(r31)
-	  cmpw      r3, r0
-	  bge-      .loc_0x4C
-	  li        r0, 0x1
-	  b         .loc_0x50
-
-	.loc_0x4C:
-	  li        r0, 0
-
-	.loc_0x50:
-	  rlwinm.   r0,r0,0,24,31
-	  bne-      .loc_0x7C
-	  lwz       r3, 0x30(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x7C
-	  lwz       r12, 0x4(r3)
-	  addi      r4, r30, 0
-	  li        r5, 0x1
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x7C:
-	  lwz       r30, 0x7C(r30)
-
-	.loc_0x80:
-	  cmplwi    r30, 0
-	  bne+      .loc_0x24
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (Generator* gen = mGenListHead; gen; gen = gen->mNextGenerator) {
+		gen->updateUseList();
+	}
 }
 
 /*
@@ -3416,32 +1566,9 @@ void GeneratorMgr::updateUseList()
  */
 void GeneratorMgr::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  lwz       r31, 0x20(r3)
-	  b         .loc_0x30
-
-	.loc_0x18:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r31, 0x7C(r31)
-
-	.loc_0x30:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x18
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (Generator* gen = mGenListHead; gen; gen = gen->mNextGenerator) {
+		gen->update();
+	}
 }
 
 /*
@@ -3449,38 +1576,11 @@ void GeneratorMgr::update()
  * Address:	800DDA10
  * Size:	00005C
  */
-void GeneratorMgr::render(Graphics&)
+void GeneratorMgr::render(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r4
-	  lwz       r31, 0x20(r3)
-	  b         .loc_0x3C
-
-	.loc_0x20:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r31, 0x7C(r31)
-
-	.loc_0x3C:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x20
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (Generator* gen = mGenListHead; gen; gen = gen->mNextGenerator) {
+		gen->render(gfx);
+	}
 }
 
 /*
@@ -3488,192 +1588,61 @@ void GeneratorMgr::render(Graphics&)
  * Address:	800DDA6C
  * Size:	000274
  */
-void GeneratorMgr::read(RandomAccessStream&, bool)
+void GeneratorMgr::read(RandomAccessStream& input, bool p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  mr        r30, r3
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
-	  addi      r28, r5, 0
-	  lwz       r6, 0x20(r3)
-	  cmplwi    r6, 0
-	  beq-      .loc_0x5C
-	  beq-      .loc_0x54
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5584
-	  stw       r0, 0x0(r6)
-	  li        r0, 0
-	  addi      r3, r6, 0
-	  stw       r0, 0x7C(r6)
-	  bl        -0x96910
+	if (mGenListHead) {
+		delete mGenListHead;
+		mGenCount = 0;
+	}
 
-	.loc_0x54:
-	  li        r0, 0
-	  stw       r0, 0x3C(r30)
+	_30.read(input);
+	if (!(_30 == 'v0.0')) {
+		PRINT("OLD VERSION !!!! %x\n", _30.mId);
+	}
 
-	.loc_0x5C:
-	  addi      r3, r30, 0x30
-	  addi      r4, r31, 0
-	  bl        -0x99A34
-	  lis       r4, 0x7630
-	  addi      r3, r30, 0x30
-	  addi      r4, r4, 0x2E30
-	  bl        -0x99B00
-	  rlwinm.   r0,r3,0,24,31
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x4C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x50(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r4, 0x7630
-	  stfs      f1, 0x54(r30)
-	  addi      r3, r30, 0x30
-	  addi      r4, r4, 0x2E31
-	  bl        -0x99B5C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xF4
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x58(r30)
+	mNaviPos.x = input.readFloat();
+	mNaviPos.y = input.readFloat();
+	mNaviPos.z = input.readFloat();
 
-	.loc_0xF4:
-	  rlwinm.   r0,r28,0,24,31
-	  bne-      .loc_0x15C
-	  lwz       r3, 0x3120(r13)
-	  bl        0x39858
-	  cmplwi    r3, 0
-	  beq-      .loc_0x15C
-	  lwz       r4, 0x4C(r30)
-	  lwz       r0, 0x50(r30)
-	  stw       r4, 0x94(r3)
-	  stw       r0, 0x98(r3)
-	  lwz       r0, 0x54(r30)
-	  stw       r0, 0x9C(r3)
-	  lwz       r4, 0x4C(r30)
-	  lwz       r0, 0x50(r30)
-	  stw       r4, 0x1AC(r3)
-	  stw       r0, 0x1B0(r3)
-	  lwz       r0, 0x54(r30)
-	  stw       r0, 0x1B4(r3)
-	  lfs       f1, 0x58(r30)
-	  lfs       f0, -0x6778(r2)
-	  lfs       f2, -0x677C(r2)
-	  fdivs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0xA0(r3)
-	  lfs       f0, 0xA0(r3)
-	  stfs      f0, 0x8C(r3)
+	if (_30 == 'v0.1') {
+		mNaviDirection = input.readFloat();
+	}
 
-	.loc_0x15C:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x3C(r30)
-	  li        r0, 0
-	  li        r28, 0
-	  stw       r0, 0x20(r30)
-	  b         .loc_0x248
+	if (!p2) {
+		Navi* navi = naviMgr->getNavi();
+		if (navi) {
+			navi->mPosition   = mNaviPos;
+			navi->_1AC        = mNaviPos;
+			navi->mDirection  = PI * (mNaviDirection / 180.0f);
+			navi->mRotation.y = navi->mDirection;
+		} else {
+			PRINT("@@@@@@@@@ SET STARTPOS NAVI FAIL !!!!!!!!!!!!!!!\n");
+		}
+	}
 
-	.loc_0x184:
-	  lwz       r0, 0x20(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1E0
-	  li        r3, 0xB8
-	  bl        -0x96BFC
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x1A8
-	  bl        -0x2130
+	mGenCount    = input.readInt();
+	mGenListHead = nullptr;
 
-	.loc_0x1A8:
-	  stw       r29, 0x20(r30)
-	  mr        r4, r31
-	  lwz       r3, 0x20(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x20(r30)
-	  stw       r30, 0x80(r3)
-	  lwz       r3, 0x3094(r13)
-	  lwz       r4, 0x20(r30)
-	  lwz       r3, 0x0(r3)
-	  bl        -0x9D66C
-	  b         .loc_0x244
+	for (int i = 0; i < mGenCount; i++) {
+		if (!mGenListHead) {
+			mGenListHead = new Generator();
+			mGenListHead->read(input);
+			mGenListHead->mMgr = this;
+			generatorList->mGenListHead->add(mGenListHead);
+		} else {
+			Generator* newGen = new Generator();
+			newGen->mMgr      = this;
+			newGen->read(input);
 
-	.loc_0x1E0:
-	  li        r3, 0xB8
-	  bl        -0x96C4C
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x1F8
-	  bl        -0x2180
-
-	.loc_0x1F8:
-	  stw       r30, 0x80(r29)
-	  mr        r3, r29
-	  mr        r4, r31
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x20(r30)
-	  b         .loc_0x220
-
-	.loc_0x21C:
-	  mr        r3, r0
-
-	.loc_0x220:
-	  lwz       r0, 0x7C(r3)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x21C
-	  stw       r29, 0x7C(r3)
-	  mr        r4, r29
-	  stw       r3, 0x78(r29)
-	  lwz       r3, 0x3094(r13)
-	  lwz       r3, 0x0(r3)
-	  bl        -0x9D6D4
-
-	.loc_0x244:
-	  addi      r28, r28, 0x1
-
-	.loc_0x248:
-	  lwz       r0, 0x3C(r30)
-	  cmpw      r28, r0
-	  blt+      .loc_0x184
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+			Generator* endList = mGenListHead;
+			for (endList; endList->mNextGenerator; endList = endList->mNextGenerator) {
+				;
+			}
+			endList->mNextGenerator = newGen;
+			newGen->mPrevGenerator  = endList;
+			generatorList->mGenListHead->add(newGen);
+		}
+	}
 }
 
 /*
@@ -3681,9 +1650,18 @@ void GeneratorMgr::read(RandomAccessStream&, bool)
  * Address:	........
  * Size:	0000D4
  */
-void GeneratorMgr::write(RandomAccessStream&)
+void GeneratorMgr::write(RandomAccessStream& output)
 {
-	// UNUSED FUNCTION
+	PRINT("xxxx start writing %d generators\n", mGenCount);
+	_24.write(output);
+	output.writeFloat(mNaviPos.x);
+	output.writeFloat(mNaviPos.y);
+	output.writeFloat(mNaviPos.z);
+	output.writeFloat(mNaviDirection);
+	output.writeInt(mGenCount);
+	for (Generator* gen = mGenListHead; gen; gen = gen->mNextGenerator) {
+		gen->write(output);
+	}
 }
 
 /*
@@ -3693,7 +1671,10 @@ void GeneratorMgr::write(RandomAccessStream&)
  */
 void GeneratorMgr::setNaviPos()
 {
-	// UNUSED FUNCTION
+	Navi* navi = naviMgr->getNavi();
+	if (navi) {
+		mNaviPos = navi->mPosition;
+	}
 }
 
 /*
@@ -3703,7 +1684,10 @@ void GeneratorMgr::setNaviPos()
  */
 void GeneratorMgr::changeNaviPos()
 {
-	// UNUSED FUNCTION
+	Navi* navi = naviMgr->getNavi();
+	if (navi) {
+		navi->mPosition = mNaviPos;
+	}
 }
 
 /*
@@ -3711,38 +1695,10 @@ void GeneratorMgr::changeNaviPos()
  * Address:	800DDCE0
  * Size:	00006C
  */
-void GenObjectPiki::ramSaveParameters(RandomAccessStream&)
+void GenObjectPiki::ramSaveParameters(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r0, 0x24(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x34(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	output.writeByte(mSpawnState());
+	output.writeByte(mSpawnColor());
 }
 
 /*
@@ -3750,38 +1706,10 @@ void GenObjectPiki::ramSaveParameters(RandomAccessStream&)
  * Address:	800DDD4C
  * Size:	00006C
  */
-void GenObjectPiki::ramLoadParameters(RandomAccessStream&)
+void GenObjectPiki::ramLoadParameters(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x24(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x34(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mSpawnState() = input.readByte();
+	mSpawnColor() = input.readByte();
 }
 
 /*
@@ -3789,154 +1717,50 @@ void GenObjectPiki::ramLoadParameters(RandomAccessStream&)
  * Address:	800DDDB8
  * Size:	000214
  */
-Creature* GenObjectPiki::birth(BirthInfo&)
+Creature* GenObjectPiki::birth(BirthInfo& info)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  li        r31, 0
-	  stw       r30, 0x40(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x3C(r1)
-	  mr        r29, r3
-	  stw       r28, 0x38(r1)
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x34(r29)
-	  cmpwi     r0, 0x3
-	  mr        r28, r0
-	  bne-      .loc_0xA0
-	  bl        0x13A270
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x6788(r2)
-	  stw       r0, 0x34(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x6770(r2)
-	  stw       r0, 0x30(r1)
-	  lfs       f1, -0x6774(r2)
-	  lfd       f3, 0x30(r1)
-	  lfs       f0, -0x676C(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stfd      f0, 0x28(r1)
-	  cmpwi     r0, 0x3
-	  lwz       r28, 0x2C(r1)
-	  blt-      .loc_0xA0
-	  li        r28, 0
+	Creature* piki = nullptr;
+	getLatestVersion();
+	int color = mSpawnColor();
+	if (color == 3) {
+		color = System::getRand(1.0f) * 3.0f;
+		if (color >= 3) {
+			color = Blue;
+		}
+	}
 
-	.loc_0xA0:
-	  lwzu      r0, 0x24(r29)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xBC
-	  blt-      .loc_0x1F0
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x1F0
-	  b         .loc_0x148
+	switch (mSpawnState()) {
+	case 0: // buried, so spawn a PikiHeadItem
+		PikiHeadItem* sprout = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
+		if (sprout) {
+			sprout->init(info.mPosition);
+			sprout->mPosition.y = mapMgr->getMinY(sprout->mPosition.x, sprout->mPosition.z, true);
+			sprout->setColor(color);
+			sprout->startAI(0);
+			static_cast<SimpleAI*>(sprout->mStateMachine)->start(sprout, 6);
+			piki = sprout;
+		}
+		break;
 
-	.loc_0xBC:
-	  lwz       r3, 0x30AC(r13)
-	  li        r4, 0xF
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x78(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r29, r3
-	  beq-      .loc_0x1F0
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2F00(r13)
-	  li        r4, 0x1
-	  lfs       f1, 0x94(r29)
-	  lfs       f2, 0x9C(r29)
-	  bl        -0x75FB8
-	  stfs      f1, 0x98(r29)
-	  addi      r3, r29, 0
-	  addi      r4, r28, 0
-	  bl        0xEBD4
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E8(r29)
-	  addi      r4, r29, 0
-	  li        r5, 0x6
-	  bl        -0x6079C
-	  mr        r31, r29
-	  b         .loc_0x1F0
+	case 1:
+	case 2: // free or in party, so spawn piki
+		piki = pikiMgr->birth();
+		if (piki) {
+			GameStat::workPikis.inc(color);
+			GameStat::update();
+			static_cast<Piki*>(piki)->init(naviMgr->getNavi());
+			piki->Creature::init(info.mPosition);
+			static_cast<Piki*>(piki)->initColor(color);
+			if (mSpawnState() == 1) { // free
+				static_cast<Piki*>(piki)->changeMode(0, naviMgr->getNavi());
+			} else { // in party
+				static_cast<Piki*>(piki)->changeMode(1, naviMgr->getNavi());
+			}
+		}
+		break;
+	}
 
-	.loc_0x148:
-	  lwz       r3, 0x3068(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x78(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r31, r3
-	  beq-      .loc_0x1F0
-	  lis       r3, 0x803D
-	  rlwinm    r4,r28,2,0,29
-	  addi      r0, r3, 0x1E88
-	  add       r4, r0, r4
-	  lwz       r3, 0x0(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r4)
-	  bl        0x34628
-	  lwz       r3, 0x3120(r13)
-	  bl        0x39484
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  bl        -0x11F08
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        -0x53354
-	  addi      r3, r31, 0
-	  addi      r4, r28, 0
-	  bl        -0x146EC
-	  lwz       r0, 0x0(r29)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x1D8
-	  lwz       r3, 0x3120(r13)
-	  bl        0x3944C
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x10DBC
-	  b         .loc_0x1F0
-
-	.loc_0x1D8:
-	  lwz       r3, 0x3120(r13)
-	  bl        0x39430
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x10DD8
-
-	.loc_0x1F0:
-	  mr        r3, r31
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  lwz       r28, 0x38(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	return piki;
 }
 
 /*
@@ -3944,64 +1768,25 @@ Creature* GenObjectPiki::birth(BirthInfo&)
  * Address:	........
  * Size:	000038
  */
-void deg2rad(int)
-{
-	// UNUSED FUNCTION
-}
+f32 deg2rad(int val) { return PI * (val / 180.0f); }
 
 /*
  * --INFO--
  * Address:	800DDFCC
  * Size:	0000A4
  */
-void GenTypeOne::init(Generator*)
+void GenTypeOne::init(Generator* gen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r4
-	  mr        r5, r31
-	  lfs       f0, -0x6790(r2)
-	  addi      r4, r1, 0x10
-	  stfs      f0, 0x18(r1)
-	  stfs      f0, 0x14(r1)
-	  stfs      f0, 0x10(r1)
-	  stfs      f0, 0x24(r1)
-	  stfs      f0, 0x20(r1)
-	  stfs      f0, 0x1C(r1)
-	  stfs      f0, 0x30(r1)
-	  stfs      f0, 0x2C(r1)
-	  stfs      f0, 0x28(r1)
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x30(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x90
-	  lwz       r12, 0x4(r3)
-	  addi      r4, r1, 0x10
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  beq-      .loc_0x90
-	  stw       r31, 0x64(r3)
-	  lwz       r4, 0x88(r31)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x88(r31)
-	  stw       r3, 0x84(r31)
-
-	.loc_0x90:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	BirthInfo info;
+	setBirthInfo(info, gen);
+	if (gen->mGenObject) {
+		Creature* obj = gen->mGenObject->birth(info);
+		if (obj) {
+			obj->mGenerator = gen;
+			gen->mAliveCount++;
+			gen->mLatestSpawnCreature = obj;
+		}
+	}
 }
 
 /*
@@ -4009,8 +1794,21 @@ void GenTypeOne::init(Generator*)
  * Address:	800DE070
  * Size:	0001B8
  */
-void GenTypeOne::setBirthInfo(BirthInfo&, Generator*)
+void GenTypeOne::setBirthInfo(BirthInfo& info, Generator* gen)
 {
+	Vector3f pos;
+	if (gen->mGenArea) {
+		pos = gen->mGenArea->getPos(gen);
+	} else {
+		pos = gen->getPos();
+	}
+
+	Vector3f rot;
+	rot.set(deg2rad(_38()), deg2rad(_48()), deg2rad(_58()));
+
+	Vector3f scale = gen->getPos();
+
+	info.set(pos, rot, scale, gen);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4613,7 +2411,7 @@ void GenTypeInitRand::setBirthInfo(BirthInfo&, Generator*)
  * Address:	800DE838
  * Size:	000088
  */
-void GenAreaPoint::getPos(Generator*)
+Vector3f GenAreaPoint::getPos(Generator*)
 {
 	/*
 	.loc_0x0:
@@ -4666,7 +2464,7 @@ void GenAreaPoint::render(Graphics&, Generator*) { }
  * Address:	800DE8C4
  * Size:	0001A4
  */
-void GenAreaCircle::getPos(Generator*)
+Vector3f GenAreaCircle::getPos(Generator*)
 {
 	/*
 	.loc_0x0:
@@ -5047,38 +2845,3 @@ void GeneratorList::updateUseList()
 	  blr
 	*/
 }
-
-/*
- * --INFO--
- * Address:	800DED48
- * Size:	000008
- */
-f32 GenAreaCircle::getRadius() { return mRadius(); }
-
-/*
- * --INFO--
- * Address:	800DED50
- * Size:	000004
- */
-void GenArea::update(Generator*) { }
-
-/*
- * --INFO--
- * Address:	800DED54
- * Size:	000008
- */
-f32 GenArea::getRadius() { return 0.0f; }
-
-/*
- * --INFO--
- * Address:	800DED5C
- * Size:	000004
- */
-void GenType::update(Generator*) { }
-
-/*
- * --INFO--
- * Address:	800DED60
- * Size:	000008
- */
-int GenTypeOne::getMaxCount() { return 1; }

@@ -40,20 +40,7 @@ GenObject* makeObjectNavi() { return new GenObjectNavi(); }
  * Address:	800F81A0
  * Size:	00008C
  */
-void GenObjectNavi::initialise()
-{
-	GenObjectFactory* fact = GenObjectFactory::factory;
-	if (fact->mSpawnerCount >= fact->mMaxSpawners) {
-		return;
-	}
-
-	fact->mSpawnerInfo[fact->mSpawnerCount].mID          = 'navi';
-	fact->mSpawnerInfo[fact->mSpawnerCount].mGenFunction = &makeObjectNavi;
-	fact->mSpawnerInfo[fact->mSpawnerCount].mName        = "generate NAVI (player2)";
-	fact->mSpawnerInfo[fact->mSpawnerCount].mVersion     = 'v0.0';
-
-	fact->mSpawnerCount++;
-}
+void GenObjectNavi::initialise() { GenObjectFactory::factory->registerMember('navi', &makeObjectNavi, "generate NAVI (player2)", 'v0.0'); }
 
 /*
  * --INFO--

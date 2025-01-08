@@ -535,13 +535,21 @@ struct TekiMgr : public MonoObjectMgr {
 	int getResultFlag(int);
 
 	// unused/inlined:
-	void getTypeIndex(char*);
 	void setUsingType(int, bool);
 
 	static void initTekiMgr();
+	static int getTypeIndex(char*);
+
+	static char* getTypeName(int idx) { return typeNames[idx]; }
+	static int getTypeId(int idx) { return typeIds[idx]; }
 
 	static char* typeNames[TEKI_TypeCount];
-	static u32 typeIds[TEKI_TypeCount];
+	static int typeIds[TEKI_TypeCount];
+
+	// DLL inlines to make:
+	// bool hasType(int);
+	// bool isUsingType(int);
+	// bool isVisibleType(int);
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2

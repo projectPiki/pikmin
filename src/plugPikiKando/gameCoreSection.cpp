@@ -3967,8 +3967,8 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	plantGeneratorMgr->setName("plant");
 	gameflow.addGenNode("ジェネレータ(plants)", plantGeneratorMgr); // 'generator (plants)'
 
-	limitGeneratorMgr      = new GeneratorMgr();
-	limitGeneratorMgr->_5C = 1;
+	limitGeneratorMgr = new GeneratorMgr();
+	limitGeneratorMgr->setLimitGenerator(true);
 	limitGeneratorMgr->setName("limit");
 	gameflow.addGenNode("ジェネレータ(limit)", limitGeneratorMgr); // 'generator (limit)'
 	memStat->end("generator");

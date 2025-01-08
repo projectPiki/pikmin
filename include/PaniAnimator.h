@@ -152,6 +152,8 @@ struct PaniAnimator : public Animator {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x54.
  */
 struct PaniItemAnimator : public PaniAnimator {
 	PaniItemAnimator();

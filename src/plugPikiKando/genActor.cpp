@@ -29,20 +29,7 @@ static GenObject* makeObjectActor() { return new GenObjectActor(); }
  * Address:	80119BA8
  * Size:	00008C
  */
-void GenObjectActor::initialise()
-{
-	GenObjectFactory* fact = GenObjectFactory::factory;
-	if (fact->mSpawnerCount >= fact->mMaxSpawners) {
-		return;
-	}
-
-	fact->mSpawnerInfo[fact->mSpawnerCount].mID          = 'actr';
-	fact->mSpawnerInfo[fact->mSpawnerCount].mGenFunction = &makeObjectActor;
-	fact->mSpawnerInfo[fact->mSpawnerCount].mName        = "create Actor";
-	fact->mSpawnerInfo[fact->mSpawnerCount].mVersion     = 'v0.0';
-
-	fact->mSpawnerCount++;
-}
+void GenObjectActor::initialise() { GenObjectFactory::factory->registerMember('actr', &makeObjectActor, "create Actor", 'v0.0'); }
 
 /*
  * --INFO--

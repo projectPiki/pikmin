@@ -3,23 +3,29 @@
 
 #include "types.h"
 #include "DynCreature.h"
+#include "Collision.h"
+#include "PaniAnimator.h"
 
 struct ItemShapeObject;
 struct MapMgr;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x440.
  */
 struct DualCreature : public DynCreature {
 	DualCreature();
 
-	virtual void update();           // _E0
-	virtual void refresh(Graphics&); // _EC
-	virtual void doKill();           // _10C
-	virtual void onGround();         // _114
+	virtual void update();                           // _E0
+	virtual void refresh(Graphics&);                 // _EC
+	virtual void doKill();                           // _10C
+	virtual bool onGround();                         // _114
+	virtual void doRender(Graphics&, Matrix4f&) = 0; // _118
+	virtual void doCreateColls(Graphics&)       = 0; // _11C
 
-	void isFrontFace();
-	void getY();
+	bool isFrontFace();
+	f32 getY();
 	void useRealDynamics();
 	void useSimpleDynamics();
 	void rotateY(f32);
@@ -27,9 +33,18 @@ struct DualCreature : public DynCreature {
 	// unused/inlined:
 	void createCollisions(Graphics&);
 
+	void setDynamicsSimpleFixed(bool isSimpleFixed) { mIsDynamicsSimpleFixed = isSimpleFixed; }
+
+	// DLL inlines todo:
+	bool isRealDynamics() { return mIsRealDynamics; }
+	void invalidateCollisions();
+
 	// _00      = VTBL
 	// _00-_43C = DynCreature?
-	// TODO: members
+	bool mIsRealDynamics;        // _43C
+	u8 _43D;                     // _43D
+	u8 _43E;                     // _43E
+	bool mIsDynamicsSimpleFixed; // _43F
 };
 
 /**
@@ -46,8 +61,12 @@ struct PelCreature : public DualCreature {
 	virtual void doCreateColls(Graphics&);       // _11C
 
 	// _00      = VTBL
-	// _00-_43C = DualCreature?
-	// TODO: members
+	// _00-_440 = DualCreature
+	PaniItemAnimator mItemAnimator; // _440
+	ItemShapeObject* mItemShape;    // _494
+	CollInfo mItemCollInfo;         // _498
+	CollPart mItemParts[10];        // _4AC
+	u32 mPartIDs[10];               // _8BC
 };
 
 #endif

@@ -1009,20 +1009,7 @@ static GenObject* makeObjectPlant() { return new GenObjectPlant(); }
  * Address:	8011AD44
  * Size:	00008C
  */
-void GenObjectPlant::initialise()
-{
-	GenObjectFactory* fact = GenObjectFactory::factory;
-	if (fact->mSpawnerCount >= fact->mMaxSpawners) {
-		return;
-	}
-
-	fact->mSpawnerInfo[fact->mSpawnerCount].mID          = 'plnt';
-	fact->mSpawnerInfo[fact->mSpawnerCount].mGenFunction = &makeObjectPlant;
-	fact->mSpawnerInfo[fact->mSpawnerCount].mName        = "Generate PLANT";
-	fact->mSpawnerInfo[fact->mSpawnerCount].mVersion     = 'v0.0';
-
-	fact->mSpawnerCount++;
-}
+void GenObjectPlant::initialise() { GenObjectFactory::factory->registerMember('plnt', &makeObjectPlant, "Generate PLANT", 'v0.0'); }
 
 /*
  * --INFO--

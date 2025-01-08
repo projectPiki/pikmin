@@ -785,7 +785,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 
 	mWorldClock.mFractionalTime   = 0.0f;
 	mWorldClock.mLastRecordedTime = 0.0f;
-	mWorldClock._24               = 0;
+	mWorldClock.mCurrentDay       = 0;
 	mWorldClock.mCurrentTime      = 0;
 	mWorldClock.mMinutes          = 0;
 

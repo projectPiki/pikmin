@@ -364,7 +364,7 @@ SearchData::SearchData()
 u32 Creature::getGeneratorID()
 {
 	if (mGenerator) {
-		return mGenerator->_58.mId;
+		return mGenerator->mGeneratorName.mId;
 	}
 	return 'null';
 }
@@ -2473,7 +2473,7 @@ void Creature::renderAtari(Graphics& gfx)
 		return;
 	}
 
-	if (static_cast<Pellet*>(this)->isUfoParts()) {
+	if (static_cast<Pellet*>(this)->isRealDynamics()) {
 		f32 halfHeight = 0.5f * getCylinderHeight();
 		f32 pickOffs   = -static_cast<Pellet*>(this)->getPickOffset();
 

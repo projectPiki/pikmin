@@ -1961,7 +1961,7 @@ void PlayerState::updateFinalResult()
  * Address:	80080BB0
  * Size:	000014
  */
-int PlayerState::getCurrDay() { return gameflow.mWorldClock._24 - 1; }
+int PlayerState::getCurrDay() { return gameflow.mWorldClock.mCurrentDay - 1; }
 
 /*
  * --INFO--

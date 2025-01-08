@@ -49,8 +49,8 @@ struct GameStat {
 		int mCounts[PikiColorCount]; // _00, indexed by piki color
 	};
 
-	void init();
-	void update();
+	static void init();
+	static void update();
 	static void dump();
 
 	static ColCounter deadPikis;
