@@ -445,12 +445,12 @@ Generator::Generator()
 
 	strcpy(mMemo, "unset");
 	mNextGenerator       = nullptr;
-	mPrevGenerator       = 0;
-	mLatestSpawnCreature = 0;
+	mPrevGenerator       = nullptr;
+	mLatestSpawnCreature = nullptr;
 	mAliveCount          = 0;
 	initCore("");
-	_B0             = 1;
-	mLatestSpawnDay = gameflow.mWorldClock.mCurrentDay;
+	mIsRamReadDisabled = true;
+	mLatestSpawnDay    = gameflow.mWorldClock.mCurrentDay;
 	setDayLimit(-1);
 }
 
@@ -473,9 +473,9 @@ Generator::Generator(int)
 
 	strcpy(mMemo, "unset");
 	mNextGenerator = nullptr;
-	mPrevGenerator = 0;
+	mPrevGenerator = nullptr;
 	initCore("");
-	_B0 = 1;
+	mIsRamReadDisabled = true;
 	setDayLimit(-1);
 }
 
@@ -1806,9 +1806,7 @@ void GenTypeOne::setBirthInfo(BirthInfo& info, Generator* gen)
 	Vector3f rot;
 	rot.set(deg2rad(_38()), deg2rad(_48()), deg2rad(_58()));
 
-	Vector3f scale = gen->getPos();
-
-	info.set(pos, rot, scale, gen);
+	info.set(pos, rot, gen->getPos(), gen);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1933,8 +1931,23 @@ void GenTypeOne::setBirthInfo(BirthInfo& info, Generator* gen)
  * Address:	800DE228
  * Size:	000168
  */
-void GenTypeOne::render(Graphics&, Generator*)
+void GenTypeOne::render(Graphics& gfx, Generator* gen)
 {
+	Matrix4f mtx1;
+	Matrix4f mtx2;
+	Vector3f scale;
+	Vector3f rot;
+
+	rot.set(deg2rad(_38()), deg2rad(_48()), deg2rad(_58()));
+	f32 s = 2.0f;
+	scale.set(s, s, s);
+
+	mtx1.makeSRT(scale, rot, gen->getPos());
+	gfx.calcViewMatrix(mtx1, mtx2);
+
+	gfx.useMatrix(mtx2, 0);
+	GlobalShape::axisShape->drawshape(gfx, *gfx.mCamera, nullptr);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2042,74 +2055,21 @@ int GenTypeAtOnce::getMaxCount() { return mMaxCount(); }
  * Address:	800DE398
  * Size:	0000E4
  */
-void GenTypeAtOnce::init(Generator*)
+void GenTypeAtOnce::init(Generator* gen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  li        r30, 0
-	  stw       r29, 0x44(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x40(r1)
-	  mr        r28, r3
-	  lfs       f31, -0x6790(r2)
-	  lwz       r31, 0x44(r3)
-	  b         .loc_0xB8
-
-	.loc_0x38:
-	  stfs      f31, 0x1C(r1)
-	  addi      r3, r28, 0
-	  addi      r5, r29, 0
-	  stfs      f31, 0x18(r1)
-	  addi      r4, r1, 0x14
-	  stfs      f31, 0x14(r1)
-	  stfs      f31, 0x28(r1)
-	  stfs      f31, 0x24(r1)
-	  stfs      f31, 0x20(r1)
-	  stfs      f31, 0x34(r1)
-	  stfs      f31, 0x30(r1)
-	  stfs      f31, 0x2C(r1)
-	  lwz       r12, 0x4(r28)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x30(r29)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xB4
-	  lwz       r12, 0x4(r3)
-	  addi      r4, r1, 0x14
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  beq-      .loc_0xB4
-	  stw       r29, 0x64(r3)
-	  lwz       r4, 0x88(r29)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x88(r29)
-	  stw       r3, 0x84(r29)
-
-	.loc_0xB4:
-	  addi      r30, r30, 0x1
-
-	.loc_0xB8:
-	  cmpw      r30, r31
-	  blt+      .loc_0x38
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  lwz       r28, 0x40(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	int max = mMaxCount();
+	for (int i = 0; i < max; i++) {
+		BirthInfo info;
+		setBirthInfo(info, gen);
+		if (gen->mGenObject) {
+			Creature* obj = gen->mGenObject->birth(info);
+			if (obj) {
+				obj->mGenerator = gen;
+				gen->mAliveCount++;
+				gen->mLatestSpawnCreature = obj;
+			}
+		}
+	}
 }
 
 /*
@@ -2117,8 +2077,16 @@ void GenTypeAtOnce::init(Generator*)
  * Address:	800DE47C
  * Size:	000138
  */
-void GenTypeAtOnce::setBirthInfo(BirthInfo&, Generator*)
+void GenTypeAtOnce::setBirthInfo(BirthInfo& info, Generator* gen)
 {
+	Vector3f vec;
+	if (gen->mGenArea) {
+		vec = gen->mGenArea->getPos(gen);
+	} else {
+		vec = gen->getPos();
+	}
+
+	info.set(vec, Vector3f(0.0f, 0.0f, 0.0f), gen->getPos(), gen);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2218,98 +2186,22 @@ int GenTypeInitRand::getMaxCount() { return mMaxCount(); }
  * Address:	800DE5BC
  * Size:	000144
  */
-void GenTypeInitRand::init(Generator*)
+void GenTypeInitRand::init(Generator* gen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stfd      f31, 0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  stw       r30, 0x68(r1)
-	  stw       r29, 0x64(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x60(r1)
-	  addi      r28, r3, 0
-	  bl        0x139A8C
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x6788(r2)
-	  stw       r0, 0x5C(r1)
-	  lis       r3, 0x4330
-	  lfs       f0, -0x6770(r2)
-	  li        r30, 0
-	  stw       r3, 0x58(r1)
-	  lwz       r4, 0x44(r28)
-	  lfd       f1, 0x58(r1)
-	  lwz       r0, 0x54(r28)
-	  fsubs     f2, f1, f3
-	  lfs       f1, -0x6774(r2)
-	  sub       r0, r0, r4
-	  lfs       f31, -0x6790(r2)
-	  xoris     r0, r0, 0x8000
-	  fdivs     f2, f2, f0
-	  stw       r0, 0x54(r1)
-	  stw       r3, 0x50(r1)
-	  lfd       f0, 0x50(r1)
-	  fmuls     f1, f1, f2
-	  fsubs     f0, f0, f3
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x48(r1)
-	  lwz       r0, 0x4C(r1)
-	  add       r31, r4, r0
-	  b         .loc_0x118
-
-	.loc_0x98:
-	  stfs      f31, 0x28(r1)
-	  addi      r3, r28, 0
-	  addi      r5, r29, 0
-	  stfs      f31, 0x24(r1)
-	  addi      r4, r1, 0x20
-	  stfs      f31, 0x20(r1)
-	  stfs      f31, 0x34(r1)
-	  stfs      f31, 0x30(r1)
-	  stfs      f31, 0x2C(r1)
-	  stfs      f31, 0x40(r1)
-	  stfs      f31, 0x3C(r1)
-	  stfs      f31, 0x38(r1)
-	  lwz       r12, 0x4(r28)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x30(r29)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x114
-	  lwz       r12, 0x4(r3)
-	  addi      r4, r1, 0x20
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  beq-      .loc_0x114
-	  stw       r29, 0x64(r3)
-	  lwz       r4, 0x88(r29)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x88(r29)
-	  stw       r3, 0x84(r29)
-
-	.loc_0x114:
-	  addi      r30, r30, 0x1
-
-	.loc_0x118:
-	  cmpw      r30, r31
-	  blt+      .loc_0x98
-	  lwz       r0, 0x7C(r1)
-	  lfd       f31, 0x70(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  lwz       r29, 0x64(r1)
-	  lwz       r28, 0x60(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	int randCount = _38() + int(System::getRand(1.0f) * f32(mMaxCount() - _38()));
+	for (int i = 0; i < randCount; i++) {
+		BirthInfo info;
+		setBirthInfo(info, gen);
+		if (gen->mGenObject) {
+			Creature* obj = gen->mGenObject->birth(info);
+			if (obj) {
+				obj->mGenerator = gen;
+				gen->mAliveCount++;
+				gen->mLatestSpawnCreature = obj;
+				u32 badCompiler; // idk where this is from.
+			}
+		}
+	}
 }
 
 /*
@@ -2317,8 +2209,16 @@ void GenTypeInitRand::init(Generator*)
  * Address:	800DE700
  * Size:	000138
  */
-void GenTypeInitRand::setBirthInfo(BirthInfo&, Generator*)
+void GenTypeInitRand::setBirthInfo(BirthInfo& info, Generator* gen)
 {
+	Vector3f vec;
+	if (gen->mGenArea) {
+		vec = gen->mGenArea->getPos(gen);
+	} else {
+		vec = gen->getPos();
+	}
+
+	info.set(vec, Vector3f(0.0f, 0.0f, 0.0f), gen->getPos(), gen);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2411,45 +2311,10 @@ void GenTypeInitRand::setBirthInfo(BirthInfo&, Generator*)
  * Address:	800DE838
  * Size:	000088
  */
-Vector3f GenAreaPoint::getPos(Generator*)
+Vector3f GenAreaPoint::getPos(Generator* gen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  addi      r31, r3, 0
-	  addi      r0, r1, 0x24
-	  lfs       f1, 0xA0(r5)
-	  addi      r6, r1, 0x28
-	  lfs       f0, 0xAC(r5)
-	  addi      r4, r1, 0x20
-	  addi      r3, r1, 0x2C
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x28(r1)
-	  lfs       f1, 0x9C(r5)
-	  lfs       f0, 0xA8(r5)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x24(r1)
-	  lfs       f1, 0x98(r5)
-	  lfs       f0, 0xA4(r5)
-	  mr        r5, r0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x20(r1)
-	  bl        -0xA7774
-	  lfs       f1, 0x30(r1)
-	  lfs       f2, 0x34(r1)
-	  lfs       f0, 0x2C(r1)
-	  stfs      f0, 0x0(r31)
-	  stfs      f1, 0x4(r31)
-	  stfs      f2, 0x8(r31)
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f pos = gen->getPos();
+	return pos;
 }
 
 /*
@@ -2464,8 +2329,15 @@ void GenAreaPoint::render(Graphics&, Generator*) { }
  * Address:	800DE8C4
  * Size:	0001A4
  */
-Vector3f GenAreaCircle::getPos(Generator*)
+Vector3f GenAreaCircle::getPos(Generator* gen)
 {
+	Vector3f pos     = gen->getPos();
+	f32 minRadFactor = System::getRand(1.0f);
+	f32 randRad      = System::getRand(1.0f) * (1.0f - minRadFactor) + minRadFactor;
+	randRad *= mRadius();
+	f32 randAngle = 2.0f * (PI * System::getRand(1.0f));
+	pos           = Vector3f(randRad * sinf(randAngle), 0.0f, randRad * cosf(randAngle)) + pos;
+	return pos;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2581,8 +2453,23 @@ Vector3f GenAreaCircle::getPos(Generator*)
  * Address:	800DEA68
  * Size:	000130
  */
-void GenAreaCircle::render(Graphics&, Generator*)
+void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 {
+	Matrix4f mtx1;
+	Matrix4f mtx2;
+	Vector3f scale;
+	f32 xz = mRadius() / 100.0f;
+	scale.set(xz, 1.0f, xz);
+
+	mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), gen->getPos());
+	gfx.calcViewMatrix(mtx1, mtx2);
+	gfx.useMatrix(mtx2, 0);
+
+	Colour colour;
+	colour.set(255, 255, 0, 255);
+
+	GlobalShape::enShape->mMaterialList->mColourInfo.mColour = colour;
+	GlobalShape::enShape->drawshape(gfx, *gfx.mCamera, nullptr);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2671,33 +2558,7 @@ void GenAreaCircle::render(Graphics&, Generator*)
  */
 GeneratorList::GeneratorList()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  li        r3, 0xB8
-	  bl        -0x97BB0
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x38
-	  lis       r4, 0x2
-	  subi      r4, r4, 0x1DC0
-	  bl        -0x2F7C
-
-	.loc_0x38:
-	  stw       r31, 0x0(r30)
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mGenListHead = new Generator(123456); // lol
 }
 
 /*
@@ -2705,31 +2566,16 @@ GeneratorList::GeneratorList()
  * Address:	800DEBF0
  * Size:	000038
  */
-void GeneratorList::findGenerator(int)
+Generator* GeneratorList::findGenerator(int idx)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x10(r3)
-	  b         .loc_0x28
+	FOREACH_NODE(Generator, mGenListHead->mChild, gen)
+	{
+		if (gen->readFromRam() && gen->mGeneratorListIdx == idx) {
+			return gen;
+		}
+	}
 
-	.loc_0xC:
-	  lbz       r0, 0xB0(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x24
-	  lwz       r0, 0xB4(r3)
-	  cmpw      r0, r4
-	  beqlr-
-
-	.loc_0x24:
-	  lwz       r3, 0xC(r3)
-
-	.loc_0x28:
-	  cmplwi    r3, 0
-	  bne+      .loc_0xC
-	  li        r3, 0
-	  blr
-	*/
+	return nullptr;
 }
 
 /*
@@ -2739,43 +2585,14 @@ void GeneratorList::findGenerator(int)
  */
 void GeneratorList::createRamGenerators()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  li        r30, 0x1
-	  stw       r29, 0x14(r1)
-	  lwz       r3, 0x0(r3)
-	  lwz       r29, 0x10(r3)
-	  b         .loc_0x4C
-
-	.loc_0x2C:
-	  lbz       r0, 0xB0(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x48
-	  stb       r30, 0x3070(r13)
-	  mr        r3, r29
-	  bl        -0x2D10
-	  stb       r31, 0x3070(r13)
-
-	.loc_0x48:
-	  lwz       r29, 0xC(r29)
-
-	.loc_0x4C:
-	  cmplwi    r29, 0
-	  bne+      .loc_0x2C
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	FOREACH_NODE(Generator, mGenListHead->mChild, gen)
+	{
+		if (gen->readFromRam()) {
+			Generator::ramMode = true;
+			gen->init();
+			Generator::ramMode = false;
+		}
+	}
 }
 
 /*
@@ -2785,63 +2602,10 @@ void GeneratorList::createRamGenerators()
  */
 void GeneratorList::updateUseList()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  lwz       r4, 0x0(r3)
-	  lis       r3, 0x803A
-	  subi      r31, r3, 0x2848
-	  lwz       r30, 0x10(r4)
-	  b         .loc_0x90
-
-	.loc_0x28:
-	  lbz       r0, 0xB0(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x8C
-	  lwz       r3, 0x94(r30)
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x48
-	  li        r0, 0
-	  b         .loc_0x60
-
-	.loc_0x48:
-	  lwz       r0, 0x2FC(r31)
-	  cmpw      r3, r0
-	  bge-      .loc_0x5C
-	  li        r0, 0x1
-	  b         .loc_0x60
-
-	.loc_0x5C:
-	  li        r0, 0
-
-	.loc_0x60:
-	  rlwinm.   r0,r0,0,24,31
-	  bne-      .loc_0x8C
-	  lwz       r3, 0x30(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x8C
-	  lwz       r12, 0x4(r3)
-	  addi      r4, r30, 0
-	  li        r5, 0x1
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x8C:
-	  lwz       r30, 0xC(r30)
-
-	.loc_0x90:
-	  cmplwi    r30, 0
-	  bne+      .loc_0x28
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	FOREACH_NODE(Generator, mGenListHead->mChild, gen)
+	{
+		if (gen->readFromRam()) {
+			gen->updateUseList();
+		}
+	}
 }

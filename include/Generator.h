@@ -171,7 +171,7 @@ struct GeneratorCache {
 struct GeneratorList {
 	GeneratorList();
 
-	void findGenerator(int);
+	Generator* findGenerator(int);
 	void createRamGenerators();
 	void updateUseList();
 
@@ -732,13 +732,13 @@ struct Generator : public Node {
 	Vector3f getPos() { return mGenPosition + mGenOffset; }
 
 	int getRebirthDay() { return mGenType->_18(); }
+	bool readFromRam() { return !mIsRamReadDisabled; }
 
 	// DLL inlines to make:
 	// void changeNaviPos();
 	// void setNaviPos();
 	// void setOffset(Vector3f&);
 	// void setPos(Vector3f&);
-	// bool readFromRam();
 	// int isCarryOver();
 
 	// _00     = VTBL
@@ -764,8 +764,8 @@ struct Generator : public Node {
 	int mDayLimit;                  // _94, will stop spawning after this day
 	Vector3f mGenPosition;          // _98
 	Vector3f mGenOffset;            // _A4
-	u8 _B0;                         // _B0
-	u32 _B4;                        // _B4, unknown
+	bool mIsRamReadDisabled;        // _B0
+	int mGeneratorListIdx;          // _B4
 };
 
 /**
