@@ -1514,7 +1514,7 @@ GeneratorMgr::GeneratorMgr()
 	mGenCount      = 0;
 	mGenListHead   = nullptr;
 	_24.setID('v0.1');
-	_30.setID('v0.0');
+	mGeneratorVersionId.setID('v0.0');
 
 	GenObjectFactory::createInstance();
 	GenAreaFactory::createInstance();
@@ -1595,16 +1595,16 @@ void GeneratorMgr::read(RandomAccessStream& input, bool p2)
 		mGenCount = 0;
 	}
 
-	_30.read(input);
-	if (!(_30 == 'v0.0')) {
-		PRINT("OLD VERSION !!!! %x\n", _30.mId);
+	mGeneratorVersionId.read(input);
+	if (!(mGeneratorVersionId == 'v0.0')) {
+		PRINT("OLD VERSION !!!! %x\n", mGeneratorVersionId.mId);
 	}
 
 	mNaviPos.x = input.readFloat();
 	mNaviPos.y = input.readFloat();
 	mNaviPos.z = input.readFloat();
 
-	if (_30 == 'v0.1') {
+	if (mGeneratorVersionId == 'v0.1') {
 		mNaviDirection = input.readFloat();
 	}
 
@@ -1806,124 +1806,8 @@ void GenTypeOne::setBirthInfo(BirthInfo& info, Generator* gen)
 	Vector3f rot;
 	rot.set(deg2rad(_38()), deg2rad(_48()), deg2rad(_58()));
 
-	info.set(pos, rot, gen->getPos(), gen);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB8(r1)
-	  stw       r31, 0xB4(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0xB0(r1)
-	  mr        r30, r4
-	  stw       r29, 0xAC(r1)
-	  addi      r29, r3, 0
-	  lfs       f0, -0x6790(r2)
-	  stfs      f0, 0x88(r1)
-	  stfs      f0, 0x84(r1)
-	  stfs      f0, 0x80(r1)
-	  lwz       r4, 0x20(r5)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x5C
-	  lwz       r12, 0x4(r4)
-	  addi      r5, r31, 0
-	  addi      r3, r1, 0x80
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x8C
-
-	.loc_0x5C:
-	  lfs       f1, 0x98(r31)
-	  lfs       f0, 0xA4(r31)
-	  lfs       f3, 0x9C(r31)
-	  lfs       f2, 0xA8(r31)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0xA0(r31)
-	  lfs       f1, 0xAC(r31)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x80(r1)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x84(r1)
-	  stfs      f0, 0x88(r1)
-
-	.loc_0x8C:
-	  lfs       f0, -0x6790(r2)
-	  lis       r4, 0x4330
-	  stfs      f0, 0x7C(r1)
-	  stfs      f0, 0x78(r1)
-	  stfs      f0, 0x74(r1)
-	  lfd       f4, -0x6788(r2)
-	  lwz       r0, 0x44(r29)
-	  lfs       f2, -0x6778(r2)
-	  xoris     r0, r0, 0x8000
-	  lwz       r3, 0x54(r29)
-	  stw       r0, 0x94(r1)
-	  xoris     r0, r3, 0x8000
-	  lwz       r5, 0x64(r29)
-	  stw       r4, 0x90(r1)
-	  xoris     r3, r5, 0x8000
-	  lfs       f5, -0x677C(r2)
-	  lfd       f0, 0x90(r1)
-	  stw       r0, 0x9C(r1)
-	  fsubs     f0, f0, f4
-	  stw       r3, 0xA4(r1)
-	  fdivs     f0, f0, f2
-	  stw       r4, 0x98(r1)
-	  stw       r4, 0xA0(r1)
-	  lfd       f1, 0x98(r1)
-	  lfd       f3, 0xA0(r1)
-	  fsubs     f1, f1, f4
-	  fmuls     f0, f5, f0
-	  fsubs     f3, f3, f4
-	  fdivs     f1, f1, f2
-	  stfs      f0, 0x74(r1)
-	  fdivs     f0, f3, f2
-	  fmuls     f1, f5, f1
-	  fmuls     f0, f5, f0
-	  stfs      f1, 0x78(r1)
-	  stfs      f0, 0x7C(r1)
-	  lfs       f1, 0x98(r31)
-	  lfs       f0, 0xA4(r31)
-	  lwz       r3, 0x80(r1)
-	  fadds     f0, f1, f0
-	  lwz       r0, 0x84(r1)
-	  stfs      f0, 0x3C(r1)
-	  lfs       f0, 0x3C(r1)
-	  stfs      f0, 0x58(r1)
-	  lfs       f1, 0x9C(r31)
-	  lfs       f0, 0xA8(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5C(r1)
-	  lfs       f1, 0xA0(r31)
-	  lfs       f0, 0xAC(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x60(r1)
-	  stw       r3, 0x0(r30)
-	  stw       r0, 0x4(r30)
-	  lwz       r0, 0x88(r1)
-	  stw       r0, 0x8(r30)
-	  lwz       r3, 0x74(r1)
-	  lwz       r0, 0x78(r1)
-	  stw       r3, 0xC(r30)
-	  stw       r0, 0x10(r30)
-	  lwz       r0, 0x7C(r1)
-	  stw       r0, 0x14(r30)
-	  lwz       r3, 0x58(r1)
-	  lwz       r0, 0x5C(r1)
-	  stw       r3, 0x18(r30)
-	  stw       r0, 0x1C(r30)
-	  lwz       r0, 0x60(r1)
-	  stw       r0, 0x20(r30)
-	  stw       r31, 0x24(r30)
-	  lwz       r0, 0xBC(r1)
-	  lwz       r31, 0xB4(r1)
-	  lwz       r30, 0xB0(r1)
-	  lwz       r29, 0xAC(r1)
-	  addi      r1, r1, 0xB8
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f& p = gen->getPos();
+	info.set(pos, rot, p, gen);
 }
 
 /*

@@ -479,19 +479,19 @@ struct GenObjectWorkObject : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	u32 _18;         // _18
-	u32 _1C;         // _1C
-	u32 _20;         // _20
-	u32 _24;         // _24
-	u8 _28[12];      // _28
-	u32 _34;         // _34
-	u8 _38[12];      // _38
-	u32 _44;         // _44
-	u8 _48[12];      // _48
-	f32 _54;         // _54
-	s32 mObjectType; // _58
-	u32 mShapeType;  // _5C
-	Vector3f _60;    // _60, hinderrock position (or just position?)
+	u32 _18;                      // _18
+	u32 _1C;                      // _1C
+	u32 _20;                      // _20
+	u32 _24;                      // _24
+	u8 _28[12];                   // _28
+	u32 _34;                      // _34
+	u8 _38[12];                   // _38
+	u32 _44;                      // _44
+	u8 _48[12];                   // _48
+	f32 _54;                      // _54
+	s32 mObjectType;              // _58
+	u32 mShapeType;               // _5C
+	Vector3f mHinderRockPosition; // _60, hinderrock position (or just position?)
 };
 
 /**
@@ -794,14 +794,14 @@ struct GeneratorMgr : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Generator* mGenListHead; // _20
-	ID32 _24;                // _24
-	ID32 _30;                // _30
-	int mGenCount;           // _3C, number of generators in list
-	ID32 _40;                // _40
-	Vector3f mNaviPos;       // _4C
-	f32 mNaviDirection;      // _58
-	bool mIsLimitGenerator;  // _5C
+	Generator* mGenListHead;  // _20
+	ID32 _24;                 // _24
+	ID32 mGeneratorVersionId; // _30
+	int mGenCount;            // _3C, number of generators in list
+	ID32 _40;                 // _40
+	Vector3f mNaviPos;        // _4C
+	f32 mNaviDirection;       // _58
+	bool mIsLimitGenerator;   // _5C
 };
 
 extern GeneratorCache* generatorCache;

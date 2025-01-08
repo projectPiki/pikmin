@@ -638,9 +638,9 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 
 		// MOVE STONE (hinderrock)
 		if (mObjectType == 1) {
-			_60.x = stream.readFloat();
-			_60.y = stream.readFloat();
-			_60.z = stream.readFloat();
+			mHinderRockPosition.x = stream.readFloat();
+			mHinderRockPosition.y = stream.readFloat();
+			mHinderRockPosition.z = stream.readFloat();
 		}
 
 		return;
@@ -668,10 +668,10 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 	// MOVE STONE (hinderrock)
 	if (mVersion == 'v0.3' && mObjectType == 1) {
 		PRINT("READING HINDERROCK !!!!!!!!!!!!!!!!!!!!!!!!!! *******\n");
-		_60.x = stream.readFloat();
-		_60.y = stream.readFloat();
-		_60.z = stream.readFloat();
-		PRINT("POS (%.1f %.1f %.1f)\n", _60.x, _60.y, _60.z);
+		mHinderRockPosition.x = stream.readFloat();
+		mHinderRockPosition.y = stream.readFloat();
+		mHinderRockPosition.z = stream.readFloat();
+		PRINT("POS (%.1f %.1f %.1f)\n", mHinderRockPosition.x, mHinderRockPosition.y, mHinderRockPosition.z);
 	}
 }
 
@@ -714,9 +714,9 @@ void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 
 		// MOVE STONE (hinderrock)
 		if (mObjectType == 1) {
-			stream.writeFloat(_60.x);
-			stream.writeFloat(_60.y);
-			stream.writeFloat(_60.z);
+			stream.writeFloat(mHinderRockPosition.x);
+			stream.writeFloat(mHinderRockPosition.y);
+			stream.writeFloat(mHinderRockPosition.z);
 		}
 
 		return;
@@ -729,9 +729,9 @@ void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 	if (mObjectType == 1) {
 		PRINT("WRITING HINDERROCK !!!!!!!!!!!!!!!!!!!!!!!!!! *******\n");
 
-		stream.writeFloat(_60.x);
-		stream.writeFloat(_60.y);
-		stream.writeFloat(_60.z);
+		stream.writeFloat(mHinderRockPosition.x);
+		stream.writeFloat(mHinderRockPosition.y);
+		stream.writeFloat(mHinderRockPosition.z);
 	}
 }
 
