@@ -850,6 +850,8 @@ void Generator::render(Graphics& gfx)
  */
 void Generator::read(RandomAccessStream& input)
 {
+	int fake[0x14];
+
 	mGeneratorName.read(input);
 	if (!ramMode) {
 		mGeneratorVersion.read(input);
@@ -896,7 +898,6 @@ void Generator::read(RandomAccessStream& input)
 	mGenObject = nullptr;
 	int objID  = readID(input);
 	mGenObject = GenObjectFactory::getProduct(objID);
-
 	if (mGenObject) {
 		mGenObject->read(input);
 	} else {
@@ -907,7 +908,6 @@ void Generator::read(RandomAccessStream& input)
 	mGenArea   = nullptr;
 	int areaID = readID(input);
 	mGenArea   = GenAreaFactory::getProduct(areaID);
-
 	if (mGenArea) {
 		mGenArea->read(input);
 	} else {
@@ -918,7 +918,6 @@ void Generator::read(RandomAccessStream& input)
 	mGenType   = nullptr;
 	int typeID = readID(input);
 	mGenType   = GenTypeFactory::getProduct(typeID);
-
 	if (mGenType) {
 		mGenType->read(input);
 	} else {
@@ -1826,105 +1825,12 @@ void GenTypeOne::render(Graphics& gfx, Generator* gen)
 	f32 s = 2.0f;
 	scale.set(s, s, s);
 
-	mtx1.makeSRT(scale, rot, gen->getPos());
+	Vector3f& pos = gen->getPos();
+	mtx1.makeSRT(scale, rot, pos);
 	gfx.calcViewMatrix(mtx1, mtx2);
 
 	gfx.useMatrix(mtx2, 0);
 	GlobalShape::axisShape->drawshape(gfx, *gfx.mCamera, nullptr);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r8, 0x4330
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x120(r1)
-	  stw       r31, 0x11C(r1)
-	  addi      r31, r4, 0
-	  addi      r6, r1, 0x4C
-	  lfs       f0, -0x6790(r2)
-	  addi      r4, r1, 0x74
-	  stfs      f0, 0x7C(r1)
-	  stfs      f0, 0x78(r1)
-	  stfs      f0, 0x74(r1)
-	  stfs      f0, 0x70(r1)
-	  stfs      f0, 0x6C(r1)
-	  stfs      f0, 0x68(r1)
-	  lfd       f4, -0x6788(r2)
-	  lwz       r0, 0x44(r3)
-	  lwz       r7, 0x54(r3)
-	  xoris     r0, r0, 0x8000
-	  lfs       f2, -0x6778(r2)
-	  stw       r0, 0x104(r1)
-	  xoris     r0, r7, 0x8000
-	  lwz       r3, 0x64(r3)
-	  stw       r8, 0x100(r1)
-	  xoris     r7, r3, 0x8000
-	  lfs       f5, -0x677C(r2)
-	  lfd       f0, 0x100(r1)
-	  addi      r3, r1, 0xC0
-	  stw       r0, 0x10C(r1)
-	  fsubs     f0, f0, f4
-	  stw       r7, 0x114(r1)
-	  fdivs     f0, f0, f2
-	  stw       r8, 0x108(r1)
-	  stw       r8, 0x110(r1)
-	  lfd       f1, 0x108(r1)
-	  lfd       f3, 0x110(r1)
-	  fsubs     f1, f1, f4
-	  fmuls     f0, f5, f0
-	  fsubs     f3, f3, f4
-	  fdivs     f1, f1, f2
-	  stfs      f0, 0x68(r1)
-	  fdivs     f0, f3, f2
-	  fmuls     f1, f5, f1
-	  fmuls     f0, f5, f0
-	  stfs      f1, 0x6C(r1)
-	  stfs      f0, 0x70(r1)
-	  lfs       f0, -0x6768(r2)
-	  stfs      f0, 0x74(r1)
-	  stfs      f0, 0x78(r1)
-	  stfs      f0, 0x7C(r1)
-	  lfs       f1, 0x98(r5)
-	  lfs       f0, 0xA4(r5)
-	  lfs       f4, 0xA0(r5)
-	  fadds     f0, f1, f0
-	  lfs       f3, 0xAC(r5)
-	  lfs       f2, 0x9C(r5)
-	  lfs       f1, 0xA8(r5)
-	  fadds     f3, f4, f3
-	  stfs      f0, 0x3C(r1)
-	  fadds     f1, f2, f1
-	  addi      r5, r1, 0x68
-	  lfs       f0, 0x3C(r1)
-	  stfs      f0, 0x4C(r1)
-	  stfs      f1, 0x50(r1)
-	  stfs      f3, 0x54(r1)
-	  bl        -0xA0238
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0xC0
-	  addi      r5, r1, 0x80
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x80
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2F58(r13)
-	  mr        r4, r31
-	  lwz       r5, 0x2E4(r31)
-	  li        r6, 0
-	  bl        -0xADF0C
-	  lwz       r0, 0x124(r1)
-	  lwz       r31, 0x11C(r1)
-	  addi      r1, r1, 0x120
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1970,92 +1876,8 @@ void GenTypeAtOnce::setBirthInfo(BirthInfo& info, Generator* gen)
 		vec = gen->getPos();
 	}
 
-	info.set(vec, Vector3f(0.0f, 0.0f, 0.0f), gen->getPos(), gen);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x58(r1)
-	  addi      r30, r4, 0
-	  lfs       f0, -0x6790(r2)
-	  stfs      f0, 0x54(r1)
-	  stfs      f0, 0x50(r1)
-	  stfs      f0, 0x4C(r1)
-	  lwz       r4, 0x20(r5)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x54
-	  lwz       r12, 0x4(r4)
-	  addi      r5, r31, 0
-	  addi      r3, r1, 0x4C
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x84
-
-	.loc_0x54:
-	  lfs       f1, 0x98(r31)
-	  lfs       f0, 0xA4(r31)
-	  lfs       f3, 0x9C(r31)
-	  lfs       f2, 0xA8(r31)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0xA0(r31)
-	  lfs       f1, 0xAC(r31)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x4C(r1)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x50(r1)
-	  stfs      f0, 0x54(r1)
-
-	.loc_0x84:
-	  lfs       f1, 0x98(r31)
-	  lfs       f0, 0xA4(r31)
-	  lfs       f2, -0x39F4(r13)
-	  fadds     f3, f1, f0
-	  lfs       f1, -0x39F0(r13)
-	  lfs       f0, -0x39EC(r13)
-	  lwz       r3, 0x4C(r1)
-	  stfs      f3, 0x20(r1)
-	  lwz       r0, 0x50(r1)
-	  lfs       f3, 0x20(r1)
-	  stfs      f3, 0x3C(r1)
-	  lfs       f4, 0x9C(r31)
-	  lfs       f3, 0xA8(r31)
-	  fadds     f3, f4, f3
-	  stfs      f3, 0x40(r1)
-	  lfs       f4, 0xA0(r31)
-	  lfs       f3, 0xAC(r31)
-	  stfs      f2, 0x30(r1)
-	  fadds     f2, f4, f3
-	  stfs      f1, 0x34(r1)
-	  stfs      f2, 0x44(r1)
-	  stfs      f0, 0x38(r1)
-	  stw       r3, 0x0(r30)
-	  stw       r0, 0x4(r30)
-	  lwz       r0, 0x54(r1)
-	  stw       r0, 0x8(r30)
-	  lwz       r3, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r3, 0xC(r30)
-	  stw       r0, 0x10(r30)
-	  lwz       r0, 0x38(r1)
-	  stw       r0, 0x14(r30)
-	  lwz       r3, 0x3C(r1)
-	  lwz       r0, 0x40(r1)
-	  stw       r3, 0x18(r30)
-	  stw       r0, 0x1C(r30)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x20(r30)
-	  stw       r31, 0x24(r30)
-	  lwz       r0, 0x64(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f& pos = gen->getPos();
+	info.set(vec, Vector3f(0.0f, 0.0f, 0.0f), pos, gen);
 }
 
 /*
@@ -2102,92 +1924,8 @@ void GenTypeInitRand::setBirthInfo(BirthInfo& info, Generator* gen)
 		vec = gen->getPos();
 	}
 
-	info.set(vec, Vector3f(0.0f, 0.0f, 0.0f), gen->getPos(), gen);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x58(r1)
-	  addi      r30, r4, 0
-	  lfs       f0, -0x6790(r2)
-	  stfs      f0, 0x54(r1)
-	  stfs      f0, 0x50(r1)
-	  stfs      f0, 0x4C(r1)
-	  lwz       r4, 0x20(r5)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x54
-	  lwz       r12, 0x4(r4)
-	  addi      r5, r31, 0
-	  addi      r3, r1, 0x4C
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x84
-
-	.loc_0x54:
-	  lfs       f1, 0x98(r31)
-	  lfs       f0, 0xA4(r31)
-	  lfs       f3, 0x9C(r31)
-	  lfs       f2, 0xA8(r31)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0xA0(r31)
-	  lfs       f1, 0xAC(r31)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x4C(r1)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x50(r1)
-	  stfs      f0, 0x54(r1)
-
-	.loc_0x84:
-	  lfs       f1, 0x98(r31)
-	  lfs       f0, 0xA4(r31)
-	  lfs       f2, -0x39E8(r13)
-	  fadds     f3, f1, f0
-	  lfs       f1, -0x39E4(r13)
-	  lfs       f0, -0x39E0(r13)
-	  lwz       r3, 0x4C(r1)
-	  stfs      f3, 0x20(r1)
-	  lwz       r0, 0x50(r1)
-	  lfs       f3, 0x20(r1)
-	  stfs      f3, 0x3C(r1)
-	  lfs       f4, 0x9C(r31)
-	  lfs       f3, 0xA8(r31)
-	  fadds     f3, f4, f3
-	  stfs      f3, 0x40(r1)
-	  lfs       f4, 0xA0(r31)
-	  lfs       f3, 0xAC(r31)
-	  stfs      f2, 0x30(r1)
-	  fadds     f2, f4, f3
-	  stfs      f1, 0x34(r1)
-	  stfs      f2, 0x44(r1)
-	  stfs      f0, 0x38(r1)
-	  stw       r3, 0x0(r30)
-	  stw       r0, 0x4(r30)
-	  lwz       r0, 0x54(r1)
-	  stw       r0, 0x8(r30)
-	  lwz       r3, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r3, 0xC(r30)
-	  stw       r0, 0x10(r30)
-	  lwz       r0, 0x38(r1)
-	  stw       r0, 0x14(r30)
-	  lwz       r3, 0x3C(r1)
-	  lwz       r0, 0x40(r1)
-	  stw       r3, 0x18(r30)
-	  stw       r0, 0x1C(r30)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x20(r30)
-	  stw       r31, 0x24(r30)
-	  lwz       r0, 0x64(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f& pos = gen->getPos();
+	info.set(vec, Vector3f(0.0f, 0.0f, 0.0f), pos, gen);
 }
 
 /*
@@ -2215,12 +1953,15 @@ void GenAreaPoint::render(Graphics&, Generator*) { }
  */
 Vector3f GenAreaCircle::getPos(Generator* gen)
 {
-	Vector3f pos     = gen->getPos();
+	Vector3f pos = gen->getPos();
+
 	f32 minRadFactor = System::getRand(1.0f);
-	f32 randRad      = System::getRand(1.0f) * (1.0f - minRadFactor) + minRadFactor;
-	randRad *= mRadius();
+	f32 radius       = System::getRand(1.0f) * (1.0f - minRadFactor) + minRadFactor;
+	radius *= mRadius();
+
 	f32 randAngle = 2.0f * (PI * System::getRand(1.0f));
-	pos           = Vector3f(randRad * sinf(randAngle), 0.0f, randRad * cosf(randAngle)) + pos;
+	pos           = Vector3f(radius * sinf(randAngle), 0.0f, radius * cosf(randAngle)) + pos;
+
 	return pos;
 	/*
 	.loc_0x0:
@@ -2341,10 +2082,9 @@ void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 {
 	Matrix4f mtx1;
 	Matrix4f mtx2;
-	Vector3f scale;
-	f32 xz = mRadius() / 100.0f;
-	scale.set(xz, 1.0f, xz);
 
+	Vector3f scale;
+	scale.set(mRadius() / 100.0f, 1.0f, mRadius() / 100.0f);
 	mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), gen->getPos());
 	gfx.calcViewMatrix(mtx1, mtx2);
 	gfx.useMatrix(mtx2, 0);
