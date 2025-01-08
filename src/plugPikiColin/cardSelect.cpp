@@ -79,7 +79,7 @@ struct CardSelectSetupSection : public Node {
 					PRINT("NORMAL MODE!!!\n");
 
 					gameflow.mWorldClock.mCurrentDay = 1;
-					if (gameflow.mGamePrefs._1E) {
+					if (gameflow.mGamePrefs.mHasSaveGame) {
 						gameflow.mMemoryCard.loadCurrentGame();
 						if (gameflow.mPlayState._20 == 1) {
 							gameflow.mPlayState.reset();
@@ -151,9 +151,9 @@ struct CardSelectSetupSection : public Node {
 				mFadeState     = 1;
 				gsys->setFade(0.0f, 3.0f);
 			} else {
-				gameflow.mGamePrefs._1E  = 1;
-				gameflow.mSaveGameCrc    = card.mCrc;
-				gameflow.mGamePrefs._108 = returnCode - 2;
+				gameflow.mGamePrefs.mHasSaveGame = 1;
+				gameflow.mSaveGameCrc            = card.mCrc;
+				gameflow.mGamePrefs._108         = returnCode - 2;
 				PRINT("got index = %d\n", card.mIndex);
 				gameflow.mGamePrefs.mSaveGameIndex = card.mIndex + 1;
 				PRINT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
@@ -199,7 +199,7 @@ CardSelectSection::CardSelectSection()
 	}
 
 	gameflow.mGamePrefs.mSaveGameIndex = 0;
-	gameflow.mGamePrefs._1E            = 0;
+	gameflow.mGamePrefs.mHasSaveGame   = 0;
 
 	if (gameflow.mIsChallengeMode == 0) {
 		Jac_SceneSetup(2, 0);

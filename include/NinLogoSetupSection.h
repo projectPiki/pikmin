@@ -34,8 +34,8 @@ struct NinLogoSetupSection : public Node {
 			progresWindow = new zen::DrawProgre();
 			progresWindow->start();
 		}
-		mMenu                   = 0;
-		gameflow.mGamePrefs._1E = 1;
+		mMenu                            = 0;
+		gameflow.mGamePrefs.mHasSaveGame = 1;
 		gsys->setFade(1.0f, 3.0f);
 	}
 

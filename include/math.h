@@ -19,14 +19,17 @@ static inline f32 quickABS(f32 x)
 #define HALF_PI    1.5707964f
 #define THIRD_PI   1.0471976f
 #define QUARTER_PI 0.7853982f
+#define SIN_2_5    0.43633234f
+#define M_SQRT3    1.73205f
 
-#define SIN_2_5 0.43633234f
-#define M_SQRT3 1.73205f
+#ifndef DEG2RAD
 
 #define DEG2RAD            (1.0f / 180.0f)
 #define TORADIANS(degrees) (PI * (DEG2RAD * degrees))
 #define RAD2DEG            (180.0f / PI)
 #define TODEGREES(radians) (radians * RAD2DEG)
+
+#endif
 
 #define CHECK_BOUNDS_BOTH(min, val1, val2, max) (min <= val1 && val2 < max)
 

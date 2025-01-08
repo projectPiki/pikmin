@@ -29,8 +29,14 @@ extern "C" {
 #define SIN_2_5 0.43633234f
 #define M_SQRT3 1.73205f
 
-#define DEG2RAD        (1.0f / 180.0f)
-#define TORADIANS(val) (PI * (DEG2RAD * val))
+#ifndef DEG2RAD
+
+#define DEG2RAD            (1.0f / 180.0f)
+#define TORADIANS(degrees) (PI * (DEG2RAD * degrees))
+#define RAD2DEG            (180.0f / PI)
+#define TODEGREES(radians) (radians * RAD2DEG)
+
+#endif
 
 extern int __float_nan[];
 extern int __float_huge[];

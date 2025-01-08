@@ -270,7 +270,7 @@ struct GamePrefs : public CoreNode {
 		mBgmVol         = 8;
 		mSfxVol         = 8;
 		_108            = 0;
-		_1E             = 0;
+		mHasSaveGame    = 0;
 		mSaveGameIndex  = 0;
 		mSpareSaveGames = 0;
 		_1F             = 0;
@@ -294,7 +294,7 @@ struct GamePrefs : public CoreNode {
 	int _18;                // _18
 	u8 mBgmVol;             // _1C
 	u8 mSfxVol;             // _1D
-	u8 _1E;                 // _1E
+	u8 mHasSaveGame;        // _1E
 	u8 _1F;                 // _1F
 	u8 mSaveGameIndex;      // _20
 	u8 mSpareSaveGames;     // _21
