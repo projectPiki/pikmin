@@ -2,6 +2,7 @@
 #define _FONT_H
 
 #include "types.h"
+#include "Geometry.h"
 
 struct Texture;
 
@@ -11,15 +12,13 @@ struct Texture;
 struct FontChar {
 	FontChar();
 
-	u16 _00;     // _00
-	u16 _02;     // _02
-	u16 _04;     // _04
-	u16 _06;     // _06
-	u8 _08[0x4]; // _08, unknown
-	u32 _0C;     // _0C, unknown
-	u32 _10;     // _10, unknown
-	u32 _14;     // _14, unknown
-	u32 _18;     // _18, unknown
+	u16 _00;                 // _00
+	u16 _02;                 // _02
+	u16 mWidth;              // _04
+	u16 mHeight;             // _06
+	u16 mCharSpacing;        // _08
+	u16 mLeftOffset;         // _0A
+	RectArea mTextureCoords; // _0C
 };
 
 /**

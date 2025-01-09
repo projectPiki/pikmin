@@ -65,11 +65,11 @@ struct CullFrustum {
 		projVec.z = vec.dot(mViewZAxis);
 	}
 
-	int _00;                     // _00
+	int mNumActivePlanes;        // _00
 	int _04;                     // _04
-	int _08;                     // _08
+	int mViewPlaneIdx;           // _08
 	CullingPlane mCullPlanes[6]; // _0C
-	Plane* _114[6];              // _114, idk how many are in this
+	Plane* mPlanePointers[6];    // _114, idk how many are in this
 	u8 _12C[0x154 - 0x12C];      // _12C, unknown
 	u8 _154;                     // _154
 	u8 _155;                     // _155
@@ -82,13 +82,13 @@ struct CullFrustum {
 	Vector3f mInvXAxis;          // _1A0
 	Vector3f mInvYAxis;          // _1AC
 	Vector3f mInvZAxis;          // _1B8
-	f32 _1C4;                    // _1C4
-	f32 _1C8;                    // _1C8
+	f32 mAspectRatio;            // _1C4
+	f32 mVerticalScale;          // _1C8
 	f32 mFov;                    // _1CC
 	f32 mNear;                   // _1D0
 	f32 mFar;                    // _1D4
-	f32 _1D8;                    // _1D8
-	f32 _1DC;                    // _1DC
+	f32 mDepth;                  // _1D8
+	f32 mWidth;                  // _1DC
 	Matrix4f mLookAtMtx;         // _1E0
 	Matrix4f mInverseLookAtMtx;  // _220
 };
@@ -108,13 +108,13 @@ struct Camera : public CullFrustum {
 	void projectCamPoint(Vector3f&);
 
 	// _00-_260 = CullFrustum
-	Matrix4f _260;      // _260
-	Matrix4f _2A0;      // _2A0
-	Matrix4f _2E0;      // _2E0
-	Vector3f mRotation; // _320
-	Vector3f _32C;      // _32C
-	Vector3f _338;      // _338
-	f32 _344;           // _344
+	Matrix4f _260;              // _260
+	Matrix4f mProjectionMatrix; // _2A0
+	Matrix4f _2E0;              // _2E0
+	Vector3f mRotation;         // _320
+	Vector3f _32C;              // _32C
+	Vector3f _338;              // _338
+	f32 _344;                   // _344
 };
 
 /**
@@ -125,12 +125,12 @@ struct LightCamera : public Camera {
 	void calcProjection(Graphics&, bool, Node*);
 
 	// _00-_348 = Camera
-	f32 _348;           // _348
-	f32 _34C;           // _34C
-	f32 _350;           // _350
-	f32 _354;           // _354
-	Texture* mLightMap; // _358
-	Vector3f _35C;      // _35C
+	f32 mProjectionX;          // _348
+	f32 mProjectionY;          // _34C
+	f32 mFrustumSize;          // _350
+	f32 mFrustumRange;         // _354
+	Texture* mLightMap;        // _358
+	Vector3f mProjectionScale; // _35C
 };
 
 /**

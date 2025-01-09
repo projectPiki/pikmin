@@ -48,7 +48,7 @@ DEFINE_PRINT("GameFlow");
 void GameLoadIdler::draw(Graphics& gfx)
 {
 	GameFlow* flow = &gameflow;
-	gfx._368.set(48, 48, 48, 255);
+	gfx.mAmbientFogColour.set(48, 48, 48, 255);
 	gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 	gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 	gfx.setClearColour(Colour(0, 0, 0, 0));

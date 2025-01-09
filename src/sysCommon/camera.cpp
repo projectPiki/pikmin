@@ -43,7 +43,7 @@ void CullFrustum::vectorToWorldPlane(Vector3f& vec, CullingPlane& worldPlane)
 bool CullFrustum::isPointVisible(Vector3f& point, f32 cutoff)
 {
 	for (int i = 0; i < _04; i++) {
-		Plane* plane = _114[i];
+		Plane* plane = mPlanePointers[i];
 		if (point.x * plane->mNormal.x + point.y * plane->mNormal.y + point.z * plane->mNormal.z - plane->mOffset < -cutoff) {
 			return false;
 		}
@@ -70,8 +70,8 @@ void CullFrustum::draw(Graphics& gfx)
 	f32 targetDist = mPosition.distance(mFocus);
 	f32 tanTheta   = sinf(PI * (mFov / 2) / 180.0f) * targetDist / cosf(PI * (mFov / 2) / 180.0f);
 
-	f32 divTanTheta = tanTheta / _1C4;
-	f32 roundedTan  = divTanTheta * _1C4;
+	f32 divTanTheta = tanTheta / mAspectRatio;
+	f32 roundedTan  = divTanTheta * mAspectRatio;
 
 	Vector3f vec1(-roundedTan, tanTheta, 0.0f);
 	Vector3f vec2(roundedTan, tanTheta, 0.0f);
@@ -1208,45 +1208,45 @@ void CullFrustum::draw(Graphics& gfx)
  * Address:	800425AC
  * Size:	00046C
  */
-void CullFrustum::updateViewPlanes(f32 p1, f32 p2, f32 p3, f32 p4)
+void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScale, f32 topScale)
 {
 	u32 badCompiler[4];
 
-	CullingPlane* planes = &mCullPlanes[_08];
+	CullingPlane* planes = &mCullPlanes[mViewPlaneIdx];
 	Vector3f vec;
-	vec.x = _1DC / absF(p1);
+	vec.x = mWidth / absF(leftScale);
 	vec.y = 0.0f;
-	vec.z = _1D8;
+	vec.z = mDepth;
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[0]);
 	planes[0].CheckMinMaxDir();
 	planes[0]._28 = 1;
 
-	vec.x = -_1DC / absF(p2);
+	vec.x = -mWidth / absF(rightScale);
 	vec.y = 0.0f;
-	vec.z = _1D8;
+	vec.z = mDepth;
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[1]);
 	planes[1].CheckMinMaxDir();
 	planes[1]._28 = 1;
 
 	vec.x = 0.0f;
-	vec.y = absF(p3) * -_1DC;
-	vec.z = _1D8;
+	vec.y = absF(bottomScale) * -mWidth;
+	vec.z = mDepth;
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[2]);
 	planes[2].CheckMinMaxDir();
 	planes[2]._28 = 1;
 
 	vec.x = 0.0f;
-	vec.y = absF(p4) * _1DC;
-	vec.z = _1D8;
+	vec.y = absF(topScale) * mWidth;
+	vec.z = mDepth;
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[3]);
 	planes[3].CheckMinMaxDir();
 	planes[3]._28 = 1;
 
-	_00 = &planes[4] - mCullPlanes;
+	mNumActivePlanes = &planes[4] - mCullPlanes;
 }
 
 /*
@@ -1258,9 +1258,9 @@ void CullFrustum::createViewPlanes()
 {
 	CullingPlane* planes = mCullPlanes;
 	Vector3f vec;
-	_00  = 0;
-	_1D8 = sinf(PI * (0.5f * mFov) / 180.0f);
-	_1DC = cosf(PI * (0.5f * mFov) / 180.0f);
+	mNumActivePlanes = 0;
+	mDepth           = sinf(PI * (0.5f * mFov) / 180.0f);
+	mWidth           = cosf(PI * (0.5f * mFov) / 180.0f);
 	vectorToWorldPlane(Vector3f(0.0f, 0.0f, 1.0f), planes[0]);
 	planes[0].mPlane.mOffset += mNear;
 	planes[0].CheckMinMaxDir();
@@ -1271,7 +1271,7 @@ void CullFrustum::createViewPlanes()
 	planes[1].CheckMinMaxDir();
 	planes[1]._28 = 1;
 
-	_08 = &planes[2] - mCullPlanes;
+	mViewPlaneIdx = &planes[2] - mCullPlanes;
 
 	FORCE_DONT_INLINE;
 }
@@ -1334,24 +1334,24 @@ void CullFrustum::createInvVecs()
  * Address:	80042C54
  * Size:	000150
  */
-void CullFrustum::update(f32 p1, f32 p2, f32 p3, f32 p4)
+void CullFrustum::update(f32 aspectRatio, f32 fov, f32 near, f32 far)
 {
-	_1C4  = p1;
-	_1C8  = 1.0f;
-	mFov  = p2;
-	mNear = p3;
-	mFar  = p4;
+	mAspectRatio   = aspectRatio;
+	mVerticalScale = 1.0f;
+	mFov           = fov;
+	mNear          = near;
+	mFar           = far;
 
 	createVecs();
 	createInvVecs();
 	createViewPlanes();
-	updateViewPlanes(_1C4, -_1C4, -_1C8, _1C8);
+	updateViewPlanes(mAspectRatio, -mAspectRatio, -mVerticalScale, mVerticalScale);
 
-	for (int i = 0; i < _00; i++) {
-		_114[i] = &mCullPlanes[i].mPlane;
+	for (int i = 0; i < mNumActivePlanes; i++) {
+		mPlanePointers[i] = &mCullPlanes[i].mPlane;
 	}
 
-	_04 = _00;
+	_04 = mNumActivePlanes;
 	_158.set(0.0f, 0.0f, 0.0f);
 }
 
@@ -1432,12 +1432,13 @@ void Camera::camReflect(Camera&, Plane&)
  */
 f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point)
 {
-	f32 dist = _2A0.mMtx[3][0] * point.x + _2A0.mMtx[3][1] * point.y + _2A0.mMtx[3][2] * point.z + _2A0.mMtx[3][3];
+	f32 dist = mProjectionMatrix.mMtx[3][0] * point.x + mProjectionMatrix.mMtx[3][1] * point.y + mProjectionMatrix.mMtx[3][2] * point.z
+	         + mProjectionMatrix.mMtx[3][3];
 	if (dist <= 0.0f) {
 		return dist;
 	}
 
-	point.multMatrix(_2A0);
+	point.multMatrix(mProjectionMatrix);
 	f32 norm = 1.0f / dist;
 	point.x *= norm;
 	point.y *= norm;
@@ -1471,8 +1472,8 @@ Camera::Camera()
 {
 	mRotation.set(0.0f, 4.363323f, 0.0f);
 	_32C.set(0.0f, 0.0f, 0.0f);
-	_1C4 = 1.0f;
-	_344 = 110.0f;
+	mAspectRatio = 1.0f;
+	_344         = 110.0f;
 }
 
 /*
@@ -1500,27 +1501,28 @@ void LightCamera::calcProjection(Graphics& gfx, bool p2, Node* p3)
 {
 	f32 targetDist = mPosition.distance(mFocus);
 	f32 tanTheta   = sinf(PI * mFov / 180.0f) / cosf(PI * mFov / 180.0f);
-	_354           = tanTheta * targetDist;
-	_350           = _354;
+	mFrustumRange  = tanTheta * targetDist;
+	mFrustumSize   = mFrustumRange;
 
-	Vector3f vec(_350 * (1.0f / tanTheta), _354 * (1.0f / tanTheta), 1.0f);
+	Vector3f vec(mFrustumSize * (1.0f / tanTheta), mFrustumRange * (1.0f / tanTheta), 1.0f);
 	Vector3f dir;
 	dir.sub2(mPosition, mFocus);
 
-	_348 = dir.length() / vec.x;
-	_34C = dir.length() / vec.y;
+	mProjectionX = dir.length() / vec.x;
+	mProjectionY = dir.length() / vec.y;
 
-	_35C.set(0.5f * _348, 0.5f * _34C, 1.0f);
+	mProjectionScale.set(0.5f * mProjectionX, 0.5f * mProjectionY, 1.0f);
 
 	if (mLightMap && p3) {
-		_348 = 0.5f * (_348 - 1.0f);
-		_34C = 0.5f * (_34C - 1.0f);
+		mProjectionX = 0.5f * (mProjectionX - 1.0f);
+		mProjectionY = 0.5f * (mProjectionY - 1.0f);
 
 		f32 width  = 2.0f * mLightMap->mWidth;
 		f32 height = 2.0f * mLightMap->mHeight;
-		gfx.setPerspective(_260.mMtx, mFov, _1C4, 30.0f, mFar, 1.0f);
+		gfx.setPerspective(_260.mMtx, mFov, mAspectRatio, 30.0f, mFar, 1.0f);
 
-		gfx.setViewport(RectArea(-(width * _348), -(height * _34C), width + (int(width * _348)), height + (int(height * _34C))));
+		gfx.setViewport(RectArea(-(width * mProjectionX), -(height * mProjectionY), width + (int(width * mProjectionX)),
+		                         height + (int(height * mProjectionY))));
 
 		Camera* cam = gfx.mCamera;
 		gfx.setClearColour(Colour(0, 0, 0, 0));

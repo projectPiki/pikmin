@@ -2885,9 +2885,9 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
  */
 FontChar::FontChar()
 {
-	_0C = _14 = _10 = _18 = 0;
 	_00 = _02 = 0;
-	_04 = _06 = 8;
+	mWidth    = 0;
+	mHeight   = 0;
 }
 
 /*
@@ -3218,8 +3218,8 @@ void MaterialHandler::setTexMatrix(bool)
  */
 Graphics::Graphics()
 {
-	mCachedShapeCount = 1000;
-	mCachedShapes     = new CachedShape[mCachedShapeCount];
+	mCachedShapeMax = 1000;
+	mCachedShapes   = new CachedShape[mCachedShapeMax];
 	/*
 	.loc_0x0:
 	  mflr      r0

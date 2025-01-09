@@ -131,14 +131,13 @@ struct Light : public CoreNode {
 	f32 _44;                     // _44
 	f32 _48;                     // _48
 	u8 _4C[0x8];                 // _4C, unknown
-	Vector3f _54;                // _54
+	Vector3f mPosition;          // _54
 	Vector3f _60;                // _60
-	u8 _6C;                      // _6C
-	u8 _6D;                      // _6D
-	u8 _6E;                      // _6E
-	u8 _6F;                      // _6F
+	Colour mDiffuseColour;       // _6C
 	u32 mLightValuesSet;         // _70
-	u8 _74[0x80 - 0x74];         // _74, unknown
+	CullFrustum* mFrustum;       // _74
+	u32 _78;                     // _78
+	u32 _7C;                     // _7C
 	CullingPlane mCullPlanes[6]; // _80
 	u8 _188[0x1C8 - 0x188];      // _188, unknown
 	u8 _1C8;                     // _1C8

@@ -38,6 +38,14 @@ struct RectArea {
 		mMaxY = y1;
 	}
 
+	inline RectArea()
+	{
+		mMinX = 0;
+		mMinY = 0;
+		mMaxX = 0;
+		mMaxY = 0;
+	}
+
 	int mMinX; // _00
 	int mMinY; // _04
 	int mMaxX; // _08

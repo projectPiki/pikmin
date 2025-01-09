@@ -6370,7 +6370,7 @@ BaseShape::BaseShape()
 {
 	setName("noname");
 	mAnimMatrices   = nullptr;
-	_2C             = 0;
+	mAnimMatrixId   = 0;
 	mSystemFlags    = 0;
 	_13C            = 0;
 	_2AC            = 1;

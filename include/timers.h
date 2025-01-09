@@ -13,15 +13,15 @@ struct TimerInf {
 	TimerInf(char*);
 
 	char* mTimerName; // _00
-	u32 _04;          // _04
-	u32 _08;          // _08
-	u32 _0C;          // _0C
-	u32 _10;          // _10
-	u32 _14;          // _14
-	u32 _18;          // _18
+	f32 mStartTime;   // _04
+	f32 mDuration;    // _08
+	f32 mAverageTime; // _0C
+	f32 mPeakTime;    // _10
+	f32 mDecayTime;   // _14
+	u32 mSampleTime;  // _18
 	u32 _1C;          // _1C
 	u8 _20;           // _20
-	u32 _24;          // _24
+	TimerInf* mNext;  // _24
 };
 
 struct Timers {

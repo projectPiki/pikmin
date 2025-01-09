@@ -43,12 +43,9 @@ Light::Light()
 	mSpotQuadTerm   = 0.0f;
 	_48             = 0.15f;
 	_44             = 0.05f;
-	_54.set(0.0f, 100.0f, 0.0f);
+	mPosition.set(0.0f, 100.0f, 0.0f);
 	_60.set(0.0f, -1.0f, 0.0f);
-	_6C = 255;
-	_6D = 255;
-	_6E = 255;
-	_6F = 255;
+	mDiffuseColour.set(255, 255, 255, 255);
 
 	setLightDistAttn(mDistancedRange, mAttenuation, mMode);
 }

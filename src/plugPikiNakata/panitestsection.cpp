@@ -64,7 +64,7 @@ PaniTestNode::PaniTestNode()
 	routeMgr  = nullptr;
 	effectMgr = nullptr;
 	pelletMgr = new PelletMgr(mapMgr);
-	_390._54.set(0.0f, 500.0f, 0.0f);
+	_390.mPosition.set(0.0f, 500.0f, 0.0f);
 	_390.mDistancedRange = 500.0f;
 	_390.update();
 	pikiMgr = new PikiMgr(nullptr);

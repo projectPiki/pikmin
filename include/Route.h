@@ -69,9 +69,9 @@ struct RoutePoint : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 _14;            // _14
-	u32 _18;            // _18
-	u32 _1C;            // _1C
+	f32 mScreenX;       // _14
+	f32 mScreenY;       // _18
+	f32 mScreenDepth;   // _1C
 	f32 _20;            // _20
 	f32 mWidth;         // _24
 	Vector3f mPosition; // _28

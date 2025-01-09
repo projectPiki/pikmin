@@ -169,7 +169,7 @@ struct BaseShape : public CoreNode {
 	u32 _20;                          // _20
 	AnimFrameCacher* mFrameCacher;    // _24
 	Matrix4f* mAnimMatrices;          // _28
-	u32 _2C;                          // _2C
+	u32 mAnimMatrixId;                // _2C
 	s32 mEnvelopeCount;               // _30
 	Envelope* mEnvelopeList;          // _34
 	s32 mVtxMatrixCount;              // _38
@@ -303,12 +303,14 @@ struct Shape : public BaseShape {
  * @note Size: 0x18.
  */
 struct CachedShape {
-	CachedShape() { _00 = _04 = this; }
+	CachedShape() { mPrev = mNext = this; }
 
-	// TODO: members
-	CachedShape* _00;   // _00, maybe prev and next?
-	CachedShape* _04;   // _04
-	u8 _08[0x18 - 0x8]; // _08
+	CachedShape* mPrev;               // _00
+	CachedShape* mNext;               // _04
+	ShapeDynMaterials* mDynMaterials; // _08
+	Shape* mParentShape;              // _0C
+	Matrix4f* mAnimMatrices;          // _10
+	f32 mDistanceFromOrigin;          // _14
 };
 
 #endif

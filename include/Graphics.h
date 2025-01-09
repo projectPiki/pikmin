@@ -52,36 +52,50 @@ struct Graphics {
 
 	// _3B4 = VTBL
 	// In the DLL, take the offset of the variable (- 4) to get the real offset here
-	int _00;                    // _00
-	u8 _04[0xC];                // _04, TODO: work out members
-	Light mLight;               // _10
-	Camera* mCamera;            // _2E4
-	u32* _2E8;                  // _2E8
-	u8 _2EC[0x30C - 0x2EC];     // _2EC, unknown
-	int mScreenWidth;           // _30C
-	int mScreenHeight;          // _310
-	Colour _314;                // _318
-	Colour _318;                // _31C
-	Colour _31C;                // _320
-	u32 _320;                   // _324
-	u32 _324;                   // _324, unknown
-	u8 _328[0x338 - 0x328];     // _328, unknown
-	LightCamera* mLightCam;     // _338
-	u8 _33C[0x368 - 0x33C];     // _33C, unknown
-	Colour _368;                // _368
-	u32 _36C;                   // _36C
-	u32 _370;                   // _370
-	u32 _374;                   // _374
-	u32 _378;                   // _378
-	u32 _37C;                   // _37C
-	u32 _380;                   // _380
-	u32 _384;                   // _384
-	u32 _388;                   // _388
-	u32 _38C;                   // _38C
-	CachedShape _390;           // _390
-	CachedShape* mCachedShapes; // _3A8
-	u32 mCachedShapeCount;      // _3AC
-	u8 _3B0[0x4];               // _3B0, unknown
+	int _00;                                  // _00
+	u32 mRenderState;                         // _08
+	Matrix4f* mMatrix;                        // _0C
+	Matrix4f* mActiveMatrix;                  // _10
+	Light mLight;                             // _10
+	Camera* mCamera;                          // _2E4
+	Texture* mActiveTexture;                  // _2E8
+	u8 _2EC[0x30C - 0x2EC];                   // _2EC
+	int mScreenWidth;                         // _30C
+	int mScreenHeight;                        // _310
+	Colour mBufferClearColour;                // _314
+	Colour mPrimaryColour;                    // _318
+	Colour mAuxiliaryColour;                  // _31C
+	u8 mIsLightingEnabled;                    // _320
+	u8 mDepthMode;                            // _321
+	u32 _324;                                 // _324
+	u32 _328;                                 // _328
+	u32 mBlendMode;                           // _32C, 0 is normal, 1 is additive, 2 is subtractive, 3 is alpha additive, 4 is no blend
+	u32 mCullMode;                            // _330
+	u32 _334;                                 // _334
+	LightCamera* mLightCam;                   // _338
+	Vector3f _33C;                            // _33C
+	u32 _348;                                 // _348
+	MaterialHandler* _34C;                    // _34C
+	MaterialHandler* mCurrentMaterialHandler; // _350
+	Material* mCurrentMaterial;               // _354
+	f32 mFogStart;                            // _358
+	f32 mFogEnd;                              // _35C
+	f32 mFogDensity;                          // _360
+	Colour mFogColour;                        // _364
+	Colour mAmbientFogColour;                 // _368
+	Colour _36C;                              // _36C
+	u32 _370;                                 // _370
+	f32 mLightIntensity;                      // _374
+	u32 mActiveLightMask;                     // _378
+	f32 mLineWidth;                           // _37C
+	u32 _380;                                 // _380
+	Matrix4f* mSystemMatrix;                  // _384, no idea
+	u32 mMaxMatrixCount;                      // _388
+	u32 mMatrixBuffer;                        // _38C
+	CachedShape _390;                         // _390
+	CachedShape* mCachedShapes;               // _3A8
+	u32 mCachedShapeMax;                      // _3AC
+	u32 mCachedShapeCount;                    // _3B0
 
 	virtual void videoReset();                                                             // _08
 	virtual void setVerticalFilter(u8*);                                                   // _0C
