@@ -45,7 +45,7 @@ void KingBody::setSalivaEffect()
 	zen::particleGenerator* ptcl
 	    = effectMgr->create(EffectMgr::EFF_Unk118, Vector3f(0.0f, 0.0f, 0.0f), mSpreadSalivaCallBack, mSalivaParticleCallBack);
 	if (ptcl) {
-		ptcl->setEmitPosPtr(&_D8);
+		ptcl->setEmitPosPtr(&mSalivaEffectPosition);
 	}
 }
 
@@ -104,10 +104,10 @@ void KingBody::setEatBombEffect()
  */
 void KingBody::createWaterEffect(int idx)
 {
-	effectMgr->create(EffectMgr::EFF_Unk15, mFootPos[idx], nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Unk15, mFootPosList[idx], nullptr, nullptr);
 	if (!mIsFootGeneratingRipples[idx]) {
 		mIsFootGeneratingRipples[idx] = true;
-		mRippleCallBacks[idx].set(mKing, &mFootPos[idx], &mIsFootGeneratingRipples[idx]);
+		mRippleCallBacks[idx].set(mKing, &mFootPosList[idx], &mIsFootGeneratingRipples[idx]);
 		zen::particleGenerator* ptcl1
 		    = effectMgr->create(EffectMgr::EFF_Unk14, Vector3f(0.0f, 0.0f, 0.0f), &mRippleCallBacks[idx], nullptr);
 		if (ptcl1) {
@@ -231,8 +231,8 @@ void KingBody::init(King* king)
 		mIsFootOnGround[i]          = true;
 		mIsFootGeneratingRipples[i] = false;
 		mFootMapAttr[i]             = ATTR_NULL;
-		mFootPos[i].set(0.0f, 0.0f, 0.0f);
-		_3C[i].set(0.0f, 0.0f, 0.0f);
+		mFootPosList[i].set(0.0f, 0.0f, 0.0f);
+		mOldFootPosList[i].set(0.0f, 0.0f, 0.0f);
 	}
 
 	_54.set(0.0f, 0.0f, 0.0f);
@@ -276,7 +276,7 @@ void KingBody::updateBlendingRatio()
 void KingBody::checkOnGround()
 {
 	for (int i = 0; i < 2; i++) {
-		f32 heightDiff = mFootPos[i].y - mKing->mPosition.y;
+		f32 heightDiff = mFootPosList[i].y - mKing->mPosition.y;
 		if (heightDiff < 3.75f) {
 			mIsFootOnGround[i] = true;
 		} else if (heightDiff > 10.0f) {
@@ -328,15 +328,15 @@ void KingBody::emitOnGroundEffect()
 {
 	for (int i = 0; i < 2; i++) {
 		if (mIsFootOnGround[i] && !_09[i]) {
-			mFootMapAttr[i] = mKing->getMapAttribute(mFootPos[i]);
-			if (mFootMapAttr[i] == ATTR_Unk5) {
+			mFootMapAttr[i] = mKing->getMapAttribute(mFootPosList[i]);
+			if (mFootMapAttr[i] == ATTR_Water) {
 				createWaterEffect(i);
 			} else {
 				mIsFootGeneratingRipples[i] = false;
 			}
 
 			if (mKing->getCurrentState() > 0 && mKing->getCurrentState() < 15) {
-				Vector3f footPos = mFootPos[i];
+				Vector3f footPos = mFootPosList[i];
 				footPos.y -= 5.0f;
 				effectMgr->create(EffectMgr::EFF_Unk103, footPos, nullptr, nullptr);
 				if (mKing->mSeContext) {
@@ -357,8 +357,8 @@ void KingBody::emitOnGroundEffect()
 void KingBody::emitSlipEffect()
 {
 	for (int i = 0; i < 2; i++) {
-		if (mIsFootOnGround[i] && qdist2(mFootPos[i].x, mFootPos[i].z, _3C[i].x, _3C[i].z) > 2.0f) {
-			Vector3f footPos = mFootPos[i];
+		if (mIsFootOnGround[i] && qdist2(mFootPosList[i].x, mFootPosList[i].z, mOldFootPosList[i].x, mOldFootPosList[i].z) > 2.0f) {
+			Vector3f footPos = mFootPosList[i];
 			footPos.y -= 5.0f;
 			effectMgr->create(EffectMgr::EFF_Unk102, footPos, nullptr, nullptr);
 		}
@@ -483,11 +483,11 @@ void KingBody::makeBlending(Matrix4f* animMatrices)
 void KingBody::copyJointPosition(Matrix4f* animMatrices)
 {
 	// TODO: sort out what these joints correspond to
-	_3C[0] = mFootPos[0];
-	_3C[1] = mFootPos[1];
+	mOldFootPosList[0] = mFootPosList[0];
+	mOldFootPosList[1] = mFootPosList[1];
 
-	animMatrices[3].getColumn(3, mFootPos[0]);
-	animMatrices[6].getColumn(3, mFootPos[1]);
+	animMatrices[3].getColumn(3, mFootPosList[0]);
+	animMatrices[6].getColumn(3, mFootPosList[1]);
 	animMatrices[31].getColumn(1, _60);
 
 	_60.multiply(-1.0f);
@@ -498,9 +498,9 @@ void KingBody::copyJointPosition(Matrix4f* animMatrices)
 	animMatrices[16].getColumn(3, _A8[1]);
 	animMatrices[17].getColumn(3, _A8[0]);
 
-	_E4 = _D8;
+	_E4 = mSalivaEffectPosition;
 
-	animMatrices[31].getColumn(3, _D8);
+	animMatrices[31].getColumn(3, mSalivaEffectPosition);
 	animMatrices[45].getColumn(3, _78[0]);
 	animMatrices[51].getColumn(3, _78[1]);
 	animMatrices[10].getColumn(3, _90[0]);

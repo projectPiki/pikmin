@@ -58,12 +58,12 @@ f32 Pom::getiMass() { return 0.0001f; }
  */
 void Pom::init(Vector3f&)
 {
-	mCollisionRadius = 20.0f;
-	mIsOrganic       = 0;
-	mIsInvincible    = 1;
-	mNeedShadow      = 1;
-	mShadowSize      = 50.0f;
-	_3B8             = 0;
+	mCollisionRadius        = 20.0f;
+	mIsOrganic              = 0;
+	mIsInvincible           = 1;
+	mNeedShadow             = 1;
+	mShadowSize             = 50.0f;
+	mIsPikiOrPlayerTouching = 0;
 	mPomAi->initAI(this);
 }
 
@@ -173,8 +173,8 @@ void Pom::doAnimation()
 void Pom::collisionCallback(CollEvent& event)
 {
 	if (event.mCollider->mObjType == OBJTYPE_Piki || event.mCollider->mObjType == OBJTYPE_Navi) {
-		if (!_3B8) {
-			_3B8 = 1;
+		if (!mIsPikiOrPlayerTouching) {
+			mIsPikiOrPlayerTouching = 1;
 		}
 
 		mPomAi->collidePetal(event.mCollider);

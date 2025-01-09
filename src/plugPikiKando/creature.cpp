@@ -915,7 +915,7 @@ void Creature::update()
 		attr = MapCode::getAttribute(mFloorTri);
 	}
 
-	if (attr == ATTR_Unk5) {
+	if (attr == ATTR_Water) {
 		if (_60 == 0) {
 			startWaterEffect();
 		}

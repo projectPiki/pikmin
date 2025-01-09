@@ -64,17 +64,17 @@ void PomAi::initAI(Pom* pom)
 	}
 
 	mPom->setAnimTimer(30.0f);
-	_08 = 1;
-	_09 = 0;
-	_0A = 0;
-	_0C = 0;
-	_10 = 0;
+	mHasCollided        = 1;
+	mPlaySound          = 0;
+	mIsOpening          = 0;
+	mPrevStickPikiCount = 0;
+	mReleasedSeedCount  = 0;
 
 	// splitting this monstrosity up into temps would be better. however, that destroys the stack :')
-	_14 = C_POM_PROP(mPom).mMinCycles()
-	    + NsMathI::getRand(NsLibMath<int>::abs(C_POM_PROP(mPom).mMaxCycles() - C_POM_PROP(mPom).mMinCycles() + 1));
-	_1C = 0.0f;
-	_18 = 0.0f;
+	mMaxSeedCount = C_POM_PROP(mPom).mMinCycles()
+	              + NsMathI::getRand(NsLibMath<int>::abs(C_POM_PROP(mPom).mMaxCycles() - C_POM_PROP(mPom).mMinCycles() + 1));
+	mCurrentDeform = 0.0f;
+	mDeformAmount  = 0.0f;
 }
 
 /*
@@ -125,7 +125,7 @@ void PomAi::keyAction0()
 void PomAi::keyAction1()
 {
 	if (mPom->getCurrentState() == 2) {
-		_0A = 0;
+		mIsOpening = 0;
 	}
 }
 
@@ -201,7 +201,7 @@ void PomAi::killCallBackEffect(bool p1)
  */
 void PomAi::collidePetal(Creature* collider)
 {
-	if (_08) {
+	if (mHasCollided) {
 		return;
 	}
 
@@ -221,15 +221,15 @@ void PomAi::collidePetal(Creature* collider)
  */
 void PomAi::setCollideSound(Creature* collider)
 {
-	_08 = 1;
+	mHasCollided = 1;
 
 	// don't trigger collision sound for pikis flying into flower
 	if (collider->mObjType == OBJTYPE_Piki) {
 		if (static_cast<Piki*>(collider)->getState() != PIKISTATE_Flying) {
-			_09 = 1;
+			mPlaySound = 1;
 		}
 	} else {
-		_09 = 1;
+		mPlaySound = 1;
 	}
 }
 
@@ -254,14 +254,14 @@ void PomAi::setEveryFrame()
 void PomAi::checkSwayAndScale()
 {
 	int stickPikiCount = mPom->getStickPikiCount();
-	if (stickPikiCount > _0C) {
-		_18 -= C_POM_PROP(mPom).mSquashAmount();
+	if (stickPikiCount > mPrevStickPikiCount) {
+		mDeformAmount -= C_POM_PROP(mPom).mSquashAmount();
 		effectMgr->create(EffectMgr::EFF_Unk121, mPom->mPosition, nullptr, nullptr);
 		playSound(5);
 		resultFlagSeen();
 	}
 
-	_0C = stickPikiCount;
+	mPrevStickPikiCount = stickPikiCount;
 }
 
 /*
@@ -271,14 +271,14 @@ void PomAi::checkSwayAndScale()
  */
 void PomAi::calcSwayAndScale()
 {
-	_1C += _18;
-	mPom->mScale.x = 1.0f - _1C;
-	mPom->mScale.y = 1.0f + _1C;
-	mPom->mScale.z = 1.0f - _1C;
+	mCurrentDeform += mDeformAmount;
+	mPom->mScale.x = 1.0f - mCurrentDeform;
+	mPom->mScale.y = 1.0f + mCurrentDeform;
+	mPom->mScale.z = 1.0f - mCurrentDeform;
 
-	_18 *= C_POM_PROP(mPom).mSquashPersistence();
+	mDeformAmount *= C_POM_PROP(mPom).mSquashPersistence();
 
-	_18 += C_POM_PROP(mPom).mSquashMultiplier() * -_1C;
+	mDeformAmount += C_POM_PROP(mPom).mSquashMultiplier() * -mCurrentDeform;
 }
 
 /*
@@ -332,22 +332,26 @@ int PomAi::killStickPiki()
  */
 void PomAi::createPikiHead()
 {
-	int seedCount      = killStickPiki();
-	Navi* navi         = naviMgr->getNavi();
-	f32 angle          = atan2f(mPom->mPosition.x - navi->mPosition.x, mPom->mPosition.z - navi->mPosition.z);
-	f32 dischargeAngle = PI * (C_POM_PROP(mPom).mDischargeAngle() / 360.0f);
-	f32 angleDiff      = angle - dischargeAngle;
-	f32 outAngle       = 2.0f * dischargeAngle;
+	int seedCount = killStickPiki();
+	Navi* player  = naviMgr->getNavi();
+	f32 baseAngle = atan2f(mPom->mPosition.x - player->mPosition.x, mPom->mPosition.z - player->mPosition.z);
+
+	f32 spreadAngle = PI * (C_POM_PROP(mPom).mDischargeAngle() / 360.0f);
+	f32 minAngle    = baseAngle - spreadAngle;
+	f32 angleRange  = 2.0f * spreadAngle;
 
 	for (int i = 0; i < seedCount; i++) {
 		PikiHeadItem* sprout = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 		if (sprout) {
-			Vector3f initPos = mPom->mPosition;
-			initPos.y += 50.0f;
-			sprout->init(initPos);
+			Vector3f spawnPos = mPom->mPosition;
+			spawnPos.y += 50.0f;
+			sprout->init(spawnPos);
+
 			sprout->setColor(mPom->mColor);
-			f32 randAngle = NsMathF::getRand(outAngle) + angleDiff;
+
+			f32 randAngle = NsMathF::getRand(angleRange) + minAngle;
 			sprout->mVelocity.set(200.0f * sinf(randAngle), 800.0f, 200.0f * cosf(randAngle));
+
 			sprout->startAI(0);
 			static_cast<SimpleAI*>(sprout->mStateMachine)->start(sprout, 0);
 		}
@@ -355,7 +359,7 @@ void PomAi::createPikiHead()
 
 	rumbleMgr->start(10, 0, mPom->mPosition);
 	playSound(3);
-	_10++;
+	mReleasedSeedCount++;
 
 	// I cannot get getRand to match the stack and ordering in both this and Boss without doing this.
 	u32 badCompiler[2];
@@ -382,8 +386,8 @@ void PomAi::emitPomOpenEffect(u32 collPartID)
  */
 void PomAi::createPomOpenEffect()
 {
-	_0A = true;
-	mOpenStarCallBack->set(&_0A);
+	mIsOpening = true;
+	mOpenStarCallBack->set(&mIsOpening);
 	emitPomOpenEffect('pom1');
 	emitPomOpenEffect('pom2');
 	emitPomOpenEffect('pom3');
@@ -398,7 +402,7 @@ void PomAi::createPomOpenEffect()
  */
 void PomAi::calcPetalStickers()
 {
-	if (mPom->_3B8) {
+	if (mPom->mIsPikiOrPlayerTouching) {
 		mPom->add2D0(gsys->getFrameTime());
 	}
 
@@ -427,7 +431,7 @@ void PomAi::calcPetalStickers()
 void PomAi::resultFlagOn()
 {
 	if (mPom->insideAndInSearch()) {
-		playerState->mResultFlags.setOn(RESFLAG_Unk45);
+		playerState->mResultFlags.setOn(RESFLAG_PomFlowerFound);
 	}
 }
 
@@ -436,7 +440,7 @@ void PomAi::resultFlagOn()
  * Address:	........
  * Size:	00002C
  */
-void PomAi::resultFlagSeen() { playerState->mResultFlags.setSeen(RESFLAG_Unk45); }
+void PomAi::resultFlagSeen() { playerState->mResultFlags.setSeen(RESFLAG_PomFlowerFound); }
 
 /*
  * --INFO--
@@ -450,7 +454,7 @@ bool PomAi::isMotionFinishTransit() { return mPom->getMotionFinish(); }
  * Address:	........
  * Size:	000020
  */
-bool PomAi::deadTransit() { return (_10 >= _14) ? true : false; }
+bool PomAi::deadTransit() { return (mReleasedSeedCount >= mMaxSeedCount) ? true : false; }
 
 /*
  * --INFO--
@@ -460,8 +464,9 @@ bool PomAi::deadTransit() { return (_10 >= _14) ? true : false; }
 bool PomAi::petalOpenTransit()
 {
 	if (C_POM_PROP(mPom).mOpenOnInteractionOnly()) {
-		return mPom->_3B8;
+		return mPom->mIsPikiOrPlayerTouching;
 	}
+
 	return true;
 }
 
@@ -470,7 +475,7 @@ bool PomAi::petalOpenTransit()
  * Address:	........
  * Size:	000008
  */
-bool PomAi::petalShakeTransit() { return _08; }
+bool PomAi::petalShakeTransit() { return mHasCollided; }
 
 /*
  * --INFO--
@@ -480,7 +485,7 @@ bool PomAi::petalShakeTransit() { return _08; }
 bool PomAi::petalCloseTransit()
 {
 	if (C_POM_PROP(mPom).mMaxPikiPerCycle() != 0) {
-		if (_0C >= C_POM_PROP(mPom).mMaxPikiPerCycle()) {
+		if (mPrevStickPikiCount >= C_POM_PROP(mPom).mMaxPikiPerCycle()) {
 			return true;
 		}
 		if (C_POM_PROP(mPom).mCloseWaitTime() > 0.0f && mPom->get2D0() > (C_POM_PROP(mPom).mCloseWaitTime())) {
@@ -552,7 +557,7 @@ void PomAi::initWait(int nextState)
 			}
 		}
 	}
-	mPom->_3B8 = false;
+	mPom->mIsPikiOrPlayerTouching = false;
 }
 
 /*
@@ -567,8 +572,8 @@ void PomAi::initPetalOpen(int nextState)
 	mPom->mAnimator.startMotion(PaniMotionInfo(10, this));
 	createPomOpenEffect();
 	mPom->set2D0(0.0f);
-	_08 = false;
-	_09 = false;
+	mHasCollided = false;
+	mPlaySound   = false;
 }
 
 /*
@@ -581,9 +586,9 @@ void PomAi::initPetalShake(int nextState)
 	mPom->setNextState(nextState);
 	mPom->setMotionFinish(false);
 	mPom->mAnimator.startMotion(PaniMotionInfo(13, this));
-	_08 = false;
-	if (_09) {
-		_09 = false;
+	mHasCollided = false;
+	if (mPlaySound) {
+		mPlaySound = false;
 		playSound(0);
 	}
 }
@@ -600,7 +605,7 @@ void PomAi::initPetalClose(int nextState)
 	mPom->setLoopCounter(0);
 	mPom->mAnimator.startMotion(PaniMotionInfo(11, this));
 	mPom->disableStick();
-	_0A = false;
+	mIsOpening = false;
 }
 
 /*

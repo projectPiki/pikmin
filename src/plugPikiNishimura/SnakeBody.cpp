@@ -44,7 +44,7 @@ void SnakeBody::setBodyOnGroundEffect()
 	}
 
 	// water?
-	if (mSnake->getMapAttribute(mSnake->mPosition) == ATTR_Unk5) {
+	if (mSnake->getMapAttribute(mSnake->mPosition) == ATTR_Water) {
 		effectMgr->create(EffectMgr::EFF_Unk85, mSnake->mPosition, nullptr, nullptr);
 		zen::particleGenerator* waterPtclGen1 = effectMgr->create(EffectMgr::EFF_Unk14, mSnake->mPosition, mOnGroundCallBack, nullptr);
 		if (waterPtclGen1) {

@@ -168,12 +168,12 @@ struct KoganeAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	u8 _04;                                   // _04
+	u8 mInWater;                              // _04
 	KoganeGenRippleCallBack* mRippleCallBack; // _08
 	Kogane* mKogane;                          // _0C
 	int mDropCount;                           // _10
 	EffectMgr::effTypeTable mEffectType;      // _14
-	f32 _18;                                  // _18
+	f32 mAppearTimer;                         // _18
 	f32 _1C;                                  // _1C
 };
 
@@ -185,7 +185,7 @@ struct KoganeGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> 
 
 	virtual bool invoke(zen::particleGenerator* ptcl) // _08
 	{
-		if (!mKogane->mKoganeAi->_04) {
+		if (!mKogane->mKoganeAi->mInWater) {
 			ptcl->finish();
 		}
 

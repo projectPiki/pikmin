@@ -30,14 +30,14 @@ static void _Print(char*, ...)
  */
 SlimeBody::SlimeBody(Slime* slime)
 {
-	mSlime         = slime;
-	mNormalIndexes = new u16[mSlime->mShapeObject->mShape->mVertexCount];
-	_18            = new int[mSlime->mShapeObject->mShape->mJointCount - 1];
-	_1C            = new Vector3f[mSlime->mShapeObject->mShape->mVertexCount];
+	mSlime                     = slime;
+	mVertexNormalIndices       = new u16[mSlime->mShapeObject->mShape->mVertexCount];
+	mNearestVertexToJoint      = new int[mSlime->mShapeObject->mShape->mJointCount - 1];
+	mNormalisedVertexPositions = new Vector3f[mSlime->mShapeObject->mShape->mVertexCount];
 
-	_08 = new Vector3f[bossMgr->mSlimeCreatureCount];
-	_0C = new Vector3f[bossMgr->mSlimeCreatureCount];
-	_10 = new Vector3f[bossMgr->mSlimeCreatureCount];
+	mVelocities         = new Vector3f[bossMgr->mSlimeCreatureCount];
+	mPrevVelocities     = new Vector3f[bossMgr->mSlimeCreatureCount];
+	mRelativeVelocities = new Vector3f[bossMgr->mSlimeCreatureCount];
 }
 
 /*
@@ -48,7 +48,7 @@ SlimeBody::SlimeBody(Slime* slime)
 void SlimeBody::init(Slime* slime)
 {
 	mSlime = slime;
-	mSlime->mShapeObject->mShape->makeNormalIndexes(mNormalIndexes);
+	mSlime->mShapeObject->mShape->makeNormalIndexes(mVertexNormalIndices);
 
 	int i;
 	for (i = 1; i < mSlime->mShapeObject->mShape->mJointCount; i++) {
@@ -59,23 +59,23 @@ void SlimeBody::init(Slime* slime)
 		for (int j = 0; j < mSlime->mShapeObject->mShape->mVertexCount; j++) {
 			f32 dist = jointAnimPos.distance(mSlime->mShapeObject->mShape->mVertexList[j]);
 			if (dist < minDist) {
-				minDist    = dist;
-				_18[i - 1] = j;
+				minDist                      = dist;
+				mNearestVertexToJoint[i - 1] = j;
 			}
 		}
 	}
 
 	for (i = 0; i < mSlime->mShapeObject->mShape->mVertexCount; i++) {
-		_1C[i].x = mSlime->mShapeObject->mShape->mVertexList[i].x;
-		_1C[i].y = mSlime->mShapeObject->mShape->mVertexList[i].y;
-		_1C[i].z = mSlime->mShapeObject->mShape->mVertexList[i].z;
+		mNormalisedVertexPositions[i].x = mSlime->mShapeObject->mShape->mVertexList[i].x;
+		mNormalisedVertexPositions[i].y = mSlime->mShapeObject->mShape->mVertexList[i].y;
+		mNormalisedVertexPositions[i].z = mSlime->mShapeObject->mShape->mVertexList[i].z;
 
-		_1C[i].normalise();
+		mNormalisedVertexPositions[i].normalise();
 	}
 
 	for (i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
-		_08[i].set(0.0f, 0.0f, 0.0f);
-		_0C[i] = mSlime->mPosition;
+		mVelocities[i].set(0.0f, 0.0f, 0.0f);
+		mPrevVelocities[i] = mSlime->mPosition;
 	}
 }
 
@@ -87,11 +87,13 @@ void SlimeBody::init(Slime* slime)
 void SlimeBody::traceCreaturePosition()
 {
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
-		_08[i].multiply(C_SLIME_PROP(mSlime)._394());
-		Vector3f diff = mSlime->mSlimeCreatures[i]->mPosition - _0C[i];
-		diff.multiply(C_SLIME_PROP(mSlime)._3A4());
-		_08[i].add(diff);
-		_0C[i].add(_08[i]);
+		mVelocities[i].multiply(C_SLIME_PROP(mSlime).mTraceDrag());
+
+		Vector3f displacement = mSlime->mSlimeCreatures[i]->mPosition - mPrevVelocities[i];
+		displacement.multiply(C_SLIME_PROP(mSlime).mSpringForce());
+
+		mVelocities[i].add(displacement);
+		mPrevVelocities[i].add(mVelocities[i]);
 	}
 }
 
@@ -107,7 +109,7 @@ void SlimeBody::makeCentrePosition()
 		mSlime->mPosition.add(mSlime->mSlimeCreatures[i]->mPosition);
 	}
 
-	mSlime->mPosition.multiply(0.25f);
+	mSlime->mPosition.multiply(0.25f); // Average of 4 parts
 }
 
 /*
@@ -118,8 +120,8 @@ void SlimeBody::makeCentrePosition()
 void SlimeBody::makeInnerPosition()
 {
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
-		_10[i].sub(_0C[i], mSlime->mPosition);
-		_10[i].y += C_SLIME_PROP(mSlime)._334();
+		mRelativeVelocities[i].sub(mPrevVelocities[i], mSlime->mPosition);
+		mRelativeVelocities[i].y += C_SLIME_PROP(mSlime).mBodyHeight();
 	}
 }
 
@@ -132,13 +134,13 @@ void SlimeBody::makeMaxRadius()
 {
 	mMaxRadius = 0.0f;
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
-		f32 distFromCentre = _10[i].length();
+		f32 distFromCentre = mRelativeVelocities[i].length();
 		if (distFromCentre > mMaxRadius) {
 			mMaxRadius = distFromCentre;
 		}
 	}
 
-	mMaxRadius += C_SLIME_PROP(mSlime)._364();
+	mMaxRadius += C_SLIME_PROP(mSlime).mMaxRadiusCompensation();
 }
 
 /*
@@ -149,9 +151,9 @@ void SlimeBody::makeMaxRadius()
 void SlimeBody::setSpherePosition()
 {
 	for (int i = 0; i < mSlime->mShapeObject->mShape->mVertexCount; i++) {
-		mSlime->mShapeObject->mShape->mVertexList[i].x = mMaxRadius * _1C[i].x;
-		mSlime->mShapeObject->mShape->mVertexList[i].y = mMaxRadius * _1C[i].y;
-		mSlime->mShapeObject->mShape->mVertexList[i].z = mMaxRadius * _1C[i].z;
+		mSlime->mShapeObject->mShape->mVertexList[i].x = mMaxRadius * mNormalisedVertexPositions[i].x;
+		mSlime->mShapeObject->mShape->mVertexList[i].y = mMaxRadius * mNormalisedVertexPositions[i].y;
+		mSlime->mShapeObject->mShape->mVertexList[i].z = mMaxRadius * mNormalisedVertexPositions[i].z;
 	}
 }
 
@@ -164,9 +166,9 @@ f32 SlimeBody::calcVertexScore(Vector3f* vertex, Vector3f* creatureNormals, f32*
 {
 	f32 score = 0.0f;
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
-		creatureNormals[i].x = vertex->x - _10[i].x;
-		creatureNormals[i].y = (vertex->y - _10[i].y) * mSlime->_3D8;
-		creatureNormals[i].z = vertex->z - _10[i].z;
+		creatureNormals[i].x = vertex->x - mRelativeVelocities[i].x;
+		creatureNormals[i].y = (vertex->y - mRelativeVelocities[i].y) * mSlime->_3D8;
+		creatureNormals[i].z = vertex->z - mRelativeVelocities[i].z;
 		creatureScores[i]
 		    = mSlime->_3D4 / std::sqrtf(SQUARE(creatureNormals[i].x) + SQUARE(creatureNormals[i].y) + SQUARE(creatureNormals[i].z));
 		score += creatureScores[i];
@@ -192,7 +194,7 @@ void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, Vector3f*
 		outVertex->z = (minNormal.z + targetNormal.z) / 2.0f;
 
 		totalScore = calcVertexScore(outVertex, creatureNormals, creatureScores);
-		if (totalScore > C_SLIME_PROP(mSlime)._384()) {
+		if (totalScore > C_SLIME_PROP(mSlime).mVertexPositionScore()) {
 			targetNormal.set(*outVertex);
 		} else {
 			minNormal.set(*outVertex);
@@ -219,9 +221,9 @@ void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, Vector3f*
  */
 void SlimeBody::makeSlimeBody()
 {
-	Vector3f up(0.0f, C_SLIME_PROP(mSlime)._334(), 0.0f);
+	Vector3f up(0.0f, C_SLIME_PROP(mSlime).mBodyHeight(), 0.0f);
 	for (int i = 0; i < mSlime->mShapeObject->mShape->mVertexCount; i++) {
-		sortPosition(&mSlime->mShapeObject->mShape->mVertexList[i], &mSlime->mShapeObject->mShape->mNormals[mNormalIndexes[i]], &up);
+		sortPosition(&mSlime->mShapeObject->mShape->mVertexList[i], &mSlime->mShapeObject->mShape->mNormals[mVertexNormalIndices[i]], &up);
 	}
 }
 

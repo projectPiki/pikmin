@@ -91,10 +91,11 @@ void KoganeAi::initAI(Kogane* kogane)
 	mKogane->setCurrentState(1);
 	mKogane->setNextState(1);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(6, this));
-	_04         = 0;
+	mInWater    = 0;
 	mDropCount  = 0;
 	mEffectType = EffectMgr::EFF_NULL;
-	_18         = C_KOGANE_PROP(mKogane).mAppearTimeMin()
+	mAppearTimer
+	    = C_KOGANE_PROP(mKogane).mAppearTimeMin()
 	    + NsMathF::getRand1(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mAppearTimeMax() - C_KOGANE_PROP(mKogane).mAppearTimeMin()));
 }
 
@@ -148,7 +149,7 @@ void KoganeAi::keyAction0()
 void KoganeAi::keyAction1()
 {
 	if (mKogane->getCurrentState() == 4) {
-		if (_04) {
+		if (mInWater) {
 			effectMgr->create(EffectMgr::EFF_Unk15, mKogane->mPosition, nullptr, nullptr);
 			rumbleMgr->start(15, 0, mKogane->mPosition);
 		} else {
@@ -239,9 +240,9 @@ void KoganeAi::setMapAttribute()
 	case ATTR_Unk4:
 		mEffectType = EffectMgr::EFF_Unk19;
 		break;
-	case ATTR_Unk5:
-		if (!_04) {
-			_04         = 1;
+	case ATTR_Water:
+		if (!mInWater) {
+			mInWater    = 1;
 			mEffectType = EffectMgr::EFF_NULL;
 			createWaterEffect();
 		}
@@ -251,8 +252,8 @@ void KoganeAi::setMapAttribute()
 		break;
 	}
 
-	if (mapAttr != ATTR_Unk5) {
-		_04 = 0;
+	if (mapAttr != ATTR_Water) {
+		mInWater = 0;
 	}
 }
 
@@ -296,7 +297,7 @@ void KoganeAi::setNewTargetPosition()
 	f32 randGoalAngle
 	    = (C_KOGANE_PROP(mKogane).mGoalAngleMin()
 	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalAngleMax() - C_KOGANE_PROP(mKogane).mGoalAngleMin())))
-	    * 0.0087266462f;
+	    * (PI / 360.0f);
 
 	f32 randGoalDist
 	    = (C_KOGANE_PROP(mKogane).mGoalDistMin()
@@ -327,7 +328,7 @@ void KoganeAi::setRouteTargetPosition()
 	f32 randGoalAngle
 	    = (C_KOGANE_PROP(mKogane).mGoalAngleMin()
 	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalAngleMax() - C_KOGANE_PROP(mKogane).mGoalAngleMin())))
-	    * 0.0087266462f;
+	    * (PI / 360.0f);
 
 	f32 randGoalDist
 	    = (C_KOGANE_PROP(mKogane).mGoalDistMin()
@@ -489,7 +490,7 @@ void KoganeAi::resultFlagOn()
  * Address:	........
  * Size:	000024
  */
-bool KoganeAi::dieTransit() { return (mKogane->get2D4() > _18) ? true : false; }
+bool KoganeAi::dieTransit() { return (mKogane->get2D4() > mAppearTimer) ? true : false; }
 
 /*
  * --INFO--

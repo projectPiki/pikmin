@@ -2226,7 +2226,7 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
 		case ATTR_Unk3:
 			soundType = 2;
 			break;
-		case ATTR_Unk5:
+		case ATTR_Water:
 			soundType = 4;
 			break;
 		case ATTR_Unk4:

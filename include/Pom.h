@@ -97,7 +97,7 @@ struct Pom : public Boss {
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss
-	bool _3B8;                      // _3B8
+	bool mIsPikiOrPlayerTouching;   // _3B8
 	int mColor;                     // _3BC
 	PomAi* mPomAi;                  // _3C0
 	ShapeDynMaterials mDynMaterial; // _3C4
@@ -160,14 +160,14 @@ struct PomAi : public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	Pom* mPom;                                 // _04
-	bool _08;                                  // _08
-	u8 _09;                                    // _09
-	bool _0A;                                  // _0A
-	int _0C;                                   // _0C
-	int _10;                                   // _10
-	int _14;                                   // _14
-	f32 _18;                                   // _18
-	f32 _1C;                                   // _1C
+	bool mHasCollided;                         // _08
+	u8 mPlaySound;                             // _09
+	bool mIsOpening;                           // _0A
+	int mPrevStickPikiCount;                   // _0C
+	int mReleasedSeedCount;                    // _10
+	int mMaxSeedCount;                         // _14
+	f32 mDeformAmount;                         // _18
+	f32 mCurrentDeform;                        // _1C
 	PomGenOpenStarCallBack* mOpenStarCallBack; // _20
 };
 

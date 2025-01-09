@@ -27,66 +27,66 @@ struct SlimeProp : public BossProp, public CoreNode {
 	 */
 	struct SlimeProperties : public Parameters {
 		inline SlimeProperties()
-		    : _204(this, 100.0f, 0.0f, 0.0f, "p00", nullptr)
-		    , _214(this, 50.0f, 0.0f, 0.0f, "s00", nullptr)
-		    , _224(this, 20.0f, 0.0f, 0.0f, "s01", nullptr)
-		    , _234(this, 200.0f, 0.0f, 0.0f, "s10", nullptr)
-		    , _244(this, 50.0f, 0.0f, 0.0f, "s11", nullptr)
-		    , _254(this, 225.0f, 0.0f, 0.0f, "s20", nullptr)
-		    , _264(this, 200.0f, 0.0f, 0.0f, "s21", nullptr)
-		    , _274(this, 40.0f, 0.0f, 0.0f, "s30", nullptr)
-		    , _284(this, 10.0f, 0.0f, 0.0f, "s40", nullptr)
-		    , _294(this, 0.85f, 0.0f, 0.0f, "s50", nullptr)
-		    , _2A4(this, 0.99f, 0.0f, 0.0f, "s51", nullptr)
-		    , _2B4(this, 200.0f, 0.0f, 0.0f, "s60", nullptr)
-		    , _2C4(this, 100.0f, 0.0f, 0.0f, "s61", nullptr)
-		    , _2D4(this, 50.0f, 0.0f, 0.0f, "s62", nullptr)
-		    , _2E4(this, 10.0f, 0.0f, 0.0f, "s63", nullptr)
-		    , _2F4(this, 1.0f, 0.0f, 0.0f, "s64", nullptr)
-		    , _304(this, 0.9f, 0.0f, 0.0f, "s70", nullptr)
-		    , _314(this, 20.0f, 0.0f, 0.0f, "s71", nullptr)
-		    , _324(this, 500.0f, 0.0f, 0.0f, "s80", nullptr)
-		    , _334(this, 20.0f, 0.0f, 0.0f, "b00", nullptr)
-		    , _344(this, 2.0f, 0.0f, 0.0f, "b01", nullptr)
-		    , _354(this, 2.0f, 0.0f, 0.0f, "b02", nullptr)
-		    , _364(this, 100.0f, 0.0f, 0.0f, "b10", nullptr)
-		    , _374(this, 1000.0f, 0.0f, 0.0f, "b20", nullptr)
-		    , _384(this, 50.0f, 0.0f, 0.0f, "b21", nullptr)
-		    , _394(this, 0.7f, 0.0f, 0.0f, "b30", nullptr)
-		    , _3A4(this, 0.5f, 0.0f, 0.0f, "b31", nullptr)
+		    : mDetectionRadius(this, 100.0f, 0.0f, 0.0f, "p00", nullptr)
+		    , mMaxMoveSpeed(this, 50.0f, 0.0f, 0.0f, "s00", nullptr)
+		    , mMinMoveSpeed(this, 20.0f, 0.0f, 0.0f, "s01", nullptr)
+		    , mNormalMaxLength(this, 200.0f, 0.0f, 0.0f, "s10", nullptr)
+		    , mNormalMinLength(this, 50.0f, 0.0f, 0.0f, "s11", nullptr)
+		    , mMaxLengthAtSticking(this, 225.0f, 0.0f, 0.0f, "s20", nullptr)
+		    , mMinLengthAtSticking(this, 200.0f, 0.0f, 0.0f, "s21", nullptr)
+		    , mDistanceBetweenNuclei(this, 40.0f, 0.0f, 0.0f, "s30", nullptr)
+		    , mMaxStickPikiNum(this, 10.0f, 0.0f, 0.0f, "s40", nullptr)
+		    , mTraceMidPoint(this, 0.85f, 0.0f, 0.0f, "s50", nullptr)
+		    , mMidPointSpring(this, 0.99f, 0.0f, 0.0f, "s51", nullptr)
+		    , mDamageLength1(this, 200.0f, 0.0f, 0.0f, "s60", nullptr)
+		    , mDamageLength2(this, 100.0f, 0.0f, 0.0f, "s61", nullptr)
+		    , mDamageRatio1(this, 50.0f, 0.0f, 0.0f, "s62", nullptr)
+		    , mDamageRatio2(this, 10.0f, 0.0f, 0.0f, "s63", nullptr)
+		    , mDamageRatio3(this, 1.0f, 0.0f, 0.0f, "s64", nullptr)
+		    , mContractTraceEnd(this, 0.9f, 0.0f, 0.0f, "s70", nullptr)
+		    , mContractSpringEnd(this, 20.0f, 0.0f, 0.0f, "s71", nullptr)
+		    , mDeadScaleSpeed(this, 500.0f, 0.0f, 0.0f, "s80", nullptr)
+		    , mBodyHeight(this, 20.0f, 0.0f, 0.0f, "b00", nullptr)
+		    , mBodyThicknessElongate(this, 2.0f, 0.0f, 0.0f, "b01", nullptr)
+		    , mBodyThicknessContract(this, 2.0f, 0.0f, 0.0f, "b02", nullptr)
+		    , mMaxRadiusCompensation(this, 100.0f, 0.0f, 0.0f, "b10", nullptr)
+		    , mRadiusContractionScore(this, 1000.0f, 0.0f, 0.0f, "b20", nullptr)
+		    , mVertexPositionScore(this, 50.0f, 0.0f, 0.0f, "b21", nullptr)
+		    , mTraceDrag(this, 0.7f, 0.0f, 0.0f, "b30", nullptr)
+		    , mSpringForce(this, 0.5f, 0.0f, 0.0f, "b31", nullptr)
 		    , mMaxSortCount(this, 10, 0, 0, "i00", nullptr)
 		{
 		}
 
 		// _200-_204 = Parameters
-		Parm<f32> _204;          // _204, p00 - detection radius?
-		Parm<f32> _214;          // _214, s00 - max moving speed?
-		Parm<f32> _224;          // _224, s01 - min moving speed?
-		Parm<f32> _234;          // _234, s10 - normal max length?
-		Parm<f32> _244;          // _244, s11 - normal min length?
-		Parm<f32> _254;          // _254, s20 - max length at sticking?
-		Parm<f32> _264;          // _264, s21 - min length at sticking?
-		Parm<f32> _274;          // _274, s30 - dist between nuclei?
-		Parm<f32> _284;          // _284, s40 - max stick piki num?
-		Parm<f32> _294;          // _294, s50 - trace mid point?
-		Parm<f32> _2A4;          // _2A4, s51 - mid point spring?
-		Parm<f32> _2B4;          // _2B4, s60 - damage length 1?
-		Parm<f32> _2C4;          // _2C4, s61 - damage length 2?
-		Parm<f32> _2D4;          // _2D4, s62 - damage ratio 1?
-		Parm<f32> _2E4;          // _2E4, s63 - damage ratio 2?
-		Parm<f32> _2F4;          // _2F4, s64 - damage ratio 3?
-		Parm<f32> _304;          // _304, s70 - contract trace end?
-		Parm<f32> _314;          // _314, s71 - contract end spring?
-		Parm<f32> _324;          // _324, s80 - dead scale speed?
-		Parm<f32> _334;          // _334, b00 - body height?
-		Parm<f32> _344;          // _344, b01 - body thickness (elongation)?
-		Parm<f32> _354;          // _354, b02 - body thickness (contraction)?
-		Parm<f32> _364;          // _364, b10 - max radius compensation?
-		Parm<f32> _374;          // _374, b20 - radius contraction score?
-		Parm<f32> _384;          // _384, b21 - vertex position score?
-		Parm<f32> _394;          // _394, b30 - trace creature?
-		Parm<f32> _3A4;          // _3A4, b31 - creature spring?
-		Parm<int> mMaxSortCount; // _3B4, i00 - how many times to "sort" collision spheres
+		Parm<f32> mDetectionRadius;        // _204, p00 - detection radius?
+		Parm<f32> mMaxMoveSpeed;           // _214, s00 - max moving speed?
+		Parm<f32> mMinMoveSpeed;           // _224, s01 - min moving speed?
+		Parm<f32> mNormalMaxLength;        // _234, s10 - normal max length?
+		Parm<f32> mNormalMinLength;        // _244, s11 - normal min length?
+		Parm<f32> mMaxLengthAtSticking;    // _254, s20 - max length at sticking?
+		Parm<f32> mMinLengthAtSticking;    // _264, s21 - min length at sticking?
+		Parm<f32> mDistanceBetweenNuclei;  // _274, s30 - dist between nuclei?
+		Parm<f32> mMaxStickPikiNum;        // _284, s40 - max stick piki num?
+		Parm<f32> mTraceMidPoint;          // _294, s50 - trace mid point?
+		Parm<f32> mMidPointSpring;         // _2A4, s51 - mid point spring?
+		Parm<f32> mDamageLength1;          // _2B4, s60 - damage length 1?
+		Parm<f32> mDamageLength2;          // _2C4, s61 - damage length 2?
+		Parm<f32> mDamageRatio1;           // _2D4, s62 - damage ratio 1?
+		Parm<f32> mDamageRatio2;           // _2E4, s63 - damage ratio 2?
+		Parm<f32> mDamageRatio3;           // _2F4, s64 - damage ratio 3?
+		Parm<f32> mContractTraceEnd;       // _304, s70 - contract trace end?
+		Parm<f32> mContractSpringEnd;      // _314, s71 - contract end spring?
+		Parm<f32> mDeadScaleSpeed;         // _324, s80 - dead scale speed?
+		Parm<f32> mBodyHeight;             // _334, b00 - body height?
+		Parm<f32> mBodyThicknessElongate;  // _344, b01 - body thickness (elongation)?
+		Parm<f32> mBodyThicknessContract;  // _354, b02 - body thickness (contraction)?
+		Parm<f32> mMaxRadiusCompensation;  // _364, b10 - max radius compensation?
+		Parm<f32> mRadiusContractionScore; // _374, b20 - radius contraction score?
+		Parm<f32> mVertexPositionScore;    // _384, b21 - vertex position score?
+		Parm<f32> mTraceDrag;              // _394, b30 - trace creature?
+		Parm<f32> mSpringForce;            // _3A4, b31 - creature spring?
+		Parm<int> mMaxSortCount;           // _3B4, i00 - how many times to "sort" collision spheres
 	};
 
 	SlimeProp();
@@ -128,14 +128,14 @@ struct SlimeBody {
 	void makeSlimeBody();
 	void setJointPosition(BossShapeObject*, Graphics&);
 
-	Slime* mSlime;       // _00
-	f32 mMaxRadius;      // _04
-	Vector3f* _08;       // _08
-	Vector3f* _0C;       // _0C
-	Vector3f* _10;       // _10
-	u16* mNormalIndexes; // _14, normal index mapped by vertex index
-	int* _18;            // _18
-	Vector3f* _1C;       // _1C
+	Slime* mSlime;                        // _00
+	f32 mMaxRadius;                       // _04
+	Vector3f* mVelocities;                // _08
+	Vector3f* mPrevVelocities;            // _0C
+	Vector3f* mRelativeVelocities;        // _10
+	u16* mVertexNormalIndices;            // _14, normal index mapped by vertex index
+	int* mNearestVertexToJoint;           // _18
+	Vector3f* mNormalisedVertexPositions; // _1C
 };
 
 /**
@@ -226,7 +226,8 @@ struct Slime : public Boss {
 
 				// weightPos is kind of the centre of mass?
 				Vector3f weightPos = mCreature->mPosition
-				                   + static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._364() * adjustVecs[i]; // max radius compensation
+				                   + static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps.mMaxRadiusCompensation()
+				                         * adjustVecs[i]; // max radius compensation
 
 				Vector3f farPos  = weightPos;
 				Vector3f nearPos = mCreature->mPosition;
@@ -248,7 +249,7 @@ struct Slime : public Boss {
 					}
 
 					// closer to other stick slimes = higher score
-					if (score > static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps._384()) { // vertex position score?
+					if (score > static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps.mVertexPositionScore()) { // vertex position score?
 						nearPos.set(weightPos);
 					} else {
 						farPos.set(weightPos);

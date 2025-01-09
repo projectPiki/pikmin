@@ -257,15 +257,15 @@ struct KingBody {
 	f32 mBlendingRate;                                            // _18
 	f32 mBlendingRatio;                                           // _1C
 	f32 _20;                                                      // _20
-	Vector3f mFootPos[2];                                         // _24
-	Vector3f _3C[2];                                              // _3C
+	Vector3f mFootPosList[2];                                     // _24
+	Vector3f mOldFootPosList[2];                                  // _3C
 	Vector3f _54;                                                 // _54
 	Vector3f _60;                                                 // _60
 	Vector3f _6C;                                                 // _6C
 	Vector3f _78[2];                                              // _78
 	Vector3f _90[2];                                              // _90
 	Vector3f _A8[4];                                              // _A8
-	Vector3f _D8;                                                 // _D8
+	Vector3f mSalivaEffectPosition;                               // _D8
 	Vector3f _E4;                                                 // _E4
 	Matrix4f* _F0;                                                // _F0
 	Matrix4f* _F4;                                                // _F4
@@ -522,8 +522,8 @@ struct KingGenSalivaParticleCallBack : public zen::CallBack2<zen::particleGenera
 	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _08
 	{
 		if (ptcl->_2E == 0) {
-			ptcl->_34.x += (mKing->mKingBody->_D8.x - mKing->mKingBody->_E4.x) / 2.0f;
-			ptcl->_34.z += (mKing->mKingBody->_D8.z - mKing->mKingBody->_E4.z) / 2.0f;
+			ptcl->_34.x += (mKing->mKingBody->mSalivaEffectPosition.x - mKing->mKingBody->_E4.x) / 2.0f;
+			ptcl->_34.z += (mKing->mKingBody->mSalivaEffectPosition.z - mKing->mKingBody->_E4.z) / 2.0f;
 		}
 
 		Vector3f ptclPos = ptcl->getPos();

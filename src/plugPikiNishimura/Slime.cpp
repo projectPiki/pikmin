@@ -87,7 +87,7 @@ void Slime::init(Vector3f& pos)
 	_3CC = bossMgr->mSlimeCreatureCount - 1;
 	_3D0 = 0.0f;
 	_3D4 = 0.0f;
-	_3D8 = SLIME_PROP._354(); // body thickness?
+	_3D8 = SLIME_PROP.mBodyThicknessContract(); // body thickness?
 	_3DC = pos;
 	_3E8 = pos;
 
