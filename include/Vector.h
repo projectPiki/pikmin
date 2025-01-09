@@ -16,6 +16,7 @@ struct Quat;
  */
 struct Vector3f {
 	Vector3f() { x = y = z = 0.0f; }
+
 	Vector3f(const f32& _x, const f32& _y, const f32& _z)
 	    : x(_x)
 	    , y(_y)
@@ -23,7 +24,14 @@ struct Vector3f {
 	{
 	}
 
-	// NB: do NOT make an operator= definition, needs to use the default copy ctor.
+	Vector3f(const Vector3f& other)
+	{
+		x = other.x;
+		y = other.y;
+		z = other.z;
+	}
+
+	// NB: do NOT make an operator= definition, needs to use the default.
 
 	// THIS IS THE COMPLETE VECTOR3F INLINE LIST.
 	// ANYTHING ELSE IS EITHER A MATH LIBRARY FUNCTION IN DISGUISE, OR FAKE.

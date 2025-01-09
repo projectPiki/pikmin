@@ -56,7 +56,7 @@ void zen::ZenQuat::GetRotate(const Quat&, Vector3f&)
  * Address:	8019B920
  * Size:	0001C0
  */
-void zen::getDistPointAndLine(Vector3f, Vector3f, Vector3f, f32&)
+f32 zen::getDistPointAndLine(Vector3f, Vector3f, Vector3f, f32&)
 {
 	/*
 	.loc_0x0:

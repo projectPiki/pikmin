@@ -52,7 +52,13 @@ struct Interaction {
  * @brief TODO
  */
 struct InteractAttack : public Interaction {
-	inline InteractAttack(); // TODO: probably
+	InteractAttack(Creature* owner, CollPart* collPart, f32 damage, bool p4)
+	    : Interaction(owner)
+	    , mDamage(damage)
+	    , mCollPart(collPart)
+	    , _10(p4)
+	{
+	}
 
 	virtual bool actCommon(Creature*);   // _08
 	virtual bool actPiki(Piki*);         // _0C
@@ -67,6 +73,7 @@ struct InteractAttack : public Interaction {
 	// _00-_08 = Interaction
 	f32 mDamage;         // _08
 	CollPart* mCollPart; // _0C
+	bool _10;            // _10
 };
 
 /**

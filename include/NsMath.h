@@ -46,7 +46,10 @@ struct NsLibMath {
 	static T revice(T value, T min, T max) { return (value < min) ? min : (value > max) ? max : value; }
 
 	// these just exist for float
-	T lagrange3(const T*, T);
+	static T lagrange3(const T* points, T val)
+	{
+		return points[0] * 0.5f * (val - 1.0f) * (val - 2.0f) - points[1] * val * (val - 2.0f) + points[2] * 0.5f * val * (val - 1.0f);
+	}
 
 	static T toGoal(T start, T goal, T step)
 	{

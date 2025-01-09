@@ -18,6 +18,34 @@ struct SnakeGenBodyRotateCallBack;
 
 /**
  * @brief TODO.
+ */
+enum SnakeAIStateID {
+	SNAKEAI_Die       = 0,
+	SNAKEAI_Struggle  = 1,
+	SNAKEAI_ChaseNavi = 2,
+	SNAKEAI_ChasePiki = 3,
+	SNAKEAI_Attack    = 4,
+	SNAKEAI_Eat       = 5,
+	SNAKEAI_Wait      = 6,
+	SNAKEAI_GoInto    = 7,
+	SNAKEAI_Under     = 8,
+	SNAKEAI_Appear    = 9,
+};
+
+/**
+ * @brief TODO.
+ */
+enum SnakeAIAttackID {
+	SNAKEATK_Near  = 0,
+	SNAKEATK_Mid   = 1,
+	SNAKEATK_Far   = 2,
+	SNAKEATK_Right = 3,
+	SNAKEATK_Left  = 4,
+	SNAKEATK_COUNT, // 5
+};
+
+/**
+ * @brief TODO.
  *
  * @note Size: 0x504
  */
@@ -30,106 +58,106 @@ struct SnakeProp : public BossProp, public CoreNode {
 	 */
 	struct SnakeProperties : public Parameters {
 		inline SnakeProperties()
-		    : _204(this, 150.0f, 0.0f, 500.0f, "p00", "")
-		    , _214(this, 100.0f, 0.0f, 300.0f, "p01", "")
-		    , _224(this, 200.0f, 0.0f, 500.0f, "u00", "2:Front Length")
-		    , _234(this, 100.0f, 0.0f, 500.0f, "u01", "2:Side Length")
-		    , _244(this, 50.0f, 0.0f, 300.0f, "u02", "2:Vertical Length")
-		    , _254(this, 25.0f, 0.0f, 100.0f, "p10", "Attack Damage Navi")
-		    , _264(this, 5.0f, 0.0f, 500.0f, "p20", "Near Attack Dist")
-		    , _274(this, 80.0f, 0.0f, 500.0f, "p21", "Near Attack Limit")
-		    , _284(this, -15.0f, -500.0f, 500.0f, "p22", "Near Attack Minus")
-		    , _294(this, 15.0f, -500.0f, 500.0f, "p23", "Near Attack Plus")
-		    , _2A4(this, 15.0f, 0.0f, 100.0f, "p24", "Near Attack Height")
-		    , _2B4(this, 80.0f, 0.0f, 500.0f, "p30", "Mid Attack Dist")
-		    , _2C4(this, 150.0f, 0.0f, 500.0f, "p31", "Mid Attack Limit")
-		    , _2D4(this, -20.0f, -500.0f, 500.0f, "p32", "Mid Attack Minus")
-		    , _2E4(this, 20.0f, -500.0f, 500.0f, "p33", "Mid Attack Plus")
-		    , _2F4(this, 15.0f, 0.0f, 100.0f, "p34", "Mid Attack Height")
-		    , _304(this, 150.0f, 0.0f, 500.0f, "p40", "Far Attack Dist")
-		    , _314(this, 220.0f, 0.0f, 500.0f, "p41", "Far Attack Limit")
-		    , _324(this, -25.0f, -500.0f, 500.0f, "p42", "Far Attack Minus")
-		    , _334(this, 25.0f, -500.0f, 500.0f, "p43", "Far Attack Plus")
-		    , _344(this, 15.0f, 0.0f, 100.0f, "p44", "Far Attack Height")
-		    , _354(this, 70.0f, 0.0f, 500.0f, "p50", "Right Attack Dist")
-		    , _364(this, 120.0f, 0.0f, 500.0f, "p51", "Right Attack Limit")
-		    , _374(this, 30.0f, -500.0f, 500.0f, "p52", "Right Attack Minus")
-		    , _384(this, 100.0f, -500.0f, 500.0f, "p53", "Right Attack Plus")
-		    , _394(this, 15.0f, 0.0f, 100.0f, "p54", "Right Attack Height")
-		    , _3A4(this, 70.0f, 0.0f, 500.0f, "p60", "Left Attack Dist")
-		    , _3B4(this, 120.0f, 0.0f, 500.0f, "p61", "Left Attack Limit")
-		    , _3C4(this, -100.0f, -500.0f, 500.0f, "p62", "Left Attack Minus")
-		    , _3D4(this, -30.0f, -500.0f, 500.0f, "p63", "Left Attack Plus")
-		    , _3E4(this, 15.0f, 0.0f, 100.0f, "p64", "Left Attack Height")
-		    , _3F4(this, 1.5f, 0.0f, 5.0f, "t00", "Norm Body Turn")
-		    , _404(this, 4.0f, 0.0f, 5.0f, "t01", "Chase Body Turn")
-		    , _414(this, 1.0f, 0.0f, 30.0f, "t10", "Chase Blend Ratio")
-		    , _424(this, 2.5f, 0.0f, 10.0f, "q00", "Dive Time")
-		    , _434(this, 0.0f, 0.0f, 10.0f, "q02", "Under Time")
+		    : mType1DetectionRadius(this, 150.0f, 0.0f, 500.0f, "p00", "")
+		    , mType1AppearDist(this, 100.0f, 0.0f, 300.0f, "p01", "")
+		    , mType2AppearFrontDist(this, 200.0f, 0.0f, 500.0f, "u00", "2:Front Length")
+		    , mType2AppearSideDist(this, 100.0f, 0.0f, 500.0f, "u01", "2:Side Length")
+		    , mType2AppearVertDist(this, 50.0f, 0.0f, 300.0f, "u02", "2:Vertical Length")
+		    , mAttackDamageNavi(this, 25.0f, 0.0f, 100.0f, "p10", "Attack Damage Navi")
+		    , mNearAttackDist(this, 5.0f, 0.0f, 500.0f, "p20", "Near Attack Dist")
+		    , mNearAttackLimit(this, 80.0f, 0.0f, 500.0f, "p21", "Near Attack Limit")
+		    , mNearAttackMinus(this, -15.0f, -500.0f, 500.0f, "p22", "Near Attack Minus")
+		    , mNearAttackPlus(this, 15.0f, -500.0f, 500.0f, "p23", "Near Attack Plus")
+		    , mNearAttackHeight(this, 15.0f, 0.0f, 100.0f, "p24", "Near Attack Height")
+		    , mMidAttackDist(this, 80.0f, 0.0f, 500.0f, "p30", "Mid Attack Dist")
+		    , mMidAttackLimit(this, 150.0f, 0.0f, 500.0f, "p31", "Mid Attack Limit")
+		    , mMidAttackMinus(this, -20.0f, -500.0f, 500.0f, "p32", "Mid Attack Minus")
+		    , mMidAttackPlus(this, 20.0f, -500.0f, 500.0f, "p33", "Mid Attack Plus")
+		    , mMidAttackHeight(this, 15.0f, 0.0f, 100.0f, "p34", "Mid Attack Height")
+		    , mFarAttackDist(this, 150.0f, 0.0f, 500.0f, "p40", "Far Attack Dist")
+		    , mFarAttackLimit(this, 220.0f, 0.0f, 500.0f, "p41", "Far Attack Limit")
+		    , mFarAttackMinus(this, -25.0f, -500.0f, 500.0f, "p42", "Far Attack Minus")
+		    , mFarAttackPlus(this, 25.0f, -500.0f, 500.0f, "p43", "Far Attack Plus")
+		    , mFarAttackHeight(this, 15.0f, 0.0f, 100.0f, "p44", "Far Attack Height")
+		    , mRightAttackDist(this, 70.0f, 0.0f, 500.0f, "p50", "Right Attack Dist")
+		    , mRightAttackLimit(this, 120.0f, 0.0f, 500.0f, "p51", "Right Attack Limit")
+		    , mRightAttackMinus(this, 30.0f, -500.0f, 500.0f, "p52", "Right Attack Minus")
+		    , mRightAttackPlus(this, 100.0f, -500.0f, 500.0f, "p53", "Right Attack Plus")
+		    , mRightAttackHeight(this, 15.0f, 0.0f, 100.0f, "p54", "Right Attack Height")
+		    , mLeftAttackDist(this, 70.0f, 0.0f, 500.0f, "p60", "Left Attack Dist")
+		    , mLeftAttackLimit(this, 120.0f, 0.0f, 500.0f, "p61", "Left Attack Limit")
+		    , mLeftAttackMinus(this, -100.0f, -500.0f, 500.0f, "p62", "Left Attack Minus")
+		    , mLeftAttackPlus(this, -30.0f, -500.0f, 500.0f, "p63", "Left Attack Plus")
+		    , mLeftAttackHeight(this, 15.0f, 0.0f, 100.0f, "p64", "Left Attack Height")
+		    , mNormBodyTurnSpeed(this, 1.5f, 0.0f, 5.0f, "t00", "Norm Body Turn")
+		    , mChaseBodyTurnSpeed(this, 4.0f, 0.0f, 5.0f, "t01", "Chase Body Turn")
+		    , mChaseBlendingRate(this, 1.0f, 0.0f, 30.0f, "t10", "Chase Blend Ratio")
+		    , mWaitBeforeDiveTime(this, 2.5f, 0.0f, 10.0f, "q00", "Dive Time")
+		    , mWaitUndergroundTime(this, 0.0f, 0.0f, 10.0f, "q02", "Under Time")
 		    , mDeadHeadScaleSpeed(this, 10.0f, 0.0f, 100.0f, "s00", "Head Scale Speed")
 		    , mDeadHeadScaleTimer(this, 1.0f, 0.0f, 10.0f, "s01", "Head Scale Timer")
 		    , mDeadBodyScaleSpeed(this, 5.0f, 0.0f, 100.0f, "s02", "Body Scale Speed")
 		    , mDeadBodyScaleTimer(this, 0.75f, 0.0f, 10.0f, "s03", "Body Scale Timer")
 		    , mDeadBodyScaleSegmentRatio(this, 0.1f, 0.0f, 1.0f, "s04", "Body Timer Up Ratio")
-		    , _494(this, 0.7f, 0.0f, 1.0f, "s10", "Normal Appear Type")
-		    , _4A4(this, 5, 0, 100, "i10", "Struggle Piki(Min)")
-		    , _4B4(this, 20, 0, 100, "i11", "Struggle Piki(Max)")
-		    , _4C4(this, 1, 0, 10, "i12", "Struggle Loop(Mid)")
-		    , _4D4(this, 3, 0, 10, "i13", "Struggle Loop(Max)")
-		    , _4E4(this, 1, -1, 3, "i30", "Head Pellet Index")
-		    , _4F4(this, 0, -1, 3, "i31", "Body Pellet Index")
+		    , mFastAppearChance(this, 0.7f, 0.0f, 1.0f, "s10", "Normal Appear Type")
+		    , mStrugglePikiMin(this, 5, 0, 100, "i10", "Struggle Piki(Min)")
+		    , mStrugglePikiMax(this, 20, 0, 100, "i11", "Struggle Piki(Max)")
+		    , mStruggleLoopMid(this, 1, 0, 10, "i12", "Struggle Loop(Mid)")
+		    , mStruggleLoopMax(this, 3, 0, 10, "i13", "Struggle Loop(Max)")
+		    , mHeadPelletIndex(this, 1, -1, 3, "i30", "Head Pellet Index")
+		    , mBodyPelletIndex(this, 0, -1, 3, "i31", "Body Pellet Index")
 		{
 		}
 
 		// _200-_204 = Parameters
-		Parm<f32> _204;                       // _204
-		Parm<f32> _214;                       // _214
-		Parm<f32> _224;                       // _224
-		Parm<f32> _234;                       // _234
-		Parm<f32> _244;                       // _244
-		Parm<f32> _254;                       // _254
-		Parm<f32> _264;                       // _264
-		Parm<f32> _274;                       // _274
-		Parm<f32> _284;                       // _284
-		Parm<f32> _294;                       // _294
-		Parm<f32> _2A4;                       // _2A4
-		Parm<f32> _2B4;                       // _2B4
-		Parm<f32> _2C4;                       // _2C4
-		Parm<f32> _2D4;                       // _2D4
-		Parm<f32> _2E4;                       // _2E4
-		Parm<f32> _2F4;                       // _2F4
-		Parm<f32> _304;                       // _304
-		Parm<f32> _314;                       // _314
-		Parm<f32> _324;                       // _324
-		Parm<f32> _334;                       // _334
-		Parm<f32> _344;                       // _344
-		Parm<f32> _354;                       // _354
-		Parm<f32> _364;                       // _364
-		Parm<f32> _374;                       // _374
-		Parm<f32> _384;                       // _384
-		Parm<f32> _394;                       // _394
-		Parm<f32> _3A4;                       // _3A4
-		Parm<f32> _3B4;                       // _3B4
-		Parm<f32> _3C4;                       // _3C4
-		Parm<f32> _3D4;                       // _3D4
-		Parm<f32> _3E4;                       // _3E4
-		Parm<f32> _3F4;                       // _3F4
-		Parm<f32> _404;                       // _404
-		Parm<f32> _414;                       // _414
-		Parm<f32> _424;                       // _424
-		Parm<f32> _434;                       // _434
+		Parm<f32> mType1DetectionRadius;      // _204
+		Parm<f32> mType1AppearDist;           // _214
+		Parm<f32> mType2AppearFrontDist;      // _224
+		Parm<f32> mType2AppearSideDist;       // _234
+		Parm<f32> mType2AppearVertDist;       // _244
+		Parm<f32> mAttackDamageNavi;          // _254
+		Parm<f32> mNearAttackDist;            // _264
+		Parm<f32> mNearAttackLimit;           // _274
+		Parm<f32> mNearAttackMinus;           // _284
+		Parm<f32> mNearAttackPlus;            // _294
+		Parm<f32> mNearAttackHeight;          // _2A4
+		Parm<f32> mMidAttackDist;             // _2B4
+		Parm<f32> mMidAttackLimit;            // _2C4
+		Parm<f32> mMidAttackMinus;            // _2D4
+		Parm<f32> mMidAttackPlus;             // _2E4
+		Parm<f32> mMidAttackHeight;           // _2F4
+		Parm<f32> mFarAttackDist;             // _304
+		Parm<f32> mFarAttackLimit;            // _314
+		Parm<f32> mFarAttackMinus;            // _324
+		Parm<f32> mFarAttackPlus;             // _334
+		Parm<f32> mFarAttackHeight;           // _344
+		Parm<f32> mRightAttackDist;           // _354
+		Parm<f32> mRightAttackLimit;          // _364
+		Parm<f32> mRightAttackMinus;          // _374
+		Parm<f32> mRightAttackPlus;           // _384
+		Parm<f32> mRightAttackHeight;         // _394
+		Parm<f32> mLeftAttackDist;            // _3A4
+		Parm<f32> mLeftAttackLimit;           // _3B4
+		Parm<f32> mLeftAttackMinus;           // _3C4
+		Parm<f32> mLeftAttackPlus;            // _3D4
+		Parm<f32> mLeftAttackHeight;          // _3E4
+		Parm<f32> mNormBodyTurnSpeed;         // _3F4
+		Parm<f32> mChaseBodyTurnSpeed;        // _404
+		Parm<f32> mChaseBlendingRate;         // _414
+		Parm<f32> mWaitBeforeDiveTime;        // _424
+		Parm<f32> mWaitUndergroundTime;       // _434
 		Parm<f32> mDeadHeadScaleSpeed;        // _444
 		Parm<f32> mDeadHeadScaleTimer;        // _454
 		Parm<f32> mDeadBodyScaleSpeed;        // _464
 		Parm<f32> mDeadBodyScaleTimer;        // _474
 		Parm<f32> mDeadBodyScaleSegmentRatio; // _484
-		Parm<f32> _494;                       // _494
-		Parm<int> _4A4;                       // _4A4
-		Parm<int> _4B4;                       // _4B4
-		Parm<int> _4C4;                       // _4C4
-		Parm<int> _4D4;                       // _4D4
-		Parm<int> _4E4;                       // _4E4
-		Parm<int> _4F4;                       // _4F4
+		Parm<f32> mFastAppearChance;          // _494
+		Parm<int> mStrugglePikiMin;           // _4A4
+		Parm<int> mStrugglePikiMax;           // _4B4
+		Parm<int> mStruggleLoopMid;           // _4C4
+		Parm<int> mStruggleLoopMax;           // _4D4
+		Parm<int> mHeadPelletIndex;           // _4E4
+		Parm<int> mBodyPelletIndex;           // _4F4
 	};
 
 	SnakeProp();
@@ -299,15 +327,15 @@ struct SnakeAi : public PaniAnimKeyListener {
 	void eatStickToMouthPiki();
 	void nearNaviInAttackArea(Creature**, f32*, int);
 	void nearPikiInAttackArea(Creature**, f32*, int);
-	void naviInAttackArea(int);
-	void pikiInAttackArea(int);
-	void appearType01();
-	void appearType02();
-	void chaseNaviTransit();
-	void chasePikiTransit();
-	void targetLostTransit();
-	void attackTransit(int);
-	void collPartMaxTransit();
+	bool naviInAttackArea(int);
+	bool pikiInAttackArea(int);
+	bool appearType01();
+	bool appearType02();
+	bool chaseNaviTransit();
+	bool chasePikiTransit();
+	bool targetLostTransit();
+	bool attackTransit(int);
+	bool collPartMaxTransit();
 	void initAttack(int, f32);
 	void initAppear(int);
 	void struggleState();
@@ -322,16 +350,16 @@ struct SnakeAi : public PaniAnimKeyListener {
 	void setAppearPosition01();
 	void setAppearPosition02();
 	void setMouthCollPart(int);
-	void getMouthCollPart(int);
+	int getMouthCollPart(int);
 	void resultFlagOn();
 	void resultFlagSeen();
-	void dieTransit();
-	void struggleTransit();
-	void eatPikiTransit();
-	void intoGroundTransit();
-	void diveTimerTransit();
-	void underTimerTransit();
-	void appearTransit();
+	bool dieTransit();
+	bool struggleTransit();
+	bool eatPikiTransit();
+	bool intoGroundTransit();
+	bool diveTimerTransit();
+	bool underTimerTransit();
+	bool appearTransit();
 	void initDie(int);
 	void initStruggle(int);
 	void initChase(int);
@@ -349,19 +377,23 @@ struct SnakeAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	u8 _04;             // _04
-	u8 _05[0x14 - 0x5]; // _05, unknown
-	int _14;            // _14
-	u32* _18;           // _18, unknown, array of 5 pointers/values
-	u32* _1C;           // _1C, unknown, array of 5 pointers/values
-	u32* _20;           // _20, unknown, array of 5 pointers/values
-	u32* _24;           // _24, unknown, array of 5 pointers/values
-	u32* _28;           // _28, unknown, array of 5 pointers/values
-	u32* _2C;           // _2C, unknown, array of 5 pointers/values
-	Vector3f* _30;      // _30, array of 5 vectors
-	Vector3f _34;       // _34
-	Vector3f _40;       // _40
-	Snake* mSnake;      // _4C
+	bool _04;                   // _04
+	bool _05;                   // _05
+	bool _06;                   // _06
+	int mMouthSlotFlag;         // _08, keeps track of which slots are occupied
+	int mOccupiedSlotCount;     // _0C
+	int mMaxSlotCount;          // _10
+	int _14;                    // _14
+	f32* mAttackDists;          // _18, array of 5 floats
+	f32* mAttackLimits;         // _1C, array of 5 floats
+	f32* mAttackMinus;          // _20, array of 5 floats
+	f32* mAttackPlus;           // _24, array of 5 floats
+	f32* mAttackHeights;        // _28, array of 5 floats
+	u32* _2C;                   // _2C, array of 5 somethings
+	Vector3f* mAttackPositions; // _30, array of 5 vectors
+	Vector3f mSnakeFrontDir;    // _34
+	Vector3f mSnakeSideDir;     // _40
+	Snake* mSnake;              // _4C
 };
 
 /**

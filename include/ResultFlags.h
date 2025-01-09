@@ -23,6 +23,8 @@ enum EResultsFlags {
 	RESFLAG_PomFlowerFound = 45,
 	RESFLAG_Unk46          = 46,
 	// ...
+	RESFLAG_Unk48 = 48,
+	// ...
 	RESFLAG_Unk50 = 50,
 };
 

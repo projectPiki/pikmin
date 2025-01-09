@@ -358,7 +358,7 @@ void SnakeBody::createDeadHeadEffect()
 	effectMgr->create(EffectMgr::EFF_Unk130, vec, nullptr, nullptr);
 	rumbleMgr->start(14, 0, vec);
 
-	createDeadPellet(vec, C_SNAKE_PROP(mSnake)._4E4());
+	createDeadPellet(vec, C_SNAKE_PROP(mSnake).mHeadPelletIndex());
 
 	for (int i = 0; i < 7; i++) {
 		mDeadPtclGens[i] = effectMgr->create(EffectMgr::EFF_Unk134, vec, nullptr, nullptr);
@@ -399,7 +399,7 @@ void SnakeBody::createDeadBodyEffect()
 	effectMgr->create(EffectMgr::EFF_Unk135, vec, nullptr, nullptr);
 	rumbleMgr->start(15, 0, vec);
 
-	createDeadPellet(vec, C_SNAKE_PROP(mSnake)._4F4());
+	createDeadPellet(vec, C_SNAKE_PROP(mSnake).mBodyPelletIndex());
 
 	if (mSnake->mSeContext) {
 		mSnake->mSeContext->playSound(0x96);
@@ -835,7 +835,7 @@ void SnakeBody::makeHeadPosition()
 
 		if (mSnake->mAnimator.getCounter() > keyVals[mSnake->mSnakeAi->_14][0]
 		    && mSnake->mAnimator.getCounter() < keyVals[mSnake->mSnakeAi->_14][2]) {
-			f32 yDiff = mSnake->mSnakeAi->_30[mSnake->mSnakeAi->_14].y - mSnake->mPosition.y;
+			f32 yDiff = mSnake->mSnakeAi->mAttackPositions[mSnake->mSnakeAi->_14].y - mSnake->mPosition.y;
 			if (mSnake->mAnimator.getCounter() < keyVals[mSnake->mSnakeAi->_14][1]) {
 				_284[7].mMtx[1][3] += (mSnake->mAnimator.getCounter() - keyVals[mSnake->mSnakeAi->_14][0])
 				                    / (keyVals[mSnake->mSnakeAi->_14][1] - keyVals[mSnake->mSnakeAi->_14][0]) * yDiff;
@@ -845,7 +845,7 @@ void SnakeBody::makeHeadPosition()
 			}
 		}
 	} else if (mSnake->getCurrentState() == 0 && mSnake->mAnimator.getCounter() > 60.0f) {
-		f32 yDiff = mSnake->mSnakeAi->_30[1].y - mSnake->mPosition.y;
+		f32 yDiff = mSnake->mSnakeAi->mAttackPositions[1].y - mSnake->mPosition.y;
 		if (mSnake->mAnimator.getCounter() < 70.0f) {
 			_284[7].mMtx[1][3] += (mSnake->mAnimator.getCounter() - 60.0f) / 10.0f * yDiff;
 		} else {
