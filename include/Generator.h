@@ -9,6 +9,8 @@
 #include "Vector.h"
 #include "ID32.h"
 
+#define GENCACHE_HEAP_SIZE (0x6C00)
+
 struct Creature;
 struct MapMgr;
 struct Pellet;
@@ -127,6 +129,23 @@ struct GeneratorCache {
 	 * @brief TODO
 	 */
 	struct Cache : public CoreNode {
+		Cache()
+		{
+			initCore("");
+			mCourseIdx      = 0;
+			mGenCount       = 0;
+			mTotalCacheSize = 0;
+			mHeapOffset     = 0;
+		}
+
+		Cache(u32 stageIdx)
+		    : mCourseIdx(stageIdx)
+		{
+			initCore("");
+			mGenCount       = 0;
+			mTotalCacheSize = 0;
+			mHeapOffset     = 0;
+		}
 
 		void saveCard(RandomAccessStream&);
 		void loadCard(RandomAccessStream&);
@@ -136,7 +155,15 @@ struct GeneratorCache {
 
 		// _00     = VTBL
 		// _00-_14 = CoreNode
-		// TODO: members
+		u32 mCourseIdx;         // _14
+		u32 mHeapOffset;        // _18
+		u32 mTotalCacheSize;    // _1C
+		u32 mGenCacheSize;      // _20
+		u32 mCreatureCacheSize; // _24
+		u32 mUfoPartsCacheSize; // _28
+		u32 mGenCount;          // _2C
+		u32 mCreatureCount;     // _30
+		u32 mUfoPartsCount;     // _34
 	};
 
 	GeneratorCache();
@@ -146,7 +173,7 @@ struct GeneratorCache {
 	void addOne(u32);
 	void saveCard(RandomAccessStream&);
 	void loadCard(RandomAccessStream&);
-	void findCache(Cache&, u32);
+	Cache* findCache(Cache&, u32);
 	void preload(u32);
 	bool hasUfoParts(u32, u32);
 	void load(u32);
@@ -160,7 +187,13 @@ struct GeneratorCache {
 	void dump();
 	void assertValid();
 
-	u8 _00[0x84]; // _00, unknown
+	Cache mAliveCacheList;    // _00, i.e. used caches
+	Cache mDeadCacheList;     // _38, i.e. free caches
+	u8* mCacheHeap;           // _70
+	int mTotalCacheSize;      // _74, max amount of cache bytes (0x6C00 by default)
+	int mUsedSize;            // _78, how many bytes of cache space have we used
+	int mFreeSize;            // _7C, how many bytes of cache space are left
+	u32 mCurrentSaveCacheIdx; // _80
 };
 
 /**

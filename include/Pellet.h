@@ -192,6 +192,8 @@ struct Pellet : public DualCreature {
 
 	// _00      = VTBL
 	// _00-_440 = DualCreature
+	u8 _440[0x470 - 0x440];              // _440, unknown
+	StateMachine<Pellet>* mStateMachine; // _470
 };
 
 /**

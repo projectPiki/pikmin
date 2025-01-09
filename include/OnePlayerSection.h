@@ -21,6 +21,7 @@ enum StageID {
 	STAGE_Last      = 4,           // Final Trial
 	STAGE_INVALID   = 5,           // default set on load, invalid
 	STAGE_END       = STAGE_INVALID,
+	STAGE_COUNT     = STAGE_INVALID,
 	STAGE_LASTVALID = STAGE_Last, // last valid loadable stage
 };
 
