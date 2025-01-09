@@ -5,6 +5,7 @@
 #include "Dolphin/mtx.h"
 #include "Joint.h"
 #include "Light.h"
+#include "Shape.h"
 
 struct BaseShape;
 struct CachedShape;
@@ -50,6 +51,7 @@ struct Graphics {
 	void calcBoxLighting(BoundBox&);
 
 	// _3B4 = VTBL
+	// In the DLL, take the offset of the variable (- 4) to get the real offset here
 	int _00;                    // _00
 	u8 _04[0xC];                // _04, TODO: work out members
 	Light mLight;               // _10
@@ -58,7 +60,10 @@ struct Graphics {
 	u8 _2EC[0x30C - 0x2EC];     // _2EC, unknown
 	int mScreenWidth;           // _30C
 	int mScreenHeight;          // _310
-	u8 _314[0x324 - 0x314];     // _2E8, unknown
+	Colour _314;                // _318
+	Colour _318;                // _31C
+	Colour _31C;                // _320
+	u32 _320;                   // _324
 	u32 _324;                   // _324, unknown
 	u8 _328[0x338 - 0x328];     // _328, unknown
 	LightCamera* mLightCam;     // _338
@@ -73,12 +78,7 @@ struct Graphics {
 	u32 _384;                   // _384
 	u32 _388;                   // _388
 	u32 _38C;                   // _38C
-	u32 _390;                   // _390
-	u32 _394;                   // _394
-	u32 _398;                   // _398
-	u32 _39C;                   // _39C
-	u32 _3A0;                   // _3A0
-	u32 _3A4;                   // _3A4
+	CachedShape _390;           // _390
 	CachedShape* mCachedShapes; // _3A8
 	u32 mCachedShapeCount;      // _3AC
 	u8 _3B0[0x4];               // _3B0, unknown

@@ -17,9 +17,12 @@ typedef struct {
 
 int puts(const char* s);
 int printf(const char*, ...);
-int sprintf(char* s, const char* format, ...);
+int fprintf(FILE*, const char* format, ...);
 int vprintf(const char* format, va_list arg);
+int vsnprintf(char* s, size_t n, const char* format, va_list arg);
 int vsprintf(char* s, const char* format, va_list arg);
+int snprintf(char* s, size_t n, const char* format, ...);
+int sprintf(char* s, const char* format, ...);
 int sscanf(const char* s, const char* format, ...);
 
 // #include "PowerPC_EABI_Support/MSL_C/MSL_Common/FILE_POS.h"

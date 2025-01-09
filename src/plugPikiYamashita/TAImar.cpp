@@ -2411,14 +2411,7 @@ f32 TAIAflyingDistanceMar::getOffset(Teki&)
  * Address:	801A75F0
  * Size:	000008
  */
-f32 FlyingDistance::getOffset(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x4(r3)
-	  blr
-	*/
-}
+f32 FlyingDistance::getOffset(Teki&) { return mOffset; }
 
 /*
  * --INFO--

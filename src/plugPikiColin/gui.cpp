@@ -1,29 +1,24 @@
 #include "Menu.h"
 #include "Geometry.h"
-#include "Graphics.h"
 #include "Font.h"
 #include "sysNew.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h"
+#include "Graphics.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000098
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT(nullptr);
 
 /*
  * --INFO--
