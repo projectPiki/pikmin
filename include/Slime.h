@@ -18,6 +18,22 @@ struct Slime;
 /**
  * @brief TODO.
  */
+enum SlimeAIStateID {
+	SLIMEAI_Die        = 0,
+	SLIMEAI_WalkRandom = 1,
+	SLIMEAI_ChaseNavi  = 2,
+	SLIMEAI_ChasePiki  = 3,
+	SLIMEAI_WalkGoHome = 4,
+	SLIMEAI_Contract   = 5,
+	SLIMEAI_Expansion  = 6,
+	SLIMEAI_Stay       = 7,
+	SLIMEAI_Appear     = 8,
+	SLIMEAI_Disappear  = 9,
+};
+
+/**
+ * @brief TODO.
+ */
 struct SlimeProp : public BossProp, public CoreNode {
 
 	/**
@@ -357,10 +373,10 @@ struct SlimeAi {
 	void contractSubFlickPiki();
 	void inCaseOfContract();
 	void makeTargetRandom();
-	void chaseNaviTransit();
-	void chasePikiTransit();
-	void targetLostTransit();
-	void appearTransit();
+	bool chaseNaviTransit();
+	bool chasePikiTransit();
+	bool targetLostTransit();
+	bool appearTransit();
 	void initDie(int);
 	void appearState();
 	void update();
@@ -380,15 +396,15 @@ struct SlimeAi {
 	void bothEndsToGoal();
 	void bothEndsToAppearGoal();
 	void setVelocity(f32);
-	void motionFinishTransit();
-	void dieTransit();
-	void outSideChaseRangeTransit();
-	void inSideWaitRangeTransit();
-	void collisionContractTransit();
-	void dissolutionContractTransit();
-	void finishContractTransit();
-	void finishExpansionTransit();
-	void disAppearTransit();
+	bool motionFinishTransit();
+	bool dieTransit();
+	bool outSideChaseRangeTransit();
+	bool inSideWaitRangeTransit();
+	bool collisionContractTransit();
+	bool dissolutionContractTransit();
+	bool finishContractTransit();
+	bool finishExpansionTransit();
+	bool disAppearTransit();
 	void initWalk(int);
 	void initChase(int);
 	void initContract(int);
@@ -405,8 +421,16 @@ struct SlimeAi {
 	void stayState();
 	void disAppearState();
 
-	u8 _00[0x20];  // _00, unknown
-	Slime* mSlime; // _20
+	bool _00;                   // _00
+	bool _01;                   // _01
+	int mNucleusStickPikiCount; // _04
+	int _08;                    // _08
+	int _0C;                    // _0C
+	f32 _10;                    // _10
+	f32 mStickersRatio;         // _14
+	f32 mMaxLength;             // _18
+	f32 mMinLength;             // _1C
+	Slime* mSlime;              // _20
 };
 
 #endif

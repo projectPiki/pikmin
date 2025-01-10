@@ -62,7 +62,7 @@ struct Nucleus : public Boss {
 	// _00      = VTBL
 	// _00-_3B8 = Boss?
 	Slime* mSlime;         // _3B8
-	NucleusAi* mNucleusAI; // _3BC
+	NucleusAi* mNucleusAi; // _3BC
 };
 
 /**

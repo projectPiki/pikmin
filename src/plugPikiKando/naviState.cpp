@@ -4156,7 +4156,7 @@ void NaviGatherState::init(Navi* navi)
 	navi->_AC4 = 0.0f;
 	navi->_ABC = 1;
 	_10        = 0;
-	SeSystem::playPlayerSe(0x13B);
+	SeSystem::playPlayerSe(SE_GATHER);
 
 	int effIDMaybe = (navi->mNaviID == 0) ? 1 : 2;
 	EffectParm parm;

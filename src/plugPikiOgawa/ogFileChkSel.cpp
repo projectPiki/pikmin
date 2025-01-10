@@ -130,8 +130,8 @@ int zen::ogScrFileChkSelMgr::update(Controller* controller, CardQuickInfo& cardI
 
 	} else if (memChkState == -1) {
 		if (!ogCheckInsCard()) {
-			SeSystem::stopSysSe(0x128);
-			SeSystem::playSysSe(0x12A);
+			SeSystem::stopSysSe(SYSSE_CARDACCESS);
+			SeSystem::playSysSe(SYSSE_CARDERROR);
 			mState = FILECHKSEL_Unk1;
 			return mState;
 		}

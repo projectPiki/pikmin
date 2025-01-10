@@ -4734,7 +4734,7 @@ void Bridge::startStageFinished(int a2, bool a3)
 bool InteractBuild::actBridge(Bridge* bridge)
 {
 	f32& buildProgress = bridge->mStageProgressList[mCurrentStage];
-	bridge->playEventSound(bridge, 173);
+	bridge->playEventSound(bridge, SEB_CONSTRUCTION);
 
 	buildProgress += mProgressRate;
 	if (buildProgress >= bridge->mMaxHealth) {

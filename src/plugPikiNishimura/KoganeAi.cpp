@@ -27,7 +27,7 @@ DEFINE_ERROR();
  */
 DEFINE_PRINT("KoganeAi");
 
-static u32 koganeSE[] = { 0x76, 0x77 };
+static u32 koganeSE[] = { SE_KOGANE_WALK, SE_KOGANE_DAMAGE };
 
 /*
  * --INFO--
@@ -397,7 +397,7 @@ void KoganeAi::birthItemPellet(int size)
 		numPellet->mVelocity.set(100.0f * xOffs, 300.0f, 100.0f * zOffs);
 		numPellet->mDirection = mKogane->mDirection;
 		numPellet->startAI(0);
-		playSound(1);
+		playSound(KOGANESOUND_Damage);
 	}
 }
 

@@ -190,7 +190,7 @@ void MizuAi::initReady(int stateID)
 	}
 
 	if (mMizu->mSeContext) {
-		mMizu->mSeContext->playSound(0xA8);
+		mMizu->mSeContext->playSound(SE_GEYSER_NORMAL);
 	}
 }
 
@@ -229,8 +229,8 @@ void MizuAi::initJet(int stateID)
 	effectMgr->create(EffectMgr::EFF_Unk197, mMizu->mPosition, nullptr, nullptr);
 
 	if (mMizu->mSeContext) {
-		mMizu->mSeContext->stopSound(0xA8);
-		mMizu->mSeContext->playSound(0xA9);
+		mMizu->mSeContext->stopSound(SE_GEYSER_NORMAL);
+		mMizu->mSeContext->playSound(SE_GEYSER_SPOUT);
 	}
 }
 
@@ -261,7 +261,7 @@ void MizuAi::readyState()
 		if (mMizu->get2D4() > 3.0f) {
 			mMizu->set2D4(0.0f);
 			if (mMizu->mSeContext) {
-				mMizu->mSeContext->playSound(0xA8);
+				mMizu->mSeContext->playSound(SE_GEYSER_NORMAL);
 			}
 		} else {
 			mMizu->add2D4(gsys->getFrameTime());

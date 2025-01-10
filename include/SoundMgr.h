@@ -6,6 +6,7 @@
 #include "Parameters.h"
 #include "Ayu.h"
 #include "Win.h"
+#include "SoundID.h"
 
 struct Creature;
 

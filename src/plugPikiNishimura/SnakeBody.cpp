@@ -142,7 +142,7 @@ void SnakeBody::updateBlendingRatio()
 {
 	if (mBlendingRatio > 0.0f) {
 		if (mBlendingRatio == 0.00001f && mSnake->getNextState() >= 2 && mSnake->getNextState() <= 3 && mSnake->mSeContext) {
-			mSnake->mSeContext->playSound(0x38);
+			mSnake->mSeContext->playSound(SE_SNAKE_TURN);
 		}
 
 		mBlendingRatio += gsys->getFrameTime() * mBlendingRate;
@@ -368,7 +368,7 @@ void SnakeBody::createDeadHeadEffect()
 	}
 
 	if (mSnake->mSeContext) {
-		mSnake->mSeContext->playSound(0x83);
+		mSnake->mSeContext->playSound(SE_MAR_DROP);
 	}
 }
 
@@ -402,7 +402,7 @@ void SnakeBody::createDeadBodyEffect()
 	createDeadPellet(vec, C_SNAKE_PROP(mSnake).mBodyPelletIndex());
 
 	if (mSnake->mSeContext) {
-		mSnake->mSeContext->playSound(0x96);
+		mSnake->mSeContext->playSound(SE_DORORO_WALK);
 	}
 }
 

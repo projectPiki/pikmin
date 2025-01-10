@@ -2,6 +2,7 @@
 #include "EffectMgr.h"
 #include "Graphics.h"
 #include "NsMath.h"
+#include "MapCode.h"
 #include "Stickers.h"
 #include "RumbleMgr.h"
 #include "Interactions.h"
@@ -213,7 +214,7 @@ void SpiderLeg::createDeadBombEffect()
 	effectMgr->create(EffectMgr::EFF_Unk189, body->mCentre, nullptr, nullptr);
 	rumbleMgr->start(5, 0, mSpider->mPosition);
 	if (mSpider->mSeContext) {
-		mSpider->mSeContext->playSound(0x2C);
+		mSpider->mSeContext->playSound(SE_SPIDER_DEAD);
 	}
 }
 
@@ -247,7 +248,7 @@ void SpiderLeg::createSmallSparkEffect(int count)
 	setSmallSparkEffect('leg4', &legVals[9]);
 
 	if (mSpider->mSeContext) {
-		mSpider->mSeContext->playSound(0x2D);
+		mSpider->mSeContext->playSound(SE_SPIDER_BOMB);
 	}
 }
 
@@ -793,7 +794,7 @@ void SpiderLeg::setShakeOffNewParameter()
 
 	if (_04 && mSpider->mSeContext) {
 		rumbleMgr->start(3, 0, mSpider->mPosition);
-		mSpider->mSeContext->playSound(0x2B);
+		mSpider->mSeContext->playSound(SE_SPIDER_SWING);
 		_04 = false;
 	}
 }
@@ -832,7 +833,7 @@ void SpiderLeg::setBodyShakeNewParameter()
 
 		if (_04 && mSpider->mSeContext) {
 			rumbleMgr->start(3, 0, mSpider->mPosition);
-			mSpider->mSeContext->playSound(0x2B);
+			mSpider->mSeContext->playSound(SE_SPIDER_SWING);
 			_04 = false;
 		}
 	} else {
@@ -1419,7 +1420,7 @@ void SpiderLeg::stepShakeOffPiki(int legNum)
  */
 void SpiderLeg::emitOnGroundEffect(int legNum)
 {
-	if (mSpider->getMapAttribute(_12C[legNum][0]) == 5) {
+	if (mSpider->getMapAttribute(_12C[legNum][0]) == ATTR_Water) {
 		createRippleEffect(legNum);
 	} else {
 		effectMgr->create(EffectMgr::EFF_Unk224, _12C[legNum][0], nullptr, nullptr);
@@ -1430,7 +1431,7 @@ void SpiderLeg::emitOnGroundEffect(int legNum)
 	}
 
 	if (mSpider->mSeContext) {
-		mSpider->mSeContext->playSound(0x29);
+		mSpider->mSeContext->playSound(SE_SPIDER_WALK);
 	}
 
 	rumbleMgr->start(14, 0, _12C[legNum][0]);

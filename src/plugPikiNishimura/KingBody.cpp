@@ -167,7 +167,7 @@ void KingBody::createUfoParts()
 		}
 
 		if (Pellet::isUfoPartsID(mKing->mPelletID.mId)) {
-			SeSystem::playSysSe(0x122);
+			SeSystem::playSysSe(SYSSE_PARTS_APPEAR);
 		}
 	}
 
@@ -340,7 +340,7 @@ void KingBody::emitOnGroundEffect()
 				footPos.y -= 5.0f;
 				effectMgr->create(EffectMgr::EFF_Unk103, footPos, nullptr, nullptr);
 				if (mKing->mSeContext) {
-					mKing->mSeContext->playSound(0x4D);
+					mKing->mSeContext->playSound(SE_KING_WALK);
 				}
 				rumbleMgr->start(4, 0, mKing->mPosition);
 				cameraMgr->startVibrationEvent(3, mKing->mPosition);

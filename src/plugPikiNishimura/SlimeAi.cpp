@@ -1,91 +1,54 @@
 #include "Slime.h"
+#include "Nucleus.h"
+#include "CoreNucleus.h"
+#include "Interactions.h"
+#include "PikiMgr.h"
+#include "NaviMgr.h"
+#include "SoundMgr.h"
+#include "EffectMgr.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT(nullptr);
 
 /*
  * --INFO--
  * Address:	80164B80
  * Size:	000008
  */
-SlimeAi::SlimeAi(Slime*)
-{
-	/*
-	.loc_0x0:
-	  stw       r4, 0x20(r3)
-	  blr
-	*/
-}
+SlimeAi::SlimeAi(Slime* slime) { mSlime = slime; }
 
 /*
  * --INFO--
  * Address:	80164B88
  * Size:	0000A8
  */
-void SlimeAi::init(Slime*)
+void SlimeAi::init(Slime* slime)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x7
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r3
-	  stw       r4, 0x20(r3)
-	  addi      r3, r1, 0x30
-	  li        r4, 0
-	  lwz       r5, 0x20(r31)
-	  stw       r0, 0x2E4(r5)
-	  lwz       r5, 0x20(r31)
-	  stw       r0, 0x2E8(r5)
-	  bl        -0x45C64
-	  lwz       r5, 0x20(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r5, 0x33C
-	  bl        -0x45A0C
-	  li        r4, 0
-	  stb       r4, 0x0(r31)
-	  li        r3, 0x1
-	  li        r0, -0x1
-	  stb       r3, 0x1(r31)
-	  stw       r4, 0x4(r31)
-	  stw       r4, 0xC(r31)
-	  stw       r0, 0x8(r31)
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0x10(r31)
-	  stfs      f0, 0x14(r31)
-	  lwz       r3, 0x20(r31)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x240(r3)
-	  stfs      f0, 0x18(r31)
-	  lwz       r3, 0x20(r31)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x250(r3)
-	  stfs      f0, 0x1C(r31)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	mSlime = slime;
+	mSlime->setCurrentState(SLIMEAI_Stay);
+	mSlime->setNextState(SLIMEAI_Stay);
+	mSlime->mAnimator.startMotion(PaniMotionInfo(0));
+	_00                    = false;
+	_01                    = true;
+	mNucleusStickPikiCount = 0;
+	_0C                    = 0;
+	_08                    = -1;
+	_10                    = 0.0f;
+	mStickersRatio         = 0.0f;
+	mMaxLength             = C_SLIME_PROP(mSlime).mNormalMaxLength();
+	mMinLength             = C_SLIME_PROP(mSlime).mNormalMinLength();
 }
 
 /*
@@ -93,17 +56,7 @@ void SlimeAi::init(Slime*)
  * Address:	80164C30
  * Size:	000014
  */
-void SlimeAi::addDamagePoint(f32)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x20(r3)
-	  lfs       f0, 0x2C0(r3)
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x2C0(r3)
-	  blr
-	*/
-}
+void SlimeAi::addDamagePoint(f32 damage) { mSlime->addDamagePoint(damage); }
 
 /*
  * --INFO--
@@ -112,7 +65,16 @@ void SlimeAi::addDamagePoint(f32)
  */
 void SlimeAi::setEveryFrame()
 {
-	// UNUSED FUNCTION
+	calcBubblePiki();
+	calcStickersRatio();
+	setLeaderIndex();
+	calcCollisionCheck();
+	makeInterrelation();
+	makeBodyThickness();
+	playExpandingSound();
+	if (mSlime->getDamagePoint() > 0.0f) {
+		mSlime->calcBossDamage();
+	}
 }
 
 /*
@@ -120,10 +82,7 @@ void SlimeAi::setEveryFrame()
  * Address:	........
  * Size:	000018
  */
-void SlimeAi::afterProcessing()
-{
-	// UNUSED FUNCTION
-}
+void SlimeAi::afterProcessing() { mNucleusStickPikiCount = mSlime->mNucleus->mNucleusAi->mStickPikiCount; }
 
 /*
  * --INFO--
@@ -132,237 +91,49 @@ void SlimeAi::afterProcessing()
  */
 void SlimeAi::calcBubblePiki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x90(r1)
-	  stfd      f31, 0x88(r1)
-	  stfd      f30, 0x80(r1)
-	  stmw      r25, 0x64(r1)
-	  mr        r28, r3
-	  lwz       r0, 0xC(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x60
-	  bge-      .loc_0x38
-	  cmpwi     r0, 0
-	  bge-      .loc_0x44
-	  b         .loc_0x98
+	CollPart* part = nullptr;
+	switch (_0C) {
+	case 0:
+		part = mSlime->mCollInfo->getSphere('stk1');
+		break;
 
-	.loc_0x38:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x98
-	  b         .loc_0x7C
+	case 1:
+		part = mSlime->mCollInfo->getSphere('stk2');
+		break;
 
-	.loc_0x44:
-	  lwz       r5, 0x20(r28)
-	  lis       r3, 0x7374
-	  addi      r4, r3, 0x6B31
-	  lwz       r3, 0x220(r5)
-	  bl        -0xDB588
-	  mr        r29, r3
-	  b         .loc_0xB0
+	case 2:
+		part = mSlime->mCollInfo->getSphere('stk3');
+		break;
 
-	.loc_0x60:
-	  lwz       r5, 0x20(r28)
-	  lis       r3, 0x7374
-	  addi      r4, r3, 0x6B32
-	  lwz       r3, 0x220(r5)
-	  bl        -0xDB5A4
-	  mr        r29, r3
-	  b         .loc_0xB0
+	default:
+		part = mSlime->mCollInfo->getSphere('stk4');
+		break;
+	}
 
-	.loc_0x7C:
-	  lwz       r5, 0x20(r28)
-	  lis       r3, 0x7374
-	  addi      r4, r3, 0x6B33
-	  lwz       r3, 0x220(r5)
-	  bl        -0xDB5C0
-	  mr        r29, r3
-	  b         .loc_0xB0
+	if (part) {
+		Iterator iter(pikiMgr);
+		CI_LOOP(iter)
+		{
+			Creature* p = *iter;
+			if (p && p->isAlive() && p->isVisible() && !p->isBuried()) {
+				Piki* piki = static_cast<Piki*>(p);
+				if (piki->mColor != Blue
+				    && qdist2(piki->mPosition.x, piki->mPosition.z, part->mCentre.x, part->mCentre.z) < part->mRadius) {
+					// we're close, so do an actual distance calculation
+					f32 dist = piki->mPosition.distance(part->mCentre);
+					if (dist < part->mRadius) {
+						InteractBubble bubble(mSlime, 200.0f);
+						piki->stimulate(bubble);
+					}
+				}
+			}
+		}
+	}
 
-	.loc_0x98:
-	  lwz       r5, 0x20(r28)
-	  lis       r3, 0x7374
-	  addi      r4, r3, 0x6B34
-	  lwz       r3, 0x220(r5)
-	  bl        -0xDB5DC
-	  mr        r29, r3
-
-	.loc_0xB0:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x2D4
-	  lwz       r31, 0x3068(r13)
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r5, 0x802B
-	  lfs       f31, -0x54A4(r2)
-	  lis       r4, 0x802B
-	  lfs       f30, -0x54A8(r2)
-	  addi      r30, r3, 0
-	  subi      r26, r5, 0x3064
-	  subi      r27, r4, 0x3090
-	  b         .loc_0x278
-
-	.loc_0xF0:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x118
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r25, r3
-	  b         .loc_0x134
-
-	.loc_0x118:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r25, r3
-
-	.loc_0x134:
-	  cmplwi    r25, 0
-	  beq-      .loc_0x25C
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x25C
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x25C
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x25C
-	  lhz       r0, 0x510(r25)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x25C
-	  lfs       f1, 0x94(r25)
-	  lfs       f2, 0x9C(r25)
-	  lfs       f3, 0x4(r29)
-	  lfs       f4, 0xC(r29)
-	  bl        -0x12C7C8
-	  lfs       f0, 0x0(r29)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x25C
-	  stfs      f30, 0x38(r1)
-	  stfs      f30, 0x34(r1)
-	  stfs      f30, 0x30(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x94(r25)
-	  lfs       f4, 0xC(r29)
-	  lfs       f3, 0x9C(r25)
-	  fsubs     f0, f1, f0
-	  lfs       f2, 0x8(r29)
-	  lfs       f1, 0x98(r25)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x28(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x28(r1)
-	  stfs      f0, 0x30(r1)
-	  stfs      f1, 0x34(r1)
-	  stfs      f3, 0x38(r1)
-	  lfs       f1, 0x30(r1)
-	  lfs       f0, 0x34(r1)
-	  lfs       f2, 0x38(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x157224
-	  lfs       f0, 0x0(r29)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x25C
-	  lwz       r0, 0x20(r28)
-	  addi      r3, r25, 0
-	  addi      r4, r1, 0x40
-	  stw       r26, 0x40(r1)
-	  stw       r0, 0x44(r1)
-	  stw       r27, 0x40(r1)
-	  stfs      f31, 0x48(r1)
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x25C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x278:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2A0
-	  li        r0, 0x1
-	  b         .loc_0x2CC
-
-	.loc_0x2A0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x2C8
-	  li        r0, 0x1
-	  b         .loc_0x2CC
-
-	.loc_0x2C8:
-	  li        r0, 0
-
-	.loc_0x2CC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0xF0
-
-	.loc_0x2D4:
-	  lwz       r3, 0xC(r28)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0xC(r28)
-	  lwz       r0, 0xC(r28)
-	  cmpwi     r0, 0x3
-	  ble-      .loc_0x2F4
-	  li        r0, 0
-	  stw       r0, 0xC(r28)
-
-	.loc_0x2F4:
-	  lmw       r25, 0x64(r1)
-	  lwz       r0, 0x94(r1)
-	  lfd       f31, 0x88(r1)
-	  lfd       f30, 0x80(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
+	_0C++;
+	if (_0C > 3) {
+		_0C = 0;
+	}
 }
 
 /*
@@ -372,60 +143,17 @@ void SlimeAi::calcBubblePiki()
  */
 void SlimeAi::calcStickersRatio()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x48(r1)
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0x14(r3)
-	  lwz       r5, 0x20(r3)
-	  lwz       r4, 0x3F8(r5)
-	  lwz       r4, 0x3BC(r4)
-	  lwz       r0, 0x4(r4)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x6C
-	  xoris     r0, r0, 0x8000
-	  lwz       r4, 0x224(r5)
-	  stw       r0, 0x44(r1)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x5498(r2)
-	  stw       r0, 0x40(r1)
-	  lfs       f0, 0x290(r4)
-	  lfd       f1, 0x40(r1)
-	  lfs       f3, 0x14(r3)
-	  fsubs     f1, f1, f2
-	  fdivs     f0, f1, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x14(r3)
-	  lfs       f1, 0x14(r3)
-	  lfs       f0, -0x54A0(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x6C
-	  stfs      f0, 0x14(r3)
+	mStickersRatio = 0.0f;
+	if (mSlime->mNucleus->mNucleusAi->mStickPikiCount > 0) {
+		mStickersRatio += mSlime->mNucleus->mNucleusAi->mStickPikiCount / C_SLIME_PROP(mSlime).mMaxStickPikiNum();
+		if (mStickersRatio > 1.0f) {
+			mStickersRatio = 1.0f;
+		}
+	}
 
-	.loc_0x6C:
-	  lwz       r4, 0x20(r3)
-	  lfs       f0, -0x54A0(r2)
-	  lfs       f2, 0x14(r3)
-	  lwz       r5, 0x224(r4)
-	  fsubs     f3, f0, f2
-	  lfs       f1, 0x240(r5)
-	  lfs       f0, 0x260(r5)
-	  fmuls     f1, f3, f1
-	  fmuls     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x18(r3)
-	  lwz       r4, 0x20(r3)
-	  lfs       f1, 0x14(r3)
-	  lwz       r5, 0x224(r4)
-	  lfs       f2, 0x250(r5)
-	  lfs       f0, 0x270(r5)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x1C(r3)
-	  addi      r1, r1, 0x48
-	  blr
-	*/
+	f32 complRatio = 1.0f - mStickersRatio;
+	mMaxLength     = complRatio * C_SLIME_PROP(mSlime).mNormalMaxLength() + mStickersRatio * C_SLIME_PROP(mSlime).mMaxLengthAtSticking();
+	mMinLength     = complRatio * C_SLIME_PROP(mSlime).mNormalMinLength() + mStickersRatio * C_SLIME_PROP(mSlime).mMinLengthAtSticking();
 }
 
 /*
@@ -435,7 +163,13 @@ void SlimeAi::calcStickersRatio()
  */
 void SlimeAi::setLeaderIndex()
 {
-	// UNUSED FUNCTION
+	if (mNucleusStickPikiCount == 0 && mSlime->mNucleus->mNucleusAi->mStickPikiCount > 0) {
+		if (mSlime->_3C8 == 3) {
+			mSlime->_3C8 = 0;
+			mSlime->_3CC = 3;
+		}
+		mSlime->_3C4 = 1;
+	}
 }
 
 /*
@@ -445,7 +179,8 @@ void SlimeAi::setLeaderIndex()
  */
 void SlimeAi::makeInterrelation()
 {
-	// UNUSED FUNCTION
+	mSlime->mSlimeCreatures[1]->_2BC = 0.667f * mSlime->mSlimeCreatures[0]->mPosition + 0.333f * mSlime->mSlimeCreatures[3]->mPosition;
+	mSlime->mSlimeCreatures[2]->_2BC = 0.333f * mSlime->mSlimeCreatures[0]->mPosition + 0.667f * mSlime->mSlimeCreatures[3]->mPosition;
 }
 
 /*
@@ -455,6 +190,8 @@ void SlimeAi::makeInterrelation()
  */
 void SlimeAi::makeBodyThickness()
 {
+	f32 dist = mSlime->mSlimeCreatures[0]->mPosition.distance(mSlime->mSlimeCreatures[3]->mPosition);
+	// f32 val = (dist - )
 	// UNUSED FUNCTION
 }
 
@@ -465,108 +202,29 @@ void SlimeAi::makeBodyThickness()
  */
 void SlimeAi::playExpandingSound()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x20(r3)
-	  lfs       f0, -0x54A8(r2)
-	  lwz       r3, 0x3F4(r3)
-	  lwz       r4, 0xC(r3)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x30(r1)
-	  stfs      f0, 0x2C(r1)
-	  stfs      f0, 0x28(r1)
-	  lfsu      f1, 0x94(r4)
-	  lfsu      f0, 0x94(r3)
-	  lfs       f4, 0x8(r4)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x8(r3)
-	  lfs       f2, 0x4(r4)
-	  lfs       f1, 0x4(r3)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x24(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x24(r1)
-	  stfs      f0, 0x28(r1)
-	  stfs      f1, 0x2C(r1)
-	  stfs      f3, 0x30(r1)
-	  lfs       f1, 0x28(r1)
-	  lfs       f0, 0x2C(r1)
-	  lfs       f2, 0x30(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x157468
-	  lfs       f0, 0x18(r31)
-	  lwz       r3, 0x20(r31)
-	  fdivs     f31, f1, f0
-	  lbz       r0, 0x3C4(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x12C
-	  lbz       r0, 0x1(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x12C
-	  lfs       f0, -0x5490(r2)
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x12C
-	  lfs       f1, 0x14(r31)
-	  lfs       f0, -0x548C(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xEC
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x124
-	  li        r4, 0x94
-	  bl        -0xC132C
-	  b         .loc_0x124
+	f32 expansionRatio = mSlime->mSlimeCreatures[0]->mPosition.distance(mSlime->mSlimeCreatures[3]->mPosition) / mMaxLength;
+	if (mSlime->_3C4 && _01 && expansionRatio > 0.8f) {
+		if (mStickersRatio > 0.5f) {
+			if (mSlime->mSeContext) {
+				// very strained stretch
+				mSlime->mSeContext->playSound(SE_SLIME_EXT3);
+			}
+		} else if (mStickersRatio > 0.0f) {
+			if (mSlime->mSeContext) {
+				// somewhat strained stretch
+				mSlime->mSeContext->playSound(SE_SLIME_EXT2);
+			}
+		} else if (mSlime->mSeContext) {
+			// normal stretch
+			mSlime->mSeContext->playSound(SE_SLIME_EXT1);
+		}
 
-	.loc_0xEC:
-	  lfs       f0, -0x54A8(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x110
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x124
-	  li        r4, 0x93
-	  bl        -0xC1350
-	  b         .loc_0x124
+		_01 = false;
+	}
 
-	.loc_0x110:
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x124
-	  li        r4, 0x92
-	  bl        -0xC1368
-
-	.loc_0x124:
-	  li        r0, 0
-	  stb       r0, 0x1(r31)
-
-	.loc_0x12C:
-	  lbz       r0, 0x1(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x14C
-	  lfs       f0, -0x5488(r2)
-	  fcmpo     cr0, f31, f0
-	  bge-      .loc_0x14C
-	  li        r0, 0x1
-	  stb       r0, 0x1(r31)
-
-	.loc_0x14C:
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	if (!_01 && expansionRatio < 0.7f) {
+		_01 = true;
+	}
 }
 
 /*
@@ -576,220 +234,25 @@ void SlimeAi::playExpandingSound()
  */
 void SlimeAi::calcCollisionCheck()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x188(r1)
-	  stfd      f31, 0x180(r1)
-	  stfd      f30, 0x178(r1)
-	  stfd      f29, 0x170(r1)
-	  stfd      f28, 0x168(r1)
-	  stw       r31, 0x164(r1)
-	  mr        r31, r3
-	  lwz       r5, 0x20(r31)
-	  lfs       f3, 0x13C(r13)
-	  lwz       r4, 0x3F4(r5)
-	  lwz       r3, 0x4(r4)
-	  lfsu      f0, 0x94(r3)
-	  lfs       f2, 0x8(r3)
-	  fmuls     f0, f0, f3
-	  lfs       f1, 0x4(r3)
-	  fmuls     f2, f2, f3
-	  stfs      f0, 0xC0(r1)
-	  fmuls     f1, f1, f3
-	  lfs       f0, 0xC0(r1)
-	  stfs      f0, 0x12C(r1)
-	  stfs      f1, 0x130(r1)
-	  stfs      f2, 0x134(r1)
-	  lwz       r3, 0x0(r4)
-	  lfsu      f0, 0x94(r3)
-	  lfs       f3, 0x138(r13)
-	  lfs       f2, 0x8(r3)
-	  lfs       f1, 0x4(r3)
-	  fmuls     f0, f0, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  stfs      f0, 0xBC(r1)
-	  lfs       f0, 0xBC(r1)
-	  stfs      f0, 0x138(r1)
-	  stfs      f1, 0x13C(r1)
-	  stfs      f2, 0x140(r1)
-	  lfs       f1, 0x138(r1)
-	  lfs       f0, 0x12C(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xF0(r1)
-	  lfs       f0, 0xF0(r1)
-	  stfs      f0, 0x144(r1)
-	  lfs       f1, 0x13C(r1)
-	  lfs       f0, 0x130(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x148(r1)
-	  lfs       f1, 0x140(r1)
-	  lfs       f0, 0x134(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14C(r1)
-	  lwz       r3, 0x144(r1)
-	  lwz       r0, 0x148(r1)
-	  stw       r3, 0x3E8(r5)
-	  stw       r0, 0x3EC(r5)
-	  lwz       r0, 0x14C(r1)
-	  stw       r0, 0x3F0(r5)
-	  lwz       r5, 0x20(r31)
-	  lfs       f3, 0x144(r13)
-	  lwz       r4, 0x3F4(r5)
-	  lwz       r3, 0xC(r4)
-	  lfsu      f0, 0x94(r3)
-	  lfs       f2, 0x8(r3)
-	  fmuls     f0, f0, f3
-	  lfs       f1, 0x4(r3)
-	  fmuls     f2, f2, f3
-	  stfs      f0, 0xB8(r1)
-	  fmuls     f1, f1, f3
-	  lfs       f0, 0xB8(r1)
-	  stfs      f0, 0x108(r1)
-	  stfs      f1, 0x10C(r1)
-	  stfs      f2, 0x110(r1)
-	  lwz       r3, 0x8(r4)
-	  lfsu      f0, 0x94(r3)
-	  lfs       f3, 0x140(r13)
-	  lfs       f2, 0x8(r3)
-	  lfs       f1, 0x4(r3)
-	  fmuls     f0, f0, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  stfs      f0, 0xB4(r1)
-	  lfs       f0, 0xB4(r1)
-	  stfs      f0, 0x114(r1)
-	  stfs      f1, 0x118(r1)
-	  stfs      f2, 0x11C(r1)
-	  lfs       f1, 0x114(r1)
-	  lfs       f0, 0x108(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xE4(r1)
-	  lfs       f0, 0xE4(r1)
-	  stfs      f0, 0x120(r1)
-	  lfs       f1, 0x118(r1)
-	  lfs       f0, 0x10C(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x124(r1)
-	  lfs       f1, 0x11C(r1)
-	  lfs       f0, 0x110(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x128(r1)
-	  lwz       r3, 0x120(r1)
-	  lwz       r0, 0x124(r1)
-	  stw       r3, 0x3DC(r5)
-	  stw       r0, 0x3E0(r5)
-	  lwz       r0, 0x128(r1)
-	  stw       r0, 0x3E4(r5)
-	  lwz       r3, 0x20(r31)
-	  lwz       r0, 0x2E4(r3)
-	  cmpwi     r0, 0x8
-	  beq-      .loc_0x318
-	  lwz       r4, 0x3FC(r3)
-	  lwz       r3, 0x3F8(r3)
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0xDC(r1)
-	  stfs      f0, 0xD8(r1)
-	  stfs      f0, 0xD4(r1)
-	  lfsu      f1, 0x94(r4)
-	  lfsu      f0, 0x94(r3)
-	  lfs       f4, 0x8(r4)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x8(r3)
-	  lfs       f2, 0x4(r4)
-	  lfs       f1, 0x4(r3)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0xB0(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0xB0(r1)
-	  stfs      f0, 0xD4(r1)
-	  stfs      f1, 0xD8(r1)
-	  stfs      f3, 0xDC(r1)
-	  lfs       f1, 0xD4(r1)
-	  lfs       f0, 0xD8(r1)
-	  lfs       f2, 0xDC(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x157760
-	  lwz       r5, 0x20(r31)
-	  lwz       r3, 0x224(r5)
-	  lfs       f0, 0x280(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x318
-	  fsubs     f1, f0, f1
-	  lwz       r4, 0x3F8(r5)
-	  lwz       r3, 0x3FC(r5)
-	  lfs       f0, -0x548C(r2)
-	  lfsu      f3, 0x94(r3)
-	  lfsu      f2, 0x94(r4)
-	  fmuls     f28, f1, f0
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x4(r4)
-	  fsubs     f31, f3, f2
-	  lfs       f2, 0x8(r3)
-	  fsubs     f30, f1, f0
-	  lfs       f0, 0x8(r4)
-	  fmuls     f1, f31, f31
-	  fsubs     f29, f2, f0
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x1577C4
-	  lfs       f0, -0x54A8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x2A4
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	mSlime->_3E8 = 0.5f * mSlime->mSlimeCreatures[0]->mPosition + 0.5f * mSlime->mSlimeCreatures[1]->mPosition;
+	mSlime->_3DC = 0.5f * mSlime->mSlimeCreatures[2]->mPosition + 0.5f * mSlime->mSlimeCreatures[3]->mPosition;
 
-	.loc_0x2A4:
-	  fmuls     f31, f31, f28
-	  lwz       r3, 0x20(r31)
-	  lfsu      f0, 0x3E8(r3)
-	  fmuls     f30, f30, f28
-	  fmuls     f29, f29, f28
-	  fadds     f0, f0, f31
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fadds     f0, f0, f30
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fadds     f0, f0, f29
-	  stfs      f0, 0x8(r3)
-	  lwz       r3, 0x20(r31)
-	  lfsu      f0, 0x3DC(r3)
-	  fsubs     f0, f0, f31
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fsubs     f0, f0, f30
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fsubs     f0, f0, f29
-	  stfs      f0, 0x8(r3)
-	  lwz       r3, 0x20(r31)
-	  lwz       r0, 0x2E4(r3)
-	  cmpwi     r0, 0x5
-	  bne-      .loc_0x318
-	  mr        r3, r31
-	  bl        0xB7C
+	if (mSlime->getCurrentState() == SLIMEAI_Appear) {
+		return;
+	}
 
-	.loc_0x318:
-	  lwz       r0, 0x18C(r1)
-	  lfd       f31, 0x180(r1)
-	  lfd       f30, 0x178(r1)
-	  lfd       f29, 0x170(r1)
-	  lfd       f28, 0x168(r1)
-	  lwz       r31, 0x164(r1)
-	  addi      r1, r1, 0x188
-	  mtlr      r0
-	  blr
-	*/
+	f32 dist = mSlime->mNucleus->mPosition.distance(mSlime->mCore->mPosition);
+	if (dist < C_SLIME_PROP(mSlime).mDistanceBetweenNuclei()) {
+		Vector3f sep = mSlime->mCore->mPosition - mSlime->mNucleus->mPosition;
+		dist         = (C_SLIME_PROP(mSlime).mDistanceBetweenNuclei() - dist) / 2.0f;
+		sep.normalise();
+		sep.multiply(dist);
+		mSlime->_3E8.add(sep);
+		mSlime->_3DC.sub(sep);
+		if (mSlime->getCurrentState() == SLIMEAI_Contract) {
+			inCaseOfContract();
+		}
+	}
 }
 
 /*
@@ -2062,7 +1525,7 @@ void SlimeAi::setVelocity(f32)
  * Address:	........
  * Size:	00000C
  */
-void SlimeAi::motionFinishTransit()
+bool SlimeAi::motionFinishTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -2072,7 +1535,7 @@ void SlimeAi::motionFinishTransit()
  * Address:	........
  * Size:	000024
  */
-void SlimeAi::dieTransit()
+bool SlimeAi::dieTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -2082,7 +1545,7 @@ void SlimeAi::dieTransit()
  * Address:	........
  * Size:	000068
  */
-void SlimeAi::outSideChaseRangeTransit()
+bool SlimeAi::outSideChaseRangeTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -2092,7 +1555,7 @@ void SlimeAi::outSideChaseRangeTransit()
  * Address:	........
  * Size:	000068
  */
-void SlimeAi::inSideWaitRangeTransit()
+bool SlimeAi::inSideWaitRangeTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -2102,7 +1565,7 @@ void SlimeAi::inSideWaitRangeTransit()
  * Address:	80166414
  * Size:	000308
  */
-void SlimeAi::chaseNaviTransit()
+bool SlimeAi::chaseNaviTransit()
 {
 	/*
 	.loc_0x0:
@@ -2330,7 +1793,7 @@ void SlimeAi::chaseNaviTransit()
  * Address:	8016671C
  * Size:	00030C
  */
-void SlimeAi::chasePikiTransit()
+bool SlimeAi::chasePikiTransit()
 {
 	/*
 	.loc_0x0:
@@ -2559,7 +2022,7 @@ void SlimeAi::chasePikiTransit()
  * Address:	80166A28
  * Size:	000198
  */
-void SlimeAi::targetLostTransit()
+bool SlimeAi::targetLostTransit()
 {
 	/*
 	.loc_0x0:
@@ -2683,7 +2146,7 @@ void SlimeAi::targetLostTransit()
  * Address:	........
  * Size:	000020
  */
-void SlimeAi::collisionContractTransit()
+bool SlimeAi::collisionContractTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -2693,7 +2156,7 @@ void SlimeAi::collisionContractTransit()
  * Address:	........
  * Size:	000034
  */
-void SlimeAi::dissolutionContractTransit()
+bool SlimeAi::dissolutionContractTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -2703,7 +2166,7 @@ void SlimeAi::dissolutionContractTransit()
  * Address:	........
  * Size:	000030
  */
-void SlimeAi::finishContractTransit()
+bool SlimeAi::finishContractTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -2713,7 +2176,7 @@ void SlimeAi::finishContractTransit()
  * Address:	........
  * Size:	000024
  */
-void SlimeAi::finishExpansionTransit()
+bool SlimeAi::finishExpansionTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -2723,7 +2186,7 @@ void SlimeAi::finishExpansionTransit()
  * Address:	80166BC0
  * Size:	0002E4
  */
-void SlimeAi::appearTransit()
+bool SlimeAi::appearTransit()
 {
 	/*
 	.loc_0x0:
@@ -2954,7 +2417,7 @@ void SlimeAi::appearTransit()
  * Address:	........
  * Size:	000024
  */
-void SlimeAi::disAppearTransit()
+bool SlimeAi::disAppearTransit()
 {
 	// UNUSED FUNCTION
 }
@@ -3800,6 +3263,111 @@ void SlimeAi::disAppearState()
  */
 void SlimeAi::update()
 {
+	setEveryFrame();
+	switch (mSlime->getCurrentState()) {
+	case SLIMEAI_Die:
+		dieState();
+		if (disAppearTransit()) {
+			initDisAppear(SLIMEAI_Disappear);
+		}
+		break;
+
+	case SLIMEAI_WalkRandom:
+		walkRandomState();
+		if (dieTransit()) {
+			initDie(SLIMEAI_Die);
+		} else if (collisionContractTransit() || dissolutionContractTransit()) {
+			initContract(SLIMEAI_Contract);
+		} else if (chaseNaviTransit()) {
+			initChase(SLIMEAI_ChaseNavi);
+		} else if (chasePikiTransit()) {
+			initChase(SLIMEAI_ChasePiki);
+		}
+		break;
+
+	case SLIMEAI_ChaseNavi:
+		chaseNaviState();
+		if (dieTransit()) {
+			initDie(SLIMEAI_Die);
+		} else if (collisionContractTransit() || dissolutionContractTransit()) {
+			initContract(SLIMEAI_Contract);
+		} else if (outSideChaseRangeTransit()) {
+			initWalk(SLIMEAI_WalkGoHome);
+		} else if (chasePikiTransit()) {
+			initChase(SLIMEAI_ChasePiki);
+		} else if (targetLostTransit()) {
+			initWalk(SLIMEAI_WalkRandom);
+		}
+		break;
+
+	case SLIMEAI_ChasePiki:
+		chasePikiState();
+		if (dieTransit()) {
+			initDie(SLIMEAI_Die);
+		} else if (collisionContractTransit() || dissolutionContractTransit()) {
+			initContract(SLIMEAI_Contract);
+		} else if (outSideChaseRangeTransit()) {
+			initWalk(SLIMEAI_WalkGoHome);
+		} else if (chaseNaviTransit()) {
+			initChase(SLIMEAI_ChaseNavi);
+		} else if (chasePikiTransit()) {
+			initChase(SLIMEAI_ChasePiki);
+		} else if (targetLostTransit()) {
+			initWalk(SLIMEAI_WalkRandom);
+		}
+		break;
+
+	case SLIMEAI_WalkGoHome:
+		walkGoHomeState();
+		if (dieTransit()) {
+			initDie(SLIMEAI_Die);
+		} else if (collisionContractTransit() || dissolutionContractTransit()) {
+			initContract(SLIMEAI_Contract);
+		} else if (inSideWaitRangeTransit()) {
+			initWalk(SLIMEAI_WalkRandom);
+		}
+		break;
+
+	case SLIMEAI_Contract:
+		contractState();
+		if (dieTransit()) {
+			initDie(SLIMEAI_Die);
+		} else if (finishContractTransit()) {
+			initExpansion(SLIMEAI_Expansion);
+		}
+		break;
+
+	case SLIMEAI_Expansion:
+		expansionState();
+		if (dieTransit()) {
+			initDie(SLIMEAI_Die);
+		} else if (collisionContractTransit()) {
+			initContract(SLIMEAI_Contract);
+		} else if (finishExpansionTransit()) {
+			initWalk(SLIMEAI_WalkRandom);
+		}
+		break;
+
+	case SLIMEAI_Stay:
+		stayState();
+		if (appearTransit()) {
+			initAppear(SLIMEAI_Appear);
+		}
+		break;
+
+	case SLIMEAI_Appear:
+		appearState();
+		if (motionFinishTransit()) {
+			initWalk(SLIMEAI_WalkRandom);
+		}
+		break;
+
+	case SLIMEAI_Disappear:
+		disAppearState();
+		break;
+	}
+
+	afterProcessing();
 	/*
 	.loc_0x0:
 	  mflr      r0

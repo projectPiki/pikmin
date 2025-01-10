@@ -249,10 +249,11 @@ struct Boss : public Creature {
 	bool getAlive() { return mCurrentLife > 0.0f; }
 
 	Vector3f* getInitPosition() { return &mInitPosition; }
-	void setInitPosition(Vector3f& pos) { mInitPosition = pos; } // check if this is set later when first used
+	void setInitPosition(Vector3f& pos) { mInitPosition = pos; }
 
 	f32 getCurrentLife() { return mCurrentLife; }
 	f32 getMaxLife() { return mMaxLife; }
+	void subCurrentLife(f32 damage) { mCurrentLife -= damage; }
 
 	// attack timer??
 	inline f32 get2D0() { return _2D0; }         // name these better later

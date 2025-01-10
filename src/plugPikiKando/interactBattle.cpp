@@ -6,6 +6,7 @@
 #include "PikiMgr.h"
 #include "MapCode.h"
 #include "PikiAI.h"
+#include "SoundMgr.h"
 #include "Collision.h"
 #include "Stickers.h"
 #include "Navi.h"
@@ -52,7 +53,7 @@ bool InteractBomb::actPiki(Piki* piki)
 
 	playerState->mResultFlags.setOn(RESFLAG_Unk24);
 
-	piki->playEventSound(mOwner, 26);
+	piki->playEventSound(mOwner, SE_PIKI_DAMAGED);
 
 	piki->mHealth -= mDamage;
 
@@ -297,7 +298,7 @@ bool InteractFlick::actPiki(Piki* piki)
 		return false;
 	}
 
-	piki->playEventSound(mOwner, 26);
+	piki->playEventSound(mOwner, SE_PIKI_DAMAGED);
 
 	piki->mHealth -= mDamage;
 
@@ -408,7 +409,7 @@ bool InteractAttack::actPiki(Piki* piki)
 		return false;
 	}
 
-	piki->playEventSound(mOwner, 26);
+	piki->playEventSound(mOwner, SE_PIKI_DAMAGED);
 	piki->startDamage();
 	piki->mHealth -= mDamage;
 
@@ -452,7 +453,7 @@ bool InteractSwallow::actPiki(Piki* piki)
 	piki->_4F8->mChildActions[piki->_4F8->mChildActionIdx].initialise(nullptr);
 	piki->mMode = 0;
 	if (!mMouthPart) {
-		piki->playEventSound(mOwner, 22);
+		piki->playEventSound(mOwner, SE_PIKI_EATEN);
 		piki->kill(false);
 		return true;
 	}
@@ -521,7 +522,7 @@ bool InteractSwallow::actPiki(Piki* piki)
 	}
 
 	PRINT("play dead sound!\n");
-	piki->playEventSound(mOwner, 0x16);
+	piki->playEventSound(mOwner, SE_PIKI_EATEN);
 
 	if (piki->_426) {
 		piki->_426 = 0;
@@ -569,7 +570,7 @@ bool InteractPress::actPiki(Piki* piki)
 	if (piki->getState() == PIKISTATE_Pressed) {
 		return false;
 	}
-	piki->playEventSound(mOwner, 27);
+	piki->playEventSound(mOwner, SE_PIKI_PRESSED);
 	if (piki->hasBomb()) {
 		Creature* bomb = piki->getHoldCreature();
 		bomb->resetStateGrabbed();

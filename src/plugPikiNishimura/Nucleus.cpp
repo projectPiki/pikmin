@@ -40,7 +40,7 @@ Nucleus::Nucleus(CreatureProp* props)
     : Boss(props)
 {
 	mCollInfo  = new CollInfo(3);
-	mNucleusAI = new NucleusAi(this);
+	mNucleusAi = new NucleusAi(this);
 }
 
 /*
@@ -62,7 +62,7 @@ void Nucleus::init(Vector3f&)
 	setIsAlive(0);
 	setShadowNeed(1);
 	setShadowSize(30.0f);
-	mNucleusAI->initAI(this);
+	mNucleusAi->initAI(this);
 }
 
 /*
@@ -122,7 +122,7 @@ void Nucleus::drawShape(Graphics& gfx)
  * Address:	8017A484
  * Size:	000024
  */
-void Nucleus::doAI() { mNucleusAI->update(); }
+void Nucleus::doAI() { mNucleusAi->update(); }
 
 /*
  * --INFO--

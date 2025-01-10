@@ -522,7 +522,7 @@ void PlantAI::TouchInit::act(AICreature* plant)
 	u32 badCompiler;
 	if (static_cast<Plant*>(plant)->mPlantType != PLANT_Mizukusa) {
 		if (plant->_2BC->mObjType == OBJTYPE_Navi) {
-			SeSystem::playPlayerSe(0x135);
+			SeSystem::playPlayerSe(SE_ORIMA_TOUCHPLANTS);
 		}
 
 		plant->setMotionSpeed(30.0f);

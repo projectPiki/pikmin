@@ -22,6 +22,11 @@ enum KoganeDropTypes {
 	KOGANEDROP_Nectar  = 2,
 };
 
+enum KoganeSoundIDs {
+	KOGANESOUND_Walk   = 0,
+	KOGANESOUND_Damage = 1,
+};
+
 /**
  * @brief TODO.
  */

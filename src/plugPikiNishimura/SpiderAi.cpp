@@ -12,7 +12,7 @@
 #include "NsMath.h"
 #include "DebugLog.h"
 
-static u32 spiderSE[] = { 0x29, 0x2A, 0x2B, 0x2C, 0x2D };
+static u32 spiderSE[] = { SE_SPIDER_WALK, SE_SPIDER_LAND, SE_SPIDER_SWING, SE_SPIDER_DEAD, SE_SPIDER_BOMB };
 
 /*
  * --INFO--

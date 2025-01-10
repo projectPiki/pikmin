@@ -129,7 +129,7 @@ void Boss::createPellet(Vector3f& bossPos, f32 vertSpeed, bool hasUfoPart)
 				numPellet->init(itemPos);
 				numPellet->mVelocity.set(100.0f * sinAngle, vertSpeed, 100.0f * cosAngle);
 				numPellet->startAI(0);
-				numPellet->playEventSound(numPellet, 0xBB);
+				numPellet->playEventSound(numPellet, SE_PELLET_BORN);
 			}
 		}
 	}
@@ -144,7 +144,7 @@ void Boss::createPellet(Vector3f& bossPos, f32 vertSpeed, bool hasUfoPart)
 			radarInfo->detachParts(this);
 
 			if (Pellet::isUfoPartsID(mPelletID.mId)) {
-				SeSystem::playSysSe(0x122);
+				SeSystem::playSysSe(SYSSE_PARTS_APPEAR);
 			}
 		}
 	}
@@ -711,7 +711,7 @@ bool InteractHitEffect::actBoss(Boss* boss)
 	case OBJTYPE_King:
 		effectMgr->create(EffectMgr::EFF_Unk69, _08, nullptr, nullptr);
 		if (mCollPart && boss->mSeContext && mCollPart->isBouncy()) {
-			boss->mSeContext->playSound(0x46);
+			boss->mSeContext->playSound(SE_MUSH_GETUP);
 		}
 		return true;
 
