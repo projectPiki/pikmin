@@ -32,8 +32,8 @@ NucleusAi::NucleusAi(Nucleus* nucleus) { mNucleus = nucleus; }
 void NucleusAi::initAI(Nucleus* nucleus)
 {
 	mNucleus = nucleus;
-	mNucleus->setCurrentState(2);
-	mNucleus->setNextState(2);
+	mNucleus->setCurrentState(NUCLEUSAI_Follow);
+	mNucleus->setNextState(NUCLEUSAI_Follow);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(2, this));
 	mNucleus->setAnimTimer(30.0f);
 	mStickPikiCount = 0;
@@ -105,7 +105,7 @@ void NucleusAi::keyLoopEnd() { mNucleus->addLoopCounter(1); }
  * Address:	8017A670
  * Size:	000010
  */
-void NucleusAi::keyFinished() { mNucleus->setMotionFinish(1); }
+void NucleusAi::keyFinished() { mNucleus->setMotionFinish(true); }
 
 /*
  * --INFO--
@@ -133,8 +133,8 @@ void NucleusAi::setEveryFrame()
  */
 void NucleusAi::setBossPosition()
 {
-	mNucleus->mPosition.x = mNucleus->mSlime->_3DC.x;
-	mNucleus->mPosition.z = mNucleus->mSlime->_3DC.z;
+	mNucleus->mPosition.x = mNucleus->mSlime->mNucleusPosition.x;
+	mNucleus->mPosition.z = mNucleus->mSlime->mNucleusPosition.z;
 }
 
 /*
@@ -180,13 +180,13 @@ bool NucleusAi::damageTransit() { return (mNucleus->getDamagePoint() > 0.0f) ? t
 void NucleusAi::initDie(int val)
 {
 	mNucleus->setNextState(val);
-	mNucleus->setMotionFinish(0);
+	mNucleus->setMotionFinish(false);
 	mNucleus->setLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
 	mNucleus->set2D4(0.0f);
-	effectMgr->create(EffectMgr::EFF_Unk57, mNucleus->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk56, mNucleus->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk55, mNucleus->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mNucleus->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mNucleus->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, mNucleus->mPosition, nullptr, nullptr);
 	mNucleus->doKill();
 }
 
@@ -198,7 +198,7 @@ void NucleusAi::initDie(int val)
 void NucleusAi::initDamage(int val)
 {
 	mNucleus->setNextState(val);
-	mNucleus->setMotionFinish(0);
+	mNucleus->setMotionFinish(false);
 	mNucleus->setLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
 }
@@ -211,7 +211,7 @@ void NucleusAi::initDamage(int val)
 void NucleusAi::initFollow(int val)
 {
 	mNucleus->setNextState(val);
-	mNucleus->setMotionFinish(0);
+	mNucleus->setMotionFinish(false);
 	mNucleus->setLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(2, this));
 }
@@ -247,23 +247,25 @@ void NucleusAi::update()
 	setEveryFrame();
 
 	switch (mNucleus->getCurrentState()) {
-	case 0: // dead?
+	case NUCLEUSAI_Die:
 		dieState();
 		break;
-	case 1: // damaged?
+
+	case NUCLEUSAI_Damage:
 		damageState();
 		if (dieTransit()) {
-			initDie(0);
+			initDie(NUCLEUSAI_Die);
 		} else if (isMotionFinishTransit()) {
-			initFollow(2);
+			initFollow(NUCLEUSAI_Follow);
 		}
 		break;
-	case 2: // following?
+
+	case NUCLEUSAI_Follow:
 		followState();
 		if (dieTransit()) {
-			initDie(0);
+			initDie(NUCLEUSAI_Die);
 		} else if (damageTransit()) {
-			initDamage(1);
+			initDamage(NUCLEUSAI_Damage);
 		}
 		break;
 	}

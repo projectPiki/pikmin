@@ -38,7 +38,7 @@ void SlimeCreature::init(Vector3f& pos, Slime* slime)
 	mSlime           = slime;
 	mCollisionRadius = 20.0f;
 	mPosition        = pos;
-	_2BC             = pos;
+	mTargetPosition  = pos;
 	Creature::init();
 	setFlag40UnsetFlag2();
 }

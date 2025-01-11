@@ -10,6 +10,15 @@ struct NucleusAi;
 /**
  * @brief TODO.
  */
+enum NucleusAIStateID {
+	NUCLEUSAI_Die    = 0,
+	NUCLEUSAI_Damage = 1,
+	NUCLEUSAI_Follow = 2,
+};
+
+/**
+ * @brief TODO.
+ */
 struct NucleusProp : public BossProp, public CoreNode {
 
 	/**

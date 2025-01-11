@@ -5,6 +5,18 @@
 #include "Boss.h"
 #include "Collision.h"
 
+/////////// Goolix (Slime) ///////////
+// Goolix is comprised of lots of parts:
+//    - Slime (main controlling entity)
+//    - SlimeBody (mechanics)
+//    - SlimeAi (state machine)
+//    - CoreNucleus (pale core that "follows" the navi)
+//    - Nucleus (dark core that pikis can attack/stick to)
+//    - SlimeCreature (4 invisible entities to help control the locations of the goo)
+//
+// CoreNucleus and Nucleus also have their own state machines (CoreNucleusAi and NucleusAi)
+// that help support the main creature's actions.
+
 struct CoreNucleus;
 struct Nucleus;
 struct SlimeAi;
@@ -34,6 +46,27 @@ enum SlimeAIStateID {
 /**
  * @brief TODO.
  */
+enum SlimeCreatureIndexID {
+	SLIMECREATURE_CoreOuter    = 0,
+	SLIMECREATURE_CoreInner    = 1,
+	SLIMECREATURE_NucleusInner = 2,
+	SLIMECREATURE_NucleusOuter = 3,
+	SLIMECREATURE_COUNT, // 4
+};
+
+/**
+ * @brief TODO.
+ */
+enum SlimeContractHitType {
+	SLIMEHIT_NoHit = -1,
+	SLIMEHIT_Small = 0,
+	SLIMEHIT_Mid   = 1,
+	SLIMEHIT_Large = 2,
+};
+
+/**
+ * @brief TODO.
+ */
 struct SlimeProp : public BossProp, public CoreNode {
 
 	/**
@@ -54,11 +87,11 @@ struct SlimeProp : public BossProp, public CoreNode {
 		    , mMaxStickPikiNum(this, 10.0f, 0.0f, 0.0f, "s40", nullptr)
 		    , mTraceMidPoint(this, 0.85f, 0.0f, 0.0f, "s50", nullptr)
 		    , mMidPointSpring(this, 0.99f, 0.0f, 0.0f, "s51", nullptr)
-		    , mDamageLength1(this, 200.0f, 0.0f, 0.0f, "s60", nullptr)
-		    , mDamageLength2(this, 100.0f, 0.0f, 0.0f, "s61", nullptr)
-		    , mDamageRatio1(this, 50.0f, 0.0f, 0.0f, "s62", nullptr)
-		    , mDamageRatio2(this, 10.0f, 0.0f, 0.0f, "s63", nullptr)
-		    , mDamageRatio3(this, 1.0f, 0.0f, 0.0f, "s64", nullptr)
+		    , mDamageLengthLarge(this, 200.0f, 0.0f, 0.0f, "s60", nullptr)
+		    , mDamageLengthMid(this, 100.0f, 0.0f, 0.0f, "s61", nullptr)
+		    , mDamageRatioLarge(this, 50.0f, 0.0f, 0.0f, "s62", nullptr)
+		    , mDamageRatioMid(this, 10.0f, 0.0f, 0.0f, "s63", nullptr)
+		    , mDamageRatioSmall(this, 1.0f, 0.0f, 0.0f, "s64", nullptr)
 		    , mContractTraceEnd(this, 0.9f, 0.0f, 0.0f, "s70", nullptr)
 		    , mContractSpringEnd(this, 20.0f, 0.0f, 0.0f, "s71", nullptr)
 		    , mDeadScaleSpeed(this, 500.0f, 0.0f, 0.0f, "s80", nullptr)
@@ -86,11 +119,11 @@ struct SlimeProp : public BossProp, public CoreNode {
 		Parm<f32> mMaxStickPikiNum;        // _284, s40 - max stick piki num?
 		Parm<f32> mTraceMidPoint;          // _294, s50 - trace mid point?
 		Parm<f32> mMidPointSpring;         // _2A4, s51 - mid point spring?
-		Parm<f32> mDamageLength1;          // _2B4, s60 - damage length 1?
-		Parm<f32> mDamageLength2;          // _2C4, s61 - damage length 2?
-		Parm<f32> mDamageRatio1;           // _2D4, s62 - damage ratio 1?
-		Parm<f32> mDamageRatio2;           // _2E4, s63 - damage ratio 2?
-		Parm<f32> mDamageRatio3;           // _2F4, s64 - damage ratio 3?
+		Parm<f32> mDamageLengthLarge;      // _2B4, s60 - damage length 1?
+		Parm<f32> mDamageLengthMid;        // _2C4, s61 - damage length 2?
+		Parm<f32> mDamageRatioLarge;       // _2D4, s62 - damage ratio 1?
+		Parm<f32> mDamageRatioMid;         // _2E4, s63 - damage ratio 2?
+		Parm<f32> mDamageRatioSmall;       // _2F4, s64 - damage ratio 3?
 		Parm<f32> mContractTraceEnd;       // _304, s70 - contract trace end?
 		Parm<f32> mContractSpringEnd;      // _314, s71 - contract end spring?
 		Parm<f32> mDeadScaleSpeed;         // _324, s80 - dead scale speed?
@@ -179,7 +212,7 @@ struct SlimeCreature : public Creature {
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	Slime* mSlime;             // _2B8
-	Vector3f _2BC;             // _2BC
+	Vector3f mTargetPosition;  // _2BC
 	SearchData mSearchData[3]; // _2C8
 };
 
@@ -333,15 +366,15 @@ struct Slime : public Boss {
 	BoundSphereUpdater* mCentreUpdater;           // _3B8
 	CollideSphereUpdater* mCollideSphereUpdaters; // _3BC
 	TubeSphereUpdater* mTubeSphereUpdaters;       // _3C0
-	u8 _3C4;                                      // _3C4
-	u8 _3C5;                                      // _3C5
-	u32 _3C8;                                     // _3C8, unknown
-	int _3CC;                                     // _3CC
-	f32 _3D0;                                     // _3D0
+	bool mIsMoveLeader;                           // _3C4, if true, move leader; if false, move follower
+	bool mDoCrashContract;                        // _3C5
+	int mLeaderCreatureIndex;                     // _3C8, which slime creature is the leader nucleus (outer)?
+	int mFollowerCreatureIndex;                   // _3CC, which slime creature is the follower nucleus (outer)?
+	f32 mLeaderSpeed;                             // _3D0
 	f32 _3D4;                                     // _3D4
-	f32 _3D8;                                     // _3D8
-	Vector3f _3DC;                                // _3DC
-	Vector3f _3E8;                                // _3E8
+	f32 mBodyThickness;                           // _3D8
+	Vector3f mNucleusPosition;                    // _3DC
+	Vector3f mCorePosition;                       // _3E8
 	SlimeCreature** mSlimeCreatures;              // _3F4
 	Nucleus* mNucleus;                            // _3F8
 	CoreNucleus* mCore;                           // _3FC
@@ -421,16 +454,16 @@ struct SlimeAi {
 	void stayState();
 	void disAppearState();
 
-	bool _00;                   // _00
-	bool _01;                   // _01
-	int mNucleusStickPikiCount; // _04
-	int _08;                    // _08
-	int _0C;                    // _0C
-	f32 _10;                    // _10
-	f32 mStickersRatio;         // _14
-	f32 mMaxLength;             // _18
-	f32 mMinLength;             // _1C
-	Slime* mSlime;              // _20
+	bool mIsContractFinished;       // _00
+	bool _01;                       // _01
+	int mPrevNucleusStickPikiCount; // _04
+	int mContractHitType;           // _08
+	int _0C;                        // _0C
+	f32 mContractDamage;            // _10
+	f32 mStickersRatio;             // _14
+	f32 mMaxLength;                 // _18
+	f32 mMinLength;                 // _1C
+	Slime* mSlime;                  // _20
 };
 
 #endif

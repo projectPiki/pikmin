@@ -104,32 +104,32 @@ void SnakeAi::animationKeyUpdated(PaniAnimKeyEvent& event)
 void SnakeAi::keyAction0()
 {
 	int currState = mSnake->getCurrentState();
-	if (currState == 0) {
+	if (currState == SNAKEAI_Die) {
 		Vector3f vec(mSnake->mSnakeBody->_5C[7]);
 		vec.y = mapMgr->getMinY(vec.x, vec.z, true);
-		effectMgr->create(EffectMgr::EFF_Unk121, vec, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_CloudOfDust_1, vec, nullptr, nullptr);
 		return;
 	}
 
-	if (currState == 4) {
+	if (currState == SNAKEAI_Attack) {
 		checkAttackTarget();
 		return;
 	}
 
-	if (currState == 7) {
+	if (currState == SNAKEAI_GoInto) {
 		mSnake->calcFlickPiki();
 		mSnake->disableStick();
 		return;
 	}
 
-	if (currState == 5) {
+	if (currState == SNAKEAI_Eat) {
 		eatStickToMouthPiki();
 		return;
 	}
 
-	if (currState == 9) {
-		effectMgr->create(EffectMgr::EFF_Unk126, mSnake->mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Unk127, mSnake->mPosition, nullptr, nullptr);
+	if (currState == SNAKEAI_Appear) {
+		effectMgr->create(EffectMgr::EFF_Snake_Appear1, mSnake->mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Snake_Appear2, mSnake->mPosition, nullptr, nullptr);
 		return;
 	}
 }
@@ -141,10 +141,10 @@ void SnakeAi::keyAction0()
  */
 void SnakeAi::keyAction1()
 {
-	if (mSnake->getCurrentState() == 0) {
+	if (mSnake->getCurrentState() == SNAKEAI_Die) {
 		Vector3f vec(mSnake->mSnakeBody->_5C[7]);
 		vec.y = mapMgr->getMinY(vec.x, vec.z, true);
-		effectMgr->create(EffectMgr::EFF_Unk120, vec, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_CloudOfDust_2, vec, nullptr, nullptr);
 	}
 }
 
@@ -170,11 +170,11 @@ void SnakeAi::keyAction3() { }
 void SnakeAi::keyLoopEnd()
 {
 	mSnake->addLoopCounter(1);
-	if (mSnake->getCurrentState() == 4 && _05) {
+	if (mSnake->getCurrentState() == SNAKEAI_Attack && _05) {
 		f32 attackVals[5] = { 32.0f, 32.0f, 32.0f, 28.0f, 28.0f };
 
 		attackTransit(5);
-		initAttack(4, attackVals[_14]);
+		initAttack(SNAKEAI_Attack, attackVals[_14]);
 	}
 }
 
@@ -284,13 +284,13 @@ void SnakeAi::traceTargetPosition()
 {
 	_04 = false;
 	mSnake->makeTargetCreature();
-	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		if (mSnake->mSnakeBody->mBlendingRatio == 0.0f) {
 			_04 = mSnake->changeDirection(C_SNAKE_PROP(mSnake).mChaseBodyTurnSpeed());
 		} else {
 			_04 = mSnake->changeDirection(C_SNAKE_PROP(mSnake).mNormBodyTurnSpeed());
 		}
-	} else if (mSnake->getCurrentState() == 4 && _05) {
+	} else if (mSnake->getCurrentState() == SNAKEAI_Attack && _05) {
 		if (_14 == 0) {
 			_04 = mSnake->changeDirection(C_SNAKE_PROP(mSnake).mNormBodyTurnSpeed());
 		} else if (_14 == 1) {
@@ -1439,8 +1439,8 @@ void SnakeAi::initGointo(int nextState)
 	mSnake->setShadowNeed(false);
 	mSnake->mAnimator.startMotion(PaniMotionInfo(9, this));
 	mSnake->mSnakeBody->initBlending(2.0f);
-	effectMgr->create(EffectMgr::EFF_Unk126, mSnake->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk127, mSnake->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Snake_Appear1, mSnake->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Snake_Appear2, mSnake->mPosition, nullptr, nullptr);
 	rumbleMgr->start(6, 0, mSnake->mPosition);
 	cameraMgr->startVibrationEvent(4, mSnake->mPosition);
 }
@@ -1503,8 +1503,8 @@ void SnakeAi::initAppear(int nextState)
 	mSnake->setIsAtari(true);
 	mSnake->setShadowNeed(true);
 	mSnake->_3C4 = 1.0f;
-	effectMgr->create(EffectMgr::EFF_Unk126, mSnake->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk127, mSnake->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Snake_Appear1, mSnake->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Snake_Appear2, mSnake->mPosition, nullptr, nullptr);
 
 	mSnake->mSnakeBody->setBodyOnGroundEffect();
 
@@ -1923,9 +1923,9 @@ void SnakeAi::dieState()
 			Vector3f pos(mSnake->mPosition);
 			pos.y = mapMgr->getMinY(pos.x, pos.z, true);
 			mSnake->setMotionFinish(false);
-			effectMgr->create(EffectMgr::EFF_Unk60, pos, nullptr, nullptr);
-			effectMgr->create(EffectMgr::EFF_Unk59, pos, nullptr, nullptr);
-			effectMgr->create(EffectMgr::EFF_Unk58, pos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeM, pos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Teki_DeathGlowM, pos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Teki_DeathWaveM, pos, nullptr, nullptr);
 
 			mSnake->createPellet(pos, 300.0f, true);
 			GameStat::killTekis.inc();

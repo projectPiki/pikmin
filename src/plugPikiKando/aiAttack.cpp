@@ -121,10 +121,10 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 1 || mActor->_174.updatable())) {
 			Vector3f vec(mActor->_464);
 			if (_1E) {
-				effectMgr->create(EffectMgr::EFF_Unk69, vec, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Piki_BigHit, vec, nullptr, nullptr);
 			} else {
-				effectMgr->create(EffectMgr::EFF_Unk47, vec, nullptr, nullptr);
-				effectMgr->create(EffectMgr::EFF_Unk48, vec, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Piki_HitA, vec, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Piki_HitB, vec, nullptr, nullptr);
 			}
 		}
 		break;
@@ -2105,10 +2105,10 @@ void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 1 || mActor->_174.updatable())) {
 			Vector3f vec(mActor->_464);
 			if (_2D) {
-				effectMgr->create(EffectMgr::EFF_Unk69, vec, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Piki_BigHit, vec, nullptr, nullptr);
 			} else {
-				effectMgr->create(EffectMgr::EFF_Unk47, vec, nullptr, nullptr);
-				effectMgr->create(EffectMgr::EFF_Unk48, vec, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Piki_HitA, vec, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Piki_HitB, vec, nullptr, nullptr);
 			}
 		}
 		break;

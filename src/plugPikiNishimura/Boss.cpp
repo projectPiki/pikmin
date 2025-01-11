@@ -700,23 +700,23 @@ bool InteractHitEffect::actBoss(Boss* boss)
 {
 	switch (boss->mObjType) {
 	case OBJTYPE_Spider:
-		effectMgr->create(EffectMgr::EFF_Unk69, _08, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_BigHit, _08, nullptr, nullptr);
 		return true;
 
 	case OBJTYPE_Snake:
-		effectMgr->create(EffectMgr::EFF_Unk69, _08, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_BigHit, _08, nullptr, nullptr);
 		return true;
 		;
 
 	case OBJTYPE_King:
-		effectMgr->create(EffectMgr::EFF_Unk69, _08, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_BigHit, _08, nullptr, nullptr);
 		if (mCollPart && boss->mSeContext && mCollPart->isBouncy()) {
 			boss->mSeContext->playSound(SE_MUSH_GETUP);
 		}
 		return true;
 
 	case OBJTYPE_Pom:
-		effectMgr->create(EffectMgr::EFF_Unk69, _08, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_BigHit, _08, nullptr, nullptr);
 		return true;
 		;
 	}

@@ -2,10 +2,13 @@
 #include "Nucleus.h"
 #include "CoreNucleus.h"
 #include "Interactions.h"
+#include "NsMath.h"
 #include "PikiMgr.h"
 #include "NaviMgr.h"
 #include "SoundMgr.h"
 #include "EffectMgr.h"
+#include "RumbleMgr.h"
+#include "PlayerState.h"
 #include "DebugLog.h"
 
 /*
@@ -40,15 +43,15 @@ void SlimeAi::init(Slime* slime)
 	mSlime->setCurrentState(SLIMEAI_Stay);
 	mSlime->setNextState(SLIMEAI_Stay);
 	mSlime->mAnimator.startMotion(PaniMotionInfo(0));
-	_00                    = false;
-	_01                    = true;
-	mNucleusStickPikiCount = 0;
-	_0C                    = 0;
-	_08                    = -1;
-	_10                    = 0.0f;
-	mStickersRatio         = 0.0f;
-	mMaxLength             = C_SLIME_PROP(mSlime).mNormalMaxLength();
-	mMinLength             = C_SLIME_PROP(mSlime).mNormalMinLength();
+	mIsContractFinished        = false;
+	_01                        = true;
+	mPrevNucleusStickPikiCount = 0;
+	_0C                        = 0;
+	mContractHitType           = SLIMEHIT_NoHit;
+	mContractDamage            = 0.0f;
+	mStickersRatio             = 0.0f;
+	mMaxLength                 = C_SLIME_PROP(mSlime).mNormalMaxLength();
+	mMinLength                 = C_SLIME_PROP(mSlime).mNormalMinLength();
 }
 
 /*
@@ -82,7 +85,7 @@ void SlimeAi::setEveryFrame()
  * Address:	........
  * Size:	000018
  */
-void SlimeAi::afterProcessing() { mNucleusStickPikiCount = mSlime->mNucleus->mNucleusAi->mStickPikiCount; }
+void SlimeAi::afterProcessing() { mPrevNucleusStickPikiCount = mSlime->mNucleus->mNucleusAi->mStickPikiCount; }
 
 /*
  * --INFO--
@@ -163,12 +166,14 @@ void SlimeAi::calcStickersRatio()
  */
 void SlimeAi::setLeaderIndex()
 {
-	if (mNucleusStickPikiCount == 0 && mSlime->mNucleus->mNucleusAi->mStickPikiCount > 0) {
-		if (mSlime->_3C8 == 3) {
-			mSlime->_3C8 = 0;
-			mSlime->_3CC = 3;
+	// if we now have stick pikis on the nucleus, change to make the core the leader
+	// (to set up the player to smack the nuclei together easier)
+	if (mPrevNucleusStickPikiCount == 0 && mSlime->mNucleus->mNucleusAi->mStickPikiCount > 0) {
+		if (mSlime->mLeaderCreatureIndex == SLIMECREATURE_NucleusOuter) {
+			mSlime->mLeaderCreatureIndex   = SLIMECREATURE_CoreOuter;
+			mSlime->mFollowerCreatureIndex = SLIMECREATURE_NucleusOuter;
 		}
-		mSlime->_3C4 = 1;
+		mSlime->mIsMoveLeader = true;
 	}
 }
 
@@ -179,8 +184,12 @@ void SlimeAi::setLeaderIndex()
  */
 void SlimeAi::makeInterrelation()
 {
-	mSlime->mSlimeCreatures[1]->_2BC = 0.667f * mSlime->mSlimeCreatures[0]->mPosition + 0.333f * mSlime->mSlimeCreatures[3]->mPosition;
-	mSlime->mSlimeCreatures[2]->_2BC = 0.333f * mSlime->mSlimeCreatures[0]->mPosition + 0.667f * mSlime->mSlimeCreatures[3]->mPosition;
+	mSlime->mSlimeCreatures[SLIMECREATURE_CoreInner]->mTargetPosition
+	    = 0.6667f * mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition
+	    + 0.3333f * mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mPosition;
+	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusInner]->mTargetPosition
+	    = 0.3333f * mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition
+	    + 0.6667f * mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mPosition;
 }
 
 /*
@@ -190,9 +199,13 @@ void SlimeAi::makeInterrelation()
  */
 void SlimeAi::makeBodyThickness()
 {
-	f32 dist = mSlime->mSlimeCreatures[0]->mPosition.distance(mSlime->mSlimeCreatures[3]->mPosition);
-	// f32 val = (dist - )
-	// UNUSED FUNCTION
+	f32 dist = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition.distance(
+	    mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mPosition);
+	f32 elongation = (dist - C_SLIME_PROP(mSlime).mNormalMinLength())
+	               / (C_SLIME_PROP(mSlime).mMaxLengthAtSticking() - C_SLIME_PROP(mSlime).mNormalMinLength());
+	f32 elongateRatio      = NsLibMath<f32>::revice(elongation, 0.0f, 1.0f);
+	mSlime->mBodyThickness = C_SLIME_PROP(mSlime).mBodyThicknessElongate() * elongateRatio
+	                       + C_SLIME_PROP(mSlime).mBodyThicknessContract() * (1.0f - elongateRatio);
 }
 
 /*
@@ -202,8 +215,10 @@ void SlimeAi::makeBodyThickness()
  */
 void SlimeAi::playExpandingSound()
 {
-	f32 expansionRatio = mSlime->mSlimeCreatures[0]->mPosition.distance(mSlime->mSlimeCreatures[3]->mPosition) / mMaxLength;
-	if (mSlime->_3C4 && _01 && expansionRatio > 0.8f) {
+	f32 expansionRatio = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition.distance(
+	                         mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mPosition)
+	                   / mMaxLength;
+	if (mSlime->mIsMoveLeader && _01 && expansionRatio > 0.8f) {
 		if (mStickersRatio > 0.5f) {
 			if (mSlime->mSeContext) {
 				// very strained stretch
@@ -234,21 +249,25 @@ void SlimeAi::playExpandingSound()
  */
 void SlimeAi::calcCollisionCheck()
 {
-	mSlime->_3E8 = 0.5f * mSlime->mSlimeCreatures[0]->mPosition + 0.5f * mSlime->mSlimeCreatures[1]->mPosition;
-	mSlime->_3DC = 0.5f * mSlime->mSlimeCreatures[2]->mPosition + 0.5f * mSlime->mSlimeCreatures[3]->mPosition;
+	mSlime->mCorePosition = 0.5f * mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition
+	                      + 0.5f * mSlime->mSlimeCreatures[SLIMECREATURE_CoreInner]->mPosition;
+	mSlime->mNucleusPosition = 0.5f * mSlime->mSlimeCreatures[SLIMECREATURE_NucleusInner]->mPosition
+	                         + 0.5f * mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mPosition;
 
 	if (mSlime->getCurrentState() == SLIMEAI_Appear) {
 		return;
 	}
 
 	f32 dist = mSlime->mNucleus->mPosition.distance(mSlime->mCore->mPosition);
+
+	// force distance between nuclei to be mDistanceBetweenNuclei
 	if (dist < C_SLIME_PROP(mSlime).mDistanceBetweenNuclei()) {
 		Vector3f sep = mSlime->mCore->mPosition - mSlime->mNucleus->mPosition;
 		dist         = (C_SLIME_PROP(mSlime).mDistanceBetweenNuclei() - dist) / 2.0f;
 		sep.normalise();
 		sep.multiply(dist);
-		mSlime->_3E8.add(sep);
-		mSlime->_3DC.sub(sep);
+		mSlime->mCorePosition.add(sep);
+		mSlime->mNucleusPosition.sub(sep);
 		if (mSlime->getCurrentState() == SLIMEAI_Contract) {
 			inCaseOfContract();
 		}
@@ -262,69 +281,26 @@ void SlimeAi::calcCollisionCheck()
  */
 void SlimeAi::setLeaderNearerTarget()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stfd      f31, 0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  stw       r28, 0x28(r1)
-	  lwz       r30, 0x20(r3)
-	  lwz       r3, 0x3F8(r30)
-	  lwz       r3, 0x3BC(r3)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xC4
-	  lwz       r0, 0x3CC(r30)
-	  addi      r28, r30, 0x30C
-	  lwz       r4, 0x3F4(r30)
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r3, 0x3C8(r30)
-	  lwzx      r5, r4, r0
-	  rlwinm    r0,r3,2,0,29
-	  lfs       f3, 0x30C(r30)
-	  lwzx      r29, r4, r0
-	  lfs       f1, 0x94(r5)
-	  lfs       f2, 0x9C(r5)
-	  lfs       f4, 0x314(r30)
-	  bl        -0x12CEFC
-	  fmr       f31, f1
-	  lfs       f1, 0x94(r29)
-	  lfs       f2, 0x9C(r29)
-	  lfs       f3, 0x0(r28)
-	  lfs       f4, 0x8(r28)
-	  bl        -0x12CF14
-	  lwz       r3, 0x224(r30)
-	  lfs       f0, 0x280(r3)
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f31
-	  ble-      .loc_0xC4
-	  lwz       r3, 0x20(r31)
-	  li        r0, 0x1
-	  addi      r4, r3, 0x3C8
-	  lwz       r3, 0x3CC(r3)
-	  lwz       r5, 0x0(r4)
-	  stw       r3, 0x0(r4)
-	  lwz       r3, 0x20(r31)
-	  stw       r5, 0x3CC(r3)
-	  lwz       r3, 0x20(r31)
-	  stb       r0, 0x3C4(r3)
+	Slime* slime = mSlime;
+	// only adjust leader if there aren't any stick pikis - core is always leader if there are stick pikis
+	if (slime->mNucleus->mNucleusAi->mStickPikiCount == 0) {
+		SlimeCreature* leader   = slime->mSlimeCreatures[slime->mLeaderCreatureIndex];
+		SlimeCreature* follower = slime->mSlimeCreatures[slime->mFollowerCreatureIndex];
+		Vector3f* targetPos     = slime->getTargetPosition();
+		f32 followDist          = qdist2(follower->mPosition.x, follower->mPosition.z, targetPos->x, targetPos->z);
+		f32 leadDist
+		    = qdist2(leader->mPosition.x, leader->mPosition.z, targetPos->x, targetPos->z) - C_SLIME_PROP(slime).mDistanceBetweenNuclei();
 
-	.loc_0xC4:
-	  lwz       r0, 0x44(r1)
-	  lfd       f31, 0x38(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+		// if difference between leader-target dist and follower-target dist gets bigger than dist between nuclei, flip
+		if (leadDist > followDist) {
+			int prevLeader                 = mSlime->mLeaderCreatureIndex;
+			mSlime->mLeaderCreatureIndex   = mSlime->mFollowerCreatureIndex;
+			mSlime->mFollowerCreatureIndex = prevLeader;
+			mSlime->mIsMoveLeader          = true;
+		}
+	}
+
+	u32 badCompiler[2]; // this whole function is questionable.
 }
 
 /*
@@ -334,83 +310,17 @@ void SlimeAi::setLeaderNearerTarget()
  */
 void SlimeAi::moveFlagCheck()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x20(r3)
-	  lfs       f0, -0x54A8(r2)
-	  lwz       r3, 0x3CC(r4)
-	  lwz       r0, 0x3C8(r4)
-	  lwz       r5, 0x3F4(r4)
-	  rlwinm    r3,r3,2,0,29
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r4, r5, r3
-	  lwzx      r3, r5, r0
-	  stfs      f0, 0x38(r1)
-	  stfs      f0, 0x34(r1)
-	  stfs      f0, 0x30(r1)
-	  lfsu      f1, 0x94(r4)
-	  lfsu      f0, 0x94(r3)
-	  lfs       f4, 0x8(r4)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x8(r3)
-	  lfs       f2, 0x4(r4)
-	  lfs       f1, 0x4(r3)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x24(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x24(r1)
-	  stfs      f0, 0x30(r1)
-	  stfs      f1, 0x34(r1)
-	  stfs      f3, 0x38(r1)
-	  lfs       f1, 0x30(r1)
-	  lfs       f0, 0x34(r1)
-	  lfs       f2, 0x38(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x1579FC
-	  lfs       f0, 0x18(r31)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xD4
-	  lwz       r3, 0x20(r31)
-	  lbzu      r0, 0x3C4(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x104
-	  li        r0, 0
-	  stb       r0, 0x0(r3)
-	  lfs       f0, -0x54A8(r2)
-	  lwz       r3, 0x20(r31)
-	  stfs      f0, 0x2D8(r3)
-	  b         .loc_0x104
-
-	.loc_0xD4:
-	  lfs       f0, 0x1C(r31)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x104
-	  lwz       r3, 0x20(r31)
-	  lbzu      r0, 0x3C4(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x104
-	  li        r0, 0x1
-	  stb       r0, 0x0(r3)
-	  lfs       f0, -0x54A8(r2)
-	  lwz       r3, 0x20(r31)
-	  stfs      f0, 0x2D8(r3)
-
-	.loc_0x104:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	f32 dist = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex]->mPosition.distance(
+	    mSlime->mSlimeCreatures[mSlime->mFollowerCreatureIndex]->mPosition);
+	if (dist > mMaxLength) {
+		if (mSlime->mIsMoveLeader) {
+			mSlime->mIsMoveLeader = false;
+			mSlime->setAnimTimer(0.0f);
+		}
+	} else if (dist < mMinLength && !mSlime->mIsMoveLeader) {
+		mSlime->mIsMoveLeader = true;
+		mSlime->setAnimTimer(0.0f);
+	}
 }
 
 /*
@@ -420,7 +330,11 @@ void SlimeAi::moveFlagCheck()
  */
 void SlimeAi::makeTargetPosition()
 {
-	// UNUSED FUNCTION
+	SlimeCreature* leader     = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex];
+	SlimeCreature* follower   = mSlime->mSlimeCreatures[mSlime->mFollowerCreatureIndex];
+	leader->mTargetPosition   = *mSlime->getTargetPosition();
+	follower->mTargetPosition = leader->mPosition;
+	mSlime->addAnimTimer(gsys->getFrameTime());
 }
 
 /*
@@ -430,96 +344,17 @@ void SlimeAi::makeTargetPosition()
  */
 void SlimeAi::makeFollowerVelocity()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  mr        r30, r3
-	  lwz       r4, 0x20(r3)
-	  lwz       r3, 0x3CC(r4)
-	  lbz       r0, 0x3C4(r4)
-	  lwz       r4, 0x3F4(r4)
-	  rlwinm    r3,r3,2,0,29
-	  cmplwi    r0, 0
-	  lwzx      r31, r4, r3
-	  bne-      .loc_0x114
-	  lfs       f1, 0x2BC(r31)
-	  lfs       f0, 0x94(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xA4(r31)
-	  lfs       f1, 0x2C0(r31)
-	  lfs       f0, 0x98(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xA8(r31)
-	  lfs       f1, 0x2C4(r31)
-	  lfs       f0, 0x9C(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xAC(r31)
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f1, 0xA4(r31)
-	  lfs       f0, 0xA8(r31)
-	  lfs       f2, 0xAC(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x157B08
-	  lfs       f0, -0x54A8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0xC4
-	  lfs       f0, 0xA4(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0xA8(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0xAC(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xAC(r31)
-
-	.loc_0xC4:
-	  lwz       r3, 0x20(r30)
-	  lfs       f4, 0x14(r30)
-	  lwz       r4, 0x224(r3)
-	  lfs       f0, -0x54A0(r2)
-	  lfs       f1, 0x230(r4)
-	  fsubs     f3, f0, f4
-	  lfs       f2, 0x220(r4)
-	  fmuls     f1, f4, f1
-	  lfs       f0, 0xA4(r31)
-	  fmuls     f2, f3, f2
-	  fadds     f1, f2, f1
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0xA8(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0xAC(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xAC(r31)
-	  b         .loc_0x12C
-
-	.loc_0x114:
-	  lfs       f0, 0x148(r13)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0x14C(r13)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0x150(r13)
-	  stfs      f0, 0xAC(r31)
-
-	.loc_0x12C:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	SlimeCreature* follower = mSlime->mSlimeCreatures[mSlime->mFollowerCreatureIndex];
+	if (!mSlime->mIsMoveLeader) {
+		follower->mTargetVelocity.sub(follower->mTargetPosition, follower->mPosition);
+		follower->mTargetVelocity.y = 0.0f;
+		follower->mTargetVelocity.normalise();
+		f32 complRatio = 1.0f - mStickersRatio;
+		follower->mTargetVelocity.multiply(C_SLIME_PROP(mSlime).mMaxMoveSpeed() * complRatio
+		                                   + C_SLIME_PROP(mSlime).mMinMoveSpeed() * mStickersRatio);
+	} else {
+		follower->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	}
 }
 
 /*
@@ -529,88 +364,16 @@ void SlimeAi::makeFollowerVelocity()
  */
 void SlimeAi::makeLeaderVelocity()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r4, 0x20(r3)
-	  lwz       r3, 0x3C8(r4)
-	  lbz       r0, 0x3C4(r4)
-	  lwz       r4, 0x3F4(r4)
-	  rlwinm    r3,r3,2,0,29
-	  cmplwi    r0, 0
-	  lwzx      r31, r4, r3
-	  beq-      .loc_0xF4
-	  lfs       f1, 0x2BC(r31)
-	  lfs       f0, 0x94(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xA4(r31)
-	  lfs       f1, 0x2C0(r31)
-	  lfs       f0, 0x98(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xA8(r31)
-	  lfs       f1, 0x2C4(r31)
-	  lfs       f0, 0x9C(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xAC(r31)
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f1, 0xA4(r31)
-	  lfs       f0, 0xA8(r31)
-	  lfs       f2, 0xAC(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x157C4C
-	  lfs       f0, -0x54A8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0xC4
-	  lfs       f0, 0xA4(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0xA8(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0xAC(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xAC(r31)
-
-	.loc_0xC4:
-	  lwz       r3, 0x20(r30)
-	  lfs       f0, 0xA4(r31)
-	  lfs       f1, 0x3D0(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0xA8(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0xAC(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xAC(r31)
-	  b         .loc_0x10C
-
-	.loc_0xF4:
-	  lfs       f0, 0x154(r13)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0x158(r13)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0x15C(r13)
-	  stfs      f0, 0xAC(r31)
-
-	.loc_0x10C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	SlimeCreature* leader   = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex];
+	SlimeCreature* follower = mSlime->mSlimeCreatures[mSlime->mFollowerCreatureIndex];
+	if (mSlime->mIsMoveLeader) {
+		leader->mTargetVelocity.sub(leader->mTargetPosition, leader->mPosition);
+		leader->mTargetVelocity.y = 0.0f;
+		leader->mTargetVelocity.normalise();
+		leader->mTargetVelocity.multiply(mSlime->mLeaderSpeed);
+	} else {
+		leader->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	}
 }
 
 /*
@@ -620,71 +383,16 @@ void SlimeAi::makeLeaderVelocity()
  */
 void SlimeAi::setMidPointVelocity()
 {
-	/*
-	.loc_0x0:
-	  li        r9, 0x1
-	  li        r7, 0x4
-	  b         .loc_0xD0
+	// ... this is just "do for 1 and 2" but okay
+	for (int i = 1; i < bossMgr->mSlimeCreatureCount - 1; i++) {
+		mSlime->mSlimeCreatures[i]->mVelocity.multiply(C_SLIME_PROP(mSlime).mTraceMidPoint());
 
-	.loc_0xC:
-	  lwz       r5, 0x20(r3)
-	  addi      r9, r9, 0x1
-	  lwz       r4, 0x3F4(r5)
-	  lwz       r5, 0x224(r5)
-	  lwzx      r4, r4, r7
-	  lfs       f1, 0x2A0(r5)
-	  lfsu      f0, 0x70(r4)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x0(r4)
-	  lfs       f0, 0x4(r4)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x4(r4)
-	  lfs       f0, 0x8(r4)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x8(r4)
-	  lwz       r4, 0x20(r3)
-	  lfs       f5, -0x54A8(r2)
-	  lwz       r5, 0x3F4(r4)
-	  lwz       r4, 0x224(r4)
-	  lwzx      r8, r5, r7
-	  lfs       f3, 0x2B0(r4)
-	  lfs       f1, 0x94(r8)
-	  lfs       f2, 0x2BC(r8)
-	  fmuls     f5, f5, f3
-	  lfs       f0, 0x70(r8)
-	  fsubs     f4, f2, f1
-	  lfs       f2, 0x2C4(r8)
-	  lfs       f1, 0x9C(r8)
-	  fmuls     f4, f4, f3
-	  fsubs     f1, f2, f1
-	  fadds     f0, f0, f4
-	  fmuls     f1, f1, f3
-	  stfs      f0, 0x70(r8)
-	  lfs       f0, 0x74(r8)
-	  fadds     f0, f0, f5
-	  stfs      f0, 0x74(r8)
-	  lfs       f0, 0x78(r8)
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x78(r8)
-	  lwz       r4, 0x20(r3)
-	  lwz       r4, 0x3F4(r4)
-	  lwzx      r5, r4, r7
-	  addi      r7, r7, 0x4
-	  lwz       r4, 0x70(r5)
-	  lwz       r0, 0x74(r5)
-	  stw       r4, 0xA4(r5)
-	  stw       r0, 0xA8(r5)
-	  lwz       r0, 0x78(r5)
-	  stw       r0, 0xAC(r5)
-
-	.loc_0xD0:
-	  lwz       r4, 0x3168(r13)
-	  lwz       r4, 0x28(r4)
-	  subi      r0, r4, 0x1
-	  cmpw      r9, r0
-	  blt+      .loc_0xC
-	  blr
-	*/
+		Vector3f displacement = mSlime->mSlimeCreatures[i]->mTargetPosition - mSlime->mSlimeCreatures[i]->mPosition;
+		displacement.y        = 0.0f;
+		displacement.multiply(C_SLIME_PROP(mSlime).mMidPointSpring());
+		mSlime->mSlimeCreatures[i]->mVelocity.add(displacement);
+		mSlime->mSlimeCreatures[i]->mTargetVelocity = mSlime->mSlimeCreatures[i]->mVelocity;
+	}
 }
 
 /*
@@ -694,7 +402,12 @@ void SlimeAi::setMidPointVelocity()
  */
 void SlimeAi::walkAllState()
 {
-	// UNUSED FUNCTION
+	setLeaderNearerTarget();
+	moveFlagCheck();
+	makeTargetPosition();
+	makeFollowerVelocity();
+	makeLeaderVelocity();
+	setMidPointVelocity();
 }
 
 /*
@@ -704,80 +417,21 @@ void SlimeAi::walkAllState()
  */
 void SlimeAi::calcContractDamage()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x20(r3)
-	  lfs       f0, -0x54A8(r2)
-	  lwz       r4, 0x3F8(r3)
-	  lwz       r3, 0x3FC(r3)
-	  stfs      f0, 0x68(r1)
-	  stfs      f0, 0x64(r1)
-	  stfs      f0, 0x60(r1)
-	  lfsu      f1, 0x94(r4)
-	  lfsu      f0, 0x94(r3)
-	  lfs       f4, 0x8(r4)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x8(r3)
-	  lfs       f2, 0x4(r4)
-	  lfs       f1, 0x4(r3)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x48(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x48(r1)
-	  stfs      f0, 0x60(r1)
-	  stfs      f1, 0x64(r1)
-	  stfs      f3, 0x68(r1)
-	  lfs       f1, 0x60(r1)
-	  lfs       f0, 0x64(r1)
-	  lfs       f2, 0x68(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x157E50
-	  lwz       r3, 0x20(r31)
-	  lwz       r4, 0x224(r3)
-	  lfs       f0, 0x2C0(r4)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xB8
-	  lfs       f0, 0x2E0(r4)
-	  li        r0, 0x2
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x10(r31)
-	  stw       r0, 0x8(r31)
-	  b         .loc_0xF0
+	f32 nucleiDist = mSlime->mCore->mPosition.distance(mSlime->mNucleus->mPosition);
+	if (nucleiDist > C_SLIME_PROP(mSlime).mDamageLengthLarge()) {
+		mContractDamage  = nucleiDist * C_SLIME_PROP(mSlime).mDamageRatioLarge();
+		mContractHitType = SLIMEHIT_Large;
+		return;
+	}
 
-	.loc_0xB8:
-	  lfs       f0, 0x2D0(r4)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xDC
-	  lfs       f0, 0x2F0(r4)
-	  li        r0, 0x1
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x10(r31)
-	  stw       r0, 0x8(r31)
-	  b         .loc_0xF0
+	if (nucleiDist > C_SLIME_PROP(mSlime).mDamageLengthMid()) {
+		mContractDamage  = nucleiDist * C_SLIME_PROP(mSlime).mDamageRatioMid();
+		mContractHitType = SLIMEHIT_Mid;
+		return;
+	}
 
-	.loc_0xDC:
-	  lfs       f0, 0x300(r4)
-	  li        r0, 0
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x10(r31)
-	  stw       r0, 0x8(r31)
-
-	.loc_0xF0:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	mContractDamage  = nucleiDist * C_SLIME_PROP(mSlime).mDamageRatioSmall();
+	mContractHitType = SLIMEHIT_Small;
 }
 
 /*
@@ -787,185 +441,22 @@ void SlimeAi::calcContractDamage()
  */
 void SlimeAi::contractCoreFlickPiki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB0(r1)
-	  stfd      f31, 0xA8(r1)
-	  stfd      f30, 0xA0(r1)
-	  stfd      f29, 0x98(r1)
-	  stmw      r25, 0x7C(r1)
-	  mr        r28, r3
-	  lwz       r3, 0x20(r3)
-	  lwz       r3, 0x3FC(r3)
-	  lwz       r3, 0x220(r3)
-	  bl        -0xDC430
-	  lwz       r30, 0x3068(r13)
-	  mr        r31, r3
-	  lfs       f1, -0x5484(r2)
-	  mr        r3, r30
-	  lfs       f0, 0x0(r31)
-	  lwz       r12, 0x0(r30)
-	  fadds     f31, f1, f0
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r5, 0x802B
-	  lfs       f30, -0x5480(r2)
-	  lis       r4, 0x802B
-	  lfs       f29, -0x54A8(r2)
-	  addi      r29, r3, 0
-	  subi      r26, r5, 0x3064
-	  subi      r27, r4, 0x3168
-	  b         .loc_0x204
-
-	.loc_0x78:
-	  cmpwi     r29, -0x1
-	  bne-      .loc_0xA0
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r25, r3
-	  b         .loc_0xBC
-
-	.loc_0xA0:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r25, r3
-
-	.loc_0xBC:
-	  cmplwi    r25, 0
-	  beq-      .loc_0x1E8
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1E8
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1E8
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x1E8
-	  lfs       f1, 0x94(r25)
-	  lfs       f2, 0x9C(r25)
-	  lfs       f3, 0x4(r31)
-	  lfs       f4, 0xC(r31)
-	  bl        -0x12D60C
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x1E8
-	  stfs      f29, 0x50(r1)
-	  stfs      f29, 0x4C(r1)
-	  stfs      f29, 0x48(r1)
-	  lfs       f1, 0x4(r31)
-	  lfs       f0, 0x94(r25)
-	  lfs       f4, 0xC(r31)
-	  lfs       f3, 0x9C(r25)
-	  fsubs     f0, f1, f0
-	  lfs       f2, 0x8(r31)
-	  lfs       f1, 0x98(r25)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x3C(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x3C(r1)
-	  stfs      f0, 0x48(r1)
-	  stfs      f1, 0x4C(r1)
-	  stfs      f3, 0x50(r1)
-	  lfs       f1, 0x48(r1)
-	  lfs       f0, 0x4C(r1)
-	  lfs       f2, 0x50(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x158064
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x1E8
-	  lwz       r5, 0x20(r28)
-	  addi      r3, r25, 0
-	  addi      r4, r1, 0x58
-	  lwz       r7, 0x3FC(r5)
-	  lwz       r6, 0x224(r7)
-	  lfs       f0, 0x128(r6)
-	  lfs       f1, 0x138(r6)
-	  stw       r26, 0x58(r1)
-	  stw       r7, 0x5C(r1)
-	  stw       r27, 0x58(r1)
-	  stfs      f0, 0x60(r1)
-	  stfs      f1, 0x64(r1)
-	  stfs      f30, 0x68(r1)
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1E8:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-
-	.loc_0x204:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x22C
-	  li        r0, 0x1
-	  b         .loc_0x258
-
-	.loc_0x22C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x254
-	  li        r0, 0x1
-	  b         .loc_0x258
-
-	.loc_0x254:
-	  li        r0, 0
-
-	.loc_0x258:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x78
-	  lmw       r25, 0x7C(r1)
-	  lwz       r0, 0xB4(r1)
-	  lfd       f31, 0xA8(r1)
-	  lfd       f30, 0xA0(r1)
-	  lfd       f29, 0x98(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	CollPart* corePart = mSlime->mCore->mCollInfo->getBoundingSphere();
+	f32 coreRadius     = corePart->mRadius + 30.0f;
+	Iterator iter(pikiMgr);
+	CI_LOOP(iter)
+	{
+		Creature* piki = *iter;
+		if (piki && piki->isAlive() && piki->isVisible() && !piki->isBuried()
+		    && qdist2(piki->mPosition.x, piki->mPosition.z, corePart->mCentre.x, corePart->mCentre.z) < coreRadius) {
+			// close enough, do a proper check
+			if (piki->mPosition.distance(corePart->mCentre) < coreRadius) {
+				InteractFlick flick(mSlime->mCore, C_BOSS_PROP(mSlime->mCore).mFlickKnockback(), C_BOSS_PROP(mSlime->mCore).mFlickDamage(),
+				                    FLICK_BACKWARDS_ANGLE);
+				piki->stimulate(flick);
+			}
+		}
+	}
 }
 
 /*
@@ -975,185 +466,22 @@ void SlimeAi::contractCoreFlickPiki()
  */
 void SlimeAi::contractSubFlickPiki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB0(r1)
-	  stfd      f31, 0xA8(r1)
-	  stfd      f30, 0xA0(r1)
-	  stfd      f29, 0x98(r1)
-	  stmw      r25, 0x7C(r1)
-	  mr        r28, r3
-	  lwz       r3, 0x20(r3)
-	  lwz       r3, 0x3F8(r3)
-	  lwz       r3, 0x220(r3)
-	  bl        -0xDC6B0
-	  lwz       r30, 0x3068(r13)
-	  mr        r31, r3
-	  lfs       f1, -0x5484(r2)
-	  mr        r3, r30
-	  lfs       f0, 0x0(r31)
-	  lwz       r12, 0x0(r30)
-	  fadds     f31, f1, f0
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r5, 0x802B
-	  lfs       f30, -0x5480(r2)
-	  lis       r4, 0x802B
-	  lfs       f29, -0x54A8(r2)
-	  addi      r29, r3, 0
-	  subi      r26, r5, 0x3064
-	  subi      r27, r4, 0x3168
-	  b         .loc_0x204
-
-	.loc_0x78:
-	  cmpwi     r29, -0x1
-	  bne-      .loc_0xA0
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r25, r3
-	  b         .loc_0xBC
-
-	.loc_0xA0:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r25, r3
-
-	.loc_0xBC:
-	  cmplwi    r25, 0
-	  beq-      .loc_0x1E8
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1E8
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1E8
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x1E8
-	  lfs       f1, 0x94(r25)
-	  lfs       f2, 0x9C(r25)
-	  lfs       f3, 0x4(r31)
-	  lfs       f4, 0xC(r31)
-	  bl        -0x12D88C
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x1E8
-	  stfs      f29, 0x50(r1)
-	  stfs      f29, 0x4C(r1)
-	  stfs      f29, 0x48(r1)
-	  lfs       f1, 0x4(r31)
-	  lfs       f0, 0x94(r25)
-	  lfs       f4, 0xC(r31)
-	  lfs       f3, 0x9C(r25)
-	  fsubs     f0, f1, f0
-	  lfs       f2, 0x8(r31)
-	  lfs       f1, 0x98(r25)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x3C(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x3C(r1)
-	  stfs      f0, 0x48(r1)
-	  stfs      f1, 0x4C(r1)
-	  stfs      f3, 0x50(r1)
-	  lfs       f1, 0x48(r1)
-	  lfs       f0, 0x4C(r1)
-	  lfs       f2, 0x50(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x1582E4
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x1E8
-	  lwz       r5, 0x20(r28)
-	  addi      r3, r25, 0
-	  addi      r4, r1, 0x58
-	  lwz       r7, 0x3F8(r5)
-	  lwz       r6, 0x224(r7)
-	  lfs       f0, 0x128(r6)
-	  lfs       f1, 0x138(r6)
-	  stw       r26, 0x58(r1)
-	  stw       r7, 0x5C(r1)
-	  stw       r27, 0x58(r1)
-	  stfs      f0, 0x60(r1)
-	  stfs      f1, 0x64(r1)
-	  stfs      f30, 0x68(r1)
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1E8:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-
-	.loc_0x204:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x22C
-	  li        r0, 0x1
-	  b         .loc_0x258
-
-	.loc_0x22C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x254
-	  li        r0, 0x1
-	  b         .loc_0x258
-
-	.loc_0x254:
-	  li        r0, 0
-
-	.loc_0x258:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x78
-	  lmw       r25, 0x7C(r1)
-	  lwz       r0, 0xB4(r1)
-	  lfd       f31, 0xA8(r1)
-	  lfd       f30, 0xA0(r1)
-	  lfd       f29, 0x98(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	CollPart* nucleusPart = mSlime->mNucleus->mCollInfo->getBoundingSphere();
+	f32 nucleusRadius     = nucleusPart->mRadius + 30.0f;
+	Iterator iter(pikiMgr);
+	CI_LOOP(iter)
+	{
+		Creature* piki = *iter;
+		if (piki && piki->isAlive() && piki->isVisible() && !piki->isBuried()
+		    && qdist2(piki->mPosition.x, piki->mPosition.z, nucleusPart->mCentre.x, nucleusPart->mCentre.z) < nucleusRadius) {
+			// close enough, do a proper check
+			if (piki->mPosition.distance(nucleusPart->mCentre) < nucleusRadius) {
+				InteractFlick flick(mSlime->mNucleus, C_BOSS_PROP(mSlime->mNucleus).mFlickKnockback(),
+				                    C_BOSS_PROP(mSlime->mNucleus).mFlickDamage(), FLICK_BACKWARDS_ANGLE);
+				piki->stimulate(flick);
+			}
+		}
+	}
 }
 
 /*
@@ -1163,184 +491,48 @@ void SlimeAi::contractSubFlickPiki()
  */
 void SlimeAi::inCaseOfContract()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  mr        r31, r3
-	  lbz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x288
-	  li        r0, 0x1
-	  stb       r0, 0x0(r31)
-	  mr        r3, r31
-	  bl        -0x2AC
-	  lwz       r3, 0x20(r31)
-	  addi      r6, r1, 0x20
-	  addi      r5, r1, 0x1C
-	  lfs       f0, 0x3E4(r3)
-	  addi      r8, r3, 0x3DC
-	  lfs       f1, 0x3F0(r3)
-	  addi      r7, r3, 0x3E8
-	  addi      r4, r1, 0x18
-	  fadds     f0, f1, f0
-	  addi      r3, r1, 0x2C
-	  stfs      f0, 0x20(r1)
-	  lfs       f1, 0x4(r7)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x1C(r1)
-	  lfs       f1, 0x0(r7)
-	  lfs       f0, 0x0(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x18(r1)
-	  bl        -0x12EF6C
-	  lfs       f2, 0x34(r1)
-	  addi      r6, r1, 0x14
-	  lfs       f3, 0x160(r13)
-	  addi      r5, r1, 0x10
-	  lfs       f1, 0x30(r1)
-	  lfs       f0, 0x2C(r1)
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  addi      r4, r1, 0xC
-	  fmuls     f0, f0, f3
-	  stfs      f2, 0x14(r1)
-	  addi      r3, r1, 0x38
-	  stfs      f1, 0x10(r1)
-	  stfs      f0, 0xC(r1)
-	  bl        -0x12EFA8
-	  lfs       f1, 0x38(r1)
-	  lfs       f0, 0x3C(r1)
-	  stfs      f1, 0x44(r1)
-	  stfs      f0, 0x48(r1)
-	  lfs       f1, 0x40(r1)
-	  lfs       f0, -0x547C(r2)
-	  stfs      f1, 0x4C(r1)
-	  lfs       f1, 0x48(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x48(r1)
-	  lwz       r0, 0x8(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x168
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x44
-	  li        r4, 0x3F
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x36A28
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x44
-	  li        r4, 0x3E
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x36A10
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x44
-	  li        r4, 0x3D
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x369F8
-	  lwz       r3, 0x3178(r13)
-	  addi      r6, r1, 0x44
-	  li        r4, 0xF
-	  li        r5, 0
-	  bl        0x16C80
-	  lwz       r3, 0x20(r31)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x264
-	  li        r4, 0x8E
-	  bl        -0xC239C
-	  b         .loc_0x264
+	// in case of contract, pull this lever
+	if (mIsContractFinished) {
+		return;
+	}
 
-	.loc_0x168:
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x1E8
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x44
-	  li        r4, 0x3C
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x369A8
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x44
-	  li        r4, 0x3B
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x36990
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x44
-	  li        r4, 0x3A
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x36978
-	  lwz       r3, 0x3178(r13)
-	  addi      r6, r1, 0x44
-	  li        r4, 0xA
-	  li        r5, 0
-	  bl        0x16C00
-	  lwz       r3, 0x20(r31)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x264
-	  li        r4, 0x8F
-	  bl        -0xC241C
-	  b         .loc_0x264
+	mIsContractFinished = true;
+	contractSubFlickPiki();
 
-	.loc_0x1E8:
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x264
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x44
-	  li        r4, 0x39
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x36928
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x44
-	  li        r4, 0x38
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x36910
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x44
-	  li        r4, 0x37
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x368F8
-	  lwz       r3, 0x3178(r13)
-	  addi      r6, r1, 0x44
-	  li        r4, 0xE
-	  li        r5, 0
-	  bl        0x16B80
-	  lwz       r3, 0x20(r31)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x264
-	  li        r4, 0x90
-	  bl        -0xC249C
+	Vector3f midPoint = 0.5f * (mSlime->mCorePosition + mSlime->mNucleusPosition);
+	midPoint.y += 15.0f;
 
-	.loc_0x264:
-	  lwz       r3, 0x20(r31)
-	  li        r0, -0x1
-	  lfs       f0, 0x10(r31)
-	  lfs       f1, 0x2C0(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x2C0(r3)
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0x10(r31)
-	  stw       r0, 0x8(r31)
+	if (mContractHitType == SLIMEHIT_Small) {
+		effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeS, midPoint, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Teki_DeathGlowS, midPoint, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveS, midPoint, nullptr, nullptr);
+		rumbleMgr->start(15, 0, midPoint);
+		if (mSlime->mSeContext) {
+			mSlime->mSeContext->playSound(SE_SLIME_HIT_SMALL);
+		}
 
-	.loc_0x288:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	} else if (mContractHitType == SLIMEHIT_Mid) {
+		effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeM, midPoint, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Teki_DeathGlowM, midPoint, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveM, midPoint, nullptr, nullptr);
+		rumbleMgr->start(10, 0, midPoint);
+		if (mSlime->mSeContext) {
+			mSlime->mSeContext->playSound(SE_SLIME_HIT_MID);
+		}
+
+	} else if (mContractHitType == SLIMEHIT_Large) {
+		effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, midPoint, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, midPoint, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, midPoint, nullptr, nullptr);
+		rumbleMgr->start(14, 0, midPoint);
+		if (mSlime->mSeContext) {
+			mSlime->mSeContext->playSound(SE_SLIME_HIT_LARGE);
+		}
+	}
+
+	mSlime->addDamagePoint(mContractDamage);
+	mContractDamage  = 0.0f;
+	mContractHitType = SLIMEHIT_NoHit;
 }
 
 /*
@@ -1350,7 +542,12 @@ void SlimeAi::inCaseOfContract()
  */
 void SlimeAi::setDieGoal()
 {
-	// UNUSED FUNCTION
+	// collapse edges into the centre
+	Vector3f midPoint
+	    = 0.5f
+	    * (mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition + mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mPosition);
+	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition    = midPoint;
+	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition = midPoint;
 }
 
 /*
@@ -1360,7 +557,15 @@ void SlimeAi::setDieGoal()
  */
 void SlimeAi::setContractGoal()
 {
-	// UNUSED FUNCTION
+	f32 goalDistFromMiddle = 5.0f + C_SLIME_PROP(mSlime).mDistanceBetweenNuclei() / 2.0f;
+	Vector3f midPoint
+	    = 0.5f
+	    * (mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition + mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mPosition);
+	Vector3f offsetFromMid = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition - midPoint;
+	offsetFromMid.normalise();
+	offsetFromMid.multiply(goalDistFromMiddle);
+	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition    = midPoint + offsetFromMid;
+	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition = midPoint - offsetFromMid;
 }
 
 /*
@@ -1370,7 +575,15 @@ void SlimeAi::setContractGoal()
  */
 void SlimeAi::setExpansionGoal()
 {
-	// UNUSED FUNCTION
+	f32 goalDistFromMiddle = 15.0f + C_SLIME_PROP(mSlime).mDistanceBetweenNuclei() / 2.0f;
+	Vector3f midPoint      = 0.5f
+	                  * (mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition
+	                     + mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition);
+	Vector3f offsetFromMid = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition - midPoint;
+	offsetFromMid.normalise();
+	offsetFromMid.multiply(goalDistFromMiddle);
+	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition    = midPoint + offsetFromMid;
+	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition = midPoint - offsetFromMid;
 }
 
 /*
@@ -1380,7 +593,11 @@ void SlimeAi::setExpansionGoal()
  */
 void SlimeAi::setAppearGoal()
 {
-	// UNUSED FUNCTION
+	Navi* navi     = naviMgr->getNavi();
+	f32 angle      = atan2f(navi->mPosition.x - mSlime->mPosition.x, navi->mPosition.z - mSlime->mPosition.z);
+	f32 initialSep = C_SLIME_PROP(mSlime).mDistanceBetweenNuclei() + 100.0f;
+	Vector3f naviDir(sinf(angle), 0.0f, cosf(angle));
+	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition = *mSlime->getInitPosition() + initialSep * naviDir;
 }
 
 /*
@@ -1390,7 +607,20 @@ void SlimeAi::setAppearGoal()
  */
 void SlimeAi::bothEndsToGoal()
 {
-	// UNUSED FUNCTION
+	Vector3f velOffset;
+	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mVelocity.multiply(C_SLIME_PROP(mSlime).mContractTraceEnd());
+
+	velOffset
+	    = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition - mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition;
+	velOffset.multiply(C_SLIME_PROP(mSlime).mContractSpringEnd());
+	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mVelocity.add(velOffset);
+
+	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mVelocity.multiply(C_SLIME_PROP(mSlime).mContractTraceEnd());
+
+	velOffset = mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition
+	          - mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mPosition;
+	velOffset.multiply(C_SLIME_PROP(mSlime).mContractSpringEnd());
+	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mVelocity.add(velOffset);
 }
 
 /*
@@ -1400,7 +630,12 @@ void SlimeAi::bothEndsToGoal()
  */
 void SlimeAi::bothEndsToAppearGoal()
 {
-	// UNUSED FUNCTION
+	Vector3f coreVel;
+	coreVel
+	    = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition - mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition;
+	coreVel.multiply(0.5f);
+	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetVelocity = coreVel;
+	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mVelocity       = coreVel;
 }
 
 /*
@@ -1410,104 +645,21 @@ void SlimeAi::bothEndsToAppearGoal()
  */
 void SlimeAi::makeTargetRandom()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x90(r1)
-	  stfd      f31, 0x88(r1)
-	  stw       r31, 0x84(r1)
-	  mr        r31, r3
-	  stw       r30, 0x80(r1)
-	  stw       r29, 0x7C(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x20(r31)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f1, 0x2D0(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x2D0(r4)
-	  lwz       r3, 0x20(r31)
-	  lfs       f0, -0x5470(r2)
-	  lfs       f1, 0x2D0(r3)
-	  addi      r4, r3, 0x30C
-	  lwz       r0, 0x3C8(r3)
-	  addi      r30, r3, 0x300
-	  fcmpo     cr0, f1, f0
-	  lwz       r3, 0x3F4(r3)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r3, r3, r0
-	  bgt-      .loc_0x84
-	  lfs       f1, 0x0(r4)
-	  lfs       f2, 0x8(r4)
-	  lfs       f3, 0x94(r3)
-	  lfs       f4, 0x9C(r3)
-	  bl        -0x12DCF4
-	  lfs       f0, -0x5470(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x14C
+	mSlime->add2D0(gsys->getFrameTime());
+	SlimeCreature* leader = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex];
+	Vector3f* targetPos   = mSlime->getTargetPosition();
+	Vector3f* initPos     = mSlime->getInitPosition();
 
-	.loc_0x84:
-	  bl        0xB1D44
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x5498(r2)
-	  stw       r0, 0x74(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x546C(r2)
-	  stw       r0, 0x70(r1)
-	  lfs       f2, -0x54A0(r2)
-	  lfd       f0, 0x70(r1)
-	  lfs       f1, -0x5468(r2)
-	  fsubs     f4, f0, f4
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0x68(r1)
-	  fdivs     f3, f4, f3
-	  stfs      f0, 0x64(r1)
-	  stfs      f0, 0x60(r1)
-	  lwz       r3, 0x20(r31)
-	  lwz       r3, 0x224(r3)
-	  fmuls     f0, f2, f3
-	  addi      r29, r3, 0x78
-	  fmuls     f31, f1, f0
-	  fmr       f1, f31
-	  bl        0xB5964
-	  lfs       f0, 0x0(r29)
-	  lwz       r3, 0x20(r31)
-	  fmuls     f2, f0, f1
-	  lfs       f0, 0x8(r30)
-	  lwz       r3, 0x224(r3)
-	  fmr       f1, f31
-	  fadds     f31, f0, f2
-	  addi      r29, r3, 0x78
-	  bl        0xB57AC
-	  lfs       f2, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fmuls     f1, f2, f1
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x60(r1)
-	  lfs       f0, 0x4(r30)
-	  stfs      f0, 0x64(r1)
-	  stfs      f31, 0x68(r1)
-	  lwz       r4, 0x20(r31)
-	  lwz       r3, 0x60(r1)
-	  lwz       r0, 0x64(r1)
-	  stw       r3, 0x30C(r4)
-	  stw       r0, 0x310(r4)
-	  lwz       r0, 0x68(r1)
-	  stw       r0, 0x314(r4)
-	  lfs       f0, -0x54A8(r2)
-	  lwz       r3, 0x20(r31)
-	  stfs      f0, 0x2D0(r3)
+	if (mSlime->get2D0() > 10.0f || qdist2(targetPos->x, targetPos->z, leader->mPosition.x, leader->mPosition.z) < 10.0f) {
+		f32 randAngle = NsMathF::getRand(TAU);
+		Vector3f newTarget;
+		newTarget.set(C_BOSS_PROP(mSlime).mMaxWaitRadius() * cosf(randAngle) + initPos->x, initPos->y,
+		              C_BOSS_PROP(mSlime).mMaxWaitRadius() * sinf(randAngle) + initPos->z);
+		mSlime->setTargetPosition(newTarget);
+		mSlime->set2D0(0.0f);
+	}
 
-	.loc_0x14C:
-	  lwz       r0, 0x94(r1)
-	  lfd       f31, 0x88(r1)
-	  lwz       r31, 0x84(r1)
-	  lwz       r30, 0x80(r1)
-	  lwz       r29, 0x7C(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler;
 }
 
 /*
@@ -1515,30 +667,21 @@ void SlimeAi::makeTargetRandom()
  * Address:	........
  * Size:	00000C
  */
-void SlimeAi::setVelocity(f32)
-{
-	// UNUSED FUNCTION
-}
+void SlimeAi::setVelocity(f32 speed) { mSlime->mLeaderSpeed = speed; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-bool SlimeAi::motionFinishTransit()
-{
-	// UNUSED FUNCTION
-}
+bool SlimeAi::motionFinishTransit() { return mSlime->getMotionFinish(); }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool SlimeAi::dieTransit()
-{
-	// UNUSED FUNCTION
-}
+bool SlimeAi::dieTransit() { return !mSlime->getAlive(); }
 
 /*
  * --INFO--
@@ -1547,7 +690,12 @@ bool SlimeAi::dieTransit()
  */
 bool SlimeAi::outSideChaseRangeTransit()
 {
-	// UNUSED FUNCTION
+	SlimeCreature* leader = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex];
+	Vector3f* initPos     = mSlime->getInitPosition();
+	if (qdist2(leader->mPosition.x, leader->mPosition.z, initPos->x, initPos->z) > C_BOSS_PROP(mSlime).mTerritoryRadius()) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -1557,7 +705,12 @@ bool SlimeAi::outSideChaseRangeTransit()
  */
 bool SlimeAi::inSideWaitRangeTransit()
 {
-	// UNUSED FUNCTION
+	SlimeCreature* follower = mSlime->mSlimeCreatures[mSlime->mFollowerCreatureIndex];
+	Vector3f* initPos       = mSlime->getInitPosition();
+	if (qdist2(follower->mPosition.x, follower->mPosition.z, initPos->x, initPos->z) < C_BOSS_PROP(mSlime).mMaxWaitRadius()) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -1567,225 +720,37 @@ bool SlimeAi::inSideWaitRangeTransit()
  */
 bool SlimeAi::chaseNaviTransit()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xF0(r1)
-	  stfd      f31, 0xE8(r1)
-	  stfd      f30, 0xE0(r1)
-	  stmw      r25, 0xC4(r1)
-	  mr        r26, r3
-	  li        r29, 0
-	  lwz       r3, 0x20(r3)
-	  lfs       f31, -0x5464(r2)
-	  lwz       r0, 0x3C8(r3)
-	  addi      r27, r3, 0x300
-	  lwz       r4, 0x318(r3)
-	  lwz       r3, 0x3F4(r3)
-	  rlwinm    r0,r0,2,0,29
-	  cmplwi    r4, 0
-	  lwzx      r28, r3, r0
-	  beq-      .loc_0xB8
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0x9C(r1)
-	  stfs      f0, 0x98(r1)
-	  stfs      f0, 0x94(r1)
-	  lfs       f1, 0x94(r4)
-	  lfs       f0, 0x94(r28)
-	  lfs       f4, 0x9C(r4)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x9C(r28)
-	  lfs       f2, 0x98(r4)
-	  lfs       f1, 0x98(r28)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x70(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x70(r1)
-	  stfs      f0, 0x94(r1)
-	  stfs      f1, 0x98(r1)
-	  stfs      f3, 0x9C(r1)
-	  lfs       f1, 0x94(r1)
-	  lfs       f0, 0x98(r1)
-	  lfs       f2, 0x9C(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x158884
-	  fmr       f31, f1
+	Creature* target      = nullptr;
+	SlimeCreature* leader = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex];
+	Vector3f* initPos     = mSlime->getInitPosition();
+	f32 minDist           = 12800.0f;
 
-	.loc_0xB8:
-	  lwz       r31, 0x3120(r13)
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f30, -0x54A8(r2)
-	  mr        r30, r3
-	  b         .loc_0x274
+	if (mSlime->getTargetCreature()) {
+		minDist = leader->mPosition.distance(mSlime->getTargetCreature()->mPosition);
+	}
 
-	.loc_0xDC:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x104
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r25, r3
-	  b         .loc_0x120
+	Iterator iter(naviMgr);
+	CI_LOOP(iter)
+	{
+		Creature* navi = *iter;
+		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
+		    && qdist2(navi->mPosition.x, navi->mPosition.z, initPos->x, initPos->z) < C_BOSS_PROP(mSlime).mTerritoryRadius()) {
+			f32 quickLeaderDist = qdist2(leader->mPosition.x, leader->mPosition.z, navi->mPosition.x, navi->mPosition.z);
+			if (quickLeaderDist < C_BOSS_PROP(mSlime).mSearchRadius() && quickLeaderDist < minDist) {
+				f32 leaderDist = leader->mPosition.distance(navi->mPosition);
+				if (leaderDist < C_BOSS_PROP(mSlime).mSearchRadius() && leaderDist < minDist) {
+					minDist = leaderDist;
+					target  = navi;
+				}
+			}
+		}
+	}
 
-	.loc_0x104:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r25, r3
-
-	.loc_0x120:
-	  lwz       r12, 0x0(r25)
-	  mr        r3, r25
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x258
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x258
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x258
-	  lfs       f1, 0x94(r25)
-	  lfs       f2, 0x9C(r25)
-	  lfs       f3, 0x0(r27)
-	  lfs       f4, 0x8(r27)
-	  bl        -0x12DF70
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x68(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x258
-	  lfs       f1, 0x94(r28)
-	  lfs       f2, 0x9C(r28)
-	  lfs       f3, 0x94(r25)
-	  lfs       f4, 0x9C(r25)
-	  bl        -0x12DF98
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x88(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x258
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x258
-	  stfs      f30, 0x84(r1)
-	  stfs      f30, 0x80(r1)
-	  stfs      f30, 0x7C(r1)
-	  lfs       f1, 0x94(r25)
-	  lfs       f0, 0x94(r28)
-	  lfs       f4, 0x9C(r25)
-	  lfs       f3, 0x9C(r28)
-	  fsubs     f0, f1, f0
-	  lfs       f2, 0x98(r25)
-	  lfs       f1, 0x98(r28)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x68(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x68(r1)
-	  stfs      f0, 0x7C(r1)
-	  stfs      f1, 0x80(r1)
-	  stfs      f3, 0x84(r1)
-	  lfs       f1, 0x7C(r1)
-	  lfs       f0, 0x80(r1)
-	  lfs       f2, 0x84(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x158A04
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x88(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x258
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x258
-	  fmr       f31, f1
-	  mr        r29, r25
-
-	.loc_0x258:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x274:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x29C
-	  li        r0, 0x1
-	  b         .loc_0x2C8
-
-	.loc_0x29C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x2C4
-	  li        r0, 0x1
-	  b         .loc_0x2C8
-
-	.loc_0x2C4:
-	  li        r0, 0
-
-	.loc_0x2C8:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0xDC
-	  cmplwi    r29, 0
-	  beq-      .loc_0x2E8
-	  lwz       r4, 0x20(r26)
-	  li        r3, 0x1
-	  stw       r29, 0x318(r4)
-	  b         .loc_0x2EC
-
-	.loc_0x2E8:
-	  li        r3, 0
-
-	.loc_0x2EC:
-	  lmw       r25, 0xC4(r1)
-	  lwz       r0, 0xF4(r1)
-	  lfd       f31, 0xE8(r1)
-	  lfd       f30, 0xE0(r1)
-	  addi      r1, r1, 0xF0
-	  mtlr      r0
-	  blr
-	*/
+	if (target) {
+		mSlime->setTargetCreature(target);
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -1795,226 +760,37 @@ bool SlimeAi::chaseNaviTransit()
  */
 bool SlimeAi::chasePikiTransit()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xF0(r1)
-	  stfd      f31, 0xE8(r1)
-	  stfd      f30, 0xE0(r1)
-	  stmw      r25, 0xC4(r1)
-	  mr        r26, r3
-	  li        r29, 0
-	  lwz       r3, 0x20(r3)
-	  lfs       f31, -0x5464(r2)
-	  lwz       r0, 0x3C8(r3)
-	  addi      r27, r3, 0x300
-	  lwz       r4, 0x318(r3)
-	  lwz       r3, 0x3F4(r3)
-	  rlwinm    r0,r0,2,0,29
-	  cmplwi    r4, 0
-	  lwzx      r28, r3, r0
-	  beq-      .loc_0xB8
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0x9C(r1)
-	  stfs      f0, 0x98(r1)
-	  stfs      f0, 0x94(r1)
-	  lfs       f1, 0x94(r4)
-	  lfs       f0, 0x94(r28)
-	  lfs       f4, 0x9C(r4)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x9C(r28)
-	  lfs       f2, 0x98(r4)
-	  lfs       f1, 0x98(r28)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x70(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x70(r1)
-	  stfs      f0, 0x94(r1)
-	  stfs      f1, 0x98(r1)
-	  stfs      f3, 0x9C(r1)
-	  lfs       f1, 0x94(r1)
-	  lfs       f0, 0x98(r1)
-	  lfs       f2, 0x9C(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x158B8C
-	  fmr       f31, f1
+	Creature* target      = nullptr;
+	SlimeCreature* leader = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex];
+	Vector3f* initPos     = mSlime->getInitPosition();
+	f32 minDist           = 12800.0f;
 
-	.loc_0xB8:
-	  lwz       r31, 0x3068(r13)
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f30, -0x54A8(r2)
-	  mr        r30, r3
-	  b         .loc_0x278
+	if (mSlime->getTargetCreature()) {
+		minDist = leader->mPosition.distance(mSlime->getTargetCreature()->mPosition);
+	}
 
-	.loc_0xDC:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x100
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x118
+	Iterator iter(pikiMgr);
+	CI_LOOP(iter)
+	{
+		Piki* piki = static_cast<Piki*>(*iter);
+		if (piki->isAlive() && piki->isVisible() && !piki->isBuried() && piki->mColor != Blue
+		    && qdist2(piki->mPosition.x, piki->mPosition.z, initPos->x, initPos->z) < C_BOSS_PROP(mSlime).mTerritoryRadius()) {
+			f32 quickLeaderDist = qdist2(leader->mPosition.x, leader->mPosition.z, piki->mPosition.x, piki->mPosition.z);
+			if (quickLeaderDist < C_BOSS_PROP(mSlime).mSearchRadius() && quickLeaderDist < minDist) {
+				f32 leaderDist = leader->mPosition.distance(piki->mPosition);
+				if (leaderDist < C_BOSS_PROP(mSlime).mSearchRadius() && leaderDist < minDist) {
+					minDist = leaderDist;
+					target  = piki;
+				}
+			}
+		}
+	}
 
-	.loc_0x100:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x118:
-	  mr        r25, r3
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x25C
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x25C
-	  mr        r3, r25
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x25C
-	  lhz       r0, 0x510(r25)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x25C
-	  lfs       f1, 0x94(r25)
-	  lfs       f2, 0x9C(r25)
-	  lfs       f3, 0x0(r27)
-	  lfs       f4, 0x8(r27)
-	  bl        -0x12E27C
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x68(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x25C
-	  lfs       f1, 0x94(r28)
-	  lfs       f2, 0x9C(r28)
-	  lfs       f3, 0x94(r25)
-	  lfs       f4, 0x9C(r25)
-	  bl        -0x12E2A4
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x88(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x25C
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x25C
-	  stfs      f30, 0x84(r1)
-	  stfs      f30, 0x80(r1)
-	  stfs      f30, 0x7C(r1)
-	  lfs       f1, 0x94(r25)
-	  lfs       f0, 0x94(r28)
-	  lfs       f4, 0x9C(r25)
-	  lfs       f3, 0x9C(r28)
-	  fsubs     f0, f1, f0
-	  lfs       f2, 0x98(r25)
-	  lfs       f1, 0x98(r28)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x68(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x68(r1)
-	  stfs      f0, 0x7C(r1)
-	  stfs      f1, 0x80(r1)
-	  stfs      f3, 0x84(r1)
-	  lfs       f1, 0x7C(r1)
-	  lfs       f0, 0x80(r1)
-	  lfs       f2, 0x84(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x158D10
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x88(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x25C
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x25C
-	  fmr       f31, f1
-	  mr        r29, r25
-
-	.loc_0x25C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x278:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2A0
-	  li        r0, 0x1
-	  b         .loc_0x2CC
-
-	.loc_0x2A0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x2C8
-	  li        r0, 0x1
-	  b         .loc_0x2CC
-
-	.loc_0x2C8:
-	  li        r0, 0
-
-	.loc_0x2CC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0xDC
-	  cmplwi    r29, 0
-	  beq-      .loc_0x2EC
-	  lwz       r4, 0x20(r26)
-	  li        r3, 0x1
-	  stw       r29, 0x318(r4)
-	  b         .loc_0x2F0
-
-	.loc_0x2EC:
-	  li        r3, 0
-
-	.loc_0x2F0:
-	  lmw       r25, 0xC4(r1)
-	  lwz       r0, 0xF4(r1)
-	  lfd       f31, 0xE8(r1)
-	  lfd       f30, 0xE0(r1)
-	  addi      r1, r1, 0xF0
-	  mtlr      r0
-	  blr
-	*/
+	if (target) {
+		mSlime->setTargetCreature(target);
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -2024,121 +800,27 @@ bool SlimeAi::chasePikiTransit()
  */
 bool SlimeAi::targetLostTransit()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  stw       r30, 0x68(r1)
-	  stw       r29, 0x64(r1)
-	  stw       r28, 0x60(r1)
-	  mr        r28, r3
-	  lwz       r4, 0x20(r3)
-	  lwz       r31, 0x318(r4)
-	  cmplwi    r31, 0
-	  beq-      .loc_0x174
-	  mr        r3, r31
-	  lwz       r0, 0x3C8(r4)
-	  lwz       r12, 0x0(r31)
-	  lwz       r4, 0x3F4(r4)
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r12, 0x88(r12)
-	  lwzx      r29, r4, r0
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x94
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x94
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xA8
+	Creature* target = mSlime->getTargetCreature();
+	if (target) {
+		SlimeCreature* leader = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex];
+		if (!target->isAlive() || !target->isVisible() || target->isBuried()) {
+			mSlime->setTargetCreature(nullptr);
+			return true;
+		}
 
-	.loc_0x94:
-	  lwz       r4, 0x20(r28)
-	  li        r0, 0
-	  li        r3, 0x1
-	  stw       r0, 0x318(r4)
-	  b         .loc_0x178
+		Vector3f* initPos = mSlime->getInitPosition();
+		if (qdist2(target->mPosition.x, target->mPosition.z, initPos->x, initPos->z) > C_BOSS_PROP(mSlime).mTerritoryRadius()) {
+			mSlime->setTargetCreature(nullptr);
+			return true;
+		}
 
-	.loc_0xA8:
-	  lwz       r30, 0x20(r28)
-	  lfs       f1, 0x94(r31)
-	  lfs       f2, 0x9C(r31)
-	  lfs       f3, 0x300(r30)
-	  lfs       f4, 0x308(r30)
-	  bl        -0x12E4BC
-	  lwz       r3, 0x224(r30)
-	  lfs       f0, 0x68(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xE4
-	  lwz       r4, 0x20(r28)
-	  li        r0, 0
-	  li        r3, 0x1
-	  stw       r0, 0x318(r4)
-	  b         .loc_0x178
+		if (leader->mPosition.distance(target->mPosition) > C_BOSS_PROP(mSlime).mSearchRadius()) {
+			mSlime->setTargetCreature(nullptr);
+			return true;
+		}
+	}
 
-	.loc_0xE4:
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0x48(r1)
-	  stfs      f0, 0x44(r1)
-	  stfs      f0, 0x40(r1)
-	  lfs       f1, 0x94(r31)
-	  lfs       f0, 0x94(r29)
-	  lfs       f4, 0x9C(r31)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x9C(r29)
-	  lfs       f2, 0x98(r31)
-	  lfs       f1, 0x98(r29)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x34(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x34(r1)
-	  stfs      f0, 0x40(r1)
-	  stfs      f1, 0x44(r1)
-	  stfs      f3, 0x48(r1)
-	  lfs       f1, 0x40(r1)
-	  lfs       f0, 0x44(r1)
-	  lfs       f2, 0x48(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x158F34
-	  lwz       r4, 0x20(r28)
-	  lwz       r3, 0x224(r4)
-	  lfs       f0, 0x88(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x174
-	  li        r0, 0
-	  stw       r0, 0x318(r4)
-	  li        r3, 0x1
-	  b         .loc_0x178
-
-	.loc_0x174:
-	  li        r3, 0
-
-	.loc_0x178:
-	  lwz       r0, 0x74(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  lwz       r29, 0x64(r1)
-	  lwz       r28, 0x60(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -2148,7 +830,10 @@ bool SlimeAi::targetLostTransit()
  */
 bool SlimeAi::collisionContractTransit()
 {
-	// UNUSED FUNCTION
+	if (mSlime->mDoCrashContract) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -2158,7 +843,10 @@ bool SlimeAi::collisionContractTransit()
  */
 bool SlimeAi::dissolutionContractTransit()
 {
-	// UNUSED FUNCTION
+	if (mPrevNucleusStickPikiCount > 0 && mSlime->mNucleus->mNucleusAi->mStickPikiCount == 0) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -2168,7 +856,10 @@ bool SlimeAi::dissolutionContractTransit()
  */
 bool SlimeAi::finishContractTransit()
 {
-	// UNUSED FUNCTION
+	if (mIsContractFinished || mSlime->get2D4() > 2.0f) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -2178,7 +869,10 @@ bool SlimeAi::finishContractTransit()
  */
 bool SlimeAi::finishExpansionTransit()
 {
-	// UNUSED FUNCTION
+	if (mSlime->get2D4() > 1.0f) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -2188,228 +882,28 @@ bool SlimeAi::finishExpansionTransit()
  */
 bool SlimeAi::appearTransit()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stmw      r27, 0x64(r1)
-	  mr        r30, r3
-	  lwz       r29, 0x3120(r13)
-	  lwz       r4, 0x20(r3)
-	  lwz       r12, 0x0(r29)
-	  mr        r3, r29
-	  addi      r31, r4, 0x300
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-	  b         .loc_0x118
+	Vector3f* initPos = mSlime->getInitPosition();
+	Iterator iterNavi(naviMgr);
+	CI_LOOP(iterNavi)
+	{
+		Creature* navi = *iterNavi;
+		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
+		    && qdist2(initPos->x, initPos->z, navi->mPosition.x, navi->mPosition.z) < C_SLIME_PROP(mSlime).mDetectionRadius()) {
+			return true;
+		}
+	}
 
-	.loc_0x3C:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0x60
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x78
+	Iterator iterPiki(pikiMgr);
+	CI_LOOP(iterPiki)
+	{
+		Creature* piki = *iterPiki;
+		if (piki->isAlive() && piki->isVisible() && !piki->isBuried()
+		    && qdist2(initPos->x, initPos->z, piki->mPosition.x, piki->mPosition.z) < C_SLIME_PROP(mSlime).mDetectionRadius()) {
+			return true;
+		}
+	}
 
-	.loc_0x60:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x78:
-	  mr        r27, r3
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xFC
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xFC
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xFC
-	  lfs       f1, 0x0(r31)
-	  lfs       f2, 0x8(r31)
-	  lfs       f3, 0x94(r27)
-	  lfs       f4, 0x9C(r27)
-	  bl        -0x12E674
-	  lwz       r3, 0x20(r30)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x210(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xFC
-	  li        r3, 0x1
-	  b         .loc_0x2D0
-
-	.loc_0xFC:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x118:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x140
-	  li        r0, 0x1
-	  b         .loc_0x16C
-
-	.loc_0x140:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x168
-	  li        r0, 0x1
-	  b         .loc_0x16C
-
-	.loc_0x168:
-	  li        r0, 0
-
-	.loc_0x16C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x3C
-	  lwz       r28, 0x3068(r13)
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-	  b         .loc_0x270
-
-	.loc_0x194:
-	  cmpwi     r29, -0x1
-	  bne-      .loc_0x1B8
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x1D0
-
-	.loc_0x1B8:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1D0:
-	  mr        r27, r3
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x254
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x254
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x254
-	  lfs       f1, 0x0(r31)
-	  lfs       f2, 0x8(r31)
-	  lfs       f3, 0x94(r27)
-	  lfs       f4, 0x9C(r27)
-	  bl        -0x12E7CC
-	  lwz       r3, 0x20(r30)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x210(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x254
-	  li        r3, 0x1
-	  b         .loc_0x2D0
-
-	.loc_0x254:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r29
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-
-	.loc_0x270:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r29
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x298
-	  li        r0, 0x1
-	  b         .loc_0x2C4
-
-	.loc_0x298:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x2C0
-	  li        r0, 0x1
-	  b         .loc_0x2C4
-
-	.loc_0x2C0:
-	  li        r0, 0
-
-	.loc_0x2C4:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x194
-	  li        r3, 0
-
-	.loc_0x2D0:
-	  lmw       r27, 0x64(r1)
-	  lwz       r0, 0x7C(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -2419,7 +913,10 @@ bool SlimeAi::appearTransit()
  */
 bool SlimeAi::disAppearTransit()
 {
-	// UNUSED FUNCTION
+	if (mSlime->_3D4 == 0.0f) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -2427,360 +924,37 @@ bool SlimeAi::disAppearTransit()
  * Address:	80166EA4
  * Size:	00053C
  */
-void SlimeAi::initDie(int)
+void SlimeAi::initDie(int nextState)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x208(r1)
-	  stfd      f31, 0x200(r1)
-	  addi      r6, r1, 0x8C
-	  addi      r5, r1, 0x88
-	  stfd      f30, 0x1F8(r1)
-	  stfd      f29, 0x1F0(r1)
-	  stfd      f28, 0x1E8(r1)
-	  stfd      f27, 0x1E0(r1)
-	  stfd      f26, 0x1D8(r1)
-	  stfd      f25, 0x1D0(r1)
-	  stw       r31, 0x1CC(r1)
-	  mr        r31, r3
-	  stw       r30, 0x1C8(r1)
-	  stw       r29, 0x1C4(r1)
-	  lwz       r3, 0x20(r3)
-	  stw       r4, 0x2E8(r3)
-	  addi      r4, r1, 0x84
-	  lwz       r3, 0x20(r31)
-	  stb       r0, 0x2BD(r3)
-	  addi      r3, r1, 0x178
-	  lwz       r7, 0x20(r31)
-	  lfs       f1, -0x545C(r2)
-	  lwz       r7, 0x3F8(r7)
-	  lfs       f0, 0x2C4(r7)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x2C4(r7)
-	  lwz       r7, 0x20(r31)
-	  lwz       r7, 0x3FC(r7)
-	  lfs       f0, 0x2C4(r7)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x2C4(r7)
-	  lfs       f0, -0x54A8(r2)
-	  lwz       r7, 0x20(r31)
-	  stfs      f0, 0x2D4(r7)
-	  lwz       r7, 0x20(r31)
-	  lfs       f0, -0x548C(r2)
-	  lwz       r10, 0x3F4(r7)
-	  lwz       r9, 0x224(r7)
-	  lwz       r8, 0xC(r10)
-	  lwz       r7, 0x0(r10)
-	  lfs       f2, 0x280(r9)
-	  addi      r8, r8, 0x94
-	  addi      r7, r7, 0x94
-	  lfs       f3, -0x5478(r2)
-	  fmuls     f2, f2, f0
-	  lfs       f1, 0x8(r7)
-	  lfs       f0, 0x8(r8)
-	  fadds     f31, f3, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x8C(r1)
-	  lfs       f1, 0x4(r7)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x88(r1)
-	  lfs       f1, 0x0(r7)
-	  lfs       f0, 0x0(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x84(r1)
-	  bl        -0x12FE7C
-	  lfs       f2, 0x180(r1)
-	  addi      r6, r1, 0x80
-	  lfs       f3, 0x168(r13)
-	  addi      r5, r1, 0x7C
-	  lfs       f1, 0x17C(r1)
-	  lfs       f0, 0x178(r1)
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  addi      r4, r1, 0x78
-	  fmuls     f0, f0, f3
-	  stfs      f2, 0x80(r1)
-	  addi      r3, r1, 0x16C
-	  stfs      f1, 0x7C(r1)
-	  stfs      f0, 0x78(r1)
-	  bl        -0x12FEB8
-	  lwz       r3, 0x20(r31)
-	  addi      r6, r1, 0xAC
-	  lfs       f30, 0x174(r1)
-	  addi      r5, r1, 0xA8
-	  lwz       r3, 0x3F4(r3)
-	  lfs       f29, 0x170(r1)
-	  addi      r4, r1, 0xA4
-	  lwz       r3, 0x0(r3)
-	  lfs       f28, 0x16C(r1)
-	  lfs       f0, 0x9C(r3)
-	  addi      r7, r3, 0x94
-	  addi      r3, r1, 0x184
-	  fsubs     f0, f0, f30
-	  stfs      f0, 0xAC(r1)
-	  lfs       f0, 0x4(r7)
-	  fsubs     f0, f0, f29
-	  stfs      f0, 0xA8(r1)
-	  lfs       f0, 0x0(r7)
-	  fsubs     f0, f0, f28
-	  stfs      f0, 0xA4(r1)
-	  bl        -0x12FF0C
-	  lfs       f27, 0x184(r1)
-	  lfs       f26, 0x188(r1)
-	  fmuls     f1, f27, f27
-	  lfs       f25, 0x18C(r1)
-	  fmuls     f0, f26, f26
-	  fmuls     f2, f25, f25
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x15940C
-	  lfs       f0, -0x54A8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x1C4
-	  fdivs     f27, f27, f1
-	  fdivs     f26, f26, f1
-	  fdivs     f25, f25, f1
+	mSlime->setNextState(nextState);
+	mSlime->setMotionFinish(false);
+	mSlime->mNucleus->subCurrentLife(128000.0f); // lol
+	mSlime->mCore->subCurrentLife(128000.0f);    // lol
+	mSlime->set2D4(0.0f);
+	setContractGoal();
+	setExpansionGoal();
+	playerState->mResultFlags.setSeen(RESFLAG_Unk50);
 
-	.loc_0x1C4:
-	  fmuls     f27, f27, f31
-	  addi      r6, r1, 0x74
-	  fmuls     f26, f26, f31
-	  addi      r5, r1, 0x70
-	  fmuls     f25, f25, f31
-	  fadds     f0, f28, f27
-	  addi      r4, r1, 0x6C
-	  fadds     f4, f29, f26
-	  addi      r3, r1, 0x124
-	  fadds     f3, f30, f25
-	  stfs      f0, 0xE0(r1)
-	  fsubs     f2, f28, f27
-	  fsubs     f1, f29, f26
-	  lfs       f5, 0xE0(r1)
-	  fsubs     f0, f30, f25
-	  stfs      f5, 0x190(r1)
-	  stfs      f4, 0x194(r1)
-	  stfs      f3, 0x198(r1)
-	  lwz       r8, 0x20(r31)
-	  lwz       r7, 0x190(r1)
-	  lwz       r8, 0x3F4(r8)
-	  lwz       r0, 0x194(r1)
-	  lwz       r8, 0x0(r8)
-	  stw       r7, 0x2BC(r8)
-	  stw       r0, 0x2C0(r8)
-	  lwz       r0, 0x198(r1)
-	  stw       r0, 0x2C4(r8)
-	  stfs      f2, 0xD4(r1)
-	  lfs       f2, 0xD4(r1)
-	  stfs      f2, 0x19C(r1)
-	  stfs      f1, 0x1A0(r1)
-	  stfs      f0, 0x1A4(r1)
-	  lwz       r8, 0x20(r31)
-	  lwz       r7, 0x19C(r1)
-	  lwz       r8, 0x3F4(r8)
-	  lwz       r0, 0x1A0(r1)
-	  lwz       r8, 0xC(r8)
-	  stw       r7, 0x2BC(r8)
-	  stw       r0, 0x2C0(r8)
-	  lwz       r0, 0x1A4(r1)
-	  stw       r0, 0x2C4(r8)
-	  lwz       r7, 0x20(r31)
-	  lfs       f0, -0x548C(r2)
-	  lwz       r10, 0x3F4(r7)
-	  lwz       r9, 0x224(r7)
-	  lwz       r8, 0xC(r10)
-	  lwz       r7, 0x0(r10)
-	  lfs       f2, 0x280(r9)
-	  addi      r8, r8, 0x2BC
-	  addi      r7, r7, 0x2BC
-	  lfs       f3, -0x547C(r2)
-	  fmuls     f2, f2, f0
-	  lfs       f1, 0x8(r7)
-	  lfs       f0, 0x8(r8)
-	  fadds     f31, f3, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x74(r1)
-	  lfs       f1, 0x4(r7)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x70(r1)
-	  lfs       f1, 0x0(r7)
-	  lfs       f0, 0x0(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x6C(r1)
-	  bl        -0x130050
-	  lfs       f2, 0x12C(r1)
-	  addi      r6, r1, 0x68
-	  lfs       f3, 0x16C(r13)
-	  addi      r5, r1, 0x64
-	  lfs       f1, 0x128(r1)
-	  lfs       f0, 0x124(r1)
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  addi      r4, r1, 0x60
-	  fmuls     f0, f0, f3
-	  stfs      f2, 0x68(r1)
-	  addi      r3, r1, 0x118
-	  stfs      f1, 0x64(r1)
-	  stfs      f0, 0x60(r1)
-	  bl        -0x13008C
-	  lwz       r3, 0x20(r31)
-	  addi      r6, r1, 0x9C
-	  lfs       f28, 0x120(r1)
-	  addi      r5, r1, 0x98
-	  lwz       r3, 0x3F4(r3)
-	  lfs       f29, 0x11C(r1)
-	  addi      r4, r1, 0x94
-	  lwz       r3, 0x0(r3)
-	  lfs       f30, 0x118(r1)
-	  lfs       f0, 0x2C4(r3)
-	  addi      r7, r3, 0x2BC
-	  addi      r3, r1, 0x130
-	  fsubs     f0, f0, f28
-	  stfs      f0, 0x9C(r1)
-	  lfs       f0, 0x4(r7)
-	  fsubs     f0, f0, f29
-	  stfs      f0, 0x98(r1)
-	  lfs       f0, 0x0(r7)
-	  fsubs     f0, f0, f30
-	  stfs      f0, 0x94(r1)
-	  bl        -0x1300E0
-	  lfs       f25, 0x130(r1)
-	  lfs       f26, 0x134(r1)
-	  fmuls     f1, f25, f25
-	  lfs       f27, 0x138(r1)
-	  fmuls     f0, f26, f26
-	  fmuls     f2, f27, f27
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x1595E0
-	  lfs       f0, -0x54A8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x398
-	  fdivs     f25, f25, f1
-	  fdivs     f26, f26, f1
-	  fdivs     f27, f27, f1
+	for (int i = 0; i < SLIMECREATURE_COUNT; i++) {
+		zen::particleGenerator* ptclGenK
+		    = effectMgr->create(EffectMgr::EFF_Slime_DeadK, mSlime->mSlimeCreatures[i]->mPosition, nullptr, nullptr);
+		if (ptclGenK) {
+			ptclGenK->setEmitPosPtr(&mSlime->mSlimeCreatures[i]->mPosition);
+		}
 
-	.loc_0x398:
-	  fmuls     f25, f25, f31
-	  li        r4, 0x32
-	  fmuls     f26, f26, f31
-	  fmuls     f27, f27, f31
-	  fadds     f0, f30, f25
-	  fadds     f4, f29, f26
-	  fadds     f3, f28, f27
-	  stfs      f0, 0xBC(r1)
-	  fsubs     f2, f30, f25
-	  fsubs     f1, f29, f26
-	  lfs       f5, 0xBC(r1)
-	  fsubs     f0, f28, f27
-	  stfs      f5, 0x13C(r1)
-	  stfs      f4, 0x140(r1)
-	  stfs      f3, 0x144(r1)
-	  lwz       r5, 0x20(r31)
-	  lwz       r3, 0x13C(r1)
-	  lwz       r5, 0x3F4(r5)
-	  lwz       r0, 0x140(r1)
-	  lwz       r5, 0x0(r5)
-	  stw       r3, 0x2BC(r5)
-	  stw       r0, 0x2C0(r5)
-	  lwz       r0, 0x144(r1)
-	  stw       r0, 0x2C4(r5)
-	  stfs      f2, 0xB0(r1)
-	  lfs       f2, 0xB0(r1)
-	  stfs      f2, 0x148(r1)
-	  stfs      f1, 0x14C(r1)
-	  stfs      f0, 0x150(r1)
-	  lwz       r5, 0x20(r31)
-	  lwz       r3, 0x148(r1)
-	  lwz       r5, 0x3F4(r5)
-	  lwz       r0, 0x14C(r1)
-	  lwz       r5, 0xC(r5)
-	  stw       r3, 0x2BC(r5)
-	  stw       r0, 0x2C0(r5)
-	  lwz       r0, 0x150(r1)
-	  stw       r0, 0x2C4(r5)
-	  lwz       r3, 0x2F6C(r13)
-	  addi      r3, r3, 0x70
-	  bl        -0xE388C
-	  li        r29, 0
-	  rlwinm    r30,r29,2,0,29
+		zen::particleGenerator* ptclGenI
+		    = effectMgr->create(EffectMgr::EFF_Slime_DeadI, mSlime->mSlimeCreatures[i]->mPosition, nullptr, nullptr);
+		if (ptclGenI) {
+			ptclGenI->setEmitPosPtr(&mSlime->mSlimeCreatures[i]->mPosition);
+		}
+	}
 
-	.loc_0x444:
-	  lwz       r5, 0x20(r31)
-	  li        r4, 0x4B
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  lwz       r5, 0x3F4(r5)
-	  li        r7, 0
-	  lwzx      r5, r5, r30
-	  addi      r5, r5, 0x94
-	  bl        0x35830
-	  cmplwi    r3, 0
-	  beq-      .loc_0x484
-	  lwz       r4, 0x20(r31)
-	  lwz       r4, 0x3F4(r4)
-	  lwzx      r4, r4, r30
-	  addi      r0, r4, 0x94
-	  stw       r0, 0x18(r3)
-
-	.loc_0x484:
-	  lwz       r5, 0x20(r31)
-	  li        r4, 0x4A
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  lwz       r5, 0x3F4(r5)
-	  li        r7, 0
-	  lwzx      r5, r5, r30
-	  addi      r5, r5, 0x94
-	  bl        0x357F0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x4C4
-	  lwz       r4, 0x20(r31)
-	  lwz       r4, 0x3F4(r4)
-	  lwzx      r4, r4, r30
-	  addi      r0, r4, 0x94
-	  stw       r0, 0x18(r3)
-
-	.loc_0x4C4:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x4
-	  addi      r30, r30, 0x4
-	  blt+      .loc_0x444
-	  lwz       r3, 0x20(r31)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x4EC
-	  li        r4, 0x8D
-	  bl        -0xC34E8
-
-	.loc_0x4EC:
-	  lwz       r3, 0x20(r31)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x504
-	  li        r4, 0x95
-	  bl        -0xC35D4
-
-	.loc_0x504:
-	  lwz       r0, 0x20C(r1)
-	  lfd       f31, 0x200(r1)
-	  lfd       f30, 0x1F8(r1)
-	  lfd       f29, 0x1F0(r1)
-	  lfd       f28, 0x1E8(r1)
-	  lfd       f27, 0x1E0(r1)
-	  lfd       f26, 0x1D8(r1)
-	  lfd       f25, 0x1D0(r1)
-	  lwz       r31, 0x1CC(r1)
-	  lwz       r30, 0x1C8(r1)
-	  lwz       r29, 0x1C4(r1)
-	  addi      r1, r1, 0x208
-	  mtlr      r0
-	  blr
-	*/
+	if (mSlime->mSeContext) {
+		mSlime->mSeContext->stopSound(SE_SLIME_WALK);
+	}
+	if (mSlime->mSeContext) {
+		mSlime->mSeContext->playSound(SE_SLIME_DISAPPEAR);
+	}
 }
 
 /*
@@ -2788,9 +962,14 @@ void SlimeAi::initDie(int)
  * Address:	........
  * Size:	000050
  */
-void SlimeAi::initWalk(int)
+void SlimeAi::initWalk(int nextState)
 {
-	// UNUSED FUNCTION
+	mSlime->setNextState(nextState);
+	mSlime->setMotionFinish(false);
+	mSlime->setTargetCreature(nullptr);
+	if (mSlime->mSeContext) {
+		mSlime->mSeContext->playSound(SE_SLIME_WALK);
+	}
 }
 
 /*
@@ -2798,8 +977,10 @@ void SlimeAi::initWalk(int)
  * Address:	........
  * Size:	000018
  */
-void SlimeAi::initChase(int)
+void SlimeAi::initChase(int nextState)
 {
+	mSlime->setNextState(nextState);
+	mSlime->setMotionFinish(false);
 	// UNUSED FUNCTION
 }
 
@@ -2808,9 +989,16 @@ void SlimeAi::initChase(int)
  * Address:	........
  * Size:	000360
  */
-void SlimeAi::initContract(int)
+void SlimeAi::initContract(int nextState)
 {
-	// UNUSED FUNCTION
+	mSlime->setNextState(nextState);
+	mSlime->setMotionFinish(false);
+	mIsContractFinished = false;
+	mSlime->set2D4(0.0f);
+	setContractGoal();
+	calcContractDamage();
+	contractCoreFlickPiki();
+	mSlime->mCore->mCoreAi->setHitMotionStart();
 }
 
 /*
@@ -2818,9 +1006,14 @@ void SlimeAi::initContract(int)
  * Address:	........
  * Size:	000268
  */
-void SlimeAi::initExpansion(int)
+void SlimeAi::initExpansion(int nextState)
 {
-	// UNUSED FUNCTION
+	mSlime->setNextState(nextState);
+	mSlime->setMotionFinish(false);
+	mSlime->mDoCrashContract = false;
+	mSlime->mIsMoveLeader    = true;
+	mSlime->set2D4(0.0f);
+	setExpansionGoal();
 }
 
 /*
@@ -2828,9 +1021,18 @@ void SlimeAi::initExpansion(int)
  * Address:	........
  * Size:	000174
  */
-void SlimeAi::initAppear(int)
+void SlimeAi::initAppear(int nextState)
 {
-	// UNUSED FUNCTION
+	mSlime->setNextState(nextState);
+	mSlime->setMotionFinish(false);
+	mSlime->mIsMoveLeader = true;
+	mSlime->set2D4(0.0f);
+	mSlime->set2D0(0.0f);
+	mSlime->setAnimTimer(0.5f);
+	setAppearGoal();
+	if (mSlime->mSeContext) {
+		mSlime->mSeContext->playSound(SE_SLIME_WALK);
+	}
 }
 
 /*
@@ -2838,9 +1040,21 @@ void SlimeAi::initAppear(int)
  * Address:	........
  * Size:	0000E0
  */
-void SlimeAi::initDisAppear(int)
+void SlimeAi::initDisAppear(int nextState)
 {
-	// UNUSED FUNCTION
+	mSlime->setNextState(nextState);
+	mSlime->setMotionFinish(false);
+	mSlime->mIsMoveLeader = false;
+	mSlime->setIsAlive(false);
+	mSlime->setIsAtari(false);
+	mSlime->set2D4(0.0f);
+	mSlime->createPellet(mSlime->mPosition, 300.0f, true);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mSlime->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mSlime->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, mSlime->mPosition, nullptr, nullptr);
+	if (mSlime->mSeContext) {
+		mSlime->mSeContext->playSound(SE_SLIME_DEAD);
+	}
 }
 
 /*
@@ -2850,7 +1064,19 @@ void SlimeAi::initDisAppear(int)
  */
 void SlimeAi::dieState()
 {
-	// UNUSED FUNCTION
+	bothEndsToGoal();
+	if (mSlime->get2D4() > 0.0f) {
+		mSlime->_3D4 -= C_SLIME_PROP(mSlime).mDeadScaleSpeed() * gsys->getFrameTime();
+		if (mSlime->_3D4 < 0.0f) {
+			mSlime->_3D4 = 0.0f;
+		}
+		if (!mSlime->getMotionFinish()) {
+			mSlime->setMotionFinish(true);
+			setDieGoal();
+		}
+	}
+	setMidPointVelocity();
+	mSlime->add2D4(gsys->getFrameTime());
 }
 
 /*
@@ -2860,7 +1086,9 @@ void SlimeAi::dieState()
  */
 void SlimeAi::walkRandomState()
 {
-	// UNUSED FUNCTION
+	makeTargetRandom();
+	setVelocity(C_SLIME_PROP(mSlime).mMaxMoveSpeed());
+	walkAllState();
 }
 
 /*
@@ -2870,7 +1098,9 @@ void SlimeAi::walkRandomState()
  */
 void SlimeAi::walkGoHomeState()
 {
-	// UNUSED FUNCTION
+	mSlime->setTargetPosition(*mSlime->getInitPosition());
+	setVelocity(C_SLIME_PROP(mSlime).mMaxMoveSpeed());
+	walkAllState();
 }
 
 /*
@@ -2880,7 +1110,9 @@ void SlimeAi::walkGoHomeState()
  */
 void SlimeAi::chaseNaviState()
 {
-	// UNUSED FUNCTION
+	mSlime->makeTargetCreature();
+	setVelocity(C_SLIME_PROP(mSlime).mMaxMoveSpeed());
+	walkAllState();
 }
 
 /*
@@ -2890,7 +1122,9 @@ void SlimeAi::chaseNaviState()
  */
 void SlimeAi::chasePikiState()
 {
-	// UNUSED FUNCTION
+	mSlime->makeTargetCreature();
+	setVelocity(C_SLIME_PROP(mSlime).mMaxMoveSpeed());
+	walkAllState();
 }
 
 /*
@@ -2900,7 +1134,9 @@ void SlimeAi::chasePikiState()
  */
 void SlimeAi::contractState()
 {
-	// UNUSED FUNCTION
+	bothEndsToGoal();
+	mSlime->add2D4(gsys->getFrameTime());
+	setMidPointVelocity();
 }
 
 /*
@@ -2910,7 +1146,9 @@ void SlimeAi::contractState()
  */
 void SlimeAi::expansionState()
 {
-	// UNUSED FUNCTION
+	bothEndsToGoal();
+	mSlime->add2D4(gsys->getFrameTime());
+	setMidPointVelocity();
 }
 
 /*
@@ -2918,10 +1156,7 @@ void SlimeAi::expansionState()
  * Address:	........
  * Size:	000004
  */
-void SlimeAi::stayState()
-{
-	// UNUSED FUNCTION
-}
+void SlimeAi::stayState() { }
 
 /*
  * --INFO--
@@ -2930,320 +1165,66 @@ void SlimeAi::stayState()
  */
 void SlimeAi::appearState()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x150(r1)
-	  stmw      r26, 0x138(r1)
-	  mr        r26, r3
-	  lwz       r4, 0x20(r3)
-	  lfs       f0, -0x5460(r2)
-	  lfs       f1, 0x2D4(r4)
-	  lwz       r3, 0x224(r4)
-	  fcmpo     cr0, f1, f0
-	  lfs       f6, 0x380(r3)
-	  bge-      .loc_0xC0
-	  lfs       f2, -0x54A0(r2)
-	  fsubs     f3, f1, f0
-	  lfs       f4, -0x548C(r2)
-	  fmuls     f0, f6, f1
-	  fsubs     f5, f1, f2
-	  lfs       f2, -0x54A8(r2)
-	  fmuls     f4, f4, f6
-	  fmuls     f2, f2, f5
-	  fmuls     f0, f3, f0
-	  fmuls     f4, f4, f1
-	  fmuls     f2, f3, f2
-	  fmuls     f3, f5, f4
-	  fsubs     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x3D4(r4)
-	  lfs       f0, -0x5454(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x90
-	  lwz       r3, 0x20(r26)
-	  lfs       f0, -0x5450(r2)
-	  lfs       f2, 0x2D8(r3)
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x2D8(r3)
-	  b         .loc_0xC4
+	u32 badCompiler[2];
+	f32 slimeScalePts[3];
+	slimeScalePts[0] = 0.0f;
+	slimeScalePts[1] = C_SLIME_PROP(mSlime).mRadiusContractionScore();
+	slimeScalePts[2] = C_SLIME_PROP(mSlime).mRadiusContractionScore();
+	f32 timer1       = mSlime->get2D4();
+	if (timer1 < 2.0f) {
+		mSlime->_3D4 = NsLibMath<f32>::lagrange3(slimeScalePts, timer1);
+		if (timer1 < 1.25f) {
+			mSlime->addAnimTimer(0.05f);
+		} else {
+			mSlime->addAnimTimer(-0.1f);
+			if (mSlime->getAnimTimer() < 0.2f) {
+				mSlime->setAnimTimer(0.2f);
+			}
+		}
+	} else {
+		mSlime->_3D4 = C_SLIME_PROP(mSlime).mRadiusContractionScore();
+	}
 
-	.loc_0x90:
-	  lwz       r3, 0x20(r26)
-	  lfs       f0, -0x544C(r2)
-	  lfs       f2, 0x2D8(r3)
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x2D8(r3)
-	  lwz       r3, 0x20(r26)
-	  lfs       f0, -0x5448(r2)
-	  lfsu      f2, 0x2D8(r3)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0xC4
-	  stfs      f0, 0x0(r3)
-	  b         .loc_0xC4
+	f32 coreScalePts[3];
+	coreScalePts[0] = 0.0f;
+	coreScalePts[1] = 1.0f;
+	coreScalePts[2] = 1.0f;
+	f32 nucleusScalePts[3];
+	nucleusScalePts[0] = 0.0f;
+	nucleusScalePts[1] = 0.7f;
+	nucleusScalePts[2] = 0.7f;
+	f32 timer2         = mSlime->get2D0();
+	if (timer2 < 1.0f) {
+		if (timer2 >= 0.47f && timer2 <= 0.97f) {
 
-	.loc_0xC0:
-	  stfs      f6, 0x3D4(r4)
+			f32 val   = (timer2 - 0.47f) * 4.0f;
+			f32 scale = NsLibMath<f32>::lagrange3(coreScalePts, val);
+			mSlime->mCore->mScale.set(scale, scale, scale);
+		}
+		if (timer2 >= 0.4f && timer2 <= 0.9f) {
 
-	.loc_0xC4:
-	  lwz       r3, 0x20(r26)
-	  lfs       f7, -0x54A0(r2)
-	  lfs       f0, 0x2D0(r3)
-	  fcmpo     cr0, f0, f7
-	  bge-      .loc_0x1C8
-	  lfs       f3, -0x5444(r2)
-	  fcmpo     cr0, f0, f3
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x148
-	  lfs       f2, -0x5440(r2)
-	  fcmpo     cr0, f0, f2
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x148
-	  fsubs     f2, f0, f3
-	  lfs       f4, -0x543C(r2)
-	  lfs       f3, -0x5460(r2)
-	  lwz       r3, 0x3FC(r3)
-	  fmuls     f8, f4, f2
-	  lfs       f4, -0x548C(r2)
-	  lfs       f2, -0x54A8(r2)
-	  fsubs     f6, f8, f7
-	  fmuls     f5, f4, f8
-	  fsubs     f4, f8, f3
-	  fmuls     f3, f2, f6
-	  fmuls     f2, f7, f8
-	  fmuls     f5, f6, f5
-	  fmuls     f3, f4, f3
-	  fmuls     f2, f4, f2
-	  fsubs     f2, f3, f2
-	  fadds     f2, f5, f2
-	  stfsu     f2, 0x7C(r3)
-	  stfs      f2, 0x4(r3)
-	  stfs      f2, 0x8(r3)
+			f32 val   = (timer2 - 0.4f) * 4.0f;
+			f32 scale = NsLibMath<f32>::lagrange3(nucleusScalePts, val);
+			mSlime->mNucleus->mScale.set(scale, scale, scale);
+		}
+	} else {
+		mSlime->mCore->mScale.set(coreScalePts[2], coreScalePts[2], coreScalePts[2]);
+		mSlime->mNucleus->mScale.set(nucleusScalePts[2], nucleusScalePts[2], nucleusScalePts[2]);
+	}
 
-	.loc_0x148:
-	  lfs       f3, -0x5438(r2)
-	  fcmpo     cr0, f0, f3
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x1F0
-	  lfs       f2, -0x5434(r2)
-	  fcmpo     cr0, f0, f2
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x1F0
-	  fsubs     f2, f0, f3
-	  lfs       f4, -0x543C(r2)
-	  lwz       r3, 0x20(r26)
-	  lfs       f3, -0x54A0(r2)
-	  fmuls     f7, f4, f2
-	  lfs       f4, -0x5460(r2)
-	  lfs       f2, -0x5488(r2)
-	  fsubs     f6, f7, f3
-	  lfs       f3, -0x54A8(r2)
-	  lfs       f5, -0x5430(r2)
-	  fsubs     f4, f7, f4
-	  fmuls     f2, f2, f7
-	  fmuls     f3, f3, f6
-	  lwz       r3, 0x3F8(r3)
-	  fmuls     f5, f5, f7
-	  fmuls     f2, f4, f2
-	  fmuls     f3, f4, f3
-	  fmuls     f4, f6, f5
-	  fsubs     f2, f3, f2
-	  fadds     f2, f4, f2
-	  stfsu     f2, 0x7C(r3)
-	  stfs      f2, 0x4(r3)
-	  stfs      f2, 0x8(r3)
-	  b         .loc_0x1F0
+	if (timer1 > 2.0f && timer2 > 1.0f) {
+		mSlime->setMotionFinish(true);
+		mSlime->mCore->setIsAlive(true);
+		mSlime->mNucleus->setIsAlive(true);
+		mSlime->mCore->mScale.set(coreScalePts[2], coreScalePts[2], coreScalePts[2]);
+		mSlime->mNucleus->mScale.set(nucleusScalePts[2], nucleusScalePts[2], nucleusScalePts[2]);
+		mSlime->mIsMoveLeader = true;
+	}
 
-	.loc_0x1C8:
-	  lwz       r3, 0x3FC(r3)
-	  stfsu     f7, 0x7C(r3)
-	  stfs      f7, 0x4(r3)
-	  stfs      f7, 0x8(r3)
-	  lwz       r3, 0x20(r26)
-	  lfs       f2, -0x5488(r2)
-	  lwz       r3, 0x3F8(r3)
-	  stfsu     f2, 0x7C(r3)
-	  stfs      f2, 0x4(r3)
-	  stfs      f2, 0x8(r3)
-
-	.loc_0x1F0:
-	  lfs       f2, -0x5460(r2)
-	  fcmpo     cr0, f1, f2
-	  ble-      .loc_0x260
-	  lfs       f1, -0x54A0(r2)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x260
-	  lwz       r3, 0x20(r26)
-	  li        r0, 0x1
-	  stb       r0, 0x2BD(r3)
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x3FC(r3)
-	  stb       r0, 0x2B8(r3)
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x3F8(r3)
-	  stb       r0, 0x2B8(r3)
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x3FC(r3)
-	  stfsu     f1, 0x7C(r3)
-	  stfs      f1, 0x4(r3)
-	  stfs      f1, 0x8(r3)
-	  lwz       r3, 0x20(r26)
-	  lfs       f0, -0x5488(r2)
-	  lwz       r3, 0x3F8(r3)
-	  stfsu     f0, 0x7C(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x8(r3)
-	  lwz       r3, 0x20(r26)
-	  stb       r0, 0x3C4(r3)
-
-	.loc_0x260:
-	  lwz       r4, 0x20(r26)
-	  addi      r30, r1, 0x74
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r29, r1, 0x70
-	  lfs       f2, 0x2D8(r4)
-	  lfs       f0, 0x28C(r3)
-	  addi      r28, r1, 0x6C
-	  lfs       f1, 0x2D4(r4)
-	  li        r31, 0x1
-	  fmuls     f0, f2, f0
-	  li        r27, 0x4
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x2D4(r4)
-	  lwz       r4, 0x20(r26)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x2D0(r4)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x2D0(r4)
-	  lfs       f0, -0x54A8(r2)
-	  stfs      f0, 0xB4(r1)
-	  stfs      f0, 0xB0(r1)
-	  stfs      f0, 0xAC(r1)
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x3F4(r3)
-	  lwz       r5, 0x0(r3)
-	  lfs       f0, 0x94(r5)
-	  lfs       f1, 0x2BC(r5)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xAC(r1)
-	  lfs       f1, 0x2C0(r5)
-	  lfs       f0, 0x98(r5)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xB0(r1)
-	  lfs       f1, 0x2C4(r5)
-	  lfs       f0, 0x9C(r5)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xB4(r1)
-	  lfs       f0, 0xAC(r1)
-	  lfs       f1, -0x548C(r2)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xAC(r1)
-	  lfs       f0, 0xB0(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xB0(r1)
-	  lfs       f0, 0xB4(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xB4(r1)
-	  lwz       r3, 0xAC(r1)
-	  lwz       r0, 0xB0(r1)
-	  stw       r3, 0xA4(r5)
-	  stw       r0, 0xA8(r5)
-	  lwz       r0, 0xB4(r1)
-	  stw       r0, 0xAC(r5)
-	  lwz       r4, 0x20(r26)
-	  lwz       r3, 0xAC(r1)
-	  lwz       r4, 0x3F4(r4)
-	  lwz       r0, 0xB0(r1)
-	  lwz       r4, 0x0(r4)
-	  stw       r3, 0x70(r4)
-	  stw       r0, 0x74(r4)
-	  lwz       r0, 0xB4(r1)
-	  stw       r0, 0x78(r4)
-	  b         .loc_0x46C
-
-	.loc_0x360:
-	  lwz       r3, 0x20(r26)
-	  addi      r4, r28, 0
-	  addi      r5, r29, 0
-	  lwz       r7, 0x3F4(r3)
-	  mr        r6, r30
-	  lwz       r8, 0x224(r3)
-	  addi      r3, r1, 0xA0
-	  lwzx      r7, r7, r27
-	  lfs       f1, 0x2A0(r8)
-	  lfsu      f0, 0x70(r7)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x0(r7)
-	  lfs       f0, 0x4(r7)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x4(r7)
-	  lfs       f0, 0x8(r7)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x8(r7)
-	  lwz       r7, 0x20(r26)
-	  lwz       r7, 0x3F4(r7)
-	  lwzx      r7, r7, r27
-	  addi      r8, r7, 0x94
-	  addi      r7, r7, 0x2BC
-	  lfs       f0, 0x8(r8)
-	  lfs       f1, 0x8(r7)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x74(r1)
-	  lfs       f1, 0x4(r7)
-	  lfs       f0, 0x4(r8)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x70(r1)
-	  lfs       f1, 0x0(r7)
-	  lfs       f0, 0x0(r8)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x6C(r1)
-	  bl        -0x1306B0
-	  lwz       r3, 0x20(r26)
-	  addi      r31, r31, 0x1
-	  lfs       f2, 0xA0(r1)
-	  lwz       r4, 0x224(r3)
-	  lwz       r3, 0x3F4(r3)
-	  lfs       f1, 0x2B0(r4)
-	  lwzx      r3, r3, r27
-	  fmuls     f2, f2, f1
-	  lfsu      f0, 0x70(r3)
-	  lfs       f4, 0xA8(r1)
-	  lfs       f3, -0x54A8(r2)
-	  fadds     f0, f0, f2
-	  fmuls     f3, f3, f1
-	  fmuls     f4, f4, f1
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fadds     f0, f0, f3
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fadds     f0, f0, f4
-	  stfs      f0, 0x8(r3)
-	  lwz       r3, 0x20(r26)
-	  lwz       r3, 0x3F4(r3)
-	  lwzx      r4, r3, r27
-	  addi      r27, r27, 0x4
-	  lwz       r3, 0x70(r4)
-	  lwz       r0, 0x74(r4)
-	  stw       r3, 0xA4(r4)
-	  stw       r0, 0xA8(r4)
-	  lwz       r0, 0x78(r4)
-	  stw       r0, 0xAC(r4)
-
-	.loc_0x46C:
-	  lwz       r3, 0x3168(r13)
-	  lwz       r3, 0x28(r3)
-	  subi      r0, r3, 0x1
-	  cmpw      r31, r0
-	  blt+      .loc_0x360
-	  lmw       r26, 0x138(r1)
-	  lwz       r0, 0x154(r1)
-	  addi      r1, r1, 0x150
-	  mtlr      r0
-	  blr
-	*/
+	mSlime->add2D4(mSlime->getAnimTimer() * gsys->getFrameTime());
+	mSlime->add2D0(gsys->getFrameTime());
+	bothEndsToAppearGoal();
+	setMidPointVelocity();
 }
 
 /*
@@ -3253,7 +1234,11 @@ void SlimeAi::appearState()
  */
 void SlimeAi::disAppearState()
 {
-	// UNUSED FUNCTION
+	bothEndsToGoal();
+	if (mSlime->get2D4() > 3.0f) {
+		mSlime->doKill();
+	}
+	mSlime->add2D4(gsys->getFrameTime());
 }
 
 /*
@@ -3276,7 +1261,9 @@ void SlimeAi::update()
 		walkRandomState();
 		if (dieTransit()) {
 			initDie(SLIMEAI_Die);
-		} else if (collisionContractTransit() || dissolutionContractTransit()) {
+		} else if (collisionContractTransit()) {
+			initContract(SLIMEAI_Contract);
+		} else if (dissolutionContractTransit()) {
 			initContract(SLIMEAI_Contract);
 		} else if (chaseNaviTransit()) {
 			initChase(SLIMEAI_ChaseNavi);
@@ -3289,7 +1276,9 @@ void SlimeAi::update()
 		chaseNaviState();
 		if (dieTransit()) {
 			initDie(SLIMEAI_Die);
-		} else if (collisionContractTransit() || dissolutionContractTransit()) {
+		} else if (collisionContractTransit()) {
+			initContract(SLIMEAI_Contract);
+		} else if (dissolutionContractTransit()) {
 			initContract(SLIMEAI_Contract);
 		} else if (outSideChaseRangeTransit()) {
 			initWalk(SLIMEAI_WalkGoHome);
@@ -3304,7 +1293,9 @@ void SlimeAi::update()
 		chasePikiState();
 		if (dieTransit()) {
 			initDie(SLIMEAI_Die);
-		} else if (collisionContractTransit() || dissolutionContractTransit()) {
+		} else if (collisionContractTransit()) {
+			initContract(SLIMEAI_Contract);
+		} else if (dissolutionContractTransit()) {
 			initContract(SLIMEAI_Contract);
 		} else if (outSideChaseRangeTransit()) {
 			initWalk(SLIMEAI_WalkGoHome);
@@ -3321,7 +1312,9 @@ void SlimeAi::update()
 		walkGoHomeState();
 		if (dieTransit()) {
 			initDie(SLIMEAI_Die);
-		} else if (collisionContractTransit() || dissolutionContractTransit()) {
+		} else if (collisionContractTransit()) {
+			initContract(SLIMEAI_Contract);
+		} else if (dissolutionContractTransit()) {
 			initContract(SLIMEAI_Contract);
 		} else if (inSideWaitRangeTransit()) {
 			initWalk(SLIMEAI_WalkRandom);

@@ -32,11 +32,11 @@ CoreNucleusAi::CoreNucleusAi(CoreNucleus* core) { mCore = core; }
 void CoreNucleusAi::initAI(CoreNucleus* core)
 {
 	mCore = core;
-	mCore->setCurrentState(2);
-	mCore->setNextState(2);
+	mCore->setCurrentState(COREAI_Follow);
+	mCore->setNextState(COREAI_Follow);
 	mCore->mAnimator.startMotion(PaniMotionInfo(2, this));
 	mCore->setAnimTimer(30.0f);
-	_04 = 0;
+	_04 = false;
 }
 
 /*
@@ -111,7 +111,7 @@ void CoreNucleusAi::keyLoopEnd() { mCore->addLoopCounter(1); }
  * Address:	8017AE70
  * Size:	000010
  */
-void CoreNucleusAi::keyFinished() { mCore->setMotionFinish(1); }
+void CoreNucleusAi::keyFinished() { mCore->setMotionFinish(true); }
 
 /*
  * --INFO--
@@ -145,8 +145,8 @@ void CoreNucleusAi::setEveryFrame()
  */
 void CoreNucleusAi::setBossPosition()
 {
-	mCore->mPosition.x = mCore->mSlime->_3E8.x;
-	mCore->mPosition.z = mCore->mSlime->_3E8.z;
+	mCore->mPosition.x = mCore->mSlime->mCorePosition.x;
+	mCore->mPosition.z = mCore->mSlime->mCorePosition.z;
 }
 
 /*
@@ -199,13 +199,13 @@ bool CoreNucleusAi::hitMotionStartTransit() { return _04; }
 void CoreNucleusAi::initDie(int val)
 {
 	mCore->setNextState(val);
-	mCore->setMotionFinish(0);
+	mCore->setMotionFinish(false);
 	mCore->setLoopCounter(0);
 	mCore->mAnimator.startMotion(PaniMotionInfo(1, this));
 	mCore->set2D4(0.0f);
-	effectMgr->create(EffectMgr::EFF_Unk57, mCore->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk56, mCore->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk55, mCore->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mCore->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mCore->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, mCore->mPosition, nullptr, nullptr);
 	mCore->doKill();
 }
 
@@ -217,7 +217,7 @@ void CoreNucleusAi::initDie(int val)
 void CoreNucleusAi::initDamage(int val)
 {
 	mCore->setNextState(val);
-	mCore->setMotionFinish(0);
+	mCore->setMotionFinish(false);
 	mCore->setLoopCounter(0);
 	mCore->mAnimator.startMotion(PaniMotionInfo(1, this));
 }
@@ -230,7 +230,7 @@ void CoreNucleusAi::initDamage(int val)
 void CoreNucleusAi::initFollow(int val)
 {
 	mCore->setNextState(val);
-	mCore->setMotionFinish(0);
+	mCore->setMotionFinish(false);
 	mCore->mAnimator.startMotion(PaniMotionInfo(2, this));
 	_04 = 0;
 }
@@ -243,10 +243,10 @@ void CoreNucleusAi::initFollow(int val)
 void CoreNucleusAi::initHit(int val)
 {
 	mCore->setNextState(val);
-	mCore->setMotionFinish(0);
+	mCore->setMotionFinish(false);
 	mCore->mAnimator.startMotion(PaniMotionInfo(10, this));
 	Vector3f ptclPos(sinf(mCore->mDirection), 0.0f, cosf(mCore->mDirection));
-	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Unk89, mCore->mPosition, nullptr, nullptr);
+	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Kogane_Hit, mCore->mPosition, nullptr, nullptr);
 	if (ptcl) {
 		ptcl->setEmitDir(ptclPos);
 	}
@@ -289,35 +289,38 @@ void CoreNucleusAi::update()
 {
 	setEveryFrame();
 	switch (mCore->getCurrentState()) {
-	case 0: // dead?
+	case COREAI_Die:
 		dieState();
 		break;
-	case 1: // damaged?
+
+	case COREAI_Damage:
 		damageState();
 		if (dieTransit()) {
-			initDie(0);
+			initDie(COREAI_Die);
 		} else if (_04) {
-			initHit(3);
+			initHit(COREAI_Hit);
 		} else if (isMotionFinishTransit()) {
-			initFollow(2);
+			initFollow(COREAI_Follow);
 		}
 		break;
-	case 2: // following?
+
+	case COREAI_Follow:
 		followState();
 		if (dieTransit()) {
-			initDie(0);
+			initDie(COREAI_Die);
 		} else if (hitMotionStartTransit()) {
-			initHit(3);
+			initHit(COREAI_Hit);
 		} else if (damageTransit()) {
-			initDamage(1);
+			initDamage(COREAI_Damage);
 		}
 		break;
-	case 3: // hit?
+
+	case COREAI_Hit:
 		hitState();
 		if (dieTransit()) {
-			initDie(0);
+			initDie(COREAI_Die);
 		} else if (isMotionFinishTransit()) {
-			initFollow(2);
+			initFollow(COREAI_Follow);
 		}
 		break;
 	}

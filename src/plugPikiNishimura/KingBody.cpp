@@ -33,17 +33,17 @@ void KingBody::setSalivaEffect()
 {
 	mSalivaCallBacks[0].set(&_A8[1], &_A8[2], mKing);
 	mSalivaParticleCallBack->set(mKing);
-	effectMgr->create(EffectMgr::EFF_Unk116, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[0], mSalivaParticleCallBack);
+	effectMgr->create(EffectMgr::EFF_King_Saliva1A, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[0], mSalivaParticleCallBack);
 
 	mSalivaCallBacks[1].set(&_A8[0], &_A8[3], mKing);
-	effectMgr->create(EffectMgr::EFF_Unk116, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[1], mSalivaParticleCallBack);
+	effectMgr->create(EffectMgr::EFF_King_Saliva1A, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[1], mSalivaParticleCallBack);
 
 	mSalivaCallBacks[2].set(&_A8[0], &_A8[1], mKing);
-	effectMgr->create(EffectMgr::EFF_Unk117, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[2], mSalivaParticleCallBack);
+	effectMgr->create(EffectMgr::EFF_King_Saliva1B, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[2], mSalivaParticleCallBack);
 
 	mSpreadSalivaCallBack->set(mKing);
 	zen::particleGenerator* ptcl
-	    = effectMgr->create(EffectMgr::EFF_Unk118, Vector3f(0.0f, 0.0f, 0.0f), mSpreadSalivaCallBack, mSalivaParticleCallBack);
+	    = effectMgr->create(EffectMgr::EFF_King_Saliva2, Vector3f(0.0f, 0.0f, 0.0f), mSpreadSalivaCallBack, mSalivaParticleCallBack);
 	if (ptcl) {
 		ptcl->setEmitPosPtr(&mSalivaEffectPosition);
 	}
@@ -59,9 +59,10 @@ void KingBody::setSeedFlashEffect()
 	mDamageStarCallBack->set(mKing);
 
 	for (int i = 0; i < 2; i++) {
-		effectMgr->create(EffectMgr::EFF_Unk47, _78[i], nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Unk48, _78[i], nullptr, nullptr);
-		zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Unk104, Vector3f(0.0f, 0.0f, 0.0f), mDamageStarCallBack, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_HitA, _78[i], nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_HitB, _78[i], nullptr, nullptr);
+		zen::particleGenerator* ptcl
+		    = effectMgr->create(EffectMgr::EFF_King_SeedFlash, Vector3f(0.0f, 0.0f, 0.0f), mDamageStarCallBack, nullptr);
 		if (ptcl) {
 			ptcl->setEmitPosPtr(&_78[i]);
 		}
@@ -77,18 +78,18 @@ void KingBody::setEatBombEffect()
 {
 	Vector3f dir(sinf(mKing->mDirection), 0.0f, cosf(mKing->mDirection));
 	Vector3f effectPos            = _6C + 50.0f * dir;
-	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_Unk123, effectPos, nullptr, nullptr);
+	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_King_EatBomb2, effectPos, nullptr, nullptr);
 	if (ptcl1) {
 		ptcl1->setEmitDir(dir);
 	}
-	zen::particleGenerator* ptcl2 = effectMgr->create(EffectMgr::EFF_Unk122, effectPos, nullptr, nullptr);
+	zen::particleGenerator* ptcl2 = effectMgr->create(EffectMgr::EFF_King_EatBomb1, effectPos, nullptr, nullptr);
 	if (ptcl2) {
 		ptcl2->setEmitDir(dir);
 	}
 
 	mDamageStarCallBack->set(mKing);
 	for (int i = 0; i < 2; i++) {
-		zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Unk124, _90[i], nullptr, nullptr);
+		zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_King_EatBomb3, _90[i], nullptr, nullptr);
 		if (ptcl) {
 			ptcl->setEmitDir(dir);
 		}
@@ -104,26 +105,26 @@ void KingBody::setEatBombEffect()
  */
 void KingBody::createWaterEffect(int idx)
 {
-	effectMgr->create(EffectMgr::EFF_Unk15, mFootPosList[idx], nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_P_Bubbles, mFootPosList[idx], nullptr, nullptr);
 	if (!mIsFootGeneratingRipples[idx]) {
 		mIsFootGeneratingRipples[idx] = true;
 		mRippleCallBacks[idx].set(mKing, &mFootPosList[idx], &mIsFootGeneratingRipples[idx]);
 		zen::particleGenerator* ptcl1
-		    = effectMgr->create(EffectMgr::EFF_Unk14, Vector3f(0.0f, 0.0f, 0.0f), &mRippleCallBacks[idx], nullptr);
+		    = effectMgr->create(EffectMgr::EFF_RippleWhite, Vector3f(0.0f, 0.0f, 0.0f), &mRippleCallBacks[idx], nullptr);
 		if (ptcl1) {
 			ptcl1->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = ptcl1->getScaleSize();
 			ptcl1->setScaleSize(2.0f * f0);
 		}
 		zen::particleGenerator* ptcl2
-		    = effectMgr->create(EffectMgr::EFF_Unk12, Vector3f(0.0f, 0.0f, 0.0f), &mRippleCallBacks[idx], nullptr);
+		    = effectMgr->create(EffectMgr::EFF_RippleSurface, Vector3f(0.0f, 0.0f, 0.0f), &mRippleCallBacks[idx], nullptr);
 		if (ptcl2) {
 			ptcl2->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = ptcl2->getScaleSize();
 			ptcl2->setScaleSize(2.0f * f0);
 		}
 		zen::particleGenerator* ptcl3
-		    = effectMgr->create(EffectMgr::EFF_Unk13, Vector3f(0.0f, 0.0f, 0.0f), &mRippleCallBacks[idx], nullptr);
+		    = effectMgr->create(EffectMgr::EFF_RippleBlack, Vector3f(0.0f, 0.0f, 0.0f), &mRippleCallBacks[idx], nullptr);
 		if (ptcl3) {
 			ptcl3->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = ptcl3->getScaleSize();
@@ -157,7 +158,7 @@ void KingBody::createUfoParts()
 		ufoPart->mDirection = mKing->mDirection;
 		ufoPart->startAI(0);
 
-		zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Unk125, partPos, nullptr, mSpitPartsParticleCallBack);
+		zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_King_SpitParts, partPos, nullptr, mSpitPartsParticleCallBack);
 
 		radarInfo->detachParts(mKing);
 
@@ -338,7 +339,7 @@ void KingBody::emitOnGroundEffect()
 			if (mKing->getCurrentState() > 0 && mKing->getCurrentState() < 15) {
 				Vector3f footPos = mFootPosList[i];
 				footPos.y -= 5.0f;
-				effectMgr->create(EffectMgr::EFF_Unk103, footPos, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_King_StepCloud, footPos, nullptr, nullptr);
 				if (mKing->mSeContext) {
 					mKing->mSeContext->playSound(SE_KING_WALK);
 				}
@@ -360,7 +361,7 @@ void KingBody::emitSlipEffect()
 		if (mIsFootOnGround[i] && qdist2(mFootPosList[i].x, mFootPosList[i].z, mOldFootPosList[i].x, mOldFootPosList[i].z) > 2.0f) {
 			Vector3f footPos = mFootPosList[i];
 			footPos.y -= 5.0f;
-			effectMgr->create(EffectMgr::EFF_Unk102, footPos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_King_Slip, footPos, nullptr, nullptr);
 		}
 	}
 }

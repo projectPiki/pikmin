@@ -2,26 +2,21 @@
 #include "Shape.h"
 #include "Graphics.h"
 #include "sysNew.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("SlimeBody");
 
 /*
  * --INFO--
@@ -167,7 +162,7 @@ f32 SlimeBody::calcVertexScore(Vector3f* vertex, Vector3f* creatureNormals, f32*
 	f32 score = 0.0f;
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
 		creatureNormals[i].x = vertex->x - mRelativeVelocities[i].x;
-		creatureNormals[i].y = (vertex->y - mRelativeVelocities[i].y) * mSlime->_3D8;
+		creatureNormals[i].y = (vertex->y - mRelativeVelocities[i].y) * mSlime->mBodyThickness;
 		creatureNormals[i].z = vertex->z - mRelativeVelocities[i].z;
 		creatureScores[i]
 		    = mSlime->_3D4 / std::sqrtf(SQUARE(creatureNormals[i].x) + SQUARE(creatureNormals[i].y) + SQUARE(creatureNormals[i].z));

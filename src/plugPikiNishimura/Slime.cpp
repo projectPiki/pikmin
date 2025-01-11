@@ -81,15 +81,15 @@ void Slime::init(Vector3f& pos)
 {
 	mCollisionRadius = 20.0f;
 	setIsOrganic(0);
-	_3C4 = 1;
-	_3C5 = 0;
-	_3C8 = 0;
-	_3CC = bossMgr->mSlimeCreatureCount - 1;
-	_3D0 = 0.0f;
-	_3D4 = 0.0f;
-	_3D8 = SLIME_PROP.mBodyThicknessContract(); // body thickness?
-	_3DC = pos;
-	_3E8 = pos;
+	mIsMoveLeader          = true;
+	mDoCrashContract       = false;
+	mLeaderCreatureIndex   = SLIMECREATURE_CoreOuter;
+	mFollowerCreatureIndex = bossMgr->mSlimeCreatureCount - 1;
+	mLeaderSpeed           = 0.0f;
+	_3D4                   = 0.0f;
+	mBodyThickness         = SLIME_PROP.mBodyThicknessContract(); // body thickness?
+	mNucleusPosition       = pos;
+	mCorePosition          = pos;
 
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
 		mSlimeCreatures[i]->init(pos, this);
@@ -99,25 +99,25 @@ void Slime::init(Vector3f& pos)
 	mSlimeBody->init(this);
 	mCollInfo->setUpdater('cent', mCentreUpdater);
 
-	mCollideSphereUpdaters[0].init(this, mSlimeCreatures[0]);
-	mCollideSphereUpdaters[1].init(this, mSlimeCreatures[1]);
-	mCollideSphereUpdaters[2].init(this, mSlimeCreatures[2]);
-	mCollideSphereUpdaters[3].init(this, mSlimeCreatures[3]);
+	mCollideSphereUpdaters[SLIMECREATURE_CoreOuter].init(this, mSlimeCreatures[SLIMECREATURE_CoreOuter]);
+	mCollideSphereUpdaters[SLIMECREATURE_CoreInner].init(this, mSlimeCreatures[SLIMECREATURE_CoreInner]);
+	mCollideSphereUpdaters[SLIMECREATURE_NucleusInner].init(this, mSlimeCreatures[SLIMECREATURE_NucleusInner]);
+	mCollideSphereUpdaters[SLIMECREATURE_NucleusOuter].init(this, mSlimeCreatures[SLIMECREATURE_NucleusOuter]);
 
-	mCollInfo->setUpdater('stk1', &mCollideSphereUpdaters[0]);
-	mCollInfo->setUpdater('stk2', &mCollideSphereUpdaters[1]);
-	mCollInfo->setUpdater('stk3', &mCollideSphereUpdaters[2]);
-	mCollInfo->setUpdater('stk4', &mCollideSphereUpdaters[3]);
+	mCollInfo->setUpdater('stk1', &mCollideSphereUpdaters[SLIMECREATURE_CoreOuter]);
+	mCollInfo->setUpdater('stk2', &mCollideSphereUpdaters[SLIMECREATURE_CoreInner]);
+	mCollInfo->setUpdater('stk3', &mCollideSphereUpdaters[SLIMECREATURE_NucleusInner]);
+	mCollInfo->setUpdater('stk4', &mCollideSphereUpdaters[SLIMECREATURE_NucleusOuter]);
 
-	mTubeSphereUpdaters[0].setSphere(mCollInfo->getSphere('stk1'));
-	mTubeSphereUpdaters[1].setSphere(mCollInfo->getSphere('stk2'));
-	mTubeSphereUpdaters[2].setSphere(mCollInfo->getSphere('stk3'));
-	mTubeSphereUpdaters[3].setSphere(mCollInfo->getSphere('stk4'));
+	mTubeSphereUpdaters[SLIMECREATURE_CoreOuter].setSphere(mCollInfo->getSphere('stk1'));
+	mTubeSphereUpdaters[SLIMECREATURE_CoreInner].setSphere(mCollInfo->getSphere('stk2'));
+	mTubeSphereUpdaters[SLIMECREATURE_NucleusInner].setSphere(mCollInfo->getSphere('stk3'));
+	mTubeSphereUpdaters[SLIMECREATURE_NucleusOuter].setSphere(mCollInfo->getSphere('stk4'));
 
-	mCollInfo->setUpdater('tub1', &mTubeSphereUpdaters[0]);
-	mCollInfo->setUpdater('tub2', &mTubeSphereUpdaters[1]);
-	mCollInfo->setUpdater('tub3', &mTubeSphereUpdaters[2]);
-	mCollInfo->setUpdater('tub4', &mTubeSphereUpdaters[3]);
+	mCollInfo->setUpdater('tub1', &mTubeSphereUpdaters[SLIMECREATURE_CoreOuter]);
+	mCollInfo->setUpdater('tub2', &mTubeSphereUpdaters[SLIMECREATURE_CoreInner]);
+	mCollInfo->setUpdater('tub3', &mTubeSphereUpdaters[SLIMECREATURE_NucleusInner]);
+	mCollInfo->setUpdater('tub4', &mTubeSphereUpdaters[SLIMECREATURE_NucleusOuter]);
 
 	mCollInfo->makeTubesChild('tub1', 3);
 }

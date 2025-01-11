@@ -50,8 +50,8 @@ Mizu::Mizu(CreatureProp* props)
  */
 bool Mizu::attackDefaultPortion()
 {
-	effectMgr->create(EffectMgr::EFF_Unk51, mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk50, mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_SD_DirtSpray, mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_SD_DirtCloud, mPosition, nullptr, nullptr);
 	return true;
 }
 

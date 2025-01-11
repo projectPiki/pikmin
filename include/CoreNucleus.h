@@ -10,6 +10,16 @@ struct Slime;
 /**
  * @brief TODO.
  */
+enum CoreNucleusAIStateID {
+	COREAI_Die    = 0,
+	COREAI_Damage = 1,
+	COREAI_Follow = 2,
+	COREAI_Hit    = 3,
+};
+
+/**
+ * @brief TODO.
+ */
 struct CoreNucleusProp : public BossProp, public CoreNode {
 
 	/**

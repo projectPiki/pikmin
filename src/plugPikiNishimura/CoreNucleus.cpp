@@ -148,6 +148,6 @@ void CoreNucleus::doAnimation()
 void CoreNucleus::collisionCallback(CollEvent& event)
 {
 	if (event.mCollider->mObjType == OBJTYPE_Piki && static_cast<Piki*>(event.mCollider)->getState() == PIKISTATE_Flying) {
-		mSlime->_3C5 = 1;
+		mSlime->mDoCrashContract = true;
 	}
 }

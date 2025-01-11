@@ -41,8 +41,8 @@ MizuAi::MizuAi(Mizu* mizu)
 void MizuAi::initMizu(Mizu* mizu)
 {
 	mMizu = mizu;
-	_0C   = effectMgr->create(EffectMgr::EFF_Unk194, mMizu->mPosition, nullptr, nullptr);
-	_08   = effectMgr->create(EffectMgr::EFF_Unk193, mMizu->mPosition, nullptr, nullptr);
+	_0C   = effectMgr->create(EffectMgr::EFF_Mizu_IdleMist, mMizu->mPosition, nullptr, nullptr);
+	_08   = effectMgr->create(EffectMgr::EFF_Mizu_IdleBubbles, mMizu->mPosition, nullptr, nullptr);
 	mMizu->setCurrentState(0);
 	mMizu->setNextState(0);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
@@ -58,8 +58,8 @@ void MizuAi::initMizu(Mizu* mizu)
 void MizuAi::initGeyzer(Mizu* geyzer)
 {
 	mMizu = geyzer;
-	_0C   = effectMgr->create(EffectMgr::EFF_Unk194, mMizu->mPosition, nullptr, nullptr);
-	_08   = effectMgr->create(EffectMgr::EFF_Unk193, mMizu->mPosition, nullptr, nullptr);
+	_0C   = effectMgr->create(EffectMgr::EFF_Mizu_IdleMist, mMizu->mPosition, nullptr, nullptr);
+	_08   = effectMgr->create(EffectMgr::EFF_Mizu_IdleBubbles, mMizu->mPosition, nullptr, nullptr);
 	mMizu->setCurrentState(1);
 	mMizu->setNextState(1);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
@@ -219,14 +219,14 @@ void MizuAi::initJet(int stateID)
 		_08->stopGen();
 	}
 
-	effectMgr->create(EffectMgr::EFF_Unk196, mMizu->mPosition, mPuffCallBack, nullptr);
-	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Unk195, mMizu->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Mizu_JetPuff, mMizu->mPosition, mPuffCallBack, nullptr);
+	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Mizu_JetStream, mMizu->mPosition, nullptr, nullptr);
 	mPuffCallBack->set(ptcl);
 	if (ptcl) {
 		ptcl->set1DC(Vector3f(1.0f, 0.0f, 0.0f));
 	}
 
-	effectMgr->create(EffectMgr::EFF_Unk197, mMizu->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Mizu_JetMist, mMizu->mPosition, nullptr, nullptr);
 
 	if (mMizu->mSeContext) {
 		mMizu->mSeContext->stopSound(SE_GEYSER_NORMAL);

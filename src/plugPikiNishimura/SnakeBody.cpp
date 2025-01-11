@@ -32,35 +32,38 @@ DEFINE_PRINT("SnakeBody");
 void SnakeBody::setBodyOnGroundEffect()
 {
 	mOnGroundCallBack->set(mSnake);
-	zen::particleGenerator* groundPtclGen = effectMgr->create(EffectMgr::EFF_Unk128, mSnake->mPosition, mOnGroundCallBack, nullptr);
+	zen::particleGenerator* groundPtclGen = effectMgr->create(EffectMgr::EFF_Snake_OnGround, mSnake->mPosition, mOnGroundCallBack, nullptr);
 	if (groundPtclGen) {
 		groundPtclGen->setEmitPosPtr(&mSnake->mPosition);
 	}
 
 	mRotateCallBack->set(mSnake);
-	zen::particleGenerator* rotatePtclGen = effectMgr->create(EffectMgr::EFF_Unk129, mSnake->mPosition, mRotateCallBack, nullptr);
+	zen::particleGenerator* rotatePtclGen = effectMgr->create(EffectMgr::EFF_Snake_Rotate, mSnake->mPosition, mRotateCallBack, nullptr);
 	if (rotatePtclGen) {
 		rotatePtclGen->setEmitPosPtr(&mSnake->mPosition);
 	}
 
 	// water?
 	if (mSnake->getMapAttribute(mSnake->mPosition) == ATTR_Water) {
-		effectMgr->create(EffectMgr::EFF_Unk85, mSnake->mPosition, nullptr, nullptr);
-		zen::particleGenerator* waterPtclGen1 = effectMgr->create(EffectMgr::EFF_Unk14, mSnake->mPosition, mOnGroundCallBack, nullptr);
+		effectMgr->create(EffectMgr::EFF_Frog_BubbleRingS, mSnake->mPosition, nullptr, nullptr);
+		zen::particleGenerator* waterPtclGen1
+		    = effectMgr->create(EffectMgr::EFF_RippleWhite, mSnake->mPosition, mOnGroundCallBack, nullptr);
 		if (waterPtclGen1) {
 			waterPtclGen1->setEmitPosPtr(&mSnake->mPosition);
 			waterPtclGen1->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = waterPtclGen1->getScaleSize();
 			waterPtclGen1->setScaleSize(3.0f * f0);
 		}
-		zen::particleGenerator* waterPtclGen2 = effectMgr->create(EffectMgr::EFF_Unk12, mSnake->mPosition, mOnGroundCallBack, nullptr);
+		zen::particleGenerator* waterPtclGen2
+		    = effectMgr->create(EffectMgr::EFF_RippleSurface, mSnake->mPosition, mOnGroundCallBack, nullptr);
 		if (waterPtclGen2) {
 			waterPtclGen2->setEmitPosPtr(&mSnake->mPosition);
 			waterPtclGen2->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = waterPtclGen2->getScaleSize();
 			waterPtclGen2->setScaleSize(3.0f * f0);
 		}
-		zen::particleGenerator* waterPtclGen3 = effectMgr->create(EffectMgr::EFF_Unk13, mSnake->mPosition, mOnGroundCallBack, nullptr);
+		zen::particleGenerator* waterPtclGen3
+		    = effectMgr->create(EffectMgr::EFF_RippleBlack, mSnake->mPosition, mOnGroundCallBack, nullptr);
 		if (waterPtclGen3) {
 			waterPtclGen3->setEmitPosPtr(&mSnake->mPosition);
 			waterPtclGen3->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
@@ -172,7 +175,7 @@ void SnakeBody::copyAnimPosition()
 {
 	// NON-MATCHING
 
-	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 4; j++) {
 				// WHY is this array access so fucky
@@ -189,7 +192,7 @@ void SnakeBody::copyAnimPosition()
  */
 void SnakeBody::makeHeadDirection()
 {
-	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		Vector3f* targetPos = mSnake->getTargetPosition();
 		_104[7][0].sub(*targetPos, _104[7][3]);
 		NsCalculation::calcOuterPro(_104[7][0], _104[7][1], _104[7][2]);
@@ -204,7 +207,7 @@ void SnakeBody::makeHeadDirection()
  */
 void SnakeBody::makeTurnVelocity()
 {
-	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		Vector3f tmpVec;
 		Vector3f avg = (_104[7][3] + _104[4][3] + _104[0][3]) / 3.0f;
 		Vector3f dir = mSnake->mPosition - *mSnake->getTargetPosition();
@@ -228,7 +231,7 @@ void SnakeBody::makeTurnVelocity()
  */
 void SnakeBody::makeNewPosition()
 {
-	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		for (int i = 1; i < 7; i++) {
 			_104[i][3].x += _5C[i + 7].x;
 			_104[i][3].y += _5C[i + 7].y;
@@ -244,7 +247,7 @@ void SnakeBody::makeNewPosition()
  */
 void SnakeBody::makeResultPosition()
 {
-	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		Vector3f vec1;
 		Vector3f vec2;
 		Vector3f vec3;
@@ -293,7 +296,7 @@ void SnakeBody::makeResultPosition()
  */
 void SnakeBody::makeVectorMatrix()
 {
-	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		for (int i = 0; i < 8; i++) {
 			if (i < 7) {
 				_104[i][0].sub(_104[i + 1][3], _104[i][3]);
@@ -353,15 +356,15 @@ void SnakeBody::createDeadHeadEffect()
 	vec.x     = 30.0f * sinf(angle) + _5C[mDeadEffectSegmentIndex].x;
 	vec.y     = 0.0f + _5C[mDeadEffectSegmentIndex].y;
 	vec.z     = 30.0f * cosf(angle) + _5C[mDeadEffectSegmentIndex].z;
-	effectMgr->create(EffectMgr::EFF_Unk132, vec, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk131, vec, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk130, vec, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Snake_DeadHeadSpecks, vec, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Snake_DeadHeadFeathers, vec, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Snake_DeadHeadCloud, vec, nullptr, nullptr);
 	rumbleMgr->start(14, 0, vec);
 
 	createDeadPellet(vec, C_SNAKE_PROP(mSnake).mHeadPelletIndex());
 
 	for (int i = 0; i < 7; i++) {
-		mDeadPtclGens[i] = effectMgr->create(EffectMgr::EFF_Unk134, vec, nullptr, nullptr);
+		mDeadPtclGens[i] = effectMgr->create(EffectMgr::EFF_Snake_DeadBodyExplode, vec, nullptr, nullptr);
 		if (mDeadPtclGens[i]) {
 			mDeadPtclGens[i]->stopGen();
 		}
@@ -395,8 +398,8 @@ void SnakeBody::createDeadBodyEffect()
 		mDeadPtclGens[mDeadEffectSegmentIndex]->startGen();
 	}
 
-	effectMgr->create(EffectMgr::EFF_Unk133, vec, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk135, vec, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Snake_DeadBody1, vec, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Snake_DeadBody2, vec, nullptr, nullptr);
 	rumbleMgr->start(15, 0, vec);
 
 	createDeadPellet(vec, C_SNAKE_PROP(mSnake).mBodyPelletIndex());
@@ -464,7 +467,7 @@ void SnakeBody::makeDeadPattern02()
  */
 void SnakeBody::makeDeadScaleParms()
 {
-	if (mSnake->getCurrentState() == 0 && mSnake->getMotionFinish()) {
+	if (mSnake->getCurrentState() == SNAKEAI_Die && mSnake->getMotionFinish()) {
 		makeDeadPattern01();
 	}
 }
@@ -828,7 +831,7 @@ void SnakeBody::makeBodySize()
  */
 void SnakeBody::makeHeadPosition()
 {
-	if (mSnake->getCurrentState() == 4) {
+	if (mSnake->getCurrentState() == SNAKEAI_Attack) {
 		f32 keyVals[5][3] = {
 			{ 32.0f, 36.0f, 49.0f }, { 32.0f, 35.0f, 49.0f }, { 32.0f, 37.0f, 49.0f }, { 28.0f, 33.0f, 49.0f }, { 28.0f, 33.0f, 49.0f },
 		};
@@ -844,7 +847,7 @@ void SnakeBody::makeHeadPosition()
 				                    / (keyVals[mSnake->mSnakeAi->_14][2] - keyVals[mSnake->mSnakeAi->_14][1]) * yDiff;
 			}
 		}
-	} else if (mSnake->getCurrentState() == 0 && mSnake->mAnimator.getCounter() > 60.0f) {
+	} else if (mSnake->getCurrentState() == SNAKEAI_Die && mSnake->mAnimator.getCounter() > 60.0f) {
 		f32 yDiff = mSnake->mSnakeAi->mAttackPositions[1].y - mSnake->mPosition.y;
 		if (mSnake->mAnimator.getCounter() < 70.0f) {
 			_284[7].mMtx[1][3] += (mSnake->mAnimator.getCounter() - 60.0f) / 10.0f * yDiff;
@@ -861,7 +864,7 @@ void SnakeBody::makeHeadPosition()
  */
 void SnakeBody::makeBodyMatrix()
 {
-	if (mSnake->getCurrentState() == 4 || mSnake->getCurrentState() == 0) {
+	if (mSnake->getCurrentState() == SNAKEAI_Attack || mSnake->getCurrentState() == SNAKEAI_Die) {
 		Vector3f vec1;
 		Vector3f vec2;
 		Vector3f vec3;
@@ -911,7 +914,7 @@ void SnakeBody::makeBodyMatrix()
  */
 void SnakeBody::makeAnimMatrix()
 {
-	if (mSnake->getCurrentState() == 4 || mSnake->getCurrentState() == 0) {
+	if (mSnake->getCurrentState() == SNAKEAI_Attack || mSnake->getCurrentState() == SNAKEAI_Die) {
 		Vector3f vecArray[8][4];
 		int i;
 		int j;
@@ -945,7 +948,7 @@ void SnakeBody::makeAnimMatrix()
  */
 void SnakeBody::caseOfMatrix(Matrix4f* animMatrices)
 {
-	if (mSnake->getCurrentState() >= 2 && mSnake->getCurrentState() <= 3) {
+	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 4; j++) {
 				animMatrices[i].setColumn(j, _104[i][j]);
@@ -1073,7 +1076,7 @@ void SnakeBody::setDeadPattern02(Matrix4f*)
  */
 void SnakeBody::setDeadScale(Matrix4f* animMatrices)
 {
-	if (mSnake->getCurrentState() == 0) {
+	if (mSnake->getCurrentState() == SNAKEAI_Die) {
 		setDeadPattern01(animMatrices);
 	}
 }

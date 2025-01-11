@@ -648,8 +648,8 @@ void NaviBuryState::init(Navi* navi)
 	navi->startMotion(PaniMotionInfo(PIKIANIM_GWait1, navi), PaniMotionInfo(PIKIANIM_GWait1));
 	_1C = 0;
 	_1E = 0;
-	effectMgr->create(EffectMgr::EFF_Unk50, navi->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk51, navi->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_SD_DirtCloud, navi->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_SD_DirtSpray, navi->mPosition, nullptr, nullptr);
 	_10.set(0.0f, 0.0f, 0.0f);
 	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -981,8 +981,8 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			UtEffectMgr::cast(3, parm);
 			break;
 		case 3:
-			effectMgr->create(EffectMgr::EFF_Unk50, navi->mPosition, nullptr, nullptr);
-			effectMgr->create(EffectMgr::EFF_Unk51, navi->mPosition, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_SD_DirtCloud, navi->mPosition, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_SD_DirtSpray, navi->mPosition, nullptr, nullptr);
 			break;
 		}
 		break;
@@ -2397,7 +2397,7 @@ void NaviUfoState::procCollideMsg(Navi* navi, MsgCollide* msg)
 	if (_10 != 1 && _10 != 2) {
 		navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 		_10 = 1;
-		effectMgr->create(EffectMgr::EFF_Unk0, navi->mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_NaviShip_Punch, navi->mPosition, nullptr, nullptr);
 	}
 }
 
@@ -2424,20 +2424,20 @@ void NaviUfoState::exec(Navi* navi)
 			if (absF(rot) < 0.15707964f) {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 				_10 = 1;
-				effectMgr->create(EffectMgr::EFF_Unk0, navi->mPosition, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_NaviShip_Punch, navi->mPosition, nullptr, nullptr);
 			} else {
 				navi->mDirection = roundAng(navi->mDirection + 0.1f * rot);
 				if (--_20 <= 0) {
 					navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 					_10 = 1;
-					effectMgr->create(EffectMgr::EFF_Unk0, navi->mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_NaviShip_Punch, navi->mPosition, nullptr, nullptr);
 				}
 			}
 
 		} else if (!navi->mOdoMeter.moving(navi->mPosition, _14)) {
 			navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 			_10 = 1;
-			effectMgr->create(EffectMgr::EFF_Unk0, navi->mPosition, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_NaviShip_Punch, navi->mPosition, nullptr, nullptr);
 			navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 			navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			return;

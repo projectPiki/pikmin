@@ -92,7 +92,7 @@ void SpiderAi::animationKeyUpdated(PaniAnimKeyEvent& event)
 void SpiderAi::keyAction0()
 {
 	int currState = mSpider->getCurrentState();
-	if (currState == 0) {
+	if (currState == SPIDERAI_Die) {
 		mSpider->setIsAlive(false);
 		CollPart* body           = mSpider->mCollInfo->getSphere('tama');
 		body->mCollInfo->mRadius = 0.0f;
@@ -100,7 +100,7 @@ void SpiderAi::keyAction0()
 		return;
 	}
 
-	if (currState == 8) {
+	if (currState == SPIDERAI_Appear) {
 		rumbleMgr->start(5, 0, mSpider->mPosition);
 		cameraMgr->startVibrationEvent(2, mSpider->mPosition);
 	}
@@ -113,7 +113,7 @@ void SpiderAi::keyAction0()
  */
 void SpiderAi::keyAction1()
 {
-	if (mSpider->getCurrentState() == 8) {
+	if (mSpider->getCurrentState() == SPIDERAI_Appear) {
 		mSpider->mSpiderLeg->_05 = 0;
 	}
 }

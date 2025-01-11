@@ -805,7 +805,7 @@ void BTeki::prepareEffects()
 
 	for (int i = 0; i < 3; i++) {
 		zen::particleGenerator* ptcl
-		    = effectMgr->create((EffectMgr::effTypeTable)(i + EffectMgr::EFF_Unk52), Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+		    = effectMgr->create((EffectMgr::effTypeTable)(i + EffectMgr::EFF_RippleWhite2), Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 		if (!ptcl) {
 			(ptcl->mScaleSize);
 			break;

@@ -55,7 +55,7 @@ void SpiderLeg::setHalfDeadEffect(u32 legCollPartID, int jointIdx, int legNum)
 		}
 		if (i == jointIdx) {
 			mHalfDeadCallBackJoints[legNum].set(&legPart->mCentre, mSpider);
-			effectMgr->create(EffectMgr::EFF_Unk184, mSpider->mPosition, &mHalfDeadCallBackJoints[legNum], nullptr);
+			effectMgr->create(EffectMgr::EFF_Spider_HalfDead, mSpider->mPosition, &mHalfDeadCallBackJoints[legNum], nullptr);
 		}
 		legPart = child;
 	}
@@ -75,7 +75,7 @@ void SpiderLeg::setHalfDeadFallEffect(u32 legCollPartID)
 			return;
 		}
 
-		zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Unk183, mSpider->mPosition, nullptr, nullptr);
+		zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Spider_HalfDeadFall, mSpider->mPosition, nullptr, nullptr);
 		if (ptclGen) {
 			Vector3f midPt = child->mCentre + legPart->mCentre;
 			midPt.multiply(0.5f);
@@ -109,17 +109,17 @@ void SpiderLeg::setDeadBombEffect(u32 legCollPartID)
 		Vector3f dir = child->mCentre - legPart->mCentre;
 		dir.normalise();
 
-		zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_Unk186, midPt, nullptr, nullptr);
+		zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_Spider_DeadBombSmoke, midPt, nullptr, nullptr);
 		if (ptclGen1) {
 			ptclGen1->setEmitDir(dir);
 		}
 
-		zen::particleGenerator* ptclGen2 = effectMgr->create(EffectMgr::EFF_Unk185, midPt, nullptr, nullptr);
+		zen::particleGenerator* ptclGen2 = effectMgr->create(EffectMgr::EFF_Spider_DeadBombDebris, midPt, nullptr, nullptr);
 		if (ptclGen2) {
 			ptclGen2->setEmitDir(dir);
 		}
 
-		effectMgr->create(EffectMgr::EFF_Unk189, legPart->mCentre, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Spider_DeadBombSparks, legPart->mCentre, nullptr, nullptr);
 
 		legPart = child;
 	}
@@ -135,7 +135,7 @@ void SpiderLeg::setSmallSparkEffect(u32 legCollPartID, int* p2)
 	CollPart* legPart = mSpider->mCollInfo->getSphere(legCollPartID);
 	for (int i = 0; i < 3; i++) {
 		if (p2[i]) {
-			effectMgr->create(EffectMgr::EFF_Unk190, legPart->mCentre, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Spider_SmallSparks, legPart->mCentre, nullptr, nullptr);
 		}
 		legPart = legPart->getChild();
 		if (!legPart) {
@@ -159,8 +159,8 @@ void SpiderLeg::setPerishEffect(u32 legCollPartID, int p2)
 		}
 
 		mPerishCallBacks[i + p2].set(&child->mCentre, &legPart->mCentre, mSpider);
-		effectMgr->create(EffectMgr::EFF_Unk192, mSpider->mPosition, &mPerishCallBacks[i + p2], nullptr);
-		effectMgr->create(EffectMgr::EFF_Unk191, mSpider->mPosition, &mPerishCallBacks[i + p2], nullptr);
+		effectMgr->create(EffectMgr::EFF_Spider_PerishBubbles, mSpider->mPosition, &mPerishCallBacks[i + p2], nullptr);
+		effectMgr->create(EffectMgr::EFF_Spider_PerishSmoke, mSpider->mPosition, &mPerishCallBacks[i + p2], nullptr);
 		legPart = child;
 	}
 }
@@ -211,7 +211,7 @@ void SpiderLeg::createDeadBombEffect()
 	setDeadBombEffect('leg3');
 	setDeadBombEffect('leg4');
 	CollPart* body = mSpider->mCollInfo->getSphere('tama');
-	effectMgr->create(EffectMgr::EFF_Unk189, body->mCentre, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Spider_DeadBombSparks, body->mCentre, nullptr, nullptr);
 	rumbleMgr->start(5, 0, mSpider->mPosition);
 	if (mSpider->mSeContext) {
 		mSpider->mSeContext->playSound(SE_SPIDER_DEAD);
@@ -274,21 +274,21 @@ void SpiderLeg::createRippleEffect(int legNum)
 {
 	Vector3f footPos(_12C[legNum][0]);
 	footPos.y -= 5.0f;
-	effectMgr->create(EffectMgr::EFF_Unk67, _12C[legNum][0], nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Unk85, footPos, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_SmokeRing_M, _12C[legNum][0], nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Frog_BubbleRingS, footPos, nullptr, nullptr);
 	mRippleCallBacks[legNum].set(&_0D[legNum]);
 
-	zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_Unk14, footPos, &mRippleCallBacks[legNum], nullptr);
+	zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_RippleWhite, footPos, &mRippleCallBacks[legNum], nullptr);
 	if (ptclGen1) {
 		f32 scale = ptclGen1->getScaleSize();
 		ptclGen1->setScaleSize(3.0f * scale);
 	}
-	zen::particleGenerator* ptclGen2 = effectMgr->create(EffectMgr::EFF_Unk12, footPos, &mRippleCallBacks[legNum], nullptr);
+	zen::particleGenerator* ptclGen2 = effectMgr->create(EffectMgr::EFF_RippleSurface, footPos, &mRippleCallBacks[legNum], nullptr);
 	if (ptclGen2) {
 		f32 scale = ptclGen2->getScaleSize();
 		ptclGen2->setScaleSize(3.0f * scale);
 	}
-	zen::particleGenerator* ptclGen3 = effectMgr->create(EffectMgr::EFF_Unk13, footPos, &mRippleCallBacks[legNum], nullptr);
+	zen::particleGenerator* ptclGen3 = effectMgr->create(EffectMgr::EFF_RippleBlack, footPos, &mRippleCallBacks[legNum], nullptr);
 	if (ptclGen3) {
 		f32 scale = ptclGen3->getScaleSize();
 		ptclGen3->setScaleSize(3.0f * scale);
@@ -1056,7 +1056,7 @@ void SpiderLeg::makeNewPosition()
  */
 void SpiderLeg::calcSpiderDirection()
 {
-	if (mSpider->getCurrentState() < 7) {
+	if (mSpider->getCurrentState() < SPIDERAI_Start) {
 		f32 x                = _12C[0][0].x - mSpider->mPosition.x + _12C[2][0].x - mSpider->mPosition.x;
 		f32 z                = _12C[0][0].z - mSpider->mPosition.z + _12C[2][0].z - mSpider->mPosition.z;
 		mSpider->mRotation.y = atan2f(x, z);
@@ -1127,7 +1127,7 @@ void SpiderLeg::calcShakeOff()
  */
 void SpiderLeg::setIdealCentre(Vector3f& centre)
 {
-	if (mSpider->getCurrentState() < 7) {
+	if (mSpider->getCurrentState() < SPIDERAI_Start) {
 		Vector3f vec(0.0f, 0.0f, 0.0f);
 		int i;
 		for (i = 0; i < 4; i++) {
@@ -1247,7 +1247,7 @@ void SpiderLeg::setJointMatrix(const BossShapeObject* shapeObj, Matrix4f& animMt
 		for (int j = 0; j < 3; j++) {
 			animMtx.multiplyTo(shapeObj->mShape->getAnimMatrix(Kumo::leg_index[i][j]), _280[i][j]);
 
-			if (j != 0 || mSpider->getCurrentState() >= 7) {
+			if (j != 0 || mSpider->getCurrentState() >= SPIDERAI_Start) {
 				_280[i][j].getColumn(3, _12C[i][j]);
 			}
 		}
@@ -1261,7 +1261,7 @@ void SpiderLeg::setJointMatrix(const BossShapeObject* shapeObj, Matrix4f& animMt
  */
 void SpiderLeg::setLength()
 {
-	if (mSpider->getCurrentState() >= 7) {
+	if (mSpider->getCurrentState() >= SPIDERAI_Start) {
 		for (int i = 0; i < 4; i++) {
 			_88[i][0] = _12C[i][0].distance(_12C[i][1]);
 			f32 dist2 = _12C[i][1].distance(_12C[i][2]);
@@ -1465,11 +1465,11 @@ void SpiderLeg::emitOffGroundEffect()
 {
 	for (int i = 0; i < 4; i++) {
 		if (!_0D[i] && _11[i]) {
-			zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_Unk181, _12C[i][0], nullptr, nullptr);
+			zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_Spider_OffGroundDebris, _12C[i][0], nullptr, nullptr);
 			if (ptclGen1) {
 				ptclGen1->setEmitPosPtr(&_12C[i][0]);
 			}
-			zen::particleGenerator* ptclGen2 = effectMgr->create(EffectMgr::EFF_Unk182, _12C[i][0], nullptr, nullptr);
+			zen::particleGenerator* ptclGen2 = effectMgr->create(EffectMgr::EFF_Spider_OffGroundSmoke, _12C[i][0], nullptr, nullptr);
 			if (ptclGen2) {
 				ptclGen2->setEmitPosPtr(&_12C[i][0]);
 			}
@@ -1592,7 +1592,7 @@ void SpiderLeg::create3Joint(BossShapeObject* shapeObj, Graphics& gfx)
  */
 void SpiderLeg::createMatrixScale(BossShapeObject* shapeObj, Graphics& gfx)
 {
-	if (mSpider->getCurrentState() == 0) {
+	if (mSpider->getCurrentState() == SPIDERAI_Die) {
 		Vector3f col;
 		for (int i = 0; i <= 15; i++) {
 			for (int j = 0; j < 3; j++) {

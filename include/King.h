@@ -536,7 +536,7 @@ struct KingGenSalivaParticleCallBack : public zen::CallBack2<zen::particleGenera
 				norm.multiply(0.01f);
 				ptclPos.y = minY;
 				ptclGen->killParticle(ptcl);
-				zen::particleGenerator* newGen = effectMgr->create(EffectMgr::EFF_Unk119, ptclPos, nullptr, nullptr);
+				zen::particleGenerator* newGen = effectMgr->create(EffectMgr::EFF_King_SalivaDroplet, ptclPos, nullptr, nullptr);
 				if (newGen) {
 					newGen->set1DC(currTri->_18);
 					newGen->setEmitDir(norm);
@@ -570,7 +570,7 @@ struct KingGenSpitPartsParticleCallBack : public zen::CallBack2<zen::particleGen
 				norm.multiply(0.01f);
 				ptclPos.y = minY;
 				ptclGen->killParticle(ptcl);
-				zen::particleGenerator* newGen = effectMgr->create(EffectMgr::EFF_Unk119, ptclPos, nullptr, nullptr);
+				zen::particleGenerator* newGen = effectMgr->create(EffectMgr::EFF_King_SalivaDroplet, ptclPos, nullptr, nullptr);
 				if (newGen) {
 					newGen->set1DC(currTri->_18);
 					newGen->setEmitDir(norm);

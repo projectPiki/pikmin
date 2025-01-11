@@ -36,22 +36,22 @@ static u32 koganeSE[] = { SE_KOGANE_WALK, SE_KOGANE_DAMAGE };
  */
 void KoganeAi::createWaterEffect()
 {
-	effectMgr->create(EffectMgr::EFF_Unk15, mKogane->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_P_Bubbles, mKogane->mPosition, nullptr, nullptr);
 	mRippleCallBack->set(mKogane);
 
-	zen::particleGenerator* ptcl14 = effectMgr->create(EffectMgr::EFF_Unk14, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
+	zen::particleGenerator* ptcl14 = effectMgr->create(EffectMgr::EFF_RippleWhite, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
 	if (ptcl14) {
 		ptcl14->setEmitPosPtr(&mKogane->mPosition);
 		ptcl14->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
 	}
 
-	zen::particleGenerator* ptcl12 = effectMgr->create(EffectMgr::EFF_Unk12, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
+	zen::particleGenerator* ptcl12 = effectMgr->create(EffectMgr::EFF_RippleSurface, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
 	if (ptcl12) {
 		ptcl12->setEmitPosPtr(&mKogane->mPosition);
 		ptcl12->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
 	}
 
-	zen::particleGenerator* ptcl13 = effectMgr->create(EffectMgr::EFF_Unk13, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
+	zen::particleGenerator* ptcl13 = effectMgr->create(EffectMgr::EFF_RippleBlack, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
 	if (ptcl13) {
 		ptcl13->setEmitPosPtr(&mKogane->mPosition);
 		ptcl13->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
@@ -150,10 +150,10 @@ void KoganeAi::keyAction1()
 {
 	if (mKogane->getCurrentState() == 4) {
 		if (mInWater) {
-			effectMgr->create(EffectMgr::EFF_Unk15, mKogane->mPosition, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_P_Bubbles, mKogane->mPosition, nullptr, nullptr);
 			rumbleMgr->start(15, 0, mKogane->mPosition);
 		} else {
-			effectMgr->create(EffectMgr::EFF_Unk120, mKogane->mPosition, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mPosition, nullptr, nullptr);
 			rumbleMgr->start(15, 0, mKogane->mPosition);
 		}
 	}
@@ -226,19 +226,19 @@ void KoganeAi::setMapAttribute()
 	int mapAttr = mKogane->getMapAttribute(mKogane->mPosition);
 	switch (mapAttr) {
 	case ATTR_Unk0:
-		mEffectType = EffectMgr::EFF_Unk19;
+		mEffectType = EffectMgr::EFF_Kogane_Walk0;
 		break;
 	case ATTR_Unk1:
-		mEffectType = EffectMgr::EFF_Unk17;
+		mEffectType = EffectMgr::EFF_Kogane_Walk2;
 		break;
 	case ATTR_Unk2:
-		mEffectType = EffectMgr::EFF_Unk18;
+		mEffectType = EffectMgr::EFF_Kogane_Walk1;
 		break;
 	case ATTR_Unk3:
-		mEffectType = EffectMgr::EFF_Unk16;
+		mEffectType = EffectMgr::EFF_Kogane_Walk3;
 		break;
 	case ATTR_Unk4:
-		mEffectType = EffectMgr::EFF_Unk19;
+		mEffectType = EffectMgr::EFF_Kogane_Walk0;
 		break;
 	case ATTR_Water:
 		if (!mInWater) {
@@ -248,7 +248,7 @@ void KoganeAi::setMapAttribute()
 		}
 		break;
 	case ATTR_Unk6:
-		mEffectType = EffectMgr::EFF_Unk19;
+		mEffectType = EffectMgr::EFF_Kogane_Walk0;
 		break;
 	}
 
@@ -612,7 +612,7 @@ void KoganeAi::initAppear(int nextState)
 	mKogane->setShadowNeed(true);
 	setNewTargetPosition();
 	resultFlagOn();
-	effectMgr->create(EffectMgr::EFF_Unk120, mKogane->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mPosition, nullptr, nullptr);
 }
 
 /*
@@ -678,15 +678,15 @@ void KoganeAi::initCreate(int nextState)
 	Vector3f vec2(sinf(perpDir), 0.0f, cosf(perpDir));
 	Vector3f vec3 = -vec2;
 
-	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_Unk89, mKogane->mPosition, nullptr, nullptr);
+	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_Kogane_Hit, mKogane->mPosition, nullptr, nullptr);
 	if (ptcl1) {
 		ptcl1->setEmitDir(vec1);
 	}
-	zen::particleGenerator* ptcl2 = effectMgr->create(EffectMgr::EFF_Unk88, mKogane->mPosition, nullptr, nullptr);
+	zen::particleGenerator* ptcl2 = effectMgr->create(EffectMgr::EFF_Kogane_SmokeR, mKogane->mPosition, nullptr, nullptr);
 	if (ptcl2) {
 		ptcl2->setEmitDir(vec2);
 	}
-	zen::particleGenerator* ptcl3 = effectMgr->create(EffectMgr::EFF_Unk87, mKogane->mPosition, nullptr, nullptr);
+	zen::particleGenerator* ptcl3 = effectMgr->create(EffectMgr::EFF_Kogane_SmokeL, mKogane->mPosition, nullptr, nullptr);
 	if (ptcl3) {
 		ptcl3->setEmitDir(vec3);
 	}
@@ -710,7 +710,7 @@ void KoganeAi::dieState()
 
 		mKogane->mScale.y = mKogane->mScale.z = mKogane->mScale.x;
 	} else {
-		effectMgr->create(EffectMgr::EFF_Unk120, mKogane->mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mPosition, nullptr, nullptr);
 		mKogane->doKill();
 	}
 }
