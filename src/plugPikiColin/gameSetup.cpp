@@ -92,7 +92,7 @@ void GameSetupSection::preCacheShapes()
 {
 	/// VVV this looks like inline
 	gsys->_214.initCore("");
-	gsys->_228 = &gsys->_214;
+	gsys->mLightFlareInfoList = (LFInfo*)&gsys->_214;
 
 	for (int i = 0; arambundleList[i][0]; i++) {
 		gsys->parseArchiveDirectory(arambundleList[i][0], arambundleList[i][1]);

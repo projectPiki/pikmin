@@ -628,7 +628,7 @@ void preloadLanguage()
 	gsys->getHeap(gsys->mActiveHeapIdx);
 	// gsys->_31C;
 	gsys->_200.initCore("");
-	gsys->_228 = &gsys->_200;
+	gsys->mLightFlareInfoList = (LFInfo*)&gsys->_200;
 	gsys->parseArchiveDirectory(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Dir], gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Arc]);
 	gsys->loadBundle(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Bun], true);
 	gsys->setTextureDirectories(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Blo], gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Tex]);

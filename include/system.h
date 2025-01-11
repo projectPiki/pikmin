@@ -204,31 +204,31 @@ public:
 	virtual void startLoading(struct LoadIdler*, bool, u32) { }                 // _2C
 	virtual void endLoading() { }                                               // _30
 
-	u32 _1A4;                 // _1A4
-	u32 mMaterialCount;       // _1A8
-	u32 mDispCount;           // _1AC
-	u32 mLightCount;          // _1B0
-	u32 _1B4;                 // _1B4
-	u32 mLoadedPolys;         // _1B8
-	u32 mLightingSkips;       // _1BC
-	u32 mLightingSets;        // _1C0
-	u32 mSystemState;         // _1C4
-	u32 mSystemFlags;         // _1C8
-	Graphics* mGraphics;      // _1CC
-	GfxobjInfo mGfxobjInfo;   // _1D0
-	bool mHasGfxObjects;      // _1F0
-	char* mTextureBase1;      // _1F4
-	char* mTextureBase2;      // _1F8
-	Shape* mCurrentShape;     // _1FC
-	CoreNode _200;            // _200
-	CoreNode _214;            // _214
-	CoreNode* _228;           // _228
-	int mFlareCount;          // _22C
-	int mLfInfoCount;         // _230
-	LFInfo* mLfInfo;          // _234
-	LightFlare* mLightFlares; // _238
-	LFlareGroup* mLfGroups;   // _23C
-	u32 _240;                 // _240
+	u32 _1A4;                     // _1A4
+	u32 mMaterialCount;           // _1A8
+	u32 mDispCount;               // _1AC
+	u32 mLightCount;              // _1B0
+	u32 _1B4;                     // _1B4
+	u32 mLoadedPolys;             // _1B8
+	u32 mLightingSkips;           // _1BC
+	u32 mLightingSets;            // _1C0
+	u32 mSystemState;             // _1C4
+	u32 mSystemFlags;             // _1C8
+	Graphics* mGraphics;          // _1CC
+	GfxobjInfo mGfxobjInfo;       // _1D0
+	bool mHasGfxObjects;          // _1F0
+	char* mTextureBase1;          // _1F4
+	char* mTextureBase2;          // _1F8
+	Shape* mCurrentShape;         // _1FC
+	CoreNode _200;                // _200
+	CoreNode _214;                // _214
+	LFInfo* mLightFlareInfoList;  // _228
+	int mFlareCount;              // _22C
+	int mLfInfoCount;             // _230
+	LFInfo* mFlareInfoList;       // _234
+	LFlareGroup* mFlareGroupList; // _238
+	LFlareGroup* _23C;            // _23C
+	u32 _240;                     // _240
 };
 
 /**

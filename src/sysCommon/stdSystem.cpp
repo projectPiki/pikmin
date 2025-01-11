@@ -48,7 +48,7 @@ StdSystem::StdSystem()
 	mGfxobjInfo.mPrev = &mGfxobjInfo;
 	mGfxobjInfo.mNext = &mGfxobjInfo;
 	mHasGfxObjects    = true;
-	mLightFlares      = nullptr;
+	mFlareGroupList   = nullptr;
 
 	initSoftReset();
 	setDataRoot("dataDir/");
@@ -434,8 +434,8 @@ Shape* StdSystem::getShape(char* a2, char* shapeName, char* modelTexturePath, bo
  */
 void StdSystem::initLFlares(int count)
 {
-	mLfInfoCount = count;
-	mLfInfo      = new LFInfo[count];
+	mLfInfoCount   = count;
+	mFlareInfoList = new LFInfo[count];
 	resetLFlares();
 }
 
@@ -455,7 +455,7 @@ LFInfo* StdSystem::getLFlareInfo()
 {
 	if (mFlareCount < mLfInfoCount) {
 		mFlareCount++;
-		return &mLfInfo[mFlareCount - 1];
+		return &mFlareInfoList[mFlareCount - 1];
 	}
 
 	return nullptr;
@@ -468,7 +468,7 @@ LFInfo* StdSystem::getLFlareInfo()
  */
 LFlareGroup* StdSystem::registerLFlare(Texture* tex)
 {
-	for (LFlareGroup* activeFlareGroup = (LFlareGroup*)mLightFlares->mChild; activeFlareGroup;
+	for (LFlareGroup* activeFlareGroup = (LFlareGroup*)mFlareGroupList->mChild; activeFlareGroup;
 	     activeFlareGroup              = (LFlareGroup*)activeFlareGroup->mNext) {
 		if (activeFlareGroup->mTexture == tex) {
 			return activeFlareGroup;
@@ -477,7 +477,7 @@ LFlareGroup* StdSystem::registerLFlare(Texture* tex)
 
 	LFlareGroup* newGroup = new LFlareGroup();
 	newGroup->mTexture    = tex;
-	mLightFlares->add(newGroup);
+	mFlareGroupList->add(newGroup);
 	return newGroup;
 }
 
@@ -495,7 +495,7 @@ void StdSystem::flushLFlares(Graphics& gfx)
 	gfx.useMatrix(Matrix4f::ident, 0);
 	gfx.useMaterial(nullptr);
 
-	FOREACH_NODE(LFlareGroup, mLightFlares->mChild, flareGroup)
+	FOREACH_NODE(LFlareGroup, mFlareGroupList->mChild, flareGroup)
 	{
 		if (flareGroup->mLFInfo) {
 			if (flareGroup->_1C) {

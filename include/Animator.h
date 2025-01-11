@@ -93,10 +93,10 @@ struct AnimCacheInfo : public CacheInfo {
 	}
 
 	// _00 - _0C = CacheInfo
-	u32 _0C; // _0C
-	u32 _10; // _10
-	u32 _14; // _14
-	u32 _18; // _18
+	u32 _0C;        // _0C
+	CacheInfo* _10; // _10
+	u32 _14;        // _14
+	u32 _18;        // _18
 };
 
 /**

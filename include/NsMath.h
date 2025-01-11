@@ -21,11 +21,12 @@ f32 calcInnerRatio(const Vector3f&, const Vector3f&);
 void calcMtxTrans(const Matrix4f&, int, Vector3f&);
 void calcVectorTrans(const Vector3f&, int, Matrix4f&);
 
-static inline void calcOuterPro(const Vector3f& vec1, const Vector3f& vec2, Vector3f& outVec)
+// Calculates the cross product
+static inline void calcOuterPro(const Vector3f& a, const Vector3f& b, Vector3f& result)
 {
-	outVec.x = vec1.y * vec2.z - vec1.z * vec2.y;
-	outVec.y = vec1.z * vec2.x - vec1.x * vec2.z;
-	outVec.z = vec1.x * vec2.y - vec1.y * vec2.x;
+	result.x = a.y * b.z - a.z * b.y;
+	result.y = a.z * b.x - a.x * b.z;
+	result.z = a.x * b.y - a.y * b.x;
 }
 
 static inline void calcMtxBotIdent(Matrix4f& mtx)

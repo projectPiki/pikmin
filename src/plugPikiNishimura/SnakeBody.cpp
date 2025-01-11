@@ -105,17 +105,17 @@ SnakeBody::SnakeBody(Snake* snake)
 void SnakeBody::init(Vector3f&, Snake* snake)
 {
 	mSnake         = snake;
-	_04            = 0;
-	_05            = 0;
+	mIsDying       = 0;
+	mUseBlend      = 0;
 	mBlendingRatio = 0.0f;
 
 	for (int i = 0; i < 7; i++) {
-		_14[i]           = 0.0f;
-		mDeadPtclGens[i] = nullptr;
+		mSegmentLengthList[i] = 0.0f;
+		mDeadPtclGens[i]      = nullptr;
 	}
 
 	for (int i = 0; i < 8; i++) {
-		_30[i] = 1.0f;
+		mSegmentScaleList[i] = 1.0f;
 	}
 
 	mDeadEffectSegmentIndex = 7;
@@ -129,7 +129,7 @@ void SnakeBody::init(Vector3f&, Snake* snake)
 void SnakeBody::initBlending(f32 blendRate)
 {
 	if (mBlendingRatio > 0.0f) {
-		_05 = 1;
+		mUseBlend = 1;
 	}
 
 	mBlendingRatio = 0.00001f;
@@ -173,18 +173,14 @@ void SnakeBody::setInitializePosition()
  */
 void SnakeBody::copyAnimPosition()
 {
-	// NON-MATCHING
-
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 4; j++) {
-				// WHY is this array access so fucky
-				_284[i].getColumn(j, _104[i][j]);
+				mSegmentMatrices[i].getColumn(j, mAnimPosList[i][j]);
 			}
 		}
 	}
 }
-
 /*
  * --INFO--
  * Address:	........
@@ -193,10 +189,12 @@ void SnakeBody::copyAnimPosition()
 void SnakeBody::makeHeadDirection()
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
-		Vector3f* targetPos = mSnake->getTargetPosition();
-		_104[7][0].sub(*targetPos, _104[7][3]);
-		NsCalculation::calcOuterPro(_104[7][0], _104[7][1], _104[7][2]);
-		NsCalculation::calcOuterPro(_104[7][2], _104[7][0], _104[7][1]);
+		SnakeAnimPosition& pos = (SnakeAnimPosition&)mAnimPosList[SnakeJointType::Neck];
+
+		// Calculate the direction from the snake's neck to the target position
+		pos.mDirection.sub(*mSnake->getTargetPosition(), pos.mPosition);
+		NsCalculation::calcOuterPro(pos.mDirection, pos.mRight, pos.mUp);
+		NsCalculation::calcOuterPro(pos.mUp, pos.mDirection, pos.mRight);
 	}
 }
 
@@ -208,18 +206,39 @@ void SnakeBody::makeHeadDirection()
 void SnakeBody::makeTurnVelocity()
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
-		Vector3f tmpVec;
-		Vector3f avg = (_104[7][3] + _104[4][3] + _104[0][3]) / 3.0f;
-		Vector3f dir = mSnake->mPosition - *mSnake->getTargetPosition();
-		dir.normalise();
+		Vector3f segmentOffset;
+
+		// Calculate a reference point by averaging key positions along the snake's body:
+		// - The neck (front)
+		// - A mid-body segment
+		// - The root (back)
+		Vector3f centerOfMass
+		    = (mAnimPosList[SnakeJointType::Neck][3] + mAnimPosList[SnakeJointType::Segment5][3] + mAnimPosList[SnakeJointType::Root][3])
+		    / 3.0f;
+
+		// Determine the direction the snake needs to move to reach its target
+		// This creates the primary steering force that guides the snake's movement
+		Vector3f targetDirection = mSnake->mPosition - *mSnake->getTargetPosition();
+		targetDirection.normalise();
+
 		for (int i = 1; i < 7; i++) {
 			int j = i - 1;
-			tmpVec.sub(_104[i][3], avg);
-			tmpVec.normalise();
-			_BC[j]   = dir + tmpVec - _104[7][0];
-			_BC[j].y = 0.0f;
-			_BC[j].normalise();
-			_BC[j].multiply(10.0f);
+
+			// Calculate how far this segment deviates from the snake's center line
+			// This helps maintain the snake's natural sinuous movement pattern
+			// by preventing segments from bunching up or stretching too far apart
+			segmentOffset.sub(mAnimPosList[i][3], centerOfMass);
+			segmentOffset.normalise();
+
+			// Combine three influences to determine how this segment should turn:
+			// 1. targetDirection: Pulls the segment toward the chase target
+			// 2. segmentOffset: Maintains proper spacing between segments
+			// 3. mAnimPosList[SnakeJointType::Neck][0]: Current neck orientation as reference
+			// Together, these create a smooth, snake-like pursuit movement
+			mSegmentTurnVelocityList[j]   = targetDirection + segmentOffset - mAnimPosList[SnakeJointType::Neck][0];
+			mSegmentTurnVelocityList[j].y = 0.0f;        // Constrain movement to horizontal
+			mSegmentTurnVelocityList[j].normalise();     // Scale to unit length
+			mSegmentTurnVelocityList[j].multiply(10.0f); // Scale to desired speed
 		}
 	}
 }
@@ -233,9 +252,9 @@ void SnakeBody::makeNewPosition()
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		for (int i = 1; i < 7; i++) {
-			_104[i][3].x += _5C[i + 7].x;
-			_104[i][3].y += _5C[i + 7].y;
-			_104[i][3].z += _5C[i + 7].z;
+			mAnimPosList[i][3].x += mSegmentPositionList[i + 7].x;
+			mAnimPosList[i][3].y += mSegmentPositionList[i + 7].y;
+			mAnimPosList[i][3].z += mSegmentPositionList[i + 7].z;
 		}
 	}
 }
@@ -248,42 +267,53 @@ void SnakeBody::makeNewPosition()
 void SnakeBody::makeResultPosition()
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
-		Vector3f vec1;
-		Vector3f vec2;
-		Vector3f vec3;
+		Vector3f segmentDirection;
+		Vector3f previousSegmentTarget;
+		Vector3f nextSegmentTarget;
+		Vector3f smoothPosList[7];
 
-		Vector3f vecArray[7];
+		// Multiple iterations are used to smooth out the snake's movement
 		for (int i = 0; i < 10; i++) {
+
+			// Process each segment except the head and tail
 			int j;
 			for (j = 1; j < 7; j++) {
 				int prev = j - 1;
 				int next = j + 1;
-				vec1.x   = _104[j][3].x - _104[prev][3].x;
-				vec1.y   = _104[j][3].y - _104[prev][3].y;
-				vec1.z   = _104[j][3].z - _104[prev][3].z;
-				vec1.normalise();
 
-				vec2.x = _14[prev] * vec1.x + _104[prev][3].x;
-				vec2.y = _14[prev] * vec1.y + _104[prev][3].y;
-				vec2.z = _14[prev] * vec1.z + _104[prev][3].z;
+				// Calculate direction from current segment to previous segment
+				segmentDirection.x = mAnimPosList[j][3].x - mAnimPosList[prev][3].x;
+				segmentDirection.y = mAnimPosList[j][3].y - mAnimPosList[prev][3].y;
+				segmentDirection.z = mAnimPosList[j][3].z - mAnimPosList[prev][3].z;
+				segmentDirection.normalise();
 
-				vec1.x = _104[j][3].x - _104[next][3].x;
-				vec1.y = _104[j][3].y - _104[next][3].y;
-				vec1.z = _104[j][3].z - _104[next][3].z;
-				vec1.normalise();
+				// Calculate target position based on previous segment
+				previousSegmentTarget.x = mSegmentLengthList[prev] * segmentDirection.x + mAnimPosList[prev][3].x;
+				previousSegmentTarget.y = mSegmentLengthList[prev] * segmentDirection.y + mAnimPosList[prev][3].y;
+				previousSegmentTarget.z = mSegmentLengthList[prev] * segmentDirection.z + mAnimPosList[prev][3].z;
 
-				vec3.x = _14[j] * vec1.x + _104[next][3].x;
-				vec3.y = _14[j] * vec1.y + _104[next][3].y;
-				vec3.z = _14[j] * vec1.z + _104[next][3].z;
+				// Calculate direction from current segment to next segment
+				segmentDirection.x = mAnimPosList[j][3].x - mAnimPosList[next][3].x;
+				segmentDirection.y = mAnimPosList[j][3].y - mAnimPosList[next][3].y;
+				segmentDirection.z = mAnimPosList[j][3].z - mAnimPosList[next][3].z;
+				segmentDirection.normalise();
 
-				vecArray[j].x = (vec2.x + vec3.x) * 0.5f;
-				vecArray[j].y = (vec2.y + vec3.y) * 0.5f;
-				vecArray[j].z = (vec2.z + vec3.z) * 0.5f;
+				// Calculate target position based on next segment
+				nextSegmentTarget.x = mSegmentLengthList[j] * segmentDirection.x + mAnimPosList[next][3].x;
+				nextSegmentTarget.y = mSegmentLengthList[j] * segmentDirection.y + mAnimPosList[next][3].y;
+				nextSegmentTarget.z = mSegmentLengthList[j] * segmentDirection.z + mAnimPosList[next][3].z;
+
+				// Average the two target positions to get final smoothed positions
+				smoothPosList[j].x = (previousSegmentTarget.x + nextSegmentTarget.x) * 0.5f;
+				smoothPosList[j].y = (previousSegmentTarget.y + nextSegmentTarget.y) * 0.5f;
+				smoothPosList[j].z = (previousSegmentTarget.z + nextSegmentTarget.z) * 0.5f;
 			}
+
+			// Update segment positions with smoothed values
 			for (j = 1; j < 7; j++) {
-				_104[j][3].x = vecArray[j].x;
-				_104[j][3].y = vecArray[j].y;
-				_104[j][3].z = vecArray[j].z;
+				mAnimPosList[j][3].x = smoothPosList[j].x;
+				mAnimPosList[j][3].y = smoothPosList[j].y;
+				mAnimPosList[j][3].z = smoothPosList[j].z;
 			}
 		}
 	}
@@ -299,25 +329,25 @@ void SnakeBody::makeVectorMatrix()
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		for (int i = 0; i < 8; i++) {
 			if (i < 7) {
-				_104[i][0].sub(_104[i + 1][3], _104[i][3]);
+				mAnimPosList[i][0].sub(mAnimPosList[i + 1][3], mAnimPosList[i][3]);
 			}
 
 			if (i > 0) {
-				_104[i][2] = _BC[4 * i + 4];
-				NsCalculation::calcOuterPro(_104[i][2], _104[i][0], _104[i][1]);
-				NsCalculation::calcOuterPro(_104[i][0], _104[i][1], _104[i][2]);
+				mAnimPosList[i][2] = mSegmentTurnVelocityList[4 * i + 4];
+				NsCalculation::calcOuterPro(mAnimPosList[i][2], mAnimPosList[i][0], mAnimPosList[i][1]);
+				NsCalculation::calcOuterPro(mAnimPosList[i][0], mAnimPosList[i][1], mAnimPosList[i][2]);
 
 			} else {
-				_104[i][2].x = cosf(mSnake->mDirection);
-				_104[i][2].y = 0.0f;
-				_104[i][2].z = -sinf(mSnake->mDirection);
-				NsCalculation::calcOuterPro(_104[i][2], _104[i][0], _104[i][1]);
-				NsCalculation::calcOuterPro(_104[i][0], _104[i][1], _104[i][2]);
+				mAnimPosList[i][2].x = cosf(mSnake->mDirection);
+				mAnimPosList[i][2].y = 0.0f;
+				mAnimPosList[i][2].z = -sinf(mSnake->mDirection);
+				NsCalculation::calcOuterPro(mAnimPosList[i][2], mAnimPosList[i][0], mAnimPosList[i][1]);
+				NsCalculation::calcOuterPro(mAnimPosList[i][0], mAnimPosList[i][1], mAnimPosList[i][2]);
 			}
 
-			_104[i][0].normalise();
-			_104[i][1].normalise();
-			_104[i][2].normalise();
+			mAnimPosList[i][0].normalise();
+			mAnimPosList[i][1].normalise();
+			mAnimPosList[i][2].normalise();
 		}
 	}
 }
@@ -353,9 +383,9 @@ void SnakeBody::createDeadHeadEffect()
 {
 	Vector3f vec;
 	f32 angle = mSnake->mDirection - 0.5f;
-	vec.x     = 30.0f * sinf(angle) + _5C[mDeadEffectSegmentIndex].x;
-	vec.y     = 0.0f + _5C[mDeadEffectSegmentIndex].y;
-	vec.z     = 30.0f * cosf(angle) + _5C[mDeadEffectSegmentIndex].z;
+	vec.x     = 30.0f * sinf(angle) + mSegmentPositionList[mDeadEffectSegmentIndex].x;
+	vec.y     = 0.0f + mSegmentPositionList[mDeadEffectSegmentIndex].y;
+	vec.z     = 30.0f * cosf(angle) + mSegmentPositionList[mDeadEffectSegmentIndex].z;
 	effectMgr->create(EffectMgr::EFF_Snake_DeadHeadSpecks, vec, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Snake_DeadHeadFeathers, vec, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Snake_DeadHeadCloud, vec, nullptr, nullptr);
@@ -384,9 +414,9 @@ void SnakeBody::createDeadBodyEffect()
 {
 	Vector3f vec;
 	int next = mDeadEffectSegmentIndex + 1;
-	vec.x    = (_5C[next].x + _5C[mDeadEffectSegmentIndex].x) / 2.0f;
-	vec.y    = (_5C[next].y + _5C[mDeadEffectSegmentIndex].y) / 2.0f;
-	vec.z    = (_5C[next].z + _5C[mDeadEffectSegmentIndex].z) / 2.0f;
+	vec.x    = (mSegmentPositionList[next].x + mSegmentPositionList[mDeadEffectSegmentIndex].x) / 2.0f;
+	vec.y    = (mSegmentPositionList[next].y + mSegmentPositionList[mDeadEffectSegmentIndex].y) / 2.0f;
+	vec.z    = (mSegmentPositionList[next].z + mSegmentPositionList[mDeadEffectSegmentIndex].z) / 2.0f;
 
 	f32 minY = mapMgr->getMinY(vec.x, vec.z, true);
 	if (minY > vec.y) {
@@ -416,8 +446,8 @@ void SnakeBody::createDeadBodyEffect()
  */
 void SnakeBody::makeDeadPattern01()
 {
-	bool prev = _04;
-	_04       = true;
+	bool prev = mIsDying;
+	mIsDying  = true;
 
 	f32 scaleTime;
 	f32 scaleSpeed;
@@ -433,9 +463,10 @@ void SnakeBody::makeDeadPattern01()
 	mSnake->add2D0(gsys->getFrameTime());
 
 	// take _30 to 0 with steps of size frameTime * b
-	_30[mDeadEffectSegmentIndex] = NsLibMath<f32>::toGoal(_30[mDeadEffectSegmentIndex], 0.0f, gsys->getFrameTime() * scaleSpeed);
+	mSegmentScaleList[mDeadEffectSegmentIndex]
+	    = NsLibMath<f32>::toGoal(mSegmentScaleList[mDeadEffectSegmentIndex], 0.0f, gsys->getFrameTime() * scaleSpeed);
 
-	if (!prev && _04) {
+	if (!prev && mIsDying) {
 		if (mDeadEffectSegmentIndex == 7) {
 			createDeadHeadEffect();
 		} else {
@@ -443,9 +474,9 @@ void SnakeBody::makeDeadPattern01()
 		}
 	}
 
-	if (mDeadEffectSegmentIndex > 0 && _30[mDeadEffectSegmentIndex] == 0.0f && mSnake->get2D0() > scaleTime) {
+	if (mDeadEffectSegmentIndex > 0 && mSegmentScaleList[mDeadEffectSegmentIndex] == 0.0f && mSnake->get2D0() > scaleTime) {
 		mDeadEffectSegmentIndex--;
-		_04 = false;
+		mIsDying = false;
 		mSnake->set2D0(0.0f);
 	}
 }
@@ -800,7 +831,7 @@ void SnakeBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx)
 	for (int i = 0, j = 0; i < 8; i++, j++) {
 		tmpMtx = shapeObj->mShape->getAnimMatrix(j);
 		NsCalculation::calcMtxBotIdent(tmpMtx);
-		invCamMtx.multiplyTo(tmpMtx, _284[i]);
+		invCamMtx.multiplyTo(tmpMtx, mSegmentMatrices[i]);
 	}
 }
 
@@ -811,15 +842,15 @@ void SnakeBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx)
  */
 void SnakeBody::makeBodySize()
 {
-	if (_14[0] == 0.0f) {
+	if (mSegmentLengthList[0] == 0.0f) {
 		Vector3f tmpVecs[8];
 		int i;
 		for (i = 0; i < 8; i++) {
-			_284[i].getColumn(3, tmpVecs[i]);
+			mSegmentMatrices[i].getColumn(3, tmpVecs[i]);
 		}
 
 		for (i = 0; i < 7; i++) {
-			_14[i] = tmpVecs[i].distance(tmpVecs[i + 1]);
+			mSegmentLengthList[i] = tmpVecs[i].distance(tmpVecs[i + 1]);
 		}
 	}
 }
@@ -836,23 +867,25 @@ void SnakeBody::makeHeadPosition()
 			{ 32.0f, 36.0f, 49.0f }, { 32.0f, 35.0f, 49.0f }, { 32.0f, 37.0f, 49.0f }, { 28.0f, 33.0f, 49.0f }, { 28.0f, 33.0f, 49.0f },
 		};
 
-		if (mSnake->mAnimator.getCounter() > keyVals[mSnake->mSnakeAi->_14][0]
-		    && mSnake->mAnimator.getCounter() < keyVals[mSnake->mSnakeAi->_14][2]) {
-			f32 yDiff = mSnake->mSnakeAi->mAttackPositions[mSnake->mSnakeAi->_14].y - mSnake->mPosition.y;
-			if (mSnake->mAnimator.getCounter() < keyVals[mSnake->mSnakeAi->_14][1]) {
-				_284[7].mMtx[1][3] += (mSnake->mAnimator.getCounter() - keyVals[mSnake->mSnakeAi->_14][0])
-				                    / (keyVals[mSnake->mSnakeAi->_14][1] - keyVals[mSnake->mSnakeAi->_14][0]) * yDiff;
+		if (mSnake->mAnimator.getCounter() > keyVals[mSnake->mSnakeAi->mAttackId][0]
+		    && mSnake->mAnimator.getCounter() < keyVals[mSnake->mSnakeAi->mAttackId][2]) {
+			f32 yDiff = mSnake->mSnakeAi->mAttackPositions[mSnake->mSnakeAi->mAttackId].y - mSnake->mPosition.y;
+			if (mSnake->mAnimator.getCounter() < keyVals[mSnake->mSnakeAi->mAttackId][1]) {
+				mSegmentMatrices[SnakeJointType::Neck].mMtx[1][3]
+				    += (mSnake->mAnimator.getCounter() - keyVals[mSnake->mSnakeAi->mAttackId][0])
+				     / (keyVals[mSnake->mSnakeAi->mAttackId][1] - keyVals[mSnake->mSnakeAi->mAttackId][0]) * yDiff;
 			} else {
-				_284[7].mMtx[1][3] += (keyVals[mSnake->mSnakeAi->_14][2] - mSnake->mAnimator.getCounter())
-				                    / (keyVals[mSnake->mSnakeAi->_14][2] - keyVals[mSnake->mSnakeAi->_14][1]) * yDiff;
+				mSegmentMatrices[SnakeJointType::Neck].mMtx[1][3]
+				    += (keyVals[mSnake->mSnakeAi->mAttackId][2] - mSnake->mAnimator.getCounter())
+				     / (keyVals[mSnake->mSnakeAi->mAttackId][2] - keyVals[mSnake->mSnakeAi->mAttackId][1]) * yDiff;
 			}
 		}
 	} else if (mSnake->getCurrentState() == SNAKEAI_Die && mSnake->mAnimator.getCounter() > 60.0f) {
 		f32 yDiff = mSnake->mSnakeAi->mAttackPositions[1].y - mSnake->mPosition.y;
 		if (mSnake->mAnimator.getCounter() < 70.0f) {
-			_284[7].mMtx[1][3] += (mSnake->mAnimator.getCounter() - 60.0f) / 10.0f * yDiff;
+			mSegmentMatrices[SnakeJointType::Neck].mMtx[1][3] += (mSnake->mAnimator.getCounter() - 60.0f) / 10.0f * yDiff;
 		} else {
-			_284[7].mMtx[1][3] += yDiff;
+			mSegmentMatrices[SnakeJointType::Neck].mMtx[1][3] += yDiff;
 		}
 	}
 }
@@ -875,23 +908,23 @@ void SnakeBody::makeBodyMatrix()
 			for (j = 1; j < 7; j++) {
 				int prev = j - 1;
 				int next = j + 1;
-				vec1.x   = _284[j].mMtx[0][3] - _284[prev].mMtx[0][3];
-				vec1.y   = _284[j].mMtx[1][3] - _284[prev].mMtx[1][3];
-				vec1.z   = _284[j].mMtx[2][3] - _284[prev].mMtx[2][3];
+				vec1.x   = mSegmentMatrices[j].mMtx[0][3] - mSegmentMatrices[prev].mMtx[0][3];
+				vec1.y   = mSegmentMatrices[j].mMtx[1][3] - mSegmentMatrices[prev].mMtx[1][3];
+				vec1.z   = mSegmentMatrices[j].mMtx[2][3] - mSegmentMatrices[prev].mMtx[2][3];
 				vec1.normalise();
 
-				vec2.x = _14[prev] * vec1.x + _284[prev].mMtx[0][3];
-				vec2.y = _14[prev] * vec1.y + _284[prev].mMtx[1][3];
-				vec2.z = _14[prev] * vec1.z + _284[prev].mMtx[2][3];
+				vec2.x = mSegmentLengthList[prev] * vec1.x + mSegmentMatrices[prev].mMtx[0][3];
+				vec2.y = mSegmentLengthList[prev] * vec1.y + mSegmentMatrices[prev].mMtx[1][3];
+				vec2.z = mSegmentLengthList[prev] * vec1.z + mSegmentMatrices[prev].mMtx[2][3];
 
-				vec1.x = _284[j].mMtx[0][3] - _284[next].mMtx[0][3];
-				vec1.y = _284[j].mMtx[1][3] - _284[next].mMtx[1][3];
-				vec1.z = _284[j].mMtx[2][3] - _284[next].mMtx[2][3];
+				vec1.x = mSegmentMatrices[j].mMtx[0][3] - mSegmentMatrices[next].mMtx[0][3];
+				vec1.y = mSegmentMatrices[j].mMtx[1][3] - mSegmentMatrices[next].mMtx[1][3];
+				vec1.z = mSegmentMatrices[j].mMtx[2][3] - mSegmentMatrices[next].mMtx[2][3];
 				vec1.normalise();
 
-				vec3.x = _14[j] * vec1.x + _284[next].mMtx[0][3];
-				vec3.y = _14[j] * vec1.y + _284[next].mMtx[1][3];
-				vec3.z = _14[j] * vec1.z + _284[next].mMtx[2][3];
+				vec3.x = mSegmentLengthList[j] * vec1.x + mSegmentMatrices[next].mMtx[0][3];
+				vec3.y = mSegmentLengthList[j] * vec1.y + mSegmentMatrices[next].mMtx[1][3];
+				vec3.z = mSegmentLengthList[j] * vec1.z + mSegmentMatrices[next].mMtx[2][3];
 
 				vecArray[j].x = (vec2.x + vec3.x) * 0.5f;
 				vecArray[j].y = (vec2.y + vec3.y) * 0.5f;
@@ -899,9 +932,9 @@ void SnakeBody::makeBodyMatrix()
 			}
 
 			for (j = 1; j < 7; j++) {
-				_284[j].mMtx[0][3] = vecArray[j].x;
-				_284[j].mMtx[1][3] = vecArray[j].y;
-				_284[j].mMtx[2][3] = vecArray[j].z;
+				mSegmentMatrices[j].mMtx[0][3] = vecArray[j].x;
+				mSegmentMatrices[j].mMtx[1][3] = vecArray[j].y;
+				mSegmentMatrices[j].mMtx[2][3] = vecArray[j].z;
 			}
 		}
 	}
@@ -920,7 +953,7 @@ void SnakeBody::makeAnimMatrix()
 		int j;
 		for (i = 0; i < 8; i++) {
 			for (j = 0; j < 4; j++) {
-				_284[i].getColumn(j, vecArray[i][j]);
+				mSegmentMatrices[i].getColumn(j, vecArray[i][j]);
 			}
 		}
 		for (i = 0; i < 7; i++) {
@@ -935,7 +968,7 @@ void SnakeBody::makeAnimMatrix()
 
 		for (i = 0; i < 7; i++) {
 			for (j = 0; j < 3; j++) {
-				_284[i].setColumn(j, vecArray[i][j]);
+				mSegmentMatrices[i].setColumn(j, vecArray[i][j]);
 			}
 		}
 	}
@@ -951,13 +984,13 @@ void SnakeBody::caseOfMatrix(Matrix4f* animMatrices)
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 4; j++) {
-				animMatrices[i].setColumn(j, _104[i][j]);
+				animMatrices[i].setColumn(j, mAnimPosList[i][j]);
 			}
 			NsCalculation::calcMtxBotIdent(animMatrices[i]);
 		}
 	} else {
 		for (int i = 0; i < 8; i++) {
-			animMatrices[i] = _284[i];
+			animMatrices[i] = mSegmentMatrices[i];
 		}
 	}
 }
@@ -972,13 +1005,13 @@ void SnakeBody::checkBlendingParm(Matrix4f* animMatrices)
 	int i;
 	if (mBlendingRatio == 0.0f) {
 		for (i = 0; i < 8; i++) {
-			_484[i] = animMatrices[i];
+			mPrevAnimMatrices[i] = animMatrices[i];
 		}
-	} else if (_05) {
+	} else if (mUseBlend) {
 		for (i = 0; i < 8; i++) {
-			_484[i] = _684[i];
+			mPrevAnimMatrices[i] = mActiveAnimMatrices[i];
 		}
-		_05 = 0;
+		mUseBlend = 0;
 	}
 }
 
@@ -989,45 +1022,56 @@ void SnakeBody::checkBlendingParm(Matrix4f* animMatrices)
  */
 void SnakeBody::makeBlending(Matrix4f* animMatrices)
 {
-	int i;
+	int segIdx;
+
 	if (mBlendingRatio > 0.0f) {
-		f32 tComp = 1.0f - mBlendingRatio;
-		for (i = 0; i < 8; i++) {
-			_5C[i].x = mBlendingRatio * animMatrices[i].mMtx[0][3] + tComp * _484[i].mMtx[0][3];
-			_5C[i].y = mBlendingRatio * animMatrices[i].mMtx[1][3] + tComp * _484[i].mMtx[1][3];
-			_5C[i].z = mBlendingRatio * animMatrices[i].mMtx[2][3] + tComp * _484[i].mMtx[2][3];
+		// First, interpolate the positions of the segments based on the blending ratio
+		f32 inverseBlendRatio = 1.0f - mBlendingRatio;
+		for (segIdx = 0; segIdx < SnakeJointType::SegmentCount; segIdx++) {
+			mSegmentPositionList[segIdx].x
+			    = mBlendingRatio * animMatrices[segIdx].mMtx[0][3] + inverseBlendRatio * mPrevAnimMatrices[segIdx].mMtx[0][3];
+			mSegmentPositionList[segIdx].y
+			    = mBlendingRatio * animMatrices[segIdx].mMtx[1][3] + inverseBlendRatio * mPrevAnimMatrices[segIdx].mMtx[1][3];
+			mSegmentPositionList[segIdx].z
+			    = mBlendingRatio * animMatrices[segIdx].mMtx[2][3] + inverseBlendRatio * mPrevAnimMatrices[segIdx].mMtx[2][3];
 		}
-		for (i = 0; i < 8; i++) {
-			Matrix3f mtx1;
-			Matrix3f mtx2;
-			Quat q1;
-			Quat q2;
+
+		// Then handle rotation and scaling for each segment
+		for (segIdx = 0; segIdx < SnakeJointType::SegmentCount; segIdx++) {
+			Matrix3f currRotMtx;
+			Matrix3f prevRotMtx;
+			Quat currRotQuat;
+			Quat prevRotQuat;
 			Vector3f scale(1.0f, 1.0f, 1.0f);
 
-			NsCalculation::calcMat4toMat3(animMatrices[i], mtx1);
-			q1.fromMat3f(mtx1);
+			// Extract rotation matrices from both animation states
+			NsCalculation::calcMat4toMat3(animMatrices[segIdx], currRotMtx);
+			currRotQuat.fromMat3f(currRotMtx);
+			NsCalculation::calcMat4toMat3(mPrevAnimMatrices[segIdx], prevRotMtx);
+			prevRotQuat.fromMat3f(prevRotMtx);
 
-			NsCalculation::calcMat4toMat3(_484[i], mtx2);
-			q2.fromMat3f(mtx2);
+			// Interpolate the rotation matrices
+			prevRotQuat.slerp(currRotQuat, mBlendingRatio, 0);
 
-			q2.slerp(q1, mBlendingRatio, 0);
-
-			if (i < 7) {
-				scale.x = _5C[i].distance(_5C[i + 1]) / _14[i];
+			// Calculate the scaling factor all segments except the neck
+			if (segIdx < 7) {
+				scale.x = mSegmentPositionList[segIdx].distance(mSegmentPositionList[segIdx + 1]) / mSegmentLengthList[segIdx];
 			}
 
-			animMatrices[i].makeVQS(_5C[i], q2, scale);
-			_684[i] = animMatrices[i];
+			// Construct the final matrix for the segment and store it in the active matrix list
+			animMatrices[segIdx].makeVQS(mSegmentPositionList[segIdx], prevRotQuat, scale);
+			mActiveAnimMatrices[segIdx] = animMatrices[segIdx];
 		}
 	} else {
-		for (i = 0; i < 8; i++) {
-			_5C[i].x = animMatrices[i].mMtx[0][3];
-			_5C[i].y = animMatrices[i].mMtx[1][3];
-			_5C[i].z = animMatrices[i].mMtx[2][3];
+		// If the blending ratio is 0, just copy the animation matrices to the active matrix list
+		for (segIdx = 0; segIdx < SnakeJointType::SegmentCount; segIdx++) {
+			mSegmentPositionList[segIdx].x = animMatrices[segIdx].mMtx[0][3];
+			mSegmentPositionList[segIdx].y = animMatrices[segIdx].mMtx[1][3];
+			mSegmentPositionList[segIdx].z = animMatrices[segIdx].mMtx[2][3];
 		}
 	}
 
-	_50 = _5C[7];
+	mNeckPosition = mSegmentPositionList[SnakeJointType::Neck];
 }
 
 /*
@@ -1038,23 +1082,23 @@ void SnakeBody::makeBlending(Matrix4f* animMatrices)
 void SnakeBody::setDeadPattern01(Matrix4f* animMatrices)
 {
 	for (int i = 0; i < 8; i++) {
-		animMatrices[i].mMtx[0][0] *= _30[i];
-		animMatrices[i].mMtx[1][0] *= _30[i];
-		animMatrices[i].mMtx[2][0] *= _30[i];
-		animMatrices[i].mMtx[0][1] *= _30[i];
-		animMatrices[i].mMtx[1][1] *= _30[i];
-		animMatrices[i].mMtx[2][1] *= _30[i];
-		animMatrices[i].mMtx[0][2] *= _30[i];
-		animMatrices[i].mMtx[1][2] *= _30[i];
-		animMatrices[i].mMtx[2][2] *= _30[i];
+		animMatrices[i].mMtx[0][0] *= mSegmentScaleList[i];
+		animMatrices[i].mMtx[1][0] *= mSegmentScaleList[i];
+		animMatrices[i].mMtx[2][0] *= mSegmentScaleList[i];
+		animMatrices[i].mMtx[0][1] *= mSegmentScaleList[i];
+		animMatrices[i].mMtx[1][1] *= mSegmentScaleList[i];
+		animMatrices[i].mMtx[2][1] *= mSegmentScaleList[i];
+		animMatrices[i].mMtx[0][2] *= mSegmentScaleList[i];
+		animMatrices[i].mMtx[1][2] *= mSegmentScaleList[i];
+		animMatrices[i].mMtx[2][2] *= mSegmentScaleList[i];
 
 		if (i < 7) {
 			animMatrices[i + 1].mMtx[0][3]
-			    = (animMatrices[i + 1].mMtx[0][3] - animMatrices[i].mMtx[0][3]) * _30[i] + animMatrices[i].mMtx[0][3];
+			    = (animMatrices[i + 1].mMtx[0][3] - animMatrices[i].mMtx[0][3]) * mSegmentScaleList[i] + animMatrices[i].mMtx[0][3];
 			animMatrices[i + 1].mMtx[1][3]
-			    = (animMatrices[i + 1].mMtx[1][3] - animMatrices[i].mMtx[1][3]) * _30[i] + animMatrices[i].mMtx[1][3];
+			    = (animMatrices[i + 1].mMtx[1][3] - animMatrices[i].mMtx[1][3]) * mSegmentScaleList[i] + animMatrices[i].mMtx[1][3];
 			animMatrices[i + 1].mMtx[2][3]
-			    = (animMatrices[i + 1].mMtx[2][3] - animMatrices[i].mMtx[2][3]) * _30[i] + animMatrices[i].mMtx[2][3];
+			    = (animMatrices[i + 1].mMtx[2][3] - animMatrices[i].mMtx[2][3]) * mSegmentScaleList[i] + animMatrices[i].mMtx[2][3];
 		}
 	}
 }

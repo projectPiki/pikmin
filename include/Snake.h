@@ -176,8 +176,41 @@ struct SnakeProp : public BossProp, public CoreNode {
 	SnakeProperties mSnakeProps; // _200
 };
 
+// clang-format off
+// https://intns.github.io/media/snake_joints.png
+DEFINE_ENUM_TYPE(
+	SnakeJointType,
+
+	Root = 0,     // bodyjnt1
+	Segment1 = 1, // bodyjnt2
+	Segment2 = 2, // bodyjnt3
+	Segment4 = 3, // bodyjnt4
+	Segment5 = 4, // bodyjnt5, middle
+	Segment6 = 5, // bodyjnt6
+	Segment7 = 6, // bodyjnt7
+	Neck = 7,     // bodyjnt8
+	SegmentCount = 8,
+
+	// 8 is the eye root
+	RightEye = 9,  // bb_rme
+	LeftEye  = 10, // bb_lme
+
+	JawHinge = 11,	 // kutijnt1
+	LeftCheek = 12,	 // kamujnt3
+	RightCheek = 13, // kamujnt2
+	Beak = 14,		 // kamujnt1
+);
+// clang-format on
+
+struct SnakeAnimPosition {
+	Vector3f mDirection;
+	Vector3f mRight;
+	Vector3f mUp;
+	Vector3f mPosition;
+};
+
 /**
- * @brief TODO
+ * @brief Snake Body controller
  *
  * @note Size: 0x890.
  */
@@ -219,24 +252,24 @@ struct SnakeBody {
 	void setDeadPattern02(Matrix4f*);
 	void setDeadScale(Matrix4f*);
 
-	Snake* mSnake;                                   // _00
-	bool _04;                                        // _04
-	u8 _05;                                          // _05
-	int mDeadEffectSegmentIndex;                     // _08
-	f32 mBlendingRatio;                              // _0C
-	f32 mBlendingRate;                               // _10
-	f32 _14[7];                                      // _14
-	f32 _30[8];                                      // _30
-	Vector3f _50;                                    // _50
-	Vector3f _5C[8];                                 // _5C
-	Vector3f _BC[6];                                 // _BC
-	Vector3f _104[8][4];                             // _104
-	Matrix4f _284[8];                                // _284
-	Matrix4f _484[8];                                // _484
-	Matrix4f _684[8];                                // _684
-	SnakeGenBodyOnGroundCallBack* mOnGroundCallBack; // _884
-	SnakeGenBodyRotateCallBack* mRotateCallBack;     // _888
-	zen::particleGenerator** mDeadPtclGens;          // _88C
+	Snake* mSnake;                                               // _00
+	bool mIsDying;                                               // _04
+	u8 mUseBlend;                                                // _05
+	int mDeadEffectSegmentIndex;                                 // _08
+	f32 mBlendingRatio;                                          // _0C
+	f32 mBlendingRate;                                           // _10
+	f32 mSegmentLengthList[7];                                   // _14
+	f32 mSegmentScaleList[SnakeJointType::SegmentCount];         // _30
+	Vector3f mNeckPosition;                                      // _50
+	Vector3f mSegmentPositionList[SnakeJointType::SegmentCount]; // _5C
+	Vector3f mSegmentTurnVelocityList[6];                        // _BC
+	Vector3f mAnimPosList[SnakeJointType::SegmentCount][4];      // _104
+	Matrix4f mSegmentMatrices[SnakeJointType::SegmentCount];     // _284
+	Matrix4f mPrevAnimMatrices[SnakeJointType::SegmentCount];    // _484
+	Matrix4f mActiveAnimMatrices[SnakeJointType::SegmentCount];  // _684
+	SnakeGenBodyOnGroundCallBack* mOnGroundCallBack;             // _884
+	SnakeGenBodyRotateCallBack* mRotateCallBack;                 // _888
+	zen::particleGenerator** mDeadPtclGens;                      // _88C
 };
 
 /**
@@ -254,15 +287,15 @@ struct Snake : public Boss {
 
 		virtual Vector3f getPos() // _08
 		{
-			mCentrePosition.x = (mSnake->mSnakeBody->_50.x + mSnake->mPosition.x) / 2.0f;
-			mCentrePosition.y = (mSnake->mSnakeBody->_50.y + mSnake->mPosition.y) / 2.0f;
-			mCentrePosition.z = (mSnake->mSnakeBody->_50.z + mSnake->mPosition.z) / 2.0f;
+			mCentrePosition.x = (mSnake->mSnakeBody->mNeckPosition.x + mSnake->mPosition.x) / 2.0f;
+			mCentrePosition.y = (mSnake->mSnakeBody->mNeckPosition.y + mSnake->mPosition.y) / 2.0f;
+			mCentrePosition.z = (mSnake->mSnakeBody->mNeckPosition.z + mSnake->mPosition.z) / 2.0f;
 
 			return mCentrePosition;
 		}
 		virtual f32 getSize() // _0C
 		{
-			mSize = mSnake->mSnakeBody->_50.distance(mCentrePosition);
+			mSize = mSnake->mSnakeBody->mNeckPosition.distance(mCentrePosition);
 			mSize += 55.0f;
 			return mSize;
 		}
@@ -296,11 +329,11 @@ struct Snake : public Boss {
 	// _00-_3B8 = Boss
 	BoundSphereUpdater* mBoundsUpdater; // _3B8
 	bool mBossType;                     // _3BC
-	f32 _3C0;                           // _3C0
+	f32 mFaceDirection;                 // _3C0
 	f32 _3C4;                           // _3C4
 	SnakeAi* mSnakeAi;                  // _3C8
 	SnakeBody* mSnakeBody;              // _3CC
-	Vector3f _3D0;                      // _3D0
+	Vector3f mSpawnPosition;            // _3D0
 };
 
 /**
@@ -377,13 +410,13 @@ struct SnakeAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	bool _04;                   // _04
-	bool _05;                   // _05
-	bool _06;                   // _06
+	bool mIsFacingTarget;       // _04
+	bool mIsAttackAllowed;      // _05
+	bool mFastAppear;           // _06
 	int mMouthSlotFlag;         // _08, keeps track of which slots are occupied
 	int mOccupiedSlotCount;     // _0C
 	int mMaxSlotCount;          // _10
-	int _14;                    // _14
+	int mAttackId;              // _14
 	f32* mAttackDists;          // _18, array of 5 floats
 	f32* mAttackLimits;         // _1C, array of 5 floats
 	f32* mAttackMinus;          // _20, array of 5 floats
@@ -422,7 +455,7 @@ struct SnakeGenBodyOnGroundCallBack : public zen::CallBack1<zen::particleGenerat
 struct SnakeGenBodyRotateCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
-		if (mSnake->mSnakeAi->_04) {
+		if (mSnake->mSnakeAi->mIsFacingTarget) {
 			ptclGen->startGen();
 		} else {
 			ptclGen->stopGen();
