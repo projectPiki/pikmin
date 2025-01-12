@@ -2260,7 +2260,7 @@ void DGXGraphics::useMatrix(Matrix4f&, int)
  * Address:	80048F60
  * Size:	0000F8
  */
-void DGXGraphics::useTexture(Texture*, int)
+void DGXGraphics::useTexture(Texture* texture, int)
 {
 	/*
 	.loc_0x0:
@@ -6192,7 +6192,7 @@ void DGXGraphics::fillRectangle(RectArea&)
  * Address:	8004C350
  * Size:	000404
  */
-void DGXGraphics::texturePrintf(Font*, int, int, char*, ...)
+void DGXGraphics::texturePrintf(Font* font, int x, int y, char* format, ...)
 {
 	/*
 	.loc_0x0:

@@ -152,9 +152,9 @@ struct Graphics {
 	virtual void blatRectangle(RectArea&)                       = 0;                       // _D8
 	virtual void lineRectangle(RectArea&)                       = 0;                       // _DC
 	virtual void testRectangle(RectArea&);                                                 // _E0
-	virtual void initProjTex(bool, LightCamera*)            = 0;                           // _E4
-	virtual void initReflectTex(bool)                       = 0;                           // _E8
-	virtual void texturePrintf(Font*, int, int, char*, ...) = 0;                           // _EC
+	virtual void initProjTex(bool, LightCamera*)                            = 0;           // _E4
+	virtual void initReflectTex(bool)                                       = 0;           // _E8
+	virtual void texturePrintf(Font* font, int x, int y, char* format, ...) = 0;           // _EC
 	virtual void perspPrintf(Font*, Vector3f&, int, int, char*, ...);                      // _F0
 };
 
@@ -218,7 +218,7 @@ struct DGXGraphics : public Graphics {
 	virtual void testRectangle(RectArea&);                                             // _E0
 	virtual void initProjTex(bool, LightCamera*);                                      // _E4
 	virtual void initReflectTex(bool);                                                 // _E8
-	virtual void texturePrintf(Font*, int, int, char*, ...);                           // _EC
+	virtual void texturePrintf(Font* font, int x, int y, char* format, ...);           // _EC
 	virtual void useMatrixQuick(Matrix4f&, int);                                       // _F4
 	virtual void drawOutline(Camera&, Shape*);                                         // _F8 (weak)
 

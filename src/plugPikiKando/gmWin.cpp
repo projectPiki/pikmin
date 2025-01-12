@@ -1,5 +1,12 @@
-#include "Win.h"
+#include "Font.h"
 #include "Geometry.h"
+#include "Graphics.h"
+#include "Matrix4f.h"
+#include "Vector.h"
+#include "Win.h"
+
+static Texture* wintex;
+static Font* font;
 
 /*
  * --INFO--
@@ -58,8 +65,7 @@ void GmWin::moveHome(Vector2i&)
  */
 void GmWin::open()
 {
-	// Generated from stw r0, 0x28(r3)
-	// _28 = 4096;
+	mStatus = 0x1000;
 }
 
 /*
@@ -69,30 +75,10 @@ void GmWin::open()
  */
 void GmWin::close()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x14(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x30
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x30:
-	  li        r0, 0x1002
-	  stw       r0, 0x28(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mCloseListener) {
+		mCloseListener->onCloseWindow();
+	}
+	mStatus = 0x1002;
 }
 
 /*
@@ -100,114 +86,22 @@ void GmWin::close()
  * Address:	80111E6C
  * Size:	00019C
  */
-void GmWin::render(Graphics&)
+void GmWin::render(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stw       r31, 0x84(r1)
-	  mr        r31, r4
-	  addi      r4, r1, 0x24
-	  stw       r30, 0x80(r1)
-	  mr        r30, r3
-	  addi      r5, r1, 0x64
-	  stw       r29, 0x7C(r1)
-	  li        r29, 0
-	  lwz       r6, 0x1C(r3)
-	  lwz       r0, 0x18(r3)
-	  addi      r3, r31, 0
-	  stw       r29, 0x64(r1)
-	  stw       r29, 0x68(r1)
-	  stw       r0, 0x6C(r1)
-	  stw       r6, 0x70(r1)
-	  lwz       r6, 0x64(r1)
-	  lwz       r0, 0x20(r30)
-	  add       r0, r6, r0
-	  stw       r0, 0x64(r1)
-	  lwz       r6, 0x6C(r1)
-	  lwz       r0, 0x20(r30)
-	  add       r0, r6, r0
-	  stw       r0, 0x6C(r1)
-	  lwz       r6, 0x68(r1)
-	  lwz       r0, 0x24(r30)
-	  add       r0, r6, r0
-	  stw       r0, 0x68(r1)
-	  lwz       r6, 0x70(r1)
-	  lwz       r0, 0x24(r30)
-	  add       r0, r6, r0
-	  stw       r0, 0x70(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r30, 0x38
-	  li        r5, 0x1
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r30, 0x3C
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x30F0(r13)
-	  lwz       r12, 0x3B4(r31)
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r29, 0x14(r1)
-	  li        r0, 0x80
-	  addi      r5, r1, 0x14
-	  stw       r29, 0x18(r1)
-	  mr        r3, r31
-	  addi      r4, r1, 0x64
-	  stw       r0, 0x1C(r1)
-	  li        r6, 0
-	  stw       r0, 0x20(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xD0(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0xFF
-	  stb       r0, 0x10(r1)
-	  addi      r4, r1, 0x10
-	  addi      r3, r31, 0
-	  stb       r0, 0x11(r1)
-	  li        r5, 0x1
-	  stb       r0, 0x12(r1)
-	  stb       r0, 0x13(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x8C(r1)
-	  lwz       r31, 0x84(r1)
-	  lwz       r30, 0x80(r1)
-	  lwz       r29, 0x7C(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+	RectArea area(0, 0, mWidth, mHeight);
+	area.mMinX += mPosX;
+	area.mMaxX += mPosX;
+	area.mMinY += mPosY;
+	area.mMaxY += mPosY;
+	Matrix4f matrix;
+	gfx.setOrthogonal(matrix.mMtx, area);
+	gfx.setColour(mColourA, true);
+	gfx.setAuxColour(mAuxColourA);
+	gfx.useTexture(wintex, 0);
+	gfx.drawRectangle(area, RectArea(0, 0, 128, 128), nullptr);
+	gfx.useTexture(nullptr, 0);
+	gfx.setColour(Colour(255, 255, 255, 255), true);
+	doRender(gfx);
 }
 
 /*
@@ -227,18 +121,11 @@ void GmWin::doRender(Graphics&)
  */
 void GmWin::placeCentre()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x1C(r3)
-	  lwz       r0, 0x18(r3)
-	  srawi     r4, r4, 0x1
-	  srawi     r0, r0, 0x1
-	  subfic    r0, r0, 0x140
-	  stw       r0, 0x20(r3)
-	  subfic    r0, r4, 0xF0
-	  stw       r0, 0x24(r3)
-	  blr
-	*/
+	const int centerX = mWidth >> 1;
+	const int centerY = mHeight >> 1;
+
+	mPosX = 320 - (centerX);
+	mPosY = 240 - (centerY);
 }
 
 /*
@@ -246,31 +133,9 @@ void GmWin::placeCentre()
  * Address:	8011202C
  * Size:	000050
  */
-void GmWin::print(Graphics&, int, int, char*)
+void GmWin::print(Graphics& gfx, int posX, int posY, char* message)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r9, r3, 0
-	  stw       r0, 0x4(r1)
-	  mr        r0, r4
-	  mr        r3, r0
-	  crclr     6, 0x6
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r8, 0x20(r9)
-	  lwz       r12, 0xEC(r12)
-	  lwz       r0, 0x24(r9)
-	  add       r5, r5, r8
-	  lwz       r4, 0x30F4(r13)
-	  mtlr      r12
-	  add       r6, r6, r0
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	gfx.texturePrintf(font, posX + mPosX, posY + mPosY, message);
 }
 
 /*
@@ -278,43 +143,11 @@ void GmWin::print(Graphics&, int, int, char*)
  * Address:	8011207C
  * Size:	000080
  */
-void GmWin::printcentre(Graphics&, int, char*)
+void GmWin::printcentre(Graphics& gfx, int posY, char* message)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  mr        r27, r3
-	  addi      r30, r6, 0
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  addi      r4, r30, 0
-	  lwz       r0, 0x18(r27)
-	  lwz       r3, 0x30F4(r13)
-	  srawi     r31, r0, 0x1
-	  bl        -0xE9F78
-	  srawi     r6, r3, 0x1
-	  lwz       r4, 0x20(r27)
-	  mr        r3, r28
-	  lwz       r0, 0x24(r27)
-	  lwz       r12, 0x3B4(r28)
-	  add       r5, r4, r31
-	  lwz       r4, 0x30F4(r13)
-	  mr        r7, r30
-	  lwz       r12, 0xEC(r12)
-	  sub       r5, r5, r6
-	  crclr     6, 0x6
-	  mtlr      r12
-	  add       r6, r29, r0
-	  blrl
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	const int windowWidth = mWidth >> 1;
+	const int stringWidth = font->stringWidth(message) >> 1;
+	gfx.texturePrintf(font, mPosX + windowWidth - stringWidth, posY + mPosY, message);
 }
 
 /*
@@ -322,43 +155,11 @@ void GmWin::printcentre(Graphics&, int, char*)
  * Address:	801120FC
  * Size:	000080
  */
-void GmWin::printright(Graphics&, int, char*)
+void GmWin::printright(Graphics& gfx, int posY, char* message)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  mr        r27, r3
-	  mr        r30, r6
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  addi      r4, r30, 0
-	  lwz       r3, 0x30F4(r13)
-	  lwz       r31, 0x18(r27)
-	  bl        -0xE9FF4
-	  mr        r5, r3
-	  lwz       r4, 0x20(r27)
-	  mr        r3, r28
-	  lwz       r0, 0x24(r27)
-	  lwz       r12, 0x3B4(r28)
-	  add       r4, r4, r31
-	  sub       r5, r4, r5
-	  lwz       r4, 0x30F4(r13)
-	  lwz       r12, 0xEC(r12)
-	  addi      r7, r30, 0
-	  crclr     6, 0x6
-	  mtlr      r12
-	  subi      r5, r5, 0x20
-	  add       r6, r29, r0
-	  blrl
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	const int windowWidth = mWidth;
+	const int stringWidth = font->stringWidth(message);
+	gfx.texturePrintf(font, mPosX + windowWidth - stringWidth - 32, posY + mPosY, message);
 }
 
 /*
@@ -366,33 +167,9 @@ void GmWin::printright(Graphics&, int, char*)
  * Address:	8011217C
  * Size:	000058
  */
-void GmWin::printleft(Graphics&, int, char*)
+void GmWin::printleft(Graphics& gfx, int posY, char* message)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r7, r3, 0
-	  stw       r0, 0x4(r1)
-	  mr        r0, r4
-	  mr        r3, r0
-	  crclr     6, 0x6
-	  stwu      r1, -0x8(r1)
-	  mr        r9, r5
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r8, 0x20(r7)
-	  lwz       r12, 0xEC(r12)
-	  lwz       r0, 0x24(r7)
-	  addi      r7, r6, 0
-	  lwz       r4, 0x30F4(r13)
-	  mtlr      r12
-	  addi      r5, r8, 0x20
-	  add       r6, r9, r0
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	gfx.texturePrintf(font, 32 + mPosX, posY + mPosY, message);
 }
 
 /*
@@ -400,37 +177,10 @@ void GmWin::printleft(Graphics&, int, char*)
  * Address:	801121D4
  * Size:	000068
  */
-void GmWin::printStart(Graphics&)
+void GmWin::printStart(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r30, 0x40
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r30, 0x44
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	gfx.setColour(mColourB, true);
+	gfx.setAuxColour(mAuxColourB);
 }
 
 /*
@@ -438,49 +188,12 @@ void GmWin::printStart(Graphics&)
  * Address:	8011223C
  * Size:	000098
  */
-void GmWin::texture(Graphics&, Texture*, int, int, int, int, RectArea)
+void GmWin::texture(Graphics& gfx, Texture* texture, int minX, int minY, int maxX, int maxY, RectArea area)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stmw      r26, 0x38(r1)
-	  mr        r26, r4
-	  addi      r4, r5, 0
-	  mr        r29, r8
-	  addi      r30, r9, 0
-	  addi      r31, r10, 0
-	  li        r5, 0
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r11, 0x20(r3)
-	  lwz       r12, 0xCC(r12)
-	  lwz       r0, 0x24(r3)
-	  mr        r3, r26
-	  mtlr      r12
-	  add       r27, r6, r11
-	  add       r28, r7, r0
-	  blrl
-	  stw       r27, 0x28(r1)
-	  add       r5, r27, r29
-	  add       r0, r28, r30
-	  stw       r28, 0x2C(r1)
-	  addi      r4, r1, 0x28
-	  addi      r3, r26, 0
-	  stw       r5, 0x30(r1)
-	  mr        r5, r31
-	  li        r6, 0
-	  stw       r0, 0x34(r1)
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r12, 0xD0(r12)
-	  mtlr      r12
-	  blrl
-	  lmw       r26, 0x38(r1)
-	  lwz       r0, 0x54(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	minX = minX + mPosX;
+	minY = minY + mPosY;
+	gfx.useTexture(texture, 0);
+	gfx.drawRectangle(RectArea(minX, minY, minX + maxX, minY + maxY), area, nullptr);
 }
 
 /*
@@ -488,53 +201,12 @@ void GmWin::texture(Graphics&, Texture*, int, int, int, int, RectArea)
  * Address:	801122D4
  * Size:	0000A8
  */
-void GmWin::texturecentre(Graphics&, Texture*, int, int, int, RectArea)
+void GmWin::texturecentre(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stmw      r26, 0x38(r1)
-	  mr        r26, r4
-	  addi      r28, r7, 0
-	  srawi     r11, r28, 0x1
-	  addi      r29, r8, 0
-	  addi      r30, r9, 0
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r4, 0x18(r3)
-	  lwz       r12, 0xCC(r12)
-	  lwz       r0, 0x24(r3)
-	  srawi     r4, r4, 0x1
-	  lwz       r10, 0x20(r3)
-	  mtlr      r12
-	  mr        r3, r26
-	  add       r7, r10, r4
-	  addi      r4, r5, 0
-	  sub       r31, r7, r11
-	  add       r27, r6, r0
-	  li        r5, 0
-	  blrl
-	  stw       r31, 0x24(r1)
-	  add       r5, r31, r28
-	  add       r0, r27, r29
-	  stw       r27, 0x28(r1)
-	  addi      r4, r1, 0x24
-	  addi      r3, r26, 0
-	  stw       r5, 0x2C(r1)
-	  mr        r5, r30
-	  li        r6, 0
-	  stw       r0, 0x30(r1)
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r12, 0xD0(r12)
-	  mtlr      r12
-	  blrl
-	  lmw       r26, 0x38(r1)
-	  lwz       r0, 0x54(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	const int minX = mPosX + (mWidth >> 1) - (width >> 1);
+	minY           = minY + mPosY;
+	gfx.useTexture(texture, 0);
+	gfx.drawRectangle(RectArea(minX, minY, minX + width, minY + height), area, nullptr);
 }
 
 /*
@@ -542,49 +214,12 @@ void GmWin::texturecentre(Graphics&, Texture*, int, int, int, RectArea)
  * Address:	8011237C
  * Size:	000098
  */
-void GmWin::textureleft(Graphics&, Texture*, int, int, int, RectArea)
+void GmWin::textureleft(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stmw      r26, 0x38(r1)
-	  mr        r26, r4
-	  addi      r4, r5, 0
-	  mr        r28, r7
-	  addi      r29, r8, 0
-	  addi      r30, r9, 0
-	  li        r5, 0
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r10, 0x20(r3)
-	  lwz       r12, 0xCC(r12)
-	  lwz       r0, 0x24(r3)
-	  mr        r3, r26
-	  mtlr      r12
-	  addi      r31, r10, 0x20
-	  add       r27, r6, r0
-	  blrl
-	  stw       r31, 0x24(r1)
-	  add       r5, r31, r28
-	  add       r0, r27, r29
-	  stw       r27, 0x28(r1)
-	  addi      r4, r1, 0x24
-	  addi      r3, r26, 0
-	  stw       r5, 0x2C(r1)
-	  mr        r5, r30
-	  li        r6, 0
-	  stw       r0, 0x30(r1)
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r12, 0xD0(r12)
-	  mtlr      r12
-	  blrl
-	  lmw       r26, 0x38(r1)
-	  lwz       r0, 0x54(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	const int minX = mPosX + 32;
+	minY           = minY + mPosY;
+	gfx.useTexture(texture, 0);
+	gfx.drawRectangle(RectArea(minX, minY, minX + width, minY + height), area, 0);
 }
 
 /*
@@ -592,52 +227,12 @@ void GmWin::textureleft(Graphics&, Texture*, int, int, int, RectArea)
  * Address:	80112414
  * Size:	0000A4
  */
-void GmWin::textureright(Graphics&, Texture*, int, int, int, RectArea)
+void GmWin::textureright(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stmw      r26, 0x38(r1)
-	  mr        r26, r4
-	  mr        r28, r7
-	  addi      r29, r8, 0
-	  addi      r30, r9, 0
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r10, 0x20(r3)
-	  lwz       r4, 0x18(r3)
-	  lwz       r0, 0x24(r3)
-	  mr        r3, r26
-	  lwz       r12, 0xCC(r12)
-	  add       r4, r10, r4
-	  sub       r7, r4, r28
-	  addi      r4, r5, 0
-	  mtlr      r12
-	  subi      r31, r7, 0x20
-	  add       r27, r6, r0
-	  li        r5, 0
-	  blrl
-	  stw       r31, 0x24(r1)
-	  add       r5, r31, r28
-	  add       r0, r27, r29
-	  stw       r27, 0x28(r1)
-	  addi      r4, r1, 0x24
-	  addi      r3, r26, 0
-	  stw       r5, 0x2C(r1)
-	  mr        r5, r30
-	  li        r6, 0
-	  stw       r0, 0x30(r1)
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r12, 0xD0(r12)
-	  mtlr      r12
-	  blrl
-	  lmw       r26, 0x38(r1)
-	  lwz       r0, 0x54(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	const int minX = mPosX + mWidth - width - 32;
+	minY           = minY + mPosY;
+	gfx.useTexture(texture, 0);
+	gfx.drawRectangle(RectArea(minX, minY, minX + width, minY + height), area, nullptr);
 }
 
 /*
