@@ -1,4 +1,5 @@
 #include "Actor.h"
+#include "DebugLog.h"
 
 ActorMgr* actorMgr;
 
@@ -7,20 +8,14 @@ ActorMgr* actorMgr;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("genActor");
 
 /*
  * --INFO--
@@ -51,9 +46,11 @@ Creature* ActorMgr::createObject()
 Actor* ActorMgr::newActor(int p1)
 {
 	Actor* actor = (Actor*)birth();
+
 	if (actor) {
-		actor->setType(p1, _40[0], _44[0], _48[0]);
+		actor->setType(p1, mShapeObjectList[0], mCreaturePropertyList[0], mAiManagerList[0]);
 	}
+
 	return actor;
 }
 

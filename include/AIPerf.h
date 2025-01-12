@@ -44,9 +44,35 @@ struct AIPerf {
 	void toggleUpdateSearchBuffer(Menu&);
 
 	static int useGrid;
+	static bool useLOD;
 	static bool iteratorCull;
 	static int optLevel;
 	static bool bridgeFast;
+	static int drawshapeCullCnt;
+	static int outsideViewCnt;
+	static int viewCullCnt;
+	static int aiCullCnt;
+	static int iteratorCullCnt;
+	static int collisionCnt;
+	static int searchInsertCnt;
+	static int searchCullCnt;
+	static int searchCnt;
+	static int moveType; // 0 = stop, 1 = no stop, 2 = slip
+	static bool generatorMode;
+	static bool kandoOnly;
+	static bool soundDebug;
+	static bool updateSearchBuffer;
+	static bool loopOptimise;
+	static bool useUpdateMgr;
+	static int ufoLevel;
+	static bool showRoute;
+	static bool aiGrid;
+	static bool showColls;
+	static bool useASync;
+
+	// TODO
+	static bool insQuick;
+	static bool useCollSort;
 
 	// TODO: members
 };

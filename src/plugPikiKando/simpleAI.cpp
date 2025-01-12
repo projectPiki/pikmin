@@ -25,15 +25,15 @@ AICreature::AICreature(CreatureProp* props)
     : Creature(props)
 {
 	// this is all apparently the ctor of a struct
-	_2BC = 0;
+	mCollidingCreature = 0;
 	_2C4.set(0.0f, 0.0f, 0.0f);
 	_2D0 = _2D4   = 0;
 	mCurrentState = nullptr;
 	_2D8          = 0.0f;
 
 	// then this is THIS ctor
-	mCurrentState = nullptr; // hm.
-	mMaxEventCnt  = 16;
+	mCurrentState  = nullptr; // hm.
+	mMaxEventCount = 16;
 	clearEventFlags();
 }
 
@@ -46,7 +46,7 @@ void AICreature::collisionCallback(CollEvent& event)
 {
 	Creature* collider = event.mCollider;
 	MsgCollide msg(event);
-	_2BC = collider;
+	mCollidingCreature = collider;
 	if (mStateMachine) {
 		static_cast<SimpleAI*>(mStateMachine)->procMsg(this, &msg);
 	}
@@ -96,10 +96,11 @@ void AICreature::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void AICreature::clearEventFlags()
 {
-	for (int i = 0; i < mMaxEventCnt; i++) {
+	for (int i = 0; i < mMaxEventCount; i++) {
 		mEventFlags[i] = 0;
 	}
-	_2EC = 0;
+
+	mCurrentEventCount = 0;
 }
 
 /*
@@ -109,8 +110,8 @@ void AICreature::clearEventFlags()
  */
 void AICreature::setEventFlag(int flagID, bool value)
 {
-	if (_2EC < mMaxEventCnt) {
-		if (flagID >= mMaxEventCnt) {
+	if (mCurrentEventCount < mMaxEventCount) {
+		if (flagID >= mMaxEventCount) {
 			if (value) {
 				ERROR("EVENT %d flag = %s\n", flagID, true);
 			} else {
@@ -323,6 +324,7 @@ void SAIState::procMsg(AICreature* creature, Msg* msg)
 			arrow->mEvent->procMsg(creature, msg);
 		}
 	}
+
 	static_cast<SimpleAI*>(mStateMachine)->checkEvent(creature);
 }
 

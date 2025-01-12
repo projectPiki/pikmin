@@ -46,21 +46,19 @@ struct Actor : public AICreature {
  */
 struct ActorMgr : public MonoObjectMgr {
 	ActorMgr(MapMgr*); // unused/inlined
+	~ActorMgr();
 
 	Actor* newActor(int);
 
-	// unused/inlined:
-	~ActorMgr();
 	Creature* createObject();
 
 	// _00     = VTBL
 	// _08     = VTBL
 	// _00-_3C = MonoObjectMgr
-	// TODO: members?
-	PaniMotionTable* mMotionTable; // _3C
-	PikiShapeObject** _40;         // _40
-	CreatureProp** _44;            // _44
-	SimpleAI** _48;                // _48
+	PaniMotionTable* mMotionTable;        // _3C
+	PikiShapeObject** mShapeObjectList;   // _40
+	CreatureProp** mCreaturePropertyList; // _44
+	SimpleAI** mAiManagerList;            // _48
 };
 
 extern ActorMgr* actorMgr;

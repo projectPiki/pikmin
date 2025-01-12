@@ -7,7 +7,7 @@
 #include "Ayu.h"
 
 /**
- * @brief TODO
+ * @brief A node that contains AI constants.
  *
  * @note Size: 0x194.
  */

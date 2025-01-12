@@ -441,7 +441,7 @@ PlantAI::PlantAI()
 bool PlantAI::OpponentMove::satisfy(AICreature* plant)
 {
 	// this stops inlining if you do it directly for some reason, but goes weird otherwise.
-	Vector3f* vec = &plant->_2BC->mVelocity;
+	Vector3f* vec = &plant->mCollidingCreature->mVelocity;
 	f32 dist      = vec->length();
 	if (dist > 40.0f) {
 		return true;
@@ -529,7 +529,7 @@ void PlantAI::TouchInit::act(AICreature* plant)
 {
 	u32 badCompiler;
 	if (static_cast<Plant*>(plant)->mPlantType != PLANT_Mizukusa) {
-		if (plant->_2BC->mObjType == OBJTYPE_Navi) {
+		if (plant->mCollidingCreature->mObjType == OBJTYPE_Navi) {
 			SeSystem::playPlayerSe(SE_ORIMA_TOUCHPLANTS);
 		}
 

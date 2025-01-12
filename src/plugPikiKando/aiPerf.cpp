@@ -1,26 +1,51 @@
 #include "AIPerf.h"
 #include "WorkObject.h"
 #include "Delegate.h"
+#include "Menu.h"
+#include "UfoItem.h"
+#include "PlayerState.h"
+#include "DebugLog.h"
+
+int AIPerf::useGrid;
+bool AIPerf::useLOD;
+bool AIPerf::iteratorCull;
+int AIPerf::optLevel;
+bool AIPerf::bridgeFast;
+int AIPerf::drawshapeCullCnt;
+int AIPerf::outsideViewCnt;
+int AIPerf::viewCullCnt;
+int AIPerf::aiCullCnt;
+int AIPerf::iteratorCullCnt;
+int AIPerf::collisionCnt;
+int AIPerf::searchInsertCnt;
+int AIPerf::searchCullCnt;
+int AIPerf::searchCnt;
+int AIPerf::moveType;
+bool AIPerf::generatorMode;
+bool AIPerf::kandoOnly;
+bool AIPerf::soundDebug;
+bool AIPerf::updateSearchBuffer;
+bool AIPerf::loopOptimise;
+bool AIPerf::useUpdateMgr;
+int AIPerf::ufoLevel;
+bool AIPerf::showRoute;
+bool AIPerf::aiGrid;
+bool AIPerf::showColls;
+bool AIPerf::useASync;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("aiPerf");
 
 /*
  * --INFO--
@@ -29,20 +54,15 @@ static void _Print(char*, ...)
  */
 void AIPerf::clearCounts()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x2FD4(r13)
-	  stw       r0, 0x2FD0(r13)
-	  stw       r0, 0x2FCC(r13)
-	  stw       r0, 0x2FC8(r13)
-	  stw       r0, 0x2FC4(r13)
-	  stw       r0, 0x2FC0(r13)
-	  stw       r0, 0x2FBC(r13)
-	  stw       r0, 0x2FB8(r13)
-	  stw       r0, 0x2FB4(r13)
-	  blr
-	*/
+	AIPerf::drawshapeCullCnt = 0;
+	AIPerf::outsideViewCnt   = 0;
+	AIPerf::viewCullCnt      = 0;
+	AIPerf::aiCullCnt        = 0;
+	AIPerf::iteratorCullCnt  = 0;
+	AIPerf::collisionCnt     = 0;
+	AIPerf::searchInsertCnt  = 0;
+	AIPerf::searchCullCnt    = 0;
+	AIPerf::searchCnt        = 0;
 }
 
 /*
@@ -50,7 +70,7 @@ void AIPerf::clearCounts()
  * Address:	80084A14
  * Size:	000C20
  */
-void AIPerf::addMenu(Menu*)
+void AIPerf::addMenu(Menu* menu)
 {
 	/*
 	.loc_0x0:
@@ -918,45 +938,12 @@ void AIPerf::addMenu(Menu*)
  * Address:	80085634
  * Size:	000088
  */
-void AIPerf::toggleMoveType(Menu&)
+void AIPerf::toggleMoveType(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8022
-	  stw       r0, 0x4(r1)
-	  lis       r5, 0x5555
-	  addi      r0, r5, 0x5556
-	  crclr     6, 0x6
-	  stwu      r1, -0x20(r1)
-	  addi      r7, r3, 0x23EC
-	  lwz       r6, 0x2FA4(r13)
-	  addi      r3, r1, 0x10
-	  addi      r6, r6, 0x1
-	  mulhw     r5, r0, r6
-	  rlwinm    r0,r5,1,31,31
-	  add       r0, r5, r0
-	  mulli     r0, r0, 0x3
-	  sub       r0, r6, r0
-	  stw       r0, 0x2FA4(r13)
-	  lwz       r6, 0x0(r7)
-	  lwz       r5, 0x4(r7)
-	  lwz       r0, 0x2FA4(r13)
-	  stw       r6, 0x10(r1)
-	  rlwinm    r0,r0,2,0,29
-	  stw       r5, 0x14(r1)
-	  lwz       r5, 0x8(r7)
-	  stw       r5, 0x18(r1)
-	  lwz       r6, 0x30(r4)
-	  subi      r4, r13, 0x5EE8
-	  lwzx      r5, r3, r0
-	  lwz       r3, 0x18(r6)
-	  bl        0x190EF0
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	AIPerf::moveType = (AIPerf::moveType + 1) % 3;
+
+	const char* types[] = { "stop", "no stop", "slip" };
+	sprintf(menu.mCurrentItem->mName, "%s", types[AIPerf::moveType]);
 }
 
 /*
@@ -964,49 +951,12 @@ void AIPerf::toggleMoveType(Menu&)
  * Address:	800856BC
  * Size:	000078
  */
-void AIPerf::toggleGeneratorMode(Menu&)
+void AIPerf::toggleGeneratorMode(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x2FA1(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r0, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r0, 0x1
-
-	.loc_0x24:
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x2FA1(r13)
-	  lbz       r0, 0x2FA1(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x14E4
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x14D4
-
-	.loc_0x54:
-	  lwz       r3, 0x30(r4)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  lwz       r3, 0x18(r3)
-	  bl        0x190E78
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	// WTF, why not !AIPerf::generatorMode?
+	// Also, don't change 0 : 1, it changes the code generation. WTF.
+	AIPerf::generatorMode = AIPerf::generatorMode ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::generatorMode ? "Generator Mode" : "Game Mode");
 }
 
 /*
@@ -1014,49 +964,10 @@ void AIPerf::toggleGeneratorMode(Menu&)
  * Address:	80085734
  * Size:	000078
  */
-void AIPerf::toggleBridge(Menu&)
+void AIPerf::toggleBridge(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, -0x5F15(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r0, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r0, 0x1
-
-	.loc_0x24:
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, -0x5F15(r13)
-	  lbz       r0, -0x5F15(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x15B4
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x1418
-
-	.loc_0x54:
-	  lwz       r3, 0x30(r4)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  lwz       r3, 0x18(r3)
-	  bl        0x190E00
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AIPerf::bridgeFast = AIPerf::bridgeFast ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::bridgeFast ? "Bridge Opt [on]" : "Bridge opt [off]");
 }
 
 /*
@@ -1064,49 +975,10 @@ void AIPerf::toggleBridge(Menu&)
  * Address:	800857AC
  * Size:	000078
  */
-void AIPerf::toggleShowRoute(Menu&)
+void AIPerf::toggleShowRoute(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x2FA0(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r0, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r0, 0x1
-
-	.loc_0x24:
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x2FA0(r13)
-	  lbz       r0, 0x2FA0(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x1590
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x157C
-
-	.loc_0x54:
-	  lwz       r3, 0x30(r4)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  lwz       r3, 0x18(r3)
-	  bl        0x190D88
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AIPerf::showRoute = AIPerf::showRoute ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::showRoute ? "Route Debug [on]" : "Route Debug [off]");
 }
 
 /*
@@ -1114,9 +986,10 @@ void AIPerf::toggleShowRoute(Menu&)
  * Address:	........
  * Size:	000078
  */
-void AIPerf::toggleAIGrid(Menu&)
+void AIPerf::toggleAIGrid(Menu& menu)
 {
-	// UNUSED FUNCTION
+	AIPerf::aiGrid = AIPerf::aiGrid ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::aiGrid ? "AI GRID [on]" : "AI GRID [off]");
 }
 
 /*
@@ -1124,49 +997,10 @@ void AIPerf::toggleAIGrid(Menu&)
  * Address:	80085824
  * Size:	000078
  */
-void AIPerf::toggleKando(Menu&)
+void AIPerf::toggleKando(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x2FA8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r0, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r0, 0x1
-
-	.loc_0x24:
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x2FA8(r13)
-	  lbz       r0, 0x2FA8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x1534
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x13E4
-
-	.loc_0x54:
-	  lwz       r3, 0x30(r4)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  lwz       r3, 0x18(r3)
-	  bl        0x190D10
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AIPerf::kandoOnly = AIPerf::kandoOnly ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::kandoOnly ? "Kando Debug [on]" : "KandoDebug [off]");
 }
 
 /*
@@ -1174,49 +1008,10 @@ void AIPerf::toggleKando(Menu&)
  * Address:	8008589C
  * Size:	000078
  */
-void AIPerf::toggleLOD(Menu&)
+void AIPerf::toggleLOD(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, -0x5F18(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r0, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r0, 0x1
-
-	.loc_0x24:
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, -0x5F18(r13)
-	  lbz       r0, -0x5F18(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x14C8
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x14BC
-
-	.loc_0x54:
-	  lwz       r3, 0x30(r4)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  lwz       r3, 0x18(r3)
-	  bl        0x190C98
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AIPerf::useLOD = AIPerf::useLOD ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useLOD ? "LOD [on]" : "LOD [off]");
 }
 
 /*
@@ -1224,49 +1019,10 @@ void AIPerf::toggleLOD(Menu&)
  * Address:	80085914
  * Size:	000078
  */
-void AIPerf::toggleColls(Menu&)
+void AIPerf::toggleColls(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, -0x5F17(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r0, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r0, 0x1
-
-	.loc_0x24:
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, -0x5F17(r13)
-	  lbz       r0, -0x5F17(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x14B0
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x14A4
-
-	.loc_0x54:
-	  lwz       r3, 0x30(r4)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  lwz       r3, 0x18(r3)
-	  bl        0x190C20
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AIPerf::showColls = AIPerf::showColls ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::showColls ? "Colls [on]" : "Colls [off]");
 }
 
 /*
@@ -1274,49 +1030,10 @@ void AIPerf::toggleColls(Menu&)
  * Address:	8008598C
  * Size:	000078
  */
-void AIPerf::toggleASync(Menu&)
+void AIPerf::toggleASync(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, -0x5F14(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r0, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r0, 0x1
-
-	.loc_0x24:
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, -0x5F14(r13)
-	  lbz       r0, -0x5F14(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x1498
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x148C
-
-	.loc_0x54:
-	  lwz       r3, 0x30(r4)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  lwz       r3, 0x18(r3)
-	  bl        0x190BA8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AIPerf::useASync = AIPerf::useASync ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useASync ? "ASYNC [on]" : "ASYNC [off]");
 }
 
 /*
@@ -1324,49 +1041,10 @@ void AIPerf::toggleASync(Menu&)
  * Address:	80085A04
  * Size:	000078
  */
-void AIPerf::toggleInsQuick(Menu&)
+void AIPerf::toggleInsQuick(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, -0x5F07(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r0, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r0, 0x1
-
-	.loc_0x24:
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, -0x5F07(r13)
-	  lbz       r0, -0x5F07(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x1480
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x1474
-
-	.loc_0x54:
-	  lwz       r3, 0x30(r4)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  lwz       r3, 0x18(r3)
-	  bl        0x190B30
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AIPerf::insQuick = AIPerf::insQuick ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::insQuick ? "Ins [Fast]" : "Ins [Slow]");
 }
 
 /*
@@ -1374,49 +1052,10 @@ void AIPerf::toggleInsQuick(Menu&)
  * Address:	80085A7C
  * Size:	000078
  */
-void AIPerf::toggleSoundDebug(Menu&)
+void AIPerf::toggleSoundDebug(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x2FA9(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r0, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r0, 0x1
-
-	.loc_0x24:
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x2FA9(r13)
-	  lbz       r0, 0x2FA9(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x150C
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x14F8
-
-	.loc_0x54:
-	  lwz       r3, 0x30(r4)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  lwz       r3, 0x18(r3)
-	  bl        0x190AB8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AIPerf::soundDebug = AIPerf::soundDebug ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::soundDebug ? "Sound Debug [on]" : "Sound Debug [off]");
 }
 
 /*
@@ -1454,49 +1093,10 @@ void AIPerf::togglePsOptimise(Menu&)
  * Address:	80085AF4
  * Size:	000078
  */
-void AIPerf::toggleCollSort(Menu&)
+void AIPerf::toggleCollSort(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, -0x5F16(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r0, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r0, 0x1
-
-	.loc_0x24:
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, -0x5F16(r13)
-	  lbz       r0, -0x5F16(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x1558
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  lis       r3, 0x802B
-	  subi      r5, r3, 0x1548
-
-	.loc_0x54:
-	  lwz       r3, 0x30(r4)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  lwz       r3, 0x18(r3)
-	  bl        0x190A40
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AIPerf::useCollSort = AIPerf::useCollSort ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useCollSort ? "[use Coll Sort]" : "[ignore Coll Sort]");
 }
 
 /*
@@ -1544,32 +1144,13 @@ void AIPerf::decGridShift(Menu&)
  * Address:	80085B6C
  * Size:	00004C
  */
-void AIPerf::incOptLevel(Menu&)
+void AIPerf::incOptLevel(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, -0x5F04(r13)
-	  cmpwi     r3, 0x3
-	  bge-      .loc_0x20
-	  addi      r0, r3, 0x1
-	  stw       r0, -0x5F04(r13)
+	if (AIPerf::optLevel < 3) {
+		AIPerf::optLevel++;
+	}
 
-	.loc_0x20:
-	  lwz       r6, 0x30(r4)
-	  lis       r3, 0x802B
-	  subi      r4, r3, 0x1568
-	  lwz       r5, -0x5F04(r13)
-	  lwz       r3, 0x18(r6)
-	  crclr     6, 0x6
-	  bl        0x1909F4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	sprintf(menu.mCurrentItem->mName, "Opt Level %d", AIPerf::optLevel);
 }
 
 /*
@@ -1577,148 +1158,55 @@ void AIPerf::incOptLevel(Menu&)
  * Address:	80085BB8
  * Size:	00004C
  */
-void AIPerf::decOptLevel(Menu&)
+void AIPerf::decOptLevel(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, -0x5F04(r13)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x20
-	  subi      r0, r3, 0x1
-	  stw       r0, -0x5F04(r13)
+	if (AIPerf::optLevel > 0) {
+		AIPerf::optLevel--;
+	}
 
-	.loc_0x20:
-	  lwz       r6, 0x30(r4)
-	  lis       r3, 0x802B
-	  subi      r4, r3, 0x1568
-	  lwz       r5, -0x5F04(r13)
-	  lwz       r3, 0x18(r6)
-	  crclr     6, 0x6
-	  bl        0x1909A8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	sprintf(menu.mCurrentItem->mName, "Opt Level %d", AIPerf::optLevel);
 }
+
+u32 ufoParts[] = { 'ust5', 'ust1', 'ust2', 'ust3', 'ust4', 'uf01', 'uf02', 'uf03', 'uf04', 'uf05', 'uf06', 'uf07', 'uf08', 'uf09', 'uf10',
+	               'uf11', 'un01', 'un02', 'un03', 'un04', 'un05', 'un06', 'un07', 'un08', 'un09', 'un10', 'un11', 'un12', 'un13', 'un14' };
 
 /*
  * --INFO--
  * Address:	80085C04
  * Size:	000160
  */
-void AIPerf::incUfoLevel(Menu&)
+void AIPerf::incUfoLevel(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  stw       r28, 0x20(r1)
-	  lwz       r0, 0x2FB0(r13)
-	  cmpwi     r0, 0x1E
-	  bgt-      .loc_0x124
-	  cmpwi     r0, 0x10
-	  li        r30, 0
-	  blt-      .loc_0x3C
-	  li        r30, 0x1
+	if (AIPerf::ufoLevel <= 30) {
+		bool halfComplete = false;
+		if (AIPerf::ufoLevel >= 16) {
+			halfComplete = true;
+		}
 
-	.loc_0x3C:
-	  lwz       r3, 0x30AC(r13)
-	  bl        0x6CFF4
-	  lwz       r4, 0x2F6C(r13)
-	  mr.       r29, r3
-	  lbz       r28, 0x10(r4)
-	  beq-      .loc_0xCC
-	  lwz       r0, 0x2FB0(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x90
-	  cmplwi    r29, 0
-	  addi      r5, r29, 0
-	  beq-      .loc_0x70
-	  addi      r5, r5, 0x2B8
+		UfoItem* shipInstance = itemMgr->getUfo();
+		int prevState         = playerState->_10;
 
-	.loc_0x70:
-	  addi      r3, r1, 0x18
-	  li        r4, 0
-	  bl        0x99310
-	  addi      r5, r3, 0
-	  addi      r3, r29, 0x524
-	  li        r4, 0
-	  bl        0x6408C
-	  b         .loc_0xBC
+		if (shipInstance) {
+			if (!AIPerf::ufoLevel) {
+				shipInstance->mAnimator.startMotion(0, &PaniMotionInfo(0, shipInstance));
+			} else {
+				shipInstance->mAnimator.startMotion(0, &PaniMotionInfo(1, shipInstance));
+			}
 
-	.loc_0x90:
-	  cmplwi    r29, 0
-	  addi      r5, r29, 0
-	  beq-      .loc_0xA0
-	  addi      r5, r5, 0x2B8
+			shipInstance->mAnimator.setMotionSpeed(0, 30.0f);
+		}
 
-	.loc_0xA0:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x1
-	  bl        0x992E0
-	  addi      r5, r3, 0
-	  addi      r3, r29, 0x524
-	  li        r4, 0
-	  bl        0x6405C
+		playerState->getUfoParts(ufoParts[AIPerf::ufoLevel], halfComplete);
+		playerState->ufoAssignStart();
 
-	.loc_0xBC:
-	  lfs       f1, -0x75D0(r2)
-	  addi      r3, r29, 0x524
-	  li        r4, 0
-	  bl        0x64084
+		if (shipInstance && prevState != playerState->_10) {
+			shipInstance->startLevelFlag(playerState->_10);
+		}
 
-	.loc_0xCC:
-	  lwz       r4, 0x2FB0(r13)
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x1338
-	  lwz       r3, 0x2F6C(r13)
-	  rlwinm    r4,r4,2,0,29
-	  add       r4, r0, r4
-	  lwz       r4, 0x0(r4)
-	  mr        r5, r30
-	  bl        -0x49D8
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x4D08
-	  cmplwi    r29, 0
-	  beq-      .loc_0x118
-	  lwz       r3, 0x2F6C(r13)
-	  lbz       r4, 0x10(r3)
-	  cmpw      r28, r4
-	  beq-      .loc_0x118
-	  mr        r3, r29
-	  bl        0x61B4C
+		AIPerf::ufoLevel++;
+	}
 
-	.loc_0x118:
-	  lwz       r3, 0x2FB0(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2FB0(r13)
-
-	.loc_0x124:
-	  lwz       r6, 0x30(r31)
-	  lis       r3, 0x802B
-	  subi      r4, r3, 0x12C0
-	  lwz       r5, 0x2FB0(r13)
-	  lwz       r3, 0x18(r6)
-	  crclr     6, 0x6
-	  bl        0x190858
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	sprintf(menu.mCurrentItem->mName, "UFO Level %d", AIPerf::ufoLevel);
 }
 
 /*

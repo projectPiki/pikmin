@@ -38,6 +38,26 @@ struct UfoItemProp : public CreatureProp {
 
 /**
  * @brief TODO
+ */
+struct UfoAnimator {
+	UfoAnimator();
+
+	void init(UfoShapeObject*, PaniMotionTable*);
+	void startMotion(int, PaniMotionInfo*);
+	void setMotionSpeed(int, f32);
+	void getMotionIndex(int);
+	void stopAllMotions();
+	void initFlagMotions(int);
+	void startFlagMotions(int);
+	void setMotionLastFrame(int);
+	void updateAnimation();
+	void updateContext();
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
  *
  * @note Size: 0x5D0.
  */
@@ -111,27 +131,10 @@ struct UfoItem : public Suckable {
 
 	// _00      = VTBL
 	// _00-_3C8 = Suckable
-	u8 _3C8[0x5D0 - 0x3C8]; // _3C8, unknown
-};
-
-/**
- * @brief TODO
- */
-struct UfoAnimator {
-	UfoAnimator();
-
-	void init(UfoShapeObject*, PaniMotionTable*);
-	void startMotion(int, PaniMotionInfo*);
-	void setMotionSpeed(int, f32);
-	void getMotionIndex(int);
-	void stopAllMotions();
-	void initFlagMotions(int);
-	void startFlagMotions(int);
-	void setMotionLastFrame(int);
-	void updateAnimation();
-	void updateContext();
-
-	// TODO: members
+	u32 _3C8;               // _3C8
+	u8 _3CC[0x524 - 0x3CC]; // _3CC, unknown
+	UfoAnimator mAnimator;  // _524
+	u8 _5A4[0x5D0 - 0x5A4]; // _5A4, unknown
 };
 
 #endif
