@@ -29,17 +29,17 @@ template <typename T, typename A>
 struct Delegate1 : public IDelegate1<A> {
 	typedef void (T::*CallbackFunc)(A);
 
-	inline Delegate1(T target, CallbackFunc func)
+	inline Delegate1(T* target, CallbackFunc func)
 	{
 		mTarget   = target;
-		mFunction = func;
+		mCallback = func;
 	}
 
-	virtual void invoke(A arg) { mTarget.*mCallback(arg); } // _08
+	virtual void invoke(A arg) { (mTarget->*mCallback)(arg); } // _08
 
 	// _00     = VTBL
 	// _00-_04 = IDelegate1
-	T mTarget;              // _04
+	T* mTarget;             // _04
 	CallbackFunc mCallback; // _08
 };
 
@@ -54,17 +54,17 @@ template <typename T, typename A, typename B>
 struct Delegate2 : public IDelegate2<A, B> {
 	typedef void (T::*CallbackFunc)(A, B);
 
-	inline Delegate2(T target, CallbackFunc func)
+	inline Delegate2(T* target, CallbackFunc func)
+	    : mTarget(target)
+	    , mCallback(func)
 	{
-		mTarget   = target;
-		mFunction = func;
 	}
 
-	virtual void invoke(A argA, B argB) { mTarget.*mCallback(argA, argB); } // _08
+	virtual void invoke(A argA, B argB) { (mTarget->*mCallback)(argA, argB); } // _08
 
 	// _00     = VTBL
-	// _00-_04 = IDelegate2
-	T mTarget;              // _04
+	// _00-_04 = IDelegate1
+	T* mTarget;             // _04
 	CallbackFunc mCallback; // _08
 };
 

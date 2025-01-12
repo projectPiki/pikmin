@@ -83,8 +83,9 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 	// _00-_3C8  = Suckable
 	// _3C8-_3CC = zen::CallBack2
 	u8 _3CC[0x428 - 0x3CC]; // _3CC, unknown
-	u16 _428;               // _428, maybe color?
-	u8 _42A[0x494 - 0x42A]; // _42A, unknown
+	u16 mOnionColour;       // _428, maybe color?
+	u32 _42C;               // _42C
+	u8 _430[0x494 - 0x430]; // _42A, unknown
 };
 
 /**

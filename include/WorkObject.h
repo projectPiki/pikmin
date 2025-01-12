@@ -104,6 +104,8 @@ struct Bridge : public WorkObject {
 	virtual bool isFinished();                // _164
 	virtual bool workable(Vector3f&);         // _168
 
+	inline int getStage() { return mStageCount; }
+
 	int getFirstUnfinishedStage();
 	int getFirstFinishedStage();
 	void getJointIndex(int);

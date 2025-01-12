@@ -3,9 +3,18 @@
 #include "Delegate.h"
 #include "Menu.h"
 #include "UfoItem.h"
+#include "BaseInf.h"
+#include "GoalItem.h"
+#include "NaviMgr.h"
+#include "GameStat.h"
 #include "PlayerState.h"
+#include "Interactions.h"
+#include "PikiMgr.h"
 #include "DebugLog.h"
 
+bool AIPerf::insQuick;
+bool AIPerf::useCollSort;
+int AIPerf::gridShift;
 int AIPerf::useGrid;
 bool AIPerf::useLOD;
 bool AIPerf::iteratorCull;
@@ -32,6 +41,7 @@ bool AIPerf::showRoute;
 bool AIPerf::aiGrid;
 bool AIPerf::showColls;
 bool AIPerf::useASync;
+bool AIPerf::pikiMabiki;
 
 /*
  * --INFO--
@@ -46,6 +56,8 @@ DEFINE_ERROR();
  * Size:	0000F0
  */
 DEFINE_PRINT("aiPerf");
+
+char* gridStrings[] = { "[grid off]", "[grid xyz]", "[grid xz]" };
 
 /*
  * --INFO--
@@ -72,865 +84,77 @@ void AIPerf::clearCounts()
  */
 void AIPerf::addMenu(Menu* menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x128(r1)
-	  stw       r31, 0x124(r1)
-	  subi      r31, r5, 0x16E0
-	  stw       r30, 0x120(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x11C(r1)
-	  addi      r29, r3, 0
-	  li        r3, 0x40
-	  stw       r28, 0x118(r1)
-	  bl        -0x3DA40
-	  li        r3, 0x14
-	  bl        -0x3DA48
-	  mr.       r6, r3
-	  beq-      .loc_0x90
-	  lwz       r0, 0x3C(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x40(r31)
-	  lis       r4, 0x802A
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0xF8(r1)
-	  addi      r0, r4, 0x7A80
-	  stw       r7, 0xFC(r1)
-	  lwz       r4, 0x44(r31)
-	  stw       r4, 0x100(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r30, 0x4(r3)
-	  lwz       r4, 0xF8(r1)
-	  lwz       r0, 0xFC(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x100(r1)
-	  stw       r0, 0x10(r3)
+	char* unused = new char[0x40];
+	menu->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(menu, &Menu::menuCloseMenu));
 
-	.loc_0x90:
-	  addi      r3, r30, 0
-	  li        r4, 0x20
-	  li        r5, 0x2000
-	  bl        -0x2715C
-	  li        r3, 0x40
-	  bl        -0x3DAB4
-	  lbz       r0, -0x5F15(r13)
-	  addi      r28, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC0
-	  addi      r5, r31, 0x12C
-	  b         .loc_0xC4
+	char* bridgeText = new char[0x40];
+	sprintf(bridgeText, "%s", AIPerf::bridgeFast ? "Bridge Opt [on]" : "Bridge opt [off]");
+	menu->addOption(0, bridgeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleBridge), true);
 
-	.loc_0xC0:
-	  addi      r5, r31, 0x13C
+	char* routeText = new char[0x40];
+	sprintf(routeText, "%s", AIPerf::showRoute ? "Route Debug [on]" : "Route Debug [off]");
+	menu->addOption(0, routeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleShowRoute), true);
 
-	.loc_0xC4:
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  bl        0x191AB4
-	  li        r3, 0x14
-	  bl        -0x3DAE8
-	  mr.       r6, r3
-	  beq-      .loc_0x130
-	  lwz       r0, 0x48(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x4C(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0xEC(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0xF0(r1)
-	  lwz       r4, 0x50(r31)
-	  stw       r4, 0xF4(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0xEC(r1)
-	  lwz       r0, 0xF0(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0xF4(r1)
-	  stw       r0, 0x10(r3)
+	char* optLevelText = new char[0x40];
+	sprintf(optLevelText, "Opt Level %d", AIPerf::optLevel);
+	menu->addOption(0, optLevelText, nullptr, true);
+	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decOptLevel));
+	menu->addKeyEvent(0x8, 0x4000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incOptLevel));
 
-	.loc_0x130:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x27038
-	  li        r3, 0x40
-	  bl        -0x3DB58
-	  lbz       r0, 0x2FA0(r13)
-	  addi      r28, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x164
-	  addi      r5, r31, 0x150
-	  b         .loc_0x168
+	char* collSortText = new char[0x40];
+	sprintf(collSortText, "%s", AIPerf::showColls ? "[use Coll Sort]" : "[ignore Coll Sort]");
+	menu->addOption(0, collSortText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleCollSort), true);
 
-	.loc_0x164:
-	  addi      r5, r31, 0x164
+	char* kandoDebugText = new char[0x40];
+	sprintf(kandoDebugText, "%s", AIPerf::kandoOnly ? "Kando Debug [on]" : "Kando Debug [off]");
+	menu->addOption(0, kandoDebugText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleKando), true);
 
-	.loc_0x168:
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  bl        0x191A10
-	  li        r3, 0x14
-	  bl        -0x3DB8C
-	  mr.       r6, r3
-	  beq-      .loc_0x1D4
-	  lwz       r0, 0x54(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x58(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0xE0(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0xE4(r1)
-	  lwz       r4, 0x5C(r31)
-	  stw       r4, 0xE8(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0xE0(r1)
-	  lwz       r0, 0xE4(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0xE8(r1)
-	  stw       r0, 0x10(r3)
+	char* soundText = new char[0x40];
+	sprintf(soundText, "%s", AIPerf::soundDebug ? "Sound Debug [on]" : "Sound Debug [off]");
+	menu->addOption(0, soundText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleSoundDebug), true);
 
-	.loc_0x1D4:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x270DC
-	  li        r3, 0x40
-	  bl        -0x3DBFC
-	  lwz       r5, -0x5F04(r13)
-	  crclr     6, 0x6
-	  addi      r28, r3, 0
-	  addi      r4, r31, 0x178
-	  bl        0x191984
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        -0x27110
-	  li        r3, 0x14
-	  bl        -0x3DC30
-	  mr.       r6, r3
-	  beq-      .loc_0x278
-	  lwz       r0, 0x60(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x64(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0xD4(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0xD8(r1)
-	  lwz       r4, 0x68(r31)
-	  stw       r4, 0xDC(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0xD4(r1)
-	  lwz       r0, 0xD8(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0xDC(r1)
-	  stw       r0, 0x10(r3)
+	char* modeText = new char[0x40];
+	sprintf(modeText, "%s", AIPerf::generatorMode ? "Generator Mode" : "Game Mode");
+	menu->addOption(0, modeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleGeneratorMode), true);
 
-	.loc_0x278:
-	  lis       r4, 0x1
-	  subi      r5, r4, 0x8000
-	  addi      r3, r30, 0
-	  li        r4, 0x8
-	  bl        -0x27348
-	  li        r3, 0x14
-	  bl        -0x3DCA0
-	  mr.       r6, r3
-	  beq-      .loc_0x2E8
-	  lwz       r0, 0x6C(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x70(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0xC8(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0xCC(r1)
-	  lwz       r4, 0x74(r31)
-	  stw       r4, 0xD0(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0xC8(r1)
-	  lwz       r0, 0xCC(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0xD0(r1)
-	  stw       r0, 0x10(r3)
+	char* moveTypeText = new char[0x40];
+	char* moveTypes[]  = { "stop", "no stop", "slip" };
+	sprintf(moveTypeText, "%s", moveTypes[AIPerf::moveType]);
+	menu->addOption(0, moveTypeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleMoveType), true);
 
-	.loc_0x2E8:
-	  addi      r3, r30, 0
-	  li        r4, 0x8
-	  li        r5, 0x4000
-	  bl        -0x273B4
-	  li        r3, 0x40
-	  bl        -0x3DD0C
-	  lbz       r0, -0x5F16(r13)
-	  addi      r28, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x318
-	  addi      r5, r31, 0x188
-	  b         .loc_0x31C
+	char* lodText = new char[0x40];
+	sprintf(lodText, "%s", AIPerf::useLOD ? "LOD [on]" : "LOD [off]");
+	menu->addOption(0, lodText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleLOD), true);
 
-	.loc_0x318:
-	  addi      r5, r31, 0x198
+	char* collsText = new char[0x40];
+	sprintf(collsText, "%s", AIPerf::showColls ? "Colls [on]" : "Colls [off]");
+	menu->addOption(0, collsText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleColls), true);
 
-	.loc_0x31C:
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  bl        0x19185C
-	  li        r3, 0x14
-	  bl        -0x3DD40
-	  mr.       r6, r3
-	  beq-      .loc_0x388
-	  lwz       r0, 0x78(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x7C(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0xBC(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0xC0(r1)
-	  lwz       r4, 0x80(r31)
-	  stw       r4, 0xC4(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0xBC(r1)
-	  lwz       r0, 0xC0(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0xC4(r1)
-	  stw       r0, 0x10(r3)
+	char* asyncText = new char[0x40];
+	sprintf(asyncText, "%s", AIPerf::useASync ? "ASYNC [on]" : "ASYNC [off]");
+	menu->addOption(0, asyncText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleASync), true);
 
-	.loc_0x388:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x27290
-	  li        r3, 0x40
-	  bl        -0x3DDB0
-	  lbz       r0, 0x2FA8(r13)
-	  addi      r28, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3BC
-	  addi      r5, r31, 0x1AC
-	  b         .loc_0x3C0
+	char* insQuickText = new char[0x40];
+	sprintf(insQuickText, "%s", AIPerf::insQuick ? "Ins [Fast]" : "Ins [Slow]");
+	menu->addOption(0, insQuickText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleInsQuick), true);
 
-	.loc_0x3BC:
-	  addi      r5, r31, 0x1C0
+	char* ufoLevelText = new char[0x40];
+	sprintf(ufoLevelText, "UFO LEVEL %d", AIPerf::ufoLevel);
+	menu->addOption(0, ufoLevelText, nullptr, true);
+	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decUfoLevel));
+	menu->addKeyEvent(0x8, 0x4000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incUfoLevel));
 
-	.loc_0x3C0:
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  bl        0x1917B8
-	  li        r3, 0x14
-	  bl        -0x3DDE4
-	  mr.       r6, r3
-	  beq-      .loc_0x42C
-	  lwz       r0, 0x84(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x88(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0xB0(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0xB4(r1)
-	  lwz       r4, 0x8C(r31)
-	  stw       r4, 0xB8(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0xB0(r1)
-	  lwz       r0, 0xB4(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0xB8(r1)
-	  stw       r0, 0x10(r3)
+	menu->addOption(0, "Flower Pikis", nullptr, true);
+	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::flowerPiki));
 
-	.loc_0x42C:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x27334
-	  li        r3, 0x40
-	  bl        -0x3DE54
-	  lbz       r0, 0x2FA9(r13)
-	  addi      r28, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x460
-	  addi      r5, r31, 0x1D4
-	  b         .loc_0x464
+	menu->addOption(0, "Break sluice", nullptr, true);
+	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::breakSluice));
 
-	.loc_0x460:
-	  addi      r5, r31, 0x1E8
+	menu->addOption(0, "COLLECT PIKIS", nullptr, true);
+	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::collectPikis));
 
-	.loc_0x464:
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  bl        0x191714
-	  li        r3, 0x14
-	  bl        -0x3DE88
-	  mr.       r6, r3
-	  beq-      .loc_0x4D0
-	  lwz       r0, 0x90(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x94(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0xA4(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0xA8(r1)
-	  lwz       r4, 0x98(r31)
-	  stw       r4, 0xAC(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0xA4(r1)
-	  lwz       r0, 0xA8(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0xAC(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x4D0:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x273D8
-	  li        r3, 0x40
-	  bl        -0x3DEF8
-	  lbz       r0, 0x2FA1(r13)
-	  addi      r28, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x504
-	  addi      r5, r31, 0x1FC
-	  b         .loc_0x508
-
-	.loc_0x504:
-	  addi      r5, r31, 0x20C
-
-	.loc_0x508:
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  bl        0x191670
-	  li        r3, 0x14
-	  bl        -0x3DF2C
-	  mr.       r6, r3
-	  beq-      .loc_0x574
-	  lwz       r0, 0x9C(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0xA0(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x98(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x9C(r1)
-	  lwz       r4, 0xA4(r31)
-	  stw       r4, 0xA0(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x98(r1)
-	  lwz       r0, 0x9C(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0xA0(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x574:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x2747C
-	  li        r3, 0x40
-	  bl        -0x3DF9C
-	  lis       r4, 0x8022
-	  lwz       r0, 0x2FA4(r13)
-	  addi      r6, r4, 0x23E0
-	  crclr     6, 0x6
-	  lwz       r5, 0x0(r6)
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r4, 0x4(r6)
-	  mr        r28, r3
-	  stw       r5, 0x104(r1)
-	  addi      r5, r1, 0x104
-	  stw       r4, 0x108(r1)
-	  subi      r4, r13, 0x5EE8
-	  lwz       r6, 0x8(r6)
-	  stw       r6, 0x10C(r1)
-	  lwzx      r5, r5, r0
-	  bl        0x1915B8
-	  li        r3, 0x14
-	  bl        -0x3DFE4
-	  mr.       r6, r3
-	  beq-      .loc_0x62C
-	  lwz       r0, 0xA8(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0xAC(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x8C(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x90(r1)
-	  lwz       r4, 0xB0(r31)
-	  stw       r4, 0x94(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x8C(r1)
-	  lwz       r0, 0x90(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x94(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x62C:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x27534
-	  li        r3, 0x40
-	  bl        -0x3E054
-	  lbz       r0, -0x5F18(r13)
-	  addi      r28, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x660
-	  addi      r5, r31, 0x218
-	  b         .loc_0x664
-
-	.loc_0x660:
-	  addi      r5, r31, 0x224
-
-	.loc_0x664:
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  bl        0x191514
-	  li        r3, 0x14
-	  bl        -0x3E088
-	  mr.       r6, r3
-	  beq-      .loc_0x6D0
-	  lwz       r0, 0xB4(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0xB8(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x80(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x84(r1)
-	  lwz       r4, 0xBC(r31)
-	  stw       r4, 0x88(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x80(r1)
-	  lwz       r0, 0x84(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x88(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x6D0:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x275D8
-	  li        r3, 0x40
-	  bl        -0x3E0F8
-	  lbz       r0, -0x5F17(r13)
-	  addi      r28, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x704
-	  addi      r5, r31, 0x230
-	  b         .loc_0x708
-
-	.loc_0x704:
-	  addi      r5, r31, 0x23C
-
-	.loc_0x708:
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  bl        0x191470
-	  li        r3, 0x14
-	  bl        -0x3E12C
-	  mr.       r6, r3
-	  beq-      .loc_0x774
-	  lwz       r0, 0xC0(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0xC4(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x74(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x78(r1)
-	  lwz       r4, 0xC8(r31)
-	  stw       r4, 0x7C(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x74(r1)
-	  lwz       r0, 0x78(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x7C(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x774:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x2767C
-	  li        r3, 0x40
-	  bl        -0x3E19C
-	  lbz       r0, -0x5F14(r13)
-	  addi      r28, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x7A8
-	  addi      r5, r31, 0x248
-	  b         .loc_0x7AC
-
-	.loc_0x7A8:
-	  addi      r5, r31, 0x254
-
-	.loc_0x7AC:
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  bl        0x1913CC
-	  li        r3, 0x14
-	  bl        -0x3E1D0
-	  mr.       r6, r3
-	  beq-      .loc_0x818
-	  lwz       r0, 0xCC(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0xD0(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x68(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x6C(r1)
-	  lwz       r4, 0xD4(r31)
-	  stw       r4, 0x70(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x68(r1)
-	  lwz       r0, 0x6C(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x70(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x818:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x27720
-	  li        r3, 0x40
-	  bl        -0x3E240
-	  lbz       r0, -0x5F07(r13)
-	  addi      r28, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84C
-	  addi      r5, r31, 0x260
-	  b         .loc_0x850
-
-	.loc_0x84C:
-	  addi      r5, r31, 0x26C
-
-	.loc_0x850:
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x5EE8
-	  bl        0x191328
-	  li        r3, 0x14
-	  bl        -0x3E274
-	  mr.       r6, r3
-	  beq-      .loc_0x8BC
-	  lwz       r0, 0xD8(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0xDC(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x5C(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x60(r1)
-	  lwz       r4, 0xE0(r31)
-	  stw       r4, 0x64(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x5C(r1)
-	  lwz       r0, 0x60(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x64(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x8BC:
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r7, 0x1
-	  bl        -0x277C4
-	  li        r3, 0x40
-	  bl        -0x3E2E4
-	  lwz       r5, 0x2FB0(r13)
-	  crclr     6, 0x6
-	  addi      r28, r3, 0
-	  addi      r4, r31, 0x278
-	  bl        0x19129C
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  li        r4, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        -0x277F8
-	  li        r3, 0x14
-	  bl        -0x3E318
-	  mr.       r6, r3
-	  beq-      .loc_0x960
-	  lwz       r0, 0xE4(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0xE8(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x50(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x54(r1)
-	  lwz       r4, 0xEC(r31)
-	  stw       r4, 0x58(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x58(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x960:
-	  lis       r4, 0x1
-	  subi      r5, r4, 0x8000
-	  addi      r3, r30, 0
-	  li        r4, 0x8
-	  bl        -0x27A30
-	  li        r3, 0x14
-	  bl        -0x3E388
-	  mr.       r6, r3
-	  beq-      .loc_0x9D0
-	  lwz       r0, 0xF0(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0xF4(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x44(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x48(r1)
-	  lwz       r4, 0xF8(r31)
-	  stw       r4, 0x4C(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x44(r1)
-	  lwz       r0, 0x48(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x4C(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x9D0:
-	  addi      r3, r30, 0
-	  li        r4, 0x8
-	  li        r5, 0x4000
-	  bl        -0x27A9C
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0x288
-	  li        r4, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        -0x278EC
-	  li        r3, 0x14
-	  bl        -0x3E40C
-	  mr.       r6, r3
-	  beq-      .loc_0xA54
-	  lwz       r0, 0xFC(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x100(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x38(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x3C(r1)
-	  lwz       r4, 0x104(r31)
-	  stw       r4, 0x40(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x38(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x40(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0xA54:
-	  lis       r4, 0x1
-	  subi      r5, r4, 0x8000
-	  addi      r3, r30, 0
-	  li        r4, 0x8
-	  bl        -0x27B24
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0x298
-	  li        r4, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        -0x27974
-	  li        r3, 0x14
-	  bl        -0x3E494
-	  mr.       r6, r3
-	  beq-      .loc_0xADC
-	  lwz       r0, 0x108(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x10C(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x2C(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x30(r1)
-	  lwz       r4, 0x110(r31)
-	  stw       r4, 0x34(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x2C(r1)
-	  lwz       r0, 0x30(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x34(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0xADC:
-	  lis       r4, 0x1
-	  subi      r5, r4, 0x8000
-	  addi      r3, r30, 0
-	  li        r4, 0x8
-	  bl        -0x27BAC
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0x2A8
-	  li        r4, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        -0x279FC
-	  li        r3, 0x14
-	  bl        -0x3E51C
-	  mr.       r6, r3
-	  beq-      .loc_0xB64
-	  lwz       r0, 0x114(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x118(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x20(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x24(r1)
-	  lwz       r4, 0x11C(r31)
-	  stw       r4, 0x28(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x28(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0xB64:
-	  lis       r4, 0x1
-	  subi      r5, r4, 0x8000
-	  addi      r3, r30, 0
-	  li        r4, 0x8
-	  bl        -0x27C34
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0x2B8
-	  li        r4, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        -0x27A84
-	  li        r3, 0x14
-	  bl        -0x3E5A4
-	  mr.       r6, r3
-	  beq-      .loc_0xBEC
-	  lwz       r0, 0x120(r31)
-	  lis       r5, 0x802A
-	  lwz       r7, 0x124(r31)
-	  lis       r4, 0x802B
-	  addi      r5, r5, 0x65F0
-	  stw       r0, 0x14(r1)
-	  subi      r0, r4, 0x1214
-	  stw       r7, 0x18(r1)
-	  lwz       r4, 0x128(r31)
-	  stw       r4, 0x1C(r1)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r29, 0x4(r3)
-	  lwz       r4, 0x14(r1)
-	  lwz       r0, 0x18(r1)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x1C(r1)
-	  stw       r0, 0x10(r3)
-
-	.loc_0xBEC:
-	  lis       r4, 0x1
-	  subi      r5, r4, 0x8000
-	  addi      r3, r30, 0
-	  li        r4, 0x8
-	  bl        -0x27CBC
-	  lwz       r0, 0x12C(r1)
-	  lwz       r31, 0x124(r1)
-	  lwz       r30, 0x120(r1)
-	  lwz       r29, 0x11C(r1)
-	  lwz       r28, 0x118(r1)
-	  addi      r1, r1, 0x128
-	  mtlr      r0
-	  blr
-	*/
+	menu->addOption(0, "FULLFILL PIKI", nullptr, true);
+	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::fullfillPiki));
 }
 
 /*
@@ -953,8 +177,6 @@ void AIPerf::toggleMoveType(Menu& menu)
  */
 void AIPerf::toggleGeneratorMode(Menu& menu)
 {
-	// WTF, why not !AIPerf::generatorMode?
-	// Also, don't change 0 : 1, it changes the code generation. WTF.
 	AIPerf::generatorMode = AIPerf::generatorMode ? 0 : 1;
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::generatorMode ? "Generator Mode" : "Game Mode");
 }
@@ -967,7 +189,7 @@ void AIPerf::toggleGeneratorMode(Menu& menu)
 void AIPerf::toggleBridge(Menu& menu)
 {
 	AIPerf::bridgeFast = AIPerf::bridgeFast ? 0 : 1;
-	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::bridgeFast ? "Bridge Opt [on]" : "Bridge opt [off]");
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::bridgeFast ? "Bridge Opt [on]" : "Bridge Opt [off]");
 }
 
 /*
@@ -1063,9 +285,10 @@ void AIPerf::toggleSoundDebug(Menu& menu)
  * Address:	........
  * Size:	000078
  */
-void AIPerf::toggleUpdateMgr(Menu&)
+void AIPerf::toggleUpdateMgr(Menu& menu)
 {
-	// UNUSED FUNCTION
+	AIPerf::useUpdateMgr = AIPerf::useUpdateMgr ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useUpdateMgr ? "updateMgr [on]" : "updateMgr [off]");
 }
 
 /*
@@ -1073,9 +296,10 @@ void AIPerf::toggleUpdateMgr(Menu&)
  * Address:	........
  * Size:	000078
  */
-void AIPerf::togglePikiMabiki(Menu&)
+void AIPerf::togglePikiMabiki(Menu& menu)
 {
-	// UNUSED FUNCTION
+	AIPerf::pikiMabiki = AIPerf::pikiMabiki ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::pikiMabiki ? "pikiMabiki [on]" : "pikiMabiki [off]");
 }
 
 /*
@@ -1083,9 +307,10 @@ void AIPerf::togglePikiMabiki(Menu&)
  * Address:	........
  * Size:	000078
  */
-void AIPerf::togglePsOptimise(Menu&)
+void AIPerf::togglePsOptimise(Menu& menu)
 {
-	// UNUSED FUNCTION
+	// Wrong, no idea what the variable in here is meant to be
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::pikiMabiki ? "psOptimise [on]" : "psOptimise [off]");
 }
 
 /*
@@ -1104,9 +329,10 @@ void AIPerf::toggleCollSort(Menu& menu)
  * Address:	........
  * Size:	000078
  */
-void AIPerf::toggleIteratorCull(Menu&)
+void AIPerf::toggleIteratorCull(Menu& menu)
 {
-	// UNUSED FUNCTION
+	AIPerf::iteratorCull = AIPerf::iteratorCull ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::iteratorCull ? "[it-cull on]" : "[it-cull off]");
 }
 
 /*
@@ -1114,9 +340,10 @@ void AIPerf::toggleIteratorCull(Menu&)
  * Address:	........
  * Size:	000070
  */
-void AIPerf::toggleUseGrid(Menu&)
+void AIPerf::toggleUseGrid(Menu& menu)
 {
-	// UNUSED FUNCTION
+	AIPerf::useGrid = (AIPerf::useGrid + 1) % 3;
+	sprintf(menu.mCurrentItem->mName, "%s", gridStrings[AIPerf::useGrid]);
 }
 
 /*
@@ -1124,9 +351,13 @@ void AIPerf::toggleUseGrid(Menu&)
  * Address:	........
  * Size:	00004C
  */
-void AIPerf::incGridShift(Menu&)
+void AIPerf::incGridShift(Menu& menu)
 {
-	// UNUSED FUNCTION
+	if (AIPerf::gridShift < 8) {
+		AIPerf::gridShift++;
+	}
+
+	sprintf(menu.mCurrentItem->mName, "grid shift %d", AIPerf::gridShift);
 }
 
 /*
@@ -1134,9 +365,13 @@ void AIPerf::incGridShift(Menu&)
  * Address:	........
  * Size:	00004C
  */
-void AIPerf::decGridShift(Menu&)
+void AIPerf::decGridShift(Menu& menu)
 {
-	// UNUSED FUNCTION
+	if (AIPerf::gridShift > 0) {
+		AIPerf::gridShift--;
+	}
+
+	sprintf(menu.mCurrentItem->mName, "grid shift %d", AIPerf::gridShift);
 }
 
 /*
@@ -1184,7 +419,7 @@ void AIPerf::incUfoLevel(Menu& menu)
 		}
 
 		UfoItem* shipInstance = itemMgr->getUfo();
-		int prevState         = playerState->_10;
+		int lastLevel         = playerState->mShipUpgradeLevel;
 
 		if (shipInstance) {
 			if (!AIPerf::ufoLevel) {
@@ -1199,8 +434,9 @@ void AIPerf::incUfoLevel(Menu& menu)
 		playerState->getUfoParts(ufoParts[AIPerf::ufoLevel], halfComplete);
 		playerState->ufoAssignStart();
 
-		if (shipInstance && prevState != playerState->_10) {
-			shipInstance->startLevelFlag(playerState->_10);
+		if (shipInstance && lastLevel != playerState->mShipUpgradeLevel) {
+			PRINT("*** START HENKA MOTION LEVEL %d (lastLevel %d)\n", playerState->mShipUpgradeLevel, lastLevel);
+			shipInstance->startLevelFlag(playerState->mShipUpgradeLevel);
 		}
 
 		AIPerf::ufoLevel++;
@@ -1214,25 +450,9 @@ void AIPerf::incUfoLevel(Menu& menu)
  * Address:	80085D64
  * Size:	000038
  */
-void AIPerf::decUfoLevel(Menu&)
+void AIPerf::decUfoLevel(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x802B
-	  stw       r0, 0x4(r1)
-	  crclr     6, 0x6
-	  stwu      r1, -0x8(r1)
-	  lwz       r6, 0x30(r4)
-	  subi      r4, r3, 0x12C0
-	  lwz       r5, 0x2FB0(r13)
-	  lwz       r3, 0x18(r6)
-	  bl        0x190810
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	sprintf(menu.mCurrentItem->mName, "UFO Level %d", AIPerf::ufoLevel);
 }
 
 /*
@@ -1240,9 +460,10 @@ void AIPerf::decUfoLevel(Menu&)
  * Address:	........
  * Size:	000078
  */
-void AIPerf::toggleUpdateSearchBuffer(Menu&)
+void AIPerf::toggleUpdateSearchBuffer(Menu& menu)
 {
-	// UNUSED FUNCTION
+	AIPerf::updateSearchBuffer = AIPerf::updateSearchBuffer ? 0 : 1;
+	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::updateSearchBuffer ? "[upd srchbuff]" : "[don't upd srchbuff]");
 }
 
 /*
@@ -1250,183 +471,45 @@ void AIPerf::toggleUpdateSearchBuffer(Menu&)
  * Address:	80085D9C
  * Size:	000170
  */
-void AIPerf::collectPikis(Menu&)
+void AIPerf::collectPikis(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  lwz       r3, 0x3120(r13)
-	  bl        0x9160C
-	  lfs       f0, 0x6F0(r3)
-	  lwz       r30, 0x3068(r13)
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, 0x6F4(r3)
-	  stfs      f0, 0x2C(r1)
-	  lfs       f0, 0x6F8(r3)
-	  mr        r3, r30
-	  stfs      f0, 0x30(r1)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-	  b         .loc_0xF8
+	Navi* navi         = naviMgr->getNavi();
+	Vector3f playerPos = navi->_6F0;
 
-	.loc_0x58:
-	  cmpwi     r29, -0x1
-	  bne-      .loc_0x80
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r31, r3
-	  b         .loc_0x9C
-
-	.loc_0x80:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r31, r3
-
-	.loc_0x9C:
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xDC
-	  lwz       r0, 0x184(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xDC
-	  lwz       r3, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0x9C(r31)
-
-	.loc_0xDC:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-
-	.loc_0xF8:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x120
-	  li        r0, 0x1
-	  b         .loc_0x14C
-
-	.loc_0x120:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x148
-	  li        r0, 0x1
-	  b         .loc_0x14C
-
-	.loc_0x148:
-	  li        r0, 0
-
-	.loc_0x14C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x58
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	Iterator iter(pikiMgr);
+	CI_LOOP(iter)
+	{
+		Creature* piki = *iter;
+		if (piki->isAlive() && !piki->isStickTo()) {
+			piki->mPosition = playerPos;
+		}
+	}
 }
 
 /*
  * --INFO--
  * Address:	80085F0C
  * Size:	0000B8
+ *
+ * Collects all pikis and puts them in the onion.
  */
-void AIPerf::fullfillPiki(Menu&)
+void AIPerf::fullfillPiki(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803D
-	  stw       r0, 0x4(r1)
-	  lis       r3, 0x803D
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r30, r4, 0x1DF0
-	  addi      r31, r3, 0x1EA0
-	  li        r28, 0
+	for (int i = 0; i < PikiColorCount; i++) {
+		if (!playerState->is184(i)) {
+			continue;
+		}
 
-	.loc_0x24:
-	  lwz       r3, 0x2F6C(r13)
-	  li        r0, 0x1
-	  slw       r0, r0, r28
-	  lbz       r3, 0x184(r3)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x98
-	  lwz       r3, 0x30AC(r13)
-	  mr        r4, r28
-	  bl        0x6CA68
-	  mr.       r29, r3
-	  beq-      .loc_0x98
-	  li        r27, 0
-
-	.loc_0x54:
-	  lhz       r4, 0x428(r29)
-	  addi      r3, r30, 0
-	  li        r5, 0
-	  bl        0x3F8AC
-	  lwz       r3, 0x42C(r29)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x42C(r29)
-	  lhz       r0, 0x428(r29)
-	  rlwinm    r0,r0,2,0,29
-	  add       r4, r31, r0
-	  lwz       r3, 0x0(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r4)
-	  bl        0x8C5CC
-	  addi      r27, r27, 0x1
-	  cmpwi     r27, 0x64
-	  blt+      .loc_0x54
-
-	.loc_0x98:
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x3
-	  blt+      .loc_0x24
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+		GoalItem* currentOnion = itemMgr->getContainer(i);
+		if (currentOnion) {
+			for (int i = 0; i < MAX_PIKI_ON_FIELD; i++) {
+				pikiInfMgr.incPiki(currentOnion->mOnionColour, 0);
+				currentOnion->_42C++;
+				GameStat::containerPikis.inc(currentOnion->mOnionColour);
+				GameStat::update();
+			}
+		}
+	}
 }
 
 /*
@@ -1434,94 +517,14 @@ void AIPerf::fullfillPiki(Menu&)
  * Address:	80085FC4
  * Size:	000114
  */
-void AIPerf::flowerPiki(Menu&)
+void AIPerf::flowerPiki(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  lwz       r31, 0x3068(r13)
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0xA0
-
-	.loc_0x34:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x58
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x70
-
-	.loc_0x58:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x70:
-	  lwz       r12, 0x0(r3)
-	  li        r4, 0x2
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0xA0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC8
-	  li        r0, 0x1
-	  b         .loc_0xF4
-
-	.loc_0xC8:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0xF0
-	  li        r0, 0x1
-	  b         .loc_0xF4
-
-	.loc_0xF0:
-	  li        r0, 0
-
-	.loc_0xF4:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x34
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	Iterator iter(pikiMgr);
+	CI_LOOP(iter)
+	{
+		Piki* piki = (Piki*)*iter;
+		piki->setFlower(2);
+	}
 }
 
 /*
@@ -1529,291 +532,67 @@ void AIPerf::flowerPiki(Menu&)
  * Address:	800860D8
  * Size:	000398
  */
-void AIPerf::breakSluice(Menu&)
+void AIPerf::breakSluice(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stfd      f31, 0x80(r1)
-	  stfd      f30, 0x78(r1)
-	  stmw      r26, 0x60(r1)
-	  lwz       r3, 0x3120(r13)
-	  bl        0x912D0
-	  mr.       r31, r3
-	  beq-      .loc_0x37C
-	  lwz       r3, 0x30AC(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x37C
-	  lwz       r28, 0x68(r3)
-	  li        r30, 0
-	  lfs       f31, -0x75CC(r2)
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-	  b         .loc_0x134
+	Navi* player = naviMgr->getNavi();
+	if (player && itemMgr) {
+		Creature* nearestWall = nullptr;
+		f32 distanceToWall    = 1000.0f;
+		Iterator wallIter(itemMgr->getMeltingPotMgr());
+		CI_LOOP(wallIter)
+		{
+			Creature* wall = *wallIter;
+			if (!wall->isSluice()) {
+				continue;
+			}
 
-	.loc_0x5C:
-	  cmpwi     r27, -0x1
-	  bne-      .loc_0x84
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-	  b         .loc_0xA0
+			f32 distance = qdist2(player->_6F0.x, player->_6F0.z, wall->mPosition.x, wall->mPosition.z);
+			if (distance < distanceToWall) {
+				distanceToWall = distance;
+				nearestWall    = wall;
+			}
+		}
 
-	.loc_0x84:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
+		Bridge* closestBridge = nullptr;
+		f32 distToBridge      = 1000.0f;
+		Iterator bridgeIter(workObjectMgr);
+		CI_LOOP(bridgeIter)
+		{
+			Bridge* i = (Bridge*)*bridgeIter;
+			if (!i->isBridge()) {
+				continue;
+			}
 
-	.loc_0xA0:
-	  lwz       r5, 0x6C(r29)
-	  li        r3, 0x1
-	  addi      r4, r3, 0
-	  cmpwi     r5, 0x16
-	  addi      r0, r3, 0
-	  beq-      .loc_0xC4
-	  cmpwi     r5, 0x17
-	  beq-      .loc_0xC4
-	  li        r0, 0
+			f32 distance = qdist2(player->_6F0.x, player->_6F0.z, i->mPosition.x, i->mPosition.z);
+			if (distance < distToBridge) {
+				distToBridge  = distance;
+				closestBridge = i;
+			}
+		}
 
-	.loc_0xC4:
-	  rlwinm.   r0,r0,0,24,31
-	  bne-      .loc_0xD8
-	  cmpwi     r5, 0x18
-	  beq-      .loc_0xD8
-	  li        r4, 0
+		if (nearestWall && closestBridge) {
+			if (distanceToWall < distToBridge) {
+				closestBridge = nullptr;
+			} else {
+				nearestWall = nullptr;
+			}
+		}
 
-	.loc_0xD8:
-	  rlwinm.   r0,r4,0,24,31
-	  bne-      .loc_0xEC
-	  cmpwi     r5, 0x19
-	  beq-      .loc_0xEC
-	  li        r3, 0
+		if (nearestWall) {
+			InteractBomb bomb(player, 12800.0f, nullptr);
+			nearestWall->stimulate(bomb);
+		} else if (closestBridge) {
+			// Complete construction up to the current phase.
+			int constructionPhase = closestBridge->getStage();
+			for (int i = 0; i < constructionPhase; i++) {
+				closestBridge->setStageFinished(i, true);
+				closestBridge->mStageProgressList[i] = 1000.0f;
+			}
 
-	.loc_0xEC:
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x118
-	  lfs       f1, 0x6F0(r31)
-	  lfs       f2, 0x6F8(r31)
-	  lfs       f3, 0x94(r29)
-	  lfs       f4, 0x9C(r29)
-	  bl        -0x4DBB4
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x118
-	  fmr       f31, f1
-	  mr        r30, r29
-
-	.loc_0x118:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-
-	.loc_0x134:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x15C
-	  li        r0, 0x1
-	  b         .loc_0x188
-
-	.loc_0x15C:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x184
-	  li        r0, 0x1
-	  b         .loc_0x188
-
-	.loc_0x184:
-	  li        r0, 0
-
-	.loc_0x188:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x5C
-	  lwz       r27, 0x3020(r13)
-	  li        r26, 0
-	  lfs       f30, -0x75CC(r2)
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-	  b         .loc_0x250
-
-	.loc_0x1B8:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0x1DC
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x1F4
-
-	.loc_0x1DC:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1F4:
-	  mr        r29, r3
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x234
-	  lfs       f1, 0x6F0(r31)
-	  lfs       f2, 0x6F8(r31)
-	  lfs       f3, 0x94(r29)
-	  lfs       f4, 0x9C(r29)
-	  bl        -0x4DCD0
-	  fcmpo     cr0, f1, f30
-	  bge-      .loc_0x234
-	  fmr       f30, f1
-	  mr        r26, r29
-
-	.loc_0x234:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x250:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x278
-	  li        r0, 0x1
-	  b         .loc_0x2A4
-
-	.loc_0x278:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x2A0
-	  li        r0, 0x1
-	  b         .loc_0x2A4
-
-	.loc_0x2A0:
-	  li        r0, 0
-
-	.loc_0x2A4:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x1B8
-	  cmplwi    r30, 0
-	  beq-      .loc_0x2D0
-	  cmplwi    r26, 0
-	  beq-      .loc_0x2D0
-	  fcmpo     cr0, f31, f30
-	  bge-      .loc_0x2CC
-	  li        r26, 0
-	  b         .loc_0x2D0
-
-	.loc_0x2CC:
-	  li        r30, 0
-
-	.loc_0x2D0:
-	  cmplwi    r30, 0
-	  beq-      .loc_0x320
-	  lis       r3, 0x802B
-	  lfs       f0, -0x75C8(r2)
-	  subi      r0, r3, 0x3064
-	  stw       r0, 0x34(r1)
-	  lis       r3, 0x802D
-	  subi      r4, r3, 0x2614
-	  stw       r31, 0x38(r1)
-	  li        r0, 0
-	  addi      r3, r30, 0
-	  stw       r4, 0x34(r1)
-	  addi      r4, r1, 0x34
-	  stfs      f0, 0x3C(r1)
-	  stw       r0, 0x40(r1)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x37C
-
-	.loc_0x320:
-	  cmplwi    r26, 0
-	  beq-      .loc_0x37C
-	  lwz       r29, 0x404(r26)
-	  li        r28, 0
-	  lfs       f31, -0x75CC(r2)
-	  li        r27, 0
-	  b         .loc_0x35C
-
-	.loc_0x33C:
-	  addi      r3, r26, 0
-	  addi      r4, r28, 0
-	  li        r5, 0x1
-	  bl        0x18194
-	  lwz       r3, 0x3D0(r26)
-	  addi      r28, r28, 0x1
-	  stfsx     f31, r3, r27
-	  addi      r27, r27, 0x4
-
-	.loc_0x35C:
-	  cmpw      r28, r29
-	  blt+      .loc_0x33C
-	  lwz       r3, 0x3F8(r26)
-	  li        r4, 0x1
-	  bl        0x1B32C
-	  lwz       r3, 0x3FC(r26)
-	  li        r4, 0x1
-	  bl        0x1B320
-
-	.loc_0x37C:
-	  lmw       r26, 0x60(r1)
-	  lwz       r0, 0x8C(r1)
-	  lfd       f31, 0x80(r1)
-	  lfd       f30, 0x78(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+			closestBridge->_3F8->setFlag(true);
+			closestBridge->_3FC->setFlag(true);
+		}
+	}
 }
 
 /*
@@ -1831,21 +610,21 @@ bool WorkObject::isBridge()
  * Address:	80086478
  * Size:	000030
  */
-void Delegate1<AIPerf, Menu&>::invoke(Menu&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r5, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x18E8A0
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+// void Delegate1<AIPerf, Menu&>::invoke(Menu& arg)
+// {
+// 	/*
+// 	.loc_0x0:
+// 	  mflr      r0
+// 	  mr        r5, r3
+// 	  stw       r0, 0x4(r1)
+// 	  addi      r12, r5, 0x8
+// 	  stwu      r1, -0x8(r1)
+// 	  lwz       r3, 0x4(r3)
+// 	  bl        0x18E8A0
+// 	  nop
+// 	  lwz       r0, 0xC(r1)
+// 	  addi      r1, r1, 0x8
+// 	  mtlr      r0
+// 	  blr
+// 	*/
+// }

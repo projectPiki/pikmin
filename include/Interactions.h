@@ -93,7 +93,12 @@ struct InteractBikkuri : public Interaction {
  * @brief TODO
  */
 struct InteractBomb : public Interaction {
-	inline InteractBomb(); // TODO: probably
+	inline InteractBomb(Creature* owner, f32 damage, CollPart* part)
+	    : Interaction(owner)
+	    , mDamage(damage)
+	    , mCollPart(part)
+	{
+	}
 
 	// need this to not be in order, otherwise vtable generates in interactBattle
 	virtual bool actTeki(Teki*);         // _10

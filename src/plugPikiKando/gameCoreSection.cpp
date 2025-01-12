@@ -3899,7 +3899,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	_3C                   = new Menu(mController, gsys->mConsFont, false);
 	_3C->_48              = glnWidth / 2;
 	_3C->mPositionOffsetY = glnHeight / 2;
-	AIPerf::addMenu(_3C);
+	// AIPerf::addMenu(_3C);
 	GlobalShape::init();
 
 	pikiUpdateMgr = new UpdateMgr();

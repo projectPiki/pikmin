@@ -30,7 +30,7 @@ struct AIPerf {
 	void flowerPiki(Menu&);
 	void breakSluice(Menu&);
 
-	static void addMenu(Menu*);
+	void addMenu(Menu*);
 
 	// unused/inlined:
 	void toggleAIGrid(Menu&);
@@ -44,6 +44,8 @@ struct AIPerf {
 	void toggleUpdateSearchBuffer(Menu&);
 
 	static int useGrid;
+	static int gridShift;
+	static bool pikiMabiki;
 	static bool useLOD;
 	static bool iteratorCull;
 	static int optLevel;
@@ -69,8 +71,6 @@ struct AIPerf {
 	static bool aiGrid;
 	static bool showColls;
 	static bool useASync;
-
-	// TODO
 	static bool insQuick;
 	static bool useCollSort;
 

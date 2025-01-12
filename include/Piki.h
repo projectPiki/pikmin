@@ -10,6 +10,7 @@
 
 #define PIKI_PROP()       static_cast<PikiProp*>(mProps)->mPikiParms
 #define C_PIKI_PROP(piki) static_cast<PikiProp*>(piki->mProps)->mPikiParms
+#define MAX_PIKI_ON_FIELD (100)
 
 struct TopAction;
 struct Navi;
@@ -47,31 +48,31 @@ enum PikiHappa {
 DEFINE_ENUM_TYPE(
 	PikiMode,
 
-    FreeMode = 0, // 0
-    FormationMode, // 1
-    AttackMode, // 2
-    NukuMode, // 3
-    GuardMode, // 4
-    PickMode, // 5
-    DecoyMode, // 6
-    ArrowMode, // 7
-    CarryMode, // 8
-    TransportMode, // 9
-    RopeMode, // 10
-    EnterMode, // 11
-    ExitMode, // 12
-    BreakwallMode, // 13
-    MineMode, // 14
-    KinokoMode, // 15
-    BridgeMode, // 16
-    PushstoneMode, // 17
-    PutbombMode, // 18
-    RescueMode, // 19
-    WeedMode, // 20
-    PebbleMode, // 21
-    BomakeMode, // 22
-    BoMode, // 23
-    WarriorMode, // 23
+	FreeMode = 0,  // 0
+	FormationMode, // 1
+	AttackMode,    // 2
+	NukuMode,      // 3
+	GuardMode,     // 4
+	PickMode,      // 5
+	DecoyMode,     // 6
+	ArrowMode,     // 7
+	CarryMode,     // 8
+	TransportMode, // 9
+	RopeMode,      // 10
+	EnterMode,     // 11
+	ExitMode,      // 12
+	BreakwallMode, // 13
+	MineMode,      // 14
+	KinokoMode,    // 15
+	BridgeMode,    // 16
+	PushstoneMode, // 17
+	PutbombMode,   // 18
+	RescueMode,    // 19
+	WeedMode,      // 20
+	PebbleMode,    // 21
+	BomakeMode,    // 22
+	BoMode,        // 23
+	WarriorMode,   // 23
 );
 // clang-format on
 

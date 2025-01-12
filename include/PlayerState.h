@@ -132,7 +132,7 @@ struct PlayerState {
 	static int totalUfoParts;
 
 	u8 _00[0x10];                 // _00, unknown
-	u8 _10;                       // _10
+	u8 mShipUpgradeLevel;         // _10
 	u8 _11;                       // _11
 	u8 _12[0x54 - 0x12];          // _12, unknown
 	DemoFlags mDemoFlags;         // _54

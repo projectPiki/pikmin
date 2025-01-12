@@ -2848,7 +2848,7 @@ void NaviContainerState::init(Navi* navi)
 	CI_LOOP(iter)
 	{
 		Piki* piki = (Piki*)*iter;
-		if (piki->mColor == navi->mGoalItem->_428) {
+		if (piki->mColor == navi->mGoalItem->mOnionColour) {
 			pikisInParty++;
 		}
 	}

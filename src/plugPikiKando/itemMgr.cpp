@@ -80,7 +80,7 @@ GoalItem* ItemMgr::getContainer(int color)
 		Creature* creature = *iter;
 		if (creature->mObjType == OBJTYPE_Goal) {
 			GoalItem* goal = static_cast<GoalItem*>(creature);
-			if (goal->_428 == color) {
+			if (goal->mOnionColour == color) {
 				return goal;
 			}
 		}
