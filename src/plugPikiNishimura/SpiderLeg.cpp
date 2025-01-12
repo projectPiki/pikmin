@@ -1423,7 +1423,7 @@ void SpiderLeg::emitOnGroundEffect(int legNum)
 	if (mSpider->getMapAttribute(_12C[legNum][0]) == ATTR_Water) {
 		createRippleEffect(legNum);
 	} else {
-		effectMgr->create(EffectMgr::EFF_Unk224, _12C[legNum][0], nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_BigDustRing, _12C[legNum][0], nullptr, nullptr);
 	}
 
 	if (mSpider->_3BA) {

@@ -1493,7 +1493,7 @@ void SnakeAi::initUnder(int nextState)
 	mSnake->setMotionFinish(false);
 	mSnake->setAnimTimer(0.0f);
 	mSnake->mAnimator.startMotion(PaniMotionInfo(6, this));
-	effectMgr->create(EffectMgr::EFF_Unk224, mSnake->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_BigDustRing, mSnake->mPosition, nullptr, nullptr);
 	mSnake->mSnakeBody->initBlending(12800.0f);
 	mOccupiedSlotCount = 0;
 	mMouthSlotFlag     = 0;
