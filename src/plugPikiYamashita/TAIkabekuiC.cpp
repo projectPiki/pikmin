@@ -2609,7 +2609,10 @@ f32 TAIAmoreLifeKabekuiC::getLifePercentThreshold(Teki&)
  * Address:	801CFA24
  * Size:	000008
  */
-bool TAIAcheckPikiFlyKabekuiC::act(Teki&) { return false; }
+bool TAIAcheckPikiFlyKabekuiC::act(Teki&)
+{
+	return false;
+}
 
 /*
  * --INFO--

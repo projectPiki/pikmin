@@ -209,4 +209,7 @@ u32 TRKInitializeSerialHandler(void)
  * Address:	8021CED4
  * Size:	000008
  */
-s32 TRKTerminateSerialHandler(void) { return 0; }
+s32 TRKTerminateSerialHandler(void)
+{
+	return 0;
+}

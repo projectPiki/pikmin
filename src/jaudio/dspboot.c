@@ -366,7 +366,9 @@ s32 __DSPCheckMXICBoot2(DSPTaskInfo2* task)
  * Address:	80008580
  * Size:	000004
  */
-void DSPInit(void) { }
+void DSPInit(void)
+{
+}
 
 /*
  * --INFO--

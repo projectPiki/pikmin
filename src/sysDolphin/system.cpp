@@ -838,7 +838,10 @@ void DVDStream::read(void* addr, int size)
  * Address:	800451D0
  * Size:	000008
  */
-int DVDStream::getPending() { return mPending; }
+int DVDStream::getPending()
+{
+	return mPending;
+}
 
 /*
  * --INFO--
@@ -2083,7 +2086,9 @@ void System::Initialise()
  * Address:	800461B4
  * Size:	000004
  */
-void System::sndPlaySe(u32) { }
+void System::sndPlaySe(u32)
+{
+}
 
 /*
  * --INFO--
@@ -2388,14 +2393,18 @@ void loadFunc(void*)
  * Address:	8004654C
  * Size:	000004
  */
-void LoadIdler::draw(Graphics&) { }
+void LoadIdler::draw(Graphics&)
+{
+}
 
 /*
  * --INFO--
  * Address:	80046550
  * Size:	000004
  */
-void LoadIdler::init() { }
+void LoadIdler::init()
+{
+}
 
 /*
  * --INFO--
@@ -3318,7 +3327,10 @@ void __sinit_system_cpp(void)
  * Size:	000008
  * (Should be weak)
  */
-int AramStream::getPending() { return mPending; }
+int AramStream::getPending()
+{
+	return mPending;
+}
 
 /*
  * --INFO--

@@ -747,14 +747,18 @@ void StateMachine<NaviDemoSunsetState>::transit(NaviDemoSunsetState*, int)
  * Address:	8010BA14
  * Size:	000004
  */
-void AState<NaviDemoSunsetState>::init(NaviDemoSunsetState*) { }
+void AState<NaviDemoSunsetState>::init(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010BA18
  * Size:	000004
  */
-void AState<NaviDemoSunsetState>::cleanup(NaviDemoSunsetState*) { }
+void AState<NaviDemoSunsetState>::cleanup(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
@@ -858,7 +862,9 @@ void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState*, MsgAnim*)
  * Address:	8010BB48
  * Size:	000004
  */
-void NaviDemoSunsetState::GoState::cleanup(NaviDemoSunsetState*) { }
+void NaviDemoSunsetState::GoState::cleanup(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
@@ -912,14 +918,18 @@ void NaviDemoSunsetState::LookState::init(NaviDemoSunsetState*)
  * Address:	8010BBD0
  * Size:	000004
  */
-void NaviDemoSunsetState::LookState::exec(NaviDemoSunsetState*) { }
+void NaviDemoSunsetState::LookState::exec(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010BBD4
  * Size:	000004
  */
-void NaviDemoSunsetState::LookState::cleanup(NaviDemoSunsetState*) { }
+void NaviDemoSunsetState::LookState::cleanup(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
@@ -1028,7 +1038,9 @@ void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState*)
  * Address:	8010BCF0
  * Size:	000004
  */
-void NaviDemoSunsetState::WhistleState::exec(NaviDemoSunsetState*) { }
+void NaviDemoSunsetState::WhistleState::exec(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
@@ -1339,7 +1351,9 @@ void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState*)
  * Address:	8010C07C
  * Size:	000004
  */
-void NaviDemoSunsetState::WhistleState::cleanup(NaviDemoSunsetState*) { }
+void NaviDemoSunsetState::WhistleState::cleanup(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
@@ -1390,14 +1404,18 @@ void NaviDemoSunsetState::WaitState::init(NaviDemoSunsetState*)
  * Address:	8010C0F8
  * Size:	000004
  */
-void NaviDemoSunsetState::WaitState::exec(NaviDemoSunsetState*) { }
+void NaviDemoSunsetState::WaitState::exec(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010C0FC
  * Size:	000004
  */
-void NaviDemoSunsetState::WaitState::cleanup(NaviDemoSunsetState*) { }
+void NaviDemoSunsetState::WaitState::cleanup(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
@@ -1448,14 +1466,18 @@ void NaviDemoSunsetState::SitState::init(NaviDemoSunsetState*)
  * Address:	8010C178
  * Size:	000004
  */
-void NaviDemoSunsetState::SitState::exec(NaviDemoSunsetState*) { }
+void NaviDemoSunsetState::SitState::exec(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010C17C
  * Size:	000004
  */
-void NaviDemoSunsetState::SitState::cleanup(NaviDemoSunsetState*) { }
+void NaviDemoSunsetState::SitState::cleanup(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
@@ -2131,7 +2153,9 @@ void StateMachine<NaviDemoSunsetState>::exec(NaviDemoSunsetState*)
  * Address:	8010CA90
  * Size:	000004
  */
-void AState<NaviDemoSunsetState>::exec(NaviDemoSunsetState*) { }
+void AState<NaviDemoSunsetState>::exec(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
@@ -2454,95 +2478,123 @@ void Receiver<NaviDemoSunsetState>::procMsg(NaviDemoSunsetState*, Msg*)
  * Address:	8010CE34
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procGroundMsg(NaviDemoSunsetState*, MsgGround*) { }
+void Receiver<NaviDemoSunsetState>::procGroundMsg(NaviDemoSunsetState*, MsgGround*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE38
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procUserMsg(NaviDemoSunsetState*, MsgUser*) { }
+void Receiver<NaviDemoSunsetState>::procUserMsg(NaviDemoSunsetState*, MsgUser*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE3C
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procOffWallMsg(NaviDemoSunsetState*, MsgOffWall*) { }
+void Receiver<NaviDemoSunsetState>::procOffWallMsg(NaviDemoSunsetState*, MsgOffWall*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE40
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procWallMsg(NaviDemoSunsetState*, MsgWall*) { }
+void Receiver<NaviDemoSunsetState>::procWallMsg(NaviDemoSunsetState*, MsgWall*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE44
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procDamageMsg(NaviDemoSunsetState*, MsgDamage*) { }
+void Receiver<NaviDemoSunsetState>::procDamageMsg(NaviDemoSunsetState*, MsgDamage*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE48
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procAnimMsg(NaviDemoSunsetState*, MsgAnim*) { }
+void Receiver<NaviDemoSunsetState>::procAnimMsg(NaviDemoSunsetState*, MsgAnim*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE4C
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procCollideMsg(NaviDemoSunsetState*, MsgCollide*) { }
+void Receiver<NaviDemoSunsetState>::procCollideMsg(NaviDemoSunsetState*, MsgCollide*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE50
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procTargetMsg(NaviDemoSunsetState*, MsgTarget*) { }
+void Receiver<NaviDemoSunsetState>::procTargetMsg(NaviDemoSunsetState*, MsgTarget*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE54
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procHangMsg(NaviDemoSunsetState*, MsgHang*) { }
+void Receiver<NaviDemoSunsetState>::procHangMsg(NaviDemoSunsetState*, MsgHang*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE58
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procStickMsg(NaviDemoSunsetState*, MsgStick*) { }
+void Receiver<NaviDemoSunsetState>::procStickMsg(NaviDemoSunsetState*, MsgStick*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE5C
  * Size:	000004
  */
-void Receiver<NaviDemoSunsetState>::procBounceMsg(NaviDemoSunsetState*, MsgBounce*) { }
+void Receiver<NaviDemoSunsetState>::procBounceMsg(NaviDemoSunsetState*, MsgBounce*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE60
  * Size:	000004
  */
-void AState<NaviDemoSunsetState>::resume(NaviDemoSunsetState*) { }
+void AState<NaviDemoSunsetState>::resume(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE64
  * Size:	000004
  */
-void AState<NaviDemoSunsetState>::restart(NaviDemoSunsetState*) { }
+void AState<NaviDemoSunsetState>::restart(NaviDemoSunsetState*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010CE68
  * Size:	000004
  */
-void StateMachine<NaviDemoSunsetState>::init(NaviDemoSunsetState*) { }
+void StateMachine<NaviDemoSunsetState>::init(NaviDemoSunsetState*)
+{
+}

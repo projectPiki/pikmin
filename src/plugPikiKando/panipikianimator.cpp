@@ -143,4 +143,6 @@ PaniMotionTable* PaniPikiAnimator::createMotionTable()
  * Address:	801199D4
  * Size:	00003C
  */
-PaniPikiAnimator::PaniPikiAnimator() { }
+PaniPikiAnimator::PaniPikiAnimator()
+{
+}

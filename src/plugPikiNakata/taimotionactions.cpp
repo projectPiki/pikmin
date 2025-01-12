@@ -435,7 +435,9 @@ bool TaiOutsideKeyStopMoveAction::act(Teki&)
  * Address:	801343E8
  * Size:	000004
  */
-void TaiStoppingMoveAction::start(Teki&) { }
+void TaiStoppingMoveAction::start(Teki&)
+{
+}
 
 /*
  * --INFO--
@@ -483,7 +485,9 @@ bool TaiStoppingMoveAction::act(Teki&)
  * Address:	80134450
  * Size:	000004
  */
-void TaiStoppingMoveAction::finish(Teki&) { }
+void TaiStoppingMoveAction::finish(Teki&)
+{
+}
 
 /*
  * --INFO--

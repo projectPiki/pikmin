@@ -190,7 +190,9 @@ void SeMgr::addInfo(int, char*)
  * Address:	800A3604
  * Size:	000004
  */
-void SeMgr::update() { }
+void SeMgr::update()
+{
+}
 
 /*
  * --INFO--

@@ -1054,7 +1054,9 @@ void zen::DrawTotalScore::setEffect(P2DPane*, int)
  * Address:	801F4804
  * Size:	000004
  */
-void zen::DrawTotalScore::playRankInFanfare() { }
+void zen::DrawTotalScore::playRankInFanfare()
+{
+}
 
 /*
  * --INFO--

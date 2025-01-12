@@ -279,7 +279,10 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
  * Address:	8005037C
  * Size:	000048
  */
-void AnimInfo::setIndex() { mIndex = gsys->findAnyIndex(mMgr->mParams._28().mString, mData->mName); }
+void AnimInfo::setIndex()
+{
+	mIndex = gsys->findAnyIndex(mMgr->mParams._28().mString, mData->mName);
+}
 
 /*
  * --INFO--
@@ -454,7 +457,10 @@ void AnimInfo::doread(RandomAccessStream& input, int p2)
  * Address:	80050814
  * Size:	000010
  */
-void AnimInfo::updateAnimFlags() { mData->mAnimFlags = mParams.mFlags.mValue; }
+void AnimInfo::updateAnimFlags()
+{
+	mData->mAnimFlags = mParams.mFlags.mValue;
+}
 
 /*
  * --INFO--
@@ -691,7 +697,10 @@ AnimInfo* AnimMgr::findAnim(int idx)
 int AnimMgr::countAnims()
 {
 	int count = 0;
-	FOREACH_NODE(AnimInfo, mAnimList.mChild, anim) { count++; }
+	FOREACH_NODE(AnimInfo, mAnimList.mChild, anim)
+	{
+		count++;
+	}
 
 	return count;
 }
@@ -915,7 +924,9 @@ void Animator::startAnim(int p1, int p2, int p3, int p4)
  * Address:	8005118C
  * Size:	000004
  */
-void Animator::finishLoop() { }
+void Animator::finishLoop()
+{
+}
 
 /*
  * --INFO--
@@ -1173,7 +1184,10 @@ void Animator::animate(f32)
  * Address:	80051458
  * Size:	000008
  */
-void Animator::changeContext(AnimContext* context) { mContext = context; }
+void Animator::changeContext(AnimContext* context)
+{
+	mContext = context;
+}
 
 /*
  * --INFO--

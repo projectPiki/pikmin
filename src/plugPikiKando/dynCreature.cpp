@@ -59,21 +59,28 @@ DynParticle::DynParticle()
  * Address:	800928E0
  * Size:	000010
  */
-f32 DynParticle::getSize() { return _90 * 3.0f; }
+f32 DynParticle::getSize()
+{
+	return _90 * 3.0f;
+}
 
 /*
  * --INFO--
  * Address:	800928F0
  * Size:	000004
  */
-void DynParticle::refresh(Graphics&) { }
+void DynParticle::refresh(Graphics&)
+{
+}
 
 /*
  * --INFO--
  * Address:	800928F4
  * Size:	000004
  */
-void DynParticle::doKill() { }
+void DynParticle::doKill()
+{
+}
 
 /*
  * --INFO--
@@ -520,7 +527,10 @@ void DynCreature::refresh(Graphics& gfx)
  * Address:	80093F0C
  * Size:	000068
  */
-void DynCreature::doKill() { releaseAllParticles(); }
+void DynCreature::doKill()
+{
+	releaseAllParticles();
+}
 
 /*
  * --INFO--

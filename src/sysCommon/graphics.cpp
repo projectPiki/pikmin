@@ -2218,7 +2218,10 @@ void PVWTevColReg::animate(f32*, ShortColour&)
  * Address:	800276D8
  * Size:	000054
  */
-void Material::attach() { gsys->mGfx->useDList(gsys->mGfx->compileMaterial(this)); }
+void Material::attach()
+{
+	gsys->mGfx->useDList(gsys->mGfx->compileMaterial(this));
+}
 
 /*
  * --INFO--
@@ -2895,7 +2898,10 @@ FontChar::FontChar()
  * Address:	80027FB4
  * Size:	00000C
  */
-int Font::charToIndex(char c) { return (c & 0xFF) - 0x20; }
+int Font::charToIndex(char c)
+{
+	return (c & 0xFF) - 0x20;
+}
 
 /*
  * --INFO--
@@ -5024,7 +5030,9 @@ void Graphics::calcLighting(f32)
  * Address:	800298F0
  * Size:	000004
  */
-void Graphics::setAmbient() { }
+void Graphics::setAmbient()
+{
+}
 
 /*
  * --INFO--
@@ -5106,49 +5114,66 @@ void CacheTexture::makeResident()
  * Address:	80029970
  * Size:	000004
  */
-void Graphics::videoReset() { }
+void Graphics::videoReset()
+{
+}
 
 /*
  * --INFO--
  * Address:	80029974
  * Size:	000004
  */
-void Graphics::setVerticalFilter(u8*) { }
+void Graphics::setVerticalFilter(u8*)
+{
+}
 
 /*
  * --INFO--
  * Address:	80029978
  * Size:	000004
  */
-void Graphics::getVerticalFilter(u8*) { }
+void Graphics::getVerticalFilter(u8*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8002997C
  * Size:	000008
  */
-u32 Graphics::getDListPtr() { return 0x0; }
+u32 Graphics::getDListPtr()
+{
+	return 0x0;
+}
 
 /*
  * --INFO--
  * Address:	80029984
  * Size:	000008
  */
-u32 Graphics::getDListRemainSize() { return 0x0; }
+u32 Graphics::getDListRemainSize()
+{
+	return 0x0;
+}
 
 /*
  * --INFO--
  * Address:	8002998C
  * Size:	000008
  */
-void Graphics::setLightcam(LightCamera* cam) { mLightCam = cam; }
+void Graphics::setLightcam(LightCamera* cam)
+{
+	mLightCam = cam;
+}
 
 /*
  * --INFO--
  * Address:	80029994
  * Size:	000004
  */
-void Graphics::setBlendMode(u8, u8, u8) { }
+void Graphics::setBlendMode(u8, u8, u8)
+{
+}
 
 /*
  * --INFO--
@@ -5228,4 +5253,6 @@ void Graphics::useMaterial(Material*)
  * Address:	80029A44
  * Size:	000004
  */
-void Graphics::testRectangle(RectArea&) { }
+void Graphics::testRectangle(RectArea&)
+{
+}

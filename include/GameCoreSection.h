@@ -93,10 +93,19 @@ struct GameCoreSection : public Node {
 	zen::DrawGameInfo* mDrawGameInfo; // _344
 };
 
-inline void clearCorePauseFlag() { GameCoreSection::pauseFlag = 0; }
+inline void clearCorePauseFlag()
+{
+	GameCoreSection::pauseFlag = 0;
+}
 
-inline void setCorePauseFlag(u32 flag) { GameCoreSection::pauseFlag = flag; }
+inline void setCorePauseFlag(u32 flag)
+{
+	GameCoreSection::pauseFlag = flag;
+}
 
-inline bool isCorePauseFlag(u32 flag) { return GameCoreSection::pauseFlag & flag; }
+inline bool isCorePauseFlag(u32 flag)
+{
+	return GameCoreSection::pauseFlag & flag;
+}
 
 #endif

@@ -66,7 +66,10 @@ void KoganeAi::createWaterEffect()
  * Address:	801762B0
  * Size:	000038
  */
-void KoganeAi::killCallBackEffect(bool p1) { effectMgr->killGenerator(mRippleCallBack, nullptr, p1); }
+void KoganeAi::killCallBackEffect(bool p1)
+{
+	effectMgr->killGenerator(mRippleCallBack, nullptr, p1);
+}
 
 /*
  * --INFO--
@@ -164,21 +167,28 @@ void KoganeAi::keyAction1()
  * Address:	........
  * Size:	000004
  */
-void KoganeAi::keyAction2() { }
+void KoganeAi::keyAction2()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void KoganeAi::keyAction3() { }
+void KoganeAi::keyAction3()
+{
+}
 
 /*
  * --INFO--
  * Address:	801765EC
  * Size:	000014
  */
-void KoganeAi::keyLoopEnd() { mKogane->addLoopCounter(1); }
+void KoganeAi::keyLoopEnd()
+{
+	mKogane->addLoopCounter(1);
+}
 
 /*
  * --INFO--
@@ -490,14 +500,20 @@ void KoganeAi::resultFlagOn()
  * Address:	........
  * Size:	000024
  */
-bool KoganeAi::dieTransit() { return (mKogane->get2D4() > mAppearTimer) ? true : false; }
+bool KoganeAi::dieTransit()
+{
+	return (mKogane->get2D4() > mAppearTimer) ? true : false;
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-bool KoganeAi::isMotionFinishTransit() { return mKogane->getMotionFinish(); }
+bool KoganeAi::isMotionFinishTransit()
+{
+	return mKogane->getMotionFinish();
+}
 
 /*
  * --INFO--
@@ -544,7 +560,10 @@ bool KoganeAi::appearTransit()
  * Address:	........
  * Size:	00001C
  */
-bool KoganeAi::startWalkTransit() { return mKogane->get2D0() > _1C; }
+bool KoganeAi::startWalkTransit()
+{
+	return mKogane->get2D0() > _1C;
+}
 
 /*
  * --INFO--
@@ -579,7 +598,10 @@ bool KoganeAi::changeTargetTransit()
  * Address:	........
  * Size:	00000C
  */
-bool KoganeAi::createPelletTransit() { return mKogane->_3B9; }
+bool KoganeAi::createPelletTransit()
+{
+	return mKogane->_3B9;
+}
 
 /*
  * --INFO--

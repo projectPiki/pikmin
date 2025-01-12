@@ -4155,4 +4155,6 @@ void ActorInstance::refresh(Matrix4f&, Graphics&, f32*)
  * Address:	80073160
  * Size:	000004
  */
-void Creature::demoDraw(Graphics&, Matrix4f*) { }
+void Creature::demoDraw(Graphics&, Matrix4f*)
+{
+}

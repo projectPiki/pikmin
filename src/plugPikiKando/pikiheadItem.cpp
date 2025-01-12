@@ -172,7 +172,10 @@ void PikiHeadItem::canPullout()
  * Address:	800EC624
  * Size:	000008
  */
-bool PikiHeadItem::isVisible() { return true; }
+bool PikiHeadItem::isVisible()
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -227,7 +230,10 @@ bool PikiHeadItem::needShadow()
  * Address:	800EC694
  * Size:	000008
  */
-bool PikiHeadItem::isAlive() { return true; }
+bool PikiHeadItem::isAlive()
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -1120,4 +1126,7 @@ bool PikiHeadItem::interactSwallow(InteractSwallow&)
  * Address:	800ED1FC
  * Size:	000008
  */
-bool PikiHeadItem::isAtari() { return false; }
+bool PikiHeadItem::isAtari()
+{
+	return false;
+}

@@ -25,7 +25,9 @@ static void _Print(char*, ...)
  * Address:	800C2C54
  * Size:	000004
  */
-void ActWatch::AnimListener::animationKeyUpdated(PaniAnimKeyEvent&) { }
+void ActWatch::AnimListener::animationKeyUpdated(PaniAnimKeyEvent&)
+{
+}
 
 /*
  * --INFO--
@@ -98,7 +100,9 @@ ActWatch::ActWatch(Piki* piki)
  * Address:	800C2D1C
  * Size:	000004
  */
-void ActWatch::Initialiser::initialise(Action*) { }
+void ActWatch::Initialiser::initialise(Action*)
+{
+}
 
 /*
  * --INFO--

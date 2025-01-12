@@ -49,7 +49,10 @@ Pom::Pom(CreatureProp* props)
  * Address:	8017812C
  * Size:	000008
  */
-f32 Pom::getiMass() { return 0.0001f; }
+f32 Pom::getiMass()
+{
+	return 0.0001f;
+}
 
 /*
  * --INFO--
@@ -100,7 +103,10 @@ void Pom::doKill()
  * Address:	8017826C
  * Size:	000028
  */
-void Pom::exitCourse() { mPomAi->killCallBackEffect(true); }
+void Pom::exitCourse()
+{
+	mPomAi->killCallBackEffect(true);
+}
 
 /*
  * --INFO--
@@ -151,7 +157,10 @@ void Pom::drawShape(Graphics& gfx)
  * Address:	80178444
  * Size:	000024
  */
-void Pom::doAI() { mPomAi->update(); }
+void Pom::doAI()
+{
+	mPomAi->update();
+}
 
 /*
  * --INFO--

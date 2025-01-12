@@ -11,7 +11,10 @@ static f32 SINTABLE[257];
  * Address:	8000DC20
  * Size:	000020
  */
-f32 sqrtf2(f32 x) { return std::sqrtf(x); }
+f32 sqrtf2(f32 x)
+{
+	return std::sqrtf(x);
+}
 
 /*
  * --INFO--
@@ -28,7 +31,10 @@ void cosf2(f32)
  * Address:	8000DCC0
  * Size:	000024
  */
-f32 atanf2(f32 x, f32 y) { return atan2(x, y); }
+f32 atanf2(f32 x, f32 y)
+{
+	return atan2(x, y);
+}
 
 /*
  * --INFO--
@@ -96,4 +102,7 @@ void Jac_InitSinTable()
  * Address:	8000DDA0
  * Size:	000034
  */
-f32 sinf3(f32 x) { return SINTABLE[int(256.0f * x)]; }
+f32 sinf3(f32 x)
+{
+	return SINTABLE[int(256.0f * x)];
+}

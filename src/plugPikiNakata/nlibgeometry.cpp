@@ -32,7 +32,10 @@ NAxisAngle4f::NAxisAngle4f()
  * Address:	8011BC80
  * Size:	000058
  */
-NAxisAngle4f::NAxisAngle4f(NVector3f& axis, f32 angle) { construct(axis, angle); }
+NAxisAngle4f::NAxisAngle4f(NVector3f& axis, f32 angle)
+{
+	construct(axis, angle);
+}
 
 /*
  * --INFO--
@@ -50,7 +53,10 @@ void NAxisAngle4f::construct(NVector3f& axis, f32 angle)
  * Address:	8011BCF8
  * Size:	000080
  */
-NMatrix4f::NMatrix4f() { input(NMatrix4f(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)); }
+NMatrix4f::NMatrix4f()
+{
+	input(NMatrix4f(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f));
+}
 
 /*
  * --INFO--
@@ -67,7 +73,10 @@ NMatrix4f::NMatrix4f(Matrix4f&)
  * Address:	8011BD78
  * Size:	000020
  */
-void NMatrix4f::construct(Matrix4f& mat) { input(mat); }
+void NMatrix4f::construct(Matrix4f& mat)
+{
+	input(mat);
+}
 
 /*
  * --INFO--
@@ -135,7 +144,10 @@ void NMatrix4f::output(Mtx)
  * Address:	8011BE08
  * Size:	000090
  */
-void NMatrix4f::input(Matrix4f& mat) { NMathf::copyArray44(this->mMtx, mat.mMtx); }
+void NMatrix4f::input(Matrix4f& mat)
+{
+	NMathf::copyArray44(this->mMtx, mat.mMtx);
+}
 
 /*
  * --INFO--
@@ -349,7 +361,10 @@ NOrientation::NOrientation()
  * Address:	8011BF4C
  * Size:	000050
  */
-NOrientation::NOrientation(Vector3f& direction) { construct(direction); }
+NOrientation::NOrientation(Vector3f& direction)
+{
+	construct(direction);
+}
 
 /*
  * --INFO--
@@ -739,7 +754,10 @@ void NOrientation::println()
  * Address:	8011C3A4
  * Size:	00003C
  */
-NPolar3f::NPolar3f() { set(1.0f, 0.0f, 0.0f); }
+NPolar3f::NPolar3f()
+{
+	set(1.0f, 0.0f, 0.0f);
+}
 
 /*
  * --INFO--
@@ -786,14 +804,20 @@ void NPolar3f::construct(NPolar3f&)
  * Address:	8011C3E0
  * Size:	000030
  */
-NPolar3f::NPolar3f(Vector3f& point) { construct(point); }
+NPolar3f::NPolar3f(Vector3f& point)
+{
+	construct(point);
+}
 
 /*
  * --INFO--
  * Address:	8011C410
  * Size:	000020
  */
-void NPolar3f::construct(Vector3f& point) { input(point); }
+void NPolar3f::construct(Vector3f& point)
+{
+	input(point);
+}
 
 /*
  * --INFO--
@@ -1106,7 +1130,10 @@ void NPosture3D::construct(NPosture3D&)
  * Address:	8011C6C0
  * Size:	000070
  */
-NPosture3D::NPosture3D(Vector3f& dir, Vector3f& up) { construct(dir, up); }
+NPosture3D::NPosture3D(Vector3f& dir, Vector3f& up)
+{
+	construct(dir, up);
+}
 
 /*
  * --INFO--
@@ -1587,7 +1614,10 @@ void LUMatrix::setDimension(int dim)
  * Address:	8011C9F8
  * Size:	000008
  */
-void NSpecialMatrix::setDimension(int dim) { mDimension = dim; }
+void NSpecialMatrix::setDimension(int dim)
+{
+	mDimension = dim;
+}
 
 /*
  * --INFO--
@@ -1624,7 +1654,9 @@ void LUMatrix::println()
  * Address:	8011CA00
  * Size:	000080
  */
-NTransform3D::NTransform3D() { }
+NTransform3D::NTransform3D()
+{
+}
 
 /*
  * --INFO--
@@ -1974,7 +2006,10 @@ NVector::NVector()
  * Address:	........
  * Size:	000030
  */
-NVector::NVector(f32* values, int size) { construct(values, size); }
+NVector::NVector(f32* values, int size)
+{
+	construct(values, size);
+}
 
 /*
  * --INFO--
@@ -2078,49 +2113,70 @@ void NVector3f::printlnVector3f(Vector3f&)
  * Address:	8011CE54
  * Size:	00002C
  */
-NVector3f::NVector3f() { set(0.0f, 0.0f, 0.0f); }
+NVector3f::NVector3f()
+{
+	set(0.0f, 0.0f, 0.0f);
+}
 
 /*
  * --INFO--
  * Address:	8011CE80
  * Size:	000040
  */
-NVector3f::NVector3f(Vector3f& vec) { construct(vec); }
+NVector3f::NVector3f(Vector3f& vec)
+{
+	construct(vec);
+}
 
 /*
  * --INFO--
  * Address:	8011CEC0
  * Size:	00001C
  */
-void NVector3f::construct(Vector3f& vec) { input(vec); }
+void NVector3f::construct(Vector3f& vec)
+{
+	input(vec);
+}
 
 /*
  * --INFO--
  * Address:	8011CEDC
  * Size:	000040
  */
-NVector3f::NVector3f(f32 x, f32 y, f32 z) { construct(x, y, z); }
+NVector3f::NVector3f(f32 x, f32 y, f32 z)
+{
+	construct(x, y, z);
+}
 
 /*
  * --INFO--
  * Address:	8011CF1C
  * Size:	000010
  */
-void NVector3f::construct(f32 x, f32 y, f32 z) { set(x, y, z); }
+void NVector3f::construct(f32 x, f32 y, f32 z)
+{
+	set(x, y, z);
+}
 
 /*
  * --INFO--
  * Address:	8011CF2C
  * Size:	000040
  */
-NVector3f::NVector3f(Vector3f& start, Vector3f& end) { construct(start, end); }
+NVector3f::NVector3f(Vector3f& start, Vector3f& end)
+{
+	construct(start, end);
+}
 
 /*
  * --INFO--
  * Address:	8011CF6C
  * Size:	000034
  */
-void NVector3f::construct(Vector3f& start, Vector3f& end) { set(end.x - start.x, end.y - start.y, end.z - start.z); }
+void NVector3f::construct(Vector3f& start, Vector3f& end)
+{
+	set(end.x - start.x, end.y - start.y, end.z - start.z);
+}
 
 /*
  * --INFO--
@@ -2228,7 +2284,9 @@ void NVector3f::print()
  * Address:	8011D014
  * Size:	000004
  */
-void NVector3f::println() { }
+void NVector3f::println()
+{
+}
 
 /*
  * --INFO--
@@ -2344,7 +2402,10 @@ NAlpha::NAlpha()
  * Address:	8011D1DC
  * Size:	00000C
  */
-void NAlpha::reset() { mValue = mOffset; }
+void NAlpha::reset()
+{
+	mValue = mOffset;
+}
 
 /*
  * --INFO--

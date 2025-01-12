@@ -6,14 +6,20 @@
  * Address:	8014A398
  * Size:	000034
  */
-TekiEvent::TekiEvent(int p1, Teki* teki) { init(p1, teki, nullptr); }
+TekiEvent::TekiEvent(int p1, Teki* teki)
+{
+	init(p1, teki, nullptr);
+}
 
 /*
  * --INFO--
  * Address:	8014A3CC
  * Size:	000030
  */
-TekiEvent::TekiEvent(int p1, Teki* teki, Creature* creature) { init(p1, teki, creature); }
+TekiEvent::TekiEvent(int p1, Teki* teki, Creature* creature)
+{
+	init(p1, teki, creature);
+}
 
 /*
  * --INFO--

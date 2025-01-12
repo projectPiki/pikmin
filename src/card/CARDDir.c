@@ -5,7 +5,10 @@
  * Address:	802098B0
  * Size:	000008
  */
-CARDDirectoryBlock* __CARDGetDirBlock(CARDControl* card) { return card->currentDir; }
+CARDDirectoryBlock* __CARDGetDirBlock(CARDControl* card)
+{
+	return card->currentDir;
+}
 
 /*
  * --INFO--

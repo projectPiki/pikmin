@@ -51,7 +51,10 @@ loop:
  * Address:	801FDA14
  * Size:	000020
  */
-void __init_user(void) { __init_cpp(); }
+void __init_user(void)
+{
+	__init_cpp();
+}
 
 /*
  * --INFO--
@@ -84,7 +87,10 @@ void __fini_cpp(void)
  * Address:	801FDA88
  * Size:	000020
  */
-void _ExitProcess(void) { PPCHalt(); }
+void _ExitProcess(void)
+{
+	PPCHalt();
+}
 #ifdef __cplusplus
 }
 #endif

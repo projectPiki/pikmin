@@ -22,7 +22,10 @@ DEFINE_PRINT(nullptr);
  * Address:	800438EC
  * Size:	000038
  */
-void AtxStream::close() { gsys->getAtxRouter()->closeRoute(this); }
+void AtxStream::close()
+{
+	gsys->getAtxRouter()->closeRoute(this);
+}
 
 /*
  * --INFO--
@@ -215,25 +218,37 @@ void AtxFileStream::close()
  * Address:	80043E34
  * Size:	000010
  */
-int AtxFileStream::getPending() { return mLength - mPosition; }
+int AtxFileStream::getPending()
+{
+	return mLength - mPosition;
+}
 
 /*
  * --INFO--
  * Address:	80043E44
  * Size:	000008
  */
-int AtxFileStream::getPosition() { return mPosition; }
+int AtxFileStream::getPosition()
+{
+	return mPosition;
+}
 
 /*
  * --INFO--
  * Address:	80043E4C
  * Size:	000008
  */
-int AtxFileStream::getLength() { return mLength; }
+int AtxFileStream::getLength()
+{
+	return mLength;
+}
 
 /*
  * --INFO--
  * Address:	80043E54
  * Size:	000008
  */
-void AtxFileStream::setLength(int length) { mLength = length; }
+void AtxFileStream::setLength(int length)
+{
+	mLength = length;
+}

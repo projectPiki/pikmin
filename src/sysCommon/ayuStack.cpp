@@ -663,7 +663,10 @@ void AyuCache::amountFree()
  * Address:	80024DB0
  * Size:	000018
  */
-bool AyuCache::isEmpty() { return (u32*)_14 == &_10; }
+bool AyuCache::isEmpty()
+{
+	return (u32*)_14 == &_10;
+}
 
 /*
  * --INFO--

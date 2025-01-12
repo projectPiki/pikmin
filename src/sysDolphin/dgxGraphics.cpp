@@ -2040,7 +2040,9 @@ void DGXGraphics::setViewportOffset(RectArea&)
  * Address:	80048CD0
  * Size:	000004
  */
-void DGXGraphics::initReflectTex(bool) { }
+void DGXGraphics::initReflectTex(bool)
+{
+}
 
 /*
  * --INFO--
@@ -6529,7 +6531,9 @@ void DGXGraphics::directErase(RectArea&, bool)
  * Address:	8004C754
  * Size:	00003C
  */
-Shape::Shape() { }
+Shape::Shape()
+{
+}
 
 /*
  * --INFO--
@@ -6647,28 +6651,36 @@ void Shape::optimize()
  * Address:	8004C8CC
  * Size:	000004
  */
-void DGXGraphics::setPointSize(f32) { }
+void DGXGraphics::setPointSize(f32)
+{
+}
 
 /*
  * --INFO--
  * Address:	8004C8D0
  * Size:	000004
  */
-void DGXGraphics::setClippingPlane(bool, Plane*) { }
+void DGXGraphics::setClippingPlane(bool, Plane*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8004C8D4
  * Size:	000004
  */
-void DGXGraphics::drawOutline(Camera&, Shape*) { }
+void DGXGraphics::drawOutline(Camera&, Shape*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8004C8D8
  * Size:	000004
  */
-void DGXGraphics::drawOneStrip(Vector3f*, Vector3f*, Vector2f*, int) { }
+void DGXGraphics::drawOneStrip(Vector3f*, Vector3f*, Vector2f*, int)
+{
+}
 
 /*
  * --INFO--

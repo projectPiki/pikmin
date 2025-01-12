@@ -217,14 +217,19 @@ CPlate::Slot::Slot()
  * Address:	800A5980
  * Size:	000008
  */
-bool CPlate::canNaviRunFast() { return true; }
+bool CPlate::canNaviRunFast()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800A5988
  * Size:	000004
  */
-void CPlate::init(Vector3f&) { }
+void CPlate::init(Vector3f&)
+{
+}
 
 /*
  * --INFO--
@@ -1832,7 +1837,10 @@ void CPlate::render(Graphics&)
  * Address:	800A6D30
  * Size:	000008
  */
-int CPlate::getFirst() { return 0; }
+int CPlate::getFirst()
+{
+	return 0;
+}
 
 /*
  * --INFO--

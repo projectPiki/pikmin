@@ -242,7 +242,9 @@ void IntroModeState::update(u32& a2)
  * Address:	8005B134
  * Size:	000004
  */
-void IntroModeState::postRender(Graphics&) { }
+void IntroModeState::postRender(Graphics&)
+{
+}
 
 /*
  * --INFO--
@@ -279,7 +281,10 @@ void QuittingModeState::postUpdate()
  * Address:	8005B1A0
  * Size:	000030
  */
-void IntroGameSetupSection::update() { mController->update(); }
+void IntroGameSetupSection::update()
+{
+	mController->update();
+}
 
 /*
  * --INFO--
@@ -626,4 +631,6 @@ void IntroGameSetupSection::draw(Graphics& gfx)
  * Address:	8005B68C
  * Size:	000004
  */
-void IntroGameSection::init() { }
+void IntroGameSection::init()
+{
+}

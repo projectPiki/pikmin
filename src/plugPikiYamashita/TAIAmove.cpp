@@ -310,7 +310,10 @@ void TAIAsetTargetPointWorkObject::start(Teki& teki)
  * Address:	801A8FA4
  * Size:	000008
  */
-bool TAIAsetTargetPointWorkObject::act(Teki& teki) { return true; }
+bool TAIAsetTargetPointWorkObject::act(Teki& teki)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -728,7 +731,10 @@ void TAIAsetTargetPointCircleRandom::start(Teki& teki)
  * Address:	801A94AC
  * Size:	000008
  */
-bool TAIAsetTargetPointCircleRandom::act(Teki& teki) { return true; }
+bool TAIAsetTargetPointCircleRandom::act(Teki& teki)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -4201,7 +4207,10 @@ bool TAIAflyingToGoal::act(Teki& teki)
  * Address:	801ABD6C
  * Size:	000008
  */
-bool TAIAflyingToGoal::goal(Teki& teki) { return true; }
+bool TAIAflyingToGoal::goal(Teki& teki)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -5313,7 +5322,9 @@ bool TAIAlanding::act(Teki& teki)
  * Address:	801ACA94
  * Size:	000004
  */
-void TAIAlanding::landingEffect(Teki& teki) { }
+void TAIAlanding::landingEffect(Teki& teki)
+{
+}
 
 /*
  * --INFO--

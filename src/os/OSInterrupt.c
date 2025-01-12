@@ -100,7 +100,10 @@ __OSInterruptHandler __OSSetInterruptHandler(__OSInterrupt interrupt, __OSInterr
  * Address:	801F8FE4
  * Size:	000014
  */
-__OSInterruptHandler __OSGetInterruptHandler(__OSInterrupt interrupt) { return InterruptHandlerTable[interrupt]; }
+__OSInterruptHandler __OSGetInterruptHandler(__OSInterrupt interrupt)
+{
+	return InterruptHandlerTable[interrupt];
+}
 
 /*
  * --INFO--

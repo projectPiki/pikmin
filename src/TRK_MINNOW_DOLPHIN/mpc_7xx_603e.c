@@ -261,4 +261,7 @@ void TRKRestoreExtended1Block(void)
  * Address:	80220410
  * Size:	000008
  */
-u32 TRKTargetCPUMinorType(void) { return 0x54; }
+u32 TRKTargetCPUMinorType(void)
+{
+	return 0x54;
+}

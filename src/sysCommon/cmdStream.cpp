@@ -59,14 +59,19 @@ void CmdStream::init(Stream* stream)
  * Address:	........
  * Size:	000004
  */
-CmdStream::CmdStream() { }
+CmdStream::CmdStream()
+{
+}
 
 /*
  * --INFO--
  * Address:	80040B7C
  * Size:	0000B0
  */
-CmdStream::CmdStream(Stream* stream) { init(stream); }
+CmdStream::CmdStream(Stream* stream)
+{
+	init(stream);
+}
 
 /**
  * @brief Fills the buffer of the command stream.
@@ -282,7 +287,10 @@ char* CmdStream::getToken(bool skipComments)
  * Address:	........
  * Size:	000010
  */
-char CmdStream::nextChar() { return mBuffer[mCurrentPosition]; }
+char CmdStream::nextChar()
+{
+	return mBuffer[mCurrentPosition];
+}
 
 /**
  * Checks if the given string matches the current token.

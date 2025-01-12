@@ -15,7 +15,10 @@ void __init_uart_console(void)
  * Address:	8021A510
  * Size:	000008
  */
-u32 __close_console(void) { return 0x0; }
+u32 __close_console(void)
+{
+	return 0x0;
+}
 
 /*
  * --INFO--

@@ -502,7 +502,10 @@ bool TAIAdamage::act(Teki&)
  * Address:	801A897C
  * Size:	000008
  */
-bool TAIAdamage::judgeDamage(Teki&) { return true; }
+bool TAIAdamage::judgeDamage(Teki&)
+{
+	return true;
+}
 
 /*
  * --INFO--

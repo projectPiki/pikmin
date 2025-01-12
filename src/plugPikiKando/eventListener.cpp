@@ -10,7 +10,9 @@ DEFINE_PRINT("eventListener");
  * Address:	80093FA8
  * Size:	000090
  */
-EventTalker::EventTalker() { }
+EventTalker::EventTalker()
+{
+}
 
 /*
  * --INFO--
@@ -19,5 +21,8 @@ EventTalker::EventTalker() { }
  */
 void EventTalker::informEvent(Event& event)
 {
-	FOREACH_NODE(EventListener, mListener.mChild, listener) { listener->gotEvent(event); }
+	FOREACH_NODE(EventListener, mListener.mChild, listener)
+	{
+		listener->gotEvent(event);
+	}
 }

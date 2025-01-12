@@ -529,7 +529,10 @@ void zen::DrawMenuBase::start()
  * Address:	801F07E8
  * Size:	000008
  */
-bool zen::DrawMenuBase::modeSleep(Controller*) { return false; }
+bool zen::DrawMenuBase::modeSleep(Controller*)
+{
+	return false;
+}
 
 /*
  * --INFO--

@@ -268,4 +268,7 @@ void SlimeBody::setJointPosition(BossShapeObject* shape, Graphics& gfx)
  * Address:	8016B160
  * Size:	000118
  */
-void SlimeBody::refresh(BossShapeObject* shape, Graphics& gfx) { setJointPosition(shape, gfx); }
+void SlimeBody::refresh(BossShapeObject* shape, Graphics& gfx)
+{
+	setJointPosition(shape, gfx);
+}

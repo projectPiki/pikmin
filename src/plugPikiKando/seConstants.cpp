@@ -27,4 +27,7 @@ static void _Print(char*, ...)
  * Address:	800A3B04
  * Size:	000134
  */
-SeConstant::SeConstant() { load("parms/", "sound.bin", 1); }
+SeConstant::SeConstant()
+{
+	load("parms/", "sound.bin", 1);
+}

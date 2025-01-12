@@ -26,21 +26,30 @@ static void _Print(char*, ...)
  * Address:	8007DF5C
  * Size:	000010
  */
-Creature* FormationMgr::getCreature(int idx) { return _20[idx]; }
+Creature* FormationMgr::getCreature(int idx)
+{
+	return _20[idx];
+}
 
 /*
  * --INFO--
  * Address:	8007DF6C
  * Size:	000008
  */
-int FormationMgr::getFirst() { return 0; }
+int FormationMgr::getFirst()
+{
+	return 0;
+}
 
 /*
  * --INFO--
  * Address:	8007DF74
  * Size:	000008
  */
-int FormationMgr::getNext(int idx) { return idx + 1; }
+int FormationMgr::getNext(int idx)
+{
+	return idx + 1;
+}
 
 /*
  * --INFO--

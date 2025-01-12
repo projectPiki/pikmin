@@ -42,21 +42,29 @@ GenObjectDebug::GenObjectDebug()
  * Address:	800864A8
  * Size:	00012C
  */
-static GenObject* makeObjectDebug() { return new GenObjectDebug(); }
+static GenObject* makeObjectDebug()
+{
+	return new GenObjectDebug();
+}
 
 /*
  * --INFO--
  * Address:	800865D4
  * Size:	00008C
  */
-void GenObjectDebug::initialise() { GenObjectFactory::factory->registerMember('debg', &makeObjectDebug, "Debug Switches", 'v0.0'); }
+void GenObjectDebug::initialise()
+{
+	GenObjectFactory::factory->registerMember('debg', &makeObjectDebug, "Debug Switches", 'v0.0');
+}
 
 /*
  * --INFO--
  * Address:	80086660
  * Size:	000004
  */
-void GenObjectDebug::doRead(RandomAccessStream&) { }
+void GenObjectDebug::doRead(RandomAccessStream&)
+{
+}
 
 /*
  * --INFO--

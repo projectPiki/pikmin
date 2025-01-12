@@ -6,14 +6,20 @@ static void* __OSArenaLo = (void*)0xffffffff;
  * Address:	801F6918
  * Size:	000008
  */
-void* OSGetArenaHi(void) { return __OSArenaHi; }
+void* OSGetArenaHi(void)
+{
+	return __OSArenaHi;
+}
 
 /*
  * --INFO--
  * Address:	801F6920
  * Size:	000008
  */
-void* OSGetArenaLo(void) { return __OSArenaLo; }
+void* OSGetArenaLo(void)
+{
+	return __OSArenaLo;
+}
 
 /*
  * --INFO--

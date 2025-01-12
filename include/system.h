@@ -365,12 +365,24 @@ struct DVDStream : public RandomAccessStream {
 extern int glnWidth;
 extern int glnHeight;
 
-static inline f32 randFloat(f32 max) { return max * System::getRand(1.0f); }
-static inline f32 randBalanced(f32 centre) { return System::getRand(1.0f) - centre; }
-static inline bool coinFlip() { return System::getRand(1.0f) > 0.5f; }
+static inline f32 randFloat(f32 max)
+{
+	return max * System::getRand(1.0f);
+}
+static inline f32 randBalanced(f32 centre)
+{
+	return System::getRand(1.0f) - centre;
+}
+static inline bool coinFlip()
+{
+	return System::getRand(1.0f) > 0.5f;
+}
 
 // these match according to the plugPiki DLL - move inlines down as they get verified
-static inline f32 randFloat() { return System::getRand(1.0f); }
+static inline f32 randFloat()
+{
+	return System::getRand(1.0f);
+}
 
 extern "C" void OSPanic(const char* filename, int line, const char* msg, ...);
 

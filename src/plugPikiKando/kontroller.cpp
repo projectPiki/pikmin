@@ -8,7 +8,10 @@ RamStream* controllerBuffer;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "Kontroller"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "Kontroller");
+}
 
 /*
  * --INFO--
@@ -190,7 +193,10 @@ void Kontroller::update()
  * Address:	80115E60
  * Size:	000008
  */
-int Kontroller::getSaveSize(int p1) { return p1 * 12; }
+int Kontroller::getSaveSize(int p1)
+{
+	return p1 * 12;
+}
 
 /*
  * --INFO--

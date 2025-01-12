@@ -877,14 +877,20 @@ void Jac_RegisterDacCallback(void)
  * Address:	80005E80
  * Size:	000008
  */
-void Jac_SetOutputMode(int mode) { JAC_SYSTEM_OUTPUT_MODE = mode; }
+void Jac_SetOutputMode(int mode)
+{
+	JAC_SYSTEM_OUTPUT_MODE = mode;
+}
 
 /*
  * --INFO--
  * Address:	80005EA0
  * Size:	000008
  */
-int Jac_GetOutputMode() { return JAC_SYSTEM_OUTPUT_MODE; }
+int Jac_GetOutputMode()
+{
+	return JAC_SYSTEM_OUTPUT_MODE;
+}
 
 /*
  * --INFO--

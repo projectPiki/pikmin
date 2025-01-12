@@ -40,14 +40,20 @@ static volatile int intcount;
  * Address:	800062C0
  * Size:	000008
  */
-void DspSyncCountClear(int count) { intcount = count; }
+void DspSyncCountClear(int count)
+{
+	intcount = count;
+}
 
 /*
  * --INFO--
  * Address:	800062E0
  * Size:	000008
  */
-int DspSyncCountCheck() { return intcount; }
+int DspSyncCountCheck()
+{
+	return intcount;
+}
 
 /*
  * --INFO--

@@ -28,7 +28,10 @@ static void _Print(char*, ...)
  * Address:	801E9654
  * Size:	000064
  */
-YaiStrategy::YaiStrategy(int stateCount, int stateID) { init(stateCount, stateID); }
+YaiStrategy::YaiStrategy(int stateCount, int stateID)
+{
+	init(stateCount, stateID);
+}
 
 /*
  * --INFO--
@@ -178,4 +181,7 @@ void YaiStrategy::eventPerformed(TekiEvent& event)
  * Address:	801E98A0
  * Size:	000020
  */
-void YaiStrategy::draw(Teki& teki, Graphics& gfx) { TekiStrategy::draw(teki, gfx); }
+void YaiStrategy::draw(Teki& teki, Graphics& gfx)
+{
+	TekiStrategy::draw(teki, gfx);
+}

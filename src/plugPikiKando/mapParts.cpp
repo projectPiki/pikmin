@@ -6,7 +6,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "mapParts"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "mapParts");
+}
 
 /*
  * --INFO--
@@ -30,14 +33,20 @@ char* MapParts::shapeFiles[4] = {
  * Address:	801184A8
  * Size:	000018
  */
-char* MapParts::getShapeFile(int idx) { return shapeFiles[idx]; }
+char* MapParts::getShapeFile(int idx)
+{
+	return shapeFiles[idx];
+}
 
 /*
  * --INFO--
  * Address:	801184C0
  * Size:	00005C
  */
-void MapParts::applyVelocity(Plane&, Vector3f&, Vector3f& p3) { _144 = _144 + p3; }
+void MapParts::applyVelocity(Plane&, Vector3f&, Vector3f& p3)
+{
+	_144 = _144 + p3;
+}
 
 /*
  * --INFO--
@@ -567,11 +576,15 @@ void MapSlider::refresh(Graphics&)
  * Address:	80118CFC
  * Size:	000004
  */
-void MapParts::read(RandomAccessStream&) { }
+void MapParts::read(RandomAccessStream&)
+{
+}
 
 /*
  * --INFO--
  * Address:	80118D00
  * Size:	000004
  */
-void MapParts::update() { }
+void MapParts::update()
+{
+}

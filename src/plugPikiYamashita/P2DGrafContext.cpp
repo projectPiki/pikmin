@@ -111,7 +111,10 @@ void P2DGrafContext::setScissor()
  * Address:	801AFB40
  * Size:	000014
  */
-void P2DGrafContext::scissor(const PUTRect& rect) { _10 = rect; }
+void P2DGrafContext::scissor(const PUTRect& rect)
+{
+	_10 = rect;
+}
 
 /*
  * --INFO--

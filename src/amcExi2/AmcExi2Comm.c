@@ -298,14 +298,18 @@ AmcExiError EXI2_WriteN(const void* src, u32 len)
  * Address:	802214C8
  * Size:	000004
  */
-void EXI2_Reserve(void) { }
+void EXI2_Reserve(void)
+{
+}
 
 /*
  * --INFO--
  * Address:	802214CC
  * Size:	000004
  */
-void EXI2_Unreserve(void) { }
+void EXI2_Unreserve(void)
+{
+}
 
 /*
  * --INFO--

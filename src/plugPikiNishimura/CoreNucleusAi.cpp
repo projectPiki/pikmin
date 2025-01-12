@@ -22,7 +22,10 @@ DEFINE_PRINT("CoreNucleusAi");
  * Address:	8017AD44
  * Size:	000020
  */
-CoreNucleusAi::CoreNucleusAi(CoreNucleus* core) { mCore = core; }
+CoreNucleusAi::CoreNucleusAi(CoreNucleus* core)
+{
+	mCore = core;
+}
 
 /*
  * --INFO--
@@ -70,14 +73,18 @@ void CoreNucleusAi::animationKeyUpdated(PaniAnimKeyEvent& event)
  * Address:	8017AE54
  * Size:	000004
  */
-void CoreNucleusAi::keyAction0() { }
+void CoreNucleusAi::keyAction0()
+{
+}
 
 /*
  * --INFO--
  * Address:	8017AE58
  * Size:	000004
  */
-void CoreNucleusAi::keyAction1() { }
+void CoreNucleusAi::keyAction1()
+{
+}
 
 /*
  * --INFO--
@@ -104,28 +111,39 @@ void CoreNucleusAi::keyAction3()
  * Address:	8017AE5C
  * Size:	000014
  */
-void CoreNucleusAi::keyLoopEnd() { mCore->addLoopCounter(1); }
+void CoreNucleusAi::keyLoopEnd()
+{
+	mCore->addLoopCounter(1);
+}
 
 /*
  * --INFO--
  * Address:	8017AE70
  * Size:	000010
  */
-void CoreNucleusAi::keyFinished() { mCore->setMotionFinish(true); }
+void CoreNucleusAi::keyFinished()
+{
+	mCore->setMotionFinish(true);
+}
 
 /*
  * --INFO--
  * Address:	8017AE80
  * Size:	000004
  */
-void CoreNucleusAi::playSound(int) { }
+void CoreNucleusAi::playSound(int)
+{
+}
 
 /*
  * --INFO--
  * Address:	8017AE84
  * Size:	00000C
  */
-void CoreNucleusAi::setHitMotionStart() { _04 = true; }
+void CoreNucleusAi::setHitMotionStart()
+{
+	_04 = true;
+}
 
 /*
  * --INFO--
@@ -154,42 +172,60 @@ void CoreNucleusAi::setBossPosition()
  * Address:	........
  * Size:	000030
  */
-void CoreNucleusAi::setSlimeDamagePoint() { mCore->mSlime->mSlimeAi->addDamagePoint(mCore->getDamagePoint()); }
+void CoreNucleusAi::setSlimeDamagePoint()
+{
+	mCore->mSlime->mSlimeAi->addDamagePoint(mCore->getDamagePoint());
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000010
  */
-void CoreNucleusAi::afterProcessing() { mCore->setDamagePoint(0.0f); }
+void CoreNucleusAi::afterProcessing()
+{
+	mCore->setDamagePoint(0.0f);
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool CoreNucleusAi::dieTransit() { return !mCore->getAlive(); }
+bool CoreNucleusAi::dieTransit()
+{
+	return !mCore->getAlive();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-bool CoreNucleusAi::isMotionFinishTransit() { return mCore->getMotionFinish(); }
+bool CoreNucleusAi::isMotionFinishTransit()
+{
+	return mCore->getMotionFinish();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool CoreNucleusAi::damageTransit() { return (mCore->getDamagePoint() > 0.0f) ? true : false; }
+bool CoreNucleusAi::damageTransit()
+{
+	return (mCore->getDamagePoint() > 0.0f) ? true : false;
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000008
  */
-bool CoreNucleusAi::hitMotionStartTransit() { return _04; }
+bool CoreNucleusAi::hitMotionStartTransit()
+{
+	return _04;
+}
 
 /*
  * --INFO--
@@ -257,28 +293,36 @@ void CoreNucleusAi::initHit(int val)
  * Address:	........
  * Size:	000004
  */
-void CoreNucleusAi::dieState() { }
+void CoreNucleusAi::dieState()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void CoreNucleusAi::damageState() { }
+void CoreNucleusAi::damageState()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void CoreNucleusAi::followState() { }
+void CoreNucleusAi::followState()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void CoreNucleusAi::hitState() { }
+void CoreNucleusAi::hitState()
+{
+}
 
 /*
  * --INFO--

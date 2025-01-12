@@ -504,7 +504,9 @@ void ClothFader::reset()
  * Address:	80079434
  * Size:	00002C
  */
-ClothFader::Particle::Particle() { }
+ClothFader::Particle::Particle()
+{
+}
 
 /*
  * --INFO--
@@ -521,7 +523,9 @@ void AttentionCamera::start(u32, Creature*, f32, f32)
  * Address:	80079460
  * Size:	000004
  */
-void AttentionCamera::Fader::initFadeOut() { }
+void AttentionCamera::Fader::initFadeOut()
+{
+}
 
 /*
  * --INFO--
@@ -642,21 +646,29 @@ void AttentionCamera::update()
  * Address:	800795A4
  * Size:	000008
  */
-bool AttentionCamera::Fader::updateFadeIn() { return true; }
+bool AttentionCamera::Fader::updateFadeIn()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800795AC
  * Size:	000004
  */
-void AttentionCamera::Fader::initFadeIn() { }
+void AttentionCamera::Fader::initFadeIn()
+{
+}
 
 /*
  * --INFO--
  * Address:	800795B0
  * Size:	000008
  */
-bool AttentionCamera::Fader::updateFadeOut() { return true; }
+bool AttentionCamera::Fader::updateFadeOut()
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -702,14 +714,18 @@ void AttentionCamera::refresh(Graphics&)
  * Address:	80079614
  * Size:	000004
  */
-void AttentionCamera::Fader::drawFadeIn(Graphics&) { }
+void AttentionCamera::Fader::drawFadeIn(Graphics&)
+{
+}
 
 /*
  * --INFO--
  * Address:	80079618
  * Size:	000004
  */
-void AttentionCamera::Fader::drawFadeOut(Graphics&) { }
+void AttentionCamera::Fader::drawFadeOut(Graphics&)
+{
+}
 
 /*
  * --INFO--

@@ -2645,7 +2645,10 @@ bool TekiOrCondition::satisfy(Creature*)
  * Address:	8012A970
  * Size:	000008
  */
-bool TaiOnceAction::act(Teki&) { return true; }
+bool TaiOnceAction::act(Teki&)
+{
+	return true;
+}
 
 /*
  * --INFO--

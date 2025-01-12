@@ -44,7 +44,10 @@ Plant::Plant()
  * Address:	80119E04
  * Size:	000048
  */
-void Plant::startMotion(int motionID) { mPlantAnimator.startMotion(PaniMotionInfo(motionID, this)); }
+void Plant::startMotion(int motionID)
+{
+	mPlantAnimator.startMotion(PaniMotionInfo(motionID, this));
+}
 
 /*
  * --INFO--
@@ -88,7 +91,10 @@ void Plant::startAI(int)
  * Address:	80119F04
  * Size:	000038
  */
-void Plant::doAnimation() { mPlantAnimator.animate(mMotionSpeed); }
+void Plant::doAnimation()
+{
+	mPlantAnimator.animate(mMotionSpeed);
+}
 
 /*
  * --INFO--
@@ -408,7 +414,9 @@ void Plant::refresh(Graphics& gfx)
  * Address:	8011A3A0
  * Size:	000004
  */
-void Plant::doKill() { }
+void Plant::doKill()
+{
+}
 
 /*
  * --INFO--
@@ -884,7 +892,10 @@ static char* plantNames[PLANT_COUNT] = {
  * Address:	........
  * Size:	000018
  */
-char* PlantMgr::getPlantName(int plantType) { return plantNames[plantType]; }
+char* PlantMgr::getPlantName(int plantType)
+{
+	return plantNames[plantType];
+}
 
 /*
  * --INFO--
@@ -917,7 +928,10 @@ void PlantMgr::initialise()
  * Address:	8011AAAC
  * Size:	0000D8
  */
-Plant* PlantMgr::createObject() { return new Plant(); }
+Plant* PlantMgr::createObject()
+{
+	return new Plant();
+}
 
 /*
  * --INFO--
@@ -1002,28 +1016,40 @@ GenObjectPlant::GenObjectPlant()
  * Address:	8011ACCC
  * Size:	000078
  */
-static GenObject* makeObjectPlant() { return new GenObjectPlant(); }
+static GenObject* makeObjectPlant()
+{
+	return new GenObjectPlant();
+}
 
 /*
  * --INFO--
  * Address:	8011AD44
  * Size:	00008C
  */
-void GenObjectPlant::initialise() { GenObjectFactory::factory->registerMember('plnt', &makeObjectPlant, "Generate PLANT", 'v0.0'); }
+void GenObjectPlant::initialise()
+{
+	GenObjectFactory::factory->registerMember('plnt', &makeObjectPlant, "Generate PLANT", 'v0.0');
+}
 
 /*
  * --INFO--
  * Address:	8011ADD0
  * Size:	000040
  */
-void GenObjectPlant::doRead(RandomAccessStream& input) { mPlantType = input.readInt(); }
+void GenObjectPlant::doRead(RandomAccessStream& input)
+{
+	mPlantType = input.readInt();
+}
 
 /*
  * --INFO--
  * Address:	8011AE10
  * Size:	0000CC
  */
-void GenObjectPlant::updateUseList(Generator* gen, int) { plantMgr->addUseList(mPlantType); }
+void GenObjectPlant::updateUseList(Generator* gen, int)
+{
+	plantMgr->addUseList(mPlantType);
+}
 
 /*
  * --INFO--

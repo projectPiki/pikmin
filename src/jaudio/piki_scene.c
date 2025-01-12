@@ -106,14 +106,20 @@ static void __Loaded(u32)
  * Address:	80019840
  * Size:	000008
  */
-u32 Jac_GetCurrentScene() { return current_scene; }
+u32 Jac_GetCurrentScene()
+{
+	return current_scene;
+}
 
 /*
  * --INFO--
  * Address:	80019860
  * Size:	000008
  */
-u32 Jac_TellChgMode() { return chgmode; }
+u32 Jac_TellChgMode()
+{
+	return chgmode;
+}
 
 /*
  * --INFO--

@@ -3438,7 +3438,10 @@ bool LifePinchCallBack::invoke(P2DPane*)
  * Address:	801B917C
  * Size:	000008
  */
-bool LifeIconCallBack::invoke(P2DPane*) { return true; }
+bool LifeIconCallBack::invoke(P2DPane*)
+{
+	return true;
+}
 
 /*
  * --INFO--

@@ -60,7 +60,9 @@ NaviMgr::NaviMgr()
  * Address:	........
  * Size:	000004
  */
-void NaviMgr::init() { }
+void NaviMgr::init()
+{
+}
 
 /*
  * --INFO--
@@ -79,7 +81,10 @@ Navi* NaviMgr::createObject()
  * Address:	801173A4
  * Size:	000020
  */
-void NaviMgr::update() { MonoObjectMgr::update(); }
+void NaviMgr::update()
+{
+	MonoObjectMgr::update();
+}
 
 /*
  * --INFO--
@@ -114,7 +119,10 @@ Navi* NaviMgr::getNavi(int idx)
 void NaviMgr::refresh2d(Graphics& gfx)
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { (*iter)->refresh2d(gfx); }
+	CI_LOOP(iter)
+	{
+		(*iter)->refresh2d(gfx);
+	}
 }
 
 /*
@@ -125,7 +133,10 @@ void NaviMgr::refresh2d(Graphics& gfx)
 void NaviMgr::renderCircle(Graphics& gfx)
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { static_cast<Navi*>(*iter)->renderCircle(gfx); }
+	CI_LOOP(iter)
+	{
+		static_cast<Navi*>(*iter)->renderCircle(gfx);
+	}
 }
 
 /*
@@ -136,7 +147,10 @@ void NaviMgr::renderCircle(Graphics& gfx)
 void NaviMgr::drawShadow(Graphics& gfx)
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { (*iter)->drawShadow(gfx); }
+	CI_LOOP(iter)
+	{
+		(*iter)->drawShadow(gfx);
+	}
 }
 
 /*
@@ -144,4 +158,7 @@ void NaviMgr::drawShadow(Graphics& gfx)
  * Address:	80117798
  * Size:	000030
  */
-void NaviMgr::read(RandomAccessStream& input) { mNaviParms->read(input); }
+void NaviMgr::read(RandomAccessStream& input)
+{
+	mNaviParms->read(input);
+}

@@ -221,11 +221,15 @@ void* operator new[](u32 size, int alignment)
  * Address:	800471AC
  * Size:	000004
  */
-void operator delete(void*) { }
+void operator delete(void*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800471B0
  * Size:	000004
  */
-void operator delete[](void*) { }
+void operator delete[](void*)
+{
+}

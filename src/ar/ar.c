@@ -159,7 +159,10 @@ void ARSetSize(void)
  * Address:	80206B34
  * Size:	000008
  */
-u32 ARGetBaseAddress() { return __AR_ARAM_USR_BASE_ADDR; }
+u32 ARGetBaseAddress()
+{
+	return __AR_ARAM_USR_BASE_ADDR;
+}
 
 /*
  * --INFO--

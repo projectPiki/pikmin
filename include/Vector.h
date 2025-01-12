@@ -279,11 +279,29 @@ inline Vector3f CP(const Vector3f& vec1, const Vector3f& vec2)
 	outVec.z = vec1.x * vec2.y - vec1.y * vec2.x;
 	return outVec;
 }
-inline Vector3f operator*(const Vector3f& a, const f32& b) { return Vector3f(a.x * b, a.y * b, a.z * b); }
-inline Vector3f operator*(const f32& b, const Vector3f& a) { return a * b; }
-inline Vector3f operator+(const Vector3f& a, const Vector3f& b) { return Vector3f(a.x + b.x, a.y + b.y, a.z + b.z); }
-inline Vector3f operator-(const Vector3f& a, const Vector3f& b) { return Vector3f(a.x - b.x, a.y - b.y, a.z - b.z); }
-inline Vector3f operator-(const Vector3f& a) { return Vector3f(-a.x, -a.y, -a.z); }
-inline Vector3f operator/(const Vector3f& a, const f32& b) { return a * (1.0f / b); }
+inline Vector3f operator*(const Vector3f& a, const f32& b)
+{
+	return Vector3f(a.x * b, a.y * b, a.z * b);
+}
+inline Vector3f operator*(const f32& b, const Vector3f& a)
+{
+	return a * b;
+}
+inline Vector3f operator+(const Vector3f& a, const Vector3f& b)
+{
+	return Vector3f(a.x + b.x, a.y + b.y, a.z + b.z);
+}
+inline Vector3f operator-(const Vector3f& a, const Vector3f& b)
+{
+	return Vector3f(a.x - b.x, a.y - b.y, a.z - b.z);
+}
+inline Vector3f operator-(const Vector3f& a)
+{
+	return Vector3f(-a.x, -a.y, -a.z);
+}
+inline Vector3f operator/(const Vector3f& a, const f32& b)
+{
+	return a * (1.0f / b);
+}
 
 #endif

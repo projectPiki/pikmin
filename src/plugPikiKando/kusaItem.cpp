@@ -83,7 +83,10 @@ void KusaItem::doLoad(RandomAccessStream& input)
  * Address:	800E5FF4
  * Size:	000038
  */
-void KusaItem::doSave(RandomAccessStream& output) { output.writeFloat(mHealth); }
+void KusaItem::doSave(RandomAccessStream& output)
+{
+	output.writeFloat(mHealth);
+}
 
 /*
  * --INFO--
@@ -104,14 +107,20 @@ bool KusaItem::ignoreAtari(Creature* creature)
  * Address:	800E6048
  * Size:	000008
  */
-f32 KusaItem::getSize() { return 10.0f; }
+f32 KusaItem::getSize()
+{
+	return 10.0f;
+}
 
 /*
  * --INFO--
  * Address:	800E6050
  * Size:	000008
  */
-f32 KusaItem::getiMass() { return 0.0f; }
+f32 KusaItem::getiMass()
+{
+	return 0.0f;
+}
 
 /*
  * --INFO--
@@ -203,14 +212,20 @@ bool BoBaseItem::ignoreAtari(Creature* creature)
  * Address:	800E6388
  * Size:	000008
  */
-f32 BoBaseItem::getSize() { return 10.0f; }
+f32 BoBaseItem::getSize()
+{
+	return 10.0f;
+}
 
 /*
  * --INFO--
  * Address:	800E6390
  * Size:	000008
  */
-f32 BoBaseItem::getiMass() { return 0.0f; }
+f32 BoBaseItem::getiMass()
+{
+	return 0.0f;
+}
 
 /*
  * --INFO--
@@ -355,25 +370,37 @@ bool BoBaseItem::interactBuild(InteractBuild& build)
  * Address:	800E6648
  * Size:	000008
  */
-bool BoBaseItem::isAlive() { return _824; }
+bool BoBaseItem::isAlive()
+{
+	return _824;
+}
 
 /*
  * --INFO--
  * Address:	800E6650
  * Size:	000008
  */
-bool BoBaseItem::isVisible() { return true; }
+bool BoBaseItem::isVisible()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800E6658
  * Size:	000008
  */
-bool KusaItem::isVisible() { return true; }
+bool KusaItem::isVisible()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800E6660
  * Size:	000008
  */
-bool KusaItem::isAlive() { return true; }
+bool KusaItem::isAlive()
+{
+	return true;
+}

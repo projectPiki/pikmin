@@ -1146,14 +1146,18 @@ void StateMachine<Pellet>::transit(Pellet*, int)
  * Address:	80095C34
  * Size:	000004
  */
-void AState<Pellet>::init(Pellet*) { }
+void AState<Pellet>::init(Pellet*)
+{
+}
 
 /*
  * --INFO--
  * Address:	80095C38
  * Size:	000004
  */
-void AState<Pellet>::cleanup(Pellet*) { }
+void AState<Pellet>::cleanup(Pellet*)
+{
+}
 
 /*
  * --INFO--
@@ -2445,7 +2449,9 @@ void Pellet::startCarryMotion(f32)
  * Address:	800969EC
  * Size:	000004
  */
-void PelletView::viewStartTrembleMotion(f32) { }
+void PelletView::viewStartTrembleMotion(f32)
+{
+}
 
 /*
  * --INFO--
@@ -2462,7 +2468,9 @@ void Pellet::stopMotion()
  * Address:	800969F0
  * Size:	000004
  */
-void PelletView::viewSetMotionSpeed(f32) { }
+void PelletView::viewSetMotionSpeed(f32)
+{
+}
 
 /*
  * --INFO--
@@ -2510,7 +2518,9 @@ void Pellet::finishMotion()
  * Address:	80096A58
  * Size:	000004
  */
-void PelletView::viewFinishMotion() { }
+void PelletView::viewFinishMotion()
+{
+}
 
 /*
  * --INFO--
@@ -3204,7 +3214,9 @@ void Pellet::doAnimation()
  * Address:	80097294
  * Size:	000004
  */
-void PelletView::viewDoAnimation() { }
+void PelletView::viewDoAnimation()
+{
+}
 
 /*
  * --INFO--
@@ -4055,7 +4067,9 @@ void StateMachine<Pellet>::exec(Pellet*)
  * Address:	80097D30
  * Size:	000004
  */
-void AState<Pellet>::exec(Pellet*) { }
+void AState<Pellet>::exec(Pellet*)
+{
+}
 
 /*
  * --INFO--
@@ -5958,7 +5972,9 @@ void PelletMgr::refresh(Graphics&)
  * Address:	800992D8
  * Size:	000004
  */
-void PelletMgr::refresh2d(Graphics&) { }
+void PelletMgr::refresh2d(Graphics&)
+{
+}
 
 /*
  * --INFO--
@@ -6014,63 +6030,86 @@ PelletMgr::~PelletMgr()
  * Address:	80099360
  * Size:	000008
  */
-int MonoObjectMgr::getSize() { return mSize; }
+int MonoObjectMgr::getSize()
+{
+	return mSize;
+}
 
 /*
  * --INFO--
  * Address:	80099368
  * Size:	000008
  */
-int MonoObjectMgr::getMax() { return mMaxElements; }
+int MonoObjectMgr::getMax()
+{
+	return mMaxElements;
+}
 
 /*
  * --INFO--
  * Address:	80099370
  * Size:	000008
  */
-bool KEffect::invoke(zen::particleGenerator*) { return false; }
+bool KEffect::invoke(zen::particleGenerator*)
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	80099378
  * Size:	000004
  */
-void KEffect::kill() { }
+void KEffect::kill()
+{
+}
 
 /*
  * --INFO--
  * Address:	8009937C
  * Size:	000004
  */
-void KEffect::stop() { }
+void KEffect::stop()
+{
+}
 
 /*
  * --INFO--
  * Address:	80099380
  * Size:	000004
  */
-void KEffect::restart() { }
+void KEffect::restart()
+{
+}
 
 /*
  * --INFO--
  * Address:	80099384
  * Size:	000008
  */
-bool KEffect::invoke(zen::particleGenerator*, zen::particleMdl*) { return false; }
+bool KEffect::invoke(zen::particleGenerator*, zen::particleMdl*)
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	8009938C
  * Size:	000008
  */
-bool KEffect::invoke(zen::particleMdl*) { return false; }
+bool KEffect::invoke(zen::particleMdl*)
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	80099394
  * Size:	000004
  */
-void StateMachine<Pellet>::init(Pellet*) { }
+void StateMachine<Pellet>::init(Pellet*)
+{
+}
 
 /*
  * --INFO--
@@ -6190,76 +6229,98 @@ void Receiver<Pellet>::procMsg(Pellet*, Msg*)
  * Address:	800994EC
  * Size:	000004
  */
-void Receiver<Pellet>::procGroundMsg(Pellet*, MsgGround*) { }
+void Receiver<Pellet>::procGroundMsg(Pellet*, MsgGround*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800994F0
  * Size:	000004
  */
-void Receiver<Pellet>::procUserMsg(Pellet*, MsgUser*) { }
+void Receiver<Pellet>::procUserMsg(Pellet*, MsgUser*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800994F4
  * Size:	000004
  */
-void Receiver<Pellet>::procOffWallMsg(Pellet*, MsgOffWall*) { }
+void Receiver<Pellet>::procOffWallMsg(Pellet*, MsgOffWall*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800994F8
  * Size:	000004
  */
-void Receiver<Pellet>::procWallMsg(Pellet*, MsgWall*) { }
+void Receiver<Pellet>::procWallMsg(Pellet*, MsgWall*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800994FC
  * Size:	000004
  */
-void Receiver<Pellet>::procDamageMsg(Pellet*, MsgDamage*) { }
+void Receiver<Pellet>::procDamageMsg(Pellet*, MsgDamage*)
+{
+}
 
 /*
  * --INFO--
  * Address:	80099500
  * Size:	000004
  */
-void Receiver<Pellet>::procAnimMsg(Pellet*, MsgAnim*) { }
+void Receiver<Pellet>::procAnimMsg(Pellet*, MsgAnim*)
+{
+}
 
 /*
  * --INFO--
  * Address:	80099504
  * Size:	000004
  */
-void Receiver<Pellet>::procCollideMsg(Pellet*, MsgCollide*) { }
+void Receiver<Pellet>::procCollideMsg(Pellet*, MsgCollide*)
+{
+}
 
 /*
  * --INFO--
  * Address:	80099508
  * Size:	000004
  */
-void Receiver<Pellet>::procTargetMsg(Pellet*, MsgTarget*) { }
+void Receiver<Pellet>::procTargetMsg(Pellet*, MsgTarget*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8009950C
  * Size:	000004
  */
-void Receiver<Pellet>::procHangMsg(Pellet*, MsgHang*) { }
+void Receiver<Pellet>::procHangMsg(Pellet*, MsgHang*)
+{
+}
 
 /*
  * --INFO--
  * Address:	80099510
  * Size:	000004
  */
-void Receiver<Pellet>::procStickMsg(Pellet*, MsgStick*) { }
+void Receiver<Pellet>::procStickMsg(Pellet*, MsgStick*)
+{
+}
 
 /*
  * --INFO--
  * Address:	80099514
  * Size:	000004
  */
-void Receiver<Pellet>::procBounceMsg(Pellet*, MsgBounce*) { }
+void Receiver<Pellet>::procBounceMsg(Pellet*, MsgBounce*)
+{
+}
 
 PelletMgr* pelletMgr;

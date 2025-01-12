@@ -50,7 +50,10 @@ Kogane::Kogane(CreatureProp* props)
  * Address:	80175DE4
  * Size:	000008
  */
-f32 Kogane::getiMass() { return 0.1f; }
+f32 Kogane::getiMass()
+{
+	return 0.1f;
+}
 
 /*
  * --INFO--
@@ -87,14 +90,20 @@ void Kogane::doKill()
  * Address:	80175E8C
  * Size:	000028
  */
-void Kogane::exitCourse() { mKoganeAi->killCallBackEffect(true); }
+void Kogane::exitCourse()
+{
+	mKoganeAi->killCallBackEffect(true);
+}
 
 /*
  * --INFO--
  * Address:	80175EB4
  * Size:	000020
  */
-void Kogane::update() { Creature::update(); }
+void Kogane::update()
+{
+	Creature::update();
+}
 
 /*
  * --INFO--

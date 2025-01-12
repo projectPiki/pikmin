@@ -25,7 +25,9 @@ static void _Print(char*, ...)
  * Address:	801AD094
  * Size:	000004
  */
-void TAIAsearchWorkObject::start(Teki&) { }
+void TAIAsearchWorkObject::start(Teki&)
+{
+}
 
 /*
  * --INFO--
@@ -1333,7 +1335,10 @@ bool TAIAstickingPiki::act(Teki&)
  * Address:	801ADF6C
  * Size:	000008
  */
-int TAIAstickingPiki::getPikiNum(Teki&) { return mStickingPikiNum; }
+int TAIAstickingPiki::getPikiNum(Teki&)
+{
+	return mStickingPikiNum;
+}
 
 /*
  * --INFO--

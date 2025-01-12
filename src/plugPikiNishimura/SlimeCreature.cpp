@@ -48,42 +48,60 @@ void SlimeCreature::init(Vector3f& pos, Slime* slime)
  * Address:	8016B370
  * Size:	000008
  */
-f32 SlimeCreature::getSize() { return 20.0f; }
+f32 SlimeCreature::getSize()
+{
+	return 20.0f;
+}
 
 /*
  * --INFO--
  * Address:	8016B378
  * Size:	000008
  */
-f32 SlimeCreature::getiMass() { return 0.01f; }
+f32 SlimeCreature::getiMass()
+{
+	return 0.01f;
+}
 
 /*
  * --INFO--
  * Address:	8016B380
  * Size:	00001C
  */
-Vector3f SlimeCreature::getCentre() { return mPosition; }
+Vector3f SlimeCreature::getCentre()
+{
+	return mPosition;
+}
 
 /*
  * --INFO--
  * Address:	8016B39C
  * Size:	000024
  */
-void SlimeCreature::doKill() { kill(false); }
+void SlimeCreature::doKill()
+{
+	kill(false);
+}
 
 /*
  * --INFO--
  * Address:	8016B3C0
  * Size:	000030
  */
-bool SlimeCreature::isAlive() { return mSlime->isAlive(); }
+bool SlimeCreature::isAlive()
+{
+	return mSlime->isAlive();
+}
 
 /*
  * --INFO--
  * Address:	8016B3F0
  * Size:	000030
  */
-bool SlimeCreature::isAtari() { return mSlime->isAtari(); }
+bool SlimeCreature::isAtari()
+{
+	return mSlime->isAtari();
+}
 
 /*
  * --INFO--
@@ -104,14 +122,18 @@ bool SlimeCreature::ignoreAtari(Creature* creature)
  * Address:	8016B440
  * Size:	000004
  */
-void SlimeCreature::doAI() { }
+void SlimeCreature::doAI()
+{
+}
 
 /*
  * --INFO--
  * Address:	8016B444
  * Size:	000004
  */
-void SlimeCreature::doAnimation() { }
+void SlimeCreature::doAnimation()
+{
+}
 
 /*
  * --INFO--
@@ -130,4 +152,6 @@ void SlimeCreature::update()
  * Address:	8016B494
  * Size:	000004
  */
-void SlimeCreature::refresh(Graphics&) { }
+void SlimeCreature::refresh(Graphics&)
+{
+}

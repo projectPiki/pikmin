@@ -25,7 +25,10 @@ void GetRotate(const Quat&, Vector3f&);
 } // namespace ZenQuat
 
 // DLL inlines:
-inline f32 Abs(f32 val) { return fabsf(val); }
+inline f32 Abs(f32 val)
+{
+	return fabsf(val);
+}
 
 } // namespace zen
 

@@ -75,7 +75,10 @@ void Jac_StopSe()
  * Address:	80016B00
  * Size:	000010
  */
-BOOL Jac_PauseCheck() { return pausemode | container; }
+BOOL Jac_PauseCheck()
+{
+	return pausemode | container;
+}
 
 /*
  * --INFO--
@@ -484,7 +487,9 @@ static void Jac_PlayInit()
  * Address:	80017020
  * Size:	000004
  */
-static void Jac_Archiver_Init() { }
+static void Jac_Archiver_Init()
+{
+}
 
 /*
  * --INFO--
@@ -611,14 +616,20 @@ void Jac_SetThreadPriority(void)
  * Address:	80017180
  * Size:	00000C
  */
-static void __BootSoundOK(u32) { boot_ok = TRUE; }
+static void __BootSoundOK(u32)
+{
+	boot_ok = TRUE;
+}
 
 /*
  * --INFO--
  * Address:	800171A0
  * Size:	000008
  */
-BOOL Jac_CheckBootOk() { return boot_ok; }
+BOOL Jac_CheckBootOk()
+{
+	return boot_ok;
+}
 
 /*
  * --INFO--
@@ -796,7 +807,10 @@ void Jac_Freeze()
  * Address:	800173C0
  * Size:	00000C
  */
-static void __ResetCounter() { count = 0; }
+static void __ResetCounter()
+{
+	count = 0;
+}
 
 /*
  * --INFO--

@@ -85,4 +85,7 @@ void KeyConfig::read(RandomAccessStream& input)
  * Address:	800849A8
  * Size:	000040
  */
-void KeyConfig::Key::read(RandomAccessStream& input) { _20 = input.readInt(); }
+void KeyConfig::Key::read(RandomAccessStream& input)
+{
+	_20 = input.readInt();
+}

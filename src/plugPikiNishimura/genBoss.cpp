@@ -22,14 +22,20 @@ DEFINE_PRINT(nullptr);
  * Address:	8014D2D0
  * Size:	00008C
  */
-static GenObject* makeObjectBoss() { return new GenObjectBoss(); }
+static GenObject* makeObjectBoss()
+{
+	return new GenObjectBoss();
+}
 
 /*
  * --INFO--
  * Address:	8014D35C
  * Size:	000088
  */
-void GenObjectBoss::initialise() { GenObjectFactory::factory->registerMember('boss', &makeObjectBoss, "ボスを発生", 2); }
+void GenObjectBoss::initialise()
+{
+	GenObjectFactory::factory->registerMember('boss', &makeObjectBoss, "ボスを発生", 2);
+}
 
 /*
  * --INFO--
@@ -61,21 +67,30 @@ void GenObjectBoss::doRead(RandomAccessStream& input)
  * Address:	8014D4D0
  * Size:	000020
  */
-void GenObjectBoss::doWrite(RandomAccessStream& output) { writeParameters(output); }
+void GenObjectBoss::doWrite(RandomAccessStream& output)
+{
+	writeParameters(output);
+}
 
 /*
  * --INFO--
  * Address:	8014D4F0
  * Size:	000020
  */
-void GenObjectBoss::ramLoadParameters(RandomAccessStream& input) { readParameters(input); }
+void GenObjectBoss::ramLoadParameters(RandomAccessStream& input)
+{
+	readParameters(input);
+}
 
 /*
  * --INFO--
  * Address:	8014D510
  * Size:	000020
  */
-void GenObjectBoss::ramSaveParameters(RandomAccessStream& output) { writeParameters(output); }
+void GenObjectBoss::ramSaveParameters(RandomAccessStream& output)
+{
+	writeParameters(output);
+}
 
 /*
  * --INFO--

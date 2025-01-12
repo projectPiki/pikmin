@@ -541,4 +541,6 @@ int ActBreakWall::breakWall()
  * Address:	800AEC08
  * Size:	000004
  */
-void ActBreakWall::cleanup() { }
+void ActBreakWall::cleanup()
+{
+}

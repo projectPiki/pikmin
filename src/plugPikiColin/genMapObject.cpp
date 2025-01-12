@@ -25,7 +25,10 @@ DEFINE_PRINT("genMapObject");
  * Address:	8005D0E8
  * Size:	000040
  */
-static GenObject* makeObjectMapObject() { return new GenObjectMapObject; }
+static GenObject* makeObjectMapObject()
+{
+	return new GenObjectMapObject;
+}
 
 /*
  * --INFO--
@@ -54,23 +57,37 @@ void GenObjectMapObject::initialise(MapMgr* mgr)
  * Address:	8005D220
  * Size:	000040
  */
-void GenObjectMapObject::doRead(RandomAccessStream& input) { _18 = input.readInt(); }
+void GenObjectMapObject::doRead(RandomAccessStream& input)
+{
+	_18 = input.readInt();
+}
 
 /*
  * --INFO--
  * Address:	8005D260
  * Size:	000004
  */
-void GenObjectMapObject::render(Graphics&, Generator*) { }
+void GenObjectMapObject::render(Graphics&, Generator*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8005D264
  * Size:	000008
  */
-Creature* GenObjectMapObject::birth(BirthInfo&) { return nullptr; }
+Creature* GenObjectMapObject::birth(BirthInfo&)
+{
+	return nullptr;
+}
 
 // I hate these, but things will NOT spawn in the correct order without them.
-static DynObjBody* fakeFunc() { return new DynObjBody(); }
+static DynObjBody* fakeFunc()
+{
+	return new DynObjBody();
+}
 
-static DynObjBridge* fakeFunc2() { return new DynObjBridge(); }
+static DynObjBridge* fakeFunc2()
+{
+	return new DynObjBridge();
+}

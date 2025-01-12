@@ -32,7 +32,10 @@ NPolynomialFunction::NPolynomialFunction(f32*, int)
  * Address:	8011B6E4
  * Size:	000028
  */
-void NPolynomialFunction::construct(f32* coefficients, int degree) { mData.construct(coefficients, degree + 1); }
+void NPolynomialFunction::construct(f32* coefficients, int degree)
+{
+	mData.construct(coefficients, degree + 1);
+}
 
 /*
  * --INFO--
@@ -152,7 +155,10 @@ NClampLinearFunction::NClampLinearFunction(f32* values)
  * Address:	8011B8F4
  * Size:	000028
  */
-void NClampLinearFunction::construct(f32* values) { mData.construct(values, 2); }
+void NClampLinearFunction::construct(f32* values)
+{
+	mData.construct(values, 2);
+}
 
 /*
  * --INFO--
@@ -191,7 +197,10 @@ f32 NClampLinearFunction::getValue(f32 p1)
  * Address:	8011BAE0
  * Size:	000058
  */
-void NClampLinearFunction::println() { NPolynomialFunction::println(); }
+void NClampLinearFunction::println()
+{
+	NPolynomialFunction::println();
+}
 
 /*
  * --INFO--

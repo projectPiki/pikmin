@@ -27,7 +27,9 @@ static void _Print(char*, ...)
  * Address:	80121BB8
  * Size:	000004
  */
-PcamMotionInfo::PcamMotionInfo() { }
+PcamMotionInfo::PcamMotionInfo()
+{
+}
 
 /*
  * --INFO--

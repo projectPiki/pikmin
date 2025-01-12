@@ -172,14 +172,20 @@ void ActBoMake::initWork()
  * Address:	800AC684
  * Size:	000008
  */
-int ActBoMake::exeWork() { return ACTOUT_Continue; }
+int ActBoMake::exeWork()
+{
+	return ACTOUT_Continue;
+}
 
 /*
  * --INFO--
  * Address:	800AC68C
  * Size:	000024
  */
-void ActBoMake::cleanup() { mActor->endStickObject(); }
+void ActBoMake::cleanup()
+{
+	mActor->endStickObject();
+}
 
 /*
  * --INFO--

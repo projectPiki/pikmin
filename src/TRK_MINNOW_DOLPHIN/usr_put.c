@@ -55,7 +55,9 @@ void usr_puts_ram(void)
  * Address:	8021CEDC
  * Size:	000004
  */
-void usr_put_initialize(void) { }
+void usr_put_initialize(void)
+{
+}
 
 /*
  * --INFO--

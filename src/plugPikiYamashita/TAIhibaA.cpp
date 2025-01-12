@@ -1356,7 +1356,10 @@ void TAIAinitHibaA::start(Teki&)
  * Address:	801D59C0
  * Size:	000008
  */
-bool TAIAinitHibaA::act(Teki&) { return true; }
+bool TAIAinitHibaA::act(Teki&)
+{
+	return true;
+}
 
 /*
  * --INFO--

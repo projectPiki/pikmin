@@ -188,21 +188,28 @@ ActPut::ActPut(Piki* piki)
  * Address:	800A7CFC
  * Size:	000004
  */
-void ActPut::Initialiser::initialise(Action*) { }
+void ActPut::Initialiser::initialise(Action*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800A7D00
  * Size:	00000C
  */
-void ActPut::init(Creature*) { mFailCountdownTimer = 0.5f; }
+void ActPut::init(Creature*)
+{
+	mFailCountdownTimer = 0.5f;
+}
 
 /*
  * --INFO--
  * Address:	800A7D0C
  * Size:	000004
  */
-void ActPut::cleanup() { }
+void ActPut::cleanup()
+{
+}
 
 /*
  * --INFO--
@@ -470,7 +477,10 @@ void ActAdjust::init(Creature*)
  * Address:	800A8068
  * Size:	000014
  */
-void ActAdjust::cleanup() { mActor->resetCreatureFlag(CF_Unk11); }
+void ActAdjust::cleanup()
+{
+	mActor->resetCreatureFlag(CF_Unk11);
+}
 
 /*
  * --INFO--

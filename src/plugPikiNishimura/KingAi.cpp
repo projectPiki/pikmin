@@ -29,7 +29,10 @@ static void _Print(char*, ...)
  * Address:	8016C2B0
  * Size:	000048
  */
-KingAi::KingAi(King* king) { mKing = king; }
+KingAi::KingAi(King* king)
+{
+	mKing = king;
+}
 
 /*
  * --INFO--
@@ -427,7 +430,10 @@ void KingAi::keyAction3()
  * Address:	8016C784
  * Size:	000014
  */
-void KingAi::keyLoopEnd() { mKing->addLoopCounter(1); }
+void KingAi::keyLoopEnd()
+{
+	mKing->addLoopCounter(1);
+}
 
 /*
  * --INFO--

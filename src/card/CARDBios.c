@@ -20,14 +20,19 @@ static OSResetFunctionInfo ResetFunctionInfo = { OnReset, 127 };
  * Address:	80207E60
  * Size:	000004
  */
-void __CARDDefaultApiCallback(s32, s32) { }
+void __CARDDefaultApiCallback(s32, s32)
+{
+}
 
 /*
  * --INFO--
  * Address:	80207E64
  * Size:	000034
  */
-void __CARDSyncCallback(s32 channel, s32 result) { OSWakeupThread(&__CARDBlock[channel].threadQueue); }
+void __CARDSyncCallback(s32 channel, s32 result)
+{
+	OSWakeupThread(&__CARDBlock[channel].threadQueue);
+}
 
 /*
  * --INFO--
@@ -608,7 +613,10 @@ void CARDInit(void)
  * Address:	80208E54
  * Size:	00001C
  */
-void __CARDSetDiskID(const DVDDiskID* diskID) { __CARDDiskID = diskID ? diskID : &__CARDDiskNone; }
+void __CARDSetDiskID(const DVDDiskID* diskID)
+{
+	__CARDDiskID = diskID ? diskID : &__CARDDiskNone;
+}
 
 /*
  * --INFO--

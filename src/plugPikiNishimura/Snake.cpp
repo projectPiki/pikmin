@@ -48,21 +48,30 @@ Snake::Snake(CreatureProp* props)
  * Address:	8015ACB8
  * Size:	000008
  */
-void Snake::setBossType(bool type) { mBossType = type; }
+void Snake::setBossType(bool type)
+{
+	mBossType = type;
+}
 
 /*
  * --INFO--
  * Address:	8015ACC0
  * Size:	00000C
  */
-f32 Snake::getCentreSize() { return mBoundsUpdater->mSize; }
+f32 Snake::getCentreSize()
+{
+	return mBoundsUpdater->mSize;
+}
 
 /*
  * --INFO--
  * Address:	8015ACCC
  * Size:	000008
  */
-f32 Snake::getiMass() { return 0.0001f; }
+f32 Snake::getiMass()
+{
+	return 0.0001f;
+}
 
 /*
  * --INFO--
@@ -101,7 +110,10 @@ void Snake::doKill()
  * Address:	8015ADD8
  * Size:	000028
  */
-void Snake::exitCourse() { mSnakeBody->killCallBackEffect(true); }
+void Snake::exitCourse()
+{
+	mSnakeBody->killCallBackEffect(true);
+}
 
 /*
  * --INFO--
@@ -162,7 +174,10 @@ void Snake::refresh2d(Graphics& gfx)
  * Address:	8015AFF8
  * Size:	000024
  */
-void Snake::doAI() { mSnakeAi->update(); }
+void Snake::doAI()
+{
+	mSnakeAi->update();
+}
 
 /*
  * --INFO--

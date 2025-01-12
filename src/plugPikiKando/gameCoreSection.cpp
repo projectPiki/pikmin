@@ -66,7 +66,10 @@ static void _Print(char*, ...)
  * Address:	8010CE6C
  * Size:	000040
  */
-void GameCoreSection::startTextDemo(Creature*, int p2) { gameflow._1E8->message(0, p2); }
+void GameCoreSection::startTextDemo(Creature*, int p2)
+{
+	gameflow._1E8->message(0, p2);
+}
 
 /*
  * --INFO--

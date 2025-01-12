@@ -34,7 +34,9 @@ DEFINE_PRINT("Boss");
  * Address:	8014D8CC
  * Size:	0005AC
  */
-BossProp::BossProp() { }
+BossProp::BossProp()
+{
+}
 
 /*
  * --INFO--
@@ -496,7 +498,10 @@ int Boss::getStickNoMouthPikiCount()
  * Address:	8014F328
  * Size:	000048
  */
-void Boss::killStickToMouthPiki() { killStickers(this, &CndStickMouthKill(this), 0); }
+void Boss::killStickToMouthPiki()
+{
+	killStickers(this, &CndStickMouthKill(this), 0);
+}
 
 /*
  * --INFO--
@@ -599,7 +604,9 @@ void Boss::refreshViewCulling(Graphics& gfx)
  * Address:	8014F5B8
  * Size:	000004
  */
-void Boss::drawShape(Graphics&) { }
+void Boss::drawShape(Graphics&)
+{
+}
 
 /*
  * --INFO--

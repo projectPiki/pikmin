@@ -269,7 +269,9 @@ void KeyItem::update()
  * Address:	800ED47C
  * Size:	000004
  */
-void KeyItem::collisionCallback(CollEvent&) { }
+void KeyItem::collisionCallback(CollEvent&)
+{
+}
 
 /*
  * --INFO--
@@ -776,7 +778,10 @@ void DoorItem::refresh(Graphics&)
  * Address:	800ED9C4
  * Size:	000008
  */
-bool DoorItem::isAlive() { return true; }
+bool DoorItem::isAlive()
+{
+	return true;
+}
 
 /*
  * --INFO--

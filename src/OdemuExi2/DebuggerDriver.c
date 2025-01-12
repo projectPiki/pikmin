@@ -984,11 +984,17 @@ void DBWrite(void)
  * Address:	80221F50
  * Size:	000004
  */
-void DBOpen(void) { return; }
+void DBOpen(void)
+{
+	return;
+}
 
 /*
  * --INFO--
  * Address:	80221F54
  * Size:	000004
  */
-void DBClose(void) { return; }
+void DBClose(void)
+{
+	return;
+}

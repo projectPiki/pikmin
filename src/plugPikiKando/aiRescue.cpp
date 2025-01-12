@@ -933,7 +933,9 @@ void ActRescue::exeThrow()
  * Address:	800C1D8C
  * Size:	000004
  */
-void ActRescue::cleanup() { }
+void ActRescue::cleanup()
+{
+}
 
 /*
  * --INFO--

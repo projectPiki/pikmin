@@ -61,14 +61,20 @@ Creature* BossMgr::getCreature(int bossID)
  * Address:	8014FEF4
  * Size:	000008
  */
-int BossMgr::getFirst() { return 0; }
+int BossMgr::getFirst()
+{
+	return 0;
+}
 
 /*
  * --INFO--
  * Address:	8014FEFC
  * Size:	000008
  */
-int BossMgr::getNext(int idx) { return idx + 1; }
+int BossMgr::getNext(int idx)
+{
+	return idx + 1;
+}
 
 /*
  * --INFO--
@@ -147,7 +153,10 @@ BossMgr::BossMgr()
  * Address:	80150388
  * Size:	000018
  */
-void BossMgr::addUseCount(int bossID, int count) { mUseCounts[bossID] += count; }
+void BossMgr::addUseCount(int bossID, int count)
+{
+	mUseCounts[bossID] += count;
+}
 
 /*
  * --INFO--
@@ -165,7 +174,10 @@ bool BossMgr::useBoss(int bossID)
  * Address:	........
  * Size:	000010
  */
-int BossMgr::getUseCount(int bossID) { return mUseCounts[bossID]; }
+int BossMgr::getUseCount(int bossID)
+{
+	return mUseCounts[bossID];
+}
 
 /*
  * --INFO--
@@ -876,11 +888,17 @@ void BossMgr::refresh2d(Graphics& gfx)
  * Address:	801525F4
  * Size:	00000C
  */
-void BossMgr::finalSetup() { mForceUpdate = true; }
+void BossMgr::finalSetup()
+{
+	mForceUpdate = true;
+}
 
 /*
  * --INFO--
  * Address:	80152600
  * Size:	000010
  */
-BossShapeObject* BossMgr::getBossShapeObject(int bossID) { return mShapeObjects[bossID]; }
+BossShapeObject* BossMgr::getBossShapeObject(int bossID)
+{
+	return mShapeObjects[bossID];
+}

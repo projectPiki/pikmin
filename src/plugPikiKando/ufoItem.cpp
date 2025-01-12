@@ -1928,7 +1928,10 @@ void UfoItem::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800E86FC
  * Size:	000008
  */
-bool UfoItem::needShadow() { return false; }
+bool UfoItem::needShadow()
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -2089,7 +2092,10 @@ UfoItem::Spot::Spot()
  * Address:	800E890C
  * Size:	000008
  */
-bool UfoItem::ignoreAtari(Creature*) { return false; }
+bool UfoItem::ignoreAtari(Creature*)
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -3242,11 +3248,17 @@ s16 UfoItem::getRouteIndex()
  * Address:	800E9794
  * Size:	000008
  */
-bool UfoItem::isVisible() { return true; }
+bool UfoItem::isVisible()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800E979C
  * Size:	000008
  */
-bool UfoItem::isAlive() { return true; }
+bool UfoItem::isAlive()
+{
+	return true;
+}

@@ -3767,21 +3767,29 @@ bool TaiOtimotiPressingAction::actByEvent(TekiEvent&)
  * Address:	8013D824
  * Size:	000008
  */
-bool TaiOtimotiBouncingAction::act(Teki&) { return true; }
+bool TaiOtimotiBouncingAction::act(Teki&)
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	8013D82C
  * Size:	000008
  */
-bool TaiOtimotiBouncingAction::actByEvent(TekiEvent&) { return false; }
+bool TaiOtimotiBouncingAction::actByEvent(TekiEvent&)
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	8013D834
  * Size:	000004
  */
-void TaiOtimotiAttackingAction::start(Teki&) { }
+void TaiOtimotiAttackingAction::start(Teki&)
+{
+}
 
 /*
  * --INFO--
@@ -3852,7 +3860,10 @@ bool TaiOtimotiAttackingAction::act(Teki&)
  * Address:	8013D8E8
  * Size:	000008
  */
-bool TaiOtimotiAttackingAction::actByEvent(TekiEvent&) { return false; }
+bool TaiOtimotiAttackingAction::actByEvent(TekiEvent&)
+{
+	return false;
+}
 
 /*
  * --INFO--

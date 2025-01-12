@@ -50,7 +50,10 @@ Spider::Spider(CreatureProp* props)
  * Address:	8015329C
  * Size:	000008
  */
-f32 Spider::getiMass() { return 0.1f; }
+f32 Spider::getiMass()
+{
+	return 0.1f;
+}
 
 /*
  * --INFO--
@@ -97,7 +100,10 @@ void Spider::doKill()
  * Address:	801533C0
  * Size:	000028
  */
-void Spider::exitCourse() { mSpiderLeg->killCallBackEffect(true); }
+void Spider::exitCourse()
+{
+	mSpiderLeg->killCallBackEffect(true);
+}
 
 /*
  * --INFO--
@@ -159,7 +165,10 @@ void Spider::drawShape(Graphics& gfx)
  * Address:	80153618
  * Size:	000024
  */
-void Spider::doAI() { mSpiderAi->update(); }
+void Spider::doAI()
+{
+	mSpiderAi->update();
+}
 
 /*
  * --INFO--

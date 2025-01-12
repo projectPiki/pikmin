@@ -312,7 +312,9 @@ void ActDeliver::cleanup()
  * Address:	800BD5F8
  * Size:	000004
  */
-void Action::Initialiser::initialise(Action*) { }
+void Action::Initialiser::initialise(Action*)
+{
+}
 
 /*
  * --INFO--

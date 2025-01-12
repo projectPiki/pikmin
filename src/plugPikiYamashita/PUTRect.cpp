@@ -164,4 +164,7 @@ void PUTRect::normalize()
  * Address:	801B37C0
  * Size:	000030
  */
-bool PUTRect::isEmpty() const { return (mMin.x >= mMax.x) || (mMin.y >= mMax.y); }
+bool PUTRect::isEmpty() const
+{
+	return (mMin.x >= mMax.x) || (mMin.y >= mMax.y);
+}

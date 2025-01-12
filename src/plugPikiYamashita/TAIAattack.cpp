@@ -334,7 +334,9 @@ bool TAIAattackWorkObject::attackWorkObject(Teki&)
  * Address:	801AE558
  * Size:	000004
  */
-void TAIAattackWorkObject::attackEffect(Teki&) { }
+void TAIAattackWorkObject::attackEffect(Teki&)
+{
+}
 
 /*
  * --INFO--
@@ -1070,7 +1072,10 @@ bool TAIAflickCheck::act(Teki&)
  * Address:	801AED50
  * Size:	000008
  */
-int TAIAflickCheck::getDamageCountLimit(Teki&) { return mDamageCountLimit; }
+int TAIAflickCheck::getDamageCountLimit(Teki&)
+{
+	return mDamageCountLimit;
+}
 
 /*
  * --INFO--

@@ -421,7 +421,10 @@ void ResultFlags::setOn(int flag)
  * Address:	80083A50
  * Size:	000024
  */
-void ResultFlags::setSeen(int flag) { setFlag(flag, 2); }
+void ResultFlags::setSeen(int flag)
+{
+	setFlag(flag, 2);
+}
 
 /*
  * --INFO--

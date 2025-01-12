@@ -26,7 +26,10 @@ DEFINE_PRINT(nullptr);
  * Address:	80086690
  * Size:	000080
  */
-MemStat::MemStat() { reset(); }
+MemStat::MemStat()
+{
+	reset();
+}
 
 /*
  * --INFO--
@@ -168,7 +171,10 @@ void MemStat::print()
  * Address:	800868F4
  * Size:	000024
  */
-MemInfo* MemStat::getInfo(char* name) { return getInfoRec(name, &mInfoListRoot); }
+MemInfo* MemStat::getInfo(char* name)
+{
+	return getInfoRec(name, &mInfoListRoot);
+}
 
 /*
  * --INFO--

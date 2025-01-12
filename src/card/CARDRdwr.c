@@ -127,4 +127,7 @@ s32 __CARDWrite(s32 channel, u32 addr, s32 length, void* dst, CARDCallback callb
  * Address:	80209494
  * Size:	000018
  */
-s32 CARDGetXferredBytes(s32 channel) { return __CARDBlock[channel].xferred; }
+s32 CARDGetXferredBytes(s32 channel)
+{
+	return __CARDBlock[channel].xferred;
+}

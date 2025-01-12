@@ -38,7 +38,10 @@ PikiInfMgr::PikiInfMgr()
  * Address:	800C56D4
  * Size:	000028
  */
-void PikiInfMgr::initGame() { pikiInfMgr.clear(); }
+void PikiInfMgr::initGame()
+{
+	pikiInfMgr.clear();
+}
 
 /*
  * --INFO--
@@ -104,7 +107,10 @@ void PikiInfMgr::incPiki(Piki* piki)
  * Address:	800C5818
  * Size:	00001C
  */
-void PikiInfMgr::incPiki(int color, int happa) { mPikiCounts[color][happa]++; }
+void PikiInfMgr::incPiki(int color, int happa)
+{
+	mPikiCounts[color][happa]++;
+}
 
 /*
  * --INFO--
@@ -278,7 +284,10 @@ void BPikiInf::doRestore(Creature* piki)
  * Address:	800C5CEC
  * Size:	000170
  */
-MonoInfMgr::MonoInfMgr() { mInfs = nullptr; }
+MonoInfMgr::MonoInfMgr()
+{
+	mInfs = nullptr;
+}
 
 /*
  * --INFO--
@@ -329,14 +338,20 @@ void MonoInfMgr::delInf(BaseInf* inf)
  * Address:	800C5FCC
  * Size:	000024
  */
-int MonoInfMgr::getActiveNum() { return mActiveList.getChildCount(); }
+int MonoInfMgr::getActiveNum()
+{
+	return mActiveList.getChildCount();
+}
 
 /*
  * --INFO--
  * Address:	800C5FF0
  * Size:	000024
  */
-int MonoInfMgr::getFreeNum() { mFreeList.getChildCount(); }
+int MonoInfMgr::getFreeNum()
+{
+	mFreeList.getChildCount();
+}
 
 /*
  * --INFO--
@@ -369,7 +384,10 @@ void MonoInfMgr::loadCard(RandomAccessStream& input)
  * Address:	800C60D8
  * Size:	0000CC
  */
-BPikiInf* BPikiInfMgr::newInf() { return new BPikiInf(); }
+BPikiInf* BPikiInfMgr::newInf()
+{
+	return new BPikiInf();
+}
 
 /*
  * --INFO--
@@ -475,7 +493,10 @@ CreatureInf::CreatureInf()
  * Address:	800C61D0
  * Size:	0000D4
  */
-CreatureInf* CreatureInfMgr::newInf() { return new CreatureInf(); }
+CreatureInf* CreatureInfMgr::newInf()
+{
+	return new CreatureInf();
+}
 
 /*
  * --INFO--
@@ -547,14 +568,20 @@ void CreatureInfMgr::restoreAll()
  * Address:	800C63E4
  * Size:	000030
  */
-void StageInf::init() { mBPikiInfMgr.init(100); }
+void StageInf::init()
+{
+	mBPikiInfMgr.init(100);
+}
 
 /*
  * --INFO--
  * Address:	800C6414
  * Size:	000064
  */
-void StageInf::initGame() { mBPikiInfMgr.initGame(); }
+void StageInf::initGame()
+{
+	mBPikiInfMgr.initGame();
+}
 
 /*
  * --INFO--
@@ -565,7 +592,10 @@ void StageInf::saveCard(RandomAccessStream& output)
 {
 	output.writeInt(mBPikiInfMgr.getActiveNum());
 
-	FOREACH_NODE(BaseInf, mBPikiInfMgr.mActiveList.mChild, inf) { inf->saveCard(output); }
+	FOREACH_NODE(BaseInf, mBPikiInfMgr.mActiveList.mChild, inf)
+	{
+		inf->saveCard(output);
+	}
 
 	// TODO: Figure out how to do this.
 	PRINT(" SAVE CARD ***** %d です\n" /*, activeNum*/);
@@ -577,5 +607,8 @@ void StageInf::saveCard(RandomAccessStream& output)
  * Address:	800C6500
  * Size:	000020
  */
-void StageInf::loadCard(RandomAccessStream& input) { mBPikiInfMgr.loadCard(input); }
+void StageInf::loadCard(RandomAccessStream& input)
+{
+	mBPikiInfMgr.loadCard(input);
+}
 #pragma dont_inline reset

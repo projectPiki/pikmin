@@ -123,7 +123,10 @@ bool BombItem::isVisible()
  * Address:	800EA290
  * Size:	000008
  */
-bool BombItem::needShadow() { return false; }
+bool BombItem::needShadow()
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -394,7 +397,9 @@ void BombItem::update()
  * Address:	800EA56C
  * Size:	000004
  */
-void BombItem::renderTimer(Graphics&) { }
+void BombItem::renderTimer(Graphics&)
+{
+}
 
 /*
  * --INFO--
@@ -509,7 +514,9 @@ void BombItem::refresh(Graphics&)
  * Address:	800EA6B0
  * Size:	000004
  */
-void BombItem::renderBlast(Graphics&) { }
+void BombItem::renderBlast(Graphics&)
+{
+}
 
 /*
  * --INFO--

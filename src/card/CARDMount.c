@@ -15,7 +15,10 @@ static void DoUnmount(s32 channel, s32 result);
  * Address:	8020AAA4
  * Size:	000020
  */
-BOOL CARDProbe(s32 channel) { return EXIProbe(channel); }
+BOOL CARDProbe(s32 channel)
+{
+	return EXIProbe(channel);
+}
 
 /*
  * --INFO--

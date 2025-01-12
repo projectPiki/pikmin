@@ -196,7 +196,10 @@ static void stateTimeout()
  * Address:	801FFC78
  * Size:	000028
  */
-static void stateGettingError() { DVDLowRequestError(cbForStateGettingError); }
+static void stateGettingError()
+{
+	DVDLowRequestError(cbForStateGettingError);
+}
 
 /*
  * --INFO--
@@ -451,7 +454,10 @@ void cbForUnrecoveredErrorRetry(u32 p1)
  * Address:	802000E8
  * Size:	000028
  */
-void stateGoToRetry() { DVDLowStopMotor(cbForStateGoToRetry); }
+void stateGoToRetry()
+{
+	DVDLowStopMotor(cbForStateGoToRetry);
+}
 
 /*
  * --INFO--
@@ -519,14 +525,20 @@ static void stateCheckID()
  * Address:	8020034C
  * Size:	000034
  */
-static void stateCheckID3(DVDCommandBlock* cmdBlock) { DVDLowAudioBufferConfig(currID->streaming, 10, cbForStateCheckID3); }
+static void stateCheckID3(DVDCommandBlock* cmdBlock)
+{
+	DVDLowAudioBufferConfig(currID->streaming, 10, cbForStateCheckID3);
+}
 
 /*
  * --INFO--
  * Address:	80200380
  * Size:	000038
  */
-static void stateCheckID2(DVDCommandBlock* block) { DVDLowRead(tmpBuffer, OSRoundUp32B(sizeof(DVDBB2)), 0x420, cbForStateCheckID2); }
+static void stateCheckID2(DVDCommandBlock* block)
+{
+	DVDLowRead(tmpBuffer, OSRoundUp32B(sizeof(DVDBB2)), 0x420, cbForStateCheckID2);
+}
 
 /*
  * --INFO--
@@ -650,7 +662,10 @@ static void stateCoverClosed()
  * Address:	8020077C
  * Size:	000030
  */
-void stateCoverClosed_CMD(DVDCommandBlock* cmdBlock) { DVDLowReadDiskID(tmpBuffer, cbForStateCoverClosed); }
+void stateCoverClosed_CMD(DVDCommandBlock* cmdBlock)
+{
+	DVDLowReadDiskID(tmpBuffer, cbForStateCoverClosed);
+}
 
 /*
  * --INFO--
@@ -678,7 +693,10 @@ void cbForStateCoverClosed(u32 p1)
  * Address:	8020081C
  * Size:	000028
  */
-static void stateMotorStopped() { DVDLowWaitCoverClose(cbForStateMotorStopped); }
+static void stateMotorStopped()
+{
+	DVDLowWaitCoverClose(cbForStateMotorStopped);
+}
 
 /*
  * --INFO--
@@ -1691,7 +1709,10 @@ s32 DVDCancel(DVDCommandBlock* block)
  * Address:	80201CD8
  * Size:	000024
  */
-static void cbForCancelSync(s32 result, DVDCommandBlock* block) { OSWakeupThread(&__DVDThreadQueue); }
+static void cbForCancelSync(s32 result, DVDCommandBlock* block)
+{
+	OSWakeupThread(&__DVDThreadQueue);
+}
 
 /*
  * --INFO--
@@ -1750,7 +1771,10 @@ void cbForCancelAllSync(void)
  * Address:	80201CFC
  * Size:	000008
  */
-DVDDiskID* DVDGetCurrentDiskID() { return (DVDDiskID*)OSPhysicalToCached(0); }
+DVDDiskID* DVDGetCurrentDiskID()
+{
+	return (DVDDiskID*)OSPhysicalToCached(0);
+}
 
 /*
  * --INFO--

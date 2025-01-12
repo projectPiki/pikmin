@@ -43,14 +43,20 @@ void ItemBall::startAI(int)
  * Address:	800F7994
  * Size:	000008
  */
-bool ItemBall::isAlive() { return true; }
+bool ItemBall::isAlive()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800F799C
  * Size:	000008
  */
-bool ItemBall::isVisible() { return true; }
+bool ItemBall::isVisible()
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -68,7 +74,9 @@ ItemObject::ItemObject(int objType, Shape* shape)
  * Address:	800F79A4
  * Size:	000004
  */
-void ItemObject::update() { }
+void ItemObject::update()
+{
+}
 
 /*
  * --INFO--
@@ -87,7 +95,10 @@ BombGenItem::BombGenItem(Shape* shape)
  * Address:	800F7A24
  * Size:	000030
  */
-bool BombGenItem::pickable() { return isValid(); }
+bool BombGenItem::pickable()
+{
+	return isValid();
+}
 
 /*
  * --INFO--

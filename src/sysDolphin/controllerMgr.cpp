@@ -45,7 +45,10 @@ void ControllerMgr::update()
  * Address:	80047278
  * Size:	000020
  */
-bool ControllerMgr::keyDown(int btn) { return (sControllerPad[0].button & btn); }
+bool ControllerMgr::keyDown(int btn)
+{
+	return (sControllerPad[0].button & btn);
+}
 
 /*
  * --INFO--

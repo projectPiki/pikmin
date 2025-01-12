@@ -274,7 +274,10 @@ bool TaiState::eventPerformed(TekiEvent& event)
  * Address:	801273E4
  * Size:	000064
  */
-TaiStrategy::TaiStrategy(int stateCount, int stateID) { init(stateCount, stateID); }
+TaiStrategy::TaiStrategy(int stateCount, int stateID)
+{
+	init(stateCount, stateID);
+}
 
 /*
  * --INFO--

@@ -72,7 +72,9 @@ u32 readID(RandomAccessStream& input)
  * Address:	........
  * Size:	000004
  */
-void printID(u32) { }
+void printID(u32)
+{
+}
 
 /*
  * --INFO--
@@ -102,7 +104,10 @@ GenBase::GenBase(u32 id, char* type, char* name)
  * Address:	........
  * Size:	00009C
  */
-void GenBase::writeVersion(RandomAccessStream& output) { writeID(output, getLatestVersion()); }
+void GenBase::writeVersion(RandomAccessStream& output)
+{
+	writeID(output, getLatestVersion());
+}
 
 /*
  * --INFO--
@@ -128,21 +133,30 @@ void GenBase::write(RandomAccessStream& output)
  * Address:	800DACF0
  * Size:	000020
  */
-void GenBase::ramSaveParameters(RandomAccessStream& output) { Parameters::write(output); }
+void GenBase::ramSaveParameters(RandomAccessStream& output)
+{
+	Parameters::write(output);
+}
 
 /*
  * --INFO--
  * Address:	800DAD10
  * Size:	000020
  */
-void GenBase::ramLoadParameters(RandomAccessStream& input) { Parameters::read(input); }
+void GenBase::ramLoadParameters(RandomAccessStream& input)
+{
+	Parameters::read(input);
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-void GenBase::readVersion(RandomAccessStream& input) { mVersion = readID(input); }
+void GenBase::readVersion(RandomAccessStream& input)
+{
+	mVersion = readID(input);
+}
 
 /*
  * --INFO--
@@ -171,14 +185,20 @@ void GenBase::read(RandomAccessStream& input)
  * Address:	800DAD34
  * Size:	0000FC
  */
-static GenObject* makeObjectPiki() { return new GenObjectPiki; }
+static GenObject* makeObjectPiki()
+{
+	return new GenObjectPiki;
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000070
  */
-GenObject* GenObjectFactory::getProduct(u32 id) { return factory->create(id); }
+GenObject* GenObjectFactory::getProduct(u32 id)
+{
+	return factory->create(id);
+}
 
 /*
  * --INFO--
@@ -198,35 +218,50 @@ void GenObjectFactory::createInstance()
  * Address:	800DAE30
  * Size:	000050
  */
-u32 GenObject::getLatestVersion() { return GenObjectFactory::factory->_getLatestVersion(mID); }
+u32 GenObject::getLatestVersion()
+{
+	return GenObjectFactory::factory->_getLatestVersion(mID);
+}
 
 /*
  * --INFO--
  * Address:	800DAE80
  * Size:	00017C
  */
-static GenType* makeTypeOne() { return new GenTypeOne; }
+static GenType* makeTypeOne()
+{
+	return new GenTypeOne;
+}
 
 /*
  * --INFO--
  * Address:	800DAFFC
  * Size:	000130
  */
-static GenType* makeTypeAtOnce() { return new GenTypeAtOnce; }
+static GenType* makeTypeAtOnce()
+{
+	return new GenTypeAtOnce;
+}
 
 /*
  * --INFO--
  * Address:	800DB12C
  * Size:	00015C
  */
-static GenType* makeTypeInitRand() { return new GenTypeInitRand; }
+static GenType* makeTypeInitRand()
+{
+	return new GenTypeInitRand;
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000070
  */
-GenType* GenTypeFactory::getProduct(u32 id) { return factory->create(id); }
+GenType* GenTypeFactory::getProduct(u32 id)
+{
+	return factory->create(id);
+}
 
 /*
  * --INFO--
@@ -248,7 +283,10 @@ void GenTypeFactory::createInstance()
  * Address:	800DB288
  * Size:	000050
  */
-u32 GenType::getLatestVersion() { return GenTypeFactory::factory->_getLatestVersion(mID); }
+u32 GenType::getLatestVersion()
+{
+	return GenTypeFactory::factory->_getLatestVersion(mID);
+}
 
 /*
  * --INFO--
@@ -373,21 +411,30 @@ void GenArea::doRead(RandomAccessStream& input)
  * Address:	800DB880
  * Size:	0000D8
  */
-static GenArea* makeCircleArea() { return new GenAreaCircle; }
+static GenArea* makeCircleArea()
+{
+	return new GenAreaCircle;
+}
 
 /*
  * --INFO--
  * Address:	800DB958
  * Size:	000098
  */
-static GenArea* makePointArea() { return new GenAreaPoint; }
+static GenArea* makePointArea()
+{
+	return new GenAreaPoint;
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000070
  */
-GenArea* GenAreaFactory::getProduct(u32 id) { return factory->create(id); }
+GenArea* GenAreaFactory::getProduct(u32 id)
+{
+	return factory->create(id);
+}
 
 /*
  * --INFO--
@@ -409,21 +456,30 @@ void GenAreaFactory::createInstance()
  * Address:	800DB9F0
  * Size:	000050
  */
-u32 GenArea::getLatestVersion() { return GenAreaFactory::factory->_getLatestVersion(mID); }
+u32 GenArea::getLatestVersion()
+{
+	return GenAreaFactory::factory->_getLatestVersion(mID);
+}
 
 /*
  * --INFO--
  * Address:	800DBA40
  * Size:	000040
  */
-void GenAreaCircle::ramSaveParameters(RandomAccessStream& output) { output.writeShort(mRadius()); }
+void GenAreaCircle::ramSaveParameters(RandomAccessStream& output)
+{
+	output.writeShort(mRadius());
+}
 
 /*
  * --INFO--
  * Address:	800DBA80
  * Size:	000060
  */
-void GenAreaCircle::ramLoadParameters(RandomAccessStream& input) { mRadius() = input.readShort(); }
+void GenAreaCircle::ramLoadParameters(RandomAccessStream& input)
+{
+	mRadius() = input.readShort();
+}
 
 /*
  * --INFO--
@@ -484,7 +540,10 @@ Generator::Generator(int)
  * Address:	........
  * Size:	000054
  */
-Generator::~Generator() { mNextGenerator = nullptr; }
+Generator::~Generator()
+{
+	mNextGenerator = nullptr;
+}
 
 /*
  * --INFO--
@@ -683,7 +742,9 @@ void Generator::informDeath(Creature* creature)
  * Address:	800DC224
  * Size:	000004
  */
-void Generator::update() { }
+void Generator::update()
+{
+}
 
 /*
  * --INFO--
@@ -1767,7 +1828,10 @@ Creature* GenObjectPiki::birth(BirthInfo& info)
  * Address:	........
  * Size:	000038
  */
-f32 deg2rad(int val) { return PI * (val / 180.0f); }
+f32 deg2rad(int val)
+{
+	return PI * (val / 180.0f);
+}
 
 /*
  * --INFO--
@@ -1838,7 +1902,10 @@ void GenTypeOne::render(Graphics& gfx, Generator* gen)
  * Address:	800DE390
  * Size:	000008
  */
-int GenTypeAtOnce::getMaxCount() { return mMaxCount(); }
+int GenTypeAtOnce::getMaxCount()
+{
+	return mMaxCount();
+}
 
 /*
  * --INFO--
@@ -1885,7 +1952,10 @@ void GenTypeAtOnce::setBirthInfo(BirthInfo& info, Generator* gen)
  * Address:	800DE5B4
  * Size:	000008
  */
-int GenTypeInitRand::getMaxCount() { return mMaxCount(); }
+int GenTypeInitRand::getMaxCount()
+{
+	return mMaxCount();
+}
 
 /*
  * --INFO--
@@ -1944,7 +2014,9 @@ Vector3f GenAreaPoint::getPos(Generator* gen)
  * Address:	800DE8C0
  * Size:	000004
  */
-void GenAreaPoint::render(Graphics&, Generator*) { }
+void GenAreaPoint::render(Graphics&, Generator*)
+{
+}
 
 /*
  * --INFO--

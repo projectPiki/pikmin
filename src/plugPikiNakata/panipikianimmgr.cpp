@@ -27,14 +27,19 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	000034
  */
-PaniMotionTable* PaniPikiAnimMgr::getMotionTable() { return motionTable; }
+PaniMotionTable* PaniPikiAnimMgr::getMotionTable()
+{
+	return motionTable;
+}
 
 /*
  * --INFO--
  * Address:	8011F8A0
  * Size:	00003C
  */
-PaniPikiAnimMgr::PaniPikiAnimMgr() { }
+PaniPikiAnimMgr::PaniPikiAnimMgr()
+{
+}
 
 /*
  * --INFO--
@@ -100,7 +105,10 @@ void PaniPikiAnimMgr::finishMotion(PaniMotionInfo* motion1, PaniMotionInfo* moti
  * Address:	8011FA68
  * Size:	000058
  */
-void PaniPikiAnimMgr::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2) { startMotion(&motion1, &motion2); }
+void PaniPikiAnimMgr::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
+{
+	startMotion(&motion1, &motion2);
+}
 
 /*
  * --INFO--

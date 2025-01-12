@@ -356,7 +356,9 @@ PelletShapeObject::PelletShapeObject(char*, Shape*, char*, char*, int)
  * Address:	8009996C
  * Size:	000038
  */
-PelletAnimator::PelletAnimator() { }
+PelletAnimator::PelletAnimator()
+{
+}
 
 /*
  * --INFO--
@@ -405,14 +407,20 @@ void PelletAnimator::finishMotion(PaniMotionInfo* motionInfo1, PaniMotionInfo* m
  * Address:	80099A68
  * Size:	000058
  */
-void PelletAnimator::startMotion(PaniMotionInfo& motionInfo1, PaniMotionInfo& motionInfo2) { startMotion(&motionInfo1, &motionInfo2); }
+void PelletAnimator::startMotion(PaniMotionInfo& motionInfo1, PaniMotionInfo& motionInfo2)
+{
+	startMotion(&motionInfo1, &motionInfo2);
+}
 
 /*
  * --INFO--
  * Address:	80099AC0
  * Size:	000028
  */
-void PelletAnimator::startMotion(PaniMotionInfo& motionInfo) { startMotion(&motionInfo, nullptr); }
+void PelletAnimator::startMotion(PaniMotionInfo& motionInfo)
+{
+	startMotion(&motionInfo, nullptr);
+}
 
 /*
  * --INFO--
@@ -469,4 +477,6 @@ PaniMotionTable* PaniPelletAnimator::createMotionTable()
  * Address:	80099CD8
  * Size:	00003C
  */
-PaniPelletAnimator::PaniPelletAnimator() { }
+PaniPelletAnimator::PaniPelletAnimator()
+{
+}

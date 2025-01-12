@@ -26,4 +26,7 @@ static void _Print(char*, ...)
  * Address:	8004C908
  * Size:	000034
  */
-void GameApp::renderall() { draw(*gsys->mGfx); }
+void GameApp::renderall()
+{
+	draw(*gsys->mGfx);
+}

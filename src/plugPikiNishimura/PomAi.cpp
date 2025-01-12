@@ -134,21 +134,28 @@ void PomAi::keyAction1()
  * Address:	........
  * Size:	000004
  */
-void PomAi::keyAction2() { }
+void PomAi::keyAction2()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void PomAi::keyAction3() { }
+void PomAi::keyAction3()
+{
+}
 
 /*
  * --INFO--
  * Address:	8017883C
  * Size:	000014
  */
-void PomAi::keyLoopEnd() { mPom->addLoopCounter(1); }
+void PomAi::keyLoopEnd()
+{
+	mPom->addLoopCounter(1);
+}
 
 /*
  * --INFO--
@@ -440,21 +447,30 @@ void PomAi::resultFlagOn()
  * Address:	........
  * Size:	00002C
  */
-void PomAi::resultFlagSeen() { playerState->mResultFlags.setSeen(RESFLAG_PomFlowerFound); }
+void PomAi::resultFlagSeen()
+{
+	playerState->mResultFlags.setSeen(RESFLAG_PomFlowerFound);
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-bool PomAi::isMotionFinishTransit() { return mPom->getMotionFinish(); }
+bool PomAi::isMotionFinishTransit()
+{
+	return mPom->getMotionFinish();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000020
  */
-bool PomAi::deadTransit() { return (mReleasedSeedCount >= mMaxSeedCount) ? true : false; }
+bool PomAi::deadTransit()
+{
+	return (mReleasedSeedCount >= mMaxSeedCount) ? true : false;
+}
 
 /*
  * --INFO--
@@ -475,7 +491,10 @@ bool PomAi::petalOpenTransit()
  * Address:	........
  * Size:	000008
  */
-bool PomAi::petalShakeTransit() { return mHasCollided; }
+bool PomAi::petalShakeTransit()
+{
+	return mHasCollided;
+}
 
 /*
  * --INFO--
@@ -653,21 +672,29 @@ void PomAi::dieState()
  * Address:	........
  * Size:	000004
  */
-void PomAi::waitState() { }
+void PomAi::waitState()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000020
  */
-void PomAi::openState() { calcPetalStickers(); }
+void PomAi::openState()
+{
+	calcPetalStickers();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000020
  */
-void PomAi::shakeState() { calcPetalStickers(); }
+void PomAi::shakeState()
+{
+	calcPetalStickers();
+}
 
 /*
  * --INFO--
@@ -686,7 +713,9 @@ void PomAi::closeState()
  * Address:	........
  * Size:	000004
  */
-void PomAi::dischargeState() { }
+void PomAi::dischargeState()
+{
+}
 
 /*
  * --INFO--

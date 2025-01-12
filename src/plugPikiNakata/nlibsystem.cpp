@@ -10,7 +10,10 @@ System* NSystem::system;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "nlibsystem"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "nlibsystem");
+}
 
 /*
  * --INFO--

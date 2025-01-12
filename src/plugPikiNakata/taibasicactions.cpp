@@ -8,7 +8,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "taibasicactions"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "taibasicactions");
+}
 
 /*
  * --INFO--
@@ -25,7 +28,10 @@ static void _Print(char*, ...)
  * Address:	801283A8
  * Size:	00000C
  */
-void TaiActionStateAction::start(Teki& teki) { teki.mActionStateId = 0; }
+void TaiActionStateAction::start(Teki& teki)
+{
+	teki.mActionStateId = 0;
+}
 
 /*
  * --INFO--
@@ -59,14 +65,20 @@ void TaiSetOptionAction::start(Teki& teki)
  * Address:	80128434
  * Size:	000038
  */
-void TaiPlaySoundAction::start(Teki& teki) { teki.playSound(mSoundID); }
+void TaiPlaySoundAction::start(Teki& teki)
+{
+	teki.playSound(mSoundID);
+}
 
 /*
  * --INFO--
  * Address:	8012846C
  * Size:	000038
  */
-void TaiStopSoundAction::start(Teki& teki) { teki.stopSound(mSoundID); }
+void TaiStopSoundAction::start(Teki& teki)
+{
+	teki.stopSound(mSoundID);
+}
 
 /*
  * --INFO--

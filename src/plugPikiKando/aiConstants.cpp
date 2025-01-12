@@ -8,7 +8,10 @@ AIConstant* AIConstant::_instance;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt);
+}
 
 /*
  * --INFO--
@@ -37,4 +40,7 @@ void AIConstant::createInstance()
  * Address:	80083EAC
  * Size:	000470
  */
-AIConstant::AIConstant() { load("parms/", "aiconst.bin", 1); }
+AIConstant::AIConstant()
+{
+	load("parms/", "aiconst.bin", 1);
+}

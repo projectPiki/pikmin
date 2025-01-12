@@ -50,7 +50,10 @@ King::King(CreatureProp* props)
  * Address:	8016BDA8
  * Size:	000008
  */
-f32 King::getiMass() { return 0.0001f; }
+f32 King::getiMass()
+{
+	return 0.0001f;
+}
 
 /*
  * --INFO--
@@ -103,7 +106,10 @@ void King::doKill()
  * Address:	8016BEB4
  * Size:	000028
  */
-void King::exitCourse() { mKingBody->killCallBackEffect(true); }
+void King::exitCourse()
+{
+	mKingBody->killCallBackEffect(true);
+}
 
 /*
  * --INFO--
@@ -175,7 +181,10 @@ void King::drawShape(Graphics& gfx)
  * Address:	8016C184
  * Size:	000024
  */
-void King::doAI() { mKingAi->update(); }
+void King::doAI()
+{
+	mKingAi->update();
+}
 
 /*
  * --INFO--

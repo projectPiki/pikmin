@@ -33,7 +33,10 @@ DEFINE_PRINT("SpiderAi");
  * Address:	80153840
  * Size:	000020
  */
-SpiderAi::SpiderAi(Spider* spider) { mSpider = spider; }
+SpiderAi::SpiderAi(Spider* spider)
+{
+	mSpider = spider;
+}
 
 /*
  * --INFO--
@@ -123,28 +126,38 @@ void SpiderAi::keyAction1()
  * Address:	........
  * Size:	000004
  */
-void SpiderAi::keyAction2() { }
+void SpiderAi::keyAction2()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void SpiderAi::keyAction3() { }
+void SpiderAi::keyAction3()
+{
+}
 
 /*
  * --INFO--
  * Address:	80153A4C
  * Size:	000014
  */
-void SpiderAi::keyLoopEnd() { mSpider->addLoopCounter(1); }
+void SpiderAi::keyLoopEnd()
+{
+	mSpider->addLoopCounter(1);
+}
 
 /*
  * --INFO--
  * Address:	80153A60
  * Size:	000010
  */
-void SpiderAi::keyFinished() { mSpider->setMotionFinish(true); }
+void SpiderAi::keyFinished()
+{
+	mSpider->setMotionFinish(true);
+}
 
 /*
  * --INFO--
@@ -223,63 +236,90 @@ void SpiderAi::resultFlagOn()
  * Address:	........
  * Size:	00002C
  */
-void SpiderAi::resultFlagSeen() { playerState->mResultFlags.setSeen(RESFLAG_Unk46); }
+void SpiderAi::resultFlagSeen()
+{
+	playerState->mResultFlags.setSeen(RESFLAG_Unk46);
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool SpiderAi::dieTransit() { return !mSpider->getAlive(); }
+bool SpiderAi::dieTransit()
+{
+	return !mSpider->getAlive();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-bool SpiderAi::isMotionFinishTransit() { return mSpider->getMotionFinish(); }
+bool SpiderAi::isMotionFinishTransit()
+{
+	return mSpider->getMotionFinish();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool SpiderAi::outSideChaseRangeTransit() { return mSpider->outSideChaseRangeTransit(); }
+bool SpiderAi::outSideChaseRangeTransit()
+{
+	return mSpider->outSideChaseRangeTransit();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool SpiderAi::inSideWaitRangeTransit() { return mSpider->inSideWaitRangeTransit(); }
+bool SpiderAi::inSideWaitRangeTransit()
+{
+	return mSpider->inSideWaitRangeTransit();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool SpiderAi::chaseNaviTransit() { return mSpider->chaseNaviTransit(); }
+bool SpiderAi::chaseNaviTransit()
+{
+	return mSpider->chaseNaviTransit();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool SpiderAi::chasePikiTransit() { return mSpider->chasePikiTransit(); }
+bool SpiderAi::chasePikiTransit()
+{
+	return mSpider->chasePikiTransit();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00002C
  */
-bool SpiderAi::shakeOffTransit() { return mSpider->getMotionFinish() && _08; }
+bool SpiderAi::shakeOffTransit()
+{
+	return mSpider->getMotionFinish() && _08;
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool SpiderAi::targetLostTransit() { return mSpider->targetLostTransit(); }
+bool SpiderAi::targetLostTransit()
+{
+	return mSpider->targetLostTransit();
+}
 
 /*
  * --INFO--
@@ -486,7 +526,10 @@ void SpiderAi::dieState()
  * Address:	........
  * Size:	000028
  */
-void SpiderAi::walkRandomState() { mSpider->makeTargetRandom(30.0f); }
+void SpiderAi::walkRandomState()
+{
+	mSpider->makeTargetRandom(30.0f);
+}
 
 /*
  * --INFO--
@@ -504,21 +547,30 @@ void SpiderAi::walkGoHomeState()
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::chaseNaviState() { mSpider->makeTargetCreature(); }
+void SpiderAi::chaseNaviState()
+{
+	mSpider->makeTargetCreature();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::chasePikiState() { mSpider->makeTargetCreature(); }
+void SpiderAi::chasePikiState()
+{
+	mSpider->makeTargetCreature();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void SpiderAi::shakeOffState() { mSpider->makeTargetCreature(); }
+void SpiderAi::shakeOffState()
+{
+	mSpider->makeTargetCreature();
+}
 
 /*
  * --INFO--

@@ -8,7 +8,10 @@
  * Address:	80116080
  * Size:	00000C
  */
-int MapCode::getAttribute(CollTriInfo* triInfo) { return triInfo->mMapCode >> 29; };
+int MapCode::getAttribute(CollTriInfo* triInfo)
+{
+	return triInfo->mMapCode >> 29;
+};
 
 /*
  * --INFO--

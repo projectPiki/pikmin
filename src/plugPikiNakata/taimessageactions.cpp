@@ -28,7 +28,10 @@ static void _Print(char*, ...)
  * Address:	80131EF8
  * Size:	00002C
  */
-void TaiSendMessageAction::start(Teki& teki) { teki.sendMessage(mMessage); }
+void TaiSendMessageAction::start(Teki& teki)
+{
+	teki.sendMessage(mMessage);
+}
 
 /*
  * --INFO--

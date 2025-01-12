@@ -22,7 +22,10 @@ static s16* dsp_buf[DSPBUF_NUM];
  * Address:	80006B80
  * Size:	000008
  */
-u32 Jac_GetCurrentSCounter() { return dac_sync_counter; }
+u32 Jac_GetCurrentSCounter()
+{
+	return dac_sync_counter;
+}
 
 /*
  * --INFO--
@@ -136,4 +139,7 @@ s16* MixDsp(s32 numSamples)
  * Address:	80006EA0
  * Size:	000024
  */
-void DspFrameEnd() { DspbufProcess(DSPBUF_EVENT_FRAME_END); }
+void DspFrameEnd()
+{
+	DspbufProcess(DSPBUF_EVENT_FRAME_END);
+}

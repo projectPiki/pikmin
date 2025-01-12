@@ -118,7 +118,9 @@ int ActFreeSelect::exec()
  * Address:	800AA8A4
  * Size:	000004
  */
-void ActFreeSelect::cleanup() { }
+void ActFreeSelect::cleanup()
+{
+}
 
 /*
  * --INFO--
@@ -467,7 +469,10 @@ void ActBoreSelect::init(Creature* creature)
  * Address:	800AADF0
  * Size:	00000C
  */
-void ActBoreSelect::stop() { _1A = 1; }
+void ActBoreSelect::stop()
+{
+	_1A = 1;
+}
 
 /*
  * --INFO--
@@ -637,7 +642,9 @@ int ActBoreSelect::exec()
  * Address:	800AAF80
  * Size:	000004
  */
-void ActBoreSelect::cleanup() { }
+void ActBoreSelect::cleanup()
+{
+}
 
 /*
  * --INFO--
@@ -1073,7 +1080,10 @@ void ActBoreTalk::startTalk()
 	mActor->turnTo(mTarget->mPosition);
 
 	Iterator iter(buf);
-	CI_LOOP(iter) { (*iter)->stimulate(InteractTalk(mActor)); }
+	CI_LOOP(iter)
+	{
+		(*iter)->stimulate(InteractTalk(mActor));
+	}
 
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Chatting, this), PaniMotionInfo(PIKIANIM_Chatting));
 	mActor->enableMotionBlend();
@@ -1368,7 +1378,9 @@ int ActBoreTalk::exec()
  * Address:	800AB834
  * Size:	000004
  */
-void ActBoreTalk::cleanup() { }
+void ActBoreTalk::cleanup()
+{
+}
 
 /*
  * --INFO--
@@ -1398,28 +1410,37 @@ ActBoreListen::ActBoreListen(Piki* piki)
  * Address:	800AB85C
  * Size:	000004
  */
-void ActBoreListen::init(Creature*) { }
+void ActBoreListen::init(Creature*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800AB860
  * Size:	000008
  */
-int ActBoreListen::exec() { return 0; }
+int ActBoreListen::exec()
+{
+	return 0;
+}
 
 /*
  * --INFO--
  * Address:	800AB868
  * Size:	000004
  */
-void ActBoreListen::cleanup() { }
+void ActBoreListen::cleanup()
+{
+}
 
 /*
  * --INFO--
  * Address:	800AB86C
  * Size:	000004
  */
-void ActBoreListen::procAnimMsg(Piki*, MsgAnim*) { }
+void ActBoreListen::procAnimMsg(Piki*, MsgAnim*)
+{
+}
 
 /*
  * --INFO--
@@ -1436,7 +1457,10 @@ ActBoreOneshot::ActBoreOneshot(Piki* piki)
  * Address:	800AB8F0
  * Size:	000038
  */
-void ActBoreOneshot::finish() { mActor->mPikiAnimMgr.finishMotion(this); }
+void ActBoreOneshot::finish()
+{
+	mActor->mPikiAnimMgr.finishMotion(this);
+}
 
 /*
  * --INFO--
@@ -1477,7 +1501,9 @@ int ActBoreOneshot::exec()
  * Address:	800ABA24
  * Size:	000004
  */
-void ActBoreOneshot::cleanup() { }
+void ActBoreOneshot::cleanup()
+{
+}
 
 /*
  * --INFO--
@@ -1830,7 +1856,9 @@ int ActBoreRest::exec()
  * Address:	800ABF1C
  * Size:	000004
  */
-void ActBoreRest::cleanup() { }
+void ActBoreRest::cleanup()
+{
+}
 
 /*
  * --INFO--

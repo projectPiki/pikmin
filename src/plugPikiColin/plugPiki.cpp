@@ -726,18 +726,25 @@ PlugPikiApp::PlugPikiApp()
  * Address:	8005F724
  * Size:	000064
  */
-GameApp::~GameApp() { }
+GameApp::~GameApp()
+{
+}
 
 /*
  * --INFO--
  * Address:	8005F788
  * Size:	000008
  */
-int GameApp::idle() { return 0x1; }
+int GameApp::idle()
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8005F790
  * Size:	000074
  */
-PlugPikiApp::~PlugPikiApp() { }
+PlugPikiApp::~PlugPikiApp()
+{
+}

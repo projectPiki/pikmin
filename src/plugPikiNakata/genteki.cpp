@@ -31,14 +31,20 @@ static void _Print(char*, ...)
  * Address:	8011B2CC
  * Size:	000040
  */
-static GenObject* makeObjectTeki() { return new GenObjectTeki(); }
+static GenObject* makeObjectTeki()
+{
+	return new GenObjectTeki();
+}
 
 /*
  * --INFO--
  * Address:	8011B30C
  * Size:	000088
  */
-void GenObjectTeki::initialise() { GenObjectFactory::factory->registerMember('teki', &makeObjectTeki, "敵を発生", 10); }
+void GenObjectTeki::initialise()
+{
+	GenObjectFactory::factory->registerMember('teki', &makeObjectTeki, "敵を発生", 10);
+}
 
 /*
  * --INFO--

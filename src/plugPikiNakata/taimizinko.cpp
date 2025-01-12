@@ -352,7 +352,10 @@ void TaiMizigenGeneratingAction::start(Teki&)
  * Address:	80132380
  * Size:	000008
  */
-bool TaiMizigenGeneratingAction::act(Teki&) { return true; }
+bool TaiMizigenGeneratingAction::act(Teki&)
+{
+	return true;
+}
 
 /*
  * --INFO--

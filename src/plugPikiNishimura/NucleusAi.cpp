@@ -22,7 +22,10 @@ DEFINE_PRINT("NucleusAi");
  * Address:	8017A544
  * Size:	000020
  */
-NucleusAi::NucleusAi(Nucleus* nucleus) { mNucleus = nucleus; }
+NucleusAi::NucleusAi(Nucleus* nucleus)
+{
+	mNucleus = nucleus;
+}
 
 /*
  * --INFO--
@@ -70,49 +73,65 @@ void NucleusAi::animationKeyUpdated(PaniAnimKeyEvent& event)
  * Address:	8017A654
  * Size:	000004
  */
-void NucleusAi::keyAction0() { }
+void NucleusAi::keyAction0()
+{
+}
 
 /*
  * --INFO--
  * Address:	8017A658
  * Size:	000004
  */
-void NucleusAi::keyAction1() { }
+void NucleusAi::keyAction1()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void NucleusAi::keyAction2() { }
+void NucleusAi::keyAction2()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void NucleusAi::keyAction3() { }
+void NucleusAi::keyAction3()
+{
+}
 
 /*
  * --INFO--
  * Address:	8017A65C
  * Size:	000014
  */
-void NucleusAi::keyLoopEnd() { mNucleus->addLoopCounter(1); }
+void NucleusAi::keyLoopEnd()
+{
+	mNucleus->addLoopCounter(1);
+}
 
 /*
  * --INFO--
  * Address:	8017A670
  * Size:	000010
  */
-void NucleusAi::keyFinished() { mNucleus->setMotionFinish(true); }
+void NucleusAi::keyFinished()
+{
+	mNucleus->setMotionFinish(true);
+}
 
 /*
  * --INFO--
  * Address:	8017A680
  * Size:	000004
  */
-void NucleusAi::playSound(int) { }
+void NucleusAi::playSound(int)
+{
+}
 
 /*
  * --INFO--
@@ -142,35 +161,50 @@ void NucleusAi::setBossPosition()
  * Address:	........
  * Size:	000030
  */
-void NucleusAi::setSlimeDamagePoint() { mNucleus->mSlime->mSlimeAi->addDamagePoint(mNucleus->getDamagePoint()); }
+void NucleusAi::setSlimeDamagePoint()
+{
+	mNucleus->mSlime->mSlimeAi->addDamagePoint(mNucleus->getDamagePoint());
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000010
  */
-void NucleusAi::afterProcessing() { mNucleus->setDamagePoint(0.0f); }
+void NucleusAi::afterProcessing()
+{
+	mNucleus->setDamagePoint(0.0f);
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool NucleusAi::dieTransit() { return !mNucleus->getAlive(); }
+bool NucleusAi::dieTransit()
+{
+	return !mNucleus->getAlive();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-bool NucleusAi::isMotionFinishTransit() { return mNucleus->getMotionFinish(); }
+bool NucleusAi::isMotionFinishTransit()
+{
+	return mNucleus->getMotionFinish();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool NucleusAi::damageTransit() { return (mNucleus->getDamagePoint() > 0.0f) ? true : false; }
+bool NucleusAi::damageTransit()
+{
+	return (mNucleus->getDamagePoint() > 0.0f) ? true : false;
+}
 
 /*
  * --INFO--
@@ -221,21 +255,27 @@ void NucleusAi::initFollow(int val)
  * Address:	........
  * Size:	000004
  */
-void NucleusAi::dieState() { }
+void NucleusAi::dieState()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void NucleusAi::damageState() { }
+void NucleusAi::damageState()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void NucleusAi::followState() { }
+void NucleusAi::followState()
+{
+}
 
 /*
  * --INFO--

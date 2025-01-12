@@ -6,7 +6,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "ropeItem"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "ropeItem");
+}
 
 /*
  * --INFO--
@@ -80,7 +83,10 @@ RopeItem::RopeItem(CreatureProp* prop, Shape* shape)
  * Address:	800EDA8C
  * Size:	000008
  */
-bool RopeItem::isAtari() { return false; }
+bool RopeItem::isAtari()
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -345,7 +351,9 @@ void RopeItem::autoInit()
  * Address:	800EDD78
  * Size:	000004
  */
-void RopeItem::startAI(int) { }
+void RopeItem::startAI(int)
+{
+}
 
 /*
  * --INFO--
@@ -392,18 +400,27 @@ f32 RopeItem::getiMass()
  * Address:	800EDDB8
  * Size:	000008
  */
-bool RopeItem::needShadow() { return false; }
+bool RopeItem::needShadow()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	800EDDC0
  * Size:	000008
  */
-bool RopeItem::isAlive() { return true; }
+bool RopeItem::isAlive()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800EDDC8
  * Size:	000008
  */
-bool RopeItem::isVisible() { return true; }
+bool RopeItem::isVisible()
+{
+	return true;
+}

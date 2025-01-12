@@ -31,32 +31,44 @@ void Timers::reset()
  * Address:	80040994
  * Size:	000010
  */
-void Timers::newFrame() { mFrameCount++; }
+void Timers::newFrame()
+{
+	mFrameCount++;
+}
 
 /*
  * --INFO--
  * Address:	800409A4
  * Size:	000004
  */
-void Timers::_start(char*, bool) { }
+void Timers::_start(char*, bool)
+{
+}
 
 /*
  * --INFO--
  * Address:	800409A8
  * Size:	000004
  */
-void Timers::_stop(char*) { }
+void Timers::_stop(char*)
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void Timers::showTimes() { }
+void Timers::showTimes()
+{
+}
 
 /*
  * --INFO--
  * Address:	800409AC
  * Size:	000004
  */
-void Timers::draw(Graphics&, Font*) { return; }
+void Timers::draw(Graphics&, Font*)
+{
+	return;
+}

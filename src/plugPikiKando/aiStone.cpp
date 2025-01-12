@@ -257,7 +257,10 @@ int ActStone::exeApproach()
  * Address:	800A7114
  * Size:	00000C
  */
-void ActStone::initAdjust() { mState = STATE_Adjust; }
+void ActStone::initAdjust()
+{
+	mState = STATE_Adjust;
+}
 
 /*
  * --INFO--
@@ -688,4 +691,6 @@ void ActStone::animationKeyUpdated(PaniAnimKeyEvent& event)
  * Address:	800A77F8
  * Size:	00006C
  */
-ActStone::~ActStone() { }
+ActStone::~ActStone()
+{
+}

@@ -278,7 +278,9 @@ void RigidBody::initializeBody()
  * Address:	8004DF0C
  * Size:	000004
  */
-void RigidBody::initRender(int) { }
+void RigidBody::initRender(int)
+{
+}
 
 /*
  * --INFO--
@@ -2027,7 +2029,9 @@ void RigidBody::updateViewInfo(int, int)
  * Address:	8004F894
  * Size:	000004
  */
-void RigidBody::makeBodyQuat(Quat&) { }
+void RigidBody::makeBodyQuat(Quat&)
+{
+}
 
 /*
  * --INFO--
@@ -2267,7 +2271,10 @@ void RigidBody::calculateVertices(int)
  * Address:	8004FBBC
  * Size:	000008
  */
-bool RigidBody::checkForCollisions(int, CollState&) { return false; }
+bool RigidBody::checkForCollisions(int, CollState&)
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -2722,7 +2729,9 @@ void RigidBody::initDimensions(f32, f32, f32)
  * Address:	80050014
  * Size:	000004
  */
-void RigidBody::shadrender(Graphics&, LightCamera*) { }
+void RigidBody::shadrender(Graphics&, LightCamera*)
+{
+}
 
 /*
  * --INFO--
@@ -2743,4 +2752,6 @@ void RigidBody::getViewScale()
  * Address:	80050020
  * Size:	000004
  */
-void RigidBody::updateCont() { }
+void RigidBody::updateCont()
+{
+}

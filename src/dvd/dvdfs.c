@@ -318,7 +318,10 @@ static BOOL DVDConvertEntrynumToPath(s32 entrynum, char* path, u32 maxlen)
  * Address:	801FF558
  * Size:	0000C4
  */
-BOOL DVDGetCurrentDir(char* path, u32 maxlen) { return DVDConvertEntrynumToPath((s32)currentDirectory, path, maxlen); }
+BOOL DVDGetCurrentDir(char* path, u32 maxlen)
+{
+	return DVDConvertEntrynumToPath((s32)currentDirectory, path, maxlen);
+}
 
 /*
  * --INFO--
@@ -433,7 +436,10 @@ s32 DVDReadPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, s32 p
  * Address:	801FF824
  * Size:	000024
  */
-void cbForReadSync(s32 result, DVDCommandBlock* block) { OSWakeupThread(&__DVDThreadQueue); }
+void cbForReadSync(s32 result, DVDCommandBlock* block)
+{
+	OSWakeupThread(&__DVDThreadQueue);
+}
 
 /*
  * --INFO--

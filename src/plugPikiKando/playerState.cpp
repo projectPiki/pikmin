@@ -657,7 +657,9 @@ void TimeGraph::PikiNum::set(int color, int num)
  * Address:	8007FAD4
  * Size:	000070
  */
-PlayerState::UfoParts::UfoParts() { }
+PlayerState::UfoParts::UfoParts()
+{
+}
 
 /*
  * --INFO--
@@ -677,7 +679,10 @@ bool PlayerState::courseOpen(int courseID)
  * Address:	8007FB84
  * Size:	00001C
  */
-bool PlayerState::happyEndable() { return _180 >= 25; }
+bool PlayerState::happyEndable()
+{
+	return _180 >= 25;
+}
 
 /*
  * --INFO--
@@ -738,7 +743,10 @@ void PlayerState::getCardPikiCount(int)
  * Address:	8007FC20
  * Size:	000008
  */
-int PlayerState::getCardUfoPartsCount() { return mCurrParts; }
+int PlayerState::getCardUfoPartsCount()
+{
+	return mCurrParts;
+}
 
 /*
  * --INFO--
@@ -1844,7 +1852,10 @@ void PlayerState::setNavi(bool p1)
  * Address:	80080A58
  * Size:	000008
  */
-int PlayerState::getFinalDeadPikis() { return _1A0; }
+int PlayerState::getFinalDeadPikis()
+{
+	return _1A0;
+}
 
 /*
  * --INFO--
@@ -1961,14 +1972,20 @@ void PlayerState::updateFinalResult()
  * Address:	80080BB0
  * Size:	000014
  */
-int PlayerState::getCurrDay() { return gameflow.mWorldClock.mCurrentDay - 1; }
+int PlayerState::getCurrDay()
+{
+	return gameflow.mWorldClock.mCurrentDay - 1;
+}
 
 /*
  * --INFO--
  * Address:	80080BC4
  * Size:	000008
  */
-int PlayerState::getTotalDays() { return 30; }
+int PlayerState::getTotalDays()
+{
+	return 30;
+}
 
 /*
  * --INFO--
@@ -2055,14 +2072,20 @@ int PlayerState::getPikiHourCount(int, int)
  * Address:	80080C68
  * Size:	000008
  */
-int PlayerState::getTotalParts() { return mTotalParts; }
+int PlayerState::getTotalParts()
+{
+	return mTotalParts;
+}
 
 /*
  * --INFO--
  * Address:	80080C70
  * Size:	000008
  */
-int PlayerState::getCurrParts() { return mCurrParts; }
+int PlayerState::getCurrParts()
+{
+	return mCurrParts;
+}
 
 /*
  * --INFO--

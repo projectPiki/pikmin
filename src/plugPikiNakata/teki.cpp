@@ -28,7 +28,9 @@ static void _Print(char*, ...)
  * Address:	80143BF0
  * Size:	000084
  */
-Teki::Teki() { }
+Teki::Teki()
+{
+}
 
 /*
  * --INFO--
@@ -104,81 +106,117 @@ void YTeki::init(int p1)
  * Address:	80143D00
  * Size:	000008
  */
-void BTeki::setTekiOptions(int opts) { mTekiOptions = opts; }
+void BTeki::setTekiOptions(int opts)
+{
+	mTekiOptions = opts;
+}
 
 /*
  * --INFO--
  * Address:	80143D08
  * Size:	00000C
  */
-void BTeki::clearTekiOptions() { mTekiOptions = 0; }
+void BTeki::clearTekiOptions()
+{
+	mTekiOptions = 0;
+}
 
 /*
  * --INFO--
  * Address:	80143D14
  * Size:	000010
  */
-void BTeki::setAnimationKeyOption(int opt) { mAnimKeyOptions |= opt; }
+void BTeki::setAnimationKeyOption(int opt)
+{
+	mAnimKeyOptions |= opt;
+}
 
 /*
  * --INFO--
  * Address:	80143D24
  * Size:	000010
  */
-void BTeki::clearAnimationKeyOption(int opt) { mAnimKeyOptions &= ~opt; }
+void BTeki::clearAnimationKeyOption(int opt)
+{
+	mAnimKeyOptions &= ~opt;
+}
 
 /*
  * --INFO--
  * Address:	80143D34
  * Size:	000008
  */
-void BTeki::setAnimationKeyOptions(int opts) { mAnimKeyOptions = opts; }
+void BTeki::setAnimationKeyOptions(int opts)
+{
+	mAnimKeyOptions = opts;
+}
 
 /*
  * --INFO--
  * Address:	80143D3C
  * Size:	00000C
  */
-void BTeki::clearAnimationKeyOptions() { mAnimKeyOptions = 0; }
+void BTeki::clearAnimationKeyOptions()
+{
+	mAnimKeyOptions = 0;
+}
 
 /*
  * --INFO--
  * Address:	80143D48
  * Size:	000018
  */
-f32 BTeki::getShadowSize() { return mTekiParams->getF(TPF_ShadowSize); }
+f32 BTeki::getShadowSize()
+{
+	return mTekiParams->getF(TPF_ShadowSize);
+}
 
 /*
  * --INFO--
  * Address:	80143D60
  * Size:	00001C
  */
-bool BTeki::isVisible() { return isTekiOption(TEKI_OPTION_VISIBLE) != 0; }
+bool BTeki::isVisible()
+{
+	return isTekiOption(TEKI_OPTION_VISIBLE) != 0;
+}
 
 /*
  * --INFO--
  * Address:	80143D7C
  * Size:	00001C
  */
-bool BTeki::isOrganic() { return isTekiOption(TEKI_OPTION_ORGANIC) != 0; }
+bool BTeki::isOrganic()
+{
+	return isTekiOption(TEKI_OPTION_ORGANIC) != 0;
+}
 
 /*
  * --INFO--
  * Address:	80143D98
  * Size:	00001C
  */
-bool BTeki::isAtari() { return isTekiOption(TEKI_OPTION_ATARI) != 0; }
+bool BTeki::isAtari()
+{
+	return isTekiOption(TEKI_OPTION_ATARI) != 0;
+}
 
 /*
  * --INFO--
  * Address:	80143DB4
  * Size:	00001C
  */
-bool BTeki::isAlive() { return isTekiOption(TEKI_OPTION_ALIVE) != 0; }
+bool BTeki::isAlive()
+{
+	return isTekiOption(TEKI_OPTION_ALIVE) != 0;
+}
 
 /*
  * --INFO--
  * Address:	80143DD0
  * Size:	00001C
  */
-bool BTeki::needShadow() { return isTekiOption(TEKI_OPTION_SHADOW_VISIBLE) != 0; }
+bool BTeki::needShadow()
+{
+	return isTekiOption(TEKI_OPTION_SHADOW_VISIBLE) != 0;
+}

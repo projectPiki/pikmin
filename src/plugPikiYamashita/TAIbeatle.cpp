@@ -4428,4 +4428,7 @@ void TAIAinitBeatle::start(Teki&)
  * Address:	801C94C4
  * Size:	000008
  */
-bool TAIAinitBeatle::act(Teki&) { return true; }
+bool TAIAinitBeatle::act(Teki&)
+{
+	return true;
+}

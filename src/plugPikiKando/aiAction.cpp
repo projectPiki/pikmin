@@ -106,14 +106,20 @@ Action::~Action()
  * Address:	800C3F00
  * Size:	00000C
  */
-void Action::init(Creature*) { mChildActionIdx = 0; }
+void Action::init(Creature*)
+{
+	mChildActionIdx = 0;
+}
 
 /*
  * --INFO--
  * Address:	800C3F0C
  * Size:	000008
  */
-int Action::exec() { return ACTOUT_Success; }
+int Action::exec()
+{
+	return ACTOUT_Success;
+}
 
 /*
  * --INFO--
@@ -751,7 +757,9 @@ TopAction::TopAction(Piki* piki)
  * Address:	800C4C3C
  * Size:	000088
  */
-TopAction::~TopAction() { }
+TopAction::~TopAction()
+{
+}
 
 /*
  * --INFO--

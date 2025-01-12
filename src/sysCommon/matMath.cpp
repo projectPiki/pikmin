@@ -188,7 +188,10 @@ void Matrix4f::multiply(Matrix4f& other)
  * Address:	8003E0D4
  * Size:	000020
  */
-void Matrix4f::multiplyTo(Matrix4f& mtxB, Matrix4f& outMtx) { PSMTXConcat(mMtx, mtxB.mMtx, outMtx.mMtx); }
+void Matrix4f::multiplyTo(Matrix4f& mtxB, Matrix4f& outMtx)
+{
+	PSMTXConcat(mMtx, mtxB.mMtx, outMtx.mMtx);
+}
 
 /*
  * --INFO--

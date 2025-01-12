@@ -142,7 +142,10 @@ bool InteractHitEffect::actTeki(Teki*)
  * Address:	8014A524
  * Size:	000008
  */
-bool InteractSwallow::actTeki(Teki*) { return true; }
+bool InteractSwallow::actTeki(Teki*)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -183,4 +186,7 @@ bool InteractPress::actTeki(Teki*)
  * Address:	8014A584
  * Size:	000008
  */
-bool InteractFlick::actTeki(Teki*) { return true; }
+bool InteractFlick::actTeki(Teki*)
+{
+	return true;
+}

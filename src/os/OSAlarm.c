@@ -53,7 +53,10 @@ void OSInitAlarm(void)
  * Address:	801F610C
  * Size:	00000C
  */
-void OSCreateAlarm(OSAlarm* alarm) { alarm->handler = nullptr; }
+void OSCreateAlarm(OSAlarm* alarm)
+{
+	alarm->handler = nullptr;
+}
 
 /*
  * --INFO--
