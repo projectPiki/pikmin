@@ -28,3 +28,5 @@ Cpp11BracedListStyle: false
 AlwaysBreakTemplateDeclarations: true
 BreakStringLiterals: true
 ReflowComments: true
+
+InsertNewlineAtEOF: true
