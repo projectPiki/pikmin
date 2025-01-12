@@ -25,13 +25,6 @@ def format_folders(folder_to_iter):
                    print("")
                    continue
 
-                with open(relative_path, "r+") as f:
-                   f.seek(0, 2)
-                   f.seek(f.tell() - 1, 0)
-                   if f.read() != '\n':
-                      f.write("\n");
-                      print("added newline", end="")
-
                 print("")
 
 if __name__ == "__main__":
