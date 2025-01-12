@@ -220,12 +220,12 @@ KingBody::KingBody(King*)
  */
 void KingBody::init(King* king)
 {
-	mKing          = king;
-	_04            = 0;
-	mBlendingRatio = 0.0f;
-	_20            = 0.0f;
-	_05            = 0;
-	_06            = 0;
+	mKing                 = king;
+	_04                   = 0;
+	mBlendingRatio        = 0.0f;
+	_20                   = 0.0f;
+	mDoFallSalivaEffect   = 0;
+	mDoSpreadSalivaEffect = 0;
 
 	for (int i = 0; i < 2; i++) {
 		_09[i]                      = 1;

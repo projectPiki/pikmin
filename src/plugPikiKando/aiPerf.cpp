@@ -12,36 +12,37 @@
 #include "PikiMgr.h"
 #include "DebugLog.h"
 
-bool AIPerf::insQuick;
-bool AIPerf::useCollSort;
-int AIPerf::gridShift;
-int AIPerf::useGrid;
-bool AIPerf::useLOD;
-bool AIPerf::iteratorCull;
-int AIPerf::optLevel;
-bool AIPerf::bridgeFast;
-int AIPerf::drawshapeCullCnt;
-int AIPerf::outsideViewCnt;
-int AIPerf::viewCullCnt;
-int AIPerf::aiCullCnt;
-int AIPerf::iteratorCullCnt;
-int AIPerf::collisionCnt;
-int AIPerf::searchInsertCnt;
-int AIPerf::searchCullCnt;
-int AIPerf::searchCnt;
-int AIPerf::moveType;
+bool AIPerf::useLOD       = true;
+bool AIPerf::showColls    = true;
+bool AIPerf::useCollSort  = true;
+bool AIPerf::bridgeFast   = true;
+bool AIPerf::useASync     = true;
+int AIPerf::useGrid       = 2;
+int AIPerf::gridShift     = 4;
+bool AIPerf::aiGrid       = true;
+bool AIPerf::insQuick     = true;
+bool AIPerf::iteratorCull = true;
+bool AIPerf::pikiMabiki   = true;
+int AIPerf::optLevel      = 2;
+
+bool AIPerf::showRoute;
 bool AIPerf::generatorMode;
+int AIPerf::moveType;
 bool AIPerf::kandoOnly;
 bool AIPerf::soundDebug;
 bool AIPerf::updateSearchBuffer;
 bool AIPerf::loopOptimise;
 bool AIPerf::useUpdateMgr;
 int AIPerf::ufoLevel;
-bool AIPerf::showRoute;
-bool AIPerf::aiGrid;
-bool AIPerf::showColls;
-bool AIPerf::useASync;
-bool AIPerf::pikiMabiki;
+int AIPerf::searchCnt;
+int AIPerf::searchCullCnt;
+int AIPerf::searchInsertCnt;
+int AIPerf::collisionCnt;
+int AIPerf::iteratorCullCnt;
+int AIPerf::aiCullCnt;
+int AIPerf::viewCullCnt;
+int AIPerf::outsideViewCnt;
+int AIPerf::drawshapeCullCnt;
 
 /*
  * --INFO--
@@ -55,7 +56,7 @@ DEFINE_ERROR();
  * Address:	........
  * Size:	0000F0
  */
-DEFINE_PRINT("aiPerf");
+DEFINE_PRINT(nullptr);
 
 char* gridStrings[] = { "[grid off]", "[grid xyz]", "[grid xz]" };
 
@@ -102,7 +103,7 @@ void AIPerf::addMenu(Menu* menu)
 	menu->addKeyEvent(0x8, 0x4000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incOptLevel));
 
 	char* collSortText = new char[0x40];
-	sprintf(collSortText, "%s", AIPerf::showColls ? "[use Coll Sort]" : "[ignore Coll Sort]");
+	sprintf(collSortText, "%s", AIPerf::useCollSort ? "[use Coll Sort]" : "[ignore Coll Sort]");
 	menu->addOption(0, collSortText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleCollSort), true);
 
 	char* kandoDebugText = new char[0x40];
@@ -558,7 +559,7 @@ void AIPerf::breakSluice(Menu& menu)
 		Iterator bridgeIter(workObjectMgr);
 		CI_LOOP(bridgeIter)
 		{
-			Bridge* i = (Bridge*)*bridgeIter;
+			WorkObject* i = (WorkObject*)*bridgeIter;
 			if (!i->isBridge()) {
 				continue;
 			}
@@ -566,7 +567,7 @@ void AIPerf::breakSluice(Menu& menu)
 			f32 distance = qdist2(player->_6F0.x, player->_6F0.z, i->mPosition.x, i->mPosition.z);
 			if (distance < distToBridge) {
 				distToBridge  = distance;
-				closestBridge = i;
+				closestBridge = (Bridge*)i;
 			}
 		}
 
@@ -594,37 +595,3 @@ void AIPerf::breakSluice(Menu& menu)
 		}
 	}
 }
-
-/*
- * --INFO--
- * Address:	80086470
- * Size:	000008
- */
-bool WorkObject::isBridge()
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	80086478
- * Size:	000030
- */
-// void Delegate1<AIPerf, Menu&>::invoke(Menu& arg)
-// {
-// 	/*
-// 	.loc_0x0:
-// 	  mflr      r0
-// 	  mr        r5, r3
-// 	  stw       r0, 0x4(r1)
-// 	  addi      r12, r5, 0x8
-// 	  stwu      r1, -0x8(r1)
-// 	  lwz       r3, 0x4(r3)
-// 	  bl        0x18E8A0
-// 	  nop
-// 	  lwz       r0, 0xC(r1)
-// 	  addi      r1, r1, 0x8
-// 	  mtlr      r0
-// 	  blr
-// 	*/
-// }

@@ -9,6 +9,9 @@
 #include "EffectMgr.h"
 #include "MapMgr.h"
 
+#define KING_PROP         (static_cast<KingProp*>(mProps)->mKingProps)
+#define C_KING_PROP(king) (static_cast<KingProp*>((king)->mProps)->mKingProps)
+
 struct KingAi;
 struct KingBody;
 struct KingDrawer;
@@ -18,6 +21,29 @@ struct KingGenSalivaParticleCallBack;
 struct KingGenDamageStarCallBack;
 struct KingGenRippleCallBack;
 struct KingGenSpitPartsParticleCallBack;
+
+/**
+ * @brief TODO.
+ */
+enum KingAIStateID {
+	KINGAI_Die          = 0,
+	KINGAI_Damage       = 1,
+	KINGAI_BombDown     = 2,
+	KINGAI_HomeTurn     = 3,
+	KINGAI_ChaseTurn    = 4,
+	KINGAI_Attack       = 5,
+	KINGAI_JumpAttack   = 6,
+	KINGAI_Swallow      = 7,
+	KINGAI_EatThrowPiki = 8,
+	KINGAI_WalkRandom   = 9,
+	KINGAI_ChaseNavi    = 10,
+	KINGAI_ChasePiki    = 11,
+	KINGAI_WalkGoHome   = 12,
+	KINGAI_Flick        = 13,
+	KINGAI_WaveNeck     = 14,
+	KINGAI_Appear       = 15,
+	KINGAI_Stay         = 16,
+};
 
 /**
  * @brief TODO.
@@ -34,16 +60,16 @@ struct KingProp : public BossProp, public CoreNode {
 		    : _204(this, 60.0f, 0.0f, 0.0f, "o00", nullptr)
 		    , _214(this, 0.5f, 0.0f, 0.0f, "o01", nullptr)
 		    , _224(this, 0.5f, 0.0f, 0.0f, "o02", nullptr)
-		    , _234(this, 180.0f, 0.0f, 0.0f, "p00", nullptr)
+		    , mAttackDistance(this, 180.0f, 0.0f, 0.0f, "p00", nullptr)
 		    , _244(this, 40.0f, 0.0f, 0.0f, "p01", nullptr)
 		    , _254(this, 25.0f, 0.0f, 0.0f, "p04", nullptr)
 		    , _264(this, 40.0f, 0.0f, 0.0f, "p02", nullptr)
 		    , _274(this, 40.0f, 0.0f, 0.0f, "p03", nullptr)
-		    , _284(this, 70.0f, 0.0f, 0.0f, "p10", nullptr)
+		    , mPressAttackRadius(this, 70.0f, 0.0f, 0.0f, "p10", nullptr)
 		    , _294(this, 60.0f, 0.0f, 0.0f, "q10", nullptr)
 		    , _2A4(this, 25.0f, 0.0f, 0.0f, "r00", nullptr)
-		    , _2B4(this, 50.0f, 0.0f, 0.0f, "r01", nullptr)
-		    , _2C4(this, 1.2f, 0.0f, 0.0f, "s00", nullptr)
+		    , mPressDamageNavi(this, 50.0f, 0.0f, 0.0f, "r01", nullptr)
+		    , mNormalKingScale(this, 1.2f, 0.0f, 0.0f, "s00", nullptr)
 		    , _2D4(this, 75.0f, 0.0f, 0.0f, "s10", nullptr)
 		    , _2E4(this, 200.0f, 0.0f, 0.0f, "s20", nullptr)
 		    , _2F4(this, 150.0f, 0.0f, 0.0f, "s21", nullptr)
@@ -51,8 +77,8 @@ struct KingProp : public BossProp, public CoreNode {
 		    , _314(this, 5.0f, 0.0f, 0.0f, "s30", nullptr)
 		    , _324(this, 50.0f, 0.0f, 0.0f, "s31", nullptr)
 		    , _334(this, 50.0f, 0.0f, 0.0f, "s32", nullptr)
-		    , _344(this, 30.0f, 0.0f, 0.0f, "s40", nullptr)
-		    , _354(this, 0.05f, 0.0f, 0.0f, "s41", nullptr)
+		    , mDamageScaleOscillationSpeed(this, 30.0f, 0.0f, 0.0f, "s40", nullptr)
+		    , mDamageScaleOscillationSize(this, 0.05f, 0.0f, 0.0f, "s41", nullptr)
 		    , _364(this, 0.5f, 0.0f, 0.0f, "t00", nullptr)
 		    , _374(this, 0.5f, 0.0f, 0.0f, "t01", nullptr)
 		    , _384(this, 0.9f, 0.0f, 0.0f, "t02", nullptr)
@@ -77,48 +103,48 @@ struct KingProp : public BossProp, public CoreNode {
 		}
 
 		// _200-_204 = Parameters
-		Parm<f32> _204; // _204, o00
-		Parm<f32> _214; // _214, o01
-		Parm<f32> _224; // _224, o02
-		Parm<f32> _234; // _234, p00
-		Parm<f32> _244; // _244, p01
-		Parm<f32> _254; // _254, p04
-		Parm<f32> _264; // _264, p02
-		Parm<f32> _274; // _274, p03
-		Parm<f32> _284; // _284, p10
-		Parm<f32> _294; // _294, q10
-		Parm<f32> _2A4; // _2A4, r00
-		Parm<f32> _2B4; // _2B4, r01
-		Parm<f32> _2C4; // _2C4, s00
-		Parm<f32> _2D4; // _2D4, s10
-		Parm<f32> _2E4; // _2E4, s20
-		Parm<f32> _2F4; // _2F4, s21
-		Parm<f32> _304; // _304, s23
-		Parm<f32> _314; // _314, s30
-		Parm<f32> _324; // _324, s31
-		Parm<f32> _334; // _334, s32
-		Parm<f32> _344; // _344, s40
-		Parm<f32> _354; // _354, s41
-		Parm<f32> _364; // _364, t00
-		Parm<f32> _374; // _374, t01
-		Parm<f32> _384; // _384, t02
-		Parm<f32> _394; // _394, t03
-		Parm<f32> _3A4; // _3A4, t10
-		Parm<f32> _3B4; // _3B4, t11
-		Parm<f32> _3C4; // _3C4, t12
-		Parm<int> _3D4; // _3D4, i00
-		Parm<int> _3E4; // _3E4, i10
-		Parm<int> _3F4; // _3F4, i11
-		Parm<int> _404; // _404, i12
-		Parm<int> _414; // _414, i13
-		Parm<int> _424; // _424, i14
-		Parm<int> _434; // _434, i20
-		Parm<int> _444; // _444, i21
-		Parm<int> _454; // _454, i22
-		Parm<int> _464; // _464, i23
-		Parm<int> _474; // _474, i24
-		Parm<int> _484; // _484, i30
-		Parm<int> _494; // _494, i40
+		Parm<f32> _204;                         // _204, o00 - walking speed?
+		Parm<f32> _214;                         // _214, o01 - turning while walking?
+		Parm<f32> _224;                         // _224, o02 - turning during turn?
+		Parm<f32> mAttackDistance;              // _234, p00
+		Parm<f32> _244;                         // _244, p01 - attack range (x, z)?
+		Parm<f32> _254;                         // _254, p04 - attack range (y)?
+		Parm<f32> _264;                         // _264, p02 - distance between tongue and piki (x,z)?
+		Parm<f32> _274;                         // _274, p03 - distance between tongue and piki (y)?
+		Parm<f32> mPressAttackRadius;           // _284, p10 - sharpness range?
+		Parm<f32> _294;                         // _294, q10 - missed range?
+		Parm<f32> _2A4;                         // _2A4, r00 - swallow damage navi?
+		Parm<f32> mPressDamageNavi;             // _2B4, r01 - press damage navi?
+		Parm<f32> mNormalKingScale;             // _2C4, s00 - size?
+		Parm<f32> _2D4;                         // _2D4, s10 - detection radius?
+		Parm<f32> _2E4;                         // _2E4, s20 - blowing area?
+		Parm<f32> _2F4;                         // _2F4, s21 - blowing power?
+		Parm<f32> _304;                         // _304, s23 - blown off damage?
+		Parm<f32> _314;                         // _314, s30 - dist from tongue?
+		Parm<f32> _324;                         // _324, s31 - height from tongue?
+		Parm<f32> _334;                         // _334, s32 - height from map?
+		Parm<f32> mDamageScaleOscillationSpeed; // _344, s40
+		Parm<f32> mDamageScaleOscillationSize;  // _354, s41
+		Parm<f32> _364;                         // _364, t00 - jump attack percent?
+		Parm<f32> _374;                         // _374, t01 - jump attack ratio (min)?
+		Parm<f32> _384;                         // _384, t02 - jump attack ratio (max)?
+		Parm<f32> _394;                         // _394, t03 - eat bomb num ratio?
+		Parm<f32> _3A4;                         // _3A4, t10 - jump attack territory?
+		Parm<f32> _3B4;                         // _3B4, t11 - jump attack range?
+		Parm<f32> _3C4;                         // _3C4, t12 - jump attack angle?
+		Parm<int> _3D4;                         // _3D4, i00 - 1 attack max eat number?
+		Parm<int> _3E4;                         // _3E4, i10 - swallowed bombs (min)?
+		Parm<int> _3F4;                         // _3F4, i11 - swallowed bombs (max)?
+		Parm<int> _404;                         // _404, i12 - damage loop (min)?
+		Parm<int> _414;                         // _414, i13 - damage loop (mid)?
+		Parm<int> _424;                         // _424, i14 - damage loop (max)?
+		Parm<int> _434;                         // _434, i20 - bomb exploded with tongue (min)?
+		Parm<int> _444;                         // _444, i21 - bomb exploded with tongue (max)?
+		Parm<int> _454;                         // _454, i22 - damage loop (min)?
+		Parm<int> _464;                         // _464, i23 - damage loop (mid)?
+		Parm<int> _474;                         // _474, i24 - damage loop (max)?
+		Parm<int> _484;                         // _484, i30 - number of attack loops?
+		Parm<int> _494;                         // _494, i40 - number of jump attacks?
 	};
 
 	KingProp();
@@ -178,8 +204,6 @@ struct King : public Boss {
 	virtual void drawShape(Graphics&);               // _120
 
 	void draw(Graphics&);
-
-	inline KingProp* getKingProp() { return static_cast<KingProp*>(mProps); }
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss
@@ -248,8 +272,8 @@ struct KingBody {
 
 	King* mKing;                                                  // _00
 	bool _04;                                                     // _04
-	u8 _05;                                                       // _05
-	u8 _06;                                                       // _06
+	bool mDoFallSalivaEffect;                                     // _05
+	bool mDoSpreadSalivaEffect;                                   // _06
 	bool mIsFootOnGround[2];                                      // _07
 	bool _09[2];                                                  // _09
 	bool mIsFootGeneratingRipples[2];                             // _0B
@@ -313,7 +337,7 @@ struct KingAi : public PaniAnimKeyListener {
 	void keyLoopEnd();
 	void keyFinished();
 	void playSound(int);
-	void createEffect(int);
+	void createEffect(BOOL);
 	void calcDamageScale();
 	void startSpreadSaliva();
 	void endSpreadSaliva();
@@ -326,15 +350,15 @@ struct KingAi : public PaniAnimKeyListener {
 	void setDamageLoopCounter(int, int, int, int, int, int);
 	void setEatDamageLoopCounter();
 	void setAttackPriority();
-	void inJumpAngle(Creature*);
-	void inTurnAngleTransit();
-	void chaseNaviTransit();
-	void chasePikiTransit();
-	void attackTransit();
-	void jumpAttackTransit();
-	void eatThrowPikiTransit();
-	void targetLostTransit();
-	void appearTransit();
+	bool inJumpAngle(Creature*);
+	bool inTurnAngleTransit();
+	bool chaseNaviTransit();
+	bool chasePikiTransit();
+	bool attackTransit();
+	bool jumpAttackTransit();
+	bool eatThrowPikiTransit();
+	bool targetLostTransit();
+	bool appearTransit();
 	void initDie(int);
 	void initAppear(int);
 	void update();
@@ -345,24 +369,24 @@ struct KingAi : public PaniAnimKeyListener {
 	void startFallSaliva();
 	void endFallSaliva();
 	void setMouthCollPart(int);
-	void getMouthCollPart(int);
+	int getMouthCollPart(int);
 	void setDispelParm(Creature*, f32);
 	void setBombDamageLoopCounter();
 	void setMoveVelocity(f32);
 	void resetAttackPriority();
 	void resultFlagOn();
 	void resultFlagSeen();
-	void attackInArea(Creature*, Vector3f*);
-	void jumpAttackInArea(Creature*, Vector3f*);
-	void dieTransit();
-	void damageTransit();
-	void bombDownTransit();
-	void isMotionFinishTransit();
-	void outSideChaseRangeTransit();
-	void inSideWaitRangeTransit();
-	void missAttackNextTransit();
-	void swallowTransit();
-	void flickTransit();
+	bool attackInArea(Creature*, Vector3f*);
+	bool jumpAttackInArea(Creature*, Vector3f*);
+	bool dieTransit();
+	bool damageTransit();
+	bool bombDownTransit();
+	bool isMotionFinishTransit();
+	bool outSideChaseRangeTransit();
+	bool inSideWaitRangeTransit();
+	bool missAttackNextTransit();
+	bool swallowTransit();
+	bool flickTransit();
 	void initDamage(int);
 	void initBombDown(int);
 	void initWalkRandom(int, bool);
@@ -401,20 +425,20 @@ struct KingAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	King* mKing;            // _04
-	u8 _08;                 // _08, might be bool
-	u8 _09;                 // _09, might be bool
-	u32 _0C;                // _0C, unknown
-	u32 _10;                // _10, might be int
-	u8 _14[0x4];            // _14, unknown
-	u32 _18;                // _18, unknown
-	int mBombDamageCounter; // _1C
-	int _20;                // _20
-	f32 _24;                // _24
-	f32 _28;                // _28
-	Vector3f _2C;           // _2C
-	Vector3f _38;           // _38
-	Vector3f _44;           // _44
+	King* mKing;                 // _04
+	u8 _08;                      // _08, might be bool
+	u8 _09;                      // _09, might be bool
+	int mMouthSlotFlag;          // _0C
+	u32 _10;                     // _10, might be int
+	u8 _14[0x4];                 // _14, unknown
+	u32 _18;                     // _18, unknown
+	int mBombDamageCounter;      // _1C
+	int _20;                     // _20
+	f32 mDamageScaleOscillation; // _24
+	f32 _28;                     // _28
+	Vector3f mAttackPosition;    // _2C
+	Vector3f _38;                // _38
+	Vector3f _44;                // _44
 };
 
 /**
@@ -486,7 +510,7 @@ struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
 		ptcl->setEmitPos(midPt);
 		ptcl->setEmitDir(dir);
 
-		if (mKing->mKingBody->_05) {
+		if (mKing->mKingBody->mDoFallSalivaEffect) {
 			ptcl->startGen();
 		} else {
 			ptcl->stopGen();
@@ -593,7 +617,7 @@ struct KingGenSpreadSalivaCallBack : public zen::CallBack1<zen::particleGenerato
 	virtual bool invoke(zen::particleGenerator* ptcl) // _08
 	{
 		ptcl->setEmitDir(mKing->mKingBody->_60);
-		if (mKing->mKingBody->_06) {
+		if (mKing->mKingBody->mDoSpreadSalivaEffect) {
 			ptcl->startGen();
 		} else {
 			ptcl->stopGen();

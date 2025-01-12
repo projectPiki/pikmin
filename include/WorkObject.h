@@ -17,14 +17,14 @@ struct DynBuildShape;
 struct WorkObject : public ItemCreature {
 	WorkObject(); // unused/inlined
 
-	virtual bool isVisible();         // _74
-	virtual bool isAlive();           // _88
-	virtual void doKill();            // _10C
-	virtual void finalSetup() { }     // _158
-	virtual bool isBridge();          // _15C
-	virtual bool isHinderRock();      // _160
-	virtual bool isFinished();        // _164
-	virtual bool workable(Vector3f&); // _168
+	virtual bool isVisible();                 // _74
+	virtual bool isAlive();                   // _88
+	virtual void doKill();                    // _10C
+	virtual void finalSetup() { }             // _158
+	virtual bool isBridge() { return false; } // _15C
+	virtual bool isHinderRock();              // _160
+	virtual bool isFinished();                // _164
+	virtual bool workable(Vector3f&);         // _168
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
