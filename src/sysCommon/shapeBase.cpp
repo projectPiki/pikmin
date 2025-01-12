@@ -174,7 +174,10 @@ void Joint::recShowHierarchy()
  * Address:	........
  * Size:	000018
  */
-void Joint::overrideAnim(AnimContext* ctx) { mParentShape->mAnimContextList[mIndex] = ctx; }
+void Joint::overrideAnim(AnimContext* ctx)
+{
+	mParentShape->mAnimContextList[mIndex] = ctx;
+}
 
 /*
  * --INFO--
@@ -2603,14 +2606,20 @@ void AnimData::detach()
  * Address:	........
  * Size:	00005C
  */
-void AnimData::initData() { mAnimInfoList = new AnimCacheInfo[mNumFrames]; }
+void AnimData::initData()
+{
+	mAnimInfoList = new AnimCacheInfo[mNumFrames];
+}
 
 /*
  * --INFO--
  * Address:	8002C448
  * Size:	000010
  */
-AnimCacheInfo::AnimCacheInfo() { initData(); }
+AnimCacheInfo::AnimCacheInfo()
+{
+	initData();
+}
 
 /*
  * --INFO--
@@ -3100,7 +3109,10 @@ void AnimDca::read(RandomAccessStream&)
  * Address:	8002CA88
  * Size:	000034
  */
-AnimDataInfo::AnimDataInfo() { mFlags = 0; }
+AnimDataInfo::AnimDataInfo()
+{
+	mFlags = 0;
+}
 
 /*
  * --INFO--
@@ -13026,7 +13038,10 @@ AnimData* BaseShape::loadAnimation(char* name, bool a3)
  * Address:	80034FE8
  * Size:	000010
  */
-Matrix4f& BaseShape::getAnimMatrix(int i) { return mAnimMatrices[i]; }
+Matrix4f& BaseShape::getAnimMatrix(int i)
+{
+	return mAnimMatrices[i];
+}
 
 /*
  * --INFO--
@@ -13892,7 +13907,9 @@ void BaseShape::findCollTri(Vector3f&, Vector3f&, Vector3f&, char*)
  * Address:	80035A68
  * Size:	000004
  */
-void AnimData::writeType(RandomAccessStream&) { }
+void AnimData::writeType(RandomAccessStream&)
+{
+}
 
 /*
  * --INFO--

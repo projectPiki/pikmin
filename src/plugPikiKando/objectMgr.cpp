@@ -39,7 +39,10 @@ void boundSphereDist(Creature*, Creature*)
 void ObjectMgr::stickUpdate()
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { (*iter)->stickUpdate(); }
+	CI_LOOP(iter)
+	{
+		(*iter)->stickUpdate();
+	}
 }
 
 /*
@@ -67,7 +70,10 @@ void ObjectMgr::invalidateSearch()
 void ObjectMgr::update()
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { (*iter)->update(); }
+	CI_LOOP(iter)
+	{
+		(*iter)->update();
+	}
 }
 
 /*
@@ -75,7 +81,9 @@ void ObjectMgr::update()
  * Address:	800E0564
  * Size:	000004
  */
-void ObjectMgr::store() { }
+void ObjectMgr::store()
+{
+}
 
 /*
  * --INFO--
@@ -2655,7 +2663,9 @@ void PolyObjectMgr::drawShadow(Graphics&, Texture*)
  * Address:	800E2318
  * Size:	000004
  */
-void PolyObjectMgr::beginRegister() { }
+void PolyObjectMgr::beginRegister()
+{
+}
 
 /*
  * --INFO--
@@ -3640,14 +3650,20 @@ Creature* CreatureNodeMgr::getCreature(int idx)
  * Address:	800E2E44
  * Size:	000008
  */
-int CreatureNodeMgr::getFirst() { return 0; }
+int CreatureNodeMgr::getFirst()
+{
+	return 0;
+}
 
 /*
  * --INFO--
  * Address:	800E2E4C
  * Size:	000008
  */
-int CreatureNodeMgr::getNext(int idx) { return idx + 1; }
+int CreatureNodeMgr::getNext(int idx)
+{
+	return idx + 1;
+}
 
 /*
  * --INFO--
@@ -3668,32 +3684,46 @@ bool CreatureNodeMgr::isDone(int idx)
  * Address:	800E2E98
  * Size:	000024
  */
-int CreatureNodeMgr::getSize() { return mRootNode.getChildCount(); }
+int CreatureNodeMgr::getSize()
+{
+	return mRootNode.getChildCount();
+}
 
 /*
  * --INFO--
  * Address:	800E2F28
  * Size:	000008
  */
-int CreatureNodeMgr::getMax() { return 0x10000; }
+int CreatureNodeMgr::getMax()
+{
+	return 0x10000;
+}
 
 /*
  * --INFO--
  * Address:	800E2F30
  * Size:	00006C
  */
-PolyObjectMgr::~PolyObjectMgr() { }
+PolyObjectMgr::~PolyObjectMgr()
+{
+}
 
 /*
  * --INFO--
  * Address:	800E2F9C
  * Size:	000008
  */
-int PolyObjectMgr::getSize() { return mSize; }
+int PolyObjectMgr::getSize()
+{
+	return mSize;
+}
 
 /*
  * --INFO--
  * Address:	800E2FA4
  * Size:	000008
  */
-int PolyObjectMgr::getMax() { return mMax; }
+int PolyObjectMgr::getMax()
+{
+	return mMax;
+}

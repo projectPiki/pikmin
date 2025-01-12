@@ -25,7 +25,10 @@ DEFINE_PRINT("interactPullout");
  * Address:	8007CB38
  * Size:	000008
  */
-bool InteractPullout::actCommon(Creature*) { return true; }
+bool InteractPullout::actCommon(Creature*)
+{
+	return true;
+}
 
 /*
  * --INFO--

@@ -6,7 +6,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "ropeCreature"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "ropeCreature");
+}
 
 /*
  * --INFO--
@@ -283,11 +286,16 @@ Vector3f RopeCreature::getRopePos(f32)
  * Address:	80094A2C
  * Size:	000004
  */
-void RopeCreature::refresh(Graphics&) { }
+void RopeCreature::refresh(Graphics&)
+{
+}
 
 /*
  * --INFO--
  * Address:	80094A30
  * Size:	000008
  */
-bool RopeCreature::needShadow() { return false; }
+bool RopeCreature::needShadow()
+{
+	return false;
+}

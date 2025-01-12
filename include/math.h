@@ -79,7 +79,10 @@ static inline f32 sqrtf(f32 x)
 	return x;
 }
 
-static inline f32 absF(f32 val) { return (f32)__fabsf(val); }
+static inline f32 absF(f32 val)
+{
+	return (f32)__fabsf(val);
+}
 
 // TODO: probably change this to zen::abs in some zenMath library later
 static inline f32 absVal(f32 val)

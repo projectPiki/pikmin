@@ -912,4 +912,6 @@ Creature* GenObjectMapParts::birth(BirthInfo&)
  * Address:	801184A4
  * Size:	000004
  */
-void MapParts::init() { }
+void MapParts::init()
+{
+}

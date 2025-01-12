@@ -26,14 +26,20 @@ char* PaniAnimator::keyNames[6] = {
  * Address:	8011EF58
  * Size:	000034
  */
-PaniMotionInfo::PaniMotionInfo(int motionIdx) { init(motionIdx, nullptr); }
+PaniMotionInfo::PaniMotionInfo(int motionIdx)
+{
+	init(motionIdx, nullptr);
+}
 
 /*
  * --INFO--
  * Address:	8011EF8C
  * Size:	000030
  */
-PaniMotionInfo::PaniMotionInfo(int motionIdx, PaniAnimKeyListener* listener) { init(motionIdx, listener); }
+PaniMotionInfo::PaniMotionInfo(int motionIdx, PaniAnimKeyListener* listener)
+{
+	init(motionIdx, listener);
+}
 
 /*
  * --INFO--
@@ -51,7 +57,10 @@ void PaniMotionInfo::init(int motionIdx, PaniAnimKeyListener* listener)
  * Address:	8011EFC8
  * Size:	000034
  */
-PaniMotion::PaniMotion(int animID) { init(animID, 1); }
+PaniMotion::PaniMotion(int animID)
+{
+	init(animID, 1);
+}
 
 /*
  * --INFO--
@@ -143,7 +152,10 @@ void PaniAnimator::init(AnimContext* context, AnimMgr* mgr, PaniMotionTable* tab
  * Address:	8011F190
  * Size:	000008
  */
-void PaniAnimator::changeContext(AnimContext* context) { mContext = context; }
+void PaniAnimator::changeContext(AnimContext* context)
+{
+	mContext = context;
+}
 
 /*
  * --INFO--

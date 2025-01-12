@@ -57,7 +57,10 @@ void Navi::viewDraw(Graphics& gfx, Matrix4f& mtx)
  * Address:	800F8384
  * Size:	00005C
  */
-void Navi::viewStartTrembleMotion(f32) { mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_OCarry), PaniMotionInfo(PIKIANIM_OCarry)); }
+void Navi::viewStartTrembleMotion(f32)
+{
+	mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_OCarry), PaniMotionInfo(PIKIANIM_OCarry));
+}
 
 /*
  * --INFO--
@@ -75,14 +78,20 @@ void Navi::viewKill()
  * Address:	800F8408
  * Size:	000008
  */
-f32 Navi::viewGetBottomRadius() { return 7.5f; }
+f32 Navi::viewGetBottomRadius()
+{
+	return 7.5f;
+}
 
 /*
  * --INFO--
  * Address:	800F8410
  * Size:	000008
  */
-f32 Navi::viewGetHeight() { return 10.0f; }
+f32 Navi::viewGetHeight()
+{
+	return 10.0f;
+}
 
 /*
  * --INFO--
@@ -100,7 +109,10 @@ bool Navi::isNuking()
  * Address:	........
  * Size:	00008C
  */
-void Navi::startMovie(bool) { mStateMachine->transit(this, NAVISTATE_DemoWait); }
+void Navi::startMovie(bool)
+{
+	mStateMachine->transit(this, NAVISTATE_DemoWait);
+}
 
 /*
  * --INFO--
@@ -128,28 +140,40 @@ void Navi::movieMode()
  * Address:	800F8530
  * Size:	000014
  */
-void Navi::incPlatePiki() { mPlateMgr->_78++; }
+void Navi::incPlatePiki()
+{
+	mPlateMgr->_78++;
+}
 
 /*
  * --INFO--
  * Address:	800F8544
  * Size:	000014
  */
-void Navi::decPlatePiki() { mPlateMgr->_78--; }
+void Navi::decPlatePiki()
+{
+	mPlateMgr->_78--;
+}
 
 /*
  * --INFO--
  * Address:	800F8558
  * Size:	00000C
  */
-int Navi::getPlatePikis() { return mPlateMgr->_78; }
+int Navi::getPlatePikis()
+{
+	return mPlateMgr->_78;
+}
 
 /*
  * --INFO--
  * Address:	800F8564
  * Size:	00000C
  */
-void Navi::startDayEnd() { _6C0 = 1; }
+void Navi::startDayEnd()
+{
+	_6C0 = 1;
+}
 
 /*
  * --INFO--
@@ -1346,7 +1370,10 @@ void Navi::reset()
  * Address:	800FA690
  * Size:	00000C
  */
-f32 Navi::getSize() { return static_cast<NaviProp*>(mProps)->mNaviProps._1FC(); }
+f32 Navi::getSize()
+{
+	return static_cast<NaviProp*>(mProps)->mNaviProps._1FC();
+}
 
 /*
  * --INFO--
@@ -4679,7 +4706,9 @@ void Navi::wallCallback(Plane&, DynCollObject*)
  * Address:	800FD2D0
  * Size:	000004
  */
-void Navi::jumpCallback() { }
+void Navi::jumpCallback()
+{
+}
 
 /*
  * --INFO--
@@ -5196,7 +5225,9 @@ void Navi::collisionCallback(CollEvent&)
  * Address:	800FD904
  * Size:	000004
  */
-void Navi::doKill() { }
+void Navi::doKill()
+{
+}
 
 /*
  * --INFO--
@@ -7425,14 +7456,19 @@ void Navi::renderCircle(Graphics&)
  * Address:	800FF7A8
  * Size:	000004
  */
-void Navi::refresh2d(Graphics&) { }
+void Navi::refresh2d(Graphics&)
+{
+}
 
 /*
  * --INFO--
  * Address:	800FF7AC
  * Size:	00003C
  */
-void Navi::sendMsg(Msg* msg) { mStateMachine->procMsg(this, msg); }
+void Navi::sendMsg(Msg* msg)
+{
+	mStateMachine->procMsg(this, msg);
+}
 
 /*
  * --INFO--
@@ -9300,14 +9336,18 @@ void Navi::updateHeadMatrix()
  * Address:	801010B0
  * Size:	000004
  */
-void PelletView::viewInit() { }
+void PelletView::viewInit()
+{
+}
 
 /*
  * --INFO--
  * Address:	801010B4
  * Size:	000004
  */
-void PelletView::viewStartExplodeMotion(f32) { }
+void PelletView::viewStartExplodeMotion(f32)
+{
+}
 
 /*
  * --INFO--
@@ -9325,11 +9365,17 @@ void NaviProp::read(RandomAccessStream& input)
  * Address:	801010FC
  * Size:	000008
  */
-bool Navi::mayIstick() { return false; }
+bool Navi::mayIstick()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	80101104
  * Size:	000008
  */
-f32 Navi::getShadowSize() { return 20.0f; }
+f32 Navi::getShadowSize()
+{
+	return 20.0f;
+}

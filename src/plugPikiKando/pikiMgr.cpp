@@ -141,14 +141,20 @@ bool PikiMgr::lostAllPikis()
  * Address:	800CEE08
  * Size:	000020
  */
-void PikiMgr::update() { MonoObjectMgr::update(); }
+void PikiMgr::update()
+{
+	MonoObjectMgr::update();
+}
 
 /*
  * --INFO--
  * Address:	800CEE28
  * Size:	000020
  */
-void PikiMgr::refresh(Graphics& graphics) { MonoObjectMgr::refresh(graphics); }
+void PikiMgr::refresh(Graphics& graphics)
+{
+	MonoObjectMgr::refresh(graphics);
+}
 
 /*
  * --INFO--
@@ -170,7 +176,10 @@ void PikiMgr::refresh2d(Graphics& gfx)
  * Address:	800CEE48
  * Size:	000030
  */
-void PikiMgr::read(RandomAccessStream& input) { mPikiParms->read(input); }
+void PikiMgr::read(RandomAccessStream& input)
+{
+	mPikiParms->read(input);
+}
 
 /*
  * --INFO--

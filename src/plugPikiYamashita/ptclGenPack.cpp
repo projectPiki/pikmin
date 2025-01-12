@@ -21,7 +21,10 @@ void PtclGenPack::setPtclGenPtr(u32 idx, particleGenerator* gen)
  * Address:	........
  * Size:	000010
  */
-particleGenerator* PtclGenPack::getPtclGenPtr(u32 idx) { return mGeneratorList[idx]; }
+particleGenerator* PtclGenPack::getPtclGenPtr(u32 idx)
+{
+	return mGeneratorList[idx];
+}
 
 /*
  * --INFO--

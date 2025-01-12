@@ -1201,7 +1201,10 @@ void GoalItem::exitPiki()
  * Address:	800EB5B8
  * Size:	000008
  */
-bool GoalItem::needShadow() { return false; }
+bool GoalItem::needShadow()
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -2441,11 +2444,17 @@ s16 GoalItem::getRouteIndex()
  * Address:	800EC4B0
  * Size:	000008
  */
-bool GoalItem::isVisible() { return true; }
+bool GoalItem::isVisible()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800EC4B8
  * Size:	000008
  */
-bool GoalItem::isAlive() { return true; }
+bool GoalItem::isAlive()
+{
+	return true;
+}

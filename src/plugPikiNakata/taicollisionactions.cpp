@@ -7,7 +7,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "taicollisionactions"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "taicollisionactions");
+}
 
 /*
  * --INFO--
@@ -24,28 +27,40 @@ static void _Print(char*, ...)
  * Address:	8012E48C
  * Size:	000014
  */
-bool TaiBounceAction::actByEvent(TekiEvent& event) { return event.mCollisionType == TekiEventType::Ground; }
+bool TaiBounceAction::actByEvent(TekiEvent& event)
+{
+	return event.mCollisionType == TekiEventType::Ground;
+}
 
 /*
  * --INFO--
  * Address:	8012E4A0
  * Size:	000014
  */
-bool TaiGroundCollisionAction::actByEvent(TekiEvent& event) { return event.mCollisionType == TekiEventType::Ground; }
+bool TaiGroundCollisionAction::actByEvent(TekiEvent& event)
+{
+	return event.mCollisionType == TekiEventType::Ground;
+}
 
 /*
  * --INFO--
  * Address:	8012E4B4
  * Size:	000014
  */
-bool TaiWallCollisionAction::actByEvent(TekiEvent& event) { return event.mCollisionType == TekiEventType::Wall; }
+bool TaiWallCollisionAction::actByEvent(TekiEvent& event)
+{
+	return event.mCollisionType == TekiEventType::Wall;
+}
 
 /*
  * --INFO--
  * Address:	8012E4C8
  * Size:	000014
  */
-bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event) { return event.mCollisionType == TekiEventType::Entity; }
+bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event)
+{
+	return event.mCollisionType == TekiEventType::Entity;
+}
 
 /*
  * --INFO--

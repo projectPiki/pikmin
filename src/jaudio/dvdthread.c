@@ -397,7 +397,10 @@ void DVDT_GetCurrentBuffer(u8**)
  * Address:	80007B80
  * Size:	000010
  */
-static void ARAM_DMAfinish(u32) { buffer_full--; }
+static void ARAM_DMAfinish(u32)
+{
+	buffer_full--;
+}
 
 /*
  * --INFO--

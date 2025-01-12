@@ -56,7 +56,10 @@ void ARAMStartDMA(u32, u32, u32, u32, s32, u32*, void (*)())
  * Address:	800061A0
  * Size:	000008
  */
-void Jac_SetAudioARAMSize(u32 size) { SELECTED_ARAM_SIZE = size; }
+void Jac_SetAudioARAMSize(u32 size)
+{
+	SELECTED_ARAM_SIZE = size;
+}
 
 /*
  * --INFO--

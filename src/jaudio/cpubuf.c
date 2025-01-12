@@ -96,4 +96,7 @@ void MixCpu(s32)
  * Address:	800070E0
  * Size:	000024
  */
-void CpuFrameEnd() { CpubufProcess(DSPBUF_EVENT_FRAME_END); }
+void CpuFrameEnd()
+{
+	CpubufProcess(DSPBUF_EVENT_FRAME_END);
+}

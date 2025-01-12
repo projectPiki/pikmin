@@ -51,7 +51,10 @@ CoreNucleus::CoreNucleus(CreatureProp* props)
  * Address:	8017AA68
  * Size:	000008
  */
-f32 CoreNucleus::getiMass() { return 0.01f; }
+f32 CoreNucleus::getiMass()
+{
+	return 0.01f;
+}
 
 /*
  * --INFO--
@@ -86,14 +89,19 @@ void CoreNucleus::doKill()
  * Address:	8017AB08
  * Size:	000004
  */
-void CoreNucleus::exitCourse() { }
+void CoreNucleus::exitCourse()
+{
+}
 
 /*
  * --INFO--
  * Address:	8017AB0C
  * Size:	000020
  */
-void CoreNucleus::update() { Creature::update(); }
+void CoreNucleus::update()
+{
+	Creature::update();
+}
 
 /*
  * --INFO--
@@ -126,7 +134,10 @@ void CoreNucleus::drawShape(Graphics& gfx)
  * Address:	8017AC30
  * Size:	000024
  */
-void CoreNucleus::doAI() { mCoreAi->update(); }
+void CoreNucleus::doAI()
+{
+	mCoreAi->update();
+}
 
 /*
  * --INFO--

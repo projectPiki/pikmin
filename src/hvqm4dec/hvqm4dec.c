@@ -5985,7 +5985,10 @@ static void BpicPlaneDec(SeqObj* seqObj, void* present, void* past, void* future
  * Address:	800236EC
  * Size:	000020
  */
-void HVQM4InitDecoder() { init_global_constants(); }
+void HVQM4InitDecoder()
+{
+	init_global_constants();
+}
 
 /*
  * --INFO--
@@ -6803,7 +6806,10 @@ void HVQM4DecodeIpic(SeqObj*, const u8*, void*)
  * Address:	80024118
  * Size:	000024
  */
-void HVQM4DecodePpic(SeqObj* seqObj, const u8* frame, void* present, void* past) { HVQM4DecodeBpic(seqObj, frame, present, past, present); }
+void HVQM4DecodePpic(SeqObj* seqObj, const u8* frame, void* present, void* past)
+{
+	HVQM4DecodeBpic(seqObj, frame, present, past, present);
+}
 
 /*
  * --INFO--

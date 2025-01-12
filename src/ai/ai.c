@@ -60,14 +60,20 @@ void AIInitDMA(u32 address, u32 length)
  * Address:	802060D0
  * Size:	000018
  */
-void AIStartDMA(void) { SET_FLAG(__DSPRegs[DSP_DMA_CONTROL_LEN], DSP_DMA_START_FLAG); }
+void AIStartDMA(void)
+{
+	SET_FLAG(__DSPRegs[DSP_DMA_CONTROL_LEN], DSP_DMA_START_FLAG);
+}
 
 /*
  * --INFO--
  * Address:	802060E8
  * Size:	000010
  */
-u32 AIGetStreamSampleCount(void) { return __AIRegs[AI_SAMPLE_COUNTER]; }
+u32 AIGetStreamSampleCount(void)
+{
+	return __AIRegs[AI_SAMPLE_COUNTER];
+}
 
 /*
  * --INFO--
@@ -84,7 +90,10 @@ void AIResetStreamSampleCount(void)
  * Address:	80206110
  * Size:	000010
  */
-u32 AIGetStreamTrigger(void) { return (__AIRegs[AI_INTRPT_TIMING]); }
+u32 AIGetStreamTrigger(void)
+{
+	return (__AIRegs[AI_INTRPT_TIMING]);
+}
 
 /*
  * --INFO--
@@ -136,7 +145,10 @@ void AISetStreamPlayState(u32 playState)
  * Address:	802061F8
  * Size:	000010
  */
-u32 AIGetStreamPlayState(void) { return __AIRegs[AI_CONTROL] & AI_CONTROL_PLAY_STATE; }
+u32 AIGetStreamPlayState(void)
+{
+	return __AIRegs[AI_CONTROL] & AI_CONTROL_PLAY_STATE;
+}
 
 /*
  * --INFO--
@@ -195,7 +207,10 @@ void AISetDSPSampleRate(u32 rate)
  * Address:	802062E8
  * Size:	000014
  */
-u32 AIGetDSPSampleRate(void) { return ((__AIRegs[AI_CONTROL] >> 6) & 1) ^ 1; }
+u32 AIGetDSPSampleRate(void)
+{
+	return ((__AIRegs[AI_CONTROL] >> 6) & 1) ^ 1;
+}
 
 /*
  * --INFO--
@@ -264,35 +279,50 @@ static void __AI_set_stream_sample_rate(u32 rate)
  * Address:	802063F8
  * Size:	000010
  */
-u32 AIGetStreamSampleRate(void) { return (__AIRegs[AI_CONTROL] >> 1) & 1; }
+u32 AIGetStreamSampleRate(void)
+{
+	return (__AIRegs[AI_CONTROL] >> 1) & 1;
+}
 
 /*
  * --INFO--
  * Address:	80206408
  * Size:	00001C
  */
-void AISetStreamVolLeft(u8 volume) { __AIRegs[AI_VOLUME] = (__AIRegs[AI_VOLUME] & ~0xFF) | (volume & 0xFF); }
+void AISetStreamVolLeft(u8 volume)
+{
+	__AIRegs[AI_VOLUME] = (__AIRegs[AI_VOLUME] & ~0xFF) | (volume & 0xFF);
+}
 
 /*
  * --INFO--
  * Address:	80206424
  * Size:	000010
  */
-u8 AIGetStreamVolLeft(void) { return __AIRegs[AI_VOLUME]; }
+u8 AIGetStreamVolLeft(void)
+{
+	return __AIRegs[AI_VOLUME];
+}
 
 /*
  * --INFO--
  * Address:	80206434
  * Size:	00001C
  */
-void AISetStreamVolRight(u8 volume) { __AIRegs[AI_VOLUME] = (__AIRegs[AI_VOLUME] & ~0xFF00) | ((volume & 0xFF) << 8); }
+void AISetStreamVolRight(u8 volume)
+{
+	__AIRegs[AI_VOLUME] = (__AIRegs[AI_VOLUME] & ~0xFF00) | ((volume & 0xFF) << 8);
+}
 
 /*
  * --INFO--
  * Address:	80206450
  * Size:	000010
  */
-u8 AIGetStreamVolRight(void) { return __AIRegs[AI_VOLUME] >> 8; }
+u8 AIGetStreamVolRight(void)
+{
+	return __AIRegs[AI_VOLUME] >> 8;
+}
 
 /*
  * --INFO--

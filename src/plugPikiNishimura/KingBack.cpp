@@ -47,7 +47,10 @@ KingBack::KingBack(CreatureProp* props)
  * Address:	80179F04
  * Size:	000008
  */
-f32 KingBack::getiMass() { return 0.0001f; }
+f32 KingBack::getiMass()
+{
+	return 0.0001f;
+}
 
 /*
  * --INFO--
@@ -78,7 +81,9 @@ void KingBack::doKill()
  * Address:	80179F94
  * Size:	000004
  */
-void KingBack::exitCourse() { }
+void KingBack::exitCourse()
+{
+}
 
 /*
  * --INFO--
@@ -124,7 +129,10 @@ void KingBack::drawShape(Graphics& gfx)
  * Address:	8017A0F4
  * Size:	00001C
  */
-void KingBack::doAI() { mPosition.set(mInitPosition); }
+void KingBack::doAI()
+{
+	mPosition.set(mInitPosition);
+}
 
 /*
  * --INFO--

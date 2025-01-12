@@ -115,7 +115,10 @@ f64 __setflm(f64);
 #define fabs(x)  __fabs(x)
 #define fabsf(x) __fabsf(x)
 
-inline f128 fabsl(f128 x) { return __fabs((f64)x); }
+inline f128 fabsl(f128 x)
+{
+	return __fabs((f64)x);
+}
 
 #ifdef __cplusplus
 };

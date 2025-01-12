@@ -28,7 +28,10 @@ DEFINE_PRINT("StdSystem");
  * Address:	8003EE34
  * Size:	000030
  */
-void AnmobjInfo::detach() { mAnimation->detach(); }
+void AnmobjInfo::detach()
+{
+	mAnimation->detach();
+}
 
 /*
  * --INFO--
@@ -71,14 +74,20 @@ void StdSystem::onceInit()
  * Address:	8003F020
  * Size:	000014
  */
-AyuHeap* StdSystem::getHeap(int heapIdx) { return &mHeaps[heapIdx]; }
+AyuHeap* StdSystem::getHeap(int heapIdx)
+{
+	return &mHeaps[heapIdx];
+}
 
 /*
  * --INFO--
  * Address:	8003F034
  * Size:	000034
  */
-void StdSystem::resetHeap(int heapIdx, int flag) { mHeaps[heapIdx].reset(flag); }
+void StdSystem::resetHeap(int heapIdx, int flag)
+{
+	mHeaps[heapIdx].reset(flag);
+}
 
 /*
  * --INFO--
@@ -444,7 +453,10 @@ void StdSystem::initLFlares(int count)
  * Address:	8003FA68
  * Size:	00000C
  */
-void StdSystem::resetLFlares() { mFlareCount = 0; }
+void StdSystem::resetLFlares()
+{
+	mFlareCount = 0;
+}
 
 /*
  * --INFO--

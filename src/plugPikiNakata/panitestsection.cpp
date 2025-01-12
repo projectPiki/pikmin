@@ -1720,14 +1720,20 @@ void PaniTestNode::draw(Graphics&)
  * Address:	801214BC
  * Size:	000034
  */
-void PaniTestNode::drawPiki(ViewPiki* piki, Graphics& gfx) { piki->refresh(gfx); }
+void PaniTestNode::drawPiki(ViewPiki* piki, Graphics& gfx)
+{
+	piki->refresh(gfx);
+}
 
 /*
  * --INFO--
  * Address:	801214F0
  * Size:	000034
  */
-void PaniTestNode::drawTeki(Teki* teki, Graphics& gfx) { teki->refresh(gfx); }
+void PaniTestNode::drawTeki(Teki* teki, Graphics& gfx)
+{
+	teki->refresh(gfx);
+}
 
 /*
  * --INFO--

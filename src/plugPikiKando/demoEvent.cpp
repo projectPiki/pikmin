@@ -45,7 +45,9 @@ void DemoEventMgr::getSenderName(int)
  * Address:	8008313C
  * Size:	000004
  */
-DemoEventMgr::DemoEventMgr() { }
+DemoEventMgr::DemoEventMgr()
+{
+}
 
 /*
  * --INFO--

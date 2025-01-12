@@ -1828,7 +1828,10 @@ void TAItankAnimation::makeDefaultAnimations()
  * Address:	801A4EAC
  * Size:	000008
  */
-bool TAIAnoReaction::act(Teki&) { return true; }
+bool TAIAnoReaction::act(Teki&)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -1850,7 +1853,10 @@ void TAIAinitTank::start(Teki&)
  * Address:	801A4EC0
  * Size:	000008
  */
-bool TAIAinitTank::act(Teki&) { return true; }
+bool TAIAinitTank::act(Teki&)
+{
+	return true;
+}
 
 /*
  * --INFO--

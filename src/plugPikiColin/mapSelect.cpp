@@ -1507,7 +1507,9 @@ void MapSelectSetupSection::draw(Graphics&)
  * Address:	80056A9C
  * Size:	000004
  */
-void MapSelectSection::init() { }
+void MapSelectSection::init()
+{
+}
 
 /*
  * --INFO--

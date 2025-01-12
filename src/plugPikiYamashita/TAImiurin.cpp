@@ -4755,4 +4755,7 @@ void TAIAinitMiurin::start(Teki&)
  * Address:	801DA080
  * Size:	000008
  */
-bool TAIAinitMiurin::act(Teki&) { return true; }
+bool TAIAinitMiurin::act(Teki&)
+{
+	return true;
+}

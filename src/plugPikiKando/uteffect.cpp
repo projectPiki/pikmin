@@ -2107,7 +2107,10 @@ void BurnEffect::kill()
  * Address:	80114AA4
  * Size:	000008
  */
-bool BurnEffect::invoke(zen::particleGenerator*) { return true; }
+bool BurnEffect::invoke(zen::particleGenerator*)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -2715,7 +2718,9 @@ void BombEffectLight::emit(EffectParm&)
  * Address:	8011524C
  * Size:	000004
  */
-void BombEffectLight::kill() { }
+void BombEffectLight::kill()
+{
+}
 
 /*
  * --INFO--
@@ -2796,7 +2801,9 @@ void BombEffect::emit(EffectParm&)
  * Address:	80115340
  * Size:	000004
  */
-void BombEffect::kill() { }
+void BombEffect::kill()
+{
+}
 
 /*
  * --INFO--
@@ -2860,7 +2867,10 @@ void SimpleEffect::kill()
  * Address:	801153C0
  * Size:	000008
  */
-bool NaviFue::invoke(zen::particleGenerator*) { return true; }
+bool NaviFue::invoke(zen::particleGenerator*)
+{
+	return true;
+}
 
 /*
  * --INFO--

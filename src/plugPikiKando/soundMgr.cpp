@@ -1873,7 +1873,10 @@ void SeSystem::update(Graphics&, Vector3f&)
  * Address:	800A51C0
  * Size:	000008
  */
-bool Boss::isBossBgm() { return false; }
+bool Boss::isBossBgm()
+{
+	return false;
+}
 
 /*
  * --INFO--

@@ -8,21 +8,30 @@ char name[] = "smartPtr";
  * Address:	800E4338
  * Size:	000018
  */
-RefCountable::RefCountable() { mCnt = 0; }
+RefCountable::RefCountable()
+{
+	mCnt = 0;
+}
 
 /*
  * --INFO--
  * Address:	800E4350
  * Size:	00000C
  */
-void RefCountable::clearCnt() { mCnt = 0; }
+void RefCountable::clearCnt()
+{
+	mCnt = 0;
+}
 
 /*
  * --INFO--
  * Address:	800E435C
  * Size:	000010
  */
-void RefCountable::addCnt() { mCnt++; }
+void RefCountable::addCnt()
+{
+	mCnt++;
+}
 
 /*
  * --INFO--

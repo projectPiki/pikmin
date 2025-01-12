@@ -612,7 +612,10 @@ void GameFlow::addFilterMenu(Menu*)
  * Address:	80051E84
  * Size:	000024
  */
-void GameFlow::read(RandomAccessStream& input) { mParameters->read(input); }
+void GameFlow::read(RandomAccessStream& input)
+{
+	mParameters->read(input);
+}
 
 /*
  * --INFO--
@@ -1701,7 +1704,10 @@ void GameFlow::update()
  * Address:	80052D60
  * Size:	0000D0
  */
-void GameFlow::addGenNode(char* name, CoreNode* node) { mGenFlow->add(new GameGenNode((name) ? name : node->mName, node)); }
+void GameFlow::addGenNode(char* name, CoreNode* node)
+{
+	mGenFlow->add(new GameGenNode((name) ? name : node->mName, node));
+}
 
 /*
  * --INFO--
@@ -1721,7 +1727,9 @@ void GameGenFlow::update()
  * Address:	80052E90
  * Size:	000004
  */
-void GameLoadIdler::init() { }
+void GameLoadIdler::init()
+{
+}
 
 /*
  * --INFO--

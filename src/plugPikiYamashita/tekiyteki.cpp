@@ -866,46 +866,65 @@ void YTeki::startNewMotion(int)
  * Address:	801A30C8
  * Size:	000008
  */
-bool TAIeffectAttackEventCallBack::hitCreature(zen::particleGenerator*, TAIeffectAttackParam*, Creature*, Vector3f) { return false; }
+bool TAIeffectAttackEventCallBack::hitCreature(zen::particleGenerator*, TAIeffectAttackParam*, Creature*, Vector3f)
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	801A30D0
  * Size:	000008
  */
-bool TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam*, Creature*, Vector3f) { return false; }
+bool TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam*, Creature*, Vector3f)
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	801A30D8
  * Size:	000008
  */
-bool TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam*, Creature*) { return false; }
+bool TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam*, Creature*)
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	801A30E0
  * Size:	000008
  */
-bool TAIeffectAttackEventCallBack::hitMap(TAIeffectAttackParam*) { return false; }
+bool TAIeffectAttackEventCallBack::hitMap(TAIeffectAttackParam*)
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	801A30E8
  * Size:	000004
  */
-void TAIeffectAttackEventCallBack::playEventSound(zen::particleGenerator*, TAIeffectAttackParam*) { }
+void TAIeffectAttackEventCallBack::playEventSound(zen::particleGenerator*, TAIeffectAttackParam*)
+{
+}
 
 /*
  * --INFO--
  * Address:	801A30EC
  * Size:	000004
  */
-void TAIeffectAttackEventCallBack::ptclHitMap(zen::particleGenerator*, TAIeffectAttackParam*) { }
+void TAIeffectAttackEventCallBack::ptclHitMap(zen::particleGenerator*, TAIeffectAttackParam*)
+{
+}
 
 /*
  * --INFO--
  * Address:	801A30F0
  * Size:	000008
  */
-bool TAIeffectAttackEventCallBack::hitCheckCulling(zen::particleGenerator*, TAIeffectAttackParam*, Creature*) { return true; }
+bool TAIeffectAttackEventCallBack::hitCheckCulling(zen::particleGenerator*, TAIeffectAttackParam*, Creature*)
+{
+	return true;
+}

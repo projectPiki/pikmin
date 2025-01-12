@@ -1873,4 +1873,6 @@ void LifeGauge::countOff()
  * Address:	8005D0E4
  * Size:	000004
  */
-void __sinit_gauges_cpp(void) { }
+void __sinit_gauges_cpp(void)
+{
+}

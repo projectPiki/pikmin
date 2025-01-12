@@ -7,7 +7,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "panitekianimator"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "panitekianimator");
+}
 
 /*
  * --INFO--
@@ -69,4 +72,6 @@ PaniMotionTable* PaniTekiAnimator::createMotionTable()
  * Address:	8011FEBC
  * Size:	00003C
  */
-PaniTekiAnimator::PaniTekiAnimator() { }
+PaniTekiAnimator::PaniTekiAnimator()
+{
+}

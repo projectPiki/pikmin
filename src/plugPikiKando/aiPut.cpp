@@ -1775,7 +1775,9 @@ void ActPutBomb::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800BFF48
  * Size:	000004
  */
-void ActPutBomb::cleanup() { }
+void ActPutBomb::cleanup()
+{
+}
 
 /*
  * --INFO--

@@ -2090,7 +2090,9 @@ bool TaiKinokoChargingSporesAction::act(Teki&)
  * Address:	80131820
  * Size:	000004
  */
-void TaiKinokoDischargingSporesAction::start(Teki&) { }
+void TaiKinokoDischargingSporesAction::start(Teki&)
+{
+}
 
 /*
  * --INFO--

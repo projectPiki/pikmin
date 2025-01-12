@@ -196,4 +196,7 @@ s32 CARDClose(CARDFileInfo* fileInfo)
  * Address:	8020BEE0
  * Size:	000008
  */
-BOOL __CARDIsOpened(CARDControl* card, s32 fileNo) { return FALSE; }
+BOOL __CARDIsOpened(CARDControl* card, s32 fileNo)
+{
+	return FALSE;
+}

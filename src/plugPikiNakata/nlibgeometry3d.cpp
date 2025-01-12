@@ -35,7 +35,10 @@ NLine::NLine()
  * Address:	8011D3FC
  * Size:	000070
  */
-NLine::NLine(NVector3f& start, NVector3f& dir) { construct(start, dir); }
+NLine::NLine(NVector3f& start, NVector3f& dir)
+{
+	construct(start, dir);
+}
 
 /*
  * --INFO--
@@ -333,7 +336,10 @@ void NPlane::construct(NVector3f&, f32)
  * Address:	8011D6E4
  * Size:	000068
  */
-NPlane::NPlane(NVector3f& normal, NVector3f& point) { construct(normal, point); }
+NPlane::NPlane(NVector3f& normal, NVector3f& point)
+{
+	construct(normal, point);
+}
 
 /*
  * --INFO--
@@ -668,7 +674,10 @@ void NPlane::transform(NTransform3D&)
  * Address:	8011D938
  * Size:	000024
  */
-void NPlane::println() { mNormal.println(); }
+void NPlane::println()
+{
+	mNormal.println();
+}
 
 /*
  * --INFO--

@@ -28,7 +28,10 @@ void RumbleSample::init()
  * Address:	8017D694
  * Size:	000028
  */
-void RumbleSample::simpleStop() { PADStopMotorHard(mChannel); }
+void RumbleSample::simpleStop()
+{
+	PADStopMotorHard(mChannel);
+}
 
 /*
  * --INFO--

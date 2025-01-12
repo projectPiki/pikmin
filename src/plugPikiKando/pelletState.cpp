@@ -8,7 +8,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "pelletState"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "pelletState");
+}
 
 /*
  * --INFO--
@@ -365,7 +368,10 @@ PelletUfoLoadState::PelletUfoLoadState()
  * Address:	8009A478
  * Size:	00000C
  */
-void PelletUfoLoadState::init(Pellet*) { _10 = 8; }
+void PelletUfoLoadState::init(Pellet*)
+{
+	_10 = 8;
+}
 
 /*
  * --INFO--
@@ -469,21 +475,27 @@ PelletDeadState::PelletDeadState()
  * Address:	8009A58C
  * Size:	000004
  */
-void PelletDeadState::init(Pellet*) { }
+void PelletDeadState::init(Pellet*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8009A590
  * Size:	000004
  */
-void PelletDeadState::exec(Pellet*) { }
+void PelletDeadState::exec(Pellet*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8009A594
  * Size:	000004
  */
-void PelletDeadState::cleanup(Pellet*) { }
+void PelletDeadState::cleanup(Pellet*)
+{
+}
 
 /*
  * --INFO--
@@ -500,21 +512,27 @@ PelletNormalState::PelletNormalState()
  * Address:	8009A5E0
  * Size:	000004
  */
-void PelletNormalState::init(Pellet*) { }
+void PelletNormalState::init(Pellet*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8009A5E4
  * Size:	000004
  */
-void PelletNormalState::exec(Pellet*) { }
+void PelletNormalState::exec(Pellet*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8009A5E8
  * Size:	000004
  */
-void PelletNormalState::cleanup(Pellet*) { }
+void PelletNormalState::cleanup(Pellet*)
+{
+}
 
 /*
  * --INFO--
@@ -531,7 +549,9 @@ PelletSwallowedState::PelletSwallowedState()
  * Address:	8009A63C
  * Size:	000004
  */
-void PelletSwallowedState::init(Pellet*) { }
+void PelletSwallowedState::init(Pellet*)
+{
+}
 
 /*
  * --INFO--
@@ -715,7 +735,9 @@ void PelletAppearState::exec(Pellet*)
  * Address:	8009A818
  * Size:	000004
  */
-void PelletAppearState::cleanup(Pellet*) { }
+void PelletAppearState::cleanup(Pellet*)
+{
+}
 
 /*
  * --INFO--
@@ -1336,7 +1358,9 @@ void PelletGoalState::exec(Pellet*)
  * Address:	8009B0C8
  * Size:	000004
  */
-void Suckable::finishSuck(Pellet*) { }
+void Suckable::finishSuck(Pellet*)
+{
+}
 
 /*
  * --INFO--
@@ -1369,11 +1393,15 @@ void PelletGoalState::cleanup(Pellet*)
  * Address:	8009B0FC
  * Size:	000004
  */
-void AState<Pellet>::resume(Pellet*) { }
+void AState<Pellet>::resume(Pellet*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8009B100
  * Size:	000004
  */
-void AState<Pellet>::restart(Pellet*) { }
+void AState<Pellet>::restart(Pellet*)
+{
+}

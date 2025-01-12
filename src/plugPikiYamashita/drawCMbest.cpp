@@ -202,7 +202,10 @@ bool zen::DrawCMBpicObj::modeAppear()
  * Address:	801EE50C
  * Size:	000008
  */
-bool zen::DrawCMBpicObj::modeSleep() { return false; }
+bool zen::DrawCMBpicObj::modeSleep()
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -506,14 +509,20 @@ void zen::DrawCMbest::wait()
  * Address:	801EE860
  * Size:	000008
  */
-bool zen::DrawCMbest::modeSleep() { return false; }
+bool zen::DrawCMbest::modeSleep()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	801EE868
  * Size:	000008
  */
-bool zen::DrawCMbest::modeWait() { return false; }
+bool zen::DrawCMbest::modeWait()
+{
+	return false;
+}
 
 /*
  * --INFO--

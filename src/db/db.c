@@ -70,7 +70,10 @@ void __DBExceptionDestination(void)
  * Address:	801FDB28
  * Size:	00001C
  */
-int __DBIsExceptionMarked(u8 a) { return __DBInterface->unk4 & (1 << a); }
+int __DBIsExceptionMarked(u8 a)
+{
+	return __DBInterface->unk4 & (1 << a);
+}
 
 /*
  * --INFO--
@@ -97,4 +100,6 @@ void __DBSetPresent(void)
  * Address:	801FDB44
  * Size:	000050
  */
-void DBPrintf(const char*, ...) { }
+void DBPrintf(const char*, ...)
+{
+}

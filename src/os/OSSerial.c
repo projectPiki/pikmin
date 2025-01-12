@@ -18,7 +18,10 @@ static void GetTypeCallback(s32 chan, u32 error, OSContext* context);
  * Address:	801FAFA8
  * Size:	000020
  */
-BOOL SIBusy(void) { return Si.chan != -1 ? TRUE : FALSE; }
+BOOL SIBusy(void)
+{
+	return Si.chan != -1 ? TRUE : FALSE;
+}
 
 /*
  * --INFO--
@@ -188,14 +191,20 @@ void SISync(void)
  * Address:	801FB5A0
  * Size:	000010
  */
-u32 SIGetStatus(s32) { return __SIRegs[SI_STAT]; }
+u32 SIGetStatus(s32)
+{
+	return __SIRegs[SI_STAT];
+}
 
 /*
  * --INFO--
  * Address:	801FB5B0
  * Size:	000014
  */
-void SISetCommand(s32 chan, u32 command) { __SIRegs[3 * chan] = command; }
+void SISetCommand(s32 chan, u32 command)
+{
+	__SIRegs[3 * chan] = command;
+}
 
 /*
  * --INFO--
@@ -212,7 +221,10 @@ void SIGetCommand(void)
  * Address:	801FB5C4
  * Size:	000010
  */
-void SITransferCommands(void) { __SIRegs[SI_STAT] = 0x80000000; }
+void SITransferCommands(void)
+{
+	__SIRegs[SI_STAT] = 0x80000000;
+}
 
 /*
  * --INFO--

@@ -1659,14 +1659,18 @@ WeedsGen::WeedsGen(Shape* shape, CreatureProp* props)
  * Address:	800E58F0
  * Size:	000004
  */
-void WeedsGen::update() { }
+void WeedsGen::update()
+{
+}
 
 /*
  * --INFO--
  * Address:	800E58F4
  * Size:	000004
  */
-void WeedsGen::refresh(Graphics&) { }
+void WeedsGen::refresh(Graphics&)
+{
+}
 
 /*
  * --INFO--
@@ -2059,7 +2063,10 @@ bool Weed::isVisible()
  * Address:	800E5D6C
  * Size:	000008
  */
-bool Weed::isAlive() { return true; }
+bool Weed::isAlive()
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -2083,7 +2090,10 @@ bool Weed::isAtari()
  * Address:	800E5D88
  * Size:	000008
  */
-bool Weed::needFlick(Creature*) { return false; }
+bool Weed::needFlick(Creature*)
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -2107,14 +2117,20 @@ bool GrassGen::isAlive()
  * Address:	800E5DA4
  * Size:	000008
  */
-bool GrassGen::isVisible() { return true; }
+bool GrassGen::isVisible()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800E5DAC
  * Size:	000008
  */
-bool GrassGen::needFlick(Creature*) { return false; }
+bool GrassGen::needFlick(Creature*)
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -2138,11 +2154,17 @@ bool RockGen::isAlive()
  * Address:	800E5DC8
  * Size:	000008
  */
-bool RockGen::isVisible() { return true; }
+bool RockGen::isVisible()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800E5DD0
  * Size:	000008
  */
-bool RockGen::needFlick(Creature*) { return false; }
+bool RockGen::needFlick(Creature*)
+{
+	return false;
+}

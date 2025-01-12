@@ -23,7 +23,10 @@ u32 InitializeUART(u32 baudRate)
  * Address:	801FD80C
  * Size:	000008
  */
-u32 ReadUARTN(void* bytes, u32 len) { return 4; }
+u32 ReadUARTN(void* bytes, u32 len)
+{
+	return 4;
+}
 
 /*
  * --INFO--

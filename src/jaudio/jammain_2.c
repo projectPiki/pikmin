@@ -4693,7 +4693,10 @@ void Cmd_Finish()
  * Address:	800125E0
  * Size:	000008
  */
-u32 Cmd_Nop() { return 0x0; }
+u32 Cmd_Nop()
+{
+	return 0x0;
+}
 
 /*
  * --INFO--

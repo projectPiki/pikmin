@@ -7,7 +7,10 @@ u32 next = 1;
  * Address:	80218068
  * Size:	000008
  */
-void srand(u32 seed) { next = seed; }
+void srand(u32 seed)
+{
+	next = seed;
+}
 
 /*
  * --INFO--

@@ -155,7 +155,9 @@ void InitMetroTRKCommTable(void)
  * Address:	80220608
  * Size:	000004
  */
-void TRKUARTInterruptHandler(void) { }
+void TRKUARTInterruptHandler(void)
+{
+}
 
 /*
  * --INFO--

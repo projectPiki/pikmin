@@ -134,7 +134,10 @@ bool zen::DrawCMscoreObj::modeMove()
  * Address:	801ED9FC
  * Size:	000008
  */
-bool zen::DrawCMscoreObj::modeWait() { return false; }
+bool zen::DrawCMscoreObj::modeWait()
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -794,7 +797,10 @@ void zen::DrawCMscoreMgr::appear(f32)
  * Address:	801EE228
  * Size:	000008
  */
-bool zen::DrawCMscoreMgr::modeSleep() { return false; }
+bool zen::DrawCMscoreMgr::modeSleep()
+{
+	return false;
+}
 
 /*
  * --INFO--

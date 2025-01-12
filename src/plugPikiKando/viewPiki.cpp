@@ -113,7 +113,10 @@ PikiShapeObject::PikiShapeObject(Shape* shape)
  * Address:	800D8B70
  * Size:	000020
  */
-bool ViewPiki::isKinoko() { return mPikiShape == PikiShapeObject::_instances[PIKI_Kinoko]; }
+bool ViewPiki::isKinoko()
+{
+	return mPikiShape == PikiShapeObject::_instances[PIKI_Kinoko];
+}
 
 /*
  * --INFO--
@@ -522,7 +525,9 @@ void ViewPiki::setFlower(int)
  * Address:	800D909C
  * Size:	000004
  */
-void ViewPiki::setLeaves(int) { }
+void ViewPiki::setLeaves(int)
+{
+}
 
 /*
  * --INFO--

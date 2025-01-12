@@ -190,7 +190,10 @@ void __DVDInterruptHandler(__OSInterrupt interrupt, OSContext* context)
  * Address:	801FE460
  * Size:	000084
  */
-static void AlarmHandler(OSAlarm* alarm, OSContext* context) { ProcessNextCommand(); }
+static void AlarmHandler(OSAlarm* alarm, OSContext* context)
+{
+	ProcessNextCommand();
+}
 
 /*
  * --INFO--

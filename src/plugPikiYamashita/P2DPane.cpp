@@ -26,7 +26,10 @@ DEFINE_PRINT("P2DPane");
  * Address:	801B069C
  * Size:	000008
  */
-void P2DPane::setCallBack(P2DPaneCallBack* callback) { mCallBack = callback; }
+void P2DPane::setCallBack(P2DPaneCallBack* callback)
+{
+	mCallBack = callback;
+}
 
 /*
  * --INFO--
@@ -63,7 +66,10 @@ void P2DPane::drawSelf(int, int, Matrix4f* drawMtx)
  * Address:	801B0700
  * Size:	000030
  */
-P2DPaneCallBackBase::P2DPaneCallBackBase(P2DPane* pane, P2DPaneType type) { checkPaneType(pane, type); }
+P2DPaneCallBackBase::P2DPaneCallBackBase(P2DPane* pane, P2DPaneType type)
+{
+	checkPaneType(pane, type);
+}
 
 /*
  * --INFO--
@@ -1054,14 +1060,18 @@ void P2DPane::loadChildResource()
  * Address:	801B17A0
  * Size:	000004
  */
-void P2DPane::loadResource() { }
+void P2DPane::loadResource()
+{
+}
 
 /*
  * --INFO--
  * Address:	801B17A4
  * Size:	000004
  */
-void P2DPane::makeResident() { }
+void P2DPane::makeResident()
+{
+}
 
 /*
  * --INFO--
@@ -1079,21 +1089,30 @@ void P2DPane::move(Vector3f& newPos)
  * Address:	801B180C
  * Size:	000008
  */
-void P2DPane::moveZ(f32 newZ) { mPaneZ = newZ; }
+void P2DPane::moveZ(f32 newZ)
+{
+	mPaneZ = newZ;
+}
 
 /*
  * --INFO--
  * Address:	801B1814
  * Size:	000024
  */
-void P2DPane::add(int x, int y) { _18.add(x, y); }
+void P2DPane::add(int x, int y)
+{
+	_18.add(x, y);
+}
 
 /*
  * --INFO--
  * Address:	801B1838
  * Size:	000024
  */
-void P2DPane::resize(int width, int height) { _18.resize(width, height); }
+void P2DPane::resize(int width, int height)
+{
+	_18.resize(width, height);
+}
 
 /*
  * --INFO--

@@ -29,14 +29,20 @@ s32 GetRandom_s32()
  * Address:	8000D7C0
  * Size:	000024
  */
-u32 GetRandom_u32() { return GetRandom_s32() & ~0x80000000; }
+u32 GetRandom_u32()
+{
+	return GetRandom_s32() & ~0x80000000;
+}
 
 /*
  * --INFO--
  * Address:	8000D800
  * Size:	000038
  */
-u32 GetRandom_ulimit(u32 limit) { return GetRandom_u32() % limit; }
+u32 GetRandom_ulimit(u32 limit)
+{
+	return GetRandom_u32() % limit;
+}
 
 /*
  * --INFO--

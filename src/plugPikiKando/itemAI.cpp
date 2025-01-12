@@ -3900,7 +3900,9 @@ void GoalAI::BootEmit::act(AICreature*)
  * Address:	800F1D18
  * Size:	000004
  */
-void GoalAI::BootDone::act(AICreature*) { }
+void GoalAI::BootDone::act(AICreature*)
+{
+}
 
 /*
  * --INFO--
@@ -4134,7 +4136,9 @@ void GoalAI::EmitPiki::act(AICreature*)
  * Address:	800F2048
  * Size:	000004
  */
-void GoalAI::EmitWait::act(AICreature*) { }
+void GoalAI::EmitWait::act(AICreature*)
+{
+}
 
 /*
  * --INFO--

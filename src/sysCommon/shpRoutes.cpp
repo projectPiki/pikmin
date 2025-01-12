@@ -739,7 +739,10 @@ void RouteGroup::refresh(Graphics&, EditNode*)
  * Address:	80037138
  * Size:	000060
  */
-void RouteGroup::render2d(Graphics& gfx, int& p3) { gfx.texturePrintf(gsys->mConsFont, 0, p3 += 12, "route [ %s ]", mRouteName); }
+void RouteGroup::render2d(Graphics& gfx, int& p3)
+{
+	gfx.texturePrintf(gsys->mConsFont, 0, p3 += 12, "route [ %s ]", mRouteName);
+}
 
 /*
  * --INFO--

@@ -1332,7 +1332,9 @@ void TaiPalmSettingPelletAction::start(Teki&)
  * Address:	8013EA9C
  * Size:	000004
  */
-void TaiPalmChangingColorAction::start(Teki&) { }
+void TaiPalmChangingColorAction::start(Teki&)
+{
+}
 
 /*
  * --INFO--

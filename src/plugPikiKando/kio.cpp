@@ -39,7 +39,10 @@ static BOOL hioEnumCallback(s32 chan)
  * Address:	80084350
  * Size:	000024
  */
-static void hioCallback() { kio->readMailbox(); }
+static void hioCallback()
+{
+	kio->readMailbox();
+}
 
 /*
  * --INFO--

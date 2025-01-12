@@ -5389,7 +5389,10 @@ void TaiNapkidFallingAction::start(Teki&)
  * Address:	8013A3C8
  * Size:	000008
  */
-bool TaiNapkidFallingAction::act(Teki&) { return false; }
+bool TaiNapkidFallingAction::act(Teki&)
+{
+	return false;
+}
 
 /*
  * --INFO--

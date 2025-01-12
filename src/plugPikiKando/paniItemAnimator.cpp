@@ -59,4 +59,6 @@ PaniMotionTable* PaniItemAnimator::createMotionTable()
  * Address:	800F80F4
  * Size:	00003C
  */
-PaniItemAnimator::PaniItemAnimator() { }
+PaniItemAnimator::PaniItemAnimator()
+{
+}

@@ -22,21 +22,30 @@ DEFINE_PRINT("genActor");
  * Address:	80119B30
  * Size:	000078
  */
-static GenObject* makeObjectActor() { return new GenObjectActor(); }
+static GenObject* makeObjectActor()
+{
+	return new GenObjectActor();
+}
 
 /*
  * --INFO--
  * Address:	80119BA8
  * Size:	00008C
  */
-void GenObjectActor::initialise() { GenObjectFactory::factory->registerMember('actr', &makeObjectActor, "create Actor", 'v0.0'); }
+void GenObjectActor::initialise()
+{
+	GenObjectFactory::factory->registerMember('actr', &makeObjectActor, "create Actor", 'v0.0');
+}
 
 /*
  * --INFO--
  * Address:	80119C34
  * Size:	000040
  */
-void GenObjectActor::doRead(RandomAccessStream& stream) { mActorId = stream.readInt(); }
+void GenObjectActor::doRead(RandomAccessStream& stream)
+{
+	mActorId = stream.readInt();
+}
 
 /*
  * --INFO--

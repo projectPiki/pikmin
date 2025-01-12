@@ -22,14 +22,20 @@ DEFINE_PRINT(nullptr);
  * Address:	80043E5C
  * Size:	000038
  */
-ID32::ID32(void) { setID('none'); }
+ID32::ID32(void)
+{
+	setID('none');
+}
 
 /*
  * --INFO--
  * Address:	80043E94
  * Size:	000030
  */
-ID32::ID32(u32 id) { setID(id); }
+ID32::ID32(u32 id)
+{
+	setID(id);
+}
 
 /**
  * @brief Sets the ID value for the ID32 object.
@@ -115,21 +121,30 @@ void ID32::updateString()
  * Address:	........
  * Size:	000030
  */
-void ID32::operator=(u32 other) { setID(other); }
+void ID32::operator=(u32 other)
+{
+	setID(other);
+}
 
 /*
  * --INFO--
  * Address:	80043FE0
  * Size:	000014
  */
-bool ID32::operator==(u32 other) { return mId == other; }
+bool ID32::operator==(u32 other)
+{
+	return mId == other;
+}
 
 /*
  * --INFO--
  * Address:	80043FF4
  * Size:	000014
  */
-bool ID32::operator!=(u32 other) { return mId != other; }
+bool ID32::operator!=(u32 other)
+{
+	return mId != other;
+}
 
 /**
  * Writes the ID32 value to the given RandomAccessStream.
@@ -175,7 +190,9 @@ void ID32::read(RandomAccessStream& stream)
  * Address:	80044158
  * Size:	000004
  */
-void ID32::print() { }
+void ID32::print()
+{
+}
 
 /**
  * @brief Converts the ID32 value to a string representation and stores it in the provided buffer.

@@ -8,14 +8,20 @@
  * Address:	80207E14
  * Size:	000010
  */
-u32 DSPCheckMailToDSP() { return __DSPRegs[DSP_MAILBOX_IN_HI] >> 0xF & 1; }
+u32 DSPCheckMailToDSP()
+{
+	return __DSPRegs[DSP_MAILBOX_IN_HI] >> 0xF & 1;
+}
 
 /*
  * --INFO--
  * Address:	80207E24
  * Size:	000010
  */
-u32 DSPCheckMailFromDSP(void) { return __DSPRegs[DSP_MAILBOX_OUT_HI] >> 0xF & 1; }
+u32 DSPCheckMailFromDSP(void)
+{
+	return __DSPRegs[DSP_MAILBOX_OUT_HI] >> 0xF & 1;
+}
 
 /*
  * --INFO--
@@ -32,7 +38,10 @@ void DSPReadCPUToDSPMbox(void)
  * Address:	80207E34
  * Size:	000018
  */
-u32 DSPReadMailFromDSP() { return (__DSPRegs[DSP_MAILBOX_OUT_HI] << 0x10) | __DSPRegs[DSP_MAILBOX_OUT_LO]; }
+u32 DSPReadMailFromDSP()
+{
+	return (__DSPRegs[DSP_MAILBOX_OUT_HI] << 0x10) | __DSPRegs[DSP_MAILBOX_OUT_LO];
+}
 
 /*
  * --INFO--

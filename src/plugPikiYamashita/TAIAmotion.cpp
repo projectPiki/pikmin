@@ -8,7 +8,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "TAIAmotion"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "TAIAmotion");
+}
 
 /*
  * --INFO--
@@ -36,7 +39,10 @@ TAIAmotion::TAIAmotion(int nextState, int motionID)
  * Address:	801ACC78
  * Size:	00004C
  */
-void TAIAmotion::start(Teki& teki) { teki.mTekiAnimator->startMotion(PaniMotionInfo(mMotionID, &teki)); }
+void TAIAmotion::start(Teki& teki)
+{
+	teki.mTekiAnimator->startMotion(PaniMotionInfo(mMotionID, &teki));
+}
 
 /*
  * --INFO--

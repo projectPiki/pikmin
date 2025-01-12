@@ -143,7 +143,9 @@ bool AICreature::checkEventFlag(int flag)
  * Address:	8007D4E4
  * Size:	000024
  */
-SimpleAI::SimpleAI() { }
+SimpleAI::SimpleAI()
+{
+}
 
 /*
  * --INFO--
@@ -204,7 +206,10 @@ SAIArrow* SimpleAI::addArrow(int p1, SAIEvent* event, int p3)
  * Address:	8007D758
  * Size:	00002C
  */
-void SimpleAI::start(AICreature* creature, int stateID) { transit(creature, stateID); }
+void SimpleAI::start(AICreature* creature, int stateID)
+{
+	transit(creature, stateID);
+}
 
 /*
  * --INFO--

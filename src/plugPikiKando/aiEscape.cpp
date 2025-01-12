@@ -71,7 +71,9 @@ ActEscape::ActEscape(Piki* piki)
  * Address:	800B88A4
  * Size:	000004
  */
-void ActEscape::Initialiser::initialise(Action*) { }
+void ActEscape::Initialiser::initialise(Action*)
+{
+}
 
 /*
  * --INFO--

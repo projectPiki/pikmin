@@ -2333,7 +2333,10 @@ void AIPerf::breakSluice(Menu&)
  * Address:	80086470
  * Size:	000008
  */
-bool WorkObject::isBridge() { return false; }
+bool WorkObject::isBridge()
+{
+	return false;
+}
 
 /*
  * --INFO--

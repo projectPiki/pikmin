@@ -173,7 +173,10 @@ bool SeedItem::isVisible()
  * Address:	800EDF0C
  * Size:	000008
  */
-bool SeedItem::isAtari() { return false; }
+bool SeedItem::isAtari()
+{
+	return false;
+}
 
 /*
  * --INFO--

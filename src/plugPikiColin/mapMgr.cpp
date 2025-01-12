@@ -4848,7 +4848,9 @@ Collision::Collision()
  * Address:	800658C8
  * Size:	000004
  */
-void MapMgr::createLights() { }
+void MapMgr::createLights()
+{
+}
 
 /*
  * --INFO--
@@ -5107,7 +5109,10 @@ void MapMgr::update()
  * Address:	80065B9C
  * Size:	000008
  */
-bool Creature::alwaysUpdatePlatform() { return false; }
+bool Creature::alwaysUpdatePlatform()
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -8980,14 +8985,18 @@ void MapMgr::recTraceMove(CollGroup*, MoveTrace&, f32)
  * Address:	80068E4C
  * Size:	000004
  */
-void DynCollObject::touchCallback(Plane&, Vector3f&, Vector3f&) { }
+void DynCollObject::touchCallback(Plane&, Vector3f&, Vector3f&)
+{
+}
 
 /*
  * --INFO--
  * Address:	80068E50
  * Size:	000004
  */
-void Creature::wallCallback(Plane&, DynCollObject*) { }
+void Creature::wallCallback(Plane&, DynCollObject*)
+{
+}
 
 /*
  * --INFO--
@@ -9725,21 +9734,27 @@ void MapShadMatHandler::setMaterial(Material*)
  * Address:	80069740
  * Size:	000004
  */
-void DynObjPushable::touchCallback(Plane&, Vector3f&, Vector3f&) { }
+void DynObjPushable::touchCallback(Plane&, Vector3f&, Vector3f&)
+{
+}
 
 /*
  * --INFO--
  * Address:	80069744
  * Size:	000004
  */
-void DynCollObjBody::update() { }
+void DynCollObjBody::update()
+{
+}
 
 /*
  * --INFO--
  * Address:	80069748
  * Size:	000004
  */
-void DynCollObjBody::adjust(Creature*) { }
+void DynCollObjBody::adjust(Creature*)
+{
+}
 
 /*
  * --INFO--
@@ -9760,21 +9775,27 @@ Shape* DynCollShape::getShape()
  * Address:	80069754
  * Size:	000004
  */
-void DynCollObject::applyVelocity(Plane&, Vector3f&, Vector3f&) { }
+void DynCollObject::applyVelocity(Plane&, Vector3f&, Vector3f&)
+{
+}
 
 /*
  * --INFO--
  * Address:	80069758
  * Size:	000004
  */
-void MapObjectPart::update() { }
+void MapObjectPart::update()
+{
+}
 
 /*
  * --INFO--
  * Address:	8006975C
  * Size:	000004
  */
-void MapObjectPart::refresh(Graphics&) { }
+void MapObjectPart::refresh(Graphics&)
+{
+}
 
 /*
  * --INFO--
@@ -9809,14 +9830,19 @@ void MapObjectPart::touchCallback(Plane&, Vector3f&, Vector3f&)
  * Address:	80069798
  * Size:	000004
  */
-void DynCollObject::adjust(Creature*) { }
+void DynCollObject::adjust(Creature*)
+{
+}
 
 /*
  * --INFO--
  * Address:	8006979C
  * Size:	000008
  */
-Shape* DynCollObject::getShape() { return nullptr; }
+Shape* DynCollObject::getShape()
+{
+	return nullptr;
+}
 
 /*
  * --INFO--

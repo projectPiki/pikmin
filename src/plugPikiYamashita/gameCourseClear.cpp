@@ -2421,7 +2421,9 @@ void GameModeBase::update(Controller*)
  * Address:	8019B098
  * Size:	000004
  */
-void GameModeBase::draw(Graphics&) { }
+void GameModeBase::draw(Graphics&)
+{
+}
 
 /*
  * --INFO--
@@ -2987,7 +2989,9 @@ void GameCourseClearScreen::read(RandomAccessStream&)
  * Address:	8019B7D0
  * Size:	000004
  */
-void GameCourseClearSection::init() { }
+void GameCourseClearSection::init()
+{
+}
 
 /*
  * --INFO--

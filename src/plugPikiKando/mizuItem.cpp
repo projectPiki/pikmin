@@ -7,7 +7,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "matoItem"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "matoItem");
+}
 
 /*
  * --INFO--
@@ -52,7 +55,10 @@ void MizuItem::update()
  * Address:	800F7D88
  * Size:	000008
  */
-bool MizuItem::needFlick(Creature*) { return false; }
+bool MizuItem::needFlick(Creature*)
+{
+	return false;
+}
 
 /*
  * --INFO--

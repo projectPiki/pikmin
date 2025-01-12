@@ -2169,7 +2169,9 @@ void ActCrowd::startZawatuki()
  * Address:	800B770C
  * Size:	000004
  */
-void ActCrowd::finishZawatuki() { }
+void ActCrowd::finishZawatuki()
+{
+}
 
 /*
  * --INFO--
@@ -2242,4 +2244,7 @@ ActCrowd::~ActCrowd()
  * Address:	800B7790
  * Size:	000008
  */
-bool ActCrowd::resumable() { return true; }
+bool ActCrowd::resumable()
+{
+	return true;
+}

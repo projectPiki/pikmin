@@ -1680,7 +1680,9 @@ void PikiState::dump()
  * Address:	800D053C
  * Size:	000004
  */
-void PikiState::doDump() { }
+void PikiState::doDump()
+{
+}
 
 /*
  * --INFO--
@@ -2265,14 +2267,18 @@ void PikiNormalState::exec(Piki*)
  * Address:	800D0B90
  * Size:	000004
  */
-void PikiNormalState::cleanup(Piki*) { }
+void PikiNormalState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800D0B94
  * Size:	000004
  */
-void PikiNormalState::procWallMsg(Piki*, MsgWall*) { }
+void PikiNormalState::procWallMsg(Piki*, MsgWall*)
+{
+}
 
 /*
  * --INFO--
@@ -2636,7 +2642,9 @@ void PikiAbsorbState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D0F88
  * Size:	000004
  */
-void PikiAbsorbState::cleanup(Piki*) { }
+void PikiAbsorbState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -3118,7 +3126,9 @@ void PikiDrownState::exec(Piki*)
  * Address:	800D15CC
  * Size:	000004
  */
-void PikiDrownState::cleanup(Piki*) { }
+void PikiDrownState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -3560,7 +3570,9 @@ void PikiKinokoState::exec(Piki*)
  * Address:	800D1B28
  * Size:	000004
  */
-void PikiKinokoState::exeAttack(Piki*) { }
+void PikiKinokoState::exeAttack(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -4604,7 +4616,9 @@ void PikiFiredState::exec(Piki*)
  * Address:	800D28D8
  * Size:	000004
  */
-void PikiFiredState::cleanup(Piki*) { }
+void PikiFiredState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -5159,7 +5173,9 @@ void PikiBulletState::procWallMsg(Piki*, MsgWall*)
  * Address:	800D2F64
  * Size:	000004
  */
-void PikiBulletState::cleanup(Piki*) { }
+void PikiBulletState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -6292,7 +6308,9 @@ void PikiFallMeckState::init(Piki*)
  * Address:	800D3D64
  * Size:	000004
  */
-void PikiFallMeckState::exec(Piki*) { }
+void PikiFallMeckState::exec(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -6479,7 +6497,9 @@ void PikiFallMeckState::procBounceMsg(Piki*, MsgBounce*)
  * Address:	800D3FF0
  * Size:	000004
  */
-void PikiFallMeckState::cleanup(Piki*) { }
+void PikiFallMeckState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -6566,7 +6586,9 @@ void PikiFallState::init(Piki*)
  * Address:	800D40C8
  * Size:	000004
  */
-void PikiFallState::exec(Piki*) { }
+void PikiFallState::exec(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -6691,7 +6713,9 @@ void PikiFallState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D421C
  * Size:	000004
  */
-void PikiFallState::cleanup(Piki*) { }
+void PikiFallState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -7347,7 +7371,9 @@ void PikiCliffState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D4A38
  * Size:	000004
  */
-void PikiCliffState::cleanup(Piki*) { }
+void PikiCliffState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -7532,7 +7558,9 @@ void PikiGoHangState::exec(Piki*)
  * Address:	800D4C58
  * Size:	000004
  */
-void PikiGoHangState::cleanup(Piki*) { }
+void PikiGoHangState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -9089,7 +9117,9 @@ void PikiFlyingState::procCollideMsg(Piki*, MsgCollide*)
  * Address:	800D5E84
  * Size:	000004
  */
-void PikiFlyingState::procStickMsg(Piki*, MsgStick*) { }
+void PikiFlyingState::procStickMsg(Piki*, MsgStick*)
+{
+}
 
 /*
  * --INFO--
@@ -9249,14 +9279,18 @@ void PikiGrowState::init(Piki*)
  * Address:	800D6038
  * Size:	000004
  */
-void PikiGrowState::exec(Piki*) { }
+void PikiGrowState::exec(Piki*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800D603C
  * Size:	000004
  */
-void PikiGrowState::cleanup(Piki*) { }
+void PikiGrowState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -9459,7 +9493,9 @@ void PikiKinokoChangeState::exec(Piki*)
  * Address:	800D6224
  * Size:	000004
  */
-void PikiKinokoChangeState::cleanup(Piki*) { }
+void PikiKinokoChangeState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -9677,7 +9713,9 @@ void PikiGrowupState::exec(Piki*)
  * Address:	800D6468
  * Size:	000004
  */
-void PikiGrowupState::cleanup(Piki*) { }
+void PikiGrowupState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -9813,21 +9851,27 @@ PikiWaveState::PikiWaveState()
  * Address:	800D65EC
  * Size:	000004
  */
-void PikiWaveState::init(Piki*) { }
+void PikiWaveState::init(Piki*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800D65F0
  * Size:	000004
  */
-void PikiWaveState::exec(Piki*) { }
+void PikiWaveState::exec(Piki*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800D65F4
  * Size:	000004
  */
-void PikiWaveState::cleanup(Piki*) { }
+void PikiWaveState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -9858,7 +9902,9 @@ void PikiWaveState::resume(Piki*)
  * Address:	800D6628
  * Size:	000004
  */
-void PikiWaveState::restart(Piki*) { }
+void PikiWaveState::restart(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -10134,7 +10180,9 @@ void PikiPushState::resume(Piki*)
  * Address:	800D68D4
  * Size:	000004
  */
-void PikiPushState::restart(Piki*) { }
+void PikiPushState::restart(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -10420,7 +10468,9 @@ void PikiPushPikiState::resume(Piki*)
  * Address:	800D6B98
  * Size:	000004
  */
-void PikiPushPikiState::restart(Piki*) { }
+void PikiPushPikiState::restart(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -10484,7 +10534,9 @@ void PikiPushPikiState::procCollideMsg(Piki*, MsgCollide*)
  * Address:	800D6C40
  * Size:	000004
  */
-void PikiPushPikiState::procWallMsg(Piki*, MsgWall*) { }
+void PikiPushPikiState::procWallMsg(Piki*, MsgWall*)
+{
+}
 
 /*
  * --INFO--
@@ -10573,7 +10625,9 @@ PikiBuryState::PikiBuryState()
  * Address:	800D6D10
  * Size:	000004
  */
-void PikiBuryState::init(Piki*) { }
+void PikiBuryState::init(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -10726,7 +10780,9 @@ void PikiBuryState::exec(Piki*)
  * Address:	800D6F14
  * Size:	000004
  */
-void PikiBuryState::cleanup(Piki*) { }
+void PikiBuryState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -10915,7 +10971,9 @@ void PikiNukareWaitState::exec(Piki*)
  * Address:	800D712C
  * Size:	000004
  */
-void PikiNukareWaitState::cleanup(Piki*) { }
+void PikiNukareWaitState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -11009,7 +11067,9 @@ void PikiNukareState::init(Piki*)
  * Address:	800D7228
  * Size:	000004
  */
-void PikiNukareState::exec(Piki*) { }
+void PikiNukareState::exec(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -11457,7 +11517,9 @@ void PikiAutoNukiState::exec(Piki*)
  * Address:	800D77C4
  * Size:	000004
  */
-void PikiAutoNukiState::cleanup(Piki*) { }
+void PikiAutoNukiState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -11701,7 +11763,9 @@ void PikiPressedState::exec(Piki*)
  * Address:	800D7A48
  * Size:	000004
  */
-void PikiPressedState::cleanup(Piki*) { }
+void PikiPressedState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -11852,7 +11916,9 @@ void PikiDyingState::exec(Piki*)
  * Address:	800D7BE8
  * Size:	000004
  */
-void PikiDyingState::cleanup(Piki*) { }
+void PikiDyingState::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -12615,7 +12681,9 @@ void PikiEmotionState::init(Piki*)
  * Address:	800D8598
  * Size:	000004
  */
-void PikiEmotionState::doDump() { }
+void PikiEmotionState::doDump()
+{
+}
 
 /*
  * --INFO--
@@ -12834,77 +12902,110 @@ void PikiEmotionState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D880C
  * Size:	000008
  */
-bool PikiDeadState::useLookUpdate() { return false; }
+bool PikiDeadState::useLookUpdate()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	800D8814
  * Size:	000008
  */
-bool PikiDyingState::useLookUpdate() { return false; }
+bool PikiDyingState::useLookUpdate()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	800D881C
  * Size:	000008
  */
-bool PikiPressedState::useLookUpdate() { return false; }
+bool PikiPressedState::useLookUpdate()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	800D8824
  * Size:	000008
  */
-bool PikiAutoNukiState::useLookUpdate() { return false; }
+bool PikiAutoNukiState::useLookUpdate()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	800D882C
  * Size:	000008
  */
-bool PikiNukareState::useLookUpdate() { return false; }
+bool PikiNukareState::useLookUpdate()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	800D8834
  * Size:	000008
  */
-bool PikiNukareWaitState::useLookUpdate() { return false; }
+bool PikiNukareWaitState::useLookUpdate()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	800D883C
  * Size:	000008
  */
-bool PikiGrowupState::useLookUpdate() { return false; }
+bool PikiGrowupState::useLookUpdate()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	800D8844
  * Size:	000008
  */
-bool PikiKinokoChangeState::useLookUpdate() { return false; }
+bool PikiKinokoChangeState::useLookUpdate()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	800D884C
  * Size:	000008
  */
-bool PikiGrowState::useLookUpdate() { return false; }
+bool PikiGrowState::useLookUpdate()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	800D8854
  * Size:	000008
  */
-bool PikiNormalState::collideAI() { return true; }
+bool PikiNormalState::collideAI()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	800D885C
  * Size:	000008
  */
-bool PikiNormalState::freeAI() { return true; }
+bool PikiNormalState::freeAI()
+{
+	return true;
+}
 
 /*
  * --INFO--

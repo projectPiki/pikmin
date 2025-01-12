@@ -137,7 +137,10 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
  * Address:	800A8660
  * Size:	00000C
  */
-void ActAttack::resume() { _1C = 0; }
+void ActAttack::resume()
+{
+	_1C = 0;
+}
 
 /*
  * --INFO--
@@ -157,7 +160,10 @@ void ActAttack::restart()
  * Address:	800A86C0
  * Size:	000008
  */
-bool ActAttack::resumable() { return true; }
+bool ActAttack::resumable()
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -165,7 +171,10 @@ bool ActAttack::resumable() { return true; }
  * Size:	000008
  */
 #pragma dont_inline on
-Creature* ActAttack::findTarget() { return nullptr; }
+Creature* ActAttack::findTarget()
+{
+	return nullptr;
+}
 #pragma dont_inline reset
 
 /*
@@ -2079,7 +2088,10 @@ void ActJumpAttack::cleanup()
  * Address:	800A9E74
  * Size:	00002C
  */
-void ActJumpAttack::attackHit() { mActor->playEventSound(getTarget(), 25); }
+void ActJumpAttack::attackHit()
+{
+	mActor->playEventSound(getTarget(), 25);
+}
 
 /*
  * --INFO--

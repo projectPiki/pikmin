@@ -8,7 +8,10 @@ static void EraseCallback(s32 channel, s32 result);
  * Address:	802094AC
  * Size:	000008
  */
-CARDFatBlock* __CARDGetFatBlock(CARDControl* card) { return card->currentFat; }
+CARDFatBlock* __CARDGetFatBlock(CARDControl* card)
+{
+	return card->currentFat;
+}
 
 /*
  * --INFO--

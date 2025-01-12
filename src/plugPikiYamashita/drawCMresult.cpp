@@ -1203,7 +1203,10 @@ void zen::DrawCMresult::setMode(zen::DrawCMresult::modeFlag)
  * Address:	801EFB08
  * Size:	000008
  */
-bool zen::DrawCMresult::modeSleep(Controller*) { return false; }
+bool zen::DrawCMresult::modeSleep(Controller*)
+{
+	return false;
+}
 
 /*
  * --INFO--

@@ -1303,21 +1303,30 @@ CollPart::CollPart()
  * Address:	80087E84
  * Size:	00001C
  */
-char* CollPart::getTypeString() { return _typeStr[mPartType]; }
+char* CollPart::getTypeString()
+{
+	return _typeStr[mPartType];
+}
 
 /*
  * --INFO--
  * Address:	80087EA0
  * Size:	00003C
  */
-ID32 CollPart::getID() { return mCollInfo->mId; }
+ID32 CollPart::getID()
+{
+	return mCollInfo->mId;
+}
 
 /*
  * --INFO--
  * Address:	80087EDC
  * Size:	00003C
  */
-ID32 CollPart::getCode() { return mCollInfo->mCode; }
+ID32 CollPart::getCode()
+{
+	return mCollInfo->mCode;
+}
 
 /*
  * --INFO--
@@ -2507,7 +2516,10 @@ void CollInfo::checkCollisionSpecial(Vector3f&, f32, CndCollPart*)
  * Address:	80088EF8
  * Size:	000008
  */
-bool CndCollPart::satisfy(CollPart*) { return false; }
+bool CndCollPart::satisfy(CollPart*)
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -2524,7 +2536,10 @@ void CollInfo::checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*)
  * Address:	80088F00
  * Size:	000028
  */
-CollPart* CollInfo::checkCollision(Creature* creature, Vector3f& p2) { return checkCollisionRec(creature, 0, p2); }
+CollPart* CollInfo::checkCollision(Creature* creature, Vector3f& p2)
+{
+	return checkCollisionRec(creature, 0, p2);
+}
 
 /*
  * --INFO--
@@ -3125,7 +3140,10 @@ void CollInfo::checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Ve
  * Address:	80089708
  * Size:	000008
  */
-CollPart* CollInfo::getBoundingSphere() { return &mCollParts[0]; }
+CollPart* CollInfo::getBoundingSphere()
+{
+	return &mCollParts[0];
+}
 
 /*
  * --INFO--
@@ -3479,7 +3497,10 @@ void CollInfo::updateInfo(Graphics&, bool)
  * Address:	80089B50
  * Size:	000014
  */
-bool CollInfo::hasInfo() { return mPartsCount != 0; }
+bool CollInfo::hasInfo()
+{
+	return mPartsCount != 0;
+}
 
 /*
  * --INFO--
@@ -3938,4 +3959,6 @@ void CollInfo::makeTree()
  * Address:	8008A028
  * Size:	000004
  */
-void __sinit_collInfo_cpp(void) { }
+void __sinit_collInfo_cpp(void)
+{
+}

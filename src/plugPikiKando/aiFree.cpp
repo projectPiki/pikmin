@@ -564,7 +564,9 @@ void ActFree::cleanup()
  * Address:	800BAD00
  * Size:	000004
  */
-void ActFree::animationKeyUpdated(PaniAnimKeyEvent&) { }
+void ActFree::animationKeyUpdated(PaniAnimKeyEvent&)
+{
+}
 
 /*
  * --INFO--
@@ -773,4 +775,7 @@ ActFree::~ActFree()
  * Address:	800BAF4C
  * Size:	000008
  */
-bool ActFree::resumable() { return true; }
+bool ActFree::resumable()
+{
+	return true;
+}

@@ -682,7 +682,10 @@ void ItemMgr::showInfo()
  * Address:	800F4368
  * Size:	000008
  */
-PelletShapeObject* ItemMgr::getPelletShapeObject(int, int) { return nullptr; }
+PelletShapeObject* ItemMgr::getPelletShapeObject(int, int)
+{
+	return nullptr;
+}
 
 /*
  * --INFO--
@@ -2368,28 +2371,40 @@ void ItemCreature::init(Vector3f& pos)
  * Address:	800F59E4
  * Size:	000008
  */
-void ItemCreature::setMotionSpeed(f32 speed) { mMotionSpeed = speed; }
+void ItemCreature::setMotionSpeed(f32 speed)
+{
+	mMotionSpeed = speed;
+}
 
 /*
  * --INFO--
  * Address:	800F59EC
  * Size:	000008
  */
-f32 ItemCreature::getMotionSpeed() { return mMotionSpeed; }
+f32 ItemCreature::getMotionSpeed()
+{
+	return mMotionSpeed;
+}
 
 /*
  * --INFO--
  * Address:	800F59F4
  * Size:	00000C
  */
-void ItemCreature::stopMotion() { mMotionSpeed = 0.0f; }
+void ItemCreature::stopMotion()
+{
+	mMotionSpeed = 0.0f;
+}
 
 /*
  * --INFO--
  * Address:	800F5A00
  * Size:	000008
  */
-f32 ItemCreature::getCurrentMotionCounter() { return mItemAnimator.mAnimationCounter; }
+f32 ItemCreature::getCurrentMotionCounter()
+{
+	return mItemAnimator.mAnimationCounter;
+}
 
 /*
  * --INFO--
@@ -2410,14 +2425,20 @@ char* ItemCreature::getCurrentMotionName()
  * Address:	800F5A34
  * Size:	000048
  */
-void ItemCreature::startMotion(int motionID) { mItemAnimator.startMotion(PaniMotionInfo(motionID, this)); }
+void ItemCreature::startMotion(int motionID)
+{
+	mItemAnimator.startMotion(PaniMotionInfo(motionID, this));
+}
 
 /*
  * --INFO--
  * Address:	800F5A7C
  * Size:	00004C
  */
-void ItemCreature::finishMotion() { mItemAnimator.finishMotion(PaniMotionInfo(-1, this)); }
+void ItemCreature::finishMotion()
+{
+	mItemAnimator.finishMotion(PaniMotionInfo(-1, this));
+}
 
 /*
  * --INFO--
@@ -2446,7 +2467,10 @@ void ItemCreature::finishMotion(f32 frame)
  * Address:	800F5B7C
  * Size:	000034
  */
-void ItemCreature::doKill() { itemMgr->kill(this); }
+void ItemCreature::doKill()
+{
+	itemMgr->kill(this);
+}
 
 /*
  * --INFO--
@@ -3640,7 +3664,9 @@ void BuildingItem::refresh(Graphics&)
  * Address:	800F6C3C
  * Size:	000004
  */
-void BuildingItem::refresh2d(Graphics&) { }
+void BuildingItem::refresh2d(Graphics&)
+{
+}
 
 /*
  * --INFO--
@@ -4477,4 +4503,7 @@ f32 BuildingItem::getiMass()
  * Address:	800F7948
  * Size:	000008
  */
-bool BuildingItem::needShadow() { return false; }
+bool BuildingItem::needShadow()
+{
+	return false;
+}

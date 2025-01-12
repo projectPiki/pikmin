@@ -60,7 +60,10 @@ bool Mizu::attackDefaultPortion()
  * Address:	8017B544
  * Size:	000008
  */
-f32 Mizu::getiMass() { return 0.0001f; }
+f32 Mizu::getiMass()
+{
+	return 0.0001f;
+}
 
 /*
  * --INFO--
@@ -106,7 +109,10 @@ void Mizu::doKill()
  * Address:	8017B618
  * Size:	000028
  */
-void Mizu::exitCourse() { mMizuAi->killCallBackEffect(true); }
+void Mizu::exitCourse()
+{
+	mMizuAi->killCallBackEffect(true);
+}
 
 /*
  * --INFO--
@@ -150,7 +156,10 @@ void Mizu::drawShape(Graphics& gfx)
  * Address:	8017B790
  * Size:	000024
  */
-void Mizu::doAI() { mMizuAi->update(); }
+void Mizu::doAI()
+{
+	mMizuAi->update();
+}
 
 /*
  * --INFO--

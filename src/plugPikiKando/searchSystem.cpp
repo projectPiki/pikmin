@@ -25,7 +25,9 @@ static void _Print(char*, ...)
  * Address:	800E2FB4
  * Size:	000004
  */
-SearchSystem::SearchSystem() { }
+SearchSystem::SearchSystem()
+{
+}
 
 /*
  * --INFO--
@@ -1611,7 +1613,10 @@ Creature* SearchBuffer::getCreature(int)
  * Address:	800E430C
  * Size:	000008
  */
-int SearchBuffer::getFirst() { return 0; }
+int SearchBuffer::getFirst()
+{
+	return 0;
+}
 
 /*
  * --INFO--

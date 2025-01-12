@@ -54,14 +54,20 @@ void Creature::startFixPosition()
  * Address:	8008A040
  * Size:	000010
  */
-void Creature::finishFixPosition() { resetCreatureFlag(CF_FixPosition); }
+void Creature::finishFixPosition()
+{
+	resetCreatureFlag(CF_FixPosition);
+}
 
 /*
  * --INFO--
  * Address:	8008A050
  * Size:	000048
  */
-bool Creature::isTerrible() { return isTeki() || isBoss(); }
+bool Creature::isTerrible()
+{
+	return isTeki() || isBoss();
+}
 
 /*
  * --INFO--
@@ -425,7 +431,10 @@ void Creature::resetStateGrabbed()
  * Address:	8008AA3C
  * Size:	000048
  */
-void Creature::turnTo(Vector3f& targetDir) { mDirection = atan2f(targetDir.x - mPosition.x, targetDir.z - mPosition.z); }
+void Creature::turnTo(Vector3f& targetDir)
+{
+	mDirection = atan2f(targetDir.x - mPosition.x, targetDir.z - mPosition.z);
+}
 
 /*
  * --INFO--
@@ -1257,7 +1266,10 @@ bool Creature::needShadow()
  * Address:	8008C3CC
  * Size:	000040
  */
-f32 Creature::getShadowSize() { return mScale.x * getSize(); }
+f32 Creature::getShadowSize()
+{
+	return mScale.x * getSize();
+}
 
 /*
  * --INFO--
@@ -2451,7 +2463,10 @@ void Creature::moveVelocity()
  * Address:	8008D53C
  * Size:	000008
  */
-bool Creature::getAvoid(Vector3f&, Vector3f&) { return false; }
+bool Creature::getAvoid(Vector3f&, Vector3f&)
+{
+	return false;
+}
 
 /*
  * --INFO--

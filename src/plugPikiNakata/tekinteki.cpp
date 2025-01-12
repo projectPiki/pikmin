@@ -8,7 +8,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "tekinakata"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "tekinakata");
+}
 
 /*
  * --INFO--
@@ -208,4 +211,7 @@ void NTeki::sendMessage(int msg)
  * Address:	8014BCE0
  * Size:	000054
  */
-void NTeki::receiveMessage(TekiMessage& msg) { eventPerformed(TekiEvent(4, static_cast<Teki*>(this), msg.mTeki)); }
+void NTeki::receiveMessage(TekiMessage& msg)
+{
+	eventPerformed(TekiEvent(4, static_cast<Teki*>(this), msg.mTeki));
+}

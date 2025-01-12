@@ -333,7 +333,9 @@ void Piki::startDemo()
  * Address:	800C6904
  * Size:	000004
  */
-void PikiState::stopEffect() { }
+void PikiState::stopEffect()
+{
+}
 
 /*
  * --INFO--
@@ -394,7 +396,9 @@ void Piki::finishDemo()
  * Address:	800C69A8
  * Size:	000004
  */
-void PikiState::restartEffect() { }
+void PikiState::restartEffect()
+{
+}
 
 /*
  * --INFO--
@@ -516,7 +520,9 @@ void Piki::addCntCallback()
  * Address:	800C6AB8
  * Size:	000004
  */
-void Piki::subCntCallback() { }
+void Piki::subCntCallback()
+{
+}
 
 /*
  * --INFO--
@@ -2564,7 +2570,10 @@ void Piki::actOnSituaton()
  * Address:	800C84C0
  * Size:	000008
  */
-bool PikiState::freeAI() { return false; }
+bool PikiState::freeAI()
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -4850,7 +4859,9 @@ void Piki::startDamage()
  * Address:	800CA02C
  * Size:	000004
  */
-void AState<Piki>::resume(Piki*) { }
+void AState<Piki>::resume(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -4932,7 +4943,9 @@ void Piki::finishDamage()
  * Address:	800CA10C
  * Size:	000004
  */
-void AState<Piki>::restart(Piki*) { }
+void AState<Piki>::restart(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -5139,7 +5152,10 @@ bool Piki::ignoreAtari(Creature*)
  * Address:	800CA308
  * Size:	000008
  */
-bool Piki::needFlick(Creature*) { return true; }
+bool Piki::needFlick(Creature*)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -5414,7 +5430,9 @@ void Piki::wallCallback(Plane&, DynCollObject*)
  * Address:	800CA580
  * Size:	000004
  */
-void Piki::jumpCallback() { }
+void Piki::jumpCallback()
+{
+}
 
 /*
  * --INFO--
@@ -6963,7 +6981,10 @@ void Piki::collisionCallback(CollEvent&)
  * Address:	800CB95C
  * Size:	000008
  */
-bool PikiState::collideAI() { return false; }
+bool PikiState::collideAI()
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -7752,7 +7773,9 @@ void Piki::init(Navi*)
  * Address:	800CC330
  * Size:	000004
  */
-void Piki::initBirth() { }
+void Piki::initBirth()
+{
+}
 
 /*
  * --INFO--
@@ -8063,7 +8086,10 @@ void Piki::updateLookCreature()
  * Address:	800CC6CC
  * Size:	000008
  */
-bool PikiState::useLookUpdate() { return true; }
+bool PikiState::useLookUpdate()
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -8848,7 +8874,9 @@ void StateMachine<Piki>::exec(Piki*)
  * Address:	800CD0E4
  * Size:	000004
  */
-void AState<Piki>::exec(Piki*) { }
+void AState<Piki>::exec(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -9306,14 +9334,18 @@ Vector3f Piki::getShadowPos()
  * Address:	800CD684
  * Size:	000004
  */
-void Piki::setLeaves(int) { }
+void Piki::setLeaves(int)
+{
+}
 
 /*
  * --INFO--
  * Address:	800CD688
  * Size:	000004
  */
-void StateMachine<Piki>::init(Piki*) { }
+void StateMachine<Piki>::init(Piki*)
+{
+}
 
 /*
  * --INFO--
@@ -9382,14 +9414,18 @@ void StateMachine<Piki>::transit(Piki*, int)
  * Address:	800CD73C
  * Size:	000004
  */
-void AState<Piki>::init(Piki*) { }
+void AState<Piki>::init(Piki*)
+{
+}
 
 /*
  * --INFO--
  * Address:	800CD740
  * Size:	000004
  */
-void AState<Piki>::cleanup(Piki*) { }
+void AState<Piki>::cleanup(Piki*)
+{
+}
 
 /*
  * --INFO--

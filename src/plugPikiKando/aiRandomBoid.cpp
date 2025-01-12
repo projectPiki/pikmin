@@ -293,7 +293,9 @@ ActRandomBoid::ActRandomBoid(Piki* piki)
  * Address:	800C0D94
  * Size:	000004
  */
-void ActRandomBoid::Initialiser::initialise(Action*) { }
+void ActRandomBoid::Initialiser::initialise(Action*)
+{
+}
 
 /*
  * --INFO--
@@ -370,7 +372,9 @@ void ActRandomBoid::init(Creature*)
  * Address:	800C0E80
  * Size:	000004
  */
-void ActRandomBoid::cleanup() { }
+void ActRandomBoid::cleanup()
+{
+}
 
 /*
  * --INFO--

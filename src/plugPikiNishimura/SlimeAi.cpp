@@ -30,7 +30,10 @@ DEFINE_PRINT(nullptr);
  * Address:	80164B80
  * Size:	000008
  */
-SlimeAi::SlimeAi(Slime* slime) { mSlime = slime; }
+SlimeAi::SlimeAi(Slime* slime)
+{
+	mSlime = slime;
+}
 
 /*
  * --INFO--
@@ -59,7 +62,10 @@ void SlimeAi::init(Slime* slime)
  * Address:	80164C30
  * Size:	000014
  */
-void SlimeAi::addDamagePoint(f32 damage) { mSlime->addDamagePoint(damage); }
+void SlimeAi::addDamagePoint(f32 damage)
+{
+	mSlime->addDamagePoint(damage);
+}
 
 /*
  * --INFO--
@@ -85,7 +91,10 @@ void SlimeAi::setEveryFrame()
  * Address:	........
  * Size:	000018
  */
-void SlimeAi::afterProcessing() { mPrevNucleusStickPikiCount = mSlime->mNucleus->mNucleusAi->mStickPikiCount; }
+void SlimeAi::afterProcessing()
+{
+	mPrevNucleusStickPikiCount = mSlime->mNucleus->mNucleusAi->mStickPikiCount;
+}
 
 /*
  * --INFO--
@@ -667,21 +676,30 @@ void SlimeAi::makeTargetRandom()
  * Address:	........
  * Size:	00000C
  */
-void SlimeAi::setVelocity(f32 speed) { mSlime->mLeaderSpeed = speed; }
+void SlimeAi::setVelocity(f32 speed)
+{
+	mSlime->mLeaderSpeed = speed;
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00000C
  */
-bool SlimeAi::motionFinishTransit() { return mSlime->getMotionFinish(); }
+bool SlimeAi::motionFinishTransit()
+{
+	return mSlime->getMotionFinish();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool SlimeAi::dieTransit() { return !mSlime->getAlive(); }
+bool SlimeAi::dieTransit()
+{
+	return !mSlime->getAlive();
+}
 
 /*
  * --INFO--
@@ -1156,7 +1174,9 @@ void SlimeAi::expansionState()
  * Address:	........
  * Size:	000004
  */
-void SlimeAi::stayState() { }
+void SlimeAi::stayState()
+{
+}
 
 /*
  * --INFO--

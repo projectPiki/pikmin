@@ -46,7 +46,10 @@ DEFINE_PRINT("workObject");
  * Address:	8009B104
  * Size:	000010
  */
-void HinderRock::beginPush() { _3C8++; }
+void HinderRock::beginPush()
+{
+	_3C8++;
+}
 
 /*
  * --INFO--
@@ -68,7 +71,10 @@ void HinderRock::endPush()
 void WorkObjectMgr::finalSetup()
 {
 	Iterator iter(this);
-	CI_LOOP(iter) { static_cast<WorkObject*>(*iter)->finalSetup(); }
+	CI_LOOP(iter)
+	{
+		static_cast<WorkObject*>(*iter)->finalSetup();
+	}
 }
 
 /*
@@ -89,7 +95,10 @@ WorkObject::WorkObject()
  * Address:	8009B23C
  * Size:	000024
  */
-void WorkObject::doKill() { mLifeGauge.countOff(); }
+void WorkObject::doKill()
+{
+	mLifeGauge.countOff();
+}
 
 /*
  * --INFO--
@@ -267,14 +276,20 @@ Creature* WorkObjectMgr::getCreature(int)
  * Address:	8009B60C
  * Size:	000008
  */
-int WorkObjectMgr::getFirst() { return 0; }
+int WorkObjectMgr::getFirst()
+{
+	return 0;
+}
 
 /*
  * --INFO--
  * Address:	8009B614
  * Size:	000008
  */
-int WorkObjectMgr::getNext(int idx) { return idx + 1; }
+int WorkObjectMgr::getNext(int idx)
+{
+	return idx + 1;
+}
 
 /*
  * --INFO--
@@ -4407,14 +4422,20 @@ Vector3f Bridge::getStartPos()
  * Address:	8009ED18
  * Size:	000008
  */
-f32 Bridge::getStageDepth() { return 20.0f; }
+f32 Bridge::getStageDepth()
+{
+	return 20.0f;
+}
 
 /*
  * --INFO--
  * Address:	8009ED20
  * Size:	000008
  */
-f32 Bridge::getStageWidth() { return 150.0f; }
+f32 Bridge::getStageWidth()
+{
+	return 150.0f;
+}
 
 /*
  * --INFO--
@@ -4979,42 +5000,60 @@ bool InteractBreak::actBridge(Bridge*)
  * Address:	8009F500
  * Size:	000008
  */
-bool Bridge::isBridge() { return true; }
+bool Bridge::isBridge()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	8009F508
  * Size:	000014
  */
-bool Bridge::alwaysUpdatePlatform() { return _424 != 0; }
+bool Bridge::alwaysUpdatePlatform()
+{
+	return _424 != 0;
+}
 
 /*
  * --INFO--
  * Address:	8009F51C
  * Size:	00000C
  */
-void Bridge::finalSetup() { _424 = 3; }
+void Bridge::finalSetup()
+{
+	_424 = 3;
+}
 
 /*
  * --INFO--
  * Address:	8009F528
  * Size:	000008
  */
-bool WorkObject::isVisible() { return true; }
+bool WorkObject::isVisible()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	8009F530
  * Size:	000008
  */
-bool WorkObject::isAlive() { return true; }
+bool WorkObject::isAlive()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	8009F538
  * Size:	000008
  */
-bool WorkObject::isHinderRock() { return false; }
+bool WorkObject::isHinderRock()
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -5036,21 +5075,28 @@ f32 ItemCreature::getHeight()
  * Address:	8009F548
  * Size:	000008
  */
-bool HinderRock::isHinderRock() { return true; }
+bool HinderRock::isHinderRock()
+{
+	return true;
+}
 
 /*
  * --INFO--
  * Address:	8009F550
  * Size:	000004
  */
-void DynBuildShape::update() { }
+void DynBuildShape::update()
+{
+}
 
 /*
  * --INFO--
  * Address:	8009F554
  * Size:	000004
  */
-void DynBuildShape::refresh(Graphics&) { }
+void DynBuildShape::refresh(Graphics&)
+{
+}
 
 /*
  * --INFO--
@@ -5115,11 +5161,17 @@ int WorkObjectMgr::getMax()
  * Address:	8009F5CC
  * Size:	000008
  */
-bool WorkObject::isFinished() { return false; }
+bool WorkObject::isFinished()
+{
+	return false;
+}
 
 /*
  * --INFO--
  * Address:	8009F5D4
  * Size:	000008
  */
-bool WorkObject::workable(Vector3f&) { return true; }
+bool WorkObject::workable(Vector3f&)
+{
+	return true;
+}

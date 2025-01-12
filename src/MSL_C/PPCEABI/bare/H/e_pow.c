@@ -423,4 +423,7 @@ f64 x, y;
  * Address: 8021B1C8
  * Size:    000020
  */
-f64 scalbn(f64 p1, int p2) { return ldexp(p1, p2); }
+f64 scalbn(f64 p1, int p2)
+{
+	return ldexp(p1, p2);
+}

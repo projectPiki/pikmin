@@ -166,7 +166,10 @@ void GeneratorCache::loadCard(RandomAccessStream& input)
 		Cache* cache   = findCache(mDeadCacheList, i);
 		if (!cache) {
 			PRINT("NO CACHE %d in DeadList\n", i);
-			FOREACH_NODE(Cache, mDeadCacheList.mChild, dead) { PRINT("deadList : id %d", dead->mCourseIdx); }
+			FOREACH_NODE(Cache, mDeadCacheList.mChild, dead)
+			{
+				PRINT("deadList : id %d", dead->mCourseIdx);
+			}
 		}
 
 		PRINT("load cache %d from %d\n", input.getPosition());
@@ -937,9 +940,15 @@ void GeneratorCache::dump()
 {
 	PRINT("************ Generator Cache ***********\n");
 	PRINT("--- alive caches ---\n");
-	FOREACH_NODE(Cache, mAliveCacheList.mChild, cache) { cache->dump(); }
+	FOREACH_NODE(Cache, mAliveCacheList.mChild, cache)
+	{
+		cache->dump();
+	}
 	PRINT("--- dead cache ---\n");
-	FOREACH_NODE(Cache, mDeadCacheList.mChild, cache) { cache->dump(); }
+	FOREACH_NODE(Cache, mDeadCacheList.mChild, cache)
+	{
+		cache->dump();
+	}
 	PRINT("*******************************\n");
 
 	// need this to not inline in assertValid

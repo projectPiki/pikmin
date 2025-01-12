@@ -155,14 +155,18 @@ void SnakeAi::keyAction1()
  * Address:	........
  * Size:	000004
  */
-void SnakeAi::keyAction2() { }
+void SnakeAi::keyAction2()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void SnakeAi::keyAction3() { }
+void SnakeAi::keyAction3()
+{
+}
 
 /*
  * --INFO--
@@ -185,7 +189,10 @@ void SnakeAi::keyLoopEnd()
  * Address:	8015B604
  * Size:	000010
  */
-void SnakeAi::keyFinished() { mSnake->setMotionFinish(true); }
+void SnakeAi::keyFinished()
+{
+	mSnake->setMotionFinish(true);
+}
 
 /*
  * --INFO--
@@ -440,14 +447,20 @@ void SnakeAi::naviNudge()
  * Address:	........
  * Size:	000018
  */
-void SnakeAi::setMouthCollPart(int partNum) { mMouthSlotFlag |= (1 << partNum); }
+void SnakeAi::setMouthCollPart(int partNum)
+{
+	mMouthSlotFlag |= (1 << partNum);
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000010
  */
-int SnakeAi::getMouthCollPart(int partNum) { return (mMouthSlotFlag >> partNum) & 1; }
+int SnakeAi::getMouthCollPart(int partNum)
+{
+	return (mMouthSlotFlag >> partNum) & 1;
+}
 
 /*
  * --INFO--
@@ -1106,21 +1119,30 @@ void SnakeAi::resultFlagOn()
  * Address:	........
  * Size:	00002C
  */
-void SnakeAi::resultFlagSeen() { playerState->mResultFlags.setSeen(RESFLAG_Unk48); }
+void SnakeAi::resultFlagSeen()
+{
+	playerState->mResultFlags.setSeen(RESFLAG_Unk48);
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool SnakeAi::dieTransit() { return !mSnake->getAlive(); }
+bool SnakeAi::dieTransit()
+{
+	return !mSnake->getAlive();
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00003C
  */
-bool SnakeAi::struggleTransit() { return mSnake->getStickNoMouthPikiCount() > 0; }
+bool SnakeAi::struggleTransit()
+{
+	return mSnake->getStickNoMouthPikiCount() > 0;
+}
 
 /*
  * --INFO--
@@ -1289,7 +1311,10 @@ bool SnakeAi::eatPikiTransit()
  * Address:	........
  * Size:	000024
  */
-bool SnakeAi::intoGroundTransit() { return mSnake->flickPikiTransit(); }
+bool SnakeAi::intoGroundTransit()
+{
+	return mSnake->flickPikiTransit();
+}
 
 /*
  * --INFO--
@@ -1985,21 +2010,27 @@ void SnakeAi::struggleState()
  * Address:	........
  * Size:	000004
  */
-void SnakeAi::chaseState() { }
+void SnakeAi::chaseState()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void SnakeAi::attackState() { }
+void SnakeAi::attackState()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void SnakeAi::eatState() { }
+void SnakeAi::eatState()
+{
+}
 
 /*
  * --INFO--
@@ -2020,14 +2051,19 @@ void SnakeAi::waitState()
  * Address:	........
  * Size:	000004
  */
-void SnakeAi::gointoState() { }
+void SnakeAi::gointoState()
+{
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00001C
  */
-void SnakeAi::underState() { mSnake->add2D0(gsys->getFrameTime()); }
+void SnakeAi::underState()
+{
+	mSnake->add2D0(gsys->getFrameTime());
+}
 
 /*
  * --INFO--

@@ -42,7 +42,10 @@ DEFINE_PRINT("naviState");
  * Address:	80101140
  * Size:	000008
  */
-NaviState* NaviStateMachine::getNaviState(Navi* navi) { return static_cast<NaviState*>(navi->mCurrState); }
+NaviState* NaviStateMachine::getNaviState(Navi* navi)
+{
+	return static_cast<NaviState*>(navi->mCurrState);
+}
 
 /*
  * --INFO--
@@ -278,21 +281,28 @@ NaviDemoInfState::NaviDemoInfState()
  * Address:	80102D60
  * Size:	000004
  */
-void NaviDemoInfState::init(Navi* navi) { }
+void NaviDemoInfState::init(Navi* navi)
+{
+}
 
 /*
  * --INFO--
  * Address:	80102D64
  * Size:	00001C
  */
-void NaviDemoInfState::exec(Navi* navi) { navi->mVelocity.set(0.0f, 0.0f, 0.0f); }
+void NaviDemoInfState::exec(Navi* navi)
+{
+	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
+}
 
 /*
  * --INFO--
  * Address:	80102D80
  * Size:	000004
  */
-void NaviDemoInfState::cleanup(Navi* navi) { }
+void NaviDemoInfState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -626,7 +636,9 @@ void NaviStuckState::exec(Navi* navi)
  * Address:	801031A8
  * Size:	000004
  */
-void NaviStuckState::cleanup(Navi* navi) { }
+void NaviStuckState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -1279,7 +1291,9 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
  * Address:	801039F0
  * Size:	000004
  */
-void NaviBuryState::cleanup(Navi* navi) { }
+void NaviBuryState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -1310,7 +1324,10 @@ void NaviWalkState::init(Navi* navi)
  * Address:	80103AB8
  * Size:	00002C
  */
-void NaviWalkState::restart(Navi* navi) { init(navi); }
+void NaviWalkState::restart(Navi* navi)
+{
+	init(navi);
+}
 
 /*
  * --INFO--
@@ -2313,7 +2330,10 @@ void NaviWalkState::exec(Navi* navi)
  * Address:	801048CC
  * Size:	000024
  */
-void NaviWalkState::cleanup(Navi* navi) { navi->finishFixPosition(); }
+void NaviWalkState::cleanup(Navi* navi)
+{
+	navi->finishFixPosition();
+}
 
 /*
  * --INFO--
@@ -3263,7 +3283,10 @@ void NaviContainerState::enterPikis(Navi* navi, int)
  * Address:	801055AC
  * Size:	000028
  */
-void NaviContainerState::exitPikis(Navi* navi, int p2) { navi->mGoalItem->exitPikis(p2); }
+void NaviContainerState::exitPikis(Navi* navi, int p2)
+{
+	navi->mGoalItem->exitPikis(p2);
+}
 
 /*
  * --INFO--
@@ -3291,7 +3314,9 @@ NaviPickState::NaviPickState()
  * Address:	80105650
  * Size:	000004
  */
-void NaviPickState::procAnimMsg(Navi* navi, MsgAnim*) { }
+void NaviPickState::procAnimMsg(Navi* navi, MsgAnim*)
+{
+}
 
 /*
  * --INFO--
@@ -3323,7 +3348,10 @@ void NaviPickState::exec(Navi* navi)
  * Address:	80105710
  * Size:	000024
  */
-void NaviPickState::cleanup(Navi* navi) { navi->endStickObject(); }
+void NaviPickState::cleanup(Navi* navi)
+{
+	navi->endStickObject();
+}
 
 /*
  * --INFO--
@@ -3340,7 +3368,10 @@ NaviRopeState::NaviRopeState()
  * Address:	80105778
  * Size:	000074
  */
-void NaviRopeState::init(Navi* navi) { navi->startMotion(PaniMotionInfo(PIKIANIM_HNoboru, navi), PaniMotionInfo(PIKIANIM_HNoboru)); }
+void NaviRopeState::init(Navi* navi)
+{
+	navi->startMotion(PaniMotionInfo(PIKIANIM_HNoboru, navi), PaniMotionInfo(PIKIANIM_HNoboru));
+}
 
 /*
  * --INFO--
@@ -3522,7 +3553,9 @@ void NaviRopeState::exec(Navi* navi)
  * Address:	80105A48
  * Size:	000004
  */
-void NaviRopeState::cleanup(Navi* navi) { }
+void NaviRopeState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -3554,21 +3587,28 @@ void NaviRopeExitState::init(Navi* navi)
  * Address:	80105B6C
  * Size:	000004
  */
-void NaviRopeExitState::exec(Navi* navi) { }
+void NaviRopeExitState::exec(Navi* navi)
+{
+}
 
 /*
  * --INFO--
  * Address:	80105B70
  * Size:	000004
  */
-void NaviRopeExitState::cleanup(Navi* navi) { }
+void NaviRopeExitState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
  * Address:	80105B74
  * Size:	000030
  */
-void NaviRopeExitState::procBounceMsg(Navi* navi, MsgBounce*) { transit(navi, NAVISTATE_Walk); }
+void NaviRopeExitState::procBounceMsg(Navi* navi, MsgBounce*)
+{
+	transit(navi, NAVISTATE_Walk);
+}
 
 /*
  * --INFO--
@@ -3597,7 +3637,10 @@ void NaviFunbariState::init(Navi* navi)
  * Address:	80105C7C
  * Size:	00001C
  */
-void NaviFunbariState::exec(Navi* navi) { navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f); }
+void NaviFunbariState::exec(Navi* navi)
+{
+	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+}
 
 /*
  * --INFO--
@@ -3618,7 +3661,9 @@ void NaviFunbariState::procAnimMsg(Navi* navi, MsgAnim* msg)
  * Address:	80105CDC
  * Size:	000004
  */
-void NaviFunbariState::cleanup(Navi* navi) { }
+void NaviFunbariState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -3700,7 +3745,10 @@ void NaviIdleState::procAnimMsg(Navi* navi, MsgAnim* msg)
  * Address:	80105F90
  * Size:	00000C
  */
-void NaviIdleState::cleanup(Navi* navi) { navi->_738 = 0.0f; }
+void NaviIdleState::cleanup(Navi* navi)
+{
+	navi->_738 = 0.0f;
+}
 
 /*
  * --INFO--
@@ -4133,14 +4181,20 @@ NaviGatherState::NaviGatherState()
  * Address:	801069D4
  * Size:	00002C
  */
-void NaviGatherState::resume(Navi* navi) { cleanup(navi); }
+void NaviGatherState::resume(Navi* navi)
+{
+	cleanup(navi);
+}
 
 /*
  * --INFO--
  * Address:	80106A00
  * Size:	000030
  */
-void NaviGatherState::restart(Navi* navi) { transit(navi, NAVISTATE_Walk); }
+void NaviGatherState::restart(Navi* navi)
+{
+	transit(navi, NAVISTATE_Walk);
+}
 
 /*
  * --INFO--
@@ -4817,7 +4871,9 @@ void NaviReleaseState::exec(Navi* navi)
  * Address:	8010739C
  * Size:	000004
  */
-void NaviReleaseState::cleanup(Navi* navi) { }
+void NaviReleaseState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -5809,7 +5865,9 @@ void NaviThrowWaitState::sortPikis(Navi* navi)
  * Address:	80108030
  * Size:	000004
  */
-void NaviThrowWaitState::cleanup(Navi* navi) { }
+void NaviThrowWaitState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -6076,7 +6134,9 @@ void NaviThrowState::exec(Navi* navi)
  * Address:	80108368
  * Size:	000004
  */
-void NaviThrowState::cleanup(Navi* navi) { }
+void NaviThrowState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -6409,7 +6469,9 @@ void NaviPushState::procAnimMsg(Navi* navi, MsgAnim*)
  * Address:	80108790
  * Size:	000004
  */
-void NaviPushState::procOffWallMsg(Navi* navi, MsgOffWall*) { }
+void NaviPushState::procOffWallMsg(Navi* navi, MsgOffWall*)
+{
+}
 
 /*
  * --INFO--
@@ -6606,7 +6668,9 @@ void NaviPushPikiState::exec(Navi* navi)
  * Address:	80108A10
  * Size:	000004
  */
-void NaviPushPikiState::cleanup(Navi* navi) { }
+void NaviPushPikiState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -7687,7 +7751,9 @@ void NaviPressedState::exec(Navi* navi)
  * Address:	80109794
  * Size:	000004
  */
-void NaviPressedState::cleanup(Navi* navi) { }
+void NaviPressedState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -7747,14 +7813,18 @@ void NaviSowState::init(Navi* navi)
  * Address:	80109850
  * Size:	000004
  */
-void NaviSowState::exec(Navi* navi) { }
+void NaviSowState::exec(Navi* navi)
+{
+}
 
 /*
  * --INFO--
  * Address:	80109854
  * Size:	000004
  */
-void NaviSowState::cleanup(Navi* navi) { }
+void NaviSowState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -7826,14 +7896,18 @@ void NaviWaterState::init(Navi* navi)
  * Address:	80109940
  * Size:	000004
  */
-void NaviWaterState::exec(Navi* navi) { }
+void NaviWaterState::exec(Navi* navi)
+{
+}
 
 /*
  * --INFO--
  * Address:	80109944
  * Size:	000004
  */
-void NaviWaterState::cleanup(Navi* navi) { }
+void NaviWaterState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -8263,7 +8337,9 @@ void NaviAttackState::exec(Navi* navi)
  * Address:	80109ED8
  * Size:	000004
  */
-void NaviAttackState::cleanup(Navi* navi) { }
+void NaviAttackState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -8332,21 +8408,27 @@ NaviLockState::NaviLockState()
  * Address:	80109FA0
  * Size:	000004
  */
-void NaviLockState::init(Navi* navi) { }
+void NaviLockState::init(Navi* navi)
+{
+}
 
 /*
  * --INFO--
  * Address:	80109FA4
  * Size:	000004
  */
-void NaviLockState::exec(Navi* navi) { }
+void NaviLockState::exec(Navi* navi)
+{
+}
 
 /*
  * --INFO--
  * Address:	80109FA8
  * Size:	000004
  */
-void NaviLockState::cleanup(Navi* navi) { }
+void NaviLockState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -8418,7 +8500,9 @@ void NaviClearState::init(Navi* navi)
  * Address:	8010A094
  * Size:	000004
  */
-void NaviClearState::exec(Navi* navi) { }
+void NaviClearState::exec(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -8459,7 +8543,9 @@ void NaviClearState::procAnimMsg(Navi* navi, MsgAnim*)
  * Address:	8010A0E8
  * Size:	000004
  */
-void NaviClearState::cleanup(Navi* navi) { }
+void NaviClearState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -8476,7 +8562,9 @@ NaviIroIroState::NaviIroIroState()
  * Address:	8010A130
  * Size:	000004
  */
-void NaviIroIroState::init(Navi* navi) { }
+void NaviIroIroState::init(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -8502,7 +8590,9 @@ void NaviIroIroState::exec(Navi* navi)
  * Address:	8010A150
  * Size:	000004
  */
-void NaviIroIroState::cleanup(Navi* navi) { }
+void NaviIroIroState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -8519,7 +8609,9 @@ NaviDeadState::NaviDeadState()
  * Address:	8010A198
  * Size:	000004
  */
-void NaviDeadState::restart(Navi* navi) { }
+void NaviDeadState::restart(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -8644,7 +8736,9 @@ void NaviDeadState::exec(Navi* navi)
  * Address:	8010A30C
  * Size:	000004
  */
-void NaviDeadState::cleanup(Navi* navi) { }
+void NaviDeadState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
@@ -8783,14 +8877,18 @@ void NaviPikiZeroState::exec(Navi* navi)
  * Address:	8010A494
  * Size:	000004
  */
-void NaviPikiZeroState::cleanup(Navi* navi) { }
+void NaviPikiZeroState::cleanup(Navi* navi)
+{
+}
 
 /*
  * --INFO--
  * Address:	8010A498
  * Size:	000004
  */
-void NaviPikiZeroState::procAnimMsg(Navi* navi, MsgAnim*) { }
+void NaviPikiZeroState::procAnimMsg(Navi* navi, MsgAnim*)
+{
+}
 
 /*
  * --INFO--
@@ -9716,102 +9814,146 @@ void NaviUfoAccessState::procAnimMsg(Navi* navi, MsgAnim*)
  * Address:	8010B044
  * Size:	000008
  */
-bool NaviUfoAccessState::invincible(Navi* navi) { return 0x1; }
+bool NaviUfoAccessState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B04C
  * Size:	000008
  */
-bool NaviPartsAccessState::invincible(Navi* navi) { return 0x1; }
+bool NaviPartsAccessState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B054
  * Size:	000008
  */
-bool NaviPikiZeroState::invincible(Navi* navi) { return 0x1; }
+bool NaviPikiZeroState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B05C
  * Size:	000008
  */
-bool NaviDeadState::invincible(Navi* navi) { return 0x1; }
+bool NaviDeadState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B064
  * Size:	000008
  */
-bool NaviPressedState::invincible(Navi* navi) { return 0x1; }
+bool NaviPressedState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B06C
  * Size:	000008
  */
-bool NaviNukuState::invincible(Navi* navi) { return 0x1; }
+bool NaviNukuState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B074
  * Size:	000008
  */
-bool NaviGeyzerState::invincible(Navi* navi) { return 0x1; }
+bool NaviGeyzerState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B07C
  * Size:	000008
  */
-bool NaviFlickState::invincible(Navi* navi) { return 0x1; }
+bool NaviFlickState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B084
  * Size:	000008
  */
-bool NaviContainerState::invincible(Navi* navi) { return 0x1; }
+bool NaviContainerState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B08C
  * Size:	000004
  */
-void GmWin::CloseListener::onCloseWindow() { }
+void GmWin::CloseListener::onCloseWindow()
+{
+}
 
 /*
  * --INFO--
  * Address:	8010B090
  * Size:	000008
  */
-bool NaviUfoState::invincible(Navi* navi) { return 0x1; }
+bool NaviUfoState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B098
  * Size:	000008
  */
-bool NaviBuryState::invincible(Navi* navi) { return 0x1; }
+bool NaviBuryState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B0A0
  * Size:	000008
  */
-bool NaviDemoInfState::invincible(Navi* navi) { return 0x1; }
+bool NaviDemoInfState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B0A8
  * Size:	000008
  */
-bool NaviDemoWaitState::invincible(Navi* navi) { return 0x1; }
+bool NaviDemoWaitState::invincible(Navi* navi)
+{
+	return 0x1;
+}
 
 /*
  * --INFO--
  * Address:	8010B0B0
  * Size:	000008
  */
-bool NaviPelletState::invincible(Navi* navi) { return 0x1; }
+bool NaviPelletState::invincible(Navi* navi)
+{
+	return 0x1;
+}

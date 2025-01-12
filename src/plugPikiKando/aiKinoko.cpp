@@ -222,7 +222,10 @@ int ActKinoko::exeJump()
  * Address:	800B48A8
  * Size:	00000C
  */
-void ActKinoko::initAttack() { mState = STATE_Attack; }
+void ActKinoko::initAttack()
+{
+	mState = STATE_Attack;
+}
 
 /*
  * --INFO--
@@ -1202,4 +1205,6 @@ void ActKinoko::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800B55F0
  * Size:	000004
  */
-void ActKinoko::cleanup() { }
+void ActKinoko::cleanup()
+{
+}

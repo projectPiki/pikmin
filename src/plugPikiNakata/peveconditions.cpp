@@ -67,7 +67,10 @@ void PeveDependenceCondition::construct(PeveCondition*)
  * Address:	80125C68
  * Size:	000048
  */
-PeveTimeCondition::PeveTimeCondition() { construct(0.0f); }
+PeveTimeCondition::PeveTimeCondition()
+{
+	construct(0.0f);
+}
 
 /*
  * --INFO--
@@ -260,42 +263,60 @@ void PeveComparisonYCondition::update()
  * Address:	80125E6C
  * Size:	00000C
  */
-void PeveComparisonYCondition::reset() { mValue = false; }
+void PeveComparisonYCondition::reset()
+{
+	mValue = false;
+}
 
 /*
  * --INFO--
  * Address:	80125E78
  * Size:	000008
  */
-bool PeveBooleanCondition::isMet() { return mValue; }
+bool PeveBooleanCondition::isMet()
+{
+	return mValue;
+}
 
 /*
  * --INFO--
  * Address:	80125E80
  * Size:	00000C
  */
-void PeveDistanceCondition::reset() { mValue = false; }
+void PeveDistanceCondition::reset()
+{
+	mValue = false;
+}
 
 /*
  * --INFO--
  * Address:	80125E8C
  * Size:	00001C
  */
-bool PeveTimeCondition::isMet() { return mCurrTime >= mLimit; }
+bool PeveTimeCondition::isMet()
+{
+	return mCurrTime >= mLimit;
+}
 
 /*
  * --INFO--
  * Address:	80125EA8
  * Size:	00000C
  */
-void PeveTimeCondition::reset() { mCurrTime = 0.0f; }
+void PeveTimeCondition::reset()
+{
+	mCurrTime = 0.0f;
+}
 
 /*
  * --INFO--
  * Address:	80125EB4
  * Size:	000018
  */
-void PeveTimeCondition::update() { mCurrTime += NSystem::system->getFrameTime(); }
+void PeveTimeCondition::update()
+{
+	mCurrTime += NSystem::system->getFrameTime();
+}
 
 /*
  * --INFO--
@@ -326,11 +347,15 @@ bool PeveDependenceCondition::isMet()
  * Address:	80125EFC
  * Size:	000004
  */
-void PeveDependenceCondition::reset() { }
+void PeveDependenceCondition::reset()
+{
+}
 
 /*
  * --INFO--
  * Address:	80125F00
  * Size:	000004
  */
-void PeveDependenceCondition::update() { }
+void PeveDependenceCondition::update()
+{
+}

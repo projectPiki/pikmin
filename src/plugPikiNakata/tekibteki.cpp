@@ -72,42 +72,60 @@ void BTeki::viewStartTrembleMotion(f32 motionSpeed)
  * Address:	80143FC0
  * Size:	000008
  */
-void BTeki::viewSetMotionSpeed(f32 speed) { mMotionSpeed = speed; }
+void BTeki::viewSetMotionSpeed(f32 speed)
+{
+	mMotionSpeed = speed;
+}
 
 /*
  * --INFO--
  * Address:	80143FC8
  * Size:	00002C
  */
-void BTeki::viewDoAnimation() { doAnimation(); }
+void BTeki::viewDoAnimation()
+{
+	doAnimation();
+}
 
 /*
  * --INFO--
  * Address:	80143FF4
  * Size:	00004C
  */
-void BTeki::viewFinishMotion() { mTekiAnimator->finishMotion(PaniMotionInfo(-1, this)); }
+void BTeki::viewFinishMotion()
+{
+	mTekiAnimator->finishMotion(PaniMotionInfo(-1, this));
+}
 
 /*
  * --INFO--
  * Address:	80144040
  * Size:	00001C
  */
-Vector3f BTeki::viewGetScale() { return mScale; }
+Vector3f BTeki::viewGetScale()
+{
+	return mScale;
+}
 
 /*
  * --INFO--
  * Address:	8014405C
  * Size:	000018
  */
-f32 BTeki::viewGetBottomRadius() { return mTekiParams->getF(TPF_CorpseSize); }
+f32 BTeki::viewGetBottomRadius()
+{
+	return mTekiParams->getF(TPF_CorpseSize);
+}
 
 /*
  * --INFO--
  * Address:	80144074
  * Size:	000018
  */
-f32 BTeki::viewGetHeight() { return mTekiParams->getF(TPF_CorpseHeight); }
+f32 BTeki::viewGetHeight()
+{
+	return mTekiParams->getF(TPF_CorpseHeight);
+}
 
 /*
  * --INFO--
@@ -127,21 +145,30 @@ void BTeki::viewDraw(Graphics& gfx, Matrix4f& mat)
  * Address:	80144130
  * Size:	000024
  */
-void BTeki::viewKill() { kill(false); }
+void BTeki::viewKill()
+{
+	kill(false);
+}
 
 /*
  * --INFO--
  * Address:	80144154
  * Size:	00000C
  */
-void BTeki::doStore(CreatureInf* info) { info->mTekiType = mTekiType; }
+void BTeki::doStore(CreatureInf* info)
+{
+	info->mTekiType = mTekiType;
+}
 
 /*
  * --INFO--
  * Address:	80144160
  * Size:	00000C
  */
-void BTeki::doRestore(CreatureInf* info) { mTekiType = (TekiTypes)info->mTekiType; }
+void BTeki::doRestore(CreatureInf* info)
+{
+	mTekiType = (TekiTypes)info->mTekiType;
+}
 
 /*
  * --INFO--
@@ -161,7 +188,10 @@ TekiShapeObject::TekiShapeObject(Shape* shape)
  * Address:	8014421C
  * Size:	000010
  */
-bool BTeki::isPellet(int objType) { return objType == OBJTYPE_Pellet; }
+bool BTeki::isPellet(int objType)
+{
+	return objType == OBJTYPE_Pellet;
+}
 
 /*
  * --INFO--
@@ -178,7 +208,10 @@ f32 BTeki::calcCircleDistanceStatic(Vector3f& pos1, f32 rad1, Vector3f& pos2, f3
  * Address:	8014427C
  * Size:	000014
  */
-bool BTeki::alwaysUpdatePlatform() { return mTekiType == TEKI_Shell; }
+bool BTeki::alwaysUpdatePlatform()
+{
+	return mTekiType == TEKI_Shell;
+}
 
 /*
  * --INFO--
@@ -409,7 +442,10 @@ void BTeki::moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&)
  * Address:	80144570
  * Size:	000028
  */
-bool BTeki::arrivedAt(f32 p1, f32 p2) { return p1 <= 2.0f * p2 * NSystem::system->getFrameTime(); }
+bool BTeki::arrivedAt(f32 p1, f32 p2)
+{
+	return p1 <= 2.0f * p2 * NSystem::system->getFrameTime();
+}
 
 /*
  * --INFO--
@@ -1071,7 +1107,10 @@ void BTeki::startStoppingMove()
  * Address:	8014510C
  * Size:	000030
  */
-void BTeki::finishStoppingMove() { clearTekiOption(TEKIOPT_StoppingMove); }
+void BTeki::finishStoppingMove()
+{
+	clearTekiOption(TEKIOPT_StoppingMove);
+}
 
 /*
  * --INFO--
@@ -1304,7 +1343,10 @@ void BTeki::doAI()
  * Address:	80145440
  * Size:	00000C
  */
-void BTeki::die() { mIsDead = 1; }
+void BTeki::die()
+{
+	mIsDead = 1;
+}
 
 /*
  * --INFO--
@@ -1962,7 +2004,10 @@ void BTeki::startDamageMotion(f32, f32)
  * Address:	80145C40
  * Size:	000024
  */
-void BTeki::releasePlatCollisions() { mPlatMgr.release(); }
+void BTeki::releasePlatCollisions()
+{
+	mPlatMgr.release();
+}
 
 /*
  * --INFO--
@@ -2992,7 +3037,9 @@ void BTeki::spawnTeki(int)
  * Address:	80146A10
  * Size:	000004
  */
-void BTeki::shootBall(Creature&) { }
+void BTeki::shootBall(Creature&)
+{
+}
 
 /*
  * --INFO--
@@ -5735,7 +5782,10 @@ void BTeki::getGravity()
  * Address:	80148934
  * Size:	00002C
  */
-TekiStrategy* BTeki::getStrategy() { return tekiMgr->getStrategy(mTekiType); }
+TekiStrategy* BTeki::getStrategy()
+{
+	return tekiMgr->getStrategy(mTekiType);
+}
 
 /*
  * --INFO--

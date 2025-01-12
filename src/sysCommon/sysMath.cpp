@@ -1868,7 +1868,9 @@ bool KRect::inside(Vector3f& point)
  * Address: 8003949C
  * Size:    00002C
  */
-KTri::KTri() { }
+KTri::KTri()
+{
+}
 
 /*
  * --INFO--

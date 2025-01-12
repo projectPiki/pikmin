@@ -89,7 +89,10 @@ void GameStat::update()
  * Address:	........
  * Size:	000004
  */
-void GameStat::Counter::dump(char* name) { PRINT("<%s> %d\n", name, mCount); }
+void GameStat::Counter::dump(char* name)
+{
+	PRINT("<%s> %d\n", name, mCount);
+}
 
 /*
  * --INFO--

@@ -250,14 +250,20 @@ void PelCreature::init(Vector3f& pos)
  * Address:	80092484
  * Size:	000008
  */
-f32 PelCreature::getiMass() { return 10.0f; }
+f32 PelCreature::getiMass()
+{
+	return 10.0f;
+}
 
 /*
  * --INFO--
  * Address:	8009248C
  * Size:	000008
  */
-bool PelCreature::isAlive() { return true; }
+bool PelCreature::isAlive()
+{
+	return true;
+}
 
 /*
  * --INFO--

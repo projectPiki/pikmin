@@ -75,7 +75,10 @@ void Creature::startClimb()
  * Address:	8008FF40
  * Size:	000010
  */
-void Creature::endClimb() { resetCreatureFlag(CF_IsClimbing); }
+void Creature::endClimb()
+{
+	resetCreatureFlag(CF_IsClimbing);
+}
 
 /*
  * --INFO--
@@ -99,7 +102,10 @@ bool Creature::isStickToPlatform()
  * Address:	........
  * Size:	000054
  */
-bool Creature::isStickToSphere() { return !isStickToPlatform(); }
+bool Creature::isStickToSphere()
+{
+	return !isStickToPlatform();
+}
 
 /*
  * --INFO--
@@ -820,14 +826,20 @@ Creature* Stickers::getCreature(int idx)
  * Address:	80090DD8
  * Size:	000008
  */
-int Stickers::getFirst() { return 0; }
+int Stickers::getFirst()
+{
+	return 0;
+}
 
 /*
  * --INFO--
  * Address:	80090DE0
  * Size:	000008
  */
-int Stickers::getNext(int idx) { return idx + 1; }
+int Stickers::getNext(int idx)
+{
+	return idx + 1;
+}
 
 /*
  * --INFO--

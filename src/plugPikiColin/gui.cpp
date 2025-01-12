@@ -216,7 +216,9 @@ void Menu::addKeyEvent(int eventCode, int inputCode, IDelegate1<Menu&>* delegate
  * Address:	8005DA1C
  * Size:	000004
  */
-void Menu::enterOption() { }
+void Menu::enterOption()
+{
+}
 
 /*
  * --INFO--
@@ -387,14 +389,20 @@ bool Menu::checkNewOption()
  * Address:	8005DF84
  * Size:	00001C
  */
-bool Menu::checkSelectKey() { return mController->isPressed(KBBTN_A) != false; }
+bool Menu::checkSelectKey()
+{
+	return mController->isPressed(KBBTN_A) != false;
+}
 
 /*
  * --INFO--
  * Address:	8005DFA0
  * Size:	00001C
  */
-bool Menu::checkCancelKey() { return mController->isPressed(KBBTN_B) != false; }
+bool Menu::checkCancelKey()
+{
+	return mController->isPressed(KBBTN_B) != false;
+}
 
 /*
  * --INFO--

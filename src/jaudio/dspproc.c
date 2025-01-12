@@ -255,7 +255,10 @@ void DsetupTable(u32 cmd1, u32 cmd2, u32 cmd3, u32 cmd4, u32 cmd5)
  * Address:	800088A0
  * Size:	000024
  */
-void DsetMixerLevel(f32 level) { DSP_MIXERLEVEL = 4096.0f * level; }
+void DsetMixerLevel(f32 level)
+{
+	DSP_MIXERLEVEL = 4096.0f * level;
+}
 
 /*
  * --INFO--

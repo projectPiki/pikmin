@@ -449,7 +449,10 @@ __OSExceptionHandler __OSSetExceptionHandler(__OSException exception, __OSExcept
  * Address:	801F5F70
  * Size:	000014
  */
-__OSExceptionHandler __OSGetExceptionHandler(__OSException exception) { return OSExceptionTable[exception]; }
+__OSExceptionHandler __OSGetExceptionHandler(__OSException exception)
+{
+	return OSExceptionTable[exception];
+}
 
 /*
  * --INFO--
@@ -587,4 +590,7 @@ void __OSPSInit(void)
  * Address:	801F60AC
  * Size:	000014
  */
-u32 __OSGetDIConfig(void) { return (__DIRegs[DI_CONFIG_IDX] & DI_CONFIG_CONFIG_MASK); }
+u32 __OSGetDIConfig(void)
+{
+	return (__DIRegs[DI_CONFIG_IDX] & DI_CONFIG_CONFIG_MASK);
+}

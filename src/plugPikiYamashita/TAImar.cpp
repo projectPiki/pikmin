@@ -1814,7 +1814,10 @@ void TAIAinitMar::start(Teki&)
  * Address:	801A6FE8
  * Size:	000008
  */
-bool TAIAinitMar::act(Teki&) { return true; }
+bool TAIAinitMar::act(Teki&)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -1865,7 +1868,10 @@ void TAIAwatchNavi::start(Teki&)
  * Address:	801A7060
  * Size:	000008
  */
-bool TAIAwatchNavi::act(Teki&) { return true; }
+bool TAIAwatchNavi::act(Teki&)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -2411,7 +2417,10 @@ f32 TAIAflyingDistanceMar::getOffset(Teki&)
  * Address:	801A75F0
  * Size:	000008
  */
-f32 FlyingDistance::getOffset(Teki&) { return mOffset; }
+f32 FlyingDistance::getOffset(Teki&)
+{
+	return mOffset;
+}
 
 /*
  * --INFO--
@@ -2587,7 +2596,9 @@ int TAIAstickingPikiMar::getPikiNum(Teki&)
  * Address:	801A7764
  * Size:	000004
  */
-void TAIAstickingPiki::start(Teki&) { }
+void TAIAstickingPiki::start(Teki&)
+{
+}
 
 /*
  * --INFO--

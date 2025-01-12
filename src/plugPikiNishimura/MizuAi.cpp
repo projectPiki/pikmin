@@ -72,7 +72,9 @@ void MizuAi::initGeyzer(Mizu* geyzer)
  * Address:	8017BA48
  * Size:	000004
  */
-void MizuAi::animationKeyUpdated(PaniAnimKeyEvent&) { }
+void MizuAi::animationKeyUpdated(PaniAnimKeyEvent&)
+{
+}
 
 /*
  * --INFO--
@@ -128,21 +130,30 @@ void MizuAi::naviGeyzerJump()
  * Address:	........
  * Size:	000028
  */
-bool MizuAi::readyTransit() { return (mMizu->getFlickDamageCount() >= C_BOSS_PROP(mMizu).mFlickDamageCountD()) ? true : false; }
+bool MizuAi::readyTransit()
+{
+	return (mMizu->getFlickDamageCount() >= C_BOSS_PROP(mMizu).mFlickDamageCountD()) ? true : false;
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000020
  */
-bool MizuAi::jetTransit() { return mMizu->_3B8 ? true : false; }
+bool MizuAi::jetTransit()
+{
+	return mMizu->_3B8 ? true : false;
+}
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-bool MizuAi::waitTransit() { return (mMizu->get2D4() > 4.0f) ? true : false; }
+bool MizuAi::waitTransit()
+{
+	return (mMizu->get2D4() > 4.0f) ? true : false;
+}
 
 /*
  * --INFO--
@@ -239,7 +250,9 @@ void MizuAi::initJet(int stateID)
  * Address:	........
  * Size:	000004
  */
-void MizuAi::waitState() { }
+void MizuAi::waitState()
+{
+}
 
 /*
  * --INFO--
@@ -274,7 +287,10 @@ void MizuAi::readyState()
  * Address:	........
  * Size:	00001C
  */
-void MizuAi::jetState() { mMizu->add2D4(gsys->getFrameTime()); }
+void MizuAi::jetState()
+{
+	mMizu->add2D4(gsys->getFrameTime());
+}
 
 /*
  * --INFO--

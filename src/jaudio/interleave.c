@@ -67,14 +67,20 @@ void Jac_SendStreamData(u8*, u32)
  * Address:	8001DB20
  * Size:	000020
  */
-BOOL Jac_CheckStreamFree(u32 p1) { return (buf->_18 >= p1) ? TRUE : FALSE; }
+BOOL Jac_CheckStreamFree(u32 p1)
+{
+	return (buf->_18 >= p1) ? TRUE : FALSE;
+}
 
 /*
  * --INFO--
  * Address:	8001DB40
  * Size:	000020
  */
-BOOL Jac_CheckStreamRemain(u32 p1) { return (buf->_14 < p1) ? FALSE : TRUE; }
+BOOL Jac_CheckStreamRemain(u32 p1)
+{
+	return (buf->_14 < p1) ? FALSE : TRUE;
+}
 
 /*
  * --INFO--

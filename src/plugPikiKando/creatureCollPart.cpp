@@ -9,7 +9,10 @@
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...) { OSPanic(__FILE__, __LINE__, fmt, "creatureCollPart"); }
+static void _Error(char* fmt, ...)
+{
+	OSPanic(__FILE__, __LINE__, fmt, "creatureCollPart");
+}
 
 /*
  * --INFO--
@@ -26,7 +29,9 @@ static void _Print(char*, ...)
  * Address:	8008E0BC
  * Size:	000004
  */
-void CreatureCollPart::touchCallback(Plane&, Vector3f&, Vector3f&) { }
+void CreatureCollPart::touchCallback(Plane&, Vector3f&, Vector3f&)
+{
+}
 
 /*
  * --INFO--

@@ -13,7 +13,10 @@ static void DefaultSwitchThreadCallback(OSThread* from, OSThread* to);
 
 // Fabricated helper inlines.
 // Initialise mutex queue (mutex equiv. to OSInitThreadQueue below).
-static inline void InitMutexQueue(OSMutexQueue* queue) { queue->head = queue->tail = NULL; }
+static inline void InitMutexQueue(OSMutexQueue* queue)
+{
+	queue->head = queue->tail = NULL;
+}
 
 /*
  * --INFO--
@@ -60,14 +63,20 @@ void __OSThreadInit(void)
  * Address:	801FBAD4
  * Size:	000010
  */
-void OSInitThreadQueue(OSThreadQueue* threadQueue) { threadQueue->head = threadQueue->tail = nullptr; }
+void OSInitThreadQueue(OSThreadQueue* threadQueue)
+{
+	threadQueue->head = threadQueue->tail = nullptr;
+}
 
 /*
  * --INFO--
  * Address:	801FBAE4
  * Size:	00000C
  */
-OSThread* OSGetCurrentThread(void) { return __OSCurrentThread; }
+OSThread* OSGetCurrentThread(void)
+{
+	return __OSCurrentThread;
+}
 
 /*
  * --INFO--
@@ -670,7 +679,10 @@ BOOL OSSetThreadPriority(OSThread*, s32)
  * Address:	801FCBAC
  * Size:	000008
  */
-OSPriority OSGetThreadPriority(OSThread* thread) { return thread->base; }
+OSPriority OSGetThreadPriority(OSThread* thread)
+{
+	return thread->base;
+}
 
 /*
  * --INFO--

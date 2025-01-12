@@ -211,7 +211,10 @@ void zen::DrawCMtitleObj::appear(f32)
  * Address:	801ED6A0
  * Size:	000008
  */
-bool zen::DrawCMtitleObj::modeSleep() { return false; }
+bool zen::DrawCMtitleObj::modeSleep()
+{
+	return false;
+}
 
 /*
  * --INFO--

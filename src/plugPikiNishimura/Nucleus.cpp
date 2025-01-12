@@ -48,7 +48,10 @@ Nucleus::Nucleus(CreatureProp* props)
  * Address:	8017A2C0
  * Size:	000008
  */
-f32 Nucleus::getiMass() { return 0.01f; }
+f32 Nucleus::getiMass()
+{
+	return 0.01f;
+}
 
 /*
  * --INFO--
@@ -82,14 +85,19 @@ void Nucleus::doKill()
  * Address:	8017A35C
  * Size:	000004
  */
-void Nucleus::exitCourse() { }
+void Nucleus::exitCourse()
+{
+}
 
 /*
  * --INFO--
  * Address:	8017A360
  * Size:	000020
  */
-void Nucleus::update() { Creature::update(); }
+void Nucleus::update()
+{
+	Creature::update();
+}
 
 /*
  * --INFO--
@@ -122,7 +130,10 @@ void Nucleus::drawShape(Graphics& gfx)
  * Address:	8017A484
  * Size:	000024
  */
-void Nucleus::doAI() { mNucleusAi->update(); }
+void Nucleus::doAI()
+{
+	mNucleusAi->update();
+}
 
 /*
  * --INFO--

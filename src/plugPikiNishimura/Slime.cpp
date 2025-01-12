@@ -63,14 +63,20 @@ Slime::Slime(CreatureProp* props, BossShapeObject* shape)
  * Address:	80163F08
  * Size:	00000C
  */
-f32 Slime::getCentreSize() { return mCentreUpdater->mSize; }
+f32 Slime::getCentreSize()
+{
+	return mCentreUpdater->mSize;
+}
 
 /*
  * --INFO--
  * Address:	80163F14
  * Size:	000008
  */
-f32 Slime::getiMass() { return 0.0001f; }
+f32 Slime::getiMass()
+{
+	return 0.0001f;
+}
 
 /*
  * --INFO--
@@ -139,7 +145,9 @@ void Slime::doKill()
  * Address:	801641CC
  * Size:	000004
  */
-void Slime::exitCourse() { }
+void Slime::exitCourse()
+{
+}
 
 /*
  * --INFO--
@@ -195,14 +203,20 @@ void Slime::drawShape(Graphics& gfx)
  * Address:	801643BC
  * Size:	000024
  */
-void Slime::doAI() { mSlimeAi->update(); }
+void Slime::doAI()
+{
+	mSlimeAi->update();
+}
 
 /*
  * --INFO--
  * Address:	801643E0
  * Size:	000024
  */
-void Slime::doAnimation() { mSlimeBody->update(); }
+void Slime::doAnimation()
+{
+	mSlimeBody->update();
+}
 
 /*
  * --INFO--
@@ -230,4 +244,7 @@ void Slime::collisionCallback(CollEvent& event)
 
 // this SOMEHOW needs to be at the start of CollideSphereUpdater::getSize
 // rather than the end, so this is the work around
-static f32 fakeFunc() { return 15.0f; }
+static f32 fakeFunc()
+{
+	return 15.0f;
+}

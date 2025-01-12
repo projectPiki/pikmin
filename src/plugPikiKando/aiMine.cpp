@@ -470,7 +470,9 @@ int ActMine::exec()
  * Address:	800B9780
  * Size:	000004
  */
-void ActMine::cleanup() { }
+void ActMine::cleanup()
+{
+}
 
 /*
  * --INFO--

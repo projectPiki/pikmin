@@ -67,7 +67,9 @@ ActChase::ActChase(Piki* piki)
  * Address:	800B56F4
  * Size:	000004
  */
-void ActChase::Initialiser::initialise(Action*) { }
+void ActChase::Initialiser::initialise(Action*)
+{
+}
 
 /*
  * --INFO--

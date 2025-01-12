@@ -90,7 +90,10 @@ void CoreNode::del()
 int CoreNode::getChildCount()
 {
 	int count = 0;
-	FOREACH_NODE(CoreNode, mChild, node) { count++; }
+	FOREACH_NODE(CoreNode, mChild, node)
+	{
+		count++;
+	}
 	return count;
 }
 
@@ -145,7 +148,10 @@ void Node::update()
  */
 void Node::draw(Graphics& gfx)
 {
-	FOREACH_NODE(Node, mChild, node) { node->draw(gfx); }
+	FOREACH_NODE(Node, mChild, node)
+	{
+		node->draw(gfx);
+	}
 }
 
 /*
@@ -153,7 +159,10 @@ void Node::draw(Graphics& gfx)
  * Address:	8004082C
  * Size:	00002C
  */
-void Node::render(Graphics& gfx) { draw(gfx); }
+void Node::render(Graphics& gfx)
+{
+	draw(gfx);
+}
 
 /*
  * --INFO--
@@ -238,7 +247,10 @@ CoreNode* NodeMgr::findNode(char*, CoreNode*)
  * Address:	80040938
  * Size:	00003C
  */
-NodeMgr::NodeMgr() { mDelete = false; }
+NodeMgr::NodeMgr()
+{
+	mDelete = false;
+}
 
 /*
  * --INFO--

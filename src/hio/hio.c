@@ -12,7 +12,10 @@ static HIOCallback RxCallback;
  * Address:	8020D388
  * Size:	00000C
  */
-static void ExtHandler(s32 chan, OSContext* context) { Chan = -1; }
+static void ExtHandler(s32 chan, OSContext* context)
+{
+	Chan = -1;
+}
 
 /*
  * --INFO--

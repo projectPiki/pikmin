@@ -225,7 +225,10 @@ bool InteractFire::actPiki(Piki* piki)
  * Address:	8007BDE0
  * Size:	000008
  */
-bool InteractWind::actCommon(Creature*) { return true; }
+bool InteractWind::actCommon(Creature*)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -320,7 +323,10 @@ bool InteractFlick::actPiki(Piki* piki)
  * Address:	8007C038
  * Size:	000008
  */
-bool InteractSlimeAttack::actCommon(Creature*) { return true; }
+bool InteractSlimeAttack::actCommon(Creature*)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -435,7 +441,10 @@ bool InteractAttack::actPiki(Piki* piki)
  * Address:	8007C3A0
  * Size:	000008
  */
-bool InteractSwallow::actCommon(Creature*) { return true; }
+bool InteractSwallow::actCommon(Creature*)
+{
+	return true;
+}
 
 /*
  * --INFO--
@@ -598,4 +607,7 @@ bool InteractPress::actPiki(Piki* piki)
  * Address:	8007C84C
  * Size:	000008
  */
-bool InteractFlute::actTeki(Teki*) { return true; }
+bool InteractFlute::actTeki(Teki*)
+{
+	return true;
+}

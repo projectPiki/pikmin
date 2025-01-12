@@ -42,7 +42,10 @@ void BufferedInputStream::init(Stream* stream, u8* buffer, int bufferSize)
  * Address:	80025598
  * Size:	0000C0
  */
-BufferedInputStream::BufferedInputStream(Stream* stream, u8* buffer, int bufferSize) { init(stream, buffer, bufferSize); }
+BufferedInputStream::BufferedInputStream(Stream* stream, u8* buffer, int bufferSize)
+{
+	init(stream, buffer, bufferSize);
+}
 
 /*
  * --INFO--

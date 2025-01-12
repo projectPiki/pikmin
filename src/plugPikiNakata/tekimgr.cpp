@@ -112,7 +112,10 @@ int TekiMgr::typeIds[TEKI_TypeCount] = {
  * Address:	8014A58C
  * Size:	00000C
  */
-void TekiMgr::initTekiMgr() { tekiMgr = nullptr; }
+void TekiMgr::initTekiMgr()
+{
+	tekiMgr = nullptr;
+}
 
 /*
  * --INFO--
@@ -534,7 +537,10 @@ void TekiMgr::startStage()
  * Address:	8014AA88
  * Size:	000020
  */
-void TekiMgr::update() { MonoObjectMgr::update(); }
+void TekiMgr::update()
+{
+	MonoObjectMgr::update();
+}
 
 /*
  * --INFO--
@@ -744,35 +750,50 @@ void TekiMgr::reset()
  * Address:	8014ACD4
  * Size:	000044
  */
-Teki* TekiMgr::createObject() { return new Teki(); }
+Teki* TekiMgr::createObject()
+{
+	return new Teki();
+}
 
 /*
  * --INFO--
  * Address:	8014AD18
  * Size:	000014
  */
-TekiStrategy* TekiMgr::getStrategy(int tekiType) { return mStrategyTable->mStrategies[tekiType]; }
+TekiStrategy* TekiMgr::getStrategy(int tekiType)
+{
+	return mStrategyTable->mStrategies[tekiType];
+}
 
 /*
  * --INFO--
  * Address:	8014AD2C
  * Size:	000010
  */
-TekiParameters* TekiMgr::getTekiParameters(int tekiType) { return mTekiParams[tekiType]; }
+TekiParameters* TekiMgr::getTekiParameters(int tekiType)
+{
+	return mTekiParams[tekiType];
+}
 
 /*
  * --INFO--
  * Address:	8014AD3C
  * Size:	000010
  */
-TekiShapeObject* TekiMgr::getTekiShapeObject(int tekiType) { return mTekiShapes[tekiType]; }
+TekiShapeObject* TekiMgr::getTekiShapeObject(int tekiType)
+{
+	return mTekiShapes[tekiType];
+}
 
 /*
  * --INFO--
  * Address:	8014AD4C
  * Size:	000010
  */
-PaniSoundTable* TekiMgr::getSoundTable(int tekiType) { return mTekiSoundTables[tekiType]; }
+PaniSoundTable* TekiMgr::getSoundTable(int tekiType)
+{
+	return mTekiSoundTables[tekiType];
+}
 
 /*
  * --INFO--
@@ -888,7 +909,10 @@ void TekiMgr::setUsingTypeTable(bool isUsingType)
  * Address:	........
  * Size:	00000C
  */
-void TekiMgr::setUsingType(int tekiType, bool isUsing) { mUsingType[tekiType] = isUsing; }
+void TekiMgr::setUsingType(int tekiType, bool isUsing)
+{
+	mUsingType[tekiType] = isUsing;
+}
 
 /*
  * --INFO--
@@ -907,7 +931,10 @@ void TekiMgr::setVisibleTypeTable(bool isVisibleType)
  * Address:	8014AFC8
  * Size:	00000C
  */
-void TekiMgr::setVisibleType(int tekiType, bool isVisible) { mVisibleType[tekiType] = isVisible; }
+void TekiMgr::setVisibleType(int tekiType, bool isVisible)
+{
+	mVisibleType[tekiType] = isVisible;
+}
 
 /*
  * --INFO--

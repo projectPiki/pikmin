@@ -111,7 +111,10 @@ void Stream::writeInt(int i)
  * Address:	80025320
  * Size:	000038
  */
-void Stream::writeByte(u8 c) { write(&c, sizeof(u8)); }
+void Stream::writeByte(u8 c)
+{
+	write(&c, sizeof(u8));
+}
 
 /*
  * --INFO--
@@ -195,35 +198,47 @@ void Stream::print(char*, ...)
  * Address:	800254D8
  * Size:	000004
  */
-void Stream::read(void*, int) { }
+void Stream::read(void*, int)
+{
+}
 
 /*
  * --INFO--
  * Address:	800254DC
  * Size:	000004
  */
-void Stream::write(void*, int) { }
+void Stream::write(void*, int)
+{
+}
 
 /*
  * --INFO--
  * Address:	800254E0
  * Size:	000008
  */
-int Stream::getPending() { return 0; }
+int Stream::getPending()
+{
+	return 0;
+}
 
 /*
  * --INFO--
  * Address:	800254E8
  * Size:	000008
  */
-int Stream::getAvailable() { return 0; }
+int Stream::getAvailable()
+{
+	return 0;
+}
 
 /*
  * --INFO--
  * Address:	800254F0
  * Size:	000004
  */
-void Stream::close() { }
+void Stream::close()
+{
+}
 
 /*
  * --INFO--

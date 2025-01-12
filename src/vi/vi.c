@@ -896,7 +896,10 @@ void VISet3D(void)
  * Address:	80203AC0
  * Size:	000008
  */
-u32 VIGetRetraceCount(void) { return retraceCount; }
+u32 VIGetRetraceCount(void)
+{
+	return retraceCount;
+}
 
 /*
  * --INFO--
@@ -976,7 +979,10 @@ u32 VIGetCurrentLine(void)
  * Address:	80203B84
  * Size:	00000C
  */
-u32 VIGetTvFormat(void) { return *(u32*)OSPhysicalToCached(0xCC); }
+u32 VIGetTvFormat(void)
+{
+	return *(u32*)OSPhysicalToCached(0xCC);
+}
 
 /*
  * --INFO--

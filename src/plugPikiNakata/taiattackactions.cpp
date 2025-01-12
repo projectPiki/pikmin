@@ -597,7 +597,10 @@ bool TaiAnimationSwallowingAction::act(Teki& teki)
  * Address:	80127EA4
  * Size:	000010
  */
-void BTeki::clearTekiOption(int opt) { mTekiOptions &= ~opt; }
+void BTeki::clearTekiOption(int opt)
+{
+	mTekiOptions &= ~opt;
+}
 
 /*
  * --INFO--
@@ -1061,4 +1064,7 @@ bool TekiNotCondition::satisfy(Creature*)
  * Address:	801283A0
  * Size:	000008
  */
-bool TekiCondition::satisfy(Creature*) { return true; }
+bool TekiCondition::satisfy(Creature*)
+{
+	return true;
+}

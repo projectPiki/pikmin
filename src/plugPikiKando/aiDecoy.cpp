@@ -226,14 +226,18 @@ void ActDecoy::init(Creature*)
  * Address:	800B79D4
  * Size:	000004
  */
-void ActDecoy::cleanup() { }
+void ActDecoy::cleanup()
+{
+}
 
 /*
  * --INFO--
  * Address:	800B79D8
  * Size:	000004
  */
-void ActDecoy::animationKeyUpdated(PaniAnimKeyEvent&) { }
+void ActDecoy::animationKeyUpdated(PaniAnimKeyEvent&)
+{
+}
 
 /*
  * --INFO--

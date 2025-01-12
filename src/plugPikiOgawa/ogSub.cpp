@@ -32,7 +32,10 @@ static int SpecialNumber[100] = {};
  * Address:	8017E850
  * Size:	00002C
  */
-bool zen::ogCheckInsCard() { return gameflow.mMemoryCard.isCardInserted(); }
+bool zen::ogCheckInsCard()
+{
+	return gameflow.mMemoryCard.isCardInserted();
+}
 
 /*
  * --INFO--
@@ -3086,7 +3089,10 @@ void zen::cnvSpecialNumberHyphen(char*)
  * Address:	80180E54
  * Size:	000008
  */
-bool P2DPaneCallBack::draw(P2DPane*) { return true; }
+bool P2DPaneCallBack::draw(P2DPane*)
+{
+	return true;
+}
 
 /*
  * --INFO--

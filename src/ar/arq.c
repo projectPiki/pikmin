@@ -77,7 +77,9 @@ void __ARQServiceQueueLo()
  * Address:	80207B80
  * Size:	000004
  */
-void __ARQCallbackHack(void) { }
+void __ARQCallbackHack(void)
+{
+}
 
 /*
  * --INFO--

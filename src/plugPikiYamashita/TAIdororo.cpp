@@ -3209,7 +3209,10 @@ bool TAIAgoTargetPiki::act(Teki&)
  * Address:	801D3960
  * Size:	000008
  */
-bool TAIAgoTargetPiki::checkArrival(Teki&) { return false; }
+bool TAIAgoTargetPiki::checkArrival(Teki&)
+{
+	return false;
+}
 
 /*
  * --INFO--
@@ -4380,4 +4383,7 @@ void TAIAinitDororo::start(Teki&)
  * Address:	801D47F8
  * Size:	000008
  */
-bool TAIAinitDororo::act(Teki&) { return true; }
+bool TAIAinitDororo::act(Teki&)
+{
+	return true;
+}

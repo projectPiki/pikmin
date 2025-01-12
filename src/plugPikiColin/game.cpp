@@ -50,7 +50,9 @@ void StageInfo::write(RandomAccessStream&)
  * Address:	8005315C
  * Size:	000004
  */
-void StageInfo::read(RandomAccessStream&) { }
+void StageInfo::read(RandomAccessStream&)
+{
+}
 
 /*
  * --INFO--

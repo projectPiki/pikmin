@@ -588,7 +588,10 @@ bool TaiClampMinVelocityYAction::act(Teki& teki)
  * Address:	80134B84
  * Size:	000020
  */
-void TaiImpassableAction::start(Teki& teki) { resetPosition(teki); }
+void TaiImpassableAction::start(Teki& teki)
+{
+	resetPosition(teki);
+}
 
 /*
  * --INFO--
@@ -711,7 +714,9 @@ void TaiRandomWanderingRouteAction::start(Teki& teki)
  * Address:	80134CC4
  * Size:	000004
  */
-void TaiRandomWanderingRouteAction::finish(Teki& teki) { }
+void TaiRandomWanderingRouteAction::finish(Teki& teki)
+{
+}
 
 /*
  * --INFO--
@@ -919,7 +924,9 @@ bool TaiTracingAction::act(Teki& teki)
  * Address:	80134EFC
  * Size:	000004
  */
-void TaiGoingHomeAction::finish(Teki& teki) { }
+void TaiGoingHomeAction::finish(Teki& teki)
+{
+}
 
 /*
  * --INFO--

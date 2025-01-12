@@ -535,7 +535,9 @@ void BaseGameSection::draw(Graphics&)
  * Address:	800571E0
  * Size:	000004
  */
-void ModeState::postUpdate() { }
+void ModeState::postUpdate()
+{
+}
 
 /*
  * --INFO--
@@ -1098,7 +1100,9 @@ void RunningModeState::update(u32&)
  * Address:	8005794C
  * Size:	000004
  */
-void GameInterface::message(int, int) { }
+void GameInterface::message(int, int)
+{
+}
 
 /*
  * --INFO--
@@ -4102,21 +4106,27 @@ GameMovieInterface::ComplexMessage::ComplexMessage()
  * Address:	8005A118
  * Size:	000004
  */
-void GameInterface::movie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool) { }
+void GameInterface::movie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool)
+{
+}
 
 /*
  * --INFO--
  * Address:	8005A11C
  * Size:	000004
  */
-void GameInterface::parseMessages() { }
+void GameInterface::parseMessages()
+{
+}
 
 /*
  * --INFO--
  * Address:	8005A120
  * Size:	000004
  */
-void GameInterface::parse(int, int) { }
+void GameInterface::parse(int, int)
+{
+}
 
 /*
  * --INFO--
@@ -4868,14 +4878,18 @@ void NewPikiGameSetupSection::draw(Graphics&)
  * Address:	8005AAF8
  * Size:	000004
  */
-void ModeState::postRender(Graphics&) { }
+void ModeState::postRender(Graphics&)
+{
+}
 
 /*
  * --INFO--
  * Address:	8005AAFC
  * Size:	000004
  */
-void NewPikiGameSection::init() { }
+void NewPikiGameSection::init()
+{
+}
 
 /*
  * --INFO--
@@ -5168,4 +5182,6 @@ void QuittingGameModeState::postUpdate()
  * Address:	8005AE18
  * Size:	000004
  */
-void BaseGameSection::openMenu() { }
+void BaseGameSection::openMenu()
+{
+}

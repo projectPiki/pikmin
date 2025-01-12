@@ -183,39 +183,57 @@ void Parm<Vector3f>::write(RandomAccessStream&)
  * Address:	8005EC70
  * Size:	000040
  */
-void Parm<f32>::read(RandomAccessStream& input) { mValue = input.readFloat(); }
+void Parm<f32>::read(RandomAccessStream& input)
+{
+	mValue = input.readFloat();
+}
 
 /*
  * --INFO--
  * Address:	8005ECB0
  * Size:	000038
  */
-void Parm<f32>::write(RandomAccessStream& output) { output.writeFloat(mValue); }
+void Parm<f32>::write(RandomAccessStream& output)
+{
+	output.writeFloat(mValue);
+}
 
 /*
  * --INFO--
  * Address:	8005ECE8
  * Size:	000040
  */
-void Parm<int>::read(RandomAccessStream& input) { mValue = input.readInt(); }
+void Parm<int>::read(RandomAccessStream& input)
+{
+	mValue = input.readInt();
+}
 
 /*
  * --INFO--
  * Address:	8005ED28
  * Size:	000038
  */
-void Parm<int>::write(RandomAccessStream& output) { output.writeInt(mValue); }
+void Parm<int>::write(RandomAccessStream& output)
+{
+	output.writeInt(mValue);
+}
 
 /*
  * --INFO--
  * Address:	8005ED60
  * Size:	000058
  */
-void Parm<String>::read(RandomAccessStream& input) { mValue = String(input.readString(), 0); }
+void Parm<String>::read(RandomAccessStream& input)
+{
+	mValue = String(input.readString(), 0);
+}
 
 /*
  * --INFO--
  * Address:	8005EDB8
  * Size:	000038
  */
-void Parm<String>::write(RandomAccessStream& output) { output.writeString(mValue); }
+void Parm<String>::write(RandomAccessStream& output)
+{
+	output.writeString(mValue);
+}
