@@ -7,23 +7,23 @@
 struct Sphere;
 
 /**
- * @brief TODO
+ * @brief A representation of a cylinder in 3D space.
  */
 struct Cylinder {
-	Cylinder(Vector3f& p1, Vector3f& p2, f32 p3)
-	    : _00(p1)
-	    , _0C(p2)
-	    , _18(p3)
+	Cylinder(Vector3f& startPoint, Vector3f& endPoint, f32 radius)
+	    : mStartPoint(startPoint)
+	    , mEndPoint(endPoint)
+	    , mRadius(radius)
 	{
 	}
 
-	void get2dDist(Vector3f&);
-	void collide(const Sphere&, Vector3f&, f32&);
-	f32 getPosRatio(const Vector3f&);
+	f32 get2dDist(Vector3f& point);
+	void collide(const Sphere& sphere, Vector3f& point, f32& depth);
+	f32 getPosRatio(const Vector3f& point); // 0-1 along the cylinder axis
 
-	Vector3f _00; // _00
-	Vector3f _0C; // _0C
-	f32 _18;      // _18
+	Vector3f mStartPoint; // _00
+	Vector3f mEndPoint;   // _0C
+	f32 mRadius;          // _18
 };
 
 /**

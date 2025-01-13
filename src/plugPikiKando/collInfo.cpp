@@ -38,8 +38,34 @@ static char* _typeStr[] = {
  * Address:	80086CC4
  * Size:	0002DC
  */
-void Cylinder::get2dDist(Vector3f&)
+f32 Cylinder::get2dDist(Vector3f& point)
 {
+	// Calculate cylinder direction vector
+	Vector3f cylinderDir = mEndPoint - mStartPoint;
+
+	Vector3f normalised = cylinderDir;
+
+	// Project point onto cylinder axis
+	f32 length          = normalised.normalise();
+	f32 projectionRatio = normalised.DP(point - mStartPoint) / length;
+
+	if (projectionRatio < 0.0f) {
+		// Before cylinder start - get 2D distance to start point
+		Vector3f startToPoint = mStartPoint - point;
+		return sqrtf(startToPoint.x * startToPoint.x + startToPoint.z * startToPoint.z);
+	}
+
+	if (projectionRatio > 1.0f) {
+		// Past cylinder end - get 2D distance to end point
+		Vector3f endToPoint = mEndPoint - point;
+		return sqrtf(endToPoint.x * endToPoint.x + endToPoint.z * endToPoint.z);
+	}
+
+	// On cylinder body - get distance to projected point
+	Vector3f projectedPoint = (normalised * projectionRatio) + mStartPoint;
+	Vector3f projToPoint    = projectedPoint - point;
+	return sqrtf(projToPoint.x * projToPoint.x + projToPoint.z * projToPoint.z);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -761,7 +787,7 @@ bool Tube::collide(const Sphere&, Vector3f&, f32&)
  * Address:	800876C8
  * Size:	0000E4
  */
-f32 Cylinder::getPosRatio(const Vector3f&)
+f32 Cylinder::getPosRatio(const Vector3f& vec)
 {
 	/*
 	.loc_0x0:
