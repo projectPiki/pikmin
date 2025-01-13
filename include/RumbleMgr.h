@@ -3,9 +3,11 @@
 
 #include "types.h"
 
+struct Graphics;
+struct Font;
 struct Vector3f;
 
-/*
+/**
  * @brief TODO
  */
 struct RumbleSample {
@@ -22,37 +24,70 @@ struct RumbleSample {
 	int mChannel;          // _08
 };
 
-/*
+/**
  * @brief TODO
+ */
+struct RumbleTable {
+	int _00; // _00
+	int _04; // _04
+};
+
+/**
+ * @brief TODO
+ */
+struct ChannelData {
+	RumbleTable* mRumblePoint; // _00, maybe this type?
+	f32* mRumbleFrame;         // _04
+	f32* mRumblePower;         // _08
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x4.
  */
 struct ChannelDataMgr {
 	ChannelDataMgr(); // unused/inlined
 
 	// unused/inlined:
 	void init();
-	void getChannelDataTbl(int);
+	ChannelData* getChannelDataTbl(int row);
 
-	// TODO: members
+	ChannelData* mDataTbl; // _00
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct ChannelMgr {
 	ChannelMgr();
 
 	void start(int, f32*);
-	void update();
+	f32 update();
 
 	// unused/inlined:
 	void init(ChannelDataMgr*);
 	void reset();
 
-	// TODO: members
+	// DLL inlines:
+	bool isFree();
+	int getActiveType();
+	void draw2d(Graphics&, Font*);
+
+	f32 _00;                  // _00
+	f32 _04;                  // _04
+	f32 _08;                  // _08
+	int mChannelIdx;          // _0C
+	ChannelData* mData;       // _10
+	ChannelDataMgr* mDataMgr; // _14
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct ControlerMgr {
 	ControlerMgr(); // unused/inlined
@@ -64,7 +99,12 @@ struct ControlerMgr {
 	void reset();
 	void stop();
 	void stop(int);
-	void update();
+	f32 update();
+
+	// DLL inline:
+	void draw2d(Graphics&, Font*);
+
+	static const int maxChannel;
 
 	// TODO: members
 };
@@ -93,5 +133,7 @@ struct RumbleMgr {
 };
 
 extern RumbleMgr* rumbleMgr;
+extern RumbleTable patternTable[64];
+extern ChannelData channelDataTbl[80];
 
 #endif

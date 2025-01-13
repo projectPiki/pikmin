@@ -1,4 +1,5 @@
 #include "RumbleMgr.h"
+#include "DebugLog.h"
 
 RumbleMgr* rumbleMgr;
 
@@ -7,20 +8,14 @@ RumbleMgr* rumbleMgr;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT(nullptr);
 
 /*
  * --INFO--
@@ -29,7 +24,7 @@ static void _Print(char*, ...)
  */
 ChannelDataMgr::ChannelDataMgr()
 {
-	// UNUSED FUNCTION
+	mDataTbl = nullptr;
 }
 
 /*
@@ -39,7 +34,7 @@ ChannelDataMgr::ChannelDataMgr()
  */
 void ChannelDataMgr::init()
 {
-	// UNUSED FUNCTION
+	mDataTbl = channelDataTbl;
 }
 
 /*
@@ -47,9 +42,9 @@ void ChannelDataMgr::init()
  * Address:	........
  * Size:	000014
  */
-void ChannelDataMgr::getChannelDataTbl(int)
+ChannelData* ChannelDataMgr::getChannelDataTbl(int row)
 {
-	// UNUSED FUNCTION
+	return &channelDataTbl[row];
 }
 
 /*
@@ -59,19 +54,11 @@ void ChannelDataMgr::getChannelDataTbl(int)
  */
 ChannelMgr::ChannelMgr()
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x5120(r2)
-	  li        r4, -0x1
-	  li        r0, 0
-	  stfs      f0, 0x0(r3)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x511C(r2)
-	  stfs      f0, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-	  blr
-	*/
+	_00         = 0.0f;
+	_04         = 0.0f;
+	_08         = 1.0f;
+	mChannelIdx = -1;
+	mData       = nullptr;
 }
 
 /*
@@ -79,9 +66,14 @@ ChannelMgr::ChannelMgr()
  * Address:	........
  * Size:	00002C
  */
-void ChannelMgr::init(ChannelDataMgr*)
+void ChannelMgr::init(ChannelDataMgr* dataMgr)
 {
-	// UNUSED FUNCTION
+	_00         = 0.0f;
+	_04         = 0.0f;
+	_08         = 1.0f;
+	mChannelIdx = -1;
+	mData       = nullptr;
+	mDataMgr    = dataMgr;
 }
 
 /*
@@ -91,7 +83,11 @@ void ChannelMgr::init(ChannelDataMgr*)
  */
 void ChannelMgr::reset()
 {
-	// UNUSED FUNCTION
+	_00         = 0.0f;
+	_04         = 0.0f;
+	_08         = 1.0f;
+	mChannelIdx = -1;
+	mData       = nullptr;
 }
 
 /*
@@ -99,39 +95,24 @@ void ChannelMgr::reset()
  * Address:	8017C890
  * Size:	000060
  */
-void ChannelMgr::start(int, f32*)
+void ChannelMgr::start(int idx, f32* valuePtr)
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x5120(r2)
-	  mulli     r7, r4, 0xC
-	  stfs      f1, 0x0(r3)
-	  lis       r6, 0x802D
-	  addi      r0, r6, 0x2378
-	  add       r0, r0, r7
-	  stw       r0, 0x10(r3)
-	  cmplwi    r5, 0
-	  stw       r4, 0xC(r3)
-	  beq-      .loc_0x54
-	  lfs       f2, 0x0(r5)
-	  lfs       f0, -0x5118(r2)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x4C
-	  fdivs     f0, f2, f0
-	  lfs       f1, -0x511C(r2)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x8(r3)
-	  blr
+	_00         = 0.0f;
+	mData       = mDataMgr->getChannelDataTbl(idx);
+	mChannelIdx = idx;
+	if (valuePtr) {
+		if (*valuePtr < 0.0f) {
+			ERROR("変な値が入ってます"); // 'there is a weird value' (lol)
+		}
 
-	.loc_0x4C:
-	  stfs      f1, 0x8(r3)
-	  blr
-
-	.loc_0x54:
-	  lfs       f0, -0x511C(r2)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
+		if (*valuePtr < 1000.0f) {
+			_08 = 1.0f - (*valuePtr / 1000.0f);
+		} else {
+			_08 = 0.0f;
+		}
+	} else {
+		_08 = 1.0f;
+	}
 }
 
 /*
@@ -139,82 +120,25 @@ void ChannelMgr::start(int, f32*)
  * Address:	8017C8F0
  * Size:	0000FC
  */
-void ChannelMgr::update()
+f32 ChannelMgr::update()
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x5120(r2)
-	  stfs      f0, 0x4(r3)
-	  lwz       r0, 0x10(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xE4
-	  lwz       r4, 0x2DEC(r13)
-	  li        r8, 0
-	  lfs       f1, 0x0(r3)
-	  li        r5, 0
-	  lfs       f0, 0x28C(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x0(r3)
-	  lfs       f3, -0x511C(r2)
-	  b         .loc_0x8C
+	_04 = 0.0f;
+	if (mData) {
+		_00 += gsys->getFrameTime();
+		for (int i = 0; i < mData->mRumblePoint->_00 - 1; i++) {
+			if (_00 > mData->mRumbleFrame[i]) {
+				f32 ratio = (_00 - mData->mRumbleFrame[i]) / (mData->mRumbleFrame[i + 1] - mData->mRumbleFrame[i]);
+				_04       = (1.0f - ratio) * mData->mRumblePower[i] + ratio * mData->mRumblePower[i + 1];
+			}
+		}
 
-	.loc_0x38:
-	  lwz       r0, 0x4(r6)
-	  lfs       f2, 0x0(r3)
-	  add       r4, r0, r5
-	  lfs       f1, 0x0(r4)
-	  fcmpo     cr0, f2, f1
-	  ble-      .loc_0x84
-	  lfs       f0, 0x4(r4)
-	  fsubs     f2, f2, f1
-	  lwz       r0, 0x8(r6)
-	  fsubs     f0, f0, f1
-	  add       r4, r0, r5
-	  lfs       f1, 0x0(r4)
-	  fdivs     f4, f2, f0
-	  lfs       f0, 0x4(r4)
-	  fsubs     f2, f3, f4
-	  fmuls     f0, f4, f0
-	  fmuls     f1, f2, f1
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4(r3)
+		if (_00 > mData->mRumbleFrame[mData->mRumblePoint->_00 - 1]) {
+			reset();
+		}
+	}
 
-	.loc_0x84:
-	  addi      r5, r5, 0x4
-	  addi      r8, r8, 0x1
-
-	.loc_0x8C:
-	  lwz       r6, 0x10(r3)
-	  lwz       r4, 0x0(r6)
-	  lwz       r7, 0x0(r4)
-	  subi      r0, r7, 0x1
-	  cmpw      r8, r0
-	  blt+      .loc_0x38
-	  lwz       r4, 0x4(r6)
-	  rlwinm    r0,r7,2,0,29
-	  lfs       f1, 0x0(r3)
-	  add       r4, r4, r0
-	  lfs       f0, -0x4(r4)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xE4
-	  lfs       f0, -0x5120(r2)
-	  li        r4, -0x1
-	  li        r0, 0
-	  stfs      f0, 0x0(r3)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x511C(r2)
-	  stfs      f0, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0xE4:
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x4(r3)
-	  lfs       f1, 0x4(r3)
-	  blr
-	*/
+	_04 *= _08;
+	return _04;
 }
 
 /*
@@ -331,7 +255,7 @@ void ControlerMgr::stop(int)
  * Address:	........
  * Size:	0000AC
  */
-void ControlerMgr::update()
+f32 ControlerMgr::update()
 {
 	// UNUSED FUNCTION
 }
@@ -341,8 +265,9 @@ void ControlerMgr::update()
  * Address:	8017CA88
  * Size:	000120
  */
-RumbleMgr::RumbleMgr(bool, bool, bool, bool)
+RumbleMgr::RumbleMgr(bool p1, bool p2, bool p3, bool p4)
 {
+
 	/*
 	.loc_0x0:
 	  mflr      r0
