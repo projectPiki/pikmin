@@ -441,45 +441,64 @@ void KingAi::pikiStickToKingMouth()
 			{
 				// pretty sure this needs to be Creature* then cast to Piki at points, but the cast is never required?
 				// idk what Nishimura was doing. maybe it was Piki* with a down cast? I can't get either to work properly
-				Piki* piki = static_cast<Piki*>(*iter);
-				if (piki && piki->isAlive() && piki->isVisible() && !piki->isBuried() && piki->getStickObject() != mKing
-				    && qdist2(piki->mPosition.x, piki->mPosition.z, slot2->mCentre.x, slot2->mCentre.z)
-				           < C_KING_PROP(mKing).mTongueRangeXZ()
+				Piki* piki = (Piki*)*iter;
+
+				// Ignore invalid objects
+				if (!piki) {
+					continue;
+				}
+
+				// Ignore dead, invisible, buried, or already stuck piki
+				if (!piki->isAlive() || !piki->isVisible() || piki->isBuried() || piki->getStickObject() == mKing) {
+					continue;
+				}
+
+				// Check if piki is close enough to king's mouth and within the tongue range
+				if (qdist2(piki->mPosition.x, piki->mPosition.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PROP(mKing).mTongueRangeXZ()
 				    && NsLibMath<f32>::abs(piki->mPosition.y - slot2->mCentre.y) < C_KING_PROP(mKing).mTongueRangeY()) {
+					// Increment the number of piki stuck in the king's mouth
 					stickMouthPikiNum++;
 					if (stickMouthPikiNum > C_KING_PROP(mKing).mMaxEatPikiNum()) {
 						return;
 					}
 
+					// Check if the king's mouth is full
 					if (isMouthFull) {
 						InteractSwallow eat(mKing, slot1->getChildAt(0), 0);
 						piki->stimulate(eat);
 						continue;
 					}
 
-					int randMouthPart = NsMathI::getRand1(mMaxMouthSlots);
+					// Randomly select slots to stick the piki in
+					int randSlotIndex = NsMathI::getRand1(mMaxMouthSlots);
 					for (int i = 0; i < mMaxMouthSlots; i++) {
-						if (randMouthPart > lastSlot) {
-							randMouthPart = 0;
+						if (randSlotIndex > lastSlot) {
+							randSlotIndex = 0;
 						}
 
-						if (!getMouthCollPart(randMouthPart)) {
-							if (randMouthPart < slot1Num) {
-								InteractSwallow eat(mKing, slot1->getChildAt(randMouthPart), 0);
+						// Check if the slot is already occupied
+						if (!getMouthCollPart(randSlotIndex)) {
+							// Stick the piki in the slot
+							if (randSlotIndex < slot1Num) {
+								InteractSwallow eat(mKing, slot1->getChildAt(randSlotIndex), 0);
 								piki->stimulate(eat);
 							} else {
-								InteractSwallow eat(mKing, slot2->getChildAt(randMouthPart - slot1Num), 0);
+								InteractSwallow eat(mKing, slot2->getChildAt(randSlotIndex - slot1Num), 0);
 								piki->stimulate(eat);
 							}
-							setMouthCollPart(randMouthPart);
+
+							setMouthCollPart(randSlotIndex);
+							break;
 						}
 
+						// Check if the last slot has been reached
 						if (i == lastSlot) {
 							InteractSwallow eat(mKing, slot1->getChildAt(0), 0);
 							piki->stimulate(eat);
 							isMouthFull = true;
 						}
-						randMouthPart++;
+
+						randSlotIndex++;
 					}
 				}
 			}
