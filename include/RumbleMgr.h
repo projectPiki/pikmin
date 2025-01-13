@@ -71,15 +71,16 @@ struct ChannelMgr {
 	void init(ChannelDataMgr*);
 	void reset();
 
+	bool isFree() { return mData == nullptr; }
+	int getActiveType() { return mActiveType; }
+
 	// DLL inlines:
-	bool isFree();
-	int getActiveType();
 	void draw2d(Graphics&, Font*);
 
 	f32 _00;                  // _00
 	f32 _04;                  // _04
 	f32 _08;                  // _08
-	int mChannelIdx;          // _0C
+	int mActiveType;          // _0C
 	ChannelData* mData;       // _10
 	ChannelDataMgr* mDataMgr; // _14
 };
@@ -87,7 +88,7 @@ struct ChannelMgr {
 /**
  * @brief TODO
  *
- * @note Size: 0x10.
+ * @note Size: 0xC.
  */
 struct ControlerMgr {
 	ControlerMgr(); // unused/inlined
@@ -106,7 +107,9 @@ struct ControlerMgr {
 
 	static const int maxChannel;
 
-	// TODO: members
+	f32 _00;                  // _00
+	ChannelMgr* mChannelMgrs; // _04
+	ChannelDataMgr* mDataMgr; // _08
 };
 
 /**
@@ -129,7 +132,13 @@ struct RumbleMgr {
 	void init();
 	void rumblePause(bool);
 
-	u8 _00[0x30]; // _00, unknown
+	f32 _00;                         // _00
+	f32 _04;                         // _04
+	u8 _08;                          // _08
+	u8 _09;                          // _09
+	RumbleSample* mSamples[4];       // _0C
+	ControlerMgr* mControlerMgrs[4]; // _1C
+	ChannelDataMgr* mDataMgr;        // _2C
 };
 
 extern RumbleMgr* rumbleMgr;

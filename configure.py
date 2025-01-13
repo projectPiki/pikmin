@@ -709,7 +709,7 @@ config.libs = [
             Object(Matching, "plugPikiNishimura/MizuAi.cpp"),
             Object(NonMatching, "plugPikiNishimura/nscalculation.cpp"),
             Object(NonMatching, "plugPikiNishimura/RumbleData.cpp"),
-            Object(NonMatching, "plugPikiNishimura/HmRumbleMgr.cpp"),
+            Object(Matching, "plugPikiNishimura/HmRumbleMgr.cpp"),
             Object(Matching, "plugPikiNishimura/HmRumbleSample.cpp"),
         ],
     },
