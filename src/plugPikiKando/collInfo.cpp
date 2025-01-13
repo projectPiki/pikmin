@@ -69,11 +69,51 @@ f32 Cylinder::get2dDist(Vector3f& point)
 
 /*
  * --INFO--
- * Address:	80086FA0
+ * Address:	80086FA0 in DOL, 100E7530 in DLL
  * Size:	0003C0
  */
-void Cylinder::collide(const Sphere&, Vector3f&, f32&)
+void Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
 {
+	// Calculate cylinder direction and normalize it
+	Vector3f cylinderDir = mEndPoint - mStartPoint;
+	f32 length           = cylinderDir.normalise();
+
+	// Project sphere center onto cylinder axis
+	f32 projectionRatio = cylinderDir.dot(sphere.mCentre - mStartPoint) / length;
+
+	// Calculate distance from center projection to cylinder ends (0.5 = center)
+	f32 distToEnds = __fabsf(projectionRatio - 0.5f) * length;
+
+	// Calculate penetration along cylinder length
+	f32 endPenetration = (0.5f * length) - (distToEnds - sphere.mRadius);
+
+	// Get actual point on cylinder axis where sphere is projected
+	Vector3f projectedPoint = (cylinderDir * projectionRatio) + mStartPoint;
+
+	// Vector from sphere center to projected point, and radial penetration
+	Vector3f sphereToProj = projectedPoint - sphere.mCentre;
+	f32 radialPenetration = sphere.mRadius + mRadius - sphereToProj.length();
+
+	// Resolve collision
+	if (endPenetration < 0.0f || endPenetration >= radialPenetration || radialPenetration < 0.0f) {
+		// Handle radial collision only if within cylinder length bounds
+		if (projectionRatio >= 0.0f && projectionRatio <= 1.0f && radialPenetration >= 0.0f) {
+			// Push along radial direction
+			pushVector = sphereToProj;
+			pushVector.normalise();
+			pushVector = pushVector * -radialPenetration;
+			depth      = projectionRatio;
+		}
+	} else {
+		// Handle end cap collision
+		if (projectionRatio < 0.5f) {
+			endPenetration = -endPenetration; // Flip direction for start cap
+		}
+
+		pushVector = cylinderDir * endPenetration;
+		depth      = projectionRatio;
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
