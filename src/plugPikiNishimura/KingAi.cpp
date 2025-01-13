@@ -4,9 +4,12 @@
 #include "Collision.h"
 #include "GameStat.h"
 #include "RumbleMgr.h"
+#include "Stickers.h"
 #include "NaviMgr.h"
+#include "ItemMgr.h"
 #include "PikiMgr.h"
 #include "Interactions.h"
+#include "PlayerState.h"
 #include "Pcam/CameraManager.h"
 #include "SoundMgr.h"
 #include "DebugLog.h"
@@ -61,7 +64,7 @@ void KingAi::initAI(King* king)
 	mMouthSlotFlag          = 0;
 	_18                     = 0;
 	mBombDamageCounter      = 0;
-	_20                     = 0;
+	mEatBombDamageCounter   = 0;
 	mDamageScaleOscillation = 0.0f;
 	_28                     = PI * (C_KING_PROP(mKing)._3C4() / 360.0f);
 }
@@ -423,7 +426,62 @@ int KingAi::getMouthCollPart(int partNum)
  */
 void KingAi::pikiStickToKingMouth()
 {
+	if (_09) {
+		int stickMouthPikiNum = mKing->getStickMouthPikiCount();
+		if (stickMouthPikiNum < C_KING_PROP(mKing)._3D4()) {
+			CollPart* slot1 = mKing->mCollInfo->getSphere('slt1');
+			CollPart* slot2 = mKing->mCollInfo->getSphere('slt2');
+			int slot1Num    = slot1->getChildCount();
+			int slot2Num    = slot2->getChildCount();
+			int lastSlot    = _10 - 1;
+			bool check      = false;
 
+			Iterator iter(pikiMgr);
+			CI_LOOP(iter)
+			{
+				Piki* piki = static_cast<Piki*>(*iter);
+				if (piki && piki->isAlive() && piki->isVisible() && !piki->isBuried() && piki->getStickObject() != mKing
+				    && qdist2(piki->mPosition.x, piki->mPosition.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PROP(mKing)._264()
+				    && NsLibMath<f32>::abs(piki->mPosition.y - slot2->mCentre.y) < C_KING_PROP(mKing)._274()) {
+					stickMouthPikiNum++;
+					if (stickMouthPikiNum > C_KING_PROP(mKing)._3D4()) {
+						return;
+					}
+
+					if (check) {
+						InteractSwallow eat(mKing, slot1->getChildAt(0), 0);
+						piki->stimulate(eat);
+						continue;
+					}
+
+					int randMouthPart = NsMathI::getRand1(_10);
+					for (int i = 0; i < _10; i++) {
+						if (randMouthPart > lastSlot) {
+							randMouthPart = 0;
+						}
+
+						if (!getMouthCollPart(randMouthPart)) {
+							if (randMouthPart < slot1Num) {
+								InteractSwallow eat(mKing, slot1->getChildAt(randMouthPart), 0);
+								piki->stimulate(eat);
+							} else {
+								InteractSwallow eat(mKing, slot2->getChildAt(randMouthPart - slot1Num), 0);
+								piki->stimulate(eat);
+							}
+							setMouthCollPart(randMouthPart);
+						}
+
+						if (i == lastSlot) {
+							InteractSwallow eat(mKing, slot1->getChildAt(0), 0);
+							piki->stimulate(eat);
+							check = true;
+						}
+						randMouthPart++;
+					}
+				}
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -754,209 +812,24 @@ void KingAi::pikiStickToKingMouth()
  */
 void KingAi::tongueBombExplosion()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stfd      f31, 0x98(r1)
-	  stfd      f30, 0x90(r1)
-	  stmw      r24, 0x70(r1)
-	  mr        r26, r3
-	  lbz       r0, 0x9(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x28C
-	  lwz       r3, 0x4(r26)
-	  lis       r24, 0x736C
-	  addi      r4, r24, 0x7431
-	  lwz       r3, 0x220(r3)
-	  bl        -0xE3C30
-	  lwz       r5, 0x4(r26)
-	  addi      r30, r3, 0
-	  addi      r4, r24, 0x7432
-	  lwz       r3, 0x220(r5)
-	  bl        -0xE3C44
-	  lwz       r29, 0x30AC(r13)
-	  addi      r31, r3, 0
-	  addi      r3, r29, 0
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r5, 0x802B
-	  lfs       f31, -0x5360(r2)
-	  lis       r4, 0x802D
-	  lfs       f30, -0x5390(r2)
-	  addi      r28, r3, 0
-	  subi      r24, r5, 0x3064
-	  subi      r25, r4, 0x2614
-	  b         .loc_0x230
-
-	.loc_0x8C:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0xB4
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-	  b         .loc_0xD0
-
-	.loc_0xB4:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-
-	.loc_0xD0:
-	  cmplwi    r27, 0
-	  beq-      .loc_0x214
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x214
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x214
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x214
-	  lwz       r0, 0x6C(r27)
-	  cmpwi     r0, 0xE
-	  bne-      .loc_0x214
-	  lfs       f1, 0x94(r27)
-	  lfs       f2, 0x9C(r27)
-	  lfs       f3, 0x4(r30)
-	  lfs       f4, 0xC(r30)
-	  bl        -0x134E28
-	  lwz       r3, 0x4(r26)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x270(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x18C
-	  lfs       f1, 0x98(r27)
-	  addi      r3, r3, 0x280
-	  lfs       f0, 0x8(r30)
-	  fsubs     f1, f1, f0
-	  fcmpo     cr0, f1, f30
-	  ble-      .loc_0x17C
-	  b         .loc_0x180
-
-	.loc_0x17C:
-	  fneg      f1, f1
-
-	.loc_0x180:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  blt-      .loc_0x1E0
-
-	.loc_0x18C:
-	  lfs       f1, 0x94(r27)
-	  lfs       f2, 0x9C(r27)
-	  lfs       f3, 0x4(r31)
-	  lfs       f4, 0xC(r31)
-	  bl        -0x134E7C
-	  lwz       r3, 0x4(r26)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x270(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x214
-	  lfs       f1, 0x98(r27)
-	  addi      r3, r3, 0x280
-	  lfs       f0, 0x8(r31)
-	  fsubs     f1, f1, f0
-	  fcmpo     cr0, f1, f30
-	  ble-      .loc_0x1D0
-	  b         .loc_0x1D4
-
-	.loc_0x1D0:
-	  fneg      f1, f1
-
-	.loc_0x1D4:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x214
-
-	.loc_0x1E0:
-	  lwz       r5, 0x4(r26)
-	  li        r0, 0
-	  addi      r3, r27, 0
-	  stw       r24, 0x50(r1)
-	  addi      r4, r1, 0x50
-	  stw       r5, 0x54(r1)
-	  stw       r25, 0x50(r1)
-	  stfs      f31, 0x58(r1)
-	  stw       r0, 0x5C(r1)
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x214:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x230:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x258
-	  li        r0, 0x1
-	  b         .loc_0x284
-
-	.loc_0x258:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x280
-	  li        r0, 0x1
-	  b         .loc_0x284
-
-	.loc_0x280:
-	  li        r0, 0
-
-	.loc_0x284:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x8C
-
-	.loc_0x28C:
-	  lmw       r24, 0x70(r1)
-	  lwz       r0, 0xA4(r1)
-	  lfd       f31, 0x98(r1)
-	  lfd       f30, 0x90(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
+	if (_09) {
+		CollPart* slot1 = mKing->mCollInfo->getSphere('slt1');
+		CollPart* slot2 = mKing->mCollInfo->getSphere('slt2');
+		Iterator iter(itemMgr);
+		CI_LOOP(iter)
+		{
+			Creature* bomb = *iter;
+			if (bomb && !bomb->isAlive() && !bomb->isVisible() && !bomb->isBuried() && bomb->mObjType == OBJTYPE_Bomb) {
+				if ((qdist2(bomb->mPosition.x, bomb->mPosition.z, slot1->mCentre.x, slot1->mCentre.z) < C_KING_PROP(mKing)._264()
+				     && NsLibMath<f32>::abs(bomb->mPosition.y - slot1->mCentre.y) < C_KING_PROP(mKing)._274())
+				    || (qdist2(bomb->mPosition.x, bomb->mPosition.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PROP(mKing)._264()
+				        && NsLibMath<f32>::abs(bomb->mPosition.y - slot2->mCentre.y) < C_KING_PROP(mKing)._274())) {
+					InteractBomb blast(mKing, 100.0f, nullptr);
+					bomb->stimulate(blast);
+				}
+			}
+		}
+	}
 }
 
 /*
@@ -977,201 +850,22 @@ void KingAi::killStickToMouthPiki()
  */
 void KingAi::tongueAttackNavi()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA8(r1)
-	  stfd      f31, 0xA0(r1)
-	  stmw      r24, 0x80(r1)
-	  mr        r26, r3
-	  lis       r24, 0x736C
-	  addi      r4, r24, 0x7431
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x220(r3)
-	  bl        -0xE3EF4
-	  lwz       r5, 0x4(r26)
-	  addi      r30, r3, 0
-	  addi      r4, r24, 0x7432
-	  lwz       r3, 0x220(r5)
-	  bl        -0xE3F08
-	  lwz       r29, 0x3120(r13)
-	  addi      r31, r3, 0
-	  addi      r3, r29, 0
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r5, 0x802B
-	  lfs       f31, -0x5390(r2)
-	  lis       r4, 0x802B
-	  addi      r28, r3, 0
-	  subi      r24, r5, 0x3064
-	  subi      r25, r4, 0x31FC
-	  b         .loc_0x21C
-
-	.loc_0x78:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0xA0
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-	  b         .loc_0xBC
-
-	.loc_0xA0:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-
-	.loc_0xBC:
-	  cmplwi    r27, 0
-	  beq-      .loc_0x200
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x200
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x200
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x200
-	  lfs       f1, 0x94(r27)
-	  lfs       f2, 0x9C(r27)
-	  lfs       f3, 0x4(r30)
-	  lfs       f4, 0xC(r30)
-	  bl        -0x1350DC
-	  lwz       r3, 0x4(r26)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x270(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x16C
-	  lfs       f1, 0x98(r27)
-	  addi      r3, r3, 0x280
-	  lfs       f0, 0x8(r30)
-	  fsubs     f1, f1, f0
-	  fcmpo     cr0, f1, f31
-	  ble-      .loc_0x15C
-	  b         .loc_0x160
-
-	.loc_0x15C:
-	  fneg      f1, f1
-
-	.loc_0x160:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  blt-      .loc_0x1C0
-
-	.loc_0x16C:
-	  lfs       f1, 0x94(r27)
-	  lfs       f2, 0x9C(r27)
-	  lfs       f3, 0x4(r31)
-	  lfs       f4, 0xC(r31)
-	  bl        -0x135130
-	  lwz       r3, 0x4(r26)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x270(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x200
-	  lfs       f1, 0x98(r27)
-	  addi      r3, r3, 0x280
-	  lfs       f0, 0x8(r31)
-	  fsubs     f1, f1, f0
-	  fcmpo     cr0, f1, f31
-	  ble-      .loc_0x1B0
-	  b         .loc_0x1B4
-
-	.loc_0x1B0:
-	  fneg      f1, f1
-
-	.loc_0x1B4:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x200
-
-	.loc_0x1C0:
-	  lwz       r6, 0x4(r26)
-	  li        r0, 0
-	  addi      r3, r27, 0
-	  lwz       r5, 0x224(r6)
-	  addi      r4, r1, 0x60
-	  lfs       f0, 0x2B0(r5)
-	  stw       r24, 0x60(r1)
-	  stw       r6, 0x64(r1)
-	  stw       r25, 0x60(r1)
-	  stfs      f0, 0x68(r1)
-	  stw       r0, 0x6C(r1)
-	  stb       r0, 0x70(r1)
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x200:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x21C:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x244
-	  li        r0, 0x1
-	  b         .loc_0x270
-
-	.loc_0x244:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x26C
-	  li        r0, 0x1
-	  b         .loc_0x270
-
-	.loc_0x26C:
-	  li        r0, 0
-
-	.loc_0x270:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x78
-	  lmw       r24, 0x80(r1)
-	  lwz       r0, 0xAC(r1)
-	  lfd       f31, 0xA0(r1)
-	  addi      r1, r1, 0xA8
-	  mtlr      r0
-	  blr
-	*/
+	CollPart* slot1 = mKing->mCollInfo->getSphere('slt1');
+	CollPart* slot2 = mKing->mCollInfo->getSphere('slt2');
+	Iterator iter(naviMgr);
+	CI_LOOP(iter)
+	{
+		Creature* navi = *iter;
+		if (navi && navi->isAlive() && navi->isVisible() && !navi->isBuried()) {
+			if ((qdist2(navi->mPosition.x, navi->mPosition.z, slot1->mCentre.x, slot1->mCentre.z) < C_KING_PROP(mKing)._264()
+			     && NsLibMath<f32>::abs(navi->mPosition.y - slot1->mCentre.y) < C_KING_PROP(mKing)._274())
+			    || (qdist2(navi->mPosition.x, navi->mPosition.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PROP(mKing)._264()
+			        && NsLibMath<f32>::abs(navi->mPosition.y - slot2->mCentre.y) < C_KING_PROP(mKing)._274())) {
+				InteractAttack blast(mKing, nullptr, C_KING_PROP(mKing)._2A4(), false);
+				navi->stimulate(blast);
+			}
+		}
+	}
 }
 
 /*
@@ -1179,8 +873,11 @@ void KingAi::tongueAttackNavi()
  * Address:	........
  * Size:	000080
  */
-void KingAi::setDispelParm(Creature*, f32)
+void KingAi::setDispelParm(Creature* target, f32 p2)
 {
+	f32 knockback = ((C_KING_PROP(mKing)._2E4() - p2) / C_KING_PROP(mKing)._2E4()) * C_KING_PROP(mKing)._2F4();
+	InteractFlick flick(mKing, knockback, C_KING_PROP(mKing)._304(), FLICK_BACKWARDS_ANGLE);
+	target->stimulate(flick);
 	// UNUSED FUNCTION
 }
 
@@ -1191,343 +888,31 @@ void KingAi::setDispelParm(Creature*, f32)
  */
 void KingAi::dispelNaviPiki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x180(r1)
-	  stfd      f31, 0x178(r1)
-	  stfd      f30, 0x170(r1)
-	  stmw      r25, 0x154(r1)
-	  addi      r29, r3, 0
-	  lwz       r31, 0x3120(r13)
-	  lwz       r12, 0x0(r31)
-	  addi      r3, r31, 0
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r5, 0x802B
-	  lfs       f30, -0x535C(r2)
-	  lis       r4, 0x802B
-	  lfs       f31, -0x5390(r2)
-	  addi      r30, r3, 0
-	  subi      r28, r5, 0x3064
-	  subi      r27, r4, 0x3168
-	  b         .loc_0x200
+	Iterator iterNavi(naviMgr);
+	CI_LOOP(iterNavi)
+	{
+		Creature* navi = *iterNavi;
+		if (navi && navi->isAlive() && navi->isVisible() && !navi->isBuried()
+		    && qdist2(navi->mPosition.x, navi->mPosition.z, mKing->mPosition.x, mKing->mPosition.z) < C_KING_PROP(mKing)._2E4()) {
+			f32 dist = navi->mPosition.distance(mKing->mPosition);
+			if (dist < C_KING_PROP(mKing)._2E4()) {
+				setDispelParm(navi, dist);
+			}
+		}
+	}
 
-	.loc_0x54:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x7C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r26, r3
-	  b         .loc_0x98
-
-	.loc_0x7C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r26, r3
-
-	.loc_0x98:
-	  cmplwi    r26, 0
-	  beq-      .loc_0x1E4
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1E4
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1E4
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x1E4
-	  lwz       r4, 0x4(r29)
-	  lfs       f1, 0x94(r26)
-	  lwz       r3, 0x224(r4)
-	  lfs       f2, 0x9C(r26)
-	  lfs       f3, 0x94(r4)
-	  addi      r25, r3, 0x2F0
-	  lfs       f4, 0x9C(r4)
-	  bl        -0x135354
-	  lfs       f0, 0x0(r25)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x1E4
-	  lwz       r3, 0x4(r29)
-	  stfs      f31, 0x124(r1)
-	  stfs      f31, 0x120(r1)
-	  stfs      f31, 0x11C(r1)
-	  lfsu      f1, 0x94(r3)
-	  lfs       f0, 0x94(r26)
-	  lfs       f4, 0x8(r3)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x9C(r26)
-	  lfs       f2, 0x4(r3)
-	  lfs       f1, 0x98(r26)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0xD0(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0xD0(r1)
-	  stfs      f0, 0x11C(r1)
-	  stfs      f1, 0x120(r1)
-	  stfs      f3, 0x124(r1)
-	  lfs       f1, 0x11C(r1)
-	  lfs       f0, 0x120(r1)
-	  lfs       f2, 0x124(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x15FDB4
-	  lwz       r5, 0x4(r29)
-	  lwz       r4, 0x224(r5)
-	  lfs       f2, 0x2F0(r4)
-	  fcmpo     cr0, f1, f2
-	  bge-      .loc_0x1E4
-	  fsubs     f0, f2, f1
-	  lfs       f1, 0x300(r4)
-	  lfs       f3, 0x310(r4)
-	  addi      r3, r26, 0
-	  addi      r4, r1, 0x104
-	  fdivs     f0, f0, f2
-	  stw       r28, 0x104(r1)
-	  stw       r5, 0x108(r1)
-	  stw       r27, 0x104(r1)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x10C(r1)
-	  stfs      f3, 0x110(r1)
-	  stfs      f30, 0x114(r1)
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1E4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x200:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x228
-	  li        r0, 0x1
-	  b         .loc_0x254
-
-	.loc_0x228:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x250
-	  li        r0, 0x1
-	  b         .loc_0x254
-
-	.loc_0x250:
-	  li        r0, 0
-
-	.loc_0x254:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x54
-	  lwz       r30, 0x3068(r13)
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r5, 0x802B
-	  lfs       f31, -0x535C(r2)
-	  lis       r4, 0x802B
-	  lfs       f30, -0x5390(r2)
-	  addi      r31, r3, 0
-	  subi      r27, r5, 0x3064
-	  subi      r28, r4, 0x3168
-	  b         .loc_0x440
-
-	.loc_0x294:
-	  cmpwi     r31, -0x1
-	  bne-      .loc_0x2BC
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r26, r3
-	  b         .loc_0x2D8
-
-	.loc_0x2BC:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r26, r3
-
-	.loc_0x2D8:
-	  cmplwi    r26, 0
-	  beq-      .loc_0x424
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x424
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x424
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x424
-	  lwz       r4, 0x4(r29)
-	  lfs       f1, 0x94(r26)
-	  lwz       r3, 0x224(r4)
-	  lfs       f2, 0x9C(r26)
-	  lfs       f3, 0x94(r4)
-	  addi      r25, r3, 0x2F0
-	  lfs       f4, 0x9C(r4)
-	  bl        -0x135594
-	  lfs       f0, 0x0(r25)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x424
-	  lwz       r3, 0x4(r29)
-	  stfs      f30, 0xF8(r1)
-	  stfs      f30, 0xF4(r1)
-	  stfs      f30, 0xF0(r1)
-	  lfsu      f1, 0x94(r3)
-	  lfs       f0, 0x94(r26)
-	  lfs       f4, 0x8(r3)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x9C(r26)
-	  lfs       f2, 0x4(r3)
-	  lfs       f1, 0x98(r26)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0xB4(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0xB4(r1)
-	  stfs      f0, 0xF0(r1)
-	  stfs      f1, 0xF4(r1)
-	  stfs      f3, 0xF8(r1)
-	  lfs       f1, 0xF0(r1)
-	  lfs       f0, 0xF4(r1)
-	  lfs       f2, 0xF8(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x15FFF4
-	  lwz       r5, 0x4(r29)
-	  lwz       r4, 0x224(r5)
-	  lfs       f2, 0x2F0(r4)
-	  fcmpo     cr0, f1, f2
-	  bge-      .loc_0x424
-	  fsubs     f0, f2, f1
-	  lfs       f1, 0x300(r4)
-	  lfs       f3, 0x310(r4)
-	  addi      r3, r26, 0
-	  addi      r4, r1, 0xD8
-	  fdivs     f0, f0, f2
-	  stw       r27, 0xD8(r1)
-	  stw       r5, 0xDC(r1)
-	  stw       r28, 0xD8(r1)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xE0(r1)
-	  stfs      f3, 0xE4(r1)
-	  stfs      f31, 0xE8(r1)
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x424:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r31, r3
-
-	.loc_0x440:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x468
-	  li        r0, 0x1
-	  b         .loc_0x494
-
-	.loc_0x468:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x490
-	  li        r0, 0x1
-	  b         .loc_0x494
-
-	.loc_0x490:
-	  li        r0, 0
-
-	.loc_0x494:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x294
-	  lmw       r25, 0x154(r1)
-	  lwz       r0, 0x184(r1)
-	  lfd       f31, 0x178(r1)
-	  lfd       f30, 0x170(r1)
-	  addi      r1, r1, 0x180
-	  mtlr      r0
-	  blr
-	*/
+	Iterator iterPiki(pikiMgr);
+	CI_LOOP(iterPiki)
+	{
+		Creature* piki = *iterPiki;
+		if (piki && piki->isAlive() && piki->isVisible() && !piki->isBuried()
+		    && qdist2(piki->mPosition.x, piki->mPosition.z, mKing->mPosition.x, mKing->mPosition.z) < C_KING_PROP(mKing)._2E4()) {
+			f32 dist = piki->mPosition.distance(mKing->mPosition);
+			if (dist < C_KING_PROP(mKing)._2E4()) {
+				setDispelParm(piki, dist);
+			}
+		}
+	}
 }
 
 /*
@@ -1535,97 +920,26 @@ void KingAi::dispelNaviPiki()
  * Address:	8016DD24
  * Size:	000120
  */
-void KingAi::setDamageLoopCounter(int, int, int, int, int, int)
+void KingAi::setDamageLoopCounter(int startVal, int minVal, int maxVal, int loopMin, int loopMid, int loopMax)
 {
-	/*
-	.loc_0x0:
-	  cmpw      r4, r6
-	  stwu      r1, -0x78(r1)
-	  blt-      .loc_0x14
-	  stw       r9, 0x14(r3)
-	  b         .loc_0x118
+	if (startVal >= maxVal) {
+		mDamageLoopCounter = loopMax;
+		return;
+	}
 
-	.loc_0x14:
-	  cmpw      r4, r5
-	  ble-      .loc_0x114
-	  sub       r0, r6, r5
-	  lfd       f4, -0x5368(r2)
-	  sub       r4, r4, r5
-	  lfs       f6, -0x5358(r2)
-	  xoris     r4, r4, 0x8000
-	  lfs       f5, -0x5354(r2)
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x74(r1)
-	  lis       r6, 0x4330
-	  lfs       f3, -0x5378(r2)
-	  stw       r0, 0x6C(r1)
-	  xoris     r4, r7, 0x8000
-	  xoris     r5, r9, 0x8000
-	  stw       r6, 0x70(r1)
-	  xoris     r0, r8, 0x8000
-	  stw       r6, 0x68(r1)
-	  lfd       f1, 0x70(r1)
-	  lfd       f0, 0x68(r1)
-	  fsubs     f1, f1, f4
-	  stw       r4, 0x5C(r1)
-	  fsubs     f0, f0, f4
-	  stw       r5, 0x64(r1)
-	  fdivs     f1, f1, f0
-	  stw       r6, 0x58(r1)
-	  stw       r0, 0x54(r1)
-	  lfd       f0, 0x58(r1)
-	  stw       r6, 0x60(r1)
-	  fmuls     f7, f6, f1
-	  lfd       f2, 0x60(r1)
-	  fsubs     f1, f0, f4
-	  stw       r6, 0x50(r1)
-	  fsubs     f2, f2, f4
-	  lfd       f0, 0x50(r1)
-	  fmuls     f1, f5, f1
-	  fsubs     f0, f0, f4
-	  fsubs     f4, f7, f3
-	  fmuls     f3, f5, f2
-	  fsubs     f2, f7, f6
-	  fmuls     f1, f1, f4
-	  fmuls     f0, f0, f7
-	  fmuls     f3, f3, f7
-	  fmuls     f1, f2, f1
-	  fmuls     f0, f2, f0
-	  fmuls     f2, f4, f3
-	  fsubs     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f5, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x48(r1)
-	  lwz       r0, 0x4C(r1)
-	  stw       r0, 0x14(r3)
-	  lwz       r0, 0x14(r3)
-	  cmpw      r0, r7
-	  bge-      .loc_0xF8
-	  b         .loc_0x10C
+	if (startVal > minVal) {
+		f32 controlPts[3];
+		controlPts[0] = loopMin;
+		controlPts[1] = loopMid;
+		controlPts[2] = loopMax;
 
-	.loc_0xF8:
-	  cmpw      r0, r9
-	  ble-      .loc_0x104
-	  b         .loc_0x108
+		f32 val            = 2.0f * (f32(startVal - minVal) / f32(maxVal - minVal));
+		mDamageLoopCounter = NsLibMath<f32>::lagrange3(controlPts, val) + 0.5f;
+		mDamageLoopCounter = NsLibMath<int>::revice(mDamageLoopCounter, loopMin, loopMax);
+		return;
+	}
 
-	.loc_0x104:
-	  mr        r9, r0
-
-	.loc_0x108:
-	  mr        r7, r9
-
-	.loc_0x10C:
-	  stw       r7, 0x14(r3)
-	  b         .loc_0x118
-
-	.loc_0x114:
-	  stw       r7, 0x14(r3)
-
-	.loc_0x118:
-	  addi      r1, r1, 0x78
-	  blr
-	*/
+	mDamageLoopCounter = loopMin;
 }
 
 /*
@@ -1635,200 +949,22 @@ void KingAi::setDamageLoopCounter(int, int, int, int, int, int)
  */
 void KingAi::setEatDamageLoopCounter()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xE0(r1)
-	  stmw      r27, 0xCC(r1)
-	  mr        r30, r3
-	  li        r31, 0
-	  lwz       r4, 0x4(r3)
-	  addi      r3, r1, 0x88
-	  bl        -0xDD1E0
-	  addi      r29, r1, 0x88
-	  addi      r3, r29, 0
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-	  b         .loc_0xD8
+	int bombPikiCount = 0;
+	Stickers stuckList(mKing);
+	Iterator iter(&stuckList);
+	CI_LOOP(iter)
+	{
+		Piki* piki = static_cast<Piki*>(*iter);
+		if (piki->isAlive() && piki->hasBomb() && piki->isStickToMouth()) {
+			bombPikiCount++;
+		}
+	}
 
-	.loc_0x44:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0x68
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x80
+	mEatBombDamageCounter += bombPikiCount;
 
-	.loc_0x68:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x80:
-	  mr        r27, r3
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xBC
-	  mr        r3, r27
-	  bl        -0xA6074
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xBC
-	  lwz       r0, 0xC8(r27)
-	  rlwinm.   r0,r0,0,16,16
-	  beq-      .loc_0xBC
-	  addi      r31, r31, 0x1
-
-	.loc_0xBC:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0xD8:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x100
-	  li        r0, 0x1
-	  b         .loc_0x12C
-
-	.loc_0x100:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x128
-	  li        r0, 0x1
-	  b         .loc_0x12C
-
-	.loc_0x128:
-	  li        r0, 0
-
-	.loc_0x12C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x44
-	  lwz       r0, 0x20(r30)
-	  add       r0, r0, r31
-	  stw       r0, 0x20(r30)
-	  lwz       r3, 0x4(r30)
-	  lwz       r4, 0x224(r3)
-	  lwz       r5, 0x400(r4)
-	  lwz       r8, 0x430(r4)
-	  cmpw      r31, r5
-	  lwz       r6, 0x420(r4)
-	  lwz       r7, 0x410(r4)
-	  lwz       r0, 0x3F0(r4)
-	  blt-      .loc_0x16C
-	  stw       r8, 0x14(r30)
-	  b         .loc_0x270
-
-	.loc_0x16C:
-	  cmpw      r31, r0
-	  ble-      .loc_0x26C
-	  sub       r3, r31, r0
-	  lfd       f4, -0x5368(r2)
-	  sub       r0, r5, r0
-	  lfs       f6, -0x5358(r2)
-	  xoris     r3, r3, 0x8000
-	  lfs       f5, -0x5354(r2)
-	  xoris     r0, r0, 0x8000
-	  stw       r3, 0xC4(r1)
-	  lis       r5, 0x4330
-	  lfs       f3, -0x5378(r2)
-	  stw       r0, 0xBC(r1)
-	  xoris     r3, r7, 0x8000
-	  xoris     r4, r8, 0x8000
-	  stw       r5, 0xC0(r1)
-	  xoris     r0, r6, 0x8000
-	  stw       r5, 0xB8(r1)
-	  lfd       f1, 0xC0(r1)
-	  lfd       f0, 0xB8(r1)
-	  fsubs     f1, f1, f4
-	  stw       r3, 0xAC(r1)
-	  fsubs     f0, f0, f4
-	  stw       r4, 0xB4(r1)
-	  fdivs     f1, f1, f0
-	  stw       r5, 0xA8(r1)
-	  stw       r0, 0xA4(r1)
-	  lfd       f0, 0xA8(r1)
-	  stw       r5, 0xB0(r1)
-	  fmuls     f7, f6, f1
-	  lfd       f2, 0xB0(r1)
-	  fsubs     f1, f0, f4
-	  stw       r5, 0xA0(r1)
-	  fsubs     f2, f2, f4
-	  lfd       f0, 0xA0(r1)
-	  fmuls     f1, f5, f1
-	  fsubs     f0, f0, f4
-	  fsubs     f4, f7, f3
-	  fmuls     f3, f5, f2
-	  fsubs     f2, f7, f6
-	  fmuls     f1, f1, f4
-	  fmuls     f0, f0, f7
-	  fmuls     f3, f3, f7
-	  fmuls     f1, f2, f1
-	  fmuls     f0, f2, f0
-	  fmuls     f2, f4, f3
-	  fsubs     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f5, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x98(r1)
-	  lwz       r0, 0x9C(r1)
-	  stw       r0, 0x14(r30)
-	  lwz       r0, 0x14(r30)
-	  cmpw      r0, r7
-	  bge-      .loc_0x250
-	  b         .loc_0x264
-
-	.loc_0x250:
-	  cmpw      r0, r8
-	  ble-      .loc_0x25C
-	  b         .loc_0x260
-
-	.loc_0x25C:
-	  mr        r8, r0
-
-	.loc_0x260:
-	  mr        r7, r8
-
-	.loc_0x264:
-	  stw       r7, 0x14(r30)
-	  b         .loc_0x270
-
-	.loc_0x26C:
-	  stw       r7, 0x14(r30)
-
-	.loc_0x270:
-	  lmw       r27, 0xCC(r1)
-	  lwz       r0, 0xE4(r1)
-	  addi      r1, r1, 0xE0
-	  mtlr      r0
-	  blr
-	*/
+	setDamageLoopCounter(bombPikiCount, C_KING_PROP(mKing).mSwallowedBombsMin(), C_KING_PROP(mKing).mSwallowedBombsMax(),
+	                     C_KING_PROP(mKing).mEatBombDamageLoopMin(), C_KING_PROP(mKing).mEatBombDamageLoopMid(),
+	                     C_KING_PROP(mKing).mEatBombDamageLoopMax());
 }
 
 /*
@@ -1838,7 +974,9 @@ void KingAi::setEatDamageLoopCounter()
  */
 void KingAi::setBombDamageLoopCounter()
 {
-	// UNUSED FUNCTION
+	mEatBombDamageCounter = 0;
+	setDamageLoopCounter(mBombDamageCounter, C_KING_PROP(mKing)._434(), C_KING_PROP(mKing)._444(), C_KING_PROP(mKing)._454(),
+	                     C_KING_PROP(mKing)._464(), C_KING_PROP(mKing)._474());
 }
 
 /*
@@ -1846,9 +984,9 @@ void KingAi::setBombDamageLoopCounter()
  * Address:	........
  * Size:	000010
  */
-void KingAi::setMoveVelocity(f32)
+void KingAi::setMoveVelocity(f32 speed)
 {
-	// UNUSED FUNCTION
+	mKing->mKingBody->mMoveSpeed = speed;
 }
 
 /*
@@ -1859,98 +997,18 @@ void KingAi::setMoveVelocity(f32)
 void KingAi::setAttackPriority()
 {
 	_08 = 1;
-	if (mKing->mCurrentLife < mKing->mMaxLife * C_KING_PROP(mKing)._364()) { // t00
-		f32 factor        = (f32)_20 * C_KING_PROP(mKing)._394();            // t03
-		f32 boundedFactor = (factor < 0.0f) ? 0.0f : (factor > 1.0f) ? 1.0f : factor;
+	if (mKing->getCurrentLife() < mKing->getMaxLife() * C_KING_PROP(mKing).mJumpAttackHealthThreshold()) {
+		f32 factor        = (f32)mEatBombDamageCounter * C_KING_PROP(mKing).mJumpAttackEatBombFactor();
+		f32 boundedFactor = NsLibMath<f32>::revice(factor, 0.0f, 1.0f);
 
-		f32 chance = boundedFactor * C_KING_PROP(mKing)._384() + (1.0f - boundedFactor) * C_KING_PROP(mKing)._374(); // t02, t01
-		if (randFloat(0.99999f) < chance) {
+		f32 jumpChance = boundedFactor * C_KING_PROP(mKing).mJumpAttackEatBombChance()
+		               + (1.0f - boundedFactor) * C_KING_PROP(mKing).mJumpAttackNoEatBombChance();
+		if (NsMathF::getRand1(1.0f) < jumpChance) {
 			_08 = 0;
 			_18 = 0;
-			// mKing->_3C0->_05 = 0; // whatever this is
+			endFallSaliva();
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x80(r1)
-	  stfd      f31, 0x78(r1)
-	  stw       r31, 0x74(r1)
-	  addi      r31, r3, 0
-	  stb       r0, 0x8(r3)
-	  lwz       r4, 0x4(r3)
-	  lwz       r5, 0x224(r4)
-	  lfs       f1, 0x2C8(r4)
-	  lfs       f0, 0x370(r5)
-	  lfs       f2, 0x2C4(r4)
-	  fmuls     f0, f1, f0
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x100
-	  lwz       r3, 0x20(r31)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x5368(r2)
-	  xoris     r3, r3, 0x8000
-	  lfs       f0, 0x3A0(r5)
-	  stw       r3, 0x6C(r1)
-	  lfs       f3, -0x5390(r2)
-	  stw       r0, 0x68(r1)
-	  lfd       f1, 0x68(r1)
-	  fsubs     f1, f1, f2
-	  fmuls     f0, f1, f0
-	  fcmpo     cr0, f0, f3
-	  bge-      .loc_0x78
-	  b         .loc_0x8C
-
-	.loc_0x78:
-	  lfs       f3, -0x5378(r2)
-	  fcmpo     cr0, f0, f3
-	  ble-      .loc_0x88
-	  b         .loc_0x8C
-
-	.loc_0x88:
-	  fmr       f3, f0
-
-	.loc_0x8C:
-	  lfs       f0, -0x5378(r2)
-	  lfs       f2, 0x390(r5)
-	  fsubs     f1, f0, f3
-	  lfs       f0, 0x380(r5)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fadds     f31, f2, f0
-	  bl        0xA9F00
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x5368(r2)
-	  stw       r0, 0x6C(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x5370(r2)
-	  stw       r0, 0x68(r1)
-	  lfs       f1, -0x5378(r2)
-	  lfd       f3, 0x68(r1)
-	  lfs       f0, -0x536C(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fcmpo     cr0, f0, f31
-	  bge-      .loc_0x100
-	  li        r0, 0
-	  stb       r0, 0x8(r31)
-	  stw       r0, 0x18(r31)
-	  lwz       r3, 0x4(r31)
-	  lwz       r3, 0x3C0(r3)
-	  stb       r0, 0x5(r3)
-
-	.loc_0x100:
-	  lwz       r0, 0x84(r1)
-	  lfd       f31, 0x78(r1)
-	  lwz       r31, 0x74(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1960,7 +1018,10 @@ void KingAi::setAttackPriority()
  */
 void KingAi::resetAttackPriority()
 {
-	// UNUSED FUNCTION
+	if (!_08 && mKing->getCurrentState() != KINGAI_JumpAttack
+	    && mKing->getCurrentLife() > mKing->getMaxLife() * C_KING_PROP(mKing).mJumpAttackHealthThreshold()) {
+		_08 = true;
+	}
 }
 
 /*
@@ -1970,7 +1031,9 @@ void KingAi::resetAttackPriority()
  */
 void KingAi::resultFlagOn()
 {
-	// UNUSED FUNCTION
+	if (mKing->insideAndInSearch()) {
+		playerState->mResultFlags.setOn(RESFLAG_Unk49);
+	}
 }
 
 /*
@@ -1980,7 +1043,7 @@ void KingAi::resultFlagOn()
  */
 void KingAi::resultFlagSeen()
 {
-	// UNUSED FUNCTION
+	playerState->mResultFlags.setSeen(RESFLAG_Unk49);
 }
 
 /*
@@ -1988,8 +1051,9 @@ void KingAi::resultFlagSeen()
  * Address:	........
  * Size:	0000C0
  */
-bool KingAi::attackInArea(Creature*, Vector3f*)
+bool KingAi::attackInArea(Creature* target, Vector3f* attackPos)
 {
+	f32 dist = qdist2(target->mPosition.x, target->mPosition.z, attackPos->x, attackPos->z);
 	// UNUSED FUNCTION
 }
 
@@ -2083,7 +1147,7 @@ bool KingAi::jumpAttackInArea(Creature*, Vector3f*)
  */
 bool KingAi::dieTransit()
 {
-	// UNUSED FUNCTION
+	return !mKing->getAlive();
 }
 
 /*
@@ -3982,8 +3046,9 @@ bool KingAi::appearTransit()
  * Address:	8016FA48
  * Size:	00014C
  */
-void KingAi::initDie(int)
+void KingAi::initDie(int nextState)
 {
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4077,7 +3142,7 @@ void KingAi::initDie(int)
  * Address:	........
  * Size:	0001C8
  */
-void KingAi::initDamage(int)
+void KingAi::initDamage(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4087,7 +3152,7 @@ void KingAi::initDamage(int)
  * Address:	........
  * Size:	0000D0
  */
-void KingAi::initBombDown(int)
+void KingAi::initBombDown(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4137,7 +3202,7 @@ void KingAi::initChasePiki(int, bool)
  * Address:	........
  * Size:	00008C
  */
-void KingAi::initHomeTurn(int)
+void KingAi::initHomeTurn(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4147,7 +3212,7 @@ void KingAi::initHomeTurn(int)
  * Address:	........
  * Size:	000084
  */
-void KingAi::initChaseTurn(int)
+void KingAi::initChaseTurn(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4157,7 +3222,7 @@ void KingAi::initChaseTurn(int)
  * Address:	........
  * Size:	0000AC
  */
-void KingAi::initAttack(int)
+void KingAi::initAttack(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4167,7 +3232,7 @@ void KingAi::initAttack(int)
  * Address:	........
  * Size:	00011C
  */
-void KingAi::initJumpAttack(int)
+void KingAi::initJumpAttack(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4177,7 +3242,7 @@ void KingAi::initJumpAttack(int)
  * Address:	........
  * Size:	0000A4
  */
-void KingAi::initSwallow(int)
+void KingAi::initSwallow(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4187,7 +3252,7 @@ void KingAi::initSwallow(int)
  * Address:	........
  * Size:	0000A4
  */
-void KingAi::initEatThrowPiki(int)
+void KingAi::initEatThrowPiki(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4197,7 +3262,7 @@ void KingAi::initEatThrowPiki(int)
  * Address:	........
  * Size:	000198
  */
-void KingAi::initFlick(int)
+void KingAi::initFlick(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4207,7 +3272,7 @@ void KingAi::initFlick(int)
  * Address:	........
  * Size:	0000AC
  */
-void KingAi::initWaveNeck(int)
+void KingAi::initWaveNeck(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4217,7 +3282,7 @@ void KingAi::initWaveNeck(int)
  * Address:	8016FB94
  * Size:	00016C
  */
-void KingAi::initAppear(int)
+void KingAi::initAppear(int nextState)
 {
 	/*
 	.loc_0x0:
@@ -4322,7 +3387,7 @@ void KingAi::initAppear(int)
  * Address:	........
  * Size:	000098
  */
-void KingAi::initStay(int)
+void KingAi::initStay(int nextState)
 {
 	// UNUSED FUNCTION
 }
@@ -4334,7 +3399,7 @@ void KingAi::initStay(int)
  */
 void KingAi::dieState()
 {
-	// UNUSED FUNCTION
+	mKing->setIsAlive(true); // ?
 }
 
 /*
@@ -4344,7 +3409,9 @@ void KingAi::dieState()
  */
 void KingAi::damageState()
 {
-	// UNUSED FUNCTION
+	if (mKing->getLoopCounter() > mDamageLoopCounter) {
+		mKing->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+	}
 }
 
 /*

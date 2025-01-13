@@ -79,19 +79,19 @@ struct KingProp : public BossProp, public CoreNode {
 		    , _334(this, 50.0f, 0.0f, 0.0f, "s32", nullptr)
 		    , mDamageScaleOscillationSpeed(this, 30.0f, 0.0f, 0.0f, "s40", nullptr)
 		    , mDamageScaleOscillationSize(this, 0.05f, 0.0f, 0.0f, "s41", nullptr)
-		    , _364(this, 0.5f, 0.0f, 0.0f, "t00", nullptr)
-		    , _374(this, 0.5f, 0.0f, 0.0f, "t01", nullptr)
-		    , _384(this, 0.9f, 0.0f, 0.0f, "t02", nullptr)
-		    , _394(this, 0.1f, 0.0f, 0.0f, "t03", nullptr)
+		    , mJumpAttackHealthThreshold(this, 0.5f, 0.0f, 0.0f, "t00", nullptr)
+		    , mJumpAttackNoEatBombChance(this, 0.5f, 0.0f, 0.0f, "t01", nullptr)
+		    , mJumpAttackEatBombChance(this, 0.9f, 0.0f, 0.0f, "t02", nullptr)
+		    , mJumpAttackEatBombFactor(this, 0.1f, 0.0f, 0.0f, "t03", nullptr)
 		    , _3A4(this, 275.0f, 0.0f, 0.0f, "t10", nullptr)
 		    , _3B4(this, 250.0f, 0.0f, 0.0f, "t11", nullptr)
 		    , _3C4(this, 120.0f, 0.0f, 0.0f, "t12", nullptr)
 		    , _3D4(this, 100, 0, 0, "i00", nullptr)
-		    , _3E4(this, 0, 0, 0, "i10", nullptr)
-		    , _3F4(this, 10, 0, 0, "i11", nullptr)
-		    , _404(this, 4, 0, 0, "i12", nullptr)
-		    , _414(this, 4, 0, 0, "i13", nullptr)
-		    , _424(this, 6, 0, 0, "i14", nullptr)
+		    , mSwallowedBombsMin(this, 0, 0, 0, "i10", nullptr)
+		    , mSwallowedBombsMax(this, 10, 0, 0, "i11", nullptr)
+		    , mEatBombDamageLoopMin(this, 4, 0, 0, "i12", nullptr)
+		    , mEatBombDamageLoopMid(this, 4, 0, 0, "i13", nullptr)
+		    , mEatBombDamageLoopMax(this, 6, 0, 0, "i14", nullptr)
 		    , _434(this, 0, 0, 0, "i20", nullptr)
 		    , _444(this, 10, 0, 0, "i21", nullptr)
 		    , _454(this, 4, 0, 0, "i22", nullptr)
@@ -125,19 +125,19 @@ struct KingProp : public BossProp, public CoreNode {
 		Parm<f32> _334;                         // _334, s32 - height from map?
 		Parm<f32> mDamageScaleOscillationSpeed; // _344, s40
 		Parm<f32> mDamageScaleOscillationSize;  // _354, s41
-		Parm<f32> _364;                         // _364, t00 - jump attack percent?
-		Parm<f32> _374;                         // _374, t01 - jump attack ratio (min)?
-		Parm<f32> _384;                         // _384, t02 - jump attack ratio (max)?
-		Parm<f32> _394;                         // _394, t03 - eat bomb num ratio?
+		Parm<f32> mJumpAttackHealthThreshold;   // _364, t00 - chance to do jump attack below this fraction of health
+		Parm<f32> mJumpAttackNoEatBombChance;   // _374, t01 - chance for jump based on (1 - eaten bombs factor)
+		Parm<f32> mJumpAttackEatBombChance;     // _384, t02 - chance for jump based on eaten bombs factor
+		Parm<f32> mJumpAttackEatBombFactor;     // _394, t03 - weighting to give number of bombs eaten when deciding to jump
 		Parm<f32> _3A4;                         // _3A4, t10 - jump attack territory?
 		Parm<f32> _3B4;                         // _3B4, t11 - jump attack range?
 		Parm<f32> _3C4;                         // _3C4, t12 - jump attack angle?
 		Parm<int> _3D4;                         // _3D4, i00 - 1 attack max eat number?
-		Parm<int> _3E4;                         // _3E4, i10 - swallowed bombs (min)?
-		Parm<int> _3F4;                         // _3F4, i11 - swallowed bombs (max)?
-		Parm<int> _404;                         // _404, i12 - damage loop (min)?
-		Parm<int> _414;                         // _414, i13 - damage loop (mid)?
-		Parm<int> _424;                         // _424, i14 - damage loop (max)?
+		Parm<int> mSwallowedBombsMin;           // _3E4, i10 - below this, always get min eat bomb damage loops
+		Parm<int> mSwallowedBombsMax;           // _3F4, i11 - above this, always get max eat bomb damage loops
+		Parm<int> mEatBombDamageLoopMin;        // _404, i12 - min damage loops from eating bombs
+		Parm<int> mEatBombDamageLoopMid;        // _414, i13 - "middle" damage loops from eating bombs (for lagrange interp)
+		Parm<int> mEatBombDamageLoopMax;        // _424, i14 - max damage loops from eating bombs
 		Parm<int> _434;                         // _434, i20 - bomb exploded with tongue (min)?
 		Parm<int> _444;                         // _444, i21 - bomb exploded with tongue (max)?
 		Parm<int> _454;                         // _454, i22 - damage loop (min)?
@@ -280,7 +280,7 @@ struct KingBody {
 	int mFootMapAttr[2];                                          // _10
 	f32 mBlendingRate;                                            // _18
 	f32 mBlendingRatio;                                           // _1C
-	f32 _20;                                                      // _20
+	f32 mMoveSpeed;                                               // _20
 	Vector3f mFootPosList[2];                                     // _24
 	Vector3f mOldFootPosList[2];                                  // _3C
 	Vector3f _54;                                                 // _54
@@ -429,11 +429,11 @@ struct KingAi : public PaniAnimKeyListener {
 	u8 _08;                      // _08, might be bool
 	u8 _09;                      // _09, might be bool
 	int mMouthSlotFlag;          // _0C
-	u32 _10;                     // _10, might be int
-	u8 _14[0x4];                 // _14, unknown
+	int _10;                     // _10
+	int mDamageLoopCounter;      // _14
 	u32 _18;                     // _18, unknown
 	int mBombDamageCounter;      // _1C
-	int _20;                     // _20
+	int mEatBombDamageCounter;   // _20
 	f32 mDamageScaleOscillation; // _24
 	f32 _28;                     // _28
 	Vector3f mAttackPosition;    // _2C

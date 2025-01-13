@@ -223,7 +223,7 @@ void KingBody::init(King* king)
 	mKing                 = king;
 	_04                   = 0;
 	mBlendingRatio        = 0.0f;
-	_20                   = 0.0f;
+	mMoveSpeed            = 0.0f;
 	mDoFallSalivaEffect   = 0;
 	mDoSpreadSalivaEffect = 0;
 
@@ -293,7 +293,7 @@ void KingBody::checkOnGround()
  */
 void KingBody::setVelocityFromPosition()
 {
-	if (_20 > 0.0f) {
+	if (mMoveSpeed > 0.0f) {
 		bool isTouchingGround = false;
 		Vector3f dir(sinf(mKing->mDirection), 0.0f, cosf(mKing->mDirection));
 		for (int i = 0; i < 2; i++) {
@@ -304,9 +304,9 @@ void KingBody::setVelocityFromPosition()
 
 		if (isTouchingGround) {
 			if (mKing->getOnWall()) {
-				mKing->mTargetVelocity = ((mKing->getAnimTimer() * gsys->getFrameTime() * _20) / 5.0f) * dir;
+				mKing->mTargetVelocity = ((mKing->getAnimTimer() * gsys->getFrameTime() * mMoveSpeed) / 5.0f) * dir;
 			} else {
-				mKing->mTargetVelocity = (mKing->getAnimTimer() * gsys->getFrameTime() * _20) * dir;
+				mKing->mTargetVelocity = (mKing->getAnimTimer() * gsys->getFrameTime() * mMoveSpeed) * dir;
 			}
 		} else if (!mKing->getOnWall()) {
 			mKing->mTargetVelocity.set(0.0f, 0.0f, 0.0f);

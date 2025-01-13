@@ -279,13 +279,11 @@ struct Creature : public RefCountable, public EventTalker {
 	    bool insideView();
 	    bool isAIActive();
 	    bool isDamaged();
-	    bool isHolding();
 	    bool isObjType(int);
 
 	    f32 calcDistance(Creature&);
 
 	    BOOL isFlying();
-	    BOOL isStickToMouth();
 
 	    void disableFaceDirAdjust();
 	    void disableFixPos();
@@ -307,7 +305,6 @@ struct Creature : public RefCountable, public EventTalker {
 	    void setOutsideView();
 	    void setStateDamaged();
 	    void startFix();
-	    void startFlying();
 	    void stopAI();
 	    void unsetCarryOver();
 
