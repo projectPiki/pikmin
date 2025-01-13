@@ -377,12 +377,12 @@ struct GameFlow : public Node {
 	// _00-_20 = Node
 	GamePrms* mParameters;                   // _20
 	MemoryCard mMemoryCard;                  // _24
-	u8 _6C[0x94 - 0x6C];                     // _6C, unknown
+	u8 _6C[0x94 - 0x6C];                     // _6C
 	GamePrefs mGamePrefs;                    // _94
-	u32 mSaveGameCrc;                        // _1A0, unknown
+	u32 mSaveGameCrc;                        // _1A0
 	PlayState mPlayState;                    // _1A4
-	int _1CC;                                // _1CC, maybe u32
-	u32 _1D0;                                // _1D0, most recently opened stage?
+	int _1CC;                                // _1CC
+	u32 mLastUnlockedStageId;                // _1D0
 	u32 _1D4;                                // _1D4, unknown
 	u32 _1D8;                                // _1D8, bitflag of some description
 	MoviePlayer* mMoviePlayer;               // _1DC
@@ -397,12 +397,12 @@ struct GameFlow : public Node {
 	Section* mGameSection;                   // _204
 	char* mLangFilePaths[2][LANGFILE_COUNT]; // _208
 	u8 _230[0x2A8 - 0x230];                  // _230, unknown
-	int _2A8;                                // _2A8, related to language?
+	int mLanguageIndex;                      // _2A8, related to language?
 	u32 _2AC;                                // _2AC, unknown
 	u32 _2B0;                                // _2B0, could be int
 	int mIsChallengeMode;                    // _2B4
 	u8 _2B8[0x4];                            // _2B8, unknown
-	u32 _2BC;                                // _2BC, unknown
+	u32 mUpdateTickCount;                    // _2BC, unknown
 	u8 _2C0[0x4];                            // _2C0, unknown
 	f32 _2C4;                                // _2C4
 	f32 _2C8;                                // _2C8
@@ -410,11 +410,11 @@ struct GameFlow : public Node {
 	int _2D0;                                // _2D0
 	int _2D4;                                // _2D4
 	WorldClock mWorldClock;                  // _2D8
-	f32 _304;                                // _304
+	f32 mTimeMultiplier;                     // _304
 	AnimFrameCacher* mFrameCacher;           // _308
 	GameGenFlow* mGenFlow;                   // _30C
-	Texture* _310;                           // _310
-	f32 _314;                                // _314
+	Texture* mLevelBannerTexture;            // _310
+	f32 mLevelBannerFadeValue;               // _314
 	Texture* mLoadBannerTexture;             // _318
 	GameLoadIdler mGameLoadIdler;            // _31C
 	u8 _330[0x338 - 0x330];                  // _330, unknown

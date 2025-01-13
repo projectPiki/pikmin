@@ -70,8 +70,6 @@ struct GameStat {
 	static int minPikis;
 	static int maxPikis;
 	static bool orimaDead;
-
-	// TODO: members
 };
 
 #endif

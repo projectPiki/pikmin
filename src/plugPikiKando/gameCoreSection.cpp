@@ -3886,19 +3886,19 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 
 	memStat->end("mapMgr");
 
-	_50            = 0;
-	_68            = gsys->loadTexture("effects/shadow.txe", true);
-	_68->mTexFlags = (Texture::TEX_CLAMP_S | Texture::TEX_Unk2 | Texture::TEX_CLAMP_T);
-	mBigFont       = new Font();
+	_50                       = 0;
+	mShadowTexture            = gsys->loadTexture("effects/shadow.txe", true);
+	mShadowTexture->mTexFlags = (Texture::TEX_CLAMP_S | Texture::TEX_Unk2 | Texture::TEX_CLAMP_T);
+	mBigFont                  = new Font();
 	mBigFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 36);
 
 	memStat->start("dynamics");
 	particleHeap = new DynParticleHeap(0x400);
 	memStat->end("dynamics");
 
-	_3C                   = new Menu(mController, gsys->mConsFont, false);
-	_3C->_48              = glnWidth / 2;
-	_3C->mPositionOffsetY = glnHeight / 2;
+	mAiPerfDebugMenu                   = new Menu(mController, gsys->mConsFont, false);
+	mAiPerfDebugMenu->_48              = glnWidth / 2;
+	mAiPerfDebugMenu->mPositionOffsetY = glnHeight / 2;
 	// AIPerf::addMenu(_3C);
 	GlobalShape::init();
 

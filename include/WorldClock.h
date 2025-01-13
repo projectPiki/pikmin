@@ -17,8 +17,8 @@ struct WorldClock {
 	void age(f32);
 
 	f32 mTimeScale;        // _00
-	f32 _04;               // _04
-	f32 _08;               // _08
+	f32 mHoursInDay;       // _04
+	f32 mTicksPerHour;     // _08
 	u8 _0C[0x4];           // _0C, unknown
 	f32 mLastRecordedTime; // _10
 	f32 mFractionalTime;   // _14

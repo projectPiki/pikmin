@@ -2400,7 +2400,7 @@ void NaviUfoState::init(Navi* navi)
 		ufo->startAccess();
 	}
 
-	_10 = 0;
+	mState = 0;
 	navi->mOdoMeter.start(0.5f, 8.0f);
 	setCorePauseFlag(COREPAUSE_Unk1 | COREPAUSE_Unk2 | COREPAUSE_Unk16);
 	Jac_StartPartsFindDemo(0, 1);
@@ -2414,9 +2414,9 @@ void NaviUfoState::init(Navi* navi)
  */
 void NaviUfoState::procCollideMsg(Navi* navi, MsgCollide* msg)
 {
-	if (_10 != 1 && _10 != 2) {
+	if (mState != 1 && mState != 2) {
 		navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
-		_10 = 1;
+		mState = 1;
 		effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mPosition, nullptr, nullptr);
 	}
 }
@@ -2428,58 +2428,62 @@ void NaviUfoState::procCollideMsg(Navi* navi, MsgCollide* msg)
  */
 void NaviUfoState::exec(Navi* navi)
 {
-	if (_10 == 0) {
-		UfoItem* ufo       = itemMgr->getUfo();
-		Vector3f goalPos   = ufo->getGoalPos();
+	if (mState == 0) {
+		UfoItem* onion     = itemMgr->getUfo();
+		Vector3f goalPos   = onion->getGoalPos();
 		Vector3f dirToGoal = goalPos - navi->mPosition;
 		f32 dist           = dirToGoal.normalise();
+
 		if (dist < 10.0f) {
 			if (!_21) {
 				_20 = 20;
 			}
-			_21     = 1;
-			f32 rot = angDist(roundAng(-ufo->mDirection), navi->mDirection);
+
+			_21 = 1;
+
+			f32 rotDelta = angDist(roundAng(-onion->mDirection), navi->mDirection);
 			navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 			navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-			if (absF(rot) < 0.15707964f) {
+
+			if (absF(rotDelta) < (PI / 20.0f)) {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
-				_10 = 1;
+				mState = 1;
 				effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mPosition, nullptr, nullptr);
 			} else {
-				navi->mDirection = roundAng(navi->mDirection + 0.1f * rot);
+				navi->mDirection = roundAng(navi->mDirection + 0.1f * rotDelta);
 				if (--_20 <= 0) {
 					navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
-					_10 = 1;
+					mState = 1;
 					effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mPosition, nullptr, nullptr);
 				}
 			}
 
-		} else if (!navi->mOdoMeter.moving(navi->mPosition, _14)) {
+		} else if (!navi->mOdoMeter.moving(navi->mPosition, mLastPosition)) {
 			navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
-			_10 = 1;
+			mState = 1;
 			effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mPosition, nullptr, nullptr);
 			navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 			navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			return;
 		} else {
-			_14                   = navi->mPosition;
+			mLastPosition         = navi->mPosition;
 			navi->mVelocity       = dirToGoal * 60.0f;
 			navi->mTargetVelocity = dirToGoal * 60.0f;
 		}
 	}
 
-	if (_10 == 1) {
+	if (mState == 1) {
 		navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 		navi->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 		navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	}
 
-	if (_10 == 2 && --_12 == 0) {
+	if (mState == 2 && --mRecoveryTimer == 0) {
 		gameflow._1E8->message(0, 25);
-		_10 = 3;
+		mState = 3;
 	}
 
-	if (_10 == 3 && gameflow._338 == 0) {
+	if (mState == 3 && gameflow._338 == 0) {
 		transit(navi, NAVISTATE_Walk);
 	}
 	/*
@@ -2817,9 +2821,9 @@ void NaviUfoState::cleanup(Navi* navi)
  */
 void NaviUfoState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
-	if (msg->mKeyEvent->mEventType == KEY_Finished && _10 == 1) {
-		_10 = 2;
-		_12 = 10;
+	if (msg->mKeyEvent->mEventType == KEY_Finished && mState == 1) {
+		mState         = 2;
+		mRecoveryTimer = 10;
 	}
 }
 

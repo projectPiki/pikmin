@@ -80,14 +80,14 @@ struct GameCoreSection : public Node {
 	u8 _31;                           // _31
 	u32 _34;                          // _34, unknown
 	u8 _38[0x4];                      // _38, unknown
-	Menu* _3C;                        // _3C, unknown
+	Menu* mAiPerfDebugMenu;           // _3C, unknown
 	u8 _40[0x50 - 0x40];              // _40, unknown
 	u32 _50;                          // _50, unknown
 	SearchSystem* _54;                // _54
 	Navi* mNavi;                      // _58
 	u8 _5C[0x64 - 0x5C];              // _5C, unknown
 	MapMgr* mMapMgr;                  // _64
-	Texture* _68;                     // _68
+	Texture* mShadowTexture;          // _68
 	Font* mBigFont;                   // _6C
 	Light _70;                        // _70
 	zen::DrawGameInfo* mDrawGameInfo; // _344

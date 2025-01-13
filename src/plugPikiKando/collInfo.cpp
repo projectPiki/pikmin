@@ -124,24 +124,14 @@ bool Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
  * Address:	80087360
  * Size:	00002C
  */
-void Tube::getYRatio(f32)
+f32 Tube::getYRatio(f32 heightToCheck)
 {
-	/*
-	.loc_0x0:
-	  lfs       f2, 0x10(r3)
-	  lfs       f3, 0x4(r3)
-	  lfs       f0, -0x75C0(r2)
-	  fsubs     f2, f2, f3
-	  fcmpu     cr0, f0, f2
-	  beq-      .loc_0x24
-	  fsubs     f0, f1, f3
-	  fdivs     f1, f0, f2
-	  blr
+	const f32 r = mEndPoint.y - mStartPoint.y;
+	if (r != 0.0f) {
+		return (heightToCheck - mStartPoint.y) / (r);
+	}
 
-	.loc_0x24:
-	  lfs       f1, -0x75A0(r2)
-	  blr
-	*/
+	return -1.0f;
 }
 
 /*
@@ -449,8 +439,13 @@ f32 Cylinder::getPosRatio(const Vector3f& vec)
  * Address:	800877AC
  * Size:	0000E4
  */
-void Tube::getPosRatio(const Vector3f&)
+f32 Tube::getPosRatio(const Vector3f& pos)
 {
+	Vector3f a = mEndPoint - mStartPoint;
+	f32 n      = a.normalise();
+
+	Vector3f b = pos - mStartPoint;
+	return b.dot(a) / n;
 	/*
 	.loc_0x0:
 	  mflr      r0

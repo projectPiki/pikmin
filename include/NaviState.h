@@ -864,11 +864,11 @@ struct NaviUfoState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u16 _10;      // _10
-	u16 _12;      // _12
-	Vector3f _14; // _14
-	s8 _20;       // _20
-	u8 _21;       // _21
+	u16 mState;             // _10
+	u16 mRecoveryTimer;     // _12
+	Vector3f mLastPosition; // _14
+	s8 _20;                 // _20
+	u8 _21;                 // _21
 };
 
 /**

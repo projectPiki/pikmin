@@ -27,21 +27,21 @@ static void _Print(char*, ...)
  * Address:	80053C5C
  * Size:	000040
  */
-void PlayState::openStage(int stageID)
+void PlayState::openStage(int stageId)
 {
-	if (stageID < STAGE_START) {
+	if (stageId < STAGE_START) {
 		return;
 	}
 
-	if (stageID > STAGE_END) {
+	if (stageId > STAGE_END) {
 		return;
 	}
 
-	if (!(mCourseOpenFlags & (1 << stageID))) {
-		gameflow._1D0 = stageID;
+	if (!(mCourseOpenFlags & (1 << stageId))) {
+		gameflow.mLastUnlockedStageId = stageId;
 	}
 
-	mCourseOpenFlags |= (1 << stageID);
+	mCourseOpenFlags |= (1 << stageId);
 }
 
 /*

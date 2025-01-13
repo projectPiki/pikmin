@@ -54,13 +54,13 @@ void GameLoadIdler::draw(Graphics& gfx)
 	gfx.setClearColour(Colour(0, 0, 0, 0));
 	gfx.clearBuffer(3, false);
 
-	Texture** tex = &flow->_310;
-	if (!flow->_310) {
+	Texture** tex = &flow->mLevelBannerTexture;
+	if (!flow->mLevelBannerTexture) {
 		return;
 	}
-	f32* f = &flow->_314;
-	flow->_314 += (1.0f / 300.0f);
-	if (flow->_314 > 1.0f) {
+	f32* f = &flow->mLevelBannerFadeValue;
+	flow->mLevelBannerFadeValue += (1.0f / 300.0f);
+	if (flow->mLevelBannerFadeValue > 1.0f) {
 		*f = 1.0f;
 	}
 
@@ -632,9 +632,11 @@ void preloadLanguage()
 	// gsys->_31C;
 	gsys->_200.initCore("");
 	gsys->mLightFlareInfoList = (LFInfo*)&gsys->_200;
-	gsys->parseArchiveDirectory(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Dir], gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Arc]);
-	gsys->loadBundle(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Bun], true);
-	gsys->setTextureDirectories(gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Blo], gameflow.mLangFilePaths[gameflow._2A8][LANGFILE_Tex]);
+	gsys->parseArchiveDirectory(gameflow.mLangFilePaths[gameflow.mLanguageIndex][LANGFILE_Dir],
+	                            gameflow.mLangFilePaths[gameflow.mLanguageIndex][LANGFILE_Arc]);
+	gsys->loadBundle(gameflow.mLangFilePaths[gameflow.mLanguageIndex][LANGFILE_Bun], true);
+	gsys->setTextureDirectories(gameflow.mLangFilePaths[gameflow.mLanguageIndex][LANGFILE_Blo],
+	                            gameflow.mLangFilePaths[gameflow.mLanguageIndex][LANGFILE_Tex]);
 	gsys->getHeap(gsys->mActiveHeapIdx);
 	gsys->setHeap(heapIdx);
 	/*
@@ -766,7 +768,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	mNextOnePlayerSectionID = ONEPLAYER_GameSetup;
 	_200                    = 0;
 	_2AC                    = 0;
-	_2A8                    = 0;
+	mLanguageIndex          = 0;
 
 	mLangFilePaths[0][LANGFILE_Dir] = "archives/blo_eng.dir";
 	mLangFilePaths[0][LANGFILE_Arc] = "dataDir/archives/blo_eng.arc";
@@ -792,11 +794,11 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	mWorldClock.mCurrentTime      = 0;
 	mWorldClock.mMinutes          = 0;
 
-	mWorldClock._04        = 24.0f;
-	mWorldClock._08        = 60.0f * factor;
-	mWorldClock.mTimeScale = mWorldClock._08 / mWorldClock._04;
-	_304                   = 1.0f;
-	_2BC                   = 0;
+	mWorldClock.mHoursInDay   = 24.0f;
+	mWorldClock.mTicksPerHour = 60.0f * factor;
+	mWorldClock.mTimeScale    = mWorldClock.mTicksPerHour / mWorldClock.mHoursInDay;
+	mTimeMultiplier           = 1.0f;
+	mUpdateTickCount          = 0;
 
 	mMemoryCard.init();
 
@@ -811,8 +813,8 @@ void GameFlow::hardReset(BaseApp* baseApp)
 		gameflow.mLoadBannerTexture->attach();
 	}
 	gsys->setHeap(heapIdx);
-	_310 = gameflow.mLoadBannerTexture;
-	_314 = 1.0f;
+	mLevelBannerTexture   = gameflow.mLoadBannerTexture;
+	mLevelBannerFadeValue = 1.0f;
 	Jac_SceneSetup(0, 0);
 	_2D4 = 1;
 
@@ -1716,9 +1718,9 @@ void GameFlow::addGenNode(char* name, CoreNode* node)
  */
 void GameGenFlow::update()
 {
-	gameflow._2BC++;
-	gameflow.mWorldClock._08        = 60.0f * (gameflow._304 * gameflow.mParameters->mDaySpeedFactor());
-	gameflow.mWorldClock.mTimeScale = gameflow.mWorldClock._08 / gameflow.mWorldClock._04;
+	gameflow.mUpdateTickCount++;
+	gameflow.mWorldClock.mTicksPerHour = 60.0f * (gameflow.mTimeMultiplier * gameflow.mParameters->mDaySpeedFactor());
+	gameflow.mWorldClock.mTimeScale    = gameflow.mWorldClock.mTicksPerHour / gameflow.mWorldClock.mHoursInDay;
 	Node::update();
 }
 

@@ -84,7 +84,7 @@ struct NinLogoSetupSection : public Node {
 			progresWindow->draw(gfx);
 		}
 
-		gameflow.drawLoadLogo(gfx, false, gameflow._310, gameflow._314);
+		gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
 
 		// either this is a lot of inlines or there's a lot of debug stuff here.
 		u32 badCompiler[64];

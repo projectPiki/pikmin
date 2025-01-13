@@ -450,36 +450,38 @@ static char* levNames[] = {
 void OnePlayerSection::init()
 {
 	Node::init("<OnePlayerSection>");
-	u32 print        = gsys->mTogglePrint;
-	Section* section = nullptr;
-	while (!section) {
-		int sectionID = gameflow.mNextOnePlayerSectionID;
-		switch (sectionID) {
+	u32 displayState        = gsys->mTogglePrint;
+	Section* currentSection = nullptr;
+
+	while (!currentSection) {
+		int nextSectionType = gameflow.mNextOnePlayerSectionID;
+		switch (nextSectionType) {
 		case ONEPLAYER_GameSetup:
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 			if (gameflow._1FC >= 2 && gameflow._1FC <= 4) {
-				gameflow._310 = gameflow.setLoadBanner(levNames[gameflow._1FC]);
-				gameflow._314 = 0.0f;
+				gameflow.mLevelBannerTexture   = gameflow.setLoadBanner(levNames[gameflow._1FC]);
+				gameflow.mLevelBannerFadeValue = 0.0f;
 			} else {
-				gameflow._310 = nullptr;
+				gameflow.mLevelBannerTexture = nullptr;
 			}
 
-			section = new GameSetupSection();
+			currentSection = new GameSetupSection();
 			gsys->endLoading();
 			break;
 
 		case ONEPLAYER_CardSelect:
-			section = new CardSelectSection();
+			currentSection = new CardSelectSection();
 			break;
 
 		case ONEPLAYER_MapSelect:
-			section = new MapSelectSection();
+			currentSection = new MapSelectSection();
 			break;
 
 		case ONEPLAYER_Unk2:
-			if (!gameflow._310) {
-				gameflow._310 = gameflow.setLoadBanner(levNames[sectionID]);
+			if (!gameflow.mLevelBannerTexture) {
+				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType]);
 			}
+
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 			FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
 			{
@@ -498,8 +500,8 @@ void OnePlayerSection::init()
 			break;
 
 		case ONEPLAYER_Unk3:
-			if (!gameflow._310) {
-				gameflow._310 = gameflow.setLoadBanner(levNames[sectionID]);
+			if (!gameflow.mLevelBannerTexture) {
+				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType]);
 			}
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 			FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
@@ -519,9 +521,10 @@ void OnePlayerSection::init()
 			break;
 
 		case ONEPLAYER_Unk4:
-			if (!gameflow._310) {
-				gameflow._310 = gameflow.setLoadBanner(levNames[sectionID]);
+			if (!gameflow.mLevelBannerTexture) {
+				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType]);
 			}
+
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 			FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
 			{
@@ -540,7 +543,7 @@ void OnePlayerSection::init()
 			break;
 
 		case ONEPLAYER_IntroGame:
-			section = new IntroGameSection();
+			currentSection = new IntroGameSection();
 			break;
 
 		case ONEPLAYER_NewPikiGame:
@@ -550,41 +553,41 @@ void OnePlayerSection::init()
 
 			Texture* tex = nullptr;
 			if (flowCont.mCurrentStage->mStageID <= STAGE_LASTVALID) {
-				gameflow._310 = gameflow.setLoadBanner(levNames[flowCont.mCurrentStage->mStageID]);
-				gameflow._314 = 0.0f;
+				gameflow.mLevelBannerTexture   = gameflow.setLoadBanner(levNames[flowCont.mCurrentStage->mStageID]);
+				gameflow.mLevelBannerFadeValue = 0.0f;
 			} else {
-				gameflow._310 = tex;
+				gameflow.mLevelBannerTexture = tex;
 			}
 
-			section = new NewPikiGameSection();
+			currentSection = new NewPikiGameSection();
 			break;
 
 		case ONEPLAYER_GameCourseClear:
-			section = new GameCourseClearSection();
+			currentSection = new GameCourseClearSection();
 			break;
 
 		case ONEPLAYER_GameStageClear:
-			section = new GameStageClearSection();
+			currentSection = new GameStageClearSection();
 			break;
 
 		case ONEPLAYER_GameCredits:
 			gsys->startLoading(nullptr, true, 60);
-			section = new GameCreditsSection();
+			currentSection = new GameCreditsSection();
 			gsys->endLoading();
 			break;
 
 		case ONEPLAYER_GameExit:
-			section = new GameExitSection();
+			currentSection = new GameExitSection();
 			break;
 		}
 
-		if (gameflow.mNextOnePlayerSectionID != sectionID) {
-			section = nullptr;
+		if (gameflow.mNextOnePlayerSectionID != nextSectionType) {
+			currentSection = nullptr;
 		}
 	}
 
-	add(section);
-	gsys->mTogglePrint = print;
+	add(currentSection);
+	gsys->mTogglePrint = displayState;
 	/*
 	.loc_0x0:
 	  mflr      r0

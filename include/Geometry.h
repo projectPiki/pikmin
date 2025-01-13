@@ -70,9 +70,9 @@ struct Sphere {
  * @brief TODO
  */
 struct Tube {
-	void getYRatio(f32);
+	f32 getYRatio(f32 heightToCheck);
 	bool collide(const Sphere&, Vector3f&, f32&);
-	void getPosRatio(const Vector3f&);
+	f32 getPosRatio(const Vector3f&);
 	void getPosGradient(Vector3f&, f32, Vector3f&, Vector3f&);
 	void setPos(f32);
 
@@ -80,10 +80,10 @@ struct Tube {
 	void getRatioRadius(f32);
 
 	// TODO: members
-	Vector3f _00; // _00
-	Vector3f _0C; // _0C
-	f32 _18;      // _18
-	f32 _1C;      // _1C
+	Vector3f mStartPoint; // _00
+	Vector3f mEndPoint;   // _0C
+	f32 _18;              // _18
+	f32 _1C;              // _1C
 };
 
 #endif
