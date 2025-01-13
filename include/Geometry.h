@@ -18,7 +18,7 @@ struct Cylinder {
 	}
 
 	f32 get2dDist(Vector3f& point);
-	void collide(const Sphere& sphere, Vector3f& pushVector, f32& depth);
+	bool collide(const Sphere& sphere, Vector3f& pushVector, f32& depth);
 	f32 getPosRatio(const Vector3f& point); // 0-1 along the cylinder axis
 
 	Vector3f mStartPoint; // _00

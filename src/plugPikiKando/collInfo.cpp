@@ -1,5 +1,6 @@
 #include "Collision.h"
 #include "Geometry.h"
+#include "zen/Math.h"
 
 #include "Shape.h"
 #include "Dolphin/os.h"
@@ -72,39 +73,32 @@ f32 Cylinder::get2dDist(Vector3f& point)
  * Address:	80086FA0 in DOL, 100E7530 in DLL
  * Size:	0003C0
  */
-void Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
+bool Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
 {
 	// Calculate cylinder direction and normalize it
 	Vector3f cylinderDir = mEndPoint - mStartPoint;
-	f32 length           = cylinderDir.normalise();
+	Vector3f normalised  = cylinderDir;
+	f32 length           = normalised.normalise();
 
 	// Project sphere center onto cylinder axis
-	f32 projectionRatio = cylinderDir.dot(sphere.mCentre - mStartPoint) / length;
+	f32 projectionRatio = normalised.dot(sphere.mCentre - mStartPoint) / length;
 
 	// Calculate distance from center projection to cylinder ends (0.5 = center)
-	f32 distToEnds = __fabsf(projectionRatio - 0.5f) * length;
+	f32 distToEnds = zen::Abs(projectionRatio - 0.5f) * length;
 
 	// Calculate penetration along cylinder length
 	f32 endPenetration = (0.5f * length) - (distToEnds - sphere.mRadius);
 
 	// Get actual point on cylinder axis where sphere is projected
-	Vector3f projectedPoint = (cylinderDir * projectionRatio) + mStartPoint;
+	Vector3f projectedPoint;
+	projectedPoint = (projectionRatio * cylinderDir) + mStartPoint - sphere.mCentre;
 
+	f32 projLength = projectedPoint.length();
 	// Vector from sphere center to projected point, and radial penetration
-	Vector3f sphereToProj = projectedPoint - sphere.mCentre;
-	f32 radialPenetration = sphere.mRadius + mRadius - sphereToProj.length();
+	f32 radialPenetration = sphere.mRadius + mRadius - projLength;
 
 	// Resolve collision
-	if (endPenetration < 0.0f || endPenetration >= radialPenetration || radialPenetration < 0.0f) {
-		// Handle radial collision only if within cylinder length bounds
-		if (projectionRatio >= 0.0f && projectionRatio <= 1.0f && radialPenetration >= 0.0f) {
-			// Push along radial direction
-			pushVector = sphereToProj;
-			pushVector.normalise();
-			pushVector = pushVector * -radialPenetration;
-			depth      = projectionRatio;
-		}
-	} else {
+	if (endPenetration >= 0.0f && endPenetration < radialPenetration && radialPenetration >= 0.0f) {
 		// Handle end cap collision
 		if (projectionRatio < 0.5f) {
 			endPenetration = -endPenetration; // Flip direction for start cap
@@ -112,265 +106,17 @@ void Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
 
 		pushVector = cylinderDir * endPenetration;
 		depth      = projectionRatio;
+		return true;
+	} else if (projectionRatio >= 0.0f && projectionRatio <= 1.0f && radialPenetration >= 0.0f) {
+		// Handle radial collision only if within cylinder length bounds
+		// Push along radial direction
+		pushVector = projectedPoint;
+		pushVector.normalise();
+		pushVector = pushVector * -radialPenetration;
+		depth      = projectionRatio;
+		return true;
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x190(r1)
-	  stfd      f31, 0x188(r1)
-	  stfd      f30, 0x180(r1)
-	  stfd      f29, 0x178(r1)
-	  stfd      f28, 0x170(r1)
-	  stfd      f27, 0x168(r1)
-	  stfd      f26, 0x160(r1)
-	  stw       r31, 0x15C(r1)
-	  mr        r31, r6
-	  stw       r30, 0x158(r1)
-	  mr        r30, r5
-	  stw       r29, 0x154(r1)
-	  mr        r29, r4
-	  stw       r28, 0x150(r1)
-	  mr        r28, r3
-	  lfs       f3, 0x10(r3)
-	  lfs       f2, 0x4(r3)
-	  lfs       f1, 0xC(r3)
-	  fsubs     f27, f3, f2
-	  lfs       f0, 0x0(r3)
-	  lfs       f2, 0x14(r3)
-	  fsubs     f28, f1, f0
-	  lfs       f0, 0x8(r3)
-	  fsubs     f26, f2, f0
-	  fmr       f30, f27
-	  fmr       f31, f28
-	  fmr       f29, f26
-	  fmuls     f0, f30, f30
-	  fmuls     f1, f31, f31
-	  fadds     f0, f1, f0
-	  fmuls     f1, f29, f29
-	  fadds     f1, f1, f0
-	  bl        -0x793E8
-	  lfs       f0, -0x75C0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0xA4
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
-
-	.loc_0xA4:
-	  lfs       f3, 0x0(r29)
-	  addi      r6, r1, 0x88
-	  lfs       f0, 0x0(r28)
-	  addi      r5, r1, 0x84
-	  lfs       f2, -0x75A4(r2)
-	  fsubs     f3, f3, f0
-	  lfs       f0, -0x75C0(r2)
-	  fmuls     f5, f2, f1
-	  addi      r4, r1, 0x80
-	  addi      r3, r1, 0xF0
-	  stfs      f3, 0xC4(r1)
-	  lfs       f6, 0xC4(r1)
-	  lfs       f4, 0x4(r29)
-	  lfs       f3, 0x4(r28)
-	  fmuls     f6, f31, f6
-	  lfs       f8, 0x8(r29)
-	  fsubs     f3, f4, f3
-	  lfs       f7, 0x8(r28)
-	  lfs       f4, 0xC(r29)
-	  fsubs     f7, f8, f7
-	  stfs      f0, 0x12C(r1)
-	  fmuls     f3, f30, f3
-	  stfs      f0, 0x128(r1)
-	  fmuls     f7, f29, f7
-	  stfs      f0, 0x124(r1)
-	  fadds     f0, f6, f3
-	  fadds     f0, f7, f0
-	  fdivs     f29, f0, f1
-	  fsubs     f0, f29, f2
-	  fmuls     f3, f26, f29
-	  fmuls     f2, f27, f29
-	  fabs      f6, f0
-	  fmuls     f0, f28, f29
-	  stfs      f3, 0x88(r1)
-	  fmuls     f1, f1, f6
-	  stfs      f2, 0x84(r1)
-	  stfs      f0, 0x80(r1)
-	  fsubs     f0, f1, f4
-	  fsubs     f30, f5, f0
-	  bl        -0x4FFC4
-	  lfs       f2, 0xF0(r1)
-	  lfs       f1, 0x0(r28)
-	  lfs       f0, 0x0(r29)
-	  fadds     f1, f2, f1
-	  lfs       f3, 0x8(r28)
-	  lfs       f4, 0xF8(r1)
-	  lfs       f2, 0x4(r28)
-	  fsubs     f0, f1, f0
-	  lfs       f1, 0xF4(r1)
-	  fadds     f3, f4, f3
-	  stfs      f0, 0x124(r1)
-	  fadds     f1, f1, f2
-	  lfs       f0, 0x4(r29)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x128(r1)
-	  lfs       f0, 0x8(r29)
-	  fsubs     f0, f3, f0
-	  stfs      f0, 0x12C(r1)
-	  lfs       f1, 0x124(r1)
-	  lfs       f0, 0x128(r1)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x12C(r1)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x75C0(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x210
-	  fsqrte    f1, f4
-	  lfd       f3, -0x75B8(r2)
-	  lfd       f2, -0x75B0(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x90(r1)
-	  lfs       f4, 0x90(r1)
-
-	.loc_0x210:
-	  lfs       f0, -0x75C0(r2)
-	  lfs       f2, 0xC(r29)
-	  lfs       f1, 0x18(r28)
-	  fcmpo     cr0, f30, f0
-	  fadds     f1, f2, f1
-	  fsubs     f31, f1, f4
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x298
-	  fcmpo     cr0, f30, f31
-	  bge-      .loc_0x298
-	  fcmpo     cr0, f31, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x298
-	  lfs       f0, -0x75A4(r2)
-	  fcmpo     cr0, f29, f0
-	  bge-      .loc_0x254
-	  fneg      f30, f30
-
-	.loc_0x254:
-	  fmuls     f2, f28, f30
-	  li        r3, 0x1
-	  fmuls     f1, f27, f30
-	  fmuls     f0, f26, f30
-	  stfs      f2, 0xAC(r1)
-	  lfs       f2, 0xAC(r1)
-	  stfs      f2, 0xE4(r1)
-	  stfs      f1, 0xE8(r1)
-	  stfs      f0, 0xEC(r1)
-	  lwz       r4, 0xE4(r1)
-	  lwz       r0, 0xE8(r1)
-	  stw       r4, 0x0(r30)
-	  stw       r0, 0x4(r30)
-	  lwz       r0, 0xEC(r1)
-	  stw       r0, 0x8(r30)
-	  stfs      f29, 0x0(r31)
-	  b         .loc_0x388
-
-	.loc_0x298:
-	  lfs       f1, -0x75C0(r2)
-	  fcmpo     cr0, f29, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x384
-	  lfs       f0, -0x75A8(r2)
-	  fcmpo     cr0, f29, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x384
-	  fcmpo     cr0, f31, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x384
-	  lwz       r3, 0x124(r1)
-	  lwz       r0, 0x128(r1)
-	  stw       r3, 0x0(r30)
-	  stw       r0, 0x4(r30)
-	  lwz       r0, 0x12C(r1)
-	  stw       r0, 0x8(r30)
-	  lfs       f1, 0x0(r30)
-	  lfs       f0, 0x4(r30)
-	  lfs       f2, 0x8(r30)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x7965C
-	  lfs       f0, -0x75C0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x330
-	  lfs       f0, 0x0(r30)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r30)
-	  lfs       f0, 0x4(r30)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x4(r30)
-	  lfs       f0, 0x8(r30)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x8(r30)
-
-	.loc_0x330:
-	  fneg      f1, f31
-	  lfs       f0, 0x0(r30)
-	  li        r3, 0x1
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x9C(r1)
-	  lfs       f0, 0x9C(r1)
-	  stfs      f0, 0xD8(r1)
-	  lfs       f0, 0x4(r30)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xDC(r1)
-	  lfs       f0, 0x8(r30)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xE0(r1)
-	  lwz       r4, 0xD8(r1)
-	  lwz       r0, 0xDC(r1)
-	  stw       r4, 0x0(r30)
-	  stw       r0, 0x4(r30)
-	  lwz       r0, 0xE0(r1)
-	  stw       r0, 0x8(r30)
-	  stfs      f29, 0x0(r31)
-	  b         .loc_0x388
-
-	.loc_0x384:
-	  li        r3, 0
-
-	.loc_0x388:
-	  lwz       r0, 0x194(r1)
-	  lfd       f31, 0x188(r1)
-	  lfd       f30, 0x180(r1)
-	  lfd       f29, 0x178(r1)
-	  lfd       f28, 0x170(r1)
-	  lfd       f27, 0x168(r1)
-	  lfd       f26, 0x160(r1)
-	  lwz       r31, 0x15C(r1)
-	  lwz       r30, 0x158(r1)
-	  lwz       r29, 0x154(r1)
-	  lwz       r28, 0x150(r1)
-	  addi      r1, r1, 0x190
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
