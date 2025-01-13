@@ -231,8 +231,8 @@ void PaniAnimator::animate(f32 speed)
 		return;
 	}
 
-	f32 startValue = (f32)mAnimInfo->getKeyValue(mStartKeyIndex);
-	f32 endValue   = (f32)mAnimInfo->getKeyValue(mNextKeyInfoIndex);
+	f32 startValue = (f32)mAnimInfo->getKeyValue(mFirstFrameIndex);
+	f32 endValue   = (f32)mAnimInfo->getKeyValue(mLastFrameIndex);
 	if (startValue > endValue) {
 		mAnimationCounter;
 		PRINT("!animate:%08x:to<from:%f,%f,%f\n", this, endValue, startValue, mAnimationCounter);
@@ -258,11 +258,11 @@ void PaniAnimator::animate(f32 speed)
 void PaniAnimator::checkConstantKeys()
 {
 	if (mCurrentKeyIndex < 0) {
-		ERROR("checkConstantKeys:nextKeyInfoIndex:%d,%d\n", mNextKeyInfoIndex, mAnimInfo->countIKeys());
+		ERROR("checkConstantKeys:nextKeyInfoIndex:%d,%d\n", mLastFrameIndex, mAnimInfo->countIKeys());
 	}
 
 	if (mAnimInfo->countIKeys() > 16) {
-		ERROR("checkConstantKeys:getKeyInfoCount():%d,%d\n", mNextKeyInfoIndex, mAnimInfo->countIKeys());
+		ERROR("checkConstantKeys:getKeyInfoCount():%d,%d\n", mLastFrameIndex, mAnimInfo->countIKeys());
 	}
 
 	for (; mCurrentKeyIndex < mAnimInfo->countIKeys(); mCurrentKeyIndex++) {

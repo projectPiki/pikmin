@@ -39,7 +39,7 @@ void CoreNucleusAi::initAI(CoreNucleus* core)
 	mCore->setNextState(COREAI_Follow);
 	mCore->mAnimator.startMotion(PaniMotionInfo(2, this));
 	mCore->setAnimTimer(30.0f);
-	_04 = false;
+	mIsHit = false;
 }
 
 /*
@@ -142,7 +142,7 @@ void CoreNucleusAi::playSound(int)
  */
 void CoreNucleusAi::setHitMotionStart()
 {
-	_04 = true;
+	mIsHit = true;
 }
 
 /*
@@ -224,7 +224,7 @@ bool CoreNucleusAi::damageTransit()
  */
 bool CoreNucleusAi::hitMotionStartTransit()
 {
-	return _04;
+	return mIsHit;
 }
 
 /*
@@ -238,7 +238,7 @@ void CoreNucleusAi::initDie(int val)
 	mCore->setMotionFinish(false);
 	mCore->setLoopCounter(0);
 	mCore->mAnimator.startMotion(PaniMotionInfo(1, this));
-	mCore->set2D4(0.0f);
+	mCore->setAttackTimer(0.0f);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mCore->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mCore->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, mCore->mPosition, nullptr, nullptr);
@@ -268,7 +268,7 @@ void CoreNucleusAi::initFollow(int val)
 	mCore->setNextState(val);
 	mCore->setMotionFinish(false);
 	mCore->mAnimator.startMotion(PaniMotionInfo(2, this));
-	_04 = 0;
+	mIsHit = 0;
 }
 
 /*
@@ -341,7 +341,7 @@ void CoreNucleusAi::update()
 		damageState();
 		if (dieTransit()) {
 			initDie(COREAI_Die);
-		} else if (_04) {
+		} else if (mIsHit) {
 			initHit(COREAI_Hit);
 		} else if (isMotionFinishTransit()) {
 			initFollow(COREAI_Follow);

@@ -217,7 +217,7 @@ void NucleusAi::initDie(int val)
 	mNucleus->setMotionFinish(false);
 	mNucleus->setLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
-	mNucleus->set2D4(0.0f);
+	mNucleus->setAttackTimer(0.0f);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mNucleus->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mNucleus->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, mNucleus->mPosition, nullptr, nullptr);

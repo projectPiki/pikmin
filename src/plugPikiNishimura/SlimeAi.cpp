@@ -654,18 +654,18 @@ void SlimeAi::bothEndsToAppearGoal()
  */
 void SlimeAi::makeTargetRandom()
 {
-	mSlime->add2D0(gsys->getFrameTime());
+	mSlime->addWalkTimer(gsys->getFrameTime());
 	SlimeCreature* leader = mSlime->mSlimeCreatures[mSlime->mLeaderCreatureIndex];
 	Vector3f* targetPos   = mSlime->getTargetPosition();
 	Vector3f* initPos     = mSlime->getInitPosition();
 
-	if (mSlime->get2D0() > 10.0f || qdist2(targetPos->x, targetPos->z, leader->mPosition.x, leader->mPosition.z) < 10.0f) {
+	if (mSlime->getWalkTimer() > 10.0f || qdist2(targetPos->x, targetPos->z, leader->mPosition.x, leader->mPosition.z) < 10.0f) {
 		f32 randAngle = NsMathF::getRand(TAU);
 		Vector3f newTarget;
 		newTarget.set(C_BOSS_PROP(mSlime).mMaxWaitRadius() * cosf(randAngle) + initPos->x, initPos->y,
 		              C_BOSS_PROP(mSlime).mMaxWaitRadius() * sinf(randAngle) + initPos->z);
 		mSlime->setTargetPosition(newTarget);
-		mSlime->set2D0(0.0f);
+		mSlime->setWalkTimer(0.0f);
 	}
 
 	u32 badCompiler;
@@ -874,7 +874,7 @@ bool SlimeAi::dissolutionContractTransit()
  */
 bool SlimeAi::finishContractTransit()
 {
-	if (mIsContractFinished || mSlime->get2D4() > 2.0f) {
+	if (mIsContractFinished || mSlime->getAttackTimer() > 2.0f) {
 		return true;
 	}
 	return false;
@@ -887,7 +887,7 @@ bool SlimeAi::finishContractTransit()
  */
 bool SlimeAi::finishExpansionTransit()
 {
-	if (mSlime->get2D4() > 1.0f) {
+	if (mSlime->getAttackTimer() > 1.0f) {
 		return true;
 	}
 	return false;
@@ -948,7 +948,7 @@ void SlimeAi::initDie(int nextState)
 	mSlime->setMotionFinish(false);
 	mSlime->mNucleus->subCurrentLife(128000.0f); // lol
 	mSlime->mCore->subCurrentLife(128000.0f);    // lol
-	mSlime->set2D4(0.0f);
+	mSlime->setAttackTimer(0.0f);
 	setContractGoal();
 	setExpansionGoal();
 	playerState->mResultFlags.setSeen(RESFLAG_Unk50);
@@ -1012,7 +1012,7 @@ void SlimeAi::initContract(int nextState)
 	mSlime->setNextState(nextState);
 	mSlime->setMotionFinish(false);
 	mIsContractFinished = false;
-	mSlime->set2D4(0.0f);
+	mSlime->setAttackTimer(0.0f);
 	setContractGoal();
 	calcContractDamage();
 	contractCoreFlickPiki();
@@ -1030,7 +1030,7 @@ void SlimeAi::initExpansion(int nextState)
 	mSlime->setMotionFinish(false);
 	mSlime->mDoCrashContract = false;
 	mSlime->mIsMoveLeader    = true;
-	mSlime->set2D4(0.0f);
+	mSlime->setAttackTimer(0.0f);
 	setExpansionGoal();
 }
 
@@ -1044,8 +1044,8 @@ void SlimeAi::initAppear(int nextState)
 	mSlime->setNextState(nextState);
 	mSlime->setMotionFinish(false);
 	mSlime->mIsMoveLeader = true;
-	mSlime->set2D4(0.0f);
-	mSlime->set2D0(0.0f);
+	mSlime->setAttackTimer(0.0f);
+	mSlime->setWalkTimer(0.0f);
 	mSlime->setAnimTimer(0.5f);
 	setAppearGoal();
 	if (mSlime->mSeContext) {
@@ -1065,7 +1065,7 @@ void SlimeAi::initDisAppear(int nextState)
 	mSlime->mIsMoveLeader = false;
 	mSlime->setIsAlive(false);
 	mSlime->setIsAtari(false);
-	mSlime->set2D4(0.0f);
+	mSlime->setAttackTimer(0.0f);
 	mSlime->createPellet(mSlime->mPosition, 300.0f, true);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mSlime->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mSlime->mPosition, nullptr, nullptr);
@@ -1083,7 +1083,7 @@ void SlimeAi::initDisAppear(int nextState)
 void SlimeAi::dieState()
 {
 	bothEndsToGoal();
-	if (mSlime->get2D4() > 0.0f) {
+	if (mSlime->getAttackTimer() > 0.0f) {
 		mSlime->_3D4 -= C_SLIME_PROP(mSlime).mDeadScaleSpeed() * gsys->getFrameTime();
 		if (mSlime->_3D4 < 0.0f) {
 			mSlime->_3D4 = 0.0f;
@@ -1094,7 +1094,7 @@ void SlimeAi::dieState()
 		}
 	}
 	setMidPointVelocity();
-	mSlime->add2D4(gsys->getFrameTime());
+	mSlime->addAttackTimer(gsys->getFrameTime());
 }
 
 /*
@@ -1153,7 +1153,7 @@ void SlimeAi::chasePikiState()
 void SlimeAi::contractState()
 {
 	bothEndsToGoal();
-	mSlime->add2D4(gsys->getFrameTime());
+	mSlime->addAttackTimer(gsys->getFrameTime());
 	setMidPointVelocity();
 }
 
@@ -1165,7 +1165,7 @@ void SlimeAi::contractState()
 void SlimeAi::expansionState()
 {
 	bothEndsToGoal();
-	mSlime->add2D4(gsys->getFrameTime());
+	mSlime->addAttackTimer(gsys->getFrameTime());
 	setMidPointVelocity();
 }
 
@@ -1190,7 +1190,7 @@ void SlimeAi::appearState()
 	slimeScalePts[0] = 0.0f;
 	slimeScalePts[1] = C_SLIME_PROP(mSlime).mRadiusContractionScore();
 	slimeScalePts[2] = C_SLIME_PROP(mSlime).mRadiusContractionScore();
-	f32 timer1       = mSlime->get2D4();
+	f32 timer1       = mSlime->getAttackTimer();
 	if (timer1 < 2.0f) {
 		mSlime->_3D4 = NsLibMath<f32>::lagrange3(slimeScalePts, timer1);
 		if (timer1 < 1.25f) {
@@ -1213,7 +1213,7 @@ void SlimeAi::appearState()
 	nucleusScalePts[0] = 0.0f;
 	nucleusScalePts[1] = 0.7f;
 	nucleusScalePts[2] = 0.7f;
-	f32 timer2         = mSlime->get2D0();
+	f32 timer2         = mSlime->getWalkTimer();
 	if (timer2 < 1.0f) {
 		if (timer2 >= 0.47f && timer2 <= 0.97f) {
 
@@ -1241,8 +1241,8 @@ void SlimeAi::appearState()
 		mSlime->mIsMoveLeader = true;
 	}
 
-	mSlime->add2D4(mSlime->getAnimTimer() * gsys->getFrameTime());
-	mSlime->add2D0(gsys->getFrameTime());
+	mSlime->addAttackTimer(mSlime->getAnimTimer() * gsys->getFrameTime());
+	mSlime->addWalkTimer(gsys->getFrameTime());
 	bothEndsToAppearGoal();
 	setMidPointVelocity();
 }
@@ -1255,10 +1255,10 @@ void SlimeAi::appearState()
 void SlimeAi::disAppearState()
 {
 	bothEndsToGoal();
-	if (mSlime->get2D4() > 3.0f) {
+	if (mSlime->getAttackTimer() > 3.0f) {
 		mSlime->doKill();
 	}
-	mSlime->add2D4(gsys->getFrameTime());
+	mSlime->addAttackTimer(gsys->getFrameTime());
 }
 
 /*

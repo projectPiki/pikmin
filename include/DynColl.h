@@ -60,7 +60,7 @@ struct DynCollShape : public DynCollObject {
 	Shape* mShape;           // _2C
 	u32 _30;                 // _30
 	u32 _34;                 // _34
-	u32* _38;                // _38
+	u32* mProgressStateList; // _38
 	u32 _3C;                 // _3C
 	u32 _40;                 // _40
 	BoundBox _44;            // _44

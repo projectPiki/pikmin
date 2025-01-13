@@ -398,7 +398,7 @@ void SpiderAi::initDie(int nextState)
 	mSpider->setMotionFinish(true);
 	mSpider->setTargetCreature(nullptr);
 	mSpider->mAnimator.startMotion(PaniMotionInfo(0, this));
-	mSpider->set2D4(0.0f);
+	mSpider->setAttackTimer(0.0f);
 	mSpider->mSpiderLeg->_07 = 1;
 	resultFlagSeen();
 }
@@ -480,7 +480,7 @@ void SpiderAi::initWait(int nextState)
 void SpiderAi::dieState()
 {
 	f32 timings[4];
-	f32 timer = mSpider->get2D4();
+	f32 timer = mSpider->getAttackTimer();
 	for (int i = 0; i < 4; i++) {
 		timings[i] = C_SPIDER_PROP(mSpider).mDeadScaleStartDelay() + i * C_SPIDER_PROP(mSpider).mDeadScaleStageDelay();
 	}
@@ -518,7 +518,7 @@ void SpiderAi::dieState()
 		}
 	}
 
-	mSpider->add2D4(gsys->getFrameTime());
+	mSpider->addAttackTimer(gsys->getFrameTime());
 }
 
 /*

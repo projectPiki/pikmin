@@ -56,7 +56,7 @@ struct DayMgr {
 	TimeSetting mCurrentTimeSetting; // _08
 	TimeSetting* mTimeSettings;      // _1400
 	Menu* _1404;                     // _1404
-	Vector3f _1408;                  // _1408
+	Vector3f mSunPosition;           // _1408
 	MapMgr* mMapMgr;                 // _1414
 };
 

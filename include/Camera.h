@@ -65,7 +65,7 @@ struct CullFrustum {
 		projVec.z = vec.dot(mViewZAxis);
 	}
 
-	int mNumActivePlanes;        // _00
+	int _00;                     // _00
 	int _04;                     // _04
 	int mViewPlaneIdx;           // _08
 	CullingPlane mCullPlanes[6]; // _0C
@@ -108,13 +108,13 @@ struct Camera : public CullFrustum {
 	void projectCamPoint(Vector3f&);
 
 	// _00-_260 = CullFrustum
-	Matrix4f _260;              // _260
-	Matrix4f mProjectionMatrix; // _2A0
-	Matrix4f _2E0;              // _2E0
-	Vector3f mRotation;         // _320
-	Vector3f _32C;              // _32C
-	Vector3f _338;              // _338
-	f32 _344;                   // _344
+	Matrix4f mPerspectiveMatrix; // _260, used for perspective projection
+	Matrix4f mProjectionMatrix;  // _2A0
+	Matrix4f _2E0;               // _2E0
+	Vector3f mRotation;          // _320
+	Vector3f _32C;               // _32C
+	Vector3f _338;               // _338
+	f32 _344;                    // _344
 };
 
 /**

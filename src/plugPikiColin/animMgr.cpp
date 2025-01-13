@@ -281,7 +281,7 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
  */
 void AnimInfo::setIndex()
 {
-	mIndex = gsys->findAnyIndex(mMgr->mParams._28().mString, mData->mName);
+	mIndex = gsys->findAnyIndex(mMgr->mParams.mBasePath().mString, mData->mName);
 }
 
 /*
@@ -482,8 +482,8 @@ void AnimInfo::addKeyFrame()
 AnimMgr::AnimMgr(Shape* shape, char* p2, int p3, char* p4)
 {
 	setName("AnimMgr");
-	_3C = shape;
-	_B4 = p3 & 0x7FFF;
+	mParent = shape;
+	_B4     = p3 & 0x7FFF;
 	mAnimList.initCore("anims");
 	loadAnims(p2, p4);
 }
@@ -659,7 +659,7 @@ void AnimMgr::loadAnims(char*, char*)
  */
 AnimInfo* AnimMgr::addAnimation(char* p1, bool p2)
 {
-	AnimInfo* info = new AnimInfo(this, gsys->loadAnimation(_3C, p1, p2));
+	AnimInfo* info = new AnimInfo(this, gsys->loadAnimation(mParent, p1, p2));
 	mAnimList.add(info);
 	return info;
 }
@@ -679,8 +679,8 @@ AnimInfo* AnimMgr::findAnim(int idx)
 				break;
 			}
 			char buf[128];
-			sprintf(buf, "%s/%s", mParams._28().mString, info->mName);
-			info->mData             = _3C->loadAnimation(buf, true);
+			sprintf(buf, "%s/%s", mParams.mBasePath().mString, info->mName);
+			info->mData             = mParent->loadAnimation(buf, true);
 			info->mData->mAnimFlags = info->mParams.mFlags();
 			return info;
 		}

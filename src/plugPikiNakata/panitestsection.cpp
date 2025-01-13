@@ -58,7 +58,7 @@ PaniTestNode::PaniTestNode()
 	mShadowTexture = gsys->loadTexture("effects/shadow.txe", true);
 	GlobalShape::init();
 	PikiShapeObject::init();
-	sprintf(flowCont._B0, "courses/test/animtest.mod");
+	sprintf(flowCont.mAnimationTestPath, "courses/test/animtest.mod");
 	mapMgr = new MapMgr(mController);
 	mapMgr->initShape();
 	routeMgr  = nullptr;

@@ -233,7 +233,7 @@ int ActAttack::exec()
 		}
 	}
 
-	if (!mActor->mStickTarget && (_24->isCreatureFlag(CF_Unk7) || !_24->isVisible())) {
+	if (!mActor->mStickTarget && (_24->isCreatureFlag(CF_IsFlying) || !_24->isVisible())) {
 		Creature* target = findTarget();
 		if (target) {
 			init(target);

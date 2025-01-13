@@ -100,7 +100,7 @@ struct AnimCacheInfo : public CacheInfo {
 };
 
 /**
- * @brief TODO
+ * @brief Animation parameter structure.
  */
 struct AnimParam {
 	int mEntryNum;   // _00
@@ -109,7 +109,7 @@ struct AnimParam {
 };
 
 /**
- * @brief TODO
+ * @brief Information about animation data, read in from a file.
  */
 struct AnimDataInfo {
 	AnimDataInfo();
@@ -325,14 +325,14 @@ struct AnimContext {
 	AnimContext()
 	    : mData(0)
 	    , mCurrentFrame(0.0f)
-	    , _08(30.0f)
+	    , mFrameRate(30.0f)
 	{
 	}
 
 	// _0C = VTBL
 	AnimData* mData;   // _00
 	f32 mCurrentFrame; // _04
-	f32 _08;           // _08
+	f32 mFrameRate;    // _08
 
 	virtual void animate(f32 time); // _08
 };
@@ -357,8 +357,8 @@ struct Animator {
 	int _14;               // _14
 	int _18;               // _18
 	int mCurrentAnimID;    // _1C
-	int mStartKeyIndex;    // _20
-	int mNextKeyInfoIndex; // _24
+	int mFirstFrameIndex;  // _20
+	int mLastFrameIndex;   // _24
 	AnimInfo* mAnimInfo;   // _28
 	f32 mAnimationCounter; // _2C
 
@@ -381,13 +381,13 @@ struct AnimMgr : public CoreNode {
 	struct AnimMgrParams : public Parameters {
 		inline AnimMgrParams()
 		    : _18(this, 2, 0, 0, "a00", nullptr)
-		    , _28(this, String("base dir", 0), String("", 0), String("", 0), "a01", nullptr)
+		    , mBasePath(this, String("base dir", 0), String("", 0), String("", 0), "a01", nullptr)
 		{
 		}
 
 		// _14-_18 = Parameters
-		Parm<int> _18;    // _18
-		Parm<String> _28; // _28
+		Parm<int> _18;          // _18
+		Parm<String> mBasePath; // _28
 	};
 
 	AnimMgr(Shape*, char*, int, char*);
@@ -404,7 +404,7 @@ struct AnimMgr : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	AnimMgrParams mParams; // _14
-	Shape* _3C;            // _3C
+	Shape* mParent;        // _3C
 	AnimInfo mAnimList;    // _40, parent of list of animations
 	u32 _B4;               // _B4
 };

@@ -3226,7 +3226,7 @@ BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* it
     , _3CC(0)
     , _3D0(0)
     , _3D4(0)
-    , _440(0)
+    , mEndAnimId(0)
     , mBuildCollision(0)
 {
 	mItemShapeObject = itemShape;
@@ -3707,8 +3707,8 @@ void BuildingItem::doSave(RandomAccessStream& output)
 {
 	output.writeFloat(mHealth);
 	output.writeFloat(mMaxHealth);
-	output.writeInt(_444);
-	output.writeInt(_440);
+	output.writeInt(mStartAnimId);
+	output.writeInt(mEndAnimId);
 	output.writeInt(_2D0);
 }
 
@@ -3719,18 +3719,18 @@ void BuildingItem::doSave(RandomAccessStream& output)
  */
 void BuildingItem::doLoad(RandomAccessStream& input)
 {
-	mHealth    = input.readFloat();
-	mMaxHealth = input.readFloat();
-	_444       = input.readInt();
-	_440       = input.readInt();
-	_2D0       = input.readInt();
-	if (_444 < _440) {
-		startMotion(_444);
+	mHealth      = input.readFloat();
+	mMaxHealth   = input.readFloat();
+	mStartAnimId = input.readInt();
+	mEndAnimId   = input.readInt();
+	_2D0         = input.readInt();
+	if (mStartAnimId < mEndAnimId) {
+		startMotion(mStartAnimId);
 		mWayPoint->setFlag(false);
 	} else {
-		startMotion(_440 - 1);
+		startMotion(mEndAnimId - 1);
 		int aKeys = mItemAnimator.mAnimInfo->countAKeys() - 1;
-		startMotion(_440 - 1, mItemAnimator.mAnimInfo->getKeyValue(aKeys) - 1.0f);
+		startMotion(mEndAnimId - 1, mItemAnimator.mAnimInfo->getKeyValue(aKeys) - 1.0f);
 		mWayPoint->setFlag(true);
 	}
 
@@ -3745,10 +3745,10 @@ void BuildingItem::doLoad(RandomAccessStream& input)
  */
 void BuildingItem::doStore(CreatureInf* info)
 {
-	info->_44       = mHealth;
-	info->_48       = mMaxHealth;
-	info->mTekiType = _444;
-	info->_40       = _440;
+	info->mHealth      = mHealth;
+	info->mMaxHealth   = mMaxHealth;
+	info->mStartAnimId = mStartAnimId;
+	info->mEndAnimId   = mEndAnimId;
 }
 
 /*
@@ -3759,20 +3759,30 @@ void BuildingItem::doStore(CreatureInf* info)
 void BuildingItem::doRestore(CreatureInf* info)
 {
 	startAI(0);
-	mHealth    = info->_44;
-	mMaxHealth = info->_48;
-	_444       = info->mTekiType;
-	_440       = info->_40;
-	if (_444 < _440) {
-		startMotion(_444);
+
+	mHealth      = info->mHealth;
+	mMaxHealth   = info->mMaxHealth;
+	mStartAnimId = info->mStartAnimId;
+	mEndAnimId   = info->mEndAnimId;
+
+	// When restoring from a save, if the start is less than the end,
+	// We can start the 'start' animation, and disable the waypoint
+	if (mStartAnimId < mEndAnimId) {
+		startMotion(mStartAnimId);
 		mWayPoint->setFlag(false);
-	} else {
-		int aKeys = mItemAnimator.mAnimInfo->countAKeys() - 1;
-		startMotion(_440 - 1, mItemAnimator.mAnimInfo->getKeyValue(aKeys) - 1.0f);
+	}
+	// Otherwise, we reset the object to its final animation state,
+	// I.e. gate is underground, like at the end of its 'fall' animation
+	else {
+		int finalKeyframeIdx = mItemAnimator.mAnimInfo->countAKeys() - 1;
+		startMotion(mEndAnimId - 1, mItemAnimator.mAnimInfo->getKeyValue(finalKeyframeIdx) - 1.0f);
 		mWayPoint->setFlag(true);
 	}
 
+	// Don't actually animate, just start it to apply the transformation
 	stopMotion();
+
+	// Begin the AI
 	static_cast<SimpleAI*>(mStateMachine)->start(this, 1);
 }
 

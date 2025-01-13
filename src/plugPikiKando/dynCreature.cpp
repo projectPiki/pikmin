@@ -45,10 +45,10 @@ DynParticle::DynParticle()
 {
 	initCore("particle");
 	mIsFree = 0;
-	_14     = 100.0f;
-	_24.set(0.0f, 0.0f, 0.0f);
-	mNextParticle = nullptr;
-	_90           = 0.01f;
+	mMass   = 100.0f;
+	mLocalPosition.set(0.0f, 0.0f, 0.0f);
+	mNextParticle    = nullptr;
+	mCollisionRadius = 0.01f;
 
 	// this is so this doesn't inline in DynParticleHeap
 	FORCE_DONT_INLINE;
@@ -61,7 +61,7 @@ DynParticle::DynParticle()
  */
 f32 DynParticle::getSize()
 {
-	return _90 * 3.0f;
+	return mCollisionRadius * 3.0f;
 }
 
 /*
@@ -140,11 +140,11 @@ DynCreature::DynCreature()
 {
 	mParticleList  = nullptr;
 	mParticleCount = 0;
-	_2F4           = 0.0f;
+	mMass          = 0.0f;
 	mPickOffset    = 0.0f;
-	_2DC.set(0.0f, 0.0f, 0.0f);
-	_2B8.set(0.0f, 0.0f, 0.0f);
-	_2C4.set(0.0f, 0.0f, 0.0f);
+	mAngularImpulseAccum.set(0.0f, 0.0f, 0.0f);
+	mAngularMomentum.set(0.0f, 0.0f, 0.0f);
+	mAngularVelocity.set(0.0f, 0.0f, 0.0f);
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 	enableFriction();
 }
@@ -185,9 +185,9 @@ void DynCreature::addParticle(f32 p1, Vector3f& p2)
 		return;
 	}
 
-	ptcl->_14 = p1;
-	ptcl->_24 = p2;
-	ptcl->_18 = p2;
+	ptcl->mMass            = p1;
+	ptcl->mLocalPosition   = p2;
+	ptcl->mInitialPosition = p2;
 	if (!mParticleList) {
 		mParticleList = ptcl;
 	} else {
@@ -199,7 +199,7 @@ void DynCreature::addParticle(f32 p1, Vector3f& p2)
 		nextPtcl->mNextParticle = ptcl;
 	}
 
-	_2F4 += p1;
+	mMass += p1;
 	mParticleCount++;
 }
 
@@ -228,18 +228,21 @@ void DynCreature::releaseAllParticles()
 void DynCreature::initialiseSystem()
 {
 	setCreatureFlag(CF_Unk1 | CF_Unk10);
-	_2E8.set(0.0f, 0.0f, 0.0f);
-	_2F4 = 0.0f;
+	mCenterOfMass.set(0.0f, 0.0f, 0.0f);
+	mMass = 0.0f;
 
+	// First pass: Calculate total mass and weighted center of mass
 	for (DynParticle* ptcl = mParticleList; ptcl; ptcl = ptcl->mNextParticle) {
-		_2E8 = _2E8 + ptcl->_14 * ptcl->_18;
-		_2F4 += ptcl->_14;
+		mCenterOfMass = mCenterOfMass + ptcl->mMass * ptcl->mInitialPosition;
+		mMass += ptcl->mMass;
 	}
 
-	_2E8 = _2E8 * (1.0f / _2F4);
+	// Average out the center of mass by dividing by total mass
+	mCenterOfMass = mCenterOfMass * (1.0f / mMass);
 
+	// Second pass: Adjust particle positions relative to center of mass
 	for (DynParticle* ptcl = mParticleList; ptcl; ptcl = ptcl->mNextParticle) {
-		ptcl->_24 = ptcl->_18 - _2E8;
+		ptcl->mLocalPosition = ptcl->mInitialPosition - mCenterOfMass;
 	}
 
 	createInvInertiaTensor();
@@ -263,144 +266,168 @@ void DynCreature::update()
  */
 void DynCreature::simulate(f32 timeStep)
 {
-	_2DC.set(0.0f, 0.0f, 0.0f);
+	mAngularImpulseAccum.set(0.0f, 0.0f, 0.0f);
 	mGroundFlag = 0;
 
 	Matrix4f rotMtx;
 	Matrix4f tmpMtx;
 	Matrix4f rotTransMtx;
 
-	rotMtx.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), _E0, Vector3f(1.0f, 1.0f, 1.0f));
+	// Build rotation matrix from current orientation quaternion
+	rotMtx.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), mRotationQuat, Vector3f(1.0f, 1.0f, 1.0f));
 	rotMtx.transposeTo(rotTransMtx);
 
 	printMatrix("rotate", rotMtx);
 	printMatrix("rotate^T", rotTransMtx);
 
+	// Transform inertia tensors to world space for physics calculations
 	rotMtx.multiplyTo(mInvInertiaTensor, tmpMtx);
-	tmpMtx.multiplyTo(rotTransMtx, _338);
+	tmpMtx.multiplyTo(rotTransMtx, mWorldInvInertiaTensor);
 	rotMtx.multiplyTo(mInertiaTensor, tmpMtx);
-	tmpMtx.multiplyTo(rotTransMtx, _2F8);
+	tmpMtx.multiplyTo(rotTransMtx, mWorldInertiaTensor);
 
+	// Check if creature is in slow-fall state (terminal velocity check)
 	bool isSlowFall = false;
 	if (mVelocity.y >= -60.0f && mVelocity.y < 0.0f) {
 		isSlowFall = true;
 	}
 
-	f32 maxDiff = 0.0f;
+	f32 maxPenetration = 0.0f;
 	u32 badCompiler3;
 	Vector3f maxNormal(0.0f, 1.0f, 0.0f);
 
-	DynParticle* ptcl = mParticleList;
-	int count1        = 0;
-	int count2        = 0;
-	int ptclNum       = 0;
-	for (ptcl; ptcl; ptcl = ptcl->mNextParticle, ptclNum++) {
-		Vector3f ptclPos(ptcl->_24);
-		ptclPos.y += mPickOffset;
-		ptcl->_94 = ptclPos;
-		ptcl->_94.multMatrix(rotMtx);
-		ptcl->_94.add(_2E8);
-		ptcl->_94.add(mPosition);
+	DynParticle* ptcl      = mParticleList;
+	int collisionCount     = 0;
+	int groundContactCount = 0;
+	int particleIndex      = 0;
 
-		ptcl->_A0 = _2C4;
+	// Process collision response for each particle
+	for (ptcl; ptcl; ptcl = ptcl->mNextParticle, particleIndex++) {
+		// Transform particle to world space
+		Vector3f localPosition(ptcl->mLocalPosition);
+		localPosition.y += mPickOffset;
+		ptcl->mWorldPosition = localPosition;
+		ptcl->mWorldPosition.multMatrix(rotMtx);
+		ptcl->mWorldPosition.add(mCenterOfMass);
+		ptcl->mWorldPosition.add(mPosition);
 
-		Vector3f ptclPos2(ptcl->_24);
-		ptclPos2.multMatrix(rotMtx);
-		ptcl->_A0.CP(ptclPos2);
+		ptcl->mWorldVelocity = mAngularVelocity;
+
+		Vector3f rotatedPosition(ptcl->mLocalPosition);
+		rotatedPosition.multMatrix(rotMtx);
+		ptcl->mWorldVelocity.CP(rotatedPosition);
+
+		// Apply creature velocity to particle, handling slow-fall case
 		if (!isSlowFall) {
-			ptcl->_A0 = ptcl->_A0 + mVelocity;
+			ptcl->mWorldVelocity = ptcl->mWorldVelocity + mVelocity;
 		} else {
-			ptcl->_A0.x += mVelocity.x;
-			ptcl->_A0.z += mVelocity.z;
+			ptcl->mWorldVelocity.x += mVelocity.x;
+			ptcl->mWorldVelocity.z += mVelocity.z;
 		}
 
-		ptcl->_3C = ptcl->_A0;
+		ptcl->mPreCollisionVelocity = ptcl->mWorldVelocity;
 
-		f32 minY = mapMgr->getMinY(ptcl->_94.x, ptcl->_94.z, true);
+		// Ground collision detection
+		f32 groundHeight = mapMgr->getMinY(ptcl->mWorldPosition.x, ptcl->mWorldPosition.z, true);
 		Vector3f vec(0.0f, 0.0f, 0.0f);
+		f32 penetrationDepth = groundHeight - (ptcl->mWorldPosition.y - ptcl->mCollisionRadius);
 
-		f32 heightDiff = minY - (ptcl->_94.y - ptcl->_90);
-		if (ptcl->_94.y - minY < ptcl->_90) {
-			mGroundFlag |= (1 << ptclNum);
-			count2++;
+		if (ptcl->mWorldPosition.y - groundHeight < ptcl->mCollisionRadius) {
+			// Mark this particle as in contact with ground
+			mGroundFlag |= (1 << particleIndex);
+			groundContactCount++;
 
-			Vector3f normal;
+			// Calculate collision normal from terrain or cylinder collision
+			Vector3f collisionNormal;
 			u32 badCompiler2;
-			CollTriInfo* floorTri = mapMgr->getCurrTri(ptcl->_94.x, ptcl->_94.z, true);
-			if (floorTri) {
-				normal = floorTri->_18;
-				normal.normalise();
+			CollTriInfo* groundTriangle = mapMgr->getCurrTri(ptcl->mWorldPosition.x, ptcl->mWorldPosition.z, true);
+			if (groundTriangle) {
+				collisionNormal = groundTriangle->mTriangleNormal;
+				collisionNormal.normalise();
 			} else {
-				normal.set(0.0f, 1.0f, 0.0f);
+				collisionNormal.set(0.0f, 1.0f, 0.0f);
 			}
 
-			if (0.5f * getCylinderHeight() + mPosition.y < minY) {
-				normal = mPosition - ptcl->_94;
-				normal.normalise();
+			// Handle deep penetration by using direction to center
+			if (0.5f * getCylinderHeight() + mPosition.y < groundHeight) {
+				collisionNormal = mPosition - ptcl->mWorldPosition;
+				collisionNormal.normalise();
 			}
 
-			if (maxDiff < heightDiff) {
-				maxDiff   = heightDiff;
-				maxNormal = normal;
+			// Track deepest penetration for position correction
+			if (maxPenetration < penetrationDepth) {
+				maxPenetration = penetrationDepth;
+				maxNormal      = collisionNormal;
 			}
 
-			ptcl->_A0 = ptcl->_3C - (ptcl->_3C.DP(normal) * (0.4f + 1.0f)) * normal;
+			// Apply collision response - bounce and friction
+			ptcl->mWorldVelocity
+			    = ptcl->mPreCollisionVelocity - (ptcl->mPreCollisionVelocity.DP(collisionNormal) * (0.4f + 1.0f)) * collisionNormal;
 
-			Vector3f ptclPos3(ptcl->_24);
-			ptclPos3.multMatrix(rotMtx);
+			Vector3f rotatedPos(ptcl->mLocalPosition);
+			rotatedPos.multMatrix(rotMtx);
 
-			f32 impulse = calcImpulse(ptclPos3, _2F4, normal, _338, ptcl->_3C, ptcl->_A0);
+			// Calculate and apply impulse forces
+			f32 impulse = calcImpulse(rotatedPos, mMass, collisionNormal, mWorldInvInertiaTensor, ptcl->mPreCollisionVelocity,
+			                          ptcl->mWorldVelocity);
 			if (impulse <= 0.0f) {
 				impulse = 0.001f;
 			}
 
 			if (impulse > 0.0f) {
-				Vector3f impVec = impulse * normal;
-				mVelocity       = mVelocity + impVec * (1.0f / _2F4);
+				// Apply linear impulse
+				Vector3f impVec = impulse * collisionNormal;
+				mVelocity       = mVelocity + impVec * (1.0f / mMass);
 
-				Vector3f ptclPos4(ptcl->_24);
-				ptclPos4.multMatrix(rotMtx);
+				// Apply angular impulse
+				Vector3f rotatedPos2(ptcl->mLocalPosition);
+				rotatedPos2.multMatrix(rotMtx);
+				rotatedPos2.CP(impVec);
+				mAngularImpulseAccum = mAngularImpulseAccum + rotatedPos2;
 
-				ptclPos4.CP(impVec);
-				_2DC = _2DC + ptclPos4;
-
+				// Apply friction if enabled
 				if (mDynFlag & 0x1) {
-					Vector3f diff = ptcl->_A0 - ptcl->_A0.DP(normal) * normal;
-					diff          = diff * -0.3f;
-					mVelocity     = mVelocity + diff * (1.0f / _2F4);
+					Vector3f tangentialVelocity = ptcl->mWorldVelocity - ptcl->mWorldVelocity.DP(collisionNormal) * collisionNormal;
+					tangentialVelocity          = tangentialVelocity * -0.3f;
+					mVelocity                   = mVelocity + tangentialVelocity * (1.0f / mMass);
 				}
 			}
 
-			count1++;
+			collisionCount++;
 		}
 	}
 
-	if (maxDiff > 0.0f) {
-		f32 offsetFactor = maxDiff * timeStep * 10.0f;
-		if (offsetFactor > 30.0f) {
-			offsetFactor = 30.0f;
+	// Apply position correction to resolve penetration
+	if (maxPenetration > 0.0f) {
+		f32 correctionStrength = maxPenetration * timeStep * 10.0f;
+		if (correctionStrength > 30.0f) {
+			correctionStrength = 30.0f;
 		}
 
-		mPosition = mPosition + maxNormal * offsetFactor;
+		mPosition = mPosition + maxNormal * correctionStrength;
 	}
 
-	_2B8 = _2B8 + _2DC;
+	// Update angular momentum
+	mAngularMomentum = mAngularMomentum + mAngularImpulseAccum;
 
-	if (_2B8.length() > 10000.0f) {
-		_2B8.normalise();
-		_2B8.multiply(10000.0f);
+	// Clamp angular momentum to prevent excessive rotation
+	if (mAngularMomentum.length() > 10000.0f) {
+		mAngularMomentum.normalise();
+		mAngularMomentum.multiply(10000.0f);
 	}
 
-	_2C4 = _2B8;
-	_2C4.multMatrix(_338);
-	_D4 = _2C4;
+	// Calculate new angular velocity
+	mAngularVelocity = mAngularMomentum;
+	mAngularVelocity.multMatrix(mWorldInvInertiaTensor);
+	mPrevAngularVelocity = mAngularVelocity;
 
-	f32 factor = timeStep;
-	if (count2 <= 0) {
-		factor *= 0.1f;
+	// Apply angular damping - stronger when in air
+	f32 dampingFactor = timeStep;
+	if (groundContactCount <= 0) {
+		dampingFactor *= 0.1f;
 	}
 
-	_2B8 = _2B8 - factor * _2B8;
+	mAngularMomentum = mAngularMomentum - dampingFactor * mAngularMomentum;
 
 	u32 badCompiler;
 }
@@ -432,28 +459,28 @@ void DynCreature::createInvInertiaTensor()
 	f32 zz   = 0.0f;
 
 	for (DynParticle* ptcl = mParticleList; ptcl; ptcl = ptcl->mNextParticle) {
-		diag += (SQUARE(ptcl->_24.x) + SQUARE(ptcl->_24.y) + SQUARE(ptcl->_24.z)) * ptcl->_14;
-		xx += ptcl->_24.x * ptcl->_24.x * ptcl->_14;
-		xy += ptcl->_24.x * ptcl->_24.y * ptcl->_14;
-		xz += ptcl->_24.x * ptcl->_24.z * ptcl->_14;
-		yy += ptcl->_24.y * ptcl->_24.y * ptcl->_14;
-		yz += ptcl->_24.y * ptcl->_24.z * ptcl->_14;
-		zz += ptcl->_24.z * ptcl->_24.z * ptcl->_14;
+		diag += (SQUARE(ptcl->mLocalPosition.x) + SQUARE(ptcl->mLocalPosition.y) + SQUARE(ptcl->mLocalPosition.z)) * ptcl->mMass;
+		xx += ptcl->mLocalPosition.x * ptcl->mLocalPosition.x * ptcl->mMass;
+		xy += ptcl->mLocalPosition.x * ptcl->mLocalPosition.y * ptcl->mMass;
+		xz += ptcl->mLocalPosition.x * ptcl->mLocalPosition.z * ptcl->mMass;
+		yy += ptcl->mLocalPosition.y * ptcl->mLocalPosition.y * ptcl->mMass;
+		yz += ptcl->mLocalPosition.y * ptcl->mLocalPosition.z * ptcl->mMass;
+		zz += ptcl->mLocalPosition.z * ptcl->mLocalPosition.z * ptcl->mMass;
 
 		Matrix4f inertTensor;
 		inertTensor.mMtx[0][0] = 0.0f;
-		inertTensor.mMtx[0][1] = ptcl->_24.z;
-		inertTensor.mMtx[0][2] = ptcl->_24.y;
+		inertTensor.mMtx[0][1] = ptcl->mLocalPosition.z;
+		inertTensor.mMtx[0][2] = ptcl->mLocalPosition.y;
 
-		inertTensor.mMtx[1][0] = -ptcl->_24.z;
+		inertTensor.mMtx[1][0] = -ptcl->mLocalPosition.z;
 		inertTensor.mMtx[1][1] = 0.0f;
-		inertTensor.mMtx[1][2] = ptcl->_24.x;
+		inertTensor.mMtx[1][2] = ptcl->mLocalPosition.x;
 
-		inertTensor.mMtx[2][0] = -ptcl->_24.y;
-		inertTensor.mMtx[2][1] = -ptcl->_24.x;
+		inertTensor.mMtx[2][0] = -ptcl->mLocalPosition.y;
+		inertTensor.mMtx[2][1] = -ptcl->mLocalPosition.x;
 		inertTensor.mMtx[2][2] = 0.0f;
 
-		inertTensor.inverse(&ptcl->_50);
+		inertTensor.inverse(&ptcl->mInvCrossMatrix);
 	}
 
 	mInertiaTensor.mMtx[0][0] = diag - xx;
@@ -481,8 +508,8 @@ void DynCreature::calcModelMatrix(Matrix4f& modelMtx)
 	Matrix4f mtx1;
 	Matrix4f mtx2;
 	mtx2.makeIdentity();
-	mtx2.setTranslation(_2E8);
-	mtx1.makeVQS(mPosition, _E0, mScale);
+	mtx2.setTranslation(mCenterOfMass);
+	mtx1.makeVQS(mPosition, mRotationQuat, mScale);
 	mtx1.multiplyTo(mtx2, modelMtx);
 }
 
@@ -512,7 +539,7 @@ void DynCreature::refresh(Graphics& gfx)
 	for (DynParticle* ptcl = mParticleList; ptcl; ptcl = ptcl->mNextParticle) {
 		bool isLight = gfx.setLighting(false, nullptr);
 		gfx.setColour(Colour(0, 255, 100, 255), true);
-		drawCube(gfx, ptcl->_94, 2.0f);
+		drawCube(gfx, ptcl->mWorldPosition, 2.0f);
 		gfx.setLighting(isLight, nullptr);
 	}
 

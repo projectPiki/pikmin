@@ -220,7 +220,7 @@ void Navi::updateDayEnd(Vector3f& pos)
 
 				// Issues here
 				CPlate::Slot* currentSlot = &piki->mNavi->mPlateMgr->mSlotList[slotID];
-				piki->mPosition           = piki->mNavi->mPlateMgr->_94 + currentSlot->_00;
+				piki->mPosition           = piki->mNavi->mPlateMgr->_94 + currentSlot->mPosition;
 				piki->mPosition.y         = mapMgr->getMinY(piki->mPosition.x, piki->mPosition.z, true);
 			}
 		}

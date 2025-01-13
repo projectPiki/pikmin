@@ -44,21 +44,21 @@ struct DynCreature : public Creature {
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	Vector3f _2B8;              // _2B8
-	Vector3f _2C4;              // _2C4
-	f32 mPickOffset;            // _2D0
-	u16 mParticleCount;         // _2D4, might be s16
-	DynParticle* mParticleList; // _2D8
-	Vector3f _2DC;              // _2DC
-	Vector3f _2E8;              // _2E8
-	f32 _2F4;                   // _2F4
-	Matrix4f _2F8;              // _2F8
-	Matrix4f _338;              // _338
-	Matrix4f mInertiaTensor;    // _378
-	Matrix4f mInvInertiaTensor; // _3B8
-	Matrix4f _3F8;              // _3F8
-	u8 mDynFlag;                // _438
-	u8 mGroundFlag;             // _439
+	Vector3f mAngularMomentum;       // _2B8
+	Vector3f mAngularVelocity;       // _2C4
+	f32 mPickOffset;                 // _2D0
+	u16 mParticleCount;              // _2D4, might be s16
+	DynParticle* mParticleList;      // _2D8
+	Vector3f mAngularImpulseAccum;   // _2DC
+	Vector3f mCenterOfMass;          // _2E8
+	f32 mMass;                       // _2F4
+	Matrix4f mWorldInertiaTensor;    // _2F8
+	Matrix4f mWorldInvInertiaTensor; // _338
+	Matrix4f mInertiaTensor;         // _378
+	Matrix4f mInvInertiaTensor;      // _3B8
+	Matrix4f _3F8;                   // _3F8
+	u8 mDynFlag;                     // _438
+	u8 mGroundFlag;                  // _439
 };
 
 #endif

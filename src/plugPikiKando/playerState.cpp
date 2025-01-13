@@ -1366,7 +1366,7 @@ void PlayerState::loadCard(RandomAccessStream&)
  */
 bool PlayerState::isTutorial()
 {
-	if (flowCont._A8 && flowCont._A8->mStageID != STAGE_Practice) {
+	if (flowCont.mCurrentStage && flowCont.mCurrentStage->mStageID != STAGE_Practice) {
 		return false;
 	}
 
@@ -1384,7 +1384,7 @@ bool PlayerState::isTutorial()
  */
 bool PlayerState::isGameCourse()
 {
-	int val = flowCont._A8->mStageIndex;
+	int val = flowCont.mCurrentStage->mStageIndex;
 	return (val >= 0 && val < 5);
 }
 
@@ -2112,7 +2112,7 @@ bool PlayerState::isUfoBroken()
 		return false;
 	}
 
-	if (flowCont._A8->mStageID == STAGE_Practice) {
+	if (flowCont.mCurrentStage->mStageID == STAGE_Practice) {
 		return true;
 	}
 

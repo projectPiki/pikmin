@@ -74,8 +74,8 @@ struct ShadowCaster : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	LightCamera mLightCamera; // _14
-	Vector3f _37C;            // _37C
-	Vector3f _388;            // _388
+	Vector3f mSourcePosition; // _37C
+	Vector3f mTargetPosition; // _388
 };
 
 /**

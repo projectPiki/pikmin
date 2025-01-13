@@ -1246,7 +1246,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	planes[3].CheckMinMaxDir();
 	planes[3]._28 = 1;
 
-	mNumActivePlanes = &planes[4] - mCullPlanes;
+	_00 = &planes[4] - mCullPlanes;
 }
 
 /*
@@ -1258,9 +1258,9 @@ void CullFrustum::createViewPlanes()
 {
 	CullingPlane* planes = mCullPlanes;
 	Vector3f vec;
-	mNumActivePlanes = 0;
-	mDepth           = sinf(PI * (0.5f * mFov) / 180.0f);
-	mWidth           = cosf(PI * (0.5f * mFov) / 180.0f);
+	_00    = 0;
+	mDepth = sinf(PI * (0.5f * mFov) / 180.0f);
+	mWidth = cosf(PI * (0.5f * mFov) / 180.0f);
 	vectorToWorldPlane(Vector3f(0.0f, 0.0f, 1.0f), planes[0]);
 	planes[0].mPlane.mOffset += mNear;
 	planes[0].CheckMinMaxDir();
@@ -1347,11 +1347,11 @@ void CullFrustum::update(f32 aspectRatio, f32 fov, f32 near, f32 far)
 	createViewPlanes();
 	updateViewPlanes(mAspectRatio, -mAspectRatio, -mVerticalScale, mVerticalScale);
 
-	for (int i = 0; i < mNumActivePlanes; i++) {
+	for (int i = 0; i < _00; i++) {
 		mPlanePointers[i] = &mCullPlanes[i].mPlane;
 	}
 
-	_04 = mNumActivePlanes;
+	_04 = _00;
 	_158.set(0.0f, 0.0f, 0.0f);
 }
 
@@ -1519,7 +1519,7 @@ void LightCamera::calcProjection(Graphics& gfx, bool p2, Node* p3)
 
 		f32 width  = 2.0f * mLightMap->mWidth;
 		f32 height = 2.0f * mLightMap->mHeight;
-		gfx.setPerspective(_260.mMtx, mFov, mAspectRatio, 30.0f, mFar, 1.0f);
+		gfx.setPerspective(mPerspectiveMatrix.mMtx, mFov, mAspectRatio, 30.0f, mFar, 1.0f);
 
 		gfx.setViewport(RectArea(-(width * mProjectionX), -(height * mProjectionY), width + (int(width * mProjectionX)),
 		                         height + (int(height * mProjectionY))));

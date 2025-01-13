@@ -42,19 +42,19 @@ void KoganeAi::createWaterEffect()
 	zen::particleGenerator* ptcl14 = effectMgr->create(EffectMgr::EFF_RippleWhite, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
 	if (ptcl14) {
 		ptcl14->setEmitPosPtr(&mKogane->mPosition);
-		ptcl14->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+		ptcl14->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 	}
 
 	zen::particleGenerator* ptcl12 = effectMgr->create(EffectMgr::EFF_RippleSurface, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
 	if (ptcl12) {
 		ptcl12->setEmitPosPtr(&mKogane->mPosition);
-		ptcl12->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+		ptcl12->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 	}
 
 	zen::particleGenerator* ptcl13 = effectMgr->create(EffectMgr::EFF_RippleBlack, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
 	if (ptcl13) {
 		ptcl13->setEmitPosPtr(&mKogane->mPosition);
-		ptcl13->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+		ptcl13->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 	}
 
 	// sigh.
@@ -275,7 +275,7 @@ void KoganeAi::setMapAttribute()
 void KoganeAi::checkAppearTimeCounter()
 {
 	if (mKogane->getCurrentState() != 1) {
-		mKogane->add2D4(gsys->getFrameTime());
+		mKogane->addAttackTimer(gsys->getFrameTime());
 	}
 }
 
@@ -502,7 +502,7 @@ void KoganeAi::resultFlagOn()
  */
 bool KoganeAi::dieTransit()
 {
-	return (mKogane->get2D4() > mAppearTimer) ? true : false;
+	return (mKogane->getAttackTimer() > mAppearTimer) ? true : false;
 }
 
 /*
@@ -562,7 +562,7 @@ bool KoganeAi::appearTransit()
  */
 bool KoganeAi::startWalkTransit()
 {
-	return mKogane->get2D0() > _1C;
+	return mKogane->getWalkTimer() > _1C;
 }
 
 /*
@@ -583,7 +583,7 @@ bool KoganeAi::stopWalkTransit()
  */
 bool KoganeAi::changeTargetTransit()
 {
-	if (mKogane->get2D0() > C_KOGANE_PROP(mKogane).mMaxSingleRunTime()) {
+	if (mKogane->getWalkTimer() > C_KOGANE_PROP(mKogane).mMaxSingleRunTime()) {
 		return true;
 	}
 	if (mKogane->getOnWall()) {
@@ -625,7 +625,7 @@ void KoganeAi::initAppear(int nextState)
 	mKogane->setNextState(nextState);
 	mKogane->setMotionFinish(false);
 	mKogane->setAnimTimer(30.0f);
-	mKogane->set2D0(0.0f);
+	mKogane->setWalkTimer(0.0f);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(6, this));
 
 	mKogane->mPosition.x += 5.0f * sinf(mKogane->mRotation.y);
@@ -646,7 +646,7 @@ void KoganeAi::initWalkRandom(int nextState, bool isRandomPos)
 {
 	mKogane->setNextState(nextState);
 	mKogane->setMotionFinish(false);
-	mKogane->set2D0(0.0f);
+	mKogane->setWalkTimer(0.0f);
 
 	if (isRandomPos) {
 		mKogane->mAnimator.startMotion(PaniMotionInfo(6, this));
@@ -671,7 +671,7 @@ void KoganeAi::initStopWalk(int nextState)
 {
 	mKogane->setNextState(nextState);
 	mKogane->setMotionFinish(false);
-	mKogane->set2D0(0.0f);
+	mKogane->setWalkTimer(0.0f);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(2, this));
 	makeStopMoving();
 	_1C = C_KOGANE_PROP(mKogane).mIdleTimeMin()
@@ -744,7 +744,7 @@ void KoganeAi::dieState()
  */
 void KoganeAi::walkRandomState()
 {
-	mKogane->add2D0(gsys->getFrameTime());
+	mKogane->addWalkTimer(gsys->getFrameTime());
 	mKogane->changeDirection(C_KOGANE_PROP(mKogane).mTurnSpeed());
 	makeTargetRandom();
 	calcScaleUp();
@@ -758,7 +758,7 @@ void KoganeAi::walkRandomState()
  */
 void KoganeAi::stopWalkState()
 {
-	mKogane->add2D0(gsys->getFrameTime());
+	mKogane->addWalkTimer(gsys->getFrameTime());
 	calcScaleUp();
 }
 

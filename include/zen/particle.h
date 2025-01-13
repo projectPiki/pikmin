@@ -236,8 +236,7 @@ struct particleGenerator : public zenList {
 	f32 pmIntpManual(f32*, f32*);
 	f32 pmIntpLinear(f32*, f32*);
 
-	// either setEmitVelocity or setOrientedNormalVector
-	inline void set1DC(Vector3f& vec) { _1DC = vec; }
+	inline void setOrientedNormalVector(Vector3f& vec) { mOrientedNormalVector = vec; }
 
 	// these are correct from the DLL
 
@@ -351,7 +350,7 @@ struct particleGenerator : public zenList {
 	particleMdlManager* mMdlMgr;                             // _1D0
 	CallBack1<particleGenerator*>* mCallBack1;               // _1D4
 	CallBack2<particleGenerator*, particleMdl*>* mCallBack2; // _1D8
-	Vector3f _1DC;                                           // _1DC
+	Vector3f mOrientedNormalVector;                          // _1DC
 	u8 _1E8[0x200 - 0x1E8];                                  // _1E8
 };
 

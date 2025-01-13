@@ -76,8 +76,8 @@ void Boss::initBoss(BirthInfo& birthInfo, int objType)
 	mMaxLife           = maxHealth;
 	mCurrentLife       = maxHealth;
 	mAnimTimer         = 0.0f;
-	_2D4               = 0.0f;
-	_2D0               = 0.0f;
+	mAttackTimer       = 0.0f;
+	mWalkTimer         = 0.0f;
 	mLifeRecoveryTimer = 0.0f;
 	mSearchAngle       = PI * (BOSS_PROP.mSearchAngle() / 360.0f);
 	mShadowSize        = 0.0f;
@@ -240,8 +240,8 @@ void Boss::makeTargetCreature()
  */
 void Boss::makeTargetRandom(f32 p1)
 {
-	_2D0 += gsys->getFrameTime();
-	if (_2D0 > 5.0f || qdist2(mPosition.x, mPosition.z, mTargetPosition.x, mTargetPosition.z) < p1) {
+	mWalkTimer += gsys->getFrameTime();
+	if (mWalkTimer > 5.0f || qdist2(mPosition.x, mPosition.z, mTargetPosition.x, mTargetPosition.z) < p1) {
 		f32 randAngle = NsMathF::getRand(TAU);
 		Vector3f vec;
 		f32 randDist = NsMathF::getRand(BOSS_PROP.mMaxWaitRadius());
@@ -250,7 +250,7 @@ void Boss::makeTargetRandom(f32 p1)
 		mTargetPosition.y = vec.y;
 		mTargetPosition.z = vec.z;
 
-		_2D0 = 0.0f;
+		mWalkTimer = 0.0f;
 
 		// whatever.
 		u32 badCompiler[2];

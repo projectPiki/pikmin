@@ -49,8 +49,9 @@ struct BPikiInf : public BaseInf {
 
 	// _00     = VTBL
 	// _00-_2C = BaseInf
-	u8 _2C; // _2C
-	u8 _2D; // _2D
+	// TODO: pick a side, is it first key index or colour?
+	u8 mPikiColour;   // _2C
+	u8 mNextKeyIndex; // _2D
 };
 
 /**
@@ -66,14 +67,14 @@ struct CreatureInf : public BaseInf {
 
 	// _00     = VTBL
 	// _00-_2C = BaseInf
-	EObjType mObjType; // _2C
-	int mCurrentDay;   // _30, or something related to it, maybe last seen day etc
-	int _34;           // _34
-	int _38;           // _38
-	int mTekiType;     // _3C
-	int _40;           // _40
-	f32 _44;           // _44
-	f32 _48;           // _48
+	EObjType mObjType;        // _2C
+	int mCurrentDay;          // _30, or something related to it, maybe last seen day etc
+	int mRebirthDay;          // _34
+	int mAdjustFaceDirection; // _38
+	int mStartAnimId;         // _3C
+	int mEndAnimId;           // _40
+	f32 mHealth;              // _44
+	f32 mMaxHealth;           // _48
 };
 
 /**

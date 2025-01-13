@@ -81,8 +81,8 @@ void TaiStopMoveAction::start(Teki& teki)
  */
 void TaiStartFlyingAction::start(Teki& teki)
 {
-	teki.setCreatureFlag(CF_Unk7);
-	teki.resetCreatureFlag(CF_Unk2);
+	teki.setCreatureFlag(CF_IsFlying);
+	teki.resetCreatureFlag(CF_GravityEnabled);
 }
 
 /*
@@ -92,8 +92,8 @@ void TaiStartFlyingAction::start(Teki& teki)
  */
 void TaiFinishFlyingAction::start(Teki& teki)
 {
-	teki.resetCreatureFlag(CF_Unk7);
-	teki.setCreatureFlag(CF_Unk2);
+	teki.resetCreatureFlag(CF_IsFlying);
+	teki.setCreatureFlag(CF_GravityEnabled);
 }
 
 /*

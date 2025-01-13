@@ -410,7 +410,7 @@ void PomAi::createPomOpenEffect()
 void PomAi::calcPetalStickers()
 {
 	if (mPom->mIsPikiOrPlayerTouching) {
-		mPom->add2D0(gsys->getFrameTime());
+		mPom->addWalkTimer(gsys->getFrameTime());
 	}
 
 	// if swallow setting is enabled
@@ -507,10 +507,10 @@ bool PomAi::petalCloseTransit()
 		if (mPrevStickPikiCount >= C_POM_PROP(mPom).mMaxPikiPerCycle()) {
 			return true;
 		}
-		if (C_POM_PROP(mPom).mCloseWaitTime() > 0.0f && mPom->get2D0() > (C_POM_PROP(mPom).mCloseWaitTime())) {
+		if (C_POM_PROP(mPom).mCloseWaitTime() > 0.0f && mPom->getWalkTimer() > (C_POM_PROP(mPom).mCloseWaitTime())) {
 			return true;
 		}
-	} else if (mPom->get2D0() > (C_POM_PROP(mPom).mCloseWaitTime())) {
+	} else if (mPom->getWalkTimer() > (C_POM_PROP(mPom).mCloseWaitTime())) {
 		return true;
 	}
 
@@ -548,7 +548,7 @@ void PomAi::initDie(int nextState)
 {
 	mPom->setNextState(nextState);
 	mPom->setMotionFinish(false);
-	mPom->set2D4(0.0f);
+	mPom->setAttackTimer(0.0f);
 	mPom->mAnimator.startMotion(PaniMotionInfo(0, this));
 }
 
@@ -590,7 +590,7 @@ void PomAi::initPetalOpen(int nextState)
 	mPom->setMotionFinish(false);
 	mPom->mAnimator.startMotion(PaniMotionInfo(10, this));
 	createPomOpenEffect();
-	mPom->set2D0(0.0f);
+	mPom->setWalkTimer(0.0f);
 	mHasCollided = false;
 	mPlaySound   = false;
 }
@@ -660,10 +660,10 @@ void PomAi::initDischarge(int nextState)
 void PomAi::dieState()
 {
 	if (mPom->getMotionFinish()) {
-		if (mPom->get2D4() > 1.0f) {
+		if (mPom->getAttackTimer() > 1.0f) {
 			mPom->doKill();
 		}
-		mPom->add2D4(gsys->getFrameTime());
+		mPom->addAttackTimer(gsys->getFrameTime());
 	}
 }
 

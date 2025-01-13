@@ -132,8 +132,8 @@ Creature* GenObjectTeki::birth(BirthInfo& info)
 	teki->reset();
 	teki->startAI(0);
 	teki->mRotation = info.mRotation;
-	if (info.mGenerator->mGenType->_28()) {
-		teki->setCreatureFlag(CF_Unk16);
+	if (info.mGenerator->mGenType->mAdjustFaceDirection()) {
+		teki->setCreatureFlag(CF_FaceDirAdjust);
 	}
 
 	teki->mRebirthDay = info.mGenerator->mGenType->_18();

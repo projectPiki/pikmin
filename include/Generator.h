@@ -552,7 +552,7 @@ struct GenType : public GenBase {
 	inline GenType(u32 id, char* name)
 	    : GenBase(id, "time type", name)
 	    , _18(this, 0, 0, 0, "b00", nullptr)
-	    , _28(this, 0, 0, 0, "b01", nullptr)
+	    , mAdjustFaceDirection(this, 0, 0, 0, "b01", nullptr)
 	{
 	}
 
@@ -567,8 +567,8 @@ struct GenType : public GenBase {
 
 	// _04     = VTBL
 	// _00-_18 = GenBase
-	Parm<int> _18; // _18, b00
-	Parm<int> _28; // _28, b01
+	Parm<int> _18;                  // _18, b00
+	Parm<int> mAdjustFaceDirection; // _28, b01
 };
 
 /**

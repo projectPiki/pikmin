@@ -159,8 +159,8 @@ struct CollPart {
 	Matrix4f mMatrix;              // _10
 	u8 _50;                        // _50
 	bool mIsStickEnabled;          // _51
-	s16 _52;                       // _52
-	s16 _54;                       // _54
+	s16 mNextIndex;                // _52, index of next sibling
+	s16 mFirstIndex;               // _54, index of first child
 	ObjCollInfo* mCollInfo;        // _58
 	u8 mPartType;                  // _5C
 	CollInfo* mParentInfo;         // _60
@@ -264,11 +264,11 @@ struct CollTriInfo {
 	void init(RoomInfo*, Vector3f*);
 	void behindEdge(Vector3f&);
 
-	u32 mMapCode; // _00
-	u8 _04[0x14]; // _04, unknown
-	Vector3f _18; // _18
-	u8 _24[0x4];  // _24, unknown
-	Plane _28[3]; // _28
+	u32 mMapCode;             // _00
+	u8 _04[0x14];             // _04, unknown
+	Vector3f mTriangleNormal; // _18
+	u32 _24;                  // _24
+	Plane _28[3];             // _28
 };
 
 /**

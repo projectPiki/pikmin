@@ -152,7 +152,7 @@ bool MizuAi::jetTransit()
  */
 bool MizuAi::waitTransit()
 {
-	return (mMizu->get2D4() > 4.0f) ? true : false;
+	return (mMizu->getAttackTimer() > 4.0f) ? true : false;
 }
 
 /*
@@ -168,7 +168,7 @@ void MizuAi::initWait(int stateID)
 	mMizu->_3B9 = true;
 	mMizu->setIsAlive(1);
 	mMizu->setIsOrganic(1);
-	mMizu->set2D4(0.0f);
+	mMizu->setAttackTimer(0.0f);
 	mMizu->setFlickDamageCount(0);
 	if (_0C) {
 		_0C->stopGen();
@@ -191,7 +191,7 @@ void MizuAi::initReady(int stateID)
 	mMizu->_3B9 = false;
 	mMizu->setIsAlive(0);
 	mMizu->setIsOrganic(0);
-	mMizu->set2D4(0.0f);
+	mMizu->setAttackTimer(0.0f);
 	mMizu->setFlickDamageCount(0);
 	if (_0C) {
 		_0C->startGen();
@@ -218,7 +218,7 @@ void MizuAi::initJet(int stateID)
 	mMizu->_3B9 = false;
 	mMizu->setIsAlive(false);
 	mMizu->setIsOrganic(false);
-	mMizu->set2D4(0.0f);
+	mMizu->setAttackTimer(0.0f);
 	mMizu->setFlickDamageCount(0);
 	naviGeyzerJump();
 
@@ -234,7 +234,7 @@ void MizuAi::initJet(int stateID)
 	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Mizu_JetStream, mMizu->mPosition, nullptr, nullptr);
 	mPuffCallBack->set(ptcl);
 	if (ptcl) {
-		ptcl->set1DC(Vector3f(1.0f, 0.0f, 0.0f));
+		ptcl->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
 	}
 
 	effectMgr->create(EffectMgr::EFF_Mizu_JetMist, mMizu->mPosition, nullptr, nullptr);
@@ -271,13 +271,13 @@ void MizuAi::readyState()
 			}
 		}
 
-		if (mMizu->get2D4() > 3.0f) {
-			mMizu->set2D4(0.0f);
+		if (mMizu->getAttackTimer() > 3.0f) {
+			mMizu->setAttackTimer(0.0f);
 			if (mMizu->mSeContext) {
 				mMizu->mSeContext->playSound(SE_GEYSER_NORMAL);
 			}
 		} else {
-			mMizu->add2D4(gsys->getFrameTime());
+			mMizu->addAttackTimer(gsys->getFrameTime());
 		}
 	}
 }
@@ -289,7 +289,7 @@ void MizuAi::readyState()
  */
 void MizuAi::jetState()
 {
-	mMizu->add2D4(gsys->getFrameTime());
+	mMizu->addAttackTimer(gsys->getFrameTime());
 }
 
 /*

@@ -400,7 +400,7 @@ bool Creature::setStateGrabbed(Creature* holder)
 
 	mHoldingCreature.set(holder);
 	holder->mGrabbedCreature.set(this);
-	mPreGrabRotation = _E0;
+	mPreGrabRotation = mRotationQuat;
 	_100.fromEuler(Vector3f(0.39269909f, 0.0f, 0.0f));
 	_110 = 0.0f;
 
@@ -459,7 +459,7 @@ void Creature::init()
 	mSearchBuffer.invalidate();
 	_114.makeIdentity();
 	mTransformMatrix.makeIdentity();
-	_E0.set(0.0f, 0.0f, 0.0f, 1.0f);
+	mRotationQuat.set(0.0f, 0.0f, 0.0f, 1.0f);
 	_60              = 0;
 	mCreatureFlags   = 0;
 	mPelletStickSlot = -1;
@@ -475,7 +475,7 @@ void Creature::init()
 	mIsBeingDamaged = false;
 
 	setCreatureFlag(CF_IsOnGround | CF_Unk4);
-	resetCreatureFlag(CF_Unk5 | CF_Unk7 | CF_Unk8 | CF_Unk11);
+	resetCreatureFlag(CF_Unk5 | CF_IsFlying | CF_Unk8 | CF_Unk11);
 	mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	_1AC.set(0.0f, 0.0f, 0.0f);
 	mStickTarget = nullptr;
@@ -800,12 +800,12 @@ Creature::Creature(CreatureProp* props)
 	mObjType       = OBJTYPE_INVALID;
 	mSeContext     = nullptr;
 	mCreatureFlags = 0;
-	resetCreatureFlag(CF_Unk7);
+	resetCreatureFlag(CF_IsFlying);
 	mCollInfo = nullptr;
 	mFloorTri = nullptr;
 	_30       = 0;
 
-	disableFlag10000();
+	disableFaceDirAdjust();
 	setRebirthDay(0);
 
 	mCollPlatNormal = nullptr;
@@ -826,8 +826,8 @@ Creature::Creature(CreatureProp* props)
 	_28              = 0;
 	resetCreatureFlag(CF_Unk10);
 
-	_E0.fromEuler(Vector3f(0.0f, 0.0f, 0.0f));
-	_D4.set(0.0f, 0.0f, 0.0f);
+	mRotationQuat.fromEuler(Vector3f(0.0f, 0.0f, 0.0f));
+	mPrevAngularVelocity.set(0.0f, 0.0f, 0.0f);
 
 	resetCreatureFlag(CF_Unk1 | CF_Unk6);
 
@@ -951,7 +951,7 @@ void Creature::update()
 	moveNew(stepTime);
 
 	if (mVolatileVelocity.length() > 0.0f && isCreatureFlag(CF_Unk22) && isCreatureFlag(CF_FixPosition) && mFloorTri
-	    && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->_18.y > sinf(THIRD_PI)) {
+	    && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->mTriangleNormal.y > sinf(THIRD_PI)) {
 		mFixedPosition = mPosition;
 	}
 
@@ -959,7 +959,7 @@ void Creature::update()
 	moveNew(stepTime);
 
 	if (isCreatureFlag(CF_Unk22)) {
-		if (mFloorTri && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->_18.y > sinf(THIRD_PI)) {
+		if (mFloorTri && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->mTriangleNormal.y > sinf(THIRD_PI)) {
 			if (mTargetVelocity.length() < 0.01f) {
 				if (!isCreatureFlag(CF_FixPosition)) {
 					setCreatureFlag(CF_FixPosition);
@@ -1055,7 +1055,7 @@ void Creature::updateAI()
 		doAI();
 	}
 
-	if (!isCreatureFlag(CF_Unk7) && !isCreatureFlag(CF_IsOnGround)) {
+	if (!isCreatureFlag(CF_IsFlying) && !isCreatureFlag(CF_IsOnGround)) {
 		return;
 	}
 
@@ -2059,7 +2059,7 @@ void Creature::moveVelocity()
 	Vector3f vec(0.0f, 0.0f, 0.0f);
 
 	if (mFloorTri) {
-		Vector3f normal(mFloorTri->_18);
+		Vector3f normal(mFloorTri->mTriangleNormal);
 		f32 speed = vel.length();
 		vel       = vel - vel.DP(normal) * normal;
 		vel.normalise();
@@ -2494,7 +2494,7 @@ void Creature::renderAtari(Graphics& gfx)
 
 		Vector3f pos(0.0f, halfHeight, 0.0f);
 		Matrix4f mtx;
-		mtx.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), _E0, Vector3f(1.0f, 1.0f, 1.0f));
+		mtx.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), mRotationQuat, Vector3f(1.0f, 1.0f, 1.0f));
 		pos.multMatrix(mtx);
 		pos = pos + mPosition;
 

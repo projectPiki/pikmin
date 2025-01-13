@@ -45,7 +45,7 @@ struct BuildingItem : public ItemCreature {
 	virtual f32 getBoundingSphereRadius();    // _64
 	virtual bool isAlive()                    // _88
 	{
-		return _440 > _444;
+		return mEndAnimId > mStartAnimId;
 	}
 	virtual bool needShadow();         // _90 (weak)
 	virtual void update();             // _E0
@@ -55,7 +55,7 @@ struct BuildingItem : public ItemCreature {
 	virtual void playEffect(int);      // _12C
 	virtual bool isCompleted()         // _15C
 	{
-		return _444 >= _440;
+		return mStartAnimId >= mEndAnimId;
 	}
 
 	void startBreakEffect();
@@ -69,8 +69,8 @@ struct BuildingItem : public ItemCreature {
 	u32 _3D4;                 // _3D4, unknown
 	PermanentEffect _3D8;     // _3D8
 	PermanentEffect _3E8;     // _3E8
-	int _440;                 // _440
-	int _444;                 // _444
+	int mEndAnimId;           // _440
+	int mStartAnimId;         // _444
 	Vector3f _448;            // _448
 	WayPoint* mWayPoint;      // _454
 	CollInfo mBuildCollision; // _458

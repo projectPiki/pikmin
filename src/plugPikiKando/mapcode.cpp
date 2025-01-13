@@ -45,5 +45,8 @@ int MapCode::getSlipCode(CollTriInfo* triInfo)
  */
 bool MapCode::isBald(CollTriInfo* triInfo)
 {
-	return (triInfo) ? (triInfo->_18.y < sinf(45 * PI / 180)) ? true : ((triInfo->mMapCode >> 25 & 1) != 0) ? false : true : true;
+	return (triInfo) ? (triInfo->mTriangleNormal.y < sinf(45 * PI / 180)) ? true
+	                 : ((triInfo->mMapCode >> 25 & 1) != 0)               ? false
+	                                                                      : true
+	                 : true;
 }

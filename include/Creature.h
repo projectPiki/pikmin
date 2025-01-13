@@ -34,12 +34,12 @@ struct SeContext;
  */
 enum CreatureFlags {
 	CF_Unk1                = 1 << 0,  // 0x1
-	CF_Unk2                = 1 << 1,  // 0x2
+	CF_GravityEnabled      = 1 << 1,  // 0x2
 	CF_IsOnGround          = 1 << 2,  // 0x4
 	CF_Unk4                = 1 << 3,  // 0x8
 	CF_Unk5                = 1 << 4,  // 0x10
 	CF_Unk6                = 1 << 5,  // 0x20
-	CF_Unk7                = 1 << 6,  // 0x40
+	CF_IsFlying            = 1 << 6,  // 0x40
 	CF_Unk8                = 1 << 7,  // 0x80
 	CF_GroundOffsetEnabled = 1 << 8,  // 0x100
 	CF_Unk10               = 1 << 9,  // 0x200
@@ -49,7 +49,7 @@ enum CreatureFlags {
 	CF_IsClimbing          = 1 << 13, // 0x2000
 	CF_StuckToObject       = 1 << 14, // 0x4000, stuck to an object
 	CF_StuckToMouth        = 1 << 15, // 0x8000, stuck to mouth of some enemy
-	CF_Unk16               = 1 << 16, // 0x10000
+	CF_FaceDirAdjust       = 1 << 16, // 0x10000
 	CF_Unk17               = 1 << 17, // 0x20000
 	CF_Unk18               = 1 << 18, // 0x40000
 	CF_IsAICullingActive   = 1 << 19, // 0x80000, creature is off camera
@@ -223,12 +223,12 @@ struct Creature : public RefCountable, public EventTalker {
 
 	Vector3f& getPosition() { return mPosition; }
 
-	inline void disableFlag10000() { resetCreatureFlag(CF_Unk16); } // this should be one of the disable inlines
+	inline void disableFaceDirAdjust() { resetCreatureFlag(CF_FaceDirAdjust); } // this should be one of the disable inlines
 
-	inline void setFlag40UnsetFlag2() // name this better later PLEASE - definitely a DLL inline
+	inline void startFlying()
 	{
-		setCreatureFlag(CF_Unk7);
-		resetCreatureFlag(CF_Unk2);
+		setCreatureFlag(CF_IsFlying);
+		resetCreatureFlag(CF_GravityEnabled);
 	}
 
 	void disableAICulling() { resetCreatureFlag(CF_IsAICullingActive); }
@@ -250,6 +250,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Creature* getStickObject() { return mStickTarget; }
 	bool isStickTo() { return mStickTarget != nullptr; }
 
+	// AKA: is this a gate?
 	bool isSluice()
 	{
 		return mObjType == OBJTYPE_SluiceSoft || mObjType == OBJTYPE_SluiceHard || mObjType == OBJTYPE_SluiceBomb
@@ -289,6 +290,7 @@ struct Creature : public RefCountable, public EventTalker {
 	    void disableFaceDirAdjust();
 	    void disableFixPos();
 	    void disableGravity();
+
 	    void enableAirResist(f32);
 	    void enableFaceDirAdjust();
 	    void enableFixPos();
@@ -338,8 +340,8 @@ struct Creature : public RefCountable, public EventTalker {
 	u32 mCreatureFlags;                  // _C8, bitflag
 	u32 _CC;                             // _CC
 	f32 mGroundOffset;                   // _D0
-	Vector3f _D4;                        // _D4
-	Quat _E0;                            // _E0
+	Vector3f mPrevAngularVelocity;       // _D4
+	Quat mRotationQuat;                  // _E0
 	Quat mPreGrabRotation;               // _F0
 	Quat _100;                           // _100
 	f32 _110;                            // _110

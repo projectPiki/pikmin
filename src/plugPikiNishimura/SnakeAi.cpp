@@ -1323,7 +1323,7 @@ bool SnakeAi::intoGroundTransit()
  */
 bool SnakeAi::diveTimerTransit()
 {
-	if (mSnake->get2D0() > C_SNAKE_PROP(mSnake).mWaitBeforeDiveTime()) {
+	if (mSnake->getWalkTimer() > C_SNAKE_PROP(mSnake).mWaitBeforeDiveTime()) {
 		return true;
 	}
 	return false;
@@ -1336,7 +1336,7 @@ bool SnakeAi::diveTimerTransit()
  */
 bool SnakeAi::underTimerTransit()
 {
-	if (mSnake->get2D0() > C_SNAKE_PROP(mSnake).mWaitUndergroundTime()) {
+	if (mSnake->getWalkTimer() > C_SNAKE_PROP(mSnake).mWaitUndergroundTime()) {
 		return true;
 	}
 	return false;
@@ -1365,7 +1365,7 @@ void SnakeAi::initDie(int nextState)
 {
 	mSnake->setNextState(nextState);
 	mSnake->setMotionFinish(false);
-	mSnake->set2D0(0.0f);
+	mSnake->setWalkTimer(0.0f);
 	mSnake->mAnimator.startMotion(PaniMotionInfo(0, this));
 	mSnake->mSnakeBody->initBlending(2.0f);
 	resultFlagSeen();
@@ -1410,7 +1410,7 @@ void SnakeAi::initAttack(int nextState, f32 frame)
 	mSnake->setNextState(nextState);
 	mSnake->setAnimTimer(30.0f);
 	mSnake->setMotionFinish(false);
-	mSnake->set2D0(0.0f);
+	mSnake->setWalkTimer(0.0f);
 	mIsAttackAllowed = true;
 
 	if (mAttackId == 0) {
@@ -1460,7 +1460,7 @@ void SnakeAi::initWait(int nextState)
 	mSnake->setMotionFinish(false);
 	mSnake->mAnimator.startMotion(PaniMotionInfo(2, this));
 	mSnake->setTargetCreature(nullptr);
-	mSnake->set2D0(0.0f);
+	mSnake->setWalkTimer(0.0f);
 	mSnake->mSnakeBody->initBlending(1.0f);
 }
 
@@ -1498,7 +1498,7 @@ void SnakeAi::initUnder(int nextState)
 	mOccupiedSlotCount = 0;
 	mMouthSlotFlag     = 0;
 	mSnake->killStickToMouthPiki();
-	mSnake->set2D0(0.0f);
+	mSnake->setWalkTimer(0.0f);
 	mSnake->setIsAlive(false);
 	mSnake->setIsAtari(false);
 	mSnake->_3C4 = 0.0f;
@@ -2040,9 +2040,9 @@ void SnakeAi::eatState()
 void SnakeAi::waitState()
 {
 	if (mSnake->getStickNoMouthPikiCount() > 0) {
-		mSnake->add2D0(gsys->getFrameTime() * 5.0f);
+		mSnake->addWalkTimer(gsys->getFrameTime() * 5.0f);
 	} else {
-		mSnake->add2D0(gsys->getFrameTime());
+		mSnake->addWalkTimer(gsys->getFrameTime());
 	}
 }
 
@@ -2062,7 +2062,7 @@ void SnakeAi::gointoState()
  */
 void SnakeAi::underState()
 {
-	mSnake->add2D0(gsys->getFrameTime());
+	mSnake->addWalkTimer(gsys->getFrameTime());
 }
 
 /*

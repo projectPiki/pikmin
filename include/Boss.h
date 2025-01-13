@@ -255,26 +255,13 @@ struct Boss : public Creature {
 	f32 getMaxLife() { return mMaxLife; }
 	void subCurrentLife(f32 damage) { mCurrentLife -= damage; }
 
-	// attack timer??
-	inline f32 get2D0() { return _2D0; }         // name these better later
-	inline void set2D0(f32 val) { _2D0 = val; }  // name these better later
-	inline void add2D0(f32 val) { _2D0 += val; } // name these better later
+	inline f32 getWalkTimer() { return mWalkTimer; }
+	inline void setWalkTimer(f32 val) { mWalkTimer = val; }
+	inline void addWalkTimer(f32 val) { mWalkTimer += val; }
 
-	// walk timer??
-	inline f32 get2D4() { return _2D4; }         // name these better later
-	inline void set2D4(f32 val) { _2D4 = val; }  // name these better later
-	inline void add2D4(f32 val) { _2D4 += val; } // name these better later
-
-	/*
-	    list of inlines to create/assign:
-	    f32 getAttackTimer();
-	    void addAttackTimer(f32);
-	    void setAttackTimer(f32);
-
-	    f32 getWalkTimer();
-	    void addWalkTimer(f32);
-	    void setWalkTimer(f32);
-	*/
+	inline f32 getAttackTimer() { return mAttackTimer; }
+	inline void setAttackTimer(f32 val) { mAttackTimer = val; }
+	inline void addAttackTimer(f32 val) { mAttackTimer += val; }
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
@@ -290,8 +277,8 @@ struct Boss : public Creature {
 	f32 mCurrentLife;               // _2C4, current health (but there's a creature variable for that too)
 	f32 mMaxLife;                   // _2C8, max health (but there's a creature variable for that too)
 	f32 mLifeRecoveryTimer;         // _2CC
-	f32 _2D0;                       // _2D0, either mAttackTimer or mWalkTimer, unsure
-	f32 _2D4;                       // _2D4, either mAttackTimer or mWalkTimer, unsure
+	f32 mWalkTimer;                 // _2D0, walk timer
+	f32 mAttackTimer;               // _2D4, either mAttackTimer or mWalkTimer, unsure
 	f32 mAnimTimer;                 // _2D8
 	f32 mSearchAngle;               // _2DC
 	f32 mShadowSize;                // _2E0

@@ -123,7 +123,7 @@ struct CoreNucleusAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	bool _04;           // _04
+	bool mIsHit;        // _04
 	CoreNucleus* mCore; // _08
 };
 

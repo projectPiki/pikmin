@@ -484,9 +484,9 @@ void OnePlayerSection::init()
 			FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
 			{
 				if (strcmp(stage->mFileName, "stages/practice.ini") == 0) {
-					flowCont._A8 = stage;
-					sprintf(flowCont._130, "%s", stage->mFileName);
-					sprintf(flowCont._1B0, "%s", stage->mFileName);
+					flowCont.mCurrentStage = stage;
+					sprintf(flowCont.mStagePath1, "%s", stage->mFileName);
+					sprintf(flowCont.mStagePath2, "%s", stage->mFileName);
 					break;
 				}
 			}
@@ -505,9 +505,9 @@ void OnePlayerSection::init()
 			FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
 			{
 				if (strcmp(stage->mFileName, "stages/stage1.ini") == 0) {
-					flowCont._A8 = stage;
-					sprintf(flowCont._130, "%s", stage->mFileName);
-					sprintf(flowCont._1B0, "%s", stage->mFileName);
+					flowCont.mCurrentStage = stage;
+					sprintf(flowCont.mStagePath1, "%s", stage->mFileName);
+					sprintf(flowCont.mStagePath2, "%s", stage->mFileName);
 					break;
 				}
 			}
@@ -526,9 +526,9 @@ void OnePlayerSection::init()
 			FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
 			{
 				if (strcmp(stage->mFileName, "stages/play_3.ini") == 0) {
-					flowCont._A8 = stage;
-					sprintf(flowCont._130, "%s", stage->mFileName);
-					sprintf(flowCont._1B0, "%s", stage->mFileName);
+					flowCont.mCurrentStage = stage;
+					sprintf(flowCont.mStagePath1, "%s", stage->mFileName);
+					sprintf(flowCont.mStagePath2, "%s", stage->mFileName);
 					break;
 				}
 			}
@@ -549,8 +549,8 @@ void OnePlayerSection::init()
 			}
 
 			Texture* tex = nullptr;
-			if (flowCont._A8->mStageID <= STAGE_LASTVALID) {
-				gameflow._310 = gameflow.setLoadBanner(levNames[flowCont._A8->mStageID]);
+			if (flowCont.mCurrentStage->mStageID <= STAGE_LASTVALID) {
+				gameflow._310 = gameflow.setLoadBanner(levNames[flowCont.mCurrentStage->mStageID]);
 				gameflow._314 = 0.0f;
 			} else {
 				gameflow._310 = tex;

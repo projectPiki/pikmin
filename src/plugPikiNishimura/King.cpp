@@ -131,24 +131,26 @@ void King::update()
  */
 void King::draw(Graphics& gfx)
 {
-	Vector3f daySep = mapMgr->mDayMgr->_1408 - mPosition;
-	daySep.y        = 0.0f;
-	daySep.normalise();
-	daySep.multiply(150.0f);
+	Vector3f lightDirection = mapMgr->mDayMgr->mSunPosition - mPosition;
+	lightDirection.y        = 0.0f;
+	lightDirection.normalise();
+	lightDirection.multiply(150.0f);
+
 	Vector3f centre = mCollInfo->getBoundingSphere()->mCentre;
 	f32 yDiff       = centre.y - mPosition.y;
 	if (yDiff > 0.0f) {
 		centre.y += yDiff * 3.0f;
 	}
 
-	mShadowCaster._37C.set(centre.x + daySep.x, centre.y + 1000.0f, centre.z + daySep.z);
-	mShadowCaster._388.set(mPosition.x, mPosition.y + 50.0f, mPosition.z);
+	mShadowCaster.mSourcePosition.set(centre.x + lightDirection.x, centre.y + 1000.0f, centre.z + lightDirection.z);
+	mShadowCaster.mTargetPosition.set(mPosition.x, mPosition.y + 50.0f, mPosition.z);
 
-	Matrix4f onCamMtx;
+	Matrix4f viewMatrix;
 	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
-	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, onCamMtx);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, viewMatrix);
+
 	mAnimator.updateContext();
-	mShapeObject->mShape->updateAnim(gfx, onCamMtx, nullptr);
+	mShapeObject->mShape->updateAnim(gfx, viewMatrix, nullptr);
 	mKingBody->refresh(mShapeObject, gfx);
 }
 

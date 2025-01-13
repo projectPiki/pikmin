@@ -147,12 +147,12 @@ void PelletView::becomePellet(u32 id, Vector3f& pos, f32 direction)
 
 	pellet->init(pos);
 	pellet->mDirection = direction;
-	pellet->_E0.fromEuler(Vector3f(0.0f, direction, 0.0f));
+	pellet->mRotationQuat.fromEuler(Vector3f(0.0f, direction, 0.0f));
 	pellet->mRotation.set(0.0f, direction, 0.0f);
 	pellet->mVelocity.set(0.0f, 0.0f, 0.0f);
 	pellet->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	pellet->_2B8.set(0.0f, 0.0f, 0.0f);
-	pellet->_2C4.set(0.0f, 0.0f, 0.0f);
+	pellet->mAngularMomentum.set(0.0f, 0.0f, 0.0f);
+	pellet->mAngularVelocity.set(0.0f, 0.0f, 0.0f);
 	pellet->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	pellet->_B0.set(0.0f, 0.0f, 0.0f);
 	pellet->startAI(0);

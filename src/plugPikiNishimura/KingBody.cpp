@@ -112,21 +112,21 @@ void KingBody::createWaterEffect(int idx)
 		zen::particleGenerator* ptcl1
 		    = effectMgr->create(EffectMgr::EFF_RippleWhite, Vector3f(0.0f, 0.0f, 0.0f), &mRippleCallBacks[idx], nullptr);
 		if (ptcl1) {
-			ptcl1->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+			ptcl1->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = ptcl1->getScaleSize();
 			ptcl1->setScaleSize(2.0f * f0);
 		}
 		zen::particleGenerator* ptcl2
 		    = effectMgr->create(EffectMgr::EFF_RippleSurface, Vector3f(0.0f, 0.0f, 0.0f), &mRippleCallBacks[idx], nullptr);
 		if (ptcl2) {
-			ptcl2->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+			ptcl2->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = ptcl2->getScaleSize();
 			ptcl2->setScaleSize(2.0f * f0);
 		}
 		zen::particleGenerator* ptcl3
 		    = effectMgr->create(EffectMgr::EFF_RippleBlack, Vector3f(0.0f, 0.0f, 0.0f), &mRippleCallBacks[idx], nullptr);
 		if (ptcl3) {
-			ptcl3->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+			ptcl3->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = ptcl3->getScaleSize();
 			ptcl3->setScaleSize(2.0f * f0);
 		}

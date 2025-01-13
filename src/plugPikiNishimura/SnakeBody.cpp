@@ -50,7 +50,7 @@ void SnakeBody::setBodyOnGroundEffect()
 		    = effectMgr->create(EffectMgr::EFF_RippleWhite, mSnake->mPosition, mOnGroundCallBack, nullptr);
 		if (waterPtclGen1) {
 			waterPtclGen1->setEmitPosPtr(&mSnake->mPosition);
-			waterPtclGen1->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+			waterPtclGen1->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = waterPtclGen1->getScaleSize();
 			waterPtclGen1->setScaleSize(3.0f * f0);
 		}
@@ -58,7 +58,7 @@ void SnakeBody::setBodyOnGroundEffect()
 		    = effectMgr->create(EffectMgr::EFF_RippleSurface, mSnake->mPosition, mOnGroundCallBack, nullptr);
 		if (waterPtclGen2) {
 			waterPtclGen2->setEmitPosPtr(&mSnake->mPosition);
-			waterPtclGen2->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+			waterPtclGen2->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = waterPtclGen2->getScaleSize();
 			waterPtclGen2->setScaleSize(3.0f * f0);
 		}
@@ -66,7 +66,7 @@ void SnakeBody::setBodyOnGroundEffect()
 		    = effectMgr->create(EffectMgr::EFF_RippleBlack, mSnake->mPosition, mOnGroundCallBack, nullptr);
 		if (waterPtclGen3) {
 			waterPtclGen3->setEmitPosPtr(&mSnake->mPosition);
-			waterPtclGen3->set1DC(Vector3f(0.0f, 1.0f, 0.0f));
+			waterPtclGen3->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = waterPtclGen3->getScaleSize();
 			waterPtclGen3->setScaleSize(3.0f * f0);
 		}
@@ -460,7 +460,7 @@ void SnakeBody::makeDeadPattern01()
 		scaleSpeed = C_SNAKE_PROP(mSnake).mDeadBodyScaleSpeed();
 	}
 
-	mSnake->add2D0(gsys->getFrameTime());
+	mSnake->addWalkTimer(gsys->getFrameTime());
 
 	// take _30 to 0 with steps of size frameTime * b
 	mSegmentScaleList[mDeadEffectSegmentIndex]
@@ -474,10 +474,10 @@ void SnakeBody::makeDeadPattern01()
 		}
 	}
 
-	if (mDeadEffectSegmentIndex > 0 && mSegmentScaleList[mDeadEffectSegmentIndex] == 0.0f && mSnake->get2D0() > scaleTime) {
+	if (mDeadEffectSegmentIndex > 0 && mSegmentScaleList[mDeadEffectSegmentIndex] == 0.0f && mSnake->getWalkTimer() > scaleTime) {
 		mDeadEffectSegmentIndex--;
 		mIsDying = false;
-		mSnake->set2D0(0.0f);
+		mSnake->setWalkTimer(0.0f);
 	}
 }
 

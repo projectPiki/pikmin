@@ -157,7 +157,7 @@ void BTeki::viewKill()
  */
 void BTeki::doStore(CreatureInf* info)
 {
-	info->mTekiType = mTekiType;
+	info->mStartAnimId = mTekiType;
 }
 
 /*
@@ -167,7 +167,7 @@ void BTeki::doStore(CreatureInf* info)
  */
 void BTeki::doRestore(CreatureInf* info)
 {
-	mTekiType = (TekiTypes)info->mTekiType;
+	mTekiType = (TekiTypes)info->mStartAnimId;
 }
 
 /*
@@ -847,8 +847,8 @@ void BTeki::prepareEffects()
 			break;
 		}
 
-		ptcl->_1DC = Vector3f(0.0f, 0.0f, 0.0f);
-		f32 val    = ptcl->mScaleSize;
+		ptcl->mOrientedNormalVector = Vector3f(0.0f, 0.0f, 0.0f);
+		f32 val                     = ptcl->mScaleSize;
 		ptcl->setScaleSize(val * getParameterF(TPF_RippleScale));
 		ptcl->pmSwitchOn(zen::PTCLGEN_GenStopped);
 		mParticleGenPack->setPtclGenPtr(i, ptcl);

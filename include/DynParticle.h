@@ -19,17 +19,17 @@ struct DynParticle : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	f32 _14;                    // _14
-	Vector3f _18;               // _18
-	Vector3f _24;               // _24
-	Vector3f _30;               // _30
-	Vector3f _3C;               // _3C
-	int mIsFree;                // _48
-	DynParticle* mNextParticle; // _4C, maybe child particle?
-	Matrix4f _50;               // _50
-	f32 _90;                    // _90
-	Vector3f _94;               // _94
-	Vector3f _A0;               // _A0
+	f32 mMass;                      // _14
+	Vector3f mInitialPosition;      // _18
+	Vector3f mLocalPosition;        // _24
+	Vector3f _30;                   // _30
+	Vector3f mPreCollisionVelocity; // _3C
+	int mIsFree;                    // _48
+	DynParticle* mNextParticle;     // _4C, maybe child particle?
+	Matrix4f mInvCrossMatrix;       // _50
+	f32 mCollisionRadius;           // _90
+	Vector3f mWorldPosition;        // _94
+	Vector3f mWorldVelocity;        // _A0
 };
 
 /**

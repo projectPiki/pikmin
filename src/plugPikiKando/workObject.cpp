@@ -3867,7 +3867,7 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 			}
 		} else {
 			if (v9 > 0) {
-				if (mBuildShape->_38[mStageJoints[v9]->mIndex]) {
+				if (mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex]) {
 					mBuildShape->jointVisible(target->mIndex, true);
 				} else {
 					mBuildShape->jointVisible(target->mIndex, false);
@@ -3882,14 +3882,15 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 		}
 
 		for (int i = 0; i < mStageCount; ++i) {
-			if (mBuildShape->_38[mStageJoints[v9]->mIndex] && mBuildShape->_38[mStageJoints[v9 + 1]->mIndex]) {
+			if (mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex]
+			    && mBuildShape->mProgressStateList[mStageJoints[v9 + 1]->mIndex]) {
 				mBuildShape->jointVisible(i, false);
 			}
 		}
 
 		int firstUnfinishedStage = -1;
 		for (int i = 0; i < mStageCount; ++i) {
-			if (mBuildShape->_38[mStageJoints[v9]->mIndex] == 0) {
+			if (mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex] == 0) {
 				firstUnfinishedStage = i;
 				break;
 			}

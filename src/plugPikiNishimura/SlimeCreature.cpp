@@ -40,7 +40,7 @@ void SlimeCreature::init(Vector3f& pos, Slime* slime)
 	mPosition        = pos;
 	mTargetPosition  = pos;
 	Creature::init();
-	setFlag40UnsetFlag2();
+	startFlying();
 }
 
 /*

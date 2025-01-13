@@ -27,10 +27,10 @@ DEFINE_PRINT(nullptr);
  */
 DualCreature::DualCreature()
 {
-	_43D = 0;
+	mIsCollisionInitialised = 0;
 	setCreatureFlag(CF_Unk1 | CF_Unk10);
-	_D4.set(0.0f, 0.0f, 0.0f);
-	_2B8.set(0.0f, 0.0f, 0.0f);
+	mPrevAngularVelocity.set(0.0f, 0.0f, 0.0f);
+	mAngularMomentum.set(0.0f, 0.0f, 0.0f);
 	useRealDynamics();
 	setDynamicsSimpleFixed(false);
 }
@@ -43,7 +43,7 @@ DualCreature::DualCreature()
 void DualCreature::doKill()
 {
 	DynCreature::doKill();
-	_43D = 0;
+	mIsCollisionInitialised = 0;
 }
 
 /*
@@ -55,7 +55,7 @@ bool DualCreature::isFrontFace()
 {
 	if (mIsRealDynamics) {
 		Vector3f yVec;
-		_E0.genVectorY(yVec);
+		mRotationQuat.genVectorY(yVec);
 		return yVec.y > 0.5f;
 	}
 
@@ -71,7 +71,7 @@ f32 DualCreature::getY()
 {
 	if (mIsRealDynamics) {
 		Vector3f yVec;
-		_E0.genVectorY(yVec);
+		mRotationQuat.genVectorY(yVec);
 		return yVec.y;
 	}
 
@@ -106,10 +106,10 @@ bool DualCreature::onGround()
  */
 void DualCreature::createCollisions(Graphics& gfx)
 {
-	if (!_43D) {
+	if (!mIsCollisionInitialised) {
 		releaseAllParticles();
-		_43D = 1;
-		_2F4 = 0.0f;
+		mIsCollisionInitialised = 1;
+		mMass                   = 0.0f;
 		doCreateColls(gfx);
 		initialiseSystem();
 	}
@@ -125,7 +125,7 @@ void DualCreature::useRealDynamics()
 	if (!mIsDynamicsSimpleFixed) {
 		_43E            = 1;
 		mIsRealDynamics = true;
-		_E0.fromEuler(mRotation);
+		mRotationQuat.fromEuler(mRotation);
 	} else {
 		useSimpleDynamics();
 	}
@@ -140,8 +140,8 @@ void DualCreature::useSimpleDynamics()
 {
 	_43E            = 1;
 	mIsRealDynamics = false;
-	_D4.set(0.0f, 0.0f, 0.0f);
-	_2B8.set(0.0f, 0.0f, 0.0f);
+	mPrevAngularVelocity.set(0.0f, 0.0f, 0.0f);
+	mAngularMomentum.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -154,9 +154,9 @@ void DualCreature::rotateY(f32 rotY)
 	if (mIsRealDynamics) {
 		Quat q1;
 		q1.fromEuler(Vector3f(0.0f, rotY, 0.0f));
-		q1.multiply(_E0);
-		_E0 = q1;
-		_E0.normalise();
+		q1.multiply(mRotationQuat);
+		mRotationQuat = q1;
+		mRotationQuat.normalise();
 	} else {
 		mDirection = roundAng(mDirection + rotY);
 		mRotation.set(0.0f, mDirection, 0.0f);
@@ -204,7 +204,7 @@ void DualCreature::refresh(Graphics& gfx)
 	}
 
 	if (mIsRealDynamics) {
-		mTransformMatrix.makeVQS(mPosition, _E0, mScale);
+		mTransformMatrix.makeVQS(mPosition, mRotationQuat, mScale);
 	} else {
 		mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
 	}

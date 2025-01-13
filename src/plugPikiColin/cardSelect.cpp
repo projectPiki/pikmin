@@ -95,10 +95,10 @@ struct CardSelectSetupSection : public Node {
 					}
 
 					if (playerState->isTutorial()) {
-						StageInfo* stage = flowCont.mRootInfo.getChild();
-						flowCont._A8     = stage;
-						sprintf(flowCont._130, "%s", stage->mFileName);
-						sprintf(flowCont._1B0, "%s", stage->mFileName);
+						StageInfo* stage       = flowCont.mRootInfo.getChild();
+						flowCont.mCurrentStage = stage;
+						sprintf(flowCont.mStagePath1, "%s", stage->mFileName);
+						sprintf(flowCont.mStagePath2, "%s", stage->mFileName);
 						gameflow.mWorldClock.setTime(14.8f);
 						gameflow.mNextOnePlayerSectionID = ONEPLAYER_IntroGame;
 					}
@@ -188,7 +188,7 @@ CardSelectSection::CardSelectSection()
 {
 	Node::init("<CardSelectSection>");
 	gsys->setFrameClamp(1);
-	flowCont._A8 = nullptr;
+	flowCont.mCurrentStage = nullptr;
 	playerState->initGame();
 	generatorCache->initGame();
 	pikiInfMgr.initGame();

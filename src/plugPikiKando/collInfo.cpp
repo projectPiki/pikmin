@@ -1244,8 +1244,8 @@ int CollPart::getChildCount()
  */
 CollPart* CollPart::getChild()
 {
-	if (_54 != -1) {
-		return &mParentInfo->mCollParts[_54];
+	if (mFirstIndex != -1) {
+		return &mParentInfo->mCollParts[mFirstIndex];
 	}
 	return nullptr;
 }
@@ -1257,12 +1257,13 @@ CollPart* CollPart::getChild()
  */
 CollPart* CollPart::getChildAt(int idx)
 {
-	int currIdx = _54;
+	int currIdx = mFirstIndex;
 	for (int i = 0; i < idx; i++) {
 		if (currIdx == -1) {
 			return nullptr;
 		}
-		currIdx = mParentInfo->mCollParts[currIdx]._52;
+
+		currIdx = mParentInfo->mCollParts[currIdx].mNextIndex;
 	}
 
 	if (currIdx == -1) {
@@ -1290,12 +1291,12 @@ CollPart* CollPart::getNext()
  */
 CollPart::CollPart()
 {
-	_50 = 1;
-	_52 = _54       = -1;
-	mCollInfo       = nullptr;
-	mParentInfo     = nullptr;
-	mPartUpdater    = nullptr;
-	mIsStickEnabled = true;
+	_50        = 1;
+	mNextIndex = mFirstIndex = -1;
+	mCollInfo                = nullptr;
+	mParentInfo              = nullptr;
+	mPartUpdater             = nullptr;
+	mIsStickEnabled          = true;
 }
 
 /*

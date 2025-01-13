@@ -296,7 +296,7 @@ u32 GenType::getLatestVersion()
 void GenType::ramSaveParameters(RandomAccessStream& output)
 {
 	output.writeByte(_18());
-	output.writeByte(_28());
+	output.writeByte(mAdjustFaceDirection());
 }
 
 /*
@@ -306,8 +306,8 @@ void GenType::ramSaveParameters(RandomAccessStream& output)
  */
 void GenType::ramLoadParameters(RandomAccessStream& input)
 {
-	_18() = input.readByte();
-	_28() = input.readByte();
+	_18()                  = input.readByte();
+	mAdjustFaceDirection() = input.readByte();
 }
 
 /*

@@ -6,7 +6,7 @@
 struct Menu;
 
 /*
- * @brief TODO
+ * @brief A static class that contains various settings.
  */
 struct AIPerf {
 	void clearCounts();
@@ -73,8 +73,6 @@ struct AIPerf {
 	static bool useASync;
 	static bool insQuick;
 	static bool useCollSort;
-
-	// TODO: members
 };
 
 #endif

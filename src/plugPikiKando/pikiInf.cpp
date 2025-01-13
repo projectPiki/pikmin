@@ -228,7 +228,7 @@ void BaseInf::loadCard(RandomAccessStream& card)
  */
 BPikiInf::BPikiInf()
 {
-	_2C = _2D = 0;
+	mPikiColour = mNextKeyIndex = 0;
 	// UNUSED FUNCTION
 }
 
@@ -240,7 +240,7 @@ BPikiInf::BPikiInf()
 void BPikiInf::saveCard(RandomAccessStream& card)
 {
 	BaseInf::saveCard(card);
-	u8 byte = (_2D << 2) | _2C;
+	u8 byte = (mNextKeyIndex << 2) | mPikiColour;
 	card.writeByte(byte);
 }
 
@@ -252,9 +252,9 @@ void BPikiInf::saveCard(RandomAccessStream& card)
 void BPikiInf::loadCard(RandomAccessStream& card)
 {
 	BaseInf::loadCard(card);
-	u8 byte = card.readByte();
-	_2C     = byte & 0x3;
-	_2D     = (byte >> 2) & 0x3F;
+	u8 byte       = card.readByte();
+	mPikiColour   = byte & 0x3;
+	mNextKeyIndex = (byte >> 2) & 0x3F;
 }
 
 /*
@@ -264,8 +264,8 @@ void BPikiInf::loadCard(RandomAccessStream& card)
  */
 void BPikiInf::doStore(Creature* piki)
 {
-	_2C = static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mStartKeyIndex;
-	_2D = static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mNextKeyInfoIndex;
+	mPikiColour   = static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mFirstFrameIndex;
+	mNextKeyIndex = static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mLastFrameIndex;
 }
 
 /*
@@ -275,8 +275,8 @@ void BPikiInf::doStore(Creature* piki)
  */
 void BPikiInf::doRestore(Creature* piki)
 {
-	static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mStartKeyIndex    = _2C;
-	static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mNextKeyInfoIndex = _2D;
+	static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mFirstFrameIndex = mPikiColour;
+	static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mLastFrameIndex  = mNextKeyIndex;
 }
 
 /*
@@ -418,7 +418,7 @@ int BPikiInfMgr::getPikiCount(int color)
 	int count = 0;
 	FOREACH_NODE(BPikiInf, mActiveList.mChild, currInf)
 	{
-		if (currInf->_2C == color) {
+		if (currInf->mPikiColour == color) {
 			count++;
 		}
 	}
@@ -484,7 +484,7 @@ void CreatureInfMgr::getRestoreFun(int)
 CreatureInf::CreatureInf()
 {
 	mObjType    = OBJTYPE_INVALID;
-	mCurrentDay = _34 = 0;
+	mCurrentDay = mRebirthDay = 0;
 	// UNUSED FUNCTION
 }
 
@@ -509,20 +509,20 @@ void CreatureInf::doStore(Creature* owner)
 	u32 badCompiler;
 	u32 badCompiler2;
 
-	mObjType    = owner->mObjType;
-	_34         = 0;
-	mCurrentDay = -1;
-	_38         = owner->isCreatureFlag(CF_Unk16) != 0;
+	mObjType             = owner->mObjType;
+	mRebirthDay          = 0;
+	mCurrentDay          = -1;
+	mAdjustFaceDirection = owner->isCreatureFlag(CF_FaceDirAdjust) != 0;
 	owner->doStore(this);
 
 	if (owner->mRebirthDay > 0) {
 		if (owner->isAlive()) {
-			_38 = 1;
-			_34 = owner->mRebirthDay;
+			mAdjustFaceDirection = 1;
+			mRebirthDay          = owner->mRebirthDay;
 		} else {
-			_38         = 0;
-			mCurrentDay = gameflow.mWorldClock.mCurrentDay;
-			_34         = owner->mRebirthDay;
+			mAdjustFaceDirection = 0;
+			mCurrentDay          = gameflow.mWorldClock.mCurrentDay;
+			mRebirthDay          = owner->mRebirthDay;
 		}
 	}
 }
@@ -534,10 +534,10 @@ void CreatureInf::doStore(Creature* owner)
  */
 void CreatureInf::doRestore(Creature* owner)
 {
-	if (_38 != 0) {
-		owner->setCreatureFlag(CF_Unk16);
+	if (mAdjustFaceDirection != 0) {
+		owner->setCreatureFlag(CF_FaceDirAdjust);
 	} else {
-		owner->resetCreatureFlag(CF_Unk16);
+		owner->resetCreatureFlag(CF_FaceDirAdjust);
 	}
 
 	owner->doRestore(this);
