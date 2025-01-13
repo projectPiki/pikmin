@@ -35,7 +35,7 @@ static char* _typeStr[] = {
 
 /*
  * --INFO--
- * Address:	80086CC4
+ * Address:	80086CC4 in DOL, 100E7340 in DLL
  * Size:	0002DC
  */
 f32 Cylinder::get2dDist(Vector3f& point)
