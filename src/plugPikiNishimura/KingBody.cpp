@@ -336,7 +336,8 @@ void KingBody::emitOnGroundEffect()
 				mIsFootGeneratingRipples[i] = false;
 			}
 
-			if (mKing->getCurrentState() > 0 && mKing->getCurrentState() < 15) {
+			if (mKing->getCurrentState() > KINGAI_Die && mKing->getCurrentState() < KINGAI_Appear) {
+				// i.e. not die, appear or stay
 				Vector3f footPos = mFootPosList[i];
 				footPos.y -= 5.0f;
 				effectMgr->create(EffectMgr::EFF_King_StepCloud, footPos, nullptr, nullptr);

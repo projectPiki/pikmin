@@ -48,6 +48,14 @@ enum KingAIStateID {
 /**
  * @brief TODO.
  */
+enum KingAttackType {
+	KINGATK_Jump   = 0,
+	KINGATK_Tongue = 1,
+};
+
+/**
+ * @brief TODO.
+ */
 struct KingProp : public BossProp, public CoreNode {
 
 	/**
@@ -57,23 +65,23 @@ struct KingProp : public BossProp, public CoreNode {
 	 */
 	struct KingProperties : public Parameters {
 		inline KingProperties()
-		    : _204(this, 60.0f, 0.0f, 0.0f, "o00", nullptr)
-		    , _214(this, 0.5f, 0.0f, 0.0f, "o01", nullptr)
-		    , _224(this, 0.5f, 0.0f, 0.0f, "o02", nullptr)
+		    : mKingWalkSpeed(this, 60.0f, 0.0f, 0.0f, "o00", nullptr)
+		    , mWalkingTurnSpeed(this, 0.5f, 0.0f, 0.0f, "o01", nullptr)
+		    , mTurningTurnSpeed(this, 0.5f, 0.0f, 0.0f, "o02", nullptr)
 		    , mAttackDistance(this, 180.0f, 0.0f, 0.0f, "p00", nullptr)
-		    , _244(this, 40.0f, 0.0f, 0.0f, "p01", nullptr)
-		    , _254(this, 25.0f, 0.0f, 0.0f, "p04", nullptr)
-		    , _264(this, 40.0f, 0.0f, 0.0f, "p02", nullptr)
-		    , _274(this, 40.0f, 0.0f, 0.0f, "p03", nullptr)
+		    , mNormalAttackRangeXZ(this, 40.0f, 0.0f, 0.0f, "p01", nullptr)
+		    , mNormalAttackRangeY(this, 25.0f, 0.0f, 0.0f, "p04", nullptr)
+		    , mTongueRangeXZ(this, 40.0f, 0.0f, 0.0f, "p02", nullptr)
+		    , mTongueRangeY(this, 40.0f, 0.0f, 0.0f, "p03", nullptr)
 		    , mPressAttackRadius(this, 70.0f, 0.0f, 0.0f, "p10", nullptr)
-		    , _294(this, 60.0f, 0.0f, 0.0f, "q10", nullptr)
-		    , _2A4(this, 25.0f, 0.0f, 0.0f, "r00", nullptr)
+		    , mHiddenUnderneathRadius(this, 60.0f, 0.0f, 0.0f, "q10", nullptr)
+		    , mTongueDamageNavi(this, 25.0f, 0.0f, 0.0f, "r00", nullptr)
 		    , mPressDamageNavi(this, 50.0f, 0.0f, 0.0f, "r01", nullptr)
 		    , mNormalKingScale(this, 1.2f, 0.0f, 0.0f, "s00", nullptr)
-		    , _2D4(this, 75.0f, 0.0f, 0.0f, "s10", nullptr)
-		    , _2E4(this, 200.0f, 0.0f, 0.0f, "s20", nullptr)
-		    , _2F4(this, 150.0f, 0.0f, 0.0f, "s21", nullptr)
-		    , _304(this, 0.0f, 0.0f, 0.0f, "s23", nullptr)
+		    , mDetectionRadius(this, 75.0f, 0.0f, 0.0f, "s10", nullptr)
+		    , mDispelRadius(this, 200.0f, 0.0f, 0.0f, "s20", nullptr)
+		    , mDispelPower(this, 150.0f, 0.0f, 0.0f, "s21", nullptr)
+		    , mDispelDamage(this, 0.0f, 0.0f, 0.0f, "s23", nullptr)
 		    , _314(this, 5.0f, 0.0f, 0.0f, "s30", nullptr)
 		    , _324(this, 50.0f, 0.0f, 0.0f, "s31", nullptr)
 		    , _334(this, 50.0f, 0.0f, 0.0f, "s32", nullptr)
@@ -83,43 +91,43 @@ struct KingProp : public BossProp, public CoreNode {
 		    , mJumpAttackNoEatBombChance(this, 0.5f, 0.0f, 0.0f, "t01", nullptr)
 		    , mJumpAttackEatBombChance(this, 0.9f, 0.0f, 0.0f, "t02", nullptr)
 		    , mJumpAttackEatBombFactor(this, 0.1f, 0.0f, 0.0f, "t03", nullptr)
-		    , _3A4(this, 275.0f, 0.0f, 0.0f, "t10", nullptr)
-		    , _3B4(this, 250.0f, 0.0f, 0.0f, "t11", nullptr)
-		    , _3C4(this, 120.0f, 0.0f, 0.0f, "t12", nullptr)
-		    , _3D4(this, 100, 0, 0, "i00", nullptr)
+		    , mAttackTerritoryRadius(this, 275.0f, 0.0f, 0.0f, "t10", nullptr)
+		    , mJumpAttackRangeXZ(this, 250.0f, 0.0f, 0.0f, "t11", nullptr)
+		    , mMaxJumpAttackAngle(this, 120.0f, 0.0f, 0.0f, "t12", nullptr)
+		    , mMaxEatPikiNum(this, 100, 0, 0, "i00", nullptr)
 		    , mSwallowedBombsMin(this, 0, 0, 0, "i10", nullptr)
 		    , mSwallowedBombsMax(this, 10, 0, 0, "i11", nullptr)
 		    , mEatBombDamageLoopMin(this, 4, 0, 0, "i12", nullptr)
 		    , mEatBombDamageLoopMid(this, 4, 0, 0, "i13", nullptr)
 		    , mEatBombDamageLoopMax(this, 6, 0, 0, "i14", nullptr)
-		    , _434(this, 0, 0, 0, "i20", nullptr)
-		    , _444(this, 10, 0, 0, "i21", nullptr)
-		    , _454(this, 4, 0, 0, "i22", nullptr)
-		    , _464(this, 4, 0, 0, "i23", nullptr)
-		    , _474(this, 6, 0, 0, "i24", nullptr)
-		    , _484(this, 2, 0, 0, "i30", nullptr)
-		    , _494(this, 3, 0, 0, "i40", nullptr)
+		    , mHitTongueBombsMin(this, 0, 0, 0, "i20", nullptr)
+		    , mHitTongueBombsMax(this, 10, 0, 0, "i21", nullptr)
+		    , mHitBombDamageLoopMin(this, 4, 0, 0, "i22", nullptr)
+		    , mHitBombDamageLoopMid(this, 4, 0, 0, "i23", nullptr)
+		    , mHitBombDamageLoopMax(this, 6, 0, 0, "i24", nullptr)
+		    , mTongueRollLoopCount(this, 2, 0, 0, "i30", nullptr)
+		    , mMaxConsecutiveJumpAttacks(this, 3, 0, 0, "i40", nullptr)
 		{
 		}
 
 		// _200-_204 = Parameters
-		Parm<f32> _204;                         // _204, o00 - walking speed?
-		Parm<f32> _214;                         // _214, o01 - turning while walking?
-		Parm<f32> _224;                         // _224, o02 - turning during turn?
+		Parm<f32> mKingWalkSpeed;               // _204, o00
+		Parm<f32> mWalkingTurnSpeed;            // _214, o01 - turning speed while walking or chasing
+		Parm<f32> mTurningTurnSpeed;            // _224, o02 - turning speed while turning or jump attacking
 		Parm<f32> mAttackDistance;              // _234, p00
-		Parm<f32> _244;                         // _244, p01 - attack range (x, z)?
-		Parm<f32> _254;                         // _254, p04 - attack range (y)?
-		Parm<f32> _264;                         // _264, p02 - distance between tongue and piki (x,z)?
-		Parm<f32> _274;                         // _274, p03 - distance between tongue and piki (y)?
-		Parm<f32> mPressAttackRadius;           // _284, p10 - sharpness range?
-		Parm<f32> _294;                         // _294, q10 - missed range?
-		Parm<f32> _2A4;                         // _2A4, r00 - swallow damage navi?
-		Parm<f32> mPressDamageNavi;             // _2B4, r01 - press damage navi?
-		Parm<f32> mNormalKingScale;             // _2C4, s00 - size?
-		Parm<f32> _2D4;                         // _2D4, s10 - detection radius?
-		Parm<f32> _2E4;                         // _2E4, s20 - blowing area?
-		Parm<f32> _2F4;                         // _2F4, s21 - blowing power?
-		Parm<f32> _304;                         // _304, s23 - blown off damage?
+		Parm<f32> mNormalAttackRangeXZ;         // _244, p01
+		Parm<f32> mNormalAttackRangeY;          // _254, p04
+		Parm<f32> mTongueRangeXZ;               // _264, p02
+		Parm<f32> mTongueRangeY;                // _274, p03
+		Parm<f32> mPressAttackRadius;           // _284, p10
+		Parm<f32> mHiddenUnderneathRadius;      // _294, q10 - radius in which king loses sight of navi/piki underneath itself (lol)
+		Parm<f32> mTongueDamageNavi;            // _2A4, r00
+		Parm<f32> mPressDamageNavi;             // _2B4, r01
+		Parm<f32> mNormalKingScale;             // _2C4, s00
+		Parm<f32> mDetectionRadius;             // _2D4, s10
+		Parm<f32> mDispelRadius;                // _2E4, s20 - radius in which navi/piki gets hit by knockback when king appears
+		Parm<f32> mDispelPower;                 // _2F4, s21 - how strong knockback effect is when king appears
+		Parm<f32> mDispelDamage;                // _304, s23 - blown off damage?
 		Parm<f32> _314;                         // _314, s30 - dist from tongue?
 		Parm<f32> _324;                         // _324, s31 - height from tongue?
 		Parm<f32> _334;                         // _334, s32 - height from map?
@@ -129,22 +137,22 @@ struct KingProp : public BossProp, public CoreNode {
 		Parm<f32> mJumpAttackNoEatBombChance;   // _374, t01 - chance for jump based on (1 - eaten bombs factor)
 		Parm<f32> mJumpAttackEatBombChance;     // _384, t02 - chance for jump based on eaten bombs factor
 		Parm<f32> mJumpAttackEatBombFactor;     // _394, t03 - weighting to give number of bombs eaten when deciding to jump
-		Parm<f32> _3A4;                         // _3A4, t10 - jump attack territory?
-		Parm<f32> _3B4;                         // _3B4, t11 - jump attack range?
-		Parm<f32> _3C4;                         // _3C4, t12 - jump attack angle?
-		Parm<int> _3D4;                         // _3D4, i00 - 1 attack max eat number?
+		Parm<f32> mAttackTerritoryRadius;       // _3A4, t10 - jump attack territory?
+		Parm<f32> mJumpAttackRangeXZ;           // _3B4, t11 - jump attack range?
+		Parm<f32> mMaxJumpAttackAngle;          // _3C4, t12 - jump attack angle?
+		Parm<int> mMaxEatPikiNum;               // _3D4, i00 - 1 attack max eat number?
 		Parm<int> mSwallowedBombsMin;           // _3E4, i10 - below this, always get min eat bomb damage loops
 		Parm<int> mSwallowedBombsMax;           // _3F4, i11 - above this, always get max eat bomb damage loops
 		Parm<int> mEatBombDamageLoopMin;        // _404, i12 - min damage loops from eating bombs
 		Parm<int> mEatBombDamageLoopMid;        // _414, i13 - "middle" damage loops from eating bombs (for lagrange interp)
 		Parm<int> mEatBombDamageLoopMax;        // _424, i14 - max damage loops from eating bombs
-		Parm<int> _434;                         // _434, i20 - bomb exploded with tongue (min)?
-		Parm<int> _444;                         // _444, i21 - bomb exploded with tongue (max)?
-		Parm<int> _454;                         // _454, i22 - damage loop (min)?
-		Parm<int> _464;                         // _464, i23 - damage loop (mid)?
-		Parm<int> _474;                         // _474, i24 - damage loop (max)?
-		Parm<int> _484;                         // _484, i30 - number of attack loops?
-		Parm<int> _494;                         // _494, i40 - number of jump attacks?
+		Parm<int> mHitTongueBombsMin;           // _434, i20 - bomb exploded with tongue (min)?
+		Parm<int> mHitTongueBombsMax;           // _444, i21 - bomb exploded with tongue (max)?
+		Parm<int> mHitBombDamageLoopMin;        // _454, i22 - damage loop (min)?
+		Parm<int> mHitBombDamageLoopMid;        // _464, i23 - damage loop (mid)?
+		Parm<int> mHitBombDamageLoopMax;        // _474, i24 - damage loop (max)?
+		Parm<int> mTongueRollLoopCount;         // _484, i30 - number of attack loops?
+		Parm<int> mMaxConsecutiveJumpAttacks;   // _494, i40 - number of jump attacks?
 	};
 
 	KingProp();
@@ -425,20 +433,20 @@ struct KingAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	King* mKing;                 // _04
-	u8 _08;                      // _08, might be bool
-	u8 _09;                      // _09, might be bool
-	int mMouthSlotFlag;          // _0C
-	int _10;                     // _10
-	int mDamageLoopCounter;      // _14
-	u32 _18;                     // _18, unknown
-	int mBombDamageCounter;      // _1C
-	int mEatBombDamageCounter;   // _20
-	f32 mDamageScaleOscillation; // _24
-	f32 _28;                     // _28
-	Vector3f mAttackPosition;    // _2C
-	Vector3f _38;                // _38
-	Vector3f _44;                // _44
+	King* mKing;                        // _04
+	u8 mAttackType;                     // _08, see KingAttackType enum
+	bool mIsTongueOut;                  // _09
+	int mMouthSlotFlag;                 // _0C
+	int mMaxMouthSlots;                 // _10
+	int mDamageLoopCounter;             // _14
+	int mConsecutiveJumpCount;          // _18
+	int mBombDamageCounter;             // _1C
+	int mEatBombDamageCounter;          // _20
+	f32 mDamageScaleOscillation;        // _24
+	f32 mMaxJumpAttackAngle;            // _28
+	Vector3f mAttackPosition;           // _2C
+	Vector3f mJumpAttackStartPosition;  // _38
+	Vector3f mJumpAttackTargetPosition; // _44
 };
 
 /**

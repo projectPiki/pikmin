@@ -10,7 +10,28 @@
 struct Controller;
 struct CreatureCollPart;
 struct DayMgr;
-struct MoveTrace;
+
+/**
+ * @brief TODO
+ */
+struct MoveTrace {
+	MoveTrace(Vector3f& p1, Vector3f& p2, f32 p3, bool p4)
+	{
+		_20 = p4;
+		_00 = p1;
+		_0C = p2;
+		_18 = p3;
+		_24 = 0;
+		_1C = 1.0f;
+	}
+
+	Vector3f _00; // _00
+	Vector3f _0C; // _0C
+	f32 _18;      // _18
+	f32 _1C;      // _1C
+	bool _20;     // _20
+	u32 _24;      // _24, unknown
+};
 
 /**
  * @brief TODO

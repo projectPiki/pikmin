@@ -62,7 +62,7 @@ f32 King::getiMass()
  */
 void King::bombDamageCounter(CollPart*)
 {
-	if (getCurrentState() == 5) {
+	if (getCurrentState() == KINGAI_Attack) {
 		mKingAi->mBombDamageCounter++;
 	}
 }
