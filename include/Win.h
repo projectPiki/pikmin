@@ -11,9 +11,7 @@ struct Texture;
 struct Vector2i;
 
 /**
- * @brief TODO
- *
- * @warning This is meant to inherit CoreNode according to RTTI. However, it doesn't seem to have a vtable? Unsure what its deal is.
+ * @brief Seemingly deprecated window drawing base class.
  */
 struct GmWin : public CoreNode {
 
@@ -23,26 +21,26 @@ struct GmWin : public CoreNode {
 	struct CloseListener {
 		virtual void onCloseWindow(); // _08
 
-		// _00 = VTBL?
+		// _00 = VTBL
 		// TODO: members
 	};
 
 	GmWin(); // unused/inlined
 
-	virtual void open();                                                      // _10
-	virtual void close();                                                     // _14
-	virtual void update();                                                    // _18 unused/inlined
-	virtual void doRender(Graphics&);                                         // _1C unused/inlined
-	virtual void render(Graphics&);                                           // _20
-	virtual void printStart(Graphics&);                                       // _24
-	virtual void print(Graphics&, int, int, char*);                           // _28
-	virtual void printcentre(Graphics&, int, char*);                          // _2C
-	virtual void printleft(Graphics&, int, char*);                            // _30
-	virtual void printright(Graphics&, int, char*);                           // _34
-	virtual void texture(Graphics&, Texture*, int, int, int, int, RectArea);  // _38
-	virtual void texturecentre(Graphics&, Texture*, int, int, int, RectArea); // _3C
-	virtual void textureleft(Graphics&, Texture*, int, int, int, RectArea);   // _40
-	virtual void textureright(Graphics&, Texture*, int, int, int, RectArea);  // _44
+	virtual void open();                                                                                          // _10
+	virtual void close();                                                                                         // _14
+	virtual void update();                                                                                        // _18 unused/inlined
+	virtual void doRender(Graphics& gfx);                                                                         // _1C unused/inlined
+	virtual void render(Graphics& gfx);                                                                           // _20
+	virtual void printStart(Graphics& gfx);                                                                       // _24
+	virtual void print(Graphics& gfx, int posX, int posY, char* message);                                         // _28
+	virtual void printcentre(Graphics& gfx, int posY, char* message);                                             // _2C
+	virtual void printleft(Graphics& gfx, int posY, char* message);                                               // _30
+	virtual void printright(Graphics& gfx, int posY, char* message);                                              // _34
+	virtual void texture(Graphics& gfx, Texture* texture, int minX, int minY, int maxX, int maxY, RectArea area); // _38
+	virtual void texturecentre(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area);  // _3C
+	virtual void textureleft(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area);    // _40
+	virtual void textureright(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area);   // _44
 
 	void placeCentre();
 	void setRect(int, int);   // unused/inlined
