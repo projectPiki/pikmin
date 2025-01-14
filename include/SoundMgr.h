@@ -1,14 +1,23 @@
 #ifndef _SOUNDMGR_H
 #define _SOUNDMGR_H
 
-#include "types.h"
+#include "Ayu.h"
+#include "Controller.h"
 #include "Node.h"
 #include "Parameters.h"
-#include "Ayu.h"
-#include "Win.h"
 #include "SoundID.h"
+#include "types.h"
+#include "Win.h"
 
 struct Creature;
+
+/**
+ * @brief TODO
+ */
+struct SeInfo {
+	int _00;   // _00
+	char* _04; // _04
+};
 
 /**
  * @brief TODO
@@ -98,30 +107,46 @@ struct SeMgr : public Node {
 	void setPikiNum(int);
 
 	// unused/inlined:
-	void findInfo(int);
-	void play(u32);
-	void stop(u32);
+	SeInfo* findInfo(int);
 	void playBGM(u32);
 	void stopBGM();
 	void stopSoundAll();
 
+	static void play(u32);
+	static void stop(u32);
+
+	// DLL inlines:
+	int getSENum() { return mSENum; }
+	SeInfo* getIndexInfo(int idx) { return &mSeInfos[idx]; }
+
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
+	// _00-_30 = SeMgr
+	int _20;          // _20
+	int mSENum;       // _24
+	int mMaxInfos;    // _28
+	SeInfo* mSeInfos; // _2C
 };
 
 /**
- * @brief TODO
+ * @brief Unused SE Test window.
  */
 struct SeWin : public GmWin {
-	virtual void open();              // _10
-	virtual void close();             // _14
-	virtual void update();            // _18
-	virtual void doRender(Graphics&); // _1C
+	virtual void open();                  // _10
+	virtual void close();                 // _14
+	virtual void update();                // _18
+	virtual void doRender(Graphics& gfx); // _1C
 
 	// _00     = VTBL
-	// _00-_14 = GmWin?
-	// TODO: members
+	// _00-_14 = CoreNode
+	// _00-_48 = GmWin
+	Controller* mController; // _48
+	int _4C;                 // _4C
+	int _50;                 // _50
+	int _54;                 // _54
+	int _58;                 // _58
+	f32 _5C;                 // _5C
+	bool _60;                // _60
 };
 
 /**

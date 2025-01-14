@@ -514,7 +514,7 @@ config.libs = [
             Object(NonMatching, "plugPikiKando/pelletState.cpp"),
             Object(NonMatching, "plugPikiKando/workObject.cpp"),
             Object(NonMatching, "plugPikiKando/routeMgr.cpp"),
-            Object(NonMatching, "plugPikiKando/seMgr.cpp"),
+            Object(Matching, "plugPikiKando/seMgr.cpp"),
             Object(Matching, "plugPikiKando/seConstants.cpp"),
             Object(NonMatching, "plugPikiKando/soundMgr.cpp"),
             Object(Matching, "plugPikiKando/updateMgr.cpp"),
