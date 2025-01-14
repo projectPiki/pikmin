@@ -152,9 +152,7 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
 	case KEY_PlayEffect:
 		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mActor->_174.updatable())) {
 			Vector3f vec = mActor->_464;
-			EffectParm parm;
-			parm.mPosition = vec;
-			parm._24       = 1.0f;
+			EffectParm parm(vec);
 			if (mWall->mObjType == OBJTYPE_SluiceSoft) {
 				UtEffectMgr::cast(11, parm);
 			} else if (mWall->mObjType == OBJTYPE_SluiceHard) {

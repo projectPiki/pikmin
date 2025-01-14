@@ -206,15 +206,8 @@ struct Creature : public RefCountable, public EventTalker {
 	void startStickObjectPellet(Pellet*, int, f32);
 	bool isStickLeader();
 
-	// fake according to the DLL
-	inline void resetVelocity()
-	{
-		mVelocity.set(Vector3f(0.0f, 0.0f, 0.0f));
-		mTargetVelocity.set(Vector3f(0.0f, 0.0f, 0.0f));
-	}
-
-	// this is apparently fake, or not a creature inline?
-	inline bool isStuckTo(Creature* creature) { return mStickTarget == creature; }
+	inline void setUnk22() { setCreatureFlag(CF_Unk22); }
+	inline void resetUnk22() { resetCreatureFlag(CF_Unk22); } // TODO: rename this to one of the DLL inlines later
 
 	// these are setFlag/resetFlag/isFlag in the DLL, but this is clearer.
 	void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
@@ -223,9 +216,9 @@ struct Creature : public RefCountable, public EventTalker {
 
 	Vector3f& getPosition() { return mPosition; }
 
-	inline void disableFaceDirAdjust() { resetCreatureFlag(CF_FaceDirAdjust); } // this should be one of the disable inlines
+	void disableFaceDirAdjust() { resetCreatureFlag(CF_FaceDirAdjust); } // this should be one of the disable inlines
 
-	inline void startFlying()
+	void startFlying()
 	{
 		setCreatureFlag(CF_IsFlying);
 		resetCreatureFlag(CF_GravityEnabled);
@@ -280,34 +273,41 @@ struct Creature : public RefCountable, public EventTalker {
 	    bool isAIActive();
 	    bool isDamaged();
 	    bool isObjType(int);
+	    BOOL isFlying();
 
 	    f32 calcDistance(Creature&);
 
-	    BOOL isFlying();
-
+	    void enableFaceDirAdjust();
 	    void disableFaceDirAdjust();
+
+	    void enableFixPos();
 	    void disableFixPos();
+
+	    void enableGravity();
 	    void disableGravity();
 
 	    void enableAirResist(f32);
-	    void enableFaceDirAdjust();
-	    void enableFixPos();
-	    void enableGravity();
+
+	    void startFix();
 	    void finishFix();
+
 	    void finishFlying();
+
 	    void inputPosition(Vector3f&);
 	    void outputPosition(Vector3f&);
+
+	    void setStateDamaged();
 	    void resetStateDamaged();
+
 	    void restartAI();
+	    void stopAI();
+
 	    void setCarryOver();
+	    void unsetCarryOver();
+
 	    void setFree(bool);
 	    void setInsideView();
 	    void setOutsideView();
-	    void setStateDamaged();
-	    void startFix();
-	    void stopAI();
-	    void unsetCarryOver();
-
 	*/
 
 	// _00     = VTBL
@@ -331,7 +331,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Vector3f mRotation;                  // _88, but I really don't want that extra level to access these
 	Vector3f mPosition;                  // _94, just a heads up in case it becomes important
 	f32 mDirection;                      // _A0
-	Vector3f mTargetVelocity;            // _A4
+	Vector3f mTargetVelocity;            // _A4, a.k.a. "drive"
 	Vector3f _B0;                        // _B0
 	Vector3f mVolatileVelocity;          // _BC
 	u32 mCreatureFlags;                  // _C8, bitflag

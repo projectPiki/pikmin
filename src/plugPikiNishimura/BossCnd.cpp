@@ -39,9 +39,7 @@ bool CndIsAlive::satisfy(Creature* target)
  */
 bool CndBossFlick::satisfy(Creature* target)
 {
-	u32 badCompiler[2];
-
-	if (target && target->isAlive() && !target->isCreatureFlag(CF_StuckToMouth) && target->isStuckTo(mBoss)) {
+	if (target && target->isAlive() && !target->isStickToMouth() && target->getStickObject() == mBoss) {
 		if (randFloat(0.999999f) < static_cast<BossProp*>(mBoss->mProps)->mBossProps.mFlickChance()) {
 			return true;
 		}
@@ -57,7 +55,7 @@ bool CndBossFlick::satisfy(Creature* target)
  */
 bool CndStickBossKill::satisfy(Creature* target)
 {
-	if (target && target->isAlive() && target->isStuckTo(mBoss)) {
+	if (target && target->isAlive() && target->getStickObject() == mBoss) {
 		return true;
 	}
 	return false;
@@ -70,7 +68,7 @@ bool CndStickBossKill::satisfy(Creature* target)
  */
 bool CndStickMouthKill::satisfy(Creature* target)
 {
-	if (target && target->isAlive() && target->isCreatureFlag(CF_StuckToMouth) && target->isStuckTo(mBoss)) {
+	if (target && target->isAlive() && target->isStickToMouth() && target->getStickObject() == mBoss) {
 		return true;
 	}
 	return false;
@@ -83,9 +81,8 @@ bool CndStickMouthKill::satisfy(Creature* target)
  */
 bool CndBossCollKill::satisfy(Creature* target)
 {
-	if (target && target->isAlive() && !target->isCreatureFlag(CF_StuckToMouth) && target->isStuckTo(mBoss)) {
-		CollPart* part = target->getStickPart();
-		if (mCollID == part->getID().mId) {
+	if (target && target->isAlive() && !target->isStickToMouth() && target->getStickObject() == mBoss) {
+		if (mCollID == target->getStickPart()->getID().mId) {
 			return true;
 		}
 	}

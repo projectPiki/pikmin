@@ -113,7 +113,8 @@ enum TekiTypes {
 struct TekiInteractionKey {
 	TekiInteractionKey(int, Interaction*);
 
-	// TODO: members
+	int mInteractionType;      // _00
+	Interaction* mInteraction; // _04
 };
 
 DEFINE_ENUM_TYPE(TekiEventType, Ground = 0, Entity = 1, Wall = 2);
@@ -208,8 +209,8 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	virtual void spawnTeki(int);                         // _198
 	virtual void shootBall(Creature&);                   // _19C
 	virtual void eventPerformed(TekiEvent&);             // _1A0
-	virtual void interact(struct TekiInteractionKey&);   // _1A4
-	virtual void interactDefault(TekiInteractionKey&);   // _1A8
+	virtual bool interact(struct TekiInteractionKey&);   // _1A4
+	virtual bool interactDefault(TekiInteractionKey&);   // _1A8
 	virtual void drawDefault(Graphics&);                 // _1AC
 	virtual void drawTekiShape(Graphics&);               // _1B0
 	virtual void drawTekiDebugInfo(Graphics&);           // _1B4
@@ -345,6 +346,17 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 		for (int i = 0; i < 4; i++) {
 			mTargetCreatures[i].reset();
 		}
+	}
+
+	// really nakata, was all this necessary (these are all DLL inlines)
+	void inputVelocity(Vector3f& vel) { mVelocity.input(vel); }
+	void inputDrive(Vector3f& drive) { mTargetVelocity.input(drive); }
+	void stopVelocity() { inputVelocity(Vector3f(0.0f, 0.0f, 0.0f)); }
+	void stopDrive() { inputDrive(Vector3f(0.0f, 0.0f, 0.0f)); }
+	void stopMove()
+	{
+		stopVelocity();
+		stopDrive();
 	}
 
 	static void outputDirectionVector(f32 angle, Vector3f& outVec) { outVec.set(NMathF::sin(angle), 0.0f, NMathF::cos(angle)); }

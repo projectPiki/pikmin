@@ -6,14 +6,36 @@
 #include "zen/CallBack.h"
 #include "Vector.h"
 
+struct Creature;
+
 /**
  * @brief TODO
  */
 struct EffectParm {
+	EffectParm(Vector3f* p1)
+	{
+		_20 = p1;
+		_24 = 1.0f;
+	}
+
+	EffectParm(Vector3f& pos)
+	{
+		mPosition = pos;
+		_24       = 1.0f;
+	}
+	// DLL inline ctors to make/check:
+	EffectParm(Creature*);
+	EffectParm(Vector3f& pos, Vector3f& dir)
+	{
+		// need to confirm
+		mPosition  = pos;
+		mDirection = dir;
+	}
 
 	Vector3f mPosition;  // _00
 	Vector3f mDirection; // _0C
-	u8 _18[0xC];         // _18, unknown
+	u8 _18[0x8];         // _18, unknown
+	Vector3f* _20;       // _20
 	f32 _24;             // _24
 	u8 _28[0x4];         // _28, I think?
 	                     // TODO: members

@@ -2,6 +2,7 @@
 #include "OnePlayerSection.h"
 #include "gameflow.h"
 #include "Pellet.h"
+#include "PelletState.h"
 #include "sysNew.h"
 #include "DebugLog.h"
 
@@ -762,10 +763,7 @@ void GeneratorCache::saveUfoParts(Pellet* part)
 
 	void* heap = (void*)(((u32)mCacheHeap + mUsedSize));
 	RamStream stream(heap, mFreeSize);
-	// TODO: work this out once more of pellet is done
-	// I assume it writes the pellet config ID, so
-	// stream.writeInt(part->mConfig->_2C.mId);
-	// stream.writeInt(part->_55C->_2C);
+	stream.writeInt(part->mConfig->_2C.mId);
 	part->save(stream, true);
 	int pos = stream.getPosition();
 	mUsedSize += pos;
@@ -780,94 +778,6 @@ void GeneratorCache::saveUfoParts(Pellet* part)
 	cache->mUfoPartsCount++;
 	cache->mTotalCacheSize += pos;
 	cache->mUfoPartsCacheSize += pos;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  mr        r30, r4
-	  stw       r29, 0x34(r1)
-	  mr        r29, r3
-	  lwz       r3, 0x80(r3)
-	  lwz       r31, 0x48(r29)
-	  b         .loc_0x40
-
-	.loc_0x2C:
-	  lwz       r0, 0x14(r31)
-	  cmplw     r0, r3
-	  bne-      .loc_0x3C
-	  b         .loc_0x4C
-
-	.loc_0x3C:
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x40:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x2C
-	  li        r31, 0
-
-	.loc_0x4C:
-	  cmplwi    r31, 0
-	  lis       r3, 0x8022
-	  lwz       r6, 0x70(r29)
-	  addi      r4, r3, 0x7398
-	  lwz       r5, 0x78(r29)
-	  lwz       r7, 0x7C(r29)
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x74C8
-	  stw       r4, 0x18(r1)
-	  lis       r3, 0x802A
-	  addi      r3, r3, 0x755C
-	  stw       r0, 0x18(r1)
-	  add       r4, r6, r5
-	  li        r0, 0
-	  stw       r3, 0x18(r1)
-	  addi      r3, r1, 0x14
-	  stw       r4, 0x1C(r1)
-	  stw       r0, 0x20(r1)
-	  stw       r7, 0x24(r1)
-	  lwz       r4, 0x55C(r30)
-	  lwz       r4, 0x2C(r4)
-	  bl        -0xBAC8C
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x14
-	  li        r5, 0x1
-	  bl        -0x55E14
-	  lwz       r4, 0x20(r1)
-	  lwz       r0, 0x78(r29)
-	  add       r0, r0, r4
-	  stw       r0, 0x78(r29)
-	  lwz       r0, 0x7C(r29)
-	  sub       r0, r0, r4
-	  stw       r0, 0x7C(r29)
-	  lwz       r0, 0x7C(r29)
-	  cmpwi     r0, 0
-	  bgt-      .loc_0xE0
-	  b         .loc_0xE4
-
-	.loc_0xE0:
-	  cmpwi     r0, 0x400
-
-	.loc_0xE4:
-	  lwz       r3, 0x34(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x34(r31)
-	  lwz       r0, 0x1C(r31)
-	  add       r0, r0, r4
-	  stw       r0, 0x1C(r31)
-	  lwz       r0, 0x28(r31)
-	  add       r0, r0, r4
-	  stw       r0, 0x28(r31)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

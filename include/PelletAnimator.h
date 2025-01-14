@@ -48,8 +48,14 @@ struct PelletAnimator {
 	void startMotion(PaniMotionInfo*, PaniMotionInfo*);
 	void finishMotion(PaniAnimKeyListener*);
 
-	PaniPelletAnimator mAnimatorA; // _00
-	PaniPelletAnimator mAnimatorB; // _54
+	PaniPelletAnimator& getLowerAnimator() { return mLowerAnimator; }
+	PaniPelletAnimator& getUpperAnimator() { return mUpperAnimator; }
+
+	// DLL inlines:
+	int getMainMotionIndex();
+
+	PaniPelletAnimator mLowerAnimator; // _00
+	PaniPelletAnimator mUpperAnimator; // _54
 };
 
 #endif

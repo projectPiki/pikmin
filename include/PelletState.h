@@ -19,13 +19,14 @@ enum PelletStateID {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct PelletStateMachine : public StateMachine<Pellet> {
 	virtual void init(Pellet*); // _08
 
 	// _00     = VTBL
 	// _00-_1C = StateMachine
-	// TODO: members
 };
 
 /**

@@ -986,10 +986,8 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 		case 2:
 			f32 randAngle = 2.0f * randFloat(PI);
 			Vector3f dir(40.0f * sinf(randAngle), 0.0f, 40.0f * cosf(randAngle));
-			EffectParm parm;
-			parm.mPosition  = navi->getPosition();
-			parm.mDirection = dir;
-			parm._24        = 80.0f;
+			EffectParm parm(navi->getPosition(), dir);
+			parm._24 = 80.0f;
 			UtEffectMgr::cast(3, parm);
 			break;
 		case 3:
@@ -4217,9 +4215,7 @@ void NaviGatherState::init(Navi* navi)
 	SeSystem::playPlayerSe(SE_GATHER);
 
 	int effIDMaybe = (navi->mNaviID == 0) ? 1 : 2;
-	EffectParm parm;
-	parm.mPosition = navi->mPosition;
-	parm._24       = 1.0f;
+	EffectParm parm(navi->mPosition);
 	UtEffectMgr::cast(effIDMaybe, parm);
 	UtEffectMgr::cast(7, parm);
 	_18 = 0;

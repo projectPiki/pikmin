@@ -5,14 +5,17 @@
 #include "DualCreature.h"
 #include "CreatureProp.h"
 #include "ObjectMgr.h"
-#include "Animator.h"
+#include "PelletAnimator.h"
 #include "StateMachine.h"
+#include "Shape.h"
 
 struct PaniAnimKeyEvent;
 struct PaniMotionTable;
 struct PelletShapeObject;
+struct PelletStateMachine;
 struct PelletView;
 struct Shape;
+struct RippleEffect;
 
 /**
  * @brief TODO
@@ -116,15 +119,17 @@ struct PelletConfig : public Parameters, public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x5BC.
  */
-struct Pellet : public DualCreature {
+struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	Pellet();
 
 	virtual void init(Vector3f&);                        // _28
 	virtual void startAI(int);                           // _34
 	virtual f32 getiMass();                              // _38
 	virtual f32 getSize();                               // _3C
-	virtual f32 getCylinderHeight();                     // _44V
+	virtual f32 getCylinderHeight();                     // _44
 	virtual void doSave(RandomAccessStream&);            // _50
 	virtual void doLoad(RandomAccessStream&);            // _54
 	virtual Vector3f getCentre();                        // _58
@@ -179,21 +184,50 @@ struct Pellet : public DualCreature {
 
 	static bool isUfoPartsID(u32);
 
-	AState<Pellet>* getCurrState() { return nullptr; } // TODO: fix later
-	void setCurrState(AState<Pellet>* state) { }       // TODO: fix later
+	AState<Pellet>* getCurrState() { return mCurrentState; }
+	void setCurrState(AState<Pellet>* state) { mCurrentState = state; }
+
+	void setMotionFlag(u8 flag) { mMotionFlag |= flag; }
+	bool isMotionFlag(u8 flag) { return mMotionFlag & flag; }
 
 	// DLL inlines to do:
-	bool isMotionFlag(u8);
-	void setMotionFlag(u8);
 	bool isUfoParts();
 
 	bool isSlotFree(int);
 	int getNearestFreeSlotIndex();
 
-	// _00      = VTBL
-	// _00-_440 = DualCreature
-	u8 _440[0x470 - 0x440];              // _440, unknown
-	StateMachine<Pellet>* mStateMachine; // _470
+	// _00       = VTBL1
+	// _440      = VTBL2
+	// _00-_440  = DualCreature
+	// _440-_444 = PaniAnimKeyListener
+	Vector3f _444;                        // _444
+	u8 _450;                              // _450
+	bool mIsPlayTrySound;                 // _451
+	u8 mMotionFlag;                       // _452
+	RippleEffect* mRippleEffect;          // _454
+	u8 _458[0x464 - 0x458];               // _458, unknown
+	Vector3f _464;                        // _464
+	PelletStateMachine* mStateMachine;    // _470
+	AState<Pellet>* mCurrentState;        // _474
+	Creature* _478;                       // _478
+	Vector3f _47C;                        // _47C
+	u16 _488;                             // _488
+	f32 _48C;                             // _48C
+	u16 _490;                             // _490
+	Vector3f _494;                        // _494
+	u8 _4A0[0x4A8 - 0x4A0];               // _4A0, unknown
+	void* mPelletView;                    // _4A8, both PelletView* and Creature* - see Pellet::getBottomRadius
+	PelletAnimator mAnimator;             // _4AC
+	u32 _554;                             // _554, unknown
+	u8 _558[0x4];                         // _558, unknown
+	PelletConfig* mConfig;                // _55C
+	f32 _560;                             // _560
+	u8 _564[0x570 - 0x564];               // _564, unknown
+	u16 _570;                             // _570
+	CollInfo* mPelletCollInfo;            // _574
+	SearchData mSearchData[4];            // _578
+	ShapeDynMaterials mShapeDynMaterials; // _5A8
+	bool mIsAlive;                        // _5B8
 };
 
 /**

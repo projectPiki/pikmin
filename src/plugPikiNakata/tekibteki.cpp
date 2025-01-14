@@ -13,6 +13,7 @@
 #include "RadarInfo.h"
 #include "TekiStrategy.h"
 #include "EffectMgr.h"
+#include "DebugLog.h"
 
 int BTeki::TEKI_OPTION_VISIBLE            = 1 << 0;
 int BTeki::TEKI_OPTION_SHADOW_VISIBLE     = 1 << 1;
@@ -40,20 +41,14 @@ int BTeki::ANIMATION_KEY_OPTION_LOOPEND   = 1 << KEY_LoopEnd;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT(nullptr);
 
 /*
  * --INFO--
@@ -580,9 +575,9 @@ void BTeki::reset()
 	mCollisionRadius = getParameterF(TPF_CollisionRadius);
 
 	prepareEffects();
-	resetVelocity();
+	stopMove();
 
-	getCentreSize();
+	PRINT("NNNNNreset:%08x:%d:%s:%f\n", this, mTekiType, TekiMgr::getTypeName(mTekiType), getCentreSize());
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1097,7 +1092,7 @@ void BTeki::startMotion(int motionID)
  */
 void BTeki::startStoppingMove()
 {
-	resetVelocity();
+	stopMove();
 	setTekiOption(TEKIOPT_StoppingMove);
 	mPreStopAnimationSpeed = mAnimationSpeed;
 }
@@ -5625,7 +5620,7 @@ void BTeki::wallCallback(Plane&, DynCollObject*)
  * Address:	80148790
  * Size:	000050
  */
-void BTeki::interact(TekiInteractionKey&)
+bool BTeki::interact(TekiInteractionKey&)
 {
 	/*
 	.loc_0x0:
@@ -5657,7 +5652,7 @@ void BTeki::interact(TekiInteractionKey&)
  * Address:	801487E0
  * Size:	000148
  */
-void BTeki::interactDefault(TekiInteractionKey&)
+bool BTeki::interactDefault(TekiInteractionKey&)
 {
 	/*
 	.loc_0x0:
