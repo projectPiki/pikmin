@@ -1,5 +1,15 @@
 #include "MemoryCard.h"
 #include "Stream.h"
+#include "CardUtil.h"
+#include "stl/string.h"
+#include "gameflow.h"
+#include "PlayerState.h"
+#include "system.h"
+
+CARDMemoryCard CardWorkArea;
+CARDStat cst;
+u8 cardData[0x1000]; // no idea how big this should be
+const char* basecardname = "Pikmin dataFile";
 
 /*
  * --INFO--
@@ -36,14 +46,9 @@ void MemoryCard::GetBlockSize(s32)
  * Address:	800738C8
  * Size:	00000C
  */
-void MemoryCard::getOptionsOffset(int)
+int MemoryCard::getOptionsOffset(int id)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r3,r4,13,0,18
-	  addi      r3, r3, 0x2000
-	  blr
-	*/
+	return id * 0x2000 + 0x2000;
 }
 
 /*
@@ -51,14 +56,9 @@ void MemoryCard::getOptionsOffset(int)
  * Address:	800738D4
  * Size:	00000C
  */
-void MemoryCard::getGameFileOffset(int)
+int MemoryCard::getGameFileOffset(int id)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r3,r4,15,0,16
-	  addi      r3, r3, 0x6000
-	  blr
-	*/
+	return id * 0x8000 + 0x6000;
 }
 
 /*
@@ -126,7 +126,7 @@ void MemoryCard::getGameFileStream(int)
  * Address:	800738E0
  * Size:	00017C
  */
-void MemoryCard::calcChecksum(void*, u32)
+u32 MemoryCard::calcChecksum(void* dataptr, u32 length)
 {
 	/*
 	.loc_0x0:
@@ -243,7 +243,18 @@ void MemoryCard::calcChecksum(void*, u32)
  */
 bool MemoryCard::hasCardFinished()
 {
-	return false;
+	bool res = CardUtilIsCardBusy() != false;
+	if (res) {
+		CardUtilUnmount(0);
+		CardUtilIdleWhileBusy();
+		if (CardUtilResultCode() < -1) {
+			_68 = true;
+		}
+	}
+
+	return res;
+
+	FORCE_DONT_INLINE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -334,106 +345,42 @@ void MemoryCard::writeOneGameFile(int)
  * Address:	80073ACC
  * Size:	000134
  */
-void MemoryCard::attemptFormatCard(int)
+bool MemoryCard::attemptFormatCard(int channel)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  bl        0x196FB8
-	  cmpwi     r3, 0
-	  beq-      .loc_0x110
-	  lis       r3, 0x803A
-	  subi      r4, r3, 0x1DA0
-	  addi      r3, r31, 0
-	  li        r5, 0
-	  li        r6, 0
-	  bl        0x197478
-	  cmpwi     r3, 0
-	  bge-      .loc_0x5C
-	  li        r0, -0x2
-	  stw       r0, 0x44(r30)
-	  li        r3, 0
-	  b         .loc_0x11C
+	if (CARDProbe(channel)) {
+		if (CARDMountAsync(channel, &CardWorkArea, 0, 0) < 0) {
+			mErrorCode = CARD_RESULT_WRONGDEVICE;
+			return false;
+		}
 
-	.loc_0x5C:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x134
-	  cmpwi     r3, -0x6
-	  beq-      .loc_0xA0
-	  bge-      .loc_0x80
-	  cmpwi     r3, -0xD
-	  beq-      .loc_0xA0
-	  b         .loc_0x88
-
-	.loc_0x80:
-	  cmpwi     r3, 0
-	  beq-      .loc_0xA0
-
-	.loc_0x88:
-	  mr        r3, r31
-	  bl        0x197698
-	  li        r0, -0x6
-	  stw       r0, 0x44(r30)
-	  li        r3, 0
-	  b         .loc_0x11C
-
-	.loc_0xA0:
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        0x19786C
-	  cmpwi     r3, 0
-	  bge-      .loc_0xCC
-	  mr        r3, r31
-	  bl        0x19766C
-	  li        r0, -0x6
-	  stw       r0, 0x44(r30)
-	  li        r3, 0
-	  b         .loc_0x11C
-
-	.loc_0xCC:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x134
-	  cmpwi     r3, 0
-	  bge-      .loc_0xF8
-	  mr        r3, r31
-	  bl        0x197640
-	  li        r0, -0x6
-	  stw       r0, 0x44(r30)
-	  li        r3, 0
-	  b         .loc_0x11C
-
-	.loc_0xF8:
-	  mr        r3, r31
-	  bl        0x197628
-	  li        r0, 0
-	  stw       r0, 0x44(r30)
-	  li        r3, 0x1
-	  b         .loc_0x11C
-
-	.loc_0x110:
-	  li        r0, -0x1
-	  stw       r0, 0x44(r30)
-	  li        r3, 0
-
-	.loc_0x11C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x134:
-	*/
+		switch (waitWhileBusy(channel)) {
+		default:
+			CARDUnmount(channel);
+			mErrorCode = CARD_RESULT_BROKEN;
+			return false;
+		case CARD_RESULT_READY:
+		case CARD_RESULT_BROKEN:
+		case CARD_RESULT_ENCODING:
+			if (CARDFormatAsync(channel, 0) < 0) {
+				CARDUnmount(channel);
+				mErrorCode = CARD_RESULT_BROKEN;
+				return false;
+			} else {
+				if (waitWhileBusy(channel) < 0) {
+					CARDUnmount(channel);
+					mErrorCode = CARD_RESULT_BROKEN;
+					return false;
+				} else {
+					CARDUnmount(channel);
+					mErrorCode = CARD_RESULT_READY;
+					return true;
+				}
+			}
+			break;
+		}
+	}
+	mErrorCode = CARD_RESULT_BUSY;
+	return false;
 }
 
 /*
@@ -441,27 +388,9 @@ void MemoryCard::attemptFormatCard(int)
  * Address:	80073C00
  * Size:	000038
  */
-void MemoryCard::waitWhileBusy(int)
+int MemoryCard::waitWhileBusy(int chan)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-
-	.loc_0x14:
-	  mr        r3, r31
-	  bl        0x195358
-	  cmpwi     r3, -0x1
-	  beq+      .loc_0x14
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	while (CARDGetResultCode(chan) == -1) { }
 }
 
 /*
@@ -469,8 +398,42 @@ void MemoryCard::waitWhileBusy(int)
  * Address:	80073C38
  * Size:	0001BC
  */
-void MemoryCard::getCardStatus(int)
+bool MemoryCard::getCardStatus(int channel)
 {
+	if (CARDProbe(channel)) {
+		if (CARDMountAsync(channel, &CardWorkArea, 0, 0) < 0) {
+			mErrorCode = CARD_RESULT_WRONGDEVICE;
+			return false;
+		}
+
+		switch (waitWhileBusy(channel)) {
+		default:
+			CARDUnmount(channel);
+			mErrorCode = CARD_RESULT_IOERROR;
+			return false;
+		case CARD_RESULT_READY:
+		case CARD_RESULT_BROKEN:
+		case CARD_RESULT_ENCODING:
+			if (CARDCheckAsync(channel, 0) < 0) {
+				CARDUnmount(channel);
+				mErrorCode = CARD_RESULT_BROKEN;
+				return false;
+			} else {
+				if (waitWhileBusy(channel) < 0) {
+					CARDUnmount(channel);
+					mErrorCode = CARD_RESULT_BROKEN;
+					return false;
+				} else {
+					CARDUnmount(channel);
+					mErrorCode = CARD_RESULT_READY;
+					return true;
+				}
+			}
+			break;
+		}
+	}
+	mErrorCode = CARD_RESULT_BUSY;
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -624,6 +587,25 @@ void MemoryCard::getCardStatus(int)
  */
 void MemoryCard::checkUseFile()
 {
+	CARDStat stat;
+	for (int i = 0; i < 127; i++) {
+		if (CARDGetStatus(_34, i, &stat) < 1) {
+			OSTime time = OS_TIMER_CLOCK;
+			OSCalendarTime calendar;
+			OSTicksToCalendarTime(time, &calendar);
+			if (!strncmp(stat.fileName, basecardname, 15)) {
+				strcpy(mFilePath, stat.fileName);
+				_38 = i;
+				return;
+			}
+
+			if (!strncmp(stat.fileName, "Pikmin", 6)) {
+				_3C = i;
+			} else if (!strncmp(stat.fileName, "~Pikmin", 7)) {
+				_3C = i;
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -707,8 +689,50 @@ void MemoryCard::checkUseFile()
  * Address:	80073EF0
  * Size:	000174
  */
-void MemoryCard::getMemoryCardState(bool)
+int MemoryCard::getMemoryCardState(bool flag)
 {
+
+	_34        = -1;
+	mErrorCode = CARD_RESULT_READY;
+	_38        = -1;
+	_3C        = -1;
+
+	if (getCardStatus(0)) {
+		_34 = 0;
+		checkUseFile();
+		if (_38 == -1) {
+			s32 temp, temp2;
+			if (CARDFreeBlocks(_34, &temp, &temp2) < 0) {
+				CARDUnmount(_34);
+				_34        = -1;
+				mErrorCode = CARD_RESULT_NOFILE;
+			}
+			if (temp2 < 1) {
+				CARDUnmount(_34);
+				_38        = -2;
+				mErrorCode = CARD_RESULT_NOENT;
+			}
+			if (temp < _40) {
+				CARDUnmount(_34);
+				_38        = -2;
+				mErrorCode = CARD_RESULT_NOCARD;
+			}
+			CARDUnmount(_34);
+		}
+	}
+
+	if (flag && _34 >= 0 && _38 != -2) {
+		loadCurrentFile();
+		mErrorCode = CARD_RESULT_READY;
+	} else if (_3C != -1) {
+		CardUtilMount(0, &CardWorkArea);
+		CardUtilIdleWhileBusy();
+		CardUtilErase(0, _3C);
+		CardUtilIdleWhileBusy();
+		CardUtilUnmount(0);
+		CardUtilIdleWhileBusy();
+	}
+	return mErrorCode;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -828,6 +852,16 @@ void MemoryCard::getMemoryCardState(bool)
  */
 void MemoryCard::loadCurrentFile()
 {
+	CardUtilMount(0, &CardWorkArea);
+	CardUtilIdleWhileBusy();
+	CARDGetStatus(0, _38, &cst);
+	CardUtilOpen(0, _38, &cardData);
+	CardUtilIdleWhileBusy();
+	CardUtilUnmount(0);
+	CardUtilIdleWhileBusy();
+
+	OSCalendarTime calendar;
+	OSTicksToCalendarTime(OSGetTick(), &calendar);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -882,140 +916,141 @@ void MemoryCard::loadCurrentFile()
  * Address:	80074114
  * Size:	0001DC
  */
-void MemoryCard::getNewestOptionsIndex()
+int MemoryCard::getNewestOptionsIndex()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x803B
-	  stw       r0, 0x4(r1)
-	  lis       r5, 0x8022
-	  lis       r4, 0x8022
-	  stwu      r1, -0x80(r1)
-	  lis       r3, 0x802A
-	  stmw      r20, 0x50(r1)
-	  lis       r26, 0x3254
-	  subi      r27, r6, 0x7DA0
-	  addi      r28, r26, 0x6532
-	  addi      r29, r5, 0x7398
-	  addi      r30, r4, 0x74C8
-	  addi      r31, r3, 0x755C
-	  li        r23, -0x1
-	  li        r22, -0x1
-	  li        r21, 0
-	  li        r25, 0x2000
-
-	.loc_0x48:
-	  li        r0, 0x2AA
-	  add       r24, r27, r25
-	  mtctr     r0
-	  addi      r11, r24, 0
-	  addi      r10, r26, 0x6532
-	  li        r9, 0
-
-	.loc_0x60:
-	  rlwinm    r8,r9,0,24,31
-	  lwz       r0, 0x0(r11)
-	  addi      r4, r8, 0x1
-	  rlwinm    r5,r9,24,0,7
-	  rlwinm    r3,r4,16,8,15
-	  subi      r6, r8, 0x1
-	  or        r3, r5, r3
-	  rlwinm    r5,r6,8,16,23
-	  addi      r9, r9, 0x1
-	  addi      r7, r8, 0x2
-	  rlwinm    r8,r9,0,24,31
-	  or        r3, r5, r3
-	  rlwimi    r3,r7,0,24,31
-	  add       r10, r10, r3
-	  addi      r4, r8, 0x1
-	  rlwinm    r5,r9,24,0,7
-	  rlwinm    r3,r4,16,8,15
-	  add       r10, r10, r0
-	  lwz       r0, 0x4(r11)
-	  subi      r6, r8, 0x1
-	  or        r3, r5, r3
-	  rlwinm    r5,r6,8,16,23
-	  addi      r7, r8, 0x2
-	  addi      r9, r9, 0x1
-	  rlwinm    r8,r9,0,24,31
-	  or        r3, r5, r3
-	  rlwimi    r3,r7,0,24,31
-	  add       r10, r10, r3
-	  addi      r4, r8, 0x1
-	  rlwinm    r3,r4,16,8,15
-	  rlwimi    r3,r9,24,0,7
-	  subi      r6, r8, 0x1
-	  add       r10, r10, r0
-	  lwz       r0, 0x8(r11)
-	  addi      r7, r8, 0x2
-	  rlwimi    r3,r6,8,16,23
-	  rlwimi    r3,r7,0,24,31
-	  add       r10, r10, r3
-	  add       r10, r10, r0
-	  addi      r11, r11, 0xC
-	  addi      r9, r9, 0x1
-	  bdnz+     .loc_0x60
-	  sub       r20, r28, r10
-	  li        r3, 0x14
-	  bl        -0x2D220
-	  cmplwi    r3, 0
-	  beq-      .loc_0x13C
-	  stw       r29, 0x4(r3)
-	  li        r4, 0
-	  li        r0, 0x2000
-	  stw       r30, 0x4(r3)
-	  stw       r31, 0x4(r3)
-	  stw       r24, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x13C:
-	  mr        r24, r3
-	  lwz       r12, 0x4(r24)
-	  li        r4, 0x1FF8
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r24
-	  lwz       r12, 0x4(r24)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r3, 0
-	  addi      r3, r24, 0
-	  lwz       r12, 0x4(r24)
-	  mr        r24, r0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplw     r3, r20
-	  bne-      .loc_0x19C
-	  cmpw      r24, r23
-	  ble-      .loc_0x19C
-	  addi      r23, r24, 0
-	  addi      r22, r21, 0
-
-	.loc_0x19C:
-	  addi      r21, r21, 0x1
-	  cmpwi     r21, 0x2
-	  addi      r25, r25, 0x2000
-	  blt+      .loc_0x48
-	  cmpwi     r22, -0x1
-	  beq-      .loc_0x1C4
-	  lis       r3, 0x803A
-	  addi      r0, r23, 0x1
-	  subi      r3, r3, 0x2848
-	  stw       r0, 0x174(r3)
-
-	.loc_0x1C4:
-	  mr        r3, r22
-	  lmw       r20, 0x50(r1)
-	  lwz       r0, 0x84(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	FORCE_DONT_INLINE; // placeholder
+	                   /*
+	                   .loc_0x0:
+	                     mflr      r0
+	                     lis       r6, 0x803B
+	                     stw       r0, 0x4(r1)
+	                     lis       r5, 0x8022
+	                     lis       r4, 0x8022
+	                     stwu      r1, -0x80(r1)
+	                     lis       r3, 0x802A
+	                     stmw      r20, 0x50(r1)
+	                     lis       r26, 0x3254
+	                     subi      r27, r6, 0x7DA0
+	                     addi      r28, r26, 0x6532
+	                     addi      r29, r5, 0x7398
+	                     addi      r30, r4, 0x74C8
+	                     addi      r31, r3, 0x755C
+	                     li        r23, -0x1
+	                     li        r22, -0x1
+	                     li        r21, 0
+	                     li        r25, 0x2000
+	               
+	                   .loc_0x48:
+	                     li        r0, 0x2AA
+	                     add       r24, r27, r25
+	                     mtctr     r0
+	                     addi      r11, r24, 0
+	                     addi      r10, r26, 0x6532
+	                     li        r9, 0
+	               
+	                   .loc_0x60:
+	                     rlwinm    r8,r9,0,24,31
+	                     lwz       r0, 0x0(r11)
+	                     addi      r4, r8, 0x1
+	                     rlwinm    r5,r9,24,0,7
+	                     rlwinm    r3,r4,16,8,15
+	                     subi      r6, r8, 0x1
+	                     or        r3, r5, r3
+	                     rlwinm    r5,r6,8,16,23
+	                     addi      r9, r9, 0x1
+	                     addi      r7, r8, 0x2
+	                     rlwinm    r8,r9,0,24,31
+	                     or        r3, r5, r3
+	                     rlwimi    r3,r7,0,24,31
+	                     add       r10, r10, r3
+	                     addi      r4, r8, 0x1
+	                     rlwinm    r5,r9,24,0,7
+	                     rlwinm    r3,r4,16,8,15
+	                     add       r10, r10, r0
+	                     lwz       r0, 0x4(r11)
+	                     subi      r6, r8, 0x1
+	                     or        r3, r5, r3
+	                     rlwinm    r5,r6,8,16,23
+	                     addi      r7, r8, 0x2
+	                     addi      r9, r9, 0x1
+	                     rlwinm    r8,r9,0,24,31
+	                     or        r3, r5, r3
+	                     rlwimi    r3,r7,0,24,31
+	                     add       r10, r10, r3
+	                     addi      r4, r8, 0x1
+	                     rlwinm    r3,r4,16,8,15
+	                     rlwimi    r3,r9,24,0,7
+	                     subi      r6, r8, 0x1
+	                     add       r10, r10, r0
+	                     lwz       r0, 0x8(r11)
+	                     addi      r7, r8, 0x2
+	                     rlwimi    r3,r6,8,16,23
+	                     rlwimi    r3,r7,0,24,31
+	                     add       r10, r10, r3
+	                     add       r10, r10, r0
+	                     addi      r11, r11, 0xC
+	                     addi      r9, r9, 0x1
+	                     bdnz+     .loc_0x60
+	                     sub       r20, r28, r10
+	                     li        r3, 0x14
+	                     bl        -0x2D220
+	                     cmplwi    r3, 0
+	                     beq-      .loc_0x13C
+	                     stw       r29, 0x4(r3)
+	                     li        r4, 0
+	                     li        r0, 0x2000
+	                     stw       r30, 0x4(r3)
+	                     stw       r31, 0x4(r3)
+	                     stw       r24, 0x8(r3)
+	                     stw       r4, 0xC(r3)
+	                     stw       r0, 0x10(r3)
+	               
+	                   .loc_0x13C:
+	                     mr        r24, r3
+	                     lwz       r12, 0x4(r24)
+	                     li        r4, 0x1FF8
+	                     lwz       r12, 0x5C(r12)
+	                     mtlr      r12
+	                     blrl
+	                     mr        r3, r24
+	                     lwz       r12, 0x4(r24)
+	                     lwz       r12, 0x8(r12)
+	                     mtlr      r12
+	                     blrl
+	                     addi      r0, r3, 0
+	                     addi      r3, r24, 0
+	                     lwz       r12, 0x4(r24)
+	                     mr        r24, r0
+	                     lwz       r12, 0x8(r12)
+	                     mtlr      r12
+	                     blrl
+	                     cmplw     r3, r20
+	                     bne-      .loc_0x19C
+	                     cmpw      r24, r23
+	                     ble-      .loc_0x19C
+	                     addi      r23, r24, 0
+	                     addi      r22, r21, 0
+	               
+	                   .loc_0x19C:
+	                     addi      r21, r21, 0x1
+	                     cmpwi     r21, 0x2
+	                     addi      r25, r25, 0x2000
+	                     blt+      .loc_0x48
+	                     cmpwi     r22, -0x1
+	                     beq-      .loc_0x1C4
+	                     lis       r3, 0x803A
+	                     addi      r0, r23, 0x1
+	                     subi      r3, r3, 0x2848
+	                     stw       r0, 0x174(r3)
+	               
+	                   .loc_0x1C4:
+	                     mr        r3, r22
+	                     lmw       r20, 0x50(r1)
+	                     lwz       r0, 0x84(r1)
+	                     addi      r1, r1, 0x80
+	                     mtlr      r0
+	                     blr
+	                   */
 }
 
 /*
@@ -1025,6 +1060,11 @@ void MemoryCard::getNewestOptionsIndex()
  */
 void MemoryCard::loadOptions()
 {
+	int id = getNewestOptionsIndex();
+	if (id != -1) {
+		RamStream* data = new RamStream((u32*)cardData + id * 0x800, 0x2000);
+		gameflow.mGamePrefs.read(*data);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1082,6 +1122,21 @@ void MemoryCard::loadOptions()
  */
 void MemoryCard::saveOptions()
 {
+	gsys->_270 = 1;
+	_68        = false;
+	if (getMemoryCardState(true) == 0 && _38 > 0) {
+		int id = getNewestOptionsIndex();
+		if (id != -1) {
+			id ^= id;
+			initOptionsArea(id);
+			CardUtilMount(0, &CardWorkArea);
+			CardUtilIdleWhileBusy();
+			CardUtilWrite(0, _38, cardData + id * 0x800, id * 0x2000 + 0x2000, 0x2000);
+			while (!hasCardFinished()) { }
+		}
+	}
+	gsys->_270 = false;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1151,6 +1206,9 @@ void MemoryCard::saveOptions()
  */
 void MemoryCard::loadCurrentGame()
 {
+	int val         = gameflow.mMemoryCard.mErrorCode;
+	RamStream* data = new RamStream((u32*)cardData + val * 0x2000, 0x8000);
+	readCurrentGame(data);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1603,8 +1661,13 @@ void MemoryCard::writeCurrentGame(RandomAccessStream*, PlayState&)
  * Address:	80074A60
  * Size:	000070
  */
-void MemoryCard::readCurrentGame(RandomAccessStream*)
+void MemoryCard::readCurrentGame(RandomAccessStream* data)
 {
+	gameflow.mPlayState.read(*data);
+	if (gameflow._1CC == 2 && playerState) {
+		playerState->loadCard(*data);
+	}
+	gameflow.mWorldClock.mCurrentDay = gameflow.mPlayState._20;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2894,8 +2957,14 @@ void MemoryCard::delFile(CardQuickInfo&)
  * Address:	80075C1C
  * Size:	00006C
  */
-void MemoryCard::doFormatCard()
+int MemoryCard::doFormatCard()
 {
+	_68        = false;
+	gsys->_270 = true;
+	attemptFormatCard(false);
+	gsys->_270 = false;
+	gameflow.mMemoryCard.getMemoryCardState(false);
+	return mErrorCode;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2935,7 +3004,7 @@ void MemoryCard::doFormatCard()
  */
 bool MemoryCard::isCardInserted()
 {
-	return false;
+	return CARDProbe(0) != FALSE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3127,8 +3196,9 @@ bool MemoryCard::hasCardChanged()
  * Address:	80075EE8
  * Size:	000574
  */
-void MemoryCard::getOkSections()
+int MemoryCard::getOkSections()
 {
+	FORCE_DONT_INLINE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3516,6 +3586,11 @@ void MemoryCard::getOkSections()
  */
 bool MemoryCard::isFileBroken()
 {
+	if (gameflow.mMemoryCard.getMemoryCardState(false) == 0 && gameflow._1CC) {
+		mErrorCode = getOkSections();
+		if (_5C < 3)
+			return true;
+	}
 	return false;
 	/*
 	.loc_0x0:
@@ -3972,28 +4047,11 @@ void MemoryCard::repairFile()
  */
 bool MemoryCard::didSaveFail()
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  lbz       r31, 0x68(r3)
-	  li        r3, 0
-	  bl        0x194064
-	  cmpwi     r3, 0
-	  bne-      .loc_0x28
-	  li        r31, 0x1
-
-	.loc_0x28:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	bool fail = _68;
+	if (CARDProbe(0) == 0) {
+		fail = true;
+	}
+	return fail;
 }
 
 /*
@@ -4263,6 +4321,7 @@ void MemoryCard::getQuickInfos(CardQuickInfo*)
  */
 void MemoryCard::init()
 {
+	CardUtilInit(nullptr, 0x2000, 0xe);
 	/*
 	.loc_0x0:
 	  mflr      r0

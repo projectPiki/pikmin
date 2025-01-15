@@ -224,6 +224,7 @@ void CARDInit();
 // CARD checking functions.
 s32 CARDCheck(s32 channel);
 s32 CARDCheckExAsync(s32 channel, s32* xferBytes, CARDCallback callback);
+s32 CARDCheckAsync(s32 channel, CARDCallback);
 
 // CARD BIOS functions.
 s32 CARDGetResultCode(s32 channel);
@@ -243,6 +244,7 @@ s32 CARDFormat(s32 channel);
 
 // CARD open/close.
 s32 CARDOpen(s32 channel, char* fileName, CARDFileInfo* fileInfo);
+s32 CARDFastOpen(s32 channel, s32 fileNo, CARDFileInfo* fileInfo);
 s32 CARDClose(CARDFileInfo* fileInfo);
 
 // CARD create/read/write functions.

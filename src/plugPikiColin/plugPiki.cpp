@@ -1,4 +1,8 @@
 #include "App.h"
+#include "timers.h"
+#include "Graphics.h"
+#include "gameflow.h"
+#include "AtxStream.h"
 
 /*
  * --INFO--
@@ -27,6 +31,20 @@ static void _Print(char*, ...)
  */
 void PlugPikiApp::hardReset()
 {
+	useHeap(0);
+	gsys->mTimer = new Timers;
+	gameflow.hardReset(this);
+	AyuHeap* heap = gsys->getHeap(0);
+
+	heap = gsys->getHeap(1);
+	heap->init("ovl", 2, 0, 0);
+
+	gsys->resetHeap(1, 1);
+	gsys->getHeap(1)->mAllocType = 1;
+	useHeap(1);
+	gsys->softReset();
+
+	FORCE_DONT_INLINE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -137,25 +155,9 @@ void PlugPikiApp::hardReset()
  */
 void PlugPikiApp::softReset()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x3A088
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  bl        -0xC814
-	  li        r0, 0x1
-	  stw       r0, 0x2C(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	BaseApp::softReset();
+	gameflow.softReset();
+	_2C = 1;
 }
 
 /*
@@ -165,28 +167,9 @@ void PlugPikiApp::softReset()
  */
 void PlugPikiApp::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803A
-	  stw       r0, 0x4(r1)
-	  subi      r5, r4, 0x2848
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  mr        r3, r5
-	  lwz       r4, 0x2D0(r5)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x2D0(r5)
-	  bl        -0xC288
-	  mr        r3, r31
-	  bl        -0x1E860
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	gameflow._2D0++;
+	gameflow.update();
+	Node::update();
 }
 
 /*
@@ -194,8 +177,40 @@ void PlugPikiApp::update()
  * Address:	8005EFDC
  * Size:	0004BC
  */
-void PlugPikiApp::draw(Graphics&)
+void PlugPikiApp::draw(Graphics& gfx)
 {
+	if (!_2C) {
+		return;
+	}
+
+	gsys->mDispCount     = 0;
+	gsys->mMaterialCount = 0;
+	gsys->_1A4           = 0;
+	gsys->_1B4           = 0;
+	gsys->mLightCount    = 0;
+	gsys->mLoadedPolys   = 0;
+	gsys->mLightingSkips = 0;
+	gsys->mLightingSets  = 0;
+	gsys->mSystemState   = 0;
+	Node::draw(gfx);
+
+	Mtx mtx;
+	RectArea area(0, 0, gfx.mScreenWidth, gfx.mScreenHeight);
+	gfx.setOrthogonal(mtx, area);
+	gfx.useTexture(nullptr, 0);
+
+	if (gsys->mTimerState) {
+		Colour color(255, 255, 255, 255);
+		gfx.setColour(color, true);
+		gfx.texturePrintf(gsys->mConsFont, 32, 32, "%d polys = %d pps", gsys->_1A4, gsys->_1A4 * gsys->_290);
+		gfx.texturePrintf(gsys->mConsFont, 32, 44, "%d anims", gsys->mLoadedPolys);
+		gfx.texturePrintf(gsys->mConsFont, 32, 56, "%d mats", gsys->mMaterialCount);
+		gfx.texturePrintf(gsys->mConsFont, 32, 68, "%d disps", gsys->mDispCount);
+		gfx.texturePrintf(gsys->mConsFont, 32, 80, "%d mtxs", gsys->mGfx->mMatrixBuffer);
+		gfx.texturePrintf(gsys->mConsFont, 32, 92, "%d / %d lighting skips / sets", gsys->mLightingSkips, gsys->mLightingSets);
+		gfx.texturePrintf(gsys->mConsFont, 32, 104, "%d light sets", gsys->mSystemState);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -527,6 +542,28 @@ void PlugPikiApp::draw(Graphics&)
  */
 int PlugPikiApp::idle()
 {
+	gsys->setHeap(mHeapIndex);
+	gsys->mTimer->newFrame();
+	gsys->mTimer->_start("all", false);
+
+	if (gsys->getPending()) {
+		gsys->detachObjs();
+		gsys->mTimer->reset();
+		gsys->clearPending();
+		softReset();
+		gsys->attachObjs();
+	} else {
+		update();
+		gsys->beginRender();
+		renderall();
+		// something here
+		gsys->doneRender();
+		// something here
+		gsys->mTimer->_stop("all");
+		gsys->waitRetrace();
+		gsys->setHeap(-1);
+	}
+	return 1;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -628,6 +665,21 @@ int PlugPikiApp::idle()
  */
 PlugPikiApp::PlugPikiApp()
 {
+	mName = "Piki the Game";
+	gsys->setHeap(0);
+	hardReset();
+	mCommandStream = new AtxCommandStream(this);
+	if (mCommandStream->open("app", 3)) {
+		mCommandStream->mPath = 0;
+	} else {
+		mCommandStream->mPath = mName;
+	}
+	gsys->mTimerState = 1;
+	gsys->hardReset();
+	gsys->getHeap(gsys->mActiveHeapIdx);
+	gsys->getHeap(gsys->mActiveHeapIdx);
+	gsys->_198 = 0;
+	gsys->setHeap(-1);
 	/*
 	.loc_0x0:
 	  mflr      r0

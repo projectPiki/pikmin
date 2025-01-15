@@ -1,4 +1,14 @@
 #include "MoviePlayer.h"
+#include "system.h"
+#include "gameflow.h"
+#include "Interface.h"
+#include "ItemMgr.h"
+#include "GoalItem.h"
+#include "RumbleMgr.h"
+#include "Graphics.h"
+#include "PlayerState.h"
+#include "EffectMgr.h"
+#include "jaudio/PikiDemo.h"
 
 /*
  * --INFO--
@@ -57,56 +67,13 @@ void MovieInfo::refresh(Graphics&)
  */
 MoviePlayer::MoviePlayer()
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8022
-	  addi      r8, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r8, 0x0(r3)
-	  addi      r7, r4, 0x737C
-	  stw       r7, 0x0(r3)
-	  li        r6, 0
-	  lis       r4, 0x802B
-	  stw       r6, 0x10(r3)
-	  subi      r5, r13, 0x6500
-	  subi      r0, r4, 0x3754
-	  stw       r6, 0xC(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r5, 0x4(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r6, 0x18(r3)
-	  stw       r8, 0x60(r3)
-	  stw       r7, 0x60(r3)
-	  stw       r6, 0x70(r3)
-	  stw       r6, 0x6C(r3)
-	  stw       r6, 0x68(r3)
-	  stw       r5, 0x64(r3)
-	  stw       r0, 0x60(r3)
-	  stw       r6, 0x78(r3)
-	  stw       r8, 0xC0(r3)
-	  stw       r7, 0xC0(r3)
-	  stw       r6, 0xD0(r3)
-	  stw       r6, 0xCC(r3)
-	  stw       r6, 0xC8(r3)
-	  stw       r5, 0xC4(r3)
-	  stw       r0, 0xC0(r3)
-	  stw       r6, 0xD8(r3)
-	  lfs       f0, -0x7754(r2)
-	  stfs      f0, 0x134(r3)
-	  stfs      f0, 0x130(r3)
-	  stfs      f0, 0x12C(r3)
-	  stfs      f0, 0x140(r3)
-	  stfs      f0, 0x13C(r3)
-	  stfs      f0, 0x138(r3)
-	  stfs      f0, 0x150(r3)
-	  stfs      f0, 0x14C(r3)
-	  stfs      f0, 0x148(r3)
-	  stfs      f0, 0x15C(r3)
-	  stfs      f0, 0x158(r3)
-	  stfs      f0, 0x154(r3)
-	  stfs      f0, 0x168(r3)
-	  blr
-	*/
+	_150 = 0.0f;
+	_14C = 0.0f;
+	_148 = 0.0f;
+	_15C = 0.0f;
+	_158 = 0.0f;
+	_154 = 0.0f;
+	_168 = 0.0f;
 }
 
 /*
@@ -116,6 +83,15 @@ MoviePlayer::MoviePlayer()
  */
 void MoviePlayer::resetMovieList()
 {
+	mInfoRoot.initCore("playList");
+	mInfoRoot2.initCore("movieList");
+	mInfoRoot3.initCore("stackList");
+
+	for (int i = 0; i < 10; i++) {
+		MovieInfo* info = new MovieInfo;
+		mInfoRoot2.add(info);
+	}
+	mIsActive = 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -188,49 +164,13 @@ void MoviePlayer::resetMovieList()
  */
 void MoviePlayer::fixMovieList()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  subi      r31, r13, 0x6500
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  b         .loc_0x60
-
-	.loc_0x2C:
-	  lwz       r29, 0x10(r28)
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  bl        0x81C
-	  mr        r3, r29
-	  bl        -0x36A00
-	  stw       r30, 0x10(r29)
-	  addi      r4, r29, 0
-	  addi      r3, r28, 0x60
-	  stw       r30, 0xC(r29)
-	  stw       r30, 0x8(r29)
-	  stw       r31, 0x4(r29)
-	  bl        -0x36A54
-
-	.loc_0x60:
-	  mr        r3, r28
-	  bl        -0x369B4
-	  cmpwi     r3, 0
-	  bne+      .loc_0x2C
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	while (mInfoRoot.getChildCount()) {
+		MovieInfo* info = (MovieInfo*)mInfoRoot.Child();
+		sndStopMovie(info);
+		info->del();
+		info->initCore("");
+		mInfoRoot2.add(info);
+	}
 }
 
 /*
@@ -248,8 +188,31 @@ void MoviePlayer::findMovie(int)
  * Address:	80077060
  * Size:	000100
  */
-void MoviePlayer::initMovie(MovieInfo*, int)
+void MoviePlayer::initMovie(MovieInfo* info, int)
 {
+	u32 type;
+	bool old   = gsys->_2A4 != 0;
+	gsys->_2A4 = 0;
+	int heapid = gsys->mActiveHeapIdx;
+	if (heapid == 2) {
+		gsys->setHeap(5);
+		AyuHeap* heap    = gsys->getHeap(5);
+		type             = heap->mAllocType;
+		heap->mAllocType = 1;
+	}
+	info->mCin = new CinematicPlayer(info->Name());
+	if (_16C && info->mCin->_00 & 0x200) {
+		_164 = 1.0f;
+		_16C = 0;
+	}
+
+	if (heapid != 2) {
+		AyuHeap* heap    = gsys->getHeap(5);
+		heap->mAllocType = type;
+		gsys->setHeap(heapid);
+	}
+	gsys->_2A4 = 0;
+	gsys->_2A4 = old;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -342,8 +305,46 @@ void MoviePlayer::translateIndex(int, int)
  * Address:	80077160
  * Size:	00049C
  */
-void MoviePlayer::startMovie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool)
+void MoviePlayer::startMovie(int movieIndex, int, Creature*, Vector3f* position, Vector3f* rotate, u32, bool)
 {
+	if (movieIndex < 0) {
+		skipScene(1);
+		return;
+	}
+
+	if (movieIndex == 12) { // title screen?
+		gameflow._1E8->message(0, 17);
+		return;
+	}
+
+	if (movieIndex == 74) { // bad ending olimin cutscene (position relative to red onion)
+		GoalItem* onyon = itemMgr->getContainer(1);
+		if (!onyon) {
+			return;
+		}
+		position = &onyon->mPosition;
+		rotate   = &onyon->mRotation;
+	}
+
+	// whimsical radar check?
+	if (movieIndex == 79 && gameflow._1E0 == 5) {
+		movieIndex = 78;
+	}
+
+	if (rumbleMgr) {
+		rumbleMgr->stop();
+	}
+
+	if (gameflow._1E8) {
+		gameflow._1E8->message(3, 0);
+	}
+	mIsActive = true;
+	mInfoRoot2.getChildCount();
+	MovieInfo* info = (MovieInfo*)mInfoRoot2.Child();
+	info->del();
+	info->mMovieIndex = movieIndex;
+	initMovie(info, movieIndex);
+	gsys->attachObjs();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -717,8 +718,23 @@ void MoviePlayer::startMovie(int, int, Creature*, Vector3f*, Vector3f*, u32, boo
  * Address:	800775FC
  * Size:	000104
  */
-void MoviePlayer::sndStartMovie(MovieInfo*)
+void MoviePlayer::sndStartMovie(MovieInfo* info)
 {
+	Jac_SetDemoPartsID(gameflow._1E0);
+	int onyons = 0;
+	if (playerState && playerState->hasPiki(0)) {
+		onyons++;
+	}
+	if (playerState && playerState->hasPiki(1)) {
+		onyons++;
+	}
+	if (playerState && playerState->hasPiki(2)) {
+		onyons++;
+	}
+	Jac_SetDemoOnyons(onyons);
+	Jac_SetDemoPartsCount(playerState ? playerState->getCurrParts() : 0);
+	gsys->_2A4 = 0;
+	Jac_StartDemo(info->mMovieIndex);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -921,8 +937,13 @@ void MoviePlayer::sndFrameMovie(MovieInfo*)
  * Address:	80077824
  * Size:	000064
  */
-void MoviePlayer::sndStopMovie(MovieInfo*)
+void MoviePlayer::sndStopMovie(MovieInfo* info)
 {
+	Jac_FinishDemo();
+	effectMgr->_18[0x600] = 1; // this is probably an inline
+	if (gameflow._1E8) {
+		gameflow._1E8->message(8, info->mMovieIndex);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -962,6 +983,15 @@ void MoviePlayer::sndStopMovie(MovieInfo*)
  */
 void MoviePlayer::update()
 {
+	gameflow._1D8 = 0;
+	if (gsys->_258 > 0) {
+		return;
+	}
+
+	if (mIsActive && _125) {
+		MovieInfo* info = (MovieInfo*)mInfoRoot3.mChild;
+		// f32 test        = info->mCin;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1247,64 +1277,25 @@ void MoviePlayer::update()
  * Address:	80077C54
  * Size:	0000AC
  */
-void MoviePlayer::skipScene(int)
+void MoviePlayer::skipScene(int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  cmpwi     r29, 0x3
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  bne-      .loc_0x68
-	  li        r31, 0
-	  b         .loc_0x58
+	if (id == 3) {
+		while (mInfoRoot3.getChildCount()) {
+			MovieInfo* info = (MovieInfo*)mInfoRoot3.mChild;
+			info->del();
+			info->mChild  = 0;
+			info->mNext   = 0;
+			info->mParent = 0;
+			mInfoRoot2.add(info);
+		}
+	}
 
-	.loc_0x34:
-	  lwz       r30, 0xD0(r28)
-	  mr        r3, r30
-	  bl        -0x37680
-	  stw       r31, 0x10(r30)
-	  addi      r4, r30, 0
-	  addi      r3, r28, 0x60
-	  stw       r31, 0xC(r30)
-	  stw       r31, 0x8(r30)
-	  bl        -0x376D0
-
-	.loc_0x58:
-	  addi      r3, r28, 0xC0
-	  bl        -0x37630
-	  cmpwi     r3, 0
-	  bne+      .loc_0x34
-
-	.loc_0x68:
-	  lwz       r3, 0x10(r28)
-	  b         .loc_0x84
-
-	.loc_0x70:
-	  lwz       r30, 0xC(r3)
-	  mr        r4, r29
-	  lwz       r3, 0x18(r3)
-	  bl        -0x73DC
-	  mr        r3, r30
-
-	.loc_0x84:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x70
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	MovieInfo* info = (MovieInfo*)mInfoRoot.mChild;
+	while (info) {
+		MovieInfo* next = (MovieInfo*)info->mNext;
+		info->mCin->skipScene(id);
+		info = next;
+	}
 }
 
 /*
@@ -1312,18 +1303,11 @@ void MoviePlayer::skipScene(int)
  * Address:	80077D00
  * Size:	00001C
  */
-void MoviePlayer::getLookAtPos(Vector3f&)
+void MoviePlayer::getLookAtPos(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x138(r3)
-	  stfs      f0, 0x0(r4)
-	  lfs       f0, 0x13C(r3)
-	  stfs      f0, 0x4(r4)
-	  lfs       f0, 0x140(r3)
-	  stfs      f0, 0x8(r4)
-	  blr
-	*/
+	pos.x = mLookAtPos.x;
+	pos.y = mLookAtPos.y;
+	pos.z = mLookAtPos.z;
 }
 
 /*
@@ -1331,7 +1315,7 @@ void MoviePlayer::getLookAtPos(Vector3f&)
  * Address:	80077D1C
  * Size:	000100
  */
-bool MoviePlayer::setCamera(Graphics&)
+bool MoviePlayer::setCamera(Graphics& gfx)
 {
 	/*
 	.loc_0x0:
@@ -1415,41 +1399,17 @@ bool MoviePlayer::setCamera(Graphics&)
  * Address:	80077E1C
  * Size:	000060
  */
-void MoviePlayer::addLights(Graphics&)
+void MoviePlayer::addLights(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r4
-	  lwz       r5, 0x10(r3)
-	  b         .loc_0x40
-
-	.loc_0x20:
-	  lwz       r3, 0x18(r5)
-	  lwz       r31, 0xC(r5)
-	  lwz       r0, 0x0(r3)
-	  rlwinm.   r0,r0,0,24,24
-	  beq-      .loc_0x3C
-	  mr        r4, r30
-	  bl        -0x6F68
-
-	.loc_0x3C:
-	  mr        r5, r31
-
-	.loc_0x40:
-	  cmplwi    r5, 0
-	  bne+      .loc_0x20
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	MovieInfo* info = (MovieInfo*)mInfoRoot.mChild;
+	while (info) {
+		CinematicPlayer* cin = info->mCin;
+		MovieInfo* next      = (MovieInfo*)info->mNext;
+		if (cin->_00 & 0x80) {
+			cin->addLights(gfx);
+		}
+		info = next;
+	}
 }
 
 /*
@@ -1457,44 +1417,15 @@ void MoviePlayer::addLights(Graphics&)
  * Address:	80077E7C
  * Size:	000074
  */
-void MoviePlayer::refresh(Graphics&)
+void MoviePlayer::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r4, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x3B4(r30)
-	  li        r4, 0x1
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x10(r31)
-	  b         .loc_0x54
-
-	.loc_0x40:
-	  lwz       r31, 0xC(r3)
-	  mr        r4, r30
-	  lwz       r3, 0x18(r3)
-	  bl        -0x6F18
-	  mr        r3, r31
-
-	.loc_0x54:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x40
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	gfx.setLighting(true, nullptr);
+	MovieInfo* info = (MovieInfo*)mInfoRoot.mChild;
+	while (info) {
+		MovieInfo* next = (MovieInfo*)info->mNext;
+		info->mCin->refresh(gfx);
+		info = next;
+	}
 }
 
 /*

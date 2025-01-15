@@ -1,4 +1,9 @@
 #include "MovSampleSection.h"
+#include "Dolphin/gx.h"
+#include "Graphics.h"
+
+GXTexObj YtexObj;
+GXTexObj UVtexObj;
 
 /*
  * --INFO--
@@ -309,28 +314,12 @@ void convHVQM4TexY8UV8(int, int, u8*, u8*)
  * Address:	800782E0
  * Size:	000034
  */
-static void playbackFunc(void*)
+static void* playbackFunc(void*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  b         .loc_0x14
-
-	.loc_0x10:
-	  bl        -0x60DB0
-
-	.loc_0x14:
-	  lbz       r0, 0x2F1C(r13)
-	  cmplwi    r0, 0
-	  beq+      .loc_0x10
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	while (!finishPlayback) {
+		Jac_StreamMovieUpdate();
+	}
+	return nullptr;
 }
 
 /*
@@ -340,6 +329,14 @@ static void playbackFunc(void*)
  */
 void MovSampleSection::init()
 {
+	Node::init("<MovSampleSection>");
+	gsys->mFrameRate  = 1;
+	gsys->mTimerState = 0;
+	gsys->startLoading(nullptr, true, 60);
+
+	MovSampleSetupSection* sect = new MovSampleSetupSection;
+	add(sect);
+	gsys->endLoading();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -508,6 +505,11 @@ void MovSampleSection::init()
  */
 void MovSampleSetupSection::update()
 {
+	mControl->update();
+
+	if (gsys->_258 < 0) {
+		Jac_StreamMovieGetPicture();
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -613,8 +615,86 @@ void MovSampleSetupSection::update()
  * Address:	800786B8
  * Size:	0006F8
  */
-void MovSampleSetupSection::draw(Graphics&)
+void MovSampleSetupSection::draw(Graphics& gfx)
 {
+	gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setClearColour(Colour(0, 0, 0, 0));
+	gfx.clearBuffer(3, false);
+	Mtx mtx;
+	gfx.setOrthogonal(mtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+
+	GXSetNumTexGens(2);
+	GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, 60, 0, 125);
+	GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX3X4, GX_TG_TEX0, 60, 0, 125);
+	GXInvalidateTexAll();
+	GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_CLEAR);
+	GXSetNumTevStages(4);
+
+	GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
+	GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_TEXC, GX_CC_KONST, GX_CC_C0);
+	GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
+	GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_A0);
+	GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_SUB, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
+	GXSetTevKColorSel(GX_TEVSTAGE0, GX_TEV_KCSEL_K0);
+	GXSetTevKAlphaSel(GX_TEVSTAGE0, GX_TEV_KASEL_K0_A);
+	GXSetTevSwapMode(GX_TEVSTAGE0, GX_TEV_SWAP0, GX_TEV_SWAP1);
+
+	GXSetTevOrder(GX_TEVSTAGE1, GX_TEXCOORD1, GX_TEXMAP1, GX_COLOR_NULL);
+	GXSetTevColorIn(GX_TEVSTAGE1, GX_CC_ZERO, GX_CC_TEXC, GX_CC_KONST, GX_CC_CPREV);
+	GXSetTevColorOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_2, GX_FALSE, GX_TEVPREV);
+	GXSetTevAlphaIn(GX_TEVSTAGE1, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_APREV);
+	GXSetTevAlphaOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_2, GX_FALSE, GX_TEVPREV);
+	GXSetTevKColorSel(GX_TEVSTAGE1, GX_TEV_KCSEL_K1);
+	GXSetTevKAlphaSel(GX_TEVSTAGE1, GX_TEV_KASEL_K1_A);
+	GXSetTevSwapMode(GX_TEVSTAGE1, GX_TEV_SWAP0, GX_TEV_SWAP0);
+
+	GXSetTevOrder(GX_TEVSTAGE2, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
+	GXSetTevColorIn(GX_TEVSTAGE2, GX_CC_ZERO, GX_CC_TEXC, GX_CC_KONST, GX_CC_CPREV);
+	GXSetTevColorOp(GX_TEVSTAGE2, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+	GXSetTevAlphaIn(GX_TEVSTAGE2, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_APREV);
+	GXSetTevAlphaOp(GX_TEVSTAGE2, GX_TEV_SUB, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+	GXSetTevKColorSel(GX_TEVSTAGE2, GX_TEV_KCSEL_K2);
+	GXSetTevKAlphaSel(GX_TEVSTAGE2, GX_TEV_KASEL_K2_A);
+	GXSetTevSwapMode(GX_TEVSTAGE2, GX_TEV_SWAP0, GX_TEV_SWAP2);
+
+	GXSetTevOrder(GX_TEVSTAGE3, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR_NULL);
+	GXSetTevColorIn(GX_TEVSTAGE3, GX_CC_CPREV, GX_CC_APREV, GX_CC_KONST, GX_CC_ZERO);
+	GXSetTevColorOp(GX_TEVSTAGE3, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+	GXSetTevAlphaIn(GX_TEVSTAGE3, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO);
+	GXSetTevAlphaOp(GX_TEVSTAGE3, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+	GXSetTevSwapMode(GX_TEVSTAGE3, GX_TEV_SWAP0, GX_TEV_SWAP0);
+	GXSetTevKColorSel(GX_TEVSTAGE3, GX_TEV_KCSEL_K3);
+
+	GXColorS10 col1 = {};
+	GXSetTevColorS10(GX_TEVREG0, col1);
+
+	GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
+	GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_ALPHA, GX_CH_ALPHA, GX_CH_ALPHA);
+	GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA, GX_CH_RED);
+
+	GXInitTexObj(&YtexObj, _48[_3C], ImgW, ImgH, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
+	GXInitTexObjLOD(&YtexObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
+	GXLoadTexObj(&YtexObj, GX_TEXMAP1);
+
+	GXInitTexObj(&UVtexObj, _48[_3C], ImgW * 2, ImgH * 2, GX_TF_IA8, GX_CLAMP, GX_CLAMP, GX_FALSE);
+	GXInitTexObjLOD(&UVtexObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
+	GXLoadTexObj(&UVtexObj, GX_TEXMAP0);
+
+	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.testRectangle(RectArea(0, 0, 640, 480));
+
+	GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
+	GXSetTevSwapMode(GX_TEVSTAGE0, GX_TEV_SWAP0, GX_TEV_SWAP0);
+	GXSetTevSwapMode(GX_TEVSTAGE1, GX_TEV_SWAP0, GX_TEV_SWAP0);
+	GXSetTevSwapMode(GX_TEVSTAGE2, GX_TEV_SWAP0, GX_TEV_SWAP0);
+	GXSetTevSwapMode(GX_TEVSTAGE3, GX_TEV_SWAP0, GX_TEV_SWAP0);
+
+	gfx.setColour(Colour(255, 255, 64, 255), true);
+	gfx.setAuxColour(Colour(255, 0, 64, 255));
+
+	gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
+
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -16,6 +16,7 @@ orig/*/*
 *.o
 *.map
 *.MAP
+*.bat
 
 # Build files
 build/

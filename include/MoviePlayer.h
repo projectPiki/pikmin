@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "CoreNode.h"
+#include "CinematicPlayer.h"
 
 struct Creature;
 struct Graphics;
@@ -12,6 +13,11 @@ struct Vector3f;
  * @brief TODO
  */
 struct MovieInfo : public CoreNode {
+	MovieInfo()
+	    : CoreNode("")
+	{
+		mCin = nullptr;
+	}
 
 	// unused/inlined:
 	void update();
@@ -20,7 +26,9 @@ struct MovieInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	u32 mMovieIndex;       // _14
+	CinematicPlayer* mCin; // _18
+	u8 _1C[0x44];          // _1C
 };
 
 /**
@@ -52,9 +60,26 @@ struct MoviePlayer {
 	void nextFrame();
 	void backFrame();
 
-	u8 _00[0x124];          // _00, unknown
-	u8 mIsActive;           // _124
-	u8 _125[0x174 - 0x125]; // _125, unknown
+	MovieInfo mInfoRoot;  // _00
+	MovieInfo mInfoRoot2; // _60
+	MovieInfo mInfoRoot3; // _C0
+	int _120;             // _120
+	u8 mIsActive;         // _124
+	u8 _125;              // _125
+	f32 _128;             // _128
+	Vector3f _12C;        // _12C
+	Vector3f mLookAtPos;  // _138
+	f32 _144;             // _144
+	f32 _148;             // _148
+	f32 _14C;             // _14C
+	f32 _150;             // _150
+	f32 _154;             // _154
+	f32 _158;             // _158
+	f32 _15C;             // _15C
+	f32 _160;             // _160
+	f32 _164;             // _164
+	f32 _168;             // _168
+	bool _16C;            // _16C
 };
 
 #endif

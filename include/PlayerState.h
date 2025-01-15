@@ -127,7 +127,7 @@ struct PlayerState {
 	void getRestParts();
 	void lostUfoParts(u32);
 
-	inline bool is184(u32 flag) { return _184 & (1 << flag); }
+	inline bool hasPiki(u32 flag) { return _184 & (1 << flag); }
 
 	static int totalUfoParts;
 

@@ -70,6 +70,13 @@ enum LanguageFileType {
 	LANGFILE_COUNT, // 5
 };
 
+struct GameChalQuickInfo {
+	int mOffset;  // _00
+	int _04;      // _04
+	int _08;      // _08
+	int mInfo[5]; // _0C
+};
+
 /**
  * @brief TODO
  *
@@ -266,7 +273,7 @@ struct GamePrefs : public CoreNode {
 
 	void Initialise()
 	{
-		_18             = 3;
+		mFlags          = 3;
 		mBgmVol         = 8;
 		mSfxVol         = 8;
 		_108            = 0;
@@ -291,7 +298,7 @@ struct GamePrefs : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	bool mIsChanged;        // _14
-	int _18;                // _18
+	int mFlags;             // _18
 	u8 mBgmVol;             // _1C
 	u8 mSfxVol;             // _1D
 	u8 mHasSaveGame;        // _1E
@@ -377,7 +384,6 @@ struct GameFlow : public Node {
 	// _00-_20 = Node
 	GamePrms* mParameters;                   // _20
 	MemoryCard mMemoryCard;                  // _24
-	u8 _6C[0x94 - 0x6C];                     // _6C
 	GamePrefs mGamePrefs;                    // _94
 	u32 mSaveGameCrc;                        // _1A0
 	PlayState mPlayState;                    // _1A4
@@ -386,7 +392,8 @@ struct GameFlow : public Node {
 	u32 _1D4;                                // _1D4, unknown
 	u32 _1D8;                                // _1D8, bitflag of some description
 	MoviePlayer* mMoviePlayer;               // _1DC
-	u8 _1E0[0x1E8 - 0x1E0];                  // _1E0, unknown
+	u8 _1E0;                                 // _1E0
+	u32 _1E4;                                // _1E4
 	GameInterface* _1E8;                     // _1E8
 	int _1EC;                                // _1EC
 	int mGameSectionID;                      // _1F0, see GameSectionID enum

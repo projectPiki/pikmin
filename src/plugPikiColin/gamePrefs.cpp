@@ -1,6 +1,9 @@
 #include "gameFlow.h"
 #include "OnePlayerSection.h"
 #include "jaudio/interface.h"
+#include "Dolphin/os.h"
+#include "RumbleMgr.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -77,8 +80,16 @@ void GamePrefs::setSfxVol(u8 vol)
  * Address:	80053D1C
  * Size:	00009C
  */
-void GamePrefs::setStereoMode(bool)
+void GamePrefs::setStereoMode(bool set)
 {
+	if (set != ((mFlags & 2) != 0)) {
+		mIsChanged = true;
+	}
+
+	mFlags |= ~2 & (set ? 2 : 0);
+
+	Jac_OutputMode((mFlags & 2) ? 1 : 0);
+	OSSetSoundMode(set);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -138,8 +149,21 @@ void GamePrefs::setStereoMode(bool)
  * Address:	80053DB8
  * Size:	0000B8
  */
-void GamePrefs::setVibeMode(bool)
+void GamePrefs::setVibeMode(bool set)
 {
+	if (set != ((mFlags & 1) != 0)) {
+		if (set) {
+			rumbleMgr->start(0, 0, 0);
+		} else {
+			rumbleMgr->stop();
+		}
+		mIsChanged = true;
+	}
+
+	mFlags |= (set ? 1 : 0) & ~1;
+
+	rumbleMgr->rumbleOption(set);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -206,8 +230,14 @@ void GamePrefs::setVibeMode(bool)
  * Address:	80053E70
  * Size:	000054
  */
-void GamePrefs::setChildMode(bool)
+void GamePrefs::setChildMode(bool set)
 {
+	if (set != ((mFlags & 4) != 0)) {
+		mIsChanged = true;
+	}
+
+	mFlags |= ~4 & (set ? 4 : 0);
+
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x18(r3)
@@ -245,8 +275,14 @@ void GamePrefs::setChildMode(bool)
  * Address:	80053EC4
  * Size:	000068
  */
-void GamePrefs::getChallengeScores(GameChalQuickInfo&)
+void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 {
+	info.mInfo[0] = mHiscores.mChalModeRecords[info.mOffset]._00[0];
+	info.mInfo[1] = mHiscores.mChalModeRecords[info.mOffset]._00[4];
+	info.mInfo[2] = mHiscores.mChalModeRecords[info.mOffset]._00[8];
+	info.mInfo[3] = mHiscores.mChalModeRecords[info.mOffset]._00[12];
+	info.mInfo[4] = mHiscores.mChalModeRecords[info.mOffset]._00[16];
+
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x0(r4)
@@ -283,8 +319,33 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo&)
  * Address:	80053F2C
  * Size:	000174
  */
-bool GamePrefs::checkIsHiscore(GameChalQuickInfo&)
+bool GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 {
+	info._08           = -1;
+	gsys->mTogglePrint = 1;
+	int index          = info.mOffset;
+	int max            = info._04;
+	if (mHiscores.mChalModeRecords[index]._00[0] < max) {
+		info._08 = 0;
+	} else if (mHiscores.mChalModeRecords[index]._00[4] < max) {
+		info._08 = 1;
+	} else if (mHiscores.mChalModeRecords[index]._00[8] < max) {
+		info._08 = 2;
+	} else if (mHiscores.mChalModeRecords[index]._00[12] < max) {
+		info._08 = 3;
+	} else if (mHiscores.mChalModeRecords[index]._00[16] < max) {
+		info._08 = 4;
+	}
+
+	if (info._08 >= 0 && info._08 < 5) {
+		for (int i = 4; i > info._08; i--) {
+			mHiscores.mChalModeRecords[i]._00[0] = mHiscores.mChalModeRecords[i]._00[4];
+		}
+		mHiscores.mChalModeRecords[info._08]._00[0] = info._04;
+	}
+
+	gsys->mTogglePrint = 0;
+	getChallengeScores(info);
 	/*
 	.loc_0x0:
 	  li        r0, -0x1
@@ -683,8 +744,25 @@ bool GamePrefs::checkIsHiscore(GameQuickInfo&)
  * Address:	800543EC
  * Size:	000178
  */
-void GamePrefs::write(RandomAccessStream&)
+void GamePrefs::write(RandomAccessStream& data)
 {
+	data.writeInt(mFlags);
+	data.writeByte(mBgmVol);
+	data.writeByte(mSfxVol);
+	data.writeByte(_22);
+
+	data.writeInt(mHiscores._00);
+	for (int i = 0; i < 5; i++) {
+		data.writeInt(mHiscores.mMinDayRecords[i]._00);
+		data.writeInt(mHiscores.mBornPikminRecords[i]._00);
+		data.writeInt(mHiscores.mDeadPikminRecords[i]._00);
+
+		for (int j = 0; j < 5; j++) {
+			data.writeInt(mHiscores.mChalModeRecords[i]._00[j]);
+		}
+	}
+
+	mIsChanged = 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -795,6 +873,9 @@ void GamePrefs::write(RandomAccessStream&)
  */
 void GamePrefs::fixSoundMode()
 {
+	OSGetSoundMode();
+	bool mode = OSGetSoundMode() != 0;
+	setStereoMode(mode);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -863,7 +944,7 @@ void GamePrefs::fixSoundMode()
  */
 void GamePrefs::read(RandomAccessStream& input)
 {
-	_18           = input.readInt();
+	mFlags        = input.readInt();
 	mBgmVol       = input.readByte();
 	mSfxVol       = input.readByte();
 	_22           = input.readByte();
@@ -872,7 +953,17 @@ void GamePrefs::read(RandomAccessStream& input)
 	for (int i = 0; i < 5; i++) {
 		mHiscores.mMinDayRecords[i]._00 = input.readInt();
 		mHiscores.mMinDayRecords[i]._04 = input.readInt();
+
+		for (int j = 0; j < 5; j++) {
+			mHiscores.mChalModeRecords[i]._00[j] = input.readInt();
+		}
 	}
+
+	fixSoundMode();
+	setBgmVol(mBgmVol);
+	setSfxVol(mSfxVol);
+	fixSoundMode();
+	setVibeMode(mFlags & 1);
 	/*
 	.loc_0x0:
 	  mflr      r0
