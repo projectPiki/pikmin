@@ -2728,7 +2728,7 @@ void RouteMgr::findNearestWayPointAll(u32, Vector3f&)
  * Address:	800A1678
  * Size:	00005C
  */
-void RouteMgr::getWayPoint(u32, int)
+WayPoint* RouteMgr::getWayPoint(u32, int)
 {
 	/*
 	.loc_0x0:

@@ -1,24 +1,28 @@
 #include "GoalItem.h"
+#include "EffectMgr.h"
+#include "DebugLog.h"
+#include "Route.h"
+#include "SoundMgr.h"
+#include "Pellet.h"
+#include "Piki.h"
+#include "BaseInf.h"
+#include "GameStat.h"
+#include "PlayerState.h"
+#include "CreatureCollPart.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("goalItem")
 
 /*
  * --INFO--
@@ -35,29 +39,13 @@ void printMatrix(char*, Matrix4f&)
  * Address:	800EA714
  * Size:	000040
  */
-bool GoalItem::insideSafeArea(Vector3f&)
+bool GoalItem::insideSafeArea(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  lfs       f3, 0x8(r4)
-	  lfs       f0, 0x9C(r3)
-	  lfs       f2, 0x0(r4)
-	  lfs       f1, 0x94(r3)
-	  fsubs     f3, f3, f0
-	  lfs       f0, -0x65C8(r2)
-	  fsubs     f2, f2, f1
-	  fmuls     f1, f3, f3
-	  fmuls     f2, f2, f2
-	  fadds     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x38
-	  li        r3, 0
-	  blr
-
-	.loc_0x38:
-	  li        r3, 0x1
-	  blr
-	*/
+	Vector3f diff = pos - mPosition;
+	if (diff.x * diff.x + diff.z * diff.z < 2500.0f) {
+		return false;
+	}
+	return true;
 }
 
 /*
@@ -65,8 +53,109 @@ bool GoalItem::insideSafeArea(Vector3f&)
  * Address:	800EA754
  * Size:	000760
  */
-void GoalItem::playEffect(int)
+void GoalItem::playEffect(int id)
 {
+	switch (mItemAnimator.mCurrentAnimID) {
+	default:
+		switch (id) {
+		case 0:
+			effectMgr->create(EffectMgr::EFF_Rocket_C, mPosition, nullptr, nullptr);
+			break;
+		case 1:
+			CollPart* part = mCollInfo->getSphere('bas1');
+			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, part->mCentre, nullptr, nullptr);
+			break;
+		case 2:
+			part = mCollInfo->getSphere('bas1');
+			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, part->mCentre, nullptr, nullptr);
+			part = mCollInfo->getSphere('bas2');
+			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, part->mCentre, nullptr, nullptr);
+			part = mCollInfo->getSphere('bas3');
+			effectMgr->create(EffectMgr::EFF_Rocket_SmokeD, part->mCentre, nullptr, nullptr);
+			break;
+		case 3:
+			setFlowEffect(false);
+			break;
+		case 4:
+			setFlightLight(false);
+			break;
+		}
+		break;
+	case 6:
+		switch (id) {
+		case 0:
+			setFlowEffect(false);
+			break;
+		case 1:
+			startConeShrink();
+			break;
+		case 2:
+			effectMgr->create(EffectMgr::EFF_Rocket_Tbc1, mPosition, nullptr, nullptr);
+			break;
+		case 3:
+			setFlightLight(false);
+			break;
+		}
+		break;
+	case 9:
+		if (mCreatureFlags & 0x200) {
+			Vector3f pos[4];
+			pos[0] = mCollInfo->getSphere('eff1')->mCentre;
+			pos[1] = mCollInfo->getSphere('eff2')->mCentre;
+			pos[2] = mCollInfo->getSphere('eff3')->mCentre;
+			pos[3] = mCollInfo->getSphere('piki')->mCentre;
+			if (id == 0) {
+				effectMgr->create(EffectMgr::EFF_Onyon_Sparkles, pos[3], nullptr, nullptr);
+			}
+			effectMgr->create(EffectMgr::EFF_Onyon_Puff, pos[rand() % 3], nullptr, nullptr);
+			playEventSound(this, EffectMgr::EFF_Bridge_FinishStage);
+		}
+		break;
+	case 4:
+		switch (id) {
+		case 0:
+			Vector3f pos = mCollInfo->getSphere('piki')->mCentre;
+			effectMgr->create(EffectMgr::EFF_Kafun_BS, pos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Kafun_NG, pos, nullptr, nullptr);
+			break;
+		case 1:
+			Vector3f pos2 = mPosition;
+			if (mOnionColour == 0) {
+				effectMgr->create(EffectMgr::EFF_Onyon_Bubbles, pos, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Onyon_Ripples2, pos, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Onyon_Ripples1, pos, nullptr, nullptr);
+			} else {
+				effectMgr->create(EffectMgr::EFF_Onyon_Suck2, pos, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Rocket_Bm1o, pos, nullptr, nullptr);
+			}
+			break;
+		case 2:
+			routeMgr->getWayPoint('test', _42A)->setFlag(true);
+			if (mOnionColour == 0) {
+				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
+			} else {
+				effectMgr->create(EffectMgr::EFF_SmokeRing_M, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
+			}
+			break;
+		case 3:
+			if (mOnionColour == 0) {
+				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas2')->mCentre, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas3')->mCentre, nullptr, nullptr);
+			} else {
+				effectMgr->create(EffectMgr::EFF_SmokeRing_M, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_SmokeRing_M, mCollInfo->getSphere('bas2')->mCentre, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_SmokeRing_M, mCollInfo->getSphere('bas3')->mCentre, nullptr, nullptr);
+			}
+			break;
+		case 4:
+			_3D4 = 0.0f;
+			_3D8 = 1;
+			_3D0 = 20.0f;
+			break;
+		}
+		break;
+	};
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -607,8 +696,22 @@ void GoalItem::playEffect(int)
  * Address:	800EAEB4
  * Size:	0000B4
  */
-void GoalItem::setFlowEffect(bool)
+void GoalItem::setFlowEffect(bool set)
 {
+	_3E4 = set;
+
+	if (set) {
+		if (!mSuckEfx) {
+			CollPart* part = mCollInfo->getSphere('piki');
+			mSuckEfx       = effectMgr->create(EffectMgr::EFF_Rocket_FlowLight, part->mCentre, nullptr, nullptr);
+			if (mSuckEfx) {
+				mSuckEfx->mEmitPosPtr = &part->mCentre;
+			}
+		}
+	} else if (mSuckEfx) {
+		effectMgr->mPtclMgr.killGenerator(mSuckEfx, false);
+		mSuckEfx = nullptr;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -668,8 +771,46 @@ void GoalItem::setFlowEffect(bool)
  * Address:	800EAF68
  * Size:	000178
  */
-void GoalItem::setSpotActive(bool)
+void GoalItem::setSpotActive(bool set)
 {
+	_3D9 = set;
+
+	if (_3D9) {
+		EffectMgr::effTypeTable efxIDs[3]
+		    = { EffectMgr::EFF_Onyon_BeaconRingBlue, EffectMgr::EFF_Onyon_BeaconRingRed, EffectMgr::EFF_Onyon_BeaconRingYellow };
+
+		if (!mSpotEfx) {
+			mSpotEfx = effectMgr->create(efxIDs[mOnionColour], mPosition, nullptr, nullptr);
+			if (mSpotEfx) {
+				mSpotEfx->mEmitPosPtr = &mPosition;
+			}
+			SeSystem::playSysSe(SYSSE_CONTAINER_OK);
+		}
+	} else {
+		if (mSpotEfx) {
+			SeSystem::stopSysSe(SYSSE_CONTAINER_OK);
+			effectMgr->mPtclMgr.killGenerator(mSpotEfx, false);
+			mSpotEfx = nullptr;
+		}
+	}
+
+	if (_3D9) {
+		EffectMgr::effTypeTable efxIDs[3]
+		    = { EffectMgr::EFF_Onyon_HaloRingBlue, EffectMgr::EFF_Onyon_HaloRingRed, EffectMgr::EFF_Onyon_HaloRingYellow };
+
+		if (!mHaloEfx) {
+			mHaloEfx = effectMgr->create(efxIDs[mOnionColour], mPosition, nullptr, nullptr);
+			if (mHaloEfx) {
+				mHaloEfx->mEmitPosPtr = &mPosition;
+			}
+		}
+	} else {
+		if (mHaloEfx) {
+			effectMgr->mPtclMgr.killGenerator(mHaloEfx, false);
+			mHaloEfx = nullptr;
+		}
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -784,35 +925,12 @@ void GoalItem::setSpotActive(bool)
  * Address:	800EB0E0
  * Size:	000058
  */
-bool GoalItem::invoke(zen::particleGenerator*, zen::particleMdl*)
+bool GoalItem::invoke(zen::particleGenerator* efx, zen::particleMdl* mdl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr.       r31, r5
-	  beq-      .loc_0x40
-	  lis       r4, 0x6C6C
-	  lwz       r3, 0x220(r3)
-	  addi      r4, r4, 0x6974
-	  bl        -0x619F4
-	  lwz       r4, 0x4(r3)
-	  lwz       r0, 0x8(r3)
-	  stw       r4, 0x18(r31)
-	  stw       r0, 0x1C(r31)
-	  lwz       r0, 0xC(r3)
-	  stw       r0, 0x20(r31)
-
-	.loc_0x40:
-	  lwz       r0, 0x24(r1)
-	  li        r3, 0x1
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (mdl) {
+		mdl->_18 = mCollInfo->getSphere('llit')->mCentre;
+	}
+	return true;
 }
 
 /*
@@ -822,8 +940,7 @@ bool GoalItem::invoke(zen::particleGenerator*, zen::particleMdl*)
  */
 void GoalItem::setFlightLight(bool a1)
 {
-	// Generated from stb r4, 0x3EC(r3)
-	// _3EC = a1;
+	_3EC = a1;
 }
 
 /*
@@ -833,18 +950,9 @@ void GoalItem::setFlightLight(bool a1)
  */
 Vector3f GoalItem::getSuckPos()
 {
-	/*
-	.loc_0x0:
-	  lfs       f2, 0x98(r4)
-	  lfs       f1, -0x65A0(r2)
-	  lfs       f3, 0x9C(r4)
-	  lfs       f0, 0x94(r4)
-	  fadds     f2, f2, f1
-	  stfs      f0, 0x0(r3)
-	  stfs      f2, 0x4(r3)
-	  stfs      f3, 0x8(r3)
-	  blr
-	*/
+	Vector3f ret = mPosition;
+	ret.y += 74.0f;
+	return ret;
 }
 
 /*
@@ -852,8 +960,28 @@ Vector3f GoalItem::getSuckPos()
  * Address:	800EB164
  * Size:	0000F4
  */
-void GoalItem::suckMe(Pellet*)
+void GoalItem::suckMe(Pellet* item)
 {
+	PelletConfig* config = item->mConfig;
+	int pikiNum;
+	if (mOnionColour == config->mPelletColor()) {
+		pikiNum = config->mMatchingOnyonSeeds();
+	} else {
+		pikiNum = config->mNonMatchingOnyonSeeds();
+	}
+
+	if (pikiNum < 0) {
+		_2D4 += 2;
+		Msg msg(10);
+		mStateMachine->procMsg(this, &msg);
+		playEventSound(this, SE_CONTAINER_HANABI);
+		playEventSound(this, SE_CONTAINER_PELLETIN2);
+	} else {
+		_2D0 += pikiNum;
+		Msg msg(10);
+		mStateMachine->procMsg(this, &msg);
+		playEventSound(this, SE_CONTAINER_PELLETIN2);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -933,8 +1061,19 @@ void GoalItem::suckMe(Pellet*)
  * Address:	800EB258
  * Size:	0000C4
  */
-void GoalItem::enterGoal(Piki*)
+void GoalItem::enterGoal(Piki* piki)
 {
+	int old = mItemAnimator.mCurrentAnimID;
+	playEventSound(this, SE_PIKI_GOHOME);
+	pikiInfMgr.incPiki(piki);
+	_42C[piki->mHappa]++;
+	piki->_584 = 1;
+	piki->kill(false);
+	GameStat::containerPikis.mCounts[piki->mColor]++;
+	GameStat::update();
+	if (old == 1) {
+		((SimpleAI*)mStateMachine)->start(this, 0);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -996,19 +1135,11 @@ void GoalItem::enterGoal(Piki*)
  * Address:	800EB31C
  * Size:	000020
  */
-void GoalItem::exitPikis(int)
+void GoalItem::exitPikis(int pikis)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x1
-	  stb       r0, 0x410(r3)
-	  lwz       r0, 0x414(r3)
-	  add       r0, r0, r4
-	  stw       r0, 0x414(r3)
-	  lfs       f0, -0x65C4(r2)
-	  stfs      f0, 0x418(r3)
-	  blr
-	*/
+	_410 = 1;
+	_414 += pikis;
+	_418 = 0.0f;
 }
 
 /*
@@ -1211,8 +1342,19 @@ bool GoalItem::needShadow()
  * Address:	800EB5C0
  * Size:	000110
  */
-GoalItem::GoalItem(CreatureProp*, ItemShapeObject*, ItemShapeObject*, ItemShapeObject*, SimpleAI*)
+GoalItem::GoalItem(CreatureProp* prop, ItemShapeObject* shape1, ItemShapeObject* shape2, ItemShapeObject* shape3, SimpleAI* ai)
 {
+	mOnionColour     = 0;
+	mItemShapeObject = nullptr;
+	_438[0]          = shape1;
+	_438[1]          = shape2;
+	_438[2]          = shape3;
+	mItemShapeObject = _438[0];
+	mStateMachine    = ai;
+	mCollInfo        = new CollInfo(15);
+	mHaloEfx         = nullptr;
+	mSpotEfx         = nullptr;
+	mSuckEfx         = nullptr;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1293,20 +1435,12 @@ GoalItem::GoalItem(CreatureProp*, ItemShapeObject*, ItemShapeObject*, ItemShapeO
  * Address:	800EB6D0
  * Size:	00001C
  */
-bool GoalItem::ignoreAtari(Creature*)
+bool GoalItem::ignoreAtari(Creature* obj)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x6C(r4)
-	  cmpwi     r0, 0xC
-	  bne-      .loc_0x14
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-	*/
+	if (obj->mObjType == OBJTYPE_NULL12) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -1314,8 +1448,11 @@ bool GoalItem::ignoreAtari(Creature*)
  * Address:	800EB6EC
  * Size:	000044
  */
-void GoalItem::setColorType(int)
+void GoalItem::setColorType(int type)
 {
+	mOnionColour     = type;
+	mItemShapeObject = _438[type];
+	// mItemShapeObject->makeInstance();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1345,6 +1482,9 @@ void GoalItem::setColorType(int)
  */
 void GoalItem::startTakeoff()
 {
+	setMotionSpeed(30.0f);
+	startMotion(mOnionColour + 6);
+	mCreatureFlags |= 0x800;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1392,6 +1532,10 @@ void GoalItem::startTakeoff()
  */
 void GoalItem::startLand()
 {
+	startMotion(mOnionColour + 9);
+	setMotionSpeed(30.0f);
+	setFlowEffect(true);
+	setFlightLight(true);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1471,6 +1615,9 @@ void GoalItem::startLand()
  */
 void GoalItem::startConeShrink()
 {
+	_3F6 = true;
+	_3F8 = 0.8f;
+	_3FC;
 	/*
 	.loc_0x0:
 	  li        r0, 0x1
@@ -1505,14 +1652,8 @@ void GoalItem::updateConeShrink()
  */
 void GoalItem::startConeEmit()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x1
-	  stb       r0, 0x408(r3)
-	  lfs       f0, -0x65C4(r2)
-	  stfs      f0, 0x3F8(r3)
-	  blr
-	*/
+	_408 = true;
+	_3F8 = 0.0f;
 }
 
 /*
@@ -1849,6 +1990,11 @@ void GoalItem::startAI(int)
  */
 void GoalItem::startBoot()
 {
+	_3CC = 3;
+	setMotionSpeed(30.0f);
+	((SimpleAI*)mStateMachine)->start(this, 5);
+	playerState->_184 |= 1 << mOnionColour + 3;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1890,20 +2036,7 @@ void GoalItem::startBoot()
  */
 void GoalItem::emitPiki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x2
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2E8(r3)
-	  bl        -0x6E6BC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	((SimpleAI*)mStateMachine)->start(this, 2);
 }
 
 /*
@@ -1913,11 +2046,7 @@ void GoalItem::emitPiki()
  */
 f32 GoalItem::getSize()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6580(r2)
-	  blr
-	*/
+	return 10.0f;
 }
 
 /*
@@ -1927,11 +2056,7 @@ f32 GoalItem::getSize()
  */
 f32 GoalItem::getiMass()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x65C4(r2)
-	  blr
-	*/
+	return 0.0f;
 }
 
 /*
@@ -1941,6 +2066,17 @@ f32 GoalItem::getiMass()
  */
 void GoalItem::update()
 {
+	mVelocity.set(0.0f, 0.0f, 0.0f);
+	ItemCreature::update();
+	if (_3D8) {
+		_3D4 += (_3D0 * mMotionSpeed * gsys->mDeltaTime) / 30.0f;
+		if (_3D4 > 1.0f) {
+			_3D4 = 1.0f;
+			_3D8 = 0;
+		}
+	}
+
+	if (_3F6 && _3F6) { }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2399,16 +2535,6 @@ void GoalItem::refresh(Graphics&)
 Vector3f GoalItem::getGoalPos()
 {
 	return mPosition;
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x94(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x98(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x9C(r4)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
 }
 
 /*
@@ -2418,11 +2544,7 @@ Vector3f GoalItem::getGoalPos()
  */
 f32 GoalItem::getGoalPosRadius()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6570(r2)
-	  blr
-	*/
+	return 75.0f;
 }
 
 /*
@@ -2432,11 +2554,7 @@ f32 GoalItem::getGoalPosRadius()
  */
 s16 GoalItem::getRouteIndex()
 {
-	/*
-	.loc_0x0:
-	  lha       r3, 0x42A(r3)
-	  blr
-	*/
+	return _42A;
 }
 
 /*

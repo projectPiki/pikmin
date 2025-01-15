@@ -5,6 +5,7 @@
 #include "ItemMgr.h"
 #include "CreatureProp.h"
 #include "SimpleAI.h"
+#include "SoundMgr.h"
 
 struct InteractBikkuri;
 struct InteractSwallow;
@@ -49,7 +50,11 @@ struct BombItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	u8 _3C8[0x840 - 0x3C8]; // _3C8, unknown
+	u8 _3C8;                 // _3C8
+	SeContext mSound;        // _3CC
+	CollInfo mBombColl;      // _3F4
+	CollPart mCollParts[10]; // _408
+	u32 _818;                // _818
 };
 
 /**

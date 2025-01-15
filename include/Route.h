@@ -162,7 +162,7 @@ struct RouteMgr : public Node {
 	void findNearestOffWayPoint(u32, Vector3f&, bool);
 	void createOffPlane(u32, Plane&, WayPoint*);
 	void findNearestWayPointAll(u32, Vector3f&);
-	void getWayPoint(u32, int);
+	WayPoint* getWayPoint(u32, int);
 	void construct(MapMgr*);
 	void initLinks();
 	void id2idx(u32);
