@@ -226,7 +226,7 @@ struct InteractFlick : public Interaction {
 	inline InteractFlick(Creature* owner, f32 knockback, f32 damage, f32 angle)
 	    : Interaction(owner)
 	{
-		mKnockback = knockback;
+		mIntensity = knockback;
 		mDamage    = damage;
 		mAngle     = angle;
 	}
@@ -240,7 +240,7 @@ struct InteractFlick : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	f32 mKnockback; // _08
+	f32 mIntensity; // _08
 	f32 mDamage;    // _0C
 	f32 mAngle;     // _10
 };

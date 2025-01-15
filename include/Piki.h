@@ -286,12 +286,12 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	f32 _48C;                     // _48C
 	PikiStateMachine* mFSM;       // _490
 	u8 _494[0x4];                 // _494
-	f32 _498;                     // _498, knockback? impulse velocity magnitude?
+	f32 mFlickIntensity;          // _498, knockback? impulse velocity magnitude?
 	f32 mRotationAngle;           // _49C
 	u8 _4A0;                      // _4A0
 	CollPart* mSwallowMouthPart;  // _4A4
-	Creature* _4A8;               // _4A8, maybe puffstool/kinoko leader?
-	Vector3f _4AC;                // _4AC
+	Creature* mLeaderCreature;    // _4A8, maybe puffstool/kinoko leader?
+	Vector3f mPluckVelocity;      // _4AC
 	int _4B8;                     // _4B8
 	u32 _4BC;                     // _4BC
 	u32 _4C0;                     // _4C0
@@ -308,7 +308,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u32 _4EC;                     // _4EC
 	u32 _4F0;                     // _4F0
 	u32 _4F4;                     // _4F4
-	TopAction* _4F8;              // _4F8, may be just Action*
+	TopAction* mActiveAction;     // _4F8, may be just Action*
 	u16 mMode;                    // _4FC, use PikiMode enum
 	u32 _500;                     // _500
 	Navi* mNavi;                  // _504

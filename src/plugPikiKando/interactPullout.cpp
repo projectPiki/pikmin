@@ -82,7 +82,7 @@ bool InteractPullout::actPiki(Piki* piki)
 	backPullDist *= strength;
 	sideComponent = sideComponent * strength;
 
-	piki->_4AC = mOwner->mPosition + Vector3f(-backPullDist * sinf(angle), 0.0f, -backPullDist * cosf(angle)) + sideComponent;
+	piki->mPluckVelocity = mOwner->mPosition + Vector3f(-backPullDist * sinf(angle), 0.0f, -backPullDist * cosf(angle)) + sideComponent;
 
 	return true;
 }

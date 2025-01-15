@@ -62,8 +62,8 @@ bool InteractBomb::actPiki(Piki* piki)
 
 	Vector3f diff = mOwner->mPosition - piki->mPosition;
 	diff.normalise();
-	piki->mRotationAngle = atan2f(diff.x, diff.z);
-	piki->_498           = 180.0f;
+	piki->mRotationAngle  = atan2f(diff.x, diff.z);
+	piki->mFlickIntensity = 180.0f;
 
 	piki->mFSM->transit(piki, PIKISTATE_Flick);
 	return true;
@@ -162,10 +162,10 @@ bool InteractSpore::actPiki(Piki* piki)
 			bomb->stimulate(release);
 		}
 
-		piki->_4A8 = kinoko;
-		piki->_4F8->abandon(nullptr);
-		piki->_4F8->mChildActionIdx = 22;
-		piki->_4F8->mChildActions[piki->_4F8->mChildActionIdx].initialise(kinoko);
+		piki->mLeaderCreature = kinoko;
+		piki->mActiveAction->abandon(nullptr);
+		piki->mActiveAction->mChildActionIdx = 22;
+		piki->mActiveAction->mChildActions[piki->mActiveAction->mChildActionIdx].initialise(kinoko);
 		piki->mFSM->transit(piki, PIKISTATE_KinokoChange);
 		return true;
 	}
@@ -256,7 +256,7 @@ bool InteractWind::actPiki(Piki* piki)
 		return false;
 	}
 
-	piki->_4F8->abandon(mWindParticles);
+	piki->mActiveAction->abandon(mWindParticles);
 	piki->mFSM->transit(piki, PIKISTATE_Flown);
 
 	piki->mVelocity       = mVelocity;
@@ -313,7 +313,7 @@ bool InteractFlick::actPiki(Piki* piki)
 		piki->mRotationAngle = mAngle;
 	}
 
-	piki->_498 = mKnockback;
+	piki->mFlickIntensity = mIntensity;
 	piki->mFSM->transit(piki, PIKISTATE_Flick);
 	return true;
 }
@@ -457,9 +457,9 @@ bool InteractSwallow::actPiki(Piki* piki)
 		ERROR("try to swallow dead piki!\n");
 	}
 
-	piki->_4F8->abandon(nullptr);
-	piki->_4F8->mChildActionIdx = 15;
-	piki->_4F8->mChildActions[piki->_4F8->mChildActionIdx].initialise(nullptr);
+	piki->mActiveAction->abandon(nullptr);
+	piki->mActiveAction->mChildActionIdx = 15;
+	piki->mActiveAction->mChildActions[piki->mActiveAction->mChildActionIdx].initialise(nullptr);
 	piki->mMode = 0;
 	if (!mMouthPart) {
 		piki->playEventSound(mOwner, SE_PIKI_EATEN);

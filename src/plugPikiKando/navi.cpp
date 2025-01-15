@@ -213,7 +213,7 @@ void Navi::updateDayEnd(Vector3f& pos)
 				}
 
 				// Complete guess, fuck it.
-				s32 slotID = ((ActTransport*)piki->_4F8->getCurrentChild())->mSlotIndex;
+				s32 slotID = ((ActTransport*)piki->mActiveAction->getCurrentChild())->mSlotIndex;
 				if (slotID == -1) {
 					ERROR("slotID = -1 desse\n");
 				}

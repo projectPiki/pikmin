@@ -35,7 +35,7 @@ static void _Print(char*, ...)
 bool InteractTalk::actPiki(Piki* piki)
 {
 	MsgTarget msg(mOwner);
-	piki->_4F8->procMsg(&msg);
+	piki->mActiveAction->procMsg(&msg);
 	return true;
 }
 
