@@ -510,10 +510,10 @@ void StdSystem::flushLFlares(Graphics& gfx)
 	FOREACH_NODE(LFlareGroup, mFlareGroupList->mChild, flareGroup)
 	{
 		if (flareGroup->mLFInfo) {
-			if (flareGroup->_1C) {
-				gfx.useMaterial(flareGroup->_1C);
+			if (flareGroup->mMaterial) {
+				gfx.useMaterial(flareGroup->mMaterial);
 			} else {
-				gfx.setCBlending(flareGroup->_24);
+				gfx.setCBlending(flareGroup->mBlendMode);
 				gfx.useMaterial(nullptr);
 				gfx.useTexture(flareGroup->mTexture, 0);
 			}
@@ -521,7 +521,7 @@ void StdSystem::flushLFlares(Graphics& gfx)
 			gfx.initParticle(true);
 
 			for (LFInfo* info = flareGroup->mLFInfo; info; info = info->mPrevInfo) {
-				if (!flareGroup->_1C) {
+				if (!flareGroup->mMaterial) {
 					gfx.setColour(info->mColour, true);
 				}
 

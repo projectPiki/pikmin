@@ -125,15 +125,15 @@ struct PolyObjectMgr : public ObjectMgr {
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_28 = ObjectMgr
-	int _28;     // _28
-	int mMax;    // _2C
-	int mSize;   // _30
-	u8 _34[0x4]; // _34, unknown
-	u32 _38;     // _38, unknown
-	int* _3C;    // _3C, indices maybe?
-	int _40;     // _40
-	u32 _44;     // _44, unknown
-	u32 _48;     // _48, unknown, pointer to some array of objects of size 0xC.
+	int _28;             // _28
+	int mMax;            // _2C
+	int mSize;           // _30
+	u8 _34[0x4];         // _34, unknown
+	u32 _38;             // _38, unknown
+	int* mObjectIndices; // _3C
+	int _40;             // _40
+	u32 _44;             // _44, unknown
+	u32 _48;             // _48, unknown, pointer to some array of objects of size 0xC.
 };
 
 #endif

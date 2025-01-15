@@ -3011,8 +3011,8 @@ int PolyObjectMgr::getFirst()
 {
 	int next = -1;
 	for (int i = 0; i < mMax; i++) {
-		int candidate = _3C[i];
-		if (_3C[i] >= 0) {
+		int candidate = mObjectIndices[i];
+		if (mObjectIndices[i] >= 0) {
 			next = i;
 			break;
 		}
@@ -3032,8 +3032,8 @@ int PolyObjectMgr::getNext(int idx)
 {
 	int next = -1;
 	for (int i = idx + 1; i < mMax; i++) {
-		int candidate = _3C[i];
-		if (_3C[i] >= 0) {
+		int candidate = mObjectIndices[i];
+		if (mObjectIndices[i] >= 0) {
 			next = i;
 			break;
 		}

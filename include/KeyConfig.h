@@ -34,12 +34,12 @@ struct KeyConfig : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Key _20; // _20, 'throw'
-	Key _44; // _44, 'set cursor'
-	Key _68; // _68, 'extract'
-	Key _8C; // _8C, 'attack'
-	Key _B0; // _B0, 'menu'
-	Key _D4; // _C4, 'disband'
+	Key mThrowKey;     // _20, 'throw'
+	Key mSetCursorKey; // _44, 'set cursor'
+	Key mExtractKey;   // _68, 'extract'
+	Key mAttackKey;    // _8C, 'attack'
+	Key mMenuKey;      // _B0, 'menu'
+	Key mDisbandKey;   // _C4, 'disband'
 };
 
 #endif

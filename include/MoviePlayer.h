@@ -53,7 +53,7 @@ struct MoviePlayer {
 	void backFrame();
 
 	u8 _00[0x124];          // _00, unknown
-	u8 _124;                // _124
+	u8 mIsActive;           // _124
 	u8 _125[0x174 - 0x125]; // _125, unknown
 };
 

@@ -3896,9 +3896,9 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	particleHeap = new DynParticleHeap(0x400);
 	memStat->end("dynamics");
 
-	mAiPerfDebugMenu                   = new Menu(mController, gsys->mConsFont, false);
-	mAiPerfDebugMenu->_48              = glnWidth / 2;
-	mAiPerfDebugMenu->mPositionOffsetY = glnHeight / 2;
+	mAiPerfDebugMenu                 = new Menu(mController, gsys->mConsFont, false);
+	mAiPerfDebugMenu->mScreenMiddleX = glnWidth / 2;
+	mAiPerfDebugMenu->mScreenMiddleY = glnHeight / 2;
 	// AIPerf::addMenu(_3C);
 	GlobalShape::init();
 

@@ -64,26 +64,26 @@ PaniTestNode::PaniTestNode()
 	routeMgr  = nullptr;
 	effectMgr = nullptr;
 	pelletMgr = new PelletMgr(mapMgr);
-	_390.mPosition.set(0.0f, 500.0f, 0.0f);
-	_390.mDistancedRange = 500.0f;
-	_390.update();
+	mMainLight.mPosition.set(0.0f, 500.0f, 0.0f);
+	mMainLight.mDistancedRange = 500.0f;
+	mMainLight.update();
 	pikiMgr = new PikiMgr(nullptr);
 	pikiMgr->init();
 	pikiMgr->mMapMgr = mapMgr;
 	FastGrid::initAIGrid(9);
 	_674 = 300.0f;
 
-	_66C = 1;
-	pikiMgr->create(_66C);
-	_664 = new Piki*[_66C];
+	mTestPikiCount = 1;
+	pikiMgr->create(mTestPikiCount);
+	mTestPikiList = new Piki*[mTestPikiCount];
 
-	for (int i = 0; i < _66C; i++) {
-		_664[i] = static_cast<ViewPiki*>(pikiMgr->birth());
-		_664[i]->init(nullptr);
-		_664[i]->mScale.set(1.0f, 1.0f, 1.0f);
-		_664[i]->mRotation.set(0.0f, 0.0f, 0.0f);
-		_664[i]->mPosition.set(0.0f, 0.0f, 0.0f);
-		_664[i]->initColor(Blue);
+	for (int i = 0; i < mTestPikiCount; i++) {
+		mTestPikiList[i] = static_cast<ViewPiki*>(pikiMgr->birth());
+		mTestPikiList[i]->init(nullptr);
+		mTestPikiList[i]->mScale.set(1.0f, 1.0f, 1.0f);
+		mTestPikiList[i]->mRotation.set(0.0f, 0.0f, 0.0f);
+		mTestPikiList[i]->mPosition.set(0.0f, 0.0f, 0.0f);
+		mTestPikiList[i]->initColor(Blue);
 	}
 
 	gameflow.addGenNode("pikiMgr", pikiMgr);
@@ -92,7 +92,7 @@ PaniTestNode::PaniTestNode()
 	gameflow.addGenNode("tekiMgr", tekiMgr);
 
 	tekiMgr->create(TEKI_TypeCount);
-	_668 = new Teki*[TEKI_TypeCount];
+	mTestTekiList = new Teki*[TEKI_TypeCount];
 	tekiMgr->setUsingTypeTable(true);
 	tekiMgr->mUsingType[TEKI_Frog]    = true;
 	tekiMgr->mUsingType[TEKI_Swallob] = true;
@@ -101,11 +101,11 @@ PaniTestNode::PaniTestNode()
 
 	for (int i = 0; i < TEKI_TypeCount; i++) {
 		if (tekiMgr->mTekiParams[i]) {
-			_668[i] = tekiMgr->newTeki(i);
-			_668[i]->mPersonality->init();
-			_668[i]->reset();
+			mTestTekiList[i] = tekiMgr->newTeki(i);
+			mTestTekiList[i]->mPersonality->init();
+			mTestTekiList[i]->reset();
 		} else {
-			_668[i] = nullptr;
+			mTestTekiList[i] = nullptr;
 		}
 	}
 
@@ -115,11 +115,11 @@ PaniTestNode::PaniTestNode()
 	_28 = 0;
 
 	Texture* fontTex = gsys->loadTexture("consFont.bti", true);
-	_30              = new Font();
-	_30->setTexture(fontTex, 16, 8);
+	mConsFont        = new Font();
+	mConsFont->setTexture(fontTex, 16, 8);
 
 	gsys->setFade(1.0f, 3.0f);
-	mCamMgr = new PcamCameraManager(&_38, mController);
+	mCamMgr = new PcamCameraManager(&mActiveCamera, mController);
 	_688    = 30.0f;
 	_68C    = 0;
 
@@ -513,10 +513,10 @@ void PaniTestNode::setTestMode(int mode)
 	Creature* camTarget = nullptr;
 	switch (mTestMode) {
 	case PANITEST_Piki:
-		camTarget = _664[0];
+		camTarget = mTestPikiList[0];
 		break;
 	case PANITEST_Teki:
-		camTarget = _668[mFocusTekiType];
+		camTarget = mTestTekiList[mFocusTekiType];
 		break;
 	}
 
@@ -1246,11 +1246,11 @@ void PaniTestNode::updateTekis()
  */
 void PaniTestNode::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	_67C = event.mEventType;
+	mAnimationEvent = event.mEventType;
 	if (mTestMode == PANITEST_Piki) {
-		_664[0]->animationKeyUpdated(event);
+		mTestPikiList[0]->animationKeyUpdated(event);
 	} else { // mTestMode == PANITEST_Teki
-		_668[mFocusTekiType]->animationKeyUpdated(event);
+		mTestTekiList[mFocusTekiType]->animationKeyUpdated(event);
 	}
 }
 

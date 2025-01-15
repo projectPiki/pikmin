@@ -1345,7 +1345,7 @@ bool KingAi::missAttackNextTransit()
 	bool res = false;
 	MoveTrace trace(attackCentre, Vector3f(0.0f, 0.0f, 0.0f), C_KING_PROP(mKing)._334(), false);
 	mapMgr->traceMove(mKing, trace, gsys->getFrameTime());
-	if (attackCentre.x != trace._00.x || attackCentre.y != trace._00.y || attackCentre.z != trace._00.z) {
+	if (attackCentre.x != trace.mPosition.x || attackCentre.y != trace.mPosition.y || attackCentre.z != trace.mPosition.z) {
 		res = true;
 	}
 	return res;

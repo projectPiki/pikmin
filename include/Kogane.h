@@ -38,7 +38,7 @@ struct KoganeProp : public BossProp, public CoreNode {
 	 * @note Offset comments are relative to KoganeProp for ease of use.
 	 */
 	struct KoganeProperties : public Parameters {
-		inline KoganeProperties() // TODO
+		inline KoganeProperties()
 		    : mAppearTriggerRadius(this, 30.0f, 0.0f, 0.0f, "o00", nullptr)
 		    , mAppearScaleUpSpeed(this, 6.0f, 0.0f, 0.0f, "o01", nullptr)
 		    , mDisappearScaleDownSpeed(this, 6.0f, 0.0f, 0.0f, "o02", nullptr)

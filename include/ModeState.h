@@ -11,7 +11,7 @@ struct Controller;
  */
 struct ModeState {
 	ModeState(Controller* c)
-	    : _04(c)
+	    : mController(c)
 	{
 	}
 
@@ -20,7 +20,7 @@ struct ModeState {
 	virtual void postUpdate();          // _10
 
 	// _00 = VTBL
-	Controller* _04;
+	Controller* mController;
 };
 
 /**

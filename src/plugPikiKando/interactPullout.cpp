@@ -48,7 +48,7 @@ bool InteractPullout::actPiki(Piki* piki)
 	PRINT("nukarePiki:faceDir = %.1f\n", piki->mDirection);
 
 	piki->mFSM->transit(piki, PIKISTATE_Nukare);
-	if (piki->mNavi->_7E5) {
+	if (piki->mNavi->mIsFastPluckEnabled) {
 		piki->mPikiAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Nukare_Fast, piki), PaniMotionInfo(PIKIANIM_Nukare_Fast));
 	} else {
 		piki->mPikiAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Nukareru, piki), PaniMotionInfo(PIKIANIM_Nukareru));

@@ -513,8 +513,8 @@ void LifeGaugeMgr::init(int count)
 		_48.add(&gaugeList[i]);
 	}
 
-	mLFlare      = gsys->registerLFlare(gsys->loadTexture("intro/item_0_9.bti", true));
-	mLFlare->_24 = 5;
+	mLFlare             = gsys->registerLFlare(gsys->loadTexture("intro/item_0_9.bti", true));
+	mLFlare->mBlendMode = 5;
 }
 
 /*

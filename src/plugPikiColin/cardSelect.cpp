@@ -159,7 +159,7 @@ struct CardSelectSetupSection : public Node {
 				PRINT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 				PRINT("using save game file %d (crc = %08x) with %d as the spare\n", gameflow.mGamePrefs.mSaveGameIndex,
 				      gameflow.mSaveGameCrc, gameflow.mGamePrefs.mSpareSaveGames);
-				gameflow.mWorldClock.mCurrentDay = card._0C;
+				gameflow.mWorldClock.mCurrentDay = card.mCurrentDay;
 				mFadeState                       = 1;
 				gsys->setFade(0.0f, 3.0f);
 			}

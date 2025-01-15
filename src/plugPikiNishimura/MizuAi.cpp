@@ -164,8 +164,8 @@ void MizuAi::initWait(int stateID)
 {
 	mMizu->setNextState(stateID);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
-	mMizu->_3B8 = 1;
-	mMizu->_3B9 = true;
+	mMizu->_3B8       = 1;
+	mMizu->mIsVisible = true;
 	mMizu->setIsAlive(1);
 	mMizu->setIsOrganic(1);
 	mMizu->setAttackTimer(0.0f);
@@ -187,8 +187,8 @@ void MizuAi::initReady(int stateID)
 {
 	mMizu->setNextState(stateID);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
-	mMizu->_3B8 = 0;
-	mMizu->_3B9 = false;
+	mMizu->_3B8       = 0;
+	mMizu->mIsVisible = false;
 	mMizu->setIsAlive(0);
 	mMizu->setIsOrganic(0);
 	mMizu->setAttackTimer(0.0f);
@@ -214,8 +214,8 @@ void MizuAi::initJet(int stateID)
 {
 	mMizu->setNextState(stateID);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(10, this));
-	mMizu->_3B8 = 1;
-	mMizu->_3B9 = false;
+	mMizu->_3B8       = 1;
+	mMizu->mIsVisible = false;
 	mMizu->setIsAlive(false);
 	mMizu->setIsOrganic(false);
 	mMizu->setAttackTimer(0.0f);

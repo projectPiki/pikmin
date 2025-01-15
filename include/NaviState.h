@@ -118,11 +118,11 @@ struct NaviBuryState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	Vector3f _10; // _10
-	u8 _1C;       // _1C
-	u8 _1D;       // _1D
-	u8 _1E;       // _1E
-	u8 _1F;       // _1F
+	Vector3f mPreviousStickInput; // _10
+	u8 mBuryState;                // _1C
+	u8 mEscapeAttemptCounter;     // _1D
+	u8 mValidEscapeAttempts;      // _1E
+	u8 mEscapeTimer;              // _1F
 };
 
 /**
@@ -382,11 +382,11 @@ struct NaviFlickState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u16 _10;                  // _10
+	u16 mFlickState;          // _10
 	f32 mGetupAnimationTimer; // _14
-	f32 _18;                  // _18
-	f32 _1C;                  // _1C
-	f32 _20;                  // _20
+	f32 mDirection;           // _18
+	f32 mRandVariation;       // _1C
+	f32 mIntensity;           // _20
 };
 
 /**
@@ -445,13 +445,13 @@ struct NaviGeyzerState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u16 _10;      // _10
-	f32 _14;      // _14
-	f32 _18;      // _18
-	f32 _1C;      // _1C
-	Vector3f _20; // _20
-	f32 _2C;      // _2C
-	u8 _30;       // _30
+	u16 mGeyserState;     // _10
+	f32 _14;              // _14
+	f32 mPlayerDirection; // _18
+	f32 _1C;              // _1C
+	Vector3f _20;         // _20
+	f32 _2C;              // _2C
+	u8 _30;               // _30
 };
 
 /**
@@ -867,7 +867,7 @@ struct NaviUfoState : public NaviState {
 	u16 mState;             // _10
 	u16 mRecoveryTimer;     // _12
 	Vector3f mLastPosition; // _14
-	s8 _20;                 // _20
+	s8 mPunchCooldownTimer; // _20
 	u8 _21;                 // _21
 };
 

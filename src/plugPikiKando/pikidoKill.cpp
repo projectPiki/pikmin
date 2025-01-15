@@ -23,10 +23,10 @@ DEFINE_PRINT("pikidoKill");
  */
 void Piki::doKill()
 {
-	if (_2D0) {
-		routeMgr->getPathFinder('test')->releaseHandle(_2D0);
-		_2D0 = 0;
-		_2D4 = 0;
+	if (mTestPathingAgentId) {
+		routeMgr->getPathFinder('test')->releaseHandle(mTestPathingAgentId);
+		mTestPathingAgentId = 0;
+		_2D4                = 0;
 	}
 
 	_338 = 0;

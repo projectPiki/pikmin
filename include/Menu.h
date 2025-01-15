@@ -63,7 +63,7 @@ struct Menu : public Node {
 		u32 _10;                        // _10, unknown
 		bool mIsEnabled;                // _14
 		char* mName;                    // _18
-		int _1C;                        // _1C
+		int mFilterIndex;               // _1C
 		MenuNavigationType::Type mType; // _20
 		KeyEvent* mEventList;           // _24
 	};
@@ -99,20 +99,23 @@ struct Menu : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Menu* mParentMenu;                          // _20
-	Menu* mPreviousMenu;                        // _24
-	Menu* mNextMenu;                            // _28
-	MenuItem* mLastItem;                        // _2C
-	MenuItem* mCurrentItem;                     // _30
-	MenuItem* mFirstItem;                       // _34
-	u32 _38;                                    // _38, unknown
-	int mUseCustomPosition;                     // _3C
-	int mMenuCount;                             // _40, option count?
-	f32 mAnimationProgress;                     // _44
-	u32 _48;                                    // _48, unknown - struct from here...
-	int mPositionOffsetY;                       // _4C
-	u32 _50;                                    // _50, unknown
-	u32 _54;                                    // _54, unknown - to here?
+	Menu* mParentMenu;      // _20
+	Menu* mPreviousMenu;    // _24
+	Menu* mNextMenu;        // _28
+	MenuItem* mLastItem;    // _2C
+	MenuItem* mCurrentItem; // _30
+	MenuItem* mFirstItem;   // _34
+	u32 _38;                // _38, unknown
+	int mUseCustomPosition; // _3C
+	int mMenuCount;         // _40, option count?
+	f32 mAnimationProgress; // _44
+
+	// RectArea?
+	u32 mScreenMiddleX; // _48, unknown - struct from here...
+	int mScreenMiddleY; // _4C
+	u32 _50;            // _50, unknown
+	u32 _54;            // _54, unknown - to here?
+
 	Controller* mController;                    // _58
 	u32 _5C;                                    // _5C, unknown
 	Colour mDiffuseColour;                      // _60
@@ -129,7 +132,7 @@ struct Menu : public Node {
 	IDelegate1<Menu&>* mOnMenuSwitchCallback;   // _8C
 	u8 _90[0x4];                                // _90, unknown
 	IDelegate1<Menu&>* mOnOptionChangeCallback; // _94
-	u8 _98;                                     // _98
+	u8 mIsMenuChanging;                         // _98
 	bool isOptionSelected;                      // _99
 	Font* mFont;                                // _9C
 	int _A0;                                    // _A0

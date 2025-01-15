@@ -27,10 +27,10 @@ DEFINE_PRINT(nullptr);
  */
 Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 {
-	_54              = 0;
-	mPositionOffsetY = 0;
-	_50              = 0;
-	_48              = 0;
+	_54            = 0;
+	mScreenMiddleY = 0;
+	_50            = 0;
+	mScreenMiddleX = 0;
 
 	_74 = 0;
 	_6C = 0;
@@ -57,10 +57,10 @@ Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 	mCurrentItem = nullptr;
 	mFirstItem   = nullptr;
 
-	_48              = 160;
-	mPositionOffsetY = 120;
-	_50              = 0;
-	_54              = 0;
+	mScreenMiddleX = 160;
+	mScreenMiddleY = 120;
+	_50            = 0;
+	_54            = 0;
 
 	_78 = 6;
 	_7C = 12;
@@ -83,7 +83,7 @@ Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 	mOnMenuSwitchCallback   = 0;
 	mOnStateChangeCallback  = 0;
 	mOnOptionChangeCallback = 0;
-	_98                     = 1;
+	mIsMenuChanging         = 1;
 	isOptionSelected        = true;
 	mInputCode              = 0x1001000;
 	mState                  = MenuStateType::Idle;
@@ -158,13 +158,13 @@ Menu::KeyEvent::KeyEvent(int eventType, int inputCode, IDelegate1<Menu&>* delega
  * Address:	8005D8C0
  * Size:	000094
  */
-Menu::MenuItem::MenuItem(int type, int p2, char* name, IDelegate1<Menu&>* delegate)
+Menu::MenuItem::MenuItem(int type, int filterIndex, char* name, IDelegate1<Menu&>* delegate)
 {
 	mIsEnabled = true;
 	mName      = name;
 
-	_1C   = p2;
-	mType = (MenuNavigationType::Type)type;
+	mFilterIndex = filterIndex;
+	mType        = (MenuNavigationType::Type)type;
 
 	mPrev = mNext = nullptr;
 	_08           = 0;
@@ -442,12 +442,12 @@ Menu* Menu::doUpdate(bool selectItem)
 
 		checkNewOption();
 
-		if (_98) {
+		if (mIsMenuChanging) {
 			if (mOnStateChangeCallback) {
 				mOnStateChangeCallback->invoke(*this);
 			}
 
-			_98              = 0;
+			mIsMenuChanging  = 0;
 			isOptionSelected = true;
 		}
 
@@ -536,12 +536,12 @@ bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 					if (menu->mNextMenu->mUseCustomPosition) {
 						const int kMenuItemHeight = 14;
 
-						menu->mNextMenu->mPositionOffsetY
-						    = menu->mPositionOffsetY - (menu->mMenuCount * kMenuItemHeight) / 2 + menu->_A0 * kMenuItemHeight;
+						menu->mNextMenu->mScreenMiddleY
+						    = menu->mScreenMiddleY - (menu->mMenuCount * kMenuItemHeight) / 2 + menu->_A0 * kMenuItemHeight;
 					}
 
-					menu->_98                      = 1;
-					menu->mCurrentItem->mMenu->_98 = 1;
+					menu->mIsMenuChanging                      = 1;
+					menu->mCurrentItem->mMenu->mIsMenuChanging = 1;
 					return false;
 				}
 
@@ -565,7 +565,7 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 	// Determine the maximum string width for the menu items
 	int maxStringWidth    = 0;
 	MenuItem* currentItem = mLastItem;
-	int baseYPosition     = mPositionOffsetY - (14 * mMenuCount / 2);
+	int baseYPosition     = mScreenMiddleY - (14 * mMenuCount / 2);
 
 	while (currentItem != mFirstItem) {
 		if (currentItem->mName) {
@@ -605,7 +605,7 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 	boxWidth *= fadeMultiplier;
 
 	// Draw the background menu box
-	RectArea menuBox(mPositionOffsetY - boxWidth, boxTop - boxBottom, mPositionOffsetY + boxWidth, boxTop + boxBottom);
+	RectArea menuBox(mScreenMiddleY - boxWidth, boxTop - boxBottom, mScreenMiddleY + boxWidth, boxTop + boxBottom);
 	gfx.fillRectangle(menuBox);
 
 	// Iterate through the menu items and draw each one
@@ -640,7 +640,7 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 			snprintf(label, sizeof(label), "%s", currentItem->mName);
 
 			int labelWidth = mFont->stringWidth(label);
-			int labelX = (mState == MenuStateType::Open) ? (mPositionOffsetY - (maxStringWidth + 8)) : (mPositionOffsetY - labelWidth / 2);
+			int labelX     = (mState == MenuStateType::Open) ? (mScreenMiddleY - (maxStringWidth + 8)) : (mScreenMiddleY - labelWidth / 2);
 
 			gfx.texturePrintf(mFont, labelX, itemOffsetY, label);
 		}
@@ -656,8 +656,8 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 	gfx.setColour(selectedColor, true);
 
 	// Define the position of the selection rectangle
-	RectArea selectedRect(mPositionOffsetY - (maxStringWidth + 8) + 4, baseYPosition + 14 * mInputCode + 1,
-	                      mPositionOffsetY + maxStringWidth + 4, baseYPosition + 14 * (mInputCode + 1));
+	RectArea selectedRect(mScreenMiddleY - (maxStringWidth + 8) + 4, baseYPosition + 14 * mInputCode + 1,
+	                      mScreenMiddleY + maxStringWidth + 4, baseYPosition + 14 * (mInputCode + 1));
 
 	gfx.lineRectangle(selectedRect);
 

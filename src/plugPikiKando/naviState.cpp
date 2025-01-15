@@ -227,7 +227,7 @@ void NaviDemoWaitState::exec(Navi* navi)
 	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
-	if (!gameflow.mMoviePlayer->_124) {
+	if (!gameflow.mMoviePlayer->mIsActive) {
 		navi->_774->restart();
 		navi->_778->restart();
 
@@ -658,14 +658,14 @@ NaviBuryState::NaviBuryState()
 void NaviBuryState::init(Navi* navi)
 {
 	navi->startMotion(PaniMotionInfo(PIKIANIM_GWait1, navi), PaniMotionInfo(PIKIANIM_GWait1));
-	_1C = 0;
-	_1E = 0;
+	mBuryState           = 0;
+	mValidEscapeAttempts = 0;
 	effectMgr->create(EffectMgr::EFF_SD_DirtCloud, navi->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_SD_DirtSpray, navi->mPosition, nullptr, nullptr);
-	_10.set(0.0f, 0.0f, 0.0f);
+	mPreviousStickInput.set(0.0f, 0.0f, 0.0f);
 	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	_1F = 150;
+	mEscapeTimer = 150;
 }
 
 /*
@@ -675,28 +675,30 @@ void NaviBuryState::init(Navi* navi)
  */
 void NaviBuryState::exec(Navi* navi)
 {
-	Vector3f stick(navi->mKontroller->getMainStickX(), 0.0f, navi->mKontroller->getMainStickY());
-	navi->reviseController(stick);
+	Vector3f stickInput(navi->mKontroller->getMainStickX(), 0.0f, navi->mKontroller->getMainStickY());
+	navi->reviseController(stickInput);
 
-	f32 stickMag = stick.length();
+	f32 stickMag = stickInput.length();
 
-	switch (_1C) {
+	switch (mBuryState) {
 	case 0:
-		if ((stickMag > 0.8f && _10.dot(stick) < 0.5f) || navi->mKontroller->isPressed(KBBTN_A) || navi->mKontroller->isPressed(KBBTN_B)) {
-			_10 = stick;
-			_1C = 1;
-			_1D = 0;
-			_1E = 0;
+		if ((stickMag > 0.8f && mPreviousStickInput.dot(stickInput) < 0.5f) || navi->mKontroller->isPressed(KBBTN_A)
+		    || navi->mKontroller->isPressed(KBBTN_B)) {
+			mPreviousStickInput   = stickInput;
+			mBuryState            = 1;
+			mEscapeAttemptCounter = 0;
+			mValidEscapeAttempts  = 0;
 			navi->startMotion(PaniMotionInfo(PIKIANIM_GFuri1, navi), PaniMotionInfo(PIKIANIM_GFuri1));
 		}
 		break;
 	case 1:
 	case 2:
-		if ((stickMag > 0.8f && _10.dot(stick) < -0.6f) || navi->mKontroller->isPressed(KBBTN_A) || navi->mKontroller->isPressed(KBBTN_B)) {
-			_1D++;
-			_10 = stick;
-			if (_1C == 1) {
-				_1C           = 2;
+		if ((stickMag > 0.8f && mPreviousStickInput.dot(stickInput) < -0.6f) || navi->mKontroller->isPressed(KBBTN_A)
+		    || navi->mKontroller->isPressed(KBBTN_B)) {
+			mEscapeAttemptCounter++;
+			mPreviousStickInput = stickInput;
+			if (mBuryState == 1) {
+				mBuryState    = 2;
 				f32 frame1Val = navi->mNaviAnimMgr.getLowerAnimator().mAnimationCounter;
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GFuri2, navi), PaniMotionInfo(PIKIANIM_GFuri2));
 				navi->mNaviAnimMgr.getLowerAnimator().mAnimationCounter = frame1Val;
@@ -706,10 +708,10 @@ void NaviBuryState::exec(Navi* navi)
 		break;
 	}
 
-	if (_1F) {
-		_1F--;
-		if (_1F == 0) {
-			_1C = 3;
+	if (mEscapeTimer) {
+		mEscapeTimer--;
+		if (mEscapeTimer == 0) {
+			mBuryState = 3;
 			navi->startMotion(PaniMotionInfo(PIKIANIM_GNuke, navi), PaniMotionInfo(PIKIANIM_GNuke));
 		}
 	}
@@ -949,7 +951,7 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
 	case KEY_LoopEnd:
-		switch (_1C) {
+		switch (mBuryState) {
 		case 0:
 			if (coinFlip()) {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GWait2, navi), PaniMotionInfo(PIKIANIM_GWait2));
@@ -959,21 +961,21 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			break;
 		case 1:
 		case 2:
-			if (_1D == 0) {
+			if (mEscapeAttemptCounter == 0) {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GWait1, navi), PaniMotionInfo(PIKIANIM_GWait1));
-				_1C = 0;
-			} else if (_1D >= static_cast<NaviProp*>(navi->mProps)->mNaviProps._40C()) {
-				_1E++;
-				if (_1E >= static_cast<NaviProp*>(navi->mProps)->mNaviProps._41C()) {
-					_1C = 3;
+				mBuryState = 0;
+			} else if (mEscapeAttemptCounter >= static_cast<NaviProp*>(navi->mProps)->mNaviProps._40C()) {
+				mValidEscapeAttempts++;
+				if (mValidEscapeAttempts >= static_cast<NaviProp*>(navi->mProps)->mNaviProps._41C()) {
+					mBuryState = 3;
 					navi->startMotion(PaniMotionInfo(PIKIANIM_GNuke, navi), PaniMotionInfo(PIKIANIM_GNuke));
 				}
-				_1D = 0;
+				mEscapeAttemptCounter = 0;
 			} else {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GWait1, navi), PaniMotionInfo(PIKIANIM_GWait1));
-				_1C = 0;
-				_1E = 0;
-				_1D = 0;
+				mBuryState            = 0;
+				mValidEscapeAttempts  = 0;
+				mEscapeAttemptCounter = 0;
 			}
 			break;
 		case 3:
@@ -982,7 +984,7 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 		}
 		break;
 	case KEY_PlayEffect:
-		switch (_1C) {
+		switch (mBuryState) {
 		case 2:
 			f32 randAngle = 2.0f * randFloat(PI);
 			Vector3f dir(40.0f * sinf(randAngle), 0.0f, 40.0f * cosf(randAngle));
@@ -2402,7 +2404,7 @@ void NaviUfoState::init(Navi* navi)
 	navi->mOdoMeter.start(0.5f, 8.0f);
 	setCorePauseFlag(COREPAUSE_Unk1 | COREPAUSE_Unk2 | COREPAUSE_Unk16);
 	Jac_StartPartsFindDemo(0, 1);
-	_20 = _21 = 0;
+	mPunchCooldownTimer = _21 = 0;
 }
 
 /*
@@ -2427,14 +2429,15 @@ void NaviUfoState::procCollideMsg(Navi* navi, MsgCollide* msg)
 void NaviUfoState::exec(Navi* navi)
 {
 	if (mState == 0) {
-		UfoItem* onion     = itemMgr->getUfo();
-		Vector3f goalPos   = onion->getGoalPos();
-		Vector3f dirToGoal = goalPos - navi->mPosition;
-		f32 dist           = dirToGoal.normalise();
+		UfoItem* onion          = itemMgr->getUfo();
+		Vector3f goalPos        = onion->getGoalPos();
+		Vector3f dirToOnionBeam = goalPos - navi->mPosition;
+		f32 distanceToOnion     = dirToOnionBeam.normalise();
 
-		if (dist < 10.0f) {
+		// Check if within valid range
+		if (distanceToOnion < 10.0f) {
 			if (!_21) {
-				_20 = 20;
+				mPunchCooldownTimer = 20;
 			}
 
 			_21 = 1;
@@ -2449,7 +2452,7 @@ void NaviUfoState::exec(Navi* navi)
 				effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mPosition, nullptr, nullptr);
 			} else {
 				navi->mDirection = roundAng(navi->mDirection + 0.1f * rotDelta);
-				if (--_20 <= 0) {
+				if (--mPunchCooldownTimer <= 0) {
 					navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 					mState = 1;
 					effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mPosition, nullptr, nullptr);
@@ -2465,8 +2468,8 @@ void NaviUfoState::exec(Navi* navi)
 			return;
 		} else {
 			mLastPosition         = navi->mPosition;
-			navi->mVelocity       = dirToGoal * 60.0f;
-			navi->mTargetVelocity = dirToGoal * 60.0f;
+			navi->mVelocity       = dirToOnionBeam * 60.0f;
+			navi->mTargetVelocity = dirToOnionBeam * 60.0f;
 		}
 	}
 
@@ -3769,11 +3772,11 @@ NaviFlickState::NaviFlickState()
  */
 void NaviFlickState::init(Navi* navi)
 {
-	_10               = 0;
-	_18               = navi->mDirection;
-	_1C               = 0.1f * randFloat(PI);
+	mFlickState       = 0;
+	mDirection        = navi->mDirection;
+	mRandVariation    = 0.1f * randFloat(PI);
 	navi->mVelocity.y = 0.0f;
-	_20               = navi->_704 + 0.1f * navi->_704 * randFloat();
+	mIntensity        = navi->_704 + 0.1f * navi->_704 * randFloat();
 	navi->startMotion(PaniMotionInfo(PIKIANIM_JHit, navi), PaniMotionInfo(PIKIANIM_JHit));
 	/*
 	.loc_0x0:
@@ -3862,19 +3865,19 @@ void NaviFlickState::init(Navi* navi)
  */
 void NaviFlickState::exec(Navi* navi)
 {
-	if (_10 == 0) {
-		f32 speed         = _20;
-		navi->mVelocity.x = -speed * sinf(_18);
-		navi->mVelocity.z = -speed * cosf(_18);
-		navi->mDirection  = roundAng(navi->mDirection + _1C);
+	if (mFlickState == 0) {
+		f32 speed         = mIntensity;
+		navi->mVelocity.x = -speed * sinf(mDirection);
+		navi->mVelocity.z = -speed * cosf(mDirection);
+		navi->mDirection  = roundAng(navi->mDirection + mRandVariation);
 		return;
 	}
 
-	if (_10 == 2) {
+	if (mFlickState == 2) {
 		mGetupAnimationTimer -= gsys->getFrameTime();
 		if (mGetupAnimationTimer < 0.0f) {
 			navi->startMotion(PaniMotionInfo(PIKIANIM_GetUp, navi), PaniMotionInfo(PIKIANIM_GetUp));
-			_10 = 3;
+			mFlickState = 3;
 		}
 		navi->mVelocity.x = navi->mVelocity.x * 0.9f;
 		navi->mVelocity.z = navi->mVelocity.z * 0.9f;
@@ -3896,13 +3899,13 @@ void NaviFlickState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
-		if (_10 == 0) {
+		if (mFlickState == 0) {
 			navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_JKoke, navi), PaniMotionInfo(PIKIANIM_JKoke));
-			_10 = 1;
+			mFlickState = 1;
 			break;
 		}
-		if (_10 == 1) {
-			_10                  = 2;
+		if (mFlickState == 1) {
+			mFlickState          = 2;
 			mGetupAnimationTimer = randFloat(0.1f);
 			break;
 		}
@@ -3945,17 +3948,17 @@ NaviGeyzerState::NaviGeyzerState()
  */
 void NaviGeyzerState::init(Navi* navi)
 {
-	_10 = 1; // why
-	_18 = navi->mDirection;
-	_1C = 0.1f * randFloat(PI);
+	mGeyserState     = 1; // why
+	mPlayerDirection = navi->mDirection;
+	_1C              = 0.1f * randFloat(PI);
 	navi->startMotion(PaniMotionInfo(PIKIANIM_JHit, navi), PaniMotionInfo(PIKIANIM_JHit));
 	_30 = 0;
 	navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_OCarry, navi), PaniMotionInfo(PIKIANIM_OCarry));
 
-	_10 = 2; // does this
-	_2C = 69.0f + navi->mPosition.y;
+	mGeyserState = 2; // does this
+	_2C          = 69.0f + navi->mPosition.y;
 
-	_10 = 0; // get set like this
+	mGeyserState = 0; // get set like this
 }
 
 /*
@@ -4124,18 +4127,18 @@ void NaviGeyzerState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
-		if (_10 == 1) {
+		if (mGeyserState == 1) {
 			navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_JKoke, navi), PaniMotionInfo(PIKIANIM_JKoke));
-			_10 = 2;
+			mGeyserState = 2;
 			break;
 		}
 
-		if (_10 == 2) {
+		if (mGeyserState == 2) {
 			navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_JKoke, navi), PaniMotionInfo(PIKIANIM_JKoke));
 			break;
 		}
 
-		if (_10 == 4) {
+		if (mGeyserState == 4) {
 			transit(navi, NAVISTATE_Walk);
 		}
 		break;
@@ -4149,9 +4152,9 @@ void NaviGeyzerState::procAnimMsg(Navi* navi, MsgAnim* msg)
  */
 void NaviGeyzerState::procBounceMsg(Navi* navi, MsgBounce* msg)
 {
-	if (_10 != 0) {
-		_10 = 3;
-		_14 = 0.3f + randFloat(0.2f);
+	if (mGeyserState != 0) {
+		mGeyserState = 3;
+		_14          = 0.3f + randFloat(0.2f);
 		rumbleMgr->start(10, 0, nullptr);
 	}
 }

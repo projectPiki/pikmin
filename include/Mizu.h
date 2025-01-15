@@ -50,16 +50,16 @@ struct MizuProp : public BossProp, public CoreNode {
 struct Mizu : public Boss {
 	Mizu(CreatureProp*);
 
-	virtual f32 getiMass();                   // _38
-	virtual bool isVisible() { return _3B9; } // _74
-	virtual void update();                    // _E0
-	virtual void refresh(Graphics&);          // _EC
-	virtual void doAI();                      // _104
-	virtual void doAnimation();               // _108
-	virtual void doKill();                    // _10C
-	virtual void exitCourse();                // _110
-	virtual bool attackDefaultPortion();      // _118
-	virtual void drawShape(Graphics&);        // _120
+	virtual f32 getiMass();                         // _38
+	virtual bool isVisible() { return mIsVisible; } // _74
+	virtual void update();                          // _E0
+	virtual void refresh(Graphics&);                // _EC
+	virtual void doAI();                            // _104
+	virtual void doAnimation();                     // _108
+	virtual void doKill();                          // _10C
+	virtual void exitCourse();                      // _110
+	virtual bool attackDefaultPortion();            // _118
+	virtual void drawShape(Graphics&);              // _120
 
 	void initMizu(Vector3f&);
 	void initGeyzer(Vector3f&);
@@ -69,7 +69,7 @@ struct Mizu : public Boss {
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	u8 _3B8;         // _3B8
-	bool _3B9;       // _3B9
+	bool mIsVisible; // _3B9
 	MizuAi* mMizuAi; // _3BC
 };
 

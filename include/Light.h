@@ -57,10 +57,10 @@ struct LFlareGroup : public CoreNode {
 	LFlareGroup()
 	    : CoreNode("lfgroup")
 	{
-		mTexture = nullptr;
-		_1C      = 0;
-		mLFInfo  = nullptr;
-		_24      = 1;
+		mTexture   = nullptr;
+		mMaterial  = 0;
+		mLFInfo    = nullptr;
+		mBlendMode = 1;
 	}
 
 	void addLFlare(Colour& color, Vector3f& pos, Vector2f& size, Vector2f* a5, Vector2f* a6)
@@ -88,11 +88,11 @@ struct LFlareGroup : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 _14;                  // _14
-	struct Texture* mTexture; // _18
-	struct Material* _1C;     // _1C
-	LFInfo* mLFInfo;          // _20
-	u32 _24;                  // _24
+	u32 _14;                    // _14
+	struct Texture* mTexture;   // _18
+	struct Material* mMaterial; // _1C
+	LFInfo* mLFInfo;            // _20
+	u32 mBlendMode;             // _24
 };
 
 /**

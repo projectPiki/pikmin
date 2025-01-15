@@ -229,7 +229,7 @@ IntroGameSection::IntroGameSection()
 void IntroModeState::update(u32& a2)
 {
 	a2 = 1;
-	if (!gameflow.mMoviePlayer->_124) {
+	if (!gameflow.mMoviePlayer->mIsActive) {
 		PRINT("quitting!\n");
 		// TODO: this has regswap issues.
 		// return new QuittingModeState(_04);

@@ -172,7 +172,7 @@ int Navi::getPlatePikis()
  */
 void Navi::startDayEnd()
 {
-	_6C0 = 1;
+	mIsDayEnd = 1;
 }
 
 /*
@@ -183,11 +183,11 @@ void Navi::startDayEnd()
  */
 void Navi::updateDayEnd(Vector3f& pos)
 {
-	if (_6C0) {
-		_6C0 = 0;
+	if (mIsDayEnd) {
+		mIsDayEnd = 0;
 
-		mPosition = pos;
-		_790      = pos;
+		mPosition       = pos;
+		mDayEndPosition = pos;
 		mPlateMgr->update();
 		makeCStick(false);
 
@@ -235,10 +235,10 @@ void Navi::updateDayEnd(Vector3f& pos)
 
 	makeCStick(false);
 
-	_790      = mPosition;
-	mPosition = pos;
+	mDayEndPosition = mPosition;
+	mPosition       = pos;
 
-	mVelocity     = pos - _790;
+	mVelocity     = pos - mDayEndPosition;
 	f32 length    = mVelocity.length();
 	f32 frameTime = 1.0f / gsys->getFrameTime();
 	mVelocity.multiply(frameTime);
@@ -956,7 +956,7 @@ void Navi::finishDamage()
 		mStateMachine->transit(this, NAVISTATE_Dead);
 		setCorePauseFlag(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 	} else {
-		if (!gameflow.mMoviePlayer->_124 && mHealth <= 0.25f * static_cast<NaviProp*>(mProps)->mNaviProps.mHealth()
+		if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * static_cast<NaviProp*>(mProps)->mNaviProps.mHealth()
 		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk29)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk29);
 			gameflow._1E8->message(0, 24);
@@ -1011,7 +1011,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	_AC4    = 0.0f;
 	mHealth = static_cast<NaviProp*>(props)->mNaviProps.mHealth();
 
-	_790.set(0.0f, 0.0f, 0.0f);
+	mDayEndPosition.set(0.0f, 0.0f, 0.0f);
 	_814 = 0.0f;
 	_818 = 1.0f;
 	_810 = 0;
@@ -1529,7 +1529,7 @@ void Navi::findNextThrowPiki()
 void Navi::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 {
 	mNaviAnimMgr.startMotion(motion1, motion2);
-	_7E0 = -1;
+	mPreBlendUpperMotionId = -1;
 }
 
 /*
@@ -1539,7 +1539,7 @@ void Navi::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
  */
 void Navi::enableMotionBlend()
 {
-	_7E0 = mNaviAnimMgr.getUpperAnimator().getCurrentMotionIndex();
+	mPreBlendUpperMotionId = mNaviAnimMgr.getUpperAnimator().getCurrentMotionIndex();
 	mNaviAnimMgr.getUpperAnimator().startMotion(PaniMotionInfo(PIKIANIM_Nigeru));
 	mNaviAnimMgr.getUpperAnimator().mAnimationCounter = 10.0f;
 }
@@ -3885,14 +3885,14 @@ void Navi::doAI()
 		return;
 	}
 
-	_7A8 -= gsys->getFrameTime();
-	if (_7A8 <= 0.0f) {
+	mAiTickTimer -= gsys->getFrameTime();
+	if (mAiTickTimer <= 0.0f) {
 		if (_7B4 == 0) {
 			offwallCallback(_7B0);
-			_7B0 = nullptr;
-			_7A8 = 0.0f;
+			_7B0         = nullptr;
+			mAiTickTimer = 0.0f;
 		} else {
-			_7A8 = 0.1f;
+			mAiTickTimer = 0.1f;
 		}
 	}
 

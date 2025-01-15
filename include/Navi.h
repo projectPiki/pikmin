@@ -135,7 +135,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	ShadowCaster mShadowCaster;        // _324
 	NaviDrawer* mNaviDrawer;           // _6B8
 	f32 _6BC;                          // _6BC
-	int _6C0;                          // _6C0
+	int mIsDayEnd;                     // _6C0
 	ShapeDynMaterials mNaviDynMats;    // _6C4
 	Vector3f _6D4;                     // _6D4
 	u8 _6E0[0x4];                      // _6E0, unknown
@@ -156,7 +156,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u32 _72C;                          // _72C, unknown
 	u32 _730;                          // _730, unknown
 	u32 _734;                          // _734, unknown
-	f32 _738;                          // _738
+	f32 _738;                          // _738, sleep button held timer?
 	u8 _73C[0x4];                      // _73C, TODO: work out members
 	Vector3f _740;                     // _740
 	Vector3f _74C;                     // _74C
@@ -168,9 +168,9 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	PermanentEffect* _77C;             // _77C
 	PermanentEffect* _780;             // _780
 	Vector3f _784;                     // _784
-	Vector3f _790;                     // _790
+	Vector3f mDayEndPosition;          // _790
 	Vector3f _79C;                     // _79C
-	f32 _7A8;                          // _7A8
+	f32 mAiTickTimer;                  // _7A8
 	u8 _7AC[0x4];                      // _7AC, unknown
 	DynCollObject* _7B0;               // _7B0
 	int _7B4;                          // _7B4
@@ -179,9 +179,9 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u8 _7D0[0x7D8 - 0x7D0];            // _7D0, TODO: work out members
 	u32 _7D8;                          // _7D8, unknown
 	u8 _7DC[0x4];                      // _7DC, unknown
-	int _7E0;                          // _7E0
+	int mPreBlendUpperMotionId;        // _7E0
 	u8 _7E4;                           // _7E4
-	u8 _7E5;                           // _7E5
+	u8 mIsFastPluckEnabled;            // _7E5
 	u8 _7E6[0x7FC - 0x7E6];            // _7E6, TODO: work out members
 	u8 _7FC;                           // _7FC
 	f32 _800;                          // _800

@@ -227,7 +227,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	// _2B8     = PaniAnimKeyListener
 	OdoMeter mOdometer;           // _2BC
 	u32 _2CC;                     // _2CC
-	u32 _2D0;                     // _2D0
+	u32 mTestPathingAgentId;      // _2D0
 	u8 _2D4;                      // _2D4
 	u32 _2D8;                     // _2D8
 	u32 _2DC;                     // _2DC
@@ -280,7 +280,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u32 _458;                     // _458
 	u32 _45C;                     // _45C
 	u32 _460;                     // _460
-	Vector3f _464;                // _464
+	Vector3f mEffectPos;          // _464
 	u8 mWantToStick;              // _470
 	u8 _471[0x48C - 0x471];       // _471
 	f32 _48C;                     // _48C

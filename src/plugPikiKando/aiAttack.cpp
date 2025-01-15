@@ -119,7 +119,7 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	case KEY_PlayEffect:
 		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 1 || mActor->_174.updatable())) {
-			Vector3f vec(mActor->_464);
+			Vector3f vec(mActor->mEffectPos);
 			if (_1E) {
 				effectMgr->create(EffectMgr::EFF_Piki_BigHit, vec, nullptr, nullptr);
 			} else {
@@ -2115,7 +2115,7 @@ void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	case KEY_PlayEffect:
 		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 1 || mActor->_174.updatable())) {
-			Vector3f vec(mActor->_464);
+			Vector3f vec(mActor->mEffectPos);
 			if (_2D) {
 				effectMgr->create(EffectMgr::EFF_Piki_BigHit, vec, nullptr, nullptr);
 			} else {
