@@ -1085,7 +1085,7 @@ void RouteMgr::getNumWayPoints(u32)
  * Address:	800A0154
  * Size:	0003B8
  */
-void RouteMgr::getSafePosition(u32, Vector3f&)
+Vector3f RouteMgr::getSafePosition(u32, Vector3f&)
 {
 	/*
 	.loc_0x0:

@@ -40,7 +40,7 @@ struct DualCreature : public DynCreature {
 	void invalidateCollisions();
 
 	// _00      = VTBL
-	// _00-_43C = DynCreature?
+	// _00-_43C = DynCreature
 	bool mIsRealDynamics;        // _43C
 	u8 mIsCollisionInitialised;  // _43D
 	u8 _43E;                     // _43E

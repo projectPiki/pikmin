@@ -72,6 +72,38 @@ enum PelletColor {
 };
 
 /**
+ * @brief Offset for pellet sound IDs associated with animations.
+ *
+ * @note Used with PaniAnimKeyEvent passing of sound IDs.
+ * @note Add 0xBE to this to get SoundID offset.
+ */
+enum PelletAnimSoundID {
+	PELSOUND_NONE     = -1,
+	PELSOUND_Other    = 0,
+	PELSOUND_Engine   = 1,
+	PELSOUND_Gear     = 2,
+	PELSOUND_Rader    = 3,
+	PELSOUND_Spring   = 4,
+	PELSOUND_Battery  = 5,
+	PELSOUND_Zenmai   = 6,
+	PELSOUND_MoneyBox = 7,
+};
+
+/**
+ * @brief Index for bounce sounds used by Pellet.
+ *
+ * @note See bounceSounds table in pelletMgr.cpp
+ */
+enum PelletBounceSoundID {
+	PELBOUNCE_NONE            = -1,
+	PELBOUNCE_NormalPellet    = 0,
+	PELBOUNCE_NormalUfoPart   = 1,
+	PELBOUNCE_SpringUfoPart   = 2,
+	PELBOUNCE_MoneyBoxUfoPart = 3,
+	// everything else is unused, though bounceSounds has more entries
+};
+
+/**
  * @brief TODO
  */
 struct PelletProp : public CreatureProp {
@@ -79,6 +111,22 @@ struct PelletProp : public CreatureProp {
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
 	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct PelletShapeObject {
+	PelletShapeObject(char*, Shape*, char*, char*, int);
+
+	bool isMotionFlag(u8 flag) { return mMotionFlag & flag; }
+	void setMotionFlag(u8 flag) { mMotionFlag |= flag; }
+
+	Shape* mShape;          // _00
+	AnimMgr* mAnimMgr;      // _04
+	AnimContext mAnimatorA; // _08
+	AnimContext mAnimatorB; // _18
+	u8 mMotionFlag;         // _28
 };
 
 /**
@@ -108,7 +156,7 @@ struct PelletConfig : public Parameters, public CoreNode {
 	Parm<int> mNonMatchingOnyonSeeds; // _E0, p07 - null produces fireworks
 	Parm<f32> mPelletScale;           // _F0, p10
 	Parm<f32> mCarryInfoHeight;       // _100, p11
-	Parm<int> _110;                   // _110, p12 - soundID of some description
+	Parm<int> mAnimSoundID;           // _110, p12 - see PelletAnimSoundID enum
 	Parm<int> mBounceSoundID;         // _120, p13
 	u32 _130;                         // _130, maybe int?
 
@@ -171,7 +219,7 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	Vector3f getSlotGlobalPos(int, f32);
 	void setSlotFlag(int);
 	void resetSlotFlag(int);
-	void isSlotFlag(int);
+	bool isSlotFlag(int);
 	void initPellet(PelletShapeObject*, PelletConfig*);
 	void startCarryMotion(f32);
 	void finishMotion();
@@ -190,9 +238,16 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	void setMotionFlag(u8 flag) { mMotionFlag |= flag; }
 	bool isMotionFlag(u8 flag) { return mMotionFlag & flag; }
 
-	// DLL inlines to do:
-	bool isUfoParts();
+	// this is just bool in the DLL, but seems to need to be BOOL/int to match initPellet
+	BOOL isUfoParts()
+	{
+		if (mConfig) {
+			return (mConfig->mPelletType() == PELTYPE_UfoPart);
+		}
+		return false;
+	}
 
+	// DLL inlines to do:
 	bool isSlotFree(int);
 	int getNearestFreeSlotIndex();
 
@@ -201,11 +256,13 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	// _00-_440  = DualCreature
 	// _440-_444 = PaniAnimKeyListener
 	Vector3f _444;                        // _444
-	u8 _450;                              // _450
+	bool _450;                            // _450
 	bool mIsPlayTrySound;                 // _451
 	u8 mMotionFlag;                       // _452
 	RippleEffect* mRippleEffect;          // _454
-	u8 _458[0x464 - 0x458];               // _458, unknown
+	u32 _458;                             // _458, unknown
+	u32 _45C;                             // _45C, unknown
+	f32 _460;                             // _460
 	Vector3f _464;                        // _464
 	PelletStateMachine* mStateMachine;    // _470
 	AState<Pellet>* mCurrentState;        // _474
@@ -215,19 +272,21 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	f32 _48C;                             // _48C
 	u16 _490;                             // _490
 	Vector3f _494;                        // _494
-	u8 _4A0[0x4A8 - 0x4A0];               // _4A0, unknown
+	u16 _4A0;                             // _4A0
+	f32 _4A4;                             // _4A4
 	void* mPelletView;                    // _4A8, both PelletView* and Creature* - see Pellet::getBottomRadius
 	PelletAnimator mAnimator;             // _4AC
-	u32 _554;                             // _554, unknown
+	PelletShapeObject* mShapeObject;      // _554
 	u8 _558[0x4];                         // _558, unknown
 	PelletConfig* mConfig;                // _55C
-	f32 _560;                             // _560
-	u8 _564[0x570 - 0x564];               // _564, unknown
+	f32 mMotionSpeed;                     // _560
+	int mSlotFlags[3];                    // _564
 	u16 _570;                             // _570
 	CollInfo* mPelletCollInfo;            // _574
 	SearchData mSearchData[4];            // _578
 	ShapeDynMaterials mShapeDynMaterials; // _5A8
 	bool mIsAlive;                        // _5B8
+	bool mIsAIActive;                     // _5B9, name is a guess
 };
 
 /**
@@ -248,7 +307,7 @@ struct PelletMgr : public MonoObjectMgr {
 
 	PelletMgr(MapMgr*);
 
-	virtual ~PelletMgr();                   // _48 (weak)
+	virtual ~PelletMgr() { }                // _48 (weak)
 	virtual void refresh(Graphics&);        // _58
 	virtual Creature* createObject();       // _80
 	virtual void read(RandomAccessStream&); // _84 (weak)
@@ -273,13 +332,15 @@ struct PelletMgr : public MonoObjectMgr {
 	bool useShape(u32);
 	ID32 getConfigIdAt(int);
 
+	bool isMovieFlag(u16 flag) { return mMovieFlags & flag; }
+	void setMovieFlags(u16 flag) { mMovieFlags |= flag; }
+
 	static int getUfoIndexFromID(u32 ufoID);
 	static u32 getUfoIDFromIndex(int);
 
 	// DLL inlines to make:
-	bool isMovieFlag(u16);
 	int getNumConfigs();
-	void setMovieFlags(u16);
+
 	void writeAnimInfos(RandomAccessStream&);
 	void writeConfigs(RandomAccessStream&);
 
@@ -289,20 +350,8 @@ struct PelletMgr : public MonoObjectMgr {
 	// TODO: members
 	u8 _3C[0x1F8 - 0x3C];             // _3C, unknown
 	PaniMotionTable* mUfoMotionTable; // _1F8
-	u8 _1FC[0x204 - 0x1FC];           // _1FC, unknown
-};
-
-/**
- * @brief TODO
- */
-struct PelletShapeObject {
-	PelletShapeObject(char*, Shape*, char*, char*, int);
-
-	Shape* mShape;          // _00
-	AnimMgr* mAnimMgr;      // _04
-	AnimContext mAnimatorA; // _08
-	AnimContext mAnimatorB; // _18
-	                        // TODO: members
+	u8 _1FC[0x200 - 0x1FC];           // _1FC, unknown
+	u16 mMovieFlags;                  // _200
 };
 
 extern PelletMgr* pelletMgr;

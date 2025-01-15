@@ -9333,15 +9333,6 @@ void Navi::updateHeadMatrix()
 
 /*
  * --INFO--
- * Address:	801010B0
- * Size:	000004
- */
-void PelletView::viewInit()
-{
-}
-
-/*
- * --INFO--
  * Address:	801010B4
  * Size:	000004
  */

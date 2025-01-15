@@ -49,13 +49,13 @@ struct EffectParm {
 struct KEffect : public zen::CallBack1<zen::particleGenerator*>,
                  public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>,
                  public zen::CallBack1<zen::particleMdl*> {
-	virtual bool invoke(zen::particleGenerator*);                    // _08 (weak)
-	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _24 (weak)
-	virtual bool invoke(zen::particleMdl*);                          // _28 (weak)
-	virtual void emit(EffectParm&) = 0;                              // _2C
-	virtual void kill();                                             // _30 (weak)
-	virtual void stop();                                             // _34 (weak)
-	virtual void restart();                                          // _38 (weak)
+	virtual bool invoke(zen::particleGenerator*) { return false; }                    // _08 (weak)
+	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*) { return false; } // _24 (weak)
+	virtual bool invoke(zen::particleMdl*) { return false; }                          // _28 (weak)
+	virtual void emit(EffectParm&) = 0;                                               // _2C
+	virtual void kill() { }                                                           // _30 (weak)
+	virtual void stop() { }                                                           // _34 (weak)
+	virtual void restart() { }                                                        // _38 (weak)
 
 	// _00 = VTBL1
 	// _04 = VTBL2

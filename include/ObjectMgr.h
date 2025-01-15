@@ -63,8 +63,8 @@ struct MonoObjectMgr : public ObjectMgr {
 	virtual void postUpdate(int, float);          // _50
 	virtual void refresh(Graphics&);              // _58
 	virtual void drawShadow(Graphics&, Texture*); // _5C
-	virtual int getSize();                        // _60 (weak)
-	virtual int getMax();                         // _64 (weak)
+	virtual int getSize() { return mSize; }       // _60 (weak)
+	virtual int getMax() { return mMaxElements; } // _64 (weak)
 	virtual void search(ObjectMgr*);              // _70
 	virtual Creature* birth();                    // _78
 	virtual void kill(Creature*);                 // _7C

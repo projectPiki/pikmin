@@ -32,13 +32,13 @@ void Piki::doKill()
 	_338 = 0;
 
 	if (_424) {
-		_428.kill();
+		_428->kill();
 		_424 = 0;
 	}
 
-	_428._00->kill();
-	_428._04->kill();
-	_428._08->kill();
+	mBurnEffect->kill();
+	mRippleEffect->kill();
+	mSlimeEffect->kill();
 
 	if (pikiUpdateMgr) { }
 

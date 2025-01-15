@@ -293,11 +293,8 @@ struct PermanentEffect {
 	void restart();
 	void kill();
 
-	// TODO: members
-	KEffect* _00; // _00
-	KEffect* _04; // _04
-	KEffect* _08; // _08
-	u32 _0C;      // _0C
+	Vector3f mPosition;               // _00
+	zen::particleGenerator* mPtclGen; // _0C
 };
 
 /**

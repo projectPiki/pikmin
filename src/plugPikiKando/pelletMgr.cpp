@@ -7,7 +7,10 @@
 #include "Stickers.h"
 #include "PlayerState.h"
 #include "UtEffect.h"
+#include "KMath.h"
+#include "RadarInfo.h"
 #include "SoundMgr.h"
+#include "EffectMgr.h"
 #include "DebugLog.h"
 #include "zen/Math.h"
 
@@ -85,7 +88,7 @@ PelletConfig::PelletConfig()
     , mNonMatchingOnyonSeeds(this, 1, 0, 0, "p07", nullptr)
     , mPelletScale(this, 1.0f, 0.0f, 0.0f, "p10", nullptr)
     , mCarryInfoHeight(this, 30.0f, 0.0f, 0.0f, "p11", nullptr)
-    , _110(this, 6, 0, 0, "p12", nullptr)
+    , mAnimSoundID(this, 6, 0, 0, "p12", nullptr)
     , mBounceSoundID(this, 0xFFFFFFFF, 0, 0, "p13", nullptr)
 {
 	_2C.setID('none');
@@ -109,8 +112,10 @@ void PelletConfig::read(RandomAccessStream& input)
 	_130 = input.readInt();
 }
 
+// see PelletBounceSoundID in Pellet.h
 static u32 bounceSounds[] = {
-	0xBC, 0xBD, 0xC2, 0xC5, 0xBD, 0xBD, 0xBD, 0xBD, 0xBD, 0xBD, 0xBD, 0xBD,
+	SE_PELLET_BOUND,   SE_UFOPARTS_BOUND, SE_UFOPARTS_SPRING, SE_UFOPARTS_MONEYBOX, SE_UFOPARTS_BOUND, SE_UFOPARTS_BOUND,
+	SE_UFOPARTS_BOUND, SE_UFOPARTS_BOUND, SE_UFOPARTS_BOUND,  SE_UFOPARTS_BOUND,    SE_UFOPARTS_BOUND, SE_UFOPARTS_BOUND,
 };
 
 NumberPel numberPellets[13] = {
@@ -172,16 +177,16 @@ void PelletView::becomePellet(u32 id, Vector3f& pos, f32 direction)
  */
 Pellet::Pellet()
 {
-	_450 = 1;
+	_450 = true;
 	_444.set(0.0f, 0.0f, 0.0f);
 	mSeContext = new SeContext();
 	mSeContext->setContext(this, 2);
 	mRippleEffect   = new RippleEffect();
 	mPelletView     = nullptr;
 	_478            = nullptr;
-	_554            = 0;
+	mShapeObject    = nullptr;
 	mConfig         = nullptr;
-	_560            = 0.0f;
+	mMotionSpeed    = 0.0f;
 	mObjType        = OBJTYPE_Pellet;
 	mCollInfo       = nullptr;
 	mPelletCollInfo = new CollInfo(6);
@@ -574,72 +579,20 @@ f32 Pellet::getiMass()
  * Address:	80095FB0
  * Size:	0000E4
  */
-bool Pellet::startStickTeki(Creature*, f32)
+bool Pellet::startStickTeki(Creature* teki, f32 p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stfd      f31, 0x68(r1)
-	  stfd      f30, 0x60(r1)
-	  stfd      f29, 0x58(r1)
-	  fmr       f29, f1
-	  stw       r31, 0x54(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x50(r1)
-	  mr        r30, r3
-	  addi      r4, r30, 0
-	  lwz       r12, 0x0(r30)
-	  addi      r3, r1, 0x34
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r31
-	  lfs       f31, 0x34(r1)
-	  lwz       r12, 0x0(r31)
-	  addi      r3, r1, 0x28
-	  lfs       f30, 0x3C(r1)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, 0x28(r1)
-	  lfs       f0, 0x30(r1)
-	  fsubs     f1, f1, f31
-	  fsubs     f2, f0, f30
-	  bl        0x1859D4
-	  lfs       f0, 0xA0(r30)
-	  fsubs     f1, f1, f0
-	  bl        -0x5DAA8
-	  stfs      f1, 0x460(r30)
-	  fmr       f1, f29
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  li        r5, 0
-	  li        r6, -0x2
-	  bl        -0x5994
-	  lwz       r0, 0x184(r31)
-	  cmplw     r0, r30
-	  beq-      .loc_0xB4
-	  li        r3, 0
-	  b         .loc_0xC0
+	Vector3f pelCentre = getCentre();
+	pelCentre          = teki->getCentre() - pelCentre;
+	f32 angle          = atan2f(pelCentre.x, pelCentre.z);
+	_460               = roundAng(angle - mDirection);
 
-	.loc_0xB4:
-	  mr        r3, r30
-	  bl        -0x9BC
-	  li        r3, 0x1
+	teki->startStickObject(this, nullptr, -2, p2);
+	if (teki->getStickObject() != this) {
+		return false;
+	}
 
-	.loc_0xC0:
-	  lwz       r0, 0x74(r1)
-	  lfd       f31, 0x68(r1)
-	  lfd       f30, 0x60(r1)
-	  lfd       f29, 0x58(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	startPick();
+	return true;
 }
 
 /*
@@ -647,48 +600,10 @@ bool Pellet::startStickTeki(Creature*, f32)
  * Address:	80096094
  * Size:	000094
  */
-void Pellet::endStickTeki(Creature*)
+void Pellet::endStickTeki(Creature* teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0xB9
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  mr        r30, r4
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  addi      r4, r29, 0
-	  sth       r31, 0x570(r3)
-	  lwz       r0, 0xC8(r29)
-	  oris      r0, r0, 0x40
-	  stw       r0, 0xC8(r29)
-	  bl        -0xBAE4
-	  addi      r3, r29, 0
-	  addi      r4, r29, 0
-	  li        r5, 0xB8
-	  bl        -0xBAF4
-	  lbz       r0, 0x438(r29)
-	  addi      r3, r29, 0
-	  ori       r0, r0, 0x1
-	  stb       r0, 0x438(r29)
-	  bl        0x900
-	  mr        r3, r29
-	  bl        -0x3500
-	  sth       r31, 0x490(r29)
-	  mr        r3, r30
-	  bl        -0x5890
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	finishPick();
+	teki->endStickObject();
 }
 
 /*
@@ -696,126 +611,30 @@ void Pellet::endStickTeki(Creature*)
  * Address:	80096128
  * Size:	000174
  */
-bool Pellet::winnable(int)
+bool Pellet::winnable(int tekiStrength)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x4E41
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  mr        r29, r3
-	  stw       r28, 0x38(r1)
-	  addi      r28, r4, 0
-	  addi      r4, r5, 0x5649
-	  lwz       r3, 0x55C(r3)
-	  li        r5, 0x2A
-	  addi      r3, r3, 0x2C
-	  bl        -0x52278
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x4C
-	  li        r3, 0
-	  b         .loc_0x154
+	if (mConfig->_2C.match('NAVI', '*')) {
+		// breadbugs aren't allowed to yoink sleeping captains.
+		return false;
+	}
 
-	.loc_0x4C:
-	  addi      r3, r1, 0x28
-	  addi      r4, r29, 0
-	  bl        -0x54F8
-	  addi      r31, r1, 0x28
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  li        r29, 0
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0xE4
+	Stickers stuckList(this);
+	Iterator iter(&stuckList);
+	int pikiCount = 0;
+	CI_LOOP(iter)
+	{
+		if ((*iter)->isPiki()) {
+			pikiCount++;
+		}
+	}
 
-	.loc_0x7C:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0xA0
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xB8
+	if (tekiStrength > pikiCount) {
+		// not enough pikis - get dragged to the nest losers!
+		return true;
+	}
 
-	.loc_0xA0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xB8:
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xC8
-	  addi      r29, r29, 0x1
-
-	.loc_0xC8:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0xE4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x10C
-	  li        r0, 0x1
-	  b         .loc_0x138
-
-	.loc_0x10C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x134
-	  li        r0, 0x1
-	  b         .loc_0x138
-
-	.loc_0x134:
-	  li        r0, 0
-
-	.loc_0x138:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x7C
-	  cmpw      r28, r29
-	  ble-      .loc_0x150
-	  li        r3, 0x1
-	  b         .loc_0x154
-
-	.loc_0x150:
-	  li        r3, 0
-
-	.loc_0x154:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  lwz       r28, 0x38(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	// get boot scooted to the onyon bread boi
+	return false;
 }
 
 /*
@@ -823,41 +642,15 @@ bool Pellet::winnable(int)
  * Address:	8009629C
  * Size:	000068
  */
-bool Pellet::stickSlot(int)
+bool Pellet::stickSlot(int slotID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  cmpwi     r31, -0x1
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  beq-      .loc_0x4C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x5BC
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x4C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x540
-	  li        r3, 0x1
-	  b         .loc_0x50
+	if (slotID != -1 && !isSlotFlag(slotID)) {
+		// valid, empty slot - fill it.
+		setSlotFlag(slotID);
+		return true;
+	}
 
-	.loc_0x4C:
-	  li        r3, 0
-
-	.loc_0x50:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -865,36 +658,12 @@ bool Pellet::stickSlot(int)
  * Address:	80096304
  * Size:	00005C
  */
-void Pellet::stickOffSlot(int)
+void Pellet::stickOffSlot(int slotID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  cmpwi     r31, -0x1
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  beq-      .loc_0x44
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x554
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x44
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x50C
-
-	.loc_0x44:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (slotID != -1 && isSlotFlag(slotID)) {
+		// valid, filled slot - reset it.
+		resetSlotFlag(slotID);
+	}
 }
 
 /*
@@ -904,44 +673,13 @@ void Pellet::stickOffSlot(int)
  */
 int Pellet::getMinFreeSlotIndex()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  b         .loc_0x40
+	for (int i = 0; i < mConfig->mCarryMaxPikis(); i++) {
+		if (!isSlotFlag(i)) {
+			return i;
+		}
+	}
 
-	.loc_0x20:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x4FC
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x3C
-	  mr        r3, r31
-	  b         .loc_0x54
-
-	.loc_0x3C:
-	  addi      r31, r31, 0x1
-
-	.loc_0x40:
-	  lwz       r3, 0x55C(r30)
-	  lwz       r0, 0x8C(r3)
-	  cmpw      r31, r0
-	  blt+      .loc_0x20
-	  li        r3, -0x1
-
-	.loc_0x54:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	return -1;
 }
 
 /*
@@ -949,107 +687,23 @@ int Pellet::getMinFreeSlotIndex()
  * Address:	800963CC
  * Size:	000160
  */
-int Pellet::getNearestFreeSlotIndex(Vector3f&)
+int Pellet::getNearestFreeSlotIndex(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x98(r1)
-	  stfd      f31, 0x90(r1)
-	  stfd      f30, 0x88(r1)
-	  stfd      f29, 0x80(r1)
-	  stfd      f28, 0x78(r1)
-	  stw       r31, 0x74(r1)
-	  li        r31, -0x1
-	  stw       r30, 0x70(r1)
-	  li        r30, 0
-	  stw       r29, 0x6C(r1)
-	  mr        r29, r4
-	  stw       r28, 0x68(r1)
-	  mr        r28, r3
-	  lfs       f28, -0x73D4(r2)
-	  lfs       f29, -0x73E8(r2)
-	  lfd       f30, -0x73D0(r2)
-	  lfd       f31, -0x73C8(r2)
-	  b         .loc_0x11C
+	f32 minDist    = 12800.0f;
+	int nearestIdx = -1;
+	for (int i = 0; i < mConfig->mCarryMaxPikis(); i++) {
+		if (!isSlotFlag(i)) {
+			// free slot, how far away is it
+			Vector3f slotSep = getSlotGlobalPos(i, 0.0f) - pos;
+			f32 slotDist     = slotSep.length();
+			if (slotDist < minDist) {
+				minDist    = slotDist;
+				nearestIdx = i;
+			}
+		}
+	}
 
-	.loc_0x50:
-	  addi      r3, r28, 0
-	  addi      r4, r30, 0
-	  bl        0x460
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x118
-	  lfs       f1, -0x73E8(r2)
-	  addi      r4, r28, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x3C
-	  bl        0x364
-	  lfs       f3, 0x40(r1)
-	  lfs       f2, 0x4(r29)
-	  lfs       f1, 0x3C(r1)
-	  lfs       f0, 0x0(r29)
-	  fsubs     f3, f3, f2
-	  lfs       f2, 0x44(r1)
-	  fsubs     f4, f1, f0
-	  lfs       f1, 0x8(r29)
-	  fmuls     f0, f3, f3
-	  fsubs     f2, f2, f1
-	  fmuls     f1, f4, f4
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f2, f2, f0
-	  fcmpo     cr0, f2, f29
-	  ble-      .loc_0x108
-	  fsqrte    f1, f2
-	  fmul      f0, f1, f1
-	  fmul      f1, f30, f1
-	  fmul      f0, f2, f0
-	  fsub      f0, f31, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f30, f1
-	  fmul      f0, f2, f0
-	  fsub      f0, f31, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f30, f1
-	  fmul      f0, f2, f0
-	  fsub      f0, f31, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f2, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x34(r1)
-	  lfs       f2, 0x34(r1)
-
-	.loc_0x108:
-	  fcmpo     cr0, f2, f28
-	  bge-      .loc_0x118
-	  fmr       f28, f2
-	  mr        r31, r30
-
-	.loc_0x118:
-	  addi      r30, r30, 0x1
-
-	.loc_0x11C:
-	  lwz       r3, 0x55C(r28)
-	  lwz       r0, 0x8C(r3)
-	  cmpw      r30, r0
-	  blt+      .loc_0x50
-	  mr        r3, r31
-	  lwz       r0, 0x9C(r1)
-	  lfd       f31, 0x90(r1)
-	  lfd       f30, 0x88(r1)
-	  lfd       f29, 0x80(r1)
-	  lfd       f28, 0x78(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  lwz       r29, 0x6C(r1)
-	  lwz       r28, 0x68(r1)
-	  addi      r1, r1, 0x98
-	  mtlr      r0
-	  blr
-	*/
+	return nearestIdx;
 }
 
 /*
@@ -1059,73 +713,23 @@ int Pellet::getNearestFreeSlotIndex(Vector3f&)
  */
 int Pellet::getRandomFreeSlotIndex()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stmw      r26, 0x38(r1)
-	  mr        r26, r3
-	  lwz       r3, 0x55C(r3)
-	  lwz       r31, 0x8C(r3)
-	  bl        0x181B28
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x73B8(r2)
-	  stw       r0, 0x34(r1)
-	  lis       r3, 0x4330
-	  xoris     r0, r31, 0x8000
-	  lfs       f0, -0x73C0(r2)
-	  stw       r3, 0x30(r1)
-	  lfs       f1, -0x73F0(r2)
-	  li        r29, 0x80
-	  lfd       f2, 0x30(r1)
-	  li        r28, -0x1
-	  stw       r0, 0x2C(r1)
-	  fsubs     f2, f2, f3
-	  li        r27, 0
-	  stw       r3, 0x28(r1)
-	  fdivs     f2, f2, f0
-	  lfd       f0, 0x28(r1)
-	  fmuls     f1, f1, f2
-	  fsubs     f0, f0, f3
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x20(r1)
-	  lwz       r30, 0x24(r1)
-	  b         .loc_0xB8
+	int maxCarryNum = mConfig->mCarryMaxPikis();
+	int randIdx     = System::getRand(1.0f) * maxCarryNum;
+	int idDist      = 128;
+	int outIdx      = -1;
+	for (int i = 0; i < maxCarryNum; i++) {
+		if (!isSlotFlag(i)) {
+			// there are like 50 abs inlines, you could've just used one kando.
+			int slotidDist = (i - randIdx > 0) ? i - randIdx : -(i - randIdx);
+			// looking for "nearest" free slot to our randomly picked slot ID
+			if (slotidDist < idDist) {
+				idDist = slotidDist;
+				outIdx = i;
+			}
+		}
+	}
 
-	.loc_0x80:
-	  addi      r3, r26, 0
-	  addi      r4, r27, 0
-	  bl        0x2D0
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xB4
-	  sub.      r0, r27, r30
-	  ble-      .loc_0xA0
-	  b         .loc_0xA4
-
-	.loc_0xA0:
-	  neg       r0, r0
-
-	.loc_0xA4:
-	  cmpw      r0, r29
-	  bge-      .loc_0xB4
-	  mr        r29, r0
-	  addi      r28, r27, 0
-
-	.loc_0xB4:
-	  addi      r27, r27, 0x1
-
-	.loc_0xB8:
-	  cmpw      r27, r31
-	  blt+      .loc_0x80
-	  mr        r3, r28
-	  lmw       r26, 0x38(r1)
-	  lwz       r0, 0x54(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	return outIdx;
 }
 
 /*
@@ -1133,131 +737,41 @@ int Pellet::getRandomFreeSlotIndex()
  * Address:	80096604
  * Size:	0001A0
  */
-Vector3f Pellet::getSlotLocalPos(int, f32)
+Vector3f Pellet::getSlotLocalPos(int slotID, f32 offset)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r5, -0x2
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stfd      f31, 0x70(r1)
-	  stfd      f30, 0x68(r1)
-	  stfd      f29, 0x60(r1)
-	  fmr       f29, f1
-	  stfd      f28, 0x58(r1)
-	  stw       r31, 0x54(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x50(r1)
-	  addi      r30, r3, 0
-	  bne-      .loc_0x40
-	  lfs       f30, 0x460(r31)
-	  b         .loc_0x84
+	f32 grabAngle;
+	if (slotID == -2) {
+		grabAngle = _460;
+	} else {
+		grabAngle = (TAU / mConfig->mCarryMaxPikis()) * slotID;
+	}
 
-	.loc_0x40:
-	  lwz       r3, 0x55C(r31)
-	  xoris     r0, r5, 0x8000
-	  lis       r4, 0x4330
-	  stw       r0, 0x4C(r1)
-	  lwz       r0, 0x8C(r3)
-	  stw       r4, 0x48(r1)
-	  xoris     r0, r0, 0x8000
-	  lfd       f3, -0x73B8(r2)
-	  stw       r0, 0x44(r1)
-	  lfd       f0, 0x48(r1)
-	  stw       r4, 0x40(r1)
-	  lfs       f1, -0x73B0(r2)
-	  fsubs     f2, f0, f3
-	  lfd       f0, 0x40(r1)
-	  fsubs     f0, f0, f3
-	  fdivs     f0, f1, f0
-	  fmuls     f30, f2, f0
+	f32 grabRadius;
+	f32 pickupHeight = mPickOffset;
+	if (!mPelletView) {
+		grabRadius = getBottomRadius() + offset;
+		grabRadius /= mScale.x;
+	} else {
+		grabRadius = getBottomRadius() + offset;
+	}
 
-	.loc_0x84:
-	  lwz       r0, 0x4A8(r31)
-	  lfs       f28, 0x2D0(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xAC
-	  mr        r3, r31
-	  bl        -0x8F4
-	  fadds     f29, f29, f1
-	  lfs       f0, 0x7C(r31)
-	  fdivs     f29, f29, f0
-	  b         .loc_0xB8
+	Vector3f localPos;
+	if (SmartTurnOver) {
+		f32 y = pickupHeight;
+		if (getGroundFlag() != 0x55) {
+			y = getCylinderHeight() - pickupHeight;
+		}
+		localPos.set(grabRadius * sinf(grabAngle), y, grabRadius * cosf(grabAngle));
 
-	.loc_0xAC:
-	  mr        r3, r31
-	  bl        -0x90C
-	  fadds     f29, f29, f1
+	} else if (isFrontFace()) {
+		localPos.set(grabRadius * sinf(grabAngle), pickupHeight, grabRadius * cosf(grabAngle));
 
-	.loc_0xB8:
-	  lbz       r0, 0x3010(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x108
-	  lbz       r0, 0x439(r31)
-	  cmplwi    r0, 0x55
-	  beq-      .loc_0xE8
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  fsubs     f28, f1, f28
+	} else {
+		f32 y = getCylinderHeight() - pickupHeight;
+		localPos.set(grabRadius * sinf(grabAngle), y, grabRadius * cosf(grabAngle));
+	}
 
-	.loc_0xE8:
-	  fmr       f1, f30
-	  bl        0x185464
-	  fmuls     f31, f29, f1
-	  fmr       f1, f30
-	  bl        0x1855EC
-	  fmuls     f1, f29, f1
-	  fmr       f0, f28
-	  b         .loc_0x16C
-
-	.loc_0x108:
-	  mr        r3, r31
-	  bl        -0x4788
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x138
-	  fmr       f1, f30
-	  bl        0x185434
-	  fmuls     f31, f29, f1
-	  fmr       f1, f30
-	  bl        0x1855BC
-	  fmuls     f1, f29, f1
-	  fmr       f0, f28
-	  b         .loc_0x16C
-
-	.loc_0x138:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  fsubs     f28, f1, f28
-	  fmr       f1, f30
-	  bl        0x1853FC
-	  fmuls     f31, f29, f1
-	  fmr       f1, f30
-	  bl        0x185584
-	  fmuls     f1, f29, f1
-	  fmr       f0, f28
-
-	.loc_0x16C:
-	  stfs      f1, 0x0(r30)
-	  stfs      f0, 0x4(r30)
-	  stfs      f31, 0x8(r30)
-	  lwz       r0, 0x7C(r1)
-	  lfd       f31, 0x70(r1)
-	  lfd       f30, 0x68(r1)
-	  lfd       f29, 0x60(r1)
-	  lfd       f28, 0x58(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	return localPos;
 }
 
 /*
@@ -1265,41 +779,11 @@ Vector3f Pellet::getSlotLocalPos(int, f32)
  * Address:	800967A4
  * Size:	000078
  */
-Vector3f Pellet::getSlotGlobalPos(int, f32)
+Vector3f Pellet::getSlotGlobalPos(int slotID, f32 offset)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x38(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x20
-	  bl        -0x1C0
-	  lfs       f1, 0x20(r1)
-	  addi      r3, r1, 0x2C
-	  lfs       f0, 0x24(r1)
-	  addi      r4, r31, 0x228
-	  stfs      f1, 0x2C(r1)
-	  stfs      f0, 0x30(r1)
-	  lfs       f0, 0x28(r1)
-	  stfs      f0, 0x34(r1)
-	  bl        -0x5F09C
-	  lfs       f0, 0x2C(r1)
-	  stfs      f0, 0x0(r30)
-	  lfs       f0, 0x30(r1)
-	  stfs      f0, 0x4(r30)
-	  lfs       f0, 0x34(r1)
-	  stfs      f0, 0x8(r30)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f globalPos = getSlotLocalPos(slotID, offset);
+	globalPos.multMatrix(mTransformMatrix);
+	return globalPos;
 }
 
 /*
@@ -1309,7 +793,7 @@ Vector3f Pellet::getSlotGlobalPos(int, f32)
  */
 void Pellet::initSlotFlags()
 {
-	// UNUSED FUNCTION
+	mSlotFlags[0] = mSlotFlags[1] = mSlotFlags[2] = 0;
 }
 
 /*
@@ -1317,24 +801,12 @@ void Pellet::initSlotFlags()
  * Address:	8009681C
  * Size:	000034
  */
-void Pellet::setSlotFlag(int)
+void Pellet::setSlotFlag(int slotID)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, -0x2
-	  beqlr-
-	  srawi     r5, r4, 0x5
-	  rlwinm    r0,r5,2,0,29
-	  add       r6, r3, r0
-	  rlwinm    r0,r5,5,0,26
-	  lwz       r5, 0x564(r6)
-	  sub       r0, r4, r0
-	  li        r3, 0x1
-	  slw       r0, r3, r0
-	  or        r0, r5, r0
-	  stw       r0, 0x564(r6)
-	  blr
-	*/
+	if (slotID != -2) {
+		// 32 flags per slot, so get correct slot (>> 5 == divide by 32 + drop remainder)
+		mSlotFlags[slotID >> 5] |= (1 << (slotID - 32 * (slotID >> 5)));
+	}
 }
 
 /*
@@ -1342,24 +814,12 @@ void Pellet::setSlotFlag(int)
  * Address:	80096850
  * Size:	000034
  */
-void Pellet::resetSlotFlag(int)
+void Pellet::resetSlotFlag(int slotID)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, -0x2
-	  beqlr-
-	  srawi     r5, r4, 0x5
-	  rlwinm    r0,r5,2,0,29
-	  add       r6, r3, r0
-	  rlwinm    r0,r5,5,0,26
-	  lwz       r5, 0x564(r6)
-	  sub       r0, r4, r0
-	  li        r3, 0x1
-	  slw       r0, r3, r0
-	  andc      r0, r5, r0
-	  stw       r0, 0x564(r6)
-	  blr
-	*/
+	if (slotID != -2) {
+		// 32 flags per slot, so get correct slot (>> 5 == divide by 32 + drop remainder)
+		mSlotFlags[slotID >> 5] &= ~(1 << (slotID - 32 * (slotID >> 5)));
+	}
 }
 
 /*
@@ -1367,30 +827,13 @@ void Pellet::resetSlotFlag(int)
  * Address:	80096884
  * Size:	000044
  */
-void Pellet::isSlotFlag(int)
+bool Pellet::isSlotFlag(int slotID)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, -0x2
-	  bne-      .loc_0x10
-	  li        r3, 0
-	  blr
+	if (slotID == -2) {
+		return false;
+	}
 
-	.loc_0x10:
-	  srawi     r5, r4, 0x5
-	  rlwinm    r0,r5,2,0,29
-	  add       r3, r3, r0
-	  rlwinm    r0,r5,5,0,26
-	  lwz       r5, 0x564(r3)
-	  sub       r0, r4, r0
-	  li        r3, 0x1
-	  slw       r0, r3, r0
-	  and       r0, r5, r0
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
+	return (mSlotFlags[slotID >> 5] & (1 << (slotID - 32 * (slotID >> 5)))) != 0;
 }
 
 /*
@@ -1398,77 +841,26 @@ void Pellet::isSlotFlag(int)
  * Address:	800968C8
  * Size:	0000E0
  */
-void Pellet::initPellet(PelletShapeObject*, PelletConfig*)
+void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r3, 0
-	  sth       r0, 0x570(r3)
-	  li        r0, 0x1
-	  stb       r0, 0x452(r3)
-	  stw       r4, 0x554(r3)
-	  lbz       r0, 0x28(r4)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x48
-	  lbz       r0, 0x452(r30)
-	  ori       r0, r0, 0x2
-	  stb       r0, 0x452(r30)
+	_570         = 0;
+	mMotionFlag  = 1;
+	mShapeObject = shapeObj;
+	if (shapeObj->isMotionFlag(2)) {
+		setMotionFlag(2);
+		if (!isMotionFlag(2)) {
+			ERROR("WHYYYYYYYYYYY\n"); // same kando
+		}
+	}
 
-	.loc_0x48:
-	  stw       r31, 0x55C(r30)
-	  li        r5, 0
-	  li        r6, 0
-	  lwz       r0, 0x574(r30)
-	  stw       r0, 0x220(r30)
-	  lwz       r4, 0x554(r30)
-	  lwz       r3, 0x220(r30)
-	  lwz       r4, 0x0(r4)
-	  bl        -0xCDCC
-	  lfs       f0, 0xFC(r31)
-	  stfs      f0, 0x7C(r30)
-	  stfs      f0, 0x80(r30)
-	  stfs      f0, 0x84(r30)
-	  lwz       r0, 0x6C(r31)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0xB4
-	  lwz       r3, 0x55C(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA8
-	  lwz       r0, 0x5C(r3)
-	  subfic    r0, r0, 0x3
-	  cntlzw    r0, r0
-	  rlwinm    r0,r0,27,24,31
-	  b         .loc_0xAC
-
-	.loc_0xA8:
-	  li        r0, 0
-
-	.loc_0xAC:
-	  cmpwi     r0, 0
-	  beq-      .loc_0xC8
-
-	.loc_0xB4:
-	  lwz       r3, 0x554(r30)
-	  addi      r4, r30, 0x5A8
-	  li        r5, 0
-	  lwz       r3, 0x0(r3)
-	  bl        -0x67060
-
-	.loc_0xC8:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mConfig   = config;
+	mCollInfo = mPelletCollInfo;
+	mCollInfo->initInfo(mShapeObject->mShape, nullptr, nullptr);
+	f32 scale = config->mPelletScale();
+	mScale.set(scale, scale, scale);
+	if (config->mPelletColor() != PELCOLOR_NULL || isUfoParts()) {
+		mShapeObject->mShape->makeInstance(mShapeDynMaterials, 0);
+	}
 }
 
 /*
@@ -1476,9 +868,15 @@ void Pellet::initPellet(PelletShapeObject*, PelletConfig*)
  * Address:	........
  * Size:	00007C
  */
-void Pellet::initPellet(PelletView*, PelletConfig*)
+void Pellet::initPellet(PelletView* view, PelletConfig* config)
 {
-	// UNUSED FUNCTION
+	_570        = 0;
+	mMotionFlag = 1;
+	mPelletView = view;
+	mConfig     = config;
+	mScale.set(view->viewGetScale());
+	mShapeObject = nullptr;
+	mCollInfo    = nullptr;
 }
 
 /*
@@ -1486,39 +884,12 @@ void Pellet::initPellet(PelletView*, PelletConfig*)
  * Address:	800969A8
  * Size:	000044
  */
-void Pellet::startCarryMotion(f32)
+void Pellet::startCarryMotion(f32 speed)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  stfs      f1, 0x560(r3)
-	  lwz       r3, 0x4A8(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  lwz       r12, 0x0(r3)
-	  lfs       f1, 0x560(r4)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800969EC
- * Size:	000004
- */
-void PelletView::viewStartTrembleMotion(f32)
-{
+	mMotionSpeed = speed;
+	if (mPelletView) {
+		static_cast<PelletView*>(mPelletView)->viewStartTrembleMotion(mMotionSpeed);
+	}
 }
 
 /*
@@ -1528,16 +899,11 @@ void PelletView::viewStartTrembleMotion(f32)
  */
 void Pellet::stopMotion()
 {
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	800969F0
- * Size:	000004
- */
-void PelletView::viewSetMotionSpeed(f32)
-{
+	if (mPelletView) {
+		static_cast<PelletView*>(mPelletView)->viewSetMotionSpeed(0.0f);
+	} else {
+		mMotionSpeed = 0.0f;
+	}
 }
 
 /*
@@ -1547,47 +913,11 @@ void PelletView::viewSetMotionSpeed(f32)
  */
 void Pellet::finishMotion()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x4A8(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x50
-
-	.loc_0x34:
-	  addi      r3, r1, 0xC
-	  li        r4, -0x1
-	  bl        0x88528
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x4AC
-	  li        r5, 0
-	  bl        0x2FD0
-
-	.loc_0x50:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80096A58
- * Size:	000004
- */
-void PelletView::viewFinishMotion()
-{
+	if (mPelletView) {
+		static_cast<PelletView*>(mPelletView)->viewFinishMotion();
+	} else {
+		mAnimator.finishMotion(&PaniMotionInfo(-1), nullptr);
+	}
 }
 
 /*
@@ -1595,55 +925,21 @@ void PelletView::viewFinishMotion()
  * Address:	80096A5C
  * Size:	000098
  */
-void Pellet::init(Vector3f&)
+void Pellet::init(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  bl        -0xBE6C
-	  lwz       r8, 0x554(r31)
-	  cmplwi    r8, 0
-	  beq-      .loc_0x40
-	  lwz       r5, 0x301C(r13)
-	  addi      r3, r31, 0x4AC
-	  lwz       r6, 0x4(r8)
-	  addi      r4, r8, 0x8
-	  lwz       r7, 0x1F8(r5)
-	  addi      r5, r8, 0x18
-	  bl        0x2F0C
+	Creature::init(pos);
+	if (mShapeObject) {
+		mAnimator.init(&mShapeObject->mAnimatorA, &mShapeObject->mAnimatorB, mShapeObject->mAnimMgr, pelletMgr->mUfoMotionTable);
+	}
+	initSlotFlags();
+	enableFriction();
+	if (mConfig->_90()) {
+		setDynamicsSimpleFixed(false);
+	} else {
+		setDynamicsSimpleFixed(true);
+	}
 
-	.loc_0x40:
-	  li        r4, 0
-	  stw       r4, 0x56C(r31)
-	  stw       r4, 0x568(r31)
-	  stw       r4, 0x564(r31)
-	  lbz       r0, 0x438(r31)
-	  ori       r0, r0, 0x1
-	  stb       r0, 0x438(r31)
-	  lwz       r3, 0x55C(r31)
-	  lwz       r0, 0x9C(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x74
-	  stb       r4, 0x43F(r31)
-	  b         .loc_0x7C
-
-	.loc_0x74:
-	  li        r0, 0x1
-	  stb       r0, 0x43F(r31)
-
-	.loc_0x7C:
-	  li        r0, 0
-	  sth       r0, 0x490(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	_490 = 0;
 }
 
 /*
@@ -1653,25 +949,11 @@ void Pellet::init(Vector3f&)
  */
 bool Pellet::isFree()
 {
+	// mSlotFlags needs to be int for resetSlotFlags, this seems to be the easier fix
+	if ((u32)(mSlotFlags[0]) == 0 && (u32)(mSlotFlags[1]) == 0 && (u32)(mSlotFlags[2]) == 0) {
+		return true;
+	}
 	return false;
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x564(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x2C
-	  lwz       r0, 0x568(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x2C
-	  lwz       r0, 0x56C(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x2C
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x2C:
-	  li        r3, 0
-	  blr
-	*/
 }
 
 /*
@@ -1679,167 +961,29 @@ bool Pellet::isFree()
  * Address:	80096B28
  * Size:	000248
  */
-void Pellet::doLoad(RandomAccessStream&)
+void Pellet::doLoad(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x50(r1)
-	  addi      r30, r4, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x450(r31)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x444(r31)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x448(r31)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x44C(r31)
-	  lfs       f1, 0x444(r31)
-	  lfs       f0, 0x94(r31)
-	  lfs       f3, 0x448(r31)
-	  lfs       f2, 0x98(r31)
-	  fsubs     f0, f1, f0
-	  lfs       f4, 0x44C(r31)
-	  lfs       f1, 0x9C(r31)
-	  fsubs     f2, f3, f2
-	  stfs      f0, 0x40(r1)
-	  fsubs     f0, f4, f1
-	  stfs      f2, 0x44(r1)
-	  stfs      f0, 0x48(r1)
-	  lfs       f1, 0x40(r1)
-	  lfs       f3, 0x48(r1)
-	  lfs       f0, 0x44(r1)
-	  fmuls     f2, f1, f1
-	  fmuls     f3, f3, f3
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x73E8(r2)
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x140
-	  fsqrte    f1, f4
-	  lfd       f3, -0x73D0(r2)
-	  lfd       f2, -0x73C8(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x20(r1)
-	  lfs       f4, 0x20(r1)
+	_450         = input.readByte();
+	_444.x       = input.readFloat();
+	_444.y       = input.readFloat();
+	_444.z       = input.readFloat();
+	Vector3f sep = _444 - mPosition;
+	if (sep.length() < 40.0f) {
+		PRINT("UFO PARTS DIDN'T MOVE!\n");
+		mPosition = _444;
+	} else if (isNan(mPosition.x) || isNan(mPosition.y) || isNan(mPosition.z)) {
+		// this isn't in the DLL, funnily enough
+		mPosition = _444;
+	} else {
+		PRINT("PARTS MOVED !!! (%.1f %.1f %.1f)\n", sep.x, sep.y, sep.z);
+		mPosition = routeMgr->getSafePosition('test', mPosition);
+	}
 
-	.loc_0x140:
-	  lfs       f0, -0x73AC(r2)
-	  fcmpo     cr0, f4, f0
-	  bge-      .loc_0x168
-	  lwz       r3, 0x444(r31)
-	  lwz       r0, 0x448(r31)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x44C(r31)
-	  stw       r0, 0x9C(r31)
-	  b         .loc_0x1E4
-
-	.loc_0x168:
-	  lfs       f1, 0x94(r31)
-	  bl        0x7BA30
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x198
-	  lfs       f1, 0x98(r31)
-	  bl        0x7BA20
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x198
-	  lfs       f1, 0x9C(r31)
-	  bl        0x7BA10
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1B4
-
-	.loc_0x198:
-	  lwz       r3, 0x444(r31)
-	  lwz       r0, 0x448(r31)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x44C(r31)
-	  stw       r0, 0x9C(r31)
-	  b         .loc_0x1E4
-
-	.loc_0x1B4:
-	  lis       r5, 0x7465
-	  lwz       r4, 0x302C(r13)
-	  addi      r3, r1, 0x28
-	  addi      r5, r5, 0x7374
-	  addi      r6, r31, 0x94
-	  bl        0x9464
-	  lwz       r3, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0x9C(r31)
-
-	.loc_0x1E4:
-	  lwz       r3, 0x2F00(r13)
-	  li        r4, 0x1
-	  lfs       f1, 0x94(r31)
-	  lfs       f2, 0x9C(r31)
-	  bl        -0x2EE18
-	  stfs      f1, 0x98(r31)
-	  addi      r4, r31, 0
-	  li        r5, 0x5
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,10,8
-	  stw       r0, 0xC8(r31)
-	  lwz       r0, 0xC8(r31)
-	  oris      r0, r0, 0x40
-	  stw       r0, 0xC8(r31)
-	  lwz       r3, 0x470(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	PRINT("ufo parts %s : (%.1f %.1f %.1f)", mConfig->_2C.mStringID, mPosition.x, mPosition.y, mPosition.z);
+	resetUnk22();
+	setUnk22();
+	mStateMachine->transit(this, 5);
 }
 
 /*
@@ -1847,47 +991,11 @@ void Pellet::doLoad(RandomAccessStream&)
  * Address:	80096D70
  * Size:	000078
  */
-void Pellet::animationKeyUpdated(PaniAnimKeyEvent&)
+void Pellet::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x452(r3)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x68
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x6
-	  bne-      .loc_0x68
-	  lwz       r4, 0x55C(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x44
-	  lwz       r0, 0x5C(r4)
-	  subfic    r0, r0, 0x3
-	  cntlzw    r0, r0
-	  rlwinm    r0,r0,27,24,31
-	  b         .loc_0x48
-
-	.loc_0x44:
-	  li        r0, 0
-
-	.loc_0x48:
-	  cmpwi     r0, 0
-	  beq-      .loc_0x68
-	  lwz       r5, 0x11C(r4)
-	  cmpwi     r5, 0
-	  blt-      .loc_0x68
-	  addi      r4, r3, 0
-	  addi      r5, r5, 0xBE
-	  bl        -0xC820
-
-	.loc_0x68:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (isMotionFlag(2) && event.mEventType == KEY_LoopEnd && isUfoParts() && mConfig->mAnimSoundID() >= 0) {
+		playEventSound(this, mConfig->mAnimSoundID() + SE_UFOPARTS_SOUNDTYPE);
+	}
 }
 
 /*
@@ -1895,48 +1003,12 @@ void Pellet::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	80096DE8
  * Size:	000094
  */
-void Pellet::doSave(RandomAccessStream&)
+void Pellet::doSave(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lbz       r4, 0x450(r30)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x444(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x448(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x44C(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	output.writeByte(_450);
+	output.writeFloat(_444.x);
+	output.writeFloat(_444.y);
+	output.writeFloat(_444.z);
 }
 
 /*
@@ -1944,287 +1016,90 @@ void Pellet::doSave(RandomAccessStream&)
  * Address:	80096E7C
  * Size:	0003B8
  */
-void Pellet::startAI(int)
+void Pellet::startAI(int stateID)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB0(r1)
-	  stw       r31, 0xAC(r1)
-	  addi      r0, r1, 0x5C
-	  mr        r31, r4
-	  stw       r30, 0xA8(r1)
-	  mr        r30, r3
-	  mr        r4, r0
-	  stw       r29, 0xA4(r1)
-	  lfs       f1, -0x5834(r13)
-	  lfs       f0, -0x5830(r13)
-	  stfs      f1, 0x5C(r1)
-	  lfs       f1, 0xA0(r3)
-	  addi      r3, r30, 0xE0
-	  stfs      f1, 0x60(r1)
-	  stfs      f0, 0x64(r1)
-	  bl        -0x5EBD8
-	  lfs       f0, -0x582C(r13)
-	  stfs      f0, 0x88(r30)
-	  lfs       f0, 0xA0(r30)
-	  stfs      f0, 0x8C(r30)
-	  lfs       f0, -0x5828(r13)
-	  stfs      f0, 0x90(r30)
-	  lwz       r3, 0x94(r30)
-	  lwz       r0, 0x98(r30)
-	  stw       r3, 0x464(r30)
-	  stw       r0, 0x468(r30)
-	  lwz       r0, 0x9C(r30)
-	  stw       r0, 0x46C(r30)
-	  lwz       r0, 0xC8(r30)
-	  oris      r0, r0, 0x40
-	  stw       r0, 0xC8(r30)
-	  lbz       r0, 0x450(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xA8
-	  lwz       r3, 0x94(r30)
-	  lwz       r0, 0x98(r30)
-	  stw       r3, 0x444(r30)
-	  stw       r0, 0x448(r30)
-	  lwz       r0, 0x9C(r30)
-	  stw       r0, 0x44C(r30)
+	mRotationQuat.fromEuler(Vector3f(0.0f, mDirection, 0.0f));
+	mRotation.set(0.0f, mDirection, 0.0f);
+	_464 = mPosition;
+	setUnk22();
+	if (_450) {
+		_444 = mPosition;
+	}
 
-	.loc_0xA8:
-	  li        r29, 0
-	  stb       r29, 0x451(r30)
-	  addi      r3, r30, 0
-	  addi      r4, r30, 0
-	  li        r5, 0xB8
-	  bl        -0xC94C
-	  lwz       r3, 0x55C(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xDC
-	  lwz       r0, 0x5C(r3)
-	  subfic    r0, r0, 0x3
-	  cntlzw    r0, r0
-	  rlwinm    r29,r0,27,24,31
+	setTrySound(false);
+	if (isUfoParts() && mConfig->mAnimSoundID() >= 0) {
+		playEventSound(this, mConfig->mAnimSoundID() + SE_UFOPARTS_SOUNDTYPE);
+	}
 
-	.loc_0xDC:
-	  cmpwi     r29, 0
-	  beq-      .loc_0x100
-	  lwz       r5, 0x11C(r3)
-	  cmpwi     r5, 0
-	  blt-      .loc_0x100
-	  addi      r3, r30, 0
-	  addi      r4, r30, 0
-	  addi      r5, r5, 0xBE
-	  bl        -0xC9C4
+	mIsAlive = true;
+	if (isUfoParts()) {
+		radarInfo->attachParts(this);
+	}
 
-	.loc_0x100:
-	  li        r0, 0x1
-	  stb       r0, 0x5B8(r30)
-	  lwz       r3, 0x55C(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x128
-	  lwz       r0, 0x5C(r3)
-	  subfic    r0, r0, 0x3
-	  cntlzw    r0, r0
-	  rlwinm    r0,r0,27,24,31
-	  b         .loc_0x12C
+	_458 = 0;
+	_45C = 0;
+	_478 = nullptr;
 
-	.loc_0x128:
-	  li        r0, 0
+	bool check = false;
+	if (mMotionFlag == 3) {
+		check = true;
+	}
 
-	.loc_0x12C:
-	  cmpwi     r0, 0
-	  beq-      .loc_0x140
-	  lwz       r3, 0x2F28(r13)
-	  mr        r4, r30
-	  bl        -0x1B98C
+	if (!mPelletView) {
+		if (isMotionFlag(2)) {
+			mAnimator.startMotion(PaniMotionInfo(0), PaniMotionInfo(3, this));
+			check = false;
+		} else {
+			mAnimator.startMotion(PaniMotionInfo(0));
+		}
+	} else {
+		startCarryMotion(0.0f);
+	}
 
-	.loc_0x140:
-	  li        r0, 0
-	  stw       r0, 0x458(r30)
-	  li        r29, 0
-	  stw       r0, 0x45C(r30)
-	  stw       r0, 0x478(r30)
-	  lbz       r3, 0x452(r30)
-	  cmplwi    r3, 0x3
-	  bne-      .loc_0x164
-	  li        r29, 0x1
+	if (check) {
+		PRINT("view=%x isMotionFlag() = %s\n", mPelletView, isCreatureFlag(CF_GravityEnabled) ? "true" : "false");
+		ERROR("DAME DESU YO !\n"); // 'no you can't!'
+	}
 
-	.loc_0x164:
-	  lwz       r0, 0x4A8(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1D8
-	  rlwinm.   r0,r3,0,30,30
-	  beq-      .loc_0x1BC
-	  cmplwi    r30, 0
-	  addi      r5, r30, 0
-	  beq-      .loc_0x188
-	  addi      r5, r5, 0x440
+	if (mPelletView || stateID == 1) {
+		mStateMachine->transit(this, 0);
+	} else {
+		mStateMachine->transit(this, 2);
+	}
 
-	.loc_0x188:
-	  addi      r3, r1, 0x4C
-	  li        r4, 0x3
-	  bl        0x87F80
-	  addi      r29, r3, 0
-	  addi      r3, r1, 0x54
-	  li        r4, 0
-	  bl        0x87F3C
-	  addi      r4, r3, 0
-	  addi      r5, r29, 0
-	  addi      r3, r30, 0x4AC
-	  bl        0x2A3C
-	  li        r29, 0
-	  b         .loc_0x200
+	stopMotion();
+	int color;
+	int type;
+	if (pelletMgr->decomposeNumberPellet(mConfig->_2C.mId, color, type)) {
+		f32 heights[4] = {
+			3.3f,
+			7.0f,
+			13.0f,
+			18.0f,
+		};
+		EffectMgr::effTypeTable effects[4] = {
+			EffectMgr::EFF_Empl_01,
+			EffectMgr::EFF_Empl_05,
+			EffectMgr::EFF_Empl_10,
+			EffectMgr::EFF_Empl_20,
+		};
+		Vector3f pos(mPosition);
+		pos.y += heights[type];
+		_4A4 = heights[type];
+		_494 = pos;
 
-	.loc_0x1BC:
-	  addi      r3, r1, 0x44
-	  li        r4, 0
-	  bl        0x87F18
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0x4AC
-	  bl        0x2A74
-	  b         .loc_0x200
+		zen::particleGenerator* ptclGen = effectMgr->create(effects[type], pos, nullptr, nullptr);
+		if (ptclGen) {
+			ptclGen->setEmitPosPtr(&_494);
+			_4A0 = 90;
+		} else {
+			_4A0 = 0;
+		}
+	} else {
+		_4A0 = 0;
+	}
 
-	.loc_0x1D8:
-	  lfs       f0, -0x73E8(r2)
-	  stfs      f0, 0x560(r30)
-	  lwz       r3, 0x4A8(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x200
-	  lwz       r12, 0x0(r3)
-	  lfs       f1, 0x560(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x200:
-	  rlwinm.   r0,r29,0,24,31
-	  lwz       r0, 0x4A8(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x218
-	  cmpwi     r31, 0x1
-	  bne-      .loc_0x238
-
-	.loc_0x218:
-	  lwz       r3, 0x470(r30)
-	  addi      r4, r30, 0
-	  li        r5, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x254
-
-	.loc_0x238:
-	  lwz       r3, 0x470(r30)
-	  addi      r4, r30, 0
-	  li        r5, 0x2
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x254:
-	  lwz       r3, 0x4A8(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x278
-	  lwz       r12, 0x0(r3)
-	  lfs       f1, -0x73E8(r2)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x280
-
-	.loc_0x278:
-	  lfs       f0, -0x73E8(r2)
-	  stfs      f0, 0x560(r30)
-
-	.loc_0x280:
-	  lwz       r4, 0x55C(r30)
-	  addi      r5, r1, 0x98
-	  lwz       r3, 0x301C(r13)
-	  addi      r6, r1, 0x94
-	  lwz       r4, 0x2C(r4)
-	  bl        0x1368
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x38C
-	  lis       r3, 0x8022
-	  addi      r10, r3, 0x23F8
-	  lwz       r4, 0x0(r10)
-	  lis       r3, 0x8022
-	  lwz       r0, 0x4(r10)
-	  addi      r9, r3, 0x2408
-	  addi      r3, r1, 0x84
-	  stw       r4, 0x84(r1)
-	  addi      r4, r1, 0x74
-	  addi      r5, r1, 0x68
-	  stw       r0, 0x88(r1)
-	  li        r6, 0
-	  li        r7, 0
-	  lwz       r8, 0x8(r10)
-	  lwz       r0, 0xC(r10)
-	  stw       r8, 0x8C(r1)
-	  stw       r0, 0x90(r1)
-	  lwz       r8, 0x0(r9)
-	  lwz       r0, 0x4(r9)
-	  stw       r8, 0x74(r1)
-	  stw       r0, 0x78(r1)
-	  lwz       r8, 0x8(r9)
-	  lwz       r0, 0xC(r9)
-	  stw       r8, 0x7C(r1)
-	  stw       r0, 0x80(r1)
-	  lfs       f0, 0x94(r30)
-	  stfs      f0, 0x68(r1)
-	  lfs       f0, 0x98(r30)
-	  stfs      f0, 0x6C(r1)
-	  lfs       f0, 0x9C(r30)
-	  lwz       r0, 0x94(r1)
-	  stfs      f0, 0x70(r1)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f0, 0x6C(r1)
-	  lfsx      f1, r3, r0
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x6C(r1)
-	  stfs      f1, 0x4A4(r30)
-	  lwz       r3, 0x68(r1)
-	  lwz       r0, 0x6C(r1)
-	  stw       r3, 0x494(r30)
-	  stw       r0, 0x498(r30)
-	  lwz       r0, 0x70(r1)
-	  stw       r0, 0x49C(r30)
-	  lwz       r0, 0x94(r1)
-	  lwz       r3, 0x3180(r13)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r4, r4, r0
-	  bl        0x10595C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x380
-	  addi      r0, r30, 0x494
-	  stw       r0, 0x18(r3)
-	  li        r0, 0x5A
-	  sth       r0, 0x4A0(r30)
-	  b         .loc_0x394
-
-	.loc_0x380:
-	  li        r0, 0
-	  sth       r0, 0x4A0(r30)
-	  b         .loc_0x394
-
-	.loc_0x38C:
-	  li        r0, 0
-	  sth       r0, 0x4A0(r30)
-
-	.loc_0x394:
-	  li        r0, 0x1
-	  stb       r0, 0x5B9(r30)
-	  lwz       r0, 0xB4(r1)
-	  lwz       r31, 0xAC(r1)
-	  lwz       r30, 0xA8(r1)
-	  lwz       r29, 0xA4(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	mIsAIActive = true;
 }
 
 /*
@@ -2234,7 +1109,13 @@ void Pellet::startAI(int)
  */
 void Pellet::startAppear()
 {
-	// UNUSED FUNCTION
+	_458 = 0;
+	_478 = nullptr;
+	if (!mPelletView) {
+		mAnimator.startMotion(PaniMotionInfo(0));
+		mMotionSpeed = 30.0f;
+	}
+	mStateMachine->transit(this, 2);
 }
 
 /*
@@ -2244,46 +1125,13 @@ void Pellet::startAppear()
  */
 void Pellet::doAnimation()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x554(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x30
-	  lfs       f1, 0x560(r31)
-	  addi      r3, r31, 0x4AC
-	  lfs       f2, -0x73EC(r2)
-	  bl        0x2888
+	if (mShapeObject) {
+		mAnimator.updateAnimation(mMotionSpeed, 30.0f);
+	}
 
-	.loc_0x30:
-	  lwz       r3, 0x4A8(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x4C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x4C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80097294
- * Size:	000004
- */
-void PelletView::viewDoAnimation()
-{
+	if (mPelletView) {
+		static_cast<PelletView*>(mPelletView)->viewDoAnimation();
+	}
 }
 
 /*
@@ -2291,55 +1139,20 @@ void PelletView::viewDoAnimation()
  * Address:	80097298
  * Size:	000088
  */
-void Pellet::refresh(Graphics&)
+void Pellet::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x474(r3)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x20
-	  lwz       r6, 0x4(r5)
-	  b         .loc_0x24
+	int state = getState();
+	if (state == 3 && !pelletMgr->isMovieFlag(1)) {
+		return;
+	}
 
-	.loc_0x20:
-	  li        r6, 0
+	if (state == 0 && mPickOffset != 0.0f && !pelletMgr->isMovieFlag(2)) {
+		return;
+	}
 
-	.loc_0x24:
-	  cmpwi     r6, 0x3
-	  bne-      .loc_0x3C
-	  lwz       r5, 0x301C(r13)
-	  lhz       r0, 0x200(r5)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x78
-
-	.loc_0x3C:
-	  cmpwi     r6, 0
-	  bne-      .loc_0x64
-	  lfs       f1, -0x73E8(r2)
-	  lfs       f0, 0x2D0(r3)
-	  fcmpu     cr0, f1, f0
-	  beq-      .loc_0x64
-	  lwz       r5, 0x301C(r13)
-	  lhz       r0, 0x200(r5)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x78
-
-	.loc_0x64:
-	  lwz       r5, 0x301C(r13)
-	  lhz       r0, 0x200(r5)
-	  rlwinm.   r0,r0,0,29,29
-	  beq-      .loc_0x78
-	  bl        -0x50F4
-
-	.loc_0x78:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (pelletMgr->isMovieFlag(4)) {
+		DualCreature::refresh(gfx);
+	}
 }
 
 /*
@@ -2347,55 +1160,20 @@ void Pellet::refresh(Graphics&)
  * Address:	80097320
  * Size:	000088
  */
-void Pellet::postUpdate(int, f32)
+void Pellet::postUpdate(int p1, f32 p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x474(r3)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x20
-	  lwz       r6, 0x4(r5)
-	  b         .loc_0x24
+	int state = getState();
+	if (state == 3 && !pelletMgr->isMovieFlag(1)) {
+		return;
+	}
 
-	.loc_0x20:
-	  li        r6, 0
+	if (state == 0 && mPickOffset != 0.0f && !pelletMgr->isMovieFlag(2)) {
+		return;
+	}
 
-	.loc_0x24:
-	  cmpwi     r6, 0x3
-	  bne-      .loc_0x3C
-	  lwz       r5, 0x301C(r13)
-	  lhz       r0, 0x200(r5)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x78
-
-	.loc_0x3C:
-	  cmpwi     r6, 0
-	  bne-      .loc_0x64
-	  lfs       f2, -0x73E8(r2)
-	  lfs       f0, 0x2D0(r3)
-	  fcmpu     cr0, f2, f0
-	  beq-      .loc_0x64
-	  lwz       r5, 0x301C(r13)
-	  lhz       r0, 0x200(r5)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x78
-
-	.loc_0x64:
-	  lwz       r5, 0x301C(r13)
-	  lhz       r0, 0x200(r5)
-	  rlwinm.   r0,r0,0,29,29
-	  beq-      .loc_0x78
-	  bl        -0xBC0C
-
-	.loc_0x78:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (pelletMgr->isMovieFlag(4)) {
+		DualCreature::postUpdate(p1, p2);
+	}
 }
 
 /*
@@ -2405,6 +1183,161 @@ void Pellet::postUpdate(int, f32)
  */
 void Pellet::update()
 {
+	_464            = mPosition;
+	bool isOnGround = onGround();
+	if (isOnGround && !mIsAIActive && mConfig->mBounceSoundID() != -1) {
+		playEventSound(this, bounceSounds[mConfig->mBounceSoundID()]);
+		if (getY() < 0.12f) {
+			PRINT("*** PELLET FLICK PIKIS !!!\n");
+			InteractFlick flick(this, 100.0f, 0.0f, FLICK_BACKWARDS_ANGLE);
+			interactStickers(this, flick, nullptr);
+		}
+	}
+
+	mIsAIActive = isOnGround;
+	int state   = getState();
+
+	if (state == 3 && !pelletMgr->isMovieFlag(1)) {
+		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
+		return;
+	}
+
+	if (state == 0 && mPickOffset != 0.0f && !pelletMgr->isMovieFlag(2)) {
+		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
+		return;
+	}
+
+	if (!pelletMgr->isMovieFlag(4)) {
+		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
+		return;
+	}
+
+	if (_4A0) {
+		_4A0--;
+		_494 = mPosition;
+		_494.y += _4A4;
+	}
+
+	Stickers stuckList(this);
+	Iterator iter(&stuckList);
+	int carryCount = 0;
+	CI_LOOP(iter)
+	{
+		Creature* piki = *iter;
+		if (piki && piki->isPiki()) {
+			carryCount++;
+		}
+	}
+
+	_570                 = carryCount;
+	f32 height           = getCylinderHeight();
+	mLifeGauge.mPosition = mPosition;
+	mLifeGauge.mPosition.y += height + 5.0f;
+	mCollisionRadius = height * 0.5f;
+
+	if (mPickOffset != 0.0f) {
+		bool isFinishPick = false;
+		if (!mStickListHead) {
+			isFinishPick = true;
+			PRINT("NO-STICKER- FINISH PICK\n");
+		} else if (_478 && _478->isPiki()) {
+			Stickers stuckList2(this);
+			Iterator iter2(&stuckList2);
+			int carryCount2 = 0;
+			CI_LOOP(iter2)
+			{
+				Creature* piki = *iter2;
+				if (piki && piki->isPiki()) {
+					carryCount2++;
+				}
+			}
+
+			_570 = carryCount2;
+			if (carryCount2 < mConfig->mCarryMinPikis()) {
+				isFinishPick = true;
+				PRINT("SHONINZU- FINISH PICK!\n");
+			}
+		}
+
+		if (isFinishPick) {
+			_478 = nullptr;
+			finishPick();
+			return;
+		}
+	}
+
+	if (_478) {
+		if (!mStickListHead) {
+			_478 = nullptr;
+			finishPick();
+			return;
+		}
+
+		if (onGround()) {
+			mVelocity.x = _47C.x;
+			mVelocity.z = _47C.z;
+			mVelocity.y += _47C.y;
+		}
+
+		if (mapMgr->getMinY(mPosition.x, mPosition.z, true) > mPosition.y) {
+			PRINT("** YABAI YO!\n");
+		}
+
+		bool isTekiAttached    = false;
+		Creature* attachedTeki = nullptr;
+		if (_478->isPiki()) {
+			Stickers stuckList3(this);
+			Iterator iter3(&stuckList3);
+			bool isOnlyPiki = true;
+			CI_LOOP(iter3)
+			{
+				Creature* stuck = *iter3;
+				if (stuck->isTeki()) {
+					isOnlyPiki   = false;
+					attachedTeki = stuck;
+					break;
+				}
+			}
+
+			if (!isOnlyPiki) {
+				isTekiAttached = true;
+			}
+
+			if (isOnlyPiki && _570 == 0) {
+				stopEventSound(this, SE_LIFT_MOVE);
+				stopEventSound(this, SE_LIFT_TRY);
+			}
+		}
+
+		f32 targetAngle;
+		if (isTekiAttached) {
+			Vector3f tekiDir = mPosition - attachedTeki->mPosition;
+			targetAngle      = atan2f(tekiDir.x, tekiDir.z);
+		} else {
+			Vector3f targetDir = _478->mPosition - mPosition;
+			targetAngle        = atan2f(targetDir.x, targetDir.z);
+		}
+
+		f32 angle = angDist(atan2f(mVelocity.x, mVelocity.z), targetAngle);
+		if (zen::Abs(angle) > PI / 20.0f) {
+			f32 val = ((6.0f / getBottomRadius()) * 0.7f);
+			rotateY(gsys->getFrameTime() * angle * val);
+		}
+	} else if (mFloorTri) {
+		f32 rate    = 3.0f * gsys->getFrameTime();
+		mVelocity.x = mVelocity.x - mVelocity.x * rate;
+		mVelocity.z = mVelocity.z - mVelocity.z * rate;
+	}
+
+	// removed nan check here
+	mStateMachine->exec(this);
+	// removed nan check here
+	DualCreature::update();
+	// removed nan check here
+
+	if (mFloorTri && isDynFlag(1)) {
+		mVelocity = mVelocity - mVelocity * 2.0f * gsys->getFrameTime();
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3103,72 +2036,13 @@ void Pellet::update()
 
 /*
  * --INFO--
- * Address:	80097CF4
- * Size:	00003C
- */
-void StateMachine<Pellet>::exec(Pellet*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x474(r4)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80097D30
- * Size:	000004
- */
-void AState<Pellet>::exec(Pellet*)
-{
-}
-
-/*
- * --INFO--
  * Address:	80097D34
  * Size:	000050
  */
 void Pellet::bounceCallback()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x38(r1)
-	  lfs       f0, -0x57FC(r13)
-	  addi      r4, r1, 0x24
-	  stw       r0, 0x24(r1)
-	  lfs       f1, -0x57F8(r13)
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x57F4(r13)
-	  stfs      f1, 0x2C(r1)
-	  stfs      f0, 0x30(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xA4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	MsgBounce msg(Vector3f(0.0f, 1.0f, 0.0f));
+	sendMsg(&msg);
 }
 
 /*
@@ -3176,19 +2050,11 @@ void Pellet::bounceCallback()
  * Address:	80097D84
  * Size:	000020
  */
-void Pellet::collisionCallback(CollEvent&)
+void Pellet::collisionCallback(CollEvent& event)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0xC8(r3)
-	  rlwinm.   r0,r4,0,9,9
-	  beqlr-
-	  rlwinm.   r0,r4,0,10,10
-	  beqlr-
-	  rlwinm    r0,r4,0,11,9
-	  stw       r0, 0xC8(r3)
-	  blr
-	*/
+	if (isCreatureFlag(CF_Unk22) && isCreatureFlag(CF_FixPosition)) {
+		resetCreatureFlag(CF_FixPosition);
+	}
 }
 
 /*
@@ -3196,44 +2062,12 @@ void Pellet::collisionCallback(CollEvent&)
  * Address:	80097DA4
  * Size:	000074
  */
-bool Pellet::stimulate(Interaction&)
+bool Pellet::stimulate(Interaction& interaction)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x58
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x5C
-
-	.loc_0x58:
-	  li        r3, 0
-
-	.loc_0x5C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (interaction.actCommon(this)) {
+		return interaction.actPellet(this);
+	}
+	return false;
 }
 
 /*
@@ -3241,8 +2075,9 @@ bool Pellet::stimulate(Interaction&)
  * Address:	80097E18
  * Size:	0002F8
  */
-void Pellet::doRender(Graphics&, Matrix4f&)
+void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
 {
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5041,353 +3876,6 @@ void PelletMgr::refresh(Graphics&)
  * Size:	000004
  */
 void PelletMgr::refresh2d(Graphics&)
-{
-}
-
-/*
- * --INFO--
- * Address:	800992DC
- * Size:	000084
- */
-PelletMgr::~PelletMgr()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x6C
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x188
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x5C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x5038
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x5C
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4F80
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-
-	.loc_0x5C:
-	  extsh.    r0, r4
-	  ble-      .loc_0x6C
-	  mr        r3, r31
-	  bl        -0x52198
-
-	.loc_0x6C:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80099360
- * Size:	000008
- */
-int MonoObjectMgr::getSize()
-{
-	return mSize;
-}
-
-/*
- * --INFO--
- * Address:	80099368
- * Size:	000008
- */
-int MonoObjectMgr::getMax()
-{
-	return mMaxElements;
-}
-
-/*
- * --INFO--
- * Address:	80099370
- * Size:	000008
- */
-bool KEffect::invoke(zen::particleGenerator*)
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	80099378
- * Size:	000004
- */
-void KEffect::kill()
-{
-}
-
-/*
- * --INFO--
- * Address:	8009937C
- * Size:	000004
- */
-void KEffect::stop()
-{
-}
-
-/*
- * --INFO--
- * Address:	80099380
- * Size:	000004
- */
-void KEffect::restart()
-{
-}
-
-/*
- * --INFO--
- * Address:	80099384
- * Size:	000008
- */
-bool KEffect::invoke(zen::particleGenerator*, zen::particleMdl*)
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	8009938C
- * Size:	000008
- */
-bool KEffect::invoke(zen::particleMdl*)
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	80099394
- * Size:	000004
- */
-void StateMachine<Pellet>::init(Pellet*)
-{
-}
-
-/*
- * --INFO--
- * Address:	80099398
- * Size:	00003C
- */
-void StateMachine<Pellet>::procMsg(Pellet*, Msg*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x474(r4)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800993D4
- * Size:	000118
- */
-void Receiver<Pellet>::procMsg(Pellet*, Msg*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r5)
-	  cmplwi    r0, 0xA
-	  bgt-      .loc_0x108
-	  lis       r6, 0x802B
-	  addi      r6, r6, 0x71C
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r6, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x108:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800994EC
- * Size:	000004
- */
-void Receiver<Pellet>::procGroundMsg(Pellet*, MsgGround*)
-{
-}
-
-/*
- * --INFO--
- * Address:	800994F0
- * Size:	000004
- */
-void Receiver<Pellet>::procUserMsg(Pellet*, MsgUser*)
-{
-}
-
-/*
- * --INFO--
- * Address:	800994F4
- * Size:	000004
- */
-void Receiver<Pellet>::procOffWallMsg(Pellet*, MsgOffWall*)
-{
-}
-
-/*
- * --INFO--
- * Address:	800994F8
- * Size:	000004
- */
-void Receiver<Pellet>::procWallMsg(Pellet*, MsgWall*)
-{
-}
-
-/*
- * --INFO--
- * Address:	800994FC
- * Size:	000004
- */
-void Receiver<Pellet>::procDamageMsg(Pellet*, MsgDamage*)
-{
-}
-
-/*
- * --INFO--
- * Address:	80099500
- * Size:	000004
- */
-void Receiver<Pellet>::procAnimMsg(Pellet*, MsgAnim*)
-{
-}
-
-/*
- * --INFO--
- * Address:	80099504
- * Size:	000004
- */
-void Receiver<Pellet>::procCollideMsg(Pellet*, MsgCollide*)
-{
-}
-
-/*
- * --INFO--
- * Address:	80099508
- * Size:	000004
- */
-void Receiver<Pellet>::procTargetMsg(Pellet*, MsgTarget*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8009950C
- * Size:	000004
- */
-void Receiver<Pellet>::procHangMsg(Pellet*, MsgHang*)
-{
-}
-
-/*
- * --INFO--
- * Address:	80099510
- * Size:	000004
- */
-void Receiver<Pellet>::procStickMsg(Pellet*, MsgStick*)
-{
-}
-
-/*
- * --INFO--
- * Address:	80099514
- * Size:	000004
- */
-void Receiver<Pellet>::procBounceMsg(Pellet*, MsgBounce*)
 {
 }
 

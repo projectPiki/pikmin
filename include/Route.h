@@ -155,7 +155,7 @@ struct RouteMgr : public Node {
 
 	PathFinder* getPathFinder(u32);
 	void getNumWayPoints(u32);
-	void getSafePosition(u32, Vector3f&);
+	Vector3f getSafePosition(u32, Vector3f&);
 	void findNearestEdge(WayPoint**, WayPoint**, u32, Vector3f&, bool, bool, bool);
 	void findNearestEdgeAvoidOff(WayPoint**, WayPoint**, u32, Vector3f&, bool, bool, bool);
 	WayPoint* findNearestWayPoint(u32, Vector3f&, bool);
