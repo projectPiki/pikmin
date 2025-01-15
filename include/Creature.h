@@ -209,6 +209,9 @@ struct Creature : public RefCountable, public EventTalker {
 	inline void setUnk22() { setCreatureFlag(CF_Unk22); }
 	inline void resetUnk22() { resetCreatureFlag(CF_Unk22); } // TODO: rename this to one of the DLL inlines later
 
+	// this is a guess name-wise
+	void restartAI() { setCreatureFlag(CF_AIAlwaysActive); }
+
 	// these are setFlag/resetFlag/isFlag in the DLL, but this is clearer.
 	void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
 	void resetCreatureFlag(u32 flag) { mCreatureFlags &= ~flag; }
