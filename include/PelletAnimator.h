@@ -10,25 +10,33 @@
 struct PaniAnimKeyListener;
 struct PaniMotionInfo;
 struct PaniMotionTable;
+struct PelletShapeObject;
 
 /**
  * @brief TODO
  *
- * @note Size: 0x5C.
+ * @note Size: 0x60.
  */
 struct PelletAnimInfo : public Parameters, public CoreNode {
 	PelletAnimInfo();
 
-	void createShapeObject();
+	PelletShapeObject* createShapeObject();
 
 	// _04     = VTBL 1
 	// _58     = VTBL 2
 	// _00-_04 = Parameters
 	// _04-_18 = CoreNode
-	ID32 mID;            // _18
-	u8 _24[0x58 - 0x24]; // _24, unknown
+	ID32 mID;         // _18
+	int _24;          // _24
+	int mTekiType;    // _28, for corpses
+	Parm<String> _2C; // _2C
+	Parm<String> _40; // _40
+	int _54;          // _54
 
+	// why is this split like this.
 	virtual void read(RandomAccessStream&); // _18
+
+	PelletShapeObject* mPelletShapeObject; // _5C
 };
 
 /**

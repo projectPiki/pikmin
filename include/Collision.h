@@ -143,6 +143,8 @@ struct CollPart {
 
 	bool isPlatformType() { return mPartType == PART_Platform; }
 
+	Matrix4f getJointMatrix() { return mJointMatrix; }
+
 	/*
 	    DLL inlines to make:
 	    bool isBouncySphereType();
@@ -156,7 +158,7 @@ struct CollPart {
 
 	f32 mRadius;                   // _00
 	Vector3f mCentre;              // _04
-	Matrix4f mMatrix;              // _10
+	Matrix4f mJointMatrix;         // _10
 	u8 _50;                        // _50
 	bool mIsStickEnabled;          // _51
 	s16 mNextIndex;                // _52, index of next sibling

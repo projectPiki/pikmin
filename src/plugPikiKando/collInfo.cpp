@@ -948,7 +948,7 @@ ID32 CollPart::getCode()
  */
 Matrix4f CollPart::getMatrix()
 {
-	Matrix4f collMat = mMatrix;
+	Matrix4f collMat = mJointMatrix;
 	Matrix4f outMat;
 	invCamMat.multiplyTo(collMat, outMat);
 	outMat.mMtx[0][3] = mCentre.x;

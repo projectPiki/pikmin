@@ -106,11 +106,23 @@ enum PelletBounceSoundID {
 /**
  * @brief TODO
  */
+enum PelletMgrMovieFlags {
+	PELMOVIE_Unk1 = 1 << 0, // 0x1
+	PELMOVIE_Unk2 = 1 << 1, // 0x2
+	PELMOVIE_Unk3 = 1 << 2, // 0x4
+	PELMOVIE_Unk4 = 1 << 3, // 0x8
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x58.
+ */
 struct PelletProp : public CreatureProp {
+	PelletProp() { mCreatureProps.mFriction(0.1f); }
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	// TODO: members
 };
 
 /**
@@ -158,7 +170,7 @@ struct PelletConfig : public Parameters, public CoreNode {
 	Parm<f32> mCarryInfoHeight;       // _100, p11
 	Parm<int> mAnimSoundID;           // _110, p12 - see PelletAnimSoundID enum
 	Parm<int> mBounceSoundID;         // _120, p13
-	u32 _130;                         // _130, maybe int?
+	int _130;                         // _130
 
 	// this has to be down here or the second VTBL spawns at 0x18 (should spawn at 0x134)
 
@@ -261,7 +273,7 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	u8 mMotionFlag;                       // _452
 	RippleEffect* mRippleEffect;          // _454
 	u32 _458;                             // _458, unknown
-	u32 _45C;                             // _45C, unknown
+	CollPart* mStuckMouthPart;            // _45C
 	f32 _460;                             // _460
 	Vector3f _464;                        // _464
 	PelletStateMachine* mStateMachine;    // _470
@@ -300,9 +312,11 @@ struct PelletMgr : public MonoObjectMgr {
 	 * @brief TODO
 	 */
 	struct UseNode : public CoreNode {
+		UseNode() { initCore("useNode"); }
+
 		// _00     = VTBL
 		// _00-_14 = CoreNode
-		// TODO: members
+		u32 mPelletID; // _14
 	};
 
 	PelletMgr(MapMgr*);
@@ -347,11 +361,15 @@ struct PelletMgr : public MonoObjectMgr {
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_3C = MonoObjectMgr
-	// TODO: members
-	u8 _3C[0x1F8 - 0x3C];             // _3C, unknown
+	UseNode mUseList;                 // _3C
+	int mConfigNum;                   // _54
+	PelletConfig mConfigList;         // _58
+	int mAnimInfoNum;                 // _190
+	PelletAnimInfo mAnimInfoList;     // _194
+	PelletProp* mPelletProps;         // _1F4
 	PaniMotionTable* mUfoMotionTable; // _1F8
-	u8 _1FC[0x200 - 0x1FC];           // _1FC, unknown
-	u16 mMovieFlags;                  // _200
+	int mReadStage;                   // _1FC, 0:read in configs, 1:read in animinfos
+	u16 mMovieFlags;                  // _200, see PelletMgrMovieFlags enum
 };
 
 extern PelletMgr* pelletMgr;

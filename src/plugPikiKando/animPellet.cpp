@@ -28,7 +28,16 @@ static void _Print(char*, ...)
  * Size:	000180
  */
 PelletAnimInfo::PelletAnimInfo()
+    : _2C(this, String("pellets", 0), String("", 0), String("", 0), "x00", nullptr)
+    , _40(this, String("noname", 0), String("", 0), String("", 0), "x01", nullptr)
 {
+	mID.setID('none');
+	_24       = 0;
+	mTekiType = -1;
+	_54       = -1;
+
+	initCore("pelletAnimInfo");
+	mPelletShapeObject = nullptr;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -135,7 +144,7 @@ PelletAnimInfo::PelletAnimInfo()
  * Address:	800996C8
  * Size:	0000D4
  */
-void PelletAnimInfo::createShapeObject()
+PelletShapeObject* PelletAnimInfo::createShapeObject()
 {
 	/*
 	.loc_0x0:
