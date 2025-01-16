@@ -722,13 +722,13 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 {
 	Jac_SetDemoPartsID(gameflow._1E0);
 	int onyons = 0;
-	if (playerState && playerState->hasPiki(0)) {
+	if (playerState && playerState->bootContainer(0)) {
 		onyons++;
 	}
-	if (playerState && playerState->hasPiki(1)) {
+	if (playerState && playerState->bootContainer(1)) {
 		onyons++;
 	}
-	if (playerState && playerState->hasPiki(2)) {
+	if (playerState && playerState->bootContainer(2)) {
 		onyons++;
 	}
 	Jac_SetDemoOnyons(onyons);

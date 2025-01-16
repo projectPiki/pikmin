@@ -7,6 +7,7 @@
 #include "StateMachine.h"
 #include "UtEffect.h"
 #include "OdoMeter.h"
+#include "Route.h"
 
 #define PIKI_PROP()       static_cast<PikiProp*>(mProps)->mPikiParms
 #define C_PIKI_PROP(piki) static_cast<PikiProp*>(piki->mProps)->mPikiParms
@@ -16,6 +17,7 @@ struct TopAction;
 struct Navi;
 struct PikiStateMachine;
 struct PikiProp;
+struct PikiState;
 
 /**
  * @brief TODO
@@ -72,7 +74,7 @@ DEFINE_ENUM_TYPE(
 	PebbleMode,    // 21
 	BomakeMode,    // 22
 	BoMode,        // 23
-	WarriorMode,   // 23
+	WarriorMode,   // 24
 );
 // clang-format on
 
@@ -121,7 +123,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	virtual void setFlower(int) { }                      // _130
 	virtual void setLeaves(int);                         // _134
 
-	void getSpeed(f32);
+	f32 getSpeed(f32);
 	void setSpeed(f32, Vector3f&);
 	void setSpeed(f32, f32);
 	void init(Navi*);
@@ -137,16 +139,16 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	void demoCheck();
 	void startDemo();
 	void finishDemo();
-	void appearDemo();
-	void getUpperMotionIndex();
-	void getAttackPower();
-	void findRoute(int, int, bool, bool);
-	void moveRouteTraceDynamic(f32);
-	void initRouteTrace(Vector3f&, bool);
-	void moveRouteTrace(f32);
-	void crGetPoint(int);
-	void crPointOpen(int);
-	void crGetRadius(int);
+	bool appearDemo();
+	int getUpperMotionIndex();
+	f32 getAttackPower();
+	int findRoute(int, int, bool, bool);
+	int moveRouteTraceDynamic(f32);
+	bool initRouteTrace(Vector3f&, bool);
+	int moveRouteTrace(f32);
+	Vector3f crGetPoint(int);
+	bool crPointOpen(int);
+	f32 crGetRadius(int);
 	void crMakeRefs();
 	bool hasBomb();
 	void startFire();
@@ -154,7 +156,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	bool isTeki(Piki*);
 	void actOnSituaton(); // dev spelling
 	int getState();
-	void graspSituation(Creature**);
+	int graspSituation(Creature**);
 	void initColor(int);
 	void startKinoko();
 	void endKinoko();
@@ -172,39 +174,40 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	static bool isSafeMePos(Vector3f&);
 
 	// unused/inlined:
-	void getPikiState();
-	void initRouteTraceDynamic(Creature*);
+	PikiState* getPikiState();
+	bool initRouteTraceDynamic(Creature*);
 	void updateFire();
-	void getNaviID();
-	void getLastState();
+	int getNaviID();
+	int getLastState();
 	void birthBuried();
-	void isGrowable();
-	void isTamable();
+	bool isGrowable();
+	bool isTamable();
 	void growup();
-	void doMotionBlend();
+	bool doMotionBlend();
 	void swapMotion(PaniMotionInfo&, PaniMotionInfo&);
 	void setSpeed(f32);
-	void getCurrentMotionName();
+	char* getCurrentMotionName();
 
-	// defined in PikiMgr.h to avoid include looping
-	inline PikiProp* getPikiProp();
+	// NB: these are all the DLL inlines. No more.
+
+	void setEraseKill() { mEraseKill = true; }
+	void unsetEraseKill() { mEraseKill = false; }
+
+	AState<Piki>* getCurrState() { return mCurrentState; }
+	void setCurrState(AState<Piki>* state) { mCurrentState = state; }
 
 	// 100AEBD0 in plugPiki
-	inline void setPositionA(Vector3f* other)
+	void startLook(Vector3f* other)
 	{
 		_33C = other;
 
 		_340 = 0;
 		_330 = 0;
 
-		// _338 is a counter
-		if (_338) {
-			subCnt();
-			_338 = 0;
-		}
+		_338.reset();
 	}
 
-	inline void resetVariables()
+	void forceFinishLook()
 	{
 		_33C = 0;
 		_348 = 0.0f;
@@ -212,48 +215,34 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 		_340 = 0;
 		_330 = 0;
 
-		if (_338) {
-			subCnt();
-			_338 = 0;
-		}
+		_338.reset();
 	}
 
-	inline void set584() { _584 = 1; } // rename later
+	bool isFired() { return mIsOnFire; }
 
-	AState<Piki>* getCurrState() { return nullptr; } // fix this later
+	static bool directDumpMode;
+	static Colour* kinokoColors;
+	static Colour* pikiColors;
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
 	OdoMeter mOdometer;                // _2BC
-	u32 _2CC;                          // _2CC
-	u32 mTestPathingAgentId;           // _2D0
-	u8 _2D4;                           // _2D4
-	u32 _2D8;                          // _2D8
-	u32 _2DC;                          // _2DC
-	u32 _2E0;                          // _2E0
-	u32 _2E4;                          // _2E4
-	u32 _2E8;                          // _2E8
-	u32 _2EC;                          // _2EC
-	u32 _2F0;                          // _2F0
-	u32 _2F4;                          // _2F4
-	u32 _2F8;                          // _2F8
-	u32 _2FC;                          // _2FC
-	u32 _300;                          // _300
-	u32 _304;                          // _304
-	u32 _308;                          // _308
-	u32 _30C;                          // _30C
-	u32 _310;                          // _310
-	u32 _314;                          // _314
-	u32 _318;                          // _318
-	u32 _31C;                          // _31C
-	u32 _320;                          // _320
-	u32 _324;                          // _324
-	u32 _328;                          // _328
-	u32 _32C;                          // _32C
+	PathFinder::Buffer* mPathBuffers;  // _2CC
+	u32 mRouteHandle;                  // _2D0
+	bool mDoRouteASync;                // _2D4
+	s16 mRouteStartWPIdx;              // _2D6
+	s16 mRouteGoalWPIdx;               // _2D8
+	bool _2DA;                         // _2DA
+	s16 mCurrRoutePoint;               // _2DC
+	Vector3f mRouteStartPos;           // _2E0
+	Vector3f mRouteGoalPos;            // _2EC
+	Vector3f mSplineControlPts[4];     // _2F8
+	s16 mNumRoutePoints;               // _328
+	Creature* mRouteTargetCreature;    // _32C
 	u8 _330;                           // _330
 	u32 _334;                          // _334
-	u32 _338;                          // _338, this is a struct, wtf? (10055D50 in plugPiki sets this to 0)
+	SmartPtr<Creature> _338;           // _338
 	Vector3f* _33C;                    // _33C
 	u8 _340;                           // _340
 	f32 _344;                          // _344
@@ -265,8 +254,9 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u8 _401[0x408 - 0x401];            // _401
 	u8 _408;                           // _408
 	bool mIsCallable;                  // _409
-	u8 _40A[0x424 - 0x40A];            // _40A
-	u8 _424;                           // _424
+	UpdateContext _40C;                // _40C
+	UpdateContext _418;                // _418
+	bool mIsOnFire;                    // _424
 	u16 _426;                          // _426
 	PermanentEffect* _428;             // _428
 	BurnEffect* mBurnEffect;           // _42C
@@ -274,15 +264,9 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	FreeLightEffect* mFreeLightEffect; // _434
 	SlimeEffect* mSlimeEffect;         // _438
 	u32 mPlayerId;                     // _43C
-	u32 _440;                          // _440
-	u32 _444;                          // _444
-	u32 _448;                          // _448
-	u32 _44C;                          // _44C
-	u32 _450;                          // _450
-	u32 _454;                          // _454
-	u32 _458;                          // _458
-	u32 _45C;                          // _45C
-	u32 _460;                          // _460
+	Vector3f _440;                     // _440
+	Vector3f _44C;                     // _44C
+	Vector3f mCatchPos;                // _458
 	Vector3f mEffectPos;               // _464
 	u8 mWantToStick;                   // _470
 	u8 _471[0x48C - 0x471];            // _471
@@ -296,34 +280,31 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Creature* mLeaderCreature;         // _4A8, maybe puffstool/kinoko leader?
 	Vector3f mPluckVelocity;           // _4AC
 	int _4B8;                          // _4B8
-	u32 _4BC;                          // _4BC
-	u32 _4C0;                          // _4C0
-	u32 _4C4;                          // _4C4
-	u32 _4C8;                          // _4C8
-	u32 _4CC;                          // _4CC
-	u32 _4D0;                          // _4D0
-	u32 _4D4;                          // _4D4
-	u32 _4D8;                          // _4D8
-	u32 _4DC;                          // _4DC
-	u32 _4E0;                          // _4E0
-	u32 _4E4;                          // _4E4
-	u32 _4E8;                          // _4E8
-	u32 _4EC;                          // _4EC
-	u32 _4F0;                          // _4F0
-	u32 _4F4;                          // _4F4
+	Vector3f _4BC;                     // _4BC
+	Vector3f _4C8;                     // _4C8
+	u8 _4D4[0x8];                      // _4D4, unknown
+	u32 _4DC;                          // _4DC, unknown
+	u8 _4E0[0x4F8 - 0x4E0];            // _4E0, unknown
 	TopAction* mActiveAction;          // _4F8, may be just Action*
 	u16 mMode;                         // _4FC, use PikiMode enum
-	u32 _500;                          // _500
+	SmartPtr<Creature> _500;           // _500
 	Navi* mNavi;                       // _504
-	u8 _508[0x8];                      // _508
+	u8 _508[0x4];                      // _508
+	Colour _50C;                       // _50C
 	u16 mColor;                        // _510, red/yellow/blue
 	u8 _512[0x518 - 0x512];            // _4FC
 	u8 _518;                           // _518
 	u8 _519;                           // _519
 	u8 _51A[0x520 - 0x51A];            // _51A
 	int mHappa;                        // _520, leaf/bud/flower
-	u8 _524[0x584 - 0x524];            // _524
-	u8 _584;                           // _584, unknown
+	u16 _524;                          // _524, might be s16
+	u8 _526[0x52C - 0x526];            // _524, unknown
+	AState<Piki>* mCurrentState;       // _52C
+	Colour _530;                       // _530
+	Colour _534;                       // _534
+	u8 _538[0x4];                      // _538, unknown
+	SearchData mPikiSearchData[6];     // _53C
+	bool mEraseKill;                   // _584
 };
 
 /**

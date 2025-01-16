@@ -320,7 +320,7 @@ int PomAi::killStickPiki()
 			if (C_POM_PROP(mPom).mDoKillSameColorPiki() && piki->mColor == mPom->mColor) {
 				piki->kill(false);
 			} else {
-				piki->set584();
+				piki->setEraseKill();
 				piki->kill(false);
 				seedCount++;
 			}

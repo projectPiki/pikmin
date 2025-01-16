@@ -53,7 +53,7 @@ ActAttack::ActAttack(Piki* piki)
 void ActAttack::init(Creature* creature)
 {
 	u32 badCompiler;
-	if (playerState->_1B5) {
+	if (playerState->mInDayEnd) {
 		return;
 	}
 
@@ -194,7 +194,7 @@ void ActAttack::decideTarget()
  */
 int ActAttack::exec()
 {
-	if (playerState->_1B5) {
+	if (playerState->mInDayEnd) {
 		return ACTOUT_Success;
 	}
 

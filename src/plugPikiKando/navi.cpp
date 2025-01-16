@@ -204,8 +204,8 @@ void Navi::updateDayEnd(Vector3f& pos)
 
 			if (piki->mMode != 11) {
 				piki->changeMode(1, piki->mNavi);
-				piki->resetVariables(); // 100AEC30 in plugPiki
-				piki->setPositionA(&piki->mNavi->mPosition);
+				piki->forceFinishLook(); // 100AEC30 in plugPiki
+				piki->startLook(&piki->mNavi->mPosition);
 				pikiCount++;
 
 				if (piki->mMode != 1) {
@@ -1539,9 +1539,9 @@ void Navi::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
  */
 void Navi::enableMotionBlend()
 {
-	mPreBlendUpperMotionId = mNaviAnimMgr.getUpperAnimator().getCurrentMotionIndex();
-	mNaviAnimMgr.getUpperAnimator().startMotion(PaniMotionInfo(PIKIANIM_Nigeru));
-	mNaviAnimMgr.getUpperAnimator().mAnimationCounter = 10.0f;
+	mPreBlendUpperMotionId = mNaviAnimMgr.getLowerAnimator().getCurrentMotionIndex();
+	mNaviAnimMgr.getLowerAnimator().startMotion(PaniMotionInfo(PIKIANIM_Nigeru));
+	mNaviAnimMgr.getLowerAnimator().mAnimationCounter = 10.0f;
 }
 
 /*
@@ -8812,8 +8812,8 @@ void Navi::swapMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 {
 	u32 badCompiler[4];
 
-	f32* frame1 = &mNaviAnimMgr.mLowerAnimator.mAnimationCounter;
-	f32* frame2 = &mNaviAnimMgr.mUpperAnimator.mAnimationCounter;
+	f32* frame1 = &mNaviAnimMgr.mUpperAnimator.mAnimationCounter;
+	f32* frame2 = &mNaviAnimMgr.mLowerAnimator.mAnimationCounter;
 	f32 val1    = *frame1;
 	f32 val2    = *frame2;
 	mNaviAnimMgr.startMotion(motion1, motion2);

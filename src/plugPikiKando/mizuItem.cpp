@@ -44,8 +44,8 @@ void MizuItem::update()
 	ItemCreature::update();
 	if (mFloorTri && mObjType == OBJTYPE_FallWater) {
 		MsgGround msg;
-		if (getAI()) {
-			getAI()->procMsg(this, &msg);
+		if (static_cast<SimpleAI*>(mStateMachine)) {
+			static_cast<SimpleAI*>(mStateMachine)->procMsg(this, &msg);
 		}
 	}
 }
@@ -75,10 +75,10 @@ void MizuItem::startAI(int)
 
 	switch (mObjType) {
 	case OBJTYPE_Water:
-		getAI()->start(this, 3);
+		static_cast<SimpleAI*>(mStateMachine)->start(this, 3);
 		break;
 	case OBJTYPE_FallWater:
-		getAI()->start(this, 0);
+		static_cast<SimpleAI*>(mStateMachine)->start(this, 0);
 		break;
 	}
 }

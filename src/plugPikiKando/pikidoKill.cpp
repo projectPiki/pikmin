@@ -23,17 +23,17 @@ DEFINE_PRINT("pikidoKill");
  */
 void Piki::doKill()
 {
-	if (mTestPathingAgentId) {
-		routeMgr->getPathFinder('test')->releaseHandle(mTestPathingAgentId);
-		mTestPathingAgentId = 0;
-		_2D4                = 0;
+	if (mRouteHandle) {
+		routeMgr->getPathFinder('test')->releaseHandle(mRouteHandle);
+		mRouteHandle  = 0;
+		mDoRouteASync = 0;
 	}
 
-	_338 = 0;
+	_338.clear();
 
-	if (_424) {
+	if (mIsOnFire) {
 		_428->kill();
-		_424 = 0;
+		mIsOnFire = false;
 	}
 
 	mBurnEffect->kill();

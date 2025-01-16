@@ -574,7 +574,7 @@ Creature* MeltingPotMgr::birth(int objType)
  * Address:	........
  * Size:	000048
  */
-void ItemMgr::getMgr(int)
+ObjectMgr* ItemMgr::getMgr(int)
 {
 	// UNUSED FUNCTION
 }
@@ -584,7 +584,7 @@ void ItemMgr::getMgr(int)
  * Address:	........
  * Size:	000120
  */
-void ItemMgr::getPikiNum()
+int ItemMgr::getPikiNum()
 {
 	// UNUSED FUNCTION
 }
@@ -682,7 +682,7 @@ void ItemMgr::showInfo()
  * Address:	800F4368
  * Size:	000008
  */
-PelletShapeObject* ItemMgr::getPelletShapeObject(int, int)
+ItemShapeObject* ItemMgr::getPelletShapeObject(int, int)
 {
 	return nullptr;
 }
@@ -692,7 +692,7 @@ PelletShapeObject* ItemMgr::getPelletShapeObject(int, int)
  * Address:	........
  * Size:	00001C
  */
-void ItemMgr::getUfoShape()
+Shape* ItemMgr::getUfoShape()
 {
 	// UNUSED FUNCTION
 }

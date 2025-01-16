@@ -267,8 +267,8 @@ TopAction::TopAction(Piki* piki)
 	_1A       = 0;
 	mName     = "top action";
 
-	setChildren(31, new ActRandomBoid(piki), nullptr, new ActWatch(piki), nullptr, new ActEscape(piki), nullptr, new ActChase(piki),
-	            nullptr, new ActGoto(piki), nullptr, new ActPickCreature(piki), nullptr, new ActPutItem(piki), nullptr,
+	setChildren(PikiAction::COUNT, new ActRandomBoid(piki), nullptr, new ActWatch(piki), nullptr, new ActEscape(piki), nullptr,
+	            new ActChase(piki), nullptr, new ActGoto(piki), nullptr, new ActPickCreature(piki), nullptr, new ActPutItem(piki), nullptr,
 	            new ActFormation(piki), nullptr, new ActAttack(piki), nullptr, new ActShoot(piki), nullptr, new ActGuard(piki), nullptr,
 	            new ActPullout(piki), nullptr, new ActPickItem(piki), nullptr, new ActDecoy(piki), nullptr, new ActCrowd(piki), nullptr,
 	            new ActFree(piki), nullptr, new ActRope(piki), nullptr, new ActEnter(piki), nullptr, new ActExit(piki), nullptr,

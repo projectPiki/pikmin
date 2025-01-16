@@ -705,7 +705,7 @@ Boss* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBoss)
 		break;
 
 	case BOSS_Pom:
-		if (playerState->hasPiki(genBoss->mItemColour)) {
+		if (playerState->hasContainer(genBoss->mItemColour)) {
 			boss = createBoss(BOSS_Pom);
 			if (boss) {
 				boss->initBoss(birthInfo, OBJTYPE_Pom);

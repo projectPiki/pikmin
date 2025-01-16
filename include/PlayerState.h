@@ -61,6 +61,9 @@ struct PlayerState {
 		void startMotion(int, int);
 		void stopMotion();
 
+		// DLL inlines:
+		void setMotionSpeed(f32);
+
 		// _00 = VTBL
 		int _04;                              // _04
 		u32 mModelID;                         // _08
@@ -81,16 +84,16 @@ struct PlayerState {
 	bool courseOpen(int);
 	bool happyEndable();
 	void setChallengeMode();
-	void getPartsGetCount(int);
+	int getPartsGetCount(int);
 	int getCardUfoPartsCount();
-	void getTotalPikiCount(int);
+	int getTotalPikiCount(int);
 	void saveCard(RandomAccessStream&);
 	void loadCard(RandomAccessStream&);
 	bool isTutorial();
 	bool isGameCourse();
-	void checkLimitGenFlag(int);
+	bool checkLimitGenFlag(int);
 	void setLimitGenFlag(int);
-	void displayPikiCount(int);
+	bool displayPikiCount(int);
 	void setDisplayPikiCount(int);
 	bool hasUfoParts(u32);
 	void update();
@@ -113,22 +116,44 @@ struct PlayerState {
 	void startAfterMotions();
 	void startUfoPartsMotion(u32, int, bool);
 	void getUfoParts(u32, bool);
-	void getNextPowerupNumber();
+	int getNextPowerupNumber();
 	void preloadHenkaMovie();
-	void findUfoParts(u32);
+	UfoParts* findUfoParts(u32);
 	void renderParts(Graphics&, Shape*);
 
 	// unused/inlined:
 	void setDebugMode();
-	void getCardPikiCount(int);
-	void getUfoPercentage();
+	int getCardPikiCount(int);
+	int getUfoPercentage();
 	void init();
-	void getFinalBornPikis();
-	void getRestParts();
+	int getFinalBornPikis();
+	int getRestParts();
 	void lostUfoParts(u32);
 
-	inline void getPiki(u32 flag) { _184 |= 1 << flag + 3; }
-	inline bool hasPiki(u32 flag) { return _184 & (1 << flag); }
+	// these MIGHT be hasContainer and setContainer and vice versa
+	void setBootContainer(int color) { _184 |= 1 << color + 3; }
+	bool bootContainer(int color) { return _184 & (1 << color + 3); }
+
+	void setContainer(int color) { _184 |= 1 << color; }
+	bool hasContainer(int color) { return _184 & (1 << color); }
+
+	bool inDayEnd() { return mInDayEnd; }
+	void setDayEnd() { mInDayEnd = true; }
+
+	/*
+	    All remaining DLL inlines:
+
+	    int getDayCollectCount(int);
+	    void setDayCollectCount(int, int);
+
+	    void setDayPowerupCount(int, int);
+
+	    bool hasRadar();
+	    bool hasUfoLeftControl();
+	    bool hasUfoRightControl();
+	    bool isChallengeMode;
+	    int getLastPikmins();
+	*/
 
 	static int totalUfoParts;
 
@@ -159,7 +184,7 @@ struct PlayerState {
 	u8 _1AC;                      // _1AC
 	u8 _1AD[0x1B4 - 0x1AD];       // _1AD, unknown
 	u8 _1B4;                      // _1B4
-	u8 _1B5;                      // _1B5
+	bool mInDayEnd;               // _1B5
 	u8 _1B6;                      // _1B6
 	PermanentEffect* _1B8;        // _1B8
 	PermanentEffect* _1BC;        // _1BC

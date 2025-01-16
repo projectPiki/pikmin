@@ -718,7 +718,7 @@ void PlayerState::setDebugMode()
  * Address:	8007FC14
  * Size:	00000C
  */
-void PlayerState::getPartsGetCount(int)
+int PlayerState::getPartsGetCount(int)
 {
 	/*
 	.loc_0x0:
@@ -733,7 +733,7 @@ void PlayerState::getPartsGetCount(int)
  * Address:	........
  * Size:	000048
  */
-void PlayerState::getCardPikiCount(int)
+int PlayerState::getCardPikiCount(int)
 {
 	// UNUSED FUNCTION
 }
@@ -753,7 +753,7 @@ int PlayerState::getCardUfoPartsCount()
  * Address:	........
  * Size:	000078
  */
-void PlayerState::getUfoPercentage()
+int PlayerState::getUfoPercentage()
 {
 	// UNUSED FUNCTION
 }
@@ -763,7 +763,7 @@ void PlayerState::getUfoPercentage()
  * Address:	8007FC28
  * Size:	000084
  */
-void PlayerState::getTotalPikiCount(int)
+int PlayerState::getTotalPikiCount(int)
 {
 	/*
 	.loc_0x0:
@@ -1393,7 +1393,7 @@ bool PlayerState::isGameCourse()
  * Address:	800804E4
  * Size:	000068
  */
-void PlayerState::checkLimitGenFlag(int)
+bool PlayerState::checkLimitGenFlag(int)
 {
 	/*
 	.loc_0x0:
@@ -1485,7 +1485,7 @@ void PlayerState::setLimitGenFlag(int)
  * Address:	800805CC
  * Size:	000020
  */
-void PlayerState::displayPikiCount(int)
+bool PlayerState::displayPikiCount(int)
 {
 	/*
 	.loc_0x0:
@@ -1862,7 +1862,7 @@ int PlayerState::getFinalDeadPikis()
  * Address:	........
  * Size:	000008
  */
-void PlayerState::getFinalBornPikis()
+int PlayerState::getFinalBornPikis()
 {
 	// UNUSED FUNCTION
 }
@@ -2092,7 +2092,7 @@ int PlayerState::getCurrParts()
  * Address:	........
  * Size:	000010
  */
-void PlayerState::getRestParts()
+int PlayerState::getRestParts()
 {
 	// UNUSED FUNCTION
 }
@@ -3004,7 +3004,7 @@ void PlayerState::getUfoParts(u32, bool)
  * Address:	80081770
  * Size:	000058
  */
-void PlayerState::getNextPowerupNumber()
+int PlayerState::getNextPowerupNumber()
 {
 	/*
 	.loc_0x0:
@@ -3136,7 +3136,7 @@ void PlayerState::lostUfoParts(u32)
  * Address:	800818C8
  * Size:	00004C
  */
-void PlayerState::findUfoParts(u32)
+PlayerState::UfoParts* PlayerState::findUfoParts(u32)
 {
 	/*
 	.loc_0x0:

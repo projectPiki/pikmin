@@ -264,8 +264,8 @@ void BPikiInf::loadCard(RandomAccessStream& card)
  */
 void BPikiInf::doStore(Creature* piki)
 {
-	mPikiColour   = static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mFirstFrameIndex;
-	mNextKeyIndex = static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mLastFrameIndex;
+	mPikiColour   = static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mFirstFrameIndex;
+	mNextKeyIndex = static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mLastFrameIndex;
 }
 
 /*
@@ -275,8 +275,8 @@ void BPikiInf::doStore(Creature* piki)
  */
 void BPikiInf::doRestore(Creature* piki)
 {
-	static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mFirstFrameIndex = mPikiColour;
-	static_cast<Piki*>(piki)->mPikiAnimMgr.mUpperAnimator.mLastFrameIndex  = mNextKeyIndex;
+	static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mFirstFrameIndex = mPikiColour;
+	static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mLastFrameIndex  = mNextKeyIndex;
 }
 
 /*

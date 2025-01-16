@@ -515,7 +515,7 @@ f32 Tube::getPosRatio(const Vector3f& pos)
  * Address:	........
  * Size:	000020
  */
-void Tube::getRatioRadius(f32)
+f32 Tube::getRatioRadius(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -685,7 +685,7 @@ void Tube::getPosGradient(Vector3f&, f32, Vector3f&, Vector3f&)
  * Address:	80087AC8
  * Size:	0000F8
  */
-void Tube::setPos(f32)
+Vector3f Tube::setPos(f32)
 {
 	/*
 	.loc_0x0:

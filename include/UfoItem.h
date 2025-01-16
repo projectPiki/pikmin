@@ -134,7 +134,9 @@ struct UfoItem : public Suckable {
 	u32 _3C8;               // _3C8
 	u8 _3CC[0x524 - 0x3CC]; // _3CC, unknown
 	UfoAnimator mAnimator;  // _524
-	u8 _5A4[0x5D0 - 0x5A4]; // _5A4, unknown
+	u8 _528[0x558 - 0x528]; // _528, unknown
+	int _558;               // _558
+	u8 _55C[0x5D0 - 0x55C]; // _55C, unknown
 };
 
 #endif

@@ -216,6 +216,9 @@ struct PikiMgr : public MonoObjectMgr {
 	bool lostAllPikis();
 	void refresh2d(Graphics&);
 
+	// this is either isRefreshing or isUpdating, idk which yet
+	bool is70(u16 flag) { return _70 & flag; }
+
 	// DLL inlines to make:
 	// bool isRefreshing(u16);
 	// bool isUpdating(u16);
@@ -250,10 +253,5 @@ struct PikiMgr : public MonoObjectMgr {
 };
 
 extern PikiMgr* pikiMgr;
-
-inline PikiProp* Piki::getPikiProp()
-{
-	return static_cast<PikiProp*>(mProps);
-}
 
 #endif

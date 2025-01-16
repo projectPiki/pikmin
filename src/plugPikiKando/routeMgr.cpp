@@ -38,8 +38,8 @@ PathFinder::PathFinder(RouteMgr::Group&)
  */
 PathFinder::Buffer::Buffer()
 {
-	_04 = 255;
-	_00 = -1;
+	_04          = 255;
+	mWayPointIdx = -1;
 }
 
 /*
@@ -47,7 +47,7 @@ PathFinder::Buffer::Buffer()
  * Address:	........
  * Size:	000048
  */
-void PathFinder::handle2idx(u32)
+int PathFinder::handle2idx(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -57,7 +57,7 @@ void PathFinder::handle2idx(u32)
  * Address:	8009F5F8
  * Size:	0000B4
  */
-void PathFinder::findASync(PathFinder::Buffer*, int, int, bool)
+u32 PathFinder::findASync(PathFinder::Buffer*, int, int, bool)
 {
 	/*
 	.loc_0x0:
@@ -120,7 +120,7 @@ void PathFinder::findASync(PathFinder::Buffer*, int, int, bool)
  * Address:	8009F6AC
  * Size:	000088
  */
-void PathFinder::checkASync(u32)
+int PathFinder::checkASync(u32)
 {
 	/*
 	.loc_0x0:
@@ -520,7 +520,7 @@ void PathFinder::updateClient(PathFinder::Client&, int)
  * Address:	8009FB4C
  * Size:	000084
  */
-void PathFinder::findSync(WayPoint**, int, int, int, bool)
+int PathFinder::findSync(WayPoint**, int, int, int, bool)
 {
 	/*
 	.loc_0x0:
@@ -573,7 +573,7 @@ void PathFinder::findSync(WayPoint**, int, int, int, bool)
  * Address:	8009FBD0
  * Size:	000230
  */
-void PathFinder::findSync(PathFinder::Buffer*, int, int, bool)
+int PathFinder::findSync(PathFinder::Buffer*, int, int, bool)
 {
 	/*
 	.loc_0x0:
@@ -765,7 +765,7 @@ void PathFinder::findSync(PathFinder::Buffer*, int, int, bool)
  * Address:	8009FE00
  * Size:	000014
  */
-void PathFinder::getWayPoint(int)
+WayPoint* PathFinder::getWayPoint(int)
 {
 	/*
 	.loc_0x0:
@@ -782,7 +782,7 @@ void PathFinder::getWayPoint(int)
  * Address:	8009FE14
  * Size:	0001FC
  */
-void PathFinder::selectWay(PathFinder::Buffer&, int, PathFinder::Buffer*, int, bool)
+int PathFinder::selectWay(PathFinder::Buffer&, int, PathFinder::Buffer*, int, bool)
 {
 	/*
 	.loc_0x0:
@@ -1050,7 +1050,7 @@ void RouteMgr::update()
  * Address:	800A0108
  * Size:	00004C
  */
-void RouteMgr::getNumWayPoints(u32)
+int RouteMgr::getNumWayPoints(u32)
 {
 	/*
 	.loc_0x0:
@@ -2381,7 +2381,7 @@ WayPoint* RouteMgr::findNearestWayPoint(u32, Vector3f&, bool)
  * Address:	800A1254
  * Size:	00016C
  */
-void RouteMgr::findNearestOffWayPoint(u32, Vector3f&, bool)
+WayPoint* RouteMgr::findNearestOffWayPoint(u32, Vector3f&, bool)
 {
 	/*
 	.loc_0x0:
@@ -2625,7 +2625,7 @@ void RouteMgr::dump(u32)
  * Address:	800A153C
  * Size:	00013C
  */
-void RouteMgr::findNearestWayPointAll(u32, Vector3f&)
+WayPoint* RouteMgr::findNearestWayPointAll(u32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -3153,7 +3153,7 @@ void RouteMgr::initLinks()
  * Address:	800A1B40
  * Size:	000048
  */
-void RouteMgr::id2idx(u32)
+int RouteMgr::id2idx(u32)
 {
 	/*
 	.loc_0x0:
@@ -3189,7 +3189,7 @@ void RouteMgr::id2idx(u32)
  * Address:	........
  * Size:	000010
  */
-void RouteMgr::idx2id(int)
+u32 RouteMgr::idx2id(int)
 {
 	// UNUSED FUNCTION
 }
@@ -3199,7 +3199,7 @@ void RouteMgr::idx2id(int)
  * Address:	800A1B88
  * Size:	00002C
  */
-void RouteMgr::getColinIndex(RouteGroup*, RoutePoint*)
+int RouteMgr::getColinIndex(RouteGroup*, RoutePoint*)
 {
 	/*
 	.loc_0x0:
@@ -3276,7 +3276,7 @@ void RouteTracer::Context::setTarget(RouteTracer*)
  * Address:	........
  * Size:	000224
  */
-void RouteTracer::Context::recognise(RouteTracer*)
+int RouteTracer::Context::recognise(RouteTracer*)
 {
 	// UNUSED FUNCTION
 }
@@ -3286,7 +3286,7 @@ void RouteTracer::Context::recognise(RouteTracer*)
  * Address:	........
  * Size:	000044
  */
-void RouteTracer::noLink()
+bool RouteTracer::noLink()
 {
 	// UNUSED FUNCTION
 }
@@ -3316,7 +3316,7 @@ void RouteTracer::updateState()
  * Address:	........
  * Size:	000054
  */
-void RouteTracer::getTarget()
+Vector3f RouteTracer::getTarget()
 {
 	// UNUSED FUNCTION
 }
@@ -3326,7 +3326,7 @@ void RouteTracer::getTarget()
  * Address:	........
  * Size:	0000C0
  */
-void WayPoint::getLinkIndex(int)
+int WayPoint::getLinkIndex(int)
 {
 	// UNUSED FUNCTION
 }
@@ -3699,7 +3699,7 @@ void WayPoint::initLinkInfos()
  * Address:	........
  * Size:	00007C
  */
-void PathFinder::findFirstStepOnyon(int, int, PathFinder::Buffer*)
+int PathFinder::findFirstStepOnyon(int, int, PathFinder::Buffer*)
 {
 	// UNUSED FUNCTION
 }
@@ -3709,7 +3709,7 @@ void PathFinder::findFirstStepOnyon(int, int, PathFinder::Buffer*)
  * Address:	800A2000
  * Size:	000580
  */
-void PathFinder::findSyncOnyon(Vector3f&, PathFinder::Buffer*, int, int, bool)
+int PathFinder::findSyncOnyon(Vector3f&, PathFinder::Buffer*, int, int, bool)
 {
 	/*
 	.loc_0x0:
@@ -4141,7 +4141,7 @@ void PathFinder::findSyncOnyon(Vector3f&, PathFinder::Buffer*, int, int, bool)
  * Address:	800A2580
  * Size:	000264
  */
-void PathFinder::selectWayOnyon(int, int, PathFinder::Buffer&, int, PathFinder::Buffer*, int, bool)
+int PathFinder::selectWayOnyon(int, int, PathFinder::Buffer&, int, PathFinder::Buffer*, int, bool)
 {
 	/*
 	.loc_0x0:
@@ -4334,7 +4334,7 @@ void PathFinder::selectWayOnyon(int, int, PathFinder::Buffer&, int, PathFinder::
  * Address:	800A27E4
  * Size:	00052C
  */
-void PathFinder::selectSecondBestWayOnyon(Vector3f&, int&, int, PathFinder::Buffer&, int, PathFinder::Buffer*, int, bool)
+int PathFinder::selectSecondBestWayOnyon(Vector3f&, int&, int, PathFinder::Buffer&, int, PathFinder::Buffer*, int, bool)
 {
 	/*
 	.loc_0x0:

@@ -699,10 +699,10 @@ void NaviBuryState::exec(Navi* navi)
 			mPreviousStickInput = stickInput;
 			if (mBuryState == 1) {
 				mBuryState    = 2;
-				f32 frame1Val = navi->mNaviAnimMgr.getLowerAnimator().mAnimationCounter;
+				f32 frame1Val = navi->mNaviAnimMgr.getUpperAnimator().mAnimationCounter;
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GFuri2, navi), PaniMotionInfo(PIKIANIM_GFuri2));
-				navi->mNaviAnimMgr.getLowerAnimator().mAnimationCounter = frame1Val;
-				navi->mNaviAnimMgr.mUpperAnimator.mAnimationCounter     = frame1Val;
+				navi->mNaviAnimMgr.getUpperAnimator().mAnimationCounter = frame1Val;
+				navi->mNaviAnimMgr.mLowerAnimator.mAnimationCounter     = frame1Val;
 			}
 		}
 		break;
@@ -3331,8 +3331,8 @@ void NaviPickState::procAnimMsg(Navi* navi, MsgAnim*)
 void NaviPickState::init(Navi* navi)
 {
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Pick), PaniMotionInfo(PIKIANIM_Run));
-	navi->mNaviAnimMgr.getLowerAnimator().mAnimationCounter = 11.0f;
 	navi->mNaviAnimMgr.getUpperAnimator().mAnimationCounter = 11.0f;
+	navi->mNaviAnimMgr.getLowerAnimator().mAnimationCounter = 11.0f;
 	navi->enableMotionBlend();
 }
 

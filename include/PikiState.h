@@ -67,14 +67,14 @@ struct PikiState : public AState<Piki> {
 	{
 	}
 
-	virtual void transit(Piki*, int); // _4C
-	virtual void stopEffect();        // _50
-	virtual void restartEffect();     // _54
-	virtual void dump();              // _58
-	virtual void doDump();            // _5C
-	virtual bool useLookUpdate();     // _60
-	virtual bool collideAI();         // _64
-	virtual bool freeAI();            // _68
+	virtual void transit(Piki*, int);       // _4C
+	virtual void stopEffect() { }           // _50
+	virtual void restartEffect() { }        // _54
+	virtual void dump();                    // _58
+	virtual void doDump();                  // _5C
+	virtual bool useLookUpdate();           // _60
+	virtual bool collideAI();               // _64
+	virtual bool freeAI() { return false; } // _68
 
 	// _00     = VTBL
 	// _00-_0C = AState

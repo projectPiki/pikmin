@@ -58,8 +58,6 @@ struct ItemCreature : public AICreature {
 	virtual void stopMotion();             // _150
 	virtual void finalSetup();             // _158 (weak)
 
-	inline SimpleAI* getAI() { return static_cast<SimpleAI*>(mStateMachine); }
-
 	// _00      = VTBL
 	// _00-_304 = AICreature
 	f32 mMotionSpeed;                  // _304
@@ -81,7 +79,7 @@ struct ItemMgr : public PolyObjectMgr {
 	 * @note Size: 0x18.
 	 */
 	struct UseNode : public CoreNode {
-		inline UseNode() { initCore("usageNode"); }
+		UseNode() { initCore("usageNode"); }
 
 		// _00     = VTBL
 		// _00-_14 = CoreNode
@@ -101,19 +99,23 @@ struct ItemMgr : public PolyObjectMgr {
 	GoalItem* getNearestContainer(Vector3f&, f32);
 	UfoItem* getUfo();
 	void addUseList(int);
-	PelletShapeObject* getPelletShapeObject(int, int);
+	ItemShapeObject* getPelletShapeObject(int, int);
 	void initialise();
 	int getContainerExitCount();
 
 	// unused/inlined:
-	void getMgr(int);
-	void getPikiNum();
+	ObjectMgr* getMgr(int);
+	int getPikiNum();
 	bool useObjType(int type);
 	void showInfo();
-	void getUfoShape();
+	Shape* getUfoShape();
 
 	MeltingPotMgr* getMeltingPotMgr() { return mMeltingPotMgr; }
 	PikiHeadMgr* getPikiHeadMgr() { return mPikiHeadMgr; }
+
+	// DLL inlines to make:
+	Shape* getPebbleShape(int);
+	Shape* getGrassShape(int);
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2

@@ -47,7 +47,7 @@ struct AState : public Receiver<T> {
 template <typename T>
 struct StateMachine {
 	inline StateMachine()
-	    : _18(-1)
+	    : mLastStateID(-1)
 	{
 	}
 
@@ -73,7 +73,7 @@ struct StateMachine {
 		AState<T>* state = target->getCurrState();
 		if (state) {
 			state->cleanup(target);
-			_18 = state->getID();
+			mLastStateID = state->getID();
 		}
 
 		if (nextStateIdx >= mStateLimit) {
@@ -121,12 +121,12 @@ struct StateMachine {
 		mStateIndexes = new int[mStateLimit];
 	}
 
+	int getLastStateID() { return mLastStateID; }
+
 	/*
 	    ONLY DLL inlines:
 
 	    int getCurrID(T*);
-
-	    int getLastStateID(); // only for piki
 	    char* getCurrName(T*); // only for piki
 	    void restart(T*); // only for navi and piki
 	    void resume(T*); // only for navi and piki
@@ -138,7 +138,7 @@ struct StateMachine {
 	int mStateLimit;     // _0C
 	int* mStateIDs;      // _10, indexed by state index (load order)
 	int* mStateIndexes;  // _14, indexed by state IDs
-	int _18;             // _18, state ID?
+	int mLastStateID;    // _18
 };
 
 #endif

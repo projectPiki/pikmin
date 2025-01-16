@@ -497,7 +497,7 @@ void AIPerf::collectPikis(Menu& menu)
 void AIPerf::fullfillPiki(Menu& menu)
 {
 	for (int i = 0; i < PikiColorCount; i++) {
-		if (!playerState->hasPiki(i)) {
+		if (!playerState->hasContainer(i)) {
 			continue;
 		}
 

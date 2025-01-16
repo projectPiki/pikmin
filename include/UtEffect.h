@@ -65,8 +65,12 @@ struct BurnEffect : public KEffect {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct FreeLightEffect : public KEffect {
+	FreeLightEffect() { _10 = 0; }
+
 	virtual void emit(EffectParm&); // _2C
 	virtual void kill();            // _30
 	virtual void stop();            // _34
@@ -78,7 +82,9 @@ struct FreeLightEffect : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	// TODO: members
+	u8 _0C[4];   // _0C, unknown
+	u32 _10;     // _10, unknown
+	u8 _14[0x4]; // _14, unknown
 };
 
 /**

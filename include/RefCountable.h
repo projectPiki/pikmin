@@ -18,6 +18,11 @@ struct RefCountable {
 	void addCnt();   // adds one to count
 	void subCnt();   // subtracts one from count (with floor of 0)
 
+	int getCnt() { return mCnt; }
+
+	// DLL inlines to do:
+	bool removable();
+
 	// _00 = VTBL
 	int mCnt; // _04, count
 };

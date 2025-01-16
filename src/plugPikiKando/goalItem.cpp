@@ -871,7 +871,7 @@ void GoalItem::enterGoal(Piki* piki)
 	playEventSound(this, SE_PIKI_GOHOME);
 	pikiInfMgr.incPiki(piki);
 	mHeldPikis[piki->mHappa]++;
-	piki->set584();
+	piki->setEraseKill();
 	piki->kill(false);
 	GameStat::containerPikis.inc(piki->mColor);
 	GameStat::update();
@@ -1253,12 +1253,12 @@ void GoalItem::startAI(int)
 	}
 
 	for (int i = 0; i < 3; i++) {
-		PRINT("****** CONTAINER %d : %d/%d/%d pikis\n", mOnionColour, mHeldPikis[0], mHeldPikis[1], mHeldPikis[2]);
+		PRINT("****** CONTAINER %d : %d/%d/%d pikis\n", mOnionColour, mHeldPikis[Leaf], mHeldPikis[Bud], mHeldPikis[Flower]);
 		mHeldPikis[i] = pikiInfMgr.mPikiCounts[mOnionColour][i];
 	}
 
 	WayPoint* wp = routeMgr->getWayPoint('test', mWaypointIdx);
-	if (!playerState->hasPiki(mOnionColour + 3) || playerState->isTutorial()) {
+	if (!playerState->bootContainer(mOnionColour) || playerState->isTutorial()) {
 		setMotionSpeed(0.0f);
 		((SimpleAI*)mStateMachine)->start(this, 5);
 		startConeShrink();
@@ -1597,7 +1597,7 @@ void GoalItem::startBoot()
 	_3CC = 3;
 	setMotionSpeed(30.0f);
 	((SimpleAI*)mStateMachine)->start(this, 5);
-	playerState->getPiki(mOnionColour);
+	playerState->setBootContainer(mOnionColour);
 }
 
 /*

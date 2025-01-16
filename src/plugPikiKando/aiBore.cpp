@@ -486,7 +486,7 @@ int ActBoreSelect::exec()
 	}
 
 	if (mActor->mNavi->_738 < 1.0f || _1A) {
-		if (mActor->mPikiAnimMgr.mLowerAnimator.mMotionIdx == 3) {
+		if (mActor->mPikiAnimMgr.mUpperAnimator.mMotionIdx == 3) {
 			return ACTOUT_Success;
 		}
 
@@ -1880,8 +1880,8 @@ void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent& event)
 				_24 = 0;
 				_1C = 1;
 				mActor->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
-				mActor->mPikiAnimMgr.mLowerAnimator.mAnimationCounter = 30.0f;
 				mActor->mPikiAnimMgr.mUpperAnimator.mAnimationCounter = 30.0f;
+				mActor->mPikiAnimMgr.mLowerAnimator.mAnimationCounter = 30.0f;
 				break;
 			}
 		}

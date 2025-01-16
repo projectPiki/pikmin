@@ -129,6 +129,19 @@ struct RouteGroup : public EditNode {
  * @brief TODO
  */
 struct WayPoint {
+
+	/**
+	 * @brief TODO
+	 */
+	struct LinkInfo {
+		// COMPLETELY stripped, exposed in the DLL
+
+		int getInfo(int);
+		void setInfo(int, int);
+
+		// TODO: members
+	};
+
 	WayPoint();
 
 	void setFlag(bool);
@@ -137,43 +150,57 @@ struct WayPoint {
 	void initLinkInfos();
 
 	// unused/inlined:
-	void getLinkIndex(int);
+	int getLinkIndex(int);
 
-	Vector3f mPosition; // _00, probably
-	int _0C;            // _0C
-	int mIndex;         // _10
-	                    // TODO: members
+	// DLL inlines:
+	bool inWater();
+
+	Vector3f mPosition;  // _00, probably
+	f32 mRadius;         // _0C
+	int mIndex;          // _10
+	u8 _14[0x38 - 0x14]; // _14, unknown
+	bool mIsOpen;        // _38
+	                     // TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct RouteMgr : public Node {
-	struct Group { };
+
+	/**
+	 * @brief TODO
+	 */
+	struct Group {
+		// DLL inline to do
+		int getNumPoints();
+
+		// TODO: members
+	};
 
 	RouteMgr();
 
 	virtual void update(); // _10
 
 	PathFinder* getPathFinder(u32);
-	void getNumWayPoints(u32);
+	int getNumWayPoints(u32);
 	Vector3f getSafePosition(u32, Vector3f&);
 	void findNearestEdge(WayPoint**, WayPoint**, u32, Vector3f&, bool, bool, bool);
 	void findNearestEdgeAvoidOff(WayPoint**, WayPoint**, u32, Vector3f&, bool, bool, bool);
 	WayPoint* findNearestWayPoint(u32, Vector3f&, bool);
-	void findNearestOffWayPoint(u32, Vector3f&, bool);
+	WayPoint* findNearestOffWayPoint(u32, Vector3f&, bool);
 	void createOffPlane(u32, Plane&, WayPoint*);
-	void findNearestWayPointAll(u32, Vector3f&);
+	WayPoint* findNearestWayPointAll(u32, Vector3f&);
 	WayPoint* getWayPoint(u32, int);
 	void construct(MapMgr*);
 	void initLinks();
-	void id2idx(u32);
-	void getColinIndex(RouteGroup*, RoutePoint*);
+	int id2idx(u32);
+	int getColinIndex(RouteGroup*, RoutePoint*);
 	void refresh(Graphics&);
 
 	// unused/inlined:
 	void dump(u32);
-	void idx2id(int);
+	u32 idx2id(int);
 
 	// _00     = VTBL
 	// _00-_20 = Node
@@ -187,8 +214,13 @@ struct PathFinder {
 	struct Buffer {
 		Buffer();
 
-		u32 _00; // _00
-		u8 _04;  // _04
+		// DLL inlines to make:
+		bool check(int);
+		void resetFlag(int);
+		void setFlag(int);
+
+		int mWayPointIdx; // _00
+		u8 _04;           // _04
 	};
 
 	struct Client {
@@ -197,22 +229,31 @@ struct PathFinder {
 
 	PathFinder(RouteMgr::Group&);
 
-	void findASync(Buffer*, int, int, bool);
-	void checkASync(u32);
+	u32 findASync(Buffer*, int, int, bool);
+	int checkASync(u32);
 	void releaseHandle(u32);
 	void updateClient(Client&, int);
-	void findSync(WayPoint**, int, int, int, bool);
-	void findSync(Buffer*, int, int, bool);
-	void getWayPoint(int);
-	void selectWay(Buffer&, int, Buffer*, int, bool);
-	void findSyncOnyon(Vector3f&, Buffer*, int, int, bool);
-	void selectWayOnyon(int, int, Buffer&, int, Buffer*, int, bool);
-	void selectSecondBestWayOnyon(Vector3f&, int&, int, Buffer&, int, Buffer*, int, bool);
+	int findSync(WayPoint**, int, int, int, bool);
+	int findSync(Buffer*, int, int, bool);
+	WayPoint* getWayPoint(int);
+	int selectWay(Buffer&, int, Buffer*, int, bool);
+	int findSyncOnyon(Vector3f&, Buffer*, int, int, bool);
+	int selectWayOnyon(int, int, Buffer&, int, Buffer*, int, bool);
+	int selectSecondBestWayOnyon(Vector3f&, int&, int, Buffer&, int, Buffer*, int, bool);
 
 	// unused/inlined:
-	void handle2idx(u32);
+	int handle2idx(u32);
 	void updateASync();
-	void findFirstStepOnyon(int, int, Buffer*);
+	int findFirstStepOnyon(int, int, Buffer*);
+
+	// DLL inlines:
+	static bool checkMode(int flag) { return mode & flag; }
+	static void clearMode() { mode = 0; }
+	static void setMode(int flag) { mode |= flag; }
+
+	static f32 limitDistance;
+	static int avoidWayPointIndex;
+	static u16 mode;
 
 	// TODO: members
 };
@@ -221,24 +262,36 @@ struct PathFinder {
  * @brief Mostly stripped struct (and substructs).
  */
 struct RouteTracer {
+	/**
+	 * @brief Mostly stripped struct (and substructs).
+	 */
 	struct Context {
+		/**
+		 * @brief Mostly stripped struct.
+		 */
 		struct PointInfo {
 			PointInfo();
+
+			// TODO: members
 		};
+
+		Context();
 
 		void makeContext(RouteTracer*);
 		void setTarget(RouteTracer*);
-		void recognise(RouteTracer*);
+		int recognise(RouteTracer*);
+
+		// TODO: members
 	};
 
 	RouteTracer();
 
 	// unused/inlined:
 	void render(Graphics&);
-	void noLink();
+	bool noLink();
 	void startConsult(Creature*, PathFinder*, PathFinder::Buffer*, int, Vector3f&);
 	void updateState();
-	void getTarget();
+	Vector3f getTarget();
 
 	// TODO: members
 };
