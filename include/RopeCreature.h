@@ -67,7 +67,9 @@ struct RopeItem : public RopeCreature {
 
 	// _00      = VTBL
 	// _00-_2D0 = RopeCreature
-	u8 _2D0[0x300 - 0x2D0]; // _2D0
+	u8 _2D0[0x2F8 - 0x2D0]; // _2D0
+	int _2F8;               // _2F8
+	Creature* mOwner;       // _2FC
 };
 
 #endif

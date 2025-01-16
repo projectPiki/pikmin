@@ -10,7 +10,10 @@
  * @note Size: 0x3C8.
  */
 struct Suckable : public ItemCreature {
-	inline Suckable(); // TODO: need to make this
+	inline Suckable(u16 id, CreatureProp* prop)
+	    : ItemCreature(id, prop, nullptr)
+	{
+	}
 
 	virtual Vector3f getGoalPos()  = 0; // _15C
 	virtual f32 getGoalPosRadius() = 0; // _160

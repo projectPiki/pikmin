@@ -505,7 +505,7 @@ void AIPerf::fullfillPiki(Menu& menu)
 		if (currentOnion) {
 			for (int i = 0; i < MAX_PIKI_ON_FIELD; i++) {
 				pikiInfMgr.incPiki(currentOnion->mOnionColour, 0);
-				currentOnion->_42C[0]++;
+				currentOnion->mHeldPikis[0]++;
 				GameStat::containerPikis.inc(currentOnion->mOnionColour);
 				GameStat::update();
 			}

@@ -7,7 +7,12 @@
 #include "Piki.h"
 #include "BaseInf.h"
 #include "GameStat.h"
+#include "gameflow.h"
 #include "PlayerState.h"
+#include "Graphics.h"
+#include "PikiMgr.h"
+#include "PikiState.h"
+#include "NaviMgr.h"
 #include "CreatureCollPart.h"
 
 /*
@@ -23,6 +28,8 @@ DEFINE_ERROR()
  * Size:	0000F4
  */
 DEFINE_PRINT("goalItem")
+
+const u32 leg_ids[3] = { 'leg1', 'leg2', 'leg3' };
 
 /*
  * --INFO--
@@ -55,8 +62,10 @@ bool GoalItem::insideSafeArea(Vector3f& pos)
  */
 void GoalItem::playEffect(int id)
 {
-	switch (mItemAnimator.mCurrentAnimID) {
-	default:
+	switch (mItemAnimator.mMotionIdx) {
+	case 9:
+	case 10:
+	case 11:
 		switch (id) {
 		case 0:
 			effectMgr->create(EffectMgr::EFF_Rocket_C, mPosition, nullptr, nullptr);
@@ -82,9 +91,11 @@ void GoalItem::playEffect(int id)
 		}
 		break;
 	case 6:
+	case 7:
+	case 8:
 		switch (id) {
 		case 0:
-			setFlowEffect(false);
+			setFlowEffect(true);
 			break;
 		case 1:
 			startConeShrink();
@@ -93,12 +104,12 @@ void GoalItem::playEffect(int id)
 			effectMgr->create(EffectMgr::EFF_Rocket_Tbc1, mPosition, nullptr, nullptr);
 			break;
 		case 3:
-			setFlightLight(false);
+			setFlightLight(true);
 			break;
 		}
 		break;
-	case 9:
-		if (mCreatureFlags & 0x200) {
+	case 12:
+		if (doAlwaysUpdate()) {
 			Vector3f pos[4];
 			pos[0] = mCollInfo->getSphere('eff1')->mCentre;
 			pos[1] = mCollInfo->getSphere('eff2')->mCentre;
@@ -107,30 +118,51 @@ void GoalItem::playEffect(int id)
 			if (id == 0) {
 				effectMgr->create(EffectMgr::EFF_Onyon_Sparkles, pos[3], nullptr, nullptr);
 			}
-			effectMgr->create(EffectMgr::EFF_Onyon_Puff, pos[rand() % 3], nullptr, nullptr);
+
+			zen::particleGenerator* gen
+			    = effectMgr->create(EffectMgr::EFF_Onyon_Puff, pos[(int)(gsys->getRand(1.0f) * 3 * 0.999999f)], nullptr, nullptr);
+			if (gen) {
+				Vector3f test;
+				gen->setEmitDir(test);
+			}
+
 			playEventSound(this, EffectMgr::EFF_Bridge_FinishStage);
 		}
 		break;
+	case 3:
 	case 4:
+	case 5:
 		switch (id) {
 		case 0:
-			Vector3f pos = mCollInfo->getSphere('piki')->mCentre;
+			CollPart* coll = mCollInfo->getSphere('piki');
+			if (coll) {
+				ERROR("no flow!\n");
+			}
+			Vector3f pos(coll->mCentre);
 			effectMgr->create(EffectMgr::EFF_Kafun_BS, pos, nullptr, nullptr);
 			effectMgr->create(EffectMgr::EFF_Kafun_NG, pos, nullptr, nullptr);
 			break;
 		case 1:
-			Vector3f pos2 = mPosition;
+			Vector3f pos2(mPosition);
 			if (mOnionColour == 0) {
-				effectMgr->create(EffectMgr::EFF_Onyon_Bubbles, pos, nullptr, nullptr);
-				effectMgr->create(EffectMgr::EFF_Onyon_Ripples2, pos, nullptr, nullptr);
-				effectMgr->create(EffectMgr::EFF_Onyon_Ripples1, pos, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Onyon_Bubbles, pos2, nullptr, nullptr);
+				zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Onyon_Ripples2, pos2, nullptr, nullptr);
+				if (efx) {
+					Vector3f nrm(0.0f, 1.0f, 0.0f);
+					efx->setOrientedNormalVector(nrm);
+				}
+				efx = effectMgr->create(EffectMgr::EFF_Onyon_Ripples1, pos2, nullptr, nullptr);
+				if (efx) {
+					Vector3f nrm(0.0f, 1.0f, 0.0f);
+					efx->setOrientedNormalVector(nrm);
+				}
 			} else {
-				effectMgr->create(EffectMgr::EFF_Onyon_Suck2, pos, nullptr, nullptr);
-				effectMgr->create(EffectMgr::EFF_Rocket_Bm1o, pos, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Onyon_Suck2, pos2, nullptr, nullptr);
+				effectMgr->create(EffectMgr::EFF_Rocket_Bm1o, pos2, nullptr, nullptr);
 			}
 			break;
 		case 2:
-			routeMgr->getWayPoint('test', _42A)->setFlag(true);
+			routeMgr->getWayPoint('test', mWaypointIdx)->setFlag(true);
 			if (mOnionColour == 0) {
 				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
 			} else {
@@ -703,67 +735,18 @@ void GoalItem::setFlowEffect(bool set)
 	if (set) {
 		if (!mSuckEfx) {
 			CollPart* part = mCollInfo->getSphere('piki');
-			mSuckEfx       = effectMgr->create(EffectMgr::EFF_Rocket_FlowLight, part->mCentre, nullptr, nullptr);
+			if (!part) {
+				ERROR("no flow part!\n");
+			}
+			mSuckEfx = effectMgr->create(EffectMgr::EFF_Rocket_FlowLight, part->mCentre, nullptr, nullptr);
 			if (mSuckEfx) {
-				mSuckEfx->mEmitPosPtr = &part->mCentre;
+				mSuckEfx->setEmitPosPtr(&part->mCentre);
 			}
 		}
 	} else if (mSuckEfx) {
-		effectMgr->mPtclMgr.killGenerator(mSuckEfx, false);
+		effectMgr->kill(mSuckEfx, false);
 		mSuckEfx = nullptr;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,24,31
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  stb       r4, 0x3E4(r3)
-	  beq-      .loc_0x78
-	  lwz       r0, 0x3E8(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x9C
-	  lis       r4, 0x7069
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r4, 0x6B69
-	  bl        -0x617E0
-	  mr        r31, r3
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x4
-	  li        r4, 0x128
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB1C2C
-	  stw       r3, 0x3E8(r30)
-	  lwz       r3, 0x3E8(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x9C
-	  addi      r0, r31, 0x4
-	  stw       r0, 0x18(r3)
-	  b         .loc_0x9C
-
-	.loc_0x78:
-	  lwz       r4, 0x3E8(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x9C
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0xB6680
-	  li        r0, 0
-	  stw       r0, 0x3E8(r30)
-
-	.loc_0x9C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -773,151 +756,43 @@ void GoalItem::setFlowEffect(bool set)
  */
 void GoalItem::setSpotActive(bool set)
 {
-	_3D9 = set;
+	mSpotEffectActive = set;
 
-	if (_3D9) {
+	if (mSpotEffectActive) {
 		EffectMgr::effTypeTable efxIDs[3]
 		    = { EffectMgr::EFF_Onyon_BeaconRingBlue, EffectMgr::EFF_Onyon_BeaconRingRed, EffectMgr::EFF_Onyon_BeaconRingYellow };
 
 		if (!mSpotEfx) {
 			mSpotEfx = effectMgr->create(efxIDs[mOnionColour], mPosition, nullptr, nullptr);
 			if (mSpotEfx) {
-				mSpotEfx->mEmitPosPtr = &mPosition;
+				mSpotEfx->setEmitPosPtr(&mPosition);
 			}
 			SeSystem::playSysSe(SYSSE_CONTAINER_OK);
 		}
 	} else {
 		if (mSpotEfx) {
 			SeSystem::stopSysSe(SYSSE_CONTAINER_OK);
-			effectMgr->mPtclMgr.killGenerator(mSpotEfx, false);
+			effectMgr->kill(mSpotEfx, false);
 			mSpotEfx = nullptr;
 		}
 	}
 
-	if (_3D9) {
+	if (mSpotEffectActive) {
 		EffectMgr::effTypeTable efxIDs[3]
 		    = { EffectMgr::EFF_Onyon_HaloRingBlue, EffectMgr::EFF_Onyon_HaloRingRed, EffectMgr::EFF_Onyon_HaloRingYellow };
 
 		if (!mHaloEfx) {
 			mHaloEfx = effectMgr->create(efxIDs[mOnionColour], mPosition, nullptr, nullptr);
 			if (mHaloEfx) {
-				mHaloEfx->mEmitPosPtr = &mPosition;
+				mHaloEfx->setEmitPosPtr(&mPosition);
 			}
 		}
 	} else {
 		if (mHaloEfx) {
-			effectMgr->mPtclMgr.killGenerator(mHaloEfx, false);
+			effectMgr->kill(mHaloEfx, false);
 			mHaloEfx = nullptr;
 		}
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  stb       r4, 0x3D9(r3)
-	  lbz       r0, 0x3D9(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x98
-	  lis       r3, 0x8022
-	  addi      r4, r3, 0x264C
-	  lwz       r3, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r3, 0x24(r1)
-	  stw       r0, 0x28(r1)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x2C(r1)
-	  lwz       r0, 0x3DC(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xC8
-	  lhz       r0, 0x428(r31)
-	  addi      r4, r1, 0x24
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x94
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r4, r4, r0
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB1B60
-	  stw       r3, 0x3DC(r31)
-	  lwz       r3, 0x3DC(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x8C
-	  addi      r0, r31, 0x94
-	  stw       r0, 0x18(r3)
-
-	.loc_0x8C:
-	  li        r3, 0x120
-	  bl        -0x45C84
-	  b         .loc_0xC8
-
-	.loc_0x98:
-	  lwz       r0, 0x3DC(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC8
-	  li        r3, 0x120
-	  bl        -0x45C68
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  lwz       r4, 0x3DC(r31)
-	  addi      r3, r3, 0x14
-	  bl        0xB65A0
-	  li        r0, 0
-	  stw       r0, 0x3DC(r31)
-
-	.loc_0xC8:
-	  lbz       r0, 0x3D9(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x140
-	  lis       r3, 0x8022
-	  addi      r4, r3, 0x2658
-	  lwz       r3, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r3, 0x18(r1)
-	  stw       r0, 0x1C(r1)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x20(r1)
-	  lwz       r0, 0x3E0(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x164
-	  lhz       r0, 0x428(r31)
-	  addi      r4, r1, 0x18
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x94
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r4, r4, r0
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB1AB0
-	  stw       r3, 0x3E0(r31)
-	  lwz       r3, 0x3E0(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x164
-	  addi      r0, r31, 0x94
-	  stw       r0, 0x18(r3)
-	  b         .loc_0x164
-
-	.loc_0x140:
-	  lwz       r4, 0x3E0(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x164
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0xB6504
-	  li        r0, 0
-	  stw       r0, 0x3E0(r31)
-
-	.loc_0x164:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -941,6 +816,7 @@ bool GoalItem::invoke(zen::particleGenerator* efx, zen::particleMdl* mdl)
 void GoalItem::setFlightLight(bool a1)
 {
 	_3EC = a1;
+	FORCE_DONT_INLINE;
 }
 
 /*
@@ -964,7 +840,7 @@ void GoalItem::suckMe(Pellet* item)
 {
 	PelletConfig* config = item->mConfig;
 	int pikiNum;
-	if (mOnionColour == config->mPelletColor()) {
+	if (mOnionColour == config->mPelletType()) {
 		pikiNum = config->mMatchingOnyonSeeds();
 	} else {
 		pikiNum = config->mNonMatchingOnyonSeeds();
@@ -972,88 +848,16 @@ void GoalItem::suckMe(Pellet* item)
 
 	if (pikiNum < 0) {
 		_2D4 += 2;
-		Msg msg(10);
+		MsgUser msg(0);
 		mStateMachine->procMsg(this, &msg);
 		playEventSound(this, SE_CONTAINER_HANABI);
 		playEventSound(this, SE_CONTAINER_PELLETIN2);
 	} else {
 		_2D0 += pikiNum;
-		Msg msg(10);
+		MsgUser msg(0);
 		mStateMachine->procMsg(this, &msg);
 		playEventSound(this, SE_CONTAINER_PELLETIN2);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x55C(r4)
-	  lhz       r3, 0x428(r3)
-	  lwz       r0, 0x5C(r4)
-	  cmpw      r3, r0
-	  bne-      .loc_0x30
-	  lwz       r5, 0xDC(r4)
-	  b         .loc_0x34
-
-	.loc_0x30:
-	  lwz       r5, 0xEC(r4)
-
-	.loc_0x34:
-	  cmpwi     r5, 0
-	  bge-      .loc_0x98
-	  lwz       r4, 0x2D4(r31)
-	  li        r3, 0xA
-	  li        r0, 0
-	  addi      r4, r4, 0x2
-	  stw       r4, 0x2D4(r31)
-	  addi      r4, r31, 0
-	  addi      r5, r1, 0x24
-	  stw       r3, 0x24(r1)
-	  stw       r0, 0x28(r1)
-	  lwz       r3, 0x2E8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xD8
-	  bl        -0x60C30
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xD6
-	  bl        -0x60C40
-	  b         .loc_0xE0
-
-	.loc_0x98:
-	  lwz       r4, 0x2D0(r31)
-	  li        r3, 0xA
-	  li        r0, 0
-	  add       r4, r4, r5
-	  stw       r4, 0x2D0(r31)
-	  addi      r4, r31, 0
-	  addi      r5, r1, 0x1C
-	  stw       r3, 0x1C(r1)
-	  stw       r0, 0x20(r1)
-	  lwz       r3, 0x2E8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xD6
-	  bl        -0x60C8C
-
-	.loc_0xE0:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1063,71 +867,17 @@ void GoalItem::suckMe(Pellet* item)
  */
 void GoalItem::enterGoal(Piki* piki)
 {
-	int old = mItemAnimator.mCurrentAnimID;
+	int old = mItemAnimator.mMotionIdx;
 	playEventSound(this, SE_PIKI_GOHOME);
 	pikiInfMgr.incPiki(piki);
-	_42C[piki->mHappa]++;
-	piki->_584 = 1;
+	mHeldPikis[piki->mHappa]++;
+	piki->set584();
 	piki->kill(false);
-	GameStat::containerPikis.mCounts[piki->mColor]++;
+	GameStat::containerPikis.inc(piki->mColor);
 	GameStat::update();
 	if (old == 1) {
 		((SimpleAI*)mStateMachine)->start(this, 0);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0xD2
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  mr        r29, r3
-	  addi      r4, r29, 0
-	  lwz       r31, 0x3B0(r3)
-	  bl        -0x60CD0
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x1DF0
-	  addi      r4, r30, 0
-	  bl        -0x25AB0
-	  lwz       r4, 0x520(r30)
-	  li        r0, 0x1
-	  addi      r3, r30, 0
-	  rlwinm    r4,r4,2,0,29
-	  add       r6, r29, r4
-	  lwz       r5, 0x42C(r6)
-	  li        r4, 0
-	  addi      r5, r5, 0x1
-	  stw       r5, 0x42C(r6)
-	  stb       r0, 0x584(r30)
-	  bl        -0x605E0
-	  lhz       r4, 0x510(r30)
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x1EA0
-	  rlwinm    r3,r4,2,0,29
-	  add       r4, r0, r3
-	  lwz       r3, 0x0(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r4)
-	  bl        0x2727C
-	  cmpwi     r31, 0x1
-	  bne-      .loc_0xA8
-	  lwz       r3, 0x2E8(r29)
-	  addi      r4, r29, 0
-	  li        r5, 0
-	  bl        -0x6DBA4
-
-	.loc_0xA8:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1137,8 +887,8 @@ void GoalItem::enterGoal(Piki* piki)
  */
 void GoalItem::exitPikis(int pikis)
 {
-	_410 = 1;
-	_414 += pikis;
+	mIsConeEmit = true;
+	mPikisToExit += pikis;
 	_418 = 0.0f;
 }
 
@@ -1147,184 +897,51 @@ void GoalItem::exitPikis(int pikis)
  * Address:	800EB33C
  * Size:	00027C
  */
-void GoalItem::exitPiki()
+Piki* GoalItem::exitPiki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  mr        r29, r3
-	  stw       r28, 0x30(r1)
-	  bl        0x12CD14
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x65A8(r2)
-	  stw       r0, 0x2C(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x65BC(r2)
-	  stw       r0, 0x28(r1)
-	  lfs       f1, -0x65C0(r2)
-	  lfd       f3, 0x28(r1)
-	  lfs       f0, -0x65B4(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stfd      f0, 0x20(r1)
-	  cmpwi     r0, 0x3
-	  lwz       r31, 0x24(r1)
-	  blt-      .loc_0x78
-	  li        r31, 0x2
+	int leg = gsys->getRand(1.0f) * 3.0f;
+	if (leg >= 3) {
+		leg = 2;
+	}
+	CollPart* legColl          = mCollInfo->getSphere(leg_ids[leg]);
+	pikiMgr->containerExitMode = 1;
+	Piki* piki                 = (Piki*)pikiMgr->birth();
+	pikiMgr->containerExitMode = 0;
+	if (!piki) {
+		ERROR("*** PIKI BIRTH FAILED !!!\n");
+		return nullptr;
+	}
 
-	.loc_0x78:
-	  lis       r4, 0x802C
-	  lwz       r3, 0x220(r29)
-	  rlwinm    r5,r31,2,0,29
-	  subi      r0, r4, 0x378C
-	  add       r4, r0, r5
-	  lwz       r4, 0x0(r4)
-	  bl        -0x61CBC
-	  li        r0, 0x1
-	  addi      r28, r3, 0
-	  stb       r0, 0x306F(r13)
-	  lwz       r3, 0x3068(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x78(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0
-	  mr.       r30, r3
-	  stb       r0, 0x306F(r13)
-	  bne-      .loc_0xCC
-	  li        r3, 0
-	  b         .loc_0x25C
+	Navi* navi = naviMgr->getNavi();
+	piki->init(navi);
+	piki->resetPosition(legColl->mCentre);
 
-	.loc_0xCC:
-	  lwz       r3, 0x3120(r13)
-	  bl        0x2BFB8
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  bl        -0x1F3D4
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r28, 0x4
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  lhz       r0, 0x428(r29)
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x1DF0
-	  mulli     r0, r0, 0xC
-	  add       r3, r3, r0
-	  lwz       r0, 0x8(r3)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x120
-	  li        r28, 0x2
-	  b         .loc_0x138
+	// always pull the highest stage pikmin out first
+	int happa;
+	if (pikiInfMgr.mPikiCounts[mOnionColour][2] > 0) {
+		happa = 2;
+	} else if (pikiInfMgr.mPikiCounts[mOnionColour][1] > 0) {
+		happa = 1;
+	} else {
+		happa = 0;
+	}
+	piki->setFlower(happa);
+	piki->initColor(mOnionColour);
+	pikiInfMgr.decPiki(piki);
+	piki->mScale.set(1.0f, 1.0f, 1.0f);
+	piki->mFSM->transit(piki, PIKISTATE_Normal);
+	piki->startRope(mRope[leg * 2], 1.0f);
+	piki->changeMode(12, nullptr);
+	mHeldPikis[happa]--;
+	GameStat::containerPikis.dec(piki->mColor);
+	GameStat::workPikis.inc(piki->mColor);
+	GameStat::update();
+	playEventSound(this, SE_PIKI_OUTHOME);
 
-	.loc_0x120:
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x134
-	  li        r28, 0x1
-	  b         .loc_0x138
-
-	.loc_0x134:
-	  li        r28, 0
-
-	.loc_0x138:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r28
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lhz       r4, 0x428(r29)
-	  bl        -0x21C1C
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x1DF0
-	  addi      r4, r30, 0
-	  bl        -0x25C70
-	  lfs       f0, -0x347C(r13)
-	  addi      r4, r30, 0
-	  li        r5, 0
-	  stfs      f0, 0x7C(r30)
-	  lfs       f0, -0x3478(r13)
-	  stfs      f0, 0x80(r30)
-	  lfs       f0, -0x3474(r13)
-	  stfs      f0, 0x84(r30)
-	  lwz       r3, 0x490(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r31,3,0,28
-	  lfs       f1, -0x65C0(r2)
-	  add       r3, r29, r0
-	  lwz       r4, 0x448(r3)
-	  mr        r3, r30
-	  bl        -0x5AA28
-	  addi      r3, r30, 0
-	  li        r4, 0xC
-	  li        r5, 0
-	  bl        -0x1E334
-	  rlwinm    r0,r28,2,0,29
-	  add       r6, r29, r0
-	  lwz       r5, 0x42C(r6)
-	  lis       r4, 0x803D
-	  lis       r3, 0x803D
-	  subi      r0, r5, 0x1
-	  stw       r0, 0x42C(r6)
-	  addi      r4, r4, 0x1EA0
-	  addi      r0, r3, 0x1E88
-	  lhz       r3, 0x510(r30)
-	  rlwinm    r3,r3,2,0,29
-	  add       r4, r4, r3
-	  lwz       r3, 0x0(r4)
-	  subi      r3, r3, 0x1
-	  stw       r3, 0x0(r4)
-	  lhz       r3, 0x510(r30)
-	  rlwinm    r3,r3,2,0,29
-	  add       r4, r0, r3
-	  lwz       r3, 0x0(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r4)
-	  bl        0x27008
-	  addi      r3, r29, 0
-	  addi      r4, r29, 0
-	  li        r5, 0xD3
-	  bl        -0x60FB4
-	  lwz       r4, 0x434(r29)
-	  lwz       r0, 0x430(r29)
-	  lwz       r3, 0x42C(r29)
-	  add       r0, r0, r4
-	  add.      r0, r3, r0
-	  bne-      .loc_0x258
-	  lwz       r3, 0x2E8(r29)
-	  addi      r4, r29, 0
-	  li        r5, 0
-	  bl        -0x6DE38
-
-	.loc_0x258:
-	  mr        r3, r30
-
-	.loc_0x25C:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  lwz       r28, 0x30(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	if (mHeldPikis[0] + mHeldPikis[1] + mHeldPikis[2] == 0) {
+		((SimpleAI*)mStateMachine)->start(this, 0);
+	}
+	return piki;
 }
 
 /*
@@ -1343,6 +960,7 @@ bool GoalItem::needShadow()
  * Size:	000110
  */
 GoalItem::GoalItem(CreatureProp* prop, ItemShapeObject* shape1, ItemShapeObject* shape2, ItemShapeObject* shape3, SimpleAI* ai)
+    : Suckable(16, prop)
 {
 	mOnionColour     = 0;
 	mItemShapeObject = nullptr;
@@ -1355,79 +973,6 @@ GoalItem::GoalItem(CreatureProp* prop, ItemShapeObject* shape1, ItemShapeObject*
 	mHaloEfx         = nullptr;
 	mSpotEfx         = nullptr;
 	mSuckEfx         = nullptr;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r27, 0x24(r1)
-	  addi      r27, r5, 0
-	  addi      r28, r6, 0
-	  addi      r5, r4, 0
-	  addi      r31, r3, 0
-	  addi      r29, r7, 0
-	  addi      r30, r8, 0
-	  li        r4, 0x10
-	  li        r6, 0
-	  bl        0xA2BC
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x3E80
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x114
-	  lis       r3, 0x802B
-	  stw       r0, 0x2B8(r31)
-	  addi      r0, r3, 0x5F4
-	  lis       r3, 0x802C
-	  stw       r0, 0x3C8(r31)
-	  subi      r3, r3, 0x3474
-	  addi      r4, r3, 0x114
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x174
-	  addi      r3, r31, 0x45C
-	  stw       r4, 0x2B8(r31)
-	  stw       r0, 0x3C8(r31)
-	  lfs       f0, -0x65C4(r2)
-	  stfs      f0, 0x404(r31)
-	  stfs      f0, 0x400(r31)
-	  stfs      f0, 0x3FC(r31)
-	  stfs      f0, 0x424(r31)
-	  stfs      f0, 0x420(r31)
-	  stfs      f0, 0x41C(r31)
-	  bl        -0x479F4
-	  li        r0, 0
-	  stw       r0, 0x484(r31)
-	  li        r3, 0x14
-	  stw       r0, 0x488(r31)
-	  stw       r0, 0x48C(r31)
-	  stw       r0, 0x490(r31)
-	  sth       r0, 0x428(r31)
-	  stw       r0, 0x3C0(r31)
-	  stw       r27, 0x438(r31)
-	  stw       r28, 0x43C(r31)
-	  stw       r29, 0x440(r31)
-	  lwz       r0, 0x438(r31)
-	  stw       r0, 0x3C0(r31)
-	  stw       r30, 0x2E8(r31)
-	  bl        -0xA4688
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xE4
-	  li        r4, 0xF
-	  bl        -0x62A70
-
-	.loc_0xE4:
-	  stw       r30, 0x220(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stw       r0, 0x3E0(r31)
-	  stw       r0, 0x3DC(r31)
-	  stw       r0, 0x3E8(r31)
-	  lwz       r0, 0x3C(r1)
-	  lmw       r27, 0x24(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1452,27 +997,7 @@ void GoalItem::setColorType(int type)
 {
 	mOnionColour     = type;
 	mItemShapeObject = _438[type];
-	// mItemShapeObject->makeInstance();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r4,2,0,29
-	  stwu      r1, -0x8(r1)
-	  sth       r4, 0x428(r3)
-	  add       r4, r3, r0
-	  lwz       r0, 0x438(r4)
-	  addi      r4, r3, 0x484
-	  stw       r0, 0x3C0(r3)
-	  lwz       r3, 0x3C0(r3)
-	  lwz       r3, 0x0(r3)
-	  bl        -0xBBDF0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mItemShapeObject->mShape->makeInstance(mDynMaterial, 0);
 }
 
 /*
@@ -1484,45 +1009,12 @@ void GoalItem::startTakeoff()
 {
 	setMotionSpeed(30.0f);
 	startMotion(mOnionColour + 6);
-	mCreatureFlags |= 0x800;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r12, 0x0(r31)
-	  lfs       f1, -0x659C(r2)
-	  lwz       r12, 0x14C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lhz       r4, 0x428(r31)
-	  lwz       r12, 0x0(r31)
-	  addi      r4, r4, 0x6
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x8
-	  subfic    r0, r3, 0xA
-	  cmpwi     r3, 0xA
-	  mtctr     r0
-	  bge-      .loc_0x5C
-
-	.loc_0x58:
-	  bdnz-     .loc_0x58
-
-	.loc_0x5C:
-	  lwz       r0, 0xC8(r31)
-	  ori       r0, r0, 0x800
-	  stw       r0, 0xC8(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	int i = 0;
+	while (i < 10) {
+		PRINT("** GOAL TAKEOFF !\n");
+		i++;
+	}
+	setCreatureFlag(0x800);
 }
 
 /*
@@ -1532,10 +1024,13 @@ void GoalItem::startTakeoff()
  */
 void GoalItem::startLand()
 {
+	_3CC = 0;
 	startMotion(mOnionColour + 9);
 	setMotionSpeed(30.0f);
+	_3FC = mSpotModelEff->mEmitPos;
 	setFlowEffect(true);
 	setFlightLight(true);
+	mSpotModelEff->mEmitPos.set(0.0f, 0.0f, 0.0f);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1615,9 +1110,9 @@ void GoalItem::startLand()
  */
 void GoalItem::startConeShrink()
 {
-	_3F6 = true;
-	_3F8 = 0.8f;
-	_3FC;
+	_3F6           = true;
+	mConeSizeTimer = 0.8f;
+	_3FC           = mSpotModelEff->mEmitPos;
 	/*
 	.loc_0x0:
 	  li        r0, 0x1
@@ -1642,6 +1137,24 @@ void GoalItem::startConeShrink()
  */
 void GoalItem::updateConeShrink()
 {
+	if (!_3F6) {
+		return;
+	}
+
+	f32 test     = mConeSizeTimer / 0.8f;
+	Vector3f pos = _3FC;
+	pos.x *= test;
+	pos.z *= test;
+
+	zen::particleMdl* mdl = (zen::particleMdl*)mSpotModelEff;
+	mdl->_0C              = pos;
+
+	mConeSizeTimer -= gsys->getFrameTime();
+
+	if (mConeSizeTimer <= 0.0f) {
+		mSpotModelEff->mEmitPos.set(0.0f, 0.0f, 0.0f);
+		_3F6 = false;
+	}
 	// UNUSED FUNCTION
 }
 
@@ -1652,8 +1165,8 @@ void GoalItem::updateConeShrink()
  */
 void GoalItem::startConeEmit()
 {
-	_408 = true;
-	_3F8 = 0.0f;
+	mIsConeEmit    = true;
+	mConeSizeTimer = 0.0f;
 }
 
 /*
@@ -1663,6 +1176,30 @@ void GoalItem::startConeEmit()
  */
 void GoalItem::updateConeEmit()
 {
+	if (!mIsConeEmit) {
+		return;
+	}
+
+	f32 test     = mConeSizeTimer / 0.8f;
+	Vector3f pos = _3FC;
+	pos.x *= test;
+	pos.z *= test;
+
+	zen::particleMdl* mdl = (zen::particleMdl*)mSpotModelEff;
+	mdl->_0C.x            = pos.x;
+	mdl->_0C.y            = pos.y;
+	mdl->_0C.z            = pos.z;
+
+	mConeSizeTimer += gsys->getFrameTime();
+
+	if (mConeSizeTimer <= 0.0f) {
+		// this is causing inline problems
+		// mdl->_0C.x = _3FC.x;
+		// mdl->_0C.y = _3FC.y;
+		// mdl->_0C.z = _3FC.z;
+		mIsConeEmit = false;
+		((SimpleAI*)mStateMachine)->start(this, 0);
+	}
 	// UNUSED FUNCTION
 }
 
@@ -1673,6 +1210,73 @@ void GoalItem::updateConeEmit()
  */
 void GoalItem::startAI(int)
 {
+	_3F4     = 1;
+	mSpotEfx = nullptr;
+	mHaloEfx = nullptr;
+	setSpotActive(false);
+	setFlowEffect(false);
+	_3F5        = 0;
+	_3F6        = 0;
+	mIsConeEmit = false;
+	mSeContext  = &_45C;
+	mSeContext->setContext(this, 3);
+	mHeldPikis[2] = nullptr;
+	mHeldPikis[1] = nullptr;
+	mHeldPikis[0] = nullptr;
+	mCollInfo->initInfo(mItemShapeObject->mShape, nullptr, nullptr);
+	mWaypointIdx = routeMgr->findNearestWayPoint('test', mPosition, false)->mIndex;
+
+	Vector3f a(0.0f, 0.0f, 0.0f);
+	Vector3f b(1.0f, 1.0f, 1.0f);
+	mSpotModelEff = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mPosition, a, b);
+	mScale.set(1.0f, 1.0f, 1.0f);
+	_2D0 = 0;
+	_2D4 = 0;
+
+	for (int i = 0; i < 3; i++) {
+		RopeItem* rope  = mRope[i];
+		CollPart* coll  = mCollInfo->getSphere(leg_ids[i]);
+		CollPart* child = coll->getChild();
+		Vector3f diff   = coll->mCentre - child->mCentre;
+		f32 len         = diff.length();
+
+		Creature* obj = itemMgr->birth(OBJTYPE_Fulcrum);
+		obj->init(coll->mCentre);
+		obj->startAI(0);
+
+		rope = (RopeItem*)itemMgr->birth(OBJTYPE_Rope);
+		rope->init(coll->mCentre);
+		rope->setRope(obj);
+		rope->_2C0   = len;
+		rope->mOwner = this;
+		rope->startAI(0);
+	}
+
+	for (int i = 0; i < 3; i++) {
+		PRINT("****** CONTAINER %d : %d/%d/%d pikis\n", mOnionColour, mHeldPikis[0], mHeldPikis[1], mHeldPikis[2]);
+		mHeldPikis[i] = pikiInfMgr.mPikiCounts[mOnionColour][i];
+	}
+
+	WayPoint* wp = routeMgr->getWayPoint('test', mWaypointIdx);
+	if (!playerState->hasPiki(mOnionColour + 3) || playerState->isTutorial()) {
+		setMotionSpeed(0.0f);
+		((SimpleAI*)mStateMachine)->start(this, 5);
+		startConeShrink();
+		set3D4(0.0f);
+		_3D0 = 0.0f;
+		wp->setFlag(false);
+	} else {
+		setMotionSpeed(30.0f);
+		mItemAnimator.startMotion(PaniMotionInfo(1));
+		((SimpleAI*)mStateMachine)->start(this, 0);
+		set3D4(1.0f);
+		wp->setFlag(true);
+	}
+	_41C               = mPosition;
+	_41C.y             = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	mIsDispensingPikis = false;
+	mPikisToExit       = 0;
+	_418               = 0.0f;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1993,40 +1597,7 @@ void GoalItem::startBoot()
 	_3CC = 3;
 	setMotionSpeed(30.0f);
 	((SimpleAI*)mStateMachine)->start(this, 5);
-	playerState->_184 |= 1 << mOnionColour + 3;
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x3
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  stb       r0, 0x3CC(r3)
-	  lwz       r12, 0x0(r31)
-	  lfs       f1, -0x659C(r2)
-	  lwz       r12, 0x14C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E8(r31)
-	  addi      r4, r31, 0
-	  li        r5, 0x5
-	  bl        -0x6E66C
-	  lwz       r6, 0x2F6C(r13)
-	  li        r4, 0x1
-	  lhz       r3, 0x428(r31)
-	  lbz       r5, 0x184(r6)
-	  addi      r0, r3, 0x3
-	  slw       r0, r4, r0
-	  or        r0, r5, r0
-	  stb       r0, 0x184(r6)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	playerState->getPiki(mOnionColour);
 }
 
 /*
@@ -2069,14 +1640,35 @@ void GoalItem::update()
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 	ItemCreature::update();
 	if (_3D8) {
-		_3D4 += (_3D0 * mMotionSpeed * gsys->mDeltaTime) / 30.0f;
+		_3D4 += (_3D0 * mMotionSpeed * gsys->getFrameTime()) / 30.0f;
 		if (_3D4 > 1.0f) {
-			_3D4 = 1.0f;
-			_3D8 = 0;
+			set3D4(1.0f);
 		}
 	}
 
-	if (_3F6 && _3F6) { }
+	if (_3F6) {
+		updateConeShrink();
+	}
+
+	if (mIsConeEmit) {
+		updateConeEmit();
+	}
+
+	mPosition = _41C;
+
+	if (mIsDispensingPikis) {
+		if (_418 <= 0.0f) {
+			exitPiki();
+			mPikisToExit--;
+			if (mPikisToExit < 1) {
+				mIsDispensingPikis = false;
+			}
+			_418 = gsys->getRand(1.0f) * 0.1f + 0.2f;
+			_418 *= 0.2f;
+		} else {
+			_418 -= gsys->getFrameTime();
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2280,8 +1872,61 @@ void GoalItem::update()
  * Address:	800EC10C
  * Size:	000378
  */
-void GoalItem::refresh(Graphics&)
+void GoalItem::refresh(Graphics& gfx)
 {
+	if (!gameflow.mGamePrefs._22 || demoHideFlag & 1 << mOnionColour) {
+		return;
+	}
+
+	mScale.set(1.0f, 1.0f, 1.0f);
+	Matrix4f mtx1;
+	Vector3f pos = mPosition;
+	mTransformMatrix.makeSRT(mScale, mRotation, pos);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx1);
+	if (!gfx.mCamera->isPointVisible(mPosition, 200.0f)) {
+		enableAICulling();
+		if (!gameflow.mGamePrefs._22) {
+			mSpotModelEff->_38.mOrigin = 0;
+		}
+	} else {
+		disableAICulling();
+		mSpotModelEff->_38.mOrigin = 0;
+	}
+
+	gfx.setLighting(true, nullptr);
+	gfx.useMatrix(Matrix4f::ident, 0);
+	mItemAnimator.finishLoop();
+
+	f32 rate;
+	if (_3D8) {
+		rate = int(mOnionColour * 2 + 1) - _3D4;
+	} else {
+		rate = int(mOnionColour << 1);
+	}
+	mDynMaterial.animate(&rate);
+	mItemShapeObject->mShape->updateAnim(gfx, mtx1, nullptr);
+	if (doAlwaysUpdate()) {
+		mItemShapeObject->mShape->drawshape(gfx, *gfx.mCamera, &mDynMaterial);
+	}
+	mCollInfo->updateInfo(gfx, false);
+
+	for (int i = 0; i < 3; i++) {
+		RopeItem* rope = mRope[i];
+		if (pikiMgr->containerDebug) {
+			PRINT("leg %d : (%.1f %.1f %.1f) \n", i);
+		}
+		CollPart* coll  = mCollInfo->getSphere(leg_ids[i]);
+		CollPart* child = coll->getChild();
+		rope->mPosition = coll->mCentre;
+		rope->mPosition = child->mCentre;
+
+		Vector3f diff = coll->mCentre - child->mCentre;
+		rope->_2C0    = diff.length();
+		if (pikiMgr->containerDebug) {
+			PRINT("==> (%.1f %.1f %.1f) : motion %d\n");
+			printMatrix("invCam", gfx.mCamera->mInverseLookAtMtx);
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2554,7 +2199,7 @@ f32 GoalItem::getGoalPosRadius()
  */
 s16 GoalItem::getRouteIndex()
 {
-	return _42A;
+	return mWaypointIdx;
 }
 
 /*

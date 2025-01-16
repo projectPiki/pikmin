@@ -483,6 +483,8 @@ struct EffectMgr : public CoreNode {
 		mPtclMgr.killGenerator(cb1, cb2, p3);
 	}
 
+	inline void kill(zen::particleGenerator* gen, bool p3) { mPtclMgr.killGenerator(gen, p3); }
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	zen::particleManager mPtclMgr; // _14

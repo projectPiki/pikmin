@@ -140,6 +140,8 @@ struct WayPoint {
 	void getLinkIndex(int);
 
 	Vector3f mPosition; // _00, probably
+	int _0C;            // _0C
+	int mIndex;         // _10
 	                    // TODO: members
 };
 

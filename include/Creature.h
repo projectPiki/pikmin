@@ -245,6 +245,7 @@ struct Creature : public RefCountable, public EventTalker {
 	CollPart* getStickPart() { return mStickPart; }
 	Creature* getStickObject() { return mStickTarget; }
 	bool isStickTo() { return mStickTarget != nullptr; }
+	bool doAlwaysUpdate() { return !isCreatureFlag(CF_IsAICullingActive); }
 
 	// AKA: is this a gate?
 	bool isSluice()

@@ -1938,7 +1938,8 @@ bool UfoItem::needShadow()
  * Address:	800E8704
  * Size:	0001F4
  */
-UfoItem::UfoItem(CreatureProp*, UfoShapeObject*)
+UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject*)
+    : Suckable(30, prop)
 {
 	/*
 	.loc_0x0:
