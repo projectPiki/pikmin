@@ -43,12 +43,12 @@ struct BitFlags {
  * @brief TODO
  */
 struct LoopChecker {
-	LoopChecker(char*, f32);
+	LoopChecker(char* loopName, f32 timeLimit);
 
 	void update();
 
-	f32 _00;   // _00
-	char* _04; // _04
+	f32 mLoopTimer;  // _00, counts down. at 0, throws an error
+	char* mLoopName; // _04
 };
 
 // utility functions

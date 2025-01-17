@@ -22,10 +22,10 @@ struct PikiProp : public CreatureProp {
 	 */
 	struct Parms : public Parameters {
 		Parms()
-		    : _5C(this, 84.0f, 0.0f, 500.0f, "p00", nullptr)
-		    , _6C(this, 162.5f, 0.0f, 500.0f, "p01", nullptr)
-		    , _7C(this, 220.0f, 0.0f, 500.0f, "p54", nullptr)
-		    , _8C(this, 160.0f, 0.0f, 500.0f, "p65", nullptr)
+		    : mMinMoveSpeed(this, 84.0f, 0.0f, 500.0f, "p00", nullptr)
+		    , mMaxLeafMoveSpeed(this, 162.5f, 0.0f, 500.0f, "p01", nullptr)
+		    , mMaxFlowerMoveSpeed(this, 220.0f, 0.0f, 500.0f, "p54", nullptr)
+		    , mMaxBudMoveSpeed(this, 160.0f, 0.0f, 500.0f, "p65", nullptr)
 		    , mPikiDisplayScale(this, 1.0f, 0.1f, 10.0f, "p38", nullptr)
 		    , mPikiHealth(this, 100.0f, 0.0f, 1000.0f, "p03", nullptr)
 		    , mSkinnyPikiHealth(this, 150.0f, 0.0f, 1000.0f, "p10", nullptr)
@@ -103,10 +103,10 @@ struct PikiProp : public CreatureProp {
 		}
 
 		// _58-_5C = Parameters
-		Parm<f32> _5C;                      // _5C, p00 - walking speed?
-		Parm<f32> _6C;                      // _6C, p01 - running speed?
-		Parm<f32> _7C;                      // _7C, p54 - flower piki speed?
-		Parm<f32> _8C;                      // _8C, p65 - bud piki speed?
+		Parm<f32> mMinMoveSpeed;            // _5C, p00 - walking speed?
+		Parm<f32> mMaxLeafMoveSpeed;        // _6C, p01 - running speed?
+		Parm<f32> mMaxFlowerMoveSpeed;      // _7C, p54 - flower piki speed?
+		Parm<f32> mMaxBudMoveSpeed;         // _8C, p65 - bud piki speed?
 		Parm<f32> mPikiDisplayScale;        // _9C, p38
 		Parm<f32> mPikiHealth;              // _AC, p03
 		Parm<f32> mSkinnyPikiHealth;        // _BC, p10 - unused

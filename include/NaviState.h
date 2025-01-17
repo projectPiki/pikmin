@@ -65,8 +65,7 @@ struct NaviState : public AState<Navi> {
 	virtual bool invincible(Navi*) { return false; } // _50 (weak)
 
 	// _00     = VTBL
-	// _00-_0C = AState
-	const char* mName; // _0C, unused?
+	// _00-_10 = AState
 };
 
 /**
@@ -247,8 +246,7 @@ struct NaviDemoSunsetState : public NaviState {
 		}
 
 		// _00     = VTBL
-		// _00-_0C = AState
-		const char* mName; // _0C, unused?
+		// _00-_10 = AState
 	};
 
 	/**

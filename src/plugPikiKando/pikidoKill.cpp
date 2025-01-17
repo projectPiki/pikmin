@@ -29,7 +29,7 @@ void Piki::doKill()
 		mDoRouteASync = 0;
 	}
 
-	_338.clear();
+	mLookAtTarget.clear();
 
 	if (mIsOnFire) {
 		_428->kill();

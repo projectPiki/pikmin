@@ -44,9 +44,9 @@ void Action::procMsg(Msg* msg)
 
 	Receiver::procMsg(mActor, msg);
 
-	if (mChildActionIdx != -1 && mChildActionIdx < mChildCount) {
-		if (mChildActions[mChildActionIdx].mAction) {
-			mChildActions[mChildActionIdx].mAction->procMsg(msg);
+	if (mCurrActionIdx != -1 && mCurrActionIdx < mChildCount) {
+		if (mChildActions[mCurrActionIdx].mAction) {
+			mChildActions[mCurrActionIdx].mAction->procMsg(msg);
 		}
 	}
 }
@@ -82,10 +82,10 @@ void Action::Child::initialise(Creature* creature)
  */
 Action::Action(Piki* actor, bool p2)
 {
-	mActor          = actor;
-	mChildActions   = nullptr;
-	mChildActionIdx = mChildCount = 0;
-	mName                         = "no name";
+	mActor         = actor;
+	mChildActions  = nullptr;
+	mCurrActionIdx = mChildCount = 0;
+	mName                        = "no name";
 }
 
 /*
@@ -108,7 +108,7 @@ Action::~Action()
  */
 void Action::init(Creature*)
 {
-	mChildActionIdx = 0;
+	mCurrActionIdx = 0;
 }
 
 /*
@@ -128,8 +128,8 @@ int Action::exec()
  */
 void AndAction::init(Creature* creature)
 {
-	mChildActionIdx = 0;
-	mChildActions[mChildActionIdx].initialise(creature);
+	mCurrActionIdx = 0;
+	mChildActions[mCurrActionIdx].initialise(creature);
 	mOtherCreature = creature;
 }
 
@@ -140,15 +140,15 @@ void AndAction::init(Creature* creature)
  */
 int AndAction::exec()
 {
-	Child* child = &mChildActions[mChildActionIdx];
+	Child* child = &mChildActions[mCurrActionIdx];
 	switch (child->mAction->exec()) {
 	case ACTOUT_Success:
-		mChildActions[mChildActionIdx].mAction->cleanup();
-		mChildActionIdx++;
-		if (mChildActionIdx >= mChildCount) {
+		mChildActions[mCurrActionIdx].mAction->cleanup();
+		mCurrActionIdx++;
+		if (mCurrActionIdx >= mChildCount) {
 			return ACTOUT_Success;
 		}
-		Child* child = &mChildActions[mChildActionIdx];
+		Child* child = &mChildActions[mCurrActionIdx];
 		child->initialise(mOtherCreature);
 		break;
 
@@ -166,8 +166,8 @@ int AndAction::exec()
  */
 void OrAction::init(Creature* creature)
 {
-	mChildActionIdx = 0;
-	mChildActions[mChildActionIdx].initialise(creature);
+	mCurrActionIdx = 0;
+	mChildActions[mCurrActionIdx].initialise(creature);
 	mOtherCreature = creature;
 }
 
@@ -178,18 +178,18 @@ void OrAction::init(Creature* creature)
  */
 int OrAction::exec()
 {
-	Child* child = &mChildActions[mChildActionIdx];
+	Child* child = &mChildActions[mCurrActionIdx];
 	switch (child->mAction->exec()) {
 	case ACTOUT_Success:
 		return ACTOUT_Success;
 
 	case ACTOUT_Fail:
-		mChildActions[mChildActionIdx].mAction->cleanup();
-		mChildActionIdx++;
-		if (mChildActionIdx >= mChildCount) {
+		mChildActions[mCurrActionIdx].mAction->cleanup();
+		mCurrActionIdx++;
+		if (mCurrActionIdx >= mChildCount) {
 			return ACTOUT_Fail;
 		}
-		Child* child = &mChildActions[mChildActionIdx];
+		Child* child = &mChildActions[mCurrActionIdx];
 		child->initialise(mOtherCreature);
 		return ACTOUT_Fail;
 	}
@@ -241,7 +241,7 @@ void TopAction::MotionListener::animationKeyUpdated(PaniAnimKeyEvent& event)
 	switch (event.mEventType) {
 	case KEY_Finished:
 		mAction->_1A = 0;
-		mAction->mChildActions[mAction->mChildActionIdx].initialise(mAction->_20);
+		mAction->mChildActions[mAction->mCurrActionIdx].initialise(mAction->_20);
 		break;
 	}
 }
@@ -258,14 +258,14 @@ TopAction::TopAction(Piki* piki)
 
 	memStat->start("topaction");
 
-	mListener = new MotionListener(this);
-	_20       = 0;
-	_24       = -1;
-	_2C       = 1.0f;
-	_28       = 0;
-	_19       = 0;
-	_1A       = 0;
-	mName     = "top action";
+	mListener    = new MotionListener(this);
+	_20          = 0;
+	_24          = -1;
+	_2C          = 1.0f;
+	_28          = 0;
+	mIsSuspended = false;
+	_1A          = 0;
+	mName        = "top action";
 
 	setChildren(PikiAction::COUNT, new ActRandomBoid(piki), nullptr, new ActWatch(piki), nullptr, new ActEscape(piki), nullptr,
 	            new ActChase(piki), nullptr, new ActGoto(piki), nullptr, new ActPickCreature(piki), nullptr, new ActPutItem(piki), nullptr,
@@ -768,13 +768,13 @@ TopAction::~TopAction()
  */
 void TopAction::init(Creature* creature)
 {
-	mChildActionIdx = 0;
-	mChildActions[mChildActionIdx].initialise(creature);
-	_20 = nullptr;
-	_2C = 1.0f;
-	_28 = 0;
-	_1A = 0;
-	_19 = 0;
+	mCurrActionIdx = 0;
+	mChildActions[mCurrActionIdx].initialise(creature);
+	_20          = nullptr;
+	_2C          = 1.0f;
+	_28          = 0;
+	_1A          = 0;
+	mIsSuspended = false;
 }
 
 /*
@@ -1222,18 +1222,18 @@ int TopAction::exec()
  */
 void TopAction::abandon(zen::particleGenerator* particle)
 {
-	if (mChildActionIdx != -1) {
-		mChildActions[mChildActionIdx].mAction->cleanup();
+	if (mCurrActionIdx != -1) {
+		mChildActions[mCurrActionIdx].mAction->cleanup();
 		if (mActor->isKinoko()) {
-			(mChildActionIdx < -1);
+			(mCurrActionIdx < -1);
 		}
 	}
 
-	mChildActionIdx = -1;
-	_28             = 0;
-	_24             = 0;
-	_20             = nullptr;
-	_19             = 0;
+	mCurrActionIdx = -1;
+	_28            = 0;
+	_24            = 0;
+	_20            = nullptr;
+	mIsSuspended   = false;
 }
 
 /*
@@ -1243,8 +1243,8 @@ void TopAction::abandon(zen::particleGenerator* particle)
  */
 bool TopAction::resumable()
 {
-	if (mChildActionIdx != -1) {
-		return mChildActions[mChildActionIdx].mAction->resumable();
+	if (mCurrActionIdx != -1) {
+		return mChildActions[mCurrActionIdx].mAction->resumable();
 	}
 	return false;
 }
@@ -1256,9 +1256,9 @@ bool TopAction::resumable()
  */
 void TopAction::resume()
 {
-	_19 = 1;
-	if (mChildActionIdx != -1) {
-		mChildActions[mChildActionIdx].mAction->resume();
+	mIsSuspended = true;
+	if (mCurrActionIdx != -1) {
+		mChildActions[mCurrActionIdx].mAction->resume();
 	}
 }
 
@@ -1269,9 +1269,9 @@ void TopAction::resume()
  */
 void TopAction::restart()
 {
-	_19 = 0;
-	if (mChildActionIdx != -1) {
-		mChildActions[mChildActionIdx].mAction->restart();
+	mIsSuspended = false;
+	if (mCurrActionIdx != -1) {
+		mChildActions[mCurrActionIdx].mAction->restart();
 	}
 }
 
@@ -1308,7 +1308,7 @@ TopAction::ObjBore::ObjBore()
  * Address:	........
  * Size:	000044
  */
-void TopAction::ObjBore::getIndex(int)
+int TopAction::ObjBore::getIndex(int)
 {
 	// UNUSED FUNCTION
 }
@@ -1352,7 +1352,7 @@ TopAction::Boredom::Boredom()
  * Address:	........
  * Size:	000044
  */
-void TopAction::Boredom::getIndex(int)
+int TopAction::Boredom::getIndex(int)
 {
 	// UNUSED FUNCTION
 }
@@ -1362,7 +1362,7 @@ void TopAction::Boredom::getIndex(int)
  * Address:	........
  * Size:	0000C4
  */
-void TopAction::Boredom::getBoredom(int, int)
+f32 TopAction::Boredom::getBoredom(int, int)
 {
 	// UNUSED FUNCTION
 }

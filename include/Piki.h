@@ -46,6 +46,27 @@ enum PikiHappa {
 	PikiMaxHappa = Flower,
 };
 
+/**
+ * @brief TODO
+ */
+enum PikiSituationType {
+	PIKISITCH_Unk0  = 0,
+	PIKISITCH_Unk1  = 1,
+	PIKISITCH_Unk2  = 2,
+	PIKISITCH_Unk3  = 3,
+	PIKISITCH_Unk4  = 4,
+	PIKISITCH_Unk5  = 5,
+	PIKISITCH_Unk6  = 6,
+	PIKISITCH_Unk7  = 7,
+	PIKISITCH_Unk8  = 8,
+	PIKISITCH_Unk9  = 9,
+	PIKISITCH_Unk10 = 10,
+	PIKISITCH_Unk11 = 11,
+	PIKISITCH_Unk12 = 12,
+	PIKISITCH_Unk13 = 13,
+	PIKISITCH_Unk14 = 14,
+};
+
 // clang-format off
 DEFINE_ENUM_TYPE(
 	PikiMode,
@@ -84,44 +105,44 @@ DEFINE_ENUM_TYPE(
 struct Piki : public Creature, public PaniAnimKeyListener {
 	Piki(CreatureProp*);
 
-	virtual void addCntCallback();                       // _08
-	virtual void subCntCallback();                       // _0C
-	virtual bool platAttachable();                       // _14
-	virtual bool doDoAI();                               // _1C
-	virtual void resetPosition(Vector3f&);               // _2C
-	virtual f32 getiMass();                              // _38
-	virtual f32 getSize();                               // _3C
-	virtual Vector3f getShadowPos();                     // _68
-	virtual bool isVisible();                            // _74
-	virtual bool isBuried();                             // _80
-	virtual bool isAtari();                              // _84
-	virtual bool isAlive();                              // _88
-	virtual bool isFixed();                              // _8C
-	virtual bool needShadow();                           // _90
-	virtual bool needFlick(Creature*);                   // _94
-	virtual bool ignoreAtari(Creature*);                 // _98
-	virtual bool stimulate(Interaction&);                // _A0
-	virtual void sendMsg(Msg*);                          // _A4
-	virtual void collisionCallback(CollEvent&);          // _A8
-	virtual void bounceCallback();                       // _AC
-	virtual void jumpCallback();                         // _B0
-	virtual void wallCallback(Plane&, DynCollObject*);   // _B4
-	virtual void offwallCallback(DynCollObject*);        // _B8
-	virtual void stickToCallback(Creature*);             // _C4
-	virtual void dump();                                 // _C8
-	virtual bool isRopable();                            // _D4
-	virtual bool mayIstick();                            // _D8
-	virtual int getFormationPri();                       // _DC
-	virtual Vector3f getCatchPos(Creature*);             // _100
-	virtual void doAI();                                 // _104
-	virtual void doAnimation();                          // _108
-	virtual void doKill();                               // _10C
-	virtual bool isKinoko() = 0;                         // _120
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _124
-	virtual void initBirth();                            // _128
-	virtual void changeShape(int) { }                    // _12C
-	virtual void setFlower(int) { }                      // _130
-	virtual void setLeaves(int);                         // _134
+	virtual void addCntCallback();                         // _08
+	virtual void subCntCallback();                         // _0C
+	virtual bool platAttachable();                         // _14
+	virtual bool doDoAI();                                 // _1C
+	virtual void resetPosition(Vector3f&);                 // _2C
+	virtual f32 getiMass();                                // _38
+	virtual f32 getSize();                                 // _3C
+	virtual Vector3f getShadowPos() { return mShadowPos; } // _68
+	virtual bool isVisible();                              // _74
+	virtual bool isBuried();                               // _80
+	virtual bool isAtari();                                // _84
+	virtual bool isAlive();                                // _88
+	virtual bool isFixed();                                // _8C
+	virtual bool needShadow();                             // _90
+	virtual bool needFlick(Creature*);                     // _94
+	virtual bool ignoreAtari(Creature*);                   // _98
+	virtual bool stimulate(Interaction&);                  // _A0
+	virtual void sendMsg(Msg*);                            // _A4
+	virtual void collisionCallback(CollEvent&);            // _A8
+	virtual void bounceCallback();                         // _AC
+	virtual void jumpCallback();                           // _B0
+	virtual void wallCallback(Plane&, DynCollObject*);     // _B4
+	virtual void offwallCallback(DynCollObject*);          // _B8
+	virtual void stickToCallback(Creature*);               // _C4
+	virtual void dump();                                   // _C8
+	virtual bool isRopable();                              // _D4
+	virtual bool mayIstick();                              // _D8
+	virtual int getFormationPri();                         // _DC
+	virtual Vector3f getCatchPos(Creature*);               // _100
+	virtual void doAI();                                   // _104
+	virtual void doAnimation();                            // _108
+	virtual void doKill();                                 // _10C
+	virtual bool isKinoko() = 0;                           // _120
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&);   // _124
+	virtual void initBirth() { }                           // _128
+	virtual void changeShape(int) { }                      // _12C
+	virtual void setFlower(int) { }                        // _130
+	virtual void setLeaves(int) { }                        // _134
 
 	f32 getSpeed(f32);
 	void setSpeed(f32, Vector3f&);
@@ -204,7 +225,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 		_340 = 0;
 		_330 = 0;
 
-		_338.reset();
+		mLookAtTarget.reset();
 	}
 
 	void forceFinishLook()
@@ -215,14 +236,14 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 		_340 = 0;
 		_330 = 0;
 
-		_338.reset();
+		mLookAtTarget.reset();
 	}
 
 	bool isFired() { return mIsOnFire; }
 
 	static bool directDumpMode;
-	static Colour* kinokoColors;
-	static Colour* pikiColors;
+	static Colour kinokoColors[6];
+	static Colour pikiColors[6];
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
@@ -242,13 +263,13 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Creature* mRouteTargetCreature;    // _32C
 	u8 _330;                           // _330
 	u32 _334;                          // _334
-	SmartPtr<Creature> _338;           // _338
+	SmartPtr<Creature> mLookAtTarget;  // _338
 	Vector3f* _33C;                    // _33C
 	u8 _340;                           // _340
 	f32 _344;                          // _344
 	f32 _348;                          // _348
 	u32 _34C;                          // _34C
-	u32 _350;                          // _350
+	int mBlendMotionIdx;               // _350
 	PaniPikiAnimMgr mPikiAnimMgr;      // _354
 	u8 mEmotion;                       // _400
 	u8 _401[0x408 - 0x401];            // _401
@@ -265,17 +286,20 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	SlimeEffect* mSlimeEffect;         // _438
 	u32 mPlayerId;                     // _43C
 	Vector3f _440;                     // _440
-	Vector3f _44C;                     // _44C
+	Vector3f mShadowPos;               // _44C
 	Vector3f mCatchPos;                // _458
 	Vector3f mEffectPos;               // _464
-	u8 mWantToStick;                   // _470
-	u8 _471[0x48C - 0x471];            // _471
+	bool mWantToStick;                 // _470
+	u8 _471[0x47C - 0x471];            // _471
+	f32 _47C;                          // _47C
+	u8 _480[0x488 - 0x480];            // _480
+	f32 mMoveSpeed;                    // _488
 	f32 _48C;                          // _48C
 	PikiStateMachine* mFSM;            // _490
 	u8 _494[0x4];                      // _494
 	f32 mFlickIntensity;               // _498, knockback? impulse velocity magnitude?
 	f32 mRotationAngle;                // _49C
-	u8 _4A0;                           // _4A0
+	bool mIsWhistlePending;            // _4A0, have been whistled, haven't joined party yet
 	CollPart* mSwallowMouthPart;       // _4A4
 	Creature* mLeaderCreature;         // _4A8, maybe puffstool/kinoko leader?
 	Vector3f mPluckVelocity;           // _4AC
@@ -284,25 +308,30 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Vector3f _4C8;                     // _4C8
 	u8 _4D4[0x8];                      // _4D4, unknown
 	u32 _4DC;                          // _4DC, unknown
-	u8 _4E0[0x4F8 - 0x4E0];            // _4E0, unknown
+	Plane* mWallPlane;                 // _4E0
+	DynCollObject* mWallObj;           // _4E4
+	int _4E8;                          // _4E8
+	f32 _4EC;                          // _4EC
+	f32 _4F0;                          // _4F0
+	f32 mPikiSize;                     // _4F4
 	TopAction* mActiveAction;          // _4F8, may be just Action*
 	u16 mMode;                         // _4FC, use PikiMode enum
 	SmartPtr<Creature> _500;           // _500
 	Navi* mNavi;                       // _504
-	u8 _508[0x4];                      // _508
-	Colour _50C;                       // _50C
+	Colour mCurrentColour;             // _508
+	Colour mDefaultColour;             // _50C
 	u16 mColor;                        // _510, red/yellow/blue
 	u8 _512[0x518 - 0x512];            // _4FC
 	u8 _518;                           // _518
 	u8 _519;                           // _519
 	u8 _51A[0x520 - 0x51A];            // _51A
-	int mHappa;                        // _520, leaf/bud/flower
+	int mHappa;                        // _520, leaf/bud/flower - see PikiHappa enum
 	u16 _524;                          // _524, might be s16
 	u8 _526[0x52C - 0x526];            // _524, unknown
 	AState<Piki>* mCurrentState;       // _52C
-	Colour _530;                       // _530
-	Colour _534;                       // _534
-	u8 _538[0x4];                      // _538, unknown
+	Colour mStartBlendColour;          // _530
+	Colour mTargetBlendColour;         // _534
+	f32 mColourBlendRatio;             // _538
 	SearchData mPikiSearchData[6];     // _53C
 	bool mEraseKill;                   // _584
 };

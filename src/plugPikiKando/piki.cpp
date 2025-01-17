@@ -10,12 +10,38 @@
 #include "PikiAI.h"
 #include "PlayerState.h"
 #include "AIPerf.h"
+#include "AIConstant.h"
 #include "Navi.h"
+#include "NaviMgr.h"
+#include "teki.h"
+#include "Boss.h"
+#include "MapCode.h"
+#include "ItemObject.h"
+#include "WeedsItem.h"
+#include "UtilityKando.h"
+#include "RumbleMgr.h"
 #include "gameflow.h"
 #include "FlowController.h"
 #include "WorkObject.h"
 #include "EffectMgr.h"
 #include "DebugLog.h"
+
+Colour Piki::pikiColors[6] = {
+	Colour(0, 50, 255, 255),  // blue
+	Colour(255, 30, 0, 255),  // red
+	Colour(255, 210, 0, 255), // yellow
+	Colour(255, 255, 255, 0), // white
+};
+
+Colour Piki::kinokoColors[6] = {
+	Colour(40, 0, 80, 255),   // deep purple
+	Colour(40, 0, 80, 255),   // deep purple
+	Colour(40, 0, 80, 255),   // deep purple
+	Colour(40, 0, 80, 255),   // deep purple
+	Colour(255, 255, 255, 0), // white
+};
+
+bool Piki::directDumpMode;
 
 /*
  * --INFO--
@@ -421,7 +447,7 @@ bool Piki::initRouteTrace(Vector3f& targetPos, bool p2)
  * Address:	800C74E8
  * Size:	000700
  */
-int Piki::moveRouteTrace(f32 speed)
+int Piki::moveRouteTrace(f32 speedRatio)
 {
 	if (AIPerf::useASync && mDoRouteASync) {
 		if (mRouteHandle) {
@@ -511,7 +537,7 @@ int Piki::moveRouteTrace(f32 speed)
 		crMakeRefs();
 		moveDir = CRSplineTangent(ctrlRatio, mSplineControlPts);
 		moveDir.normalise();
-		setSpeed(speed, moveDir);
+		setSpeed(speedRatio, moveDir);
 		return 2;
 	}
 
@@ -525,7 +551,7 @@ int Piki::moveRouteTrace(f32 speed)
 	if (moveDir.DP(crDir) <= 0.0f) {
 		moveDir = crDir;
 	}
-	setSpeed(speed, moveDir);
+	setSpeed(speedRatio, moveDir);
 	return 2;
 }
 
@@ -701,102 +727,102 @@ void Piki::actOnSituaton()
 	Creature* target = nullptr;
 
 	switch (graspSituation(&target)) {
-	case 1:
+	case PIKISITCH_Unk1:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::Attack;
+		mActiveAction->mCurrActionIdx = PikiAction::Attack;
 		mActiveAction->mChildActions[PikiAction::Attack].initialise(target);
 		mMode = PikiMode::AttackMode;
 		break;
 
-	case 2:
+	case PIKISITCH_Unk2:
 		ERROR("U CAN'T DO IT RIGHT !\n"); // LOL
 		break;
 
-	case 14:
+	case PIKISITCH_Unk14:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::Bou;
+		mActiveAction->mCurrActionIdx = PikiAction::Bou;
 		mActiveAction->mChildActions[PikiAction::Bou].initialise(target);
 		mMode = PikiMode::BoMode;
 		break;
 
-	case 9:
+	case PIKISITCH_Unk9:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::Transport;
+		mActiveAction->mCurrActionIdx = PikiAction::Transport;
 		mActiveAction->mChildActions[PikiAction::Transport].initialise(target);
 		mMode = PikiMode::TransportMode;
 		break;
 
-	case 10:
+	case PIKISITCH_Unk10:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::Rescue;
+		mActiveAction->mCurrActionIdx = PikiAction::Rescue;
 		mActiveAction->mChildActions[PikiAction::Rescue].initialise(target);
 		mMode = PikiMode::RescueMode;
 		break;
 
-	case 11:
+	case PIKISITCH_Unk11:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::Weed;
+		mActiveAction->mCurrActionIdx = PikiAction::Weed;
 		mActiveAction->mChildActions[PikiAction::Weed].initialise(target);
 		mMode = PikiMode::WeedMode;
 		break;
 
-	case 13:
+	case PIKISITCH_Unk13:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::BoMake;
+		mActiveAction->mCurrActionIdx = PikiAction::BoMake;
 		mActiveAction->mChildActions[PikiAction::BoMake].initialise(target);
 		mMode = PikiMode::BomakeMode;
 		break;
 
-	case 12:
+	case PIKISITCH_Unk12:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::Stone;
+		mActiveAction->mCurrActionIdx = PikiAction::Stone;
 		mActiveAction->mChildActions[PikiAction::Stone].initialise(target);
 		mMode = PikiMode::PebbleMode;
 		break;
 
-	case 4:
+	case PIKISITCH_Unk4:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::Mine;
+		mActiveAction->mCurrActionIdx = PikiAction::Mine;
 		mActiveAction->mChildActions[PikiAction::Mine].initialise(target);
 		mMode = PikiMode::MineMode;
 		break;
 
-	case 3:
+	case PIKISITCH_Unk3:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::PickItem;
+		mActiveAction->mCurrActionIdx = PikiAction::PickItem;
 		mActiveAction->mChildActions[PikiAction::PickItem].initialise(target);
 		mMode = PikiMode::PickMode;
 		break;
 
-	case 7:
+	case PIKISITCH_Unk7:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::Bridge;
+		mActiveAction->mCurrActionIdx = PikiAction::Bridge;
 		mActiveAction->mChildActions[PikiAction::Bridge].initialise(target);
 		mMode = PikiMode::BridgeMode;
 		break;
 
-	case 8:
+	case PIKISITCH_Unk8:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::Push;
+		mActiveAction->mCurrActionIdx = PikiAction::Push;
 		mActiveAction->mChildActions[PikiAction::Push].initialise(target);
 		mMode = PikiMode::PushstoneMode;
 		break;
 
-	case 6:
+	case PIKISITCH_Unk6:
 		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 		mActiveAction->abandon(nullptr);
-		mActiveAction->mChildActionIdx = PikiAction::BreakWall;
+		mActiveAction->mCurrActionIdx = PikiAction::BreakWall;
 		mActiveAction->mChildActions[PikiAction::BreakWall].initialise(target);
 		mMode = PikiMode::BreakwallMode;
 		break;
@@ -901,7 +927,354 @@ bool Piki::isBuried()
  */
 int Piki::graspSituation(Creature** outTarget)
 {
+	if (!tekiMgr) {
+		return PIKISITCH_Unk0;
+	}
 
+	if (!bossMgr) {
+		return PIKISITCH_Unk0;
+	}
+
+	if (isHolding()) {
+		return PIKISITCH_Unk0;
+	}
+
+	if (getState() == PIKISTATE_Emotion) {
+		// cannot expect a piki to be emotional AND handle situations
+		// honestly same
+		PRINT("EMOTION STATE : GRASP SITUATION\n");
+		ERROR("mail to kando");
+	}
+
+	if (playerState->inDayEnd()) {
+		return PIKISITCH_Unk0;
+	}
+
+	f32 minDist = 12800.0f;
+	int sitchID = PIKISITCH_Unk0;
+
+	////////// CHECK FOR TEKI OR BOSS TO ATTACK //////////
+	f32 minTestDist = pikiMgr->mPikiParms->mPikiParms._2FC();
+
+	Iterator iterTeki(tekiMgr);
+	Creature* closestTarget = nullptr;
+	CI_LOOP(iterTeki)
+	{
+		Creature* teki = *iterTeki;
+		if (roughCull(teki, this, minTestDist + teki->getCentreSize())) {
+			continue;
+		}
+		if (teki->isVisible() && teki->isAlive() && !teki->isFlying() && teki->isOrganic() && !teki->isStickTo()) {
+			f32 tekiDist = qdist2(this, teki);
+			if (tekiDist <= minTestDist + teki->getCentreSize()) {
+				minTestDist   = tekiDist;
+				closestTarget = teki;
+			}
+		}
+	}
+
+	Iterator iterBoss(bossMgr);
+	CI_LOOP(iterBoss)
+	{
+		Creature* boss = *iterBoss;
+		if (roughCull(boss, this, minTestDist)) {
+			continue;
+		}
+		if (boss->isVisible() && boss->isAlive() && !boss->isFlying() && boss->isOrganic()) {
+			f32 bossDist = qdist2(this, boss);
+			if (bossDist <= minTestDist + boss->getCentreSize()) {
+				minTestDist   = bossDist;
+				closestTarget = boss;
+			}
+		}
+	}
+
+	if (closestTarget && 12800.0f > minTestDist) {
+		minDist    = minTestDist;
+		*outTarget = closestTarget;
+		sitchID    = PIKISITCH_Unk1;
+	}
+
+	////////// CHECK FOR PUFFMIN/DROWNING PIKI TO FIGHT/RESCUE //////////
+	if (mNavi) {
+		minTestDist            = 100.0f;
+		Creature* kinokoTarget = nullptr;
+		Creature* rescueTarget = nullptr;
+		Iterator iterPiki(pikiMgr);
+		CI_LOOP(iterPiki)
+		{
+			Piki* piki = static_cast<Piki*>(*iterPiki);
+			if (roughCull(piki, this, minTestDist)) {
+				continue;
+			}
+			if (mColor == Blue && piki->getState() == PIKISTATE_Drown) {
+				f32 pikiDist = qdist2(this, piki);
+				if (pikiDist <= minTestDist + piki->getCentreSize()) {
+					minTestDist  = pikiDist;
+					rescueTarget = piki;
+					continue;
+				}
+			}
+
+			if (piki->isTeki(this) && !piki->isBuried() && piki->isVisible() && piki->isAlive() && !piki->isFlying()) {
+				f32 pikiDist = qdist2(this, piki);
+				if (pikiDist <= minTestDist + piki->getCentreSize()) {
+					minTestDist  = pikiDist;
+					kinokoTarget = piki;
+				}
+			}
+		}
+
+		if (rescueTarget) {
+			if (minTestDist < minDist) {
+				minDist    = minTestDist;
+				*outTarget = rescueTarget;
+				sitchID    = PIKISITCH_Unk10;
+			}
+		} else if (kinokoTarget) {
+			if (minTestDist < minDist) {
+				minDist    = minTestDist;
+				*outTarget = kinokoTarget;
+				sitchID    = PIKISITCH_Unk1;
+			}
+		}
+	}
+
+	////////// CHECK FOR MAP OBJECTS (WALLS, GRASS, ROCKS, STICKS) //////////
+	Creature* wallTarget   = nullptr;
+	Creature* grassTarget  = nullptr;
+	Creature* pebbleTarget = nullptr;
+	Creature* boTarget     = nullptr;
+	Creature* kusaTarget   = nullptr;
+	minTestDist            = pikiMgr->mPikiParms->mPikiParms._30C();
+	Iterator iterMP(itemMgr->getMeltingPotMgr());
+	CI_LOOP(iterMP)
+	{
+		Creature* obj = *iterMP;
+		if (obj->isSluice() && obj->isAlive()) {
+			CollPart* flagPart = obj->mCollInfo->getSphere('flag');
+			if (flagPart) {
+				if (roughCull(obj, this, flagPart->mRadius + getCentreSize())) {
+					continue;
+				}
+
+				// we have 5 seconds to solve this or we error.
+				LoopChecker checker("sit:sluice", 5.0f);
+				u32 badCompiler;
+				for (int i = 0; i < flagPart->getChildCount(); i++) {
+					checker.update();
+					CollPart* childPart = flagPart->getChildAt(i);
+					Vector3f partDir    = childPart->mCentre - mPosition;
+					f32 objDist         = partDir.length() - childPart->mRadius - getCentreSize();
+					if (objDist <= minTestDist) {
+						minTestDist = objDist;
+						wallTarget  = obj;
+					}
+				}
+			}
+		} else if (obj->mObjType == OBJTYPE_GrassGen && obj->isAlive()) {
+			f32 objDist = centreDist(this, obj);
+			if (objDist <= minTestDist + obj->getCentreSize() && static_cast<GrassGen*>(obj)->workable()) {
+				minTestDist = objDist;
+				grassTarget = obj;
+			}
+
+		} else if (obj->mObjType == OBJTYPE_RockGen && obj->isAlive()) {
+			f32 objDist = centreDist(this, obj);
+			if (objDist <= minTestDist + obj->getCentreSize() && static_cast<RockGen*>(obj)->workable()) {
+				minTestDist  = objDist;
+				pebbleTarget = obj;
+			}
+
+		} else if (obj->mObjType == OBJTYPE_BoBase && obj->isAlive()) {
+			f32 objDist = centreDist(this, obj);
+			if (objDist <= minTestDist + obj->getCentreSize()) {
+				minTestDist = objDist;
+				boTarget    = obj;
+			}
+
+		} else if (obj->mObjType == OBJTYPE_Kusa && obj->mHealth >= obj->mMaxHealth) {
+			f32 objDist = centreDist(this, obj);
+			if (objDist <= minTestDist + obj->getCentreSize()) {
+				minTestDist = objDist;
+				kusaTarget  = obj;
+			}
+		}
+	}
+
+	// test wall now, test weeds + bo + kusa later
+	if (wallTarget && minTestDist < minDist) {
+		minDist    = minTestDist;
+		*outTarget = wallTarget;
+		sitchID    = PIKISITCH_Unk6;
+	}
+
+	////////// CHECK FOR PELLETS TO PICK UP //////////
+	Creature* pelletTarget = nullptr;
+	minTestDist            = pikiMgr->mPikiParms->mPikiParms._30C();
+	Iterator iterPellet(pelletMgr);
+	CI_LOOP(iterPellet)
+	{
+		Creature* c    = *iterPellet;
+		Pellet* pellet = static_cast<Pellet*>(c);
+		if (pellet->isAlive() && pellet->getMinFreeSlotIndex() != -1) {
+			if (roughCull(c, this, getCentreSize() + minTestDist + c->getCentreSize())) {
+				continue;
+			}
+			if (c) {
+				f32 pelDist = centreDist(this, c);
+				if (pelDist <= c->getCentreSize() + minTestDist + getCentreSize()) {
+					minTestDist  = pelDist;
+					pelletTarget = c;
+				}
+			}
+		}
+	}
+
+	if (pelletTarget && minTestDist < minDist) {
+		minDist    = minTestDist;
+		*outTarget = pelletTarget;
+		sitchID    = PIKISITCH_Unk9;
+	}
+
+	////////// CHECK FOR THINGS WE CAN GRAB (GRASS(?), BOMBS) //////////
+	Creature* removedTarget = nullptr; // this should be here according to the DLL
+	Creature* bombTarget    = nullptr;
+
+	minTestDist = pikiMgr->mPikiParms->mPikiParms._30C();
+	Iterator iterItem(itemMgr);
+	CI_LOOP(iterItem)
+	{
+		Creature* item = *iterItem;
+		if (roughCull(item, this, minTestDist)) {
+			continue;
+		}
+
+		if (item->isVisible() && item->isAlive() && !item->isGrabbed()) {
+			if (item->mObjType == OBJTYPE_GrassGen) {
+				f32 grassDist = centreDist(this, item);
+				if (grassDist <= item->getCentreSize() + minTestDist) {
+					minTestDist = grassDist;
+					grassTarget = item;
+				}
+
+			} else if (item->mObjType == OBJTYPE_Bomb && mColor == Yellow && item->isVisible()) {
+				f32 bombDist = centreDist(this, item);
+				if (bombDist <= item->getCentreSize() + minTestDist) {
+					minTestDist = bombDist;
+					bombTarget  = item;
+				}
+			}
+		}
+	}
+
+	// do all the built-up checking so far
+	if (removedTarget) {
+		if (minTestDist < minDist) {
+			minDist    = minTestDist;
+			*outTarget = removedTarget;
+			sitchID    = PIKISITCH_Unk2; // unimplemented/commented out
+		}
+	} else if (bombTarget) {
+		if (minTestDist < minDist) {
+			minDist    = minTestDist;
+			*outTarget = bombTarget;
+			sitchID    = PIKISITCH_Unk3;
+		}
+	} else if (grassTarget) {
+		if (minTestDist < minDist) {
+			minDist    = minTestDist;
+			*outTarget = grassTarget;
+			sitchID    = PIKISITCH_Unk11;
+		}
+	} else if (pebbleTarget) {
+		if (minTestDist < minDist) {
+			minDist    = minTestDist;
+			*outTarget = pebbleTarget;
+			sitchID    = PIKISITCH_Unk12;
+		}
+	} else if (boTarget) {
+		if (minTestDist < minDist) {
+			minDist    = minTestDist;
+			*outTarget = boTarget;
+			sitchID    = PIKISITCH_Unk13;
+		}
+	} else if (kusaTarget) {
+		if (minTestDist < minDist) {
+			minDist    = minTestDist;
+			*outTarget = kusaTarget;
+			sitchID    = PIKISITCH_Unk14;
+		}
+	}
+
+	////////// CHECK FOR THINGS TO WORK ON //////////
+	Creature* workTarget = nullptr;
+	minTestDist          = pikiMgr->mPikiParms->mPikiParms._2FC();
+
+	Iterator iterWork(workObjectMgr);
+	CI_LOOP(iterWork)
+	{
+		WorkObject* workObj = static_cast<WorkObject*>(*iterWork);
+		f32 workDist        = sphereDist(workObj, this);
+		workObj->isBridge(); // id overlook removing this in a big-ass function like this too, kando
+		f32 test = minTestDist;
+		if (workObj->isBridge()) {
+			test = minTestDist * 7.0f;
+		}
+		if (workDist < test && !workObj->isFinished() && workObj->workable(mPosition)) {
+			minTestDist = workDist;
+			workTarget  = workObj;
+		}
+	}
+
+	if (workTarget) {
+		WorkObject* workObj = static_cast<WorkObject*>(workTarget);
+		if (workObj->workable(mPosition)) {
+			if (workObj->isBridge()) {
+				if (minTestDist < minDist) {
+					minDist    = minTestDist;
+					*outTarget = workTarget;
+					sitchID    = PIKISITCH_Unk7;
+				}
+			} else if (workObj->isHinderRock()) {
+				if (minTestDist < minDist) {
+					minDist    = minTestDist;
+					*outTarget = workTarget;
+					sitchID    = PIKISITCH_Unk8;
+				}
+			}
+		}
+	}
+
+	////////// CHECK FOR BOMB GENERATORS (YELLOW ONLY) //////////
+	if (mColor == Yellow) {
+		Creature* bombGenTarget = nullptr;
+		minTestDist             = pikiMgr->mPikiParms->mPikiParms._2FC();
+		Iterator iterBomb(itemMgr);
+		CI_LOOP(iterBomb)
+		{
+			Creature* bombGen = *iterBomb;
+			if (bombGen->mObjType != OBJTYPE_BombGen) {
+				continue;
+			}
+
+			f32 bombDist = sphereDist(bombGen, this);
+			if (bombDist < minTestDist) {
+				minTestDist = bombDist;
+				if (static_cast<BombGenItem*>(bombGen)->pickable()) {
+					bombGenTarget = bombGen;
+				}
+			}
+		}
+
+		if (bombGenTarget && !bombTarget && minTestDist < minDist) {
+			minDist    = minTestDist;
+			*outTarget = bombGenTarget;
+			sitchID    = PIKISITCH_Unk4;
+		}
+	}
+
+	return sitchID;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2320,75 +2693,30 @@ int Piki::graspSituation(Creature** outTarget)
  * Address:	800C9878
  * Size:	0000D8
  */
-void Piki::initColor(int)
+void Piki::initColor(int color)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x803A
-	  sth       r4, 0x510(r31)
-	  subi      r3, r3, 0x24E0
-	  lwz       r0, 0x230(r3)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x68
-	  cmpwi     r4, 0x1
-	  beq-      .loc_0x50
-	  bge-      .loc_0x5C
-	  cmpwi     r4, 0
-	  bge-      .loc_0x44
-	  b         .loc_0x5C
+	mColor = color;
+	if (flowCont._230 == 1) {
+		switch (color) {
+		case Blue:
+			mPlayerId = 0;
+			break;
+		case Red:
+			mPlayerId = 1;
+			break;
+		default:
+			mPlayerId = -1;
+			break;
+		}
+	} else {
+		mPlayerId = 0;
+	}
 
-	.loc_0x44:
-	  li        r0, 0
-	  stw       r0, 0x43C(r31)
-	  b         .loc_0x70
-
-	.loc_0x50:
-	  li        r0, 0x1
-	  stw       r0, 0x43C(r31)
-	  b         .loc_0x70
-
-	.loc_0x5C:
-	  li        r0, -0x1
-	  stw       r0, 0x43C(r31)
-	  b         .loc_0x70
-
-	.loc_0x68:
-	  li        r0, 0
-	  stw       r0, 0x43C(r31)
-
-	.loc_0x70:
-	  lhz       r4, 0x510(r31)
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x1E18
-	  rlwinm    r3,r4,2,0,29
-	  add       r3, r0, r3
-	  lwz       r0, 0x0(r3)
-	  mr        r3, r31
-	  stw       r0, 0x508(r31)
-	  lwz       r12, 0x0(r31)
-	  lhz       r4, 0x510(r31)
-	  lwz       r12, 0x12C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x508(r31)
-	  stw       r0, 0x50C(r31)
-	  lwz       r0, 0x508(r31)
-	  stw       r0, 0x534(r31)
-	  lwz       r0, 0x534(r31)
-	  stw       r0, 0x530(r31)
-	  lfs       f0, -0x6A20(r2)
-	  stfs      f0, 0x538(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mCurrentColour = pikiColors[mColor];
+	changeShape(mColor);
+	mDefaultColour    = mCurrentColour;
+	mStartBlendColour = mTargetBlendColour = mCurrentColour;
+	mColourBlendRatio                      = 1.0f;
 }
 
 /*
@@ -2398,21 +2726,7 @@ void Piki::initColor(int)
  */
 void Piki::startKinoko()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x12C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	changeShape(PIKI_Kinoko);
 }
 
 /*
@@ -2422,31 +2736,9 @@ void Piki::startKinoko()
  */
 void Piki::endKinoko()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  stw       r0, 0x4A8(r3)
-	  lwz       r12, 0x0(r31)
-	  lhz       r4, 0x510(r31)
-	  lwz       r12, 0x12C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lhz       r4, 0x510(r31)
-	  bl        .loc_0x50
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x50:
-	*/
+	mLeaderCreature = nullptr;
+	changeShape(mColor);
+	setColor(mColor);
 }
 
 /*
@@ -2454,53 +2746,18 @@ void Piki::endKinoko()
  * Address:	800C99D0
  * Size:	000098
  */
-void Piki::setColor(int)
+void Piki::setColor(int color)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  sth       r4, 0x510(r3)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x50
-	  lhz       r4, 0x510(r31)
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x1E30
-	  rlwinm    r3,r4,2,0,29
-	  add       r3, r0, r3
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x50C(r31)
-	  b         .loc_0x6C
+	mColor = color;
+	if (isKinoko()) {
+		mDefaultColour = kinokoColors[mColor];
+	} else {
+		mDefaultColour = pikiColors[mColor];
+	}
 
-	.loc_0x50:
-	  lhz       r4, 0x510(r31)
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x1E18
-	  rlwinm    r3,r4,2,0,29
-	  add       r3, r0, r3
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x50C(r31)
-
-	.loc_0x6C:
-	  lwz       r0, 0x508(r31)
-	  stw       r0, 0x530(r31)
-	  lwz       r0, 0x50C(r31)
-	  stw       r0, 0x534(r31)
-	  lfs       f0, -0x6A48(r2)
-	  stfs      f0, 0x538(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mStartBlendColour  = mCurrentColour;
+	mTargetBlendColour = mDefaultColour;
+	mColourBlendRatio  = 0.0f;
 }
 
 /*
@@ -2510,54 +2767,16 @@ void Piki::setColor(int)
  */
 void Piki::setPastel()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x10(r1)
-	  lis       r4, 0x803D
-	  addi      r0, r4, 0x1E18
-	  lhz       r5, 0x510(r3)
-	  rlwinm    r4,r5,2,0,29
-	  add       r4, r0, r4
-	  lwz       r0, 0x0(r4)
-	  stw       r0, 0x50C(r3)
-	  lbz       r4, 0x50C(r3)
-	  stb       r4, 0xC(r1)
-	  addi      r4, r4, 0xA0
-	  cmpwi     r4, 0xFF
-	  lbz       r5, 0x50D(r3)
-	  stb       r5, 0xD(r1)
-	  lbz       r6, 0x50E(r3)
-	  stb       r6, 0xE(r1)
-	  lbz       r0, 0x50F(r3)
-	  stb       r0, 0xF(r1)
-	  blt-      .loc_0x50
-	  li        r4, 0xFF
+	mDefaultColour = pikiColors[mColor];
 
-	.loc_0x50:
-	  addi      r0, r5, 0xA0
-	  stb       r4, 0xC(r1)
-	  cmpwi     r0, 0xFF
-	  blt-      .loc_0x64
-	  li        r0, 0xFF
+	Colour pastel = mDefaultColour;
+	pastel.r      = (mDefaultColour.r + 160 >= 255) ? 255 : mDefaultColour.r + 160;
+	pastel.g      = (mDefaultColour.g + 160 >= 255) ? 255 : mDefaultColour.g + 160;
+	pastel.b      = (mDefaultColour.b + 160 >= 255) ? 255 : mDefaultColour.b + 160;
 
-	.loc_0x64:
-	  addi      r4, r6, 0xA0
-	  stb       r0, 0xD(r1)
-	  cmpwi     r4, 0xFF
-	  blt-      .loc_0x78
-	  li        r4, 0xFF
-
-	.loc_0x78:
-	  stb       r4, 0xE(r1)
-	  lwz       r0, 0xC(r1)
-	  stw       r0, 0x534(r3)
-	  lwz       r0, 0x508(r3)
-	  stw       r0, 0x530(r3)
-	  lfs       f0, -0x6A48(r2)
-	  stfs      f0, 0x538(r3)
-	  addi      r1, r1, 0x10
-	  blr
-	*/
+	mTargetBlendColour = pastel;
+	mStartBlendColour  = mCurrentColour;
+	mColourBlendRatio  = 0.0f;
 }
 
 /*
@@ -2567,51 +2786,7 @@ void Piki::setPastel()
  */
 void Piki::unsetPastel()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r12, 0x0(r31)
-	  lhz       r0, 0x510(r3)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x50
-	  lhz       r4, 0x510(r31)
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x1E30
-	  rlwinm    r3,r4,2,0,29
-	  add       r3, r0, r3
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x50C(r31)
-	  b         .loc_0x6C
-
-	.loc_0x50:
-	  lhz       r4, 0x510(r31)
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x1E18
-	  rlwinm    r3,r4,2,0,29
-	  add       r3, r0, r3
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x50C(r31)
-
-	.loc_0x6C:
-	  lwz       r0, 0x508(r31)
-	  stw       r0, 0x530(r31)
-	  lwz       r0, 0x50C(r31)
-	  stw       r0, 0x534(r31)
-	  lfs       f0, -0x6A48(r2)
-	  stfs      f0, 0x538(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	setColor(mColor);
 }
 
 /*
@@ -2621,119 +2796,17 @@ void Piki::unsetPastel()
  */
 void Piki::updateColor()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x98(r1)
-	  lfs       f3, 0x538(r3)
-	  lfs       f2, -0x6A20(r2)
-	  fcmpo     cr0, f3, f2
-	  cror      2, 0x1, 0x2
-	  beq-      .loc_0x1A0
-	  lwz       r4, 0x2DEC(r13)
-	  lfs       f0, -0x6A04(r2)
-	  lfs       f1, 0x28C(r4)
-	  fdivs     f0, f1, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x538(r3)
-	  lfs       f0, 0x538(r3)
-	  fcmpo     cr0, f0, f2
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x44
-	  stfs      f2, 0x538(r3)
+	if (mColourBlendRatio >= 1.0f) {
+		return;
+	}
 
-	.loc_0x44:
-	  lbz       r5, 0x530(r3)
-	  lis       r4, 0x4330
-	  lbz       r0, 0x534(r3)
-	  stw       r5, 0x84(r1)
-	  lfd       f0, -0x6A00(r2)
-	  stw       r0, 0x8C(r1)
-	  lfs       f1, 0x538(r3)
-	  stw       r4, 0x88(r1)
-	  stw       r4, 0x80(r1)
-	  lfd       f3, 0x88(r1)
-	  lfd       f2, 0x80(r1)
-	  stw       r5, 0x94(r1)
-	  fsubs     f3, f3, f0
-	  fsubs     f2, f2, f0
-	  stw       r4, 0x90(r1)
-	  fsubs     f2, f3, f2
-	  lfd       f3, 0x90(r1)
-	  fsubs     f3, f3, f0
-	  fmuls     f2, f1, f2
-	  fadds     f2, f3, f2
-	  fctiwz    f2, f2
-	  stfd      f2, 0x78(r1)
-	  lwz       r0, 0x7C(r1)
-	  stb       r0, 0x508(r3)
-	  lbz       r5, 0x531(r3)
-	  lbz       r0, 0x535(r3)
-	  stw       r5, 0x64(r1)
-	  stw       r0, 0x6C(r1)
-	  stw       r4, 0x68(r1)
-	  stw       r4, 0x60(r1)
-	  lfd       f3, 0x68(r1)
-	  lfd       f2, 0x60(r1)
-	  stw       r5, 0x74(r1)
-	  fsubs     f3, f3, f0
-	  fsubs     f2, f2, f0
-	  stw       r4, 0x70(r1)
-	  fsubs     f2, f3, f2
-	  lfd       f3, 0x70(r1)
-	  fsubs     f3, f3, f0
-	  fmuls     f2, f1, f2
-	  fadds     f2, f3, f2
-	  fctiwz    f2, f2
-	  stfd      f2, 0x58(r1)
-	  lwz       r0, 0x5C(r1)
-	  stb       r0, 0x509(r3)
-	  lbz       r5, 0x532(r3)
-	  lbz       r0, 0x536(r3)
-	  stw       r5, 0x44(r1)
-	  stw       r0, 0x4C(r1)
-	  stw       r4, 0x48(r1)
-	  stw       r4, 0x40(r1)
-	  lfd       f3, 0x48(r1)
-	  lfd       f2, 0x40(r1)
-	  stw       r5, 0x54(r1)
-	  fsubs     f3, f3, f0
-	  fsubs     f2, f2, f0
-	  stw       r4, 0x50(r1)
-	  fsubs     f2, f3, f2
-	  lfd       f3, 0x50(r1)
-	  fsubs     f3, f3, f0
-	  fmuls     f2, f1, f2
-	  fadds     f2, f3, f2
-	  fctiwz    f2, f2
-	  stfd      f2, 0x38(r1)
-	  lwz       r0, 0x3C(r1)
-	  stb       r0, 0x50A(r3)
-	  lbz       r5, 0x533(r3)
-	  lbz       r0, 0x537(r3)
-	  stw       r5, 0x24(r1)
-	  stw       r0, 0x2C(r1)
-	  stw       r4, 0x28(r1)
-	  stw       r4, 0x20(r1)
-	  lfd       f3, 0x28(r1)
-	  lfd       f2, 0x20(r1)
-	  stw       r5, 0x34(r1)
-	  fsubs     f3, f3, f0
-	  fsubs     f2, f2, f0
-	  stw       r4, 0x30(r1)
-	  fsubs     f2, f3, f2
-	  lfd       f3, 0x30(r1)
-	  fsubs     f3, f3, f0
-	  fmuls     f0, f1, f2
-	  fadds     f0, f3, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stb       r0, 0x50B(r3)
+	mColourBlendRatio += gsys->getFrameTime() / 1.2f;
 
-	.loc_0x1A0:
-	  addi      r1, r1, 0x98
-	  blr
-	*/
+	if (mColourBlendRatio >= 1.0f) {
+		mColourBlendRatio = 1.0f;
+	}
+
+	mStartBlendColour.lerpTo(mTargetBlendColour, mColourBlendRatio, mCurrentColour);
 }
 
 /*
@@ -2743,45 +2816,17 @@ void Piki::updateColor()
  */
 bool Piki::needShadow()
 {
-	/*
-	.loc_0x0:
-	  lhz       r4, 0x510(r3)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x28
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r0, 0x1D8(r3)
-	  rlwinm.   r0,r0,0,28,28
-	  beq-      .loc_0x28
-	  li        r3, 0
-	  blr
+	if (mColor == Blue && (gameflow._1D8 & 0x8)) {
+		return false;
+	}
+	if (mColor == Red && (gameflow._1D8 & 0x10)) {
+		return false;
+	}
+	if (mColor == Yellow && (gameflow._1D8 & 0x20)) {
+		return false;
+	}
 
-	.loc_0x28:
-	  cmplwi    r4, 0x1
-	  bne-      .loc_0x4C
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r0, 0x1D8(r3)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0x4C
-	  li        r3, 0
-	  blr
-
-	.loc_0x4C:
-	  cmplwi    r4, 0x2
-	  bne-      .loc_0x70
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r0, 0x1D8(r3)
-	  rlwinm.   r0,r0,0,26,26
-	  beq-      .loc_0x70
-	  li        r3, 0
-	  blr
-
-	.loc_0x70:
-	  li        r3, 0x1
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -2791,21 +2836,11 @@ bool Piki::needShadow()
  */
 bool Piki::isFixed()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x52C(r3)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0x14
-	  bne-      .loc_0x20
-	  lbz       r0, 0x10(r3)
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
+	if (getState() == PIKISTATE_Push) {
+		return !static_cast<PikiPushState*>(getCurrState())->_10;
+	}
 
-	.loc_0x20:
-	  li        r3, 0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -2813,82 +2848,16 @@ bool Piki::isFixed()
  * Address:	800C9DE4
  * Size:	000098
  */
-void Piki::sendMsg(Msg*)
+void Piki::sendMsg(Msg* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  mr        r5, r31
-	  stw       r30, 0x28(r1)
-	  mr        r30, r3
-	  addi      r4, r30, 0
-	  lwz       r3, 0x490(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x0(r31)
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x68
-	  lwz       r3, 0x52C(r30)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0x16
-	  bne-      .loc_0x68
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xD8(r12)
-	  mtlr      r12
-	  blrl
+	mFSM->procMsg(this, msg);
+	if (msg->mMsgType == MSG_Stick && getState() == PIKISTATE_Flick) {
+		PRINT("may i stick is %s\n", mayIstick() ? "true" : "false");
+	}
 
-	.loc_0x68:
-	  lwz       r3, 0x4F8(r30)
-	  lbz       r0, 0x19(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x80
-	  mr        r4, r31
-	  bl        -0x637C
-
-	.loc_0x80:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800C9E7C
- * Size:	00003C
- */
-void StateMachine<Piki>::procMsg(Piki*, Msg*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x52C(r4)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!mActiveAction->mIsSuspended) {
+		mActiveAction->procMsg(msg);
+	}
 }
 
 /*
@@ -2896,44 +2865,13 @@ void StateMachine<Piki>::procMsg(Piki*, Msg*)
  * Address:	800C9EB8
  * Size:	000074
  */
-bool Piki::stimulate(Interaction&)
+bool Piki::stimulate(Interaction& interaction)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x58
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x5C
+	if (interaction.actCommon(this)) {
+		return interaction.actPiki(this);
+	}
 
-	.loc_0x58:
-	  li        r3, 0
-
-	.loc_0x5C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -2943,52 +2881,24 @@ bool Piki::stimulate(Interaction&)
  */
 int Piki::getFormationPri()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x504(r3)
-	  lwz       r0, 0x80C(r4)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x34
-	  bge-      .loc_0x20
-	  cmpwi     r0, 0
-	  bge-      .loc_0x2C
-	  b         .loc_0x6C
+	switch (mNavi->_80C) {
+	case 0:
+		return _4B8;
 
-	.loc_0x20:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x6C
-	  b         .loc_0x60
+	case 1:
+		if (_4B8 == 1) {
+			return 0;
+		} else if (_4B8 == 2) {
+			return 1;
+		}
+		return 2;
 
-	.loc_0x2C:
-	  lwz       r3, 0x4B8(r3)
-	  blr
+	case 2:
+		return -_4B8;
 
-	.loc_0x34:
-	  lwz       r0, 0x4B8(r3)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x48
-	  li        r3, 0
-	  blr
-
-	.loc_0x48:
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x58
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x58:
-	  li        r3, 0x2
-	  blr
-
-	.loc_0x60:
-	  lwz       r0, 0x4B8(r3)
-	  neg       r3, r0
-	  blr
-
-	.loc_0x6C:
-	  lwz       r3, 0x4B8(r3)
-	  blr
-	*/
+	default:
+		return _4B8;
+	}
 }
 
 /*
@@ -2998,59 +2908,20 @@ int Piki::getFormationPri()
  */
 void Piki::startDamage()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x52C(r3)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0xE
-	  bne-      .loc_0x3C
-	  li        r3, 0x8
-	  subfic    r0, r3, 0xA
-	  cmpwi     r3, 0xA
-	  mtctr     r0
-	  bge-      .loc_0x3C
+	if (getState() == PIKISTATE_Flying) {
+		PRINT("FLYING DAMAGED!!!\n");
+		for (int i = 0; i < 10; i++) {
+			PRINT("\tFLYING DAMAGE ***** **** **** ***\n");
+		}
+	}
 
-	.loc_0x38:
-	  bdnz-     .loc_0x38
+	mActiveAction->resume();
+	if (getState() == PIKISTATE_Flick) {
+		PRINT("flick & damaged\n");
+	}
 
-	.loc_0x3C:
-	  lwz       r3, 0x4F8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x54(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x1
-	  stb       r0, 0x2B4(r31)
-	  lwz       r3, 0x52C(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x78
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r31
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x78:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800CA02C
- * Size:	000004
- */
-void AState<Piki>::resume(Piki*)
-{
+	setStateDamaged();
+	mFSM->resume(this);
 }
 
 /*
@@ -3060,81 +2931,25 @@ void AState<Piki>::resume(Piki*)
  */
 void Piki::finishDamage()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  stb       r0, 0x2B4(r3)
-	  lwz       r3, 0x52C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x3C
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r31
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
+	if (getState() == PIKISTATE_Flick) {
+		PRINT("in flick : damage done\n");
+	}
 
-	.loc_0x3C:
-	  lbz       r0, 0x4A0(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x88
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x88
-	  lwz       r5, 0x504(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0x312C
-	  mr        r3, r31
-	  bl        -0x39830
-	  li        r0, 0
-	  stb       r0, 0x4A0(r31)
-	  b         .loc_0xC8
+	resetStateDamaged();
+	mFSM->restart(this);
+	if (mIsWhistlePending && isAlive()) {
+		changeMode(PikiMode::FormationMode, mNavi);
+		endStickObject();
+		mIsWhistlePending = false;
+		return;
+	}
 
-	.loc_0x88:
-	  lwz       r3, 0x4F8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xBC
-	  lwz       r3, 0x4F8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xC8
-
-	.loc_0xBC:
-	  lwz       r3, 0x4F8(r31)
-	  li        r4, 0
-	  bl        -0x4DB0
-
-	.loc_0xC8:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800CA10C
- * Size:	000004
- */
-void AState<Piki>::restart(Piki*)
-{
+	if (mActiveAction->resumable()) {
+		mActiveAction->restart();
+	} else {
+		PRINT("aiAction->curr = %d is not resumable!\n", mActiveAction->mCurrActionIdx);
+		mActiveAction->abandon(nullptr);
+	}
 }
 
 /*
@@ -3142,72 +2957,20 @@ void AState<Piki>::restart(Piki*)
  * Address:	800CA110
  * Size:	0000DC
  */
-void Piki::animationKeyUpdated(PaniAnimKeyEvent&)
+void Piki::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x58(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x39C(r3)
-	  cmpwi     r0, 0x38
-	  bne-      .loc_0x7C
-	  lwz       r0, 0x0(r31)
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x7C
-	  lfs       f1, -0x6A48(r2)
-	  addi      r4, r1, 0x28
-	  lfs       f0, -0x6A20(r2)
-	  li        r3, 0x11
-	  stfs      f1, 0x30(r1)
-	  stfs      f1, 0x2C(r1)
-	  stfs      f1, 0x28(r1)
-	  stfs      f1, 0x3C(r1)
-	  stfs      f1, 0x38(r1)
-	  stfs      f1, 0x34(r1)
-	  lwz       r5, 0x94(r30)
-	  lwz       r0, 0x98(r30)
-	  stw       r5, 0x28(r1)
-	  stw       r0, 0x2C(r1)
-	  lwz       r0, 0x9C(r30)
-	  stw       r0, 0x30(r1)
-	  stfs      f0, 0x4C(r1)
-	  bl        0x4A158
+	if (mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == 56 && event.mEventType == KEY_PlayEffect) {
+		EffectParm parm(mPosition);
+		UtEffectMgr::cast(17, parm);
+	}
 
-	.loc_0x7C:
-	  lbz       r0, 0x2B4(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xA0
-	  lwz       r0, 0x0(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xA0
-	  mr        r3, r30
-	  bl        -0x178
-	  b         .loc_0xC4
+	if (isDamaged() && event.mEventType == KEY_Finished) {
+		finishDamage();
+		return;
+	}
 
-	.loc_0xA0:
-	  li        r0, 0x4
-	  stw       r0, 0x20(r1)
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x20
-	  stw       r31, 0x24(r1)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xA4(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xC4:
-	  lwz       r0, 0x64(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	MsgAnim msg(&event);
+	sendMsg(&msg);
 }
 
 /*
@@ -3217,7 +2980,7 @@ void Piki::animationKeyUpdated(PaniAnimKeyEvent&)
  */
 void Piki::birthBuried()
 {
-	// UNUSED FUNCTION
+	mFSM->transit(this, PIKISTATE_Grow);
 }
 
 /*
@@ -3227,38 +2990,14 @@ void Piki::birthBuried()
  */
 bool Piki::isAtari()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2A8(r3)
-	  lwz       r3, 0x52C(r3)
-	  cmplwi    r0, 0
-	  lwz       r3, 0x4(r3)
-	  bne-      .loc_0x54
-	  cmpwi     r3, 0x1C
-	  beq-      .loc_0x54
-	  cmpwi     r3, 0x13
-	  beq-      .loc_0x54
-	  cmpwi     r3, 0x21
-	  beq-      .loc_0x54
-	  subi      r0, r3, 0xC
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x54
-	  cmpwi     r3, 0x8
-	  beq-      .loc_0x54
-	  subi      r0, r3, 0x1
-	  cmplwi    r0, 0x4
-	  ble-      .loc_0x54
-	  cmpwi     r3, 0x10
-	  bne-      .loc_0x5C
+	int state = getState();
+	if (isGrabbed() || state == PIKISTATE_Absorb || state == PIKISTATE_GrowUp || state == PIKISTATE_Pressed || state == PIKISTATE_Hanged
+	    || state == PIKISTATE_WaterHanged || state == PIKISTATE_Swallowed || state == PIKISTATE_Grow || state == PIKISTATE_Bury
+	    || state == PIKISTATE_Nukare || state == PIKISTATE_NukareWait || state == PIKISTATE_AutoNuki || state == PIKISTATE_Cliff) {
+		return false;
+	}
 
-	.loc_0x54:
-	  li        r3, 0
-	  blr
-
-	.loc_0x5C:
-	  li        r3, 0x1
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -3266,75 +3005,32 @@ bool Piki::isAtari()
  * Address:	800CA250
  * Size:	0000B8
  */
-bool Piki::ignoreAtari(Creature*)
+bool Piki::ignoreAtari(Creature* target)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x6C(r4)
-	  cmpwi     r5, 0x2C
-	  bne-      .loc_0x20
-	  lhz       r0, 0x510(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x20
-	  li        r3, 0x1
-	  blr
+	if (target->mObjType == OBJTYPE_Slime && mColor == Blue) {
+		return true;
+	}
+	if (getStickObject() == target) {
+		return true;
+	}
 
-	.loc_0x20:
-	  lwz       r0, 0x184(r3)
-	  cmplw     r0, r4
-	  bne-      .loc_0x34
-	  li        r3, 0x1
-	  blr
+	if ((mMode == PikiMode::EnterMode || mMode == PikiMode::ExitMode) && target->isTeki()) {
+		return true;
+	}
 
-	.loc_0x34:
-	  lhz       r0, 0x4FC(r3)
-	  cmplwi    r0, 0xB
-	  beq-      .loc_0x48
-	  cmplwi    r0, 0xC
-	  bne-      .loc_0x58
+	int state = getState();
+	if (state == PIKISTATE_Flying || state == PIKISTATE_Hanged) {
+		if (target->mObjType == OBJTYPE_Piki || target->mObjType == OBJTYPE_Navi) {
+			return true;
+		}
+	} else if (target->mObjType == OBJTYPE_Piki) {
+		int targState = static_cast<Piki*>(target)->getState();
+		if (targState == PIKISTATE_Flying || targState == PIKISTATE_Hanged) {
+			return true;
+		}
+	}
 
-	.loc_0x48:
-	  cmpwi     r5, 0x37
-	  bne-      .loc_0x58
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x58:
-	  lwz       r3, 0x52C(r3)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0xE
-	  beq-      .loc_0x70
-	  cmpwi     r0, 0xC
-	  bne-      .loc_0x88
-
-	.loc_0x70:
-	  cmpwi     r5, 0
-	  beq-      .loc_0x80
-	  cmpwi     r5, 0x36
-	  bne-      .loc_0xB0
-
-	.loc_0x80:
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x88:
-	  cmpwi     r5, 0
-	  bne-      .loc_0xB0
-	  lwz       r3, 0x52C(r4)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0xE
-	  beq-      .loc_0xA8
-	  cmpwi     r0, 0xC
-	  bne-      .loc_0xB0
-
-	.loc_0xA8:
-	  li        r3, 0x1
-	  blr
-
-	.loc_0xB0:
-	  li        r3, 0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -3354,97 +3050,14 @@ bool Piki::needFlick(Creature*)
  */
 bool Piki::isVisible()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r3)
-	  lwz       r3, 0x52C(r3)
-	  rlwinm.   r0,r0,0,20,20
-	  lwz       r4, 0x4(r3)
-	  beq-      .loc_0x1C
-	  li        r3, 0
-	  blr
+	int state = getState();
+	if (!isAIActive()) {
+		return false;
+	}
 
-	.loc_0x1C:
-	  cmpwi     r4, 0x7
-	  li        r3, 0
-	  addi      r5, r3, 0
-	  addi      r6, r3, 0
-	  addi      r7, r3, 0
-	  addi      r8, r3, 0
-	  addi      r9, r3, 0
-	  addi      r10, r3, 0
-	  addi      r11, r3, 0
-	  addi      r12, r3, 0
-	  addi      r0, r3, 0
-	  beq-      .loc_0x58
-	  cmpwi     r4, 0x6
-	  beq-      .loc_0x58
-	  li        r0, 0x1
-
-	.loc_0x58:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x6C
-	  cmpwi     r4, 0x3
-	  beq-      .loc_0x6C
-	  li        r12, 0x1
-
-	.loc_0x6C:
-	  rlwinm.   r0,r12,0,24,31
-	  beq-      .loc_0x80
-	  cmpwi     r4, 0x1
-	  beq-      .loc_0x80
-	  li        r11, 0x1
-
-	.loc_0x80:
-	  rlwinm.   r0,r11,0,24,31
-	  beq-      .loc_0x94
-	  cmpwi     r4, 0x20
-	  beq-      .loc_0x94
-	  li        r10, 0x1
-
-	.loc_0x94:
-	  rlwinm.   r0,r10,0,24,31
-	  beq-      .loc_0xA8
-	  cmpwi     r4, 0x13
-	  beq-      .loc_0xA8
-	  li        r9, 0x1
-
-	.loc_0xA8:
-	  rlwinm.   r0,r9,0,24,31
-	  beq-      .loc_0xBC
-	  cmpwi     r4, 0x1C
-	  beq-      .loc_0xBC
-	  li        r8, 0x1
-
-	.loc_0xBC:
-	  rlwinm.   r0,r8,0,24,31
-	  beq-      .loc_0xD0
-	  cmpwi     r4, 0x21
-	  beq-      .loc_0xD0
-	  li        r7, 0x1
-
-	.loc_0xD0:
-	  rlwinm.   r0,r7,0,24,31
-	  beq-      .loc_0xE4
-	  cmpwi     r4, 0x5
-	  beq-      .loc_0xE4
-	  li        r6, 0x1
-
-	.loc_0xE4:
-	  rlwinm.   r0,r6,0,24,31
-	  beq-      .loc_0xF8
-	  cmpwi     r4, 0x4
-	  beq-      .loc_0xF8
-	  li        r5, 0x1
-
-	.loc_0xF8:
-	  rlwinm.   r0,r5,0,24,31
-	  beqlr-
-	  cmpwi     r4, 0x8
-	  beqlr-
-	  li        r3, 0x1
-	  blr
-	*/
+	return (state != PIKISTATE_Dead && state != PIKISTATE_Dying && state != PIKISTATE_Nukare && state != PIKISTATE_Grow
+	        && state != PIKISTATE_UNUSED32 && state != PIKISTATE_GrowUp && state != PIKISTATE_Absorb && state != PIKISTATE_Pressed
+	        && state != PIKISTATE_AutoNuki && state != PIKISTATE_NukareWait && state != PIKISTATE_Swallowed);
 }
 
 /*
@@ -3454,7 +3067,8 @@ bool Piki::isVisible()
  */
 bool Piki::isGrowable()
 {
-	// UNUSED FUNCTION
+	int state = getState();
+	return isBuried() && state != PIKISTATE_Absorb && state != PIKISTATE_GrowUp;
 }
 
 /*
@@ -3464,7 +3078,8 @@ bool Piki::isGrowable()
  */
 bool Piki::isTamable()
 {
-	// UNUSED FUNCTION
+	int state = getState();
+	return !isDamaged() && state == PIKISTATE_Normal;
 }
 
 /*
@@ -3474,72 +3089,28 @@ bool Piki::isTamable()
  */
 bool Piki::isThrowable()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x40
-	  lwz       r0, 0x184(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x40
-	  li        r3, 0
-	  b         .loc_0xB0
+	if (!isAlive() && isStickTo()) {
+		return false;
+	}
 
-	.loc_0x40:
-	  lwz       r3, 0x52C(r31)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0xA
-	  beq-      .loc_0x60
-	  cmpwi     r0, 0x9
-	  beq-      .loc_0x60
-	  cmpwi     r0, 0x18
-	  bne-      .loc_0x68
+	int state = getState();
+	if (state == PIKISTATE_Bubble || state == PIKISTATE_Fired || state == PIKISTATE_Drown) {
+		return false;
+	}
 
-	.loc_0x60:
-	  li        r3, 0
-	  b         .loc_0xB0
+	if (state == PIKISTATE_Pressed) {
+		return false;
+	}
 
-	.loc_0x68:
-	  cmpwi     r0, 0x21
-	  bne-      .loc_0x78
-	  li        r3, 0
-	  b         .loc_0xB0
+	if (state == PIKISTATE_Kinoko) {
+		return false;
+	}
 
-	.loc_0x78:
-	  cmpwi     r0, 0x17
-	  bne-      .loc_0x88
-	  li        r3, 0
-	  b         .loc_0xB0
+	if (isKinoko()) {
+		return false;
+	}
 
-	.loc_0x88:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xAC
-	  li        r3, 0
-	  b         .loc_0xB0
-
-	.loc_0xAC:
-	  li        r3, 0x1
-
-	.loc_0xB0:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -3549,7 +3120,14 @@ bool Piki::isThrowable()
  */
 void Piki::growup()
 {
-	// UNUSED FUNCTION
+	if (getState() == PIKISTATE_Absorb) {
+		PRINT("growup : %x\n", this);
+		mFSM->transit(this, PIKISTATE_GrowUp);
+		return;
+	}
+
+	PRINT("transform\n");
+	mFSM->transit(this, PIKISTATE_UNUSED32); // ooooo
 }
 
 /*
@@ -3557,28 +3135,11 @@ void Piki::growup()
  * Address:	800CA4E4
  * Size:	000044
  */
-void Piki::offwallCallback(DynCollObject*)
+void Piki::offwallCallback(DynCollObject* wall)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x7
-	  stwu      r1, -0x18(r1)
-	  lfs       f0, -0x6A48(r2)
-	  stfs      f0, 0x4F0(r3)
-	  stw       r0, 0x10(r1)
-	  stw       r4, 0x14(r1)
-	  addi      r4, r1, 0x10
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xA4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_4F0 = 0.0f;
+	MsgOffWall msg(wall);
+	sendMsg(&msg);
 }
 
 /*
@@ -3586,33 +3147,14 @@ void Piki::offwallCallback(DynCollObject*)
  * Address:	800CA528
  * Size:	000058
  */
-void Piki::wallCallback(Plane&, DynCollObject*)
+void Piki::wallCallback(Plane& wallPlane, DynCollObject* wall)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x20(r1)
-	  stw       r0, 0x4E8(r3)
-	  li        r0, 0x6
-	  stw       r4, 0x4E0(r3)
-	  stw       r5, 0x4E4(r3)
-	  lfs       f0, -0x69F8(r2)
-	  stfs      f0, 0x4EC(r3)
-	  stw       r0, 0x14(r1)
-	  stw       r4, 0x18(r1)
-	  addi      r4, r1, 0x14
-	  stw       r5, 0x1C(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xA4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	_4E8       = 1;
+	mWallPlane = &wallPlane;
+	mWallObj   = wall;
+	_4EC       = 0.7f;
+	MsgWall msg(wallPlane, wall);
+	sendMsg(&msg);
 }
 
 /*
@@ -3631,51 +3173,23 @@ void Piki::jumpCallback()
  */
 bool Piki::platAttachable()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x470(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x70
+	if (!mWantToStick) {
+		return false;
+	}
 
-	.loc_0x20:
-	  lwz       r0, 0x2AC(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  li        r3, 0
-	  b         .loc_0x70
+	if (isHolding()) {
+		return false;
+	}
 
-	.loc_0x34:
-	  lwz       r4, 0x52C(r3)
-	  lwz       r0, 0x4(r4)
-	  cmpwi     r0, 0x16
-	  bne-      .loc_0x4C
-	  li        r3, 0
-	  b         .loc_0x70
+	if (getState() == PIKISTATE_Flick) {
+		return false;
+	}
 
-	.loc_0x4C:
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x6C
-	  li        r3, 0
-	  b         .loc_0x70
+	if (!isAlive()) {
+		return false;
+	}
 
-	.loc_0x6C:
-	  li        r3, 0x1
-
-	.loc_0x70:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -3685,83 +3199,38 @@ bool Piki::platAttachable()
  */
 bool Piki::mayIstick()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  mr        r29, r3
-	  lwz       r0, 0x2AC(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x30
-	  li        r3, 0
-	  b         .loc_0xC4
+	if (isHolding()) {
+		return false;
+	}
 
-	.loc_0x30:
-	  lwz       r3, 0x52C(r29)
-	  lwz       r4, 0x490(r29)
-	  lwz       r30, 0x4(r3)
-	  lwz       r31, 0x18(r4)
-	  cmpwi     r30, 0x1A
-	  bne-      .loc_0x50
-	  li        r3, 0
-	  b         .loc_0xC4
+	int prevState = getLastState();
+	int state     = getState();
+	if (state == PIKISTATE_LookAt) {
+		return false;
+	}
 
-	.loc_0x50:
-	  cmpwi     r30, 0x16
-	  bne-      .loc_0x60
-	  li        r3, 0
-	  b         .loc_0xC4
+	if (state == PIKISTATE_Flick) {
+		return false;
+	}
 
-	.loc_0x60:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x84
-	  li        r3, 0
-	  b         .loc_0xC4
+	if (!isAlive()) {
+		return false;
+	}
 
-	.loc_0x84:
-	  cmpwi     r30, 0xE
-	  beq-      .loc_0x94
-	  cmpwi     r31, 0xE
-	  bne-      .loc_0x9C
+	if (state == PIKISTATE_Flying || prevState == PIKISTATE_Flying) {
+		PRINT("piki might stick!\n");
+		return true;
+	}
 
-	.loc_0x94:
-	  li        r3, 0x1
-	  b         .loc_0xC4
+	if (mMode == PikiMode::CarryMode) {
+		return true;
+	}
 
-	.loc_0x9C:
-	  lhz       r0, 0x4FC(r29)
-	  cmplwi    r0, 0x8
-	  bne-      .loc_0xB0
-	  li        r3, 0x1
-	  b         .loc_0xC4
+	if (mMode == PikiMode::AttackMode) {
+		return true;
+	}
 
-	.loc_0xB0:
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0xC0
-	  li        r3, 0x1
-	  b         .loc_0xC4
-
-	.loc_0xC0:
-	  li        r3, 0
-
-	.loc_0xC4:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -3771,23 +3240,8 @@ bool Piki::mayIstick()
  */
 void Piki::stickToCallback(Creature*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x8
-	  stwu      r1, -0x18(r1)
-	  stw       r0, 0x10(r1)
-	  addi      r4, r1, 0x10
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xA4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	MsgStick msg;
+	sendMsg(&msg);
 }
 
 /*
@@ -3797,200 +3251,51 @@ void Piki::stickToCallback(Creature*)
  */
 void Piki::bounceCallback()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0xC8(r1)
-	  stw       r31, 0xC4(r1)
-	  mr        r31, r3
-	  addi      r4, r1, 0xA4
-	  stw       r30, 0xC0(r1)
-	  stw       r29, 0xBC(r1)
-	  stw       r28, 0xB8(r1)
-	  lfs       f0, -0x429C(r13)
-	  stw       r0, 0xA4(r1)
-	  lfs       f1, -0x4298(r13)
-	  stfs      f0, 0xA8(r1)
-	  lfs       f0, -0x4294(r13)
-	  stfs      f1, 0xAC(r1)
-	  stfs      f0, 0xB0(r1)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xA4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x28C(r31)
-	  li        r0, -0x1
-	  cmplwi    r3, 0
-	  beq-      .loc_0x6C
-	  bl        0x4B900
-	  mr        r0, r3
+	MsgBounce msg(Vector3f(0.0f, 1.0f, 0.0f));
+	sendMsg(&msg);
 
-	.loc_0x6C:
-	  lwz       r3, 0x52C(r31)
-	  lwz       r30, 0x4(r3)
-	  cmpwi     r30, 0x6
-	  beq-      .loc_0x29C
-	  cmpwi     r30, 0x7
-	  bne-      .loc_0x88
-	  b         .loc_0x29C
+	int attr = ATTR_NULL;
+	if (mFloorTri) {
+		attr = MapCode::getAttribute(mFloorTri);
+	}
 
-	.loc_0x88:
-	  cmpwi     r0, 0x5
-	  li        r28, 0
-	  bne-      .loc_0xB4
-	  lhz       r0, 0x426(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xB4
-	  lhz       r0, 0x510(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB4
-	  li        r28, 0x1
-	  b         .loc_0x118
+	int state = getState();
+	if (state == PIKISTATE_Dying || state == PIKISTATE_Dead) {
+		return;
+	}
 
-	.loc_0xB4:
-	  lwz       r29, 0x184(r31)
-	  cmplwi    r29, 0
-	  beq-      .loc_0x118
-	  lhz       r0, 0x426(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x118
-	  lhz       r0, 0x510(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x118
-	  cmplwi    r29, 0
-	  beq-      .loc_0x118
-	  lwz       r3, 0x28C(r29)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x118
-	  bl        0x4B878
-	  cmpwi     r3, 0x5
-	  bne-      .loc_0x118
-	  lfs       f2, 0x98(r29)
-	  lfs       f1, 0x98(r31)
-	  lfs       f0, -0x69F4(r2)
-	  fsubs     f1, f2, f1
-	  fabs      f1, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x118
-	  li        r28, 0x1
+	bool isDrownSurface = false;
+	if (attr == ATTR_Water && _426 == 0 && mColor != Blue) {
+		isDrownSurface = true;
+	} else if (isStickTo() && _426 == 0 && mColor != Blue) {
+		Creature* obj = getStickObject();
+		if (obj && obj->mFloorTri && MapCode::getAttribute(obj->mFloorTri) == ATTR_Water) {
+			if (zen::Abs(obj->mPosition.y - mPosition.y) < 10.0f) {
+				isDrownSurface = true;
+			}
+		}
+	}
 
-	.loc_0x118:
-	  rlwinm.   r0,r28,0,24,31
-	  beq-      .loc_0x264
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x264
-	  cmpwi     r30, 0x7
-	  beq-      .loc_0x264
-	  cmpwi     r30, 0x6
-	  beq-      .loc_0x264
-	  cmpwi     r30, 0x21
-	  beq-      .loc_0x264
-	  cmpwi     r30, 0xD
-	  beq-      .loc_0x264
-	  lwz       r3, 0x3038(r13)
-	  addi      r6, r31, 0x94
-	  li        r4, 0x5
-	  li        r5, 0xB4
-	  bl        -0x26454
-	  cmplwi    r31, 0
-	  addi      r29, r31, 0
-	  beq-      .loc_0x180
-	  addi      r29, r29, 0x2B8
+	if (isDrownSurface && isAlive() && state != PIKISTATE_Dead && state != PIKISTATE_Dying && state != PIKISTATE_Pressed
+	    && state != PIKISTATE_WaterHanged) {
+		seSystem->playSoundDirect(5, SEW_PIKI_WATERDROP, mPosition);
+		startMotion(PaniMotionInfo(PIKIANIM_TYakusui, this), PaniMotionInfo(PIKIANIM_TYakusui));
+		mFSM->transit(this, PIKISTATE_Drown);
+		EffectParm rippleParm(&mPosition);
+		EffectParm parm(mPosition);
+		rippleParm._24 = 2.0f;
 
-	.loc_0x180:
-	  addi      r3, r1, 0x2C
-	  li        r4, 0x38
-	  bl        0x546B4
-	  addi      r30, r3, 0
-	  addi      r5, r29, 0
-	  addi      r3, r1, 0x34
-	  li        r4, 0x38
-	  bl        0x546D4
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r30, 0
-	  bl        .loc_0x2BC
-	  lwz       r3, 0x490(r31)
-	  addi      r4, r31, 0
-	  li        r5, 0x18
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f2, -0x6A48(r2)
-	  addi      r0, r31, 0x94
-	  lfs       f1, -0x6A20(r2)
-	  addi      r4, r1, 0x74
-	  stfs      f2, 0x7C(r1)
-	  stfs      f2, 0x78(r1)
-	  stfs      f2, 0x74(r1)
-	  stfs      f2, 0x88(r1)
-	  stfs      f2, 0x84(r1)
-	  stfs      f2, 0x80(r1)
-	  stw       r0, 0x94(r1)
-	  stfs      f1, 0x98(r1)
-	  stfs      f2, 0x50(r1)
-	  lfs       f0, -0x69F0(r2)
-	  stfs      f2, 0x4C(r1)
-	  stfs      f2, 0x48(r1)
-	  stfs      f2, 0x5C(r1)
-	  stfs      f2, 0x58(r1)
-	  stfs      f2, 0x54(r1)
-	  lwz       r3, 0x94(r31)
-	  lwz       r0, 0x98(r31)
-	  stw       r3, 0x48(r1)
-	  stw       r0, 0x4C(r1)
-	  lwz       r0, 0x9C(r31)
-	  stw       r0, 0x50(r1)
-	  stfs      f1, 0x6C(r1)
-	  stfs      f0, 0x98(r1)
-	  lwz       r3, 0x430(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x11
-	  addi      r4, r1, 0x48
-	  bl        0x49970
-	  li        r0, 0x1
-	  sth       r0, 0x426(r31)
-	  b         .loc_0x29C
+		mRippleEffect->emit(rippleParm);
+		UtEffectMgr::cast(17, parm);
+		_426 = 1;
+		return;
+	}
 
-	.loc_0x264:
-	  lhz       r0, 0x4FC(r31)
-	  cmplwi    r0, 0x4
-	  bne-      .loc_0x29C
-	  lfs       f0, -0x6A48(r2)
-	  stfs      f0, 0x98(r31)
-	  lwz       r0, 0xC8(r31)
-	  ori       r0, r0, 0x4
-	  stw       r0, 0xC8(r31)
-	  lfs       f0, -0x4290(r13)
-	  stfs      f0, 0x70(r31)
-	  lfs       f0, -0x428C(r13)
-	  stfs      f0, 0x74(r31)
-	  lfs       f0, -0x4288(r13)
-	  stfs      f0, 0x78(r31)
-
-	.loc_0x29C:
-	  lwz       r0, 0xCC(r1)
-	  lwz       r31, 0xC4(r1)
-	  lwz       r30, 0xC0(r1)
-	  lwz       r29, 0xBC(r1)
-	  lwz       r28, 0xB8(r1)
-	  addi      r1, r1, 0xC8
-	  mtlr      r0
-	  blr
-
-	.loc_0x2BC:
-	*/
+	if (mMode == PikiMode::GuardMode) {
+		mPosition.y = 0.0f;
+		setCreatureFlag(CF_IsOnGround);
+		mVelocity.set(0.0f, 0.0f, 0.0f);
+	}
 }
 
 /*
@@ -3998,178 +3303,95 @@ void Piki::bounceCallback()
  * Address:	800CA9D8
  * Size:	000234
  */
-void Piki::startMotion(PaniMotionInfo&, PaniMotionInfo&)
+void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  mr        r31, r3
-	  stw       r30, 0x60(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x5C(r1)
-	  addi      r29, r4, 0
-	  lwz       r3, 0x52C(r3)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x5C
-	  lwz       r0, 0x0(r29)
-	  cmpwi     r0, 0x46
-	  beq-      .loc_0x5C
-	  cmpwi     r0, 0x1D
-	  beq-      .loc_0x5C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC8(r12)
-	  mtlr      r12
-	  blrl
+	int state = getState();
 
-	.loc_0x5C:
-	  addi      r4, r29, 0
-	  addi      r5, r30, 0
-	  addi      r3, r31, 0x354
-	  bl        0x55028
-	  li        r0, -0x1
-	  stw       r0, 0x350(r31)
-	  lwz       r3, 0x2F6C(r13)
-	  lbz       r0, 0x1B5(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x218
-	  lwz       r0, 0x0(r29)
-	  cmpwi     r0, 0x29
-	  beq-      .loc_0xB4
-	  bge-      .loc_0xA8
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x210
-	  cmpwi     r0, 0
-	  bge-      .loc_0xB4
-	  b         .loc_0x210
+	// if we're being swallowed, make sure we're doing the correct animation
+	if (state == PIKISTATE_Swallowed && motion1.mMotionIdx != PIKIANIM_Esa && motion1.mMotionIdx != PIKIANIM_Fall) {
+		// BZZZZT. WRONG.
+		PRINT("SWALLOW ** MOTION %d/%d\n", motion1.mMotionIdx, motion2.mMotionIdx);
+		dump();
+	}
 
-	.loc_0xA8:
-	  cmpwi     r0, 0x32
-	  beq-      .loc_0xB4
-	  b         .loc_0x210
+	if (state == PIKISTATE_Bury && motion1.mMotionIdx == PIKIANIM_Damage) {
+		PRINT("bury piki start damage ??\n");
+	}
 
-	.loc_0xB4:
-	  lwz       r30, 0x338(r31)
-	  mr        r3, r31
-	  bl        0xEC48
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x184
-	  cmplwi    r30, 0
-	  bne-      .loc_0x144
-	  bl        0x14D5C8
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x6A28(r2)
-	  stw       r0, 0x54(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x69EC(r2)
-	  stw       r0, 0x50(r1)
-	  lfs       f1, -0x6A20(r2)
-	  lfd       f3, 0x50(r1)
-	  lfs       f0, -0x69F0(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x48(r1)
-	  lwz       r0, 0x4C(r1)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x130
-	  lwz       r4, 0x504(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x6F0
-	  bl        0xEB24
-	  b         .loc_0x218
+	if (state == PIKISTATE_Flick) {
+		// make sure we're doing a flick animation
+		int motionID = motion1.mMotionIdx;
+		if (motionID != PIKIANIM_JHit && motionID != PIKIANIM_GetUp && motionID != PIKIANIM_JKoke && motionID != PIKIANIM_Dead
+		    && motionID != PIKIANIM_Dead2 && motionID != PIKIANIM_Dead3 && motionID != PIKIANIM_Walk) {
+			PRINT("flick : start motion %d ******** \n", motionID);
+		}
+	}
 
-	.loc_0x130:
-	  lwz       r4, 0x504(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x784
-	  bl        0xEB10
-	  b         .loc_0x218
+	if (isDamaged() && motion1.mMotionIdx != PIKIANIM_Damage) {
+		PRINT("DAMAGE : something goes wrong !\n");
+		PRINT("%f\n", 0.1f / 0.0f); // HAHAHAHAHA
+	}
 
-	.loc_0x144:
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0x94
-	  bl        0xEB00
-	  lwz       r3, 0x338(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x16C
-	  beq-      .loc_0x16C
-	  bl        0x19834
-	  li        r0, 0
-	  stw       r0, 0x338(r31)
+	if ((state == PIKISTATE_Dying || state == PIKISTATE_Dead) && motion1.mMotionIdx != PIKIANIM_Dead) {
+		PRINT("DYING/DEAD : something goes wrong !\n");
+	}
 
-	.loc_0x16C:
-	  stw       r30, 0x338(r31)
-	  lwz       r3, 0x338(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x218
-	  bl        0x19808
-	  b         .loc_0x218
+	mPikiAnimMgr.startMotion(motion1, motion2);
+	mBlendMotionIdx = -1;
 
-	.loc_0x184:
-	  lbz       r0, 0x330(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x218
-	  cmplwi    r30, 0
-	  beq-      .loc_0x218
-	  lwz       r3, 0x220(r30)
-	  li        r4, 0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1B8
-	  lis       r4, 0x2A2A
-	  addi      r4, r4, 0x2A2A
-	  bl        -0x4129C
-	  mr        r4, r3
+	if (playerState->inDayEnd()) {
+		return;
+	}
 
-	.loc_0x1B8:
-	  cmplwi    r4, 0
-	  beq-      .loc_0x1D0
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x4
-	  bl        0xEA84
-	  b         .loc_0x1DC
+	switch (motion1.mMotionIdx) {
+	case PIKIANIM_Run:
+	case PIKIANIM_Nigeru:
+	case PIKIANIM_Walk:
+	case PIKIANIM_Wait:
+	case PIKIANIM_Iraira:
+	case PIKIANIM_Suwaru:
+		Creature* target = mLookAtTarget.getPtr();
+		if (!isLooking()) {
+			if (!target) {
+				int rand = System::getRand(1.0f) * 2.0f;
+				if (rand == 0) {
+					startHimaLook(&mNavi->_6F0);
+				} else {
+					startHimaLook(&mNavi->_784);
+				}
+				return;
+			}
 
-	.loc_0x1D0:
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0x94
-	  bl        0xEA74
+			startHimaLook(&target->mPosition);
+			mLookAtTarget.set(target);
+			return;
+		}
 
-	.loc_0x1DC:
-	  lwz       r3, 0x338(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1F8
-	  beq-      .loc_0x1F8
-	  bl        0x197A8
-	  li        r0, 0
-	  stw       r0, 0x338(r31)
+		if (_330 && target) {
+			CollPart* part = nullptr;
+			if (target->mCollInfo) {
+				part = target->mCollInfo->getRandomCollPart('****');
+			}
+			if (part) {
+				startHimaLook(&part->mCentre);
+			} else {
+				startHimaLook(&target->mPosition);
+			}
 
-	.loc_0x1F8:
-	  stw       r30, 0x338(r31)
-	  lwz       r3, 0x338(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x218
-	  bl        0x1977C
-	  b         .loc_0x218
+			if (isStickTo()) {
+				PRINT("++++++++++++ PIKI STICK TO AND START LOOK !\n");
+			}
 
-	.loc_0x210:
-	  mr        r3, r31
-	  bl        0xEAD8
+			mLookAtTarget.set(target);
+		}
+		return;
 
-	.loc_0x218:
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  lwz       r29, 0x5C(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	default:
+		finishLook();
+		return;
+	}
+
+	u32 badCompiler[4]; // idk what this is from
 }
 
 /*
@@ -4179,27 +3401,8 @@ void Piki::startMotion(PaniMotionInfo&, PaniMotionInfo&)
  */
 void Piki::enableMotionBlend()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0xB
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0x3AC
-	  lwz       r0, 0x3F0(r3)
-	  stw       r0, 0x350(r3)
-	  addi      r3, r1, 0x18
-	  bl        0x54328
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  bl        0x54584
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mBlendMotionIdx = mPikiAnimMgr.getLowerAnimator().getCurrentMotionIndex();
+	mPikiAnimMgr.getLowerAnimator().startMotion(PaniMotionInfo(PIKIANIM_Asibumi));
 }
 
 /*
@@ -4209,7 +3412,7 @@ void Piki::enableMotionBlend()
  */
 bool Piki::doMotionBlend()
 {
-	// UNUSED FUNCTION
+	return mBlendMotionIdx != -1;
 }
 
 /*
@@ -4217,9 +3420,18 @@ bool Piki::doMotionBlend()
  * Address:	........
  * Size:	00005C
  */
-void Piki::swapMotion(PaniMotionInfo&, PaniMotionInfo&)
+void Piki::swapMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 {
-	// UNUSED FUNCTION
+	int upperCounter = mPikiAnimMgr.getUpperAnimator().mAnimationCounter;
+	int lowerCounter = mPikiAnimMgr.getLowerAnimator().mAnimationCounter;
+
+	mPikiAnimMgr.startMotion(motion1, motion2);
+	mPikiAnimMgr.getUpperAnimator().mAnimationCounter = upperCounter;
+	mPikiAnimMgr.getLowerAnimator().mAnimationCounter = lowerCounter;
+
+	if (motion1.mMotionIdx == PIKIANIM_Wait) {
+		ERROR("swapMotion(wait)");
+	}
 }
 
 /*
@@ -4227,117 +3439,37 @@ void Piki::swapMotion(PaniMotionInfo&, PaniMotionInfo&)
  * Address:	800CAC54
  * Size:	000190
  */
-void Piki::checkBridgeWall(Creature*, Vector3f&)
+void Piki::checkBridgeWall(Creature* object, Vector3f& direction)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  mr        r31, r3
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  addi      r29, r5, 0
-	  lwz       r0, 0x2AC(r3)
-	  lwz       r3, 0x52C(r3)
-	  cmplwi    r0, 0
-	  lwz       r3, 0x4(r3)
-	  bne-      .loc_0x174
-	  lhz       r0, 0x4FC(r31)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x174
-	  cmpwi     r3, 0x21
-	  beq-      .loc_0x174
-	  cmpwi     r3, 0x7
-	  beq-      .loc_0x174
-	  cmpwi     r3, 0x6
-	  beq-      .loc_0x174
-	  cmplwi    r4, 0
-	  beq-      .loc_0x174
-	  lwz       r0, 0x6C(r4)
-	  cmpwi     r0, 0x26
-	  bne-      .loc_0x174
-	  lwz       r3, 0x4F8(r31)
-	  lha       r0, 0x8(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x84
-	  li        r3, 0
-	  b         .loc_0x90
+	int state = getState();
+	if (isHolding()) {
+		return;
+	}
 
-	.loc_0x84:
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r0,3,0,28
-	  lwzx      r3, r3, r0
+	if (mMode != PikiMode::FormationMode) {
+		return;
+	}
 
-	.loc_0x90:
-	  cmplwi    r3, 0
-	  beq-      .loc_0x174
-	  lhz       r0, 0x2C(r3)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x174
-	  addi      r30, r4, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x174
-	  addi      r4, r30, 0
-	  addi      r3, r1, 0x30
-	  bl        -0x2C1C4
-	  lfs       f3, 0x0(r29)
-	  lfs       f2, 0x30(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x34(r1)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x8(r29)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x38(r1)
-	  lbz       r0, 0x3C8(r30)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  cmplwi    r0, 0
-	  fadds     f1, f1, f0
-	  beq-      .loc_0x174
-	  lfs       f0, -0x69E8(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x174
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x164(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x174
-	  lwz       r3, 0x3038(r13)
-	  addi      r5, r31, 0x94
-	  li        r4, 0x101
-	  bl        -0x26988
-	  lwz       r3, 0x4F8(r31)
-	  li        r4, 0
-	  bl        -0x5A58
-	  lwz       r3, 0x4F8(r31)
-	  li        r0, 0x17
-	  addi      r4, r30, 0
-	  sth       r0, 0x8(r3)
-	  lwz       r3, 0x4F8(r31)
-	  lwz       r3, 0x4(r3)
-	  addi      r3, r3, 0xB8
-	  bl        -0x7098
-	  li        r0, 0x10
-	  sth       r0, 0x4FC(r31)
-
-	.loc_0x174:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	if (state != PIKISTATE_Pressed && state != PIKISTATE_Dead && state != PIKISTATE_Dying) {
+		if (object && object->mObjType == OBJTYPE_WorkObject) {
+			Action* action = mActiveAction->getCurrAction();
+			if (action && static_cast<ActCrowd*>(action)->_2C == 1) {
+				WorkObject* workObj = static_cast<WorkObject*>(object);
+				if (workObj->isBridge()) {
+					Bridge* bridge = static_cast<Bridge*>(workObj);
+					f32 zComp      = direction.DP(bridge->getBridgeZVec());
+					if (bridge->_3C8 && zComp < -0.8f && !bridge->isFinished()) {
+						PRINT("** BRIDGE AI START\n");
+						seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+						mActiveAction->abandon(nullptr);
+						mActiveAction->mCurrActionIdx = PikiAction::Bridge;
+						mActiveAction->mChildActions[PikiAction::Bridge].initialise(bridge);
+						mMode = PikiMode::BridgeMode;
+					}
+				}
+			}
+		}
+	}
 }
 
 /*
@@ -4345,8 +3477,9 @@ void Piki::checkBridgeWall(Creature*, Vector3f&)
  * Address:	800CADE4
  * Size:	000B78
  */
-void Piki::collisionCallback(CollEvent&)
+void Piki::collisionCallback(CollEvent& event)
 {
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5168,16 +4301,6 @@ void Piki::collisionCallback(CollEvent&)
 
 /*
  * --INFO--
- * Address:	800CB95C
- * Size:	000008
- */
-bool PikiState::collideAI()
-{
-	return false;
-}
-
-/*
- * --INFO--
  * Address:	800CB964
  * Size:	000400
  */
@@ -5217,9 +4340,19 @@ Piki::Piki(CreatureProp* prop)
  * Address:	........
  * Size:	000078
  */
-void Piki::setSpeed(f32)
+void Piki::setSpeed(f32 speedRatio)
 {
-	// UNUSED FUNCTION
+	f32 scale = 1.0f; // i guess they were playing around with this?
+	f32 max   = pikiMgr->mPikiParms->mPikiParms.mMaxLeafMoveSpeed() * scale;
+	if (AIConstant::_instance->mConstants.mDoScaleHappaMoveSpeed() && mHappa == Flower) {
+		max = pikiMgr->mPikiParms->mPikiParms.mMaxFlowerMoveSpeed();
+	} else if (AIConstant::_instance->mConstants.mDoScaleHappaMoveSpeed() && mHappa == Bud) {
+		max = pikiMgr->mPikiParms->mPikiParms.mMaxBudMoveSpeed();
+	}
+
+	f32 min = pikiMgr->mPikiParms->mPikiParms.mMinMoveSpeed() * scale;
+
+	mMoveSpeed = (max - min) * speedRatio + min;
 }
 
 /*
@@ -5227,44 +4360,19 @@ void Piki::setSpeed(f32)
  * Address:	800CBD64
  * Size:	000074
  */
-f32 Piki::getSpeed(f32)
+f32 Piki::getSpeed(f32 speedRatio)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x3068(r13)
-	  lwz       r4, 0x2F80(r13)
-	  lwz       r5, 0x68(r5)
-	  lwz       r0, 0x110(r4)
-	  addi      r6, r4, 0x110
-	  lfs       f2, -0x6A20(r2)
-	  lfs       f0, 0x78(r5)
-	  cmpwi     r0, 0
-	  fmuls     f3, f2, f0
-	  beq-      .loc_0x3C
-	  lwz       r0, 0x520(r3)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x3C
-	  lfs       f3, 0x88(r5)
-	  b         .loc_0x58
+	f32 scale = 1.0f; // i guess they were playing around with this?
+	f32 max   = pikiMgr->mPikiParms->mPikiParms.mMaxLeafMoveSpeed() * scale;
+	if (AIConstant::_instance->mConstants.mDoScaleHappaMoveSpeed() && mHappa == Flower) {
+		max = pikiMgr->mPikiParms->mPikiParms.mMaxFlowerMoveSpeed();
+	} else if (AIConstant::_instance->mConstants.mDoScaleHappaMoveSpeed() && mHappa == Bud) {
+		max = pikiMgr->mPikiParms->mPikiParms.mMaxBudMoveSpeed();
+	}
 
-	.loc_0x3C:
-	  lwz       r0, 0x0(r6)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x58
-	  lwz       r0, 0x520(r3)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x58
-	  lfs       f3, 0x98(r5)
+	f32 min = pikiMgr->mPikiParms->mPikiParms.mMinMoveSpeed() * scale;
 
-	.loc_0x58:
-	  lfs       f2, -0x6A20(r2)
-	  lfs       f0, 0x68(r5)
-	  fmuls     f2, f2, f0
-	  fsubs     f0, f3, f2
-	  fmuls     f0, f1, f0
-	  fadds     f1, f2, f0
-	  blr
-	*/
+	return (max - min) * speedRatio + min;
 }
 
 /*
@@ -5272,64 +4380,19 @@ f32 Piki::getSpeed(f32)
  * Address:	800CBDD8
  * Size:	0000C4
  */
-void Piki::setSpeed(f32, Vector3f&)
+void Piki::setSpeed(f32 speedRatio, Vector3f& direction)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x78(r1)
-	  lwz       r6, 0x3068(r13)
-	  lwz       r5, 0x2F80(r13)
-	  lwz       r6, 0x68(r6)
-	  addi      r7, r5, 0x110
-	  lfs       f3, -0x6A20(r2)
-	  lfs       f0, 0x68(r6)
-	  lwz       r0, 0x0(r7)
-	  lfs       f2, 0x78(r6)
-	  fmuls     f4, f3, f0
-	  cmpwi     r0, 0
-	  fmuls     f0, f3, f2
-	  beq-      .loc_0x48
-	  lwz       r0, 0x520(r3)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x48
-	  lfs       f0, 0x88(r6)
-	  b         .loc_0x64
+	f32 scale = 1.0f; // i guess they were playing around with this?
+	f32 max   = pikiMgr->mPikiParms->mPikiParms.mMaxLeafMoveSpeed() * scale;
+	f32 min   = pikiMgr->mPikiParms->mPikiParms.mMinMoveSpeed() * scale;
+	if (AIConstant::_instance->mConstants.mDoScaleHappaMoveSpeed() && mHappa == Flower) {
+		max = pikiMgr->mPikiParms->mPikiParms.mMaxFlowerMoveSpeed();
+	} else if (AIConstant::_instance->mConstants.mDoScaleHappaMoveSpeed() && mHappa == Bud) {
+		max = pikiMgr->mPikiParms->mPikiParms.mMaxBudMoveSpeed();
+	}
 
-	.loc_0x48:
-	  lwz       r0, 0x0(r7)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x64
-	  lwz       r0, 0x520(r3)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x64
-	  lfs       f0, 0x98(r6)
-
-	.loc_0x64:
-	  fsubs     f0, f0, f4
-	  fmuls     f0, f1, f0
-	  fadds     f0, f4, f0
-	  stfs      f0, 0x488(r3)
-	  lfs       f2, 0x488(r3)
-	  lfs       f0, 0x0(r4)
-	  lfs       f1, 0x8(r4)
-	  fmuls     f0, f0, f2
-	  fmuls     f1, f1, f2
-	  stfs      f0, 0x48(r1)
-	  lfs       f0, 0x48(r1)
-	  stfs      f0, 0x68(r1)
-	  lfs       f0, 0x4(r4)
-	  fmuls     f0, f0, f2
-	  stfs      f0, 0x6C(r1)
-	  stfs      f1, 0x70(r1)
-	  lwz       r4, 0x68(r1)
-	  lwz       r0, 0x6C(r1)
-	  stw       r4, 0xA4(r3)
-	  stw       r0, 0xA8(r3)
-	  lwz       r0, 0x70(r1)
-	  stw       r0, 0xAC(r3)
-	  addi      r1, r1, 0x78
-	  blr
-	*/
+	mMoveSpeed      = (max - min) * speedRatio + min;
+	mTargetVelocity = mMoveSpeed * direction;
 }
 
 /*
@@ -5337,70 +4400,20 @@ void Piki::setSpeed(f32, Vector3f&)
  * Address:	800CBE9C
  * Size:	0000DC
  */
-void Piki::setSpeed(f32, f32)
+void Piki::setSpeed(f32 speedRatio, f32 angle)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stfd      f31, 0x68(r1)
-	  stfd      f30, 0x60(r1)
-	  fmr       f30, f2
-	  stw       r31, 0x5C(r1)
-	  mr        r31, r3
-	  lwz       r5, 0x3068(r13)
-	  lwz       r4, 0x2F80(r13)
-	  lwz       r5, 0x68(r5)
-	  lwzu      r0, 0x110(r4)
-	  lfs       f2, -0x6A20(r2)
-	  lfs       f0, 0x78(r5)
-	  cmpwi     r0, 0
-	  fmuls     f3, f2, f0
-	  beq-      .loc_0x58
-	  lwz       r0, 0x520(r31)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x58
-	  lfs       f3, 0x88(r5)
-	  b         .loc_0x74
+	f32 scale = 1.0f; // i guess they were playing around with this?
+	f32 max   = pikiMgr->mPikiParms->mPikiParms.mMaxLeafMoveSpeed() * scale;
+	if (AIConstant::_instance->mConstants.mDoScaleHappaMoveSpeed() && mHappa == Flower) {
+		max = pikiMgr->mPikiParms->mPikiParms.mMaxFlowerMoveSpeed();
+	} else if (AIConstant::_instance->mConstants.mDoScaleHappaMoveSpeed() && mHappa == Bud) {
+		max = pikiMgr->mPikiParms->mPikiParms.mMaxBudMoveSpeed();
+	}
 
-	.loc_0x58:
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x74
-	  lwz       r0, 0x520(r31)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x74
-	  lfs       f3, 0x98(r5)
+	f32 min = pikiMgr->mPikiParms->mPikiParms.mMinMoveSpeed() * scale;
 
-	.loc_0x74:
-	  lfs       f2, -0x6A20(r2)
-	  lfs       f0, 0x68(r5)
-	  fmuls     f2, f2, f0
-	  fsubs     f0, f3, f2
-	  fmuls     f0, f1, f0
-	  fmr       f1, f30
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x488(r31)
-	  bl        0x14FDB8
-	  lfs       f0, 0x488(r31)
-	  fmuls     f31, f0, f1
-	  fmr       f1, f30
-	  bl        0x14FC14
-	  lfs       f0, 0x488(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, -0x4284(r13)
-	  stfs      f0, 0xA8(r31)
-	  stfs      f31, 0xAC(r31)
-	  lwz       r0, 0x74(r1)
-	  lfd       f31, 0x68(r1)
-	  lfd       f30, 0x60(r1)
-	  lwz       r31, 0x5C(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	mMoveSpeed = (max - min) * speedRatio + min;
+	mTargetVelocity.set(mMoveSpeed * cosf(angle), 0.0f, mMoveSpeed * sinf(angle));
 }
 
 /*
@@ -5410,19 +4423,10 @@ void Piki::setSpeed(f32, f32)
  */
 f32 Piki::getSize()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x52C(r3)
-	  lwz       r0, 0x4(r4)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x18
-	  lfs       f1, -0x69F0(r2)
-	  blr
-
-	.loc_0x18:
-	  lfs       f1, 0x4F4(r3)
-	  blr
-	*/
+	if (getState() == PIKISTATE_Bury) {
+		return 2.0f;
+	}
+	return mPikiSize;
 }
 
 /*
@@ -5432,32 +4436,14 @@ f32 Piki::getSize()
  */
 f32 Piki::getiMass()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x52C(r3)
-	  lwz       r3, 0x4(r3)
-	  cmpwi     r3, 0x14
-	  beq-      .loc_0x18
-	  cmpwi     r3, 0x15
-	  bne-      .loc_0x20
-
-	.loc_0x18:
-	  lfs       f1, -0x69F0(r2)
-	  blr
-
-	.loc_0x20:
-	  subi      r0, r3, 0x1
-	  cmplwi    r0, 0x1
-	  bgt-      .loc_0x34
-	  lfs       f1, -0x6A48(r2)
-	  blr
-
-	.loc_0x34:
-	  lwz       r3, 0x3068(r13)
-	  lwz       r3, 0x68(r3)
-	  lfs       f1, 0x268(r3)
-	  blr
-	*/
+	int state = getState();
+	if (state == PIKISTATE_Push || state == PIKISTATE_PushPiki) {
+		return 2.0f;
+	}
+	if (state == PIKISTATE_Grow || state == PIKISTATE_Bury) {
+		return 0.0f;
+	}
+	return pikiMgr->mPikiParms->mPikiParms._25C();
 }
 
 /*
@@ -5465,37 +4451,11 @@ f32 Piki::getiMass()
  * Address:	800CBFDC
  * Size:	000068
  */
-void Piki::resetPosition(Vector3f&)
+void Piki::resetPosition(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0x41390
-	  lwz       r3, 0x0(r31)
-	  lwz       r0, 0x4(r31)
-	  stw       r3, 0x44C(r30)
-	  stw       r0, 0x450(r30)
-	  lwz       r0, 0x8(r31)
-	  stw       r0, 0x454(r30)
-	  lwz       r3, 0x0(r31)
-	  lwz       r0, 0x4(r31)
-	  stw       r3, 0x464(r30)
-	  stw       r0, 0x468(r30)
-	  lwz       r0, 0x8(r31)
-	  stw       r0, 0x46C(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Creature::resetPosition(pos);
+	mShadowPos = pos;
+	mEffectPos = pos;
 }
 
 /*
@@ -5503,7 +4463,7 @@ void Piki::resetPosition(Vector3f&)
  * Address:	800CC044
  * Size:	0002EC
  */
-void Piki::init(Navi*)
+void Piki::init(Navi* navi)
 {
 	/*
 	.loc_0x0:
@@ -5711,41 +4671,17 @@ void Piki::init(Navi*)
 
 /*
  * --INFO--
- * Address:	800CC330
- * Size:	000004
- */
-void Piki::initBirth()
-{
-}
-
-/*
- * --INFO--
  * Address:	800CC334
  * Size:	000038
  */
 bool Piki::isAlive()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x52C(r3)
-	  lwz       r0, 0x4(r4)
-	  cmpwi     r0, 0x6
-	  beq-      .loc_0x18
-	  cmpwi     r0, 0x7
-	  bne-      .loc_0x20
+	int state = getState();
+	if (state == PIKISTATE_Dying || state == PIKISTATE_Dead) {
+		return false;
+	}
 
-	.loc_0x18:
-	  li        r3, 0
-	  blr
-
-	.loc_0x20:
-	  lfs       f1, 0x58(r3)
-	  lfs       f0, -0x6A48(r2)
-	  fcmpo     cr0, f1, f0
-	  mfcr      r0
-	  rlwinm    r3,r0,2,31,31
-	  blr
-	*/
+	return Creature::isAlive();
 }
 
 /*
@@ -5755,14 +4691,7 @@ bool Piki::isAlive()
  */
 bool Piki::isFruit()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x520(r3)
-	  subfic    r0, r0, 0x2
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
+	return mHappa == Flower;
 }
 
 /*
@@ -5772,6 +4701,7 @@ bool Piki::isFruit()
  */
 void Piki::updateLookCreature()
 {
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -6024,46 +4954,14 @@ void Piki::updateLookCreature()
 
 /*
  * --INFO--
- * Address:	800CC6CC
- * Size:	000008
- */
-bool PikiState::useLookUpdate()
-{
-	return true;
-}
-
-/*
- * --INFO--
  * Address:	800CC6D4
  * Size:	000050
  */
 void Piki::doAnimation()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        .loc_0x50
-	  lwz       r4, 0x94(r31)
-	  addi      r3, r31, 0x354
-	  lwz       r0, 0x98(r31)
-	  stw       r4, 0x440(r31)
-	  stw       r0, 0x444(r31)
-	  lwz       r0, 0x9C(r31)
-	  stw       r0, 0x448(r31)
-	  lfs       f1, 0x47C(r31)
-	  bl        0x53438
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x50:
-	*/
+	updateWalkAnimation();
+	_440 = mPosition;
+	mPikiAnimMgr.updateAnimation(_47C);
 }
 
 /*
@@ -6783,50 +5681,12 @@ void Piki::realAI()
 
 /*
  * --INFO--
- * Address:	800CD0A8
- * Size:	00003C
- */
-void StateMachine<Piki>::exec(Piki*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x52C(r4)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800CD0E4
- * Size:	000004
- */
-void AState<Piki>::exec(Piki*)
-{
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	00002C
  */
 char* Piki::getCurrentMotionName()
 {
-	// UNUSED FUNCTION
+	return mPikiAnimMgr.getUpperAnimator().getCurrentMotionName();
 }
 
 /*
@@ -6836,78 +5696,25 @@ char* Piki::getCurrentMotionName()
  */
 void Piki::doAI()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x52C(r3)
-	  lwz       r3, 0x4(r3)
-	  cmpwi     r3, 0x22
-	  bne-      .loc_0x58
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x69C0(r2)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, -0x6A04(r2)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0xA0(r31)
-	  fmuls     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xA0(r31)
-	  lfs       f1, 0xA0(r31)
-	  bl        -0x94BAC
-	  stfs      f1, 0xA0(r31)
-	  b         .loc_0xD0
+	int state = getState();
+	if (state == PIKISTATE_Unk34) {
+		mDirection += 1.2f * (HALF_PI * gsys->getFrameTime());
+		mDirection = roundAng(mDirection);
+		return;
+	}
 
-	.loc_0x58:
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,26,26
-	  bne-      .loc_0xB8
-	  cmpwi     r3, 0x1C
-	  beq-      .loc_0x74
-	  cmpwi     r3, 0x13
-	  bne-      .loc_0x88
+	if (!isCreatureFlag(CF_Unk6)) {
+		if (state == PIKISTATE_Absorb || state == PIKISTATE_GrowUp) {
+			dump();
+			ERROR(" state is ABSORB or GROWUP!!!!!!!!!!\n");
+		}
 
-	.loc_0x74:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC8(r12)
-	  mtlr      r12
-	  blrl
+		if (AIPerf::optLevel <= 2 || _174.updatable()) {
+			mActiveAction->exec();
+		}
+	}
 
-	.loc_0x88:
-	  lwz       r0, -0x5F04(r13)
-	  cmpwi     r0, 0x2
-	  ble-      .loc_0xA4
-	  addi      r3, r31, 0x174
-	  bl        -0x27D28
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xB8
-
-	.loc_0xA4:
-	  lwz       r3, 0x4F8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xB8:
-	  lwz       r3, 0x500(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xD0
-	  bl        0x171C0
-	  li        r0, 0
-	  stw       r0, 0x500(r31)
-
-	.loc_0xD0:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	_500.reset();
 }
 
 /*
@@ -7073,6 +5880,16 @@ void Piki::changeMode(int, Navi*)
 	*/
 }
 
+char* _standStr[] = { "GROUND", "TEKIPLAT", "PLAT", "AIR" };
+
+char* _modeStr[] = {
+	"FREE_MODE",   "FORMATION_MODE", "ATTACK_MODE",    "NUKU_MODE",      "GUARD_MODE",   "PICK_MODE",   "DECOY_MODE",
+	"ARROW_MODE",  "CARRY_MODE",     "TRANSPORT_MODE", "ROPE_MODE",      "ENTER_MODE",   "EXIT_MODE",   "BREAKWALL_MODE",
+	"MINE_MODE",   "KINOKO_MODE",    "BRIDGE_MODE",    "PUSHSTONE_MODE", "PUTBOMB_MODE", "RESCUE_MODE", "WEED_MODE",
+	"PEBBLE_MODE", "BOMAKE_MODE",    "BO_MODE",        "WARRIOR_MODE",
+};
+static char* _colorNames[] = { "blue", "red", "yellow" };
+
 /*
  * --INFO--
  * Address:	800CD418
@@ -7080,348 +5897,112 @@ void Piki::changeMode(int, Navi*)
  */
 void Piki::dump()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x168(r1)
-	  stw       r31, 0x164(r1)
-	  mr        r31, r3
-	  stw       r30, 0x160(r1)
-	  subi      r30, r4, 0x7BD8
-	  lwz       r3, 0x3178(r13)
-	  bl        0xAFAB8
-	  lbz       r0, 0x3060(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x160
-	  lwz       r0, 0x52C(r31)
-	  cmplwi    r0, 0
-	  lwz       r0, 0x39C(r31)
-	  cmpwi     r0, 0
-	  lwz       r0, 0x3F0(r31)
-	  cmpwi     r0, 0
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  lwz       r0, 0x230(r3)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x78
-	  lwz       r0, 0x504(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x78
-	  lwz       r3, 0x3120(r13)
-	  li        r4, 0
-	  bl        0x49FAC
+	// they probably used a lot more temps and a lot less ternaries, whatever.
+	u32 badCompiler[4];
 
-	.loc_0x78:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x84(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x52C(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x4F8(r31)
-	  lha       r5, 0x8(r4)
-	  cmpwi     r5, -0x1
-	  bne-      .loc_0xF4
-	  li        r0, 0
-	  b         .loc_0x100
+	rumbleMgr->stop();
+	if (directDumpMode) {
+		PRINT("--- piki %x (color=%s) info fl %d col %d---\n", this, _colorNames[mColor], mHappa, mColor);
+		PRINT(" * state     (%s:%d)\n", mFSM->getCurrName(this), getState());
+		PRINT(" * mode      (%s:%d)\n", _modeStr[mMode], mMode);
+		PRINT(" * callable = %s\n", mIsCallable ? "true" : "false");
 
-	.loc_0xF4:
-	  lwz       r3, 0x4(r4)
-	  rlwinm    r0,r5,3,0,28
-	  lwzx      r0, r3, r0
+		// this feels like it should be a ternary but that spawns inline calls.
+		char* actionName;
+		if (mActiveAction->getCurrAction()) {
+			actionName = mActiveAction->getCurrAction()->getName();
+		} else {
+			actionName = "no curr action";
+		}
+		PRINT(" * ai        (%s:%d)        suspend=%s\n", actionName, mActiveAction->mCurrActionIdx,
+		      mActiveAction->mIsSuspended ? "true" : "false");
+		PRINT(" * motion    <%s/%s>\n", mPikiAnimMgr.getUpperAnimator().getCurrentMotionName(),
+		      mPikiAnimMgr.getLowerAnimator().getCurrentMotionName());
 
-	.loc_0x100:
-	  cmplwi    r0, 0
-	  beq-      .loc_0x118
-	  lhz       r0, 0x4FC(r31)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x118
-	  cmpwi     r5, -0x1
+		if (flowCont._230 == 1) {
+			char* naviName;
+			if (mNavi) {
+				naviName = (mNavi == naviMgr->getNavi(0)) ? "player1" : "player2";
+			} else {
+				naviName = "no-player";
+			}
 
-	.loc_0x118:
-	  lwz       r3, 0x188(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x128
-	  bl        -0x456B8
+			PRINT(" * navi = %s : playerID = %d\n", naviName, mPlayerId);
+		}
 
-	.loc_0x128:
-	  mr        r3, r31
-	  bl        -0x42DB8
-	  lwz       r3, 0x4F8(r31)
-	  lha       r0, 0x8(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x238
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r0,3,0,28
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x238
+		PRINT(" aiSTOP = %s\n", isAIActive() ? "false" : "true");
+		PRINT(" onground = %s\n", isCreatureFlag(CF_IsOnGround) ? "true" : "false");
+		PRINT(" vel(%.1f,%.1f) velocity(%.1f,%.1f)\n", mVelocity.x, mVelocity.z, mTargetVelocity.x, mTargetVelocity.z);
+		PRINT(" inDamage = %s\n", mIsBeingDamaged ? "true" : "false");
+		PRINT(" flags = %x : isVisible=%s isAlive=%s isAtari=%s\n", isVisible() ? "true" : "false", isAlive() ? "true" : "false",
+		      isAtari() ? "true" : "false");
+		PRINT(" kinoko = %s\n", isKinoko() ? "yes" : "no");
+		PRINT(" emotion = %d\n", mEmotion);
+		static_cast<PikiState*>(getCurrState())->dump();
+		if (mActiveAction->getCurrAction() && mMode == PikiMode::FormationMode) {
+			ActCrowd* action = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
 
-	.loc_0x160:
-	  lwz       r0, 0x52C(r31)
-	  cmplwi    r0, 0
-	  lwz       r0, 0x39C(r31)
-	  cmpwi     r0, 0
-	  lwz       r0, 0x3F0(r31)
-	  cmpwi     r0, 0
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  lwz       r0, 0x230(r3)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x1A4
-	  lwz       r0, 0x504(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1A4
-	  lwz       r3, 0x3120(r13)
-	  li        r4, 0
-	  bl        0x49E80
+			PRINT("<form> md %d koke %s route %s wait %s st %d", action->_2E, action->_64 ? "Y" : "N", action->_7F ? "Y" : "N",
+			      action->_7D ? "Y" : "N", action->_2C);
+		}
 
-	.loc_0x1A4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x84(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x52C(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x188(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x204
-	  bl        -0x45794
+		PRINT(" _stickObject=%x(%d) : _stickToObject=%s\n", getStickObject(), getStickObject() ? getStickObject()->mObjType : -1,
+		      mStickPart ? mStickPart->getTypeString() : "none");
+		PRINT(" floorCollTri=%x\n", mFloorTri);
+		PRINT(" standType = %s fluteBooking = %s\n", _standStr[getStandType()], mIsWhistlePending ? "true" : "-");
+		PRINT(" wantToStick = %s\n", mWantToStick ? "true" : "false");
 
-	.loc_0x204:
-	  mr        r3, r31
-	  bl        -0x42E94
-	  lwz       r3, 0x4F8(r31)
-	  lha       r0, 0x8(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x238
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r0,3,0,28
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
+		// why not use the inline to get it, idk
+		if (mActiveAction->mCurrActionIdx != -1) {
+			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].mAction->dump();
+		}
 
-	.loc_0x238:
-	  lwz       r0, 0x16C(r1)
-	  lwz       r31, 0x164(r1)
-	  lwz       r30, 0x160(r1)
-	  addi      r1, r1, 0x168
-	  mtlr      r0
-	  blr
-	*/
-}
+	} else {
+		PRINT("--- piki %x (color=%s) info --\n", this, _colorNames[mColor]);
+		PRINT(" * state     (%s:%d)\n", mFSM->getCurrName(this), getState());
+		PRINT(" * mode      (%s:%d)\n", _modeStr[mMode], mMode);
+		PRINT(" * callable = %s\n", mIsCallable ? "true" : "false");
 
-/*
- * --INFO--
- * Address:	800CD668
- * Size:	00001C
- */
-Vector3f Piki::getShadowPos()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x44C(r4)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x450(r4)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x454(r4)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
-}
+		// this feels like it should be a ternary but that spawns inline calls.
+		char* actionName;
+		if (mActiveAction->getCurrAction()) {
+			actionName = mActiveAction->getCurrAction()->getName();
+		} else {
+			actionName = "no curr action";
+		}
+		PRINT(" * ai        (%s:%d)        suspend=%s\n", actionName, mActiveAction->mCurrActionIdx,
+		      mActiveAction->mIsSuspended ? "true" : "false");
+		PRINT(" * motion    <%s/%s>\n", mPikiAnimMgr.getUpperAnimator().getCurrentMotionName(),
+		      mPikiAnimMgr.getLowerAnimator().getCurrentMotionName());
 
-/*
- * --INFO--
- * Address:	800CD684
- * Size:	000004
- */
-void Piki::setLeaves(int)
-{
-}
+		if (flowCont._230 == 1) {
+			char* naviName;
+			if (mNavi) {
+				naviName = (mNavi == naviMgr->getNavi(0)) ? "player1" : "player2";
+			} else {
+				naviName = "no-player";
+			}
 
-/*
- * --INFO--
- * Address:	800CD688
- * Size:	000004
- */
-void StateMachine<Piki>::init(Piki*)
-{
-}
+			PRINT(" * navi = %s : playerID = %d\n", naviName, mPlayerId);
+		}
 
-/*
- * --INFO--
- * Address:	800CD68C
- * Size:	0000B0
- */
-void StateMachine<Piki>::transit(Piki*, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r5,2,0,29
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  mr        r29, r4
-	  stw       r28, 0x18(r1)
-	  mr        r28, r3
-	  lwz       r31, 0x52C(r4)
-	  lwz       r3, 0x14(r3)
-	  cmplwi    r31, 0
-	  lwzx      r30, r3, r0
-	  mr        r3, r31
-	  beq-      .loc_0x5C
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r29
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x4(r31)
-	  stw       r0, 0x18(r28)
+		PRINT(" aiSTOP = %s\n", isAIActive() ? "false" : "true");
+		PRINT(" onground = %s\n", isCreatureFlag(CF_IsOnGround) ? "true" : "false");
+		PRINT(" vel(%.1f,%.1f) velocity(%.1f,%.1f)\n", mVelocity.x, mVelocity.z, mTargetVelocity.x, mTargetVelocity.z);
+		PRINT(" inDamage = %s\n", mIsBeingDamaged ? "true" : "false");
+		PRINT(" flags = %x : isVisible=%s isAlive=%s isAtari=%s\n", isVisible() ? "true" : "false", isAlive() ? "true" : "false",
+		      isAtari() ? "true" : "false");
+		PRINT(" emotion = %d\n", mEmotion);
+		static_cast<PikiState*>(getCurrState())->dump();
+		PRINT(" _stickObject=%x(%d) : _stickToObject=%s\n", getStickObject(), getStickObject() ? getStickObject()->mObjType : -1,
+		      mStickPart ? mStickPart->getTypeString() : "none");
+		PRINT(" floorCollTri=%x\n", mFloorTri);
+		PRINT(" standType = %s fluteBooking = %s\n", _standStr[getStandType()], mIsWhistlePending ? "true" : "-");
+		PRINT(" wantToStick = %s\n", mWantToStick ? "true" : "false");
 
-	.loc_0x5C:
-	  lwz       r0, 0xC(r28)
-	  cmpw      r30, r0
-	  blt-      .loc_0x6C
-
-	.loc_0x68:
-	  b         .loc_0x68
-
-	.loc_0x6C:
-	  lwz       r3, 0x4(r28)
-	  rlwinm    r0,r30,2,0,29
-	  addi      r4, r29, 0
-	  lwzx      r3, r3, r0
-	  stw       r3, 0x52C(r29)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800CD73C
- * Size:	000004
- */
-void AState<Piki>::init(Piki*)
-{
-}
-
-/*
- * --INFO--
- * Address:	800CD740
- * Size:	000004
- */
-void AState<Piki>::cleanup(Piki*)
-{
-}
-
-/*
- * --INFO--
- * Address:	800CD744
- * Size:	0000B8
- */
-void __sinit_piki_cpp(void)
-{
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803D
-	  addi      r8, r3, 0x1E18
-	  li        r7, 0
-	  stb       r7, 0x0(r8)
-	  li        r0, 0x32
-	  li        r6, 0xFF
-	  stb       r0, 0x1(r8)
-	  li        r5, 0x1E
-	  li        r4, 0xD2
-	  stb       r6, 0x2(r8)
-	  li        r3, 0x28
-	  li        r0, 0x50
-	  stb       r6, 0x3(r8)
-	  stb       r6, 0x4(r8)
-	  stb       r5, 0x5(r8)
-	  stb       r7, 0x6(r8)
-	  stb       r6, 0x7(r8)
-	  stb       r6, 0x8(r8)
-	  stb       r4, 0x9(r8)
-	  stb       r7, 0xA(r8)
-	  stb       r6, 0xB(r8)
-	  stb       r6, 0xC(r8)
-	  stb       r6, 0xD(r8)
-	  stb       r6, 0xE(r8)
-	  stb       r7, 0xF(r8)
-	  stb       r3, 0x18(r8)
-	  stb       r7, 0x19(r8)
-	  stb       r0, 0x1A(r8)
-	  stb       r6, 0x1B(r8)
-	  stb       r3, 0x1C(r8)
-	  stb       r7, 0x1D(r8)
-	  stb       r0, 0x1E(r8)
-	  stb       r6, 0x1F(r8)
-	  stb       r3, 0x20(r8)
-	  stb       r7, 0x21(r8)
-	  stb       r0, 0x22(r8)
-	  stb       r6, 0x23(r8)
-	  stb       r3, 0x24(r8)
-	  stb       r7, 0x25(r8)
-	  stb       r0, 0x26(r8)
-	  stb       r6, 0x27(r8)
-	  stb       r6, 0x28(r8)
-	  stb       r6, 0x29(r8)
-	  stb       r6, 0x2A(r8)
-	  stb       r7, 0x2B(r8)
-	  blr
-	*/
+		// why not use the inline to get it, idk
+		if (mActiveAction->mCurrActionIdx != -1) {
+			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].mAction->dump();
+		}
+	}
 }

@@ -52,9 +52,9 @@ ActFreeSelect::ActFreeSelect(Piki* piki)
 void ActFreeSelect::init(Creature* creature)
 {
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Wait, mActor), PaniMotionInfo(PIKIANIM_Wait));
-	mActionTimer    = 2.0f + gsys->getFrameTime();
-	mIsTimerActive  = 1;
-	mChildActionIdx = CHILD_NULL;
+	mActionTimer   = 2.0f + gsys->getFrameTime();
+	mIsTimerActive = 1;
+	mCurrActionIdx = CHILD_NULL;
 
 	_1C                  = PI * (randBalanced(0.5f)) / 3.0f;
 	mIsChildActionActive = 0;
@@ -68,13 +68,13 @@ void ActFreeSelect::init(Creature* creature)
  */
 void ActFreeSelect::finishRest()
 {
-	switch (mChildActionIdx) {
+	switch (mCurrActionIdx) {
 	case CHILD_BoreRest:
-		static_cast<ActBoreRest*>(mChildActions[mChildActionIdx].mAction)->_18 = 1;
-		mIsChildActionActive                                                   = 1;
+		static_cast<ActBoreRest*>(mChildActions[mCurrActionIdx].mAction)->_18 = 1;
+		mIsChildActionActive                                                  = 1;
 		break;
 	case CHILD_BoreOneshot:
-		static_cast<ActBoreOneshot*>(mChildActions[mChildActionIdx].mAction)->finish();
+		static_cast<ActBoreOneshot*>(mChildActions[mCurrActionIdx].mAction)->finish();
 		mIsChildActionActive = 1;
 		break;
 	default:
@@ -95,7 +95,7 @@ int ActFreeSelect::exec()
 	}
 
 	if (mIsChildActionActive) {
-		return mChildActions[mChildActionIdx].mAction->exec();
+		return mChildActions[mCurrActionIdx].mAction->exec();
 	}
 
 	if (mIsTimerActive) {
@@ -105,7 +105,7 @@ int ActFreeSelect::exec()
 			determine();
 		}
 	} else {
-		if (mChildActions[mChildActionIdx].mAction->exec()) {
+		if (mChildActions[mCurrActionIdx].mAction->exec()) {
 			init(nullptr);
 		}
 	}
@@ -130,14 +130,14 @@ void ActFreeSelect::cleanup()
 void ActFreeSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 {
 	if (mIsTimerActive) {
-		mIsTimerActive  = 0;
-		mChildActionIdx = CHILD_Watch;
-		mChildActions[mChildActionIdx].initialise(msg->mTarget);
+		mIsTimerActive = 0;
+		mCurrActionIdx = CHILD_Watch;
+		mChildActions[mCurrActionIdx].initialise(msg->mTarget);
 		return;
 	}
 
-	if (mChildActionIdx == CHILD_BoreTalk) {
-		ActBoreTalk* boreTalk = static_cast<ActBoreTalk*>(mChildActions[mChildActionIdx].mAction);
+	if (mCurrActionIdx == CHILD_BoreTalk) {
+		ActBoreTalk* boreTalk = static_cast<ActBoreTalk*>(mChildActions[mCurrActionIdx].mAction);
 		boreTalk->_18         = 0;
 		boreTalk->mTarget     = msg->mTarget;
 	}
@@ -168,8 +168,8 @@ void ActFreeSelect::determine()
 		randIdx = CHILD_Watch;
 	}
 
-	mIsTimerActive  = 0;
-	mChildActionIdx = randIdx;
+	mIsTimerActive = 0;
+	mCurrActionIdx = randIdx;
 
 	Creature* target = nullptr;
 
@@ -211,7 +211,7 @@ void ActFreeSelect::determine()
 		break;
 	}
 
-	mChildActions[mChildActionIdx].initialise(target);
+	mChildActions[mCurrActionIdx].initialise(target);
 
 	/*
 	.loc_0x0:
@@ -455,9 +455,9 @@ ActBoreSelect::ActBoreSelect(Piki* piki)
 void ActBoreSelect::init(Creature* creature)
 {
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Wait, mActor), PaniMotionInfo(PIKIANIM_Wait));
-	mActionTimer    = 2.0f + gsys->getFrameTime();
-	mIsTimerActive  = 1;
-	mChildActionIdx = CHILD_NULL;
+	mActionTimer   = 2.0f + gsys->getFrameTime();
+	mIsTimerActive = 1;
+	mCurrActionIdx = CHILD_NULL;
 
 	_1C                  = PI * (randBalanced(0.5f)) / 3.0f;
 	mIsChildActionActive = 0;
@@ -482,7 +482,7 @@ void ActBoreSelect::stop()
 int ActBoreSelect::exec()
 {
 	if (mIsChildActionActive) {
-		return mChildActions[mChildActionIdx].mAction->exec();
+		return mChildActions[mCurrActionIdx].mAction->exec();
 	}
 
 	if (mActor->mNavi->_738 < 1.0f || _1A) {
@@ -490,14 +490,14 @@ int ActBoreSelect::exec()
 			return ACTOUT_Success;
 		}
 
-		if (mChildActionIdx == CHILD_BoreRest) {
-			static_cast<ActBoreRest*>(mChildActions[mChildActionIdx].mAction)->_18 = 1;
-			mIsChildActionActive                                                   = true;
+		if (mCurrActionIdx == CHILD_BoreRest) {
+			static_cast<ActBoreRest*>(mChildActions[mCurrActionIdx].mAction)->_18 = 1;
+			mIsChildActionActive                                                  = true;
 			return ACTOUT_Continue;
 		}
 
-		if (mChildActionIdx == CHILD_BoreOneshot) {
-			static_cast<ActBoreOneshot*>(mChildActions[mChildActionIdx].mAction)->finish();
+		if (mCurrActionIdx == CHILD_BoreOneshot) {
+			static_cast<ActBoreOneshot*>(mChildActions[mCurrActionIdx].mAction)->finish();
 			mIsChildActionActive = true;
 			return ACTOUT_Continue;
 		}
@@ -511,7 +511,7 @@ int ActBoreSelect::exec()
 			determine();
 		}
 	} else {
-		if (mChildActions[mChildActionIdx].mAction->exec()) {
+		if (mChildActions[mCurrActionIdx].mAction->exec()) {
 			init(nullptr);
 		}
 	}
@@ -654,14 +654,14 @@ void ActBoreSelect::cleanup()
 void ActBoreSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 {
 	if (mIsTimerActive) {
-		mIsTimerActive  = 0;
-		mChildActionIdx = CHILD_Watch;
-		mChildActions[mChildActionIdx].initialise(msg->mTarget);
+		mIsTimerActive = 0;
+		mCurrActionIdx = CHILD_Watch;
+		mChildActions[mCurrActionIdx].initialise(msg->mTarget);
 		return;
 	}
 
-	if (mChildActionIdx == CHILD_BoreTalk) {
-		ActBoreTalk* boreTalk = static_cast<ActBoreTalk*>(mChildActions[mChildActionIdx].mAction);
+	if (mCurrActionIdx == CHILD_BoreTalk) {
+		ActBoreTalk* boreTalk = static_cast<ActBoreTalk*>(mChildActions[mCurrActionIdx].mAction);
 		boreTalk->_18         = 0;
 		boreTalk->mTarget     = msg->mTarget;
 	}
@@ -674,8 +674,8 @@ void ActBoreSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
  */
 void ActBoreSelect::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	if (mChildActionIdx != CHILD_NULL) {
-		mChildActions[mChildActionIdx].mAction->procAnimMsg(piki, msg);
+	if (mCurrActionIdx != CHILD_NULL) {
+		mChildActions[mCurrActionIdx].mAction->procAnimMsg(piki, msg);
 		return;
 	}
 
@@ -711,8 +711,8 @@ void ActBoreSelect::determine()
 		randIdx = CHILD_Watch;
 	}
 
-	mIsTimerActive  = 0;
-	mChildActionIdx = randIdx;
+	mIsTimerActive = 0;
+	mCurrActionIdx = randIdx;
 
 	Creature* target = nullptr;
 
@@ -754,7 +754,7 @@ void ActBoreSelect::determine()
 		break;
 	}
 
-	mChildActions[mChildActionIdx].initialise(target);
+	mChildActions[mCurrActionIdx].initialise(target);
 	/*
 	.loc_0x0:
 	  mflr      r0

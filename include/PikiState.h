@@ -61,24 +61,23 @@ struct PikiStateMachine : public StateMachine<Piki> {
  * @brief TODO
  */
 struct PikiState : public AState<Piki> {
-	inline PikiState(int stateID, const char* name)
+	PikiState(int stateID, char* name)
 	    : AState(stateID)
-	    , mName(name)
 	{
+		mName = name;
 	}
 
-	virtual void transit(Piki*, int);       // _4C
-	virtual void stopEffect() { }           // _50
-	virtual void restartEffect() { }        // _54
-	virtual void dump();                    // _58
-	virtual void doDump();                  // _5C
-	virtual bool useLookUpdate();           // _60
-	virtual bool collideAI();               // _64
-	virtual bool freeAI() { return false; } // _68
+	virtual void transit(Piki*, int);             // _4C
+	virtual void stopEffect() { }                 // _50
+	virtual void restartEffect() { }              // _54
+	virtual void dump();                          // _58
+	virtual void doDump();                        // _5C
+	virtual bool useLookUpdate() { return true; } // _60
+	virtual bool collideAI() { return false; }    // _64
+	virtual bool freeAI() { return false; }       // _68
 
 	// _00     = VTBL
-	// _00-_0C = AState
-	const char* mName; // _0C
+	// _00-_10 = AState
 };
 
 /**
@@ -596,7 +595,7 @@ struct PikiPushState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	bool _10; // _10
 };
 
 /**

@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	800E467C
  * Size:	000020
  */
-void RockGen::workable()
+bool RockGen::workable()
 {
 	/*
 	.loc_0x0:
@@ -81,7 +81,7 @@ void RockGen::finishWork()
  * Address:	800E46CC
  * Size:	000020
  */
-void GrassGen::workable()
+bool GrassGen::workable()
 {
 	/*
 	.loc_0x0:

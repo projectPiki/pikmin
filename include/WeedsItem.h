@@ -41,7 +41,7 @@ struct GrassGen : public ItemCreature {
 	virtual void update();             // _E0
 	virtual void refresh(Graphics&);   // _EC
 
-	void workable();
+	bool workable();
 	void startWork();
 	void finishWork();
 	void resolve();
@@ -72,7 +72,7 @@ struct RockGen : public ItemCreature {
 	virtual void update();                    // _E0
 	virtual void refresh(Graphics&);          // _EC
 
-	void workable();
+	bool workable();
 	void startWork();
 	void finishWork();
 	void resolve();

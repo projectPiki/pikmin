@@ -196,8 +196,7 @@ struct SAIState : public AState<AICreature> {
 	virtual void cleanup(AICreature*);       // _40
 
 	// _00     = VTBL
-	// _00-_0C = AState
-	char* mName;               // _0C, probably
+	// _00-_10 = AState
 	SAIArrow mRootArrow;       // _10
 	int mArrowCount;           // _44
 	int mMotionIdx;            // _48

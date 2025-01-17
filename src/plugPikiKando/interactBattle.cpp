@@ -164,8 +164,8 @@ bool InteractSpore::actPiki(Piki* piki)
 
 		piki->mLeaderCreature = kinoko;
 		piki->mActiveAction->abandon(nullptr);
-		piki->mActiveAction->mChildActionIdx = 22;
-		piki->mActiveAction->mChildActions[piki->mActiveAction->mChildActionIdx].initialise(kinoko);
+		piki->mActiveAction->mCurrActionIdx = 22;
+		piki->mActiveAction->mChildActions[piki->mActiveAction->mCurrActionIdx].initialise(kinoko);
 		piki->mFSM->transit(piki, PIKISTATE_KinokoChange);
 		return true;
 	}
@@ -458,8 +458,8 @@ bool InteractSwallow::actPiki(Piki* piki)
 	}
 
 	piki->mActiveAction->abandon(nullptr);
-	piki->mActiveAction->mChildActionIdx = 15;
-	piki->mActiveAction->mChildActions[piki->mActiveAction->mChildActionIdx].initialise(nullptr);
+	piki->mActiveAction->mCurrActionIdx = 15;
+	piki->mActiveAction->mChildActions[piki->mActiveAction->mCurrActionIdx].initialise(nullptr);
 	piki->mMode = 0;
 	if (!mMouthPart) {
 		piki->playEventSound(mOwner, SE_PIKI_EATEN);

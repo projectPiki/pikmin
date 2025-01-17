@@ -33,6 +33,7 @@
         "stackchecker.h": "c",
         "dvdthread.h": "c",
         "ipldec.h": "c",
-        "dsp.h": "c"
+        "dsp.h": "c",
+        "os.h": "c"
     },
 }

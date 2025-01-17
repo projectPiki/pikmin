@@ -30,8 +30,8 @@ static void _Print(char*, ...)
 ActBou::ActBou(Piki* piki)
     : Action(piki, true)
 {
-	mName           = "Bou";
-	mChildActionIdx = -1;
+	mName          = "Bou";
+	mCurrActionIdx = -1;
 }
 
 /*

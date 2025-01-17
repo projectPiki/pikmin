@@ -227,9 +227,13 @@ struct Creature : public RefCountable, public EventTalker {
 		resetCreatureFlag(CF_GravityEnabled);
 	}
 
+	BOOL isFlying() { return isCreatureFlag(CF_IsFlying); }
+
 	void disableAICulling() { resetCreatureFlag(CF_IsAICullingActive); }
 	void enableAICulling() { setCreatureFlag(CF_IsAICullingActive); }
 	bool aiCullable() { return !isCreatureFlag(CF_IsAICullingActive); }
+
+	bool isAIActive() { return !isCreatureFlag(CF_IsAiDisabled); }
 
 	// we're grabbed if we're held by something
 	bool isGrabbed() { return !mHoldingCreature.isNull(); }
@@ -271,13 +275,15 @@ struct Creature : public RefCountable, public EventTalker {
 
 	void disableGroundOffset() { resetCreatureFlag(CF_GroundOffsetEnabled); }
 
+	void setStateDamaged() { mIsBeingDamaged = true; }
+	void resetStateDamaged() { mIsBeingDamaged = false; }
+	bool isDamaged() { return mIsBeingDamaged; }
+
 	/*
 	    DLL inlines to assign/make:
 	    bool insideView();
 	    bool isAIActive();
-	    bool isDamaged();
 	    bool isObjType(int);
-	    BOOL isFlying();
 
 	    f32 calcDistance(Creature&);
 
@@ -299,9 +305,6 @@ struct Creature : public RefCountable, public EventTalker {
 
 	    void inputPosition(Vector3f&);
 	    void outputPosition(Vector3f&);
-
-	    void setStateDamaged();
-	    void resetStateDamaged();
 
 	    void restartAI();
 	    void stopAI();

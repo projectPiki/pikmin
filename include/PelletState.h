@@ -33,15 +33,14 @@ struct PelletStateMachine : public StateMachine<Pellet> {
  * @brief TODO
  */
 struct PelletState : public AState<Pellet> {
-	inline PelletState(int stateID, const char* name)
+	inline PelletState(int stateID, char* name)
 	    : AState(stateID)
-	    , mName(name)
 	{
+		mName = name;
 	}
 
 	// _00     = VTBL
-	// _00-_0C = AState
-	const char* mName; // _0C, probably
+	// _00-_10 = AState
 };
 
 /**

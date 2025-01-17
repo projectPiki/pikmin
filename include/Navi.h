@@ -115,7 +115,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 
 	// _00       = VTBL
 	// _000-_2B8 = Creature
-	// _2B8-_2BC = ptr to PaniAnimKeyListener
+	// _2B8-_2BC = PaniAnimKeyListener
 	// _2BC-_2C4 = PelletView
 	OdoMeter mOdoMeter;                // _2C4
 	u32 _2D4;                          // _2D4
@@ -186,7 +186,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u8 _7FC;                           // _7FC
 	f32 _800;                          // _800
 	u8 _804[0x8];                      // _804, unknown
-	u32 _80C;                          // _80C, unknown
+	int _80C;                          // _80C
 	u32 _810;                          // _810, unknown
 	f32 _814;                          // _814
 	f32 _818;                          // _818

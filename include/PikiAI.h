@@ -131,21 +131,14 @@ struct Action : public Receiver<Piki> {
 	void procMsg(Msg*); // this isn't overridden in the vtable but it exists, idk.
 	void setChildren(int, ...);
 
-	inline Child* getChild(int idx) { return &mChildActions[idx]; }
-	inline Child* getCurrentChild()
-	{
-		if (mChildActionIdx == -1) {
-			return nullptr;
-		} else {
-			return &mChildActions[mChildActionIdx];
-		}
-	}
+	char* getName() { return mName; }
 
-	inline void initialiseChildAction(Creature* creature) { getChild(mChildActionIdx)->initialise(creature); }
+	// ONLY DLL inlines to do:
+	void setName(char*);
 
 	// _00 = VTBL
 	Child* mChildActions; // _04, array of mChildCount Children
-	s16 mChildActionIdx;  // _08
+	s16 mCurrActionIdx;   // _08
 	s16 mChildCount;      // _0A
 	Piki* mActor;         // _0C
 	char* mName;          // _10
@@ -155,7 +148,7 @@ struct Action : public Receiver<Piki> {
  * @brief TODO
  */
 struct AndAction : public Action {
-	inline AndAction(Piki* piki) // TODO: probably
+	AndAction(Piki* piki)
 	    : Action(piki, true)
 	{
 		mOtherCreature = nullptr; // this might be an argument in the ctor, who knows
@@ -214,7 +207,7 @@ struct TopAction : public Action {
 		ObjBore();
 
 		// unused/inlined:
-		void getIndex(int);
+		int getIndex(int);
 		void addBoredom(int, f32);
 		void update();
 
@@ -232,8 +225,8 @@ struct TopAction : public Action {
 		Boredom();
 
 		// unused/inlined:
-		void getIndex(int);
-		void getBoredom(int, int);
+		int getIndex(int);
+		f32 getBoredom(int, int);
 		void addBoredom(int, int, f32);
 		void update();
 		void draw2d(Graphics&, int);
@@ -249,12 +242,12 @@ struct TopAction : public Action {
 
 	virtual void getInfo(char* out) // _60
 	{
-		mChildActions[mChildActionIdx].mAction->getInfo(out);
+		mChildActions[mCurrActionIdx].mAction->getInfo(out);
 	}
 	virtual void draw(Graphics& gfx) // _40
 	{
 		if (_18) {
-			mChildActions[mChildActionIdx].mAction->draw(gfx);
+			mChildActions[mCurrActionIdx].mAction->draw(gfx);
 		}
 	}
 	virtual ~TopAction();         // _44
@@ -269,11 +262,16 @@ struct TopAction : public Action {
 	// unused/inlined:
 	void knowledgeCheck();
 
+	Action* getCurrAction() { return (mCurrActionIdx == -1) ? nullptr : mChildActions[mCurrActionIdx].mAction; }
+
+	// DLL inlines to do:
+	void startAction(int, Creature*);
+
 	// _00     = VTBL
 	// _00-_14 = Action
 	MotionListener* mListener; // _14
 	u8 _18;                    // _18
-	u8 _19;                    // _19
+	bool mIsSuspended;         // _19
 	u8 _1A;                    // _1A
 	int _1C;                   // _1C
 	Creature* _20;             // _20
@@ -737,7 +735,16 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = SlotChangeListner ptr
-	u8 _18[0x80 - 0x18]; // _18, unknown
+	u8 _18[0x2C - 0x18]; // _18, unknown
+	u16 _2C;             // _2C, "md"?
+	u16 _2E;             // _2E, "st"?
+	u8 _30[0x64 - 0x30]; // _30, unknown
+	u8 _64;              // _64, "koke"?
+	u8 _65[0x7C - 0x65]; // _65, unknown
+	u8 _7C;              // _7C
+	u8 _7D;              // _7D, "wait"?
+	u8 _7E;              // _7E
+	u8 _7F;              // _7F, "route"?
 	                     // _80-_88 = SlotChangeListner
 };
 
