@@ -443,6 +443,7 @@ struct EffectMgr : public CoreNode {
 		EFF_Rocket_Nke1                 = 328, // rct_nke1.pcr
 		EFF_Rocket_Nke2                 = 329, // rct_nke2.pcr
 		EFF_Rocket_Fkm1                 = 330, // rct_fkm1.pcr
+		EFF_331                         = 331,
 	};
 
 	/**

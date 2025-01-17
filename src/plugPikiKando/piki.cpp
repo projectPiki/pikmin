@@ -209,7 +209,7 @@ int Piki::findRoute(int startWPIndex, int endWPIndex, bool p3, bool doASync)
 	}
 
 	UfoItem* ship = itemMgr->getUfo();
-	if (ship && ship->_558 == endWPIndex) {
+	if (ship && ship->mWaypointID == endWPIndex) {
 		destIdx = 3;
 	}
 

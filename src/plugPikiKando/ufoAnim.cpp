@@ -522,7 +522,7 @@ void UfoAnimator::setMotionSpeed(int, f32)
  * Address:	800E9D60
  * Size:	000014
  */
-void UfoAnimator::getMotionIndex(int)
+int UfoAnimator::getMotionIndex(int)
 {
 	/*
 	.loc_0x0:

@@ -1,86 +1,59 @@
 #include "UfoItem.h"
+#include "DebugLog.h"
+#include "SoundID.h"
+#include "UtEffect.h"
+#include "Pellet.h"
+#include "NaviMgr.h"
+#include "Route.h"
+#include "gameflow.h"
+#include "Graphics.h"
+#include "MoviePlayer.h"
+#include "PlayerState.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
+
+int numKeys              = 3;
+f32 trKeys[3]            = { 0.0f, 13.0f, 50.0f };
+static const int test[3] = { 205, 204, 203 };
+
+const EffectMgr::effTypeTable effects[16]
+    = { EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep,
+	    EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep,
+	    EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep,
+	    EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep, EffectMgr::EFF_Rocket_Gep };
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("ufoItem")
 
 /*
  * --INFO--
  * Address:	800E7018
  * Size:	0000B4
  */
-bool UfoItem::insideSafeArea(Vector3f&)
+bool UfoItem::insideSafeArea(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  mr        r31, r4
-	  lfs       f3, 0x9C(r3)
-	  lfs       f4, 0x8(r4)
-	  lfs       f2, 0x0(r4)
-	  lfs       f1, 0x94(r3)
-	  fsubs     f3, f4, f3
-	  lfs       f0, -0x6640(r2)
-	  fsubs     f2, f2, f1
-	  fmuls     f1, f3, f3
-	  fmuls     f2, f2, f2
-	  fadds     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x4C
-	  li        r3, 0
-	  b         .loc_0xA0
+	Vector3f diff = pos - mPosition;
+	f32 dist      = diff.x * diff.x + diff.z * diff.z;
+	if (dist < 8100.0f) {
+		return false;
+	}
 
-	.loc_0x4C:
-	  mr        r4, r3
-	  lwz       r12, 0x0(r3)
-	  addi      r3, r1, 0x3C
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f3, 0x44(r1)
-	  lfs       f0, 0x8(r31)
-	  lfs       f2, 0x3C(r1)
-	  lfs       f1, 0x0(r31)
-	  fsubs     f3, f3, f0
-	  lfs       f0, -0x663C(r2)
-	  fsubs     f2, f2, f1
-	  fmuls     f1, f3, f3
-	  fmuls     f2, f2, f2
-	  fadds     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x9C
-	  li        r3, 0
-	  b         .loc_0xA0
-
-	.loc_0x9C:
-	  li        r3, 0x1
-
-	.loc_0xA0:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f goal = getGoalPos();
+	diff          = goal - pos;
+	dist          = diff.x * diff.x + diff.z * diff.z;
+	if (dist < 4900.0f) {
+		return false;
+	}
+	return true;
 }
 
 /*
@@ -88,92 +61,25 @@ bool UfoItem::insideSafeArea(Vector3f&)
  * Address:	800E70CC
  * Size:	000124
  */
-void UfoItem::setSpotTurn(bool)
+void UfoItem::setSpotTurn(bool set)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x30(r1)
-	  addi      r30, r3, 0
-	  addi      r4, r30, 0
-	  lwz       r12, 0x0(r30)
-	  addi      r3, r1, 0x10
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x10(r1)
-	  lis       r3, 0x676F
-	  lfs       f1, 0x14(r1)
-	  addi      r4, r3, 0x6C31
-	  stfs      f0, 0x20(r1)
-	  lfs       f0, 0x18(r1)
-	  stfs      f1, 0x24(r1)
-	  stfs      f0, 0x28(r1)
-	  lwz       r3, 0x220(r30)
-	  bl        -0x5DA14
-	  rlwinm.   r0,r31,0,24,31
-	  bne-      .loc_0xB4
-	  lbz       r0, 0x3CA(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB4
-	  lwz       r4, 0x3CC(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x94
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0xBA470
-	  li        r0, 0
-	  stw       r0, 0x3CC(r30)
+	Vector3f goal  = getGoalPos();
+	CollPart* part = mCollInfo->getSphere('gol1');
 
-	.loc_0x94:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x20
-	  li        r4, 0x1
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB59C4
-	  stw       r3, 0x3CC(r30)
-	  b         .loc_0x108
-
-	.loc_0xB4:
-	  rlwinm.   r0,r31,0,24,31
-	  beq-      .loc_0x108
-	  lbz       r0, 0x3CA(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x108
-	  lwz       r4, 0x3CC(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xEC
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0xBA418
-	  li        r0, 0
-	  stw       r0, 0x3CC(r30)
-
-	.loc_0xEC:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x20
-	  li        r4, 0x2
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB596C
-	  stw       r3, 0x3CC(r30)
-
-	.loc_0x108:
-	  stb       r31, 0x3CA(r30)
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	if (!set && _3CA) {
+		if (mRingEfx) {
+			effectMgr->kill(mRingEfx, false);
+			mRingEfx = nullptr;
+		}
+		mRingEfx = effectMgr->create(EffectMgr::EFF_Rocket_NaviNormalRings, goal, nullptr, nullptr);
+	} else if (set && !_3CA) {
+		if (mRingEfx) {
+			effectMgr->kill(mRingEfx, false);
+			mRingEfx = nullptr;
+		}
+		mRingEfx = effectMgr->create(EffectMgr::EFF_Rocket_NaviActionRings, goal, nullptr, nullptr);
+	}
+	_3CA = set;
 }
 
 /*
@@ -181,104 +87,38 @@ void UfoItem::setSpotTurn(bool)
  * Address:	800E71F0
  * Size:	00014C
  */
-void UfoItem::setSpotActive(bool)
+void UfoItem::setSpotActive(bool set)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x50(r1)
-	  li        r30, 0
-	  stb       r30, 0x3CA(r3)
-	  addi      r3, r1, 0x1C
-	  stb       r4, 0x3C9(r31)
-	  mr        r4, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x1C(r1)
-	  lis       r3, 0x676F
-	  lfs       f1, 0x20(r1)
-	  addi      r4, r3, 0x6C31
-	  stfs      f0, 0x40(r1)
-	  lfs       f0, 0x24(r1)
-	  stfs      f1, 0x44(r1)
-	  stfs      f0, 0x48(r1)
-	  lwz       r3, 0x220(r31)
-	  bl        -0x5DB40
-	  lbz       r0, 0x3C9(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xF0
-	  lwz       r4, 0x3CC(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x90
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0xBA34C
-	  stw       r30, 0x3CC(r31)
+	_3CA = false;
+	_3C9 = set;
 
-	.loc_0x90:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x40
-	  li        r4, 0x1
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB58A4
-	  stw       r3, 0x3CC(r31)
-	  lwz       r4, 0x3D0(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xD0
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0xBA310
-	  li        r0, 0
-	  stw       r0, 0x3D0(r31)
+	Vector3f goal = Vector3f(getGoalPos());
+	f32 paddig[2]; // needed for stack to work
+	CollPart* part = mCollInfo->getSphere('gol1');
 
-	.loc_0xD0:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x40
-	  li        r4, 0x3
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB5864
-	  stw       r3, 0x3D0(r31)
-	  b         .loc_0x134
+	if (_3C9) {
+		if (mRingEfx) {
+			effectMgr->kill(mRingEfx, false);
+			mRingEfx = nullptr;
+		}
+		mRingEfx = effectMgr->create(EffectMgr::EFF_Rocket_NaviNormalRings, goal, nullptr, nullptr);
 
-	.loc_0xF0:
-	  lwz       r4, 0x3CC(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x110
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0xBA2CC
-	  stw       r30, 0x3CC(r31)
+		if (_3D0) {
+			effectMgr->kill(_3D0, false);
+			_3D0 = nullptr;
+		}
+		_3D0 = effectMgr->create(EffectMgr::EFF_Rocket_NaviSparkle, goal, nullptr, nullptr);
 
-	.loc_0x110:
-	  lwz       r4, 0x3D0(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x134
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0xBA2AC
-	  li        r0, 0
-	  stw       r0, 0x3D0(r31)
-
-	.loc_0x134:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	} else {
+		if (mRingEfx) {
+			effectMgr->kill(mRingEfx, false);
+			mRingEfx = nullptr;
+		}
+		if (_3D0) {
+			effectMgr->kill(_3D0, false);
+			_3D0 = nullptr;
+		}
+	}
 }
 
 /*
@@ -286,67 +126,24 @@ void UfoItem::setSpotActive(bool)
  * Address:	800E733C
  * Size:	0000B8
  */
-void UfoItem::setTroubleEffect(bool)
+void UfoItem::setTroubleEffect(bool set)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,24,31
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  stb       r4, 0x428(r3)
-	  beq-      .loc_0x60
-	  lfs       f0, -0x6638(r2)
-	  li        r0, -0x1
-	  addi      r3, r29, 0
-	  stfs      f0, 0x42C(r29)
-	  li        r4, 0
-	  stw       r0, 0x430(r29)
-	  bl        .loc_0xB8
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        .loc_0xB8
-	  addi      r3, r29, 0
-	  li        r4, 0x5
-	  bl        .loc_0xB8
-	  b         .loc_0x9C
+	_428 = set;
+	if (set) {
+		_42C = 0.0f;
+		_430 = -1;
+		startTroubleEffectOne(0);
+		startTroubleEffectOne(1);
+		startTroubleEffectOne(5);
+		return;
+	}
 
-	.loc_0x60:
-	  addi      r30, r29, 0
-	  li        r29, 0
-	  li        r31, 0
-
-	.loc_0x6C:
-	  lwz       r4, 0x4C4(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x8C
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0xBA204
-	  stw       r31, 0x4C4(r30)
-
-	.loc_0x8C:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x6
-	  addi      r30, r30, 0x4
-	  blt+      .loc_0x6C
-
-	.loc_0x9C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-
-	.loc_0xB8:
-	*/
+	for (int i = 0; i < 6; i++) {
+		if (_4C4[i]) {
+			effectMgr->kill(_4C4[i], false);
+			_4C4[i] = nullptr;
+		}
+	}
 }
 
 /*
@@ -354,66 +151,16 @@ void UfoItem::setTroubleEffect(bool)
  * Address:	800E73F4
  * Size:	0000D4
  */
-void UfoItem::startTroubleEffectOne(int)
+void UfoItem::startTroubleEffectOne(int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r8, r5, 0x25A4
-	  mulli     r5, r4, 0xC
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  rlwinm    r31,r4,2,0,29
-	  li        r7, 0
-	  stw       r30, 0x38(r1)
-	  addi      r30, r5, 0x47C
-	  stw       r29, 0x34(r1)
-	  addi      r29, r1, 0x14
-	  add       r29, r29, r31
-	  stw       r28, 0x30(r1)
-	  mr        r28, r3
-	  add       r30, r28, r30
-	  lwz       r6, 0x0(r8)
-	  lwz       r0, 0x4(r8)
-	  lwz       r3, 0x3180(r13)
-	  stw       r6, 0x14(r1)
-	  li        r6, 0
-	  stw       r0, 0x18(r1)
-	  lwz       r5, 0x8(r8)
-	  lwz       r0, 0xC(r8)
-	  stw       r5, 0x1C(r1)
-	  addi      r5, r30, 0
-	  stw       r0, 0x20(r1)
-	  lwz       r4, 0x10(r8)
-	  lwz       r0, 0x14(r8)
-	  stw       r4, 0x24(r1)
-	  stw       r0, 0x28(r1)
-	  lwz       r4, 0x0(r29)
-	  bl        0xB56C0
-	  add       r4, r28, r31
-	  stw       r3, 0x4C4(r4)
-	  lwz       r3, 0x4C4(r4)
-	  stw       r30, 0x18(r3)
-	  lwz       r0, 0x0(r29)
-	  cmpwi     r0, 0x10B
-	  bne-      .loc_0xB4
-	  addi      r3, r28, 0
-	  addi      r4, r28, 0
-	  li        r5, 0xDF
-	  bl        -0x5CEF0
+	EffectMgr::effTypeTable ids[6] = { EffectMgr::EFF_Rocket_MkS,  EffectMgr::EFF_Rocket_Hiba, EffectMgr::EFF_Rocket_Biri,
+		                               EffectMgr::EFF_Rocket_Biri, EffectMgr::EFF_Rocket_Biri, EffectMgr::EFF_Rocket_TakeS };
+	_4C4[id]                       = effectMgr->create(ids[id], _47C[id], nullptr, nullptr);
+	_4C4[id]->setEmitPosPtr(&_47C[id]);
 
-	.loc_0xB4:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  lwz       r28, 0x30(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	if (ids[id] == EffectMgr::EFF_Rocket_Biri) {
+		playEventSound(this, SE_UFO_SPARK);
+	}
 }
 
 /*
@@ -423,168 +170,31 @@ void UfoItem::startTroubleEffectOne(int)
  */
 void UfoItem::updateTroubleEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  mr        r31, r3
-	  stw       r30, 0x70(r1)
-	  lbz       r0, 0x428(r3)
-	  lis       r3, 0x8022
-	  addi      r4, r3, 0x2598
-	  cmplwi    r0, 0
-	  beq-      .loc_0x234
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x6634(r2)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0x42C(r31)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x42C(r31)
-	  lwz       r3, 0x430(r31)
-	  lwz       r0, -0x36A8(r13)
-	  addi      r6, r3, 0x1
-	  cmpw      r6, r0
-	  bge-      .loc_0x210
-	  lis       r3, 0x802C
-	  lfs       f1, 0x42C(r31)
-	  rlwinm    r5,r6,2,0,29
-	  subi      r0, r3, 0x4014
-	  add       r3, r0, r5
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x210
-	  stw       r6, 0x430(r31)
-	  lwz       r0, 0x430(r31)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x124
-	  bge-      .loc_0xA0
-	  cmpwi     r0, 0
-	  bge-      .loc_0xAC
-	  b         .loc_0x210
+	if (!_428) {
+		return;
+	}
 
-	.loc_0xA0:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x210
-	  b         .loc_0x19C
+	_42C += gsys->getFrameTime() * 30.0f;
+	int test = _430 + 1;
+	if (test < numKeys && _42C >= trKeys[test]) {
+		_430 = test;
+		switch (_430) {
+		case 0:
+			startTroubleEffectOne(2);
+			break;
+		case 1:
+			startTroubleEffectOne(4);
+			break;
+		case 2:
+			startTroubleEffectOne(3);
+			break;
+		}
+	}
 
-	.loc_0xAC:
-	  lwz       r6, 0xC(r4)
-	  addi      r30, r31, 0x494
-	  lwz       r0, 0x10(r4)
-	  mr        r5, r30
-	  lwz       r3, 0x3180(r13)
-	  stw       r6, 0x50(r1)
-	  li        r6, 0
-	  li        r7, 0
-	  stw       r0, 0x54(r1)
-	  lwz       r8, 0x14(r4)
-	  lwz       r0, 0x18(r4)
-	  stw       r8, 0x58(r1)
-	  stw       r0, 0x5C(r1)
-	  lwz       r8, 0x1C(r4)
-	  lwz       r0, 0x20(r4)
-	  stw       r8, 0x60(r1)
-	  stw       r0, 0x64(r1)
-	  lwz       r4, 0x58(r1)
-	  bl        0xB557C
-	  stw       r3, 0x4CC(r31)
-	  lwz       r3, 0x4CC(r31)
-	  stw       r30, 0x18(r3)
-	  lwz       r0, 0x58(r1)
-	  cmpwi     r0, 0x10B
-	  bne-      .loc_0x210
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xDF
-	  bl        -0x5D030
-	  b         .loc_0x210
-
-	.loc_0x124:
-	  lwz       r6, 0xC(r4)
-	  addi      r30, r31, 0x4AC
-	  lwz       r0, 0x10(r4)
-	  mr        r5, r30
-	  lwz       r3, 0x3180(r13)
-	  stw       r6, 0x38(r1)
-	  li        r6, 0
-	  li        r7, 0
-	  stw       r0, 0x3C(r1)
-	  lwz       r8, 0x14(r4)
-	  lwz       r0, 0x18(r4)
-	  stw       r8, 0x40(r1)
-	  stw       r0, 0x44(r1)
-	  lwz       r8, 0x1C(r4)
-	  lwz       r0, 0x20(r4)
-	  stw       r8, 0x48(r1)
-	  stw       r0, 0x4C(r1)
-	  lwz       r4, 0x48(r1)
-	  bl        0xB5504
-	  stw       r3, 0x4D4(r31)
-	  lwz       r3, 0x4D4(r31)
-	  stw       r30, 0x18(r3)
-	  lwz       r0, 0x48(r1)
-	  cmpwi     r0, 0x10B
-	  bne-      .loc_0x210
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xDF
-	  bl        -0x5D0A8
-	  b         .loc_0x210
-
-	.loc_0x19C:
-	  lwz       r6, 0xC(r4)
-	  addi      r30, r31, 0x4A0
-	  lwz       r0, 0x10(r4)
-	  mr        r5, r30
-	  lwz       r3, 0x3180(r13)
-	  stw       r6, 0x20(r1)
-	  li        r6, 0
-	  li        r7, 0
-	  stw       r0, 0x24(r1)
-	  lwz       r8, 0x14(r4)
-	  lwz       r0, 0x18(r4)
-	  stw       r8, 0x28(r1)
-	  stw       r0, 0x2C(r1)
-	  lwz       r8, 0x1C(r4)
-	  lwz       r0, 0x20(r4)
-	  stw       r8, 0x30(r1)
-	  stw       r0, 0x34(r1)
-	  lwz       r4, 0x2C(r1)
-	  bl        0xB548C
-	  stw       r3, 0x4D0(r31)
-	  lwz       r3, 0x4D0(r31)
-	  stw       r30, 0x18(r3)
-	  lwz       r0, 0x2C(r1)
-	  cmpwi     r0, 0x10B
-	  bne-      .loc_0x210
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xDF
-	  bl        -0x5D120
-
-	.loc_0x210:
-	  lfs       f1, 0x42C(r31)
-	  lfs       f0, -0x6630(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x234
-	  li        r0, -0x1
-	  stw       r0, 0x430(r31)
-	  lfs       f0, -0x6638(r2)
-	  stfs      f0, 0x42C(r31)
-
-	.loc_0x234:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	if (_42C >= 80.0f) {
+		_430 = -1;
+		_42C = 0.0f;
+	}
 }
 
 /*
@@ -594,86 +204,14 @@ void UfoItem::updateTroubleEffect()
  */
 void UfoItem::startConeEffect(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  addi      r31, r3, 0
-	  addi      r4, r31, 0
-	  lwz       r12, 0x0(r31)
-	  addi      r3, r1, 0x24
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x24(r1)
-	  mr        r4, r31
-	  lfs       f1, 0x28(r1)
-	  addi      r3, r1, 0x18
-	  stfs      f0, 0x68(r1)
-	  lfs       f0, 0x2C(r1)
-	  stfs      f1, 0x6C(r1)
-	  stfs      f0, 0x70(r1)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x164(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x6638(r2)
-	  li        r0, 0x18
-	  lfs       f3, 0x18(r1)
-	  addi      r4, r1, 0x30
-	  stfs      f0, 0x38(r1)
-	  lfs       f2, 0x1C(r1)
-	  stfs      f0, 0x34(r1)
-	  lfs       f1, 0x20(r1)
-	  stfs      f3, 0x5C(r1)
-	  stfs      f0, 0x30(r1)
-	  stfs      f2, 0x60(r1)
-	  stfs      f0, 0x44(r1)
-	  stfs      f1, 0x64(r1)
-	  stfs      f0, 0x40(r1)
-	  stfs      f0, 0x3C(r1)
-	  lwz       r3, 0x68(r1)
-	  lwz       r5, 0x6C(r1)
-	  stw       r3, 0x30(r1)
-	  lwz       r3, 0x70(r1)
-	  stw       r5, 0x34(r1)
-	  lwz       r5, 0x5C(r1)
-	  stw       r3, 0x38(r1)
-	  lwz       r3, 0x60(r1)
-	  stw       r5, 0x3C(r1)
-	  stw       r3, 0x40(r1)
-	  lwz       r3, 0x64(r1)
-	  stw       r3, 0x44(r1)
-	  lfs       f0, -0x662C(r2)
-	  stfs      f0, 0x54(r1)
-	  stw       r0, 0x52C(r31)
-	  lwz       r3, 0x52C(r31)
-	  bl        0x2CAF4
-	  cmplwi    r31, 0
-	  addi      r5, r31, 0
-	  beq-      .loc_0xEC
-	  addi      r5, r5, 0x2B8
-
-	.loc_0xEC:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x1
-	  bl        0x37784
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x2500
-	  lfs       f1, -0x6634(r2)
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x2528
-	  lwz       r0, 0x84(r1)
-	  lwz       r31, 0x7C(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f goal = getGoalPos();
+	Vector3f suck = getSuckPos();
+	EffectParm eff(goal, suck);
+	_52C = 0x18;
+	utEffectMgr->cast(_52C, eff);
+	mAnimator.startMotion(0, &PaniMotionInfo(1, this));
+	mAnimator.setMotionSpeed(0, 30.0f);
+	PRINT("*** UFO FUTA OPEN !!!!!!!!!!!!!!________________________________\n");
 }
 
 /*
@@ -683,18 +221,7 @@ void UfoItem::startConeEffect(int)
  */
 void UfoItem::finishConeEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x52C(r3)
-	  bl        0x2CAD4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	utEffectMgr->kill(_52C);
 }
 
 /*
@@ -702,8 +229,9 @@ void UfoItem::finishConeEffect()
  * Address:	........
  * Size:	000044
  */
-void UfoItem::initLevelFlag(int)
+void UfoItem::initLevelFlag(int flag)
 {
+	lightLevelFlag(flag);
 	// UNUSED FUNCTION
 }
 
@@ -712,103 +240,22 @@ void UfoItem::initLevelFlag(int)
  * Address:	800E7864
  * Size:	000158
  */
-void UfoItem::startLevelFlag(int)
+void UfoItem::startLevelFlag(int flag)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x40(r1)
-	  addi      r30, r3, 0
-	  bl        .loc_0x158
-	  lfs       f0, 0x94(r30)
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, 0x98(r30)
-	  stfs      f0, 0x38(r1)
-	  lfs       f0, 0x9C(r30)
-	  lwz       r3, 0x2F6C(r13)
-	  stfs      f0, 0x3C(r1)
-	  lbz       r0, 0x10(r3)
-	  cmplwi    r0, 0x5
-	  bne-      .loc_0xDC
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x34
-	  li        r4, 0xF0
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB5278
-	  lfs       f0, -0x36A4(r13)
-	  addi      r5, r1, 0x34
-	  lfs       f1, -0x36A0(r13)
-	  li        r4, 0xF1
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x369C(r13)
-	  li        r6, 0
-	  stfs      f1, 0x2C(r1)
-	  li        r7, 0
-	  stfs      f0, 0x30(r1)
-	  lwz       r8, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r8, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0x1E4(r3)
-	  lwz       r3, 0x3180(r13)
-	  bl        0xB5230
-	  lfs       f0, -0x3698(r13)
-	  lfs       f1, -0x3694(r13)
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, -0x3690(r13)
-	  stfs      f1, 0x20(r1)
-	  stfs      f0, 0x24(r1)
-	  lwz       r4, 0x1C(r1)
-	  lwz       r0, 0x20(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x24(r1)
-	  stw       r0, 0x1E4(r3)
-	  b         .loc_0x134
-
-	.loc_0xDC:
-	  lfs       f1, 0x38(r1)
-	  addi      r5, r1, 0x34
-	  lfs       f0, -0x6628(r2)
-	  li        r4, 0x12B
-	  li        r6, 0
-	  fadds     f0, f1, f0
-	  li        r7, 0
-	  stfs      f0, 0x38(r1)
-	  lwz       r3, 0x3180(r13)
-	  bl        0xB51D4
-	  lfs       f0, -0x368C(r13)
-	  lfs       f1, -0x3688(r13)
-	  stfs      f0, 0x10(r1)
-	  lfs       f0, -0x3684(r13)
-	  stfs      f1, 0x14(r1)
-	  stfs      f0, 0x18(r1)
-	  lwz       r4, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x18(r1)
-	  stw       r0, 0x1E4(r3)
-
-	.loc_0x134:
-	  addi      r3, r30, 0x524
-	  addi      r4, r31, 0
-	  bl        0x253C
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-
-	.loc_0x158:
-	*/
+	lightLevelFlag(flag);
+	zen::particleGenerator* efx;
+	Vector3f pos = mPosition;
+	if (playerState->mShipUpgradeLevel == 5) {
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_Complete1, pos, nullptr, nullptr);
+		efx->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 1.0f));
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_Complete2, pos, nullptr, nullptr);
+		efx->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 1.0f));
+	} else {
+		pos.y += 60.0f;
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_NJ1CA, pos, nullptr, nullptr);
+		efx->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 1.0f));
+	}
+	mAnimator.startFlagMotions(flag);
 }
 
 /*
@@ -816,45 +263,19 @@ void UfoItem::startLevelFlag(int)
  * Address:	800E79BC
  * Size:	000078
  */
-void UfoItem::lightLevelFlag(int)
+void UfoItem::lightLevelFlag(int flag)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  mr.       r29, r4
-	  lfs       f31, -0x6638(r2)
-	  ble-      .loc_0x2C
-	  lfs       f31, -0x6634(r2)
+	f32 rate = 0.0f;
+	if (flag > 0) {
+		rate = 30.0f;
+	}
 
-	.loc_0x2C:
-	  li        r30, 0
-	  rlwinm    r0,r30,4,0,27
-	  add       r31, r3, r0
+	for (int i = 0; i < 4; i++) {
+		mLightAnims[i].start(flag);
+		mLightAnims[i].mSpeed = rate;
+	}
 
-	.loc_0x38:
-	  addi      r3, r31, 0x58C
-	  addi      r4, r29, 0
-	  bl        0x3E4
-	  addi      r30, r30, 0x1
-	  stfs      f31, 0x594(r31)
-	  cmpwi     r30, 0x4
-	  addi      r31, r31, 0x10
-	  blt+      .loc_0x38
-	  lwz       r0, 0x2C(r1)
-	  lfd       f31, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	FORCE_DONT_INLINE;
 }
 
 /*
@@ -862,8 +283,76 @@ void UfoItem::lightLevelFlag(int)
  * Address:	800E7A34
  * Size:	000390
  */
-void UfoItem::setJetEffect(int, bool)
+void UfoItem::setJetEffect(int id, bool set)
 {
+	if (id > 0) {
+		_4DC                 = id;
+		volatile int vals[6] = { 1, 1, 2, 2, 3, 3 };
+		int stage            = playerState->mShipUpgradeLevel - 2;
+		PRINT("*** UFO LEVEL %d : JET LEVEL %d\n", playerState->mShipUpgradeLevel, vals[playerState->mShipUpgradeLevel]);
+		u32 tags[4] = { 'eng1', 'eng2', 'eng3', 'eng4' };
+		if (playerState->mShipUpgradeLevel <= 1) {
+			stage = 4;
+		}
+
+		for (int j = 0; j < 4; j++) {
+			for (int i = 0; i < 4; i++) {
+				if (_4E0[j][i]) {
+					effectMgr->kill(_4E0[j][i], false);
+					_4E0[j][i] = nullptr;
+				}
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				CollPart* coll = mCollInfo->getSphere(tags[i]);
+				switch (i) {
+				case 0:
+					_4E0[0][j] = effectMgr->create(effects[stage + j], coll->mCentre, nullptr, nullptr);
+					if (_4E0[0][j]) {
+						_4E0[0][j]->setEmitPosPtr(&coll->mCentre);
+					}
+					break;
+				case 1:
+					_4E0[0][j] = effectMgr->create(effects[stage + j], coll->mCentre, nullptr, nullptr);
+					if (_4E0[0][j]) {
+						_4E0[0][j]->setEmitPosPtr(&coll->mCentre);
+						_4E0[0][j]->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
+					}
+					break;
+				case 2:
+					if (set && playerState->mShipUpgradeLevel != 5) {
+						_4E0[0][j] = effectMgr->create(effects[stage + j], coll->mCentre, nullptr, nullptr);
+						if (_4E0[0][j]) {
+							_4E0[0][j]->setEmitPosPtr(&coll->mCentre);
+						}
+					}
+					break;
+				case 3:
+					if (set && playerState->mShipUpgradeLevel != 5) {
+						_4E0[0][j] = effectMgr->create(effects[stage + j], coll->mCentre, nullptr, nullptr);
+						if (_4E0[0][j]) {
+							_4E0[0][j]->setEmitPosPtr(&coll->mCentre);
+							_4E0[0][j]->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
+						}
+					}
+					break;
+				}
+			}
+		}
+
+	} else {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (_4E0[i][j]) {
+					effectMgr->kill(_4E0[i][j], false);
+					_4E0[i][j] = nullptr;
+				}
+			}
+		}
+		//_4DC = 0;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1138,16 +627,10 @@ void UfoItem::setJetEffect(int, bool)
  */
 UfoItem::LightAnimator::LightAnimator()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x6638(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  sth       r0, 0xC(r3)
-	  blr
-	*/
+	mDyn   = 0;
+	mSpeed = 0.0f;
+	mFrame = 0.0f;
+	mType  = 0;
 }
 
 /*
@@ -1155,37 +638,15 @@ UfoItem::LightAnimator::LightAnimator()
  * Address:	800E7DE0
  * Size:	000058
  */
-void UfoItem::LightAnimator::start(int)
+void UfoItem::LightAnimator::start(int id)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  cmpwi     r4, 0
-	  sth       r4, 0xC(r3)
-	  ble-      .loc_0x40
-	  subi      r0, r4, 0x1
-	  lfd       f1, -0x6618(r2)
-	  xoris     r0, r0, 0x8000
-	  lfs       f2, -0x6624(r2)
-	  stw       r0, 0x14(r1)
-	  lis       r0, 0x4330
-	  stw       r0, 0x10(r1)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f0, f0, f1
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x4(r3)
-	  b         .loc_0x48
-
-	.loc_0x40:
-	  lfs       f0, -0x6620(r2)
-	  stfs      f0, 0x4(r3)
-
-	.loc_0x48:
-	  lfs       f0, -0x6634(r2)
-	  stfs      f0, 0x8(r3)
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	mType = id;
+	if (id > 0) {
+		mFrame = (id - 1) * 20.0f;
+	} else {
+		mFrame = 19.0f;
+	}
+	mSpeed = 30.0f;
 }
 
 /*
@@ -1195,7 +656,20 @@ void UfoItem::LightAnimator::start(int)
  */
 void UfoItem::LightAnimator::update()
 {
-	// UNUSED FUNCTION
+	if (mType) {
+		f32 frame = 20.0f * (mType - 1);
+		mFrame += mSpeed * gsys->getFrameTime();
+		if (20.0f + frame - 1.0f >= mFrame) {
+			Creature* ufo = itemMgr->getUfo();
+			if (mType < 5) {
+				ufo->playEventSound(ufo, SE_UFO_LIGHT);
+			} else {
+				ufo->playEventSound(ufo, SE_UFO_LIGHT2);
+			}
+			mFrame = frame;
+		}
+	}
+	mDyn->animate(&mFrame);
 }
 
 /*
@@ -1205,34 +679,8 @@ void UfoItem::LightAnimator::update()
  */
 Vector3f UfoItem::getGoalPos()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x671E0
-	  lis       r4, 0x676F
-	  lwz       r3, 0x220(r31)
-	  addi      r4, r4, 0x6C31
-	  bl        -0x5E758
-	  lfsu      f0, 0x4(r3)
-	  stfs      f0, 0x0(r30)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x4(r30)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x8(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	playerState->isUfoBroken();
+	return mCollInfo->getSphere('gol1')->mCentre;
 }
 
 /*
@@ -1242,26 +690,8 @@ Vector3f UfoItem::getGoalPos()
  */
 f32 UfoItem::getGoalPosRadius()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x6723C
-	  lis       r4, 0x676F
-	  lwz       r3, 0x220(r31)
-	  addi      r4, r4, 0x6C31
-	  bl        -0x5E7B4
-	  lfs       f1, 0x0(r3)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	playerState->isUfoBroken();
+	return mCollInfo->getSphere('gol1')->mRadius;
 }
 
 /*
@@ -1271,44 +701,11 @@ f32 UfoItem::getGoalPosRadius()
  */
 Vector3f UfoItem::getSuckPos()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  lis       r31, 0x7375
-	  stw       r30, 0x20(r1)
-	  addi      r30, r31, 0x6330
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x18(r1)
-	  mr        r28, r3
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x67298
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x40
-	  addi      r30, r31, 0x6331
-
-	.loc_0x40:
-	  lwz       r3, 0x220(r29)
-	  mr        r4, r30
-	  bl        -0x5E818
-	  lfsu      f0, 0x4(r3)
-	  stfs      f0, 0x0(r28)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x4(r28)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x8(r28)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	u32 tag = 'suc0';
+	if (!playerState->isUfoBroken()) {
+		tag = 'suc1';
+	}
+	return mCollInfo->getSphere(tag)->mCentre;
 }
 
 /*
@@ -1316,66 +713,18 @@ Vector3f UfoItem::getSuckPos()
  * Address:	800E7F64
  * Size:	0000BC
  */
-void UfoItem::suckMe(Pellet*)
+void UfoItem::suckMe(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x67304
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x54
-	  cmplwi    r31, 0
-	  addi      r5, r31, 0
-	  beq-      .loc_0x34
-	  addi      r5, r5, 0x2B8
+	PRINT("UFO ** SUCK PELLET\n");
+	if (playerState->isUfoBroken()) {
+		mAnimator.startMotion(0, &PaniMotionInfo(0, this));
+	} else {
+		mAnimator.startMotion(0, &PaniMotionInfo(1, this));
+	}
 
-	.loc_0x34:
-	  addi      r3, r1, 0x18
-	  li        r4, 0
-	  bl        0x36FEC
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x1D68
-	  b         .loc_0x80
-
-	.loc_0x54:
-	  cmplwi    r31, 0
-	  addi      r5, r31, 0
-	  beq-      .loc_0x64
-	  addi      r5, r5, 0x2B8
-
-	.loc_0x64:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x1
-	  bl        0x36FBC
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x1D38
-
-	.loc_0x80:
-	  lwz       r3, 0x3120(r13)
-	  bl        0x2F3DC
-	  lfs       f1, -0x6634(r2)
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x1D58
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xDA
-	  bl        -0x5DA54
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	Navi* navi = naviMgr->getNavi();
+	mAnimator.setMotionSpeed(0, 30.0f);
+	playEventSound(this, SE_UFO_PARTSIN);
 }
 
 /*
@@ -1385,52 +734,13 @@ void UfoItem::suckMe(Pellet*)
  */
 void UfoItem::startYozora()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0xC
-	  bl        0x36F1C
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x1CCC
-	  lfs       f1, -0x6638(r2)
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x1CF4
-	  lwz       r4, 0x2F6C(r13)
-	  lis       r3, 0x8022
-	  addi      r8, r3, 0x25E4
-	  lbz       r0, 0x10(r4)
-	  addi      r4, r1, 0x14
-	  lwz       r5, 0x0(r8)
-	  mr        r3, r31
-	  lwz       r6, 0x4(r8)
-	  rlwinm    r0,r0,2,0,29
-	  stw       r5, 0x14(r1)
-	  li        r5, 0x1
-	  stw       r6, 0x18(r1)
-	  lwz       r7, 0x8(r8)
-	  lwz       r6, 0xC(r8)
-	  stw       r7, 0x1C(r1)
-	  stw       r6, 0x20(r1)
-	  lwz       r7, 0x10(r8)
-	  lwz       r6, 0x14(r8)
-	  stw       r7, 0x24(r1)
-	  stw       r6, 0x28(r1)
-	  lwzx      r4, r4, r0
-	  bl        -0x680
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	mAnimator.startMotion(0, &PaniMotionInfo(1));
+	mAnimator.setMotionSpeed(0, 0.0f);
+
+	u8 level    = playerState->mShipUpgradeLevel;
+	int vals[6] = { 1, 1, 2, 2, 3, 3 };
+	setJetEffect(vals[level], true);
+	PRINT("** START YOZORA\n");
 }
 
 /*
@@ -1440,52 +750,13 @@ void UfoItem::startYozora()
  */
 void UfoItem::startGalaxy()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0xC
-	  bl        0x36E70
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x1C20
-	  lfs       f1, -0x6638(r2)
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x1C48
-	  lwz       r4, 0x2F6C(r13)
-	  lis       r3, 0x8022
-	  addi      r8, r3, 0x25FC
-	  lbz       r0, 0x10(r4)
-	  addi      r4, r1, 0x14
-	  lwz       r5, 0x0(r8)
-	  mr        r3, r31
-	  lwz       r6, 0x4(r8)
-	  rlwinm    r0,r0,2,0,29
-	  stw       r5, 0x14(r1)
-	  li        r5, 0
-	  stw       r6, 0x18(r1)
-	  lwz       r7, 0x8(r8)
-	  lwz       r6, 0xC(r8)
-	  stw       r7, 0x1C(r1)
-	  stw       r6, 0x20(r1)
-	  lwz       r7, 0x10(r8)
-	  lwz       r6, 0x14(r8)
-	  stw       r7, 0x24(r1)
-	  stw       r6, 0x28(r1)
-	  lwzx      r4, r4, r0
-	  bl        -0x72C
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	mAnimator.startMotion(0, &PaniMotionInfo(1));
+	mAnimator.setMotionSpeed(0, 0.0f);
+
+	u8 level    = playerState->mShipUpgradeLevel;
+	int vals[6] = { 1, 1, 2, 2, 3, 3 };
+	setJetEffect(vals[level], false);
+	PRINT("** START GALAXY\n");
 }
 
 /*
@@ -1493,93 +764,24 @@ void UfoItem::startGalaxy()
  * Address:	800E8178
  * Size:	000130
  */
-void UfoItem::finishSuck(Pellet*)
+void UfoItem::finishSuck(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stfd      f31, 0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  mr        r30, r4
-	  stw       r29, 0x3C(r1)
-	  mr        r29, r3
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x67D2C
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xC0
-	  mr        r4, r29
-	  lwz       r12, 0x0(r29)
-	  addi      r3, r1, 0x10
-	  lwz       r12, 0x164(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x10(r1)
-	  addi      r5, r1, 0x28
-	  lfs       f1, 0x14(r1)
-	  li        r4, 0x11F
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, 0x18(r1)
-	  li        r6, 0
-	  stfs      f1, 0x2C(r1)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  stfs      f0, 0x30(r1)
-	  bl        0xB4948
-	  mr.       r31, r3
-	  beq-      .loc_0xC0
-	  lfs       f1, 0xA0(r29)
-	  bl        0x133954
-	  fmr       f31, f1
-	  lfs       f1, 0xA0(r29)
-	  bl        0x133ADC
-	  stfs      f1, 0x1C(r1)
-	  lfs       f0, -0x3668(r13)
-	  stfs      f0, 0x20(r1)
-	  stfs      f31, 0x24(r1)
-	  lwz       r3, 0x1C(r1)
-	  lwz       r0, 0x20(r1)
-	  stw       r3, 0xA0(r31)
-	  stw       r0, 0xA4(r31)
-	  lwz       r0, 0x24(r1)
-	  stw       r0, 0xA8(r31)
-
-	.loc_0xC0:
-	  lwz       r3, 0x2F6C(r13)
-	  lbz       r0, 0x10(r3)
-	  stb       r0, 0x520(r29)
-	  lwz       r4, 0x55C(r30)
-	  lwz       r0, 0x130(r4)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0xF0
-	  lwz       r3, 0x2F6C(r13)
-	  li        r5, 0
-	  lwz       r4, 0x2C(r4)
-	  bl        -0x66F48
-	  b         .loc_0x100
-
-	.loc_0xF0:
-	  lwz       r3, 0x2F6C(r13)
-	  li        r5, 0x1
-	  lwz       r4, 0x2C(r4)
-	  bl        -0x66F5C
-
-	.loc_0x100:
-	  lfs       f1, -0x6634(r2)
-	  addi      r3, r29, 0x524
-	  li        r4, 0
-	  bl        0x1ACC
-	  lwz       r0, 0x54(r1)
-	  lfd       f31, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	if (!playerState->isTutorial()) {
+		Vector3f pos                = getSuckPos();
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_Suck1, pos, nullptr, nullptr);
+		if (efx) {
+			Vector3f dir(sinf(mDirection), 0.0f, cosf(mDirection));
+			efx->setEmitDir(dir);
+		}
+	}
+	_520                 = playerState->mShipUpgradeLevel;
+	PelletConfig* config = pelt->mConfig;
+	if (config->_130 != -1) {
+		playerState->getUfoParts(config->_2C.mId, false);
+	} else {
+		playerState->getUfoParts(config->_2C.mId, true);
+	}
+	mAnimator.setMotionSpeed(0, 30.0f);
 }
 
 /*
@@ -1587,8 +789,116 @@ void UfoItem::finishSuck(Pellet*)
  * Address:	800E82A8
  * Size:	000454
  */
-void UfoItem::animationKeyUpdated(PaniAnimKeyEvent&)
+void UfoItem::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
+	int anim = mAnimator.getMotionIndex(0);
+	if (event.mEventType == 0) {
+		PRINT("FINISHED --------- motion = %d\n");
+	}
+	switch (anim) {
+	case 16:
+		switch (event.mEventType) {
+		case 1:
+			mAnimator.setMotionSpeed(0, 0.0f);
+			break;
+		case 0:
+			mAnimator.setMotionSpeed(0, 0.0f);
+			break;
+		}
+		break;
+	case 0:
+	case 1:
+		switch (event.mEventType) {
+		case 1:
+			mAnimator.setMotionSpeed(0, 0.0f);
+			break;
+		case 0:
+			playerState->ufoAssignStart();
+			mAnimator.setMotionSpeed(0, 0.0f);
+			PRINT("*** SET UFO MOTION SPEED 000\n");
+			break;
+		case 8:
+			switch (event.mValue) { // yes this is a switch in a switch in a switch
+			case 0:
+				if (anim == 0) {
+					effectMgr->create(EffectMgr::EFF_Rocket_Nke2, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mPosition, nullptr, nullptr);
+				}
+				break;
+			case 2:
+				if (anim == 0) {
+					effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mPosition, nullptr, nullptr);
+				} else {
+					effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mPosition, nullptr, nullptr);
+				}
+				break;
+			}
+			break;
+		}
+		break;
+	case 11:
+	case 12:
+	case 13:
+	case 14:
+	case 15:
+		if (event.mEventType == 8) {
+			switch (event.mValue) {
+			case 0:
+				u8 level    = playerState->mShipUpgradeLevel;
+				int vals[6] = { 1, 1, 2, 2, 3, 3 };
+				setJetEffect(vals[level], false);
+				break;
+			case 2:
+				if (playerState->is11(4)) {
+					setPca2Effect(true);
+				}
+				break;
+			case 3:
+				if (playerState->is11(2)) {
+					setPca1Effect(true);
+				}
+				break;
+			case 1:
+				switch (playerState->mShipUpgradeLevel) {
+				case 0:
+				case 1:
+					effectMgr->create(EffectMgr::EFF_Rocket_JetG02, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_331, mPosition, nullptr, nullptr);
+					break;
+				case 2:
+				case 3:
+					effectMgr->create(EffectMgr::EFF_Rocket_JetG03, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_331, mPosition, nullptr, nullptr);
+					break;
+				case 4:
+					effectMgr->create(EffectMgr::EFF_Rocket_Bst1da, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_331, mPosition, nullptr, nullptr);
+					break;
+				case 5:
+					effectMgr->create(EffectMgr::EFF_Rocket_MkB, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Bstg, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Bst1db, mPosition, nullptr, nullptr);
+					break;
+				}
+				// no break here?
+			case 9:
+				if (playerState->mShipUpgradeLevel == 5) {
+					CollPart* coll = mCollInfo->getSphere('gcen');
+					zen::particleGenerator* efx;
+					efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA1, coll->mCentre, nullptr, nullptr);
+					efx->setEmitPosPtr(&coll->mCentre);
+					efx = effectMgr->create(EffectMgr::EFF_Rocket_Bst1fb, coll->mCentre, nullptr, nullptr);
+					efx->setEmitPosPtr(&coll->mCentre);
+					Vector3f nrm(0.0f, 0.0f, 1.0f);
+					efx->setOrientedNormalVector(nrm);
+					efx = effectMgr->create(EffectMgr::EFF_Rocket_Bst1fa, coll->mCentre, nullptr, nullptr);
+					efx->setEmitPosPtr(&coll->mCentre);
+				}
+				break;
+			}
+		}
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1938,137 +1248,35 @@ bool UfoItem::needShadow()
  * Address:	800E8704
  * Size:	0001F4
  */
-UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject*)
+UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
     : Suckable(30, prop)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  addi      r5, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  li        r4, 0x1E
-	  bl        0xD180
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x3E80
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x114
-	  lis       r3, 0x802C
-	  stw       r0, 0x2B8(r30)
-	  subi      r4, r3, 0x3CD0
-	  addi      r0, r4, 0x114
-	  stw       r4, 0x0(r30)
-	  lis       r3, 0x800F
-	  subi      r4, r3, 0x7708
-	  stw       r0, 0x2B8(r30)
-	  addi      r3, r30, 0x3D4
-	  li        r5, 0
-	  li        r6, 0x1C
-	  li        r7, 0x3
-	  bl        0x12C300
-	  lfs       f0, -0x6638(r2)
-	  lis       r3, 0x8003
-	  addi      r4, r3, 0x5B24
-	  stfs      f0, 0x43C(r30)
-	  addi      r3, r30, 0x47C
-	  li        r5, 0
-	  stfs      f0, 0x438(r30)
-	  li        r6, 0xC
-	  li        r7, 0x6
-	  stfs      f0, 0x434(r30)
-	  stfs      f0, 0x448(r30)
-	  stfs      f0, 0x444(r30)
-	  stfs      f0, 0x440(r30)
-	  stfs      f0, 0x454(r30)
-	  stfs      f0, 0x450(r30)
-	  stfs      f0, 0x44C(r30)
-	  stfs      f0, 0x460(r30)
-	  stfs      f0, 0x45C(r30)
-	  stfs      f0, 0x458(r30)
-	  stfs      f0, 0x46C(r30)
-	  stfs      f0, 0x468(r30)
-	  stfs      f0, 0x464(r30)
-	  stfs      f0, 0x478(r30)
-	  stfs      f0, 0x474(r30)
-	  stfs      f0, 0x470(r30)
-	  bl        0x12C298
-	  addi      r3, r30, 0x524
-	  bl        0x1438
-	  lfs       f0, -0x6638(r2)
-	  addi      r3, r30, 0x560
-	  stfs      f0, 0x538(r30)
-	  stfs      f0, 0x534(r30)
-	  stfs      f0, 0x530(r30)
-	  stfs      f0, 0x544(r30)
-	  stfs      f0, 0x540(r30)
-	  stfs      f0, 0x53C(r30)
-	  stfs      f0, 0x554(r30)
-	  stfs      f0, 0x550(r30)
-	  stfs      f0, 0x54C(r30)
-	  bl        -0x44BB4
-	  lis       r3, 0x800E
-	  addi      r4, r3, 0x7DC4
-	  addi      r3, r30, 0x58C
-	  li        r5, 0
-	  li        r6, 0x10
-	  li        r7, 0x4
-	  bl        0x12C244
-	  li        r0, 0
-	  stw       r0, 0x4C4(r30)
-	  li        r4, 0xF
-	  stw       r0, 0x4C8(r30)
-	  stw       r0, 0x4CC(r30)
-	  stw       r0, 0x4D0(r30)
-	  stw       r0, 0x4D4(r30)
-	  stw       r0, 0x4D8(r30)
-	  stw       r31, 0x55C(r30)
-	  lfs       f0, -0x3658(r13)
-	  stfs      f0, 0x7C(r30)
-	  lfs       f0, -0x3654(r13)
-	  stfs      f0, 0x80(r30)
-	  lfs       f0, -0x3650(r13)
-	  stfs      f0, 0x84(r30)
-	  stw       r0, 0x588(r30)
-	  lwz       r3, 0x0(r31)
-	  bl        -0xB8FC0
-	  stw       r3, 0x58C(r30)
-	  li        r4, 0x34
-	  lwz       r0, 0x588(r30)
-	  stw       r0, 0x0(r3)
-	  stw       r3, 0x588(r30)
-	  lwz       r3, 0x0(r31)
-	  bl        -0xB8FDC
-	  stw       r3, 0x59C(r30)
-	  li        r4, 0x33
-	  lwz       r0, 0x588(r30)
-	  stw       r0, 0x0(r3)
-	  stw       r3, 0x588(r30)
-	  lwz       r3, 0x0(r31)
-	  bl        -0xB8FF8
-	  stw       r3, 0x5AC(r30)
-	  li        r4, 0x28
-	  lwz       r0, 0x588(r30)
-	  stw       r0, 0x0(r3)
-	  stw       r3, 0x588(r30)
-	  lwz       r3, 0x0(r31)
-	  bl        -0xB9014
-	  stw       r3, 0x5BC(r30)
-	  lwz       r0, 0x588(r30)
-	  stw       r0, 0x0(r3)
-	  stw       r3, 0x588(r30)
-	  mr        r3, r30
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < 6; i++) {
+		_4C4[i] = nullptr;
+	}
+	mShipModel = shape;
+	mScale.set(1.0f, 1.0f, 1.0f);
+	mDynMat = nullptr;
+
+	ShapeDynMaterials* mat = shape->mShape->instanceMaterials(15);
+	mLightAnims[0].mDyn    = mat;
+	mat->_00               = (int)mDynMat;
+	mDynMat                = mat;
+
+	mat                 = shape->mShape->instanceMaterials(52);
+	mLightAnims[1].mDyn = mat;
+	mat->_00            = (int)mDynMat;
+	mDynMat             = mat;
+
+	mat                 = shape->mShape->instanceMaterials(51);
+	mLightAnims[2].mDyn = mat;
+	mat->_00            = (int)mDynMat;
+	mDynMat             = mat;
+
+	mat                 = shape->mShape->instanceMaterials(40);
+	mLightAnims[3].mDyn = mat;
+	mat->_00            = (int)mDynMat;
+	mDynMat             = mat;
 }
 
 /*
@@ -2078,14 +1286,6 @@ UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject*)
  */
 UfoItem::Spot::Spot()
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x6638(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -2105,61 +1305,15 @@ bool UfoItem::ignoreAtari(Creature*)
  */
 void UfoItem::startTakeoff()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lwz       r5, 0x2F6C(r13)
-	  lwzu      r3, 0x262C(r4)
-	  lbz       r5, 0x10(r5)
-	  lwz       r0, 0x4(r4)
-	  subic.    r5, r5, 0x1
-	  stw       r3, 0x14(r1)
-	  stw       r0, 0x18(r1)
-	  mr        r6, r5
-	  lwz       r3, 0x8(r4)
-	  lwz       r0, 0xC(r4)
-	  stw       r3, 0x1C(r1)
-	  stw       r0, 0x20(r1)
-	  lwz       r0, 0x10(r4)
-	  stw       r0, 0x24(r1)
-	  bge-      .loc_0x58
-	  li        r6, 0
-
-	.loc_0x58:
-	  cmplwi    r31, 0
-	  addi      r5, r31, 0
-	  beq-      .loc_0x68
-	  addi      r5, r5, 0x2B8
-
-	.loc_0x68:
-	  rlwinm    r0,r6,2,0,29
-	  addi      r3, r1, 0x14
-	  lwzx      r4, r3, r0
-	  addi      r3, r1, 0xC
-	  bl        0x36600
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x137C
-	  lfs       f1, -0x6634(r2)
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x13A4
-	  lwz       r3, 0x52C(r31)
-	  bl        0x2B970
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x678FC
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	int id     = playerState->mShipUpgradeLevel - 1;
+	int ids[5] = { 11, 11, 12, 13, 13 };
+	if (id < 0) {
+		id = 0;
+	}
+	mAnimator.startMotion(0, &PaniMotionInfo(ids[id], this));
+	mAnimator.setMotionSpeed(0, 30.0f);
+	UtEffectMgr::kill(_52C);
+	playerState->startSpecialMotions();
 }
 
 /*
@@ -2169,198 +1323,59 @@ void UfoItem::startTakeoff()
  */
 void UfoItem::startAI(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x38(r1)
-	  stb       r0, 0x3CA(r3)
-	  stb       r0, 0x3C8(r3)
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x68588
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x44
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x16D4
-	  b         .loc_0x68
+	_3CA = 0;
+	_3C8 = 0;
+	if (playerState->isTutorial()) {
+		setTroubleEffect(true);
+	} else {
+		setTroubleEffect(false);
+		effectMgr->create(EffectMgr::EFF_Rocket_Land, mPosition, nullptr, nullptr);
+	}
+	_52C = 21;
 
-	.loc_0x44:
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x16E4
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x94
-	  li        r4, 0xE9
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB4100
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			_4E0[i][j] = nullptr;
+		}
+	}
 
-	.loc_0x68:
-	  li        r0, 0x15
-	  stw       r0, 0x52C(r31)
-	  li        r0, 0
-	  mr        r3, r31
-	  stw       r0, 0x4E0(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  stw       r0, 0x4E4(r31)
-	  stw       r0, 0x4E8(r31)
-	  stw       r0, 0x4EC(r31)
-	  stw       r0, 0x4F0(r31)
-	  stw       r0, 0x4F4(r31)
-	  stw       r0, 0x4F8(r31)
-	  stw       r0, 0x4FC(r31)
-	  stw       r0, 0x500(r31)
-	  stw       r0, 0x504(r31)
-	  stw       r0, 0x508(r31)
-	  stw       r0, 0x50C(r31)
-	  stw       r0, 0x510(r31)
-	  stw       r0, 0x514(r31)
-	  stw       r0, 0x518(r31)
-	  stw       r0, 0x51C(r31)
-	  bl        -0x1060
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        0x4D4
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        0x5E0
-	  li        r0, 0x1
-	  stb       r0, 0x5CC(r31)
-	  addi      r0, r31, 0x560
-	  addi      r4, r31, 0
-	  stw       r0, 0x2C(r31)
-	  li        r5, 0x7
-	  lwz       r3, 0x2C(r31)
-	  bl        -0x44D98
-	  li        r3, 0x14
-	  bl        -0xA1AD0
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x118
-	  li        r4, 0x10
-	  bl        -0x5FEB8
+	setJetEffect(0, false);
+	setPca1Effect(false);
+	setPca2Effect(false);
+	_5CC       = 1;
+	mSeContext = &mShipSe;
+	mSeContext->setContext(this, 7);
+	mCollInfo = new CollInfo(16);
+	mCollInfo->initInfo(mShipModel->mShape, nullptr, nullptr);
+	mWaypointID = routeMgr->findNearestWayPoint('test', mPosition, false)->mIndex;
+	setMotionSpeed(30.0f);
+	_54C   = mPosition;
+	_54C.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	mAnimator.init(mShipModel, itemMgr->mUfoMotionTable);
 
-	.loc_0x118:
-	  stw       r30, 0x220(r31)
-	  li        r5, 0
-	  li        r6, 0
-	  lwz       r4, 0x55C(r31)
-	  lwz       r3, 0x220(r31)
-	  lwz       r4, 0x0(r4)
-	  bl        -0x5EFA0
-	  lis       r4, 0x7465
-	  lwz       r3, 0x302C(r13)
-	  addi      r4, r4, 0x7374
-	  addi      r5, r31, 0x94
-	  li        r6, 0
-	  bl        -0x47A34
-	  lwz       r0, 0x10(r3)
-	  mr        r3, r31
-	  stw       r0, 0x558(r31)
-	  lwz       r12, 0x0(r31)
-	  lfs       f1, -0x6634(r2)
-	  lwz       r12, 0x14C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x94(r31)
-	  li        r4, 0x1
-	  lwz       r0, 0x98(r31)
-	  stw       r3, 0x54C(r31)
-	  stw       r0, 0x550(r31)
-	  lwz       r0, 0x9C(r31)
-	  stw       r0, 0x554(r31)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x94(r31)
-	  lfs       f2, 0x9C(r31)
-	  bl        -0x80C64
-	  stfs      f1, 0x550(r31)
-	  addi      r3, r31, 0x524
-	  lwz       r5, 0x30AC(r13)
-	  lwz       r4, 0x55C(r31)
-	  lwz       r5, 0x94(r5)
-	  bl        0x10F4
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x67F10
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1F0
-	  addi      r3, r1, 0x28
-	  li        r4, 0
-	  bl        0x363BC
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x116C
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xE0
-	  bl        -0x5E608
-	  b         .loc_0x21C
+	if (playerState->isUfoBroken()) {
+		mAnimator.startMotion(0, &PaniMotionInfo(0));
+		playEventSound(this, SE_UFO_DESTROY);
+	} else {
+		mAnimator.startMotion(0, &PaniMotionInfo(1));
+		playEventSound(this, SE_UFO_IDLING);
+	}
+	mAnimator.stopAllMotions();
+	u8 level = playerState->mShipUpgradeLevel;
+	lightLevelFlag(playerState->mShipUpgradeLevel);
+	PRINT("** start AI (%.1f %.1f %.1f) : routeIndex = %d\n");
+	mAnimator.initFlagMotions(level);
 
-	.loc_0x1F0:
-	  addi      r3, r1, 0x20
-	  li        r4, 0x1
-	  bl        0x3638C
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0x113C
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xDE
-	  bl        -0x5E638
-
-	.loc_0x21C:
-	  addi      r3, r31, 0x524
-	  bl        0x1180
-	  lwz       r4, 0x2F6C(r13)
-	  mr        r3, r31
-	  lbz       r30, 0x10(r4)
-	  mr        r4, r30
-	  bl        -0x124C
-	  addi      r3, r31, 0x524
-	  addi      r4, r30, 0
-	  bl        0x11A8
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x687A8
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x298
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x1A40
-	  lfs       f2, -0x6638(r2)
-	  stfs      f2, 0x3E4(r31)
-	  lfs       f1, -0x6610(r2)
-	  stfs      f1, 0x3E0(r31)
-	  stfs      f2, 0x3E8(r31)
-	  lfs       f0, -0x660C(r2)
-	  stfs      f0, 0x400(r31)
-	  stfs      f1, 0x3FC(r31)
-	  stfs      f2, 0x404(r31)
-	  lfs       f0, -0x6608(r2)
-	  stfs      f0, 0x41C(r31)
-	  stfs      f1, 0x418(r31)
-	  stfs      f2, 0x420(r31)
-	  b         .loc_0x2A4
-
-	.loc_0x298:
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x1A84
-
-	.loc_0x2A4:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	if (!playerState->isTutorial()) {
+		setSpotActive(true);
+		for (int i = 0; i < 3; i++) {
+			mSpots[i]._10 = i * 2.0943952f;
+			mSpots[i]._0C = 9.0f;
+			mSpots[i]._14 = 0.0f;
+		}
+	} else {
+		setSpotActive(false);
+	}
 }
 
 /*
@@ -2370,11 +1385,7 @@ void UfoItem::startAI(int)
  */
 f32 UfoItem::getSize()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6604(r2)
-	  blr
-	*/
+	return 10.0f;
 }
 
 /*
@@ -2384,11 +1395,7 @@ f32 UfoItem::getSize()
  */
 f32 UfoItem::getiMass()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6638(r2)
-	  blr
-	*/
+	return 0.0f;
 }
 
 /*
@@ -2396,63 +1403,19 @@ f32 UfoItem::getiMass()
  * Address:	800E8CA0
  * Size:	0000B0
  */
-void UfoItem::accessible()
+bool UfoItem::accessible()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r30, 0x524
-	  bl        0x10A0
-	  lis       r4, 0x803A
-	  lfs       f0, -0x6600(r2)
-	  subi      r5, r4, 0x2848
-	  lwz       r4, 0x20(r5)
-	  mr        r31, r3
-	  lfs       f2, 0x2F0(r5)
-	  lfs       f1, 0x20(r4)
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x54
-	  li        r3, 0
-	  b         .loc_0x98
+	int anim = mAnimator.getMotionIndex(0);
 
-	.loc_0x54:
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x68884
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x94
-	  cmpwi     r31, 0x1
-	  beq-      .loc_0x74
-	  cmpwi     r31, 0x10
-	  bne-      .loc_0x94
+	if (gameflow.mWorldClock.mTotalTime > gameflow.mParameters->mEndHour() - 0.2f) {
+		PRINT("tod = %f : endhour = %f\n", gameflow.mWorldClock.mTotalTime, gameflow.mParameters->mEndHour());
+		return false;
+	}
 
-	.loc_0x74:
-	  lwz       r3, 0x528(r30)
-	  lfs       f0, -0x6638(r2)
-	  lfs       f1, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x94
-	  li        r3, 0x1
-	  b         .loc_0x98
-
-	.loc_0x94:
-	  li        r3, 0
-
-	.loc_0x98:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (!playerState->isTutorial() && (anim == 1 || anim == 16) && getVal() <= 0.0f) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -2462,105 +1425,11 @@ void UfoItem::accessible()
  */
 void UfoItem::startAccess()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  addi      r31, r3, 0
-	  addi      r4, r31, 0
-	  stb       r0, 0x3C8(r3)
-	  addi      r3, r1, 0x50
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x50(r1)
-	  mr        r4, r31
-	  lfs       f1, 0x54(r1)
-	  addi      r3, r1, 0x5C
-	  stfs      f0, 0xC(r1)
-	  lfs       f0, 0x58(r1)
-	  stfs      f1, 0x10(r1)
-	  stfs      f0, 0x14(r1)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x164(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x6638(r2)
-	  li        r0, 0x18
-	  lfs       f3, 0x5C(r1)
-	  addi      r4, r1, 0x24
-	  stfs      f0, 0x2C(r1)
-	  lfs       f2, 0x60(r1)
-	  stfs      f0, 0x28(r1)
-	  lfs       f1, 0x64(r1)
-	  stfs      f3, 0x18(r1)
-	  stfs      f0, 0x24(r1)
-	  stfs      f2, 0x1C(r1)
-	  stfs      f0, 0x38(r1)
-	  stfs      f1, 0x20(r1)
-	  stfs      f0, 0x34(r1)
-	  stfs      f0, 0x30(r1)
-	  lwz       r3, 0xC(r1)
-	  lwz       r5, 0x10(r1)
-	  stw       r3, 0x24(r1)
-	  lwz       r3, 0x14(r1)
-	  stw       r5, 0x28(r1)
-	  lwz       r5, 0x18(r1)
-	  stw       r3, 0x2C(r1)
-	  lwz       r3, 0x1C(r1)
-	  stw       r5, 0x30(r1)
-	  stw       r3, 0x34(r1)
-	  lwz       r3, 0x20(r1)
-	  stw       r3, 0x38(r1)
-	  lfs       f0, -0x662C(r2)
-	  stfs      f0, 0x48(r1)
-	  stw       r0, 0x52C(r31)
-	  lwz       r3, 0x52C(r31)
-	  bl        0x2B4B0
-	  cmplwi    r31, 0
-	  addi      r5, r31, 0
-	  beq-      .loc_0xF4
-	  addi      r5, r5, 0x2B8
+	_3C8 = 1;
+	startConeEffect(false);
 
-	.loc_0xF4:
-	  addi      r3, r1, 0x68
-	  li        r4, 0x1
-	  bl        0x36140
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0xEBC
-	  lfs       f1, -0x6634(r2)
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0xEE4
-	  cmplwi    r31, 0
-	  addi      r5, r31, 0
-	  beq-      .loc_0x130
-	  addi      r5, r5, 0x2B8
-
-	.loc_0x130:
-	  addi      r3, r1, 0x70
-	  li        r4, 0x10
-	  bl        0x36104
-	  addi      r5, r3, 0
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0xE80
-	  lfs       f1, -0x6634(r2)
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0xEA8
-	  lwz       r0, 0x84(r1)
-	  lwz       r31, 0x7C(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	mAnimator.startMotion(0, &PaniMotionInfo(16, this));
+	mAnimator.setMotionSpeed(0, 30.0f);
 }
 
 /*
@@ -2570,27 +1439,9 @@ void UfoItem::startAccess()
  */
 void UfoItem::finishAccess()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  stb       r0, 0x3C8(r3)
-	  lwz       r3, 0x52C(r3)
-	  bl        0x2B444
-	  lfs       f1, -0x6634(r2)
-	  addi      r3, r31, 0x524
-	  li        r4, 0
-	  bl        0xE60
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_3C8 = 0;
+	UtEffectMgr::kill(_52C);
+	mAnimator.setMotionSpeed(0, 30.0f);
 }
 
 /*
@@ -2600,36 +1451,11 @@ void UfoItem::finishAccess()
  */
 void UfoItem::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x1A54
-	  lfs       f0, -0x364C(r13)
-	  mr        r3, r31
-	  stfs      f0, 0x70(r31)
-	  lfs       f0, -0x3648(r13)
-	  stfs      f0, 0x74(r31)
-	  lfs       f0, -0x3644(r13)
-	  stfs      f0, 0x78(r31)
-	  bl        0xCCB8
-	  addi      r3, r31, 0x524
-	  bl        0x1164
-	  lwz       r3, 0x54C(r31)
-	  lwz       r0, 0x550(r31)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x554(r31)
-	  stw       r0, 0x9C(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	updateTroubleEffect();
+	mVelocity.set(0.0f, 0.0f, 0.0f);
+	ItemCreature::update();
+	mAnimator.updateAnimation();
+	mPosition = _54C;
 }
 
 /*
@@ -2637,83 +1463,21 @@ void UfoItem::update()
  * Address:	800E8F74
  * Size:	000118
  */
-void UfoItem::setPca1Effect(bool)
+void UfoItem::setPca1Effect(bool set)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,24,31
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r3, 0
-	  stb       r4, 0x548(r3)
-	  beq-      .loc_0x104
-	  lfs       f0, -0x3640(r13)
-	  addi      r3, r1, 0x28
-	  lfs       f1, -0x363C(r13)
-	  addi      r4, r31, 0x228
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x3638(r13)
-	  stfs      f1, 0x2C(r1)
-	  stfs      f0, 0x30(r1)
-	  bl        -0xB19A8
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x530
-	  li        r4, 0x11D
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB3B6C
-	  lfs       f0, -0x3634(r13)
-	  addi      r5, r31, 0x530
-	  lfs       f1, -0x3630(r13)
-	  li        r4, 0x11E
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, -0x362C(r13)
-	  li        r6, 0
-	  stfs      f1, 0x20(r1)
-	  li        r7, 0
-	  stfs      f0, 0x24(r1)
-	  lwz       r8, 0x1C(r1)
-	  lwz       r0, 0x20(r1)
-	  stw       r8, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x24(r1)
-	  stw       r0, 0x1E4(r3)
-	  lwz       r8, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r8, 0xA0(r3)
-	  stw       r0, 0xA4(r3)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0xA8(r3)
-	  lwz       r3, 0x3180(r13)
-	  bl        0xB3B0C
-	  lfs       f0, -0x3628(r13)
-	  lfs       f1, -0x3624(r13)
-	  stfs      f0, 0x10(r1)
-	  lfs       f0, -0x3620(r13)
-	  stfs      f1, 0x14(r1)
-	  stfs      f0, 0x18(r1)
-	  lwz       r4, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x18(r1)
-	  stw       r0, 0x1E4(r3)
-	  lwz       r4, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r4, 0xA0(r3)
-	  stw       r0, 0xA4(r3)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0xA8(r3)
+	_548 = set;
+	if (set) {
+		Vector3f dir(1.0f, 0.0f, 0.0f);
+		dir.rotate(mTransformMatrix);
 
-	.loc_0x104:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, _530, nullptr, nullptr);
+		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+		efx->setEmitDir(dir);
+
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, _530, nullptr, nullptr);
+		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+		efx->setEmitDir(dir);
+	}
 }
 
 /*
@@ -2721,83 +1485,21 @@ void UfoItem::setPca1Effect(bool)
  * Address:	800E908C
  * Size:	000118
  */
-void UfoItem::setPca2Effect(bool)
+void UfoItem::setPca2Effect(bool set)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,24,31
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r3, 0
-	  stb       r4, 0x549(r3)
-	  beq-      .loc_0x104
-	  lfs       f0, -0x361C(r13)
-	  addi      r3, r1, 0x28
-	  lfs       f1, -0x3618(r13)
-	  addi      r4, r31, 0x228
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x3614(r13)
-	  stfs      f1, 0x2C(r1)
-	  stfs      f0, 0x30(r1)
-	  bl        -0xB1AC0
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x53C
-	  li        r4, 0x11D
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB3A54
-	  lfs       f0, -0x3610(r13)
-	  addi      r5, r31, 0x53C
-	  lfs       f1, -0x360C(r13)
-	  li        r4, 0x11E
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, -0x3608(r13)
-	  li        r6, 0
-	  stfs      f1, 0x20(r1)
-	  li        r7, 0
-	  stfs      f0, 0x24(r1)
-	  lwz       r8, 0x1C(r1)
-	  lwz       r0, 0x20(r1)
-	  stw       r8, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x24(r1)
-	  stw       r0, 0x1E4(r3)
-	  lwz       r8, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r8, 0xA0(r3)
-	  stw       r0, 0xA4(r3)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0xA8(r3)
-	  lwz       r3, 0x3180(r13)
-	  bl        0xB39F4
-	  lfs       f0, -0x3604(r13)
-	  lfs       f1, -0x3600(r13)
-	  stfs      f0, 0x10(r1)
-	  lfs       f0, -0x35FC(r13)
-	  stfs      f1, 0x14(r1)
-	  stfs      f0, 0x18(r1)
-	  lwz       r4, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x18(r1)
-	  stw       r0, 0x1E4(r3)
-	  lwz       r4, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r4, 0xA0(r3)
-	  stw       r0, 0xA4(r3)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0xA8(r3)
+	_548 = set;
+	if (set) {
+		Vector3f dir(1.0f, 0.0f, 0.0f);
+		dir.rotate(mTransformMatrix);
 
-	.loc_0x104:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, _53C, nullptr, nullptr);
+		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+		efx->setEmitDir(dir);
+
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, _53C, nullptr, nullptr);
+		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+		efx->setEmitDir(dir);
+	}
 }
 
 /*
@@ -2805,72 +1507,20 @@ void UfoItem::setPca2Effect(bool)
  * Address:	800E91A4
  * Size:	0000E4
  */
-void UfoItem::refresh(Graphics&)
+void UfoItem::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r31, r4, 0
-	  addi      r6, r1, 0x10
-	  stw       r30, 0x60(r1)
-	  mr        r30, r3
-	  addi      r4, r30, 0x7C
-	  lfs       f0, 0x94(r3)
-	  addi      r3, r30, 0x228
-	  addi      r5, r30, 0x88
-	  stfs      f0, 0x10(r1)
-	  lfs       f0, 0x98(r30)
-	  stfs      f0, 0x14(r1)
-	  lfs       f0, 0x9C(r30)
-	  stfs      f0, 0x18(r1)
-	  bl        -0xAB0F4
-	  lwz       r3, 0x2E4(r31)
-	  addi      r4, r30, 0x94
-	  lfs       f1, -0x65FC(r2)
-	  bl        -0xA7C74
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x70
-	  lwz       r0, 0xC8(r30)
-	  oris      r0, r0, 0x8
-	  stw       r0, 0xC8(r30)
-	  b         .loc_0x7C
+	Matrix4f mtx;
+	Vector3f pos = mPosition;
+	mTransformMatrix.makeSRT(mScale, mRotation, pos);
 
-	.loc_0x70:
-	  lwz       r0, 0xC8(r30)
-	  rlwinm    r0,r0,0,13,11
-	  stw       r0, 0xC8(r30)
-
-	.loc_0x7C:
-	  lwz       r3, 0x2E4(r31)
-	  addi      r4, r30, 0x228
-	  addi      r5, r1, 0x1C
-	  addi      r3, r3, 0x1E0
-	  bl        -0xAB15C
-	  lwz       r12, 0x3B4(r31)
-	  lis       r4, 0x803A
-	  mr        r3, r31
-	  lwz       r12, 0x74(r12)
-	  subi      r4, r4, 0x77C0
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  addi      r5, r1, 0x1C
-	  lwz       r12, 0xFC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	if (!gfx.mCamera->isPointVisible(mPosition, 200.0f)) {
+		enableAICulling();
+	} else {
+		disableAICulling();
+	}
+	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx);
+	gfx.useMatrix(Matrix4f::ident, 0);
+	demoDraw(gfx, &mtx);
 }
 
 /*
@@ -2878,8 +1528,75 @@ void UfoItem::refresh(Graphics&)
  * Address:	800E9288
  * Size:	000504
  */
-void UfoItem::demoDraw(Graphics&, Matrix4f*)
+void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
 {
+	for (int i = 0; i < 4; i++) {
+		mLightAnims[i].update();
+	}
+
+	mAnimator.updateContext();
+	mShipModel->mShape->updateAnim(gfx, *mtx, nullptr);
+
+	if (gameflow.mMoviePlayer->mIsActive || doAlwaysUpdate()) {
+		mShipModel->mShape->drawshape(gfx, *gfx.mCamera, mDynMat);
+		playerState->renderParts(gfx, mShipModel->mShape);
+	}
+
+	Vector3f pos;
+
+	pos.set(0.0f, 14.0f, 0.0f);
+	mShipModel->mShape->calcJointWorldPos(gfx, 48, pos);
+	_53C = pos;
+
+	pos.set(0.0f, 14.0f, 0.0f);
+	mShipModel->mShape->calcJointWorldPos(gfx, 49, pos);
+	_530 = pos;
+
+	if (playerState->isTutorial()) {
+
+		pos.set(13.1f, -98.4f, -2.0f);
+		mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
+		_47C[0] = pos;
+
+		pos.set(-9.1999998f, -68.099998f, 28.6f);
+		mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
+		_47C[1] = pos;
+
+		_47C[2] = _47C[0];
+		_47C[3] = _47C[1];
+
+		pos.set(-22.2f, 4.9f, -25.0f);
+		mShipModel->mShape->calcJointWorldPos(gfx, 41, pos);
+		_47C[4] = pos;
+
+		pos.set(0.0f, -93.0f, 0.0f);
+		mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
+		_47C[5] = pos;
+	}
+
+	mCollInfo->updateInfo(gfx, false);
+	for (int i = 0; i < 3; i++) {
+		CollPart* part = mCollInfo->getSphere('gol1');
+		if (part) {
+			f32 test = mDirection + mSpots[i]._10;
+			if (_3CA) {
+				mSpots[i]._14 += gsys->getFrameTime() * 37.69911193847656f;
+				if (mSpots[i]._14 > TAU) {
+					mSpots[i]._14 = 0.0f;
+				}
+				test += mSpots[i]._14;
+			}
+			Vector3f dir(mSpots[i]._0C * sinf(test), 0.0f, mSpots[i]._0C * cosf(test));
+			mSpots[i]._00 = part->mCentre + dir;
+		}
+	}
+
+	if (_5CC) {
+		mWaypointID   = routeMgr->findNearestWayPoint('test', getGoalPos(), false)->mIndex;
+		Vector3f goal = getGoalPos();
+		PRINT("*** UFO ROUTE INDEX = %d (%.1f %.1f %.1f)\n", mWaypointID, goal.x, goal.y, goal.z);
+		_5CC = 0;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3237,6 +1954,7 @@ void UfoItem::demoDraw(Graphics&, Matrix4f*)
  */
 s16 UfoItem::getRouteIndex()
 {
+	return mWaypointID;
 	/*
 	.loc_0x0:
 	  lwz       r3, 0x558(r3)

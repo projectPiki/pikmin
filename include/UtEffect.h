@@ -310,7 +310,7 @@ struct UtEffectMgr {
 	UtEffectMgr();
 
 	void registerEffect(int, KEffect*);
-	void kill(int);
+	static void kill(int);
 
 	static void cast(int, EffectParm&);
 

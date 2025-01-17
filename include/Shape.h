@@ -127,7 +127,7 @@ struct BaseShape : public CoreNode {
 	void importIni(RandomAccessStream&);
 	void countMaterials(Joint*, u32);
 	void recTraverseMaterials(Joint*, IDelegate2<Joint*, u32>*);
-	void instanceMaterials(int);
+	ShapeDynMaterials* instanceMaterials(int);
 	void makeInstance(struct ShapeDynMaterials&, int);
 	void drawculled(Graphics&, struct Camera&, ShapeDynMaterials*);
 	void drawshape(Graphics&, Camera&, ShapeDynMaterials*);

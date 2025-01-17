@@ -6647,7 +6647,7 @@ void BaseShape::recTraverseMaterials(Joint*, IDelegate2<Joint*, u32>*)
  * Address:	8002F8B4
  * Size:	000078
  */
-void BaseShape::instanceMaterials(int)
+ShapeDynMaterials* BaseShape::instanceMaterials(int)
 {
 	/*
 	.loc_0x0:

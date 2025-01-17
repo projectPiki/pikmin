@@ -4,6 +4,9 @@
 #include "types.h"
 #include "Suckable.h"
 #include "CreatureProp.h"
+#include "EffectMgr.h"
+#include "Shape.h"
+#include "SoundMgr.h"
 
 struct Piki;
 struct SimpleAI;
@@ -45,7 +48,7 @@ struct UfoAnimator {
 	void init(UfoShapeObject*, PaniMotionTable*);
 	void startMotion(int, PaniMotionInfo*);
 	void setMotionSpeed(int, f32);
-	void getMotionIndex(int);
+	int getMotionIndex(int);
 	void stopAllMotions();
 	void initFlagMotions(int);
 	void startFlagMotions(int);
@@ -54,6 +57,7 @@ struct UfoAnimator {
 	void updateContext();
 
 	// TODO: members
+	int _00; // _00
 };
 
 /**
@@ -75,6 +79,10 @@ struct UfoItem : public Suckable {
 		void update();
 
 		// TODO: members
+		ShapeDynMaterials* mDyn; // _00
+		f32 mFrame;              // _04
+		f32 mSpeed;              // _08
+		u16 mType;               // _0C
 	};
 
 	/**
@@ -84,6 +92,11 @@ struct UfoItem : public Suckable {
 		Spot();
 
 		// TODO: members
+		Vector3f _00;
+		f32 _0C;
+		f32 _10;
+		f32 _14;
+		f32 _18;
 	};
 
 	UfoItem(CreatureProp*, UfoShapeObject*);
@@ -120,7 +133,7 @@ struct UfoItem : public Suckable {
 	void startYozora();
 	void startGalaxy();
 	void startTakeoff();
-	void accessible();
+	bool accessible();
 	void startAccess();
 	void finishAccess();
 	void setPca1Effect(bool);
@@ -129,14 +142,44 @@ struct UfoItem : public Suckable {
 	// unused/inlined:
 	void initLevelFlag(int);
 
+	// this needs a proper name
+	inline f32 getVal() { return *_528; }
+
 	// _00      = VTBL
 	// _00-_3C8 = Suckable
-	u32 _3C8;               // _3C8
-	u8 _3CC[0x524 - 0x3CC]; // _3CC, unknown
-	UfoAnimator mAnimator;  // _524
-	u8 _528[0x558 - 0x528]; // _528, unknown
-	int _558;               // _558
-	u8 _55C[0x5D0 - 0x55C]; // _55C, unknown
+	u8 _3C8;                            // _3C8
+	u8 _3C9;                            // _3C9
+	u8 _3CA;                            // _3CA
+	zen::particleGenerator* mRingEfx;   // _3CC
+	zen::particleGenerator* _3D0;       // _3D0
+	Spot mSpots[3];                     // _3D4
+	u8 _428;                            // _428
+	f32 _42C;                           // _42C
+	u32 _430;                           // _430
+	Vector3f _434;                      // _434
+	Vector3f _440;                      // _440
+	Vector3f _44C;                      // _44C
+	Vector3f _458;                      // _458
+	Vector3f _464;                      // _464
+	Vector3f _470;                      // _470
+	Vector3f _47C[6];                   // _47C
+	zen::particleGenerator* _4C4[6];    // _4C4
+	u16 _4DC;                           // _4DC
+	zen::particleGenerator* _4E0[4][4]; // _4E0
+	u8 _520;                            // _520
+	UfoAnimator mAnimator;              // _524
+	f32* _528;                          // _528
+	int _52C;                           // _52C
+	Vector3f _530;                      // _530
+	Vector3f _53C;                      // _53C
+	u8 _548;                            // _548
+	Vector3f _54C;                      // _54C
+	int mWaypointID;                    // _558
+	UfoShapeObject* mShipModel;         // _55C
+	SeContext mShipSe;                  // _560
+	ShapeDynMaterials* mDynMat;         // _588
+	LightAnimator mLightAnims[4];       // _58C
+	u8 _5CC;                            // _5CC
 };
 
 #endif

@@ -30,6 +30,7 @@ struct EffectParm {
 		// need to confirm
 		mPosition  = pos;
 		mDirection = dir;
+		_24        = 1.0f;
 	}
 
 	Vector3f mPosition;  // _00

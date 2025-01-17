@@ -140,6 +140,9 @@ struct PlayerState {
 	bool inDayEnd() { return mInDayEnd; }
 	void setDayEnd() { mInDayEnd = true; }
 
+	// placeholder, idk what this is
+	bool is11(u8 flag) { return _11 & flag; }
+
 	/*
 	    All remaining DLL inlines:
 
