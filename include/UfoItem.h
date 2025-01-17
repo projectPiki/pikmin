@@ -56,8 +56,11 @@ struct UfoAnimator {
 	void updateAnimation();
 	void updateContext();
 
+	f32 getSpeed(int id) { return mAnimSpeeds[id]; }
+
 	// TODO: members
-	int _00; // _00
+	PaniUfoAnimator* mAnims; // _00
+	f32* mAnimSpeeds;        //_04
 };
 
 /**
@@ -142,9 +145,6 @@ struct UfoItem : public Suckable {
 	// unused/inlined:
 	void initLevelFlag(int);
 
-	// this needs a proper name
-	inline f32 getVal() { return *_528; }
-
 	// _00      = VTBL
 	// _00-_3C8 = Suckable
 	u8 _3C8;                            // _3C8
@@ -168,7 +168,6 @@ struct UfoItem : public Suckable {
 	zen::particleGenerator* _4E0[4][4]; // _4E0
 	u8 _520;                            // _520
 	UfoAnimator mAnimator;              // _524
-	f32* _528;                          // _528
 	int _52C;                           // _52C
 	Vector3f _530;                      // _530
 	Vector3f _53C;                      // _53C

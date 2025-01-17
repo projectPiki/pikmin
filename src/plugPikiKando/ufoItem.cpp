@@ -1412,7 +1412,7 @@ bool UfoItem::accessible()
 		return false;
 	}
 
-	if (!playerState->isTutorial() && (anim == 1 || anim == 16) && getVal() <= 0.0f) {
+	if (!playerState->isTutorial() && (anim == 1 || anim == 16) && mAnimator.getSpeed(0) <= 0.0f) {
 		return true;
 	}
 	return false;
