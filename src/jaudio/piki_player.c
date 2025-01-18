@@ -82,7 +82,7 @@ void Jac_Orima_Walk(u16 soundID, u32 p2)
  * Address:	80018200
  * Size:	000190
  */
-void Jac_Orima_Formation(void)
+void Jac_Orima_Formation(s32, s32)
 {
 	/*
 	.loc_0x0:
@@ -532,7 +532,7 @@ void Jac_StopOrimaSe(void)
  * Address:	80018740
  * Size:	000078
  */
-void Jac_Piki_Number(void)
+void Jac_Piki_Number(s32)
 {
 	/*
 	.loc_0x0:

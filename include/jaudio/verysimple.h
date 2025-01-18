@@ -8,7 +8,7 @@ extern "C" {
 #endif // ifdef __cplusplus
 
 //////////// JAUDIO "VERY SIMPLE" FUNCTIONS ////////////
-void Jac_StopSe();
+void Jac_StopSe(s32);
 BOOL Jac_PauseCheck();
 void Jac_SysSEDemoFadeCheck();
 void Jac_PlaySystemSe();

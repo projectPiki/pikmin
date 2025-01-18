@@ -63,7 +63,7 @@ static BOOL InitQueue()
  * Address:	80016AE0
  * Size:	00000C
  */
-void Jac_StopSe()
+void Jac_StopSe(s32)
 {
 	if (cmdqueue_reset) {
 		(cmdqueue_reset != 0);
