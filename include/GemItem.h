@@ -4,6 +4,7 @@
 #include "types.h"
 #include "ItemMgr.h"
 #include "SimpleAI.h"
+#include "SoundMgr.h"
 
 /*
  * @brief TODO
@@ -32,14 +33,30 @@ struct GemItem : public ItemCreature {
 
 	// unused/inlined:
 	void setAtariFree();
-	void reachCapacity();
+	bool reachCapacity();
 	void updateLiftup();
 	void startPick(f32);
 	void finishPick();
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TODO: members
+	bool _3C8;             // _3C8
+	int _3CC;              // _3CC
+	f32 _3D0;              // _3D0
+	f32 _3D4;              // _3D4
+	u8 _3D8;               // _3D8
+	u8 _3D9;               // _3D9
+	int mGemType;          // _3DC pellet size?
+	int mColor;            // _3E0
+	u8 _3E4;               // _3E4
+	f32 _3E8;              // _3E8
+	int _3EC;              // _3EC
+	int _3F0;              // _3F0
+	int _3F8;              // _3F8
+	int _3FC;              // _3FC
+	CollInfo mGemCollInfo; // _400
+	CollPart mGemColl[10]; // _414
+	SeContext mGemSe;      // _84C
 };
 
 /**

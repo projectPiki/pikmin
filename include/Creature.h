@@ -289,6 +289,8 @@ struct Creature : public RefCountable, public EventTalker {
 	// this might not be the right name
 	void enableFaceDirAdjust() { setCreatureFlag(0x40000); }
 
+	void setFree(bool set) { set ? setCreatureFlag(CF_Free) : resetCreatureFlag(CF_Free); }
+
 	/*
 	    DLL inlines to assign/make:
 	    bool insideView();

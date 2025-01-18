@@ -1,24 +1,25 @@
 #include "GemItem.h"
+#include "DebugLog.h"
+#include "BaseInf.h"
+#include "Stickers.h"
+#include "EffectMgr.h"
+
+// theres a lot more to this
+int table[16] = { 0, 1, 2, 3 };
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT(nullptr)
 
 /*
  * --INFO--
@@ -27,7 +28,14 @@ static void _Print(char*, ...)
  */
 bool GemItem::ignoreAtari(Creature*)
 {
-	// UNUSED FUNCTION
+	if (getStickObject()) {
+		return true;
+	}
+
+	if (mObjType == OBJTYPE_NULL12 && _3C8) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -37,7 +45,8 @@ bool GemItem::ignoreAtari(Creature*)
  */
 void GemItem::setAtariFree()
 {
-	// UNUSED FUNCTION
+	_3C8 = true;
+	playEventSound(this, SE_PELLET_BORN);
 }
 
 /*
@@ -47,7 +56,10 @@ void GemItem::setAtariFree()
  */
 void GemItem::bounceCallback()
 {
-	// UNUSED FUNCTION
+	if (_3C8) {
+		effectMgr->create(EffectMgr::EFF_BigDustRing, mPosition, nullptr, nullptr);
+	}
+	_3C8 = false;
 }
 
 /*
@@ -55,9 +67,15 @@ void GemItem::bounceCallback()
  * Address:	........
  * Size:	000108
  */
-GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, SimpleAI*, f32, int, int)
+GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, SimpleAI* ai, f32 a1, int, int)
     : ItemCreature(p2, props, shapes[0])
+    , mGemCollInfo(0)
 {
+	mGemType         = p2;
+	mColor           = 0;
+	mItemShapeObject = itemMgr->getPelletShapeObject(mColor, p2);
+	mStateMachine    = ai;
+	_3E8             = a1;
 	// UNUSED FUNCTION
 }
 
@@ -66,8 +84,9 @@ GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, 
  * Address:	........
  * Size:	000068
  */
-void GemItem::initParam(int)
+void GemItem::initParam(int type)
 {
+	setColorType(type);
 	// UNUSED FUNCTION
 }
 
@@ -76,76 +95,28 @@ void GemItem::initParam(int)
  * Address:	800E4390
  * Size:	0000E4
  */
-void GemItem::setColorType(int)
+void GemItem::setColorType(int col)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r4, 0x3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r3, 0
-	  stw       r4, 0x3E0(r3)
-	  blt-      .loc_0x78
-	  bl        0x133CC0
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x6710(r2)
-	  stw       r0, 0x2C(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x671C(r2)
-	  stw       r0, 0x28(r1)
-	  lfs       f1, -0x6720(r2)
-	  lfd       f3, 0x28(r1)
-	  lfs       f0, -0x6718(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stfd      f0, 0x20(r1)
-	  cmpwi     r0, 0x3
-	  lwz       r4, 0x24(r1)
-	  blt-      .loc_0x78
-	  li        r4, 0
+	mColor = col;
+	if (col >= 3) {
+		col = gsys->getRand(1.0f) * 3.0f;
+		if (col >= 3) {
+			col = 0;
+		}
+	}
+	mColor = col;
 
-	.loc_0x78:
-	  stw       r4, 0x3E0(r31)
-	  lwz       r0, 0x3DC(r31)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x90
-	  cmpwi     r0, 0x5
-	  blt-      .loc_0x98
+	if (mGemType < 0 || mGemType >= 5) {
+		ERROR("illegal gem type !\n", mGemType);
+		mGemType = 0;
+	}
+	mItemShapeObject = itemMgr->getPelletShapeObject(mColor, mGemType);
 
-	.loc_0x90:
-	  li        r0, 0
-	  stw       r0, 0x3DC(r31)
+	if (mItemShapeObject) {
+		mItemAnimator.init(&mItemShapeObject->mAnimContext, mItemShapeObject->mAnimMgr, itemMgr->mItemMotionTable);
+	}
 
-	.loc_0x98:
-	  lwz       r3, 0x30AC(r13)
-	  lwz       r4, 0x3E0(r31)
-	  lwz       r5, 0x3DC(r31)
-	  bl        0xFF34
-	  stw       r3, 0x3C0(r31)
-	  lwz       r4, 0x3C0(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xD0
-	  lwz       r6, 0x30AC(r13)
-	  addi      r3, r31, 0x36C
-	  lwz       r5, 0x4(r4)
-	  addi      r4, r4, 0x8
-	  lwz       r6, 0x90(r6)
-	  bl        0x3ACC8
-
-	.loc_0xD0:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -155,6 +126,20 @@ void GemItem::setColorType(int)
  */
 void GemItem::startAI(int)
 {
+	mSeContext = &mGemSe;
+	mSeContext->setContext(this, 2);
+	mCollInfo = &mGemCollInfo;
+	mGemCollInfo.initInfo(mItemShapeObject->mShape, mGemColl, nullptr);
+	mScale.set(1.0f, 1.0f, 1.0f);
+	mRotation.set(1.0f, mDirection, 1.0f);
+	resetCreatureFlag(0x80);
+	((SimpleAI*)mStateMachine)->start(this, 0);
+	_3D9 = false;
+	_3D8 = false;
+	playSound(0);
+	// v func
+	_3CC = 0;
+	_3C8 = 0;
 	// UNUSED FUNCTION
 }
 
@@ -165,6 +150,42 @@ void GemItem::startAI(int)
  */
 void GemItem::update()
 {
+	// a lot of this is just estimating based on the dll
+
+	if (_3D8) {
+		updateLiftup();
+	}
+	f32 motionScl;
+	if (mColor == 1 && mGemType == 1) {
+		motionScl = 1.333333f;
+	} else {
+		motionScl = 2.666666f;
+	}
+	ItemCreature::update();
+	if (mStickListHead) {
+		f32 len = mVelocity.length();
+		setMotionSpeed(len * motionScl);
+		f32 s = getMotionSpeed();
+		if (s > 1000.0f) {
+			PRINT("motionSpeed = %f : vel(%.1f %.1f %.1f) : getSpeedScl %.1f motionScl %.1f\n", getMotionSpeed(), mVelocity.x, mVelocity.y,
+			      mVelocity.z, motionScl, motionScl);
+		}
+	} else {
+		// some virtual func
+
+		if (mCurrentState->getID()) {
+			// some virtual func
+			if (_3D9) {
+				stopEventSound(this, SE_LIFT_TRY);
+				stopEventSound(this, SE_LIFT_MOVE);
+				finishPick();
+			}
+			setCreatureFlag(0x80); // this is a further inline
+			if (isCreatureFlag(4)) {
+				mVelocity = mVelocity * 1.5f;
+			}
+		}
+	}
 	// UNUSED FUNCTION
 }
 
@@ -173,9 +194,10 @@ void GemItem::update()
  * Address:	........
  * Size:	000050
  */
-void GemItem::reachCapacity()
+bool GemItem::reachCapacity()
 {
-	// UNUSED FUNCTION
+	Stickers stick(this);
+	return _3F0 < stick.getCount();
 }
 
 /*
@@ -185,6 +207,22 @@ void GemItem::reachCapacity()
  */
 void GemItem::updateLiftup()
 {
+	f32 a = _3D4;
+	_3D4 += gsys->getFrameTime() * 3.333333f;
+	if (_3D4 > _3D0) {
+		_3D4 = _3D0;
+		_3D8 = false;
+	}
+	enableGroundOffset(_3D4);
+	mPosition.y += _3D4 - a;
+
+	Stickers stick(this);
+	Iterator it(nullptr);
+	CI_LOOP(it)
+	{
+		Creature* obj = *it;
+		obj->_194.y   = obj->_194.y - (_3D4 - a);
+	}
 	// UNUSED FUNCTION
 }
 
@@ -193,9 +231,17 @@ void GemItem::updateLiftup()
  * Address:	........
  * Size:	000098
  */
-void GemItem::startPick(f32)
+void GemItem::startPick(f32 val)
 {
-	// UNUSED FUNCTION
+	playSound(0);
+	getCurrentMotionName();
+	setFree(false);
+	_3D0        = val;
+	_3D4        = 0;
+	_3D8        = true;
+	mVelocity.y = 0.0f;
+	enableGroundOffset(0.0f);
+	_3D9 = true;
 }
 
 /*
@@ -205,7 +251,13 @@ void GemItem::startPick(f32)
  */
 void GemItem::finishPick()
 {
-	// UNUSED FUNCTION
+	PRINT("FINISH PICK ++++++++++++++\n");
+	_3D8 = 0;
+	_3D0 = 0;
+	disableGroundOffset();
+	setFree(true);
+	_3D9 = 0;
+	resetCreatureFlag(0x40);
 }
 
 /*
@@ -215,7 +267,7 @@ void GemItem::finishPick()
  */
 f32 GemItem::getSize()
 {
-	// UNUSED FUNCTION
+	return 41.0f * _3E8 / 0.4f;
 }
 
 /*
@@ -225,7 +277,7 @@ f32 GemItem::getSize()
  */
 f32 GemItem::getiMass()
 {
-	// UNUSED FUNCTION
+	return 0.0f;
 }
 
 /*
@@ -235,6 +287,32 @@ f32 GemItem::getiMass()
  */
 void GemItem::split()
 {
+	if (_3E4) {
+		int something = table[_3E4];
+		if (something > 0) {
+			PRINT("gem type %d split !\n", mGemType);
+			_3E4 = 0;
+			kill(false);
+			int objType = mGemType == 1 ? OBJTYPE_Gem1 : OBJTYPE_Gem5;
+			f32 yvel    = 240.0f;
+			for (int i = 0; i < something; i++) {
+				Creature* obj = itemMgr->birth(objType);
+				Vector3f pos  = mPosition;
+				mPosition.y += 10.0f;
+				f32 r    = gsys->getRand(1.0f);
+				f32 calc = r * PI + r * PI;
+				Vector3f velocity(sinf(calc) * 40.0f, yvel, cosf(calc) * 40.0f);
+				if (obj) {
+					obj->init(pos);
+					obj->startAI(0);
+					obj->initParam(mColor);
+					obj->mVelocity.x = velocity.x;
+					obj->mVelocity.y = velocity.y;
+					obj->mVelocity.z = velocity.z;
+				}
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -384,9 +462,10 @@ void GemItem::split()
  * Address:	........
  * Size:	000048
  */
-void GemItem::refresh(Graphics&)
+void GemItem::refresh(Graphics& gfx)
 {
-	// UNUSED FUNCTION
+	ItemCreature::refresh(gfx);
+	mCollInfo->updateInfo(gfx, false);
 }
 
 /*
@@ -394,9 +473,10 @@ void GemItem::refresh(Graphics&)
  * Address:	........
  * Size:	000014
  */
-void GemItem::doStore(CreatureInf*)
+void GemItem::doStore(CreatureInf* inf)
 {
-	// UNUSED FUNCTION
+	inf->mStartAnimId = mGemType;
+	inf->mEndAnimId   = mColor;
 }
 
 /*
@@ -404,9 +484,13 @@ void GemItem::doStore(CreatureInf*)
  * Address:	........
  * Size:	000064
  */
-void GemItem::doRestore(CreatureInf*)
+void GemItem::doRestore(CreatureInf* inf)
 {
-	// UNUSED FUNCTION
+	mGemType = inf->mStartAnimId;
+	mColor   = inf->mEndAnimId;
+	initParam(mColor);
+	startAI(0);
+	PRINT("DO RESTORE END ****\n");
 }
 
 /*
@@ -416,7 +500,8 @@ void GemItem::doRestore(CreatureInf*)
  */
 void GemItem::doKill()
 {
-	// UNUSED FUNCTION
+	mSeContext->releaseEvent();
+	itemMgr->kill(this); // guess here because I cant tell from the dll
 }
 
 /*
@@ -426,6 +511,7 @@ void GemItem::doKill()
  */
 bool GemItem::isAlive()
 {
+	return true;
 	// UNUSED FUNCTION
 }
 
@@ -446,6 +532,5 @@ void GemItem::setRouteTracer(RouteTracer*)
  */
 void ItemCreature::finalSetup()
 {
-	// Generated from stb r0, 0x3C4(r3)
-	// _3C4 = 1;
+	_3C4 = 1;
 }

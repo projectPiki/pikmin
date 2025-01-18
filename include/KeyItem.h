@@ -35,7 +35,7 @@ struct KeyItem : public Creature {
 	virtual void startAI(int);                  // _34
 	virtual f32 getiMass();                     // _38
 	virtual f32 getSize();                      // _3C
-	virtual f32 getHeight();                    // _40
+	virtual f32 getHeight() { return 0.0f; }    // _40
 	virtual bool isVisible();                   // _74
 	virtual void collisionCallback(CollEvent&); // _A8
 	virtual void update();                      // _E0
@@ -44,7 +44,9 @@ struct KeyItem : public Creature {
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	u8 _2B8[0x2E4 - 0x2B8]; // _2B8, unknown
+	int _2B8;              // _2B8
+	SearchData mSearch[3]; // _2BC
+	Shape* mModel;         // _2E0
 };
 
 #endif

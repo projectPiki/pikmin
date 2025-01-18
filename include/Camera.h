@@ -65,6 +65,14 @@ struct CullFrustum {
 		projVec.z = vec.dot(mViewZAxis);
 	}
 
+	void setBoundOffset(Vector3f* pos)
+	{
+		_154 = pos != nullptr;
+		if (_154) {
+			_158 = *pos;
+		}
+	}
+
 	int _00;                     // _00
 	int _04;                     // _04
 	int mViewPlaneIdx;           // _08

@@ -1,79 +1,39 @@
 #include "KeyItem.h"
 #include "DoorItem.h"
+#include "DebugLog.h"
+#include "Graphics.h"
+#include "MapMgr.h"
+#include "Font.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT(nullptr)
 
 /*
  * --INFO--
  * Address:	800ED204
  * Size:	0000A8
  */
-KeyItem::KeyItem(CreatureProp* props, Shape*)
+KeyItem::KeyItem(CreatureProp* props, Shape* model)
     : Creature(props)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bl        -0x62348
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x2CE0
-	  lis       r3, 0x8009
-	  stw       r0, 0x0(r30)
-	  subi      r4, r3, 0x5808
-	  addi      r3, r30, 0x2BC
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x3
-	  bl        0x127828
-	  stw       r31, 0x2E0(r30)
-	  li        r0, 0x4
-	  addi      r3, r30, 0x1B8
-	  stw       r0, 0x68(r30)
-	  addi      r4, r30, 0x2BC
-	  li        r5, 0x3
-	  bl        -0x95E4
-	  lwz       r3, 0xC8(r30)
-	  li        r4, 0x3
-	  li        r0, 0x2
-	  rlwinm    r3,r3,0,23,21
-	  stw       r3, 0xC8(r30)
-	  mr        r3, r30
-	  lwz       r5, 0xC8(r30)
-	  ori       r5, r5, 0x1
-	  stw       r5, 0xC8(r30)
-	  stw       r4, 0x6C(r30)
-	  stw       r0, 0x2B8(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mModel = model;
+	_68    = 4;
+	mSearchBuffer.init(mSearch, 3);
+	resetCreatureFlag(0x200);
+	setCreatureFlag(1);
+	mObjType = OBJTYPE_Key;
+	_2B8     = 2;
 }
 
 /*
@@ -83,11 +43,7 @@ KeyItem::KeyItem(CreatureProp* props, Shape*)
  */
 f32 KeyItem::getSize()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6528(r2)
-	  blr
-	*/
+	return 25.0f;
 }
 
 /*
@@ -95,32 +51,13 @@ f32 KeyItem::getSize()
  * Address:	800ED2B4
  * Size:	000054
  */
-void KeyItem::init(Vector3f&)
+void KeyItem::init(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lfs       f0, -0x6524(r2)
-	  stfs      f0, 0x7C(r3)
-	  stfs      f0, 0x80(r31)
-	  stfs      f0, 0x84(r31)
-	  bl        -0x626D4
-	  addi      r3, r31, 0x1B8
-	  addi      r4, r31, 0x2BC
-	  li        r5, 0x3
-	  bl        -0x9668
-	  li        r0, 0x2
-	  stw       r0, 0x2B8(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	f32 scale = 1.0f;
+	mScale.set(scale, scale, scale);
+	Creature::init(pos);
+	mSearchBuffer.init(mSearch, 3);
+	_2B8 = 2;
 }
 
 /*
@@ -130,8 +67,7 @@ void KeyItem::init(Vector3f&)
  */
 void KeyItem::startAI(int)
 {
-	// Generated from stw r0, 0x2B8(r3)
-	// _2B8 = 0;
+	_2B8 = 0;
 }
 
 /*
@@ -141,17 +77,11 @@ void KeyItem::startAI(int)
  */
 bool KeyItem::isVisible()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2B8(r3)
-	  li        r3, 0
-	  cmpwi     r0, 0x1
-	  beqlr-
-	  cmpwi     r0, 0x2
-	  beqlr-
-	  li        r3, 0x1
-	  blr
-	*/
+	bool res = false;
+	if (_2B8 != 1 && _2B8 != 2) {
+		res = true;
+	}
+	return res;
 }
 
 /*
@@ -161,24 +91,9 @@ bool KeyItem::isVisible()
  */
 void KeyItem::doKill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x8(r1)
-	  stw       r0, 0x2B8(r3)
-	  lwz       r3, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x7C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("key is killed ?\n");
+	_2B8 = 1;
+	itemMgr->kill(this);
 }
 
 /*
@@ -188,80 +103,16 @@ void KeyItem::doKill()
  */
 void KeyItem::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  lfs       f2, 0x70(r3)
-	  lfs       f1, 0x74(r3)
-	  fmuls     f2, f2, f2
-	  lfs       f3, 0x78(r3)
-	  fmuls     f1, f1, f1
-	  lfs       f0, -0x6520(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x98
-	  fsqrte    f1, f4
-	  lfd       f3, -0x6518(r2)
-	  lfd       f2, -0x6510(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x10(r1)
-	  lfs       f4, 0x10(r1)
+	f32 length = mVelocity.length() / 150.0f * 0.01f + 0.025f;
+	if (length > 2.0f) {
+		length = 2.0f;
+	}
+	mDirection += length * TAU;
+	mDirection = roundAng(mDirection);
+	mGrid.updateGrid(mPosition);
+	updateAI();
 
-	.loc_0x98:
-	  lfs       f0, -0x6500(r2)
-	  lfs       f2, -0x6504(r2)
-	  fdivs     f1, f4, f0
-	  lfs       f3, -0x6508(r2)
-	  lfs       f0, -0x64FC(r2)
-	  fmuls     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpo     cr0, f1, f0
-	  fmr       f2, f1
-	  ble-      .loc_0xC4
-	  fmr       f2, f0
-
-	.loc_0xC4:
-	  lfs       f0, -0x64F8(r2)
-	  lfs       f1, 0xA0(r31)
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xA0(r31)
-	  lfs       f1, 0xA0(r31)
-	  bl        -0xB4EC4
-	  stfs      f1, 0xA0(r31)
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  bl        -0x58F3C
-	  mr        r3, r31
-	  bl        -0x61AE8
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -280,11 +131,7 @@ void KeyItem::collisionCallback(CollEvent&)
  */
 f32 KeyItem::getiMass()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x64F4(r2)
-	  blr
-	*/
+	return 10.0f;
 }
 
 /*
@@ -292,8 +139,20 @@ f32 KeyItem::getiMass()
  * Address:	800ED488
  * Size:	00014C
  */
-void KeyItem::refresh(Graphics&)
+void KeyItem::refresh(Graphics& gfx)
 {
+	Matrix4f mtx, mtx2;
+	Vector3f pos(mPosition.x, mPosition.y + 20.0f, mPosition.z);
+
+	mTransformMatrix.makeSRT(mScale, mRotation, pos);
+
+	gfx.calcViewMatrix(mTransformMatrix, mtx2);
+	gfx.useMatrix(mtx2, 0);
+	gfx.mCamera->setBoundOffset(&mPosition);
+	mapMgr->getLight(mPosition.x, mPosition.z);
+	gfx.setLighting(true, nullptr);
+	mModel->drawshape(gfx, *gfx.mCamera, nullptr);
+	gfx.mCamera->setBoundOffset(nullptr);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -394,33 +253,10 @@ void KeyItem::refresh(Graphics&)
 DoorItem::DoorItem(int p1, CreatureProp* props, Shape* shape)
     : ItemCreature(p1, props, shape)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  bl        0x82C4
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x2E58
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x114
-	  li        r4, 0x2
-	  stw       r0, 0x2B8(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stw       r4, 0x3CC(r31)
-	  lfs       f0, -0x6520(r2)
-	  stfs      f0, 0x3C8(r31)
-	  stw       r0, 0x3D0(r31)
-	  stw       r0, 0x3D4(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mStateId = 2;
+	_3C8     = 0.0f;
+	_3D0     = 0;
+	_3D4     = 0;
 }
 
 /*
@@ -430,17 +266,10 @@ DoorItem::DoorItem(int p1, CreatureProp* props, Shape* shape)
  */
 void DoorItem::disappear()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x3CC(r3)
-	  cmpwi     r0, 0x3
-	  beqlr-
-	  li        r0, 0x3
-	  stw       r0, 0x3CC(r3)
-	  lfs       f0, -0x64EC(r2)
-	  stfs      f0, 0x3C8(r3)
-	  blr
-	*/
+	if (mStateId != 3) {
+		mStateId = 3;
+		_3C8     = 2.5f;
+	}
 }
 
 /*
@@ -450,7 +279,7 @@ void DoorItem::disappear()
  */
 void DoorItem::becomeGate()
 {
-	// UNUSED FUNCTION
+	mObjType = OBJTYPE_Gate;
 }
 
 /*
@@ -460,18 +289,10 @@ void DoorItem::becomeGate()
  */
 f32 DoorItem::getSize()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0x5
-	  bne-      .loc_0x14
-	  lfs       f1, -0x64E8(r2)
-	  blr
-
-	.loc_0x14:
-	  lfs       f1, -0x64E4(r2)
-	  blr
-	*/
+	if (mObjType == OBJTYPE_Gate) {
+		return 60.0f;
+	}
+	return 30.0f;
 }
 
 /*
@@ -479,34 +300,15 @@ f32 DoorItem::getSize()
  * Address:	800ED670
  * Size:	000054
  */
-void DoorItem::init(Vector3f&)
+void DoorItem::init(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        0x82F0
-	  lwz       r0, 0x6C(r31)
-	  lfs       f0, -0x6524(r2)
-	  cmpwi     r0, 0x5
-	  bne-      .loc_0x2C
-	  lfs       f0, -0x64FC(r2)
-
-	.loc_0x2C:
-	  stfs      f0, 0x7C(r31)
-	  li        r0, 0x2
-	  stfs      f0, 0x80(r31)
-	  stfs      f0, 0x84(r31)
-	  stw       r0, 0x3CC(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	ItemCreature::init(pos);
+	f32 scale = 1.0f;
+	if (mObjType == OBJTYPE_Gate) {
+		scale = 2.0f;
+	}
+	mScale.set(scale, scale, scale);
+	mStateId = 2;
 }
 
 /*
@@ -516,8 +318,7 @@ void DoorItem::init(Vector3f&)
  */
 void DoorItem::startAI(int)
 {
-	// Generated from stw r0, 0x3CC(r3)
-	// _3CC = 0;
+	mStateId = 0;
 }
 
 /*
@@ -527,55 +328,20 @@ void DoorItem::startAI(int)
  */
 void DoorItem::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x3CC(r3)
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x94
-	  lwz       r4, 0x2DEC(r13)
-	  lfs       f1, 0x3C8(r3)
-	  lfs       f0, 0x28C(r4)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x3C8(r3)
-	  lfs       f1, 0x3C8(r3)
-	  lfs       f0, -0x64EC(r2)
-	  lwz       r4, 0x2DEC(r13)
-	  fdivs     f3, f1, f0
-	  lfs       f4, -0x64FC(r2)
-	  lfs       f1, -0x64E0(r2)
-	  lfs       f0, 0x28C(r4)
-	  lfs       f2, 0x98(r3)
-	  fmuls     f0, f1, f0
-	  fmuls     f1, f4, f3
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x98(r3)
-	  lfs       f0, -0x3378(r13)
-	  stfs      f0, 0x7C(r3)
-	  stfs      f1, 0x80(r3)
-	  lfs       f0, -0x3374(r13)
-	  stfs      f0, 0x84(r3)
-	  lfs       f1, 0x3C8(r3)
-	  lfs       f0, -0x6520(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x98
-	  li        r0, 0x1
-	  stw       r0, 0x3CC(r3)
-	  li        r4, 0
-	  bl        -0x62A7C
-	  b         .loc_0x98
+	if (mStateId == 3) {
+		_3C8 -= gsys->getFrameTime();
+		f32 yscale = (_3C8 / 2.5f) * 2.0f;
+		mPosition.y -= gsys->getFrameTime() * 3.0f;
 
-	.loc_0x94:
-	  bl        0x8490
+		mScale.set(2.0f, yscale, 2.0f);
 
-	.loc_0x98:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+		if (_3C8 < 0.0f) {
+			mStateId = 1;
+			kill(nullptr);
+		}
+	} else {
+		ItemCreature::update();
+	}
 }
 
 /*
@@ -585,17 +351,11 @@ void DoorItem::update()
  */
 bool DoorItem::isVisible()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x3CC(r3)
-	  li        r3, 0
-	  cmpwi     r0, 0x1
-	  beqlr-
-	  cmpwi     r0, 0x2
-	  beqlr-
-	  li        r3, 0x1
-	  blr
-	*/
+	bool res = false;
+	if (mStateId != 1 && mStateId != 2) {
+		res = true;
+	}
+	return res;
 }
 
 /*
@@ -605,11 +365,7 @@ bool DoorItem::isVisible()
  */
 f32 DoorItem::getiMass()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6520(r2)
-	  blr
-	*/
+	return 0.0f;
 }
 
 /*
@@ -619,17 +375,11 @@ f32 DoorItem::getiMass()
  */
 bool DoorItem::isAtari()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x3CC(r3)
-	  li        r3, 0x1
-	  cmpwi     r0, 0
-	  beqlr-
-	  cmpwi     r0, 0x3
-	  beqlr-
-	  li        r3, 0
-	  blr
-	*/
+	bool res = true;
+	if (mStateId != 0 && mStateId != 3) {
+		res = false;
+	}
+	return res;
 }
 
 /*
@@ -637,176 +387,28 @@ bool DoorItem::isAtari()
  * Address:	800ED7C0
  * Size:	000204
  */
-void DoorItem::refresh(Graphics&)
+void DoorItem::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x170(r1)
-	  stw       r31, 0x16C(r1)
-	  stw       r30, 0x168(r1)
-	  stw       r29, 0x164(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x160(r1)
-	  addi      r28, r3, 0
-	  addi      r3, r28, 0x228
-	  addi      r4, r28, 0x7C
-	  addi      r5, r28, 0x88
-	  addi      r6, r28, 0x94
-	  bl        -0xAF700
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  addi      r4, r28, 0x228
-	  addi      r5, r1, 0x120
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x3370(r13)
-	  addi      r3, r1, 0x114
-	  lfs       f1, -0x336C(r13)
-	  addi      r4, r1, 0x120
-	  stfs      f0, 0x114(r1)
-	  lfs       f0, -0x3368(r13)
-	  stfs      f1, 0x118(r1)
-	  stfs      f0, 0x11C(r1)
-	  bl        -0xB60E8
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x3B4(r29)
-	  addi      r0, r3, 0
-	  lis       r4, 0x803A
-	  lwz       r12, 0x74(r12)
-	  addi      r3, r29, 0
-	  subi      r4, r4, 0x77C0
-	  mtlr      r12
-	  mr        r31, r0
-	  li        r5, 0
-	  blrl
-	  li        r0, 0xFF
-	  stb       r0, 0x10(r1)
-	  addi      r4, r1, 0x10
-	  addi      r3, r29, 0
-	  stb       r0, 0x11(r1)
-	  li        r5, 0x1
-	  stb       r0, 0x12(r1)
-	  stb       r0, 0x13(r1)
-	  lwz       r12, 0x3B4(r29)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r4, 0x2DEC(r13)
-	  lwz       r12, 0x3B4(r29)
-	  li        r5, 0
-	  lwz       r4, 0x10(r4)
-	  lwz       r12, 0xCC(r12)
-	  lwz       r4, 0x0(r4)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  li        r4, 0
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x3D4(r28)
-	  addi      r30, r3, 0
-	  crclr     6, 0x6
-	  addi      r3, r1, 0x14
-	  subi      r4, r13, 0x3364
-	  bl        0x128C9C
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r1, 0x14
-	  lwz       r3, 0x10(r3)
-	  bl        -0xC57D8
-	  lwz       r12, 0x3B4(r29)
-	  srawi     r0, r3, 0x1
-	  lwz       r4, 0x2DEC(r13)
-	  addze     r0, r0
-	  lwz       r12, 0xF0(r12)
-	  lwz       r4, 0x10(r4)
-	  addi      r3, r29, 0
-	  mtlr      r12
-	  neg       r6, r0
-	  addi      r5, r1, 0x114
-	  crclr     6, 0x6
-	  addi      r8, r1, 0x14
-	  li        r7, 0
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  addi      r4, r1, 0x120
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  bl        0x82D8
-	  lwz       r0, 0x174(r1)
-	  lwz       r31, 0x16C(r1)
-	  lwz       r30, 0x168(r1)
-	  lwz       r29, 0x164(r1)
-	  lwz       r28, 0x160(r1)
-	  addi      r1, r1, 0x170
-	  mtlr      r0
-	  blr
-	*/
-}
+	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+	Matrix4f mtx;
+	gfx.calcViewMatrix(mTransformMatrix, mtx);
 
-/*
- * --INFO--
- * Address:	800ED9C4
- * Size:	000008
- */
-bool DoorItem::isAlive()
-{
-	return true;
-}
+	Vector3f pos(0.0f, 40.0f, 0.0f);
+	pos.multMatrix(mtx);
+	bool set = gfx.setLighting(false, nullptr);
+	gfx.useMatrix(Matrix4f::ident, 0);
 
-/*
- * --INFO--
- * Address:	800ED9CC
- * Size:	000008
- */
-f32 DoorItem::getHeight()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6520(r2)
-	  blr
-	*/
-}
+	char str[256];
 
-/*
- * --INFO--
- * Address:	800ED9D4
- * Size:	000008
- */
-f32 KeyItem::getHeight()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6520(r2)
-	  blr
-	*/
+	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.useTexture(gsys->mConsFont->mTexture, 0);
+	int blend = gfx.setCBlending(0);
+
+	sprintf(str, "%s", _3D4);
+	gfx.perspPrintf(gsys->mConsFont, pos, -(gsys->mConsFont->stringWidth(str) / 2), 0, str);
+
+	gfx.setCBlending(blend);
+	gfx.setLighting(set, nullptr);
+	gfx.useMatrix(mtx, nullptr);
+	ItemCreature::refresh(gfx);
 }
