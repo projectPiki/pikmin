@@ -239,7 +239,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 		mLookAtTarget.reset();
 	}
 
-	bool isFired() { return mIsOnFire; }
+	bool isFired() { return mIsFired; }
 
 	static bool directDumpMode;
 	static Colour kinokoColors[6];
@@ -248,92 +248,95 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	// _2B8     = PaniAnimKeyListener
-	OdoMeter mOdometer;                // _2BC
-	PathFinder::Buffer* mPathBuffers;  // _2CC
-	u32 mRouteHandle;                  // _2D0
-	bool mDoRouteASync;                // _2D4
-	s16 mRouteStartWPIdx;              // _2D6
-	s16 mRouteGoalWPIdx;               // _2D8
-	bool _2DA;                         // _2DA
-	s16 mCurrRoutePoint;               // _2DC
-	Vector3f mRouteStartPos;           // _2E0
-	Vector3f mRouteGoalPos;            // _2EC
-	Vector3f mSplineControlPts[4];     // _2F8
-	s16 mNumRoutePoints;               // _328
-	Creature* mRouteTargetCreature;    // _32C
-	u8 _330;                           // _330
-	u32 _334;                          // _334
-	SmartPtr<Creature> mLookAtTarget;  // _338
-	Vector3f* _33C;                    // _33C
-	u8 _340;                           // _340
-	f32 _344;                          // _344
-	f32 _348;                          // _348
-	u32 _34C;                          // _34C
-	int mBlendMotionIdx;               // _350
-	PaniPikiAnimMgr mPikiAnimMgr;      // _354
-	u8 mEmotion;                       // _400
-	u8 _401[0x408 - 0x401];            // _401
-	u8 _408;                           // _408
-	bool mIsCallable;                  // _409
-	UpdateContext _40C;                // _40C
-	UpdateContext _418;                // _418
-	bool mIsOnFire;                    // _424
-	u16 _426;                          // _426
-	PermanentEffect* _428;             // _428
-	BurnEffect* mBurnEffect;           // _42C
-	RippleEffect* mRippleEffect;       // _430
-	FreeLightEffect* mFreeLightEffect; // _434
-	SlimeEffect* mSlimeEffect;         // _438
-	u32 mPlayerId;                     // _43C
-	Vector3f _440;                     // _440
-	Vector3f mShadowPos;               // _44C
-	Vector3f mCatchPos;                // _458
-	Vector3f mEffectPos;               // _464
-	bool mWantToStick;                 // _470
-	u8 _471[0x47C - 0x471];            // _471
-	f32 _47C;                          // _47C
-	u8 _480[0x488 - 0x480];            // _480
-	f32 mMoveSpeed;                    // _488
-	f32 _48C;                          // _48C
-	PikiStateMachine* mFSM;            // _490
-	u8 _494[0x4];                      // _494
-	f32 mFlickIntensity;               // _498, knockback? impulse velocity magnitude?
-	f32 mRotationAngle;                // _49C
-	bool mIsWhistlePending;            // _4A0, have been whistled, haven't joined party yet
-	CollPart* mSwallowMouthPart;       // _4A4
-	Creature* mLeaderCreature;         // _4A8, maybe puffstool/kinoko leader?
-	Vector3f mPluckVelocity;           // _4AC
-	int _4B8;                          // _4B8
-	Vector3f _4BC;                     // _4BC
-	Vector3f _4C8;                     // _4C8
-	u8 _4D4[0x8];                      // _4D4, unknown
-	u32 _4DC;                          // _4DC, unknown
-	Plane* mWallPlane;                 // _4E0
-	DynCollObject* mWallObj;           // _4E4
-	int _4E8;                          // _4E8
-	f32 _4EC;                          // _4EC
-	f32 _4F0;                          // _4F0
-	f32 mPikiSize;                     // _4F4
-	TopAction* mActiveAction;          // _4F8, may be just Action*
-	u16 mMode;                         // _4FC, use PikiMode enum
-	SmartPtr<Creature> _500;           // _500
-	Navi* mNavi;                       // _504
-	Colour mCurrentColour;             // _508
-	Colour mDefaultColour;             // _50C
-	u16 mColor;                        // _510, red/yellow/blue
-	u8 _512[0x518 - 0x512];            // _4FC
-	u8 _518;                           // _518
-	u8 _519;                           // _519
-	u8 _51A[0x520 - 0x51A];            // _51A
-	int mHappa;                        // _520, leaf/bud/flower - see PikiHappa enum
-	u16 _524;                          // _524, might be s16
-	u8 _526[0x52C - 0x526];            // _524, unknown
-	AState<Piki>* mCurrentState;       // _52C
-	Colour mStartBlendColour;          // _530
-	Colour mTargetBlendColour;         // _534
-	f32 mColourBlendRatio;             // _538
-	SearchData mPikiSearchData[6];     // _53C
-	bool mEraseKill;                   // _584
+	OdoMeter mOdometer;                   // _2BC
+	PathFinder::Buffer* mPathBuffers;     // _2CC
+	u32 mRouteHandle;                     // _2D0
+	bool mDoRouteASync;                   // _2D4
+	s16 mRouteStartWPIdx;                 // _2D6
+	s16 mRouteGoalWPIdx;                  // _2D8
+	bool _2DA;                            // _2DA
+	s16 mCurrRoutePoint;                  // _2DC
+	Vector3f mRouteStartPos;              // _2E0
+	Vector3f mRouteGoalPos;               // _2EC
+	Vector3f mSplineControlPts[4];        // _2F8
+	s16 mNumRoutePoints;                  // _328
+	Creature* mRouteTargetCreature;       // _32C
+	u8 _330;                              // _330
+	u32 _334;                             // _334
+	SmartPtr<Creature> mLookAtTarget;     // _338
+	Vector3f* _33C;                       // _33C
+	u8 _340;                              // _340
+	f32 _344;                             // _344
+	f32 _348;                             // _348
+	f32 _34C;                             // _34C
+	int mBlendMotionIdx;                  // _350
+	PaniPikiAnimMgr mPikiAnimMgr;         // _354
+	u8 mEmotion;                          // _400
+	u32 _404;                             // _404, unknown
+	u8 _408;                              // _408
+	bool mIsCallable;                     // _409
+	UpdateContext mPikiUpdateContext;     // _40C
+	UpdateContext mPikiLookUpdateContext; // _418
+	bool mIsFired;                        // _424
+	u16 _426;                             // _426
+	PermanentEffect* _428;                // _428
+	BurnEffect* mBurnEffect;              // _42C
+	RippleEffect* mRippleEffect;          // _430
+	FreeLightEffect* mFreeLightEffect;    // _434
+	SlimeEffect* mSlimeEffect;            // _438
+	u32 mPlayerId;                        // _43C
+	Vector3f _440;                        // _440
+	Vector3f mShadowPos;                  // _44C
+	Vector3f mCatchPos;                   // _458
+	Vector3f mEffectPos;                  // _464
+	bool mWantToStick;                    // _470
+	u32 _474;                             // _474, unknown
+	f32 _478;                             // _478
+	f32 mMotionSpeed;                     // _47C
+	int _480;                             // _480
+	int _484;                             // _484
+	f32 mMoveSpeed;                       // _488
+	f32 _48C;                             // _48C
+	PikiStateMachine* mFSM;               // _490
+	u8 _494[0x4];                         // _494
+	f32 mFlickIntensity;                  // _498, knockback? impulse velocity magnitude?
+	f32 mRotationAngle;                   // _49C
+	bool mIsWhistlePending;               // _4A0, have been whistled, haven't joined party yet
+	CollPart* mSwallowMouthPart;          // _4A4
+	Creature* mLeaderCreature;            // _4A8, maybe puffstool/kinoko leader?
+	Vector3f mPluckVelocity;              // _4AC
+	int _4B8;                             // _4B8
+	Vector3f _4BC;                        // _4BC
+	Vector3f _4C8;                        // _4C8
+	u8 _4D4[0x4];                         // _4D4, unknown
+	u32 _4D8;                             // _4D8, unknown
+	u32 _4DC;                             // _4DC, unknown
+	Plane* mWallPlane;                    // _4E0
+	DynCollObject* mWallObj;              // _4E4
+	int _4E8;                             // _4E8
+	f32 _4EC;                             // _4EC
+	f32 _4F0;                             // _4F0
+	f32 mPikiSize;                        // _4F4
+	TopAction* mActiveAction;             // _4F8, may be just Action*
+	u16 mMode;                            // _4FC, use PikiMode enum
+	SmartPtr<Creature> _500;              // _500
+	Navi* mNavi;                          // _504
+	Colour mCurrentColour;                // _508
+	Colour mDefaultColour;                // _50C
+	u16 mColor;                           // _510, red/yellow/blue
+	u32 _514;                             // _514, unknown
+	u8 _518;                              // _518
+	u8 _519;                              // _519
+	u32 _51C;                             // _51C, unknown
+	int mHappa;                           // _520, leaf/bud/flower - see PikiHappa enum
+	u16 _524;                             // _524, might be s16
+	f32 _528;                             // _528
+	AState<Piki>* mCurrentState;          // _52C
+	Colour mStartBlendColour;             // _530
+	Colour mTargetBlendColour;            // _534
+	f32 mColourBlendRatio;                // _538
+	SearchData mPikiSearchData[6];        // _53C
+	bool mEraseKill;                      // _584
 };
 
 /**

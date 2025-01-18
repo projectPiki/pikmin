@@ -487,7 +487,7 @@ void BTeki::init(int tekiType)
 void BTeki::reset()
 {
 	if (tekiOptUpdateMgr) {
-		_174.init(tekiOptUpdateMgr);
+		mOptUpdateContext.init(tekiOptUpdateMgr);
 	}
 
 	clearTekiOptions();

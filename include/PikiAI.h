@@ -264,8 +264,11 @@ struct TopAction : public Action {
 
 	Action* getCurrAction() { return (mCurrActionIdx == -1) ? nullptr : mChildActions[mCurrActionIdx].mAction; }
 
-	// DLL inlines to do:
-	void startAction(int, Creature*);
+	void startAction(int actionID, Creature* target)
+	{
+		mCurrActionIdx = actionID;
+		mChildActions[mCurrActionIdx].initialise(target);
+	}
 
 	// _00     = VTBL
 	// _00-_14 = Action

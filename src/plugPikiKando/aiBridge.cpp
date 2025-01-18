@@ -300,7 +300,7 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
 		_24 = 1;
 		break;
 	case KEY_PlayEffect:
-		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mActor->_174.updatable())) {
+		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mActor->mOptUpdateContext.updatable())) {
 			effectMgr->create(EffectMgr::EFF_Piki_WorkCloud, mActor->mEffectPos, nullptr, nullptr);
 		}
 		break;

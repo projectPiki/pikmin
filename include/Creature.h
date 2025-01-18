@@ -251,6 +251,8 @@ struct Creature : public RefCountable, public EventTalker {
 	bool isStickTo() { return mStickTarget != nullptr; }
 	bool doAlwaysUpdate() { return !isCreatureFlag(CF_IsAICullingActive); }
 
+	bool isObjType(int type) { return mObjType == type; }
+
 	// AKA: is this a gate?
 	bool isSluice()
 	{
@@ -291,8 +293,6 @@ struct Creature : public RefCountable, public EventTalker {
 	/*
 	    DLL inlines to assign/make:
 	    bool insideView();
-	    bool isAIActive();
-	    bool isObjType(int);
 
 	    f32 calcDistance(Creature&);
 
@@ -363,7 +363,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Creature* mNextRopeHolder;           // _160, rope holder after this one in the rope list
 	Creature* mPrevRopeHolder;           // _164, rope holder before this one in the rope list
 	UpdateContext _168;                  // _168
-	UpdateContext _174;                  // _174
+	UpdateContext mOptUpdateContext;     // _174
 	Creature* mStickListHead;            // _180, first sticker in list of stickers stuck to this creature
 	Creature* mStickTarget;              // _184, creature/object this creature is stuck to
 	CollPart* mStickPart;                // _188

@@ -51,16 +51,16 @@ struct AICreature : public Creature, public PaniAnimKeyListener {
 	// _00-_2B8  = Creature
 	// _2B8-_2BC = PaniAnimKeyListener
 	Creature* mCollidingCreature;            // _2BC
-	u32 _2C0;                                // _2C0, unknown
+	u32 _2C0;                                // _2C0, 'target'?
 	Vector3f _2C4;                           // _2C4, could just be floats
 	int _2D0;                                // _2D0, to do with bombs
-	u32 _2D4;                                // _2D4, unknown
+	int _2D4;                                // _2D4
 	f32 _2D8;                                // _2D8
-	u8 _2DC[4];                              // _2DC, unknown
+	f32 _2DC;                                // _2DC
 	f32 _2E0;                                // _2E0
 	AState<AICreature>* mCurrentState;       // _2E4
 	StateMachine<AICreature>* mStateMachine; // _2E8
-	int mCurrentEventCount;                  // _2EC, unknown
+	int mCurrentEventCount;                  // _2EC
 	int mMaxEventCount;                      // _2F0
 	bool mEventFlags[16];                    // _2F4
 };

@@ -193,7 +193,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	Vector3f _81C;                     // _81C
 	u32 _828;                          // _828, unknown
 	PikiShapeObject* mNaviShapeObject; // _82C
-	u8 _830[0x4];                      // _830, unknown
+	u8 _830;                           // _830
 	PaniPikiAnimMgr mNaviAnimMgr;      // _834
 	SearchData mNaviSearchData[6];     // _8E0
 	u32 _928;                          // _928, unknown
