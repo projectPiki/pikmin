@@ -279,6 +279,15 @@ struct Creature : public RefCountable, public EventTalker {
 	void resetStateDamaged() { mIsBeingDamaged = false; }
 	bool isDamaged() { return mIsBeingDamaged; }
 
+	inline void enableAirResist(f32 res)
+	{
+		setCreatureFlag(0x10);
+		_CC = res;
+	}
+
+	// this might not be the right name
+	void enableFaceDirAdjust() { setCreatureFlag(0x40000); }
+
 	/*
 	    DLL inlines to assign/make:
 	    bool insideView();
@@ -295,8 +304,6 @@ struct Creature : public RefCountable, public EventTalker {
 
 	    void enableGravity();
 	    void disableGravity();
-
-	    void enableAirResist(f32);
 
 	    void startFix();
 	    void finishFix();
@@ -342,7 +349,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Vector3f _B0;                        // _B0
 	Vector3f mVolatileVelocity;          // _BC
 	u32 mCreatureFlags;                  // _C8, bitflag
-	u32 _CC;                             // _CC
+	f32 _CC;                             // _CC
 	f32 mGroundOffset;                   // _D0
 	Vector3f mPrevAngularVelocity;       // _D4
 	Quat mRotationQuat;                  // _E0

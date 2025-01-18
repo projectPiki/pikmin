@@ -82,7 +82,7 @@ struct FreeLightEffect : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	u8 _0C[4];   // _0C, unknown
+	u16 mColor;  // _0C
 	u32 _10;     // _10, unknown
 	u8 _14[0x4]; // _14, unknown
 };

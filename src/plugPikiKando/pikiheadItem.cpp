@@ -1,24 +1,27 @@
 #include "PikiHeadItem.h"
+#include "DebugLog.h"
+#include "KEffect.h"
+#include "SoundMgr.h"
+#include "GameStat.h"
+#include "MapMgr.h"
+#include "PikiMgr.h"
+#include "NaviMgr.h"
+#include "PikiState.h"
+#include "Interactions.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("pikiheadItem")
 
 /*
  * --INFO--
@@ -27,33 +30,8 @@ static void _Print(char*, ...)
  */
 void PikiHeadItem::startWaterEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  addi      r0, r3, 0x94
-	  stwu      r1, -0x38(r1)
-	  lfs       f1, -0x6568(r2)
-	  addi      r4, r1, 0xC
-	  lfs       f0, -0x6564(r2)
-	  stfs      f1, 0x14(r1)
-	  stfs      f1, 0x10(r1)
-	  stfs      f1, 0xC(r1)
-	  stfs      f1, 0x20(r1)
-	  stfs      f1, 0x1C(r1)
-	  stfs      f1, 0x18(r1)
-	  stw       r0, 0x2C(r1)
-	  stfs      f0, 0x30(r1)
-	  lwz       r3, 0x3F4(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	EffectParm parm(&mPosition);
+	mRippleEfx->emit(parm);
 }
 
 /*
@@ -63,21 +41,7 @@ void PikiHeadItem::startWaterEffect()
  */
 void PikiHeadItem::finishWaterEffect()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x3F4(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mRippleEfx->kill();
 }
 
 /*
@@ -85,44 +49,20 @@ void PikiHeadItem::finishWaterEffect()
  * Address:	800EC558
  * Size:	000074
  */
-void PikiHeadItem::playSound(int)
+void PikiHeadItem::playSound(int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r6, r3
-	  stw       r0, 0x4(r1)
-	  addi      r5, r4, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  lwz       r0, 0x3E0(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x38
-	  addi      r3, r6, 0
-	  mr        r4, r0
-	  addi      r5, r5, 0xCC
-	  bl        -0x61FD4
-	  b         .loc_0x60
+	if (_3E0) {
+		playEventSound(_3E0, id + 0xcc);
+		return;
+	}
 
-	.loc_0x38:
-	  cmpwi     r5, 0
-	  ble-      .loc_0x60
-	  addi      r31, r5, 0x108
-	  lwz       r3, 0x3038(r13)
-	  addi      r4, r31, 0
-	  addi      r5, r6, 0x94
-	  bl        -0x481A0
-	  lwz       r3, 0x3038(r13)
-	  mr        r4, r31
-	  bl        -0x472F0
-
-	.loc_0x60:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (id > 0) {
+		int sound = id + 0x108;
+		seSystem->playPikiSound(sound, mPosition);
+		PRINT("SEF_PIKI_GROW1 = %d / seIdx = %d\n", 0x109, sound);
+		seSystem->getJacID(sound);
+		PRINT("play (idx=%d) Pikihead sound jac =%d/simz(dmg=%d grow1=%d)\n", id, sound, 0x22, 0x23);
+	}
 }
 
 /*
@@ -130,41 +70,14 @@ void PikiHeadItem::playSound(int)
  * Address:	800EC5CC
  * Size:	000058
  */
-void PikiHeadItem::canPullout()
+bool PikiHeadItem::canPullout()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  beq-      .loc_0x2C
-	  lwz       r3, 0x4(r3)
-	  b         .loc_0x30
-
-	.loc_0x2C:
-	  li        r3, -0x1
-
-	.loc_0x30:
-	  subi      r0, r3, 0x6
-	  cmplwi    r0, 0x2
-	  bgt-      .loc_0x44
-	  li        r3, 0x1
-	  b         .loc_0x48
-
-	.loc_0x44:
-	  li        r3, 0
-
-	.loc_0x48:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AState<AICreature>* state = getCurrState();
+	u32 id                    = state ? state->getID() : -1;
+	if (id - 6 <= 2) {
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -184,45 +97,12 @@ bool PikiHeadItem::isVisible()
  */
 bool PikiHeadItem::needShadow()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  beq-      .loc_0x2C
-	  lwz       r3, 0x4(r3)
-	  b         .loc_0x30
-
-	.loc_0x2C:
-	  li        r3, -0x1
-
-	.loc_0x30:
-	  cmpwi     r3, 0x3
-	  beq-      .loc_0x4C
-	  cmpwi     r3, 0xE
-	  beq-      .loc_0x4C
-	  subi      r0, r3, 0xB
-	  cmplwi    r0, 0x1
-	  bgt-      .loc_0x54
-
-	.loc_0x4C:
-	  li        r3, 0
-	  b         .loc_0x58
-
-	.loc_0x54:
-	  li        r3, 0x1
-
-	.loc_0x58:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AState<AICreature>* state = getCurrState();
+	int id                    = state ? state->getID() : -1;
+	if (id == 3 || id == 14 || (u32)(id - 11) <= 1) {
+		return false;
+	}
+	return true;
 }
 
 /*
@@ -240,115 +120,16 @@ bool PikiHeadItem::isAlive()
  * Address:	800EC69C
  * Size:	00018C
  */
-PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject*, SimpleAI*)
-    : ItemCreature(0, props, nullptr)
+PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
+    : ItemCreature(15, props, nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  addi      r5, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  li        r4, 0xF
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r6, 0
-	  li        r6, 0
-	  bl        0x91E0
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x31CC
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x114
-	  addi      r3, r30, 0x3E4
-	  stw       r0, 0x2B8(r30)
-	  lfs       f0, -0x6568(r2)
-	  stfs      f0, 0x3DC(r30)
-	  stfs      f0, 0x3D8(r30)
-	  stfs      f0, 0x3D4(r30)
-	  bl        0x27C70
-	  stw       r31, 0x3C0(r30)
-	  li        r31, 0
-	  li        r3, 0x18
-	  stw       r29, 0x2E8(r30)
-	  stw       r31, 0x3CC(r30)
-	  stw       r31, 0x3D0(r30)
-	  stw       r31, 0x3E0(r30)
-	  bl        -0xA5714
-	  cmplwi    r3, 0
-	  beq-      .loc_0xE8
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r5, r4, 0x26D0
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r4, r5, 0xC
-	  addi      r0, r5, 0x18
-	  stw       r5, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-	  stw       r31, 0x10(r3)
-
-	.loc_0xE8:
-	  stw       r3, 0x3C8(r30)
-	  li        r3, 0x18
-	  bl        -0xA5788
-	  cmplwi    r3, 0
-	  beq-      .loc_0x168
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r5, r4, 0x5AC
-	  stw       r5, 0x0(r3)
-	  addi      r0, r5, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r6, r4, 0x2660
-	  addi      r0, r5, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r5, r6, 0xC
-	  addi      r4, r6, 0x18
-	  stw       r6, 0x0(r3)
-	  li        r0, 0
-	  stw       r5, 0x4(r3)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x168:
-	  stw       r3, 0x3F4(r30)
-	  mr        r3, r30
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mItemShapeObject = shape;
+	mStateMachine    = ai;
+	mSeedColor       = 0;
+	mFlowerStage     = 0;
+	_3E0             = nullptr;
+	mFreeLightEfx    = new FreeLightEffect;
+	mRippleEfx       = new RippleEffect;
 }
 
 /*
@@ -358,6 +139,30 @@ PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject*, SimpleAI*)
  */
 void PikiHeadItem::startAI(int)
 {
+	enableFaceDirAdjust();
+	_3E0 = nullptr;
+	mItemAnimator.startMotion(PaniMotionInfo(0));
+
+	f32 scale = 1.0f;
+	mScale.set(scale, scale, scale);
+
+	enableAirResist(10.0f - gsys->getRand(1.0f) * 0.5f);
+
+	static_cast<SimpleAI*>(mStateMachine)->start(this, 6);
+
+	if (mSeedColor < 0 || mSeedColor > 2) {
+		ERROR("set pikihead color before startAI\n");
+	}
+
+	GameStat::mePikis.inc(mSeedColor);
+	GameStat::update();
+	_3D4                  = mPosition;
+	mFreeLightEfx->mColor = mSeedColor;
+	EffectParm parm(&_3D4);
+	mFreeLightEfx->emit(parm);
+
+	f32 test; // this nearly fixes the stack
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -452,50 +257,15 @@ void PikiHeadItem::startAI(int)
  * Address:	800EC978
  * Size:	00008C
  */
-void PikiHeadItem::setPermanentEffects(bool)
+void PikiHeadItem::setPermanentEffects(bool set)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,24,31
-	  stwu      r1, -0x40(r1)
-	  beq-      .loc_0x68
-	  lwz       r6, 0x3CC(r3)
-	  addi      r0, r3, 0x3D4
-	  lwz       r5, 0x3C8(r3)
-	  addi      r4, r1, 0x10
-	  sth       r6, 0xC(r5)
-	  lfs       f1, -0x6568(r2)
-	  lfs       f0, -0x6564(r2)
-	  stfs      f1, 0x18(r1)
-	  stfs      f1, 0x14(r1)
-	  stfs      f1, 0x10(r1)
-	  stfs      f1, 0x24(r1)
-	  stfs      f1, 0x20(r1)
-	  stfs      f1, 0x1C(r1)
-	  stw       r0, 0x30(r1)
-	  stfs      f0, 0x34(r1)
-	  lwz       r3, 0x3C8(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x7C
-
-	.loc_0x68:
-	  lwz       r3, 0x3C8(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x7C:
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	if (set) {
+		mFreeLightEfx->mColor = mSeedColor;
+		EffectParm parm(&_3D4);
+		mFreeLightEfx->emit(parm);
+	} else {
+		mFreeLightEfx->kill();
+	}
 }
 
 /*
@@ -505,44 +275,12 @@ void PikiHeadItem::setPermanentEffects(bool)
  */
 void PikiHeadItem::doKill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  bl        0x9164
-	  lwz       r0, 0x3CC(r31)
-	  lis       r4, 0x803D
-	  lis       r3, 0x803D
-	  rlwinm    r5,r0,2,0,29
-	  addi      r0, r4, 0x1E94
-	  add       r5, r0, r5
-	  lwz       r4, 0x0(r5)
-	  addi      r0, r3, 0x1E88
-	  subi      r3, r4, 0x1
-	  stw       r3, 0x0(r5)
-	  lwz       r3, 0x3CC(r31)
-	  rlwinm    r3,r3,2,0,29
-	  add       r4, r0, r3
-	  lwz       r3, 0x0(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r4)
-	  bl        0x25B04
-	  lwz       r3, 0x3C8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r31, 0x3E4
-	  bl        0x27A9C
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	ItemCreature::doKill();
+	GameStat::mePikis.dec(mSeedColor);
+	GameStat::workPikis.inc(mSeedColor);
+	GameStat::update();
+	mFreeLightEfx->kill();
+	_3E4.kill();
 }
 
 /*
@@ -552,11 +290,7 @@ void PikiHeadItem::doKill()
  */
 f32 PikiHeadItem::getSize()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6548(r2)
-	  blr
-	*/
+	return 5.0f;
 }
 
 /*
@@ -566,11 +300,7 @@ f32 PikiHeadItem::getSize()
  */
 f32 PikiHeadItem::getiMass()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6544(r2)
-	  blr
-	*/
+	return 50.0f;
 }
 
 /*
@@ -578,10 +308,9 @@ f32 PikiHeadItem::getiMass()
  * Address:	800ECAA0
  * Size:	000008
  */
-void PikiHeadItem::setColor(int a1)
+void PikiHeadItem::setColor(int color)
 {
-	// Generated from stw r4, 0x3CC(r3)
-	// _3CC = a1;
+	mSeedColor = color;
 }
 
 /*
@@ -589,8 +318,21 @@ void PikiHeadItem::setColor(int a1)
  * Address:	800ECAA8
  * Size:	00054C
  */
-void PikiHeadItem::refresh(Graphics&)
+void PikiHeadItem::refresh(Graphics& gfx)
 {
+	f32 scale = 1.0f;
+	mScale.set(scale, scale, scale);
+	mapMgr->getLight(mPosition.x, mPosition.z); // this returns something
+	if (!mItemShapeObject) {
+		return; // this is probably a goto
+	}
+
+	Matrix4f mtx;
+	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+	int color     = mSeedColor;
+	Material* mat = mItemShapeObject->mShape->mMaterialList;
+	// mat.setColor();
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -964,81 +706,28 @@ void PikiHeadItem::refresh(Graphics&)
  * Address:	800ECFF4
  * Size:	000108
  */
-bool PikiHeadItem::interactBikkuri(InteractBikkuri&)
+bool PikiHeadItem::interactBikkuri(InteractBikkuri& act)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  li        r30, 0x1
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  stb       r30, 0x306D(r13)
-	  lwz       r3, 0x3068(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x78(r12)
-	  mtlr      r12
-	  blrl
-	  li        r31, 0
-	  mr.       r29, r3
-	  stb       r31, 0x306D(r13)
-	  beq-      .loc_0xE4
-	  lwz       r3, 0x3120(r13)
-	  bl        0x2A380
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  bl        -0x2100C
-	  mr        r3, r29
-	  lwz       r4, 0x3CC(r28)
-	  bl        -0x237E4
-	  mr        r3, r29
-	  lwz       r4, 0x3D0(r28)
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  addi      r4, r28, 0x94
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r30, 0x306E(r13)
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  li        r5, 0
-	  bl        -0x1FED4
-	  stb       r31, 0x306E(r13)
-	  addi      r4, r29, 0
-	  li        r5, 0x5
-	  lwz       r3, 0x490(r29)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r28, 0
-	  li        r4, 0
-	  bl        -0x623EC
-	  li        r3, 0x1
-	  b         .loc_0xE8
+	PikiMgr::meBirthMode = true;
+	Piki* piki           = (Piki*)pikiMgr->birth();
+	PikiMgr::meBirthMode = false;
 
-	.loc_0xE4:
-	  li        r3, 0
+	if (piki) {
+		Navi* navi = naviMgr->getNavi();
+		piki->init(navi);
+		piki->initColor(mSeedColor);
+		piki->setFlower(mFlowerStage);
+		piki->resetPosition(mPosition);
 
-	.loc_0xE8:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+		PikiMgr::meNukiMode = true;
+		piki->changeMode(0, nullptr);
+		PikiMgr::meNukiMode = false;
+		piki->mFSM->transit(piki, 5);
+
+		kill(false);
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -1046,79 +735,24 @@ bool PikiHeadItem::interactBikkuri(InteractBikkuri&)
  * Address:	800ED0FC
  * Size:	000100
  */
-bool PikiHeadItem::interactSwallow(InteractSwallow&)
+bool PikiHeadItem::interactSwallow(InteractSwallow& act)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  mr        r30, r4
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  stb       r0, 0x306D(r13)
-	  lwz       r3, 0x3068(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x78(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0
-	  mr.       r31, r3
-	  stb       r0, 0x306D(r13)
-	  beq-      .loc_0xE0
-	  lwz       r3, 0x3120(r13)
-	  bl        0x2A278
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  bl        -0x21114
-	  mr        r3, r31
-	  lwz       r4, 0x3CC(r29)
-	  bl        -0x238EC
-	  mr        r3, r31
-	  lwz       r4, 0x3D0(r29)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  addi      r4, r29, 0x94
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x490(r31)
-	  addi      r4, r31, 0
-	  li        r5, 0x5
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  bl        -0x624DC
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xE4
+	PikiMgr::meBirthMode = true;
+	Piki* piki           = (Piki*)pikiMgr->birth();
+	PikiMgr::meBirthMode = false;
 
-	.loc_0xE0:
-	  li        r3, 0
+	if (piki) {
+		Navi* navi = naviMgr->getNavi();
+		piki->init(navi);
+		piki->initColor(mSeedColor);
+		piki->setFlower(mFlowerStage);
+		piki->resetPosition(mPosition);
+		piki->mFSM->transit(piki, 5);
+		kill(false);
 
-	.loc_0xE4:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+		return act.actPiki(piki);
+	}
+	return false;
 }
 
 /*

@@ -5,6 +5,7 @@
 #include "ItemMgr.h"
 #include "CreatureProp.h"
 #include "SimpleAI.h"
+#include "UtEffect.h"
 
 struct InteractBikkuri;
 struct InteractSwallow;
@@ -45,7 +46,7 @@ struct PikiHeadItem : public ItemCreature {
 	virtual void doKill();            // _10C
 	virtual void playSound(int);      // _128
 
-	void canPullout();
+	bool canPullout();
 	void setPermanentEffects(bool);
 	void setColor(int);
 	bool interactBikkuri(InteractBikkuri&);
@@ -53,7 +54,13 @@ struct PikiHeadItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	// TODO: members
+	FreeLightEffect* mFreeLightEfx; // _3C8
+	int mSeedColor;                 // _3CC
+	int mFlowerStage;               // _3D0
+	Vector3f _3D4;                  // _3D4
+	Creature* _3E0;                 // _3E0
+	PermanentEffect _3E4;           // _3E4
+	RippleEffect* mRippleEfx;       // _3F4
 };
 
 /**
