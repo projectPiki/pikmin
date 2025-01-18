@@ -62,7 +62,8 @@ struct EffShpInst : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	Vector3f _14; // _14
+	              // TODO: members
 };
 
 /**
@@ -469,7 +470,7 @@ struct EffectMgr : public CoreNode {
 	void exit();
 	zen::particleGenerator* create(EffectMgr::effTypeTable, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
 	                               zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*);
-	zen::particleGenerator* create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f&);
+	EffShpInst* create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f&);
 	void getShapeInst();
 	void killAllShapes();
 

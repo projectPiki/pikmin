@@ -56,11 +56,10 @@ struct UfoAnimator {
 	void updateAnimation();
 	void updateContext();
 
-	f32 getSpeed(int id) { return mAnimSpeeds[id]; }
+	f32 getMotionSpeed(int id) { return mAnimSpeeds[id]; }
 
-	// TODO: members
 	PaniUfoAnimator* mAnims; // _00
-	f32* mAnimSpeeds;        //_04
+	f32* mAnimSpeeds;        // _04
 };
 
 /**
@@ -81,6 +80,8 @@ struct UfoItem : public Suckable {
 		// unused/inlined:
 		void update();
 
+		void setSpeed(f32 speed) { mSpeed = speed; }
+
 		// TODO: members
 		ShapeDynMaterials* mDyn; // _00
 		f32 mFrame;              // _04
@@ -92,14 +93,13 @@ struct UfoItem : public Suckable {
 	 * @brief TODO
 	 */
 	struct Spot {
-		Spot();
+		Spot() { }
 
-		// TODO: members
-		Vector3f _00;
-		f32 _0C;
-		f32 _10;
-		f32 _14;
-		f32 _18;
+		Vector3f _00; // _00
+		f32 _0C;      // _0C
+		f32 _10;      // _10
+		f32 _14;      // _14
+		f32 _18;      // _18
 	};
 
 	UfoItem(CreatureProp*, UfoShapeObject*);
@@ -108,8 +108,6 @@ struct UfoItem : public Suckable {
 	virtual void startAI(int);                           // _34
 	virtual f32 getiMass();                              // _38
 	virtual f32 getSize();                               // _3C
-	virtual bool isVisible();                            // _74
-	virtual bool isAlive();                              // _88
 	virtual bool needShadow();                           // _90
 	virtual bool ignoreAtari(Creature*);                 // _98
 	virtual void update();                               // _E0
@@ -121,7 +119,9 @@ struct UfoItem : public Suckable {
 	virtual Vector3f getSuckPos();                       // _164
 	virtual void suckMe(Pellet*);                        // _168
 	virtual void finishSuck(Pellet*);                    // _16C
-	virtual s16 getRouteIndex();                         // _170
+	virtual int getRouteIndex() { return mWaypointID; }  // _170
+	virtual bool isVisible() { return true; }            // _74
+	virtual bool isAlive() { return true; }              // _88
 
 	void setSpotTurn(bool);
 	void setSpotActive(bool);
@@ -164,7 +164,7 @@ struct UfoItem : public Suckable {
 	Vector3f _470;                      // _470
 	Vector3f _47C[6];                   // _47C
 	zen::particleGenerator* _4C4[6];    // _4C4
-	u16 _4DC;                           // _4DC
+	s16 mJetLevel;                      // _4DC
 	zen::particleGenerator* _4E0[4][4]; // _4E0
 	u8 _520;                            // _520
 	UfoAnimator mAnimator;              // _524

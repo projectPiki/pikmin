@@ -15,12 +15,12 @@ struct Suckable : public ItemCreature {
 	{
 	}
 
-	virtual Vector3f getGoalPos()  = 0; // _15C
-	virtual f32 getGoalPosRadius() = 0; // _160
-	virtual Vector3f getSuckPos()  = 0; // _164
-	virtual void suckMe(Pellet*)   = 0; // _168
-	virtual void finishSuck(Pellet*);   // _16C (weak)
-	virtual s16 getRouteIndex() = 0;    // _170
+	virtual Vector3f getGoalPos()  = 0;  // _15C
+	virtual f32 getGoalPosRadius() = 0;  // _160
+	virtual Vector3f getSuckPos()  = 0;  // _164
+	virtual void suckMe(Pellet*)   = 0;  // _168
+	virtual void finishSuck(Pellet*) { } // _16C (weak)
+	virtual int getRouteIndex() = 0;     // _170
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature

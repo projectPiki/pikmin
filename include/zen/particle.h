@@ -236,8 +236,6 @@ struct particleGenerator : public zenList {
 	f32 pmIntpManual(f32*, f32*);
 	f32 pmIntpLinear(f32*, f32*);
 
-	inline void setOrientedNormalVector(Vector3f& vec) { mOrientedNormalVector = vec; }
-
 	// these are correct from the DLL
 
 	void pmSwitchOn(u32 flag) { mGeneratorFlags |= flag; }
@@ -248,6 +246,7 @@ struct particleGenerator : public zenList {
 	void setEmitPos(Vector3f& pos) { mEmitPos = pos; }
 	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
 	void setEmitDir(Vector3f& dir) { mEmitDir = dir; }
+	void setOrientedNormalVector(Vector3f& vec) { mOrientedNormalVector = vec; }
 	void setCallBack(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2)
 	{
 		mCallBack1 = cb1;
@@ -293,7 +292,6 @@ struct particleGenerator : public zenList {
 	    void setEmitVelocity(Vector3f&);
 	    void setGravityField(Vector3f&, bool);
 	    void setOrientedConstZAxis(bool);
-	    void setOrientedNormalVector(Vector3f&);
 	    void setVortexField(Vector3f, f32, f32, f32, f32, bool);
 
 	    void setFreqFrm(f32);

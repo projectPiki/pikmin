@@ -16,10 +16,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT(nullptr);
 
 /*
  * --INFO--
@@ -43,6 +40,11 @@ UfoShapeObject::UfoShapeObject(Shape* shape)
 	mShape->overrideAnim(29, &mAnimContexts[6]);
 	mShape->overrideAnim(53, &mAnimContexts[7]);
 }
+
+char* PaniUfoAnimator::motionLabels[17] = {
+	"wait tut", "wait",    "takeoff",   "henka1",    "henka1b",   "henka1d",   "henka2",    "henka2d",    "henka3",
+	"henka4a",  "henka4b", "takeoff-1", "takeoff-2", "takeoff-3", "takeoff-4", "takeoff-5", "open-close",
+};
 
 /*
  * --INFO--

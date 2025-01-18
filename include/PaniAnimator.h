@@ -215,9 +215,10 @@ struct PaniUfoAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
+	static char* motionLabels[17];
+
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
-	// TODO: members
 };
 
 /**

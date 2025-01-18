@@ -1355,15 +1355,6 @@ void PelletGoalState::exec(Pellet*)
 
 /*
  * --INFO--
- * Address:	8009B0C8
- * Size:	000004
- */
-void Suckable::finishSuck(Pellet*)
-{
-}
-
-/*
- * --INFO--
  * Address:	8009B0CC
  * Size:	000030
  */

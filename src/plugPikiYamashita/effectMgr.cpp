@@ -1331,7 +1331,7 @@ void EffectParticleRegistration::create(Vector3f&, zen::CallBack1<zen::particleG
  * Address:	8019CBBC
  * Size:	000044
  */
-zen::particleGenerator* EffectMgr::create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f&)
+EffShpInst* EffectMgr::create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f&)
 {
 	/*
 	.loc_0x0:

@@ -29,7 +29,9 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT("goalItem")
 
-const u32 leg_ids[3] = { 'leg1', 'leg2', 'leg3' };
+static u32 leg_ids[3] = { 'leg1', 'leg2', 'leg3' };
+
+u8 GoalItem::demoHideFlag;
 
 /*
  * --INFO--
@@ -62,7 +64,7 @@ bool GoalItem::insideSafeArea(Vector3f& pos)
  */
 void GoalItem::playEffect(int id)
 {
-	switch (mItemAnimator.mMotionIdx) {
+	switch (mItemAnimator.getCurrentMotionIndex()) {
 	case 9:
 	case 10:
 	case 11:
@@ -109,7 +111,7 @@ void GoalItem::playEffect(int id)
 		}
 		break;
 	case 12:
-		if (doAlwaysUpdate()) {
+		if (aiCullable()) {
 			Vector3f pos[4];
 			pos[0] = mCollInfo->getSphere('eff1')->mCentre;
 			pos[1] = mCollInfo->getSphere('eff2')->mCentre;
@@ -119,10 +121,12 @@ void GoalItem::playEffect(int id)
 				effectMgr->create(EffectMgr::EFF_Onyon_Sparkles, pos[3], nullptr, nullptr);
 			}
 
-			zen::particleGenerator* gen
-			    = effectMgr->create(EffectMgr::EFF_Onyon_Puff, pos[(int)(gsys->getRand(1.0f) * 3 * 0.999999f)], nullptr, nullptr);
+			int randIdx                 = (int)(gsys->getRand(1.0f) * 3.0f * 0.999999f);
+			zen::particleGenerator* gen = effectMgr->create(EffectMgr::EFF_Onyon_Puff, pos[randIdx], nullptr, nullptr);
 			if (gen) {
-				Vector3f test;
+				int legIDs[3] = { 2, 1, 0 };
+
+				Vector3f test = -1.0f * mRope[legIDs[randIdx]]->_2C4;
 				gen->setEmitDir(test);
 			}
 
@@ -144,17 +148,16 @@ void GoalItem::playEffect(int id)
 			break;
 		case 1:
 			Vector3f pos2(mPosition);
-			if (mOnionColour == 0) {
+			if (mOnionColour == Blue) {
 				effectMgr->create(EffectMgr::EFF_Onyon_Bubbles, pos2, nullptr, nullptr);
 				zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Onyon_Ripples2, pos2, nullptr, nullptr);
 				if (efx) {
-					Vector3f nrm(0.0f, 1.0f, 0.0f);
-					efx->setOrientedNormalVector(nrm);
+					// Vector3f nrm(0.0f, 1.0f, 0.0f);
+					efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 				}
 				efx = effectMgr->create(EffectMgr::EFF_Onyon_Ripples1, pos2, nullptr, nullptr);
 				if (efx) {
-					Vector3f nrm(0.0f, 1.0f, 0.0f);
-					efx->setOrientedNormalVector(nrm);
+					efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 				}
 			} else {
 				effectMgr->create(EffectMgr::EFF_Onyon_Suck2, pos2, nullptr, nullptr);
@@ -163,14 +166,14 @@ void GoalItem::playEffect(int id)
 			break;
 		case 2:
 			routeMgr->getWayPoint('test', mWaypointIdx)->setFlag(true);
-			if (mOnionColour == 0) {
+			if (mOnionColour == Blue) {
 				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
 			} else {
 				effectMgr->create(EffectMgr::EFF_SmokeRing_M, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
 			}
 			break;
 		case 3:
-			if (mOnionColour == 0) {
+			if (mOnionColour == Blue) {
 				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas1')->mCentre, nullptr, nullptr);
 				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas2')->mCentre, nullptr, nullptr);
 				effectMgr->create(EffectMgr::EFF_Onyon_BubblesSmall, mCollInfo->getSphere('bas3')->mCentre, nullptr, nullptr);
@@ -181,13 +184,14 @@ void GoalItem::playEffect(int id)
 			}
 			break;
 		case 4:
-			_3D4 = 0.0f;
-			_3D8 = 1;
+			enableColorAnim();
 			_3D0 = 20.0f;
 			break;
 		}
 		break;
-	};
+	}
+
+	u32 badCompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -887,7 +891,7 @@ void GoalItem::enterGoal(Piki* piki)
  */
 void GoalItem::exitPikis(int pikis)
 {
-	mIsConeEmit = true;
+	mIsDispensingPikis = true;
 	mPikisToExit += pikis;
 	_418 = 0.0f;
 }
@@ -1027,80 +1031,10 @@ void GoalItem::startLand()
 	_3CC = 0;
 	startMotion(mOnionColour + 9);
 	setMotionSpeed(30.0f);
-	_3FC = mSpotModelEff->mEmitPos;
+	_3FC = mSpotModelEff->_14;
 	setFlowEffect(true);
 	setFlightLight(true);
-	mSpotModelEff->mEmitPos.set(0.0f, 0.0f, 0.0f);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  stb       r0, 0x3CC(r3)
-	  lwz       r12, 0x0(r30)
-	  lhz       r4, 0x428(r30)
-	  lwz       r12, 0x130(r12)
-	  addi      r4, r4, 0x9
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lfs       f1, -0x659C(r2)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x14C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x40C(r30)
-	  li        r0, 0x1
-	  lwz       r4, 0x14(r5)
-	  lwz       r3, 0x18(r5)
-	  stw       r4, 0x3FC(r30)
-	  stw       r3, 0x400(r30)
-	  lwz       r3, 0x1C(r5)
-	  stw       r3, 0x404(r30)
-	  stb       r0, 0x3E4(r30)
-	  lwz       r0, 0x3E8(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xC4
-	  lis       r4, 0x7069
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r4, 0x6B69
-	  bl        -0x62128
-	  mr        r31, r3
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x4
-	  li        r4, 0x128
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB12E4
-	  stw       r3, 0x3E8(r30)
-	  lwz       r3, 0x3E8(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xC4
-	  addi      r0, r31, 0x4
-	  stw       r0, 0x18(r3)
-
-	.loc_0xC4:
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x740
-	  lwz       r3, 0x40C(r30)
-	  lfs       f0, -0x3470(r13)
-	  stfsu     f0, 0x14(r3)
-	  lfs       f0, -0x346C(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x3468(r13)
-	  stfs      f0, 0x8(r3)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mSpotModelEff->_14.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -1112,22 +1046,7 @@ void GoalItem::startConeShrink()
 {
 	_3F6           = true;
 	mConeSizeTimer = 0.8f;
-	_3FC           = mSpotModelEff->mEmitPos;
-	/*
-	.loc_0x0:
-	  li        r0, 0x1
-	  stb       r0, 0x3F6(r3)
-	  lfs       f0, -0x6598(r2)
-	  stfs      f0, 0x3F8(r3)
-	  lwz       r5, 0x40C(r3)
-	  lwz       r4, 0x14(r5)
-	  lwz       r0, 0x18(r5)
-	  stw       r4, 0x3FC(r3)
-	  stw       r0, 0x400(r3)
-	  lwz       r0, 0x1C(r5)
-	  stw       r0, 0x404(r3)
-	  blr
-	*/
+	_3FC           = mSpotModelEff->_14;
 }
 
 /*
@@ -1146,16 +1065,14 @@ void GoalItem::updateConeShrink()
 	pos.x *= test;
 	pos.z *= test;
 
-	zen::particleMdl* mdl = (zen::particleMdl*)mSpotModelEff;
-	mdl->_0C              = pos;
+	mSpotModelEff->_14 = pos;
 
 	mConeSizeTimer -= gsys->getFrameTime();
 
 	if (mConeSizeTimer <= 0.0f) {
-		mSpotModelEff->mEmitPos.set(0.0f, 0.0f, 0.0f);
+		mSpotModelEff->_14.set(0.0f, 0.0f, 0.0f);
 		_3F6 = false;
 	}
-	// UNUSED FUNCTION
 }
 
 /*
@@ -1180,27 +1097,21 @@ void GoalItem::updateConeEmit()
 		return;
 	}
 
-	f32 test     = mConeSizeTimer / 0.8f;
+	f32 val      = mConeSizeTimer; // don't ask.
+	f32 test     = val / 0.8f;
 	Vector3f pos = _3FC;
 	pos.x *= test;
 	pos.z *= test;
 
-	zen::particleMdl* mdl = (zen::particleMdl*)mSpotModelEff;
-	mdl->_0C.x            = pos.x;
-	mdl->_0C.y            = pos.y;
-	mdl->_0C.z            = pos.z;
+	mSpotModelEff->_14 = pos;
 
 	mConeSizeTimer += gsys->getFrameTime();
 
-	if (mConeSizeTimer <= 0.0f) {
-		// this is causing inline problems
-		// mdl->_0C.x = _3FC.x;
-		// mdl->_0C.y = _3FC.y;
-		// mdl->_0C.z = _3FC.z;
-		mIsConeEmit = false;
+	if (mConeSizeTimer >= 0.8f) {
+		mSpotModelEff->_14 = _3FC;
+		mIsConeEmit        = false;
 		((SimpleAI*)mStateMachine)->start(this, 0);
 	}
-	// UNUSED FUNCTION
 }
 
 /*
@@ -1262,14 +1173,14 @@ void GoalItem::startAI(int)
 		setMotionSpeed(0.0f);
 		((SimpleAI*)mStateMachine)->start(this, 5);
 		startConeShrink();
-		set3D4(0.0f);
+		enableColorAnim();
 		_3D0 = 0.0f;
 		wp->setFlag(false);
 	} else {
 		setMotionSpeed(30.0f);
 		mItemAnimator.startMotion(PaniMotionInfo(1));
 		((SimpleAI*)mStateMachine)->start(this, 0);
-		set3D4(1.0f);
+		disableColorAnim();
 		wp->setFlag(true);
 	}
 	_41C               = mPosition;
@@ -1642,7 +1553,7 @@ void GoalItem::update()
 	if (_3D8) {
 		_3D4 += (_3D0 * mMotionSpeed * gsys->getFrameTime()) / 30.0f;
 		if (_3D4 > 1.0f) {
-			set3D4(1.0f);
+			disableColorAnim();
 		}
 	}
 
@@ -1658,9 +1569,14 @@ void GoalItem::update()
 
 	if (mIsDispensingPikis) {
 		if (_418 <= 0.0f) {
-			exitPiki();
+			if (!exitPiki()) {
+				int mapPikis = GameStat::mapPikis;
+				int mePikis  = GameStat::mePikis;
+				PRINT("map=%d mePiki=%d exitC=%d", mapPikis, mePikis, mPikisToExit);
+				ERROR("2d err %d %d %d", mapPikis, mePikis, mPikisToExit);
+			}
 			mPikisToExit--;
-			if (mPikisToExit < 1) {
+			if (mPikisToExit <= 0) {
 				mIsDispensingPikis = false;
 			}
 			_418 = gsys->getRand(1.0f) * 0.1f + 0.2f;
@@ -1669,202 +1585,6 @@ void GoalItem::update()
 			_418 -= gsys->getFrameTime();
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  mr        r31, r3
-	  lfs       f0, -0x3458(r13)
-	  stfs      f0, 0x70(r31)
-	  lfs       f0, -0x3454(r13)
-	  stfs      f0, 0x74(r31)
-	  lfs       f0, -0x3450(r13)
-	  stfs      f0, 0x78(r31)
-	  bl        0x9D90
-	  lbz       r0, 0x3D8(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  lfs       f1, 0x3D0(r31)
-	  lfs       f0, 0x304(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  fmuls     f2, f1, f0
-	  lfs       f0, -0x659C(r2)
-	  lfs       f1, 0x28C(r3)
-	  lfs       f3, 0x3D4(r31)
-	  fmuls     f1, f2, f1
-	  fdivs     f0, f1, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x3D4(r31)
-	  lfs       f1, 0x3D4(r31)
-	  lfs       f0, -0x65C0(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x84
-	  stfs      f0, 0x3D4(r31)
-	  li        r0, 0
-	  stb       r0, 0x3D8(r31)
-
-	.loc_0x84:
-	  lbz       r0, 0x3F6(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x138
-	  beq-      .loc_0x138
-	  lfs       f2, 0x3F8(r31)
-	  lfs       f1, -0x6598(r2)
-	  lfs       f0, 0x3FC(r31)
-	  fdivs     f1, f2, f1
-	  stfs      f0, 0x50(r1)
-	  lfs       f0, 0x400(r31)
-	  stfs      f0, 0x54(r1)
-	  lfs       f0, 0x404(r31)
-	  stfs      f0, 0x58(r1)
-	  lfs       f0, 0x50(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x50(r1)
-	  lfs       f0, 0x58(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x58(r1)
-	  lwz       r4, 0x40C(r31)
-	  lwz       r3, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r3, 0x14(r4)
-	  stw       r0, 0x18(r4)
-	  lwz       r0, 0x58(r1)
-	  stw       r0, 0x1C(r4)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x3F8(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x3F8(r31)
-	  lfs       f1, 0x3F8(r31)
-	  lfs       f0, -0x65C4(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x138
-	  lwz       r3, 0x40C(r31)
-	  li        r0, 0
-	  lfs       f0, -0x3464(r13)
-	  stfsu     f0, 0x14(r3)
-	  lfs       f0, -0x3460(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x345C(r13)
-	  stfs      f0, 0x8(r3)
-	  stb       r0, 0x3F6(r31)
-
-	.loc_0x138:
-	  lbz       r0, 0x408(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1F8
-	  beq-      .loc_0x1F8
-	  lfs       f1, 0x3F8(r31)
-	  lfs       f2, -0x6598(r2)
-	  lfs       f0, 0x3FC(r31)
-	  fdivs     f1, f1, f2
-	  stfs      f0, 0x44(r1)
-	  lfs       f0, 0x400(r31)
-	  stfs      f0, 0x48(r1)
-	  lfs       f0, 0x404(r31)
-	  stfs      f0, 0x4C(r1)
-	  lfs       f0, 0x44(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x44(r1)
-	  lfs       f0, 0x4C(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x4C(r1)
-	  lwz       r4, 0x40C(r31)
-	  lwz       r3, 0x44(r1)
-	  lwz       r0, 0x48(r1)
-	  stw       r3, 0x14(r4)
-	  stw       r0, 0x18(r4)
-	  lwz       r0, 0x4C(r1)
-	  stw       r0, 0x1C(r4)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x3F8(r31)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x3F8(r31)
-	  lfs       f0, 0x3F8(r31)
-	  fcmpo     cr0, f0, f2
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x1F8
-	  lwz       r7, 0x40C(r31)
-	  li        r0, 0
-	  lwz       r6, 0x3FC(r31)
-	  mr        r4, r31
-	  lwz       r3, 0x400(r31)
-	  li        r5, 0
-	  stw       r6, 0x14(r7)
-	  stw       r3, 0x18(r7)
-	  lwz       r3, 0x404(r31)
-	  stw       r3, 0x1C(r7)
-	  stb       r0, 0x408(r31)
-	  lwz       r3, 0x2E8(r31)
-	  bl        -0x6E8D4
-
-	.loc_0x1F8:
-	  lwz       r3, 0x41C(r31)
-	  lwz       r0, 0x420(r31)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x424(r31)
-	  stw       r0, 0x9C(r31)
-	  lbz       r0, 0x410(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2C0
-	  lfs       f1, 0x418(r31)
-	  lfs       f0, -0x65C4(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x2B0
-	  mr        r3, r31
-	  bl        -0xD30
-	  cmplwi    r3, 0
-	  lwz       r3, 0x414(r31)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x414(r31)
-	  lwz       r0, 0x414(r31)
-	  cmpwi     r0, 0
-	  bgt-      .loc_0x25C
-	  li        r0, 0
-	  stb       r0, 0x410(r31)
-
-	.loc_0x25C:
-	  bl        0x12BFDC
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x65A8(r2)
-	  stw       r0, 0x6C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x65BC(r2)
-	  stw       r0, 0x68(r1)
-	  lfs       f2, -0x65C0(r2)
-	  lfd       f1, 0x68(r1)
-	  lfs       f0, -0x6578(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x657C(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x418(r31)
-	  lfs       f0, 0x418(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x418(r31)
-	  b         .loc_0x2C0
-
-	.loc_0x2B0:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x418(r31)
-
-	.loc_0x2C0:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1886,11 +1606,11 @@ void GoalItem::refresh(Graphics& gfx)
 	if (!gfx.mCamera->isPointVisible(mPosition, 200.0f)) {
 		enableAICulling();
 		if (!gameflow.mGamePrefs._22) {
-			mSpotModelEff->_38.mOrigin = 0;
+			// mSpotModelEff->_38.mOrigin = 0;
 		}
 	} else {
 		disableAICulling();
-		mSpotModelEff->_38.mOrigin = 0;
+		// mSpotModelEff->_38.mOrigin = 0;
 	}
 
 	gfx.setLighting(true, nullptr);
@@ -1905,7 +1625,7 @@ void GoalItem::refresh(Graphics& gfx)
 	}
 	mDynMaterial.animate(&rate);
 	mItemShapeObject->mShape->updateAnim(gfx, mtx1, nullptr);
-	if (doAlwaysUpdate()) {
+	if (aiCullable()) {
 		mItemShapeObject->mShape->drawshape(gfx, *gfx.mCamera, &mDynMaterial);
 	}
 	mCollInfo->updateInfo(gfx, false);
@@ -2197,7 +1917,7 @@ f32 GoalItem::getGoalPosRadius()
  * Address:	800EC4A8
  * Size:	000008
  */
-s16 GoalItem::getRouteIndex()
+int GoalItem::getRouteIndex()
 {
 	return mWaypointIdx;
 }
