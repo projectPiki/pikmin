@@ -1,91 +1,45 @@
 #include "SeedItem.h"
+#include "DebugLog.h"
+#include "ItemMgr.h"
+#include "NaviMgr.h"
+#include "AIConstant.h"
+#include "Graphics.h"
+#include "Interactions.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("seedItem")
 
 /*
  * --INFO--
  * Address:	800EDDD0
  * Size:	0000DC
  */
-SeedItem::SeedItem(CreatureProp* props, Shape**)
+SeedItem::SeedItem(CreatureProp* props, Shape** shapes)
     : Creature(props)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bl        -0x62F14
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x2980
-	  lis       r3, 0x8009
-	  stw       r0, 0x0(r30)
-	  subi      r4, r3, 0x5808
-	  addi      r3, r30, 0x2BC
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x3
-	  bl        0x126C5C
-	  lfs       f0, -0x64C8(r2)
-	  li        r0, 0x4
-	  addi      r3, r30, 0x1B8
-	  stfs      f0, 0x2F8(r30)
-	  addi      r4, r30, 0x2BC
-	  li        r5, 0x3
-	  stfs      f0, 0x2F4(r30)
-	  stfs      f0, 0x2F0(r30)
-	  lwz       r6, 0x0(r31)
-	  stw       r6, 0x2E8(r30)
-	  lwz       r6, 0x4(r31)
-	  stw       r6, 0x2EC(r30)
-	  lwz       r6, 0x2E8(r30)
-	  stw       r6, 0x2E4(r30)
-	  lfs       f0, -0x64C4(r2)
-	  stfs      f0, 0x7C(r30)
-	  stfs      f0, 0x80(r30)
-	  stfs      f0, 0x84(r30)
-	  stw       r0, 0x68(r30)
-	  lwz       r0, 0xC8(r30)
-	  rlwinm    r0,r0,0,23,21
-	  stw       r0, 0xC8(r30)
-	  lwz       r0, 0xC8(r30)
-	  ori       r0, r0, 0x11
-	  stw       r0, 0xC8(r30)
-	  bl        -0xA1FC
-	  li        r0, 0x2
-	  stw       r0, 0x6C(r30)
-	  li        r0, 0x3
-	  addi      r3, r30, 0
-	  stw       r0, 0x2B8(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mShape        = shapes[0];
+	mShape2       = shapes[1];
+	mCurrentShape = mShape;
+
+	f32 scale = 0.2f;
+	mScale.set(scale, scale, scale);
+	_68 = 4;
+	resetCreatureFlag(CF_Unk10);
+	setCreatureFlag(CF_Unk1 | CF_Unk5);
+	mSearchBuffer.init(mSearch, 3);
+	mObjType = OBJTYPE_Seed;
+	mStateId = 3;
 }
 
 /*
@@ -95,11 +49,7 @@ SeedItem::SeedItem(CreatureProp* props, Shape**)
  */
 f32 SeedItem::getSize()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x64C0(r2)
-	  blr
-	*/
+	return 10.0f;
 }
 
 /*
@@ -107,28 +57,11 @@ f32 SeedItem::getSize()
  * Address:	800EDEB4
  * Size:	000044
  */
-void SeedItem::init(Vector3f&)
+void SeedItem::init(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x632C4
-	  addi      r3, r31, 0x1B8
-	  addi      r4, r31, 0x2BC
-	  li        r5, 0x3
-	  bl        -0xA258
-	  li        r0, 0x3
-	  stw       r0, 0x2B8(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Creature::init(pos);
+	mSearchBuffer.init(mSearch, 3);
+	mStateId = 3;
 }
 
 /*
@@ -138,7 +71,11 @@ void SeedItem::init(Vector3f&)
  */
 void SeedItem::startBirth()
 {
-	// UNUSED FUNCTION
+	mStateId      = 0;
+	mCurrentShape = mShape;
+	resetCreatureFlag(CF_GravityEnabled);
+	setCreatureFlag(CF_Unk5);
+	mVelocity.y = 10.0f;
 }
 
 /*
@@ -148,7 +85,11 @@ void SeedItem::startBirth()
  */
 void SeedItem::startSown()
 {
-	// UNUSED FUNCTION
+	mStateId      = 1;
+	_2E0          = 200.0f;
+	mCurrentShape = mShape2;
+	setCreatureFlag(CF_GravityEnabled);
+	resetCreatureFlag(CF_Unk5);
 }
 
 /*
@@ -158,14 +99,7 @@ void SeedItem::startSown()
  */
 bool SeedItem::isVisible()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2B8(r3)
-	  subfic    r3, r0, 0x2
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
+	return mStateId != 2;
 }
 
 /*
@@ -185,6 +119,9 @@ bool SeedItem::isAtari()
  */
 void SeedItem::doKill()
 {
+	PRINT("seed is killed ?\n");
+	mStateId = 2;
+	itemMgr->kill(this);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -212,164 +149,43 @@ void SeedItem::doKill()
  */
 void SeedItem::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB0(r1)
-	  stfd      f31, 0xA8(r1)
-	  stfd      f30, 0xA0(r1)
-	  stfd      f29, 0x98(r1)
-	  stfd      f28, 0x90(r1)
-	  stfd      f27, 0x88(r1)
-	  stw       r31, 0x84(r1)
-	  stw       r30, 0x80(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x2B8(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x208
-	  lwz       r3, 0x3120(r13)
-	  bl        0x29438
-	  lfs       f0, 0x94(r30)
-	  mr        r31, r3
-	  lfs       f1, 0x94(r3)
-	  lfs       f2, 0x9C(r3)
-	  fsubs     f30, f1, f0
-	  lfs       f0, 0x9C(r30)
-	  lfs       f1, -0x64C8(r2)
-	  fsubs     f31, f2, f0
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f31, f31
-	  fadds     f0, f0, f1
-	  fadds     f29, f2, f0
-	  fcmpo     cr0, f29, f1
-	  ble-      .loc_0xD0
-	  fsqrte    f1, f29
-	  lfd       f3, -0x64B8(r2)
-	  lfd       f2, -0x64B0(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f29, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f29, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f29, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f29, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x40(r1)
-	  lfs       f29, 0x40(r1)
+	if (mStateId == 0) {
+		Navi* navi    = naviMgr->getNavi();
+		Vector3f diff = navi->mPosition - mPosition;
+		diff.y        = 0.0f;
+		f32 dist      = diff.length();
 
-	.loc_0xD0:
-	  lfs       f0, -0x64A8(r2)
-	  fcmpo     cr0, f29, f0
-	  bge-      .loc_0xEC
-	  lfs       f27, -0x64A4(r2)
-	  lfs       f28, -0x64BC(r2)
-	  lfs       f3, -0x64A0(r2)
-	  b         .loc_0x140
+		f32 mult, vel, y;
+		if (dist < 20.0f) {
+			y    = 30.0f;
+			vel  = 200.0f;
+			mult = 1.0f;
+		} else if (dist < 200.0f) {
+			y    = ((dist - 20.0f) / 180.0f) * 70.0f + 30.0f;
+			vel  = ((dist - 20.0f) / 180.0f) * 150.0f + 200.0f;
+			mult = ((dist - 20.0f) / 180.0f) * 5.0f + 1.0f;
+		} else {
+			y    = 100.0f;
+			vel  = 350.0f;
+			mult = 6.0f;
+		}
+		mDirection += gsys->getFrameTime() * PI * mult;
+		mDirection = roundAng(mDirection);
 
-	.loc_0xEC:
-	  lfs       f5, -0x64BC(r2)
-	  fcmpo     cr0, f29, f5
-	  bge-      .loc_0x134
-	  fsubs     f1, f29, f0
-	  lfs       f0, -0x6498(r2)
-	  lfs       f3, -0x649C(r2)
-	  lfs       f2, -0x6494(r2)
-	  fdivs     f6, f1, f0
-	  lfs       f0, -0x6490(r2)
-	  lfs       f4, -0x64A4(r2)
-	  lfs       f1, -0x64A0(r2)
-	  fmuls     f3, f3, f6
-	  fmuls     f2, f2, f6
-	  fmuls     f0, f0, f6
-	  fadds     f27, f4, f3
-	  fadds     f28, f5, f2
-	  fadds     f3, f1, f0
-	  b         .loc_0x140
+		mRotation.set(0.0f, mDirection, 0.0f);
 
-	.loc_0x134:
-	  lfs       f27, -0x648C(r2)
-	  lfs       f28, -0x6488(r2)
-	  lfs       f3, -0x6484(r2)
-
-	.loc_0x140:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x6480(r2)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0xA0(r30)
-	  fmuls     f0, f1, f0
-	  fmuls     f0, f3, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0xA0(r30)
-	  lfs       f1, 0xA0(r30)
-	  bl        -0xB5B2C
-	  stfs      f1, 0xA0(r30)
-	  lfs       f0, -0x32F0(r13)
-	  stfs      f0, 0x88(r30)
-	  lfs       f0, 0xA0(r30)
-	  stfs      f0, 0x8C(r30)
-	  lfs       f0, -0x32EC(r13)
-	  stfs      f0, 0x90(r30)
-	  lfs       f0, -0x64A0(r2)
-	  fdivs     f0, f0, f29
-	  fmuls     f1, f30, f0
-	  fmuls     f0, f31, f0
-	  fmuls     f1, f28, f1
-	  fmuls     f0, f28, f0
-	  stfs      f1, 0x70(r30)
-	  stfs      f0, 0x78(r30)
-	  lfs       f0, 0x98(r30)
-	  fcmpo     cr0, f0, f27
-	  bge-      .loc_0x1E4
-	  lfs       f3, 0x74(r30)
-	  lfs       f0, -0x648C(r2)
-	  fcmpo     cr0, f3, f0
-	  bge-      .loc_0x1E4
-	  lwz       r4, 0x2F80(r13)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x30(r4)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, -0x647C(r2)
-	  fmuls     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x74(r30)
-
-	.loc_0x1E4:
-	  lfs       f0, -0x6478(r2)
-	  fcmpo     cr0, f29, f0
-	  bge-      .loc_0x208
-	  lwz       r5, 0x72C(r31)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  addi      r0, r5, 0x1
-	  stw       r0, 0x72C(r31)
-	  bl        -0x63474
-
-	.loc_0x208:
-	  mr        r3, r30
-	  bl        -0x627E0
-	  lwz       r0, 0xB4(r1)
-	  lfd       f31, 0xA8(r1)
-	  lfd       f30, 0xA0(r1)
-	  lfd       f29, 0x98(r1)
-	  lfd       f28, 0x90(r1)
-	  lfd       f27, 0x88(r1)
-	  lwz       r31, 0x84(r1)
-	  lwz       r30, 0x80(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+		diff        = diff * (1.0f / dist);
+		mVelocity.x = vel * diff.x;
+		mVelocity.z = vel * diff.z;
+		if (mPosition.y < y && mVelocity.y < 100.0f) {
+			mVelocity.y += AIConstant::_instance->mConstants._24() * gsys->getFrameTime() * 2.5f;
+		}
+		if (dist < 8.0f) {
+			navi->_72C++;
+			kill(nullptr);
+		}
+	}
+	updateAI();
 }
 
 /*
@@ -379,6 +195,9 @@ void SeedItem::update()
  */
 void SeedItem::doAI()
 {
+	if (mStateId == 2) {
+		return;
+	}
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x2B8(r3)
@@ -393,8 +212,23 @@ void SeedItem::doAI()
  * Address:	800EE19C
  * Size:	000138
  */
-void SeedItem::refresh(Graphics&)
+void SeedItem::refresh(Graphics& gfx)
 {
+	if (mStateId != 2) {
+		Matrix4f unused;
+		mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+
+		Matrix4f mtx;
+		gfx.calcViewMatrix(mTransformMatrix, mtx);
+		gfx.useMatrix(mtx, 0);
+		gfx.mCamera->setBoundOffset(&mPosition);
+		mapMgr->getLight(mPosition.x, mPosition.z);
+		gfx.setLighting(true, nullptr);
+		mCurrentShape->drawshape(gfx, *gfx.mCamera, nullptr);
+		gfx.mCamera->setBoundOffset(nullptr);
+	}
+
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -487,26 +321,10 @@ void SeedItem::refresh(Graphics&)
  * Address:	800EE2D4
  * Size:	00003C
  */
-bool SeedItem::stimulate(Interaction&)
+bool SeedItem::stimulate(Interaction& act)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  addi      r0, r3, 0
-	  addi      r3, r4, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r4)
-	  mr        r4, r0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x1
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	act.actCommon(this);
+	return true;
 }
 
 /*
@@ -516,11 +334,7 @@ bool SeedItem::stimulate(Interaction&)
  */
 f32 SeedItem::getHeight()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x64C8(r2)
-	  blr
-	*/
+	return 0.0f;
 }
 
 /*
@@ -530,9 +344,5 @@ f32 SeedItem::getHeight()
  */
 f32 SeedItem::getiMass()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x648C(r2)
-	  blr
-	*/
+	return 100.0f;
 }

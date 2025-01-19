@@ -320,7 +320,6 @@ struct Creature : public RefCountable, public EventTalker {
 	    void setCarryOver();
 	    void unsetCarryOver();
 
-	    void setFree(bool);
 	    void setInsideView();
 	    void setOutsideView();
 	*/

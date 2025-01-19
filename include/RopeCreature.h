@@ -53,23 +53,24 @@ struct RopeCreature : public Creature {
 struct RopeItem : public RopeCreature {
 	RopeItem(CreatureProp*, Shape*);
 
-	virtual void init(Vector3f&); // _28
-	virtual void startAI(int);    // _34
-	virtual f32 getiMass();       // _38
-	virtual f32 getSize();        // _3C
-	virtual bool isVisible();     // _74
-	virtual bool isAtari();       // _84
-	virtual bool isAlive();       // _88
-	virtual bool needShadow();    // _90
-	virtual void doKill();        // _10C
+	virtual void init(Vector3f&);               // _28
+	virtual void startAI(int);                  // _34
+	virtual f32 getiMass();                     // _38
+	virtual f32 getSize();                      // _3C
+	virtual bool needShadow() { return false; } // _90
+	virtual bool isAlive() { return true; }     // _88
+	virtual bool isVisible() { return true; }   // _74
+	virtual bool isAtari();                     // _84
+	virtual void doKill();                      // _10C
 
 	void autoInit();
 
 	// _00      = VTBL
 	// _00-_2D0 = RopeCreature
-	u8 _2D0[0x2F8 - 0x2D0]; // _2D0
-	int _2F8;               // _2F8
-	Creature* mOwner;       // _2FC
+	int _2D0;              // _2D0
+	SearchData mSearch[3]; // _2D4
+	Shape* mModel;         // _2F8
+	Creature* mOwner;      // _2FC
 };
 
 #endif

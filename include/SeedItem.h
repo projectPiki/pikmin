@@ -45,7 +45,13 @@ struct SeedItem : public Creature {
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	u8 _2B8[0x2FC - 0x2B8]; // _2B8, unknown
+	int mStateId;          // _2B8
+	SearchData mSearch[3]; // _2BC
+	f32 _2E0;              // _2E0
+	Shape* mCurrentShape;  // _2E4
+	Shape* mShape;         // _2E8
+	Shape* mShape2;        // _2EC
+	Vector3f _2F0;         // _2F0
 };
 
 #endif
