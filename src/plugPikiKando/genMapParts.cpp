@@ -1,150 +1,38 @@
 #include "Generator.h"
 #include "MapMgr.h"
+#include "DebugLog.h"
+#include "Graphics.h"
+#include "sysNew.h"
+#include "GlobalShape.h"
+
+MapMgr* GenObjectMapParts::mapMgr;
+int numShapes = 5;
+
+char* shapeNames[] = { "box", "1", "2", "3", "log" };
+char* kindNames[]  = { "slider", "entity", "dynamic" };
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("genMapParts")
 
 /*
  * --INFO--
  * Address:	8011785C
  * Size:	0001C0
  */
-static GenObjectMapParts* makeObjectMapParts()
+static GenObject* makeObjectMapParts()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x90
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  stw       r30, 0x58(r1)
-	  bl        -0xD0870
-	  mr.       r31, r3
-	  beq-      .loc_0x1A4
-	  lis       r4, 0x802C
-	  lis       r3, 0x802C
-	  addi      r5, r4, 0x309C
-	  lis       r4, 0x6D70
-	  addi      r6, r3, 0x30A8
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x6172
-	  bl        -0x3CBE8
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5490
-	  lis       r3, 0x802C
-	  stw       r0, 0x4(r31)
-	  addi      r0, r3, 0x3138
-	  stw       r0, 0x4(r31)
-	  addi      r5, r1, 0x2C
-	  addi      r4, r31, 0
-	  lwz       r0, -0x22B0(r13)
-	  addi      r3, r31, 0x18
-	  stw       r0, 0x34(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r0, 0x2C(r1)
-	  bl        -0xB8E54
-	  lis       r3, 0x802A
-	  addi      r30, r3, 0x60C4
-	  stw       r30, 0x20(r31)
-	  li        r0, 0x1
-	  addi      r5, r1, 0x28
-	  stw       r0, 0x24(r31)
-	  mr        r4, r31
-	  addi      r3, r31, 0x28
-	  lwz       r0, -0x22AC(r13)
-	  stw       r0, 0x3C(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r0, 0x28(r1)
-	  bl        -0xB8E88
-	  stw       r30, 0x30(r31)
-	  li        r0, 0x64
-	  addi      r5, r1, 0x24
-	  stw       r0, 0x34(r31)
-	  mr        r4, r31
-	  addi      r3, r31, 0x38
-	  lwz       r0, -0x22A8(r13)
-	  stw       r0, 0x44(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x24(r1)
-	  bl        -0xB8EB4
-	  lis       r3, 0x802A
-	  addi      r30, r3, 0x6098
-	  stw       r30, 0x40(r31)
-	  addi      r5, r1, 0x20
-	  addi      r4, r31, 0
-	  lfs       f0, -0x6058(r2)
-	  addi      r3, r31, 0x48
-	  stfs      f0, 0x44(r31)
-	  lwz       r0, -0x22A4(r13)
-	  stw       r0, 0x4C(r1)
-	  lwz       r0, 0x4C(r1)
-	  stw       r0, 0x20(r1)
-	  bl        -0xB8EE8
-	  stw       r30, 0x50(r31)
-	  addi      r5, r1, 0x1C
-	  addi      r4, r31, 0
-	  lfs       f0, -0x6054(r2)
-	  addi      r3, r31, 0x58
-	  stfs      f0, 0x54(r31)
-	  lwz       r0, -0x22A0(r13)
-	  stw       r0, 0x54(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r0, 0x1C(r1)
-	  bl        -0xB8F14
-	  stw       r30, 0x60(r31)
-	  li        r0, 0
-	  lfs       f0, -0x6050(r2)
-	  stfs      f0, 0x64(r31)
-	  lfs       f0, -0x6058(r2)
-	  stfs      f0, 0x80(r31)
-	  stfs      f0, 0x7C(r31)
-	  stfs      f0, 0x78(r31)
-	  stfs      f0, 0x8C(r31)
-	  stfs      f0, 0x88(r31)
-	  stfs      f0, 0x84(r31)
-	  stw       r0, 0x6C(r31)
-	  stw       r0, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lfs       f0, -0x22F8(r13)
-	  stfs      f0, 0x78(r31)
-	  lfs       f0, -0x22F4(r13)
-	  stfs      f0, 0x7C(r31)
-	  lfs       f0, -0x22F0(r13)
-	  stfs      f0, 0x80(r31)
-	  lfs       f0, -0x22EC(r13)
-	  stfs      f0, 0x84(r31)
-	  lfs       f0, -0x22E8(r13)
-	  stfs      f0, 0x88(r31)
-	  lfs       f0, -0x22E4(r13)
-	  stfs      f0, 0x8C(r31)
-
-	.loc_0x1A4:
-	  mr        r3, r31
-	  lwz       r0, 0x64(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	return new GenObjectMapParts;
 }
 
 /*
@@ -152,47 +40,10 @@ static GenObjectMapParts* makeObjectMapParts()
  * Address:	80117A1C
  * Size:	000090
  */
-void GenObjectMapParts::initialise(MapMgr*)
+void GenObjectMapParts::initialise(MapMgr* mgr)
 {
-	/*
-	.loc_0x0:
-	  stw       r3, 0x3128(r13)
-	  lwz       r7, 0x3074(r13)
-	  lwz       r5, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  cmpw      r5, r0
-	  bgelr-
-	  lis       r4, 0x6D70
-	  lwz       r3, 0x8(r7)
-	  addi      r4, r4, 0x6172
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r6, 0x8011
-	  lis       r4, 0x802C
-	  lwz       r0, 0x0(r7)
-	  lis       r3, 0x7630
-	  lwz       r5, 0x8(r7)
-	  addi      r6, r6, 0x785C
-	  rlwinm    r0,r0,4,0,27
-	  add       r5, r5, r0
-	  stw       r6, 0x4(r5)
-	  addi      r5, r4, 0x30BC
-	  addi      r4, r3, 0x2E30
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r7)
-	  blr
-	*/
+	mapMgr = mgr;
+	GenObjectFactory::factory->registerMember('mpar', makeObjectMapParts, "マップパーツを発生", 'v0.0');
 }
 
 /*
@@ -200,83 +51,20 @@ void GenObjectMapParts::initialise(MapMgr*)
  * Address:	80117AAC
  * Size:	000118
  */
-void GenObjectMapParts::doRead(RandomAccessStream&)
+void GenObjectMapParts::doRead(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x6C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x70(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x74(r30)
-	  lwz       r0, 0x74(r30)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x100
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x78(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x7C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x80(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x84(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x88(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x8C(r30)
+	_6C = input.readInt();
+	_70 = input.readInt();
+	_74 = input.readInt();
+	if (_74 == 1) {
+		_78.x = input.readFloat();
+		_78.y = input.readFloat();
+		_78.z = input.readFloat();
 
-	.loc_0x100:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+		_84.x = input.readFloat();
+		_84.y = input.readFloat();
+		_84.z = input.readFloat();
+	}
 }
 
 /*
@@ -284,8 +72,71 @@ void GenObjectMapParts::doRead(RandomAccessStream&)
  * Address:	80117BC4
  * Size:	000664
  */
-void GenObjectMapParts::render(Graphics&, Generator*)
+void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 {
+	Matrix4f mtx0, mtx4;
+	f32 scl = 0.2f;
+	Vector3f scale;
+	scale.set(scl, scl, scl);
+	int id = _70;
+	BaseShape* shape;
+	if (id < numShapes) {
+		shape = mapMgr->_74[id];
+	} else {
+		shape = mapMgr->loadPlatshape(MapParts::getShapeFile(id - numShapes));
+	}
+	Matrix4f mtx;
+	Vector3f pos       = gen->getPos();
+	Vector3f globalPos = _78 + pos;
+	static bool first  = true;
+	if (first) {
+		PRINT("render :: start (%.1f %.1f %.1f)\n", globalPos.x, globalPos.y, globalPos.z);
+		PRINT(" start (%.1f %.1f %.1f) gen(%.1f %.1f %.1f)\n", globalPos.x, globalPos.y, globalPos.z, gen->getPos().x, gen->getPos().y,
+		      gen->getPos().z);
+		first = false;
+	}
+	Matrix4f mtx2;
+	Matrix4f mtx3;
+	mtx3.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), globalPos);
+	gfx.calcViewMatrix(mtx3, mtx2);
+	gfx.useMatrix(mtx2, 0);
+	gfx.setLighting(true, nullptr);
+	shape->drawshape(gfx, *gfx.mCamera, nullptr);
+
+	mtx3.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), gen->getPos());
+	gfx.calcViewMatrix(mtx3, mtx2);
+	gfx.useMatrix(mtx2, 0);
+	shape->drawshape(gfx, *gfx.mCamera, nullptr);
+
+	if (_74 != 1) {
+		return;
+	}
+
+	Vector3f pos3 = gen->getPos() + globalPos;
+	mtx0.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), pos3);
+	gfx.calcViewMatrix(mtx0, mtx2);
+	gfx.useMatrix(mtx2, 0);
+
+	Colour color1;
+	color1.set(255, 0, 0, 255);
+	GlobalShape::markerShape->mMaterialList->mColourInfo.mColour = color1;
+	GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
+	Vector3f globalPos2 = _84 + gen->getPos();
+	mtx0.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), globalPos2);
+	gfx.calcViewMatrix(mtx0, mtx2);
+	gfx.useMatrix(mtx2, 0);
+
+	color1.set(0, 0, 255, 255);
+	GlobalShape::markerShape->mMaterialList->mColourInfo.mColour = color1;
+	GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
+
+	bool light = gfx.setLighting(true, nullptr);
+	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
+	gfx.useTexture(nullptr, 0);
+	gfx.setColour(Colour(255, 255, 255, 255), false);
+	gfx.setAuxColour(Colour(255, 255, 255, 255));
+	gfx.drawLine(globalPos, globalPos2);
+	gfx.setLighting(light, nullptr);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -715,8 +566,51 @@ void GenObjectMapParts::render(Graphics&, Generator*)
  * Address:	80118228
  * Size:	00027C
  */
-Creature* GenObjectMapParts::birth(BirthInfo&)
+Creature* GenObjectMapParts::birth(BirthInfo& info)
 {
+	int id = _70;
+	PRINT("kind is %d\n", id);
+	BaseShape* shape;
+	if (id < numShapes) {
+		shape = mapMgr->_74[id];
+	} else {
+		shape = mapMgr->loadPlatshape(MapParts::getShapeFile(id - numShapes));
+		if (!shape) {
+			PRINT("failed to load %s\n", MapParts::getShapeFile(_70 - numShapes));
+			ERROR("sorry");
+		}
+	}
+
+	MapEntity* ent;
+	switch (_6C) {
+	case 0:
+		MapSlider* slider = new MapSlider((Shape*)shape, _18(), _28(), _38(), _48(), _58(), 0);
+		slider->_150      = info.mPosition;
+		slider->_15C      = info.mRotation.y;
+		break;
+	case 1:
+		ent       = new MapEntity((Shape*)shape);
+		ent->_134 = info.mPosition;
+		ent->_128 = info.mRotation;
+		break;
+	case 2:
+		return nullptr;
+	}
+
+	PRINT("CREATING MAP PARTS #### mp = %x\n", ent);
+
+	if (ent) {
+		if (_74 == 1) {
+			Vector3f* vecs = new Vector3f; // this is wrong
+			vecs[0].set(_78 + info.mPosition);
+			vecs[1].set(_84 + info.mPosition);
+			ent->_140 = vecs;
+		}
+		ent->init();
+		mapMgr->mCollShape->add(ent);
+	}
+
+	return nullptr;
 	/*
 	.loc_0x0:
 	  mflr      r0

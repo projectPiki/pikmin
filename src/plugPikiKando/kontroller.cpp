@@ -1,5 +1,7 @@
 #include "Kontroller.h"
 #include "Dolphin/os.h"
+#include "DebugLog.h"
+#include "KIO.h"
 
 RamStream* controllerBuffer;
 
@@ -8,20 +10,14 @@ RamStream* controllerBuffer;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "Kontroller");
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("Kontroller")
 
 /*
  * --INFO--
@@ -31,9 +27,9 @@ static void _Print(char*, ...)
 Kontroller::Kontroller(int p1)
     : Controller(p1)
 {
-	_50 = 0;
-	_54 = 0;
-	_58 = nullptr;
+	_50         = 0;
+	_54         = 0;
+	mDataStream = nullptr;
 }
 
 /*
@@ -43,8 +39,9 @@ Kontroller::Kontroller(int p1)
  */
 void Kontroller::save(RamStream* stream, int p2)
 {
-	_54 = p2;
-	_58 = stream;
+	PRINT("************ save start\n");
+	_54         = p2;
+	mDataStream = stream;
 	stream->setPosition(0);
 	_50 = 1;
 }
@@ -56,8 +53,9 @@ void Kontroller::save(RamStream* stream, int p2)
  */
 void Kontroller::load(RamStream* stream, int p2)
 {
-	_54 = p2;
-	_58 = stream;
+	PRINT("************ load start\n");
+	_54         = p2;
+	mDataStream = stream;
 	stream->setPosition(0);
 	_50 = 2;
 }
@@ -69,7 +67,10 @@ void Kontroller::load(RamStream* stream, int p2)
  */
 void Kontroller::stop()
 {
-	// UNUSED FUNCTION
+	PRINT("************ stopped\n");
+	_50         = 0;
+	mDataStream = nullptr;
+	_54         = 0;
 }
 
 /*
@@ -80,7 +81,39 @@ void Kontroller::stop()
 void Kontroller::update()
 {
 	switch (_50) {
+	case 2:
+		read(*mDataStream);
+		if (--_54 <= 0) {
+			stop();
+		}
+		updateCont(_5C);
+		break;
+	case 1:
+		Controller::update();
+		write(*mDataStream);
+		if (--_54 <= 0) {
+			void* addr = mDataStream->mBufferAddr;
+			DCFlushRange(addr, mDataStream->getPosition());
+
+			// AAAAAAAAAAAAAAAAAAAAAA
+			int test = 0;
+			for (int i = 20; i > 0; i--) {
+				test += 6;
+			}
+			PRINT("%i\n", getSaveSize(test));
+
+			mDataStream->close();
+			mDataStream->getPosition();
+			kio->startWrite(1, (u8*)mDataStream->mBufferAddr, mDataStream->getPosition());
+			stop();
+		}
+		break;
+	case 0:
+		Controller::update();
+		break;
 	}
+
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -203,78 +236,17 @@ int Kontroller::getSaveSize(int p1)
  * Address:	80115E68
  * Size:	00010C
  */
-void Kontroller::write(RandomAccessStream&)
+void Kontroller::write(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r4, 0x20(r30)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x45(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x46(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x47(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x48(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x49(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x4A(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x4B(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x4C(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	stream.writeInt(mCurrentInput);
+	stream.writeByte(mMainStickX);
+	stream.writeByte(mMainStickY);
+	stream.writeByte(mSubStickX);
+	stream.writeByte(mSubStickY);
+	stream.writeByte(mAnalogA);
+	stream.writeByte(mAnalogB);
+	stream.writeByte(mTriggerL);
+	stream.writeByte(mTriggerR);
 }
 
 /*
@@ -282,76 +254,15 @@ void Kontroller::write(RandomAccessStream&)
  * Address:	80115F74
  * Size:	00010C
  */
-void Kontroller::read(RandomAccessStream&)
+void Kontroller::read(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x5C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x45(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x46(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x47(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x48(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x49(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x4A(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x4B(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x4C(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_5C         = stream.readInt();
+	mMainStickX = stream.readByte();
+	mMainStickY = stream.readByte();
+	mSubStickX  = stream.readByte();
+	mSubStickY  = stream.readByte();
+	mAnalogA    = stream.readByte();
+	mAnalogB    = stream.readByte();
+	mTriggerL   = stream.readByte();
+	mTriggerR   = stream.readByte();
 }

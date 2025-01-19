@@ -9445,7 +9445,7 @@ void MapMgr::traceMove(Creature*, MoveTrace&, f32)
  * Address:	80069424
  * Size:	000070
  */
-void MapMgr::loadPlatshape(char*)
+BaseShape* MapMgr::loadPlatshape(char*)
 {
 	/*
 	.loc_0x0:

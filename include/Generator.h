@@ -382,8 +382,18 @@ struct GenObjectMapObject : public GenObject {
  */
 struct GenObjectMapParts : public GenObject {
 	inline GenObjectMapParts()
-	    : GenObject('mpar', "マップパーツを生む") // 'generate map parts'
+	    : GenObject('mpar', "マップパーツを生む") // 'generate map parts',
+	    , _18(this, 1, 1, 1, "p00", nullptr)
+	    , _28(this, 100, 100, 100, "p01", nullptr)
+	    , _38(this, 0.0f, 0.0f, 0.0f, "p02", nullptr)
+	    , _48(this, 2.0f, 2.0f, 2.0f, "p04", nullptr)
+	    , _58(this, 60.0f, 60.0f, 60.0f, "p03", nullptr)
 	{
+		_6C = 0;
+		_70 = 0;
+		_74 = 0;
+		_78.set(0.0f, 0.0f, 0.0f);
+		_84.set(0.0f, 0.0f, 0.0f);
 	}
 
 	virtual void doRead(RandomAccessStream&);   // _14
@@ -392,9 +402,21 @@ struct GenObjectMapParts : public GenObject {
 
 	static void initialise(MapMgr*);
 
+	static MapMgr* mapMgr;
+
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	// TODO: members
+	Parm<int> _18; // _18
+	Parm<int> _28; // _28
+	Parm<f32> _38; // _38
+	Parm<f32> _48; // _48
+	Parm<f32> _58; // _58
+	int _68;       // _68
+	int _6C;       // _6C
+	int _70;       // _70
+	int _74;       // _74
+	Vector3f _78;  // _78
+	Vector3f _84;  // _84
 };
 
 /**

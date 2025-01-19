@@ -5,6 +5,7 @@
 #include "EffectMgr.h"
 #include "Dolphin/os.h"
 #include "sysNew.h"
+#include "Interactions.h"
 
 /*
  * --INFO--
@@ -51,7 +52,7 @@ void KusaItem::startAI(int)
 	mCollInfo = &mKusaCollision;
 	mCollInfo->initInfo(mItemShape, mKusaParts, mPartIDs);
 	mCollInfo->makeTubesChild('rope', 1);
-	mScale.set(0.0f, 0.0f, 0.0f);
+	mScale.set(1.0f, 1.0f, 1.0f);
 	_814       = mPosition;
 	_814.y     = mapMgr->getMinY(mPosition.x, mPosition.z, true);
 	mHealth    = 50.0f;
@@ -282,8 +283,26 @@ void BoBaseItem::refresh(Graphics& gfx)
 bool BoBaseItem::interactBuild(InteractBuild& build)
 {
 	if (mStickItem) {
-		// this makes no sense with what InteractBuild looks like?
+		mStickItem->mHealth += build.mProgressRate * 0.4f; // this needs fixing
+		if (mStickItem->mHealth >= mStickItem->mMaxHealth) {
+			mHealth = mMaxHealth;
+			_824    = 0;
+			effectMgr->create(EffectMgr::EFF_Kusa_Extend2, mPosition, nullptr, nullptr);
+			playEventSound(this, SEB_WALL_DOWN);
+			_825 = 30;
+			if (mPtclGen) {
+				effectMgr->kill(mPtclGen, false);
+			}
+		} else {
+			playEventSound(this, SEB_CONSTRUCTION);
+			_825 = 30;
+			if (!mPtclGen) {
+				mPtclGen = effectMgr->create(EffectMgr::EFF_Kusa_Extend1, mPosition, nullptr, nullptr);
+			}
+		}
+		return true;
 	}
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0

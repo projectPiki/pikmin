@@ -239,7 +239,7 @@ struct MapMgr {
 	void findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&);
 	void recTraceMove(CollGroup*, MoveTrace&, f32);
 	void traceMove(Creature*, MoveTrace&, f32);
-	void loadPlatshape(char*);
+	BaseShape* loadPlatshape(char*);
 	CreatureCollPart* requestCollPart(ObjCollInfo*, Creature*);
 
 	// unused/inlined:
@@ -251,7 +251,7 @@ struct MapMgr {
 	MapRoom* mMapRooms;                    // _14, array of 256 MapRooms
 	u8 _18[0x64 - 0x18];                   // _18, unknown
 	ShapeDynMaterials mDynMaterials;       // _64
-	u8 _74[0x88 - 0x74];                   // _74, unknown
+	BaseShape* _74[5];                     // _74
 	DynCollShape* mCollShape;              // _88
 	u8 _8C[0x4];                           // _8C, unknown
 	BoundBox _90;                          // _90
