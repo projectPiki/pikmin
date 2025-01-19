@@ -19,7 +19,7 @@ struct PelletView {
 	virtual void viewKill()                                   = 0;         // _0C
 	virtual void viewDraw(struct Graphics&, struct Matrix4f&) = 0;         // _10
 	virtual void viewStartTrembleMotion(f32) { }                           // _14 (weak)
-	virtual void viewStartExplodeMotion(f32);                              // _18 (weak)
+	virtual void viewStartExplodeMotion(f32) { }                           // _18 (weak)
 	virtual void viewSetMotionSpeed(f32) { }                               // _1C (weak)
 	virtual void viewFinishMotion() { }                                    // _20 (weak)
 	virtual void viewDoAnimation() { }                                     // _24 (weak)

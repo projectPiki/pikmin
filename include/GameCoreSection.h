@@ -23,12 +23,12 @@ struct DrawGameInfo;
  * @brief TODO
  */
 enum CorePauseFlags {
-	COREPAUSE_Unk1 = 0x1,
-	COREPAUSE_Unk2 = 0x2,
-	COREPAUSE_Unk3 = 0x4,
-	COREPAUSE_Unk4 = 0x8,
+	COREPAUSE_Unk1 = 1 << 0, // 0x1
+	COREPAUSE_Unk2 = 1 << 1, // 0x2
+	COREPAUSE_Unk3 = 1 << 2, // 0x4
+	COREPAUSE_Unk4 = 1 << 3, // 0x8
 	// ...
-	COREPAUSE_Unk16 = 0x8000,
+	COREPAUSE_Unk16 = 1 << 15, // 0x8000
 };
 
 /**
@@ -61,9 +61,13 @@ struct GameCoreSection : public Node {
 	static void startTextDemo(Creature*, int);
 
 	// unused/inlined:
-	void hideTeki();
-	void hideAllPellet();
-	void hidePelletExceptSucked();
+	bool hideTeki();
+	bool hideAllPellet();
+	bool hidePelletExceptSucked();
+
+	static void finishPause() { pauseFlag = 0; }
+	static void startPause(u16 pause) { pauseFlag = pause; }
+	static bool inPause() { return pauseFlag & COREPAUSE_Unk16; } // probably?
 
 	static u16 pauseFlag;
 	static int textDemoState;
@@ -92,20 +96,5 @@ struct GameCoreSection : public Node {
 	Light _70;                        // _70
 	zen::DrawGameInfo* mDrawGameInfo; // _344
 };
-
-inline void clearCorePauseFlag()
-{
-	GameCoreSection::pauseFlag = 0;
-}
-
-inline void setCorePauseFlag(u32 flag)
-{
-	GameCoreSection::pauseFlag = flag;
-}
-
-inline bool isCorePauseFlag(u32 flag)
-{
-	return GameCoreSection::pauseFlag & flag;
-}
 
 #endif

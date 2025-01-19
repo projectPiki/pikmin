@@ -17,8 +17,8 @@ struct NaviProp : public CreatureProp {
 	/**
 	 * @brief Fabricated. Offsets relative to NaviProp for convenience.
 	 */
-	struct NaviParms : public Parameters {
-		inline NaviParms()
+	struct Parms : public Parameters {
+		inline Parms()
 		    : _5C(this, 120.0f, 0.0f, 500.0f, "p00", nullptr)
 		    , _6C(this, 200.0f, 0.0f, 1000.0f, "p60", nullptr)
 		    , _7C(this, 15.0f, 0.0f, 500.0f, "p62", nullptr)
@@ -151,11 +151,15 @@ struct NaviProp : public CreatureProp {
 
 	NaviProp();
 
-	virtual void read(RandomAccessStream&); // _08 (weak)
+	virtual void read(RandomAccessStream& input) // _08 (weak)
+	{
+		mCreatureProps.read(input);
+		mNaviProps.read(input);
+	}
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	NaviParms mNaviProps; // _58
+	Parms mNaviProps; // _58
 };
 
 /**

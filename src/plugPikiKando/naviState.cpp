@@ -228,8 +228,8 @@ void NaviDemoWaitState::exec(Navi* navi)
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	if (!gameflow.mMoviePlayer->mIsActive) {
-		navi->_774->restart();
-		navi->_778->restart();
+		navi->mNaviLightEfx->restart();
+		navi->mNaviLightGlowEfx->restart();
 
 		PRINT("RETURN TO WALK : MOVIE END \n");
 		if (navi->mIsBeingDamaged) {
@@ -353,8 +353,7 @@ void NaviStuckState::exec(Navi* navi)
 	if (stickMovement < -0.3f || navi->mKontroller->isPressed(KBBTN_A) || navi->mKontroller->isPressed(KBBTN_B)) {
 		mActionCount++;
 
-		NaviProp::NaviParms& naviParms = static_cast<NaviProp*>(navi->mProps)->mNaviProps;
-		s32 minFlickActions            = naviParms.mMinKinokoFlickActions();
+		s32 minFlickActions = C_NAVI_PROP(navi).mMinKinokoFlickActions();
 		if (mActionCount > minFlickActions) {
 			// after a certain amount of recorded actions, try and flick a puffmin
 			Stickers stickers(navi);
@@ -2402,7 +2401,7 @@ void NaviUfoState::init(Navi* navi)
 
 	mState = 0;
 	navi->mOdoMeter.start(0.5f, 8.0f);
-	setCorePauseFlag(COREPAUSE_Unk1 | COREPAUSE_Unk2 | COREPAUSE_Unk16);
+	GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk2 | COREPAUSE_Unk16);
 	Jac_StartPartsFindDemo(0, 1);
 	mPunchCooldownTimer = _21 = 0;
 }
@@ -2480,7 +2479,7 @@ void NaviUfoState::exec(Navi* navi)
 	}
 
 	if (mState == 2 && --mRecoveryTimer == 0) {
-		gameflow._1E8->message(0, 25);
+		gameflow.mGameInterface->message(0, 25);
 		mState = 3;
 	}
 
@@ -2811,7 +2810,7 @@ void NaviUfoState::cleanup(Navi* navi)
 		ufo->finishAccess();
 	}
 
-	clearCorePauseFlag();
+	GameCoreSection::finishPause();
 	Jac_FinishPartsFindDemo();
 }
 
@@ -4208,7 +4207,7 @@ void NaviGatherState::restart(Navi* navi)
  */
 void NaviGatherState::init(Navi* navi)
 {
-	navi->_6BC = 30.0f;
+	navi->mMotionSpeed = 30.0f;
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Fue, navi), PaniMotionInfo(PIKIANIM_Fue));
 	navi->enableMotionBlend();
 	navi->_AB8 = 0.0f;

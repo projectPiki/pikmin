@@ -313,7 +313,7 @@ void MoviePlayer::startMovie(int movieIndex, int, Creature*, Vector3f* position,
 	}
 
 	if (movieIndex == 12) { // title screen?
-		gameflow._1E8->message(0, 17);
+		gameflow.mGameInterface->message(0, 17);
 		return;
 	}
 
@@ -335,8 +335,8 @@ void MoviePlayer::startMovie(int movieIndex, int, Creature*, Vector3f* position,
 		rumbleMgr->stop();
 	}
 
-	if (gameflow._1E8) {
-		gameflow._1E8->message(3, 0);
+	if (gameflow.mGameInterface) {
+		gameflow.mGameInterface->message(3, 0);
 	}
 	mIsActive = true;
 	mInfoRoot2.getChildCount();
@@ -941,8 +941,8 @@ void MoviePlayer::sndStopMovie(MovieInfo* info)
 {
 	Jac_FinishDemo();
 	effectMgr->_18[0x600] = 1; // this is probably an inline
-	if (gameflow._1E8) {
-		gameflow._1E8->message(8, info->mMovieIndex);
+	if (gameflow.mGameInterface) {
+		gameflow.mGameInterface->message(8, info->mMovieIndex);
 	}
 	/*
 	.loc_0x0:

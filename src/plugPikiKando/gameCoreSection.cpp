@@ -68,7 +68,7 @@ static void _Print(char*, ...)
  */
 void GameCoreSection::startTextDemo(Creature*, int p2)
 {
-	gameflow._1E8->message(0, p2);
+	gameflow.mGameInterface->message(0, p2);
 }
 
 /*
@@ -91,7 +91,7 @@ void GameCoreSection::updateTextDemo()
 		textDemoTimer--;
 		attentionCamera->update();
 		if (textDemoTimer == 0) {
-			gameflow._1E8->message(0, textDemoIndex);
+			gameflow.mGameInterface->message(0, textDemoIndex);
 			textDemoState = 2;
 		}
 		break;
@@ -666,7 +666,7 @@ void GameCoreSection::endMovie(int)
  * Address:	........
  * Size:	000034
  */
-void GameCoreSection::hideTeki()
+bool GameCoreSection::hideTeki()
 {
 	// UNUSED FUNCTION
 }
@@ -676,7 +676,7 @@ void GameCoreSection::hideTeki()
  * Address:	........
  * Size:	000034
  */
-void GameCoreSection::hideAllPellet()
+bool GameCoreSection::hideAllPellet()
 {
 	// UNUSED FUNCTION
 }
@@ -686,7 +686,7 @@ void GameCoreSection::hideAllPellet()
  * Address:	........
  * Size:	000034
  */
-void GameCoreSection::hidePelletExceptSucked()
+bool GameCoreSection::hidePelletExceptSucked()
 {
 	// UNUSED FUNCTION
 }
