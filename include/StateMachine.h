@@ -92,6 +92,8 @@ struct StateMachine {
 		state->init(target);
 	}
 
+	// NB: this is ALL the inlines according to the DLL. No more.
+
 	bool isValidID(int stateID)
 	{
 		if (stateID < 0 || stateID >= mStateLimit) {
@@ -151,11 +153,15 @@ struct StateMachine {
 		}
 	}
 
-	/*
-	    ONLY DLL inlines left:
+	int getCurrID(T* target)
+	{
+		AState<T>* state = target->getCurrState();
+		if (state) {
+			return state->getID();
+		}
 
-	    int getCurrID(T*);
-	*/
+		return -1;
+	}
 
 	// _00 = VTBL
 	AState<T>** mStates; // _04

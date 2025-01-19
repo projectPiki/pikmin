@@ -34,6 +34,7 @@
         "dvdthread.h": "c",
         "ipldec.h": "c",
         "dsp.h": "c",
-        "os.h": "c"
+        "os.h": "c",
+        "math.h": "c"
     },
 }

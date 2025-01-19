@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "PowerPC_EABI_Support/MSL_C/PPC_EABI/math_ppc.h"
+#include "std/Math.h"
 
 #define SQUARE(v) ((v) * (v))
 
@@ -114,6 +115,18 @@ f32 sqrDistance(Vector3f&, KTri&, f32*, f32*);
 
 // unused
 f32 qdist3(f32 x0, f32 y0, f32 z0, f32 x1, f32 y1, f32 z1);
+
+inline f32 speedy_sqrtf(f32 x)
+{
+	vf32 y;
+	if (x > 0.0f) {
+
+		f64 guess = __frsqrte((f64)x);
+		y         = (f32)(x * guess);
+		return y;
+	}
+	return x;
+}
 
 #endif
 

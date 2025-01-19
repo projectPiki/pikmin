@@ -1188,36 +1188,3 @@ void Animator::changeContext(AnimContext* context)
 {
 	mContext = context;
 }
-
-/*
- * --INFO--
- * Address:	80051460
- * Size:	000008
- */
-template <>
-int Parm<String>::size()
-{
-	return sizeof(String);
-}
-
-/*
- * --INFO--
- * Address:	80051468
- * Size:	000008
- */
-template <>
-int Parm<f32>::size()
-{
-	return sizeof(f32);
-}
-
-/*
- * --INFO--
- * Address:	80051470
- * Size:	000008
- */
-template <>
-int Parm<int>::size()
-{
-	return sizeof(int);
-}

@@ -741,7 +741,9 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
 	u8 _18[0x2C - 0x18]; // _18, unknown
 	u16 _2C;             // _2C, "md"?
 	u16 _2E;             // _2E, "st"?
-	u8 _30[0x64 - 0x30]; // _30, unknown
+	u8 _30[0x58 - 0x30]; // _30, unknown
+	int _58;             // _58, slot ID?
+	u8 _5C[0x64 - 0x5C]; // _5C, unknown
 	u8 _64;              // _64, "koke"?
 	u8 _65[0x7C - 0x65]; // _65, unknown
 	u8 _7C;              // _7C

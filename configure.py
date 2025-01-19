@@ -518,7 +518,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/seConstants.cpp"),
             Object(NonMatching, "plugPikiKando/soundMgr.cpp"),
             Object(Matching, "plugPikiKando/updateMgr.cpp"),
-            Object(NonMatching, "plugPikiKando/cPlate.cpp"),
+            Object(Matching, "plugPikiKando/cPlate.cpp"),
             Object(NonMatching, "plugPikiKando/aiStone.cpp"),
             Object(NonMatching, "plugPikiKando/aiActions.cpp"),
             Object(NonMatching, "plugPikiKando/aiAttack.cpp"),

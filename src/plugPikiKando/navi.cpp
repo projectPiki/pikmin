@@ -100,8 +100,7 @@ f32 Navi::viewGetHeight()
  */
 bool Navi::isNuking()
 {
-	int stateID = (mCurrState) ? mCurrState->mStateID : NAVISTATE_NULL;
-	return stateID == NAVISTATE_Nuku;
+	return mStateMachine->getCurrID(this) == NAVISTATE_Nuku;
 }
 
 /*
@@ -109,9 +108,18 @@ bool Navi::isNuking()
  * Address:	........
  * Size:	00008C
  */
-void Navi::startMovie(bool)
+void Navi::startMovie(bool doStopEffects)
 {
-	mStateMachine->transit(this, NAVISTATE_DemoWait);
+	int state = mStateMachine->getCurrID(this);
+	if (doStopEffects) {
+		_774->stop();
+		_778->stop();
+	}
+
+	if (state != NAVISTATE_DemoInf && state != NAVISTATE_Starting) {
+		PRINT("************ NAVI => DEMO_WAIT STATE \n");
+		mStateMachine->transit(this, NAVISTATE_DemoWait);
+	}
 }
 
 /*
@@ -130,9 +138,9 @@ void Navi::startMovieInf()
  * Address:	........
  * Size:	000020
  */
-void Navi::movieMode()
+bool Navi::movieMode()
 {
-	// UNUSED FUNCTION
+	return (gameflow._1D8 & 0x40) != 0;
 }
 
 /*
@@ -172,7 +180,7 @@ int Navi::getPlatePikis()
  */
 void Navi::startDayEnd()
 {
-	mIsDayEnd = 1;
+	mIsDayEnd = TRUE;
 }
 
 /*
@@ -194,34 +202,31 @@ void Navi::updateDayEnd(Vector3f& pos)
 		PRINT("********* UPDATE DAY END ** 1ST FRAME\n");
 		PRINT("******** FORMATION =====================\n");
 
-		int pikiCount = 0;
-
 		Iterator iter(pikiMgr);
+		int pikiCount = 0;
 		CI_LOOP(iter)
 		{
 			Piki* piki = static_cast<Piki*>(*iter);
-			piki->mFSM->transit(piki, 0);
+			piki->mFSM->transit(piki, PIKISTATE_Normal);
 
-			if (piki->mMode != 11) {
-				piki->changeMode(1, piki->mNavi);
-				piki->forceFinishLook(); // 100AEC30 in plugPiki
+			if (piki->mMode != PikiMode::EnterMode) {
+				piki->changeMode(PikiMode::FormationMode, piki->mNavi);
+				piki->forceFinishLook();
 				piki->startLook(&piki->mNavi->mPosition);
 				pikiCount++;
 
-				if (piki->mMode != 1) {
+				if (piki->mMode != PikiMode::FormationMode) {
 					ERROR("nandeyanen!");
 				}
 
-				// Complete guess, fuck it.
-				s32 slotID = ((ActTransport*)piki->mActiveAction->getCurrAction())->mSlotIndex;
+				int slotID = ((ActCrowd*)piki->mActiveAction->getCurrAction())->_58;
 				if (slotID == -1) {
 					ERROR("slotID = -1 desse\n");
 				}
 
 				// Issues here
-				CPlate::Slot* currentSlot = &piki->mNavi->mPlateMgr->mSlotList[slotID];
-				piki->mPosition           = piki->mNavi->mPlateMgr->_94 + currentSlot->mPosition;
-				piki->mPosition.y         = mapMgr->getMinY(piki->mPosition.x, piki->mPosition.z, true);
+				piki->mPosition   = piki->mNavi->mPlateMgr->mSlotList[slotID].mPosition + piki->mNavi->mPlateMgr->_94;
+				piki->mPosition.y = mapMgr->getMinY(piki->mPosition.x, piki->mPosition.z, true);
 			}
 		}
 
@@ -772,7 +777,7 @@ bool Navi::isRopable()
  * Address:	........
  * Size:	00008C
  */
-void Navi::startDamage()
+bool Navi::startDamage()
 {
 	// UNUSED FUNCTION
 }
@@ -1549,7 +1554,7 @@ void Navi::enableMotionBlend()
  * Address:	........
  * Size:	000014
  */
-void Navi::doMotionBlend()
+bool Navi::doMotionBlend()
 {
 	// UNUSED FUNCTION
 }
@@ -3915,7 +3920,7 @@ void Navi::doAttack()
  * Address:	........
  * Size:	00009C
  */
-void Navi::insideOnyon()
+bool Navi::insideOnyon()
 {
 	// UNUSED FUNCTION
 }
@@ -3925,7 +3930,7 @@ void Navi::insideOnyon()
  * Address:	800FC7FC
  * Size:	000A40
  */
-void Navi::procActionButton()
+bool Navi::procActionButton()
 {
 	/*
 	.loc_0x0:
@@ -8256,7 +8261,7 @@ bool InteractBomb::actNavi(Navi*)
  * Address:	801002C8
  * Size:	000080
  */
-void Navi::orimaDamaged()
+bool Navi::orimaDamaged()
 {
 	/*
 	.loc_0x0:

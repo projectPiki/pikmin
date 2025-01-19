@@ -26,7 +26,7 @@ static void _Print(char*, ...)
  * Address:	80082818
  * Size:	0006D8
  */
-void Navi::demoCheck()
+bool Navi::demoCheck()
 {
 	/*
 	.loc_0x0:

@@ -71,7 +71,7 @@ struct Parm : public BaseParm {
 		mValue = value;
 	}
 
-	virtual int size();                             // _08
+	virtual int size() { return sizeof(T); }        // _08
 	virtual void write(struct RandomAccessStream&); // _0C
 	virtual void read(RandomAccessStream&);         // _10
 

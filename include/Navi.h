@@ -28,7 +28,11 @@ struct Piki;
 struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 
 	struct Locus {
+		Locus(); // DLL, todo
+
 		void update();
+
+		// TODO: members
 	};
 
 	Navi(CreatureProp*, int);
@@ -64,7 +68,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	virtual void viewStartTrembleMotion(f32);            // _164 (weak)
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _168 (weak)
 
-	void demoCheck();
+	bool demoCheck();
 	bool isNuking();
 	void startMovieInf();
 	void incPlatePiki();
@@ -85,14 +89,14 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	void callPikis(f32);
 	void callDebugs(f32);
 	void releasePikis();
-	void procActionButton();
+	bool procActionButton();
 	void letPikiWork();
 	void reviseController(Vector3f&);
 	void makeVelocity(bool);
 	void makeCStick(bool);
 	void draw(Graphics&);
 	void renderCircle(Graphics&);
-	void orimaDamaged();
+	bool orimaDamaged();
 	void throwPiki(Piki*, Vector3f&);
 	void swapMotion(PaniMotionInfo&, PaniMotionInfo&);
 	void finishLook();
@@ -101,17 +105,27 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 
 	// unused/inlined:
 	void startMovie(bool);
-	void movieMode();
-	void startDamage();
-	void doMotionBlend();
+	bool movieMode();
+	bool startDamage();
+	bool doMotionBlend();
 	void doAttack();
-	void insideOnyon();
+	bool insideOnyon();
 	void procDamage(f32);
 	void throwLocus(Vector3f&);
 	void renderParabola(Graphics&, f32, f32);
 
 	AState<Navi>* getCurrState() { return mCurrState; }
 	void setCurrState(AState<Navi>* state) { mCurrState = state; }
+
+	/*
+	    DLL inlines:
+
+	    bool isPellet();
+	    void setPellet(bool);
+
+	    void forceFinishLook();
+	    void startLook(Vector3f*);
+	*/
 
 	// _00       = VTBL
 	// _000-_2B8 = Creature

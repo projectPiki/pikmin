@@ -768,7 +768,7 @@ void Generator::render(Graphics& gfx)
 		Colour colour;
 		colour.set(255, 125, 0, 255);
 
-		GlobalShape::markerShape->mMaterialList->mColourInfo.mColour = colour;
+		GlobalShape::markerShape->mMaterialList->Colour() = colour;
 		GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
 
 		if (mGenArea) {
@@ -784,8 +784,6 @@ void Generator::render(Graphics& gfx)
 		}
 	}
 
-	// idk, something weird is going on with the getPos inline.
-	u32 badCompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0

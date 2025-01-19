@@ -97,10 +97,9 @@ void Kontroller::update()
 
 			// AAAAAAAAAAAAAAAAAAAAAA
 			int test = 0;
-			for (int i = 20; i > 0; i--) {
-				test += 6;
+			for (int i = 16; i > 0; i--) {
+				test += 8;
 			}
-			PRINT("%i\n", getSaveSize(test));
 
 			mDataStream->close();
 			mDataStream->getPosition();
