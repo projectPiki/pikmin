@@ -51,7 +51,8 @@ struct GrassGen : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	u8 _3C8[0x3E4 - 0x3C8]; // _3C8, unknown
+	u32 _3C8;               // _3C8
+	u8 _3CC[0x3E4 - 0x3CC]; // _3CC, unknown
 };
 
 /**

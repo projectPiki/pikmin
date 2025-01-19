@@ -510,7 +510,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/objectTypes.cpp"),
             Object(NonMatching, "plugPikiKando/pelletMgr.cpp"),
             Object(NonMatching, "plugPikiKando/animPellet.cpp"),
-            Object(NonMatching, "plugPikiKando/genPellet.cpp"),
+            Object(Matching, "plugPikiKando/genPellet.cpp"),
             Object(NonMatching, "plugPikiKando/pelletState.cpp"),
             Object(NonMatching, "plugPikiKando/workObject.cpp"),
             Object(NonMatching, "plugPikiKando/routeMgr.cpp"),

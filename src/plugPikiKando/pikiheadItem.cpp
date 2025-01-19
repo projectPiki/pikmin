@@ -139,7 +139,7 @@ PikiHeadItem::PikiHeadItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI
  */
 void PikiHeadItem::startAI(int)
 {
-	enableFaceDirAdjust();
+	enableFixPos();
 	_3E0 = nullptr;
 	mItemAnimator.startMotion(PaniMotionInfo(0));
 

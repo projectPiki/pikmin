@@ -1,24 +1,30 @@
 #include "Generator.h"
+#include "DebugLog.h"
+#include "sysNew.h"
+#include "ItemMgr.h"
+#include "PlayerState.h"
+#include "GoalItem.h"
+#include "BuildingItem.h"
+#include "WeedsItem.h"
+#include "DoorItem.h"
+#include "GemItem.h"
+#include "PikiHeadItem.h"
+#include "BombItem.h"
+#include "gameflow.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT(nullptr)
 
 /*
  * --INFO--
@@ -26,9 +32,15 @@ static void _Print(char*, ...)
  * Size:	000148
  */
 GenObjectItem::GenObjectItem()
-    : GenObject('item', "")
+    : GenObject('item', "アイテムを生む")
+    , _18(this, 0, 0, 0, "p00", nullptr)
+    , _28(this, 0, 0, 0, "p01", nullptr)
+    , _38(this, 0, 0, 0, "p02", nullptr)
+    , _48(this, 3, 3, 3, "p03", nullptr)
 {
-	// UNUSED FUNCTION
+	mObjType = 1;
+	sprintf(_5C, " ");
+	sprintf(_7C, " ");
 }
 
 /*
@@ -36,53 +48,12 @@ GenObjectItem::GenObjectItem()
  * Address:	800EE320
  * Size:	0000A8
  */
-void GenObjectItem::ramSaveParameters(RandomAccessStream&)
+void GenObjectItem::ramSaveParameters(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r4, r30, 0x24
-	  lwz       r12, 0x4(r31)
-	  addi      r3, r31, 0
-	  lwz       r4, 0x0(r4)
-	  lwz       r12, 0x28(r12)
-	  addi      r4, r4, 0x1
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x34(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x44(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x54(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	stream.writeByte(_18() + 1);
+	stream.writeByte(_28() & 255);
+	stream.writeByte(_38() & 255);
+	stream.writeByte(_48() & 255);
 }
 
 /*
@@ -90,53 +61,12 @@ void GenObjectItem::ramSaveParameters(RandomAccessStream&)
  * Address:	800EE3C8
  * Size:	0000A8
  */
-void GenObjectItem::ramLoadParameters(RandomAccessStream&)
+void GenObjectItem::ramLoadParameters(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r3,r3,0,24,31
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x24(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x34(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x44(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x54(r30)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	_18() = stream.readByte() - 1;
+	_28() = stream.readByte();
+	_38() = stream.readByte();
+	_48() = stream.readByte();
 }
 
 /*
@@ -144,99 +74,9 @@ void GenObjectItem::ramLoadParameters(RandomAccessStream&)
  * Address:	800EE470
  * Size:	000158
  */
-void makeObjectItem()
+GenObject* makeObjectItem()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x9C
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  bl        -0xA7488
-	  mr.       r31, r3
-	  beq-      .loc_0x138
-	  lis       r4, 0x802C
-	  lis       r3, 0x802C
-	  subi      r5, r4, 0x285C
-	  lis       r4, 0x6974
-	  subi      r6, r3, 0x2850
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x656D
-	  bl        -0x13800
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5490
-	  lis       r3, 0x802C
-	  stw       r0, 0x4(r31)
-	  subi      r0, r3, 0x2770
-	  stw       r0, 0x4(r31)
-	  addi      r5, r1, 0x24
-	  addi      r4, r31, 0
-	  lwz       r0, -0x32C8(r13)
-	  addi      r3, r31, 0x18
-	  stw       r0, 0x2C(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r0, 0x24(r1)
-	  bl        -0x8FA6C
-	  lis       r3, 0x802A
-	  addi      r29, r3, 0x60C4
-	  stw       r29, 0x20(r31)
-	  li        r30, 0
-	  addi      r5, r1, 0x20
-	  stw       r30, 0x24(r31)
-	  mr        r4, r31
-	  addi      r3, r31, 0x28
-	  lwz       r0, -0x32C4(r13)
-	  stw       r0, 0x34(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r0, 0x20(r1)
-	  bl        -0x8FAA0
-	  stw       r29, 0x30(r31)
-	  addi      r5, r1, 0x1C
-	  addi      r4, r31, 0
-	  stw       r30, 0x34(r31)
-	  addi      r3, r31, 0x38
-	  lwz       r0, -0x32C0(r13)
-	  stw       r0, 0x3C(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r0, 0x1C(r1)
-	  bl        -0x8FAC8
-	  stw       r29, 0x40(r31)
-	  addi      r5, r1, 0x18
-	  addi      r4, r31, 0
-	  stw       r30, 0x44(r31)
-	  addi      r3, r31, 0x48
-	  lwz       r0, -0x32BC(r13)
-	  stw       r0, 0x44(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x18(r1)
-	  bl        -0x8FAF0
-	  stw       r29, 0x50(r31)
-	  li        r3, 0x3
-	  li        r0, 0x1
-	  crclr     6, 0x6
-	  stw       r3, 0x54(r31)
-	  addi      r3, r31, 0x5C
-	  stw       r0, 0x58(r31)
-	  subi      r4, r13, 0x32B8
-	  bl        0x128004
-	  addi      r3, r31, 0x7C
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x32B8
-	  bl        0x127FF4
-
-	.loc_0x138:
-	  mr        r3, r31
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	return new GenObjectItem;
 }
 
 /*
@@ -246,44 +86,7 @@ void makeObjectItem()
  */
 void GenObjectItem::initialise()
 {
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x3074(r13)
-	  lwz       r5, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  cmpw      r5, r0
-	  bgelr-
-	  lis       r4, 0x6974
-	  lwz       r3, 0x8(r7)
-	  addi      r4, r4, 0x656D
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r6, 0x800F
-	  lis       r4, 0x802C
-	  lwz       r0, 0x0(r7)
-	  lis       r3, 0x7630
-	  lwz       r5, 0x8(r7)
-	  subi      r6, r6, 0x1B90
-	  rlwinm    r0,r0,4,0,27
-	  add       r5, r5, r0
-	  stw       r6, 0x4(r5)
-	  subi      r5, r4, 0x2840
-	  addi      r4, r3, 0x2E31
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r7)
-	  blr
-	*/
+	GenObjectFactory::factory->registerMember('item', makeObjectItem, "アイテムを発生", 'v0.1');
 }
 
 /*
@@ -291,92 +94,29 @@ void GenObjectItem::initialise()
  * Address:	800EE654
  * Size:	00011C
  */
-void GenObjectItem::doRead(RandomAccessStream&)
+void GenObjectItem::doRead(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x120(r1)
-	  stw       r31, 0x11C(r1)
-	  stw       r30, 0x118(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x114(r1)
-	  addi      r29, r3, 0
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x58(r29)
-	  b         .loc_0x100
-
-	.loc_0x4C:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  addi      r4, r1, 0x10
-	  li        r5, 0x100
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r1, 0x10
-	  bl        -0x59C40
-	  stw       r3, 0x58(r29)
-	  lwz       r3, 0xC(r29)
-	  subis     r0, r3, 0x7630
-	  cmplwi    r0, 0x2E30
-	  beq-      .loc_0xE0
-	  li        r31, 0
-
-	.loc_0x88:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r31, 0x5C
-	  addi      r31, r31, 0x1
-	  stbx      r3, r29, r0
-	  cmpwi     r31, 0x20
-	  blt+      .loc_0x88
-	  li        r31, 0
-
-	.loc_0xB4:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r31, 0x7C
-	  addi      r31, r31, 0x1
-	  stbx      r3, r29, r0
-	  cmpwi     r31, 0x20
-	  blt+      .loc_0xB4
-	  b         .loc_0x100
-
-	.loc_0xE0:
-	  addi      r3, r29, 0x5C
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x32B8
-	  bl        0x127E58
-	  addi      r3, r29, 0x7C
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x32B8
-	  bl        0x127E48
-
-	.loc_0x100:
-	  lwz       r0, 0x124(r1)
-	  lwz       r31, 0x11C(r1)
-	  lwz       r30, 0x118(r1)
-	  lwz       r29, 0x114(r1)
-	  addi      r1, r1, 0x120
-	  mtlr      r0
-	  blr
-	*/
+	if (Generator::ramMode) {
+		mObjType = stream.readByte();
+	} else {
+		char buffer[256];
+		stream.readString(buffer, 0x100);
+		mObjType = ObjType::getIndex(buffer);
+		if (mObjType == -1) {
+			PRINT("ItemGenerator * %s is not item\n", buffer);
+		}
+		if (mVersion != 'v0.0') {
+			for (int i = 0; i < 32; i++) {
+				_5C[i] = stream.readByte();
+			}
+			for (int i = 0; i < 32; i++) {
+				_7C[i] = stream.readByte();
+			}
+		} else {
+			sprintf(_5C, " ");
+			sprintf(_7C, " ");
+		}
+	}
 }
 
 /*
@@ -384,83 +124,21 @@ void GenObjectItem::doRead(RandomAccessStream&)
  * Address:	800EE770
  * Size:	000100
  */
-void GenObjectItem::doWrite(RandomAccessStream&)
+void GenObjectItem::doWrite(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  lbz       r0, 0x3070(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  mr        r3, r30
-	  lwz       r0, 0x58(r29)
-	  lwz       r12, 0x4(r30)
-	  rlwinm    r4,r0,0,24,31
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xE4
-
-	.loc_0x4C:
-	  lwz       r3, 0x58(r29)
-	  bl        -0x59D88
-	  lwz       r12, 0x4(r30)
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  subis     r0, r3, 0x7630
-	  cmplwi    r0, 0x2E30
-	  beq-      .loc_0xE4
-	  li        r31, 0
-
-	.loc_0x90:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  addi      r0, r31, 0x5C
-	  lbzx      r4, r29, r0
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r31, 0x1
-	  cmpwi     r31, 0x20
-	  blt+      .loc_0x90
-	  li        r31, 0
-
-	.loc_0xBC:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  addi      r0, r31, 0x7C
-	  lbzx      r4, r29, r0
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r31, 0x1
-	  cmpwi     r31, 0x20
-	  blt+      .loc_0xBC
-
-	.loc_0xE4:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (Generator::ramMode) {
+		stream.writeByte(mObjType);
+	} else {
+		stream.writeString(ObjType::getName(mObjType));
+		if (getLatestVersion() != 'v0.0') {
+			for (int i = 0; i < 32; i++) {
+				stream.writeByte(_5C[i]);
+			}
+			for (int i = 0; i < 32; i++) {
+				stream.writeByte(_7C[i]);
+			}
+		}
+	}
 }
 
 /*
@@ -480,23 +158,9 @@ void sprintID(char*, u32)
  */
 void GenObjectItem::updateUseList(Generator*, int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x58(r3)
-	  cmpwi     r4, -0x1
-	  beq-      .loc_0x20
-	  lwz       r3, 0x30AC(r13)
-	  bl        0x5010
-
-	.loc_0x20:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mObjType != -1) {
+		itemMgr->addUseList(mObjType);
+	}
 }
 
 /*
@@ -504,8 +168,108 @@ void GenObjectItem::updateUseList(Generator*, int)
  * Address:	800EE8A0
  * Size:	000448
  */
-Creature* GenObjectItem::birth(BirthInfo&)
+Creature* GenObjectItem::birth(BirthInfo& info)
 {
+	if (mObjType == -1) {
+		return nullptr;
+	}
+
+	// Has onion check
+	if (mObjType == OBJTYPE_Goal) {
+		if (!playerState->hasContainer(_18())) {
+			if (info.mGenerator->mGeneratorName != 'next') {
+				return nullptr;
+			}
+		} else {
+			if (info.mGenerator->mGeneratorName == 'next') {
+				return nullptr;
+			}
+		}
+	}
+
+	Creature* item = itemMgr->birth(mObjType);
+	if (item) {
+		switch (item->mObjType) {
+		case OBJTYPE_Goal:
+			((GoalItem*)item)->setColorType(_18());
+			break;
+		case OBJTYPE_Rope:
+			((RopeItem*)item)->_2D0 = _18();
+			((RopeItem*)item)->autoInit();
+			break;
+		case OBJTYPE_NULL12:
+			((GemItem*)item)->setColorType(_18());
+			break;
+		case OBJTYPE_SluiceSoft:
+		case OBJTYPE_SluiceHard:
+		case OBJTYPE_SluiceBomb:
+		case OBJTYPE_SluiceBombHard:
+			((BuildingItem*)item)->mEndAnimId = _48();
+			break;
+		case OBJTYPE_RockGen:
+			f32 size = _18();
+			if ((f32)_18() <= 0.0f) {
+				size = 30.0f;
+			}
+			((RockGen*)item)->setSizeAndNum(size, _48());
+			break;
+		case OBJTYPE_GrassGen:
+			size = _18();
+			if ((f32)_18() <= 0.0f) {
+				size = 30.0f;
+			}
+			((GrassGen*)item)->setSizeAndNum(size, _48());
+			break;
+		case OBJTYPE_Weeds:
+			((GrassGen*)item)->_3C8 = _48();
+			break;
+		}
+
+		int health = _38() + _28() * (int)gameflow.mWorldClock.mHoursInDay;
+		item->init(info.mPosition);
+		item->mRotation  = info.mRotation;
+		item->mDirection = item->mRotation.y;
+		item->mGenerator = info.mGenerator;
+		item->mHealth    = health;
+		item->mMaxHealth = item->mHealth;
+		item->startAI(0);
+		if (info.mGenerator->doAdjustFaceDir()) {
+			item->enableFaceDirAdjust();
+		}
+		char id[8];
+		item->mGenerator->mGeneratorName.sprint(id);
+
+		if (mVersion != 'v0.0' && item->mObjType == OBJTYPE_Door) {
+			((DoorItem*)item)->_3D0 = _5C;
+			((DoorItem*)item)->_3D4 = _7C;
+		}
+
+		if (item->mObjType == OBJTYPE_BombGen) {
+			s16 val                 = _18();
+			((BombItem*)item)->_3CA = val;
+			((BombItem*)item)->_3C8 = val;
+			item->mGrid.updateGrid(item->mPosition);
+		}
+
+		if (item->mObjType == OBJTYPE_Pikihead) {
+			Iterator it(itemMgr);
+			Creature* goal = nullptr;
+			f32 maxDist    = 12800.0f;
+			CI_LOOP(it)
+			{
+				Creature* obj = *it;
+				if (obj->mObjType == OBJTYPE_Goal) {
+					f32 dist = sphereDist(obj, item);
+					if (dist < maxDist) {
+						maxDist = dist;
+						goal    = obj;
+					}
+				}
+			}
+			((PikiHeadItem*)item)->_3E0 = goal;
+		}
+	}
+	return item;
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -352,7 +352,13 @@ struct GenObjectItem : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	// TODO: members
+	Parm<int> _18; // _18
+	Parm<int> _28; // _28
+	Parm<int> _38; // _38
+	Parm<int> _48; // _48
+	int mObjType;  // _58
+	char _5C[32];  // _5C
+	char _7C[32];  // _7C
 };
 
 /**
@@ -453,8 +459,8 @@ struct GenObjectPellet : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	u32 _18;  // _18, unknown
-	ID32 _1C; // _1C
+	int mIndex;     // _18
+	ID32 mPelletId; // _1C
 };
 
 /**
@@ -788,6 +794,9 @@ struct Generator : public Node {
 
 	int getRebirthDay() { return mGenType->_18(); }
 	bool readFromRam() { return !mIsRamReadDisabled; }
+
+	// this is an inline in the DLL, but I cant tell what its name is from the list
+	bool doAdjustFaceDir() { return mGenType->mAdjustFaceDirection(); }
 
 	// DLL inlines to make:
 	// void changeNaviPos();

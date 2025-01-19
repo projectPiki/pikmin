@@ -49,8 +49,8 @@ struct DoorItem : public ItemCreature {
 	// _00-_3C8 = ItemCreature
 	f32 _3C8;     // _3C8
 	int mStateId; // _3CC
-	u32 _3D0;     // _3D0
-	u32 _3D4;     // _3D4
+	char* _3D0;   // _3D0
+	char* _3D4;   // _3D4
 };
 
 #endif

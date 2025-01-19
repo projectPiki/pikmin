@@ -219,6 +219,7 @@ struct Creature : public RefCountable, public EventTalker {
 
 	Vector3f& getPosition() { return mPosition; }
 
+	void enableFaceDirAdjust() { setCreatureFlag(CF_FaceDirAdjust); }
 	void disableFaceDirAdjust() { resetCreatureFlag(CF_FaceDirAdjust); } // this should be one of the disable inlines
 
 	void startFlying()
@@ -286,8 +287,7 @@ struct Creature : public RefCountable, public EventTalker {
 		_CC = res;
 	}
 
-	// this might not be the right name
-	void enableFaceDirAdjust() { setCreatureFlag(0x40000); }
+	void enableFixPos() { setCreatureFlag(0x40000); }
 
 	void setFree(bool set) { set ? setCreatureFlag(CF_Free) : resetCreatureFlag(CF_Free); }
 
@@ -296,9 +296,6 @@ struct Creature : public RefCountable, public EventTalker {
 	    bool insideView();
 
 	    f32 calcDistance(Creature&);
-
-	    void enableFaceDirAdjust();
-	    void disableFaceDirAdjust();
 
 	    void enableFixPos();
 	    void disableFixPos();

@@ -50,7 +50,8 @@ struct BombItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	u8 _3C8;                 // _3C8
+	s16 _3C8;                // _3C8
+	s16 _3CA;                // _3CA
 	SeContext mSound;        // _3CC
 	CollInfo mBombColl;      // _3F4
 	CollPart mCollParts[10]; // _408
