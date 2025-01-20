@@ -1579,7 +1579,7 @@ int TAIAturnToTarget::getTurnMotionIndex(Teki& teki)
 {
 	Vector3f direction;
 	direction.sub2(teki.mTargetPosition, teki.mPosition);
-	teki.mTargetAngle = NMathF::atan2Vec(direction);
+	teki.mTargetAngle = NMathF::atan2(direction.x, direction.z);
 
 	if (angDist(teki.mTargetAngle, teki.mDirection) > 0.0f) {
 		return mLeftTurnAnimID;

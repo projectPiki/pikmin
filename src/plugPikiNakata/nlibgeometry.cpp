@@ -24,7 +24,8 @@ DEFINE_PRINT("nlibgeometry")
  */
 NAxisAngle4f::NAxisAngle4f()
 {
-	// UNUSED FUNCTION
+	mAxis.construct(NVector3f(0.0f, 1.0f, 0.0f));
+	mAngle = 0.0f;
 }
 
 /*
@@ -44,8 +45,8 @@ NAxisAngle4f::NAxisAngle4f(NVector3f& axis, f32 angle)
  */
 void NAxisAngle4f::construct(NVector3f& axis, f32 angle)
 {
-	mAxis.input(axis);
-	mAngle = angle;
+	inputAxis(axis);
+	setAngle(angle);
 }
 
 /*
@@ -63,9 +64,9 @@ NMatrix4f::NMatrix4f()
  * Address:	........
  * Size:	000030
  */
-NMatrix4f::NMatrix4f(Matrix4f&)
+NMatrix4f::NMatrix4f(Matrix4f& mat)
 {
-	// UNUSED FUNCTION
+	construct(mat);
 }
 
 /*
@@ -94,9 +95,10 @@ NMatrix4f::NMatrix4f(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x
  * Address:	........
  * Size:	000060
  */
-void NMatrix4f::construct(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32)
+void NMatrix4f::construct(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, f32 x12, f32 x13, f32 x20, f32 x21, f32 x22, f32 x23,
+                          f32 x30, f32 x31, f32 x32, f32 x33)
 {
-	// UNUSED FUNCTION
+	set(x00, x01, x02, x03, x10, x11, x12, x13, x20, x21, x22, x23, x30, x31, x32, x33);
 }
 
 /*
@@ -104,9 +106,9 @@ void NMatrix4f::construct(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32,
  * Address:	........
  * Size:	000030
  */
-NMatrix4f::NMatrix4f(Mtx)
+NMatrix4f::NMatrix4f(Mtx44 mtx)
 {
-	// UNUSED FUNCTION
+	construct(mtx);
 }
 
 /*
@@ -114,9 +116,9 @@ NMatrix4f::NMatrix4f(Mtx)
  * Address:	........
  * Size:	000020
  */
-void NMatrix4f::construct(Mtx)
+void NMatrix4f::construct(Mtx44 mtx)
 {
-	// UNUSED FUNCTION
+	input(mtx);
 }
 
 /*
@@ -124,9 +126,9 @@ void NMatrix4f::construct(Mtx)
  * Address:	........
  * Size:	000090
  */
-void NMatrix4f::input(Mtx)
+void NMatrix4f::input(Mtx44 mtx)
 {
-	// UNUSED FUNCTION
+	NMathf::copyArray44(mMtx, mtx);
 }
 
 /*
@@ -134,9 +136,9 @@ void NMatrix4f::input(Mtx)
  * Address:	........
  * Size:	000090
  */
-void NMatrix4f::output(Mtx)
+void NMatrix4f::output(Mtx44 mtx)
 {
-	// UNUSED FUNCTION
+	NMathf::copyArray44(mtx, mMtx);
 }
 
 /*
@@ -195,9 +197,9 @@ void NMatrix4f::setRow(int row, f32 x, f32 y, f32 z)
  * Address:	........
  * Size:	000024
  */
-void NMatrix4f::inputRow(int, Vector3f&)
+void NMatrix4f::inputRow(int row, Vector3f& vec)
 {
-	// UNUSED FUNCTION
+	setRow(row, vec.x, vec.y, vec.z);
 }
 
 /*
@@ -205,9 +207,10 @@ void NMatrix4f::inputRow(int, Vector3f&)
  * Address:	........
  * Size:	000028
  */
-void NMatrix4f::inputRow(int, Vector3f&, f32)
+void NMatrix4f::inputRow(int row, Vector3f& vec, f32 trans)
 {
-	// UNUSED FUNCTION
+	inputRow(row, vec);
+	mMtx[row][3] = trans;
 }
 
 /*
@@ -215,9 +218,9 @@ void NMatrix4f::inputRow(int, Vector3f&, f32)
  * Address:	........
  * Size:	000024
  */
-void NMatrix4f::outputRow(int, Vector3f&)
+void NMatrix4f::outputRow(int row, Vector3f& outRow)
 {
-	// UNUSED FUNCTION
+	outRow.set(mMtx[row][0], mMtx[row][1], mMtx[row][2]);
 }
 
 /*
@@ -994,7 +997,7 @@ void NPolar3f::roundMeridian()
  * Address:	........
  * Size:	00003C
  */
-void NPolar3f::clampMeridian(f32)
+bool NPolar3f::clampMeridian(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1396,7 +1399,7 @@ void NPosture3D::inputTransform(NTransform3D&)
  * Address:	........
  * Size:	00006C
  */
-void NPosture3D::calcDirection()
+f32 NPosture3D::calcDirection()
 {
 	// UNUSED FUNCTION
 }
@@ -2050,7 +2053,7 @@ void NVector::add(NVector&)
  * Address:	........
  * Size:	000118
  */
-void NVector::dot(NVector&)
+f32 NVector::dot(NVector&)
 {
 	// UNUSED FUNCTION
 }
@@ -2080,9 +2083,9 @@ void NVector::println()
  * Address:	........
  * Size:	00002C
  */
-void NVector3f::printVector3f(Vector3f&)
+void NVector3f::printVector3f(Vector3f& vec)
 {
-	// UNUSED FUNCTION
+	NVector3f(vec).print();
 }
 
 /*
@@ -2090,22 +2093,9 @@ void NVector3f::printVector3f(Vector3f&)
  * Address:	8011CE28
  * Size:	00002C
  */
-void NVector3f::printlnVector3f(Vector3f&)
+void NVector3f::printlnVector3f(Vector3f& vec)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r4, r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  addi      r3, r1, 0xC
-	  bl        0x44
-	  bl        0x1D4
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f(vec).println();
 }
 
 /*
@@ -2135,7 +2125,7 @@ NVector3f::NVector3f(Vector3f& vec)
  */
 void NVector3f::construct(Vector3f& vec)
 {
-	input(vec);
+	set(vec.x, vec.y, vec.z);
 }
 
 /*
@@ -2183,9 +2173,9 @@ void NVector3f::construct(Vector3f& start, Vector3f& end)
  * Address:	........
  * Size:	000054
  */
-void NVector3f::interpolate(Vector3f&, Vector3f&, f32)
+void NVector3f::interpolate(Vector3f& start, Vector3f& end, f32 t)
 {
-	// UNUSED FUNCTION
+	set(NMathF::interpolate(start.x, end.x, t), NMathF::interpolate(start.y, end.y, t), NMathF::interpolate(start.z, end.z, t));
 }
 
 /*
@@ -2195,8 +2185,7 @@ void NVector3f::interpolate(Vector3f&, Vector3f&, f32)
  */
 bool NVector3f::isZero()
 {
-	return (NMathf::absolute(x) != 0.0f && NMathf::absolute(y) != 0.0f && NMathf::absolute(z) != 0.0f);
-	// UNUSED FUNCTION
+	return (NMathF::isZero(x) && NMathF::isZero(y) && NMathF::isZero(z));
 }
 
 /*
@@ -2204,9 +2193,9 @@ bool NVector3f::isZero()
  * Address:	........
  * Size:	0000F0
  */
-void NVector3f::equals(Vector3f&)
+bool NVector3f::equals(Vector3f& vec)
 {
-	// UNUSED FUNCTION
+	return NVector3f(*this, vec).isZero();
 }
 
 /*
@@ -2214,9 +2203,9 @@ void NVector3f::equals(Vector3f&)
  * Address:	........
  * Size:	000058
  */
-void NVector3f::isVertical(Vector3f&)
+bool NVector3f::isVertical(Vector3f& vec)
 {
-	// UNUSED FUNCTION
+	return NMathF::isZero(dot(vec));
 }
 
 /*
@@ -2226,7 +2215,7 @@ void NVector3f::isVertical(Vector3f&)
  */
 bool NVector3f::isParallel(Vector3f& vec)
 {
-	return NMathf::absolute(NMathf::absolute(x * vec.x + y * vec.y + z * vec.z) - 1.0f) <= NMathF::error;
+	return NMathF::equals(NMathf::absolute(dot(vec)), 1.0f);
 }
 
 /*
@@ -2234,9 +2223,15 @@ bool NVector3f::isParallel(Vector3f& vec)
  * Address:	........
  * Size:	000144
  */
-void NVector3f::makeUnitVector(Vector3f&, Vector3f&)
+void NVector3f::makeUnitVector(Vector3f& start, Vector3f& end)
 {
-	// UNUSED FUNCTION
+	sub2(end, start);
+	f32 dist = length();
+	if (NMathF::isPositive(dist)) {
+		normalize();
+	} else {
+		input(NVector3f(0.0f, 0.0f, 1.0f));
+	}
 }
 
 /*
@@ -2244,9 +2239,10 @@ void NVector3f::makeUnitVector(Vector3f&, Vector3f&)
  * Address:	........
  * Size:	000088
  */
-void NVector3f::outputQuat(f32, Quat&)
+void NVector3f::outputQuat(f32 theta, Quat& q)
 {
-	// UNUSED FUNCTION
+	f32 scale = NMathF::sin(theta / 2.0f);
+	q.set(scale * x, scale * y, scale * z, NMathF::cos(theta / 2.0f));
 }
 
 /*
@@ -2254,9 +2250,18 @@ void NVector3f::outputQuat(f32, Quat&)
  * Address:	........
  * Size:	0000E0
  */
-void NVector3f::calcAngle(NVector3f&)
+f32 NVector3f::calcAngle(NVector3f& other)
 {
-	// UNUSED FUNCTION
+	f32 proj = dot(other);
+	if (proj > 1.0f) {
+		proj = 1.0f;
+	}
+	if (proj < -1.0f) {
+		proj = -1.0f;
+	}
+
+	return NMathF::roundAngle(proj); // idk which function this is
+	                                 // UNUSED FUNCTION
 }
 
 /*
@@ -2264,8 +2269,9 @@ void NVector3f::calcAngle(NVector3f&)
  * Address:	........
  * Size:	000098
  */
-void NVector3f::calcLargerAngle(NVector3f&)
+f32 NVector3f::calcLargerAngle(NVector3f& other)
 {
+	return TAU - calcAngle(other);
 	// UNUSED FUNCTION
 }
 
@@ -2276,7 +2282,7 @@ void NVector3f::calcLargerAngle(NVector3f&)
  */
 void NVector3f::print()
 {
-	// UNUSED FUNCTION
+	PRINT("(%f,%f,%f)", x, y, z);
 }
 
 /*
@@ -2286,6 +2292,7 @@ void NVector3f::print()
  */
 void NVector3f::println()
 {
+	PRINT("(%f,%f,%f)\n", x, y, z);
 }
 
 /*
@@ -2312,7 +2319,9 @@ bool NVector3f::normalizeCheck()
 		return false;
 	}
 
-	normalizeByLength(len);
+	x /= len;
+	y /= len;
+	z /= len;
 	return true;
 }
 
@@ -2325,8 +2334,7 @@ void NVector3f::normalize()
 {
 	f32 len = length();
 	if (NMathF::isZero(len)) {
-		f32 lenCopy = len;
-		PRINT("!normalize:zero:%f\n", lenCopy);
+		PRINT("!normalize:zero:%f\n", len);
 		return;
 	}
 
@@ -2342,8 +2350,8 @@ void NVector3f::normalize()
  */
 f32 NAlpha::fadeInValue(f32 x)
 {
-	f32 hpi = NMathF::pi / 2;
-	return sinf(x * hpi);
+	f32 val = sinf(x * (NMathF::pi / 2.0f) + (NMathF::pi / 2.0f));
+	return 1.0f - val;
 }
 
 /*
@@ -2353,8 +2361,7 @@ f32 NAlpha::fadeInValue(f32 x)
  */
 f32 NAlpha::fadeOutValue(f32 x)
 {
-	f32 hpi = NMathF::pi / 2;
-	return 1.0f - sinf((x * hpi) + hpi);
+	return sinf(x * (NMathF::pi / 2));
 }
 
 /*
@@ -2365,12 +2372,9 @@ f32 NAlpha::fadeOutValue(f32 x)
 f32 NAlpha::fadeInOutValue(f32 x)
 {
 	if (x < 0.5f) {
-		f32 function = (sinf((NMathF::pi / 2) + (2.0f * x) * (NMathF::pi / 2)));
-		return 0.5f * (1.0f - function);
+		return 0.5f * fadeInValue(2.0f * x);
 	}
-
-	f32 function = (sinf((2.0f * (x - 0.5f)) * (NMathF::pi / 2)));
-	return 0.5f + (0.5f * function);
+	return fadeOutValue(2.0f * (x - 0.5f)) * 0.5f + 0.5f;
 }
 
 /*
@@ -2381,10 +2385,10 @@ f32 NAlpha::fadeInOutValue(f32 x)
 f32 NAlpha::fadeOutInValue(f32 x)
 {
 	if (x < 0.5f) {
-		return (0.5f * sinf((2.0f * x) * (NMathF::pi / 2)));
+		return fadeOutValue(2.0f * x) * 0.5f;
 	}
 
-	return 0.5f + 0.5f * (1.0f - sinf((NMathF::pi / 2) + (2.0f * (x - 0.5f)) * (NMathF::pi / 2)));
+	return fadeInValue(2.0f * (x - 0.5f)) * 0.5f + 0.5f;
 }
 
 /*
@@ -2394,7 +2398,10 @@ f32 NAlpha::fadeOutInValue(f32 x)
  */
 NAlpha::NAlpha()
 {
-	// UNUSED FUNCTION
+	mOffset = 0.0f;
+	mScale  = 1.0f;
+	mMode   = 0;
+	mValue  = mOffset;
 }
 
 /*
@@ -2426,10 +2433,10 @@ f32 NAlpha::getValue(f32 input)
 	switch (mMode) {
 	case NAlphaMode::Linear:
 		return normalisedValue;
-	case NAlphaMode::FadeOut:
-		return fadeOutValue(normalisedValue);
 	case NAlphaMode::FadeIn:
 		return fadeInValue(normalisedValue);
+	case NAlphaMode::FadeOut:
+		return fadeOutValue(normalisedValue);
 	case NAlphaMode::FadeInOut:
 		return fadeInOutValue(normalisedValue);
 	case NAlphaMode::FadeOutIn:

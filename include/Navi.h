@@ -184,7 +184,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u8 _725[0x72C - 0x725];              // _725, TODO: work out members
 	u32 _72C;                            // _72C, unknown
 	u32 _730;                            // _730, unknown
-	u32 _734;                            // _734, unknown
+	int mCurrKeyCount;                   // _734
 	f32 _738;                            // _738, sleep button held timer?
 	u8 _73C[0x4];                        // _73C, TODO: work out members
 	Vector3f _740;                       // _740

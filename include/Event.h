@@ -8,7 +8,14 @@
  * @brief TODO
  */
 struct Event {
-	// TODO: members
+	Event(int p1, u32 p2)
+	{
+		_00 = p1;
+		_04 = p2;
+	}
+
+	int _00; // _00
+	u32 _04; // _04
 };
 
 /**

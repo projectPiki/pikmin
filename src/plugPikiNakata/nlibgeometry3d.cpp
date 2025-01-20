@@ -47,8 +47,8 @@ NLine::NLine(NVector3f& start, NVector3f& dir)
  */
 void NLine::construct(NVector3f& start, NVector3f& dir)
 {
-	mStart.setNVec(start);
-	mDirection.setNVec(dir);
+	// mStart.setNVec(start);
+	// mDirection.setNVec(dir);
 }
 
 /*
@@ -76,7 +76,7 @@ void NLine::construct(NLine&)
  * Address:	8011D4A0
  * Size:	0000C0
  */
-void NLine::calcDistance(NVector3f&, f32*)
+f32 NLine::calcDistance(NVector3f&, f32*)
 {
 	/*
 	.loc_0x0:
@@ -140,7 +140,7 @@ void NLine::calcDistance(NVector3f&, f32*)
  * Address:	........
  * Size:	0002AC
  */
-void NLine::calcDistance(NLine&, f32*, f32*)
+f32 NLine::calcDistance(NLine&, f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -160,7 +160,7 @@ void NLine::outputVerticalPosition(NVector3f&, NVector3f&)
  * Address:	8011D560
  * Size:	000064
  */
-void NLine::calcVerticalProjection(NVector3f&)
+f32 NLine::calcVerticalProjection(NVector3f&)
 {
 	/*
 	.loc_0x0:
@@ -348,7 +348,7 @@ NPlane::NPlane(NVector3f& normal, NVector3f& point)
  */
 void NPlane::construct(NVector3f& normal, NVector3f& point)
 {
-	mNormal.setNVec(normal);
+	// mNormal.setNVec(normal);
 	mOffset = -(mNormal.x * point.x + mNormal.y * point.y + mNormal.z * point.z);
 }
 
@@ -417,7 +417,7 @@ void NPlane::construct(NPlane&)
  * Address:	........
  * Size:	000114
  */
-void NPlane::intersects(NLine&, f32*)
+bool NPlane::intersects(NLine&, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -427,7 +427,7 @@ void NPlane::intersects(NLine&, f32*)
  * Address:	........
  * Size:	00018C
  */
-void NPlane::outputIntersection(NLine&, NVector3f&)
+bool NPlane::outputIntersection(NLine&, NVector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -437,7 +437,7 @@ void NPlane::outputIntersection(NLine&, NVector3f&)
  * Address:	........
  * Size:	000154
  */
-void NPlane::intersectsRay(NLine&, f32*)
+bool NPlane::intersectsRay(NLine&, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -447,7 +447,7 @@ void NPlane::intersectsRay(NLine&, f32*)
  * Address:	........
  * Size:	000100
  */
-void NPlane::outputRayIntersection(NLine&, NVector3f&)
+bool NPlane::outputRayIntersection(NLine&, NVector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -457,7 +457,7 @@ void NPlane::outputRayIntersection(NLine&, NVector3f&)
  * Address:	........
  * Size:	0001DC
  */
-void NPlane::intersectsSegment(NSegment&, f32*)
+bool NPlane::intersectsSegment(NSegment&, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -467,7 +467,7 @@ void NPlane::intersectsSegment(NSegment&, f32*)
  * Address:	........
  * Size:	000188
  */
-void NPlane::outputSegmentIntersection(NSegment&, NVector3f&)
+bool NPlane::outputSegmentIntersection(NSegment&, NVector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -564,7 +564,7 @@ void NPlane::negate()
  * Address:	........
  * Size:	0000F0
  */
-void NPlane::adjustTo(NVector3f&, f32)
+bool NPlane::adjustTo(NVector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -574,7 +574,7 @@ void NPlane::adjustTo(NVector3f&, f32)
  * Address:	........
  * Size:	0000F8
  */
-void NPlane::adjust(NVector3f&)
+bool NPlane::adjust(NVector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -584,7 +584,7 @@ void NPlane::adjust(NVector3f&)
  * Address:	........
  * Size:	00028C
  */
-void NPlane::outputIntersectionLineY(NPlane&, NLine&)
+bool NPlane::outputIntersectionLineY(NPlane&, NLine&)
 {
 	// UNUSED FUNCTION
 }
@@ -594,7 +594,7 @@ void NPlane::outputIntersectionLineY(NPlane&, NLine&)
  * Address:	........
  * Size:	000028
  */
-void NPlane::calcAngle(NPlane&)
+f32 NPlane::calcAngle(NPlane&)
 {
 	// UNUSED FUNCTION
 }
@@ -604,7 +604,7 @@ void NPlane::calcAngle(NPlane&)
  * Address:	........
  * Size:	00005C
  */
-void NPlane::calcY(f32, f32)
+f32 NPlane::calcY(f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -734,7 +734,7 @@ void NSegment::construct(NSegment&)
  * Address:	........
  * Size:	0002E0
  */
-void NSegment::calcDistanceAsSegment(NVector3f&, f32*, f32*)
+f32 NSegment::calcDistanceAsSegment(NVector3f&, f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -744,7 +744,7 @@ void NSegment::calcDistanceAsSegment(NVector3f&, f32*, f32*)
  * Address:	........
  * Size:	0003CC
  */
-void NSegment::calcDistanceAsSegment(NLine&, f32*, f32*)
+f32 NSegment::calcDistanceAsSegment(NLine&, f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -754,7 +754,7 @@ void NSegment::calcDistanceAsSegment(NLine&, f32*, f32*)
  * Address:	........
  * Size:	000230
  */
-void NSegment::calcSegmentDistanceAsSegment(NSegment&, f32*, f32*)
+f32 NSegment::calcSegmentDistanceAsSegment(NSegment&, f32*, f32*)
 {
 	// UNUSED FUNCTION
 }

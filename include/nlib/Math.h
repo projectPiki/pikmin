@@ -60,24 +60,22 @@ struct NMathF {
 	static f32 roundAngle(f32);
 
 	// inlines from DLL, to be created:
-	static f32 angleDifference(f32, f32);
-	static f32 calcNearerDirection(f32, f32);
-	static f32 d2r(f32);
-	static f32 interpolate(f32, f32, f32);
-	static f32 length(f32, f32);
-	static f32 r2d(f32);
-	static f32 rangeRandom(f32, f32);
-	static f32 rateRandom(f32, f32);
-	static f32 sqrt(f32);
-	static f32 tan(f32);
-	static int quotient(f32, f32);
-	static bool equals(f32, f32);
-	static bool isPositive(f32);
-	static bool isZero(f32 value) { return NMathf::absolute(value) <= error; }
-	static bool occurred(f32);
-
-	// this is fake.
-	static inline f32 atan2Vec(Vector3f vec) { return atan2(vec.x, vec.z); }
+	static inline f32 acos(f32);
+	static inline f32 angleDifference(f32, f32);
+	static inline f32 calcNearerDirection(f32, f32);
+	static inline f32 d2r(f32);
+	static inline f32 interpolate(f32 x, f32 y, f32 t) { return (1.0f - t) * x + t * y; }
+	static inline f32 length(f32, f32);
+	static inline f32 r2d(f32);
+	static inline f32 rangeRandom(f32, f32);
+	static inline f32 rateRandom(f32, f32);
+	static inline f32 sqrt(f32);
+	static inline f32 tan(f32);
+	static inline int quotient(f32, f32);
+	static inline bool equals(f32 x, f32 y) { return NMathF::isZero(x - y); }
+	static inline bool isPositive(f32 x) { return x >= error; }
+	static inline bool isZero(f32 value) { return NMathf::absolute(value) <= error; }
+	static inline bool occurred(f32);
 
 	// this is fake or needs renaming
 	static inline f32 getRandomAngle() { return 2.0f * StdSystem::getRand(1.0f) * pi; }

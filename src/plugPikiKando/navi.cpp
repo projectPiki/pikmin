@@ -2,10 +2,12 @@
 #include "BombItem.h"
 #include "CPlate.h"
 #include "DebugLog.h"
+#include "DoorItem.h"
 #include "EffectMgr.h"
 #include "FlowController.h"
 #include "GameCoreSection.h"
 #include "gameflow.h"
+#include "Generator.h"
 #include "GlobalShape.h"
 #include "GoalItem.h"
 #include "Graphics.h"
@@ -34,6 +36,7 @@
 #include "Shape.h"
 #include "SoundMgr.h"
 #include "StateMachine.h"
+#include "Stickers.h"
 #include "sysNew.h"
 #include "teki.h"
 #include "UfoItem.h"
@@ -42,6 +45,8 @@
 #include "zen/Math.h"
 
 bool DelayPikiBirth = true;
+
+static f32 controllerLen;
 
 /*
  * --INFO--
@@ -688,9 +693,9 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mObjType = OBJTYPE_Navi;
 	mSearchBuffer.init(mNaviSearchData, 6);
 
-	_72C = 0;
-	_730 = 0;
-	_734 = 0;
+	_72C          = 0;
+	_730          = 0;
+	mCurrKeyCount = 0;
 	_7D8.clear();
 	_770 = 0;
 }
@@ -2473,256 +2478,74 @@ void Navi::letPikiWork()
  */
 void Navi::collisionCallback(CollEvent& event)
 {
+	Creature* collider = event.mCollider;
+	if (collider != _2FC) {
+		switch (collider->mObjType) {
+		case OBJTYPE_WorkObject:
+			Bridge* bridge = static_cast<Bridge*>(collider);
+			if (bridge->isBridge()) {
+				if (bridge->_3C8 && getCollidePlatformCreature() == bridge) {
+					Vector3f normal(getCollidePlatformNormal());
+					if ((normal.DP(bridge->getBridgeZVec()) >= -0.8f)) {
+						return;
+					}
+				} else {
+					return;
+				}
+			}
+		case OBJTYPE_SluiceSoft:
+		case OBJTYPE_SluiceHard:
+		case OBJTYPE_SluiceBomb:
+		case OBJTYPE_SluiceBombHard:
+		case OBJTYPE_Pellet:
+			if (_2FC) {
+				_300 = 0.0f;
+			}
+			_2FC = collider;
+			_300 += gsys->getFrameTime();
+			if (_300 > 0.5f) {
+				letPikiWork();
+				_300 = 0.0f;
+			}
+			break;
+		}
+	}
 
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xF8(r1)
-	  stfd      f31, 0xF0(r1)
-	  stfd      f30, 0xE8(r1)
-	  stfd      f29, 0xE0(r1)
-	  stfd      f28, 0xD8(r1)
-	  stw       r31, 0xD4(r1)
-	  stw       r30, 0xD0(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0xCC(r1)
-	  stw       r28, 0xC8(r1)
-	  addi      r28, r4, 0
-	  lwz       r0, 0x2FC(r3)
-	  lwz       r3, 0x0(r4)
-	  cmplw     r3, r0
-	  addi      r31, r3, 0
-	  beq-      .loc_0x15C
-	  lwz       r0, 0x6C(r31)
-	  cmpwi     r0, 0x26
-	  beq-      .loc_0x78
-	  bge-      .loc_0x6C
-	  cmpwi     r0, 0x1A
-	  bge-      .loc_0x15C
-	  cmpwi     r0, 0x16
-	  bge-      .loc_0x110
-	  b         .loc_0x15C
+	MsgCollide msg(event);
+	sendMsg(&msg);
 
-	.loc_0x6C:
-	  cmpwi     r0, 0x34
-	  beq-      .loc_0x110
-	  b         .loc_0x15C
-
-	.loc_0x78:
-	  addi      r29, r31, 0
-	  addi      r3, r29, 0
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x110
-	  lbz       r0, 0x3C8(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x340
-	  mr        r3, r30
-	  bl        -0x733F4
-	  cmplw     r3, r29
-	  bne-      .loc_0x340
-	  addi      r3, r1, 0x78
-	  addi      r4, r30, 0
-	  bl        -0x733EC
-	  lfs       f31, 0x78(r1)
-	  mr        r4, r29
-	  lfs       f30, 0x7C(r1)
-	  addi      r3, r1, 0x6C
-	  lfs       f29, 0x80(r1)
-	  bl        -0x5EB0C
-	  lfs       f1, 0x6C(r1)
-	  lfs       f0, 0x70(r1)
-	  fmuls     f2, f31, f1
-	  lfs       f3, 0x74(r1)
-	  fmuls     f1, f30, f0
-	  lfs       f0, -0x62C0(r2)
-	  fmuls     f3, f29, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x110
-	  b         .loc_0x340
-	  b         .loc_0x340
-
-	.loc_0x110:
-	  lwz       r0, 0x2FC(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x124
-	  lfs       f0, -0x63A0(r2)
-	  stfs      f0, 0x300(r30)
-
-	.loc_0x124:
-	  stw       r31, 0x2FC(r30)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x300(r30)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x300(r30)
-	  lfs       f1, 0x300(r30)
-	  lfs       f0, -0x6384(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x15C
-	  mr        r3, r30
-	  bl        -0x328
-	  lfs       f0, -0x63A0(r2)
-	  stfs      f0, 0x300(r30)
-
-	.loc_0x15C:
-	  li        r0, 0x3
-	  stw       r0, 0xA8(r1)
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0xA8
-	  lwz       r0, 0x0(r28)
-	  stw       r0, 0xAC(r1)
-	  lwz       r0, 0x4(r28)
-	  stw       r0, 0xB0(r1)
-	  lwz       r0, 0x8(r28)
-	  stw       r0, 0xB4(r1)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xA4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0xADC(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1A8
-	  lwz       r29, 0x4(r3)
-	  b         .loc_0x1AC
-
-	.loc_0x1A8:
-	  li        r29, -0x1
-
-	.loc_0x1AC:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x340
-	  lwz       r0, 0x6C(r31)
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x260
-	  bge-      .loc_0x1E4
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x1F0
-	  b         .loc_0x340
-
-	.loc_0x1E4:
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x340
-	  b         .loc_0x234
-
-	.loc_0x1F0:
-	  lwz       r0, 0x64(r31)
-	  cmplwi    r0, 0
-	  mr        r3, r31
-	  bl        -0x72F3C
-	  li        r0, 0x2
-	  stw       r0, 0x9C(r1)
-	  addi      r4, r1, 0x9C
-	  stw       r3, 0xA0(r1)
-	  addi      r3, r30, 0x8
-	  bl        -0x69770
-	  lwz       r5, 0x734(r30)
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  addi      r0, r5, 0x1
-	  stw       r0, 0x734(r30)
-	  bl        -0x72AE0
-	  b         .loc_0x340
-
-	.loc_0x234:
-	  lwz       r3, 0x734(r30)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x340
-	  lwz       r0, 0x3CC(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x340
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x734(r30)
-	  mr        r3, r31
-	  bl        -0x101B8
-	  b         .loc_0x340
-
-	.loc_0x260:
-	  lwz       r0, 0x734(r30)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x340
-	  cmpwi     r29, 0x22
-	  beq-      .loc_0x340
-	  lis       r3, 0x803A
-	  lwz       r5, 0x3D0(r31)
-	  subi      r3, r3, 0x24E0
-	  crclr     6, 0x6
-	  addi      r3, r3, 0x1B0
-	  subi      r4, r13, 0x2BC0
-	  bl        0x118D78
-	  lfs       f3, 0x94(r30)
-	  lfs       f2, 0x94(r31)
-	  lfs       f1, 0x98(r30)
-	  lfs       f0, 0x98(r31)
-	  fsubs     f29, f3, f2
-	  lfs       f2, 0x9C(r30)
-	  fsubs     f30, f1, f0
-	  lfs       f0, 0x9C(r31)
-	  fmuls     f1, f29, f29
-	  fsubs     f28, f2, f0
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f28, f28
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xEFC1C
-	  lfs       f0, -0x63A0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x2E4
-	  fdivs     f29, f29, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f28, f28, f1
-
-	.loc_0x2E4:
-	  lfs       f1, 0xA0(r31)
-	  bl        0x11E2D8
-	  fmr       f31, f1
-	  lfs       f1, 0xA0(r31)
-	  bl        0x11E460
-	  lfs       f0, -0x2BC4(r13)
-	  fmuls     f2, f1, f29
-	  fmuls     f3, f31, f28
-	  lfs       f1, -0x62BC(r2)
-	  fmuls     f0, f0, f30
-	  fadds     f0, f2, f0
-	  fadds     f31, f3, f0
-	  bl        0x11E2AC
-	  fcmpo     cr0, f31, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x340
-	  lwz       r3, 0x320(r30)
-	  addi      r4, r30, 0
-	  li        r5, 0x22
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x340:
-	  lwz       r0, 0xFC(r1)
-	  lfd       f31, 0xF0(r1)
-	  lfd       f30, 0xE8(r1)
-	  lfd       f29, 0xE0(r1)
-	  lfd       f28, 0xD8(r1)
-	  lwz       r31, 0xD4(r1)
-	  lwz       r30, 0xD0(r1)
-	  lwz       r29, 0xCC(r1)
-	  lwz       r28, 0xC8(r1)
-	  addi      r1, r1, 0xF8
-	  mtlr      r0
-	  blr
-	*/
+	int state = mStateMachine->getCurrID(this);
+	if (collider->isVisible()) {
+		switch (collider->mObjType) {
+		case OBJTYPE_Key:
+			if (collider->mGenerator) {
+				PRINT("key->generator->id = %x\n", collider->mGenerator->mGeneratorName.mId);
+			}
+			Event event(2, collider->getGeneratorID());
+			informEvent(event);
+			mCurrKeyCount++;
+			collider->kill(false);
+			break;
+		case OBJTYPE_Gate:
+			if (mCurrKeyCount > 0 && static_cast<DoorItem*>(collider)->mStateId == 0) {
+				mCurrKeyCount--;
+				static_cast<DoorItem*>(collider)->disappear();
+			}
+			break;
+		case OBJTYPE_Door:
+			if (mCurrKeyCount > 0 && state != NAVISTATE_Clear) {
+				DoorItem* door = static_cast<DoorItem*>(collider);
+				sprintf(flowCont.mStagePath2, "%s", door->_3D0);
+				Vector3f naviDoorSep = mPosition - door->mPosition;
+				naviDoorSep.normalise();
+				Vector3f faceDir(sinf(door->mDirection), 0.0f, cosf(door->mDirection));
+				if (faceDir.DP(naviDoorSep) >= cosf(HALF_PI)) {
+					mStateMachine->transit(this, NAVISTATE_Clear);
+				}
+			}
+			break;
+		}
+	}
 }
 
 /*
@@ -2739,139 +2562,40 @@ void Navi::doKill()
  * Address:	800FD908
  * Size:	0001E8
  */
-void Navi::reviseController(Vector3f&)
+void Navi::reviseController(Vector3f& stickPos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stfd      f31, 0x80(r1)
-	  stfd      f30, 0x78(r1)
-	  stfd      f29, 0x70(r1)
-	  stfd      f28, 0x68(r1)
-	  stw       r31, 0x64(r1)
-	  mr        r31, r4
-	  stw       r30, 0x60(r1)
-	  mr        r30, r3
-	  lfs       f2, 0x0(r4)
-	  lfs       f1, 0x4(r4)
-	  fmuls     f2, f2, f2
-	  lfs       f3, 0x8(r4)
-	  fmuls     f1, f1, f1
-	  lfs       f0, -0x63A0(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f31, f3, f1
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0xB0
-	  fsqrte    f1, f31
-	  lfd       f3, -0x6398(r2)
-	  lfd       f2, -0x6390(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f31, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f31, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f31, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f31, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x28(r1)
-	  lfs       f31, 0x28(r1)
+	f32 newMag = stickPos.length();
+	f32 theta  = roundAng(atan2f(stickPos.x, stickPos.z));
 
-	.loc_0xB0:
-	  lfs       f1, 0x0(r31)
-	  lfs       f2, 0x8(r31)
-	  bl        0x11E038
-	  bl        -0xC543C
-	  lwz       r4, 0x224(r30)
-	  lis       r3, 0x4330
-	  lfs       f3, -0x62B8(r2)
-	  lfs       f2, 0x328(r4)
-	  lfs       f0, -0x6384(r2)
-	  fmuls     f4, f3, f2
-	  lfd       f3, -0x62E8(r2)
-	  lfs       f2, -0x62B4(r2)
-	  fmuls     f0, f0, f4
-	  fadds     f0, f1, f0
-	  fdivs     f0, f0, f4
-	  fctiwz    f0, f0
-	  stfd      f0, 0x58(r1)
-	  lwz       r0, 0x5C(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x54(r1)
-	  stw       r3, 0x50(r1)
-	  lfd       f0, 0x50(r1)
-	  fsubs     f0, f0, f3
-	  fmuls     f29, f4, f0
-	  fdivs     f0, f29, f2
-	  fctiwz    f0, f0
-	  stfd      f0, 0x48(r1)
-	  lwz       r0, 0x4C(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x44(r1)
-	  stw       r3, 0x40(r1)
-	  lfd       f0, 0x40(r1)
-	  fsubs     f0, f0, f3
-	  fmuls     f0, f2, f0
-	  fsubs     f28, f29, f0
-	  fsubs     f1, f2, f28
-	  bl        0x11E2A0
-	  fmr       f30, f1
-	  fmr       f1, f28
-	  bl        0x11E294
-	  fadds     f30, f1, f30
-	  lfs       f1, -0x62B4(r2)
-	  bl        0x11E288
-	  fdivs     f3, f1, f30
-	  lfs       f2, -0x6388(r2)
-	  lwz       r4, 0x224(r30)
-	  lfs       f0, 0x388(r4)
-	  fdivs     f1, f2, f3
-	  fmuls     f31, f31, f1
-	  fcmpo     cr0, f31, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x184
-	  fmr       f31, f2
+	// bin angle in amounts set by navi parameter
+	f32 binWidth    = (PI / 180.0f) * NAVI_PROP.mShakePreventionAngle();
+	f32 binnedAngle = binWidth * int((theta + binWidth * 0.5f) / binWidth);
 
-	.loc_0x184:
-	  lfs       f0, 0x368(r4)
-	  fcmpo     cr0, f31, f0
-	  bge-      .loc_0x194
-	  lfs       f31, -0x63A0(r2)
+	// calculate amount to boost stick magnitude by
+	f32 boostFactor = (binnedAngle - (int)(binnedAngle / QUARTER_PI) * QUARTER_PI);
+	theta           = sinf(QUARTER_PI - boostFactor);
+	boostFactor     = sinf(boostFactor);
+	boostFactor += theta;
 
-	.loc_0x194:
-	  stfs      f3, 0x30B0(r13)
-	  fmr       f1, f29
-	  bl        0x11E0B0
-	  fmuls     f30, f31, f1
-	  fmr       f1, f29
-	  bl        0x11E238
-	  fmuls     f0, f31, f1
-	  stfs      f0, 0x0(r31)
-	  lfs       f0, -0x2BBC(r13)
-	  stfs      f0, 0x4(r31)
-	  stfs      f30, 0x8(r31)
-	  lwz       r0, 0x8C(r1)
-	  lfd       f31, 0x80(r1)
-	  lfd       f30, 0x78(r1)
-	  lfd       f29, 0x70(r1)
-	  lfd       f28, 0x68(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+	// boost stick magnitude
+	f32 len = (sinf(QUARTER_PI) / boostFactor);
+	newMag *= (1.0f / len);
+
+	// make 'close enough' good enough
+	if (newMag >= NAVI_PROP.mClampStickToMaxThreshold()) {
+		newMag = 1.0f;
+	}
+
+	// enforce dead zone
+	if (newMag < NAVI_PROP.mNeutralStickThreshold()) {
+		newMag = 0.0f;
+	}
+
+	controllerLen = len;
+
+	stickPos.set(newMag * sinf(binnedAngle), 0.0f, newMag * cosf(binnedAngle));
+
+	u32 badCompiler[2];
 }
 
 /*
@@ -2879,8 +2603,114 @@ void Navi::reviseController(Vector3f&)
  * Address:	800FDAF0
  * Size:	0008FC
  */
-void Navi::makeVelocity(bool)
+void Navi::makeVelocity(bool p1)
 {
+
+	_738 += gsys->getFrameTime();
+
+	if (mKontroller->keyDown(KBBTN_B) || mKontroller->keyDown(KBBTN_A) || mKontroller->keyDown(KBBTN_X) || mKontroller->keyDown(KBBTN_Z)) {
+		_738 = 0.0f;
+	}
+
+	NVector3f stickVec(mKontroller->getMainStickX(), 0.0f, -mKontroller->getMainStickY());
+	if (stickVec.x >= 1.0f) {
+		stickVec.x = 1.0f;
+	} else if (stickVec.x <= -1.0f) {
+		stickVec.x = -1.0f;
+	}
+
+	if (stickVec.z >= 1.0f) {
+		stickVec.z = 1.0f;
+	} else if (stickVec.z <= -1.0f) {
+		stickVec.z = -1.0f;
+	}
+
+	reviseController(stickVec);
+
+	_740                    = _74C;
+	_74C                    = stickVec;
+	f32 angle               = NMathF::atan2(mNaviCamera->mViewXAxis.z, mNaviCamera->mViewXAxis.x);
+	NAxisAngle4f& axisAngle = NAxisAngle4f(NVector3f(0.0f, 1.0f, 0.0f), angle);
+	NTransform3D transform;
+	transform.inputAxisAngle(axisAngle);
+
+	if (!p1) {
+		mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	}
+
+	transform.transform(stickVec);
+
+	if (!p1) {
+		Stickers stuckList(this);
+		int stickCount = stuckList.getCount();
+		f32 drag       = 1.0f;
+		if (stickCount > 0) {
+			drag -= stickCount * 0.08f;
+			if (drag < 0.1f) {
+				drag = 0.1f;
+			}
+		}
+
+		if (mPlateMgr->canNaviRunFast()) {
+			mTargetVelocity = (stickVec * NAVI_PROP._DC()) * drag;
+		} else {
+			mTargetVelocity = (stickVec * NAVI_PROP._CC()) * drag;
+		}
+
+		if (mFloorTri) {
+			// ?? this does nothing.
+			f32 speed    = mTargetVelocity.length();
+			Vector3f vec = mTargetVelocity - mTargetVelocity.DP(mFloorTri->mTriangleNormal) * mFloorTri->mTriangleNormal;
+			vec.normalise();
+			vec = vec * speed;
+		}
+	}
+
+	transform.transform(_74C);
+
+	f32 stickMag = stickVec.length();
+
+	Vector3f stickVec2(stickVec);
+
+	stickVec2.normalise();
+	stickVec2 = stickVec2 * NAVI_PROP._3AC();
+
+	f32 step           = gsys->getFrameTime();
+	Vector3f targetPos = stickVec2 * step + mCursorPosition;
+	f32 targetDist     = targetPos.length();
+	if (targetDist >= NAVI_PROP._39C()) {
+		Vector3f vec(targetPos);
+		vec.normalise();
+		stickVec2 = stickVec2 - vec.DP(stickVec2) * vec;
+		targetPos = stickVec2 * step + mCursorPosition;
+	}
+
+	mCursorPosition       = targetPos;
+	mCursorNaviDist       = targetPos.length();
+	mCursorTargetPosition = targetPos;
+
+	if (!(stickMag <= NAVI_PROP.mNeutralStickThreshold())) {
+		_738 = 0.0f;
+	}
+
+	bool check = false;
+	if (_738 >= NAVI_PROP._33C()) {
+		check = true;
+	}
+
+	if ((check || (!check && stickMag > NAVI_PROP.mNeutralStickThreshold())) && stickMag <= NAVI_PROP._36C()) {
+		mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		Vector3f cursorPos(mCursorPosition);
+		mDirection += 0.2f * angDist(roundAng(atan2f(cursorPos.x, cursorPos.z)), mDirection);
+		mDirection = roundAng(mDirection);
+		mRotation.set(0.0f, mDirection, 0.0f);
+		setCreatureFlag(CF_Unk11);
+	} else {
+		resetCreatureFlag(CF_Unk11);
+	}
+
+	stickVec.set(0.0f, 0.0f, 0.0f);
+	makeCStick(false);
 	/*
 	.loc_0x0:
 	  mflr      r0
