@@ -15,15 +15,9 @@ struct Creature;
 struct SearchData {
 	SearchData();
 
-	inline void init()
-	{
-		_08 = 0;
-		_04 = 12800.0f;
-	}
-
-	SmartPtr<Creature> _00; // _00
-	f32 _04;                // _04
-	u32 _08;                // _08, unknown
+	SmartPtr<Creature> mPtr; // _00
+	f32 _04;                 // _04
+	int _08;                 // _08, unknown
 };
 
 /**
@@ -47,20 +41,21 @@ struct SearchBuffer : public Traversable {
 
 	// unused/inlined:
 	void operator=(SearchBuffer&);
-	void getIndex(Creature*);
+	int getIndex(Creature*);
 	void reset();
 	void update();
 
 	// _00     = VTBL
 	// _00-_08 = Traversable
-	u8 _08[0x8];     // _08, unknown
-	u32 _10;         // _10, unknown
-	SearchData* _14; // _14, unknown
-	s16 _18;         // _18
-	s16 _1A;         // _1A
-	u8 _1C[0x4];     // _1C, unknown
-	u32 _20;         // _20, unknown
-	u8 _24;          // _24
+	f32 mMaxDistance;      // _08
+	int mLastEntry;        // _0C
+	u32 _10;               // _10, unused
+	SearchData* mDataList; // _14
+	s16 mCurrentEntries;   // _18
+	s16 mMaxEntries;       // _1A
+	s16 _1C;               // _1C, unused
+	u32 _20;               // _20, unused
+	u8 _24;                // _24, unused
 };
 
 /**

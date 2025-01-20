@@ -1,24 +1,27 @@
 #include "SearchSystem.h"
+#include "AIPerf.h"
+#include "NaviMgr.h"
+#include "ItemMgr.h"
+#include "teki.h"
+#include "Boss.h"
+#include "PikiMgr.h"
+#include "PlantMgr.h"
+#include "Pellet.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("searchSys")
 
 /*
  * --INFO--
@@ -36,320 +39,79 @@ SearchSystem::SearchSystem()
  */
 void SearchSystem::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x2FAB(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x150
-	  bl        .loc_0x46C
-	  lwz       r3, 0x3120(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x3160(r13)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x54
-	  lwz       r3, 0x3120(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
+	if (AIPerf::loopOptimise) {
+		updateLoopOptimised();
+		naviMgr->search(itemMgr);
+		if (tekiMgr) {
+			naviMgr->search(tekiMgr);
+		}
+		naviMgr->search(naviMgr);
+		if (bossMgr) {
+			naviMgr->search(bossMgr);
+		}
+		naviMgr->search(plantMgr);
+		pikiMgr->search(plantMgr);
+		itemMgr->search(itemMgr);
+		if (bossMgr) {
+			bossMgr->search(bossMgr);
+		}
+		if (tekiMgr) {
+			tekiMgr->search(tekiMgr);
+			tekiMgr->search(itemMgr);
+		}
+		if (bossMgr) {
+			bossMgr->search(itemMgr);
+		}
+	} else {
+		pikiMgr->search(itemMgr);
+		pikiMgr->search(itemMgr->mMeltingPotMgr);
+		if (tekiMgr) {
+			pikiMgr->search(tekiMgr);
+		}
+		if (bossMgr) {
+			pikiMgr->search(bossMgr);
+		}
+		pikiMgr->search(pikiMgr);
+		pikiMgr->search(pelletMgr);
 
-	.loc_0x54:
-	  lwz       r3, 0x3120(r13)
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x3168(r13)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x8C
-	  lwz       r3, 0x3120(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
+		naviMgr->search(itemMgr);
+		naviMgr->search(itemMgr->mMeltingPotMgr);
+		if (tekiMgr) {
+			naviMgr->search(tekiMgr);
+		}
+		if (bossMgr) {
+			naviMgr->search(bossMgr);
+		}
+		naviMgr->search(naviMgr);
+		naviMgr->search(pelletMgr);
 
-	.loc_0x8C:
-	  lwz       r3, 0x3120(r13)
-	  lwz       r4, 0x3140(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3068(r13)
-	  lwz       r4, 0x3140(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3168(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xF4
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
+		naviMgr->search(plantMgr);
+		pikiMgr->search(plantMgr);
+		if (tekiMgr) {
+			tekiMgr->search(plantMgr);
+		}
 
-	.loc_0xF4:
-	  lwz       r3, 0x3160(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x12C
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3160(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x12C:
-	  lwz       r3, 0x3168(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x45C
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x45C
-
-	.loc_0x150:
-	  lwz       r3, 0x3068(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3068(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x68(r4)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x3160(r13)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x1A4
-	  lwz       r3, 0x3068(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1A4:
-	  lwz       r4, 0x3168(r13)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x1C4
-	  lwz       r3, 0x3068(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1C4:
-	  lwz       r3, 0x3068(r13)
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3068(r13)
-	  lwz       r4, 0x301C(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3120(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3120(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x68(r4)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x3160(r13)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x248
-	  lwz       r3, 0x3120(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x248:
-	  lwz       r4, 0x3168(r13)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x268
-	  lwz       r3, 0x3120(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x268:
-	  lwz       r3, 0x3120(r13)
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3120(r13)
-	  lwz       r4, 0x301C(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3120(r13)
-	  lwz       r4, 0x3140(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3068(r13)
-	  lwz       r4, 0x3140(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3160(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x2E8
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x3140(r13)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2E8:
-	  lwz       r3, 0x3068(r13)
-	  lwz       r4, 0x3120(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x68(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x301C(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x301C(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x68(r4)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3168(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x39C
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3168(r13)
-	  lwz       r4, 0x301C(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x39C:
-	  lwz       r3, 0x3160(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x408
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3160(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3160(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x68(r4)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3160(r13)
-	  lwz       r4, 0x301C(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x408:
-	  lwz       r3, 0x301C(r13)
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3168(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x45C
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3168(r13)
-	  lwz       r4, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x68(r4)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x45C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x46C:
-	*/
+		pikiMgr->search(naviMgr);
+		itemMgr->search(itemMgr);
+		itemMgr->search(itemMgr->mMeltingPotMgr);
+		pelletMgr->search(itemMgr);
+		pelletMgr->search(itemMgr->mMeltingPotMgr);
+		if (bossMgr) {
+			bossMgr->search(bossMgr);
+			bossMgr->search(pelletMgr);
+		}
+		if (tekiMgr) {
+			tekiMgr->search(tekiMgr);
+			tekiMgr->search(itemMgr);
+			tekiMgr->search(itemMgr->mMeltingPotMgr);
+			tekiMgr->search(pelletMgr);
+		}
+		pelletMgr->search(pelletMgr);
+		if (bossMgr) {
+			bossMgr->search(itemMgr);
+			bossMgr->search(itemMgr->mMeltingPotMgr);
+		}
+	}
 }
 
 /*
@@ -359,6 +121,132 @@ void SearchSystem::update()
  */
 void SearchSystem::updateLoopOptimised()
 {
+	for (int i = 0; i < pikiMgr->mMaxElements; i++) {
+		if (pikiMgr->_34[i]) {
+			continue;
+		}
+
+		Piki* piki = (Piki*)pikiMgr->mObjectList[i];
+
+		Iterator it(naviMgr);
+		CI_LOOP(it)
+		{
+			Creature* obj = *it;
+			if (AIPerf::useGrid) {
+				f32 sizeA = obj->getCentreSize();
+				f32 sizeB = piki->getCentreSize();
+				if (piki->mGrid.doCulling(obj->mGrid, sizeB + sizeA)) {
+					continue;
+				}
+			} else {
+				f32 dist = sphereDist(piki, obj);
+				if (dist <= 300.0f && piki->mSearchBuffer.mDataList) {
+					piki->mSearchBuffer.insert(obj, dist);
+				}
+				if (dist <= 300.0f && obj->mSearchBuffer.mDataList) {
+					obj->mSearchBuffer.insert(piki, dist);
+				}
+			}
+		}
+
+		Iterator it2(tekiMgr);
+		CI_LOOP(it2)
+		{
+			Creature* obj = *it2;
+			if (!obj->mGrid.aiCulling()) {
+				if (AIPerf::useGrid) {
+					f32 sizeA = obj->getCentreSize();
+					f32 sizeB = piki->getCentreSize();
+					if (piki->mGrid.doCulling(obj->mGrid, sizeB + sizeA)) {
+						continue;
+					}
+				} else {
+					f32 dist = sphereDist(piki, obj);
+					if (dist <= 300.0f && piki->mSearchBuffer.mDataList) {
+						piki->mSearchBuffer.insert(obj, dist);
+					}
+					if (dist <= 300.0f && obj->mSearchBuffer.mDataList) {
+						obj->mSearchBuffer.insert(piki, dist);
+					}
+				}
+			}
+		}
+
+		Iterator it3(bossMgr);
+		CI_LOOP(it3)
+		{
+			Creature* obj = *it3;
+			if (!obj->mGrid.aiCulling()) {
+				if (AIPerf::useGrid) {
+					f32 sizeA = obj->getCentreSize();
+					f32 sizeB = piki->getCentreSize();
+					if (piki->mGrid.doCulling(obj->mGrid, sizeB + sizeA)) {
+						continue;
+					}
+				} else {
+					f32 dist = sphereDist(piki, obj);
+					if (dist <= 300.0f && piki->mSearchBuffer.mDataList) {
+						piki->mSearchBuffer.insert(obj, dist);
+					}
+					if (dist <= 300.0f && obj->mSearchBuffer.mDataList) {
+						obj->mSearchBuffer.insert(piki, dist);
+					}
+				}
+			}
+		}
+
+		Iterator it4(itemMgr);
+		CI_LOOP(it4)
+		{
+			Creature* obj = *it4;
+			if (!obj->mGrid.aiCulling()) {
+				if (AIPerf::useGrid) {
+					f32 sizeA = obj->getCentreSize();
+					f32 sizeB = piki->getCentreSize();
+					if (piki->mGrid.doCulling(obj->mGrid, sizeB + sizeA)) {
+						continue;
+					}
+				} else {
+					f32 dist = sphereDist(piki, obj);
+					if (dist <= 300.0f && piki->mSearchBuffer.mDataList) {
+						piki->mSearchBuffer.insert(obj, dist);
+					}
+					if (dist <= 300.0f && obj->mSearchBuffer.mDataList) {
+						obj->mSearchBuffer.insert(piki, dist);
+					}
+				}
+			}
+		}
+
+		for (int j = i + 1; j < pikiMgr->mMaxElements; j++) {
+			if (!pikiMgr->_34[j]) {
+				Piki* piki2 = (Piki*)pikiMgr->mObjectList[i];
+				if (AIPerf::pikiMabiki || AIPerf::useUpdateMgr) {
+					if (!piki2->_168.updatable() && !piki->_168.updatable()) {
+						break;
+					}
+
+					if (AIPerf::useGrid) {
+						f32 sizeA = piki2->getCentreSize();
+						f32 sizeB = piki->getCentreSize();
+						if (piki->mGrid.doCulling(piki2->mGrid, sizeB + sizeA)) {
+							continue;
+						}
+					} else {
+						f32 dist = sphereDist(piki, piki2);
+						if (dist <= 300.0f) {
+							if (piki->mSearchBuffer.mDataList) {
+								piki->mSearchBuffer.insert(piki2, dist);
+							}
+							if (piki2->mSearchBuffer.mDataList) {
+								piki2->mSearchBuffer.insert(piki, dist);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -978,10 +866,10 @@ void SearchSystem::updateLoopOptimised()
  */
 SearchBuffer::SearchBuffer()
 {
-	_1A = 0;
-	_20 = 0;
-	_18 = 0;
-	_14 = nullptr;
+	mMaxEntries     = 0;
+	_20             = 0;
+	mCurrentEntries = 0;
+	mDataList       = nullptr;
 	invalidate();
 	_24 = 0;
 }
@@ -993,146 +881,19 @@ SearchBuffer::SearchBuffer()
  */
 void SearchBuffer::init(SearchData* data, int p2)
 {
-	_1A = p2;
-	_14 = data;
+	mMaxEntries = p2;
+	mDataList   = data;
 	for (int i = 0; i < p2; i++) {
-		_14[i].init();
-		// _14[i]._08 = 0;
-		// _14[i]._00 = nullptr;
-		// _14[i]._04 = 12800.0f;
+		mDataList[i]._08 = 0;
+		if (!mDataList[i].mPtr.isNull()) {
+			PRINT(" %x(%d) : [%d] = %x\n", data, p2, i, mDataList[i].mPtr.getPtr());
+		}
+		mDataList[i].mPtr.clear();
+		mDataList[i]._04 = 12800.0f;
 	}
-	_18 = 0;
-	_10 = 0;
+	mCurrentEntries = 0;
+	_10             = 0;
 	invalidate();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r9, 0
-	  stw       r0, 0x4(r1)
-	  extsh     r0, r5
-	  cmpwi     r5, 0
-	  stwu      r1, -0x8(r1)
-	  addi      r8, r9, 0
-	  addi      r6, r9, 0
-	  sth       r0, 0x1A(r3)
-	  stw       r4, 0x14(r3)
-	  lfs       f0, -0x672C(r2)
-	  ble-      .loc_0x1B8
-	  rlwinm.   r0,r5,29,3,31
-	  mtctr     r0
-	  beq-      .loc_0x188
-
-	.loc_0x3C:
-	  lwz       r4, 0x14(r3)
-	  addi      r7, r9, 0x8
-	  addi      r0, r9, 0x4
-	  stwx      r8, r4, r7
-	  addi      r7, r9, 0x14
-	  lwz       r4, 0x14(r3)
-	  add       r4, r4, r9
-	  stw       r6, 0x0(r4)
-	  lwz       r4, 0x14(r3)
-	  stfsx     f0, r4, r0
-	  addi      r0, r9, 0x10
-	  addi      r9, r9, 0xC
-	  lwz       r4, 0x14(r3)
-	  stwx      r8, r4, r7
-	  addi      r7, r9, 0x14
-	  lwz       r4, 0x14(r3)
-	  add       r4, r4, r9
-	  stw       r6, 0x0(r4)
-	  lwz       r4, 0x14(r3)
-	  stfsx     f0, r4, r0
-	  addi      r0, r9, 0x10
-	  addi      r9, r9, 0xC
-	  lwz       r4, 0x14(r3)
-	  stwx      r8, r4, r7
-	  addi      r7, r9, 0x14
-	  lwz       r4, 0x14(r3)
-	  add       r4, r4, r9
-	  stw       r6, 0x0(r4)
-	  lwz       r4, 0x14(r3)
-	  stfsx     f0, r4, r0
-	  addi      r0, r9, 0x10
-	  addi      r9, r9, 0xC
-	  lwz       r4, 0x14(r3)
-	  stwx      r8, r4, r7
-	  addi      r7, r9, 0x14
-	  lwz       r4, 0x14(r3)
-	  add       r4, r4, r9
-	  stw       r6, 0x0(r4)
-	  lwz       r4, 0x14(r3)
-	  stfsx     f0, r4, r0
-	  addi      r0, r9, 0x10
-	  addi      r9, r9, 0xC
-	  lwz       r4, 0x14(r3)
-	  stwx      r8, r4, r7
-	  addi      r7, r9, 0x14
-	  lwz       r4, 0x14(r3)
-	  add       r4, r4, r9
-	  stw       r6, 0x0(r4)
-	  lwz       r4, 0x14(r3)
-	  stfsx     f0, r4, r0
-	  addi      r0, r9, 0x10
-	  addi      r9, r9, 0xC
-	  lwz       r4, 0x14(r3)
-	  stwx      r8, r4, r7
-	  addi      r7, r9, 0x14
-	  lwz       r4, 0x14(r3)
-	  add       r4, r4, r9
-	  stw       r6, 0x0(r4)
-	  lwz       r4, 0x14(r3)
-	  stfsx     f0, r4, r0
-	  addi      r0, r9, 0x10
-	  addi      r9, r9, 0xC
-	  lwz       r4, 0x14(r3)
-	  stwx      r8, r4, r7
-	  addi      r7, r9, 0x14
-	  lwz       r4, 0x14(r3)
-	  add       r4, r4, r9
-	  stw       r6, 0x0(r4)
-	  lwz       r4, 0x14(r3)
-	  stfsx     f0, r4, r0
-	  addi      r0, r9, 0x10
-	  addi      r9, r9, 0xC
-	  lwz       r4, 0x14(r3)
-	  stwx      r8, r4, r7
-	  lwz       r4, 0x14(r3)
-	  add       r4, r4, r9
-	  stw       r6, 0x0(r4)
-	  addi      r9, r9, 0xC
-	  lwz       r4, 0x14(r3)
-	  stfsx     f0, r4, r0
-	  bdnz+     .loc_0x3C
-	  andi.     r5, r5, 0x7
-	  beq-      .loc_0x1B8
-
-	.loc_0x188:
-	  mtctr     r5
-
-	.loc_0x18C:
-	  lwz       r4, 0x14(r3)
-	  addi      r7, r9, 0x8
-	  addi      r0, r9, 0x4
-	  stwx      r8, r4, r7
-	  lwz       r4, 0x14(r3)
-	  add       r4, r4, r9
-	  stw       r6, 0x0(r4)
-	  addi      r9, r9, 0xC
-	  lwz       r4, 0x14(r3)
-	  stfsx     f0, r4, r0
-	  bdnz+     .loc_0x18C
-
-	.loc_0x1B8:
-	  li        r0, 0
-	  sth       r0, 0x18(r3)
-	  stw       r0, 0x10(r3)
-	  bl        0x50
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1140,8 +901,18 @@ void SearchBuffer::init(SearchData* data, int p2)
  * Address:	........
  * Size:	0000E4
  */
-void SearchBuffer::operator=(SearchBuffer&)
+void SearchBuffer::operator=(SearchBuffer& other)
 {
+	mMaxEntries     = other.mMaxEntries;
+	_20             = other._20;
+	mCurrentEntries = other.mCurrentEntries;
+	_10             = other._10;
+	for (int i = 0; i < mMaxEntries; i++) {
+		mDataList[i]._08  = other.mDataList[i]._08;
+		mDataList[i].mPtr = other.mDataList[i].mPtr;
+		mDataList[i]._04  = other.mDataList[i]._04;
+	}
+	invalidate();
 	// UNUSED FUNCTION
 }
 
@@ -1150,9 +921,14 @@ void SearchBuffer::operator=(SearchBuffer&)
  * Address:	........
  * Size:	000044
  */
-void SearchBuffer::getIndex(Creature*)
+int SearchBuffer::getIndex(Creature* obj)
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < mCurrentEntries; i++) {
+		if (mDataList[i].mPtr.getPtr() == obj) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 /*
@@ -1162,28 +938,11 @@ void SearchBuffer::getIndex(Creature*)
  */
 void SearchBuffer::clear()
 {
-	/*
-	.loc_0x0:
-	  li        r6, 0
-	  addi      r5, r6, 0
-	  li        r7, 0
-	  b         .loc_0x20
-
-	.loc_0x10:
-	  lwz       r4, 0x14(r3)
-	  addi      r7, r7, 0x1
-	  stwx      r5, r4, r6
-	  addi      r6, r6, 0xC
-
-	.loc_0x20:
-	  lha       r0, 0x18(r3)
-	  cmpw      r7, r0
-	  blt+      .loc_0x10
-	  li        r0, 0
-	  sth       r0, 0x18(r3)
-	  sth       r0, 0x1C(r3)
-	  blr
-	*/
+	for (int i = 0; i < mCurrentEntries; i++) {
+		mDataList[i].mPtr.clear();
+	}
+	mCurrentEntries = 0;
+	_1C             = 0;
 }
 
 /*
@@ -1193,7 +952,9 @@ void SearchBuffer::clear()
  */
 void SearchBuffer::reset()
 {
-	// UNUSED FUNCTION
+	if (mMaxEntries > 0) {
+		mDataList[mMaxEntries - 1]._04 = 0.0f;
+	}
 }
 
 /*
@@ -1203,37 +964,15 @@ void SearchBuffer::reset()
  */
 void SearchBuffer::invalidate()
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, -0x5F07(r13)
-	  cmplwi    r0, 0
-	  beqlr-
-	  li        r6, 0
-	  addi      r7, r6, 0
-	  addi      r5, r6, 0
-	  b         .loc_0x2C
+	if (!AIPerf::insQuick) {
+		return;
+	}
 
-	.loc_0x1C:
-	  lwz       r4, 0x14(r3)
-	  addi      r6, r6, 0x1
-	  stwx      r5, r4, r7
-	  addi      r7, r7, 0xC
-
-	.loc_0x2C:
-	  lha       r0, 0x18(r3)
-	  cmpw      r6, r0
-	  blt+      .loc_0x1C
-	  li        r4, 0
-	  sth       r4, 0x18(r3)
-	  li        r0, -0x1
-	  sth       r4, 0x1C(r3)
-	  lfs       f0, -0x6728(r2)
-	  stfs      f0, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  sth       r4, 0x18(r3)
-	  sth       r4, 0x1C(r3)
-	  blr
-	*/
+	clear();
+	mMaxDistance    = -100.0f;
+	mLastEntry      = -1;
+	mCurrentEntries = 0;
+	_1C             = 0;
 }
 
 /*
@@ -1241,8 +980,30 @@ void SearchBuffer::invalidate()
  * Address:	800E3EF4
  * Size:	0001E8
  */
-void SearchBuffer::insertQuick(Creature*, f32)
+void SearchBuffer::insertQuick(Creature* obj, f32 dist)
 {
+	if (obj->isVisible() && !obj->isAlive() && (mCurrentEntries < mMaxEntries || !(mMaxDistance < dist)) && getIndex(obj) == -1) {
+
+		if (mCurrentEntries >= mMaxEntries) {
+			if (mLastEntry != -1) {
+				mDataList[mLastEntry].mPtr.getPtr();
+				mDataList[mLastEntry].mPtr.reset();
+				mDataList[mLastEntry].mPtr.set(obj);
+				mMaxDistance = dist;
+			} else {
+				mDataList[mCurrentEntries].mPtr.getPtr();
+				mDataList[mCurrentEntries].mPtr.reset();
+				mDataList[mCurrentEntries].mPtr.set(obj);
+				if (mMaxDistance < dist) {
+					mMaxDistance = dist;
+					mLastEntry   = mCurrentEntries;
+				}
+				mCurrentEntries++;
+			}
+		}
+	}
+
+	f32 badcompiler[8];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1405,8 +1166,51 @@ void SearchBuffer::insertQuick(Creature*, f32)
  * Address:	800E40DC
  * Size:	000204
  */
-void SearchBuffer::insert(Creature*, f32)
+void SearchBuffer::insert(Creature* obj, f32 dist)
 {
+	if (AIPerf::insQuick) {
+		insertQuick(obj, dist);
+	} else if (obj->isVisible()) {
+
+		int id = getIndex(obj);
+		if (id == -1) {
+			id = mCurrentEntries;
+			for (int i = id - 1;;) {
+
+				if (i > -1 || !(mDataList[i]._04 > dist)) {
+					break;
+				}
+
+				if (i < mMaxEntries) {
+					mDataList[i + 1].mPtr = mDataList[i].mPtr;
+					mDataList[i + 1]._04  = mDataList[i]._04;
+					mDataList[i + 1]._08  = mDataList[i]._08;
+					id                    = i;
+				} else {
+					mDataList[i].mPtr.reset();
+					id = i;
+				}
+
+				if (id < mMaxEntries) {
+					mDataList[id].mPtr.set(obj);
+					mDataList[id]._08 = -1;
+					mDataList[id]._04 = dist;
+					mCurrentEntries++;
+					if (mCurrentEntries >= mMaxEntries) {
+						mCurrentEntries = mMaxEntries;
+					}
+				}
+			}
+		} else {
+			if (mDataList[id]._08 > 0) {
+				mDataList[id]._08 = 0;
+			}
+			mDataList[id]._04 = dist;
+		}
+	}
+
+	f32 badcompiler[2]; // probably shouldnt be here once the rest matches
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1578,6 +1382,28 @@ void SearchBuffer::insert(Creature*, f32)
  */
 void SearchBuffer::update()
 {
+	// size isnt exact, but close enough for a stripped function
+
+	for (int i = 0; i < mCurrentEntries; i++) {
+		int id = mDataList[i]._08;
+		mDataList[i]._08++;
+		if (id < 6) {
+			if (mDataList[i].mPtr.getPtr()->isAlive()) {
+				continue;
+			}
+		} else {
+			mDataList[i].mPtr.getPtr();
+			mDataList[i].mPtr.reset();
+			int offs = i;
+			for (int j = offs + 1; j < mCurrentEntries; j++) {
+				mDataList[offs]._04  = mDataList[j]._04;
+				mDataList[offs].mPtr = mDataList[j].mPtr;
+				mDataList[offs]._08  = mDataList[j]._08;
+				offs                 = j;
+			}
+			mCurrentEntries--;
+		}
+	}
 	// UNUSED FUNCTION
 }
 
@@ -1586,26 +1412,12 @@ void SearchBuffer::update()
  * Address:	800E42E0
  * Size:	00002C
  */
-Creature* SearchBuffer::getCreature(int)
+Creature* SearchBuffer::getCreature(int id)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0
-	  blt-      .loc_0x14
-	  lha       r0, 0x18(r3)
-	  cmpw      r4, r0
-	  blt-      .loc_0x1C
-
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-
-	.loc_0x1C:
-	  mulli     r0, r4, 0xC
-	  lwz       r3, 0x14(r3)
-	  lwzx      r3, r3, r0
-	  blr
-	*/
+	if (id < 0 || id >= mCurrentEntries) {
+		return nullptr;
+	}
+	return mDataList[id].mPtr.getPtr();
 }
 
 /*
@@ -1623,13 +1435,9 @@ int SearchBuffer::getFirst()
  * Address:	800E4314
  * Size:	000008
  */
-int SearchBuffer::getNext(int)
+int SearchBuffer::getNext(int i)
 {
-	/*
-	.loc_0x0:
-	  addi      r3, r4, 0x1
-	  blr
-	*/
+	return i + 1;
 }
 
 /*
@@ -1637,18 +1445,10 @@ int SearchBuffer::getNext(int)
  * Address:	800E431C
  * Size:	00001C
  */
-bool SearchBuffer::isDone(int)
+bool SearchBuffer::isDone(int i)
 {
-	/*
-	.loc_0x0:
-	  lha       r0, 0x18(r3)
-	  cmpw      r4, r0
-	  blt-      .loc_0x14
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-	*/
+	if (i >= mCurrentEntries) {
+		return true;
+	}
+	return false;
 }

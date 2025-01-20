@@ -358,7 +358,7 @@ int Creature::getStandType()
 SearchData::SearchData()
 {
 	_08 = 0;
-	_00.reset();
+	mPtr.reset();
 	_04 = 12800.0f;
 }
 
