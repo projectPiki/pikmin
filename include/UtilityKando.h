@@ -34,9 +34,9 @@ struct BitFlags {
 	// unused/inlined:
 	void resetFlag(u16);
 
-	u8* _00; // _00
-	u16 _04; // _04
-	u16 _06; // _06
+	u8* mFlags;      // _00
+	u16 mEntryCount; // _04
+	u16 mSize;       // _06
 };
 
 /**
