@@ -353,8 +353,8 @@ void WorldClock::setTime(f32 time)
 	mCurrentTime      = time;
 	mFractionalTime   = mTimeScale * (time - f32(int(time)));
 	mMinutes          = (60.0f / mTimeScale) * mFractionalTime;
-	mTotalTime        = f32(mCurrentTime) + (mFractionalTime / mTimeScale);
-	mLastRecordedTime = mTotalTime;
+	mTimeOfDay        = f32(mCurrentTime) + (mFractionalTime / mTimeScale);
+	mLastRecordedTime = mTimeOfDay;
 }
 
 /*
@@ -784,7 +784,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 
 	gsys->setTextureDirectories("screen/sys_blo/", "screen/otona_tex/");
 
-	mParameters = new GamePrms();
+	mParameters = new Parms();
 	int size    = 0x8000;
 	f32 factor  = mParameters->mDaySpeedFactor();
 

@@ -83,8 +83,11 @@ struct PcamCamera : public NCamera {
 	void makePolar();
 	void printInfo(Graphics&, Font*);
 
-	// TODO: members
-	u8 _04[0x16C - sizeof(NCamera)]; // _00, unknown
+	// _20     = VTBL
+	// _00-_20 = NCamera
+	u8 _24[0x30 - 0x24];  // _24, unknown
+	u8 _30;               // _30
+	u8 _31[0x16C - 0x31]; // _31, unknown
 };
 
 #endif

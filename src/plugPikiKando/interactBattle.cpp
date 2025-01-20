@@ -536,7 +536,7 @@ bool InteractSwallow::actPiki(Piki* piki)
 	if (piki->_426) {
 		piki->_426 = 0;
 		piki->mRippleEffect->kill();
-		piki->mIsFired = false;
+		piki->mIsPanicked = false;
 	}
 
 	piki->_426 = 0;

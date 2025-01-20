@@ -249,7 +249,10 @@ struct InteractFlick : public Interaction {
  * @brief TODO
  */
 struct InteractFlute : public Interaction {
-	inline InteractFlute(); // TODO: probably
+	InteractFlute(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actTeki(Teki*); // _10
 
@@ -377,7 +380,7 @@ struct InteractPush : public Interaction {
  * @brief TODO
  */
 struct InteractRelease : public Interaction {
-	inline InteractRelease(Creature* owner, f32 p2)
+	InteractRelease(Creature* owner, f32 p2)
 	    : Interaction(owner)
 	{
 		_08 = p2;

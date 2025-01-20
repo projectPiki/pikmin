@@ -239,7 +239,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 		mLookAtTarget.reset();
 	}
 
-	bool isFired() { return mIsFired; }
+	bool isFired() { return mFiredState == 1; }
 
 	static bool directDumpMode;
 	static Colour kinokoColors[6];
@@ -277,14 +277,14 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	bool mIsCallable;                     // _409
 	UpdateContext mPikiUpdateContext;     // _40C
 	UpdateContext mPikiLookUpdateContext; // _418
-	bool mIsFired;                        // _424
+	bool mIsPanicked;                     // _424
 	u16 _426;                             // _426
 	PermanentEffect* _428;                // _428
 	BurnEffect* mBurnEffect;              // _42C
 	RippleEffect* mRippleEffect;          // _430
 	FreeLightEffect* mFreeLightEffect;    // _434
 	SlimeEffect* mSlimeEffect;            // _438
-	u32 mPlayerId;                        // _43C
+	int mPlayerId;                        // _43C
 	Vector3f _440;                        // _440
 	Vector3f mShadowPos;                  // _44C
 	Vector3f mCatchPos;                   // _458
@@ -329,7 +329,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u8 _519;                              // _519
 	u32 _51C;                             // _51C, unknown
 	int mHappa;                           // _520, leaf/bud/flower - see PikiHappa enum
-	u16 _524;                             // _524, might be s16
+	u16 mFiredState;                      // _524, 0:none, 1:fired, 2:recovering
 	f32 _528;                             // _528
 	AState<Piki>* mCurrentState;          // _52C
 	Colour mStartBlendColour;             // _530

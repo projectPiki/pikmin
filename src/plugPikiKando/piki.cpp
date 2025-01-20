@@ -647,11 +647,11 @@ bool Piki::hasBomb()
  */
 void Piki::startFire()
 {
-	_524 = 1;
+	mFiredState = 1;
 	seSystem->playPikiSound(SEF_PIKI_FIRED, mPosition);
 	EffectParm parm(&mEffectPos);
 	mBurnEffect->emit(parm);
-	mIsFired = true;
+	mIsPanicked = true;
 }
 
 /*
@@ -661,9 +661,9 @@ void Piki::startFire()
  */
 void Piki::updateFire()
 {
-	if (_524) {
+	if (mFiredState) {
 		int state = getState();
-		if (_524 != 2 && state != PIKISTATE_Dying && state != PIKISTATE_Dead && state != PIKISTATE_Fired && state != PIKISTATE_Drown
+		if (mFiredState != 2 && state != PIKISTATE_Dying && state != PIKISTATE_Dead && state != PIKISTATE_Fired && state != PIKISTATE_Drown
 		    && mColor != Red) {
 			changeMode(PikiMode::FreeMode, mNavi);
 			mFSM->transit(this, PIKISTATE_Fired);
@@ -679,8 +679,8 @@ void Piki::updateFire()
 void Piki::endFire()
 {
 	mBurnEffect->kill();
-	mIsFired = false;
-	_524     = 2;
+	mIsPanicked = false;
+	mFiredState = 2;
 	effectMgr->create(EffectMgr::EFF_Piki_FireRecover, mEffectPos, nullptr, nullptr);
 }
 
@@ -3549,8 +3549,8 @@ void Piki::collisionCallback(CollEvent& event)
 		return;
 	}
 
-	if (AIConstant::_instance->mConstants._74() && (collider->mObjType == OBJTYPE_Teki || collider->isBoss()) && collider->isOrganic()
-	    && mMode == PikiMode::FormationMode && getState() != PIKISTATE_Pressed) {
+	if (AIConstant::_instance->mConstants.mDoCStickAttack() && (collider->mObjType == OBJTYPE_Teki || collider->isBoss())
+	    && collider->isOrganic() && mMode == PikiMode::FormationMode && getState() != PIKISTATE_Pressed) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
 		if (crowd && crowd->_2C == 1) {
 			mActiveAction->abandon(nullptr);
@@ -3704,7 +3704,7 @@ Piki::Piki(CreatureProp* prop)
 	mSearchBuffer.init(mPikiSearchData, 6);
 	_68              = 1;
 	_428             = new PermanentEffect();
-	mIsFired         = false;
+	mIsPanicked      = false;
 	_4DC             = 0;
 	mCurrentState    = nullptr;
 	mCollisionRadius = 8.0f;
@@ -3860,7 +3860,7 @@ void Piki::init(Navi* navi)
 	_404            = 0;
 	mLeaderCreature = nullptr;
 	_426            = 0;
-	_524            = 0;
+	mFiredState     = 0;
 	mIsCallable     = true;
 	_440.set(0.0f, 0.0f, 0.0f);
 	unsetEraseKill();
@@ -4200,7 +4200,7 @@ void Piki::realAI()
 			seSystem->playSoundDirect(5, SEW_PIKI_WATERDROP, mPosition);
 		}
 
-		mIsFired = true; // huh. sure.
+		mIsPanicked = true; // huh. sure.
 		_426++;
 		if (_426 > 1000) {
 			_426 = 1000;
@@ -4221,7 +4221,7 @@ void Piki::realAI()
 		if (_426) {
 			_426 = 0;
 			mRippleEffect->kill();
-			mIsFired = false;
+			mIsPanicked = false;
 		}
 
 		_426 = 0;

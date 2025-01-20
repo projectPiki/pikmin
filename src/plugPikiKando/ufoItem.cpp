@@ -872,8 +872,8 @@ bool UfoItem::accessible()
 {
 	int anim = mAnimator.getMotionIndex(0);
 
-	if (gameflow.mWorldClock.mTotalTime > gameflow.mParameters->mEndHour() - 0.2f) {
-		PRINT("tod = %f : endhour = %f\n", gameflow.mWorldClock.mTotalTime, gameflow.mParameters->mEndHour());
+	if (gameflow.mWorldClock.mTimeOfDay > gameflow.mParameters->mEndHour() - 0.2f) {
+		PRINT("tod = %f : endhour = %f\n", gameflow.mWorldClock.mTimeOfDay, gameflow.mParameters->mEndHour());
 		return false;
 	}
 

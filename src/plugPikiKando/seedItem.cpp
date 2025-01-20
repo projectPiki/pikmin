@@ -178,7 +178,7 @@ void SeedItem::update()
 		mVelocity.x = vel * diff.x;
 		mVelocity.z = vel * diff.z;
 		if (mPosition.y < y && mVelocity.y < 100.0f) {
-			mVelocity.y += AIConstant::_instance->mConstants._24() * gsys->getFrameTime() * 2.5f;
+			mVelocity.y += AIConstant::_instance->mConstants.mGravity() * gsys->getFrameTime() * 2.5f;
 		}
 		if (dist < 8.0f) {
 			navi->_72C++;

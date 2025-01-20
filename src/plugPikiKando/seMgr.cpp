@@ -279,13 +279,13 @@ void SeWin::update()
 			}
 		}
 
-		if (mController->isPressed(KBBTN_A)) {
+		if (mController->keyClick(KBBTN_A)) {
 			PRINT("stop %d sound ***********\n", _50);
 			SeMgr::stop(_50);
 			SeInfo* info = seMgr->getIndexInfo(_4C);
 			_50          = info->_00;
 			SeMgr::play(info->_00);
-		} else if (mController->isPressed(KBBTN_B) || mController->isPressed(KBBTN_Z)) {
+		} else if (mController->keyClick(KBBTN_B) || mController->keyClick(KBBTN_Z)) {
 			SeMgr::stop(_4C);
 			close();
 		}

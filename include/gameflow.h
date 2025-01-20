@@ -322,8 +322,8 @@ struct GameFlow : public Node {
 	 *
 	 * @note Size: 0xD8.
 	 */
-	struct GamePrms : public Parameters {
-		inline GamePrms()
+	struct Parms : public Parameters {
+		inline Parms()
 		    : mStartHour(this, 7.0f, 0.0f, 0.0f, "t00", nullptr)
 		    , mEndHour(this, 19.0f, 0.0f, 0.0f, "t01", nullptr)
 		    , mDaySpeedFactor(this, 20.0f, 0.0f, 0.0f, "p00", nullptr)
@@ -382,7 +382,7 @@ struct GameFlow : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	GamePrms* mParameters;                   // _20
+	Parms* mParameters;                      // _20
 	MemoryCard mMemoryCard;                  // _24
 	GamePrefs mGamePrefs;                    // _94
 	u32 mSaveGameCrc;                        // _1A0

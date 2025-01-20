@@ -8,6 +8,8 @@ struct Camera;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20?
  */
 struct NCamera {
 	NCamera(Camera*);

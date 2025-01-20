@@ -46,10 +46,10 @@ Creature* PikiMgr::birth()
 	}
 
 	if (meBirthMode) {
-		if (totalPikis >= AIConstant::_instance->mConstants._114() + 1) {
+		if (totalPikis >= AIConstant::_instance->mConstants.mMaxPikisOnField() + 1) {
 			return nullptr;
 		}
-	} else if (totalPikis >= AIConstant::_instance->mConstants._114()) {
+	} else if (totalPikis >= AIConstant::_instance->mConstants.mMaxPikisOnField()) {
 		return nullptr;
 	}
 

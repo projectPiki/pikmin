@@ -118,7 +118,7 @@ int zen::ogScrStartMgr::update(Controller* controller)
 
 		P2DPaneLibrary::setFamilyAlpha(mPressStartScreen, 255.0f * (0.5f - 0.5f * cosf(TAU * mFadeTimer)));
 
-		if (controller->isPressed(KBBTN_START)) {
+		if (controller->keyClick(KBBTN_START)) {
 			mExitState = START_Exit;
 			mState     = START_FadeOut;
 			mFadeTimer = 0.0f;

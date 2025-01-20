@@ -103,7 +103,7 @@ int zen::ogScrMapMgr::update(Controller* controller)
 		return mState;
 	}
 
-	if (controller->isPressed(KBBTN_B)) {
+	if (controller->keyClick(KBBTN_B)) {
 		mState = MAP_Unk2;
 	}
 

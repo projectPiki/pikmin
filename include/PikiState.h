@@ -199,6 +199,8 @@ struct PikiDeadState : public PikiState {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x2C.
  */
 struct PikiDrownState : public PikiState {
 	PikiDrownState();
@@ -212,7 +214,7 @@ struct PikiDrownState : public PikiState {
 	// _00-_10 = PikiState
 	u8 _10[0xC];  // _10, unknown
 	Vector3f _1C; // _1C
-	              // TODO: members
+	bool _28;     // _28, probably mIsCalled/mIsWhistled
 };
 
 /**
@@ -318,6 +320,8 @@ struct PikiFiredState : public PikiState {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct PikiFlickState : public PikiState {
 	PikiFlickState();
@@ -329,11 +333,15 @@ struct PikiFlickState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x4];         // _10, unknown
+	f32 _14;             // _14
+	u8 _18[0x24 - 0x18]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct PikiFlownState : public PikiState {
 	PikiFlownState();
@@ -346,7 +354,8 @@ struct PikiFlownState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	f32 _10;             // _10
+	u8 _14[0x24 - 0x14]; // _14, unknown
 };
 
 /**

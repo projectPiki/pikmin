@@ -595,7 +595,7 @@ config.libs = [
             Object(NonMatching, "plugPikiKando/uteffect.cpp"),
             Object(NonMatching, "plugPikiKando/kontroller.cpp"),
             Object(Matching, "plugPikiKando/mapcode.cpp"),
-            Object(NonMatching, "plugPikiKando/utkando.cpp"),
+            Object(Matching, "plugPikiKando/utkando.cpp"),
             Object(NonMatching, "plugPikiKando/naviMgr.cpp"),
             Object(NonMatching, "plugPikiKando/genMapParts.cpp"),
             Object(NonMatching, "plugPikiKando/mapParts.cpp"),

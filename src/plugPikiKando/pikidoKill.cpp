@@ -31,9 +31,9 @@ void Piki::doKill()
 
 	mLookAtTarget.clear();
 
-	if (mIsFired) {
+	if (mIsPanicked) {
 		_428->kill();
-		mIsFired = false;
+		mIsPanicked = false;
 	}
 
 	mBurnEffect->kill();

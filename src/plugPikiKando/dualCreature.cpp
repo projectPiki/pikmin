@@ -285,7 +285,7 @@ void PelCreature::startAI(int)
 void PelCreature::doRender(Graphics& gfx, Matrix4f& mtx)
 {
 	Navi* navi = naviMgr->getNavi();
-	if (navi->mKontroller->isPressed(KBBTN_B)) {
+	if (navi->mKontroller->keyClick(KBBTN_B)) {
 		mVelocity.y += 400.0f;
 		if (mIsRealDynamics) {
 			useSimpleDynamics();

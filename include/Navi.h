@@ -21,6 +21,7 @@ struct NaviStateMachine;
 struct GoalItem;
 struct NaviState;
 struct Piki;
+struct PikiHeadItem;
 
 #define NAVI_PROP         (static_cast<NaviProp*>(mProps)->mNaviProps)
 #define C_NAVI_PROP(navi) (static_cast<NaviProp*>((navi)->mProps)->mNaviProps)
@@ -149,10 +150,10 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u8 _2F0;                             // _2F0
 	f32 _2F4;                            // _2F4
 	f32 _2F8;                            // _2F8
-	u32 _2FC;                            // _2FC, unknown
+	Creature* _2FC;                      // _2FC
 	f32 _300;                            // _300
-	u32 _304;                            // _304, unknown
-	u8 _308;                             // _308
+	Creature* _304;                      // _304, maybe Pellet*?
+	bool mIsInWater;                     // _308
 	u32 _30C;                            // _30C, unknown
 	u32 _310;                            // _310, unknown
 	BurnEffect* mBurnEffect;             // _314
@@ -164,10 +165,10 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	f32 mMotionSpeed;                    // _6BC
 	int mIsDayEnd;                       // _6C0
 	ShapeDynMaterials mNaviDynMats;      // _6C4
-	Vector3f _6D4;                       // _6D4, cursor position related?
-	f32 _6E0;                            // _6E0, cursor distance?
-	Vector3f _6E4;                       // _6E4, cursor position related?
-	Vector3f _6F0;                       // _6F0
+	Vector3f mCursorPosition;            // _6D4, where cursor (whistle) currently is
+	f32 mCursorNaviDist;                 // _6E0, how far is the cursor from us?
+	Vector3f mCursorTargetPosition;      // _6E4, where we want cursor to be
+	Vector3f _6F0;                       // _6F0, also cursor related?
 	int _6FC;                            // _6FC
 	int _700;                            // _700
 	f32 _704;                            // _704
@@ -199,18 +200,22 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	Vector3f mDayEndPosition;            // _790
 	Vector3f _79C;                       // _79C
 	f32 mAiTickTimer;                    // _7A8
-	u8 _7AC[0x4];                        // _7AC, unknown
-	DynCollObject* _7B0;                 // _7B0
+	Plane* mWallPlane;                   // _7AC
+	DynCollObject* mWallCollObj;         // _7B0
 	int _7B4;                            // _7B4
-	u8 _7B8[0x7C4 - 0x7B8];              // _7B8, unknown
+	int _7B8;                            // _7B8
+	Piki* _7BC;                          // _7BC
+	PikiHeadItem* _7C0;                  // _7C0
 	Vector3f _7C4;                       // _7C4
-	u8 _7D0[0x7D8 - 0x7D0];              // _7D0, TODO: work out members
+	f32 _7D0;                            // _7D0
+	u8 _7D4[0x7D8 - 0x7D4];              // _7D4, TODO: work out members
 	SmartPtr<Creature> _7D8;             // _7D8
 	f32 _7DC;                            // _7DC
 	int mPreBlendLowerMotionID;          // _7E0
-	u8 _7E4;                             // _7E4
-	u8 mIsFastPluckEnabled;              // _7E5
-	u8 _7E6[0x7F8 - 0x7E6];              // _7E6, TODO: work out members
+	bool mIsPlucking;                    // _7E4
+	bool mIsFastPluckEnabled;            // _7E5
+	u8 mNoPluckTimer;                    // _7E6, count after plucking stops to zoom out camera/stop fast pluck
+	u8 _7E7[0x7F8 - 0x7E7];              // _7E7, TODO: work out members
 	Piki* mNextThrowPiki;                // _7F8
 	u8 _7FC;                             // _7FC
 	f32 _800;                            // _800
@@ -257,5 +262,7 @@ struct NaviDrawer : public Node {
 	// _00-_20 = Node
 	Navi* mNavi; // _20
 };
+
+extern bool DelayPikiBirth;
 
 #endif

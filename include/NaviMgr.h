@@ -80,7 +80,7 @@ struct NaviProp : public CreatureProp {
 		    , mMinKinokoFlickActions(this, 4, 0, 16, "p57", nullptr)
 		    , _40C(this, 3, 0, 16, "p58", nullptr)
 		    , _41C(this, 3, 0, 16, "p59", nullptr)
-		    , _42C(this, 100, 0, 1000, "p61", nullptr)
+		    , mPostPluckZoomOutTime(this, 100, 0, 1000, "p61", nullptr)
 		{
 		}
 
@@ -146,7 +146,7 @@ struct NaviProp : public CreatureProp {
 		Parm<int> mMinKinokoFlickActions; // _3FC, p57, need to put in (this + 1) "actions" to flick a puffmin
 		Parm<int> _40C;                   // _40C, p58, bury key count?
 		Parm<int> _41C;                   // _41C, p59, bury exit count?
-		Parm<int> _42C;                   // _42C, p61, focus camera zoom out (frames)
+		Parm<int> mPostPluckZoomOutTime;  // _42C, p61, #frames after we stop plucking to release focus cam
 	};
 
 	NaviProp();

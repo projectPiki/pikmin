@@ -338,7 +338,7 @@ void Menu::addMenu(Menu* menu, int p2, char* name)
 bool Menu::checkNewOption()
 {
 	// If down is pressed
-	if (mController->isReleased(KBBTN_CSTICK_DOWN) || mController->isReleased(KBBTN_MSTICK_DOWN)) {
+	if (mController->keyUnClick(KBBTN_CSTICK_DOWN) || mController->keyUnClick(KBBTN_MSTICK_DOWN)) {
 		mCurrentItem->checkEvents(this, KeyEventType::Hold);
 
 		// Move to the next menu item
@@ -359,7 +359,7 @@ bool Menu::checkNewOption()
 
 		isOptionSelected = true;
 
-	} else if (mController->isReleased(KBBTN_CSTICK_UP) || mController->isReleased(KBBTN_MSTICK_UP)) {
+	} else if (mController->keyUnClick(KBBTN_CSTICK_UP) || mController->keyUnClick(KBBTN_MSTICK_UP)) {
 		mCurrentItem->checkEvents(this, KeyEventType::Hold);
 
 		// Move to the previous menu item (go up)
@@ -391,7 +391,7 @@ bool Menu::checkNewOption()
  */
 bool Menu::checkSelectKey()
 {
-	return mController->isPressed(KBBTN_A) != false;
+	return mController->keyClick(KBBTN_A) != false;
 }
 
 /*
@@ -401,7 +401,7 @@ bool Menu::checkSelectKey()
  */
 bool Menu::checkCancelKey()
 {
-	return mController->isPressed(KBBTN_B) != false;
+	return mController->keyClick(KBBTN_B) != false;
 }
 
 /*
@@ -509,19 +509,19 @@ bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 			event->mDelegate->invoke(*menu);
 			break;
 		case KeyEventType::Input:
-			if (menu->mController->isCurrentInput(event->mInputCode)) {
+			if (menu->mController->keyDown(event->mInputCode)) {
 				event->mDelegate->invoke(*menu);
 			}
 			break;
 		case KeyEventType::Release:
 		case KeyEventType::SpecialRelease:
-			if (menu->mController->isReleased(event->mInputCode)) {
+			if (menu->mController->keyUnClick(event->mInputCode)) {
 				event->mDelegate->invoke(*menu);
 				return true;
 			}
 			break;
 		case KeyEventType::Navigate:
-			if (menu->mController->isReleased(event->mInputCode)) {
+			if (menu->mController->keyUnClick(event->mInputCode)) {
 				// If the current item is a submenu, open it
 				if (menu->mCurrentItem->mType == MenuNavigationType::SubMenu) {
 					checkEvents(menu, KeyEventType::Hold);

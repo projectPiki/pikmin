@@ -100,11 +100,11 @@ zen::OgTestScreen::OgTestScreen()
  */
 void zen::OgTestScreen::modeSelectSub()
 {
-	if (mController->isPressed(KBBTN_MSTICK_UP) && mSelectedMode > TESTMODE_MIN) {
+	if (mController->keyClick(KBBTN_MSTICK_UP) && mSelectedMode > TESTMODE_MIN) {
 		mSelectedMode--;
 	}
 
-	if (mController->isPressed(KBBTN_MSTICK_DOWN) && mSelectedMode < TESTMODE_MAX) {
+	if (mController->keyClick(KBBTN_MSTICK_DOWN) && mSelectedMode < TESTMODE_MAX) {
 		mSelectedMode++;
 	}
 
@@ -119,86 +119,86 @@ void zen::OgTestScreen::modeSelectSub()
 	}
 
 	if (mSelectedMode == TESTMODE_Diary) {
-		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mDiaryMode < 30) {
+		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mDiaryMode < 30) {
 			mDiaryMode++;
 		}
 
-		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mDiaryMode > 0) {
+		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mDiaryMode > 0) {
 			mDiaryMode--;
 		}
 	}
 
 	if (mSelectedMode == TESTMODE_MemChk) {
-		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mMemChkMode < 9) {
+		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mMemChkMode < 9) {
 			mMemChkMode++;
 		}
 
-		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mMemChkMode > 0) {
+		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mMemChkMode > 0) {
 			mMemChkMode--;
 		}
 	}
 
 	if (mSelectedMode == TESTMODE_Map) {
-		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mMapMode < 1) {
+		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mMapMode < 1) {
 			mMapMode++;
 		}
 
-		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mMapMode > 0) {
+		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mMapMode > 0) {
 			mMapMode--;
 		}
 	}
 
 	if (mSelectedMode == TESTMODE_Save) {
-		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mSaveMode < 7) {
+		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mSaveMode < 7) {
 			mSaveMode++;
 		}
 
-		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mSaveMode > 0) {
+		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mSaveMode > 0) {
 			mSaveMode--;
 		}
 	}
 
 	if (mSelectedMode == TESTMODE_Pause) {
-		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT)) {
+		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT)) {
 			mPauseMode = true;
 		}
 
-		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT)) {
+		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT)) {
 			mPauseMode = false;
 		}
 	}
 
 	if (mSelectedMode == TESTMODE_FileChkSel) {
-		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT)) {
+		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT)) {
 			mFileChkSelMode = true;
 		}
 
-		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT)) {
+		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT)) {
 			mFileChkSelMode = false;
 		}
 	}
 
 	if (mSelectedMode == TESTMODE_Title) {
-		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT)) {
+		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT)) {
 			mTitleMode = true;
 		}
 
-		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT)) {
+		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT)) {
 			mTitleMode = false;
 		}
 	}
 
 	if (mSelectedMode == 12) {
-		if (mController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && _38A < 5) {
+		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && _38A < 5) {
 			_38A++;
 		}
 
-		if (mController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && _38A > 0) {
+		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && _38A > 0) {
 			_38A--;
 		}
 	}
 
-	if (!mController->isPressed(KBBTN_A)) {
+	if (!mController->keyClick(KBBTN_A)) {
 		return;
 	}
 

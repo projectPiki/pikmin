@@ -12,14 +12,14 @@
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-DEFINE_PRINT("utKando")
+DEFINE_PRINT(nullptr);
 
 /*
  * --INFO--
@@ -98,7 +98,7 @@ void BitFlags::saveCard(RandomAccessStream& stream)
 void BitFlags::create(u16 size, u8* data)
 {
 	mEntryCount = size;
-	mSize       = ((size >> 3) & 0x1FFF) + 1;
+	mSize       = u16(size >> 3) + 1;
 	if (data) {
 		mFlags = data;
 	} else {
@@ -125,8 +125,7 @@ void BitFlags::reset()
  */
 void BitFlags::setFlag(u16 flag)
 {
-	u16 id = flag >> 3;
-	mFlags[id] |= 1 << u16(flag - (id << 3));
+	mFlags[flag >> 3] |= 1 << u16(flag - 8 * (flag >> 3));
 }
 
 /*
@@ -136,8 +135,7 @@ void BitFlags::setFlag(u16 flag)
  */
 void BitFlags::resetFlag(u16 flag)
 {
-	u16 id = flag >> 3;
-	mFlags[id] &= ~(1 << u16(flag - (id << 3)));
+	mFlags[flag >> 3] &= ~(1 << u16(flag - 8 * (flag >> 3)));
 }
 
 /*
@@ -147,26 +145,7 @@ void BitFlags::resetFlag(u16 flag)
  */
 bool BitFlags::isFlag(u16 flag)
 {
-	u16 id = flag >> 3;
-	return (mFlags[id] & (1 << u16(flag - (id << 3)))) != 0;
-
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x0(r3)
-	  rlwinm    r0,r4,29,19,31
-	  rlwinm    r5,r4,0,16,31
-	  rlwinm    r4,r4,0,16,28
-	  lbzx      r0, r3, r0
-	  sub       r3, r5, r4
-	  rlwinm    r3,r3,0,16,31
-	  li        r4, 0x1
-	  slw       r3, r4, r3
-	  and       r0, r3, r0
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
+	return ((1 << u16(flag - 8 * (flag >> 3))) & mFlags[flag >> 3]) != 0;
 }
 
 /*

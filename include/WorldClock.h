@@ -22,7 +22,7 @@ struct WorldClock {
 	u8 _0C[0x4];           // _0C, unknown
 	f32 mLastRecordedTime; // _10
 	f32 mFractionalTime;   // _14
-	f32 mTotalTime;        // _18
+	f32 mTimeOfDay;        // _18
 	u8 _1C[0x4];           // _1C, unknown
 	int mCurrentTime;      // _20
 	int mCurrentDay;       // _24

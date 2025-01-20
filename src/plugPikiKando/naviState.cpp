@@ -138,13 +138,12 @@ void NaviPelletState::exec(Navi* navi)
 	}
 
 	if (!mIsFinished
-	    && (navi->mKontroller->isCurrentInput(KBBTN_A) || navi->mKontroller->isCurrentInput(KBBTN_B)
-	        || navi->mKontroller->isCurrentInput(KBBTN_X) || navi->mKontroller->isCurrentInput(KBBTN_L)
-	        || navi->mKontroller->isCurrentInput(KBBTN_R) || navi->mKontroller->isCurrentInput(KBBTN_MSTICK_LEFT)
-	        || navi->mKontroller->isCurrentInput(KBBTN_MSTICK_RIGHT) || navi->mKontroller->isCurrentInput(KBBTN_MSTICK_UP)
-	        || navi->mKontroller->isCurrentInput(KBBTN_MSTICK_DOWN) || navi->mKontroller->isCurrentInput(KBBTN_CSTICK_LEFT)
-	        || navi->mKontroller->isCurrentInput(KBBTN_CSTICK_RIGHT) || navi->mKontroller->isCurrentInput(KBBTN_CSTICK_UP)
-	        || navi->mKontroller->isCurrentInput(KBBTN_CSTICK_DOWN))) {
+	    && (navi->mKontroller->keyDown(KBBTN_A) || navi->mKontroller->keyDown(KBBTN_B) || navi->mKontroller->keyDown(KBBTN_X)
+	        || navi->mKontroller->keyDown(KBBTN_L) || navi->mKontroller->keyDown(KBBTN_R) || navi->mKontroller->keyDown(KBBTN_MSTICK_LEFT)
+	        || navi->mKontroller->keyDown(KBBTN_MSTICK_RIGHT) || navi->mKontroller->keyDown(KBBTN_MSTICK_UP)
+	        || navi->mKontroller->keyDown(KBBTN_MSTICK_DOWN) || navi->mKontroller->keyDown(KBBTN_CSTICK_LEFT)
+	        || navi->mKontroller->keyDown(KBBTN_CSTICK_RIGHT) || navi->mKontroller->keyDown(KBBTN_CSTICK_UP)
+	        || navi->mKontroller->keyDown(KBBTN_CSTICK_DOWN))) {
 		mIsFinished = true;
 		if (navi->mPellet) {
 			navi->mPellet->kill(false);
@@ -350,7 +349,7 @@ void NaviStuckState::exec(Navi* navi)
 	    - hit the B button
 	*/
 	f32 stickMovement = currStickDir.dot(mPrevStickDir);
-	if (stickMovement < -0.3f || navi->mKontroller->isPressed(KBBTN_A) || navi->mKontroller->isPressed(KBBTN_B)) {
+	if (stickMovement < -0.3f || navi->mKontroller->keyClick(KBBTN_A) || navi->mKontroller->keyClick(KBBTN_B)) {
 		mActionCount++;
 
 		s32 minFlickActions = C_NAVI_PROP(navi).mMinKinokoFlickActions();
@@ -681,8 +680,8 @@ void NaviBuryState::exec(Navi* navi)
 
 	switch (mBuryState) {
 	case 0:
-		if ((stickMag > 0.8f && mPreviousStickInput.dot(stickInput) < 0.5f) || navi->mKontroller->isPressed(KBBTN_A)
-		    || navi->mKontroller->isPressed(KBBTN_B)) {
+		if ((stickMag > 0.8f && mPreviousStickInput.dot(stickInput) < 0.5f) || navi->mKontroller->keyClick(KBBTN_A)
+		    || navi->mKontroller->keyClick(KBBTN_B)) {
 			mPreviousStickInput   = stickInput;
 			mBuryState            = 1;
 			mEscapeAttemptCounter = 0;
@@ -692,8 +691,8 @@ void NaviBuryState::exec(Navi* navi)
 		break;
 	case 1:
 	case 2:
-		if ((stickMag > 0.8f && mPreviousStickInput.dot(stickInput) < -0.6f) || navi->mKontroller->isPressed(KBBTN_A)
-		    || navi->mKontroller->isPressed(KBBTN_B)) {
+		if ((stickMag > 0.8f && mPreviousStickInput.dot(stickInput) < -0.6f) || navi->mKontroller->keyClick(KBBTN_A)
+		    || navi->mKontroller->keyClick(KBBTN_B)) {
 			mEscapeAttemptCounter++;
 			mPreviousStickInput = stickInput;
 			if (mBuryState == 1) {
@@ -3342,7 +3341,7 @@ void NaviPickState::init(Navi* navi)
  */
 void NaviPickState::exec(Navi* navi)
 {
-	if (!navi->mStickTarget || navi->mKontroller->isPressed(KBBTN_B)) {
+	if (!navi->mStickTarget || navi->mKontroller->keyClick(KBBTN_B)) {
 		transit(navi, NAVISTATE_Walk);
 	}
 }
@@ -3707,13 +3706,12 @@ void NaviIdleState::init(Navi* navi)
 void NaviIdleState::exec(Navi* navi)
 {
 	navi->makeVelocity(false);
-	if ((!mStopBeingIdle && navi->_738 < 1.0f) || navi->mKontroller->isCurrentInput(KBBTN_A) || navi->mKontroller->isCurrentInput(KBBTN_B)
-	    || navi->mKontroller->isCurrentInput(KBBTN_X) || navi->mKontroller->isCurrentInput(KBBTN_L)
-	    || navi->mKontroller->isCurrentInput(KBBTN_R) || navi->mKontroller->isCurrentInput(KBBTN_MSTICK_LEFT)
-	    || navi->mKontroller->isCurrentInput(KBBTN_MSTICK_RIGHT) || navi->mKontroller->isCurrentInput(KBBTN_MSTICK_UP)
-	    || navi->mKontroller->isCurrentInput(KBBTN_MSTICK_DOWN) || navi->mKontroller->isCurrentInput(KBBTN_CSTICK_LEFT)
-	    || navi->mKontroller->isCurrentInput(KBBTN_CSTICK_RIGHT) || navi->mKontroller->isCurrentInput(KBBTN_CSTICK_UP)
-	    || navi->mKontroller->isCurrentInput(KBBTN_CSTICK_DOWN)) {
+	if ((!mStopBeingIdle && navi->_738 < 1.0f) || navi->mKontroller->keyDown(KBBTN_A) || navi->mKontroller->keyDown(KBBTN_B)
+	    || navi->mKontroller->keyDown(KBBTN_X) || navi->mKontroller->keyDown(KBBTN_L) || navi->mKontroller->keyDown(KBBTN_R)
+	    || navi->mKontroller->keyDown(KBBTN_MSTICK_LEFT) || navi->mKontroller->keyDown(KBBTN_MSTICK_RIGHT)
+	    || navi->mKontroller->keyDown(KBBTN_MSTICK_UP) || navi->mKontroller->keyDown(KBBTN_MSTICK_DOWN)
+	    || navi->mKontroller->keyDown(KBBTN_CSTICK_LEFT) || navi->mKontroller->keyDown(KBBTN_CSTICK_RIGHT)
+	    || navi->mKontroller->keyDown(KBBTN_CSTICK_UP) || navi->mKontroller->keyDown(KBBTN_CSTICK_DOWN)) {
 		navi->mNaviAnimMgr.finishMotion(navi);
 		navi->enableMotionBlend();
 		mStopBeingIdle = true;
