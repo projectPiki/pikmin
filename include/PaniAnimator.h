@@ -174,6 +174,8 @@ struct PaniPelletAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
+	static char* motionLabels[];
+
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
 };
