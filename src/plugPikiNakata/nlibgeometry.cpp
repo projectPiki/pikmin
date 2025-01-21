@@ -228,9 +228,12 @@ void NMatrix4f::outputRow(int row, Vector3f& outRow)
  * Address:	........
  * Size:	0000B0
  */
-void NMatrix4f::inputRows(NVector3f&, NVector3f&, NVector3f&)
+void NMatrix4f::inputRows(NVector3f& row0, NVector3f& row1, NVector3f& row2)
 {
-	// UNUSED FUNCTION
+	inputRow(0, row0, 0.0f);
+	inputRow(1, row1, 0.0f);
+	inputRow(2, row2, 0.0f);
+	inputRow(0, NVector3f(0.0f, 0.0f, 0.0f), 1.0f);
 }
 
 /*
@@ -238,9 +241,11 @@ void NMatrix4f::inputRows(NVector3f&, NVector3f&, NVector3f&)
  * Address:	........
  * Size:	000018
  */
-void NMatrix4f::setCol(int, f32, f32, f32)
+void NMatrix4f::setCol(int col, f32 x, f32 y, f32 z)
 {
-	// UNUSED FUNCTION
+	mMtx[0][col] = x;
+	mMtx[1][col] = y;
+	mMtx[2][col] = z;
 }
 
 /*
@@ -250,10 +255,7 @@ void NMatrix4f::setCol(int, f32, f32, f32)
  */
 void NMatrix4f::inputCol(int col, Vector3f& input)
 {
-	mMtx[0][col] = input.x;
-	mMtx[1][col] = input.y;
-	mMtx[2][col] = input.z;
-	// UNUSED FUNCTION
+	setCol(col, input.x, input.y, input.z);
 }
 
 /*
@@ -261,9 +263,10 @@ void NMatrix4f::inputCol(int col, Vector3f& input)
  * Address:	........
  * Size:	000028
  */
-void NMatrix4f::inputCol(int, Vector3f&, f32)
+void NMatrix4f::inputCol(int col, Vector3f& input, f32 trans)
 {
-	// UNUSED FUNCTION
+	inputCol(col, input);
+	mMtx[3][col] = trans;
 }
 
 /*
@@ -273,9 +276,7 @@ void NMatrix4f::inputCol(int, Vector3f&, f32)
  */
 void NMatrix4f::outputCol(int col, Vector3f& output)
 {
-	output.x = mMtx[0][col];
-	output.y = mMtx[1][col];
-	output.z = mMtx[2][col];
+	output.set(mMtx[0][col], mMtx[1][col], mMtx[2][col]);
 }
 
 /*
@@ -283,9 +284,12 @@ void NMatrix4f::outputCol(int col, Vector3f& output)
  * Address:	........
  * Size:	0000B0
  */
-void NMatrix4f::inputCols(NVector3f&, NVector3f&, NVector3f&)
+void NMatrix4f::inputCols(NVector3f& col0, NVector3f& col1, NVector3f& col2)
 {
-	// UNUSED FUNCTION
+	inputCol(0, col0, 0.0f);
+	inputCol(1, col1, 0.0f);
+	inputCol(2, col2, 0.0f);
+	inputCol(3, NVector3f(0.0f, 0.0f, 0.0f), 1.0f);
 }
 
 /*
@@ -293,9 +297,9 @@ void NMatrix4f::inputCols(NVector3f&, NVector3f&, NVector3f&)
  * Address:	........
  * Size:	000020
  */
-void NMatrix4f::mul(Matrix4f&)
+void NMatrix4f::mul(Matrix4f& mtx)
 {
-	// UNUSED FUNCTION
+	multiply(mtx);
 }
 
 /*
@@ -303,9 +307,9 @@ void NMatrix4f::mul(Matrix4f&)
  * Address:	........
  * Size:	000030
  */
-void NMatrix4f::mul2(Matrix4f&, Matrix4f&)
+void NMatrix4f::mul2(Matrix4f& mtx, Matrix4f& outMtx)
 {
-	// UNUSED FUNCTION
+	multiplyTo(mtx, outMtx);
 }
 
 /*
@@ -313,9 +317,13 @@ void NMatrix4f::mul2(Matrix4f&, Matrix4f&)
  * Address:	........
  * Size:	0000C8
  */
-void NMatrix4f::scale(f32)
+void NMatrix4f::scale(f32 scale)
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			mMtx[i][j] *= scale;
+		}
+	}
 }
 
 /*
@@ -325,7 +333,13 @@ void NMatrix4f::scale(f32)
  */
 void NMatrix4f::transpose()
 {
-	// UNUSED FUNCTION
+	for (int i = 1; i < 4; i++) {
+		for (int j = 0; j < i; j++) {
+			f32 prev   = mMtx[i][j];
+			mMtx[i][j] = mMtx[j][i];
+			mMtx[j][i] = prev;
+		}
+	}
 }
 
 /*
@@ -335,7 +349,9 @@ void NMatrix4f::transpose()
  */
 void NMatrix4f::makeIdentRow(int row)
 {
-	setRow(row, 0.0f, 0.0f, 0.0f);
+	mMtx[row][0] = 0.0f;
+	mMtx[row][1] = 0.0f;
+	mMtx[row][2] = 0.0f;
 	mMtx[row][3] = 1.0f;
 }
 
@@ -346,7 +362,9 @@ void NMatrix4f::makeIdentRow(int row)
  */
 void NMatrix4f::println()
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < 4; i++) {
+		PRINT("|%f,%f,%f,%f|\n", mMtx[i][0], mMtx[i][1], mMtx[i][2], mMtx[i][3]);
+	}
 }
 
 /*
@@ -356,7 +374,7 @@ void NMatrix4f::println()
  */
 NOrientation::NOrientation()
 {
-	// UNUSED FUNCTION
+	input(NVector3f(0.0f, 0.0f, 1.0f), NVector3f(0.0f, 1.0f, 0.0f));
 }
 
 /*
@@ -376,9 +394,7 @@ NOrientation::NOrientation(Vector3f& direction)
  */
 void NOrientation::construct(Vector3f& direction)
 {
-	NVector3f upVector(0.0f, 1.0f, 0.0f);
-	mDirection.input(direction);
-	mUpVector.input(upVector);
+	input(direction, NVector3f(0.0f, 1.0f, 0.0f));
 }
 
 /*
@@ -386,9 +402,9 @@ void NOrientation::construct(Vector3f& direction)
  * Address:	........
  * Size:	000060
  */
-NOrientation::NOrientation(Vector3f&, Vector3f&)
+NOrientation::NOrientation(Vector3f& direction, Vector3f& up)
 {
-	// UNUSED FUNCTION
+	construct(direction, up);
 }
 
 /*
@@ -396,9 +412,9 @@ NOrientation::NOrientation(Vector3f&, Vector3f&)
  * Address:	........
  * Size:	000034
  */
-void NOrientation::construct(Vector3f&, Vector3f&)
+void NOrientation::construct(Vector3f& direction, Vector3f& up)
 {
-	// UNUSED FUNCTION
+	input(direction, up);
 }
 
 /*
@@ -412,74 +428,16 @@ void NOrientation::normalize()
 		makeUp();
 	}
 
-	NVector3f left;
+	NVector3f& left = NVector3f();
 	outputLeft(left);
 
-	NTransform3D transform;
+	NTransform3D& transform = NTransform3D();
 
-	transform.inputAxisAngle(NAxisAngle4f(left, NMathF::pi * 0.5f));
+	NAxisAngle4f& axisAngle = NAxisAngle4f(left, NMathF::pi / 2.0f);
+
+	transform.inputAxisAngle(axisAngle);
 	mUpVector.input(mDirection);
 	transform.transform(mUpVector);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  stw       r30, 0x78(r1)
-	  stw       r29, 0x74(r1)
-	  addi      r29, r3, 0
-	  addi      r4, r29, 0
-	  addi      r3, r29, 0xC
-	  bl        0xF68
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x38
-	  mr        r3, r29
-	  bl        0xEC
-
-	.loc_0x38:
-	  addi      r3, r1, 0x60
-	  bl        0xE04
-	  addi      r31, r3, 0
-	  addi      r3, r29, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0xD4
-	  addi      r3, r1, 0x20
-	  bl        0x998
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x10
-	  bl        0xDE0
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0x10
-	  addi      r5, r31, 0x4
-	  addi      r6, r31, 0x8
-	  bl        -0xBE9FC
-	  lfs       f1, -0x1CA4(r13)
-	  addi      r4, r1, 0x10
-	  lfs       f0, -0x5FE8(r2)
-	  mr        r3, r30
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x1C(r1)
-	  bl        0xC2C
-	  lfs       f0, 0x0(r29)
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0xC
-	  stfs      f0, 0xC(r29)
-	  lfs       f0, 0x4(r29)
-	  stfs      f0, 0x10(r29)
-	  lfs       f0, 0x8(r29)
-	  stfs      f0, 0x14(r29)
-	  bl        0xBDC
-	  lwz       r0, 0x84(r1)
-	  lwz       r31, 0x7C(r1)
-	  lwz       r30, 0x78(r1)
-	  lwz       r29, 0x74(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-
-	.loc_0xD4:
-	*/
 }
 
 /*
@@ -487,9 +445,10 @@ void NOrientation::normalize()
  * Address:	........
  * Size:	00004C
  */
-void NOrientation::transform(NTransform3D&)
+void NOrientation::transform(NTransform3D& transform)
 {
-	// UNUSED FUNCTION
+	transform.transform(mDirection);
+	transform.transform(mUpVector);
 }
 
 /*
@@ -497,9 +456,9 @@ void NOrientation::transform(NTransform3D&)
  * Address:	........
  * Size:	00004C
  */
-void NOrientation::outputRight(NVector3f&)
+void NOrientation::outputRight(NVector3f& outRight)
 {
-	// UNUSED FUNCTION
+	outRight.cross(mDirection, mUpVector);
 }
 
 /*
@@ -507,30 +466,9 @@ void NOrientation::outputRight(NVector3f&)
  * Address:	8011C0E8
  * Size:	00004C
  */
-void NOrientation::outputLeft(NVector3f&)
+void NOrientation::outputLeft(NVector3f& outLeft)
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x4(r3)
-	  lfs       f6, 0x14(r3)
-	  lfs       f2, 0xC(r3)
-	  lfs       f7, 0x8(r3)
-	  fmuls     f0, f6, f1
-	  lfs       f4, 0x10(r3)
-	  fmuls     f5, f2, f1
-	  lfs       f3, 0x0(r3)
-	  fmuls     f1, f4, f7
-	  fmuls     f4, f4, f3
-	  fmuls     f3, f6, f3
-	  fmuls     f2, f2, f7
-	  fsubs     f0, f1, f0
-	  fsubs     f1, f5, f4
-	  fsubs     f2, f3, f2
-	  stfs      f0, 0x0(r4)
-	  stfs      f2, 0x4(r4)
-	  stfs      f1, 0x8(r4)
-	  blr
-	*/
+	outLeft.cross(mUpVector, mDirection);
 }
 
 /*
@@ -540,166 +478,20 @@ void NOrientation::outputLeft(NVector3f&)
  */
 void NOrientation::makeUp()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xE0(r1)
-	  stw       r31, 0xDC(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0xB4
-	  stw       r30, 0xD8(r1)
-	  stw       r29, 0xD4(r1)
-	  stw       r28, 0xD0(r1)
-	  bl        0xCFC
-	  addi      r29, r1, 0xC0
-	  addi      r3, r29, 0
-	  bl        0xCF0
-	  lfs       f1, -0x5FF0(r2)
-	  addi      r3, r1, 0x1C
-	  lfs       f2, -0x5FEC(r2)
-	  fmr       f3, f1
-	  bl        0xD64
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0xB4
-	  addi      r5, r31, 0x4
-	  addi      r6, r31, 0x8
-	  bl        -0xBEB00
-	  addi      r3, r29, 0
-	  addi      r4, r1, 0x1C
-	  addi      r5, r1, 0x20
-	  addi      r6, r1, 0x24
-	  bl        -0xBEB14
-	  lfs       f1, -0x5FF0(r2)
-	  addi      r0, r1, 0xB4
-	  lfs       f2, -0x5FEC(r2)
-	  mr        r28, r0
-	  fmr       f3, f1
-	  addi      r3, r1, 0xA8
-	  bl        0xD20
-	  addi      r4, r3, 0
-	  addi      r3, r28, 0
-	  bl        0xDD8
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xD0
-	  lfs       f1, -0x5FF0(r2)
-	  addi      r3, r1, 0x9C
-	  lfs       f2, -0x5FEC(r2)
-	  fmr       f3, f1
-	  bl        0xCF8
-	  lfs       f0, 0x9C(r1)
-	  stfs      f0, 0xC0(r1)
-	  lfs       f0, 0xA0(r1)
-	  stfs      f0, 0xC4(r1)
-	  lfs       f0, 0xA4(r1)
-	  stfs      f0, 0xC8(r1)
-	  b         .loc_0x124
+	NOrientation& orient = NOrientation(mDirection);
 
-	.loc_0xD0:
-	  lfs       f1, -0x5FF0(r2)
-	  addi      r3, r1, 0x90
-	  lfs       f3, -0x5FEC(r2)
-	  fmr       f2, f1
-	  bl        0xCC8
-	  addi      r4, r3, 0
-	  addi      r3, r28, 0
-	  bl        0xD80
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x124
-	  lfs       f1, -0x5FF0(r2)
-	  addi      r3, r1, 0x84
-	  lfs       f3, -0x5FEC(r2)
-	  fmr       f2, f1
-	  bl        0xCA0
-	  lfs       f0, 0x84(r1)
-	  stfs      f0, 0xC0(r1)
-	  lfs       f0, 0x88(r1)
-	  stfs      f0, 0xC4(r1)
-	  lfs       f0, 0x8C(r1)
-	  stfs      f0, 0xC8(r1)
+	if (!orient.mDirection.isParallel(NVector3f(0.0f, 1.0f, 0.0f))) {
+		orient.inputUp(NVector3f(0.0f, 1.0f, 0.0f));
 
-	.loc_0x124:
-	  addi      r3, r28, 0xC
-	  addi      r4, r28, 0
-	  bl        0xD40
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x140
-	  mr        r3, r28
-	  bl        .loc_0x0
+	} else if (!orient.mDirection.isParallel(NVector3f(0.0f, 0.0f, 1.0f))) {
+		orient.inputUp(NVector3f(0.0f, 0.0f, 1.0f));
 
-	.loc_0x140:
-	  addi      r3, r1, 0x28
-	  bl        0xBDC
-	  lfs       f3, 0xC0(r1)
-	  mr        r29, r3
-	  lfs       f2, 0xB8(r1)
-	  addi      r6, r1, 0x18
-	  lfs       f1, 0xC4(r1)
-	  lfs       f0, 0xB4(r1)
-	  fmuls     f2, f3, f2
-	  addi      r5, r1, 0x14
-	  fmuls     f0, f1, f0
-	  addi      r4, r1, 0x10
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x18(r1)
-	  lfs       f3, 0xC8(r1)
-	  lfs       f2, 0xB4(r1)
-	  lfs       f1, 0xC0(r1)
-	  lfs       f0, 0xBC(r1)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x14(r1)
-	  lfs       f3, 0xC4(r1)
-	  lfs       f2, 0xBC(r1)
-	  lfs       f1, 0xC8(r1)
-	  lfs       f0, 0xB8(r1)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x10(r1)
-	  bl        -0xBEC60
-	  addi      r3, r1, 0x34
-	  bl        0x70C
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x74
-	  bl        0xB54
-	  addi      r3, r1, 0x74
-	  addi      r4, r29, 0
-	  bl        .loc_0x254
-	  lfs       f1, -0x1CA4(r13)
-	  addi      r4, r1, 0x74
-	  lfs       f0, -0x5FE8(r2)
-	  mr        r3, r30
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x80(r1)
-	  bl        0x9A8
-	  lfs       f0, 0xB4(r1)
-	  addi      r3, r30, 0
-	  addi      r4, r28, 0xC
-	  stfs      f0, 0xC0(r1)
-	  lfs       f0, 0xB8(r1)
-	  stfs      f0, 0xC4(r1)
-	  lfs       f0, 0xBC(r1)
-	  stfs      f0, 0xC8(r1)
-	  bl        0x958
-	  lfs       f0, 0xC0(r1)
-	  stfs      f0, 0xC(r31)
-	  lfs       f0, 0xC4(r1)
-	  stfs      f0, 0x10(r31)
-	  lfs       f0, 0xC8(r1)
-	  stfs      f0, 0x14(r31)
-	  lwz       r0, 0xE4(r1)
-	  lwz       r31, 0xDC(r1)
-	  lwz       r30, 0xD8(r1)
-	  lwz       r29, 0xD4(r1)
-	  lwz       r28, 0xD0(r1)
-	  addi      r1, r1, 0xE0
-	  mtlr      r0
-	  blr
+	} else {
+		PRINT("?makeUp\n");
+	}
 
-	.loc_0x254:
-	*/
+	orient.normalize();
+	mUpVector.input(orient.mUpVector);
 }
 
 /*
@@ -707,9 +499,12 @@ void NOrientation::makeUp()
  * Address:	........
  * Size:	000124
  */
-void NOrientation::outputTransform(NTransform3D&)
+void NOrientation::outputTransform(NTransform3D& transform)
 {
-	// UNUSED FUNCTION
+	NVector3f& left = NVector3f();
+	outputLeft(left);
+
+	transform.inputCols(left, mUpVector, mDirection);
 }
 
 /*
@@ -717,9 +512,12 @@ void NOrientation::outputTransform(NTransform3D&)
  * Address:	........
  * Size:	000068
  */
-void NOrientation::inputTransform(NTransform3D&)
+void NOrientation::inputTransform(NTransform3D& transform)
 {
-	// UNUSED FUNCTION
+	transform.outputCol(1, mUpVector);
+	transform.outputCol(2, mDirection);
+	mUpVector.normalize();
+	mDirection.normalize();
 }
 
 /*
@@ -727,9 +525,14 @@ void NOrientation::inputTransform(NTransform3D&)
  * Address:	........
  * Size:	0000CC
  */
-void NOrientation::outputRotation(NTransform3D&)
+void NOrientation::outputRotation(NTransform3D& transform)
 {
-	// UNUSED FUNCTION
+	NVector3f& left = NVector3f();
+	outputLeft(left);
+
+	transform.inputCol(0, left);
+	transform.inputCol(1, mUpVector);
+	transform.inputCol(2, mDirection);
 }
 
 /*
@@ -737,9 +540,10 @@ void NOrientation::outputRotation(NTransform3D&)
  * Address:	........
  * Size:	000034
  */
-void NOrientation::inputRotation(NTransform3D&)
+void NOrientation::inputRotation(NTransform3D& transform)
 {
-	// UNUSED FUNCTION
+	transform.outputCol(1, mUpVector);
+	transform.outputCol(1, mDirection);
 }
 
 /*
@@ -749,7 +553,10 @@ void NOrientation::inputRotation(NTransform3D&)
  */
 void NOrientation::println()
 {
-	// UNUSED FUNCTION
+	PRINT("fore:");
+	mDirection.println();
+	PRINT("up:");
+	mUpVector.println();
 }
 
 /*
@@ -767,9 +574,9 @@ NPolar3f::NPolar3f()
  * Address:	........
  * Size:	000030
  */
-NPolar3f::NPolar3f(f32, f32, f32)
+NPolar3f::NPolar3f(f32 rad, f32 inc, f32 azi)
 {
-	// UNUSED FUNCTION
+	construct(rad, inc, azi);
 }
 
 /*
@@ -777,9 +584,9 @@ NPolar3f::NPolar3f(f32, f32, f32)
  * Address:	........
  * Size:	000020
  */
-void NPolar3f::construct(f32, f32, f32)
+void NPolar3f::construct(f32 rad, f32 inc, f32 azi)
 {
-	// UNUSED FUNCTION
+	set(rad, inc, azi);
 }
 
 /*
@@ -787,9 +594,9 @@ void NPolar3f::construct(f32, f32, f32)
  * Address:	........
  * Size:	000030
  */
-NPolar3f::NPolar3f(NPolar3f&)
+NPolar3f::NPolar3f(NPolar3f& other)
 {
-	// UNUSED FUNCTION
+	construct(other);
 }
 
 /*
@@ -797,9 +604,9 @@ NPolar3f::NPolar3f(NPolar3f&)
  * Address:	........
  * Size:	00002C
  */
-void NPolar3f::construct(NPolar3f&)
+void NPolar3f::construct(NPolar3f& other)
 {
-	// UNUSED FUNCTION
+	set(other.mRadius, other.mInclination, other.mAzimuth);
 }
 
 /*
@@ -839,9 +646,9 @@ void NPolar3f::set(f32 radius, f32 inclination, f32 azimuth)
  * Address:	........
  * Size:	00001C
  */
-void NPolar3f::input(NPolar3f&)
+void NPolar3f::input(NPolar3f& other)
 {
-	// UNUSED FUNCTION
+	set(other.mRadius, other.mInclination, other.mAzimuth);
 }
 
 /*
@@ -851,52 +658,7 @@ void NPolar3f::input(NPolar3f&)
  */
 void NPolar3f::input(Vector3f& point)
 {
-	set(point.length(), NMathF::atan2(point.length(), point.y), NMathF::atan2(point.x, point.z));
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stfd      f31, 0x28(r1)
-	  stfd      f30, 0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lfs       f1, 0x0(r4)
-	  lfs       f2, 0x8(r4)
-	  bl        0x199C
-	  lfs       f0, 0x8(r31)
-	  fmr       f30, f1
-	  lfs       f1, 0x0(r31)
-	  fmuls     f0, f0, f0
-	  fmuls     f1, f1, f1
-	  fadds     f1, f1, f0
-	  bl        -0x10E848
-	  lfs       f2, 0x4(r31)
-	  bl        0x1978
-	  lfs       f2, 0x0(r31)
-	  fmr       f31, f1
-	  lfs       f0, 0x4(r31)
-	  fmuls     f1, f2, f2
-	  lfs       f2, 0x8(r31)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x10E878
-	  stfs      f1, 0x0(r30)
-	  stfs      f31, 0x4(r30)
-	  stfs      f30, 0x8(r30)
-	  lwz       r0, 0x34(r1)
-	  lfd       f31, 0x28(r1)
-	  lfd       f30, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	set(point.length(), NMathF::atan2(NMathF::length(point.x, point.z), point.y), NMathF::atan2(point.x, point.z));
 }
 
 /*
@@ -904,52 +666,14 @@ void NPolar3f::input(Vector3f& point)
  * Address:	8011C4E8
  * Size:	0000A4
  */
-void NPolar3f::output(Vector3f&)
+void NPolar3f::output(Vector3f& point)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stfd      f30, 0x48(r1)
-	  stfd      f29, 0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x38(r1)
-	  mr        r30, r3
-	  lfs       f1, 0x4(r3)
-	  bl        0xFF7D4
-	  lfs       f0, 0x4(r30)
-	  fmr       f29, f1
-	  fmr       f1, f0
-	  bl        0xFF630
-	  lfs       f0, 0x8(r30)
-	  fmr       f30, f1
-	  fmr       f1, f0
-	  bl        0xFF7B4
-	  lfs       f0, 0x8(r30)
-	  fmr       f31, f1
-	  fmr       f1, f0
-	  bl        0xFF610
-	  lfs       f0, 0x0(r30)
-	  fmuls     f3, f0, f29
-	  fmuls     f0, f0, f30
-	  fmuls     f2, f31, f3
-	  fmuls     f1, f1, f3
-	  stfs      f2, 0x0(r31)
-	  stfs      f0, 0x4(r31)
-	  stfs      f1, 0x8(r31)
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lfd       f30, 0x48(r1)
-	  lfd       f29, 0x40(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	f32 sinInc = NMathF::sin(mInclination);
+	f32 cosInc = NMathF::cos(mInclination);
+	f32 sinAzi = NMathF::sin(mAzimuth);
+	f32 cosAzi = NMathF::cos(mAzimuth);
+
+	point.set(mRadius * sinInc * sinAzi, mRadius * cosInc, mRadius * sinInc * cosAzi);
 }
 
 /*
@@ -959,17 +683,8 @@ void NPolar3f::output(Vector3f&)
  */
 void NPolar3f::negate()
 {
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
- */
-f32 NMathF::roundAngle(f32)
-{
-	// UNUSED FUNCTION
+	set(mRadius, NMathF::pi - mInclination, NMathF::pi + mAzimuth);
+	round();
 }
 
 /*
@@ -977,9 +692,10 @@ f32 NMathF::roundAngle(f32)
  * Address:	........
  * Size:	000054
  */
-void NPolar3f::interpolate(NPolar3f&, NPolar3f&, f32)
+void NPolar3f::interpolate(NPolar3f& start, NPolar3f& end, f32 t)
 {
-	// UNUSED FUNCTION
+	set(NMathF::interpolate(start.mRadius, end.mRadius, t), NMathF::interpolate(start.mInclination, end.mInclination, t),
+	    NMathF::interpolate(start.mAzimuth, end.mAzimuth, t));
 }
 
 /*
@@ -989,7 +705,10 @@ void NPolar3f::interpolate(NPolar3f&, NPolar3f&, f32)
  */
 void NPolar3f::roundMeridian()
 {
-	// UNUSED FUNCTION
+	mInclination = NMathF::roundAngle(mInclination);
+	if (mInclination > NMathF::pi) {
+		mInclination = 2.0f * NMathF::pi - mInclination;
+	}
 }
 
 /*
@@ -997,9 +716,19 @@ void NPolar3f::roundMeridian()
  * Address:	........
  * Size:	00003C
  */
-bool NPolar3f::clampMeridian(f32)
+bool NPolar3f::clampMeridian(f32 angle)
 {
-	// UNUSED FUNCTION
+	f32 complAngle = NMathF::pi - angle;
+	if (mInclination < angle) {
+		mInclination = angle;
+		return true;
+	}
+	if (mInclination > complAngle) {
+		mInclination = complAngle;
+		return true;
+	}
+
+	return false;
 }
 
 /*
@@ -1009,7 +738,7 @@ bool NPolar3f::clampMeridian(f32)
  */
 void NPolar3f::println()
 {
-	// UNUSED FUNCTION
+	PRINT("(%f,%f,%f)\n", mRadius, mInclination, mAzimuth);
 }
 
 /*
@@ -1019,7 +748,8 @@ void NPolar3f::println()
  */
 NPosture2D::NPosture2D()
 {
-	// UNUSED FUNCTION
+	mTranslation.construct(0.0f, 0.0f, 0.0f);
+	mDirection = 0.0f;
 }
 
 /*
@@ -1027,9 +757,9 @@ NPosture2D::NPosture2D()
  * Address:	........
  * Size:	000068
  */
-NPosture2D::NPosture2D(Vector3f&, f32)
+NPosture2D::NPosture2D(Vector3f& trans, f32 dir)
 {
-	// UNUSED FUNCTION
+	construct(trans, dir);
 }
 
 /*
@@ -1037,9 +767,10 @@ NPosture2D::NPosture2D(Vector3f&, f32)
  * Address:	........
  * Size:	000020
  */
-void NPosture2D::construct(Vector3f&, f32)
+void NPosture2D::construct(Vector3f& trans, f32 dir)
 {
-	// UNUSED FUNCTION
+	mTranslation.input(trans);
+	mDirection = dir;
 }
 
 /*
@@ -1047,9 +778,12 @@ void NPosture2D::construct(Vector3f&, f32)
  * Address:	........
  * Size:	000094
  */
-void NPosture2D::outputTransform(NTransform3D&)
+void NPosture2D::outputTransform(NTransform3D& transform)
 {
-	// UNUSED FUNCTION
+	transform.inputTranslation(mTranslation);
+	NAxisAngle4f& axisAngle = NAxisAngle4f();
+	outputAxisAngle(axisAngle);
+	transform.inputRotation(axisAngle);
 }
 
 /*
@@ -1057,9 +791,19 @@ void NPosture2D::outputTransform(NTransform3D&)
  * Address:	........
  * Size:	000110
  */
-void NPosture2D::outputInverseTransform(NTransform3D&)
+void NPosture2D::outputInverseTransform(NTransform3D& transform)
 {
-	// UNUSED FUNCTION
+	NTransform3D& trans1 = NTransform3D();
+	NTransform3D& trans2 = NTransform3D();
+	NVector3f& pos       = NVector3f(mTranslation);
+	pos.negate();
+	trans1.inputTranslation(pos);
+
+	NAxisAngle4f& axisAngle = NAxisAngle4f();
+	axisAngle.inputAxis(NVector3f(0.0f, 1.0f, 0.0f));
+	axisAngle.setAngle(-mDirection);
+	trans2.inputRotation(axisAngle);
+	transform.mul2(trans1, trans2);
 }
 
 /*
@@ -1067,9 +811,10 @@ void NPosture2D::outputInverseTransform(NTransform3D&)
  * Address:	........
  * Size:	000068
  */
-void NPosture2D::outputAxisAngle(NAxisAngle4f&)
+void NPosture2D::outputAxisAngle(NAxisAngle4f& axisAngle)
 {
-	// UNUSED FUNCTION
+	axisAngle.inputAxis(NVector3f(0.0f, 1.0f, 0.0f));
+	axisAngle.setAngle(mDirection);
 }
 
 /*
@@ -1079,10 +824,8 @@ void NPosture2D::outputAxisAngle(NAxisAngle4f&)
  */
 void NPosture2D::readData(Stream& input)
 {
-	_04 = input.readFloat();
-	_08 = input.readFloat();
-	_0C = input.readFloat();
-	_10 = input.readFloat();
+	mTranslation.read(input);
+	mDirection = input.readFloat();
 }
 
 /*
@@ -1092,7 +835,9 @@ void NPosture2D::readData(Stream& input)
  */
 void NPosture2D::println()
 {
-	// UNUSED FUNCTION
+	PRINT("translation:");
+	mTranslation.println();
+	PRINT("direction:%f\n", mDirection);
 }
 
 /*
@@ -1102,10 +847,8 @@ void NPosture2D::println()
  */
 NPosture3D::NPosture3D()
 {
-	NVector3f dir(0.0f, 0.0f, 0.0f);
-	mDirection.set(dir);
-	NVector3f up(0.0f, 0.0f, 1.0f);
-	mUp.set(up);
+	mViewpoint.input(NVector3f(0.0f, 0.0f, 0.0f));
+	mWatchpoint.input(NVector3f(0.0f, 0.0f, 1.0f));
 }
 
 /*
@@ -1113,9 +856,9 @@ NPosture3D::NPosture3D()
  * Address:	........
  * Size:	000060
  */
-NPosture3D::NPosture3D(NPosture3D&)
+NPosture3D::NPosture3D(NPosture3D& other)
 {
-	// UNUSED FUNCTION
+	construct(other);
 }
 
 /*
@@ -1123,9 +866,9 @@ NPosture3D::NPosture3D(NPosture3D&)
  * Address:	........
  * Size:	00005C
  */
-void NPosture3D::construct(NPosture3D&)
+void NPosture3D::construct(NPosture3D& other)
 {
-	// UNUSED FUNCTION
+	input(other);
 }
 
 /*
@@ -1133,9 +876,9 @@ void NPosture3D::construct(NPosture3D&)
  * Address:	8011C6C0
  * Size:	000070
  */
-NPosture3D::NPosture3D(Vector3f& dir, Vector3f& up)
+NPosture3D::NPosture3D(Vector3f& view, Vector3f& watch)
 {
-	construct(dir, up);
+	construct(view, watch);
 }
 
 /*
@@ -1143,10 +886,10 @@ NPosture3D::NPosture3D(Vector3f& dir, Vector3f& up)
  * Address:	8011C730
  * Size:	000034
  */
-void NPosture3D::construct(Vector3f& dir, Vector3f& up)
+void NPosture3D::construct(Vector3f& view, Vector3f& watch)
 {
-	mDirection.set(dir);
-	mUp.set(up);
+	mViewpoint.input(view);
+	mWatchpoint.input(watch);
 }
 
 /*
@@ -1156,70 +899,12 @@ void NPosture3D::construct(Vector3f& dir, Vector3f& up)
  */
 void NPosture3D::normalize()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x1C
-	  bl        0x6D4
-	  addi      r31, r3, 0
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0xD4
-	  lfs       f1, 0x0(r31)
-	  lfs       f0, 0x4(r31)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x8(r31)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x10EB74
-	  lfs       f0, -0x5FF0(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x64
-	  b         .loc_0x68
-
-	.loc_0x64:
-	  fneg      f1, f1
-
-	.loc_0x68:
-	  lfs       f0, -0x1CB0(r13)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xBC
-	  lfs       f1, -0x5FF0(r2)
-	  addi      r3, r1, 0x10
-	  lfs       f3, -0x5FEC(r2)
-	  fmr       f2, f1
-	  bl        0x6F0
-	  lfs       f1, 0x10(r30)
-	  lfs       f0, 0x10(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x10(r30)
-	  lfs       f1, 0x14(r30)
-	  lfs       f0, 0x14(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r30)
-	  lfs       f1, 0x18(r30)
-	  lfs       f0, 0x18(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x18(r30)
-
-	.loc_0xBC:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-
-	.loc_0xD4:
-	*/
+	NVector3f& dir = NVector3f();
+	outputRelative(dir);
+	if (NMathF::isZero(dir.length())) {
+		PRINT("?normalize:zero:");
+		mWatchpoint.add(NVector3f(0.0f, 0.0f, 1.0f));
+	}
 }
 
 /*
@@ -1227,24 +912,9 @@ void NPosture3D::normalize()
  * Address:	8011C838
  * Size:	000034
  */
-void NPosture3D::outputRelative(NVector3f&)
+void NPosture3D::outputRelative(NVector3f& dir)
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x10(r3)
-	  lfs       f0, 0x4(r3)
-	  lfs       f3, 0x14(r3)
-	  lfs       f2, 0x8(r3)
-	  fsubs     f0, f1, f0
-	  lfs       f4, 0x18(r3)
-	  lfs       f1, 0xC(r3)
-	  fsubs     f2, f3, f2
-	  stfs      f0, 0x0(r4)
-	  fsubs     f0, f4, f1
-	  stfs      f2, 0x4(r4)
-	  stfs      f0, 0x8(r4)
-	  blr
-	*/
+	dir.sub2(mWatchpoint, mViewpoint);
 }
 
 /*
@@ -1252,9 +922,10 @@ void NPosture3D::outputRelative(NVector3f&)
  * Address:	........
  * Size:	000054
  */
-void NPosture3D::outputUnitVector(NVector3f&)
+void NPosture3D::outputUnitVector(NVector3f& dir)
 {
-	// UNUSED FUNCTION
+	outputRelative(dir);
+	dir.normalize();
 }
 
 /*
@@ -1262,9 +933,10 @@ void NPosture3D::outputUnitVector(NVector3f&)
  * Address:	........
  * Size:	00004C
  */
-void NPosture3D::transform(NTransform3D&)
+void NPosture3D::transform(NTransform3D& transform)
 {
-	// UNUSED FUNCTION
+	transform.transform(mViewpoint);
+	transform.transform(mWatchpoint);
 }
 
 /*
@@ -1272,36 +944,10 @@ void NPosture3D::transform(NTransform3D&)
  * Address:	8011C86C
  * Size:	000064
  */
-void NPosture3D::translate(Vector3f&)
+void NPosture3D::translate(Vector3f& offset)
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x0(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4(r3)
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, 0x4(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x8(r3)
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x8(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r3)
-	  lfs       f1, 0x10(r3)
-	  lfs       f0, 0x0(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x10(r3)
-	  lfs       f1, 0x14(r3)
-	  lfs       f0, 0x4(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r3)
-	  lfs       f1, 0x18(r3)
-	  lfs       f0, 0x8(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x18(r3)
-	  blr
-	*/
+	mViewpoint.add(offset);
+	mWatchpoint.add(offset);
 }
 
 /*
@@ -1309,9 +955,10 @@ void NPosture3D::translate(Vector3f&)
  * Address:	........
  * Size:	000064
  */
-void NPosture3D::rotate(NVector3f&, NPolar3f&)
+void NPosture3D::rotate(NVector3f& p1, NPolar3f& p2)
 {
-	// UNUSED FUNCTION
+	rotatePoint(mViewpoint, p1, p2);
+	rotatePoint(mWatchpoint, p1, p2);
 }
 
 /*
@@ -1319,9 +966,18 @@ void NPosture3D::rotate(NVector3f&, NPolar3f&)
  * Address:	........
  * Size:	0001CC
  */
-void NPosture3D::rotatePoint(NVector3f&, NVector3f&, NPolar3f&)
+void NPosture3D::rotatePoint(NVector3f& p1, NVector3f& p2, NPolar3f& p3)
 {
-	// UNUSED FUNCTION
+	NVector3f& tempVec = NVector3f();
+	NPolar3f& tempPol  = NPolar3f();
+
+	tempVec.sub2(p1, p2);
+
+	tempPol.input(tempVec);
+	tempPol.add(p3);
+	tempPol.output(tempVec);
+
+	p1.add2(p2, tempVec);
 }
 
 /*
@@ -1329,9 +985,10 @@ void NPosture3D::rotatePoint(NVector3f&, NVector3f&, NPolar3f&)
  * Address:	........
  * Size:	000070
  */
-void NPosture3D::interpolate(NPosture3D&, NPosture3D&, f32)
+void NPosture3D::interpolate(NPosture3D& start, NPosture3D& end, f32 t)
 {
-	// UNUSED FUNCTION
+	mViewpoint.interpolate(start.mViewpoint, end.mViewpoint, t);
+	mWatchpoint.interpolate(start.mWatchpoint, end.mWatchpoint, t);
 }
 
 /*
@@ -1339,9 +996,15 @@ void NPosture3D::interpolate(NPosture3D&, NPosture3D&, f32)
  * Address:	........
  * Size:	0000D8
  */
-void NPosture3D::input(NPosture2D&)
+void NPosture3D::input(NPosture2D& other2D)
 {
-	// UNUSED FUNCTION
+	inputViewpoint(other2D.getTranslation());
+
+	NVector3f& watch = NVector3f();
+	watch.set(NMathF::sin(other2D.getDirection()), 0.0f, NMathF::cos(other2D.getDirection()));
+	watch.add(mViewpoint);
+
+	inputWatchpoint(watch);
 }
 
 /*
@@ -1349,9 +1012,12 @@ void NPosture3D::input(NPosture2D&)
  * Address:	........
  * Size:	000094
  */
-void NPosture3D::output(NPosture2D&)
+void NPosture3D::output(NPosture2D& out2D)
 {
-	// UNUSED FUNCTION
+	out2D.inputTranslation(mViewpoint);
+	NVector3f& dir = NVector3f();
+	outputRelative(dir);
+	out2D.setDirection(NMathF::atan2(dir.x, dir.z));
 }
 
 /*
@@ -1359,9 +1025,12 @@ void NPosture3D::output(NPosture2D&)
  * Address:	........
  * Size:	000078
  */
-void NPosture3D::outputTransform(NPosture3D&, NTransform3D&)
+void NPosture3D::outputTransform(NPosture3D& p1, NTransform3D& outTransform)
 {
-	// UNUSED FUNCTION
+	NTransform3D& temp = NTransform3D();
+	outputInverseTransform(outTransform);
+	p1.outputTransform(temp);
+	outTransform.mul(temp);
 }
 
 /*
@@ -1369,9 +1038,15 @@ void NPosture3D::outputTransform(NPosture3D&, NTransform3D&)
  * Address:	........
  * Size:	0002A0
  */
-void NPosture3D::outputTransform(NTransform3D&)
+void NPosture3D::outputTransform(NTransform3D& transform)
 {
-	// UNUSED FUNCTION
+	transform.inputTranslation(mViewpoint);
+	NVector3f& dir = NVector3f();
+	dir.sub2(mWatchpoint, mViewpoint);
+	dir.normalize();
+	NOrientation& orient = NOrientation(dir);
+	orient.normalize();
+	orient.outputRotation(transform);
 }
 
 /*
@@ -1379,9 +1054,26 @@ void NPosture3D::outputTransform(NTransform3D&)
  * Address:	........
  * Size:	000418
  */
-void NPosture3D::outputInverseTransform(NTransform3D&)
+void NPosture3D::outputInverseTransform(NTransform3D& invTransform)
 {
-	// UNUSED FUNCTION
+	NTransform3D& trans1 = NTransform3D();
+	NTransform3D& trans2 = NTransform3D();
+
+	NVector3f& pos = NVector3f(mViewpoint);
+	pos.negate();
+
+	trans1.inputTranslation(pos);
+
+	NVector3f& dir = NVector3f();
+	dir.sub2(mWatchpoint, mViewpoint);
+	dir.normalize();
+
+	NOrientation& orient = NOrientation(dir);
+	orient.normalize();
+	orient.outputRotation(trans2);
+
+	trans2.transpose();
+	invTransform.mul2(trans1, trans2);
 }
 
 /*
@@ -1389,9 +1081,12 @@ void NPosture3D::outputInverseTransform(NTransform3D&)
  * Address:	........
  * Size:	00010C
  */
-void NPosture3D::inputTransform(NTransform3D&)
+void NPosture3D::inputTransform(NTransform3D& transform)
 {
-	// UNUSED FUNCTION
+	transform.outputTranslation(mViewpoint);
+	NOrientation& orient = NOrientation();
+	orient.inputRotation(transform);
+	mWatchpoint.add2(mViewpoint, orient.getFore());
 }
 
 /*
@@ -1401,7 +1096,9 @@ void NPosture3D::inputTransform(NTransform3D&)
  */
 f32 NPosture3D::calcDirection()
 {
-	// UNUSED FUNCTION
+	NVector3f& dir = NVector3f();
+	outputRelative(dir);
+	return NMathF::atan2(dir.x, dir.z);
 }
 
 /*
@@ -1409,60 +1106,10 @@ f32 NPosture3D::calcDirection()
  * Address:	8011C8D0
  * Size:	0000C4
  */
-void NPosture3D::readData(Stream&)
+void NPosture3D::readData(Stream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x4(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x8(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0xC(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x10(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x14(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x18(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mViewpoint.read(input);
+	mWatchpoint.read(input);
 }
 
 /*
@@ -1472,7 +1119,8 @@ void NPosture3D::readData(Stream&)
  */
 void NPosture3D::println()
 {
-	// UNUSED FUNCTION
+	mViewpoint.println();
+	mWatchpoint.println();
 }
 
 /*
@@ -1480,9 +1128,9 @@ void NPosture3D::println()
  * Address:	........
  * Size:	00003C
  */
-NSpecialMatrix::NSpecialMatrix(int)
+NSpecialMatrix::NSpecialMatrix(int dim)
 {
-	// UNUSED FUNCTION
+	construct(dim);
 }
 
 /*
@@ -1490,9 +1138,9 @@ NSpecialMatrix::NSpecialMatrix(int)
  * Address:	........
  * Size:	000008
  */
-void NSpecialMatrix::construct(int)
+void NSpecialMatrix::construct(int dim)
 {
-	// UNUSED FUNCTION
+	mDimension = dim;
 }
 
 /*
@@ -1500,10 +1148,9 @@ void NSpecialMatrix::construct(int)
  * Address:	........
  * Size:	00004C
  */
-NLowerMatrix::NLowerMatrix(f32* p1, int p2)
-    : NSpecialMatrix(p2)
+NLowerMatrix::NLowerMatrix(f32* values, int dim)
 {
-	// UNUSED FUNCTION
+	construct(values, dim);
 }
 
 /*
@@ -1511,9 +1158,10 @@ NLowerMatrix::NLowerMatrix(f32* p1, int p2)
  * Address:	........
  * Size:	00000C
  */
-void NLowerMatrix::construct(f32*, int)
+void NLowerMatrix::construct(f32* values, int dim)
 {
-	// UNUSED FUNCTION
+	NSpecialMatrix::construct(dim);
+	mLower = values;
 }
 
 /*
@@ -1521,9 +1169,12 @@ void NLowerMatrix::construct(f32*, int)
  * Address:	........
  * Size:	000060
  */
-void NLowerMatrix::solve(NVector&, NVector&)
+void NLowerMatrix::solve(NVector& inVec, NVector& outVec)
 {
-	// UNUSED FUNCTION
+	outVec.mValues[0] = inVec.mValues[0];
+	for (int i = 1; i < mDimension; i++) {
+		outVec.mValues[i] = inVec.mValues[i] - mLower[i - 1] * outVec.mValues[i - 1];
+	}
 }
 
 /*
@@ -1533,7 +1184,9 @@ void NLowerMatrix::solve(NVector&, NVector&)
  */
 void NLowerMatrix::println()
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < mDimension - 1; i++) {
+		PRINT("l[%d]:%f\n", i, mLower[i]);
+	}
 }
 
 /*
@@ -1541,10 +1194,9 @@ void NLowerMatrix::println()
  * Address:	........
  * Size:	00004C
  */
-NUpperMatrix::NUpperMatrix(f32* p1, f32* p2, int p3)
-    : NSpecialMatrix(p3)
+NUpperMatrix::NUpperMatrix(f32* centreVals, f32* upperVals, int dim)
 {
-	// UNUSED FUNCTION
+	construct(centreVals, upperVals, dim);
 }
 
 /*
@@ -1552,9 +1204,11 @@ NUpperMatrix::NUpperMatrix(f32* p1, f32* p2, int p3)
  * Address:	........
  * Size:	000010
  */
-void NUpperMatrix::construct(f32*, f32*, int)
+void NUpperMatrix::construct(f32* centreVals, f32* upperVals, int dim)
 {
-	// UNUSED FUNCTION
+	NSpecialMatrix::construct(dim);
+	mCentre = centreVals;
+	mUpper  = upperVals;
 }
 
 /*
@@ -1562,9 +1216,13 @@ void NUpperMatrix::construct(f32*, f32*, int)
  * Address:	........
  * Size:	000180
  */
-void NUpperMatrix::solve(NVector&, NVector&)
+void NUpperMatrix::solve(NVector& inVec, NVector& outVec)
 {
-	// UNUSED FUNCTION
+	outVec.mValues[mDimension - 1] = inVec.mValues[mDimension - 1] / mCentre[mDimension - 1];
+
+	for (int i = mDimension - 2; i >= 0; i--) {
+		outVec.mValues[i] = (inVec.mValues[i] - mUpper[i] * outVec.mValues[i + 1]) / mCentre[i];
+	}
 }
 
 /*
@@ -1574,7 +1232,12 @@ void NUpperMatrix::solve(NVector&, NVector&)
  */
 void NUpperMatrix::println()
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < mDimension; i++) {
+		PRINT("e[%d]:%f\n", i, mCentre[i]);
+	}
+	for (int i = 0; i < mDimension - 1; i++) {
+		PRINT("u[%d]:%f\n", i, mUpper[i]);
+	}
 }
 
 /*
@@ -1582,12 +1245,9 @@ void NUpperMatrix::println()
  * Address:	........
  * Size:	00006C
  */
-LUMatrix::LUMatrix(f32*, f32*, f32*, int p4)
-    : NSpecialMatrix(p4)
-    , _08(p4)
-    , _14(p4)
+LUMatrix::LUMatrix(f32* centreVals, f32* lowerVals, f32* upperVals, int dim)
 {
-	// UNUSED FUNCTION
+	construct(centreVals, lowerVals, upperVals, dim);
 }
 
 /*
@@ -1595,9 +1255,14 @@ LUMatrix::LUMatrix(f32*, f32*, f32*, int p4)
  * Address:	........
  * Size:	000034
  */
-void LUMatrix::construct(f32*, f32*, f32*, int)
+void LUMatrix::construct(f32* centreVals, f32* lowerVals, f32* upperVals, int dim)
 {
-	// UNUSED FUNCTION
+	NSpecialMatrix::construct(dim);
+	mCentreVals = centreVals;
+	mLowerVals  = lowerVals;
+	mUpperVals  = upperVals;
+	mLower.construct(mLowerVals, dim);
+	mUpper.construct(mCentreVals, mUpperVals, dim);
 }
 
 /*
@@ -1607,19 +1272,9 @@ void LUMatrix::construct(f32*, f32*, f32*, int)
  */
 void LUMatrix::setDimension(int dim)
 {
-	mDimension = dim;
-	_08.setDimension(dim);
-	_14.setDimension(dim);
-}
-
-/*
- * --INFO--
- * Address:	8011C9F8
- * Size:	000008
- */
-void NSpecialMatrix::setDimension(int dim)
-{
-	mDimension = dim;
+	NSpecialMatrix::setDimension(dim);
+	mLower.setDimension(dim);
+	mUpper.setDimension(dim);
 }
 
 /*
@@ -1627,9 +1282,13 @@ void NSpecialMatrix::setDimension(int dim)
  * Address:	........
  * Size:	00022C
  */
-void LUMatrix::solve(NVector&, NVector&)
+void LUMatrix::solve(NVector& inVec, NVector& outVec)
 {
-	// UNUSED FUNCTION
+	f32 vals[16];
+	decompose();
+	NVector& tmp = NVector(vals, mDimension);
+	mLower.solve(inVec, tmp);
+	mUpper.solve(tmp, outVec);
 }
 
 /*
@@ -1639,7 +1298,15 @@ void LUMatrix::solve(NVector&, NVector&)
  */
 void LUMatrix::decompose()
 {
-	// UNUSED FUNCTION
+	mUpper.setCenter(0, mCentreVals[0]);
+	for (int i = 1; i < mDimension; i++) {
+		mLower.setLower(i, mLowerVals[i - 1] / mUpper.getCenter(i - 1));
+
+		mUpper.setCenter(i, mCentreVals[i] - mLower.getLower(i) * mUpperVals[i - 1]);
+	}
+	for (int i = 0; i < mDimension - 1; i++) {
+		mUpper.setUpper(i, mUpperVals[i]);
+	}
 }
 
 /*
@@ -1649,7 +1316,15 @@ void LUMatrix::decompose()
  */
 void LUMatrix::println()
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < mDimension; i++) {
+		PRINT("e[%d]:%f\n", i, mCentreVals[i]);
+	}
+	for (int i = 0; i < mDimension - 1; i++) {
+		PRINT("l[%d]:%f\n", i, mLowerVals[i]);
+	}
+	for (int i = 0; i < mDimension - 1; i++) {
+		PRINT("u[%d]:%f\n", i, mUpperVals[i]);
+	}
 }
 
 /*
@@ -1666,9 +1341,9 @@ NTransform3D::NTransform3D()
  * Address:	........
  * Size:	000098
  */
-NTransform3D::NTransform3D(NMatrix4f&)
+NTransform3D::NTransform3D(NMatrix4f& mtx)
 {
-	// UNUSED FUNCTION
+	construct(mtx);
 }
 
 /*
@@ -1676,9 +1351,9 @@ NTransform3D::NTransform3D(NMatrix4f&)
  * Address:	........
  * Size:	000020
  */
-void NTransform3D::construct(NMatrix4f&)
+void NTransform3D::construct(NMatrix4f& mtx)
 {
-	// UNUSED FUNCTION
+	construct(mtx);
 }
 
 /*
@@ -1686,9 +1361,12 @@ void NTransform3D::construct(NMatrix4f&)
  * Address:	........
  * Size:	000090
  */
-void NTransform3D::translate(Vector3f&)
+void NTransform3D::translate(Vector3f& offset)
 {
-	// UNUSED FUNCTION
+	NVector3f& trans = NVector3f();
+	outputTranslation(trans);
+	trans.add(offset);
+	inputTranslation(trans);
 }
 
 /*
@@ -1696,8 +1374,11 @@ void NTransform3D::translate(Vector3f&)
  * Address:	8011CB08
  * Size:	00019C
  */
-void NTransform3D::rotate(Vector3f&)
+void NTransform3D::rotate(Vector3f& point)
 {
+	NTransform3D& rotation = NTransform3D();
+	outputRotation(rotation);
+	rotation.rotate(point);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1811,22 +1492,9 @@ void NTransform3D::rotate(Vector3f&)
  * Address:	8011CCA4
  * Size:	00002C
  */
-void NTransform3D::transform(Vector3f&)
+void NTransform3D::transform(Vector3f& point)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  addi      r0, r3, 0
-	  addi      r3, r4, 0
-	  stwu      r1, -0x8(r1)
-	  mr        r4, r0
-	  bl        -0xE5570
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	point.multMatrix(*this);
 }
 
 /*
@@ -1834,9 +1502,10 @@ void NTransform3D::transform(Vector3f&)
  * Address:	........
  * Size:	000044
  */
-void NTransform3D::transform(Vector3f&, Vector3f&)
+void NTransform3D::transform(Vector3f& p1, Vector3f& p2)
 {
-	// UNUSED FUNCTION
+	p2 = p1;
+	transform(p2);
 }
 
 /*
@@ -1844,9 +1513,17 @@ void NTransform3D::transform(Vector3f&, Vector3f&)
  * Address:	........
  * Size:	000184
  */
-void NTransform3D::transform(NVector&)
+void NTransform3D::transform(NVector& vec)
 {
-	// UNUSED FUNCTION
+	f32 vals[4];
+	NVector tmp(vals, 4);
+	tmp.input(vec);
+	for (int i = 0; i < 4; i++) {
+		vec.mValues[i] = 0.0f;
+		for (int j = 0; j < 4; j++) {
+			vec.mValues[i] += tmp.mValues[j] * mMtx[i][j];
+		}
+	}
 }
 
 /*
@@ -1854,9 +1531,10 @@ void NTransform3D::transform(NVector&)
  * Address:	........
  * Size:	00018C
  */
-void NTransform3D::transform(NVector&, NVector&)
+void NTransform3D::transform(NVector& p1, NVector& p2)
 {
-	// UNUSED FUNCTION
+	p2.input(p1);
+	transform(p2);
 }
 
 /*
@@ -1864,9 +1542,10 @@ void NTransform3D::transform(NVector&, NVector&)
  * Address:	........
  * Size:	000094
  */
-void NTransform3D::inputVector(Vector3f&)
+void NTransform3D::inputVector(Vector3f& vec)
 {
-	// UNUSED FUNCTION
+	makeIdentity();
+	inputTranslation(vec);
 }
 
 /*
@@ -1874,20 +1553,9 @@ void NTransform3D::inputVector(Vector3f&)
  * Address:	8011CCD0
  * Size:	000024
  */
-void NTransform3D::inputAxisAngle(NAxisAngle4f&)
+void NTransform3D::inputAxisAngle(NAxisAngle4f& axisAngle)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lfs       f1, 0xC(r4)
-	  bl        -0xDEE18
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	makeRotate(axisAngle.getAxis(), axisAngle.getAngle());
 }
 
 /*
@@ -1895,9 +1563,9 @@ void NTransform3D::inputAxisAngle(NAxisAngle4f&)
  * Address:	........
  * Size:	00001C
  */
-void NTransform3D::inputTranslation(Vector3f&)
+void NTransform3D::inputTranslation(Vector3f& trans)
 {
-	// UNUSED FUNCTION
+	inputCol(3, trans);
 }
 
 /*
@@ -1905,9 +1573,9 @@ void NTransform3D::inputTranslation(Vector3f&)
  * Address:	........
  * Size:	00001C
  */
-void NTransform3D::outputTranslation(Vector3f&)
+void NTransform3D::outputTranslation(Vector3f& trans)
 {
-	// UNUSED FUNCTION
+	outputCol(3, trans);
 }
 
 /*
@@ -1915,9 +1583,11 @@ void NTransform3D::outputTranslation(Vector3f&)
  * Address:	........
  * Size:	00004C
  */
-void NTransform3D::inputRotation(Matrix4f&)
+void NTransform3D::inputRotation(Matrix4f& rotMtx)
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < 3; i++) {
+		setRow(i, rotMtx.mMtx[i][0], rotMtx.mMtx[i][1], rotMtx.mMtx[i][2]);
+	}
 }
 
 /*
@@ -1925,62 +1595,15 @@ void NTransform3D::inputRotation(Matrix4f&)
  * Address:	8011CCF4
  * Size:	0000CC
  */
-void NTransform3D::outputRotation(Matrix4f&)
+void NTransform3D::outputRotation(Matrix4f& rotMtx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x18
-	  bl        0x140
-	  lfs       f0, 0x0(r30)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r30)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r30)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, 0x0(r3)
-	  stfs      f0, 0x0(r31)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x4(r31)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x8(r31)
-	  lfs       f0, 0x10(r30)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x14(r30)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x18(r30)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, 0x0(r3)
-	  stfs      f0, 0x10(r31)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x14(r31)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x18(r31)
-	  lfs       f0, 0x20(r30)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x24(r30)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x28(r30)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, 0x0(r3)
-	  stfs      f0, 0x20(r31)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x24(r31)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x28(r31)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f& row = NVector3f();
+	for (int i = 0; i < 3; i++) {
+		outputRow(i, row);
+		rotMtx.mMtx[i][0] = row.x;
+		rotMtx.mMtx[i][1] = row.y;
+		rotMtx.mMtx[i][2] = row.z;
+	}
 }
 
 /*
@@ -1988,9 +1611,11 @@ void NTransform3D::outputRotation(Matrix4f&)
  * Address:	........
  * Size:	0000E4
  */
-void NTransform3D::inputRotation(NAxisAngle4f&)
+void NTransform3D::inputRotation(NAxisAngle4f& axisAngle)
 {
-	// UNUSED FUNCTION
+	NTransform3D& trans = NTransform3D();
+	trans.inputAxisAngle(axisAngle);
+	inputRotation(trans);
 }
 
 /*

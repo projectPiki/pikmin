@@ -64,11 +64,11 @@ struct Vector3f {
 
 	void set(const Vector3f& other) { set(other.x, other.y, other.z); }
 
-	void input(const Vector3f& other) { set(other.x, other.y, other.z); }
+	void input(Vector3f& other) { set(other.x, other.y, other.z); }
 
 	// TODO: void output(Vector3f&);
 
-	f32 length() const { return std::sqrtf(x * x + y * y + z * z); }
+	f32 length() { return std::sqrtf(x * x + y * y + z * z); }
 
 	f32 distance(Vector3f& to)
 	{
@@ -90,7 +90,7 @@ struct Vector3f {
 
 	// TODO: check if this is correct or if one of these needs adjusting
 	f32 DP(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
-	f32 dot(Vector3f& other) const { return x * other.x + y * other.y + z * other.z; }
+	f32 dot(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
 
 	void CP(Vector3f& other)
 	{
@@ -105,9 +105,7 @@ struct Vector3f {
 
 	void cross(Vector3f& vec1, Vector3f& vec2)
 	{
-		x = vec1.y * vec2.z - vec1.z * vec2.y;
-		y = vec1.z * vec2.x - vec1.x * vec2.z;
-		z = vec1.x * vec2.y - vec1.y * vec2.x;
+		set(vec1.y * vec2.z - vec1.z * vec2.y, vec1.z * vec2.x - vec1.x * vec2.z, vec1.x * vec2.y - vec1.y * vec2.x);
 	}
 
 	void add(Vector3f& other)

@@ -41,11 +41,6 @@ struct NVector3f : public Vector3f {
 	NVector3f(f32, f32, f32);
 	NVector3f(Vector3f&, Vector3f&);
 
-	NVector3f(const NVector3f& other)
-	    : Vector3f(other)
-	{
-	}
-
 	void construct(Vector3f&);
 	void construct(f32, f32, f32);
 	void construct(Vector3f&, Vector3f&);
@@ -131,19 +126,22 @@ struct NMatrix4f : public Matrix4f {
 	void transpose();
 	void println();
 
-	void makeIdentity(); // DLL, to do
+	void makeIdentity()
+	{
+		input(NMatrix4f(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f));
+	}
 
-	// _00-_30 = Matrix4f
+	// _00-_40 = Matrix4f
 };
 
 /**
  * @brief TODO
  */
 struct NSpecialMatrix {
-	NSpecialMatrix(int);                   // unused/inlined
-	NSpecialMatrix(const NSpecialMatrix&); // DLL, to do
+	NSpecialMatrix() { } // DLL inline
+	NSpecialMatrix(int); // unused/inlined
 
-	virtual void setDimension(int); // _08
+	virtual void setDimension(int dim) { mDimension = dim; } // _08
 
 	// unused/inlined:
 	void construct(int);
@@ -158,36 +156,42 @@ struct NSpecialMatrix {
  * @brief TODO
  */
 struct NUpperMatrix : public NSpecialMatrix {
-	NUpperMatrix(f32*, f32*, int);     // unused/inlined
-	NUpperMatrix(const NUpperMatrix&); // DLL, to do
+	NUpperMatrix() { }             // DLL inline
+	NUpperMatrix(f32*, f32*, int); // unused/inlined
 
 	// unused/inlined:
 	void construct(f32*, f32*, int);
 	void solve(NVector&, NVector&);
 	void println();
 
-	f32 getCenter(int);       // DLL, to do
-	void setCenter(int, f32); // DLL, to do
+	f32 getCenter(int idx) { return mCentre[idx]; }
+	void setCenter(int idx, f32 val) { mCentre[idx] = val; }
+	void setUpper(int idx, f32 val) { mUpper[idx] = val; }
 
-	// TODO: members
+	// _00     = VTBL
+	// _00-_08 = NSpecialMatrix
+	f32* mCentre; // _08
+	f32* mUpper;  // _0C
 };
 
 /**
  * @brief TODO
  */
 struct NLowerMatrix : public NSpecialMatrix {
+	NLowerMatrix() { }
 	NLowerMatrix(f32*, int);
-	NLowerMatrix(const NLowerMatrix&); // DLL, to do
 
 	// unused/inlined:
 	void construct(f32*, int);
 	void solve(NVector&, NVector&);
 	void println();
 
-	f32 getLower(int);       // DLL, to do
-	void setLower(int, f32); // DLL, to do
+	f32 getLower(int idx) { return mLower[idx - 1]; }
+	void setLower(int idx, f32 val) { mLower[idx - 1] = val; }
 
-	// TODO: members
+	// _00     = VTBL
+	// _00-_08 = NSpecialMatrix
+	f32* mLower; // _08
 };
 
 /**
@@ -195,7 +199,6 @@ struct NLowerMatrix : public NSpecialMatrix {
  */
 struct LUMatrix : public NSpecialMatrix {
 	LUMatrix(f32*, f32*, f32*, int); // unused/inlined
-	LUMatrix(const LUMatrix&);       // DLL, to do
 
 	virtual void setDimension(int); // _08
 
@@ -211,9 +214,11 @@ struct LUMatrix : public NSpecialMatrix {
 
 	// _00 = VTBL
 	// _00-_08 = NSpecialMatrix
-	NSpecialMatrix _08; // _08, maybe NLowerMatrix?
-	u8 _10[0x4];        // _10, unknown
-	NSpecialMatrix _14; // _14, maybe NUpperMatrix?
+	NLowerMatrix mLower; // _08
+	NUpperMatrix mUpper; // _14
+	f32* mCentreVals;    // _24
+	f32* mLowerVals;     // _28
+	f32* mUpperVals;     // _2C
 };
 
 /**
@@ -223,7 +228,6 @@ struct NOrientation {
 	NOrientation(Vector3f&);
 	NOrientation();                     // unused/inlined
 	NOrientation(Vector3f&, Vector3f&); // unused/inlined
-	NOrientation(const NOrientation&);  // DLL, to do
 
 	void construct(Vector3f&);
 	void normalize();
@@ -243,11 +247,16 @@ struct NOrientation {
 	NVector3f& getFore() { return mDirection; }
 	NVector3f& getUp() { return mUpVector; }
 
-	void input(Vector3f&, Vector3f&); // DLL, to do
-	void inputUp(Vector3f&);
+	void input(Vector3f& direction, Vector3f& up)
+	{
+		mDirection.input(direction);
+		mUpVector.input(up);
+	}
 
-	NVector3f mDirection; // _00
-	NVector3f mUpVector;  // _0C
+	void inputUp(Vector3f& up) { mUpVector.input(up); }
+
+	NVector3f mDirection; // _00, a.k.a. 'fore'/forward
+	NVector3f mUpVector;  // _0C, a.k.a. 'up'
 };
 
 /**
@@ -274,14 +283,28 @@ struct NPolar3f {
 	bool clampMeridian(f32);
 	void println();
 
-	void add(NPolar3f&);             // DLL, to do
-	void add2(NPolar3f&, NPolar3f&); // DLL, to do
-	void rotateAzimuth(f32);         // DLL, to do
-	void round();                    // DLL, to do
-	void roundAzimuth();             // DLL, to do
+	void round()
+	{
+		roundMeridian();
+		roundAzimuth();
+	}
+
+	void roundAzimuth() { mAzimuth = NMathF::roundAngle(mAzimuth); }
+
+	void add(NPolar3f& other) { add2(*this, other); } // yeah, really
+
+	void add2(NPolar3f& pol1, NPolar3f& pol2)
+	{
+		mRadius      = pol1.mRadius + pol2.mRadius;
+		mInclination = pol1.mInclination + pol2.mInclination;
+		mAzimuth     = pol1.mAzimuth + pol2.mAzimuth;
+		round();
+	}
+
+	void rotateAzimuth(f32); // DLL, to do
 
 	f32 mRadius;      // _00
-	f32 mInclination; // _04
+	f32 mInclination; // _04, a.k.a. meridian
 	f32 mAzimuth;     // _08
 };
 
@@ -291,12 +314,6 @@ struct NPolar3f {
 struct NAxisAngle4f {
 	NAxisAngle4f(); // unused/inlined
 	NAxisAngle4f(NVector3f&, f32);
-
-	NAxisAngle4f(const NAxisAngle4f& other)
-	    : mAxis(other.mAxis)
-	    , mAngle(other.mAngle)
-	{
-	}
 
 	void construct(NVector3f&, f32);
 
@@ -325,16 +342,15 @@ struct NPosture2D {
 	void outputAxisAngle(NAxisAngle4f&);
 	void println();
 
-	NVector3f& getTranslation();      // DLL, to do
-	f32 getDirection();               // DLL, to do
-	void inputTranslation(Vector3f&); // DLL, to do
-	void setDirection(f32);           // DLL, to do
+	NVector3f& getTranslation() { return mTranslation; }
+	f32 getDirection() { return mDirection; }
+
+	void inputTranslation(Vector3f& trans) { mTranslation.input(trans); }
+	void setDirection(f32 dir) { mDirection = dir; }
 
 	// _00 = VTBL
-	f32 _04; // _04
-	f32 _08; // _08
-	f32 _0C; // _0C
-	f32 _10; // _10
+	NVector3f mTranslation; // _04
+	f32 mDirection;         // _10
 };
 
 /**
@@ -368,16 +384,23 @@ struct NPosture3D {
 	f32 calcDirection();
 	void println();
 
-	NVector3f& getViewpoint();       // DLL, to do
-	NVector3f& getWatchpoint();      // DLL, to do
-	void input(NPosture3D&);         // DLL, to do
-	void inputViewpoint(Vector3f&);  // DLL, to do
-	void inputWatchpoint(Vector3f&); // DLL, to do
-	void output(NPosture3D&);        // DLL, to do
+	NVector3f& getViewpoint() { return mViewpoint; }
+	void inputViewpoint(Vector3f& view) { mViewpoint.input(view); }
+
+	NVector3f& getWatchpoint() { return mWatchpoint; }
+	void inputWatchpoint(Vector3f& watch) { mWatchpoint.input(watch); }
+
+	void input(NPosture3D& other)
+	{
+		inputViewpoint(other.getViewpoint());
+		inputWatchpoint(other.getWatchpoint());
+	}
+
+	void output(NPosture3D&); // DLL, to do
 
 	// _00 = VTBL
-	NVector3f mDirection; // _04
-	NVector3f mUp;        // _10
+	NVector3f mViewpoint;  // _04, i.e. where we *are*
+	NVector3f mWatchpoint; // _10, i.e. where we're *looking* at
 };
 
 /**
@@ -393,7 +416,7 @@ struct NPosture3DIO {
 /**
  * @brief TODO
  */
-struct NTransform3D {
+struct NTransform3D : public NMatrix4f {
 	NTransform3D();
 	NTransform3D(NMatrix4f&); // unused/inlined
 
@@ -414,7 +437,7 @@ struct NTransform3D {
 	void inputRotation(Matrix4f&);
 	void inputRotation(NAxisAngle4f&);
 
-	NMatrix4f mMtx; // _00
+	// _00-_40 = NMatrix4f
 };
 
 struct NAlphaMode {

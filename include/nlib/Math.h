@@ -56,25 +56,38 @@ struct NMathF {
 	static f32 atan2(f32, f32);
 	static f32 remainder(f32, f32);
 
-	// unused/inlined:
-	static f32 roundAngle(f32);
+	// NB: don't use this - it gets stripped in nlibgeometry
+	// so shouldn't show up elsewhere in anything non-stripped
+	static inline f32 roundAngle(f32 angle)
+	{
+		f32 tau = 2.0f * NMathF::pi;
+		if (angle < 0.0f) {
+			return angle + tau;
+		}
+		if (angle >= tau) {
+			return angle - tau;
+		}
+		return angle;
+	}
+
+	static inline f32 interpolate(f32 x, f32 y, f32 t) { return (1.0f - t) * x + t * y; }
+	static inline f32 length(f32 x, f32 y) { return std::sqrtf(x * x + y * y); }
+
+	static inline bool equals(f32 x, f32 y) { return NMathF::isZero(x - y); }
+	static inline bool isPositive(f32 x) { return x >= error; }
+	static inline bool isZero(f32 value) { return NMathf::absolute(value) <= error; }
 
 	// inlines from DLL, to be created:
 	static inline f32 acos(f32);
 	static inline f32 angleDifference(f32, f32);
 	static inline f32 calcNearerDirection(f32, f32);
 	static inline f32 d2r(f32);
-	static inline f32 interpolate(f32 x, f32 y, f32 t) { return (1.0f - t) * x + t * y; }
-	static inline f32 length(f32, f32);
 	static inline f32 r2d(f32);
 	static inline f32 rangeRandom(f32, f32);
 	static inline f32 rateRandom(f32, f32);
 	static inline f32 sqrt(f32);
 	static inline f32 tan(f32);
 	static inline int quotient(f32, f32);
-	static inline bool equals(f32 x, f32 y) { return NMathF::isZero(x - y); }
-	static inline bool isPositive(f32 x) { return x >= error; }
-	static inline bool isZero(f32 value) { return NMathf::absolute(value) <= error; }
 	static inline bool occurred(f32);
 
 	// this is fake or needs renaming
