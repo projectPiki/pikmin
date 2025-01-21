@@ -487,7 +487,7 @@ config.libs = [
             Object(NonMatching, "plugPikiKando/playerState.cpp"),
             Object(NonMatching, "plugPikiKando/gameDemo.cpp"),
             Object(NonMatching, "plugPikiKando/demoInvoker.cpp"),
-            Object(NonMatching, "plugPikiKando/demoEvent.cpp"),
+            Object(Matching, "plugPikiKando/demoEvent.cpp"),
             Object(NonMatching, "plugPikiKando/resultFlag.cpp"),
             Object(Matching, "plugPikiKando/aiConstants.cpp"),
             Object(Matching, "plugPikiKando/kio.cpp"),

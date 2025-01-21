@@ -140,8 +140,8 @@ struct PlayerState {
 	bool inDayEnd() { return mInDayEnd; }
 	void setDayEnd() { mInDayEnd = true; }
 
-	// placeholder, idk what this is
-	bool is11(u8 flag) { return _11 & flag; }
+	bool hasUfoLeftControl() { return _11 & 4; }
+	bool hasUfoRightControl() { return _11 & 2; }
 
 	/*
 	    All remaining DLL inlines:
@@ -152,8 +152,6 @@ struct PlayerState {
 	    void setDayPowerupCount(int, int);
 
 	    bool hasRadar();
-	    bool hasUfoLeftControl();
-	    bool hasUfoRightControl();
 	    bool isChallengeMode;
 	    int getLastPikmins();
 	*/
