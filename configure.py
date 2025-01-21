@@ -779,7 +779,7 @@ config.libs = [
             Object(NonMatching, "plugPikiYamashita/P2DPane.cpp"),
             Object(NonMatching, "plugPikiYamashita/P2DPicture.cpp"),
             Object(NonMatching, "plugPikiYamashita/P2DScreen.cpp"),
-            Object(NonMatching, "plugPikiYamashita/P2DStream.cpp"),
+            Object(Matching, "plugPikiYamashita/P2DStream.cpp"),
             Object(Matching, "plugPikiYamashita/PSUList.cpp"),
             Object(Matching, "plugPikiYamashita/PUTRect.cpp"),
             Object(NonMatching, "plugPikiYamashita/P2DWindow.cpp"),
