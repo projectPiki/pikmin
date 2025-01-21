@@ -1,24 +1,19 @@
 #include "nlib/Geometry3D.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("nlibgeometry3d");
 
 /*
  * --INFO--
@@ -27,7 +22,7 @@ static void _Print(char*, ...)
  */
 NLine::NLine()
 {
-	// UNUSED FUNCTION
+	construct(NVector3f(0.0f, 0.0f, 0.0f), NVector3f(0.0f, 0.0f, 1.0f));
 }
 
 /*
@@ -35,9 +30,9 @@ NLine::NLine()
  * Address:	8011D3FC
  * Size:	000070
  */
-NLine::NLine(NVector3f& start, NVector3f& dir)
+NLine::NLine(NVector3f& pos, NVector3f& dir)
 {
-	construct(start, dir);
+	construct(pos, dir);
 }
 
 /*
@@ -45,10 +40,10 @@ NLine::NLine(NVector3f& start, NVector3f& dir)
  * Address:	8011D46C
  * Size:	000034
  */
-void NLine::construct(NVector3f& start, NVector3f& dir)
+void NLine::construct(NVector3f& pos, NVector3f& dir)
 {
-	// mStart.setNVec(start);
-	// mDirection.setNVec(dir);
+	mPosition.input(pos);
+	mDirection.input(dir);
 }
 
 /*
@@ -56,9 +51,9 @@ void NLine::construct(NVector3f& start, NVector3f& dir)
  * Address:	........
  * Size:	000060
  */
-NLine::NLine(NLine&)
+NLine::NLine(NLine& other)
 {
-	// UNUSED FUNCTION
+	construct(other);
 }
 
 /*
@@ -66,9 +61,9 @@ NLine::NLine(NLine&)
  * Address:	........
  * Size:	000034
  */
-void NLine::construct(NLine&)
+void NLine::construct(NLine& other)
 {
-	// UNUSED FUNCTION
+	construct(other.mPosition, other.mDirection);
 }
 
 /*
@@ -76,63 +71,17 @@ void NLine::construct(NLine&)
  * Address:	8011D4A0
  * Size:	0000C0
  */
-f32 NLine::calcDistance(NVector3f&, f32*)
+f32 NLine::calcDistance(NVector3f& point, f32* vertProj)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stfd      f31, 0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x3C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x38(r1)
-	  addi      r28, r3, 0
-	  addi      r3, r1, 0x2C
-	  bl        -0x67C
-	  addi      r31, r3, 0
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  bl        .loc_0xC0
-	  fmr       f31, f1
-	  addi      r3, r28, 0
-	  addi      r4, r31, 0
-	  bl        0xD4
-	  cmplwi    r30, 0
-	  beq-      .loc_0x60
-	  stfs      f31, 0x0(r30)
+	NVector3f& pos = NVector3f();
+	f32 proj       = calcVerticalProjection(point);
+	outputPosition(proj, pos);
 
-	.loc_0x60:
-	  lfs       f3, 0x0(r29)
-	  lfs       f2, 0x0(r31)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r31)
-	  fsubs     f4, f3, f2
-	  lfs       f2, 0x8(r29)
-	  fsubs     f3, f1, f0
-	  lfs       f0, 0x8(r31)
-	  fmuls     f1, f4, f4
-	  fsubs     f2, f2, f0
-	  fmuls     f0, f3, f3
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x10F8F8
-	  lwz       r0, 0x54(r1)
-	  lfd       f31, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  lwz       r28, 0x38(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
+	if (vertProj) {
+		*vertProj = proj;
+	}
 
-	.loc_0xC0:
-	*/
+	return pos.distance(point);
 }
 
 /*
@@ -140,8 +89,37 @@ f32 NLine::calcDistance(NVector3f&, f32*)
  * Address:	........
  * Size:	0002AC
  */
-f32 NLine::calcDistance(NLine&, f32*, f32*)
+f32 NLine::calcDistance(NLine& other, f32* p2, f32* p3)
 {
+	f32 dirProj = mDirection.dot(other.getDirection());
+	if (NMathF::equals(dirProj, 1.0f) || NMathF::equals(dirProj, -1.0f)) {
+		f32 vertProj = 0.0f;
+		f32 dist     = calcDistance(other.getPosition(), &vertProj);
+		if (p2) {
+			*p2 = vertProj;
+		}
+		if (p3) {
+			*p3 = 0.0f;
+		}
+		return dist;
+	}
+
+	NVector3f& otherPos = NVector3f(other.getPosition());
+	f32 ndot            = -otherPos.dot(other.getDirection());
+	f32 val             = (otherPos.dot(mDirection) * dirProj + ndot) / (1.0f - dirProj * dirProj);
+	f32 val2            = otherPos.dot(mDirection) + val * dirProj;
+
+	NVector3f& outPos = NVector3f();
+	outputPosition(val2, outPos);
+	NVector3f& otherOutPos = NVector3f();
+	other.outputPosition(val, otherOutPos);
+	if (p2) {
+		*p2 = val2;
+	}
+	if (p3) {
+		*p3 = val;
+	}
+	return outPos.distance(otherOutPos);
 	// UNUSED FUNCTION
 }
 
@@ -150,9 +128,9 @@ f32 NLine::calcDistance(NLine&, f32*, f32*)
  * Address:	........
  * Size:	000044
  */
-void NLine::outputVerticalPosition(NVector3f&, NVector3f&)
+void NLine::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
 {
-	// UNUSED FUNCTION
+	outputPosition(calcVerticalProjection(point), outPos);
 }
 
 /*
@@ -160,36 +138,10 @@ void NLine::outputVerticalPosition(NVector3f&, NVector3f&)
  * Address:	8011D560
  * Size:	000064
  */
-f32 NLine::calcVerticalProjection(NVector3f&)
+f32 NLine::calcVerticalProjection(NVector3f& point)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x10
-	  addi      r4, r31, 0x4
-	  bl        -0x654
-	  lfs       f3, 0x10(r31)
-	  lfs       f2, 0x0(r3)
-	  lfs       f1, 0x14(r31)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x18(r31)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r3)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f1, f1, f0
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f& sep = NVector3f(mPosition, point);
+	return mDirection.dot(sep);
 }
 
 /*
@@ -199,54 +151,9 @@ f32 NLine::calcVerticalProjection(NVector3f&)
  */
 void NLine::outputPosition(f32 t, NVector3f& outPos)
 {
-	NVector3f pos;
-	pos.x = t * mDirection.x;
-	pos.y = t * mDirection.y;
-	pos.z = t * mDirection.z;
-
-	outPos.set(mStart.x + pos.x, mStart.y + pos.y, mStart.z + pos.z);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stfd      f31, 0x30(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x18
-	  bl        -0x798
-	  lfs       f0, 0x10(r30)
-	  fmuls     f0, f31, f0
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x14(r30)
-	  fmuls     f0, f31, f0
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x18(r30)
-	  fmuls     f0, f31, f0
-	  stfs      f0, 0x8(r3)
-	  lfs       f1, 0x4(r30)
-	  lfs       f0, 0x0(r3)
-	  lfs       f3, 0x8(r30)
-	  lfs       f2, 0x4(r3)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0xC(r30)
-	  lfs       f1, 0x8(r3)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x0(r31)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x4(r31)
-	  stfs      f0, 0x8(r31)
-	  lwz       r0, 0x3C(r1)
-	  lfd       f31, 0x30(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f& tmp = NVector3f();
+	tmp.scale2(t, mDirection);
+	outPos.add2(mPosition, tmp);
 }
 
 /*
@@ -254,9 +161,9 @@ void NLine::outputPosition(f32 t, NVector3f& outPos)
  * Address:	........
  * Size:	0000A8
  */
-void NLine::outputPositionY(f32, NVector3f&)
+void NLine::outputPositionY(f32 p1, NVector3f& outPos)
 {
-	// UNUSED FUNCTION
+	outputPosition((p1 - mPosition.y) / mDirection.y, outPos);
 }
 
 /*
@@ -264,30 +171,10 @@ void NLine::outputPositionY(f32, NVector3f&)
  * Address:	8011D660
  * Size:	00004C
  */
-void NLine::transform(NTransform3D&)
+void NLine::transform(NTransform3D& transform)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0x4
-	  bl        -0x9E0
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0x10
-	  bl        -0xB88
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	transform.transform(mPosition);
+	transform.rotate(mDirection);
 }
 
 /*
@@ -297,7 +184,9 @@ void NLine::transform(NTransform3D&)
  */
 void NLine::println()
 {
-	mStart.println();
+	PRINT("position:\n");
+	mPosition.println();
+	PRINT("direction:\n");
 	mDirection.println();
 }
 
@@ -348,8 +237,8 @@ NPlane::NPlane(NVector3f& normal, NVector3f& point)
  */
 void NPlane::construct(NVector3f& normal, NVector3f& point)
 {
-	// mNormal.setNVec(normal);
-	mOffset = -(mNormal.x * point.x + mNormal.y * point.y + mNormal.z * point.z);
+	mNormal.input(normal);
+	setDifference(point);
 }
 
 /*
@@ -477,9 +366,9 @@ bool NPlane::outputSegmentIntersection(NSegment&, NVector3f&)
  * Address:	........
  * Size:	000030
  */
-void NPlane::outputPosition(NVector3f&)
+void NPlane::outputPosition(NVector3f& outPos)
 {
-	// UNUSED FUNCTION
+	outPos.scale2(-mDifference, mNormal);
 }
 
 /*
@@ -487,66 +376,12 @@ void NPlane::outputPosition(NVector3f&)
  * Address:	8011D79C
  * Size:	0000DC
  */
-void NPlane::outputVerticalPosition(NVector3f&, NVector3f&)
+void NPlane::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r5
-	  stw       r30, 0x38(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x34(r1)
-	  addi      r29, r3, 0
-	  lfs       f3, 0x4(r3)
-	  lfs       f2, 0x0(r4)
-	  lfs       f1, 0x8(r3)
-	  addi      r3, r1, 0x1C
-	  lfs       f0, 0x4(r4)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0xC(r29)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r4)
-	  lfs       f4, 0x10(r29)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  fadds     f31, f4, f0
-	  bl        -0x9A8
-	  fneg      f1, f31
-	  lfs       f0, 0x4(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x8(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0xC(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x8(r3)
-	  lfs       f1, 0x0(r30)
-	  lfs       f0, 0x0(r3)
-	  lfs       f3, 0x4(r30)
-	  lfs       f2, 0x4(r3)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r30)
-	  lfs       f1, 0x8(r3)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x0(r31)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x4(r31)
-	  stfs      f0, 0x8(r31)
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	f32 t          = judge(point);
+	NVector3f& tmp = NVector3f();
+	tmp.scale2(-t, mNormal);
+	outPos.add2(point, tmp);
 }
 
 /*
@@ -614,59 +449,13 @@ f32 NPlane::calcY(f32, f32)
  * Address:	8011D878
  * Size:	0000C0
  */
-void NPlane::transform(NTransform3D&)
+void NPlane::transform(NTransform3D& transform)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r1, 0x14
-	  bl        -0xA48
-	  lfs       f1, 0x10(r29)
-	  mr        r31, r3
-	  lfs       f0, 0x4(r29)
-	  addi      r3, r30, 0
-	  fneg      f1, f1
-	  addi      r4, r29, 0x4
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x0(r31)
-	  lfs       f0, 0x8(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x4(r31)
-	  lfs       f0, 0xC(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x8(r31)
-	  bl        -0xDD0
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0xC40
-	  lfs       f3, 0x4(r29)
-	  lfs       f2, 0x0(r31)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x4(r31)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0xC(r29)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r31)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  fneg      f0, f0
-	  stfs      f0, 0x10(r29)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f& tmp = NVector3f();
+	outputPosition(tmp);
+	transform.rotate(mNormal);
+	transform.transform(tmp);
+	setDifference(tmp);
 }
 
 /*
@@ -676,7 +465,9 @@ void NPlane::transform(NTransform3D&)
  */
 void NPlane::println()
 {
+	PRINT("normal:\n");
 	mNormal.println();
+	PRINT("difference:%f\n", mDifference);
 }
 
 /*
@@ -796,5 +587,7 @@ void NSegment::makeProjectionY()
  */
 void NSegment::println()
 {
-	// UNUSED FUNCTION
+	NLine::println();
+	PRINT("edge:\n");
+	mEdge.println();
 }

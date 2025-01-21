@@ -6,6 +6,7 @@
 
 struct NSegment;
 struct Plane;
+struct NLine;
 
 /**
  * @brief TODO
@@ -29,13 +30,14 @@ struct NLine {
 	void outputVerticalPosition(NVector3f&, NVector3f&);
 	void outputPositionY(f32, NVector3f&);
 
-	NVector3f& getDirection();                   // DLL, to do
-	NVector3f& getPosition();                    // DLL, to do
+	NVector3f& getDirection() { return mDirection; }
+	NVector3f& getPosition() { return mPosition; }
+
 	void inputDirection(NVector3f&, NVector3f&); // DLL, to do
 	void inputPosition(NVector3f&);              // DLL, to do
 
 	// _00 = VTBL
-	NVector3f mStart;     // _04
+	NVector3f mPosition;  // _04
 	NVector3f mDirection; // _10
 };
 
@@ -75,22 +77,29 @@ struct NPlane {
 	f32 calcAngle(NPlane&);
 	f32 calcY(f32, f32);
 
-	NVector3f& getNormal();        // DLL, to do
-	f32 judge(Vector3f&);          // DLL, to do
-	void setDifference(Vector3f&); // DLL, to do
+	f32 judge(Vector3f& point) { return mNormal.dot(point) + mDifference; }
+
+	void setDifference(Vector3f& point) { mDifference = -mNormal.dot(point); }
+
+	NVector3f& getNormal() { return mNormal; }
 
 	// _00 = VTBL
 	NVector3f mNormal; // _04
-	f32 mOffset;       // _10
+	f32 mDifference;   // _10
 };
 
 /**
  * @brief TODO
  */
-struct NSegment {
+struct NSegment : public NLine {
 	NSegment();                       // unused/inlined
 	NSegment(NVector3f&, NVector3f&); // unused/inlined
 	NSegment(NSegment&);              // unused/inlined
+
+	virtual void transform(NTransform3D&); // _08
+	virtual void println();                // _0C
+	virtual void translate(NVector3f&);    // _10
+	virtual void makeProjectionY();        // _14
 
 	// unused/inlined:
 	void construct(NVector3f&, NVector3f&);
@@ -98,17 +107,15 @@ struct NSegment {
 	f32 calcDistanceAsSegment(NVector3f&, f32*, f32*);
 	f32 calcDistanceAsSegment(NLine&, f32*, f32*);
 	f32 calcSegmentDistanceAsSegment(NSegment&, f32*, f32*);
-	void transform(NTransform3D&);
-	void translate(NVector3f&);
-	void makeProjectionY();
-	void println();
 
 	NVector3f& getEdge();       // DLL, to do
 	f32 calcLength();           // DLL, to do
 	void inputEdge(NVector3f&); // DLL, to do
 	void normalize();           // DLL, to do
 
-	// TODO: members
+	// _00     = VTBL
+	// _00-_1C = NLine
+	NVector3f mEdge; // _1C
 };
 
 #endif

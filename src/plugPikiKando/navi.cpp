@@ -2631,7 +2631,7 @@ void Navi::makeVelocity(bool p1)
 	_74C                    = stickVec;
 	f32 angle               = NMathF::atan2(mNaviCamera->mViewXAxis.z, mNaviCamera->mViewXAxis.x);
 	NAxisAngle4f& axisAngle = NAxisAngle4f(NVector3f(0.0f, 1.0f, 0.0f), angle);
-	NTransform3D transform;
+	NTransform3D& transform = NTransform3D();
 	transform.inputAxisAngle(axisAngle);
 
 	if (!p1) {

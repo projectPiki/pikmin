@@ -66,7 +66,7 @@ struct Vector3f {
 
 	void input(Vector3f& other) { set(other.x, other.y, other.z); }
 
-	// TODO: void output(Vector3f&);
+	void output(Vector3f& outVec) { outVec.set(x, y, z); }
 
 	f32 length() { return std::sqrtf(x * x + y * y + z * z); }
 
@@ -154,7 +154,12 @@ struct Vector3f {
 		z *= scale;
 	}
 
-	void scale2(f32 scale, Vector3f& vec) { vec.set(scale * x, scale * y, scale * z); }
+	void scale2(f32 scale, Vector3f& vec)
+	{
+		x = scale * vec.x;
+		y = scale * vec.y;
+		z = scale * vec.z;
+	}
 
 	// TODO: check if this is this, or x *= -1.0f etc
 	void negate()

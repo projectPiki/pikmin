@@ -99,4 +99,8 @@ struct NMathI {
 	static bool checkBit(int, int);
 };
 
+extern u16 atan(f32 x, f32 y);
+
+extern u16 AtanTable[1025];
+
 #endif

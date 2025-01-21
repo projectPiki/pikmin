@@ -17,10 +17,25 @@ struct NCamera {
 	void makeMatrix();
 	void makeCamera();
 
-	f32 mRotationAngle;        // _00
-	Camera* mCamera;           // _04
-	NVector3f mPosition;       // _08
-	NVector3f mTargetPosition; // _14
+	NVector3f& getViewpoint() { return mViewpoint; }
+	void inputWatchpoint(Vector3f&);
+
+	NVector3f& getWatchpoint() { return mWatchpoint; }
+	void inputViewpoint(Vector3f&);
+
+	f32 getAspect();
+	void setAspect(f32);
+
+	f32 getFov();
+	void setFov(f32);
+
+	void outputPosture(NPosture3D&);
+	void inputPosture(NPosture3D&);
+
+	f32 mRotationAngle;    // _00
+	Camera* mCamera;       // _04
+	NVector3f mViewpoint;  // _08, a.k.a. position - point we're viewing *from*
+	NVector3f mWatchpoint; // _14, a.k.a. target position - point we're *watching*
 };
 
 #endif
