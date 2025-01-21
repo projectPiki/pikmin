@@ -79,7 +79,7 @@ struct PikiProp : public CreatureProp {
 		    , _3BC(this, 4.0f, 0.0f, 300.0f, "p52", nullptr)
 		    , _3CC(this, 1.0f, 0.0f, 300.0f, "p53", nullptr)
 		    , _3DC(this, 3.0f, 0.0f, 30.0f, "p55", nullptr)
-		    , _3EC(this, 0.8f, 0.0f, 1.0f, "p56", nullptr)
+		    , mPikiLeaveSeedChance(this, 0.8f, 0.0f, 1.0f, "p56", nullptr)
 		    , _3FC(this, 2.0f, 0.0f, 60.0f, "p57", nullptr)
 		    , _40C(this, 50.0f, 0.0f, 1000.0f, "p58", nullptr)
 		    , _41C(this, 200.0f, 0.0f, 1000.0f, "p59", nullptr)
@@ -160,7 +160,7 @@ struct PikiProp : public CreatureProp {
 		Parm<f32> _3BC;                     // _3BC, p52
 		Parm<f32> _3CC;                     // _3CC, p53
 		Parm<f32> _3DC;                     // _3DC, p55
-		Parm<f32> _3EC;                     // _3EC, p56
+		Parm<f32> mPikiLeaveSeedChance;     // _3EC, p56 chance for a flower to leave a seed upon death
 		Parm<f32> _3FC;                     // _3FC, p57
 		Parm<f32> _40C;                     // _40C, p58
 		Parm<f32> _41C;                     // _41C, p59
@@ -244,7 +244,7 @@ struct PikiMgr : public MonoObjectMgr {
 	u32 _54;                       // _54
 	u32 _58;                       // _58
 	u32 _5C;                       // _5C
-	u32 _60;                       // _60
+	u32 mDeadPikis;                // _60
 	PaniMotionTable* mMotionTable; // _64
 	PikiProp* mPikiParms;          // _68
 	Navi* mNavi;                   // _6C

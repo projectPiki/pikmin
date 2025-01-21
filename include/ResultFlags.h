@@ -39,10 +39,19 @@ struct ResultFlags {
 	 */
 	struct FlagInfo {
 
-		// unused/inlined:
-		void type();
+		enum StoreType {
+			Store_Forget = 0,
+			Store_Reset  = 1,
+			Store_Keep   = 2,
+		};
 
-		// TODO: members
+		// unused/inlined:
+		int type();
+
+		int mScreenId;   // _00
+		bool mIsAutoSet; // _04
+		int mPrio;       // _08
+		u32 mStore;      // _0C
 	};
 
 	ResultFlags();
@@ -52,18 +61,20 @@ struct ResultFlags {
 	void loadCard(RandomAccessStream&);
 	void setOn(int);
 	void setSeen(int);
-	void getDayDocument(int, int&);
-	void getDocument(int&);
+	int getDayDocument(int, int&);
+	int getDocument(int&);
 	void dump();
-	bool getFlag(int);
+	u8 getFlag(int);
 	void setFlag(int, u8);
 
-	u16 _00;     // _00
-	u16 _02;     // _02
-	u16 _04;     // _04
-	u8* _08;     // _08
-	s16 _0C[30]; // _0C
-	u32* _48;    // _48
+	static FlagInfo flagTable[];
+
+	u16 _00;           // _00
+	u16 _02;           // _02
+	u16 _04;           // _04
+	u8* _08;           // _08
+	s16 mDaysSeen[30]; // _0C, what log id was seen for each day
+	u32* _48;          // _48
 };
 
 #endif

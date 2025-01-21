@@ -107,7 +107,7 @@ PikiMgr::PikiMgr(Navi* navi)
 void PikiMgr::init()
 {
 	AiTable::init();
-	_60                  = 0;
+	mDeadPikis           = 0;
 	PikiMgr::meNukiMode  = 0;
 	PikiMgr::meBirthMode = 0;
 }

@@ -1,5 +1,7 @@
 #include "ResultFlags.h"
 #include "DebugLog.h"
+#include "PlayerState.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -15,6 +17,86 @@ DEFINE_ERROR();
  */
 DEFINE_PRINT("resultFlag");
 
+ResultFlags::FlagInfo ResultFlags::flagTable[] = {
+	// .blo index, auto-enable, priority, store type
+	{ 1, false, 1, ResultFlags::FlagInfo::Store_Forget },    // End of Day 1
+	{ 3, false, 3, ResultFlags::FlagInfo::Store_Forget },    // First Visit Forest of Hope
+	{ 5, false, 9, ResultFlags::FlagInfo::Store_Forget },    // Open Forest Navel
+	{ 6, false, 10, ResultFlags::FlagInfo::Store_Forget },   // First Visit Forest Navel
+	{ 7, false, 11, ResultFlags::FlagInfo::Store_Forget },   // Open Distant Spring
+	{ 8, false, 12, ResultFlags::FlagInfo::Store_Reset },    // First Visit Distant Spring
+	{ 10, false, 13, ResultFlags::FlagInfo::Store_Forget },  // Final Day
+	{ 11, false, 14, ResultFlags::FlagInfo::Store_Forget },  // 25 parts
+	{ 12, false, 15, ResultFlags::FlagInfo::Store_Forget },  // 29 parts
+	{ 13, false, 5, ResultFlags::FlagInfo::Store_Reset },    // Olimar down
+	{ 14, false, 4, ResultFlags::FlagInfo::Store_Reset },    // Pikmin extinction
+	{ 15, false, 2, ResultFlags::FlagInfo::Store_Forget },   // All 30 parts (unused)
+	{ 17, false, 6, ResultFlags::FlagInfo::Store_Reset },    // Yellow Pikmin with bomb
+	{ 18, false, 7, ResultFlags::FlagInfo::Store_Forget },   // Meet Blue Pikmin
+	{ 19, false, 16, ResultFlags::FlagInfo::Store_Keep },    // Pikmin Routing
+	{ 20, false, 19, ResultFlags::FlagInfo::Store_Reset },   // Olimar's Daydream
+	{ 21, false, 20, ResultFlags::FlagInfo::Store_Reset },   // 15 parts
+	{ 23, false, 8, ResultFlags::FlagInfo::Store_Reset },    // Pikmin left behind
+	{ 24, false, 17, ResultFlags::FlagInfo::Store_Reset },   // Pikmin dies to bomb rock
+	{ 26, false, 18, ResultFlags::FlagInfo::Store_Keep },    // 10 parts
+	{ 27, true, 200, ResultFlags::FlagInfo::Store_Keep },    // Unused Controls log 1
+	{ 29, false, 201, ResultFlags::FlagInfo::Store_Keep },   // Unused Controls log 2
+	{ 31, true, 202, ResultFlags::FlagInfo::Store_Keep },    // Unused Controls log 3
+	{ 32, false, 203, ResultFlags::FlagInfo::Store_Forget }, // Broken Bridge
+	{ 33, false, 204, ResultFlags::FlagInfo::Store_Keep },   // Pikmin seeds
+	{ 35, false, 205, ResultFlags::FlagInfo::Store_Keep },   // Pikmin seed grows up
+	{ 36, false, 207, ResultFlags::FlagInfo::Store_Keep },   // Pikmin onions
+	{ 37, false, 206, ResultFlags::FlagInfo::Store_Forget }, // Meet Yellow Pikmin (no bombs)
+	{ 38, false, 208, ResultFlags::FlagInfo::Store_Forget }, // Blue Pikmin touch water (unused)
+	{ 39, false, 209, ResultFlags::FlagInfo::Store_Forget }, // Pikmin on fire
+	{ 40, false, 400, ResultFlags::FlagInfo::Store_Reset },  // Smoky Progg
+	{ 41, false, 401, ResultFlags::FlagInfo::Store_Reset },  // Bulborb
+	{ 42, false, 402, ResultFlags::FlagInfo::Store_Reset },  // Puffstool
+	{ 43, false, 403, ResultFlags::FlagInfo::Store_Reset },  // Flint Beetle
+	{ 44, false, 404, ResultFlags::FlagInfo::Store_Reset },  // Honeywisp
+	{ 45, false, 405, ResultFlags::FlagInfo::Store_Reset },  // Candypop Bud
+	{ 46, false, 406, ResultFlags::FlagInfo::Store_Reset },  // Beady Long Legs
+	{ 47, false, 407, ResultFlags::FlagInfo::Store_Reset },  // Armored Cannon Beetle
+	{ 48, false, 408, ResultFlags::FlagInfo::Store_Reset },  // Burrowing Snagret
+	{ 49, false, 409, ResultFlags::FlagInfo::Store_Reset },  // Emperor Bulblax
+	{ 50, false, 410, ResultFlags::FlagInfo::Store_Reset },  // Goolix
+	{ 51, false, 411, ResultFlags::FlagInfo::Store_Reset },  // Mamuta
+	{ 52, false, 412, ResultFlags::FlagInfo::Store_Reset },  // Sheargrub
+	{ 53, false, 413, ResultFlags::FlagInfo::Store_Reset },  // Fiery Blowhog
+	{ 54, false, 414, ResultFlags::FlagInfo::Store_Reset },  // Pearly Clamclamp
+	{ 55, false, 415, ResultFlags::FlagInfo::Store_Reset },  // Beadbug
+	{ 56, false, 416, ResultFlags::FlagInfo::Store_Reset },  // Puffy Blowhog
+	{ 57, false, 417, ResultFlags::FlagInfo::Store_Reset },  // Wollywog
+	{ 58, true, 600, ResultFlags::FlagInfo::Store_Keep },    // Misc 1
+	{ 59, true, 601, ResultFlags::FlagInfo::Store_Keep },    // Misc 2
+	{ 60, true, 602, ResultFlags::FlagInfo::Store_Keep },    // Misc 3
+	{ 61, true, 603, ResultFlags::FlagInfo::Store_Keep },    // Misc 4
+	{ 62, true, 604, ResultFlags::FlagInfo::Store_Keep },    // Misc 5
+	{ 63, true, 605, ResultFlags::FlagInfo::Store_Keep },    // Misc 6
+	{ 64, true, 606, ResultFlags::FlagInfo::Store_Keep },    // Misc 7
+	{ 65, true, 607, ResultFlags::FlagInfo::Store_Keep },    // Misc 8
+	{ 66, true, 608, ResultFlags::FlagInfo::Store_Keep },    // Misc 9
+	{ 67, true, 609, ResultFlags::FlagInfo::Store_Keep },    // Misc 10
+	{ 68, true, 610, ResultFlags::FlagInfo::Store_Keep },    // Misc 11
+	{ 69, true, 611, ResultFlags::FlagInfo::Store_Keep },    // Misc 12
+	{ 70, true, 612, ResultFlags::FlagInfo::Store_Keep },    // Misc 13
+	{ 71, true, 613, ResultFlags::FlagInfo::Store_Keep },    // Misc 14
+	{ 72, true, 614, ResultFlags::FlagInfo::Store_Keep },    // Misc 15
+	{ 73, true, 615, ResultFlags::FlagInfo::Store_Keep },    // Misc 16
+	{ 74, true, 616, ResultFlags::FlagInfo::Store_Keep },    // Misc 17
+	{ 75, true, 617, ResultFlags::FlagInfo::Store_Keep },    // Misc 18
+	{ 76, true, 618, ResultFlags::FlagInfo::Store_Keep },    // Misc 19
+	{ 77, true, 619, ResultFlags::FlagInfo::Store_Keep },    // Misc 20
+	{ 78, true, 620, ResultFlags::FlagInfo::Store_Keep },    // Misc 21
+	{ 79, true, 621, ResultFlags::FlagInfo::Store_Keep },    // Misc 22
+	{ 80, true, 622, ResultFlags::FlagInfo::Store_Keep },    // Misc 23
+	{ 81, true, 623, ResultFlags::FlagInfo::Store_Keep },    // Misc 24
+	{ 82, true, 624, ResultFlags::FlagInfo::Store_Keep },    // Misc 25
+	{ 83, true, 625, ResultFlags::FlagInfo::Store_Keep },    // Misc 26
+	{ 84, true, 626, ResultFlags::FlagInfo::Store_Keep },    // Misc 27
+	{ -1, 0, 0, 0 },                                         // END
+};
+
 /*
  * --INFO--
  * Address:	8008358C
@@ -22,142 +104,36 @@ DEFINE_PRINT("resultFlag");
  */
 ResultFlags::ResultFlags()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x26
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  sth       r0, 0x0(r3)
-	  li        r0, 0x94
-	  rlwinm    r3,r0,2,0,29
-	  lhz       r0, 0x0(r31)
-	  rlwinm    r0,r0,2,16,29
-	  sth       r0, 0x4(r31)
-	  bl        -0x3C5C0
-	  stw       r3, 0x48(r31)
-	  li        r30, 0
-	  sth       r30, 0x2(r31)
-	  lhz       r3, 0x0(r31)
-	  bl        -0x3C5D4
-	  stw       r3, 0x8(r31)
-	  li        r4, 0
-	  b         .loc_0x68
+	int max = 38;
+	_00     = max;
+	_04     = _00 << 2;
+	_48     = new u32[max + 110];
+	_02     = 0;
+	_08     = new u8[_00];
+	for (int i = 0; i < _00; i++) {
+		_08[i] = false;
+	}
 
-	.loc_0x5C:
-	  lwz       r3, 0x8(r31)
-	  stbx      r30, r3, r4
-	  addi      r4, r4, 0x1
+	for (int i = 0; i < _04; i++) {
+		if (flagTable[i].mScreenId == -1) {
+			break;
+		}
+		_48[flagTable[i].mScreenId] = i;
 
-	.loc_0x68:
-	  lhz       r0, 0x0(r31)
-	  cmpw      r4, r0
-	  blt+      .loc_0x5C
-	  lis       r3, 0x802B
-	  subi      r30, r3, 0x1E04
-	  li        r29, 0
-	  b         .loc_0xC8
+		if (flagTable[i].mIsAutoSet) {
+			setOn(flagTable[i].mScreenId);
+		}
+		_02++;
+	}
 
-	.loc_0x84:
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0xD4
-	  lwz       r3, 0x48(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r29, r3, r0
-	  lbz       r0, 0x4(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB4
-	  mr        r3, r31
-	  lwz       r4, 0x0(r30)
-	  bl        0x3C4
+	for (int i = 0; i < 30; i++) {
+		mDaysSeen[i] = -1;
+	}
 
-	.loc_0xB4:
-	  lhz       r3, 0x2(r31)
-	  addi      r30, r30, 0x10
-	  addi      r29, r29, 0x1
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x2(r31)
-
-	.loc_0xC8:
-	  lhz       r0, 0x4(r31)
-	  cmpw      r29, r0
-	  blt+      .loc_0x84
-
-	.loc_0xD4:
-	  li        r3, -0x1
-	  sth       r3, 0xC(r31)
-	  li        r5, 0x18
-	  sth       r3, 0xE(r31)
-	  sth       r3, 0x10(r31)
-	  sth       r3, 0x12(r31)
-	  sth       r3, 0x14(r31)
-	  sth       r3, 0x16(r31)
-	  sth       r3, 0x18(r31)
-	  sth       r3, 0x1A(r31)
-	  sth       r3, 0x1C(r31)
-	  sth       r3, 0x1E(r31)
-	  sth       r3, 0x20(r31)
-	  sth       r3, 0x22(r31)
-	  sth       r3, 0x24(r31)
-	  sth       r3, 0x26(r31)
-	  sth       r3, 0x28(r31)
-	  sth       r3, 0x2A(r31)
-	  sth       r3, 0x2C(r31)
-	  sth       r3, 0x2E(r31)
-	  sth       r3, 0x30(r31)
-	  sth       r3, 0x32(r31)
-	  sth       r3, 0x34(r31)
-	  sth       r3, 0x36(r31)
-	  sth       r3, 0x38(r31)
-	  sth       r3, 0x3A(r31)
-	  b         .loc_0x194
-
-	.loc_0x140:
-	  subfic    r0, r5, 0x1E
-	  cmpwi     r5, 0x1E
-	  mtctr     r0
-	  bge-      .loc_0x15C
-
-	.loc_0x150:
-	  sth       r3, 0xC(r4)
-	  addi      r4, r4, 0x2
-	  bdnz+     .loc_0x150
-
-	.loc_0x15C:
-	  addi      r3, r31, 0
-	  li        r4, 0x1B
-	  bl        0x360
-	  addi      r3, r31, 0
-	  li        r4, 0x1D
-	  bl        0x354
-	  addi      r3, r31, 0
-	  li        r4, 0x1F
-	  bl        0x348
-	  addi      r3, r31, 0
-	  li        r4, 0x26
-	  bl        0x33C
-	  mr        r3, r31
-	  b         .loc_0x1A0
-
-	.loc_0x194:
-	  rlwinm    r0,r5,1,0,30
-	  add       r4, r31, r0
-	  b         .loc_0x140
-
-	.loc_0x1A0:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	setSeen(27);
+	setSeen(29);
+	setSeen(31);
+	setSeen(38);
 }
 
 /*
@@ -167,125 +143,29 @@ ResultFlags::ResultFlags()
  */
 void ResultFlags::initGame()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r4, 0
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  b         .loc_0x34
+	for (int i = 0; i < _00; i++) {
+		_08[i] = false;
+	}
 
-	.loc_0x28:
-	  lwz       r3, 0x8(r31)
-	  stbx      r4, r3, r5
-	  addi      r5, r5, 0x1
+	for (int i = 0; i < _04; i++) {
+		if (flagTable[i].mScreenId == -1) {
+			break;
+		}
+		_48[flagTable[i].mScreenId] = i;
 
-	.loc_0x34:
-	  lhz       r0, 0x0(r31)
-	  cmpw      r5, r0
-	  blt+      .loc_0x28
-	  lis       r3, 0x802B
-	  subi      r30, r3, 0x1E04
-	  li        r29, 0
-	  b         .loc_0x88
+		if (flagTable[i].mIsAutoSet) {
+			setOn(flagTable[i].mScreenId);
+		}
+	}
 
-	.loc_0x50:
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x94
-	  lwz       r3, 0x48(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r29, r3, r0
-	  lbz       r0, 0x4(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x80
-	  mr        r3, r31
-	  lwz       r4, 0x0(r30)
-	  bl        0x23C
+	for (int i = 0; i < 30; i++) {
+		mDaysSeen[i] = -1;
+	}
 
-	.loc_0x80:
-	  addi      r30, r30, 0x10
-	  addi      r29, r29, 0x1
-
-	.loc_0x88:
-	  lhz       r0, 0x4(r31)
-	  cmpw      r29, r0
-	  blt+      .loc_0x50
-
-	.loc_0x94:
-	  li        r3, -0x1
-	  sth       r3, 0xC(r31)
-	  li        r5, 0x18
-	  sth       r3, 0xE(r31)
-	  sth       r3, 0x10(r31)
-	  sth       r3, 0x12(r31)
-	  sth       r3, 0x14(r31)
-	  sth       r3, 0x16(r31)
-	  sth       r3, 0x18(r31)
-	  sth       r3, 0x1A(r31)
-	  sth       r3, 0x1C(r31)
-	  sth       r3, 0x1E(r31)
-	  sth       r3, 0x20(r31)
-	  sth       r3, 0x22(r31)
-	  sth       r3, 0x24(r31)
-	  sth       r3, 0x26(r31)
-	  sth       r3, 0x28(r31)
-	  sth       r3, 0x2A(r31)
-	  sth       r3, 0x2C(r31)
-	  sth       r3, 0x2E(r31)
-	  sth       r3, 0x30(r31)
-	  sth       r3, 0x32(r31)
-	  sth       r3, 0x34(r31)
-	  sth       r3, 0x36(r31)
-	  sth       r3, 0x38(r31)
-	  sth       r3, 0x3A(r31)
-	  b         .loc_0x150
-
-	.loc_0x100:
-	  subfic    r0, r5, 0x1E
-	  cmpwi     r5, 0x1E
-	  mtctr     r0
-	  bge-      .loc_0x11C
-
-	.loc_0x110:
-	  sth       r3, 0xC(r4)
-	  addi      r4, r4, 0x2
-	  bdnz+     .loc_0x110
-
-	.loc_0x11C:
-	  addi      r3, r31, 0
-	  li        r4, 0x1B
-	  bl        0x1E4
-	  addi      r3, r31, 0
-	  li        r4, 0x1D
-	  bl        0x1D8
-	  addi      r3, r31, 0
-	  li        r4, 0x1F
-	  bl        0x1CC
-	  addi      r3, r31, 0
-	  li        r4, 0x26
-	  bl        0x1C0
-	  b         .loc_0x15C
-
-	.loc_0x150:
-	  rlwinm    r0,r5,1,0,30
-	  add       r4, r31, r0
-	  b         .loc_0x100
-
-	.loc_0x15C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	setSeen(27);
+	setSeen(29);
+	setSeen(31);
+	setSeen(38);
 }
 
 /*
@@ -293,58 +173,16 @@ void ResultFlags::initGame()
  * Address:	800838C0
  * Size:	0000A4
  */
-void ResultFlags::saveCard(RandomAccessStream&)
+void ResultFlags::saveCard(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  b         .loc_0x48
+	int i = 0;
+	for (i = 0; i < _00; i++) {
+		stream.writeByte(_08[i]);
+	}
 
-	.loc_0x28:
-	  mr        r3, r29
-	  lwz       r4, 0x8(r31)
-	  lwz       r12, 0x4(r29)
-	  lbzx      r4, r4, r30
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r30, r30, 0x1
-
-	.loc_0x48:
-	  lhz       r0, 0x0(r31)
-	  cmpw      r30, r0
-	  blt+      .loc_0x28
-	  li        r30, 0
-	  rlwinm    r0,r30,1,0,30
-	  add       r31, r31, r0
-
-	.loc_0x60:
-	  mr        r3, r29
-	  lha       r4, 0xC(r31)
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x1E
-	  addi      r31, r31, 0x2
-	  blt+      .loc_0x60
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (i = 0; i < 30; i++) {
+		stream.writeShort(mDaysSeen[i]);
+	}
 }
 
 /*
@@ -352,56 +190,16 @@ void ResultFlags::saveCard(RandomAccessStream&)
  * Address:	80083964
  * Size:	00009C
  */
-void ResultFlags::loadCard(RandomAccessStream&)
+void ResultFlags::loadCard(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  b         .loc_0x48
+	int i = 0;
+	for (i = 0; i < _00; i++) {
+		_08[i] = stream.readByte();
+	}
 
-	.loc_0x28:
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x8(r31)
-	  stbx      r3, r4, r30
-	  addi      r30, r30, 0x1
-
-	.loc_0x48:
-	  lhz       r0, 0x0(r31)
-	  cmpw      r30, r0
-	  blt+      .loc_0x28
-	  li        r30, 0
-
-	.loc_0x58:
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r30, r30, 0x1
-	  sth       r3, 0xC(r31)
-	  cmpwi     r30, 0x1E
-	  addi      r31, r31, 0x2
-	  blt+      .loc_0x58
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (i = 0; i < 30; i++) {
+		mDaysSeen[i] = stream.readShort();
+	}
 }
 
 /*
@@ -431,61 +229,28 @@ void ResultFlags::setSeen(int flag)
  * Address:	80083A74
  * Size:	0000A0
  */
-void ResultFlags::getDayDocument(int, int&)
+int ResultFlags::getDayDocument(int day, int& res)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,1,0,30
-	  add       r4, r3, r0
-	  lha       r7, 0xC(r4)
-	  lis       r4, 0x802B
-	  subi      r4, r4, 0x1E20
-	  cmpwi     r7, -0x1
-	  bne-      .loc_0x2C
-	  li        r0, 0
-	  stw       r0, 0x0(r5)
-	  li        r3, -0x1
-	  blr
+	int id = mDaysSeen[day];
+	if (id == -1) {
+		res = 0;
+		return -1;
+	}
 
-	.loc_0x2C:
-	  lhz       r0, 0x2(r3)
-	  addi      r6, r4, 0x1C
-	  li        r8, 0
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x90
+	for (int i = 0; i < _02; i++) {
+		int temp = flagTable[i].mScreenId;
+		if (temp == id) {
+			if (flagTable[i + 1].mScreenId == -1) {
+				res = 1;
+				return temp;
+			}
+			res = flagTable[i + 1].mScreenId - flagTable[i].mScreenId;
+			return temp;
+		}
+	}
 
-	.loc_0x44:
-	  lwz       r0, 0x0(r6)
-	  cmpw      r0, r7
-	  mr        r3, r0
-	  bne-      .loc_0x84
-	  rlwinm    r0,r8,4,0,27
-	  add       r4, r4, r0
-	  lwz       r6, 0x2C(r4)
-	  cmpwi     r6, -0x1
-	  bne-      .loc_0x74
-	  li        r0, 0x1
-	  stw       r0, 0x0(r5)
-	  blr
-
-	.loc_0x74:
-	  lwz       r0, 0x1C(r4)
-	  sub       r0, r6, r0
-	  stw       r0, 0x0(r5)
-	  blr
-
-	.loc_0x84:
-	  addi      r6, r6, 0x10
-	  addi      r8, r8, 0x1
-	  bdnz+     .loc_0x44
-
-	.loc_0x90:
-	  li        r0, 0
-	  stw       r0, 0x0(r5)
-	  li        r3, -0x1
-	  blr
-	*/
+	res = 0;
+	return -1;
 }
 
 /*
@@ -493,8 +258,56 @@ void ResultFlags::getDayDocument(int, int&)
  * Address:	80083B14
  * Size:	000180
  */
-void ResultFlags::getDocument(int&)
+int ResultFlags::getDocument(int& out)
 {
+
+	int prio       = 0x1f400;
+	int index      = -1;
+	FlagInfo* info = flagTable;
+
+	for (int i = 0; i < _02; i++) {
+		int id = info[i].mScreenId;
+		if (getFlag(id) == true && prio > info[i].mPrio) {
+			prio  = info[i].mPrio;
+			index = i;
+		}
+	}
+
+	if (index != -1) {
+
+		int id = info[index + 2].mStore;
+		if (id == -1) {
+			out = 1;
+		} else {
+			out = id - info[index].mScreenId;
+		}
+
+		setFlag(flagTable[index].mScreenId, 2);
+
+		for (int i = 0; i < _02; i++) {
+			int id = info[i].mScreenId;
+			if (getFlag(id) == true) {
+				switch (info[i].mStore) {
+				case FlagInfo::Store_Forget:
+					setFlag(id, 2);
+					break;
+				case FlagInfo::Store_Reset:
+					setFlag(id, 0);
+					break;
+				}
+			}
+		}
+
+		mDaysSeen[playerState->getCurrDay()] = flagTable[index].mScreenId;
+		return flagTable[index].mScreenId;
+
+	} else {
+		dump();
+		ERROR("cannot happen !\n");
+		return -1;
+	}
+
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -627,9 +440,18 @@ void ResultFlags::getDocument(int&)
  * Address:	........
  * Size:	00003C
  */
-void ResultFlags::FlagInfo::type()
+int ResultFlags::FlagInfo::type()
 {
-	// UNUSED FUNCTION
+	if (mPrio < 200) {
+		return 0;
+	}
+	if (mPrio < 400) {
+		return 200;
+	}
+	if (mPrio < 600) {
+		return 400;
+	}
+	return 600;
 }
 
 /*
@@ -639,102 +461,43 @@ void ResultFlags::FlagInfo::type()
  */
 void ResultFlags::dump()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r26, 0x28(r1)
-	  subi      r30, r4, 0x1E04
-	  lis       r4, 0x8022
-	  addi      r26, r3, 0
-	  addi      r31, r4, 0x23D0
-	  li        r29, 0
-	  li        r28, 0
-	  li        r27, 0
-	  b         .loc_0xEC
+	int prev = 0;
+	int p    = 0;
+	PRINT("******* CURRENT RESULT FLAGS STATUS ***********\n");
+	for (int i = 0; i < _04; i++) {
+		int id = flagTable[i].mScreenId;
+		if (id == -1) {
+			break;
+		}
 
-	.loc_0x34:
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0xF8
-	  lwz       r3, 0x8(r30)
-	  cmpwi     r3, 0xC8
-	  bge-      .loc_0x54
-	  li        r0, 0
-	  b         .loc_0x78
+		// This all seems to be DLL exclusive
+		// char* strs[4];
+		// strs[3] = nullptr;
+		// int type = info[id].type();
+		// if (type < 0x191) {
+		//	if (type == 400) {
+		//		strs[3] = "TEK";
+		//	} else if (type == 0) {
+		//		strs[3] = "GEN";
+		//	} else if (type == 200) {
+		//		strs[3] = "SET";
+		//	}
+		//} else if (type == 600) {
+		//	strs[3] = "ETC";
+		//}
 
-	.loc_0x54:
-	  cmpwi     r3, 0x190
-	  bge-      .loc_0x64
-	  li        r0, 0xC8
-	  b         .loc_0x78
+		if (prev != flagTable[i].type()) {
+			p    = 0;
+			prev = flagTable[i].type();
+		}
+		prev          = flagTable[i].type();
+		char* strs[3] = { "OFF", "ON", "SEEN" };
 
-	.loc_0x64:
-	  cmpwi     r3, 0x258
-	  bge-      .loc_0x74
-	  li        r0, 0x190
-	  b         .loc_0x78
-
-	.loc_0x74:
-	  li        r0, 0x258
-
-	.loc_0x78:
-	  cmpw      r29, r0
-	  beq-      .loc_0x84
-	  li        r28, 0
-
-	.loc_0x84:
-	  cmpwi     r3, 0xC8
-	  bge-      .loc_0x94
-	  li        r0, 0
-	  b         .loc_0xB8
-
-	.loc_0x94:
-	  cmpwi     r3, 0x190
-	  bge-      .loc_0xA4
-	  li        r0, 0xC8
-	  b         .loc_0xB8
-
-	.loc_0xA4:
-	  cmpwi     r3, 0x258
-	  bge-      .loc_0xB4
-	  li        r0, 0x190
-	  b         .loc_0xB8
-
-	.loc_0xB4:
-	  li        r0, 0x258
-
-	.loc_0xB8:
-	  mr        r29, r0
-	  lwz       r4, 0x0(r31)
-	  lwz       r0, 0x4(r31)
-	  mr        r3, r26
-	  addi      r28, r28, 0x1
-	  stw       r4, 0x18(r1)
-	  stw       r0, 0x1C(r1)
-	  lwz       r0, 0x8(r31)
-	  stw       r0, 0x20(r1)
-	  lwz       r4, 0x0(r30)
-	  bl        .loc_0x10C
-	  addi      r30, r30, 0x10
-	  addi      r27, r27, 0x1
-
-	.loc_0xEC:
-	  lhz       r0, 0x4(r26)
-	  cmpw      r27, r0
-	  blt+      .loc_0x34
-
-	.loc_0xF8:
-	  lmw       r26, 0x28(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-
-	.loc_0x10C:
-	*/
+		// The final game version of this print probably cut out the strs[3], since its not set in final
+		PRINT(" ENUM_RESULT_%s_G%02d_P00 = %s : %d pages\n", strs[3], p++, strs[getFlag(flagTable[i].mScreenId)],
+		      (flagTable[i + 1].mScreenId == -1) ? 1 : flagTable[i + 1].mScreenId - id);
+	}
+	PRINT("*************************************************\n");
 }
 
 /*
@@ -742,23 +505,11 @@ void ResultFlags::dump()
  * Address:	80083DA0
  * Size:	000030
  */
-bool ResultFlags::getFlag(int)
+u8 ResultFlags::getFlag(int index)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x48(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwz       r3, 0x8(r3)
-	  lwzx      r4, r5, r0
-	  srawi     r5, r4, 0x2
-	  rlwinm    r0,r5,2,0,29
-	  lbzx      r3, r3, r5
-	  sub       r0, r4, r0
-	  rlwinm    r0,r0,1,0,30
-	  sraw      r0, r3, r0
-	  rlwinm    r3,r0,0,30,31
-	  blr
-	*/
+	int a = _48[index];
+	int b = a >> 2;
+	return _08[b] >> ((a - b * 4) * 2) & 3;
 }
 
 /*
@@ -766,8 +517,27 @@ bool ResultFlags::getFlag(int)
  * Address:	80083DD0
  * Size:	000090
  */
-void ResultFlags::setFlag(int, u8)
+void ResultFlags::setFlag(int index, u8 flag)
 {
+	int a  = _48[index];
+	int b  = a >> 2;
+	u8 old = _08[b];
+
+	a -= b * 4;
+
+	if (flag & 1) {
+		old |= (1 << a * 2);
+	} else {
+		old &= ~(1 << a * 2);
+	}
+
+	if (flag & 2) {
+		old |= (1 << a * 2 + 1);
+	} else {
+		old &= ~(1 << a * 2 + 1);
+	}
+
+	_08[b] = old;
 	/*
 	.loc_0x0:
 	  lwz       r6, 0x48(r3)
