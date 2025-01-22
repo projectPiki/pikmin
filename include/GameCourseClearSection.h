@@ -22,7 +22,7 @@ struct GameCourseClearScreen : public Node {
 	 */
 	struct Parms : public Parameters {
 		Parms()
-		    : _24(this, 300.0f, 0.0f, 1000.0f, "p00", "floatテストだぴょ−ン") // 'float test'
+		    : _24(this, 300.0f, 0.0f, 1000.0f, "p00", "floatテストだぴょ−ン") // 'f32 test'
 		    , _34(this, 1, 0, 100, "i00", "intテストだぴょ−ン")               // 'int test'
 		{
 		}

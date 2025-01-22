@@ -7,7 +7,6 @@ struct Vector3f;
 struct Colour;
 
 namespace zen {
-
 /**
  * @brief TODO
  */
@@ -25,15 +24,11 @@ struct DrawNaviLifeCircle {
 
 	// TODO: members
 };
+} // namespace zen
 
 namespace zenGraphics {
-
-// unused globals
-void drawOneTri(Vector3f*, Colour&);
-void setTevFillPolygon();
-
+static void drawOneTri(Vector3f*, Colour&);
+static void setTevFillPolygon();
 } // namespace zenGraphics
-
-} // namespace zen
 
 #endif

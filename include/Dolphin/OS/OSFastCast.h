@@ -45,7 +45,7 @@ static inline void OSInitFastCast()
 #endif // clang-format on
 }
 
-// Float to int.
+// f32 to int.
 // NB: should theoretically have these for u8/u16/s8/s16 eventually.
 static inline s16 __OSf32tos16(register f32 inF)
 {
@@ -108,7 +108,7 @@ static inline void OSf32tos8(f32* f, s8* out)
 	*out = __OSf32tos8(*f);
 }
 
-// Int to float.
+// Int to f32.
 // NB: should have these for u8/u16/s8/s16 eventually.
 
 // TODO: make these based on above/as necessary.

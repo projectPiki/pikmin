@@ -18,6 +18,15 @@ enum WorldMapName {
 	// TODO: this
 };
 
+struct WorldMapTitleMgr {
+	WorldMapTitleMgr();
+
+	void exitTitle();
+	void init(P2DScreen*);
+	void init();
+	void update();
+};
+
 /**
  * @brief TODO
  */
@@ -171,6 +180,8 @@ struct WorldMapCoursePointMgr {
 	// TODO: members
 };
 
+} // namespace zen
+
 /**
  * @brief TODO
  */
@@ -178,10 +189,29 @@ struct WorldMapWipe {
 	WorldMapWipe();
 
 	void init(P2DScreen*, u32);
+	void move(int, int);
+	void moveDefaultPos();
+	void set(int, int);
+	void setDefault();
+	void update(f32, u8);
 
 	// TODO: members
 };
 
-} // namespace zen
+/**
+ * @brief Entire struct seems to be inline, wtf?
+ */
+struct WorldMapWipeMgr {
+	WorldMapWipeMgr();
+
+	void close(float, int, int);
+	void init(P2DScreen*);
+	void init();
+	BOOL isActive();
+	void open(float);
+	void set(int, int);
+	void setDefault();
+	BOOL update();
+};
 
 #endif

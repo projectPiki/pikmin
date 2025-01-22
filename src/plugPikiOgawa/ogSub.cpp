@@ -236,7 +236,7 @@ void zen::setTextColor(P2DTextBox*, P2DPicture*)
  * Address:	8017EAF8
  * Size:	000088
  */
-void zen::getStringCVS(char*, char*, s16)
+bool zen::getStringCVS(char*, char*, s16)
 {
 	/*
 	.loc_0x0:

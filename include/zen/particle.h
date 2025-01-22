@@ -427,7 +427,7 @@ struct particleManager {
 	void pmPutPtclGen(zenList* gen) { _20.put(gen); }
 
 	// remaining DLL functions:
-	// particleMdl* createParticle(Texture*, s16, Vector3f&, Vector3f&, Vector3f&, float, float, Colour, Colour, CallBack1<particleMdl*>*);
+	// particleMdl* createParticle(Texture*, s16, Vector3f&, Vector3f&, Vector3f&, f32, f32, Colour, Colour, CallBack1<particleMdl*>*);
 
 	static const f32 DEFAULT_FRAME_RATE;
 	static const u16 MAX_PTCLGENS_NUM;

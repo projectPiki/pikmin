@@ -55,7 +55,6 @@ struct ogRaderMgr {
 };
 
 // unused/inlined global functions:
-void setOffsetSub(P2DPicture*);
 
 } // namespace zen
 

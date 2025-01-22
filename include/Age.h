@@ -44,7 +44,7 @@ struct AgeServer : public AtxStream {
 	void NewEditor(char*, Colour*);
 	void NewEditor(char*, char*, int);
 	void NewEditor(char*, char*, int, int, int);
-	void NewEditor(char*, float*, float, float, int);
+	void NewEditor(char*, f32*, f32, f32, int);
 	void NewEditor(char*, int*, int, int, int);
 	void NewEditor(char*, short*, int, int, int);
 	void NewLabel(char*);
@@ -52,7 +52,7 @@ struct AgeServer : public AtxStream {
 	void NewNodeWindow(char*);
 	void NewOption(char*, int);
 	void NewPropWindow(char*, u32);
-	void NewViewer(char*, float*);
+	void NewViewer(char*, f32*);
 	void NewViewer(char*, int*);
 
 	bool Open();

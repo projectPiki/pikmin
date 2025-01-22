@@ -28,11 +28,15 @@ struct ZenController {
 
 	void update();
 
-	inline bool isPressed(u32 button) { return _04 & button; }
-	inline void setController(Controller* controller) { mController = controller; }
+	/* Inlined:
+	    void setRepeatTime(f32);
+	*/
+
+	inline BOOL keyRepeat(u32 button) { return mRepeatInput & button; }
+	inline void setContPtr(Controller* controller) { mController = controller; }
 
 	Controller* mController; // _00
-	u32 _04;                 // _04, probably some form of input
+	u32 mRepeatInput;        // _04, probably some form of input
 	u8 _08[0x6C - 0x8];      // _08, unknown
 };
 

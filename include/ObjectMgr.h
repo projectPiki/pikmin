@@ -60,7 +60,7 @@ struct MonoObjectMgr : public ObjectMgr {
 	virtual bool isDone(int);                     // _14
 	virtual ~MonoObjectMgr() { }                  // _48 (weak)
 	virtual void update();                        // _4C (weak)
-	virtual void postUpdate(int, float);          // _50
+	virtual void postUpdate(int, f32);            // _50
 	virtual void refresh(Graphics&);              // _58
 	virtual void drawShadow(Graphics&, Texture*); // _5C
 	virtual int getSize() { return mNumObjects; } // _60 (weak)
@@ -108,7 +108,7 @@ struct PolyObjectMgr : public ObjectMgr {
 	virtual bool isDone(int);                     // _14
 	virtual ~PolyObjectMgr();                     // _48
 	virtual void update();                        // _4C
-	virtual void postUpdate(int, float);          // _50
+	virtual void postUpdate(int, f32);            // _50
 	virtual void refresh(Graphics&);              // _58
 	virtual void drawShadow(Graphics&, Texture*); // _5C
 	virtual int getSize();                        // _60

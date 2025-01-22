@@ -21,7 +21,14 @@ struct LightCamera;
 struct WorldSpring {
 	WorldSpring() { }
 
-	u8 _00[0x4];  // _00, unknown
+	// Guessed implementation, function exists though
+	inline void init(int a, f32 x, f32 y, f32 z)
+	{
+		_00 = a;
+		_04.set(x, y, z);
+	}
+
+	int _00;      // _00
 	Vector3f _04; // _04
 };
 

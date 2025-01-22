@@ -109,11 +109,11 @@ void zen::OgTestScreen::modeSelectSub()
 	}
 
 	if (mSelectedMode == TESTMODE_Tutorial) {
-		if (mZenController->isPressed(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152) {
+		if (mZenController->keyRepeat(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152) {
 			mTutorialMode++;
 		}
 
-		if (mZenController->isPressed(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0) {
+		if (mZenController->keyRepeat(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0) {
 			mTutorialMode--;
 		}
 	}
@@ -272,7 +272,7 @@ void zen::OgTestScreen::modeSelectSub()
 void zen::OgTestScreen::update()
 {
 	mController->update();
-	mZenController->setController(mController);
+	mZenController->setContPtr(mController);
 	mZenController->update();
 
 	if (mActiveMode == TESTMODE_INACTIVE) {

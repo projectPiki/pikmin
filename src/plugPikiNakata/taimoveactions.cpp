@@ -1885,7 +1885,7 @@ bool TaiWatchOffTerritoryCenterAction::act(Teki& teki)
  */
 void TaiTargetNestAction::start(Teki& teki)
 {
-	// float from pointer and vec3f?
+	// f32 from pointer and vec3f?
 	// void* ptr = teki._2C8;
 	// teki._388.x = ptr->_10;
 	// teki._388.y = ptr->_04;

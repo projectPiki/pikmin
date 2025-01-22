@@ -107,7 +107,7 @@ typedef struct Extended2_PPC_6xx_7xx {
 
 typedef struct ProcessorState_PPC_6xx_7xx {
 	Default_PPC Default;
-	Float_PPC Float;
+	Float_PPC f32;
 	Extended1_PPC_6xx_7xx Extended1;
 	Extended2_PPC_6xx_7xx Extended2;
 	u32 transport_handler_saved_ra;

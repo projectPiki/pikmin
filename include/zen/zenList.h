@@ -39,6 +39,8 @@ struct zenListManager {
 		init();
 	}
 
+	~zenListManager() { }
+
 	// these are all the inlines/member functions according to the DLL.
 
 	void init() { mOrigin->mPrev = mOrigin->mNext = mOrigin; }
@@ -84,8 +86,6 @@ struct zenListManager {
 		}
 		return count;
 	}
-
-	~zenListManager() { }
 
 	zenList* mOrigin; // _00
 	zenList mList;    // _04

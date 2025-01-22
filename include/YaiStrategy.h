@@ -17,6 +17,9 @@ struct YaiStrategy : public TekiStrategy {
 	virtual void eventPerformed(TekiEvent&); // _10
 	virtual void draw(Teki&, Graphics&);     // _18
 
+	// Guessed implementation, function exists though
+	inline void setState(int index, TaiState* state) { mStateList[index] = state; }
+
 	void init(int, int);
 
 	// _00     = VTBL

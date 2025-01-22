@@ -238,7 +238,7 @@ struct LightPool : public Node {
 	u32 _648;       // _648
 	u32 _64C;       // _64C
 	Vector3f _650;  // _650
-	float _65C;     // _65C
+	f32 _65C;       // _65C
 	Colour mColour; // _660
 	u8 _664[8];     // _664
 	u8 mFlags;      // _66C, use LightPoolFlags

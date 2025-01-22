@@ -346,9 +346,9 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 		return data.mData[(param.mEntryNum - 1) * dataSize + param.mDataOffset + 1];
 	}
 
-	float frameStart = data.mData[offset];
-	float frameEnd   = data.mData[offset + dataSize];
-	float inTangent, outTangent, startPos, endPos;
+	f32 frameStart = data.mData[offset];
+	f32 frameEnd   = data.mData[offset + dataSize];
+	f32 inTangent, outTangent, startPos, endPos;
 
 	// Determine tangents and positions based on dataSize
 	if (dataSize == 4) {
@@ -364,13 +364,13 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 	}
 
 	// Interpolation calculations
-	float t            = (currTime - frameStart) * (1.0f / 30.0f);
-	float tSquared     = t * t;
-	float tCubed       = tSquared * t;
-	float frameDelta   = 30.0f / (frameEnd - frameStart);
-	float deltaSquared = frameDelta * frameDelta;
-	float deltaCubed   = deltaSquared * frameDelta;
-	float mult         = 3.0f * tSquared * deltaSquared;
+	f32 t            = (currTime - frameStart) * (1.0f / 30.0f);
+	f32 tSquared     = t * t;
+	f32 tCubed       = tSquared * t;
+	f32 frameDelta   = 30.0f / (frameEnd - frameStart);
+	f32 deltaSquared = frameDelta * frameDelta;
+	f32 deltaCubed   = deltaSquared * frameDelta;
+	f32 mult         = 3.0f * tSquared * deltaSquared;
 
 	return (tCubed * deltaSquared - tSquared * frameDelta) * outTangent
 	     + (t + (tCubed * deltaSquared - 2.0f * tSquared * frameDelta)) * inTangent
@@ -2008,11 +2008,11 @@ void SceneData::parse(CmdStream* stream)
 void DataChunk::addData(f32 data)
 {
 	if (mDataIndex >= mDataSize) {
-		mDataSize      = mDataIndex + 0x800;
-		float* newData = new float[mDataSize];
+		mDataSize    = mDataIndex + 0x800;
+		f32* newData = new f32[mDataSize];
 
 		if (mDataIndex) {
-			memcpy(newData, mData, mDataIndex * sizeof(float));
+			memcpy(newData, mData, mDataIndex * sizeof(f32));
 		}
 
 		delete[] mData;

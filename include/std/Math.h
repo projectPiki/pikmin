@@ -32,13 +32,13 @@ inline f32 sqrtf(f32 x)
 #define fabsf(x) __fabsf(x)
 #else
 double fabs(double x);
-float fabsf(float x);
+f32 fabsf(f32 x);
 #endif
 
-inline float fmodf(float x, float m)
+inline f32 fmodf(f32 x, f32 m)
 {
-	float a = fabsf(m);
-	float b = fabsf(x);
+	f32 a = fabsf(m);
+	f32 b = fabsf(x);
 	if (a > b)
 		return x;
 	else {

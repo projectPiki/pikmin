@@ -41,12 +41,12 @@ static inline void calcMtxBotIdent(Matrix4f& mtx)
 // these exist in the DLL "map"
 template <typename T>
 struct NsLibMath {
-	// these exist for int and float
+	// these exist for int and f32
 	static inline T abs(T val) { return (val > 0) ? val : -val; }
 
 	static T revice(T value, T min, T max) { return (value < min) ? min : (value > max) ? max : value; }
 
-	// these just exist for float
+	// these just exist for f32
 	static T lagrange3(const T* points, T val)
 	{
 		return points[0] * 0.5f * (val - 1.0f) * (val - 2.0f) - points[1] * val * (val - 2.0f) + points[2] * 0.5f * val * (val - 1.0f);
@@ -114,7 +114,7 @@ inline int getRand1(int val)
 	return System::getRand(1.0f) * (val * 0.99999899f);
 }
 
-// this COULD be revice instead, but i haven't seen a float version yet. TBD.
+// this COULD be revice instead, but i haven't seen a f32 version yet. TBD.
 // just bounds value in [min,max]
 inline int intLoop(int value, int min, int max)
 {

@@ -15,21 +15,23 @@
 #include "TekiPersonality.h"
 #include "Shape.h"
 #include "system.h"
+#include "zen/CallBack.h"
 
-struct NTeki;
-struct Teki;
-struct TekiMgr;
 struct CollEvent;
-struct TekiAnimationManager;
-struct TekiStrategy;
-struct TekiStrategyTable;
-struct TekiParameters;
-struct PeveParabolaEvent;
+struct CreaturePlatMgr;
+struct NTeki;
 struct PeveAccelerationEvent;
 struct PeveCircleMoveEvent;
 struct PeveHorizontalSinWaveEvent;
+struct PeveParabolaEvent;
+struct TAIeffectAttackEventCallBack;
+struct Teki;
+struct TekiAnimationManager;
+struct TekiMgr;
+struct TekiParameters;
 struct TekiPersonality;
-struct CreaturePlatMgr;
+struct TekiStrategy;
+struct TekiStrategyTable;
 
 namespace zen {
 struct PtclGenPack;
@@ -336,7 +338,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	f32 getPersonalityF(int idx) { return mPersonality->mParams->getF(idx); } // weak
 	int getPersonalityI(int idx) { return mPersonality->mParams->getI(idx); } // weak
 
-	f32 getParameterF(int idx) { return mTekiParams->getF(idx); } // see TekiFloatParams enum
+	f32 getParameterF(int idx) { return mTekiParams->getF(idx); } // see Tekif32Params enum
 	int getParameterI(int idx) { return mTekiParams->getI(idx); } // see TekiIntParams enum
 
 	void outputDirectionVector(Vector3f& outDir) { BTeki::outputDirectionVector(getDirection(), outDir); }
@@ -483,7 +485,56 @@ struct YTeki : public NTeki {
 	void killStickToMouthPiki();
 	bool startNewMotion(int);
 
-	// unused/inlined:
+	/* INLINED FUNCTIONS
+	    void YTeki::addDesire(f32);
+	    f32 addFrameCounter(f32);
+	    void addSpeed(f32);
+	    f32 getAngle();
+	    bool getBiteSwitch();
+	    bool getChokeSwitch();
+	    zen::CallBack1<zen::particleGenerator *> * getConeTypePtclCallBack();
+	    zen::CallBack1<zen::particleGenerator *> * getCylinderTypePtclCallBack();
+	    f32 getDesire();
+	    f32 getDororoGravity();
+	    bool getEffectSwitch();
+	    zen::CallBack1<zen::particleGenerator*>* getEventTypePtclCallBack();
+	    f32 getExceptionalGravity();
+	    bool getFlyingSwitch();
+	    f32 getFrameCounter();
+	    f32 getFrameCounterMax();
+	    int getMapCode();
+	    bool getRunAwaySwitch();
+	    f32 getSpeed();
+	    int getStatus();
+	    bool getStaySwitch();
+	    int getTableIndex();
+	    bool getTimerStart();
+	    class WorkObject* getWorkObjectPointer();
+	    void initConeTypePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
+	    void initCylinderTYpePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
+	    void initEventTypePtclCallBack();
+	    void setAngle(f32);
+	    f32 setAnimSpeed(f32);
+	    void setBiteSwitch(bool);
+	    void setChokeSwitch(bool);
+	    void setDesire(f32);
+	    void setDororoGravity(f32);
+	    void setEffectSwitch(bool);
+	    void setExceptionalGravity(f32);
+	    void setFlyingSwitch(bool);
+	    void setFrameCounter(f32);
+	    void setFrameCounterMax(f32);
+	    void setManualAnimation(bool);
+	    void setMapCode(int);
+	    void setRunAwaySwitch(bool);
+	    void setSpeed(f32);
+	    void setStatus(int);
+	    void setStaySwitch(bool);
+	    void setTableIndex(int);
+	    void setTimerStart(bool);
+	    void setWorkObjectPointer(WorkObject*);
+	*/
+
 	int getMapAttribute();
 
 	// see TAIAappearKabekui::start

@@ -108,7 +108,7 @@ int StdSystem::setHeap(int newHeapIdx)
  */
 void StdSystem::getAppMemory(char* buffer)
 {
-	float mem = getHeap(SYSHEAP_App)->getFree() / 1024.0f;
+	f32 mem = getHeap(SYSHEAP_App)->getFree() / 1024.0f;
 	sprintf(buffer, "FreeMem %.2fk", mem);
 }
 

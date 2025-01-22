@@ -9,6 +9,7 @@ struct P2DPicture;
 struct P2DScreen;
 struct P2DTextBox;
 struct Vector3f;
+struct Texture;
 
 namespace zen {
 
@@ -131,17 +132,18 @@ struct TypingTextMgr {
 // global utility functions
 bool ogCheckInsCard();
 f32 calcPuruPuruScale(f32);
-void setNumberTag(P2DScreen*, u32, int*, int);
-void setTextColor(P2DTextBox*, P2DPicture*);
-void getStringCVS(char*, char*, s16);
 int getSpecialNumber(int);
-void setSpecialNumber(int, int);
 void cnvSpecialNumber(char*);
 void cnvSpecialNumberHyphen(char*);
-void getDistPointAndLine(Vector3f, Vector3f, Vector3f, f32&);
-void makeRotMatrix(Vector3f&, Matrix3f&);
+f32 getDistPointAndLine(Vector3f, Vector3f, Vector3f, f32&);
+bool getStringCVS(char*, char*, short);
+::Texture* loadTexExp(const char*, bool, bool);
 void makePathName(const char*, const char*, char*);
-void loadTexExp(const char*, bool, bool);
+void makeRotMatrix(Vector3f&, Matrix3f&);
+void setNumberTag(P2DScreen*, u32, int*, int);
+void setOffsetSub(P2DPicture*);
+void setSpecialNumber(int, int);
+void setTextColor(P2DTextBox*, P2DPicture*);
 
 // unused/inlined globals:
 void movePicturePos(P2DPicture*, P2DPicture*);

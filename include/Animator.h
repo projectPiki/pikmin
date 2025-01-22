@@ -64,7 +64,7 @@ struct DataChunk {
 			}
 
 			const char* token = stream->getToken(true);
-			float value;
+			f32 value;
 			sscanf(token, "%f", &value);
 			addData(value);
 			++tokenCount;
