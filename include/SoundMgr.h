@@ -15,8 +15,8 @@ struct Creature;
  * @brief TODO
  */
 struct SeInfo {
-	int _00;   // _00
-	char* _04; // _04
+	int mSeID;     // _00
+	char* mSeName; // _04
 };
 
 /**
@@ -101,13 +101,13 @@ struct SeMgr : public Node {
 	virtual void update(); // _10
 
 	void playNaviSound(s32, s32);
-	void addInfo(int, char*);
+	void addInfo(int seID, char* seName);
 	void joinBattle();
 	void leaveBattle();
 	void setPikiNum(int);
 
 	// unused/inlined:
-	SeInfo* findInfo(int);
+	SeInfo* findInfo(int seID);
 	void playBGM(u32);
 	void stopBGM();
 	void stopSoundAll();
@@ -122,7 +122,7 @@ struct SeMgr : public Node {
 	// _00     = VTBL
 	// _00-_20 = Node
 	// _00-_30 = SeMgr
-	int _20;          // _20
+	int mBattleCount; // _20
 	int mSENum;       // _24
 	int mMaxInfos;    // _28
 	SeInfo* mSeInfos; // _2C
@@ -140,13 +140,13 @@ struct SeWin : public GmWin {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	// _00-_48 = GmWin
-	Controller* mController; // _48
-	int _4C;                 // _4C
-	int _50;                 // _50
-	int _54;                 // _54
-	int _58;                 // _58
-	f32 _5C;                 // _5C
-	bool _60;                // _60
+	Controller* mController;  // _48
+	int mCurrSeID;            // _4C
+	int mSound;               // _50
+	int mAnimFramesRemaining; // _54
+	int mUp;                  // _58
+	f32 mTime;                // _5C
+	bool mStickWasPushed;     // _60
 };
 
 /**

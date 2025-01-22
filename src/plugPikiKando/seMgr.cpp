@@ -30,10 +30,10 @@ SeMgr* seMgr;
  */
 SeMgr::SeMgr()
 {
-	_20       = 0;
-	mSENum    = 0;
-	mMaxInfos = 128;
-	mSeInfos  = new SeInfo[mMaxInfos];
+	mBattleCount = 0;
+	mSENum       = 0;
+	mMaxInfos    = 128;
+	mSeInfos     = new SeInfo[mMaxInfos];
 	addInfo(0x0007, "Breakup");
 	addInfo(0x0008, "Gather");
 	addInfo(0x0006, "Throw");
@@ -60,12 +60,17 @@ void SeMgr::playNaviSound(s32 p1, s32 p2)
 
 /*
  * --INFO--
- * Address:	........
+ * Address:	........ in DOL, 10126280 in DLL
  * Size:	000048
  */
-SeInfo* SeMgr::findInfo(int)
+SeInfo* SeMgr::findInfo(int seID)
 {
-	// UNUSED FUNCTION
+	for (int i = 0;; i++) {
+		if (mSENum <= i)
+			return nullptr;
+		if (mSeInfos[i].mSeID == seID)
+			return &mSeInfos[i];
+	}
 }
 
 /*
@@ -73,15 +78,15 @@ SeInfo* SeMgr::findInfo(int)
  * Address:	800A35D0
  * Size:	000034
  */
-void SeMgr::addInfo(int p1, char* p2)
+void SeMgr::addInfo(int seID, char* seName)
 {
 	if (mSENum >= mMaxInfos) {
 		PRINT("maxInfos !\n");
 		ERROR("mail to me\n");
 	}
 
-	mSeInfos[mSENum]._00 = p1;
-	mSeInfos[mSENum]._04 = p2;
+	mSeInfos[mSENum].mSeID   = seID;
+	mSeInfos[mSENum].mSeName = seName;
 	mSENum++;
 }
 
@@ -151,7 +156,7 @@ void SeMgr::stopSoundAll()
  */
 void SeMgr::joinBattle()
 {
-	_20++;
+	mBattleCount++;
 }
 
 /*
@@ -161,9 +166,9 @@ void SeMgr::joinBattle()
  */
 void SeMgr::leaveBattle()
 {
-	_20--;
-	if (_20 <= 0) {
-		_20 = 0;
+	mBattleCount--;
+	if (mBattleCount <= 0) {
+		mBattleCount = 0;
 	}
 }
 
@@ -192,9 +197,9 @@ void SeWin::doRender(Graphics& gfx)
 	u32 badCompiler;
 	printStart(gfx);
 	printcentre(gfx, 32, "SE テスト"); // "SE Test"
-	sprintf(buffer, "SE %d", _4C);
+	sprintf(buffer, "SE %d", mCurrSeID);
 	printcentre(gfx, 80, buffer);
-	sprintf(buffer, "%s", seMgr->getIndexInfo(_4C)->_04);
+	sprintf(buffer, "%s", seMgr->getIndexInfo(mCurrSeID)->mSeName);
 	printcentre(gfx, 140, buffer);
 }
 
@@ -209,84 +214,84 @@ void SeWin::update()
 
 	switch (mStatus) {
 	case 0x1000: {
-		_54--;
+		mAnimFramesRemaining--;
 		mPosY += 32;
-		if (!_54) {
+		if (!mAnimFramesRemaining) {
 			mStatus = 0x1001;
 		}
 		if (zen::Abs(mController->getMainStickY()) > 0.5f) {
-			_60 = true;
+			mStickWasPushed = true;
 		}
 		return;
 	}
 	case 0x1002: {
-		_54--;
+		mAnimFramesRemaining--;
 		mPosY += 32;
-		if (!_54) {
+		if (!mAnimFramesRemaining) {
 			mStatus = 0x1003;
 		}
 		return;
 	}
 	case 0x1001: {
-		if (_60) {
+		if (mStickWasPushed) {
 			if (zen::Abs(mController->getMainStickY()) > 0.5f) {
 				return;
 			}
-			_60 = false;
+			mStickWasPushed = false;
 		}
 		const f32 mainStickY = mController->getMainStickY();
 
 		bool flag = true;
 		if (mainStickY > 0.5f) {
-			if (_58 <= 0) {
-				_5C = 0.0f;
-			} else if (_5C < 0.8f) {
+			if (mUp <= 0) {
+				mTime = 0.0f;
+			} else if (mTime < 0.8f) {
 				flag = false;
 			}
-			_5C += gsys->getFrameTime();
-			if (_5C > 1.4f) {
-				if (_58 < 6) {
-					_58 += 1;
+			mTime += gsys->getFrameTime();
+			if (mTime > 1.4f) {
+				if (mUp < 6) {
+					mUp += 1;
 				}
 			} else {
-				_58 = 1;
+				mUp = 1;
 			}
 		} else if (mainStickY < -0.5f) {
-			if (_58 >= 0) {
-				_5C = 0.0f;
-			} else if (_5C < 0.8f) {
+			if (mUp >= 0) {
+				mTime = 0.0f;
+			} else if (mTime < 0.8f) {
 				flag = false;
 			}
-			_5C += gsys->getFrameTime();
-			if (_5C > 1.4f) {
-				if (_58 > -6) {
-					_58 -= 1;
+			mTime += gsys->getFrameTime();
+			if (mTime > 1.4f) {
+				if (mUp > -6) {
+					mUp -= 1;
 				}
 			} else {
-				_58 = -1;
+				mUp = -1;
 			}
 		} else {
-			_58 = 0;
-			_5C = 0.0f;
+			mUp   = 0;
+			mTime = 0.0f;
 		}
-		if (_58 && flag) {
-			if (_58 > 0) {
-				_4C += (_58 + _4C >= seMgr->getSENum()) ? seMgr->getSENum() - _4C - 1 : _58;
-				PRINT(" UP up is %d : curr became %d\n", _58, _4C);
+		if (mUp && flag) {
+			if (mUp > 0) {
+				mCurrSeID += (mUp + mCurrSeID >= seMgr->getSENum()) ? seMgr->getSENum() - mCurrSeID - 1 : mUp;
+				PRINT(" UP up is %d : curr became %d\n", mUp, mCurrSeID);
 			} else {
-				_4C += (_58 + _4C < 0) ? 0 : _58;
-				PRINT(" DOWN up is %d : curr became %d\n", _58, _4C);
+				mCurrSeID += (mUp + mCurrSeID < 0) ? 0 : mUp;
+				PRINT(" DOWN up is %d : curr became %d\n", mUp, mCurrSeID);
 			}
 		}
 
 		if (mController->keyClick(KBBTN_A)) {
-			PRINT("stop %d sound ***********\n", _50);
-			SeMgr::stop(_50);
-			SeInfo* info = seMgr->getIndexInfo(_4C);
-			_50          = info->_00;
-			SeMgr::play(info->_00);
+			PRINT("stop %d sound ***********\n", mSound);
+			SeMgr::stop(mSound);
+			SeInfo* info = seMgr->getIndexInfo(mCurrSeID);
+			mSound       = info->mSeID;
+			SeMgr::play(info->mSeID);
 		} else if (mController->keyClick(KBBTN_B) || mController->keyClick(KBBTN_Z)) {
-			SeMgr::stop(_4C);
+			SeMgr::stop(mCurrSeID);
 			close();
 		}
 		return;
@@ -305,15 +310,16 @@ void SeWin::open()
 		return;
 	placeCentre();
 	GmWin::open();
-	const int iVar1 = mPosY + 120;
 
-	_54   = iVar1 / 32;
-	mPosY = -120;
-	_58   = 0;
-	_50   = nullptr;
-	_4C   = 0;
-	_5C   = 0.0f;
-	_60   = false;
+	mAnimFramesRemaining = (mPosY + 120) / 32;
+	mPosY                = -120;
+	mUp                  = 0;
+	mSound               = 0;
+	mCurrSeID            = 0;
+	mTime                = 0.0f;
+	mStickWasPushed      = false;
+
+	seMgr->stopBGM();
 }
 
 /*
@@ -328,5 +334,5 @@ void SeWin::close()
 	placeCentre();
 	GmWin::close();
 
-	_54 = 15;
+	mAnimFramesRemaining = 15;
 }
