@@ -210,7 +210,7 @@ void ActEnter::init(Creature*)
  * Address:	........
  * Size:	000064
  */
-void ActEnter::routeMove()
+int ActEnter::routeMove()
 {
 	// UNUSED FUNCTION
 }
@@ -407,7 +407,7 @@ void ActEnter::procCollideMsg(Piki*, MsgCollide*)
  * Address:	800B83C0
  * Size:	0001AC
  */
-void ActEnter::gotoLeg()
+int ActEnter::gotoLeg()
 {
 	/*
 	.loc_0x0:
@@ -534,7 +534,7 @@ void ActEnter::gotoLeg()
  * Address:	800B856C
  * Size:	000234
  */
-void ActEnter::climb()
+int ActEnter::climb()
 {
 	/*
 	.loc_0x0:

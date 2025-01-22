@@ -20,7 +20,7 @@ zen::DamageEffect::DamageEffect()
  * Address:	801F1500
  * Size:	0000A8
  */
-void zen::DamageEffect::update()
+bool zen::DamageEffect::update()
 {
 	/*
 	.loc_0x0:

@@ -69,7 +69,7 @@ void NaviMgr::init()
  * Address:	80117344
  * Size:	000060
  */
-Navi* NaviMgr::createObject()
+Creature* NaviMgr::createObject()
 {
 	Navi* navi = new Navi(mNaviParms, mNaviID);
 	mNaviID++;

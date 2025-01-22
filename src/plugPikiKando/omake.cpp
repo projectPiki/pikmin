@@ -752,7 +752,7 @@ void NoiseFunction::init(int)
  * Address:	........
  * Size:	00008C
  */
-void NoiseFunction::getValue(f32)
+f32 NoiseFunction::getValue(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -772,7 +772,7 @@ void TurbulenceFun::init(int, int)
  * Address:	........
  * Size:	000240
  */
-void TurbulenceFun::getValue(f32)
+f32 TurbulenceFun::getValue(f32)
 {
 	// UNUSED FUNCTION
 }

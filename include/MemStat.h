@@ -44,8 +44,8 @@ struct MemStat {
 	MemInfo* getInfoRec(char*, MemInfo*);
 
 	// unused/inlined:
-	void getMemorySize(char*);
-	void getRestMemory();
+	int getMemorySize(char*);
+	int getRestMemory();
 
 	MemInfo mInfoListRoot;       // _00
 	MemInfo* mCurrentInfo;       // _18

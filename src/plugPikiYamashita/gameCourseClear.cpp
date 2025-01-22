@@ -1197,7 +1197,7 @@ void zen::particleGenerator::remove()
  * Address:	8019A4C8
  * Size:	000084
  */
-void CMresultMode::update(Controller*)
+bool CMresultMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1267,7 +1267,7 @@ void CMresultMode::draw(Graphics&)
  * Address:	8019A570
  * Size:	000080
  */
-void HurryUpMode::update(Controller*)
+bool HurryUpMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1336,7 +1336,7 @@ void HurryUpMode::draw(Graphics&)
  * Address:	8019A614
  * Size:	0000C0
  */
-void GameInfoMode::update(Controller*)
+bool GameInfoMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1423,7 +1423,7 @@ void GameInfoMode::draw(Graphics&)
  * Address:	8019A6F8
  * Size:	000080
  */
-void ProgressiveMode::update(Controller*)
+bool ProgressiveMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1492,7 +1492,7 @@ void ProgressiveMode::draw(Graphics&)
  * Address:	8019A79C
  * Size:	0000E4
  */
-void CountDownMode::update(Controller*)
+bool CountDownMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1594,7 +1594,7 @@ void CountDownMode::draw(Graphics&)
  * Address:	8019A8A4
  * Size:	0000D4
  */
-void GameOverMode::update(Controller*)
+bool GameOverMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1690,7 +1690,7 @@ void GameOverMode::draw(Graphics&)
  * Address:	8019A99C
  * Size:	000130
  */
-void ContainerMode::update(Controller*)
+bool ContainerMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1813,7 +1813,7 @@ void ContainerMode::draw(Graphics&)
  * Address:	8019AAF0
  * Size:	000080
  */
-void WMPauseMode::update(Controller*)
+bool WMPauseMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1882,7 +1882,7 @@ void WMPauseMode::draw(Graphics&)
  * Address:	8019AB94
  * Size:	000088
  */
-void WorldMapMode::update(Controller*)
+bool WorldMapMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1953,7 +1953,7 @@ void WorldMapMode::draw(Graphics&)
  * Address:	8019AC40
  * Size:	000090
  */
-void CMcourseSelectMode::update(Controller*)
+bool CMcourseSelectMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -2028,7 +2028,7 @@ void CMcourseSelectMode::draw(Graphics&)
  * Address:	8019ACF4
  * Size:	000080
  */
-void HiScoreMode::update(Controller*)
+bool HiScoreMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -2097,7 +2097,7 @@ void HiScoreMode::draw(Graphics&)
  * Address:	8019AD98
  * Size:	000080
  */
-void UfoPartsMode::update(Controller*)
+bool UfoPartsMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -2166,7 +2166,7 @@ void UfoPartsMode::draw(Graphics&)
  * Address:	8019AE3C
  * Size:	0000B0
  */
-void SaveMesMode::update(Controller*)
+bool SaveMesMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -2253,7 +2253,7 @@ void SaveMesMode::draw(Graphics&)
  * Address:	8019AF10
  * Size:	000080
  */
-void SaveFailureMode::update(Controller*)
+bool SaveFailureMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -2322,7 +2322,7 @@ void SaveFailureMode::draw(Graphics&)
  * Address:	8019AFB4
  * Size:	000080
  */
-void FinalResultMode::update(Controller*)
+bool FinalResultMode::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -2391,7 +2391,7 @@ void FinalResultMode::draw(Graphics&)
  * Address:	8019B058
  * Size:	000040
  */
-void GameModeBase::update(Controller*)
+bool GameModeBase::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -2541,7 +2541,7 @@ void GameCourseClearScreen::update()
  * Address:	8019B1F0
  * Size:	0000A8
  */
-void GameModeMgr::updateSelect(Controller*)
+bool GameModeMgr::updateSelect(Controller*)
 {
 	/*
 	.loc_0x0:

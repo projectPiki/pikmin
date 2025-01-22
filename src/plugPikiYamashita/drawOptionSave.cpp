@@ -56,7 +56,7 @@ zen::DrawOptionSave::DrawOptionSave()
  * Address:	801F554C
  * Size:	000188
  */
-void zen::DrawOptionSave::update(Controller*)
+bool zen::DrawOptionSave::update(Controller*)
 {
 	/*
 	.loc_0x0:

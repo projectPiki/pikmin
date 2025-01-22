@@ -565,7 +565,7 @@ void zen::DrawHurryUp::brightStatus()
  * Address:	801C0B8C
  * Size:	0001F8
  */
-void zen::DrawHurryUp::endStatus()
+bool zen::DrawHurryUp::endStatus()
 {
 	/*
 	.loc_0x0:
@@ -711,7 +711,7 @@ void zen::DrawHurryUp::endStatus()
  * Address:	801C0D84
  * Size:	0002C0
  */
-void zen::DrawHurryUp::update()
+bool zen::DrawHurryUp::update()
 {
 	/*
 	.loc_0x0:

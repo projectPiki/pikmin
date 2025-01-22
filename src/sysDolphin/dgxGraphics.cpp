@@ -444,7 +444,7 @@ void DGXGraphics::setupRender()
  * Address:	800479CC
  * Size:	000008
  */
-u32 DGXGraphics::getDListPtr()
+u8* DGXGraphics::getDListPtr()
 {
 	/*
 	.loc_0x0:

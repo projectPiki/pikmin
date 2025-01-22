@@ -13897,7 +13897,7 @@ void BaseShape::calcJointWorldScale(Graphics&, int, Vector3f&)
  * Address:	........
  * Size:	000148
  */
-void BaseShape::findCollTri(Vector3f&, Vector3f&, Vector3f&, char*)
+CollTriInfo* BaseShape::findCollTri(Vector3f&, Vector3f&, Vector3f&, char*)
 {
 	// UNUSED FUNCTION
 }

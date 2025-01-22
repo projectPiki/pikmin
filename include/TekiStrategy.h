@@ -20,7 +20,7 @@ struct TekiStrategy {
 	virtual void createEffect(Teki& teki, int);                 // _14
 	virtual void draw(Teki& teki, Graphics& gfx);               // _18
 	virtual void drawDebugInfo(Teki& teki, Graphics& gfx);      // _1C
-	virtual void interact(Teki& teki, TekiInteractionKey& key); // _20
+	virtual bool interact(Teki& teki, TekiInteractionKey& key); // _20
 	virtual void spawnCorpseParts(Teki& teki);                  // _24
 
 	// _00 = VTBL

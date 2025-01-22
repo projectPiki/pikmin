@@ -24,7 +24,7 @@ struct DrawGameOver {
 	DrawGameOver();
 
 	void start(modeFlag, f32);
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
 
 	// TODO: members
@@ -38,7 +38,7 @@ struct DrawGameOverLetter {
 
 	void init(P2DPane*);
 	void initParams();
-	void update();
+	bool update();
 
 	// TODO: members
 };

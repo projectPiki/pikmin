@@ -157,7 +157,7 @@ void SeContext::setContext(Creature*, int)
  * Address:	........
  * Size:	000044
  */
-void SeContext::getPos()
+Vector3f SeContext::getPos()
 {
 	// UNUSED FUNCTION
 }
@@ -167,7 +167,7 @@ void SeContext::getPos()
  * Address:	........
  * Size:	00001C
  */
-void SeContext::getObjType()
+int SeContext::getObjType()
 {
 	// UNUSED FUNCTION
 }
@@ -347,7 +347,7 @@ void SeContext::update()
  * Address:	800A3F80
  * Size:	000058
  */
-void SeContext::releaseEvent()
+bool SeContext::releaseEvent()
 {
 	/*
 	.loc_0x0:
@@ -590,7 +590,7 @@ void SeSystem::resetSystem()
  * Address:	800A41FC
  * Size:	00020C
  */
-void SeSystem::createEvent(SeContext*, int, SVector_*)
+int SeSystem::createEvent(SeContext*, int, SVector_*)
 {
 	/*
 	.loc_0x0:
@@ -1165,7 +1165,7 @@ void SeSystem::getEvent(s32)
  * Address:	800A48D0
  * Size:	000048
  */
-void SeSystem::getEvent(SeContext*)
+int SeSystem::getEvent(SeContext*)
 {
 	/*
 	.loc_0x0:
@@ -1958,7 +1958,7 @@ void SeSystem::calcCameraPos(Vector3f&, Vector3f&)
  * Address:	800A52C4
  * Size:	000018
  */
-void SeSystem::getJacID(int)
+int SeSystem::getJacID(int)
 {
 	/*
 	.loc_0x0:
@@ -1976,7 +1976,7 @@ void SeSystem::getJacID(int)
  * Address:	........
  * Size:	000018
  */
-void SeSystem::getSoundName(int)
+char* SeSystem::getSoundName(int)
 {
 	// UNUSED FUNCTION
 }
@@ -1986,7 +1986,7 @@ void SeSystem::getSoundName(int)
  * Address:	........
  * Size:	000018
  */
-void SeSystem::getEventType(int)
+int SeSystem::getEventType(int)
 {
 	// UNUSED FUNCTION
 }
@@ -1996,7 +1996,7 @@ void SeSystem::getEventType(int)
  * Address:	........
  * Size:	000024
  */
-void SeSystem::isLoopType(int)
+bool SeSystem::isLoopType(int)
 {
 	// UNUSED FUNCTION
 }

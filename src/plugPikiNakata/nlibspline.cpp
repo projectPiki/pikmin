@@ -67,7 +67,7 @@ void NArray<SplineKeyFrame>::get(int)
  * Address:	........
  * Size:	000030
  */
-void SplineInterpolator::interpolate(f32, NPosture3D&, bool)
+bool SplineInterpolator::interpolate(f32, NPosture3D&, bool)
 {
 	// UNUSED FUNCTION
 }
@@ -77,7 +77,7 @@ void SplineInterpolator::interpolate(f32, NPosture3D&, bool)
  * Address:	8011DE6C
  * Size:	0000E0
  */
-void SplineInterpolator::interpolateNext(f32, NPosture3D&)
+bool SplineInterpolator::interpolateNext(f32, NPosture3D&)
 {
 	/*
 	.loc_0x0:
@@ -155,7 +155,7 @@ void SplineInterpolator::interpolateNext(f32, NPosture3D&)
  * Address:	........
  * Size:	0000FC
  */
-void SplineInterpolator::interpolateDirect(f32, NPosture3D&)
+bool SplineInterpolator::interpolateDirect(f32, NPosture3D&)
 {
 	// UNUSED FUNCTION
 }
@@ -247,7 +247,7 @@ void NArray<SplineSegment>::get(int)
  * Address:	8011E03C
  * Size:	0000BC
  */
-void SplineInterpolator::searchSegmentIndex(f32, int)
+int SplineInterpolator::searchSegmentIndex(f32, int)
 {
 	/*
 	.loc_0x0:
@@ -526,7 +526,7 @@ SplineSegment::SplineSegment()
  * Address:	........
  * Size:	0001EC
  */
-void SplineSegment::calcDistance(NVector3f&, f32*)
+f32 SplineSegment::calcDistance(NVector3f&, f32*)
 {
 	// UNUSED FUNCTION
 }

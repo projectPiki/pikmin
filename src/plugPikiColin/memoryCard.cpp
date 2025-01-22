@@ -2138,7 +2138,7 @@ void MemoryCard::initOptionsArea(int)
  * Address:	80075090
  * Size:	000414
  */
-void MemoryCard::makeDefaultFile()
+int MemoryCard::makeDefaultFile()
 {
 	/*
 	.loc_0x0:
@@ -3196,7 +3196,7 @@ bool MemoryCard::hasCardChanged()
  * Address:	80075EE8
  * Size:	000574
  */
-int MemoryCard::getOkSections()
+u32 MemoryCard::getOkSections()
 {
 	FORCE_DONT_INLINE;
 	/*

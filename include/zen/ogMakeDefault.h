@@ -12,12 +12,20 @@ namespace zen {
  * @brief TODO
  */
 struct ogScrMakeDefaultMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum MakeDefaultStatus {
+		// TODO: this
+	};
+
 	ogScrMakeDefaultMgr();
 
 	void start();
-	void update(Controller*);
+	MakeDefaultStatus update(Controller*);
 	void draw(Graphics&);
-	void checkTypingAll();
+	bool checkTypingAll();
 
 	// unused/inlined:
 

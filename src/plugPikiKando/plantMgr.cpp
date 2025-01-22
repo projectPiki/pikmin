@@ -928,7 +928,7 @@ void PlantMgr::initialise()
  * Address:	8011AAAC
  * Size:	0000D8
  */
-Plant* PlantMgr::createObject()
+Creature* PlantMgr::createObject()
 {
 	return new Plant();
 }
@@ -970,7 +970,7 @@ void PlantMgr::addUseList(int plantType)
  * Address:	........
  * Size:	000150
  */
-Plant* PlantMgr::birth()
+Creature* PlantMgr::birth()
 {
 	CreatureNode* cnode = new CreatureNode();
 	cnode->mCreature    = new Plant();
@@ -1058,7 +1058,7 @@ void GenObjectPlant::updateUseList(Generator* gen, int)
  */
 Creature* GenObjectPlant::birth(BirthInfo& info)
 {
-	Plant* plant = plantMgr->birth();
+	Plant* plant = static_cast<Plant*>(plantMgr->birth());
 	if (plant) {
 		plant->init(info.mPosition);
 		plant->mRotation  = info.mRotation;

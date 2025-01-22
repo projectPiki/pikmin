@@ -14,10 +14,18 @@ namespace zen {
  * @note Size: 0x58.
  */
 struct ogScrPauseMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum PauseStatus {
+		// TODO: this
+	};
+
 	ogScrPauseMgr();
 
 	void start(bool);
-	int update(Controller*);
+	PauseStatus update(Controller*);
 	void draw(Graphics&);
 
 	u8 _00[0x58]; // _00, unknown

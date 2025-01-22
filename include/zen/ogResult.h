@@ -22,12 +22,20 @@ enum EnumResult {
  * @note Size: 0x55C.
  */
 struct ogScrResultMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum returnStatusFlag {
+		// TODO: this
+	};
+
 	ogScrResultMgr();
 	ogScrResultMgr(EnumResult*);
 
 	void ogScrResultMgrSub();
 	void start();
-	int update(Controller*);
+	returnStatusFlag update(Controller*);
 	void draw(Graphics&);
 
 	// unused/inlined:

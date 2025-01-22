@@ -79,7 +79,7 @@ zen::ogScrMapMgr::ogScrMapMgr()
  * Address:	80183080
  * Size:	00029C
  */
-int zen::ogScrMapMgr::update(Controller* controller)
+zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 {
 	if (mState == MAP_NULL) {
 		return mState;

@@ -71,7 +71,7 @@ void P2DWindow::makeResident()
  * Address:	........
  * Size:	000038
  */
-void P2DWindow::loadResource(char*)
+Texture* P2DWindow::loadResource(char*)
 {
 	// UNUSED FUNCTION
 }

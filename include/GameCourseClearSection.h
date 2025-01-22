@@ -8,6 +8,7 @@
 
 struct Menu;
 struct Font;
+struct GameModeBase;
 
 /**
  * @brief TODO
@@ -64,8 +65,13 @@ struct GameCourseClearSection : public Section {
 struct GameModeMgr {
 	GameModeMgr(int);
 
-	void updateSelect(Controller*);
+	bool updateSelect(Controller*);
 	void drawSelect(Graphics&, Font*);
+
+	// DLL inlines to do:
+	bool update(Controller*);
+	void draw(Graphics&, Font*);
+	void setGameMode(int, GameModeBase*);
 
 	// TODO: members
 };
@@ -74,7 +80,7 @@ struct GameModeMgr {
  * @brief TODO
  */
 struct GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// TODO: members
@@ -84,7 +90,7 @@ struct GameModeBase {
  * @brief TODO
  */
 struct CMcourseSelectMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -98,7 +104,7 @@ struct CMcourseSelectMode : public GameModeBase {
 struct CMresultMode : public GameModeBase {
 	CMresultMode();
 
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -110,7 +116,7 @@ struct CMresultMode : public GameModeBase {
  * @brief TODO
  */
 struct ContainerMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -122,7 +128,7 @@ struct ContainerMode : public GameModeBase {
  * @brief TODO
  */
 struct CountDownMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -134,7 +140,7 @@ struct CountDownMode : public GameModeBase {
  * @brief TODO
  */
 struct FinalResultMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -146,7 +152,7 @@ struct FinalResultMode : public GameModeBase {
  * @brief TODO
  */
 struct GameInfoMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -158,7 +164,7 @@ struct GameInfoMode : public GameModeBase {
  * @brief TODO
  */
 struct GameOverMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -170,7 +176,7 @@ struct GameOverMode : public GameModeBase {
  * @brief TODO
  */
 struct HiScoreMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -182,7 +188,7 @@ struct HiScoreMode : public GameModeBase {
  * @brief TODO
  */
 struct HurryUpMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -194,7 +200,7 @@ struct HurryUpMode : public GameModeBase {
  * @brief TODO
  */
 struct ProgressiveMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -206,7 +212,7 @@ struct ProgressiveMode : public GameModeBase {
  * @brief TODO
  */
 struct SaveFailureMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -218,7 +224,7 @@ struct SaveFailureMode : public GameModeBase {
  * @brief TODO
  */
 struct SaveMesMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -230,7 +236,7 @@ struct SaveMesMode : public GameModeBase {
  * @brief TODO
  */
 struct UfoPartsMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -242,7 +248,7 @@ struct UfoPartsMode : public GameModeBase {
  * @brief TODO
  */
 struct WMPauseMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL
@@ -254,7 +260,7 @@ struct WMPauseMode : public GameModeBase {
  * @brief TODO
  */
 struct WorldMapMode : public GameModeBase {
-	virtual void update(Controller*); // _08
+	virtual bool update(Controller*); // _08
 	virtual void draw(Graphics&);     // _0C
 
 	// _??     = VTBL

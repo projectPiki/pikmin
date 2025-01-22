@@ -26,8 +26,8 @@ struct DrawHurryUp {
 	void initPanes();
 	void start(messageTypeFlag);
 	void startStatus();
-	void endStatus();
-	void update();
+	bool endStatus();
+	bool update();
 	void draw(Graphics&);
 
 	// unused/inlined:

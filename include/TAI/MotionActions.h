@@ -31,7 +31,7 @@ struct TaiContinuousMotionAction : public TaiMotionAction {
 
 	virtual void start(Teki&);         // _08
 	virtual bool act(Teki&);           // _10
-	virtual void motionStarted(Teki&); // _1C
+	virtual bool motionStarted(Teki&); // _1C
 
 	// _04     = VTBL
 	// _00-_08 = TaiMotionAction

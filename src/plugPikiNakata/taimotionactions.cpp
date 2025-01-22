@@ -209,7 +209,7 @@ bool TaiContinuousMotionAction::act(Teki&)
  * Address:	801341E0
  * Size:	000024
  */
-void TaiContinuousMotionAction::motionStarted(Teki&)
+bool TaiContinuousMotionAction::motionStarted(Teki&)
 {
 	/*
 	.loc_0x0:

@@ -53,7 +53,7 @@ void PikiShapeObject::init()
  * Address:	........
  * Size:	00006C
  */
-void PikiShapeObject::create(int)
+PikiShapeObject* PikiShapeObject::create(int)
 {
 	// UNUSED FUNCTION
 }

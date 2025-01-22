@@ -3048,7 +3048,7 @@ zen::TexAnim::AnimData::AnimData()
  * Address:	801BD2C0
  * Size:	0000C8
  */
-void zen::ArrowCenterCallBack::setTexture(P2DPicture*)
+zen::ArrowBasicCallBack::arrowType zen::ArrowCenterCallBack::setTexture(P2DPicture*)
 {
 	/*
 	.loc_0x0:
@@ -3126,7 +3126,7 @@ void zen::ArrowCenterCallBack::setTexture(P2DPicture*)
  * Address:	801BD388
  * Size:	000068
  */
-void zen::ArrowBasicCallBack::judgeArrowType()
+zen::ArrowBasicCallBack::arrowType zen::ArrowBasicCallBack::judgeArrowType()
 {
 	/*
 	.loc_0x0:
@@ -3814,7 +3814,7 @@ void zen::DrawContainer::setDispParam()
  * Address:	........
  * Size:	00003C
  */
-void zen::DrawContainer::waitStatus()
+bool zen::DrawContainer::waitStatus()
 {
 	// UNUSED FUNCTION
 }
@@ -3824,7 +3824,7 @@ void zen::DrawContainer::waitStatus()
  * Address:	........
  * Size:	000404
  */
-void zen::DrawContainer::startStatus()
+bool zen::DrawContainer::startStatus()
 {
 	// UNUSED FUNCTION
 }
@@ -3834,7 +3834,7 @@ void zen::DrawContainer::startStatus()
  * Address:	801BDC28
  * Size:	000C20
  */
-void zen::DrawContainer::operationStatus()
+bool zen::DrawContainer::operationStatus()
 {
 	/*
 	.loc_0x0:
@@ -4738,7 +4738,7 @@ void zen::DrawContainer::operationStatus()
  * Address:	........
  * Size:	000384
  */
-void zen::DrawContainer::endStatus()
+bool zen::DrawContainer::endStatus()
 {
 	// UNUSED FUNCTION
 }
@@ -4748,7 +4748,7 @@ void zen::DrawContainer::endStatus()
  * Address:	801BE848
  * Size:	00052C
  */
-void zen::DrawContainer::update(int&)
+bool zen::DrawContainer::update(int&)
 {
 	/*
 	.loc_0x0:

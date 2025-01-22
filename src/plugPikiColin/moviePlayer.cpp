@@ -35,7 +35,7 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	000054
  */
-void MovieInfo::update()
+bool MovieInfo::update()
 {
 	// UNUSED FUNCTION
 }
@@ -178,7 +178,7 @@ void MoviePlayer::fixMovieList()
  * Address:	........
  * Size:	00003C
  */
-void MoviePlayer::findMovie(int)
+MovieListInfo* MoviePlayer::findMovie(int)
 {
 	// UNUSED FUNCTION
 }
@@ -295,7 +295,7 @@ void MoviePlayer::initMovie(MovieInfo* info, int)
  * Address:	........
  * Size:	000040
  */
-void MoviePlayer::translateIndex(int, int)
+int MoviePlayer::translateIndex(int, int)
 {
 	// UNUSED FUNCTION
 }

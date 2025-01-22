@@ -225,7 +225,7 @@ void Kontroller::update()
  * Address:	80115E60
  * Size:	000008
  */
-int Kontroller::getSaveSize(int p1)
+u32 Kontroller::getSaveSize(int p1)
 {
 	return p1 * 12;
 }

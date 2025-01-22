@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	801EC478
  * Size:	0001B8
  */
-void zen::DrawCMCSmenu::modeAppear(Controller*)
+bool zen::DrawCMCSmenu::modeAppear(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -921,7 +921,7 @@ void zen::DrawCMcourseSelect::setBestScore()
  * Address:	801ED018
  * Size:	00011C
  */
-void zen::DrawCMcourseSelect::update(Controller*)
+bool zen::DrawCMcourseSelect::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1091,7 +1091,7 @@ void zen::DrawCMcourseSelect::draw(Graphics&)
  * Address:	801ED208
  * Size:	000008
  */
-void zen::DrawCMcourseSelect::getReturnStatusFlag()
+zen::DrawCMcourseSelect::returnStatusFlag zen::DrawCMcourseSelect::getReturnStatusFlag()
 {
 	/*
 	.loc_0x0:
@@ -1105,7 +1105,7 @@ void zen::DrawCMcourseSelect::getReturnStatusFlag()
  * Address:	801ED210
  * Size:	000100
  */
-void zen::DrawCMcourseSelect::modeOperation(Controller*)
+bool zen::DrawCMcourseSelect::modeOperation(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1193,7 +1193,7 @@ void zen::DrawCMcourseSelect::modeOperation(Controller*)
  * Address:	801ED310
  * Size:	000168
  */
-void zen::DrawCMCSmenu::update(Controller*)
+bool zen::DrawCMCSmenu::update(Controller*)
 {
 	/*
 	.loc_0x0:

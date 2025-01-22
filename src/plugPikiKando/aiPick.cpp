@@ -98,7 +98,7 @@ ActPickItem::ActPickItem(Piki* piki)
  * Address:	800BCBDC
  * Size:	000180
  */
-void ActPickItem::findItem()
+Creature* ActPickItem::findItem()
 {
 	/*
 	.loc_0x0:

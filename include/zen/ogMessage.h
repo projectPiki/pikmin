@@ -14,9 +14,17 @@ namespace zen {
  * @note Size: 0xA5F0.
  */
 struct ogScrMessageMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum MessageStatus {
+		// TODO: this
+	};
+
 	ogScrMessageMgr(char*);
 
-	void SearchTopPage(int);
+	s16 SearchTopPage(int);
 	void resetPage();
 	void start(int);
 	void setPage(int);
@@ -29,7 +37,7 @@ struct ogScrMessageMgr {
 	void MakeAndSetPageInfo(char***);
 	void dispAll();
 	void fadeOut();
-	void update(Controller*);
+	MessageStatus update(Controller*);
 	void draw(Graphics&);
 
 	// unused/inlined:

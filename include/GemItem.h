@@ -27,12 +27,12 @@ struct GemItem : public ItemCreature {
 	virtual void update();                     // _E0, stripped
 	virtual void refresh(Graphics&);           // _EC, stripped
 	virtual void doKill();                     // _10C, stripped
+	virtual void setAtariFree();               // _15C, stripped
 
 	void setColorType(int);
 	void split();
 
 	// unused/inlined:
-	void setAtariFree();
 	bool reachCapacity();
 	void updateLiftup();
 	void startPick(f32);

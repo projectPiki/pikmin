@@ -14,10 +14,18 @@ namespace zen {
  * @note Size: 0xA8.
  */
 struct ogScrTitleMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum TitleStatus {
+		// TODO: this
+	};
+
 	ogScrTitleMgr();
 
 	void start(bool);
-	int update(Controller*);
+	TitleStatus update(Controller*);
 	void draw(Graphics&);
 	void StereoOnOff(bool);
 	void DispBarBGM(bool);

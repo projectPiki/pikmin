@@ -46,7 +46,7 @@ SmokeEmitter::Smoke::Smoke()
  * Address:	........
  * Size:	0000F0
  */
-void SmokeEmitter::emit(Vector3f&, Vector3f&)
+SmokeEmitter::Smoke* SmokeEmitter::emit(Vector3f&, Vector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -315,7 +315,7 @@ void EffectShape::initShape(char*)
  * Address:	........
  * Size:	000008
  */
-void EffectShape::update()
+bool EffectShape::update()
 {
 	// UNUSED FUNCTION
 }
@@ -345,7 +345,7 @@ void EffShpInst::initEffShpInst()
  * Address:	8019BF7C
  * Size:	000134
  */
-void EffShpInst::update()
+bool EffShpInst::update()
 {
 	/*
 	.loc_0x0:
@@ -458,7 +458,7 @@ EffectGeometryRegistration::EffectGeometryRegistration(char*, char*, f32, u8)
  * Address:	8019C0B0
  * Size:	0000FC
  */
-void EffectGeometryRegistration::create(Vector3f&, Vector3f&, Vector3f&)
+EffShpInst* EffectGeometryRegistration::create(Vector3f&, Vector3f&, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1371,7 +1371,7 @@ zen::particleGenerator* EffectMgr::create(EffectMgr::simpleTypeTable, Vector3f&,
  * Address:	8019CC00
  * Size:	0000A8
  */
-void EffectMgr::getShapeInst()
+EffShpInst* EffectMgr::getShapeInst()
 {
 	/*
 	.loc_0x0:

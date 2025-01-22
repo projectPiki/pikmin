@@ -427,7 +427,7 @@ void System::run(BaseApp*)
  * Address:	80044C14
  * Size:	000058
  */
-void System::getTime()
+f32 System::getTime()
 {
 	/*
 	.loc_0x0:

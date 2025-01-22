@@ -202,11 +202,11 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	virtual void updateTimers();                         // _17C
 	virtual void gravitate(f32);                         // _180
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _184 (weak)
-	virtual void getTekiCollisionSize();                 // _188
+	virtual f32 getTekiCollisionSize();                  // _188
 	virtual void makeDamaged();                          // _18C
 	virtual void startDamageMotion(f32, f32);            // _190
-	virtual void generateTeki(int);                      // _194
-	virtual void spawnTeki(int);                         // _198
+	virtual Teki* generateTeki(int);                     // _194
+	virtual Teki* spawnTeki(int);                        // _198
 	virtual void shootBall(Creature&);                   // _19C
 	virtual void eventPerformed(TekiEvent&);             // _1A0
 	virtual bool interact(struct TekiInteractionKey&);   // _1A4
@@ -233,7 +233,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	virtual void dieSoon();                    // _1EC
 	virtual void becomeCorpse();               // _1F0
 
-	bool arrivedAt(f32, f32);
 	void prepareEffects();
 	void startStoppingMove();
 	void finishStoppingMove();
@@ -246,73 +245,74 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	void spawnWaters(int);
 	void spawnCorpseParts();
 	void outputSpawnPosition(Vector3f&);
-	void nearestAngleTarget(Creature*);
-	void cullableCenter(Creature&, f32);
-	void cullableSphere(Creature&, f32);
-	void inSectorPosition(Vector3f&, f32, f32);
-	void visibleCreature(Creature&);
-	void separateCreature(Creature&);
-	void contactCreature(Creature&);
+	bool nearestAngleTarget(Creature*);
+	bool cullableCenter(Creature&, f32);
+	bool cullableSphere(Creature&, f32);
+	bool inSectorPosition(Vector3f&, f32, f32);
+	bool visibleCreature(Creature&);
+	bool separateCreature(Creature&);
+	bool contactCreature(Creature&);
 	bool attackableCreature(Creature&);
-	void calcTargetAngle(Vector3f&);
-	void moveToward(Vector3f&, f32);
-	void turnToward(f32, f32);
+	f32 calcTargetAngle(Vector3f&);
+	bool moveToward(Vector3f&, f32);
+	bool turnToward(f32, f32);
 	void rotateTeki(f32);
 	Creature* getClosestNaviPiki(Condition&, f32*);
-	void attackTarget(Creature&, f32, f32, Condition&);
+	bool attackTarget(Creature&, f32, f32, Condition&);
 	void outputHitCenter(Vector3f&);
-	void interactNaviPiki(Interaction&, Condition&);
-	void interactNavi(Interaction&, Condition&);
-	void interactPiki(Interaction&, Condition&);
+	bool interactNaviPiki(Interaction&, Condition&);
+	bool interactNavi(Interaction&, Condition&);
+	bool interactPiki(Interaction&, Condition&);
 	void flick();
 	void flick(struct InteractFlick&, InteractFlick&);
 	void flickUpper();
 	void flickUpper(InteractFlick&);
 	void flickLower();
 	void flickLower(InteractFlick&);
-	void checkNaviPiki(Condition&);
-	void countPikis(Condition&);
-	void getFlickDamageCount(int);
-	void getGravity();
+	bool checkNaviPiki(Condition&);
+	int countPikis(Condition&);
+	int getFlickDamageCount(int);
+	f32 getGravity();
 	TekiStrategy* getStrategy();
-	void getSeaLevel();
-	void getYFromSeaLevel();
+	f32 getSeaLevel();
+	f32 getYFromSeaLevel();
 	void makePositionRoute(Vector3f&, Vector3f&, bool);
 	void makeWayPointRoute(int, int, bool);
-	void getTargetNearestWayPoint(Vector3f&);
-	void getNearestWayPoint();
-	void getWayPoint(int);
-	void getRouteWayPoint(int);
+	WayPoint* getTargetNearestWayPoint(Vector3f&);
+	WayPoint* getNearestWayPoint();
+	WayPoint* getWayPoint(int);
+	WayPoint* getRouteWayPoint(int);
 	void updateLifeGauge();
 	void drawRange(Graphics&, Vector3f&, f32, struct Colour&);
-	void getFreeSlot();
+	CollPart* getFreeSlot();
 	bool isFreeCollPart(CollPart*);
 	void outputWorldAnimationPosition(Vector3f&, int, Matrix4f&);
-	void getPositionMapCode(Vector3f&);
-	void getPositionMapCode();
+	int getPositionMapCode(Vector3f&);
+	int getPositionMapCode();
 	bool inWaterTeki();
 	void moveNestPosition();
 	void startParticleGenerator(int);
 	void stopParticleGenerator(int);
 	void setParticleGeneratorPosition(int, Vector3f&);
 	void setParticleGeneratorDirection(int, Vector3f&);
-	void calcCollisionDistance(Creature&);
-	void getCollisionSize();
+	f32 calcCollisionDistance(Creature&);
+	f32 getCollisionSize();
 	void setCorpsePartJoint(int, int);                          // unused
 	void outputDirectionPosition(Vector3f&, f32, f32);          // unused
 	void jumpTo(Vector3f&, f32);                                // unused
-	void insideDirection(Vector3f&);                            // unused
-	void attackRangeNaviPiki(Interaction&, Condition&);         // unused
-	void interactTeki(Interaction&, Condition&);                // unused
-	void countTekis(Condition&);                                // unused
-	void getCameraAnimationMatrix(int);                         // unused
+	bool insideDirection(Vector3f&);                            // unused
+	bool attackRangeNaviPiki(Interaction&, Condition&);         // unused
+	bool interactTeki(Interaction&, Condition&);                // unused
+	int countTekis(Condition&);                                 // unused
+	Matrix4f& getCameraAnimationMatrix(int);                    // unused
 	void outputWorldAnimationMatrix(Matrix4f&, int, Matrix4f&); // unused
-	void getCollisionCenter();                                  // unused
+	Vector3f getCollisionCenter();                              // unused
 
+	static bool arrivedAt(f32, f32);
 	static bool isPellet(int);
 	static f32 calcCircleDistanceStatic(Vector3f&, f32, Vector3f&, f32);
 	static f32 calcSphereDistanceStatic(Vector3f&, f32, Vector3f&, f32);
-	static void moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&);
+	static bool moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&);
 
 	inline void setMotionSpeed(f32 speed)
 	{
@@ -478,13 +478,13 @@ struct YTeki : public NTeki {
 	bool isNaviWatch();
 	void moveTowardPriorityFaceDir(Vector3f&, f32);
 	void moveTowardPriorityFaceDir(Vector3f&, f32, f32);
-	void turnToTarget();
+	bool turnToTarget();
 	void flyingStay(f32);
 	void killStickToMouthPiki();
-	void startNewMotion(int);
+	bool startNewMotion(int);
 
 	// unused/inlined:
-	void getMapAttribute();
+	int getMapAttribute();
 
 	// see TAIAappearKabekui::start
 	inline void set4C8(u32 val) { _4C8 = (_4C8 & ~0xFFFFFFEF); }
@@ -527,10 +527,10 @@ struct Teki : public YTeki {
 struct TekiMgr : public MonoObjectMgr {
 	TekiMgr();
 
-	virtual ~TekiMgr() { }           // _48
-	virtual void update();           // _4C
-	virtual void refresh(Graphics&); // _58
-	virtual Teki* createObject();    // _80
+	virtual ~TekiMgr() { }            // _48
+	virtual void update();            // _4C
+	virtual void refresh(Graphics&);  // _58
+	virtual Creature* createObject(); // _80
 
 	void startStage();
 	Teki* newTeki(int);

@@ -352,7 +352,7 @@ void TAIAeffCloudOfDust::createCloudOfDust(Teki&, int)
  * Address:	801D61FC
  * Size:	000050
  */
-void TAIAeffCloudOfDust::getCollPart(Teki&, int)
+CollPart* TAIAeffCloudOfDust::getCollPart(Teki&, int)
 {
 	/*
 	.loc_0x0:

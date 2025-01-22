@@ -27,11 +27,11 @@ struct DrawCMCSmenu : public DrawMenuBase {
 
 	inline DrawCMCSmenu(); // TODO: this
 
-	virtual void update(Controller*); // _14
+	virtual bool update(Controller*); // _14
 	virtual void start();             // _18
 	virtual void setModeFunc(int);    // _28
 
-	void modeAppear(Controller*);
+	bool modeAppear(Controller*);
 
 	// TODO: members
 };
@@ -40,14 +40,21 @@ struct DrawCMCSmenu : public DrawMenuBase {
  * @brief TODO
  */
 struct DrawCMcourseSelect {
+	/**
+	 * @brief TODO
+	 */
+	enum returnStatusFlag {
+		// TODO: this
+	};
+
 	DrawCMcourseSelect();
 
 	void start();
 	void setBestScore();
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
-	void getReturnStatusFlag();
-	void modeOperation(Controller*);
+	returnStatusFlag getReturnStatusFlag();
+	bool modeOperation(Controller*);
 
 	// TODO: members
 };
@@ -151,7 +158,7 @@ struct DrawCMbest {
  */
 struct DrawCMresultAlpha {
 
-	virtual void update(); // _08
+	virtual bool update(); // _08
 
 	// TODO: members
 };
@@ -179,7 +186,7 @@ struct DrawCMresult {
 
 	DrawCMresult();
 
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
 	void start(const GameChalQuickInfo&);
 	void makeResident();

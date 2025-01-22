@@ -697,7 +697,7 @@ void zen::MenuPanel::update(P2DPane*)
  * Address:	801C9E2C
  * Size:	000074
  */
-void zen::MenuPanelMgr::update()
+bool zen::MenuPanelMgr::update()
 {
 	/*
 	.loc_0x0:
@@ -748,7 +748,7 @@ void zen::MenuPanelMgr::update()
  * Address:	801C9EA0
  * Size:	000050
  */
-void zen::MenuPanelMgr::checkFinish()
+bool zen::MenuPanelMgr::checkFinish()
 {
 	/*
 	.loc_0x0:

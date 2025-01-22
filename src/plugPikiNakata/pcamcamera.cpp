@@ -1783,7 +1783,7 @@ void PcamCamera::finishMotion()
  * Address:	........
  * Size:	000028
  */
-void PcamCamera::getChangingMotionRate()
+f32 PcamCamera::getChangingMotionRate()
 {
 	// UNUSED FUNCTION
 }
@@ -1793,7 +1793,7 @@ void PcamCamera::getChangingMotionRate()
  * Address:	80123144
  * Size:	00006C
  */
-void PcamCamera::getGoalDistance()
+f32 PcamCamera::getGoalDistance()
 {
 	/*
 	.loc_0x0:
@@ -1832,7 +1832,7 @@ void PcamCamera::getGoalDistance()
  * Address:	801231B0
  * Size:	000060
  */
-void PcamCamera::getCurrentAngle()
+f32 PcamCamera::getCurrentAngle()
 {
 	/*
 	.loc_0x0:
@@ -1870,7 +1870,7 @@ void PcamCamera::getCurrentAngle()
  * Address:	80123224
  * Size:	000064
  */
-void PcamCamera::getCurrentFov()
+f32 PcamCamera::getCurrentFov()
 {
 	/*
 	.loc_0x0:
@@ -1907,7 +1907,7 @@ void PcamCamera::getCurrentFov()
  * Address:	80123288
  * Size:	000018
  */
-void PcamCamera::getCurrentHomingSpeed()
+f32 PcamCamera::getCurrentHomingSpeed()
 {
 	/*
 	.loc_0x0:
@@ -1925,7 +1925,7 @@ void PcamCamera::getCurrentHomingSpeed()
  * Address:	........
  * Size:	000060
  */
-void PcamCamera::getCurrentWatchAdjustment()
+f32 PcamCamera::getCurrentWatchAdjustment()
 {
 	// UNUSED FUNCTION
 }
@@ -1935,7 +1935,7 @@ void PcamCamera::getCurrentWatchAdjustment()
  * Address:	........
  * Size:	000060
  */
-void PcamCamera::getCurrentNaviWatchWeight()
+f32 PcamCamera::getCurrentNaviWatchWeight()
 {
 	// UNUSED FUNCTION
 }
@@ -1945,7 +1945,7 @@ void PcamCamera::getCurrentNaviWatchWeight()
  * Address:	801232A0
  * Size:	000060
  */
-void PcamCamera::getCurrentBlur()
+f32 PcamCamera::getCurrentBlur()
 {
 	/*
 	.loc_0x0:
@@ -1981,7 +1981,7 @@ void PcamCamera::getCurrentBlur()
  * Address:	80123300
  * Size:	00005C
  */
-void PcamCamera::calcCurrentDistance()
+f32 PcamCamera::calcCurrentDistance()
 {
 	/*
 	.loc_0x0:
@@ -2016,7 +2016,7 @@ void PcamCamera::calcCurrentDistance()
  * Address:	........
  * Size:	000074
  */
-void PcamCamera::calcCurrentDirection()
+f32 PcamCamera::calcCurrentDirection()
 {
 	// UNUSED FUNCTION
 }
@@ -2026,7 +2026,7 @@ void PcamCamera::calcCurrentDirection()
  * Address:	........
  * Size:	000074
  */
-void PcamCamera::calcTargetDistance()
+f32 PcamCamera::calcTargetDistance()
 {
 	// UNUSED FUNCTION
 }
@@ -2036,7 +2036,7 @@ void PcamCamera::calcTargetDistance()
  * Address:	........
  * Size:	00000C
  */
-void PcamCamera::getTargetDirection()
+f32 PcamCamera::getTargetDirection()
 {
 	// UNUSED FUNCTION
 }
@@ -2046,7 +2046,7 @@ void PcamCamera::getTargetDirection()
  * Address:	8012335C
  * Size:	000094
  */
-void PcamCamera::getCursorDirection()
+f32 PcamCamera::getCursorDirection()
 {
 	/*
 	.loc_0x0:

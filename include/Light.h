@@ -110,8 +110,8 @@ struct Light : public CoreNode {
 	// unused/inlined:
 	void setLightParallel();
 	void calcLightSizes();
-	void calcLightMapRadius();
-	void calcLightObjRadius();
+	f32 calcLightMapRadius();
+	f32 calcLightObjRadius();
 	void refresh(Graphics&, LFlareGroup*);
 
 	// _00     = VTBL

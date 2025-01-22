@@ -21,6 +21,16 @@ enum EDemoFlags {
 	DEMOFLAG_Unk29 = 29,
 };
 
+/**
+ * @brief TODO
+ */
+struct DemoFlag {
+	// TODO: this - only gets returned by DemoFlags::getDemoFlag smh
+};
+
+/**
+ * @brief TODO
+ */
 struct DemoParms : public Node {
 
 	struct Parms : Parameters {
@@ -60,7 +70,7 @@ struct DemoFlags {
 	void setFlagOnly(int);
 	void setTimer(f32, int, Creature*);
 	void resetTimer();
-	void getDemoFlag(int);
+	DemoFlag* getDemoFlag(int);
 
 	// TODO: members
 	u16 _00;     // _00
@@ -84,8 +94,8 @@ struct DemoEventMgr {
 	void act(int, int);
 
 	// unused/inlined:
-	void getEventName(int, int);
-	void getSenderName(int);
+	char* getEventName(int, int);
+	char* getSenderName(int);
 
 	// no members
 };

@@ -27,7 +27,7 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	000058
  */
-void zen::ogRaderMgr::ogCalcDispXZ(Vector3f)
+Vector3f zen::ogRaderMgr::ogCalcDispXZ(Vector3f)
 {
 	// UNUSED FUNCTION
 }
@@ -2355,7 +2355,7 @@ void zen::ogRaderMgr::updateMenu(Controller*)
  * Address:	80186EA0
  * Size:	000748
  */
-void zen::ogRaderMgr::update(Controller*)
+zen::ogRaderMgr::RaderStatus zen::ogRaderMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

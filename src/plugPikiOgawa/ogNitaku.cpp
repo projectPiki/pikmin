@@ -508,7 +508,7 @@ void zen::ogNitakuMgr::cursorDisable(f32)
  * Address:	80196E58
  * Size:	000344
  */
-void zen::ogNitakuMgr::update(Controller*)
+zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

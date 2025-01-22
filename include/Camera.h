@@ -113,7 +113,7 @@ struct Camera : public CullFrustum {
 
 	// unused/inlined:
 	void camReflect(Camera&, Plane&);
-	void projectCamPoint(Vector3f&);
+	f32 projectCamPoint(Vector3f&);
 
 	// _00-_260 = CullFrustum
 	Matrix4f mPerspectiveMatrix; // _260, used for perspective projection

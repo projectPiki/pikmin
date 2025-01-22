@@ -365,7 +365,7 @@ void zen::DrawSaveMes::hide()
  * Address:	801F2A84
  * Size:	0008A4
  */
-void zen::DrawSaveMes::update(Controller*)
+bool zen::DrawSaveMes::update(Controller*)
 {
 	/*
 	.loc_0x0:

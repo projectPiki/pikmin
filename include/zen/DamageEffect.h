@@ -13,7 +13,7 @@ namespace zen {
 struct DamageEffect {
 	DamageEffect();
 
-	void update();
+	bool update();
 	void draw(Graphics&);
 
 	// TODO: members

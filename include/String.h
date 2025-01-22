@@ -17,19 +17,16 @@ struct String {
 	int getLength();
 
 	// unused/inlined:
-	bool isSame(char*);
 	f32 toFloat();
 	int toInt();
-	int getLength(char*);
-	bool isSame(char*, char*);
-	void dup(char*);
-	void contains(char*, char*);
-	void copy(char*, char*);
-	void copyUntil(char*, char*, char, char**);
-	void concat(char*, char*);
-	void calcHash(char*);
-	void calcHash();
-	void toInt(char*);
+	char* dup(char*);
+	bool contains(char*, char*);
+	char* copy(char*, char*);
+	bool copyUntil(char*, char*, char, char**);
+	u32 calcHash(char*);
+	u32 calcHash();
+	int toInt(char*);
+	bool isSame(char*);
 
 	void init(int length)
 	{
@@ -41,6 +38,10 @@ struct String {
 		mString = str;
 		mLength = length;
 	}
+
+	static bool isSame(char*, char*);
+	static void concat(char*, char*);
+	static int getLength(char*);
 
 	int mLength;   // _00
 	char* mString; // _04

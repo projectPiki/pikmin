@@ -180,7 +180,7 @@ void ActBridge::initDetour()
  * Address:	........
  * Size:	0000F0
  */
-void ActBridge::exeDetour()
+int ActBridge::exeDetour()
 {
 	// UNUSED FUNCTION
 }
@@ -211,7 +211,7 @@ void ActBridge::initClimb()
  * Address:	........
  * Size:	000068
  */
-void ActBridge::exeClimb()
+int ActBridge::exeClimb()
 {
 	// UNUSED FUNCTION
 }
@@ -231,7 +231,7 @@ void ActBridge::initApproach()
  * Address:	........
  * Size:	000328
  */
-void ActBridge::exeApproach()
+int ActBridge::exeApproach()
 {
 	// UNUSED FUNCTION
 }
@@ -251,7 +251,7 @@ void ActBridge::initGo()
  * Address:	........
  * Size:	0003F0
  */
-void ActBridge::exeGo()
+int ActBridge::exeGo()
 {
 	// UNUSED FUNCTION
 }
@@ -271,7 +271,7 @@ void ActBridge::initWork()
  * Address:	........
  * Size:	000414
  */
-void ActBridge::exeWork()
+int ActBridge::exeWork()
 {
 	// UNUSED FUNCTION
 }

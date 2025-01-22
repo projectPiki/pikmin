@@ -2103,7 +2103,7 @@ void DayOverModeState::makeTotalScoreWindow()
  * Address:	80058680
  * Size:	000368
  */
-void DayOverModeState::initialisePhaseOne()
+ModeState* DayOverModeState::initialisePhaseOne()
 {
 	/*
 	.loc_0x0:
@@ -2361,7 +2361,7 @@ void DayOverModeState::initialisePhaseOne()
  * Address:	800589E8
  * Size:	000410
  */
-void DayOverModeState::initialisePhaseTwo()
+ModeState* DayOverModeState::initialisePhaseTwo()
 {
 	/*
 	.loc_0x0:
@@ -2665,7 +2665,7 @@ void DayOverModeState::initialisePhaseTwo()
  * Address:	80058DF8
  * Size:	000258
  */
-void DayOverModeState::initialisePhaseThree()
+ModeState* DayOverModeState::initialisePhaseThree()
 {
 	/*
 	.loc_0x0:
@@ -2839,7 +2839,7 @@ void DayOverModeState::initialisePhaseThree()
  * Address:	80059050
  * Size:	00013C
  */
-void DayOverModeState::initialisePhaseFour()
+ModeState* DayOverModeState::initialisePhaseFour()
 {
 	/*
 	.loc_0x0:

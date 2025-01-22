@@ -1327,7 +1327,7 @@ void zen::ogScrMemChkMgr::FormatEffectStart()
  * Address:	........
  * Size:	000020
  */
-void zen::ogScrMemChkMgr::checkTypingAll()
+bool zen::ogScrMemChkMgr::checkTypingAll()
 {
 	// UNUSED FUNCTION
 }
@@ -1357,7 +1357,7 @@ void zen::ogScrMemChkMgr::setNoCard()
  * Address:	8018E0DC
  * Size:	000EC4
  */
-int zen::ogScrMemChkMgr::update(Controller*)
+zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

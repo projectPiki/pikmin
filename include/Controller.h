@@ -71,9 +71,10 @@ struct Controller : public Node {
 		reset(p1);
 	}
 
+	virtual void update(); // _10
+
 	void reset(u32 playerNum);
 	void updateCont(u32 keyStatus);
-	void update();
 	f32 getMainStickX();
 	f32 getMainStickY();
 	f32 getSubStickX();

@@ -681,7 +681,7 @@ void PeveCircleMoveEvent::outputPosition(Vector3f&)
  * Address:	80126644
  * Size:	000084
  */
-void PeveCircleMoveEvent::calcAngle()
+f32 PeveCircleMoveEvent::calcAngle()
 {
 	/*
 	.loc_0x0:
@@ -1471,7 +1471,7 @@ void PeveInterpolationEvent::setStartTime(f32)
  * Address:	80126DCC
  * Size:	000008
  */
-void PeveInterpolationEvent::getStartTime()
+f32 PeveInterpolationEvent::getStartTime()
 {
 	/*
 	.loc_0x0:
@@ -1499,7 +1499,7 @@ void PeveInterpolationEvent::setPeriod(f32)
  * Address:	80126DDC
  * Size:	000008
  */
-void PeveInterpolationEvent::getPeriod()
+f32 PeveInterpolationEvent::getPeriod()
 {
 	/*
 	.loc_0x0:
@@ -1527,7 +1527,7 @@ void PeveInterpolationEvent::setTime(f32)
  * Address:	80126DEC
  * Size:	000008
  */
-void PeveInterpolationEvent::getTime()
+f32 PeveInterpolationEvent::getTime()
 {
 	/*
 	.loc_0x0:
@@ -1541,7 +1541,7 @@ void PeveInterpolationEvent::getTime()
  * Address:	80126DF4
  * Size:	000010
  */
-void PeveInterpolationEvent::getEndTime()
+f32 PeveInterpolationEvent::getEndTime()
 {
 	/*
 	.loc_0x0:

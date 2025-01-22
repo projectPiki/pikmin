@@ -60,13 +60,13 @@ struct PcamCamera : public NCamera {
 	void startMotion(int, int);
 	void startMotion(PcamMotionInfo&);
 	void finishMotion();
-	void getGoalDistance();
-	void getCurrentAngle();
-	void getCurrentFov();
-	void getCurrentHomingSpeed();
-	void getCurrentBlur();
-	void calcCurrentDistance();
-	void getCursorDirection();
+	f32 getGoalDistance();
+	f32 getCurrentAngle();
+	f32 getCurrentFov();
+	f32 getCurrentHomingSpeed();
+	f32 getCurrentBlur();
+	f32 calcCurrentDistance();
+	f32 getCursorDirection();
 	void outputTargetPosition(NVector3f&);
 	void outputCursorPosition(NVector3f&);
 	void outputFormationWatchpoint(Navi*, NVector3f&);
@@ -74,12 +74,12 @@ struct PcamCamera : public NCamera {
 
 	// unused/inlined:
 	void playCameraSound(int);
-	void getChangingMotionRate();
-	void getCurrentWatchAdjustment();
-	void getCurrentNaviWatchWeight();
-	void calcCurrentDirection();
-	void calcTargetDistance();
-	void getTargetDirection();
+	f32 getChangingMotionRate();
+	f32 getCurrentWatchAdjustment();
+	f32 getCurrentNaviWatchWeight();
+	f32 calcCurrentDirection();
+	f32 calcTargetDistance();
+	f32 getTargetDirection();
 	void makePolar();
 	void printInfo(Graphics&, Font*);
 

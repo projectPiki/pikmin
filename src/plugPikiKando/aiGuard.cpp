@@ -757,7 +757,7 @@ int ActGuard::exec()
  * Address:	800BBEC0
  * Size:	0001F4
  */
-void ActGuard::findFriend()
+Piki* ActGuard::findFriend()
 {
 	/*
 	.loc_0x0:
@@ -918,7 +918,7 @@ void ActGuard::findFriend()
  * Address:	800BC0B4
  * Size:	0000FC
  */
-void ActGuard::checkLoop(Piki*)
+int ActGuard::checkLoop(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -1011,7 +1011,7 @@ void ActGuard::checkLoop(Piki*)
  * Address:	800BC1B0
  * Size:	000258
  */
-void ActGuard::findFriend(int)
+Piki* ActGuard::findFriend(int)
 {
 	/*
 	.loc_0x0:
@@ -1359,7 +1359,7 @@ void ActGuard::setGoal()
  * Address:	800BC600
  * Size:	000088
  */
-void ActGuard::getLeft(Piki*)
+Piki* ActGuard::getLeft(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -1411,7 +1411,7 @@ void ActGuard::getLeft(Piki*)
  * Address:	800BC688
  * Size:	000088
  */
-void ActGuard::getRight(Piki*)
+Piki* ActGuard::getRight(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -1463,7 +1463,7 @@ void ActGuard::getRight(Piki*)
  * Address:	800BC710
  * Size:	0001C4
  */
-void ActGuard::setLeft()
+bool ActGuard::setLeft()
 {
 	/*
 	.loc_0x0:
@@ -1618,7 +1618,7 @@ void ActGuard::setLeft()
  * Address:	800BC8D4
  * Size:	0001C4
  */
-void ActGuard::setRight()
+bool ActGuard::setRight()
 {
 	/*
 	.loc_0x0:

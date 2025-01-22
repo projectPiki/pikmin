@@ -75,14 +75,14 @@ struct DrawWorldMap {
 
 	DrawWorldMap();
 
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
 	void start(startModeFlag, startPlaceFlag);
-	void modeStart(Controller*);
-	void modeAppear(Controller*);
-	void modeOperation(Controller*);
-	void modeConfirm(Controller*);
-	void modeEnd(Controller*);
+	bool modeStart(Controller*);
+	bool modeAppear(Controller*);
+	bool modeOperation(Controller*);
+	bool modeConfirm(Controller*);
+	bool modeEnd(Controller*);
 	void updateScreens();
 	void closeMapInfo();
 	void openMapInfo();
@@ -106,7 +106,7 @@ struct WorldMapConfirmMgr {
 	};
 
 	void init(statusFlag);
-	void modeOperation(Controller*);
+	bool modeOperation(Controller*);
 
 	// TODO: members
 };
@@ -121,7 +121,7 @@ struct WorldMapCursorMgr {
 	void effect();
 	void moveOnyon();
 	void forceMove();
-	void moveUfo();
+	bool moveUfo();
 	void stayUfo();
 	void updateOnyonPos(Vector3f*, Vector3f*, Vector3f*);
 
@@ -165,8 +165,8 @@ struct WorldMapPartsInfoMgr {
  * @brief TODO
  */
 struct WorldMapCoursePointMgr {
-	void modeAppear();
-	void modeOperation(Controller*, bool);
+	bool modeAppear();
+	bool modeOperation(Controller*, bool);
 
 	// TODO: members
 };

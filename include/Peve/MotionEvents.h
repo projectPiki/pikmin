@@ -42,7 +42,7 @@ struct PeveCircleMoveEvent : public PeveEvent {
 
 	void makeCircleMoveEvent(f32, NVector3fIO*, NVector3fIO*, f32, f32, f32, f32);
 	void outputPosition(Vector3f&);
-	void calcAngle();
+	f32 calcAngle();
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
@@ -143,12 +143,12 @@ struct PeveInterpolationEvent : public PeveEvent {
 	virtual void update();          // _24
 	virtual bool isFinished();      // _28
 	virtual void setStartTime(f32); // _3C
-	virtual void getStartTime();    // _40
+	virtual f32 getStartTime();     // _40
 	virtual void setPeriod(f32);    // _44
-	virtual void getPeriod();       // _48
+	virtual f32 getPeriod();        // _48
 	virtual void setTime(f32);      // _4C
-	virtual void getTime();         // _50
-	virtual void getEndTime();      // _54
+	virtual f32 getTime();          // _50
+	virtual f32 getEndTime();       // _54
 
 	// unused/inlined:
 	void makeInterpolationEvent(PeveCondition*, NPosture3DIO*);

@@ -366,8 +366,8 @@ struct PCRData : public zenList {
  * @brief TODO
  */
 struct particleLoader {
-	void load(char*, bool);
-	void pmFind(char*);
+	u8* load(char*, bool);
+	u8* pmFind(char*);
 
 	// unused/inlined:
 	~particleLoader();
@@ -481,9 +481,9 @@ struct PtclGenPack {
 	void setCallBack(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
 	void start();
 	void stop();
-	void checkStop();
-	void checkEmit();
-	void checkActive();
+	bool checkStop();
+	bool checkEmit();
+	bool checkActive();
 
 	inline particleGenerator** getGenList() { return mGeneratorList; }
 

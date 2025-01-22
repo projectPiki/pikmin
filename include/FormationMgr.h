@@ -39,7 +39,7 @@ struct Spine {
 struct FormPoint {
 	FormPoint(); // unused/inlined
 
-	void getPos();
+	Vector3f getPos();
 
 	// TODO: members
 };
@@ -55,15 +55,15 @@ struct FormationMgr : public Traversable {
 	virtual int getNext(int);           // _10
 	virtual bool isDone(int);           // _14
 
-	void getLastCentre();
-	void getFormPoint(Creature*);
+	Vector3f getLastCentre();
+	FormPoint* getFormPoint(Creature*);
 	void slide(Creature*, int);
 	void exit(Creature*);
 
 	// unused/inlined:
 	void add(Vector3f&, Vector3f&);
-	void getIndex(Creature*);
-	void getFptIndex(FormPoint*);
+	int getIndex(Creature*);
+	int getFptIndex(FormPoint*);
 	void clear();
 	void rearrange();
 	void setOffset(Vector3f&);

@@ -118,7 +118,7 @@ void zen::ogScrFileSelectMgr::copyCardInfosSub()
  * Address:	801878D0
  * Size:	0001F4
  */
-void zen::ogScrFileSelectMgr::getCardFileInfos()
+bool zen::ogScrFileSelectMgr::getCardFileInfos()
 {
 	/*
 	.loc_0x0:
@@ -3638,7 +3638,7 @@ void zen::ogScrFileSelectMgr::BeginFadeOut()
  * Address:	........
  * Size:	000060
  */
-void zen::ogScrFileSelectMgr::CanToCopy(int)
+int zen::ogScrFileSelectMgr::CanToCopy(int)
 {
 	// UNUSED FUNCTION
 }
@@ -4231,7 +4231,7 @@ void zen::ogScrFileSelectMgr::quit()
  * Address:	8018AFB0
  * Size:	000A20
  */
-int zen::ogScrFileSelectMgr::update(Controller*, CardQuickInfo&)
+zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Controller*, CardQuickInfo&)
 {
 	/*
 	.loc_0x0:

@@ -208,7 +208,7 @@ void ActWeed::initApproach()
  * Address:	800C3250
  * Size:	0001E0
  */
-void ActWeed::exeApproach()
+int ActWeed::exeApproach()
 {
 	/*
 	.loc_0x0:
@@ -365,7 +365,7 @@ void ActWeed::initAdjust()
  * Address:	800C343C
  * Size:	000214
  */
-void ActWeed::exeAdjust()
+int ActWeed::exeAdjust()
 {
 	/*
 	.loc_0x0:
@@ -573,7 +573,7 @@ void ActWeed::initNuking()
  * Address:	800C36DC
  * Size:	0000E0
  */
-void ActWeed::exeNuking()
+int ActWeed::exeNuking()
 {
 	/*
 	.loc_0x0:

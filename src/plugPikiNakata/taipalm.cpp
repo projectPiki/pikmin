@@ -897,7 +897,7 @@ void TaiPalmStrategy::createEffect(Teki&, int)
  * Address:	8013E650
  * Size:	000100
  */
-void TaiPalmStrategy::translateMotionIndex(Teki&, int)
+int TaiPalmStrategy::translateMotionIndex(Teki&, int)
 {
 	/*
 	.loc_0x0:

@@ -139,7 +139,7 @@ void MemStat::end(char* name)
  * Address:	........
  * Size:	000034
  */
-void MemStat::getMemorySize(char*)
+int MemStat::getMemorySize(char*)
 {
 	// UNUSED FUNCTION
 }
@@ -149,7 +149,7 @@ void MemStat::getMemorySize(char*)
  * Address:	........
  * Size:	000034
  */
-void MemStat::getRestMemory()
+int MemStat::getRestMemory()
 {
 	// UNUSED FUNCTION
 }

@@ -6345,7 +6345,7 @@ void MapMgr::showCollisions(Vector3f&)
  * Address:	........
  * Size:	00006C
  */
-void MapMgr::closeCollTri(CollGroup*, CollTriInfo*)
+bool MapMgr::closeCollTri(CollGroup*, CollTriInfo*)
 {
 	// UNUSED FUNCTION
 }
@@ -7662,7 +7662,7 @@ f32 MapMgr::getLight(f32, f32)
  * Address:	80067DA0
  * Size:	000164
  */
-void MapMgr::getCollGroupList(f32, f32, bool)
+CollGroup* MapMgr::getCollGroupList(f32, f32, bool)
 {
 	/*
 	.loc_0x0:
@@ -8169,7 +8169,7 @@ CollTriInfo* MapMgr::getCurrTri(f32, f32, bool)
  * Address:	80068334
  * Size:	0002EC
  */
-void MapMgr::findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&)
+f32 MapMgr::findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -9445,7 +9445,7 @@ void MapMgr::traceMove(Creature*, MoveTrace&, f32)
  * Address:	80069424
  * Size:	000070
  */
-BaseShape* MapMgr::loadPlatshape(char*)
+Shape* MapMgr::loadPlatshape(char*)
 {
 	/*
 	.loc_0x0:

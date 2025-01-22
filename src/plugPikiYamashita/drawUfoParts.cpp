@@ -78,7 +78,7 @@ zen::DrawUfoParts::DrawUfoParts()
  * Address:	801F1E4C
  * Size:	000130
  */
-void zen::DrawUfoParts::update(Controller*)
+bool zen::DrawUfoParts::update(Controller*)
 {
 	/*
 	.loc_0x0:

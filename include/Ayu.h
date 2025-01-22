@@ -28,10 +28,10 @@ struct AyuCache {
 	bool isEmpty();
 	u32 largestBlockFree();
 
-	void getIndex();
+	int getIndex();
 	void releaseIndex(int);
 	void deleteIdAll(u32);
-	void amountFree();
+	u32 amountFree();
 
 	u32 _00;     // _00
 	u32 _04;     // _04

@@ -1737,7 +1737,7 @@ void zen::ogScrResultMgr::StartRESULT()
  * Address:	80184C18
  * Size:	000384
  */
-int zen::ogScrResultMgr::update(Controller*)
+zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

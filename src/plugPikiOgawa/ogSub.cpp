@@ -1252,7 +1252,7 @@ void zen::setTenmetuAlpha::calcAlpha(f32)
  * Address:	8017F748
  * Size:	000358
  */
-void zen::setTenmetuAlpha::update()
+zen::setTenmetuAlpha::TenmetuMode zen::setTenmetuAlpha::update()
 {
 	/*
 	.loc_0x0:
@@ -1648,7 +1648,7 @@ void zen::ogFadeMgr::setAlpha()
  * Address:	8017FC00
  * Size:	000140
  */
-void zen::ogFadeMgr::update()
+zen::ogFadeMgr::ogFadeStatusFlag zen::ogFadeMgr::update()
 {
 	/*
 	.loc_0x0:

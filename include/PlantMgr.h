@@ -148,8 +148,8 @@ struct PlantMgr : public CreatureNodeMgr {
 
 	PlantMgr(MapMgr*);
 
-	virtual ~PlantMgr() { }        // _48
-	virtual Plant* createObject(); // _78
+	virtual ~PlantMgr() { }           // _48
+	virtual Creature* createObject(); // _78
 
 	void initialise();
 	bool usePlantType(int);
@@ -157,7 +157,7 @@ struct PlantMgr : public CreatureNodeMgr {
 	// unused/inlined:
 	char* getPlantName(int);
 	void addUseList(int);
-	Plant* birth();
+	Creature* birth();
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2

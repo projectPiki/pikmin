@@ -42,7 +42,7 @@ zen::ogScrTutorialMgr::ogScrTutorialMgr()
  * Address:	80182C14
  * Size:	0000BC
  */
-int zen::ogScrTutorialMgr::update(Controller*)
+zen::ogScrTutorialMgr::TutorialStatus zen::ogScrTutorialMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

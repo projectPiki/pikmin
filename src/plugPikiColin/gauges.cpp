@@ -598,7 +598,7 @@ void LifeGaugeMgr::refresh(Graphics&)
  * Address:	........
  * Size:	000080
  */
-void LifeGaugeMgr::getGaugeInfo()
+GaugeInfo* LifeGaugeMgr::getGaugeInfo()
 {
 	// UNUSED FUNCTION
 }

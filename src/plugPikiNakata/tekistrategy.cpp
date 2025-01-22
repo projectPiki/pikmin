@@ -95,9 +95,9 @@ void TekiStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
  * Address:	8014D22C
  * Size:	000034
  */
-void TekiStrategy::interact(Teki& teki, TekiInteractionKey& key)
+bool TekiStrategy::interact(Teki& teki, TekiInteractionKey& key)
 {
-	teki.interactDefault(key);
+	return teki.interactDefault(key);
 }
 
 /*

@@ -9,7 +9,6 @@ struct Menu;
  * @brief A static class that contains various settings.
  */
 struct AIPerf {
-	void clearCounts();
 	void toggleMoveType(Menu&);
 	void toggleGeneratorMode(Menu&);
 	void toggleBridge(Menu&);
@@ -42,6 +41,8 @@ struct AIPerf {
 	void incGridShift(Menu&);
 	void decGridShift(Menu&);
 	void toggleUpdateSearchBuffer(Menu&);
+
+	static void clearCounts();
 
 	static int useGrid;
 	static int gridShift;

@@ -159,7 +159,7 @@ struct BaseShape : public CoreNode {
 	void skipChunk(RandomAccessStream&, u32);
 	void importDca(char*, CmdStream*);
 	void calcJointWorldScale(Graphics&, int, Vector3f&);
-	void findCollTri(Vector3f&, Vector3f&, Vector3f&, char*);
+	CollTriInfo* findCollTri(Vector3f&, Vector3f&, Vector3f&, char*);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

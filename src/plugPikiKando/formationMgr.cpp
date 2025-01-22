@@ -70,7 +70,7 @@ bool FormationMgr::isDone(int idx)
  * Address:	8007DF98
  * Size:	0000E0
  */
-void FormPoint::getPos()
+Vector3f FormPoint::getPos()
 {
 	/*
 	.loc_0x0:
@@ -138,7 +138,7 @@ void FormPoint::getPos()
  * Address:	8007E078
  * Size:	0000A8
  */
-void FormationMgr::getLastCentre()
+Vector3f FormationMgr::getLastCentre()
 {
 	/*
 	.loc_0x0:
@@ -212,7 +212,7 @@ FormPoint::FormPoint()
  * Address:	8007E128
  * Size:	0001E4
  */
-void FormationMgr::getFormPoint(Creature*)
+FormPoint* FormationMgr::getFormPoint(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -558,7 +558,7 @@ void FormationMgr::add(Vector3f&, Vector3f&)
  * Address:	........
  * Size:	000044
  */
-void FormationMgr::getIndex(Creature*)
+int FormationMgr::getIndex(Creature*)
 {
 	// UNUSED FUNCTION
 }
@@ -568,7 +568,7 @@ void FormationMgr::getIndex(Creature*)
  * Address:	........
  * Size:	000044
  */
-void FormationMgr::getFptIndex(FormPoint*)
+int FormationMgr::getFptIndex(FormPoint*)
 {
 	// UNUSED FUNCTION
 }

@@ -748,7 +748,7 @@ zen::DrawCMresult::DrawCMresult()
  * Address:	801EF5BC
  * Size:	0000CC
  */
-void zen::DrawCMresult::update(Controller*)
+bool zen::DrawCMresult::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -815,7 +815,7 @@ void zen::DrawCMresult::update(Controller*)
  * Address:	801EF688
  * Size:	000050
  */
-void zen::DrawCMresultAlpha::update()
+bool zen::DrawCMresultAlpha::update()
 {
 	/*
 	.loc_0x0:

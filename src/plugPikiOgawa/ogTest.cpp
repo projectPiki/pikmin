@@ -311,11 +311,11 @@ void zen::OgTestScreen::update()
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 
-	if (mStartMgr->update(mController) >= START_Exit) {
+	if (mStartMgr->update(mController) >= ogScrStartMgr::START_Exit) {
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 
-	if (mFileChkSelMgr->update(mController, CardQuickInfo()) >= FILECHKSEL_Exit) {
+	if (mFileChkSelMgr->update(mController, CardQuickInfo()) >= ogScrFileChkSelMgr::FILECHKSEL_Exit) {
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 }

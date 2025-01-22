@@ -424,7 +424,7 @@ void AyuCache::init(u32 a2, u32 a3)
  * Address:	........
  * Size:	000018
  */
-void AyuCache::getIndex()
+int AyuCache::getIndex()
 {
 	// UNUSED FUNCTION
 }
@@ -653,7 +653,7 @@ void AyuCache::deleteIdAll(u32)
  * Address:	........
  * Size:	00002C
  */
-void AyuCache::amountFree()
+u32 AyuCache::amountFree()
 {
 	// UNUSED FUNCTION
 }

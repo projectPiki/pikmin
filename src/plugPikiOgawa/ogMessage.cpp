@@ -35,7 +35,7 @@ static void _Print(char*, ...)
  * Address:	8018BB50
  * Size:	000048
  */
-void zen::ogScrMessageMgr::SearchTopPage(int)
+s16 zen::ogScrMessageMgr::SearchTopPage(int)
 {
 	/*
 	.loc_0x0:
@@ -1270,7 +1270,7 @@ void zen::ogScrMessageMgr::fadeOut()
  * Address:	8018C9CC
  * Size:	00057C
  */
-void zen::ogScrMessageMgr::update(Controller*)
+zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

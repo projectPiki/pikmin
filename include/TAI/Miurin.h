@@ -43,7 +43,7 @@ struct TAImiurinParameters : public TekiParameters {
 struct TAImiurinStrategy : public YaiStrategy {
 	TAImiurinStrategy();
 
-	virtual void interact(Teki&, TekiInteractionKey&); // _20
+	virtual bool interact(Teki&, TekiInteractionKey&); // _20
 
 	// _00     = VTBL
 	// _00-_10 = YaiStrategy?

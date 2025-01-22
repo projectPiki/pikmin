@@ -100,7 +100,7 @@ void Parameters::write(RandomAccessStream& output)
  * Address:	........
  * Size:	000064
  */
-void Parameters::sizeInFile()
+int Parameters::sizeInFile()
 {
 	// UNUSED FUNCTION
 }

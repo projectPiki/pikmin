@@ -184,7 +184,7 @@ bool PtclGenPack::checkStopGen()
  * Address:	........
  * Size:	000044
  */
-void PtclGenPack::checkStop()
+bool PtclGenPack::checkStop()
 {
 	// UNUSED FUNCTION
 }
@@ -194,7 +194,7 @@ void PtclGenPack::checkStop()
  * Address:	........
  * Size:	000044
  */
-void PtclGenPack::checkEmit()
+bool PtclGenPack::checkEmit()
 {
 	// UNUSED FUNCTION
 }
@@ -204,7 +204,7 @@ void PtclGenPack::checkEmit()
  * Address:	........
  * Size:	000044
  */
-void PtclGenPack::checkActive()
+bool PtclGenPack::checkActive()
 {
 	// UNUSED FUNCTION
 }

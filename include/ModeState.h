@@ -36,10 +36,10 @@ struct DayOverModeState : public ModeState {
 	virtual void postRender(Graphics&); // _0C
 
 	void makeTotalScoreWindow();
-	void initialisePhaseOne();
-	void initialisePhaseTwo();
-	void initialisePhaseThree();
-	void initialisePhaseFour();
+	ModeState* initialisePhaseOne();
+	ModeState* initialisePhaseTwo();
+	ModeState* initialisePhaseThree();
+	ModeState* initialisePhaseFour();
 
 	// _00     = VTBL?
 	// _00-_04 = ModeState?

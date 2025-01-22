@@ -15,38 +15,39 @@ struct ogScrFileSelectMgr;
 
 /**
  * @brief TODO
- */
-enum ogScrFileChkSelState {
-	FILECHKSEL_NULL = -1,
-	FILECHKSEL_Unk0 = 0,
-
-	FILECHKSEL_Unk1 = 1,
-	FILECHKSEL_Unk2 = 2,
-	FILECHKSEL_Unk3 = 3,
-	FILECHKSEL_Unk4 = 4,
-	FILECHKSEL_Unk5 = 5,
-
-	FILECHKSEL_Exit = FILECHKSEL_Unk1, // anything above this is an error/exit
-};
-
-/**
- * @brief TODO
  *
  * @note Size: 0x18.
  */
 struct ogScrFileChkSelMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum returnStatusFlag {
+		FILECHKSEL_NULL = -1,
+		FILECHKSEL_Unk0 = 0,
+
+		FILECHKSEL_Unk1 = 1,
+		FILECHKSEL_Unk2 = 2,
+		FILECHKSEL_Unk3 = 3,
+		FILECHKSEL_Unk4 = 4,
+		FILECHKSEL_Unk5 = 5,
+
+		FILECHKSEL_Exit = FILECHKSEL_Unk1, // anything above this is an error/exit
+	};
+
 	ogScrFileChkSelMgr();
 
 	void start(bool);
 	void startSave();
-	int update(Controller*, CardQuickInfo&);
+	returnStatusFlag update(Controller*, CardQuickInfo&);
 	void draw(Graphics&);
 
 	// unused/inlined:
 	void init();
 	void startSub();
 
-	int mState;                         // _00
+	returnStatusFlag mState;            // _00
 	bool _04;                           // _04
 	P2DScreen* mDataBScreen;            // _08
 	bool _0C;                           // _0C

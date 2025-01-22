@@ -47,7 +47,7 @@ struct AtxCommandStream : public AtxStream {
 	{
 	}
 
-	bool checkCommands();
+	BOOL checkCommands();
 
 	// _04     = VTBL
 	// _00-_08 = AtxStream

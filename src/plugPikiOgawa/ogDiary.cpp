@@ -125,7 +125,7 @@ zen::ogScrDiaryMgr::ogScrDiaryMgr()
  * Address:	8018F344
  * Size:	0000FC
  */
-void zen::ogScrDiaryMgr::update(Controller*)
+zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -578,7 +578,7 @@ void zen::ogScrDiaryMgr::typePage()
  * Address:	8018F8E8
  * Size:	0000C8
  */
-void zen::ogScrDiaryMgr::nextPage()
+bool zen::ogScrDiaryMgr::nextPage()
 {
 	/*
 	.loc_0x0:
@@ -1043,7 +1043,7 @@ void zen::ogDrawDiary::open(f32, f32, s16)
  * Address:	8018FE64
  * Size:	0002B8
  */
-void zen::ogDrawDiary::update(Controller*)
+zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1776,7 +1776,7 @@ void zen::ogDrawSelectDiary::setCursorAlpha()
  * Address:	80190820
  * Size:	000104
  */
-void zen::ogDrawSelectDiary::MoveCursor()
+bool zen::ogDrawSelectDiary::MoveCursor()
 {
 	/*
 	.loc_0x0:
@@ -1857,7 +1857,7 @@ void zen::ogDrawSelectDiary::MoveCursor()
  * Address:	80190924
  * Size:	000880
  */
-int zen::ogDrawSelectDiary::update(Controller*)
+zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Controller*)
 {
 	/*
 	.loc_0x0:

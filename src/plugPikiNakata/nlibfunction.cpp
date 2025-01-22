@@ -89,7 +89,7 @@ f32 NPolynomialFunction::getValue(f32 p1)
  * Address:	........
  * Size:	000028
  */
-void NPolynomialFunction::getCoefficient(int)
+f32 NPolynomialFunction::getCoefficient(int)
 {
 	// UNUSED FUNCTION
 }

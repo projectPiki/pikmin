@@ -86,7 +86,7 @@ struct TAIAgoGoalPath : public TAIAgoTargetPriorityFaceDir {
 	virtual bool act(Teki&);          // _10
 	virtual bool checkArrival(Teki&); // _1C
 
-	void makePath(Teki&);
+	bool makePath(Teki&);
 
 	// _04     = VTBL
 	// _00-_0C = TAIAgoTargetPriorityFaceDir?

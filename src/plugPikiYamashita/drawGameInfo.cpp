@@ -3060,7 +3060,7 @@ void zen::DrawGameInfo::lowerFrameOut(f32, bool)
  * Address:	........
  * Size:	000018
  */
-void zen::DrawGameInfo::isUpperFrameIn()
+bool zen::DrawGameInfo::isUpperFrameIn()
 {
 	// UNUSED FUNCTION
 }
@@ -3070,7 +3070,7 @@ void zen::DrawGameInfo::isUpperFrameIn()
  * Address:	........
  * Size:	000018
  */
-void zen::DrawGameInfo::isUpperFrameOut()
+bool zen::DrawGameInfo::isUpperFrameOut()
 {
 	// UNUSED FUNCTION
 }
@@ -3080,7 +3080,7 @@ void zen::DrawGameInfo::isUpperFrameOut()
  * Address:	........
  * Size:	000030
  */
-void zen::DrawGameInfo::isLowerFrameIn()
+bool zen::DrawGameInfo::isLowerFrameIn()
 {
 	// UNUSED FUNCTION
 }
@@ -3090,7 +3090,7 @@ void zen::DrawGameInfo::isLowerFrameIn()
  * Address:	........
  * Size:	000030
  */
-void zen::DrawGameInfo::isLowerFrameOut()
+bool zen::DrawGameInfo::isLowerFrameOut()
 {
 	// UNUSED FUNCTION
 }

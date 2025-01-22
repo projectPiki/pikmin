@@ -343,7 +343,7 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
 	Creature* findTarget();
 
 	// unused/inlined:
-	void decideTarget();
+	Creature* decideTarget();
 	void startLost();
 
 	inline Creature* getTarget() { return _24; } // name is a guess
@@ -645,15 +645,15 @@ struct ActBridge : public Action, virtual PaniAnimKeyListener {
 	bool collideBridgeSurface();
 	bool collideBridgeBlocker();
 	void initDetour();
-	void exeDetour();
+	int exeDetour();
 	void initClimb();
-	void exeClimb();
+	int exeClimb();
 	void initApproach();
-	void exeApproach();
+	int exeApproach();
 	void initGo();
-	void exeGo();
+	int exeGo();
 	void initWork();
-	void exeWork();
+	int exeWork();
 	void doWork(int);
 	void newInitApproach();
 
@@ -767,10 +767,10 @@ struct ActDecoy : public Action, public PaniAnimKeyListener {
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 
-	void findTeki();
+	Creature* findTeki();
 
 	// unused/inlined:
-	void update();
+	Creature* update();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -820,11 +820,11 @@ struct ActEnter : public Action {
 	virtual void cleanup();                          // _50
 
 	void findLeg();
-	void gotoLeg();
-	void climb();
+	int gotoLeg();
+	int climb();
 
 	// unused/inlined:
-	void routeMove();
+	int routeMove();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1027,14 +1027,14 @@ struct ActGuard : public Action {
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
-	void findFriend();
-	void checkLoop(Piki*);
-	void findFriend(int);
+	Piki* findFriend();
+	int checkLoop(Piki*);
+	Piki* findFriend(int);
 	void setGoal();
-	void getLeft(Piki*);
-	void getRight(Piki*);
-	void setLeft();
-	void setRight();
+	Piki* getLeft(Piki*);
+	Piki* getRight(Piki*);
+	bool setLeft();
+	bool setRight();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1062,8 +1062,8 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 	void doClimb();
 
 	// unused/inlined:
-	void getAttackPos();
-	void getAttackSize();
+	Vector3f getAttackPos();
+	f32 getAttackSize();
 
 	inline Creature* getTarget() { return _24; } // name is a guess
 
@@ -1140,11 +1140,11 @@ struct ActMine : public Action, virtual PaniAnimKeyListener {
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
 
 	void initWatch();
-	void exeMine();
+	int exeMine();
 
 	// unused/inlined:
-	void exeWatch();
-	void exeGo();
+	int exeWatch();
+	int exeGo();
 	void initMine();
 	void initGo();
 
@@ -1224,7 +1224,7 @@ struct ActPickItem : public AndAction {
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
-	void findItem();
+	Creature* findItem();
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
@@ -1281,12 +1281,12 @@ struct ActPush : public Action, virtual PaniAnimKeyListener {
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
 
-	void exeApproach();
+	int exeApproach();
 	void initGo();
-	void exeGo();
+	int exeGo();
 
 	// unused/inlined:
-	void collideRockSurface();
+	bool collideRockSurface();
 	void initApproach();
 
 	// _00     = VTBL
@@ -1338,20 +1338,20 @@ struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
-	void findTeki();
+	Creature* findTeki();
 	void initSet();
-	void exeSet();
+	int exeSet();
 	void warnPikis();
 	void initAim();
-	void exeAim();
+	int exeAim();
 	void initWait();
 	void initThrow();
 	void initPut();
-	void exeThrow();
+	int exeThrow();
 
 	// unused/inlined:
-	void exeWait();
-	void exePut();
+	int exeWait();
+	int exePut();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1374,7 +1374,7 @@ struct ActPutItem : public Action {
 	virtual void cleanup();       // _50
 
 	void findPos();
-	void findAdjacent(Creature*);
+	bool findAdjacent(Creature*);
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1436,13 +1436,13 @@ struct ActRescue : public Action, virtual PaniAnimKeyListener {
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
 	void initApproach();
-	void exeApproach();
+	int exeApproach();
 	void initRescue();
-	void exeRescue();
+	int exeRescue();
 	void initGo();
-	void exeGo();
+	int exeGo();
 	void initThrow();
-	void exeThrow();
+	int exeThrow();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1482,10 +1482,10 @@ struct ActShoot : public AndAction {
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
-	void findTarget();
+	Creature* findTarget();
 
 	// unused/inlined:
-	void decideTarget();
+	Creature* decideTarget();
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
@@ -1568,30 +1568,30 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
 
 	void turnOver();
 	bool isStickLeader();
-	void getCarriers();
-	void findPellet();
+	f32 getCarriers();
+	Pellet* findPellet();
 	void setSlotIndex();
 	int execJump();
-	void gotoLiftPos();
+	bool gotoLiftPos();
 	void doLift();
-	void useWaterRoute();
-	void moveGuruGuru();
+	bool useWaterRoute();
+	int moveGuruGuru();
 	void decideGoal(Creature*);
-	void crGetPoint(int);
-	void crPointOpen(int);
+	Vector3f crGetPoint(int);
+	bool crPointOpen(int);
 	void crInit();
 	void crMakeRefs();
 	void findObstacle();
-	void crMove();
-	void moveToWayPoint();
+	bool crMove();
+	int moveToWayPoint();
 
 	// unused/inlined:
 	void initWait();
-	void exeWait();
-	void getNumStickers();
-	void calcNumStickers();
+	int exeWait();
+	int getNumStickers();
+	int calcNumStickers();
 	void initJump();
-	void crGetRadius(int);
+	f32 crGetRadius(int);
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1667,11 +1667,11 @@ struct ActWeed : public Action, public PaniAnimKeyListener {
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
 	void initApproach();
-	void exeApproach();
+	int exeApproach();
 	void initAdjust();
-	void exeAdjust();
+	int exeAdjust();
 	void initNuking();
-	void exeNuking();
+	int exeNuking();
 
 	// _00     = VTBL
 	// _00-_14 = Action

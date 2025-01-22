@@ -118,7 +118,7 @@ void zen::ogDrawScrMenu::calcAngleSpeed(f32)
  * Address:	80191354
  * Size:	000350
  */
-void zen::ogDrawScrMenu::update(Controller*, bool, bool)
+zen::ogDrawScrMenu::returnStatusFlag zen::ogDrawScrMenu::update(Controller*, bool, bool)
 {
 	/*
 	.loc_0x0:
@@ -404,7 +404,7 @@ void P2DPane::move(int, int, f32)
  * Address:	........
  * Size:	000080
  */
-void zen::ogDrawScrMenu::draw(Graphics&)
+bool zen::ogDrawScrMenu::draw(Graphics&)
 {
 	// UNUSED FUNCTION
 }
@@ -2000,7 +2000,7 @@ void zen::ogScrMenuMgr::updateCont(Controller*)
  * Address:	80192C34
  * Size:	000598
  */
-void zen::ogScrMenuMgr::update(Controller*)
+zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

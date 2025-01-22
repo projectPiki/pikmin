@@ -467,11 +467,12 @@ void AnimInfo::updateAnimFlags()
  * Address:	80050824
  * Size:	000080
  */
-void AnimInfo::addKeyFrame()
+AnimKey* AnimInfo::addKeyFrame()
 {
 	AnimKey* keyFrame        = new AnimKey();
 	keyFrame->mKeyframeIndex = mData->mNumFrames - 1;
 	mAnimKeys.add(keyFrame);
+	return keyFrame;
 }
 
 /*

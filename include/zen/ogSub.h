@@ -30,6 +30,14 @@ struct PikaAlphaMgr {
  * @brief TODO
  */
 struct setTenmetuAlpha {
+
+	/**
+	 * @brief TODO
+	 */
+	enum TenmetuMode {
+		// TODO: this
+	};
+
 	setTenmetuAlpha(P2DPicture*, f32, f32, u8, u8);
 	setTenmetuAlpha(P2DPicture*, f32);
 
@@ -37,7 +45,7 @@ struct setTenmetuAlpha {
 	void start();
 	void startFadeIn(f32, f32, f32);
 	void startFadeOut(f32, f32, f32);
-	void update();
+	TenmetuMode update();
 
 	// unused/inlined:
 	void calcAlpha(f32);
@@ -54,14 +62,14 @@ struct ogFadeMgr {
 	 * @brief TODO
 	 */
 	enum ogFadeStatusFlag {
-
+		// TODO: this
 	};
 
 	ogFadeMgr(P2DPane*, u8);
 
 	void start(ogFadeStatusFlag, f32);
 	void setAlpha();
-	void update();
+	ogFadeStatusFlag update();
 };
 
 /**

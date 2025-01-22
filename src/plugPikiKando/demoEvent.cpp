@@ -39,7 +39,7 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	000090
  */
-void DemoEventMgr::getEventName(int, int)
+char* DemoEventMgr::getEventName(int, int)
 {
 	// UNUSED FUNCTION
 }
@@ -49,7 +49,7 @@ void DemoEventMgr::getEventName(int, int)
  * Address:	........
  * Size:	000018
  */
-void DemoEventMgr::getSenderName(int)
+char* DemoEventMgr::getSenderName(int)
 {
 	// UNUSED FUNCTION
 }

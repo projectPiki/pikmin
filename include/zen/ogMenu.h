@@ -12,14 +12,22 @@ namespace zen {
  * @brief TODO
  */
 struct ogDrawScrMenu {
+
+	/**
+	 * @brief TODO
+	 */
+	enum returnStatusFlag {
+		// TODO: this
+	};
+
 	ogDrawScrMenu();
 
-	void update(Controller*, bool, bool);
+	returnStatusFlag update(Controller*, bool, bool);
 
 	// unused/inlined:
 	void setScreen(char*);
 	void calcAngleSpeed(f32);
-	void draw(Graphics&);
+	bool draw(Graphics&);
 
 	// TODO: members
 };
@@ -72,10 +80,18 @@ struct ogDrawScrInfo2 {
  * @brief TODO
  */
 struct ogScrMenuMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum returnStatusFlag {
+		// TODO: this
+	};
+
 	ogScrMenuMgr();
 
 	void start();
-	void update(Controller*);
+	returnStatusFlag update(Controller*);
 	void draw(Graphics&);
 
 	// unused/inlined:

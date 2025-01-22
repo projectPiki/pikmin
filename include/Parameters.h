@@ -53,7 +53,7 @@ struct Parameters {
 	}
 
 	// unused/inlined:
-	void sizeInFile();
+	int sizeInFile();
 
 	BaseParm* mHead; // _00
 };

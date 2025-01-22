@@ -17,7 +17,7 @@ struct Kontroller : public Controller {
 	void load(RamStream*, int);
 	void write(RandomAccessStream&);
 
-	static int getSaveSize(int);
+	static u32 getSaveSize(int);
 
 	// unused/inlined:
 	void stop();

@@ -301,7 +301,7 @@ zen::DrawHiScore::DrawHiScore()
  * Address:	801F0E58
  * Size:	00012C
  */
-void zen::DrawHiScore::update(Controller*)
+bool zen::DrawHiScore::update(Controller*)
 {
 	/*
 	.loc_0x0:

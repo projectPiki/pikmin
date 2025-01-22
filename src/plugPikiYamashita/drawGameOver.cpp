@@ -583,7 +583,7 @@ void zen::DrawGameOverLetter::initParams()
  * Address:	801E8FE8
  * Size:	000118
  */
-void zen::DrawGameOver::update(Controller*)
+bool zen::DrawGameOver::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -681,7 +681,7 @@ void zen::DrawGameOver::update(Controller*)
  * Address:	801E9100
  * Size:	000514
  */
-void zen::DrawGameOverLetter::update()
+bool zen::DrawGameOverLetter::update()
 {
 	/*
 	.loc_0x0:

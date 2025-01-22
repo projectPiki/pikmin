@@ -49,7 +49,7 @@ struct TaiSwallowStrategy : public TaiStrategy {
 	virtual void start(Teki&);                         // _08
 	virtual void draw(Teki&, Graphics&);               // _18
 	virtual void drawDebugInfo(Teki&, Graphics&);      // _1C
-	virtual void interact(Teki&, TekiInteractionKey&); // _20
+	virtual bool interact(Teki&, TekiInteractionKey&); // _20
 
 	bool isSleeping(Teki&);
 

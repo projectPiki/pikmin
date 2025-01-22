@@ -215,11 +215,11 @@ struct CollInfo {
 
 	void enableStick();
 	void disableStick();
-	void checkCollisionSpecial(Vector3f&, f32, CndCollPart*);
+	CollPart* checkCollisionSpecial(Vector3f&, f32, CndCollPart*);
 	CollPart* checkCollision(Creature*, Vector3f&);
 	CollPart* checkCollisionRec(Creature*, int, Vector3f&);
 	bool checkCollision(CollInfo*, CollPart**, CollPart**, Vector3f&);
-	void checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Vector3f&);
+	bool checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Vector3f&);
 	CollPart* getBoundingSphere();
 	CollPart* getSphere(u32 id);
 	CollPart* getNearestCollPart(Vector3f&, u32);
@@ -239,10 +239,10 @@ struct CollInfo {
 	void startUpdateRec(int);
 	void stopUpdate(u32);
 	void stopUpdateRec(int);
-	void checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*);
+	CollPart* checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*);
 	void dumpInfo();
 	void makeTubes(u32, int);
-	void getIndex(ObjCollInfo*);
+	int getIndex(ObjCollInfo*);
 
 	u8 mUseDefaultMaxParts; // _00
 	CollPart* mCollParts;   // _04, array of size mMaxParts
@@ -264,7 +264,7 @@ struct CollTriInfo {
 	CollTriInfo();
 
 	void init(RoomInfo*, Vector3f*);
-	void behindEdge(Vector3f&);
+	int behindEdge(Vector3f&);
 
 	u32 mMapCode;             // _00
 	u8 _04[0x14];             // _04, unknown
@@ -279,7 +279,7 @@ struct CollTriInfo {
 struct CollState {
 	// unused/inlined:
 	void resetCollisions(Shape*);
-	void add(Vector3f&, Vector3f&, RigidBody*);
+	bool add(Vector3f&, Vector3f&, RigidBody*);
 
 	// TODO: members
 };

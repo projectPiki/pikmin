@@ -138,7 +138,7 @@ struct MonoInfMgr : public InfMgr {
  * @note Size: 0x64.
  */
 struct BPikiInfMgr : public MonoInfMgr {
-	virtual BPikiInf* newInf(); // _1C
+	virtual BaseInf* newInf(); // _1C
 
 	int getPikiCount(int color);
 
@@ -153,16 +153,17 @@ struct BPikiInfMgr : public MonoInfMgr {
  * @brief TODO
  */
 struct CreatureInfMgr : public MonoInfMgr {
-	virtual CreatureInf* newInf(); // _1C
+	virtual BaseInf* newInf(); // _1C
 
 	// unused/inlined:
-	void beginRegister(int);
 	void registerType(int, InfFuncType1, InfFuncType2);
-	void endRegister();
-	void getStoreFun(int);
-	void getRestoreFun(int);
 	void updateUseList();
 	void restoreAll();
+
+	static void beginRegister(int);
+	static void endRegister();
+	static CreatureInf* getStoreFun(int);
+	static CreatureInf* getRestoreFun(int);
 
 	// _00     = VTBL
 	// _00-_64 = MonoInfMgr
@@ -186,7 +187,7 @@ struct PikiInfMgr {
 	void clear();
 
 	// unused/inlined:
-	void getTotal();
+	int getTotal();
 
 	// TODO: members
 	int mPikiCounts[3][3]; // _00, indexed by color and happa maybe?

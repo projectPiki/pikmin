@@ -170,7 +170,7 @@ struct NaviMgr : public MonoObjectMgr {
 
 	virtual ~NaviMgr() { }                  // _48
 	virtual void update();                  // _4C
-	virtual Navi* createObject();           // _80
+	virtual Creature* createObject();       // _80
 	virtual void read(RandomAccessStream&); // _84
 
 	Navi* getNavi();

@@ -65,13 +65,13 @@ struct WorkObjectMgr : public ObjectMgr {
 
 	void finalSetup();
 	void loadShapes();
-	WorkObject* birth(int, int);
+	Creature* birth(int, int);
 
 	// unused/inlined:
-	void getNameIndex(char*);
-	void getName(int);
-	void getShapeNameIndex(char*);
-	void getShapeName(int);
+	int getNameIndex(char*);
+	char* getName(int);
+	int getShapeNameIndex(char*);
+	char* getShapeName(int);
 	void addUseList(int);
 
 	// _00     = VTBL 1
@@ -108,7 +108,7 @@ struct Bridge : public WorkObject {
 
 	int getFirstUnfinishedStage();
 	int getFirstFinishedStage();
-	void getJointIndex(int);
+	int getJointIndex(int);
 	bool isStageFinished(int);
 	void flatten();
 	void setStageFinished(int, bool);
@@ -164,15 +164,15 @@ struct HinderRock : public WorkObject {
 
 	void beginPush();
 	void endPush();
-	void getZVector();
-	void getXVector();
-	void getPlaneFlag(Vector3f&);
+	Vector3f getZVector();
+	Vector3f getXVector();
+	u8 getPlaneFlag(Vector3f&);
 	void updatePlanes();
 	Vector3f getVertex(int);
 
 	// unused/inlined:
-	void getPlaneIndex(Vector3f&);
-	void getTangentPos(f32);
+	int getPlaneIndex(Vector3f&);
+	Vector3f getTangentPos(f32);
 
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject

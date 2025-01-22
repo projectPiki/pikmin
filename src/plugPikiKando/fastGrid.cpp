@@ -289,7 +289,7 @@ bool FastGrid::aiCulling()
  * Address:	80094338
  * Size:	0000B8
  */
-void FastGrid::aiCullingLarge(int)
+bool FastGrid::aiCullingLarge(int)
 {
 	/*
 	.loc_0x0:

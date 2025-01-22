@@ -344,7 +344,7 @@ void P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
  * Address:	........
  * Size:	000008
  */
-void P2DScreen::stop()
+P2DPane* P2DScreen::stop()
 {
 	// UNUSED FUNCTION
 }

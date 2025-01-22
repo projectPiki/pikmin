@@ -26,7 +26,7 @@ struct DrawSaveMes {
 	void mesAppear();
 	void saveFinish();
 	void saveError();
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
 	void setMode(modeFlag);
 
@@ -50,11 +50,11 @@ struct DrawSaveFailure {
 
 	DrawSaveFailure();
 
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
 	void open(f32);
 	void setMode(modeFlag);
-	void calcFrame(f32);
+	f32 calcFrame(f32);
 	void init();
 
 	// TODO: members
@@ -66,7 +66,7 @@ struct DrawSaveFailure {
 struct DrawOptionSave {
 	DrawOptionSave();
 
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
 	void modeCardCheck(Controller*);
 	void init();

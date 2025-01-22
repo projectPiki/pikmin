@@ -232,18 +232,18 @@ struct MapMgr {
 	void postrefresh(Graphics&);
 	void updatePos(f32, f32);
 	f32 getLight(f32, f32);
-	void getCollGroupList(f32, f32, bool);
+	CollGroup* getCollGroupList(f32, f32, bool);
 	f32 getMinY(f32, f32, bool);
 	f32 getMaxY(f32, f32, bool);
 	CollTriInfo* getCurrTri(f32, f32, bool);
-	void findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&);
+	f32 findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&);
 	void recTraceMove(CollGroup*, MoveTrace&, f32);
 	void traceMove(Creature*, MoveTrace&, f32);
-	BaseShape* loadPlatshape(char*);
+	Shape* loadPlatshape(char*);
 	CreatureCollPart* requestCollPart(ObjCollInfo*, Creature*);
 
 	// unused/inlined:
-	void closeCollTri(CollGroup*, CollTriInfo*);
+	bool closeCollTri(CollGroup*, CollTriInfo*);
 
 	Controller* mController;               // _00
 	DayMgr* mDayMgr;                       // _04

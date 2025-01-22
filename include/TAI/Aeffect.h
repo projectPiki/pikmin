@@ -6,6 +6,7 @@
 #include "EffectMgr.h"
 
 struct Vector3f;
+struct CollPart;
 
 /**
  * @brief TODO
@@ -23,7 +24,7 @@ struct TAIAeffCloudOfDust : public TaiAction {
 
 	void init(EffectMgr::effTypeTable, bool, int, int, f32, int, int, int, int, int);
 	void createCloudOfDust(Teki&, int);
-	void getCollPart(Teki&, int);
+	CollPart* getCollPart(Teki&, int);
 
 	static int RUMBLE_NONE;
 

@@ -4195,7 +4195,7 @@ Creature* PikiHeadMgr::birth()
  * Address:	800F7608
  * Size:	000060
  */
-PikiHeadItem* PikiHeadMgr::createObject()
+Creature* PikiHeadMgr::createObject()
 {
 	/*
 	.loc_0x0:

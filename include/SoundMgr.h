@@ -75,11 +75,11 @@ struct SeContext {
 	void playSound(int);
 	void stopSound(int);
 	void update();
-	void releaseEvent();
+	bool releaseEvent();
 
 	// unused/inlined:
-	void getPos();
-	void getObjType();
+	Vector3f getPos();
+	int getObjType();
 	void createEvent(int);
 	void dump();
 
@@ -169,29 +169,29 @@ struct SeSystem {
 
 	void initEvent();
 	void resetSystem();
-	void createEvent(SeContext*, int, SVector_*);
+	int createEvent(SeContext*, int, SVector_*);
 	void playPikiSound(int, Vector3f&);
 	void playSoundDirect(int, int, Vector3f&);
 	void destroyEvent(SeContext*, s32);
-	void getEvent(SeContext*);
+	int getEvent(SeContext*);
 	void draw3d(Graphics&);
 	void draw2d(Graphics&);
 	void dumpEvents();
 	void update(Graphics&, Vector3f&);
 	void calcCameraPos(Vector3f&, Vector3f&);
-	void getJacID(int);
+	int getJacID(int);
 	void exitCourse();
-	void stopPlayerSe(int);
 
 	// unused/inlined:
 	void getEvent(s32);
-	void getSoundName(int);
-	void getEventType(int);
-	void isLoopType(int);
+	char* getSoundName(int);
+	int getEventType(int);
+	bool isLoopType(int);
 
 	static void playSysSe(int);
 	static void stopSysSe(int);
 	static void playPlayerSe(int);
+	static void stopPlayerSe(int);
 
 	// TODO: members
 	u8 _00[0x78]; // _00, unknown

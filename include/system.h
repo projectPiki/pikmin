@@ -130,9 +130,9 @@ struct StdSystem {
 
 	void getAppMemory(char*);
 	void findAnyGfxObject(char*, u32);
-	void findTexture(Texture*);
-	void findAnyAnimation(char*);
-	void findIndexAnimation(char*, int);
+	GfxobjInfo* findTexture(Texture*);
+	AnimData* findAnyAnimation(char*);
+	AnimData* findIndexAnimation(char*, int);
 
 	// Static functions
 	static char* stringDup(char*);
@@ -257,7 +257,7 @@ struct System : public StdSystem {
 	void beginRender();
 	void doneRender();
 	void waitRetrace();
-	void getTime();
+	f32 getTime();
 	void updateSysClock();
 	void hardReset();
 	void showDvdError(Graphics&);

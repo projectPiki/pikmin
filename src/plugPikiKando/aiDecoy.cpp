@@ -59,7 +59,7 @@ ActDecoy::ActDecoy(Piki* piki)
  * Address:	800B7800
  * Size:	000178
  */
-void ActDecoy::findTeki()
+Creature* ActDecoy::findTeki()
 {
 	/*
 	.loc_0x0:
@@ -181,7 +181,7 @@ void ActDecoy::findTeki()
  * Address:	........
  * Size:	0001EC
  */
-void ActDecoy::update()
+Creature* ActDecoy::update()
 {
 	// UNUSED FUNCTION
 }

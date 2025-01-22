@@ -70,7 +70,7 @@ void zen::ogScrStartMgr::stop()
  * Address:	80198AE0
  * Size:	0001C0
  */
-int zen::ogScrStartMgr::update(Controller* controller)
+zen::ogScrStartMgr::StartStatus zen::ogScrStartMgr::update(Controller* controller)
 {
 	// not active
 	if (mState == START_NULL) {

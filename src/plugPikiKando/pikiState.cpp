@@ -6895,7 +6895,7 @@ void PikiCliffState::startFall(Piki*)
  * Address:	800D43F0
  * Size:	0001A4
  */
-void PikiCliffState::nearEnough(Piki*)
+bool PikiCliffState::nearEnough(Piki*)
 {
 	/*
 	.loc_0x0:

@@ -27,7 +27,7 @@ struct NPolynomialFunction : public NFunction {
 	// unused/inlined:
 	void construct(f32*, NPolynomialFunction&);
 	void mul2(NPolynomialFunction&, NPolynomialFunction&);
-	void getCoefficient(int);
+	f32 getCoefficient(int);
 
 	// _00     = VTBL
 	// _00-_04 = NFunction

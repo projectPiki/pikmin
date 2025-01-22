@@ -154,7 +154,7 @@ void PikiInfMgr::clear()
  * Address:	........
  * Size:	00004C
  */
-void PikiInfMgr::getTotal()
+int PikiInfMgr::getTotal()
 {
 	// UNUSED FUNCTION
 }
@@ -384,7 +384,7 @@ void MonoInfMgr::loadCard(RandomAccessStream& input)
  * Address:	800C60D8
  * Size:	0000CC
  */
-BPikiInf* BPikiInfMgr::newInf()
+BaseInf* BPikiInfMgr::newInf()
 {
 	return new BPikiInf();
 }
@@ -461,7 +461,7 @@ void CreatureInfMgr::endRegister()
  * Address:	........
  * Size:	00004C
  */
-void CreatureInfMgr::getStoreFun(int)
+CreatureInf* CreatureInfMgr::getStoreFun(int)
 {
 	// UNUSED FUNCTION
 }
@@ -471,7 +471,7 @@ void CreatureInfMgr::getStoreFun(int)
  * Address:	........
  * Size:	00004C
  */
-void CreatureInfMgr::getRestoreFun(int)
+CreatureInf* CreatureInfMgr::getRestoreFun(int)
 {
 	// UNUSED FUNCTION
 }
@@ -493,7 +493,7 @@ CreatureInf::CreatureInf()
  * Address:	800C61D0
  * Size:	0000D4
  */
-CreatureInf* CreatureInfMgr::newInf()
+BaseInf* CreatureInfMgr::newInf()
 {
 	return new CreatureInf();
 }

@@ -320,7 +320,7 @@ bool TAIAsetTargetPointWorkObject::act(Teki& teki)
  * Address:	801A8FAC
  * Size:	0001B0
  */
-void TAIAgoGoalPath::makePath(Teki& teki)
+bool TAIAgoGoalPath::makePath(Teki& teki)
 {
 	/*
 	.loc_0x0:

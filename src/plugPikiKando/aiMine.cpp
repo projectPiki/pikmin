@@ -163,7 +163,7 @@ void ActMine::initWatch()
  * Address:	........
  * Size:	000008
  */
-void ActMine::exeWatch()
+int ActMine::exeWatch()
 {
 	// UNUSED FUNCTION
 }
@@ -173,7 +173,7 @@ void ActMine::exeWatch()
  * Address:	........
  * Size:	0000E8
  */
-void ActMine::exeGo()
+int ActMine::exeGo()
 {
 	// UNUSED FUNCTION
 }
@@ -203,7 +203,7 @@ void ActMine::initGo()
  * Address:	800B9434
  * Size:	00014C
  */
-void ActMine::exeMine()
+int ActMine::exeMine()
 {
 	/*
 	.loc_0x0:

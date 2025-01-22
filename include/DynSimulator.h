@@ -66,7 +66,7 @@ struct RigidBody : public Node {
 	virtual void initDimensions(f32, f32, f32);                           // _30
 	virtual void computeForces(int, f32);                                 // _34
 	virtual void integrate(int, int, f32);                                // _38
-	virtual void resolveCollisions(int, Collision&);                      // _3C
+	virtual bool resolveCollisions(int, Collision&);                      // _3C
 	virtual void calculateVertices(int);                                  // _40
 	virtual void initCollisions(int);                                     // _44
 	virtual bool checkForCollisions(int, CollState&);                     // _48
@@ -76,7 +76,7 @@ struct RigidBody : public Node {
 	virtual void makeBodyQuat(Quat&);                                     // _58
 	virtual void initRender(int);                                         // _5C
 	virtual void shadrender(Graphics&, LightCamera*);                     // _60
-	virtual void getViewScale();                                          // _64
+	virtual f32 getViewScale();                                           // _64
 	virtual void updateCont();                                            // _68
 	virtual void applyGroundForces(int, CollGroup*);                      // _6C
 
@@ -124,7 +124,7 @@ struct DynSimulator : public Node {
 	void evolveSimulation(f32, Shape*);
 	void Integrate(f32);
 	void CalculateVertices(int);
-	void CheckForCollisions(int, Shape*);
+	int CheckForCollisions(int, Shape*);
 	void ResolveCollisions(int);
 
 	// _00     = VTBL

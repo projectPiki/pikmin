@@ -1568,7 +1568,7 @@ f32 GrassGen::getSize()
  * Address:	800E5810
  * Size:	0000E0
  */
-void GrassGen::getRandomGrass()
+Grass* GrassGen::getRandomGrass()
 {
 	/*
 	.loc_0x0:

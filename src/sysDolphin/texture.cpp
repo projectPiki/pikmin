@@ -138,7 +138,7 @@ u8 Texture::getAlpha(int x, int y)
  * Address:	........
  * Size:	0000D4
  */
-void Texture::getRed(int, int)
+u8 Texture::getRed(int, int)
 {
 	// UNUSED FUNCTION
 }

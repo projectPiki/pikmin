@@ -30,7 +30,7 @@ struct DrawTotalScore {
 
 	DrawTotalScore(TotalScoreRecord*);
 
-	void update(Controller*);
+	bool update(Controller*);
 	void setMode(modeFlag);
 	void playRankInFanfare();
 	void setRankInEffect();
@@ -59,7 +59,7 @@ struct DrawFinalResult {
 
 	DrawFinalResult(TotalScoreRecord*);
 
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
 	void start();
 	void setMode(modeFlag);

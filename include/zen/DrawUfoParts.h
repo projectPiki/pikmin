@@ -14,7 +14,7 @@ namespace zen {
 struct DrawUfoParts {
 	DrawUfoParts();
 
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
 	void sleep();
 	void start();

@@ -2226,7 +2226,7 @@ f32 TAIAstepBackTank::getVelocity(Teki&)
  * Address:	801A52DC
  * Size:	000020
  */
-void TAIAoutsideOptionalRangeTank::setTargetPosition(Teki&)
+bool TAIAoutsideOptionalRangeTank::setTargetPosition(Teki&)
 {
 	/*
 	.loc_0x0:

@@ -333,7 +333,7 @@ bool TAIAjudgeOptionalRange::act(Teki&)
  * Address:	801AD40C
  * Size:	000068
  */
-void TAIAjudgeOptionalRange::setTargetPositionCreature(Teki&)
+bool TAIAjudgeOptionalRange::setTargetPositionCreature(Teki&)
 {
 	/*
 	.loc_0x0:
@@ -1029,7 +1029,7 @@ bool TAIAvisiblePiki::act(Teki&)
  * Address:	........
  * Size:	0000CC
  */
-void TAIAattackableTarget::checkDist(Teki&)
+bool TAIAattackableTarget::checkDist(Teki&)
 {
 	// UNUSED FUNCTION
 }

@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	801B5C64
  * Size:	000150
  */
-void P2DFont::loadFont(char*, int&, int&)
+Font* P2DFont::loadFont(char*, int&, int&)
 {
 	/*
 	.loc_0x0:
@@ -275,7 +275,7 @@ void P2DFont::setGradColor(const Colour&, const Colour&)
  * Address:	........
  * Size:	000040
  */
-void P2DFont::charToIndex(int)
+int P2DFont::charToIndex(int)
 {
 	// UNUSED FUNCTION
 }
@@ -285,7 +285,7 @@ void P2DFont::charToIndex(int)
  * Address:	801B5F6C
  * Size:	0000C4
  */
-void P2DFont::getWidth(int, int)
+f32 P2DFont::getWidth(int, int)
 {
 	/*
 	.loc_0x0:
@@ -350,7 +350,7 @@ void P2DFont::getWidth(int, int)
  * Address:	801B6030
  * Size:	000308
  */
-void P2DFont::drawChar(f32, f32, int, int, int)
+f32 P2DFont::drawChar(f32, f32, int, int, int)
 {
 	/*
 	.loc_0x0:

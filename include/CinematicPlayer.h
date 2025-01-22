@@ -11,6 +11,7 @@ struct CmdStream;
 struct Graphics;
 struct Matrix4f;
 struct Vector3f;
+struct ActorInstance;
 
 /**
  * @brief TODO
@@ -34,10 +35,10 @@ struct SceneData : public CoreNode {
  * @brief TODO
  */
 struct SceneCut : public CoreNode {
-	void addInstance(char*);
+	ActorInstance* addInstance(char*);
 
 	// unused/inlined:
-	void countEKeys();
+	int countEKeys();
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
@@ -84,13 +85,13 @@ struct CinematicPlayer {
 
 	void init(char*);
 	void loadCin(char*);
-	void addScene(SceneData*);
-	void addCut(int, int, int);
+	SceneData* addScene(SceneData*);
+	SceneCut* addCut(int, int, int);
 	void addActor(CineShapeObject*);
 	void addActor(char*, char*, char*);
-	void addSceneCut();
+	SceneCut* addSceneCut();
 	void skipScene(int);
-	void update();
+	int update();
 	void addLights(Graphics&);
 	void refresh(Graphics&);
 

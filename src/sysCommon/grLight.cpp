@@ -187,7 +187,7 @@ void Light::calcLightSizes()
  * Address:	........
  * Size:	000030
  */
-void Light::calcLightMapRadius()
+f32 Light::calcLightMapRadius()
 {
 	// UNUSED FUNCTION
 }
@@ -197,7 +197,7 @@ void Light::calcLightMapRadius()
  * Address:	........
  * Size:	000030
  */
-void Light::calcLightObjRadius()
+f32 Light::calcLightObjRadius()
 {
 	// UNUSED FUNCTION
 }

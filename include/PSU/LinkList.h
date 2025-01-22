@@ -40,8 +40,8 @@ struct PSUPtrList {
 
 	// unused/inlined:
 	void setFirst(PSUPtrLink*);
-	void prepend(PSUPtrLink*);
-	void insert(PSUPtrLink*, PSUPtrLink*);
+	bool prepend(PSUPtrLink*);
+	bool insert(PSUPtrLink*, PSUPtrLink*);
 	void getNthLink(u32) const;
 
 	PSUPtrLink* mHead; // _00

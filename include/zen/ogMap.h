@@ -15,28 +15,29 @@ struct TypingTextMgr;
 
 /**
  * @brief TODO
- */
-enum ogScrMapState {
-	MAP_NULL = -1,
-	MAP_Unk0 = 0,
-	MAP_Unk1 = 1,
-	MAP_Unk2 = 2,
-	MAP_Unk4 = 4,
-};
-
-/**
- * @brief TODO
  *
  * @note Size: 0x30.
  */
 struct ogScrMapMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum MapStatus {
+		MAP_NULL = -1,
+		MAP_Unk0 = 0,
+		MAP_Unk1 = 1,
+		MAP_Unk2 = 2,
+		MAP_Unk4 = 4,
+	};
+
 	ogScrMapMgr();
 
 	void start(s16);
-	int update(Controller*);
+	MapStatus update(Controller*);
 	void draw(Graphics&);
 
-	int mState;                    // _00
+	MapStatus mState;              // _00
 	P2DScreen* _04;                // _04
 	P2DScreen* mTestScreen;        // _08, test.blo
 	P2DScreen* mTest2Screen;       // _0C, test2.blo

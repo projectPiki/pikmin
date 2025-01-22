@@ -2376,7 +2376,7 @@ void TaiSwallowStrategy::draw(Teki&, Graphics&)
  * Address:	80141478
  * Size:	000128
  */
-void TaiSwallowStrategy::interact(Teki&, TekiInteractionKey&)
+bool TaiSwallowStrategy::interact(Teki&, TekiInteractionKey&)
 {
 	/*
 	.loc_0x0:

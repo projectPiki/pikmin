@@ -31,7 +31,7 @@ struct SplineSegment {
 	SplineSegment();
 
 	// unused/inlined:
-	void calcDistance(NVector3f&, f32*);
+	f32 calcDistance(NVector3f&, f32*);
 
 	// TODO: members
 };
@@ -56,11 +56,12 @@ struct SplineKeyFrame {
 	SplineKeyFrame(); // unused/inlined
 
 	// unused/inlined:
-	void transform(NTransform3D&);
-	void inputPosture(NPosture3D&);
-	void outputPosture(NPosture3D&);
-	void interpolate(SplineKeyFrame&, f32, NPosture3D&);
-	void readData(Stream&, int);
+	// TODO: add offset comments once we know what this inherits from
+	virtual void transform(NTransform3D&);
+	virtual void inputPosture(NPosture3D&);
+	virtual void outputPosture(NPosture3D&);
+	virtual void interpolate(SplineKeyFrame&, f32, NPosture3D&);
+	virtual void readData(Stream&, int);
 
 	// TODO: members
 };
@@ -72,14 +73,14 @@ struct SplineInterpolator {
 	SplineInterpolator(int, NPool<SplineSegment>*); // unused/inlined
 
 	void reset();
-	void interpolateNext(f32, NPosture3D&);
+	bool interpolateNext(f32, NPosture3D&);
 	void outputPosture(f32, NPosture3D&);
-	void searchSegmentIndex(f32, int);
+	int searchSegmentIndex(f32, int);
 
 	// unused/inlined:
 	void makeSpline();
-	void interpolate(f32, NPosture3D&, bool);
-	void interpolateDirect(f32, NPosture3D&);
+	bool interpolate(f32, NPosture3D&, bool);
+	bool interpolateDirect(f32, NPosture3D&);
 	void addFrame(SplineKeyFrame*);
 	void addSegment();
 	void removeAllFrames();

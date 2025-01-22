@@ -269,7 +269,7 @@ f32 BTeki::calcSphereDistanceStatic(Vector3f& pos1, f32 rad1, Vector3f& pos2, f3
  * Address:	80144338
  * Size:	000238
  */
-void BTeki::moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&)
+bool BTeki::moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1928,7 +1928,7 @@ f32 BTeki::getiMass()
  * Address:	80145B98
  * Size:	00002C
  */
-void BTeki::getTekiCollisionSize()
+f32 BTeki::getTekiCollisionSize()
 {
 	/*
 	.loc_0x0:
@@ -2674,7 +2674,7 @@ void BTeki::spawnCorpseParts()
  * Address:	801464D8
  * Size:	0000D8
  */
-void BTeki::generateTeki(int)
+Teki* BTeki::generateTeki(int)
 {
 	/*
 	.loc_0x0:
@@ -2866,7 +2866,7 @@ void BTeki::outputSpawnPosition(Vector3f&)
  * Address:	80146740
  * Size:	000250
  */
-void BTeki::spawnTeki(int)
+Teki* BTeki::spawnTeki(int)
 {
 	/*
 	.loc_0x0:
@@ -3098,7 +3098,7 @@ void BTeki::dump()
  * Address:	80146AC8
  * Size:	0000E8
  */
-void BTeki::nearestAngleTarget(Creature*)
+bool BTeki::nearestAngleTarget(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -3182,7 +3182,7 @@ void BTeki::nearestAngleTarget(Creature*)
  * Address:	80146BB0
  * Size:	000020
  */
-void BTeki::cullableCenter(Creature&, f32)
+bool BTeki::cullableCenter(Creature&, f32)
 {
 	/*
 	.loc_0x0:
@@ -3202,7 +3202,7 @@ void BTeki::cullableCenter(Creature&, f32)
  * Address:	80146BD0
  * Size:	000088
  */
-void BTeki::cullableSphere(Creature&, f32)
+bool BTeki::cullableSphere(Creature&, f32)
 {
 	/*
 	.loc_0x0:
@@ -3248,7 +3248,7 @@ void BTeki::cullableSphere(Creature&, f32)
  * Address:	80146C58
  * Size:	0000BC
  */
-void BTeki::inSectorPosition(Vector3f&, f32, f32)
+bool BTeki::inSectorPosition(Vector3f&, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -3313,7 +3313,7 @@ void BTeki::inSectorPosition(Vector3f&, f32, f32)
  * Address:	80146D14
  * Size:	000190
  */
-void BTeki::visibleCreature(Creature&)
+bool BTeki::visibleCreature(Creature&)
 {
 	/*
 	.loc_0x0:
@@ -3439,7 +3439,7 @@ void BTeki::visibleCreature(Creature&)
  * Address:	80146EA4
  * Size:	000154
  */
-void BTeki::separateCreature(Creature&)
+bool BTeki::separateCreature(Creature&)
 {
 	/*
 	.loc_0x0:
@@ -3546,7 +3546,7 @@ void BTeki::separateCreature(Creature&)
  * Address:	80146FF8
  * Size:	000154
  */
-void BTeki::contactCreature(Creature&)
+bool BTeki::contactCreature(Creature&)
 {
 	/*
 	.loc_0x0:
@@ -3794,7 +3794,7 @@ bool BTeki::attackableCreature(Creature&)
  * Address:	80147300
  * Size:	0000F0
  */
-void BTeki::calcTargetAngle(Vector3f&)
+f32 BTeki::calcTargetAngle(Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -3878,7 +3878,7 @@ void BTeki::calcTargetAngle(Vector3f&)
  * Address:	801473F0
  * Size:	0001DC
  */
-void BTeki::moveToward(Vector3f&, f32)
+bool BTeki::moveToward(Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -4019,7 +4019,7 @@ void BTeki::moveToward(Vector3f&, f32)
  * Address:	801475CC
  * Size:	0000C8
  */
-void BTeki::turnToward(f32, f32)
+bool BTeki::turnToward(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -4142,7 +4142,7 @@ void BTeki::jumpTo(Vector3f&, f32)
  * Address:	........
  * Size:	000168
  */
-void BTeki::insideDirection(Vector3f&)
+bool BTeki::insideDirection(Vector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -4325,7 +4325,7 @@ Creature* BTeki::getClosestNaviPiki(Condition&, f32*)
  * Address:	80147934
  * Size:	0000DC
  */
-void BTeki::attackTarget(Creature&, f32, f32, Condition&)
+bool BTeki::attackTarget(Creature&, f32, f32, Condition&)
 {
 	/*
 	.loc_0x0:
@@ -4476,7 +4476,7 @@ void BTeki::outputHitCenter(Vector3f&)
  * Address:	........
  * Size:	0001F4
  */
-void BTeki::attackRangeNaviPiki(Interaction&, Condition&)
+bool BTeki::attackRangeNaviPiki(Interaction&, Condition&)
 {
 	// UNUSED FUNCTION
 }
@@ -4486,7 +4486,7 @@ void BTeki::attackRangeNaviPiki(Interaction&, Condition&)
  * Address:	........
  * Size:	00015C
  */
-void BTeki::interactTeki(Interaction&, Condition&)
+bool BTeki::interactTeki(Interaction&, Condition&)
 {
 	// UNUSED FUNCTION
 }
@@ -4496,7 +4496,7 @@ void BTeki::interactTeki(Interaction&, Condition&)
  * Address:	80147B18
  * Size:	00007C
  */
-void BTeki::interactNaviPiki(Interaction&, Condition&)
+bool BTeki::interactNaviPiki(Interaction&, Condition&)
 {
 	/*
 	.loc_0x0:
@@ -4543,7 +4543,7 @@ void BTeki::interactNaviPiki(Interaction&, Condition&)
  * Address:	80147B94
  * Size:	000090
  */
-void BTeki::interactNavi(Interaction&, Condition&)
+bool BTeki::interactNavi(Interaction&, Condition&)
 {
 	/*
 	.loc_0x0:
@@ -4593,7 +4593,7 @@ void BTeki::interactNavi(Interaction&, Condition&)
  * Address:	80147C24
  * Size:	000150
  */
-void BTeki::interactPiki(Interaction&, Condition&)
+bool BTeki::interactPiki(Interaction&, Condition&)
 {
 	/*
 	.loc_0x0:
@@ -5171,7 +5171,7 @@ void BTeki::flickLower(InteractFlick&)
  * Address:	801482EC
  * Size:	000174
  */
-void BTeki::checkNaviPiki(Condition&)
+bool BTeki::checkNaviPiki(Condition&)
 {
 	/*
 	.loc_0x0:
@@ -5296,7 +5296,7 @@ void BTeki::checkNaviPiki(Condition&)
  * Address:	80148460
  * Size:	000148
  */
-void BTeki::countPikis(Condition&)
+int BTeki::countPikis(Condition&)
 {
 	/*
 	.loc_0x0:
@@ -5406,7 +5406,7 @@ void BTeki::countPikis(Condition&)
  * Address:	........
  * Size:	000148
  */
-void BTeki::countTekis(Condition&)
+int BTeki::countTekis(Condition&)
 {
 	// UNUSED FUNCTION
 }
@@ -5416,7 +5416,7 @@ void BTeki::countTekis(Condition&)
  * Address:	801485A8
  * Size:	000054
  */
-void BTeki::getFlickDamageCount(int)
+int BTeki::getFlickDamageCount(int)
 {
 	/*
 	.loc_0x0:
@@ -5762,7 +5762,7 @@ bool BTeki::interactDefault(TekiInteractionKey&)
  * Address:	80148928
  * Size:	00000C
  */
-void BTeki::getGravity()
+f32 BTeki::getGravity()
 {
 	/*
 	.loc_0x0:
@@ -5787,7 +5787,7 @@ TekiStrategy* BTeki::getStrategy()
  * Address:	80148960
  * Size:	000034
  */
-void BTeki::getSeaLevel()
+f32 BTeki::getSeaLevel()
 {
 	/*
 	.loc_0x0:
@@ -5812,7 +5812,7 @@ void BTeki::getSeaLevel()
  * Address:	80148994
  * Size:	000044
  */
-void BTeki::getYFromSeaLevel()
+f32 BTeki::getYFromSeaLevel()
 {
 	/*
 	.loc_0x0:
@@ -5938,7 +5938,7 @@ void BTeki::makeWayPointRoute(int, int, bool)
  * Address:	80148AE4
  * Size:	000034
  */
-void BTeki::getTargetNearestWayPoint(Vector3f&)
+WayPoint* BTeki::getTargetNearestWayPoint(Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -5963,7 +5963,7 @@ void BTeki::getTargetNearestWayPoint(Vector3f&)
  * Address:	80148B18
  * Size:	000034
  */
-void BTeki::getNearestWayPoint()
+WayPoint* BTeki::getNearestWayPoint()
 {
 	/*
 	.loc_0x0:
@@ -5988,7 +5988,7 @@ void BTeki::getNearestWayPoint()
  * Address:	80148B4C
  * Size:	000030
  */
-void BTeki::getWayPoint(int)
+WayPoint* BTeki::getWayPoint(int)
 {
 	/*
 	.loc_0x0:
@@ -6012,7 +6012,7 @@ void BTeki::getWayPoint(int)
  * Address:	80148B7C
  * Size:	00002C
  */
-void BTeki::getRouteWayPoint(int)
+WayPoint* BTeki::getRouteWayPoint(int)
 {
 	/*
 	.loc_0x0:
@@ -6791,7 +6791,7 @@ void BTeki::refresh2d(Graphics&)
  * Address:	80149560
  * Size:	000088
  */
-void BTeki::getFreeSlot()
+CollPart* BTeki::getFreeSlot()
 {
 	/*
 	.loc_0x0:
@@ -7081,7 +7081,7 @@ void BTeki::createTekiEffect(int)
  * Address:	........
  * Size:	000028
  */
-void BTeki::getCameraAnimationMatrix(int)
+Matrix4f& BTeki::getCameraAnimationMatrix(int)
 {
 	// UNUSED FUNCTION
 }
@@ -7155,7 +7155,7 @@ void BTeki::outputWorldAnimationPosition(Vector3f&, int, Matrix4f&)
  * Address:	801498F0
  * Size:	000044
  */
-void BTeki::getPositionMapCode(Vector3f&)
+int BTeki::getPositionMapCode(Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -7188,7 +7188,7 @@ void BTeki::getPositionMapCode(Vector3f&)
  * Address:	80149934
  * Size:	000048
  */
-void BTeki::getPositionMapCode()
+int BTeki::getPositionMapCode()
 {
 	/*
 	.loc_0x0:
@@ -7375,7 +7375,7 @@ void BTeki::setParticleGeneratorDirection(int, Vector3f&)
  * Address:	80149AA0
  * Size:	0000E0
  */
-void BTeki::calcCollisionDistance(Creature&)
+f32 BTeki::calcCollisionDistance(Creature&)
 {
 	/*
 	.loc_0x0:
@@ -7445,7 +7445,7 @@ void BTeki::calcCollisionDistance(Creature&)
  * Address:	80149B80
  * Size:	00002C
  */
-void BTeki::getCollisionSize()
+f32 BTeki::getCollisionSize()
 {
 	/*
 	.loc_0x0:
@@ -7468,7 +7468,7 @@ void BTeki::getCollisionSize()
  * Address:	........
  * Size:	000038
  */
-void BTeki::getCollisionCenter()
+Vector3f BTeki::getCollisionCenter()
 {
 	// UNUSED FUNCTION
 }

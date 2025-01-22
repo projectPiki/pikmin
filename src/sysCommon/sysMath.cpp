@@ -43,7 +43,7 @@ bool Plane::equal(Plane&)
  * Address: ........
  * Size:    000148
  */
-void Plane::calcRadScale()
+f32 Plane::calcRadScale()
 {
 	// UNUSED FUNCTION
 }
@@ -858,7 +858,7 @@ void CollTriInfo::init(RoomInfo* info, Vector3f* pos)
  * Address: 80038834
  * Size:    0000C4
  */
-void CollTriInfo::behindEdge(Vector3f&)
+int CollTriInfo::behindEdge(Vector3f&)
 {
 	/*
 	.loc_0x0:

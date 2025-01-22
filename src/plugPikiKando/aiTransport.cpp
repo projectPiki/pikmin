@@ -239,7 +239,7 @@ void ActTransport::initWait()
  * Address:	........
  * Size:	000070
  */
-void ActTransport::exeWait()
+int ActTransport::exeWait()
 {
 	// UNUSED FUNCTION
 }
@@ -365,7 +365,7 @@ bool ActTransport::isStickLeader()
  * Address:	800AF060
  * Size:	000190
  */
-void ActTransport::getCarriers()
+f32 ActTransport::getCarriers()
 {
 	/*
 	.loc_0x0:
@@ -497,7 +497,7 @@ void ActTransport::getCarriers()
  * Address:	........
  * Size:	00001C
  */
-void ActTransport::getNumStickers()
+int ActTransport::getNumStickers()
 {
 	// UNUSED FUNCTION
 }
@@ -507,7 +507,7 @@ void ActTransport::getNumStickers()
  * Address:	........
  * Size:	000140
  */
-void ActTransport::calcNumStickers()
+int ActTransport::calcNumStickers()
 {
 	// UNUSED FUNCTION
 }
@@ -530,7 +530,7 @@ ActTransport::ActTransport(Piki* piki)
  * Address:	800AF2E4
  * Size:	000160
  */
-void ActTransport::findPellet()
+Pellet* ActTransport::findPellet()
 {
 	/*
 	.loc_0x0:
@@ -1314,7 +1314,7 @@ int ActTransport::execJump()
  * Address:	800AFC74
  * Size:	000740
  */
-void ActTransport::gotoLiftPos()
+bool ActTransport::gotoLiftPos()
 {
 	/*
 	.loc_0x0:
@@ -2347,7 +2347,7 @@ void ActTransport::doLift()
  * Address:	800B0A18
  * Size:	000168
  */
-void ActTransport::useWaterRoute()
+bool ActTransport::useWaterRoute()
 {
 	/*
 	.loc_0x0:
@@ -3142,7 +3142,7 @@ int ActTransport::exec()
  * Address:	800B1434
  * Size:	0008A8
  */
-void ActTransport::moveGuruGuru()
+int ActTransport::moveGuruGuru()
 {
 	/*
 	.loc_0x0:
@@ -4192,7 +4192,7 @@ void ActTransport::cleanup()
  * Address:	800B21AC
  * Size:	0001D8
  */
-void ActTransport::crGetPoint(int)
+Vector3f ActTransport::crGetPoint(int)
 {
 	/*
 	.loc_0x0:
@@ -4334,7 +4334,7 @@ void ActTransport::crGetPoint(int)
  * Address:	800B2384
  * Size:	00008C
  */
-void ActTransport::crPointOpen(int)
+bool ActTransport::crPointOpen(int)
 {
 	/*
 	.loc_0x0:
@@ -4389,7 +4389,7 @@ void ActTransport::crPointOpen(int)
  * Address:	........
  * Size:	000078
  */
-void ActTransport::crGetRadius(int)
+f32 ActTransport::crGetRadius(int)
 {
 	// UNUSED FUNCTION
 }
@@ -5057,7 +5057,7 @@ void ActTransport::findObstacle()
  * Address:	800B2CD0
  * Size:	00094C
  */
-void ActTransport::crMove()
+bool ActTransport::crMove()
 {
 	/*
 	.loc_0x0:
@@ -6297,7 +6297,7 @@ void ActTransport::draw(Graphics&)
  * Address:	800B3DE0
  * Size:	0006FC
  */
-void ActTransport::moveToWayPoint()
+int ActTransport::moveToWayPoint()
 {
 	/*
 	.loc_0x0:

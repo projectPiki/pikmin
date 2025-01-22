@@ -14,7 +14,7 @@ struct Plane {
 
 	// unused/inlined:
 	bool equal(Plane&);
-	void calcRadScale();
+	f32 calcRadScale();
 	void reflect(Vector3f&);
 	void reflectVector(Vector3f&);
 	void bounceVector(Vector3f&, f32);

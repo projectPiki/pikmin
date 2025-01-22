@@ -316,7 +316,7 @@ void ActRescue::initApproach()
  * Address:	800C15E0
  * Size:	0000E4
  */
-void ActRescue::exeApproach()
+int ActRescue::exeApproach()
 {
 	/*
 	.loc_0x0:
@@ -442,7 +442,7 @@ void ActRescue::initRescue()
  * Address:	800C1750
  * Size:	000078
  */
-void ActRescue::exeRescue()
+int ActRescue::exeRescue()
 {
 	/*
 	.loc_0x0:
@@ -601,7 +601,7 @@ void ActRescue::initGo()
  * Address:	800C194C
  * Size:	00016C
  */
-void ActRescue::exeGo()
+int ActRescue::exeGo()
 {
 	/*
 	.loc_0x0:
@@ -732,7 +732,7 @@ void ActRescue::initThrow()
  * Address:	800C1AD8
  * Size:	0002B4
  */
-void ActRescue::exeThrow()
+int ActRescue::exeThrow()
 {
 	/*
 	.loc_0x0:

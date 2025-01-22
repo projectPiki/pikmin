@@ -105,7 +105,7 @@ void WorkObject::doKill()
  * Address:	........
  * Size:	000070
  */
-void WorkObjectMgr::getNameIndex(char*)
+int WorkObjectMgr::getNameIndex(char*)
 {
 	// UNUSED FUNCTION
 }
@@ -115,7 +115,7 @@ void WorkObjectMgr::getNameIndex(char*)
  * Address:	........
  * Size:	000038
  */
-void WorkObjectMgr::getName(int)
+char* WorkObjectMgr::getName(int)
 {
 	// UNUSED FUNCTION
 }
@@ -125,7 +125,7 @@ void WorkObjectMgr::getName(int)
  * Address:	........
  * Size:	000070
  */
-void WorkObjectMgr::getShapeNameIndex(char*)
+int WorkObjectMgr::getShapeNameIndex(char*)
 {
 	// UNUSED FUNCTION
 }
@@ -135,7 +135,7 @@ void WorkObjectMgr::getShapeNameIndex(char*)
  * Address:	........
  * Size:	000038
  */
-void WorkObjectMgr::getShapeName(int)
+char* WorkObjectMgr::getShapeName(int)
 {
 	// UNUSED FUNCTION
 }
@@ -188,7 +188,7 @@ void WorkObjectMgr::addUseList(int)
  * Address:	8009B458
  * Size:	00012C
  */
-WorkObject* WorkObjectMgr::birth(int wObjType, int p2)
+Creature* WorkObjectMgr::birth(int wObjType, int p2)
 {
 	WorkObject* object = nullptr;
 	Shape* shape       = mItemShapes[p2];
@@ -1239,7 +1239,7 @@ bool HinderRock::isFinished()
  * Address:	8009C2C8
  * Size:	0000C8
  */
-void HinderRock::getZVector()
+Vector3f HinderRock::getZVector()
 {
 	/*
 	.loc_0x0:
@@ -1303,7 +1303,7 @@ void HinderRock::getZVector()
  * Address:	8009C390
  * Size:	0000C8
  */
-void HinderRock::getXVector()
+Vector3f HinderRock::getXVector()
 {
 	/*
 	.loc_0x0:
@@ -1367,7 +1367,7 @@ void HinderRock::getXVector()
  * Address:	........
  * Size:	0000CC
  */
-void HinderRock::getPlaneIndex(Vector3f&)
+int HinderRock::getPlaneIndex(Vector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -1377,7 +1377,7 @@ void HinderRock::getPlaneIndex(Vector3f&)
  * Address:	8009C458
  * Size:	0000F8
  */
-void HinderRock::getPlaneFlag(Vector3f&)
+u8 HinderRock::getPlaneFlag(Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1459,7 +1459,7 @@ void HinderRock::getPlaneFlag(Vector3f&)
  * Address:	........
  * Size:	0000E8
  */
-void HinderRock::getTangentPos(f32)
+Vector3f HinderRock::getTangentPos(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -3598,7 +3598,7 @@ int Bridge::getFirstFinishedStage()
  * Address:	8009E30C
  * Size:	000040
  */
-void Bridge::getJointIndex(int)
+int Bridge::getJointIndex(int)
 {
 	/*
 	.loc_0x0:

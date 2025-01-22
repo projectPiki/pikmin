@@ -292,7 +292,7 @@ void NArray<NNode>::insert(int, NNode*)
  * Address:	8011E444
  * Size:	000040
  */
-void NNode::getChild(int)
+NNode* NNode::getChild(int)
 {
 	/*
 	.loc_0x0:
@@ -727,7 +727,7 @@ void NListNode::removeChild(NListNode*)
  * Address:	........
  * Size:	00001C
  */
-void NListNode::getChildCount()
+int NListNode::getChildCount()
 {
 	// UNUSED FUNCTION
 }

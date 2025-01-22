@@ -170,10 +170,10 @@ struct DrawGameInfo {
 	void upperDisplayOff();
 	void lowerDisplayOn();
 	void lowerDisplayOff();
-	void isUpperFrameIn();
-	void isUpperFrameOut();
-	void isLowerFrameIn();
-	void isLowerFrameOut();
+	bool isUpperFrameIn();
+	bool isUpperFrameOut();
+	bool isLowerFrameIn();
+	bool isLowerFrameOut();
 
 	// TODO: members
 };

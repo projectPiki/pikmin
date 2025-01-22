@@ -132,7 +132,7 @@ void ActPush::init(Creature*)
  * Address:	........
  * Size:	000050
  */
-void ActPush::collideRockSurface()
+bool ActPush::collideRockSurface()
 {
 	// UNUSED FUNCTION
 }
@@ -233,7 +233,7 @@ void ActPush::initApproach()
  * Address:	800BE1F4
  * Size:	000110
  */
-void ActPush::exeApproach()
+int ActPush::exeApproach()
 {
 	/*
 	.loc_0x0:
@@ -420,7 +420,7 @@ void ActPush::initGo()
  * Address:	800BE440
  * Size:	000214
  */
-void ActPush::exeGo()
+int ActPush::exeGo()
 {
 	/*
 	.loc_0x0:

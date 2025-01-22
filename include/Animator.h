@@ -300,7 +300,7 @@ struct AnimInfo : public CoreNode {
 	int getKeyValue(int);
 	void doread(RandomAccessStream&, int);
 	void updateAnimFlags();
-	void addKeyFrame();
+	AnimKey* addKeyFrame();
 
 	// unused/inlined:
 	void initAnimData(AnimData*);

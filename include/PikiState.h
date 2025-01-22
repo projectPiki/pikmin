@@ -170,7 +170,7 @@ struct PikiCliffState : public PikiState {
 	virtual void exec(Piki*);                  // _3C
 	virtual void cleanup(Piki*);               // _40
 
-	void nearEnough(Piki*);
+	bool nearEnough(Piki*);
 
 	// unused/inlined:
 	void startFall(Piki*);

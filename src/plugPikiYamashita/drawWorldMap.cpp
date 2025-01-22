@@ -3926,7 +3926,7 @@ WorldMapCoursePoint::WorldMapCoursePoint()
  * Address:	801DE714
  * Size:	000C14
  */
-void zen::DrawWorldMap::update(Controller*)
+bool zen::DrawWorldMap::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -6143,7 +6143,7 @@ void zen::WorldMapCursorMgr::forceMove()
  * Address:	801E04F0
  * Size:	000494
  */
-void zen::WorldMapCursorMgr::moveUfo()
+bool zen::WorldMapCursorMgr::moveUfo()
 {
 	/*
 	.loc_0x0:
@@ -9200,7 +9200,7 @@ void WorldMapCoursePoint::select()
  * Address:	801E2E0C
  * Size:	00047C
  */
-void zen::DrawWorldMap::modeStart(Controller*)
+bool zen::DrawWorldMap::modeStart(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -9527,7 +9527,7 @@ void zen::DrawWorldMap::modeStart(Controller*)
  * Address:	801E3288
  * Size:	002744
  */
-void zen::DrawWorldMap::modeAppear(Controller*)
+bool zen::DrawWorldMap::modeAppear(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -12400,7 +12400,7 @@ void zen::DrawWorldMap::modeAppear(Controller*)
  * Address:	801E59CC
  * Size:	000214
  */
-void zen::WorldMapCoursePointMgr::modeAppear()
+bool zen::WorldMapCoursePointMgr::modeAppear()
 {
 	/*
 	.loc_0x0:
@@ -12559,7 +12559,7 @@ void zen::WorldMapCoursePointMgr::modeAppear()
  * Address:	801E5BE0
  * Size:	0005A4
  */
-void zen::WorldMapCoursePointMgr::modeOperation(Controller*, bool)
+bool zen::WorldMapCoursePointMgr::modeOperation(Controller*, bool)
 {
 	/*
 	.loc_0x0:
@@ -12972,7 +12972,7 @@ void zen::WorldMapCoursePointMgr::modeOperation(Controller*, bool)
  * Address:	801E6184
  * Size:	000868
  */
-void zen::DrawWorldMap::modeOperation(Controller*)
+bool zen::DrawWorldMap::modeOperation(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -13590,7 +13590,7 @@ void zen::DrawWorldMap::modeOperation(Controller*)
  * Address:	801E69EC
  * Size:	000614
  */
-void zen::DrawWorldMap::modeConfirm(Controller*)
+bool zen::DrawWorldMap::modeConfirm(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -14063,7 +14063,7 @@ void zen::DrawWorldMap::modeConfirm(Controller*)
  * Address:	801E7000
  * Size:	0001C8
  */
-void zen::WorldMapConfirmMgr::modeOperation(Controller*)
+bool zen::WorldMapConfirmMgr::modeOperation(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -14201,7 +14201,7 @@ void zen::WorldMapConfirmMgr::modeOperation(Controller*)
  * Address:	801E71C8
  * Size:	000154
  */
-void zen::DrawWorldMap::modeEnd(Controller*)
+bool zen::DrawWorldMap::modeEnd(Controller*)
 {
 	/*
 	.loc_0x0:

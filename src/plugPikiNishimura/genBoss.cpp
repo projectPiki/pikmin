@@ -207,7 +207,7 @@ void GenObjectBoss::updateUseList(Generator*, int count)
  */
 Creature* GenObjectBoss::birth(BirthInfo& info)
 {
-	Boss* boss = nullptr;
+	Creature* boss = nullptr;
 	if (mBossID == BOSS_Spider) {
 		boss = bossMgr->create(BOSS_Spider, info, this);
 	} else if (mBossID == BOSS_Snake) {

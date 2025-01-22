@@ -15,6 +15,14 @@ namespace zen {
  * @brief TODO
  */
 struct ogRaderMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum RaderStatus {
+		// TODO: this
+	};
+
 	ogRaderMgr();
 
 	void setRaderAngle(f32);
@@ -27,12 +35,12 @@ struct ogRaderMgr {
 	void updateGame(Controller*);
 	void AreaScroll(f32*, f32*, f32, f32);
 	void updateMenu(Controller*);
-	void update(Controller*);
+	RaderStatus update(Controller*);
 	void end();
 	void draw(Graphics&);
 
 	// unused/inlined:
-	void ogCalcDispXZ(Vector3f);
+	Vector3f ogCalcDispXZ(Vector3f);
 	void setRaderScale(f32);
 	void chaseRaderScale(f32);
 	void getOrimaPos();

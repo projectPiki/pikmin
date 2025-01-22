@@ -750,7 +750,7 @@ void TekiMgr::reset()
  * Address:	8014ACD4
  * Size:	000044
  */
-Teki* TekiMgr::createObject()
+Creature* TekiMgr::createObject()
 {
 	return new Teki();
 }

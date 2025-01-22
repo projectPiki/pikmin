@@ -336,7 +336,7 @@ bool YTeki::isNaviWatch()
  * Address:	........
  * Size:	000054
  */
-void YTeki::getMapAttribute()
+int YTeki::getMapAttribute()
 {
 	// UNUSED FUNCTION
 }
@@ -475,7 +475,7 @@ void YTeki::moveTowardPriorityFaceDir(Vector3f&, f32, f32)
  * Address:	801A2C4C
  * Size:	0000FC
  */
-void YTeki::turnToTarget()
+bool YTeki::turnToTarget()
 {
 	/*
 	.loc_0x0:
@@ -790,7 +790,7 @@ void YTeki::killStickToMouthPiki()
  * Address:	801A3000
  * Size:	0000C8
  */
-void YTeki::startNewMotion(int)
+bool YTeki::startNewMotion(int)
 {
 	/*
 	.loc_0x0:

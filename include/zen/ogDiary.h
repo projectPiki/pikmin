@@ -13,13 +13,21 @@ namespace zen {
  * @brief TODO
  */
 struct ogScrDiaryMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum DiaryStatus {
+		// TODO: this
+	};
+
 	ogScrDiaryMgr();
 
-	void update(Controller*);
+	DiaryStatus update(Controller*);
 	void draw(Graphics&);
 	void start(s16, s16);
 	void typePage();
-	void nextPage();
+	bool nextPage();
 	void backPage();
 	void exit();
 
@@ -35,10 +43,18 @@ struct ogScrDiaryMgr {
  * @brief TODO
  */
 struct ogDrawDiary {
+
+	/**
+	 * @brief TODO
+	 */
+	enum DiaryStatus {
+		// TODO: this
+	};
+
 	ogDrawDiary();
 
 	void open(f32, f32, s16);
-	void update(Controller*);
+	DiaryStatus update(Controller*);
 
 	// unused/inlined:
 	void start();
@@ -54,12 +70,20 @@ struct ogDrawDiary {
  * @note Size: 0x2F0.
  */
 struct ogDrawSelectDiary {
+
+	/**
+	 * @brief TODO
+	 */
+	enum SelectDiaryStatus {
+		// TODO: this
+	};
+
 	ogDrawSelectDiary();
 
 	void start();
 	void setCursorAlpha();
-	void MoveCursor();
-	int update(Controller*);
+	bool MoveCursor();
+	SelectDiaryStatus update(Controller*);
 	void draw(Graphics&);
 
 	u8 _00[0x2F0]; // _00, unknown

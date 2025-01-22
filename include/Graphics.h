@@ -37,18 +37,18 @@ struct Graphics {
 	Graphics();
 
 	void resetMatrixBuffer();
-	void getMatrices(int);
+	Matrix4f* getMatrices(int);
 	void resetCacheBuffer();
 	void cacheShape(BaseShape*, ShapeDynMaterials*);
 	void flushCachedShapes();
 	void drawCylinder(Vector3f&, Vector3f&, f32, Matrix4f&);
 	void drawSphere(Vector3f&, f32, Matrix4f&);
-	void calcLighting(f32);
+	int calcLighting(f32);
 
 	// unused/inlined:
 	void drawCircle(Vector3f&, f32, Matrix4f&);
-	void calcSphereLighting(Vector3f&, f32);
-	void calcBoxLighting(BoundBox&);
+	int calcSphereLighting(Vector3f&, f32);
+	int calcBoxLighting(BoundBox&);
 
 	// _3B4 = VTBL
 	// In the DLL, take the offset of the variable (- 4) to get the real offset here
@@ -100,7 +100,7 @@ struct Graphics {
 	virtual void videoReset();                                                             // _08
 	virtual void setVerticalFilter(u8*);                                                   // _0C
 	virtual void getVerticalFilter(u8*);                                                   // _10
-	virtual u32 getDListPtr();                                                             // _14
+	virtual u8* getDListPtr();                                                             // _14
 	virtual u32 getDListRemainSize();                                                      // _18
 	virtual u32 compileMaterial(Material*) { return 0; }                                   // _1C
 	virtual void useDList(u32) { }                                                         // _20
@@ -167,7 +167,7 @@ struct DGXGraphics : public Graphics {
 	virtual void videoReset();                                                         // _08
 	virtual void setVerticalFilter(u8*);                                               // _0C
 	virtual void getVerticalFilter(u8*);                                               // _10
-	virtual u32 getDListPtr();                                                         // _14
+	virtual u8* getDListPtr();                                                         // _14
 	virtual u32 getDListRemainSize();                                                  // _18
 	virtual u32 compileMaterial(Material*);                                            // _1C
 	virtual void useDList(u32);                                                        // _20

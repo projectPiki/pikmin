@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	........
  * Size:	0000AC
  */
-void zen::KeyRepeat::update(Controller*)
+bool zen::KeyRepeat::update(Controller*)
 {
 	// UNUSED FUNCTION
 }

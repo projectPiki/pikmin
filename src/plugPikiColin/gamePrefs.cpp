@@ -319,7 +319,7 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
  * Address:	80053F2C
  * Size:	000174
  */
-bool GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
+void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 {
 	info._08           = -1;
 	gsys->mTogglePrint = 1;
@@ -465,7 +465,7 @@ bool GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
  * Address:	800540A0
  * Size:	00034C
  */
-bool GamePrefs::checkIsHiscore(GameQuickInfo&)
+void GamePrefs::checkIsHiscore(GameQuickInfo&)
 {
 	/*
 	.loc_0x0:

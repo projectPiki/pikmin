@@ -338,7 +338,7 @@ void zen::ogScrMakeDefaultMgr::start()
  * Address:	80193DE8
  * Size:	000354
  */
-void zen::ogScrMakeDefaultMgr::update(Controller*)
+zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -653,7 +653,7 @@ void zen::ogScrMakeDefaultMgr::draw(Graphics&)
  * Address:	801941E4
  * Size:	000020
  */
-void zen::ogScrMakeDefaultMgr::checkTypingAll()
+bool zen::ogScrMakeDefaultMgr::checkTypingAll()
 {
 	/*
 	.loc_0x0:

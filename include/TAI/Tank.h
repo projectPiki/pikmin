@@ -157,7 +157,7 @@ struct TAIAoutsideOptionalRangeTank : public TAIAoutsideOptionalRange {
 	{
 	}
 
-	virtual void setTargetPosition(Teki&); // _1C
+	virtual bool setTargetPosition(Teki&); // _1C
 	virtual f32 getOptionalRange(Teki&);   // _20
 
 	// _04     = VTBL

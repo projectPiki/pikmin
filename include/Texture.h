@@ -134,7 +134,7 @@ struct Texture : public GfxObject {
 
 	// unused/inlined:
 	void offsetGLtoGX(int, int);
-	void getRed(int, int);
+	u8 getRed(int, int);
 
 	// _00 = VTBL
 	u16 mTexFormat;    // _04, see TexImgFormat enum

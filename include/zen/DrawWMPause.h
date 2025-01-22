@@ -12,10 +12,18 @@ namespace zen {
  * @brief TODO
  */
 struct DrawWMPause {
+
+	/**
+	 * @brief TODO
+	 */
+	enum returnStatusFlag {
+		// TODO: this
+	};
+
 	DrawWMPause();
 
 	void start();
-	void update(Controller*);
+	returnStatusFlag update(Controller*);
 	void draw(Graphics&);
 
 	// TODO: members

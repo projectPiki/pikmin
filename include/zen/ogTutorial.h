@@ -25,9 +25,16 @@ struct ogScrTutorialMgr {
 		// TODO: this
 	};
 
+	/**
+	 * @brief TODO
+	 */
+	enum TutorialStatus {
+		// TODO: this
+	};
+
 	ogScrTutorialMgr();
 
-	int update(Controller*);
+	TutorialStatus update(Controller*);
 	void draw(Graphics&);
 	void start(zen::ogScrTutorialMgr::EnumTutorial);
 

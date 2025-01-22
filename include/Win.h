@@ -63,6 +63,8 @@ struct GmWin : public CoreNode {
 	Colour mAuxColourB;            // _44
 };
 
+// NB: these probably inherit GmWin and have the associated virtual functions, but they're so stripped it's whatever
+
 /**
  * @brief TODO
  */

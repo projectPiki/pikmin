@@ -1015,7 +1015,7 @@ void DemoFlags::resetTimer()
  * Address:	800827E4
  * Size:	000010
  */
-void DemoFlags::getDemoFlag(int)
+DemoFlag* DemoFlags::getDemoFlag(int)
 {
 	/*
 	.loc_0x0:

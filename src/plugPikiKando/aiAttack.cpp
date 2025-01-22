@@ -182,7 +182,7 @@ Creature* ActAttack::findTarget()
  * Address:	........
  * Size:	0002C8
  */
-void ActAttack::decideTarget()
+Creature* ActAttack::decideTarget()
 {
 	// UNUSED FUNCTION
 }
@@ -732,7 +732,7 @@ void ActJumpAttack::init(Creature* creature)
  * Address:	........
  * Size:	000068
  */
-void ActJumpAttack::getAttackPos()
+Vector3f ActJumpAttack::getAttackPos()
 {
 	// UNUSED FUNCTION
 }
@@ -742,7 +742,7 @@ void ActJumpAttack::getAttackPos()
  * Address:	........
  * Size:	000044
  */
-void ActJumpAttack::getAttackSize()
+f32 ActJumpAttack::getAttackSize()
 {
 	// UNUSED FUNCTION
 }

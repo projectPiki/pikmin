@@ -37,7 +37,7 @@ void CollState::resetCollisions(Shape*)
  * Address:	........
  * Size:	000080
  */
-void CollState::add(Vector3f&, Vector3f&, RigidBody*)
+bool CollState::add(Vector3f&, Vector3f&, RigidBody*)
 {
 	// UNUSED FUNCTION
 }
@@ -1334,7 +1334,7 @@ void RigidBody::integrate(int, int, f32)
  * Address:	8004EF18
  * Size:	00034C
  */
-void RigidBody::resolveCollisions(int, Collision&)
+bool RigidBody::resolveCollisions(int, Collision&)
 {
 	/*
 	.loc_0x0:
@@ -2693,7 +2693,7 @@ void DynSimulator::updateVecQuats(f32)
  * Address:	........
  * Size:	00009C
  */
-void DynSimulator::CheckForCollisions(int, Shape*)
+int DynSimulator::CheckForCollisions(int, Shape*)
 {
 	// UNUSED FUNCTION
 }
@@ -2738,7 +2738,7 @@ void RigidBody::shadrender(Graphics&, LightCamera*)
  * Address:	80050018
  * Size:	000008
  */
-void RigidBody::getViewScale()
+f32 RigidBody::getViewScale()
 {
 	/*
 	.loc_0x0:

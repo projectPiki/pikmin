@@ -291,8 +291,8 @@ struct GamePrefs : public CoreNode {
 	void setVibeMode(bool);
 	void setChildMode(bool);
 	void getChallengeScores(GameChalQuickInfo&);
-	bool checkIsHiscore(GameChalQuickInfo&);
-	bool checkIsHiscore(GameQuickInfo&);
+	void checkIsHiscore(GameChalQuickInfo&);
+	void checkIsHiscore(GameQuickInfo&);
 	void fixSoundMode();
 
 	// _00     = VTBL

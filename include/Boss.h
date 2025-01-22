@@ -345,7 +345,7 @@ struct BossMgr : public ObjectMgr {
 	void constructBoss();
 	void initSlime(int);
 	void init(int, int);
-	Boss* create(int, BirthInfo&, GenObjectBoss*);
+	Creature* create(int, BirthInfo&, GenObjectBoss*);
 	void kill(Creature*);
 	void refresh2d(Graphics&);
 	void finalSetup();

@@ -22,16 +22,16 @@ struct Actor : public AICreature {
 	void setType(int, PikiShapeObject*, CreatureProp*, SimpleAI*);
 
 	// unused/inlined:
-	void startAI(int);
-	void refresh(struct Graphics&);
-	void update();
-	void doAnimation();
-	void doAI();
-	void doKill();
-	void startMotion(int);
-	void startMotion(int, f32);
-	void finishMotion();
-	void finishMotion(f32);
+	virtual void startAI(int);              // _34
+	virtual void refresh(struct Graphics&); // _EC
+	virtual void update();                  // _E0
+	virtual void doAnimation();             // _108
+	virtual void doAI();                    // _104
+	virtual void doKill();                  // _10C
+	virtual void startMotion(int);          // _130
+	virtual void startMotion(int, f32);     // _13C
+	virtual void finishMotion();            // _134
+	virtual void finishMotion(f32);         // _138
 
 	// _00      = VTBL
 	// _00-_304 = AICreature
@@ -46,11 +46,11 @@ struct Actor : public AICreature {
  */
 struct ActorMgr : public MonoObjectMgr {
 	ActorMgr(MapMgr*); // unused/inlined
-	~ActorMgr();
+
+	virtual ~ActorMgr();              // _48
+	virtual Creature* createObject(); // _80
 
 	Actor* newActor(int);
-
-	Creature* createObject();
 
 	// _00     = VTBL
 	// _08     = VTBL

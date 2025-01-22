@@ -31,7 +31,7 @@ struct DrawMenuBase : public DrawScreen {
 	DrawMenuBase(char*, bool, bool);
 
 	virtual void draw(Graphics&);            // _10
-	virtual void update(Controller*);        // _14
+	virtual bool update(Controller*);        // _14
 	virtual void start();                    // _18
 	virtual bool modeDefault(Controller*);   // _1C
 	virtual bool modeSleep(Controller*);     // _20
@@ -55,7 +55,7 @@ struct DrawMenu : public DrawScreen {
 	void start(int);
 	void updateMenuPanes();
 	void updateSelectMenuNo(Controller*);
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
 	void setMenuItemActiveSw(int, bool);
 	void setCancelSelectMenuNo(int);
@@ -90,7 +90,7 @@ struct DrawMenuTitle {
 	void start();
 	void wait();
 	void end();
-	void update(f32);
+	bool update(f32);
 
 	// unused/inlined:
 	void operation();

@@ -922,7 +922,7 @@ void CinematicPlayer::loadCin(char*)
  * Address:	800705D8
  * Size:	0000B4
  */
-void CinematicPlayer::addScene(SceneData*)
+SceneData* CinematicPlayer::addScene(SceneData*)
 {
 	/*
 	.loc_0x0:
@@ -995,7 +995,7 @@ void CinematicPlayer::addScene(char*)
  * Address:	8007068C
  * Size:	000090
  */
-void CinematicPlayer::addCut(int, int, int)
+SceneCut* CinematicPlayer::addCut(int, int, int)
 {
 	/*
 	.loc_0x0:
@@ -1117,7 +1117,7 @@ void CinematicPlayer::addActor(char*, char*, char*)
  * Address:	800707BC
  * Size:	000138
  */
-void CinematicPlayer::addSceneCut()
+SceneCut* CinematicPlayer::addSceneCut()
 {
 	/*
 	.loc_0x0:
@@ -1264,7 +1264,7 @@ void CinematicPlayer::skipScene(int)
  * Address:	80070978
  * Size:	000574
  */
-void CinematicPlayer::update()
+int CinematicPlayer::update()
 {
 	/*
 	.loc_0x0:
@@ -1808,7 +1808,7 @@ void CinematicPlayer::refresh(Graphics&)
  * Address:	80071058
  * Size:	000190
  */
-void SceneCut::addInstance(char*)
+ActorInstance* SceneCut::addInstance(char*)
 {
 	/*
 	.loc_0x0:
@@ -1932,7 +1932,7 @@ void SceneCut::addInstance(char*)
  * Address:	........
  * Size:	000024
  */
-void SceneCut::countEKeys()
+int SceneCut::countEKeys()
 {
 	// UNUSED FUNCTION
 }

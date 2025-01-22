@@ -20,10 +20,18 @@ struct TotalScoreType { };
  * @note Size: 0x830.
  */
 struct ogScrTotalScoreMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum TotalScoreStatus {
+		// TODO: this
+	};
+
 	ogScrTotalScoreMgr(TotalScoreType*);
 
 	void start();
-	int update(Controller*);
+	TotalScoreStatus update(Controller*);
 	void draw(Graphics&);
 	void setRankInEffect();
 	void setRankInColor();

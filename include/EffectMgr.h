@@ -26,7 +26,7 @@ struct SmokeEmitter : public Node {
 	virtual void draw(Graphics&); // _14
 
 	// unused/inlined:
-	void emit(Vector3f&, Vector3f&);
+	Smoke* emit(Vector3f&, Vector3f&);
 	void update(f32);
 
 	// _00     = VTBL
@@ -41,7 +41,7 @@ struct EffectShape : public CoreNode {
 
 	// unused/inlined:
 	void initShape(char*);
-	void update();
+	bool update();
 	void refresh(Graphics&, Matrix4f&, f32*);
 
 	// _00     = VTBL
@@ -54,7 +54,7 @@ struct EffectShape : public CoreNode {
  */
 struct EffShpInst : public CoreNode {
 
-	void update();
+	bool update();
 
 	// unused/inlined:
 	void initEffShpInst();
@@ -84,7 +84,7 @@ struct EffectParticleRegistration {
 struct EffectGeometryRegistration {
 	EffectGeometryRegistration(char*, char*, f32, u8); // unused/inlined
 
-	virtual void create(Vector3f&, Vector3f&, Vector3f&); // _08
+	virtual EffShpInst* create(Vector3f&, Vector3f&, Vector3f&); // _08
 
 	// TODO: members
 };
@@ -471,7 +471,7 @@ struct EffectMgr : public CoreNode {
 	zen::particleGenerator* create(EffectMgr::effTypeTable, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
 	                               zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*);
 	EffShpInst* create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f&);
-	void getShapeInst();
+	EffShpInst* getShapeInst();
 	void killAllShapes();
 
 	// unused/inlined:

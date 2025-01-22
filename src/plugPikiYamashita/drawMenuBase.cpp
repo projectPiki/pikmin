@@ -322,7 +322,7 @@ zen::DrawMenuBase::DrawMenuBase(char* p1, bool p2, bool p3)
  * Address:	801F0584
  * Size:	000070
  */
-void zen::DrawMenuBase::update(Controller*)
+bool zen::DrawMenuBase::update(Controller*)
 {
 	/*
 	.loc_0x0:

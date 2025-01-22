@@ -17,7 +17,7 @@ struct NNode {
 	virtual void removeChild(int);      // _18
 	virtual void removeAllChildren();   // _1C
 
-	void getChild(int);
+	NNode* getChild(int);
 
 	// _00 = VTBL
 	NArray<NNode>* mNodeArray; // _04
@@ -32,7 +32,7 @@ struct NListNode {
 	// unused/inlined:
 	void addChild(NListNode*);
 	void removeChild(NListNode*);
-	void getChildCount();
+	int getChildCount();
 	void addChild(int, NListNode*);
 	void toString();
 

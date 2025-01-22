@@ -32,7 +32,7 @@ struct P2DScreen : public P2DPane {
 
 	// unused/inlined:
 	void set(RandomAccessStream*);
-	void stop();
+	P2DPane* stop();
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane

@@ -117,7 +117,7 @@ void zen::DrawWMPause::start()
  * Address:	801E9E00
  * Size:	00017C
  */
-void zen::DrawWMPause::update(Controller*)
+zen::DrawWMPause::returnStatusFlag zen::DrawWMPause::update(Controller*)
 {
 	/*
 	.loc_0x0:

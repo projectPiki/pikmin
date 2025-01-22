@@ -184,7 +184,7 @@ void ActShoot::init(Creature*)
  * Address:	800C233C
  * Size:	000178
  */
-void ActShoot::findTarget()
+Creature* ActShoot::findTarget()
 {
 	/*
 	.loc_0x0:
@@ -306,7 +306,7 @@ void ActShoot::findTarget()
  * Address:	........
  * Size:	000288
  */
-void ActShoot::decideTarget()
+Creature* ActShoot::decideTarget()
 {
 	// UNUSED FUNCTION
 }

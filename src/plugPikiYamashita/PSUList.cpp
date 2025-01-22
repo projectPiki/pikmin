@@ -108,7 +108,7 @@ bool PSUPtrList::append(PSUPtrLink* link)
  * Address:	........
  * Size:	0000BC
  */
-void PSUPtrList::prepend(PSUPtrLink*)
+bool PSUPtrList::prepend(PSUPtrLink*)
 {
 	// UNUSED FUNCTION
 }
@@ -118,7 +118,7 @@ void PSUPtrList::prepend(PSUPtrLink*)
  * Address:	........
  * Size:	0001DC
  */
-void PSUPtrList::insert(PSUPtrLink*, PSUPtrLink*)
+bool PSUPtrList::insert(PSUPtrLink*, PSUPtrLink*)
 {
 	// UNUSED FUNCTION
 }

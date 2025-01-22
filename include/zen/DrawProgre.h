@@ -31,10 +31,18 @@ struct DrawProgreMes {
  * @note Size: 0x10.
  */
 struct DrawProgre {
+
+	/**
+	 * @brief TODO
+	 */
+	enum returnStatusFlag {
+		// TODO: this
+	};
+
 	DrawProgre();
 
 	void start();
-	int update(Controller*);
+	returnStatusFlag update(Controller*);
 	void draw(Graphics&);
 
 	u8 _00[0x10]; // _00, unknown

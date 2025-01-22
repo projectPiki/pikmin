@@ -166,7 +166,7 @@ Texture* StdSystem::loadTexture(char* path, bool unk)
  * Address:	........
  * Size:	000034
  */
-void StdSystem::findTexture(Texture*)
+GfxobjInfo* StdSystem::findTexture(Texture*)
 {
 	// UNUSED FUNCTION
 }
@@ -236,7 +236,7 @@ AnimData* StdSystem::findAnimation(char* path)
  * Address:	........
  * Size:	0000AC
  */
-void StdSystem::findAnyAnimation(char*)
+AnimData* StdSystem::findAnyAnimation(char*)
 {
 	// UNUSED FUNCTION
 }
@@ -246,7 +246,7 @@ void StdSystem::findAnyAnimation(char*)
  * Address:	........
  * Size:	000098
  */
-void StdSystem::findIndexAnimation(char*, int)
+AnimData* StdSystem::findIndexAnimation(char*, int)
 {
 	// UNUSED FUNCTION
 }

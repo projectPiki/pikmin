@@ -11,7 +11,7 @@ namespace zen {
  * @brief TODO
  */
 struct KeyRepeat {
-	void update(Controller*);
+	bool update(Controller*);
 
 	static f32 repeatTime;
 

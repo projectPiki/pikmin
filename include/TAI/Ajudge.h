@@ -79,11 +79,11 @@ struct TAIAjudgeOptionalRange : public TaiAction {
 	}
 
 	virtual bool act(Teki&);                   // _10
-	virtual void setTargetPosition(Teki&) = 0; // _1C
+	virtual bool setTargetPosition(Teki&) = 0; // _1C
 	virtual f32 getOptionalRange(Teki&)   = 0; // _20
 	virtual bool judgement(Teki&)         = 0; // _24
 
-	void setTargetPositionCreature(Teki&);
+	bool setTargetPositionCreature(Teki&);
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -98,7 +98,7 @@ struct TAIAinsideOptionalRange : public TAIAjudgeOptionalRange {
 	{
 	}
 
-	virtual void setTargetPosition(Teki&) = 0; // _1C
+	virtual bool setTargetPosition(Teki&) = 0; // _1C
 	virtual f32 getOptionalRange(Teki&)   = 0; // _20
 	virtual bool judgement(Teki&)         = 0; // _24
 
@@ -115,7 +115,7 @@ struct TAIAoutsideOptionalRange : public TAIAjudgeOptionalRange {
 	{
 	}
 
-	virtual void setTargetPosition(Teki&) = 0; // _1C
+	virtual bool setTargetPosition(Teki&) = 0; // _1C
 	virtual f32 getOptionalRange(Teki&)   = 0; // _20
 	virtual bool judgement(Teki&)         = 0; // _24
 
@@ -221,7 +221,7 @@ struct TAIAattackableTarget : public TaiAction {
 	bool checkAngle(Teki&);
 
 	// unused/inlined:
-	void checkDist(Teki&);
+	bool checkDist(Teki&);
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction

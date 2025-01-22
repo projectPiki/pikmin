@@ -632,7 +632,7 @@ void BossMgr::init(int bossID, int count)
  * Address:	801513E4
  * Size:	000DB4
  */
-Boss* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBoss)
+Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBoss)
 {
 	Boss* boss = nullptr;
 	switch (bossID) {

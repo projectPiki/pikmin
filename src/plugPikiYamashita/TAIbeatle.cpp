@@ -3942,7 +3942,7 @@ bool TAIArockAttack::act(Teki&)
  * Address:	801C8F5C
  * Size:	000020
  */
-void TAIAinsideOptionalRangeBeatle::setTargetPosition(Teki&)
+bool TAIAinsideOptionalRangeBeatle::setTargetPosition(Teki&)
 {
 	/*
 	.loc_0x0:

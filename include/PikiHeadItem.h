@@ -288,9 +288,9 @@ struct PikiHeadAI : public SimpleAI {
 struct PikiHeadMgr : public MonoObjectMgr {
 	PikiHeadMgr(ItemMgr*);
 
-	virtual ~PikiHeadMgr();               // _48 (weak)
-	virtual Creature* birth();            // _78
-	virtual PikiHeadItem* createObject(); // _80
+	virtual ~PikiHeadMgr();           // _48 (weak)
+	virtual Creature* birth();        // _78
+	virtual Creature* createObject(); // _80
 
 	static u8 buryMode;
 

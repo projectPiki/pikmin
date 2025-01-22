@@ -43,7 +43,7 @@ struct LifeGaugeMgr {
 	void init(int);
 	void update();
 	void refresh(Graphics&);
-	void getGaugeInfo();
+	GaugeInfo* getGaugeInfo();
 	void addLG(GaugeInfo*);
 	void removeLG(GaugeInfo*);
 

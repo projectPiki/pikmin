@@ -25,8 +25,8 @@ struct MenuPanel : public P2DPaneCallBack {
 struct MenuPanelMgr {
 
 	void setCallBack(P2DScreen*, P2DPane*);
-	void update();
-	void checkFinish();
+	bool update();
+	bool checkFinish();
 
 	// unused/inlined:
 	void operation();

@@ -15,7 +15,7 @@ namespace zen {
 struct DrawHiScore {
 	DrawHiScore();
 
-	void update(Controller*);
+	bool update(Controller*);
 	void draw(Graphics&);
 	void start();
 	void rewriteNumber(P2DScreen*, u32, int, int, bool);

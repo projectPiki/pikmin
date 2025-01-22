@@ -761,7 +761,7 @@ zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord*)
  * Address:	801F44F8
  * Size:	0001D4
  */
-void zen::DrawTotalScore::update(Controller*)
+bool zen::DrawTotalScore::update(Controller*)
 {
 	/*
 	.loc_0x0:
@@ -1701,7 +1701,7 @@ zen::DrawFinalResult::DrawFinalResult(zen::TotalScoreRecord*)
  * Address:	801F5138
  * Size:	0001A4
  */
-void zen::DrawFinalResult::update(Controller*)
+bool zen::DrawFinalResult::update(Controller*)
 {
 	/*
 	.loc_0x0:

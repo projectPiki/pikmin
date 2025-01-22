@@ -372,7 +372,7 @@ void WorldClock::reset(f32)
  * Address:	........
  * Size:	00006C
  */
-void WorldClock::age(f32)
+f32 WorldClock::age(f32)
 {
 	// UNUSED FUNCTION
 }

@@ -72,8 +72,8 @@ struct Menu : public Node {
 
 	virtual bool checkSelectKey();  // _30
 	virtual bool checkCancelKey();  // _34
-	virtual bool checkNewOption();  // _38
-	virtual void enterOption();     // _3C
+	virtual bool checkNewOption();  // _38, apparently this should return BOOL not bool, idk
+	virtual void enterOption();     // _3C, apparently this should return Menu*, doesn't seem to though
 	virtual Menu* enterMenu(Menu*); // _40
 	virtual Menu* exitMenu(Menu*);  // _44
 	virtual void open(bool);        // _48

@@ -12,6 +12,13 @@ struct Vector3f;
 /**
  * @brief TODO
  */
+struct MovieListInfo {
+	// TODO: this - only returned by MoviePlayer::findMovie, sigh
+};
+
+/**
+ * @brief TODO
+ */
 struct MovieInfo : public CoreNode {
 	MovieInfo()
 	    : CoreNode("")
@@ -20,7 +27,7 @@ struct MovieInfo : public CoreNode {
 	}
 
 	// unused/inlined:
-	void update();
+	bool update();
 	bool setCamera(Graphics&);
 	void refresh(Graphics&);
 
@@ -54,8 +61,8 @@ struct MoviePlayer {
 	void refresh(Graphics&);
 
 	// unused/inlined:
-	void findMovie(int);
-	void translateIndex(int, int);
+	MovieListInfo* findMovie(int);
+	int translateIndex(int, int);
 	void sndFrameMovie(MovieInfo*);
 	void nextFrame();
 	void backFrame();

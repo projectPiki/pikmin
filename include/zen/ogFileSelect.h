@@ -30,10 +30,17 @@ struct ogScrFileSelectMgr {
 		// TODO: this
 	};
 
+	/**
+	 * @brief TODO
+	 */
+	enum returnStatusFlag {
+		// TODO: this
+	};
+
 	ogScrFileSelectMgr();
 
 	void copyCardInfosSub();
-	void getCardFileInfos();
+	bool getCardFileInfos();
 	void paneOnOffXY(bool);
 	void MovePaneXY();
 	void OpenYesNoWindow();
@@ -55,7 +62,7 @@ struct ogScrFileSelectMgr {
 	void OperateSelect(Controller*);
 	void KetteiEffectStart();
 	void TailEffectStart();
-	int update(Controller*, CardQuickInfo&);
+	returnStatusFlag update(Controller*, CardQuickInfo&);
 	void draw(Graphics&);
 
 	// unused/inlined:
@@ -72,7 +79,7 @@ struct ogScrFileSelectMgr {
 	void setOperateMode_Delete();
 	void OperateDelete(Controller*);
 	void BeginFadeOut();
-	void CanToCopy(int);
+	int CanToCopy(int);
 	void TailEffectMove(int, int);
 	void TailEffectMoveM(int, int);
 	void quit();

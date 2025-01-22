@@ -2156,7 +2156,7 @@ TAImiurinStrategy::TAImiurinStrategy()
  * Address:	801D80A0
  * Size:	0000C4
  */
-void TAImiurinStrategy::interact(Teki&, TekiInteractionKey&)
+bool TAImiurinStrategy::interact(Teki&, TekiInteractionKey&)
 {
 	/*
 	.loc_0x0:

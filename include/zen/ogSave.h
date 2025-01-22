@@ -12,10 +12,18 @@ namespace zen {
  * @brief TODO
  */
 struct ogSaveMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum SaveStatus {
+		// TODO: this
+	};
+
 	ogSaveMgr();
 
 	void start();
-	void update(Controller*);
+	SaveStatus update(Controller*);
 	void draw(Graphics&);
 
 	// unused/inlined:

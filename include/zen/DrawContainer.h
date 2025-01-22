@@ -29,14 +29,14 @@ struct DrawContainer {
 	void start(containerType, int, int, int, int, int, int);
 	void draw(Graphics&);
 	void setDispParam();
-	void operationStatus();
-	void update(int&);
+	bool operationStatus();
+	bool update(int&);
 
 	// unused/inlined:
 	~DrawContainer();
-	void waitStatus();
-	void startStatus();
-	void endStatus();
+	bool waitStatus();
+	bool startStatus();
+	bool endStatus();
 
 	u8 _00[0x1E0]; // _00, unknown
 };
@@ -46,7 +46,14 @@ struct DrawContainer {
  */
 struct ArrowBasicCallBack {
 
-	void judgeArrowType();
+	/**
+	 * @brief TODO
+	 */
+	enum arrowType {
+		// TODO: this
+	};
+
+	arrowType judgeArrowType();
 
 	// TODO: members
 };
@@ -58,7 +65,7 @@ struct ArrowCenterCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
 
 	virtual bool invoke(P2DPane*); // _08
 
-	void setTexture(P2DPicture*);
+	arrowType setTexture(P2DPicture*);
 
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack?

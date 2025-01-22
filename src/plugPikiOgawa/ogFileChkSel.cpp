@@ -99,7 +99,7 @@ void zen::ogScrFileChkSelMgr::startSave()
  * Address:	80193748
  * Size:	000198
  */
-int zen::ogScrFileChkSelMgr::update(Controller* controller, CardQuickInfo& cardInfo)
+zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Controller* controller, CardQuickInfo& cardInfo)
 {
 	if (mState == FILECHKSEL_NULL) {
 		return mState;

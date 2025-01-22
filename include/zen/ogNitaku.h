@@ -14,10 +14,18 @@ namespace zen {
  * @brief TODO
  */
 struct ogNitakuMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum NitakuStatus {
+		// TODO: this
+	};
+
 	ogNitakuMgr(P2DScreen*, P2DTextBox*, P2DTextBox*, P2DTextBox*, bool, bool);
 
 	void start();
-	void update(Controller*);
+	NitakuStatus update(Controller*);
 	void cursorEnable(f32);
 	void cursorDisable(f32);
 

@@ -18,7 +18,7 @@ struct DrawScreen {
 
 	DrawScreen(char*, P2DGrafContext*, bool, bool);
 
-	virtual void update(); // _08
+	virtual bool update(); // _08
 	virtual void draw();   // _0C
 
 	// unused/inlined:

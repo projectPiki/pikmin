@@ -47,7 +47,7 @@ struct GrassGen : public ItemCreature {
 	void resolve();
 	void create(int, f32, int);
 	void setSizeAndNum(f32, int);
-	void getRandomGrass();
+	Grass* getRandomGrass();
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature

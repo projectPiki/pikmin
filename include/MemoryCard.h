@@ -54,13 +54,13 @@ struct MemoryCard : public CoreNode {
 	void readCurrentGame(RandomAccessStream*);
 	void initBannerArea(CARDStat&, char*);
 	void initOptionsArea(int);
-	void makeDefaultFile();
+	int makeDefaultFile();
 	void copyFile(CardQuickInfo&, CardQuickInfo&);
 	void delFile(CardQuickInfo&);
 	int doFormatCard();
 	bool isCardInserted();
 	bool hasCardChanged();
-	int getOkSections();
+	u32 getOkSections();
 	bool isFileBroken();
 	void repairFile();
 	bool didSaveFail();

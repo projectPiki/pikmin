@@ -5,6 +5,8 @@
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
 
+struct Texture;
+
 /**
  * @brief TODO
  *
@@ -35,7 +37,7 @@ struct P2DWindow : public P2DPane {
 	void drawContents(const PUTRect&);
 
 	// unused/inlined:
-	void loadResource(char*);
+	Texture* loadResource(char*);
 
 	// _00     = VTBL
 	// _00-_?? = P2DPane

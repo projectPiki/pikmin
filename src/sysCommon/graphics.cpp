@@ -3414,7 +3414,7 @@ void Graphics::resetMatrixBuffer()
  * Address:	80028514
  * Size:	00001C
  */
-void Graphics::getMatrices(int p1)
+Matrix4f* Graphics::getMatrices(int p1)
 {
 
 	/*
@@ -4939,7 +4939,7 @@ void Graphics::perspPrintf(Font*, Vector3f&, int, int, char*, ...)
  * Address:	800297DC
  * Size:	000114
  */
-void Graphics::calcLighting(f32)
+int Graphics::calcLighting(f32)
 {
 	/*
 	.loc_0x0:
@@ -5039,7 +5039,7 @@ void Graphics::setAmbient()
  * Address:	........
  * Size:	0001D0
  */
-void Graphics::calcSphereLighting(Vector3f&, f32)
+int Graphics::calcSphereLighting(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -5049,7 +5049,7 @@ void Graphics::calcSphereLighting(Vector3f&, f32)
  * Address:	........
  * Size:	0003A4
  */
-void Graphics::calcBoxLighting(BoundBox&)
+int Graphics::calcBoxLighting(BoundBox&)
 {
 	// UNUSED FUNCTION
 }
@@ -5141,9 +5141,9 @@ void Graphics::getVerticalFilter(u8*)
  * Address:	8002997C
  * Size:	000008
  */
-u32 Graphics::getDListPtr()
+u8* Graphics::getDListPtr()
 {
-	return 0x0;
+	return nullptr;
 }
 
 /*

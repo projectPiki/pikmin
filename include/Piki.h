@@ -345,14 +345,13 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 struct PikiShapeObject {
 	PikiShapeObject(Shape*);
 
-	void exitCourse();
-
 	static AnimMgr* getAnimMgr();
 	static void init();
 	static void initOnce();
+	static void exitCourse();
 
 	// unused/inlined:
-	void create(int);
+	static PikiShapeObject* create(int);
 
 	static bool firstTime;
 	static PikiShapeObject* _instances[4];

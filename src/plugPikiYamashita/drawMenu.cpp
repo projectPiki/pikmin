@@ -681,7 +681,7 @@ void zen::DrawMenuTitle::end()
  * Address:	801C2F8C
  * Size:	000170
  */
-void zen::DrawMenuTitle::update(f32)
+bool zen::DrawMenuTitle::update(f32)
 {
 	/*
 	.loc_0x0:
@@ -2258,7 +2258,7 @@ void zen::DrawMenu::updateSelectMenuNo(Controller*)
  * Address:	801C44D4
  * Size:	00040C
  */
-void zen::DrawMenu::update(Controller*)
+bool zen::DrawMenu::update(Controller*)
 {
 	/*
 	.loc_0x0:

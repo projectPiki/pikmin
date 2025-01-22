@@ -128,7 +128,7 @@ ActPutBomb::ActPutBomb(Piki* piki)
  * Address:	800BEB1C
  * Size:	00048C
  */
-void ActPutBomb::findTeki()
+Creature* ActPutBomb::findTeki()
 {
 	/*
 	.loc_0x0:
@@ -642,7 +642,7 @@ void ActPutBomb::initSet()
  * Address:	800BF174
  * Size:	0001D8
  */
-void ActPutBomb::exeSet()
+int ActPutBomb::exeSet()
 {
 	/*
 	.loc_0x0:
@@ -1018,7 +1018,7 @@ void ActPutBomb::initAim()
  * Address:	800BF61C
  * Size:	0002CC
  */
-void ActPutBomb::exeAim()
+int ActPutBomb::exeAim()
 {
 	/*
 	.loc_0x0:
@@ -1242,7 +1242,7 @@ void ActPutBomb::initWait()
  * Address:	........
  * Size:	000080
  */
-void ActPutBomb::exeWait()
+int ActPutBomb::exeWait()
 {
 	// UNUSED FUNCTION
 }
@@ -1396,7 +1396,7 @@ void ActPutBomb::initPut()
  * Address:	800BFAC4
  * Size:	00023C
  */
-void ActPutBomb::exeThrow()
+int ActPutBomb::exeThrow()
 {
 	/*
 	.loc_0x0:
@@ -1563,7 +1563,7 @@ void ActPutBomb::exeThrow()
  * Address:	........
  * Size:	000038
  */
-void ActPutBomb::exePut()
+int ActPutBomb::exePut()
 {
 	// UNUSED FUNCTION
 }
@@ -2139,7 +2139,7 @@ void ActPutItem::findPos()
  * Address:	800C03B4
  * Size:	000340
  */
-void ActPutItem::findAdjacent(Creature*)
+bool ActPutItem::findAdjacent(Creature*)
 {
 	/*
 	.loc_0x0:

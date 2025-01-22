@@ -264,7 +264,7 @@ void zen::DrawProgre::start()
  * Address:	801DA52C
  * Size:	0002A0
  */
-int zen::DrawProgre::update(Controller*)
+zen::DrawProgre::returnStatusFlag zen::DrawProgre::update(Controller*)
 {
 	/*
 	.loc_0x0:

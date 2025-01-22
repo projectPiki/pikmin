@@ -14,7 +14,7 @@ struct WorldClock {
 	// unused/inlined:
 	void setClockSpd(f32);
 	void reset(f32);
-	void age(f32);
+	f32 age(f32);
 
 	f32 mTimeScale;        // _00
 	f32 mHoursInDay;       // _04

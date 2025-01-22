@@ -112,7 +112,7 @@ struct DefaultFader : public AttentionCamera::Fader {
  */
 struct NoiseFunction {
 	void init(int);
-	void getValue(f32);
+	f32 getValue(f32);
 };
 
 /**
@@ -122,7 +122,7 @@ struct NoiseFunction {
  */
 struct TurbulenceFun {
 	void init(int, int);
-	void getValue(f32);
+	f32 getValue(f32);
 };
 
 extern AttentionCamera* attentionCamera;

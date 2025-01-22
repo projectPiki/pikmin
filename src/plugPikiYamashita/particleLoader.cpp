@@ -25,7 +25,7 @@ static void _Print(char*, ...)
  * Address:	801A0F24
  * Size:	000158
  */
-void zen::particleLoader::load(char*, bool)
+u8* zen::particleLoader::load(char*, bool)
 {
 	/*
 	.loc_0x0:
@@ -133,7 +133,7 @@ void zen::particleLoader::load(char*, bool)
  * Address:	801A107C
  * Size:	000084
  */
-void zen::particleLoader::pmFind(char*)
+u8* zen::particleLoader::pmFind(char*)
 {
 	/*
 	.loc_0x0:

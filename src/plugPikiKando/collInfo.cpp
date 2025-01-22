@@ -1989,7 +1989,7 @@ void CollInfo::stopUpdateRec(int)
  * Address:	80088D38
  * Size:	0001C0
  */
-void CollInfo::checkCollisionSpecial(Vector3f&, f32, CndCollPart*)
+CollPart* CollInfo::checkCollisionSpecial(Vector3f&, f32, CndCollPart*)
 {
 	/*
 	.loc_0x0:
@@ -2139,7 +2139,7 @@ bool CndCollPart::satisfy(CollPart*)
  * Address:	........
  * Size:	000008
  */
-void CollInfo::checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*)
+CollPart* CollInfo::checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*)
 {
 	// UNUSED FUNCTION
 }
@@ -2641,7 +2641,7 @@ bool CollInfo::checkCollision(CollInfo*, CollPart**, CollPart**, Vector3f&)
  * Address:	800895A8
  * Size:	000160
  */
-void CollInfo::checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Vector3f&)
+bool CollInfo::checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -3460,7 +3460,7 @@ int CollInfo::getId2Index(u32 id)
  * Address:	........
  * Size:	000048
  */
-void CollInfo::getIndex(ObjCollInfo*)
+int CollInfo::getIndex(ObjCollInfo*)
 {
 	// UNUSED FUNCTION
 }

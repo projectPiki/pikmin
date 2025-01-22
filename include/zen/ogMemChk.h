@@ -17,6 +17,14 @@ struct TypingTextMgr;
  * @note Size: 0x10C.
  */
 struct ogScrMemChkMgr {
+
+	/**
+	 * @brief TODO
+	 */
+	enum MemChkStatus {
+		// TODO: this
+	};
+
 	ogScrMemChkMgr();
 
 	void StatusCheck();
@@ -25,7 +33,7 @@ struct ogScrMemChkMgr {
 	void DispAcup(bool);
 	void start();
 	void DebugStart(int);
-	int update(Controller*);
+	MemChkStatus update(Controller*);
 	void draw(Graphics&);
 	void setErrorMessage();
 
@@ -37,7 +45,7 @@ struct ogScrMemChkMgr {
 	void MakeDefFileStart();
 	void RepairFileStart();
 	void FormatEffectStart();
-	void checkTypingAll();
+	bool checkTypingAll();
 	void checkErrNitaku(zen::ogNitakuMgr*, Controller*);
 	void setNoCard();
 

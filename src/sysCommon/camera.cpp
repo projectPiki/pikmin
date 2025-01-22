@@ -1458,7 +1458,7 @@ f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point)
  * Address:	........
  * Size:	000170
  */
-void Camera::projectCamPoint(Vector3f&)
+f32 Camera::projectCamPoint(Vector3f&)
 {
 	// UNUSED FUNCTION
 }

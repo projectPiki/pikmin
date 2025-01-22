@@ -594,7 +594,7 @@ void zen::ogSaveMgr::startDirectSave(s16)
  * Address:	80195F3C
  * Size:	000834
  */
-void zen::ogSaveMgr::update(Controller*)
+zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller*)
 {
 	/*
 	.loc_0x0:

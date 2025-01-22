@@ -39,7 +39,7 @@ struct TaiPalmStrategy : public TaiStrategy {
 	virtual void createEffect(Teki&, int); // _14
 	virtual void draw(Teki&, Graphics&);   // _18
 
-	void translateMotionIndex(Teki&, int);
+	int translateMotionIndex(Teki&, int);
 
 	// _00     = VTBL
 	// _00-_10 = TaiStrategy
