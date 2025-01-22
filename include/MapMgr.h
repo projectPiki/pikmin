@@ -231,7 +231,7 @@ struct MapMgr {
 	void drawXLU(Graphics&);
 	void postrefresh(Graphics&);
 	void updatePos(f32, f32);
-	void getLight(f32, f32);
+	f32 getLight(f32, f32);
 	void getCollGroupList(f32, f32, bool);
 	f32 getMinY(f32, f32, bool);
 	f32 getMaxY(f32, f32, bool);

@@ -3358,7 +3358,7 @@ void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 				if (rand == 0) {
 					startHimaLook(&mNavi->_6F0);
 				} else {
-					startHimaLook(&mNavi->_784);
+					startHimaLook(&mNavi->mNaviLightPosition);
 				}
 				return;
 			}

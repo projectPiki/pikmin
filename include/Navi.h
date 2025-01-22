@@ -125,12 +125,18 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 
 	void setPellet(bool isPellet) { mIsPellet = isPellet; }
 
+	bool isPellet() { return mIsPellet; }
+
+	void forceFinishLook()
+	{
+		mLookAtPosPtr = nullptr;
+		_2F4 = _2F8 = 0.0f;
+		_2F0        = 0;
+	}
+
 	/*
 	    DLL inlines:
 
-	    bool isPellet();
-
-	    void forceFinishLook();
 	    void startLook(Vector3f*);
 	*/
 
@@ -155,7 +161,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	Creature* _304;                      // _304, maybe Pellet*?
 	bool mIsInWater;                     // _308
 	u32 _30C;                            // _30C, unknown
-	u32 _310;                            // _310, unknown
+	int _310;                            // _310
 	BurnEffect* mBurnEffect;             // _314
 	RippleEffect* mRippleEffect;         // _318
 	SlimeEffect* mSlimeEffect;           // _31C
@@ -175,11 +181,11 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	GoalItem* mGoalItem;                 // _708
 	u8 _70C;                             // _70C
 	CPlate* mPlateMgr;                   // _710, manages pikis in navi's party
-	u8 _714[0x4];                        // _714, unknown
+	f32 _714;                            // _714
 	u8 _718;                             // _718
 	u8 _719;                             // _719
-	u32 _71C;                            // _71C, unknown
-	u32 _720;                            // _720, unknown
+	int _71C;                            // _71C
+	int _720;                            // _720
 	u8 _724;                             // _724
 	u8 _725[0x72C - 0x725];              // _725, TODO: work out members
 	u32 _72C;                            // _72C, unknown
@@ -196,7 +202,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	PermanentEffect* mNaviLightGlowEfx;  // _778
 	PermanentEffect* _77C;               // _77C
 	PermanentEffect* _780;               // _780
-	Vector3f _784;                       // _784
+	Vector3f mNaviLightPosition;         // _784
 	Vector3f mDayEndPosition;            // _790
 	Vector3f _79C;                       // _79C
 	f32 mAiTickTimer;                    // _7A8
@@ -235,10 +241,10 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u8 _930[0x8];                        // _930, unknown
 	Vector3f _938[32];                   // _938
 	f32 _AB8;                            // _AB8
-	u32 _ABC;                            // _ABC, unknown
-	u8 _AC0[0x4];                        // _AC0, unknown
+	int _ABC;                            // _ABC
+	f32 _AC0;                            // _AC0
 	f32 _AC4;                            // _AC4
-	u8 _AC8[0x4];                        // _AC8, unknown
+	f32 _AC8;                            // _AC8
 	u8 _ACC;                             // _ACC
 	u32 _AD0;                            // _AD0, unknown
 	u8 _AD4[0x4];                        // _AD4, unknown

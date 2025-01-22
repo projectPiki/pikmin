@@ -130,10 +130,10 @@ struct InteractBreak : public Interaction {
  * @brief TODO
  */
 struct InteractBubble : public Interaction {
-	inline InteractBubble(Creature* owner, f32 p2)
+	inline InteractBubble(Creature* owner, f32 damage)
 	    : Interaction(owner)
 	{
-		_08 = p2;
+		mDamage = damage;
 	}
 
 	virtual bool actPiki(Piki*); // _0C
@@ -141,7 +141,7 @@ struct InteractBubble : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	f32 _08; // _08
+	f32 mDamage; // _08
 };
 
 /**
@@ -216,7 +216,7 @@ struct InteractFire : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	f32 mDamage; // _08
 };
 
 /**
@@ -423,13 +423,17 @@ struct InteractSpore : public Interaction {
  * @brief TODO
  */
 struct InteractSuck : public Interaction {
-	inline InteractSuck(); // TODO: probably
+	InteractSuck(Creature* owner, f32 damage)
+	    : Interaction(owner)
+	    , mDamage(damage)
+	{
+	}
 
 	virtual bool actNavi(Navi*); // _14
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	f32 mDamage; // _08
 };
 
 /**

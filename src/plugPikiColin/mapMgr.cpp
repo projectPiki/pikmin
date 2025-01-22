@@ -7648,7 +7648,7 @@ void MapMgr::updatePos(f32, f32)
  * Address:	80067D98
  * Size:	000008
  */
-void MapMgr::getLight(f32, f32)
+f32 MapMgr::getLight(f32, f32)
 {
 	/*
 	.loc_0x0:
