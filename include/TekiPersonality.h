@@ -22,10 +22,22 @@ struct TekiPersonality {
 	enum IntParamTypes {
 		INT_PelletMinCount = 0,
 		INT_PelletMaxCount = 1,
-		INT_WaterMinCount  = 2,
-		INT_WaterMaxCount  = 3,
+		INT_NectarMinCount = 2,
+		INT_NectarMaxCount = 3,
 		INT_Parameter0     = 4,
 		INT_ParamCount, // 5
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	enum FltParamTypes {
+		FLT_Size               = 0,
+		FLT_Strength           = 1,
+		FLT_TerritoryRange     = 2,
+		FLT_PelletAppearChance = 3,
+		FLT_NectarAppearChance = 4,
+		FLT_ParamCount, // 5
 	};
 
 	TekiPersonality();
@@ -39,12 +51,8 @@ struct TekiPersonality {
 	f32 getF(int idx) { return mParams->getF(idx); }
 	int getI(int idx) { return mParams->getI(idx); }
 
-	inline void init()
-	{
-		mPosition.set(Vector3f(0.0f, 0.0f, 0.0f));
-		mScale.set(Vector3f(0.0f, 0.0f, 0.0f));
-		mFaceDirection = 0.0f;
-	}
+	void setF(int idx, f32 val) { mParams->setF(idx, val); }
+	void setI(int idx, int val) { mParams->setI(idx, val); }
 
 	// _00 = VTBL
 	Vector3f mPosition;           // _04

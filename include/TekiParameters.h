@@ -115,7 +115,7 @@ struct TekiParameters : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	int _20;                          // _20
+	int mVersion;                     // _20
 	ID32 mParaIDs[8];                 // _24
 	ParaMultiParameters* mParameters; // _84
 };

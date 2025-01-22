@@ -102,7 +102,9 @@ PaniTestNode::PaniTestNode()
 	for (int i = 0; i < TEKI_TypeCount; i++) {
 		if (tekiMgr->mTekiParams[i]) {
 			mTestTekiList[i] = tekiMgr->newTeki(i);
-			mTestTekiList[i]->mPersonality->init();
+			mTestTekiList[i]->mPersonality->mPosition.set(0.0f, 0.0f, 0.0f);
+			mTestTekiList[i]->mPersonality->mScale.set(0.0f, 0.0f, 0.0f);
+			mTestTekiList[i]->mPersonality->mFaceDirection = 0.0f;
 			mTestTekiList[i]->reset();
 		} else {
 			mTestTekiList[i] = nullptr;

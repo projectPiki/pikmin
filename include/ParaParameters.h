@@ -12,7 +12,7 @@ struct Stream;
 template <typename T>
 struct ParaParameterInfo {
 
-	inline void set(char* name, T min, T max)
+	void init(char* name, T min, T max)
 	{
 		mName = name;
 		mMin  = min;
@@ -112,7 +112,7 @@ struct ParaParameterInfoF : public ParaParameterInfo<f32> {
 		mMax  = 0.0f;
 	}
 
-	inline void set(char* name, f32 min, f32 max) { ParaParameterInfo<f32>::set(name, min, max); }
+	inline void set(char* name, f32 min, f32 max) { ParaParameterInfo<f32>::init(name, min, max); }
 
 	// TODO: members
 };
@@ -143,8 +143,6 @@ struct ParaMultiParameters {
 
 	void setF(int idx, f32 val) { mFloatParams->set(idx, val); }
 	void setI(int idx, int val) { mIntParams->set(idx, val); }
-
-	ParaParameterInfoI* getInfoI(int idx) { return static_cast<ParaParameterInfoI*>(&mIntParams->mParaInfo[idx]); }
 
 	// _08 = VTBL
 	ParaParametersI* mIntParams;   // _00
