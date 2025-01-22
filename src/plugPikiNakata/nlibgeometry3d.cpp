@@ -89,38 +89,47 @@ f32 NLine::calcDistance(NVector3f& point, f32* vertProj)
  * Address:	........
  * Size:	0002AC
  */
-f32 NLine::calcDistance(NLine& other, f32* p2, f32* p3)
+f32 NLine::calcDistance(NLine& other, f32* closestPointThisLine, f32* closestPointOtherLine)
 {
-	f32 dirProj = mDirection.dot(other.getDirection());
-	if (NMathF::equals(dirProj, 1.0f) || NMathF::equals(dirProj, -1.0f)) {
-		f32 vertProj = 0.0f;
-		f32 dist     = calcDistance(other.getPosition(), &vertProj);
-		if (p2) {
-			*p2 = vertProj;
+	f32 directionsAlignment = mDirection.dot(other.getDirection());
+
+	if (NMathF::equals(directionsAlignment, 1.0f) || NMathF::equals(directionsAlignment, -1.0f)) {
+		// Lines are parallel or anti-parallel
+		f32 projectionOnLine = 0.0f;
+		f32 distance         = calcDistance(other.getPosition(), &projectionOnLine);
+
+		if (closestPointThisLine) {
+			*closestPointThisLine = projectionOnLine;
 		}
-		if (p3) {
-			*p3 = 0.0f;
+
+		if (closestPointOtherLine) {
+			*closestPointOtherLine = 0.0f;
 		}
-		return dist;
+
+		return distance;
 	}
 
-	NVector3f& otherPos = NVector3f(other.getPosition());
-	f32 ndot            = -otherPos.dot(other.getDirection());
-	f32 val             = (otherPos.dot(mDirection) * dirProj + ndot) / (1.0f - dirProj * dirProj);
-	f32 val2            = otherPos.dot(mDirection) + val * dirProj;
+	NVector3f& otherOrigin  = NVector3f(other.getPosition());
+	f32 otherOrigProjection = -otherOrigin.dot(other.getDirection());
+	f32 paramOnOtherLine
+	    = (otherOrigin.dot(mDirection) * directionsAlignment + otherOrigProjection) / (1.0f - directionsAlignment * directionsAlignment);
+	f32 paramOnThisLine = otherOrigin.dot(mDirection) + paramOnOtherLine * directionsAlignment;
 
-	NVector3f& outPos = NVector3f();
-	outputPosition(val2, outPos);
-	NVector3f& otherOutPos = NVector3f();
-	other.outputPosition(val, otherOutPos);
-	if (p2) {
-		*p2 = val2;
+	NVector3f& closestPointThis = NVector3f();
+	outputPosition(paramOnThisLine, closestPointThis);
+
+	NVector3f& closestPointOther = NVector3f();
+	other.outputPosition(paramOnOtherLine, closestPointOther);
+
+	if (closestPointThisLine) {
+		*closestPointThisLine = paramOnThisLine;
 	}
-	if (p3) {
-		*p3 = val;
+
+	if (closestPointOtherLine) {
+		*closestPointOtherLine = paramOnOtherLine;
 	}
-	return outPos.distance(otherOutPos);
-	// UNUSED FUNCTION
+
+	return closestPointThis.distance(closestPointOther);
 }
 
 /*

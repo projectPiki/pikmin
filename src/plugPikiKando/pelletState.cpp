@@ -223,10 +223,10 @@ PelletAppearState::PelletAppearState()
  */
 void PelletAppearState::init(Pellet* pelt)
 {
-	f32 scale = pelt->mConfig->mPelletScale();
-	_10       = 0.1f;
-	pelt->mScale.set(_10 * scale, _10 * scale, _10 * scale);
-	_14 = 2.0f;
+	f32 scale     = pelt->mConfig->mPelletScale();
+	mCurrentScale = 0.1f;
+	pelt->mScale.set(mCurrentScale * scale, mCurrentScale * scale, mCurrentScale * scale);
+	mTransitionTimer = 2.0f;
 }
 
 /*
@@ -248,17 +248,17 @@ void PelletAppearState::exec(Pellet* pelt)
 {
 	f32 scale = pelt->mConfig->mPelletScale();
 	pelt->invalidateCollisions();
-	_10 += gsys->getFrameTime() * 3.3333333f;
-	if (_10 >= 1.0f) {
-		_10 = 1.0f;
+	mCurrentScale += gsys->getFrameTime() * 3.3333333f;
+	if (mCurrentScale >= 1.0f) {
+		mCurrentScale = 1.0f;
 		pelt->mScale.set(scale, scale, scale);
 	} else {
-		pelt->mScale.set(_10 * scale, _10 * scale, _10 * scale);
+		pelt->mScale.set(mCurrentScale * scale, mCurrentScale * scale, mCurrentScale * scale);
 	}
 
-	if (_10 >= 1.0f) {
-		_14 -= gsys->getFrameTime();
-		if (_14 < 0.0f) {
+	if (mCurrentScale >= 1.0f) {
+		mTransitionTimer -= gsys->getFrameTime();
+		if (mTransitionTimer < 0.0f) {
 			transit(pelt, PELSTATE_Normal);
 		}
 	}
@@ -290,12 +290,12 @@ PelletGoalState::PelletGoalState()
  */
 void PelletGoalState::init(Pellet* pelt)
 {
-	_31 = 0;
+	mTargetIsOnion = 0;
 	if (pelt->mTargetGoal->mObjType == OBJTYPE_Ufo) {
-		_31 = true;
+		mTargetIsOnion = true;
 		if (!playerState->mDemoFlags.isFlag(13)) {
-			gameflow._1E0 = -1;
-			gameflow._1E2 = -1;
+			gameflow.mMovieInfoNum = -1;
+			gameflow.mMovieType    = -1;
 			playerState->mDemoFlags.setFlag(13, (Creature*)itemMgr->getUfo());
 			playerState->mDemoFlags.setFlagOnly(12);
 		} else {
@@ -303,9 +303,9 @@ void PelletGoalState::init(Pellet* pelt)
 			for (int i = 0; i < 30; i++) {
 				PRINT("nextPowerup = %d\n", playerState->getNextPowerupNumber());
 			}
-			gameflow._1E0 = pelletMgr->getUfoIndexFromID(pelt->mConfig->_2C.mId);
-			gameflow._1E2 = check ? 2 : 0;
-			PRINT("suicomi movie :- type = %d : info = %d\n", gameflow._1E2, gameflow._1E0);
+			gameflow.mMovieInfoNum = pelletMgr->getUfoIndexFromID(pelt->mConfig->_2C.mId);
+			gameflow.mMovieType    = check ? 2 : 0;
+			PRINT("suicomi movie :- type = %d : info = %d\n", gameflow.mMovieType, gameflow.mMovieInfoNum);
 			gameflow.mGameInterface->movie(79, 0, pelt, &pelt->mPosition, &pelt->mRotation, -1, true);
 		}
 		playerState->preloadHenkaMovie();
@@ -316,11 +316,14 @@ void PelletGoalState::init(Pellet* pelt)
 			playerState->mDemoFlags.setFlag(10, pelt);
 		}
 	}
+
 	pelt->startCarryMotion(120.0f);
-	Vector3f posDiff = pelt->mTargetGoal->getSuckPos() - pelt->mTargetGoal->getGoalPos();
-	_14              = posDiff.length();
-	_10              = 0.0f;
-	_18              = 1.5f;
+
+	Vector3f posDiff  = pelt->mTargetGoal->getSuckPos() - pelt->mTargetGoal->getGoalPos();
+	mDistanceToTarget = posDiff.length();
+
+	_10        = 0.0f;
+	mWaitTimer = 1.5f;
 	pelt->setCreatureFlag(0x80); // needs a further inline
 	pelt->mVelocity.y = 0.0f;
 
@@ -329,14 +332,15 @@ void PelletGoalState::init(Pellet* pelt)
 		EffectParm parm(pos);
 		utEffectMgr->cast(0, parm);
 	}
-	_1C = pelt->mScale.x;
+
+	mStartScaleX = pelt->mScale.x;
 	pelt->playEventSound(pelt->mTargetGoal, SE_CONTAINER_PELLETIN);
 	pelt->mAngularMomentum = pelt->mAngularMomentum + Vector3f(100.0f, 200.0f, 10.0f);
 
 	if (pelt->mTargetGoal->mObjType == OBJTYPE_Ufo) {
-		Vector3f pos  = pelt->mTargetGoal->getGoalPos();
-		Vector3f pos2 = pelt->mTargetGoal->getSuckPos();
-		EffectParm parm(pos, pos2);
+		Vector3f goalPos = pelt->mTargetGoal->getGoalPos();
+		Vector3f suckPos = pelt->mTargetGoal->getSuckPos();
+		EffectParm parm(goalPos, suckPos);
 		utEffectMgr->cast(21, parm);
 		utEffectMgr->cast(22, parm);
 	}
@@ -362,36 +366,37 @@ void PelletGoalState::init(Pellet* pelt)
  */
 void PelletGoalState::exec(Pellet* pelt)
 {
-	if (_18 > 0.0f) {
+	if (mWaitTimer > 0.0f) {
 		pelt->mVelocity.z = 0.0f;
 		pelt->mVelocity.x = 0.0f;
-		_18 -= gsys->getFrameTime();
-		_30 = true;
+		mWaitTimer -= gsys->getFrameTime();
+		mIsFirstMove = true;
 		return;
 	}
 
-	if (_30) {
-		_24           = pelt->mPosition;
-		_20           = 0.0f;
-		_30           = false;
-		Vector3f diff = pelt->mTargetGoal->getSuckPos() - _24;
-		_14           = diff.length();
-		_34           = 0.0f;
+	if (mIsFirstMove) {
+		mStartPosition    = pelt->mPosition;
+		mSuckProgress     = 0.0f;
+		mIsFirstMove      = false;
+		Vector3f diff     = pelt->mTargetGoal->getSuckPos() - mStartPosition;
+		mDistanceToTarget = diff.length();
+		mSuckSpeed        = 0.0f;
 	}
 
-	Vector3f diff   = (pelt->mTargetGoal->getSuckPos() - _24);
-	pelt->mPosition = _24 + diff * _20;
-	f32 scale       = (1.0f - _20 * 0.75f) * _1C;
+	Vector3f diff   = (pelt->mTargetGoal->getSuckPos() - mStartPosition);
+	pelt->mPosition = mStartPosition + diff * mSuckProgress;
+	f32 scale       = (1.0f - mSuckProgress * 0.75f) * mStartScaleX;
 	pelt->mScale.set(scale, scale, scale);
-	_20 += (_34 * gsys->getFrameTime()) / _14;
-	_34 += gsys->getFrameTime() * 720.0f;
+	mSuckProgress += (mSuckSpeed * gsys->getFrameTime()) / mDistanceToTarget;
+	mSuckSpeed += gsys->getFrameTime() * 720.0f;
 
-	if (_20 >= 1.0f) {
+	if (mSuckProgress >= 1.0f) {
 		if (pelt->mConfig->mPelletType() == PELTYPE_UfoPart) {
 			pelt->mTargetGoal->finishSuck(pelt);
 		} else {
 			pelt->mTargetGoal->suckMe(pelt);
 		}
+
 		pelt->mIsAlive = false;
 		pelt->kill(false);
 		transit(pelt, PELSTATE_Dead);
@@ -405,7 +410,7 @@ void PelletGoalState::exec(Pellet* pelt)
  */
 void PelletGoalState::cleanup(Pellet*)
 {
-	if (_31) {
+	if (mTargetIsOnion) {
 		utEffectMgr->kill(21);
 	}
 }

@@ -327,7 +327,7 @@ void MoviePlayer::startMovie(int movieIndex, int, Creature*, Vector3f* position,
 	}
 
 	// whimsical radar check?
-	if (movieIndex == 79 && gameflow._1E0 == 5) {
+	if (movieIndex == 79 && gameflow.mMovieInfoNum == 5) {
 		movieIndex = 78;
 	}
 
@@ -720,7 +720,7 @@ void MoviePlayer::startMovie(int movieIndex, int, Creature*, Vector3f* position,
  */
 void MoviePlayer::sndStartMovie(MovieInfo* info)
 {
-	Jac_SetDemoPartsID(gameflow._1E0);
+	Jac_SetDemoPartsID(gameflow.mMovieInfoNum);
 	int onyons = 0;
 	if (playerState && playerState->bootContainer(0)) {
 		onyons++;

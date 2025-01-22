@@ -392,8 +392,8 @@ struct GameFlow : public Node {
 	u32 _1D4;                                // _1D4, unknown
 	u32 _1D8;                                // _1D8, bitflag of some description
 	MoviePlayer* mMoviePlayer;               // _1DC
-	s16 _1E0;                                // _1E0
-	s16 _1E2;                                // _1E2
+	s16 mMovieInfoNum;                       // _1E0
+	s16 mMovieType;                          // _1E2
 	u32 _1E4;                                // _1E4
 	GameInterface* mGameInterface;           // _1E8
 	int _1EC;                                // _1EC
