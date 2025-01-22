@@ -58,7 +58,8 @@ struct PelletAppearState : public PelletState {
 
 	// _00     = VTBL
 	// _00-_10 = PelletState
-	u8 _10[0x8]; // _10, unknown
+	f32 _10; // _10
+	f32 _14; // _14
 };
 
 /**
@@ -91,9 +92,15 @@ struct PelletGoalState : public PelletState {
 
 	// _00     = VTBL
 	// _00-_10 = PelletState
-	u8 _10[0x24 - 0x10]; // _10, unknown
-	Vector3f _24;        // _24
-	u8 _30[0x8];         // _30, unknown
+	f32 _10; // _10
+	f32 _14;
+	f32 _18;
+	f32 _1C;
+	f32 _20;
+	Vector3f _24; // _24
+	u8 _30;       // _30
+	u8 _31;       // _31
+	f32 _34;      // _34
 };
 
 /**
@@ -142,7 +149,7 @@ struct PelletUfoLoadState : public PelletState {
 
 	// _00     = VTBL
 	// _00-_10 = PelletState
-	u8 _10; // _10
+	u8 mWaitTime; // _10
 };
 
 #endif

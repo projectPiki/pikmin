@@ -37,7 +37,7 @@ struct DualCreature : public DynCreature {
 
 	// DLL inlines todo:
 	bool isRealDynamics() { return mIsRealDynamics; }
-	void invalidateCollisions();
+	void invalidateCollisions() { mIsCollisionInitialised = false; }
 
 	// _00      = VTBL
 	// _00-_43C = DynCreature

@@ -1,356 +1,45 @@
 #include "PelletState.h"
 #include "Suckable.h"
 #include "Pellet.h"
-#include "Dolphin/os.h"
+#include "MapMgr.h"
+#include "sysNew.h"
+#include "gameflow.h"
+#include "FlowController.h"
+#include "PlayerState.h"
+#include "GoalItem.h"
+#include "Interface.h"
+#include "Stickers.h"
+#include "DebugLog.h"
+#include "UtEffect.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "pelletState");
-}
+DEFINE_ERROR();
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("pelletState");
 
 /*
  * --INFO--
  * Address:	8009A02C
  * Size:	000400
  */
-void PelletStateMachine::init(Pellet*)
+void PelletStateMachine::init(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x6
-	  stwu      r1, -0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x68(r1)
-	  stw       r0, 0xC(r3)
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  lwz       r0, 0xC(r3)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0x53058
-	  stw       r3, 0x4(r31)
-	  lwz       r0, 0xC(r31)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0x53068
-	  stw       r3, 0x10(r31)
-	  lwz       r0, 0xC(r31)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0x53078
-	  stw       r3, 0x14(r31)
-	  li        r3, 0x10
-	  bl        -0x53084
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x70
-	  bl        0x500
-
-	.loc_0x70:
-	  lwz       r4, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  bge-      .loc_0xF0
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r4,2,0,29
-	  stwx      r30, r3, r0
-	  lwz       r3, 0x4(r30)
-	  cmpwi     r3, 0
-	  blt-      .loc_0xA4
-	  lwz       r0, 0xC(r31)
-	  cmpw      r3, r0
-	  blt-      .loc_0xAC
-
-	.loc_0xA4:
-	  li        r0, 0
-	  b         .loc_0xB0
-
-	.loc_0xAC:
-	  li        r0, 0x1
-
-	.loc_0xB0:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0xF0
-	  stw       r31, 0x8(r30)
-	  lwz       r0, 0x8(r31)
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r0, 0x4(r30)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0xF0:
-	  li        r3, 0x18
-	  bl        -0x5311C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x108
-	  bl        0x570
-
-	.loc_0x108:
-	  lwz       r4, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  bge-      .loc_0x188
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r4,2,0,29
-	  stwx      r30, r3, r0
-	  lwz       r3, 0x4(r30)
-	  cmpwi     r3, 0
-	  blt-      .loc_0x13C
-	  lwz       r0, 0xC(r31)
-	  cmpw      r3, r0
-	  blt-      .loc_0x144
-
-	.loc_0x13C:
-	  li        r0, 0
-	  b         .loc_0x148
-
-	.loc_0x144:
-	  li        r0, 0x1
-
-	.loc_0x148:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x188
-	  stw       r31, 0x8(r30)
-	  lwz       r0, 0x8(r31)
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r0, 0x4(r30)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0x188:
-	  li        r3, 0x10
-	  bl        -0x531B4
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x1A0
-	  bl        0x424
-
-	.loc_0x1A0:
-	  lwz       r4, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  bge-      .loc_0x220
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r4,2,0,29
-	  stwx      r30, r3, r0
-	  lwz       r3, 0x4(r30)
-	  cmpwi     r3, 0
-	  blt-      .loc_0x1D4
-	  lwz       r0, 0xC(r31)
-	  cmpw      r3, r0
-	  blt-      .loc_0x1DC
-
-	.loc_0x1D4:
-	  li        r0, 0
-	  b         .loc_0x1E0
-
-	.loc_0x1DC:
-	  li        r0, 0x1
-
-	.loc_0x1E0:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x220
-	  stw       r31, 0x8(r30)
-	  lwz       r0, 0x8(r31)
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r0, 0x4(r30)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0x220:
-	  li        r3, 0x38
-	  bl        -0x5324C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x238
-	  bl        0x5BC
-
-	.loc_0x238:
-	  lwz       r4, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  bge-      .loc_0x2B8
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r4,2,0,29
-	  stwx      r30, r3, r0
-	  lwz       r3, 0x4(r30)
-	  cmpwi     r3, 0
-	  blt-      .loc_0x26C
-	  lwz       r0, 0xC(r31)
-	  cmpw      r3, r0
-	  blt-      .loc_0x274
-
-	.loc_0x26C:
-	  li        r0, 0
-	  b         .loc_0x278
-
-	.loc_0x274:
-	  li        r0, 0x1
-
-	.loc_0x278:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x2B8
-	  stw       r31, 0x8(r30)
-	  lwz       r0, 0x8(r31)
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r0, 0x4(r30)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0x2B8:
-	  li        r3, 0x10
-	  bl        -0x532E4
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x2D0
-	  bl        0x248
-
-	.loc_0x2D0:
-	  lwz       r4, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  bge-      .loc_0x350
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r4,2,0,29
-	  stwx      r30, r3, r0
-	  lwz       r3, 0x4(r30)
-	  cmpwi     r3, 0
-	  blt-      .loc_0x304
-	  lwz       r0, 0xC(r31)
-	  cmpw      r3, r0
-	  blt-      .loc_0x30C
-
-	.loc_0x304:
-	  li        r0, 0
-	  b         .loc_0x310
-
-	.loc_0x30C:
-	  li        r0, 0x1
-
-	.loc_0x310:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x350
-	  stw       r31, 0x8(r30)
-	  lwz       r0, 0x8(r31)
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r0, 0x4(r30)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0x350:
-	  li        r3, 0x14
-	  bl        -0x5337C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x368
-	  bl        .loc_0x400
-
-	.loc_0x368:
-	  lwz       r4, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  bge-      .loc_0x3E8
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r4,2,0,29
-	  stwx      r30, r3, r0
-	  lwz       r3, 0x4(r30)
-	  cmpwi     r3, 0
-	  blt-      .loc_0x39C
-	  lwz       r0, 0xC(r31)
-	  cmpw      r3, r0
-	  blt-      .loc_0x3A4
-
-	.loc_0x39C:
-	  li        r0, 0
-	  b         .loc_0x3A8
-
-	.loc_0x3A4:
-	  li        r0, 0x1
-
-	.loc_0x3A8:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x3E8
-	  stw       r31, 0x8(r30)
-	  lwz       r0, 0x8(r31)
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r0, 0x4(r30)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0x3E8:
-	  lwz       r0, 0x74(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-
-	.loc_0x400:
-	*/
+	create(PELSTATE_StateCount);
+	registerState(new PelletNormalState);
+	registerState(new PelletAppearState);
+	registerState(new PelletSwallowedState);
+	registerState(new PelletGoalState);
+	registerState(new PelletDeadState);
+	registerState(new PelletUfoLoadState);
 }
 
 /*
@@ -370,7 +59,7 @@ PelletUfoLoadState::PelletUfoLoadState()
  */
 void PelletUfoLoadState::init(Pellet*)
 {
-	_10 = 8;
+	mWaitTime = 8;
 }
 
 /*
@@ -378,67 +67,16 @@ void PelletUfoLoadState::init(Pellet*)
  * Address:	8009A484
  * Size:	000070
  */
-void PelletUfoLoadState::exec(Pellet*)
+void PelletUfoLoadState::exec(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  lbz       r5, 0x10(r3)
-	  subi      r4, r5, 0x1
-	  rlwinm.   r0,r4,0,24,31
-	  stb       r4, 0x10(r3)
-	  bne-      .loc_0x44
-	  lwz       r12, 0x0(r3)
-	  addi      r4, r31, 0
-	  li        r5, 0x2
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x5C
+	if (--mWaitTime == 0) {
+		transit(pelt, PELSTATE_Appear);
+		return;
+	}
 
-	.loc_0x44:
-	  lfs       f1, 0x94(r31)
-	  li        r4, 0x1
-	  lfs       f2, 0x9C(r31)
-	  lwz       r3, 0x2F00(r13)
-	  bl        -0x325D4
-	  stfs      f1, 0x98(r31)
-
-	.loc_0x5C:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8009A4F4
- * Size:	000030
- */
-void AState<Pellet>::transit(Pellet*, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x8(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f pos(pelt->mPosition);
+	pelt->mPosition.y = mapMgr->getMinY(pos.x, pos.z, true);
+	PRINT("setting ufo parts(%s) : y=%f\n", pelt->mConfig->mName, pelt->mPosition.y);
 }
 
 /*
@@ -446,18 +84,10 @@ void AState<Pellet>::transit(Pellet*, int)
  * Address:	8009A524
  * Size:	00001C
  */
-void PelletUfoLoadState::cleanup(Pellet*)
+void PelletUfoLoadState::cleanup(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r4)
-	  rlwinm    r0,r0,0,10,8
-	  stw       r0, 0xC8(r4)
-	  lwz       r0, 0xC8(r4)
-	  oris      r0, r0, 0x40
-	  stw       r0, 0xC8(r4)
-	  blr
-	*/
+	pelt->resetUnk22();
+	pelt->setUnk22();
 }
 
 /*
@@ -475,7 +105,7 @@ PelletDeadState::PelletDeadState()
  * Address:	8009A58C
  * Size:	000004
  */
-void PelletDeadState::init(Pellet*)
+void PelletDeadState::init(Pellet* pelt)
 {
 }
 
@@ -558,28 +188,12 @@ void PelletSwallowedState::init(Pellet*)
  * Address:	8009A640
  * Size:	00003C
  */
-void PelletSwallowedState::exec(Pellet*)
+void PelletSwallowedState::exec(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0xC8(r4)
-	  rlwinm.   r0,r0,0,16,16
-	  bne-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!pelt->isStickToMouth()) {
+		PRINT("pellet ha tasukatta !\n");
+		transit(pelt, PELSTATE_Normal);
+	}
 }
 
 /*
@@ -587,20 +201,9 @@ void PelletSwallowedState::exec(Pellet*)
  * Address:	8009A67C
  * Size:	000024
  */
-void PelletSwallowedState::cleanup(Pellet*)
+void PelletSwallowedState::cleanup(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r3, r4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xA670
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	pelt->endStickMouth();
 }
 
 /*
@@ -618,23 +221,12 @@ PelletAppearState::PelletAppearState()
  * Address:	8009A6EC
  * Size:	000030
  */
-void PelletAppearState::init(Pellet*)
+void PelletAppearState::init(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x55C(r4)
-	  lfs       f0, -0x7368(r2)
-	  lfs       f1, 0xFC(r5)
-	  stfs      f0, 0x10(r3)
-	  lfs       f0, 0x10(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x7C(r4)
-	  stfs      f0, 0x80(r4)
-	  stfs      f0, 0x84(r4)
-	  lfs       f0, -0x7364(r2)
-	  stfs      f0, 0x14(r3)
-	  blr
-	*/
+	f32 scale = pelt->mConfig->mPelletScale();
+	_10       = 0.1f;
+	pelt->mScale.set(_10 * scale, _10 * scale, _10 * scale);
+	_14 = 2.0f;
 }
 
 /*
@@ -642,23 +234,9 @@ void PelletAppearState::init(Pellet*)
  * Address:	8009A71C
  * Size:	000030
  */
-void PelletAppearState::procBounceMsg(Pellet*, MsgBounce*)
+void PelletAppearState::procBounceMsg(Pellet* pelt, MsgBounce* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	transit(pelt, PELSTATE_Normal);
 }
 
 /*
@@ -666,68 +244,24 @@ void PelletAppearState::procBounceMsg(Pellet*, MsgBounce*)
  * Address:	8009A74C
  * Size:	0000CC
  */
-void PelletAppearState::exec(Pellet*)
+void PelletAppearState::exec(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x55C(r4)
-	  lfs       f3, 0xFC(r5)
-	  stb       r0, 0x43D(r4)
-	  lwz       r5, 0x2DEC(r13)
-	  lfs       f1, -0x7360(r2)
-	  lfs       f0, 0x28C(r5)
-	  lfs       f2, 0x10(r3)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x10(r3)
-	  lfs       f1, 0x10(r3)
-	  lfs       f0, -0x735C(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x60
-	  stfs      f0, 0x10(r3)
-	  stfs      f3, 0x7C(r4)
-	  stfs      f3, 0x80(r4)
-	  stfs      f3, 0x84(r4)
-	  b         .loc_0x70
+	f32 scale = pelt->mConfig->mPelletScale();
+	pelt->invalidateCollisions();
+	_10 += gsys->getFrameTime() * 3.3333333f;
+	if (_10 >= 1.0f) {
+		_10 = 1.0f;
+		pelt->mScale.set(scale, scale, scale);
+	} else {
+		pelt->mScale.set(_10 * scale, _10 * scale, _10 * scale);
+	}
 
-	.loc_0x60:
-	  fmuls     f0, f1, f3
-	  stfs      f0, 0x7C(r4)
-	  stfs      f0, 0x80(r4)
-	  stfs      f0, 0x84(r4)
-
-	.loc_0x70:
-	  lfs       f1, 0x10(r3)
-	  lfs       f0, -0x735C(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xBC
-	  lwz       r5, 0x2DEC(r13)
-	  lfs       f1, 0x14(r3)
-	  lfs       f0, 0x28C(r5)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x14(r3)
-	  lfs       f1, 0x14(r3)
-	  lfs       f0, -0x7358(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xBC
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xBC:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (_10 >= 1.0f) {
+		_14 -= gsys->getFrameTime();
+		if (_14 < 0.0f) {
+			transit(pelt, PELSTATE_Normal);
+		}
+	}
 }
 
 /*
@@ -754,398 +288,71 @@ PelletGoalState::PelletGoalState()
  * Address:	8009A878
  * Size:	00057C
  */
-void PelletGoalState::init(Pellet*)
+void PelletGoalState::init(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x180(r1)
-	  stw       r31, 0x17C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x178(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x174(r1)
-	  stw       r28, 0x170(r1)
-	  stb       r0, 0x31(r3)
-	  lwz       r3, 0x458(r4)
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0x1E
-	  bne-      .loc_0x148
-	  li        r0, 0x1
-	  stb       r0, 0x31(r30)
-	  li        r4, 0xD
-	  lwz       r3, 0x2F6C(r13)
-	  addi      r3, r3, 0x54
-	  bl        -0x18404
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xA0
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  li        r0, -0x1
-	  sth       r0, 0x1E0(r3)
-	  sth       r0, 0x1E2(r3)
-	  lwz       r3, 0x30AC(r13)
-	  bl        0x5834C
-	  lwz       r4, 0x2F6C(r13)
-	  addi      r5, r3, 0
-	  addi      r3, r4, 0x54
-	  li        r4, 0xD
-	  bl        -0x183E4
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0xC
-	  addi      r3, r3, 0x54
-	  bl        -0x181C0
-	  b         .loc_0x13C
+	_31 = 0;
+	if (pelt->mTargetGoal->mObjType == OBJTYPE_Ufo) {
+		_31 = true;
+		if (!playerState->mDemoFlags.isFlag(13)) {
+			gameflow._1E0 = -1;
+			gameflow._1E2 = -1;
+			playerState->mDemoFlags.setFlag(13, (Creature*)itemMgr->getUfo());
+			playerState->mDemoFlags.setFlagOnly(12);
+		} else {
+			bool check = playerState->getNextPowerupNumber() == true;
+			for (int i = 0; i < 30; i++) {
+				PRINT("nextPowerup = %d\n", playerState->getNextPowerupNumber());
+			}
+			gameflow._1E0 = pelletMgr->getUfoIndexFromID(pelt->mConfig->_2C.mId);
+			gameflow._1E2 = check ? 2 : 0;
+			PRINT("suicomi movie :- type = %d : info = %d\n", gameflow._1E2, gameflow._1E0);
+			gameflow.mGameInterface->movie(79, 0, pelt, &pelt->mPosition, &pelt->mRotation, -1, true);
+		}
+		playerState->preloadHenkaMovie();
 
-	.loc_0xA0:
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x191AC
-	  subfic    r0, r3, 0x1
-	  cntlzw    r0, r0
-	  rlwinm    r29,r0,27,5,31
-	  li        r28, 0
+	} else if (flowCont.mCurrentStage->mStageID == 0) {
+		if (!playerState->mDemoFlags.isFlag(10)) {
+			PRINT("** FIRST PELLET IN\n");
+			playerState->mDemoFlags.setFlag(10, pelt);
+		}
+	}
+	pelt->startCarryMotion(120.0f);
+	Vector3f posDiff = pelt->mTargetGoal->getSuckPos() - pelt->mTargetGoal->getGoalPos();
+	_14              = posDiff.length();
+	_10              = 0.0f;
+	_18              = 1.5f;
+	pelt->setCreatureFlag(0x80); // needs a further inline
+	pelt->mVelocity.y = 0.0f;
 
-	.loc_0xB8:
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x191C4
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x1E
-	  blt+      .loc_0xB8
-	  lwz       r3, 0x55C(r31)
-	  lwz       r3, 0x2C(r3)
-	  bl        -0x5E38
-	  rlwinm.   r0,r29,0,24,31
-	  lis       r4, 0x803A
-	  extsh     r0, r3
-	  subi      r3, r4, 0x2848
-	  sth       r0, 0x1E0(r3)
-	  beq-      .loc_0xF8
-	  li        r0, 0x2
-	  b         .loc_0xFC
+	if (pelt->mTargetGoal->mObjType != OBJTYPE_Ufo) {
+		Vector3f pos = pelt->mTargetGoal->getGoalPos();
+		EffectParm parm(pos);
+		utEffectMgr->cast(0, parm);
+	}
+	_1C = pelt->mScale.x;
+	pelt->playEventSound(pelt->mTargetGoal, SE_CONTAINER_PELLETIN);
+	pelt->mAngularMomentum = pelt->mAngularMomentum + Vector3f(100.0f, 200.0f, 10.0f);
 
-	.loc_0xF8:
-	  li        r0, 0
+	if (pelt->mTargetGoal->mObjType == OBJTYPE_Ufo) {
+		Vector3f pos  = pelt->mTargetGoal->getGoalPos();
+		Vector3f pos2 = pelt->mTargetGoal->getSuckPos();
+		EffectParm parm(pos, pos2);
+		utEffectMgr->cast(21, parm);
+		utEffectMgr->cast(22, parm);
+	}
 
-	.loc_0xFC:
-	  lis       r3, 0x803A
-	  extsh     r0, r0
-	  subi      r3, r3, 0x2848
-	  sth       r0, 0x1E2(r3)
-	  addi      r6, r31, 0
-	  addi      r7, r31, 0x94
-	  lwz       r3, 0x1E8(r3)
-	  addi      r8, r31, 0x88
-	  li        r4, 0x4F
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0
-	  li        r9, -0x1
-	  lwz       r12, 0xC(r12)
-	  li        r10, 0x1
-	  mtlr      r12
-	  blrl
+	Stickers stick(pelt);
+	Iterator it(&stick);
+	PRINT("PELLET GOAL START*******\n");
+	CI_LOOP(it)
+	{
+		Creature* obj = *it;
+		PRINT("still stick %s\n", ObjType::getName(obj->mObjType));
+	}
 
-	.loc_0x13C:
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x191F0
-	  b         .loc_0x18C
-
-	.loc_0x148:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  lwz       r3, 0xA8(r3)
-	  lhz       r0, 0x26(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x18C
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0xA
-	  addi      r3, r3, 0x54
-	  bl        -0x18520
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x18C
-	  lwz       r3, 0x2F6C(r13)
-	  addi      r5, r31, 0
-	  li        r4, 0xA
-	  addi      r3, r3, 0x54
-	  bl        -0x184E4
-
-	.loc_0x18C:
-	  mr        r3, r31
-	  lfs       f1, -0x7354(r2)
-	  bl        -0x4064
-	  lwz       r4, 0x458(r31)
-	  addi      r3, r1, 0xA8
-	  lwz       r12, 0x0(r4)
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x458(r31)
-	  addi      r3, r1, 0xB4
-	  lwz       r12, 0x0(r4)
-	  lwz       r12, 0x164(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f3, 0xB8(r1)
-	  lfs       f2, 0xAC(r1)
-	  lfs       f1, 0xB4(r1)
-	  lfs       f0, 0xA8(r1)
-	  fsubs     f3, f3, f2
-	  lfs       f2, 0xBC(r1)
-	  fsubs     f4, f1, f0
-	  lfs       f0, 0xB0(r1)
-	  fmuls     f1, f3, f3
-	  fsubs     f3, f2, f0
-	  lfs       f0, -0x7358(r2)
-	  fmuls     f2, f4, f4
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x264
-	  fsqrte    f1, f4
-	  lfd       f3, -0x7350(r2)
-	  lfd       f2, -0x7348(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x58(r1)
-	  lfs       f4, 0x58(r1)
-
-	.loc_0x264:
-	  stfs      f4, 0x14(r30)
-	  lfs       f1, -0x7358(r2)
-	  stfs      f1, 0x10(r30)
-	  lfs       f0, -0x7340(r2)
-	  stfs      f0, 0x18(r30)
-	  lwz       r0, 0xC8(r31)
-	  ori       r0, r0, 0x80
-	  stw       r0, 0xC8(r31)
-	  stfs      f1, 0x74(r31)
-	  lwz       r4, 0x458(r31)
-	  lwz       r0, 0x6C(r4)
-	  cmpwi     r0, 0x1E
-	  beq-      .loc_0x30C
-	  lwz       r12, 0x0(r4)
-	  addi      r3, r1, 0x9C
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, -0x7358(r2)
-	  addi      r4, r1, 0x12C
-	  lfs       f0, 0x9C(r1)
-	  li        r3, 0
-	  stfs      f1, 0x134(r1)
-	  lfs       f3, 0xA0(r1)
-	  stfs      f1, 0x130(r1)
-	  lfs       f2, 0xA4(r1)
-	  stfs      f0, 0x158(r1)
-	  lfs       f0, -0x735C(r2)
-	  stfs      f1, 0x12C(r1)
-	  stfs      f3, 0x15C(r1)
-	  stfs      f2, 0x160(r1)
-	  stfs      f1, 0x140(r1)
-	  lwz       r6, 0x158(r1)
-	  stfs      f1, 0x13C(r1)
-	  lwz       r5, 0x15C(r1)
-	  stfs      f1, 0x138(r1)
-	  lwz       r0, 0x160(r1)
-	  stw       r6, 0x12C(r1)
-	  stw       r5, 0x130(r1)
-	  stw       r0, 0x134(r1)
-	  stfs      f0, 0x150(r1)
-	  bl        0x79760
-
-	.loc_0x30C:
-	  lfs       f0, 0x7C(r31)
-	  addi      r3, r31, 0
-	  li        r5, 0xCB
-	  stfs      f0, 0x1C(r30)
-	  lwz       r4, 0x458(r31)
-	  bl        -0x105E4
-	  lfs       f2, 0x2B8(r31)
-	  lfs       f0, -0x55D0(r13)
-	  lfs       f1, -0x55CC(r13)
-	  fadds     f2, f2, f0
-	  lfs       f0, -0x55C8(r13)
-	  stfs      f2, 0x60(r1)
-	  lfs       f2, 0x60(r1)
-	  stfs      f2, 0x90(r1)
-	  lfs       f2, 0x2BC(r31)
-	  fadds     f1, f2, f1
-	  stfs      f1, 0x94(r1)
-	  lfs       f1, 0x2C0(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x98(r1)
-	  lwz       r3, 0x90(r1)
-	  lwz       r0, 0x94(r1)
-	  stw       r3, 0x2B8(r31)
-	  stw       r0, 0x2BC(r31)
-	  lwz       r0, 0x98(r1)
-	  stw       r0, 0x2C0(r31)
-	  lwz       r4, 0x458(r31)
-	  lwz       r0, 0x6C(r4)
-	  cmpwi     r0, 0x1E
-	  bne-      .loc_0x44C
-	  lwz       r12, 0x0(r4)
-	  addi      r3, r1, 0x78
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x78(r1)
-	  addi      r3, r1, 0x6C
-	  lfs       f1, 0x7C(r1)
-	  stfs      f0, 0x120(r1)
-	  lfs       f0, 0x80(r1)
-	  stfs      f1, 0x124(r1)
-	  stfs      f0, 0x128(r1)
-	  lwz       r4, 0x458(r31)
-	  lwz       r12, 0x0(r4)
-	  lwz       r12, 0x164(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x7358(r2)
-	  addi      r4, r1, 0xE8
-	  lfs       f3, 0x6C(r1)
-	  li        r3, 0x15
-	  stfs      f0, 0xF0(r1)
-	  lfs       f2, 0x70(r1)
-	  stfs      f0, 0xEC(r1)
-	  lfs       f1, 0x74(r1)
-	  stfs      f3, 0x114(r1)
-	  stfs      f0, 0xE8(r1)
-	  stfs      f2, 0x118(r1)
-	  stfs      f0, 0xFC(r1)
-	  stfs      f1, 0x11C(r1)
-	  stfs      f0, 0xF8(r1)
-	  stfs      f0, 0xF4(r1)
-	  lwz       r0, 0x120(r1)
-	  lwz       r5, 0x124(r1)
-	  stw       r0, 0xE8(r1)
-	  lwz       r0, 0x128(r1)
-	  stw       r5, 0xEC(r1)
-	  lwz       r5, 0x114(r1)
-	  stw       r0, 0xF0(r1)
-	  lwz       r0, 0x118(r1)
-	  stw       r5, 0xF4(r1)
-	  stw       r0, 0xF8(r1)
-	  lwz       r0, 0x11C(r1)
-	  stw       r0, 0xFC(r1)
-	  lfs       f0, -0x735C(r2)
-	  stfs      f0, 0x10C(r1)
-	  bl        0x7962C
-	  li        r3, 0x16
-	  addi      r4, r1, 0xE8
-	  bl        0x79620
-
-	.loc_0x44C:
-	  addi      r3, r1, 0xD8
-	  addi      r4, r31, 0
-	  bl        -0xA048
-	  addi      r30, r1, 0xD8
-	  addi      r3, r30, 0
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-	  b         .loc_0x4D8
-
-	.loc_0x478:
-	  cmpwi     r29, -0x1
-	  bne-      .loc_0x49C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x4B4
-
-	.loc_0x49C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x4B4:
-	  lwz       r3, 0x6C(r3)
-	  bl        -0x62F8
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-
-	.loc_0x4D8:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x500
-	  li        r0, 0x1
-	  b         .loc_0x52C
-
-	.loc_0x500:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x528
-	  li        r0, 0x1
-	  b         .loc_0x52C
-
-	.loc_0x528:
-	  li        r0, 0
-
-	.loc_0x52C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x478
-	  lwz       r3, 0x55C(r31)
-	  lwz       r0, 0x5C(r3)
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x55C
-	  lwz       r3, 0x458(r31)
-	  mr        r4, r31
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x168(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x55C:
-	  lwz       r0, 0x184(r1)
-	  lwz       r31, 0x17C(r1)
-	  lwz       r30, 0x178(r1)
-	  lwz       r29, 0x174(r1)
-	  lwz       r28, 0x170(r1)
-	  addi      r1, r1, 0x180
-	  mtlr      r0
-	  blr
-	*/
+	if (pelt->mConfig->mPelletType() == PELTYPE_UfoPart) {
+		pelt->mTargetGoal->suckMe(pelt);
+	}
 }
 
 /*
@@ -1153,204 +360,42 @@ void PelletGoalState::init(Pellet*)
  * Address:	8009ADF4
  * Size:	0002D4
  */
-void PelletGoalState::exec(Pellet*)
+void PelletGoalState::exec(Pellet* pelt)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x118(r1)
-	  stw       r31, 0x114(r1)
-	  mr        r31, r4
-	  stw       r30, 0x110(r1)
-	  mr        r30, r3
-	  lfs       f0, -0x7358(r2)
-	  lfs       f1, 0x18(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x54
-	  stfs      f0, 0x78(r31)
-	  li        r0, 0x1
-	  stfs      f0, 0x70(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x18(r30)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x18(r30)
-	  stb       r0, 0x30(r30)
-	  b         .loc_0x2BC
+	if (_18 > 0.0f) {
+		pelt->mVelocity.z = 0.0f;
+		pelt->mVelocity.x = 0.0f;
+		_18 -= gsys->getFrameTime();
+		_30 = true;
+		return;
+	}
 
-	.loc_0x54:
-	  lbz       r0, 0x30(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x144
-	  lwz       r5, 0x94(r31)
-	  li        r0, 0
-	  lwz       r4, 0x98(r31)
-	  addi      r3, r1, 0xE0
-	  stw       r5, 0x24(r30)
-	  stw       r4, 0x28(r30)
-	  lwz       r4, 0x9C(r31)
-	  stw       r4, 0x2C(r30)
-	  stfs      f0, 0x20(r30)
-	  stb       r0, 0x30(r30)
-	  lwz       r4, 0x458(r31)
-	  lwz       r12, 0x0(r4)
-	  lwz       r12, 0x164(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f3, 0xE4(r1)
-	  lfs       f2, 0x28(r30)
-	  lfs       f1, 0xE0(r1)
-	  lfs       f0, 0x24(r30)
-	  fsubs     f3, f3, f2
-	  lfs       f2, 0xE8(r1)
-	  fsubs     f4, f1, f0
-	  lfs       f0, 0x2C(r30)
-	  fmuls     f1, f3, f3
-	  fsubs     f3, f2, f0
-	  lfs       f0, -0x7358(r2)
-	  fmuls     f2, f4, f4
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x138
-	  fsqrte    f1, f4
-	  lfd       f3, -0x7350(r2)
-	  lfd       f2, -0x7348(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x88(r1)
-	  lfs       f4, 0x88(r1)
+	if (_30) {
+		_24           = pelt->mPosition;
+		_20           = 0.0f;
+		_30           = false;
+		Vector3f diff = pelt->mTargetGoal->getSuckPos() - _24;
+		_14           = diff.length();
+		_34           = 0.0f;
+	}
 
-	.loc_0x138:
-	  stfs      f4, 0x14(r30)
-	  lfs       f0, -0x7358(r2)
-	  stfs      f0, 0x34(r30)
+	Vector3f diff   = (pelt->mTargetGoal->getSuckPos() - _24);
+	pelt->mPosition = _24 + diff * _20;
+	f32 scale       = (1.0f - _20 * 0.75f) * _1C;
+	pelt->mScale.set(scale, scale, scale);
+	_20 += (_34 * gsys->getFrameTime()) / _14;
+	_34 += gsys->getFrameTime() * 720.0f;
 
-	.loc_0x144:
-	  lwz       r4, 0x458(r31)
-	  addi      r3, r1, 0xC8
-	  lwz       r12, 0x0(r4)
-	  lwz       r12, 0x164(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0xC8(r1)
-	  lfs       f7, 0x24(r30)
-	  lfs       f4, 0x20(r30)
-	  fsubs     f0, f0, f7
-	  lfs       f5, 0x2C(r30)
-	  lfs       f2, 0xD0(r1)
-	  lfs       f6, 0x28(r30)
-	  fmuls     f0, f0, f4
-	  lfs       f1, 0xCC(r1)
-	  fsubs     f2, f2, f5
-	  stfs      f0, 0xA4(r1)
-	  fsubs     f1, f1, f6
-	  fmuls     f3, f2, f4
-	  lfs       f0, 0xA4(r1)
-	  fmuls     f1, f1, f4
-	  fadds     f2, f7, f0
-	  fadds     f0, f5, f3
-	  fadds     f1, f6, f1
-	  stfs      f2, 0x98(r1)
-	  lfs       f2, 0x98(r1)
-	  stfs      f2, 0xBC(r1)
-	  stfs      f1, 0xC0(r1)
-	  stfs      f0, 0xC4(r1)
-	  lwz       r3, 0xBC(r1)
-	  lwz       r0, 0xC0(r1)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0xC4(r1)
-	  stw       r0, 0x9C(r31)
-	  lfs       f1, -0x733C(r2)
-	  lfs       f0, 0x20(r30)
-	  lfs       f3, -0x735C(r2)
-	  fmuls     f1, f1, f0
-	  lfs       f0, 0x1C(r30)
-	  fsubs     f1, f3, f1
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x7C(r31)
-	  stfs      f0, 0x80(r31)
-	  stfs      f0, 0x84(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f2, 0x34(r30)
-	  lfs       f1, 0x28C(r3)
-	  lfs       f0, 0x14(r30)
-	  fmuls     f1, f2, f1
-	  lfs       f2, 0x20(r30)
-	  fdivs     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x20(r30)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x7338(r2)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0x34(r30)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x34(r30)
-	  lfs       f0, 0x20(r30)
-	  fcmpo     cr0, f0, f3
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x2BC
-	  lwz       r3, 0x55C(r31)
-	  lwz       r0, 0x5C(r3)
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x274
-	  lwz       r3, 0x458(r31)
-	  mr        r4, r31
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x16C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x28C
-
-	.loc_0x274:
-	  lwz       r3, 0x458(r31)
-	  mr        r4, r31
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x168(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x28C:
-	  li        r0, 0
-	  stb       r0, 0x5B8(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x103B0
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x4
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2BC:
-	  lwz       r0, 0x11C(r1)
-	  lwz       r31, 0x114(r1)
-	  lwz       r30, 0x110(r1)
-	  addi      r1, r1, 0x118
-	  mtlr      r0
-	  blr
-	*/
+	if (_20 >= 1.0f) {
+		if (pelt->mConfig->mPelletType() == PELTYPE_UfoPart) {
+			pelt->mTargetGoal->finishSuck(pelt);
+		} else {
+			pelt->mTargetGoal->suckMe(pelt);
+		}
+		pelt->mIsAlive = false;
+		pelt->kill(false);
+		transit(pelt, PELSTATE_Dead);
+	}
 }
 
 /*
@@ -1360,39 +405,7 @@ void PelletGoalState::exec(Pellet*)
  */
 void PelletGoalState::cleanup(Pellet*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x31(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r3, 0x15
-	  bl        0x7923C
-
-	.loc_0x20:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8009B0FC
- * Size:	000004
- */
-void AState<Pellet>::resume(Pellet*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8009B100
- * Size:	000004
- */
-void AState<Pellet>::restart(Pellet*)
-{
+	if (_31) {
+		utEffectMgr->kill(21);
+	}
 }

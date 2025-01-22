@@ -1040,7 +1040,7 @@ void Pellet::startAI(int stateID)
 		radarInfo->attachParts(this);
 	}
 
-	_458            = 0;
+	mTargetGoal     = nullptr;
 	mStuckMouthPart = 0;
 	_478            = nullptr;
 
@@ -1113,8 +1113,8 @@ void Pellet::startAI(int stateID)
  */
 void Pellet::startAppear()
 {
-	_458 = 0;
-	_478 = nullptr;
+	mTargetGoal = nullptr;
+	_478        = nullptr;
 	if (!mPelletView) {
 		mAnimator.startMotion(PaniMotionInfo(0));
 		mMotionSpeed = 30.0f;

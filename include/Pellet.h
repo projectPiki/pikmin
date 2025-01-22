@@ -7,6 +7,7 @@
 #include "ObjectMgr.h"
 #include "PelletAnimator.h"
 #include "StateMachine.h"
+#include "EffectMgr.h"
 #include "Shape.h"
 
 struct PaniAnimKeyEvent;
@@ -16,6 +17,7 @@ struct PelletStateMachine;
 struct PelletView;
 struct Shape;
 struct RippleEffect;
+struct GoalItem;
 
 /**
  * @brief TODO
@@ -272,7 +274,7 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	bool mIsPlayTrySound;                 // _451
 	u8 mMotionFlag;                       // _452
 	RippleEffect* mRippleEffect;          // _454
-	u32 _458;                             // _458, unknown
+	GoalItem* mTargetGoal;                // _458
 	CollPart* mStuckMouthPart;            // _45C
 	f32 _460;                             // _460
 	Vector3f _464;                        // _464

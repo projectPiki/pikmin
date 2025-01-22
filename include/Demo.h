@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Node.h"
+#include "Parameters.h"
 
 struct Creature;
 
@@ -20,18 +21,16 @@ enum EDemoFlags {
 	DEMOFLAG_Unk29 = 29,
 };
 
-/**
- * @brief TODO
- */
 struct DemoParms : public Node {
 
-	/**
-	 * @brief TODO
-	 */
-	struct Parms {
+	struct Parms : Parameters {
 		Parms();
 
-		// TODO: members
+		Parm<f32> mOnionBootTriggerRadius; // _00
+		Parm<f32> mSeedDemoTriggerRadius;  // _10
+		Parm<f32> mSeedDemoWaitTime;       // _20
+		Parm<f32> _30;                     // _30
+		Parm<f32> mDemoTriggerRadius;      // _40
 	};
 
 	DemoParms();
@@ -40,7 +39,7 @@ struct DemoParms : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
+	Parms mParms; // _24
 };
 
 /**
@@ -92,5 +91,6 @@ struct DemoEventMgr {
 };
 
 extern DemoEventMgr* demoEventMgr;
+extern DemoParms* demoParms;
 
 #endif

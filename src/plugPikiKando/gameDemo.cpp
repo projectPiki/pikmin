@@ -36,6 +36,11 @@ DemoParms::DemoParms()
  * Size:	000120
  */
 DemoParms::Parms::Parms()
+    : mOnionBootTriggerRadius(this, 150.0f, 0.0f, 1000.0f, "p00", "コンテナ接近距離")
+    , mSeedDemoTriggerRadius(this, 100.0f, 0.0f, 1000.0f, "p01", "芽ピキ接近距離")
+    , mSeedDemoWaitTime(this, 6.0f, 0.0f, 500.0f, "p02", "芽ピキ抜かずタイムアウト")
+    , _30(this, 30.0f, 0.0f, 500.0f, "p03", "ペレット草バトルタイムアウト")
+    , mDemoTriggerRadius(this, 150.0f, 0.0f, 1000.0f, "p04", "エンジン接近距離")
 {
 	// UNUSED FUNCTION
 }

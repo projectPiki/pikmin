@@ -17,7 +17,7 @@ DEFINE_ERROR();
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("naviMgr");
+DEFINE_PRINT("naviiMgr"); // epic typo
 
 NaviMgr* naviMgr;
 
