@@ -105,7 +105,7 @@ Navi* NaviMgr::getNavi()
  */
 Navi* NaviMgr::getNavi(int idx)
 {
-	if (idx >= mSize) {
+	if (idx >= mNumObjects) {
 		(idx >= 0);
 	}
 	return static_cast<Navi*>(mObjectList[idx]);

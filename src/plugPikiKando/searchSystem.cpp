@@ -122,7 +122,7 @@ void SearchSystem::update()
 void SearchSystem::updateLoopOptimised()
 {
 	for (int i = 0; i < pikiMgr->mMaxElements; i++) {
-		if (pikiMgr->_34[i]) {
+		if (pikiMgr->mEntryStatus[i]) {
 			continue;
 		}
 
@@ -219,7 +219,7 @@ void SearchSystem::updateLoopOptimised()
 		}
 
 		for (int j = i + 1; j < pikiMgr->mMaxElements; j++) {
-			if (!pikiMgr->_34[j]) {
+			if (!pikiMgr->mEntryStatus[j]) {
 				Piki* piki2 = (Piki*)pikiMgr->mObjectList[i];
 				if (AIPerf::pikiMabiki || AIPerf::useUpdateMgr) {
 					if (!piki2->_168.updatable() && !piki->_168.updatable()) {

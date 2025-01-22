@@ -21,7 +21,7 @@ struct RefCountable {
 	int getCnt() { return mCnt; }
 
 	// DLL inlines to do:
-	bool removable();
+	bool removable() { return mCnt == 0; }
 
 	// _00 = VTBL
 	int mCnt; // _04, count

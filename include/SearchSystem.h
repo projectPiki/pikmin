@@ -45,6 +45,8 @@ struct SearchBuffer : public Traversable {
 	void reset();
 	void update();
 
+	bool available() { return mDataList != nullptr; }
+
 	// _00     = VTBL
 	// _00-_08 = Traversable
 	f32 mMaxDistance;      // _08

@@ -63,7 +63,7 @@ struct MonoObjectMgr : public ObjectMgr {
 	virtual void postUpdate(int, float);          // _50
 	virtual void refresh(Graphics&);              // _58
 	virtual void drawShadow(Graphics&, Texture*); // _5C
-	virtual int getSize() { return mSize; }       // _60 (weak)
+	virtual int getSize() { return mNumObjects; } // _60 (weak)
 	virtual int getMax() { return mMaxElements; } // _64 (weak)
 	virtual void search(ObjectMgr*);              // _70
 	virtual Creature* birth();                    // _78
@@ -74,16 +74,16 @@ struct MonoObjectMgr : public ObjectMgr {
 	void searchSelf();
 
 	// unused/inlined:
-	void getEmptyIndex();
-	void getIndex(Creature*);
+	int getEmptyIndex();
+	int getIndex(Creature*);
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_28 = ObjectMgr
 	Creature** mObjectList; // _28, array of objects
 	int mMaxElements;       // _2C
-	int mSize;              // _30
-	int* _34;               // _34
+	int mNumObjects;        // _30
+	int* mEntryStatus;      // _34
 	u32 _38;                // _38, unknown
 };
 
@@ -94,6 +94,13 @@ struct MonoObjectMgr : public ObjectMgr {
  */
 struct PolyObjectMgr : public ObjectMgr {
 	PolyObjectMgr(int);
+
+	// completely guessing on this name
+	struct PolyData {
+		Creature* _00;
+		int _04;
+		int _08;
+	};
 
 	virtual Creature* getCreature(int);           // _08
 	virtual int getFirst();                       // _0C
@@ -114,13 +121,13 @@ struct PolyObjectMgr : public ObjectMgr {
 	void beginRegister();
 	void registerClass(int objType, Creature* object, int size);
 	void endRegister();
-	void get(int);
+	Creature* get(int);
 	void searchSelf();
 
 	// unused/inlined:
-	void getEmptyIndex();
-	void getIndex(Creature*);
-	void getTemplateIndex(int);
+	int getEmptyIndex();
+	int getIndex(Creature*);
+	int getTemplateIndex(int);
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
@@ -129,11 +136,11 @@ struct PolyObjectMgr : public ObjectMgr {
 	int mMax;            // _2C
 	int mSize;           // _30
 	u8 _34[0x4];         // _34, unknown
-	u32 _38;             // _38, unknown
+	u8* _38;             // _38, unknown
 	int* mObjectIndices; // _3C
 	int _40;             // _40
 	u32 _44;             // _44, unknown
-	u32 _48;             // _48, unknown, pointer to some array of objects of size 0xC.
+	PolyData* mEntries;  // _48
 };
 
 #endif
