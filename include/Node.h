@@ -30,6 +30,17 @@ struct Node : public CoreNode {
 
 	void init(char*);
 
+	// Inlined functions
+	bool getFlag(int);
+	int getFlags();
+	int getType();
+	void clearFlag(int);
+	void setFlag(int);
+	void setFlag(int, bool);
+	void setFlags(int);
+	void setType(int);
+	void togFlag(int);
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	s32 mType;  // _14

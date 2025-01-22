@@ -37,6 +37,17 @@ struct Joint::MatPoly;
 /**
  * @brief TODO
  */
+struct VtxMatrix {
+	void read(RandomAccessStream&);
+	void write(RandomAccessStream&);
+
+	bool mHasPartialWeights; // _00
+	u32 mIndex;              // _04
+};
+
+/**
+ * @brief TODO
+ */
 struct Envelope {
 	Envelope();
 

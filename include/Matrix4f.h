@@ -35,6 +35,7 @@ struct Matrix4f {
 	void makePerspective(f32, f32, f32, f32);
 	void makeBallRotate(Vector3f&);
 	void rotate(Vector3f&, f32);
+	void rotate(Vector3f&);
 	void rotate(f32, f32, f32);
 	void makeAligned(Vector3f&, f32);
 	void rotateX(f32);
@@ -44,6 +45,8 @@ struct Matrix4f {
 	void makeLookfrom(Vector3f&, Vector3f&);
 	void makeProjection(Vector3f&, struct Plane&);
 	void makeReflection(Plane&);
+	void makeBillVector(Vector3f&, Matrix4f&, Vector3f&);
+	// void makeSRT(SRT);
 
 	inline void set(Matrix4f& other)
 	{
@@ -86,7 +89,7 @@ struct Matrix4f {
 		mMtx[2][colNum] = col.z;
 	}
 
-	void setTranslation(const Vector3f& trans)
+	void setTranslation(Vector3f& trans)
 	{
 		mMtx[0][3] = trans.x;
 		mMtx[1][3] = trans.y;

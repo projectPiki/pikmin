@@ -4,9 +4,9 @@
 #include "types.h"
 #include "math.h"
 #include "Stream.h"
-#include "std/Math.h"
 
 struct Matrix3f;
+struct Matrix4f;
 struct Quat;
 
 /**
@@ -31,15 +31,9 @@ struct Vector3f {
 		z = other.z;
 	}
 
-	// NB: do NOT make an operator= definition, needs to use the default.
-
-	// THIS IS THE COMPLETE VECTOR3F INLINE LIST.
-	// ANYTHING ELSE IS EITHER A MATH LIBRARY FUNCTION IN DISGUISE, OR FAKE.
-
-	void rotate(struct Matrix4f&);
-	void rotateTo(Matrix4f&, Vector3f&);
-	void multMatrix(Matrix4f&);
-	void multMatrixTo(Matrix4f&, Vector3f&);
+	//!
+	//! NB: do NOT make an operator= definition, needs to use the default.
+	//!
 
 	void read(Stream& stream)
 	{
@@ -63,12 +57,15 @@ struct Vector3f {
 	}
 
 	void set(const Vector3f& other) { set(other.x, other.y, other.z); }
-
 	void input(Vector3f& other) { set(other.x, other.y, other.z); }
-
 	void output(Vector3f& outVec) { outVec.set(x, y, z); }
 
 	f32 length() { return std::sqrtf(x * x + y * y + z * z); }
+	f32 squaredLength() { return x * x + y * y + z * z; }
+
+	// TODO: implementions are guessed, a manual check if accurate required
+	f32 DP(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
+	f32 dot(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
 
 	f32 distance(Vector3f& to)
 	{
@@ -85,12 +82,6 @@ struct Vector3f {
 		}
 		return norm;
 	}
-
-	// TODO: void normalize();
-
-	// TODO: check if this is correct or if one of these needs adjusting
-	f32 DP(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
-	f32 dot(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
 
 	void CP(Vector3f& other)
 	{
@@ -186,15 +177,60 @@ struct Vector3f {
 		outVec.z = (other.z - z) * t + z;
 	}
 
-	// TODO: void project(Vector3f&);
-
-	// unused/inlined:
+	void rotate(Matrix4f&);
+	void rotateTo(Matrix4f&, Vector3f&);
+	void multMatrix(Matrix4f&);
+	void multMatrixTo(Matrix4f&, Vector3f&);
 	void rotateTranspose(Matrix4f&);
-
 	void rotate(Quat&);
 	void rotateInverse(Quat&);
 
-	f32 x, y, z; // _00, _04, _08
+	// unused/inlined (ALL HAVE NOT BEEN CHECKED FOR ACCURACY):
+	void normalize() { normalise(); }
+
+	void project(Vector3f& other)
+	{
+		f32 dp = DP(other);
+		x      = -(dp * other.x - x);
+		y      = -(dp * other.y - y);
+		z      = -(dp * other.z - z);
+	}
+
+	void middle(Vector3f& a, Vector3f& b)
+	{
+		add2(a, b);
+		scale(0.5f);
+	}
+
+	bool isSame(Vector3f& other)
+	{
+		return __fabsf(x - other.x) < 0.0001f && __fabsf(y - other.y) < 0.0001f && __fabsf(z - other.z) < 0.0001f;
+	}
+
+	void add(Vector3f& a, Vector3f& b)
+	{
+		x = a.x + b.x;
+		y = a.y + b.y;
+		z = a.z + b.z;
+	}
+
+	void add(f32 _x, f32 _y, f32 _z)
+	{
+		x += _x;
+		y += _y;
+		z += _z;
+	}
+
+#ifndef __MWERKS__
+	void genAge(struct AgeServer&, char*, Vector3f&, Vector3f&)
+	{
+		// Empty implementation
+	}
+#endif
+
+	f32 x; // _00
+	f32 y; // _04
+	f32 z; // _08
 };
 
 /**
@@ -210,7 +246,18 @@ struct Vector2f {
 		y = _y;
 	}
 
-	// this is the only Vector2f inline outside of the constructors.
+	void write(Stream& stream)
+	{
+		stream.writeFloat(x);
+		stream.writeFloat(y);
+	}
+
+	void read(Stream& stream)
+	{
+		x = stream.readFloat();
+		y = stream.readFloat();
+	}
+
 	void set(f32 _x, f32 _y)
 	{
 		x = _x;
@@ -226,8 +273,18 @@ struct Vector2f {
  * @note Size: 0x8.
  */
 struct Vector2i {
+	void read(Stream& stream)
+	{
+		x = stream.readInt();
+		y = stream.readInt();
+	}
 
-	// this doesn't even have a constructor according to the DLL.
+	void write(Stream& stream)
+	{
+		stream.writeInt(x);
+		stream.writeInt(y);
+	}
+
 	void set(int _x, int _y)
 	{
 		x = _x;
@@ -273,35 +330,34 @@ struct Quat {
 	f32 s;      // _0C, scalar/real part
 };
 
-// these are all in the DLL function list.
-inline Vector3f CP(const Vector3f& vec1, const Vector3f& vec2)
-{
-	Vector3f outVec;
-	outVec.x = vec1.y * vec2.z - vec1.z * vec2.y;
-	outVec.y = vec1.z * vec2.x - vec1.x * vec2.z;
-	outVec.z = vec1.x * vec2.y - vec1.y * vec2.x;
-	return outVec;
-}
+//!
+//! These are taken from the DLL, do NOT remove
+//!
 inline Vector3f operator*(const Vector3f& a, const f32& b)
 {
 	return Vector3f(a.x * b, a.y * b, a.z * b);
 }
+
 inline Vector3f operator*(const f32& b, const Vector3f& a)
 {
 	return a * b;
 }
+
 inline Vector3f operator+(const Vector3f& a, const Vector3f& b)
 {
 	return Vector3f(a.x + b.x, a.y + b.y, a.z + b.z);
 }
+
 inline Vector3f operator-(const Vector3f& a, const Vector3f& b)
 {
 	return Vector3f(a.x - b.x, a.y - b.y, a.z - b.z);
 }
+
 inline Vector3f operator-(const Vector3f& a)
 {
 	return Vector3f(-a.x, -a.y, -a.z);
 }
+
 inline Vector3f operator/(const Vector3f& a, const f32& b)
 {
 	return a * (1.0f / b);
