@@ -55,7 +55,7 @@ struct BombItem : public ItemCreature {
 	SeContext mSound;        // _3CC
 	CollInfo mBombColl;      // _3F4
 	CollPart mCollParts[10]; // _408
-	u32 _818;                // _818
+	u32 mCollPartIdList;     // _818
 };
 
 /**

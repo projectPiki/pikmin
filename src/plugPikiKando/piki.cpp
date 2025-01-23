@@ -3266,9 +3266,9 @@ void Piki::bounceCallback()
 	}
 
 	bool isDrownSurface = false;
-	if (attr == ATTR_Water && _426 == 0 && mColor != Blue) {
+	if (attr == ATTR_Water && mInWaterTimer == 0 && mColor != Blue) {
 		isDrownSurface = true;
-	} else if (isStickTo() && _426 == 0 && mColor != Blue) {
+	} else if (isStickTo() && mInWaterTimer == 0 && mColor != Blue) {
 		Creature* obj = getStickObject();
 		if (obj && obj->mFloorTri && MapCode::getAttribute(obj->mFloorTri) == ATTR_Water) {
 			if (zen::Abs(obj->mPosition.y - mPosition.y) < 10.0f) {
@@ -3288,7 +3288,7 @@ void Piki::bounceCallback()
 
 		mRippleEffect->emit(rippleParm);
 		UtEffectMgr::cast(17, parm);
-		_426 = 1;
+		mInWaterTimer = 1;
 		return;
 	}
 
@@ -3859,7 +3859,7 @@ void Piki::init(Navi* navi)
 	mEmotion        = 10;
 	_404            = 0;
 	mLeaderCreature = nullptr;
-	_426            = 0;
+	mInWaterTimer   = 0;
 	mFiredState     = 0;
 	mIsCallable     = true;
 	_440.set(0.0f, 0.0f, 0.0f);
@@ -4150,8 +4150,8 @@ void Piki::realAI()
 			held->dump();
 			AICreature* aiC = static_cast<AICreature*>(held);
 			PRINT("---- aiContext ---\n");
-			PRINT(" creature=%x target=%x\n", aiC->mCollidingCreature, aiC->_2C0);
-			PRINT(" int=%d int2=%d real=%f real1=%f real2=%f\n", aiC->_2D0, aiC->_2D4, aiC->_2D8, aiC->_2DC, aiC->_2E0);
+			PRINT(" creature=%x target=%x\n", aiC->mCollidingCreature, aiC->mTargetCreature);
+			PRINT(" int=%d int2=%d real=%f real1=%f real2=%f\n", aiC->_2D0, aiC->_2D4, aiC->mCurrentHealth, aiC->_2DC, aiC->mMaxHealth);
 			PRINT("  currState=%x\n", aiC->mCurrentState);
 			PRINT("============================================\n");
 			dump();
@@ -4168,7 +4168,7 @@ void Piki::realAI()
 		}
 	}
 
-	mCollisionRadius = pikiMgr->mPikiParms->mPikiParms._26C();
+	mCollisionRadius = pikiMgr->mPikiParms->mPikiParms.mCollisionRadius();
 	bool isGrowState = false;
 	int state        = getState();
 	if (getState() == PIKISTATE_Grow) {
@@ -4192,7 +4192,7 @@ void Piki::realAI()
 	}
 
 	if (isInWater && getState() != PIKISTATE_WaterHanged) {
-		if (_426 == 0) {
+		if (mInWaterTimer == 0) {
 			EffectParm rippleParm(&mShadowPos);
 			EffectParm castParm(mShadowPos);
 			mRippleEffect->emit(rippleParm);
@@ -4201,30 +4201,31 @@ void Piki::realAI()
 		}
 
 		mIsPanicked = true; // huh. sure.
-		_426++;
-		if (_426 > 1000) {
-			_426 = 1000;
+		mInWaterTimer++;
+		if (mInWaterTimer > 1000) {
+			mInWaterTimer = 1000;
 		}
 
 		if (mColor == Blue) {
-			playerState->mResultFlags.setOn(RESFLAG_Unk38);
+			playerState->mResultFlags.setOn(RESFLAG_BluePikminWaterImmunity);
 		}
 
 		if (state != PIKISTATE_Swallowed && state != PIKISTATE_Dead && state != PIKISTATE_Dying && state != PIKISTATE_Pressed
 		    && state != PIKISTATE_Drown && state != PIKISTATE_Flying && mColor != Blue && isAlive()) {
-			if (_426 >= int(gsys->getRand(1.0f) * pikiMgr->mPikiParms->mPikiParms._48C()) + pikiMgr->mPikiParms->mPikiParms._47C()) {
+			if (mInWaterTimer
+			    >= int(gsys->getRand(1.0f) * pikiMgr->mPikiParms->mPikiParms._48C()) + pikiMgr->mPikiParms->mPikiParms._47C()) {
 				startMotion(PaniMotionInfo(PIKIANIM_TYakusui, this), PaniMotionInfo(PIKIANIM_TYakusui));
 				mFSM->transit(this, PIKISTATE_Drown);
 			}
 		}
 	} else {
-		if (_426) {
-			_426 = 0;
+		if (mInWaterTimer) {
+			mInWaterTimer = 0;
 			mRippleEffect->kill();
 			mIsPanicked = false;
 		}
 
-		_426 = 0;
+		mInWaterTimer = 0;
 	}
 
 	_34C = mDirection;

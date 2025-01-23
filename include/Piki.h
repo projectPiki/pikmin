@@ -278,7 +278,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	UpdateContext mPikiUpdateContext;     // _40C
 	UpdateContext mPikiLookUpdateContext; // _418
 	bool mIsPanicked;                     // _424
-	u16 _426;                             // _426
+	u16 mInWaterTimer;                    // _426
 	PermanentEffect* _428;                // _428
 	BurnEffect* mBurnEffect;              // _42C
 	RippleEffect* mRippleEffect;          // _430

@@ -533,13 +533,13 @@ bool InteractSwallow::actPiki(Piki* piki)
 	PRINT("play dead sound!\n");
 	piki->playEventSound(mOwner, SE_PIKI_EATEN);
 
-	if (piki->_426) {
-		piki->_426 = 0;
+	if (piki->mInWaterTimer) {
+		piki->mInWaterTimer = 0;
 		piki->mRippleEffect->kill();
 		piki->mIsPanicked = false;
 	}
 
-	piki->_426 = 0;
+	piki->mInWaterTimer = 0;
 	return true;
 }
 

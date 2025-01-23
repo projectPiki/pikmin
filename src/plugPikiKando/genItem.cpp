@@ -33,9 +33,9 @@ DEFINE_PRINT(nullptr)
  */
 GenObjectItem::GenObjectItem()
     : GenObject('item', "アイテムを生む")
-    , _18(this, 0, 0, 0, "p00", nullptr)
-    , _28(this, 0, 0, 0, "p01", nullptr)
-    , _38(this, 0, 0, 0, "p02", nullptr)
+    , mParameterA(this, 0, 0, 0, "p00", nullptr)
+    , mParameterB(this, 0, 0, 0, "p01", nullptr)
+    , mParameterC(this, 0, 0, 0, "p02", nullptr)
     , _48(this, 3, 3, 3, "p03", nullptr)
 {
 	mObjType = 1;
@@ -50,9 +50,9 @@ GenObjectItem::GenObjectItem()
  */
 void GenObjectItem::ramSaveParameters(RandomAccessStream& stream)
 {
-	stream.writeByte(_18() + 1);
-	stream.writeByte(_28() & 255);
-	stream.writeByte(_38() & 255);
+	stream.writeByte(mParameterA() + 1);
+	stream.writeByte(mParameterB() & 255);
+	stream.writeByte(mParameterC() & 255);
 	stream.writeByte(_48() & 255);
 }
 
@@ -63,10 +63,10 @@ void GenObjectItem::ramSaveParameters(RandomAccessStream& stream)
  */
 void GenObjectItem::ramLoadParameters(RandomAccessStream& stream)
 {
-	_18() = stream.readByte() - 1;
-	_28() = stream.readByte();
-	_38() = stream.readByte();
-	_48() = stream.readByte();
+	mParameterA() = stream.readByte() - 1;
+	mParameterB() = stream.readByte();
+	mParameterC() = stream.readByte();
+	_48()         = stream.readByte();
 }
 
 /*
@@ -98,24 +98,28 @@ void GenObjectItem::doRead(RandomAccessStream& stream)
 {
 	if (Generator::ramMode) {
 		mObjType = stream.readByte();
+		return;
+	}
+
+	char buffer[256];
+	stream.readString(buffer, 0x100);
+
+	mObjType = ObjType::getIndex(buffer);
+	if (mObjType == -1) {
+		PRINT("ItemGenerator * %s is not item\n", buffer);
+	}
+
+	if (mVersion != 'v0.0') {
+		for (int i = 0; i < 32; i++) {
+			_5C[i] = stream.readByte();
+		}
+
+		for (int i = 0; i < 32; i++) {
+			_7C[i] = stream.readByte();
+		}
 	} else {
-		char buffer[256];
-		stream.readString(buffer, 0x100);
-		mObjType = ObjType::getIndex(buffer);
-		if (mObjType == -1) {
-			PRINT("ItemGenerator * %s is not item\n", buffer);
-		}
-		if (mVersion != 'v0.0') {
-			for (int i = 0; i < 32; i++) {
-				_5C[i] = stream.readByte();
-			}
-			for (int i = 0; i < 32; i++) {
-				_7C[i] = stream.readByte();
-			}
-		} else {
-			sprintf(_5C, " ");
-			sprintf(_7C, " ");
-		}
+		sprintf(_5C, " ");
+		sprintf(_7C, " ");
 	}
 }
 
@@ -128,15 +132,17 @@ void GenObjectItem::doWrite(RandomAccessStream& stream)
 {
 	if (Generator::ramMode) {
 		stream.writeByte(mObjType);
-	} else {
-		stream.writeString(ObjType::getName(mObjType));
-		if (getLatestVersion() != 'v0.0') {
-			for (int i = 0; i < 32; i++) {
-				stream.writeByte(_5C[i]);
-			}
-			for (int i = 0; i < 32; i++) {
-				stream.writeByte(_7C[i]);
-			}
+		return;
+	}
+
+	stream.writeString(ObjType::getName(mObjType));
+	if (getLatestVersion() != 'v0.0') {
+		for (int i = 0; i < 32; i++) {
+			stream.writeByte(_5C[i]);
+		}
+
+		for (int i = 0; i < 32; i++) {
+			stream.writeByte(_7C[i]);
 		}
 	}
 }
@@ -176,7 +182,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 
 	// Has onion check
 	if (mObjType == OBJTYPE_Goal) {
-		if (!playerState->hasContainer(_18())) {
+		if (!playerState->hasContainer(mParameterA())) {
 			if (info.mGenerator->mGeneratorName != 'next') {
 				return nullptr;
 			}
@@ -191,14 +197,14 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 	if (item) {
 		switch (item->mObjType) {
 		case OBJTYPE_Goal:
-			((GoalItem*)item)->setColorType(_18());
+			((GoalItem*)item)->setColorType(mParameterA());
 			break;
 		case OBJTYPE_Rope:
-			((RopeItem*)item)->_2D0 = _18();
+			((RopeItem*)item)->_2D0 = mParameterA();
 			((RopeItem*)item)->autoInit();
 			break;
 		case OBJTYPE_NULL12:
-			((GemItem*)item)->setColorType(_18());
+			((GemItem*)item)->setColorType(mParameterA());
 			break;
 		case OBJTYPE_SluiceSoft:
 		case OBJTYPE_SluiceHard:
@@ -207,15 +213,15 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 			((BuildingItem*)item)->mEndAnimId = _48();
 			break;
 		case OBJTYPE_RockGen:
-			f32 size = _18();
-			if ((f32)_18() <= 0.0f) {
+			f32 size = mParameterA();
+			if ((f32)mParameterA() <= 0.0f) {
 				size = 30.0f;
 			}
 			((RockGen*)item)->setSizeAndNum(size, _48());
 			break;
 		case OBJTYPE_GrassGen:
-			size = _18();
-			if ((f32)_18() <= 0.0f) {
+			size = mParameterA();
+			if ((f32)mParameterA() <= 0.0f) {
 				size = 30.0f;
 			}
 			((GrassGen*)item)->setSizeAndNum(size, _48());
@@ -225,7 +231,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 			break;
 		}
 
-		int health = _38() + _28() * (int)gameflow.mWorldClock.mHoursInDay;
+		int health = mParameterC() + mParameterB() * (int)gameflow.mWorldClock.mHoursInDay;
 		item->init(info.mPosition);
 		item->mRotation  = info.mRotation;
 		item->mDirection = item->mRotation.y;
@@ -245,7 +251,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		}
 
 		if (item->mObjType == OBJTYPE_BombGen) {
-			s16 val                 = _18();
+			s16 val                 = mParameterA();
 			((BombItem*)item)->_3CA = val;
 			((BombItem*)item)->_3C8 = val;
 			item->mGrid.updateGrid(item->mPosition);

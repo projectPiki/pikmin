@@ -23,8 +23,8 @@ DEFINE_PRINT("ropeCreature");
 RopeCreature::RopeCreature(CreatureProp* prop)
     : Creature(prop)
 {
-	_2B8 = nullptr;
-	_2BC = nullptr;
+	mParentRope  = nullptr;
+	mAttachedObj = nullptr;
 }
 
 /*
@@ -37,12 +37,12 @@ void RopeCreature::setRope(Creature* obj)
 	Vector3f diff(obj->getCentre() - getCentre());
 	mPosDifference = diff;
 	mPosDifference.normalise();
-	_2C0 = diff.length();
-	_2B8 = obj;
-	if (_2B8->mObjType == OBJTYPE_Rope) {
-		((RopeItem*)_2B8)->_2BC = this;
+	mRopeLength = diff.length();
+	mParentRope = obj;
+	if (mParentRope->mObjType == OBJTYPE_Rope) {
+		((RopeItem*)mParentRope)->mAttachedObj = this;
 	}
-	_2C0 = 50.0f;
+	mRopeLength = 50.0f;
 }
 
 /*
@@ -53,7 +53,7 @@ void RopeCreature::setRope(Creature* obj)
 void RopeCreature::update()
 {
 	Creature::update();
-	mPosDifference = _2B8->mPosition - mPosition;
+	mPosDifference = mParentRope->mPosition - mPosition;
 	mPosDifference.normalise();
 }
 
@@ -65,7 +65,7 @@ void RopeCreature::update()
 Vector3f RopeCreature::getRopePos(f32 size)
 {
 	Vector3f pos(mPosition);
-	pos = pos + (_2C0 * size) * mPosDifference;
+	pos = pos + (mRopeLength * size) * mPosDifference;
 	return pos;
 }
 

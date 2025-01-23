@@ -2529,7 +2529,7 @@ void PelletMgr::createShapeObjects()
 	{
 		PelletAnimInfo* info = static_cast<PelletAnimInfo*>(node);
 		bool doCreate        = false;
-		switch (info->_24) {
+		switch (info->mCreationType) {
 		case 0:
 			doCreate = true;
 			break;

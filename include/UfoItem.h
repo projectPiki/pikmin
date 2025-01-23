@@ -147,38 +147,38 @@ struct UfoItem : public Suckable {
 
 	// _00      = VTBL
 	// _00-_3C8 = Suckable
-	u8 _3C8;                            // _3C8
-	u8 _3C9;                            // _3C9
-	u8 _3CA;                            // _3CA
-	zen::particleGenerator* mRingEfx;   // _3CC
-	zen::particleGenerator* _3D0;       // _3D0
-	Spot mSpots[3];                     // _3D4
-	u8 _428;                            // _428
-	f32 _42C;                           // _42C
-	u32 _430;                           // _430
-	Vector3f _434;                      // _434
-	Vector3f _440;                      // _440
-	Vector3f _44C;                      // _44C
-	Vector3f _458;                      // _458
-	Vector3f _464;                      // _464
-	Vector3f _470;                      // _470
-	Vector3f _47C[6];                   // _47C
-	zen::particleGenerator* _4C4[6];    // _4C4
-	s16 mJetLevel;                      // _4DC
-	zen::particleGenerator* _4E0[4][4]; // _4E0
-	u8 _520;                            // _520
-	UfoAnimator mAnimator;              // _524
-	int _52C;                           // _52C
-	Vector3f _530;                      // _530
-	Vector3f _53C;                      // _53C
-	u8 _548;                            // _548
-	Vector3f _54C;                      // _54C
-	int mWaypointID;                    // _558
-	UfoShapeObject* mShipModel;         // _55C
-	SeContext mShipSe;                  // _560
-	ShapeDynMaterials* mDynMat;         // _588
-	LightAnimator mLightAnims[4];       // _58C
-	u8 _5CC;                            // _5CC
+	u8 mIsMenuOpen;                                       // _3C8
+	u8 mIsLightActive;                                    // _3C9
+	u8 mShouldLightActivate;                              // _3CA
+	zen::particleGenerator* mRingFx;                      // _3CC
+	zen::particleGenerator* mSparkleFx;                   // _3D0
+	Spot mSpots[3];                                       // _3D4
+	u8 mIsTroubleFxEnabled;                               // _428
+	f32 mTroubleFxTimer;                                  // _42C
+	u32 mTroubleFxState;                                  // _430
+	Vector3f _434;                                        // _434
+	Vector3f _440;                                        // _440
+	Vector3f _44C;                                        // _44C
+	Vector3f _458;                                        // _458
+	Vector3f _464;                                        // _464
+	Vector3f _470;                                        // _470
+	Vector3f mTroubleFxPositionList[6];                   // _47C
+	zen::particleGenerator* mTroubleFxGenList[6];         // _4C4
+	s16 mJetLevel;                                        // _4DC
+	zen::particleGenerator* mEngineParticleGenList[4][4]; // _4E0
+	u8 mShipUpgradeLevel;                                 // _520
+	UfoAnimator mAnimator;                                // _524
+	int mConeEffectId;                                    // _52C
+	Vector3f mPtcllFxPosition;                            // _530
+	Vector3f mPtcl2FxPosition;                            // _53C
+	u8 mIsPtclFxActive;                                   // _548
+	Vector3f mSpotlightPosition;                          // _54C
+	int mWaypointID;                                      // _558
+	UfoShapeObject* mShipModel;                           // _55C
+	SeContext mShipSe;                                    // _560
+	ShapeDynMaterials* mDynMat;                           // _588
+	LightAnimator mLightAnims[4];                         // _58C
+	u8 mNeedPathfindRefresh;                              // _5CC
 };
 
 #endif

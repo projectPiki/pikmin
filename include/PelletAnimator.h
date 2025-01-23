@@ -26,12 +26,12 @@ struct PelletAnimInfo : public Parameters, public CoreNode {
 	// _58     = VTBL 2
 	// _00-_04 = Parameters
 	// _04-_18 = CoreNode
-	ID32 mID;         // _18
-	int _24;          // _24
-	int mTekiType;    // _28, for corpses
-	Parm<String> _2C; // _2C
-	Parm<String> _40; // _40
-	int _54;          // _54
+	ID32 mID;                 // _18
+	int mCreationType;        // _24
+	int mTekiType;            // _28, for corpses
+	Parm<String> mFolderPath; // _2C
+	Parm<String> mFileName;   // _40
+	int mStartAnimId;         // _54
 
 	// why is this split like this.
 	virtual void read(RandomAccessStream&); // _18

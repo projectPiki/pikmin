@@ -28,6 +28,7 @@ void BombItem::collisionCallback(CollEvent& coll)
 {
 	Creature* obj = coll.mCollider;
 	int state     = getCurrState()->getID();
+
 	if (obj->mObjType != OBJTYPE_Piki && state == 1) {
 		if (coll.mColliderPart->getID().mId == 'beat') {
 			PRINT("***BOMB COLLIDE WITH KING COLL PART!!!!!!!!!\n");
@@ -46,9 +47,11 @@ void BombItem::collisionCallback(CollEvent& coll)
 bool BombItem::isVisible()
 {
 	int state = getCurrState()->getID();
+
 	if (state == 4 || state == 5 || state == 1 || state == 2) {
 		return false;
 	}
+
 	return true;
 }
 
@@ -70,9 +73,11 @@ bool BombItem::needShadow()
 bool BombItem::isAlive()
 {
 	int state = getCurrState()->getID();
+
 	if (state == 4 || state == 5 || state == 1 || state == 2) {
 		return false;
 	}
+
 	return true;
 }
 
@@ -100,17 +105,23 @@ void BombItem::startAI(int)
 {
 	setUnk22();
 	restartAI();
+
 	mSeContext = &mSound;
 	mSeContext->setContext(this, 1);
+
 	mCollInfo = &mBombColl;
-	mCollInfo->initInfo(mItemShapeObject->mShape, mCollParts, &_818);
+	mCollInfo->initInfo(mItemShapeObject->mShape, mCollParts, &mCollPartIdList);
+
 	mItemAnimator.startMotion(PaniMotionInfo(0));
 	mMotionSpeed = 0.0f;
-	f32 scale    = 1.0f;
+
+	f32 scale = 1.0f;
 	mScale.set(scale, scale, scale);
+
 	((SimpleAI*)mStateMachine)->start(this, 0);
+
 	mLifeGauge.mPosition = mPosition;
-	mLifeGauge._0C.set(0.0f, 20.0f, 0.0f);
+	mLifeGauge.mOffset.set(0.0f, 20.0f, 0.0f);
 }
 
 /*
@@ -140,16 +151,20 @@ f32 BombItem::getiMass()
  */
 void BombItem::update()
 {
-	if (!gameflow.mMoviePlayer->mIsActive) {
-		ItemCreature::update();
-		int state = getCurrState()->getID();
-		if (state != 5 && state != 3 && state != 4 && mFloorTri && MapCode::getAttribute(mFloorTri) == ATTR_Water) {
-			PRINT("BOMB WATER START **********\n");
-			mStateMachine->transit(this, 4);
-		}
-		if (state == 1 && mFloorTri) {
-			((SimpleAI*)mStateMachine)->start(this, 3);
-		}
+	if (gameflow.mMoviePlayer->mIsActive) {
+		return;
+	}
+
+	ItemCreature::update();
+
+	int state = getCurrState()->getID();
+	if (state != 5 && state != 3 && state != 4 && mFloorTri && MapCode::getAttribute(mFloorTri) == ATTR_Water) {
+		PRINT("BOMB WATER START **********\n");
+		mStateMachine->transit(this, 4);
+	}
+
+	if (state == 1 && mFloorTri) {
+		((SimpleAI*)mStateMachine)->start(this, 3);
 	}
 }
 
@@ -170,8 +185,9 @@ void BombItem::renderTimer(Graphics&)
 void BombItem::refresh2d(Graphics& gfx)
 {
 	int state = getCurrState()->getID();
+
 	if (state == 2) {
-		mLifeGauge.updValue(_2D8, _2E0);
+		mLifeGauge.updValue(mCurrentHealth, mMaxHealth);
 		mLifeGauge.mPosition = mPosition;
 		mLifeGauge.mScale    = 5000.0f / gfx.mCamera->mNear;
 		mLifeGauge.refresh(gfx);
@@ -185,19 +201,22 @@ void BombItem::refresh2d(Graphics& gfx)
  */
 void BombItem::refresh(Graphics& gfx)
 {
-	if (!gameflow.mMoviePlayer->mIsActive) {
-		int state = getCurrState()->getID();
-		ItemCreature::refresh(gfx);
-		// welcome to DLL heaven/hell.
-		// why is this called here and never used?
-		// WHY does it fix the issues with the updateInfo call?
-		// I hate this compiler SO much.
-		aiCullable();
+	if (gameflow.mMoviePlayer->mIsActive) {
+		return;
+	}
 
-		mCollInfo->updateInfo(gfx, false);
-		if (state == 2) {
-			renderTimer(gfx);
-		}
+	int state = getCurrState()->getID();
+	ItemCreature::refresh(gfx);
+
+	// welcome to DLL heaven/hell.
+	// why is this called here and never used?
+	// WHY does it fix the issues with the updateInfo call?
+	// I hate this compiler SO much.
+	aiCullable();
+
+	mCollInfo->updateInfo(gfx, false);
+	if (state == 2) {
+		renderTimer(gfx);
 	}
 }
 
@@ -219,6 +238,6 @@ void BombItem::dump()
 {
 	int state = getCurrState()->getID();
 	PRINT("****** BOMB %x \n", this);
-	PRINT("state = %d\n");
+	PRINT("state = %d\n", state);
 	PRINT("alive = %s visible = %s\n", isAlive() ? "true" : "false", isVisible() ? "true" : "false");
 }

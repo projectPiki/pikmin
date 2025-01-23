@@ -59,9 +59,9 @@ void PikiHeadItem::playSound(int id)
 	if (id > 0) {
 		int sound = id + 0x108;
 		seSystem->playPikiSound(sound, mPosition);
-		PRINT("SEF_PIKI_GROW1 = %d / seIdx = %d\n", 0x109, sound);
+		PRINT("SEF_PIKI_GROW1 = %d / seIdx = %d\n", SEF_PIKI_GROW1, sound);
 		seSystem->getJacID(sound);
-		PRINT("play (idx=%d) Pikihead sound jac =%d/simz(dmg=%d grow1=%d)\n", id, sound, 0x22, 0x23);
+		PRINT("play (idx=%d) Pikihead sound jac =%d/simz(dmg=%d grow1=%d)\n", id, sound, SE_PIKI_DAMAGED, 0x23);
 	}
 }
 

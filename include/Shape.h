@@ -78,7 +78,7 @@ struct MtxGroup {
  */
 struct ShapeDynMaterials {
 	ShapeDynMaterials()
-	    : _00(0)
+	    : mParent(0)
 	    , _04(0)
 	    , _08(0)
 	    , _0C(0)
@@ -88,10 +88,10 @@ struct ShapeDynMaterials {
 	void animate(f32*);
 	void updateContext();
 
-	u32 _00;       // _00
-	u32 _04;       // _04
-	Material* _08; // _08
-	u32 _0C;       // _0C
+	ShapeDynMaterials* mParent; // _00
+	u32 _04;                    // _04
+	Material* _08;              // _08
+	u32 _0C;                    // _0C
 };
 
 DEFINE_ENUM_TYPE(DisplayListFlags, Front = 0, Other = 1, Both = 2, Stripped = 0x1000000);

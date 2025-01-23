@@ -176,7 +176,7 @@ void DynCreature::disablePickOffset()
  * Address:	80092C14
  * Size:	000100
  */
-void DynCreature::addParticle(f32 p1, Vector3f& p2)
+void DynCreature::addParticle(f32 mass, Vector3f& position)
 {
 	DynParticle* ptcl = particleHeap->getFreeOne();
 	if (!ptcl) {
@@ -185,9 +185,9 @@ void DynCreature::addParticle(f32 p1, Vector3f& p2)
 		return;
 	}
 
-	ptcl->mMass            = p1;
-	ptcl->mLocalPosition   = p2;
-	ptcl->mInitialPosition = p2;
+	ptcl->mMass            = mass;
+	ptcl->mLocalPosition   = position;
+	ptcl->mInitialPosition = position;
 	if (!mParticleList) {
 		mParticleList = ptcl;
 	} else {
@@ -199,7 +199,7 @@ void DynCreature::addParticle(f32 p1, Vector3f& p2)
 		nextPtcl->mNextParticle = ptcl;
 	}
 
-	mMass += p1;
+	mMass += mass;
 	mParticleCount++;
 }
 

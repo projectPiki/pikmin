@@ -352,13 +352,13 @@ struct GenObjectItem : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	Parm<int> _18; // _18
-	Parm<int> _28; // _28
-	Parm<int> _38; // _38
-	Parm<int> _48; // _48
-	int mObjType;  // _58
-	char _5C[32];  // _5C
-	char _7C[32];  // _7C
+	Parm<int> mParameterA; // _18
+	Parm<int> mParameterB; // _28
+	Parm<int> mParameterC; // _38
+	Parm<int> _48;         // _48
+	int mObjType;          // _58
+	char _5C[32];          // _5C
+	char _7C[32];          // _7C
 };
 
 /**

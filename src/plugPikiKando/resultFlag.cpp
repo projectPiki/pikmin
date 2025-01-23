@@ -104,26 +104,29 @@ ResultFlags::FlagInfo ResultFlags::flagTable[] = {
  */
 ResultFlags::ResultFlags()
 {
-	int max = 38;
-	_00     = max;
-	_04     = _00 << 2;
-	_48     = new u32[max + 110];
-	_02     = 0;
-	_08     = new u8[_00];
-	for (int i = 0; i < _00; i++) {
-		_08[i] = false;
+	int max    = 38;
+	mLength    = max;
+	mTableSize = mLength << 2;
+
+	mScreenToTableList = new u32[max + 110];
+	mActiveCount       = 0;
+	mStates            = new u8[mLength];
+	for (int i = 0; i < mLength; i++) {
+		mStates[i] = false;
 	}
 
-	for (int i = 0; i < _04; i++) {
+	for (int i = 0; i < mTableSize; i++) {
 		if (flagTable[i].mScreenId == -1) {
 			break;
 		}
-		_48[flagTable[i].mScreenId] = i;
+
+		mScreenToTableList[flagTable[i].mScreenId] = i;
 
 		if (flagTable[i].mIsAutoSet) {
 			setOn(flagTable[i].mScreenId);
 		}
-		_02++;
+
+		mActiveCount++;
 	}
 
 	for (int i = 0; i < 30; i++) {
@@ -143,15 +146,15 @@ ResultFlags::ResultFlags()
  */
 void ResultFlags::initGame()
 {
-	for (int i = 0; i < _00; i++) {
-		_08[i] = false;
+	for (int i = 0; i < mLength; i++) {
+		mStates[i] = false;
 	}
 
-	for (int i = 0; i < _04; i++) {
+	for (int i = 0; i < mTableSize; i++) {
 		if (flagTable[i].mScreenId == -1) {
 			break;
 		}
-		_48[flagTable[i].mScreenId] = i;
+		mScreenToTableList[flagTable[i].mScreenId] = i;
 
 		if (flagTable[i].mIsAutoSet) {
 			setOn(flagTable[i].mScreenId);
@@ -176,8 +179,8 @@ void ResultFlags::initGame()
 void ResultFlags::saveCard(RandomAccessStream& stream)
 {
 	int i = 0;
-	for (i = 0; i < _00; i++) {
-		stream.writeByte(_08[i]);
+	for (i = 0; i < mLength; i++) {
+		stream.writeByte(mStates[i]);
 	}
 
 	for (i = 0; i < 30; i++) {
@@ -193,8 +196,8 @@ void ResultFlags::saveCard(RandomAccessStream& stream)
 void ResultFlags::loadCard(RandomAccessStream& stream)
 {
 	int i = 0;
-	for (i = 0; i < _00; i++) {
-		_08[i] = stream.readByte();
+	for (i = 0; i < mLength; i++) {
+		mStates[i] = stream.readByte();
 	}
 
 	for (i = 0; i < 30; i++) {
@@ -237,7 +240,7 @@ int ResultFlags::getDayDocument(int day, int& res)
 		return -1;
 	}
 
-	for (int i = 0; i < _02; i++) {
+	for (int i = 0; i < mActiveCount; i++) {
 		int temp = flagTable[i].mScreenId;
 		if (temp == id) {
 			if (flagTable[i + 1].mScreenId == -1) {
@@ -261,33 +264,32 @@ int ResultFlags::getDayDocument(int day, int& res)
 int ResultFlags::getDocument(int& out)
 {
 
-	int prio       = 0x1f400;
-	int index      = -1;
-	FlagInfo* info = flagTable;
+	int minimumPriority = 0x1f400;
+	int index           = -1;
+	FlagInfo* flagData  = flagTable;
 
-	for (int i = 0; i < _02; i++) {
-		int id = info[i].mScreenId;
-		if (getFlag(id) == true && prio > info[i].mPrio) {
-			prio  = info[i].mPrio;
-			index = i;
+	for (int i = 0; i < mActiveCount; i++) {
+		int id = flagData[i].mScreenId;
+		if (getFlag(id) == true && minimumPriority > flagData[i].mPriority) {
+			minimumPriority = flagData[i].mPriority;
+			index           = i;
 		}
 	}
 
 	if (index != -1) {
-
-		int id = info[index + 2].mStore;
-		if (id == -1) {
+		int nextScreenId = flagData[index + 2].mStore;
+		if (nextScreenId == -1) {
 			out = 1;
 		} else {
-			out = id - info[index].mScreenId;
+			out = nextScreenId - flagData[index].mScreenId;
 		}
 
 		setFlag(flagTable[index].mScreenId, 2);
 
-		for (int i = 0; i < _02; i++) {
-			int id = info[i].mScreenId;
+		for (int i = 0; i < mActiveCount; i++) {
+			int id = flagData[i].mScreenId;
 			if (getFlag(id) == true) {
-				switch (info[i].mStore) {
+				switch (flagData[i].mStore) {
 				case FlagInfo::Store_Forget:
 					setFlag(id, 2);
 					break;
@@ -442,13 +444,13 @@ int ResultFlags::getDocument(int& out)
  */
 int ResultFlags::FlagInfo::type()
 {
-	if (mPrio < 200) {
+	if (mPriority < 200) {
 		return 0;
 	}
-	if (mPrio < 400) {
+	if (mPriority < 400) {
 		return 200;
 	}
-	if (mPrio < 600) {
+	if (mPriority < 600) {
 		return 400;
 	}
 	return 600;
@@ -464,7 +466,7 @@ void ResultFlags::dump()
 	int prev = 0;
 	int p    = 0;
 	PRINT("******* CURRENT RESULT FLAGS STATUS ***********\n");
-	for (int i = 0; i < _04; i++) {
+	for (int i = 0; i < mTableSize; i++) {
 		int id = flagTable[i].mScreenId;
 		if (id == -1) {
 			break;
@@ -507,9 +509,9 @@ void ResultFlags::dump()
  */
 u8 ResultFlags::getFlag(int index)
 {
-	int a = _48[index];
+	int a = mScreenToTableList[index];
 	int b = a >> 2;
-	return _08[b] >> ((a - b * 4) * 2) & 3;
+	return mStates[b] >> ((a - b * 4) * 2) & 3;
 }
 
 /*
@@ -519,9 +521,9 @@ u8 ResultFlags::getFlag(int index)
  */
 void ResultFlags::setFlag(int index, u8 flag)
 {
-	int a  = _48[index];
+	int a  = mScreenToTableList[index];
 	int b  = a >> 2;
-	u8 old = _08[b];
+	u8 old = mStates[b];
 
 	a -= b * 4;
 
@@ -537,7 +539,7 @@ void ResultFlags::setFlag(int index, u8 flag)
 		old &= ~(1 << a * 2 + 1);
 	}
 
-	_08[b] = old;
+	mStates[b] = old;
 	/*
 	.loc_0x0:
 	  lwz       r6, 0x48(r3)

@@ -10,7 +10,7 @@ char name[] = "smartPtr";
  */
 RefCountable::RefCountable()
 {
-	mCnt = 0;
+	mCount = 0;
 }
 
 /*
@@ -20,7 +20,7 @@ RefCountable::RefCountable()
  */
 void RefCountable::clearCnt()
 {
-	mCnt = 0;
+	mCount = 0;
 }
 
 /*
@@ -30,7 +30,7 @@ void RefCountable::clearCnt()
  */
 void RefCountable::addCnt()
 {
-	mCnt++;
+	mCount++;
 }
 
 /*
@@ -40,10 +40,10 @@ void RefCountable::addCnt()
  */
 void RefCountable::subCnt()
 {
-	mCnt--;
-	if (mCnt >= 0) {
+	mCount--;
+	if (mCount >= 0) {
 		return;
 	}
-	mCnt = 0;
+	mCount = 0;
 	return;
 }

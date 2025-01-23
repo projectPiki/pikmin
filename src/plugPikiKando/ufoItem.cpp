@@ -117,20 +117,20 @@ void UfoItem::setSpotTurn(bool set)
 	Vector3f goal  = getGoalPos();
 	CollPart* part = mCollInfo->getSphere('gol1');
 
-	if (!set && _3CA) {
-		if (mRingEfx) {
-			effectMgr->kill(mRingEfx, false);
-			mRingEfx = nullptr;
+	if (!set && mShouldLightActivate) {
+		if (mRingFx) {
+			effectMgr->kill(mRingFx, false);
+			mRingFx = nullptr;
 		}
-		mRingEfx = effectMgr->create(EffectMgr::EFF_Rocket_NaviNormalRings, goal, nullptr, nullptr);
-	} else if (set && !_3CA) {
-		if (mRingEfx) {
-			effectMgr->kill(mRingEfx, false);
-			mRingEfx = nullptr;
+		mRingFx = effectMgr->create(EffectMgr::EFF_Rocket_NaviNormalRings, goal, nullptr, nullptr);
+	} else if (set && !mShouldLightActivate) {
+		if (mRingFx) {
+			effectMgr->kill(mRingFx, false);
+			mRingFx = nullptr;
 		}
-		mRingEfx = effectMgr->create(EffectMgr::EFF_Rocket_NaviActionRings, goal, nullptr, nullptr);
+		mRingFx = effectMgr->create(EffectMgr::EFF_Rocket_NaviActionRings, goal, nullptr, nullptr);
 	}
-	_3CA = set;
+	mShouldLightActivate = set;
 }
 
 /*
@@ -140,34 +140,34 @@ void UfoItem::setSpotTurn(bool set)
  */
 void UfoItem::setSpotActive(bool set)
 {
-	_3CA = false;
-	_3C9 = set;
+	mShouldLightActivate = false;
+	mIsLightActive       = set;
 
 	Vector3f goal = Vector3f(getGoalPos());
 	f32 paddig[2]; // needed for stack to work
 	CollPart* part = mCollInfo->getSphere('gol1');
 
-	if (_3C9) {
-		if (mRingEfx) {
-			effectMgr->kill(mRingEfx, false);
-			mRingEfx = nullptr;
+	if (mIsLightActive) {
+		if (mRingFx) {
+			effectMgr->kill(mRingFx, false);
+			mRingFx = nullptr;
 		}
-		mRingEfx = effectMgr->create(EffectMgr::EFF_Rocket_NaviNormalRings, goal, nullptr, nullptr);
+		mRingFx = effectMgr->create(EffectMgr::EFF_Rocket_NaviNormalRings, goal, nullptr, nullptr);
 
-		if (_3D0) {
-			effectMgr->kill(_3D0, false);
-			_3D0 = nullptr;
+		if (mSparkleFx) {
+			effectMgr->kill(mSparkleFx, false);
+			mSparkleFx = nullptr;
 		}
-		_3D0 = effectMgr->create(EffectMgr::EFF_Rocket_NaviSparkle, goal, nullptr, nullptr);
+		mSparkleFx = effectMgr->create(EffectMgr::EFF_Rocket_NaviSparkle, goal, nullptr, nullptr);
 
 	} else {
-		if (mRingEfx) {
-			effectMgr->kill(mRingEfx, false);
-			mRingEfx = nullptr;
+		if (mRingFx) {
+			effectMgr->kill(mRingFx, false);
+			mRingFx = nullptr;
 		}
-		if (_3D0) {
-			effectMgr->kill(_3D0, false);
-			_3D0 = nullptr;
+		if (mSparkleFx) {
+			effectMgr->kill(mSparkleFx, false);
+			mSparkleFx = nullptr;
 		}
 	}
 }
@@ -179,10 +179,10 @@ void UfoItem::setSpotActive(bool set)
  */
 void UfoItem::setTroubleEffect(bool set)
 {
-	_428 = set;
+	mIsTroubleFxEnabled = set;
 	if (set) {
-		_42C = 0.0f;
-		_430 = -1;
+		mTroubleFxTimer = 0.0f;
+		mTroubleFxState = -1;
 		startTroubleEffectOne(0);
 		startTroubleEffectOne(1);
 		startTroubleEffectOne(5);
@@ -190,9 +190,9 @@ void UfoItem::setTroubleEffect(bool set)
 	}
 
 	for (int i = 0; i < 6; i++) {
-		if (_4C4[i]) {
-			effectMgr->kill(_4C4[i], false);
-			_4C4[i] = nullptr;
+		if (mTroubleFxGenList[i]) {
+			effectMgr->kill(mTroubleFxGenList[i], false);
+			mTroubleFxGenList[i] = nullptr;
 		}
 	}
 }
@@ -206,8 +206,8 @@ void UfoItem::startTroubleEffectOne(int id)
 {
 	EffectMgr::effTypeTable ids[6] = { EffectMgr::EFF_Rocket_MkS,  EffectMgr::EFF_Rocket_Hiba, EffectMgr::EFF_Rocket_Biri,
 		                               EffectMgr::EFF_Rocket_Biri, EffectMgr::EFF_Rocket_Biri, EffectMgr::EFF_Rocket_TakeS };
-	_4C4[id]                       = effectMgr->create(ids[id], _47C[id], nullptr, nullptr);
-	_4C4[id]->setEmitPosPtr(&_47C[id]);
+	mTroubleFxGenList[id]          = effectMgr->create(ids[id], mTroubleFxPositionList[id], nullptr, nullptr);
+	mTroubleFxGenList[id]->setEmitPosPtr(&mTroubleFxPositionList[id]);
 
 	if (ids[id] == EffectMgr::EFF_Rocket_Biri) {
 		playEventSound(this, SE_UFO_SPARK);
@@ -221,15 +221,15 @@ void UfoItem::startTroubleEffectOne(int id)
  */
 void UfoItem::updateTroubleEffect()
 {
-	if (!_428) {
+	if (!mIsTroubleFxEnabled) {
 		return;
 	}
 
-	_42C += gsys->getFrameTime() * 30.0f;
-	int test = _430 + 1;
-	if (test < numKeys && _42C >= trKeys[test]) {
-		_430 = test;
-		switch (_430) {
+	mTroubleFxTimer += gsys->getFrameTime() * 30.0f;
+	int test = mTroubleFxState + 1;
+	if (test < numKeys && mTroubleFxTimer >= trKeys[test]) {
+		mTroubleFxState = test;
+		switch (mTroubleFxState) {
 		case 0:
 			startTroubleEffectOne(2);
 			break;
@@ -242,9 +242,9 @@ void UfoItem::updateTroubleEffect()
 		}
 	}
 
-	if (_42C >= 80.0f) {
-		_430 = -1;
-		_42C = 0.0f;
+	if (mTroubleFxTimer >= 80.0f) {
+		mTroubleFxState = -1;
+		mTroubleFxTimer = 0.0f;
 	}
 }
 
@@ -258,8 +258,8 @@ void UfoItem::startConeEffect(int)
 	Vector3f goal = getGoalPos();
 	Vector3f suck = getSuckPos();
 	EffectParm eff(goal, suck);
-	_52C = 0x18;
-	utEffectMgr->cast(_52C, eff);
+	mConeEffectId = EffectMgr::EFF_BombLight_Wave;
+	utEffectMgr->cast(mConeEffectId, eff);
 	mAnimator.startMotion(0, &PaniMotionInfo(1, this));
 	mAnimator.setMotionSpeed(0, 30.0f);
 	PRINT("*** UFO FUTA OPEN !!!!!!!!!!!!!!________________________________\n");
@@ -272,7 +272,7 @@ void UfoItem::startConeEffect(int)
  */
 void UfoItem::finishConeEffect()
 {
-	utEffectMgr->kill(_52C);
+	utEffectMgr->kill(mConeEffectId);
 }
 
 /*
@@ -353,9 +353,9 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 		// reset all active ones first
 		for (i = 0; i < 4; i++) {
 			for (j = 0; j < 4; j++) {
-				if (_4E0[i][j]) {
-					effectMgr->kill(_4E0[i][j], false);
-					_4E0[i][j] = nullptr;
+				if (mEngineParticleGenList[i][j]) {
+					effectMgr->kill(mEngineParticleGenList[i][j], false);
+					mEngineParticleGenList[i][j] = nullptr;
 				}
 			}
 		}
@@ -366,36 +366,40 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 				CollPart* coll = mCollInfo->getSphere(tags[engine]);
 				switch (type) {
 				case 0:
-					_4E0[engine][3] = effectMgr->create(effects[stage + engine * offset][0], coll->mCentre, nullptr, nullptr);
-					if (_4E0[engine][3]) {
-						_4E0[engine][3]->setEmitPosPtr(&coll->mCentre);
+					mEngineParticleGenList[engine][3]
+					    = effectMgr->create(effects[stage + engine * offset][0], coll->mCentre, nullptr, nullptr);
+					if (mEngineParticleGenList[engine][3]) {
+						mEngineParticleGenList[engine][3]->setEmitPosPtr(&coll->mCentre);
 					}
 					break;
 
 				case 1:
-					_4E0[engine][2] = effectMgr->create(effects[stage + engine * offset][1], coll->mCentre, nullptr, nullptr);
-					if (_4E0[engine][2]) {
-						_4E0[engine][2]->setEmitPosPtr(&coll->mCentre);
-						_4E0[engine][2]->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
+					mEngineParticleGenList[engine][2]
+					    = effectMgr->create(effects[stage + engine * offset][1], coll->mCentre, nullptr, nullptr);
+					if (mEngineParticleGenList[engine][2]) {
+						mEngineParticleGenList[engine][2]->setEmitPosPtr(&coll->mCentre);
+						mEngineParticleGenList[engine][2]->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
 					}
 					break;
 				case 2:
 					// don't do smoke effect if we've fixed enough of the ship
 					if (doSmokeEffects && playerState->mShipUpgradeLevel != 5) {
 						PRINT("SMOKE * CB *\n");
-						_4E0[engine][1] = effectMgr->create(effects[stage + engine * offset][2], coll->mCentre, nullptr, nullptr);
-						if (_4E0[engine][1]) {
-							_4E0[engine][1]->setEmitPosPtr(&coll->mCentre);
+						mEngineParticleGenList[engine][1]
+						    = effectMgr->create(effects[stage + engine * offset][2], coll->mCentre, nullptr, nullptr);
+						if (mEngineParticleGenList[engine][1]) {
+							mEngineParticleGenList[engine][1]->setEmitPosPtr(&coll->mCentre);
 						}
 					}
 					break;
 				case 3:
 					// don't do smoke effect if we've fixed enough of the ship
 					if (doSmokeEffects && playerState->mShipUpgradeLevel != 5) {
-						_4E0[engine][0] = effectMgr->create(effects[stage + engine * offset][3], coll->mCentre, nullptr, nullptr);
-						if (_4E0[engine][0]) {
-							_4E0[engine][0]->setEmitPosPtr(&coll->mCentre);
-							_4E0[engine][0]->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
+						mEngineParticleGenList[engine][0]
+						    = effectMgr->create(effects[stage + engine * offset][3], coll->mCentre, nullptr, nullptr);
+						if (mEngineParticleGenList[engine][0]) {
+							mEngineParticleGenList[engine][0]->setEmitPosPtr(&coll->mCentre);
+							mEngineParticleGenList[engine][0]->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
 						}
 					}
 					break;
@@ -408,9 +412,9 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 	// reset all active effects
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			if (_4E0[i][j]) {
-				effectMgr->kill(_4E0[i][j], false);
-				_4E0[i][j] = nullptr;
+			if (mEngineParticleGenList[i][j]) {
+				effectMgr->kill(mEngineParticleGenList[i][j], false);
+				mEngineParticleGenList[i][j] = nullptr;
 			}
 		}
 	}
@@ -573,7 +577,7 @@ void UfoItem::finishSuck(Pellet* pelt)
 			efx->setEmitDir(dir);
 		}
 	}
-	_520                 = playerState->mShipUpgradeLevel;
+	mShipUpgradeLevel    = playerState->mShipUpgradeLevel;
 	PelletConfig* config = pelt->mConfig;
 	if (config->_130 != -1) {
 		playerState->getUfoParts(config->_2C.mId, false);
@@ -724,7 +728,7 @@ UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
     : Suckable(30, prop)
 {
 	for (int i = 0; i < 6; i++) {
-		_4C4[i] = nullptr;
+		mTroubleFxGenList[i] = nullptr;
 	}
 	mShipModel = shape;
 	mScale.set(1.0f, 1.0f, 1.0f);
@@ -732,22 +736,22 @@ UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
 
 	ShapeDynMaterials* mat = shape->mShape->instanceMaterials(15);
 	mLightAnims[0].mDyn    = mat;
-	mat->_00               = (int)mDynMat;
+	mat->mParent           = mDynMat;
 	mDynMat                = mat;
 
 	mat                 = shape->mShape->instanceMaterials(52);
 	mLightAnims[1].mDyn = mat;
-	mat->_00            = (int)mDynMat;
+	mat->mParent        = mDynMat;
 	mDynMat             = mat;
 
 	mat                 = shape->mShape->instanceMaterials(51);
 	mLightAnims[2].mDyn = mat;
-	mat->_00            = (int)mDynMat;
+	mat->mParent        = mDynMat;
 	mDynMat             = mat;
 
 	mat                 = shape->mShape->instanceMaterials(40);
 	mLightAnims[3].mDyn = mat;
-	mat->_00            = (int)mDynMat;
+	mat->mParent        = mDynMat;
 	mDynMat             = mat;
 }
 
@@ -775,7 +779,7 @@ void UfoItem::startTakeoff()
 	}
 	mAnimator.startMotion(0, &PaniMotionInfo(ids[id], this));
 	mAnimator.setMotionSpeed(0, 30.0f);
-	UtEffectMgr::kill(_52C);
+	UtEffectMgr::kill(mConeEffectId);
 	playerState->startSpecialMotions();
 }
 
@@ -786,19 +790,21 @@ void UfoItem::startTakeoff()
  */
 void UfoItem::startAI(int)
 {
-	_3CA = 0;
-	_3C8 = 0;
+	mShouldLightActivate = 0;
+	mIsMenuOpen          = 0;
+
 	if (playerState->isTutorial()) {
 		setTroubleEffect(true);
 	} else {
 		setTroubleEffect(false);
 		effectMgr->create(EffectMgr::EFF_Rocket_Land, mPosition, nullptr, nullptr);
 	}
-	_52C = 21;
+
+	mConeEffectId = EffectMgr::EFF_Navi_Light;
 
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
-			_4E0[i][j] = nullptr;
+			mEngineParticleGenList[i][j] = nullptr;
 		}
 	}
 
@@ -807,15 +813,17 @@ void UfoItem::startAI(int)
 	setJetEffect(0, false);
 	setPca1Effect(false);
 	setPca2Effect(false);
-	_5CC       = 1;
+
+	mNeedPathfindRefresh = 1;
+
 	mSeContext = &mShipSe;
 	mSeContext->setContext(this, 7);
 	mCollInfo = new CollInfo(16);
 	mCollInfo->initInfo(mShipModel->mShape, nullptr, nullptr);
 	mWaypointID = routeMgr->findNearestWayPoint('test', mPosition, false)->mIndex;
 	setMotionSpeed(30.0f);
-	_54C   = mPosition;
-	_54C.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	mSpotlightPosition   = mPosition;
+	mSpotlightPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
 	mAnimator.init(mShipModel, itemMgr->mUfoMotionTable);
 
 	if (playerState->isUfoBroken()) {
@@ -890,7 +898,7 @@ bool UfoItem::accessible()
  */
 void UfoItem::startAccess()
 {
-	_3C8 = 1;
+	mIsMenuOpen = 1;
 	startConeEffect(false);
 
 	mAnimator.startMotion(0, &PaniMotionInfo(16, this));
@@ -904,8 +912,8 @@ void UfoItem::startAccess()
  */
 void UfoItem::finishAccess()
 {
-	_3C8 = 0;
-	UtEffectMgr::kill(_52C);
+	mIsMenuOpen = 0;
+	UtEffectMgr::kill(mConeEffectId);
 	mAnimator.setMotionSpeed(0, 30.0f);
 }
 
@@ -920,7 +928,7 @@ void UfoItem::update()
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 	ItemCreature::update();
 	mAnimator.updateAnimation();
-	mPosition = _54C;
+	mPosition = mSpotlightPosition;
 }
 
 /*
@@ -930,16 +938,16 @@ void UfoItem::update()
  */
 void UfoItem::setPca1Effect(bool set)
 {
-	_548 = set;
+	mIsPtclFxActive = set;
 	if (set) {
 		Vector3f dir(1.0f, 0.0f, 0.0f);
 		dir.rotate(mTransformMatrix);
 
-		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, _530, nullptr, nullptr);
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPtcllFxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 
-		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, _530, nullptr, nullptr);
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, mPtcllFxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 	}
@@ -952,16 +960,16 @@ void UfoItem::setPca1Effect(bool set)
  */
 void UfoItem::setPca2Effect(bool set)
 {
-	_548 = set;
+	mIsPtclFxActive = set;
 	if (set) {
 		Vector3f dir(1.0f, 0.0f, 0.0f);
 		dir.rotate(mTransformMatrix);
 
-		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, _53C, nullptr, nullptr);
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPtcl2FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 
-		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, _53C, nullptr, nullptr);
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, mPtcl2FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 	}
@@ -1011,32 +1019,32 @@ void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
 	u32 badCompiler;
 	pos.set(0.0f, 14.0f, 0.0f);
 	mShipModel->mShape->calcJointWorldPos(gfx, 48, pos);
-	_53C = pos;
+	mPtcl2FxPosition = pos;
 
 	pos.set(0.0f, 14.0f, 0.0f);
 	mShipModel->mShape->calcJointWorldPos(gfx, 49, pos);
-	_530 = pos;
+	mPtcllFxPosition = pos;
 
 	if (playerState->isTutorial()) {
 
 		pos.set(13.1f, -98.4f, -2.0f);
 		mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
-		_47C[0] = pos;
+		mTroubleFxPositionList[0] = pos;
 
 		pos.set(-9.2f, -68.1f, 28.6f);
 		mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
-		_47C[1] = pos;
+		mTroubleFxPositionList[1] = pos;
 
-		_47C[2] = _47C[0];
-		_47C[3] = _47C[1];
+		mTroubleFxPositionList[2] = mTroubleFxPositionList[0];
+		mTroubleFxPositionList[3] = mTroubleFxPositionList[1];
 
 		pos.set(-22.2f, 4.9f, -25.0f);
 		mShipModel->mShape->calcJointWorldPos(gfx, 41, pos);
-		_47C[4] = pos;
+		mTroubleFxPositionList[4] = pos;
 
 		pos.set(0.0f, -93.0f, 0.0f);
 		mShipModel->mShape->calcJointWorldPos(gfx, 2, pos);
-		_47C[5] = pos;
+		mTroubleFxPositionList[5] = pos;
 	}
 
 	mCollInfo->updateInfo(gfx, false);
@@ -1044,7 +1052,7 @@ void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
 		CollPart* part = mCollInfo->getSphere('gol1');
 		if (part) {
 			f32 test = mDirection + mSpots[i]._10;
-			if (_3CA) {
+			if (mShouldLightActivate) {
 				mSpots[i]._14 += gsys->getFrameTime() * 37.69911193847656f;
 				if (mSpots[i]._14 > TAU) {
 					mSpots[i]._14 = 0.0f;
@@ -1056,10 +1064,10 @@ void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
 		}
 	}
 
-	if (_5CC) {
+	if (mNeedPathfindRefresh) {
 		mWaypointID   = routeMgr->findNearestWayPoint('test', getGoalPos(), false)->mIndex;
 		Vector3f goal = getGoalPos();
 		PRINT("*** UFO ROUTE INDEX = %d (%.1f %.1f %.1f)\n", mWaypointID, goal.x, goal.y, goal.z);
-		_5CC = 0;
+		mNeedPathfindRefresh = 0;
 	}
 }

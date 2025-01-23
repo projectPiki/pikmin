@@ -46,7 +46,7 @@ struct CPlate : public Traversable, public Node {
 		}
 
 		Vector3f mPosition;           // _00
-		Vector3f _0C;                 // _0C
+		Vector3f mOffsetFromCenter;   // _0C
 		SmartPtr<Creature> mOccupant; // _18
 		SlotChangeListner* mListener; // _1C
 	};
@@ -57,10 +57,10 @@ struct CPlate : public Traversable, public Node {
 	virtual void update();                                                     // _4C
 	virtual void render(Graphics&);                                            // _50
 	// these need to go last to spawn the vtable further down in cPlate.cpp
-	virtual Creature* getCreature(int);                 // _08
-	virtual int getFirst() { return 0; }                // _0C
-	virtual int getNext(int idx) { return idx + 1; }    // _10
-	virtual bool isDone(int idx) { return idx >= _74; } // _14
+	virtual Creature* getCreature(int);                             // _08
+	virtual int getFirst() { return 0; }                            // _0C
+	virtual int getNext(int idx) { return idx + 1; }                // _10
+	virtual bool isDone(int idx) { return idx >= mTotalSlotCount; } // _14
 
 	bool canNaviRunFast();
 	void init(Vector3f&);
@@ -84,24 +84,24 @@ struct CPlate : public Traversable, public Node {
 	// _08 = VTBL 2
 	// _00-_08 = Traversable
 	// _08-_28 = Node
-	Parms mCPlateParms;      // _28
-	Vector3f _5C;            // _5C, denoted by a markerShape in debug mode
-	f32 _68;                 // _68
-	f32 _6C;                 // _6C
-	f32 _70;                 // _70
-	int _74;                 // _74
-	u32 _78;                 // _78
-	int mCurrSlotCount;      // _7C, no. used slots
-	CPlate::Slot* mSlotList; // _80
-	int mMaxSlotCount;       // _84, max slots
-	Vector3f _88;            // _88
-	Vector3f _94;            // _94, denoted by a markerShape in debug mode
-	Vector3f _A0;            // _A0
-	f32 _AC;                 // _AC
-	Vector3f _B0;            // _B0
-	int mHappaCounts[3];     // _BC, indexed by PikiHappa
-	u8 _C8;                  // _C8
-	u8 _C9;                  // _C9
+	Parms mCPlateParms;        // _28
+	Vector3f mPlateOffset;     // _5C, denoted by a markerShape in debug mode
+	f32 mPlateLength;          // _68
+	f32 mPlateSize;            // _6C
+	f32 mInnerRadius;          // _70
+	int mTotalSlotCount;       // _74
+	u32 mPlatePikiCount;       // _78
+	int mUsedSlotCount;        // _7C
+	CPlate::Slot* mSlotList;   // _80
+	int mSlotListSize;         // _84, max slots
+	Vector3f mOriginPosition;  // _88
+	Vector3f mPlateCenter;     // _94, denoted by a markerShape in debug mode
+	Vector3f mCurrentVelocity; // _A0
+	f32 mDirectionAngle;       // _AC
+	Vector3f mDevOffsetTest;   // _B0, unused
+	int mHappaCounts[3];       // _BC, indexed by PikiHappa
+	u8 _C8;                    // _C8
+	u8 mIsNeutral;             // _C9
 };
 
 #endif

@@ -711,7 +711,7 @@ bool Creature::startRope(RopeCreature* rope, f32 ropeRatio)
 
 	mRope = rope;
 
-	Cylinder cylinder(rope->mPosition, rope->_2B8->mPosition, 2.0f);
+	Cylinder cylinder(rope->mPosition, rope->mParentRope->mPosition, 2.0f);
 	mRopeRatio = cylinder.getPosRatio(mPosition);
 	mPosition  = rope->getRopePos(mRopeRatio);
 

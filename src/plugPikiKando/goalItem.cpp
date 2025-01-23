@@ -1158,8 +1158,8 @@ void GoalItem::startAI(int)
 		rope = (RopeItem*)itemMgr->birth(OBJTYPE_Rope);
 		rope->init(coll->mCentre);
 		rope->setRope(obj);
-		rope->_2C0   = len;
-		rope->mOwner = this;
+		rope->mRopeLength = len;
+		rope->mOwner      = this;
 		rope->startAI(0);
 	}
 
@@ -1640,8 +1640,8 @@ void GoalItem::refresh(Graphics& gfx)
 		rope->mPosition = coll->mCentre;
 		rope->mPosition = child->mCentre;
 
-		Vector3f diff = coll->mCentre - child->mCentre;
-		rope->_2C0    = diff.length();
+		Vector3f diff     = coll->mCentre - child->mCentre;
+		rope->mRopeLength = diff.length();
 		if (pikiMgr->containerDebug) {
 			PRINT("==> (%.1f %.1f %.1f) : motion %d\n");
 			printMatrix("invCam", gfx.mCamera->mInverseLookAtMtx);

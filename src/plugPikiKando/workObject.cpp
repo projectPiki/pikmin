@@ -48,7 +48,7 @@ DEFINE_PRINT("workObject");
  */
 void HinderRock::beginPush()
 {
-	_3C8++;
+	mPushCount++;
 }
 
 /*
@@ -58,8 +58,8 @@ void HinderRock::beginPush()
  */
 void HinderRock::endPush()
 {
-	if (_3C8) {
-		_3C8--;
+	if (mPushCount) {
+		mPushCount--;
 	}
 }
 
@@ -1053,9 +1053,9 @@ bool HinderRock::insideSafeArea(Vector3f&)
  */
 void HinderRock::doLoad(RandomAccessStream& stream)
 {
-	_43C = stream.readByte();
-	_418 = 0;
-	_3C8 = 0;
+	_43C       = stream.readByte();
+	_418       = 0;
+	mPushCount = 0;
 
 	_440 = 0.0f;
 

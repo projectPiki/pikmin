@@ -15,8 +15,8 @@ enum EResultsFlags {
 	// ...
 	RESFLAG_Unk24 = 24,
 	// ...
-	RESFLAG_Unk38 = 38,
-	RESFLAG_Unk39 = 39,
+	RESFLAG_BluePikminWaterImmunity = 38,
+	RESFLAG_Unk39                   = 39,
 	// ...
 	RESFLAG_Unk42 = 42,
 	RESFLAG_Unk43 = 43,
@@ -50,7 +50,7 @@ struct ResultFlags {
 
 		int mScreenId;   // _00
 		bool mIsAutoSet; // _04
-		int mPrio;       // _08
+		int mPriority;   // _08
 		u32 mStore;      // _0C
 	};
 
@@ -69,12 +69,12 @@ struct ResultFlags {
 
 	static FlagInfo flagTable[];
 
-	u16 _00;           // _00
-	u16 _02;           // _02
-	u16 _04;           // _04
-	u8* _08;           // _08
-	s16 mDaysSeen[30]; // _0C, what log id was seen for each day
-	u32* _48;          // _48
+	u16 mLength;             // _00, maximum amount of flags
+	u16 mActiveCount;        // _02
+	u16 mTableSize;          // _04
+	u8* mStates;             // _08
+	s16 mDaysSeen[30];       // _0C, what log id was seen for each day
+	u32* mScreenToTableList; // _48
 };
 
 #endif

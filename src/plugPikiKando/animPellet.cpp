@@ -24,13 +24,13 @@ DEFINE_PRINT("animPellet");
  * Size:	000180
  */
 PelletAnimInfo::PelletAnimInfo()
-    : _2C(this, String("pellets", 0), String("", 0), String("", 0), "x00", nullptr)
-    , _40(this, String("noname", 0), String("", 0), String("", 0), "x01", nullptr)
+    : mFolderPath(this, String("pellets", 0), String("", 0), String("", 0), "x00", nullptr)
+    , mFileName(this, String("noname", 0), String("", 0), String("", 0), "x01", nullptr)
 {
 	mID.setID('none');
-	_24       = 0;
-	mTekiType = -1;
-	_54       = -1;
+	mCreationType = 0;
+	mTekiType     = -1;
+	mStartAnimId  = -1;
 
 	initCore("pelletAnimInfo");
 	mPelletShapeObject = nullptr;
@@ -46,12 +46,12 @@ PelletShapeObject* PelletAnimInfo::createShapeObject()
 	char path[PATH_MAX];
 	char path2[PATH_MAX];
 
-	sprintf(path, "objects/%s/%s.mod", _2C().mString, _40().mString);
+	sprintf(path, "objects/%s/%s.mod", mFolderPath().mString, mFileName().mString);
 	Shape* shape = gameflow.loadShape(path, true);
 
 	if (shape) {
-		sprintf(path2, "%s.bin", _40().mString);
-		mPelletShapeObject = new PelletShapeObject(mID.mStringID, shape, _2C().mString, path2, _54);
+		sprintf(path2, "%s.bin", mFileName().mString);
+		mPelletShapeObject = new PelletShapeObject(mID.mStringID, shape, mFolderPath().mString, path2, mStartAnimId);
 	} else {
 		mPelletShapeObject = nullptr;
 	}
@@ -67,9 +67,9 @@ PelletShapeObject* PelletAnimInfo::createShapeObject()
 void PelletAnimInfo::read(RandomAccessStream& stream)
 {
 	mID.read(stream);
-	_24       = stream.readInt();
-	mTekiType = stream.readInt();
-	_54       = stream.readInt();
+	mCreationType = stream.readInt();
+	mTekiType     = stream.readInt();
+	mStartAnimId  = stream.readInt();
 	Parameters::read(stream);
 }
 
@@ -91,8 +91,10 @@ PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char*
 	} else {
 		mAnimMgr = new AnimMgr(shape, nullptr, 0, nullptr);
 	}
+
 	mShape->overrideAnim(0, &mAnimatorA);
 	mMotionFlag = 1;
+
 	if (a != -1) {
 		mShape->overrideAnim(a, &mAnimatorB);
 		setMotionFlag(2);

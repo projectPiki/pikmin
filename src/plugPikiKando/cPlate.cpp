@@ -38,20 +38,20 @@ Creature* CPlate::getCreature(int idx)
  */
 CPlate::CPlate(MapMgr* mgr)
 {
-	mMaxSlotCount = 110;
-	_6C           = 10.0f;
-	_68           = 10.0f;
-	_88.set(0.0f, 0.0f, 0.0f);
-	_AC            = 0.0f;
-	mSlotList      = new Slot[mMaxSlotCount];
-	_74            = 0;
-	_78            = 0;
-	mCurrSlotCount = 0;
-	_C8            = 0;
-	_C9            = 1;
+	mSlotListSize = 110;
+	mPlateSize    = 10.0f;
+	mPlateLength  = 10.0f;
+	mOriginPosition.set(0.0f, 0.0f, 0.0f);
+	mDirectionAngle = 0.0f;
+	mSlotList       = new Slot[mSlotListSize];
+	mTotalSlotCount = 0;
+	mPlatePikiCount = 0;
+	mUsedSlotCount  = 0;
+	_C8             = 0;
+	mIsNeutral      = 1;
 
 	load("parms/", "cunit.bin", 1);
-	_B0.set(0.0f, 0.0f, 0.0f);
+	mDevOffsetTest.set(0.0f, 0.0f, 0.0f);
 	mHappaCounts[0] = mHappaCounts[1] = mHappaCounts[2] = 0;
 }
 
@@ -79,20 +79,20 @@ void CPlate::init(Vector3f&)
  * Address:	800A598C
  * Size:	0001C0
  */
-void CPlate::setPos(Vector3f& p1, f32 p2, Vector3f& p3)
+void CPlate::setPos(Vector3f& position, f32 angle, Vector3f& velocity)
 {
 	f32 offset = mCPlateParms.mStartOffset();
-	if (speedy_sqrtf(_A0.x * _A0.x + _A0.z * _A0.z) > 5.0f) {
+	if (speedy_sqrtf(mCurrentVelocity.x * mCurrentVelocity.x + mCurrentVelocity.z * mCurrentVelocity.z) > 5.0f) {
 		offset = 0.0f;
 	}
 
-	f32 dist = _68 + offset;
-	_AC      = p2;
-	_88      = p1;
-	_94      = _88 + Vector3f(dist * sinf(p2), 0.0f, dist * cosf(p2));
-	_A0      = p3;
-	_5C      = p1 + Vector3f(_70 * sinf(p2), 0.0f, _70 * cosf(p2));
-	_C9      = 0;
+	f32 totalRadius  = mPlateLength + offset;
+	mDirectionAngle  = angle;
+	mOriginPosition  = position;
+	mPlateCenter     = mOriginPosition + Vector3f(totalRadius * sinf(angle), 0.0f, totalRadius * cosf(angle));
+	mCurrentVelocity = velocity;
+	mPlateOffset     = position + Vector3f(mInnerRadius * sinf(angle), 0.0f, mInnerRadius * cosf(angle));
+	mIsNeutral       = 0;
 
 	u32 badCompiler[2];
 }
@@ -102,19 +102,19 @@ void CPlate::setPos(Vector3f& p1, f32 p2, Vector3f& p3)
  * Address:	800A5B4C
  * Size:	0001BC
  */
-void CPlate::setPosGray(Vector3f& p1, f32 p2, Vector3f& p3)
+void CPlate::setPosGray(Vector3f& position, f32 angle, Vector3f& velocity)
 {
 	f32 offset = mCPlateParms.mStartOffset();
-	if (speedy_sqrtf(_A0.x * _A0.x + _A0.z * _A0.z) > 5.0f) {
+	if (speedy_sqrtf(mCurrentVelocity.x * mCurrentVelocity.x + mCurrentVelocity.z * mCurrentVelocity.z) > 5.0f) {
 		offset = 0.0f;
 	}
 
-	f32 dist = _68 + offset;
-	_88      = p1;
-	_94      = _88 + Vector3f(dist * sinf(p2), 0.0f, dist * cosf(p2));
-	_A0      = p3;
-	_5C      = p1 + Vector3f(_70 * sinf(p2), 0.0f, _70 * cosf(p2));
-	_C9      = 0;
+	f32 dist         = mPlateLength + offset;
+	mOriginPosition  = position;
+	mPlateCenter     = mOriginPosition + Vector3f(dist * sinf(angle), 0.0f, dist * cosf(angle));
+	mCurrentVelocity = velocity;
+	mPlateOffset     = position + Vector3f(mInnerRadius * sinf(angle), 0.0f, mInnerRadius * cosf(angle));
+	mIsNeutral       = 0;
 
 	u32 badCompiler[2];
 }
@@ -124,11 +124,11 @@ void CPlate::setPosGray(Vector3f& p1, f32 p2, Vector3f& p3)
  * Address:	........
  * Size:	0001E0
  */
-void CPlate::setPosNeutral(Vector3f& p1, f32 p2, Vector3f& p3)
+void CPlate::setPosNeutral(Vector3f& position, f32 angle, Vector3f& velocity)
 {
-	setPos(p1, p2, p3);
-	_C9 = 1;
-	_94 = _88;
+	setPos(position, angle, velocity);
+	mIsNeutral   = 1;
+	mPlateCenter = mOriginPosition;
 }
 
 /*
@@ -139,10 +139,10 @@ void CPlate::setPosNeutral(Vector3f& p1, f32 p2, Vector3f& p3)
 int CPlate::getSlot(Creature* occupant, SlotChangeListner* listener)
 {
 	mHappaCounts[static_cast<Piki*>(occupant)->mHappa]++;
-	int idx = mCurrSlotCount;
+	int idx = mUsedSlotCount;
 	mSlotList[idx].mOccupant.set(occupant);
 	mSlotList[idx].mListener = listener;
-	mCurrSlotCount++;
+	mUsedSlotCount++;
 	return idx;
 }
 
@@ -170,11 +170,13 @@ void CPlate::releaseSlot(Creature* occupant, int idx)
 		PRINT(" %x try to release slot (%d) but owner is %x\n", occupant, idx, slot->mOccupant.getPtr());
 		ERROR(" sorry ...\n");
 	}
+
 	mHappaCounts[static_cast<Piki*>(occupant)->mHappa]--;
 	slot->mOccupant.reset();
-	mCurrSlotCount--;
-	_74--;
-	for (int i = idx; i < mCurrSlotCount; i++) {
+	mUsedSlotCount--;
+	mTotalSlotCount--;
+
+	for (int i = idx; i < mUsedSlotCount; i++) {
 		mSlotList[i].mOccupant.reset();
 		mSlotList[i].mOccupant.set(mSlotList[i + 1].mOccupant.getPtr());
 		mSlotList[i].mListener = mSlotList[i + 1].mListener;
@@ -215,8 +217,8 @@ void CPlate::swapSlot(int idx1, int idx2)
  */
 bool CPlate::validSlot(int idx)
 {
-	if (idx < 0 || idx >= mCurrSlotCount) {
-		PRINT("slot %d : out of range [0..%d]\n", idx, mCurrSlotCount);
+	if (idx < 0 || idx >= mUsedSlotCount) {
+		PRINT("slot %d : out of range [0..%d]\n", idx, mUsedSlotCount);
 		return false;
 	}
 
@@ -230,19 +232,13 @@ bool CPlate::validSlot(int idx)
  */
 void CPlate::sortByColor(Piki* piki)
 {
-	BOOL hasBomb1;
-	if (piki->hasBomb()) {
-		hasBomb1 = TRUE;
-	} else {
-		hasBomb1 = FALSE;
-	}
-	bool hasBomb  = hasBomb1;
+	bool hasBomb  = piki->hasBomb() ? 1 : 0;
 	int color     = piki->mColor;
 	int nextColor = (color + 1) % PikiColorCount;
 	int happa     = piki->mHappa;
 
-	for (int i = 0; i < mCurrSlotCount; i++) {
-		for (int j = 0; j < mCurrSlotCount; j++) {
+	for (int i = 0; i < mUsedSlotCount; i++) {
+		for (int j = 0; j < mUsedSlotCount; j++) {
 			Piki* iOwner = static_cast<Piki*>(mSlotList[i].mOccupant.getPtr());
 			Piki* jOwner = static_cast<Piki*>(mSlotList[j].mOccupant.getPtr());
 
@@ -291,7 +287,7 @@ void CPlate::sortByColor(Piki* piki)
  */
 void CPlate::rearrangeSlot(Vector3f& p1, f32, Vector3f&)
 {
-	for (int i = mCurrSlotCount - 1; i >= 1; i--) {
+	for (int i = mUsedSlotCount - 1; i >= 1; i--) {
 		for (int j = i; j >= 1; j--) {
 			Vector3f sep = p1 - mSlotList[j].mOccupant.getPtr()->mPosition;
 			f32 jDist    = sep.length();
@@ -311,34 +307,36 @@ void CPlate::rearrangeSlot(Vector3f& p1, f32, Vector3f&)
  * Address:	800A6670
  * Size:	000188
  */
-void CPlate::refresh(int p1, f32 p2)
+void CPlate::refresh(int slotCount, f32 interpT)
 {
-	if (p1 < _74) {
-		mCurrSlotCount -= _74 - p1;
+	if (slotCount < mTotalSlotCount) {
+		mUsedSlotCount -= mTotalSlotCount - slotCount;
 	}
 
-	_74 = p1;
-	_70 = (2.0f * mCPlateParms.mMaxPosSize()) * speedy_sqrtf(p1 / PI);
-	_70 = (2.1f * mCPlateParms.mMaxPosSize()) * speedy_sqrtf(p1 / PI);
+	mTotalSlotCount = slotCount;
+	mInnerRadius    = (2.0f * mCPlateParms.mMaxPosSize()) * speedy_sqrtf(slotCount / PI);
+	mInnerRadius    = (2.1f * mCPlateParms.mMaxPosSize()) * speedy_sqrtf(slotCount / PI);
 
-	f32 max;
-	f32 min;
-	f32 size = 1.9f * mCPlateParms.mMaxPosSize();
-	if (size > _70) {
-		max = size;
-		min = _70;
+	f32 maxRadius;
+	f32 minRadius;
+	f32 baseSize = 1.9f * mCPlateParms.mMaxPosSize();
+	if (baseSize > mInnerRadius) {
+		maxRadius = baseSize;
+		minRadius = mInnerRadius;
 	} else {
-		max = _70;
-		min = size;
+		maxRadius = mInnerRadius;
+		minRadius = baseSize;
 	}
 
-	_6C       = -(max - min) * p2 + max;
-	_68       = ((4.0f * p1) * mCPlateParms.mMaxPosSize() * mCPlateParms.mMaxPosSize()) / (_6C * PI);
+	mPlateSize   = -(maxRadius - minRadius) * interpT + maxRadius;
+	mPlateLength = ((4.0f * slotCount) * mCPlateParms.mMaxPosSize() * mCPlateParms.mMaxPosSize()) / (mPlateSize * PI);
+
 	f32 limit = mCPlateParms.mLengthLimit();
-	if (_68 > limit) {
-		_68 = limit;
-		_6C = ((4.0f * p1) * mCPlateParms.mMaxPosSize() * mCPlateParms.mMaxPosSize()) / (_68 * PI);
+	if (mPlateLength > limit) {
+		mPlateLength = limit;
+		mPlateSize   = ((4.0f * slotCount) * mCPlateParms.mMaxPosSize() * mCPlateParms.mMaxPosSize()) / (mPlateLength * PI);
 	}
+
 	refreshSlot();
 }
 
@@ -349,39 +347,44 @@ void CPlate::refresh(int p1, f32 p2)
  */
 void CPlate::refreshSlot()
 {
-	int val2, idx, flip;
+	int slotsInRow, slotIndex;
+	BOOL flip;
 
-	f32 zVal = -_68;
-	idx      = 0;
-	Matrix4f mtx;
-	Vector3f vec(_94);
-	vec.multiply(-1.0f);
+	f32 zExtent = -mPlateLength;
+	slotIndex   = 0;
 
-	mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, _AC, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
-	Vector3f vec2(0.0f, 0.0f, 0.0f);
-	vec2.multMatrixTo(mtx, _B0);
+	Matrix4f transformMtx;
 
-	flip = 1;
-	while (idx < _74) {
-		int val = (speedy_sqrtf(_68 * _68 - zVal * zVal) * _6C / _68) / (2.0f * mCPlateParms.mMaxPosSize());
-		if (val < 0) {
-			val = 0;
+	Vector3f centerOffset(mPlateCenter);
+	centerOffset.multiply(-1.0f);
+
+	transformMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, mDirectionAngle, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
+
+	Vector3f devOffsetTest(0.0f, 0.0f, 0.0f);
+	devOffsetTest.multMatrixTo(transformMtx, mDevOffsetTest);
+
+	flip = TRUE;
+	while (slotIndex < mTotalSlotCount) {
+		int slotsPerSize = (speedy_sqrtf(mPlateLength * mPlateLength - zExtent * zExtent) * mPlateSize / mPlateLength)
+		                 / (2.0f * mCPlateParms.mMaxPosSize());
+		if (slotsPerSize < 0) {
+			slotsPerSize = 0;
 		}
 
-		f32 xVal = f32(flip) * (2.0f * (f32(val) * mCPlateParms.mMaxPosSize()));
-		val2     = 2 * val + 1;
-		while (val2 > 0) {
-			if (idx < _74) {
-				mSlotList[idx].mPosition.set(xVal, 0.0f, zVal);
-				mSlotList[idx].mPosition.multMatrixTo(mtx, mSlotList[idx]._0C);
-				idx++;
+		f32 xExtent = f32(flip) * (2.0f * (f32(slotsPerSize) * mCPlateParms.mMaxPosSize()));
+		slotsInRow  = 2 * slotsPerSize + 1;
+		while (slotsInRow > 0) {
+			if (slotIndex < mTotalSlotCount) {
+				mSlotList[slotIndex].mPosition.set(xExtent, 0.0f, zExtent);
+				mSlotList[slotIndex].mPosition.multMatrixTo(transformMtx, mSlotList[slotIndex].mOffsetFromCenter);
+				slotIndex++;
 			}
 
-			val2--;
-			xVal -= (2.0f * (f32(flip) * mCPlateParms.mMaxPosSize()));
+			slotsInRow--;
+			xExtent -= (2.0f * (f32(flip) * mCPlateParms.mMaxPosSize()));
 		}
 
-		zVal += 2.0f * mCPlateParms.mMaxPosSize();
+		zExtent += 2.0f * mCPlateParms.mMaxPosSize();
 		flip *= -1;
 	}
 }
@@ -395,8 +398,8 @@ void CPlate::update()
 {
 	// the hell was this even for kando
 	Vector3f vec;
-	f32 val = _5C.y + 2.0f;
-	vec.set(sinf(_AC), 0.0f, cosf(_AC));
+	f32 val = mPlateOffset.y + 2.0f;
+	vec.set(sinf(mDirectionAngle), 0.0f, cosf(mDirectionAngle));
 	if (mHappaCounts[1]) {
 		val = 0.0f;
 	}
@@ -430,7 +433,7 @@ void CPlate::render(Graphics& gfx)
 	f32 s = 0.25f;
 	scale.set(s, s, s);
 
-	mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), _5C);
+	mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), mPlateOffset);
 
 	gfx.calcViewMatrix(mtx1, mtx2);
 	gfx.useMatrix(mtx2, 0);
@@ -441,7 +444,7 @@ void CPlate::render(Graphics& gfx)
 	GlobalShape::markerShape->mMaterialList->Colour() = colour;
 	GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
 
-	mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), _94);
+	mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), mPlateCenter);
 
 	gfx.calcViewMatrix(mtx1, mtx2);
 	gfx.useMatrix(mtx2, 0);
@@ -450,12 +453,14 @@ void CPlate::render(Graphics& gfx)
 	GlobalShape::markerShape->mMaterialList->Colour() = colour;
 	GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
 
-	for (int i = 0; i < mCurrSlotCount; i++) {
-		Vector3f pos(mSlotList[i]._0C);
-		pos = pos + _94;
-		s   = 0.08f;
+	for (int i = 0; i < mUsedSlotCount; i++) {
+		Vector3f globalPos(mSlotList[i].mOffsetFromCenter);
+		globalPos = globalPos + mPlateCenter;
+
+		s = 0.08f;
 		scale.set(s, s, s);
-		mtx1.makeSRT(scale, Vector3f(0.0f, 4.0f, 0.0f), pos);
+
+		mtx1.makeSRT(scale, Vector3f(0.0f, 4.0f, 0.0f), globalPos);
 
 		gfx.calcViewMatrix(mtx1, mtx2);
 		gfx.useMatrix(mtx2, 0);

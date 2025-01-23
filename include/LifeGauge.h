@@ -65,8 +65,8 @@ struct LifeGauge {
 	void countOff();
 
 	Vector3f mPosition; // _00
-	Vector3f _0C;       // _0C
-	u32 _18;            // _18, unknown
+	Vector3f mOffset;   // _0C
+	u32 mIsNotFull;     // _18, unknown
 	int _1C;            // _1C
 	u8 _20;             // _20
 	f32 _24;            // _24

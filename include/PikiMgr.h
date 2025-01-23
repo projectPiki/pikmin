@@ -55,7 +55,7 @@ struct PikiProp : public CreatureProp {
 		    , _23C(this, 6.0f, 0.0f, 100.0f, "p27", nullptr)
 		    , _24C(this, 10.0f, 0.0f, 100.0f, "p34", nullptr)
 		    , _25C(this, 100.0f, 0.0f, 2000.0f, "p28", nullptr)
-		    , _26C(this, 8.0f, 0.0f, 100.0f, "p39", nullptr)
+		    , mCollisionRadius(this, 8.0f, 0.0f, 100.0f, "p39", nullptr)
 		    , _27C(this, 600.0f, 0.0f, 10000.0f, "p29", nullptr)
 		    , _28C(this, 1000.0f, 0.0f, 10000.0f, "p30", nullptr)
 		    , _29C(this, 10.0f, 0.0f, 1000.0f, "p31", nullptr)
@@ -136,7 +136,7 @@ struct PikiProp : public CreatureProp {
 		Parm<f32> _23C;                     // _23C, p27
 		Parm<f32> _24C;                     // _24C, p34
 		Parm<f32> _25C;                     // _25C, p28
-		Parm<f32> _26C;                     // _26C, p39
+		Parm<f32> mCollisionRadius;         // _26C, p39
 		Parm<f32> _27C;                     // _27C, p29
 		Parm<f32> _28C;                     // _28C, p30
 		Parm<f32> _29C;                     // _29C, p31

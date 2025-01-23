@@ -39,10 +39,10 @@ struct RopeCreature : public Creature {
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	Creature* _2B8;          // _2B8, probably
-	RopeCreature* _2BC;      // _2BC, probably
-	f32 _2C0;                // _2C0
-	Vector3f mPosDifference; // _2C4
+	Creature* mParentRope;      // _2B8, probably
+	RopeCreature* mAttachedObj; // _2BC, probably
+	f32 mRopeLength;            // _2C0
+	Vector3f mPosDifference;    // _2C4
 };
 
 /**

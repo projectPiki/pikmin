@@ -176,7 +176,7 @@ struct HinderRock : public WorkObject {
 
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject
-	u16 _3C8;                   // _3C8
+	u16 mPushCount;             // _3C8
 	Plane _3CC[4];              // _3CC
 	Vector3f _40C;              // _40C
 	u32 _418;                   // _418

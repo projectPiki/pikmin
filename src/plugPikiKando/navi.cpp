@@ -173,7 +173,7 @@ bool Navi::movieMode()
  */
 void Navi::incPlatePiki()
 {
-	mPlateMgr->_78++;
+	mPlateMgr->mPlatePikiCount++;
 }
 
 /*
@@ -183,7 +183,7 @@ void Navi::incPlatePiki()
  */
 void Navi::decPlatePiki()
 {
-	mPlateMgr->_78--;
+	mPlateMgr->mPlatePikiCount--;
 }
 
 /*
@@ -193,7 +193,7 @@ void Navi::decPlatePiki()
  */
 int Navi::getPlatePikis()
 {
-	return mPlateMgr->_78;
+	return mPlateMgr->mPlatePikiCount;
 }
 
 /*
@@ -248,7 +248,7 @@ void Navi::updateDayEnd(Vector3f& pos)
 				}
 
 				// Issues here
-				Vector3f slotPos  = piki->mNavi->mPlateMgr->mSlotList[slotID]._0C + piki->mNavi->mPlateMgr->_94;
+				Vector3f slotPos  = piki->mNavi->mPlateMgr->mSlotList[slotID].mOffsetFromCenter + piki->mNavi->mPlateMgr->mPlateCenter;
 				piki->mPosition   = slotPos;
 				piki->mPosition.y = mapMgr->getMinY(piki->mPosition.x, piki->mPosition.z, true);
 			}
@@ -3362,7 +3362,7 @@ void Navi::makeCStick(bool p1)
 
 	if (mPlateMgr) {
 		if (getCurrState()->getID() != NAVISTATE_DemoSunset && getCurrState()->getID() != NAVISTATE_Dead) {
-			if (mPlateMgr->_74 > 0) {
+			if (mPlateMgr->mTotalSlotCount > 0) {
 				seMgr->playNaviSound(74.0f * subStick.x, 74.0f * subStick.z);
 			} else {
 				seMgr->playNaviSound(0, 0);
@@ -3379,7 +3379,7 @@ void Navi::makeCStick(bool p1)
 		_738       = 0.0f;
 		_764       = subStick;
 		f32 angle1 = atan2f(subStick.x, subStick.z);
-		f32 angle2 = mPlateMgr->_AC;
+		f32 angle2 = mPlateMgr->mDirectionAngle;
 		Vector3f dir1(sinf(angle1), 0.0f, cosf(angle1));
 		Vector3f dir2(sinf(angle2), 0.0f, cosf(angle2));
 
@@ -3465,7 +3465,7 @@ void Navi::makeCStick(bool p1)
 			_719 = 1;
 		} else if (_71C == 1) {
 			_719              = 1;
-			Vector3f squadSep = mPlateMgr->_5C - mPosition;
+			Vector3f squadSep = mPlateMgr->mPlateOffset - mPosition;
 			squadSep.normalise();
 			mPlateMgr->setPosGray(mPosition, atan2f(squadSep.x, squadSep.z), mVelocity);
 		} else if (_71C == 2) {

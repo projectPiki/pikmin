@@ -724,7 +724,7 @@ void LifeGauge::updValue(f32 currHealth, f32 maxHealth)
 {
 	mHealthRatio = currHealth / maxHealth;
 	if (mHealthRatio < 1.0f && _24 != 1.0f) {
-		_18 = 1;
+		mIsNotFull = 1;
 	}
 }
 
