@@ -147,11 +147,11 @@ char* WorkObjectMgr::getShapeName(int)
  */
 WorkObjectMgr::WorkObjectMgr()
 {
-	mItemShapes = new Shape*[5];
-	_44         = new u8[5];
+	mItemShapes          = new Shape*[5];
+	mShouldThisShapeLoad = new u8[5];
 
 	for (int i = 0; i < 5; i++) {
-		_44[i] = 0;
+		mShouldThisShapeLoad[i] = 0;
 	}
 }
 
@@ -163,7 +163,7 @@ WorkObjectMgr::WorkObjectMgr()
 void WorkObjectMgr::loadShapes()
 {
 	for (int i = 0; i < 5; i++) {
-		if (_44[i]) {
+		if (mShouldThisShapeLoad[i]) {
 			PRINT("LOADING SHAPE FOR %d\n", i);
 			mItemShapes[i] = gameflow.loadShape(files[i], true);
 		} else {
