@@ -216,15 +216,18 @@ struct PikiMgr : public MonoObjectMgr {
 	bool lostAllPikis();
 	void refresh2d(Graphics&);
 
-	// this is either isRefreshing or isUpdating, idk which yet
-	bool is70(u16 flag) { return _70 & flag; }
+	// 1 = free, 2 = formation, 4 = work
+	bool isUpdating(u16 flag) { return _70 & flag; }
+	void setUpdateFlag(u16 flag) { _70 |= flag; }
 
-	// DLL inlines to make:
-	// bool isRefreshing(u16);
-	// bool isUpdating(u16);
-	// void hideAll();
-	// void setRefreshFlag(u16);
-	// void setUpdateFlag(u16);
+	bool isRefreshing(u16 flag) { return _72 & flag; }
+	void setRefreshFlag(u16 flag) { _72 |= flag; }
+
+	void hideAll()
+	{
+		_70 = 0;
+		_72 = 0;
+	}
 
 	static bool meNukiMode;
 	static bool meBirthMode;

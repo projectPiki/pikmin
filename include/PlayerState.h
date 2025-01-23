@@ -138,18 +138,21 @@ struct PlayerState {
 	bool hasContainer(int color) { return _184 & (1 << color); }
 
 	bool inDayEnd() { return mInDayEnd; }
-	void setDayEnd() { mInDayEnd = true; }
+	void setDayEnd(bool set) { mInDayEnd = set; }
 
 	bool hasUfoLeftControl() { return _11 & 4; }
 	bool hasUfoRightControl() { return _11 & 2; }
+
+	void setDayCollectCount(int day, int parts) { mPartsCollectedByDay[day] = parts; }
+	void setDayPowerupCount(int day, int parts) { mPartsToNextByDay[day] = parts; }
+
+	// I dont think this is right, but this is definitely one of the inlines
+	bool hasRadar() { return _1B6; }
 
 	/*
 	    All remaining DLL inlines:
 
 	    int getDayCollectCount(int);
-	    void setDayCollectCount(int, int);
-
-	    void setDayPowerupCount(int, int);
 
 	    bool hasRadar();
 	    bool isChallengeMode;
@@ -158,10 +161,15 @@ struct PlayerState {
 
 	static int totalUfoParts;
 
-	u8 _00[0x10];                 // _00, unknown
+	int mSroutedNum;              // _00
+	int mLostBattlePikis;         // _04
+	int mLeftBehindPikis;         // _08
+	u32 _0C;                      // _0C, unknown
 	u8 mShipUpgradeLevel;         // _10
 	u8 _11;                       // _11
-	u8 _12[0x54 - 0x12];          // _12, unknown
+	u32 _14;                      // _14
+	u8 mPartsCollectedByDay[30];  // _18
+	u8 mPartsToNextByDay[30];     // _38
 	DemoFlags mDemoFlags;         // _54
 	ResultFlags mResultFlags;     // _70
 	u8 _BC[0xC4 - 0xBC];          // _BC, unknown

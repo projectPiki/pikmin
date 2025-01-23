@@ -149,11 +149,11 @@ bool Piki::appearDemo()
 		return false;
 	} else if (mColor == Yellow && gameflow._1D8 & 0x20) {
 		return false;
-	} else if (mMode == PikiMode::FreeMode && !pikiMgr->is70(1)) {
+	} else if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(1)) {
 		return false;
-	} else if (mMode == PikiMode::FormationMode && !pikiMgr->is70(2)) {
+	} else if (mMode == PikiMode::FormationMode && !pikiMgr->isUpdating(2)) {
 		return false;
-	} else if (!pikiMgr->is70(4)) {
+	} else if (!pikiMgr->isUpdating(4)) {
 		return false;
 	}
 

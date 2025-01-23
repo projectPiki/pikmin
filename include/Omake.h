@@ -38,6 +38,7 @@ struct AttentionCamera {
 	void setFader(u32);
 
 	// TODO: work out members
+	u8 _00[0x24]; // _00
 };
 
 /**

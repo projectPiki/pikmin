@@ -87,7 +87,9 @@ struct PcamCamera : public NCamera {
 	// _00-_20 = NCamera
 	u8 _24[0x30 - 0x24];  // _24, unknown
 	u8 _30;               // _30
-	u8 _31[0x16C - 0x31]; // _31, unknown
+	u8 _31[0xC8 - 0x31];  // _31, unknown
+	f32 _C8;              // _C8
+	u8 _CC[0x16C - 0xCC]; // _CC
 };
 
 #endif

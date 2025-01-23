@@ -427,7 +427,7 @@ struct GameFlow : public Node {
 	GameLoadIdler mGameLoadIdler;            // _31C
 	u8 _330[0x338 - 0x330];                  // _330, unknown
 	int _338;                                // _338
-	u32 _33C;                                // _33C, unknown
+	int _33C;                                // _33C, unknown
 	u8 _340[0x350 - 0x340];                  // _340, unknown
 	int mFilterType;                         // _350
 	u8 mFilters[8];                          // _354

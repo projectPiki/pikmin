@@ -205,6 +205,10 @@ struct RouteMgr : public Node {
 	// _00     = VTBL
 	// _00-_20 = Node
 	// TODO: members
+	int _20; // _20
+	int _24; // _24
+	int _28; // _28
+	int _2C; // _2C
 };
 
 /**

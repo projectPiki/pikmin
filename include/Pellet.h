@@ -349,7 +349,7 @@ struct PelletMgr : public MonoObjectMgr {
 	ID32 getConfigIdAt(int);
 
 	bool isMovieFlag(u16 flag) { return mMovieFlags & flag; }
-	void setMovieFlags(u16 flag) { mMovieFlags |= flag; }
+	void setMovieFlags(u16 flag) { mMovieFlags = flag; }
 
 	static int getUfoIndexFromID(u32 ufoID);
 	static u32 getUfoIDFromIndex(int);

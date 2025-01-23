@@ -18,6 +18,7 @@ struct DrawHurryUp {
 	 * @brief TODO
 	 */
 	enum messageTypeFlag {
+		MesgType1 = 1,
 		// TODO: this
 	};
 

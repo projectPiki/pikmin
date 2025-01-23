@@ -176,7 +176,13 @@ struct DrawGameInfo {
 	bool isLowerFrameOut();
 
 	// TODO: members
+	int _00; // _00
+	u16 _04; // _04
+	u16 _06; // _06
+	u16 _08; // _08
 };
+
+extern DrawGameInfo* pGameInfo;
 
 } // namespace zen
 

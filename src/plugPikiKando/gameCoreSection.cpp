@@ -29,37 +29,47 @@
 #include "teki.h"
 #include "ItemMgr.h"
 #include "PlantMgr.h"
+#include "Dolphin/pad.h"
 #include "Pcam/CameraManager.h"
 #include "PlayerState.h"
 #include "RadarInfo.h"
 #include "Interface.h"
-#include "Dolphin/os.h"
+#include "GoalItem.h"
+#include "GameStat.h"
+#include "PikiMgr.h"
+#include "PikiHeadItem.h"
+#include "NaviState.h"
+#include "PikiState.h"
+#include "Pcam/Camera.h"
+#include "MoviePlayer.h"
+#include "RumbleMgr.h"
+#include "UfoItem.h"
+#include "FlowController.h"
+#include "DebugLog.h"
 
 u16 GameCoreSection::pauseFlag;
 int GameCoreSection::textDemoState;
 u16 GameCoreSection::textDemoTimer;
 int GameCoreSection::textDemoIndex;
+PcamCameraManager* cameraMgr;
+bool lastDamage;
+bool currDamage;
+u32 damageParm;
+bool preloadUFO;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "gameCoreSection");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("gameCoreSection")
 
 /*
  * --INFO--
@@ -110,368 +120,124 @@ void GameCoreSection::updateTextDemo()
  * Address:	8010CF98
  * Size:	000464
  */
-void GameCoreSection::startMovie(u32, bool)
+void GameCoreSection::startMovie(u32 flags, bool b)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,11,11
-	  stwu      r1, -0xC0(r1)
-	  stmw      r25, 0xA4(r1)
-	  addi      r31, r5, 0
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  stb       r31, 0x30(r3)
-	  li        r3, 0
-	  stb       r3, 0x30A0(r13)
-	  beq-      .loc_0x38
-	  li        r0, 0x2
-	  stb       r0, 0x30A0(r13)
+	_30                    = b;
+	GoalItem::demoHideFlag = 0;
+	if (flags & 0x100000) {
+		GoalItem::demoHideFlag = 2;
+	}
 
-	.loc_0x38:
-	  lwz       r3, 0x301C(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x4C
-	  li        r0, 0x5
-	  sth       r0, 0x200(r3)
+	if (pelletMgr) {
+		pelletMgr->setMovieFlags(5);
+	}
 
-	.loc_0x4C:
-	  lwz       r3, 0x3160(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x70
-	  li        r4, 0
-	  bl        0x3DF2C
-	  lwz       r3, 0x3160(r13)
-	  li        r4, 0x7
-	  li        r5, 0x1
-	  bl        0x3DFC4
+	PRINT("+ movie start : flags=%x\n", flags);
 
-	.loc_0x70:
-	  lwz       r4, 0x3068(r13)
-	  li        r3, 0
-	  rlwinm.   r0,r30,0,20,20
-	  sth       r3, 0x70(r4)
-	  sth       r3, 0x72(r4)
-	  beq-      .loc_0x98
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x72(r3)
-	  ori       r0, r0, 0x1
-	  sth       r0, 0x72(r3)
+	if (tekiMgr) {
+		tekiMgr->setVisibleTypeTable(false);
+		tekiMgr->setVisibleType(TEKI_Palm, true);
+	}
 
-	.loc_0x98:
-	  rlwinm.   r0,r30,0,19,19
-	  beq-      .loc_0xB0
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x70(r3)
-	  ori       r0, r0, 0x1
-	  sth       r0, 0x70(r3)
+	pikiMgr->hideAll();
+	if (flags & 0x800) {
+		pikiMgr->setRefreshFlag(1);
+	}
+	if (flags & 0x1000) {
+		pikiMgr->setUpdateFlag(1);
+	}
+	if (flags & 0x2000) {
+		pikiMgr->setRefreshFlag(2);
+	}
+	if (flags & 0x4000) {
+		pikiMgr->setUpdateFlag(2);
+	}
+	if (flags & 0x8000) {
+		pikiMgr->setRefreshFlag(4);
+	}
+	if (flags & 0x10000) {
+		pikiMgr->setUpdateFlag(4);
+	}
 
-	.loc_0xB0:
-	  rlwinm.   r0,r30,0,18,18
-	  beq-      .loc_0xC8
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x72(r3)
-	  ori       r0, r0, 0x2
-	  sth       r0, 0x72(r3)
+	if (pikiMgr->isUpdating(1)) {
+		PRINT("+ update free piki\n");
+	}
+	if (pikiMgr->isUpdating(2)) {
+		PRINT("+ update formation piki\n");
+	}
+	if (pikiMgr->isUpdating(4)) {
+		PRINT("+ update work piki\n");
+	}
 
-	.loc_0xC8:
-	  rlwinm.   r0,r30,0,17,17
-	  beq-      .loc_0xE0
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x70(r3)
-	  ori       r0, r0, 0x2
-	  sth       r0, 0x70(r3)
+	if (pikiMgr->isRefreshing(1)) {
+		PRINT("+ refresh free piki\n");
+	}
+	if (pikiMgr->isRefreshing(2)) {
+		PRINT("+ refresh formation piki\n");
+	}
+	if (pikiMgr->isRefreshing(4)) {
+		PRINT("+ refresh work piki\n");
+	}
 
-	.loc_0xE0:
-	  rlwinm.   r0,r30,0,16,16
-	  beq-      .loc_0xF8
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x72(r3)
-	  ori       r0, r0, 0x4
-	  sth       r0, 0x72(r3)
+	if (flags & 0x200000) {
+		pikiMgr->setUpdateFlag(8);
+	}
 
-	.loc_0xF8:
-	  rlwinm.   r0,r30,0,15,15
-	  beq-      .loc_0x110
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x70(r3)
-	  ori       r0, r0, 0x4
-	  sth       r0, 0x70(r3)
+	{
+		Iterator it(pikiMgr);
+		CI_LOOP(it)
+		{
+			Piki* piki = (Piki*)(*it);
+			if (piki->isAlive()) {
+				piki->startDemo();
+			}
+		}
+	}
 
-	.loc_0x110:
-	  rlwinm.   r0,r30,0,10,10
-	  beq-      .loc_0x128
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x70(r3)
-	  ori       r0, r0, 0x8
-	  sth       r0, 0x70(r3)
+	Navi* orima = naviMgr->getNavi();
+	if (orima) {
+		orima->mNaviLightEfx->changeEffect(EffectMgr::EFF_Navi_Light);
+		orima->mNaviLightGlowEfx->changeEffect(EffectMgr::EFF_Navi_LightGlow);
+		if (orima->mDamageEfxA) {
+			orima->mDamageEfxA->pmSwitchOff(0x10);
+		}
+		if (orima->mDamageEfxB) {
+			orima->mDamageEfxB->pmSwitchOff(0x10);
+		}
+		if (orima->mDamageEfxC) {
+			orima->mDamageEfxC->pmSwitchOff(0x10);
+		}
+		if (orima->isDamaged()) {
+			orima->finishDamage();
+		}
+		int state = orima->mStateMachine->getCurrID(orima);
+		if (b) {
+			PRINT("++++++++++ KILL ANTENNA\n");
+			orima->mNaviLightEfx->stop();
+			orima->mNaviLightGlowEfx->stop();
+		}
+		orima->mRippleEffect->stop();
+		if (state != NAVISTATE_DemoInf && state != NAVISTATE_Starting) {
+			PRINT("************ NAVI => DEMO_WAIT STATE \n");
+			orima->mStateMachine->transit(orima, NAVISTATE_DemoWait);
+		}
+	}
 
-	.loc_0x128:
-	  lwz       r28, 0x3068(r13)
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-	  b         .loc_0x1C4
+	{
+		Iterator it(pikiMgr);
+		CI_LOOP(it)
+		{
+			Piki* piki = (Piki*)(*it);
+			int color  = piki->mColor;
+			if ((color == Blue && flags & 0x8) || (color == Red && flags & 0x10) || (color == Yellow && flags & 0x20)) {
+				piki->mFreeLightEffect->stop();
+			}
+		}
+	}
 
-	.loc_0x148:
-	  cmpwi     r27, -0x1
-	  bne-      .loc_0x16C
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x184
-
-	.loc_0x16C:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x184:
-	  mr        r25, r3
-	  lwz       r12, 0x0(r25)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1A8
-	  mr        r3, r25
-	  bl        -0x468E4
-
-	.loc_0x1A8:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-
-	.loc_0x1C4:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1EC
-	  li        r0, 0x1
-	  b         .loc_0x218
-
-	.loc_0x1EC:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x214
-	  li        r0, 0x1
-	  b         .loc_0x218
-
-	.loc_0x214:
-	  li        r0, 0
-
-	.loc_0x218:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x148
-	  lwz       r3, 0x3120(r13)
-	  bl        0xA208
-	  mr.       r25, r3
-	  beq-      .loc_0x314
-	  lwz       r3, 0x774(r25)
-	  li        r4, 0x15
-	  bl        0x728C
-	  lwz       r3, 0x778(r25)
-	  li        r4, 0x16
-	  bl        0x7280
-	  lwz       r3, 0x2D4(r25)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x260
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,28,26
-	  stw       r0, 0x80(r3)
-
-	.loc_0x260:
-	  lwz       r3, 0x2D8(r25)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x278
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,28,26
-	  stw       r0, 0x80(r3)
-
-	.loc_0x278:
-	  lwz       r3, 0x2DC(r25)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x290
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,28,26
-	  stw       r0, 0x80(r3)
-
-	.loc_0x290:
-	  lbz       r0, 0x2B4(r25)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2A4
-	  mr        r3, r25
-	  bl        -0x137D0
-
-	.loc_0x2A4:
-	  lwz       r3, 0xADC(r25)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x2B8
-	  lwz       r28, 0x4(r3)
-	  b         .loc_0x2BC
-
-	.loc_0x2B8:
-	  li        r28, -0x1
-
-	.loc_0x2BC:
-	  rlwinm.   r0,r31,0,24,31
-	  beq-      .loc_0x2D4
-	  lwz       r3, 0x774(r25)
-	  bl        0x727C
-	  lwz       r3, 0x778(r25)
-	  bl        0x7274
-
-	.loc_0x2D4:
-	  lwz       r3, 0x318(r25)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  cmpwi     r28, 0x16
-	  beq-      .loc_0x314
-	  cmpwi     r28, 0x17
-	  beq-      .loc_0x314
-	  lwz       r3, 0x320(r25)
-	  addi      r4, r25, 0
-	  li        r5, 0x15
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x314:
-	  lwz       r27, 0x3068(r13)
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r28, r3, 0
-	  rlwinm    r31,r30,0,28,28
-	  rlwinm    r26,r30,0,27,27
-	  rlwinm    r25,r30,0,26,26
-	  b         .loc_0x3E0
-
-	.loc_0x340:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0x364
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x37C
-
-	.loc_0x364:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x37C:
-	  lhz       r0, 0x510(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x390
-	  cmplwi    r31, 0
-	  bne-      .loc_0x3B0
-
-	.loc_0x390:
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x3A0
-	  cmplwi    r26, 0
-	  bne-      .loc_0x3B0
-
-	.loc_0x3A0:
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x3C4
-	  cmplwi    r25, 0
-	  beq-      .loc_0x3C4
-
-	.loc_0x3B0:
-	  lwz       r3, 0x434(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x3C4:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x3E0:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x408
-	  li        r0, 0x1
-	  b         .loc_0x434
-
-	.loc_0x408:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x430
-	  li        r0, 0x1
-	  b         .loc_0x434
-
-	.loc_0x430:
-	  li        r0, 0
-
-	.loc_0x434:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x340
-	  rlwinm.   r0,r30,0,21,21
-	  beq-      .loc_0x450
-	  lwz       r0, 0x2C(r29)
-	  ori       r0, r0, 0x4
-	  stw       r0, 0x2C(r29)
-
-	.loc_0x450:
-	  lmw       r25, 0xA4(r1)
-	  lwz       r0, 0xC4(r1)
-	  addi      r1, r1, 0xC0
-	  mtlr      r0
-	  blr
-	*/
+	if (flags & 0x400) {
+		_2C |= 4;
+	}
 }
 
 /*
@@ -479,186 +245,55 @@ void GameCoreSection::startMovie(u32, bool)
  * Address:	8010D3FC
  * Size:	000254
  */
-void GameCoreSection::endMovie(int)
+void GameCoreSection::endMovie(int a)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0xB0(r1)
-	  stfd      f31, 0xA8(r1)
-	  stfd      f30, 0xA0(r1)
-	  stmw      r27, 0x8C(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  lwz       r5, 0x3160(r13)
-	  stb       r0, 0x30A0(r13)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x40
-	  addi      r3, r5, 0
-	  li        r4, 0x1
-	  bl        0x3DAE8
+	GoalItem::demoHideFlag = 0;
+	if (tekiMgr) {
+		tekiMgr->setVisibleTypeTable(true);
+	}
+	if (pelletMgr) {
+		pelletMgr->setMovieFlags(7);
+	}
+	PRINT("+ movie done\n");
+	PRINT("+ reset PikiMgr update/refresh flags\n");
+	pikiMgr->setUpdateFlag(7);
+	pikiMgr->setRefreshFlag(7);
 
-	.loc_0x40:
-	  lwz       r3, 0x301C(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x54
-	  li        r0, 0x7
-	  sth       r0, 0x200(r3)
+	{
+		Iterator it(pikiMgr);
+		CI_LOOP(it)
+		{
+			Piki* piki = (Piki*)(*it);
+			piki->mFreeLightEffect->restart();
+			piki->finishDemo();
+		}
+	}
 
-	.loc_0x54:
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x70(r3)
-	  ori       r0, r0, 0x7
-	  sth       r0, 0x70(r3)
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x72(r3)
-	  ori       r0, r0, 0x7
-	  sth       r0, 0x72(r3)
-	  lwz       r29, 0x3068(r13)
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-	  b         .loc_0x10C
+	mNavi->mNaviLightEfx->restart();
+	mNavi->mNaviLightGlowEfx->restart();
+	_2C = 0;
 
-	.loc_0x94:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0xB8
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xD0
+	if (mNavi) {
+		f32 angle;
+		if (_30) {
+			angle = mNavi->mDirection + PI;
+			PRINT("use navi back camera\n");
+		} else {
+			angle = cameraMgr->mCamera->_C8;
+			PRINT("using previous camera\\n");
+		}
+		angle = cameraMgr->mCamera->_C8;
+		if (a == 4 || a == 5 || a == 6 || a == 16) {
+			Vector3f diff = gameflow.mMoviePlayer->_12C - gameflow.mMoviePlayer->mLookAtPos;
+			diff.y        = 0.0f;
+			diff.normalise();
+			angle = atan2f(diff.x, diff.z);
+		}
+		cameraMgr->mCamera->makeCurrentPosition(angle);
+		cameraMgr->update();
+	}
 
-	.loc_0xB8:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xD0:
-	  mr        r27, r3
-	  lwz       r3, 0x434(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r27
-	  bl        -0x46BE0
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x10C:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x134
-	  li        r0, 0x1
-	  b         .loc_0x160
-
-	.loc_0x134:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x15C
-	  li        r0, 0x1
-	  b         .loc_0x160
-
-	.loc_0x15C:
-	  li        r0, 0
-
-	.loc_0x160:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x94
-	  lwz       r3, 0x58(r30)
-	  lwz       r3, 0x774(r3)
-	  bl        0x6F8C
-	  lwz       r3, 0x58(r30)
-	  lwz       r3, 0x778(r3)
-	  bl        0x6F80
-	  li        r0, 0
-	  stw       r0, 0x2C(r30)
-	  lwz       r0, 0x58(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x238
-	  lwz       r3, 0x30D8(r13)
-	  subi      r0, r31, 0x4
-	  cmplwi    r0, 0x2
-	  lwz       r3, 0x20(r3)
-	  lfs       f1, 0xC8(r3)
-	  ble-      .loc_0x1B4
-	  cmpwi     r31, 0x10
-	  bne-      .loc_0x218
-
-	.loc_0x1B4:
-	  lis       r3, 0x803A
-	  lfs       f0, -0x6130(r2)
-	  subi      r3, r3, 0x2848
-	  lwz       r3, 0x1DC(r3)
-	  fmuls     f0, f0, f0
-	  addi      r4, r3, 0x138
-	  lfs       f1, 0x138(r3)
-	  lfsu      f3, 0x12C(r3)
-	  fsubs     f31, f3, f1
-	  lfs       f2, 0x8(r3)
-	  lfs       f1, 0x8(r4)
-	  fsubs     f30, f2, f1
-	  fmuls     f1, f31, f31
-	  fmuls     f2, f30, f30
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xFF9B0
-	  lfs       f0, -0x6130(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x20C
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-
-	.loc_0x20C:
-	  fmr       f1, f31
-	  fmr       f2, f30
-	  bl        0x10E3E8
-
-	.loc_0x218:
-	  lwz       r3, 0x30D8(r13)
-	  lwz       r3, 0x20(r3)
-	  bl        0x14910
-	  lwz       r3, 0x30D8(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x238:
-	  lmw       r27, 0x8C(r1)
-	  lwz       r0, 0xB4(r1)
-	  lfd       f31, 0xA8(r1)
-	  lfd       f30, 0xA0(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[6];
 }
 
 /*
@@ -698,111 +333,24 @@ bool GameCoreSection::hidePelletExceptSucked()
  */
 void GameCoreSection::exitDayEnd()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  lwz       r31, 0x3068(r13)
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0xD8
-
-	.loc_0x38:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x5C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x74
-
-	.loc_0x5C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x74:
-	  mr        r29, r3
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xBC
-	  lwz       r3, 0x30AC(r13)
-	  lhz       r4, 0x510(r29)
-	  bl        -0x1AD30
-	  cmplwi    r3, 0
-	  beq-      .loc_0xB0
-	  mr        r4, r29
-	  bl        -0x224A0
-	  b         .loc_0xBC
-
-	.loc_0xB0:
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  bl        -0x82A28
-
-	.loc_0xBC:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0xD8:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x100
-	  li        r0, 0x1
-	  b         .loc_0x12C
-
-	.loc_0x100:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x128
-	  li        r0, 0x1
-	  b         .loc_0x12C
-
-	.loc_0x128:
-	  li        r0, 0
-
-	.loc_0x12C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x38
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	int entered = 0;
+	int killed  = 0;
+	Iterator it(pikiMgr);
+	CI_LOOP(it)
+	{
+		Piki* piki = (Piki*)*it;
+		if (piki->isAlive()) {
+			GoalItem* item = itemMgr->getContainer(piki->mColor);
+			if (item) {
+				item->enterGoal(piki);
+				entered++;
+			} else {
+				piki->kill(false);
+				killed++;
+			}
+		}
+	}
+	PRINT("((EXITDAYEND)) ***** FORCE ENTERPIKIS %d / killed %d \n", entered, killed);
 }
 
 /*
@@ -812,6 +360,24 @@ void GameCoreSection::exitDayEnd()
  */
 void GameCoreSection::forceDayEnd()
 {
+	PRINT("*********** FORCE DAY END =====================================\n");
+	seSystem->resetSystem();
+	playerState->setDayEnd(true);
+	PRINT("------------ forceDayEnd --------------\n");
+	_38[2] = 1;
+	_38[1] = 1;
+	_38[0] = 1;
+	_31    = 1;
+	clearDeadlyPikmins();
+	enterFreePikmins();
+
+	Iterator it(pikiMgr);
+	CI_LOOP(it)
+	{
+		Piki* piki = (Piki*)*it;
+		piki->forceFinishLook();
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -940,126 +506,33 @@ void GameCoreSection::forceDayEnd()
  */
 void GameCoreSection::clearDeadlyPikmins()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r27, 0x2C(r1)
-	  lwz       r30, 0x3068(r13)
-	  lwz       r12, 0x0(r30)
-	  mr        r3, r30
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r4, 0x802C
-	  addi      r29, r3, 0
-	  addi      r31, r4, 0x21AC
-	  b         .loc_0x10C
+	int killed = 0;
+	Iterator it(pikiMgr);
+	CI_LOOP(it)
+	{
+		Piki* piki = (Piki*)*it;
+		int state  = piki->getState();
+		bool kill  = false;
+		switch (state) {
+		case PIKISTATE_Dying:
+		case PIKISTATE_Swallowed:
+		case PIKISTATE_WaterHanged:
+		case PIKISTATE_Kinoko:
+		case PIKISTATE_Drown:
+			kill = true;
+			break;
+		}
+		if (piki->isKinoko()) {
+			kill = true;
+		}
 
-	.loc_0x38:
-	  cmpwi     r29, -0x1
-	  bne-      .loc_0x5C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x74
+		if (kill || !piki->isAlive()) {
+			piki->kill(false);
+			killed++;
+		}
+	}
 
-	.loc_0x5C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x74:
-	  mr        r28, r3
-	  bl        -0x4544C
-	  subi      r0, r3, 0x6
-	  cmplwi    r0, 0x12
-	  li        r27, 0
-	  bgt-      .loc_0xA0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r31, r0
-	  mtctr     r0
-	  bctr
-	  li        r27, 0x1
-
-	.loc_0xA0:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC0
-	  li        r27, 0x1
-
-	.loc_0xC0:
-	  rlwinm.   r0,r27,0,24,31
-	  bne-      .loc_0xE4
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xF0
-
-	.loc_0xE4:
-	  addi      r3, r28, 0
-	  li        r4, 0
-	  bl        -0x82D34
-
-	.loc_0xF0:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-
-	.loc_0x10C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x134
-	  li        r0, 0x1
-	  b         .loc_0x160
-
-	.loc_0x134:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x15C
-	  li        r0, 0x1
-	  b         .loc_0x160
-
-	.loc_0x15C:
-	  li        r0, 0
-
-	.loc_0x160:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x38
-	  lmw       r27, 0x2C(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("clearDeadlyPikmins %d", killed);
 }
 
 /*
@@ -1069,241 +542,57 @@ void GameCoreSection::clearDeadlyPikmins()
  */
 void GameCoreSection::enterFreePikmins()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stmw      r26, 0x58(r1)
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x8E700
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x30C
-	  lwz       r31, 0x3068(r13)
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x2B0
+	if (playerState->isEnding()) {
+		return;
+	}
 
-	.loc_0x40:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x64
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x7C
+	int goalSafe = 0;
+	int ufoSafe  = 0;
 
-	.loc_0x64:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
+	Iterator it(pikiMgr);
+	CI_LOOP(it)
+	{
+		Piki* piki = (Piki*)*it;
+		u32 mode   = piki->mMode;
+		if (!piki->isKinoko() && !piki->isHolding() && piki->isAlive() && (int)mode != PikiMode::FormationMode && (1 < mode - 11)) {
+			int state = piki->getState();
+			if (state != 7 && state != 24 && state == 0) {
+				for (int i = 0; i < 3; i++) {
+					Navi* navi     = naviMgr->getNavi();
+					GoalItem* goal = itemMgr->getContainer(i);
+					if (goal
+					    && qdist2(goal->mPosition.x, goal->mPosition.z, piki->mPosition.x, piki->mPosition.z)
+					           <= pikiMgr->mPikiParms->mPikiParms._45C()) {
+						if (state == 26 || state == 3 || state == 28) {
+							piki->mFSM->transit(piki, 0);
+						}
+						piki->mFSM->transit(piki, 0);
+						navi->mGoalItem = itemMgr->getContainer(piki->mColor);
+						piki->changeMode(11, nullptr);
+						goalSafe++;
+						break;
+					}
 
-	.loc_0x7C:
-	  mr        r27, r3
-	  lwz       r12, 0x0(r27)
-	  lhz       r28, 0x4FC(r27)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x294
-	  lwz       r0, 0x2AC(r27)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x294
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x294
-	  cmpwi     r28, 0x1
-	  beq-      .loc_0x294
-	  subi      r0, r28, 0xB
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x294
-	  mr        r3, r27
-	  bl        -0x4562C
-	  addi      r28, r3, 0
-	  cmpwi     r28, 0x7
-	  beq-      .loc_0x294
-	  cmpwi     r28, 0x18
-	  beq-      .loc_0x294
-	  cmpwi     r28, 0
-	  bne-      .loc_0x294
-	  li        r26, 0
+					UfoItem* ufo = itemMgr->getUfo();
+					if (ufo) {
+						Vector3f pos = ufo->getGoalPos();
+						if (qdist2(pos.x, pos.z, piki->mPosition.x, piki->mPosition.z) <= pikiMgr->mPikiParms->mPikiParms._45C()) {
+							if (state == 26 || state == 3 || state == 28) {
+								piki->mFSM->transit(piki, 0);
+							}
+							piki->mFSM->transit(piki, 0);
+							navi->mGoalItem = itemMgr->getContainer(piki->mColor);
+							piki->changeMode(11, nullptr);
+							ufoSafe++;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
 
-	.loc_0x100:
-	  lwz       r3, 0x3120(r13)
-	  bl        0x981C
-	  mr        r29, r3
-	  lwz       r3, 0x30AC(r13)
-	  mr        r4, r26
-	  bl        -0x1B200
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1C0
-	  lfs       f1, 0x94(r3)
-	  lfs       f2, 0x9C(r3)
-	  lfs       f3, 0x94(r27)
-	  lfs       f4, 0x9C(r27)
-	  bl        -0xD55AC
-	  lwz       r3, 0x3068(r13)
-	  lwz       r3, 0x68(r3)
-	  lfs       f0, 0x468(r3)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x1C0
-	  cmpwi     r28, 0x1A
-	  beq-      .loc_0x164
-	  cmpwi     r28, 0x3
-	  beq-      .loc_0x164
-	  cmpwi     r28, 0x1C
-	  bne-      .loc_0x180
-
-	.loc_0x164:
-	  lwz       r3, 0x490(r27)
-	  addi      r4, r27, 0
-	  li        r5, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x180:
-	  lwz       r3, 0x490(r27)
-	  addi      r4, r27, 0
-	  li        r5, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x30AC(r13)
-	  lhz       r4, 0x510(r27)
-	  bl        -0x1B290
-	  stw       r3, 0x708(r29)
-	  addi      r3, r27, 0
-	  li        r4, 0xB
-	  li        r5, 0
-	  bl        -0x40A90
-	  b         .loc_0x294
-
-	.loc_0x1C0:
-	  lwz       r3, 0x30AC(r13)
-	  bl        -0x1B030
-	  cmplwi    r3, 0
-	  beq-      .loc_0x288
-	  mr        r4, r3
-	  lwz       r12, 0x0(r3)
-	  addi      r3, r1, 0x34
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, 0x34(r1)
-	  lfs       f2, 0x3C(r1)
-	  lfs       f3, 0x94(r27)
-	  lfs       f4, 0x9C(r27)
-	  bl        -0xD5674
-	  lwz       r3, 0x3068(r13)
-	  lwz       r3, 0x68(r3)
-	  lfs       f0, 0x468(r3)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x288
-	  cmpwi     r28, 0x1A
-	  beq-      .loc_0x22C
-	  cmpwi     r28, 0x3
-	  beq-      .loc_0x22C
-	  cmpwi     r28, 0x1C
-	  bne-      .loc_0x248
-
-	.loc_0x22C:
-	  lwz       r3, 0x490(r27)
-	  addi      r4, r27, 0
-	  li        r5, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x248:
-	  lwz       r3, 0x490(r27)
-	  addi      r4, r27, 0
-	  li        r5, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x30AC(r13)
-	  lhz       r4, 0x510(r27)
-	  bl        -0x1B358
-	  stw       r3, 0x708(r29)
-	  addi      r3, r27, 0
-	  li        r4, 0xB
-	  li        r5, 0
-	  bl        -0x40B58
-	  b         .loc_0x294
-
-	.loc_0x288:
-	  addi      r26, r26, 0x1
-	  cmpwi     r26, 0x3
-	  blt+      .loc_0x100
-
-	.loc_0x294:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x2B0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2D8
-	  li        r0, 0x1
-	  b         .loc_0x304
-
-	.loc_0x2D8:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x300
-	  li        r0, 0x1
-	  b         .loc_0x304
-
-	.loc_0x300:
-	  li        r0, 0
-
-	.loc_0x304:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x40
-
-	.loc_0x30C:
-	  lmw       r26, 0x58(r1)
-	  lwz       r0, 0x74(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("enterFreePikmins %d + %d = %d", goalSafe, ufoSafe, goalSafe + ufoSafe);
 }
 
 /*
@@ -1313,6 +602,251 @@ void GameCoreSection::enterFreePikmins()
  */
 void GameCoreSection::cleanupDayEnd()
 {
+	pauseFlag = false;
+	clearDeadlyPikmins();
+	enterFreePikmins();
+	PRINT("________ CLEANUP DAYEND ____________________________\n");
+	rumbleMgr->stop();
+
+	switch (flowCont.mCurrentStage->mStageID) {
+	case 0:
+		playerState->mResultFlags.setOn(1);
+		playerState->mResultFlags.setOn(29);
+		break;
+	case 1:
+		playerState->mResultFlags.setOn(3);
+		break;
+	case 3:
+		playerState->mResultFlags.setOn(8);
+		break;
+	case 4:
+		break;
+	}
+	if (playerState->getCurrDay() + 1 == playerState->getTotalDays() - 1) {
+		playerState->mResultFlags.setOn(10);
+	}
+	if (playerState->getCurrParts() >= 11 && playerState->getCurrDay() >= 9) {
+		playerState->mResultFlags.setOn(26);
+	}
+	int day = playerState->getCurrDay();
+	playerState->setDayCollectCount(day, playerState->getCurrParts());
+	playerState->setDayPowerupCount(day, playerState->getNextPowerupNumber());
+
+	for (int i = 0; i < 3; i++) {
+		GoalItem* goal = itemMgr->getContainer(i);
+		if (goal) {
+			goal->setSpotActive(false);
+		}
+	}
+	playerState->setDayEnd(true);
+
+	if (naviMgr->getNavi()) {
+		PRINT("********** KILL RIPPLE EFFECT****\n");
+		naviMgr->getNavi()->mRippleEffect->kill();
+	}
+	seSystem->resetSystem();
+
+	if (!playerState->hasRadar() && !playerState->isGameCourse()) {
+		PRINT("** SKIP CLEANUPDAYEND\n");
+		return;
+	}
+
+	PRINT("STEP (1) : Save Generators\n");
+	if (!playerState->hasRadar()) {
+		generatorCache->beginSave(flowCont.mCurrentStage->mStageIndex);
+		int gens    = 0;
+		int objs    = 0;
+		int pellets = 0;
+		for (Generator* gen = (Generator*)generatorList->mGenListHead->mChild; gen; gen = (Generator*)gen->mNext) {
+			if (gen->mCarryOverFlags & 1) {
+				generatorCache->saveGenerator(gen);
+				gens++;
+			}
+		}
+		for (Generator* gen = (Generator*)generatorList->mGenListHead->mChild; gen; gen = (Generator*)gen->mNext) {
+			if ((gen->mCarryOverFlags & 1) && (gen->mCarryOverFlags & 2)) {
+				generatorCache->saveGeneratorCreature(gen);
+				objs++;
+			}
+		}
+
+		Iterator it(pelletMgr);
+		CI_LOOP(it)
+		{
+			Pellet* pelt = (Pellet*)*it;
+			if (pelt->mConfig->mPelletType() == PELTYPE_UfoPart) {
+				generatorCache->saveUfoParts(pelt);
+				pellets++;
+			}
+		}
+
+		PRINT("****************** SAVED %d GENERATORS *****************\n", gens);
+		PRINT("****************** SAVED %d CREATURES *****************\n", objs);
+		PRINT("****************** SAVED %d UFOPARTS *****************\n", pellets);
+		generatorCache->endSave();
+		generatorCache->dump();
+	}
+
+	PRINT("STEP (2) : remove objects (teki/boss/pellet/free pikis)\n");
+	int killed = 0;
+	if (!playerState->hasRadar() && !playerState->isTutorial() && !playerState->isEnding()) {
+		Iterator it(pikiMgr);
+		CI_LOOP(it)
+		{
+			Piki* piki = (Piki*)*it;
+			int mode   = piki->mMode;
+			if (piki->isKinoko()) {
+				GameStat::victimPikis.inc(piki->mColor);
+				GameStat::deadPikis.inc(piki->mColor);
+				piki->setEraseKill();
+				piki->kill(false);
+				it.dec();
+				killed++;
+			} else {
+				if (piki->isHolding()) {
+					InteractRelease act(piki, 1.0f);
+					AICreature* obj = (AICreature*)piki->getHoldCreature();
+					obj->stimulate(act);
+					((SimpleAI*)obj->mStateMachine)->start(obj, 4);
+					PRINT("BOMB KILL!\n");
+				}
+				int state = piki->getState();
+				if ((mode != 1 || state == 24 || state == 9 || state == 7 || state == 8 || state == 10 || state == 6 || state == 22
+				     || !piki->isAlive())
+				    && !(mode == 11 || mode == 12) && state != 26) {
+					bool test = false;
+					if (piki->mMode == 0) {
+						for (int i = 0; i < 3; i++) {
+							GoalItem* goal = itemMgr->getContainer(i);
+							if (goal
+							    && qdist2(goal->mPosition.x, goal->mPosition.z, piki->mPosition.x, piki->mPosition.z)
+							           <= pikiMgr->mPikiParms->mPikiParms._45C()) {
+								test = true;
+								break;
+							}
+							UfoItem* ufo = itemMgr->getUfo();
+							if (ufo) {
+								Vector3f pos = ufo->getGoalPos();
+								if (qdist2(pos.x, pos.z, piki->mPosition.x, piki->mPosition.z) <= pikiMgr->mPikiParms->mPikiParms._45C()) {
+									test = true;
+									break;
+								}
+							}
+						}
+					}
+					if (!test) {
+						GameStat::victimPikis.inc(piki->mColor);
+						GameStat::deadPikis.inc(piki->mColor);
+						piki->setEraseKill();
+						piki->kill(false);
+						it.dec();
+						killed++;
+					}
+				}
+			}
+		}
+		if (GameStat::victimPikis > 0) {
+			playerState->mResultFlags.setOn(23);
+		}
+	}
+	PRINT("++++++ %d PIKIS KILLED\n", killed);
+	tekiMgr->killAll();
+	bossMgr->killAll();
+	pelletMgr->killAll();
+
+	Iterator it(itemMgr);
+	CI_LOOP(it)
+	{
+		Creature* obj = *it;
+		if (obj->mObjType != OBJTYPE_Pikihead && obj->mObjType != OBJTYPE_Goal && obj->mObjType != OBJTYPE_Fulcrum
+		    && obj->mObjType != OBJTYPE_Rope) {
+			obj->kill(false);
+		}
+	}
+
+	Iterator ph_it(itemMgr->getPikiHeadMgr());
+	CI_LOOP(ph_it)
+	{
+		PikiHeadItem* obj = (PikiHeadItem*)*ph_it;
+		obj->setPermanentEffects(false);
+	}
+
+	EffectMgr* emgr = effectMgr;
+	emgr->mPtclMgr.killAllGenarator(true);
+	emgr->killAllShapes();
+
+	for (int i = 0; i < 3; i++) {
+		GoalItem* goal = itemMgr->getContainer(i);
+		if (goal && playerState->hasContainer(goal->mOnionColour)) {
+			goal->mSpotModelEff
+			    = effectMgr->create((EffectMgr::modelTypeTable)i, goal->mPosition, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(1.0f, 1.0f, 1.0f));
+		}
+	}
+
+	UfoItem* ufo = itemMgr->getUfo();
+	if (ufo) {
+		ufo->mRingFx = nullptr;
+		ufo->setSpotActive(true);
+	}
+
+	{
+		Iterator ph_it(itemMgr->getPikiHeadMgr());
+		CI_LOOP(ph_it)
+		{
+			PikiHeadItem* obj = (PikiHeadItem*)*ph_it;
+			obj->setPermanentEffects(true);
+		}
+	}
+
+	PRINT("STEP(3) : clear tekiMgr/bossMgr pointer\n");
+	tekiMgr = nullptr;
+	bossMgr = nullptr;
+	mMapMgr->mCollShape->initCore("");
+	if (!playerState->hasRadar()) {
+		playerState->update();
+	}
+	naviMgr->getNavi()->startMovieInf();
+	if (!playerState->hasRadar()) {
+		playerState->mResultFlags.dump();
+	}
+
+	PRINT("STEP (4) : record me pikis\n");
+
+	if (!playerState->hasRadar()) {
+		StageInf* inf = &flowCont.mCurrentStage->mStageInf;
+		Iterator ph_it(itemMgr->getPikiHeadMgr());
+		CI_LOOP(ph_it)
+		{
+			PikiHeadItem* obj = (PikiHeadItem*)*ph_it;
+			if (obj->mObjType == OBJTYPE_Pikihead) {
+				int id = obj->getCurrState()->getID();
+				if (id != 0 && id != 1 && id != 12 && id != 13) {
+					BaseInf* bInf = inf->mBPikiInfMgr.getFreeInf();
+					if (bInf) {
+						PRINT("store PIKIHEAD !\n");
+						bInf->store(obj);
+					} else {
+						PRINT("no free inf for PikiHead ***\n");
+					}
+					PRINT(">>> @@@@ FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
+				}
+			}
+			obj->kill(false);
+			ph_it.dec();
+		}
+		playerState->updateFinalResult();
+	} else {
+		PRINT("MECK IS SLEEPY\n");
+	}
+
+	playerState->mSroutedNum += GameStat::bornPikis;
+	int lost = GameStat::deadPikis - GameStat::victimPikis;
+	if (lost < 0) {
+		lost = 0;
+	}
+	playerState->mLostBattlePikis += lost;
+	playerState->mLeftBehindPikis += GameStat::victimPikis;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2360,101 +1894,14 @@ void GameCoreSection::cleanupDayEnd()
  */
 void GameCoreSection::prepareBadEnd()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  lwz       r3, 0x30AC(r13)
-	  lwz       r31, 0x64(r3)
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0xB8
-
-	.loc_0x3C:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x60
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x78
-
-	.loc_0x60:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x78:
-	  addi      r29, r3, 0
-	  li        r4, 0
-	  bl        -0x22260
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  bl        -0x83F04
-	  cmpwi     r30, 0
-	  blt-      .loc_0x9C
-	  subi      r30, r30, 0x1
-
-	.loc_0x9C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0xB8:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xE0
-	  li        r0, 0x1
-	  b         .loc_0x10C
-
-	.loc_0xE0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x108
-	  li        r0, 0x1
-	  b         .loc_0x10C
-
-	.loc_0x108:
-	  li        r0, 0
-
-	.loc_0x10C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x3C
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	Iterator ph_it(itemMgr->getPikiHeadMgr());
+	CI_LOOP(ph_it)
+	{
+		PikiHeadItem* obj = (PikiHeadItem*)*ph_it;
+		obj->setPermanentEffects(false);
+		obj->kill(false);
+		ph_it.dec();
+	}
 }
 
 /*
@@ -2464,45 +1911,23 @@ void GameCoreSection::prepareBadEnd()
  */
 void GameCoreSection::exitStage()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  lwz       r3, 0x2F6C(r13)
-	  stw       r31, 0x2F78(r13)
-	  stw       r31, 0x3120(r13)
-	  bl        -0x8E3B4
-	  lwz       r3, 0x3038(r13)
-	  bl        -0x699D4
-	  stw       r31, 0x3074(r13)
-	  stw       r31, 0x3078(r13)
-	  stw       r31, 0x307C(r13)
-	  stw       r31, 0x2F80(r13)
-	  stw       r31, 0x2F98(r13)
-	  bl        -0x8FA14
-	  bl        -0x36438
-	  lwz       r3, 0x3030(r13)
-	  li        r4, 0
-	  bl        -0x6B69C
-	  li        r3, 0
-	  li        r4, 0
-	  bl        0xF6A08
-	  lwz       r3, 0x3180(r13)
-	  bl        0x8DE1C
-	  lwz       r3, 0x2FE8(r13)
-	  bl        -0x885E4
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  stw       r31, 0x230(r3)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	demoEventMgr = nullptr;
+	naviMgr      = nullptr;
+	playerState->exitCourse();
+	seSystem->exitCourse();
+	PRINT(" clean up singleton pattern\n");
+	GenObjectFactory::factory = nullptr;
+	GenTypeFactory::factory   = nullptr;
+	GenAreaFactory::factory   = nullptr;
+	AIConstant::_instance     = nullptr;
+	KeyConfig::_instance      = nullptr;
+	GlobalShape::exitCourse();
+	PikiShapeObject::exitCourse();
+	seMgr->setPikiNum(0);
+	PADControlMotor(0, 0);
+	effectMgr->exit();
+	memStat->reset();
+	flowCont._230 = 0;
 }
 
 /*
@@ -2552,942 +1977,1230 @@ void asmTest(f32, f32)
  */
 void GameCoreSection::initStage()
 {
+	playerState->setDayEnd(false);
+	if (playerState->hasRadar()) {
+		pikiInfMgr.initGame();
+	}
+
+	lastDamage = false;
+	currDamage = false;
+	damageParm = 0;
+	_38[2]     = 0;
+	_38[1]     = 0;
+	_38[0]     = 0;
+
+	if (playerState->isTutorial()) {
+		_38[2] = 1;
+		_38[1] = 1;
+		_38[0] = 1;
+	}
+
+	switch (flowCont.mCurrentStage->mStageID) {
+	case 2:
+		playerState->mResultFlags.setOn(6);
+		break;
+	case 3:
+		playerState->mResultFlags.setOn(8);
+		break;
+	case 4:
+		break;
+	}
+
+	if (gameflow.mWorldClock.mCurrentDay > 10 && gameflow.mWorldClock.mCurrentDay < 20) {
+		playerState->mResultFlags.setOn(20);
+	} else if (gameflow.mWorldClock.mCurrentDay > 20) {
+		playerState->mResultFlags.setSeen(20);
+	}
+	playerState->initCourse();
+	PRINT("--------------- GeneratorCache : preload start\n");
+	memStat->start("genCache");
+	generatorCache->preload(flowCont.mCurrentStage->mStageIndex);
+	memStat->end("genCache");
+	GameStat::init();
+	PRINT("--------------- GeneratorCache : preload done\n");
+
+	memStat->start("initStage");
+	flowCont._230 = 0;
+	seMgr->setPikiNum(0);
+	mNavi->_730          = flowCont._250;
+	mNavi->mCurrKeyCount = flowCont._24C;
+
+	memStat->start("routeMgr");
+	routeMgr = new RouteMgr;
+	routeMgr->construct(mMapMgr);
+	if (routeMgr->getPathFinder('test') == nullptr) {
+		PRINT("finder is NULL\n");
+	}
+	memStat->end("routeMgr");
+	PRINT("done\n");
+
+	memStat->start("piki");
+	pikiMgr = new PikiMgr(mNavi);
+	pikiMgr->init();
+	pikiMgr->mPikiShape = _50;
+	pikiMgr->mMapMgr    = mMapMgr;
+
+	memStat->start("pikiCreate");
+	pikiMgr->create(102);
+	memStat->end("pikiCreate");
+	memStat->end("piki");
+	gameflow.addGenNode("pikiMgr", pikiMgr);
+	PRINT("done2\n");
+
+	char path[PATH_MAX];
+	strcpy(path, flowCont.mStagePath1);
+	for (char* i = &path[0]; *i != '.'; i++) { }
+	strncpy(path + 1, "gen", 4);
+	PRINT("---------- auto load generator file : <%s>\n", path);
+	for (char* i = &path[0]; *i != '.'; i++) { }
+	path[0] = '/';
+	path[1] = '0';
+	char path2[PATH_MAX];
+	bool useDefault = false;
+	bool useDay     = false;
+	bool useInit    = false;
+	bool usePlant   = false;
+	sprintf(path2, "%sdefault.gen", path);
+	RandomAccessStream* data = gsys->openFile(path2, true, true);
+	if (data) {
+		PRINT("DEFAULT GEN LOADED **********************************\n");
+		generatorMgr->read(*data, false);
+		data->close();
+		generatorMgr->updateUseList();
+		useDefault = true;
+	} else {
+		PRINT("*** NO GENERATOR FILE\n");
+		mNavi->mPosition.set(0.0f, 0.0f, 0.0f);
+		mNavi->mDayEndPosition = mNavi->mPosition;
+		mNavi->mDirection      = 0.0f;
+		mNavi->mRotation.set(0.0f, 0.0f, 0.0f);
+	}
+	mNavi->reset();
+
+	sprintf(path2, "%s%d.gen", path, (gameflow.mWorldClock.mCurrentDay - 1) % 30);
+	data = gsys->openFile(path2, true, true);
+	if (data) {
+		PRINT("** FILE %s READING\n", path2);
+		dailyGeneratorMgr->read(*data, false);
+		data->close();
+		dailyGeneratorMgr->updateUseList();
+		useDay = true;
+	} else {
+		PRINT("** FILE %s NOT FOUND\n", path2);
+	}
+
+	if (flowCont.mCurrentStage->_20 == 0) {
+		flowCont.mCurrentStage->_20 = 1;
+
+		sprintf(path2, "%sinit.gen", path);
+		data = gsys->openFile(path2, true, true);
+		if (data) {
+			PRINT("** FILE %s READING\n", path2);
+			onceGeneratorMgr->read(*data, false);
+			data->close();
+			onceGeneratorMgr->updateUseList();
+			useInit = true;
+		}
+	}
+
+	sprintf(path2, "%splants.gen", path);
+	data = gsys->openFile(path2, true, true);
+	if (data) {
+		PRINT("** FILE %s READING\n", path2);
+		plantGeneratorMgr->read(*data, false);
+		data->close();
+		plantGeneratorMgr->updateUseList();
+		usePlant = true;
+	}
+
+	int i  = 0;
+	u8 day = gameflow.mWorldClock.mCurrentDay - 1;
+	for (GenFileInfo* info = (GenFileInfo*)flowCont.mCurrentStage->mFileInfoList.mChild; info; info = (GenFileInfo*)info->mNext) {
+		if (info->_14 >= day && day <= info->_15 && !playerState->checkLimitGenFlag(i)) {
+			sprintf(path2, "%s%s", path, info->mName);
+			data = gsys->openFile(path2, true, true);
+			if (data) {
+				GeneratorMgr* gen = new GeneratorMgr;
+				gen->mName        = info->mName;
+				limitGeneratorMgr->add(gen);
+				gen->read(*data, true);
+				data->close();
+				playerState->setLimitGenFlag(i);
+				gen->setDayLimit(info->_16 + 1);
+				gen->updateUseList();
+			}
+		}
+		i++;
+	}
+
+	generatorList->updateUseList();
+	memStat->start("item");
+	itemMgr->initialise();
+	memStat->end("item");
+
+	memStat->start("mapMgr");
+	memStat->start("plant");
+	plantMgr->initialise();
+	memStat->end("plant");
+	memStat->end("mapMgr");
+
+	memStat->start("teki");
+	int old = gsys->setHeap(4);
+	tekiMgr->startStage();
+	gsys->setHeap(old);
+	memStat->end("teki");
+
+	memStat->start("boss");
+	old = gsys->setHeap(4);
+	bossMgr->constructBoss();
+	gsys->setHeap(old);
+	memStat->end("boss");
+
+	if (!preloadUFO) {
+		memStat->start("pellet");
+		pelletMgr->initShapeInfos();
+		memStat->end("pellet");
+		pelletMgr->registerUfoParts();
+	}
+
+	memStat->start("mapMgr");
+	memStat->start("workObj");
+	workObjectMgr->loadShapes();
+	memStat->end("workObj");
+	memStat->start("mapMgr");
+
+	memStat->start("bobby");
+	if (useDefault) {
+		PRINT("*** GEN1\n");
+		generatorMgr->init();
+	}
+	generatorList->createRamGenerators();
+
+	memStat->start("genCache");
+	generatorCache->load(flowCont.mCurrentStage->mStageIndex);
+	memStat->end("genCache");
+
+	if (useDay) {
+		PRINT("*** GEN2\n");
+		dailyGeneratorMgr->init();
+	}
+	if (useInit) {
+		PRINT("*** GEN3\n");
+		onceGeneratorMgr->init();
+	}
+	if (usePlant) {
+		PRINT("*** GEN4\n");
+		plantGeneratorMgr->init();
+	}
+
+	for (GeneratorMgr* gen = (GeneratorMgr*)limitGeneratorMgr->mChild; gen; gen = (GeneratorMgr*)gen->mNext) {
+		gen->init();
+	}
+	memStat->end("bobby");
+
+	Iterator it(pikiMgr);
+	CI_LOOP(it)
+	{
+		Piki* piki = (Piki*)*it;
+		piki->initColor(piki->mColor);
+	}
+
+	attentionCamera = new AttentionCamera;
+	cameraMgr->startCamera(naviMgr->getNavi());
+	cameraMgr->update();
+	mNavi->_310 = 1;
+
+	if (!playerState->hasRadar()) {
+		StageInf* inf = &flowCont.mCurrentStage->mStageInf;
+		PRINT("@@@@ FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
+		for (BaseInf* a = (BaseInf*)inf->mBPikiInfMgr.mActiveList.mChild; a; a = (BaseInf*)a->mNext) {
+			PikiHeadItem* item = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
+			if (item) {
+				((BaseInf*)inf)->restore(item); // I dont know if this is right
+				item->mPosition.y = mapMgr->getMinY(item->mPosition.x, item->mPosition.z, true);
+				item->init(item->mPosition);
+				item->setColor(item->mSeedColor);
+				item->startAI(0);
+				((SimpleAI*)item->mStateMachine)->start(item, 6);
+				PRINT(" NEW PIKIHEAD ****\n");
+				inf->mBPikiInfMgr.delInf(a);
+				PRINT("@@@@ FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
+			} else {
+				PRINT("no room for pikihead! ****\n");
+			}
+		}
+	}
+
+	PRINT("*** INIT TEKI NAKA PARTS ******\n");
+	pelletMgr->initTekiNakaParts();
+	PRINT("*******************************\n");
+	PRINT("initStage::end\n");
+	memStat->end("initStage");
+
+	PRINT("Creature size is %d\n", sizeof(Creature));
+	PRINT("Pellet size is %d\n", sizeof(Pellet));
+	PRINT("DynParticle size is %d\n", sizeof(DynParticle));
+	PRINT("Piki size is %d\n", sizeof(Piki));
+	PRINT("Navi size is %d\n", sizeof(Navi));
+	PRINT("Teki size is %d\n", sizeof(Teki));
+	PRINT("CollPart size is %d\n", sizeof(CollPart));
+
+	GameStat::containerPikis.set(0, pikiInfMgr.getColorTotal(0));
+	GameStat::containerPikis.set(1, pikiInfMgr.getColorTotal(1));
+	GameStat::containerPikis.set(2, pikiInfMgr.getColorTotal(2));
+	GameStat::update();
+	GameStat::minPikis = GameStat::allPikis;
+	PRINT("*** START WITH %d PIKIS\n", GameStat::minPikis);
+
+	data = gsys->openFile("ghost/record.gst", true, true);
+	if (data) {
+		data->getPending();
+		int pend = data->getPending();
+		data->read(controllerBuffer->mBufferAddr, pend);
+		data->close();
+		DCFlushRange(controllerBuffer->mBufferAddr, data->getLength());
+	}
+
+	naviMgr->getNavi(0)->startKontroller();
+	PRINT("init stage done\n");
+
+	f32 badcompiler[2];
 	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x288(r1)
-	  stmw      r20, 0x258(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x2F6C(r13)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stb       r0, 0x1B5(r3)
-	  addi      r30, r4, 0x2188
-	  lwz       r3, 0x2F6C(r13)
-	  lbz       r0, 0x1B6(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x44
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x1DF0
-	  bl        -0x49684
+.loc_0x0:
+  mflr      r0
+  stw       r0, 0x4(r1)
+  stwu      r1, -0x288(r1)
+  stmw      r20, 0x258(r1)
+  mr        r31, r3
+  lwz       r3, 0x2F6C(r13)
+  li        r0, 0
+  lis       r4, 0x802C
+  stb       r0, 0x1B5(r3)
+  addi      r30, r4, 0x2188
+  lwz       r3, 0x2F6C(r13)
+  lbz       r0, 0x1B6(r3)
+  cmplwi    r0, 0
+  beq-      .loc_0x44
+  lis       r3, 0x803D
+  addi      r3, r3, 0x1DF0
+  bl        -0x49684
 
-	.loc_0x44:
-	  li        r0, 0
-	  stb       r0, 0x30C0(r13)
-	  stb       r0, 0x30C1(r13)
-	  stw       r0, 0x30C4(r13)
-	  stb       r0, 0x3A(r31)
-	  stb       r0, 0x39(r31)
-	  stb       r0, 0x38(r31)
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x8E908
-	  rlwinm    r0,r3,0,24,31
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  li        r0, 0x1
-	  stb       r0, 0x3A(r31)
-	  stb       r0, 0x39(r31)
-	  stb       r0, 0x38(r31)
+.loc_0x44:
+  li        r0, 0
+  stb       r0, 0x30C0(r13)
+  stb       r0, 0x30C1(r13)
+  stw       r0, 0x30C4(r13)
+  stb       r0, 0x3A(r31)
+  stb       r0, 0x39(r31)
+  stb       r0, 0x38(r31)
+  lwz       r3, 0x2F6C(r13)
+  bl        -0x8E908
+  rlwinm    r0,r3,0,24,31
+  cmplwi    r0, 0
+  beq-      .loc_0x84
+  li        r0, 0x1
+  stb       r0, 0x3A(r31)
+  stb       r0, 0x39(r31)
+  stb       r0, 0x38(r31)
 
-	.loc_0x84:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  addi      r29, r3, 0xA8
-	  lwz       r3, 0x0(r29)
-	  lhz       r0, 0x26(r3)
-	  cmpwi     r0, 0x3
-	  beq-      .loc_0xD0
-	  bge-      .loc_0xB4
-	  cmpwi     r0, 0x2
-	  bge-      .loc_0xBC
-	  cmpwi     r0, 0
-	  b         .loc_0xE0
+.loc_0x84:
+  lis       r3, 0x803A
+  subi      r3, r3, 0x24E0
+  addi      r29, r3, 0xA8
+  lwz       r3, 0x0(r29)
+  lhz       r0, 0x26(r3)
+  cmpwi     r0, 0x3
+  beq-      .loc_0xD0
+  bge-      .loc_0xB4
+  cmpwi     r0, 0x2
+  bge-      .loc_0xBC
+  cmpwi     r0, 0
+  b         .loc_0xE0
 
-	.loc_0xB4:
-	  cmpwi     r0, 0x5
-	  b         .loc_0xE0
+.loc_0xB4:
+  cmpwi     r0, 0x5
+  b         .loc_0xE0
 
-	.loc_0xBC:
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x6
-	  addi      r3, r3, 0x70
-	  bl        -0x8B3E0
-	  b         .loc_0xE0
+.loc_0xBC:
+  lwz       r3, 0x2F6C(r13)
+  li        r4, 0x6
+  addi      r3, r3, 0x70
+  bl        -0x8B3E0
+  b         .loc_0xE0
 
-	.loc_0xD0:
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x8
-	  addi      r3, r3, 0x70
-	  bl        -0x8B3F4
+.loc_0xD0:
+  lwz       r3, 0x2F6C(r13)
+  li        r4, 0x8
+  addi      r3, r3, 0x70
+  bl        -0x8B3F4
 
-	.loc_0xE0:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r28, r3, 0x2FC
-	  lwz       r0, 0x0(r28)
-	  cmpwi     r0, 0xA
-	  blt-      .loc_0x114
-	  cmpwi     r0, 0x14
-	  bgt-      .loc_0x114
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x14
-	  addi      r3, r3, 0x70
-	  bl        -0x8B424
-	  b         .loc_0x12C
+.loc_0xE0:
+  lis       r3, 0x803A
+  subi      r3, r3, 0x2848
+  addi      r28, r3, 0x2FC
+  lwz       r0, 0x0(r28)
+  cmpwi     r0, 0xA
+  blt-      .loc_0x114
+  cmpwi     r0, 0x14
+  bgt-      .loc_0x114
+  lwz       r3, 0x2F6C(r13)
+  li        r4, 0x14
+  addi      r3, r3, 0x70
+  bl        -0x8B424
+  b         .loc_0x12C
 
-	.loc_0x114:
-	  cmpwi     r0, 0x14
-	  ble-      .loc_0x12C
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x14
-	  addi      r3, r3, 0x70
-	  bl        -0x8B3F0
+.loc_0x114:
+  cmpwi     r0, 0x14
+  ble-      .loc_0x12C
+  lwz       r3, 0x2F6C(r13)
+  li        r4, 0x14
+  addi      r3, r3, 0x70
+  bl        -0x8B3F0
 
-	.loc_0x12C:
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x8E704
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x70
-	  bl        -0x8871C
-	  lwz       r4, 0x0(r29)
-	  lwz       r3, 0x3098(r13)
-	  lhz       r4, 0x24(r4)
-	  bl        -0x2F858
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x70
-	  bl        -0x88628
-	  bl        0x3644
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x7C
-	  bl        -0x88748
-	  lis       r3, 0x803A
-	  subi      r22, r3, 0x24E0
-	  li        r0, 0
-	  stw       r0, 0x230(r22)
-	  li        r4, 0
-	  lwz       r3, 0x3030(r13)
-	  bl        -0x6B860
-	  lwz       r0, 0x250(r22)
-	  addi      r4, r30, 0x88
-	  lwz       r3, 0x58(r31)
-	  stw       r0, 0x730(r3)
-	  lwz       r0, 0x24C(r22)
-	  lwz       r3, 0x58(r31)
-	  stw       r0, 0x72C(r3)
-	  lwz       r3, 0x2FE8(r13)
-	  bl        -0x88788
-	  li        r3, 0x30
-	  bl        -0xC7EC4
-	  mr        r22, r3
-	  mr        r3, r22
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1C8
-	  bl        -0x6D808
+.loc_0x12C:
+  lwz       r3, 0x2F6C(r13)
+  bl        -0x8E704
+  lwz       r3, 0x2FE8(r13)
+  addi      r4, r30, 0x70
+  bl        -0x8871C
+  lwz       r4, 0x0(r29)
+  lwz       r3, 0x3098(r13)
+  lhz       r4, 0x24(r4)
+  bl        -0x2F858
+  lwz       r3, 0x2FE8(r13)
+  addi      r4, r30, 0x70
+  bl        -0x88628
+  bl        0x3644
+  lwz       r3, 0x2FE8(r13)
+  addi      r4, r30, 0x7C
+  bl        -0x88748
+  lis       r3, 0x803A
+  subi      r22, r3, 0x24E0
+  li        r0, 0
+  stw       r0, 0x230(r22)
+  li        r4, 0
+  lwz       r3, 0x3030(r13)
+  bl        -0x6B860
+  lwz       r0, 0x250(r22)
+  addi      r4, r30, 0x88
+  lwz       r3, 0x58(r31)
+  stw       r0, 0x730(r3)
+  lwz       r0, 0x24C(r22)
+  lwz       r3, 0x58(r31)
+  stw       r0, 0x72C(r3)
+  lwz       r3, 0x2FE8(r13)
+  bl        -0x88788
+  li        r3, 0x30
+  bl        -0xC7EC4
+  mr        r22, r3
+  mr        r3, r22
+  cmplwi    r3, 0
+  beq-      .loc_0x1C8
+  bl        -0x6D808
 
-	.loc_0x1C8:
-	  stw       r22, 0x302C(r13)
-	  lwz       r3, 0x302C(r13)
-	  lwz       r4, 0x64(r31)
-	  bl        -0x6D768
-	  lis       r4, 0x7465
-	  lwz       r3, 0x302C(r13)
-	  addi      r4, r4, 0x7374
-	  bl        -0x6EEEC
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x88
-	  bl        -0x886C0
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x25A4
-	  bl        -0x887DC
-	  li        r3, 0x74
-	  bl        -0xC7F18
-	  mr        r22, r3
-	  mr        r3, r22
-	  cmplwi    r3, 0
-	  beq-      .loc_0x220
-	  lwz       r4, 0x58(r31)
-	  bl        -0x411A8
+.loc_0x1C8:
+  stw       r22, 0x302C(r13)
+  lwz       r3, 0x302C(r13)
+  lwz       r4, 0x64(r31)
+  bl        -0x6D768
+  lis       r4, 0x7465
+  lwz       r3, 0x302C(r13)
+  addi      r4, r4, 0x7374
+  bl        -0x6EEEC
+  lwz       r3, 0x2FE8(r13)
+  addi      r4, r30, 0x88
+  bl        -0x886C0
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x25A4
+  bl        -0x887DC
+  li        r3, 0x74
+  bl        -0xC7F18
+  mr        r22, r3
+  mr        r3, r22
+  cmplwi    r3, 0
+  beq-      .loc_0x220
+  lwz       r4, 0x58(r31)
+  bl        -0x411A8
 
-	.loc_0x220:
-	  stw       r22, 0x3068(r13)
-	  lwz       r3, 0x3068(r13)
-	  bl        -0x401CC
-	  lwz       r0, 0x50(r31)
-	  addi      r4, r30, 0x94
-	  lwz       r3, 0x3068(r13)
-	  stw       r0, 0x48(r3)
-	  lwz       r0, 0x64(r31)
-	  lwz       r3, 0x3068(r13)
-	  stw       r0, 0x4C(r3)
-	  lwz       r3, 0x2FE8(r13)
-	  bl        -0x8882C
-	  lwz       r3, 0x3068(r13)
-	  li        r4, 0x66
-	  bl        -0x2DE80
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x94
-	  bl        -0x88734
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x25A4
-	  bl        -0x88740
-	  lwz       r5, 0x3068(r13)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x284
-	  addi      r5, r5, 0x8
+.loc_0x220:
+  stw       r22, 0x3068(r13)
+  lwz       r3, 0x3068(r13)
+  bl        -0x401CC
+  lwz       r0, 0x50(r31)
+  addi      r4, r30, 0x94
+  lwz       r3, 0x3068(r13)
+  stw       r0, 0x48(r3)
+  lwz       r0, 0x64(r31)
+  lwz       r3, 0x3068(r13)
+  stw       r0, 0x4C(r3)
+  lwz       r3, 0x2FE8(r13)
+  bl        -0x8882C
+  lwz       r3, 0x3068(r13)
+  li        r4, 0x66
+  bl        -0x2DE80
+  lwz       r3, 0x2FE8(r13)
+  addi      r4, r30, 0x94
+  bl        -0x88734
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x25A4
+  bl        -0x88740
+  lwz       r5, 0x3068(r13)
+  cmplwi    r5, 0
+  beq-      .loc_0x284
+  addi      r5, r5, 0x8
 
-	.loc_0x284:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  subi      r4, r13, 0x259C
-	  bl        -0xBC248
-	  lis       r3, 0x803A
-	  subi      r4, r3, 0x24E0
-	  addi      r3, r1, 0x150
-	  addi      r4, r4, 0x130
-	  bl        0x10A39C
-	  addi      r3, r1, 0x150
-	  b         .loc_0x2B0
+.loc_0x284:
+  lis       r3, 0x803A
+  subi      r3, r3, 0x2848
+  subi      r4, r13, 0x259C
+  bl        -0xBC248
+  lis       r3, 0x803A
+  subi      r4, r3, 0x24E0
+  addi      r3, r1, 0x150
+  addi      r4, r4, 0x130
+  bl        0x10A39C
+  addi      r3, r1, 0x150
+  b         .loc_0x2B0
 
-	.loc_0x2B0:
-	  b         .loc_0x2B4
+.loc_0x2B0:
+  b         .loc_0x2B4
 
-	.loc_0x2B4:
-	  b         .loc_0x2BC
+.loc_0x2B4:
+  b         .loc_0x2BC
 
-	.loc_0x2B8:
-	  addi      r3, r3, 0x1
+.loc_0x2B8:
+  addi      r3, r3, 0x1
 
-	.loc_0x2BC:
-	  lbz       r0, 0x0(r3)
-	  cmplwi    r0, 0x2E
-	  bne+      .loc_0x2B8
-	  addi      r3, r3, 0x1
-	  li        r0, 0x67
-	  stb       r0, 0x0(r3)
-	  addi      r3, r3, 0x1
-	  li        r0, 0x65
-	  stb       r0, 0x0(r3)
-	  addi      r3, r3, 0x1
-	  li        r0, 0x6E
-	  stb       r0, 0x0(r3)
-	  addi      r3, r3, 0x1
-	  li        r0, 0
-	  stb       r0, 0x0(r3)
-	  addi      r3, r1, 0x150
-	  b         .loc_0x300
+.loc_0x2BC:
+  lbz       r0, 0x0(r3)
+  cmplwi    r0, 0x2E
+  bne+      .loc_0x2B8
+  addi      r3, r3, 0x1
+  li        r0, 0x67
+  stb       r0, 0x0(r3)
+  addi      r3, r3, 0x1
+  li        r0, 0x65
+  stb       r0, 0x0(r3)
+  addi      r3, r3, 0x1
+  li        r0, 0x6E
+  stb       r0, 0x0(r3)
+  addi      r3, r3, 0x1
+  li        r0, 0
+  stb       r0, 0x0(r3)
+  addi      r3, r1, 0x150
+  b         .loc_0x300
 
-	.loc_0x300:
-	  b         .loc_0x304
+.loc_0x300:
+  b         .loc_0x304
 
-	.loc_0x304:
-	  b         .loc_0x30C
+.loc_0x304:
+  b         .loc_0x30C
 
-	.loc_0x308:
-	  addi      r3, r3, 0x1
+.loc_0x308:
+  addi      r3, r3, 0x1
 
-	.loc_0x30C:
-	  lbz       r0, 0x0(r3)
-	  cmplwi    r0, 0x2E
-	  bne+      .loc_0x308
-	  li        r0, 0x2F
-	  crclr     6, 0x6
-	  stb       r0, 0x0(r3)
-	  addi      r3, r3, 0x1
-	  li        r0, 0
-	  stb       r0, 0x0(r3)
-	  addi      r3, r1, 0x50
-	  addi      r4, r30, 0xA0
-	  addi      r5, r1, 0x150
-	  li        r27, 0
-	  li        r26, 0
-	  li        r25, 0
-	  li        r24, 0
-	  bl        0x107534
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r1, 0x50
-	  li        r5, 0x1
-	  lwz       r12, 0x1A0(r3)
-	  li        r6, 0x1
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r20, r3
-	  cmplwi    r20, 0
-	  beq-      .loc_0x3B0
-	  lwz       r3, 0x3080(r13)
-	  mr        r4, r20
-	  li        r5, 0
-	  bl        -0x31634
-	  mr        r3, r20
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3080(r13)
-	  bl        -0x31798
-	  li        r27, 0x1
-	  b         .loc_0x418
+.loc_0x30C:
+  lbz       r0, 0x0(r3)
+  cmplwi    r0, 0x2E
+  bne+      .loc_0x308
+  li        r0, 0x2F
+  crclr     6, 0x6
+  stb       r0, 0x0(r3)
+  addi      r3, r3, 0x1
+  li        r0, 0
+  stb       r0, 0x0(r3)
+  addi      r3, r1, 0x50
+  addi      r4, r30, 0xA0
+  addi      r5, r1, 0x150
+  li        r27, 0
+  li        r26, 0
+  li        r25, 0
+  li        r24, 0
+  bl        0x107534
+  lwz       r3, 0x2DEC(r13)
+  addi      r4, r1, 0x50
+  li        r5, 0x1
+  lwz       r12, 0x1A0(r3)
+  li        r6, 0x1
+  lwz       r12, 0xC(r12)
+  mtlr      r12
+  blrl
+  mr        r20, r3
+  cmplwi    r20, 0
+  beq-      .loc_0x3B0
+  lwz       r3, 0x3080(r13)
+  mr        r4, r20
+  li        r5, 0
+  bl        -0x31634
+  mr        r3, r20
+  lwz       r12, 0x4(r3)
+  lwz       r12, 0x4C(r12)
+  mtlr      r12
+  blrl
+  lwz       r3, 0x3080(r13)
+  bl        -0x31798
+  li        r27, 0x1
+  b         .loc_0x418
 
-	.loc_0x3B0:
-	  lwz       r3, 0x58(r31)
-	  lfs       f0, -0x25BC(r13)
-	  addi      r3, r3, 0x94
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, -0x25B8(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x25B4(r13)
-	  stfs      f0, 0x8(r3)
-	  lwz       r4, 0x58(r31)
-	  lwz       r3, 0x94(r4)
-	  lwz       r0, 0x98(r4)
-	  stw       r3, 0x790(r4)
-	  stw       r0, 0x794(r4)
-	  lwz       r0, 0x9C(r4)
-	  stw       r0, 0x798(r4)
-	  lfs       f0, -0x6130(r2)
-	  lwz       r3, 0x58(r31)
-	  stfs      f0, 0xA0(r3)
-	  lwz       r3, 0x58(r31)
-	  lfs       f0, -0x25B0(r13)
-	  addi      r3, r3, 0x88
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, -0x25AC(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x25A8(r13)
-	  stfs      f0, 0x8(r3)
+.loc_0x3B0:
+  lwz       r3, 0x58(r31)
+  lfs       f0, -0x25BC(r13)
+  addi      r3, r3, 0x94
+  stfs      f0, 0x0(r3)
+  lfs       f0, -0x25B8(r13)
+  stfs      f0, 0x4(r3)
+  lfs       f0, -0x25B4(r13)
+  stfs      f0, 0x8(r3)
+  lwz       r4, 0x58(r31)
+  lwz       r3, 0x94(r4)
+  lwz       r0, 0x98(r4)
+  stw       r3, 0x790(r4)
+  stw       r0, 0x794(r4)
+  lwz       r0, 0x9C(r4)
+  stw       r0, 0x798(r4)
+  lfs       f0, -0x6130(r2)
+  lwz       r3, 0x58(r31)
+  stfs      f0, 0xA0(r3)
+  lwz       r3, 0x58(r31)
+  lfs       f0, -0x25B0(r13)
+  addi      r3, r3, 0x88
+  stfs      f0, 0x0(r3)
+  lfs       f0, -0x25AC(r13)
+  stfs      f0, 0x4(r3)
+  lfs       f0, -0x25A8(r13)
+  stfs      f0, 0x8(r3)
 
-	.loc_0x418:
-	  lwz       r3, 0x58(r31)
-	  bl        -0x14EAC
-	  lwz       r4, 0x0(r28)
-	  lis       r3, 0x8889
-	  subi      r0, r3, 0x7777
-	  crclr     6, 0x6
-	  subi      r6, r4, 0x1
-	  mulhw     r0, r0, r6
-	  add       r0, r0, r6
-	  srawi     r0, r0, 0x4
-	  rlwinm    r3,r0,1,31,31
-	  add       r0, r0, r3
-	  mulli     r0, r0, 0x1E
-	  addi      r3, r1, 0x50
-	  addi      r4, r30, 0xB0
-	  addi      r5, r1, 0x150
-	  sub       r6, r6, r0
-	  bl        0x107424
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r1, 0x50
-	  li        r5, 0x1
-	  lwz       r12, 0x1A0(r3)
-	  li        r6, 0x1
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r20, r3
-	  cmplwi    r20, 0
-	  beq-      .loc_0x4BC
-	  lwz       r3, 0x3088(r13)
-	  mr        r4, r20
-	  li        r5, 0x1
-	  bl        -0x31744
-	  mr        r3, r20
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3088(r13)
-	  bl        -0x318A8
-	  li        r26, 0x1
+.loc_0x418:
+  lwz       r3, 0x58(r31)
+  bl        -0x14EAC
+  lwz       r4, 0x0(r28)
+  lis       r3, 0x8889
+  subi      r0, r3, 0x7777
+  crclr     6, 0x6
+  subi      r6, r4, 0x1
+  mulhw     r0, r0, r6
+  add       r0, r0, r6
+  srawi     r0, r0, 0x4
+  rlwinm    r3,r0,1,31,31
+  add       r0, r0, r3
+  mulli     r0, r0, 0x1E
+  addi      r3, r1, 0x50
+  addi      r4, r30, 0xB0
+  addi      r5, r1, 0x150
+  sub       r6, r6, r0
+  bl        0x107424
+  lwz       r3, 0x2DEC(r13)
+  addi      r4, r1, 0x50
+  li        r5, 0x1
+  lwz       r12, 0x1A0(r3)
+  li        r6, 0x1
+  lwz       r12, 0xC(r12)
+  mtlr      r12
+  blrl
+  mr        r20, r3
+  cmplwi    r20, 0
+  beq-      .loc_0x4BC
+  lwz       r3, 0x3088(r13)
+  mr        r4, r20
+  li        r5, 0x1
+  bl        -0x31744
+  mr        r3, r20
+  lwz       r12, 0x4(r3)
+  lwz       r12, 0x4C(r12)
+  mtlr      r12
+  blrl
+  lwz       r3, 0x3088(r13)
+  bl        -0x318A8
+  li        r26, 0x1
 
-	.loc_0x4BC:
-	  lwz       r3, 0x0(r29)
-	  addi      r3, r3, 0x20
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x548
-	  li        r0, 0x1
-	  crclr     6, 0x6
-	  stw       r0, 0x0(r3)
-	  addi      r3, r1, 0x50
-	  addi      r4, r30, 0xBC
-	  addi      r5, r1, 0x150
-	  bl        0x107398
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r1, 0x50
-	  li        r5, 0x1
-	  lwz       r12, 0x1A0(r3)
-	  li        r6, 0x1
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r20, r3
-	  cmplwi    r20, 0
-	  beq-      .loc_0x548
-	  lwz       r3, 0x308C(r13)
-	  mr        r4, r20
-	  li        r5, 0x1
-	  bl        -0x317D0
-	  mr        r3, r20
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x308C(r13)
-	  bl        -0x31934
-	  li        r25, 0x1
+.loc_0x4BC:
+  lwz       r3, 0x0(r29)
+  addi      r3, r3, 0x20
+  lwz       r0, 0x0(r3)
+  cmpwi     r0, 0
+  bne-      .loc_0x548
+  li        r0, 0x1
+  crclr     6, 0x6
+  stw       r0, 0x0(r3)
+  addi      r3, r1, 0x50
+  addi      r4, r30, 0xBC
+  addi      r5, r1, 0x150
+  bl        0x107398
+  lwz       r3, 0x2DEC(r13)
+  addi      r4, r1, 0x50
+  li        r5, 0x1
+  lwz       r12, 0x1A0(r3)
+  li        r6, 0x1
+  lwz       r12, 0xC(r12)
+  mtlr      r12
+  blrl
+  mr        r20, r3
+  cmplwi    r20, 0
+  beq-      .loc_0x548
+  lwz       r3, 0x308C(r13)
+  mr        r4, r20
+  li        r5, 0x1
+  bl        -0x317D0
+  mr        r3, r20
+  lwz       r12, 0x4(r3)
+  lwz       r12, 0x4C(r12)
+  mtlr      r12
+  blrl
+  lwz       r3, 0x308C(r13)
+  bl        -0x31934
+  li        r25, 0x1
 
-	.loc_0x548:
-	  addi      r3, r1, 0x50
-	  crclr     6, 0x6
-	  addi      r4, r30, 0xC8
-	  addi      r5, r1, 0x150
-	  bl        0x107328
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r1, 0x50
-	  li        r5, 0x1
-	  lwz       r12, 0x1A0(r3)
-	  li        r6, 0x1
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r20, r3
-	  cmplwi    r20, 0
-	  beq-      .loc_0x5B8
-	  lwz       r3, 0x3084(r13)
-	  mr        r4, r20
-	  li        r5, 0x1
-	  bl        -0x31840
-	  mr        r3, r20
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3084(r13)
-	  bl        -0x319A4
-	  li        r24, 0x1
+.loc_0x548:
+  addi      r3, r1, 0x50
+  crclr     6, 0x6
+  addi      r4, r30, 0xC8
+  addi      r5, r1, 0x150
+  bl        0x107328
+  lwz       r3, 0x2DEC(r13)
+  addi      r4, r1, 0x50
+  li        r5, 0x1
+  lwz       r12, 0x1A0(r3)
+  li        r6, 0x1
+  lwz       r12, 0xC(r12)
+  mtlr      r12
+  blrl
+  mr        r20, r3
+  cmplwi    r20, 0
+  beq-      .loc_0x5B8
+  lwz       r3, 0x3084(r13)
+  mr        r4, r20
+  li        r5, 0x1
+  bl        -0x31840
+  mr        r3, r20
+  lwz       r12, 0x4(r3)
+  lwz       r12, 0x4C(r12)
+  mtlr      r12
+  blrl
+  lwz       r3, 0x3084(r13)
+  bl        -0x319A4
+  li        r24, 0x1
 
-	.loc_0x5B8:
-	  lwz       r3, 0x0(r29)
-	  li        r22, 0
-	  lwz       r4, 0x0(r28)
-	  lwz       r23, 0xA0(r3)
-	  subi      r0, r4, 0x1
-	  b         .loc_0x5D0
+.loc_0x5B8:
+  lwz       r3, 0x0(r29)
+  li        r22, 0
+  lwz       r4, 0x0(r28)
+  lwz       r23, 0xA0(r3)
+  subi      r0, r4, 0x1
+  b         .loc_0x5D0
 
-	.loc_0x5D0:
-	  rlwinm    r28,r0,0,24,31
-	  b         .loc_0x5D8
+.loc_0x5D0:
+  rlwinm    r28,r0,0,24,31
+  b         .loc_0x5D8
 
-	.loc_0x5D8:
-	  b         .loc_0x6D0
+.loc_0x5D8:
+  b         .loc_0x6D0
 
-	.loc_0x5DC:
-	  lbz       r0, 0x14(r23)
-	  cmplw     r28, r0
-	  blt-      .loc_0x6C8
-	  lbz       r0, 0x15(r23)
-	  cmplw     r28, r0
-	  bgt-      .loc_0x6C8
-	  lwz       r3, 0x2F6C(r13)
-	  mr        r4, r22
-	  bl        -0x8EE30
-	  rlwinm    r0,r3,0,24,31
-	  cmplwi    r0, 0
-	  bne-      .loc_0x6C8
-	  lwz       r6, 0x4(r23)
-	  addi      r3, r1, 0x50
-	  addi      r5, r1, 0x150
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x2594
-	  bl        0x107260
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r1, 0x50
-	  li        r5, 0x1
-	  lwz       r12, 0x1A0(r3)
-	  li        r6, 0x1
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r20, r3
-	  cmplwi    r20, 0
-	  beq-      .loc_0x6C8
-	  li        r3, 0x60
-	  bl        -0xC8368
-	  mr        r21, r3
-	  mr        r3, r21
-	  cmplwi    r3, 0
-	  beq-      .loc_0x66C
-	  bl        -0x31FCC
+.loc_0x5DC:
+  lbz       r0, 0x14(r23)
+  cmplw     r28, r0
+  blt-      .loc_0x6C8
+  lbz       r0, 0x15(r23)
+  cmplw     r28, r0
+  bgt-      .loc_0x6C8
+  lwz       r3, 0x2F6C(r13)
+  mr        r4, r22
+  bl        -0x8EE30
+  rlwinm    r0,r3,0,24,31
+  cmplwi    r0, 0
+  bne-      .loc_0x6C8
+  lwz       r6, 0x4(r23)
+  addi      r3, r1, 0x50
+  addi      r5, r1, 0x150
+  crclr     6, 0x6
+  subi      r4, r13, 0x2594
+  bl        0x107260
+  lwz       r3, 0x2DEC(r13)
+  addi      r4, r1, 0x50
+  li        r5, 0x1
+  lwz       r12, 0x1A0(r3)
+  li        r6, 0x1
+  lwz       r12, 0xC(r12)
+  mtlr      r12
+  blrl
+  mr        r20, r3
+  cmplwi    r20, 0
+  beq-      .loc_0x6C8
+  li        r3, 0x60
+  bl        -0xC8368
+  mr        r21, r3
+  mr        r3, r21
+  cmplwi    r3, 0
+  beq-      .loc_0x66C
+  bl        -0x31FCC
 
-	.loc_0x66C:
-	  lwz       r0, 0x4(r23)
-	  mr        r4, r21
-	  stw       r0, 0x4(r21)
-	  lwz       r3, 0x3090(r13)
-	  bl        -0xCEDBC
-	  mr        r3, r21
-	  mr        r4, r20
-	  li        r5, 0x1
-	  bl        -0x31938
-	  mr        r3, r20
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2F6C(r13)
-	  mr        r4, r22
-	  bl        -0x8EE78
-	  lbz       r4, 0x16(r23)
-	  mr        r3, r21
-	  addi      r4, r4, 0x1
-	  bl        -0x31ACC
-	  mr        r3, r21
-	  bl        -0x31AB8
+.loc_0x66C:
+  lwz       r0, 0x4(r23)
+  mr        r4, r21
+  stw       r0, 0x4(r21)
+  lwz       r3, 0x3090(r13)
+  bl        -0xCEDBC
+  mr        r3, r21
+  mr        r4, r20
+  li        r5, 0x1
+  bl        -0x31938
+  mr        r3, r20
+  lwz       r12, 0x4(r3)
+  lwz       r12, 0x4C(r12)
+  mtlr      r12
+  blrl
+  lwz       r3, 0x2F6C(r13)
+  mr        r4, r22
+  bl        -0x8EE78
+  lbz       r4, 0x16(r23)
+  mr        r3, r21
+  addi      r4, r4, 0x1
+  bl        -0x31ACC
+  mr        r3, r21
+  bl        -0x31AB8
 
-	.loc_0x6C8:
-	  addi      r22, r22, 0x1
-	  lwz       r23, 0xC(r23)
+.loc_0x6C8:
+  addi      r22, r22, 0x1
+  lwz       r23, 0xC(r23)
 
-	.loc_0x6D0:
-	  cmplwi    r23, 0
-	  bne+      .loc_0x5DC
-	  lwz       r3, 0x3094(r13)
-	  bl        -0x3075C
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x258C
-	  bl        -0x88CC8
-	  lwz       r3, 0x30AC(r13)
-	  bl        -0x1B098
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x258C
-	  bl        -0x88BCC
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x2584
-	  bl        -0x88CE8
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x257C
-	  bl        -0x88CF4
-	  lwz       r3, 0x3140(r13)
-	  bl        0xB58C
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x257C
-	  bl        -0x88BF8
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x2584
-	  bl        -0x88C04
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x2574
-	  bl        -0x88D20
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0x4
-	  bl        -0xD03FC
-	  mr        r0, r3
-	  lwz       r3, 0x3160(r13)
-	  mr        r20, r0
-	  bl        0x3B424
-	  lwz       r3, 0x2DEC(r13)
-	  mr        r4, r20
-	  bl        -0xD0418
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x2574
-	  bl        -0x88C44
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x256C
-	  bl        -0x88D60
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0x4
-	  bl        -0xD043C
-	  mr        r0, r3
-	  lwz       r3, 0x3168(r13)
-	  mr        r20, r0
-	  bl        0x40EEC
-	  lwz       r3, 0x2DEC(r13)
-	  mr        r4, r20
-	  bl        -0xD0458
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x256C
-	  bl        -0x88C84
-	  lbz       r0, 0x2F68(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x7EC
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x2564
-	  bl        -0x88DAC
-	  lwz       r3, 0x301C(r13)
-	  bl        -0x768F8
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x2564
-	  bl        -0x88CB0
-	  lwz       r3, 0x301C(r13)
-	  bl        -0x77030
+.loc_0x6D0:
+  cmplwi    r23, 0
+  bne+      .loc_0x5DC
+  lwz       r3, 0x3094(r13)
+  bl        -0x3075C
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x258C
+  bl        -0x88CC8
+  lwz       r3, 0x30AC(r13)
+  bl        -0x1B098
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x258C
+  bl        -0x88BCC
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x2584
+  bl        -0x88CE8
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x257C
+  bl        -0x88CF4
+  lwz       r3, 0x3140(r13)
+  bl        0xB58C
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x257C
+  bl        -0x88BF8
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x2584
+  bl        -0x88C04
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x2574
+  bl        -0x88D20
+  lwz       r3, 0x2DEC(r13)
+  li        r4, 0x4
+  bl        -0xD03FC
+  mr        r0, r3
+  lwz       r3, 0x3160(r13)
+  mr        r20, r0
+  bl        0x3B424
+  lwz       r3, 0x2DEC(r13)
+  mr        r4, r20
+  bl        -0xD0418
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x2574
+  bl        -0x88C44
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x256C
+  bl        -0x88D60
+  lwz       r3, 0x2DEC(r13)
+  li        r4, 0x4
+  bl        -0xD043C
+  mr        r0, r3
+  lwz       r3, 0x3168(r13)
+  mr        r20, r0
+  bl        0x40EEC
+  lwz       r3, 0x2DEC(r13)
+  mr        r4, r20
+  bl        -0xD0458
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x256C
+  bl        -0x88C84
+  lbz       r0, 0x2F68(r13)
+  cmplwi    r0, 0
+  bne-      .loc_0x7EC
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x2564
+  bl        -0x88DAC
+  lwz       r3, 0x301C(r13)
+  bl        -0x768F8
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x2564
+  bl        -0x88CB0
+  lwz       r3, 0x301C(r13)
+  bl        -0x77030
 
-	.loc_0x7EC:
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x2584
-	  bl        -0x88DD4
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x255C
-	  bl        -0x88DE0
-	  lwz       r3, 0x3020(r13)
-	  bl        -0x7415C
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x255C
-	  bl        -0x88CE4
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x2584
-	  bl        -0x88CF0
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x2554
-	  bl        -0x88E0C
-	  rlwinm    r0,r27,0,24,31
-	  cmplwi    r0, 0
-	  beq-      .loc_0x844
-	  lwz       r3, 0x3080(r13)
-	  bl        -0x31C90
+.loc_0x7EC:
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x2584
+  bl        -0x88DD4
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x255C
+  bl        -0x88DE0
+  lwz       r3, 0x3020(r13)
+  bl        -0x7415C
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x255C
+  bl        -0x88CE4
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x2584
+  bl        -0x88CF0
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x2554
+  bl        -0x88E0C
+  rlwinm    r0,r27,0,24,31
+  cmplwi    r0, 0
+  beq-      .loc_0x844
+  lwz       r3, 0x3080(r13)
+  bl        -0x31C90
 
-	.loc_0x844:
-	  lwz       r3, 0x3094(r13)
-	  bl        -0x30938
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x70
-	  bl        -0x88E34
-	  lwz       r4, 0x0(r29)
-	  lwz       r3, 0x3098(r13)
-	  lhz       r4, 0x24(r4)
-	  bl        -0x2FCE8
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x70
-	  bl        -0x88D40
-	  rlwinm    r0,r26,0,24,31
-	  cmplwi    r0, 0
-	  beq-      .loc_0x888
-	  lwz       r3, 0x3088(r13)
-	  bl        -0x31CD4
+.loc_0x844:
+  lwz       r3, 0x3094(r13)
+  bl        -0x30938
+  lwz       r3, 0x2FE8(r13)
+  addi      r4, r30, 0x70
+  bl        -0x88E34
+  lwz       r4, 0x0(r29)
+  lwz       r3, 0x3098(r13)
+  lhz       r4, 0x24(r4)
+  bl        -0x2FCE8
+  lwz       r3, 0x2FE8(r13)
+  addi      r4, r30, 0x70
+  bl        -0x88D40
+  rlwinm    r0,r26,0,24,31
+  cmplwi    r0, 0
+  beq-      .loc_0x888
+  lwz       r3, 0x3088(r13)
+  bl        -0x31CD4
 
-	.loc_0x888:
-	  rlwinm    r0,r25,0,24,31
-	  cmplwi    r0, 0
-	  beq-      .loc_0x89C
-	  lwz       r3, 0x308C(r13)
-	  bl        -0x31CE8
+.loc_0x888:
+  rlwinm    r0,r25,0,24,31
+  cmplwi    r0, 0
+  beq-      .loc_0x89C
+  lwz       r3, 0x308C(r13)
+  bl        -0x31CE8
 
-	.loc_0x89C:
-	  rlwinm    r0,r24,0,24,31
-	  cmplwi    r0, 0
-	  beq-      .loc_0x8B0
-	  lwz       r3, 0x3084(r13)
-	  bl        -0x31CFC
+.loc_0x89C:
+  rlwinm    r0,r24,0,24,31
+  cmplwi    r0, 0
+  beq-      .loc_0x8B0
+  lwz       r3, 0x3084(r13)
+  bl        -0x31CFC
 
-	.loc_0x8B0:
-	  lwz       r3, 0x3090(r13)
-	  lwz       r20, 0x10(r3)
-	  b         .loc_0x8BC
+.loc_0x8B0:
+  lwz       r3, 0x3090(r13)
+  lwz       r20, 0x10(r3)
+  b         .loc_0x8BC
 
-	.loc_0x8BC:
-	  b         .loc_0x8C0
+.loc_0x8BC:
+  b         .loc_0x8C0
 
-	.loc_0x8C0:
-	  b         .loc_0x8D0
+.loc_0x8C0:
+  b         .loc_0x8D0
 
-	.loc_0x8C4:
-	  mr        r3, r20
-	  bl        -0x31D18
-	  lwz       r20, 0xC(r20)
+.loc_0x8C4:
+  mr        r3, r20
+  bl        -0x31D18
+  lwz       r20, 0xC(r20)
 
-	.loc_0x8D0:
-	  cmplwi    r20, 0
-	  bne+      .loc_0x8C4
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x2554
-	  bl        -0x88DB0
-	  lwz       r21, 0x3068(r13)
-	  mr        r3, r21
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r22, r3
-	  b         .loc_0x904
+.loc_0x8D0:
+  cmplwi    r20, 0
+  bne+      .loc_0x8C4
+  lwz       r3, 0x2FE8(r13)
+  subi      r4, r13, 0x2554
+  bl        -0x88DB0
+  lwz       r21, 0x3068(r13)
+  mr        r3, r21
+  lwz       r12, 0x0(r3)
+  lwz       r12, 0xC(r12)
+  mtlr      r12
+  blrl
+  mr        r22, r3
+  b         .loc_0x904
 
-	.loc_0x904:
-	  b         .loc_0x908
+.loc_0x904:
+  b         .loc_0x908
 
-	.loc_0x908:
-	  b         .loc_0x96C
+.loc_0x908:
+  b         .loc_0x96C
 
-	.loc_0x90C:
-	  cmpwi     r22, -0x1
-	  bne-      .loc_0x930
-	  mr        r3, r21
-	  lwz       r12, 0x0(r3)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x948
+.loc_0x90C:
+  cmpwi     r22, -0x1
+  bne-      .loc_0x930
+  mr        r3, r21
+  lwz       r12, 0x0(r3)
+  li        r4, 0
+  lwz       r12, 0x8(r12)
+  mtlr      r12
+  blrl
+  b         .loc_0x948
 
-	.loc_0x930:
-	  mr        r3, r21
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r22
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
+.loc_0x930:
+  mr        r3, r21
+  lwz       r12, 0x0(r3)
+  mr        r4, r22
+  lwz       r12, 0x8(r12)
+  mtlr      r12
+  blrl
 
-	.loc_0x948:
-	  lhz       r4, 0x510(r3)
-	  bl        -0x45DEC
-	  mr        r3, r21
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r22
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r22, r3
+.loc_0x948:
+  lhz       r4, 0x510(r3)
+  bl        -0x45DEC
+  mr        r3, r21
+  lwz       r12, 0x0(r3)
+  mr        r4, r22
+  lwz       r12, 0x10(r12)
+  mtlr      r12
+  blrl
+  mr        r22, r3
 
-	.loc_0x96C:
-	  mr        r3, r21
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r22
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  cmplwi    r0, 0
-	  beq-      .loc_0x998
-	  li        r0, 0x1
-	  b         .loc_0x9C4
+.loc_0x96C:
+  mr        r3, r21
+  lwz       r12, 0x0(r3)
+  mr        r4, r22
+  lwz       r12, 0x14(r12)
+  mtlr      r12
+  blrl
+  rlwinm    r0,r3,0,24,31
+  cmplwi    r0, 0
+  beq-      .loc_0x998
+  li        r0, 0x1
+  b         .loc_0x9C4
 
-	.loc_0x998:
-	  mr        r3, r21
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r22
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x9C0
-	  li        r0, 0x1
-	  b         .loc_0x9C4
+.loc_0x998:
+  mr        r3, r21
+  lwz       r12, 0x0(r3)
+  mr        r4, r22
+  lwz       r12, 0x8(r12)
+  mtlr      r12
+  blrl
+  cmplwi    r3, 0
+  bne-      .loc_0x9C0
+  li        r0, 0x1
+  b         .loc_0x9C4
 
-	.loc_0x9C0:
-	  li        r0, 0
+.loc_0x9C0:
+  li        r0, 0
 
-	.loc_0x9C4:
-	  rlwinm    r0,r0,0,24,31
-	  cmplwi    r0, 0
-	  beq+      .loc_0x90C
-	  li        r3, 0x24
-	  bl        -0xC86E8
-	  mr        r21, r3
-	  mr        r3, r21
-	  cmplwi    r3, 0
-	  beq-      .loc_0x9EC
-	  bl        -0x96950
+.loc_0x9C4:
+  rlwinm    r0,r0,0,24,31
+  cmplwi    r0, 0
+  beq+      .loc_0x90C
+  li        r3, 0x24
+  bl        -0xC86E8
+  mr        r21, r3
+  mr        r3, r21
+  cmplwi    r3, 0
+  beq-      .loc_0x9EC
+  bl        -0x96950
 
-	.loc_0x9EC:
-	  stw       r21, 0x2F20(r13)
-	  lwz       r3, 0x3120(r13)
-	  bl        0x7CB8
-	  mr        r4, r3
-	  lwz       r3, 0x30D8(r13)
-	  bl        0x14734
-	  lwz       r3, 0x30D8(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x58(r31)
-	  li        r0, 0x1
-	  stw       r0, 0x310(r3)
-	  lwz       r3, 0x2F6C(r13)
-	  lbz       r0, 0x1B6(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xB5C
-	  lwz       r3, 0x0(r29)
-	  addi      r20, r3, 0x2C
-	  mr        r3, r20
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r20
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r21, 0x1C(r20)
-	  b         .loc_0xA6C
+.loc_0x9EC:
+  stw       r21, 0x2F20(r13)
+  lwz       r3, 0x3120(r13)
+  bl        0x7CB8
+  mr        r4, r3
+  lwz       r3, 0x30D8(r13)
+  bl        0x14734
+  lwz       r3, 0x30D8(r13)
+  lwz       r12, 0x0(r3)
+  lwz       r12, 0x10(r12)
+  mtlr      r12
+  blrl
+  lwz       r3, 0x58(r31)
+  li        r0, 0x1
+  stw       r0, 0x310(r3)
+  lwz       r3, 0x2F6C(r13)
+  lbz       r0, 0x1B6(r3)
+  cmplwi    r0, 0
+  bne-      .loc_0xB5C
+  lwz       r3, 0x0(r29)
+  addi      r20, r3, 0x2C
+  mr        r3, r20
+  lwz       r12, 0x0(r3)
+  lwz       r12, 0x14(r12)
+  mtlr      r12
+  blrl
+  mr        r3, r20
+  lwz       r12, 0x0(r3)
+  lwz       r12, 0x18(r12)
+  mtlr      r12
+  blrl
+  lwz       r21, 0x1C(r20)
+  b         .loc_0xA6C
 
-	.loc_0xA6C:
-	  b         .loc_0xA70
+.loc_0xA6C:
+  b         .loc_0xA70
 
-	.loc_0xA70:
-	  b         .loc_0xB54
+.loc_0xA70:
+  b         .loc_0xB54
 
-	.loc_0xA74:
-	  lwz       r3, 0x30AC(r13)
-	  li        r4, 0xF
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x78(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r22, r3
-	  cmplwi    r22, 0
-	  beq-      .loc_0xB50
-	  mr        r3, r21
-	  mr        r4, r22
-	  bl        -0x49EC4
-	  lwz       r3, 0x64(r31)
-	  li        r4, 0x1
-	  lfs       f1, 0x94(r22)
-	  lfs       f2, 0x9C(r22)
-	  bl        -0xA78C8
-	  stfs      f1, 0x98(r22)
-	  mr        r3, r22
-	  addi      r4, r22, 0x94
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r22
-	  lwz       r4, 0x3CC(r22)
-	  bl        -0x22D54
-	  mr        r3, r22
-	  lwz       r12, 0x0(r3)
-	  li        r4, 0
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E8(r22)
-	  mr        r4, r22
-	  li        r5, 0x6
-	  bl        -0x920C4
-	  mr        r3, r20
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r21
-	  lwz       r21, 0xC(r21)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r20
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r20
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xB54
+.loc_0xA74:
+  lwz       r3, 0x30AC(r13)
+  li        r4, 0xF
+  lwz       r12, 0x0(r3)
+  lwz       r12, 0x78(r12)
+  mtlr      r12
+  blrl
+  mr        r22, r3
+  cmplwi    r22, 0
+  beq-      .loc_0xB50
+  mr        r3, r21
+  mr        r4, r22
+  bl        -0x49EC4
+  lwz       r3, 0x64(r31)
+  li        r4, 0x1
+  lfs       f1, 0x94(r22)
+  lfs       f2, 0x9C(r22)
+  bl        -0xA78C8
+  stfs      f1, 0x98(r22)
+  mr        r3, r22
+  addi      r4, r22, 0x94
+  lwz       r12, 0x0(r3)
+  lwz       r12, 0x28(r12)
+  mtlr      r12
+  blrl
+  mr        r3, r22
+  lwz       r4, 0x3CC(r22)
+  bl        -0x22D54
+  mr        r3, r22
+  lwz       r12, 0x0(r3)
+  li        r4, 0
+  lwz       r12, 0x34(r12)
+  mtlr      r12
+  blrl
+  lwz       r3, 0x2E8(r22)
+  mr        r4, r22
+  li        r5, 0x6
+  bl        -0x920C4
+  mr        r3, r20
+  lwz       r12, 0x0(r3)
+  mr        r4, r21
+  lwz       r21, 0xC(r21)
+  lwz       r12, 0x10(r12)
+  mtlr      r12
+  blrl
+  mr        r3, r20
+  lwz       r12, 0x0(r3)
+  lwz       r12, 0x14(r12)
+  mtlr      r12
+  blrl
+  mr        r3, r20
+  lwz       r12, 0x0(r3)
+  lwz       r12, 0x18(r12)
+  mtlr      r12
+  blrl
+  b         .loc_0xB54
 
-	.loc_0xB50:
-	  lwz       r21, 0xC(r21)
+.loc_0xB50:
+  lwz       r21, 0xC(r21)
 
-	.loc_0xB54:
-	  cmplwi    r21, 0
-	  bne+      .loc_0xA74
+.loc_0xB54:
+  cmplwi    r21, 0
+  bne+      .loc_0xA74
 
-	.loc_0xB5C:
-	  lwz       r3, 0x301C(r13)
-	  bl        -0x76960
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x7C
-	  bl        -0x8903C
-	  lis       r3, 0x803D
-	  addi      r5, r3, 0x1DF0
-	  lis       r4, 0x803D
-	  lwz       r3, 0x8(r5)
-	  addi      r6, r4, 0x1EA0
-	  lwz       r0, 0x4(r5)
-	  lwz       r4, 0x0(r6)
-	  add       r0, r0, r3
-	  lwz       r3, 0x0(r5)
-	  add       r0, r0, r4
-	  add       r0, r3, r0
-	  stw       r0, 0x0(r6)
-	  lwz       r3, 0x14(r5)
-	  lwz       r0, 0x10(r5)
-	  lwz       r4, 0x4(r6)
-	  add       r0, r0, r3
-	  lwz       r3, 0xC(r5)
-	  add       r0, r0, r4
-	  add       r0, r3, r0
-	  stw       r0, 0x4(r6)
-	  lwz       r3, 0x20(r5)
-	  lwz       r0, 0x1C(r5)
-	  lwz       r4, 0x8(r6)
-	  add       r0, r0, r3
-	  lwz       r3, 0x18(r5)
-	  add       r0, r0, r4
-	  add       r0, r3, r0
-	  stw       r0, 0x8(r6)
-	  bl        0x2C68
-	  lis       r4, 0x803D
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r6, r4, 0x1ED0
-	  lwz       r7, 0x8(r6)
-	  addi      r4, r30, 0xD8
-	  lwz       r0, 0x4(r6)
-	  li        r5, 0x1
-	  lwz       r6, 0x0(r6)
-	  add       r0, r0, r7
-	  add       r0, r6, r0
-	  stw       r0, 0x3100(r13)
-	  li        r6, 0x1
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r20, r3
-	  cmplwi    r20, 0
-	  beq-      .loc_0xCB0
-	  mr        r3, r20
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r20
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r5, r3
-	  lwz       r4, 0x3118(r13)
-	  mr        r3, r20
-	  lwz       r12, 0x4(r3)
-	  lwz       r4, 0x8(r4)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r20
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r20
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x3118(r13)
-	  mr        r4, r3
-	  lwz       r3, 0x8(r5)
-	  bl        0xE7224
+.loc_0xB5C:
+  lwz       r3, 0x301C(r13)
+  bl        -0x76960
+  lwz       r3, 0x2FE8(r13)
+  addi      r4, r30, 0x7C
+  bl        -0x8903C
+  lis       r3, 0x803D
+  addi      r5, r3, 0x1DF0
+  lis       r4, 0x803D
+  lwz       r3, 0x8(r5)
+  addi      r6, r4, 0x1EA0
+  lwz       r0, 0x4(r5)
+  lwz       r4, 0x0(r6)
+  add       r0, r0, r3
+  lwz       r3, 0x0(r5)
+  add       r0, r0, r4
+  add       r0, r3, r0
+  stw       r0, 0x0(r6)
+  lwz       r3, 0x14(r5)
+  lwz       r0, 0x10(r5)
+  lwz       r4, 0x4(r6)
+  add       r0, r0, r3
+  lwz       r3, 0xC(r5)
+  add       r0, r0, r4
+  add       r0, r3, r0
+  stw       r0, 0x4(r6)
+  lwz       r3, 0x20(r5)
+  lwz       r0, 0x1C(r5)
+  lwz       r4, 0x8(r6)
+  add       r0, r0, r3
+  lwz       r3, 0x18(r5)
+  add       r0, r0, r4
+  add       r0, r3, r0
+  stw       r0, 0x8(r6)
+  bl        0x2C68
+  lis       r4, 0x803D
+  lwz       r3, 0x2DEC(r13)
+  addi      r6, r4, 0x1ED0
+  lwz       r7, 0x8(r6)
+  addi      r4, r30, 0xD8
+  lwz       r0, 0x4(r6)
+  li        r5, 0x1
+  lwz       r6, 0x0(r6)
+  add       r0, r0, r7
+  add       r0, r6, r0
+  stw       r0, 0x3100(r13)
+  li        r6, 0x1
+  lwz       r12, 0x1A0(r3)
+  lwz       r12, 0xC(r12)
+  mtlr      r12
+  blrl
+  mr        r20, r3
+  cmplwi    r20, 0
+  beq-      .loc_0xCB0
+  mr        r3, r20
+  lwz       r12, 0x4(r3)
+  lwz       r12, 0x44(r12)
+  mtlr      r12
+  blrl
+  mr        r3, r20
+  lwz       r12, 0x4(r3)
+  lwz       r12, 0x44(r12)
+  mtlr      r12
+  blrl
+  mr        r5, r3
+  lwz       r4, 0x3118(r13)
+  mr        r3, r20
+  lwz       r12, 0x4(r3)
+  lwz       r4, 0x8(r4)
+  lwz       r12, 0x3C(r12)
+  mtlr      r12
+  blrl
+  mr        r3, r20
+  lwz       r12, 0x4(r3)
+  lwz       r12, 0x4C(r12)
+  mtlr      r12
+  blrl
+  mr        r3, r20
+  lwz       r12, 0x4(r3)
+  lwz       r12, 0x60(r12)
+  mtlr      r12
+  blrl
+  lwz       r5, 0x3118(r13)
+  mr        r4, r3
+  lwz       r3, 0x8(r5)
+  bl        0xE7224
 
-	.loc_0xCB0:
-	  lwz       r3, 0x3120(r13)
-	  li        r4, 0
-	  bl        0x7A68
-	  bl        -0x157E0
-	  lmw       r20, 0x258(r1)
-	  lwz       r0, 0x28C(r1)
-	  addi      r1, r1, 0x288
-	  mtlr      r0
-	  blr
-	*/
+.loc_0xCB0:
+  lwz       r3, 0x3120(r13)
+  li        r4, 0
+  bl        0x7A68
+  bl        -0x157E0
+  lmw       r20, 0x258(r1)
+  lwz       r0, 0x28C(r1)
+  addi      r1, r1, 0x288
+  mtlr      r0
+  blr
+*/
 }
 
 /*
@@ -3497,6 +3210,87 @@ void GameCoreSection::initStage()
  */
 void GameCoreSection::finalSetup()
 {
+	PRINT("======================= FINAL SETUP ==============================\n");
+	PRINT("final setup!\n");
+	routeMgr->initLinks();
+
+	Iterator it(pelletMgr);
+	CI_LOOP(it)
+	{
+		Pellet* pellet = (Pellet*)*it;
+		if (pellet) {
+			pellet->mPosition.y = mMapMgr->getMinY(pellet->mPosition.x, pellet->mPosition.z, true);
+		}
+	}
+
+	for (int i = 0; i < 3; i++) {
+		GoalItem* goal = itemMgr->getContainer(i);
+		if (goal) {
+			int num = goal->mHeldPikis[0] + goal->mHeldPikis[1] + goal->mHeldPikis[2];
+			GameStat::containerPikis.set(num, goal->mOnionColour);
+			GameStat::update();
+		}
+	}
+
+	GameStat::update();
+	PRINT("********* BONUS PIKI CHECK\n");
+	GameStat::dump();
+
+	if (playerState->_BC[0] == 0 && !playerState->isTutorial() && GameStat::allPikis == 0
+	    && ((GameStat::allPikis[0] == 0 && playerState->hasContainer(0)) || (GameStat::allPikis[1] == 0 && playerState->hasContainer(1))
+	        || (GameStat::allPikis[2] == 0 && playerState->hasContainer(2)))) {
+		if (!playerState->mDemoFlags.isFlag(17)) {
+			playerState->mDemoFlags.setFlag(17, nullptr);
+			playerState->_BC[0] = 1;
+		} else {
+			gameflow.mGameInterface->movie(64, 0, nullptr, nullptr, nullptr, -1, true);
+			playerState->_BC[0] = 1;
+		}
+	}
+
+	if (!playerState->isTutorial() && !playerState->hasRadar()) {
+		PRINT("========== NAVI STARTING STATE START \n");
+		Navi* navi = naviMgr->getNavi();
+		if (navi) {
+			navi->mStateMachine->transit(navi, 23);
+			itemMgr->getUfo();
+			cameraMgr->mCamera->startCamera(navi, 1, 0);
+		}
+	} else {
+		if (!playerState->isTutorial()) {
+			cameraMgr->mCamera->startCamera(mNavi, 0, 0);
+			if (playerState->isTutorial() && playerState->_11 & 8) {
+				cameraMgr->mCamera->startMotion(0, 0);
+				cameraMgr->mCamera->_30 = 0;
+			}
+		} else {
+			cameraMgr->mCamera->startCamera(mNavi, 1, 0);
+		}
+	}
+
+	UfoItem* ufo = itemMgr->getUfo();
+	if (ufo) {
+		if (!playerState->isTutorial()) {
+			ufo->setSpotActive(true);
+		} else {
+			ufo->setSpotActive(false);
+		}
+	}
+
+	if (bossMgr) {
+		bossMgr->finalSetup();
+	}
+
+	if (itemMgr && itemMgr->mMeltingPotMgr) {
+		itemMgr->mMeltingPotMgr->finalSetup();
+	}
+
+	if (workObjectMgr) {
+		workObjectMgr->finalSetup();
+	}
+
+	PRINT("====================== FINAL SETUP DONE ======================\n");
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4725,6 +4519,48 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
  */
 void GameCoreSection::update()
 {
+	if (!gameflow.mMoviePlayer->mIsActive && _31 == false && gameflow.mParameters->mNightWarning() >= gameflow.mWorldClock.mTimeOfDay
+	    && (flowCont._234 != 1 || flowCont._234 != 2) && !playerState->inDayEnd()) {
+		// if (playerState->hasRadar()) {
+		startSundownWarn();
+		//} else {
+		PRINT("======== IN DAY END *** \n");
+		//}
+	}
+
+	if (!gameflow.mMoviePlayer->mIsActive) {
+		if (hurryupWindow->update()) {
+			PRINT("ZAMA*HURRY!!\n");
+		}
+	}
+	accountWindow->update();
+	routeMgr->update();
+
+	if (gameflow._33C == 0 && gameflow._338 == 0) {
+		playerState->update();
+	}
+
+	if (GameStat::allPikis == 0 && GameStat::maxPikis > 0) {
+		Navi* navi = mNavi;
+		int id     = navi->getCurrState()->getID();
+		if (id != 33 && id != 25 && id != 21 && id != 22) {
+			PRINT("**** PIKI ZERO GAME OVER *******\n");
+			PRINT("deadpikis %d pellets %d killtekis %d maxpikis %d", GameStat::deadPikis, GameStat::getPellets, GameStat::killTekis,
+			      GameStat::maxPikis);
+			navi->mStateMachine->transit(navi, 33);
+			playerState->mResultFlags.setOn(14);
+		}
+	}
+
+	if (!gameflow.mMoviePlayer->mIsActive) {
+		cameraMgr->update();
+	}
+	zen::pGameInfo->_00 = 0; // whatever is going on with this
+	zen::pGameInfo->_04 = GameStat::allPikis;
+	zen::pGameInfo->_06 = GameStat::mapPikis;
+	zen::pGameInfo->_08 = GameStat::formationPikis;
+	Node::update();
+	
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4933,8 +4769,7 @@ void GameCoreSection::update()
  */
 void GameCoreSection::startContainerDemo()
 {
-	// Generated from stw r0, 0x34(r3)
-	// _34 = 2;
+	_34 = 2;
 }
 
 /*
@@ -4944,6 +4779,10 @@ void GameCoreSection::startContainerDemo()
  */
 void GameCoreSection::startSundownWarn()
 {
+	_31 = 1;
+	PRINT("***** START HURRY UP WINDOW\n");
+	hurryupWindow->start(zen::DrawHurryUp::MesgType1);
+	seSystem->playSysSe(SYSSE_EVENING_ALERT);
 	/*
 	.loc_0x0:
 	  mflr      r0

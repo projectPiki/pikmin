@@ -189,6 +189,8 @@ struct PikiInfMgr {
 	// unused/inlined:
 	int getTotal();
 
+	int getColorTotal(int col) { return mPikiCounts[col][0] + mPikiCounts[col][1] + mPikiCounts[col][2]; }
+
 	// TODO: members
 	int mPikiCounts[3][3]; // _00, indexed by color and happa maybe?
 };
