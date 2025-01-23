@@ -122,6 +122,7 @@ struct TaiCollecVisibleHeightPelletLostAction : public TaiAction {
  */
 struct TaiCollecVisibleHeightPelletLostTimerAction : public TaiTimerAction {
 	inline TaiCollecVisibleHeightPelletLostTimerAction() // TODO: this is a guess
+	    : TaiTimerAction(0, 0, 0.0f, 0.0f)
 	{
 	}
 
@@ -303,6 +304,7 @@ struct TaiCollecPuttingPelletAction : public TaiAction {
  */
 struct TaiCollecCarryingToNestAction : public TaiContinuousMotionAction {
 	inline TaiCollecCarryingToNestAction() // TODO: this is a guess
+	    : TaiContinuousMotionAction(0, 0)
 	{
 	}
 

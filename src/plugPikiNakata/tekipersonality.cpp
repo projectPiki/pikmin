@@ -157,6 +157,7 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
 	_24 = (s8)input.readByte();
 	mID.read(input);
 	params->read(input);
+	PRINT("TekiPersonality::read:pelletColor:%d\n", _24);
 }
 
 /*

@@ -40,7 +40,7 @@ void TaiSendMessageAction::start(Teki& teki)
  */
 bool TaiKeySendMessageAction::act(Teki& teki)
 {
-	if (teki.isAnimKeyOption(mAnimKeyOpt)) {
+	if (teki.getAnimationKeyOption(mAnimKeyOpt)) {
 		teki.sendMessage(mMessage);
 	}
 	return false;

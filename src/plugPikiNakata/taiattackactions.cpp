@@ -115,7 +115,7 @@ void TaiAnimationSwallowingAction::start(Teki& teki)
  */
 bool TaiAnimationSwallowingAction::act(Teki& teki)
 {
-	if (teki.isAnimKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
+	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
 		teki.flickUpper();
 		Vector3f center;
 		teki.outputHitCenter(center);

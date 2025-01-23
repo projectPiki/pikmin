@@ -48,6 +48,7 @@ struct TaiNapkidStrategy : public TaiStrategy {
  */
 struct TaiNapkidWanderingRouteAction : public TaiContinuousMotionAction {
 	inline TaiNapkidWanderingRouteAction() // TODO: this is a guess
+	    : TaiContinuousMotionAction(0, 0)
 	{
 	}
 

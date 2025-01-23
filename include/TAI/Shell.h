@@ -11,7 +11,35 @@ struct Creature;
 
 /////////// Pearly Clamclamp (Shell) AI Actions ///////////
 
-/*
+/**
+ * @brief TODO
+ */
+enum TaiShellIntParams {
+	SHELLPI_ClosingLoopCount = TPI_COUNT,
+	SHELLPI_COUNT, // 21
+};
+
+/**
+ * @brief TODO
+ */
+enum TaiShellFloatParams {
+	SHELLPF_OpeningPeriod = TPF_COUNT,
+	SHELLPF_COUNT, // 51
+};
+
+/**
+ * @brief TODO
+ */
+enum TaiShellStateID {
+	SHELLSTATE_Unk0 = 0,
+	SHELLSTATE_Unk1 = 1,
+	SHELLSTATE_Unk2 = 2,
+	SHELLSTATE_Unk3 = 3,
+	SHELLSTATE_Unk4 = 4,
+	SHELLSTATE_COUNT, // 5
+};
+
+/**
  * @brief TODO
  */
 struct TaiShellSoundTable : public PaniSoundTable {
@@ -31,7 +59,7 @@ struct TaiShellParameters : public TekiParameters {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiShellStrategy : public TaiStrategy {
@@ -86,8 +114,8 @@ struct TaiShellSaveItemPositionAction : public TaiAction {
  * @brief TODO
  */
 struct TaiShellNaviPikiInsideAction : public TaiAction {
-	inline TaiShellNaviPikiInsideAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiShellNaviPikiInsideAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -102,8 +130,8 @@ struct TaiShellNaviPikiInsideAction : public TaiAction {
  * @brief TODO
  */
 struct TaiShellEatAction : public TaiAction {
-	inline TaiShellEatAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiShellEatAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -115,6 +143,16 @@ struct TaiShellEatAction : public TaiAction {
 };
 
 /////////// Pearly Clamclamp (Pearl/Treasure) AI Actions ///////////
+
+/**
+ * @brief TODO
+ */
+enum TaiPearlStateID {
+	PEARLSTATE_Unk0 = 0,
+	PEARLSTATE_Unk1 = 1,
+	PEARLSTATE_Unk2 = 2,
+	PEARLSTATE_COUNT, // 3
+};
 
 /*
  * @brief TODO

@@ -4,7 +4,7 @@
 #include "types.h"
 #include "Vector.h"
 #include "Dolphin/mtx.h"
-#include "system.h"
+#include <system.h>
 
 template <typename T>
 struct NMath {
@@ -91,12 +91,12 @@ struct NMathF {
 	static inline bool occurred(f32);
 
 	// this is fake or needs renaming
-	static inline f32 getRandomAngle() { return 2.0f * StdSystem::getRand(1.0f) * pi; }
+	static inline f32 getRandomAngle() { return 2.0f * System::getRand(1.0f) * pi; }
 };
 
 struct NMathI {
 	static int rangeRandom(int, int);
-	static bool checkBit(int, int);
+	static bool checkBit(int flag, int bit) { return (flag & bit); }
 };
 
 extern u16 atan(f32 x, f32 y);

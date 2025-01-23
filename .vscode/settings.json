@@ -35,6 +35,7 @@
         "ipldec.h": "c",
         "dsp.h": "c",
         "os.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "system.h": "c"
     },
 }

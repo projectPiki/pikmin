@@ -25,9 +25,11 @@ struct TaiActionStateAction : public TaiAction {
  * @brief TODO
  */
 struct TaiSetOptionAction : public TaiAction {
-	inline TaiSetOptionAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiSetOptionAction(int option, bool doSet)
+	    : TaiAction(-1)
 	{
+		mOpt   = option;
+		mDoSet = doSet;
 	}
 
 	virtual void start(Teki&); // _08
@@ -75,7 +77,7 @@ struct TaiStopSoundAction : public TaiAction {
  */
 struct TaiTypeNaviWatchResultOnAction : public TaiAction {
 	inline TaiTypeNaviWatchResultOnAction() // TODO: this is a guess
-	    : TaiAction(0)
+	    : TaiAction(-1)
 	{
 	}
 

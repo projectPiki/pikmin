@@ -9,7 +9,7 @@
  */
 struct TaiWaitTurningAction : public TaiMotionAction {
 	inline TaiWaitTurningAction() // TODO: this is a guess
-	    : TaiMotionAction(-1)
+	    : TaiMotionAction(-1, 0)
 	{
 	}
 

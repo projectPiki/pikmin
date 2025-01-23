@@ -291,6 +291,8 @@ struct Creature : public RefCountable, public EventTalker {
 
 	void setFree(bool set) { set ? setCreatureFlag(CF_Free) : resetCreatureFlag(CF_Free); }
 
+	void inputPosition(Vector3f& pos) { mPosition = pos; }
+
 	/*
 	    DLL inlines to assign/make:
 	    bool insideView();
@@ -308,7 +310,6 @@ struct Creature : public RefCountable, public EventTalker {
 
 	    void finishFlying();
 
-	    void inputPosition(Vector3f&);
 	    void outputPosition(Vector3f&);
 
 	    void restartAI();

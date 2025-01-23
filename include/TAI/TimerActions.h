@@ -8,8 +8,11 @@
  * @brief TODO
  */
 struct TaiTimerAction : public TaiAction {
-	inline TaiTimerAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTimerAction(int p1, int p2, f32 p3, f32 p4)
+	    : TaiAction(p1)
+	    , _08(p2)
+	    , _0C(p3)
+	    , _10(p4)
 	{
 	}
 
@@ -20,7 +23,9 @@ struct TaiTimerAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int _08; // _08
+	f32 _0C; // _0C
+	f32 _10; // _10
 };
 
 /**
@@ -62,6 +67,7 @@ struct TaiTimerElapsedAction : public TaiAction {
  */
 struct TaiStartingTimerAction : public TaiTimerAction {
 	inline TaiStartingTimerAction() // TODO: this is a guess
+	    : TaiTimerAction(0, 0, 0.0f, 0.0f)
 	{
 	}
 

@@ -87,8 +87,8 @@ struct TaiStartDyingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiSpawnItemsAction : public TaiAction {
-	inline TaiSpawnItemsAction(int nextState) // TODO: this is a guess
-	    : TaiAction(nextState)
+	TaiSpawnItemsAction()
+	    : TaiAction(-1)
 	{
 	}
 
@@ -119,8 +119,8 @@ struct TaiCreateDeadEffectAction : public TaiAction {
  * @brief TODO
  */
 struct TaiDyingAction : public TaiMotionAction {
-	inline TaiDyingAction() // TODO: this is a guess
-	    : TaiMotionAction(0)
+	TaiDyingAction(int p1)
+	    : TaiMotionAction(-1, p1)
 	{
 	}
 
@@ -232,8 +232,8 @@ struct TaiCounterattackSimultaneousDamageAction : public TaiAction {
  * @brief TODO
  */
 struct TaiDamagingAction : public TaiMotionAction {
-	inline TaiDamagingAction() // TODO: this is a guess
-	    : TaiMotionAction(0)
+	TaiDamagingAction(int nextState, int p2)
+	    : TaiMotionAction(nextState, p2)
 	{
 	}
 

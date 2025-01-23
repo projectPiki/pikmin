@@ -79,6 +79,7 @@ struct TaiSwallowReceiveMessageAction : public TaiAction {
  */
 struct TaiSwallowTurningAction : public TaiContinuousMotionAction {
 	inline TaiSwallowTurningAction() // TODO: this is a guess
+	    : TaiContinuousMotionAction(0, 0)
 	{
 	}
 
@@ -94,7 +95,7 @@ struct TaiSwallowTurningAction : public TaiContinuousMotionAction {
  */
 struct TaiSwallowFlickingAction : public TaiMotionAction {
 	inline TaiSwallowFlickingAction() // TODO: this is a guess
-	    : TaiMotionAction(-1)
+	    : TaiMotionAction(-1, 0)
 	{
 	}
 

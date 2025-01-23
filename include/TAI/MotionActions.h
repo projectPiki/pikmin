@@ -7,8 +7,9 @@
  * @brief TODO
  */
 struct TaiMotionAction : public TaiAction {
-	inline TaiMotionAction(int nextState) // TODO: this is a guess
+	TaiMotionAction(int nextState, int p2)
 	    : TaiAction(nextState)
+	    , _08(p2)
 	{
 	}
 
@@ -17,15 +18,15 @@ struct TaiMotionAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int _08; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiContinuousMotionAction : public TaiMotionAction {
-	inline TaiContinuousMotionAction() // TODO: this is a guess
-	    : TaiMotionAction(0)
+	TaiContinuousMotionAction(int p1, int p2) // TODO: this is a guess
+	    : TaiMotionAction(p1, p2)
 	{
 	}
 
@@ -43,7 +44,7 @@ struct TaiContinuousMotionAction : public TaiMotionAction {
  */
 struct TaiFinishMotionAction : public TaiMotionAction {
 	inline TaiFinishMotionAction() // TODO: this is a guess
-	    : TaiMotionAction(0)
+	    : TaiMotionAction(0, 0)
 	{
 	}
 
@@ -74,8 +75,9 @@ struct TaiAnimationKeyAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCountLoopAction : public TaiAction {
-	inline TaiCountLoopAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiCountLoopAction(int nextState, int p2)
+	    : TaiAction(nextState)
+	    , _08(p2)
 	{
 	}
 
@@ -84,7 +86,7 @@ struct TaiCountLoopAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int _08; // _08
 };
 
 /**
@@ -92,7 +94,7 @@ struct TaiCountLoopAction : public TaiAction {
  */
 struct TaiSwitchMotionAction : public TaiMotionAction {
 	inline TaiSwitchMotionAction() // TODO: this is a guess
-	    : TaiMotionAction(0)
+	    : TaiMotionAction(0, 0)
 	{
 	}
 

@@ -51,7 +51,7 @@ struct TaiPalmStrategy : public TaiStrategy {
  */
 struct TaiPalmMotionAction : public TaiMotionAction {
 	inline TaiPalmMotionAction() // TODO: this is a guess
-	    : TaiMotionAction(-1)
+	    : TaiMotionAction(-1, 0)
 	{
 	}
 
@@ -67,6 +67,7 @@ struct TaiPalmMotionAction : public TaiMotionAction {
  */
 struct TaiPalmDyingAction : public TaiDyingAction {
 	inline TaiPalmDyingAction() // TODO: this is a guess
+	    : TaiDyingAction(0)
 	{
 	}
 
@@ -83,6 +84,7 @@ struct TaiPalmDyingAction : public TaiDyingAction {
  */
 struct TaiPalmDamagingAction : public TaiDamagingAction {
 	inline TaiPalmDamagingAction() // TODO: this is a guess
+	    : TaiDamagingAction(0, 0)
 	{
 	}
 

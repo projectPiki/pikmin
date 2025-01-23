@@ -10,9 +10,10 @@ struct Vector3f;
  * @brief TODO
  */
 struct TaiEffectAction : public TaiAction {
-	inline TaiEffectAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiEffectAction(int effID) // TODO: this is a guess
+	    : TaiAction(-1)
 	{
+		mEffectType = effID;
 	}
 
 	virtual void start(Teki&); // _08

@@ -29,8 +29,8 @@ struct TaiAction {
  * @brief TODO
  */
 struct TaiOnceAction : public TaiAction {
-	inline TaiOnceAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiOnceAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -124,6 +124,8 @@ struct TaiState {
 	virtual bool act(Teki& teki);                  // _10
 	virtual bool eventPerformed(TekiEvent& event); // _14
 
+	void setAction(int idx, TaiAction* action) { mActions[idx] = action; }
+
 	// _00 = VTBL
 	int mCount;           // _04, count of actions
 	TaiAction** mActions; // _08, array of mCount actions
@@ -140,6 +142,8 @@ struct TaiStrategy : public TekiStrategy {
 	virtual void eventPerformed(TekiEvent& event); // _10
 
 	void init(int, int);
+
+	void setState(int idx, TaiState* state) { mStateList[idx] = state; }
 
 	// _00 = VTBL
 	// _00-_04 = TekiStrategy

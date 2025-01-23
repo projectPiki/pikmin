@@ -108,6 +108,7 @@ struct TaiMizinkoStrategy : public TaiStrategy {
  */
 struct TaiMizinkoCryTimerAction : public TaiTimerAction {
 	inline TaiMizinkoCryTimerAction() // TODO: this is a guess
+	    : TaiTimerAction(0, 0, 0.0f, 0.0f)
 	{
 	}
 
@@ -123,6 +124,7 @@ struct TaiMizinkoCryTimerAction : public TaiTimerAction {
  */
 struct TaiMizinkoMovingTimerAction : public TaiTimerAction {
 	inline TaiMizinkoMovingTimerAction() // TODO: this is a guess
+	    : TaiTimerAction(0, 0, 0.0f, 0.0f)
 	{
 	}
 

@@ -324,19 +324,22 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 
 	inline void setVisible() { setTekiOption(TEKI_OPTION_VISIBLE); }
 
-	inline bool isTekiOption(int opt) const { return mTekiOptions & opt; }
-	inline bool isAnimKeyOption(int opt) const { return mAnimKeyOptions & opt; }
-
 	inline int getStateID() { return mStateID; }
 
-	inline f32 getParticleFactor() { return getParameterF(19); } // rename later when we know what this is
+	inline f32 getParticleFactor() { return getParameterF(TPF_RippleScale); } // rename later when we know what this is
 
 	inline f32 doGetVelocityAnimSpeed() { return getVelocityAnimationSpeed(mTargetVelocity.length()); }
 
 	// these are all correct name-wise according to the map or the DLL.
-	f32 getDirection() { return mDirection; }                                 // weak function
-	f32 getPersonalityF(int idx) { return mPersonality->mParams->getF(idx); } // weak
-	int getPersonalityI(int idx) { return mPersonality->mParams->getI(idx); } // weak
+	void setDirection(f32 dir) { mDirection = dir; }
+	f32 getDirection() { return mDirection; } // weak function
+
+	// NB: according to the DLL, this should use NMathI::checkBit, but that inflates stack too much
+	bool getTekiOption(int opt) { return mTekiOptions & opt; }
+	bool getAnimationKeyOption(int opt) { return mAnimKeyOptions & opt; }
+
+	f32 getPersonalityF(int idx) { return mPersonality->getF(idx); } // weak
+	int getPersonalityI(int idx) { return mPersonality->getI(idx); } // weak
 
 	f32 getParameterF(int idx) { return mTekiParams->getF(idx); } // see Tekif32Params enum
 	int getParameterI(int idx) { return mTekiParams->getI(idx); } // see TekiIntParams enum
@@ -361,29 +364,73 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 		stopDrive();
 	}
 
+	void setCreaturePointer(int idx, Creature* target) { mTargetCreatures[idx].set(target); }
+	Creature* getCreaturePointer(int idx) { return mTargetCreatures[idx].getPtr(); }
+
 	static void outputDirectionVector(f32 angle, Vector3f& outVec) { outVec.set(NMathF::sin(angle), 0.0f, NMathF::cos(angle)); }
 
-	// this is basically two static enums smh
-	static int TEKI_OPTION_VISIBLE;
-	static int TEKI_OPTION_SHADOW_VISIBLE;
-	static int TEKI_OPTION_LIFE_GAUGE_VISIBLE;
-	static int TEKI_OPTION_ATARI;
-	static int TEKI_OPTION_ALIVE;
-	static int TEKI_OPTION_ORGANIC;
-	static int TEKI_OPTION_MANUAL_ANIMATION;
-	static int TEKI_OPTION_GRAVITATABLE;
-	static int TEKI_OPTION_INVINCIBLE;
-	static int TEKI_OPTION_PRESSED;
-	static int TEKI_OPTION_DRAWED;
-	static int TEKI_OPTION_SHAPE_VISIBLE;
-	static int TEKI_OPTION_DAMAGE_COUNTABLE;
+	f32 getScaleRate()
+	{
+		f32 size  = getPersonalityF(TekiPersonality::FLT_Size);
+		f32 scale = getParameterF(TPF_Scale);
+		return scale * size;
+	}
 
-	static int ANIMATION_KEY_OPTION_FINISHED;
-	static int ANIMATION_KEY_OPTION_ACTION_0;
-	static int ANIMATION_KEY_OPTION_ACTION_1;
-	static int ANIMATION_KEY_OPTION_ACTION_2;
-	static int ANIMATION_KEY_OPTION_LOOPSTART;
-	static int ANIMATION_KEY_OPTION_LOOPEND;
+	f32 getAttackableRange() { return getParameterF(TPF_AttackableRange) * getScaleRate(); }
+	f32 getAttackHitRange() { return getParameterF(TPF_AttackHitRange) * getScaleRate(); }
+	f32 getLowerRange() { return getParameterF(TPF_LowerRange) * getScaleRate(); }
+	f32 getAttackRange() { return getParameterF(TPF_AttackRange) * getScaleRate(); }
+	f32 getScale() { return getScaleRate() * 1.0f; }
+
+	/*
+	    DLL inlines to make:
+	    bool animationFinished();
+	    bool timerElapsed(int);
+
+	    f32 calcSphereDistance(Creature&);
+	    f32 calcTargetDirection(Vector3f&);
+	    f32 getTerritoryDistance();
+
+
+	    Vector3f& getDrive();
+	    f32 getDriveLength();
+
+	    Vector3f& getNestPosition();
+	    Vector3f& getVelocity();
+
+	    void clearCreaturePointer(int);
+
+	    ID32& getCorpsePartID(int);
+
+	    void inputDirectionVector(Vector3f&);
+
+	    void setPersonalityF(int, f32);
+	    void setPersonalityI(int, int);
+
+	    static f32 calcDirection(Vector3f&);
+	*/
+
+	// this is basically two static enums smh
+	static const int TEKI_OPTION_VISIBLE;
+	static const int TEKI_OPTION_SHADOW_VISIBLE;
+	static const int TEKI_OPTION_LIFE_GAUGE_VISIBLE;
+	static const int TEKI_OPTION_ATARI;
+	static const int TEKI_OPTION_ALIVE;
+	static const int TEKI_OPTION_ORGANIC;
+	static const int TEKI_OPTION_MANUAL_ANIMATION;
+	static const int TEKI_OPTION_GRAVITATABLE;
+	static const int TEKI_OPTION_INVINCIBLE;
+	static const int TEKI_OPTION_PRESSED;
+	static const int TEKI_OPTION_DRAWED;
+	static const int TEKI_OPTION_SHAPE_VISIBLE;
+	static const int TEKI_OPTION_DAMAGE_COUNTABLE;
+
+	static const int ANIMATION_KEY_OPTION_FINISHED;
+	static const int ANIMATION_KEY_OPTION_ACTION_0;
+	static const int ANIMATION_KEY_OPTION_ACTION_1;
+	static const int ANIMATION_KEY_OPTION_ACTION_2;
+	static const int ANIMATION_KEY_OPTION_LOOPSTART;
+	static const int ANIMATION_KEY_OPTION_LOOPEND;
 
 	// _00       = VTBL
 	// _000-_2B8 = Creature

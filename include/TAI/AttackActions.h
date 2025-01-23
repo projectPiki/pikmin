@@ -123,7 +123,7 @@ struct TaiTargetStickAction : public TaiAction {
  */
 struct TaiFlickingAction : public TaiMotionAction {
 	inline TaiFlickingAction() // TODO: this is a guess
-	    : TaiMotionAction(0)
+	    : TaiMotionAction(0, 0)
 	{
 	}
 
@@ -141,7 +141,7 @@ struct TaiFlickingAction : public TaiMotionAction {
  */
 struct TaiFlickingUpperAction : public TaiMotionAction {
 	inline TaiFlickingUpperAction() // TODO: this is a guess
-	    : TaiMotionAction(0)
+	    : TaiMotionAction(0, 0)
 	{
 	}
 

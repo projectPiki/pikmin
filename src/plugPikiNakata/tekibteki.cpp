@@ -15,26 +15,26 @@
 #include "EffectMgr.h"
 #include "DebugLog.h"
 
-int BTeki::TEKI_OPTION_VISIBLE            = 1 << 0;
-int BTeki::TEKI_OPTION_SHADOW_VISIBLE     = 1 << 1;
-int BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE = 1 << 2;
-int BTeki::TEKI_OPTION_ATARI              = 1 << 3;
-int BTeki::TEKI_OPTION_ALIVE              = 1 << 4;
-int BTeki::TEKI_OPTION_ORGANIC            = 1 << 5;
-int BTeki::TEKI_OPTION_MANUAL_ANIMATION   = 1 << 7;
-int BTeki::TEKI_OPTION_GRAVITATABLE       = 1 << 8;
-int BTeki::TEKI_OPTION_INVINCIBLE         = 1 << 9;
-int BTeki::TEKI_OPTION_PRESSED            = 1 << 10;
-int BTeki::TEKI_OPTION_DRAWED             = 1 << 13;
-int BTeki::TEKI_OPTION_SHAPE_VISIBLE      = 1 << 14;
-int BTeki::TEKI_OPTION_DAMAGE_COUNTABLE   = 1 << 15;
+const int BTeki::TEKI_OPTION_VISIBLE            = 1 << 0;
+const int BTeki::TEKI_OPTION_SHADOW_VISIBLE     = 1 << 1;
+const int BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE = 1 << 2;
+const int BTeki::TEKI_OPTION_ATARI              = 1 << 3;
+const int BTeki::TEKI_OPTION_ALIVE              = 1 << 4;
+const int BTeki::TEKI_OPTION_ORGANIC            = 1 << 5;
+const int BTeki::TEKI_OPTION_MANUAL_ANIMATION   = 1 << 7;
+const int BTeki::TEKI_OPTION_GRAVITATABLE       = 1 << 8;
+const int BTeki::TEKI_OPTION_INVINCIBLE         = 1 << 9;
+const int BTeki::TEKI_OPTION_PRESSED            = 1 << 10;
+const int BTeki::TEKI_OPTION_DRAWED             = 1 << 13;
+const int BTeki::TEKI_OPTION_SHAPE_VISIBLE      = 1 << 14;
+const int BTeki::TEKI_OPTION_DAMAGE_COUNTABLE   = 1 << 15;
 
-int BTeki::ANIMATION_KEY_OPTION_FINISHED  = 1 << KEY_Finished;
-int BTeki::ANIMATION_KEY_OPTION_ACTION_0  = 1 << KEY_Action0;
-int BTeki::ANIMATION_KEY_OPTION_ACTION_1  = 1 << KEY_Action1;
-int BTeki::ANIMATION_KEY_OPTION_ACTION_2  = 1 << KEY_Action2;
-int BTeki::ANIMATION_KEY_OPTION_LOOPSTART = 1 << KEY_LoopStart;
-int BTeki::ANIMATION_KEY_OPTION_LOOPEND   = 1 << KEY_LoopEnd;
+const int BTeki::ANIMATION_KEY_OPTION_FINISHED  = 1 << KEY_Finished;
+const int BTeki::ANIMATION_KEY_OPTION_ACTION_0  = 1 << KEY_Action0;
+const int BTeki::ANIMATION_KEY_OPTION_ACTION_1  = 1 << KEY_Action1;
+const int BTeki::ANIMATION_KEY_OPTION_ACTION_2  = 1 << KEY_Action2;
+const int BTeki::ANIMATION_KEY_OPTION_LOOPSTART = 1 << KEY_LoopStart;
+const int BTeki::ANIMATION_KEY_OPTION_LOOPEND   = 1 << KEY_LoopEnd;
 
 /*
  * --INFO--
@@ -997,11 +997,11 @@ void BTeki::doAnimation()
 	if (!mTekiShape) {
 		return;
 	}
-	if (isTekiOption(TEKIOPT_ManualAnimation)) {
+	if (getTekiOption(TEKIOPT_ManualAnimation)) {
 		mAnimationSpeed = mMotionSpeed;
 	} else if (!(mTekiAnimator->mAnimInfo->mParams.mFlags() & AnimInfo::FLAG_Unk2)) {
 		mAnimationSpeed = mTekiAnimator->mAnimInfo->mParams.mSpeed();
-	} else if (isTekiOption(TEKIOPT_StoppingMove)) {
+	} else if (getTekiOption(TEKIOPT_StoppingMove)) {
 		mAnimationSpeed = mPreStopAnimationSpeed;
 	} else {
 		mAnimationSpeed = doGetVelocityAnimSpeed();

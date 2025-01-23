@@ -1,5 +1,17 @@
 #include "TAI/Shell.h"
+#include "TAI/BasicActions.h"
+#include "TAI/TimerActions.h"
+#include "TAI/ReactionActions.h"
+#include "RumbleMgr.h"
+#include "MapMgr.h"
+#include "nlib/Geometry.h"
+#include "teki.h"
+#include "Pellet.h"
+#include "TekiConditions.h"
+#include "PlayerState.h"
 #include "SoundMgr.h"
+#include "Graphics.h"
+#include "sysNew.h"
 #include "DebugLog.h"
 
 /*
@@ -35,110 +47,33 @@ TaiShellSoundTable::TaiShellSoundTable()
  * Size:	00018C
  */
 TaiShellParameters::TaiShellParameters()
-    : TekiParameters(21, 51)
+    : TekiParameters(SHELLPI_COUNT, SHELLPF_COUNT)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x15
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x33
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  addi      r31, r3, 0
-	  bl        0x9CD8
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x3718
-	  stw       r0, 0x0(r31)
-	  li        r5, 0x14
-	  lis       r4, 0x802D
-	  lwz       r6, 0x84(r31)
-	  li        r0, 0x32
-	  lis       r3, 0x802D
-	  lwz       r6, 0x0(r6)
-	  mulli     r5, r5, 0xC
-	  lwz       r6, 0x8(r6)
-	  subi      r4, r4, 0x3BFC
-	  add       r6, r6, r5
-	  stw       r4, 0x0(r6)
-	  li        r9, 0
-	  li        r4, 0x1E
-	  stw       r9, 0x4(r6)
-	  mulli     r5, r0, 0xC
-	  stw       r4, 0x8(r6)
-	  subi      r4, r3, 0x3BE8
-	  lwz       r3, 0x84(r31)
-	  li        r7, 0x1
-	  li        r6, -0x1
-	  lwz       r8, 0x4(r3)
-	  li        r0, 0x5
-	  addi      r3, r31, 0
-	  lwz       r8, 0x8(r8)
-	  add       r5, r8, r5
-	  stw       r4, 0x0(r5)
-	  lfs       f0, -0x5940(r2)
-	  stfs      f0, 0x4(r5)
-	  lfs       f0, -0x593C(r2)
-	  stfs      f0, 0x8(r5)
-	  lwz       r4, 0x84(r31)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r7, 0x4(r5)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r6, 0xC(r5)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r9, 0x8(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f2, -0x5938(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f2, 0x0(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f2, 0x4(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5934(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x8(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5930(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x20(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f1, -0x592C(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0x48(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5928(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x58(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0x5C(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f1, -0x5924(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0x4C(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f2, 0xAC(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5920(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xB0(r5)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r0, 0x50(r5)
-	  lwz       r4, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  stfs      f1, 0xC8(r4)
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	int i = SHELLPI_ClosingLoopCount;
+	mParameters->mIntParams->mParaInfo[i++].init("CLOSING_LOOP_COUNT", 0, 30);
+
+	int j = SHELLPF_OpeningPeriod;
+	mParameters->mFloatParams->mParaInfo[j++].init("OPENING_PERIOD", 0.0f, 30.0f);
+
+	ParaMultiParameters* multiP = mParameters;
+	multiP->setI(TPI_ShadowType, 1);
+	multiP->setI(TPI_SpawnType, -1);
+	multiP->setI(TPI_CullingType, 0);
+	multiP->setF(TPF_Life, 1.0f);
+	multiP->setF(TPF_Scale, 1.0f);
+	multiP->setF(TPF_Weight, -1.0f);
+	multiP->setF(TPF_AttackableRange, 42.0f);
+	multiP->setF(TPF_ShadowSize, 10.0f);
+	multiP->setF(TPF_SpawnDistance, 3.0f);
+	multiP->setF(TPF_SpawnHeight, 10.0f);
+	multiP->setF(TPF_RippleScale, 4.0f);
+	multiP->setF(TPF_BombDamageRate, 1.0f);
+	multiP->setF(TPF_CollisionRadius, 24.0f);
+
+	multiP->setI(SHELLPI_ClosingLoopCount, 5);
+	multiP->setF(SHELLPF_OpeningPeriod, 4.0f);
+
+	u32 badCompiler;
 }
 
 /*
@@ -146,363 +81,61 @@ TaiShellParameters::TaiShellParameters()
  * Address:	801421E0
  * Size:	0004F4
  */
-TaiShellStrategy::TaiShellStrategy(TekiParameters*)
-    : TaiStrategy(0, 0) // TODO: fix
+TaiShellStrategy::TaiShellStrategy(TekiParameters* params)
+    : TaiStrategy(SHELLSTATE_COUNT, SHELLSTATE_Unk0)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stmw      r24, 0x80(r1)
-	  addi      r28, r4, 0
-	  addi      r30, r3, 0
-	  li        r4, 0x5
-	  bl        -0x1AE1C
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x37CC
-	  stw       r0, 0x0(r30)
-	  li        r3, 0x8
-	  bl        -0xFB210
-	  addi      r29, r3, 0
-	  mr.       r0, r29
-	  beq-      .loc_0x64
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r29)
-	  li        r0, -0x1
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r29)
-	  addi      r0, r3, 0x6A60
-	  stw       r0, 0x4(r29)
+	TaiTypeNaviWatchResultOnAction* naviWatchAction   = new TaiTypeNaviWatchResultOnAction();
+	TaiShellSetPositionAction* setPosAction           = new TaiShellSetPositionAction();
+	TaiShellSaveItemPositionAction* saveItemPosAction = new TaiShellSaveItemPositionAction();
+	TaiContinuousMotionAction* motionAction           = new TaiContinuousMotionAction(-1, 2);
+	TaiShellNaviPikiInsideAction* insideAction        = new TaiShellNaviPikiInsideAction(1);
 
-	.loc_0x64:
-	  li        r3, 0x8
-	  bl        -0xFB244
-	  addi      r31, r3, 0
-	  mr.       r0, r31
-	  beq-      .loc_0x98
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r31)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x3810
-	  stw       r0, 0x4(r31)
+	TaiState* state0 = new TaiState(4);
+	int j            = 0;
+	state0->setAction(j++, setPosAction);
+	state0->setAction(j++, saveItemPosAction);
+	state0->setAction(j++, motionAction);
+	state0->setAction(j++, insideAction);
+	setState(SHELLSTATE_Unk0, state0);
 
-	.loc_0x98:
-	  li        r3, 0x8
-	  bl        -0xFB278
-	  addi      r27, r3, 0
-	  mr.       r0, r27
-	  beq-      .loc_0xCC
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r27)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r27)
-	  subi      r0, r3, 0x3854
-	  stw       r0, 0x4(r27)
+	motionAction                    = new TaiContinuousMotionAction(-1, 10);
+	TaiTimerAction* openTimerAction = new TaiTimerAction(2, 0, params->getF(SHELLPF_OpeningPeriod), 0.0f);
 
-	.loc_0xCC:
-	  li        r3, 0xC
-	  bl        -0xFB2AC
-	  addi      r26, r3, 0
-	  mr.       r0, r26
-	  beq-      .loc_0x114
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r26)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r26)
-	  subi      r0, r3, 0x6A6C
-	  lis       r3, 0x802D
-	  stw       r0, 0x4(r26)
-	  li        r4, 0x2
-	  subi      r0, r3, 0x6A8C
-	  stw       r4, 0x8(r26)
-	  stw       r0, 0x4(r26)
+	TaiState* state1 = new TaiState(3);
+	j                = 0;
+	state1->setAction(j++, setPosAction);
+	state1->setAction(j++, motionAction);
+	state1->setAction(j++, openTimerAction);
+	setState(SHELLSTATE_Unk1, state1);
 
-	.loc_0x114:
-	  li        r3, 0x8
-	  bl        -0xFB2F4
-	  addi      r25, r3, 0
-	  mr.       r0, r25
-	  beq-      .loc_0x148
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r25)
-	  li        r0, 0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r25)
-	  subi      r0, r3, 0x389C
-	  stw       r0, 0x4(r25)
+	motionAction                        = new TaiContinuousMotionAction(-1, 11);
+	TaiCountLoopAction* closeLoopAction = new TaiCountLoopAction(3, params->getI(SHELLPI_ClosingLoopCount));
 
-	.loc_0x148:
-	  li        r3, 0xC
-	  bl        -0xFB328
-	  addi      r24, r3, 0
-	  mr.       r3, r24
-	  beq-      .loc_0x164
-	  li        r4, 0x4
-	  bl        -0x1B2A8
+	TaiState* state2 = new TaiState(3);
+	j                = 0;
+	state2->setAction(j++, setPosAction);
+	state2->setAction(j++, closeLoopAction);
+	state2->setAction(j++, motionAction);
+	setState(SHELLSTATE_Unk2, state2);
 
-	.loc_0x164:
-	  li        r0, 0
-	  lwz       r3, 0x8(r24)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r31, r3, r0
-	  li        r0, 0x1
-	  li        r4, 0x2
-	  lwz       r3, 0x8(r24)
-	  rlwinm    r0,r0,2,0,29
-	  li        r5, 0x3
-	  stwx      r27, r3, r0
-	  rlwinm    r4,r4,2,0,29
-	  rlwinm    r0,r5,2,0,29
-	  lwz       r5, 0x8(r24)
-	  li        r3, 0xC
-	  stwx      r26, r5, r4
-	  lwz       r4, 0x8(r24)
-	  stwx      r25, r4, r0
-	  lwz       r4, 0x8(r30)
-	  stw       r24, 0x0(r4)
-	  bl        -0xFB38C
-	  addi      r24, r3, 0
-	  mr.       r0, r24
-	  beq-      .loc_0x1F4
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r24)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r24)
-	  subi      r0, r3, 0x6A6C
-	  lis       r3, 0x802D
-	  stw       r0, 0x4(r24)
-	  li        r4, 0xA
-	  subi      r0, r3, 0x6A8C
-	  stw       r4, 0x8(r24)
-	  stw       r0, 0x4(r24)
+	TaiShellEatAction* eatAction = new TaiShellEatAction(4);
+	TaiOnceAction* onceAction    = new TaiOnceAction(0);
 
-	.loc_0x1F4:
-	  li        r3, 0x14
-	  bl        -0xFB3D4
-	  addi      r25, r3, 0
-	  mr.       r0, r25
-	  beq-      .loc_0x24C
-	  lwz       r5, 0x84(r28)
-	  lis       r4, 0x802C
-	  lis       r3, 0x802D
-	  lwz       r6, 0x4(r5)
-	  addi      r5, r4, 0x6620
-	  li        r4, 0x2
-	  lwz       r6, 0x0(r6)
-	  subi      r3, r3, 0x35D8
-	  li        r0, 0
-	  lfs       f0, 0xC8(r6)
-	  stw       r5, 0x4(r25)
-	  stw       r4, 0x0(r25)
-	  stw       r3, 0x4(r25)
-	  stw       r0, 0x8(r25)
-	  stfs      f0, 0xC(r25)
-	  lfs       f0, -0x5940(r2)
-	  stfs      f0, 0x10(r25)
+	TaiState* state3 = new TaiState(3);
+	j                = 0;
+	state3->setAction(j++, setPosAction);
+	state3->setAction(j++, eatAction);
+	state3->setAction(j++, onceAction);
+	setState(SHELLSTATE_Unk3, state3);
 
-	.loc_0x24C:
-	  li        r3, 0xC
-	  bl        -0xFB42C
-	  addi      r26, r3, 0
-	  mr.       r3, r26
-	  beq-      .loc_0x268
-	  li        r4, 0x3
-	  bl        -0x1B3AC
+	motionAction = new TaiContinuousMotionAction(0, 13);
 
-	.loc_0x268:
-	  li        r0, 0
-	  lwz       r3, 0x8(r26)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r31, r3, r0
-	  li        r0, 0x1
-	  li        r5, 0x2
-	  lwz       r4, 0x8(r26)
-	  rlwinm    r3,r0,2,0,29
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r24, r4, r3
-	  li        r3, 0xC
-	  lwz       r4, 0x8(r26)
-	  stwx      r25, r4, r0
-	  lwz       r4, 0x8(r30)
-	  stw       r26, 0x4(r4)
-	  bl        -0xFB480
-	  addi      r24, r3, 0
-	  mr.       r0, r24
-	  beq-      .loc_0x2E8
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r24)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r24)
-	  subi      r0, r3, 0x6A6C
-	  lis       r3, 0x802D
-	  stw       r0, 0x4(r24)
-	  li        r4, 0xB
-	  subi      r0, r3, 0x6A8C
-	  stw       r4, 0x8(r24)
-	  stw       r0, 0x4(r24)
-
-	.loc_0x2E8:
-	  li        r3, 0xC
-	  bl        -0xFB4C8
-	  addi      r25, r3, 0
-	  mr.       r0, r25
-	  beq-      .loc_0x330
-	  lwz       r5, 0x84(r28)
-	  lis       r4, 0x802C
-	  lis       r3, 0x802D
-	  lwz       r6, 0x0(r5)
-	  addi      r5, r4, 0x6620
-	  li        r4, 0x3
-	  lwz       r6, 0x0(r6)
-	  subi      r0, r3, 0x6B60
-	  lwz       r3, 0x50(r6)
-	  stw       r5, 0x4(r25)
-	  stw       r4, 0x0(r25)
-	  stw       r0, 0x4(r25)
-	  stw       r3, 0x8(r25)
-
-	.loc_0x330:
-	  li        r3, 0xC
-	  bl        -0xFB510
-	  addi      r26, r3, 0
-	  mr.       r3, r26
-	  beq-      .loc_0x34C
-	  li        r4, 0x3
-	  bl        -0x1B490
-
-	.loc_0x34C:
-	  li        r0, 0
-	  lwz       r3, 0x8(r26)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r31, r3, r0
-	  li        r0, 0x1
-	  li        r5, 0x2
-	  lwz       r4, 0x8(r26)
-	  rlwinm    r3,r0,2,0,29
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r25, r4, r3
-	  li        r3, 0x8
-	  lwz       r4, 0x8(r26)
-	  stwx      r24, r4, r0
-	  lwz       r4, 0x8(r30)
-	  stw       r26, 0x8(r4)
-	  bl        -0xFB564
-	  addi      r24, r3, 0
-	  mr.       r0, r24
-	  beq-      .loc_0x3B8
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r24)
-	  li        r0, 0x4
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r24)
-	  subi      r0, r3, 0x38FC
-	  stw       r0, 0x4(r24)
-
-	.loc_0x3B8:
-	  li        r3, 0x8
-	  bl        -0xFB598
-	  addi      r25, r3, 0
-	  mr.       r0, r25
-	  beq-      .loc_0x3EC
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r25)
-	  li        r0, 0
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r25)
-	  addi      r0, r3, 0x6DDC
-	  stw       r0, 0x4(r25)
-
-	.loc_0x3EC:
-	  li        r3, 0xC
-	  bl        -0xFB5CC
-	  addi      r26, r3, 0
-	  mr.       r3, r26
-	  beq-      .loc_0x408
-	  li        r4, 0x3
-	  bl        -0x1B54C
-
-	.loc_0x408:
-	  li        r0, 0
-	  lwz       r3, 0x8(r26)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r31, r3, r0
-	  li        r0, 0x1
-	  li        r5, 0x2
-	  lwz       r4, 0x8(r26)
-	  rlwinm    r3,r0,2,0,29
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r24, r4, r3
-	  li        r3, 0xC
-	  lwz       r4, 0x8(r26)
-	  stwx      r25, r4, r0
-	  lwz       r4, 0x8(r30)
-	  stw       r26, 0xC(r4)
-	  bl        -0xFB620
-	  addi      r24, r3, 0
-	  mr.       r0, r24
-	  beq-      .loc_0x488
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r24)
-	  li        r0, 0
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r24)
-	  subi      r0, r3, 0x6A6C
-	  lis       r3, 0x802D
-	  stw       r0, 0x4(r24)
-	  li        r4, 0xD
-	  subi      r0, r3, 0x6A8C
-	  stw       r4, 0x8(r24)
-	  stw       r0, 0x4(r24)
-
-	.loc_0x488:
-	  li        r3, 0xC
-	  bl        -0xFB668
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x4A4
-	  li        r4, 0x3
-	  bl        -0x1B5E8
-
-	.loc_0x4A4:
-	  li        r0, 0
-	  lwz       r3, 0x8(r25)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r31, r3, r0
-	  li        r0, 0x1
-	  li        r5, 0x2
-	  lwz       r4, 0x8(r25)
-	  rlwinm    r3,r0,2,0,29
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r24, r4, r3
-	  mr        r3, r30
-	  lwz       r4, 0x8(r25)
-	  stwx      r29, r4, r0
-	  lwz       r4, 0x8(r30)
-	  stw       r25, 0x10(r4)
-	  lwz       r0, 0xA4(r1)
-	  lmw       r24, 0x80(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
+	TaiState* state4 = new TaiState(3);
+	j                = 0;
+	state4->setAction(j++, setPosAction);
+	state4->setAction(j++, motionAction);
+	state4->setAction(j++, naviWatchAction);
+	setState(SHELLSTATE_Unk4, state4);
 }
 
 /*
@@ -510,48 +143,15 @@ TaiShellStrategy::TaiShellStrategy(TekiParameters*)
  * Address:	801426D4
  * Size:	00008C
  */
-void TaiShellStrategy::createEffect(Teki&, int)
+void TaiShellStrategy::createEffect(Teki& teki, int p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  bl        0xAAD0
-	  lwz       r0, 0x3180(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x74
-	  cmpwi     r31, 0
-	  bne-      .loc_0x74
-	  addi      r3, r1, 0x14
-	  bl        -0x258B8
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x14
-	  bl        0x3E98
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x14
-	  li        r4, 0xE0
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x5A408
-	  lwz       r3, 0x3178(r13)
-	  addi      r6, r1, 0x14
-	  li        r4, 0x4
-	  li        r5, 0
-	  bl        0x3A690
-
-	.loc_0x74:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	TekiStrategy::createEffect(teki, p2);
+	if (effectMgr && p2 == 0) {
+		NVector3f spawnPos;
+		teki.outputSpawnPosition(spawnPos);
+		effectMgr->create(EffectMgr::EFF_BigDustRing, spawnPos, nullptr, nullptr);
+		rumbleMgr->start(4, 0, spawnPos);
+	}
 }
 
 /*
@@ -559,8 +159,43 @@ void TaiShellStrategy::createEffect(Teki&, int)
  * Address:	80142760
  * Size:	0001F4
  */
-void TaiShellStrategy::start(Teki&)
+void TaiShellStrategy::start(Teki& teki)
 {
+	teki.mParticleGenerators[0] = effectMgr->create(EffectMgr::EFF_Shell_Twinkle, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+	TaiStrategy::start(teki);
+	teki.clearTekiOption(BTeki::TEKI_OPTION_ORGANIC);
+	teki.clearTekiOption(BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE);
+	BOOL hasPart = teki.getPersonalityI(TekiPersonality::INT_Parameter0);
+	int type     = TEKI_Pearl;
+	if (hasPart == TRUE) {
+		ID32& id = teki.mPersonality->mID;
+		if (playerState->existUfoParts(id.mId)) {
+			PRINT("!!!TaiShellStrategy::start:%08x:%s already exists\n", teki, id.mStringID);
+			teki.mPersonality->mID.setID('none');
+		} else {
+			type = TEKI_Rocpe;
+		}
+	}
+
+	Teki* pearl = teki.generateTeki(type);
+
+	if (!pearl) {
+		PRINT("!TaiShellStrategy::start:teki==null:%08x\n", teki);
+		return;
+	}
+
+	NVector3f spawnPos;
+	teki.outputSpawnPosition(spawnPos);
+	ID32& id = teki.mPersonality->mID;
+	PRINT("TaiShellStrategy:%08x:%d,%s\n", this, type, id.mStringID);
+	pearl->mPersonality->mID.setID(id.mId);
+	pearl->startAI(0);
+
+	pearl->inputPosition(spawnPos);
+	pearl->setDirection(teki.getDirection());
+	teki.setCreaturePointer(2, pearl);
+	pearl->setCreaturePointer(0, &teki);
+	teki.mPersonality->mID.setID('none');
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -710,67 +345,22 @@ void TaiShellStrategy::start(Teki&)
  * Address:	80142954
  * Size:	0000D0
  */
-void TaiShellStrategy::draw(Teki&, Graphics&)
+void TaiShellStrategy::draw(Teki& teki, Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x70(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x6C(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r30, 0
-	  bl        0x705C
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  bl        0xA838
-	  lwz       r3, 0x3D8(r30)
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB4
-	  lwz       r3, 0x410(r30)
-	  lwz       r0, -0x9AC(r13)
-	  and.      r0, r3, r0
-	  bne-      .loc_0x6C
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x7064
-	  b         .loc_0xB4
-
-	.loc_0x6C:
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x7030
-	  lwz       r3, 0x2E4(r31)
-	  addi      r4, r1, 0x24
-	  addi      r3, r3, 0x1E0
-	  bl        -0x10459C
-	  addi      r3, r1, 0x18
-	  bl        -0x25B8C
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x18
-	  addi      r6, r1, 0x24
-	  li        r5, 0x6
-	  bl        0x6E54
-	  addi      r3, r30, 0
-	  addi      r5, r1, 0x18
-	  li        r4, 0
-	  bl        0x703C
-
-	.loc_0xB4:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  lwz       r29, 0x6C(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	teki.moveNestPosition();
+	TekiStrategy::draw(teki, gfx);
+	if (teki.mParticleGenerators[0]) {
+		if (!teki.getTekiOption(BTeki::TEKI_OPTION_DRAWED)) {
+			teki.stopParticleGenerator(0);
+		} else {
+			teki.startParticleGenerator(0);
+			Matrix4f invLookMtx;
+			gfx.mCamera->mLookAtMtx.inverse(&invLookMtx);
+			NVector3f animPos;
+			teki.outputWorldAnimationPosition(animPos, 6, invLookMtx);
+			teki.setParticleGeneratorPosition(0, animPos);
+		}
+	}
 }
 
 /*
@@ -778,29 +368,13 @@ void TaiShellStrategy::draw(Teki&, Graphics&)
  * Address:	80142A24
  * Size:	000038
  */
-bool TaiShellSetPositionAction::act(Teki&)
+bool TaiShellSetPositionAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x420(r4)
-	  lwz       r0, -0x9C4(r13)
-	  lwz       r6, 0x410(r5)
-	  and.      r0, r6, r0
-	  beq-      .loc_0x24
-	  bl        .loc_0x38
-
-	.loc_0x24:
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x38:
-	*/
+	BTeki* pearl = static_cast<BTeki*>(teki.getCreaturePointer(2));
+	if (pearl->getTekiOption(BTeki::TEKI_OPTION_ALIVE)) {
+		setPosition(teki, pearl);
+	}
+	return false;
 }
 
 /*
@@ -808,41 +382,12 @@ bool TaiShellSetPositionAction::act(Teki&)
  * Address:	80142A5C
  * Size:	000078
  */
-void TaiShellSetPositionAction::setPosition(Teki&, Creature*)
+void TaiShellSetPositionAction::setPosition(Teki& teki, Creature* pearl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  addi      r3, r1, 0x14
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  bl        -0x25C28
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x14
-	  bl        0x3B28
-	  lwz       r3, 0x2F00(r13)
-	  li        r4, 0x1
-	  lfs       f1, 0x14(r1)
-	  lfs       f2, 0x1C(r1)
-	  bl        -0xDAB98
-	  stfs      f1, 0x18(r1)
-	  lwz       r3, 0x14(r1)
-	  lwz       r0, 0x18(r1)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x1C(r1)
-	  stw       r0, 0x9C(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f spawnPos;
+	teki.outputSpawnPosition(spawnPos);
+	spawnPos.y = mapMgr->getMinY(spawnPos.x, spawnPos.z, true);
+	pearl->inputPosition(spawnPos);
 }
 
 /*
@@ -850,8 +395,30 @@ void TaiShellSetPositionAction::setPosition(Teki&, Creature*)
  * Address:	80142AD4
  * Size:	0001A8
  */
-bool TaiShellSaveItemPositionAction::act(Teki&)
+bool TaiShellSaveItemPositionAction::act(Teki& teki)
 {
+	if (teki.mTekiAnimator->getCounter() > teki.mTekiAnimator->getKeyValueByKeyType(2)) {
+		return false;
+	}
+
+	Pellet* item = static_cast<Teki*>(teki.getCreaturePointer(2))->mPellet;
+
+	if (!item) {
+		PRINT("TaiShellSaveItemPositionAction::act:item==null:%08x\n", teki);
+		return false;
+	}
+
+	NVector3f savePos;
+	teki.outputSpawnPosition(savePos);
+	f32 dist = savePos.distanceXZ(item->getPosition());
+	if (dist >= teki.getAttackableRange()) {
+		PRINT("TaiShellResetPearlAction::resetPearl:%08x:outside:%f,%f\n", teki, dist, teki.getAttackableRange());
+		return false;
+	}
+
+	PRINT("TaiShellResetPearlAction::resetPearl:%08x:inside:%f,%f\n", teki, dist, teki.getAttackableRange());
+	setPosition(teki, item);
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -978,41 +545,12 @@ bool TaiShellSaveItemPositionAction::act(Teki&)
  * Address:	80142C7C
  * Size:	000078
  */
-void TaiShellSaveItemPositionAction::setPosition(Teki&, Creature*)
+void TaiShellSaveItemPositionAction::setPosition(Teki& teki, Creature* item)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  addi      r3, r1, 0x14
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  bl        -0x25E48
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x14
-	  bl        0x3908
-	  lwz       r3, 0x2F00(r13)
-	  li        r4, 0x1
-	  lfs       f1, 0x14(r1)
-	  lfs       f2, 0x1C(r1)
-	  bl        -0xDADB8
-	  stfs      f1, 0x18(r1)
-	  lwz       r3, 0x14(r1)
-	  lwz       r0, 0x18(r1)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x1C(r1)
-	  stw       r0, 0x9C(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f spawnPos;
+	teki.outputSpawnPosition(spawnPos);
+	spawnPos.y = mapMgr->getMinY(spawnPos.x, spawnPos.z, true);
+	item->inputPosition(spawnPos);
 }
 
 /*
@@ -1020,76 +558,12 @@ void TaiShellSaveItemPositionAction::setPosition(Teki&, Creature*)
  * Address:	80142CF4
  * Size:	000104
  */
-bool TaiShellNaviPikiInsideAction::act(Teki&)
+bool TaiShellNaviPikiInsideAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stfd      f31, 0x98(r1)
-	  addi      r3, r1, 0x7C
-	  stfd      f30, 0x90(r1)
-	  stw       r31, 0x8C(r1)
-	  addi      r31, r4, 0
-	  bl        -0x25EC0
-	  addi      r3, r31, 0
-	  addi      r4, r1, 0x7C
-	  bl        0x3890
-	  lwz       r3, 0x2C8(r31)
-	  li        r4, 0
-	  lwz       r3, 0x34(r3)
-	  bl        -0x1FB20
-	  lwz       r3, 0x2C4(r31)
-	  fmr       f30, f1
-	  li        r4, 0x1
-	  lwz       r3, 0x84(r3)
-	  bl        -0x1FB34
-	  lwz       r3, 0x2C4(r31)
-	  fmr       f31, f1
-	  li        r4, 0x8
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  bl        -0x20888
-	  lfs       f2, 0x7C(r1)
-	  fmuls     f0, f31, f30
-	  lis       r6, 0x802B
-	  stfs      f2, 0x5C(r1)
-	  lis       r5, 0x802C
-	  lfs       f2, 0x80(r1)
-	  lis       r3, 0x802D
-	  fmuls     f0, f1, f0
-	  stfs      f2, 0x60(r1)
-	  subi      r0, r3, 0x285C
-	  subi      r6, r6, 0xF68
-	  lfs       f1, 0x84(r1)
-	  addi      r5, r5, 0x6964
-	  stfs      f1, 0x64(r1)
-	  addi      r4, r1, 0x68
-	  mr        r3, r31
-	  stw       r6, 0x68(r1)
-	  lfs       f1, -0x5940(r2)
-	  stw       r5, 0x68(r1)
-	  stw       r0, 0x68(r1)
-	  stfs      f1, 0x74(r1)
-	  stfs      f1, 0x70(r1)
-	  stfs      f1, 0x6C(r1)
-	  lfs       f1, 0x5C(r1)
-	  stfs      f1, 0x6C(r1)
-	  lfs       f1, 0x60(r1)
-	  stfs      f1, 0x70(r1)
-	  lfs       f1, 0x64(r1)
-	  stfs      f1, 0x74(r1)
-	  stfs      f0, 0x78(r1)
-	  bl        0x5514
-	  lwz       r0, 0xA4(r1)
-	  lfd       f31, 0x98(r1)
-	  lfd       f30, 0x90(r1)
-	  lwz       r31, 0x8C(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f spawnPos;
+	teki.outputSpawnPosition(spawnPos);
+
+	return teki.checkNaviPiki(TekiPositionDistanceCondition(spawnPos, teki.getAttackableRange()));
 }
 
 /*
@@ -1097,8 +571,18 @@ bool TaiShellNaviPikiInsideAction::act(Teki&)
  * Address:	80142DF8
  * Size:	0001D0
  */
-bool TaiShellEatAction::act(Teki&)
+bool TaiShellEatAction::act(Teki& teki)
 {
+	u32 badCompiler[6];
+	// some ungodly combination of these things will fix the stack, but i cannot work out *what*
+
+	TekiAndCondition recogAndNotStick(&TekiRecognitionCondition(&teki), &TekiNotCondition(&TekiStickerCondition(&teki)));
+
+	NVector3f spawnPos;
+	teki.outputSpawnPosition(spawnPos);
+	TekiAndCondition posDistAndAnd(&recogAndNotStick, &TekiPositionDistanceCondition(spawnPos, teki.getAttackableRange()));
+	return teki.interactNaviPiki(InteractSwallow(&teki, nullptr, 0), posDistAndAnd);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1228,48 +712,9 @@ bool TaiShellEatAction::act(Teki&)
 TaiPearlSoundTable::TaiPearlSoundTable()
     : PaniSoundTable(5)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x5
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  bl        -0x23F74
-	  li        r30, 0
-	  li        r31, 0
-	  b         .loc_0x58
-
-	.loc_0x30:
-	  li        r3, 0x4
-	  bl        -0xFBFF8
-	  cmplwi    r3, 0
-	  beq-      .loc_0x48
-	  addi      r0, r30, 0x67
-	  stw       r0, 0x0(r3)
-
-	.loc_0x48:
-	  lwz       r4, 0x4(r29)
-	  addi      r30, r30, 0x1
-	  stwx      r3, r4, r31
-	  addi      r31, r31, 0x4
-
-	.loc_0x58:
-	  lwz       r0, 0x0(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  mr        r3, r29
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mSoundCount; i++) {
+		mSounds[i] = new PaniSound(SE_SHELL_CLOSE + i);
+	}
 }
 
 /*
@@ -1280,91 +725,27 @@ TaiPearlSoundTable::TaiPearlSoundTable()
 TaiPearlParameters::TaiPearlParameters()
     : TekiParameters(20, 50)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x14
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x32
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r31, r3, 0
-	  bl        0x8CE0
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x3A14
-	  stw       r0, 0x0(r31)
-	  li        r7, 0x1
-	  li        r6, 0x3
-	  lwz       r4, 0x84(r31)
-	  li        r0, -0x1
-	  addi      r3, r31, 0
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r7, 0x0(r5)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r6, 0x18(r5)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r0, 0xC(r5)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r7, 0x48(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f1, -0x5938(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0x0(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0x4(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x591C(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x8(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5918(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x78(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5914(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x7C(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x593C(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x44(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5910(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x48(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x590C(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x50(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x54(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5908(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xA4(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5904(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xA8(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0xAC(r5)
-	  lwz       r4, 0x4(r4)
-	  lfs       f0, -0x5900(r2)
-	  lwz       r4, 0x0(r4)
-	  stfs      f0, 0xB0(r4)
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	ParaMultiParameters* multiP = mParameters;
+	multiP->setI(TPI_CorpseType, 1);
+	multiP->setI(TPI_CarcassSize, 3);
+	multiP->setI(TPI_SpawnType, -1);
+	multiP->setI(TPI_SpawnPelletForward, 1);
+
+	multiP->setF(TPF_Life, 1.0f);
+	multiP->setF(TPF_Scale, 1.0f);
+	multiP->setF(TPF_Weight, 1000.0f);
+	multiP->setF(TPF_DamageMotionPeriod, 0.3f);
+	multiP->setF(TPF_DamageMotionAmplitude, 0.2f);
+	multiP->setF(TPF_LifeGaugeOffset, 30.0f);
+	multiP->setF(TPF_ShadowSize, 25.0f);
+	multiP->setF(TPF_CorpseSize, 5.0f);
+	multiP->setF(TPF_CorpseHeight, 5.0f);
+	multiP->setF(TPF_CorpseVelocityHoriz, 400.0f);
+	multiP->setF(TPF_CorpseVelocityVert, 300.0f);
+	multiP->setF(TPF_BombDamageRate, 1.0f);
+	multiP->setF(TPF_CollisionRadius, 16.0f);
+
+	u32 badCompiler[4];
 }
 
 /*
@@ -1375,92 +756,27 @@ TaiPearlParameters::TaiPearlParameters()
 TaiRocpearlParameters::TaiRocpearlParameters()
     : TekiParameters(20, 50)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x14
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x32
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r31, r3, 0
-	  bl        0x8B98
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x3A7C
-	  stw       r0, 0x0(r31)
-	  li        r8, 0
-	  li        r7, 0x3
-	  lwz       r4, 0x84(r31)
-	  li        r6, -0x1
-	  li        r0, 0x1
-	  lwz       r5, 0x0(r4)
-	  mr        r3, r31
-	  lwz       r5, 0x0(r5)
-	  stw       r8, 0x0(r5)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r7, 0x18(r5)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r6, 0xC(r5)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r0, 0x48(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f1, -0x5938(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0x0(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0x4(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x591C(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x8(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5918(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x78(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5914(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x7C(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x593C(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x44(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5910(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x48(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x592C(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x50(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x54(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5908(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x9C(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5904(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xA0(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0xAC(r5)
-	  lwz       r4, 0x4(r4)
-	  lfs       f0, -0x5900(r2)
-	  lwz       r4, 0x0(r4)
-	  stfs      f0, 0xB0(r4)
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	ParaMultiParameters* multiP = mParameters;
+	multiP->setI(TPI_CorpseType, 0);
+	multiP->setI(TPI_CarcassSize, 3);
+	multiP->setI(TPI_SpawnType, -1);
+	multiP->setI(TPI_SpawnPelletForward, 1);
+
+	multiP->setF(TPF_Life, 1.0f);
+	multiP->setF(TPF_Scale, 1.0f);
+	multiP->setF(TPF_Weight, 1000.0f);
+	multiP->setF(TPF_DamageMotionPeriod, 0.3f);
+	multiP->setF(TPF_DamageMotionAmplitude, 0.2f);
+	multiP->setF(TPF_LifeGaugeOffset, 30.0f);
+	multiP->setF(TPF_ShadowSize, 25.0f);
+	multiP->setF(TPF_CorpseSize, 10.0f);
+	multiP->setF(TPF_CorpseHeight, 10.0f);
+	multiP->setF(TPF_SpawnPelletVelocityHoriz, 400.0f);
+	multiP->setF(TPF_SpawnPelletVelocityVert, 300.0f);
+	multiP->setF(TPF_BombDamageRate, 1.0f);
+	multiP->setF(TPF_CollisionRadius, 16.0f);
+
+	u32 badCompiler[4];
 }
 
 /*
@@ -1469,254 +785,41 @@ TaiRocpearlParameters::TaiRocpearlParameters()
  * Size:	00036C
  */
 TaiPearlStrategy::TaiPearlStrategy(TekiParameters*)
-    : TaiStrategy(0, 0) // TODO: fix
+    : TaiStrategy(PEARLSTATE_COUNT, PEARLSTATE_Unk2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x3
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x2
-	  stwu      r1, -0x60(r1)
-	  stmw      r23, 0x3C(r1)
-	  addi      r31, r3, 0
-	  bl        -0x1BF18
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x3B38
-	  stw       r0, 0x0(r31)
-	  li        r3, 0x8
-	  bl        -0xFC30C
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0x60
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r30)
-	  li        r0, 0
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r30)
-	  subi      r0, r3, 0x42D8
-	  stw       r0, 0x4(r30)
+	TaiDeadAction* deadAct               = new TaiDeadAction(0);
+	TaiDamageAction* damageAct           = new TaiDamageAction(1);
+	TaiDyingAction* dyingAct             = new TaiDyingAction(0);
+	TaiSpawnItemsAction* spawnItemsAct   = new TaiSpawnItemsAction();
+	TaiEffectAction* effectAct           = new TaiEffectAction(EffectMgr::EFF_Shell_Boom);
+	TaiPearlTresureSoundAction* soundAct = new TaiPearlTresureSoundAction();
+	TaiSetOptionAction* setOptAct        = new TaiSetOptionAction(BTeki::TEKI_OPTION_SHADOW_VISIBLE, false);
 
-	.loc_0x60:
-	  li        r3, 0x8
-	  bl        -0xFC340
-	  addi      r29, r3, 0
-	  mr.       r0, r29
-	  beq-      .loc_0x94
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r29)
-	  li        r0, 0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r29)
-	  subi      r0, r3, 0x4580
-	  stw       r0, 0x4(r29)
+	TaiState* state = new TaiState(5);
+	int j           = 0;
+	state->setAction(j++, soundAct);
+	state->setAction(j++, spawnItemsAct);
+	state->setAction(j++, dyingAct);
+	state->setAction(j++, setOptAct);
+	state->setAction(j++, effectAct);
+	setState(PEARLSTATE_Unk0, state);
 
-	.loc_0x94:
-	  li        r3, 0xC
-	  bl        -0xFC374
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0xDC
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r28)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r28)
-	  subi      r0, r3, 0x6A6C
-	  lis       r3, 0x802D
-	  stw       r0, 0x4(r28)
-	  li        r4, 0
-	  subi      r0, r3, 0x447C
-	  stw       r4, 0x8(r28)
-	  stw       r0, 0x4(r28)
+	TaiMotionAction* motionAct = new TaiMotionAction(-1, 2);
 
-	.loc_0xDC:
-	  li        r3, 0x8
-	  bl        -0xFC3BC
-	  addi      r27, r3, 0
-	  mr.       r0, r27
-	  beq-      .loc_0x110
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r27)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r27)
-	  subi      r0, r3, 0x43FC
-	  stw       r0, 0x4(r27)
+	state = new TaiState(3);
+	j     = 0;
+	state->setAction(j++, deadAct);
+	state->setAction(j++, damageAct);
+	state->setAction(j++, motionAct);
+	setState(PEARLSTATE_Unk2, state);
 
-	.loc_0x110:
-	  li        r3, 0xC
-	  bl        -0xFC3F0
-	  addi      r26, r3, 0
-	  mr.       r0, r26
-	  beq-      .loc_0x14C
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r26)
-	  li        r0, -0x1
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r26)
-	  addi      r3, r3, 0x7FDC
-	  li        r0, 0x5B
-	  stw       r3, 0x4(r26)
-	  stw       r0, 0x8(r26)
+	TaiDamagingAction* damagingAct = new TaiDamagingAction(2, 1);
 
-	.loc_0x14C:
-	  li        r3, 0x8
-	  bl        -0xFC42C
-	  addi      r25, r3, 0
-	  mr.       r0, r25
-	  beq-      .loc_0x180
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r25)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r25)
-	  subi      r0, r3, 0x3BA4
-	  stw       r0, 0x4(r25)
-
-	.loc_0x180:
-	  li        r3, 0x10
-	  bl        -0xFC460
-	  addi      r24, r3, 0
-	  mr.       r0, r24
-	  beq-      .loc_0x1C4
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r24)
-	  li        r0, -0x1
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r24)
-	  addi      r3, r3, 0x6B14
-	  li        r0, 0
-	  stw       r3, 0x4(r24)
-	  lwz       r3, -0x9D0(r13)
-	  stw       r3, 0x8(r24)
-	  stb       r0, 0xC(r24)
-
-	.loc_0x1C4:
-	  li        r3, 0xC
-	  bl        -0xFC4A4
-	  addi      r23, r3, 0
-	  mr.       r3, r23
-	  beq-      .loc_0x1E0
-	  li        r4, 0x5
-	  bl        -0x1C424
-
-	.loc_0x1E0:
-	  li        r0, 0
-	  lwz       r3, 0x8(r23)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r25, r3, r0
-	  li        r0, 0x1
-	  li        r4, 0x2
-	  lwz       r3, 0x8(r23)
-	  rlwinm    r0,r0,2,0,29
-	  li        r6, 0x3
-	  stwx      r27, r3, r0
-	  li        r0, 0x4
-	  rlwinm    r3,r4,2,0,29
-	  lwz       r5, 0x8(r23)
-	  rlwinm    r4,r6,2,0,29
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r28, r5, r3
-	  li        r3, 0xC
-	  lwz       r5, 0x8(r23)
-	  stwx      r24, r5, r4
-	  lwz       r4, 0x8(r23)
-	  stwx      r26, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r23, 0x0(r4)
-	  bl        -0xFC518
-	  addi      r23, r3, 0
-	  mr.       r0, r23
-	  beq-      .loc_0x274
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r23)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r23)
-	  subi      r3, r3, 0x6A6C
-	  li        r0, 0x2
-	  stw       r3, 0x4(r23)
-	  stw       r0, 0x8(r23)
-
-	.loc_0x274:
-	  li        r3, 0xC
-	  bl        -0xFC554
-	  addi      r24, r3, 0
-	  mr.       r3, r24
-	  beq-      .loc_0x290
-	  li        r4, 0x3
-	  bl        -0x1C4D4
-
-	.loc_0x290:
-	  li        r0, 0
-	  lwz       r3, 0x8(r24)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r30, r3, r0
-	  li        r0, 0x1
-	  li        r5, 0x2
-	  lwz       r4, 0x8(r24)
-	  rlwinm    r3,r0,2,0,29
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r29, r4, r3
-	  li        r3, 0xC
-	  lwz       r4, 0x8(r24)
-	  stwx      r23, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r24, 0x8(r4)
-	  bl        -0xFC5A8
-	  addi      r23, r3, 0
-	  mr.       r0, r23
-	  beq-      .loc_0x310
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r23)
-	  li        r0, 0x2
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r23)
-	  subi      r0, r3, 0x6A6C
-	  lis       r3, 0x802D
-	  stw       r0, 0x4(r23)
-	  li        r4, 0x1
-	  subi      r0, r3, 0x4650
-	  stw       r4, 0x8(r23)
-	  stw       r0, 0x4(r23)
-
-	.loc_0x310:
-	  li        r3, 0xC
-	  bl        -0xFC5F0
-	  addi      r24, r3, 0
-	  mr.       r3, r24
-	  beq-      .loc_0x32C
-	  li        r4, 0x2
-	  bl        -0x1C570
-
-	.loc_0x32C:
-	  li        r0, 0
-	  lwz       r3, 0x8(r24)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r30, r3, r0
-	  li        r0, 0x1
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r4, 0x8(r24)
-	  mr        r3, r31
-	  stwx      r23, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r24, 0x4(r4)
-	  lwz       r0, 0x64(r1)
-	  lmw       r23, 0x3C(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	state = new TaiState(2);
+	j     = 0;
+	state->setAction(j++, deadAct);
+	state->setAction(j++, damagingAct);
+	setState(PEARLSTATE_Unk1, state);
 }
 
 /*
@@ -1724,19 +827,9 @@ TaiPearlStrategy::TaiPearlStrategy(TekiParameters*)
  * Address:	8014364C
  * Size:	000020
  */
-void TaiPearlStrategy::start(Teki&)
+void TaiPearlStrategy::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x1C1C4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	TaiStrategy::start(teki);
 }
 
 /*
@@ -1744,36 +837,16 @@ void TaiPearlStrategy::start(Teki&)
  * Address:	8014366C
  * Size:	000064
  */
-void TaiPearlTresureSoundAction::start(Teki&)
+void TaiPearlTresureSoundAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  lwz       r0, 0x418(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x50
-	  mr        r31, r0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0x69
-	  lwz       r12, 0x1C0(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0x89
-	  lwz       r12, 0x1C0(r12)
-	  mtlr      r12
-	  blrl
+	Creature* maybeClam = teki.getCreaturePointer(0);
+	if (maybeClam) {
+		Teki* clam = static_cast<Teki*>(maybeClam);
+		clam->playSound(SE_SHELL_TRESURE);
+		clam->playSound(SE_KURIONE_HIT);
+	} else {
+		PRINT("TaiPearlTresureSoundAction::start:creature==null:%08x\n", teki);
+	}
 
-	.loc_0x50:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler[2];
 }

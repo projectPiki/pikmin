@@ -178,7 +178,7 @@ f32 BTeki::getShadowSize()
  */
 bool BTeki::isVisible()
 {
-	return isTekiOption(TEKI_OPTION_VISIBLE) != 0;
+	return getTekiOption(TEKI_OPTION_VISIBLE) != 0;
 }
 
 /*
@@ -188,7 +188,7 @@ bool BTeki::isVisible()
  */
 bool BTeki::isOrganic()
 {
-	return isTekiOption(TEKI_OPTION_ORGANIC) != 0;
+	return getTekiOption(TEKI_OPTION_ORGANIC) != 0;
 }
 
 /*
@@ -198,7 +198,7 @@ bool BTeki::isOrganic()
  */
 bool BTeki::isAtari()
 {
-	return isTekiOption(TEKI_OPTION_ATARI) != 0;
+	return getTekiOption(TEKI_OPTION_ATARI) != 0;
 }
 
 /*
@@ -208,7 +208,7 @@ bool BTeki::isAtari()
  */
 bool BTeki::isAlive()
 {
-	return isTekiOption(TEKI_OPTION_ALIVE) != 0;
+	return getTekiOption(TEKI_OPTION_ALIVE) != 0;
 }
 
 /*
@@ -218,5 +218,5 @@ bool BTeki::isAlive()
  */
 bool BTeki::needShadow()
 {
-	return isTekiOption(TEKI_OPTION_SHADOW_VISIBLE) != 0;
+	return getTekiOption(TEKI_OPTION_SHADOW_VISIBLE) != 0;
 }
