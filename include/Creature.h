@@ -290,8 +290,6 @@ struct Creature : public RefCountable, public EventTalker {
 		_CC = res;
 	}
 
-	void enableFixPos() { setCreatureFlag(0x40000); }
-
 	void setFree(bool set) { set ? setCreatureFlag(CF_Free) : resetCreatureFlag(CF_Free); }
 
 	void inputPosition(Vector3f& pos) { mPosition = pos; }
