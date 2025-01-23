@@ -31,11 +31,11 @@ enum TaiShellFloatParams {
  * @brief TODO
  */
 enum TaiShellStateID {
-	SHELLSTATE_Unk0 = 0,
-	SHELLSTATE_Unk1 = 1,
-	SHELLSTATE_Unk2 = 2,
-	SHELLSTATE_Unk3 = 3,
-	SHELLSTATE_Unk4 = 4,
+	SHELLSTATE_Normal = 0,
+	SHELLSTATE_Open   = 1,
+	SHELLSTATE_Warn   = 2,
+	SHELLSTATE_Close  = 3,
+	SHELLSTATE_Eat    = 4,
 	SHELLSTATE_COUNT, // 5
 };
 
@@ -148,9 +148,9 @@ struct TaiShellEatAction : public TaiAction {
  * @brief TODO
  */
 enum TaiPearlStateID {
-	PEARLSTATE_Unk0 = 0,
-	PEARLSTATE_Unk1 = 1,
-	PEARLSTATE_Unk2 = 2,
+	PEARLSTATE_Die    = 0,
+	PEARLSTATE_Damage = 1,
+	PEARLSTATE_Normal = 2,
 	PEARLSTATE_COUNT, // 3
 };
 

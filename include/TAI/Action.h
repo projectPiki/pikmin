@@ -6,6 +6,8 @@
 
 struct Teki;
 
+#define TAI_NO_TRANSIT (-1)
+
 /**
  * @brief TODO
  */

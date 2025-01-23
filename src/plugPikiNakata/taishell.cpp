@@ -82,60 +82,65 @@ TaiShellParameters::TaiShellParameters()
  * Size:	0004F4
  */
 TaiShellStrategy::TaiShellStrategy(TekiParameters* params)
-    : TaiStrategy(SHELLSTATE_COUNT, SHELLSTATE_Unk0)
+    : TaiStrategy(SHELLSTATE_COUNT, SHELLSTATE_Normal)
 {
 	TaiTypeNaviWatchResultOnAction* naviWatchAction   = new TaiTypeNaviWatchResultOnAction();
 	TaiShellSetPositionAction* setPosAction           = new TaiShellSetPositionAction();
 	TaiShellSaveItemPositionAction* saveItemPosAction = new TaiShellSaveItemPositionAction();
-	TaiContinuousMotionAction* motionAction           = new TaiContinuousMotionAction(-1, 2);
-	TaiShellNaviPikiInsideAction* insideAction        = new TaiShellNaviPikiInsideAction(1);
+	TaiContinuousMotionAction* motionAction           = new TaiContinuousMotionAction(TAI_NO_TRANSIT, 2);
+	TaiShellNaviPikiInsideAction* insideAction        = new TaiShellNaviPikiInsideAction(SHELLSTATE_Open);
 
+	// NORMAL STATE (just chilling)
 	TaiState* state0 = new TaiState(4);
 	int j            = 0;
 	state0->setAction(j++, setPosAction);
 	state0->setAction(j++, saveItemPosAction);
 	state0->setAction(j++, motionAction);
-	state0->setAction(j++, insideAction);
-	setState(SHELLSTATE_Unk0, state0);
+	state0->setAction(j++, insideAction); // if pikis or navis inside, transit to Open
+	setState(SHELLSTATE_Normal, state0);
 
-	motionAction                    = new TaiContinuousMotionAction(-1, 10);
-	TaiTimerAction* openTimerAction = new TaiTimerAction(2, 0, params->getF(SHELLPF_OpeningPeriod), 0.0f);
+	motionAction                    = new TaiContinuousMotionAction(TAI_NO_TRANSIT, 10);
+	TaiTimerAction* openTimerAction = new TaiTimerAction(SHELLSTATE_Warn, 0, params->getF(SHELLPF_OpeningPeriod), 0.0f);
 
+	// OPEN STATE (opening wide)
 	TaiState* state1 = new TaiState(3);
 	j                = 0;
 	state1->setAction(j++, setPosAction);
 	state1->setAction(j++, motionAction);
-	state1->setAction(j++, openTimerAction);
-	setState(SHELLSTATE_Unk1, state1);
+	state1->setAction(j++, openTimerAction); // when open timer is done, transit to Warn
+	setState(SHELLSTATE_Open, state1);
 
-	motionAction                        = new TaiContinuousMotionAction(-1, 11);
-	TaiCountLoopAction* closeLoopAction = new TaiCountLoopAction(3, params->getI(SHELLPI_ClosingLoopCount));
+	motionAction                        = new TaiContinuousMotionAction(TAI_NO_TRANSIT, 11);
+	TaiCountLoopAction* closeLoopAction = new TaiCountLoopAction(SHELLSTATE_Close, params->getI(SHELLPI_ClosingLoopCount));
 
+	// WARN STATE (warning loops at max open before snapping shut)
 	TaiState* state2 = new TaiState(3);
 	j                = 0;
 	state2->setAction(j++, setPosAction);
-	state2->setAction(j++, closeLoopAction);
+	state2->setAction(j++, closeLoopAction); // when warn loops are done, transit to Close
 	state2->setAction(j++, motionAction);
-	setState(SHELLSTATE_Unk2, state2);
+	setState(SHELLSTATE_Warn, state2);
 
-	TaiShellEatAction* eatAction = new TaiShellEatAction(4);
-	TaiOnceAction* onceAction    = new TaiOnceAction(0);
+	TaiShellEatAction* eatAction = new TaiShellEatAction(SHELLSTATE_Eat);
+	TaiOnceAction* onceAction    = new TaiOnceAction(SHELLSTATE_Normal);
 
+	// CLOSE STATE (snapping shut)
 	TaiState* state3 = new TaiState(3);
 	j                = 0;
 	state3->setAction(j++, setPosAction);
-	state3->setAction(j++, eatAction);
-	state3->setAction(j++, onceAction);
-	setState(SHELLSTATE_Unk3, state3);
+	state3->setAction(j++, eatAction);  // if things to eat, transit to Eat
+	state3->setAction(j++, onceAction); // nothing to eat, transit to Normal
+	setState(SHELLSTATE_Close, state3);
 
-	motionAction = new TaiContinuousMotionAction(0, 13);
+	motionAction = new TaiContinuousMotionAction(SHELLSTATE_Normal, 13);
 
+	// EAT STATE (chewing pikis or navis state)
 	TaiState* state4 = new TaiState(3);
 	j                = 0;
 	state4->setAction(j++, setPosAction);
-	state4->setAction(j++, motionAction);
+	state4->setAction(j++, motionAction); // eat anim done, transit to Normal
 	state4->setAction(j++, naviWatchAction);
-	setState(SHELLSTATE_Unk4, state4);
+	setState(SHELLSTATE_Eat, state4);
 }
 
 /*
@@ -189,7 +194,7 @@ void TaiShellStrategy::start(Teki& teki)
 	ID32& id = teki.mPersonality->mID;
 	PRINT("TaiShellStrategy:%08x:%d,%s\n", this, type, id.mStringID);
 	pearl->mPersonality->mID.setID(id.mId);
-	pearl->startAI(0);
+	pearl->startAI(0); // unused, will go to default state (PEARLSTATE_Normal)
 
 	pearl->inputPosition(spawnPos);
 	pearl->setDirection(teki.getDirection());
@@ -785,16 +790,17 @@ TaiRocpearlParameters::TaiRocpearlParameters()
  * Size:	00036C
  */
 TaiPearlStrategy::TaiPearlStrategy(TekiParameters*)
-    : TaiStrategy(PEARLSTATE_COUNT, PEARLSTATE_Unk2)
+    : TaiStrategy(PEARLSTATE_COUNT, PEARLSTATE_Normal)
 {
-	TaiDeadAction* deadAct               = new TaiDeadAction(0);
-	TaiDamageAction* damageAct           = new TaiDamageAction(1);
+	TaiDeadAction* deadAct               = new TaiDeadAction(PEARLSTATE_Die);
+	TaiDamageAction* damageAct           = new TaiDamageAction(PEARLSTATE_Damage);
 	TaiDyingAction* dyingAct             = new TaiDyingAction(0);
 	TaiSpawnItemsAction* spawnItemsAct   = new TaiSpawnItemsAction();
 	TaiEffectAction* effectAct           = new TaiEffectAction(EffectMgr::EFF_Shell_Boom);
 	TaiPearlTresureSoundAction* soundAct = new TaiPearlTresureSoundAction();
 	TaiSetOptionAction* setOptAct        = new TaiSetOptionAction(BTeki::TEKI_OPTION_SHADOW_VISIBLE, false);
 
+	// DIE STATE (dying, time to yeet out of the clam)
 	TaiState* state = new TaiState(5);
 	int j           = 0;
 	state->setAction(j++, soundAct);
@@ -802,24 +808,26 @@ TaiPearlStrategy::TaiPearlStrategy(TekiParameters*)
 	state->setAction(j++, dyingAct);
 	state->setAction(j++, setOptAct);
 	state->setAction(j++, effectAct);
-	setState(PEARLSTATE_Unk0, state);
+	setState(PEARLSTATE_Die, state);
 
-	TaiMotionAction* motionAct = new TaiMotionAction(-1, 2);
+	TaiMotionAction* motionAct = new TaiMotionAction(TAI_NO_TRANSIT, 2);
 
+	// NORMAL STATE (just chilling)
 	state = new TaiState(3);
 	j     = 0;
-	state->setAction(j++, deadAct);
-	state->setAction(j++, damageAct);
+	state->setAction(j++, deadAct);   // if dead, transit to Die
+	state->setAction(j++, damageAct); // if being damaged, transit to Damage
 	state->setAction(j++, motionAct);
-	setState(PEARLSTATE_Unk2, state);
+	setState(PEARLSTATE_Normal, state);
 
-	TaiDamagingAction* damagingAct = new TaiDamagingAction(2, 1);
+	TaiDamagingAction* damagingAct = new TaiDamagingAction(PEARLSTATE_Normal, 1);
 
+	// DAMAGE STATE (being attacked)
 	state = new TaiState(2);
 	j     = 0;
-	state->setAction(j++, deadAct);
-	state->setAction(j++, damagingAct);
-	setState(PEARLSTATE_Unk1, state);
+	state->setAction(j++, deadAct);     // if dead, transit to Die
+	state->setAction(j++, damagingAct); // if no longer being damaged, transit to Normal
+	setState(PEARLSTATE_Damage, state);
 }
 
 /*
