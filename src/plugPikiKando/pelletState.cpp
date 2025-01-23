@@ -303,7 +303,7 @@ void PelletGoalState::init(Pellet* pelt)
 			for (int i = 0; i < 30; i++) {
 				PRINT("nextPowerup = %d\n", playerState->getNextPowerupNumber());
 			}
-			gameflow.mMovieInfoNum = pelletMgr->getUfoIndexFromID(pelt->mConfig->_2C.mId);
+			gameflow.mMovieInfoNum = pelletMgr->getUfoIndexFromID(pelt->mConfig->mModelId.mId);
 			gameflow.mMovieType    = check ? 2 : 0;
 			PRINT("suicomi movie :- type = %d : info = %d\n", gameflow.mMovieType, gameflow.mMovieInfoNum);
 			gameflow.mGameInterface->movie(79, 0, pelt, &pelt->mPosition, &pelt->mRotation, -1, true);

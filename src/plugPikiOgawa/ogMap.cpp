@@ -35,18 +35,18 @@ void zen::ogScrMapMgr::start(s16 p1)
 {
 	u32 badCompiler[6];
 
-	_14    = p1;
+	mMode  = p1;
 	mState = MAP_Unk1;
 
-	if (_14 == 1) {
-		_04   = mTest2Screen;
-		mPic1 = _04->search('pic1', true);
-		_24   = mPic1->_18.mMin.x;
-		_28   = mPic1->_18.mMin.y;
+	if (mMode == 1) {
+		mCurrentScreen = mTest2Screen;
+		mPic1          = mCurrentScreen->search('pic1', true);
+		mPic1PositionX = mPic1->mRectTransform.mMin.x;
+		mPic1PositionY = mPic1->mRectTransform.mMin.y;
 		mTypingTextMgr->start();
 
 	} else {
-		_04 = mTestScreen;
+		mCurrentScreen = mTestScreen;
 	}
 
 	_2C = 0;
@@ -70,7 +70,7 @@ zen::ogScrMapMgr::ogScrMapMgr()
 	mTypingTextMgr      = new TypingTextMgr(textBox);
 
 	mCursorPane = mTest2Screen->search('curs', true);
-	_18         = 0.0f;
+	mFrameTimer = 0.0f;
 	mState      = MAP_NULL;
 }
 
@@ -85,8 +85,8 @@ zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 		return mState;
 	}
 
-	_18 += gsys->getFrameTime();
-	_04->update();
+	mFrameTimer += gsys->getFrameTime();
+	mCurrentScreen->update();
 
 	if (mState == MAP_Unk1) {
 		mState = MAP_Unk0;
@@ -107,7 +107,7 @@ zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 		mState = MAP_Unk2;
 	}
 
-	if (_14 == 1) {
+	if (mMode == 1) {
 		mTypingTextMgr->update();
 	}
 	/*
@@ -365,5 +365,5 @@ void zen::ogScrMapMgr::draw(Graphics& gfx)
 
 	P2DPerspGraph perspGraph(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 	perspGraph.setPort();
-	_04->draw(0, 0, &perspGraph);
+	mCurrentScreen->draw(0, 0, &perspGraph);
 }

@@ -638,7 +638,7 @@ void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 		stream.readFloat();
 		stream.readFloat();
 		stream.readFloat();
-		pelletMgr->addUseList(config->_44.mId);
+		pelletMgr->addUseList(config->mPelletId.mId);
 	}
 
 	u32 badCompiler[2];
@@ -763,7 +763,7 @@ void GeneratorCache::saveUfoParts(Pellet* part)
 
 	void* heap = (void*)(((u32)mCacheHeap + mUsedSize));
 	RamStream stream(heap, mFreeSize);
-	stream.writeInt(part->mConfig->_2C.mId);
+	stream.writeInt(part->mConfig->mModelId.mId);
 	part->save(stream, true);
 	int pos = stream.getPosition();
 	mUsedSize += pos;

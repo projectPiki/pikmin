@@ -1525,7 +1525,7 @@ bool Navi::procActionButton()
 				Vector3f pelNaviSep = pellet->mPosition - mPosition;
 				f32 distFromNavi    = std::sqrtf(pelNaviSep.x * pelNaviSep.x + pelNaviSep.z * pelNaviSep.z) - pellet->getBottomRadius();
 				if (distFromNavi <= 20.0f) {
-					int idx = PelletMgr::getUfoIndexFromID(pellet->mConfig->_2C.mId);
+					int idx = PelletMgr::getUfoIndexFromID(pellet->mConfig->mModelId.mId);
 					if (idx == -1) {
 						ERROR("WHY !! THIS IS NOT UFO PARTS!!\n");
 					}

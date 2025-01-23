@@ -276,7 +276,7 @@ void SpiderLeg::createRippleEffect(int legNum)
 	footPos.y -= 5.0f;
 	effectMgr->create(EffectMgr::EFF_SmokeRing_M, _12C[legNum][0], nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Frog_BubbleRingS, footPos, nullptr, nullptr);
-	mRippleCallBacks[legNum].set(&_0D[legNum]);
+	mRippleCallBacks[legNum].set(&mIsOnGround[legNum]);
 
 	zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_RippleWhite, footPos, &mRippleCallBacks[legNum], nullptr);
 	if (ptclGen1) {
@@ -571,10 +571,10 @@ void SpiderLeg::init(Spider* spider)
 	_264 = mSpider->mPosition;
 
 	for (int i = 0; i < 4; i++) {
-		_E8[i] = 0;
-		_11[i] = 0;
-		_0D[i] = false;
-		_D0[i] = C_SPIDER_PROP(mSpider)._264();
+		_E8[i]                  = 0;
+		_11[i]                  = 0;
+		mIsOnGround[i]          = false;
+		mFootRaiseHeightList[i] = C_SPIDER_PROP(mSpider)._264();
 
 		_12C[i][0] = mSpider->mPosition;
 		_1BC[i][0] = _12C[i][0];
@@ -632,10 +632,11 @@ void SpiderLeg::setLegParameter()
 
 	for (int i = 0; i < 4; i++) {
 		f32 goal = C_SPIDER_PROP(mSpider)._264() - _E8[i] * C_SPIDER_PROP(mSpider)._274() - 0.5f * _E0;
-		_D0[i]   = NsLibMath<f32>::toGoal(_D0[i], goal, C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime());
+		mFootRaiseHeightList[i]
+		    = NsLibMath<f32>::toGoal(mFootRaiseHeightList[i], goal, C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime());
 
-		if (_D0[i] < C_SPIDER_PROP(mSpider)._284()) {
-			_D0[i] = C_SPIDER_PROP(mSpider)._284();
+		if (mFootRaiseHeightList[i] < C_SPIDER_PROP(mSpider)._284()) {
+			mFootRaiseHeightList[i] = C_SPIDER_PROP(mSpider)._284();
 		}
 	}
 	/*
@@ -940,17 +941,17 @@ void SpiderLeg::setWalkNewPosition()
 
 			_1BC[i][1].x = (_12C[i][0].x + 4.0f * _1BC[i][2].x) / 5.0f;
 			_1BC[i][1].z = (_12C[i][0].z + 4.0f * _1BC[i][2].z) / 5.0f;
-			_1BC[i][1].y = mSpider->mPosition.y + _D0[i];
+			_1BC[i][1].y = mSpider->mPosition.y + mFootRaiseHeightList[i];
 
-			_0D[i] = false;
-			_15[i] = false;
-			_19[i] = true;
-			_09[i] = true;
-			_A8[i] = 0.0f;
+			mIsOnGround[i] = false;
+			_15[i]         = false;
+			_19[i]         = true;
+			_09[i]         = true;
+			_A8[i]         = 0.0f;
 		}
 
 		if (_09[i]) {
-			f32 goal     = _70[i] + _D0[i];
+			f32 goal     = _70[i] + mFootRaiseHeightList[i];
 			_1BC[i][1].y = NsLibMath<f32>::toGoal(_1BC[i][1].y, goal, C_SPIDER_PROP(mSpider)._4B4() * gsys->getFrameTime());
 		}
 	}
@@ -1140,7 +1141,7 @@ void SpiderLeg::setIdealCentre(Vector3f& centre)
 		centre.z /= 4.0f;
 
 		for (i = 0; i < 4; i++) {
-			if (_0D[i]) {
+			if (mIsOnGround[i]) {
 				vec.x = _12C[i][0].x - centre.x;
 				vec.z = _12C[i][0].z - centre.z;
 				centre.x += C_SPIDER_PROP(mSpider)._3D4() * vec.x;
@@ -1288,17 +1289,17 @@ void SpiderLeg::getHeight()
 		if (_08) {
 			if (diff > -5.0f) {
 				if (_A8[i] > 0.5f) {
-					_09[i] = false;
-					_0D[i] = true;
+					_09[i]         = false;
+					mIsOnGround[i] = true;
 				}
 			} else if (_A8[i] < 0.5f) {
-				_0D[i] = false;
+				mIsOnGround[i] = false;
 			}
 		} else if (diff > -5.0f) {
-			_09[i] = false;
-			_0D[i] = true;
+			_09[i]         = false;
+			mIsOnGround[i] = true;
 		} else {
-			_0D[i] = false;
+			mIsOnGround[i] = false;
 		}
 	}
 }
@@ -1312,7 +1313,7 @@ void SpiderLeg::getLegController()
 {
 	if (_08) {
 		for (int i = 0; i < 4; i++) {
-			if (_0D[i] && !_11[i] && _19[i]) {
+			if (mIsOnGround[i] && !_11[i] && _19[i]) {
 				_15[NsMathI::intLoop(i + 1, 0, 3)] = true;
 				_19[i]                             = false;
 			}
@@ -1447,7 +1448,7 @@ void SpiderLeg::emitOnGroundEffect(int legNum)
 void SpiderLeg::onGroundFunction()
 {
 	for (int i = 0; i < 4; i++) {
-		if (_0D[i] && !_11[i]) {
+		if (mIsOnGround[i] && !_11[i]) {
 			stepDamageNavi(i);
 			stepDamagePiki(i);
 			stepShakeOffPiki(i);
@@ -1464,7 +1465,7 @@ void SpiderLeg::onGroundFunction()
 void SpiderLeg::emitOffGroundEffect()
 {
 	for (int i = 0; i < 4; i++) {
-		if (!_0D[i] && _11[i]) {
+		if (!mIsOnGround[i] && _11[i]) {
 			zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_Spider_OffGroundDebris, _12C[i][0], nullptr, nullptr);
 			if (ptclGen1) {
 				ptclGen1->setEmitPosPtr(&_12C[i][0]);
@@ -1612,7 +1613,7 @@ void SpiderLeg::createMatrixScale(BossShapeObject* shapeObj, Graphics& gfx)
 void SpiderLeg::setGroundFlag()
 {
 	for (int i = 0; i < 4; i++) {
-		_11[i] = _0D[i];
+		_11[i] = mIsOnGround[i];
 	}
 }
 

@@ -220,8 +220,8 @@ void GemItem::updateLiftup()
 	Iterator it(nullptr);
 	CI_LOOP(it)
 	{
-		Creature* obj = *it;
-		obj->_194.y   = obj->_194.y - (_3D4 - a);
+		Creature* obj          = *it;
+		obj->mAttachPosition.y = obj->mAttachPosition.y - (_3D4 - a);
 	}
 	// UNUSED FUNCTION
 }

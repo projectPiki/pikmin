@@ -547,7 +547,7 @@ void BossMgr::setBossParam(Boss* boss, GenObjectBoss* genBoss)
 
 	PelletConfig* config = pelletMgr->getConfigFromIdx(genBoss->mPelletConfigIdx);
 	if (config) {
-		boss->mPelletID.mId = config->_2C.mId;
+		boss->mPelletID.mId = config->mModelId.mId;
 	} else {
 		boss->mPelletID.mId = 'none';
 	}

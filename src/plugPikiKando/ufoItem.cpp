@@ -579,10 +579,10 @@ void UfoItem::finishSuck(Pellet* pelt)
 	}
 	mShipUpgradeLevel    = playerState->mShipUpgradeLevel;
 	PelletConfig* config = pelt->mConfig;
-	if (config->_130 != -1) {
-		playerState->getUfoParts(config->_2C.mId, false);
+	if (config->mUfoPartIndex != -1) {
+		playerState->getUfoParts(config->mModelId.mId, false);
 	} else {
-		playerState->getUfoParts(config->_2C.mId, true);
+		playerState->getUfoParts(config->mModelId.mId, true);
 	}
 	mAnimator.setMotionSpeed(0, 30.0f);
 }

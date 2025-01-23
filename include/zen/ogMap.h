@@ -38,16 +38,16 @@ struct ogScrMapMgr {
 	void draw(Graphics&);
 
 	MapStatus mState;              // _00
-	P2DScreen* _04;                // _04
+	P2DScreen* mCurrentScreen;     // _04
 	P2DScreen* mTestScreen;        // _08, test.blo
 	P2DScreen* mTest2Screen;       // _0C, test2.blo
 	TypingTextMgr* mTypingTextMgr; // _10
-	s16 _14;                       // _14
-	f32 _18;                       // _18
+	s16 mMode;                     // _14
+	f32 mFrameTimer;               // _18
 	P2DPane* mPic1;                // _1C
 	P2DPane* mCursorPane;          // _20
-	f32 _24;                       // _24
-	f32 _28;                       // _28
+	f32 mPic1PositionX;            // _24
+	f32 mPic1PositionY;            // _28
 	s16 _2C;                       // _2C
 	s16 _2E;                       // _2E
 };

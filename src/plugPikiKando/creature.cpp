@@ -357,9 +357,9 @@ int Creature::getStandType()
  */
 SearchData::SearchData()
 {
-	_08 = 0;
-	mPtr.reset();
-	_04 = 12800.0f;
+	mSearchIteration = 0;
+	mTargetCreature.reset();
+	mDistance = 12800.0f;
 }
 
 /*
@@ -493,10 +493,10 @@ void Creature::init()
 	mNextRopeHolder = nullptr;
 	if (searchUpdateMgr) {
 		if (isPiki()) {
-			_168.setPiki(true);
+			mSearchContext.setPiki(true);
 		}
 
-		_168.init(searchUpdateMgr);
+		mSearchContext.init(searchUpdateMgr);
 	}
 }
 
@@ -575,7 +575,7 @@ void Creature::kill(bool p1)
 	}
 
 	if (searchUpdateMgr) {
-		_168.exit();
+		mSearchContext.exit();
 	}
 
 	if (mObjType == OBJTYPE_Piki || mObjType == OBJTYPE_Navi) {

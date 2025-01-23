@@ -2124,17 +2124,17 @@ bool PlayerState::isUfoBroken()
  * Address:	80080CC8
  * Size:	0000C4
  */
-void PlayerState::registerUfoParts(int p1, u32 modelID, u32 p3)
+void PlayerState::registerUfoParts(int p1, u32 modelID, u32 pelletId)
 {
 	pelletMgr->mUfoMotionTable = PaniPelletAnimator::createMotionTable();
 	if (mTotalRegisteredParts >= mTotalParts) {
 		ID32 id1(modelID);
-		ID32 id2(p3);
+		ID32 id2(pelletId);
 	}
 
 	UfoParts* part           = &mUfoParts[mTotalRegisteredParts];
-	part->_04                = p1;
-	part->_0C                = p3;
+	part->mPartIndex         = p1;
+	part->mPelletId          = pelletId;
 	part->mModelID           = modelID;
 	PelletShapeObject* shape = pelletMgr->getShapeObject(modelID);
 	part->initAnim(shape);

@@ -160,31 +160,39 @@ void Creature::endStickMouth()
  */
 void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 stickDist)
 {
-	Matrix4f objMatrix;
-	Matrix4f invObjMatrix;
-	Vector3f vec; // unused lol
+	Matrix4f worldMatrix;
+	Matrix4f invWorldMatrix;
+	Vector3f unused;
 
+	// Get world transform from either attach point or full object
 	if (stickPart) {
-		objMatrix = mStickPart->getMatrix(); // should this be uh. stickPart->getMatrix()??
+		worldMatrix = mStickPart->getMatrix(); // Likely bug: should use attachPoint instead of mAttachPoint
 	} else {
-		objMatrix.makeSRT(obj->mScale, obj->mRotation, obj->mPosition);
+		worldMatrix.makeSRT(obj->mScale, obj->mRotation, obj->mPosition);
 	}
 
-	objMatrix.inverse(&invObjMatrix);
+	worldMatrix.inverse(&invWorldMatrix);
 
-	_194 = mPosition;
+	// Start from current position
+	mAttachPosition = mPosition;
 
 	if (stickPart) {
-		_194 = _194 - stickPart->mCentre;
-		_194.normalise();
-		_194 = _194 * (stickPart->mRadius + stickDist) + stickPart->mCentre;
+		// Position relative to attach point's center
+		mAttachPosition = mAttachPosition - stickPart->mCentre;
+		mAttachPosition.normalise();
+
+		// Move out to the surface of the sphere plus the offset
+		mAttachPosition = mAttachPosition * (stickPart->mRadius + stickDist) + stickPart->mCentre;
 	} else {
-		_194 = _194 - obj->mPosition;
-		_194.normalise();
-		_194 = _194 * (obj->getCentreSize() + stickDist) + obj->mPosition;
+		// Same process but using full object's center and size
+		mAttachPosition = mAttachPosition - obj->mPosition;
+		mAttachPosition.normalise();
+
+		mAttachPosition = mAttachPosition * (obj->getCentreSize() + stickDist) + obj->mPosition;
 	}
 
-	_194.multMatrix(invObjMatrix);
+	// Convert final position to object's local space
+	mAttachPosition.multMatrix(invWorldMatrix);
 }
 
 /*

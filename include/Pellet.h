@@ -155,14 +155,14 @@ struct PelletConfig : public Parameters, public CoreNode {
 	// _00-_04 = Parameters
 	// _04-_18 = CoreNode
 	Parm<String> mPelletName;         // _18, x99
-	ID32 _2C;                         // _2C
+	ID32 mModelId;                    // _2C
 	ID32 _38;                         // _38
-	ID32 _44;                         // _44
+	ID32 mPelletId;                   // _44
 	Parm<int> mPelletType;            // _50, p00
 	Parm<int> mPelletColor;           // _60, p09
 	Parm<int> mCarryMinPikis;         // _70, p01
 	Parm<int> mCarryMaxPikis;         // _80, p02
-	Parm<int> _90;                    // _90, p03 - maybe model rotation when sucking into onyon?
+	Parm<int> mUseDynamicMotion;      // _90, p03 - maybe model rotation when sucking into onyon?
 	Parm<f32> _A0;                    // _A0, p04 - dynParm1?
 	Parm<f32> _B0;                    // _B0, p05 - dynParm2?
 	Parm<int> _C0;                    // _C0, p08 - dynCollNums?
@@ -172,7 +172,7 @@ struct PelletConfig : public Parameters, public CoreNode {
 	Parm<f32> mCarryInfoHeight;       // _100, p11
 	Parm<int> mAnimSoundID;           // _110, p12 - see PelletAnimSoundID enum
 	Parm<int> mBounceSoundID;         // _120, p13
-	int _130;                         // _130
+	int mUfoPartIndex;                // _130
 
 	// this has to be down here or the second VTBL spawns at 0x18 (should spawn at 0x134)
 

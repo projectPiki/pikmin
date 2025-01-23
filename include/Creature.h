@@ -360,14 +360,14 @@ struct Creature : public RefCountable, public EventTalker {
 	f32 mRopeRatio;                      // _15C, how far along the rope are we
 	Creature* mNextRopeHolder;           // _160, rope holder after this one in the rope list
 	Creature* mPrevRopeHolder;           // _164, rope holder before this one in the rope list
-	UpdateContext _168;                  // _168
+	UpdateContext mSearchContext;        // _168
 	UpdateContext mOptUpdateContext;     // _174
 	Creature* mStickListHead;            // _180, first sticker in list of stickers stuck to this creature
 	Creature* mStickTarget;              // _184, creature/object this creature is stuck to
 	CollPart* mStickPart;                // _188
 	Creature* mNextSticker;              // _18C, sticker after this one in the sticker list
 	Creature* mPrevSticker;              // _190, sticker before this one in the sticker list
-	Vector3f _194;                       // _194
+	Vector3f mAttachPosition;            // _194
 	int mPelletStickSlot;                // _1A0
 	u32 _1A4;                            // _1A4
 	u32 _1A8;                            // _1A8, unknown

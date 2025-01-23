@@ -145,7 +145,7 @@ int ActBou::gotoLeg()
 		mActor->mStickPart->makeTube(tube);
 		Vector3f vec1;
 		Vector3f vec2;
-		tube.getPosGradient(mActor->mPosition, mActor->_194.x, vec1, vec2);
+		tube.getPosGradient(mActor->mPosition, mActor->mAttachPosition.x, vec1, vec2);
 		_18 = vec2;
 		return ACTOUT_Continue;
 	}

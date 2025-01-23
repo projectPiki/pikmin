@@ -101,7 +101,7 @@ struct P2DPane {
 	u8 _0C;                     // _0C, flag of some description
 	u32 mTagName;               // _10, unknown
 	f32 mPaneZ;                 // _14
-	PUTRect _18;                // _18
+	PUTRect mRectTransform;     // _18
 	PUTRect _20;                // _20
 	PUTRect _28;                // _28
 	PUTRect _30;                // _30

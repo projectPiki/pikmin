@@ -227,7 +227,7 @@ P2DPane::P2DPane()
 
 	setFlag(1, 7, 1);
 	mTagName = 0;
-	_18.set(0, 0, 0, 0);
+	mRectTransform.set(0, 0, 0, 0);
 	_B8 = 0;
 	_BA = 0;
 	setFlag(0, 5, 2);
@@ -278,8 +278,8 @@ P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5
 {
 	mPaneType = paneType;
 	setFlag(1, 7, 1);
-	mTagName = tag;
-	_18      = p5;
+	mTagName       = tag;
+	mRectTransform = p5;
 	if (parent) {
 		parent->mPaneTree.append(getPaneTree());
 	}
@@ -340,10 +340,10 @@ P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 
 	mTagName = *(u32*)tag;
 
-	_18.mMin.x = (int)input->readShort();
-	_18.mMin.y = (int)input->readShort();
-	_18.mMax.x = _18.mMin.x + (int)input->readShort();
-	_18.mMax.y = _18.mMin.y + (int)input->readShort();
+	mRectTransform.mMin.x = (int)input->readShort();
+	mRectTransform.mMin.y = (int)input->readShort();
+	mRectTransform.mMax.x = mRectTransform.mMin.x + (int)input->readShort();
+	mRectTransform.mMax.y = mRectTransform.mMin.y + (int)input->readShort();
 
 	if (parent) {
 		parent->mPaneTree.append(getPaneTree());
@@ -1080,7 +1080,7 @@ void P2DPane::makeResident()
  */
 void P2DPane::move(Vector3f& newPos)
 {
-	_18.move(newPos.x, newPos.y);
+	mRectTransform.move(newPos.x, newPos.y);
 	mPaneZ = newPos.z;
 }
 
@@ -1101,7 +1101,7 @@ void P2DPane::moveZ(f32 newZ)
  */
 void P2DPane::add(int x, int y)
 {
-	_18.add(x, y);
+	mRectTransform.add(x, y);
 }
 
 /*
@@ -1111,7 +1111,7 @@ void P2DPane::add(int x, int y)
  */
 void P2DPane::resize(int width, int height)
 {
-	_18.resize(width, height);
+	mRectTransform.resize(width, height);
 }
 
 /*

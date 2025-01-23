@@ -282,7 +282,7 @@ struct SpiderLeg {
 	u8 _07;                                                  // _07
 	u8 _08;                                                  // _08
 	u8 _09[4];                                               // _09
-	bool _0D[4];                                             // _0D
+	bool mIsOnGround[4];                                     // _0D
 	u8 _11[4];                                               // _11
 	u8 _15[4];                                               // _15
 	u8 _19[4];                                               // _19
@@ -298,7 +298,7 @@ struct SpiderLeg {
 	u8 _B8[0xC8 - 0xB8];                                     // _B8, unknown
 	f32 _C8;                                                 // _C8
 	f32 _CC;                                                 // _CC
-	f32 _D0[4];                                              // _D0
+	f32 mFootRaiseHeightList[4];                             // _D0
 	f32 _E0;                                                 // _E0
 	f32 _E4;                                                 // _E4
 	int _E8[4];                                              // _E8
@@ -396,7 +396,7 @@ struct SpiderAi : public PaniAnimKeyListener {
 struct SpiderGenHalfDeadCallBackJoint : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
-		ptclGen->setEmitPosPtr(_04);
+		ptclGen->setEmitPosPtr(mPosition);
 		if (!mSpider->_3BA || !mSpider->getAlive()) {
 			ptclGen->finish();
 		}
@@ -406,14 +406,14 @@ struct SpiderGenHalfDeadCallBackJoint : public zen::CallBack1<zen::particleGener
 
 	void set(Vector3f* p1, Spider* spider)
 	{
-		_04     = p1;
-		mSpider = spider;
+		mPosition = p1;
+		mSpider   = spider;
 	}
 
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	Vector3f* _04;   // _04
-	Spider* mSpider; // _08
+	Vector3f* mPosition; // _04
+	Spider* mSpider;     // _08
 };
 
 /**
@@ -424,10 +424,10 @@ struct SpiderGenHalfDeadCallBackJoint : public zen::CallBack1<zen::particleGener
 struct SpiderGenPerishCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
-		Vector3f midPt = *_04 + *_08;
+		Vector3f midPt = *mStartPoint + *mEndPoint;
 		midPt.multiply(0.5f);
 
-		Vector3f dir = *_04 - *_08;
+		Vector3f dir = *mStartPoint - *mEndPoint;
 		dir.normalise();
 
 		ptclGen->setEmitPos(midPt);
@@ -440,18 +440,18 @@ struct SpiderGenPerishCallBack : public zen::CallBack1<zen::particleGenerator*> 
 		return true;
 	}
 
-	void set(Vector3f* p1, Vector3f* p2, Spider* spider)
+	void set(Vector3f* start, Vector3f* end, Spider* spider)
 	{
-		_04     = p1;
-		_08     = p2;
-		mSpider = spider;
+		mStartPoint = start;
+		mEndPoint   = end;
+		mSpider     = spider;
 	}
 
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	Vector3f* _04;   // _04
-	Vector3f* _08;   // _08
-	Spider* mSpider; // _0C
+	Vector3f* mStartPoint; // _04
+	Vector3f* mEndPoint;   // _08
+	Spider* mSpider;       // _0C
 };
 
 /**
@@ -462,18 +462,18 @@ struct SpiderGenPerishCallBack : public zen::CallBack1<zen::particleGenerator*> 
 struct SpiderGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
-		if (!*_04) {
+		if (!*mIsRunning) {
 			ptclGen->finish();
 		}
 
 		return true;
 	}
 
-	void set(bool* p1) { _04 = p1; }
+	void set(bool* cond) { mIsRunning = cond; }
 
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	bool* _04; // _04
+	bool* mIsRunning; // _04
 };
 
 #endif

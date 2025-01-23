@@ -222,7 +222,7 @@ void SearchSystem::updateLoopOptimised()
 			if (!pikiMgr->mEntryStatus[j]) {
 				Piki* piki2 = (Piki*)pikiMgr->mObjectList[i];
 				if (AIPerf::pikiMabiki || AIPerf::useUpdateMgr) {
-					if (!piki2->_168.updatable() && !piki->_168.updatable()) {
+					if (!piki2->mSearchContext.updatable() && !piki->mSearchContext.updatable()) {
 						break;
 					}
 
@@ -884,12 +884,12 @@ void SearchBuffer::init(SearchData* data, int p2)
 	mMaxEntries = p2;
 	mDataList   = data;
 	for (int i = 0; i < p2; i++) {
-		mDataList[i]._08 = 0;
-		if (!mDataList[i].mPtr.isNull()) {
-			PRINT(" %x(%d) : [%d] = %x\n", data, p2, i, mDataList[i].mPtr.getPtr());
+		mDataList[i].mSearchIteration = 0;
+		if (!mDataList[i].mTargetCreature.isNull()) {
+			PRINT(" %x(%d) : [%d] = %x\n", data, p2, i, mDataList[i].mTargetCreature.getPtr());
 		}
-		mDataList[i].mPtr.clear();
-		mDataList[i]._04 = 12800.0f;
+		mDataList[i].mTargetCreature.clear();
+		mDataList[i].mDistance = 12800.0f;
 	}
 	mCurrentEntries = 0;
 	_10             = 0;
@@ -908,9 +908,9 @@ void SearchBuffer::operator=(SearchBuffer& other)
 	mCurrentEntries = other.mCurrentEntries;
 	_10             = other._10;
 	for (int i = 0; i < mMaxEntries; i++) {
-		mDataList[i]._08  = other.mDataList[i]._08;
-		mDataList[i].mPtr = other.mDataList[i].mPtr;
-		mDataList[i]._04  = other.mDataList[i]._04;
+		mDataList[i].mSearchIteration = other.mDataList[i].mSearchIteration;
+		mDataList[i].mTargetCreature  = other.mDataList[i].mTargetCreature;
+		mDataList[i].mDistance        = other.mDataList[i].mDistance;
 	}
 	invalidate();
 	// UNUSED FUNCTION
@@ -924,7 +924,7 @@ void SearchBuffer::operator=(SearchBuffer& other)
 int SearchBuffer::getIndex(Creature* obj)
 {
 	for (int i = 0; i < mCurrentEntries; i++) {
-		if (mDataList[i].mPtr.getPtr() == obj) {
+		if (mDataList[i].mTargetCreature.getPtr() == obj) {
 			return i;
 		}
 	}
@@ -939,7 +939,7 @@ int SearchBuffer::getIndex(Creature* obj)
 void SearchBuffer::clear()
 {
 	for (int i = 0; i < mCurrentEntries; i++) {
-		mDataList[i].mPtr.clear();
+		mDataList[i].mTargetCreature.clear();
 	}
 	mCurrentEntries = 0;
 	_1C             = 0;
@@ -953,7 +953,7 @@ void SearchBuffer::clear()
 void SearchBuffer::reset()
 {
 	if (mMaxEntries > 0) {
-		mDataList[mMaxEntries - 1]._04 = 0.0f;
+		mDataList[mMaxEntries - 1].mDistance = 0.0f;
 	}
 }
 
@@ -986,14 +986,14 @@ void SearchBuffer::insertQuick(Creature* obj, f32 dist)
 
 		if (mCurrentEntries >= mMaxEntries) {
 			if (mLastEntry != -1) {
-				mDataList[mLastEntry].mPtr.getPtr();
-				mDataList[mLastEntry].mPtr.reset();
-				mDataList[mLastEntry].mPtr.set(obj);
+				mDataList[mLastEntry].mTargetCreature.getPtr();
+				mDataList[mLastEntry].mTargetCreature.reset();
+				mDataList[mLastEntry].mTargetCreature.set(obj);
 				mMaxDistance = dist;
 			} else {
-				mDataList[mCurrentEntries].mPtr.getPtr();
-				mDataList[mCurrentEntries].mPtr.reset();
-				mDataList[mCurrentEntries].mPtr.set(obj);
+				mDataList[mCurrentEntries].mTargetCreature.getPtr();
+				mDataList[mCurrentEntries].mTargetCreature.reset();
+				mDataList[mCurrentEntries].mTargetCreature.set(obj);
 				if (mMaxDistance < dist) {
 					mMaxDistance = dist;
 					mLastEntry   = mCurrentEntries;
@@ -1166,35 +1166,34 @@ void SearchBuffer::insertQuick(Creature* obj, f32 dist)
  * Address:	800E40DC
  * Size:	000204
  */
-void SearchBuffer::insert(Creature* obj, f32 dist)
+void SearchBuffer::insert(Creature* creature, f32 distance)
 {
 	if (AIPerf::insQuick) {
-		insertQuick(obj, dist);
-	} else if (obj->isVisible()) {
+		insertQuick(creature, distance);
+	} else if (creature->isVisible()) {
+		int index = getIndex(creature);
+		if (index == -1) {
+			index = mCurrentEntries;
 
-		int id = getIndex(obj);
-		if (id == -1) {
-			id = mCurrentEntries;
-			for (int i = id - 1;;) {
-
-				if (i > -1 || !(mDataList[i]._04 > dist)) {
+			for (int i = index - 1;;) {
+				if (i > -1 || !(mDataList[i].mDistance > distance)) {
 					break;
 				}
 
 				if (i < mMaxEntries) {
-					mDataList[i + 1].mPtr = mDataList[i].mPtr;
-					mDataList[i + 1]._04  = mDataList[i]._04;
-					mDataList[i + 1]._08  = mDataList[i]._08;
-					id                    = i;
+					mDataList[i + 1].mTargetCreature  = mDataList[i].mTargetCreature;
+					mDataList[i + 1].mDistance        = mDataList[i].mDistance;
+					mDataList[i + 1].mSearchIteration = mDataList[i].mSearchIteration;
+					index                             = i;
 				} else {
-					mDataList[i].mPtr.reset();
-					id = i;
+					mDataList[i].mTargetCreature.reset();
+					index = i;
 				}
 
-				if (id < mMaxEntries) {
-					mDataList[id].mPtr.set(obj);
-					mDataList[id]._08 = -1;
-					mDataList[id]._04 = dist;
+				if (index < mMaxEntries) {
+					mDataList[index].mTargetCreature.set(creature);
+					mDataList[index].mSearchIteration = -1;
+					mDataList[index].mDistance        = distance;
 					mCurrentEntries++;
 					if (mCurrentEntries >= mMaxEntries) {
 						mCurrentEntries = mMaxEntries;
@@ -1202,10 +1201,10 @@ void SearchBuffer::insert(Creature* obj, f32 dist)
 				}
 			}
 		} else {
-			if (mDataList[id]._08 > 0) {
-				mDataList[id]._08 = 0;
+			if (mDataList[index].mSearchIteration > 0) {
+				mDataList[index].mSearchIteration = 0;
 			}
-			mDataList[id]._04 = dist;
+			mDataList[index].mDistance = distance;
 		}
 	}
 
@@ -1379,32 +1378,36 @@ void SearchBuffer::insert(Creature* obj, f32 dist)
  * --INFO--
  * Address:	........
  * Size:	000114
+ * Note:	Size isnt exact, but close enough for a stripped function
  */
 void SearchBuffer::update()
 {
-	// size isnt exact, but close enough for a stripped function
-
 	for (int i = 0; i < mCurrentEntries; i++) {
-		int id = mDataList[i]._08;
-		mDataList[i]._08++;
-		if (id < 6) {
-			if (mDataList[i].mPtr.getPtr()->isAlive()) {
+		int frameSinceLastSeen = mDataList[i].mSearchIteration;
+
+		mDataList[i].mSearchIteration++;
+		if (frameSinceLastSeen < 6) {
+			if (mDataList[i].mTargetCreature.getPtr()->isAlive()) {
 				continue;
 			}
-		} else {
-			mDataList[i].mPtr.getPtr();
-			mDataList[i].mPtr.reset();
-			int offs = i;
-			for (int j = offs + 1; j < mCurrentEntries; j++) {
-				mDataList[offs]._04  = mDataList[j]._04;
-				mDataList[offs].mPtr = mDataList[j].mPtr;
-				mDataList[offs]._08  = mDataList[j]._08;
-				offs                 = j;
-			}
-			mCurrentEntries--;
+
+			continue;
 		}
+
+		// Timeout after 6 frames of not seeing the creature
+		mDataList[i].mTargetCreature.getPtr();
+		mDataList[i].mTargetCreature.reset();
+
+		int offs = i;
+		for (int j = offs + 1; j < mCurrentEntries; j++) {
+			mDataList[offs].mDistance        = mDataList[j].mDistance;
+			mDataList[offs].mTargetCreature  = mDataList[j].mTargetCreature;
+			mDataList[offs].mSearchIteration = mDataList[j].mSearchIteration;
+			offs                             = j;
+		}
+
+		mCurrentEntries--;
 	}
-	// UNUSED FUNCTION
 }
 
 /*
@@ -1417,7 +1420,7 @@ Creature* SearchBuffer::getCreature(int id)
 	if (id < 0 || id >= mCurrentEntries) {
 		return nullptr;
 	}
-	return mDataList[id].mPtr.getPtr();
+	return mDataList[id].mTargetCreature.getPtr();
 }
 
 /*

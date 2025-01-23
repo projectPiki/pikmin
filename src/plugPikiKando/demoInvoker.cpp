@@ -108,7 +108,7 @@ bool Navi::demoCheck()
 			f32 len       = sqrtf(diff.x * diff.x + diff.z * diff.z);
 			len -= obj->getBottomRadius();
 			if (len <= maxDist) {
-				int id = PelletMgr::getUfoIndexFromID(obj->mConfig->_2C.mId);
+				int id = PelletMgr::getUfoIndexFromID(obj->mConfig->mModelId.mId);
 				if (!playerState->mDemoFlags.isFlag(id + 32)) {
 					gameflow.mMovieType    = 3;
 					gameflow.mMovieInfoNum = id;

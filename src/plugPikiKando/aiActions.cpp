@@ -311,8 +311,8 @@ int ActPut::exec()
 ActAdjust::ActAdjust(Piki* piki)
     : Action(piki, true)
 {
-	_18 = 8;
-	_14 = 5.0f;
+	mAdjustTimeLimit = 8;
+	_14              = 5.0f;
 }
 
 /*
@@ -322,8 +322,8 @@ ActAdjust::ActAdjust(Piki* piki)
  */
 void ActAdjust::Initialiser::initialise(Action* action)
 {
-	static_cast<ActAdjust*>(action)->_14 = _04;
-	static_cast<ActAdjust*>(action)->_18 = _08;
+	static_cast<ActAdjust*>(action)->_14              = _04;
+	static_cast<ActAdjust*>(action)->mAdjustTimeLimit = mAdjustTimeLimit;
 }
 
 /*
@@ -489,18 +489,18 @@ void ActAdjust::cleanup()
  */
 int ActAdjust::exec()
 {
-	if (_3C) {
+	if (mForceFail) {
 		return ACTOUT_Fail;
 	}
 
-	mActor->mVelocity       = _30;
-	mActor->mTargetVelocity = _30;
-	mActor->mDirection += _2C * gsys->getFrameTime();
+	mActor->mVelocity       = mVelocity;
+	mActor->mTargetVelocity = mVelocity;
+	mActor->mDirection += mTurnSpeed * gsys->getFrameTime();
 	mActor->mDirection = roundAng(mActor->mDirection);
 	mActor->mRotation.set(0.0f, mActor->mDirection, 0.0f);
-	_28 += gsys->getFrameTime();
 
-	if (_28 > f32(_18) * (1 / 30.0f)) {
+	mAdjustTimer += gsys->getFrameTime();
+	if (mAdjustTimer > f32(mAdjustTimeLimit) * (1 / 30.0f)) {
 		return ACTOUT_Success;
 	}
 

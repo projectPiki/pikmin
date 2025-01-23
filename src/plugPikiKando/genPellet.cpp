@@ -71,7 +71,7 @@ void GenObjectPellet::doRead(RandomAccessStream& stream)
  */
 void GenObjectPellet::doWrite(RandomAccessStream& stream)
 {
-	mPelletId = pelletMgr->getConfigFromIdx(mIndex)->_2C;
+	mPelletId = pelletMgr->getConfigFromIdx(mIndex)->mModelId;
 	mPelletId.write(stream);
 	PRINT("******* WRITE \n");
 	mPelletId.print();
@@ -86,7 +86,7 @@ void GenObjectPellet::updateUseList(Generator*, int)
 {
 	PelletConfig* cfg = pelletMgr->getConfig(mPelletId.mId);
 	if (cfg) {
-		pelletMgr->addUseList(cfg->_44.mId);
+		pelletMgr->addUseList(cfg->mPelletId.mId);
 	}
 }
 

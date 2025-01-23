@@ -84,7 +84,7 @@ PelletConfig::PelletConfig()
     , mPelletColor(this, PELCOLOR_NULL, 0, 0, "p09", nullptr)
     , mCarryMinPikis(this, 1, 0, 0, "p01", nullptr)
     , mCarryMaxPikis(this, 1, 0, 0, "p02", nullptr)
-    , _90(this, 0, 0, 0, "p03", nullptr)
+    , mUseDynamicMotion(this, 0, 0, 0, "p03", nullptr)
     , _A0(this, 10.0f, 0.0f, 0.0f, "p04", nullptr)
     , _B0(this, 4.0f, 0.0f, 0.0f, "p05", nullptr)
     , _C0(this, 4, 0, 0, "p08", nullptr)
@@ -95,11 +95,11 @@ PelletConfig::PelletConfig()
     , mAnimSoundID(this, 6, 0, 0, "p12", nullptr)
     , mBounceSoundID(this, 0xFFFFFFFF, 0, 0, "p13", nullptr)
 {
-	_2C.setID('none');
+	mModelId.setID('none');
 	_38.setID('none');
-	_44.setID('none');
+	mPelletId.setID('none');
 	initCore("pelletConfig");
-	_130 = -1;
+	mUfoPartIndex = -1;
 }
 
 /*
@@ -110,10 +110,10 @@ PelletConfig::PelletConfig()
 void PelletConfig::read(RandomAccessStream& input)
 {
 	Parameters::read(input);
-	_2C.read(input);
-	_44.read(input);
+	mModelId.read(input);
+	mPelletId.read(input);
 	_38.read(input);
-	_130 = input.readInt();
+	mUfoPartIndex = input.readInt();
 }
 
 // see PelletBounceSoundID in Pellet.h
@@ -398,14 +398,14 @@ void Pellet::startPick()
 			isOnlyPiki = false;
 		}
 
-		stuck->_194.y -= offset * dir;
+		stuck->mAttachPosition.y -= offset * dir;
 	}
 
 	if (!isOnlyPiki) {
 		disablePickOffset();
 		CI_LOOP(iter)
 		{
-			(*iter)->_194.y += offset * dir;
+			(*iter)->mAttachPosition.y += offset * dir;
 		}
 	}
 
@@ -617,7 +617,7 @@ void Pellet::endStickTeki(Creature* teki)
  */
 bool Pellet::winnable(int tekiStrength)
 {
-	if (mConfig->_2C.match('NAVI', '*')) {
+	if (mConfig->mModelId.match('NAVI', '*')) {
 		// breadbugs aren't allowed to yoink sleeping captains.
 		return false;
 	}
@@ -937,7 +937,7 @@ void Pellet::init(Vector3f& pos)
 	}
 	initSlotFlags();
 	enableFriction();
-	if (mConfig->_90()) {
+	if (mConfig->mUseDynamicMotion()) {
 		setDynamicsSimpleFixed(false);
 	} else {
 		setDynamicsSimpleFixed(true);
@@ -984,7 +984,7 @@ void Pellet::doLoad(RandomAccessStream& input)
 	}
 
 	mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
-	PRINT("ufo parts %s : (%.1f %.1f %.1f)", mConfig->_2C.mStringID, mPosition.x, mPosition.y, mPosition.z);
+	PRINT("ufo parts %s : (%.1f %.1f %.1f)", mConfig->mModelId.mStringID, mPosition.x, mPosition.y, mPosition.z);
 	resetUnk22();
 	setUnk22();
 	mStateMachine->transit(this, 5);
@@ -1074,7 +1074,7 @@ void Pellet::startAI(int stateID)
 	stopMotion();
 	int color;
 	int type;
-	if (pelletMgr->decomposeNumberPellet(mConfig->_2C.mId, color, type)) {
+	if (pelletMgr->decomposeNumberPellet(mConfig->mModelId.mId, color, type)) {
 		f32 heights[4] = {
 			3.3f,
 			7.0f,
@@ -2212,7 +2212,7 @@ void PelletMgr::registerUfoParts()
 	{
 		PelletConfig* config = static_cast<PelletConfig*>(node);
 		if (config->mPelletType() == PELTYPE_UfoPart) {
-			playerState->registerUfoParts(config->_130, config->_2C.mId, config->_44.mId);
+			playerState->registerUfoParts(config->mUfoPartIndex, config->mModelId.mId, config->mPelletId.mId);
 		}
 	}
 }
@@ -2253,9 +2253,9 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 		return nullptr;
 	}
 
-	if (config->_2C.match('tk**', '*') && !view) {
-		PRINT("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->_2C.mStringID);
-		PRINT("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->_2C.mStringID);
+	if (config->mModelId.match('tk**', '*') && !view) {
+		PRINT("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->mModelId.mStringID);
+		PRINT("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->mModelId.mStringID);
 		ERROR("nakata!");
 	}
 
@@ -2301,7 +2301,7 @@ PelletShapeObject* PelletMgr::getShapeObject(u32 pelletID)
 	FOREACH_NODE(CoreNode, mAnimInfoList.mChild, node)
 	{
 		PelletAnimInfo* info = static_cast<PelletAnimInfo*>(node);
-		if (info->mID.mId == config->_44.mId) {
+		if (info->mID.mId == config->mPelletId.mId) {
 			return info->mPelletShapeObject;
 		}
 	}
@@ -2393,7 +2393,7 @@ int PelletMgr::getConfigIndex(u32 pelletID)
 	FOREACH_NODE(CoreNode, mConfigList.mChild, node)
 	{
 		PelletConfig* config = static_cast<PelletConfig*>(node);
-		if (config->_2C.mId == pelletID) {
+		if (config->mModelId.mId == pelletID) {
 			return idx;
 		}
 		idx++;
@@ -2440,7 +2440,7 @@ PelletConfig* PelletMgr::getConfig(u32 pelletID)
 	FOREACH_NODE(CoreNode, mConfigList.mChild, node)
 	{
 		PelletConfig* config = static_cast<PelletConfig*>(node);
-		if (config->_2C.mId == pelletID) {
+		if (config->mModelId.mId == pelletID) {
 			return config;
 		}
 	}

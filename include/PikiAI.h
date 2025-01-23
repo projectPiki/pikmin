@@ -296,8 +296,8 @@ struct ActAdjust : public Action {
 		virtual void initialise(Action*); // _08
 
 		// _00 = VTBL
-		f32 _04; // _04, same as _14 in ActAdjust
-		int _08; // _08, same as _18 in ActAdjust
+		f32 _04;              // _04, same as _14 in ActAdjust
+		int mAdjustTimeLimit; // _08, same as _18 in ActAdjust
 	};
 
 	ActAdjust(Piki*);
@@ -305,8 +305,8 @@ struct ActAdjust : public Action {
 	virtual ~ActAdjust() { }          // _44 (weak)
 	virtual void defaultInitialiser() // _38 (weak)
 	{
-		_14 = 10.0f;
-		_18 = 8;
+		_14              = 10.0f;
+		mAdjustTimeLimit = 8;
 	}
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
@@ -314,13 +314,13 @@ struct ActAdjust : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	f32 _14;      // _14
-	int _18;      // _18
-	Vector3f _1C; // _1C
-	f32 _28;      // _28
-	f32 _2C;      // _2C
-	Vector3f _30; // _30
-	u8 _3C;       // _3C
+	f32 _14;              // _14
+	int mAdjustTimeLimit; // _18
+	Vector3f _1C;         // _1C
+	f32 mAdjustTimer;     // _28
+	f32 mTurnSpeed;       // _2C
+	Vector3f mVelocity;   // _30
+	u8 mForceFail;        // _3C
 };
 
 /**

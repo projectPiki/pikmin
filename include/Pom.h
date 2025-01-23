@@ -181,18 +181,18 @@ struct PomGenOpenStarCallBack : public zen::CallBack1<zen::particleGenerator*> {
 
 	virtual bool invoke(zen::particleGenerator* ptcl) // _08
 	{
-		if (*_04 == false) {
+		if (!*mIsActive) {
 			ptcl->finish();
 		}
+
 		return true;
 	}
 
-	// helpful name, thanks DLL.
-	void set(bool* val) { _04 = val; }
+	void set(bool* val) { mIsActive = val; }
 
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	bool* _04; // _04, points to _0A in PomAi?
+	bool* mIsActive; // _04, points to _0A in PomAi
 };
 
 #endif

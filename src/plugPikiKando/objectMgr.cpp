@@ -53,7 +53,7 @@ void ObjectMgr::invalidateSearch()
 	CI_LOOP(iter)
 	{
 		Creature* c = *iter;
-		if (c->_168.updatable()) {
+		if (c->mSearchContext.updatable()) {
 			c->mSearchBuffer.invalidate();
 		}
 	}
@@ -486,7 +486,7 @@ void MonoObjectMgr::search(ObjectMgr* mgr)
 		}
 
 		Creature* obj = mObjectList[i];
-		if (AIPerf::insQuick && !obj->_168.updatable()) {
+		if (AIPerf::insQuick && !obj->mSearchContext.updatable()) {
 			continue;
 		}
 
@@ -503,7 +503,7 @@ void MonoObjectMgr::search(ObjectMgr* mgr)
 		{
 			Creature* obj2 = *it;
 			if (AIPerf::useUpdateMgr) {
-				if (!obj->_168.updatable() && !obj2->_168.updatable()) {
+				if (!obj->mSearchContext.updatable() && !obj2->mSearchContext.updatable()) {
 					continue;
 				}
 			}
@@ -525,12 +525,12 @@ void MonoObjectMgr::search(ObjectMgr* mgr)
 			dist     = dist - s2;
 
 			if (dist <= 300.0f && obj->isAlive() && obj->mSearchBuffer.mDataList) {
-				if (!AIPerf::useUpdateMgr || obj->_168.updatable()) {
+				if (!AIPerf::useUpdateMgr || obj->mSearchContext.updatable()) {
 					obj->mSearchBuffer.insert(obj2, dist);
 				}
 			}
 			if (dist <= 300.0f && obj2->isAlive() && obj2->mSearchBuffer.mDataList) {
-				if (!AIPerf::useUpdateMgr || obj2->_168.updatable()) {
+				if (!AIPerf::useUpdateMgr || obj2->mSearchContext.updatable()) {
 					obj2->mSearchBuffer.insert(obj, dist);
 				}
 			}
@@ -571,7 +571,7 @@ void MonoObjectMgr::searchSelf()
 			Creature* obj2 = mObjectList[j];
 
 			if (mabiki || AIPerf::useUpdateMgr) {
-				if (!obj->_168.updatable() && !obj2->_168.updatable()) {
+				if (!obj->mSearchContext.updatable() && !obj2->mSearchContext.updatable()) {
 					continue;
 				}
 			}
@@ -596,12 +596,12 @@ void MonoObjectMgr::searchSelf()
 
 			if (dist <= 300.0f && obj->isAlive()) {
 				if (obj->isAlive() && obj->mSearchBuffer.mDataList) {
-					if ((!AIPerf::useUpdateMgr && !mabiki) || obj->_168.updatable()) {
+					if ((!AIPerf::useUpdateMgr && !mabiki) || obj->mSearchContext.updatable()) {
 						obj->mSearchBuffer.insert(obj2, dist);
 					}
 				}
 				if (obj2->isAlive() && obj2->mSearchBuffer.mDataList) {
-					if ((!AIPerf::useUpdateMgr && !mabiki) || obj2->_168.updatable()) {
+					if ((!AIPerf::useUpdateMgr && !mabiki) || obj2->mSearchContext.updatable()) {
 						obj2->mSearchBuffer.insert(obj, dist);
 					}
 				}
@@ -619,15 +619,15 @@ void MonoObjectMgr::searchSelf()
  */
 PolyObjectMgr::PolyObjectMgr(int num)
 {
-	_38      = 0;
-	_44      = 0;
-	_40      = num;
-	mEntries = new PolyData[num];
+	mObjectPool     = 0;
+	mEntryCount     = 0;
+	mMaxClassLength = num;
+	mEntries        = new PolyData[num];
 
 	for (int i = 0; i < num; i++) {
-		mEntries[i]._00 = 0;
-		mEntries[i]._04 = 0;
-		mEntries[i]._08 = -1;
+		mEntries[i].mClassObj  = 0;
+		mEntries[i].mClassSize = 0;
+		mEntries[i].mClassId   = -1;
 	}
 }
 
@@ -638,13 +638,13 @@ PolyObjectMgr::PolyObjectMgr(int num)
  */
 void PolyObjectMgr::create(int num)
 {
-	mSize          = 0;
-	mMax           = num;
-	mObjectIndices = new int[mMax];
-	for (int i = 0; i < mMax; i++) {
+	mActiveObjects = 0;
+	mPoolCapacity  = num;
+	mObjectIndices = new int[mPoolCapacity];
+	for (int i = 0; i < mPoolCapacity; i++) {
 		mObjectIndices[i] = -1;
 	}
-	_28 = 0;
+	mMaxSize = 0;
 }
 
 /*
@@ -654,7 +654,7 @@ void PolyObjectMgr::create(int num)
  */
 void PolyObjectMgr::update()
 {
-	for (int i = 0; i < mMax; i++) {
+	for (int i = 0; i < mPoolCapacity; i++) {
 
 		if (mObjectIndices[i] >= 0) {
 			Creature* obj = get(i);
@@ -679,7 +679,7 @@ void PolyObjectMgr::update()
  */
 void PolyObjectMgr::postUpdate(int a1, f32 a2)
 {
-	for (int i = 0; i < mMax; i++) {
+	for (int i = 0; i < mPoolCapacity; i++) {
 		if (mObjectIndices[i] >= 0) {
 			Creature* obj = get(i);
 			if (obj) {
@@ -696,7 +696,7 @@ void PolyObjectMgr::postUpdate(int a1, f32 a2)
  */
 void PolyObjectMgr::refresh(Graphics& gfx)
 {
-	for (int i = 0; i < mMax; i++) {
+	for (int i = 0; i < mPoolCapacity; i++) {
 		if (mObjectIndices[i] >= 0) {
 			Creature* obj = get(i);
 			if (obj) {
@@ -713,7 +713,7 @@ void PolyObjectMgr::refresh(Graphics& gfx)
  */
 void PolyObjectMgr::drawShadow(Graphics& gfx, Texture*)
 {
-	for (int i = 0; i < mMax; i++) {
+	for (int i = 0; i < mPoolCapacity; i++) {
 		if (mObjectIndices[i] >= 0) {
 			Creature* obj = get(i);
 			if (obj && obj->aiCullable()) {
@@ -737,20 +737,22 @@ void PolyObjectMgr::beginRegister()
  * Address:	800E231C
  * Size:	000088
  */
-void PolyObjectMgr::registerClass(int id, Creature* obj, int num)
+void PolyObjectMgr::registerClass(int id, Creature* obj, int size)
 {
-	for (int i = 0; i < _40; i++) {
-		if (id == mEntries[i]._08) {
+	for (int i = 0; i < mMaxClassLength; i++) {
+		if (id == mEntries[i].mClassId) {
 			return;
 		}
 	}
-	if (_28 < num) {
-		_28 = num;
+
+	if (mMaxSize < size) {
+		mMaxSize = size;
 	}
-	mEntries[_44]._00 = obj;
-	mEntries[_44]._04 = num;
-	mEntries[_44]._08 = id;
-	_44++;
+
+	mEntries[mEntryCount].mClassObj  = obj;
+	mEntries[mEntryCount].mClassSize = size;
+	mEntries[mEntryCount].mClassId   = id;
+	mEntryCount++;
 
 	PRINT("registerClass::id %d duplicates\n", id);
 	ERROR("hello mck\n");
@@ -763,9 +765,9 @@ void PolyObjectMgr::registerClass(int id, Creature* obj, int num)
  */
 void PolyObjectMgr::endRegister()
 {
-	_38 = new u8[mMax * _28];
-	for (int i = 0; i < mMax * _28; i++) {
-		_38[i] = -1;
+	mObjectPool = new u8[mPoolCapacity * mMaxSize];
+	for (int i = 0; i < mPoolCapacity * mMaxSize; i++) {
+		mObjectPool[i] = -1;
 	}
 }
 
@@ -776,11 +778,12 @@ void PolyObjectMgr::endRegister()
  */
 int PolyObjectMgr::getEmptyIndex()
 {
-	for (int i = 0; i < mMax; i++) {
+	for (int i = 0; i < mPoolCapacity; i++) {
 		if (mObjectIndices[i] == -1) {
 			return i;
 		}
 	}
+
 	return -1;
 }
 
@@ -792,7 +795,7 @@ int PolyObjectMgr::getEmptyIndex()
 int PolyObjectMgr::getIndex(Creature* obj)
 {
 	int ret = -1;
-	for (int i = 0; i < mMax; i++) {
+	for (int i = 0; i < mPoolCapacity; i++) {
 		if (get(i) == obj) {
 			ret = i;
 			break;
@@ -808,8 +811,8 @@ int PolyObjectMgr::getIndex(Creature* obj)
  */
 int PolyObjectMgr::getTemplateIndex(int id)
 {
-	for (int i = 0; i < _40; i++) {
-		if (mEntries[i]._08 == id) {
+	for (int i = 0; i < mMaxClassLength; i++) {
+		if (mEntries[i].mClassId == id) {
 			return i;
 		}
 	}
@@ -823,7 +826,7 @@ int PolyObjectMgr::getTemplateIndex(int id)
  */
 Creature* PolyObjectMgr::get(int i)
 {
-	return (Creature*)((int)_38 + _28 * i);
+	return (Creature*)((int)mObjectPool + mMaxSize * i);
 }
 
 /*
@@ -833,34 +836,35 @@ Creature* PolyObjectMgr::get(int i)
  */
 Creature* PolyObjectMgr::birth(int id)
 {
-	if (mSize >= mMax) {
+	if (mActiveObjects >= mPoolCapacity) {
 		return nullptr;
 	}
 
-	int tID = getTemplateIndex(id);
-	if (tID == -1) {
+	int templateId = getTemplateIndex(id);
+	if (templateId == -1) {
 		PRINT("<PolyObjectMgr::birth> id %d is invalid\n", id);
 		return nullptr;
 	}
 
-	int eID = getEmptyIndex();
-	if (eID == -1) {
+	int emptyId = getEmptyIndex();
+	if (emptyId == -1) {
 		PRINT("<PolyObjectMgr> failed to give birth new object\n");
 		return nullptr;
 	}
 
-	// I dont have a clue whats happening here, but it matches
-	u8 *temp, *obj;
-	PolyData* data      = &mEntries[tID];
-	obj                 = (u8*)get(eID);
-	mObjectIndices[eID] = id;
-	temp                = (u8*)data->_00;
-	for (int i = 0; i < data->_04; i++) {
-		obj[i] = temp[i];
-	}
-	mSize++;
+	u8 *templateData, *newObject;
+	PolyData* newTemplate = &mEntries[templateId];
 
-	return (Creature*)obj;
+	newObject               = (u8*)get(emptyId);
+	mObjectIndices[emptyId] = id;
+	templateData            = (u8*)newTemplate->mClassObj;
+	for (int i = 0; i < newTemplate->mClassSize; i++) {
+		newObject[i] = templateData[i];
+	}
+
+	mActiveObjects++;
+
+	return (Creature*)newObject;
 }
 
 /*
@@ -874,7 +878,7 @@ void PolyObjectMgr::kill(Creature* obj)
 	if (obj->removable()) {
 		PRINT("%x really dead (index %d) \n", obj, id);
 		mObjectIndices[id] = -1;
-		mSize--;
+		mActiveObjects--;
 	} else {
 		mObjectIndices[id] = -2;
 	}
@@ -887,7 +891,7 @@ void PolyObjectMgr::kill(Creature* obj)
  */
 Creature* PolyObjectMgr::getCreature(int id)
 {
-	if (id < 0 || id >= mMax || mObjectIndices[id] < 0) {
+	if (id < 0 || id >= mPoolCapacity || mObjectIndices[id] < 0) {
 		return nullptr;
 	}
 	return get(id);
@@ -901,7 +905,7 @@ Creature* PolyObjectMgr::getCreature(int id)
 int PolyObjectMgr::getFirst()
 {
 	int next = -1;
-	for (int i = 0; i < mMax; i++) {
+	for (int i = 0; i < mPoolCapacity; i++) {
 		int candidate = mObjectIndices[i];
 		if (mObjectIndices[i] >= 0) {
 			next = i;
@@ -909,7 +913,7 @@ int PolyObjectMgr::getFirst()
 		}
 	}
 	if (next == -1) {
-		return mMax;
+		return mPoolCapacity;
 	}
 	return next;
 }
@@ -922,7 +926,7 @@ int PolyObjectMgr::getFirst()
 int PolyObjectMgr::getNext(int idx)
 {
 	int next = -1;
-	for (int i = idx + 1; i < mMax; i++) {
+	for (int i = idx + 1; i < mPoolCapacity; i++) {
 		int candidate = mObjectIndices[i];
 		if (mObjectIndices[i] >= 0) {
 			next = i;
@@ -930,7 +934,7 @@ int PolyObjectMgr::getNext(int idx)
 		}
 	}
 	if (next == -1) {
-		return mMax;
+		return mPoolCapacity;
 	}
 	return next;
 }
@@ -942,7 +946,7 @@ int PolyObjectMgr::getNext(int idx)
  */
 bool PolyObjectMgr::isDone(int idx)
 {
-	if (idx >= mMax) {
+	if (idx >= mPoolCapacity) {
 		return true;
 	}
 	return false;
@@ -967,7 +971,7 @@ void PolyObjectMgr::search(ObjectMgr* mgr)
  */
 void PolyObjectMgr::searchSelf()
 {
-	for (int i = 0; i < mMax - 1; i++) {
+	for (int i = 0; i < mPoolCapacity - 1; i++) {
 		if (mObjectIndices[i] < 0) {
 			continue;
 		}
@@ -982,14 +986,14 @@ void PolyObjectMgr::searchSelf()
 			continue;
 		}
 
-		for (int j = i + 1; j < mMax; j++) {
+		for (int j = i + 1; j < mPoolCapacity; j++) {
 			if (mObjectIndices[j] < 0) {
 				continue;
 			}
 			Creature* obj2 = get(j);
 
 			if (AIPerf::useUpdateMgr) {
-				if (!obj->_168.updatable() && !obj2->_168.updatable()) {
+				if (!obj->mSearchContext.updatable() && !obj2->mSearchContext.updatable()) {
 					continue;
 				}
 			}
@@ -1014,12 +1018,12 @@ void PolyObjectMgr::searchSelf()
 
 			if (dist <= 300.0f) {
 				if (obj->isAlive() && obj->mSearchBuffer.mDataList) {
-					if ((!AIPerf::useUpdateMgr) || obj->_168.updatable()) {
+					if ((!AIPerf::useUpdateMgr) || obj->mSearchContext.updatable()) {
 						obj->mSearchBuffer.insert(obj2, dist);
 					}
 				}
 				if (obj2->isAlive() && obj2->mSearchBuffer.mDataList) {
-					if ((!AIPerf::useUpdateMgr) || obj2->_168.updatable()) {
+					if ((!AIPerf::useUpdateMgr) || obj2->mSearchContext.updatable()) {
 						obj2->mSearchBuffer.insert(obj, dist);
 					}
 				}
@@ -1034,374 +1038,73 @@ void PolyObjectMgr::searchSelf()
  * --INFO--
  * Address:	800E29B8
  * Size:	000404
+ *
+ * Searches for nearby objects and populates each object's search buffer with potential interaction targets.
+ * Uses spatial partitioning and culling for performance optimization.
+ * @param otherMgr The object manager containing potential target objects
+ *
  */
-void ObjectMgr::search(ObjectMgr* mgr)
+void ObjectMgr::search(ObjectMgr* otherMgr)
 {
-	Iterator ita(this);
-	CI_LOOP(ita)
+	Iterator sourceIter(this);
+	CI_LOOP(sourceIter)
 	{
-		Creature* obj = *ita;
+		Creature* sourceObj = *sourceIter;
 
-		// problem with this
-		bool test     = false;
-		bool isPlayer = (obj->mObjType != OBJTYPE_Piki && obj->mObjType != OBJTYPE_Navi);
-		if (isPlayer && !obj->isCreatureFlag(CF_AIAlwaysActive)) {
-			test = true;
-		}
-		if (test && obj->mGrid.aiCulling() && !obj->aiCullable()) {
+		// Skip non-important objects (not Pikmin / Player) unless they have specific flags
+		bool skipObj
+		    = (sourceObj->mObjType != OBJTYPE_Piki && sourceObj->mObjType != OBJTYPE_Navi) && !sourceObj->isCreatureFlag(CF_AIAlwaysActive);
+		if (skipObj && sourceObj->mGrid.aiCulling() && !sourceObj->aiCullable()) {
 			continue;
 		}
 
-		Iterator it(mgr);
+		Iterator it(otherMgr);
 		CI_LOOP(it)
 		{
-			Creature* obj2 = *it;
+			Creature* targetObj = *it;
 
-			test     = false;
-			isPlayer = (obj2->mObjType != OBJTYPE_Piki && obj2->mObjType != OBJTYPE_Navi);
-			if (isPlayer && !obj2->isCreatureFlag(CF_AIAlwaysActive)) {
-				test = true;
-			}
-			if (test && obj2->mGrid.aiCulling() && !obj2->aiCullable()) {
+			skipObj = (targetObj->mObjType != OBJTYPE_Piki && targetObj->mObjType != OBJTYPE_Navi)
+			       && !targetObj->isCreatureFlag(CF_AIAlwaysActive);
+			if (skipObj && targetObj->mGrid.aiCulling() && !targetObj->aiCullable()) {
 				continue;
 			}
 
+			// Use spatial grid to quickly cull distant objects
 			if (AIPerf::useGrid) {
-				if (obj->mGrid.doCulling(obj2->mGrid, obj->getBoundingSphereRadius() + obj2->getBoundingSphereRadius())) {
+				if (sourceObj->mGrid.doCulling(targetObj->mGrid,
+				                               sourceObj->getBoundingSphereRadius() + targetObj->getBoundingSphereRadius())) {
 					continue;
 				}
 			}
-			f32 dist = centreDist(obj, obj2);
-			f32 s2   = obj->getBoundingSphereRadius() + obj2->getBoundingSphereRadius();
-			dist     = dist - s2;
 
-			if (dist <= 300.0f && obj->isAlive() && obj->mSearchBuffer.mDataList) {
-				if (!AIPerf::useUpdateMgr || obj->_168.updatable()) {
-					obj->mSearchBuffer.insert(obj2, dist);
+			// Calculate actual distance between objects (accounting for their sizes)
+			f32 distance       = centreDist(sourceObj, targetObj);
+			f32 combinedRadius = sourceObj->getBoundingSphereRadius() + targetObj->getBoundingSphereRadius();
+			distance           = distance - combinedRadius;
+
+			// Check if objects are within interaction range
+			const f32 INTERACTION_RANGE = 300.0f;
+
+			// Add objects to each other's search buffers if they're:
+			// 1) Within interaction range
+			// 2) Alive
+			// 3) Have initialized data lists
+			// 4) Pass update manager checks (if enabled)
+			if (distance <= INTERACTION_RANGE && sourceObj->isAlive() && sourceObj->mSearchBuffer.mDataList) {
+				// Add target to source's search buffer if conditions met
+				if (!AIPerf::useUpdateMgr || sourceObj->mSearchContext.updatable()) {
+					sourceObj->mSearchBuffer.insert(targetObj, distance);
 				}
 			}
-			if (dist <= 300.0f && obj2->isAlive() && obj2->mSearchBuffer.mDataList) {
-				if (!AIPerf::useUpdateMgr || obj2->_168.updatable()) {
-					obj2->mSearchBuffer.insert(obj, dist);
+
+			if (distance <= INTERACTION_RANGE && targetObj->isAlive() && targetObj->mSearchBuffer.mDataList) {
+				// Add source to target's search buffer if conditions met
+				if (!AIPerf::useUpdateMgr || targetObj->mSearchContext.updatable()) {
+					targetObj->mSearchBuffer.insert(sourceObj, distance);
 				}
 			}
 		}
 	}
-
-	f32 c[1];
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stfd      f31, 0x68(r1)
-	  stfd      f30, 0x60(r1)
-	  stfd      f29, 0x58(r1)
-	  stmw      r26, 0x40(r1)
-	  mr        r29, r3
-	  mr        r26, r4
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f31, -0x6738(r2)
-	  addi      r28, r3, 0
-	  addi      r27, r26, 0
-	  b         .loc_0x388
-
-	.loc_0x44:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0x6C
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r31, r3
-	  b         .loc_0x88
-
-	.loc_0x6C:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r31, r3
-
-	.loc_0x88:
-	  lwz       r4, 0x6C(r31)
-	  li        r3, 0
-	  addi      r0, r3, 0
-	  cmpwi     r4, 0
-	  beq-      .loc_0xA8
-	  cmpwi     r4, 0x36
-	  beq-      .loc_0xA8
-	  li        r0, 0x1
-
-	.loc_0xA8:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0xC0
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,11,11
-	  bne-      .loc_0xC0
-	  li        r3, 0x1
-
-	.loc_0xC0:
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xE4
-	  addi      r3, r31, 0x40
-	  bl        -0x4E8F4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xE4
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,12,12
-	  bne-      .loc_0x36C
-
-	.loc_0xE4:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r26, r3
-	  b         .loc_0x310
-
-	.loc_0x100:
-	  cmpwi     r26, -0x1
-	  bne-      .loc_0x128
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x144
-
-	.loc_0x128:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r26
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x144:
-	  lwz       r4, 0x6C(r30)
-	  li        r3, 0
-	  addi      r0, r3, 0
-	  cmpwi     r4, 0
-	  beq-      .loc_0x164
-	  cmpwi     r4, 0x36
-	  beq-      .loc_0x164
-	  li        r0, 0x1
-
-	.loc_0x164:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x17C
-	  lwz       r0, 0xC8(r30)
-	  rlwinm.   r0,r0,0,11,11
-	  bne-      .loc_0x17C
-	  li        r3, 0x1
-
-	.loc_0x17C:
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1A0
-	  addi      r3, r30, 0x40
-	  bl        -0x4E9B0
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1A0
-	  lwz       r0, 0xC8(r30)
-	  rlwinm.   r0,r0,0,12,12
-	  bne-      .loc_0x2F4
-
-	.loc_0x1A0:
-	  lwz       r0, -0x5F10(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x1F0
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x64(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  fmr       f29, f1
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x64(r12)
-	  mtlr      r12
-	  blrl
-	  fadds     f1, f1, f29
-	  addi      r3, r31, 0x40
-	  addi      r4, r30, 0x40
-	  bl        -0x4E7AC
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x2F4
-
-	.loc_0x1F0:
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        -0x57180
-	  mr        r3, r30
-	  fmr       f29, f1
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x64(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  fmr       f30, f1
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x64(r12)
-	  mtlr      r12
-	  blrl
-	  fadds     f0, f1, f30
-	  fsubs     f29, f29, f0
-	  fcmpo     cr0, f29, f31
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x294
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x294
-	  lwz       r0, 0x1CC(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x294
-	  lbz       r0, 0x2FAC(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x284
-	  addi      r3, r31, 0x168
-	  bl        -0x3D7D8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x294
-
-	.loc_0x284:
-	  fmr       f1, f29
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x1B8
-	  bl        0x1494
-
-	.loc_0x294:
-	  fcmpo     cr0, f29, f31
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x2F4
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2F4
-	  lwz       r0, 0x1CC(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2F4
-	  lbz       r0, 0x2FAC(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2E4
-	  addi      r3, r30, 0x168
-	  bl        -0x3D838
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2F4
-
-	.loc_0x2E4:
-	  fmr       f1, f29
-	  addi      r4, r31, 0
-	  addi      r3, r30, 0x1B8
-	  bl        0x1434
-
-	.loc_0x2F4:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r26
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r26, r3
-
-	.loc_0x310:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r26
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x338
-	  li        r0, 0x1
-	  b         .loc_0x364
-
-	.loc_0x338:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  mr        r4, r26
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x360
-	  li        r0, 0x1
-	  b         .loc_0x364
-
-	.loc_0x360:
-	  li        r0, 0
-
-	.loc_0x364:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x100
-
-	.loc_0x36C:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x388:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x3B0
-	  li        r0, 0x1
-	  b         .loc_0x3DC
-
-	.loc_0x3B0:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x3D8
-	  li        r0, 0x1
-	  b         .loc_0x3DC
-
-	.loc_0x3D8:
-	  li        r0, 0
-
-	.loc_0x3DC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x44
-	  lmw       r26, 0x40(r1)
-	  lwz       r0, 0x74(r1)
-	  lfd       f31, 0x68(r1)
-	  lfd       f30, 0x60(r1)
-	  lfd       f29, 0x58(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1493,7 +1196,7 @@ PolyObjectMgr::~PolyObjectMgr()
  */
 int PolyObjectMgr::getSize()
 {
-	return mSize;
+	return mActiveObjects;
 }
 
 /*
@@ -1503,5 +1206,5 @@ int PolyObjectMgr::getSize()
  */
 int PolyObjectMgr::getMax()
 {
-	return mMax;
+	return mPoolCapacity;
 }

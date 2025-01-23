@@ -97,9 +97,9 @@ struct PolyObjectMgr : public ObjectMgr {
 
 	// completely guessing on this name
 	struct PolyData {
-		Creature* _00;
-		int _04;
-		int _08;
+		Creature* mClassObj;
+		int mClassSize;
+		int mClassId;
 	};
 
 	virtual Creature* getCreature(int);           // _08
@@ -128,18 +128,20 @@ struct PolyObjectMgr : public ObjectMgr {
 	int getEmptyIndex();
 	int getIndex(Creature*);
 	int getTemplateIndex(int);
+	int getTemplateID(int);
+	int getNumTemplates();
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_28 = ObjectMgr
-	int _28;             // _28
-	int mMax;            // _2C
-	int mSize;           // _30
-	u8 _34[0x4];         // _34, unknown
-	u8* _38;             // _38, unknown
+	int mMaxSize;        // _28
+	int mPoolCapacity;   // _2C
+	int mActiveObjects;  // _30
+	u8 _34[0x4];         // _34
+	u8* mObjectPool;     // _38
 	int* mObjectIndices; // _3C
-	int _40;             // _40
-	u32 _44;             // _44, unknown
+	int mMaxClassLength; // _40
+	u32 mEntryCount;     // _44
 	PolyData* mEntries;  // _48
 };
 

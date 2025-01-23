@@ -65,9 +65,9 @@ struct PlayerState {
 		void setMotionSpeed(f32);
 
 		// _00 = VTBL
-		int _04;                              // _04
+		int mPartIndex;                       // _04
 		u32 mModelID;                         // _08
-		u32 _0C;                              // _0C
+		u32 mPelletId;                        // _0C
 		PelletAnimator mAnimator;             // _10
 		Vector3f _B8;                         // _B8
 		ShapeDynMaterials mAnimatedMaterials; // _C4

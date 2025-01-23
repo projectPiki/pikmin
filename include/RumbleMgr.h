@@ -28,8 +28,8 @@ struct RumbleSample {
  * @brief TODO
  */
 struct RumbleTable {
-	int _00; // _00
-	int _04; // _04
+	int mFrameLength; // _00
+	int _04;          // _04
 };
 
 /**
@@ -77,9 +77,9 @@ struct ChannelMgr {
 	// DLL inlines:
 	void draw2d(Graphics&, Font*);
 
-	f32 _00;                  // _00
-	f32 _04;                  // _04
-	f32 _08;                  // _08
+	f32 mRumbleTimer;         // _00
+	f32 mRumbleIntensity;     // _04
+	f32 mRumbleScale;         // _08
 	int mActiveType;          // _0C
 	ChannelData* mData;       // _10
 	ChannelDataMgr* mDataMgr; // _14
@@ -107,7 +107,7 @@ struct ControlerMgr {
 
 	static const int maxChannel;
 
-	f32 _00;                  // _00
+	f32 mRumbleIntensity;     // _00
 	ChannelMgr* mChannelMgrs; // _04
 	ChannelDataMgr* mDataMgr; // _08
 };
@@ -132,10 +132,10 @@ struct RumbleMgr {
 	void init();
 	void rumblePause(bool);
 
-	f32 _00;                         // _00
-	f32 _04;                         // _04
-	u8 _08;                          // _08
-	u8 _09;                          // _09
+	f32 mRumbleIntensity;            // _00
+	f32 mRumbleFadeOutTimer;         // _04
+	u8 mIsEnabled;                   // _08
+	u8 mIsDisabled;                  // _09
 	RumbleSample* mSamples[4];       // _0C
 	ControlerMgr* mControlerMgrs[4]; // _1C
 	ChannelDataMgr* mDataMgr;        // _2C
