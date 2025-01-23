@@ -361,8 +361,8 @@ void Pellet::startPick()
 	}
 
 	setTrySound(false);
-	resetUnk22();
-	resetCreatureFlag(CF_FixPosition);
+	disableFixPos();
+	resetCreatureFlag(CF_IsPositionFixed);
 	disableFriction();
 	startCarryMotion(30.0f);
 
@@ -426,7 +426,7 @@ void Pellet::startPick()
 void Pellet::finishPick()
 {
 	_570 = 0;
-	setUnk22();
+	enableFixPos();
 	stopEventSound(this, SE_LIFT_MOVE);
 	stopEventSound(this, SE_LIFT_TRY);
 	enableFriction();
@@ -985,8 +985,8 @@ void Pellet::doLoad(RandomAccessStream& input)
 
 	mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
 	PRINT("ufo parts %s : (%.1f %.1f %.1f)", mConfig->mModelId.mStringID, mPosition.x, mPosition.y, mPosition.z);
-	resetUnk22();
-	setUnk22();
+	disableFixPos();
+	enableFixPos();
 	mStateMachine->transit(this, 5);
 }
 
@@ -1025,7 +1025,7 @@ void Pellet::startAI(int stateID)
 	mRotationQuat.fromEuler(Vector3f(0.0f, mDirection, 0.0f));
 	mRotation.set(0.0f, mDirection, 0.0f);
 	_464 = mPosition;
-	setUnk22();
+	enableFixPos();
 	if (_450) {
 		_444 = mPosition;
 	}
@@ -2056,8 +2056,8 @@ void Pellet::bounceCallback()
  */
 void Pellet::collisionCallback(CollEvent& event)
 {
-	if (isCreatureFlag(CF_Unk22) && isCreatureFlag(CF_FixPosition)) {
-		resetCreatureFlag(CF_FixPosition);
+	if (isCreatureFlag(CF_AllowFixPosition) && isCreatureFlag(CF_IsPositionFixed)) {
+		resetCreatureFlag(CF_IsPositionFixed);
 	}
 }
 

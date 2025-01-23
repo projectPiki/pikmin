@@ -750,7 +750,7 @@ void Navi::reset()
 	_304                                    = 0;
 	_2F4                                    = 0.0f;
 	_2F8                                    = 0.0f;
-	setUnk22();
+	enableFixPos();
 	_830 = 0;
 	_2E0 = 0;
 	setPellet(false);

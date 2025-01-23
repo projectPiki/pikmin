@@ -268,7 +268,7 @@ struct CollTriInfo {
 
 	u32 mMapCode;             // _00
 	u8 _04[0x14];             // _04, unknown
-	Vector3f mTriangleNormal; // _18
+	Vector3f mTriangleNormal; // _18, when accessing the .y, 1.0 is flat ground, 0.0 is vertical
 	u32 _24;                  // _24
 	Plane _28[3];             // _28
 };

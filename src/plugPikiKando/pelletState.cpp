@@ -86,8 +86,8 @@ void PelletUfoLoadState::exec(Pellet* pelt)
  */
 void PelletUfoLoadState::cleanup(Pellet* pelt)
 {
-	pelt->resetUnk22();
-	pelt->setUnk22();
+	pelt->disableFixPos();
+	pelt->enableFixPos();
 }
 
 /*

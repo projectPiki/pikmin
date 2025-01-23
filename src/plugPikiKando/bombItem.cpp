@@ -103,7 +103,7 @@ BombItem::BombItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
  */
 void BombItem::startAI(int)
 {
-	setUnk22();
+	enableFixPos();
 	restartAI();
 
 	mSeContext = &mSound;

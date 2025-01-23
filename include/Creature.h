@@ -51,11 +51,11 @@ enum CreatureFlags {
 	CF_StuckToMouth        = 1 << 15, // 0x8000, stuck to mouth of some enemy
 	CF_FaceDirAdjust       = 1 << 16, // 0x10000
 	CF_Unk17               = 1 << 17, // 0x20000
-	CF_Unk18               = 1 << 18, // 0x40000
+	CF_DisableMovement     = 1 << 18, // 0x40000
 	CF_IsAICullingActive   = 1 << 19, // 0x80000, creature is off camera
 	CF_AIAlwaysActive      = 1 << 20, // 0x100000, do not cull AI when off-camera
-	CF_FixPosition         = 1 << 21, // 0x200000
-	CF_Unk22               = 1 << 22, // 0x400000
+	CF_IsPositionFixed     = 1 << 21, // 0x200000
+	CF_AllowFixPosition    = 1 << 22, // 0x400000
 };
 
 /**
@@ -206,8 +206,11 @@ struct Creature : public RefCountable, public EventTalker {
 	void startStickObjectPellet(Pellet*, int, f32);
 	bool isStickLeader();
 
-	inline void setUnk22() { setCreatureFlag(CF_Unk22); }
-	inline void resetUnk22() { resetCreatureFlag(CF_Unk22); } // TODO: rename this to one of the DLL inlines later
+	inline void enableFixPos() { setCreatureFlag(CF_AllowFixPosition); }
+	inline void disableFixPos() { resetCreatureFlag(CF_AllowFixPosition); }
+
+	inline void startFix() { setCreatureFlag(CF_IsPositionFixed); }
+	inline void finishFix() { resetCreatureFlag(CF_IsPositionFixed); }
 
 	// this is a guess name-wise
 	void restartAI() { setCreatureFlag(CF_AIAlwaysActive); }
@@ -299,14 +302,8 @@ struct Creature : public RefCountable, public EventTalker {
 
 	    f32 calcDistance(Creature&);
 
-	    void enableFixPos();
-	    void disableFixPos();
-
 	    void enableGravity();
 	    void disableGravity();
-
-	    void startFix();
-	    void finishFix();
 
 	    void finishFlying();
 
@@ -334,7 +331,7 @@ struct Creature : public RefCountable, public EventTalker {
 	FastGrid mGrid;                      // _40
 	f32 mHealth;                         // _58
 	f32 mMaxHealth;                      // _5C
-	u8 _60;                              // _60
+	u8 mWaterFxTimer;                    // _60
 	Generator* mGenerator;               // _64
 	u32 _68;                             // _68, might be int
 	EObjType mObjType;                   // _6C
@@ -392,7 +389,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Vector3f _29C;                       // _29C
 	SmartPtr<Creature> mHoldingCreature; // _2A8, what is holding this creature (e.g. what piki if this is a bomb)
 	SmartPtr<Creature> mGrabbedCreature; // _2AC, what is this creature holding (e.g. what bomb if this is a piki)
-	u32 _2B0;                            // _2B0, unknown
+	u32 mIsFrozen;                       // _2B0, unknown
 	bool mIsBeingDamaged;                // _2B4
 };
 

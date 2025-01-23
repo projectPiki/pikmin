@@ -46,7 +46,7 @@ DEFINE_PRINT("Creature");
 void Creature::startFixPosition()
 {
 	mFixedPosition = mPosition;
-	setCreatureFlag(CF_FixPosition);
+	setCreatureFlag(CF_IsPositionFixed);
 }
 
 /*
@@ -56,7 +56,7 @@ void Creature::startFixPosition()
  */
 void Creature::finishFixPosition()
 {
-	resetCreatureFlag(CF_FixPosition);
+	resetCreatureFlag(CF_IsPositionFixed);
 }
 
 /*
@@ -460,7 +460,7 @@ void Creature::init()
 	_114.makeIdentity();
 	mTransformMatrix.makeIdentity();
 	mRotationQuat.set(0.0f, 0.0f, 0.0f, 1.0f);
-	_60              = 0;
+	mWaterFxTimer    = 0;
 	mCreatureFlags   = 0;
 	mPelletStickSlot = -1;
 	disableAICulling();
@@ -838,7 +838,7 @@ Creature::Creature(CreatureProp* props)
 	mCollPlatform   = nullptr;
 	_290            = 0;
 	_298            = 0;
-	_2B0            = 0;
+	mIsFrozen       = 0;
 }
 
 /*
@@ -864,129 +864,156 @@ void Creature::updateStatic()
  */
 void Creature::update()
 {
+	// Update sound effects
 	if (mSeContext) {
 		mSeContext->update();
 	}
 
+	// Update spatial grid positions
 	mGrid.updateGrid(mPosition);
 	bool isPikiOrNavi = false;
 	if (mObjType == OBJTYPE_Piki || mObjType == OBJTYPE_Navi) {
 		isPikiOrNavi = true;
 	}
-
 	mGrid.updateAIGrid(mPosition, isPikiOrNavi);
 
-	// in the DLL this ONE TIME doesn't use the isCreatureFlag inline
-	// but it doesn't affect anything (for now) so i'm adding it in
+	// Skip AI updates for non-important and CULLED objects
 	if (!isPikiOrNavi && !isCreatureFlag(CF_AIAlwaysActive) && mGrid.aiCulling() && !aiCullable()) {
 		return;
 	}
+
 	_1A4 = 0;
 	_1A8 = 0;
 
-	if (!_2B0) {
+	// Handle AI and animations if not frozen
+	if (!mIsFrozen) {
 		doAnimation();
 		updateAI();
 	}
 
+	// Skip remaining updates if holding something
 	if (!mHoldingCreature.isNull()) {
 		return;
 	}
 
+	// Handle being stuck to another creature's mouth
 	if (isCreatureFlag(CF_StuckToMouth)) {
 		if (mStickListHead) {
 			mPosition = mStickListHead->mPosition;
 		}
+
 		if (!mStickTarget) {
 			resetCreatureFlag(CF_StuckToMouth);
 			PRINT("MOUTH RESET\n");
 		}
+
 		return;
 	}
 
+	// Update rope physics if attached to one
 	if (mRope) {
 		updateStickRope();
 	}
 
 	moveAttach();
 
+	// Handle different types of sticking behaviour
 	if (mStickTarget) {
 		if (isStickToPlatform()) {
 			updateStickPlatform();
 		} else {
 			updateStickNonPlatform();
 		}
+
 		return;
 	}
 
-	int attr = ATTR_NULL;
+	// Handle effects if we're on the floor
+	int terrainAttribute = ATTR_NULL;
 	if (mFloorTri) {
-		attr = MapCode::getAttribute(mFloorTri);
+		terrainAttribute = MapCode::getAttribute(mFloorTri);
 	}
 
-	if (attr == ATTR_Water) {
-		if (_60 == 0) {
+	// Handle water effects if walking in water
+	if (terrainAttribute == ATTR_Water) {
+		if (mWaterFxTimer == 0) {
 			startWaterEffect();
 		}
 
-		_60++;
+		mWaterFxTimer++;
 
-		if (_60 > 240) {
-			_60 = 240;
+		if (mWaterFxTimer > 240) {
+			mWaterFxTimer = 240;
 		}
-	} else {
-		if (_60 != 0) {
-			_60 = 0;
-			finishWaterEffect();
-		}
+	} else if (mWaterFxTimer != 0) {
+		// When leaving the water, reset the water effect
+		mWaterFxTimer = 0;
+		finishWaterEffect();
 	}
 
-	if (isCreatureFlag(CF_Unk18)) {
+	if (isCreatureFlag(CF_DisableMovement)) {
 		return;
 	}
 
-	f32 stepTime = gsys->getFrameTime();
-	Vector3f vel(mVelocity);
+	// Apply movement in two passes - volatile (temporary) and normal velocity
+	f32 deltaTime = gsys->getFrameTime();
+	Vector3f originalVel(mVelocity);
 	mVelocity = mVolatileVelocity;
-	moveNew(stepTime);
+	moveNew(deltaTime);
 
-	if (mVolatileVelocity.length() > 0.0f && isCreatureFlag(CF_Unk22) && isCreatureFlag(CF_FixPosition) && mFloorTri
+	// Handle fixed position on non-slippery surfaces, with a slope < 60 degrees
+	if (mVolatileVelocity.length() > 0.0f && isCreatureFlag(CF_AllowFixPosition) && isCreatureFlag(CF_IsPositionFixed) && mFloorTri
 	    && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->mTriangleNormal.y > sinf(THIRD_PI)) {
 		mFixedPosition = mPosition;
 	}
 
-	mVelocity = vel;
-	moveNew(stepTime);
+	mVelocity = originalVel;
+	moveNew(deltaTime);
 
-	if (isCreatureFlag(CF_Unk22)) {
+	// Update the fixed position status
+	if (isCreatureFlag(CF_AllowFixPosition)) {
+		// If we're on the ground, it's not slippery, and the slope is < 60 degrees
 		if (mFloorTri && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->mTriangleNormal.y > sinf(THIRD_PI)) {
+
+			// If we're barely moving, just stay still
 			if (mTargetVelocity.length() < 0.01f) {
-				if (!isCreatureFlag(CF_FixPosition)) {
-					setCreatureFlag(CF_FixPosition);
+				if (!isCreatureFlag(CF_IsPositionFixed)) {
+					setCreatureFlag(CF_IsPositionFixed);
 					mFixedPosition = mPosition;
 				}
+
 			} else {
-				resetCreatureFlag(CF_FixPosition);
+				// We're moving too fast to stay fixed
+				resetCreatureFlag(CF_IsPositionFixed);
 			}
+
 		} else {
-			resetCreatureFlag(CF_FixPosition);
+			// Not on stable ground, so don't fix position (either slope or slippery triangle)
+			resetCreatureFlag(CF_IsPositionFixed);
 		}
 
-		if (isCreatureFlag(CF_FixPosition)) {
-			Vector3f fixedDir = mFixedPosition - mPosition;
-			f32 dist          = fixedDir.normalise();
-			if (!(dist < 30.0f)) {
-				dist = 0.0f;
+		// Pull creature back to fixed position if drifted
+		if (isCreatureFlag(CF_IsPositionFixed)) {
+			Vector3f pullDir = mFixedPosition - mPosition;
+			f32 driftDist    = pullDir.normalise();
+
+			// Only apply pull force if within 30 units
+			if (!(driftDist < 30.0f)) {
+				driftDist = 0.0f;
 			}
-			if (dist > 0.0f) {
-				vel       = (10.0f * dist) * fixedDir;
-				mVelocity = vel;
+
+			// Apply spring-like force back to fixed point
+			if (driftDist > 0.0f) {
+				// Stronger pull when further away
+				originalVel = (10.0f * driftDist) * pullDir;
+
+				mVelocity = originalVel;
 			}
 		}
 	}
 
 	mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
-	moveRotation(stepTime);
+	moveRotation(deltaTime);
 }
 
 /*

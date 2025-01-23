@@ -79,8 +79,8 @@ int ActStone::exec()
  */
 void ActStone::cleanup()
 {
-	mActor->resetCreatureFlag(CF_Unk22);
-	mActor->resetCreatureFlag(CF_FixPosition);
+	mActor->resetCreatureFlag(CF_AllowFixPosition);
+	mActor->resetCreatureFlag(CF_IsPositionFixed);
 	if (mRockGen) {
 		mRockGen->finishWork();
 	}
@@ -435,7 +435,7 @@ void ActStone::initAttack()
 	mState = STATE_Attack;
 	mActor->startMotion(PaniMotionInfo(19, this), PaniMotionInfo(19));
 	_28 = 0;
-	mActor->setCreatureFlag(CF_Unk22);
+	mActor->setCreatureFlag(CF_AllowFixPosition);
 }
 
 /*
@@ -446,8 +446,8 @@ void ActStone::initAttack()
 int ActStone::exeAttack()
 {
 	if (mCurrPebble->_0E == 0) {
-		mActor->resetCreatureFlag(CF_Unk22);
-		mActor->resetCreatureFlag(CF_FixPosition);
+		mActor->resetCreatureFlag(CF_AllowFixPosition);
+		mActor->resetCreatureFlag(CF_IsPositionFixed);
 
 		initApproach();
 		return ACTOUT_Continue;

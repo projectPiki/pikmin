@@ -317,7 +317,7 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void ActBridge::cleanup()
 {
-	mActor->resetCreatureFlag(CF_Unk18);
+	mActor->resetCreatureFlag(CF_DisableMovement);
 	mActor->resetCreatureFlag(CF_Unk8);
 }
 
@@ -944,7 +944,7 @@ void ActBridge::newInitWork()
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 	_4D = 0;
 	if (AIPerf::bridgeFast) {
-		mActor->setCreatureFlag(CF_Unk18);
+		mActor->setCreatureFlag(CF_DisableMovement);
 	}
 }
 
@@ -958,7 +958,7 @@ int ActBridge::newExeWork()
 	// If the bridge is finished, continue
 	if (mBridge->isStageFinished(mStageIdx)) {
 		newInitGo();
-		mActor->resetCreatureFlag(CF_Unk18);
+		mActor->resetCreatureFlag(CF_DisableMovement);
 		return ACTOUT_Continue;
 	}
 
@@ -969,19 +969,19 @@ int ActBridge::newExeWork()
 		mCollisionCount++;
 
 		if (mCollisionCount > 3) {
-			mActor->resetCreatureFlag(CF_Unk18);
+			mActor->resetCreatureFlag(CF_DisableMovement);
 		}
 
 		if (mCollisionCount > 15 && _4D) {
 			newInitApproach();
-			mActor->resetCreatureFlag(CF_Unk18);
+			mActor->resetCreatureFlag(CF_DisableMovement);
 			return ACTOUT_Continue;
 		}
 	}
 
 	if (!mBridge->workable(mActor->mPosition)) {
 		mActor->mEmotion = 1;
-		mActor->resetCreatureFlag(CF_Unk18);
+		mActor->resetCreatureFlag(CF_DisableMovement);
 		return ACTOUT_Fail;
 	}
 
