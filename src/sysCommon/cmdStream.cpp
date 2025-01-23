@@ -3,6 +3,7 @@
 #include "stl/mem.h"
 #include "stl/string.h"
 #include "sysNew.h"
+#include "DebugLog.h"
 
 u8* CmdStream::statbuff;
 
@@ -11,20 +12,14 @@ u8* CmdStream::statbuff;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("TODO: Replace")
 
 /**
  * @brief Initializes the CmdStream with the given Stream object.

@@ -32,7 +32,7 @@ GenObjInfo shpInfo[] = {
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR();
+DEFINE_ERROR()
 
 /*
  * --INFO--

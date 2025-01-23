@@ -1,5 +1,6 @@
 #include "Boss.h"
 #include "Dolphin/os.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
@@ -7,11 +8,7 @@
  * Size:	00009C
  */
 
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "BossAnimMgr");
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
@@ -19,10 +16,7 @@ static void _Error(char* fmt, ...)
  * Size:	0000F4
  */
 
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("BossAnimMgr") //! TODO: Why is the size not proper?
 
 /*
  * --INFO--

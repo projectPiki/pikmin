@@ -1,6 +1,7 @@
 #include "types.h"
 #include "CardUtil.h"
 #include "Dolphin/card.h"
+#include "DebugLog.h"
 
 CardUtilThread CardThread;
 CardUtilControl CardControl;
@@ -10,20 +11,14 @@ CardUtilControl CardControl;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("TODO: Replace")
 
 /*
  * --INFO--

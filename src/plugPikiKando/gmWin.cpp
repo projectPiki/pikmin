@@ -4,6 +4,7 @@
 #include "Matrix4f.h"
 #include "Vector.h"
 #include "Win.h"
+#include "DebugLog.h"
 
 static Texture* wintex;
 static Font* font;
@@ -13,20 +14,14 @@ static Font* font;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT(nullptr)
 
 /*
  * --INFO--

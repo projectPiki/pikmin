@@ -8,7 +8,7 @@
  * Address:	........
  * Size:	000098
  */
-DEFINE_ERROR();
+DEFINE_ERROR()
 
 /*
  * --INFO--
@@ -40,7 +40,7 @@ bool AtxStream::open(char* name, int port)
 
 	if (!router->openRoute(this, port)) {
 #ifdef DEBUG
-		_Error("Could not open route to server\n");
+		ERROR("Could not open route to server\n");
 #endif
 
 		gsys->setAtxRouter(nullptr);

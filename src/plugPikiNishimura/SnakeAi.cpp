@@ -23,7 +23,7 @@ static u32 snakeSE[] = {
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR();
+DEFINE_ERROR()
 
 /*
  * --INFO--

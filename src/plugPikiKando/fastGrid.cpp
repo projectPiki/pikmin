@@ -1,4 +1,5 @@
 #include "FastGrid.h"
+#include "DebugLog.h"
 
 u32 FastGrid::aiGridMap;
 u16 FastGrid::aiGridSize;
@@ -9,20 +10,14 @@ u16 FastGrid::aiGridShift = 12;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("TODO: Replace")
 
 /*
  * --INFO--

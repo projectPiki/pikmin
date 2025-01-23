@@ -1,4 +1,5 @@
 #include "PaniPikiAnimator.h"
+#include "DebugLog.h"
 
 PaniMotionTable* PaniPikiAnimMgr::motionTable;
 
@@ -7,20 +8,14 @@ PaniMotionTable* PaniPikiAnimMgr::motionTable;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("TODO: Replace")
 
 /*
  * --INFO--

@@ -1,29 +1,21 @@
 #include "TekiStrategy.h"
 #include "teki.h"
 #include "sysNew.h"
-
-static char file[] = __FILE__;
-static char name[] = "tekistrategy";
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("tekistrategy")
 
 /*
  * --INFO--

@@ -1,7 +1,7 @@
 #include "Event.h"
 #include "DebugLog.h"
 
-DEFINE_ERROR();
+DEFINE_ERROR()
 
 DEFINE_PRINT("eventListener");
 

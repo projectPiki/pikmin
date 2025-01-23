@@ -19,7 +19,7 @@ static u32 spiderSE[] = { SE_SPIDER_WALK, SE_SPIDER_LAND, SE_SPIDER_SWING, SE_SP
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR();
+DEFINE_ERROR()
 
 /*
  * --INFO--

@@ -1,5 +1,6 @@
 #include "AIConstant.h"
 #include "sysNew.h"
+#include "DebugLog.h"
 
 AIConstant* AIConstant::_instance;
 
@@ -8,20 +9,14 @@ AIConstant* AIConstant::_instance;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt);
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT(nullptr)
 
 /*
  * --INFO--

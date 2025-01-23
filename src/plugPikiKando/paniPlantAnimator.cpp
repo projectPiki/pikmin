@@ -1,26 +1,21 @@
 #include "PaniAnimator.h"
 #include "Dolphin/os.h"
 #include "sysNew.h"
+#include "DebugLog.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char* fmt, ...)
-{
-	OSPanic(__FILE__, __LINE__, fmt, "paniPlantAnimator");
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("paniPlantAnimator")
 
 char* PaniPlantAnimator::motionLabels[7] = {
 	"1", "2", "3", "4", "5", "6", "7",

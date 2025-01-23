@@ -8,6 +8,7 @@
 #include "sysNew.h"
 #include "Shape.h"
 #include "Piki.h"
+#include "DebugLog.h"
 
 int PlayerState::totalUfoParts = 30;
 
@@ -19,20 +20,14 @@ PlayerState* playerState;
  * Address:	........
  * Size:	00009C
  */
-static void _Error(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-static void _Print(char*, ...)
-{
-	// UNUSED FUNCTION
-}
+DEFINE_PRINT("TODO: Replace")
 
 /*
  * --INFO--
