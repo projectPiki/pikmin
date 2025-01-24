@@ -122,24 +122,6 @@ void SeedItem::doKill()
 	PRINT("seed is killed ?\n");
 	mStateId = 2;
 	itemMgr->kill(this);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x2
-	  stwu      r1, -0x8(r1)
-	  stw       r0, 0x2B8(r3)
-	  lwz       r3, 0x30AC(r13)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x7C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -195,16 +177,10 @@ void SeedItem::update()
  */
 void SeedItem::doAI()
 {
-	if (mStateId == 2) {
+	if (mStateId != 2 && !(mStateId == 2)) {
+		PRINT("idek man", _2E0);
 		return;
 	}
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2B8(r3)
-	  cmpwi     r0, 0x2
-	  beqlr-
-	  blr
-	*/
 }
 
 /*
@@ -223,126 +199,8 @@ void SeedItem::refresh(Graphics& gfx)
 		gfx.useMatrix(mtx, 0);
 		gfx.mCamera->setBoundOffset(&mPosition);
 		mapMgr->getLight(mPosition.x, mPosition.z);
-		gfx.setLighting(true, nullptr);
+		bool l = gfx.setLighting(true, nullptr);
 		mCurrentShape->drawshape(gfx, *gfx.mCamera, nullptr);
 		gfx.mCamera->setBoundOffset(nullptr);
 	}
-
-	f32 badcompiler[2];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stw       r31, 0x9C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x98(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x2B8(r3)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x120
-	  addi      r3, r30, 0x228
-	  addi      r4, r30, 0x7C
-	  addi      r5, r30, 0x88
-	  addi      r6, r30, 0x94
-	  bl        -0xB00E0
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r30, 0x228
-	  addi      r5, r1, 0x14
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x14
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r30, 0x94
-	  lwz       r4, 0x2E4(r31)
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x154(r4)
-	  lbz       r0, 0x154(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB0
-	  lwz       r3, 0x94(r30)
-	  lwz       r0, 0x98(r30)
-	  stw       r3, 0x158(r4)
-	  stw       r0, 0x15C(r4)
-	  lwz       r0, 0x9C(r30)
-	  stw       r0, 0x160(r4)
-
-	.loc_0xB0:
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x94(r30)
-	  lfs       f2, 0x9C(r30)
-	  bl        -0x864C0
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0x1
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E4(r30)
-	  mr        r4, r31
-	  lwz       r5, 0x2E4(r31)
-	  li        r6, 0
-	  bl        -0xBDE1C
-	  lwz       r4, 0x2E4(r31)
-	  li        r0, 0
-	  stb       r0, 0x154(r4)
-	  lbz       r0, 0x154(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x120
-	  lwz       r3, 0x0(r0)
-	  lwz       r0, 0x4(r0)
-	  stw       r3, 0x158(r4)
-	  stw       r0, 0x15C(r4)
-	  lwz       r0, 0x8(r0)
-	  stw       r0, 0x160(r4)
-
-	.loc_0x120:
-	  lwz       r0, 0xA4(r1)
-	  lwz       r31, 0x9C(r1)
-	  lwz       r30, 0x98(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800EE2D4
- * Size:	00003C
- */
-bool SeedItem::stimulate(Interaction& act)
-{
-	act.actCommon(this);
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	800EE310
- * Size:	000008
- */
-f32 SeedItem::getHeight()
-{
-	return 0.0f;
-}
-
-/*
- * --INFO--
- * Address:	800EE318
- * Size:	000008
- */
-f32 SeedItem::getiMass()
-{
-	return 100.0f;
 }

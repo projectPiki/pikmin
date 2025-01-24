@@ -577,7 +577,7 @@ config.libs = [
             Object(NonMatching, "plugPikiKando/pikiheadItem.cpp"),
             Object(NonMatching, "plugPikiKando/keyItem.cpp"),
             Object(Matching, "plugPikiKando/ropeItem.cpp"),
-            Object(NonMatching, "plugPikiKando/seedItem.cpp"),
+            Object(Matching, "plugPikiKando/seedItem.cpp"),
             Object(NonMatching, "plugPikiKando/genItem.cpp"),
             Object(NonMatching, "plugPikiKando/itemAI.cpp"),
             Object(NonMatching, "plugPikiKando/itemMgr.cpp"),
