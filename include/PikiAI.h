@@ -34,6 +34,7 @@ extern char* info[9];
 DEFINE_ENUM_TYPE(
 	PikiAction,
 
+	NOACTION = -1,  // -1
 	RandomBoid = 0, // 0
 	Watch,          // 1
 	Escape,         // 2
@@ -211,11 +212,11 @@ struct TopAction : public Action {
 		void addBoredom(int, f32);
 		void update();
 
-		u32* _00; // _00, unknown (pointer?)
-		u32* _04; // _04, unknown (pointer?)
-		u8* _08;  // _08, array of size _10, might be bools
-		u32 _0C;  // _0C, unknown
-		int mCnt; // _10, count of objects in _00, _04, _08 arrays
+		f32* _00;  // _00
+		int* _04;  // _04, ids?
+		bool* _08; // _08
+		u32 _0C;   // _0C, unknown
+		int mCnt;  // _10, count of objects in _00, _04, _08 arrays
 	};
 
 	/**
@@ -232,10 +233,10 @@ struct TopAction : public Action {
 		void draw2d(Graphics&, int);
 
 		ObjBore* mObjects; // _00, array of mObjectCnt objects
-		u32* _04;          // _04, unknown (pointer?)
-		u32 _08;           // _08, unknown
+		int* _04;          // _04
+		int _08;           // _08
 		int mObjectCnt;    // _0C, number of mObjects
-		u32 _10;           // _10, unknown
+		int _10;           // _10
 	};
 
 	TopAction(Piki*);
@@ -917,7 +918,8 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x34 - 0x18]; // _18, unknown
+	u8 _18;              // _18
+	u8 _19[0x34 - 0x19]; // _19, unknown
 };
 
 /**
