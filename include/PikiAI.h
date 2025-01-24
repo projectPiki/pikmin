@@ -129,7 +129,7 @@ struct Action : public Receiver<Piki> {
 	virtual bool resumable() { return false; }             // _5C (weak)
 	virtual void getInfo(char* out) { sprintf(out, "-"); } // _60 (weak)
 
-	void procMsg(Msg*); // this isn't overridden in the vtable but it exists, idk.
+	void procMsg(Msg*);
 	void setChildren(int, ...);
 
 	char* getName() { return mName; }
@@ -1519,6 +1519,8 @@ struct ActShootCreature : public Action, public PaniAnimKeyListener {
  */
 struct ActStone : public Action, public PaniAnimKeyListener {
 
+#define STONE_NECTAR_CHANCE (0.08f)
+
 	/**
 	 * @brief TODO
 	 */
@@ -1530,7 +1532,7 @@ struct ActStone : public Action, public PaniAnimKeyListener {
 
 	ActStone(Piki*);
 
-	virtual ~ActStone();                                 // _44
+	virtual ~ActStone() { }                              // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1547,7 +1549,7 @@ struct ActStone : public Action, public PaniAnimKeyListener {
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
 	u16 mState;          // _18
-	u8 _1A[0x20 - 0x1A]; // _18, unknown
+	u8 _1A[0x20 - 0x1A]; // _1A, unknown
 	Pebble* mCurrPebble; // _20, unknown
 	RockGen* mRockGen;   // _24
 	u8 _28;              // _28

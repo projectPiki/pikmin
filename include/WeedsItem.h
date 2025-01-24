@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "ItemMgr.h"
+#include "PikiAI.h"
 
 /*
  * @brief TODO
@@ -19,10 +20,24 @@ struct Grass {
 struct Pebble {
 	Pebble();
 
+	bool isAlive() { return mHealth != 0; }
+
+	int attack()
+	{
+		if (mHealth != 0) {
+			mHealth--;
+			if (mHealth == 0) {
+				return ACTOUT_Success;
+			}
+			return ACTOUT_Continue;
+		}
+		return ACTOUT_Fail;
+	}
+
 	// TODO: members
 	Vector3f mPosition; // _00
 	u8 _0C[0x2];        // _0C, unknown
-	u8 _0E;             // _0E
+	u8 mHealth;         // _0E
 };
 
 /**
