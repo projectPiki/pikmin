@@ -33,12 +33,12 @@ struct DoorItem : public ItemCreature {
 	virtual void startAI(int);               // _34
 	virtual f32 getiMass();                  // _38
 	virtual f32 getSize();                   // _3C
-	virtual f32 getHeight() { return 0.0f; } // _40
 	virtual bool isVisible();                // _74
 	virtual bool isAtari();                  // _84
-	virtual bool isAlive() { return true; }  // _88
 	virtual void update();                   // _E0
 	virtual void refresh(Graphics&);         // _EC
+	virtual bool isAlive() { return true; }  // _88
+	virtual f32 getHeight() { return 0.0f; } // _40
 
 	void disappear();
 

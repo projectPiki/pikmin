@@ -30,8 +30,8 @@ KeyItem::KeyItem(CreatureProp* props, Shape* model)
 	mModel = model;
 	_68    = 4;
 	mSearchBuffer.init(mSearch, 3);
-	resetCreatureFlag(0x200);
-	setCreatureFlag(1);
+	resetCreatureFlag(CF_Unk10);
+	setCreatureFlag(CF_Unk1);
 	mObjType = OBJTYPE_Key;
 	_2B8     = 2;
 }
@@ -142,107 +142,16 @@ f32 KeyItem::getiMass()
 void KeyItem::refresh(Graphics& gfx)
 {
 	Matrix4f mtx, mtx2;
-	Vector3f pos(mPosition.x, mPosition.y + 20.0f, mPosition.z);
 
-	mTransformMatrix.makeSRT(mScale, mRotation, pos);
+	mTransformMatrix.makeSRT(mScale, mRotation, Vector3f(mPosition.x, mPosition.y + 20.0f, mPosition.z));
 
 	gfx.calcViewMatrix(mTransformMatrix, mtx2);
 	gfx.useMatrix(mtx2, 0);
 	gfx.mCamera->setBoundOffset(&mPosition);
 	mapMgr->getLight(mPosition.x, mPosition.z);
-	gfx.setLighting(true, nullptr);
+	bool l = gfx.setLighting(true, nullptr);
 	mModel->drawshape(gfx, *gfx.mCamera, nullptr);
 	gfx.mCamera->setBoundOffset(nullptr);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA8(r1)
-	  stw       r31, 0xA4(r1)
-	  addi      r6, r1, 0x10
-	  mr        r31, r4
-	  stw       r30, 0xA0(r1)
-	  mr        r30, r3
-	  addi      r4, r30, 0x7C
-	  lfs       f2, -0x64F0(r2)
-	  addi      r5, r30, 0x88
-	  lfs       f1, 0x98(r3)
-	  lfs       f0, 0x94(r3)
-	  addi      r3, r30, 0x228
-	  fadds     f1, f2, f1
-	  stfs      f0, 0x10(r1)
-	  stfs      f1, 0x14(r1)
-	  lfs       f0, 0x9C(r30)
-	  stfs      f0, 0x18(r1)
-	  bl        -0xAF3E0
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r30, 0x228
-	  addi      r5, r1, 0x20
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x20
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r30, 0x94
-	  lwz       r4, 0x2E4(r31)
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x154(r4)
-	  lbz       r0, 0x154(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC4
-	  lwz       r3, 0x94(r30)
-	  lwz       r0, 0x98(r30)
-	  stw       r3, 0x158(r4)
-	  stw       r0, 0x15C(r4)
-	  lwz       r0, 0x9C(r30)
-	  stw       r0, 0x160(r4)
-
-	.loc_0xC4:
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x94(r30)
-	  lfs       f2, 0x9C(r30)
-	  bl        -0x857C0
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0x1
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E0(r30)
-	  mr        r4, r31
-	  lwz       r5, 0x2E4(r31)
-	  li        r6, 0
-	  bl        -0xBD11C
-	  lwz       r4, 0x2E4(r31)
-	  li        r0, 0
-	  stb       r0, 0x154(r4)
-	  lbz       r0, 0x154(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x134
-	  lwz       r3, 0x0(r0)
-	  lwz       r0, 0x4(r0)
-	  stw       r3, 0x158(r4)
-	  stw       r0, 0x15C(r4)
-	  lwz       r0, 0x8(r0)
-	  stw       r0, 0x160(r4)
-
-	.loc_0x134:
-	  lwz       r0, 0xAC(r1)
-	  lwz       r31, 0xA4(r1)
-	  lwz       r30, 0xA0(r1)
-	  addi      r1, r1, 0xA8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -250,8 +159,8 @@ void KeyItem::refresh(Graphics& gfx)
  * Address:	800ED5D4
  * Size:	000060
  */
-DoorItem::DoorItem(int p1, CreatureProp* props, Shape* shape)
-    : ItemCreature(p1, props, shape)
+DoorItem::DoorItem(int objType, CreatureProp* props, Shape* shape)
+    : ItemCreature(objType, props, shape)
 {
 	mStateId = 2;
 	_3C8     = 0.0f;
