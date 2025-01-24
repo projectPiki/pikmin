@@ -277,10 +277,10 @@ void BoBaseItem::refresh(Graphics& gfx)
 bool BoBaseItem::interactBuild(InteractBuild& build)
 {
 	if (mStickItem) {
-		mStickItem->mHealth += build.mProgressRate * 0.4f; // this needs fixing
+		mStickItem->mHealth = mStickItem->mHealth + build.mProgressRate * 0.4f; // this needs fixing
 		if (mStickItem->mHealth >= mStickItem->mMaxHealth) {
-			mHealth = mMaxHealth;
-			_824    = 0;
+			mStickItem->mHealth = mStickItem->mMaxHealth;
+			_824                = 0;
 			effectMgr->create(EffectMgr::EFF_Kusa_Extend2, mPosition, nullptr, nullptr);
 			playEventSound(this, SEB_WALL_DOWN);
 			_825 = 30;
@@ -297,85 +297,6 @@ bool BoBaseItem::interactBuild(InteractBuild& build)
 		return true;
 	}
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x820(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xF8
-	  lfs       f1, -0x6678(r2)
-	  lfs       f0, 0xC(r4)
-	  lfsu      f2, 0x58(r3)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x0(r3)
-	  lwz       r3, 0x820(r31)
-	  lfs       f1, 0x5C(r3)
-	  addi      r4, r3, 0x58
-	  lfs       f0, 0x58(r3)
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xB0
-	  stfs      f1, 0x0(r4)
-	  li        r0, 0
-	  addi      r5, r31, 0x94
-	  stb       r0, 0x824(r31)
-	  li        r4, 0xC7
-	  li        r6, 0
-	  lwz       r3, 0x3180(r13)
-	  li        r7, 0
-	  bl        0xB658C
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xAB
-	  bl        -0x5C008
-	  li        r0, 0x1E
-	  stb       r0, 0x825(r31)
-	  lwz       r4, 0x828(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xF0
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0xBAFE4
-	  b         .loc_0xF0
-
-	.loc_0xB0:
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xAD
-	  bl        -0x5C040
-	  li        r0, 0x1E
-	  stb       r0, 0x825(r31)
-	  lwz       r0, 0x828(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xF0
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x94
-	  li        r4, 0xC6
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xB6518
-	  stw       r3, 0x828(r31)
-
-	.loc_0xF0:
-	  li        r3, 0x1
-	  b         .loc_0xFC
-
-	.loc_0xF8:
-	  li        r3, 0
-
-	.loc_0xFC:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -386,34 +307,4 @@ bool BoBaseItem::interactBuild(InteractBuild& build)
 bool BoBaseItem::isAlive()
 {
 	return _824;
-}
-
-/*
- * --INFO--
- * Address:	800E6650
- * Size:	000008
- */
-bool BoBaseItem::isVisible()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	800E6658
- * Size:	000008
- */
-bool KusaItem::isVisible()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	800E6660
- * Size:	000008
- */
-bool KusaItem::isAlive()
-{
-	return true;
 }

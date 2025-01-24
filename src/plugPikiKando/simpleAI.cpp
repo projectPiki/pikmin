@@ -27,9 +27,9 @@ AICreature::AICreature(CreatureProp* props)
 	// this is all apparently the ctor of a struct
 	mCollidingCreature = 0;
 	_2C4.set(0.0f, 0.0f, 0.0f);
-	_2D0 = _2D4    = 0;
-	mCurrentState  = nullptr;
-	mCurrentHealth = 0.0f;
+	_2D0 = _2D4        = 0;
+	mCurrentState      = nullptr;
+	mCurrentItemHealth = 0.0f;
 
 	// then this is THIS ctor
 	mCurrentState  = nullptr; // hm.

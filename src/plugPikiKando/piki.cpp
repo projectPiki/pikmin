@@ -4151,7 +4151,7 @@ void Piki::realAI()
 			AICreature* aiC = static_cast<AICreature*>(held);
 			PRINT("---- aiContext ---\n");
 			PRINT(" creature=%x target=%x\n", aiC->mCollidingCreature, aiC->mTargetCreature);
-			PRINT(" int=%d int2=%d real=%f real1=%f real2=%f\n", aiC->_2D0, aiC->_2D4, aiC->mCurrentHealth, aiC->_2DC, aiC->mMaxHealth);
+			PRINT(" int=%d int2=%d real=%f real1=%f real2=%f\n", aiC->_2D0, aiC->_2D4, aiC->mCurrentItemHealth, aiC->_2DC, aiC->mMaxHealth);
 			PRINT("  currState=%x\n", aiC->mCurrentState);
 			PRINT("============================================\n");
 			dump();

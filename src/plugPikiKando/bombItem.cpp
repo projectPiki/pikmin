@@ -187,7 +187,7 @@ void BombItem::refresh2d(Graphics& gfx)
 	int state = getCurrState()->getID();
 
 	if (state == 2) {
-		mLifeGauge.updValue(mCurrentHealth, mMaxHealth);
+		mLifeGauge.updValue(mCurrentItemHealth, mMaxItemHealth);
 		mLifeGauge.mPosition = mPosition;
 		mLifeGauge.mScale    = 5000.0f / gfx.mCamera->mNear;
 		mLifeGauge.refresh(gfx);
