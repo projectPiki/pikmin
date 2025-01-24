@@ -379,7 +379,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Vector3f _274;                       // _274, this is actually a wrapper around a Vector3f in the DLL, but idk what yet.
 	DynCollObject* mCollPlatform;        // _280
 	Vector3f* mCollPlatNormal;           // _284
-	u32 _288;                            // _288, unknown
+	CollTriInfo* _288;                   // _288, something to do with climbing
 	CollTriInfo* mFloorTri;              // _28C
 	u32 _290;                            // _290, unknown
 	u8 _294[0x4];                        // _294, unknown

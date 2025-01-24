@@ -132,10 +132,9 @@ struct Action : public Receiver<Piki> {
 	void procMsg(Msg*);
 	void setChildren(int, ...);
 
+	// only DLL inlines:
 	char* getName() { return mName; }
-
-	// ONLY DLL inlines to do:
-	void setName(char*);
+	void setName(char* name) { mName = name; }
 
 	// _00 = VTBL
 	Child* mChildActions; // _04, array of mChildCount Children
@@ -152,7 +151,7 @@ struct AndAction : public Action {
 	AndAction(Piki* piki)
 	    : Action(piki, true)
 	{
-		mOtherCreature = nullptr; // this might be an argument in the ctor, who knows
+		mOtherCreature = nullptr;
 	}
 
 	virtual ~AndAction() { }      // _44 (weak)
@@ -332,7 +331,7 @@ struct ActAdjust : public Action {
 struct ActAttack : public AndAction, public PaniAnimKeyListener {
 	ActAttack(Piki*);
 
-	virtual ~ActAttack();                                // _44
+	virtual ~ActAttack() { }                             // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -347,18 +346,18 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
 	Creature* decideTarget();
 	void startLost();
 
-	inline Creature* getTarget() { return _24; } // name is a guess
+	// inline Creature* getTarget() { return _24; } // name is a guess
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
 	// _18     = PaniAnimKeyListener
-	u8 _1C;        // _1C
-	u8 _1D;        // _1D
-	u8 _1E;        // _1E
-	u8 _1F;        // _1F
-	u32 _20;       // _20, unknown
-	Creature* _24; // _24
-	Creature* _28; // _28
+	u8 _1C;                 // _1C
+	u8 _1D;                 // _1D
+	u8 _1E;                 // _1E
+	u8 _1F;                 // _1F
+	Traversable* _20;       // _20, idk what this is but it's something inheriting from this
+	SmartPtr<Creature> _24; // _24
+	Creature* _28;          // _28
 };
 
 /**
@@ -1054,7 +1053,7 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 	virtual void procBounceMsg(Piki*, MsgBounce*);       // _0C
 	virtual void procStickMsg(Piki*, MsgStick*);         // _10
 	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
-	virtual ~ActJumpAttack();                            // _44
+	virtual ~ActJumpAttack() { }                         // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1067,18 +1066,16 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 	Vector3f getAttackPos();
 	f32 getAttackSize();
 
-	inline Creature* getTarget() { return _24; } // name is a guess
-
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	int _18;             // _18
-	u8 _1C[0x20 - 0x1C]; // _1C, unknown
-	int _20;             // _20
-	Creature* _24;       // _24
-	CollPart* _28;       // _28
-	u8 _2C;              // _2C
-	u8 _2D;              // _2D
+	int _18;                // _18
+	u8 _1C[0x20 - 0x1C];    // _1C, unknown
+	int _20;                // _20
+	SmartPtr<Creature> _24; // _24
+	CollPart* _28;          // _28
+	u8 _2C;                 // _2C
+	u8 _2D;                 // _2D
 };
 
 /**
@@ -1184,8 +1181,8 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	Creature* mObject; // _18, thing to be picked up
-	u8 _1C;            // _1C
+	SmartPtr<Creature> mObject; // _18, thing to be picked up
+	u8 _1C;                     // _1C
 };
 
 /**

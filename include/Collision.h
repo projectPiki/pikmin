@@ -139,21 +139,17 @@ struct CollPart {
 	void makeCylinder(struct Cylinder&);
 	bool samePlatShape(Shape*);
 
-	bool isTubeType() { return mPartType == PART_Tube || mPartType == PART_TubeChild; } // based on P2, maybe isTubeLike? who knows
-
+	bool isTubeType() { return mPartType == PART_Tube || mPartType == PART_TubeChild; }
 	bool isPlatformType() { return mPartType == PART_Platform; }
+	bool isCollisionType() { return mPartType == PART_Collision; }
 
 	Matrix4f getJointMatrix() { return mJointMatrix; }
 
 	/*
 	    DLL inlines to make:
 	    bool isBouncySphereType();
-	    bool isCollisionType();
-	    bool isPlatformType();
 	    bool isReferenceType();
 	    bool isSphereType();
-
-	    Matrix4f getJointMatrix();
 	*/
 
 	f32 mRadius;                   // _00

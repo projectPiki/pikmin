@@ -7,6 +7,8 @@
 #include "PikiState.h"
 #include "AIConstant.h"
 #include "sysNew.h"
+#include "zen/Math.h"
+#include "CourseDebug.h"
 #include "Dolphin/os.h"
 #include "DebugLog.h"
 
@@ -22,7 +24,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("aiAttack")
 
 /*
  * --INFO--
@@ -32,10 +34,9 @@ DEFINE_PRINT("TODO: Replace")
 ActAttack::ActAttack(Piki* piki)
     : AndAction(piki)
 {
-	_24   = 0;
-	mName = "attack";
+	setName("attack");
 	setChildren(1, new ActJumpAttack(piki), nullptr);
-	_24 = 0;
+	_24.clear();
 	_1F = 0;
 }
 
@@ -46,16 +47,18 @@ ActAttack::ActAttack(Piki* piki)
  */
 void ActAttack::init(Creature* creature)
 {
-	u32 badCompiler;
-	if (playerState->mInDayEnd) {
+	if (playerState->inDayEnd()) {
+		PRINT("DAY END ATTACK!\n");
+		ERROR("day end attack!\n");
 		return;
 	}
 
 	mActor->_408     = 0;
 	mActor->mEmotion = 5;
-	mActor->getState(); // some debug thing probably
+	mActor->getState(); // this is also just like this in the DLL lol
 
 	if (!creature) {
+		PRINT("commander is 0 karl gotti!!!!!!!!!!1\n"); // lol
 		_28 = nullptr;
 		_20 = 0;
 		_1F = 0;
@@ -70,15 +73,10 @@ void ActAttack::init(Creature* creature)
 	}
 
 	if (creature) {
-		if (_24) {
-			resetCreature(_24);
-		}
-		_24 = creature;
-		postSetCreature(_24);
+		_24.set(creature);
 
 		AndAction::init(creature);
-		if (creature->mObjType == OBJTYPE_Teki && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk9)
-		    && static_cast<Teki*>(creature)->mTekiType == TEKI_Palm) {
+		if (creature->isTeki() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk9) && static_cast<Teki*>(creature)->mTekiType == TEKI_Palm) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk9);
 		}
 	}
@@ -95,7 +93,9 @@ void ActAttack::init(Creature* creature)
  */
 void ActAttack::startLost()
 {
-	// UNUSED FUNCTION
+	_1C = 1;
+	_1D = 0;
+	mActor->startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, this), PaniMotionInfo(PIKIANIM_Sagasu2));
 }
 
 /*
@@ -112,7 +112,7 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 		break;
 	case KEY_PlayEffect:
-		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 1 || mActor->mOptUpdateContext.updatable())) {
+		if (mActor->aiCullable() && (AIPerf::optLevel <= 1 || mActor->mOptUpdateContext.updatable())) {
 			Vector3f vec(mActor->mEffectPos);
 			if (_1E) {
 				effectMgr->create(EffectMgr::EFF_Piki_BigHit, vec, nullptr, nullptr);
@@ -123,7 +123,6 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 		break;
 	}
-	u32 badCompiler; // sigh
 }
 
 /*
@@ -143,9 +142,9 @@ void ActAttack::resume()
  */
 void ActAttack::restart()
 {
-	if (_24) {
+	if (!_24.isNull()) {
 		seMgr->leaveBattle();
-		init(getTarget());
+		init(_24.getPtr());
 	}
 }
 
@@ -164,12 +163,26 @@ bool ActAttack::resumable()
  * Address:	800A86C8
  * Size:	000008
  */
-#pragma dont_inline on
 Creature* ActAttack::findTarget()
 {
+	// yep.
+	if (false) {
+		Iterator iter(tekiMgr);
+		CI_LOOP(iter)
+		{
+			Creature* teki = *iter;
+			if (roughCull(teki, mActor, 30.0f)) {
+				continue;
+			}
+			// i'm bad at reading the DLL assembly, but it's genuinely something like this
+			// (IDA and ghidra both don't try it bc it's inaccessible)
+			if (qdist2(teki, mActor) < 50.0f && teki->isAlive() && teki->isVisible() && !teki->isBuried() && !teki->isFlying()) {
+				return teki;
+			}
+		}
+	}
 	return nullptr;
 }
-#pragma dont_inline reset
 
 /*
  * --INFO--
@@ -178,7 +191,25 @@ Creature* ActAttack::findTarget()
  */
 Creature* ActAttack::decideTarget()
 {
-	// UNUSED FUNCTION
+	f32 minDist = 12800.0f;
+	Creature* targetList[100];
+	Iterator iter(_20);
+	int count = 0;
+	CI_LOOP(iter)
+	{
+		if ((*iter)->isAlive() && (*iter)->isVisible()) {
+			if (qdist2(*iter, mActor) < 1.0f) {
+				return *iter;
+			}
+			targetList[count++] = *iter;
+		}
+	}
+
+	if (count != 0) {
+		return targetList[int(System::getRand(1.0f)) * count];
+	}
+
+	return nullptr;
 }
 
 /*
@@ -188,7 +219,7 @@ Creature* ActAttack::decideTarget()
  */
 int ActAttack::exec()
 {
-	if (playerState->mInDayEnd) {
+	if (playerState->inDayEnd()) {
 		return ACTOUT_Success;
 	}
 
@@ -201,56 +232,63 @@ int ActAttack::exec()
 		return ACTOUT_Continue;
 	}
 
-	if (!_24) {
+	if (_24.isNull()) {
 		Creature* target = findTarget();
 		if (target) {
 			seMgr->leaveBattle();
 			init(target);
+			PRINT("... found new target!\n");
 			return ACTOUT_Continue;
 		}
 
 		return ACTOUT_Success;
 	}
 
-	if (!_24->isAlive()) {
-		if (mActor->mStickTarget) {
+	if (!_24.getPtr()->isAlive()) {
+		if (mActor->isStickTo()) {
 			mActor->endStickObject();
 		}
 		return ACTOUT_Success;
 	}
 
-	if (_24->mObjType == OBJTYPE_Piki) {
-		Piki* targetPiki = static_cast<Piki*>(_24);
+	if (_24.getPtr()->isPiki()) {
+		Piki* targetPiki = static_cast<Piki*>(_24.getPtr());
 		if (!targetPiki->isKinoko() || (targetPiki->isKinoko() && targetPiki->getState() == PIKISTATE_KinokoChange)) {
 			mActor->mEmotion = 7;
 			return ACTOUT_Success;
 		}
 	}
 
-	if (!mActor->mStickTarget && (_24->isCreatureFlag(CF_IsFlying) || !_24->isVisible())) {
+	if (!mActor->isStickTo() && (_24.getPtr()->isFlying() || !_24.getPtr()->isVisible())) {
+		PRINT("target start flying\n");
+
 		Creature* target = findTarget();
 		if (target) {
 			init(target);
+			PRINT("... found new target!\n");
 			return ACTOUT_Continue;
 		}
-		_1C = 1;
-		_1D = 0;
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, this), PaniMotionInfo(PIKIANIM_Sagasu2));
+		PRINT("TARGET LOST !!\n");
+		startLost();
 		return ACTOUT_Continue;
 	}
 
 	int andRet = AndAction::exec();
 	if (andRet != ACTOUT_Continue) {
 		if (_1F) {
-			if (findTarget() && andRet == ACTOUT_Success) {
+			Creature* target = findTarget();
+			PRINT("piki attack : res is %s\n", (andRet == 2) ? "success" : (andRet == 1) ? "failed" : "not");
+			if (target && andRet == ACTOUT_Success) {
 				seMgr->leaveBattle();
 				init(_28);
 				return ACTOUT_Success;
 			}
+
+			PRINT("all targets are removed !\n");
 			return ACTOUT_Success;
 		}
 
-		Creature* target = _24;
+		Creature* target = _24.getPtr();
 		if (AIConstant::_instance->mConstants._C4() == 0) {
 			if (target->isAlive()) {
 				seMgr->leaveBattle();
@@ -258,265 +296,21 @@ int ActAttack::exec()
 				return ACTOUT_Continue;
 			}
 
+			PRINT("genocide start ?\n"); // lol?
 			target = findTarget();
 			if (target) {
 				seMgr->leaveBattle();
 				init(target);
+				PRINT("... found new target!\n");
 				return ACTOUT_Continue;
 			}
 		}
+
+		PRINT("once is done : %x\n", mActor);
 		return ACTOUT_Success;
 	}
 
 	return andRet;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x58(r1)
-	  stw       r29, 0x54(r1)
-	  lwz       r4, 0x2F6C(r13)
-	  lbz       r0, 0x1B5(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  li        r3, 0x2
-	  b         .loc_0x320
-
-	.loc_0x34:
-	  lbz       r0, 0x1C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x78
-	  lwz       r3, 0xC(r31)
-	  lfs       f0, -0x5000(r13)
-	  stfsu     f0, 0xA4(r3)
-	  lfs       f0, -0x4FFC(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x4FF8(r13)
-	  stfs      f0, 0x8(r3)
-	  lbz       r0, 0x1D(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x70
-	  li        r3, 0x2
-	  b         .loc_0x320
-
-	.loc_0x70:
-	  li        r3, 0
-	  b         .loc_0x320
-
-	.loc_0x78:
-	  lwz       r3, 0x24(r31)
-	  cmplwi    r3, 0
-	  bne-      .loc_0xC4
-	  mr        r3, r31
-	  bl        -0x90
-	  mr.       r29, r3
-	  beq-      .loc_0xBC
-	  lwz       r3, 0x3030(r13)
-	  bl        -0x5150
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r29
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  b         .loc_0x320
-
-	.loc_0xBC:
-	  li        r3, 0x2
-	  b         .loc_0x320
-
-	.loc_0xC4:
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xF8
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0x184(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xF0
-	  bl        -0x17F44
-
-	.loc_0xF0:
-	  li        r3, 0x2
-	  b         .loc_0x320
-
-	.loc_0xF8:
-	  lwz       r3, 0x24(r31)
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x164
-	  mr        r29, r3
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x150
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x164
-	  mr        r3, r29
-	  bl        0x1FD40
-	  cmpwi     r3, 0x1D
-	  bne-      .loc_0x164
-
-	.loc_0x150:
-	  lwz       r4, 0xC(r31)
-	  li        r0, 0x7
-	  li        r3, 0x2
-	  stb       r0, 0x400(r4)
-	  b         .loc_0x320
-
-	.loc_0x164:
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0x184(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x220
-	  lwz       r3, 0x24(r31)
-	  lwz       r0, 0xC8(r3)
-	  rlwinm.   r0,r0,0,25,25
-	  bne-      .loc_0x19C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x220
-
-	.loc_0x19C:
-	  mr        r3, r31
-	  bl        -0x1A8
-	  mr.       r4, r3
-	  beq-      .loc_0x1C8
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  b         .loc_0x320
-
-	.loc_0x1C8:
-	  li        r0, 0x1
-	  stb       r0, 0x1C(r31)
-	  li        r0, 0
-	  cmplwi    r31, 0
-	  stb       r0, 0x1D(r31)
-	  mr        r29, r31
-	  beq-      .loc_0x1E8
-	  addi      r29, r29, 0x18
-
-	.loc_0x1E8:
-	  addi      r3, r1, 0x34
-	  li        r4, 0x41
-	  bl        0x76698
-	  addi      r30, r3, 0
-	  addi      r5, r29, 0
-	  addi      r3, r1, 0x2C
-	  li        r4, 0x41
-	  bl        0x766B8
-	  mr        r4, r3
-	  lwz       r3, 0xC(r31)
-	  mr        r5, r30
-	  bl        0x220F4
-	  li        r3, 0
-	  b         .loc_0x320
-
-	.loc_0x220:
-	  mr        r3, r31
-	  bl        0x1B700
-	  mr.       r29, r3
-	  beq-      .loc_0x31C
-	  lbz       r0, 0x1F(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x284
-	  mr        r3, r31
-	  bl        -0x248
-	  cmplwi    r3, 0
-	  beq-      .loc_0x27C
-	  cmpwi     r29, 0x2
-	  bne-      .loc_0x27C
-	  lwz       r3, 0x3030(r13)
-	  bl        -0x5310
-	  mr        r3, r31
-	  lwz       r4, 0x28(r31)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x2
-	  b         .loc_0x320
-
-	.loc_0x27C:
-	  li        r3, 0x2
-	  b         .loc_0x320
-
-	.loc_0x284:
-	  lwz       r3, 0x2F80(r13)
-	  lwz       r29, 0x24(r31)
-	  lwz       r0, 0xD0(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x314
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2DC
-	  lwz       r3, 0x3030(r13)
-	  bl        -0x5370
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r29
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  b         .loc_0x320
-
-	.loc_0x2DC:
-	  mr        r3, r31
-	  bl        -0x2E8
-	  mr.       r29, r3
-	  beq-      .loc_0x314
-	  lwz       r3, 0x3030(r13)
-	  bl        -0x53A8
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r29
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  b         .loc_0x320
-
-	.loc_0x314:
-	  li        r3, 0x2
-	  b         .loc_0x320
-
-	.loc_0x31C:
-	  mr        r3, r29
-
-	.loc_0x320:
-	  lwz       r0, 0x64(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  lwz       r29, 0x54(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -529,7 +323,7 @@ void ActAttack::cleanup()
 	mActor->endClimb();
 	seMgr->leaveBattle();
 	mActor->endStickObject();
-	resetCreature(_24);
+	_24.reset();
 	mActor->_519 = 0;
 }
 
@@ -540,9 +334,8 @@ void ActAttack::cleanup()
  */
 ActJumpAttack::ActJumpAttack(Piki* piki)
     : Action(piki, true)
-    , _24(nullptr)
 {
-	_24 = nullptr; // lol
+	_24.clear(); // lol
 }
 
 /*
@@ -552,21 +345,15 @@ ActJumpAttack::ActJumpAttack(Piki* piki)
  */
 void ActJumpAttack::init(Creature* creature)
 {
-	u32 badCompiler; // hmm.
-	u32 badCompiler2;
-
 	mActor->_408     = 0;
 	mActor->mEmotion = 5;
 	if (creature) {
-		if (_24) {
-			resetCreature(_24);
-		}
-		_24 = creature;
-		postSetCreature(_24);
+		_24.set(creature);
 	}
 	_18 = 0;
 	_2C = 0;
-	if (mActor->mStickTarget) {
+	if (mActor->isStickTo()) {
+		PRINT("jump attack : piki sticks to %s\n", mActor->mStickPart ? mActor->mStickPart->mCollInfo->mId.mStringID : "?");
 		if (mActor->mStickPart && mActor->mStickPart->isClimbable()) {
 			mActor->startClimb();
 			_18 = 6;
@@ -582,143 +369,6 @@ void ActJumpAttack::init(Creature* creature)
 	}
 
 	_28 = creature->getNearestCollPart(mActor->mPosition, '*t**');
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x5
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  mr.       r31, r4
-	  stw       r30, 0x50(r1)
-	  mr        r30, r3
-	  stw       r29, 0x4C(r1)
-	  li        r29, 0
-	  stw       r28, 0x48(r1)
-	  lwz       r3, 0xC(r3)
-	  stb       r29, 0x408(r3)
-	  lwz       r3, 0xC(r30)
-	  stb       r0, 0x400(r3)
-	  beq-      .loc_0x6C
-	  lwz       r3, 0x24(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x58
-	  beq-      .loc_0x58
-	  bl        0x3B84C
-	  stw       r29, 0x24(r30)
-
-	.loc_0x58:
-	  stw       r31, 0x24(r30)
-	  lwz       r3, 0x24(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x6C
-	  bl        0x3B824
-
-	.loc_0x6C:
-	  li        r0, 0
-	  stw       r0, 0x18(r30)
-	  stb       r0, 0x2C(r30)
-	  lwz       r3, 0xC(r30)
-	  lwz       r0, 0x184(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x150
-	  lwz       r3, 0x188(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xF4
-	  bl        -0x20E80
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xF4
-	  lwz       r3, 0xC(r30)
-	  bl        -0x18C9C
-	  li        r0, 0x6
-	  cmplwi    r30, 0
-	  stw       r0, 0x18(r30)
-	  mr        r28, r30
-	  beq-      .loc_0xC0
-	  addi      r28, r28, 0x14
-
-	.loc_0xC0:
-	  addi      r3, r1, 0x38
-	  li        r4, 0x3F
-	  bl        0x763C0
-	  addi      r29, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x40
-	  li        r4, 0x3F
-	  bl        0x763E0
-	  mr        r4, r3
-	  lwz       r3, 0xC(r30)
-	  mr        r5, r29
-	  bl        0x21E1C
-	  b         .loc_0x144
-
-	.loc_0xF4:
-	  li        r0, 0x5
-	  stw       r0, 0x18(r30)
-	  li        r0, 0
-	  cmplwi    r30, 0
-	  stb       r0, 0x2D(r30)
-	  mr        r28, r30
-	  beq-      .loc_0x114
-	  addi      r28, r28, 0x14
-
-	.loc_0x114:
-	  addi      r3, r1, 0x28
-	  li        r4, 0x30
-	  bl        0x7636C
-	  addi      r29, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x30
-	  li        r4, 0x30
-	  bl        0x7638C
-	  mr        r4, r3
-	  lwz       r3, 0xC(r30)
-	  mr        r5, r29
-	  bl        0x21DC8
-
-	.loc_0x144:
-	  li        r0, 0
-	  stw       r0, 0x20(r30)
-	  b         .loc_0x190
-
-	.loc_0x150:
-	  cmplwi    r30, 0
-	  addi      r28, r30, 0
-	  beq-      .loc_0x160
-	  addi      r28, r28, 0x14
-
-	.loc_0x160:
-	  addi      r3, r1, 0x18
-	  li        r4, 0
-	  bl        0x76320
-	  addi      r29, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x20
-	  li        r4, 0
-	  bl        0x76340
-	  mr        r4, r3
-	  lwz       r3, 0xC(r30)
-	  mr        r5, r29
-	  bl        0x21D7C
-
-	.loc_0x190:
-	  lwz       r4, 0xC(r30)
-	  lis       r5, 0x2A74
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x94
-	  addi      r5, r5, 0x2A2A
-	  bl        -0x1E918
-	  stw       r3, 0x28(r30)
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  lwz       r28, 0x48(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -728,7 +378,10 @@ void ActJumpAttack::init(Creature* creature)
  */
 Vector3f ActJumpAttack::getAttackPos()
 {
-	// UNUSED FUNCTION
+	if (_28) {
+		return _28->mCentre;
+	}
+	return _24.getPtr()->getCentre();
 }
 
 /*
@@ -738,7 +391,10 @@ Vector3f ActJumpAttack::getAttackPos()
  */
 f32 ActJumpAttack::getAttackSize()
 {
-	// UNUSED FUNCTION
+	if (_28) {
+		return _28->mRadius;
+	}
+	return _24.getPtr()->getCentreSize();
 }
 
 /*
@@ -777,16 +433,16 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	// this definitely has inlines somewhere, the control flow is so wacky.
 
-	if (!_24 || !_24->isAlive() || piki->getState() == PIKISTATE_LookAt) {
+	if (!_24.getPtr() || !_24.getPtr()->isAlive() || piki->getState() == PIKISTATE_LookAt) {
 		return;
 	}
 
-	if (_24->mObjType == OBJTYPE_Piki && !static_cast<Piki*>(_24)->isKinoko()) {
+	if (_24.getPtr()->mObjType == OBJTYPE_Piki && !static_cast<Piki*>(_24.getPtr())->isKinoko()) {
 		_2C = 1;
 		return;
 	}
 
-	if (msg->mEvent.mCollider != _24) {
+	if (msg->mEvent.mCollider != _24.getPtr()) {
 		return;
 	}
 
@@ -794,32 +450,43 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 		return;
 	}
 
-	if (piki->mStickTarget != nullptr) {
+	if (piki->isStickTo()) {
 		return;
 	}
+
+	PRINT("JUMP STICK ###\n");
 
 	if (msg->mEvent.mColliderPart == 0) {
+		PRINT("ざまし! ta no coll part\n"); // 'alarm clock! ta no coll part'
 		return;
 	}
 
-	if (msg->mEvent.mColliderPart->mPartType == PART_Platform) {
+	if (msg->mEvent.mColliderPart->isPlatformType()) {
 		if (msg->mEvent.mColliderPart->isStickable()) {
+			PRINT("stick to platform\n");
 			piki->startStick(msg->mEvent.mCollider, msg->mEvent.mColliderPart);
 		} else {
-			if (!msg->mEvent.mColliderPart->isClimbable()) {
+			if (msg->mEvent.mColliderPart->isClimbable()) {
+				PRINT("start climb platform\n");
+				piki->startStick(msg->mEvent.mCollider, msg->mEvent.mColliderPart);
+			} else {
+				PRINT("stickable nor climbable platform\n");
 				return;
 			}
-			piki->startStick(msg->mEvent.mCollider, msg->mEvent.mColliderPart);
 		}
 	} else {
-		if (msg->mEvent.mColliderPart->mPartType == PART_Collision || msg->mEvent.mColliderPart->isTubeType()) {
+		if (msg->mEvent.mColliderPart->isCollisionType() || msg->mEvent.mColliderPart->isTubeType()) {
 			if (msg->mEvent.mColliderPart->isStickable()) {
+				PRINT(" stick to 球 or チューブ\n"); // 'stick to ball or tube'
 				piki->startStickObject(msg->mEvent.mCollider, msg->mEvent.mColliderPart, -1, 0.0f);
 			} else {
+				PRINT("try to stick to coll-sphere (%s:code %s): ", msg->mEvent.mColliderPart->mCollInfo->mId.mStringID,
+				      msg->mEvent.mColliderPart->mCollInfo->mCode.mStringID);
 				return;
 			}
+		} else {
+			return;
 		}
-		return;
 	}
 
 	_18 = 5;
@@ -834,187 +501,8 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 
 	_20                = 0;
 	piki->mWantToStick = 0;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x58(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x54(r1)
-	  mr        r29, r3
-	  stw       r28, 0x50(r1)
-	  lwz       r3, 0x24(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x248
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x248
-	  mr        r3, r30
-	  bl        0x1F7B0
-	  cmpwi     r3, 0x1A
-	  bne-      .loc_0x60
-	  b         .loc_0x248
 
-	.loc_0x60:
-	  lwz       r3, 0x24(r29)
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x94
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x94
-	  li        r0, 0x1
-	  stb       r0, 0x2C(r29)
-	  b         .loc_0x248
-
-	.loc_0x94:
-	  lwz       r3, 0x4(r31)
-	  lwz       r0, 0x24(r29)
-	  cmplw     r3, r0
-	  bne-      .loc_0x248
-	  lwz       r0, 0x18(r29)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x248
-	  lwz       r0, 0x184(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x248
-	  lwz       r3, 0x8(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x248
-	  lbz       r4, 0x5C(r3)
-	  cmplwi    r4, 0x3
-	  bne-      .loc_0x11C
-	  bl        -0x21268
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xF4
-	  lwz       r4, 0x4(r31)
-	  mr        r3, r30
-	  lwz       r5, 0x8(r31)
-	  bl        -0x1855C
-	  b         .loc_0x174
-
-	.loc_0xF4:
-	  lwz       r3, 0x8(r31)
-	  bl        -0x21168
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x248
-	  lwz       r4, 0x4(r31)
-	  mr        r3, r30
-	  lwz       r5, 0x8(r31)
-	  bl        -0x18580
-	  b         .loc_0x174
-	  b         .loc_0x248
-
-	.loc_0x11C:
-	  cmplwi    r4, 0
-	  beq-      .loc_0x144
-	  cmplwi    r4, 0x5
-	  li        r0, 0x1
-	  beq-      .loc_0x13C
-	  cmplwi    r4, 0x6
-	  beq-      .loc_0x13C
-	  li        r0, 0
-
-	.loc_0x13C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x248
-
-	.loc_0x144:
-	  bl        -0x212D8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x248
-	  lwz       r4, 0x4(r31)
-	  mr        r3, r30
-	  lwz       r5, 0x8(r31)
-	  li        r6, -0x1
-	  lfs       f1, -0x7168(r2)
-	  bl        -0x18800
-	  b         .loc_0x174
-	  b         .loc_0x248
-	  b         .loc_0x248
-
-	.loc_0x174:
-	  li        r0, 0x5
-	  stw       r0, 0x18(r29)
-	  lwz       r3, 0x8(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1F4
-	  lbz       r0, 0x5C(r3)
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x1F4
-	  bl        -0x21204
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1F4
-	  mr        r3, r30
-	  bl        -0x19020
-	  cmplwi    r29, 0
-	  addi      r28, r29, 0
-	  beq-      .loc_0x1B8
-	  addi      r28, r28, 0x14
-
-	.loc_0x1B8:
-	  addi      r3, r1, 0x38
-	  li        r4, 0x3F
-	  bl        0x76044
-	  addi      r31, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x40
-	  li        r4, 0x3F
-	  bl        0x76064
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0
-	  bl        0x21AA0
-	  li        r0, 0x6
-	  stw       r0, 0x18(r29)
-	  b         .loc_0x23C
-
-	.loc_0x1F4:
-	  li        r0, 0
-	  cmplwi    r29, 0
-	  stb       r0, 0x2D(r29)
-	  mr        r28, r29
-	  beq-      .loc_0x20C
-	  addi      r28, r28, 0x14
-
-	.loc_0x20C:
-	  addi      r3, r1, 0x28
-	  li        r4, 0x30
-	  bl        0x75FF0
-	  addi      r31, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x30
-	  li        r4, 0x30
-	  bl        0x76010
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0
-	  bl        0x21A4C
-
-	.loc_0x23C:
-	  li        r0, 0
-	  stw       r0, 0x20(r29)
-	  stb       r0, 0x470(r30)
-
-	.loc_0x248:
-	  lwz       r0, 0x64(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  lwz       r29, 0x54(r1)
-	  lwz       r28, 0x50(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler[2];
 }
 
 /*
@@ -1024,6 +512,223 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
  */
 int ActJumpAttack::exec()
 {
+	Creature* target = _24.getPtr();
+	if (!target || !target->isVisible() || !target->isAlive()) {
+		if (mActor->isStickTo()) {
+			mActor->endStickObject();
+		}
+		return ACTOUT_Success;
+	}
+
+	if (target->mObjType == OBJTYPE_Piki) {
+		Piki* targPiki = static_cast<Piki*>(target);
+		if (!targPiki->isKinoko()) {
+			return ACTOUT_Success;
+		}
+	}
+
+	if (mActor->isStickTo() && mActor->getStickObject() && !mActor->getStickObject()->isAlive()) {
+		return ACTOUT_Success;
+	}
+
+	switch (_18) {
+	case 6:
+		doClimb();
+		break;
+	case 2: {
+		Vector3f direction = getAttackPos() - mActor->mPosition;
+		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
+		direction.normalise();
+		f32 angle = angDist(atan2f(direction.x, direction.z), mActor->mDirection);
+
+		f32 size = getAttackSize() + mActor->getCentreSize();
+		if (dist2D < size) {
+			mActor->setSpeed(0.5f, direction);
+			mActor->mTargetVelocity = mActor->mTargetVelocity * -1.0f;
+			break;
+		}
+
+		if (dist2D > size + 6.0f) {
+			mActor->setSpeed(0.5f, direction);
+			break;
+		}
+
+		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		if (angle < PI / 10.0f) {
+			f32 vertSpeed = 200.0f;
+			mActor->mVelocity.set(100.0f * direction.x, vertSpeed, 100.0f * direction.z);
+			mActor->startMotion(PaniMotionInfo(PIKIANIM_StillJump, this), PaniMotionInfo(PIKIANIM_StillJump));
+			_18                  = 1;
+			mActor->mWantToStick = 1;
+			PRINT("jump !\n");
+			break;
+		}
+
+		mActor->mDirection = roundAng(mActor->mDirection + 0.2f * angle);
+
+	} break;
+
+	case 0: {
+		Vector3f direction = getAttackPos() - mActor->mPosition;
+		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
+		f32 dist3D         = direction.normalise();
+		f32 angle          = zen::Abs(angDist(atan2f(direction.x, direction.z), mActor->mDirection));
+		if ((!_2C || (_2C && _28 && !_28->isStickable())) && angle < PI / 10.0f
+		    && dist3D < getAttackSize() + mActor->getCentreSize() + 10.0f) {
+			if (!mActor->isStickTo()) {
+				_2D = 0;
+				mActor->startMotion(PaniMotionInfo(PIKIANIM_Attack, this), PaniMotionInfo(PIKIANIM_Attack));
+				mActor->playEventSound(target, SE_PIKI_ATTACK_VOICE);
+				_20 = 0;
+				_18 = 4;
+				mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+			}
+		} else if ((!_28 || _28->isStickable()) && _2C && System::getRand(1.0f) > 0.9f) {
+			_18 = 2;
+		} else {
+			if (dist2D < getAttackSize() + mActor->getCentreSize() && System::getRand(1.0f) > 0.7f) {
+				PRINT("jump adjust : dist2d = %.1f d = %.1f\n", dist2D, dist3D);
+				_18 = 2;
+			}
+
+			mActor->mDirection = roundAng(mActor->mDirection + 0.2f * angle);
+			mActor->setSpeed(1.0f, direction);
+		}
+
+		if (mActor->isStickTo() && !mActor->mFloorTri) {
+			_18 = 5;
+			PRINT("start ATTACK(KUTTUKU)!\n");
+			_2D = 0;
+			mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+			mActor->playEventSound(target, SE_PIKI_ATTACK_VOICE);
+			_20 = 0;
+		}
+
+	} break;
+
+	case 4: {
+		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		if (mActor->isStickTo() && !mActor->mFloorTri) {
+			_18 = 5;
+			_2D = 0;
+			mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+			mActor->playEventSound(target, SE_PIKI_ATTACK_VOICE);
+			_20 = 0;
+			break;
+		}
+
+		if (_20 == 1) {
+			Vector3f direction = getAttackPos() - mActor->mPosition;
+			f32 angle          = angDist(atan2f(direction.x, direction.z), mActor->mDirection);
+			f32 sep            = direction.length();
+			f32 dist           = sep - getAttackSize() - mActor->getCentreSize();
+			if (dist < 10.0f && zen::Abs(angle) < PI / 4.0f && (target->isBoss() || target->isTeki()) && target->isAlive()
+			    && target->isVisible()) {
+				f32 damage = mActor->getAttackPower();
+				if (CourseDebug::pikiNoAttack) {
+					damage = 0.001f;
+				}
+
+				InteractAttack attack(mActor, nullptr, damage, false);
+				if (target->stimulate(attack)) {
+					PRINT("ATTACK SUCCESS\n");
+					attackHit();
+					_20 = 2;
+					break;
+				}
+				_2D = 1;
+				break;
+			}
+
+			if (dist < 10.0f && target->mObjType == OBJTYPE_Piki) {
+				Piki* targPiki = static_cast<Piki*>(target);
+				if (targPiki->isTeki(mActor) && targPiki->isAlive() && targPiki->isVisible() && !targPiki->isDamaged()) {
+					f32 damage = mActor->getAttackPower();
+					if (CourseDebug::pikiNoAttack) {
+						damage = 0.001f;
+					}
+
+					InteractAttack attack(mActor, nullptr, damage, false);
+					if (target->stimulate(attack)) {
+						PRINT("ATTACK SUCCESS\n");
+						attackHit();
+						_20 = 2;
+						break;
+					}
+					_2D = 1;
+					break;
+				}
+				break;
+			}
+			_2D = 1;
+			break;
+		}
+		if (_20 == 4) {
+			return ACTOUT_Success;
+		}
+	} break;
+	case 5: {
+		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
+		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		if (_20 == 1) {
+			if (mActor->isStickTo()) {
+				Creature* stickObj = mActor->getStickObject();
+				if ((stickObj->isBoss() || stickObj->isTeki()) && stickObj->isAlive() && stickObj->isVisible()) {
+					f32 damage = mActor->getAttackPower();
+					if (CourseDebug::pikiNoAttack) {
+						damage = 0.001f;
+					}
+
+					InteractAttack attack(mActor, mActor->getStickPart(), damage, false);
+					if (stickObj->stimulate(attack)) {
+						PRINT("ATTACK SUCCESS\n");
+						if (stickObj->isFlying()) {
+							PRINT("飛んでいるやつに攻撃！！！\n"); // 'Attack the flying thing!!!' HAHA
+						}
+
+						attackHit();
+						_20 = 2;
+					} else {
+						_2D = 1;
+					}
+				}
+
+				if (stickObj->mObjType == OBJTYPE_Piki) {
+					Piki* stickPiki = static_cast<Piki*>(stickObj);
+					if (stickPiki->isTeki(mActor) && stickPiki->isAlive() && stickPiki->isVisible()) {
+						f32 damage = mActor->getAttackPower();
+						if (CourseDebug::pikiNoAttack) {
+							damage = 0.001f;
+						}
+
+						InteractAttack attack(mActor, mActor->getStickPart(), damage, false);
+						if (stickObj->stimulate(attack)) {
+							PRINT("ATTACK SUCCESS\n");
+
+							attackHit();
+							_20 = 2;
+						} else {
+							_2D = 1;
+						}
+					}
+				}
+			}
+		} else if (_20 == 4) {
+			return ACTOUT_Success;
+		}
+
+		if (!mActor->isStickTo()) {
+			PRINT("jump attack : finish stick\n");
+			mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
+			_18 = 0;
+			return ACTOUT_Continue;
+		}
+	} break;
+	}
+
+	return ACTOUT_Continue;
+
+	u32 badCompiler[5];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2073,7 +1778,7 @@ int ActJumpAttack::exec()
  */
 void ActJumpAttack::cleanup()
 {
-	resetCreature(_24);
+	_24.reset();
 	mActor->mWantToStick = 0;
 }
 
@@ -2084,7 +1789,7 @@ void ActJumpAttack::cleanup()
  */
 void ActJumpAttack::attackHit()
 {
-	mActor->playEventSound(getTarget(), 25);
+	mActor->playEventSound(_24.getPtr(), 25);
 }
 
 /*
@@ -2108,7 +1813,7 @@ void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		_20 = 4;
 		break;
 	case KEY_PlayEffect:
-		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 1 || mActor->mOptUpdateContext.updatable())) {
+		if (mActor->aiCullable() && (AIPerf::optLevel <= 1 || mActor->mOptUpdateContext.updatable())) {
 			Vector3f vec(mActor->mEffectPos);
 			if (_2D) {
 				effectMgr->create(EffectMgr::EFF_Piki_BigHit, vec, nullptr, nullptr);
@@ -2119,102 +1824,6 @@ void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 		break;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x34
-	  cmpwi     r0, 0
-	  beq-      .loc_0x58
-	  bge-      .loc_0x40
-	  b         .loc_0x118
-
-	.loc_0x34:
-	  cmpwi     r0, 0x8
-	  beq-      .loc_0x78
-	  b         .loc_0x118
-
-	.loc_0x40:
-	  li        r0, 0x1
-	  stw       r0, 0x20(r31)
-	  b         .loc_0x118
-
-	.loc_0x4C:
-	  li        r0, 0
-	  stw       r0, 0x20(r31)
-	  b         .loc_0x118
-
-	.loc_0x58:
-	  lwz       r0, 0x18(r31)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x6C
-	  li        r0, 0
-	  stw       r0, 0x18(r31)
-
-	.loc_0x6C:
-	  li        r0, 0x4
-	  stw       r0, 0x20(r31)
-	  b         .loc_0x118
-
-	.loc_0x78:
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0xC8(r3)
-	  rlwinm.   r0,r0,0,12,12
-	  bne-      .loc_0x118
-	  lwz       r0, -0x5F04(r13)
-	  cmpwi     r0, 0x1
-	  ble-      .loc_0xA4
-	  addi      r3, r3, 0x174
-	  bl        -0x4AE0
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x118
-
-	.loc_0xA4:
-	  lwz       r3, 0xC(r31)
-	  lfsu      f0, 0x464(r3)
-	  stfs      f0, 0x18(r1)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x20(r1)
-	  lbz       r0, 0x2D(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xE8
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x18
-	  li        r4, 0x45
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xF2BB8
-	  b         .loc_0x118
-
-	.loc_0xE8:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x18
-	  li        r4, 0x2F
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xF2B9C
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x18
-	  li        r4, 0x30
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xF2B84
-
-	.loc_0x118:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -2224,393 +1833,58 @@ void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void ActJumpAttack::doClimb()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xF0(r1)
-	  stfd      f31, 0xE8(r1)
-	  stfd      f30, 0xE0(r1)
-	  stfd      f29, 0xD8(r1)
-	  stw       r31, 0xD4(r1)
-	  mr        r31, r3
-	  stw       r30, 0xD0(r1)
-	  stw       r29, 0xCC(r1)
-	  stw       r28, 0xC8(r1)
-	  lwz       r30, 0x24(r3)
-	  cmplwi    r30, 0
-	  beq-      .loc_0x1D4
-	  lwz       r3, 0x220(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1D4
-	  bl        -0x204C0
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1D4
-	  lis       r4, 0x6365
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r4, 0x6E74
-	  bl        -0x20918
-	  mr.       r30, r3
-	  beq-      .loc_0x1D4
-	  lwz       r3, 0xC(r31)
-	  lfs       f3, 0x8(r30)
-	  addi      r3, r3, 0x94
-	  lfs       f1, 0x4(r30)
-	  lfs       f2, 0x4(r3)
-	  lfs       f0, 0x0(r3)
-	  fsubs     f4, f3, f2
-	  lfs       f2, 0xC(r30)
-	  fsubs     f5, f1, f0
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, -0x7168(r2)
-	  fsubs     f3, f2, f1
-	  fmuls     f2, f5, f5
-	  fmuls     f1, f4, f4
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f31, f3, f1
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x10C
-	  fsqrte    f1, f31
-	  lfd       f3, -0x7128(r2)
-	  lfd       f2, -0x7120(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f31, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f31, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f31, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f31, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x48(r1)
-	  lfs       f31, 0x48(r1)
+	Creature* target = _24.getPtr();
+	if (target && target->mCollInfo && target->mCollInfo->hasInfo()) {
+		CollPart* part = target->mCollInfo->getSphere('cent');
+		if (part) {
+			Vector3f dir = part->mCentre - mActor->mPosition;
+			f32 sep      = dir.length();
+			f32 dist     = sep - part->mRadius - mActor->getCentreSize();
+			PRINT("  :: climb target distance = %.1f\n", dist);
+			if (dist < 5.0f) {
+				_18 = 5;
+				_2D = 0;
+				mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+				mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
+				mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+				_20 = 0;
+				mActor->endClimb();
+				return;
+			}
+		}
+	}
 
-	.loc_0x10C:
-	  lwz       r3, 0xC(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f2, 0x0(r30)
-	  lfs       f0, -0x7110(r2)
-	  fsubs     f2, f31, f2
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x1D4
-	  li        r0, 0x5
-	  stw       r0, 0x18(r31)
-	  li        r0, 0
-	  cmplwi    r31, 0
-	  stb       r0, 0x2D(r31)
-	  mr        r29, r31
-	  beq-      .loc_0x158
-	  addi      r29, r29, 0x14
+	PRINT("climbing ...\n");
+	if (!mActor->_288) {
+		_18 = 0;
+		mActor->endClimb();
+		return;
+	}
 
-	.loc_0x158:
-	  addi      r3, r1, 0x74
-	  li        r4, 0x30
-	  bl        0x74E2C
-	  addi      r30, r3, 0
-	  addi      r5, r29, 0
-	  addi      r3, r1, 0x7C
-	  li        r4, 0x30
-	  bl        0x74E4C
-	  mr        r4, r3
-	  lwz       r3, 0xC(r31)
-	  mr        r5, r30
-	  bl        0x20888
-	  lwz       r3, 0xC(r31)
-	  li        r0, 0
-	  lfs       f0, -0x4FB4(r13)
-	  stfsu     f0, 0x70(r3)
-	  lfs       f0, -0x4FB0(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x4FAC(r13)
-	  stfs      f0, 0x8(r3)
-	  lwz       r3, 0xC(r31)
-	  lfs       f0, -0x4FA8(r13)
-	  stfsu     f0, 0xA4(r3)
-	  lfs       f0, -0x4FA4(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x4FA0(r13)
-	  stfs      f0, 0x8(r3)
-	  stw       r0, 0x20(r31)
-	  lwz       r3, 0xC(r31)
-	  bl        -0x1A258
-	  b         .loc_0x42C
+	bool check = true;
+	for (int i = 0; i < 3; i++) {
+		if (mActor->_288->_28[i].dist(mActor->mPosition) < -2.0f * mActor->getCentreSize()) {
+			PRINT("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mActor->_288->_28[i].dist(mActor->mPosition),
+			      -2.0f * mActor->getCentreSize());
+			check = false;
+		}
+	}
 
-	.loc_0x1D4:
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0x288(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1F8
-	  li        r0, 0
-	  stw       r0, 0x18(r31)
-	  lwz       r3, 0xC(r31)
-	  bl        -0x1A27C
-	  b         .loc_0x42C
+	if (!check) {
+		mActor->endStick();
+		_18 = 0;
+		PRINT("finish stick :: out of tri\n");
+		return;
+	}
 
-	.loc_0x1F8:
-	  lfs       f31, -0x710C(r2)
-	  li        r30, 0x1
-	  li        r28, 0
-	  li        r29, 0
-
-	.loc_0x208:
-	  lwz       r3, 0xC(r31)
-	  addi      r4, r29, 0x28
-	  lwz       r0, 0x288(r3)
-	  lwz       r12, 0x0(r3)
-	  add       r4, r0, r4
-	  lfs       f2, 0x94(r3)
-	  lfs       f3, 0x0(r4)
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0x98(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x8(r4)
-	  fmuls     f1, f1, f0
-	  lfs       f0, 0x9C(r3)
-	  lwz       r12, 0x5C(r12)
-	  fmuls     f3, f3, f0
-	  lfs       f0, 0xC(r4)
-	  fadds     f1, f2, f1
-	  mtlr      r12
-	  fadds     f1, f3, f1
-	  fsubs     f30, f1, f0
-	  blrl
-	  fmuls     f0, f31, f1
-	  fcmpo     cr0, f30, f0
-	  bge-      .loc_0x280
-	  lwz       r3, 0xC(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r30, 0
-
-	.loc_0x280:
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x3
-	  addi      r29, r29, 0x10
-	  blt+      .loc_0x208
-	  rlwinm.   r0,r30,0,24,31
-	  bne-      .loc_0x2AC
-	  lwz       r3, 0xC(r31)
-	  bl        -0x1988C
-	  li        r0, 0
-	  stw       r0, 0x18(r31)
-	  b         .loc_0x42C
-
-	.loc_0x2AC:
-	  lfs       f1, -0x4F9C(r13)
-	  lfs       f0, -0x4F98(r13)
-	  stfs      f1, 0xA8(r1)
-	  stfs      f0, 0xAC(r1)
-	  lfs       f0, -0x4F94(r13)
-	  stfs      f0, 0xB0(r1)
-	  lfs       f0, -0x7168(r2)
-	  stfs      f0, 0xA4(r1)
-	  stfs      f0, 0xA0(r1)
-	  lwz       r3, 0xC(r31)
-	  lwz       r3, 0x284(r3)
-	  lfs       f30, 0x0(r3)
-	  lfs       f31, 0x4(r3)
-	  fmuls     f1, f30, f30
-	  lfs       f29, 0x8(r3)
-	  fmuls     f0, f31, f31
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x9C684
-	  lfs       f0, -0x7168(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x314
-	  fdivs     f30, f30, f1
-	  fdivs     f31, f31, f1
-	  fdivs     f29, f29, f1
-
-	.loc_0x314:
-	  lfs       f1, 0xA8(r1)
-	  addi      r6, r1, 0x3C
-	  lfs       f0, 0xAC(r1)
-	  addi      r5, r1, 0x38
-	  fmuls     f1, f1, f30
-	  fmuls     f0, f0, f31
-	  lfs       f2, 0xB0(r1)
-	  addi      r4, r1, 0x34
-	  fmuls     f2, f2, f29
-	  fadds     f0, f1, f0
-	  addi      r3, r1, 0x68
-	  fadds     f0, f2, f0
-	  fmuls     f2, f29, f0
-	  fmuls     f1, f31, f0
-	  fmuls     f0, f30, f0
-	  stfs      f2, 0x3C(r1)
-	  stfs      f1, 0x38(r1)
-	  stfs      f0, 0x34(r1)
-	  bl        -0x7320C
-	  lwz       r0, 0xA8(r1)
-	  lwz       r3, 0xAC(r1)
-	  stw       r0, 0x9C(r1)
-	  lwz       r0, 0xB0(r1)
-	  stw       r3, 0xA0(r1)
-	  stw       r0, 0xA4(r1)
-	  lfs       f1, 0x9C(r1)
-	  lfs       f0, 0xA0(r1)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0xA4(r1)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x9C724
-	  lfs       f0, -0x7168(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x3CC
-	  lfs       f0, 0x9C(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x9C(r1)
-	  lfs       f0, 0xA0(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xA0(r1)
-	  lfs       f0, 0xA4(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xA4(r1)
-
-	.loc_0x3CC:
-	  lfs       f4, -0x4F90(r13)
-	  lfs       f0, 0x9C(r1)
-	  lfs       f1, 0xA0(r1)
-	  lfs       f2, 0xA4(r1)
-	  fmuls     f0, f0, f4
-	  fmuls     f3, f1, f4
-	  fmuls     f1, f2, f4
-	  stfs      f0, 0x9C(r1)
-	  stfs      f3, 0xA0(r1)
-	  stfs      f1, 0xA4(r1)
-	  lwz       r4, 0xC(r31)
-	  lwz       r3, 0x9C(r1)
-	  lwz       r0, 0xA0(r1)
-	  stw       r3, 0xA4(r4)
-	  stw       r0, 0xA8(r4)
-	  lwz       r0, 0xA4(r1)
-	  stw       r0, 0xAC(r4)
-	  lwz       r4, 0xC(r31)
-	  lwz       r3, 0x9C(r1)
-	  lwz       r0, 0xA0(r1)
-	  stw       r3, 0x70(r4)
-	  stw       r0, 0x74(r4)
-	  lwz       r0, 0xA4(r1)
-	  stw       r0, 0x78(r4)
-
-	.loc_0x42C:
-	  lwz       r0, 0xF4(r1)
-	  lfd       f31, 0xE8(r1)
-	  lfd       f30, 0xE0(r1)
-	  lfd       f29, 0xD8(r1)
-	  lwz       r31, 0xD4(r1)
-	  lwz       r30, 0xD0(r1)
-	  lwz       r29, 0xCC(r1)
-	  lwz       r28, 0xC8(r1)
-	  addi      r1, r1, 0xF0
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AA424
- * Size:	00006C
- */
-ActJumpAttack::~ActJumpAttack()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x50
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x5424
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x64
-	  addi      r3, r30, 0
-	  stw       r0, 0x14(r30)
-	  li        r4, 0
-	  bl        0x199A8
-	  extsh.    r0, r31
-	  ble-      .loc_0x50
-	  mr        r3, r30
-	  bl        -0x632C4
-
-	.loc_0x50:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800AA490
- * Size:	00007C
- */
-ActAttack::~ActAttack()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x60
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x54E8
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x64
-	  stw       r0, 0x18(r30)
-	  beq-      .loc_0x50
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x7ED0
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x1992C
-
-	.loc_0x50:
-	  extsh.    r0, r31
-	  ble-      .loc_0x60
-	  mr        r3, r30
-	  bl        -0x63340
-
-	.loc_0x60:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f normal(0.0f, 1.0f, 0.0f);
+	Vector3f sep;
+	Vector3f cpNorm(*mActor->mCollPlatNormal);
+	cpNorm.normalise();
+	cpNorm = normal - (normal.DP(cpNorm) * cpNorm); // this is completely unused lol.
+	sep    = normal;
+	sep.normalise();
+	sep                     = sep * 20.0f;
+	mActor->mTargetVelocity = sep;
+	mActor->mVelocity       = sep;
 }

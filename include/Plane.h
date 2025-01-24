@@ -20,6 +20,8 @@ struct Plane {
 	void bounceVector(Vector3f&, f32);
 	void frictionVector(Vector3f&, f32);
 
+	f32 dist(Vector3f& point) { return mNormal.DP(point) - mOffset; }
+
 	Vector3f mNormal; // _00
 	f32 mOffset;      // _0C
 };
