@@ -4560,7 +4560,7 @@ void GameCoreSection::update()
 	zen::pGameInfo->_06 = GameStat::mapPikis;
 	zen::pGameInfo->_08 = GameStat::formationPikis;
 	Node::update();
-	
+
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -25,13 +25,13 @@ struct CreatureNode : public CoreNode {
  * @brief TODO.
  */
 struct CreatureNodeMgr : public ObjectMgr {
-	virtual Creature* getCreature(int); // _08
-	virtual int getFirst();             // _0C
-	virtual int getNext(int);           // _10
-	virtual bool isDone(int);           // _14
-	virtual ~CreatureNodeMgr() { }      // _48
-	virtual int getSize();              // _60
-	virtual int getMax();               // _64
+	virtual Creature* getCreature(int);      // _08
+	virtual int getFirst();                  // _0C
+	virtual int getNext(int);                // _10
+	virtual bool isDone(int);                // _14
+	virtual ~CreatureNodeMgr() { }           // _48
+	virtual int getSize();                   // _60
+	virtual int getMax() { return 0x10000; } // _64
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2

@@ -102,20 +102,20 @@ struct PolyObjectMgr : public ObjectMgr {
 		int mClassId;
 	};
 
-	virtual Creature* getCreature(int);           // _08
-	virtual int getFirst();                       // _0C
-	virtual int getNext(int);                     // _10
-	virtual bool isDone(int);                     // _14
-	virtual ~PolyObjectMgr();                     // _48
-	virtual void update();                        // _4C
-	virtual void postUpdate(int, f32);            // _50
-	virtual void refresh(Graphics&);              // _58
-	virtual void drawShadow(Graphics&, Texture*); // _5C
-	virtual int getSize();                        // _60
-	virtual int getMax();                         // _64
-	virtual void search(ObjectMgr*);              // _70
-	virtual Creature* birth(int);                 // _78
-	virtual void kill(Creature*);                 // _7C
+	virtual Creature* getCreature(int);              // _08
+	virtual int getFirst();                          // _0C
+	virtual int getNext(int);                        // _10
+	virtual bool isDone(int);                        // _14
+	virtual ~PolyObjectMgr() { }                     // _48
+	virtual void update();                           // _4C
+	virtual void postUpdate(int, f32);               // _50
+	virtual void refresh(Graphics&);                 // _58
+	virtual void drawShadow(Graphics&, Texture*);    // _5C
+	virtual int getSize() { return mActiveObjects; } // _60
+	virtual int getMax() { return mPoolCapacity; }   // _64
+	virtual void search(ObjectMgr*);                 // _70
+	virtual Creature* birth(int);                    // _78
+	virtual void kill(Creature*);                    // _7C
 
 	void create(int);
 	void beginRegister();
