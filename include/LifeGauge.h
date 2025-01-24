@@ -30,10 +30,17 @@ struct GaugeInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 _14;             // _14, unknown
-	u8 _18[0x10];        // _18, unknown
-	Vector3f _28;        // _28
-	u8 _34[0x48 - 0x34]; // _34, unknown
+	u32 _14;      // _14
+	u32 _18;      // _18
+	u32 _1C;      // _1C
+	u32 _20;      // _20
+	int _24;      // _24
+	Vector3f _28; // _28
+	f32 _34;      // _34
+	f32 _38;      // _38
+	f32 _3C;      // _3C
+	f32 _40;      // _40
+	f32 _44;      // _44
 };
 
 /**

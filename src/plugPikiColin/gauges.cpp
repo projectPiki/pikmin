@@ -1,7 +1,9 @@
 #include "LifeGauge.h"
 #include "Colour.h"
 #include "sysNew.h"
+#include "system.h"
 #include "Light.h"
+#include "gameflow.h"
 #include "DebugLog.h"
 
 static Colour lgborder;
@@ -33,7 +35,12 @@ DEFINE_PRINT(nullptr)
  */
 void GaugeInfo::init()
 {
-	// UNUSED FUNCTION
+	_18 = 0;
+	_34 = 0;
+	_3C = 0;
+	_38 = 0;
+	PRINT("gauge init\n");
+	_24 = 0;
 }
 
 /*
@@ -43,271 +50,69 @@ void GaugeInfo::init()
  */
 void GaugeInfo::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stfd      f31, 0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x18(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0xE4
-	  bge-      .loc_0x34
-	  cmpwi     r0, 0
-	  bge-      .loc_0x40
-	  b         .loc_0x138
+	switch (_18) {
+	case 0: {
+		_34 += gsys->getFrameTime() * 2.0f;
 
-	.loc_0x34:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x138
-	  b         .loc_0xFC
+		if (_34 >= HALF_PI) {
+			_18 = 1;
+		}
 
-	.loc_0x40:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x79FC(r2)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0x34(r31)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x34(r31)
-	  lfs       f1, 0x34(r31)
-	  lfs       f0, -0x79F8(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x78
-	  li        r0, 0x1
-	  stw       r0, 0x18(r31)
+		f32 rotation = _34 < HALF_PI ? _34 : HALF_PI;
 
-	.loc_0x78:
-	  lfs       f1, 0x34(r31)
-	  lfs       f0, -0x79F8(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x8C
-	  b         .loc_0x90
+		_3C = sinf(rotation) * 255.0f;
+		_38 = sinf(rotation) * 30.0f;
+		_40 = sinf(rotation) * 8.0f;
+		_44 = sinf(rotation) * 8.0f;
+		break;
+	}
 
-	.loc_0x8C:
-	  fmr       f1, f0
+	case 1:
+		if (_24) {
+			_18 = 2;
+		}
+		break;
 
-	.loc_0x90:
-	  fmr       f31, f1
-	  bl        0x1C04D4
-	  lfs       f0, -0x79F4(r2)
-	  fmuls     f0, f0, f1
-	  fmr       f1, f31
-	  stfs      f0, 0x3C(r31)
-	  bl        0x1C04C0
-	  lfs       f0, -0x79F0(r2)
-	  fmuls     f0, f0, f1
-	  fmr       f1, f31
-	  stfs      f0, 0x38(r31)
-	  bl        0x1C04AC
-	  lfs       f0, -0x79EC(r2)
-	  fmuls     f0, f0, f1
-	  fmr       f1, f31
-	  stfs      f0, 0x40(r31)
-	  bl        0x1C0498
-	  lfs       f0, -0x79EC(r2)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x44(r31)
-	  b         .loc_0x138
-
-	.loc_0xE4:
-	  lwz       r0, 0x24(r31)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x138
-	  li        r0, 0x2
-	  stw       r0, 0x18(r31)
-	  b         .loc_0x138
-
-	.loc_0xFC:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x79E8(r2)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0x3C(r31)
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x3C(r31)
-	  lfs       f1, 0x3C(r31)
-	  lfs       f0, -0x7A00(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x138
-	  stfs      f0, 0x3C(r31)
-	  mr        r4, r31
-	  lwz       r3, 0x2EAC(r13)
-	  bl        0x688
-
-	.loc_0x138:
-	  lwz       r0, 0x3C(r1)
-	  lfd       f31, 0x30(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	case 2:
+		_3C -= gsys->getFrameTime() * 1200.0f;
+		if (_3C < 0.0f) {
+			_3C = 0.0f;
+			lgMgr->removeLG(this);
+		}
+	}
 }
 
 /*
  * --INFO--
- * Address:	8005B8D0
+ * Address:	8005B8D0, 100377F0 in DLL
  * Size:	000210
  */
-void GaugeInfo::showDigits(Vector3f, Colour&, int, f32, f32)
+void GaugeInfo::showDigits(Vector3f position, Colour& colour, int number, f32 width, f32 height)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r6, 0x63
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xC0(r1)
-	  stfd      f31, 0xB8(r1)
-	  fmr       f31, f2
-	  stfd      f30, 0xB0(r1)
-	  fmr       f30, f1
-	  stfd      f29, 0xA8(r1)
-	  stfd      f28, 0xA0(r1)
-	  stfd      f27, 0x98(r1)
-	  stfd      f26, 0x90(r1)
-	  stfd      f25, 0x88(r1)
-	  stmw      r22, 0x60(r1)
-	  addi      r22, r4, 0
-	  addi      r23, r5, 0
-	  ble-      .loc_0x48
-	  li        r6, 0x63
+	if (number > 99) {
+		number = 99;
+	}
 
-	.loc_0x48:
-	  cmpwi     r6, 0xA
-	  addi      r25, r6, 0
-	  blt-      .loc_0x5C
-	  li        r28, 0x2
-	  b         .loc_0x60
+	int num = number;
 
-	.loc_0x5C:
-	  li        r28, 0x1
+	// Either 1 or 2 digits (0-99)
+	int numDigits = num >= 10 ? 2 : 1;
 
-	.loc_0x60:
-	  cmpwi     r28, 0x2
-	  bne-      .loc_0x84
-	  lfs       f0, -0x79E0(r2)
-	  lfs       f1, -0x79E4(r2)
-	  fmuls     f0, f0, f30
-	  lfs       f2, 0x0(r22)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x0(r22)
+	// If 2 digits, move the position to the left
+	if (numDigits == 2) {
+		position.x += width * 0.5f * 1.5f;
+	}
 
-	.loc_0x84:
-	  lfs       f0, -0x79E0(r2)
-	  lis       r3, 0x6666
-	  lfs       f28, -0x7A00(r2)
-	  addi      r30, r3, 0x6667
-	  fmuls     f25, f0, f30
-	  lfs       f29, -0x79DC(r2)
-	  addi      r27, r1, 0x28
-	  lfd       f26, -0x79D0(r2)
-	  addi      r26, r1, 0x30
-	  lfs       f27, -0x79D8(r2)
-	  li        r24, 0
-	  lis       r31, 0x4330
-	  b         .loc_0x1D8
+	for (int i = 0; i < numDigits; i++) {
+		f32 divisor = 1 / 11.0f;
+		f32 uvStart = (num % 10) * divisor;
+		f32 uvEnd   = ((num % 10) + 1.0f) * divisor;
 
-	.loc_0xB8:
-	  mulhw     r0, r30, r25
-	  stfs      f30, 0x38(r1)
-	  lfs       f2, -0x700C(r13)
-	  lfs       f0, -0x7010(r13)
-	  stfs      f31, 0x3C(r1)
-	  srawi     r0, r0, 0x2
-	  lwz       r4, 0x2EAC(r13)
-	  rlwinm    r5,r0,1,31,31
-	  lwz       r3, 0x2DEC(r13)
-	  add       r0, r0, r5
-	  mulli     r0, r0, 0xA
-	  sub       r0, r25, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x5C(r1)
-	  stw       r31, 0x58(r1)
-	  stw       r0, 0x54(r1)
-	  lfd       f1, 0x58(r1)
-	  stw       r31, 0x50(r1)
-	  fsubs     f3, f1, f26
-	  lfd       f1, 0x50(r1)
-	  fadds     f3, f29, f3
-	  fsubs     f1, f1, f26
-	  fmuls     f3, f3, f27
-	  fmuls     f1, f1, f27
-	  stfs      f3, 0x28(r1)
-	  stfs      f1, 0x30(r1)
-	  stfs      f2, 0x2C(r1)
-	  stfs      f0, 0x34(r1)
-	  lwz       r29, 0x90(r4)
-	  bl        -0x1BF88
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1B8
-	  lwz       r0, 0x0(r23)
-	  cmplwi    r26, 0
-	  stw       r0, 0x0(r3)
-	  lwz       r4, 0x0(r22)
-	  lwz       r0, 0x4(r22)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-	  lwz       r0, 0x8(r22)
-	  stw       r0, 0xC(r3)
-	  lwz       r4, 0x38(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r4, 0x10(r3)
-	  stw       r0, 0x14(r3)
-	  beq-      .loc_0x19C
-	  cmplwi    r27, 0
-	  beq-      .loc_0x19C
-	  lwz       r4, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r4, 0x18(r3)
-	  stw       r0, 0x1C(r3)
-	  lwz       r4, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r4, 0x20(r3)
-	  stw       r0, 0x24(r3)
-	  b         .loc_0x1AC
+		lgMgr->mLFlare->addLFlare(colour, position, Vector2f(width, height), &Vector2f(uvStart, 0.0f), &Vector2f(uvEnd, 1.0f));
 
-	.loc_0x19C:
-	  stfs      f28, 0x18(r3)
-	  stfs      f28, 0x1C(r3)
-	  stfs      f29, 0x20(r3)
-	  stfs      f29, 0x24(r3)
-
-	.loc_0x1AC:
-	  lwz       r0, 0x20(r29)
-	  stw       r0, 0x28(r3)
-	  stw       r3, 0x20(r29)
-
-	.loc_0x1B8:
-	  mulhw     r0, r30, r25
-	  lfs       f0, 0x0(r22)
-	  fsubs     f0, f0, f25
-	  srawi     r0, r0, 0x2
-	  stfs      f0, 0x0(r22)
-	  rlwinm    r3,r0,1,31,31
-	  add       r25, r0, r3
-	  addi      r24, r24, 0x1
-
-	.loc_0x1D8:
-	  cmpw      r24, r28
-	  blt+      .loc_0xB8
-	  lmw       r22, 0x60(r1)
-	  lwz       r0, 0xC4(r1)
-	  lfd       f31, 0xB8(r1)
-	  lfd       f30, 0xB0(r1)
-	  lfd       f29, 0xA8(r1)
-	  lfd       f28, 0xA0(r1)
-	  lfd       f27, 0x98(r1)
-	  lfd       f26, 0x90(r1)
-	  lfd       f25, 0x88(r1)
-	  addi      r1, r1, 0xC0
-	  mtlr      r0
-	  blr
-	*/
+		num /= 10;
+		position.x -= width * 1.5f;
+	}
 }
 
 /*
@@ -519,29 +324,10 @@ void LifeGaugeMgr::init(int count)
  */
 void LifeGaugeMgr::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  lwz       r31, 0x10(r3)
-	  b         .loc_0x24
-
-	.loc_0x18:
-	  mr        r3, r31
-	  bl        -0x730
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x24:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x18
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	FOREACH_NODE(GaugeInfo, _00.mChild, gauge)
+	{
+		gauge->update();
+	}
 }
 
 /*
@@ -549,8 +335,14 @@ void LifeGaugeMgr::update()
  * Address:	8005BED4
  * Size:	000068
  */
-void LifeGaugeMgr::refresh(Graphics&)
+void LifeGaugeMgr::refresh(Graphics& gfx)
 {
+	// WTF
+
+	FOREACH_NODE(GaugeInfo, _00.mChild, gauge)
+	{
+		gauge->refresh(gfx);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -613,35 +405,11 @@ void LifeGaugeMgr::addLG(GaugeInfo*)
  * Address:	8005BF3C
  * Size:	000060
  */
-void LifeGaugeMgr::removeLG(GaugeInfo*)
+void LifeGaugeMgr::removeLG(GaugeInfo* info)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  bl        -0x1B94C
-	  li        r5, 0
-	  stw       r5, 0x10(r31)
-	  subi      r0, r13, 0x7000
-	  addi      r4, r31, 0
-	  stw       r5, 0xC(r31)
-	  addi      r3, r30, 0x48
-	  stw       r5, 0x8(r31)
-	  stw       r0, 0x4(r31)
-	  bl        -0x1B9A8
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	info->del();
+	info->initCore("");
+	_48.add(info);
 }
 
 /*
@@ -651,63 +419,23 @@ void LifeGaugeMgr::removeLG(GaugeInfo*)
  */
 LifeGauge::LifeGauge()
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x7A00(r2)
-	  li        r11, 0
-	  li        r10, 0x80
-	  stfs      f0, 0x8(r3)
-	  addi      r9, r13, 0x2E98
-	  li        r8, 0xC0
-	  stfs      f0, 0x4(r3)
-	  li        r0, 0xFF
-	  addi      r7, r13, 0x2EA8
-	  stfs      f0, 0x0(r3)
-	  addi      r6, r13, 0x2EA4
-	  addi      r5, r13, 0x2EA0
-	  stfs      f0, 0x14(r3)
-	  addi      r4, r13, 0x2E9C
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0xC(r3)
-	  stw       r11, 0x1C(r3)
-	  stw       r11, 0x18(r3)
-	  stfs      f0, 0x24(r3)
-	  stfs      f0, 0x28(r3)
-	  stb       r11, 0x20(r3)
-	  lfs       f0, -0x79DC(r2)
-	  stfs      f0, 0x30(r3)
-	  stfs      f0, 0x2C(r3)
-	  stb       r10, 0x2E98(r13)
-	  stb       r10, 0x1(r9)
-	  stb       r10, 0x2(r9)
-	  stb       r8, 0x3(r9)
-	  stb       r11, 0x2EA8(r13)
-	  stb       r0, 0x1(r7)
-	  stb       r11, 0x2(r7)
-	  stb       r0, 0x3(r7)
-	  stb       r10, 0x2EA4(r13)
-	  stb       r0, 0x1(r6)
-	  stb       r11, 0x2(r6)
-	  stb       r0, 0x3(r6)
-	  stb       r0, 0x2EA0(r13)
-	  stb       r0, 0x1(r5)
-	  stb       r11, 0x2(r5)
-	  stb       r0, 0x3(r5)
-	  stb       r0, 0x2E9C(r13)
-	  stb       r11, 0x1(r4)
-	  stb       r11, 0x2(r4)
-	  stb       r0, 0x3(r4)
-	  lfs       f0, -0x6FFC(r13)
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, -0x6FF8(r13)
-	  stfs      f0, 0x10(r3)
-	  lfs       f0, -0x6FF4(r13)
-	  stfs      f0, 0x14(r3)
-	  lfs       f0, -0x79BC(r2)
-	  stfs      f0, 0x34(r3)
-	  stw       r11, 0x38(r3)
-	  blr
-	*/
+	_1C          = 0;
+	mIsNotFull   = 0;
+	_24          = 0.0f;
+	_28          = 0.0f;
+	_20          = 0;
+	_30          = 1.0f;
+	mHealthRatio = 1.0f;
+
+	lgborder.set(0x80, 0x80, 0x80, 0xC0);
+	lglev3.set(0x00, 0xFF, 0x00, 0xFF);
+	lglev2.set(0x80, 0xFF, 0x00, 0xFF);
+	lglev1.set(0xFF, 0xFF, 0x00, 0xFF);
+	lglev0.set(0xFF, 0x00, 0x00, 0xFF);
+
+	mOffset.set(0.0f, 100.0f, 0.0f);
+	mScale = 48.0f;
+	_38    = 0;
 }
 
 /*

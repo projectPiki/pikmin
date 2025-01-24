@@ -66,24 +66,24 @@ struct LFlareGroup : public CoreNode {
 	void addLFlare(Colour& color, Vector3f& pos, Vector2f& size, Vector2f* a5, Vector2f* a6)
 	{
 		LFInfo* info = gsys->getLFlareInfo();
-		if (info) {
-			info->mColour   = color;
-			info->mFlarePos = pos;
-			info->mSize     = size;
-
-			if (a5 && a6) {
-				info->_18.x = a5->x;
-				info->_18.y = a5->y;
-				info->_20.x = a6->x;
-				info->_20.y = a6->y;
-			} else {
-				info->_18.set(0.0f, 0.0f);
-				info->_20.set(1.0f, 1.0f);
-			}
-
-			info->mPrevInfo = mLFInfo;
-			mLFInfo         = info;
+		if (!info) {
+			return;
 		}
+
+		info->mColour   = color;
+		info->mFlarePos = pos;
+		info->mSize     = size;
+
+		if (a5 && a6) {
+			info->_18 = *a5;
+			info->_20 = *a6;
+		} else {
+			info->_18.set(0.0f, 0.0f);
+			info->_20.set(1.0f, 1.0f);
+		}
+
+		info->mPrevInfo = mLFInfo;
+		mLFInfo         = info;
 	}
 
 	// _00     = VTBL
