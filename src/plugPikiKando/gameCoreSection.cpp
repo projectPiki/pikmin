@@ -45,6 +45,10 @@
 #include "RumbleMgr.h"
 #include "UfoItem.h"
 #include "FlowController.h"
+#include "MoviePlayer.h"
+#include "DayMgr.h"
+#include "timers.h"
+#include "Graphics.h"
 #include "DebugLog.h"
 
 u16 GameCoreSection::pauseFlag;
@@ -52,6 +56,9 @@ int GameCoreSection::textDemoState;
 u16 GameCoreSection::textDemoTimer;
 int GameCoreSection::textDemoIndex;
 PcamCameraManager* cameraMgr;
+zen::DrawContainer* containerWindow;
+zen::DrawHurryUp* hurryupWindow;
+zen::DrawAccount* accountWindow;
 bool lastDamage;
 bool currDamage;
 u32 damageParm;
@@ -303,6 +310,7 @@ void GameCoreSection::endMovie(int a)
  */
 bool GameCoreSection::hideTeki()
 {
+	return gameflow.mMoviePlayer->mIsActive && !(_2C & 4);
 	// UNUSED FUNCTION
 }
 
@@ -3638,7 +3646,7 @@ void GameCoreSection::finalSetup()
 GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& camera)
     : Node("gamecore")
 {
-	_28           = 0;
+	mDrawHideType = 0;
 	textDemoState = 0;
 	pauseFlag     = 0;
 	_2C           = 0;
@@ -4809,6 +4817,116 @@ void GameCoreSection::startSundownWarn()
  */
 void GameCoreSection::updateAI()
 {
+	int pikis = GameStat::mapPikis;
+	if (pikis > 50) {
+		AIPerf::optLevel = 2;
+		if (AIPerf::optLevel != 2)
+			PRINT("________________________________________ opt level 2!\n");
+	} else if (pikis > 30) {
+		if (AIPerf::optLevel != 1)
+			PRINT("________________________________________ opt level 1!\n");
+		AIPerf::optLevel = 1;
+	} else {
+		if (AIPerf::optLevel != 0)
+			PRINT("________________________________________ opt level 0!\n");
+		AIPerf::optLevel = 0;
+	}
+
+	if (textDemoState) {
+		updateTextDemo();
+		return;
+	}
+
+	attentionCamera->update();
+	int start = playerState->getStartHour();
+	int hours = playerState->getEndHour() - start % 24;
+	// some nonsense
+	if (!_38[0] && start + hours >= gameflow.mWorldClock.mCurrentTime) {
+		_38[0] = 1;
+		seSystem->playSysSe(SYSSE_TIME_SMALLSIGNAL);
+	} else if (!_38[1] && hours >= gameflow.mWorldClock.mCurrentTime) {
+		_38[1] = 1;
+		seSystem->playSysSe(SYSSE_TIME_SIGNAL);
+		if (!playerState->mDemoFlags.isFlag(31)) {
+			playerState->mDemoFlags.setFlagOnly(31);
+			gameflow.mGameInterface->message(0, 31);
+		}
+	} else if (!_38[2] && start >= gameflow.mWorldClock.mCurrentTime) {
+		_38[2] = 1;
+		seSystem->playSysSe(SYSSE_TIME_SMALLSIGNAL);
+	}
+	AIPerf::clearCounts();
+	pikiUpdateMgr->update();
+	searchUpdateMgr->update();
+	pikiLookUpdateMgr->update();
+	pikiOptUpdateMgr->update();
+	tekiOptUpdateMgr->update();
+	mMapMgr->update();
+	if (gameflow._338 == 0) {
+		naviMgr->update();
+	}
+
+	if (gameflow._338 == 0) {
+		if (tekiMgr) {
+			if (AIPerf::insQuick) {
+				naviMgr->invalidateSearch();
+				pikiMgr->invalidateSearch();
+				if (tekiMgr) {
+					tekiMgr->invalidateSearch();
+				}
+				if (bossMgr) {
+					bossMgr->invalidateSearch();
+				}
+				itemMgr->invalidateSearch();
+				plantMgr->invalidateSearch();
+				workObjectMgr->invalidateSearch();
+				itemMgr->mMeltingPotMgr->invalidateSearch();
+				_54->update();
+			} else {
+				_54->update();
+			}
+		}
+
+		if (gameflow._33C == 0) {
+			if (!inPause() && bossMgr) {
+				if (!hideTeki()) {
+					bossMgr->update();
+				}
+			}
+
+			if (!!inPause()) {
+				pikiMgr->update();
+			}
+			itemMgr->update();
+			if (!inPause()) {
+				workObjectMgr->update();
+				plantMgr->update();
+				if (tekiMgr && !gameflow.mMoviePlayer->mIsActive) {
+					tekiMgr->update();
+				}
+				pelletMgr->update();
+			}
+		}
+	}
+	if (tekiMgr) {
+		f32 time = gsys->getFrameTime();
+		if (gameflow._338 == 0) {
+			naviMgr->postUpdate(0, time);
+		}
+
+		if (!gameflow._338 && !inPause() && !gameflow._33C) {
+			pikiMgr->postUpdate(0, time);
+			itemMgr->postUpdate(0, time);
+			pelletMgr->postUpdate(0, time);
+			plantMgr->postUpdate(0, time);
+			if (tekiMgr && !hideTeki()) {
+				tekiMgr->postUpdate(0, time);
+			}
+			if (bossMgr && !hideTeki()) {
+				bossMgr->postUpdate(0, time);
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5209,8 +5327,93 @@ void GameCoreSection::updateAI()
  * Address:	8011104C
  * Size:	0005A4
  */
-void GameCoreSection::draw(Graphics&)
+void GameCoreSection::draw(Graphics& gfx)
 {
+	gfx.mCamera->mProjectionMatrix = gfx.mCamera->mPerspectiveMatrix;
+	gfx.mCamera->mProjectionMatrix.multiply(gfx.mCamera->mLookAtMtx);
+	// gsys->mTimer->_start("se updt", true);
+	if (gameflow.mMoviePlayer->mIsActive) {
+		Vector3f pos;
+		gameflow.mMoviePlayer->getLookAtPos(pos);
+		seSystem->update(gfx, pos);
+	} else {
+		seSystem->update(gfx, mNavi->mPosition);
+	}
+	// gsys->mTimer->_stop("se updt");
+
+	gfx.useMatrix(Matrix4f::ident, 0);
+	gfx.calcLighting(1.0f);
+	if (mDrawHideType != 8) {
+		mMapMgr->refresh(gfx);
+	}
+	mMapMgr->mDayMgr->setFog(gfx, nullptr);
+
+	if (!AIPerf::generatorMode) {
+		if (mDrawHideType != 2 && tekiMgr && !hideTeki()) {
+			tekiMgr->refresh(gfx);
+		}
+		if (mDrawHideType != 1) {
+			pikiMgr->refresh(gfx);
+		}
+	}
+
+	gameflow.mMoviePlayer->refresh(gfx);
+	naviMgr->refresh(gfx);
+
+	if (!AIPerf::generatorMode && mDrawHideType != 4 && bossMgr && !hideTeki()) {
+		bossMgr->refresh(gfx);
+	}
+
+	if (mDrawHideType != 3) {
+		itemMgr->refresh(gfx);
+	}
+
+	if (mDrawHideType != 6) {
+		workObjectMgr->refresh(gfx);
+	}
+
+	if (!AIPerf::generatorMode) {
+		if (mDrawHideType != 5) {
+			pelletMgr->refresh(gfx);
+		}
+
+		if (mDrawHideType != 7) {
+			plantMgr->refresh(gfx);
+		}
+	}
+
+	naviMgr->renderCircle(gfx);
+	mMapMgr->drawXLU(gfx);
+	mMapMgr->mDayMgr->setFog(gfx, &Colour(0, 0, 0, 0));
+	Matrix4f mtx;
+	gfx.calcViewMatrix(Matrix4f::ident, mtx);
+	gfx.useMatrix(mtx, 0);
+	int blend = gfx.setCBlending(2);
+	gfx.setDepth(false);
+	gfx.setLighting(false, nullptr);
+	gfx.useTexture(mShadowTexture, 0);
+	gfx.setColour(Colour(255, 255, 255, 128), true);
+	if (AIPerf::optLevel <= 1) {
+		pikiMgr->drawShadow(gfx, mShadowTexture);
+	}
+	itemMgr->drawShadow(gfx, mShadowTexture);
+	pelletMgr->drawShadow(gfx, mShadowTexture);
+	if (tekiMgr && !hideTeki()) {
+		tekiMgr->drawShadow(gfx, mShadowTexture);
+	}
+	naviMgr->drawShadow(gfx);
+
+	gfx.setCBlending(blend);
+	gfx.setDepth(true);
+	mMapMgr->postrefresh(gfx);
+	if (AIPerf::soundDebug) {
+		seSystem->draw3d(gfx);
+	}
+	Node::draw(gfx);
+	if (AIPerf::showRoute) {
+		routeMgr->refresh(gfx);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5626,8 +5829,38 @@ void drawRectangle(Graphics&, RectArea&, RectArea&, Vector3f*)
  * Address:	801115F0
  * Size:	000260
  */
-void GameCoreSection::draw1D(Graphics&)
+void GameCoreSection::draw1D(Graphics& gfx)
 {
+	if (mDrawHideType == 9) {
+		return;
+	}
+
+	Matrix4f mtx;
+	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+
+	if (!AIPerf::generatorMode) {
+		if (bossMgr && !hideTeki()) {
+			bossMgr->refresh2d(gfx);
+		}
+		if (tekiMgr && !hideTeki()) {
+			tekiMgr->refresh2d(gfx);
+		}
+	}
+	naviMgr->refresh2d(gfx);
+
+	if (gsys->mToggleDebugExtra) {
+		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.setAuxColour(Colour(255, 255, 255, 255));
+		gfx.useTexture(nullptr, 0);
+		char str[PATH_MAX];
+		sprintf(str, "culled:ai %d view %d/%d shape %d (%d tekis)", AIPerf::aiCullCnt, AIPerf::viewCullCnt, AIPerf::outsideViewCnt,
+		        AIPerf::drawshapeCullCnt, tekiMgr ? tekiMgr->getSize() : 0);
+		gfx.texturePrintf(gsys->mConsFont, 60, 90, str);
+	}
+
+	attentionCamera->refresh(gfx);
+	pelletMgr->refresh2d(gfx);
+	itemMgr->refresh2d(gfx);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5801,13 +6034,88 @@ void GameCoreSection::draw1D(Graphics&)
 	*/
 }
 
+char* triNames[]
+    = { "", "HIDE PIKI", "HIDE TEKI", "HIDE ITEM", "HIDE BOSS", "HIDE PELLET", "HIDE WORK", "HIDE PLANTS", "HIDE MAP", "HIDE 2D" };
+
 /*
  * --INFO--
  * Address:	80111850
  * Size:	0005C4
  */
-void GameCoreSection::draw2D(Graphics&)
+void GameCoreSection::draw2D(Graphics& gfx)
 {
+	Matrix4f mtx;
+	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setAuxColour(Colour(255, 255, 255, 255));
+	gfx.useTexture(nullptr, 0);
+	gfx.texturePrintf(gsys->mConsFont, 60, 120, triNames[mDrawHideType]);
+
+	if (AIPerf::soundDebug) {
+		seSystem->draw2d(gfx);
+	}
+
+	if (AIPerf::moveType) {
+		gfx.useTexture(mMapMgr->_4B8, 0);
+		GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
+		GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
+		GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
+		GXSetTevSwapModeTable(GX_TEV_SWAP3, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
+
+		GXSetNumTevStages(4);
+		GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
+		GXSetTevOrder(GX_TEVSTAGE1, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
+		GXSetTevOrder(GX_TEVSTAGE2, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
+		GXSetTevOrder(GX_TEVSTAGE3, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
+
+		GXSetTevSwapMode(GX_TEVSTAGE0, GX_TEV_SWAP1, GX_TEV_SWAP1);
+		GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_TEXC);
+		GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_KONST);
+		GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+		GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+
+		GXSetTevSwapMode(GX_TEVSTAGE1, GX_TEV_SWAP2, GX_TEV_SWAP2);
+		GXSetTevColorIn(GX_TEVSTAGE1, GX_CC_CPREV, GX_CC_ZERO, GX_CC_ZERO, GX_CC_TEXC);
+		GXSetTevAlphaIn(GX_TEVSTAGE1, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_KONST);
+		GXSetTevColorOp(GX_TEVSTAGE1, GX_TEV_COMP_RGB8_GT, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+
+		GXSetTevSwapMode(GX_TEVSTAGE2, GX_TEV_SWAP3, GX_TEV_SWAP3);
+		GXSetTevColorIn(GX_TEVSTAGE2, GX_CC_CPREV, GX_CC_ZERO, GX_CC_ZERO, GX_CC_TEXC);
+		GXSetTevAlphaIn(GX_TEVSTAGE2, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_KONST);
+		GXSetTevColorOp(GX_TEVSTAGE2, GX_TEV_COMP_RGB8_GT, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+		static int timer = 1;
+		GXColor color;
+		color.r = 220;
+		color.g = 160;
+		color.b = 160;
+		color.a = 255;
+		GXSetTevKColorSel(GX_TEVSTAGE3, GX_TEV_KCSEL_K0);
+		GXSetTevKColor(GX_KCOLOR0, color);
+		GXSetTevColorIn(GX_TEVSTAGE3, GX_CC_ZERO, GX_CC_CPREV, GX_CC_KONST, GX_CC_ZERO);
+		GXSetTevAlphaIn(GX_TEVSTAGE3, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_KONST);
+		GXSetTevColorOp(GX_TEVSTAGE3, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+
+		RectArea a(0, 0, (f32)gfx.mScreenWidth * 0.5f, (f32)gfx.mScreenHeight * 0.5f);
+		RectArea b(0, 0, (f32)gfx.mScreenWidth * 0.5f, (f32)gfx.mScreenHeight * 0.5f);
+		gfx.drawRectangle(a, b, nullptr);
+
+		GXSetTevSwapMode(GX_TEVSTAGE0, GX_TEV_SWAP0, GX_TEV_SWAP0);
+		GXSetTevSwapMode(GX_TEVSTAGE1, GX_TEV_SWAP0, GX_TEV_SWAP0);
+		GXSetTevSwapMode(GX_TEVSTAGE2, GX_TEV_SWAP0, GX_TEV_SWAP0);
+	} else {
+		if (naviMgr->getNavi()->getCurrState()->getID() != NAVISTATE_DemoSunset) {
+			mDrawGameInfo->draw(gfx);
+		}
+		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		containerWindow->draw(gfx);
+		if (!gameflow.mMoviePlayer->mIsActive && !gameflow._338) {
+			hurryupWindow->draw(gfx);
+		}
+		accountWindow->draw(gfx);
+	}
+
+	f32 badcompiler[166]; // this is a LOT of padding, idk why its here
+
 	/*
 	.loc_0x0:
 	  mflr      r0

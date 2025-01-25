@@ -78,7 +78,7 @@ struct GameCoreSection : public Node {
 	// _00-_20 = Node
 	Controller* mController;          // _20
 	u8 _24[0x4];                      // _24, unknown
-	u32 _28;                          // _28, unknown
+	int mDrawHideType;                // _28, enum todo
 	u32 _2C;                          // _2C, unknown
 	u8 _30;                           // _30
 	u8 _31;                           // _31
