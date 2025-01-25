@@ -148,11 +148,11 @@ struct InteractBubble : public Interaction {
  * @brief TODO
  */
 struct InteractBuild : public Interaction {
-	inline InteractBuild(Creature* owner)
+	InteractBuild(Creature* owner, int stage, f32 rate)
 	    : Interaction(owner)
 	{
-		mCurrentStage = 0;
-		mProgressRate = 1.0f;
+		mCurrentStage = stage;
+		mProgressRate = rate;
 	}
 
 	virtual bool actBridge(Bridge*);     // _24
@@ -160,7 +160,7 @@ struct InteractBuild : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	u32 mCurrentStage; // _0C, unknown
+	int mCurrentStage; // _0C
 	f32 mProgressRate; // _10
 };
 

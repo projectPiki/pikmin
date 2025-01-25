@@ -144,7 +144,7 @@ void ActBoMake::animationKeyUpdated(PaniAnimKeyEvent& event)
 	case KEY_Finished:
 		break;
 	case KEY_Action0:
-		InteractBuild build(mActor);
+		InteractBuild build(mActor, 0, 1.0f);
 		mBuildObject->stimulate(build); // the one time it's not in the same line, smh
 		break;
 	}

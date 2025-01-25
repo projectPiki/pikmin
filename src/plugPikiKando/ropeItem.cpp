@@ -27,8 +27,8 @@ RopeItem::RopeItem(CreatureProp* prop, Shape* shape)
 {
 	mModel = shape;
 	_68    = 4;
-	resetCreatureFlag(0x200);
-	setCreatureFlag(1);
+	resetCreatureFlag(CF_Unk10);
+	setCreatureFlag(CF_Unk1);
 	mSearchBuffer.init(mSearch, 3);
 	mObjType         = OBJTYPE_Rope;
 	mCollisionRadius = 5.0f;

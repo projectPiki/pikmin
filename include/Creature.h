@@ -206,29 +206,36 @@ struct Creature : public RefCountable, public EventTalker {
 	void startStickObjectPellet(Pellet*, int, f32);
 	bool isStickLeader();
 
-	inline void enableFixPos() { setCreatureFlag(CF_AllowFixPosition); }
-	inline void disableFixPos() { resetCreatureFlag(CF_AllowFixPosition); }
-
-	inline void startFix() { setCreatureFlag(CF_IsPositionFixed); }
-	inline void finishFix() { resetCreatureFlag(CF_IsPositionFixed); }
-
-	// this is a guess name-wise
-	void restartAI() { setCreatureFlag(CF_AIAlwaysActive); }
+	// these are ONE PAIR of the inlines.
+	inline void setFlag80() { setCreatureFlag(CF_Unk8); }
+	inline void unsetFlag80() { resetCreatureFlag(CF_Unk8); }
 
 	// these are setFlag/resetFlag/isFlag in the DLL, but this is clearer.
 	void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
 	void resetCreatureFlag(u32 flag) { mCreatureFlags &= ~flag; }
 	bool isCreatureFlag(u32 flag) { return mCreatureFlags & flag; }
 
-	Vector3f& getPosition() { return mPosition; }
+	void enableFixPos() { setCreatureFlag(CF_AllowFixPosition); }
+	void disableFixPos() { resetCreatureFlag(CF_AllowFixPosition); }
+
+	void startFix() { setCreatureFlag(CF_DisableMovement); }
+	void finishFix() { resetCreatureFlag(CF_DisableMovement); }
+
+	void restartAI() { setCreatureFlag(CF_AIAlwaysActive); }
 
 	void enableFaceDirAdjust() { setCreatureFlag(CF_FaceDirAdjust); }
-	void disableFaceDirAdjust() { resetCreatureFlag(CF_FaceDirAdjust); } // this should be one of the disable inlines
+	void disableFaceDirAdjust() { resetCreatureFlag(CF_FaceDirAdjust); }
 
 	void startFlying()
 	{
 		setCreatureFlag(CF_IsFlying);
 		resetCreatureFlag(CF_GravityEnabled);
+	}
+
+	void finishFlying()
+	{
+		resetCreatureFlag(CF_IsFlying);
+		setCreatureFlag(CF_GravityEnabled);
 	}
 
 	BOOL isFlying() { return isCreatureFlag(CF_IsFlying); }
@@ -239,6 +246,28 @@ struct Creature : public RefCountable, public EventTalker {
 
 	bool isAIActive() { return !isCreatureFlag(CF_IsAiDisabled); }
 
+	BOOL isStickToMouth() { return isCreatureFlag(CF_StuckToMouth); }
+
+	void enableGroundOffset(f32 offset)
+	{
+		setCreatureFlag(CF_GroundOffsetEnabled);
+		mGroundOffset = offset;
+	}
+
+	void disableGroundOffset() { resetCreatureFlag(CF_GroundOffsetEnabled); }
+
+	void setFree(bool set) { set ? setCreatureFlag(CF_Free) : resetCreatureFlag(CF_Free); }
+
+	void enableAirResist(f32 res)
+	{
+		setCreatureFlag(CF_Unk5);
+		_CC = res;
+	}
+
+	Vector3f& getPosition() { return mPosition; }
+	void inputPosition(Vector3f& pos) { mPosition = pos; }
+	// void outputPosition(Vector3f& pos); // DLL inline - to do
+
 	// we're grabbed if we're held by something
 	bool isGrabbed() { return !mHoldingCreature.isNull(); }
 	Creature* getHolder() { return mHoldingCreature.getPtr(); }
@@ -248,7 +277,6 @@ struct Creature : public RefCountable, public EventTalker {
 	Creature* getHoldCreature() { return mGrabbedCreature.getPtr(); }
 
 	// idk why this is a BOOL and not bool but go figure
-	BOOL isStickToMouth() { return isCreatureFlag(CF_StuckToMouth); }
 
 	CollPart* getStickPart() { return mStickPart; }
 	Creature* getStickObject() { return mStickTarget; }
@@ -272,27 +300,9 @@ struct Creature : public RefCountable, public EventTalker {
 
 	bool roughCulling(Creature* other, f32 p2) { return mGrid.doCulling(other->mGrid, p2); }
 
-	void enableGroundOffset(f32 offset)
-	{
-		setCreatureFlag(CF_GroundOffsetEnabled);
-		mGroundOffset = offset;
-	}
-
-	void disableGroundOffset() { resetCreatureFlag(CF_GroundOffsetEnabled); }
-
 	void setStateDamaged() { mIsBeingDamaged = true; }
 	void resetStateDamaged() { mIsBeingDamaged = false; }
 	bool isDamaged() { return mIsBeingDamaged; }
-
-	inline void enableAirResist(f32 res)
-	{
-		setCreatureFlag(0x10);
-		_CC = res;
-	}
-
-	void setFree(bool set) { set ? setCreatureFlag(CF_Free) : resetCreatureFlag(CF_Free); }
-
-	void inputPosition(Vector3f& pos) { mPosition = pos; }
 
 	/*
 	    DLL inlines to assign/make:
@@ -303,11 +313,6 @@ struct Creature : public RefCountable, public EventTalker {
 	    void enableGravity();
 	    void disableGravity();
 
-	    void finishFlying();
-
-	    void outputPosition(Vector3f&);
-
-	    void restartAI();
 	    void stopAI();
 
 	    void setCarryOver();

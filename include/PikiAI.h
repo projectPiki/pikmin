@@ -603,7 +603,7 @@ struct ActBreakWall : public Action, public PaniAnimKeyListener {
 	BuildingItem* mWall; // _18
 	u16 mState;          // _1C
 	Vector3f _20;        // _20
-	u32 _2C;             // _2C, unknown, same as gameflow._300
+	int _2C;             // _2C, unknown, same as gameflow._300
 	u8 _30;              // _30
 	u8 _31;              // _31
 	u8 _32;              // _32
@@ -621,9 +621,9 @@ struct ActBridge : public Action, virtual PaniAnimKeyListener {
 	 */
 	enum StateID {
 		STATE_Approach = 0,
-		STATE_Unk1     = 1, // one of these is detour
+		STATE_Detour   = 1,
 		STATE_Go       = 2,
-		STATE_Unk3     = 3, // and one is climb. both unused
+		STATE_Climb    = 3,
 		STATE_Work     = 4,
 	};
 
@@ -662,21 +662,21 @@ struct ActBridge : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	Bridge* mBridge;     // _18, unknown
-	u16 mState;          // _1C
-	u32 _20;             // _20, unknown - same as _300 in gameflow
-	u32 _24;             // _24
-	u16 mCollisionCount; // _28
-	u16 _2A;             // _2A
-	f32 _2C;             // _2C
-	s16 mStageIdx;       // _30
-	u8 _32;              // _32
-	u8 _33;              // _33
-	Vector3f _34;        // _34
-	Vector3f _40;        // _40
-	u8 mActionCounter;   // _4C
-	u8 _4D;              // _4D
-	                     // _50-_58 = PaniAnimKeyListener
+	Bridge* mBridge;            // _18, unknown
+	u16 mState;                 // _1C
+	int _20;                    // _20, unknown - same as _300 in gameflow
+	int _24;                    // _24
+	u16 mCollisionCount;        // _28
+	u16 _2A;                    // _2A
+	f32 _2C;                    // _2C
+	s16 mStageIdx;              // _30
+	u8 _32;                     // _32
+	u8 _33;                     // _33
+	Vector3f _34;               // _34
+	Vector3f mClimbingVelocity; // _40
+	u8 mActionCounter;          // _4C
+	u8 _4D;                     // _4D
+	                            // _50-_58 = PaniAnimKeyListener
 };
 
 /**

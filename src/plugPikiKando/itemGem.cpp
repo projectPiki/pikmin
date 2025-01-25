@@ -132,7 +132,7 @@ void GemItem::startAI(int)
 	mGemCollInfo.initInfo(mItemShapeObject->mShape, mGemColl, nullptr);
 	mScale.set(1.0f, 1.0f, 1.0f);
 	mRotation.set(1.0f, mDirection, 1.0f);
-	resetCreatureFlag(0x80);
+	resetCreatureFlag(CF_Unk8);
 	((SimpleAI*)mStateMachine)->start(this, 0);
 	_3D9 = false;
 	_3D8 = false;
@@ -180,8 +180,8 @@ void GemItem::update()
 				stopEventSound(this, SE_LIFT_MOVE);
 				finishPick();
 			}
-			setCreatureFlag(0x80); // this is a further inline
-			if (isCreatureFlag(4)) {
+			setCreatureFlag(CF_Unk8); // this is a further inline
+			if (isCreatureFlag(CF_IsOnGround)) {
 				mVelocity = mVelocity * 1.5f;
 			}
 		}
@@ -257,7 +257,7 @@ void GemItem::finishPick()
 	disableGroundOffset();
 	setFree(true);
 	_3D9 = 0;
-	resetCreatureFlag(0x40);
+	resetCreatureFlag(CF_IsFlying);
 }
 
 /*

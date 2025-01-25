@@ -1018,7 +1018,7 @@ void GoalItem::startTakeoff()
 		PRINT("** GOAL TAKEOFF !\n");
 		i++;
 	}
-	setCreatureFlag(0x800);
+	setCreatureFlag(CF_IsAiDisabled);
 }
 
 /*
