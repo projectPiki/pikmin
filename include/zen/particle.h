@@ -282,6 +282,46 @@ struct particleGenerator : public zenList {
 	void pmPutParticle(zenList* ptcl) { mMdlMgr->putPtcl(ptcl); }
 	void pmPutParticleChild(zenList* child) { mMdlMgr->putPtclChild(child); }
 
+	void setEmitVelocity(Vector3f& pos)
+	{
+		_138.set(pos);
+		_84 |= 0x20000;
+	}
+
+	void setNewtonField(Vector3f pos, f32 a, bool b)
+	{
+		_170.set(pos - getGPos());
+		_17C = a;
+		setOrientedConstZAxis(b);
+	}
+
+	void setOrientedConstZAxis(bool set)
+	{
+		if (set) {
+			pmSwitchOn(0x100000);
+		} else {
+			pmSwitchOff(0x100000);
+		}
+	}
+
+	void setVortexField(Vector3f pos, f32 a, f32 b, f32 c, f32 d, bool set)
+	{
+		_144.set(pos);
+		_150 = a; //-0.12f;
+		_154 = b; //-0.09f;
+		_158 = c; // 0.3f;
+		_15C = d; // 400.0f;
+		setOrientedConstZAxis(set);
+	}
+
+	void setGravityField(Vector3f& pos, bool set)
+	{
+		_12C.set(pos);
+		setOrientedConstZAxis(set);
+	}
+
+	void setInitVel(f32 vel) { _B8 = vel; }
+
 	/*
 	    These are still to be made/assigned from the DLL:
 
@@ -291,12 +331,10 @@ struct particleGenerator : public zenList {
 	    void setAirField(Vector3f&, bool);
 	    void setEmitVelocity(Vector3f&);
 	    void setGravityField(Vector3f&, bool);
-	    void setOrientedConstZAxis(bool);
 	    void setVortexField(Vector3f, f32, f32, f32, f32, bool);
 
 	    void setFreqFrm(f32);
 	    void setInitVel(f32);
-	    void setNewtonField(Vector3f, f32, bool);
 
 	    f32 getFreqFrm();
 	    f32 getInitVel();
@@ -328,7 +366,8 @@ struct particleGenerator : public zenList {
 	Vector3f _94;                                            // _94
 	Vector3f mEmitDir;                                       // _A0
 	Vector3f _AC;                                            // _AC
-	u8 _B8[0xF0 - 0xB8];                                     // _B8, unknown
+	f32 _B8;                                                 // _B8
+	u8 _BC[0xF0 - 0xBC];                                     // _BC, unknown
 	f32 mScaleSize;                                          // _F0
 	u8 _F4[0x120 - 0xF4];                                    // _F4, unknown
 	Colour _120;                                             // _120
@@ -336,11 +375,14 @@ struct particleGenerator : public zenList {
 	Vector3f _12C;                                           // _12C
 	Vector3f _138;                                           // _138
 	Vector3f _144;                                           // _144
-	u8 _150[0x160 - 0x150];                                  // _150, unknown
+	f32 _150;                                                // _150
+	f32 _154;                                                // _154
+	f32 _158;                                                // _158
+	f32 _15C;                                                // _15C
 	Vector3f _160;                                           // _160
 	u8 _16C[0x4];                                            // _16C, unknown
 	Vector3f _170;                                           // _170
-	u8 _17C[0x4];                                            // _17C, unknown
+	f32 _17C;                                                // _17C
 	Vector3f _180;                                           // _180
 	u8 _18C[0x8];                                            // _18C, unknown
 	Vector3f _194;                                           // _194

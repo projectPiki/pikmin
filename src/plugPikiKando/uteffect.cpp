@@ -1,5 +1,10 @@
 #include "UtEffect.h"
+#include "Creature.h"
+#include "EffectMgr.h"
+#include "NaviMgr.h"
 #include "DebugLog.h"
+
+KEffect** UtEffectMgr::effects;
 
 /*
  * --INFO--
@@ -13,7 +18,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("utEffect")
 
 /*
  * --INFO--
@@ -22,35 +27,7 @@ DEFINE_PRINT("TODO: Replace")
  */
 SlimeEffect::SlimeEffect()
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r5, r4, 0x5AC
-	  stw       r5, 0x0(r3)
-	  addi      r0, r5, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r0, r5, 0x18
-	  addi      r6, r4, 0x2CE0
-	  stw       r0, 0x8(r3)
-	  addi      r5, r6, 0xC
-	  addi      r4, r6, 0x18
-	  stw       r6, 0x0(r3)
-	  li        r0, 0
-	  stw       r5, 0x4(r3)
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  blr
-	*/
+	mEfxGen = nullptr;
 }
 
 /*
@@ -60,16 +37,8 @@ SlimeEffect::SlimeEffect()
  */
 void SlimeEffect::stop()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0xC(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,28,26
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	if (mEfxGen)
+		mEfxGen->pmSwitchOff(0x10);
 }
 
 /*
@@ -79,16 +48,8 @@ void SlimeEffect::stop()
  */
 void SlimeEffect::restart()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0xC(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x10
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	if (mEfxGen)
+		mEfxGen->pmSwitchOn(0x10);
 }
 
 /*
@@ -96,51 +57,14 @@ void SlimeEffect::restart()
  * Address:	80113204
  * Size:	000090
  */
-void SlimeEffect::emit(EffectParm&)
+void SlimeEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x28(r4)
-	  stw       r0, 0x10(r3)
-	  lwz       r3, 0x10(r3)
-	  lfsu      f0, 0x94(r3)
-	  stfs      f0, 0x18(r1)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x20(r1)
-	  lwz       r0, 0xC(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x7C
-	  cmplwi    r31, 0
-	  addi      r7, r31, 0
-	  beq-      .loc_0x54
-	  addi      r7, r7, 0x4
-
-	.loc_0x54:
-	  lwz       r3, 0x3180(r13)
-	  addi      r6, r31, 0
-	  addi      r5, r1, 0x18
-	  li        r4, 0x24
-	  bl        0x898D0
-	  stw       r3, 0xC(r31)
-	  lwz       r4, 0x10(r31)
-	  lwz       r3, 0xC(r31)
-	  addi      r0, r4, 0x94
-	  stw       r0, 0x18(r3)
-
-	.loc_0x7C:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mObj         = parm._28;
+	Vector3f pos = mObj->mPosition;
+	if (!mEfxGen) {
+		mEfxGen = effectMgr->create(EffectMgr::EFF_Piki_Bubble, pos, this, this);
+		mEfxGen->setEmitPosPtr(&mObj->mPosition);
+	}
 }
 
 /*
@@ -148,52 +72,15 @@ void SlimeEffect::emit(EffectParm&)
  * Address:	80113294
  * Size:	00009C
  */
-bool SlimeEffect::invoke(zen::particleGenerator*, zen::particleMdl*)
+bool SlimeEffect::invoke(zen::particleGenerator* gen, zen::particleMdl* mdl)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x58(r1)
-	  lwz       r0, 0xC(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x90
-	  cmplwi    r5, 0
-	  beq-      .loc_0x90
-	  lwz       r3, 0x10(r3)
-	  lfsu      f0, 0x70(r3)
-	  stfs      f0, 0x48(r1)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x4C(r1)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x50(r1)
-	  lfs       f0, -0x60B0(r2)
-	  stfs      f0, 0x4C(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, 0x48(r1)
-	  lfs       f2, 0x28C(r3)
-	  lfs       f1, 0x4C(r1)
-	  fmuls     f0, f0, f2
-	  lfs       f4, -0x24C0(r13)
-	  fmuls     f3, f1, f2
-	  lfs       f1, 0x50(r1)
-	  fmuls     f0, f0, f4
-	  fmuls     f2, f1, f2
-	  fmuls     f1, f3, f4
-	  stfs      f0, 0x48(r1)
-	  fmuls     f0, f2, f4
-	  stfs      f1, 0x4C(r1)
-	  stfs      f0, 0x50(r1)
-	  lwz       r3, 0x48(r1)
-	  lwz       r0, 0x4C(r1)
-	  stw       r3, 0x34(r5)
-	  stw       r0, 0x38(r5)
-	  lwz       r0, 0x50(r1)
-	  stw       r0, 0x3C(r5)
-
-	.loc_0x90:
-	  li        r3, 0x1
-	  addi      r1, r1, 0x58
-	  blr
-	*/
+	if (mEfxGen && mdl) {
+		Vector3f velocity = mObj->mVelocity;
+		velocity.y        = 0.0f;
+		velocity          = velocity * gsys->getFrameTime() * 0.9f;
+		mdl->_34          = velocity;
+	}
+	return true;
 }
 
 /*
@@ -203,30 +90,10 @@ bool SlimeEffect::invoke(zen::particleGenerator*, zen::particleMdl*)
  */
 void SlimeEffect::kill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r4, 0xC(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x38
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8E268
-	  li        r0, 0
-	  stw       r0, 0xC(r31)
-
-	.loc_0x38:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mEfxGen) {
+		effectMgr->mPtclMgr.killGenerator(mEfxGen, false);
+		mEfxGen = nullptr;
+	}
 }
 
 /*
@@ -236,1050 +103,34 @@ void SlimeEffect::kill()
  */
 UtEffectMgr::UtEffectMgr()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  li        r3, 0x70
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  bl        -0xCC398
-	  stw       r3, 0x3114(r13)
-	  li        r3, 0xC
-	  bl        -0xCC3A4
-	  mr.       r5, r3
-	  beq-      .loc_0x94
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0x5AC
-	  stw       r7, 0x0(r3)
-	  addi      r0, r7, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r6, r4, 0x2C74
-	  addi      r0, r7, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r4, r6, 0xC
-	  addi      r0, r6, 0x18
-	  stw       r6, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-
-	.loc_0x94:
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        .loc_0xF54
-	  li        r3, 0x1C
-	  bl        -0xCC41C
-	  mr.       r29, r3
-	  beq-      .loc_0x12C
-	  lwz       r3, 0x3120(r13)
-	  li        r4, 0
-	  bl        0x4004
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r29)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r29)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r29)
-	  addi      r5, r4, 0x5AC
-	  stw       r5, 0x0(r29)
-	  addi      r0, r5, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r29)
-	  addi      r6, r4, 0x2C08
-	  addi      r0, r5, 0x18
-	  stw       r0, 0x8(r29)
-	  addi      r5, r6, 0xC
-	  addi      r4, r6, 0x18
-	  stw       r6, 0x0(r29)
-	  li        r0, 0
-	  stw       r5, 0x4(r29)
-	  stw       r4, 0x8(r29)
-	  stw       r3, 0xC(r29)
-	  stw       r0, 0x18(r29)
-	  stw       r0, 0x14(r29)
-	  stw       r0, 0x10(r29)
-
-	.loc_0x12C:
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  li        r4, 0x1
-	  bl        .loc_0xF54
-	  li        r3, 0x1C
-	  bl        -0xCC4B8
-	  mr.       r29, r3
-	  beq-      .loc_0x1C8
-	  lwz       r3, 0x3120(r13)
-	  li        r4, 0x1
-	  bl        0x3F68
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r29)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r29)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r29)
-	  addi      r5, r4, 0x5AC
-	  stw       r5, 0x0(r29)
-	  addi      r0, r5, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r29)
-	  addi      r6, r4, 0x2C08
-	  addi      r0, r5, 0x18
-	  stw       r0, 0x8(r29)
-	  addi      r5, r6, 0xC
-	  addi      r4, r6, 0x18
-	  stw       r6, 0x0(r29)
-	  li        r0, 0
-	  stw       r5, 0x4(r29)
-	  stw       r4, 0x8(r29)
-	  stw       r3, 0xC(r29)
-	  stw       r0, 0x18(r29)
-	  stw       r0, 0x14(r29)
-	  stw       r0, 0x10(r29)
-
-	.loc_0x1C8:
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  li        r4, 0x2
-	  bl        .loc_0xF54
-	  li        r3, 0xC
-	  bl        -0xCC554
-	  mr.       r5, r3
-	  beq-      .loc_0x244
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0x5AC
-	  stw       r7, 0x0(r3)
-	  addi      r0, r7, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r6, r4, 0x2B9C
-	  addi      r0, r7, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r4, r6, 0xC
-	  addi      r0, r6, 0x18
-	  stw       r6, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-
-	.loc_0x244:
-	  addi      r3, r31, 0
-	  li        r4, 0x3
-	  bl        .loc_0xF54
-	  li        r3, 0xC
-	  bl        -0xCC5CC
-	  mr.       r5, r3
-	  beq-      .loc_0x2BC
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0x5AC
-	  stw       r7, 0x0(r3)
-	  addi      r0, r7, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r6, r4, 0x2B2C
-	  addi      r0, r7, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r4, r6, 0xC
-	  addi      r0, r6, 0x18
-	  stw       r6, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-
-	.loc_0x2BC:
-	  addi      r3, r31, 0
-	  li        r4, 0x5
-	  bl        .loc_0xF54
-	  li        r3, 0xC
-	  bl        -0xCC644
-	  mr.       r5, r3
-	  beq-      .loc_0x334
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0x5AC
-	  stw       r7, 0x0(r3)
-	  addi      r0, r7, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r6, r4, 0x2AB8
-	  addi      r0, r7, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r4, r6, 0xC
-	  addi      r0, r6, 0x18
-	  stw       r6, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-
-	.loc_0x334:
-	  addi      r3, r31, 0
-	  li        r4, 0x4
-	  bl        .loc_0xF54
-	  li        r3, 0xC
-	  bl        -0xCC6BC
-	  mr.       r5, r3
-	  beq-      .loc_0x3AC
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0x5AC
-	  stw       r7, 0x0(r3)
-	  addi      r0, r7, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r6, r4, 0x2A48
-	  addi      r0, r7, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r4, r6, 0xC
-	  addi      r0, r6, 0x18
-	  stw       r6, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-
-	.loc_0x3AC:
-	  addi      r3, r31, 0
-	  li        r4, 0x6
-	  bl        .loc_0xF54
-	  li        r3, 0x18
-	  bl        -0xCC734
-	  mr.       r30, r3
-	  beq-      .loc_0x484
-	  lwz       r3, 0x3120(r13)
-	  li        r4, 0
-	  bl        0x3CEC
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r30)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r30)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r30)
-	  addi      r5, r4, 0x5AC
-	  stw       r5, 0x0(r30)
-	  addi      r0, r5, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r30)
-	  addi      r0, r5, 0x18
-	  addi      r6, r4, 0x29D8
-	  stw       r0, 0x8(r30)
-	  addi      r5, r6, 0xC
-	  addi      r4, r6, 0x18
-	  stw       r6, 0x0(r30)
-	  addi      r29, r3, 0
-	  li        r0, 0x18
-	  stw       r5, 0x4(r30)
-	  stw       r4, 0x8(r30)
-	  stw       r29, 0xC(r30)
-	  stw       r0, 0x10(r30)
-	  lwz       r0, 0x10(r30)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0xCC7C0
-	  cmplwi    r29, 0
-	  stw       r3, 0x14(r30)
-	  beq-      .loc_0x484
-	  li        r5, 0
-	  addi      r6, r5, 0
-	  addi      r4, r5, 0
-	  b         .loc_0x478
-
-	.loc_0x468:
-	  lwz       r3, 0x14(r30)
-	  addi      r5, r5, 0x1
-	  stwx      r4, r3, r6
-	  addi      r6, r6, 0x4
-
-	.loc_0x478:
-	  lwz       r0, 0x10(r30)
-	  cmpw      r5, r0
-	  blt+      .loc_0x468
-
-	.loc_0x484:
-	  addi      r3, r31, 0
-	  addi      r5, r30, 0
-	  li        r4, 0x7
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCC810
-	  mr.       r5, r3
-	  beq-      .loc_0x510
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0x2D
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x510:
-	  addi      r3, r31, 0
-	  li        r4, 0x9
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCC898
-	  mr.       r5, r3
-	  beq-      .loc_0x598
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0x2E
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x598:
-	  addi      r3, r31, 0
-	  li        r4, 0xA
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCC920
-	  mr.       r5, r3
-	  beq-      .loc_0x620
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0xDE
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x620:
-	  addi      r3, r31, 0
-	  li        r4, 0xB
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCC9A8
-	  mr.       r5, r3
-	  beq-      .loc_0x6A8
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0xDF
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x6A8:
-	  addi      r3, r31, 0
-	  li        r4, 0xC
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCCA30
-	  mr.       r5, r3
-	  beq-      .loc_0x730
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0xD2
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x730:
-	  addi      r3, r31, 0
-	  li        r4, 0xD
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCCAB8
-	  mr.       r5, r3
-	  beq-      .loc_0x7B8
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0xD1
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x7B8:
-	  addi      r3, r31, 0
-	  li        r4, 0xE
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCCB40
-	  mr.       r5, r3
-	  beq-      .loc_0x840
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0xDD
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x840:
-	  addi      r3, r31, 0
-	  li        r4, 0xF
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCCBC8
-	  mr.       r5, r3
-	  beq-      .loc_0x8C8
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0xDC
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x8C8:
-	  addi      r3, r31, 0
-	  li        r4, 0x10
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCCC50
-	  mr.       r5, r3
-	  beq-      .loc_0x950
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0xF
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x950:
-	  addi      r3, r31, 0
-	  li        r4, 0x11
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCCCD8
-	  mr.       r5, r3
-	  beq-      .loc_0x9D8
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0xE
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0x9D8:
-	  addi      r3, r31, 0
-	  li        r4, 0x12
-	  bl        .loc_0xF54
-	  li        r3, 0xC
-	  bl        -0xCCD60
-	  mr.       r5, r3
-	  beq-      .loc_0xA50
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0x5AC
-	  stw       r7, 0x0(r3)
-	  addi      r0, r7, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r6, r4, 0x2908
-	  addi      r0, r7, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r4, r6, 0xC
-	  addi      r0, r6, 0x18
-	  stw       r6, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-
-	.loc_0xA50:
-	  addi      r3, r31, 0
-	  li        r4, 0x13
-	  bl        .loc_0xF54
-	  li        r3, 0xC
-	  bl        -0xCCDD8
-	  mr.       r5, r3
-	  beq-      .loc_0xAC8
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0x5AC
-	  stw       r7, 0x0(r3)
-	  addi      r0, r7, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r6, r4, 0x289C
-	  addi      r0, r7, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r4, r6, 0xC
-	  addi      r0, r6, 0x18
-	  stw       r6, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-
-	.loc_0xAC8:
-	  addi      r3, r31, 0
-	  li        r4, 0x14
-	  bl        .loc_0xF54
-	  li        r3, 0x34
-	  bl        -0xCCE50
-	  mr.       r5, r3
-	  beq-      .loc_0xB94
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r0, r6, 0x18
-	  addi      r7, r4, 0x282C
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r6, r4, 0x27F0
-	  stw       r7, 0x0(r3)
-	  addi      r4, r7, 0xC
-	  addi      r0, r7, 0x18
-	  stw       r4, 0x4(r3)
-	  li        r9, 0
-	  li        r8, 0x146
-	  stw       r0, 0x8(r3)
-	  li        r7, 0x147
-	  addi      r4, r6, 0xC
-	  lfs       f0, -0x60B0(r2)
-	  addi      r0, r6, 0x18
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  stw       r9, 0x28(r3)
-	  stw       r9, 0x24(r3)
-	  stw       r8, 0x2C(r3)
-	  stw       r7, 0x30(r3)
-	  stw       r6, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-
-	.loc_0xB94:
-	  addi      r3, r31, 0
-	  li        r4, 0x15
-	  bl        .loc_0xF54
-	  li        r3, 0x28
-	  bl        -0xCCF1C
-	  mr.       r5, r3
-	  beq-      .loc_0xC30
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r0, r6, 0x18
-	  addi      r7, r4, 0x2744
-	  stw       r0, 0x8(r3)
-	  addi      r6, r7, 0xC
-	  addi      r4, r7, 0x18
-	  stw       r7, 0x0(r3)
-	  li        r0, 0
-	  stw       r6, 0x4(r3)
-	  stw       r4, 0x8(r3)
-	  lfs       f0, -0x60B0(r2)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  stw       r0, 0x24(r3)
-
-	.loc_0xC30:
-	  addi      r3, r31, 0
-	  li        r4, 0x16
-	  bl        .loc_0xF54
-	  li        r3, 0x34
-	  bl        -0xCCFB8
-	  mr.       r5, r3
-	  beq-      .loc_0xCE0
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r0, r6, 0x18
-	  addi      r4, r4, 0x282C
-	  stw       r0, 0x8(r3)
-	  addi      r0, r4, 0xC
-	  addi      r7, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r6, 0
-	  li        r4, 0x122
-	  stw       r0, 0x4(r3)
-	  li        r0, 0x123
-	  stw       r7, 0x8(r3)
-	  lfs       f0, -0x60B0(r2)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  stw       r6, 0x28(r3)
-	  stw       r6, 0x24(r3)
-	  stw       r4, 0x2C(r3)
-	  stw       r0, 0x30(r3)
-
-	.loc_0xCE0:
-	  addi      r3, r31, 0
-	  li        r4, 0x17
-	  bl        .loc_0xF54
-	  li        r3, 0x34
-	  bl        -0xCD068
-	  mr.       r5, r3
-	  beq-      .loc_0xD90
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r0, r6, 0x18
-	  addi      r4, r4, 0x282C
-	  stw       r0, 0x8(r3)
-	  addi      r0, r4, 0xC
-	  addi      r7, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r6, 0
-	  li        r4, 0x122
-	  stw       r0, 0x4(r3)
-	  li        r0, 0x123
-	  stw       r7, 0x8(r3)
-	  lfs       f0, -0x60B0(r2)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  stw       r6, 0x28(r3)
-	  stw       r6, 0x24(r3)
-	  stw       r4, 0x2C(r3)
-	  stw       r0, 0x30(r3)
-
-	.loc_0xD90:
-	  addi      r3, r31, 0
-	  li        r4, 0x18
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCD118
-	  mr.       r5, r3
-	  beq-      .loc_0xE18
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0x2A
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0xE18:
-	  addi      r3, r31, 0
-	  li        r4, 0x19
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCD1A0
-	  mr.       r5, r3
-	  beq-      .loc_0xEA0
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0x29
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0xEA0:
-	  addi      r3, r31, 0
-	  li        r4, 0x1A
-	  bl        .loc_0xF54
-	  li        r3, 0x14
-	  bl        -0xCD228
-	  mr.       r5, r3
-	  beq-      .loc_0xF28
-	  lis       r4, 0x802B
-	  addi      r0, r4, 0x600
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x5F4
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x5E8
-	  lis       r4, 0x802B
-	  stw       r0, 0x8(r3)
-	  addi      r6, r4, 0x5AC
-	  stw       r6, 0x0(r3)
-	  addi      r0, r6, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x2978
-	  addi      r0, r6, 0x18
-	  stw       r0, 0x8(r3)
-	  addi      r7, r4, 0xC
-	  addi      r6, r4, 0x18
-	  stw       r4, 0x0(r3)
-	  li        r4, 0x28
-	  li        r0, 0
-	  stw       r7, 0x4(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r4, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0xF28:
-	  addi      r3, r31, 0
-	  li        r4, 0x1B
-	  bl        .loc_0xF54
-	  mr        r3, r31
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-
-	.loc_0xF54:
-	*/
+	UtEffectMgr::effects = new KEffect*[28];
+	registerEffect(0, new GoalEffect);
+	registerEffect(1, new NaviWhistle(naviMgr->getNavi(0)));
+	registerEffect(2, new NaviWhistle(naviMgr->getNavi(1))); // louie confirmed?
+	registerEffect(3, new SmokeSoilEffect);
+	registerEffect(5, new SmokeGrassEffect);
+	registerEffect(4, new SmokeRockEffect);
+	registerEffect(6, new SmokeTreeEffect);
+	registerEffect(7, new NaviFue(naviMgr->getNavi(0)));
+	registerEffect(9, new SimpleEffect(EffectMgr::EFF_Piki_GrowUp1));
+	registerEffect(10, new SimpleEffect(EffectMgr::EFF_Piki_GrowUp2));
+	registerEffect(11, new SimpleEffect(EffectMgr::EFF_Wl_Hit1));
+	registerEffect(12, new SimpleEffect(EffectMgr::EFF_Wl_Hit0));
+	registerEffect(13, new SimpleEffect(EffectMgr::EFF_WL_Hit2));
+	registerEffect(14, new SimpleEffect(EffectMgr::EFF_WL_Hit3));
+	registerEffect(15, new SimpleEffect(EffectMgr::EFF_Wl_Brk00));
+	registerEffect(16, new SimpleEffect(EffectMgr::EFF_Wl_Brk01));
+	registerEffect(17, new SimpleEffect(EffectMgr::EFF_P_Bubbles));
+	registerEffect(18, new SimpleEffect(EffectMgr::EFF_RippleWhite));
+	registerEffect(19, new BombEffect);
+	registerEffect(20, new BombEffectLight);
+	registerEffect(21, new UfoSuckEffect);
+	registerEffect(22, new UfoSuikomiEffect);
+	registerEffect(23, new WhistleTemplate(0x122, 0x123));
+	registerEffect(24, new WhistleTemplate(0x122, 0x123));
+	registerEffect(25, new SimpleEffect(EffectMgr::EFF_Piki_IdleBlue));
+	registerEffect(26, new SimpleEffect(EffectMgr::EFF_Piki_IdleRed));
+	registerEffect(27, new SimpleEffect(EffectMgr::EFF_Piki_IdleYellow));
 }
 
 /*
@@ -1287,15 +138,9 @@ UtEffectMgr::UtEffectMgr()
  * Address:	801142D0
  * Size:	000010
  */
-void UtEffectMgr::registerEffect(int, KEffect*)
+void UtEffectMgr::registerEffect(int id, KEffect* efx)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x3114(r13)
-	  rlwinm    r0,r4,2,0,29
-	  stwx      r5, r3, r0
-	  blr
-	*/
+	effects[id] = efx;
 }
 
 /*
@@ -1303,30 +148,15 @@ void UtEffectMgr::registerEffect(int, KEffect*)
  * Address:	801142E0
  * Size:	000044
  */
-void UtEffectMgr::cast(int, EffectParm&)
+void UtEffectMgr::cast(int id, EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r3,2,0,29
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x3114(r13)
-	  lwzx      r0, r5, r0
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x34
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
+	if (id < 0 || id > 27) {
+		ERROR("cast oob : %d", id);
+	}
 
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	KEffect* eff = effects[id];
+	if (eff)
+		eff->emit(parm);
 }
 
 /*
@@ -1334,30 +164,15 @@ void UtEffectMgr::cast(int, EffectParm&)
  * Address:	80114324
  * Size:	000044
  */
-void UtEffectMgr::kill(int)
+void UtEffectMgr::kill(int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r3,2,0,29
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x3114(r13)
-	  lwzx      r0, r4, r0
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x34
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
+	if (id < 0 || id > 27) {
+		ERROR("kill oob : %d", id);
+	}
 
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	KEffect* eff = effects[id];
+	if (eff)
+		eff->kill();
 }
 
 /*
@@ -1367,22 +182,8 @@ void UtEffectMgr::kill(int)
  */
 PermanentEffect::PermanentEffect()
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x60B0(r2)
-	  li        r0, 0
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  stw       r0, 0xC(r3)
-	  lfs       f0, -0x2490(r13)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, -0x248C(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x2488(r13)
-	  stfs      f0, 0x8(r3)
-	  blr
-	*/
+	mPtclGen = nullptr;
+	mPosition.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -1390,48 +191,18 @@ PermanentEffect::PermanentEffect()
  * Address:	8011439C
  * Size:	00008C
  */
-void PermanentEffect::init(Vector3f&, int)
+void PermanentEffect::init(Vector3f& pos, int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r8, r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  lwz       r0, 0xC(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x78
-	  lwz       r3, 0x0(r4)
-	  mr        r5, r31
-	  lwz       r0, 0x4(r4)
-	  li        r6, 0
-	  li        r7, 0
-	  stw       r3, 0x0(r31)
-	  stw       r0, 0x4(r31)
-	  lwz       r0, 0x8(r4)
-	  mr        r4, r8
-	  stw       r0, 0x8(r31)
-	  lwz       r3, 0x3180(r13)
-	  bl        0x8874C
-	  stw       r3, 0xC(r31)
-	  lwz       r3, 0xC(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x78
-	  stw       r31, 0x18(r3)
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x1
-	  stw       r0, 0x80(r3)
+	if (mPtclGen) {
+		return;
+	}
+	mPosition = pos;
+	mPtclGen  = effectMgr->create((EffectMgr::effTypeTable)id, mPosition, nullptr, nullptr);
 
-	.loc_0x78:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (mPtclGen) {
+		mPtclGen->setEmitPosPtr(&mPosition);
+		mPtclGen->stop();
+	}
 }
 
 /*
@@ -1439,8 +210,12 @@ void PermanentEffect::init(Vector3f&, int)
  * Address:	80114428
  * Size:	000034
  */
-void PermanentEffect::updatePos(Vector3f&)
+void PermanentEffect::updatePos(Vector3f& pos)
 {
+	mPosition = pos;
+	if (mPtclGen) {
+		mPtclGen->start();
+	}
 	/*
 	.loc_0x0:
 	  lwz       r5, 0x0(r4)
@@ -1464,47 +239,15 @@ void PermanentEffect::updatePos(Vector3f&)
  * Address:	8011445C
  * Size:	000080
  */
-void PermanentEffect::changeEffect(int)
+void PermanentEffect::changeEffect(int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r0, 0xC(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3C
-	  lwz       r3, 0x3180(r13)
-	  mr        r4, r0
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8D130
-
-	.loc_0x3C:
-	  lwz       r3, 0x3180(r13)
-	  addi      r4, r31, 0
-	  addi      r5, r30, 0
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x8868C
-	  stw       r3, 0xC(r30)
-	  lwz       r3, 0xC(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x68
-	  stw       r30, 0x18(r3)
-
-	.loc_0x68:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (mPtclGen) {
+		effectMgr->mPtclMgr.killGenerator(mPtclGen, false);
+	}
+	mPtclGen = effectMgr->create((EffectMgr::effTypeTable)id, mPosition, nullptr, nullptr);
+	if (mPtclGen) {
+		mPtclGen->setEmitPosPtr(&mPosition);
+	}
 }
 
 /*
@@ -1514,16 +257,9 @@ void PermanentEffect::changeEffect(int)
  */
 void PermanentEffect::stop()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0xC(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,28,26
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	if (mPtclGen) {
+		mPtclGen->pmSwitchOff(0x10);
+	}
 }
 
 /*
@@ -1533,16 +269,9 @@ void PermanentEffect::stop()
  */
 void PermanentEffect::restart()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0xC(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x10
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	if (mPtclGen) {
+		mPtclGen->pmSwitchOn(0x10);
+	}
 }
 
 /*
@@ -1552,30 +281,10 @@ void PermanentEffect::restart()
  */
 void PermanentEffect::kill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r4, 0xC(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x38
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8D084
-	  li        r0, 0
-	  stw       r0, 0xC(r31)
-
-	.loc_0x38:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mPtclGen) {
+		effectMgr->mPtclMgr.killGenerator(mPtclGen, false);
+		mPtclGen = nullptr;
+	}
 }
 
 /*
@@ -1583,45 +292,15 @@ void PermanentEffect::kill()
  * Address:	80114560
  * Size:	000080
  */
-void FreeLightEffect::emit(EffectParm&)
+void FreeLightEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x28(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x10(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x68
-	  lhz       r0, 0xC(r30)
-	  li        r6, 0
-	  lwz       r3, 0x3180(r13)
-	  li        r7, 0
-	  lwz       r5, 0x20(r31)
-	  subfic    r4, r0, 0x2A
-	  bl        0x88598
-	  stw       r3, 0x10(r30)
-	  lwz       r3, 0x10(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x68
-	  lfs       f0, 0xF0(r3)
-	  stfs      f0, 0x14(r30)
-	  lwz       r0, 0x20(r31)
-	  lwz       r3, 0x10(r30)
-	  stw       r0, 0x18(r3)
-
-	.loc_0x68:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	if (!mEfx) {
+		mEfx = effectMgr->create((EffectMgr::effTypeTable)(EffectMgr::EFF_Piki_IdleBlue - mColor), *parm._20, nullptr, nullptr);
+		if (mEfx) {
+			mScale = mEfx->getScaleSize();
+			mEfx->setEmitPosPtr(parm._20);
+		}
+	}
 }
 
 /*
@@ -1631,16 +310,9 @@ void FreeLightEffect::emit(EffectParm&)
  */
 void FreeLightEffect::stop()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x10(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,28,26
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	if (mEfx) {
+		mEfx->pmSwitchOff(0x10);
+	}
 }
 
 /*
@@ -1650,16 +322,9 @@ void FreeLightEffect::stop()
  */
 void FreeLightEffect::restart()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x10(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x10
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	if (mEfx) {
+		mEfx->pmSwitchOn(0x10);
+	}
 }
 
 /*
@@ -1667,18 +332,11 @@ void FreeLightEffect::restart()
  * Address:	80114618
  * Size:	00001C
  */
-void FreeLightEffect::setScale(f32)
+void FreeLightEffect::setScale(f32 scale)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x10(r3)
-	  cmplwi    r4, 0
-	  beqlr-
-	  lfs       f0, 0x14(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xF0(r4)
-	  blr
-	*/
+	if (mEfx) {
+		mEfx->setScaleSize(scale * mScale);
+	}
 }
 
 /*
@@ -1688,30 +346,10 @@ void FreeLightEffect::setScale(f32)
  */
 void FreeLightEffect::kill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x10(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x38
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8CF64
-	  li        r0, 0
-	  stw       r0, 0x10(r31)
-
-	.loc_0x38:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mEfx) {
+		effectMgr->mPtclMgr.killGenerator(mEfx, false);
+		mEfx = nullptr;
+	}
 }
 
 /*
@@ -1719,92 +357,28 @@ void FreeLightEffect::kill()
  * Address:	80114680
  * Size:	000134
  */
-void RippleEffect::emit(EffectParm&)
+void RippleEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stfd      f31, 0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x60(r1)
-	  mr        r30, r3
-	  lwz       r0, 0xC(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x118
-	  lfs       f31, 0x24(r31)
-	  li        r4, 0xD
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  lwz       r5, 0x20(r31)
-	  li        r7, 0
-	  bl        0x88474
-	  stw       r3, 0x10(r30)
-	  lwz       r3, 0x10(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA4
-	  lfs       f0, 0xF0(r3)
-	  lwz       r0, 0x20(r31)
-	  fmuls     f0, f31, f0
-	  stw       r0, 0x18(r3)
-	  lfs       f1, -0x2484(r13)
-	  lfs       f2, -0x2480(r13)
-	  stfs      f1, 0x4C(r1)
-	  lfs       f1, -0x247C(r13)
-	  stfs      f2, 0x50(r1)
-	  stfs      f1, 0x54(r1)
-	  lwz       r4, 0x10(r30)
-	  lwz       r3, 0x4C(r1)
-	  lwz       r0, 0x50(r1)
-	  stw       r3, 0x1DC(r4)
-	  stw       r0, 0x1E0(r4)
-	  lwz       r0, 0x54(r1)
-	  stw       r0, 0x1E4(r4)
-	  lwz       r3, 0x10(r30)
-	  stfs      f0, 0xF0(r3)
+	if (mEfxA) {
+		return;
+	}
+	f32 a = parm._24;
 
-	.loc_0xA4:
-	  lwz       r3, 0x3180(r13)
-	  li        r4, 0xE
-	  lwz       r5, 0x20(r31)
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x88400
-	  stw       r3, 0xC(r30)
-	  lwz       r3, 0xC(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x118
-	  lfs       f0, 0xF0(r3)
-	  lwz       r0, 0x20(r31)
-	  fmuls     f0, f31, f0
-	  stw       r0, 0x18(r3)
-	  lfs       f1, -0x2478(r13)
-	  lfs       f2, -0x2474(r13)
-	  stfs      f1, 0x40(r1)
-	  lfs       f1, -0x2470(r13)
-	  stfs      f2, 0x44(r1)
-	  stfs      f1, 0x48(r1)
-	  lwz       r4, 0xC(r30)
-	  lwz       r3, 0x40(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r3, 0x1DC(r4)
-	  stw       r0, 0x1E0(r4)
-	  lwz       r0, 0x48(r1)
-	  stw       r0, 0x1E4(r4)
-	  lwz       r3, 0xC(r30)
-	  stfs      f0, 0xF0(r3)
+	mEfxB = effectMgr->create(EffectMgr::EFF_RippleBlack, *parm._20, nullptr, nullptr);
+	if (mEfxB) {
+		f32 scale = a * mEfxB->getScaleSize();
+		mEfxB->setEmitPosPtr(parm._20);
+		mEfxB->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+		mEfxB->setScaleSize(scale);
+	}
 
-	.loc_0x118:
-	  lwz       r0, 0x74(r1)
-	  lfd       f31, 0x68(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	mEfxA = effectMgr->create(EffectMgr::EFF_RippleWhite, *parm._20, nullptr, nullptr);
+	if (mEfxA) {
+		f32 scale = a * mEfxA->getScaleSize();
+		mEfxA->setEmitPosPtr(parm._20);
+		mEfxA->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+		mEfxA->setScaleSize(scale);
+	}
 }
 
 /*
@@ -1814,52 +388,18 @@ void RippleEffect::emit(EffectParm&)
  */
 void RippleEffect::kill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x10(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x38
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8CDE4
-	  li        r0, 0
-	  stw       r0, 0x10(r31)
-
-	.loc_0x38:
-	  lwz       r4, 0x14(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x5C
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8CDC0
-	  li        r0, 0
-	  stw       r0, 0x14(r31)
-
-	.loc_0x5C:
-	  lwz       r4, 0xC(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x80
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8CD9C
-	  li        r0, 0
-	  stw       r0, 0xC(r31)
-
-	.loc_0x80:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mEfxB) {
+		effectMgr->mPtclMgr.killGenerator(mEfxB, false);
+		mEfxB = nullptr;
+	}
+	if (mEfxC) {
+		effectMgr->mPtclMgr.killGenerator(mEfxC, false);
+		mEfxC = nullptr;
+	}
+	if (mEfxA) {
+		effectMgr->mPtclMgr.killGenerator(mEfxA, false);
+		mEfxA = nullptr;
+	}
 }
 
 /*
@@ -1869,24 +409,12 @@ void RippleEffect::kill()
  */
 void RippleEffect::stop()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x10(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x18
-	  lwz       r0, 0x80(r4)
-	  rlwinm    r0,r0,0,28,26
-	  stw       r0, 0x80(r4)
-
-	.loc_0x18:
-	  lwz       r3, 0xC(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,28,26
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	if (mEfxB) {
+		mEfxB->pmSwitchOff(0x10);
+	}
+	if (mEfxA) {
+		mEfxA->pmSwitchOff(0x10);
+	}
 }
 
 /*
@@ -1896,24 +424,12 @@ void RippleEffect::stop()
  */
 void RippleEffect::restart()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x10(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x18
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x10
-	  stw       r0, 0x80(r4)
-
-	.loc_0x18:
-	  lwz       r3, 0xC(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x10
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	if (mEfxB) {
+		mEfxB->pmSwitchOn(0x10);
+	}
+	if (mEfxA) {
+		mEfxA->pmSwitchOn(0x10);
+	}
 }
 
 /*
@@ -1923,16 +439,9 @@ void RippleEffect::restart()
  */
 void BurnEffect::stop()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x10(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,28,26
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	if (mEfxA) {
+		mEfxA->pmSwitchOff(0x10);
+	}
 }
 
 /*
@@ -1942,16 +451,9 @@ void BurnEffect::stop()
  */
 void BurnEffect::restart()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x10(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x10
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	if (mEfxA) {
+		mEfxA->pmSwitchOn(0x10);
+	}
 }
 
 /*
@@ -1959,98 +461,30 @@ void BurnEffect::restart()
  * Address:	801148E8
  * Size:	00014C
  */
-void BurnEffect::emit(EffectParm&)
+void BurnEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x78(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x10(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x134
-	  lwz       r3, 0x3180(r13)
-	  mr        r6, r30
-	  lwz       r5, 0x20(r31)
-	  li        r4, 0x2B
-	  li        r7, 0
-	  bl        0x88214
-	  stw       r3, 0x10(r30)
-	  lwz       r3, 0x10(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xC8
-	  lwz       r0, 0x20(r31)
-	  stw       r0, 0x18(r3)
-	  lfs       f0, -0x246C(r13)
-	  lfs       f1, -0x2468(r13)
-	  stfs      f0, 0x54(r1)
-	  lfs       f0, -0x2464(r13)
-	  stfs      f1, 0x58(r1)
-	  stfs      f0, 0x5C(r1)
-	  lwz       r4, 0x10(r30)
-	  lwz       r3, 0x54(r1)
-	  lwz       r0, 0x58(r1)
-	  stw       r3, 0x1DC(r4)
-	  stw       r0, 0x1E0(r4)
-	  lwz       r0, 0x5C(r1)
-	  stw       r0, 0x1E4(r4)
-	  lwz       r3, 0xC(r30)
-	  lfs       f0, -0x60AC(r2)
-	  lfs       f1, 0x0(r3)
-	  lfs       f2, -0x60B0(r2)
-	  lfs       f3, 0x8(r3)
-	  fmuls     f1, f1, f0
-	  lwz       r3, 0x10(r30)
-	  fmuls     f2, f2, f0
-	  fmuls     f3, f3, f0
-	  stfs      f1, 0x138(r3)
-	  stfs      f2, 0x13C(r3)
-	  stfs      f3, 0x140(r3)
-	  lwz       r0, 0x84(r3)
-	  oris      r0, r0, 0x2
-	  stw       r0, 0x84(r3)
+	if (mEfxA) {
+		return;
+	}
 
-	.loc_0xC8:
-	  lwz       r3, 0x3180(r13)
-	  mr        r6, r30
-	  lwz       r5, 0x20(r31)
-	  li        r4, 0x2C
-	  li        r7, 0
-	  bl        0x88174
-	  stw       r3, 0x14(r30)
-	  lwz       r3, 0x14(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x134
-	  lwz       r0, 0x20(r31)
-	  stw       r0, 0x18(r3)
-	  lwz       r3, 0xC(r30)
-	  lfs       f0, -0x60AC(r2)
-	  lfs       f1, 0x0(r3)
-	  lfs       f2, -0x60B0(r2)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x8(r3)
-	  lwz       r3, 0x14(r30)
-	  fmuls     f2, f2, f0
-	  fmuls     f3, f3, f0
-	  stfs      f1, 0x138(r3)
-	  stfs      f2, 0x13C(r3)
-	  stfs      f3, 0x140(r3)
-	  lwz       r0, 0x84(r3)
-	  oris      r0, r0, 0x2
-	  stw       r0, 0x84(r3)
+	mEfxA = effectMgr->create(EffectMgr::EFF_Piki_Fire, *parm._20, this, nullptr);
+	if (mEfxA) {
+		mEfxA->setEmitPosPtr(parm._20);
+		mEfxA->setOrientedNormalVector(Vector3f(0.0f, 0.0f, 1.0f));
+		Vector3f vel(_0C[0]);
+		vel.y = 0.0f;
+		vel.multiply(0.01f);
+		mEfxA->setEmitVelocity(Vector3f(vel));
+	}
 
-	.loc_0x134:
-	  lwz       r0, 0x84(r1)
-	  lwz       r31, 0x7C(r1)
-	  lwz       r30, 0x78(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	mEfxB = effectMgr->create(EffectMgr::EFF_Piki_FireSparkles, *parm._20, this, nullptr);
+	if (mEfxB) {
+		mEfxB->setEmitPosPtr(parm._20);
+		Vector3f vel(_0C[0]);
+		vel.y = 0.0f;
+		vel.multiply(0.01f);
+		mEfxB->setEmitVelocity(Vector3f(vel));
+	}
 }
 
 /*
@@ -2060,41 +494,14 @@ void BurnEffect::emit(EffectParm&)
  */
 void BurnEffect::kill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x10(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x38
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8CB64
-	  li        r0, 0
-	  stw       r0, 0x10(r31)
-
-	.loc_0x38:
-	  lwz       r4, 0x14(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x5C
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8CB40
-	  li        r0, 0
-	  stw       r0, 0x14(r31)
-
-	.loc_0x5C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mEfxA) {
+		effectMgr->mPtclMgr.killGenerator(mEfxA, false);
+		mEfxA = nullptr;
+	}
+	if (mEfxB) {
+		effectMgr->mPtclMgr.killGenerator(mEfxB, false);
+		mEfxB = nullptr;
+	}
 }
 
 /*
@@ -2112,8 +519,20 @@ bool BurnEffect::invoke(zen::particleGenerator*)
  * Address:	80114AAC
  * Size:	0001C4
  */
-void UfoSuikomiEffect::emit(EffectParm&)
+void UfoSuikomiEffect::emit(EffectParm& parm)
 {
+	_0C = parm.mPosition;
+	_18 = parm.mDirection;
+	if (mEfx) {
+		return;
+	}
+	mEfx          = effectMgr->create(EffectMgr::EFF_Rocket_Nke1, _0C, this, this);
+	Vector3f diff = _18 - _0C;
+	mEfx->setNewtonField(diff, 0.0016f, true);
+	diff.normalise();
+	mEfx->setVortexField(Vector3f(diff), -0.12f, -0.09f, 0.3f, 400.0f, true);
+
+	f32 badcompiler[6];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2247,30 +666,10 @@ void UfoSuikomiEffect::emit(EffectParm&)
  */
 void UfoSuikomiEffect::kill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x24(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x38
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8C90C
-	  li        r0, 0
-	  stw       r0, 0x24(r31)
-
-	.loc_0x38:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mEfx) {
+		effectMgr->mPtclMgr.killGenerator(mEfx, false);
+		mEfx = nullptr;
+	}
 }
 
 /*
@@ -2278,8 +677,19 @@ void UfoSuikomiEffect::kill()
  * Address:	80114CD8
  * Size:	0000E0
  */
-void WhistleTemplate::emit(EffectParm&)
+void WhistleTemplate::emit(EffectParm& parm)
 {
+	_0C = parm.mPosition;
+	_18 = parm.mDirection;
+	if (mEfxA || mEfxB) {
+		return;
+	}
+	mEfxA = effectMgr->create((EffectMgr::effTypeTable)_2C, _18, this, this);
+	mEfxB = effectMgr->create((EffectMgr::effTypeTable)_30, _18, this, this);
+
+	if (mEfxA) {
+		mEfxA->setOrientedConstZAxis(true);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2356,41 +766,17 @@ void WhistleTemplate::emit(EffectParm&)
  */
 void WhistleTemplate::kill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x24(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x38
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8C7E0
-	  li        r0, 0
-	  stw       r0, 0x24(r31)
-
-	.loc_0x38:
-	  lwz       r4, 0x28(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x5C
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8C7BC
-	  li        r0, 0
-	  stw       r0, 0x28(r31)
-
-	.loc_0x5C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("** KILL WHISTLE TYPE\n");
+	if (mEfxA) {
+		PRINT("* DO KILL pg2\n");
+		effectMgr->mPtclMgr.killGenerator(mEfxA, false);
+		mEfxA = nullptr;
+	}
+	if (mEfxB) {
+		PRINT("* DO KILL pg3\n");
+		effectMgr->mPtclMgr.killGenerator(mEfxB, false);
+		mEfxB = nullptr;
+	}
 }
 
 /*
@@ -2398,8 +784,10 @@ void WhistleTemplate::kill()
  * Address:	80114E28
  * Size:	00034C
  */
-bool WhistleTemplate::invoke(zen::particleGenerator*, zen::particleMdl*)
+bool WhistleTemplate::invoke(zen::particleGenerator* efx, zen::particleMdl* mdl)
 {
+	Vector3f diff = _18 - _0C;
+	mdl->_18      = diff;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2645,67 +1033,17 @@ bool WhistleTemplate::invoke(zen::particleGenerator*, zen::particleMdl*)
  * Address:	80115174
  * Size:	0000D8
  */
-void BombEffectLight::emit(EffectParm&)
+void BombEffectLight::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  li        r7, 0
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r4
-	  addi      r5, r31, 0
-	  lwz       r3, 0x3180(r13)
-	  li        r4, 0x20
-	  bl        0x8799C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x64
-	  lfs       f0, -0x24A4(r13)
-	  lfs       f1, -0x24A0(r13)
-	  stfs      f0, 0x10(r1)
-	  lfs       f0, -0x249C(r13)
-	  stfs      f1, 0x14(r1)
-	  stfs      f0, 0x18(r1)
-	  lwz       r4, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x18(r1)
-	  stw       r0, 0x1E4(r3)
-
-	.loc_0x64:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0
-	  li        r4, 0x17
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x8794C
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0
-	  li        r4, 0x18
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x87934
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0
-	  li        r4, 0x19
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x8791C
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0
-	  li        r4, 0x1A
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x87904
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Bomb_Glow, parm.mPosition, nullptr, nullptr);
+	if (efx) {
+		Vector3f nrm(0.0f, 1.0f, 0.0f);
+		efx->setOrientedNormalVector(nrm);
+	}
+	effectMgr->create(EffectMgr::EFF_BombLight_Bang, parm.mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_BombLight_Wave, parm.mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_BombLight_FireBang, parm.mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_BombLight_FireGlow, parm.mPosition, nullptr, nullptr);
 }
 
 /*
@@ -2722,73 +1060,18 @@ void BombEffectLight::kill()
  * Address:	80115250
  * Size:	0000F0
  */
-void BombEffect::emit(EffectParm&)
+void BombEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  li        r7, 0
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r4
-	  addi      r5, r31, 0
-	  lwz       r3, 0x3180(r13)
-	  li        r4, 0x20
-	  bl        0x878C0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x64
-	  lfs       f0, -0x24B0(r13)
-	  lfs       f1, -0x24AC(r13)
-	  stfs      f0, 0x10(r1)
-	  lfs       f0, -0x24A8(r13)
-	  stfs      f1, 0x14(r1)
-	  stfs      f0, 0x18(r1)
-	  lwz       r4, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x18(r1)
-	  stw       r0, 0x1E4(r3)
-
-	.loc_0x64:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0
-	  li        r4, 0x1F
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x87870
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0
-	  li        r4, 0x21
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x87858
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0
-	  li        r4, 0x1E
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x87840
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0
-	  li        r4, 0x22
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x87828
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0
-	  li        r4, 0x23
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x87810
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Bomb_Glow, parm.mPosition, nullptr, nullptr);
+	if (efx) {
+		Vector3f nrm(0.0f, 1.0f, 0.0f);
+		efx->setOrientedNormalVector(nrm);
+	}
+	effectMgr->create(EffectMgr::EFF_Bomb_Wave, parm.mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Bomb_DustRing, parm.mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Bomb_Bang, parm.mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Bomb_FireBang, parm.mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Bomb_FireGlow, parm.mPosition, nullptr, nullptr);
 }
 
 /*
@@ -2805,28 +1088,9 @@ void BombEffect::kill()
  * Address:	80115344
  * Size:	000044
  */
-void SimpleEffect::emit(EffectParm&)
+void SimpleEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r4
-	  stw       r0, 0x4(r1)
-	  li        r6, 0
-	  li        r7, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x3180(r13)
-	  lwz       r4, 0xC(r31)
-	  bl        0x877CC
-	  stw       r3, 0x10(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mEfx = effectMgr->create((EffectMgr::effTypeTable)mEfxId, parm.mPosition, nullptr, nullptr);
 }
 
 /*
@@ -2836,25 +1100,8 @@ void SimpleEffect::emit(EffectParm&)
  */
 void SimpleEffect::kill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x10(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x28
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8C218
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mEfx)
+		effectMgr->mPtclMgr.killGenerator(mEfx, false);
 }
 
 /*
@@ -2872,67 +1119,18 @@ bool NaviFue::invoke(zen::particleGenerator*)
  * Address:	801153C8
  * Size:	0000C0
  */
-void NaviFue::emit(EffectParm&)
+void NaviFue::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
-	  mr        r28, r3
-	  lwz       r3, 0x14(r3)
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xA0
-	  li        r29, 0
-	  mulli     r31, r29, 0xC
-	  li        r30, 0
-	  b         .loc_0x94
+	if (mEntries[0]) {
+		return;
+	}
 
-	.loc_0x40:
-	  lwz       r0, 0xC(r28)
-	  addi      r5, r31, 0x938
-	  lwz       r3, 0x3180(r13)
-	  addi      r6, r28, 0
-	  add       r5, r0, r5
-	  li        r4, 0x14
-	  li        r7, 0
-	  bl        0x87714
-	  lwz       r4, 0x14(r28)
-	  stwx      r3, r4, r30
-	  lwz       r3, 0x14(r28)
-	  lwzx      r4, r3, r30
-	  cmplwi    r4, 0
-	  beq-      .loc_0x88
-	  lwz       r3, 0xC(r28)
-	  addi      r0, r31, 0x938
-	  add       r0, r3, r0
-	  stw       r0, 0x18(r4)
-
-	.loc_0x88:
-	  addi      r31, r31, 0xC
-	  addi      r30, r30, 0x4
-	  addi      r29, r29, 0x1
-
-	.loc_0x94:
-	  lwz       r0, 0x10(r28)
-	  cmpw      r29, r0
-	  blt+      .loc_0x40
-
-	.loc_0xA0:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mEntryNum; i++) {
+		mEntries[i] = effectMgr->create(EffectMgr::EFF_Navi_WhistleCursor, mNavi->_938[i], this, nullptr);
+		if (mEntries[i]) {
+			mEntries[i]->setEmitPosPtr(&mNavi->_938[i]);
+		}
+	}
 }
 
 /*
@@ -2942,62 +1140,17 @@ void NaviFue::emit(EffectParm&)
  */
 void NaviFue::kill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  mr        r28, r3
-	  lwz       r3, 0x14(r3)
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x90
-	  li        r30, 0
-	  lfs       f31, -0x60B0(r2)
-	  addi      r31, r30, 0
-	  li        r29, 0
-	  b         .loc_0x84
+	if (!mEntries[0]) {
+		return;
+	}
 
-	.loc_0x48:
-	  lwz       r3, 0x14(r28)
-	  lwzx      r3, r3, r30
-	  cmplwi    r3, 0
-	  beq-      .loc_0x74
-	  stfs      f31, 0xB8(r3)
-	  li        r5, 0
-	  lwz       r3, 0x14(r28)
-	  lwz       r6, 0x3180(r13)
-	  lwzx      r4, r3, r30
-	  addi      r3, r6, 0x14
-	  bl        0x8C0CC
-
-	.loc_0x74:
-	  lwz       r3, 0x14(r28)
-	  addi      r29, r29, 0x1
-	  stwx      r31, r3, r30
-	  addi      r30, r30, 0x4
-
-	.loc_0x84:
-	  lwz       r0, 0x10(r28)
-	  cmpw      r29, r0
-	  blt+      .loc_0x48
-
-	.loc_0x90:
-	  lwz       r0, 0x2C(r1)
-	  lfd       f31, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mEntryNum; i++) {
+		if (mEntries[i]) {
+			mEntries[i]->setInitVel(0.0f);
+			effectMgr->mPtclMgr.killGenerator(mEntries[i], false);
+		}
+		mEntries[i] = nullptr;
+	}
 }
 
 /*
@@ -3005,24 +1158,9 @@ void NaviFue::kill()
  * Address:	8011553C
  * Size:	000034
  */
-void SmokeTreeEffect::emit(EffectParm&)
+void SmokeTreeEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x13
-	  li        r6, 0
-	  stwu      r1, -0x8(r1)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  bl        0x875DC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	effectMgr->create(EffectMgr::EFF_Kogane_Walk0, parm.mPosition, nullptr, nullptr);
 }
 
 /*
@@ -3030,24 +1168,9 @@ void SmokeTreeEffect::emit(EffectParm&)
  * Address:	80115570
  * Size:	000034
  */
-void SmokeRockEffect::emit(EffectParm&)
+void SmokeRockEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x11
-	  li        r6, 0
-	  stwu      r1, -0x8(r1)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  bl        0x875A8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	effectMgr->create(EffectMgr::EFF_Kogane_Walk2, parm.mPosition, nullptr, nullptr);
 }
 
 /*
@@ -3055,24 +1178,9 @@ void SmokeRockEffect::emit(EffectParm&)
  * Address:	801155A4
  * Size:	000034
  */
-void SmokeGrassEffect::emit(EffectParm&)
+void SmokeGrassEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x12
-	  li        r6, 0
-	  stwu      r1, -0x8(r1)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  bl        0x87574
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	effectMgr->create(EffectMgr::EFF_Kogane_Walk1, parm.mPosition, nullptr, nullptr);
 }
 
 /*
@@ -3080,24 +1188,9 @@ void SmokeGrassEffect::emit(EffectParm&)
  * Address:	801155D8
  * Size:	000034
  */
-void SmokeSoilEffect::emit(EffectParm&)
+void SmokeSoilEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x13
-	  li        r6, 0
-	  stwu      r1, -0x8(r1)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  bl        0x87540
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	effectMgr->create(EffectMgr::EFF_Kogane_Walk0, parm.mPosition, nullptr, nullptr);
 }
 
 /*
@@ -3105,8 +1198,21 @@ void SmokeSoilEffect::emit(EffectParm&)
  * Address:	8011560C
  * Size:	0000FC
  */
-void NaviWhistle::emit(EffectParm&)
+void NaviWhistle::emit(EffectParm& parm)
 {
+	if (mEfxA || mEfxB || mEfxC) {
+		return;
+	}
+	mEfxA = effectMgr->create(EffectMgr::EFF_Navi_Whistle1, mNavi->mNaviLightPosition, this, nullptr);
+	mEfxB = effectMgr->create(EffectMgr::EFF_Navi_Whistle2, mNavi->mNaviLightPosition, this, this);
+	mEfxC = effectMgr->create(EffectMgr::EFF_Navi_Whistle3, mNavi->mNaviLightPosition, this, this);
+
+	if (mEfxA) {
+		mEfxA->setEmitPosPtr(&mNavi->mNaviLightPosition);
+	}
+	if (mEfxB) {
+		mEfxB;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3192,52 +1298,20 @@ void NaviWhistle::emit(EffectParm&)
  */
 void NaviWhistle::kill()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x10(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x38
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8BE90
-	  li        r0, 0
-	  stw       r0, 0x10(r31)
+	if (mEfxA) {
+		effectMgr->mPtclMgr.killGenerator(mEfxA, false);
+		mEfxA = nullptr;
+	}
 
-	.loc_0x38:
-	  lwz       r4, 0x14(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x5C
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8BE6C
-	  li        r0, 0
-	  stw       r0, 0x14(r31)
+	if (mEfxB) {
+		effectMgr->mPtclMgr.killGenerator(mEfxB, false);
+		mEfxB = nullptr;
+	}
 
-	.loc_0x5C:
-	  lwz       r4, 0x18(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x80
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x8BE48
-	  li        r0, 0
-	  stw       r0, 0x18(r31)
-
-	.loc_0x80:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mEfxC) {
+		effectMgr->mPtclMgr.killGenerator(mEfxC, false);
+		mEfxC = nullptr;
+	}
 }
 
 /*
@@ -3500,8 +1574,13 @@ bool NaviWhistle::invoke(zen::particleGenerator*, zen::particleMdl*)
  * Address:	80115B00
  * Size:	000038
  */
-bool GoalEffect::invoke(zen::particleGenerator*)
+bool GoalEffect::invoke(zen::particleGenerator* efx)
 {
+	if (efx->_88[8] > 50) {
+		Vector3f grav(0.0f, 0.0f, 0.0f);
+		efx->setGravityField(grav, true);
+	}
+	return true;
 	/*
 	.loc_0x0:
 	  lha       r0, 0x90(r4)
@@ -3528,26 +1607,7 @@ bool GoalEffect::invoke(zen::particleGenerator*)
  * Address:	80115B38
  * Size:	00003C
  */
-void GoalEffect::emit(EffectParm&)
+void GoalEffect::emit(EffectParm& parm)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr.       r6, r3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  addi      r7, r6, 0
-	  beq-      .loc_0x1C
-	  addi      r7, r7, 0x4
-
-	.loc_0x1C:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r4, 0
-	  li        r4, 0xE1
-	  bl        0x86FD8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	effectMgr->create(EffectMgr::EFF_Onyon_Suck, parm.mPosition, this, this);
 }

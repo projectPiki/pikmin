@@ -38,7 +38,7 @@ struct EffectParm {
 	u8 _18[0x8];         // _18, unknown
 	Vector3f* _20;       // _20
 	f32 _24;             // _24
-	u8 _28[0x4];         // _28, I think?
+	Creature* _28;       // _28, I think?
 	                     // TODO: members
 };
 

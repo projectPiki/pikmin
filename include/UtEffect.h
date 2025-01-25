@@ -3,6 +3,9 @@
 
 #include "types.h"
 #include "KEffect.h"
+#include "EffectMgr.h"
+
+struct Navi;
 
 // NB: could maybe split these into smaller headers down the line
 // Most of their functions are in uteffect in Kando, so they're here for now.
@@ -43,9 +46,9 @@ struct BombEffectLight : public KEffect {
 struct BurnEffect : public KEffect {
 	BurnEffect(Vector3f* vec)
 	{
-		_0C = vec;
-		_10 = 0;
-		_14 = 0;
+		_0C   = vec;
+		mEfxA = 0;
+		mEfxB = 0;
 	}
 
 	virtual bool invoke(zen::particleGenerator*); // _08
@@ -58,9 +61,9 @@ struct BurnEffect : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	Vector3f* _0C; // _0C
-	u32 _10;       // _10, unknown
-	u32 _14;       // _14, unknown
+	Vector3f* _0C;                 // _0C
+	zen::particleGenerator* mEfxA; // _10
+	zen::particleGenerator* mEfxB; // _14
 };
 
 /**
@@ -69,7 +72,7 @@ struct BurnEffect : public KEffect {
  * @note Size: 0x18.
  */
 struct FreeLightEffect : public KEffect {
-	FreeLightEffect() { _10 = 0; }
+	FreeLightEffect() { mEfx = nullptr; }
 
 	virtual void emit(EffectParm&); // _2C
 	virtual void kill();            // _30
@@ -82,9 +85,9 @@ struct FreeLightEffect : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	u16 mColor;  // _0C
-	u32 _10;     // _10, unknown
-	u8 _14[0x4]; // _14, unknown
+	u16 mColor;                   // _0C
+	zen::particleGenerator* mEfx; // _10, unknown
+	f32 mScale;                   // _14
 };
 
 /**
@@ -105,6 +108,17 @@ struct GoalEffect : public KEffect {
  * @brief TODO
  */
 struct NaviFue : public KEffect {
+	NaviFue(Navi* navi)
+	{
+		mNavi     = navi;
+		mEntryNum = 24;
+		mEntries  = new zen::particleGenerator*[mEntryNum];
+		if (navi) {
+			for (int i = 0; i < mEntryNum; i++) {
+				mEntries[i] = nullptr;
+			}
+		}
+	}
 	virtual bool invoke(zen::particleGenerator*); // _08
 	virtual void emit(EffectParm&);               // _2C
 	virtual void kill();                          // _30
@@ -113,13 +127,22 @@ struct NaviFue : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	// TODO: members
+	Navi* mNavi;                       // _0C
+	int mEntryNum;                     // _10
+	zen::particleGenerator** mEntries; // _14
 };
 
 /**
  * @brief TODO
  */
 struct NaviWhistle : public KEffect {
+	NaviWhistle(Navi* navi)
+	{
+		mNavi = navi;
+		mEfxC = 0;
+		mEfxB = 0;
+		mEfxA = 0;
+	}
 	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _24
 	virtual void emit(EffectParm&);                                  // _2C
 	virtual void kill();                                             // _30
@@ -129,6 +152,10 @@ struct NaviWhistle : public KEffect {
 	// _08     = VTBL3
 	// _00-_0C = KEffect
 	// TODO: members
+	Navi* mNavi;                   // _0C
+	zen::particleGenerator* mEfxA; // _10
+	zen::particleGenerator* mEfxB; // _14
+	zen::particleGenerator* mEfxC; // _18
 };
 
 /**
@@ -139,8 +166,8 @@ struct NaviWhistle : public KEffect {
 struct RippleEffect : public KEffect {
 	RippleEffect()
 	{
-		_0C = 0;
-		_10 = _14 = 0;
+		mEfxA = 0;
+		mEfxB = mEfxC = 0;
 	}
 
 	virtual void emit(EffectParm&); // _2C
@@ -152,15 +179,20 @@ struct RippleEffect : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	u32 _0C; // _0C, unknown
-	u32 _10; // _10, unknown
-	u32 _14; // _14, unknown
+	zen::particleGenerator* mEfxA; // _0C
+	zen::particleGenerator* mEfxB; // _10
+	zen::particleGenerator* mEfxC; // _14
 };
 
 /**
  * @brief TODO
  */
 struct SimpleEffect : public KEffect {
+	SimpleEffect(u16 id)
+	{
+		mEfxId = id;
+		mEfx   = 0;
+	}
 	virtual void emit(EffectParm&); // _2C
 	virtual void kill();            // _30
 
@@ -168,7 +200,8 @@ struct SimpleEffect : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	// TODO: members
+	int mEfxId;                   // _0C
+	zen::particleGenerator* mEfx; // _10
 };
 
 /**
@@ -189,7 +222,8 @@ struct SlimeEffect : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	u8 _0C[0x14 - 0xC]; // _0C, unknown
+	zen::particleGenerator* mEfxGen; // _0C
+	Creature* mObj;                  // _10
 };
 
 /**
@@ -248,6 +282,8 @@ struct SmokeTreeEffect : public KEffect {
  * @brief TODO
  */
 struct UfoSuikomiEffect : public KEffect {
+	UfoSuikomiEffect() { mEfx = 0; }
+
 	virtual void emit(EffectParm&); // _2C
 	virtual void kill();            // _30
 
@@ -255,13 +291,22 @@ struct UfoSuikomiEffect : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	// TODO: members
+	Vector3f _0C;                 // _0C
+	Vector3f _18;                 // _18
+	zen::particleGenerator* mEfx; // _24
 };
 
 /**
  * @brief TODO
  */
 struct WhistleTemplate : public KEffect {
+	WhistleTemplate(u32 id1, u32 id2)
+	{
+		mEfxA = mEfxB = 0;
+		_2C           = id1;
+		_30           = id2;
+	}
+
 	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _24
 	virtual void emit(EffectParm&);                                  // _2C
 	virtual void kill();                                             // _30
@@ -270,18 +315,27 @@ struct WhistleTemplate : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	// TODO: members
+	Vector3f _0C;                  // _0C
+	Vector3f _18;                  // _18
+	zen::particleGenerator* mEfxA; // _24
+	zen::particleGenerator* mEfxB; // _28
+	int _2C;                       // _2C
+	int _30;                       // _30
 };
 
 /**
  * @brief TODO
  */
 struct UfoSuckEffect : public WhistleTemplate {
+	UfoSuckEffect()
+	    : WhistleTemplate(EffectMgr::EFF_Rocket_Bm2, EffectMgr::EFF_Rocket_Suck2)
+	{
+	}
+
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
-	// _00-_0C = WhistleTemplate?
-	// TODO: members
+	// _00-_34 = WhistleTemplate
 };
 
 /**
@@ -313,6 +367,8 @@ struct UtEffectMgr {
 	static void kill(int);
 
 	static void cast(int, EffectParm&);
+
+	static KEffect** effects;
 
 	// TODO: members
 };
