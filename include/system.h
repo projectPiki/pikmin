@@ -367,13 +367,16 @@ struct DVDStream : public RandomAccessStream {
 extern int glnWidth;
 extern int glnHeight;
 
-static inline f32 randFloat(f32 max)
-{
-	return max * System::getRand(1.0f);
-}
+// this doesn't exist in the DLL, but ActFreeBore::init is so dumb
+// you can pry this out of my cold dead hands when you fix that
 static inline f32 randBalanced(f32 centre)
 {
 	return System::getRand(1.0f) - centre;
+}
+
+static inline f32 randFloat(f32 max)
+{
+	return max * System::getRand(1.0f);
 }
 static inline bool coinFlip()
 {

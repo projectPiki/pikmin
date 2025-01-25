@@ -10,8 +10,13 @@
 // this needs fixing but idk how to do so
 static inline f32 quickABS(f32 x)
 {
-	u32 val = (*(u32*)&x & ~0x80000000);
-	return *(f32*)&val;
+	union {
+		u32 w;
+		f32 f;
+	} tmp;
+	tmp.f = x;
+	tmp.w &= ~0x80000000;
+	return tmp.f;
 }
 
 #define LONG_TAU   6.2831854820251465

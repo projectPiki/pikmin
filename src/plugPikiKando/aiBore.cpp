@@ -33,7 +33,7 @@ DEFINE_PRINT(nullptr)
 ActFreeSelect::ActFreeSelect(Piki* piki)
     : Action(piki, true)
 {
-	mName = "freebore";
+	setName("freebore");
 	setChildren(CHILD_COUNT, new ActWatch(piki), nullptr, new ActBoreTalk(piki), nullptr, new ActBoreOneshot(piki), nullptr,
 	            new ActBoreRest(piki), nullptr);
 }
@@ -64,8 +64,8 @@ void ActFreeSelect::finishRest()
 {
 	switch (mCurrActionIdx) {
 	case CHILD_BoreRest:
-		static_cast<ActBoreRest*>(mChildActions[mCurrActionIdx].mAction)->_18 = 1;
-		mIsChildActionActive                                                  = 1;
+		static_cast<ActBoreRest*>(mChildActions[mCurrActionIdx].mAction)->finishRest();
+		mIsChildActionActive = 1;
 		break;
 	case CHILD_BoreOneshot:
 		static_cast<ActBoreOneshot*>(mChildActions[mCurrActionIdx].mAction)->finish();
@@ -144,7 +144,7 @@ void ActFreeSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
  */
 void ActFreeSelect::determine()
 {
-	if (coinFlip()) {
+	if (gsys->getRand(1.0f) > 0.5f) {
 		mActionTimer = 2.0f + gsys->getFrameTime();
 		return;
 	}
@@ -158,18 +158,18 @@ void ActFreeSelect::determine()
 
 	int randIdx = selectRandomly(choices, CHILD_COUNT);
 
-	if (mActor->mGrabbedCreature.mPtr) {
+	if (mActor->isHolding()) {
 		randIdx = CHILD_Watch;
 	}
 
-	mIsTimerActive = 0;
-	mCurrActionIdx = randIdx;
-
-	Creature* target = nullptr;
+	Creature* nearestEnemy;
+	Creature* target;
+	target = nearestEnemy = nullptr;
+	mIsTimerActive        = (nearestEnemy != nullptr);
+	mCurrActionIdx        = randIdx;
 
 	switch (randIdx) {
 	case CHILD_Watch:
-		Creature* nearestEnemy;
 		if (tekiMgr) {
 			nearestEnemy = tekiMgr->findClosest(mActor->mPosition, nullptr);
 		}
@@ -177,7 +177,12 @@ void ActFreeSelect::determine()
 		Creature* nearestItem = itemMgr->findClosest(mActor->mPosition, nullptr);
 		Creature* nearestNavi = naviMgr->findClosest(mActor->mPosition, nullptr);
 
-		Creature* nearestBoss = (bossMgr) ? bossMgr->findClosest(mActor->mPosition, nullptr) : nullptr;
+		Creature* nearestBoss;
+		if (bossMgr) {
+			nearestBoss = bossMgr->findClosest(mActor->mPosition, nullptr);
+		} else {
+			nearestBoss = nullptr;
+		}
 
 		if (nearestBoss) {
 			target = nearestBoss;
@@ -206,6 +211,8 @@ void ActFreeSelect::determine()
 	}
 
 	mChildActions[mCurrActionIdx].initialise(target);
+
+	u32 badCompiler[2];
 
 	/*
 	.loc_0x0:
@@ -480,13 +487,13 @@ int ActBoreSelect::exec()
 	}
 
 	if (mActor->mNavi->_738 < 1.0f || _1A) {
-		if (mActor->mPikiAnimMgr.mUpperAnimator.mMotionIdx == 3) {
+		if (mActor->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == 3) {
 			return ACTOUT_Success;
 		}
 
 		if (mCurrActionIdx == CHILD_BoreRest) {
-			static_cast<ActBoreRest*>(mChildActions[mCurrActionIdx].mAction)->_18 = 1;
-			mIsChildActionActive                                                  = true;
+			static_cast<ActBoreRest*>(mChildActions[mCurrActionIdx].mAction)->finishRest();
+			mIsChildActionActive = true;
 			return ACTOUT_Continue;
 		}
 
@@ -511,124 +518,6 @@ int ActBoreSelect::exec()
 	}
 
 	return ACTOUT_Continue;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r3
-	  lbz       r0, 0x19(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x44
-	  lha       r0, 0x8(r31)
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r0,3,0,28
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x170
-
-	.loc_0x44:
-	  lwz       r4, 0xC(r31)
-	  lfs       f0, -0x7104(r2)
-	  lwz       r3, 0x504(r4)
-	  lfs       f1, 0x738(r3)
-	  fcmpo     cr0, f1, f0
-	  blt-      .loc_0x68
-	  lbz       r0, 0x1A(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xD8
-
-	.loc_0x68:
-	  lwz       r0, 0x39C(r4)
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x7C
-	  li        r3, 0x2
-	  b         .loc_0x170
-
-	.loc_0x7C:
-	  lha       r0, 0x8(r31)
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0xA8
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r0,3,0,28
-	  li        r5, 0x1
-	  lwzx      r4, r3, r0
-	  li        r3, 0
-	  stb       r5, 0x18(r4)
-	  stb       r5, 0x19(r31)
-	  b         .loc_0x170
-
-	.loc_0xA8:
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0xD0
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r0,3,0,28
-	  lwzx      r3, r3, r0
-	  bl        0xA38
-	  li        r0, 0x1
-	  stb       r0, 0x19(r31)
-	  li        r3, 0
-	  b         .loc_0x170
-
-	.loc_0xD0:
-	  li        r3, 0x2
-	  b         .loc_0x170
-
-	.loc_0xD8:
-	  lbz       r0, 0x18(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x12C
-	  lfs       f0, -0x4F3C(r13)
-	  stfs      f0, 0xA4(r4)
-	  lfs       f0, -0x4F38(r13)
-	  stfs      f0, 0xA8(r4)
-	  lfs       f0, -0x4F34(r13)
-	  stfs      f0, 0xAC(r4)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x14(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x14(r31)
-	  lfs       f1, 0x14(r31)
-	  lfs       f0, -0x70E8(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x16C
-	  mr        r3, r31
-	  bl        0x198
-	  b         .loc_0x16C
-
-	.loc_0x12C:
-	  lha       r0, 0x8(r31)
-	  lwz       r3, 0x4(r31)
-	  rlwinm    r0,r0,3,0,28
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  cmpwi     r3, 0
-	  beq-      .loc_0x16C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x16C:
-	  li        r3, 0
-
-	.loc_0x170:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -687,7 +576,7 @@ void ActBoreSelect::procAnimMsg(Piki* piki, MsgAnim* msg)
  */
 void ActBoreSelect::determine()
 {
-	if (coinFlip()) {
+	if (gsys->getRand(1.0f) > 0.5f) {
 		mActionTimer = 2.0f + gsys->getFrameTime();
 		return;
 	}
@@ -705,14 +594,14 @@ void ActBoreSelect::determine()
 		randIdx = CHILD_Watch;
 	}
 
-	mIsTimerActive = 0;
-	mCurrActionIdx = randIdx;
-
-	Creature* target = nullptr;
+	Creature* nearestEnemy;
+	Creature* target;
+	nearestEnemy = target = nullptr;
+	mIsTimerActive        = false;
+	mCurrActionIdx        = randIdx;
 
 	switch (randIdx) {
 	case CHILD_Watch:
-		Creature* nearestEnemy;
 		if (tekiMgr) {
 			nearestEnemy = tekiMgr->findClosest(mActor->mPosition, nullptr);
 		}
@@ -728,16 +617,16 @@ void ActBoreSelect::determine()
 		}
 
 		// these are probably not distances, rename later
-		f32 enemyDist = (nearestEnemy) ? nearestEnemy->mVelocity.length() : 0.0f;
-		f32 itemDist  = (nearestItem) ? nearestItem->mVelocity.length() : 0.0f;
-		f32 naviDist  = (nearestNavi) ? nearestNavi->mVelocity.length() : 0.0f;
+		f32 enemySpeed = (nearestEnemy) ? nearestEnemy->mVelocity.length() : 0.0f;
+		f32 itemSpeed  = (nearestItem) ? nearestItem->mVelocity.length() : 0.0f;
+		f32 naviSpeed  = (nearestNavi) ? nearestNavi->mVelocity.length() : 0.0f;
 
-		if (enemyDist > itemDist && enemyDist > naviDist) {
+		if (enemySpeed > itemSpeed && enemySpeed > naviSpeed) {
 			target = nearestEnemy;
 			break;
 		}
 
-		if (itemDist > naviDist) {
+		if (itemSpeed > naviSpeed) {
 			target = nearestItem;
 			break;
 		}
@@ -749,6 +638,8 @@ void ActBoreSelect::determine()
 	}
 
 	mChildActions[mCurrActionIdx].initialise(target);
+
+	u32 badCompiler[3];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -994,73 +885,8 @@ void ActBoreTalk::init(Creature* creature)
 	mTarget = *iter;
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Asibumi, this), PaniMotionInfo(PIKIANIM_Asibumi));
 	mActor->enableMotionBlend();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  addi      r29, r3, 0
-	  stb       r0, 0x24(r3)
-	  stw       r0, 0x18(r3)
-	  lwz       r3, 0xC(r3)
-	  addi      r30, r3, 0x1B8
-	  lwz       r12, 0x0(r30)
-	  addi      r3, r30, 0
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r4, r3, 0
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x6C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x80
 
-	.loc_0x6C:
-	  lwz       r12, 0x0(r30)
-	  mr        r3, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x80:
-	  cmplwi    r29, 0
-	  stw       r3, 0x1C(r29)
-	  mr        r30, r29
-	  beq-      .loc_0x94
-	  lwz       r30, 0x14(r29)
-
-	.loc_0x94:
-	  addi      r3, r1, 0x1C
-	  li        r4, 0xB
-	  bl        0x73AAC
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x24
-	  li        r4, 0xB
-	  bl        0x73ACC
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x1F508
-	  lwz       r3, 0xC(r29)
-	  bl        0x1F734
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler[2];
 }
 
 /*
@@ -1070,177 +896,23 @@ void ActBoreTalk::init(Creature* creature)
  */
 void ActBoreTalk::startTalk()
 {
-	SearchBuffer* buf = &mActor->mSearchBuffer;
+	Iterator iter(&mActor->mSearchBuffer);
 	mActor->turnTo(mTarget->mPosition);
 
-	Iterator iter(buf);
 	CI_LOOP(iter)
 	{
-		(*iter)->stimulate(InteractTalk(mActor));
+		Creature* c = *iter;
+		c->stimulate(InteractTalk(mActor));
 	}
 
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Chatting, this), PaniMotionInfo(PIKIANIM_Chatting));
 	mActor->enableMotionBlend();
-	_20 = randFloat(2.0f) + 5.0f;
+	_20 = 2.0f * System::getRand(1.0f) + 5.0f;
 
-	if (mActor->mMode == 1 && mActor->mNavi->mPlateMgr && mActor->mNavi->mCurrState->getID() != NAVISTATE_DemoSunset
-	    && mActor->mNavi->mCurrState->getID() != NAVISTATE_Dead) {
+	if (mActor->mMode == PikiMode::FormationMode && mActor->mNavi->mPlateMgr
+	    && mActor->mNavi->getCurrState()->getID() != NAVISTATE_DemoSunset && mActor->mNavi->mCurrState->getID() != NAVISTATE_Dead) {
 		seMgr->setPikiNum(0);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stmw      r26, 0x70(r1)
-	  mr        r30, r3
-	  lwz       r3, 0xC(r3)
-	  lwz       r4, 0x1C(r30)
-	  addi      r31, r3, 0x1B8
-	  addi      r4, r4, 0x94
-	  bl        -0x20AE0
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r5, 0x802B
-	  lis       r4, 0x802B
-	  addi      r26, r3, 0
-	  subi      r28, r5, 0x3064
-	  subi      r29, r4, 0x2D74
-	  addi      r27, r1, 0x50
-	  b         .loc_0xD4
-
-	.loc_0x58:
-	  cmpwi     r26, -0x1
-	  bne-      .loc_0x7C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x94
-
-	.loc_0x7C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r26
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x94:
-	  lwz       r0, 0xC(r30)
-	  mr        r4, r27
-	  stw       r28, 0x50(r1)
-	  stw       r0, 0x54(r1)
-	  stw       r29, 0x50(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r26
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r26, r3
-
-	.loc_0xD4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r26
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xFC
-	  li        r0, 0x1
-	  b         .loc_0x128
-
-	.loc_0xFC:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r26
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x124
-	  li        r0, 0x1
-	  b         .loc_0x128
-
-	.loc_0x124:
-	  li        r0, 0
-
-	.loc_0x128:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x58
-	  cmplwi    r30, 0
-	  addi      r27, r30, 0
-	  beq-      .loc_0x140
-	  lwz       r27, 0x14(r30)
-
-	.loc_0x140:
-	  addi      r3, r1, 0x40
-	  li        r4, 0x40
-	  bl        0x73918
-	  addi      r31, r3, 0
-	  addi      r5, r27, 0
-	  addi      r3, r1, 0x48
-	  li        r4, 0x40
-	  bl        0x73938
-	  mr        r4, r3
-	  lwz       r3, 0xC(r30)
-	  mr        r5, r31
-	  bl        0x1F374
-	  lwz       r3, 0xC(r30)
-	  bl        0x1F5A0
-	  bl        0x16CA00
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x70F0(r2)
-	  stw       r0, 0x6C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x7100(r2)
-	  stw       r0, 0x68(r1)
-	  lfs       f2, -0x7104(r2)
-	  lfd       f1, 0x68(r1)
-	  lfs       f0, -0x7108(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x70E4(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x20(r30)
-	  lwz       r3, 0xC(r30)
-	  lhz       r0, 0x4FC(r3)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x200
-	  lwz       r3, 0x504(r3)
-	  lwz       r0, 0x710(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x200
-	  lwz       r3, 0xADC(r3)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0x19
-	  beq-      .loc_0x200
-	  cmpwi     r0, 0x1D
-	  beq-      .loc_0x200
-	  lwz       r3, 0x3030(r13)
-	  li        r4, 0
-	  bl        -0x80B8
-
-	.loc_0x200:
-	  lmw       r26, 0x70(r1)
-	  lwz       r0, 0x8C(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1255,12 +927,12 @@ int ActBoreTalk::exec()
 	}
 
 	if (_18 == 0) {
-		f32 ang            = atan2f(mActor->mPosition.x - mTarget->mPosition.x, mActor->mPosition.z - mTarget->mPosition.z);
-		f32 angle          = angDist(ang, mActor->mDirection);
-		mActor->mDirection = roundAng(mActor->mDirection + 0.1f * angle);
+		Vector3f dir       = mTarget->mPosition - mActor->mPosition;
+		f32 ang            = atan2f(dir.x, dir.z);
+		ang                = angDist(ang, mActor->mDirection);
+		mActor->mDirection = roundAng(mActor->mDirection + 0.1f * ang);
 
-		// what is going on here, this should have a conversion and a clrlwi r0, r0, 1???
-		if (quickABS(angle) < 0.1f) {
+		if (quickABS(ang) < 0.1f) {
 			_18 = 1;
 			startTalk();
 		}
@@ -1276,95 +948,6 @@ int ActBoreTalk::exec()
 	}
 
 	return ACTOUT_Continue;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stfd      f31, 0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x1C(r3)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x2C
-	  li        r3, 0x1
-	  b         .loc_0x110
-
-	.loc_0x2C:
-	  lwz       r0, 0x18(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xB8
-	  lwz       r3, 0xC(r31)
-	  lfsu      f3, 0x94(r4)
-	  lfsu      f1, 0x94(r3)
-	  lfs       f2, 0x8(r4)
-	  lfs       f0, 0x8(r3)
-	  fsubs     f1, f3, f1
-	  fsubs     f2, f2, f0
-	  bl        0x170298
-	  lwz       r3, 0xC(r31)
-	  lfs       f2, 0xA0(r3)
-	  bl        -0x731B8
-	  fmr       f31, f1
-	  lfs       f0, -0x70E0(r2)
-	  lwz       r3, 0xC(r31)
-	  fmuls     f0, f0, f31
-	  lfs       f1, 0xA0(r3)
-	  fadds     f1, f1, f0
-	  bl        -0x73200
-	  lwz       r3, 0xC(r31)
-	  stfs      f1, 0xA0(r3)
-	  stfs      f31, 0x3C(r1)
-	  lfs       f0, -0x70E0(r2)
-	  lwz       r0, 0x3C(r1)
-	  rlwinm    r0,r0,0,1,31
-	  stw       r0, 0x3C(r1)
-	  lfs       f1, 0x3C(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xB8
-	  li        r0, 0x1
-	  stw       r0, 0x18(r31)
-	  mr        r3, r31
-	  bl        -0x2C8
-
-	.loc_0xB8:
-	  lbz       r0, 0x24(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xCC
-	  li        r3, 0x2
-	  b         .loc_0x110
-
-	.loc_0xCC:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x20(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x20(r31)
-	  lfs       f1, 0x20(r31)
-	  lfs       f0, -0x70E8(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x10C
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x100
-	  lwz       r4, 0x14(r31)
-
-	.loc_0x100:
-	  lwz       r3, 0xC(r31)
-	  addi      r3, r3, 0x354
-	  bl        0x742AC
-
-	.loc_0x10C:
-	  li        r3, 0
-
-	.loc_0x110:
-	  lwz       r0, 0x6C(r1)
-	  lfd       f31, 0x60(r1)
-	  lwz       r31, 0x5C(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1598,16 +1181,18 @@ int ActBoreRest::exec()
 	_20 -= gsys->getFrameTime();
 
 	if (!_24 && _20 < 0.0f) {
-		if (_1C <= 1 && coinFlip()) {
+		if (_1C <= 1 && System::getRand(1.0f) > 0.5f) {
 			sitDown();
 		} else if (_1C >= 1) {
 			standUp();
 		}
 
-		_20 = 3.0f + randFloat(2.0f);
+		_20 = 3.0f + 2.0f * System::getRand(1.0f);
 	}
 
 	return ACTOUT_Continue;
+
+	u32 badCompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1874,8 +1459,8 @@ void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent& event)
 				_24 = 0;
 				_1C = 1;
 				mActor->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
-				mActor->mPikiAnimMgr.mUpperAnimator.mAnimationCounter = 30.0f;
-				mActor->mPikiAnimMgr.mLowerAnimator.mAnimationCounter = 30.0f;
+				mActor->mPikiAnimMgr.getUpperAnimator().mAnimationCounter = 30.0f;
+				mActor->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 30.0f;
 				break;
 			}
 		}
@@ -1883,84 +1468,4 @@ void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent& event)
 	case KEY_LoopEnd:
 		break;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  addi      r29, r3, 0
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x6
-	  beq-      .loc_0xE8
-	  bge-      .loc_0xE8
-	  cmpwi     r0, 0
-	  beq-      .loc_0x38
-	  b         .loc_0xE8
-
-	.loc_0x38:
-	  lbz       r0, 0x24(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xE8
-	  lwz       r0, 0x1C(r29)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0xE8
-	  bge-      .loc_0x60
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0x6C
-	  b         .loc_0xE8
-
-	.loc_0x60:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0xE8
-	  b         .loc_0x84
-
-	.loc_0x6C:
-	  li        r3, 0
-	  stb       r3, 0x24(r29)
-	  li        r0, 0x1
-	  stw       r3, 0x1C(r29)
-	  stb       r0, 0x25(r29)
-	  b         .loc_0xE8
-
-	.loc_0x84:
-	  li        r0, 0
-	  stb       r0, 0x24(r29)
-	  li        r0, 0x1
-	  cmplwi    r29, 0
-	  stw       r0, 0x1C(r29)
-	  mr        r30, r29
-	  beq-      .loc_0xA4
-	  lwz       r30, 0x14(r29)
-
-	.loc_0xA4:
-	  addi      r3, r1, 0x28
-	  li        r4, 0x32
-	  bl        0x72F8C
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x30
-	  li        r4, 0x32
-	  bl        0x72FAC
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x1E9E8
-	  lfs       f0, -0x70D8(r2)
-	  lwz       r3, 0xC(r29)
-	  stfs      f0, 0x384(r3)
-	  lwz       r3, 0xC(r29)
-	  stfs      f0, 0x3D8(r3)
-
-	.loc_0xE8:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
 }

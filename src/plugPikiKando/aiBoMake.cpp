@@ -88,13 +88,11 @@ void ActBoMake::initApproach()
 int ActBoMake::exeApproach()
 {
 	Vector3f direction = mBuildObject->mPosition - mActor->mPosition;
-	f32 dist           = direction.normalise();
-	if (dist - mBuildObject->getCentreSize() - mActor->getCentreSize() < 3.0f) {
+	if (direction.normalise() - mBuildObject->getCentreSize() - mActor->getCentreSize() < 3.0f) {
 		initWork();
 		return ACTOUT_Continue;
 	}
 
-	u32 badCompiler; // sigh
 	mActor->setSpeed(1.0f, direction);
 	return ACTOUT_Continue;
 }
@@ -107,64 +105,12 @@ int ActBoMake::exeApproach()
 void ActBoMake::initWork()
 {
 	// can't stick to a work object if piki is already stuck to something
-	if (mActor->mStickTarget) {
+	if (mActor->isStickTo()) {
 		return;
 	}
 
 	mActor->startStickObject(mBuildObject, mBuildObject->mCollInfo->getSphere('cent'), -1, 0.0f);
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr        r29, r3
-	  lwz       r3, 0xC(r3)
-	  lwz       r0, 0x184(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x98
-	  lwz       r5, 0x1C(r29)
-	  lis       r3, 0x6365
-	  addi      r4, r3, 0x6E74
-	  lwz       r3, 0x220(r5)
-	  bl        -0x22EFC
-	  mr        r5, r3
-	  lwz       r3, 0xC(r29)
-	  lwz       r4, 0x1C(r29)
-	  li        r6, -0x1
-	  lfs       f1, -0x70D0(r2)
-	  bl        -0x1BF6C
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x68
-	  addi      r30, r30, 0x14
-
-	.loc_0x68:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x30
-	  bl        0x72918
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x30
-	  bl        0x72938
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x1E374
-
-	.loc_0x98:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

@@ -454,6 +454,8 @@ struct ActBoreRest : public Action, virtual PaniAnimKeyListener {
 	// unused/inlined:
 	void standUp();
 
+	void finishRest() { _18 = 1; }
+
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
@@ -496,11 +498,11 @@ struct ActBoreSelect : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	f32 mActionTimer;        // _14
-	u8 mIsTimerActive;       // _18
-	u8 mIsChildActionActive; // _19
-	u8 _1A;                  // _1A
-	f32 _1C;                 // _1C
+	f32 mActionTimer;          // _14
+	bool mIsTimerActive;       // _18
+	bool mIsChildActionActive; // _19
+	u8 _1A;                    // _1A
+	f32 _1C;                   // _1C
 };
 
 /**
@@ -977,11 +979,11 @@ struct ActFreeSelect : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	f32 mActionTimer;        // _14, timer?
-	u8 mIsTimerActive;       // _18
-	u8 mIsChildActionActive; // _19
-	u8 _1A;                  // _1A
-	f32 _1C;                 // _1C
+	f32 mActionTimer;             // _14, timer?
+	volatile bool mIsTimerActive; // _18
+	bool mIsChildActionActive;    // _19
+	u8 _1A;                       // _1A
+	f32 _1C;                      // _1C
 };
 
 /**
