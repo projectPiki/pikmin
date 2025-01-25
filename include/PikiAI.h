@@ -81,7 +81,7 @@ struct Action : public Receiver<Piki> {
 	 * @brief TODO
 	 */
 	struct Initialiser {
-		virtual void initialise(Action*); // _08 (weak)
+		virtual void initialise(Action*) { } // _08 (weak)
 
 		// _00 = VTBL
 		// TODO: members
@@ -698,14 +698,15 @@ struct ActChase : public Action {
 
 	ActChase(Piki*);
 
-	virtual ~ActChase();          // _44 (weak)
+	virtual ~ActChase() { }       // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x1C - 0x14]; // _14, unknown
+	SmartPtr<Creature> mTarget; // _14
+	f32 mChaseTimer;            // _18
 };
 
 /**
@@ -788,23 +789,34 @@ struct ActDeliver : public AndAction {
 	/**
 	 * @brief TODO
 	 */
+	enum ChildID {
+		CHILD_NULL         = -1,
+		CHILD_PickCreature = 0,
+		CHILD_Goto         = 1,
+		CHILD_Put          = 2,
+		CHILD_COUNT, // 3
+	};
+
+	/**
+	 * @brief TODO
+	 */
 	struct Initialiser : public Action::Initialiser {
 		virtual void initialise(Action*); // _08
 
 		// _00 = VTBL
-		// TODO: members
+		Creature* mObject; // _04
 	};
 
 	ActDeliver(Piki*);
 
-	virtual void defaultInitialiser(); // _38 (weak)
-	virtual ~ActDeliver();             // _44 (weak)
-	virtual void init(Creature*);      // _48
-	virtual void cleanup();            // _50 (weak)
+	virtual ~ActDeliver() { }                              // _44 (weak)
+	virtual void defaultInitialiser() { mObject.clear(); } // _38 (weak)
+	virtual void init(Creature*);                          // _48
+	virtual void cleanup() { mObject.reset(); }            // _50 (weak)
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	// TODO: members
+	SmartPtr<Creature> mObject; // _18
 };
 
 /**
@@ -997,10 +1009,19 @@ struct ActGoto : public Action {
 	 * @brief TODO
 	 */
 	struct Initialiser : public Action::Initialiser {
+		Initialiser(f32 p1, f32 p2, Creature* p3)
+		{
+			_04 = p3;
+			_08 = p1;
+			_0C = p2;
+		}
+
 		virtual void initialise(Action*); // _08
 
 		// _00 = VTBL
-		// TODO: members
+		Creature* _04; // _04
+		f32 _08;       // _08
+		f32 _0C;       // _0C
 	};
 
 	ActGoto(Piki*);
@@ -1158,6 +1179,8 @@ struct ActMine : public Action, virtual PaniAnimKeyListener {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct ActPick : public Action, public PaniAnimKeyListener {
 
@@ -1197,6 +1220,16 @@ struct ActPickCreature : public AndAction {
 	/**
 	 * @brief TODO
 	 */
+	enum ChildID {
+		CHILD_NULL = -1,
+		CHILD_Goto = 0,
+		CHILD_Pick = 1,
+		CHILD_COUNT, // 2
+	};
+
+	/**
+	 * @brief TODO
+	 */
 	struct InitGoto {
 		void initialise(Action*, Action*);
 		// TODO: members
@@ -1204,12 +1237,12 @@ struct ActPickCreature : public AndAction {
 
 	ActPickCreature(Piki*);
 
-	virtual ~ActPickCreature();   // _44 (weak)
-	virtual void init(Creature*); // _48
+	virtual ~ActPickCreature() { } // _44 (weak)
+	virtual void init(Creature*);  // _48
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	u8 _18[0x1C - 0x18]; // _18, unknown
+	SmartPtr<Creature> _18; // _18
 };
 
 /**
@@ -1460,14 +1493,15 @@ struct ActRescue : public Action, virtual PaniAnimKeyListener {
 struct ActRope : public Action {
 	ActRope(Piki*);
 
-	virtual ~ActRope();           // _44 (weak)
+	virtual ~ActRope() { }        // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x24 - 0x14]; // _14, unknown
+	f32 mSpeed;              // _14
+	Vector3f mRopeDirection; // _18
 };
 
 /**
@@ -1636,15 +1670,22 @@ struct ActWatch : public Action {
 	 * @brief TODO
 	 */
 	struct AnimListener : public PaniAnimKeyListener {
+		AnimListener(ActWatch* owner, Piki* piki)
+		{
+			mOwnerAction = owner;
+			mActor       = piki;
+		}
+
 		virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
 		// _00 = VTBL
-		// TODO: members
+		ActWatch* mOwnerAction; // _04
+		Piki* mActor;           // _08
 	};
 
 	ActWatch(Piki* piki);
 
-	virtual ~ActWatch();          // _44 (weak)
+	virtual ~ActWatch() { }       // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
@@ -1652,7 +1693,10 @@ struct ActWatch : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x2C - 0x14]; // _14, unknown
+	SmartPtr<Creature> mTarget; // _14
+	int _18;                    // _18
+	AnimListener* mListener;    // _1C
+	Vector3f _20;               // _20
 };
 
 /**
