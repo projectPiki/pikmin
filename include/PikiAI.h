@@ -10,6 +10,7 @@
 
 struct Bridge;
 struct BuildingItem;
+struct GoalItem;
 struct Pebble;
 struct RockGen;
 
@@ -1594,10 +1595,25 @@ struct ActStone : public Action, public PaniAnimKeyListener {
  * @note Size: 0xC0.
  */
 struct ActTransport : public Action, virtual PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum State {
+		STATE_Unk0 = 0,
+		STATE_Wait = 1,
+		STATE_Unk2 = 2,
+		STATE_Unk3 = 3,
+		STATE_Unk4 = 4,
+		STATE_Unk5 = 5,
+		STATE_Unk6 = 6,
+		STATE_Jump = 7,
+	};
+
 	ActTransport(Piki*);
 
 	virtual void draw(Graphics&);                        // _40
-	virtual ~ActTransport();                             // _44
+	virtual ~ActTransport() { }                          // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1630,23 +1646,34 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
 	void initJump();
 	f32 crGetRadius(int);
 
+	// not in the DLL, but necessary for doLift
+	inline BOOL doLandOnly() { return useWaterRoute() ? FALSE : TRUE; }
+
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	Pellet* mPellet;     // _18
-	u8 _1C[0x4];         // _1C, unknown
-	OdoMeter mOdometer;  // _20
-	Vector3f _30;        // _30
-	u8 _3C[0x4C - 0x3C]; // _3C, unknown
-	Vector3f _4C[4];     // _4C, probably CR spline points
-	Vector3f _7C;        // _7C
-	u32 _88;             // _88
-	int mSlotIndex;      // _8C
-	Vector3f _90;        // _90
-	u8 _9C[0xA8 - 0x9C]; // _9C, unknown
-	int _A8;             // _A8
-	u8 _AC[0xB8 - 0xAC]; // _AC, unknown
-	                     // _B8-_C0 = PaniAnimKeyListener
+	SmartPtr<Pellet> mPellet; // _18
+	u16 mState;               // _1C
+	OdoMeter mOdometer;       // _20
+	Vector3f _30;             // _30
+	u16 mNumRoutePoints;      // _3C
+	u8 _3E;                   // _3E
+	u16 _40;                  // _40
+	u8 _42[0x4C - 0x42];      // _3C, unknown
+	Vector3f _4C[4];          // _4C, probably CR spline points
+	Vector3f _7C;             // _7C
+	u32 _88;                  // _88
+	int mSlotIndex;           // _8C
+	Vector3f _90;             // _90
+	u8 _9C;                   // _9C
+	u8 _9D;                   // _9D
+	int _A0;                  // _A0
+	f32 _A4;                  // _A4
+	int _A8;                  // _A8
+	int mGoalWPIndex;         // _AC
+	GoalItem* mGoal;          // _B0
+	u8 _B4;                   // _B4
+	                          // _B8-_C0 = PaniAnimKeyListener
 };
 
 /**

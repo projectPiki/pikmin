@@ -261,8 +261,9 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 		return false;
 	}
 
+	bool isSlotFree(int slot) { return !isSlotFlag(slot); } // yeah actually.
+
 	// DLL inlines to do:
-	bool isSlotFree(int);
 	int getNearestFreeSlotIndex();
 
 	// _00       = VTBL1
