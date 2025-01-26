@@ -587,7 +587,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/genNavi.cpp"),
             Object(NonMatching, "plugPikiKando/navi.cpp"),
             Object(NonMatching, "plugPikiKando/naviState.cpp"),
-            Object(NonMatching, "plugPikiKando/naviDemoState.cpp"),
+            Object(Matching, "plugPikiKando/naviDemoState.cpp"),
             Object(NonMatching, "plugPikiKando/gameCoreSection.cpp"),
             Object(Matching, "plugPikiKando/gmWin.cpp"),
             Object(Matching, "plugPikiKando/gameStat.cpp"),

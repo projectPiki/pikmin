@@ -378,6 +378,11 @@ static inline f32 randFloat(f32 max)
 {
 	return max * System::getRand(1.0f);
 }
+static inline bool randChance(f32 chance)
+{
+	f32 r = System::getRand(1.0f);
+	return r >= chance;
+}
 static inline bool coinFlip()
 {
 	return System::getRand(1.0f) > 0.5f;
