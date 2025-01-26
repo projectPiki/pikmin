@@ -253,7 +253,10 @@ struct NaviDemoSunsetState : public NaviState {
 	 * @brief TODO
 	 */
 	struct GoState : public DemoState {
-		inline GoState(); // probably
+		inline GoState()
+		    : DemoState(DEMOSTATE_Go)
+		{
+		}
 
 		virtual void procAnimMsg(NaviDemoSunsetState*, MsgAnim*); // _20
 		virtual void init(NaviDemoSunsetState*);                  // _38
@@ -262,14 +265,18 @@ struct NaviDemoSunsetState : public NaviState {
 
 		// _00     = VTBL
 		// _00-_0C = AState
-		// TODO: members
+		int _10;  // _10
+		bool _14; // _14
 	};
 
 	/**
 	 * @brief TODO
 	 */
 	struct LookState : public DemoState {
-		inline LookState(); // probably
+		inline LookState()
+		    : DemoState(DEMOSTATE_Look)
+		{
+		}
 
 		virtual void procAnimMsg(NaviDemoSunsetState*, MsgAnim*); // _20
 		virtual void init(NaviDemoSunsetState*);                  // _38
@@ -285,7 +292,10 @@ struct NaviDemoSunsetState : public NaviState {
 	 * @brief TODO
 	 */
 	struct SitState : public DemoState {
-		inline SitState(); // probably
+		inline SitState()
+		    : DemoState(DEMOSTATE_Sit)
+		{
+		}
 
 		virtual void init(NaviDemoSunsetState*);    // _38
 		virtual void exec(NaviDemoSunsetState*);    // _3C
@@ -300,7 +310,10 @@ struct NaviDemoSunsetState : public NaviState {
 	 * @brief TODO
 	 */
 	struct WaitState : public DemoState {
-		inline WaitState(); // probably
+		inline WaitState()
+		    : DemoState(DEMOSTATE_Wait)
+		{
+		}
 
 		virtual void init(NaviDemoSunsetState*);    // _38
 		virtual void exec(NaviDemoSunsetState*);    // _3C
@@ -315,7 +328,10 @@ struct NaviDemoSunsetState : public NaviState {
 	 * @brief TODO
 	 */
 	struct WhistleState : public DemoState {
-		inline WhistleState(); // probably
+		inline WhistleState()
+		    : DemoState(DEMOSTATE_Whistle)
+		{
+		}
 
 		virtual void procAnimMsg(NaviDemoSunsetState*, MsgAnim*); // _20
 		virtual void init(NaviDemoSunsetState*);                  // _38
@@ -326,7 +342,7 @@ struct NaviDemoSunsetState : public NaviState {
 
 		// _00     = VTBL
 		// _00-_0C = AState
-		// TODO: members
+		int _10; // _10
 	};
 
 	virtual void procAnimMsg(Navi*, MsgAnim*); // _20
@@ -336,14 +352,20 @@ struct NaviDemoSunsetState : public NaviState {
 
 	void setActors(Navi*);
 
+	AState<NaviDemoSunsetState>* getCurrState() { return mCurrentState; }
+
+	void setCurrState(AState<NaviDemoSunsetState>* state) { mCurrentState = state; }
+
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	Navi* mNavi;                     // _10
-	Vector3f _14;                    // _14
-	Vector3f _20;                    // _20
-	u8 _2C[0xC];                     // _2C, unknown
-	DemoStateMachine* mStateMachine; // _38
-	u8 _3C[0x4];                     // _3C, unknown
+	Navi* mNavi;                                // _10
+	Vector3f mStartPos;                         // _14
+	Vector3f mGoalPos;                          // _20
+	f32 _2C;                                    // _2C
+	f32 _30;                                    // _30
+	bool mOpenedAccount;                        // _34
+	DemoStateMachine* mStateMachine;            // _38
+	AState<NaviDemoSunsetState>* mCurrentState; // _3C, unknown
 };
 
 /**

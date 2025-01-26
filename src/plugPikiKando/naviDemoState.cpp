@@ -1,5 +1,19 @@
 #include "NaviState.h"
+#include "NaviMgr.h"
 #include "system.h"
+#include "Pcam/CameraManager.h"
+#include "Pcam/Camera.h"
+#include "GameStat.h"
+#include "ItemMgr.h"
+#include "CPlate.h"
+#include "GoalItem.h"
+#include "teki.h"
+#include "Boss.h"
+#include "PikiAI.h"
+#include "PikiMgr.h"
+#include "Kontroller.h"
+#include "zen/DrawAccount.h"
+#include "FlowController.h"
 #include "DebugLog.h"
 
 /*
@@ -14,7 +28,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("naviDemo")
 
 /*
  * --INFO--
@@ -23,345 +37,12 @@ DEFINE_PRINT("TODO: Replace")
  */
 void NaviDemoSunsetState::DemoStateMachine::init(NaviDemoSunsetState*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x24
-	  stwu      r1, -0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x58(r1)
-	  li        r30, 0
-	  stw       r0, 0xC(r3)
-	  stw       r30, 0x8(r3)
-	  lwz       r0, 0xC(r3)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0xC410C
-	  stw       r3, 0x4(r31)
-	  lwz       r0, 0xC(r31)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0xC411C
-	  stw       r3, 0x10(r31)
-	  lwz       r0, 0xC(r31)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0xC412C
-	  stw       r3, 0x14(r31)
-	  li        r3, 0x18
-	  bl        -0xC4138
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA0
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x20D4
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x2084
-	  stw       r0, 0x0(r3)
-	  lis       r5, 0x802C
-	  lis       r4, 0x802C
-	  stw       r30, 0x4(r3)
-	  addi      r5, r5, 0x2034
-	  addi      r0, r4, 0x1FE4
-	  stw       r30, 0x8(r3)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-
-	.loc_0xA0:
-	  lwz       r5, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r5, r0
-	  bge-      .loc_0x120
-	  lwz       r4, 0x4(r31)
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r3, r4, r0
-	  lwz       r4, 0x4(r3)
-	  cmpwi     r4, 0
-	  blt-      .loc_0xD4
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  blt-      .loc_0xDC
-
-	.loc_0xD4:
-	  li        r0, 0
-	  b         .loc_0xE0
-
-	.loc_0xDC:
-	  li        r0, 0x1
-
-	.loc_0xE0:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x120
-	  stw       r31, 0x8(r3)
-	  lwz       r0, 0x8(r31)
-	  lwz       r5, 0x4(r3)
-	  lwz       r4, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r5, r4, r0
-	  lwz       r0, 0x4(r3)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0x120:
-	  li        r3, 0x10
-	  bl        -0xC4200
-	  cmplwi    r3, 0
-	  beq-      .loc_0x170
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x20D4
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x2084
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  addi      r5, r5, 0x2034
-	  addi      r0, r4, 0x1F58
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-
-	.loc_0x170:
-	  lwz       r5, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r5, r0
-	  bge-      .loc_0x1F0
-	  lwz       r4, 0x4(r31)
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r3, r4, r0
-	  lwz       r4, 0x4(r3)
-	  cmpwi     r4, 0
-	  blt-      .loc_0x1A4
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  blt-      .loc_0x1AC
-
-	.loc_0x1A4:
-	  li        r0, 0
-	  b         .loc_0x1B0
-
-	.loc_0x1AC:
-	  li        r0, 0x1
-
-	.loc_0x1B0:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x1F0
-	  stw       r31, 0x8(r3)
-	  lwz       r0, 0x8(r31)
-	  lwz       r5, 0x4(r3)
-	  lwz       r4, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r5, r4, r0
-	  lwz       r0, 0x4(r3)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0x1F0:
-	  li        r3, 0x14
-	  bl        -0xC42D0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x240
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x20D4
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x2084
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x2
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  addi      r5, r5, 0x2034
-	  addi      r0, r4, 0x1ECC
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-
-	.loc_0x240:
-	  lwz       r5, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r5, r0
-	  bge-      .loc_0x2C0
-	  lwz       r4, 0x4(r31)
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r3, r4, r0
-	  lwz       r4, 0x4(r3)
-	  cmpwi     r4, 0
-	  blt-      .loc_0x274
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  blt-      .loc_0x27C
-
-	.loc_0x274:
-	  li        r0, 0
-	  b         .loc_0x280
-
-	.loc_0x27C:
-	  li        r0, 0x1
-
-	.loc_0x280:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x2C0
-	  stw       r31, 0x8(r3)
-	  lwz       r0, 0x8(r31)
-	  lwz       r5, 0x4(r3)
-	  lwz       r4, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r5, r4, r0
-	  lwz       r0, 0x4(r3)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0x2C0:
-	  li        r3, 0x10
-	  bl        -0xC43A0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x310
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x20D4
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x2084
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x3
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  addi      r5, r5, 0x2034
-	  addi      r0, r4, 0x1E3C
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-
-	.loc_0x310:
-	  lwz       r5, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r5, r0
-	  bge-      .loc_0x390
-	  lwz       r4, 0x4(r31)
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r3, r4, r0
-	  lwz       r4, 0x4(r3)
-	  cmpwi     r4, 0
-	  blt-      .loc_0x344
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  blt-      .loc_0x34C
-
-	.loc_0x344:
-	  li        r0, 0
-	  b         .loc_0x350
-
-	.loc_0x34C:
-	  li        r0, 0x1
-
-	.loc_0x350:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x390
-	  stw       r31, 0x8(r3)
-	  lwz       r0, 0x8(r31)
-	  lwz       r5, 0x4(r3)
-	  lwz       r4, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r5, r4, r0
-	  lwz       r0, 0x4(r3)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0x390:
-	  li        r3, 0x10
-	  bl        -0xC4470
-	  cmplwi    r3, 0
-	  beq-      .loc_0x3E0
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x20D4
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x2084
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x4
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  addi      r5, r5, 0x2034
-	  addi      r0, r4, 0x1DB0
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-
-	.loc_0x3E0:
-	  lwz       r5, 0x8(r31)
-	  lwz       r0, 0xC(r31)
-	  cmpw      r5, r0
-	  bge-      .loc_0x460
-	  lwz       r4, 0x4(r31)
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r3, r4, r0
-	  lwz       r4, 0x4(r3)
-	  cmpwi     r4, 0
-	  blt-      .loc_0x414
-	  lwz       r0, 0xC(r31)
-	  cmpw      r4, r0
-	  blt-      .loc_0x41C
-
-	.loc_0x414:
-	  li        r0, 0
-	  b         .loc_0x420
-
-	.loc_0x41C:
-	  li        r0, 0x1
-
-	.loc_0x420:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x460
-	  stw       r31, 0x8(r3)
-	  lwz       r0, 0x8(r31)
-	  lwz       r5, 0x4(r3)
-	  lwz       r4, 0x10(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r5, r4, r0
-	  lwz       r0, 0x4(r3)
-	  lwz       r4, 0x8(r31)
-	  lwz       r3, 0x14(r31)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r4, r3, r0
-	  lwz       r3, 0x8(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r31)
-
-	.loc_0x460:
-	  lwz       r0, 0x64(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	create(36); // NOT 5 as it should be
+	registerState(new GoState);
+	registerState(new LookState);
+	registerState(new WhistleState);
+	registerState(new WaitState);
+	registerState(new SitState);
 }
 
 /*
@@ -369,49 +50,10 @@ void NaviDemoSunsetState::DemoStateMachine::init(NaviDemoSunsetState*)
  * Address:	8010B558
  * Size:	000090
  */
-void NaviDemoSunsetState::GoState::init(NaviDemoSunsetState*)
+void NaviDemoSunsetState::GoState::init(NaviDemoSunsetState* state)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr        r29, r4
-	  stw       r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  lwz       r30, 0x10(r4)
-	  cmplwi    r30, 0
-	  beq-      .loc_0x34
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x34:
-	  addi      r3, r1, 0x10
-	  li        r4, 0
-	  bl        0x139C4
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0
-	  bl        0x139E4
-	  lwz       r6, 0x10(r29)
-	  addi      r4, r3, 0
-	  addi      r5, r31, 0
-	  addi      r3, r6, 0x834
-	  bl        0x144AC
-	  li        r0, 0
-	  stb       r0, 0x14(r28)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(0, state->mNavi), PaniMotionInfo(0));
+	_14 = false;
 }
 
 /*
@@ -419,8 +61,34 @@ void NaviDemoSunsetState::GoState::init(NaviDemoSunsetState*)
  * Address:	8010B5E8
  * Size:	00034C
  */
-void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState*)
+void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 {
+	if (_14) {
+		state->mNavi->mVelocity.multiply(0.9f);
+		state->mNavi->mTargetVelocity = state->mNavi->mVelocity;
+		return;
+	}
+
+	Vector3f diff = (state->mGoalPos - state->mNavi->mPosition);
+	f32 dist      = std::sqrtf(diff.x * diff.x + diff.z * diff.z);
+	f32 nrm       = diff.normalise() / state->_2C;
+
+	if (nrm > 0.7f && nrm < 0.71f && gsys->getRand(1.0f) >= 0.999f) {
+		_14 = true;
+		state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(20, state->mNavi), PaniMotionInfo(20));
+		_10 = (int)(gsys->getRand(1.0f) * 4.0f) + 2;
+		return;
+	}
+
+	if (dist <= 5.0f) {
+		state->mNavi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		transit(state, 1);
+	} else {
+		f32 test                = nrm * 0.6f + 0.4f;
+		f32 speed               = C_NAVI_PROP(state->mNavi)._CC();
+		state->mNavi->mPosition = diff * speed * test;
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -653,203 +321,27 @@ void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState*)
 
 /*
  * --INFO--
- * Address:	8010B934
- * Size:	000030
- */
-void AState<NaviDemoSunsetState>::transit(NaviDemoSunsetState*, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x8(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8010B964
- * Size:	0000B0
- */
-void StateMachine<NaviDemoSunsetState>::transit(NaviDemoSunsetState*, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r5,2,0,29
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  mr        r29, r4
-	  stw       r28, 0x18(r1)
-	  mr        r28, r3
-	  lwz       r31, 0x3C(r4)
-	  lwz       r3, 0x14(r3)
-	  cmplwi    r31, 0
-	  lwzx      r30, r3, r0
-	  mr        r3, r31
-	  beq-      .loc_0x5C
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r29
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x4(r31)
-	  stw       r0, 0x18(r28)
-
-	.loc_0x5C:
-	  lwz       r0, 0xC(r28)
-	  cmpw      r30, r0
-	  blt-      .loc_0x6C
-
-	.loc_0x68:
-	  b         .loc_0x68
-
-	.loc_0x6C:
-	  lwz       r3, 0x4(r28)
-	  rlwinm    r0,r30,2,0,29
-	  addi      r4, r29, 0
-	  lwzx      r3, r3, r0
-	  stw       r3, 0x3C(r29)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8010BA14
- * Size:	000004
- */
-void AState<NaviDemoSunsetState>::init(NaviDemoSunsetState*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010BA18
- * Size:	000004
- */
-void AState<NaviDemoSunsetState>::cleanup(NaviDemoSunsetState*)
-{
-}
-
-/*
- * --INFO--
  * Address:	8010BA1C
  * Size:	00012C
  */
-void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState*, MsgAnim*)
+void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x28(r1)
-	  addi      r28, r3, 0
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0x6
-	  beq-      .loc_0x44
-	  bge-      .loc_0x10C
-	  cmpwi     r0, 0
-	  beq-      .loc_0xC0
-	  b         .loc_0x10C
-
-	.loc_0x44:
-	  lbz       r0, 0x14(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x10C
-	  lwz       r3, 0x10(r28)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x10(r28)
-	  lwz       r3, 0x10(r29)
-	  lfs       f0, -0x267C(r13)
-	  stfsu     f0, 0xA4(r3)
-	  lfs       f0, -0x2678(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x2674(r13)
-	  stfs      f0, 0x8(r3)
-	  lwz       r3, 0x10(r29)
-	  lfs       f0, -0x2670(r13)
-	  stfsu     f0, 0x70(r3)
-	  lfs       f0, -0x266C(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x2668(r13)
-	  stfs      f0, 0x8(r3)
-	  lwz       r0, 0x10(r28)
-	  cmpwi     r0, 0
-	  bgt-      .loc_0x10C
-	  lwz       r3, 0x10(r29)
-	  cmplwi    r3, 0
-	  addi      r4, r3, 0
-	  beq-      .loc_0xB4
-	  addi      r4, r4, 0x2B8
-
-	.loc_0xB4:
-	  addi      r3, r3, 0x834
-	  bl        0x13FEC
-	  b         .loc_0x10C
-
-	.loc_0xC0:
-	  lwz       r30, 0x10(r29)
-	  cmplwi    r30, 0
-	  beq-      .loc_0xD0
-	  addi      r30, r30, 0x2B8
-
-	.loc_0xD0:
-	  addi      r3, r1, 0x14
-	  li        r4, 0x2
-	  bl        0x13464
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x2
-	  bl        0x13484
-	  lwz       r6, 0x10(r29)
-	  addi      r4, r3, 0
-	  addi      r5, r31, 0
-	  addi      r3, r6, 0x834
-	  bl        0x13F4C
-	  li        r0, 0
-	  stb       r0, 0x14(r28)
-
-	.loc_0x10C:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	switch (msg->mKeyEvent->mEventType) {
+	case 6:
+		if (_14) {
+			_10--;
+			state->mNavi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+			state->mNavi->mVelocity.set(0.0f, 0.0f, 0.0f);
+			if (_10 <= 0) {
+				state->mNavi->mNaviAnimMgr.finishMotion(state->mNavi);
+			}
+		}
+		break;
+	case 0:
+		state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(2, state->mNavi), PaniMotionInfo(2));
+		_14 = false;
+		break;
+	}
 }
 
 /*
@@ -866,46 +358,10 @@ void NaviDemoSunsetState::GoState::cleanup(NaviDemoSunsetState*)
  * Address:	8010BB4C
  * Size:	000084
  */
-void NaviDemoSunsetState::LookState::init(NaviDemoSunsetState*)
+void NaviDemoSunsetState::LookState::init(NaviDemoSunsetState* state)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr        r29, r4
-	  lwz       r30, 0x10(r4)
-	  cmplwi    r30, 0
-	  beq-      .loc_0x2C
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x2C:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x41
-	  bl        0x133D8
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x41
-	  bl        0x133F8
-	  mr        r4, r3
-	  lwz       r3, 0x10(r29)
-	  mr        r5, r31
-	  bl        -0x11334
-	  lwz       r3, 0x30D8(r13)
-	  lwz       r3, 0x20(r3)
-	  bl        0x174C4
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	state->mNavi->startMotion(PaniMotionInfo(65, state->mNavi), PaniMotionInfo(65));
+	cameraMgr->mCamera->finishMotion();
 }
 
 /*
@@ -931,48 +387,17 @@ void NaviDemoSunsetState::LookState::cleanup(NaviDemoSunsetState*)
  * Address:	8010BBD8
  * Size:	00007C
  */
-void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState*, MsgAnim*)
+void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x20
-	  b         .loc_0x6C
-
-	.loc_0x20:
-	  lis       r5, 0x803D
-	  addi      r5, r5, 0x1ED0
-	  lwz       r6, 0x8(r5)
-	  lwz       r0, 0x4(r5)
-	  lwz       r5, 0x0(r5)
-	  add       r0, r0, r6
-	  add.      r0, r5, r0
-	  bne-      .loc_0x58
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0x4
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x6C
-
-	.loc_0x58:
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0x2
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x6C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	switch (msg->mKeyEvent->mEventType) {
+	case 0:
+		if (GameStat::allPikis == 0) {
+			transit(state, DEMOSTATE_Sit);
+		} else {
+			transit(state, DEMOSTATE_Whistle);
+		}
+		break;
+	}
 }
 
 /*
@@ -980,52 +405,11 @@ void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState*, MsgAnim*)
  * Address:	8010BC54
  * Size:	00009C
  */
-void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState*)
+void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState* state)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr        r29, r4
-	  stw       r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  lwz       r30, 0x10(r4)
-	  cmplwi    r30, 0
-	  beq-      .loc_0x34
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x34:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x31
-	  bl        0x132C8
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x31
-	  bl        0x132E8
-	  mr        r4, r3
-	  lwz       r3, 0x10(r29)
-	  mr        r5, r31
-	  bl        -0x11444
-	  li        r0, 0
-	  lis       r3, 0x803A
-	  stw       r0, 0x10(r28)
-	  subi      r3, r3, 0x24E0
-	  li        r0, 0x1
-	  stw       r0, 0x23C(r3)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	state->mNavi->startMotion(PaniMotionInfo(49, state->mNavi), PaniMotionInfo(49));
+	_10           = 0;
+	flowCont._23C = 1;
 }
 
 /*
@@ -1042,71 +426,22 @@ void NaviDemoSunsetState::WhistleState::exec(NaviDemoSunsetState*)
  * Address:	8010BCF4
  * Size:	0000C0
  */
-void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState*, MsgAnim*)
+void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState* state, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0x6
-	  beq-      .loc_0x3C
-	  bge-      .loc_0xA8
-	  cmpwi     r0, 0
-	  beq-      .loc_0x8C
-	  b         .loc_0xA8
-
-	.loc_0x3C:
-	  lwz       r3, 0x10(r30)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x10(r30)
-	  lwz       r0, 0x10(r30)
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x60
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0xC0
-
-	.loc_0x60:
-	  lwz       r0, 0x10(r30)
-	  cmpwi     r0, 0x10
-	  bne-      .loc_0xA8
-	  lwz       r3, 0x10(r31)
-	  cmplwi    r3, 0
-	  addi      r4, r3, 0
-	  beq-      .loc_0x80
-	  addi      r4, r4, 0x2B8
-
-	.loc_0x80:
-	  addi      r3, r3, 0x834
-	  bl        0x13D48
-	  b         .loc_0xA8
-
-	.loc_0x8C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x3
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xA8:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-
-	.loc_0xC0:
-	*/
+	switch (msg->mKeyEvent->mEventType) {
+	case 6:
+		_10++;
+		if (_10 == 8) {
+			enterAllPikis(state);
+		}
+		if (_10 == 16) {
+			state->mNavi->mNaviAnimMgr.finishMotion(state->mNavi);
+		}
+		break;
+	case 0:
+		transit(state, 3);
+		break;
+	}
 }
 
 /*
@@ -1114,8 +449,50 @@ void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState*, MsgAni
  * Address:	8010BDB4
  * Size:	0002C8
  */
-void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState*)
+void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state)
 {
+	GoalItem* goals[3];
+
+	Navi* navi = state->mNavi;
+	Iterator it(itemMgr);
+	CI_LOOP(it)
+	{
+		GoalItem* goal = (GoalItem*)*it;
+		if (goal->mObjType == OBJTYPE_Goal) {
+			goals[goal->mOnionColour] = goal;
+		}
+	}
+
+	for (int i = 0; i < 3; i++) {
+		if (!goals[i]) {
+			char buf[256];
+			sprintf(buf, "no goal (%d)", i);
+			PRINT("no goal %d\n", i);
+		}
+	}
+
+	Piki* pikiList[200];
+	int pikis = 0;
+	Iterator it2(navi->mPlateMgr);
+	CI_LOOP(it2)
+	{
+		Piki* piki = (Piki*)*it2;
+		if (piki->isAlive()) {
+			pikiList[pikis++] = piki;
+		}
+	}
+
+	for (int i = 0; i < pikis; i++) {
+		if (pikiList[i]->mColor >= 3) {
+			PRINT("COLOR ID = %d\n", pikiList[i]->mColor);
+			char buf[256];
+			sprintf(buf, "COLOR %d !!", pikiList[i]->mColor);
+			ERROR(buf);
+		}
+
+		navi->mGoalItem = goals[pikiList[i]->mColor];
+		pikiList[i]->changeMode(11, nullptr);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1355,43 +732,9 @@ void NaviDemoSunsetState::WhistleState::cleanup(NaviDemoSunsetState*)
  * Address:	8010C080
  * Size:	000078
  */
-void NaviDemoSunsetState::WaitState::init(NaviDemoSunsetState*)
+void NaviDemoSunsetState::WaitState::init(NaviDemoSunsetState* state)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr        r29, r4
-	  lwz       r30, 0x10(r4)
-	  cmplwi    r30, 0
-	  beq-      .loc_0x2C
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x2C:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x3
-	  bl        0x12EA4
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x3
-	  bl        0x12EC4
-	  mr        r4, r3
-	  lwz       r3, 0x10(r29)
-	  mr        r5, r31
-	  bl        -0x11868
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	state->mNavi->startMotion(PaniMotionInfo(3, state->mNavi), PaniMotionInfo(3));
 }
 
 /*
@@ -1417,43 +760,9 @@ void NaviDemoSunsetState::WaitState::cleanup(NaviDemoSunsetState*)
  * Address:	8010C100
  * Size:	000078
  */
-void NaviDemoSunsetState::SitState::init(NaviDemoSunsetState*)
+void NaviDemoSunsetState::SitState::init(NaviDemoSunsetState* state)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr        r29, r4
-	  lwz       r30, 0x10(r4)
-	  cmplwi    r30, 0
-	  beq-      .loc_0x2C
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x2C:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x32
-	  bl        0x12E24
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x32
-	  bl        0x12E44
-	  mr        r4, r3
-	  lwz       r3, 0x10(r29)
-	  mr        r5, r31
-	  bl        -0x118E8
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	state->mNavi->startMotion(PaniMotionInfo(50, state->mNavi), PaniMotionInfo(50));
 }
 
 /*
@@ -1491,159 +800,31 @@ NaviDemoSunsetState::NaviDemoSunsetState()
  * Address:	8010C254
  * Size:	000200
  */
-void NaviDemoSunsetState::init(Navi*)
+void NaviDemoSunsetState::init(Navi* navi)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r4, 0
-	  li        r4, 0
-	  stw       r30, 0x38(r1)
-	  mr        r30, r3
-	  stw       r29, 0x34(r1)
-	  stw       r28, 0x30(r1)
-	  lwz       r3, 0x3030(r13)
-	  bl        -0x68C44
-	  lwz       r3, 0x3030(r13)
-	  li        r4, 0
-	  li        r5, 0
-	  bl        -0x68CE8
-	  stw       r31, 0x10(r30)
-	  li        r0, 0
-	  addi      r4, r30, 0
-	  stw       r0, 0x3C(r30)
-	  li        r5, 0
-	  lwz       r3, 0x38(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x2664(r13)
-	  stfs      f0, 0x14(r30)
-	  lfs       f0, -0x2660(r13)
-	  stfs      f0, 0x18(r30)
-	  lfs       f0, -0x265C(r13)
-	  stfs      f0, 0x1C(r30)
-	  lfs       f0, -0x2658(r13)
-	  stfs      f0, 0x20(r30)
-	  lfs       f0, -0x2654(r13)
-	  stfs      f0, 0x24(r30)
-	  lfs       f0, -0x2650(r13)
-	  stfs      f0, 0x28(r30)
-	  lwz       r29, 0x30AC(r13)
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-	  b         .loc_0x158
+	seMgr->setPikiNum(0);
+	seMgr->playNaviSound(0, 0);
+	mNavi         = navi;
+	mCurrentState = nullptr;
+	mStateMachine->transit(this, DEMOSTATE_Go);
+	mStartPos.set(0.0f, 0.0f, 0.0f);
+	mGoalPos.set(400.0f, 0.0f, 0.0f);
 
-	.loc_0xB8:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0xDC
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xF4
+	Iterator it(itemMgr);
+	CI_LOOP(it)
+	{
+		Creature* obj = *it;
+		if (obj->mObjType == OBJTYPE_SunsetStart) {
+			mStartPos = obj->mPosition;
+		} else if (obj->mObjType == OBJTYPE_SunsetGoal) {
+			mGoalPos = obj->mPosition;
+		}
+	}
 
-	.loc_0xDC:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xF4:
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0x1B
-	  bne-      .loc_0x11C
-	  lwz       r4, 0x94(r3)
-	  lwz       r0, 0x98(r3)
-	  stw       r4, 0x14(r30)
-	  stw       r0, 0x18(r30)
-	  lwz       r0, 0x9C(r3)
-	  stw       r0, 0x1C(r30)
-	  b         .loc_0x13C
-
-	.loc_0x11C:
-	  cmpwi     r0, 0x1C
-	  bne-      .loc_0x13C
-	  lwz       r4, 0x94(r3)
-	  lwz       r0, 0x98(r3)
-	  stw       r4, 0x20(r30)
-	  stw       r0, 0x24(r30)
-	  lwz       r0, 0x9C(r3)
-	  stw       r0, 0x28(r30)
-
-	.loc_0x13C:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x158:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x180
-	  li        r0, 0x1
-	  b         .loc_0x1AC
-
-	.loc_0x180:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x1A8
-	  li        r0, 0x1
-	  b         .loc_0x1AC
-
-	.loc_0x1A8:
-	  li        r0, 0
-
-	.loc_0x1AC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0xB8
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x200
-	  lfs       f0, -0x6140(r2)
-	  stfs      f0, 0x30(r30)
-	  lwz       r3, 0x30D8(r13)
-	  lwz       r3, 0x20(r3)
-	  addi      r4, r3, 0x38
-	  bl        0x16BD0
-	  li        r0, 0
-	  stb       r0, 0x34(r30)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  lwz       r28, 0x30(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-
-	.loc_0x200:
-	*/
+	setActors(navi);
+	_30 = 30.0f;
+	cameraMgr->mCamera->startMotion(*(PcamMotionInfo*)((int)cameraMgr->mCamera + 0x38)); // I really dont want to figure out this struct yet
+	mOpenedAccount = false;
 }
 
 /*
@@ -1651,8 +832,50 @@ void NaviDemoSunsetState::init(Navi*)
  * Address:	8010C454
  * Size:	0004A0
  */
-void NaviDemoSunsetState::setActors(Navi*)
+void NaviDemoSunsetState::setActors(Navi* navi)
 {
+	navi->mPosition = mStartPos;
+
+	Vector3f dist    = mGoalPos - mStartPos;
+	_2C              = dist.normalise();
+	navi->mDirection = atan2f(dist.x, dist.z);
+	navi->makeCStick(false);
+
+	Iterator it(navi->mPlateMgr);
+	CI_LOOP(it)
+	{
+		Piki* piki        = (Piki*)*it;
+		ActCrowd* act     = (ActCrowd*)piki->mActiveAction->getCurrAction();
+		Vector3f newpos   = navi->mPlateMgr->mSlotList[act->mCPlateSlotID].mPosition + navi->mPlateMgr->mPlateCenter;
+		piki->mPosition   = newpos;
+		piki->mPosition.y = mapMgr->getMinY(piki->mPosition.x, piki->mPosition.z, true);
+	}
+
+	Iterator it3(pikiMgr);
+	CI_LOOP(it3)
+	{
+		Piki* piki = (Piki*)*it3;
+		if (piki->mMode != 1 || piki->getState() == 14) {
+			piki->mEraseKill = true;
+			piki->kill(false);
+			it3.dec();
+		}
+	}
+
+	tekiMgr->store();
+	itemMgr->store();
+	tekiMgr->killAll();
+	bossMgr->killAll();
+
+	Iterator it2(itemMgr);
+	CI_LOOP(it2)
+	{
+		Creature* item = *it3;
+		if (item->mObjType != OBJTYPE_Pikihead && item->mObjType != OBJTYPE_Goal && item->mObjType != OBJTYPE_Fulcrum
+		    && item->mObjType != OBJTYPE_Rope) {
+			item->kill(false);
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2013,143 +1236,31 @@ void NaviDemoSunsetState::setActors(Navi*)
  * Address:	8010C8F4
  * Size:	000160
  */
-void NaviDemoSunsetState::exec(Navi*)
+void NaviDemoSunsetState::exec(Navi* navi)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x48(r1)
-	  addi      r30, r4, 0
-	  addi      r3, r30, 0
-	  bl        -0x12230
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0xE534
-	  lfs       f0, -0x6184(r2)
-	  mr        r4, r31
-	  stfs      f0, 0x738(r30)
-	  lwz       r3, 0x38(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x30(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x30(r31)
-	  lfs       f1, 0x30(r31)
-	  lfs       f0, -0x6184(r2)
-	  fcmpo     cr0, f1, f0
-	  blt-      .loc_0x9C
-	  lfs       f0, -0x613C(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xC8
-	  lwz       r4, 0x2E4(r30)
-	  lis       r3, 0x108
-	  subi      r0, r3, 0x1000
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0xC8
+	navi->findNextThrowPiki();
+	navi->makeCStick(true);
+	navi->_738 = 0.0f;
+	mStateMachine->exec(this);
+	_30 -= gsys->getFrameTime();
 
-	.loc_0x9C:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  li        r0, 0x1
-	  stw       r0, 0x240(r3)
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x148
+	if (_30 < 0.0f || (_30 <= 15.0f && navi->mKontroller->keyClick(0x107f000))) {
+		flowCont._240 = 1;
+		cleanup(navi);
+		return;
+	}
 
-	.loc_0xC8:
-	  lbz       r0, 0x34(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x148
-	  lfs       f0, -0x6138(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x148
-	  lwz       r4, 0x3100(r13)
-	  lis       r3, 0x803D
-	  lwz       r0, 0x3104(r13)
-	  addi      r7, r3, 0x1E58
-	  extsh     r3, r4
-	  sth       r3, 0x38(r1)
-	  extsh     r0, r0
-	  lwz       r3, 0x30F8(r13)
-	  addi      r4, r1, 0x38
-	  sth       r0, 0x3A(r1)
-	  lwz       r0, 0x30FC(r13)
-	  extsh     r5, r3
-	  lwz       r6, 0x8(r7)
-	  lwz       r3, 0x4(r7)
-	  extsh     r0, r0
-	  lwz       r7, 0x0(r7)
-	  add       r6, r3, r6
-	  lwz       r3, 0x30E4(r13)
-	  add       r6, r7, r6
-	  sth       r6, 0x3C(r1)
-	  sth       r5, 0x3E(r1)
-	  sth       r0, 0x40(r1)
-	  bl        0xB5CD4
-	  li        r0, 0x1
-	  stb       r0, 0x34(r31)
+	if (mOpenedAccount) {
+		return;
+	}
 
-	.loc_0x148:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
-}
+	if (!(_30 <= 20.0f)) {
+		return;
+	}
 
-/*
- * --INFO--
- * Address:	8010CA54
- * Size:	00003C
- */
-void StateMachine<NaviDemoSunsetState>::exec(NaviDemoSunsetState*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x3C(r4)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8010CA90
- * Size:	000004
- */
-void AState<NaviDemoSunsetState>::exec(NaviDemoSunsetState*)
-{
+	zen::AccountData data(GameStat::minPikis, GameStat::maxPikis, GameStat::deadPikis, GameStat::killTekis, GameStat::getPellets);
+	accountWindow->start(data);
+	mOpenedAccount = true;
 }
 
 /*
@@ -2157,177 +1268,23 @@ void AState<NaviDemoSunsetState>::exec(NaviDemoSunsetState*)
  * Address:	8010CA94
  * Size:	000218
  */
-void NaviDemoSunsetState::cleanup(Navi*)
+void NaviDemoSunsetState::cleanup(Navi* navi)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stmw      r27, 0x44(r1)
-	  lwz       r31, 0x3068(r13)
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x1A8
-
-	.loc_0x30:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x54
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x6C
-
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x6C:
-	  cmplwi    r3, 0
-	  addi      r27, r3, 0
-	  beq-      .loc_0x18C
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x18C
-	  lwz       r29, 0x30AC(r13)
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-	  b         .loc_0x130
-
-	.loc_0xB4:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0xD8
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xF0
-
-	.loc_0xD8:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xF0:
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0x10
-	  bne-      .loc_0x114
-	  lhz       r4, 0x428(r3)
-	  lhz       r0, 0x510(r27)
-	  cmplw     r4, r0
-	  bne-      .loc_0x114
-	  mr        r4, r27
-	  bl        -0x2194C
-
-	.loc_0x114:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x130:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x158
-	  li        r0, 0x1
-	  b         .loc_0x184
-
-	.loc_0x158:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x180
-	  li        r0, 0x1
-	  b         .loc_0x184
-
-	.loc_0x180:
-	  li        r0, 0
-
-	.loc_0x184:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0xB4
-
-	.loc_0x18C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x1A8:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1D0
-	  li        r0, 0x1
-	  b         .loc_0x1FC
-
-	.loc_0x1D0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x1F8
-	  li        r0, 0x1
-	  b         .loc_0x1FC
-
-	.loc_0x1F8:
-	  li        r0, 0
-
-	.loc_0x1FC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x30
-	  lmw       r27, 0x44(r1)
-	  lwz       r0, 0x5C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	Iterator it(pikiMgr);
+	CI_LOOP(it)
+	{
+		Piki* piki = (Piki*)*it;
+		if (piki && piki->isAlive()) {
+			Iterator it2(itemMgr);
+			CI_LOOP(it2)
+			{
+				GoalItem* item = (GoalItem*)*it2;
+				if (item->mObjType == OBJTYPE_Goal && item->mOnionColour == piki->mColor) {
+					item->enterGoal(piki);
+				}
+			}
+		}
+	}
 }
 
 /*
@@ -2335,261 +1292,7 @@ void NaviDemoSunsetState::cleanup(Navi*)
  * Address:	8010CCAC
  * Size:	000034
  */
-void NaviDemoSunsetState::procAnimMsg(Navi*, MsgAnim*)
+void NaviDemoSunsetState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x38(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8010CCE0
- * Size:	00003C
- */
-void StateMachine<NaviDemoSunsetState>::procMsg(NaviDemoSunsetState*, Msg*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x3C(r4)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8010CD1C
- * Size:	000118
- */
-void Receiver<NaviDemoSunsetState>::procMsg(NaviDemoSunsetState*, Msg*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r5)
-	  cmplwi    r0, 0xA
-	  bgt-      .loc_0x108
-	  lis       r6, 0x802C
-	  addi      r6, r6, 0x1AE4
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r6, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x108:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8010CE34
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procGroundMsg(NaviDemoSunsetState*, MsgGround*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE38
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procUserMsg(NaviDemoSunsetState*, MsgUser*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE3C
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procOffWallMsg(NaviDemoSunsetState*, MsgOffWall*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE40
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procWallMsg(NaviDemoSunsetState*, MsgWall*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE44
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procDamageMsg(NaviDemoSunsetState*, MsgDamage*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE48
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procAnimMsg(NaviDemoSunsetState*, MsgAnim*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE4C
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procCollideMsg(NaviDemoSunsetState*, MsgCollide*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE50
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procTargetMsg(NaviDemoSunsetState*, MsgTarget*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE54
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procHangMsg(NaviDemoSunsetState*, MsgHang*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE58
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procStickMsg(NaviDemoSunsetState*, MsgStick*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE5C
- * Size:	000004
- */
-void Receiver<NaviDemoSunsetState>::procBounceMsg(NaviDemoSunsetState*, MsgBounce*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE60
- * Size:	000004
- */
-void AState<NaviDemoSunsetState>::resume(NaviDemoSunsetState*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE64
- * Size:	000004
- */
-void AState<NaviDemoSunsetState>::restart(NaviDemoSunsetState*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8010CE68
- * Size:	000004
- */
-void StateMachine<NaviDemoSunsetState>::init(NaviDemoSunsetState*)
-{
+	mStateMachine->procMsg(this, msg);
 }

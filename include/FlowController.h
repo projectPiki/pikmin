@@ -33,7 +33,9 @@ struct FlowController {
 	char mStagePath2[0x80];        // _1B0, identical to above
 	int _230;                      // _230, unknown
 	int _234;                      // _234
-	u8 _238[0x244 - 0x238];        // _238, unknown
+	u8 _238;                       // _238
+	u32 _23C;                      // _23C
+	int _240;                      // _240
 	int _244;                      // _244
 	u32 _248;                      // _248, unknown
 	u32 _24C;                      // _24C, unknown

@@ -1442,7 +1442,7 @@ zen::DrawScreen::~DrawScreen()
  * Address:	801C25B4
  * Size:	000124
  */
-void zen::DrawAccount::update()
+bool zen::DrawAccount::update()
 {
 	/*
 	.loc_0x0:

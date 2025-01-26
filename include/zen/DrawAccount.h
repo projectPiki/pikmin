@@ -12,7 +12,21 @@ namespace zen {
  * @brief TODO
  */
 struct AccountData {
-	// TODO: members
+	AccountData() { }
+	AccountData(s16 minPiki, s16 maxPiki, s16 deadPiki, s16 deadTeki, s16 pellets)
+	{
+		_00 = minPiki;
+		_02 = maxPiki;
+		_04 = deadPiki;
+		_06 = deadTeki;
+		_08 = pellets;
+	}
+
+	s16 _00; // _00
+	s16 _02; // _02
+	s16 _04; // _04
+	s16 _06; // _06
+	s16 _08; // _08
 };
 
 /**
@@ -24,7 +38,7 @@ struct DrawAccount : public DrawScreen {
 
 	DrawAccount();
 
-	virtual void update(); // _08
+	virtual bool update(); // _08
 
 	void start(AccountData&);
 	void draw(Graphics&);
