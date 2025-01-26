@@ -52,6 +52,7 @@ struct GemItem : public ItemCreature {
 	f32 _3E8;              // _3E8
 	int _3EC;              // _3EC
 	int _3F0;              // _3F0
+	int _3F4;              // _3F4
 	int _3F8;              // _3F8
 	int _3FC;              // _3FC
 	CollInfo mGemCollInfo; // _400

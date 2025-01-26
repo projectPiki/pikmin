@@ -851,7 +851,7 @@ void GoalItem::suckMe(Pellet* item)
 	}
 
 	if (pikiNum < 0) {
-		_2D4 += 2;
+		mCounter += 2;
 		MsgUser msg(0);
 		mStateMachine->procMsg(this, &msg);
 		playEventSound(this, SE_CONTAINER_HANABI);
@@ -1141,8 +1141,8 @@ void GoalItem::startAI(int)
 	Vector3f b(1.0f, 1.0f, 1.0f);
 	mSpotModelEff = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mPosition, a, b);
 	mScale.set(1.0f, 1.0f, 1.0f);
-	_2D0 = 0;
-	_2D4 = 0;
+	_2D0     = 0;
+	mCounter = 0;
 
 	for (int i = 0; i < 3; i++) {
 		RopeItem* rope  = mRope[i];

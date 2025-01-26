@@ -95,8 +95,7 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 		_3D8 = true;
 	}
 
-	// DLL inlines to do:
-	int getTotalStorePikis();
+	int getTotalStorePikis() { return mHeldPikis[0] + mHeldPikis[1] + mHeldPikis[2]; }
 
 	// _00       = VTBL
 	// _00-_3C8  = Suckable

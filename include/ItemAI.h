@@ -11,6 +11,15 @@
  */
 struct SluiceAI : public SimpleAI {
 
+	enum SluiceStateID {
+		Sluice_Init       = 0,
+		Sluice_WaitInit   = 1,
+		Sluice_ChangeInit = 2,
+		Sluice_AddCount   = 3,
+		Sluice_MotionDone = 4,
+		Sluice_DamageInit = 5,
+	};
+
 	/**
 	 * @brief TODO
 	 */
