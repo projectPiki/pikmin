@@ -193,7 +193,7 @@ void PikiMgr::dumpAll()
 	CI_LOOP(iter)
 	{
 		Creature* piki        = *iter;
-		Matrix4f transformMtx = piki->mTransformMatrix;
+		Matrix4f transformMtx = piki->mWorldMtx;
 		PRINT("[%x] piki %d --------------------------\n", piki, pikiNum);
 		for (int i = 0; i < 4; i++) {
 			PRINT("   ( %.1f %.1f %.1f %.1f )\n", transformMtx.mMtx[i][0], transformMtx.mMtx[i][1], transformMtx.mMtx[i][2],

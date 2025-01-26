@@ -452,7 +452,7 @@ void SpiderAi::initAppear(int nextState)
 	mSpider->setIsOrganic(true);
 	mSpider->setAnimTimer(30.0f);
 	mSpider->mRotation.y += NsMathF::getRand(PI) - HALF_PI;
-	mSpider->mDirection = mSpider->mRotation.y;
+	mSpider->mFaceDirection = mSpider->mRotation.y;
 }
 
 /*

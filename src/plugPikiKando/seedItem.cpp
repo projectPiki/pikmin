@@ -28,12 +28,13 @@ DEFINE_PRINT("seedItem")
 SeedItem::SeedItem(CreatureProp* props, Shape** shapes)
     : Creature(props)
 {
-	mShape        = shapes[0];
-	mShape2       = shapes[1];
-	mCurrentShape = mShape;
+	mSeedShape    = shapes[0];
+	mPlantedShape = shapes[1];
+	mCurrentShape = mSeedShape;
 
 	f32 scale = 0.2f;
 	mScale.set(scale, scale, scale);
+
 	_68 = 4;
 	resetCreatureFlag(CF_Unk10);
 	setCreatureFlag(CF_Unk1 | CF_Unk5);
@@ -72,8 +73,8 @@ void SeedItem::init(Vector3f& pos)
 void SeedItem::startBirth()
 {
 	mStateId      = 0;
-	mCurrentShape = mShape;
-	resetCreatureFlag(CF_GravityEnabled);
+	mCurrentShape = mSeedShape;
+	resetCreatureFlag(CF_GravityEnabled); // Disable gravity for controlled drop
 	setCreatureFlag(CF_Unk5);
 	mVelocity.y = 10.0f;
 }
@@ -86,9 +87,9 @@ void SeedItem::startBirth()
 void SeedItem::startSown()
 {
 	mStateId      = 1;
-	_2E0          = 200.0f;
-	mCurrentShape = mShape2;
-	setCreatureFlag(CF_GravityEnabled);
+	mGrowthTimer  = 200.0f;
+	mCurrentShape = mPlantedShape;
+	setCreatureFlag(CF_GravityEnabled); // Enable gravity
 	resetCreatureFlag(CF_Unk5);
 }
 
@@ -132,41 +133,54 @@ void SeedItem::doKill()
 void SeedItem::update()
 {
 	if (mStateId == 0) {
-		Navi* navi    = naviMgr->getNavi();
-		Vector3f diff = navi->mPosition - mPosition;
-		diff.y        = 0.0f;
-		f32 dist      = diff.length();
+		Navi* player = naviMgr->getNavi();
 
-		f32 mult, vel, y;
-		if (dist < 20.0f) {
-			y    = 30.0f;
-			vel  = 200.0f;
-			mult = 1.0f;
-		} else if (dist < 200.0f) {
-			y    = ((dist - 20.0f) / 180.0f) * 70.0f + 30.0f;
-			vel  = ((dist - 20.0f) / 180.0f) * 150.0f + 200.0f;
-			mult = ((dist - 20.0f) / 180.0f) * 5.0f + 1.0f;
+		Vector3f toPlayer    = player->mPosition - mPosition;
+		toPlayer.y           = 0.0f;
+		f32 distanceToPlayer = toPlayer.length();
+		f32 rotationSpeed, moveSpeed, targetHeight;
+
+		// Adjust movement speed and height based on distance to player
+		if (distanceToPlayer < 20.0f) {
+			// If the seed is close to the player, it will move towards the player at a fixed height and speed
+			targetHeight  = 30.0f;
+			moveSpeed     = 200.0f;
+			rotationSpeed = 1.0f;
+		} else if (distanceToPlayer < 200.0f) {
+			// If the seed is within 200 units of the player, it will move towards the player at a height and speed that scales with
+			// distance
+			targetHeight  = ((distanceToPlayer - 20.0f) / 180.0f) * 70.0f + 30.0f;
+			moveSpeed     = ((distanceToPlayer - 20.0f) / 180.0f) * 150.0f + 200.0f;
+			rotationSpeed = ((distanceToPlayer - 20.0f) / 180.0f) * 5.0f + 1.0f;
 		} else {
-			y    = 100.0f;
-			vel  = 350.0f;
-			mult = 6.0f;
+			// If the seed is more than 200 units away from the player, it will move towards the player at a fixed height and speed
+			targetHeight  = 100.0f;
+			moveSpeed     = 350.0f;
+			rotationSpeed = 6.0f;
 		}
-		mDirection += gsys->getFrameTime() * PI * mult;
-		mDirection = roundAng(mDirection);
 
-		mRotation.set(0.0f, mDirection, 0.0f);
+		// Update rotation
+		mFaceDirection += gsys->getFrameTime() * PI * rotationSpeed;
+		mFaceDirection = roundAng(mFaceDirection);
+		mRotation.set(0.0f, mFaceDirection, 0.0f);
 
-		diff        = diff * (1.0f / dist);
-		mVelocity.x = vel * diff.x;
-		mVelocity.z = vel * diff.z;
-		if (mPosition.y < y && mVelocity.y < 100.0f) {
+		// Update velocity towards the player
+		toPlayer    = toPlayer * (1.0f / distanceToPlayer);
+		mVelocity.x = moveSpeed * toPlayer.x;
+		mVelocity.z = moveSpeed * toPlayer.z;
+
+		// Apply upward force if below target
+		if (mPosition.y < targetHeight && mVelocity.y < 100.0f) {
 			mVelocity.y += AIConstant::_instance->mConstants.mGravity() * gsys->getFrameTime() * 2.5f;
 		}
-		if (dist < 8.0f) {
-			navi->_72C++;
+
+		// Check if the seed is close enough to the player to be picked up
+		if (distanceToPlayer < 8.0f) {
+			player->_72C++;
 			kill(nullptr);
 		}
 	}
+
 	updateAI();
 }
 
@@ -178,7 +192,7 @@ void SeedItem::update()
 void SeedItem::doAI()
 {
 	if (mStateId != 2 && !(mStateId == 2)) {
-		PRINT("idek man", _2E0);
+		PRINT("idek man", mGrowthTimer);
 		return;
 	}
 }
@@ -192,10 +206,10 @@ void SeedItem::refresh(Graphics& gfx)
 {
 	if (mStateId != 2) {
 		Matrix4f unused;
-		mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 
 		Matrix4f mtx;
-		gfx.calcViewMatrix(mTransformMatrix, mtx);
+		gfx.calcViewMatrix(mWorldMtx, mtx);
 		gfx.useMatrix(mtx, 0);
 		gfx.mCamera->setBoundOffset(&mPosition);
 		mapMgr->getLight(mPosition.x, mPosition.z);

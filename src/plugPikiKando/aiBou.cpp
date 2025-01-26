@@ -36,7 +36,7 @@ ActBou::ActBou(Piki* piki)
 void ActBou::init(Creature* creature)
 {
 	if (creature && creature->mObjType == OBJTYPE_Kusa) {
-		mClimbingStick = creature;
+		mTargetStick = creature;
 	} else {
 		PRINT("TARGET IS %x : %d\n", creature, creature ? creature->mObjType : OBJTYPE_INVALID);
 	}
@@ -50,7 +50,7 @@ void ActBou::init(Creature* creature)
 		mActor->_408 = 2;
 	}
 
-	_16 = 120;
+	mTimeoutCounter = 120;
 }
 
 /*
@@ -87,21 +87,23 @@ int ActBou::gotoLeg()
 
 		mActor->setCreatureFlag(CF_Unk8);
 		mActor->finishLook();
+
 		Tube tube;
 		mActor->mStickPart->makeTube(tube);
-		Vector3f vec1;
-		Vector3f vec2;
-		tube.getPosGradient(mActor->mPosition, mActor->mAttachPosition.x, vec1, vec2);
-		_18 = vec2;
+
+		Vector3f pos;
+		Vector3f gradient;
+		tube.getPosGradient(mActor->mPosition, mActor->mAttachPosition.x, pos, gradient);
+		mClimbDirection = gradient;
 		return ACTOUT_Continue;
 	}
 
-	if (--_16 <= 0) {
+	if (--mTimeoutCounter <= 0) {
 		mActor->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
-	Vector3f direction = mClimbingStick->mPosition - mActor->mPosition;
+	Vector3f direction = mTargetStick->mPosition - mActor->mPosition;
 	f32 dist           = direction.normalise();
 	PRINT("d is %.1f\n", dist);
 	mActor->setSpeed(0.5f, direction);
@@ -115,7 +117,7 @@ int ActBou::gotoLeg()
  */
 void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
-	if (msg->mEvent.mCollider != mClimbingStick) {
+	if (msg->mEvent.mCollider != mTargetStick) {
 		return;
 	}
 
@@ -135,18 +137,18 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 
 	msg->mEvent.mColliderPart->makeTube(tube);
 
-	f32 gRatio = tube.getYRatio(10.0f + mClimbingStick->mPosition.y);
+	f32 groundRatio = tube.getYRatio(10.0f + mTargetStick->mPosition.y);
 
-	Vector3f vec;
+	Vector3f collisionPoint;
 	f32 ratio;
-	if (tube.collide(sphere, vec, ratio)) {
-		PRINT("ground ratio = %f ratio = %f\n", gRatio, ratio);
-		_16 = 120;
+	if (tube.collide(sphere, collisionPoint, ratio)) {
+		PRINT("ground ratio = %f ratio = %f\n", groundRatio, ratio);
+		mTimeoutCounter = 120;
 		mActor->startStickObject(msg->mEvent.mCollider, msg->mEvent.mColliderPart, -1, 0.0f);
 		mActor->finishLook();
 
 		mActor->mOdometer.start(1.0f, 5.0f);
-		_28 = mActor->mPosition;
+		mLastPosition = mActor->mPosition;
 	}
 }
 
@@ -161,14 +163,14 @@ int ActBou::climb()
 		return ACTOUT_Fail;
 	}
 
-	if (!mActor->mOdometer.moving(mActor->mPosition, _28)) {
+	if (!mActor->mOdometer.moving(mActor->mPosition, mLastPosition)) {
 		PRINT("======= BO ODOMETER FAILED\n");
 		return ACTOUT_Fail;
 	}
 
-	_28               = mActor->mPosition;
+	mLastPosition     = mActor->mPosition;
 	f32 mag           = (22.0f + randFloat(4.0f));
-	mActor->mVelocity = _18 * mag;
+	mActor->mVelocity = mClimbDirection * mag;
 	return ACTOUT_Continue;
 }
 
@@ -179,7 +181,7 @@ int ActBou::climb()
  */
 void ActBou::cleanup()
 {
-	mActor->mVelocity       = _18 * 150.0f;
+	mActor->mVelocity       = mClimbDirection * 150.0f;
 	mActor->mTargetVelocity = mActor->mVelocity;
 	mActor->endStickObject();
 	mActor->mCreatureFlags &= ~(CF_Unk8); // should use the inline, but stack

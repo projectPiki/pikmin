@@ -261,7 +261,7 @@ struct Creature : public RefCountable, public EventTalker {
 	void enableAirResist(f32 res)
 	{
 		setCreatureFlag(CF_Unk5);
-		_CC = res;
+		mAirResistance = res;
 	}
 
 	Vector3f& getPosition() { return mPosition; }
@@ -342,19 +342,19 @@ struct Creature : public RefCountable, public EventTalker {
 	Vector3f mScale;                     // _7C, NB: these 3 vectors are an SRT according to DLL
 	Vector3f mRotation;                  // _88, but I really don't want that extra level to access these
 	Vector3f mPosition;                  // _94, just a heads up in case it becomes important
-	f32 mDirection;                      // _A0
+	f32 mFaceDirection;                  // _A0
 	Vector3f mTargetVelocity;            // _A4, a.k.a. "drive"
 	Vector3f _B0;                        // _B0
 	Vector3f mVolatileVelocity;          // _BC
 	u32 mCreatureFlags;                  // _C8, bitflag
-	f32 _CC;                             // _CC
+	f32 mAirResistance;                  // _CC
 	f32 mGroundOffset;                   // _D0
 	Vector3f mPrevAngularVelocity;       // _D4
 	Quat mRotationQuat;                  // _E0
 	Quat mPreGrabRotation;               // _F0
 	Quat _100;                           // _100
 	f32 _110;                            // _110
-	Matrix4f _114;                       // _114
+	Matrix4f mRopeOrientMtx;             // _114
 	Creature* mRopeListHead;             // _154, first holder in list of holders holding onto this rope
 	RopeCreature* mRope;                 // _158
 	f32 mRopeRatio;                      // _15C, how far along the rope are we
@@ -371,20 +371,20 @@ struct Creature : public RefCountable, public EventTalker {
 	int mPelletStickSlot;                // _1A0
 	u32 _1A4;                            // _1A4
 	u32 _1A8;                            // _1A8, unknown
-	Vector3f _1AC;                       // _1AC
+	Vector3f mLastPosition;              // _1AC
 	SearchBuffer mSearchBuffer;          // _1B8
 	LifeGauge mLifeGauge;                // _1E0
 	u32 _21C;                            // _21C, unknown
 	CollInfo* mCollInfo;                 // _220
 	CreatureProp* mProps;                // _224, creature properties
-	Matrix4f mTransformMatrix;           // _228
+	Matrix4f mWorldMtx;                  // _228
 	f32 _268;                            // _268
-	f32 _26C;                            // _26C
+	f32 mSize;                           // _26C
 	f32 mCollisionRadius;                // _270
 	Vector3f _274;                       // _274, this is actually a wrapper around a Vector3f in the DLL, but idk what yet.
 	DynCollObject* mCollPlatform;        // _280
 	Vector3f* mCollPlatNormal;           // _284
-	CollTriInfo* _288;                   // _288, something to do with climbing
+	CollTriInfo* mClimbingTri;           // _288
 	CollTriInfo* mFloorTri;              // _28C
 	u32 _290;                            // _290, unknown
 	u8 _294[0x4];                        // _294, unknown

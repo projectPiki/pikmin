@@ -281,7 +281,7 @@ void CoreNucleusAi::initHit(int val)
 	mCore->setNextState(val);
 	mCore->setMotionFinish(false);
 	mCore->mAnimator.startMotion(PaniMotionInfo(10, this));
-	Vector3f ptclPos(sinf(mCore->mDirection), 0.0f, cosf(mCore->mDirection));
+	Vector3f ptclPos(sinf(mCore->mFaceDirection), 0.0f, cosf(mCore->mFaceDirection));
 	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Kogane_Hit, mCore->mPosition, nullptr, nullptr);
 	if (ptcl) {
 		ptcl->setEmitDir(ptclPos);

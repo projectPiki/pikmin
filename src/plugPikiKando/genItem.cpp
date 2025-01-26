@@ -39,8 +39,8 @@ GenObjectItem::GenObjectItem()
     , _48(this, 3, 3, 3, "p03", nullptr)
 {
 	mObjType = 1;
-	sprintf(_5C, " ");
-	sprintf(_7C, " ");
+	sprintf(mName1, " ");
+	sprintf(mName2, " ");
 }
 
 /*
@@ -111,15 +111,15 @@ void GenObjectItem::doRead(RandomAccessStream& stream)
 
 	if (mVersion != 'v0.0') {
 		for (int i = 0; i < 32; i++) {
-			_5C[i] = stream.readByte();
+			mName1[i] = stream.readByte();
 		}
 
 		for (int i = 0; i < 32; i++) {
-			_7C[i] = stream.readByte();
+			mName2[i] = stream.readByte();
 		}
 	} else {
-		sprintf(_5C, " ");
-		sprintf(_7C, " ");
+		sprintf(mName1, " ");
+		sprintf(mName2, " ");
 	}
 }
 
@@ -138,11 +138,11 @@ void GenObjectItem::doWrite(RandomAccessStream& stream)
 	stream.writeString(ObjType::getName(mObjType));
 	if (getLatestVersion() != 'v0.0') {
 		for (int i = 0; i < 32; i++) {
-			stream.writeByte(_5C[i]);
+			stream.writeByte(mName1[i]);
 		}
 
 		for (int i = 0; i < 32; i++) {
-			stream.writeByte(_7C[i]);
+			stream.writeByte(mName2[i]);
 		}
 	}
 }
@@ -233,11 +233,11 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 
 		int health = mParameterC() + mParameterB() * (int)gameflow.mWorldClock.mHoursInDay;
 		item->init(info.mPosition);
-		item->mRotation  = info.mRotation;
-		item->mDirection = item->mRotation.y;
-		item->mGenerator = info.mGenerator;
-		item->mHealth    = health;
-		item->mMaxHealth = item->mHealth;
+		item->mRotation      = info.mRotation;
+		item->mFaceDirection = item->mRotation.y;
+		item->mGenerator     = info.mGenerator;
+		item->mHealth        = health;
+		item->mMaxHealth     = item->mHealth;
 		item->startAI(0);
 		if (info.mGenerator->doAdjustFaceDir()) {
 			item->enableFaceDirAdjust();
@@ -246,8 +246,8 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		item->mGenerator->mGeneratorName.sprint(id);
 
 		if (mVersion != 'v0.0' && item->mObjType == OBJTYPE_Door) {
-			((DoorItem*)item)->_3D0 = _5C;
-			((DoorItem*)item)->_3D4 = _7C;
+			((DoorItem*)item)->mDestinationStagePath = mName1;
+			((DoorItem*)item)->mLabelText            = mName2;
 		}
 
 		if (item->mObjType == OBJTYPE_BombGen) {

@@ -116,6 +116,7 @@ int ActStone::exeApproach()
 	Vector3f direction = mCurrPebble->mPosition - mActor->mPosition;
 	f32 dist2D         = std::sqrtf(direction.x * direction.x + direction.z * direction.z);
 	f32 unused         = direction.normalise();
+
 	if (dist2D <= 20.0f) {
 		initAdjust();
 		return ACTOUT_Continue;
@@ -171,7 +172,7 @@ void ActStone::initAttack()
 {
 	mState = STATE_Attack;
 	mActor->startMotion(PaniMotionInfo(PIKIANIM_Job2, this), PaniMotionInfo(PIKIANIM_Job2));
-	_28 = 0;
+	mIsAttackReady = 0;
 	mActor->enableFixPos();
 }
 
@@ -192,7 +193,7 @@ int ActStone::exeAttack()
 
 	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-	if (_28) {
+	if (mIsAttackReady) {
 		initAttack();
 		return ACTOUT_Continue;
 	}
@@ -219,7 +220,7 @@ void ActStone::animationKeyUpdated(PaniAnimKeyEvent& event)
 			return;
 		}
 
-		Vector3f effectPos(sinf(mActor->mDirection), 0.0f, cosf(mActor->mDirection));
+		Vector3f effectPos(sinf(mActor->mFaceDirection), 0.0f, cosf(mActor->mFaceDirection));
 		effectPos = effectPos * 5.0f + mActor->mPosition;
 		EffectParm parm(effectPos);
 		UtEffectMgr::cast(12, parm);
@@ -249,7 +250,7 @@ void ActStone::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	case KEY_Finished:
 		if (mState == STATE_Attack) {
-			_28 = 1;
+			mIsAttackReady = 1;
 		}
 
 		break;

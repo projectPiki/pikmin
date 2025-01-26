@@ -357,8 +357,8 @@ struct GenObjectItem : public GenObject {
 	Parm<int> mParameterC; // _38
 	Parm<int> _48;         // _48
 	int mObjType;          // _58
-	char _5C[32];          // _5C
-	char _7C[32];          // _7C
+	char mName1[32];       // _5C
+	char mName2[32];       // _7C
 };
 
 /**

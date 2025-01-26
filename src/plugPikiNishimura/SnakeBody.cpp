@@ -338,9 +338,9 @@ void SnakeBody::makeVectorMatrix()
 				NsCalculation::calcOuterPro(mAnimPosList[i][0], mAnimPosList[i][1], mAnimPosList[i][2]);
 
 			} else {
-				mAnimPosList[i][2].x = cosf(mSnake->mDirection);
+				mAnimPosList[i][2].x = cosf(mSnake->mFaceDirection);
 				mAnimPosList[i][2].y = 0.0f;
-				mAnimPosList[i][2].z = -sinf(mSnake->mDirection);
+				mAnimPosList[i][2].z = -sinf(mSnake->mFaceDirection);
 				NsCalculation::calcOuterPro(mAnimPosList[i][2], mAnimPosList[i][0], mAnimPosList[i][1]);
 				NsCalculation::calcOuterPro(mAnimPosList[i][0], mAnimPosList[i][1], mAnimPosList[i][2]);
 			}
@@ -382,7 +382,7 @@ void SnakeBody::createDeadPellet(Vector3f& pelletPos, int itemIdx)
 void SnakeBody::createDeadHeadEffect()
 {
 	Vector3f vec;
-	f32 angle = mSnake->mDirection - 0.5f;
+	f32 angle = mSnake->mFaceDirection - 0.5f;
 	vec.x     = 30.0f * sinf(angle) + mSegmentPositionList[mDeadEffectSegmentIndex].x;
 	vec.y     = 0.0f + mSegmentPositionList[mDeadEffectSegmentIndex].y;
 	vec.z     = 30.0f * cosf(angle) + mSegmentPositionList[mDeadEffectSegmentIndex].z;

@@ -80,9 +80,9 @@ void StageInfo::parseGenerators(CmdStream* commands)
 		u32 byte3;
 		sscanf(commands->getToken(true), "%d", &byte3);
 
-		fileInfo->_14 = byte1;
-		fileInfo->_15 = byte2;
-		fileInfo->_16 = byte3;
+		fileInfo->mStartDay = byte1;
+		fileInfo->mEndDay   = byte2;
+		fileInfo->mDuration = byte3;
 
 		mFileInfoList.add(fileInfo);
 	}
@@ -458,8 +458,8 @@ void OnePlayerSection::init()
 		switch (nextSectionType) {
 		case ONEPLAYER_GameSetup:
 			gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
-			if (gameflow._1FC >= 2 && gameflow._1FC <= 4) {
-				gameflow.mLevelBannerTexture   = gameflow.setLoadBanner(levNames[gameflow._1FC]);
+			if (gameflow.mLevelIndex >= 2 && gameflow.mLevelIndex <= 4) {
+				gameflow.mLevelBannerTexture   = gameflow.setLoadBanner(levNames[gameflow.mLevelIndex]);
 				gameflow.mLevelBannerFadeValue = 0.0f;
 			} else {
 				gameflow.mLevelBannerTexture = nullptr;
@@ -496,7 +496,7 @@ void OnePlayerSection::init()
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 			gameflow.mWorldClock.mCurrentDay = 1;
 			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
-			gameflow._1FC                    = 3;
+			gameflow.mLevelIndex             = 3;
 			break;
 
 		case ONEPLAYER_Unk3:
@@ -517,7 +517,7 @@ void OnePlayerSection::init()
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 			gameflow.mWorldClock.mCurrentDay = 1;
 			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
-			gameflow._1FC                    = 4;
+			gameflow.mLevelIndex             = 4;
 			break;
 
 		case ONEPLAYER_Unk4:
@@ -539,7 +539,7 @@ void OnePlayerSection::init()
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
 			gameflow.mWorldClock.mCurrentDay = 2;
 			gameflow.mNextOnePlayerSectionID = ONEPLAYER_NewPikiGame;
-			gameflow._1FC                    = 10;
+			gameflow.mLevelIndex             = 10;
 			break;
 
 		case ONEPLAYER_IntroGame:

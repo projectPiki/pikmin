@@ -105,9 +105,9 @@ int ActWatch::exec()
 
 	f32 dist = qdist2(0.0f, 0.0f, lookDir.x, lookDir.z);
 	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	mActor->mDirection += 0.4f * angDist(atan2f(lookDir.x, lookDir.z), mActor->mDirection);
-	mActor->mDirection = roundAng(mActor->mDirection);
-	mActor->mRotation.set(0.0f, mActor->mDirection, 0.0f);
+	mActor->mFaceDirection += 0.4f * angDist(atan2f(lookDir.x, lookDir.z), mActor->mFaceDirection);
+	mActor->mFaceDirection = roundAng(mActor->mFaceDirection);
+	mActor->mRotation.set(0.0f, mActor->mFaceDirection, 0.0f);
 	return ACTOUT_Continue;
 
 	u32 badCompiler[7];

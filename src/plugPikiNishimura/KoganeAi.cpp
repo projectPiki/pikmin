@@ -303,7 +303,7 @@ void KoganeAi::calcScaleUp()
  */
 void KoganeAi::setNewTargetPosition()
 {
-	f32 angle = mKogane->mDirection;
+	f32 angle = mKogane->mFaceDirection;
 	f32 randGoalAngle
 	    = (C_KOGANE_PROP(mKogane).mGoalAngleMin()
 	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalAngleMax() - C_KOGANE_PROP(mKogane).mGoalAngleMin())))
@@ -388,8 +388,8 @@ void KoganeAi::makeStopMoving()
  */
 void KoganeAi::birthItemPellet(int size)
 {
-	f32 xOffs         = -sinf(mKogane->mDirection);
-	f32 zOffs         = -cosf(mKogane->mDirection);
+	f32 xOffs         = -sinf(mKogane->mFaceDirection);
+	f32 zOffs         = -cosf(mKogane->mFaceDirection);
 	Vector3f* partPos = &mKogane->mCollInfo->getSphere('cent')->mCentre;
 	Vector3f pelletPos(*partPos);
 	pelletPos.x += 20.0f * xOffs;
@@ -405,7 +405,7 @@ void KoganeAi::birthItemPellet(int size)
 	if (numPellet) {
 		numPellet->init(pelletPos);
 		numPellet->mVelocity.set(100.0f * xOffs, 300.0f, 100.0f * zOffs);
-		numPellet->mDirection = mKogane->mDirection;
+		numPellet->mFaceDirection = mKogane->mFaceDirection;
 		numPellet->startAI(0);
 		playSound(KOGANESOUND_Damage);
 	}
@@ -424,9 +424,9 @@ void KoganeAi::birthItemWater(int numDrops, f32 p2)
 	f32 angleOffset;
 	if (numDrops == 1) {
 		angleOffset = 0.0f;
-		initAngle   = mKogane->mDirection;
+		initAngle   = mKogane->mFaceDirection;
 	} else if (numDrops > 1) {
-		initAngle   = mKogane->mDirection - (PI * p2 * 0.5f);
+		initAngle   = mKogane->mFaceDirection - (PI * p2 * 0.5f);
 		angleOffset = PI * p2 / (numDrops - 1);
 	}
 
@@ -695,8 +695,8 @@ void KoganeAi::initCreate(int nextState)
 	mKogane->setMotionFinish(false);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(1, this));
 
-	f32 perpDir = mKogane->mDirection + HALF_PI;
-	Vector3f vec1(sinf(mKogane->mDirection), 0.0f, cosf(mKogane->mDirection));
+	f32 perpDir = mKogane->mFaceDirection + HALF_PI;
+	Vector3f vec1(sinf(mKogane->mFaceDirection), 0.0f, cosf(mKogane->mFaceDirection));
 	Vector3f vec2(sinf(perpDir), 0.0f, cosf(perpDir));
 	Vector3f vec3 = -vec2;
 

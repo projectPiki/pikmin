@@ -163,7 +163,7 @@ void Navi::startMovieInf()
  */
 bool Navi::movieMode()
 {
-	return (gameflow._1D8 & 0x40) != 0;
+	return (gameflow.mDemoFlags & 0x40) != 0;
 }
 
 /*
@@ -677,7 +677,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	_268        = 0.0f;
 	mKontroller = new Kontroller(naviID + 1);
-	_26C        = 20.0f;
+	mSize       = 20.0f;
 
 	memStat->start("naviStateM");
 	mStateMachine = new NaviStateMachine();
@@ -761,7 +761,7 @@ void Navi::reset()
 	_300                = 0.0f;
 	mIsInWater          = false;
 	_30C                = 0;
-	_310                = 0;
+	mIsCursorVisible    = 0;
 	_6FC                = 1;
 	_700                = 5;
 	_79C.set(0.0f, 0.0f, 0.0f);
@@ -784,11 +784,11 @@ void Navi::reset()
 	_724 = 0;
 
 	f32 dist = (NAVI_PROP._38C() + NAVI_PROP._39C()) * 0.5f;
-	mCursorPosition.set(dist * sinf(mDirection), 0.0f, dist * cosf(mDirection));
+	mCursorPosition.set(dist * sinf(mFaceDirection), 0.0f, dist * cosf(mFaceDirection));
 	mCursorNaviDist       = mCursorPosition.length();
 	mCursorTargetPosition = mCursorPosition;
-	_6F0.set(0.0f, 0.0f, 0.0f);
-	_7DC           = mDirection;
+	mCursorWorldPos.set(0.0f, 0.0f, 0.0f);
+	_7DC           = mFaceDirection;
 	mNextThrowPiki = nullptr;
 	mNaviLightEfx->changeEffect(EffectMgr::EFF_Navi_Light);
 	mNaviLightGlowEfx->changeEffect(EffectMgr::EFF_Navi_LightGlow);
@@ -909,7 +909,7 @@ void Navi::updateWalkAnimation()
 		return;
 	}
 
-	f32 angle      = zen::Abs(mDirection - _7DC);
+	f32 angle      = zen::Abs(mFaceDirection - _7DC);
 	Navi* listener = nullptr;
 	int newMotionID;
 	if (speed < NAVI_PROP._23C()) {
@@ -1094,7 +1094,7 @@ void Navi::update()
 	*/
 
 	mKontroller->update();
-	_7DC = mDirection;
+	_7DC = mFaceDirection;
 	Creature::update();
 
 	mapMgr->updatePos(mPosition.x, mPosition.z);
@@ -1172,7 +1172,7 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void Navi::callPikis(f32 radius)
 {
-	Vector3f unused = _6F0 - mPosition;
+	Vector3f unused = mCursorWorldPos - mPosition;
 	u32 badCompiler[4];
 
 	Iterator iterPiki(pikiMgr);
@@ -1183,7 +1183,7 @@ void Navi::callPikis(f32 radius)
 			continue;
 		}
 
-		Vector3f sep = piki->mPosition - _6F0;
+		Vector3f sep = piki->mPosition - mCursorWorldPos;
 		f32 dist     = speedy_sqrtf(sep.x * sep.x + sep.z * sep.z);
 		if (dist >= radius) {
 			continue;
@@ -1246,7 +1246,7 @@ void Navi::callPikis(f32 radius)
 		Creature* maybeSprout = *iterSprout;
 		if (maybeSprout->mObjType == OBJTYPE_Pikihead) {
 			PikiHeadItem* sprout = static_cast<PikiHeadItem*>(maybeSprout);
-			Vector3f sproutSep   = maybeSprout->mPosition - _6F0;
+			Vector3f sproutSep   = maybeSprout->mPosition - mCursorWorldPos;
 			f32 sproutDist       = speedy_sqrtf(sproutSep.x * sproutSep.x + sproutSep.z * sproutSep.z);
 			if (!AIConstant::_instance->mConstants.mDoPluckWithCursor()) {
 				continue;
@@ -1278,7 +1278,7 @@ void Navi::callPikis(f32 radius)
 	CI_LOOP(iterTeki)
 	{
 		Creature* teki   = *iterTeki;
-		Vector3f tekiSep = teki->mPosition - _6F0;
+		Vector3f tekiSep = teki->mPosition - mCursorWorldPos;
 		f32 tekiDist     = speedy_sqrtf(tekiSep.x * tekiSep.x + tekiSep.z * tekiSep.z);
 		if (teki->isAlive() && teki->isVisible() && tekiDist < radius) {
 			InteractFlute flute(this);
@@ -1299,7 +1299,7 @@ void Navi::callDebugs(f32 radius)
 	CI_LOOP(iterPiki)
 	{
 		Piki* piki       = static_cast<Piki*>(*iterPiki);
-		Vector3f pikiSep = piki->mPosition - _6F0;
+		Vector3f pikiSep = piki->mPosition - mCursorWorldPos;
 		f32 tekiDist     = pikiSep.length();
 		if (tekiDist < radius) {
 			if (pikiCount == 0) {
@@ -1317,7 +1317,7 @@ void Navi::callDebugs(f32 radius)
 	CI_LOOP(iterTeki)
 	{
 		Creature* teki   = *iterTeki;
-		Vector3f tekiSep = teki->mPosition - _6F0;
+		Vector3f tekiSep = teki->mPosition - mCursorWorldPos;
 		f32 tekiDist     = tekiSep.length();
 		if (tekiDist < radius) {
 			if (tekiCount == 0) {
@@ -1443,7 +1443,7 @@ void Navi::releasePikis()
  */
 void Navi::doAI()
 {
-	if (gameflow._1D8 & 0x40) {
+	if (gameflow.mDemoFlags & 0x40) {
 		return;
 	}
 
@@ -1590,7 +1590,7 @@ bool Navi::procActionButton()
 			startMotion(PaniMotionInfo(PIKIANIM_Asibumi), PaniMotionInfo(PIKIANIM_Asibumi));
 			PRINT("nuki d=%.1f rn=%d", minDist, mIsFastPluckEnabled);
 			Vector3f sproutSep = closestSprout->mPosition - mPosition;
-			_7D0               = angDist(roundAng(atan2f(sproutSep.x, sproutSep.z)), mDirection) / 10.0f;
+			_7D0               = angDist(roundAng(atan2f(sproutSep.x, sproutSep.z)), mFaceDirection) / 10.0f;
 			f32 dist           = sproutSep.length();
 			f32 scaledDist     = 3.0003002f * ((1.0f / dist) * (dist - 15.0f));
 			_7C4               = scaledDist * sproutSep;
@@ -1618,7 +1618,7 @@ bool Navi::procActionButton()
 			startMotion(PaniMotionInfo(PIKIANIM_Asibumi), PaniMotionInfo(PIKIANIM_Asibumi));
 
 			Vector3f pikiSep = piki->mPosition - mPosition;
-			_7D0             = angDist(roundAng(atan2f(pikiSep.x, pikiSep.z)), mDirection) / 10.0f;
+			_7D0             = angDist(roundAng(atan2f(pikiSep.x, pikiSep.z)), mFaceDirection) / 10.0f;
 
 			f32 pikiDist   = pikiSep.length();
 			f32 scaledDist = 3.0003002f * ((1.0f / pikiDist) * (pikiDist - 15.0f));
@@ -2527,7 +2527,7 @@ void Navi::collisionCallback(CollEvent& event)
 			collider->kill(false);
 			break;
 		case OBJTYPE_Gate:
-			if (mCurrKeyCount > 0 && static_cast<DoorItem*>(collider)->mStateId == 0) {
+			if (mCurrKeyCount > 0 && static_cast<DoorItem*>(collider)->mStateId == DoorState::Active) {
 				mCurrKeyCount--;
 				static_cast<DoorItem*>(collider)->disappear();
 			}
@@ -2535,10 +2535,10 @@ void Navi::collisionCallback(CollEvent& event)
 		case OBJTYPE_Door:
 			if (mCurrKeyCount > 0 && state != NAVISTATE_Clear) {
 				DoorItem* door = static_cast<DoorItem*>(collider);
-				sprintf(flowCont.mStagePath2, "%s", door->_3D0);
+				sprintf(flowCont.mStagePath2, "%s", door->mDestinationStagePath);
 				Vector3f naviDoorSep = mPosition - door->mPosition;
 				naviDoorSep.normalise();
-				Vector3f faceDir(sinf(door->mDirection), 0.0f, cosf(door->mDirection));
+				Vector3f faceDir(sinf(door->mFaceDirection), 0.0f, cosf(door->mFaceDirection));
 				if (faceDir.DP(naviDoorSep) >= cosf(HALF_PI)) {
 					mStateMachine->transit(this, NAVISTATE_Clear);
 				}
@@ -2701,9 +2701,9 @@ void Navi::makeVelocity(bool p1)
 	if ((check || (!check && stickMag > NAVI_PROP.mNeutralStickThreshold())) && stickMag <= NAVI_PROP._36C()) {
 		mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		Vector3f cursorPos(mCursorPosition);
-		mDirection += 0.2f * angDist(roundAng(atan2f(cursorPos.x, cursorPos.z)), mDirection);
-		mDirection = roundAng(mDirection);
-		mRotation.set(0.0f, mDirection, 0.0f);
+		mFaceDirection += 0.2f * angDist(roundAng(atan2f(cursorPos.x, cursorPos.z)), mFaceDirection);
+		mFaceDirection = roundAng(mFaceDirection);
+		mRotation.set(0.0f, mFaceDirection, 0.0f);
 		setCreatureFlag(CF_Unk11);
 	} else {
 		resetCreatureFlag(CF_Unk11);
@@ -3410,7 +3410,7 @@ void Navi::makeCStick(bool p1)
 			_724 = 1;
 		}
 
-		f32 backDir = mDirection + PI;
+		f32 backDir = mFaceDirection + PI;
 		if (!_718 && mTargetVelocity.length() < 50.0f && mStateMachine->getCurrID(this) != NAVISTATE_ThrowWait) {
 			backDir = _714;
 			mPlateMgr->setPos(mPosition, backDir, mVelocity);
@@ -3496,60 +3496,60 @@ void Navi::refresh(Graphics& gfx)
 			mapMgr->showCollisions(mPosition);
 		}
 
-		Matrix4f mtx1;
+		Matrix4f viewMtx;
 		mPlateMgr->render(gfx);
 
 		// these aren't used for anything in the DLL either, lol.
-		f32 unusedVal  = sinf(mDirection);
-		f32 unusedVal2 = cosf(mDirection);
+		f32 unusedVal  = sinf(mFaceDirection);
+		f32 unusedVal2 = cosf(mFaceDirection);
 		f32 badCompiler;
 
-		_6F0   = mCursorPosition + mPosition;
-		_6F0.y = mapMgr->getMinY(_6F0.x, _6F0.z, true) + 1.0f;
+		mCursorWorldPos   = mCursorPosition + mPosition;
+		mCursorWorldPos.y = mapMgr->getMinY(mCursorWorldPos.x, mCursorWorldPos.z, true) + 1.0f;
 
-		CollTriInfo* tri = mapMgr->getCurrTri(_6F0.x, _6F0.z, true);
-		Matrix4f mtx2;
-		mtx2.makeIdentity();
+		CollTriInfo* cursorTri = mapMgr->getCurrTri(mCursorWorldPos.x, mCursorWorldPos.z, true);
 
-		Vector3f someSep = _6F0 - mPosition;
-		someSep.normalise();
+		Matrix4f orientMatrix;
+		orientMatrix.makeIdentity();
 
-		Vector3f normal(0.0f, 1.0f, 0.0f);
-		if (tri) {
-			normal = tri->mTriangleNormal;
-			normal.normalise();
+		Vector3f cursorDir = mCursorWorldPos - mPosition;
+		cursorDir.normalise();
+
+		Vector3f surfaceNormal(0.0f, 1.0f, 0.0f);
+		if (cursorTri) {
+			surfaceNormal = cursorTri->mTriangleNormal;
+			surfaceNormal.normalise();
 		}
 
-		Vector3f newDir;
-		newDir = normal;
-		newDir.CP(someSep);
-		newDir.normalise();
+		Vector3f rightVector;
+		rightVector = surfaceNormal;
+		rightVector.CP(cursorDir);
+		rightVector.normalise();
 
-		someSep = newDir;
-		someSep.CP(normal);
-		someSep.normalise();
+		cursorDir = rightVector;
+		cursorDir.CP(surfaceNormal);
+		cursorDir.normalise();
 
-		mtx2.mMtx[0][0] = newDir.x;
-		mtx2.mMtx[1][0] = newDir.y;
-		mtx2.mMtx[2][0] = newDir.z;
+		orientMatrix.mMtx[0][0] = rightVector.x;
+		orientMatrix.mMtx[1][0] = rightVector.y;
+		orientMatrix.mMtx[2][0] = rightVector.z;
 
-		mtx2.mMtx[0][1] = normal.x;
-		mtx2.mMtx[1][1] = normal.y;
-		mtx2.mMtx[2][1] = normal.z;
+		orientMatrix.mMtx[0][1] = surfaceNormal.x;
+		orientMatrix.mMtx[1][1] = surfaceNormal.y;
+		orientMatrix.mMtx[2][1] = surfaceNormal.z;
 
-		mtx2.mMtx[0][2] = someSep.x;
-		mtx2.mMtx[1][2] = someSep.y;
-		mtx2.mMtx[2][2] = someSep.z;
+		orientMatrix.mMtx[0][2] = cursorDir.x;
+		orientMatrix.mMtx[1][2] = cursorDir.y;
+		orientMatrix.mMtx[2][2] = cursorDir.z;
 
-		mTransformMatrix = mtx2;
+		mWorldMtx = orientMatrix;
+		mWorldMtx.setTranslation(mCursorWorldPos);
 
-		mTransformMatrix.setTranslation(_6F0);
-
-		if (_310 && getCurrState()->getID() != NAVISTATE_DemoSunset) {
+		if (mIsCursorVisible && getCurrState()->getID() != NAVISTATE_DemoSunset) {
 			gfx.useMatrix(Matrix4f::ident, 0);
-			gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx1);
+			gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, viewMtx);
 
-			gfx.useMatrix(mtx1, 0);
+			gfx.useMatrix(viewMtx, 0);
 
 			mNaviDynMats.updateContext();
 			GlobalShape::cursorShape->drawshape(gfx, *gfx.mCamera, nullptr);
@@ -3602,22 +3602,23 @@ void Navi::draw(Graphics& gfx)
 	}
 
 	if (mRope) {
-		mTransformMatrix = _114;
-		mTransformMatrix.setTranslation(mPosition.x, mPosition.y, mPosition.z);
+		mWorldMtx = mRopeOrientMtx;
+		mWorldMtx.setTranslation(mPosition.x, mPosition.y, mPosition.z);
 	} else {
-		mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
-		_114 = mTransformMatrix;
+		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mRopeOrientMtx = mWorldMtx;
 	}
 
 	gfx.useMatrix(Matrix4f::ident, 0);
+
 	u32 badCompiler2;
-	Matrix4f mtx;
-	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx);
+	Matrix4f viewMtx;
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, viewMtx);
 
 	mNaviAnimMgr.updateContext();
 	mapMgr->getLight(mPosition.x, mPosition.z);
 
-	bool isError = false;
+	bool hasAnimError = false;
 	for (int i = 0; i < mNaviShapeObject->mShape->mJointCount; i++) {
 		if (mNaviShapeObject->mShape->mAnimContextList[i]->mData && &mNaviShapeObject->mShape->mAnimContextList[i]->mCurrentFrame) {
 			int frame1 = mNaviShapeObject->mShape->mAnimContextList[i]->mCurrentFrame;
@@ -3625,17 +3626,17 @@ void Navi::draw(Graphics& gfx)
 			if (frame1 < 0 || frame2 >= mNaviShapeObject->mShape->mAnimContextList[i]->mData->mNumFrames) {
 				PRINT(" NAVI -------- error : joint is %d\n", i);
 				PRINT(" motion is %s\n", mNaviAnimMgr.getUpperAnimator().getCurrentMotionName());
-				isError = true;
+				hasAnimError = true;
 			}
 		}
 	}
 
-	if (!isError) {
-		mNaviShapeObject->mShape->updateAnim(gfx, mtx, nullptr);
+	if (!hasAnimError) {
+		mNaviShapeObject->mShape->updateAnim(gfx, viewMtx, nullptr);
 	}
 
 	updateHeadMatrix();
-	if (!(gameflow._1D8 & 4) && !_2E0) {
+	if (!(gameflow.mDemoFlags & 4) && !_2E0) {
 		demoDraw(gfx, nullptr);
 	}
 
@@ -3675,7 +3676,7 @@ void Navi::renderCircle(Graphics& gfx)
 		f32 angle = i * (TAU / 24.0f);
 		angle += ang;
 		Vector3f dir(rad * sinf(angle), 0.0f, rad * cosf(angle));
-		Vector3f pos(_6F0);
+		Vector3f pos(mCursorWorldPos);
 		pos     = pos + dir;
 		pos.y   = mapMgr->getMinY(pos.x, pos.z, true);
 		_938[i] = pos;
@@ -4223,14 +4224,14 @@ void Navi::dump()
  */
 void Navi::throwPiki(Piki* piki, Vector3f& pos)
 {
-	f32 unused = mDirection + PI;
+	f32 unused = mFaceDirection + PI;
 	piki->mActiveAction->abandon(nullptr);
 	rumbleMgr->start(2, 0, nullptr);
-	piki->mPosition   = mPosition + Vector3f(0.0f, 10.0f, 0.0f);
-	Vector3f throwDir = pos - piki->mPosition;
-	f32 throwDist     = speedy_sqrtf(throwDir.x * throwDir.x + throwDir.z * throwDir.z);
-	f32 throwAngle    = atan2f(throwDir.x, throwDir.z);
-	piki->mDirection  = roundAng(throwAngle);
+	piki->mPosition      = mPosition + Vector3f(0.0f, 10.0f, 0.0f);
+	Vector3f throwDir    = pos - piki->mPosition;
+	f32 throwDist        = speedy_sqrtf(throwDir.x * throwDir.x + throwDir.z * throwDir.z);
+	f32 throwAngle       = atan2f(throwDir.x, throwDir.z);
+	piki->mFaceDirection = roundAng(throwAngle);
 
 	f32 halfTime = 0.5f * NAVI_PROP._1AC();
 	f32 height;
@@ -4327,8 +4328,8 @@ void Navi::updateLook()
 		return;
 	}
 
-	f32 angle3 = roundAng(_2F4 + mDirection);
-	f32 angle4 = roundAng(angle2 - mDirection);
+	f32 angle3 = roundAng(_2F4 + mFaceDirection);
+	f32 angle4 = roundAng(angle2 - mFaceDirection);
 
 	f32 angle5;
 	if (angle4 < PI) {

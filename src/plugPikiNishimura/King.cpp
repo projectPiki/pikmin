@@ -146,8 +146,8 @@ void King::draw(Graphics& gfx)
 	mShadowCaster.mTargetPosition.set(mPosition.x, mPosition.y + 50.0f, mPosition.z);
 
 	Matrix4f viewMatrix;
-	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
-	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, viewMatrix);
+	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, viewMatrix);
 
 	mAnimator.updateContext();
 	mShapeObject->mShape->updateAnim(gfx, viewMatrix, nullptr);

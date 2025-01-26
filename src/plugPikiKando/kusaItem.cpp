@@ -47,14 +47,16 @@ void KusaItem::startAI(int)
 	mCollInfo->initInfo(mItemShape, mKusaParts, mPartIDs);
 	mCollInfo->makeTubesChild('rope', 1);
 	mScale.set(1.0f, 1.0f, 1.0f);
-	_814       = mPosition;
-	_814.y     = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+
+	mGroundPosition   = mPosition;
+	mGroundPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+
 	mHealth    = 50.0f;
 	mMaxHealth = 200.0f;
 	mBaseItem  = static_cast<BoBaseItem*>(itemMgr->birth(OBJTYPE_BoBase));
 
 	if (mBaseItem) {
-		mBaseItem->init(_814);
+		mBaseItem->init(mGroundPosition);
 		mBaseItem->mStickItem = this;
 		mBaseItem->startAI(0);
 	}
@@ -69,7 +71,7 @@ void KusaItem::doLoad(RandomAccessStream& input)
 {
 	mHealth = input.readFloat();
 	if (mHealth >= mMaxHealth) {
-		mBaseItem->_824 = false;
+		mBaseItem->mIsActive = false;
 	}
 }
 
@@ -124,7 +126,7 @@ f32 KusaItem::getiMass()
  */
 void KusaItem::update()
 {
-	mPosition = _814;
+	mPosition = mGroundPosition;
 	ItemCreature::update();
 }
 
@@ -138,10 +140,10 @@ void KusaItem::refresh(Graphics& gfx)
 	Matrix4f camMat;
 	Matrix4f mat;
 	mat.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, mHealth - mMaxHealth, 0.0f));
-	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
-	mTransformMatrix.multiply(mat);
+	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.multiply(mat);
 
-	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, camMat);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, camMat);
 	gfx.setLighting(true, nullptr);
 	gfx.useMatrix(Matrix4f::ident, 0);
 
@@ -177,11 +179,11 @@ void BoBaseItem::startAI(int)
 	mCollInfo = &mBaseCollision;
 	mCollInfo->initInfo(mItemShape, mBaseParts, mPartIDs);
 	mScale.set(1.0f, 1.0f, 1.0f);
-	_814     = mPosition;
-	_814.y   = mapMgr->getMinY(mPosition.x, mPosition.z, true);
-	_824     = true;
-	mPtclGen = nullptr;
-	_825     = 0;
+	mGroundPosition    = mPosition;
+	mGroundPosition.y  = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	mIsActive          = true;
+	mParticleGenerator = nullptr;
+	mEffectDuration    = 0;
 }
 
 /*
@@ -229,22 +231,24 @@ f32 BoBaseItem::getiMass()
  */
 void BoBaseItem::update()
 {
-	if (_824) {
-		mPosition = _814;
+	if (mIsActive) {
+		mPosition = mGroundPosition;
 		ItemCreature::update();
-		_825--;
-		if (_825 <= 0) {
-			_825 = 0;
-			if (mPtclGen) {
-				effectMgr->mPtclMgr.killGenerator(mPtclGen, false);
-				mPtclGen = nullptr;
+
+		mEffectDuration--;
+		if (mEffectDuration <= 0) {
+			mEffectDuration = 0;
+			if (mParticleGenerator) {
+				effectMgr->mPtclMgr.killGenerator(mParticleGenerator, false);
+				mParticleGenerator = nullptr;
 			}
 		}
+
 		return;
 	}
 
-	if (_825 > 0) {
-		_825--;
+	if (mEffectDuration > 0) {
+		mEffectDuration--;
 	}
 }
 
@@ -255,11 +259,11 @@ void BoBaseItem::update()
  */
 void BoBaseItem::refresh(Graphics& gfx)
 {
-	if (_824 || (!_824 && _825 > 0)) {
+	if (mIsActive || (!mIsActive && mEffectDuration > 0)) {
 		Matrix4f camMat;
-		mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 
-		gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, camMat);
+		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, camMat);
 		gfx.setLighting(true, nullptr);
 		gfx.useMatrix(Matrix4f::ident, 0);
 
@@ -277,25 +281,27 @@ void BoBaseItem::refresh(Graphics& gfx)
 bool BoBaseItem::interactBuild(InteractBuild& build)
 {
 	if (mStickItem) {
-		mStickItem->mHealth = mStickItem->mHealth + build.mProgressRate * 0.4f; // this needs fixing
+		mStickItem->mHealth = mStickItem->mHealth + build.mProgressRate * 0.4f;
 		if (mStickItem->mHealth >= mStickItem->mMaxHealth) {
 			mStickItem->mHealth = mStickItem->mMaxHealth;
-			_824                = 0;
+			mIsActive           = 0;
 			effectMgr->create(EffectMgr::EFF_Kusa_Extend2, mPosition, nullptr, nullptr);
 			playEventSound(this, SEB_WALL_DOWN);
-			_825 = 30;
-			if (mPtclGen) {
-				effectMgr->kill(mPtclGen, false);
+			mEffectDuration = 30;
+			if (mParticleGenerator) {
+				effectMgr->kill(mParticleGenerator, false);
 			}
 		} else {
 			playEventSound(this, SEB_CONSTRUCTION);
-			_825 = 30;
-			if (!mPtclGen) {
-				mPtclGen = effectMgr->create(EffectMgr::EFF_Kusa_Extend1, mPosition, nullptr, nullptr);
+			mEffectDuration = 30;
+			if (!mParticleGenerator) {
+				mParticleGenerator = effectMgr->create(EffectMgr::EFF_Kusa_Extend1, mPosition, nullptr, nullptr);
 			}
 		}
+
 		return true;
 	}
+
 	return false;
 }
 
@@ -306,5 +312,5 @@ bool BoBaseItem::interactBuild(InteractBuild& build)
  */
 bool BoBaseItem::isAlive()
 {
-	return _824;
+	return mIsActive;
 }

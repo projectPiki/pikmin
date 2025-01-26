@@ -194,7 +194,7 @@ CardSelectSection::CardSelectSection()
 	pikiInfMgr.initGame();
 	FOREACH_NODE(StageInfo, flowCont.mRootInfo.mChild, stage)
 	{
-		stage->_20 = 0;
+		stage->mHasInitialised = 0;
 		stage->mStageInf.initGame();
 	}
 

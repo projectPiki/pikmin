@@ -978,7 +978,7 @@ void MoviePlayer::sndStopMovie(MovieInfo* info)
  */
 void MoviePlayer::update()
 {
-	gameflow._1D8 = 0;
+	gameflow.mDemoFlags = 0;
 	if (gsys->_258 > 0) {
 		return;
 	}

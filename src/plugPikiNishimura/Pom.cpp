@@ -127,9 +127,9 @@ void Pom::update()
 void Pom::refresh(Graphics& gfx)
 {
 	if (isAlive()) {
-		mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 		Matrix4f mtx;
-		gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx);
+		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 		mAnimator.updateContext();
 
 		f32 dynAnimType = mColor;

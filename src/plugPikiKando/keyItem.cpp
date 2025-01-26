@@ -33,7 +33,7 @@ KeyItem::KeyItem(CreatureProp* props, Shape* model)
 	resetCreatureFlag(CF_Unk10);
 	setCreatureFlag(CF_Unk1);
 	mObjType = OBJTYPE_Key;
-	_2B8     = 2;
+	mState   = KeyState::Inactive;
 }
 
 /*
@@ -57,7 +57,7 @@ void KeyItem::init(Vector3f& pos)
 	mScale.set(scale, scale, scale);
 	Creature::init(pos);
 	mSearchBuffer.init(mSearch, 3);
-	_2B8 = 2;
+	mState = KeyState::Inactive;
 }
 
 /*
@@ -67,7 +67,7 @@ void KeyItem::init(Vector3f& pos)
  */
 void KeyItem::startAI(int)
 {
-	_2B8 = 0;
+	mState = KeyState::Active;
 }
 
 /*
@@ -77,11 +77,13 @@ void KeyItem::startAI(int)
  */
 bool KeyItem::isVisible()
 {
-	bool res = false;
-	if (_2B8 != 1 && _2B8 != 2) {
-		res = true;
+	bool visible = false;
+
+	if (mState != KeyState::Collected && mState != KeyState::Inactive) {
+		visible = true;
 	}
-	return res;
+
+	return visible;
 }
 
 /*
@@ -92,7 +94,7 @@ bool KeyItem::isVisible()
 void KeyItem::doKill()
 {
 	PRINT("key is killed ?\n");
-	_2B8 = 1;
+	mState = KeyState::Collected;
 	itemMgr->kill(this);
 }
 
@@ -103,12 +105,13 @@ void KeyItem::doKill()
  */
 void KeyItem::update()
 {
-	f32 length = mVelocity.length() / 150.0f * 0.01f + 0.025f;
-	if (length > 2.0f) {
-		length = 2.0f;
+	f32 rotationSpeed = mVelocity.length() / 150.0f * 0.01f + 0.025f;
+	if (rotationSpeed > 2.0f) {
+		rotationSpeed = 2.0f;
 	}
-	mDirection += length * TAU;
-	mDirection = roundAng(mDirection);
+
+	mFaceDirection += rotationSpeed * TAU;
+	mFaceDirection = roundAng(mFaceDirection);
 	mGrid.updateGrid(mPosition);
 	updateAI();
 
@@ -141,14 +144,15 @@ f32 KeyItem::getiMass()
  */
 void KeyItem::refresh(Graphics& gfx)
 {
-	Matrix4f mtx, mtx2;
+	Matrix4f transform, viewTransform;
 
-	mTransformMatrix.makeSRT(mScale, mRotation, Vector3f(mPosition.x, mPosition.y + 20.0f, mPosition.z));
+	mWorldMtx.makeSRT(mScale, mRotation, Vector3f(mPosition.x, mPosition.y + 20.0f, mPosition.z));
+	gfx.calcViewMatrix(mWorldMtx, viewTransform);
+	gfx.useMatrix(viewTransform, 0);
 
-	gfx.calcViewMatrix(mTransformMatrix, mtx2);
-	gfx.useMatrix(mtx2, 0);
 	gfx.mCamera->setBoundOffset(&mPosition);
 	mapMgr->getLight(mPosition.x, mPosition.z);
+
 	bool l = gfx.setLighting(true, nullptr);
 	mModel->drawshape(gfx, *gfx.mCamera, nullptr);
 	gfx.mCamera->setBoundOffset(nullptr);
@@ -162,10 +166,10 @@ void KeyItem::refresh(Graphics& gfx)
 DoorItem::DoorItem(int objType, CreatureProp* props, Shape* shape)
     : ItemCreature(objType, props, shape)
 {
-	mStateId = 2;
-	_3C8     = 0.0f;
-	_3D0     = 0;
-	_3D4     = 0;
+	mStateId              = DoorState::Inactive;
+	mFadeTimer            = 0.0f;
+	mDestinationStagePath = 0;
+	mLabelText            = 0;
 }
 
 /*
@@ -175,9 +179,9 @@ DoorItem::DoorItem(int objType, CreatureProp* props, Shape* shape)
  */
 void DoorItem::disappear()
 {
-	if (mStateId != 3) {
-		mStateId = 3;
-		_3C8     = 2.5f;
+	if (mStateId != DoorState::Vanishing) {
+		mStateId   = DoorState::Vanishing;
+		mFadeTimer = 2.5f;
 	}
 }
 
@@ -201,6 +205,7 @@ f32 DoorItem::getSize()
 	if (mObjType == OBJTYPE_Gate) {
 		return 60.0f;
 	}
+
 	return 30.0f;
 }
 
@@ -217,7 +222,7 @@ void DoorItem::init(Vector3f& pos)
 		scale = 2.0f;
 	}
 	mScale.set(scale, scale, scale);
-	mStateId = 2;
+	mStateId = DoorState::Inactive;
 }
 
 /*
@@ -227,7 +232,7 @@ void DoorItem::init(Vector3f& pos)
  */
 void DoorItem::startAI(int)
 {
-	mStateId = 0;
+	mStateId = DoorState::Active;
 }
 
 /*
@@ -237,15 +242,15 @@ void DoorItem::startAI(int)
  */
 void DoorItem::update()
 {
-	if (mStateId == 3) {
-		_3C8 -= gsys->getFrameTime();
-		f32 yscale = (_3C8 / 2.5f) * 2.0f;
+	if (mStateId == DoorState::Vanishing) {
+		mFadeTimer -= gsys->getFrameTime();
+		f32 yscale = (mFadeTimer / 2.5f) * 2.0f;
 		mPosition.y -= gsys->getFrameTime() * 3.0f;
 
 		mScale.set(2.0f, yscale, 2.0f);
 
-		if (_3C8 < 0.0f) {
-			mStateId = 1;
+		if (mFadeTimer < 0.0f) {
+			mStateId = DoorState::Killed;
 			kill(nullptr);
 		}
 	} else {
@@ -261,7 +266,7 @@ void DoorItem::update()
 bool DoorItem::isVisible()
 {
 	bool res = false;
-	if (mStateId != 1 && mStateId != 2) {
+	if (mStateId != 1 && mStateId != DoorState::Inactive) {
 		res = true;
 	}
 	return res;
@@ -285,7 +290,7 @@ f32 DoorItem::getiMass()
 bool DoorItem::isAtari()
 {
 	bool res = true;
-	if (mStateId != 0 && mStateId != 3) {
+	if (mStateId != DoorState::Active && mStateId != DoorState::Vanishing) {
 		res = false;
 	}
 	return res;
@@ -298,9 +303,9 @@ bool DoorItem::isAtari()
  */
 void DoorItem::refresh(Graphics& gfx)
 {
-	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 	Matrix4f mtx;
-	gfx.calcViewMatrix(mTransformMatrix, mtx);
+	gfx.calcViewMatrix(mWorldMtx, mtx);
 
 	Vector3f pos(0.0f, 40.0f, 0.0f);
 	pos.multMatrix(mtx);
@@ -313,7 +318,7 @@ void DoorItem::refresh(Graphics& gfx)
 	gfx.useTexture(gsys->mConsFont->mTexture, 0);
 	int blend = gfx.setCBlending(0);
 
-	sprintf(str, "%s", _3D4);
+	sprintf(str, "%s", mLabelText);
 	gfx.perspPrintf(gsys->mConsFont, pos, -(gsys->mConsFont->stringWidth(str) / 2), 0, str);
 
 	gfx.setCBlending(blend);

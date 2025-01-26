@@ -475,7 +475,7 @@ void AIPerf::toggleUpdateSearchBuffer(Menu& menu)
 void AIPerf::collectPikis(Menu& menu)
 {
 	Navi* navi         = naviMgr->getNavi();
-	Vector3f playerPos = navi->_6F0;
+	Vector3f playerPos = navi->mCursorWorldPos;
 
 	Iterator iter(pikiMgr);
 	CI_LOOP(iter)
@@ -547,7 +547,7 @@ void AIPerf::breakSluice(Menu& menu)
 				continue;
 			}
 
-			f32 distance = qdist2(player->_6F0.x, player->_6F0.z, wall->mPosition.x, wall->mPosition.z);
+			f32 distance = qdist2(player->mCursorWorldPos.x, player->mCursorWorldPos.z, wall->mPosition.x, wall->mPosition.z);
 			if (distance < distanceToWall) {
 				distanceToWall = distance;
 				nearestWall    = wall;
@@ -564,7 +564,7 @@ void AIPerf::breakSluice(Menu& menu)
 				continue;
 			}
 
-			f32 distance = qdist2(player->_6F0.x, player->_6F0.z, i->mPosition.x, i->mPosition.z);
+			f32 distance = qdist2(player->mCursorWorldPos.x, player->mCursorWorldPos.z, i->mPosition.x, i->mPosition.z);
 			if (distance < distToBridge) {
 				distToBridge  = distance;
 				closestBridge = (Bridge*)i;

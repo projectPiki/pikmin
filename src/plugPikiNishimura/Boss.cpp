@@ -62,7 +62,7 @@ void Boss::initBoss(BirthInfo& birthInfo, int objType)
 	Creature::init(birthInfo.mPosition);
 	mObjType           = (EObjType)objType;
 	mRotation          = birthInfo.mRotation;
-	mDirection         = mRotation.y;
+	mFaceDirection     = mRotation.y;
 	mIsAlive           = true;
 	mIsAtari           = true;
 	mIsVisible         = true;
@@ -141,7 +141,7 @@ void Boss::createPellet(Vector3f& bossPos, f32 vertSpeed, bool hasUfoPart)
 		if (ufoPart) {
 			ufoPart->init(bossPos);
 			ufoPart->mVelocity.set(0.0f, vertSpeed, 0.0f);
-			ufoPart->mDirection = mDirection;
+			ufoPart->mFaceDirection = mFaceDirection;
 			ufoPart->startAI(0);
 			radarInfo->detachParts(this);
 
@@ -164,24 +164,24 @@ bool Boss::changeDirection(f32 turnSpeed)
 	bool notFacingTarget = false;
 	f32 maxTurnDist      = turnSpeed * gsys->getFrameTime();
 	f32 targetDir        = atan2f(mTargetPosition.x - mPosition.x, mTargetPosition.z - mPosition.z);
-	mDirection           = NsMathF::roundAngle(mDirection);
-	f32 properTargetDir  = NsMathF::calcNearerDirection(mDirection, targetDir);
+	mFaceDirection       = NsMathF::roundAngle(mFaceDirection);
+	f32 properTargetDir  = NsMathF::calcNearerDirection(mFaceDirection, targetDir);
 
-	if (properTargetDir > mDirection) {
-		if (properTargetDir - mDirection < maxTurnDist) {
-			mDirection = properTargetDir;
+	if (properTargetDir > mFaceDirection) {
+		if (properTargetDir - mFaceDirection < maxTurnDist) {
+			mFaceDirection = properTargetDir;
 		} else {
-			mDirection      = mDirection + maxTurnDist;
+			mFaceDirection  = mFaceDirection + maxTurnDist;
 			notFacingTarget = true;
 		}
-	} else if (mDirection - properTargetDir < maxTurnDist) {
-		mDirection = properTargetDir;
+	} else if (mFaceDirection - properTargetDir < maxTurnDist) {
+		mFaceDirection = properTargetDir;
 	} else {
-		mDirection      = mDirection - maxTurnDist;
+		mFaceDirection  = mFaceDirection - maxTurnDist;
 		notFacingTarget = true;
 	}
 
-	mDirection = mRotation.y = NsMathF::roundAngle(mDirection);
+	mFaceDirection = mRotation.y = NsMathF::roundAngle(mFaceDirection);
 
 	return notFacingTarget;
 }
@@ -397,14 +397,14 @@ bool Boss::outSideChaseRangeTransit()
 bool Boss::inSearchAngle(Creature* target)
 {
 	f32 dir       = atan2f(target->mPosition.x - mPosition.x, target->mPosition.z - mPosition.z);
-	f32 targetDir = NsMathF::calcNearerDirection(mDirection, dir);
-	if (targetDir > mDirection) {
-		f32 diff = targetDir - mDirection;
+	f32 targetDir = NsMathF::calcNearerDirection(mFaceDirection, dir);
+	if (targetDir > mFaceDirection) {
+		f32 diff = targetDir - mFaceDirection;
 		if (diff < mSearchAngle) {
 			return true;
 		}
 
-	} else if (mDirection - targetDir < mSearchAngle) {
+	} else if (mFaceDirection - targetDir < mSearchAngle) {
 		return true;
 	}
 

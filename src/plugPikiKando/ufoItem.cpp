@@ -573,7 +573,7 @@ void UfoItem::finishSuck(Pellet* pelt)
 		Vector3f pos                = getSuckPos();
 		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_Suck1, pos, nullptr, nullptr);
 		if (efx) {
-			Vector3f dir(sinf(mDirection), 0.0f, cosf(mDirection));
+			Vector3f dir(sinf(mFaceDirection), 0.0f, cosf(mFaceDirection));
 			efx->setEmitDir(dir);
 		}
 	}
@@ -941,7 +941,7 @@ void UfoItem::setPca1Effect(bool set)
 	mIsPtclFxActive = set;
 	if (set) {
 		Vector3f dir(1.0f, 0.0f, 0.0f);
-		dir.rotate(mTransformMatrix);
+		dir.rotate(mWorldMtx);
 
 		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPtcllFxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
@@ -963,7 +963,7 @@ void UfoItem::setPca2Effect(bool set)
 	mIsPtclFxActive = set;
 	if (set) {
 		Vector3f dir(1.0f, 0.0f, 0.0f);
-		dir.rotate(mTransformMatrix);
+		dir.rotate(mWorldMtx);
 
 		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPtcl2FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
@@ -984,14 +984,14 @@ void UfoItem::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
 	Vector3f pos = mPosition;
-	mTransformMatrix.makeSRT(mScale, mRotation, pos);
+	mWorldMtx.makeSRT(mScale, mRotation, pos);
 
 	if (!gfx.mCamera->isPointVisible(mPosition, 200.0f)) {
 		enableAICulling();
 	} else {
 		disableAICulling();
 	}
-	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 	gfx.useMatrix(Matrix4f::ident, 0);
 	demoDraw(gfx, &mtx);
 }
@@ -1051,7 +1051,7 @@ void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
 	for (int i = 0; i < 3; i++) {
 		CollPart* part = mCollInfo->getSphere('gol1');
 		if (part) {
-			f32 test = mDirection + mSpots[i]._10;
+			f32 test = mFaceDirection + mSpots[i]._10;
 			if (mShouldLightActivate) {
 				mSpots[i]._14 += gsys->getFrameTime() * 37.69911193847656f;
 				if (mSpots[i]._14 > TAU) {

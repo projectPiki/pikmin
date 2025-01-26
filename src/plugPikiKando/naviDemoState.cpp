@@ -389,9 +389,9 @@ void NaviDemoSunsetState::setActors(Navi* navi)
 {
 	navi->mPosition = mStartPos;
 
-	Vector3f dist    = mGoalPos - mStartPos;
-	_2C              = dist.normalise();
-	navi->mDirection = atan2f(dist.x, dist.z);
+	Vector3f dist        = mGoalPos - mStartPos;
+	_2C                  = dist.normalise();
+	navi->mFaceDirection = atan2f(dist.x, dist.z);
 	navi->makeCStick(false);
 
 	Iterator iterParty(navi->mPlateMgr);

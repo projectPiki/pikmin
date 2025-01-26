@@ -2011,7 +2011,7 @@ void GoalAI::BootEmit::act(AICreature* item)
 		seed->init(pos);
 		seed->setColor(obj->mOnionColour);
 		rand();
-		f32 dir = obj->mDirection;
+		f32 dir = obj->mFaceDirection;
 		seed->mVelocity.set(sinf(dir) * 290.0f, 800.0f, cosf(dir) * 290.0f);
 		item->playEventSound(item, SE_CONTAINER_PIKIBORN);
 		seed->startAI(0);

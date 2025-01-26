@@ -390,7 +390,7 @@ struct GameFlow : public Node {
 	int _1CC;                                // _1CC
 	u32 mLastUnlockedStageId;                // _1D0
 	u32 _1D4;                                // _1D4, unknown
-	u32 _1D8;                                // _1D8, bitflag of some description
+	u32 mDemoFlags;                          // _1D8, bitflag of some description
 	MoviePlayer* mMoviePlayer;               // _1DC
 	s16 mMovieInfoNum;                       // _1E0
 	s16 mMovieType;                          // _1E2
@@ -400,7 +400,7 @@ struct GameFlow : public Node {
 	int mGameSectionID;                      // _1F0, see GameSectionID enum
 	s32 mNextOnePlayerSectionID;             // _1F4, see OnePlayerSectionID enum
 	u8 _1F8[0x4];                            // _1F8, unknown
-	int _1FC;                                // _1FC
+	int mLevelIndex;                         // _1FC
 	u32 _200;                                // _200, unknown
 	Section* mGameSection;                   // _204
 	char* mLangFilePaths[2][LANGFILE_COUNT]; // _208
@@ -415,7 +415,7 @@ struct GameFlow : public Node {
 	f32 _2C4;                                // _2C4
 	f32 _2C8;                                // _2C8
 	f32 _2CC;                                // _2CC
-	int _2D0;                                // _2D0
+	int mAppTickCounter;                     // _2D0
 	int _2D4;                                // _2D4
 	WorldClock mWorldClock;                  // _2D8
 	f32 mTimeMultiplier;                     // _304

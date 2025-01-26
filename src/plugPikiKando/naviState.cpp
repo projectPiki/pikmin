@@ -110,7 +110,7 @@ NaviPelletState::NaviPelletState()
  */
 void NaviPelletState::init(Navi* navi)
 {
-	navi->becomePellet('navi', navi->mPosition, navi->mDirection);
+	navi->becomePellet('navi', navi->mPosition, navi->mFaceDirection);
 	navi->mIsPellet = true;
 	mIsFinished     = false;
 	seMgr->playNaviSound(0, 0);
@@ -2345,9 +2345,9 @@ void NaviWalkState::procWallMsg(Navi* navi, MsgWall* msg)
 		_1C = 0.0f;
 	}
 
-	f32 x            = msg->mWallNormal->x;
-	f32 z            = msg->mWallNormal->z;
-	navi->mDirection = atan2f(-x, -z);
+	f32 x                = msg->mWallNormal->x;
+	f32 z                = msg->mWallNormal->z;
+	navi->mFaceDirection = atan2f(-x, -z);
 }
 
 /*
@@ -2440,7 +2440,7 @@ void NaviUfoState::exec(Navi* navi)
 
 			_21 = 1;
 
-			f32 rotDelta = angDist(roundAng(-onion->mDirection), navi->mDirection);
+			f32 rotDelta = angDist(roundAng(-onion->mFaceDirection), navi->mFaceDirection);
 			navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 			navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
@@ -2449,7 +2449,7 @@ void NaviUfoState::exec(Navi* navi)
 				mState = 1;
 				effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mPosition, nullptr, nullptr);
 			} else {
-				navi->mDirection = roundAng(navi->mDirection + 0.1f * rotDelta);
+				navi->mFaceDirection = roundAng(navi->mFaceDirection + 0.1f * rotDelta);
 				if (--mPunchCooldownTimer <= 0) {
 					navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 					mState = 1;
@@ -3580,7 +3580,7 @@ void NaviRopeExitState::init(Navi* navi)
 	u32 badCompiler;
 	navi->endRope();
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Jump, navi), PaniMotionInfo(PIKIANIM_Jump));
-	f32 angle = navi->mDirection;
+	f32 angle = navi->mFaceDirection;
 	navi->mVelocity.set(50.0f * sinf(angle), 200.0f, 50.0f * cosf(angle));
 	navi->mTargetVelocity = navi->mVelocity;
 }
@@ -3770,7 +3770,7 @@ NaviFlickState::NaviFlickState()
 void NaviFlickState::init(Navi* navi)
 {
 	mFlickState       = 0;
-	mDirection        = navi->mDirection;
+	mDirection        = navi->mFaceDirection;
 	mRandVariation    = 0.1f * randFloat(PI);
 	navi->mVelocity.y = 0.0f;
 	mIntensity        = navi->_704 + 0.1f * navi->_704 * randFloat();
@@ -3863,10 +3863,10 @@ void NaviFlickState::init(Navi* navi)
 void NaviFlickState::exec(Navi* navi)
 {
 	if (mFlickState == 0) {
-		f32 speed         = mIntensity;
-		navi->mVelocity.x = -speed * sinf(mDirection);
-		navi->mVelocity.z = -speed * cosf(mDirection);
-		navi->mDirection  = roundAng(navi->mDirection + mRandVariation);
+		f32 speed            = mIntensity;
+		navi->mVelocity.x    = -speed * sinf(mDirection);
+		navi->mVelocity.z    = -speed * cosf(mDirection);
+		navi->mFaceDirection = roundAng(navi->mFaceDirection + mRandVariation);
 		return;
 	}
 
@@ -3946,7 +3946,7 @@ NaviGeyzerState::NaviGeyzerState()
 void NaviGeyzerState::init(Navi* navi)
 {
 	mGeyserState     = 1; // why
-	mPlayerDirection = navi->mDirection;
+	mPlayerDirection = navi->mFaceDirection;
 	_1C              = 0.1f * randFloat(PI);
 	navi->startMotion(PaniMotionInfo(PIKIANIM_JHit, navi), PaniMotionInfo(PIKIANIM_JHit));
 	_30 = 0;

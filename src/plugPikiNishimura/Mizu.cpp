@@ -132,9 +132,9 @@ void Mizu::update()
  */
 void Mizu::refresh(Graphics& gfx)
 {
-	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 	Matrix4f onCamMtx;
-	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, onCamMtx);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, onCamMtx);
 	mAnimator.updateContext();
 	mShapeObject->mShape->updateAnim(gfx, onCamMtx, nullptr);
 	mCollInfo->updateInfo(gfx, false);

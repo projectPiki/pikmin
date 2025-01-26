@@ -822,15 +822,15 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	gsys->startLoading(&mGameLoadIdler, true, 0);
 	PRINT("done starting loading\n");
 
-	_2CC = 0.0f;
-	_2C8 = 0.0f;
-	_2C4 = 0.0f;
-	_2D0 = 2;
+	_2CC            = 0.0f;
+	_2C8            = 0.0f;
+	_2C4            = 0.0f;
+	mAppTickCounter = 2;
 
 	PRINT("reading parms\n");
 	PRINT("load params\n");
 	load("parms/", "gamePrms.bin", 1);
-	_1D8 = 0;
+	mDemoFlags = 0;
 
 	mMoviePlayer = new MoviePlayer();
 	rumbleMgr    = new RumbleMgr(true, false, false, false);

@@ -283,7 +283,7 @@ void GameCoreSection::endMovie(int a)
 	if (mNavi) {
 		f32 angle;
 		if (_30) {
-			angle = mNavi->mDirection + PI;
+			angle = mNavi->mFaceDirection + PI;
 			PRINT("use navi back camera\n");
 		} else {
 			angle = cameraMgr->mCamera->_C8;
@@ -2080,7 +2080,7 @@ void GameCoreSection::initStage()
 		PRINT("*** NO GENERATOR FILE\n");
 		mNavi->mPosition.set(0.0f, 0.0f, 0.0f);
 		mNavi->mDayEndPosition = mNavi->mPosition;
-		mNavi->mDirection      = 0.0f;
+		mNavi->mFaceDirection  = 0.0f;
 		mNavi->mRotation.set(0.0f, 0.0f, 0.0f);
 	}
 	mNavi->reset();
@@ -2097,8 +2097,8 @@ void GameCoreSection::initStage()
 		PRINT("** FILE %s NOT FOUND\n", path2);
 	}
 
-	if (flowCont.mCurrentStage->_20 == 0) {
-		flowCont.mCurrentStage->_20 = 1;
+	if (flowCont.mCurrentStage->mHasInitialised == 0) {
+		flowCont.mCurrentStage->mHasInitialised = 1;
 
 		sprintf(path2, "%sinit.gen", path);
 		data = gsys->openFile(path2, true, true);
@@ -2123,8 +2123,9 @@ void GameCoreSection::initStage()
 
 	int i  = 0;
 	u8 day = gameflow.mWorldClock.mCurrentDay - 1;
-	for (GenFileInfo* info = (GenFileInfo*)flowCont.mCurrentStage->mFileInfoList.mChild; info; info = (GenFileInfo*)info->mNext) {
-		if (info->_14 >= day && day <= info->_15 && !playerState->checkLimitGenFlag(i)) {
+	FOREACH_NODE(GenFileInfo, flowCont.mCurrentStage->mFileInfoList.mChild, info)
+	{
+		if (info->mStartDay >= day && day <= info->mEndDay && !playerState->checkLimitGenFlag(i)) {
 			sprintf(path2, "%s%s", path, info->mName);
 			data = gsys->openFile(path2, true, true);
 			if (data) {
@@ -2134,7 +2135,7 @@ void GameCoreSection::initStage()
 				gen->read(*data, true);
 				data->close();
 				playerState->setLimitGenFlag(i);
-				gen->setDayLimit(info->_16 + 1);
+				gen->setDayLimit(info->mDuration + 1);
 				gen->updateUseList();
 			}
 		}
@@ -2216,7 +2217,7 @@ void GameCoreSection::initStage()
 	attentionCamera = new AttentionCamera;
 	cameraMgr->startCamera(naviMgr->getNavi());
 	cameraMgr->update();
-	mNavi->_310 = 1;
+	mNavi->mIsCursorVisible = 1;
 
 	if (!playerState->hasRadar()) {
 		StageInf* inf = &flowCont.mCurrentStage->mStageInf;

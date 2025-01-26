@@ -137,9 +137,9 @@ void Plant::refresh(Graphics& gfx)
 	} else {
 		_30C = 0;
 		_394 = 0;
-		mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 		Matrix4f mtx;
-		gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx);
+		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 
 		mPlantAnimator.updateContext();
 		shape->mShape->updateAnim(gfx, mtx, nullptr);
@@ -1061,8 +1061,8 @@ Creature* GenObjectPlant::birth(BirthInfo& info)
 	Plant* plant = static_cast<Plant*>(plantMgr->birth());
 	if (plant) {
 		plant->init(info.mPosition);
-		plant->mRotation  = info.mRotation;
-		plant->mDirection = plant->mRotation.y;
+		plant->mRotation      = info.mRotation;
+		plant->mFaceDirection = plant->mRotation.y;
 		plant->reset(mPlantType);
 		plant->mGenerator = info.mGenerator;
 		plant->mHealth    = 1.0f;

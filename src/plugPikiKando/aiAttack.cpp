@@ -539,7 +539,7 @@ int ActJumpAttack::exec()
 		Vector3f direction = getAttackPos() - mActor->mPosition;
 		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
 		direction.normalise();
-		f32 angle = angDist(atan2f(direction.x, direction.z), mActor->mDirection);
+		f32 angle = angDist(atan2f(direction.x, direction.z), mActor->mFaceDirection);
 
 		f32 size = getAttackSize() + mActor->getCentreSize();
 		if (dist2D < size) {
@@ -564,7 +564,7 @@ int ActJumpAttack::exec()
 			break;
 		}
 
-		mActor->mDirection = roundAng(mActor->mDirection + 0.2f * angle);
+		mActor->mFaceDirection = roundAng(mActor->mFaceDirection + 0.2f * angle);
 
 	} break;
 
@@ -572,7 +572,7 @@ int ActJumpAttack::exec()
 		Vector3f direction = getAttackPos() - mActor->mPosition;
 		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
 		f32 dist3D         = direction.normalise();
-		f32 angle          = zen::Abs(angDist(atan2f(direction.x, direction.z), mActor->mDirection));
+		f32 angle          = zen::Abs(angDist(atan2f(direction.x, direction.z), mActor->mFaceDirection));
 		if ((!_2C || (_2C && _28 && !_28->isStickable())) && angle < PI / 10.0f
 		    && dist3D < getAttackSize() + mActor->getCentreSize() + 10.0f) {
 			if (!mActor->isStickTo()) {
@@ -591,7 +591,7 @@ int ActJumpAttack::exec()
 				_18 = 2;
 			}
 
-			mActor->mDirection = roundAng(mActor->mDirection + 0.2f * angle);
+			mActor->mFaceDirection = roundAng(mActor->mFaceDirection + 0.2f * angle);
 			mActor->setSpeed(1.0f, direction);
 		}
 
@@ -619,7 +619,7 @@ int ActJumpAttack::exec()
 
 		if (_20 == 1) {
 			Vector3f direction = getAttackPos() - mActor->mPosition;
-			f32 angle          = angDist(atan2f(direction.x, direction.z), mActor->mDirection);
+			f32 angle          = angDist(atan2f(direction.x, direction.z), mActor->mFaceDirection);
 			f32 sep            = direction.length();
 			f32 dist           = sep - getAttackSize() - mActor->getCentreSize();
 			if (dist < 10.0f && zen::Abs(angle) < PI / 4.0f && (target->isBoss() || target->isTeki()) && target->isAlive()
@@ -1855,7 +1855,7 @@ void ActJumpAttack::doClimb()
 	}
 
 	PRINT("climbing ...\n");
-	if (!mActor->_288) {
+	if (!mActor->mClimbingTri) {
 		_18 = 0;
 		mActor->endClimb();
 		return;
@@ -1863,8 +1863,8 @@ void ActJumpAttack::doClimb()
 
 	bool check = true;
 	for (int i = 0; i < 3; i++) {
-		if (mActor->_288->_28[i].dist(mActor->mPosition) < -2.0f * mActor->getCentreSize()) {
-			PRINT("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mActor->_288->_28[i].dist(mActor->mPosition),
+		if (mActor->mClimbingTri->_28[i].dist(mActor->mPosition) < -2.0f * mActor->getCentreSize()) {
+			PRINT("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mActor->mClimbingTri->_28[i].dist(mActor->mPosition),
 			      -2.0f * mActor->getCentreSize());
 			check = false;
 		}

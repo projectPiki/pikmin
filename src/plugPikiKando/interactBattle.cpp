@@ -308,7 +308,7 @@ bool InteractFlick::actPiki(Piki* piki)
 	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiHealth());
 
 	if (mAngle < FLICK_BACKWARDS_THRESHOLD) {
-		piki->mRotationAngle = piki->mDirection;
+		piki->mRotationAngle = piki->mFaceDirection;
 	} else {
 		piki->mRotationAngle = mAngle;
 	}

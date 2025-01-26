@@ -927,10 +927,10 @@ int ActBoreTalk::exec()
 	}
 
 	if (_18 == 0) {
-		Vector3f dir       = mTarget->mPosition - mActor->mPosition;
-		f32 ang            = atan2f(dir.x, dir.z);
-		ang                = angDist(ang, mActor->mDirection);
-		mActor->mDirection = roundAng(mActor->mDirection + 0.1f * ang);
+		Vector3f dir           = mTarget->mPosition - mActor->mPosition;
+		f32 ang                = atan2f(dir.x, dir.z);
+		ang                    = angDist(ang, mActor->mFaceDirection);
+		mActor->mFaceDirection = roundAng(mActor->mFaceDirection + 0.1f * ang);
 
 		if (quickABS(ang) < 0.1f) {
 			_18 = 1;

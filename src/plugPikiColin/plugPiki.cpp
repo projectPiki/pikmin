@@ -162,7 +162,7 @@ void PlugPikiApp::softReset()
  */
 void PlugPikiApp::update()
 {
-	gameflow._2D0++;
+	gameflow.mAppTickCounter++;
 	gameflow.update();
 	Node::update();
 }

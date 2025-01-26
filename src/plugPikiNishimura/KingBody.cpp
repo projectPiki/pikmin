@@ -76,7 +76,7 @@ void KingBody::setSeedFlashEffect()
  */
 void KingBody::setEatBombEffect()
 {
-	Vector3f dir(sinf(mKing->mDirection), 0.0f, cosf(mKing->mDirection));
+	Vector3f dir(sinf(mKing->mFaceDirection), 0.0f, cosf(mKing->mFaceDirection));
 	Vector3f effectPos            = _6C + 50.0f * dir;
 	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_King_EatBomb2, effectPos, nullptr, nullptr);
 	if (ptcl1) {
@@ -144,8 +144,8 @@ void KingBody::createUfoParts()
 	if (ufoPart) {
 		CollPart* nosePart = mKing->mCollInfo->getSphere('nose');
 		f32 angle          = atan2f(nosePart->mCentre.x - mKing->mPosition.x, nosePart->mCentre.z - mKing->mPosition.z);
-		f32 xOffs          = sinf(angle) + sinf(mKing->mDirection);
-		f32 zOffs          = cosf(angle) + cosf(mKing->mDirection);
+		f32 xOffs          = sinf(angle) + sinf(mKing->mFaceDirection);
+		f32 zOffs          = cosf(angle) + cosf(mKing->mFaceDirection);
 		Vector3f dir(xOffs, 0.0f, zOffs);
 		Vector3f partPos(nosePart->mCentre);
 		partPos.y -= 80.0f;
@@ -155,7 +155,7 @@ void KingBody::createUfoParts()
 		dir.normalise();
 		ufoPart->mVelocity.set(250.0f * dir.x, 0.0f, 250.0f * dir.z);
 
-		ufoPart->mDirection = mKing->mDirection;
+		ufoPart->mFaceDirection = mKing->mFaceDirection;
 		ufoPart->startAI(0);
 
 		zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_King_SpitParts, partPos, nullptr, mSpitPartsParticleCallBack);
@@ -295,7 +295,7 @@ void KingBody::setVelocityFromPosition()
 {
 	if (mMoveSpeed > 0.0f) {
 		bool isTouchingGround = false;
-		Vector3f dir(sinf(mKing->mDirection), 0.0f, cosf(mKing->mDirection));
+		Vector3f dir(sinf(mKing->mFaceDirection), 0.0f, cosf(mKing->mFaceDirection));
 		for (int i = 0; i < 2; i++) {
 			if (mIsFootOnGround[i]) {
 				isTouchingGround = true;

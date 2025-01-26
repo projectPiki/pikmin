@@ -1669,10 +1669,10 @@ void GeneratorMgr::read(RandomAccessStream& input, bool p2)
 	if (!p2) {
 		Navi* navi = naviMgr->getNavi();
 		if (navi) {
-			navi->mPosition   = mNaviPos;
-			navi->_1AC        = mNaviPos;
-			navi->mDirection  = PI * (mNaviDirection / 180.0f);
-			navi->mRotation.y = navi->mDirection;
+			navi->mPosition      = mNaviPos;
+			navi->mLastPosition  = mNaviPos;
+			navi->mFaceDirection = PI * (mNaviDirection / 180.0f);
+			navi->mRotation.y    = navi->mFaceDirection;
 		} else {
 			PRINT("@@@@@@@@@ SET STARTPOS NAVI FAIL !!!!!!!!!!!!!!!\n");
 		}

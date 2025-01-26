@@ -331,8 +331,8 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	inline f32 doGetVelocityAnimSpeed() { return getVelocityAnimationSpeed(mTargetVelocity.length()); }
 
 	// these are all correct name-wise according to the map or the DLL.
-	void setDirection(f32 dir) { mDirection = dir; }
-	f32 getDirection() { return mDirection; } // weak function
+	void setDirection(f32 dir) { mFaceDirection = dir; }
+	f32 getDirection() { return mFaceDirection; } // weak function
 
 	// NB: according to the DLL, this should use NMathI::checkBit, but that inflates stack too much
 	bool getTekiOption(int opt) { return mTekiOptions & opt; }

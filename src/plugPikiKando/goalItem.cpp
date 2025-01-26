@@ -1601,8 +1601,8 @@ void GoalItem::refresh(Graphics& gfx)
 	mScale.set(1.0f, 1.0f, 1.0f);
 	Matrix4f mtx1;
 	Vector3f pos = mPosition;
-	mTransformMatrix.makeSRT(mScale, mRotation, pos);
-	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx1);
+	mWorldMtx.makeSRT(mScale, mRotation, pos);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx1);
 	if (!gfx.mCamera->isPointVisible(mPosition, 200.0f)) {
 		enableAICulling();
 		if (!gameflow.mGamePrefs._22) {

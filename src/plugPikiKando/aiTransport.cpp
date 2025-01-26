@@ -369,9 +369,9 @@ int ActTransport::execJump()
 			return ACTOUT_Continue;
 		}
 
-		mActor->mDirection  = roundAng(atan2f(slotDir.x, slotDir.z));
-		mActor->mRotation.y = mActor->mDirection;
-		mState              = STATE_Unk2;
+		mActor->mFaceDirection = roundAng(atan2f(slotDir.x, slotDir.z));
+		mActor->mRotation.y    = mActor->mFaceDirection;
+		mState                 = STATE_Unk2;
 
 		mActor->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
 		mActor->enableMotionBlend();
@@ -474,9 +474,9 @@ bool ActTransport::gotoLiftPos()
 			return true;
 		}
 
-		mActor->mDirection  = roundAng(atan2f(slotDir.x, slotDir.z));
-		mActor->mRotation.y = mActor->mDirection;
-		mState              = STATE_Unk2;
+		mActor->mFaceDirection = roundAng(atan2f(slotDir.x, slotDir.z));
+		mActor->mRotation.y    = mActor->mFaceDirection;
+		mState                 = STATE_Unk2;
 		mActor->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
 		mActor->enableMotionBlend();
 		if (pel->isCreatureFlag(CF_IsPositionFixed)) {

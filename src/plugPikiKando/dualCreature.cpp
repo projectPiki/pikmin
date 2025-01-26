@@ -158,8 +158,8 @@ void DualCreature::rotateY(f32 rotY)
 		mRotationQuat = q1;
 		mRotationQuat.normalise();
 	} else {
-		mDirection = roundAng(mDirection + rotY);
-		mRotation.set(0.0f, mDirection, 0.0f);
+		mFaceDirection = roundAng(mFaceDirection + rotY);
+		mRotation.set(0.0f, mFaceDirection, 0.0f);
 	}
 }
 
@@ -204,12 +204,12 @@ void DualCreature::refresh(Graphics& gfx)
 	}
 
 	if (mIsRealDynamics) {
-		mTransformMatrix.makeVQS(mPosition, mRotationQuat, mScale);
+		mWorldMtx.makeVQS(mPosition, mRotationQuat, mScale);
 	} else {
-		mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 	}
 
-	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 	doRender(gfx, mtx);
 	if (mIsRealDynamics) {
 		createCollisions(gfx);

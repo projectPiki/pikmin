@@ -161,7 +161,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	Creature* _304;                      // _304, maybe Pellet*?
 	bool mIsInWater;                     // _308
 	u32 _30C;                            // _30C, unknown
-	int _310;                            // _310
+	int mIsCursorVisible;                // _310
 	BurnEffect* mBurnEffect;             // _314
 	RippleEffect* mRippleEffect;         // _318
 	SlimeEffect* mSlimeEffect;           // _31C
@@ -174,7 +174,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	Vector3f mCursorPosition;            // _6D4, where cursor (whistle) currently is
 	f32 mCursorNaviDist;                 // _6E0, how far is the cursor from us?
 	Vector3f mCursorTargetPosition;      // _6E4, where we want cursor to be
-	Vector3f _6F0;                       // _6F0, also cursor related?
+	Vector3f mCursorWorldPos;            // _6F0, also cursor related?
 	int _6FC;                            // _6FC
 	int _700;                            // _700
 	f32 _704;                            // _704

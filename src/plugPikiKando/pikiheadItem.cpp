@@ -328,7 +328,7 @@ void PikiHeadItem::refresh(Graphics& gfx)
 	}
 
 	Matrix4f mtx;
-	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 	int color     = mSeedColor;
 	Material* mat = mItemShapeObject->mShape->mMaterialList;
 	// mat.setColor();

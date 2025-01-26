@@ -859,12 +859,12 @@ void SpiderLeg::setNextDirAndCent()
 		f32 factorThreshold
 		    = qdist2(mSpider->mPosition.x, mSpider->mPosition.z, mSpider->getTargetPosition()->x, mSpider->getTargetPosition()->z);
 
-		mSpider->mDirection = NsMathF::roundAngle(mSpider->mDirection);
+		mSpider->mFaceDirection = NsMathF::roundAngle(mSpider->mFaceDirection);
 		_E4 = atan2f(mSpider->getTargetPosition()->x - mSpider->mPosition.x, mSpider->getTargetPosition()->z - mSpider->mPosition.z);
-		_E4 = NsMathF::calcNearerDirection(mSpider->mDirection, _E4);
+		_E4 = NsMathF::calcNearerDirection(mSpider->mFaceDirection, _E4);
 
-		if (_E4 > mSpider->mDirection) {
-			f32 diff = _E4 - mSpider->mDirection;
+		if (_E4 > mSpider->mFaceDirection) {
+			f32 diff = _E4 - mSpider->mFaceDirection;
 			if (diff < dirChangeThreshold) {
 				if (diff > QUARTER_PI) {
 					if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
@@ -874,7 +874,7 @@ void SpiderLeg::setNextDirAndCent()
 					}
 				}
 			} else {
-				_E4 = mSpider->mDirection + dirChangeThreshold;
+				_E4 = mSpider->mFaceDirection + dirChangeThreshold;
 				if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
 					centreDist *= distFactor;
 				} else {
@@ -882,7 +882,7 @@ void SpiderLeg::setNextDirAndCent()
 				}
 			}
 		} else {
-			f32 diff = mSpider->mDirection - _E4;
+			f32 diff = mSpider->mFaceDirection - _E4;
 			if (diff < dirChangeThreshold) {
 				if (diff > QUARTER_PI) {
 					if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
@@ -892,7 +892,7 @@ void SpiderLeg::setNextDirAndCent()
 					}
 				}
 			} else {
-				_E4 = mSpider->mDirection - dirChangeThreshold;
+				_E4 = mSpider->mFaceDirection - dirChangeThreshold;
 				if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
 					centreDist *= distFactor;
 				} else {
@@ -1062,7 +1062,7 @@ void SpiderLeg::calcSpiderDirection()
 		f32 z                = _12C[0][0].z - mSpider->mPosition.z + _12C[2][0].z - mSpider->mPosition.z;
 		mSpider->mRotation.y = atan2f(x, z);
 	}
-	mSpider->mDirection = mSpider->mRotation.y;
+	mSpider->mFaceDirection = mSpider->mRotation.y;
 }
 
 /*
@@ -1074,7 +1074,7 @@ void SpiderLeg::calcShakeOffDirection()
 {
 	if (_F8 == 2) {
 		mSpider->mRotation.y += _80;
-		mSpider->mDirection = mSpider->mRotation.y;
+		mSpider->mFaceDirection = mSpider->mRotation.y;
 	}
 }
 
@@ -1491,7 +1491,7 @@ void SpiderLeg::setKneeDirection()
 	for (int i = 0; i < 4; i++) {
 		Vector3f vec1(0.0f, 0.0f, 0.0f);
 		Vector3f vec2(0.0f, 0.0f, 0.0f);
-		f32 angle = mSpider->mDirection - PI * vals[i];
+		f32 angle = mSpider->mFaceDirection - PI * vals[i];
 		vec1.x    = sinf(angle);
 		vec1.z    = cosf(angle);
 		vec1.normalise();

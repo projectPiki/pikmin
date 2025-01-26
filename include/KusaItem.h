@@ -50,11 +50,11 @@ struct KusaItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	CollInfo mKusaCollision; // _3C8
-	CollPart mKusaParts[10]; // _3DC
-	u32 mPartIDs[10];        // _7EC
-	Vector3f _814;           // _814
-	BoBaseItem* mBaseItem;   // _820
+	CollInfo mKusaCollision;  // _3C8
+	CollPart mKusaParts[10];  // _3DC
+	u32 mPartIDs[10];         // _7EC
+	Vector3f mGroundPosition; // _814
+	BoBaseItem* mBaseItem;    // _820
 };
 
 /////////// Stick Base Item (CUT/CRASHES) ///////////
@@ -78,14 +78,14 @@ struct BoBaseItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	CollInfo mBaseCollision;          // _3C8
-	CollPart mBaseParts[10];          // _3DC
-	u32 mPartIDs[10];                 // _7EC
-	Vector3f _814;                    // _814
-	KusaItem* mStickItem;             // _820
-	bool _824;                        // _824
-	s8 _825;                          // _825
-	zen::particleGenerator* mPtclGen; // _828
+	CollInfo mBaseCollision;                    // _3C8
+	CollPart mBaseParts[10];                    // _3DC
+	u32 mPartIDs[10];                           // _7EC
+	Vector3f mGroundPosition;                   // _814
+	KusaItem* mStickItem;                       // _820
+	bool mIsActive;                             // _824
+	s8 mEffectDuration;                         // _825
+	zen::particleGenerator* mParticleGenerator; // _828
 };
 
 #endif

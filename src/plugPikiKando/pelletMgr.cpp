@@ -159,7 +159,7 @@ void PelletView::becomePellet(u32 id, Vector3f& pos, f32 direction)
 	}
 
 	pellet->init(pos);
-	pellet->mDirection = direction;
+	pellet->mFaceDirection = direction;
 	pellet->mRotationQuat.fromEuler(Vector3f(0.0f, direction, 0.0f));
 	pellet->mRotation.set(0.0f, direction, 0.0f);
 	pellet->mVelocity.set(0.0f, 0.0f, 0.0f);
@@ -588,7 +588,7 @@ bool Pellet::startStickTeki(Creature* teki, f32 p2)
 	Vector3f pelCentre = getCentre();
 	pelCentre          = teki->getCentre() - pelCentre;
 	f32 angle          = atan2f(pelCentre.x, pelCentre.z);
-	_460               = roundAng(angle - mDirection);
+	_460               = roundAng(angle - mFaceDirection);
 
 	teki->startStickObject(this, nullptr, -2, p2);
 	if (teki->getStickObject() != this) {
@@ -786,7 +786,7 @@ Vector3f Pellet::getSlotLocalPos(int slotID, f32 offset)
 Vector3f Pellet::getSlotGlobalPos(int slotID, f32 offset)
 {
 	Vector3f globalPos = getSlotLocalPos(slotID, offset);
-	globalPos.multMatrix(mTransformMatrix);
+	globalPos.multMatrix(mWorldMtx);
 	return globalPos;
 }
 
@@ -1022,8 +1022,8 @@ void Pellet::doSave(RandomAccessStream& output)
  */
 void Pellet::startAI(int stateID)
 {
-	mRotationQuat.fromEuler(Vector3f(0.0f, mDirection, 0.0f));
-	mRotation.set(0.0f, mDirection, 0.0f);
+	mRotationQuat.fromEuler(Vector3f(0.0f, mFaceDirection, 0.0f));
+	mRotation.set(0.0f, mFaceDirection, 0.0f);
 	_464 = mPosition;
 	enableFixPos();
 	if (_450) {

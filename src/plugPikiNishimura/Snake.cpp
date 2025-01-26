@@ -136,8 +136,8 @@ void Snake::update()
 void Snake::refresh(Graphics& gfx)
 {
 	Matrix4f onCamMtx;
-	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
-	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, onCamMtx);
+	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, onCamMtx);
 	mAnimator.updateContext();
 	mShapeObject->mShape->updateAnim(gfx, onCamMtx, nullptr);
 	mSnakeBody->refresh(mShapeObject, gfx);

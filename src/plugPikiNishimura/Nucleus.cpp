@@ -106,9 +106,9 @@ void Nucleus::update()
  */
 void Nucleus::refresh(Graphics& gfx)
 {
-	mTransformMatrix.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 	Matrix4f mtx;
-	gfx.mCamera->mLookAtMtx.multiplyTo(mTransformMatrix, mtx);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 	mAnimator.updateContext();
 	mShapeObject->mShape->updateAnim(gfx, mtx, nullptr);
 	mCollInfo->updateInfo(gfx, false);

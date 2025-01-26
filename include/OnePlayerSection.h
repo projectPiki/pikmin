@@ -51,9 +51,9 @@ struct GenFileInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u8 _14; // _14
-	u8 _15; // _15
-	u8 _16; // _16
+	u8 mStartDay; // _14
+	u8 mEndDay;   // _15
+	u8 mDuration; // _16
 };
 
 /**
@@ -63,10 +63,10 @@ struct StageInfo : public CoreNode {
 	inline StageInfo()
 	    : CoreNode("stageInfo")
 	{
-		mStageIndex  = 0;
-		mStageID     = STAGE_INVALID;
-		mChalStageID = CHALSTAGE_INVALID;
-		_20          = 0;
+		mStageIndex     = 0;
+		mStageID        = STAGE_INVALID;
+		mChalStageID    = CHALSTAGE_INVALID;
+		mHasInitialised = 0;
 		mFileInfoList.initCore("");
 	}
 
@@ -84,7 +84,7 @@ struct StageInfo : public CoreNode {
 	char* mStageName;          // _14
 	char* mFileName;           // _18
 	BOOL mIsVisible;           // _1C
-	u32 _20;                   // _20, unknown
+	u32 mHasInitialised;       // _20, unknown
 	u16 mStageIndex;           // _24, order stage is loaded in from file
 	u16 mStageID;              // _26, see StageID enum
 	u16 mChalStageID;          // _28, see ChalStageID enum

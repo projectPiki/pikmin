@@ -207,16 +207,15 @@ struct TopAction : public Action {
 	struct ObjBore {
 		ObjBore();
 
-		// unused/inlined:
 		int getIndex(int);
 		void addBoredom(int, f32);
 		void update();
 
-		f32* _00;  // _00
-		int* _04;  // _04, ids?
-		bool* _08; // _08
-		u32 _0C;   // _0C, unknown
-		int mCnt;  // _10, count of objects in _00, _04, _08 arrays
+		f32* mBoredomLevels; // _00
+		int* mObjectIds;     // _04
+		bool* mIsMaxBored;   // _08
+		u32 mCurrentCount;   // _0C
+		int mMaxCount;       // _10
 	};
 
 	/**
@@ -232,11 +231,11 @@ struct TopAction : public Action {
 		void update();
 		void draw2d(Graphics&, int);
 
-		ObjBore* mObjects; // _00, array of mObjectCnt objects
-		int* _04;          // _04
-		int _08;           // _08
-		int mObjectCnt;    // _0C, number of mObjects
-		int _10;           // _10
+		ObjBore* mBoredomCollectors; // _00
+		int* mBoredomIds;            // _04
+		int mCurrentBoredomCount;    // _08
+		int mMaxBoredomCollectors;   // _0C
+		int mNextAvailableIndex;     // _10
 	};
 
 	TopAction(Piki*);
@@ -247,7 +246,7 @@ struct TopAction : public Action {
 	}
 	virtual void draw(Graphics& gfx) // _40
 	{
-		if (_18) {
+		if (mIsDebugDraw) {
 			mChildActions[mCurrActionIdx].mAction->draw(gfx);
 		}
 	}
@@ -274,7 +273,7 @@ struct TopAction : public Action {
 	// _00     = VTBL
 	// _00-_14 = Action
 	MotionListener* mListener; // _14
-	u8 _18;                    // _18
+	u8 mIsDebugDraw;           // _18
 	bool mIsSuspended;         // _19
 	u8 _1A;                    // _1A
 	int _1C;                   // _1C
@@ -561,10 +560,10 @@ struct ActBou : public Action {
 	// _00     = VTBL
 	// _00-_14 = Action
 	u16 mState;               // _14
-	s16 _16;                  // _16
-	Vector3f _18;             // _18
-	Creature* mClimbingStick; // _24
-	Vector3f _28;             // _28
+	s16 mTimeoutCounter;      // _16
+	Vector3f mClimbDirection; // _18
+	Creature* mTargetStick;   // _24
+	Vector3f mLastPosition;   // _28
 };
 
 /**
@@ -1586,7 +1585,7 @@ struct ActStone : public Action, public PaniAnimKeyListener {
 	u8 _1A[0x20 - 0x1A]; // _1A, unknown
 	Pebble* mCurrPebble; // _20, unknown
 	RockGen* mRockGen;   // _24
-	u8 _28;              // _28
+	u8 mIsAttackReady;   // _28
 };
 
 /**

@@ -43,9 +43,9 @@ bool InteractPullout::actPiki(Piki* piki)
 	}
 
 	PRINT(" ##### %x pulls out piki %x\n", mOwner, piki);
-	piki->mDirection = roundAng(mOwner->mDirection);
-	piki->mRotation.set(0.0f, piki->mDirection, 0.0f);
-	PRINT("nukarePiki:faceDir = %.1f\n", piki->mDirection);
+	piki->mFaceDirection = roundAng(mOwner->mFaceDirection);
+	piki->mRotation.set(0.0f, piki->mFaceDirection, 0.0f);
+	PRINT("nukarePiki:faceDir = %.1f\n", piki->mFaceDirection);
 
 	piki->mFSM->transit(piki, PIKISTATE_Nukare);
 	if (piki->mNavi->mIsFastPluckEnabled) {
@@ -64,7 +64,7 @@ bool InteractPullout::actPiki(Piki* piki)
 	backPullDist *= scale;
 	perpDist *= scale;
 
-	f32 angle = mOwner->mDirection;
+	f32 angle = mOwner->mFaceDirection;
 
 	Vector3f perpOffset(-perpDist * cosf(angle), 0.0f, perpDist * sinf(angle));
 

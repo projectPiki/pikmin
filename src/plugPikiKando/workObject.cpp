@@ -1067,7 +1067,7 @@ void HinderRock::doLoad(RandomAccessStream& stream)
 	}
 
 	Vector3f scale(1.0f, 1.0f, 1.0f);
-	mTransformMatrix.makeSRT(scale, mRotation, mPosition);
+	mWorldMtx.makeSRT(scale, mRotation, mPosition);
 
 	DynBuildShape* shape = mBuildShape;
 	// TODO: wtf?

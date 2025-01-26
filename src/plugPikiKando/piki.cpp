@@ -143,11 +143,11 @@ void Piki::finishDemo()
  */
 bool Piki::appearDemo()
 {
-	if (mColor == Blue && gameflow._1D8 & 8) {
+	if (mColor == Blue && gameflow.mDemoFlags & 8) {
 		return false;
-	} else if (mColor == Red && gameflow._1D8 & 0x10) {
+	} else if (mColor == Red && gameflow.mDemoFlags & 0x10) {
 		return false;
-	} else if (mColor == Yellow && gameflow._1D8 & 0x20) {
+	} else if (mColor == Yellow && gameflow.mDemoFlags & 0x20) {
 		return false;
 	} else if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(1)) {
 		return false;
@@ -2817,13 +2817,13 @@ void Piki::updateColor()
  */
 bool Piki::needShadow()
 {
-	if (mColor == Blue && (gameflow._1D8 & 0x8)) {
+	if (mColor == Blue && (gameflow.mDemoFlags & 0x8)) {
 		return false;
 	}
-	if (mColor == Red && (gameflow._1D8 & 0x10)) {
+	if (mColor == Red && (gameflow.mDemoFlags & 0x10)) {
 		return false;
 	}
-	if (mColor == Yellow && (gameflow._1D8 & 0x20)) {
+	if (mColor == Yellow && (gameflow.mDemoFlags & 0x20)) {
 		return false;
 	}
 
@@ -3356,7 +3356,7 @@ void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 			if (!target) {
 				int rand = System::getRand(1.0f) * 2.0f;
 				if (rand == 0) {
-					startHimaLook(&mNavi->_6F0);
+					startHimaLook(&mNavi->mCursorWorldPos);
 				} else {
 					startHimaLook(&mNavi->mNaviLightPosition);
 				}
@@ -3907,7 +3907,7 @@ void Piki::init(Navi* navi)
 	mFSM->transit(this, PIKISTATE_Normal);
 	mPikiSize = pikiMgr->mPikiParms->mPikiParms._23C()
 	          + (pikiMgr->mPikiParms->mPikiParms._24C() - pikiMgr->mPikiParms->mPikiParms._23C()) * System::getRand(1.0f);
-	_34C = mDirection;
+	_34C = mFaceDirection;
 	initBirth();
 	mRouteGoalWPIdx      = -1;
 	mRouteStartWPIdx     = -1;
@@ -4046,7 +4046,7 @@ void Piki::updateWalkAnimation()
 		}
 
 		int upperMotionID = mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex();
-		f32 angleDiff     = zen::Abs(mDirection - _34C);
+		f32 angleDiff     = zen::Abs(mFaceDirection - _34C);
 		doMotionBlend();
 		int newMotionID;
 		if (speed < pikiMgr->mPikiParms->mPikiParms._19C()) {
@@ -4229,7 +4229,7 @@ void Piki::realAI()
 		mInWaterTimer = 0;
 	}
 
-	_34C = mDirection;
+	_34C = mFaceDirection;
 	updateFire();
 	mFSM->exec(this);
 	_4E8 = 0;
@@ -4634,8 +4634,8 @@ void Piki::doAI()
 {
 	int state = getState();
 	if (state == PIKISTATE_Unk34) {
-		mDirection += 1.2f * (HALF_PI * gsys->getFrameTime());
-		mDirection = roundAng(mDirection);
+		mFaceDirection += 1.2f * (HALF_PI * gsys->getFrameTime());
+		mFaceDirection = roundAng(mFaceDirection);
 		return;
 	}
 

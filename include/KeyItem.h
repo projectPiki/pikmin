@@ -23,6 +23,12 @@ struct KeyProp : public CreatureProp {
 	// _00-_58 = CreatureProp
 };
 
+DEFINE_ENUM_TYPE(KeyState,
+                 Active,    // Key is interactive
+                 Collected, // Key has been collected
+                 Inactive,  // Key is initialized but not started
+);
+
 /**
  * @brief TODO
  *
@@ -44,7 +50,7 @@ struct KeyItem : public Creature {
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	int _2B8;              // _2B8
+	KeyState::Type mState; // _2B8
 	SearchData mSearch[3]; // _2BC
 	Shape* mModel;         // _2E0
 };

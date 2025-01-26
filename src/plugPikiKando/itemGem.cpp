@@ -131,7 +131,7 @@ void GemItem::startAI(int)
 	mCollInfo = &mGemCollInfo;
 	mGemCollInfo.initInfo(mItemShapeObject->mShape, mGemColl, nullptr);
 	mScale.set(1.0f, 1.0f, 1.0f);
-	mRotation.set(1.0f, mDirection, 1.0f);
+	mRotation.set(1.0f, mFaceDirection, 1.0f);
 	resetCreatureFlag(CF_Unk8);
 	((SimpleAI*)mStateMachine)->start(this, 0);
 	_3D9 = false;

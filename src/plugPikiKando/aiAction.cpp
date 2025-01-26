@@ -139,13 +139,16 @@ void AndAction::init(Creature* creature)
 int AndAction::exec()
 {
 	Child* child = &mChildActions[mCurrActionIdx];
+
 	switch (child->mAction->exec()) {
 	case ACTOUT_Success:
 		mChildActions[mCurrActionIdx].mAction->cleanup();
 		mCurrActionIdx++;
+
 		if (mCurrActionIdx >= mChildCount) {
 			return ACTOUT_Success;
 		}
+
 		Child* child = &mChildActions[mCurrActionIdx];
 		child->initialise(mOtherCreature);
 		break;
@@ -177,6 +180,7 @@ void OrAction::init(Creature* creature)
 int OrAction::exec()
 {
 	Child* child = &mChildActions[mCurrActionIdx];
+
 	switch (child->mAction->exec()) {
 	case ACTOUT_Success:
 		return ACTOUT_Success;
@@ -252,7 +256,7 @@ void TopAction::MotionListener::animationKeyUpdated(PaniAnimKeyEvent& event)
 TopAction::TopAction(Piki* piki)
     : Action(piki, false)
 {
-	_18 = 0;
+	mIsDebugDraw = 0;
 
 	memStat->start("topaction");
 
@@ -315,12 +319,14 @@ int TopAction::exec()
 		return ACTOUT_Continue;
 	}
 
+	// Initialise free mode if no current action and the pikmin isn't flying
 	if (mCurrActionIdx == PikiAction::NOACTION) {
 		if (mActor->getState() != PIKISTATE_Flying) {
 			mActor->mMode  = PikiMode::FreeMode;
 			mCurrActionIdx = PikiAction::Free;
 			mChildActions[mCurrActionIdx].initialise(nullptr);
 		}
+
 		return ACTOUT_Continue;
 	}
 
@@ -510,14 +516,14 @@ void TopAction::knowledgeCheck()
  */
 TopAction::ObjBore::ObjBore()
 {
-	_0C  = 0;
-	mCnt = 5;
-	_00  = new f32[mCnt];
-	_04  = new int[mCnt];
-	_08  = new bool[mCnt];
+	mCurrentCount  = 0;
+	mMaxCount      = 5;
+	mBoredomLevels = new f32[mMaxCount];
+	mObjectIds     = new int[mMaxCount];
+	mIsMaxBored    = new bool[mMaxCount];
 
-	for (int i = 0; i < mCnt; i++) {
-		_08[i] = 0;
+	for (int i = 0; i < mMaxCount; i++) {
+		mIsMaxBored[i] = 0;
 	}
 }
 
@@ -528,8 +534,8 @@ TopAction::ObjBore::ObjBore()
  */
 int TopAction::ObjBore::getIndex(int id)
 {
-	for (int i = 0; i < _0C; i++) {
-		if (_04[i] == id) {
+	for (int i = 0; i < mCurrentCount; i++) {
+		if (mObjectIds[i] == id) {
 			return i;
 		}
 	}
@@ -542,32 +548,32 @@ int TopAction::ObjBore::getIndex(int id)
  * Address:	........
  * Size:	000134
  */
-void TopAction::ObjBore::addBoredom(int id, f32 p2)
+void TopAction::ObjBore::addBoredom(int id, f32 inc)
 {
 	int idx = getIndex(id);
 	if (idx == -1) {
-		if (_0C >= mCnt) {
-			idx = _0C;
-			_0C = idx + 1;
+		if (mCurrentCount >= mMaxCount) {
+			idx           = mCurrentCount;
+			mCurrentCount = idx + 1;
 		} else {
-			for (int i = 1; i < mCnt; i++) {
-				_00[i - 1] = _00[i];
-				_04[i - 1] = _04[i];
-				_08[i - 1] = _08[i];
+			for (int i = 1; i < mMaxCount; i++) {
+				mBoredomLevels[i - 1] = mBoredomLevels[i];
+				mObjectIds[i - 1]     = mObjectIds[i];
+				mIsMaxBored[i - 1]    = mIsMaxBored[i];
 			}
-			idx = mCnt - 1;
+			idx = mMaxCount - 1;
 		}
 
-		_04[idx] = id;
-		_08[idx] = 0;
-		_00[idx] = 0;
+		mObjectIds[idx]     = id;
+		mIsMaxBored[idx]    = 0;
+		mBoredomLevels[idx] = 0;
 	}
 
-	if (!_08[idx]) {
-		_00[idx] += p2;
-		if (_00[idx] >= 1.0f) {
-			_00[idx] = 1.0f;
-			_08[idx] = true;
+	if (!mIsMaxBored[idx]) {
+		mBoredomLevels[idx] += inc;
+		if (mBoredomLevels[idx] >= 1.0f) {
+			mBoredomLevels[idx] = 1.0f;
+			mIsMaxBored[idx]    = true;
 		}
 	}
 }
@@ -579,12 +585,12 @@ void TopAction::ObjBore::addBoredom(int id, f32 p2)
  */
 void TopAction::ObjBore::update()
 {
-	for (int i = 0; i < _0C; i++) {
-		if (_08[i]) {
-			_00[i] -= gsys->getFrameTime() * (1.0f / 15.0f);
-			if (_00[i] <= 0.0f) {
-				_00[i] = System::getRand(1.0f) * 0.01f;
-				_08[i] = false;
+	for (int i = 0; i < mCurrentCount; i++) {
+		if (mIsMaxBored[i]) {
+			mBoredomLevels[i] -= gsys->getFrameTime() * (1.0f / 15.0f);
+			if (mBoredomLevels[i] <= 0.0f) {
+				mBoredomLevels[i] = System::getRand(1.0f) * 0.01f;
+				mIsMaxBored[i]    = false;
 			}
 		}
 	}
@@ -597,11 +603,11 @@ void TopAction::ObjBore::update()
  */
 TopAction::Boredom::Boredom()
 {
-	_08        = 0;
-	mObjectCnt = 30;
-	mObjects   = new ObjBore[mObjectCnt];
-	_04        = new int[mObjectCnt];
-	_10        = 0;
+	mCurrentBoredomCount  = 0;
+	mMaxBoredomCollectors = 30;
+	mBoredomCollectors    = new ObjBore[mMaxBoredomCollectors];
+	mBoredomIds           = new int[mMaxBoredomCollectors];
+	mNextAvailableIndex   = 0;
 }
 
 /*
@@ -611,11 +617,12 @@ TopAction::Boredom::Boredom()
  */
 int TopAction::Boredom::getIndex(int id)
 {
-	for (int i = 0; i < _08; i++) {
-		if (_04[i] == id) {
+	for (int i = 0; i < mCurrentBoredomCount; i++) {
+		if (mBoredomIds[i] == id) {
 			return i;
 		}
 	}
+
 	return -1;
 }
 
@@ -628,13 +635,13 @@ f32 TopAction::Boredom::getBoredom(int boreID, int objID)
 {
 	int idx = getIndex(boreID);
 	if (idx != -1) {
-		ObjBore* obj = &mObjects[idx];
+		ObjBore* obj = &mBoredomCollectors[idx];
 		int objIdx   = obj->getIndex(objID);
 		if (objIdx != -1) {
-			if (obj->_08[objIdx]) {
+			if (obj->mIsMaxBored[objIdx]) {
 				return 1.0f;
 			}
-			return obj->_00[idx];
+			return obj->mBoredomLevels[idx];
 		}
 	}
 	return 0.0f;
@@ -649,20 +656,20 @@ void TopAction::Boredom::addBoredom(int boreID, int objID, f32 p2)
 {
 	int idx = getIndex(boreID);
 	if (idx == -1) {
-		if (_08 < mObjectCnt) {
-			idx = _08;
-			_08 = idx - 1;
+		if (mCurrentBoredomCount < mMaxBoredomCollectors) {
+			idx                  = mCurrentBoredomCount;
+			mCurrentBoredomCount = idx - 1;
 		} else {
-			idx = _10;
-			_10 = idx + 1;
-			if (_10 >= mObjectCnt) {
-				_10 = 0;
+			idx                 = mNextAvailableIndex;
+			mNextAvailableIndex = idx + 1;
+			if (mNextAvailableIndex >= mMaxBoredomCollectors) {
+				mNextAvailableIndex = 0;
 			}
 		}
-		_04[idx] = boreID;
+		mBoredomIds[idx] = boreID;
 	}
 
-	mObjects[idx].addBoredom(objID, p2);
+	mBoredomCollectors[idx].addBoredom(objID, p2);
 }
 
 /*
@@ -672,8 +679,8 @@ void TopAction::Boredom::addBoredom(int boreID, int objID, f32 p2)
  */
 void TopAction::Boredom::update()
 {
-	for (int i = 0; i < _08; i++) {
-		mObjects[i].update();
+	for (int i = 0; i < mCurrentBoredomCount; i++) {
+		mBoredomCollectors[i].update();
 	}
 }
 

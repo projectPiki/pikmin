@@ -279,9 +279,9 @@ void KingAi::createEffect(BOOL doStartSpreadSaliva)
  */
 void KingAi::setAttackPosition()
 {
-	mAttackPosition.x = mKing->mPosition.x + C_KING_PROP(mKing).mAttackDistance() * sinf(mKing->mDirection);
+	mAttackPosition.x = mKing->mPosition.x + C_KING_PROP(mKing).mAttackDistance() * sinf(mKing->mFaceDirection);
 	mAttackPosition.y = mKing->mPosition.y;
-	mAttackPosition.z = mKing->mPosition.z + C_KING_PROP(mKing).mAttackDistance() * cosf(mKing->mDirection);
+	mAttackPosition.z = mKing->mPosition.z + C_KING_PROP(mKing).mAttackDistance() * cosf(mKing->mFaceDirection);
 }
 
 /*
@@ -1093,14 +1093,14 @@ bool KingAi::attackInArea(Creature* target, Vector3f* centre)
  */
 bool KingAi::inJumpAngle(Creature* target)
 {
-	f32 dir = NsMathF::calcNearerDirection(mKing->mDirection,
+	f32 dir = NsMathF::calcNearerDirection(mKing->mFaceDirection,
 	                                       atan2f(target->mPosition.x - mKing->mPosition.x, target->mPosition.z - mKing->mPosition.z));
-	if (dir > mKing->mDirection) {
-		f32 diff = dir - mKing->mDirection;
+	if (dir > mKing->mFaceDirection) {
+		f32 diff = dir - mKing->mFaceDirection;
 		if (diff < mMaxJumpAttackAngle) {
 			return true;
 		}
-	} else if (mKing->mDirection - dir < mMaxJumpAttackAngle) {
+	} else if (mKing->mFaceDirection - dir < mMaxJumpAttackAngle) {
 		return true;
 	}
 
@@ -1205,14 +1205,14 @@ bool KingAi::inTurnAngleTransit()
 {
 	Vector3f* targetPos = mKing->getTargetPosition();
 	f32 angle           = atan2f(targetPos->x - mKing->mPosition.x, targetPos->z - mKing->mPosition.z);
-	f32 dir             = NsMathF::calcNearerDirection(mKing->mDirection, angle);
-	if (dir > mKing->mDirection) {
-		f32 diff = dir - mKing->mDirection;
+	f32 dir             = NsMathF::calcNearerDirection(mKing->mFaceDirection, angle);
+	if (dir > mKing->mFaceDirection) {
+		f32 diff = dir - mKing->mFaceDirection;
 		if (diff > QUARTER_PI) {
 			return true;
 		}
 	} else {
-		if (mKing->mDirection - dir > QUARTER_PI) {
+		if (mKing->mFaceDirection - dir > QUARTER_PI) {
 			return true;
 		}
 	}
@@ -1338,9 +1338,9 @@ bool KingAi::attackTransit()
 bool KingAi::missAttackNextTransit()
 {
 	Vector3f attackCentre(mKing->mCollInfo->getSphere('slt2')->mCentre);
-	attackCentre.x += C_KING_PROP(mKing)._314() * sinf(mKing->mDirection);
+	attackCentre.x += C_KING_PROP(mKing)._314() * sinf(mKing->mFaceDirection);
 	attackCentre.y += C_KING_PROP(mKing)._324();
-	attackCentre.z += C_KING_PROP(mKing)._314() * cosf(mKing->mDirection);
+	attackCentre.z += C_KING_PROP(mKing)._314() * cosf(mKing->mFaceDirection);
 
 	bool res = false;
 	MoveTrace trace(attackCentre, Vector3f(0.0f, 0.0f, 0.0f), C_KING_PROP(mKing)._334(), false);
@@ -1405,9 +1405,9 @@ bool KingAi::eatThrowPikiTransit()
 	if (!mIsTongueOut) {
 		CollPart* slot3 = mKing->mCollInfo->getSphere('slt3');
 		Vector3f attackCentre(slot3->mCentre);
-		attackCentre.x += 30.0f * sinf(mKing->mDirection);
+		attackCentre.x += 30.0f * sinf(mKing->mFaceDirection);
 		attackCentre.y += 15.0f;
-		attackCentre.z += 30.0f * cosf(mKing->mDirection);
+		attackCentre.z += 30.0f * cosf(mKing->mFaceDirection);
 		f32 slotRad         = slot3->mRadius;
 		f32 minAttackHeight = attackCentre.y - slotRad;
 

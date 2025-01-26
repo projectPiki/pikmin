@@ -495,8 +495,8 @@ void BTeki::reset()
 	              | TEKIOPT_Unk11 | TEKIOPT_ShapeVisible | TEKIOPT_DamageCountable);
 
 	resetPosition(mPersonality->mPosition);
-	mDirection        = mPersonality->mFaceDirection;
-	_26C              = getSize();
+	mFaceDirection    = mPersonality->mFaceDirection;
+	mSize             = getSize();
 	mIsDead           = 0;
 	mStateID          = 0;
 	mPreviousStateId  = 0;

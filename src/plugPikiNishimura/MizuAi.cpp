@@ -116,7 +116,7 @@ void MizuAi::setEveryFrame()
  */
 void MizuAi::naviGeyzerJump()
 {
-	Vector3f dir(sinf(mMizu->mDirection), 0.0f, cosf(mMizu->mDirection));
+	Vector3f dir(sinf(mMizu->mFaceDirection), 0.0f, cosf(mMizu->mFaceDirection));
 	dir.multiply(C_BOSS_PROP(mMizu).mTerritoryRadius());
 	Vector3f targetPos = mMizu->mPosition + dir;
 	targetPos.y        = mapMgr->getMinY(targetPos.x, targetPos.z, true);

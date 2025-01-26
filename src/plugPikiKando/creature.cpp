@@ -433,7 +433,7 @@ void Creature::resetStateGrabbed()
  */
 void Creature::turnTo(Vector3f& targetDir)
 {
-	mDirection = atan2f(targetDir.x - mPosition.x, targetDir.z - mPosition.z);
+	mFaceDirection = atan2f(targetDir.x - mPosition.x, targetDir.z - mPosition.z);
 }
 
 /*
@@ -457,8 +457,8 @@ void Creature::adjustDistance(Vector3f& targetPos, f32 targetDist)
 void Creature::init()
 {
 	mSearchBuffer.invalidate();
-	_114.makeIdentity();
-	mTransformMatrix.makeIdentity();
+	mRopeOrientMtx.makeIdentity();
+	mWorldMtx.makeIdentity();
 	mRotationQuat.set(0.0f, 0.0f, 0.0f, 1.0f);
 	mWaterFxTimer    = 0;
 	mCreatureFlags   = 0;
@@ -477,7 +477,7 @@ void Creature::init()
 	setCreatureFlag(CF_IsOnGround | CF_Unk4);
 	resetCreatureFlag(CF_Unk5 | CF_IsFlying | CF_Unk8 | CF_Unk11);
 	mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
-	_1AC.set(0.0f, 0.0f, 0.0f);
+	mLastPosition.set(0.0f, 0.0f, 0.0f);
 	mStickTarget = nullptr;
 	mStickPart   = nullptr;
 
@@ -530,8 +530,8 @@ int Creature::getAtariType()
  */
 void Creature::resetPosition(Vector3f& pos)
 {
-	mPosition = pos;
-	_1AC      = pos;
+	mPosition     = pos;
+	mLastPosition = pos;
 }
 
 /*
@@ -809,7 +809,7 @@ Creature::Creature(CreatureProp* props)
 	setRebirthDay(0);
 
 	mCollPlatNormal = nullptr;
-	_288            = 0;
+	mClimbingTri    = 0;
 	mGenerator      = nullptr;
 
 	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -819,8 +819,8 @@ Creature::Creature(CreatureProp* props)
 	mPosition.set(0.0f, 0.0f, 0.0f);
 	mScale.set(1.0f, 1.0f, 1.0f);
 
-	mDirection       = 0.0f;
-	_26C             = 10.0f;
+	mFaceDirection   = 0.0f;
+	mSize            = 10.0f;
 	mCollisionRadius = 16.0f;
 	mProps           = props;
 	_28              = 0;
@@ -1058,7 +1058,7 @@ void Creature::postUpdate(int, f32 p2)
 		}
 	}
 
-	_1AC = mPosition;
+	mLastPosition = mPosition;
 
 	if (getHoldCreature()) {
 		Creature* held  = getHoldCreature();
@@ -1228,7 +1228,7 @@ Vector3f Creature::getCatchPos(Creature* target)
 	Vector3f catchPos;
 	f32 rad = 0.95f * getSize();
 
-	catchPos = Vector3f(rad * sinf(mDirection), 0.0f, rad * cosf(mDirection)) + mPosition;
+	catchPos = Vector3f(rad * sinf(mFaceDirection), 0.0f, rad * cosf(mFaceDirection)) + mPosition;
 	return catchPos;
 	/*
 	.loc_0x0:

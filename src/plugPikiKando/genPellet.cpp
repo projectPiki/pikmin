@@ -101,9 +101,9 @@ Creature* GenObjectPellet::birth(BirthInfo& info)
 	Pellet* pelt = pelletMgr->newPellet(mPelletId.mId, nullptr);
 	if (pelt) {
 		pelt->init(info.mPosition);
-		pelt->mRotation  = info.mRotation;
-		pelt->mDirection = pelt->mRotation.y;
-		pelt->mGenerator = info.mGenerator;
+		pelt->mRotation      = info.mRotation;
+		pelt->mFaceDirection = pelt->mRotation.y;
+		pelt->mGenerator     = info.mGenerator;
 		pelt->startAI(0);
 		if (info.mGenerator->doAdjustFaceDir()) {
 			pelt->enableFaceDirAdjust();
