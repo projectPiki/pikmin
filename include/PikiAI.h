@@ -10,7 +10,7 @@
 
 struct Bridge;
 struct BuildingItem;
-struct GoalItem;
+struct Suckable;
 struct Pebble;
 struct RockGen;
 
@@ -345,8 +345,6 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
 	// unused/inlined:
 	Creature* decideTarget();
 	void startLost();
-
-	// inline Creature* getTarget() { return _24; } // name is a guess
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
@@ -1599,13 +1597,13 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
 	 * @brief TODO
 	 */
 	enum State {
-		STATE_Unk0 = 0,
+		STATE_Go   = 0,
 		STATE_Wait = 1,
-		STATE_Unk2 = 2,
-		STATE_Unk3 = 3,
-		STATE_Unk4 = 4,
-		STATE_Unk5 = 5,
-		STATE_Unk6 = 6,
+		STATE_Lift = 2,
+		STATE_Move = 3,
+		STATE_Guru = 4,
+		STATE_Goal = 5,
+		STATE_Put  = 6,
 		STATE_Jump = 7,
 	};
 
@@ -1651,28 +1649,29 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	SmartPtr<Pellet> mPellet; // _18
-	u16 mState;               // _1C
-	OdoMeter mOdometer;       // _20
-	Vector3f _30;             // _30
-	u16 mNumRoutePoints;      // _3C
-	u8 _3E;                   // _3E
-	u16 _40;                  // _40
-	u8 _42[0x4C - 0x42];      // _3C, unknown
-	Vector3f _4C[4];          // _4C, probably CR spline points
-	Vector3f _7C;             // _7C
-	u32 _88;                  // _88
-	int mSlotIndex;           // _8C
-	Vector3f _90;             // _90
-	u8 _9C;                   // _9C
-	u8 _9D;                   // _9D
-	int _A0;                  // _A0
-	f32 _A4;                  // _A4
-	int _A8;                  // _A8
-	int mGoalWPIndex;         // _AC
-	GoalItem* mGoal;          // _B0
-	u8 _B4;                   // _B4
-	                          // _B8-_C0 = PaniAnimKeyListener
+	SmartPtr<Pellet> mPellet;      // _18
+	u16 mState;                    // _1C
+	OdoMeter mOdometer;            // _20
+	Vector3f mMoveDir;             // _30, calc'd from CRSplineTangent
+	u16 mNumRoutePoints;           // _3C
+	u8 _3E;                        // _3E
+	u16 _40;                       // _40
+	int _44;                       // _44
+	u32 _48;                       // _48, unknown
+	Vector3f mSplineControlPts[4]; // _4C
+	Vector3f mRouteStartPos;       // _7C
+	u8 _88;                        // _88
+	int mSlotIndex;                // _8C
+	Vector3f _90;                  // _90
+	u8 _9C;                        // _9C
+	u8 _9D;                        // _9D
+	int _A0;                       // _A0
+	f32 _A4;                       // _A4
+	int _A8;                       // _A8
+	int mGoalWPIndex;              // _AC
+	Suckable* mGoal;               // _B0, either GoalItem* or UfoItem*, depending
+	u8 _B4;                        // _B4
+	                               // _B8-_C0 = PaniAnimKeyListener
 };
 
 /**

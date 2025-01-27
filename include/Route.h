@@ -127,6 +127,8 @@ struct RouteGroup : public EditNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC4.
  */
 struct WayPoint {
 
@@ -160,7 +162,9 @@ struct WayPoint {
 	int mIndex;          // _10
 	u8 _14[0x38 - 0x14]; // _14, unknown
 	bool mIsOpen;        // _38
-	                     // TODO: members
+	u8 _39[0x40 - 0x39]; // _39, unknown
+	u8 _40;              // _40, flag?
+	u8 _41[0xC4 - 0x41]; // _41, unknown
 };
 
 /**

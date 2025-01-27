@@ -272,7 +272,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	int mBlendMotionIdx;                  // _350
 	PaniPikiAnimMgr mPikiAnimMgr;         // _354
 	u8 mEmotion;                          // _400
-	u32 _404;                             // _404, unknown
+	Creature* _404;                       // _404, might be Pellet*
 	u8 _408;                              // _408
 	bool mIsCallable;                     // _409
 	UpdateContext mPikiUpdateContext;     // _40C

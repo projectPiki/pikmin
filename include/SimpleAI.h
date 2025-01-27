@@ -141,7 +141,7 @@ struct SAIMotionLoopEndEvent : public SAIEvent {
  */
 struct SAIUserEvent : public SAIEvent {
 	SAIUserEvent(int id) { mUserID = id; }
-	
+
 	virtual void procUserMsg(AICreature*, MsgUser*); // _30
 
 	// _00     = VTBL

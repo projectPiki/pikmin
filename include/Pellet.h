@@ -17,7 +17,7 @@ struct PelletStateMachine;
 struct PelletView;
 struct Shape;
 struct RippleEffect;
-struct GoalItem;
+struct Suckable;
 
 /**
  * @brief TODO
@@ -275,7 +275,7 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	bool mIsPlayTrySound;                 // _451
 	u8 mMotionFlag;                       // _452
 	RippleEffect* mRippleEffect;          // _454
-	GoalItem* mTargetGoal;                // _458
+	Suckable* mTargetGoal;                // _458
 	CollPart* mStuckMouthPart;            // _45C
 	f32 _460;                             // _460
 	Vector3f _464;                        // _464

@@ -3857,7 +3857,7 @@ void Piki::init(Navi* navi)
 	_330 = 0;
 	forceFinishLook();
 	mEmotion        = 10;
-	_404            = 0;
+	_404            = nullptr;
 	mLeaderCreature = nullptr;
 	mInWaterTimer   = 0;
 	mFiredState     = 0;
