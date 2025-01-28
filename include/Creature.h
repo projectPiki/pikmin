@@ -403,21 +403,4 @@ f32 qdist2(Creature*, Creature*);
 f32 circleDist(Creature*, Creature*);
 bool roughCull(Creature*, Creature*, f32);
 
-// these are probably SmartPtr inlines, or creature inlines - TODO: fix.
-// these are the things that make the most sense so far, this code comes up in weird spots
-inline void resetCreature(Creature*& creature)
-{
-	if (creature) {
-		creature->subCnt();
-		creature = nullptr;
-	}
-}
-
-inline void postSetCreature(Creature*& creature)
-{
-	if (creature) {
-		creature->addCnt();
-	}
-}
-
 #endif

@@ -282,7 +282,7 @@ struct InteractGeyzer : public Interaction {
  * @brief TODO
  */
 struct InteractGrab : public Interaction {
-	inline InteractGrab(Creature* owner)
+	InteractGrab(Creature* owner)
 	    : Interaction(owner)
 	{
 	}

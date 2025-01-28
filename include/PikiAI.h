@@ -8,6 +8,7 @@
 #include "SlotChangeListner.h"
 #include "stl/stdio.h"
 
+struct BombGenItem;
 struct Bridge;
 struct BuildingItem;
 struct Suckable;
@@ -1037,15 +1038,22 @@ struct ActGoto : public Action {
 
 	ActGoto(Piki*);
 
-	virtual void defaultInitialiser(); // _38 (weak)
-	virtual ~ActGoto();                // _44 (weak)
-	virtual void init(Creature*);      // _48
-	virtual int exec();                // _4C
-	virtual void cleanup();            // _50
+	virtual ~ActGoto() { }            // _44 (weak)
+	virtual void defaultInitialiser() // _38 (weak)
+	{
+		_18 = 0.0f;
+		_14 = 9.0f;
+	}
+	virtual void init(Creature*); // _48
+	virtual int exec();           // _4C
+	virtual void cleanup();       // _50
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x24 - 0x14]; // _14, unknown
+	f32 _14;                // _14
+	f32 _18;                // _18
+	SmartPtr<Creature> _1C; // _1C
+	f32 _20;                // _20
 };
 
 /**
@@ -1164,13 +1172,23 @@ struct ActKinoko : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x30.
  */
 struct ActMine : public Action, virtual PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Go    = 0,
+		STATE_Mine  = 1,
+		STATE_Watch = 2,
+	};
+
 	ActMine(Piki*);
 
-	virtual ~ActMine();                                  // _44 (weak)
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
+	virtual ~ActMine() { }                               // _44 (weak)
 
 	void initWatch();
 	int exeMine();
@@ -1184,8 +1202,11 @@ struct ActMine : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	u8 _18[0x28 - 0x18]; // _18, unknown
-	                     // _28-_30 = PaniAnimKeyListener
+	BombGenItem* mBombGen;   // _18
+	u16 mState;              // _1C
+	u32 _20;                 // _20, unknown
+	bool mIsMineActionReady; // _24
+	                         // _28-_30 = PaniAnimKeyListener
 };
 
 /**

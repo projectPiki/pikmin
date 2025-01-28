@@ -36,13 +36,9 @@ bool TaiAttackableNaviPikiAction::act(Teki& teki)
 	}
 
 	// this needs? more inlines? somehow?
-	u32 badCompiler;
-	u32 badCompiler2;
-	if (teki.mTargetCreatures[0].mPtr) {
-		resetCreature(teki.mTargetCreatures[0].mPtr);
-	}
-	teki.mTargetCreatures[0].mPtr = naviPiki;
-	postSetCreature(teki.mTargetCreatures[0].mPtr);
+	teki.setCreaturePointer(0, naviPiki);
+
+	u32 badCompiler[2];
 
 	return true;
 }
@@ -56,11 +52,7 @@ bool TaiAttackableNaviAction::act(Teki& teki)
 {
 	Navi* navi = naviMgr->getNavi();
 	if (teki.attackableCreature(*navi)) {
-		if (teki.mTargetCreatures[0].mPtr) {
-			resetCreature(teki.mTargetCreatures[0].mPtr);
-		}
-		teki.mTargetCreatures[0].mPtr = navi;
-		postSetCreature(teki.mTargetCreatures[0].mPtr);
+		teki.mTargetCreatures[0].set(navi);
 		return true;
 	}
 	return false;
@@ -79,11 +71,7 @@ bool TaiAttackablePikiAction::act(Teki& teki)
 		return false;
 	}
 
-	if (teki.mTargetCreatures[0].mPtr) {
-		resetCreature(teki.mTargetCreatures[0].mPtr);
-	}
-	teki.mTargetCreatures[0].mPtr = nearest;
-	postSetCreature(teki.mTargetCreatures[0].mPtr);
+	teki.mTargetCreatures[0].set(nearest);
 	// sigh
 	u32 badCompiler;
 	u32 badCompiler2;
@@ -97,7 +85,7 @@ bool TaiAttackablePikiAction::act(Teki& teki)
  */
 void TaiAnimationSwallowingAction::start(Teki& teki)
 {
-	if (teki.mTargetCreatures) {
+	if (teki.mTargetCreatures[0].getPtr()) {
 		teki.setTekiOption(BTeki::TEKI_OPTION_INVINCIBLE);
 	}
 }
