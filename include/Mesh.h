@@ -17,7 +17,7 @@ struct Mesh : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	int mMeshIndex;          // _14
-	int mFlags;              // _18
+	int mParentJoint;        // _18
 	int mMtxDepIndex;        // _1C, matrix dependency index (index into MtxGroup)
 	int mMtxGroupCount;      // _20
 	MtxGroup* mMtxGroupList; // _24

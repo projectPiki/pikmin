@@ -34,6 +34,19 @@ struct AnimFrameCacher;
 struct Joint;
 struct Joint::MatPoly;
 
+struct NBT {
+	Vector3f mNormal;   // _00
+	Vector3f mBinormal; // _0C
+	Vector3f mTangent;  // _18
+
+	inline void read(RandomAccessStream& stream)
+	{
+		mNormal.read(stream);
+		mBinormal.read(stream);
+		mTangent.read(stream);
+	}
+};
+
 /**
  * @brief TODO
  */
@@ -121,6 +134,35 @@ struct DispList : public CoreNode {
 struct DlobjInfo : public GfxobjInfo {
 	DlobjInfo();
 };
+
+// clang-format off
+DEFINE_ENUM_TYPE(BaseShapeChunk,
+	Header           = 0x00,
+	Vertex           = 0x10,
+	VertexNormal     = 0x11,
+	VertexNBT        = 0x12,
+	VertexColour     = 0x13,
+	TexCoord0        = 0x18,
+	TexCoord1        = 0x19,
+	TexCoord2        = 0x1A,
+	TexCoord3        = 0x1B,
+	TexCoord4        = 0x1C,
+	TexCoord5        = 0x1D,
+	TexCoord6        = 0x1E,
+	TexCoord7        = 0x1F,
+	Texture          = 0x20,
+	TextureAttribute = 0x22,
+	Material         = 0x30,
+	VertexMatrix     = 0x40,
+	MatrixEnvelope   = 0x41,
+	Mesh             = 0x50,
+	Joint            = 0x60,
+	JointName        = 0x61,
+	CollisionPrism   = 0x100,
+	CollisionGrid    = 0x110,
+	EndOfFile        = 0xFFFF,
+);
+// clang-format on
 
 /**
  * @brief TODO
@@ -213,20 +255,13 @@ struct BaseShape : public CoreNode {
 	RouteGroup mRouteGroup;           // _178
 	s32 mVertexCount;                 // _238 - from here down might match the names/types from _27C on from the DLL?
 	Vector3f* mVertexList;            // _23C
-	u8 _240[0x4];                     // _240
-	u32 _244;                         // _244
-	u32 _248;                         // _248
-	u8 _24C[0x26C - 0x24C];           // _18C
-	u32 _26C;                         // _26C
-	u32 _270;                         // _270
-	u32 _274;                         // _274
-	u32 _278;                         // _278
-	u32 _27C;                         // _27C
-	u32 _280;                         // _280
-	u32 _284;                         // _284
-	u32 _288;                         // _288
+	u32 mNbtCount;                    // _240
+	NBT* mNbtList;                    // _244
+	s32 mTotalActiveTexCoords;        // _248
+	s32 mTexCoordCounts[8];           // _24C
+	Vector2f* mTexCoordList[8];       // _250
 	s32 mNormalCount;                 // _28C
-	Vector3f* mNormals;               // _290
+	Vector3f* mNormalList;            // _290
 	u8 _294[0x4];                     // _294
 	u32 _298;                         // _298
 	u32 _29C;                         // _29C
@@ -234,64 +269,6 @@ struct BaseShape : public CoreNode {
 	u32 _2A4;                         // _2A4
 	u32 _2A8;                         // _2A8
 	u8 _2AC;                          // _2AC
-
-	// OLD - idk what this is from but it's not correct.
-	// s32 mSystemUsed;                   // _14
-	// AnimContext* mCurrentAnimations;   // _18
-	// AnimContext** mAnimOverrides;      // _1C
-	// AnimContext* mBackupAnimOverrides; // _20
-	// AnimFrameCacher* mFrameCacher;     // _24
-	// Matrix4f* mAnimMatrix;             // _28
-	// int _2C;                           // _2C
-	// int mEnvelopeCount;                // _30
-	// Envelope* mEnvelopeList;           // _34
-	// s32 mVtxMatrixCount;               // _38
-	// VtxMatrix* mVtxMatrixList;         // _3C
-	// s32 mMaterialCount;                // _40
-	// Material* mMaterialList;           // _44
-	// s32 mTevInfoCount;                 // _48
-	// PVWTevInfo* mTevInfoList;          // _4C
-	// s32 mMeshCount;                    // _50
-	// Mesh* mMeshList;                   // _54
-	// s32 mJointCount;                   // _58
-	// Joint* mJoints;                    // _5C
-	// s32 mRouteGroupCount;              // _60
-	// RouteGroup* mRouteGroupList;       // _64
-	// s32 mTextureAttributesCount;       // _68
-	// TexAttr* mTextureAttributeList;    // _6C
-	// s32 _70;                           // _70
-	// s32 mTextureCount;                 // _74
-	// TexImg* mTextureList;              // _78
-	// AnimData mAnimData;                // _7C
-	// LightGroup mGroups;                // _C0
-	// ObjCollInfo mCollisionInfo;        // _12C
-	// s32 _180;                          // _180
-	// BoundBox mCourseExtents;           // _184
-	// f32 mGridSize;                     // _19C
-	// s32 mGridSizeX;                    // _1A0
-	// s32 mGridSizeY;                    // _1A4
-	// s32* mCollisionTriangles;          // _1A8
-	// s32 mCollTriCount;                 // _1AC
-	// CollTriInfo* mCollTriInfoList;     // _1B0
-	// s32 mBaseRoomCount;                // _1B4
-	// BaseRoomInfo* mRoomInfoList;       // _1B8
-	// u8 _1BC[0xC0];                     // _1BC
-	// s32 mVertexCount;                  // _27C - maybe these match above from _238?
-	// Vector3f* mVertexList;             // _280
-	// s32 mVertexColourCount;            // _284
-	// Colour* mVertexColourList;         // _288
-	// s32 mTexCoordSetCount;             // _28C
-	// s32 mTexCoordCount[8];             // _290
-	// Vector2f* mTexCoords[8];           // _2B0
-	// s32 mNormalCount;                  // _2D0
-	// Vector3f* mNormals;                // _2D4
-	// s32 mNbtCount;                     // _2D8
-	// NBT* mNbtList;                     // _2DC
-	// s32 mAttrListCount;                // _2E0
-	// Texture** mExternalTextureList;    // _2E4
-	// s32 mAttrListMatCount;             // _2E8
-	// u32 _2EC;                          // _2EC
-	// u8 _2F0;                           // _2FO
 };
 
 /**

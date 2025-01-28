@@ -57,7 +57,7 @@ struct AyuStack {
 	bool checkOverflow();
 	inline void checkStack();
 	void create(char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled);
-	int getFree();
+	inline int getFree() { return mSize - mTotalSize; }
 	int getMaxFree();
 	int getSize();
 	int getTopUsed();

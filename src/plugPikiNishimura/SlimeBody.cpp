@@ -218,7 +218,8 @@ void SlimeBody::makeSlimeBody()
 {
 	Vector3f up(0.0f, C_SLIME_PROP(mSlime).mBodyHeight(), 0.0f);
 	for (int i = 0; i < mSlime->mShapeObject->mShape->mVertexCount; i++) {
-		sortPosition(&mSlime->mShapeObject->mShape->mVertexList[i], &mSlime->mShapeObject->mShape->mNormals[mVertexNormalIndices[i]], &up);
+		sortPosition(&mSlime->mShapeObject->mShape->mVertexList[i], &mSlime->mShapeObject->mShape->mNormalList[mVertexNormalIndices[i]],
+		             &up);
 	}
 }
 

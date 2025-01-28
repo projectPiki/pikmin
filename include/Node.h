@@ -57,6 +57,7 @@ struct FaceNode : public CoreNode {
 	{
 	}
 
+#ifndef __MWERKS__
 	FaceNode(int faceCount)
 	{
 		mFaceCount        = faceCount;
@@ -73,15 +74,18 @@ struct FaceNode : public CoreNode {
 		mCurrentFaceIndex = 0;
 		mHasMatrixData    = 0;
 	}
+#endif
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mFaceCount;        // _14
-	int* mMtxIdx;          // _18
-	int* mVtxIdx;          // _1C
-	int* mColIdx;          // _20
-	int* mNrmIdx;          // _24
-	int* mTexCoords[8];    // _28
+	int mFaceCount;     // _14
+	int* mMtxIdx;       // _18
+	int* mVtxIdx;       // _1C
+	int* mColIdx;       // _20
+	int* mNrmIdx;       // _24
+	int* mTexCoords[8]; // _28
+
+#ifndef __MWERKS__
 	int mMtxGroupIndex;    // _2C
 	int mMtxGroupCount;    // _30
 	int mNumMatrices;      // _34
@@ -89,6 +93,7 @@ struct FaceNode : public CoreNode {
 	int mDisplayListFlags; // _3C
 	int mCurrentFaceIndex; // _40
 	int mHasMatrixData;    // _44
+#endif
 };
 
 /**

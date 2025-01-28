@@ -193,7 +193,11 @@ struct PVWTextureInfo {
 /**
  * @brief TODO
  */
-struct PVWTevInfo { };
+struct PVWTevInfo {
+	void read(RandomAccessStream&);
+
+	char _00[0x84];
+};
 
 /**
  * @brief TODO

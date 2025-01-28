@@ -26,6 +26,7 @@ Texture* fnTexs = nullptr;
 Material* matUsed[256];
 int matIndex;
 int usedIndex;
+int _dlindx;
 
 /*
  * --INFO--
@@ -124,7 +125,7 @@ DispList::DispList()
  */
 void Mesh::read(RandomAccessStream& stream)
 {
-	mFlags            = stream.readInt();
+	mParentJoint      = stream.readInt();
 	mVertexDescriptor = stream.readInt();
 	mMtxGroupCount    = stream.readInt();
 
@@ -6412,25 +6413,26 @@ BaseShape::BaseShape()
 	mLightGroup.initCore("");
 	mRouteGroup.initCore("");
 
-	_248         = 0;
-	mVertexCount = 0;
-	mVertexList  = nullptr;
-	_244         = 0;
+	mTotalActiveTexCoords = 0;
+	mVertexCount          = 0;
+	mVertexList           = nullptr;
+	mNbtList              = 0;
 
-	_26C     = 0;
-	_270     = 0;
-	_274     = 0;
-	_278     = 0;
-	_27C     = 0;
-	_280     = 0;
-	_284     = 0;
-	_288     = 0;
-	mNormals = nullptr;
-	_298     = 0;
-	_29C     = 0;
-	_2A4     = 0;
-	_2A0     = 0;
-	_2A8     = 0;
+	mTexCoordList[0] = nullptr;
+	mTexCoordList[1] = nullptr;
+	mTexCoordList[2] = nullptr;
+	mTexCoordList[3] = nullptr;
+	mTexCoordList[4] = nullptr;
+	mTexCoordList[5] = nullptr;
+	mTexCoordList[6] = nullptr;
+	mTexCoordList[7] = nullptr;
+
+	mNormalList = nullptr;
+	_298        = 0;
+	_29C        = 0;
+	_2A4        = 0;
+	_2A0        = 0;
+	_2A8        = 0;
 
 	_170 = 0;
 	_174 = 0;
@@ -7976,9 +7978,11 @@ void BaseShape::resolveTextureNames()
  * Address:	........
  * Size:	000064
  */
-void BaseShape::skipChunk(RandomAccessStream&, u32)
+void BaseShape::skipChunk(RandomAccessStream& stream, u32 amt)
 {
-	// UNUSED FUNCTION
+	for (u32 i = 0; i < amt; i++) {
+		stream.readByte();
+	}
 }
 
 /*
@@ -7986,74 +7990,25 @@ void BaseShape::skipChunk(RandomAccessStream&, u32)
  * Address:	80030A74
  * Size:	0000CC
  */
-void BaseShape::recAddMatpoly(Joint*, int)
+void BaseShape::recAddMatpoly(Joint* parentJoint, int f)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  b         .loc_0xA8
+	FOREACH_NODE(Joint, parentJoint, currentJoint)
+	{
+		if (currentJoint->mChild) {
+			recAddMatpoly((Joint*)currentJoint->mChild, f);
+		}
 
-	.loc_0x28:
-	  lwz       r4, 0x10(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x40
-	  addi      r3, r29, 0
-	  addi      r5, r30, 0
-	  bl        .loc_0x0
+		FOREACH_NODE(Joint::MatPoly, currentJoint->mMatPoly.mChild, poly)
+		{
+			Material* mat = &mMaterialList[poly->mIndex];
 
-	.loc_0x40:
-	  lwz       r5, 0xF4(r31)
-	  b         .loc_0x9C
-
-	.loc_0x48:
-	  lwz       r0, 0x1C(r5)
-	  lwz       r3, 0x44(r29)
-	  mulli     r0, r0, 0x9C
-	  add       r3, r3, r0
-	  lwz       r0, 0x18(r3)
-	  rlwinm    r0,r0,24,8,31
-	  and.      r0, r0, r30
-	  beq-      .loc_0x98
-	  stw       r3, 0x14(r5)
-	  lwz       r0, 0x20(r5)
-	  lwz       r3, 0x54(r29)
-	  mulli     r0, r0, 0x30
-	  add       r0, r3, r0
-	  stw       r0, 0x18(r5)
-	  lwz       r3, 0x2DD0(r13)
-	  lwz       r4, 0x64(r29)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2DD0(r13)
-	  rlwinm    r0,r3,2,0,29
-	  stwx      r5, r4, r0
-
-	.loc_0x98:
-	  lwz       r5, 0xC(r5)
-
-	.loc_0x9C:
-	  cmplwi    r5, 0
-	  bne+      .loc_0x48
-	  lwz       r31, 0xC(r31)
-
-	.loc_0xA8:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x28
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+			if ((mat->mFlags >> 8) & f) {
+				poly->mMaterial         = mat;
+				poly->mMesh             = &mMeshList[poly->mMeshIndex];
+				mMatpolyList[_dlindx++] = poly;
+			}
+		}
+	}
 }
 
 /*
@@ -8061,8 +8016,278 @@ void BaseShape::recAddMatpoly(Joint*, int)
  * Address:	80030B40
  * Size:	002590
  */
-void BaseShape::read(RandomAccessStream&)
+void BaseShape::read(RandomAccessStream& stream)
 {
+	u32 chunkType;
+	do {
+		u32 pos = stream.getPosition();
+
+		chunkType  = stream.readInt();
+		u32 length = stream.readInt();
+
+		if (pos & 0x1F) {
+			ERROR("chunk start not on boundary %08x!\n", pos);
+		}
+
+		switch (chunkType) {
+		case BaseShapeChunk::Header: {
+			stream.skipPadding(0x20);
+			stream.readInt();
+			mSystemFlags = stream.readInt();
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		case BaseShapeChunk::Vertex: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mVertexCount = stream.readInt();
+			stream.skipPadding(0x20);
+			mVertexList = new Vector3f[mVertexCount];
+			for (int i = 0; i < mVertexCount; i++) {
+				mVertexList[i].read(stream);
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		case BaseShapeChunk::VertexNormal: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mNormalCount = stream.readInt();
+			stream.skipPadding(0x20);
+			mNormalList = new Vector3f[mNormalCount];
+			for (int i = 0; i < mVertexCount; i++) {
+				mNormalList[i].read(stream);
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		case BaseShapeChunk::VertexNBT: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mNbtCount = stream.readInt();
+			stream.skipPadding(0x20);
+			mNbtList = new NBT[mNbtCount];
+			for (int i = 0; i < mNbtCount; i++) {
+				mNbtList[i].read(stream);
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		case BaseShapeChunk::TexCoord0:
+		case BaseShapeChunk::TexCoord1:
+		case BaseShapeChunk::TexCoord2:
+		case BaseShapeChunk::TexCoord3:
+		case BaseShapeChunk::TexCoord4:
+		case BaseShapeChunk::TexCoord5:
+		case BaseShapeChunk::TexCoord6:
+		case BaseShapeChunk::TexCoord7: {
+			int free  = gsys->getHeap(SYSHEAP_App)->getFree();
+			int index = chunkType - BaseShapeChunk::TexCoord0;
+
+			mTexCoordCounts[index] = stream.readInt();
+			mTexCoordList[index]   = new Vector2f[mTexCoordCounts[index]];
+
+			for (int i = 0; i < mTexCoordCounts[index]; i++) {
+				mTexCoordList[index][i].read(stream);
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			stream.skipPadding(0x20);
+			mTotalActiveTexCoords++;
+			break;
+		}
+
+		case BaseShapeChunk::Texture: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mTextureCount = stream.readInt();
+			stream.skipPadding(0x20);
+			mTextureList = new TexImg[mTextureCount];
+			for (int i = 0; i < mTextureCount; i++) {
+				mTextureList[i].read(stream);
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		case BaseShapeChunk::TextureAttribute: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mTexAttrCount = stream.readInt();
+			stream.skipPadding(0x20);
+			mTexAttrList = new TexAttr[mTexAttrCount];
+			for (int i = 0; i < mTexAttrCount; i++) {
+				mTexAttrList[i].read(stream);
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		case BaseShapeChunk::Material: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mMaterialCount = stream.readInt();
+			mTevInfoCount  = stream.readInt();
+
+			stream.skipPadding(0x20);
+
+			if (mTevInfoCount) {
+				mTevInfoList = new PVWTevInfo[mTevInfoCount];
+				for (int i = 0; i < mTevInfoCount; i++) {
+					mTevInfoList[i].read(stream);
+				}
+			}
+
+			if (mMaterialCount) {
+				mMaterialList = new Material[mMaterialCount];
+				for (int i = 0; i < mMaterialCount; i++) {
+					mMaterialList[i].mIndex = i;
+					mMaterialList[i].read(stream);
+
+					MatobjInfo* info = new MatobjInfo;
+					info->mTarget    = &mMaterialList[i];
+					gsys->addGfxObject(info);
+				}
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		case BaseShapeChunk::VertexMatrix: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mVtxMatrixCount = stream.readInt();
+			stream.skipPadding(0x20);
+			mVtxMatrixList = new VtxMatrix[mVtxMatrixCount];
+			for (int i = 0; i < mVtxMatrixCount; i++) {
+				mVtxMatrixList[i].read(stream);
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		case BaseShapeChunk::MatrixEnvelope: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mEnvelopeCount = stream.readInt();
+			stream.skipPadding(0x20);
+			mEnvelopeList = new Envelope[mVtxMatrixCount];
+			for (int i = 0; i < mEnvelopeCount; i++) {
+				mEnvelopeList[i].read(stream);
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		case BaseShapeChunk::Mesh: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mMeshCount = stream.readInt();
+			stream.skipPadding(0x20);
+			mMeshList = new Mesh[mMeshCount];
+			for (int i = 0; i < mMeshCount; i++) {
+				mMeshList[i].read(stream);
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		case BaseShapeChunk::Joint: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mJointCount = stream.readInt();
+			stream.skipPadding(0x20);
+			mJointList = new Joint[mJointCount];
+			for (int i = 0; i < mMeshCount; i++) {
+				if (mMeshList[i].mParentJoint != -1) {
+					mMeshList[i].mJointList = &mJointList[mMeshList[i].mParentJoint];
+				}
+			}
+
+			for (int i = 0; i < mJointCount; i++) {
+				mJointList[i].mParentShape = this;
+				mJointList[i].read(stream);
+				_140.expandBound(mJointList[i].mBounds);
+			}
+
+			stream.skipPadding(0x20);
+
+			mTotalMatpolyCount = 0;
+			for (int i = 0; i < mJointCount; i++) {
+				mTotalMatpolyCount += mJointList[i].mMatPolyCount;
+			}
+
+			mMatpolyList = new Joint::MatPoly*[mTotalMatpolyCount];
+
+			for (int i = 0; i < mJointCount; i++) {
+				mJointList[i].mIndex = i;
+				if (mJointList[i].mParentIndex != -1) {
+					mJointList[mJointList[i].mParentIndex].add(&mJointList[i]);
+				}
+			}
+
+			_dlindx = 0;
+			recAddMatpoly(mJointList, 4);
+			recAddMatpoly(mJointList, 2);
+			recAddMatpoly(mJointList, 1);
+
+			for (int i = 0; i < mTotalMatpolyCount; i++) {
+				mMatpolyList[i]->mJointList = mMatpolyList[i]->mMesh->mJointList;
+			}
+
+			gsys->getHeap(SYSHEAP_App)->getFree();
+			break;
+		}
+
+		case BaseShapeChunk::JointName: {
+			int free = gsys->getHeap(SYSHEAP_App)->getFree();
+
+			mJointCount = stream.readInt();
+			stream.skipPadding(0x20);
+			for (int i = 0; i < mJointCount; i++) {
+				String name(0);
+				stream.readString(name);
+				mJointList[i].setName(name.mString);
+			}
+
+			stream.skipPadding(0x20);
+			break;
+		}
+
+		default: {
+			skipChunk(stream, length);
+		}
+		}
+	} while (chunkType != 0xFFFF);
+
+	if (stream.getPending()) {
+		importIni(stream);
+	}
+
+	mAnimMatrixId = mEnvelopeCount + mJointCount;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -10863,7 +11088,7 @@ Mesh::Mesh()
     : CoreNode("mesh")
 {
 	mJointList        = nullptr;
-	mFlags            = -1;
+	mParentJoint      = -1;
 	mVertexDescriptor = 1;
 }
 
