@@ -1023,17 +1023,17 @@ struct ActGoto : public Action {
 	struct Initialiser : public Action::Initialiser {
 		Initialiser(f32 p1, f32 p2, Creature* p3)
 		{
-			_04 = p3;
-			_08 = p1;
-			_0C = p2;
+			mTarget      = p3;
+			mMaxDistance = p1;
+			mMinDistance = p2;
 		}
 
 		virtual void initialise(Action*); // _08
 
 		// _00 = VTBL
-		Creature* _04; // _04
-		f32 _08;       // _08
-		f32 _0C;       // _0C
+		Creature* mTarget; // _04
+		f32 mMaxDistance;  // _08
+		f32 mMinDistance;  // _0C
 	};
 
 	ActGoto(Piki*);
@@ -1041,8 +1041,8 @@ struct ActGoto : public Action {
 	virtual ~ActGoto() { }            // _44 (weak)
 	virtual void defaultInitialiser() // _38 (weak)
 	{
-		_18 = 0.0f;
-		_14 = 9.0f;
+		mMinDistance = 0.0f;
+		mMaxDistance = 9.0f;
 	}
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
@@ -1050,10 +1050,10 @@ struct ActGoto : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	f32 _14;                // _14
-	f32 _18;                // _18
-	SmartPtr<Creature> _1C; // _1C
-	f32 _20;                // _20
+	f32 mMaxDistance;           // _14
+	f32 mMinDistance;           // _18
+	SmartPtr<Creature> mTarget; // _1C
+	f32 mTimeoutDuration;       // _20
 };
 
 /**

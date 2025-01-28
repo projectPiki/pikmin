@@ -84,6 +84,6 @@ void ActDeliver::init(Creature* target)
 	}
 
 	if (mChildActions[CHILD_Goto].mInitialiser) {
-		static_cast<ActGoto::Initialiser*>(mChildActions[CHILD_Goto].mInitialiser)->_04 = mObject.getPtr();
+		static_cast<ActGoto::Initialiser*>(mChildActions[CHILD_Goto].mInitialiser)->mTarget = mObject.getPtr();
 	}
 }

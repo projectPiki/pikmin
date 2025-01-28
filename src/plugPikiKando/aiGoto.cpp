@@ -24,7 +24,7 @@ DEFINE_PRINT(nullptr)
 ActGoto::ActGoto(Piki* piki)
     : Action(piki, true)
 {
-	_1C.clear();
+	mTarget.clear();
 }
 
 /*
@@ -34,11 +34,11 @@ ActGoto::ActGoto(Piki* piki)
  */
 void ActGoto::Initialiser::initialise(Action* action)
 {
-	ActGoto* ai = static_cast<ActGoto*>(action);
-	ai->_14     = _08;
-	ai->_18     = _0C;
-	if (_04) {
-		ai->_1C.set(_04);
+	ActGoto* ai      = static_cast<ActGoto*>(action);
+	ai->mMaxDistance = mMaxDistance;
+	ai->mMinDistance = mMinDistance;
+	if (mTarget) {
+		ai->mTarget.set(mTarget);
 	}
 }
 
@@ -49,8 +49,8 @@ void ActGoto::Initialiser::initialise(Action* action)
  */
 void ActGoto::init(Creature* target)
 {
-	_20 = randFloat(2.0f) + 4.0f;
-	_1C.set(target);
+	mTimeoutDuration = randFloat(2.0f) + 4.0f;
+	mTarget.set(target);
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
 
@@ -61,8 +61,8 @@ void ActGoto::init(Creature* target)
  */
 void ActGoto::cleanup()
 {
-	Creature* target = _1C.getPtr();
-	_1C.reset();
+	Creature* target = mTarget.getPtr();
+	mTarget.reset();
 }
 
 /*
@@ -72,51 +72,66 @@ void ActGoto::cleanup()
  */
 int ActGoto::exec()
 {
-	Creature* target = _1C.getPtr();
+	Creature* target = mTarget.getPtr();
 	if (!target || !target->isVisible()) {
 		return ACTOUT_Fail;
 	}
 
-	_20 -= gsys->getFrameTime();
+	mTimeoutDuration -= gsys->getFrameTime();
 
-	f32 dist       = qdist2(target, mPiki);
-	f32 heightDiff = zen::Abs(target->mPosition.y - mPiki->mPosition.y);
-	if (dist >= _18 && dist <= _14 + mPiki->getCentreSize() + target->getCentreSize()) {
-		if (heightDiff > 20.0f) {
+	f32 distanceToTarget = qdist2(target, mPiki);
+	f32 verticalDistance = zen::Abs(target->mPosition.y - mPiki->mPosition.y);
+
+	// If distance is within the range, return success
+	if (distanceToTarget >= mMinDistance && distanceToTarget <= mMaxDistance + mPiki->getCentreSize() + target->getCentreSize()) {
+		// Can't be too much of a difference vertically
+		if (verticalDistance > 20.0f) {
 			return ACTOUT_Fail;
 		}
+
 		return ACTOUT_Success;
 	}
 
-	if (_20 < 0.0f) {
+	if (mTimeoutDuration < 0.0f) {
 		PRINT("time out\n");
 		return ACTOUT_Fail;
 	}
 
-	Vector3f targetPos(target->mPosition);
-	Vector3f dir = mPiki->mPosition - targetPos;
-	dir.normalise();
-	dir       = dir * _18;
-	targetPos = targetPos + dir;
+	// Calculate desired position maintaining minimum distance from target
+	Vector3f targetPosition(target->mPosition);
+	Vector3f directionToTarget = mPiki->mPosition - targetPosition;
+	directionToTarget.normalise();
+	directionToTarget = directionToTarget * mMinDistance;
+	targetPosition    = targetPosition + directionToTarget;
+
+	// Reset current target velocity
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	Vector3f dir2 = targetPos - mPiki->mPosition;
-	dir2.y        = 0.0f;
-	f32 dist2     = dir2.length();
-	if (dist2 > 0.0f) {
-		dir2 = (1.0f / dist2) * dir2;
+
+	// Calculate movement direction, ignoring vertical component
+	Vector3f moveDirection = targetPosition - mPiki->mPosition;
+	moveDirection.y        = 0.0f;
+	f32 horizontalDistance = moveDirection.length();
+
+	// Normalize movement direction if possible, otherwise choose random direction
+	if (horizontalDistance > 0.0f) {
+		moveDirection = (1.0f / horizontalDistance) * moveDirection;
 	} else {
-		f32 angle = 2.0f * randFloat(PI);
-		dir2.set(cosf(angle), 0.0f, sinf(angle));
+		// If no clear direction, pick random angle in horizontal plane
+		f32 randomAngle = 2.0f * randFloat(PI);
+		moveDirection.set(cosf(randomAngle), 0.0f, sinf(randomAngle));
 	}
 
+	// This entire code segment remains unused, except for mPiki->setSpeed
+	// But it is some sort of smoothing algorithm for the movement direction
+	// It is not clear what the purpose of this is, but it is likely to make the movement more natural
 	Vector3f vec1(0.0f, 0.0f, 0.0f);
-	Vector3f vec2 = targetPos - mPiki->mPosition;
-	vec2.normalise();
-	Vector3f vec3(-vec2.z, 0.0f, vec2.x);
-	bool unused = false;
-	mPiki->setSpeed(1.0f, dir2);
+	Vector3f unitDirToTarget = targetPosition - mPiki->mPosition;
+	unitDirToTarget.normalise();
+	Vector3f perpDir(-unitDirToTarget.z, 0.0f, unitDirToTarget.x);
+	bool velocityBlending = false;
+	mPiki->setSpeed(1.0f, moveDirection);
 	f32 factor = 1.0f;
-	if (unused) {
+	if (velocityBlending) {
 		mPiki->mTargetVelocity = (1.0f - factor) * mPiki->mTargetVelocity + factor * vec1;
 	}
 
