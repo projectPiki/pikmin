@@ -1,5 +1,8 @@
 #include "PikiAI.h"
 #include "Navi.h"
+#include "NaviMgr.h"
+#include "Interactions.h"
+#include "SoundMgr.h"
 #include "DebugLog.h"
 
 /*
@@ -14,7 +17,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("aiKinoko")
 
 /*
  * --INFO--
@@ -23,10 +26,9 @@ DEFINE_PRINT("TODO: Replace")
  */
 ActKinoko::ActKinoko(Piki* piki)
     : Action(piki, true)
-    , _18(0)
 {
 	mName = "kinoko";
-	_18   = 0;
+	_18.clear();
 }
 
 /*
@@ -38,11 +40,7 @@ void ActKinoko::init(Creature* creature)
 {
 	mActor->_408 = 0;
 	if (creature) {
-		if (_18) {
-			resetCreature(_18);
-		}
-		_18 = creature;
-		postSetCreature(_18);
+		_18.set(creature);
 	}
 
 	mState = STATE_Boid;
@@ -76,7 +74,8 @@ int ActKinoko::exec()
  */
 void ActKinoko::initStick()
 {
-	// UNUSED FUNCTION
+	mState = STATE_Stick;
+	mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 }
 
 /*
@@ -107,7 +106,12 @@ int ActKinoko::exeStick()
  */
 void ActKinoko::initJump()
 {
-	// UNUSED FUNCTION
+	mState         = STATE_Jump;
+	f32 vertSpeed  = 170.0f;
+	f32 horizSpeed = 50.0f;
+	Vector3f vel(horizSpeed * sinf(mActor->mFaceDirection), vertSpeed, horizSpeed * cosf(mActor->mFaceDirection));
+	mActor->mVelocity       = vel;
+	mActor->mTargetVelocity = vel;
 }
 
 /*
@@ -122,94 +126,14 @@ int ActKinoko::exeJump()
 		return ACTOUT_Continue;
 	}
 
-	if (mActor->mNavi->mPosition.distance(mActor->mPosition) < 12.0f) { }
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  stw       r30, 0x68(r1)
-	  stw       r29, 0x64(r1)
-	  mr        r29, r3
-	  lwz       r4, 0xC(r3)
-	  lwz       r0, 0x28C(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3C
-	  mr        r3, r29
-	  bl        .loc_0x128
-	  li        r3, 0
-	  b         .loc_0x10C
-
-	.loc_0x3C:
-	  lwz       r3, 0x504(r4)
-	  lfsu      f1, 0x94(r4)
-	  lfsu      f3, 0x94(r3)
-	  lfs       f0, 0x4(r4)
-	  lfs       f2, 0x4(r3)
-	  fsubs     f3, f3, f1
-	  lfs       f1, 0x8(r3)
-	  fsubs     f2, f2, f0
-	  lfs       f0, 0x8(r4)
-	  fsubs     f4, f1, f0
-	  fmuls     f0, f2, f2
-	  fmuls     f1, f3, f3
-	  fmuls     f2, f4, f4
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xA6BB8
-	  lfs       f0, -0x6F6C(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x108
-	  lwz       r30, 0xC(r29)
-	  lis       r3, 0x6865
-	  addi      r4, r3, 0x6164
-	  lwz       r3, 0x504(r30)
-	  lwz       r3, 0x220(r3)
-	  bl        -0x2B10C
-	  lwz       r4, 0x504(r30)
-	  mr        r5, r3
-	  lfs       f1, -0x6F78(r2)
-	  addi      r3, r30, 0
-	  li        r6, -0x1
-	  bl        -0x2417C
-	  li        r0, 0x3
-	  cmplwi    r29, 0
-	  stw       r0, 0x1C(r29)
-	  mr        r30, r29
-	  beq-      .loc_0xD0
-	  lwz       r30, 0x14(r29)
-
-	.loc_0xD0:
-	  addi      r3, r1, 0x30
-	  li        r4, 0x30
-	  bl        0x6A700
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x28
-	  li        r4, 0x30
-	  bl        0x6A720
-	  mr        r4, r3
-	  lwz       r3, 0xC(r29)
-	  mr        r5, r31
-	  bl        0x1615C
-	  li        r3, 0
-	  b         .loc_0x10C
-
-	.loc_0x108:
-	  li        r3, 0
-
-	.loc_0x10C:
-	  lwz       r0, 0x74(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  lwz       r29, 0x64(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-
-	.loc_0x128:
-	*/
+	Vector3f sep = mActor->mNavi->mPosition - mActor->mPosition;
+	f32 dist     = sep.normalise();
+	if (dist < 12.0f) {
+		mActor->startStickObject(mActor->mNavi, mActor->mNavi->mCollInfo->getSphere('head'), -1, 0.0f);
+		initStick();
+		return ACTOUT_Continue;
+	}
+	return ACTOUT_Continue;
 }
 
 /*
@@ -229,135 +153,26 @@ void ActKinoko::initAttack()
  */
 int ActKinoko::exeAttack()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stfd      f31, 0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  stw       r30, 0x58(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x18(r3)
-	  cmplwi    r0, 0
-	  mr        r31, r0
-	  beq-      .loc_0x48
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x50
+	Creature* target = _18.getPtr();
+	if (!target || !target->isAlive()) {
+		return ACTOUT_Fail;
+	}
 
-	.loc_0x48:
-	  li        r3, 0x1
-	  b         .loc_0x1A4
+	f32 dist = qdist2(target, mActor);
+	if (dist > 500.0f) {
+		initBoid();
+		return ACTOUT_Continue;
+	}
 
-	.loc_0x50:
-	  mr        r3, r31
-	  lwz       r4, 0xC(r30)
-	  bl        -0x27A90
-	  lfs       f0, -0x6F68(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x78
-	  mr        r3, r30
-	  bl        .loc_0x1C0
-	  li        r3, 0
-	  b         .loc_0x1A4
+	Vector3f sep = mActor->mNavi->mPosition - mActor->mPosition;
+	dist         = sep.normalise();
+	if (dist < 25.0f) {
+		initJump();
+		return ACTOUT_Continue;
+	}
 
-	.loc_0x78:
-	  lwz       r4, 0xC(r30)
-	  lwz       r3, 0x504(r4)
-	  lfsu      f1, 0x94(r3)
-	  lfsu      f0, 0x94(r4)
-	  lfs       f3, 0x4(r3)
-	  lfs       f2, 0x4(r4)
-	  fsubs     f0, f1, f0
-	  lfs       f4, 0x8(r3)
-	  lfs       f1, 0x8(r4)
-	  fsubs     f2, f3, f2
-	  stfs      f0, 0x48(r1)
-	  fsubs     f0, f4, f1
-	  stfs      f2, 0x4C(r1)
-	  stfs      f0, 0x50(r1)
-	  lfs       f1, 0x48(r1)
-	  lfs       f0, 0x4C(r1)
-	  lfs       f2, 0x50(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xA6D44
-	  lfs       f0, -0x6F78(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x104
-	  lfs       f0, 0x48(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x48(r1)
-	  lfs       f0, 0x4C(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x4C(r1)
-	  lfs       f0, 0x50(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x50(r1)
-
-	.loc_0x104:
-	  lfs       f0, -0x6F64(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x190
-	  li        r0, 0x2
-	  stw       r0, 0x1C(r30)
-	  lwz       r3, 0xC(r30)
-	  lfs       f1, 0xA0(r3)
-	  bl        0x167180
-	  lfs       f0, -0x6F74(r2)
-	  lwz       r3, 0xC(r30)
-	  fmuls     f31, f0, f1
-	  lfs       f1, 0xA0(r3)
-	  bl        0x167300
-	  lfs       f2, -0x6F74(r2)
-	  li        r3, 0
-	  lfs       f0, -0x6F70(r2)
-	  fmuls     f1, f2, f1
-	  stfs      f1, 0x28(r1)
-	  stfs      f0, 0x2C(r1)
-	  stfs      f31, 0x30(r1)
-	  lwz       r5, 0xC(r30)
-	  lwz       r4, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r4, 0x70(r5)
-	  stw       r0, 0x74(r5)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0x78(r5)
-	  lwz       r5, 0xC(r30)
-	  lwz       r4, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r4, 0xA4(r5)
-	  stw       r0, 0xA8(r5)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0xAC(r5)
-	  b         .loc_0x1A4
-
-	.loc_0x190:
-	  lwz       r3, 0xC(r30)
-	  addi      r4, r1, 0x48
-	  lfs       f1, -0x6F60(r2)
-	  bl        0x17388
-	  li        r3, 0
-
-	.loc_0x1A4:
-	  lwz       r0, 0x6C(r1)
-	  lfd       f31, 0x60(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-
-	.loc_0x1C0:
-	*/
+	mActor->setSpeed(1.0f, sep);
+	return ACTOUT_Continue;
 }
 
 /*
@@ -367,6 +182,31 @@ int ActKinoko::exeAttack()
  */
 void ActKinoko::initBoid()
 {
+	// this needs 0x10 more stack, mostly from inlines.
+	// however, it also can't have TOO much going on or it stops inlining in exeBoid
+	// weird balance.
+	// also, DLL doesn't have any more inlines than this so idek.
+
+	mState           = STATE_Boid;
+	Creature* target = _18.getPtr();
+	if (!target) {
+		return;
+	}
+
+	_20          = 2.0f * System::getRand(1.0f) + 1.5f;
+	Vector3f sep = target->mPosition - mActor->mPosition;
+	f32 dist     = sep.normalise();
+	Vector3f orthoDir(sep.z, 0.0f, -sep.x);
+	if (System::getRand(1.0f) > 0.5f) {
+		orthoDir.multiply(-1.0f);
+	}
+
+	orthoDir = orthoDir + (0.2f * (System::getRand(1.0f) - 0.5f)) * sep;
+	orthoDir.normalise();
+	_24 = orthoDir;
+
+	mActor->playEventSound(target, SE_KINOKOPIKI_DANCE);
+	u32 badCompiler[3];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -549,6 +389,79 @@ void ActKinoko::initBoid()
  */
 int ActKinoko::exeBoid()
 {
+	Creature* target = _18.getPtr();
+	if (!target || !target->isAlive()) {
+		return ACTOUT_Fail;
+	}
+
+	if (qdist2(mActor->mNavi->mPosition.x, mActor->mNavi->mPosition.z, mActor->mPosition.x, mActor->mPosition.z) < 120.0f) {
+		initAttack();
+		return ACTOUT_Continue;
+	}
+
+	_20 -= gsys->getFrameTime();
+	if (_20 < 0.0f) {
+		initBoid();
+	}
+
+	Iterator iter(&mActor->mSearchBuffer);
+	int boidCount = 0;
+	Vector3f boidPos(0.0f, 0.0f, 0.0f);
+	Vector3f boidVel(0.0f, 0.0f, 0.0f);
+	Vector3f closestPartnerDir(0.0f, 0.0f, 0.0f);
+	bool isClosePartner = false;
+	f32 minDist         = 50.0f;
+
+	CI_LOOP(iter)
+	{
+		Creature* obj = *iter;
+		if (obj->mObjType == OBJTYPE_Piki) {
+			Piki* piki = static_cast<Piki*>(obj);
+			if (piki != mActor && piki->isKinoko()) {
+				f32 dist = qdist2(piki->mPosition.x, piki->mPosition.z, mActor->mPosition.x, mActor->mPosition.z);
+				if (dist < minDist) {
+					minDist           = dist;
+					closestPartnerDir = mActor->mPosition - piki->mPosition;
+					isClosePartner    = true;
+				}
+
+				boidPos = boidPos + piki->mPosition;
+				boidVel = boidVel + piki->mVelocity;
+				boidCount++;
+			}
+		}
+	}
+
+	if (boidCount > 0) {
+		closestPartnerDir.normalise();
+		boidPos.multiply(1.0f / f32(boidCount));
+		boidVel.multiply(1.0f / f32(boidCount));
+		boidVel.normalise();
+		Vector3f boidDir = boidPos - mActor->mPosition;
+		Vector3f offset(sinf(mActor->mFaceDirection), 0.0f, cosf(mActor->mFaceDirection));
+		boidDir.normalise();
+		Vector3f moveDir;
+		if (isClosePartner) {
+			moveDir = offset * 0.01f + closestPartnerDir * 0.99f;
+		} else {
+			moveDir = offset * 0.4f + boidDir * 0.5f + _24 * 0.1f;
+		}
+
+		moveDir.normalise();
+		mActor->setSpeed(0.3f, moveDir);
+
+	} else {
+		mActor->setSpeed(0.3f, _24);
+	}
+
+	Vector3f newMoveDir = target->mPosition - mActor->mPosition;
+	if (!(newMoveDir.normalise() < 100.0f)) {
+		mActor->setSpeed(0.5f, newMoveDir);
+	}
+
+	return ACTOUT_Continue;
+
+	u32 badCompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1146,53 +1059,25 @@ int ActKinoko::exeBoid()
  * Address:	800B5558
  * Size:	000098
  */
-void ActKinoko::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActKinoko::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x24
-	  b         .loc_0x84
+	switch (event.mEventType) {
+	case KEY_Action0:
+		if (mState == STATE_Stick) {
+			Navi* navi = naviMgr->getNavi();
+			if (!navi) {
+				ERROR("kinoko no navi!\n");
+			}
+			PRINT("navi=%x", navi);
+			InteractSuck suck(mActor, 0.5f);
+			if (navi->stimulate(suck)) {
+				SeSystem::playPlayerSe(SE_KINOKOPIKI_ATTACK);
+			}
+		}
+		break;
+	}
 
-	.loc_0x24:
-	  lwz       r0, 0x1C(r31)
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x84
-	  lwz       r3, 0x3120(r13)
-	  bl        0x61E38
-	  lis       r4, 0x802B
-	  lwz       r5, 0xC(r31)
-	  subi      r0, r4, 0x3064
-	  lfs       f0, -0x6F50(r2)
-	  stw       r0, 0x18(r1)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x12C
-	  stw       r5, 0x1C(r1)
-	  addi      r4, r1, 0x18
-	  stw       r0, 0x18(r1)
-	  stfs      f0, 0x20(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x84
-	  li        r3, 0x14A
-	  bl        -0x101FC
-
-	.loc_0x84:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler[2];
 }
 
 /*

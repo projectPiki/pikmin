@@ -388,6 +388,11 @@ static inline bool coinFlip()
 	return System::getRand(1.0f) > 0.5f;
 }
 
+static inline f32 dumbRandFloat(f32 max)
+{
+	return System::getRand(1.0f + max);
+}
+
 // these match according to the plugPiki DLL - move inlines down as they get verified
 static inline f32 randFloat()
 {

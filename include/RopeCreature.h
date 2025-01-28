@@ -42,7 +42,7 @@ struct RopeCreature : public Creature {
 	Creature* mParentRope;      // _2B8, probably
 	RopeCreature* mAttachedObj; // _2BC, probably
 	f32 mRopeLength;            // _2C0
-	Vector3f mPosDifference;    // _2C4
+	Vector3f mRopeDirection;    // _2C4
 };
 
 /**

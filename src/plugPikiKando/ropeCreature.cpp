@@ -35,8 +35,8 @@ RopeCreature::RopeCreature(CreatureProp* prop)
 void RopeCreature::setRope(Creature* obj)
 {
 	Vector3f diff(obj->getCentre() - getCentre());
-	mPosDifference = diff;
-	mPosDifference.normalise();
+	mRopeDirection = diff;
+	mRopeDirection.normalise();
 	mRopeLength = diff.length();
 	mParentRope = obj;
 	if (mParentRope->mObjType == OBJTYPE_Rope) {
@@ -53,8 +53,8 @@ void RopeCreature::setRope(Creature* obj)
 void RopeCreature::update()
 {
 	Creature::update();
-	mPosDifference = mParentRope->mPosition - mPosition;
-	mPosDifference.normalise();
+	mRopeDirection = mParentRope->mPosition - mPosition;
+	mRopeDirection.normalise();
 }
 
 /*
@@ -65,7 +65,7 @@ void RopeCreature::update()
 Vector3f RopeCreature::getRopePos(f32 size)
 {
 	Vector3f pos(mPosition);
-	pos = pos + (mRopeLength * size) * mPosDifference;
+	pos = pos + (mRopeLength * size) * mRopeDirection;
 	return pos;
 }
 

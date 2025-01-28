@@ -853,6 +853,14 @@ struct ActEscape : public Action {
 	/**
 	 * @brief TODO
 	 */
+	enum StateID {
+		STATE_Normal = 0,
+		STATE_Avoid  = 1,
+	};
+
+	/**
+	 * @brief TODO
+	 */
 	struct Initialiser : public Action::Initialiser {
 		virtual void initialise(Action*); // _08
 
@@ -862,7 +870,7 @@ struct ActEscape : public Action {
 
 	ActEscape(Piki*);
 
-	virtual ~ActEscape();         // _44 (weak)
+	virtual ~ActEscape() { }      // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
@@ -870,7 +878,11 @@ struct ActEscape : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x30 - 0x14]; // _14, unknown
+	SmartPtr<Creature> mTarget; // _14
+	f32 mEscapeTimer;           // _18
+	u8 _1C[0x4];                // _1C, unknown
+	int mState;                 // _20
+	Vector3f _24;               // _24
 };
 
 /**
@@ -882,14 +894,15 @@ struct ActExit : public Action {
 	ActExit(Piki*);
 
 	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
-	virtual ~ActExit();                              // _44
+	virtual ~ActExit() { }                           // _44
 	virtual void init(Creature*);                    // _48
 	virtual int exec();                              // _4C
 	virtual void cleanup();                          // _50
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x24 - 0x14]; // _14, unknown
+	Vector3f _14; // _14
+	u8 _20;       // _20
 };
 
 /**
@@ -1138,11 +1151,11 @@ struct ActKinoko : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	Creature* _18; // _18, unknown
-	int mState;    // _1C, unknown
-	u8 _20[0x4];   // _20, unknown
-	Vector3f _24;  // _24
-	               // _30-_38 = PaniAnimKeyListener
+	SmartPtr<Creature> _18; // _18
+	int mState;             // _1C, unknown
+	f32 _20;                // _20, unknown
+	Vector3f _24;           // _24
+	                        // _30-_38 = PaniAnimKeyListener
 };
 
 /**

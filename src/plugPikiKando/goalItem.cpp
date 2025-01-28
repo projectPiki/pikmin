@@ -126,7 +126,7 @@ void GoalItem::playEffect(int id)
 			if (gen) {
 				int legIDs[3] = { 2, 1, 0 };
 
-				Vector3f test = -1.0f * mRope[legIDs[randIdx]]->mPosDifference;
+				Vector3f test = -1.0f * mRope[legIDs[randIdx]]->mRopeDirection;
 				gen->setEmitDir(test);
 			}
 
