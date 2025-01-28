@@ -41,9 +41,9 @@ ActBreakWall::ActBreakWall(Piki* piki)
  */
 void ActBreakWall::init(Creature* creature)
 {
-	_31              = 0;
-	mActor->_408     = 2;
-	mActor->mEmotion = 0;
+	_31             = 0;
+	mPiki->_408     = 2;
+	mPiki->mEmotion = 0;
 
 	if (creature->isSluice()) {
 		mWall = static_cast<BuildingItem*>(creature);
@@ -51,11 +51,11 @@ void ActBreakWall::init(Creature* creature)
 		mWall = nullptr;
 	}
 
-	mState               = STATE_GotoWall;
-	_32                  = 0;
-	mActor->mWantToStick = 0;
-	_30                  = randFloat(4.0f);
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
+	mState              = STATE_GotoWall;
+	_32                 = 0;
+	mPiki->mWantToStick = 0;
+	_30                 = randFloat(4.0f);
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
 /*
@@ -151,8 +151,8 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
 		_32 = 0;
 		break;
 	case KEY_PlayEffect:
-		if (!mActor->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mActor->mOptUpdateContext.updatable())) {
-			Vector3f vec = mActor->mEffectPos;
+		if (!mPiki->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
+			Vector3f vec = mPiki->mEffectPos;
 			EffectParm parm(vec);
 			if (mWall->mObjType == OBJTYPE_SluiceSoft) {
 				UtEffectMgr::cast(11, parm);
@@ -184,7 +184,7 @@ int ActBreakWall::exec()
 		return gotoWall();
 
 	case STATE_BreakWall:
-		Vector3f sep = _20 - mActor->mPosition;
+		Vector3f sep = _20 - mPiki->mPosition;
 		if (sep.length() > 5.0f) {
 			mState = STATE_GotoWall;
 			break;
@@ -202,9 +202,9 @@ int ActBreakWall::exec()
  */
 int ActBreakWall::gotoWall()
 {
-	Vector3f direction = mWall->mPosition - mActor->mPosition;
+	Vector3f direction = mWall->mPosition - mPiki->mPosition;
 	direction.normalise();
-	mActor->setSpeed(1.0f, direction);
+	mPiki->setSpeed(1.0f, direction);
 	return ACTOUT_Continue;
 }
 
@@ -229,14 +229,14 @@ void ActBreakWall::initBreakWall()
 void ActBreakWall::startWorkMotion()
 {
 	if (_30 == 0) {
-		if (mActor->getCollidePlatformCreature()) {
-			Vector3f normal = mActor->getCollidePlatformNormal();
+		if (mPiki->getCollidePlatformCreature()) {
+			Vector3f normal = mPiki->getCollidePlatformNormal();
 			if (normal.y > 0.7f) {
-				mActor->startMotion(PaniMotionInfo(PIKIANIM_Job2, this), PaniMotionInfo(PIKIANIM_Job2));
+				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Job2, this), PaniMotionInfo(PIKIANIM_Job2));
 				return;
 			}
 		}
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 	}
 }
 
@@ -261,7 +261,7 @@ int ActBreakWall::breakWall()
 	}
 
 	if (val > 0 && _32) {
-		InteractAttack attack(mActor, nullptr, val / 60.0f, false);
+		InteractAttack attack(mPiki, nullptr, val / 60.0f, false);
 		_32 = 0;
 		if (!mWall->stimulate(attack)) {
 			if (mWall->isCompleted()) {
@@ -269,8 +269,8 @@ int ActBreakWall::breakWall()
 			}
 			_31++;
 			if (_31 >= int(randFloat(3.0f)) + 3) {
-				mActor->mEmotion = 1;
-				mActor->_408     = 0;
+				mPiki->mEmotion = 1;
+				mPiki->_408     = 0;
 				return ACTOUT_Fail;
 			}
 		}
@@ -278,8 +278,8 @@ int ActBreakWall::breakWall()
 		_2C = gameflow.mWorldClock.mMinutes;
 	}
 
-	mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	return ACTOUT_Continue;
 }
 

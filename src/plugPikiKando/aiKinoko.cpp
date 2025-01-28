@@ -38,7 +38,7 @@ ActKinoko::ActKinoko(Piki* piki)
  */
 void ActKinoko::init(Creature* creature)
 {
-	mActor->_408 = 0;
+	mPiki->_408 = 0;
 	if (creature) {
 		_18.set(creature);
 	}
@@ -75,7 +75,7 @@ int ActKinoko::exec()
 void ActKinoko::initStick()
 {
 	mState = STATE_Stick;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 }
 
 /*
@@ -85,13 +85,13 @@ void ActKinoko::initStick()
  */
 int ActKinoko::exeStick()
 {
-	if (!mActor->mStickTarget) {
+	if (!mPiki->mStickTarget) {
 		initAttack();
 		return ACTOUT_Continue;
 	}
 
-	if (!mActor->mNavi->isAlive()) {
-		mActor->endStickObject();
+	if (!mPiki->mNavi->isAlive()) {
+		mPiki->endStickObject();
 		initBoid();
 		return ACTOUT_Continue;
 	}
@@ -109,9 +109,9 @@ void ActKinoko::initJump()
 	mState         = STATE_Jump;
 	f32 vertSpeed  = 170.0f;
 	f32 horizSpeed = 50.0f;
-	Vector3f vel(horizSpeed * sinf(mActor->mFaceDirection), vertSpeed, horizSpeed * cosf(mActor->mFaceDirection));
-	mActor->mVelocity       = vel;
-	mActor->mTargetVelocity = vel;
+	Vector3f vel(horizSpeed * sinf(mPiki->mFaceDirection), vertSpeed, horizSpeed * cosf(mPiki->mFaceDirection));
+	mPiki->mVelocity       = vel;
+	mPiki->mTargetVelocity = vel;
 }
 
 /*
@@ -121,15 +121,15 @@ void ActKinoko::initJump()
  */
 int ActKinoko::exeJump()
 {
-	if (mActor->mFloorTri) {
+	if (mPiki->mFloorTri) {
 		initAttack();
 		return ACTOUT_Continue;
 	}
 
-	Vector3f sep = mActor->mNavi->mPosition - mActor->mPosition;
+	Vector3f sep = mPiki->mNavi->mPosition - mPiki->mPosition;
 	f32 dist     = sep.normalise();
 	if (dist < 12.0f) {
-		mActor->startStickObject(mActor->mNavi, mActor->mNavi->mCollInfo->getSphere('head'), -1, 0.0f);
+		mPiki->startStickObject(mPiki->mNavi, mPiki->mNavi->mCollInfo->getSphere('head'), -1, 0.0f);
 		initStick();
 		return ACTOUT_Continue;
 	}
@@ -158,20 +158,20 @@ int ActKinoko::exeAttack()
 		return ACTOUT_Fail;
 	}
 
-	f32 dist = qdist2(target, mActor);
+	f32 dist = qdist2(target, mPiki);
 	if (dist > 500.0f) {
 		initBoid();
 		return ACTOUT_Continue;
 	}
 
-	Vector3f sep = mActor->mNavi->mPosition - mActor->mPosition;
+	Vector3f sep = mPiki->mNavi->mPosition - mPiki->mPosition;
 	dist         = sep.normalise();
 	if (dist < 25.0f) {
 		initJump();
 		return ACTOUT_Continue;
 	}
 
-	mActor->setSpeed(1.0f, sep);
+	mPiki->setSpeed(1.0f, sep);
 	return ACTOUT_Continue;
 }
 
@@ -194,7 +194,7 @@ void ActKinoko::initBoid()
 	}
 
 	_20          = 2.0f * System::getRand(1.0f) + 1.5f;
-	Vector3f sep = target->mPosition - mActor->mPosition;
+	Vector3f sep = target->mPosition - mPiki->mPosition;
 	f32 dist     = sep.normalise();
 	Vector3f orthoDir(sep.z, 0.0f, -sep.x);
 	if (System::getRand(1.0f) > 0.5f) {
@@ -205,7 +205,7 @@ void ActKinoko::initBoid()
 	orthoDir.normalise();
 	_24 = orthoDir;
 
-	mActor->playEventSound(target, SE_KINOKOPIKI_DANCE);
+	mPiki->playEventSound(target, SE_KINOKOPIKI_DANCE);
 	u32 badCompiler[3];
 	/*
 	.loc_0x0:
@@ -394,7 +394,7 @@ int ActKinoko::exeBoid()
 		return ACTOUT_Fail;
 	}
 
-	if (qdist2(mActor->mNavi->mPosition.x, mActor->mNavi->mPosition.z, mActor->mPosition.x, mActor->mPosition.z) < 120.0f) {
+	if (qdist2(mPiki->mNavi->mPosition.x, mPiki->mNavi->mPosition.z, mPiki->mPosition.x, mPiki->mPosition.z) < 120.0f) {
 		initAttack();
 		return ACTOUT_Continue;
 	}
@@ -404,7 +404,7 @@ int ActKinoko::exeBoid()
 		initBoid();
 	}
 
-	Iterator iter(&mActor->mSearchBuffer);
+	Iterator iter(&mPiki->mSearchBuffer);
 	int boidCount = 0;
 	Vector3f boidPos(0.0f, 0.0f, 0.0f);
 	Vector3f boidVel(0.0f, 0.0f, 0.0f);
@@ -417,11 +417,11 @@ int ActKinoko::exeBoid()
 		Creature* obj = *iter;
 		if (obj->mObjType == OBJTYPE_Piki) {
 			Piki* piki = static_cast<Piki*>(obj);
-			if (piki != mActor && piki->isKinoko()) {
-				f32 dist = qdist2(piki->mPosition.x, piki->mPosition.z, mActor->mPosition.x, mActor->mPosition.z);
+			if (piki != mPiki && piki->isKinoko()) {
+				f32 dist = qdist2(piki->mPosition.x, piki->mPosition.z, mPiki->mPosition.x, mPiki->mPosition.z);
 				if (dist < minDist) {
 					minDist           = dist;
-					closestPartnerDir = mActor->mPosition - piki->mPosition;
+					closestPartnerDir = mPiki->mPosition - piki->mPosition;
 					isClosePartner    = true;
 				}
 
@@ -437,8 +437,8 @@ int ActKinoko::exeBoid()
 		boidPos.multiply(1.0f / f32(boidCount));
 		boidVel.multiply(1.0f / f32(boidCount));
 		boidVel.normalise();
-		Vector3f boidDir = boidPos - mActor->mPosition;
-		Vector3f offset(sinf(mActor->mFaceDirection), 0.0f, cosf(mActor->mFaceDirection));
+		Vector3f boidDir = boidPos - mPiki->mPosition;
+		Vector3f offset(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 		boidDir.normalise();
 		Vector3f moveDir;
 		if (isClosePartner) {
@@ -448,15 +448,15 @@ int ActKinoko::exeBoid()
 		}
 
 		moveDir.normalise();
-		mActor->setSpeed(0.3f, moveDir);
+		mPiki->setSpeed(0.3f, moveDir);
 
 	} else {
-		mActor->setSpeed(0.3f, _24);
+		mPiki->setSpeed(0.3f, _24);
 	}
 
-	Vector3f newMoveDir = target->mPosition - mActor->mPosition;
+	Vector3f newMoveDir = target->mPosition - mPiki->mPosition;
 	if (!(newMoveDir.normalise() < 100.0f)) {
-		mActor->setSpeed(0.5f, newMoveDir);
+		mPiki->setSpeed(0.5f, newMoveDir);
 	}
 
 	return ACTOUT_Continue;
@@ -1069,7 +1069,7 @@ void ActKinoko::animationKeyUpdated(PaniAnimKeyEvent& event)
 				ERROR("kinoko no navi!\n");
 			}
 			PRINT("navi=%x", navi);
-			InteractSuck suck(mActor, 0.5f);
+			InteractSuck suck(mPiki, 0.5f);
 			if (navi->stimulate(suck)) {
 				SeSystem::playPlayerSe(SE_KINOKOPIKI_ATTACK);
 			}

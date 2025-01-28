@@ -210,7 +210,7 @@ public:
 	u32 mDispCount;               // _1AC
 	u32 mLightCount;              // _1B0
 	u32 _1B4;                     // _1B4
-	u32 mLoadedPolys;             // _1B8
+	u32 mAnimatedPolygons;        // _1B8
 	u32 mLightingSkips;           // _1BC
 	u32 mLightingSets;            // _1C0
 	u32 mSystemState;             // _1C4
@@ -229,7 +229,7 @@ public:
 	LFInfo* mFlareInfoList;       // _234
 	LFlareGroup* mFlareGroupList; // _238
 	LFlareGroup* _23C;            // _23C
-	u32 _240;                     // _240
+	u32 mDvdReadBytesCount;       // _240
 };
 
 /**

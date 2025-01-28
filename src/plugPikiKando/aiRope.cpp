@@ -34,19 +34,19 @@ ActRope::ActRope(Piki* piki)
  */
 void ActRope::init(Creature*)
 {
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
-	mActor->setCreatureFlag(CF_Unk8);
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
+	mPiki->setCreatureFlag(CF_Unk8);
 	mSpeed = randBalanced(0.5f) * 4.0f + 22.0f;
-	if (mActor->isHolding()) {
-		mActor->_408 = 3;
+	if (mPiki->isHolding()) {
+		mPiki->_408 = 3;
 	}
 
-	if (mActor->mStickPart) {
+	if (mPiki->mStickPart) {
 		Tube tube;
-		mActor->mStickPart->makeTube(tube);
+		mPiki->mStickPart->makeTube(tube);
 		Vector3f vec1;
 		Vector3f vec2;
-		tube.getPosGradient(mActor->mPosition, mActor->mAttachPosition.x, vec1, vec2);
+		tube.getPosGradient(mPiki->mPosition, mPiki->mAttachPosition.x, vec1, vec2);
 		mRopeDirection = vec2;
 	} else {
 		mRopeDirection.set(0.0f, 1.0f, 0.0f);
@@ -60,11 +60,11 @@ void ActRope::init(Creature*)
  */
 int ActRope::exec()
 {
-	if (!mActor->mStickPart) {
+	if (!mPiki->mStickPart) {
 		return ACTOUT_Fail;
 	}
 
-	mActor->mVelocity = mRopeDirection * mSpeed;
+	mPiki->mVelocity = mRopeDirection * mSpeed;
 	return ACTOUT_Continue;
 }
 
@@ -75,8 +75,8 @@ int ActRope::exec()
  */
 void ActRope::cleanup()
 {
-	mActor->mVelocity       = mRopeDirection * 150.0f;
-	mActor->mTargetVelocity = mActor->mVelocity;
-	mActor->mCreatureFlags &= ~(CF_Unk8);
-	mActor->endStickObject();
+	mPiki->mVelocity       = mRopeDirection * 150.0f;
+	mPiki->mTargetVelocity = mPiki->mVelocity;
+	mPiki->mCreatureFlags &= ~(CF_Unk8);
+	mPiki->endStickObject();
 }

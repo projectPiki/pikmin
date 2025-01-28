@@ -35,12 +35,12 @@ ActExit::ActExit(Piki* piki)
  */
 void ActExit::init(Creature*)
 {
-	mActor->_408 = 0;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
-	mActor->mScale.set(0.0f, 0.0f, 0.0f);
-	_14 = mActor->mPosition;
-	mActor->mOdometer.start(1.0f, 5.0f);
-	_20 = false;
+	mPiki->_408 = 0;
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
+	mPiki->mScale.set(0.0f, 0.0f, 0.0f);
+	mPrevPosition = mPiki->mPosition;
+	mPiki->mOdometer.start(1.0f, 5.0f);
+	mHasCollided = false;
 }
 
 /*
@@ -52,7 +52,7 @@ void ActExit::procCollideMsg(Piki*, MsgCollide* msg)
 {
 	if (msg->mEvent.mCollider->mObjType != OBJTYPE_Goal && !msg->mEvent.mCollider->isPiki()
 	    && msg->mEvent.mCollider->mObjType != OBJTYPE_Navi) {
-		_20 = true;
+		mHasCollided = true;
 	}
 }
 
@@ -63,48 +63,48 @@ void ActExit::procCollideMsg(Piki*, MsgCollide* msg)
  */
 int ActExit::exec()
 {
-	if (_20 || !mActor->mRope) {
-		mActor->mScale.set(1.0f, 1.0f, 1.0f);
+	if (mHasCollided || !mPiki->mRope) {
+		mPiki->mScale.set(1.0f, 1.0f, 1.0f);
 		PRINT("*** EXIT ** NO ROPE\n");
 		return ACTOUT_Fail;
 	}
 
-	if (!mActor->mOdometer.moving(mActor->mPosition, _14)) {
-		mActor->endRope();
-		mActor->mScale.set(1.0f, 1.0f, 1.0f);
+	if (!mPiki->mOdometer.moving(mPiki->mPosition, mPrevPosition)) {
+		mPiki->endRope();
+		mPiki->mScale.set(1.0f, 1.0f, 1.0f);
 		return ACTOUT_Fail;
 	}
 
-	_14 = mActor->mPosition;
-	if (mActor->mRopeRatio > 0.72f) {
-		PRINT("piki->ropePos = %f\n", mActor->mRopeRatio);
-		mActor->mIsCallable = false;
-		f32 scale           = (1.0f - mActor->mRopeRatio) / (1.0f - 0.72f) * 1.0f;
+	mPrevPosition = mPiki->mPosition;
+	if (mPiki->mRopePosRatio > 0.72f) {
+		PRINT("piki->ropePos = %f\n", mPiki->mRopePosRatio);
+		mPiki->mIsCallable = false;
+		f32 scale          = (1.0f - mPiki->mRopePosRatio) / (1.0f - 0.72f) * 1.0f;
 		if (scale < 0.0f) {
 			scale = 0.0f;
 		}
-		mActor->mScale.set(scale, scale, scale);
+		mPiki->mScale.set(scale, scale, scale);
 	} else {
-		mActor->mScale.set(1.0f, 1.0f, 1.0f);
+		mPiki->mScale.set(1.0f, 1.0f, 1.0f);
 	}
 
-	if (mActor->mFloorTri) {
+	if (mPiki->mFloorTri) {
 		return ACTOUT_Success;
 	}
 
-	if (mActor->mRopeRatio < 0.0f) {
+	if (mPiki->mRopePosRatio < 0.0f) {
 		return ACTOUT_Success;
 	}
 
-	f32 val     = 70.0f;
-	f32 randVal = 8.0f * randBalanced(0.5f);
-	Vector3f ropeDir(mActor->mRope->mRopeDirection);
-	Vector3f faceDir(sinf(mActor->mFaceDirection), 0.0f, cosf(mActor->mFaceDirection));
+	f32 baseVelocity = 70.0f;
+	f32 sideVelocity = 8.0f * randBalanced(0.5f);
+	Vector3f ropeDir(mPiki->mRope->mRopeDirection);
+	Vector3f faceDir(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 	Vector3f sideDir(faceDir);
 	sideDir.CP(ropeDir);
 	sideDir.normalise();
 
-	mActor->mVelocity = ropeDir * -val + sideDir * randVal;
+	mPiki->mVelocity = ropeDir * -baseVelocity + sideDir * sideVelocity;
 	return ACTOUT_Continue;
 
 	u32 badCompiler[2];
@@ -117,12 +117,12 @@ int ActExit::exec()
  */
 void ActExit::cleanup()
 {
-	if (mActor->isAlive()) {
-		mActor->mScale.set(1.0f, 1.0f, 1.0f);
+	if (mPiki->isAlive()) {
+		mPiki->mScale.set(1.0f, 1.0f, 1.0f);
 	}
 
-	mActor->mIsCallable = true;
-	mActor->endRope();
-	f32 angle = mActor->mFaceDirection;
-	mActor->mVelocity.set(50.0f * sinf(angle), 200.0f, 50.0f * cosf(angle));
+	mPiki->mIsCallable = true;
+	mPiki->endRope();
+	f32 angle = mPiki->mFaceDirection;
+	mPiki->mVelocity.set(50.0f * sinf(angle), 200.0f, 50.0f * cosf(angle));
 }

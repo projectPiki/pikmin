@@ -41,10 +41,10 @@ ActBridge::ActBridge(Piki* piki)
  */
 void ActBridge::init(Creature* creature)
 {
-	_32 = _33        = 0;
-	mActor->_408     = 2;
-	mActor->mEmotion = 0;
-	mBridge          = nullptr;
+	_32 = _33       = 0;
+	mPiki->_408     = 2;
+	mPiki->mEmotion = 0;
+	mBridge         = nullptr;
 
 	if (creature && creature->mObjType == OBJTYPE_WorkObject) {
 		WorkObject* bridge = static_cast<WorkObject*>(creature);
@@ -67,7 +67,7 @@ void ActBridge::dump()
 	const char* stateNames[] = { "approach", "detour", "go", "work" };
 	PRINT("state : %s  bridge stage : %d\n", stateNames[mState], mStageIdx);
 	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
-	Vector3f sep      = stagePos - mActor->mPosition;
+	Vector3f sep      = stagePos - mPiki->mPosition;
 	Vector3f zVec     = mBridge->getBridgeZVec();
 	f32 zdist         = sep.DP(zVec);
 	PRINT("zdist is %.1f\n", zdist);
@@ -80,9 +80,9 @@ void ActBridge::dump()
  */
 bool ActBridge::collideBridgeSurface()
 {
-	Creature* platform = mActor->getCollidePlatformCreature();
+	Creature* platform = mPiki->getCollidePlatformCreature();
 	if (platform && platform == mBridge) {
-		Vector3f normal = mActor->getCollidePlatformNormal();
+		Vector3f normal = mPiki->getCollidePlatformNormal();
 		if (normal.y > 0.8f) {
 			return true;
 		}
@@ -97,9 +97,9 @@ bool ActBridge::collideBridgeSurface()
  */
 bool ActBridge::collideBridgeBlocker()
 {
-	Creature* platform = mActor->getCollidePlatformCreature();
+	Creature* platform = mPiki->getCollidePlatformCreature();
 	if (platform && platform == mBridge) {
-		Vector3f normal = mActor->getCollidePlatformNormal();
+		Vector3f normal = mPiki->getCollidePlatformNormal();
 		Vector3f zVec   = mBridge->getBridgeZVec();
 		if (normal.dot(zVec) < -0.8f) {
 			return true;
@@ -118,7 +118,7 @@ int ActBridge::exec()
 {
 	if (!mBridge) {
 		PRINT("no bridge!\n");
-		mActor->mEmotion = 1;
+		mPiki->mEmotion = 1;
 		PRINT("exe:no bridge!");
 		return ACTOUT_Fail;
 	}
@@ -178,7 +178,7 @@ void ActBridge::procWallMsg(Piki* piki, MsgWall* msg)
 void ActBridge::initClimb()
 {
 	mState = STATE_Climb;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
 	Vector3f normal(_34);
 	normal.y = 0.0f;
 	normal.normalise();
@@ -186,7 +186,7 @@ void ActBridge::initClimb()
 
 	mClimbingVelocity = Vector3f(0.0f, 1.0f, 0.0f);
 	mClimbingVelocity.normalise();
-	mActor->setFlag80();
+	mPiki->setFlag80();
 	PRINT("climb vel (%.1f %.1f %.1f)\n", mClimbingVelocity.x, mClimbingVelocity.y, mClimbingVelocity.z);
 }
 
@@ -199,10 +199,10 @@ int ActBridge::exeClimb()
 {
 	if (_32) {
 		PRINT("climbing (%.1f %.1f %.1f)\n", mClimbingVelocity.x, mClimbingVelocity.y, mClimbingVelocity.z);
-		mActor->setSpeed(1.0f, mClimbingVelocity);
+		mPiki->setSpeed(1.0f, mClimbingVelocity);
 	} else {
 		initApproach();
-		mActor->unsetFlag80();
+		mPiki->unsetFlag80();
 	}
 }
 
@@ -215,7 +215,7 @@ void ActBridge::initApproach()
 {
 	mState = STATE_Approach;
 	_32    = 0;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
 /*
@@ -276,7 +276,7 @@ int ActBridge::exeWork()
  */
 void ActBridge::doWork(int mins)
 {
-	InteractBuild build(mActor, mStageIdx, mins / 60.0f);
+	InteractBuild build(mPiki, mStageIdx, mins / 60.0f);
 	mBridge->stimulate(build);
 	_20 = gameflow.mWorldClock.mMinutes;
 	_24 = 0;
@@ -296,8 +296,8 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
 		_24 = 1;
 		break;
 	case KEY_PlayEffect:
-		if (mActor->aiCullable() && (AIPerf::optLevel <= 0 || mActor->mOptUpdateContext.updatable())) {
-			effectMgr->create(EffectMgr::EFF_Piki_WorkCloud, mActor->mEffectPos, nullptr, nullptr);
+		if (mPiki->aiCullable() && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
+			effectMgr->create(EffectMgr::EFF_Piki_WorkCloud, mPiki->mEffectPos, nullptr, nullptr);
 		}
 		break;
 	case KEY_Finished:
@@ -313,8 +313,8 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void ActBridge::cleanup()
 {
-	mActor->resetCreatureFlag(CF_DisableMovement);
-	mActor->unsetFlag80();
+	mPiki->resetCreatureFlag(CF_DisableMovement);
+	mPiki->unsetFlag80();
 }
 
 /*
@@ -325,7 +325,7 @@ void ActBridge::cleanup()
 void ActBridge::newInitApproach()
 {
 	mState = STATE_Approach;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 	PRINT("approach init\n");
 }
 
@@ -340,7 +340,7 @@ int ActBridge::newExeApproach()
 
 	if (!mBridge) {
 		PRINT("app bri fail");
-		mActor->mEmotion = 1;
+		mPiki->mEmotion = 1;
 		PRINT("app failed\n");
 		return ACTOUT_Fail;
 	}
@@ -351,13 +351,13 @@ int ActBridge::newExeApproach()
 		return ACTOUT_Continue;
 	}
 
-	Vector3f direction = mBridge->getStartPos() - mActor->getPosition();
+	Vector3f direction = mBridge->getStartPos() - mPiki->getPosition();
 	u32 badCompiler2;
 	if (direction.normalise() < 300.0f) {
 		f32 bridgePosY;
 		f32 bridgePosX;
 		u32 badCompiler[4];
-		mBridge->getBridgePos(mActor->mPosition, bridgePosX, bridgePosY);
+		mBridge->getBridgePos(mPiki->mPosition, bridgePosX, bridgePosY);
 		int currStage = mBridge->getFirstUnfinishedStage();
 		if (currStage == -1) {
 			PRINT("** newExeApp: SUCCESS * fstStage = -1!\n");
@@ -373,10 +373,10 @@ int ActBridge::newExeApproach()
 				Vector3f zVec = mBridge->getBridgeZVec();
 				// f32 val = stagePos.DP(zVec);
 				direction = zVec;
-				mActor->setSpeed(0.7f, direction);
+				mPiki->setSpeed(0.7f, direction);
 			} else {
 				PRINT("z:%.1f > 0 : bridge app failed\n", bridgePosY);
-				mActor->mEmotion = 1;
+				mPiki->mEmotion = 1;
 				return ACTOUT_Fail;
 			}
 		} else {
@@ -390,10 +390,10 @@ int ActBridge::newExeApproach()
 					newDir.multiply(-1.0f);
 				}
 			}
-			mActor->setSpeed(0.7f, newDir);
+			mPiki->setSpeed(0.7f, newDir);
 		}
 	} else {
-		mActor->setSpeed(0.7f, direction);
+		mPiki->setSpeed(0.7f, direction);
 	}
 
 	return ACTOUT_Continue;
@@ -664,7 +664,7 @@ void ActBridge::newInitGo()
 		mStageIdx = -1;
 	}
 
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
 /*
@@ -681,7 +681,7 @@ int ActBridge::newExeGo()
 	}
 
 	if (!mBridge) {
-		mActor->mEmotion = 1;
+		mPiki->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
@@ -703,13 +703,13 @@ int ActBridge::newExeGo()
 	xVec.multiply(_2C * mBridge->getStageWidth());
 	stagePos.add(xVec);
 
-	Vector3f direction = stagePos - mActor->mPosition;
+	Vector3f direction = stagePos - mPiki->mPosition;
 	mBridge->getBridgeZVec();
 	// direction.DP(zVec);
 
 	direction.normalise();
 
-	mActor->setSpeed(0.70f, direction);
+	mPiki->setSpeed(0.70f, direction);
 	return ACTOUT_Continue;
 
 	u32 badCompiler[4];
@@ -956,10 +956,10 @@ void ActBridge::newInitWork()
 		return;
 	}
 
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 	_4D = 0;
 	if (AIPerf::bridgeFast) {
-		mActor->setCreatureFlag(CF_DisableMovement);
+		mPiki->setCreatureFlag(CF_DisableMovement);
 	}
 }
 
@@ -975,30 +975,30 @@ int ActBridge::newExeWork()
 		PRINT("**** STAGE IS FINISHED *** WORK\n");
 		PRINT("stage fin! work->go");
 		newInitGo();
-		mActor->resetCreatureFlag(CF_DisableMovement);
+		mPiki->resetCreatureFlag(CF_DisableMovement);
 		return ACTOUT_Continue;
 	}
 
 	if (collideBridgeBlocker()) {
 		mCollisionCount = 0;
 	} else {
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mCollisionCount++;
 
 		if (mCollisionCount > 3) {
-			mActor->resetCreatureFlag(CF_DisableMovement);
+			mPiki->resetCreatureFlag(CF_DisableMovement);
 		}
 
 		if (mCollisionCount > 15 && _4D) {
 			newInitApproach();
-			mActor->resetCreatureFlag(CF_DisableMovement);
+			mPiki->resetCreatureFlag(CF_DisableMovement);
 			return ACTOUT_Continue;
 		}
 	}
 
-	if (!mBridge->workable(mActor->mPosition)) {
-		mActor->mEmotion = 1;
-		mActor->resetCreatureFlag(CF_DisableMovement);
+	if (!mBridge->workable(mPiki->mPosition)) {
+		mPiki->mEmotion = 1;
+		mPiki->resetCreatureFlag(CF_DisableMovement);
 		return ACTOUT_Fail;
 	}
 
@@ -1016,16 +1016,16 @@ int ActBridge::newExeWork()
 	}
 
 	Vector3f stagePos(mBridge->getStagePos(mStageIdx));
-	Vector3f sep = stagePos - mActor->mPosition;
+	Vector3f sep = stagePos - mPiki->mPosition;
 	Vector3f zVec(mBridge->getBridgeZVec());
 	Vector3f xVec(mBridge->getBridgeXVec());
 	f32 zDist = sep.DP(zVec);
 	f32 xDist = sep.DP(xVec);
 
 	if (zen::Abs(zDist) > 24.0f) {
-		mActor->resetCreatureFlag(CF_DisableMovement);
+		mPiki->resetCreatureFlag(CF_DisableMovement);
 	} else {
-		mActor->setCreatureFlag(CF_DisableMovement);
+		mPiki->setCreatureFlag(CF_DisableMovement);
 	}
 
 	if (zen::Abs(xDist) > 0.5f * mBridge->getStageWidth()) {
@@ -1043,7 +1043,7 @@ int ActBridge::newExeWork()
 		zVec.normalise();
 	}
 	mBridge->getStageDepth();
-	mActor->setSpeed(0.5f, zVec);
+	mPiki->setSpeed(0.5f, zVec);
 	return ACTOUT_Continue;
 	/*
 	.loc_0x0:

@@ -53,12 +53,12 @@ void ActWatch::Initialiser::initialise(Action*)
 void ActWatch::init(Creature* target)
 {
 	if (target) {
-		_18 = int(randFloat(20.0f)) + 50;
+		mWatchRetryTimer = int(randFloat(20.0f)) + 50;
 		mTarget.set(target);
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
-		mActor->enableMotionBlend();
-		_20 = target->getCentre();
-		_20.y += 1.6f * target->getBoundingSphereRadius();
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
+		mPiki->enableMotionBlend();
+		mTargetPosition = target->getCentre();
+		mTargetPosition.y += 1.6f * target->getBoundingSphereRadius();
 	}
 }
 
@@ -70,7 +70,7 @@ void ActWatch::init(Creature* target)
 void ActWatch::cleanup()
 {
 	mTarget.reset();
-	mActor->finishLook();
+	mPiki->finishLook();
 }
 
 /*
@@ -80,7 +80,7 @@ void ActWatch::cleanup()
  */
 void ActWatch::getInfo(char* buffer)
 {
-	sprintf(buffer, "watch(%d)", _18);
+	sprintf(buffer, "watch(%d)", mWatchRetryTimer);
 }
 
 /*
@@ -95,19 +95,19 @@ int ActWatch::exec()
 		return ACTOUT_Fail;
 	}
 
-	if (--_18 < 0) {
+	if (--mWatchRetryTimer < 0) {
 		return ACTOUT_Success;
 	}
 
 	// what the hell did you do man
-	Vector3f lookDir = target->mPosition - mActor->mPosition;
+	Vector3f lookDir = target->mPosition - mPiki->mPosition;
 	Vector3f* p      = &lookDir;
 
 	f32 dist = qdist2(0.0f, 0.0f, lookDir.x, lookDir.z);
-	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	mActor->mFaceDirection += 0.4f * angDist(atan2f(lookDir.x, lookDir.z), mActor->mFaceDirection);
-	mActor->mFaceDirection = roundAng(mActor->mFaceDirection);
-	mActor->mRotation.set(0.0f, mActor->mFaceDirection, 0.0f);
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mFaceDirection += 0.4f * angDist(atan2f(lookDir.x, lookDir.z), mPiki->mFaceDirection);
+	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection);
+	mPiki->mRotation.set(0.0f, mPiki->mFaceDirection, 0.0f);
 	return ACTOUT_Continue;
 
 	u32 badCompiler[7];

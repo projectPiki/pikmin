@@ -141,7 +141,7 @@ struct Action : public Receiver<Piki> {
 	Child* mChildActions; // _04, array of mChildCount Children
 	s16 mCurrActionIdx;   // _08
 	s16 mChildCount;      // _0A
-	Piki* mActor;         // _0C
+	Piki* mPiki;          // _0C
 	char* mName;          // _10
 };
 
@@ -882,7 +882,7 @@ struct ActEscape : public Action {
 	f32 mEscapeTimer;           // _18
 	u8 _1C[0x4];                // _1C, unknown
 	int mState;                 // _20
-	Vector3f _24;               // _24
+	Vector3f mAvoidDirection;   // _24
 };
 
 /**
@@ -901,8 +901,8 @@ struct ActExit : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	Vector3f _14; // _14
-	u8 _20;       // _20
+	Vector3f mPrevPosition; // _14
+	u8 mHasCollided;        // _20
 };
 
 /**
@@ -1667,23 +1667,23 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
 	OdoMeter mOdometer;            // _20
 	Vector3f mMoveDir;             // _30, calc'd from CRSplineTangent
 	u16 mNumRoutePoints;           // _3C
-	u8 _3E;                        // _3E
-	u16 _40;                       // _40
-	int _44;                       // _44
+	u8 mJumpRetryTimer;            // _3E
+	u16 mStateProgress;            // _40
+	int mNextPathIndex;            // _44
 	u32 _48;                       // _48, unknown
 	Vector3f mSplineControlPts[4]; // _4C
 	Vector3f mRouteStartPos;       // _7C
-	u8 _88;                        // _88
+	u8 mPathType;                  // _88
 	int mSlotIndex;                // _8C
-	Vector3f _90;                  // _90
-	u8 _9C;                        // _9C
-	u8 _9D;                        // _9D
-	int _A0;                       // _A0
-	f32 _A4;                       // _A4
-	int _A8;                       // _A8
+	Vector3f mSpinStartPosition;   // _90
+	u8 mFinishPutting;             // _9C
+	u8 mIsLiftActionDone;          // _9D
+	int mLiftRetryCount;           // _A0
+	f32 mWaitTimer;                // _A4
+	int mPathIndex;                // _A8
 	int mGoalWPIndex;              // _AC
 	Suckable* mGoal;               // _B0, either GoalItem* or UfoItem*, depending
-	u8 _B4;                        // _B4
+	u8 mCanCarry;                  // _B4
 	                               // _B8-_C0 = PaniAnimKeyListener
 };
 
@@ -1732,9 +1732,9 @@ struct ActWatch : public Action {
 	// _00     = VTBL
 	// _00-_14 = Action
 	SmartPtr<Creature> mTarget; // _14
-	int _18;                    // _18
+	int mWatchRetryTimer;       // _18
 	AnimListener* mListener;    // _1C
-	Vector3f _20;               // _20
+	Vector3f mTargetPosition;   // _20
 };
 
 /**

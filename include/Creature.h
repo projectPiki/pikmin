@@ -357,7 +357,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Matrix4f mRopeOrientMtx;             // _114
 	Creature* mRopeListHead;             // _154, first holder in list of holders holding onto this rope
 	RopeCreature* mRope;                 // _158
-	f32 mRopeRatio;                      // _15C, how far along the rope are we
+	f32 mRopePosRatio;                   // _15C, how far along the rope are we
 	Creature* mNextRopeHolder;           // _160, rope holder after this one in the rope list
 	Creature* mPrevRopeHolder;           // _164, rope holder before this one in the rope list
 	UpdateContext mSearchContext;        // _168

@@ -55,7 +55,7 @@ int ActBoMake::exec()
 	}
 
 	if (!mBuildObject->isAlive()) {
-		mActor->mEmotion = 0;
+		mPiki->mEmotion = 0;
 		return ACTOUT_Success;
 	}
 
@@ -77,7 +77,7 @@ int ActBoMake::exec()
 void ActBoMake::initApproach()
 {
 	mState = STATE_Approach;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
 /*
@@ -87,13 +87,13 @@ void ActBoMake::initApproach()
  */
 int ActBoMake::exeApproach()
 {
-	Vector3f direction = mBuildObject->mPosition - mActor->mPosition;
-	if (direction.normalise() - mBuildObject->getCentreSize() - mActor->getCentreSize() < 3.0f) {
+	Vector3f direction = mBuildObject->mPosition - mPiki->mPosition;
+	if (direction.normalise() - mBuildObject->getCentreSize() - mPiki->getCentreSize() < 3.0f) {
 		initWork();
 		return ACTOUT_Continue;
 	}
 
-	mActor->setSpeed(1.0f, direction);
+	mPiki->setSpeed(1.0f, direction);
 	return ACTOUT_Continue;
 }
 
@@ -105,12 +105,12 @@ int ActBoMake::exeApproach()
 void ActBoMake::initWork()
 {
 	// can't stick to a work object if piki is already stuck to something
-	if (mActor->isStickTo()) {
+	if (mPiki->isStickTo()) {
 		return;
 	}
 
-	mActor->startStickObject(mBuildObject, mBuildObject->mCollInfo->getSphere('cent'), -1, 0.0f);
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+	mPiki->startStickObject(mBuildObject, mBuildObject->mCollInfo->getSphere('cent'), -1, 0.0f);
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 }
 
 /*
@@ -130,7 +130,7 @@ int ActBoMake::exeWork()
  */
 void ActBoMake::cleanup()
 {
-	mActor->endStickObject();
+	mPiki->endStickObject();
 }
 
 /*
@@ -144,7 +144,7 @@ void ActBoMake::animationKeyUpdated(PaniAnimKeyEvent& event)
 	case KEY_Finished:
 		break;
 	case KEY_Action0:
-		InteractBuild build(mActor, 0, 1.0f);
+		InteractBuild build(mPiki, 0, 1.0f);
 		mBuildObject->stimulate(build); // the one time it's not in the same line, smh
 		break;
 	}

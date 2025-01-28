@@ -53,9 +53,9 @@ void ActAttack::init(Creature* creature)
 		return;
 	}
 
-	mActor->_408     = 0;
-	mActor->mEmotion = 5;
-	mActor->getState(); // this is also just like this in the DLL lol
+	mPiki->_408     = 0;
+	mPiki->mEmotion = 5;
+	mPiki->getState(); // this is also just like this in the DLL lol
 
 	if (!creature) {
 		PRINT("commander is 0 karl gotti!!!!!!!!!!1\n"); // lol
@@ -95,7 +95,7 @@ void ActAttack::startLost()
 {
 	_1C = 1;
 	_1D = 0;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, this), PaniMotionInfo(PIKIANIM_Sagasu2));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, this), PaniMotionInfo(PIKIANIM_Sagasu2));
 }
 
 /*
@@ -112,8 +112,8 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 		break;
 	case KEY_PlayEffect:
-		if (mActor->aiCullable() && (AIPerf::optLevel <= 1 || mActor->mOptUpdateContext.updatable())) {
-			Vector3f vec(mActor->mEffectPos);
+		if (mPiki->aiCullable() && (AIPerf::optLevel <= 1 || mPiki->mOptUpdateContext.updatable())) {
+			Vector3f vec(mPiki->mEffectPos);
 			if (_1E) {
 				effectMgr->create(EffectMgr::EFF_Piki_BigHit, vec, nullptr, nullptr);
 			} else {
@@ -171,12 +171,12 @@ Creature* ActAttack::findTarget()
 		CI_LOOP(iter)
 		{
 			Creature* teki = *iter;
-			if (roughCull(teki, mActor, 30.0f)) {
+			if (roughCull(teki, mPiki, 30.0f)) {
 				continue;
 			}
 			// i'm bad at reading the DLL assembly, but it's genuinely something like this
 			// (IDA and ghidra both don't try it bc it's inaccessible)
-			if (qdist2(teki, mActor) < 50.0f && teki->isAlive() && teki->isVisible() && !teki->isBuried() && !teki->isFlying()) {
+			if (qdist2(teki, mPiki) < 50.0f && teki->isAlive() && teki->isVisible() && !teki->isBuried() && !teki->isFlying()) {
 				return teki;
 			}
 		}
@@ -198,7 +198,7 @@ Creature* ActAttack::decideTarget()
 	CI_LOOP(iter)
 	{
 		if ((*iter)->isAlive() && (*iter)->isVisible()) {
-			if (qdist2(*iter, mActor) < 1.0f) {
+			if (qdist2(*iter, mPiki) < 1.0f) {
 				return *iter;
 			}
 			targetList[count++] = *iter;
@@ -224,7 +224,7 @@ int ActAttack::exec()
 	}
 
 	if (_1C) {
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		if (_1D) {
 			return ACTOUT_Success;
 		}
@@ -245,8 +245,8 @@ int ActAttack::exec()
 	}
 
 	if (!_24.getPtr()->isAlive()) {
-		if (mActor->isStickTo()) {
-			mActor->endStickObject();
+		if (mPiki->isStickTo()) {
+			mPiki->endStickObject();
 		}
 		return ACTOUT_Success;
 	}
@@ -254,12 +254,12 @@ int ActAttack::exec()
 	if (_24.getPtr()->isPiki()) {
 		Piki* targetPiki = static_cast<Piki*>(_24.getPtr());
 		if (!targetPiki->isKinoko() || (targetPiki->isKinoko() && targetPiki->getState() == PIKISTATE_KinokoChange)) {
-			mActor->mEmotion = 7;
+			mPiki->mEmotion = 7;
 			return ACTOUT_Success;
 		}
 	}
 
-	if (!mActor->isStickTo() && (_24.getPtr()->isFlying() || !_24.getPtr()->isVisible())) {
+	if (!mPiki->isStickTo() && (_24.getPtr()->isFlying() || !_24.getPtr()->isVisible())) {
 		PRINT("target start flying\n");
 
 		Creature* target = findTarget();
@@ -306,7 +306,7 @@ int ActAttack::exec()
 			}
 		}
 
-		PRINT("once is done : %x\n", mActor);
+		PRINT("once is done : %x\n", mPiki);
 		return ACTOUT_Success;
 	}
 
@@ -320,11 +320,11 @@ int ActAttack::exec()
  */
 void ActAttack::cleanup()
 {
-	mActor->endClimb();
+	mPiki->endClimb();
 	seMgr->leaveBattle();
-	mActor->endStickObject();
+	mPiki->endStickObject();
 	_24.reset();
-	mActor->_519 = 0;
+	mPiki->_519 = 0;
 }
 
 /*
@@ -345,30 +345,30 @@ ActJumpAttack::ActJumpAttack(Piki* piki)
  */
 void ActJumpAttack::init(Creature* creature)
 {
-	mActor->_408     = 0;
-	mActor->mEmotion = 5;
+	mPiki->_408     = 0;
+	mPiki->mEmotion = 5;
 	if (creature) {
 		_24.set(creature);
 	}
 	_18 = 0;
 	_2C = 0;
-	if (mActor->isStickTo()) {
-		PRINT("jump attack : piki sticks to %s\n", mActor->mStickPart ? mActor->mStickPart->mCollInfo->mId.mStringID : "?");
-		if (mActor->mStickPart && mActor->mStickPart->isClimbable()) {
-			mActor->startClimb();
+	if (mPiki->isStickTo()) {
+		PRINT("jump attack : piki sticks to %s\n", mPiki->mStickPart ? mPiki->mStickPart->mCollInfo->mId.mStringID : "?");
+		if (mPiki->mStickPart && mPiki->mStickPart->isClimbable()) {
+			mPiki->startClimb();
 			_18 = 6;
-			mActor->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
 		} else {
 			_18 = 5;
 			_2D = 0;
-			mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 		}
 		_20 = 0;
 	} else {
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
 	}
 
-	_28 = creature->getNearestCollPart(mActor->mPosition, '*t**');
+	_28 = creature->getNearestCollPart(mPiki->mPosition, '*t**');
 }
 
 /*
@@ -514,8 +514,8 @@ int ActJumpAttack::exec()
 {
 	Creature* target = _24.getPtr();
 	if (!target || !target->isVisible() || !target->isAlive()) {
-		if (mActor->isStickTo()) {
-			mActor->endStickObject();
+		if (mPiki->isStickTo()) {
+			mPiki->endStickObject();
 		}
 		return ACTOUT_Success;
 	}
@@ -527,7 +527,7 @@ int ActJumpAttack::exec()
 		}
 	}
 
-	if (mActor->isStickTo() && mActor->getStickObject() && !mActor->getStickObject()->isAlive()) {
+	if (mPiki->isStickTo() && mPiki->getStickObject() && !mPiki->getStickObject()->isAlive()) {
 		return ACTOUT_Success;
 	}
 
@@ -536,100 +536,100 @@ int ActJumpAttack::exec()
 		doClimb();
 		break;
 	case 2: {
-		Vector3f direction = getAttackPos() - mActor->mPosition;
+		Vector3f direction = getAttackPos() - mPiki->mPosition;
 		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
 		direction.normalise();
-		f32 angle = angDist(atan2f(direction.x, direction.z), mActor->mFaceDirection);
+		f32 angle = angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection);
 
-		f32 size = getAttackSize() + mActor->getCentreSize();
+		f32 size = getAttackSize() + mPiki->getCentreSize();
 		if (dist2D < size) {
-			mActor->setSpeed(0.5f, direction);
-			mActor->mTargetVelocity = mActor->mTargetVelocity * -1.0f;
+			mPiki->setSpeed(0.5f, direction);
+			mPiki->mTargetVelocity = mPiki->mTargetVelocity * -1.0f;
 			break;
 		}
 
 		if (dist2D > size + 6.0f) {
-			mActor->setSpeed(0.5f, direction);
+			mPiki->setSpeed(0.5f, direction);
 			break;
 		}
 
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		if (angle < PI / 10.0f) {
 			f32 vertSpeed = 200.0f;
-			mActor->mVelocity.set(100.0f * direction.x, vertSpeed, 100.0f * direction.z);
-			mActor->startMotion(PaniMotionInfo(PIKIANIM_StillJump, this), PaniMotionInfo(PIKIANIM_StillJump));
-			_18                  = 1;
-			mActor->mWantToStick = 1;
+			mPiki->mVelocity.set(100.0f * direction.x, vertSpeed, 100.0f * direction.z);
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_StillJump, this), PaniMotionInfo(PIKIANIM_StillJump));
+			_18                 = 1;
+			mPiki->mWantToStick = 1;
 			PRINT("jump !\n");
 			break;
 		}
 
-		mActor->mFaceDirection = roundAng(mActor->mFaceDirection + 0.2f * angle);
+		mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.2f * angle);
 
 	} break;
 
 	case 0: {
-		Vector3f direction = getAttackPos() - mActor->mPosition;
+		Vector3f direction = getAttackPos() - mPiki->mPosition;
 		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
 		f32 dist3D         = direction.normalise();
-		f32 angle          = zen::Abs(angDist(atan2f(direction.x, direction.z), mActor->mFaceDirection));
+		f32 angle          = zen::Abs(angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection));
 		if ((!_2C || (_2C && _28 && !_28->isStickable())) && angle < PI / 10.0f
-		    && dist3D < getAttackSize() + mActor->getCentreSize() + 10.0f) {
-			if (!mActor->isStickTo()) {
+		    && dist3D < getAttackSize() + mPiki->getCentreSize() + 10.0f) {
+			if (!mPiki->isStickTo()) {
 				_2D = 0;
-				mActor->startMotion(PaniMotionInfo(PIKIANIM_Attack, this), PaniMotionInfo(PIKIANIM_Attack));
-				mActor->playEventSound(target, SE_PIKI_ATTACK_VOICE);
+				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Attack, this), PaniMotionInfo(PIKIANIM_Attack));
+				mPiki->playEventSound(target, SE_PIKI_ATTACK_VOICE);
 				_20 = 0;
 				_18 = 4;
-				mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+				mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			}
 		} else if ((!_28 || _28->isStickable()) && _2C && System::getRand(1.0f) > 0.9f) {
 			_18 = 2;
 		} else {
-			if (dist2D < getAttackSize() + mActor->getCentreSize() && System::getRand(1.0f) > 0.7f) {
+			if (dist2D < getAttackSize() + mPiki->getCentreSize() && System::getRand(1.0f) > 0.7f) {
 				PRINT("jump adjust : dist2d = %.1f d = %.1f\n", dist2D, dist3D);
 				_18 = 2;
 			}
 
-			mActor->mFaceDirection = roundAng(mActor->mFaceDirection + 0.2f * angle);
-			mActor->setSpeed(1.0f, direction);
+			mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.2f * angle);
+			mPiki->setSpeed(1.0f, direction);
 		}
 
-		if (mActor->isStickTo() && !mActor->mFloorTri) {
+		if (mPiki->isStickTo() && !mPiki->mFloorTri) {
 			_18 = 5;
 			PRINT("start ATTACK(KUTTUKU)!\n");
 			_2D = 0;
-			mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
-			mActor->playEventSound(target, SE_PIKI_ATTACK_VOICE);
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+			mPiki->playEventSound(target, SE_PIKI_ATTACK_VOICE);
 			_20 = 0;
 		}
 
 	} break;
 
 	case 4: {
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		if (mActor->isStickTo() && !mActor->mFloorTri) {
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		if (mPiki->isStickTo() && !mPiki->mFloorTri) {
 			_18 = 5;
 			_2D = 0;
-			mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
-			mActor->playEventSound(target, SE_PIKI_ATTACK_VOICE);
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+			mPiki->playEventSound(target, SE_PIKI_ATTACK_VOICE);
 			_20 = 0;
 			break;
 		}
 
 		if (_20 == 1) {
-			Vector3f direction = getAttackPos() - mActor->mPosition;
-			f32 angle          = angDist(atan2f(direction.x, direction.z), mActor->mFaceDirection);
+			Vector3f direction = getAttackPos() - mPiki->mPosition;
+			f32 angle          = angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection);
 			f32 sep            = direction.length();
-			f32 dist           = sep - getAttackSize() - mActor->getCentreSize();
+			f32 dist           = sep - getAttackSize() - mPiki->getCentreSize();
 			if (dist < 10.0f && zen::Abs(angle) < PI / 4.0f && (target->isBoss() || target->isTeki()) && target->isAlive()
 			    && target->isVisible()) {
-				f32 damage = mActor->getAttackPower();
+				f32 damage = mPiki->getAttackPower();
 				if (CourseDebug::pikiNoAttack) {
 					damage = 0.001f;
 				}
 
-				InteractAttack attack(mActor, nullptr, damage, false);
+				InteractAttack attack(mPiki, nullptr, damage, false);
 				if (target->stimulate(attack)) {
 					PRINT("ATTACK SUCCESS\n");
 					attackHit();
@@ -642,13 +642,13 @@ int ActJumpAttack::exec()
 
 			if (dist < 10.0f && target->mObjType == OBJTYPE_Piki) {
 				Piki* targPiki = static_cast<Piki*>(target);
-				if (targPiki->isTeki(mActor) && targPiki->isAlive() && targPiki->isVisible() && !targPiki->isDamaged()) {
-					f32 damage = mActor->getAttackPower();
+				if (targPiki->isTeki(mPiki) && targPiki->isAlive() && targPiki->isVisible() && !targPiki->isDamaged()) {
+					f32 damage = mPiki->getAttackPower();
 					if (CourseDebug::pikiNoAttack) {
 						damage = 0.001f;
 					}
 
-					InteractAttack attack(mActor, nullptr, damage, false);
+					InteractAttack attack(mPiki, nullptr, damage, false);
 					if (target->stimulate(attack)) {
 						PRINT("ATTACK SUCCESS\n");
 						attackHit();
@@ -668,18 +668,18 @@ int ActJumpAttack::exec()
 		}
 	} break;
 	case 5: {
-		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		if (_20 == 1) {
-			if (mActor->isStickTo()) {
-				Creature* stickObj = mActor->getStickObject();
+			if (mPiki->isStickTo()) {
+				Creature* stickObj = mPiki->getStickObject();
 				if ((stickObj->isBoss() || stickObj->isTeki()) && stickObj->isAlive() && stickObj->isVisible()) {
-					f32 damage = mActor->getAttackPower();
+					f32 damage = mPiki->getAttackPower();
 					if (CourseDebug::pikiNoAttack) {
 						damage = 0.001f;
 					}
 
-					InteractAttack attack(mActor, mActor->getStickPart(), damage, false);
+					InteractAttack attack(mPiki, mPiki->getStickPart(), damage, false);
 					if (stickObj->stimulate(attack)) {
 						PRINT("ATTACK SUCCESS\n");
 						if (stickObj->isFlying()) {
@@ -695,13 +695,13 @@ int ActJumpAttack::exec()
 
 				if (stickObj->mObjType == OBJTYPE_Piki) {
 					Piki* stickPiki = static_cast<Piki*>(stickObj);
-					if (stickPiki->isTeki(mActor) && stickPiki->isAlive() && stickPiki->isVisible()) {
-						f32 damage = mActor->getAttackPower();
+					if (stickPiki->isTeki(mPiki) && stickPiki->isAlive() && stickPiki->isVisible()) {
+						f32 damage = mPiki->getAttackPower();
 						if (CourseDebug::pikiNoAttack) {
 							damage = 0.001f;
 						}
 
-						InteractAttack attack(mActor, mActor->getStickPart(), damage, false);
+						InteractAttack attack(mPiki, mPiki->getStickPart(), damage, false);
 						if (stickObj->stimulate(attack)) {
 							PRINT("ATTACK SUCCESS\n");
 
@@ -717,9 +717,9 @@ int ActJumpAttack::exec()
 			return ACTOUT_Success;
 		}
 
-		if (!mActor->isStickTo()) {
+		if (!mPiki->isStickTo()) {
 			PRINT("jump attack : finish stick\n");
-			mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 			_18 = 0;
 			return ACTOUT_Continue;
 		}
@@ -1779,7 +1779,7 @@ int ActJumpAttack::exec()
 void ActJumpAttack::cleanup()
 {
 	_24.reset();
-	mActor->mWantToStick = 0;
+	mPiki->mWantToStick = 0;
 }
 
 /*
@@ -1789,7 +1789,7 @@ void ActJumpAttack::cleanup()
  */
 void ActJumpAttack::attackHit()
 {
-	mActor->playEventSound(_24.getPtr(), 25);
+	mPiki->playEventSound(_24.getPtr(), 25);
 }
 
 /*
@@ -1813,8 +1813,8 @@ void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 		_20 = 4;
 		break;
 	case KEY_PlayEffect:
-		if (mActor->aiCullable() && (AIPerf::optLevel <= 1 || mActor->mOptUpdateContext.updatable())) {
-			Vector3f vec(mActor->mEffectPos);
+		if (mPiki->aiCullable() && (AIPerf::optLevel <= 1 || mPiki->mOptUpdateContext.updatable())) {
+			Vector3f vec(mPiki->mEffectPos);
 			if (_2D) {
 				effectMgr->create(EffectMgr::EFF_Piki_BigHit, vec, nullptr, nullptr);
 			} else {
@@ -1837,41 +1837,41 @@ void ActJumpAttack::doClimb()
 	if (target && target->mCollInfo && target->mCollInfo->hasInfo()) {
 		CollPart* part = target->mCollInfo->getSphere('cent');
 		if (part) {
-			Vector3f dir = part->mCentre - mActor->mPosition;
+			Vector3f dir = part->mCentre - mPiki->mPosition;
 			f32 sep      = dir.length();
-			f32 dist     = sep - part->mRadius - mActor->getCentreSize();
+			f32 dist     = sep - part->mRadius - mPiki->getCentreSize();
 			PRINT("  :: climb target distance = %.1f\n", dist);
 			if (dist < 5.0f) {
 				_18 = 5;
 				_2D = 0;
-				mActor->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
-				mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-				mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
+				mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+				mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 				_20 = 0;
-				mActor->endClimb();
+				mPiki->endClimb();
 				return;
 			}
 		}
 	}
 
 	PRINT("climbing ...\n");
-	if (!mActor->mClimbingTri) {
+	if (!mPiki->mClimbingTri) {
 		_18 = 0;
-		mActor->endClimb();
+		mPiki->endClimb();
 		return;
 	}
 
 	bool check = true;
 	for (int i = 0; i < 3; i++) {
-		if (mActor->mClimbingTri->_28[i].dist(mActor->mPosition) < -2.0f * mActor->getCentreSize()) {
-			PRINT("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mActor->mClimbingTri->_28[i].dist(mActor->mPosition),
-			      -2.0f * mActor->getCentreSize());
+		if (mPiki->mClimbingTri->_28[i].dist(mPiki->mPosition) < -2.0f * mPiki->getCentreSize()) {
+			PRINT("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mPiki->mClimbingTri->_28[i].dist(mPiki->mPosition),
+			      -2.0f * mPiki->getCentreSize());
 			check = false;
 		}
 	}
 
 	if (!check) {
-		mActor->endStick();
+		mPiki->endStick();
 		_18 = 0;
 		PRINT("finish stick :: out of tri\n");
 		return;
@@ -1879,12 +1879,12 @@ void ActJumpAttack::doClimb()
 
 	Vector3f normal(0.0f, 1.0f, 0.0f);
 	Vector3f sep;
-	Vector3f cpNorm(*mActor->mCollPlatNormal);
+	Vector3f cpNorm(*mPiki->mCollPlatNormal);
 	cpNorm.normalise();
 	cpNorm = normal - (normal.DP(cpNorm) * cpNorm); // this is completely unused lol.
 	sep    = normal;
 	sep.normalise();
-	sep                     = sep * 20.0f;
-	mActor->mTargetVelocity = sep;
-	mActor->mVelocity       = sep;
+	sep                    = sep * 20.0f;
+	mPiki->mTargetVelocity = sep;
+	mPiki->mVelocity       = sep;
 }

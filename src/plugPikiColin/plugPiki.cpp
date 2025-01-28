@@ -178,15 +178,15 @@ void PlugPikiApp::draw(Graphics& gfx)
 		return;
 	}
 
-	gsys->mDispCount     = 0;
-	gsys->mMaterialCount = 0;
-	gsys->_1A4           = 0;
-	gsys->_1B4           = 0;
-	gsys->mLightCount    = 0;
-	gsys->mLoadedPolys   = 0;
-	gsys->mLightingSkips = 0;
-	gsys->mLightingSets  = 0;
-	gsys->mSystemState   = 0;
+	gsys->mDispCount        = 0;
+	gsys->mMaterialCount    = 0;
+	gsys->_1A4              = 0;
+	gsys->_1B4              = 0;
+	gsys->mLightCount       = 0;
+	gsys->mAnimatedPolygons = 0;
+	gsys->mLightingSkips    = 0;
+	gsys->mLightingSets     = 0;
+	gsys->mSystemState      = 0;
 	Node::draw(gfx);
 
 	Mtx mtx;
@@ -195,13 +195,13 @@ void PlugPikiApp::draw(Graphics& gfx)
 	gfx.useTexture(nullptr, 0);
 
 	if (gsys->mTimerState) {
-		Colour color(255, 255, 255, 255);
-		gfx.setColour(color, true);
+		Colour white(255, 255, 255, 255);
+		gfx.setColour(white, true);
 		gfx.texturePrintf(gsys->mConsFont, 32, 32, "%d polys = %d pps", gsys->_1A4, gsys->_1A4 * gsys->_290);
-		gfx.texturePrintf(gsys->mConsFont, 32, 44, "%d anims", gsys->mLoadedPolys);
+		gfx.texturePrintf(gsys->mConsFont, 32, 44, "%d anims", gsys->mAnimatedPolygons);
 		gfx.texturePrintf(gsys->mConsFont, 32, 56, "%d mats", gsys->mMaterialCount);
 		gfx.texturePrintf(gsys->mConsFont, 32, 68, "%d disps", gsys->mDispCount);
-		gfx.texturePrintf(gsys->mConsFont, 32, 80, "%d mtxs", gsys->mGfx->mMatrixBuffer);
+		gfx.texturePrintf(gsys->mConsFont, 32, 80, "%d mtxs", gsys->mGfx->mActiveMatrices);
 		gfx.texturePrintf(gsys->mConsFont, 32, 92, "%d / %d lighting skips / sets", gsys->mLightingSkips, gsys->mLightingSets);
 		gfx.texturePrintf(gsys->mConsFont, 32, 104, "%d light sets", gsys->mSystemState);
 	}

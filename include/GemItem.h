@@ -40,24 +40,24 @@ struct GemItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	bool _3C8;             // _3C8
-	int _3CC;              // _3CC
-	f32 _3D0;              // _3D0
-	f32 _3D4;              // _3D4
-	u8 _3D8;               // _3D8
-	u8 _3D9;               // _3D9
-	int mGemType;          // _3DC pellet size?
-	int mColor;            // _3E0
-	u8 _3E4;               // _3E4
-	f32 _3E8;              // _3E8
-	int _3EC;              // _3EC
-	int _3F0;              // _3F0
-	int _3F4;              // _3F4
-	int _3F8;              // _3F8
-	int _3FC;              // _3FC
-	CollInfo mGemCollInfo; // _400
-	CollPart mGemColl[10]; // _414
-	SeContext mGemSe;      // _84C
+	bool _3C8;               // _3C8
+	int _3CC;                // _3CC
+	f32 mTargetHeight;       // _3D0
+	f32 mCurrentHeight;      // _3D4
+	u8 mIsRising;            // _3D8
+	u8 mIsBeingLifted;       // _3D9
+	int mGemType;            // _3DC pellet size?
+	int mColor;              // _3E0
+	u8 _3E4;                 // _3E4
+	f32 mSizeScale;          // _3E8
+	int _3EC;                // _3EC
+	int mMaxAttachedObjects; // _3F0
+	int _3F4;                // _3F4
+	int _3F8;                // _3F8
+	int _3FC;                // _3FC
+	CollInfo mGemCollInfo;   // _400
+	CollPart mGemColl[10];   // _414
+	SeContext mGemSe;        // _84C
 };
 
 /**

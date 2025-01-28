@@ -91,7 +91,7 @@ struct Graphics {
 	u32 _380;                                 // _380
 	Matrix4f* mSystemMatrix;                  // _384, no idea
 	u32 mMaxMatrixCount;                      // _388
-	u32 mMatrixBuffer;                        // _38C
+	u32 mActiveMatrices;                      // _38C
 	CachedShape _390;                         // _390
 	CachedShape* mCachedShapes;               // _3A8
 	u32 mCachedShapeMax;                      // _3AC

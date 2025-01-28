@@ -36,11 +36,11 @@ char* info[9] = {
 void Action::procMsg(Msg* msg)
 {
 	u32 badCompiler;
-	if (mActor->isCreatureFlag(CF_IsAiDisabled)) {
+	if (mPiki->isCreatureFlag(CF_IsAiDisabled)) {
 		return;
 	}
 
-	Receiver::procMsg(mActor, msg);
+	Receiver::procMsg(mPiki, msg);
 
 	if (mCurrActionIdx != -1 && mCurrActionIdx < mChildCount) {
 		if (mChildActions[mCurrActionIdx].mAction) {
@@ -57,8 +57,8 @@ void Action::procMsg(Msg* msg)
 void Action::Child::initialise(Creature* creature)
 {
 	if (mAction) {
-		mAction->mActor->mEmotion = 10;
-		mAction->mActor->_408     = 2;
+		mAction->mPiki->mEmotion = 10;
+		mAction->mPiki->_408     = 2;
 	}
 
 	if (mAction) {
@@ -80,7 +80,7 @@ void Action::Child::initialise(Creature* creature)
  */
 Action::Action(Piki* actor, bool p2)
 {
-	mActor         = actor;
+	mPiki          = actor;
 	mChildActions  = nullptr;
 	mCurrActionIdx = mChildCount = 0;
 	mName                        = "no name";
@@ -321,8 +321,8 @@ int TopAction::exec()
 
 	// Initialise free mode if no current action and the pikmin isn't flying
 	if (mCurrActionIdx == PikiAction::NOACTION) {
-		if (mActor->getState() != PIKISTATE_Flying) {
-			mActor->mMode  = PikiMode::FreeMode;
+		if (mPiki->getState() != PIKISTATE_Flying) {
+			mPiki->mMode   = PikiMode::FreeMode;
 			mCurrActionIdx = PikiAction::Free;
 			mChildActions[mCurrActionIdx].initialise(nullptr);
 		}
@@ -330,15 +330,15 @@ int TopAction::exec()
 		return ACTOUT_Continue;
 	}
 
-	if (mCurrActionIdx == PikiAction::Formation && !mActor->isFruit()) {
+	if (mCurrActionIdx == PikiAction::Formation && !mPiki->isFruit()) {
 		ActFormation* form = static_cast<ActFormation*>(getCurrAction());
 		if (form->_18) {
 			Iterator iter(itemMgr);
 			CI_LOOP(iter)
 			{
 				Creature* item = *iter;
-				if (item->mObjType == OBJTYPE_Water && item->isVisible() && !item->isGrabbed() && qdist2(item, mActor) < 200.0f) {
-					mActor->changeMode(PikiMode::PickMode, mActor->mNavi);
+				if (item->mObjType == OBJTYPE_Water && item->isVisible() && !item->isGrabbed() && qdist2(item, mPiki) < 200.0f) {
+					mPiki->changeMode(PikiMode::PickMode, mPiki->mNavi);
 					break;
 				}
 			}
@@ -359,14 +359,14 @@ int TopAction::exec()
 		_20            = nullptr;
 		mCurrActionIdx = PikiAction::NOACTION;
 		_2C            = 1.0f;
-		if (mActor->mMode != PikiMode::FreeMode) {
+		if (mPiki->mMode != PikiMode::FreeMode) {
 			bool doJoinParty = false;
-			switch (mActor->_408) {
+			switch (mPiki->_408) {
 			case 2:
 				break;
 			case 1:
-				f32 dist = qdist2(mActor->mNavi, mActor);
-				if (dist <= C_PIKI_PROP(mActor)._46C()) {
+				f32 dist = qdist2(mPiki->mNavi, mPiki);
+				if (dist <= C_PIKI_PROP(mPiki)._46C()) {
 					doJoinParty = true;
 				}
 				break;
@@ -376,50 +376,50 @@ int TopAction::exec()
 			}
 
 			if (doJoinParty) {
-				if (mActor->mMode == PikiMode::PutbombMode) {
+				if (mPiki->mMode == PikiMode::PutbombMode) {
 					PRINT("******** BOMB * FORMATION !\n");
 				}
-				int emote = mActor->mEmotion;
-				mActor->changeMode(PikiMode::FormationMode, nullptr);
-				if (mActor->isKinoko()) {
+				int emote = mPiki->mEmotion;
+				mPiki->changeMode(PikiMode::FormationMode, nullptr);
+				if (mPiki->isKinoko()) {
 					PRINT("キノコピキ：もとにもどる！"); // 'kinokopiki: back to normal!'
-					mActor->mFSM->transit(mActor, PIKISTATE_KinokoChange);
+					mPiki->mFSM->transit(mPiki, PIKISTATE_KinokoChange);
 
 				} else if (emote != 10) {
-					mActor->mEmotion = emote;
-					mActor->mFSM->transit(mActor, PIKISTATE_Emotion);
+					mPiki->mEmotion = emote;
+					mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 				}
 
 				return ACTOUT_Continue;
 			}
 
-			if (mActor->mMode == PikiMode::PutbombMode) {
+			if (mPiki->mMode == PikiMode::PutbombMode) {
 				PRINT("******** BOMB * FREEEEEEEEEEEEEEEEEEE WHYYYYYYYYYYYYYION !\n");
 			}
 
-			if (mActor->_408 == 3 && mActor->isHolding()) {
-				mActor->changeMode(PikiMode::PutbombMode, mActor->mNavi);
+			if (mPiki->_408 == 3 && mPiki->isHolding()) {
+				mPiki->changeMode(PikiMode::PutbombMode, mPiki->mNavi);
 			} else {
-				int emote      = mActor->mEmotion;
-				mActor->mMode  = PikiMode::FreeMode;
+				int emote      = mPiki->mEmotion;
+				mPiki->mMode   = PikiMode::FreeMode;
 				mCurrActionIdx = PikiAction::Free;
 				mChildActions[mCurrActionIdx].initialise(nullptr);
 
-				if (mActor->isKinoko()) {
+				if (mPiki->isKinoko()) {
 					PRINT("キノコピキ：もとにもどる！"); // 'kinokopiki: back to normal!'
-					mActor->mFSM->transit(mActor, PIKISTATE_KinokoChange);
+					mPiki->mFSM->transit(mPiki, PIKISTATE_KinokoChange);
 
 				} else if (emote != 10) {
-					mActor->mEmotion = emote;
-					mActor->mFSM->transit(mActor, PIKISTATE_Emotion);
+					mPiki->mEmotion = emote;
+					mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 				}
 			}
 		} else {
-			int emote = mActor->mEmotion;
-			mActor->actOnSituaton();
+			int emote = mPiki->mEmotion;
+			mPiki->actOnSituaton();
 			if (emote != 10) {
-				mActor->mEmotion = emote;
-				mActor->mFSM->transit(mActor, PIKISTATE_Emotion);
+				mPiki->mEmotion = emote;
+				mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 			}
 		}
 		break;
@@ -437,7 +437,7 @@ void TopAction::abandon(zen::particleGenerator* particle)
 {
 	if (mCurrActionIdx != -1) {
 		mChildActions[mCurrActionIdx].mAction->cleanup();
-		if (mActor->isKinoko()) {
+		if (mPiki->isKinoko()) {
 			PRINT("kinoko %d exit", mCurrActionIdx);
 		}
 

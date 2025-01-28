@@ -75,7 +75,7 @@ GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, 
 	mColor           = 0;
 	mItemShapeObject = itemMgr->getPelletShapeObject(mColor, p2);
 	mStateMachine    = ai;
-	_3E8             = a1;
+	mSizeScale       = a1;
 	// UNUSED FUNCTION
 }
 
@@ -134,8 +134,8 @@ void GemItem::startAI(int)
 	mRotation.set(1.0f, mFaceDirection, 1.0f);
 	resetCreatureFlag(CF_Unk8);
 	((SimpleAI*)mStateMachine)->start(this, 0);
-	_3D9 = false;
-	_3D8 = false;
+	mIsBeingLifted = false;
+	mIsRising      = false;
 	playSound(0);
 	// v func
 	_3CC = 0;
@@ -152,7 +152,7 @@ void GemItem::update()
 {
 	// a lot of this is just estimating based on the dll
 
-	if (_3D8) {
+	if (mIsRising) {
 		updateLiftup();
 	}
 	f32 motionScl;
@@ -163,8 +163,8 @@ void GemItem::update()
 	}
 	ItemCreature::update();
 	if (mStickListHead) {
-		f32 len = mVelocity.length();
-		setMotionSpeed(len * motionScl);
+		f32 speed = mVelocity.length();
+		setMotionSpeed(speed * motionScl);
 		f32 s = getMotionSpeed();
 		if (s > 1000.0f) {
 			PRINT("motionSpeed = %f : vel(%.1f %.1f %.1f) : getSpeedScl %.1f motionScl %.1f\n", getMotionSpeed(), mVelocity.x, mVelocity.y,
@@ -175,7 +175,7 @@ void GemItem::update()
 
 		if (mCurrentState->getID()) {
 			// some virtual func
-			if (_3D9) {
+			if (mIsBeingLifted) {
 				stopEventSound(this, SE_LIFT_TRY);
 				stopEventSound(this, SE_LIFT_MOVE);
 				finishPick();
@@ -197,7 +197,7 @@ void GemItem::update()
 bool GemItem::reachCapacity()
 {
 	Stickers stick(this);
-	return _3F0 < stick.getCount();
+	return mMaxAttachedObjects < stick.getCount();
 }
 
 /*
@@ -207,23 +207,22 @@ bool GemItem::reachCapacity()
  */
 void GemItem::updateLiftup()
 {
-	f32 a = _3D4;
-	_3D4 += gsys->getFrameTime() * 3.333333f;
-	if (_3D4 > _3D0) {
-		_3D4 = _3D0;
-		_3D8 = false;
+	f32 prevHeight = mCurrentHeight;
+	mCurrentHeight += gsys->getFrameTime() * 3.333333f;
+	if (mCurrentHeight > mTargetHeight) {
+		mCurrentHeight = mTargetHeight;
+		mIsRising      = false;
 	}
-	enableGroundOffset(_3D4);
-	mPosition.y += _3D4 - a;
+	enableGroundOffset(mCurrentHeight);
+	mPosition.y += mCurrentHeight - prevHeight;
 
 	Stickers stick(this);
 	Iterator it(nullptr);
 	CI_LOOP(it)
 	{
 		Creature* obj          = *it;
-		obj->mAttachPosition.y = obj->mAttachPosition.y - (_3D4 - a);
+		obj->mAttachPosition.y = obj->mAttachPosition.y - (mCurrentHeight - prevHeight);
 	}
-	// UNUSED FUNCTION
 }
 
 /*
@@ -236,12 +235,12 @@ void GemItem::startPick(f32 val)
 	playSound(0);
 	getCurrentMotionName();
 	setFree(false);
-	_3D0        = val;
-	_3D4        = 0;
-	_3D8        = true;
-	mVelocity.y = 0.0f;
+	mTargetHeight  = val;
+	mCurrentHeight = 0;
+	mIsRising      = true;
+	mVelocity.y    = 0.0f;
 	enableGroundOffset(0.0f);
-	_3D9 = true;
+	mIsBeingLifted = true;
 }
 
 /*
@@ -252,11 +251,11 @@ void GemItem::startPick(f32 val)
 void GemItem::finishPick()
 {
 	PRINT("FINISH PICK ++++++++++++++\n");
-	_3D8 = 0;
-	_3D0 = 0;
+	mIsRising     = 0;
+	mTargetHeight = 0;
 	disableGroundOffset();
 	setFree(true);
-	_3D9 = 0;
+	mIsBeingLifted = 0;
 	resetCreatureFlag(CF_IsFlying);
 }
 
@@ -267,7 +266,7 @@ void GemItem::finishPick()
  */
 f32 GemItem::getSize()
 {
-	return 41.0f * _3E8 / 0.4f;
+	return 41.0f * mSizeScale / 0.4f;
 }
 
 /*

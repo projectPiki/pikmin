@@ -44,7 +44,7 @@ void ActChase::init(Creature* target)
 {
 	mChaseTimer = randFloat(2.0f) + 4.0f;
 	mTarget.set(target);
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
 
 /*
@@ -73,7 +73,7 @@ int ActChase::exec()
 
 	mChaseTimer -= gsys->getFrameTime();
 
-	if (!mActor->_500.isNull() && mActor->_500.getPtr() == mTarget.getPtr()) {
+	if (!mPiki->_500.isNull() && mPiki->_500.getPtr() == mTarget.getPtr()) {
 		return ACTOUT_Success;
 	}
 
@@ -81,9 +81,9 @@ int ActChase::exec()
 		return ACTOUT_Fail;
 	}
 
-	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
-	Vector3f chaseDir = target->mPosition - mActor->mPosition;
+	Vector3f chaseDir = target->mPosition - mPiki->mPosition;
 	chaseDir.y        = 0.0f;
 	f32 chaseDist     = chaseDir.length();
 	if (chaseDist > 0.0f) {
@@ -93,6 +93,6 @@ int ActChase::exec()
 		chaseDir.set(cosf(randAngle), 0.0f, sinf(randAngle));
 	}
 
-	mActor->setSpeed(1.0f, chaseDir);
+	mPiki->setSpeed(1.0f, chaseDir);
 	return ACTOUT_Continue;
 }

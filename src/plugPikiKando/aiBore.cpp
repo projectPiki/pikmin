@@ -45,7 +45,7 @@ ActFreeSelect::ActFreeSelect(Piki* piki)
  */
 void ActFreeSelect::init(Creature* creature)
 {
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Wait, mActor), PaniMotionInfo(PIKIANIM_Wait));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait, mPiki), PaniMotionInfo(PIKIANIM_Wait));
 	mActionTimer   = 2.0f + gsys->getFrameTime();
 	mIsTimerActive = 1;
 	mCurrActionIdx = CHILD_NULL;
@@ -93,7 +93,7 @@ int ActFreeSelect::exec()
 	}
 
 	if (mIsTimerActive) {
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mActionTimer -= gsys->getFrameTime();
 		if (mActionTimer < 0.0f) {
 			determine();
@@ -158,7 +158,7 @@ void ActFreeSelect::determine()
 
 	int randIdx = selectRandomly(choices, CHILD_COUNT);
 
-	if (mActor->isHolding()) {
+	if (mPiki->isHolding()) {
 		randIdx = CHILD_Watch;
 	}
 
@@ -171,15 +171,15 @@ void ActFreeSelect::determine()
 	switch (randIdx) {
 	case CHILD_Watch:
 		if (tekiMgr) {
-			nearestEnemy = tekiMgr->findClosest(mActor->mPosition, nullptr);
+			nearestEnemy = tekiMgr->findClosest(mPiki->mPosition, nullptr);
 		}
 
-		Creature* nearestItem = itemMgr->findClosest(mActor->mPosition, nullptr);
-		Creature* nearestNavi = naviMgr->findClosest(mActor->mPosition, nullptr);
+		Creature* nearestItem = itemMgr->findClosest(mPiki->mPosition, nullptr);
+		Creature* nearestNavi = naviMgr->findClosest(mPiki->mPosition, nullptr);
 
 		Creature* nearestBoss;
 		if (bossMgr) {
-			nearestBoss = bossMgr->findClosest(mActor->mPosition, nullptr);
+			nearestBoss = bossMgr->findClosest(mPiki->mPosition, nullptr);
 		} else {
 			nearestBoss = nullptr;
 		}
@@ -455,7 +455,7 @@ ActBoreSelect::ActBoreSelect(Piki* piki)
  */
 void ActBoreSelect::init(Creature* creature)
 {
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Wait, mActor), PaniMotionInfo(PIKIANIM_Wait));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait, mPiki), PaniMotionInfo(PIKIANIM_Wait));
 	mActionTimer   = 2.0f + gsys->getFrameTime();
 	mIsTimerActive = 1;
 	mCurrActionIdx = CHILD_NULL;
@@ -486,8 +486,8 @@ int ActBoreSelect::exec()
 		return mChildActions[mCurrActionIdx].mAction->exec();
 	}
 
-	if (mActor->mNavi->_738 < 1.0f || _1A) {
-		if (mActor->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == 3) {
+	if (mPiki->mNavi->_738 < 1.0f || _1A) {
+		if (mPiki->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == 3) {
 			return ACTOUT_Success;
 		}
 
@@ -506,7 +506,7 @@ int ActBoreSelect::exec()
 	}
 
 	if (mIsTimerActive) {
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mActionTimer -= gsys->getFrameTime();
 		if (mActionTimer < 0.0f) {
 			determine();
@@ -590,7 +590,7 @@ void ActBoreSelect::determine()
 
 	int randIdx = selectRandomly(choices, CHILD_COUNT);
 
-	if (mActor->mGrabbedCreature.mPtr) {
+	if (mPiki->mGrabbedCreature.mPtr) {
 		randIdx = CHILD_Watch;
 	}
 
@@ -603,13 +603,13 @@ void ActBoreSelect::determine()
 	switch (randIdx) {
 	case CHILD_Watch:
 		if (tekiMgr) {
-			nearestEnemy = tekiMgr->findClosest(mActor->mPosition, nullptr);
+			nearestEnemy = tekiMgr->findClosest(mPiki->mPosition, nullptr);
 		}
 
-		Creature* nearestItem = itemMgr->findClosest(mActor->mPosition, nullptr);
-		Creature* nearestNavi = naviMgr->findClosest(mActor->mPosition, nullptr);
+		Creature* nearestItem = itemMgr->findClosest(mPiki->mPosition, nullptr);
+		Creature* nearestNavi = naviMgr->findClosest(mPiki->mPosition, nullptr);
 
-		Creature* nearestBoss = (bossMgr) ? bossMgr->findClosest(mActor->mPosition, nullptr) : nullptr;
+		Creature* nearestBoss = (bossMgr) ? bossMgr->findClosest(mPiki->mPosition, nullptr) : nullptr;
 
 		if (nearestBoss) {
 			target = nearestBoss;
@@ -880,11 +880,11 @@ void ActBoreTalk::init(Creature* creature)
 {
 	mIsAnimFinished = false;
 	_18             = 0;
-	Iterator iter(&mActor->mSearchBuffer);
+	Iterator iter(&mPiki->mSearchBuffer);
 	iter.first();
 	mTarget = *iter;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Asibumi, this), PaniMotionInfo(PIKIANIM_Asibumi));
-	mActor->enableMotionBlend();
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Asibumi, this), PaniMotionInfo(PIKIANIM_Asibumi));
+	mPiki->enableMotionBlend();
 
 	u32 badCompiler[2];
 }
@@ -896,21 +896,21 @@ void ActBoreTalk::init(Creature* creature)
  */
 void ActBoreTalk::startTalk()
 {
-	Iterator iter(&mActor->mSearchBuffer);
-	mActor->turnTo(mTarget->mPosition);
+	Iterator iter(&mPiki->mSearchBuffer);
+	mPiki->turnTo(mTarget->mPosition);
 
 	CI_LOOP(iter)
 	{
 		Creature* c = *iter;
-		c->stimulate(InteractTalk(mActor));
+		c->stimulate(InteractTalk(mPiki));
 	}
 
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Chatting, this), PaniMotionInfo(PIKIANIM_Chatting));
-	mActor->enableMotionBlend();
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Chatting, this), PaniMotionInfo(PIKIANIM_Chatting));
+	mPiki->enableMotionBlend();
 	_20 = 2.0f * System::getRand(1.0f) + 5.0f;
 
-	if (mActor->mMode == PikiMode::FormationMode && mActor->mNavi->mPlateMgr
-	    && mActor->mNavi->getCurrState()->getID() != NAVISTATE_DemoSunset && mActor->mNavi->mCurrState->getID() != NAVISTATE_Dead) {
+	if (mPiki->mMode == PikiMode::FormationMode && mPiki->mNavi->mPlateMgr && mPiki->mNavi->getCurrState()->getID() != NAVISTATE_DemoSunset
+	    && mPiki->mNavi->mCurrState->getID() != NAVISTATE_Dead) {
 		seMgr->setPikiNum(0);
 	}
 }
@@ -927,10 +927,10 @@ int ActBoreTalk::exec()
 	}
 
 	if (_18 == 0) {
-		Vector3f dir           = mTarget->mPosition - mActor->mPosition;
-		f32 ang                = atan2f(dir.x, dir.z);
-		ang                    = angDist(ang, mActor->mFaceDirection);
-		mActor->mFaceDirection = roundAng(mActor->mFaceDirection + 0.1f * ang);
+		Vector3f dir          = mTarget->mPosition - mPiki->mPosition;
+		f32 ang               = atan2f(dir.x, dir.z);
+		ang                   = angDist(ang, mPiki->mFaceDirection);
+		mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.1f * ang);
 
 		if (quickABS(ang) < 0.1f) {
 			_18 = 1;
@@ -944,7 +944,7 @@ int ActBoreTalk::exec()
 
 	_20 -= gsys->getFrameTime();
 	if (_20 < 0.0f) {
-		mActor->mPikiAnimMgr.finishMotion(this);
+		mPiki->mPikiAnimMgr.finishMotion(this);
 	}
 
 	return ACTOUT_Continue;
@@ -1036,7 +1036,7 @@ ActBoreOneshot::ActBoreOneshot(Piki* piki)
  */
 void ActBoreOneshot::finish()
 {
-	mActor->mPikiAnimMgr.finishMotion(this);
+	mPiki->mPikiAnimMgr.finishMotion(this);
 }
 
 /*
@@ -1056,7 +1056,7 @@ void ActBoreOneshot::init(Creature* creature)
 
 	int randAnim = selectRandomly(choices, 4);
 
-	mActor->startMotion(PaniMotionInfo(randAnim, this), PaniMotionInfo(randAnim));
+	mPiki->startMotion(PaniMotionInfo(randAnim, this), PaniMotionInfo(randAnim));
 }
 
 /*
@@ -1127,11 +1127,11 @@ void ActBoreRest::sitDown()
 {
 	switch (_1C) {
 	case 0:
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
 		_1C = 1;
 		break;
 	case 1:
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_Neru, this), PaniMotionInfo(PIKIANIM_Neru));
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Neru, this), PaniMotionInfo(PIKIANIM_Neru));
 		_1C = 3;
 		break;
 	}
@@ -1146,11 +1146,11 @@ void ActBoreRest::standUp()
 {
 	switch (_1C) {
 	case 1:
-		mActor->mPikiAnimMgr.finishMotion(this);
+		mPiki->mPikiAnimMgr.finishMotion(this);
 		_24 = 1;
 		break;
 	case 3:
-		mActor->mPikiAnimMgr.finishMotion(this);
+		mPiki->mPikiAnimMgr.finishMotion(this);
 		_24 = 1;
 		break;
 	}
@@ -1458,9 +1458,9 @@ void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent& event)
 			case 3:
 				_24 = 0;
 				_1C = 1;
-				mActor->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
-				mActor->mPikiAnimMgr.getUpperAnimator().mAnimationCounter = 30.0f;
-				mActor->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 30.0f;
+				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
+				mPiki->mPikiAnimMgr.getUpperAnimator().mAnimationCounter = 30.0f;
+				mPiki->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 30.0f;
 				break;
 			}
 		}

@@ -45,9 +45,9 @@ void ActEscape::init(Creature* target)
 	mEscapeTimer = randFloat(2.0f) + 4.0f;
 	mTarget.set(target);
 	mState = STATE_Normal;
-	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	PRINT(" escape start\n");
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Nigeru), PaniMotionInfo(PIKIANIM_Nigeru));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Nigeru), PaniMotionInfo(PIKIANIM_Nigeru));
 }
 
 /*
@@ -77,35 +77,36 @@ int ActEscape::exec()
 		return ACTOUT_Success;
 	}
 
-	bool unused;
+	bool escapeLimitReached;
 	if (mEscapeTimer > 10.0f) {
-		unused       = false;
-		mEscapeTimer = 10.0f;
+		escapeLimitReached = false;
+		mEscapeTimer       = 10.0f;
 	}
 
 	switch (mState) {
 	case STATE_Normal:
-		Vector3f dir = mActor->mPosition - target->mPosition;
-		Vector3f tmp(dir);
-		f32 dist = dir.length();
+		Vector3f escapeDirection = mPiki->mPosition - target->mPosition;
+		Vector3f tmp(escapeDirection);
+		f32 dist = escapeDirection.length();
 		if (dist > 0.0f) {
-			dir = (1.0f / dist) * dir;
+			escapeDirection = (1.0f / dist) * escapeDirection;
 		} else {
 			f32 randAngle = 2.0f * randFloat(PI);
-			dir.set(cosf(randAngle), 0.0f, sinf(randAngle));
+			escapeDirection.set(cosf(randAngle), 0.0f, sinf(randAngle));
 		}
 
-		mActor->setSpeed(1.0f, dir);
-		if (mActor->getAvoid(mActor->mTargetVelocity, _24)) {
+		mPiki->setSpeed(1.0f, escapeDirection);
+		if (mPiki->getAvoid(mPiki->mTargetVelocity, mAvoidDirection)) {
 			mState = STATE_Avoid;
-			Vector3f moveDir(-_24.z, 0.0f, _24.x);
-			mActor->setSpeed(1.0f, moveDir);
+			Vector3f perpMoveDir(-mAvoidDirection.z, 0.0f, mAvoidDirection.x);
+			mPiki->setSpeed(1.0f, perpMoveDir);
 		}
 		break;
+
 	case STATE_Avoid:
-		if (mActor->getAvoid(mActor->mTargetVelocity, _24)) {
-			Vector3f moveDir(-_24.z, 0.0f, _24.x);
-			mActor->setSpeed(1.0f, moveDir);
+		if (mPiki->getAvoid(mPiki->mTargetVelocity, mAvoidDirection)) {
+			Vector3f moveDir(-mAvoidDirection.z, 0.0f, mAvoidDirection.x);
+			mPiki->setSpeed(1.0f, moveDir);
 		} else {
 			mState = STATE_Normal;
 		}
@@ -122,5 +123,5 @@ int ActEscape::exec()
  */
 void ActEscape::getInfo(char* buf)
 {
-	sprintf(buf, "esc(%s) (%.1f,%.1f)", mState == STATE_Normal ? "NORMAL" : "AVOID", mActor->mTargetVelocity.x, mActor->mTargetVelocity.z);
+	sprintf(buf, "esc(%s) (%.1f,%.1f)", mState == STATE_Normal ? "NORMAL" : "AVOID", mPiki->mTargetVelocity.x, mPiki->mTargetVelocity.z);
 }

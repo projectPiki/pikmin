@@ -76,8 +76,8 @@ int ActStone::exec()
  */
 void ActStone::cleanup()
 {
-	mActor->disableFixPos();
-	mActor->resetCreatureFlag(CF_IsPositionFixed);
+	mPiki->disableFixPos();
+	mPiki->resetCreatureFlag(CF_IsPositionFixed);
 	if (mRockGen) {
 		mRockGen->finishWork();
 	}
@@ -98,7 +98,7 @@ void ActStone::initApproach()
 
 	mState = STATE_Approach;
 
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
 /*
@@ -109,11 +109,11 @@ void ActStone::initApproach()
 int ActStone::exeApproach()
 {
 	if (!mCurrPebble || !mCurrPebble->isAlive()) {
-		mActor->mEmotion = 1;
+		mPiki->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
-	Vector3f direction = mCurrPebble->mPosition - mActor->mPosition;
+	Vector3f direction = mCurrPebble->mPosition - mPiki->mPosition;
 	f32 dist2D         = std::sqrtf(direction.x * direction.x + direction.z * direction.z);
 	f32 unused         = direction.normalise();
 
@@ -122,7 +122,7 @@ int ActStone::exeApproach()
 		return ACTOUT_Continue;
 	}
 
-	mActor->setSpeed(0.7f, direction);
+	mPiki->setSpeed(0.7f, direction);
 	return ACTOUT_Continue;
 }
 
@@ -144,22 +144,22 @@ void ActStone::initAdjust()
 int ActStone::exeAdjust()
 {
 	if (!mCurrPebble || !mCurrPebble->isAlive()) {
-		mActor->mEmotion = 1;
+		mPiki->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
-	Vector3f direction = mCurrPebble->mPosition - mActor->mPosition;
+	Vector3f direction = mCurrPebble->mPosition - mPiki->mPosition;
 	f32 dist2D         = std::sqrtf(direction.x * direction.x + direction.z * direction.z);
 	f32 unused         = direction.normalise();
 
 	if (dist2D < 8.0f) {
 		initAttack();
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 		return ACTOUT_Continue;
 	}
 
-	mActor->setSpeed(0.5f, direction);
+	mPiki->setSpeed(0.5f, direction);
 	return ACTOUT_Continue;
 }
 
@@ -171,9 +171,9 @@ int ActStone::exeAdjust()
 void ActStone::initAttack()
 {
 	mState = STATE_Attack;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Job2, this), PaniMotionInfo(PIKIANIM_Job2));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Job2, this), PaniMotionInfo(PIKIANIM_Job2));
 	mIsAttackReady = 0;
-	mActor->enableFixPos();
+	mPiki->enableFixPos();
 }
 
 /*
@@ -184,15 +184,15 @@ void ActStone::initAttack()
 int ActStone::exeAttack()
 {
 	if (mCurrPebble->mHealth == 0) {
-		mActor->disableFixPos();
-		mActor->resetCreatureFlag(CF_IsPositionFixed);
+		mPiki->disableFixPos();
+		mPiki->resetCreatureFlag(CF_IsPositionFixed);
 
 		initApproach();
 		return ACTOUT_Continue;
 	}
 
-	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 	if (mIsAttackReady) {
 		initAttack();
 		return ACTOUT_Continue;
@@ -213,22 +213,22 @@ void ActStone::animationKeyUpdated(PaniAnimKeyEvent& event)
 		if (mState != STATE_Attack) {
 			return;
 		}
-		mActor->mPikiAnimMgr.finishMotion(this);
+		mPiki->mPikiAnimMgr.finishMotion(this);
 		int pebbleState = mCurrPebble->attack();
 
 		if (pebbleState == ACTOUT_Fail) {
 			return;
 		}
 
-		Vector3f effectPos(sinf(mActor->mFaceDirection), 0.0f, cosf(mActor->mFaceDirection));
-		effectPos = effectPos * 5.0f + mActor->mPosition;
+		Vector3f effectPos(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
+		effectPos = effectPos * 5.0f + mPiki->mPosition;
 		EffectParm parm(effectPos);
 		UtEffectMgr::cast(12, parm);
 
 		if (pebbleState == ACTOUT_Success) {
 			UtEffectMgr::cast(10, parm);
 			mRockGen->killPebble();
-			mActor->playEventSound(mRockGen, SEB_STONE_BREAK);
+			mPiki->playEventSound(mRockGen, SEB_STONE_BREAK);
 			if (System::getRand(1.0f) > (1.0f - STONE_NECTAR_CHANCE)) {
 				MizuItem* nectar = static_cast<MizuItem*>(itemMgr->birth(OBJTYPE_FallWater));
 				if (nectar) {
@@ -245,7 +245,7 @@ void ActStone::animationKeyUpdated(PaniAnimKeyEvent& event)
 				}
 			}
 		} else {
-			mActor->playEventSound(mRockGen, SEB_STONE_HIT);
+			mPiki->playEventSound(mRockGen, SEB_STONE_HIT);
 		}
 		break;
 	case KEY_Finished:

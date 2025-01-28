@@ -720,8 +720,8 @@ bool Creature::startRope(RopeCreature* rope, f32 ropeRatio)
 	mRope = rope;
 
 	Cylinder cylinder(rope->mPosition, rope->mParentRope->mPosition, 2.0f);
-	mRopeRatio = cylinder.getPosRatio(mPosition);
-	mPosition  = rope->getRopePos(mRopeRatio);
+	mRopePosRatio = cylinder.getPosRatio(mPosition);
+	mPosition     = rope->getRopePos(mRopePosRatio);
 
 	if (!rope->mRopeListHead) {
 		rope->mRopeListHead = this;
@@ -738,7 +738,7 @@ bool Creature::startRope(RopeCreature* rope, f32 ropeRatio)
 		mNextRopeHolder             = nullptr;
 	}
 
-	mRopeRatio = ropeRatio;
+	mRopePosRatio = ropeRatio;
 
 	return true;
 }

@@ -49,9 +49,9 @@ void ActTransport::turnOver()
 		return;
 	}
 
-	Pellet* pel = mPellet.getPtr();
-	Stickers stuckList(pel);
-	Iterator iter(&stuckList);
+	Pellet* pellet = mPellet.getPtr();
+	Stickers attachedPikis(pellet);
+	Iterator iter(&attachedPikis);
 	CI_LOOP(iter)
 	{
 		Creature* stuck = *iter;
@@ -65,12 +65,14 @@ void ActTransport::turnOver()
 		}
 	}
 
-	Vector3f dir = mActor->mPosition - pel->mPosition;
-	dir.normalise();
-	dir.multiply(pel->getBottomRadius());
-	Vector3f upNorm(0.0f, 400.0f * pel->getBottomRadius() / 20.0f, 0.0f);
-	dir.CP(upNorm);
-	pel->mAngularMomentum = pel->mAngularMomentum + dir;
+	Vector3f torqueDir = mPiki->mPosition - pellet->mPosition;
+	torqueDir.normalise();
+	torqueDir.multiply(pellet->getBottomRadius());
+
+	Vector3f upwardForce(0.0f, 400.0f * pellet->getBottomRadius() / 20.0f, 0.0f);
+	torqueDir.CP(upwardForce);
+
+	pellet->mAngularMomentum = pellet->mAngularMomentum + torqueDir;
 }
 
 /*
@@ -82,9 +84,9 @@ void ActTransport::initWait()
 {
 	Pellet* pel = mPellet.getPtr();
 	mState      = STATE_Wait;
-	mActor->startLook(&pel->mPosition);
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
-	_A4 = 3.0f;
+	mPiki->startLook(&pel->mPosition);
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
+	mWaitTimer = 3.0f;
 }
 
 /*
@@ -95,15 +97,15 @@ void ActTransport::initWait()
 int ActTransport::exeWait()
 {
 	Pellet* pel = mPellet.getPtr();
-	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	if (pel->getGroundFlag() == 0x55) {
-		_40    = 0;
-		mState = STATE_Go;
+		mStateProgress = 0;
+		mState         = STATE_Go;
 	}
-	_A4 -= gsys->getFrameTime();
-	if (_A4 < 0.0f) {
-		_40    = 0;
-		mState = STATE_Go;
+	mWaitTimer -= gsys->getFrameTime();
+	if (mWaitTimer < 0.0f) {
+		mStateProgress = 0;
+		mState         = STATE_Go;
 	}
 
 	return ACTOUT_Continue;
@@ -127,7 +129,7 @@ bool ActTransport::isStickLeader()
 	{
 		Creature* piki = *iter;
 		if (piki->isPiki()) {
-			return piki == mActor;
+			return piki == mPiki;
 		}
 	}
 	return false;
@@ -209,7 +211,7 @@ ActTransport::ActTransport(Piki* piki)
     : Action(piki, true)
 {
 	setName("Transport");
-	_A8 = -1;
+	mPathIndex = -1;
 }
 
 /*
@@ -225,11 +227,11 @@ Pellet* ActTransport::findPellet()
 	CI_LOOP(iter)
 	{
 		Pellet* pellet = static_cast<Pellet*>(*iter);
-		if (roughCull(pellet, mActor, minDist)) {
+		if (roughCull(pellet, mPiki, minDist)) {
 			continue;
 		}
 		if (pellet->isFree()) {
-			f32 dist = qdist2(pellet, mActor);
+			f32 dist = qdist2(pellet, mPiki);
 			if (dist < minDist) {
 				minDist       = dist;
 				closestPellet = pellet;
@@ -247,7 +249,7 @@ Pellet* ActTransport::findPellet()
  */
 void ActTransport::init(Creature* target)
 {
-	mActor->_408 = 1;
+	mPiki->_408 = 1;
 	if (!target) {
 		target = findPellet();
 	}
@@ -255,21 +257,21 @@ void ActTransport::init(Creature* target)
 	if (target && target->mObjType == OBJTYPE_Pellet && target->isAlive()) {
 		mPellet.set(static_cast<Pellet*>(target));
 		if (mPellet.getPtr()->isUfoParts()) {
-			mActor->_408 = 2;
+			mPiki->_408 = 2;
 		}
 	} else {
 		mPellet.reset();
 	}
 
-	_40    = 0;
-	mState = STATE_Go;
-	_A4    = 3.0f;
-	_9C    = 0;
-	_9D    = 0;
-	mGoal  = nullptr;
+	mStateProgress    = 0;
+	mState            = STATE_Go;
+	mWaitTimer        = 3.0f;
+	mFinishPutting    = 0;
+	mIsLiftActionDone = 0;
+	mGoal             = nullptr;
 	setSlotIndex();
-	_B4 = 0;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+	mCanCarry = 0;
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
 /*
@@ -296,29 +298,29 @@ void ActTransport::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
-		_9D = 1;
+		mIsLiftActionDone = 1;
 		break;
 	case KEY_LoopEnd:
 		if (mState == STATE_Lift) {
 			Pellet* pel  = mPellet.getPtr();
 			int numStick = getNumStickers();
 			if (pel && numStick < pel->mConfig->mCarryMinPikis()) {
-				_A0--;
-				if (_A0 < 0) {
-					mActor->mPikiAnimMgr.finishMotion(this);
+				mLiftRetryCount--;
+				if (mLiftRetryCount < 0) {
+					mPiki->mPikiAnimMgr.finishMotion(this);
 				}
 			}
 		}
 		break;
 	case KEY_Finished:
 		if (mState == STATE_Put) {
-			_9C = 1;
+			mFinishPutting = 1;
 			break;
 		}
 		if (mState == STATE_Lift) {
-			mActor->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
-			_9D = 0;
-			_A0 = int(randFloat(3.0f)) + 5;
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
+			mIsLiftActionDone = 0;
+			mLiftRetryCount   = int(randFloat(3.0f)) + 5;
 		}
 		break;
 	}
@@ -331,11 +333,11 @@ void ActTransport::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void ActTransport::initJump()
 {
-	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-	mActor->mVelocity.y = 0.5f * AIConstant::_instance->mConstants.mGravity();
-	_3E                 = 0;
-	mState              = STATE_Jump;
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mVelocity.y = 0.5f * AIConstant::_instance->mConstants.mGravity();
+	mJumpRetryTimer    = 0;
+	mState             = STATE_Jump;
 }
 
 /*
@@ -357,53 +359,53 @@ int ActTransport::execJump()
 	}
 
 	Vector3f slotPos = pel->getSlotGlobalPos(mSlotIndex, 0.0f);
-	Vector3f slotDir = slotPos - mActor->mPosition;
+	Vector3f slotDir = slotPos - mPiki->mPosition;
 	f32 slotDistXZ   = speedy_sqrtf(slotDir.x * slotDir.x + slotDir.z * slotDir.z);
 	f32 slotHeight   = slotDir.y;
 	f32 dist         = slotDir.normalise() - pel->getCentreSize();
 
 	if (slotDistXZ > 60.0f) {
-		_40    = 0;
-		mState = STATE_Go;
+		mStateProgress = 0;
+		mState         = STATE_Go;
 		return ACTOUT_Continue;
 	}
 
 	if (zen::Abs(slotHeight) <= 8.8f) {
 		if (!pel->isSlotFree(mSlotIndex)) {
 			int oldSlot = mSlotIndex;
-			mSlotIndex  = pel->getNearestFreeSlotIndex(mActor->mPosition);
+			mSlotIndex  = pel->getNearestFreeSlotIndex(mPiki->mPosition);
 			if (oldSlot == mSlotIndex) {
-				mActor->mEmotion = 1;
+				mPiki->mEmotion = 1;
 				return ACTOUT_Fail;
 			}
 			if (mSlotIndex == -1) {
-				mActor->mEmotion = 1;
+				mPiki->mEmotion = 1;
 				return ACTOUT_Fail;
 			}
 
-			_40    = 0;
-			mState = STATE_Go;
-			_A4    = 3.0f;
+			mStateProgress = 0;
+			mState         = STATE_Go;
+			mWaitTimer     = 3.0f;
 			return ACTOUT_Continue;
 		}
 
-		mActor->mFaceDirection = roundAng(atan2f(slotDir.x, slotDir.z));
-		mActor->mRotation.y    = mActor->mFaceDirection;
-		mState                 = STATE_Lift;
+		mPiki->mFaceDirection = roundAng(atan2f(slotDir.x, slotDir.z));
+		mPiki->mRotation.y    = mPiki->mFaceDirection;
+		mState                = STATE_Lift;
 
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
-		mActor->enableMotionBlend();
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
+		mPiki->enableMotionBlend();
 		PRINT("start try sound \n");
 		pel->setTrySound(true);
 
 		Vector3f pelNorm(0.0f, pel->getCylinderHeight(), 0.0f);
-		_9D = 0;
-		_A0 = int(randFloat(3.0f)) + 5;
-		mActor->startStickObject(pel, nullptr, mSlotIndex, 0.0f);
+		mIsLiftActionDone = 0;
+		mLiftRetryCount   = int(randFloat(3.0f)) + 5;
+		mPiki->startStickObject(pel, nullptr, mSlotIndex, 0.0f);
 
-		seSystem->playPikiSound(SEF_PIKI_HANG, mActor->mPosition);
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
+		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mPosition);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 
 		int numStickers = calcNumStickers();
 		int minWeight   = pel->mConfig->mCarryMinPikis();
@@ -414,14 +416,14 @@ int ActTransport::execJump()
 		return ACTOUT_Continue;
 	}
 
-	if (mActor->mFloorTri) {
-		_3E++;
-		if (_3E > 6) {
-			mActor->mVelocity.y = 0.5f * AIConstant::_instance->mConstants.mGravity();
-			_3E                 = 0;
+	if (mPiki->mFloorTri) {
+		mJumpRetryTimer++;
+		if (mJumpRetryTimer > 6) {
+			mPiki->mVelocity.y = 0.5f * AIConstant::_instance->mConstants.mGravity();
+			mJumpRetryTimer    = 0;
 		}
 	} else {
-		_3E = 0;
+		mJumpRetryTimer = 0;
 	}
 
 	return ACTOUT_Continue;
@@ -434,122 +436,123 @@ int ActTransport::execJump()
  */
 bool ActTransport::gotoLiftPos()
 {
-	Pellet* pel = mPellet.getPtr();
-	if (mSlotIndex == -1 || !pel) {
-		return false;
-	}
-	if (!pel->isAlive()) {
+	Pellet* pellet = mPellet.getPtr();
+	if (mSlotIndex == -1 || !pellet) {
 		return false;
 	}
 
-	Vector3f slotPos = pel->getSlotGlobalPos(mSlotIndex, 0.0f);
-	Vector3f slotDir = slotPos - mActor->mPosition;
-	f32 slotDistXZ   = speedy_sqrtf(slotDir.x * slotDir.x + slotDir.z * slotDir.z);
-	f32 slotHeight   = slotDir.y;
-	f32 dist         = slotDir.normalise();
-	f32 unused       = dist - pel->getCentreSize();
+	if (!pellet->isAlive()) {
+		return false;
+	}
 
-	if (slotDistXZ < 100.0f && ++_40 >= 60) {
-		int oldSlot = mSlotIndex;
-		mSlotIndex  = pel->getNearestFreeSlotIndex(mActor->mPosition);
-		if (oldSlot == mSlotIndex) {
-			mActor->mEmotion = 1;
+	Vector3f targetSlotPos = pellet->getSlotGlobalPos(mSlotIndex, 0.0f);
+	Vector3f slotDirection = targetSlotPos - mPiki->mPosition;
+	f32 horizontalDist     = speedy_sqrtf(slotDirection.x * slotDirection.x + slotDirection.z * slotDirection.z);
+	f32 verticalDist       = slotDirection.y;
+	f32 totalDist          = slotDirection.normalise();
+	f32 distToCentre       = totalDist - pellet->getCentreSize();
+
+	if (horizontalDist < 100.0f && ++mStateProgress >= 60) {
+		int previousSlot = mSlotIndex;
+		mSlotIndex       = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
+		if (previousSlot == mSlotIndex) {
+			mPiki->mEmotion = 1;
 			return false;
 		}
 
 		if (mSlotIndex == -1) {
-			mActor->mEmotion = 1;
+			mPiki->mEmotion = 1;
 			return false;
 		}
 
-		_40    = 0;
-		mState = STATE_Go;
-		_A4    = 3.0f;
+		mStateProgress = 0;
+		mState         = STATE_Go;
+		mWaitTimer     = 3.0f;
 		return true;
 	}
 
-	if (slotDistXZ > 6.0f) {
-		mActor->setSpeed(1.0f, slotDir);
+	if (horizontalDist > 6.0f) {
+		mPiki->setSpeed(1.0f, slotDirection);
 		return true;
 	}
 
-	if (slotDistXZ < 6.0f && slotHeight >= -8.0f) {
-		if (slotHeight >= 8.0f) {
+	if (horizontalDist < 6.0f && verticalDist >= -8.0f) {
+		if (verticalDist >= 8.0f) {
 			initJump();
 			return true;
 		}
 
-		if (!pel->isSlotFree(mSlotIndex)) {
-			mSlotIndex = pel->getNearestFreeSlotIndex(mActor->mPosition);
+		if (!pellet->isSlotFree(mSlotIndex)) {
+			mSlotIndex = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
 			if (mSlotIndex == -1) {
-				mActor->mEmotion = 1;
+				mPiki->mEmotion = 1;
 				return false;
 			}
 
-			_40    = 0;
-			mState = STATE_Go;
-			_A4    = 3.0f;
+			mStateProgress = 0;
+			mState         = STATE_Go;
+			mWaitTimer     = 3.0f;
 			return true;
 		}
 
-		mActor->mFaceDirection = roundAng(atan2f(slotDir.x, slotDir.z));
-		mActor->mRotation.y    = mActor->mFaceDirection;
-		mState                 = STATE_Lift;
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
-		mActor->enableMotionBlend();
-		if (pel->isCreatureFlag(CF_IsPositionFixed)) {
+		mPiki->mFaceDirection = roundAng(atan2f(slotDirection.x, slotDirection.z));
+		mPiki->mRotation.y    = mPiki->mFaceDirection;
+		mState                = STATE_Lift;
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
+		mPiki->enableMotionBlend();
+		if (pellet->isCreatureFlag(CF_IsPositionFixed)) {
 			PRINT("start try sound \n");
-			pel->setTrySound(true);
+			pellet->setTrySound(true);
 		} else {
 			PRINT("*** OMIT try sound \n");
 		}
 
-		Vector3f pelNorm(0.0f, pel->getCylinderHeight(), 0.0f);
-		_9D = 0;
-		_A0 = int(randFloat(3.0f)) + 5;
-		mActor->startStickObject(pel, nullptr, mSlotIndex, 0.0f);
-		seSystem->playPikiSound(SEF_PIKI_HANG, mActor->mPosition);
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
+		Vector3f pelNorm(0.0f, pellet->getCylinderHeight(), 0.0f);
+		mIsLiftActionDone = 0;
+		mLiftRetryCount   = int(randFloat(3.0f)) + 5;
+		mPiki->startStickObject(pellet, nullptr, mSlotIndex, 0.0f);
+		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mPosition);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 
-		int numStickers = calcNumStickers();
-		int minWeight   = pel->mConfig->mCarryMinPikis();
-		Vector3f carryInfoPos(pel->mPosition);
-		carryInfoPos.y += 5.0f + pel->getCylinderHeight();
-		pel->mLifeGauge.countOn(carryInfoPos, numStickers, minWeight);
+		int currentCarriers  = calcNumStickers();
+		int requiredCarriers = pellet->mConfig->mCarryMinPikis();
+		Vector3f carryInfoPos(pellet->mPosition);
+		carryInfoPos.y += 5.0f + pellet->getCylinderHeight();
+		pellet->mLifeGauge.countOn(carryInfoPos, currentCarriers, requiredCarriers);
 		return true;
 	}
 
-	Vector3f centreDir = pel->getCentre() - mActor->mPosition;
+	Vector3f centreDir = pellet->getCentre() - mPiki->mPosition;
 	f32 centreDist     = centreDir.normalise();
-	Vector3f orthoDir(slotDir);
+	Vector3f orthoDir(slotDirection);
 	orthoDir.CP(centreDir);
 
-	if (centreDist < dist) {
-		Vector3f pikiMoveDir(-slotDir.z, 0.0f, slotDir.x);
+	if (centreDist < totalDist) {
+		Vector3f pikiMoveDir(-slotDirection.z, 0.0f, slotDirection.x);
 		if (orthoDir.y > 0.0f) {
 			pikiMoveDir.multiply(-1.0f);
 		}
 
-		mActor->setSpeed(0.2f, pikiMoveDir);
-		_A4 -= gsys->getFrameTime();
+		mPiki->setSpeed(0.2f, pikiMoveDir);
+		mWaitTimer -= gsys->getFrameTime();
 
-		if (_A4 < 0.0f) {
-			mSlotIndex = pel->getNearestFreeSlotIndex(mActor->mPosition);
+		if (mWaitTimer < 0.0f) {
+			mSlotIndex = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
 			if (mSlotIndex == -1) {
-				mActor->mEmotion = 1;
+				mPiki->mEmotion = 1;
 				return false;
 			}
 
-			_40    = 0;
-			mState = STATE_Go;
-			_A4    = 3.0f;
+			mStateProgress = 0;
+			mState         = STATE_Go;
+			mWaitTimer     = 3.0f;
 			return true;
 		}
 		return true;
 	}
 
-	mActor->setSpeed(0.2f, slotDir);
+	mPiki->setSpeed(0.2f, slotDirection);
 	return true;
 }
 
@@ -572,14 +575,14 @@ void ActTransport::doLift()
 			Piki* piki = static_cast<Piki*>(stuck);
 			if (piki->mMode == PikiMode::TransportMode) {
 				ActTransport* action = static_cast<ActTransport*>(piki->mActiveAction->getCurrAction());
-				if (action->_9D) {
+				if (action->mIsLiftActionDone) {
 					count++;
 				}
 			}
 		}
 	}
 
-	if (_9D) {
+	if (mIsLiftActionDone) {
 
 		if (count < pel->mConfig->mCarryMinPikis()) {
 			return;
@@ -603,15 +606,15 @@ void ActTransport::doLift()
 				fxCheck = true;
 			}
 			PRINT("** NEAREST EDGE AVOID OFF =================\n");
-			routeMgr->findNearestEdgeAvoidOff(&wpA, &wpB, 'test', mActor->mPosition, landOnly, false, fxCheck);
+			routeMgr->findNearestEdgeAvoidOff(&wpA, &wpB, 'test', mPiki->mPosition, landOnly, false, fxCheck);
 
 			if (wpA && wpB) {
 				PRINT("** FIND NEAREST EDGE %d and %d\n", wpA->mIndex, wpB->mIndex);
 			}
 
 			if (wpA && wpB) {
-				Vector3f sepA = wpA->mPosition - mActor->mPosition;
-				Vector3f sepB = wpB->mPosition - mActor->mPosition;
+				Vector3f sepA = wpA->mPosition - mPiki->mPosition;
+				Vector3f sepB = wpB->mPosition - mPiki->mPosition;
 				if (sepA.length() > sepB.length()) {
 					nearestWP = wpB;
 				} else {
@@ -619,7 +622,7 @@ void ActTransport::doLift()
 				}
 			} else {
 				PRINT("gakkari desu ...\n");
-				nearestWP = routeMgr->findNearestWayPoint('test', mActor->mPosition, landOnly);
+				nearestWP = routeMgr->findNearestWayPoint('test', mPiki->mPosition, landOnly);
 			}
 
 			int idx       = nearestWP->mIndex;
@@ -634,19 +637,19 @@ void ActTransport::doLift()
 				PathFinder::setMode(1);
 			}
 
-			int routePoints = mActor->findRoute(idx, goalWPIdx, false, false);
+			int routePoints = mPiki->findRoute(idx, goalWPIdx, false, false);
 			mNumRoutePoints = routePoints;
 			PRINT("numWayPoints = %d\n", routePoints);
 			PRINT("done\n");
 			if (routePoints == 0) {
 				PRINT("SECOND TRY START !!!\n");
-				routePoints     = mActor->findRoute(idx, goalWPIdx, true, false);
+				routePoints     = mPiki->findRoute(idx, goalWPIdx, true, false);
 				mNumRoutePoints = routePoints;
 				if (routePoints == 0) {
 					if (landOnly) {
 						PRINT("THIRD TRY START !!!\n");
 						PathFinder::clearMode();
-						routePoints     = mActor->findRoute(idx, goalWPIdx, true, false);
+						routePoints     = mPiki->findRoute(idx, goalWPIdx, true, false);
 						mNumRoutePoints = routePoints;
 					}
 
@@ -654,9 +657,9 @@ void ActTransport::doLift()
 						PRINT("end of abusan!");
 						mState = STATE_Put;
 						pel->mVelocity.set(0.0f, 0.0f, 0.0f);
-						mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-						mActor->mPikiAnimMgr.finishMotion(this);
-						mActor->endStickObject();
+						mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+						mPiki->mPikiAnimMgr.finishMotion(this);
+						mPiki->endStickObject();
 						return;
 					}
 				}
@@ -664,18 +667,18 @@ void ActTransport::doLift()
 			if (landOnly) {
 				PathFinder::clearMode();
 			}
-			_B4          = 1;
-			_A8          = 0;
+			mCanCarry    = 1;
+			mPathIndex   = 0;
 			mGoalWPIndex = goalWPIdx;
 			pel->startPick();
-			mActor->playEventSound(pel, SE_LIFT_MOVE);
+			mPiki->playEventSound(pel, SE_LIFT_MOVE);
 			crInit();
 		}
 
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_Pick), PaniMotionInfo(PIKIANIM_Pick));
-		mActor->mPikiAnimMgr.getUpperAnimator().mAnimationCounter = 11.0f;
-		mActor->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 11.0f;
-		mActor->enableMotionBlend();
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Pick), PaniMotionInfo(PIKIANIM_Pick));
+		mPiki->mPikiAnimMgr.getUpperAnimator().mAnimationCounter = 11.0f;
+		mPiki->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 11.0f;
+		mPiki->enableMotionBlend();
 		mState = STATE_Move;
 	} else {
 		pel->getPickOffset();
@@ -725,22 +728,22 @@ int ActTransport::exec()
 		if (!pel->isVisible()) {
 			if (pel->isUfoParts()) {
 				if (pel->getState() == PELSTATE_Goal) {
-					mActor->mEmotion = 9;
-					mActor->_404     = pel;
+					mPiki->mEmotion = 9;
+					mPiki->_404     = pel;
 				} else {
-					mActor->mEmotion = 1;
+					mPiki->mEmotion = 1;
 				}
 			} else if (pel->getState() == PELSTATE_Goal) {
-				mActor->mEmotion = 4;
-				mActor->_404     = pel;
+				mPiki->mEmotion = 4;
+				mPiki->_404     = pel;
 			} else {
-				mActor->mEmotion = 1;
+				mPiki->mEmotion = 1;
 			}
 			return ACTOUT_Fail;
 		}
 	} else {
 		PRINT("target is NULL!\n");
-		mActor->mEmotion = 7;
+		mPiki->mEmotion = 7;
 		return ACTOUT_Fail;
 	}
 
@@ -773,16 +776,16 @@ int ActTransport::exec()
 			PRINT("小人数!!!\n"); // 'small group!!!' lol
 			mState = STATE_Put;
 			pel->mVelocity.set(0.0f, 0.0f, 0.0f);
-			mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-			mActor->mPikiAnimMgr.finishMotion(this);
-			mActor->endStickObject();
+			mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+			mPiki->mPikiAnimMgr.finishMotion(this);
+			mPiki->endStickObject();
 			return ACTOUT_Continue;
 		}
 
 		// sure
-		mActor->mVelocity.set(50.0f * (f32(numStickers) / f32(minWeight)), 0.0f, 0.0f);
+		mPiki->mVelocity.set(50.0f * (f32(numStickers) / f32(minWeight)), 0.0f, 0.0f);
 
-		if (isStickLeader() && _A8 != -1) {
+		if (isStickLeader() && mPathIndex != -1) {
 			if (!mGoal) {
 				return ACTOUT_Fail;
 			}
@@ -797,14 +800,14 @@ int ActTransport::exec()
 			if (goalDir.normalise() == 0.0f) {
 				goalDir.set(0.0f, 0.0f, 0.0f);
 			}
-			_B4 = 1;
+			mCanCarry = 1;
 
 			if (goalDistXZ < 10.0f) {
 				mState = STATE_Put;
 				pel->mVelocity.set(0.0f, 0.0f, 0.0f);
-				mActor->mPikiAnimMgr.finishMotion(this);
-				mActor->endStickObject();
-				mActor->stopEventSound(pel, SE_LIFT_MOVE);
+				mPiki->mPikiAnimMgr.finishMotion(this);
+				mPiki->endStickObject();
+				mPiki->stopEventSound(pel, SE_LIFT_MOVE);
 
 				if (pel->mObjType == OBJTYPE_Pellet) {
 
@@ -833,8 +836,8 @@ int ActTransport::exec()
 				break;
 			}
 
-			if (!mActor->mNavi) {
-				PRINT("colorID = %d : playerID = (%d) navi =%x \n", mActor->mColor, mActor->mPlayerId, mActor->mNavi);
+			if (!mPiki->mNavi) {
+				PRINT("colorID = %d : playerID = (%d) navi =%x \n", mPiki->mColor, mPiki->mPlayerId, mPiki->mNavi);
 				ERROR("Mr.Blending !\n");
 			}
 
@@ -847,16 +850,16 @@ int ActTransport::exec()
 			f32 speed = ((carriers + 1.0f - f32(minCarry)) / f32(maxCarry)) * (maxSpeed - minSpeed) + minSpeed;
 			goalDir.y = 0.0f;
 			goalDir.multiply(speed);
-			pel->doCarry(mActor, goalDir, numStickers);
+			pel->doCarry(mPiki, goalDir, numStickers);
 			break;
 		}
 
-		if (!mActor->isStickTo()) {
+		if (!mPiki->isStickTo()) {
 			mState = STATE_Put;
 			pel->mVelocity.set(0.0f, 0.0f, 0.0f);
-			mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-			mActor->mPikiAnimMgr.finishMotion(this);
-			mActor->endStickObject();
+			mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+			mPiki->mPikiAnimMgr.finishMotion(this);
+			mPiki->endStickObject();
 		}
 
 	} break;
@@ -868,24 +871,24 @@ int ActTransport::exec()
 		return moveGuruGuru();
 
 	case STATE_Put: {
-		if (!_9C) {
+		if (!mFinishPutting) {
 			break;
 		}
 
 		Pellet* pel = mPellet.getPtr();
 		if (pel->isUfoParts()) {
 			if (pel->getState() == PELSTATE_Goal) {
-				mActor->mEmotion = 9;
-				mActor->_404     = mPellet.getPtr();
+				mPiki->mEmotion = 9;
+				mPiki->_404     = mPellet.getPtr();
 			} else {
-				mActor->mEmotion = 1;
+				mPiki->mEmotion = 1;
 			}
 		} else if (pel->getState() == PELSTATE_Goal) {
-			mActor->mEmotion = 4;
-			mActor->mEmotion = 4;
-			mActor->_404     = mPellet.getPtr();
+			mPiki->mEmotion = 4;
+			mPiki->mEmotion = 4;
+			mPiki->_404     = mPellet.getPtr();
 		} else {
-			mActor->mEmotion = 1;
+			mPiki->mEmotion = 1;
 		}
 		return ACTOUT_Success;
 	}
@@ -1573,30 +1576,30 @@ int ActTransport::moveGuruGuru()
 		PRINT("小人数!!!\n"); // 'small group!!!'
 		mState = STATE_Put;
 		pel->mVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mPikiAnimMgr.finishMotion(this);
-		mActor->endStickObject();
+		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mPikiAnimMgr.finishMotion(this);
+		mPiki->endStickObject();
 		return ACTOUT_Continue;
 	}
 
-	mActor->mVelocity.set(50.0f * (f32(numStickers) / f32(minWeight)), 0.0f, 0.0f);
+	mPiki->mVelocity.set(50.0f * (f32(numStickers) / f32(minWeight)), 0.0f, 0.0f);
 
-	if (isStickLeader() && _A8 != -1) {
-		WayPoint* wp    = routeMgr->getWayPoint('test', mActor->mPathBuffers[_A8].mWayPointIdx);
+	if (isStickLeader() && mPathIndex != -1) {
+		WayPoint* wp    = routeMgr->getWayPoint('test', mPiki->mPathBuffers[mPathIndex].mWayPointIdx);
 		Vector3f& wpPos = wp->mPosition;
 
-		if (wp->mIsOpen && !(wp->_40 & 2) && crPointOpen(_A8 + 1)) {
-			PRINT("curr = %d : currBase = %d\n", _A8, _44);
-			PRINT("==== 開通ざました ====(%d) : %d (route %d)\n", wp->mIndex, _A8,
-			      mActor->mPathBuffers[_A8].mWayPointIdx); // '==== opened ===='
+		if (wp->mIsOpen && !(wp->_40 & 2) && crPointOpen(mPathIndex + 1)) {
+			PRINT("curr = %d : currBase = %d\n", mPathIndex, mNextPathIndex);
+			PRINT("==== 開通ざました ====(%d) : %d (route %d)\n", wp->mIndex, mPathIndex,
+			      mPiki->mPathBuffers[mPathIndex].mWayPointIdx); // '==== opened ===='
 			PRINT("::: route=%s type=%s\n", (wp->mIsOpen) ? "on" : "*** off ***", (wp->_40 & 2) ? "pebble" : "---");
 			mState = STATE_Move;
 			return ACTOUT_Continue;
 		}
 
 		bool isFirst = false;
-		if (_A8 >= 1) {
-			wp = routeMgr->getWayPoint('test', mActor->mPathBuffers[_A8 - 1].mWayPointIdx);
+		if (mPathIndex >= 1) {
+			wp = routeMgr->getWayPoint('test', mPiki->mPathBuffers[mPathIndex - 1].mWayPointIdx);
 		} else {
 			isFirst = true;
 		}
@@ -1611,17 +1614,17 @@ int ActTransport::moveGuruGuru()
 		}
 
 		if (isFirst) {
-			pathDir = _90;
+			pathDir = mSpinStartPosition;
 			rad     = 10.0f;
 		} else {
 			pathDir = wp->mPosition + pathDir * dist;
 			rad     = 10.0f;
 		}
 
-		_A4 += PI * gsys->getFrameTime();
+		mWaitTimer += PI * gsys->getFrameTime();
 
-		if (_A4 > TAU) {
-			_A4 -= TAU;
+		if (mWaitTimer > TAU) {
+			mWaitTimer -= TAU;
 			if (!gameflow.mMoviePlayer->mIsActive && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk28)) {
 				playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk28);
 				if (pel->aiCullable()) {
@@ -1641,7 +1644,7 @@ int ActTransport::moveGuruGuru()
 			return ACTOUT_Continue;
 		}
 
-		Vector3f vel(sinf(_A4), 0.0f, cosf(_A4));
+		Vector3f vel(sinf(mWaitTimer), 0.0f, cosf(mWaitTimer));
 		u32 badCompiler2;
 		vel.multiply(rad);
 		vel.add(pathDir);
@@ -1655,14 +1658,14 @@ int ActTransport::moveGuruGuru()
 		speed        = (minSpeed + speed);
 		speed *= 0.5f;
 		vel.multiply(speed);
-		pel->doCarry(mActor, vel, numStickers);
+		pel->doCarry(mPiki, vel, numStickers);
 
-	} else if ((isStickLeader() && _A8 == -1) || !mActor->isStickTo()) {
+	} else if ((isStickLeader() && mPathIndex == -1) || !mPiki->isStickTo()) {
 		mState = STATE_Put;
 		pel->mVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mPikiAnimMgr.finishMotion(this);
-		mActor->endStickObject();
+		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mPikiAnimMgr.finishMotion(this);
+		mPiki->endStickObject();
 	}
 
 	return ACTOUT_Continue;
@@ -1755,7 +1758,7 @@ void ActTransport::decideGoal(Creature* cargo)
  */
 void ActTransport::cleanup()
 {
-	mActor->endStickObject();
+	mPiki->endStickObject();
 	Pellet* pel = mPellet.getPtr();
 	if (pel) {
 		int numStickers = calcNumStickers();
@@ -1794,9 +1797,9 @@ Vector3f ActTransport::crGetPoint(int idx)
 		return mGoal->getGoalPos();
 	}
 
-	WayPoint* wp = routeMgr->getWayPoint('test', mActor->mPathBuffers[idx].mWayPointIdx);
+	WayPoint* wp = routeMgr->getWayPoint('test', mPiki->mPathBuffers[idx].mWayPointIdx);
 	if (!wp) {
-		PRINT("numWayPoints=%d idx=%d no waypoint (wp.idx=%d)\n", mNumRoutePoints, idx, mActor->mPathBuffers[idx].mWayPointIdx);
+		PRINT("numWayPoints=%d idx=%d no waypoint (wp.idx=%d)\n", mNumRoutePoints, idx, mPiki->mPathBuffers[idx].mWayPointIdx);
 		ERROR("gakkusi");
 	}
 
@@ -1820,9 +1823,9 @@ bool ActTransport::crPointOpen(int idx)
 		return true;
 	}
 
-	WayPoint* wp = routeMgr->getWayPoint('test', mActor->mPathBuffers[idx].mWayPointIdx);
+	WayPoint* wp = routeMgr->getWayPoint('test', mPiki->mPathBuffers[idx].mWayPointIdx);
 	if (!wp) {
-		PRINT("numWayPoints=%d idx=%d no waypoint (wp.idx=%d)\n", mNumRoutePoints, idx, mActor->mPathBuffers[idx].mWayPointIdx);
+		PRINT("numWayPoints=%d idx=%d no waypoint (wp.idx=%d)\n", mNumRoutePoints, idx, mPiki->mPathBuffers[idx].mWayPointIdx);
 		ERROR("gakkusi");
 	}
 
@@ -1845,7 +1848,7 @@ f32 ActTransport::crGetRadius(int idx)
 		return 50.0f;
 	}
 
-	return routeMgr->getWayPoint('test', mActor->mPathBuffers[idx].mWayPointIdx)->mRadius;
+	return routeMgr->getWayPoint('test', mPiki->mPathBuffers[idx].mWayPointIdx)->mRadius;
 }
 
 /*
@@ -1856,31 +1859,31 @@ f32 ActTransport::crGetRadius(int idx)
 void ActTransport::crInit()
 {
 	Pellet* pel     = mPellet.getPtr();
-	_44             = -1;
+	mNextPathIndex  = -1;
 	mRouteStartPos  = pel->mPosition;
-	Vector3f point1 = crGetPoint(_44 + 1);
-	Vector3f point2 = crGetPoint(_44 + 2);
-	Tube crTube(point1, point2, crGetRadius(_44 + 1), crGetRadius(_44 + 2));
+	Vector3f point1 = crGetPoint(mNextPathIndex + 1);
+	Vector3f point2 = crGetPoint(mNextPathIndex + 2);
+	Tube crTube(point1, point2, crGetRadius(mNextPathIndex + 1), crGetRadius(mNextPathIndex + 2));
 	f32 collDepth;
 	Vector3f pushVec;
 	Sphere sphere(pel->mPosition, 0.0f);
-	if (crTube.collide(sphere, pushVec, collDepth) && crPointOpen(_44 + 2)) {
+	if (crTube.collide(sphere, pushVec, collDepth) && crPointOpen(mNextPathIndex + 2)) {
 		PRINT("crInit() TUBE START **\n");
-		_44                  = 0;
+		mNextPathIndex       = 0;
 		mSplineControlPts[0] = crGetPoint(-1);
 		mSplineControlPts[1] = crGetPoint(-1);
 		mSplineControlPts[2] = crGetPoint(1);
 		mSplineControlPts[3] = crGetPoint(2);
-		_88                  = 0;
+		mPathType            = 0;
 	} else {
 		bool landOnly = useWaterRoute() == 0;
 		WayPoint* wpA = nullptr;
 		WayPoint* wpB = nullptr;
 
 		PRINT("crInit() ** NEAREST EDGE AVOID OFF =================\n");
-		wpA = routeMgr->getWayPoint('test', mActor->mPathBuffers[0].mWayPointIdx);
+		wpA = routeMgr->getWayPoint('test', mPiki->mPathBuffers[0].mWayPointIdx);
 		if (mNumRoutePoints >= 2) {
-			wpB = routeMgr->getWayPoint('test', mActor->mPathBuffers[1].mWayPointIdx);
+			wpB = routeMgr->getWayPoint('test', mPiki->mPathBuffers[1].mWayPointIdx);
 		}
 
 		PRINT("nearest edge( %d, %d )\n", (wpA) ? wpA->mIndex : -1, (wpB) ? wpB->mIndex : -1);
@@ -1902,11 +1905,11 @@ void ActTransport::crInit()
 
 			crMakeRefs();
 			mSplineControlPts[2] = nextPoint;
-			_88                  = 1;
+			mPathType            = 1;
 
 		} else {
 			crMakeRefs();
-			_88 = 2;
+			mPathType = 2;
 		}
 	}
 
@@ -2292,7 +2295,7 @@ void ActTransport::crInit()
 void ActTransport::crMakeRefs()
 {
 	for (int i = 0; i < 4; i++) {
-		mSplineControlPts[i] = crGetPoint(_44 + i - 1);
+		mSplineControlPts[i] = crGetPoint(mNextPathIndex + i - 1);
 	}
 }
 
@@ -2319,7 +2322,7 @@ void ActTransport::findObstacle()
 			vec                   = (proj * pathDist) * pathDir + point1;
 			vec                   = vec - teki->mPosition;
 			f32 unusedDist        = vec.normalise();
-			f32 unusedWeightedVal = crGetRadius(_44) * (1.0f - proj) + crGetRadius(_44 + 1) * (proj);
+			f32 unusedWeightedVal = crGetRadius(mNextPathIndex) * (1.0f - proj) + crGetRadius(mNextPathIndex + 1) * (proj);
 		}
 	}
 
@@ -2565,37 +2568,37 @@ void ActTransport::findObstacle()
 bool ActTransport::crMove()
 {
 	Pellet* pel        = mPellet.getPtr();
-	Vector3f currPoint = crGetPoint(_44);
+	Vector3f currPoint = crGetPoint(mNextPathIndex);
 	Vector3f point2(mSplineControlPts[2]);
 
-	if ((_44 == -1 && !crPointOpen(1)) || (_44 != -1 && !crPointOpen(_44 + 1))) {
-		PRINT("******** GURUGURU START : currBase+1 = %d is off !\n", _44);
-		PRINT("ROUTE IS OFF !!! currBase+1 = %d\n", _44 + 1);
-		PRINT("ROUTE INDEX IS %d\n", mActor->mPathBuffers[_44 + 1].mWayPointIdx);
-		PRINT("crPoint : offp=%d", mActor->mPathBuffers[_44 + 1].mWayPointIdx);
+	if ((mNextPathIndex == -1 && !crPointOpen(1)) || (mNextPathIndex != -1 && !crPointOpen(mNextPathIndex + 1))) {
+		PRINT("******** GURUGURU START : currBase+1 = %d is off !\n", mNextPathIndex);
+		PRINT("ROUTE IS OFF !!! currBase+1 = %d\n", mNextPathIndex + 1);
+		PRINT("ROUTE INDEX IS %d\n", mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
+		PRINT("crPoint : offp=%d", mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
 
-		WayPoint* wp = routeMgr->getWayPoint('test', mActor->mPathBuffers[_44 + 1].mWayPointIdx);
+		WayPoint* wp = routeMgr->getWayPoint('test', mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
 		if (wp) {
 			PRINT("** ROUTE POINT %d is %s : %s\n", wp->mIndex, wp->mIsOpen ? "on" : "off", wp->_40 & 2 ? "pebble" : "-");
 		}
 
-		mState = STATE_Guru;
-		_90    = pel->mPosition;
-		_A4    = 0.0f;
+		mState             = STATE_Guru;
+		mSpinStartPosition = pel->mPosition;
+		mWaitTimer         = 0.0f;
 		return true;
 	}
 
 	Vector3f dir = point2 - pel->mPosition;
 	if (qdist2(point2.x, point2.z, pel->mPosition.x, pel->mPosition.z) < 6.0f) {
-		if (_44 >= mNumRoutePoints - 2) {
+		if (mNextPathIndex >= mNumRoutePoints - 2) {
 			mState   = STATE_Goal;
 			mMoveDir = CRSplineTangent(1.0f, mSplineControlPts);
 			mMoveDir.normalise();
 			return true;
 		}
 
-		_44++;
-		_A8++;
+		mNextPathIndex++;
+		mPathIndex++;
 		crMakeRefs();
 		findObstacle();
 		mMoveDir = CRSplineTangent(0.0f, mSplineControlPts);
@@ -2630,7 +2633,7 @@ bool ActTransport::crMove()
 	vec              = vec - pel->mPosition;
 	vec.y            = 0.0f;
 	f32 val1         = vec.normalise();
-	f32 weightedProj = crGetRadius(_44) * (1.0f - factor) + crGetRadius(_44 + 1) * factor;
+	f32 weightedProj = crGetRadius(mNextPathIndex) * (1.0f - factor) + crGetRadius(mNextPathIndex + 1) * factor;
 
 	f32 blend = zen::Abs(val1) / weightedProj;
 
@@ -2651,15 +2654,15 @@ bool ActTransport::crMove()
 	}
 
 	if (factor >= 1.0f) {
-		if (_44 >= mNumRoutePoints - 2) {
+		if (mNextPathIndex >= mNumRoutePoints - 2) {
 			mState   = STATE_Goal;
 			mMoveDir = CRSplineTangent(factor, mSplineControlPts);
 			mMoveDir.normalise();
 			return true;
 		}
 
-		_44++;
-		_A8++;
+		mNextPathIndex++;
+		mPathIndex++;
 		factor = 0.0f;
 		crMakeRefs();
 		findObstacle();
@@ -2712,15 +2715,15 @@ void ActTransport::draw(Graphics& gfx)
 		"other",
 	};
 
-	Vector3f pikiPos = mActor->mPosition;
+	Vector3f pikiPos = mPiki->mPosition;
 	char buf2[256];
 	char buf1[256];
 	sprintf(buf1, " ");
 
 	if (mState == STATE_Move) {
 		Pellet* pel        = mPellet.getPtr();
-		Vector3f currPoint = crGetPoint(_44);
-		Vector3f nextPoint = crGetPoint(_44 + 1);
+		Vector3f currPoint = crGetPoint(mNextPathIndex);
+		Vector3f nextPoint = crGetPoint(mNextPathIndex + 1);
 		Vector3f pathDir   = nextPoint - currPoint;
 		f32 pathDist       = pathDir.normalise();
 		f32 proj           = pathDir.DP(pel->mPosition - currPoint) / pathDist;
@@ -2735,7 +2738,7 @@ void ActTransport::draw(Graphics& gfx)
 		vec              = (proj * pathDist) * pathDir + currPoint;
 		vec              = vec - pel->mPosition;
 		f32 val1         = vec.normalise();
-		f32 weightedProj = crGetRadius(_44) * (1.0f - proj) + crGetRadius(_44 + 1) * proj;
+		f32 weightedProj = crGetRadius(mNextPathIndex) * (1.0f - proj) + crGetRadius(mNextPathIndex + 1) * proj;
 		Vector3f vec2;
 		vec2 = CRSplineTangent(proj, mSplineControlPts);
 		if (vec2.DP(pathDir) <= 0.0f) {
@@ -2745,11 +2748,11 @@ void ActTransport::draw(Graphics& gfx)
 		labelPos.y += 40.0f;
 		drawArrow(gfx, labelPos, vec2, 20.0f);
 		CRSplineDraw(gfx, 16, mSplineControlPts);
-		sprintf(buf2, "%s %d %.1f", stateNames[mState], _44, proj);
-		sprintf(buf1, "%.1f/%.1f %s", val1, weightedProj, type[_88]);
+		sprintf(buf2, "%s %d %.1f", stateNames[mState], mNextPathIndex, proj);
+		sprintf(buf1, "%.1f/%.1f %s", val1, weightedProj, type[mPathType]);
 
 	} else {
-		sprintf(buf2, "%s %d %.1f %s", stateNames[mState], _44, type[_88]);
+		sprintf(buf2, "%s %d %.1f %s", stateNames[mState], mNextPathIndex, type[mPathType]);
 	}
 
 	gfx.useMatrix(Matrix4f::ident, 0);
@@ -2792,35 +2795,35 @@ void ActTransport::draw(Graphics& gfx)
  */
 int ActTransport::moveToWayPoint()
 {
-	Pellet* pel     = mPellet.getPtr();
-	int numStickers = getNumStickers();
-	int minWeight   = pel->mConfig->mCarryMinPikis();
+	Pellet* pel         = mPellet.getPtr();
+	int currentCarriers = getNumStickers();
+	int minCarriers     = pel->mConfig->mCarryMinPikis();
 
-	if (numStickers < minWeight) {
+	if (currentCarriers < minCarriers) {
 		PRINT("小人数!!!\n"); // 'small group!!!'
 		mState = STATE_Put;
 		pel->mVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mPikiAnimMgr.finishMotion(this);
-		mActor->endStickObject();
+		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mPikiAnimMgr.finishMotion(this);
+		mPiki->endStickObject();
 		return ACTOUT_Continue;
 	}
 
-	if (isStickLeader() && _A8 != -1) {
-		if (!_B4) {
+	if (isStickLeader() && mPathIndex != -1) {
+		if (!mCanCarry) {
 			PRINT("おれにはムリデス\n"); // 'i can't do it'
 			mState = STATE_Put;
 			pel->mVelocity.set(0.0f, 0.0f, 0.0f);
-			mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-			mActor->mPikiAnimMgr.finishMotion(this);
-			mActor->endStickObject();
+			mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+			mPiki->mPikiAnimMgr.finishMotion(this);
+			mPiki->endStickObject();
 			return ACTOUT_Continue;
 		}
 
-		WayPoint* wp = routeMgr->getWayPoint('test', mActor->mPathBuffers[_A8].mWayPointIdx);
+		WayPoint* wp = routeMgr->getWayPoint('test', mPiki->mPathBuffers[mPathIndex].mWayPointIdx);
 		if (!wp->mIsOpen || (wp->_40 & 2)) {
-			Vector3f currPoint = crGetPoint(_A8);
-			Vector3f nextPoint = crGetPoint(_A8 + 1);
+			Vector3f currPoint = crGetPoint(mPathIndex);
+			Vector3f nextPoint = crGetPoint(mPathIndex + 1);
 			Vector3f pathDir   = nextPoint - currPoint;
 			pathDir.normalise();
 			Plane plane;
@@ -2829,11 +2832,11 @@ int ActTransport::moveToWayPoint()
 			if (plane.dist(pel->mPosition) <= 0.0f) {
 				PRINT("===== MOVETOWAY POINT !\n");
 				PRINT("plane Dist=%f\n", plane.dist(pel->mPosition));
-				PRINT("curr=%d : idx=%d **** WAYPOINT IS OFF !!!\n", _A8, mActor->mPathBuffers[_A8].mWayPointIdx);
-				PRINT("moveWay : offp=%d", mActor->mPathBuffers[_44 + 1].mWayPointIdx);
-				_90    = pel->mPosition;
-				mState = STATE_Guru;
-				_A4    = 0.0f;
+				PRINT("curr=%d : idx=%d **** WAYPOINT IS OFF !!!\n", mPathIndex, mPiki->mPathBuffers[mPathIndex].mWayPointIdx);
+				PRINT("moveWay : offp=%d", mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
+				mSpinStartPosition = pel->mPosition;
+				mState             = STATE_Guru;
+				mWaitTimer         = 0.0f;
 				return ACTOUT_Continue;
 			}
 		}
@@ -2841,29 +2844,29 @@ int ActTransport::moveToWayPoint()
 		if (!crMove()) {
 			mState = STATE_Put;
 			pel->mVelocity.set(0.0f, 0.0f, 0.0f);
-			mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-			mActor->mPikiAnimMgr.finishMotion(this);
-			mActor->endStickObject();
+			mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+			mPiki->mPikiAnimMgr.finishMotion(this);
+			mPiki->endStickObject();
 			return ACTOUT_Continue;
 		}
 
 		f32 maxSpeed = 0.7f * pikiMgr->mPikiParms->mPikiParms.mMaxLeafMoveSpeed();
 		f32 minSpeed = 0.5f * maxSpeed;
-		f32 factor   = (getCarriers() + 1.0f - f32(minWeight)) / f32(pel->mConfig->mCarryMaxPikis());
+		f32 factor   = (getCarriers() + 1.0f - f32(minCarriers)) / f32(pel->mConfig->mCarryMaxPikis());
 		f32 speed    = factor * (maxSpeed - minSpeed);
 		speed        = (minSpeed + speed);
 		// speed *= 0.5f;
 		mMoveDir.y = 0.0f;
 		mMoveDir.normalise();
 		mMoveDir.multiply(speed);
-		pel->doCarry(mActor, mMoveDir, numStickers);
+		pel->doCarry(mPiki, mMoveDir, currentCarriers);
 
-	} else if ((isStickLeader() && _A8 == -1) || !mActor->isStickTo()) {
+	} else if ((isStickLeader() && mPathIndex == -1) || !mPiki->isStickTo()) {
 		mState = STATE_Put;
 		pel->mVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mPikiAnimMgr.finishMotion(this);
-		mActor->endStickObject();
+		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mPikiAnimMgr.finishMotion(this);
+		mPiki->endStickObject();
 	}
 
 	return ACTOUT_Continue;

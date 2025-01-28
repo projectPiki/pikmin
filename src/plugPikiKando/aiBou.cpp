@@ -42,12 +42,12 @@ void ActBou::init(Creature* creature)
 	}
 
 	mState = STATE_GotoLeg;
-	mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 
-	if (mActor->isHolding()) {
-		mActor->_408 = 3;
+	if (mPiki->isHolding()) {
+		mPiki->_408 = 3;
 	} else {
-		mActor->_408 = 2;
+		mPiki->_408 = 2;
 	}
 
 	mTimeoutCounter = 120;
@@ -78,35 +78,35 @@ int ActBou::exec()
  */
 int ActBou::gotoLeg()
 {
-	if (mActor->mStickPart) {
+	if (mPiki->mStickPart) {
 		PRINT("START CLIMB !!\n");
 		mState = STATE_Climb;
-		mActor->mVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
+		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
 
-		mActor->setCreatureFlag(CF_Unk8);
-		mActor->finishLook();
+		mPiki->setCreatureFlag(CF_Unk8);
+		mPiki->finishLook();
 
 		Tube tube;
-		mActor->mStickPart->makeTube(tube);
+		mPiki->mStickPart->makeTube(tube);
 
 		Vector3f pos;
 		Vector3f gradient;
-		tube.getPosGradient(mActor->mPosition, mActor->mAttachPosition.x, pos, gradient);
+		tube.getPosGradient(mPiki->mPosition, mPiki->mAttachPosition.x, pos, gradient);
 		mClimbDirection = gradient;
 		return ACTOUT_Continue;
 	}
 
 	if (--mTimeoutCounter <= 0) {
-		mActor->mEmotion = 1;
+		mPiki->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
-	Vector3f direction = mTargetStick->mPosition - mActor->mPosition;
+	Vector3f direction = mTargetStick->mPosition - mPiki->mPosition;
 	f32 dist           = direction.normalise();
 	PRINT("d is %.1f\n", dist);
-	mActor->setSpeed(0.5f, direction);
+	mPiki->setSpeed(0.5f, direction);
 	return ACTOUT_Continue;
 }
 
@@ -125,12 +125,12 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 		return;
 	}
 
-	if (mActor->isStickTo()) {
+	if (mPiki->isStickTo()) {
 		return;
 	}
 
-	Vector3f centre = mActor->getCentre();
-	f32 radius      = mActor->getCentreSize();
+	Vector3f centre = mPiki->getCentre();
+	f32 radius      = mPiki->getCentreSize();
 
 	Sphere sphere(centre, radius);
 	Tube tube;
@@ -144,11 +144,11 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 	if (tube.collide(sphere, collisionPoint, ratio)) {
 		PRINT("ground ratio = %f ratio = %f\n", groundRatio, ratio);
 		mTimeoutCounter = 120;
-		mActor->startStickObject(msg->mEvent.mCollider, msg->mEvent.mColliderPart, -1, 0.0f);
-		mActor->finishLook();
+		mPiki->startStickObject(msg->mEvent.mCollider, msg->mEvent.mColliderPart, -1, 0.0f);
+		mPiki->finishLook();
 
-		mActor->mOdometer.start(1.0f, 5.0f);
-		mLastPosition = mActor->mPosition;
+		mPiki->mOdometer.start(1.0f, 5.0f);
+		mLastPosition = mPiki->mPosition;
 	}
 }
 
@@ -159,18 +159,18 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
  */
 int ActBou::climb()
 {
-	if (!mActor->mStickPart) {
+	if (!mPiki->mStickPart) {
 		return ACTOUT_Fail;
 	}
 
-	if (!mActor->mOdometer.moving(mActor->mPosition, mLastPosition)) {
+	if (!mPiki->mOdometer.moving(mPiki->mPosition, mLastPosition)) {
 		PRINT("======= BO ODOMETER FAILED\n");
 		return ACTOUT_Fail;
 	}
 
-	mLastPosition     = mActor->mPosition;
-	f32 mag           = (22.0f + randFloat(4.0f));
-	mActor->mVelocity = mClimbDirection * mag;
+	mLastPosition    = mPiki->mPosition;
+	f32 mag          = (22.0f + randFloat(4.0f));
+	mPiki->mVelocity = mClimbDirection * mag;
 	return ACTOUT_Continue;
 }
 
@@ -181,8 +181,8 @@ int ActBou::climb()
  */
 void ActBou::cleanup()
 {
-	mActor->mVelocity       = mClimbDirection * 150.0f;
-	mActor->mTargetVelocity = mActor->mVelocity;
-	mActor->endStickObject();
-	mActor->mCreatureFlags &= ~(CF_Unk8); // should use the inline, but stack
+	mPiki->mVelocity       = mClimbDirection * 150.0f;
+	mPiki->mTargetVelocity = mPiki->mVelocity;
+	mPiki->endStickObject();
+	mPiki->mCreatureFlags &= ~(CF_Unk8); // should use the inline, but stack
 }

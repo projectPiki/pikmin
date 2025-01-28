@@ -488,7 +488,7 @@ void Creature::init()
 
 	mRopeListHead   = nullptr;
 	mRope           = nullptr;
-	mRopeRatio      = 0.0f;
+	mRopePosRatio   = 0.0f;
 	mPrevRopeHolder = nullptr;
 	mNextRopeHolder = nullptr;
 	if (searchUpdateMgr) {

@@ -820,7 +820,7 @@ void DVDStream::read(void* addr, int size)
 {
 	int roundedSize = ALIGN_NEXT(size, 32);
 	s32 result      = -1;
-	gsys->_240 += roundedSize;
+	gsys->mDvdReadBytesCount += roundedSize;
 	while (result == -1) {
 		result = DVDReadPrio(&mFileInfo, addr, roundedSize, mOffset, 2);
 	}

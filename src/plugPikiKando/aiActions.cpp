@@ -51,8 +51,8 @@ void ActPick::animationKeyUpdated(PaniAnimKeyEvent& event)
 	switch (event.mEventType) {
 	case KEY_Action0:
 		Creature* obj = mObject.getPtr();
-		if (obj && obj->isVisible() && qdist2(obj, mActor) < 20.0f) {
-			obj->stimulate(InteractGrab(mActor));
+		if (obj && obj->isVisible() && qdist2(obj, mPiki) < 20.0f) {
+			obj->stimulate(InteractGrab(mPiki));
 		}
 		break;
 
@@ -72,8 +72,8 @@ void ActPick::init(Creature* object)
 	_1C = 0;
 	mObject.set(object);
 
-	mActor->startMotion(PaniMotionInfo(4, this), PaniMotionInfo(4));
-	mActor->enableMotionBlend();
+	mPiki->startMotion(PaniMotionInfo(4, this), PaniMotionInfo(4));
+	mPiki->enableMotionBlend();
 }
 
 /*
@@ -94,11 +94,11 @@ void ActPick::cleanup()
  */
 int ActPick::exec()
 {
-	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	if (_1C) {
-		if (!mActor->isHolding()) {
-			mActor->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
-			mActor->mEmotion = 1;
+		if (!mPiki->isHolding()) {
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+			mPiki->mEmotion = 1;
 			return ACTOUT_Fail;
 		}
 
@@ -154,14 +154,14 @@ void ActPut::cleanup()
  */
 int ActPut::exec()
 {
-	mActor->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
-	Creature* obj = mActor->getHoldCreature();
+	Creature* obj = mPiki->getHoldCreature();
 	if (!obj) {
 		return ACTOUT_Fail;
 	}
 
-	if (obj->stimulate(InteractRelease(mActor, 1.0f))) {
+	if (obj->stimulate(InteractRelease(mPiki, 1.0f))) {
 		PRINT("release ?\n");
 		return ACTOUT_Success;
 	}
@@ -210,10 +210,10 @@ void ActAdjust::init(Creature* target)
 		PRINT(" target is %x\n", target);
 		mForceFail      = 0;
 		_1C             = target->mPosition;
-		Vector3f dir    = _1C - mActor->mPosition;
+		Vector3f dir    = _1C - mPiki->mPosition;
 		f32 adjPerFrame = mAdjustTimeLimit * (1.0f / 30.0f);
 		u32 badCompiler;
-		mTurnSpeed = angDist(atan2f(dir.x, dir.z), mActor->mFaceDirection) / adjPerFrame;
+		mTurnSpeed = angDist(atan2f(dir.x, dir.z), mPiki->mFaceDirection) / adjPerFrame;
 		f32 dist   = dir.length();
 
 		PRINT(" numFrames = %d \n", mAdjustTimeLimit);
@@ -225,8 +225,8 @@ void ActAdjust::init(Creature* target)
 
 		PRINT(" deltaVec(%.1f,%.1f,%.1f) : deltaF(%.1f)\n", mVelocity.x, mVelocity.y, mVelocity.z, mTurnSpeed);
 		mAdjustTimer = 0.0f;
-		mActor->startMotion(PaniMotionInfo(PIKIANIM_Asibumi), PaniMotionInfo(PIKIANIM_Asibumi));
-		mActor->setCreatureFlag(CF_Unk11);
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Asibumi), PaniMotionInfo(PIKIANIM_Asibumi));
+		mPiki->setCreatureFlag(CF_Unk11);
 	} else {
 		mForceFail = 1;
 	}
@@ -239,7 +239,7 @@ void ActAdjust::init(Creature* target)
  */
 void ActAdjust::cleanup()
 {
-	mActor->resetCreatureFlag(CF_Unk11);
+	mPiki->resetCreatureFlag(CF_Unk11);
 }
 
 /*
@@ -253,11 +253,11 @@ int ActAdjust::exec()
 		return ACTOUT_Fail;
 	}
 
-	mActor->mVelocity       = mVelocity;
-	mActor->mTargetVelocity = mVelocity;
-	mActor->mFaceDirection += mTurnSpeed * gsys->getFrameTime();
-	mActor->mFaceDirection = roundAng(mActor->mFaceDirection);
-	mActor->mRotation.set(0.0f, mActor->mFaceDirection, 0.0f);
+	mPiki->mVelocity       = mVelocity;
+	mPiki->mTargetVelocity = mVelocity;
+	mPiki->mFaceDirection += mTurnSpeed * gsys->getFrameTime();
+	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection);
+	mPiki->mRotation.set(0.0f, mPiki->mFaceDirection, 0.0f);
 
 	mAdjustTimer += gsys->getFrameTime();
 	if (mAdjustTimer > f32(mAdjustTimeLimit) * (1 / 30.0f)) {
