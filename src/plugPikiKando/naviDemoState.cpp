@@ -409,7 +409,7 @@ void NaviDemoSunsetState::setActors(Navi* navi)
 	{
 		Piki* piki = (Piki*)*iterPiki;
 		if (piki->mMode != PikiMode::FormationMode || piki->getState() == PIKISTATE_Flying) {
-			piki->mEraseKill = true;
+			piki->mEraseOnKill = true;
 			piki->kill(false);
 			iterPiki.dec();
 		}

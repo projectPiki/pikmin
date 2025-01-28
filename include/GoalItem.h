@@ -85,14 +85,14 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 
 	void disableColorAnim()
 	{
-		_3D4 = 1.0f;
-		_3D8 = false;
+		mColourAnimProgress     = 1.0f;
+		mColourAnimationEnabled = false;
 	}
 
 	void enableColorAnim()
 	{
-		_3D4 = 0.0f;
-		_3D8 = true;
+		mColourAnimProgress     = 0.0f;
+		mColourAnimationEnabled = true;
 	}
 
 	int getTotalStorePikis() { return mHeldPikis[0] + mHeldPikis[1] + mHeldPikis[2]; }
@@ -101,9 +101,9 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 	// _00-_3C8  = Suckable
 	// _3C8-_3CC = zen::CallBack2
 	u8 _3CC;                          // _3CC
-	f32 _3D0;                         // _3D0
-	f32 _3D4;                         // _3D4
-	bool _3D8;                        // _3D8
+	f32 mColourFadeRate;              // _3D0
+	f32 mColourAnimProgress;          // _3D4
+	bool mColourAnimationEnabled;     // _3D8
 	bool mSpotEffectActive;           // _3D9
 	zen::particleGenerator* mSpotEfx; // _3DC
 	zen::particleGenerator* mHaloEfx; // _3E0
@@ -113,14 +113,14 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 	int _3F0;                         // _3F0
 	u8 _3F4;                          // _3F4
 	bool _3F5;                        // _3F5
-	bool _3F6;                        // _3F6
+	bool mIsClosing;                  // _3F6
 	f32 mConeSizeTimer;               // _3F8
 	Vector3f _3FC;                    // _3FC
 	bool mIsConeEmit;                 // _408
 	EffShpInst* mSpotModelEff;        // _40C
 	bool mIsDispensingPikis;          // _410
 	int mPikisToExit;                 // _414
-	f32 _418;                         // _418
+	f32 mPikiSpawnTimer;              // _418
 	Vector3f _41C;                    // _41C
 	u16 mOnionColour;                 // _428
 	s16 mWaypointIdx;                 // _42A

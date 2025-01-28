@@ -182,12 +182,12 @@ void PelletView::becomePellet(u32 id, Vector3f& pos, f32 direction)
 Pellet::Pellet()
 {
 	_450 = true;
-	_444.set(0.0f, 0.0f, 0.0f);
+	mSpawnPosition.set(0.0f, 0.0f, 0.0f);
 	mSeContext = new SeContext();
 	mSeContext->setContext(this, 2);
 	mRippleEffect   = new RippleEffect();
 	mPelletView     = nullptr;
-	_478            = nullptr;
+	mPikiCarrier    = nullptr;
 	mShapeObject    = nullptr;
 	mConfig         = nullptr;
 	mMotionSpeed    = 0.0f;
@@ -199,7 +199,7 @@ Pellet::Pellet()
 	mStateMachine->init(this);
 	mSearchBuffer.init(mSearchData, 4);
 	mCollisionRadius = 4.0f;
-	_47C.set(0.0f, 0.0f, 0.0f);
+	mCarryDirection.set(0.0f, 0.0f, 0.0f);
 	setTrySound(false);
 }
 
@@ -425,14 +425,14 @@ void Pellet::startPick()
  */
 void Pellet::finishPick()
 {
-	_570 = 0;
+	mCarrierCounter = 0;
 	enableFixPos();
 	stopEventSound(this, SE_LIFT_MOVE);
 	stopEventSound(this, SE_LIFT_TRY);
 	enableFriction();
 	finishMotion();
 	disablePickOffset();
-	_490 = 0;
+	mCarryState = 0;
 }
 
 /*
@@ -444,8 +444,8 @@ void Pellet::startGoal()
 {
 	finishPick();
 	mStateMachine->transit(this, 1);
-	_478 = 0;
-	_47C.set(0.0f, 0.0f, 0.0f);
+	mPikiCarrier = 0;
+	mCarryDirection.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -453,42 +453,43 @@ void Pellet::startGoal()
  * Address:	80095C3C
  * Size:	00016C
  */
-void Pellet::doCarry(Creature* p1, Vector3f& p2, u16 p3)
+void Pellet::doCarry(Creature* carryingPiki, Vector3f& direction, u16 carrierCount)
 {
-	if (_490 == 1) {
-		_48C -= gsys->getFrameTime();
-		if (_48C <= 0.0f) {
-			_490 = 2;
+	if (mCarryState == 1) {
+		mTransitionTimer -= gsys->getFrameTime();
+		if (mTransitionTimer <= 0.0f) {
+			mCarryState = 2;
 		}
-		_47C = p2 * 0.5f;
+
+		mCarryDirection = direction * 0.5f;
 		return;
 	}
 
-	if (_478 && _478->mObjType != p1->mObjType) {
-		if (_490 == 0) {
-			_490 = 1;
-			_48C = 3.5f;
+	if (mPikiCarrier && mPikiCarrier->mObjType != carryingPiki->mObjType) {
+		if (mCarryState == 0) {
+			mCarryState      = 1;
+			mTransitionTimer = 3.5f;
 			return;
 		}
 
-		if (_478->getStickObject() == this && _488 > p3) {
-			PRINT("%s win\n", ObjType::getName(_478->mObjType));
+		if (mPikiCarrier->getStickObject() == this && mCarrierCount > carrierCount) {
+			PRINT("%s win\n", ObjType::getName(mPikiCarrier->mObjType));
 			return;
 		}
 
-		_47C = p2;
-		_478 = p1;
-		_488 = p3;
-		PRINT("%s win\n", ObjType::getName(_478->mObjType));
-		_490 = 1;
-		_48C = 3.5f;
+		mCarryDirection = direction;
+		mPikiCarrier    = carryingPiki;
+		mCarrierCount   = carrierCount;
+		PRINT("%s win\n", ObjType::getName(mPikiCarrier->mObjType));
+		mCarryState      = 1;
+		mTransitionTimer = 3.5f;
 
 		return;
 	}
 
-	_47C = p2;
-	_478 = p1;
-	_488 = p3;
+	mCarryDirection = direction;
+	mPikiCarrier    = carryingPiki;
+	mCarrierCount   = carrierCount;
 }
 
 /*
@@ -585,10 +586,10 @@ f32 Pellet::getiMass()
  */
 bool Pellet::startStickTeki(Creature* teki, f32 p2)
 {
-	Vector3f pelCentre = getCentre();
-	pelCentre          = teki->getCentre() - pelCentre;
-	f32 angle          = atan2f(pelCentre.x, pelCentre.z);
-	_460               = roundAng(angle - mFaceDirection);
+	Vector3f toEnemy = getCentre();
+	toEnemy          = teki->getCentre() - toEnemy;
+	f32 angle        = atan2f(toEnemy.x, toEnemy.z);
+	mStuckAngle      = roundAng(angle - mFaceDirection);
 
 	teki->startStickObject(this, nullptr, -2, p2);
 	if (teki->getStickObject() != this) {
@@ -745,7 +746,7 @@ Vector3f Pellet::getSlotLocalPos(int slotID, f32 offset)
 {
 	f32 grabAngle;
 	if (slotID == -2) {
-		grabAngle = _460;
+		grabAngle = mStuckAngle;
 	} else {
 		grabAngle = (TAU / mConfig->mCarryMaxPikis()) * slotID;
 	}
@@ -847,9 +848,9 @@ bool Pellet::isSlotFlag(int slotID)
  */
 void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 {
-	_570         = 0;
-	mMotionFlag  = 1;
-	mShapeObject = shapeObj;
+	mCarrierCounter = 0;
+	mMotionFlag     = 1;
+	mShapeObject    = shapeObj;
 	if (shapeObj->isMotionFlag(2)) {
 		setMotionFlag(2);
 		if (!isMotionFlag(2)) {
@@ -874,10 +875,10 @@ void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
  */
 void Pellet::initPellet(PelletView* view, PelletConfig* config)
 {
-	_570        = 0;
-	mMotionFlag = 1;
-	mPelletView = view;
-	mConfig     = config;
+	mCarrierCounter = 0;
+	mMotionFlag     = 1;
+	mPelletView     = view;
+	mConfig         = config;
 	mScale.set(view->viewGetScale());
 	mShapeObject = nullptr;
 	mCollInfo    = nullptr;
@@ -943,7 +944,7 @@ void Pellet::init(Vector3f& pos)
 		setDynamicsSimpleFixed(true);
 	}
 
-	_490 = 0;
+	mCarryState = 0;
 }
 
 /*
@@ -967,19 +968,19 @@ bool Pellet::isFree()
  */
 void Pellet::doLoad(RandomAccessStream& input)
 {
-	_450         = input.readByte();
-	_444.x       = input.readFloat();
-	_444.y       = input.readFloat();
-	_444.z       = input.readFloat();
-	Vector3f sep = _444 - mPosition;
-	if (sep.length() < 40.0f) {
+	_450                  = input.readByte();
+	mSpawnPosition.x      = input.readFloat();
+	mSpawnPosition.y      = input.readFloat();
+	mSpawnPosition.z      = input.readFloat();
+	Vector3f displacement = mSpawnPosition - mPosition;
+	if (displacement.length() < 40.0f) {
 		PRINT("UFO PARTS DIDN'T MOVE!\n");
-		mPosition = _444;
+		mPosition = mSpawnPosition;
 	} else if (isNan(mPosition.x) || isNan(mPosition.y) || isNan(mPosition.z)) {
 		// this isn't in the DLL, funnily enough
-		mPosition = _444;
+		mPosition = mSpawnPosition;
 	} else {
-		PRINT("PARTS MOVED !!! (%.1f %.1f %.1f)\n", sep.x, sep.y, sep.z);
+		PRINT("PARTS MOVED !!! (%.1f %.1f %.1f)\n", displacement.x, displacement.y, displacement.z);
 		mPosition = routeMgr->getSafePosition('test', mPosition);
 	}
 
@@ -1010,9 +1011,9 @@ void Pellet::animationKeyUpdated(PaniAnimKeyEvent& event)
 void Pellet::doSave(RandomAccessStream& output)
 {
 	output.writeByte(_450);
-	output.writeFloat(_444.x);
-	output.writeFloat(_444.y);
-	output.writeFloat(_444.z);
+	output.writeFloat(mSpawnPosition.x);
+	output.writeFloat(mSpawnPosition.y);
+	output.writeFloat(mSpawnPosition.z);
 }
 
 /*
@@ -1024,10 +1025,10 @@ void Pellet::startAI(int stateID)
 {
 	mRotationQuat.fromEuler(Vector3f(0.0f, mFaceDirection, 0.0f));
 	mRotation.set(0.0f, mFaceDirection, 0.0f);
-	_464 = mPosition;
+	mLastPosition = mPosition;
 	enableFixPos();
 	if (_450) {
-		_444 = mPosition;
+		mSpawnPosition = mPosition;
 	}
 
 	setTrySound(false);
@@ -1042,7 +1043,7 @@ void Pellet::startAI(int stateID)
 
 	mTargetGoal     = nullptr;
 	mStuckMouthPart = 0;
-	_478            = nullptr;
+	mPikiCarrier    = nullptr;
 
 	bool check = false;
 	if (mMotionFlag == 3) {
@@ -1089,12 +1090,12 @@ void Pellet::startAI(int stateID)
 		};
 		Vector3f pos(mPosition);
 		pos.y += heights[type];
-		_4A4 = heights[type];
-		_494 = pos;
+		mCurrentPelletHeight   = heights[type];
+		mCurrentPelletPosition = pos;
 
 		zen::particleGenerator* ptclGen = effectMgr->create(effects[type], pos, nullptr, nullptr);
 		if (ptclGen) {
-			ptclGen->setEmitPosPtr(&_494);
+			ptclGen->setEmitPosPtr(&mCurrentPelletPosition);
 			_4A0 = 90;
 		} else {
 			_4A0 = 0;
@@ -1113,8 +1114,8 @@ void Pellet::startAI(int stateID)
  */
 void Pellet::startAppear()
 {
-	mTargetGoal = nullptr;
-	_478        = nullptr;
+	mTargetGoal  = nullptr;
+	mPikiCarrier = nullptr;
 	if (!mPelletView) {
 		mAnimator.startMotion(PaniMotionInfo(0));
 		mMotionSpeed = 30.0f;
@@ -1187,7 +1188,7 @@ void Pellet::postUpdate(int p1, f32 p2)
  */
 void Pellet::update()
 {
-	_464            = mPosition;
+	mLastPosition   = mPosition;
 	bool isOnGround = onGround();
 	if (isOnGround && !mIsAIActive && mConfig->mBounceSoundID() != -1) {
 		playEventSound(this, bounceSounds[mConfig->mBounceSoundID()]);
@@ -1218,8 +1219,8 @@ void Pellet::update()
 
 	if (_4A0) {
 		_4A0--;
-		_494 = mPosition;
-		_494.y += _4A4;
+		mCurrentPelletPosition = mPosition;
+		mCurrentPelletPosition.y += mCurrentPelletHeight;
 	}
 
 	Stickers stuckList(this);
@@ -1233,7 +1234,7 @@ void Pellet::update()
 		}
 	}
 
-	_570                 = carryCount;
+	mCarrierCounter      = carryCount;
 	f32 height           = getCylinderHeight();
 	mLifeGauge.mPosition = mPosition;
 	mLifeGauge.mPosition.y += height + 5.0f;
@@ -1244,7 +1245,7 @@ void Pellet::update()
 		if (!mStickListHead) {
 			isFinishPick = true;
 			PRINT("NO-STICKER- FINISH PICK\n");
-		} else if (_478 && _478->isPiki()) {
+		} else if (mPikiCarrier && mPikiCarrier->isPiki()) {
 			Stickers stuckList2(this);
 			Iterator iter2(&stuckList2);
 			int carryCount2 = 0;
@@ -1256,7 +1257,7 @@ void Pellet::update()
 				}
 			}
 
-			_570 = carryCount2;
+			mCarrierCounter = carryCount2;
 			if (carryCount2 < mConfig->mCarryMinPikis()) {
 				isFinishPick = true;
 				PRINT("SHONINZU- FINISH PICK!\n");
@@ -1264,23 +1265,23 @@ void Pellet::update()
 		}
 
 		if (isFinishPick) {
-			_478 = nullptr;
+			mPikiCarrier = nullptr;
 			finishPick();
 			return;
 		}
 	}
 
-	if (_478) {
+	if (mPikiCarrier) {
 		if (!mStickListHead) {
-			_478 = nullptr;
+			mPikiCarrier = nullptr;
 			finishPick();
 			return;
 		}
 
 		if (onGround()) {
-			mVelocity.x = _47C.x;
-			mVelocity.z = _47C.z;
-			mVelocity.y += _47C.y;
+			mVelocity.x = mCarryDirection.x;
+			mVelocity.z = mCarryDirection.z;
+			mVelocity.y += mCarryDirection.y;
 		}
 
 		if (mapMgr->getMinY(mPosition.x, mPosition.z, true) > mPosition.y) {
@@ -1289,7 +1290,7 @@ void Pellet::update()
 
 		bool isTekiAttached    = false;
 		Creature* attachedTeki = nullptr;
-		if (_478->isPiki()) {
+		if (mPikiCarrier->isPiki()) {
 			Stickers stuckList3(this);
 			Iterator iter3(&stuckList3);
 			bool isOnlyPiki = true;
@@ -1307,7 +1308,7 @@ void Pellet::update()
 				isTekiAttached = true;
 			}
 
-			if (isOnlyPiki && _570 == 0) {
+			if (isOnlyPiki && mCarrierCounter == 0) {
 				stopEventSound(this, SE_LIFT_MOVE);
 				stopEventSound(this, SE_LIFT_TRY);
 			}
@@ -1318,7 +1319,7 @@ void Pellet::update()
 			Vector3f tekiDir = mPosition - attachedTeki->mPosition;
 			targetAngle      = atan2f(tekiDir.x, tekiDir.z);
 		} else {
-			Vector3f targetDir = _478->mPosition - mPosition;
+			Vector3f targetDir = mPikiCarrier->mPosition - mPosition;
 			targetAngle        = atan2f(targetDir.x, targetDir.z);
 		}
 

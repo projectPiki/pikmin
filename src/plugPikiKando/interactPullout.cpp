@@ -71,9 +71,9 @@ bool InteractPullout::actPiki(Piki* piki)
 	sideComponent.add(perpOffset);
 
 	f32 strength = 1.0f;
-	if (piki->_4B8 == 1) {
+	if (piki->mFormationPriority == 1) {
 		strength = C_PIKI_PROP(piki)._13C();
-	} else if (piki->_4B8 == 2) {
+	} else if (piki->mFormationPriority == 2) {
 		strength = C_PIKI_PROP(piki)._14C();
 	} else {
 		strength = C_PIKI_PROP(piki)._12C();

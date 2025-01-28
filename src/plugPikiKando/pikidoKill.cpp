@@ -36,8 +36,8 @@ void Piki::doKill()
 {
 	if (mRouteHandle) {
 		routeMgr->getPathFinder('test')->releaseHandle(mRouteHandle);
-		mRouteHandle  = 0;
-		mDoRouteASync = 0;
+		mRouteHandle         = 0;
+		mUseAsyncPathfinding = 0;
 	}
 
 	mLookAtTarget.clear();
@@ -63,7 +63,7 @@ void Piki::doKill()
 
 	// Check if the lost pikmin should leave a seed behind
 	int state = getState();
-	if (!playerState->mInDayEnd && state != PIKISTATE_Swallowed && mHappa == Flower && mMode != PikiMode::EnterMode && !mEraseKill) {
+	if (!playerState->mInDayEnd && state != PIKISTATE_Swallowed && mHappa == Flower && mMode != PikiMode::EnterMode && !mEraseOnKill) {
 		CollTriInfo* tri = mapMgr->getCurrTri(mPosition.x, mPosition.z, true);
 		if (tri && !MapCode::isBald(tri) && isSafeMePos(mPosition) && MapCode::getAttribute(tri) != ATTR_Water) {
 			if (gsys->getRand(1.0f) >= pikiMgr->mPikiParms->mPikiParms.mPikiLeaveSeedChance()) {
@@ -89,7 +89,7 @@ void Piki::doKill()
 		}
 	}
 
-	if (!mEraseKill) {
+	if (!mEraseOnKill) {
 		// the DLL seems to do more here
 		f32 max = mapMgr->getMaxY(mShadowPos.x, mShadowPos.z, true);
 		// f32 y   = mShadowPos.y;

@@ -1518,7 +1518,7 @@ bool Navi::procActionButton()
 				UfoItem* ship       = itemMgr->getUfo();
 				Vector3f pelShipSep = pellet->mPosition - ship->getGoalPos();
 				f32 distFromShip    = std::sqrtf(pelShipSep.x * pelShipSep.x + pelShipSep.z * pelShipSep.z);
-				if (distFromShip < 30.0f && pellet->_570 != 0) {
+				if (distFromShip < 30.0f && pellet->mCarrierCounter != 0) {
 					continue;
 				}
 

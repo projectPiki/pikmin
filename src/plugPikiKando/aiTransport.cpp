@@ -172,7 +172,7 @@ int ActTransport::getNumStickers()
 {
 	Pellet* pel = mPellet.getPtr();
 	if (pel) {
-		return pel->_570;
+		return pel->mCarrierCounter;
 	}
 	return 0;
 }
@@ -728,14 +728,14 @@ int ActTransport::exec()
 		if (!pel->isVisible()) {
 			if (pel->isUfoParts()) {
 				if (pel->getState() == PELSTATE_Goal) {
-					mPiki->mEmotion = 9;
-					mPiki->_404     = pel;
+					mPiki->mEmotion          = 9;
+					mPiki->mCarryingShipPart = pel;
 				} else {
 					mPiki->mEmotion = 1;
 				}
 			} else if (pel->getState() == PELSTATE_Goal) {
-				mPiki->mEmotion = 4;
-				mPiki->_404     = pel;
+				mPiki->mEmotion          = 4;
+				mPiki->mCarryingShipPart = pel;
 			} else {
 				mPiki->mEmotion = 1;
 			}
@@ -878,15 +878,15 @@ int ActTransport::exec()
 		Pellet* pel = mPellet.getPtr();
 		if (pel->isUfoParts()) {
 			if (pel->getState() == PELSTATE_Goal) {
-				mPiki->mEmotion = 9;
-				mPiki->_404     = mPellet.getPtr();
+				mPiki->mEmotion          = 9;
+				mPiki->mCarryingShipPart = mPellet.getPtr();
 			} else {
 				mPiki->mEmotion = 1;
 			}
 		} else if (pel->getState() == PELSTATE_Goal) {
-			mPiki->mEmotion = 4;
-			mPiki->mEmotion = 4;
-			mPiki->_404     = mPellet.getPtr();
+			mPiki->mEmotion          = 4;
+			mPiki->mEmotion          = 4;
+			mPiki->mCarryingShipPart = mPellet.getPtr();
 		} else {
 			mPiki->mEmotion = 1;
 		}
@@ -2682,7 +2682,7 @@ bool ActTransport::crMove()
 	}
 
 	if (!gameflow.mMoviePlayer->mIsActive) {
-		bool isMoving = mOdometer.moving(pel->mPosition, pel->_464);
+		bool isMoving = mOdometer.moving(pel->mPosition, pel->mLastPosition);
 		if (!isMoving) {
 			PRINT("pellet %s is not moving", pel->mConfig->mPelletId.mStringID);
 			return false;

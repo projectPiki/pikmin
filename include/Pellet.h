@@ -270,25 +270,25 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	// _440      = VTBL2
 	// _00-_440  = DualCreature
 	// _440-_444 = PaniAnimKeyListener
-	Vector3f _444;                        // _444
+	Vector3f mSpawnPosition;              // _444
 	bool _450;                            // _450
 	bool mIsPlayTrySound;                 // _451
 	u8 mMotionFlag;                       // _452
 	RippleEffect* mRippleEffect;          // _454
 	Suckable* mTargetGoal;                // _458
 	CollPart* mStuckMouthPart;            // _45C
-	f32 _460;                             // _460
-	Vector3f _464;                        // _464
+	f32 mStuckAngle;                      // _460
+	Vector3f mLastPosition;               // _464
 	PelletStateMachine* mStateMachine;    // _470
 	AState<Pellet>* mCurrentState;        // _474
-	Creature* _478;                       // _478
-	Vector3f _47C;                        // _47C
-	u16 _488;                             // _488
-	f32 _48C;                             // _48C
-	u16 _490;                             // _490
-	Vector3f _494;                        // _494
+	Creature* mPikiCarrier;               // _478
+	Vector3f mCarryDirection;             // _47C
+	u16 mCarrierCount;                    // _488
+	f32 mTransitionTimer;                 // _48C
+	u16 mCarryState;                      // _490
+	Vector3f mCurrentPelletPosition;      // _494
 	u16 _4A0;                             // _4A0
-	f32 _4A4;                             // _4A4
+	f32 mCurrentPelletHeight;             // _4A4
 	void* mPelletView;                    // _4A8, both PelletView* and Creature* - see Pellet::getBottomRadius
 	PelletAnimator mAnimator;             // _4AC
 	PelletShapeObject* mShapeObject;      // _554
@@ -296,7 +296,7 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	PelletConfig* mConfig;                // _55C
 	f32 mMotionSpeed;                     // _560
 	int mSlotFlags[3];                    // _564
-	u16 _570;                             // _570
+	u16 mCarrierCounter;                  // _570
 	CollInfo* mPelletCollInfo;            // _574
 	SearchData mSearchData[4];            // _578
 	ShapeDynMaterials mShapeDynMaterials; // _5A8

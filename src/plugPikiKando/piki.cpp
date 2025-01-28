@@ -224,55 +224,66 @@ PikiState* Piki::getPikiState()
  * Address:	800C6B00
  * Size:	00035C
  */
-int Piki::findRoute(int startWPIndex, int endWPIndex, bool p3, bool doASync)
+int Piki::findRoute(int sourceWaypointIndex, int destWaypointIndex, bool isRetryAttempt, bool useAsynchronous)
 {
-	int destIdx = -1;
+	// First, check if the destination is an onion
+	int destinationType = -1;
 	for (int i = PikiMinColor; i < PikiColorCount; i++) {
 		GoalItem* onyon = itemMgr->getContainer(i);
-		if (onyon && onyon->mWaypointIdx == endWPIndex) {
-			destIdx = i;
+		if (onyon && onyon->mWaypointIdx == destWaypointIndex) {
+			destinationType = i;
 			break;
 		}
 	}
 
+	// Check if the destination is Olimar's ship
 	UfoItem* ship = itemMgr->getUfo();
-	if (ship && ship->mWaypointID == endWPIndex) {
-		destIdx = 3;
+	if (ship && ship->mWaypointID == destWaypointIndex) {
+		destinationType = 3;
 	}
 
-	if (destIdx == -1) {
-		// we got supplied BAD waypoints - need to manually check this
+	// If destination isn't a special point, try to copy an existing path
+	// from another Piki that's already calculated this route
+	if (destinationType == -1) {
 		Iterator iter(pikiMgr);
 		CI_LOOP(iter)
 		{
 			Piki* piki = static_cast<Piki*>(*iter);
-			if (piki->mRouteStartWPIdx == startWPIndex && piki->mRouteGoalWPIdx == endWPIndex && p3 == piki->_2DA
-			    && piki->mPathBuffers[0].mWayPointIdx == startWPIndex) {
-				bool doLoop = true;
-				int numWP   = 0;
-				int loopCnt = 0;
-				for (int i = 0; doLoop; i++) {
-					loopCnt++;
-					if (loopCnt > 1000) {
+			// Find another Piki with matching route parameters
+			if (piki->mRouteSourceIndex == sourceWaypointIndex && piki->mRouteDestinationIndex == destWaypointIndex
+			    && isRetryAttempt == piki->mIsRetryPathfind && piki->mPathBuffers[0].mWayPointIdx == sourceWaypointIndex) {
+
+				bool keepSearching = true;
+				int pathLength     = 0;
+				int safetyCounter  = 0;
+
+				for (int i = 0; keepSearching; i++) {
+					safetyCounter++;
+					if (safetyCounter > 1000) {
 						ERROR("array violation!\n");
 					}
+
+					// Copy waypoint data
 					mPathBuffers[i].mWayPointIdx = piki->mPathBuffers[i].mWayPointIdx;
-					int bufVal                   = mPathBuffers[i].mWayPointIdx;
+					int currentPoint             = mPathBuffers[i].mWayPointIdx;
 					mPathBuffers[i]._04          = piki->mPathBuffers[i]._04;
-					numWP++;
-					if (bufVal == endWPIndex) {
-						mRouteStartWPIdx = startWPIndex;
-						mRouteGoalWPIdx  = endWPIndex;
-						_2DA             = p3;
-						return numWP;
+					pathLength++;
+
+					// Check if we've reached the destination
+					if (currentPoint == destWaypointIndex) {
+						mRouteSourceIndex      = sourceWaypointIndex;
+						mRouteDestinationIndex = destWaypointIndex;
+						mIsRetryPathfind       = isRetryAttempt;
+						return pathLength;
 					}
 
-					int rWP = routeMgr->getNumWayPoints('test');
-					if (rWP <= numWP) {
+					// Check if we've examined all possible waypoints
+					int totalWaypoints = routeMgr->getNumWayPoints('test');
+					if (totalWaypoints <= pathLength) {
 						// we've checked all way points on the map
-						doLoop = false;
-						PRINT("i is %d : rnum = %d : num = %d\n", i, rWP, numWP);
-						for (int j = 0; j < rWP; j++) {
+						keepSearching = false;
+						PRINT("i is %d : rnum = %d : num = %d\n", i, totalWaypoints, pathLength);
+						for (int j = 0; j < totalWaypoints; j++) {
 							;
 						}
 					}
@@ -281,33 +292,36 @@ int Piki::findRoute(int startWPIndex, int endWPIndex, bool p3, bool doASync)
 		}
 	}
 
-	mRouteStartWPIdx = startWPIndex;
-	mRouteGoalWPIdx  = endWPIndex;
-	_2DA             = p3;
+	mRouteSourceIndex      = sourceWaypointIndex;
+	mRouteDestinationIndex = destWaypointIndex;
+	mIsRetryPathfind       = isRetryAttempt;
 
+	// Calculate new path
 	int handle;
-	if (destIdx != -1) {
-		handle = routeMgr->getPathFinder('test')->findSyncOnyon(mPosition, mPathBuffers, startWPIndex, destIdx, p3);
+	if (destinationType != -1) {
+		handle
+		    = routeMgr->getPathFinder('test')->findSyncOnyon(mPosition, mPathBuffers, sourceWaypointIndex, destinationType, isRetryAttempt);
 		if (!handle) {
 			PRINT("ONYON ROOT FAILED\n");
 		}
 	} else {
-		if (doASync && AIPerf::useASync) {
-			mDoRouteASync = true;
+		if (useAsynchronous && AIPerf::useASync) {
+			mUseAsyncPathfinding = true;
 			if (mRouteHandle == 0) {
-				mRouteHandle = routeMgr->getPathFinder('test')->findASync(mPathBuffers, startWPIndex, endWPIndex, p3);
+				mRouteHandle
+				    = routeMgr->getPathFinder('test')->findASync(mPathBuffers, sourceWaypointIndex, destWaypointIndex, isRetryAttempt);
 				PRINT("*** %x START ASYNC ROUTE FIND (handle=%d)\n", mRouteHandle);
 			}
 			return -55;
 		}
 
-		handle = routeMgr->getPathFinder('test')->findSync(mPathBuffers, startWPIndex, endWPIndex, p3);
+		handle = routeMgr->getPathFinder('test')->findSync(mPathBuffers, sourceWaypointIndex, destWaypointIndex, isRetryAttempt);
 	}
 
 	if (!handle) {
 		PRINT("root find failed\n");
-		mRouteGoalWPIdx  = -1;
-		mRouteStartWPIdx = -1;
+		mRouteDestinationIndex = -1;
+		mRouteSourceIndex      = -1;
 	}
 
 	return handle;
@@ -342,7 +356,7 @@ int Piki::moveRouteTraceDynamic(f32 p1)
 		return traceRes;
 	}
 
-	if (mDoRouteASync) {
+	if (mUseAsyncPathfinding) {
 		return 2;
 	}
 
@@ -374,8 +388,8 @@ bool Piki::initRouteTrace(Vector3f& targetPos, bool p2)
 		mRouteHandle = 0;
 	}
 
-	mDoRouteASync = false;
-	bool onlyLand = true;
+	mUseAsyncPathfinding = false;
+	bool onlyLand        = true;
 	if (mColor == Blue) {
 		onlyLand = false;
 	}
@@ -412,7 +426,7 @@ bool Piki::initRouteTrace(Vector3f& targetPos, bool p2)
 		PathFinder::clearMode();
 	}
 
-	if (p2 && mDoRouteASync && mNumRoutePoints == -55) {
+	if (p2 && mUseAsyncPathfinding && mNumRoutePoints == -55) {
 		PRINT("*** ASYNC SUCCESS %x\n", this);
 		return true;
 	}
@@ -450,7 +464,7 @@ bool Piki::initRouteTrace(Vector3f& targetPos, bool p2)
  */
 int Piki::moveRouteTrace(f32 speedRatio)
 {
-	if (AIPerf::useASync && mDoRouteASync) {
+	if (AIPerf::useASync && mUseAsyncPathfinding) {
 		if (mRouteHandle) {
 			int numPts = routeMgr->getPathFinder('test')->checkASync(mRouteHandle);
 			if (numPts == -2) {
@@ -483,13 +497,13 @@ int Piki::moveRouteTrace(f32 speedRatio)
 			}
 
 			routeMgr->getPathFinder('test')->releaseHandle(mRouteHandle);
-			mRouteHandle  = 0;
-			mDoRouteASync = false;
+			mRouteHandle         = 0;
+			mUseAsyncPathfinding = false;
 
 		} else {
 			PRINT("waiting for handle\n");
 			PRINT("wait for r-handle");
-			mRouteHandle = routeMgr->getPathFinder('test')->findASync(mPathBuffers, mRouteStartWPIdx, mRouteGoalWPIdx, false);
+			mRouteHandle = routeMgr->getPathFinder('test')->findASync(mPathBuffers, mRouteSourceIndex, mRouteDestinationIndex, false);
 			return 2;
 		}
 	}
@@ -2884,21 +2898,21 @@ int Piki::getFormationPri()
 {
 	switch (mNavi->_80C) {
 	case 0:
-		return _4B8;
+		return mFormationPriority;
 
 	case 1:
-		if (_4B8 == 1) {
+		if (mFormationPriority == 1) {
 			return 0;
-		} else if (_4B8 == 2) {
+		} else if (mFormationPriority == 2) {
 			return 1;
 		}
 		return 2;
 
 	case 2:
-		return -_4B8;
+		return -mFormationPriority;
 
 	default:
-		return _4B8;
+		return mFormationPriority;
 	}
 }
 
@@ -3688,7 +3702,7 @@ void Piki::collisionCallback(CollEvent& event)
 Piki::Piki(CreatureProp* prop)
     : Creature(prop)
 {
-	_33C = nullptr;
+	mLookatTarget = nullptr;
 	if (routeMgr) {
 		int numWP = routeMgr->getNumWayPoints('test');
 		if (numWP > 0) {
@@ -3849,20 +3863,20 @@ void Piki::init(Navi* navi)
 	_344 = 0.0f;
 	_348 = 0.0f;
 	mScale.set(1.0f, 1.0f, 1.0f);
-	mRouteHandle  = 0;
-	mDoRouteASync = false;
-	_528          = 0.0f;
+	mRouteHandle         = 0;
+	mUseAsyncPathfinding = false;
+	_528                 = 0.0f;
 	mLookAtTarget.clear();
-	_33C = nullptr;
-	_330 = 0;
+	mLookatTarget = nullptr;
+	_330          = 0;
 	forceFinishLook();
-	mEmotion        = 10;
-	_404            = nullptr;
-	mLeaderCreature = nullptr;
-	mInWaterTimer   = 0;
-	mFiredState     = 0;
-	mIsCallable     = true;
-	_440.set(0.0f, 0.0f, 0.0f);
+	mEmotion          = 10;
+	mCarryingShipPart = nullptr;
+	mLeaderCreature   = nullptr;
+	mInWaterTimer     = 0;
+	mFiredState       = 0;
+	mIsCallable       = true;
+	mLastAnimPosition.set(0.0f, 0.0f, 0.0f);
 	unsetEraseKill();
 	_484 = -1;
 	_480 = 0;
@@ -3907,11 +3921,11 @@ void Piki::init(Navi* navi)
 	mFSM->transit(this, PIKISTATE_Normal);
 	mPikiSize = pikiMgr->mPikiParms->mPikiParms._23C()
 	          + (pikiMgr->mPikiParms->mPikiParms._24C() - pikiMgr->mPikiParms->mPikiParms._23C()) * System::getRand(1.0f);
-	_34C = mFaceDirection;
+	mOldFaceDirection = mFaceDirection;
 	initBirth();
-	mRouteGoalWPIdx      = -1;
-	mRouteStartWPIdx     = -1;
-	mRouteTargetCreature = nullptr;
+	mRouteDestinationIndex = -1;
+	mRouteSourceIndex      = -1;
+	mRouteTargetCreature   = nullptr;
 
 	u32 badCompiler[2];
 }
@@ -4012,7 +4026,7 @@ void Piki::updateLookCreature()
 void Piki::doAnimation()
 {
 	updateWalkAnimation();
-	_440 = mPosition;
+	mLastAnimPosition = mPosition;
 	mPikiAnimMgr.updateAnimation(mMotionSpeed);
 }
 
@@ -4034,7 +4048,7 @@ void Piki::updateWalkAnimation()
 			enableMotionBlend();
 		}
 
-		Vector3f sep = mPosition - _440;
+		Vector3f sep = mPosition - mLastAnimPosition;
 		sep.y        = 0.0f;
 		f32 speed    = sep.length() / gsys->getFrameTime();
 
@@ -4046,7 +4060,7 @@ void Piki::updateWalkAnimation()
 		}
 
 		int upperMotionID = mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex();
-		f32 angleDiff     = zen::Abs(mFaceDirection - _34C);
+		f32 angleDiff     = zen::Abs(mFaceDirection - mOldFaceDirection);
 		doMotionBlend();
 		int newMotionID;
 		if (speed < pikiMgr->mPikiParms->mPikiParms._19C()) {
@@ -4229,7 +4243,7 @@ void Piki::realAI()
 		mInWaterTimer = 0;
 	}
 
-	_34C = mFaceDirection;
+	mOldFaceDirection = mFaceDirection;
 	updateFire();
 	mFSM->exec(this);
 	_4E8 = 0;

@@ -185,7 +185,7 @@ void GoalItem::playEffect(int id)
 			break;
 		case 4:
 			enableColorAnim();
-			_3D0 = 20.0f;
+			mColourFadeRate = 20.0f;
 			break;
 		}
 		break;
@@ -893,7 +893,7 @@ void GoalItem::exitPikis(int pikis)
 {
 	mIsDispensingPikis = true;
 	mPikisToExit += pikis;
-	_418 = 0.0f;
+	mPikiSpawnTimer = 0.0f;
 }
 
 /*
@@ -1044,7 +1044,7 @@ void GoalItem::startLand()
  */
 void GoalItem::startConeShrink()
 {
-	_3F6           = true;
+	mIsClosing     = true;
 	mConeSizeTimer = 0.8f;
 	_3FC           = mSpotModelEff->_14;
 }
@@ -1056,7 +1056,7 @@ void GoalItem::startConeShrink()
  */
 void GoalItem::updateConeShrink()
 {
-	if (!_3F6) {
+	if (!mIsClosing) {
 		return;
 	}
 
@@ -1071,7 +1071,7 @@ void GoalItem::updateConeShrink()
 
 	if (mConeSizeTimer <= 0.0f) {
 		mSpotModelEff->_14.set(0.0f, 0.0f, 0.0f);
-		_3F6 = false;
+		mIsClosing = false;
 	}
 }
 
@@ -1127,7 +1127,7 @@ void GoalItem::startAI(int)
 	setSpotActive(false);
 	setFlowEffect(false);
 	_3F5        = 0;
-	_3F6        = 0;
+	mIsClosing  = 0;
 	mIsConeEmit = false;
 	mSeContext  = &_45C;
 	mSeContext->setContext(this, 3);
@@ -1174,7 +1174,7 @@ void GoalItem::startAI(int)
 		((SimpleAI*)mStateMachine)->start(this, 5);
 		startConeShrink();
 		enableColorAnim();
-		_3D0 = 0.0f;
+		mColourFadeRate = 0.0f;
 		wp->setFlag(false);
 	} else {
 		setMotionSpeed(30.0f);
@@ -1187,7 +1187,7 @@ void GoalItem::startAI(int)
 	_41C.y             = mapMgr->getMinY(mPosition.x, mPosition.z, true);
 	mIsDispensingPikis = false;
 	mPikisToExit       = 0;
-	_418               = 0.0f;
+	mPikiSpawnTimer    = 0.0f;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1550,14 +1550,14 @@ void GoalItem::update()
 {
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 	ItemCreature::update();
-	if (_3D8) {
-		_3D4 += (_3D0 * mMotionSpeed * gsys->getFrameTime()) / 30.0f;
-		if (_3D4 > 1.0f) {
+	if (mColourAnimationEnabled) {
+		mColourAnimProgress += (mColourFadeRate * mMotionSpeed * gsys->getFrameTime()) / 30.0f;
+		if (mColourAnimProgress > 1.0f) {
 			disableColorAnim();
 		}
 	}
 
-	if (_3F6) {
+	if (mIsClosing) {
 		updateConeShrink();
 	}
 
@@ -1568,21 +1568,23 @@ void GoalItem::update()
 	mPosition = _41C;
 
 	if (mIsDispensingPikis) {
-		if (_418 <= 0.0f) {
+		if (mPikiSpawnTimer <= 0.0f) {
 			if (!exitPiki()) {
 				int mapPikis = GameStat::mapPikis;
 				int mePikis  = GameStat::mePikis;
 				PRINT("map=%d mePiki=%d exitC=%d", mapPikis, mePikis, mPikisToExit);
 				ERROR("2d err %d %d %d", mapPikis, mePikis, mPikisToExit);
 			}
+
 			mPikisToExit--;
 			if (mPikisToExit <= 0) {
 				mIsDispensingPikis = false;
 			}
-			_418 = gsys->getRand(1.0f) * 0.1f + 0.2f;
-			_418 *= 0.2f;
+
+			mPikiSpawnTimer = gsys->getRand(1.0f) * 0.1f + 0.2f;
+			mPikiSpawnTimer *= 0.2f;
 		} else {
-			_418 -= gsys->getFrameTime();
+			mPikiSpawnTimer -= gsys->getFrameTime();
 		}
 	}
 }
@@ -1618,8 +1620,8 @@ void GoalItem::refresh(Graphics& gfx)
 	mItemAnimator.finishLoop();
 
 	f32 rate;
-	if (_3D8) {
-		rate = int(mOnionColour * 2 + 1) - _3D4;
+	if (mColourAnimationEnabled) {
+		rate = int(mOnionColour * 2 + 1) - mColourAnimProgress;
 	} else {
 		rate = int(mOnionColour << 1);
 	}

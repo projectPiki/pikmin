@@ -211,8 +211,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 
 	// NB: these are all the DLL inlines. No more.
 
-	void setEraseKill() { mEraseKill = true; }
-	void unsetEraseKill() { mEraseKill = false; }
+	void setEraseKill() { mEraseOnKill = true; }
+	void unsetEraseKill() { mEraseOnKill = false; }
 
 	AState<Piki>* getCurrState() { return mCurrentState; }
 	void setCurrState(AState<Piki>* state) { mCurrentState = state; }
@@ -220,7 +220,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	// 100AEBD0 in plugPiki
 	void startLook(Vector3f* other)
 	{
-		_33C = other;
+		mLookatTarget = other;
 
 		_340 = 0;
 		_330 = 0;
@@ -230,11 +230,11 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 
 	void forceFinishLook()
 	{
-		_33C = 0;
-		_348 = 0.0f;
-		_344 = 0.0f;
-		_340 = 0;
-		_330 = 0;
+		mLookatTarget = 0;
+		_348          = 0.0f;
+		_344          = 0.0f;
+		_340          = 0;
+		_330          = 0;
 
 		mLookAtTarget.reset();
 	}
@@ -251,10 +251,10 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	OdoMeter mOdometer;                   // _2BC
 	PathFinder::Buffer* mPathBuffers;     // _2CC
 	u32 mRouteHandle;                     // _2D0
-	bool mDoRouteASync;                   // _2D4
-	s16 mRouteStartWPIdx;                 // _2D6
-	s16 mRouteGoalWPIdx;                  // _2D8
-	bool _2DA;                            // _2DA
+	bool mUseAsyncPathfinding;            // _2D4
+	s16 mRouteSourceIndex;                // _2D6
+	s16 mRouteDestinationIndex;           // _2D8
+	bool mIsRetryPathfind;                // _2DA
 	s16 mCurrRoutePoint;                  // _2DC
 	Vector3f mRouteStartPos;              // _2E0
 	Vector3f mRouteGoalPos;               // _2EC
@@ -264,15 +264,15 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u8 _330;                              // _330
 	u32 _334;                             // _334
 	SmartPtr<Creature> mLookAtTarget;     // _338
-	Vector3f* _33C;                       // _33C
+	Vector3f* mLookatTarget;              // _33C
 	u8 _340;                              // _340
 	f32 _344;                             // _344
 	f32 _348;                             // _348
-	f32 _34C;                             // _34C
+	f32 mOldFaceDirection;                // _34C
 	int mBlendMotionIdx;                  // _350
 	PaniPikiAnimMgr mPikiAnimMgr;         // _354
 	u8 mEmotion;                          // _400
-	Creature* _404;                       // _404, might be Pellet*
+	Creature* mCarryingShipPart;          // _404
 	u8 _408;                              // _408
 	bool mIsCallable;                     // _409
 	UpdateContext mPikiUpdateContext;     // _40C
@@ -285,7 +285,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	FreeLightEffect* mFreeLightEffect;    // _434
 	SlimeEffect* mSlimeEffect;            // _438
 	int mPlayerId;                        // _43C
-	Vector3f _440;                        // _440
+	Vector3f mLastAnimPosition;           // _440
 	Vector3f mShadowPos;                  // _44C
 	Vector3f mCatchPos;                   // _458
 	Vector3f mEffectPos;                  // _464
@@ -299,13 +299,13 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	f32 _48C;                             // _48C
 	PikiStateMachine* mFSM;               // _490
 	u8 _494[0x4];                         // _494
-	f32 mFlickIntensity;                  // _498, knockback? impulse velocity magnitude?
+	f32 mFlickIntensity;                  // _498
 	f32 mRotationAngle;                   // _49C
 	bool mIsWhistlePending;               // _4A0, have been whistled, haven't joined party yet
 	CollPart* mSwallowMouthPart;          // _4A4
-	Creature* mLeaderCreature;            // _4A8, maybe puffstool/kinoko leader?
+	Creature* mLeaderCreature;            // _4A8
 	Vector3f mPluckVelocity;              // _4AC
-	int _4B8;                             // _4B8
+	int mFormationPriority;               // _4B8
 	Vector3f _4BC;                        // _4BC
 	Vector3f _4C8;                        // _4C8
 	u8 _4D4[0x4];                         // _4D4, unknown
@@ -336,7 +336,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Colour mTargetBlendColour;            // _534
 	f32 mColourBlendRatio;                // _538
 	SearchData mPikiSearchData[6];        // _53C
-	bool mEraseKill;                      // _584
+	bool mEraseOnKill;                    // _584
 };
 
 /**
