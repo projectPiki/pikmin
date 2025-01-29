@@ -763,7 +763,7 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
 struct ActDecoy : public Action, public PaniAnimKeyListener {
 	ActDecoy(Piki*);
 
-	virtual ~ActDecoy();                                 // _44 (weak)
+	virtual ~ActDecoy() { }                              // _44 (weak)
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -777,7 +777,8 @@ struct ActDecoy : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x20 - 0x18]; // _18, unknown
+	int _18; // _18
+	f32 _1C; // _1C
 };
 
 /**

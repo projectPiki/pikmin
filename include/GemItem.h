@@ -6,7 +6,20 @@
 #include "SimpleAI.h"
 #include "SoundMgr.h"
 
-/*
+/**
+ * @brief TODO
+ */
+struct GemTable {
+	int _00; // _00
+	int _04; // _04
+	int _08; // _08
+	int _0C; // _0C
+	int _10; // _10
+	int _14; // _14
+	f32 _18; // _18
+};
+
+/**
  * @brief TODO
  *
  * @note Virtual table is stripped (so no RTTI) - inheritance is a guess.

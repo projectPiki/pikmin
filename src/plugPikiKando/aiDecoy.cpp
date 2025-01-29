@@ -1,4 +1,6 @@
 #include "PikiAI.h"
+#include "teki.h"
+#include "NaviMgr.h"
 #include "DebugLog.h"
 
 /*
@@ -21,32 +23,8 @@ DEFINE_PRINT(nullptr)
  * Size:	000054
  */
 ActDecoy::ActDecoy(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        0xC60C
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x246C
-	  lis       r3, 0x802B
-	  stw       r0, 0x14(r31)
-	  addi      r3, r3, 0x642C
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x64
-	  addi      r3, r31, 0
-	  stw       r0, 0x14(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -56,119 +34,20 @@ ActDecoy::ActDecoy(Piki* piki)
  */
 Creature* ActDecoy::findTeki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stfd      f31, 0x48(r1)
-	  stfd      f30, 0x40(r1)
-	  stmw      r27, 0x2C(r1)
-	  mr        r27, r3
-	  li        r28, 0
-	  lwz       r30, 0x3160(r13)
-	  lfs       f31, -0x6E80(r2)
-	  lwz       r12, 0x0(r30)
-	  addi      r3, r30, 0
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-	  b         .loc_0xFC
+	f32 minDist           = 300.0f;
+	Creature* closestTeki = nullptr;
+	Iterator iter(tekiMgr);
+	CI_LOOP(iter)
+	{
+		Creature* teki = *iter;
+		f32 dist       = qdist2(teki, mPiki);
+		if (teki->isVisible() && teki->isAlive() && dist < minDist) {
+			minDist     = dist;
+			closestTeki = teki;
+		}
+	}
 
-	.loc_0x44:
-	  cmpwi     r29, -0x1
-	  bne-      .loc_0x6C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r31, r3
-	  b         .loc_0x88
-
-	.loc_0x6C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r31, r3
-
-	.loc_0x88:
-	  lwz       r4, 0xC(r27)
-	  mr        r3, r31
-	  bl        -0x2AA14
-	  lwz       r12, 0x0(r31)
-	  fmr       f30, f1
-	  mr        r3, r31
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xE0
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xE0
-	  fcmpo     cr0, f30, f31
-	  bge-      .loc_0xE0
-	  fmr       f31, f30
-	  mr        r28, r31
-
-	.loc_0xE0:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-
-	.loc_0xFC:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x124
-	  li        r0, 0x1
-	  b         .loc_0x150
-
-	.loc_0x124:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x14C
-	  li        r0, 0x1
-	  b         .loc_0x150
-
-	.loc_0x14C:
-	  li        r0, 0
-
-	.loc_0x150:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x44
-	  mr        r3, r28
-	  lmw       r27, 0x2C(r1)
-	  lwz       r0, 0x54(r1)
-	  lfd       f31, 0x48(r1)
-	  lfd       f30, 0x40(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	return closestTeki;
 }
 
 /*
@@ -178,7 +57,23 @@ Creature* ActDecoy::findTeki()
  */
 Creature* ActDecoy::update()
 {
-	// UNUSED FUNCTION
+	Creature* teki = findTeki();
+	if (teki) {
+		if (qdist2(teki, mPiki) < 60.0f) {
+			_18 = 0;
+		} else {
+			_18 = 2;
+		}
+	} else {
+		if (_18 != 3) {
+			_1C = 5.0f;
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
+		}
+
+		_18 = 3;
+	}
+
+	return teki;
 }
 
 /*
@@ -186,34 +81,9 @@ Creature* ActDecoy::update()
  * Address:	800B7978
  * Size:	00005C
  */
-void ActDecoy::init(Creature*)
+void ActDecoy::init(Creature* target)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x10
-	  bl        0x675C0
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0
-	  bl        0x675B0
-	  mr        r4, r3
-	  lwz       r3, 0xC(r30)
-	  mr        r5, r31
-	  bl        0x13020
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
 
 /*
@@ -241,6 +111,44 @@ void ActDecoy::animationKeyUpdated(PaniAnimKeyEvent&)
  */
 int ActDecoy::exec()
 {
+	Creature* teki = update();
+	switch (_18) {
+	case 3:
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		_1C -= gsys->getFrameTime();
+		if (_1C < 0.0f) {
+			return ACTOUT_Success;
+		}
+		break;
+	case 2:
+		Vector3f dir = mPiki->mPosition - teki->mPosition;
+		f32 dist     = dir.length();
+		dir          = dir * (-1.0f / dist);
+		if (dist < 80.0f && dist > 60.0f) {
+			mPiki->mFaceDirection += angDist(atan2f(dir.x, dir.z), mPiki->mFaceDirection) * gsys->getFrameTime() * 3.0f;
+			mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		} else {
+			mPiki->setSpeed(0.5f, dir);
+		}
+		break;
+	case 0:
+		Navi* navi       = naviMgr->getNavi();
+		Vector3f naviDir = mPiki->mPosition - navi->mPosition;
+		naviDir.normalise();
+		Vector3f tekiDir = mPiki->mPosition - teki->mPosition;
+		dist             = tekiDir.length();
+		tekiDir          = tekiDir * (1.0f / dist);
+		f32 proj         = tekiDir.DP(naviDir);
+		tekiDir          = tekiDir + quickABS(proj) * naviDir * 1.3f;
+		tekiDir.normalise();
+		mPiki->setSpeed(1.0f, tekiDir);
+		if (dist > 60.0f) {
+			_18 = 2;
+		}
+		break;
+	}
+
+	return ACTOUT_Continue;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -594,47 +502,6 @@ int ActDecoy::exec()
 	  lwz       r30, 0x140(r1)
 	  lwz       r29, 0x13C(r1)
 	  addi      r1, r1, 0x168
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800B7EF0
- * Size:	00006C
- */
-ActDecoy::~ActDecoy()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x50
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x642C
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x64
-	  addi      r3, r30, 0
-	  stw       r0, 0x14(r30)
-	  li        r4, 0
-	  bl        0xBEDC
-	  extsh.    r0, r31
-	  ble-      .loc_0x50
-	  mr        r3, r30
-	  bl        -0x70D90
-
-	.loc_0x50:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
 	*/

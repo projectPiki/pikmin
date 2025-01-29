@@ -5,7 +5,10 @@
 #include "EffectMgr.h"
 
 // theres a lot more to this
-int table[16] = { 0, 1, 2, 3 };
+GemTable table[5] = {
+	{ 1, 3, 1, 2, 1, 0, 16.0f },      { 5, 10, 5, 5, 3, 5, 32.0f },    { 10, 20, 10, 10, 6, 2, 48.0f },
+	{ 20, 50, 20, 20, 10, 0, 64.0f }, { 50, 200, 50, 0, 0, 0, 16.0f },
+};
 
 /*
  * --INFO--
@@ -287,173 +290,35 @@ f32 GemItem::getiMass()
 void GemItem::split()
 {
 	if (_3E4) {
-		int something = table[_3E4];
+		int something = table[mGemType]._14;
 		if (something > 0) {
 			PRINT("gem type %d split !\n", mGemType);
 			_3E4 = 0;
 			kill(false);
-			int objType = mGemType == 1 ? OBJTYPE_Gem1 : OBJTYPE_Gem5;
-			f32 yvel    = 240.0f;
+			int objType;
+			if (mGemType == 1) {
+				objType = OBJTYPE_Gem1;
+			} else {
+				objType = OBJTYPE_Gem5;
+			}
+
 			for (int i = 0; i < something; i++) {
 				Creature* obj = itemMgr->birth(objType);
 				Vector3f pos  = mPosition;
 				mPosition.y += 10.0f;
-				f32 r    = gsys->getRand(1.0f);
-				f32 calc = r * PI + r * PI;
-				Vector3f velocity(sinf(calc) * 40.0f, yvel, cosf(calc) * 40.0f);
+				f32 angle      = 2.0f * randFloat(PI);
+				f32 vertSpeed  = 240.0f;
+				f32 horizSpeed = 40.0f;
+				Vector3f velocity(horizSpeed * sinf(angle), vertSpeed, horizSpeed * cosf(angle));
 				if (obj) {
 					obj->init(pos);
 					obj->startAI(0);
 					obj->initParam(mColor);
-					obj->mVelocity.x = velocity.x;
-					obj->mVelocity.y = velocity.y;
-					obj->mVelocity.z = velocity.z;
+					obj->mVelocity = velocity;
 				}
 			}
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stfd      f31, 0x98(r1)
-	  stfd      f30, 0x90(r1)
-	  stfd      f29, 0x88(r1)
-	  stfd      f28, 0x80(r1)
-	  stfd      f27, 0x78(r1)
-	  stfd      f26, 0x70(r1)
-	  stfd      f25, 0x68(r1)
-	  stfd      f24, 0x60(r1)
-	  stfd      f23, 0x58(r1)
-	  stfd      f22, 0x50(r1)
-	  stmw      r26, 0x38(r1)
-	  mr        r31, r3
-	  lbz       r0, 0x3E4(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1C0
-	  lwz       r0, 0x3DC(r31)
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4E50
-	  mulli     r0, r0, 0x1C
-	  add       r3, r3, r0
-	  lwz       r29, 0x14(r3)
-	  cmpwi     r29, 0
-	  ble-      .loc_0x1C0
-	  li        r0, 0
-	  stb       r0, 0x3E4(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x5980C
-	  lwz       r0, 0x3DC(r31)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x90
-	  li        r28, 0xB
-	  b         .loc_0x94
-
-	.loc_0x90:
-	  li        r28, 0x7
-
-	.loc_0x94:
-	  lfs       f24, -0x6708(r2)
-	  li        r27, 0
-	  lfd       f25, -0x6710(r2)
-	  lis       r30, 0x4330
-	  lfs       f26, -0x671C(r2)
-	  lfs       f27, -0x6720(r2)
-	  lfs       f28, -0x6704(r2)
-	  lfs       f29, -0x6700(r2)
-	  lfs       f30, -0x66FC(r2)
-	  lfs       f31, -0x66F8(r2)
-	  b         .loc_0x1B8
-
-	.loc_0xC0:
-	  lwz       r3, 0x30AC(r13)
-	  mr        r4, r28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x78(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x94(r31)
-	  mr        r26, r3
-	  stfs      f0, 0x24(r1)
-	  lfs       f0, 0x98(r31)
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, 0x9C(r31)
-	  stfs      f0, 0x2C(r1)
-	  lfs       f0, 0x98(r31)
-	  fadds     f0, f0, f24
-	  stfs      f0, 0x98(r31)
-	  bl        0x133AFC
-	  xoris     r0, r3, 0x8000
-	  stw       r0, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  lfd       f0, 0x30(r1)
-	  fsubs     f0, f0, f25
-	  fdivs     f0, f0, f26
-	  fmuls     f0, f27, f0
-	  fmuls     f0, f29, f0
-	  fmuls     f22, f28, f0
-	  fmr       f1, f22
-	  bl        0x1375B4
-	  fmuls     f23, f30, f1
-	  fmr       f1, f22
-	  bl        0x13773C
-	  fmuls     f0, f30, f1
-	  cmplwi    r26, 0
-	  stfs      f0, 0x10(r1)
-	  stfs      f31, 0x14(r1)
-	  stfs      f23, 0x18(r1)
-	  beq-      .loc_0x1B4
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  addi      r4, r1, 0x24
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  li        r4, 0
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r26
-	  lwz       r4, 0x3E0(r31)
-	  lwz       r12, 0x0(r26)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r3, 0x70(r26)
-	  stw       r0, 0x74(r26)
-	  lwz       r0, 0x18(r1)
-	  stw       r0, 0x78(r26)
-
-	.loc_0x1B4:
-	  addi      r27, r27, 0x1
-
-	.loc_0x1B8:
-	  cmpw      r27, r29
-	  blt+      .loc_0xC0
-
-	.loc_0x1C0:
-	  lmw       r26, 0x38(r1)
-	  lwz       r0, 0xA4(r1)
-	  lfd       f31, 0x98(r1)
-	  lfd       f30, 0x90(r1)
-	  lfd       f29, 0x88(r1)
-	  lfd       f28, 0x80(r1)
-	  lfd       f27, 0x78(r1)
-	  lfd       f26, 0x70(r1)
-	  lfd       f25, 0x68(r1)
-	  lfd       f24, 0x60(r1)
-	  lfd       f23, 0x58(r1)
-	  lfd       f22, 0x50(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
