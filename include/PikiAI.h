@@ -1343,35 +1343,62 @@ struct ActPickItem : public AndAction {
  *
  * @note Size: 0x1C.
  */
-struct ActPullout : public Action {
+struct ActPullout : public AndAction {
+
+	/**
+	 * @brief TODO
+	 */
+	enum ChildID {
+		CHILD_NULL            = -1,
+		CHILD_Goto            = 0,
+		CHILD_Adjust          = 1,
+		CHILD_PulloutCreature = 2,
+		CHILD_COUNT, // 3
+	};
+
 	ActPullout(Piki*);
 
-	virtual ~ActPullout();        // _44 (weak)
+	virtual ~ActPullout() { }     // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
 	// _00     = VTBL
-	// _00-_14 = Action
-	u8 _14[0x1C - 0x14]; // _14, unknown
+	// _00-_18 = AndAction
+	SmartPtr<Creature> _18; // _18
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x28.
  */
 struct ActPulloutCreature : public Action, public PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Unk0 = 0,
+		STATE_Unk1 = 1,
+		STATE_Unk2 = 2,
+	};
+
 	ActPulloutCreature(Piki*);
 
-	virtual ~ActPulloutCreature();                       // _44 (weak)
+	virtual ~ActPulloutCreature() { }                    // _44 (weak)
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	int mState;             // _18
+	f32 _1C;                // _1C
+	SmartPtr<Creature> _20; // _20
+	u8 _24;                 // _24
 };
 
 /**

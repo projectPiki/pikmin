@@ -352,7 +352,10 @@ struct InteractPress : public Interaction {
  * @brief TODO
  */
 struct InteractPullout : public Interaction {
-	inline InteractPullout(); // TODO: probably
+	InteractPullout(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actCommon(Creature*);   // _08
 	virtual bool actPiki(Piki*);         // _0C
@@ -360,7 +363,6 @@ struct InteractPullout : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
 };
 
 /**
