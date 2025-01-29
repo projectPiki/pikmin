@@ -53,7 +53,7 @@ struct TexAttr : public CoreNode {
 	int mTextureIndex; // _18
 	s16 mTilingType;   // _1C
 	s16 mFlags;        // _1E
-	s16 _20;           // _20
+	u16 _20;           // _20
 	s16 _22;           // _22
 	f32 _24;           // _24
 	char* mName;       // _28
@@ -78,10 +78,10 @@ struct TexImg : public CoreNode {
 
 	static int calcDataSize(int texFmt, int width, int height);
 	static void getTileSize(int texFmt, u32& tileSizeX, u32& tileSizeY);
+	static char* formatName(u32 texFmt);
 
 	// unused/inlined:
 	void convFormat(u32);
-	void formatName(u32);
 	void setColour(Colour&);
 	void readTexData(Texture*, RandomAccessStream&, u8*);
 	void dumpBti(Texture*, char*, RandomAccessStream&, RandomAccessStream&);

@@ -293,6 +293,15 @@ struct Shape : public BaseShape {
 struct CachedShape {
 	CachedShape() { mPrev = mNext = this; }
 
+	inline void insertAfter(CachedShape* other)
+	{
+		other->mNext = mNext;
+		other->mPrev = this;
+
+		mNext->mPrev = other;
+		mNext        = other;
+	}
+
 	CachedShape* mPrev;               // _00
 	CachedShape* mNext;               // _04
 	ShapeDynMaterials* mDynMaterials; // _08

@@ -201,7 +201,7 @@ void PlugPikiApp::draw(Graphics& gfx)
 		gfx.texturePrintf(gsys->mConsFont, 32, 44, "%d anims", gsys->mAnimatedPolygons);
 		gfx.texturePrintf(gsys->mConsFont, 32, 56, "%d mats", gsys->mMaterialCount);
 		gfx.texturePrintf(gsys->mConsFont, 32, 68, "%d disps", gsys->mDispCount);
-		gfx.texturePrintf(gsys->mConsFont, 32, 80, "%d mtxs", gsys->mGfx->mActiveMatrices);
+		gfx.texturePrintf(gsys->mConsFont, 32, 80, "%d mtxs", gsys->mGfx->mActiveMatrixIdx);
 		gfx.texturePrintf(gsys->mConsFont, 32, 92, "%d / %d lighting skips / sets", gsys->mLightingSkips, gsys->mLightingSets);
 		gfx.texturePrintf(gsys->mConsFont, 32, 104, "%d light sets", gsys->mSystemState);
 	}

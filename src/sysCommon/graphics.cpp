@@ -1557,8 +1557,32 @@ void PVWTextureData::animate(f32*, Matrix4f&)
  * Address:	80026E14
  * Size:	0005A4
  */
-void PVWTextureData::read(RandomAccessStream&)
+void PVWTextureData::read(RandomAccessStream& stream)
 {
+	_00 = stream.readInt();
+	_0C = stream.readShort();
+	_0E = stream.readShort();
+	_10 = stream.readByte();
+	_11 = stream.readByte();
+	_12 = stream.readByte();
+	_13 = stream.readByte();
+	_14 = stream.readInt();
+	_38 = stream.readInt();
+	_3C = stream.readFloat();
+	_1C = stream.readFloat();
+	_20 = stream.readFloat();
+	_24 = stream.readFloat();
+	_28 = stream.readFloat();
+	_2C = stream.readFloat();
+	_30 = stream.readFloat();
+	_34 = stream.readFloat();
+
+	// _40.read(stream);
+	// _48.read(stream);
+	// _50.read(stream);
+
+	// 3 function calls.. hmmm
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3371,31 +3395,10 @@ Graphics::Graphics()
  */
 void Graphics::initRender(int, int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  subi      r0, r13, 0x7DFC
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  stw       r4, 0x378(r3)
-	  stw       r4, 0x20(r31)
-	  stw       r4, 0x1C(r31)
-	  stw       r4, 0x18(r31)
-	  stw       r0, 0x14(r31)
-	  bl        .loc_0x50
-	  mr        r3, r31
-	  bl        0x40
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-
-	.loc_0x50:
-	*/
+	mActiveLightMask = 0;
+	mLight.initCore("");
+	resetMatrixBuffer();
+	resetCacheBuffer();
 }
 
 /*
@@ -3405,8 +3408,7 @@ void Graphics::initRender(int, int)
  */
 void Graphics::resetMatrixBuffer()
 {
-	// Generated from stw r0, 0x38C(r3)
-	// _38C = 0;
+	mActiveMatrixIdx = nullptr;
 }
 
 /*
@@ -3414,19 +3416,15 @@ void Graphics::resetMatrixBuffer()
  * Address:	80028514
  * Size:	00001C
  */
-Matrix4f* Graphics::getMatrices(int p1)
+Matrix4f* Graphics::getMatrices(int requestedMatrixCount)
 {
+	if (mActiveMatrixIdx + requestedMatrixCount > mMaxMatrixCount) {
+		ERROR("using too many matrices!!\n");
+	}
 
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x38C(r3)
-	  lwz       r6, 0x384(r3)
-	  rlwinm    r5,r0,6,0,25
-	  add       r0, r0, r4
-	  stw       r0, 0x38C(r3)
-	  add       r3, r6, r5
-	  blr
-	*/
+	Matrix4f* mtx = &mSystemMatrices[mActiveMatrixIdx];
+	mActiveMatrixIdx += requestedMatrixCount;
+	return mtx;
 }
 
 /*
@@ -3436,15 +3434,10 @@ Matrix4f* Graphics::getMatrices(int p1)
  */
 void Graphics::resetCacheBuffer()
 {
-	/*
-	.loc_0x0:
-	  addi      r4, r3, 0x390
-	  stw       r4, 0x394(r3)
-	  li        r0, 0
-	  stw       r4, 0x390(r3)
-	  stw       r0, 0x3B0(r3)
-	  blr
-	*/
+	_390.mNext = &_390;
+	_390.mPrev = &_390;
+
+	mCachedShapeCount = nullptr;
 }
 
 /*
@@ -3452,120 +3445,33 @@ void Graphics::resetCacheBuffer()
  * Address:	80028548
  * Size:	000184
  */
-void Graphics::cacheShape(BaseShape*, ShapeDynMaterials*)
+void Graphics::cacheShape(BaseShape* shape, ShapeDynMaterials* mats)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r26, 0x28(r1)
-	  mr        r30, r4
-	  mr        r29, r3
-	  addi      r31, r5, 0
-	  lwz       r0, 0x3B0(r3)
-	  lwz       r4, 0x3A8(r3)
-	  addi      r3, r30, 0
-	  mulli     r0, r0, 0x18
-	  add       r26, r4, r0
-	  li        r4, 0
-	  bl        0xCA6C
-	  addi      r27, r3, 0x2C
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0xCA5C
-	  addi      r28, r3, 0x1C
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0xCA4C
-	  lfs       f1, 0x0(r28)
-	  lfs       f0, 0xC(r3)
-	  fmuls     f1, f1, f1
-	  lfs       f3, 0x0(r27)
-	  fmuls     f2, f0, f0
-	  lfs       f0, -0x7DD4(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0xDC
-	  fsqrte    f1, f4
-	  lfd       f3, -0x7D98(r2)
-	  lfd       f2, -0x7D90(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x18(r1)
-	  lfs       f4, 0x18(r1)
+	if (mCachedShapeCount >= mCachedShapeMax) {
+		ERROR("using too many shapes!!\n");
+	}
 
-	.loc_0xDC:
-	  stfs      f4, 0x14(r26)
-	  addi      r0, r29, 0x390
-	  li        r4, 0
-	  lwz       r5, 0x390(r29)
-	  b         .loc_0x128
+	CachedShape* cache = &mCachedShapes[mCachedShapeCount];
+	Vector3f pos(shape->getAnimMatrix(0).mMtx[0][3], shape->getAnimMatrix(0).mMtx[1][3], shape->getAnimMatrix(0).mMtx[2][3]);
+	cache->mDistanceFromOrigin = pos.length();
 
-	.loc_0xF0:
-	  lfs       f1, 0x14(r26)
-	  lfs       f0, 0x14(r5)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x124
-	  lwz       r0, 0x4(r5)
-	  li        r4, 0x1
-	  stw       r0, 0x4(r26)
-	  stw       r5, 0x0(r26)
-	  lwz       r3, 0x4(r5)
-	  stw       r26, 0x0(r3)
-	  stw       r26, 0x4(r5)
-	  b         .loc_0x130
+	bool far = false;
+	for (CachedShape* i = _390.mPrev; i != &_390; i = i->mPrev) {
+		if (cache->mDistanceFromOrigin >= i->mDistanceFromOrigin) {
+			i->insertAfter(cache);
+			far = true;
+			break;
+		}
+	}
 
-	.loc_0x124:
-	  lwz       r5, 0x0(r5)
+	if (!far) {
+		_390.insertAfter(cache);
+	}
 
-	.loc_0x128:
-	  cmplw     r5, r0
-	  bne+      .loc_0xF0
-
-	.loc_0x130:
-	  rlwinm.   r0,r4,0,24,31
-	  bne-      .loc_0x154
-	  lwz       r3, 0x394(r29)
-	  addi      r0, r29, 0x390
-	  stw       r3, 0x4(r26)
-	  stw       r0, 0x0(r26)
-	  lwz       r3, 0x394(r29)
-	  stw       r26, 0x0(r3)
-	  stw       r26, 0x394(r29)
-
-	.loc_0x154:
-	  stw       r31, 0x8(r26)
-	  stw       r30, 0xC(r26)
-	  lwz       r0, 0x28(r30)
-	  stw       r0, 0x10(r26)
-	  lwz       r3, 0x3B0(r29)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x3B0(r29)
-	  lwz       r0, 0x44(r1)
-	  lmw       r26, 0x28(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	cache->mDynMaterials = mats;
+	cache->mParentShape  = (Shape*)shape;
+	cache->mAnimMatrices = shape->mAnimMatrices;
+	mCachedShapeCount++;
 }
 
 /*
@@ -3575,59 +3481,20 @@ void Graphics::cacheShape(BaseShape*, ShapeDynMaterials*)
  */
 void Graphics::flushCachedShapes()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x400
-	  stwu      r1, -0x28(r1)
-	  stmw      r27, 0x14(r1)
-	  mr        r27, r3
-	  addi      r31, r27, 0x390
-	  lwz       r30, 0x4(r3)
-	  stw       r0, 0x4(r3)
-	  lwz       r29, 0x390(r3)
-	  b         .loc_0x80
+	u32 oldRenderState = mRenderState;
 
-	.loc_0x2C:
-	  lwz       r0, 0x8(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x54
-	  mr        r28, r0
-	  b         .loc_0x4C
+	mRenderState = 1024;
+	for (CachedShape* i = _390.mPrev; i != &_390; i = i->mPrev) {
+		if (i->mDynMaterials) {
+			for (ShapeDynMaterials* j = i->mDynMaterials; j; j = j->mParent) {
+				j->updateContext();
+			}
+		}
 
-	.loc_0x40:
-	  mr        r3, r28
-	  bl        0x6A80
-	  lwz       r28, 0x0(r28)
-
-	.loc_0x4C:
-	  cmplwi    r28, 0
-	  bne+      .loc_0x40
-
-	.loc_0x54:
-	  lwz       r0, 0x10(r29)
-	  mr        r3, r27
-	  lwz       r4, 0xC(r29)
-	  stw       r0, 0x28(r4)
-	  lwz       r12, 0x3B4(r27)
-	  lwz       r4, 0x2E4(r27)
-	  lwz       r12, 0x84(r12)
-	  lwz       r5, 0xC(r29)
-	  mtlr      r12
-	  blrl
-	  lwz       r29, 0x0(r29)
-
-	.loc_0x80:
-	  cmplw     r29, r31
-	  bne+      .loc_0x2C
-	  stw       r30, 0x4(r27)
-	  lmw       r27, 0x14(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+		i->mParentShape->mAnimMatrices = i->mAnimMatrices;
+		drawMeshes(*mCamera, i->mParentShape);
+	}
+	mRenderState = oldRenderState;
 }
 
 /*
@@ -3640,14 +3507,17 @@ void TexImg::convFormat(u32)
 	// UNUSED FUNCTION
 }
 
+char* fmtNames[]
+    = { "TEX_FMT_RGB565", "TEX_FMT_S3TC", "TEX_FMT_RGB5A3", "TEX_FMT_I4", "TEX_FMT_I8", "TEX_FMT_IA4", "TEX_FMT_IA8", "TEX_FMT_RGBA8" };
+
 /*
  * --INFO--
  * Address:	........
  * Size:	000018
  */
-void TexImg::formatName(u32)
+char* TexImg::formatName(u32 format)
 {
-	// UNUSED FUNCTION
+	return fmtNames[format];
 }
 
 /*
@@ -3655,52 +3525,44 @@ void TexImg::formatName(u32)
  * Address:	8002876C
  * Size:	00009C
  */
-int TexImg::calcDataSize(int, int, int)
+int TexImg::calcDataSize(int format, int width, int height)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0x9
-	  li        r7, 0
-	  bgt-      .loc_0x94
-	  lis       r6, 0x8022
-	  addi      r6, r6, 0x7FA8
-	  rlwinm    r0,r3,2,0,29
-	  lwzx      r0, r6, r0
-	  mtctr     r0
-	  bctr
-	  mullw     r0, r4, r5
-	  srawi     r0, r0, 0x3
-	  addze     r0, r0
-	  rlwinm    r7,r0,2,0,29
-	  b         .loc_0x94
-	  mullw     r0, r4, r5
-	  rlwinm    r7,r0,1,0,30
-	  b         .loc_0x94
-	  mullw     r0, r4, r5
-	  rlwinm    r7,r0,1,0,30
-	  b         .loc_0x94
-	  mullw     r0, r4, r5
-	  srawi     r7, r0, 0x1
-	  addze     r7, r7
-	  b         .loc_0x94
-	  mullw     r7, r4, r5
-	  b         .loc_0x94
-	  mullw     r7, r4, r5
-	  b         .loc_0x94
-	  mullw     r0, r4, r5
-	  rlwinm    r7,r0,1,0,30
-	  b         .loc_0x94
-	  mullw     r0, r4, r5
-	  rlwinm    r7,r0,2,0,29
-	  b         .loc_0x94
-	  mullw     r7, r4, r5
-	  b         .loc_0x94
-	  mullw     r7, r4, r5
+	s32 size = 0;
 
-	.loc_0x94:
-	  mr        r3, r7
-	  blr
-	*/
+	switch (format) {
+	case 1:
+		size = (width * height / 8) * 4;
+		break;
+	case 0:
+		size = width * height * 2;
+		break;
+	case 2:
+		size = width * height * 2;
+		break;
+	case 3:
+		size = width * height / 2;
+		break;
+	case 4:
+		size = width * height;
+		break;
+	case 5:
+		size = width * height;
+		break;
+	case 6:
+		size = width * height * 2;
+		break;
+	case 7:
+		size = width * height * 4;
+		break;
+	case 8:
+		size = width * height;
+		break;
+	case 9:
+		size = width * height;
+		break;
+	}
+
+	return size;
 }
 
 /*
@@ -3718,87 +3580,21 @@ void TexImg::setColour(Colour&)
  * Address:	80028808
  * Size:	000130
  */
-void TexImg::read(RandomAccessStream&)
+void TexImg::read(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x1C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x20(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x18(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x24(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x28(r30)
-	  li        r4, 0x20
-	  lwz       r3, 0x28(r30)
-	  bl        0x1E86C
-	  stw       r3, 0x2C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r4, 0x2C(r30)
-	  lwz       r12, 0x3C(r12)
-	  lwz       r5, 0x28(r30)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mWidth  = stream.readShort();
+	mHeight = stream.readShort();
+	mFormat = static_cast<TexImgFormat>(stream.readInt());
+	_24     = stream.readInt();
+
+	s32 _ = stream.readInt();
+	_     = stream.readInt();
+	_     = stream.readInt();
+	_     = stream.readInt();
+
+	mDataSize    = stream.readInt();
+	mTextureData = new (0x20) u8[mDataSize];
+	stream.read(mTextureData, mDataSize);
 }
 
 /*
@@ -3806,41 +3602,24 @@ void TexImg::read(RandomAccessStream&)
  * Address:	80028938
  * Size:	000058
  */
-void TexImg::getTileSize(int, u32&, u32&)
+void TexImg::getTileSize(int format, u32& xSize, u32& ySize)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0x6
-	  bge-      .loc_0x18
-	  cmpwi     r3, 0x3
-	  beq-      .loc_0x24
-	  bge-      .loc_0x34
-	  b         .loc_0x48
-
-	.loc_0x18:
-	  cmpwi     r3, 0x9
-	  beq-      .loc_0x34
-	  b         .loc_0x48
-
-	.loc_0x24:
-	  li        r0, 0x8
-	  stw       r0, 0x0(r4)
-	  stw       r0, 0x0(r5)
-	  blr
-
-	.loc_0x34:
-	  li        r0, 0x8
-	  stw       r0, 0x0(r4)
-	  li        r0, 0x4
-	  stw       r0, 0x0(r5)
-	  blr
-
-	.loc_0x48:
-	  li        r0, 0x4
-	  stw       r0, 0x0(r4)
-	  stw       r0, 0x0(r5)
-	  blr
-	*/
+	switch (format) {
+	case 3:
+		xSize = 8;
+		ySize = 8;
+		break;
+	case 4:
+	case 5:
+	case 9:
+		xSize = 8;
+		ySize = 4;
+		break;
+	default:
+		xSize = 4;
+		ySize = 4;
+		break;
+	}
 }
 
 /*
@@ -3848,18 +3627,64 @@ void TexImg::getTileSize(int, u32&, u32&)
  * Address:	........
  * Size:	00014C
  */
-void TexImg::readTexData(Texture*, RandomAccessStream&, u8*)
+void TexImg::readTexData(Texture* tex, RandomAccessStream& stream, u8* data)
 {
-	// UNUSED FUNCTION
+	mDataSize = TexImg::calcDataSize(mFormat, mWidth, mHeight);
+
+	if (data) {
+		mTextureData = data;
+	} else {
+		mTextureData = new (0x20) u8[mDataSize];
+	}
+
+	stream.read(mTextureData, mDataSize);
+	TexImg::getTileSize(mFormat, tex->mTileSizeX, tex->mTileSizeY);
+	tex->mWidthFactor  = 1.0f / mWidth;
+	tex->mHeightFactor = 1.0f / mHeight;
+	tex->decodeData(this);
 }
+
+char* btitexFmts[] = { "GX_TF_I4", "GX_TF_I8", "GX_TF_IA4", "GX_TF_IA8", "GX_TF_RGB565", "GX_TF_RGB5A3", "GX_TF_RGBA8", "INVALID",
+	                   "INVALID",  "INVALID",  "INVALID",   "INVALID",   "INVALID",      "INVALID",      "GX_TF_CMPR" };
+
+char* btipalFmts[] = { "GX_TF_C4", "GX_TF_C8", "GX_TF_C14X2" };
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000004
  */
-void TexImg::dumpBti(Texture*, char*, RandomAccessStream&, RandomAccessStream&)
+void TexImg::dumpBti(Texture* tex, char* name, RandomAccessStream& input, RandomAccessStream& output)
 {
+#ifndef __MWERKS__
+	// read BTI function
+	// blah blah
+
+	// if some bollocks
+	// now lets get to the fun parts
+
+	// this is wrong btw, I can't be bothered to check if this shows up
+	// but im doing it anyway, fuck it
+	output.print("// %s (%d colour) format %s : data = %d bytes\n", output.mPath, 0, btipalFmts[tex->mTexFormat]);
+	output.print("// texture size = %d x %d\n");
+	output.print("static u16 %s_palette[%d] ATTRIBUTE_ALIGN(32) = {\n");
+	output.print("\t");
+	PRINT("sending colour %d, %d, %d\n");
+	output.print("0x%04x,");
+	output.print("\n");
+	output.print("\t};\n\n");
+
+	// so much code i skipped over lol
+	output.print("// %s got normal image of format %s : data = %d bytes\n");
+	output.print("// texture size = %d x %d\n");
+
+	output.print("static u8 %s_data[%d] ATTRIBUTE_ALIGN(32) = {\n");
+	output.print("\t");
+	output.print("0x%02x,");
+	output.print("\n");
+	output.print("\t};\n\n");
+
+#endif
 	// UNUSED FUNCTION
 }
 
@@ -4155,119 +3980,22 @@ void TexImg::importBti(Texture*, RandomAccessStream&, u8*)
  * Address:	80028D7C
  * Size:	0001A8
  */
-void TexImg::importTxe(Texture*, RandomAccessStream&)
+void TexImg::importTxe(Texture* tex, RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x34(r1)
-	  mr        r29, r4
-	  stw       r28, 0x30(r1)
-	  addi      r28, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x1C(r28)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x20(r28)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,16,31
-	  stw       r0, 0x18(r28)
-	  mr        r3, r30
-	  lwz       r0, 0x18(r28)
-	  srawi     r0, r0, 0x8
-	  sth       r0, 0x6(r29)
-	  lwz       r0, 0x18(r28)
-	  rlwinm    r0,r0,0,24,31
-	  stw       r0, 0x18(r28)
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r31, 0
+	mWidth         = stream.readShort();
+	mHeight        = stream.readShort();
+	mFormat        = static_cast<TexImgFormat>((u16)stream.readShort());
+	tex->mTexFlags = mFormat >> 8;
 
-	.loc_0xC0:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r31, 0x1
-	  cmpwi     r31, 0xA
-	  blt+      .loc_0xC0
-	  lwz       r3, 0x18(r28)
-	  lwz       r4, 0x1C(r28)
-	  lwz       r5, 0x20(r28)
-	  bl        -0x6FC
-	  stw       r3, 0x28(r28)
-	  li        r4, 0x20
-	  lwz       r3, 0x28(r28)
-	  bl        0x1E2F0
-	  stw       r3, 0x2C(r28)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r4, 0x2C(r28)
-	  lwz       r12, 0x3C(r12)
-	  lwz       r5, 0x28(r28)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x18(r28)
-	  addi      r4, r29, 0xC
-	  addi      r5, r29, 0x10
-	  bl        -0x570
-	  lwz       r0, 0x1C(r28)
-	  lis       r5, 0x4330
-	  lfd       f1, -0x7DA8(r2)
-	  addi      r3, r29, 0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x2C(r1)
-	  mr        r4, r28
-	  lfs       f2, -0x7DC8(r2)
-	  stw       r5, 0x28(r1)
-	  lfd       f0, 0x28(r1)
-	  fsubs     f0, f0, f1
-	  fdivs     f0, f2, f0
-	  stfs      f0, 0x28(r29)
-	  lwz       r0, 0x20(r28)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x24(r1)
-	  stw       r5, 0x20(r1)
-	  lfd       f0, 0x20(r1)
-	  fsubs     f0, f0, f1
-	  fdivs     f0, f2, f0
-	  stfs      f0, 0x2C(r29)
-	  bl        0x1B858
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  lwz       r28, 0x30(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	mFormat = static_cast<TexImgFormat>(mFormat & 0xFF);
+
+	s16 _  = stream.readShort();
+	s32 __ = stream.readInt();
+	for (int i = 0; i < 10; i++) {
+		stream.readShort();
+	}
+
+	readTexData(tex, stream, nullptr);
 }
 
 /*
@@ -4277,6 +4005,39 @@ void TexImg::importTxe(Texture*, RandomAccessStream&)
  */
 void TexAttr::initImage()
 {
+	mTexture = new Texture();
+
+	if (!mTexture) {
+		ERROR("could not make texture!!\n");
+	}
+
+	TexImg::getTileSize(mImage->mFormat, mTexture->mTileSizeX, mTexture->mTileSizeY);
+
+	if (_20) {
+		mTexture->mTexObj      = (GXTexObj*)(mImage->_24 - 1);
+		mTexture->mWidthFactor = _24;
+	} else {
+		mTexture->mTexObj      = nullptr;
+		mTexture->mWidthFactor = 0.0f;
+	}
+
+	mTexture->mWidthFactor  = 1.0f / mImage->mWidth;
+	mTexture->mHeightFactor = 1.0f / mImage->mHeight;
+
+	mTexture->mTexFlags = mTilingType;
+
+	// ISSUES HERE, obviously lol
+	// Find last occurrence of '/' in the path
+	int i = strlen(&gsys->mTextureBase2[1]) - 1;
+	while (i >= 0 && (&gsys->mTextureBase2[1])[i] != '/') {
+		i--;
+	}
+
+	char path[PATH_MAX];
+	sprintf(path, "%s:%d", &gsys->mTextureBase2[i + 1], mTextureIndex);
+
+	gsys->addTexture(mTexture, path);
+	mTexture->decodeData(mImage);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4428,54 +4189,13 @@ void TexAttr::initImage()
  * Address:	80029108
  * Size:	0000AC
  */
-void TexAttr::read(RandomAccessStream&)
+void TexAttr::read(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x18(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  sth       r3, 0x1C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  sth       r3, 0x20(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x24(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mTextureIndex = stream.readShort();
+	stream.readShort();
+	mTilingType = stream.readShort();
+	_20         = stream.readShort();
+	_24         = stream.readFloat();
 }
 
 /*

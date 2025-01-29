@@ -576,7 +576,7 @@ void StdSystem::loadBundle(char* path, bool p3)
 				CacheTexture* cacheTex = new CacheTexture();
 				cacheTex->mTexImage    = newTexImg;
 				newTexture             = cacheTex;
-				newTexImg->importBti(cacheTex, *fileStream, (u8*)OSRoundUp32B(mGraphics->mSystemMatrix));
+				newTexImg->importBti(cacheTex, *fileStream, (u8*)OSRoundUp32B(mGraphics->mSystemMatrices));
 				cacheTex->_48 = copyRamToCache((u32)newTexImg->mTextureData, newTexImg->mDataSize, 0);
 				copyWaitUntilDone();
 				newTexImg->mTextureData = nullptr;
