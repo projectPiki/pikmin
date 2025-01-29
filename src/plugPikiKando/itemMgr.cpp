@@ -650,12 +650,12 @@ ItemMgr::ItemMgr()
 
 	mUfoShape = new UfoShapeObject(gameflow.loadShape("objects/ufo/ufo0705.mod", true));
 
-	_4C = gameflow.loadShape("objects/weeds/stone1.mod", true);
-	_50 = gameflow.loadShape("objects/weeds/stone2.mod", true);
-	_54 = gameflow.loadShape("objects/weeds/stone3.mod", true);
-	_58 = gameflow.loadShape("objects/weeds/weed1.mod", true);
-	_5C = gameflow.loadShape("objects/weeds/weed1.mod", true);
-	_60 = gameflow.loadShape("objects/weeds/weed1.mod", true);
+	_4C[0] = gameflow.loadShape("objects/weeds/stone1.mod", true);
+	_4C[1] = gameflow.loadShape("objects/weeds/stone2.mod", true);
+	_4C[2] = gameflow.loadShape("objects/weeds/stone3.mod", true);
+	_58[0] = gameflow.loadShape("objects/weeds/weed1.mod", true);
+	_58[1] = gameflow.loadShape("objects/weeds/weed1.mod", true);
+	_58[2] = gameflow.loadShape("objects/weeds/weed1.mod", true);
 
 	mMeltingPotMgr = nullptr;
 	mPikiHeadMgr   = nullptr;

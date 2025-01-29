@@ -238,9 +238,7 @@ struct PikiMgr : public MonoObjectMgr {
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_3C = MonoObjectMgr
-	Shape* mLeafModel;             // _3C
-	Shape* mBudModel;              // _40
-	Shape* mFlowerModel;           // _44
+	Shape* mLeafModel[3];          // _3C
 	Shape* mPikiShape;             // _48
 	MapMgr* mMapMgr;               // _4C
 	u32 _50;                       // _50

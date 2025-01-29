@@ -631,7 +631,7 @@ Vector3f getThrowVelocity(Vector3f&, f32, Vector3f&, Vector3f&)
  * Address:	80112F10
  * Size:	000254
  */
-void getCameraSafeAngle(Vector3f&, f32, f32)
+f32 getCameraSafeAngle(Vector3f&, f32, f32)
 {
 	/*
 	.loc_0x0:

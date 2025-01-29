@@ -485,7 +485,7 @@ config.libs = [
             Object(NonMatching, "plugPikiKando/formationMgr.cpp"),
             Object(Matching, "plugPikiKando/globalShapes.cpp"),
             Object(NonMatching, "plugPikiKando/playerState.cpp"),
-            Object(NonMatching, "plugPikiKando/gameDemo.cpp"),
+            Object(Matching, "plugPikiKando/gameDemo.cpp"),
             Object(Matching, "plugPikiKando/demoInvoker.cpp"),
             Object(Matching, "plugPikiKando/demoEvent.cpp"),
             Object(NonMatching, "plugPikiKando/resultFlag.cpp"),

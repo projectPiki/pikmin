@@ -25,18 +25,18 @@ struct FastGrid {
 	static void renderAIGrid(Graphics&);
 
 	static u16 aiGridShift;
-	static u32 aiGridMap; // type unsure
+	static u8* aiGridMap; // type unsure
 	static u16 aiGridSize;
 
-	u16 _00; // _00
+	s16 _00; // _00
 	u16 _02; // _02
-	u16 _04; // _04
+	s16 _04; // _04
 	u16 _06; // _06
-	u16 _08; // _08
+	s16 _08; // _08
 	u16 _0A; // _0A
-	u16 _0C; // _0C
+	s16 _0C; // _0C
 	u16 _0E; // _0E
-	u16 _10; // _10
+	s16 _10; // _10
 	u16 _12; // _12
 	u16 _14; // _14
 	u16 _16; // _16

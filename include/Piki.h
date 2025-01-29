@@ -262,7 +262,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	s16 mNumRoutePoints;                  // _328
 	Creature* mRouteTargetCreature;       // _32C
 	u8 _330;                              // _330
-	u32 _334;                             // _334
+	f32 _334;                             // _334
 	SmartPtr<Creature> mLookAtTarget;     // _338
 	Vector3f* mLookatTarget;              // _33C
 	u8 _340;                              // _340

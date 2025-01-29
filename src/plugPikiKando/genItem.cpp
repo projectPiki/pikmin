@@ -227,7 +227,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 			((GrassGen*)item)->setSizeAndNum(size, _48());
 			break;
 		case OBJTYPE_Weeds:
-			((GrassGen*)item)->_3C8 = _48();
+			((GrassGen*)item)->mWorkingPikis = _48();
 			break;
 		}
 

@@ -31,10 +31,8 @@ struct ViewPiki : public Piki {
 	// _00      = VTBL
 	// _00-_588 = Piki
 	PikiShapeObject* mPikiShape; // _588
-	u32 _58C;                    // _58C
-	u32 _590;                    // _590
-	u32 _594;                    // _594
-	u32 _598;                    // _598
+	Vector3f _58C;               // _58C
+	Shape* mHappaModel;          // _598
 };
 
 #endif

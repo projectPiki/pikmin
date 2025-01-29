@@ -26,6 +26,12 @@ enum EDemoFlags {
  */
 struct DemoFlag {
 	// TODO: this - only gets returned by DemoFlags::getDemoFlag smh
+
+	char* mName; // _00
+	u16 mIndex;  // _04
+	s16 _06;     // _06
+	u16 _08;     // _08
+	bool _0A;    // _0A
 };
 
 /**
@@ -45,7 +51,7 @@ struct DemoParms : public Node {
 
 	DemoParms();
 
-	virtual void read(RandomAccessStream&); // _0C
+	virtual void read(RandomAccessStream& data) { mParms.read(data); } // _0C
 
 	// _00     = VTBL
 	// _00-_20 = Node
@@ -72,15 +78,14 @@ struct DemoFlags {
 	void resetTimer();
 	DemoFlag* getDemoFlag(int);
 
-	// TODO: members
-	u16 _00;     // _00
-	u16 _02;     // _02
-	u16 _04;     // _04
-	u8* _08;     // _08
-	u32* _0C;    // _0C
-	u8 _10[0x4]; // _10, unknown
-	f32 _14;     // _14
-	u16 _18;     // _18
+	u16 mFlagCount;            // _00
+	u16 mCurrentDataIndex;     // _02
+	u16 mFlagDataNum;          // _04
+	u8* mStoredFlags;          // _08
+	DemoFlag** mFlagDataList;  // _0C
+	Creature* mTargetCreature; // _10
+	f32 mWaitTimer;            // _14
+	s16 _18;                   // _18
 };
 
 /**

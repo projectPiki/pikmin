@@ -1,4 +1,7 @@
 #include "WeedsItem.h"
+#include "SoundMgr.h"
+#include "MapMgr.h"
+#include "Graphics.h"
 #include "DebugLog.h"
 
 /*
@@ -22,17 +25,7 @@ DEFINE_PRINT(nullptr)
  */
 bool RockGen::workable()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3C8(r3)
-	  li        r3, 0x5
-	  eqv       r0, r3, r4
-	  subc      r3, r4, r3
-	  rlwinm    r0,r0,1,31,31
-	  addze     r3, r0
-	  rlwinm    r3,r3,0,31,31
-	  blr
-	*/
+	return mWorkingPikis < 5;
 }
 
 /*
@@ -42,15 +35,9 @@ bool RockGen::workable()
  */
 void RockGen::startWork()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3C8(r3)
-	  cmpwi     r4, 0x5
-	  bgelr-
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x3C8(r3)
-	  blr
-	*/
+	if (workable()) {
+		mWorkingPikis++;
+	}
 }
 
 /*
@@ -60,15 +47,9 @@ void RockGen::startWork()
  */
 void RockGen::finishWork()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3C8(r3)
-	  cmpwi     r4, 0
-	  blelr-
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x3C8(r3)
-	  blr
-	*/
+	if (mWorkingPikis > 0) {
+		mWorkingPikis--;
+	}
 }
 
 /*
@@ -78,17 +59,7 @@ void RockGen::finishWork()
  */
 bool GrassGen::workable()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3C8(r3)
-	  li        r3, 0x5
-	  eqv       r0, r3, r4
-	  subc      r3, r4, r3
-	  rlwinm    r0,r0,1,31,31
-	  addze     r3, r0
-	  rlwinm    r3,r3,0,31,31
-	  blr
-	*/
+	return mWorkingPikis < 5;
 }
 
 /*
@@ -98,15 +69,9 @@ bool GrassGen::workable()
  */
 void GrassGen::startWork()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3C8(r3)
-	  cmpwi     r4, 0x5
-	  bgelr-
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x3C8(r3)
-	  blr
-	*/
+	if (workable()) {
+		mWorkingPikis++;
+	}
 }
 
 /*
@@ -116,15 +81,9 @@ void GrassGen::startWork()
  */
 void GrassGen::finishWork()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3C8(r3)
-	  cmpwi     r4, 0
-	  blelr-
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x3C8(r3)
-	  blr
-	*/
+	if (mWorkingPikis > 0) {
+		mWorkingPikis--;
+	}
 }
 
 /*
@@ -134,6 +93,26 @@ void GrassGen::finishWork()
  */
 void RockGen::resolve()
 {
+	u16 max = _3D6;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < max - 1; j++) {
+			Vector3f* pos = &mPebbles[j].mPosition;
+			for (int k = j + 1; k < max; k++) {
+				Vector3f* pos2 = &mPebbles[k].mPosition;
+				Vector3f diff  = *pos - *pos2;
+				f32 len        = std::sqrtf(diff.x * diff.x + diff.z * diff.z);
+				diff.normalise();
+				if (len < 30.0f) {
+					diff  = diff * 15.0f;
+					*pos  = *pos - diff;
+					*pos2 = *pos2 + diff;
+
+					pos->y  = mapMgr->getMinY(pos->x, pos->z, true);
+					pos2->y = mapMgr->getMinY(pos2->x, pos2->z, true);
+				}
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -313,6 +292,26 @@ void RockGen::resolve()
  */
 void GrassGen::resolve()
 {
+	u16 max = _3D2;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < max - 1; j++) {
+			Vector3f* pos = &mGrass[j].mPosition;
+			for (int k = j + 1; k < max; k++) {
+				Vector3f* pos2 = &mGrass[k].mPosition;
+				Vector3f diff  = *pos - *pos2;
+				f32 len        = std::sqrtf(diff.x * diff.x + diff.z * diff.z);
+				diff.normalise();
+				if (len < 30.0f) {
+					diff  = diff * 15.0f;
+					*pos  = *pos - diff;
+					*pos2 = *pos2 + diff;
+
+					pos->y  = mapMgr->getMinY(pos->x, pos->z, true);
+					pos2->y = mapMgr->getMinY(pos2->x, pos2->z, true);
+				}
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -491,53 +490,13 @@ void GrassGen::resolve()
  * Size:	0000A0
  */
 RockGen::RockGen(Shape* shape, CreatureProp* props)
-    : ItemCreature(0, props, shape)
+    : ItemCreature(OBJTYPE_RockGen, props, nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x21
-	  stw       r0, 0x4(r1)
-	  li        r6, 0
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bl        0x10CB8
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x47F8
-	  stw       r3, 0x0(r30)
-	  addi      r3, r3, 0x114
-	  li        r0, 0
-	  stw       r3, 0x2B8(r30)
-	  li        r3, 0x28
-	  lfs       f0, -0x66F0(r2)
-	  stfs      f0, 0x3E0(r30)
-	  stfs      f0, 0x3DC(r30)
-	  stfs      f0, 0x3D8(r30)
-	  stw       r0, 0x3D0(r30)
-	  sth       r0, 0x3D6(r30)
-	  sth       r0, 0x3D4(r30)
-	  bl        -0x9DC2C
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x70
-	  bl        -0x40FE4
-
-	.loc_0x70:
-	  stw       r31, 0x2C(r30)
-	  addi      r4, r30, 0
-	  li        r5, 0x4
-	  lwz       r3, 0x2C(r30)
-	  bl        -0x40F20
-	  mr        r3, r30
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mPebbles       = 0;
+	_3D6           = 0;
+	mActivePebbles = 0;
+	mSeContext     = new SeContext;
+	mSeContext->setContext(this, 4);
 }
 
 /*
@@ -545,8 +504,30 @@ RockGen::RockGen(Shape* shape, CreatureProp* props)
  * Address:	800E4C74
  * Size:	000284
  */
-void RockGen::create(int, f32, int)
+void RockGen::create(int num, f32 size, int)
 {
+	mPebbles       = new Pebble[num];
+	mActivePebbles = num;
+	_3D6           = num;
+	mSize          = size;
+
+	for (int i = 0; i < num; i++) {
+		f32 a     = gsys->getRand(1.0f);
+		f32 b     = ((1.0f - a) * gsys->getRand(1.0f) + a) * size;
+		f32 angle = gsys->getRand(1.0f) * TAU;
+		Vector3f dir(sinf(angle) * b, 0.0f, cosf(angle) * b);
+		dir   = dir + mPosition;
+		dir.y = mapMgr->getMinY(dir.x, dir.z, true);
+
+		Pebble* obj    = &mPebbles[i];
+		obj->mPosition = dir;
+		obj->_0C       = gsys->getRand(1.0f) * 0.999999f * 255.0f;
+		obj->_0D       = gsys->getRand(1.0f) * 0.999999f * 3.0f;
+		obj->mHealth   = obj->_0D * 2 + 2;
+	}
+
+	resolve();
+	f32 badcompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -724,14 +705,6 @@ void RockGen::create(int, f32, int)
  */
 Pebble::Pebble()
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x66F0(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -739,15 +712,11 @@ Pebble::Pebble()
  * Address:	800E4F0C
  * Size:	000010
  */
-void RockGen::setSizeAndNum(f32, int)
+void RockGen::setSizeAndNum(f32 size, int num)
 {
-	/*
-	.loc_0x0:
-	  sth       r4, 0x3D4(r3)
-	  sth       r4, 0x3D6(r3)
-	  stfs      f1, 0x3E4(r3)
-	  blr
-	*/
+	mActivePebbles = num;
+	_3D6           = num;
+	mSize          = size;
 }
 
 /*
@@ -755,34 +724,13 @@ void RockGen::setSizeAndNum(f32, int)
  * Address:	800E4F1C
  * Size:	00005C
  */
-void RockGen::startAI(int)
+void RockGen::startAI(int state)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  stw       r0, 0x3C8(r3)
-	  lhz       r4, 0x3D6(r31)
-	  lfs       f1, 0x3E4(r31)
-	  bl        -0x2D0
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  bl        -0x50A30
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  li        r5, 0
-	  bl        -0x509A4
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mWorkingPikis = 0;
+	create(_3D6, mSize, 0);
+	PRINT("++++++++ CREATE ROCK GEN +++++++\n");
+	mGrid.updateGrid(mPosition);
+	mGrid.updateAIGrid(mPosition, false);
 }
 
 /*
@@ -792,13 +740,7 @@ void RockGen::startAI(int)
  */
 void RockGen::killPebble()
 {
-	/*
-	.loc_0x0:
-	  lhz       r4, 0x3D4(r3)
-	  subi      r0, r4, 0x1
-	  sth       r0, 0x3D4(r3)
-	  blr
-	*/
+	mActivePebbles--;
 }
 
 /*
@@ -806,26 +748,9 @@ void RockGen::killPebble()
  * Address:	800E4F88
  * Size:	00003C
  */
-void RockGen::doSave(RandomAccessStream&)
+void RockGen::doSave(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r3, r4, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x4(r4)
-	  lhz       r0, 0x3D4(r5)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	data.writeByte(mActivePebbles);
 }
 
 /*
@@ -833,8 +758,15 @@ void RockGen::doSave(RandomAccessStream&)
  * Address:	800E4FC4
  * Size:	000080
  */
-void RockGen::doLoad(RandomAccessStream&)
+void RockGen::doLoad(RandomAccessStream& data)
 {
+	mActivePebbles = data.readByte();
+	for (int i = 0; i < _3D6 - mActivePebbles; i++) {
+		int offset = _3D6 - 1 - i;
+
+		mPebbles[offset].mHealth = 0;
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -883,22 +815,9 @@ void RockGen::doLoad(RandomAccessStream&)
  */
 void RockGen::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1C
-	  bl        -0x41170
-
-	.loc_0x1C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mSeContext) {
+		mSeContext->update();
+	}
 }
 
 /*
@@ -906,119 +825,23 @@ void RockGen::update()
  * Address:	800E5070
  * Size:	000190
  */
-void RockGen::refresh(Graphics&)
+void RockGen::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x100(r1)
-	  stfd      f31, 0xF8(r1)
-	  stfd      f30, 0xF0(r1)
-	  stfd      f29, 0xE8(r1)
-	  stfd      f28, 0xE0(r1)
-	  stmw      r24, 0xC0(r1)
-	  mr        r29, r3
-	  mr        r30, r4
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x66B0(r2)
-	  addi      r4, r29, 0x94
-	  lwz       r3, 0x2E4(r30)
-	  fmuls     f1, f0, f1
-	  bl        -0xA3B34
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x16C
-	  lfs       f28, -0x66AC(r2)
-	  addi      r27, r1, 0x1C
-	  lfs       f29, -0x66A8(r2)
-	  addi      r26, r1, 0x28
-	  lfd       f30, -0x66A0(r2)
-	  lfs       f31, -0x66C4(r2)
-	  li        r31, 0
-	  li        r25, 0
-	  lis       r28, 0x4330
-	  b         .loc_0x160
-
-	.loc_0x7C:
-	  lwz       r0, 0x3D0(r29)
-	  add       r3, r0, r25
-	  lbz       r0, 0xE(r3)
-	  addi      r24, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x158
-	  lbz       r0, 0xC(r24)
-	  mr        r4, r26
-	  lfs       f3, -0x3850(r13)
-	  mr        r5, r27
-	  stw       r0, 0xBC(r1)
-	  lfs       f0, -0x385C(r13)
-	  mr        r6, r24
-	  stw       r28, 0xB8(r1)
-	  addi      r3, r1, 0x74
-	  lfs       f1, -0x3858(r13)
-	  lfd       f2, 0xB8(r1)
-	  stfs      f0, 0x28(r1)
-	  fsubs     f4, f2, f30
-	  lfs       f2, -0x384C(r13)
-	  stfs      f3, 0x1C(r1)
-	  lfs       f0, -0x3854(r13)
-	  fdivs     f3, f4, f31
-	  stfs      f1, 0x2C(r1)
-	  stfs      f0, 0x30(r1)
-	  fmuls     f0, f29, f3
-	  fmuls     f0, f28, f0
-	  stfs      f0, 0x20(r1)
-	  stfs      f2, 0x24(r1)
-	  bl        -0xA706C
-	  mr        r3, r30
-	  lwz       r12, 0x3B4(r30)
-	  addi      r4, r1, 0x74
-	  addi      r5, r1, 0x34
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x1
-	  stw       r0, 0x324(r30)
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x34
-	  lwz       r12, 0x3B4(r30)
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0xD(r24)
-	  mr        r4, r30
-	  lwz       r7, 0x30AC(r13)
-	  li        r6, 0
-	  rlwinm    r3,r0,2,0,29
-	  addi      r0, r3, 0x4C
-	  lwz       r5, 0x2E4(r30)
-	  lwzx      r3, r7, r0
-	  bl        -0xB4D58
-
-	.loc_0x158:
-	  addi      r25, r25, 0x10
-	  addi      r31, r31, 0x1
-
-	.loc_0x160:
-	  lhz       r0, 0x3D6(r29)
-	  cmpw      r31, r0
-	  blt+      .loc_0x7C
-
-	.loc_0x16C:
-	  lmw       r24, 0xC0(r1)
-	  lwz       r0, 0x104(r1)
-	  lfd       f31, 0xF8(r1)
-	  lfd       f30, 0xF0(r1)
-	  lfd       f29, 0xE8(r1)
-	  lfd       f28, 0xE0(r1)
-	  addi      r1, r1, 0x100
-	  mtlr      r0
-	  blr
-	*/
+	if (gfx.mCamera->isPointVisible(mPosition, getSize() * 4.0f)) {
+		for (int i = 0; i < _3D6; i++) {
+			Pebble* pb = &mPebbles[i];
+			if (pb->mHealth) {
+				Matrix4f mtx;
+				f32 test = pb->_0C / 255.0f * PI * 2;
+				mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, test, 0.0f), pb->mPosition);
+				Matrix4f mtx2;
+				gfx.calcViewMatrix(mtx, mtx2);
+				gfx._324 = 1;
+				gfx.useMatrix(mtx2, 0);
+				itemMgr->getPebbleShape(pb->_0D)->drawshape(gfx, *gfx.mCamera, nullptr);
+			}
+		}
+	}
 }
 
 /*
@@ -1028,11 +851,7 @@ void RockGen::refresh(Graphics&)
  */
 f32 RockGen::getSize()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x3E4(r3)
-	  blr
-	*/
+	return mSize;
 }
 
 /*
@@ -1042,77 +861,20 @@ f32 RockGen::getSize()
  */
 Pebble* RockGen::getRandomPebble()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lhz       r0, 0x3D4(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  b         .loc_0xCC
+	if (mActivePebbles <= 0)
+		return nullptr;
 
-	.loc_0x28:
-	  bl        0x132E40
-	  xoris     r0, r3, 0x8000
-	  lhz       r4, 0x3D6(r31)
-	  stw       r0, 0x24(r1)
-	  lis       r3, 0x4330
-	  lhz       r0, 0x3D4(r31)
-	  cmpwi     r4, 0
-	  stw       r3, 0x20(r1)
-	  mtctr     r4
-	  lfd       f1, -0x66B8(r2)
-	  lfd       f0, 0x20(r1)
-	  li        r4, 0
-	  stw       r0, 0x1C(r1)
-	  fsubs     f1, f0, f1
-	  lfs       f0, -0x66D0(r2)
-	  stw       r3, 0x18(r1)
-	  lfs       f3, -0x66D4(r2)
-	  fdivs     f4, f1, f0
-	  lfd       f1, -0x66A0(r2)
-	  lfd       f0, 0x18(r1)
-	  lfs       f2, -0x66C8(r2)
-	  fmuls     f3, f3, f4
-	  fsubs     f0, f0, f1
-	  fmuls     f0, f0, f3
-	  fmuls     f0, f2, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x10(r1)
-	  lwz       r5, 0x14(r1)
-	  ble-      .loc_0xC8
-
-	.loc_0x9C:
-	  lwz       r0, 0x3D0(r31)
-	  add       r3, r0, r4
-	  lbz       r0, 0xE(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC0
-	  cmpwi     r5, 0
-	  bgt-      .loc_0xBC
-	  b         .loc_0xCC
-
-	.loc_0xBC:
-	  subi      r5, r5, 0x1
-
-	.loc_0xC0:
-	  addi      r4, r4, 0x10
-	  bdnz+     .loc_0x9C
-
-	.loc_0xC8:
-	  li        r3, 0
-
-	.loc_0xCC:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	int id = mActivePebbles * gsys->getRand(1.0f) * 0.999999f;
+	for (int i = 0; i < _3D6; i++) {
+		Pebble* pb = &mPebbles[i];
+		if (pb->mHealth) {
+			if (id <= 0) {
+				return pb;
+			}
+			id--;
+		}
+	}
+	return nullptr;
 }
 
 /*
@@ -1121,53 +883,13 @@ Pebble* RockGen::getRandomPebble()
  * Size:	0000A0
  */
 GrassGen::GrassGen(Shape* shape, CreatureProp* props)
-    : ItemCreature(0, props, shape)
+    : ItemCreature(OBJTYPE_GrassGen, props, nullptr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x22
-	  stw       r0, 0x4(r1)
-	  li        r6, 0
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bl        0x105A4
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4988
-	  stw       r3, 0x0(r30)
-	  addi      r3, r3, 0x114
-	  li        r0, 0
-	  stw       r3, 0x2B8(r30)
-	  li        r3, 0x28
-	  lfs       f0, -0x66F0(r2)
-	  stfs      f0, 0x3DC(r30)
-	  stfs      f0, 0x3D8(r30)
-	  stfs      f0, 0x3D4(r30)
-	  stw       r0, 0x3CC(r30)
-	  sth       r0, 0x3D2(r30)
-	  sth       r0, 0x3D0(r30)
-	  bl        -0x9E340
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x70
-	  bl        -0x416F8
-
-	.loc_0x70:
-	  stw       r31, 0x2C(r30)
-	  addi      r4, r30, 0
-	  li        r5, 0x4
-	  lwz       r3, 0x2C(r30)
-	  bl        -0x41634
-	  mr        r3, r30
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mGrass       = 0;
+	_3D2         = 0;
+	mActiveGrass = 0;
+	mSeContext   = new SeContext;
+	mSeContext->setContext(this, 4);
 }
 
 /*
@@ -1175,8 +897,30 @@ GrassGen::GrassGen(Shape* shape, CreatureProp* props)
  * Address:	800E5388
  * Size:	000244
  */
-void GrassGen::create(int, f32, int)
+void GrassGen::create(int num, f32 size, int)
 {
+	mGrass       = new Grass[num];
+	mActiveGrass = num;
+	_3D2         = num;
+	mSize        = size;
+
+	for (int i = 0; i < num; i++) {
+		f32 a     = gsys->getRand(1.0f);
+		f32 b     = ((1.0f - a) * gsys->getRand(1.0f) + a) * size;
+		f32 angle = gsys->getRand(1.0f) * TAU;
+		Vector3f dir(sinf(angle) * b, 0.0f, cosf(angle) * b);
+		dir   = dir + mPosition;
+		dir.y = mapMgr->getMinY(dir.x, dir.z, true);
+
+		Grass* obj     = &mGrass[i];
+		obj->mPosition = dir;
+		obj->mHealth   = gsys->getRand(1.0f) * 0.999999f * 255.0f;
+		obj->_0D       = 0;
+		obj->_0C       = 1;
+	}
+
+	resolve();
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1338,14 +1082,6 @@ void GrassGen::create(int, f32, int)
  */
 Grass::Grass()
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x66F0(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -1353,15 +1089,11 @@ Grass::Grass()
  * Address:	800E55E0
  * Size:	000010
  */
-void GrassGen::setSizeAndNum(f32, int)
+void GrassGen::setSizeAndNum(f32 size, int num)
 {
-	/*
-	.loc_0x0:
-	  sth       r4, 0x3D0(r3)
-	  sth       r4, 0x3D2(r3)
-	  stfs      f1, 0x3E0(r3)
-	  blr
-	*/
+	mActiveGrass = num;
+	_3D2         = num;
+	mSize        = size;
 }
 
 /*
@@ -1371,32 +1103,11 @@ void GrassGen::setSizeAndNum(f32, int)
  */
 void GrassGen::startAI(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  stw       r0, 0x3C8(r3)
-	  lhz       r4, 0x3D2(r31)
-	  lfs       f1, 0x3E0(r31)
-	  bl        -0x290
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  bl        -0x51104
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  li        r5, 0
-	  bl        -0x51078
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mWorkingPikis = 0;
+	create(_3D2, mSize, 0);
+	mGrid.updateGrid(mPosition);
+	mGrid.updateAIGrid(mPosition, false);
+	PRINT("++++++++ CREATE GRASS GEN +++++++\n");
 }
 
 /*
@@ -1406,22 +1117,9 @@ void GrassGen::startAI(int)
  */
 void GrassGen::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1C
-	  bl        -0x41778
-
-	.loc_0x1C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mSeContext) {
+		mSeContext->update();
+	}
 }
 
 /*
@@ -1429,119 +1127,23 @@ void GrassGen::update()
  * Address:	800E5678
  * Size:	000190
  */
-void GrassGen::refresh(Graphics&)
+void GrassGen::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x100(r1)
-	  stfd      f31, 0xF8(r1)
-	  stfd      f30, 0xF0(r1)
-	  stfd      f29, 0xE8(r1)
-	  stfd      f28, 0xE0(r1)
-	  stmw      r24, 0xC0(r1)
-	  mr        r29, r3
-	  mr        r30, r4
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x66B0(r2)
-	  addi      r4, r29, 0x94
-	  lwz       r3, 0x2E4(r30)
-	  fmuls     f1, f0, f1
-	  bl        -0xA413C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x16C
-	  lfs       f28, -0x66AC(r2)
-	  addi      r27, r1, 0x1C
-	  lfs       f29, -0x66A8(r2)
-	  addi      r26, r1, 0x28
-	  lfd       f30, -0x66A0(r2)
-	  lfs       f31, -0x66C4(r2)
-	  li        r31, 0
-	  li        r25, 0
-	  lis       r28, 0x4330
-	  b         .loc_0x160
-
-	.loc_0x7C:
-	  lwz       r0, 0x3CC(r29)
-	  add       r3, r0, r25
-	  lbz       r0, 0xC(r3)
-	  addi      r24, r3, 0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x158
-	  lbz       r0, 0xE(r24)
-	  mr        r4, r26
-	  lfs       f3, -0x3838(r13)
-	  mr        r5, r27
-	  stw       r0, 0xBC(r1)
-	  lfs       f0, -0x3844(r13)
-	  mr        r6, r24
-	  stw       r28, 0xB8(r1)
-	  addi      r3, r1, 0x74
-	  lfs       f1, -0x3840(r13)
-	  lfd       f2, 0xB8(r1)
-	  stfs      f0, 0x28(r1)
-	  fsubs     f4, f2, f30
-	  lfs       f2, -0x3834(r13)
-	  stfs      f3, 0x1C(r1)
-	  lfs       f0, -0x383C(r13)
-	  fdivs     f3, f4, f31
-	  stfs      f1, 0x2C(r1)
-	  stfs      f0, 0x30(r1)
-	  fmuls     f0, f29, f3
-	  fmuls     f0, f28, f0
-	  stfs      f0, 0x20(r1)
-	  stfs      f2, 0x24(r1)
-	  bl        -0xA7674
-	  mr        r3, r30
-	  lwz       r12, 0x3B4(r30)
-	  addi      r4, r1, 0x74
-	  addi      r5, r1, 0x34
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x1
-	  stw       r0, 0x324(r30)
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x34
-	  lwz       r12, 0x3B4(r30)
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0xD(r24)
-	  mr        r4, r30
-	  lwz       r7, 0x30AC(r13)
-	  li        r6, 0
-	  rlwinm    r3,r0,2,0,29
-	  addi      r0, r3, 0x58
-	  lwz       r5, 0x2E4(r30)
-	  lwzx      r3, r7, r0
-	  bl        -0xB5360
-
-	.loc_0x158:
-	  addi      r25, r25, 0x10
-	  addi      r31, r31, 0x1
-
-	.loc_0x160:
-	  lhz       r0, 0x3D2(r29)
-	  cmpw      r31, r0
-	  blt+      .loc_0x7C
-
-	.loc_0x16C:
-	  lmw       r24, 0xC0(r1)
-	  lwz       r0, 0x104(r1)
-	  lfd       f31, 0xF8(r1)
-	  lfd       f30, 0xF0(r1)
-	  lfd       f29, 0xE8(r1)
-	  lfd       f28, 0xE0(r1)
-	  addi      r1, r1, 0x100
-	  mtlr      r0
-	  blr
-	*/
+	if (gfx.mCamera->isPointVisible(mPosition, getSize() * 4.0f)) {
+		for (int i = 0; i < _3D2; i++) {
+			Grass* pb = &mGrass[i];
+			if (pb->_0C) {
+				Matrix4f mtx;
+				f32 test = pb->mHealth / 255.0f * PI * 2;
+				mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, test, 0.0f), pb->mPosition);
+				Matrix4f mtx2;
+				gfx.calcViewMatrix(mtx, mtx2);
+				gfx._324 = 1;
+				gfx.useMatrix(mtx2, 0);
+				itemMgr->getGrassShape(pb->_0D)->drawshape(gfx, *gfx.mCamera, nullptr);
+			}
+		}
+	}
 }
 
 /*
@@ -1551,11 +1153,7 @@ void GrassGen::refresh(Graphics&)
  */
 f32 GrassGen::getSize()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x3E0(r3)
-	  blr
-	*/
+	return mSize;
 }
 
 /*
@@ -1565,77 +1163,20 @@ f32 GrassGen::getSize()
  */
 Grass* GrassGen::getRandomGrass()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lhz       r0, 0x3D0(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  b         .loc_0xCC
+	if (mActiveGrass <= 0)
+		return nullptr;
 
-	.loc_0x28:
-	  bl        0x132838
-	  xoris     r0, r3, 0x8000
-	  lhz       r4, 0x3D2(r31)
-	  stw       r0, 0x24(r1)
-	  lis       r3, 0x4330
-	  lhz       r0, 0x3D0(r31)
-	  cmpwi     r4, 0
-	  stw       r3, 0x20(r1)
-	  mtctr     r4
-	  lfd       f1, -0x66B8(r2)
-	  lfd       f0, 0x20(r1)
-	  li        r4, 0
-	  stw       r0, 0x1C(r1)
-	  fsubs     f1, f0, f1
-	  lfs       f0, -0x66D0(r2)
-	  stw       r3, 0x18(r1)
-	  lfs       f3, -0x66D4(r2)
-	  fdivs     f4, f1, f0
-	  lfd       f1, -0x66A0(r2)
-	  lfd       f0, 0x18(r1)
-	  lfs       f2, -0x66C8(r2)
-	  fmuls     f3, f3, f4
-	  fsubs     f0, f0, f1
-	  fmuls     f0, f0, f3
-	  fmuls     f0, f2, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x10(r1)
-	  lwz       r5, 0x14(r1)
-	  ble-      .loc_0xC8
-
-	.loc_0x9C:
-	  lwz       r0, 0x3CC(r31)
-	  add       r3, r0, r4
-	  lbz       r0, 0xC(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC0
-	  cmpwi     r5, 0
-	  bgt-      .loc_0xBC
-	  b         .loc_0xCC
-
-	.loc_0xBC:
-	  subi      r5, r5, 0x1
-
-	.loc_0xC0:
-	  addi      r4, r4, 0x10
-	  bdnz+     .loc_0x9C
-
-	.loc_0xC8:
-	  li        r3, 0
-
-	.loc_0xCC:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	int id = mActiveGrass * gsys->getRand(1.0f) * 0.999999f;
+	for (int i = 0; i < _3D2; i++) {
+		Grass* pb = &mGrass[i];
+		if (pb->_0C) {
+			if (id <= 0) {
+				return pb;
+			}
+			id--;
+		}
+	}
+	return nullptr;
 }
 
 /*
@@ -1646,7 +1187,13 @@ Grass* GrassGen::getRandomGrass()
 WeedsGen::WeedsGen(Shape* shape, CreatureProp* props)
     : ItemCreature(0, props, shape)
 {
-	// UNUSED FUNCTION
+	if (!shape) {
+		ERROR("ERR\n");
+	}
+	_3C8             = 0;
+	_3D0             = props;
+	mItemShapeObject = nullptr;
+	_3CC             = shape;
 }
 
 /*
@@ -1672,132 +1219,28 @@ void WeedsGen::refresh(Graphics&)
  * Address:	800E58F8
  * Size:	0001CC
  */
-void WeedsGen::startAI(int)
+void WeedsGen::startAI(int ai)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stfd      f31, 0x80(r1)
-	  stfd      f30, 0x78(r1)
-	  stfd      f29, 0x70(r1)
-	  stfd      f28, 0x68(r1)
-	  stfd      f27, 0x60(r1)
-	  stfd      f26, 0x58(r1)
-	  stfd      f25, 0x50(r1)
-	  stfd      f24, 0x48(r1)
-	  stw       r31, 0x44(r1)
-	  lis       r31, 0x4330
-	  stw       r30, 0x40(r1)
-	  li        r30, 0
-	  stw       r29, 0x3C(r1)
-	  stw       r28, 0x38(r1)
-	  mr        r28, r3
-	  lfd       f31, -0x66B8(r2)
-	  lfs       f27, -0x66D0(r2)
-	  lfs       f28, -0x66D4(r2)
-	  lfs       f29, -0x6698(r2)
-	  lfs       f30, -0x66CC(r2)
-	  b         .loc_0x180
+	for (int i = 0; i < _3C8; i++) {
+		Weed* gen = (Weed*)itemMgr->birth(OBJTYPE_Weed);
+		if (gen) {
+			f32 size  = gsys->getRand(1.0f) * 50.0f;
+			f32 angle = gsys->getRand(1.0f) * TAU;
+			Vector3f offset(sinf(angle) * size, 0.0f, cosf(angle) * size);
+			offset   = offset + mPosition;
+			offset.y = mapMgr->getMinY(offset.x, offset.z, true);
+			if (!_3CC) {
+				ERROR("STAI\n");
+			}
+			gen->mProps = _3D0;
+			gen->mGen   = this;
+			gen->init(offset);
+			gen->mItemShape = _3CC;
+			gen->startAI(0);
+		}
+	}
 
-	.loc_0x60:
-	  lwz       r3, 0x30AC(r13)
-	  li        r4, 0x20
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x78(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r29, r3
-	  beq-      .loc_0x17C
-	  bl        0x1326F8
-	  xoris     r0, r3, 0x8000
-	  stw       r0, 0x34(r1)
-	  stw       r31, 0x30(r1)
-	  lfd       f0, 0x30(r1)
-	  fsubs     f0, f0, f31
-	  fdivs     f0, f0, f27
-	  fmuls     f0, f28, f0
-	  fmuls     f25, f29, f0
-	  bl        0x1326D4
-	  xoris     r0, r3, 0x8000
-	  stw       r0, 0x2C(r1)
-	  stw       r31, 0x28(r1)
-	  lfd       f0, 0x28(r1)
-	  fsubs     f0, f0, f31
-	  fdivs     f0, f0, f27
-	  fmuls     f0, f28, f0
-	  fmuls     f24, f30, f0
-	  fmr       f1, f24
-	  bl        0x136190
-	  fmuls     f26, f25, f1
-	  fmr       f1, f24
-	  bl        0x136318
-	  fmuls     f1, f25, f1
-	  lfs       f0, -0x3830(r13)
-	  li        r4, 0x1
-	  stfs      f1, 0x1C(r1)
-	  stfs      f0, 0x20(r1)
-	  stfs      f26, 0x24(r1)
-	  lfs       f1, 0x1C(r1)
-	  lfs       f0, 0x94(r28)
-	  lfs       f3, 0x20(r1)
-	  lfs       f2, 0x98(r28)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x24(r1)
-	  lfs       f1, 0x9C(r28)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x1C(r1)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x20(r1)
-	  stfs      f0, 0x24(r1)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x1C(r1)
-	  lfs       f2, 0x24(r1)
-	  bl        -0x7DB24
-	  stfs      f1, 0x20(r1)
-	  addi      r3, r29, 0
-	  addi      r4, r1, 0x1C
-	  lwz       r0, 0x3D0(r28)
-	  stw       r0, 0x224(r29)
-	  stw       r28, 0x3CC(r29)
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x3CC(r28)
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  stw       r0, 0x308(r29)
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x17C:
-	  addi      r30, r30, 0x1
-
-	.loc_0x180:
-	  lwz       r0, 0x3C8(r28)
-	  cmpw      r30, r0
-	  blt+      .loc_0x60
-	  lwz       r0, 0x8C(r1)
-	  lfd       f31, 0x80(r1)
-	  lfd       f30, 0x78(r1)
-	  lfd       f29, 0x70(r1)
-	  lfd       f28, 0x68(r1)
-	  lfd       f27, 0x60(r1)
-	  lfd       f26, 0x58(r1)
-	  lfd       f25, 0x50(r1)
-	  lfd       f24, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  lwz       r28, 0x38(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -1808,6 +1251,8 @@ void WeedsGen::startAI(int)
 Weed::Weed()
     : ItemCreature(0, nullptr, nullptr)
 {
+	mItemShapeObject = nullptr;
+	setCreatureFlag(0x11);
 	// UNUSED FUNCTION
 }
 
@@ -1818,18 +1263,8 @@ Weed::Weed()
  */
 void Weed::startAI(int)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x382C(r13)
-	  li        r0, 0
-	  stfs      f0, 0x7C(r3)
-	  lfs       f0, -0x3828(r13)
-	  stfs      f0, 0x80(r3)
-	  lfs       f0, -0x3824(r13)
-	  stfs      f0, 0x84(r3)
-	  sth       r0, 0x3C8(r3)
-	  blr
-	*/
+	mScale.set(0.1f, 0.1f, 0.1f);
+	_3C8 = 0;
 }
 
 /*
@@ -1837,66 +1272,20 @@ void Weed::startAI(int)
  * Address:	800E5AE8
  * Size:	0000CC
  */
-bool Weed::interactPullout(Creature*)
+bool Weed::interactPullout(Creature* item)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stfd      f31, 0x38(r1)
-	  stfd      f30, 0x30(r1)
-	  stfd      f29, 0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  lhz       r0, 0x3C8(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xA8
-	  li        r0, 0x1
-	  sth       r0, 0x3C8(r31)
-	  li        r0, 0
-	  sth       r0, 0x3CA(r31)
-	  lfs       f29, 0xA0(r4)
-	  fmr       f1, f29
-	  bl        0x136028
-	  lfs       f0, -0x6694(r2)
-	  fneg      f30, f0
-	  fmuls     f31, f30, f1
-	  fmr       f1, f29
-	  bl        0x1361A8
-	  fmuls     f1, f30, f1
-	  lfs       f0, -0x3820(r13)
-	  li        r3, 0x1
-	  stfs      f1, 0x10(r1)
-	  stfs      f0, 0x14(r1)
-	  stfs      f31, 0x18(r1)
-	  lwz       r4, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r4, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0x18(r1)
-	  stw       r0, 0x78(r31)
-	  lwz       r4, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r4, 0xA4(r31)
-	  stw       r0, 0xA8(r31)
-	  lwz       r0, 0x18(r1)
-	  stw       r0, 0xAC(r31)
-	  b         .loc_0xAC
+	if (!_3C8) {
+		_3C8      = 1;
+		_3CA      = 0;
+		f32 size  = 20.0f;
+		f32 angle = item->mFaceDirection;
+		Vector3f velocity(sinf(angle) * -size, 370.0f, cosf(angle) * -size);
 
-	.loc_0xA8:
-	  li        r3, 0
-
-	.loc_0xAC:
-	  lwz       r0, 0x44(r1)
-	  lfd       f31, 0x38(r1)
-	  lfd       f30, 0x30(r1)
-	  lfd       f29, 0x28(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+		mVelocity       = velocity;
+		mTargetVelocity = velocity;
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -1906,52 +1295,17 @@ bool Weed::interactPullout(Creature*)
  */
 void Weed::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  bl        0x1002C
-	  lhz       r0, 0x3C8(r31)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x88
-	  lhz       r3, 0x3CA(r31)
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x3CA(r31)
-	  lhz       r0, 0x3CA(r31)
-	  cmplwi    r0, 0x1E
-	  ble-      .loc_0x4C
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x5AF18
-	  b         .loc_0x88
-
-	.loc_0x4C:
-	  stw       r0, 0x14(r1)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x66A0(r2)
-	  stw       r0, 0x10(r1)
-	  lfs       f1, -0x66D8(r2)
-	  lfd       f0, 0x10(r1)
-	  lfs       f3, -0x66D4(r2)
-	  fsubs     f2, f0, f2
-	  lfs       f0, -0x6690(r2)
-	  fdivs     f1, f2, f1
-	  fsubs     f1, f3, f1
-	  fmuls     f1, f1, f0
-	  stfs      f1, 0x7C(r31)
-	  stfs      f1, 0x80(r31)
-	  stfs      f1, 0x84(r31)
-
-	.loc_0x88:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	ItemCreature::update();
+	if (_3C8 == 1) {
+		_3CA++;
+		if (_3CA > 30) {
+			kill(nullptr);
+		} else {
+			f32 s = (1.0f - _3CA / 30.0f);
+			s *= 0.1f;
+			mScale.set(s, s, s);
+		}
+	}
 }
 
 /*
@@ -1959,81 +1313,16 @@ void Weed::update()
  * Address:	800E5C50
  * Size:	000108
  */
-void Weed::refresh(Graphics&)
+void Weed::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x50(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r30, 0x228
-	  addi      r4, r30, 0x7C
-	  addi      r5, r30, 0x88
-	  addi      r6, r30, 0x94
-	  bl        -0xA7B88
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r30, 0x228
-	  addi      r5, r1, 0x10
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x1
-	  stw       r0, 0x324(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r1, 0x10
-	  lwz       r12, 0x3B4(r31)
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r30, 0x94
-	  lwz       r4, 0x2E4(r31)
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x154(r4)
-	  lbz       r0, 0x154(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xAC
-	  lwz       r3, 0x94(r30)
-	  lwz       r0, 0x98(r30)
-	  stw       r3, 0x158(r4)
-	  stw       r0, 0x15C(r4)
-	  lwz       r0, 0x9C(r30)
-	  stw       r0, 0x160(r4)
-
-	.loc_0xAC:
-	  lwz       r3, 0x308(r30)
-	  mr        r4, r31
-	  lwz       r5, 0x2E4(r31)
-	  li        r6, 0
-	  bl        -0xB58A0
-	  lwz       r4, 0x2E4(r31)
-	  li        r0, 0
-	  stb       r0, 0x154(r4)
-	  lbz       r0, 0x154(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xF0
-	  lwz       r3, 0x0(r0)
-	  lwz       r0, 0x4(r0)
-	  stw       r3, 0x158(r4)
-	  stw       r0, 0x15C(r4)
-	  lwz       r0, 0x8(r0)
-	  stw       r0, 0x160(r4)
-
-	.loc_0xF0:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	Matrix4f mtx;
+	gfx.calcViewMatrix(mWorldMtx, mtx);
+	gfx._324 = 1;
+	gfx.useMatrix(mtx, 0);
+	gfx.mCamera->setBoundOffset(&mPosition);
+	mItemShape->drawshape(gfx, *gfx.mCamera, nullptr);
+	gfx.mCamera->setBoundOffset(nullptr);
 }
 
 /*
@@ -2043,14 +1332,7 @@ void Weed::refresh(Graphics&)
  */
 bool Weed::isVisible()
 {
-	/*
-	.loc_0x0:
-	  lhz       r0, 0x3C8(r3)
-	  neg       r0, r0
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
+	return _3C8 == 0;
 }
 
 /*
@@ -2070,96 +1352,5 @@ bool Weed::isAlive()
  */
 bool Weed::isAtari()
 {
-	/*
-	.loc_0x0:
-	  lhz       r0, 0x3C8(r3)
-	  neg       r0, r0
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800E5D88
- * Size:	000008
- */
-bool Weed::needFlick(Creature*)
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	800E5D90
- * Size:	000014
- */
-bool GrassGen::isAlive()
-{
-	/*
-	.loc_0x0:
-	  lhz       r0, 0x3D0(r3)
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800E5DA4
- * Size:	000008
- */
-bool GrassGen::isVisible()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	800E5DAC
- * Size:	000008
- */
-bool GrassGen::needFlick(Creature*)
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	800E5DB4
- * Size:	000014
- */
-bool RockGen::isAlive()
-{
-	/*
-	.loc_0x0:
-	  lhz       r0, 0x3D4(r3)
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800E5DC8
- * Size:	000008
- */
-bool RockGen::isVisible()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	800E5DD0
- * Size:	000008
- */
-bool RockGen::needFlick(Creature*)
-{
-	return false;
+	return _3C8 == 0;
 }

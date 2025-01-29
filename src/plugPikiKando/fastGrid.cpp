@@ -1,7 +1,10 @@
 #include "FastGrid.h"
+#include "MemStat.h"
+#include "sysNew.h"
+#include "AIPerf.h"
 #include "DebugLog.h"
 
-u32 FastGrid::aiGridMap;
+u8* FastGrid::aiGridMap;
 u16 FastGrid::aiGridSize;
 u16 FastGrid::aiGridShift = 12;
 
@@ -17,7 +20,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("fastGrid")
 
 /*
  * --INFO--
@@ -35,43 +38,16 @@ FastGrid::FastGrid()
  * Address:	800940BC
  * Size:	000078
  */
-void FastGrid::initAIGrid(u8)
+void FastGrid::initAIGrid(u8 shift)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r3,0,24,31
-	  subi      r4, r13, 0x5A04
-	  stwu      r1, -0x18(r1)
-	  sth       r0, -0x5A08(r13)
-	  lwz       r3, 0x2FE8(r13)
-	  lhz       r0, -0x5A08(r13)
-	  subfic    r0, r0, 0x10
-	  slw       r0, r5, r0
-	  sth       r0, 0x300C(r13)
-	  bl        -0xD9B4
-	  lhz       r0, 0x300C(r13)
-	  li        r4, 0x20
-	  mullw     r3, r0, r0
-	  bl        -0x4CF94
-	  stw       r3, 0x3008(r13)
-	  bl        .loc_0x78
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r13, 0x5A04
-	  bl        -0xD8C8
-	  lhz       r3, 0x300C(r13)
-	  lis       r0, 0x4330
-	  stw       r3, 0x14(r1)
-	  stw       r0, 0x10(r1)
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x78:
-	*/
+	aiGridShift = shift;
+	aiGridSize  = 1 << 0x10 - aiGridShift;
+	memStat->start("aiGrid");
+	aiGridMap = new (0x20) u8[aiGridSize * aiGridSize];
+	clearAIGrid();
+	memStat->end("aiGrid");
+	PRINT("aiGridSize = %d : total = %d (KBytes)\n", aiGridSize, aiGridSize * aiGridSize);
+	PRINT("@@@@@@@@@@ aiGridSize = %d : griz size = %f\n", aiGridSize, 32768.0f / aiGridSize);
 }
 
 /*
@@ -81,24 +57,9 @@ void FastGrid::initAIGrid(u8)
  */
 void FastGrid::clearAIGrid()
 {
-	/*
-	.loc_0x0:
-	  li        r5, 0
-	  li        r4, 0
-	  b         .loc_0x18
-
-	.loc_0xC:
-	  lwz       r3, 0x3008(r13)
-	  stbx      r4, r3, r5
-	  addi      r5, r5, 0x1
-
-	.loc_0x18:
-	  lhz       r0, 0x300C(r13)
-	  mullw     r0, r0, r0
-	  cmpw      r5, r0
-	  blt+      .loc_0xC
-	  blr
-	*/
+	for (int i = 0; i < aiGridSize * aiGridSize; i++) {
+		aiGridMap[i] = 0;
+	}
 }
 
 /*
@@ -108,7 +69,8 @@ void FastGrid::clearAIGrid()
  */
 void FastGrid::addAIGrid()
 {
-	// UNUSED FUNCTION
+	int id = _0C * aiGridSize + _10;
+	aiGridMap[id]++;
 }
 
 /*
@@ -118,21 +80,10 @@ void FastGrid::addAIGrid()
  */
 void FastGrid::delAIGrid()
 {
-	/*
-	.loc_0x0:
-	  lha       r4, 0xC(r3)
-	  lhz       r0, 0x300C(r13)
-	  lha       r3, 0x10(r3)
-	  mullw     r0, r4, r0
-	  lwz       r5, 0x3008(r13)
-	  add       r4, r3, r0
-	  lbzx      r3, r5, r4
-	  cmplwi    r3, 0
-	  beqlr-
-	  subi      r0, r3, 0x1
-	  stbx      r0, r5, r4
-	  blr
-	*/
+	int id = _0C * aiGridSize + _10;
+	if (aiGridMap[id]) {
+		aiGridMap[id]--;
+	}
 }
 
 /*
@@ -142,6 +93,29 @@ void FastGrid::delAIGrid()
  */
 bool FastGrid::aiCulling()
 {
+	if (!AIPerf::aiGrid) {
+		return false;
+	}
+
+	if (_14 != 1) {
+		return aiCullingLarge(_14);
+	}
+	int a      = _0C;
+	int b      = _10;
+	int offset = b + a * aiGridSize;
+	if (aiGridMap[offset]) {
+		return false;
+	}
+	int c = aiGridSize - 1;
+	if (b < c && aiGridMap[offset + 1]) {
+		return false;
+	}
+
+	if (b < aiGridMap[offset + 1] && aiGridMap[offset - 1]) {
+		return false;
+	}
+
+	return true;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -476,52 +450,19 @@ bool FastGrid::doCulling(const FastGrid&, f32)
  * Address:	80094520
  * Size:	00009C
  */
-void FastGrid::updateGrid(const Vector3f&)
+void FastGrid::updateGrid(const Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  lwz       r0, -0x5F10(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x94
-	  lfs       f0, 0x0(r4)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  sth       r0, 0x0(r3)
-	  lha       r5, 0x0(r3)
-	  lwz       r0, -0x5F0C(r13)
-	  sraw      r0, r5, r0
-	  extsh     r0, r0
-	  sth       r0, 0x0(r3)
-	  lfs       f0, 0x8(r4)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  sth       r0, 0x8(r3)
-	  lha       r5, 0x8(r3)
-	  lwz       r0, -0x5F0C(r13)
-	  sraw      r0, r5, r0
-	  extsh     r0, r0
-	  sth       r0, 0x8(r3)
-	  lwz       r0, -0x5F10(r13)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x94
-	  lfs       f0, 0x4(r4)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  sth       r0, 0x4(r3)
-	  lha       r4, 0x4(r3)
-	  lwz       r0, -0x5F0C(r13)
-	  sraw      r0, r4, r0
-	  extsh     r0, r0
-	  sth       r0, 0x4(r3)
+	if (AIPerf::useGrid) {
+		_00 = pos.x;
+		_00 = _00 >> AIPerf::gridShift;
 
-	.loc_0x94:
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+		_08 = pos.z;
+		_08 = _08 >> AIPerf::gridShift;
+		if (AIPerf::useGrid == 1) {
+			_04 = pos.y;
+			_04 = _04 >> AIPerf::gridShift;
+		}
+	}
 }
 
 /*
@@ -529,8 +470,16 @@ void FastGrid::updateGrid(const Vector3f&)
  * Address:	800945BC
  * Size:	0000E8
  */
-void FastGrid::updateAIGrid(const Vector3f&, bool)
+void FastGrid::updateAIGrid(const Vector3f& pos, bool)
 {
+
+	if (AIPerf::useGrid) {
+		_0C = pos.x;
+		_0C = aiGridSize >> 1 + _0C >> aiGridShift;
+
+		_10 = pos.z;
+		_10 = aiGridSize >> 1 + _10 >> aiGridShift;
+	}
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x28(r1)

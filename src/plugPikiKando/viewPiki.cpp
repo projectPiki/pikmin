@@ -2,6 +2,17 @@
 #include "gameflow.h"
 #include "Shape.h"
 #include "sysNew.h"
+#include "MemStat.h"
+#include "ItemMgr.h"
+#include "MoviePlayer.h"
+#include "PikiMgr.h"
+#include "UfoItem.h"
+#include "AIPerf.h"
+#include "MapCode.h"
+#include "PikiAI.h"
+#include "Font.h"
+#include "PikiState.h"
+#include "Graphics.h"
 #include "DebugLog.h"
 
 /*
@@ -16,7 +27,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("viewPiki")
 
 PikiShapeObject* PikiShapeObject::_instances[4];
 bool PikiShapeObject::firstTime = true;
@@ -48,9 +59,17 @@ void PikiShapeObject::init()
  * Address:	........
  * Size:	00006C
  */
-PikiShapeObject* PikiShapeObject::create(int)
+PikiShapeObject* PikiShapeObject::create(int index)
 {
-	// UNUSED FUNCTION
+	memStat->start("piki animmgr");
+	if (firstTime) {
+		initOnce();
+	}
+	memStat->end("piki animmgr");
+	if (index < 0 || index > 3) {
+		ERROR("illegal index %d\n");
+	}
+	return _instances[index];
 }
 
 /*
@@ -118,93 +137,25 @@ bool ViewPiki::isKinoko()
  * Address:	800D8B90
  * Size:	000128
  */
-void ViewPiki::changeShape(int)
+void ViewPiki::changeShape(int index)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  cmpwi     r31, -0x1
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  bne-      .loc_0x28
-	  lwz       r31, 0x4B8(r30)
+	if (index == -1) {
+		index = mFormationPriority;
+	}
+	mPikiShape = PikiShapeObject::create(index);
+	mPikiAnimMgr.changeContext(&mPikiShape->mAnimatorB, &mPikiShape->mAnimatorA);
+	mCollInfo->initInfo(mPikiShape->mShape, nullptr, nullptr);
+	if (isKinoko()) {
+		setColor(mColor);
+		mHappaModel = nullptr;
+	} else {
+		setFlower(mHappa);
+	}
+	f32 scale = 1.0f;
+	mScale.set(scale, scale, scale);
+	setLeaves(index + 1);
 
-	.loc_0x28:
-	  lis       r4, 0x802C
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r4, 0x5CC4
-	  bl        -0x5248C
-	  lbz       r0, -0x3B90(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x48
-	  bl        -0x2B4
-
-	.loc_0x48:
-	  lis       r4, 0x802C
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r4, 0x5CC4
-	  bl        -0x5239C
-	  lis       r3, 0x803D
-	  rlwinm    r4,r31,2,0,29
-	  addi      r0, r3, 0x1E48
-	  add       r3, r0, r4
-	  lwz       r0, 0x0(r3)
-	  addi      r3, r30, 0x354
-	  stw       r0, 0x588(r30)
-	  lwz       r5, 0x588(r30)
-	  addi      r4, r5, 0x14
-	  addi      r5, r5, 0x4
-	  bl        0x46D48
-	  lwz       r4, 0x588(r30)
-	  li        r5, 0
-	  lwz       r3, 0x220(r30)
-	  li        r6, 0
-	  lwz       r4, 0x0(r4)
-	  bl        -0x4F0C4
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xD0
-	  mr        r3, r30
-	  lhz       r4, 0x510(r30)
-	  bl        -0xF280
-	  li        r0, 0
-	  stw       r0, 0x598(r30)
-	  b         .loc_0xE8
-
-	.loc_0xD0:
-	  mr        r3, r30
-	  lwz       r4, 0x520(r30)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xE8:
-	  lfs       f0, -0x6810(r2)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x1
-	  stfs      f0, 0x7C(r30)
-	  stfs      f0, 0x80(r30)
-	  stfs      f0, 0x84(r30)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x134(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -215,33 +166,8 @@ void ViewPiki::changeShape(int)
 ViewPiki::ViewPiki(CreatureProp* prop)
     : Piki(prop)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0xD368
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x5B98
-	  stw       r3, 0x0(r31)
-	  addi      r3, r3, 0x114
-	  li        r0, 0
-	  stw       r3, 0x2B8(r31)
-	  mr        r3, r31
-	  lfs       f0, -0x6818(r2)
-	  stfs      f0, 0x594(r31)
-	  stfs      f0, 0x590(r31)
-	  stfs      f0, 0x58C(r31)
-	  stw       r0, 0x588(r31)
-	  stw       r0, 0x520(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mPikiShape = nullptr;
+	mHappa     = 0;
 }
 
 /*
@@ -251,56 +177,15 @@ ViewPiki::ViewPiki(CreatureProp* prop)
  */
 void ViewPiki::initBirth()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  stw       r0, 0x598(r3)
-	  lis       r3, 0x802C
-	  subi      r4, r3, 0x5CC4
-	  lwz       r3, 0x2FE8(r13)
-	  bl        -0x52608
-	  lbz       r0, -0x3B90(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3C
-	  bl        -0x430
+	mHappaModel = nullptr;
+	mPikiShape  = PikiShapeObject::create(0);
+	mPikiAnimMgr.init(mPikiShape->mAnimMgr, &mPikiShape->mAnimatorB, &mPikiShape->mAnimatorA, pikiMgr->mMotionTable);
 
-	.loc_0x3C:
-	  lis       r4, 0x802C
-	  lwz       r3, 0x2FE8(r13)
-	  subi      r4, r4, 0x5CC4
-	  bl        -0x52518
-	  lis       r3, 0x803D
-	  lwz       r0, 0x1E48(r3)
-	  addi      r3, r31, 0x354
-	  stw       r0, 0x588(r31)
-	  lwz       r8, 0x588(r31)
-	  lwz       r6, 0x3068(r13)
-	  lwz       r4, 0x24(r8)
-	  addi      r5, r8, 0x14
-	  lwz       r7, 0x64(r6)
-	  addi      r6, r8, 0x4
-	  bl        0x46B50
-	  lfs       f0, -0x6810(r2)
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  stfs      f0, 0x7C(r31)
-	  stfs      f0, 0x80(r31)
-	  stfs      f0, 0x84(r31)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	f32 scale = 1.0f;
+	mScale.set(scale, scale, scale);
+	setFlower(0);
+
+	f32 badcompiler[4];
 }
 
 /*
@@ -308,8 +193,33 @@ void ViewPiki::initBirth()
  * Address:	800D8DCC
  * Size:	00026C
  */
-void ViewPiki::init(Shape*, MapMgr*, Navi*)
+void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 {
+	mPikiShape  = PikiShapeObject::create(0);
+	mHappaModel = nullptr;
+
+	mCollInfo = new CollInfo(4);
+	mCollInfo->initInfo(mPikiShape->mShape, nullptr, nullptr);
+	mPikiAnimMgr.init(mPikiShape->mAnimMgr, &mPikiShape->mAnimatorB, &mPikiShape->mAnimatorA, pikiMgr->mMotionTable);
+
+	f32 scale = 1.0f;
+	scale *= pikiMgr->mPikiParms->mPikiParms._12C();
+	mScale.set(scale, scale, scale);
+	setLeaves(1);
+
+	mPikiAnimMgr.startMotion(PaniMotionInfo(22, this), PaniMotionInfo(22));
+
+	mScale.set(1.0f, 1.0f, 1.0f);
+	mRotation.set(0.0f, 0.0f, 0.0f);
+	mPosition.set((gsys->getRand(1.0f) - 0.5f) * 300.0f, 0.0f, (gsys->getRand(1.0f) - 0.5f) * 300.0f);
+
+	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	_268 = 0.0f;
+	Piki::init(navi);
+	mLastPosition = mPosition;
+	_58C          = mPosition;
+
+	f32 badcompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -481,38 +391,12 @@ void ViewPiki::init(Shape*, MapMgr*, Navi*)
  * Address:	800D9038
  * Size:	000064
  */
-void ViewPiki::setFlower(int)
+void ViewPiki::setFlower(int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x4C
-	  stw       r31, 0x520(r30)
-	  rlwinm    r0,r31,2,0,29
-	  lwz       r3, 0x3068(r13)
-	  add       r3, r3, r0
-	  lwz       r0, 0x3C(r3)
-	  stw       r0, 0x598(r30)
-
-	.loc_0x4C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (!isKinoko()) {
+		mHappa      = id;
+		mHappaModel = pikiMgr->mLeafModel[id];
+	}
 }
 
 /*
@@ -529,116 +413,19 @@ void ViewPiki::setLeaves(int)
  * Address:	800D90A0
  * Size:	00017C
  */
-void ViewPiki::postUpdate(int, f32)
+void ViewPiki::postUpdate(int a, f32 b)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stfd      f31, 0x78(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x74(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x70(r1)
-	  mr        r30, r3
-	  lhz       r5, 0x4FC(r3)
-	  cmplwi    r5, 0
-	  bne-      .loc_0x40
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x70(r3)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x160
+	if ((mMode || pikiMgr->isUpdating(1)) && (mMode != 1 || pikiMgr->isUpdating(2)) && pikiMgr->isUpdating(4)) {
+		if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(8)) {
+			Vector3f diff = mPosition - itemMgr->getUfo()->getGoalPos();
+			if (diff.length() > 100.0f) {
+				return;
+			}
+		}
+		Creature::postUpdate(a, b);
+	}
 
-	.loc_0x40:
-	  cmplwi    r5, 0x1
-	  bne-      .loc_0x58
-	  lwz       r3, 0x3068(r13)
-	  lhz       r0, 0x70(r3)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x160
-
-	.loc_0x58:
-	  lwz       r3, 0x3068(r13)
-	  lhz       r4, 0x70(r3)
-	  rlwinm.   r0,r4,0,29,29
-	  beq-      .loc_0x160
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r3, 0x1DC(r3)
-	  lbz       r0, 0x124(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x150
-	  rlwinm.   r0,r4,0,28,28
-	  beq-      .loc_0x150
-	  lwz       r3, 0x30AC(r13)
-	  bl        0x19B0C
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r3
-	  addi      r3, r1, 0x44
-	  lwz       r12, 0x15C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f3, 0x98(r30)
-	  lfs       f2, 0x48(r1)
-	  lfs       f1, 0x94(r30)
-	  lfs       f0, 0x44(r1)
-	  fsubs     f3, f3, f2
-	  lfs       f2, 0x9C(r30)
-	  fsubs     f4, f1, f0
-	  lfs       f0, 0x4C(r1)
-	  fmuls     f1, f3, f3
-	  fsubs     f3, f2, f0
-	  lfs       f0, -0x6818(r2)
-	  fmuls     f2, f4, f4
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x144
-	  fsqrte    f1, f4
-	  lfd       f3, -0x67F8(r2)
-	  lfd       f2, -0x67F0(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x30(r1)
-	  lfs       f4, 0x30(r1)
-
-	.loc_0x144:
-	  lfs       f0, -0x67E8(r2)
-	  fcmpo     cr0, f4, f0
-	  bgt-      .loc_0x160
-
-	.loc_0x150:
-	  fmr       f1, f31
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0x4DA74
-
-	.loc_0x160:
-	  lwz       r0, 0x84(r1)
-	  lfd       f31, 0x78(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -648,6 +435,47 @@ void ViewPiki::postUpdate(int, f32)
  */
 void ViewPiki::update()
 {
+	if (mMode == 0 && !pikiMgr->isUpdating(1)) {
+		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
+		return;
+	} else if (mMode == 1 && !pikiMgr->isUpdating(2)) {
+		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
+		return;
+	} else if (!pikiMgr->isUpdating(4)) {
+		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
+		return;
+	}
+
+	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(8)) {
+		Vector3f diff = mPosition - itemMgr->getUfo()->getGoalPos();
+		if (diff.length() > 100.0f) {
+			mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
+			return;
+		}
+	}
+
+	updateColor();
+	_1A4 = 0;
+	Creature::update();
+	realAI();
+	u32 color = mColor;
+	if ((color != 0 || !(gameflow.mDemoFlags & 8)) && (color != 1 || !(gameflow.mDemoFlags & 0x10))
+	    && (color != 2 || !(gameflow.mDemoFlags & 0x20)) && AIPerf::optLevel == 0 && mFloorTri && gsys->getRand(1.0f) > 0.99f) {
+		Vector3f diff = _58C - mPosition;
+		if (diff.length() > 40.0f) {
+			Vector3f pos(mPosition.x, mPosition.y + 1.0f, mPosition.z);
+			Vector3f rot(mVelocity.x * 0.01667f, 1.0f, mVelocity.z * 0.01667f);
+			EffectParm parm(pos, rot);
+			int attr = MapCode::getAttribute(mFloorTri);
+			if (attr >= 0 && attr <= 3) {
+				utEffectMgr->cast(attr + 3, parm);
+			}
+			_58C = mPosition;
+		}
+	}
+
+	f32 badcompiler[1];
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -938,53 +766,16 @@ void ViewPiki::update()
  * Address:	800D9624
  * Size:	0000A0
  */
-void Piki::startHimaLook(Vector3f*)
+void Piki::startHimaLook(Vector3f* pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  li        r31, 0
-	  stw       r30, 0x20(r1)
-	  mr        r30, r3
-	  stw       r4, 0x33C(r3)
-	  stb       r31, 0x340(r3)
-	  stb       r31, 0x330(r3)
-	  lwz       r3, 0x338(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x3C
-	  bl        0xAD14
-	  stw       r31, 0x338(r30)
+	mLookatTarget = pos;
+	_340          = false;
+	_330          = false;
+	mLookAtTarget.reset();
+	_330 = 1;
+	_334 = gsys->getRand(1.0f) * 3.0f + 4.0f;
 
-	.loc_0x3C:
-	  li        r0, 0x1
-	  stb       r0, 0x330(r30)
-	  bl        0x13EA08
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x6800(r2)
-	  stw       r0, 0x1C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x680C(r2)
-	  stw       r0, 0x18(r1)
-	  lfs       f2, -0x6810(r2)
-	  lfd       f1, 0x18(r1)
-	  lfs       f0, -0x67D4(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x67D8(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x334(r30)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -994,15 +785,9 @@ void Piki::startHimaLook(Vector3f*)
  */
 void Piki::finishLook()
 {
-	/*
-	.loc_0x0:
-	  li        r4, 0
-	  stw       r4, 0x33C(r3)
-	  li        r0, 0xA
-	  stb       r0, 0x340(r3)
-	  stb       r4, 0x330(r3)
-	  blr
-	*/
+	mLookatTarget = nullptr;
+	_340          = 10;
+	_330          = false;
 }
 
 /*
@@ -1012,14 +797,7 @@ void Piki::finishLook()
  */
 bool Piki::isLooking()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x33C(r3)
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
+	return mLookatTarget != nullptr;
 }
 
 /*
@@ -1029,6 +807,77 @@ bool Piki::isLooking()
  */
 void Piki::updateLook()
 {
+	// for some rediculous reason, the code handling a null target is slapped in the MIDDLE of the code
+	// for when there is a target, so the only way I can make it work is with a double goto
+
+	f32 mod = 0.05f;
+	if (!mLookatTarget) {
+		goto dumb2;
+	}
+
+	Vector3f diff = *mLookatTarget - mPosition;
+	f32 angle     = atan2f(diff.x, diff.z);
+	f32 len       = std::sqrtf(diff.x * diff.x + diff.z * diff.z);
+	f32 angle2    = atan2f(diff.y, len);
+	goto dumb1;
+
+	{
+	dumb2:
+		mod  = 0.2f;
+		_344 = roundAng(mod * angDist(0.0f, _344) + _344);
+		_348 = roundAng(mod * angDist(0.0f, _348) + _348);
+		if (absF(_344) < 0.1f && absF(_348) < 0.1f) {
+			forceFinishLook();
+		}
+		return;
+	}
+
+dumb1:
+	f32 dir1 = roundAng(_344 + mFaceDirection);
+	f32 dir2 = roundAng(angle - mFaceDirection);
+	f32 calc;
+	if (dir2 < PI) {
+		if (_344 > PI) {
+			calc = TAU - (_344 - dir2);
+		} else {
+			calc = angDist(angle, dir1);
+		}
+	} else if (_344 <= PI) {
+		calc = (_344 - dir2);
+		calc = TAU - calc;
+		calc = calc * -1.0f;
+	} else {
+		calc = angDist(angle, dir1);
+	}
+
+	if (absF(calc) < 0.15707964f) {
+		calc = 0.0f;
+	}
+	_344 = roundAng(calc * mod + _344);
+	if (_344 > 1.0471976f && _344 < PI) {
+		_344 = 1.0471976f;
+	} else if (_344 < 5.2359877f && _344 >= PI) {
+		_344 = PI;
+	}
+
+	calc = angDist(angle2, _348);
+	if (absF(calc) < 0.15707964f) {
+		calc = 0.0f;
+	}
+
+	_348 = roundAng(calc * mod + _348);
+	if (_348 > 1.0471976f && _348 < PI) {
+		_348 = 1.0471976f;
+	} else if (_348 < 5.2359877f && _348 >= PI) {
+		_348 = PI;
+	}
+
+	if (_340) {
+		_340--;
+		if (_340 == 0) {
+			forceFinishLook();
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1289,8 +1138,83 @@ void Piki::updateLook()
  * Address:	800D9A68
  * Size:	000678
  */
-void ViewPiki::demoDraw(Graphics&, Matrix4f*)
+void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
 {
+	Vector3f pos;
+	if (AIPerf::optLevel <= 2 || mOptUpdateContext.updatable()) {
+		pos.set(0.0f, 0.0f, 0.0f);
+		mPikiShape->mShape->calcJointWorldPos(gfx, 0, pos);
+		mShadowPos = pos;
+		pos.set(0.0f, 4.0f, 0.0f);
+		mPikiShape->mShape->calcJointWorldPos(gfx, 1, pos);
+		mCatchPos = pos;
+	}
+
+	if (mHappa == 1) {
+		pos.set(4.0f, 0.0f, 0.0f);
+	} else if (mHappa == 2) {
+		pos.set(3.0f, 0.0f, 0.0f);
+	} else {
+		pos.set(6.0f, 0.0f, 0.0f);
+	}
+	mPikiShape->mShape->calcJointWorldPos(gfx, 6, pos);
+	mEffectPos = pos;
+
+	if (isDamaged()) {
+		if (gsys->getRand(1.0f) > 0.5f) {
+			mPikiShape->mShape->mMaterialList->setColour(Colour(255, 255, 255, 255));
+		}
+	}
+	mPikiShape->mShape->mMaterialList->setColour(mCurrentColour);
+
+	if (aiCullable()) {
+		mPikiShape->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
+	}
+
+	if (mIsPanicked) {
+		_428->updatePos(mShadowPos);
+	}
+
+	if (aiCullable() && AIPerf::optLevel < 3 && mHappaModel) {
+		gfx.useMatrix(mPikiShape->mShape->getAnimMatrix(6), 0);
+		mHappaModel->drawshape(gfx, *gfx.mCamera, nullptr);
+	}
+
+	if (mMode == 1 && AIPerf::kandoOnly) {
+		gfx.useMatrix(Matrix4f::ident, 0);
+		ActCrowd* act = (ActCrowd*)mActiveAction;
+		if (mActiveAction->getCurrAction() != 0) {
+			Vector3f pos = mPosition;
+			pos.y        = act->mCPlateSlotID * act->mCPlateSlotID + 50.0f + pos.y;
+			bool light   = gfx.setLighting(false, nullptr);
+			gfx.useMatrix(Matrix4f::ident, 0);
+			if (act->_2C == 2) {
+				gfx.setColour(Colour(255, 10, 50, 255), 1);
+			} else if (act->_2C == 2) {
+				gfx.setColour(Colour(200, 255, 255, 255), 1);
+			} else {
+				gfx.setColour(Colour(255, 255, 255, 255), 1);
+			}
+
+			char* strs[4] = { "A", "B", "C", "D" };
+			char buf[256];
+			int cb = gfx.setCBlending(0);
+			pos.multMatrix(gfx.mCamera->mLookAtMtx);
+			sprintf(buf, "%s%d", strs[act->_2E], act->mCPlateSlotID);
+			gfx.perspPrintf(gsys->mConsFont, pos, -(gsys->mConsFont->stringWidth(buf) / 2), 0, buf);
+			gfx.setCBlending(cb);
+			gfx.setLighting(light, nullptr);
+		}
+	}
+
+	if (AIPerf::kandoOnly && mActiveAction) {
+		ActCrowd* act = (ActCrowd*)mActiveAction;
+		if (mActiveAction->getCurrAction() != 0) {
+			gfx.useMatrix(Matrix4f::ident, 0);
+			mActiveAction->getCurrAction()->draw(gfx);
+		}
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1771,8 +1695,76 @@ void printMatrix(char*, Matrix4f&)
  * Address:	800DA0E0
  * Size:	000B48
  */
-void ViewPiki::refresh(Graphics&)
+void ViewPiki::refresh(Graphics& gfx)
 {
+	u32 happa = mHappa;
+	if (happa == 0 && gameflow.mDemoFlags & 8) {
+		return;
+	}
+	if (happa == 1 && gameflow.mDemoFlags & 16) {
+		return;
+	}
+	if (happa == 2 && gameflow.mDemoFlags & 32) {
+		return;
+	}
+	if (mMode == 0 && !pikiMgr->isUpdating(1)) {
+		return;
+	}
+	if (mMode == 1 && !pikiMgr->isUpdating(2)) {
+		return;
+	}
+	if (!pikiMgr->isUpdating(4)) {
+		return;
+	}
+
+	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(8)) {
+		Vector3f diff = mPosition - itemMgr->getUfo()->getGoalPos();
+		if (diff.length() > 100.0f) {
+			return;
+		}
+	}
+	Matrix4f mtx;
+	f32 size = getSize();
+	if (!gfx.mCamera->isPointVisible(mPosition, size * 4.0f)) {
+		enableAICulling();
+	} else {
+		disableAICulling();
+		if (AIPerf::useLOD) {
+			Vector3f diff = gfx.mCamera->mPosition - mPosition;
+			_528          = diff.length();
+		}
+	}
+
+	if (getState() == PIKISTATE_Pressed) {
+		f32 a = pikiMgr->mPikiParms->mPikiParms.mPikiDisplayScale();
+		f32 b = pikiMgr->mPikiParms->mPikiParms.mBlueAttackPower() - pikiMgr->mPikiParms->mPikiParms.mBlueAttackPower();
+		f32 c = pikiMgr->mPikiParms->mPikiParms.mBlueAttackPower();
+		f32 e = pikiMgr->mPikiParms->mPikiParms.mBlueAttackPower();
+		f32 f, g;
+		f32 one = 1.0f;
+		if (_48C < c - e) {
+			f = 2.0f;
+			g = 0.01f;
+		} else {
+			f = (_48C / b) * one + 1.0f;
+			g = (1.0f - _48C) / b * 0.99f + 0.01f;
+			if (g < 0.0f) {
+				ERROR("sacle minus!\n");
+			}
+		}
+		mScale.set(a * f, a * g, a * f);
+	}
+
+	if ((!mStickTarget || !isStickToPlatform()) && !mRope && ((mStickTarget && mStickPart) || mStickPart->isTubeType())) {
+		mWorldMtx = mRopeOrientMtx;
+	} else {
+		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mRopeOrientMtx = mWorldMtx;
+	}
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
+
+	mCollInfo->updateInfo(gfx, false);
+	demoDraw(gfx, nullptr);
 	/*
 	.loc_0x0:
 	  mflr      r0

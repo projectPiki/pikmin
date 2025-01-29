@@ -18,6 +18,18 @@ struct Material : public CoreNode {
 
 	Colour& Colour() { return mColourInfo.mColour; }
 
+	void setColour(struct Colour& color)
+	{
+		if (mLightingInfo._00 & 2) {
+			_90->r = color.r;
+			_90->g = color.g;
+			_90->b = color.b;
+			_90->a = color.a;
+		} else {
+			mColourInfo.mColour = color;
+		}
+	}
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	u32 mIndex;                       // _14

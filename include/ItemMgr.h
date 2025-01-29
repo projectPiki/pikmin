@@ -114,18 +114,14 @@ struct ItemMgr : public PolyObjectMgr {
 	PikiHeadMgr* getPikiHeadMgr() { return mPikiHeadMgr; }
 
 	// DLL inlines to make:
-	Shape* getPebbleShape(int);
-	Shape* getGrassShape(int);
+	Shape* getPebbleShape(int i) { return _4C[i]; }
+	Shape* getGrassShape(int i) { return _58[i]; }
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_4C = PolyObjectMgr
-	Shape* _4C;                        // _4C
-	Shape* _50;                        // _50
-	Shape* _54;                        // _54
-	Shape* _58;                        // _58
-	Shape* _5C;                        // _5C
-	Shape* _60;                        // _60
+	Shape* _4C[3];                     // _4C
+	Shape* _58[3];                     // _58
 	PikiHeadMgr* mPikiHeadMgr;         // _64
 	MeltingPotMgr* mMeltingPotMgr;     // _68
 	UseNode mRootUseNode;              // _6C
