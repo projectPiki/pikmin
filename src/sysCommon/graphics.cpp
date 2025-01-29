@@ -12,6 +12,7 @@
 #include "sysNew.h"
 #include "PVW.h"
 #include "DebugLog.h"
+#include "nlib/Math.h"
 
 /*
  * --INFO--
@@ -3248,129 +3249,42 @@ void MaterialHandler::setTexMatrix(bool)
  */
 Graphics::Graphics()
 {
+	PRINT("dgxgraphics constructor\n");
+
+	_00 = 0;
+
+	for (int i = 0; i < 0x1000; i++) {
+		sintable[i] = NMathF::sin(i / 4096.0f * TAU);
+		costable[i] = NMathF::cos(i / 4096.0f * TAU);
+	}
+
+	mActiveTexture = nullptr;
+
+	_2EC = 0;
+	_2F0 = 0;
+	_2F4 = 0;
+	_2F8 = 0;
+	_2FC = 0;
+	_300 = 0;
+	_304 = 0;
+	_308 = 0;
+
+	mCurrentMaterial = nullptr;
+	mLightCam        = nullptr;
+
+	Matrix4f::ident.makeIdentity();
+
+	mCurrentMaterialHandler = nullptr;
+	_34C                    = new MaterialHandler();
+
+	mMaxMatrixCount = gsys->mMatrixCount;
+	mSystemMatrices = gsys->mMatrices;
+
 	mCachedShapeMax = 1000;
 	mCachedShapes   = new CachedShape[mCachedShapeMax];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8023
-	  stw       r0, 0x4(r1)
-	  subi      r0, r4, 0x7EAC
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stfd      f30, 0x48(r1)
-	  stfd      f29, 0x40(r1)
-	  stfd      f28, 0x38(r1)
-	  stmw      r27, 0x24(r1)
-	  addi      r31, r3, 0
-	  stw       r0, 0x3B4(r3)
-	  addi      r3, r31, 0x10
-	  bl        0x1730
-	  lfs       f0, -0x7DD4(r2)
-	  lis       r3, 0x8039
-	  addi      r28, r3, 0x4840
-	  stfs      f0, 0x344(r31)
-	  lis       r4, 0x8039
-	  addi      r3, r31, 0x390
-	  stfs      f0, 0x340(r31)
-	  li        r0, 0
-	  addi      r29, r4, 0x840
-	  stfs      f0, 0x33C(r31)
-	  li        r27, 0
-	  lis       r30, 0x4330
-	  stw       r3, 0x394(r31)
-	  stw       r3, 0x390(r31)
-	  stw       r0, 0x0(r31)
-	  lfs       f29, -0x7D88(r2)
-	  lfd       f30, -0x7DA8(r2)
-	  lfs       f31, -0x7D84(r2)
 
-	.loc_0x80:
-	  xoris     r0, r27, 0x8000
-	  stw       r0, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  lfd       f0, 0x18(r1)
-	  fsubs     f0, f0, f30
-	  fdivs     f0, f0, f31
-	  fmuls     f28, f29, f0
-	  fmr       f1, f28
-	  bl        0x1F3964
-	  fmr       f0, f1
-	  fmr       f1, f28
-	  stfs      f0, 0x0(r29)
-	  bl        0x1F37C0
-	  addi      r27, r27, 0x1
-	  stfs      f1, 0x0(r28)
-	  cmpwi     r27, 0x1000
-	  addi      r28, r28, 0x4
-	  addi      r29, r29, 0x4
-	  blt+      .loc_0x80
-	  li        r30, 0
-	  stw       r30, 0x2E8(r31)
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x77C0
-	  stw       r30, 0x2EC(r31)
-	  stw       r30, 0x2F0(r31)
-	  stw       r30, 0x2F4(r31)
-	  stw       r30, 0x2F8(r31)
-	  stw       r30, 0x2FC(r31)
-	  stw       r30, 0x300(r31)
-	  stw       r30, 0x304(r31)
-	  stw       r30, 0x308(r31)
-	  stw       r30, 0x354(r31)
-	  stw       r30, 0x338(r31)
-	  bl        0x159D4
-	  stw       r30, 0x350(r31)
-	  li        r3, 0x8
-	  bl        0x1EC10
-	  cmplwi    r3, 0
-	  beq-      .loc_0x12C
-	  lis       r4, 0x8023
-	  subi      r0, r4, 0x7DA8
-	  stw       r0, 0x4(r3)
-	  stw       r30, 0x0(r3)
-
-	.loc_0x12C:
-	  stw       r3, 0x34C(r31)
-	  li        r0, 0x3E8
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r3, 0x3C(r3)
-	  stw       r3, 0x388(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r3, 0x40(r3)
-	  stw       r3, 0x384(r31)
-	  stw       r0, 0x3AC(r31)
-	  lwz       r30, 0x3AC(r31)
-	  mulli     r3, r30, 0x18
-	  addi      r3, r3, 0x8
-	  bl        0x1EBC4
-	  lis       r4, 0x8003
-	  subi      r4, r4, 0x7B54
-	  addi      r7, r30, 0
-	  li        r5, 0
-	  li        r6, 0x18
-	  bl        0x1EC7D0
-	  stw       r3, 0x3A8(r31)
-	  li        r5, 0
-	  li        r4, 0x30
-	  stb       r5, 0x368(r31)
-	  li        r0, 0xFF
-	  addi      r3, r31, 0
-	  stb       r5, 0x369(r31)
-	  stb       r4, 0x36A(r31)
-	  stb       r0, 0x36B(r31)
-	  lfs       f0, -0x7DC8(r2)
-	  stfs      f0, 0x374(r31)
-	  lmw       r27, 0x24(r1)
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lfd       f30, 0x48(r1)
-	  lfd       f29, 0x40(r1)
-	  lfd       f28, 0x38(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	mAmbientFogColour.set(0, 0, 0x30, 0xFF);
+	mLightIntensity = 1.0f;
 }
 
 /*
@@ -4203,8 +4117,40 @@ void TexAttr::read(RandomAccessStream& stream)
  * Address:	800291B4
  * Size:	0002BC
  */
-void Graphics::drawCylinder(Vector3f&, Vector3f&, f32, Matrix4f&)
+void Graphics::drawCylinder(Vector3f& a1, Vector3f& a2, f32 a3, Matrix4f& a4)
 {
+	useTexture(nullptr, 0);
+
+	Vector3f v0  = a1;
+	Vector3f v1  = a2 - a1;
+	f32 distance = v1.normalise();
+
+	// some bollocks with multiplication here
+
+	for (int i = 0; i < 16; i++) {
+		Matrix4f a, b;
+
+		Vector3f v2(0.0f, i * (PI / 8), 0.0f);
+		Vector3f v3(1.0f, 1.0f, 1.0f);
+
+		a.makeSRT(v3, v2, v0);
+		a4.multiplyTo(a, b);
+		useMatrix(b, 0);
+
+		for (int j = 0; j < 16; j++) {
+			// Calculate angles for current and next point
+			f32 currentAngle = i * PI / 8.0f;
+			f32 nextAngle    = ((i + 1) % 32) * PI / 8.0f;
+
+			// Calculate points
+			Vector3f start(NMathF::sin(currentAngle) * a3, 0.0f, NMathF::cos(currentAngle) * a3);
+			Vector3f end(NMathF::sin(nextAngle) * a3, 0.0f, NMathF::cos(nextAngle) * a3);
+
+			drawLine(start, end);
+		}
+
+		// more bollocks with multiplication here
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4659,90 +4605,39 @@ void Graphics::perspPrintf(Font*, Vector3f&, int, int, char*, ...)
  * Address:	800297DC
  * Size:	000114
  */
-int Graphics::calcLighting(f32)
+int Graphics::calcLighting(f32 intensity)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
-	  mr        r28, r3
-	  stfs      f1, 0x374(r3)
-	  lwz       r12, 0x3B4(r28)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0
-	  stw       r0, 0x378(r28)
-	  li        r30, 0
-	  li        r31, 0x1
-	  lwz       r29, 0x20(r28)
-	  b         .loc_0x88
+	mLightIntensity = intensity;
 
-	.loc_0x4C:
-	  lwz       r4, 0x378(r28)
-	  slw       r0, r31, r30
-	  addi      r3, r28, 0
-	  or        r0, r4, r0
-	  stw       r0, 0x378(r28)
-	  addi      r4, r29, 0
-	  addi      r5, r30, 0
-	  lwz       r12, 0x3B4(r28)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r30, r30, 0x1
-	  cmplwi    r30, 0x7
-	  beq-      .loc_0x90
-	  lwz       r29, 0xC(r29)
+	setAmbient();
 
-	.loc_0x88:
-	  cmplwi    r29, 0
-	  bne+      .loc_0x4C
+	s32 lightIndex   = 0;
+	mActiveLightMask = 0;
 
-	.loc_0x90:
-	  lwz       r0, 0x20(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC0
-	  lfs       f0, -0x7D78(r2)
-	  addi      r3, r28, 0
-	  li        r5, 0x7
-	  stfs      f0, 0x370(r28)
-	  lwz       r12, 0x3B4(r28)
-	  lwz       r4, 0x20(r28)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
+	FOREACH_NODE(Light, mLight.mChild, l)
+	{
+		mActiveLightMask |= 1 << lightIndex;
+		setLight(l, lightIndex);
 
-	.loc_0xC0:
-	  lwz       r3, 0x2DEC(r13)
-	  lwzu      r0, 0x1B4(r3)
-	  cmpw      r30, r0
-	  ble-      .loc_0xD4
-	  stw       r30, 0x0(r3)
+		// 8 light maximum, restricted by GX
+		if (++lightIndex == 7u) {
+			break;
+		}
+	}
 
-	.loc_0xD4:
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  li        r4, 0x1
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (mLight.mChild) {
+		_370 = 50.0f;
+		setLight((Light*)mLight.mChild, 7);
+	}
+
+	if (lightIndex > gsys->_1B4) {
+		gsys->_1B4 = lightIndex;
+	}
+
+	setLighting(true, nullptr);
+	return lightIndex;
+
+	s32 unused[2];
 }
 
 /*
@@ -4781,52 +4676,14 @@ int Graphics::calcBoxLighting(BoundBox&)
  */
 void CacheTexture::makeResident()
 {
-	if (gsys->mCacher) {
-		if (mCacheInfo) {
-			gsys->mCacher->updateInfo(this);
+	if (gsys->mCacher && !gsys->_260) {
+		if (!_40) {
+			gsys->mCacher->cacheTexture(this);
+			gsys->copyCacheToTexture(this);
 		} else {
 			gsys->mCacher->updateInfo(this);
-			gsys->copyCacheToTexture(this);
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r4, 0x2DEC(r13)
-	  lwz       r3, 0x38(r4)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x68
-	  lwz       r0, 0x260(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x68
-	  lwz       r0, 0x40(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x60
-	  mr        r4, r31
-	  bl        0x16B44
-	  lwz       r3, 0x2DEC(r13)
-	  mr        r4, r31
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x68
-
-	.loc_0x60:
-	  mr        r4, r31
-	  bl        0x16A44
-
-	.loc_0x68:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

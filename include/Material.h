@@ -52,10 +52,13 @@ struct MatobjInfo : public GfxobjInfo {
  * @brief TODO
  */
 struct MaterialHandler {
+	MaterialHandler() { _00 = 0; }
+
+	u32 _00; // _00
+	// _04     = VTBL
+
 	virtual void setMaterial(Material*); // _08
 	virtual void setTexMatrix(bool);     // _0C
-
-	// TODO: members
 };
 
 #endif

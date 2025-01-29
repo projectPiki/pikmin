@@ -59,7 +59,14 @@ struct Graphics {
 	Light mLight;                             // _10
 	Camera* mCamera;                          // _2E4
 	Texture* mActiveTexture;                  // _2E8
-	u8 _2EC[0x30C - 0x2EC];                   // _2EC
+	u32 _2EC;                                 // _2EC
+	u32 _2F0;                                 // _2F0
+	u32 _2F4;                                 // _2F4
+	u32 _2F8;                                 // _2F8
+	u32 _2FC;                                 // _2FC
+	u32 _300;                                 // _300
+	u32 _304;                                 // _304
+	u32 _308;                                 // _308
 	int mScreenWidth;                         // _30C
 	int mScreenHeight;                        // _310
 	Colour mBufferClearColour;                // _314
@@ -84,7 +91,7 @@ struct Graphics {
 	Colour mFogColour;                        // _364
 	Colour mAmbientFogColour;                 // _368
 	Colour _36C;                              // _36C
-	u32 _370;                                 // _370
+	f32 _370;                                 // _370
 	f32 mLightIntensity;                      // _374
 	u32 mActiveLightMask;                     // _378
 	f32 mLineWidth;                           // _37C

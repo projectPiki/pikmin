@@ -209,7 +209,7 @@ public:
 	u32 mMaterialCount;           // _1A8
 	u32 mDispCount;               // _1AC
 	u32 mLightCount;              // _1B0
-	u32 _1B4;                     // _1B4
+	s32 _1B4;                     // _1B4
 	u32 mAnimatedPolygons;        // _1B8
 	u32 mLightingSkips;           // _1BC
 	u32 mLightingSets;            // _1C0
@@ -294,7 +294,7 @@ struct System : public StdSystem {
 	u32 _254;                     // _254, unknown
 	int _258;                     // _258
 	u32 _25C;                     // _25C
-	u32 _260;                     // _260, unknown
+	CacheTexture* _260;           // _260, unknown
 	u32 _264;                     // _264
 	u32 _268;                     // _268
 	vu32 _26C;                    // _26C
