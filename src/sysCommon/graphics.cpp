@@ -2666,17 +2666,70 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 
 	for (int i = 0; i < numCols; i++) {
 		for (int j = 0; j < numRows; j++) {
+			int charIndex         = i * numRows + j;
+			FontChar& currentChar = mChars[charIndex];
+
+			// Find left boundary
+			int leftEdge = 0;
 			for (int k = 0; k < mCharWidth; k++) {
-				int count = 0;
+				int alphaCount = 0;
 				for (int m = 0; m < mCharHeight - 1; m++) {
-					if (tex->getAlpha(k + (j * mCharWidth), m + (i * mCharHeight))) {
-						count++;
+					if (!tex->getAlpha(k + (j * mCharWidth), m + (i * mCharHeight))) {
+						alphaCount++;
 					}
 				}
-				if (count != mCharHeight - 1) {
+
+				if (alphaCount != mCharHeight - 1) {
+					break;
+				}
+
+				leftEdge = k;
+			}
+
+			// Find right boundary
+			int rightEdge;
+			for (int k = mCharWidth - 1; k >= 0; k--) {
+				int alphaCount = 0;
+				for (int m = 0; m < mCharHeight - 1; m++) {
+					if (!tex->getAlpha(k + (j * mCharWidth), m + (i * mCharHeight))) {
+						alphaCount++;
+					}
+				}
+
+				if (alphaCount != mCharHeight - 1) {
+					break;
+				}
+
+				rightEdge = k;
+			}
+
+			// Find baseline
+			int baseline    = -1;
+			int baselinePos = mCharWidth;
+			for (int k = 0; k < mCharWidth; k++) {
+				u8 alpha = tex->getAlpha(k + (j * mCharWidth), ((i * mCharHeight) + mCharHeight) - 1);
+				if (baseline < 0) {
+					if (!alpha) {
+						baseline = k;
+					}
+				} else if (alpha) {
+					baselinePos = k;
 					break;
 				}
 			}
+
+			// This is fucking ridiculous, seriously? why?
+			// so much indexing, this isn't even an inline function
+			mChars[charIndex].mCharSpacing         = baselinePos - baseline;
+			mChars[charIndex].mLeftOffset          = baseline - leftEdge;
+			mChars[charIndex]._00                  = leftEdge + mCharWidth * j;
+			mChars[charIndex].mWidth               = mCharWidth - leftEdge - rightEdge;
+			mChars[charIndex]._02                  = i * mCharHeight;
+			mChars[charIndex].mHeight              = mCharHeight - 1;
+			mChars[charIndex].mTextureCoords.mMinX = (s16)mChars[charIndex]._00;
+			mChars[charIndex].mTextureCoords.mMinY = (s16)mChars[charIndex]._02;
+			mChars[charIndex].mTextureCoords.mMaxX = (s16)mChars[charIndex].mWidth + (s16)mChars[charIndex]._00;
+			mChars[charIndex].mTextureCoords.mMaxY = (s16)mChars[charIndex]._02 + (s16)mChars[charIndex].mHeight - 1;
 		}
 	}
 	/*
@@ -2991,7 +3044,7 @@ void searchKanjiCode(u16)
  * Address:	80028058
  * Size:	0000DC
  */
-void Font::charToIndex(u16)
+void Font::charToIndex(u16 c)
 {
 	/*
 	.loc_0x0:

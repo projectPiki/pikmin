@@ -46,10 +46,10 @@ struct RectArea {
 		mMaxY = 0;
 	}
 
-	int mMinX; // _00
-	int mMinY; // _04
-	int mMaxX; // _08
-	int mMaxY; // _0C
+	int mMinX; // _00, x1
+	int mMinY; // _04, y1
+	int mMaxX; // _08, x2
+	int mMaxY; // _0C, y2
 };
 
 /**
