@@ -13,15 +13,51 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("aiRandomBoid")
 
 /*
  * --INFO--
  * Address:	800C0A10
  * Size:	0002F8
  */
-void ActRandomBoid::AnimListener::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActRandomBoid::AnimListener::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
+	switch (event.mEventType) {
+	case KEY_Finished:
+		mAction->_1C = 0;
+		switch (mAction->mState) {
+		case STATE_Boid:
+			f32 angle = 2.0f * randFloat(PI);
+			if (System::getRand(1.0f) > 0.8f) {
+				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
+				mPiki->setSpeed(-1.2f, Vector3f(cosf(angle), 0.0f, sinf(angle)));
+				return;
+			}
+
+			if (System::getRand(1.0f) > 0.8f) {
+				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
+				mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+				return;
+			}
+
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
+			mPiki->setSpeed(0.0f, Vector3f(cosf(angle), 0.0f, sinf(angle)));
+			break;
+		case STATE_Stop:
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
+			break;
+		case STATE_Random:
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
+			f32 angle2 = 2.0f * randFloat(PI);
+			mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+			break;
+		}
+		break;
+	case KEY_Action0:
+		break;
+	}
+
+	u32 badCompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -239,48 +275,9 @@ void ActRandomBoid::AnimListener::animationKeyUpdated(PaniAnimKeyEvent&)
  * Size:	00008C
  */
 ActRandomBoid::ActRandomBoid(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r4
-	  stw       r3, 0x8(r1)
-	  lwz       r3, 0x8(r1)
-	  bl        0x30A4
-	  lis       r3, 0x802B
-	  lwz       r31, 0x8(r1)
-	  addi      r0, r3, 0x7734
-	  stw       r0, 0x0(r31)
-	  li        r3, 0x10
-	  bl        -0x79D40
-	  cmplwi    r3, 0
-	  beq-      .loc_0x68
-	  lis       r4, 0x802B
-	  subi      r0, r4, 0x246C
-	  lis       r4, 0x802B
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x7828
-	  stw       r0, 0x0(r3)
-	  stw       r31, 0x4(r3)
-	  stw       r30, 0x8(r3)
-
-	.loc_0x68:
-	  lwz       r4, 0x8(r1)
-	  stw       r3, 0x24(r4)
-	  mr        r3, r4
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mListener = new AnimListener(this, piki);
 }
 
 /*
@@ -299,67 +296,13 @@ void ActRandomBoid::Initialiser::initialise(Action*)
  */
 void ActRandomBoid::init(Creature*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  addi      r30, r3, 0
-	  stw       r0, 0x14(r3)
-	  bl        0x1572B8
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x6B88(r2)
-	  stw       r0, 0x3C(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x6BA4(r2)
-	  stw       r0, 0x38(r1)
-	  lfs       f1, -0x6BA8(r2)
-	  lfd       f3, 0x38(r1)
-	  lfs       f0, -0x6B80(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x30(r1)
-	  lwz       r3, 0x34(r1)
-	  addi      r0, r3, 0x14
-	  stw       r0, 0x18(r30)
-	  bl        0x15726C
-	  lwz       r5, 0xC(r30)
-	  addi      r3, r1, 0x1C
-	  lfs       f0, -0x45F8(r13)
-	  li        r4, 0
-	  stfsu     f0, 0xA4(r5)
-	  lfs       f0, -0x45F4(r13)
-	  stfs      f0, 0x4(r5)
-	  lfs       f0, -0x45F0(r13)
-	  stfs      f0, 0x8(r5)
-	  lwz       r5, 0x24(r30)
-	  bl        0x5E15C
-	  lwz       r5, 0x24(r30)
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x24
-	  li        r4, 0
-	  bl        0x5E148
-	  mr        r4, r3
-	  lwz       r3, 0xC(r30)
-	  mr        r5, r31
-	  bl        0x9B84
-	  lwz       r3, 0x24(r30)
-	  li        r0, 0
-	  stb       r0, 0xC(r3)
-	  stb       r0, 0x1C(r30)
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	mState    = STATE_Boid;
+	_18       = int(randFloat(10.0f)) + 20;
+	f32 angle = 2.0f * randFloat(PI);
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, mListener), PaniMotionInfo(PIKIANIM_Run, mListener));
+	mListener->_0C = 0;
+	_1C            = 0;
 }
 
 /*
@@ -378,6 +321,68 @@ void ActRandomBoid::cleanup()
  */
 int ActRandomBoid::exec()
 {
+	if (_1C) {
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		return ACTOUT_Continue;
+	}
+
+	if (--_18 < 0) {
+		_18            = int(randFloat(12.0f)) + 38;
+		int startState = mState;
+		if (mState == STATE_Boid && System::getRand(1.0f) > 0.5f) {
+			mState = STATE_Unk3;
+			mPiki->mPikiAnimMgr.finishMotion(mListener);
+			_1C = 1;
+			_18 += int(randFloat(50.0f)) + 30;
+		} else {
+			if (System::getRand(1.0f) > 0.65f) {
+				if (System::getRand(1.0f) > 0.75f) {
+					mState = STATE_Random;
+					if (startState != STATE_Random) {
+						mPiki->mPikiAnimMgr.finishMotion(mListener);
+						_1C = 1;
+					}
+				} else {
+					mState = STATE_Boid;
+					if (startState != STATE_Stop && startState != STATE_Boid) {
+						mPiki->mPikiAnimMgr.finishMotion(mListener);
+						_1C = 1;
+					}
+				}
+
+				f32 angle = 2.0f * randFloat(PI);
+				mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+				_18 += 120;
+			} else {
+				_18 += 120;
+				mState = STATE_Stop;
+				if (startState != STATE_Stop || startState != STATE_Boid) {
+					mPiki->mPikiAnimMgr.finishMotion(mListener);
+					_1C = 1;
+					return ACTOUT_Continue;
+				}
+			}
+		}
+
+		return ACTOUT_Continue;
+	}
+
+	if (mState == STATE_Stop) {
+		_18 = 1;
+	}
+	if (mState == STATE_Unk3) {
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	}
+
+	u32 badCompiler[15];
+	Vector3f avoidVec;
+	if (mPiki->getAvoid(mPiki->mTargetVelocity, avoidVec)) {
+		mPiki->mTargetVelocity = mPiki->mTargetVelocity + mPiki->getSpeed(0.5f) * avoidVec;
+	}
+
+	return ACTOUT_Continue;
+
+	u32 badCompiler2[61];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -646,70 +651,18 @@ int ActRandomBoid::exec()
 	*/
 }
 
+static char* stateName[] = {
+	"ランダム", // 'random'
+	"Boid",
+	"停止", // 'stop'
+};
+
 /*
  * --INFO--
  * Address:	800C1240
  * Size:	000044
  */
-void ActRandomBoid::getInfo(char*)
+void ActRandomBoid::getInfo(char* buf)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  crclr     6, 0x6
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x14(r3)
-	  lis       r3, 0x802B
-	  rlwinm    r5,r0,2,0,29
-	  addi      r0, r3, 0x76E8
-	  add       r3, r0, r5
-	  lwz       r5, 0x0(r3)
-	  addi      r3, r4, 0
-	  subi      r4, r13, 0x45B8
-	  bl        0x155328
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800C1284
- * Size:	000064
- */
-ActRandomBoid::~ActRandomBoid()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x48
-	  lis       r3, 0x802B
-	  addi      r0, r3, 0x7734
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x2B50
-	  extsh.    r0, r31
-	  ble-      .loc_0x48
-	  mr        r3, r30
-	  bl        -0x7A11C
-
-	.loc_0x48:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	sprintf(buf, "%s", stateName[mState]);
 }

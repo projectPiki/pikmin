@@ -1,4 +1,11 @@
 #include "PikiAI.h"
+#include "PikiMgr.h"
+#include "Navi.h"
+#include "PikiState.h"
+#include "GameStat.h"
+#include "RumbleMgr.h"
+#include "SoundMgr.h"
+#include "sysNew.h"
 #include "DebugLog.h"
 
 /*
@@ -13,7 +20,10 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F0
  */
-DEFINE_PRINT(nullptr)
+DEFINE_PRINT("free")
+
+static int motions[] = { PIKIANIM_Rinbow, PIKIANIM_Akubi, PIKIANIM_Sagasu2, PIKIANIM_Chatting };
+int numMotions       = 4;
 
 /*
  * --INFO--
@@ -21,66 +31,10 @@ DEFINE_PRINT(nullptr)
  * Size:	0000CC
  */
 ActFree::ActFree(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  mr        r30, r5
-	  stw       r3, 0x8(r1)
-	  beq-      .loc_0x3C
-	  lwz       r4, 0x8(r1)
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x246C
-	  addi      r3, r4, 0x48
-	  stw       r3, 0x14(r4)
-	  stw       r0, 0x48(r4)
-
-	.loc_0x3C:
-	  lwz       r3, 0x8(r1)
-	  addi      r4, r30, 0
-	  li        r5, 0x1
-	  bl        0x9788
-	  lwz       r7, 0x8(r1)
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x6AC8
-	  stw       r3, 0x0(r7)
-	  addi      r6, r3, 0x68
-	  addi      r4, r7, 0x48
-	  lwz       r5, 0x14(r7)
-	  subi      r0, r13, 0x48C0
-	  li        r3, 0x20
-	  stw       r6, 0x0(r5)
-	  lwz       r5, 0x14(r7)
-	  sub       r4, r4, r5
-	  stw       r4, 0x4(r5)
-	  lfs       f0, -0x6D00(r2)
-	  stfs      f0, 0x38(r7)
-	  stfs      f0, 0x34(r7)
-	  stfs      f0, 0x30(r7)
-	  stw       r0, 0x10(r7)
-	  bl        -0x73690
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0xAC
-	  mr        r4, r30
-	  bl        -0x1018C
-
-	.loc_0xAC:
-	  lwz       r3, 0x8(r1)
-	  stw       r31, 0x18(r3)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	setName("free");
+	mSelectAction = new ActFreeSelect(piki);
 }
 
 /*
@@ -88,67 +42,19 @@ ActFree::ActFree(Piki* piki)
  * Address:	800BA6CC
  * Size:	0000D0
  */
-void ActFree::initBoid(Vector3f&, f32)
+void ActFree::initBoid(Vector3f& p1, f32 p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  addi      r30, r3, 0
-	  stb       r0, 0x46(r3)
-	  lwz       r3, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r3, 0x30(r30)
-	  stw       r0, 0x34(r30)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x38(r30)
-	  stfs      f1, 0x3C(r30)
-	  lwz       r3, 0xC(r30)
-	  lwz       r0, 0x2AC(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  addi      r3, r1, 0x2C
-	  li        r4, 0x4
-	  bl        0x64838
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x34
-	  li        r4, 0x4
-	  bl        0x64828
-	  mr        r4, r3
-	  lwz       r3, 0xC(r30)
-	  mr        r5, r31
-	  bl        0x10298
-	  lwz       r3, 0xC(r30)
-	  bl        0x104C4
-	  b         .loc_0xB0
+	_46 = 1;
+	_30 = p1;
+	_3C = p2;
+	if (mPiki->isHolding()) {
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Pick), PaniMotionInfo(PIKIANIM_Pick));
+		mPiki->enableMotionBlend();
+	} else {
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+	}
 
-	.loc_0x84:
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x2
-	  bl        0x64800
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x24
-	  li        r4, 0x2
-	  bl        0x647F0
-	  mr        r4, r3
-	  lwz       r3, 0xC(r30)
-	  mr        r5, r31
-	  bl        0x10260
-
-	.loc_0xB0:
-	  lfs       f0, -0x6CFC(r2)
-	  stfs      f0, 0x28(r30)
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	_28 = 3.0f;
 }
 
 /*
@@ -158,132 +64,24 @@ void ActFree::initBoid(Vector3f&, f32)
  */
 void ActFree::exeBoid()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB0(r1)
-	  stw       r31, 0xAC(r1)
-	  mr        r31, r3
-	  stw       r30, 0xA8(r1)
-	  stw       r29, 0xA4(r1)
-	  lwz       r3, 0xC(r3)
-	  lfsu      f0, 0x94(r3)
-	  lfs       f1, 0x30(r31)
-	  lfs       f3, 0x34(r31)
-	  lfs       f2, 0x4(r3)
-	  fsubs     f0, f1, f0
-	  lfs       f4, 0x38(r31)
-	  lfs       f1, 0x8(r3)
-	  fsubs     f2, f3, f2
-	  stfs      f0, 0x90(r1)
-	  fsubs     f0, f4, f1
-	  stfs      f2, 0x94(r1)
-	  stfs      f0, 0x98(r1)
-	  lfs       f1, 0x90(r1)
-	  lfs       f0, 0x94(r1)
-	  lfs       f2, 0x98(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xACBCC
-	  lfs       f0, -0x6D00(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0xA4
-	  lfs       f0, 0x90(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x90(r1)
-	  lfs       f0, 0x94(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x94(r1)
-	  lfs       f0, 0x98(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x98(r1)
+	Vector3f dir = _30 - mPiki->mPosition;
+	f32 dist     = dir.normalise();
+	_28 -= gsys->getFrameTime();
 
-	.loc_0xA4:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f2, 0x28(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x28(r31)
-	  lfs       f2, -0x6CF8(r2)
-	  lfs       f0, 0x3C(r31)
-	  fmuls     f0, f2, f0
-	  fcmpo     cr0, f1, f0
-	  blt-      .loc_0xE0
-	  lfs       f1, 0x28(r31)
-	  lfs       f0, -0x6D00(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x198
-
-	.loc_0xE0:
-	  lwz       r4, 0xC(r31)
-	  li        r0, 0
-	  lwz       r3, 0xC8(r4)
-	  oris      r3, r3, 0x40
-	  stw       r3, 0xC8(r4)
-	  lfs       f0, -0x6CFC(r2)
-	  stfs      f0, 0x2C(r31)
-	  stb       r0, 0x46(r31)
-	  lwz       r3, 0xC(r31)
-	  lfs       f0, -0x48B4(r13)
-	  stfsu     f0, 0xA4(r3)
-	  lfs       f0, -0x48B0(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x48AC(r13)
-	  stfs      f0, 0x8(r3)
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0x2AC(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1A8
-	  lwz       r0, 0x39C(r3)
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x1A8
-	  cmplwi    r31, 0
-	  addi      r29, r31, 0
-	  beq-      .loc_0x148
-	  lwz       r29, 0x14(r31)
-
-	.loc_0x148:
-	  addi      r3, r1, 0x70
-	  li        r4, 0x4
-	  bl        0x6466C
-	  addi      r30, r3, 0
-	  addi      r5, r29, 0
-	  addi      r3, r1, 0x78
-	  li        r4, 0x4
-	  bl        0x6468C
-	  mr        r4, r3
-	  lwz       r3, 0xC(r31)
-	  mr        r5, r30
-	  bl        0x100C8
-	  lfs       f0, -0x6CF4(r2)
-	  lwz       r3, 0xC(r31)
-	  stfs      f0, 0x384(r3)
-	  lwz       r3, 0xC(r31)
-	  stfs      f0, 0x3D8(r3)
-	  lwz       r3, 0xC(r31)
-	  bl        0x102E0
-	  b         .loc_0x1A8
-
-	.loc_0x198:
-	  lwz       r3, 0xC(r31)
-	  addi      r4, r1, 0x90
-	  lfs       f1, -0x6CF0(r2)
-	  bl        0x11498
-
-	.loc_0x1A8:
-	  lwz       r0, 0xB4(r1)
-	  lwz       r31, 0xAC(r1)
-	  lwz       r30, 0xA8(r1)
-	  lwz       r29, 0xA4(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	if (dist < 0.9f * _3C || _28 <= 0.0f) {
+		mPiki->enableFixPos();
+		_2C = 3.0f;
+		_46 = 0;
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		if (mPiki->isHolding() && mPiki->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() != PIKIANIM_Pick) {
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Pick, this), PaniMotionInfo(PIKIANIM_Pick));
+			mPiki->mPikiAnimMgr.getUpperAnimator().mAnimationCounter = 18.0f;
+			mPiki->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 18.0f;
+			mPiki->enableMotionBlend();
+		}
+	} else {
+		mPiki->setSpeed(0.5f, dir);
+	}
 }
 
 /*
@@ -293,6 +91,47 @@ void ActFree::exeBoid()
  */
 void ActFree::init(Creature*)
 {
+	_46 = 0;
+	_40 = 1.0f;
+	_28 = C_PIKI_PROP(mPiki)._2EC() + randFloat(3.0f);
+	_20 = 0.9f * _28;
+	_24 = 0.8f * _28;
+
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	if (mPiki->isHolding()) {
+		PRINT("### piki is holding !\n");
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait, this), PaniMotionInfo(PIKIANIM_Wait));
+	} else {
+		f32 r         = System::getRand(1.0f);
+		int motionIdx = r * f32(numMotions);
+		if (motionIdx >= numMotions) {
+			motionIdx = 0;
+		}
+		mPiki->startMotion(PaniMotionInfo(motions[motionIdx], this), PaniMotionInfo(motions[motionIdx]));
+	}
+
+	mPiki->setPastel();
+	_1C = 0;
+	_45 = 0;
+	mSelectAction->init(nullptr);
+
+	GameStat::workPikis.dec(mPiki->mColor);
+	GameStat::freePikis.inc(mPiki->mColor);
+
+	GameStat::update();
+
+	if (mPiki->aiCullable() && !PikiMgr::meNukiMode) {
+		seSystem->playPikiSound(SEF_PIKI_BREAKUP, mPiki->mPosition);
+	}
+
+	EffectParm parm(&mPiki->mEffectPos);
+	mPiki->mFreeLightEffect->mColor = mPiki->mColor;
+	mPiki->mFreeLightEffect->emit(parm);
+	mPiki->enableFixPos();
+	_2C = 3.0f;
+
+	u32 badCompiler[2];
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -506,52 +345,15 @@ void ActFree::init(Creature*)
  */
 void ActFree::cleanup()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lwz       r3, 0xC(r3)
-	  lwz       r0, 0xC8(r3)
-	  rlwinm    r0,r0,0,10,8
-	  stw       r0, 0xC8(r3)
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0xC8(r3)
-	  rlwinm    r0,r0,0,11,9
-	  stw       r0, 0xC8(r3)
-	  lwz       r3, 0xC(r31)
-	  lwz       r3, 0x434(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0xC(r31)
-	  lis       r4, 0x803D
-	  lis       r3, 0x803D
-	  lhz       r5, 0x510(r5)
-	  addi      r4, r4, 0x1E88
-	  addi      r0, r3, 0x1E7C
-	  rlwinm    r3,r5,2,0,29
-	  add       r4, r4, r3
-	  lwz       r3, 0x0(r4)
-	  addi      r3, r3, 0x1
-	  stw       r3, 0x0(r4)
-	  lwz       r3, 0xC(r31)
-	  lhz       r3, 0x510(r3)
-	  rlwinm    r3,r3,2,0,29
-	  add       r4, r0, r3
-	  lwz       r3, 0x0(r4)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x0(r4)
-	  bl        0x57878
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mPiki->disableFixPos();
+	mPiki->mCreatureFlags &= ~CF_IsPositionFixed;
+	mPiki->mFreeLightEffect->kill();
+	GameStat::workPikis.inc(mPiki->mColor);
+	GameStat::freePikis.dec(mPiki->mColor);
+	// if (GameStat::freePikis < 0) {
+	// 	ERROR("counter minus(fp)");
+	// }
+	GameStat::update();
 }
 
 /*
@@ -570,81 +372,33 @@ void ActFree::animationKeyUpdated(PaniAnimKeyEvent&)
  */
 int ActFree::exec()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  stw       r30, 0x78(r1)
-	  mr        r30, r3
-	  lfs       f0, -0x6D00(r2)
-	  lfs       f1, 0x40(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x38
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x40(r30)
+	Creature* target;
+	u32 badCompiler[23]; // huh.
 
-	.loc_0x38:
-	  lbz       r0, 0x45(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x68
-	  lwz       r4, 0xC(r30)
-	  li        r5, 0x1A
-	  lwz       r3, 0x490(r4)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  b         .loc_0xD8
+	if (_40 > 0.0f) {
+		_40 -= gsys->getFrameTime();
+	}
 
-	.loc_0x68:
-	  lbz       r0, 0x46(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  mr        r3, r30
-	  bl        -0x5E0
-	  li        r3, 0
-	  b         .loc_0xD8
+	if (_45) {
+		mPiki->mFSM->transit(mPiki, PIKISTATE_LookAt);
+		return ACTOUT_Continue;
+	}
 
-	.loc_0x84:
-	  lwz       r3, 0x18(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0xC(r30)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0x40C
-	  bl        -0x15950
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xB8
-	  li        r3, 0
-	  b         .loc_0xD8
+	if (_46) {
+		exeBoid();
+		return ACTOUT_Continue;
+	}
 
-	.loc_0xB8:
-	  lwz       r3, 0xC(r30)
-	  addi      r4, r1, 0x74
-	  bl        0xD7B4
-	  cmpwi     r3, 0
-	  beq-      .loc_0xD4
-	  lwz       r3, 0x18(r30)
-	  bl        -0x106BC
+	int res = mSelectAction->exec();
+	if (!mPiki->mPikiUpdateContext.updatable()) {
+		return ACTOUT_Continue;
+	}
 
-	.loc_0xD4:
-	  mr        r3, r31
+	if (mPiki->graspSituation(&target)) {
+		mSelectAction->finishRest();
+	}
 
-	.loc_0xD8:
-	  lwz       r0, 0x84(r1)
-	  lwz       r31, 0x7C(r1)
-	  lwz       r30, 0x78(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	return res;
 }
 
 /*
@@ -652,125 +406,17 @@ int ActFree::exec()
  * Address:	800BADF4
  * Size:	0000D8
  */
-void ActFree::procCollideMsg(Piki*, MsgCollide*)
+void ActFree::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  mr        r30, r4
-	  stw       r29, 0x1C(r1)
-	  mr        r29, r3
-	  lfs       f0, -0x6D00(r2)
-	  lfs       f1, 0x40(r3)
-	  fcmpo     cr0, f1, f0
-	  bgt-      .loc_0xBC
-	  lbz       r0, 0x46(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x40
-	  b         .loc_0xBC
+	if (_40 > 0.0f || _46) {
+		return;
+	}
 
-	.loc_0x40:
-	  lwz       r31, 0x4(r5)
-	  lwz       r0, 0x6C(r31)
-	  cmpwi     r0, 0x36
-	  bne-      .loc_0xBC
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xBC
-	  lwz       r0, 0x180(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xBC
-	  lbz       r0, 0x45(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xBC
-	  lwz       r3, 0x43C(r30)
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x9C
-	  lwz       r0, 0x92C(r31)
-	  cmpw      r0, r3
-	  bne-      .loc_0xBC
-
-	.loc_0x9C:
-	  lwz       r3, 0x3178(r13)
-	  li        r4, 0x2
-	  li        r5, 0
-	  li        r6, 0
-	  bl        0xC1EA8
-	  li        r0, 0x1
-	  stb       r0, 0x45(r29)
-	  stw       r31, 0x504(r30)
-
-	.loc_0xBC:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800BAECC
- * Size:	000080
- */
-ActFree::~ActFree()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x64
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x6AC8
-	  stw       r3, 0x0(r30)
-	  addi      r6, r3, 0x68
-	  addi      r0, r30, 0x48
-	  lwz       r5, 0x14(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  stw       r6, 0x0(r5)
-	  lwz       r5, 0x14(r30)
-	  sub       r0, r0, r5
-	  stw       r0, 0x4(r5)
-	  bl        0x8EEC
-	  extsh.    r0, r31
-	  ble-      .loc_0x64
-	  mr        r3, r30
-	  bl        -0x73D80
-
-	.loc_0x64:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800BAF4C
- * Size:	000008
- */
-bool ActFree::resumable()
-{
-	return true;
+	Creature* collider = msg->mEvent.mCollider;
+	if (collider->mObjType == OBJTYPE_Navi && !piki->isKinoko() && !collider->mStickListHead && !_45
+	    && (piki->mPlayerId == -1 || static_cast<Navi*>(collider)->mNaviID == piki->mPlayerId)) {
+		rumbleMgr->start(2, 0, nullptr);
+		_45         = 1;
+		piki->mNavi = static_cast<Navi*>(collider);
+	}
 }
