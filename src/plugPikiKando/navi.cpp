@@ -1333,6 +1333,24 @@ void Navi::callDebugs(f32 radius)
  * --INFO--
  * Address:	800FBF1C
  * Size:	0007DC
+ *
+ * @brief Releases the Pikmin from the Navi's control and organizes them by color.
+ *
+ * This function iterates through the Pikmin managed by the Navi, filters out those that are not in a releasable state,
+ * and then organizes the remaining Pikmin by their color. It calculates the center of mass and size for each color group,
+ * adjusts their positions to avoid overlap, and finally changes their mode to FreeMode.
+ *
+ * @dor, and bomb-carrying Pikmin are treated as aetails
+ * - Pikmin that are dead, dying, or in certain states are not considered for release.
+ * - Pikmin are grouped by their col separate group.
+ * - The center of mass and size for each color group are calculated.
+ * - The positions of the color groups are adjusted to avoid overlap with the Navi and with each other.
+ * - The mode of each Pikmin is changed to FreeMode, and their positions are updated based on the calculated center of mass and size.
+ *
+ * @note
+ * - The function assumes a maximum of 200 Pikmin can be managed at a time.
+ * - The function uses several constants and enumerations such as PikiColorCount, PikiMode, and PIKISTATE_*.
+ * - The function modifies the Pikmin's active action to ActFree and initializes their boid behavior.
  */
 void Navi::releasePikis()
 {

@@ -29,7 +29,7 @@ ActPullout::ActPullout(Piki* piki)
     : AndAction(piki)
 {
 	setChildren(CHILD_COUNT, new ActGoto(piki), nullptr, new ActAdjust(piki), nullptr, new ActPulloutCreature(piki), nullptr);
-	_18.clear();
+	mTarget.clear();
 }
 
 /*
@@ -61,10 +61,10 @@ void ActPullout::init(Creature* target)
 		}
 	}
 	if (target) {
-		_18.set(target);
+		mTarget.set(target);
 		AndAction::init(target);
 	} else {
-		_18.reset();
+		mTarget.reset();
 	}
 }
 
@@ -75,7 +75,7 @@ void ActPullout::init(Creature* target)
  */
 int ActPullout::exec()
 {
-	if (_18.isNull()) {
+	if (mTarget.isNull()) {
 		return ACTOUT_Success;
 	}
 
@@ -108,7 +108,7 @@ void ActPullout::cleanup()
 {
 	Action::cleanup();
 	mPiki->_518 = 1;
-	_18.reset();
+	mTarget.reset();
 }
 
 /*

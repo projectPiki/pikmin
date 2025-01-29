@@ -29,7 +29,7 @@ ActPickItem::ActPickItem(Piki* piki)
 {
 	setName("pick item");
 	setChildren(CHILD_COUNT, new ActGoto(piki), nullptr, new ActPick(piki), nullptr);
-	_18.clear();
+	mTargetItem.clear();
 }
 
 /*
@@ -74,11 +74,11 @@ void ActPickItem::init(Creature* target)
 	}
 
 	if (target) {
-		_18.set(target);
+		mTargetItem.set(target);
 		AndAction::init(target);
 		PRINT(" set target to %x\n", target);
 	} else {
-		_18.reset();
+		mTargetItem.reset();
 	}
 }
 
@@ -95,19 +95,19 @@ int ActPickItem::exec()
 		return ACTOUT_Success;
 	}
 
-	Creature* item = _18.getPtr();
-	if (_18.isNull()) {
+	Creature* bomb = mTargetItem.getPtr();
+	if (mTargetItem.isNull()) {
 		PRINT("PICKEE IS NULL!\n");
 		return ACTOUT_Fail;
 	}
 
-	if (!item->isVisible()) {
+	if (!bomb->isVisible()) {
 		PRINT("BOMB IS NOT VISIBLE\n");
 		return ACTOUT_Fail;
 	}
 
-	if (item->getHolder() && item->getHolder() != mPiki) {
-		PRINT("BOMB HOLDER IS NOT ME (%x) ME IS %x\n", item->getHolder(), mPiki);
+	if (bomb->getHolder() && bomb->getHolder() != mPiki) {
+		PRINT("BOMB HOLDER IS NOT ME (%x) ME IS %x\n", bomb->getHolder(), mPiki);
 		mPiki->mEmotion = 7;
 		return ACTOUT_Fail;
 	}
@@ -133,7 +133,7 @@ void ActPickItem::cleanup()
 		PRINT("### piki is%sholding\n", " not ");
 	}
 
-	_18.reset();
+	mTargetItem.reset();
 }
 
 /*
@@ -156,20 +156,20 @@ void ActFlower::init(Creature*)
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 	mPiki->mFSM->transit(mPiki, PIKISTATE_UNUSED32);
-	_1C = 0;
+	mIsAnimationComplete = 0;
 	if (!mPiki->isHolding()) {
-		_1D = 1;
+		mIsCarryEmpty = 1;
 		return;
 	}
 
-	_1D = 0;
-	if (mPiki->_514 + 1 >= C_PIKI_PROP(mPiki).mFlowerEnergyRequirement()) {
+	mIsCarryEmpty = 0;
+	if (mPiki->mFloweringTimer + 1 >= C_PIKI_PROP(mPiki).mFlowerEnergyRequirement()) {
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_GrowUp2, this), PaniMotionInfo(PIKIANIM_GrowUp2));
 	} else {
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_GrowUp1, this), PaniMotionInfo(PIKIANIM_GrowUp1));
 	}
 
-	_18 = 0.0f;
+	mElapsedTime = 0.0f;
 }
 
 /*
@@ -184,18 +184,18 @@ void ActFlower::animationKeyUpdated(PaniAnimKeyEvent& event)
 		Creature* held = mPiki->getHoldCreature();
 		held->stimulate(InteractRelease(mPiki, 1.0f));
 		held->kill(false);
-		mPiki->_514++;
-		if (mPiki->_514 >= C_PIKI_PROP(mPiki).mFlowerEnergyRequirement()) {
+		mPiki->mFloweringTimer++;
+		if (mPiki->mFloweringTimer >= C_PIKI_PROP(mPiki).mFlowerEnergyRequirement()) {
 			mPiki->setFlower(Flower);
-			if (mPiki->_514 > 100) {
-				mPiki->_514 = 100;
+			if (mPiki->mFloweringTimer > 100) {
+				mPiki->mFloweringTimer = 100;
 			}
-		} else if (mPiki->_514 >= C_PIKI_PROP(mPiki).mBudEnergyRequirement()) {
+		} else if (mPiki->mFloweringTimer >= C_PIKI_PROP(mPiki).mBudEnergyRequirement()) {
 			mPiki->setFlower(Bud);
 		}
 		break;
 	case KEY_Finished:
-		_1C = 1;
+		mIsAnimationComplete = 1;
 		break;
 	}
 }
@@ -217,19 +217,20 @@ void ActFlower::cleanup()
  */
 int ActFlower::exec()
 {
-	if (_1D) {
+	if (mIsCarryEmpty) {
 		return ACTOUT_Fail;
 	}
 
-	_18 += gsys->getFrameTime();
+	mElapsedTime += gsys->getFrameTime();
 
-	Creature* held = mPiki->getHoldCreature();
-	if (held) {
-		f32 scale = (1.0f - _18 / 1.0f) * 0.3f;
-		held->mScale.set(scale, scale, scale);
+	Creature* heldItem = mPiki->getHoldCreature();
+	if (heldItem) {
+		// The iconic nectar drinking animation
+		f32 shrinkScale = (1.0f - mElapsedTime / 1.0f) * 0.3f;
+		heldItem->mScale.set(shrinkScale, shrinkScale, shrinkScale);
 	}
 
-	if (_1C) {
+	if (mIsAnimationComplete) {
 		return ACTOUT_Success;
 	}
 

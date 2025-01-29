@@ -3917,7 +3917,7 @@ void Piki::init(Navi* navi)
 	mMode   = PikiMode::FormationMode;
 	mHealth = pikiMgr->mPikiParms->mPikiParms.mPikiHealth();
 	mFSM->transit(this, PIKISTATE_Normal);
-	_514 = 0;
+	mFloweringTimer = 0;
 	mFSM->transit(this, PIKISTATE_Normal);
 	mPikiSize = pikiMgr->mPikiParms->mPikiParms._23C()
 	          + (pikiMgr->mPikiParms->mPikiParms._24C() - pikiMgr->mPikiParms->mPikiParms._23C()) * System::getRand(1.0f);

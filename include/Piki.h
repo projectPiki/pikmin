@@ -324,7 +324,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Colour mCurrentColour;                // _508
 	Colour mDefaultColour;                // _50C
 	u16 mColor;                           // _510, red/yellow/blue
-	int _514;                             // _514
+	int mFloweringTimer;                  // _514
 	u8 _518;                              // _518
 	u8 _519;                              // _519
 	u32 _51C;                             // _51C, unknown

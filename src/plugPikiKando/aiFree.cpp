@@ -42,11 +42,11 @@ ActFree::ActFree(Piki* piki)
  * Address:	800BA6CC
  * Size:	0000D0
  */
-void ActFree::initBoid(Vector3f& p1, f32 p2)
+void ActFree::initBoid(Vector3f& targetPosition, f32 radius)
 {
-	_46 = 1;
-	_30 = p1;
-	_3C = p2;
+	mIsBoidActive   = 1;
+	mTargetPosition = targetPosition;
+	mArrivalRadius  = radius;
 	if (mPiki->isHolding()) {
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Pick), PaniMotionInfo(PIKIANIM_Pick));
 		mPiki->enableMotionBlend();
@@ -54,7 +54,7 @@ void ActFree::initBoid(Vector3f& p1, f32 p2)
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 	}
 
-	_28 = 3.0f;
+	mBoidTimer = 3.0f;
 }
 
 /*
@@ -64,14 +64,14 @@ void ActFree::initBoid(Vector3f& p1, f32 p2)
  */
 void ActFree::exeBoid()
 {
-	Vector3f dir = _30 - mPiki->mPosition;
-	f32 dist     = dir.normalise();
-	_28 -= gsys->getFrameTime();
+	Vector3f dirToTarget = mTargetPosition - mPiki->mPosition;
+	f32 distanceToTarget = dirToTarget.normalise();
+	mBoidTimer -= gsys->getFrameTime();
 
-	if (dist < 0.9f * _3C || _28 <= 0.0f) {
+	if (distanceToTarget < 0.9f * mArrivalRadius || mBoidTimer <= 0.0f) {
 		mPiki->enableFixPos();
-		_2C = 3.0f;
-		_46 = 0;
+		mFixedPositionTimer = 3.0f;
+		mIsBoidActive       = 0;
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		if (mPiki->isHolding() && mPiki->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() != PIKIANIM_Pick) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Pick, this), PaniMotionInfo(PIKIANIM_Pick));
@@ -80,7 +80,7 @@ void ActFree::exeBoid()
 			mPiki->enableMotionBlend();
 		}
 	} else {
-		mPiki->setSpeed(0.5f, dir);
+		mPiki->setSpeed(0.5f, dirToTarget);
 	}
 }
 
@@ -91,11 +91,11 @@ void ActFree::exeBoid()
  */
 void ActFree::init(Creature*)
 {
-	_46 = 0;
-	_40 = 1.0f;
-	_28 = C_PIKI_PROP(mPiki)._2EC() + randFloat(3.0f);
-	_20 = 0.9f * _28;
-	_24 = 0.8f * _28;
+	mIsBoidActive           = 0;
+	mCollisionCooldownTimer = 1.0f;
+	mBoidTimer              = C_PIKI_PROP(mPiki)._2EC() + randFloat(3.0f);
+	_20                     = 0.9f * mBoidTimer;
+	_24                     = 0.8f * mBoidTimer;
 
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	if (mPiki->isHolding()) {
@@ -111,8 +111,8 @@ void ActFree::init(Creature*)
 	}
 
 	mPiki->setPastel();
-	_1C = 0;
-	_45 = 0;
+	_1C            = 0;
+	mTouchedPlayer = 0;
 	mSelectAction->init(nullptr);
 
 	GameStat::workPikis.dec(mPiki->mColor);
@@ -128,7 +128,7 @@ void ActFree::init(Creature*)
 	mPiki->mFreeLightEffect->mColor = mPiki->mColor;
 	mPiki->mFreeLightEffect->emit(parm);
 	mPiki->enableFixPos();
-	_2C = 3.0f;
+	mFixedPositionTimer = 3.0f;
 
 	u32 badCompiler[2];
 
@@ -375,16 +375,17 @@ int ActFree::exec()
 	Creature* target;
 	u32 badCompiler[23]; // huh.
 
-	if (_40 > 0.0f) {
-		_40 -= gsys->getFrameTime();
+	if (mCollisionCooldownTimer > 0.0f) {
+		mCollisionCooldownTimer -= gsys->getFrameTime();
 	}
 
-	if (_45) {
+	// Look, but don't touch.
+	if (mTouchedPlayer) {
 		mPiki->mFSM->transit(mPiki, PIKISTATE_LookAt);
 		return ACTOUT_Continue;
 	}
 
-	if (_46) {
+	if (mIsBoidActive) {
 		exeBoid();
 		return ACTOUT_Continue;
 	}
@@ -408,15 +409,15 @@ int ActFree::exec()
  */
 void ActFree::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
-	if (_40 > 0.0f || _46) {
+	if (mCollisionCooldownTimer > 0.0f || mIsBoidActive) {
 		return;
 	}
 
 	Creature* collider = msg->mEvent.mCollider;
-	if (collider->mObjType == OBJTYPE_Navi && !piki->isKinoko() && !collider->mStickListHead && !_45
+	if (collider->mObjType == OBJTYPE_Navi && !piki->isKinoko() && !collider->mStickListHead && !mTouchedPlayer
 	    && (piki->mPlayerId == -1 || static_cast<Navi*>(collider)->mNaviID == piki->mPlayerId)) {
 		rumbleMgr->start(2, 0, nullptr);
-		_45         = 1;
-		piki->mNavi = static_cast<Navi*>(collider);
+		mTouchedPlayer = 1;
+		piki->mNavi    = static_cast<Navi*>(collider);
 	}
 }

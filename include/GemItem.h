@@ -10,13 +10,13 @@
  * @brief TODO
  */
 struct GemTable {
-	int _00; // _00
-	int _04; // _04
-	int _08; // _08
-	int _0C; // _0C
-	int _10; // _10
-	int _14; // _14
-	f32 _18; // _18
+	int _00;          // _00
+	int _04;          // _04
+	int _08;          // _08
+	int _0C;          // _0C
+	int _10;          // _10
+	int mSplitAmount; // _14
+	f32 _18;          // _18
 };
 
 /**
@@ -53,7 +53,7 @@ struct GemItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	bool _3C8;               // _3C8
+	bool mIsFree;            // _3C8
 	int _3CC;                // _3CC
 	f32 mTargetHeight;       // _3D0
 	f32 mCurrentHeight;      // _3D4

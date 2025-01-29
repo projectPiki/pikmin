@@ -35,7 +35,7 @@ bool GemItem::ignoreAtari(Creature*)
 		return true;
 	}
 
-	if (mObjType == OBJTYPE_NULL12 && _3C8) {
+	if (mObjType == OBJTYPE_NULL12 && mIsFree) {
 		return true;
 	}
 	return false;
@@ -48,7 +48,7 @@ bool GemItem::ignoreAtari(Creature*)
  */
 void GemItem::setAtariFree()
 {
-	_3C8 = true;
+	mIsFree = true;
 	playEventSound(this, SE_PELLET_BORN);
 }
 
@@ -59,10 +59,11 @@ void GemItem::setAtariFree()
  */
 void GemItem::bounceCallback()
 {
-	if (_3C8) {
+	if (mIsFree) {
 		effectMgr->create(EffectMgr::EFF_BigDustRing, mPosition, nullptr, nullptr);
 	}
-	_3C8 = false;
+
+	mIsFree = false;
 }
 
 /*
@@ -141,8 +142,8 @@ void GemItem::startAI(int)
 	mIsRising      = false;
 	playSound(0);
 	// v func
-	_3CC = 0;
-	_3C8 = 0;
+	_3CC    = 0;
+	mIsFree = 0;
 	// UNUSED FUNCTION
 }
 
@@ -289,33 +290,38 @@ f32 GemItem::getiMass()
  */
 void GemItem::split()
 {
-	if (_3E4) {
-		int something = table[mGemType]._14;
-		if (something > 0) {
-			PRINT("gem type %d split !\n", mGemType);
-			_3E4 = 0;
-			kill(false);
-			int objType;
-			if (mGemType == 1) {
-				objType = OBJTYPE_Gem1;
-			} else {
-				objType = OBJTYPE_Gem5;
-			}
+	if (!_3E4) {
+		return;
+	}
 
-			for (int i = 0; i < something; i++) {
-				Creature* obj = itemMgr->birth(objType);
-				Vector3f pos  = mPosition;
-				mPosition.y += 10.0f;
-				f32 angle      = 2.0f * randFloat(PI);
-				f32 vertSpeed  = 240.0f;
-				f32 horizSpeed = 40.0f;
-				Vector3f velocity(horizSpeed * sinf(angle), vertSpeed, horizSpeed * cosf(angle));
-				if (obj) {
-					obj->init(pos);
-					obj->startAI(0);
-					obj->initParam(mColor);
-					obj->mVelocity = velocity;
-				}
+	int splitAmount = table[mGemType].mSplitAmount;
+	if (splitAmount > 0) {
+		PRINT("gem type %d split !\n", mGemType);
+		_3E4 = 0;
+		kill(false);
+		int objType;
+		if (mGemType == 1) {
+			objType = OBJTYPE_Gem1;
+		} else {
+			objType = OBJTYPE_Gem5;
+		}
+
+		for (int i = 0; i < splitAmount; i++) {
+			Creature* obj = itemMgr->birth(objType);
+			Vector3f pos  = mPosition;
+			mPosition.y += 10.0f;
+
+			f32 angle      = 2.0f * randFloat(PI);
+			f32 vertSpeed  = 240.0f;
+			f32 horizSpeed = 40.0f;
+
+			Vector3f velocity(horizSpeed * sinf(angle), vertSpeed, horizSpeed * cosf(angle));
+
+			if (obj) {
+				obj->init(pos);
+				obj->startAI(0);
+				obj->initParam(mColor);
+				obj->mVelocity = velocity;
 			}
 		}
 	}

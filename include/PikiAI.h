@@ -853,11 +853,11 @@ struct ActEnter : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u16 mState;       // _14
-	GoalItem* mOnyon; // _18
-	CollPart* mLeg;   // _1C
-	Vector3f _20;     // _20
-	u8 _2C;           // _2C, unknown
+	u16 mState;             // _14
+	GoalItem* mOnyon;       // _18
+	CollPart* mLeg;         // _1C
+	Vector3f mLastPosition; // _20
+	u8 mHasCollided;        // _2C, unknown
 };
 
 /**
@@ -937,10 +937,10 @@ struct ActFlower : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	f32 _18; // _18
-	u8 _1C;  // _1C
-	u8 _1D;  // _1D
-	         // _20-_24 = PaniAnimKeyListener
+	f32 mElapsedTime;        // _18
+	u8 mIsAnimationComplete; // _1C
+	u8 mIsCarryEmpty;        // _1D
+	                         // _20-_24 = PaniAnimKeyListener
 };
 
 /**
@@ -1029,14 +1029,14 @@ struct ActFree : public Action, virtual PaniAnimKeyListener {
 	u16 _1C;                      // _1C
 	f32 _20;                      // _20
 	f32 _24;                      // _24
-	f32 _28;                      // _28
-	f32 _2C;                      // _2C
-	Vector3f _30;                 // _30
-	f32 _3C;                      // _3C
-	f32 _40;                      // _40
+	f32 mBoidTimer;               // _28
+	f32 mFixedPositionTimer;      // _2C
+	Vector3f mTargetPosition;     // _30
+	f32 mArrivalRadius;           // _3C
+	f32 mCollisionCooldownTimer;  // _40
 	u8 _44;                       // _44
-	u8 _45;                       // _45
-	u8 _46;                       // _46
+	u8 mTouchedPlayer;            // _45
+	u8 mIsBoidActive;             // _46
 	                              // _48-_50 = PaniAnimKeyListener
 };
 
@@ -1335,7 +1335,7 @@ struct ActPickItem : public AndAction {
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	SmartPtr<Creature> _18; // _18
+	SmartPtr<Creature> mTargetItem; // _18
 };
 
 /**
@@ -1365,7 +1365,7 @@ struct ActPullout : public AndAction {
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	SmartPtr<Creature> _18; // _18
+	SmartPtr<Creature> mTarget; // _18
 };
 
 /**
@@ -1529,7 +1529,7 @@ struct ActRandomBoid : public Action {
 		STATE_Random = 0,
 		STATE_Boid   = 1,
 		STATE_Stop   = 2,
-		STATE_Unk3   = 3,
+		STATE_Idle   = 3,
 	};
 
 	/**
@@ -1571,8 +1571,8 @@ struct ActRandomBoid : public Action {
 	// _00     = VTBL
 	// _00-_14 = Action
 	int mState;              // _14
-	int _18;                 // _18
-	u8 _1C;                  // _1C
+	int mStateTimer;         // _18
+	u8 mIsAnimFinishing;     // _1C
 	u32 _20;                 // _20, unknown
 	AnimListener* mListener; // _24
 };

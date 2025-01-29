@@ -38,7 +38,7 @@ ActEnter::ActEnter(Piki* piki)
  */
 void ActEnter::init(Creature* target)
 {
-	_2C = 0;
+	mHasCollided = false;
 	if (target && target->mObjType == OBJTYPE_Goal) {
 		mOnyon = static_cast<GoalItem*>(target);
 	} else {
@@ -47,10 +47,11 @@ void ActEnter::init(Creature* target)
 	}
 
 	findLeg();
-	Vector3f onyonPos(mOnyon->mPosition);
-	onyonPos = onyonPos - mPiki->mPosition;
-	f32 dist = onyonPos.length();
-	if (dist > 400.0f) {
+
+	Vector3f onionPosition(mOnyon->mPosition);
+	onionPosition       = onionPosition - mPiki->mPosition;
+	f32 distanceToOnion = onionPosition.length();
+	if (distanceToOnion > 400.0f) {
 		mState = 0;
 		if (!mPiki->initRouteTrace(mOnyon->mPosition, false)) {
 			PRINT("zannen !\n");
@@ -83,6 +84,7 @@ int ActEnter::routeMove()
 		mState = STATE_GotoLeg;
 		return ACTOUT_Continue;
 	}
+
 	return ACTOUT_Continue;
 }
 
@@ -128,6 +130,7 @@ int ActEnter::exec()
 	case STATE_Climb:
 		return climb();
 	}
+
 	return ACTOUT_Continue;
 }
 
@@ -140,7 +143,7 @@ void ActEnter::procCollideMsg(Piki*, MsgCollide* msg)
 {
 	if (msg->mEvent.mCollider->mObjType == OBJTYPE_Pellet && (mState == STATE_GotoLeg || mState == STATE_Climb)) {
 		PRINT("enter : collide with %s\n", ObjType::getName(msg->mEvent.mCollider->mObjType));
-		_2C = 1;
+		mHasCollided = 1;
 	}
 }
 
@@ -161,11 +164,11 @@ int ActEnter::gotoLeg()
 		return ACTOUT_Continue;
 	}
 
-	if (_2C && !mPiki->mOdometer.moving(mPiki->mPosition, _20)) {
+	if (mHasCollided && !mPiki->mOdometer.moving(mPiki->mPosition, mLastPosition)) {
 		return ACTOUT_Fail;
 	}
 
-	_20             = mPiki->mPosition;
+	mLastPosition   = mPiki->mPosition;
 	Vector3f legDir = mLeg->mCentre - mPiki->mPosition;
 	f32 unused      = legDir.normalise();
 	mPiki->setSpeed(0.5f, legDir);
@@ -185,7 +188,7 @@ int ActEnter::climb()
 		return ACTOUT_Fail;
 	}
 
-	if (_2C) {
+	if (mHasCollided) {
 		return ACTOUT_Fail;
 	}
 
@@ -201,12 +204,12 @@ int ActEnter::climb()
 
 	f32 sideWeight = 8.0f * randBalanced(0.5f);
 	Vector3f ropeDir(mPiki->mRope->mRopeDirection);
-	Vector3f offset(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
-	Vector3f sideDir(offset);
+	Vector3f facingVector(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
+	Vector3f sideDir(facingVector);
 	sideDir.CP(ropeDir);
 	sideDir.normalise();
-	f32 val          = 15.0f;
-	mPiki->mVelocity = ropeDir * val + sideDir * sideWeight;
+	f32 climbSpeed   = 15.0f;
+	mPiki->mVelocity = ropeDir * climbSpeed + sideDir * sideWeight;
 	return ACTOUT_Continue;
 }
 

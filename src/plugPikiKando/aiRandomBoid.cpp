@@ -24,7 +24,7 @@ void ActRandomBoid::AnimListener::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
-		mAction->_1C = 0;
+		mAction->mIsAnimFinishing = 0;
 		switch (mAction->mState) {
 		case STATE_Boid:
 			f32 angle = 2.0f * randFloat(PI);
@@ -296,13 +296,13 @@ void ActRandomBoid::Initialiser::initialise(Action*)
  */
 void ActRandomBoid::init(Creature*)
 {
-	mState    = STATE_Boid;
-	_18       = int(randFloat(10.0f)) + 20;
-	f32 angle = 2.0f * randFloat(PI);
+	mState      = STATE_Boid;
+	mStateTimer = int(randFloat(10.0f)) + 20;
+	f32 angle   = 2.0f * randFloat(PI);
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, mListener), PaniMotionInfo(PIKIANIM_Run, mListener));
-	mListener->_0C = 0;
-	_1C            = 0;
+	mListener->_0C   = 0;
+	mIsAnimFinishing = 0;
 }
 
 /*
@@ -321,46 +321,44 @@ void ActRandomBoid::cleanup()
  */
 int ActRandomBoid::exec()
 {
-	if (_1C) {
+	if (mIsAnimFinishing) {
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		return ACTOUT_Continue;
 	}
 
-	if (--_18 < 0) {
-		_18            = int(randFloat(12.0f)) + 38;
+	if (--mStateTimer < 0) {
+		mStateTimer    = int(randFloat(12.0f)) + 38;
 		int startState = mState;
 		if (mState == STATE_Boid && System::getRand(1.0f) > 0.5f) {
-			mState = STATE_Unk3;
+			mState = STATE_Idle;
 			mPiki->mPikiAnimMgr.finishMotion(mListener);
-			_1C = 1;
-			_18 += int(randFloat(50.0f)) + 30;
-		} else {
-			if (System::getRand(1.0f) > 0.65f) {
-				if (System::getRand(1.0f) > 0.75f) {
-					mState = STATE_Random;
-					if (startState != STATE_Random) {
-						mPiki->mPikiAnimMgr.finishMotion(mListener);
-						_1C = 1;
-					}
-				} else {
-					mState = STATE_Boid;
-					if (startState != STATE_Stop && startState != STATE_Boid) {
-						mPiki->mPikiAnimMgr.finishMotion(mListener);
-						_1C = 1;
-					}
-				}
-
-				f32 angle = 2.0f * randFloat(PI);
-				mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-				_18 += 120;
-			} else {
-				_18 += 120;
-				mState = STATE_Stop;
-				if (startState != STATE_Stop || startState != STATE_Boid) {
+			mIsAnimFinishing = 1;
+			mStateTimer += int(randFloat(50.0f)) + 30;
+		} else if (System::getRand(1.0f) > 0.65f) {
+			if (System::getRand(1.0f) > 0.75f) {
+				mState = STATE_Random;
+				if (startState != STATE_Random) {
 					mPiki->mPikiAnimMgr.finishMotion(mListener);
-					_1C = 1;
-					return ACTOUT_Continue;
+					mIsAnimFinishing = 1;
 				}
+			} else {
+				mState = STATE_Boid;
+				if (startState != STATE_Stop && startState != STATE_Boid) {
+					mPiki->mPikiAnimMgr.finishMotion(mListener);
+					mIsAnimFinishing = 1;
+				}
+			}
+
+			f32 randomAngle = 2.0f * randFloat(PI);
+			mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+			mStateTimer += 120;
+		} else {
+			mStateTimer += 120;
+			mState = STATE_Stop;
+			if (startState != STATE_Stop || startState != STATE_Boid) {
+				mPiki->mPikiAnimMgr.finishMotion(mListener);
+				mIsAnimFinishing = 1;
+				return ACTOUT_Continue;
 			}
 		}
 
@@ -368,9 +366,10 @@ int ActRandomBoid::exec()
 	}
 
 	if (mState == STATE_Stop) {
-		_18 = 1;
+		mStateTimer = 1;
 	}
-	if (mState == STATE_Unk3) {
+
+	if (mState == STATE_Idle) {
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	}
 
