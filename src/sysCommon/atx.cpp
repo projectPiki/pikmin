@@ -39,10 +39,7 @@ bool AtxStream::open(char* name, int port)
 		return false;
 
 	if (!router->openRoute(this, port)) {
-#ifdef DEBUG
 		ERROR("Could not open route to server\n");
-#endif
-
 		gsys->setAtxRouter(nullptr);
 		return false;
 	}

@@ -963,7 +963,7 @@ void Creature::update()
 
 	// Handle fixed position on non-slippery surfaces, with a slope < 60 degrees
 	if (mVolatileVelocity.length() > 0.0f && isCreatureFlag(CF_AllowFixPosition) && isCreatureFlag(CF_IsPositionFixed) && mFloorTri
-	    && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->mTriangleNormal.y > sinf(THIRD_PI)) {
+	    && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->mTriangle.mNormal.y > sinf(THIRD_PI)) {
 		mFixedPosition = mPosition;
 	}
 
@@ -973,7 +973,7 @@ void Creature::update()
 	// Update the fixed position status
 	if (isCreatureFlag(CF_AllowFixPosition)) {
 		// If we're on the ground, it's not slippery, and the slope is < 60 degrees
-		if (mFloorTri && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->mTriangleNormal.y > sinf(THIRD_PI)) {
+		if (mFloorTri && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->mTriangle.mNormal.y > sinf(THIRD_PI)) {
 
 			// If we're barely moving, just stay still
 			if (mTargetVelocity.length() < 0.01f) {
@@ -2086,7 +2086,7 @@ void Creature::moveVelocity()
 	Vector3f vec(0.0f, 0.0f, 0.0f);
 
 	if (mFloorTri) {
-		Vector3f normal(mFloorTri->mTriangleNormal);
+		Vector3f normal(mFloorTri->mTriangle.mNormal);
 		f32 speed = vel.length();
 		vel       = vel - vel.DP(normal) * normal;
 		vel.normalise();

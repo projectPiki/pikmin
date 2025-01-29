@@ -342,7 +342,7 @@ void DynCreature::simulate(f32 timeStep)
 			u32 badCompiler2;
 			CollTriInfo* groundTriangle = mapMgr->getCurrTri(ptcl->mWorldPosition.x, ptcl->mWorldPosition.z, true);
 			if (groundTriangle) {
-				collisionNormal = groundTriangle->mTriangleNormal;
+				collisionNormal = groundTriangle->mTriangle.mNormal;
 				collisionNormal.normalise();
 			} else {
 				collisionNormal.set(0.0f, 1.0f, 0.0f);

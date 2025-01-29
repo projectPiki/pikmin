@@ -2678,7 +2678,7 @@ void Navi::makeVelocity(bool p1)
 		if (mFloorTri) {
 			// ?? this does nothing.
 			f32 speed    = mTargetVelocity.length();
-			Vector3f vec = mTargetVelocity - mTargetVelocity.DP(mFloorTri->mTriangleNormal) * mFloorTri->mTriangleNormal;
+			Vector3f vec = mTargetVelocity - mTargetVelocity.DP(mFloorTri->mTriangle.mNormal) * mFloorTri->mTriangle.mNormal;
 			vec.normalise();
 			vec = vec * speed;
 		}
@@ -3535,7 +3535,7 @@ void Navi::refresh(Graphics& gfx)
 
 		Vector3f surfaceNormal(0.0f, 1.0f, 0.0f);
 		if (cursorTri) {
-			surfaceNormal = cursorTri->mTriangleNormal;
+			surfaceNormal = cursorTri->mTriangle.mNormal;
 			surfaceNormal.normalise();
 		}
 

@@ -7,6 +7,7 @@
 #include "Collision.h"
 #include "BoundBox.h"
 #include "KMath.h"
+#include "Graphics.h"
 #include "DebugLog.h"
 
 /*
@@ -712,140 +713,19 @@ f32 qdist3(f32, f32, f32, f32, f32, f32)
  * Address: 80038678
  * Size:    0001BC
  */
-void CollTriInfo::init(RoomInfo* info, Vector3f* pos)
+void CollTriInfo::init(RoomInfo* info, Vector3f* vertices)
 {
 	for (int i = 0; i < 3; ++i) {
-		// Vector3f* pos1;
-		// Vector3f* pos2;
-		// pos2 = &pos[this->_04[(i + 1) % 3]];
-		// pos1 = &pos[this->_04[i % 3]];
+		Vector3f& nextVertex    = vertices[mVertexIndices[(i + 1) % 3]];
+		Vector3f& currentVertex = vertices[mVertexIndices[i % 3]];
 
-		// Vector3f tempVector;
-		// tempVector.sub2(pos2, pos1);
-		// tempVector.normalise();
-		// tempVector.CP(&this->field_18);
-		// this->field_28[i] = tempVector;
-		// f64 dpResult      = tempVector.DP(pos2);
-		// this->field_34[i] = dpResult;
+		Vector3f edgeNormal = nextVertex - currentVertex;
+
+		edgeNormal.normalise();
+		edgeNormal.CP(mTriangle.mNormal);
+		mEdgePlanes[i].mNormal = edgeNormal;
+		mEdgePlanes[i].mOffset = edgeNormal.DP(nextVertex);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stfd      f31, 0x70(r1)
-	  stmw      r26, 0x58(r1)
-	  mr        r27, r3
-	  lis       r3, 0x5555
-	  addi      r28, r5, 0
-	  addi      r30, r27, 0
-	  addi      r31, r3, 0x5556
-	  li        r29, 0
-	  lfs       f31, -0x7C60(r2)
-
-	.loc_0x30:
-	  addi      r6, r29, 0x1
-	  mulhw     r5, r31, r6
-	  mulhw     r3, r31, r29
-	  rlwinm    r4,r5,1,31,31
-	  rlwinm    r0,r3,1,31,31
-	  add       r4, r5, r4
-	  add       r0, r3, r0
-	  mulli     r3, r4, 0x3
-	  mulli     r0, r0, 0x3
-	  sub       r3, r6, r3
-	  sub       r0, r29, r0
-	  rlwinm    r4,r3,2,0,29
-	  rlwinm    r3,r0,2,0,29
-	  addi      r4, r4, 0x4
-	  addi      r0, r3, 0x4
-	  lwzx      r3, r27, r4
-	  lwzx      r0, r27, r0
-	  mulli     r3, r3, 0xC
-	  add       r26, r28, r3
-	  mulli     r0, r0, 0xC
-	  lfs       f1, 0x0(r26)
-	  lfs       f3, 0x4(r26)
-	  lfs       f5, 0x8(r26)
-	  add       r3, r28, r0
-	  lfs       f0, 0x0(r3)
-	  lfs       f2, 0x4(r3)
-	  lfs       f4, 0x8(r3)
-	  fsubs     f0, f1, f0
-	  fsubs     f2, f3, f2
-	  fsubs     f1, f5, f4
-	  stfs      f0, 0x4C(r1)
-	  stfs      f2, 0x50(r1)
-	  stfs      f1, 0x54(r1)
-	  lfs       f1, 0x4C(r1)
-	  lfs       f0, 0x50(r1)
-	  lfs       f2, 0x54(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x2AB0C
-	  fcmpu     cr0, f31, f1
-	  beq-      .loc_0x104
-	  lfs       f0, 0x4C(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x4C(r1)
-	  lfs       f0, 0x50(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x50(r1)
-	  lfs       f0, 0x54(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x54(r1)
-
-	.loc_0x104:
-	  lfs       f1, 0x54(r1)
-	  addi      r29, r29, 0x1
-	  lfs       f2, 0x1C(r27)
-	  cmpwi     r29, 0x3
-	  lfs       f5, 0x18(r27)
-	  lfs       f6, 0x50(r1)
-	  fmuls     f0, f1, f2
-	  lfs       f7, 0x4C(r1)
-	  fmuls     f4, f1, f5
-	  lfs       f3, 0x20(r27)
-	  fmuls     f2, f7, f2
-	  fmuls     f1, f6, f3
-	  fmuls     f3, f7, f3
-	  fsubs     f0, f1, f0
-	  fmuls     f1, f6, f5
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x4C(r1)
-	  fsubs     f0, f2, f1
-	  stfs      f3, 0x50(r1)
-	  stfs      f0, 0x54(r1)
-	  lwz       r3, 0x4C(r1)
-	  lwz       r0, 0x50(r1)
-	  stw       r3, 0x28(r30)
-	  stw       r0, 0x2C(r30)
-	  lwz       r0, 0x54(r1)
-	  stw       r0, 0x30(r30)
-	  lfs       f3, 0x4C(r1)
-	  lfs       f2, 0x0(r26)
-	  lfs       f1, 0x50(r1)
-	  lfs       f0, 0x4(r26)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x54(r1)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r26)
-	  fmuls     f1, f3, f1
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x34(r30)
-	  addi      r30, r30, 0x10
-	  blt+      .loc_0x30
-	  lmw       r26, 0x58(r1)
-	  lwz       r0, 0x7C(r1)
-	  lfd       f31, 0x70(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -853,66 +733,15 @@ void CollTriInfo::init(RoomInfo* info, Vector3f* pos)
  * Address: 80038834
  * Size:    0000C4
  */
-int CollTriInfo::behindEdge(Vector3f&)
+int CollTriInfo::behindEdge(Vector3f& point)
 {
-	/*
-	.loc_0x0:
-	  lfs       f2, 0x28(r3)
-	  lfs       f5, 0x0(r4)
-	  lfs       f1, 0x2C(r3)
-	  lfs       f3, 0x4(r4)
-	  fmuls     f4, f2, f5
-	  lfs       f6, 0x30(r3)
-	  fmuls     f2, f1, f3
-	  lfs       f7, 0x8(r4)
-	  lfs       f1, 0x34(r3)
-	  fmuls     f6, f6, f7
-	  lfs       f0, -0x7C60(r2)
-	  fadds     f2, f4, f2
-	  fadds     f2, f6, f2
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x48
-	  li        r3, 0
-	  blr
+	for (int i = 0; i < 3; i++) {
+		if (mEdgePlanes[i].dist(point) < 0.0f) {
+			return i;
+		}
+	}
 
-	.loc_0x48:
-	  addi      r3, r3, 0x10
-	  lfs       f2, 0x28(r3)
-	  lfs       f1, 0x2C(r3)
-	  fmuls     f4, f2, f5
-	  lfs       f6, 0x30(r3)
-	  fmuls     f2, f1, f3
-	  lfs       f1, 0x34(r3)
-	  fmuls     f6, f6, f7
-	  fadds     f2, f4, f2
-	  fadds     f2, f6, f2
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x84
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x84:
-	  lfs       f2, 0x38(r3)
-	  lfs       f1, 0x3C(r3)
-	  fmuls     f4, f2, f5
-	  lfs       f6, 0x40(r3)
-	  fmuls     f2, f1, f3
-	  lfs       f1, 0x44(r3)
-	  fmuls     f6, f6, f7
-	  fadds     f2, f4, f2
-	  fadds     f2, f6, f2
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xBC
-	  li        r3, 0x2
-	  blr
-
-	.loc_0xBC:
-	  li        r3, -0x1
-	  blr
-	*/
+	return -1;
 }
 
 /*
@@ -920,412 +749,459 @@ int CollTriInfo::behindEdge(Vector3f&)
  * Address: 800388F8
  * Size:    000644
  */
-void BoundBox::draw(Graphics&)
+void BoundBox::draw(Graphics& gfx)
 {
+	// Top face
+	gfx.drawLine(Vector3f(mMin.x, mMax.y, mMin.z), Vector3f(mMax.x, mMax.y, mMin.z));
+	gfx.drawLine(Vector3f(mMin.x, mMax.y, mMin.z), Vector3f(mMin.x, mMax.y, mMax.z));
+	gfx.drawLine(Vector3f(mMax.x, mMax.y, mMin.z), Vector3f(mMax.x, mMax.y, mMax.z));
+	gfx.drawLine(Vector3f(mMin.x, mMax.y, mMax.z), Vector3f(mMax.x, mMax.y, mMax.z));
+
+	// Bottom face
+	gfx.drawLine(Vector3f(mMin.x, mMin.y, mMin.z), Vector3f(mMax.x, mMin.y, mMin.z));
+	gfx.drawLine(Vector3f(mMin.x, mMin.y, mMin.z), Vector3f(mMin.x, mMin.y, mMax.z));
+	gfx.drawLine(Vector3f(mMax.x, mMin.y, mMin.z), Vector3f(mMax.x, mMin.y, mMax.z));
+	gfx.drawLine(Vector3f(mMin.x, mMin.y, mMax.z), Vector3f(mMax.x, mMin.y, mMax.z));
+
+	// Vertical edges
+	gfx.drawLine(Vector3f(mMin.x, mMin.y, mMin.z), Vector3f(mMin.x, mMax.y, mMin.z));
+	gfx.drawLine(Vector3f(mMax.x, mMin.y, mMin.z), Vector3f(mMax.x, mMax.y, mMin.z));
+	gfx.drawLine(Vector3f(mMin.x, mMin.y, mMax.z), Vector3f(mMin.x, mMax.y, mMax.z));
+	gfx.drawLine(Vector3f(mMax.x, mMin.y, mMax.z), Vector3f(mMax.x, mMax.y, mMax.z));
+
+	Vector3f triangleVertices[4];
+	Vector2f unk2[4];
+
+	Colour gfxCol(gfx.mPrimaryColour.r, gfx.mPrimaryColour.g, gfx.mPrimaryColour.b, 1);
+	gfx.setColour(gfxCol, 1);
+
+	triangleVertices[0].set(mMax.x, mMax.y, mMin.z);
+	triangleVertices[1].set(mMax.x, mMin.y, mMin.z);
+	triangleVertices[2].set(mMin.x, mMin.y, mMin.z);
+	triangleVertices[3].set(mMin.x, mMax.y, mMin.z);
+	gfx.drawOneTri(triangleVertices, nullptr, unk2, 4);
+
+	triangleVertices[0].set(mMin.x, mMax.y, mMax.z);
+	triangleVertices[1].set(mMin.x, mMin.y, mMax.z);
+	triangleVertices[2].set(mMax.x, mMin.y, mMax.z);
+	triangleVertices[3].set(mMax.x, mMax.y, mMax.z);
+	gfx.drawOneTri(triangleVertices, nullptr, unk2, 4);
+
+	triangleVertices[0].set(mMax.x, mMax.y, mMin.z);
+	triangleVertices[1].set(mMax.x, mMin.y, mMin.z);
+	triangleVertices[2].set(mMin.x, mMin.y, mMin.z);
+	triangleVertices[3].set(mMin.x, mMax.y, mMin.z);
+	gfx.drawOneTri(triangleVertices, nullptr, unk2, 4);
+
+	triangleVertices[0].set(mMax.x, mMin.y, mMin.z);
+	triangleVertices[1].set(mMax.x, mMax.y, mMin.z);
+	triangleVertices[2].set(mMax.x, mMax.y, mMax.z);
+	triangleVertices[3].set(mMax.x, mMin.y, mMax.z);
+	gfx.drawOneTri(triangleVertices, nullptr, unk2, 4);
 	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x190(r1)
-	  stw       r31, 0x18C(r1)
-	  mr        r31, r3
-	  addi      r5, r1, 0x120
-	  stw       r30, 0x188(r1)
-	  addi      r30, r4, 0
-	  addi      r4, r1, 0x12C
-	  lfs       f0, 0xC(r3)
-	  addi      r3, r30, 0
-	  stfs      f0, 0x120(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x124(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x128(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x12C(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x130(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x134(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0xC(r31)
-	  addi      r5, r1, 0x108
-	  addi      r4, r1, 0x114
-	  stfs      f0, 0x108(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x10C(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x110(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x114(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x118(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x11C(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x0(r31)
-	  addi      r5, r1, 0xF0
-	  addi      r4, r1, 0xFC
-	  stfs      f0, 0xF0(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0xF4(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0xF8(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0xFC(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x100(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x104(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x0(r31)
-	  addi      r5, r1, 0xD8
-	  addi      r4, r1, 0xE4
-	  stfs      f0, 0xD8(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0xDC(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0xE0(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0xE4(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0xE8(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0xEC(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0xC(r31)
-	  addi      r5, r1, 0xC0
-	  addi      r4, r1, 0xCC
-	  stfs      f0, 0xC0(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0xC4(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0xC8(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0xCC(r1)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0xD0(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0xD4(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0xC(r31)
-	  addi      r5, r1, 0xA8
-	  addi      r4, r1, 0xB4
-	  stfs      f0, 0xA8(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0xAC(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0xB0(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0xB4(r1)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0xB8(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0xBC(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x0(r31)
-	  addi      r5, r1, 0x90
-	  addi      r4, r1, 0x9C
-	  stfs      f0, 0x90(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x94(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x98(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x9C(r1)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0xA0(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0xA4(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x0(r31)
-	  addi      r5, r1, 0x78
-	  addi      r4, r1, 0x84
-	  stfs      f0, 0x78(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x7C(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x80(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x84(r1)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x88(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x8C(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x0(r31)
-	  addi      r5, r1, 0x60
-	  addi      r4, r1, 0x6C
-	  stfs      f0, 0x60(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x64(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x68(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x6C(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x70(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x74(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0xC(r31)
-	  addi      r5, r1, 0x48
-	  addi      r4, r1, 0x54
-	  stfs      f0, 0x48(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x4C(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x50(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x54(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x58(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x5C(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x0(r31)
-	  addi      r5, r1, 0x30
-	  addi      r4, r1, 0x3C
-	  stfs      f0, 0x30(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x38(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x3C(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x40(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x44(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0xC(r31)
-	  addi      r5, r1, 0x18
-	  addi      r4, r1, 0x24
-	  stfs      f0, 0x18(r1)
-	  mr        r3, r30
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x20(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x24(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x2C(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0x98(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x7C60(r2)
-	  li        r0, 0x20
-	  addi      r4, r1, 0x14
-	  stfs      f0, 0x160(r1)
-	  mr        r3, r30
-	  li        r5, 0x1
-	  stfs      f0, 0x15C(r1)
-	  stfs      f0, 0x158(r1)
-	  stfs      f0, 0x16C(r1)
-	  stfs      f0, 0x168(r1)
-	  stfs      f0, 0x164(r1)
-	  stfs      f0, 0x178(r1)
-	  stfs      f0, 0x174(r1)
-	  stfs      f0, 0x170(r1)
-	  stfs      f0, 0x184(r1)
-	  stfs      f0, 0x180(r1)
-	  stfs      f0, 0x17C(r1)
-	  lbz       r8, 0x31A(r30)
-	  lbz       r7, 0x319(r30)
-	  lbz       r6, 0x318(r30)
-	  stb       r6, 0x14(r1)
-	  stb       r7, 0x15(r1)
-	  stb       r8, 0x16(r1)
-	  stb       r0, 0x17(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x0(r31)
-	  mr        r3, r30
-	  addi      r4, r1, 0x158
-	  stfs      f0, 0x158(r1)
-	  addi      r6, r1, 0x138
-	  li        r5, 0
-	  lfs       f0, 0x4(r31)
-	  li        r7, 0x4
-	  stfs      f0, 0x15C(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x160(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x164(r1)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x168(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x16C(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x170(r1)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x174(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x178(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x17C(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x180(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x184(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0xC(r31)
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x158
-	  stfs      f0, 0x158(r1)
-	  addi      r6, r1, 0x138
-	  li        r5, 0
-	  lfs       f0, 0x10(r31)
-	  li        r7, 0x4
-	  stfs      f0, 0x15C(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x160(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x164(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x168(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x16C(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x170(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x174(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x178(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x17C(r1)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x180(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x184(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0xC(r31)
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x158
-	  stfs      f0, 0x158(r1)
-	  addi      r6, r1, 0x138
-	  li        r5, 0
-	  lfs       f0, 0x4(r31)
-	  li        r7, 0x4
-	  stfs      f0, 0x15C(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x160(r1)
-	  lfs       f0, 0xC(r31)
-	  stfs      f0, 0x164(r1)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x168(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x16C(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x170(r1)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x174(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x178(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x17C(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x180(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x184(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x0(r31)
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x158
-	  stfs      f0, 0x158(r1)
-	  addi      r6, r1, 0x138
-	  li        r5, 0
-	  lfs       f0, 0x10(r31)
-	  li        r7, 0x4
-	  stfs      f0, 0x15C(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x160(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x164(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x168(r1)
-	  lfs       f0, 0x14(r31)
-	  stfs      f0, 0x16C(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x170(r1)
-	  lfs       f0, 0x4(r31)
-	  stfs      f0, 0x174(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x178(r1)
-	  lfs       f0, 0x0(r31)
-	  stfs      f0, 0x17C(r1)
-	  lfs       f0, 0x10(r31)
-	  stfs      f0, 0x180(r1)
-	  lfs       f0, 0x8(r31)
-	  stfs      f0, 0x184(r1)
-	  lwz       r12, 0x3B4(r30)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x194(r1)
-	  lwz       r31, 0x18C(r1)
-	  lwz       r30, 0x188(r1)
-	  addi      r1, r1, 0x190
-	  mtlr      r0
-	  blr
-	*/
+.loc_0x0:
+  mflr      r0
+  stw       r0, 0x4(r1)
+  stwu      r1, -0x190(r1)
+  stw       r31, 0x18C(r1)
+  mr        r31, r3
+  addi      r5, r1, 0x120
+  stw       r30, 0x188(r1)
+  addi      r30, r4, 0
+  addi      r4, r1, 0x12C
+  lfs       f0, 0xC(r3)
+  addi      r3, r30, 0
+  stfs      f0, 0x120(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x124(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x128(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0x12C(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x130(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x134(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0xC(r31)
+  addi      r5, r1, 0x108
+  addi      r4, r1, 0x114
+  stfs      f0, 0x108(r1)
+  mr        r3, r30
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x10C(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x110(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0x114(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x118(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x11C(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0x0(r31)
+  addi      r5, r1, 0xF0
+  addi      r4, r1, 0xFC
+  stfs      f0, 0xF0(r1)
+  mr        r3, r30
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0xF4(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0xF8(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0xFC(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x100(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x104(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0x0(r31)
+  addi      r5, r1, 0xD8
+  addi      r4, r1, 0xE4
+  stfs      f0, 0xD8(r1)
+  mr        r3, r30
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0xDC(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0xE0(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0xE4(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0xE8(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0xEC(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0xC(r31)
+  addi      r5, r1, 0xC0
+  addi      r4, r1, 0xCC
+  stfs      f0, 0xC0(r1)
+  mr        r3, r30
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0xC4(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0xC8(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0xCC(r1)
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0xD0(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0xD4(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0xC(r31)
+  addi      r5, r1, 0xA8
+  addi      r4, r1, 0xB4
+  stfs      f0, 0xA8(r1)
+  mr        r3, r30
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0xAC(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0xB0(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0xB4(r1)
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0xB8(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0xBC(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0x0(r31)
+  addi      r5, r1, 0x90
+  addi      r4, r1, 0x9C
+  stfs      f0, 0x90(r1)
+  mr        r3, r30
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x94(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x98(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0x9C(r1)
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0xA0(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0xA4(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0x0(r31)
+  addi      r5, r1, 0x78
+  addi      r4, r1, 0x84
+  stfs      f0, 0x78(r1)
+  mr        r3, r30
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x7C(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x80(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0x84(r1)
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x88(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x8C(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0x0(r31)
+  addi      r5, r1, 0x60
+  addi      r4, r1, 0x6C
+  stfs      f0, 0x60(r1)
+  mr        r3, r30
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x64(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x68(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0x6C(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x70(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x74(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0xC(r31)
+  addi      r5, r1, 0x48
+  addi      r4, r1, 0x54
+  stfs      f0, 0x48(r1)
+  mr        r3, r30
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x4C(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x50(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0x54(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x58(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x5C(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0x0(r31)
+  addi      r5, r1, 0x30
+  addi      r4, r1, 0x3C
+  stfs      f0, 0x30(r1)
+  mr        r3, r30
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x34(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x38(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0x3C(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x40(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x44(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0xC(r31)
+  addi      r5, r1, 0x18
+  addi      r4, r1, 0x24
+  stfs      f0, 0x18(r1)
+  mr        r3, r30
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x1C(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x20(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0x24(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x28(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x2C(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0x98(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, -0x7C60(r2)
+  li        r0, 0x20
+  addi      r4, r1, 0x14
+  stfs      f0, 0x160(r1)
+  mr        r3, r30
+  li        r5, 0x1
+  stfs      f0, 0x15C(r1)
+  stfs      f0, 0x158(r1)
+  stfs      f0, 0x16C(r1)
+  stfs      f0, 0x168(r1)
+  stfs      f0, 0x164(r1)
+  stfs      f0, 0x178(r1)
+  stfs      f0, 0x174(r1)
+  stfs      f0, 0x170(r1)
+  stfs      f0, 0x184(r1)
+  stfs      f0, 0x180(r1)
+  stfs      f0, 0x17C(r1)
+  lbz       r8, 0x31A(r30)
+  lbz       r7, 0x319(r30)
+  lbz       r6, 0x318(r30)
+  stb       r6, 0x14(r1)
+  stb       r7, 0x15(r1)
+  stb       r8, 0x16(r1)
+  stb       r0, 0x17(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0xA8(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0x0(r31)
+  mr        r3, r30
+  addi      r4, r1, 0x158
+  stfs      f0, 0x158(r1)
+  addi      r6, r1, 0x138
+  li        r5, 0
+  lfs       f0, 0x4(r31)
+  li        r7, 0x4
+  stfs      f0, 0x15C(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x160(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0x164(r1)
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x168(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x16C(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0x170(r1)
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x174(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x178(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0x17C(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x180(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x184(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0xA0(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0xC(r31)
+  addi      r3, r30, 0
+  addi      r4, r1, 0x158
+  stfs      f0, 0x158(r1)
+  addi      r6, r1, 0x138
+  li        r5, 0
+  lfs       f0, 0x10(r31)
+  li        r7, 0x4
+  stfs      f0, 0x15C(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x160(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0x164(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x168(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x16C(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0x170(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x174(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x178(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0x17C(r1)
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x180(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x184(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0xA0(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0xC(r31)
+  addi      r3, r30, 0
+  addi      r4, r1, 0x158
+  stfs      f0, 0x158(r1)
+  addi      r6, r1, 0x138
+  li        r5, 0
+  lfs       f0, 0x4(r31)
+  li        r7, 0x4
+  stfs      f0, 0x15C(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x160(r1)
+  lfs       f0, 0xC(r31)
+  stfs      f0, 0x164(r1)
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x168(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x16C(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0x170(r1)
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x174(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x178(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0x17C(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x180(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x184(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0xA0(r12)
+  mtlr      r12
+  blrl
+  lfs       f0, 0x0(r31)
+  addi      r3, r30, 0
+  addi      r4, r1, 0x158
+  stfs      f0, 0x158(r1)
+  addi      r6, r1, 0x138
+  li        r5, 0
+  lfs       f0, 0x10(r31)
+  li        r7, 0x4
+  stfs      f0, 0x15C(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x160(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0x164(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x168(r1)
+  lfs       f0, 0x14(r31)
+  stfs      f0, 0x16C(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0x170(r1)
+  lfs       f0, 0x4(r31)
+  stfs      f0, 0x174(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x178(r1)
+  lfs       f0, 0x0(r31)
+  stfs      f0, 0x17C(r1)
+  lfs       f0, 0x10(r31)
+  stfs      f0, 0x180(r1)
+  lfs       f0, 0x8(r31)
+  stfs      f0, 0x184(r1)
+  lwz       r12, 0x3B4(r30)
+  lwz       r12, 0xA0(r12)
+  mtlr      r12
+  blrl
+  lwz       r0, 0x194(r1)
+  lwz       r31, 0x18C(r1)
+  lwz       r30, 0x188(r1)
+  addi      r1, r1, 0x190
+  mtlr      r0
+  blr
+*/
 }
 
 /*
@@ -1335,99 +1211,37 @@ void BoundBox::draw(Graphics&)
  */
 bool pointInsideTri(KTri& tri, Vector3f& point)
 {
-	Vector3f A;
-	A           = tri.mVertA;
-	Vector3f AB = A + tri.mSideAB;
-	Vector3f AC = A + tri.mSideAC;
+	Vector3f vertex1;
+	Vector3f vertex2;
+	Vector3f vertex3;
 
-	Vector3f B = AB - A;
-	Vector3f C = AC - AB;
-	Vector3f D = A - AC;
+	vertex1 = tri.Origin();
+	vertex2 = vertex1 + tri.Edge0();
+	vertex3 = vertex1 + tri.Edge1();
 
-	if (B.z * (point.x - A.x) - B.x * (point.z - A.z) > 0.0f) {
+	Vector3f edge1 = vertex2 - vertex1;
+	Vector3f edge2 = vertex3 - vertex2;
+	Vector3f edge3 = vertex1 - vertex3;
+
+	Vector3f toPoint1 = point - vertex1;
+	edge1.CP(toPoint1);
+	if (edge1.y > 0.0f) {
 		return false;
 	}
 
-	if (C.z * (point.x - AB.x) - C.x * (point.z - AB.z) > 0.0f) {
+	Vector3f toPoint2 = point - vertex2;
+	edge2.CP(toPoint2);
+	if (edge2.y > 0.0f) {
 		return false;
 	}
 
-	if (D.z * (point.x - AC.x) - D.x * (point.z - AC.z) > 0.0f) {
+	Vector3f toPoint3 = point - vertex3;
+	edge3.CP(toPoint3);
+	if (edge3.y > 0.0f) {
 		return false;
 	}
-
-	FORCE_DONT_INLINE;
 
 	return true;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x200(r1)
-	  lfs       f4, -0x7C60(r2)
-	  stfs      f4, 0x1FC(r1)
-	  stfs      f4, 0x1F8(r1)
-	  lwz       r5, 0x0(r3)
-	  lwz       r0, 0x4(r3)
-	  stw       r5, 0x1F4(r1)
-	  stw       r0, 0x1F8(r1)
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x1FC(r1)
-	  lfs       f9, 0x1FC(r1)
-	  lfs       f0, 0x14(r3)
-	  lfs       f10, 0x1F4(r1)
-	  fadds     f5, f9, f0
-	  lfs       f0, 0xC(r3)
-	  lfs       f11, 0x8(r4)
-	  fadds     f6, f10, f0
-	  lfs       f12, 0x0(r4)
-	  fsubs     f7, f11, f9
-	  lfs       f3, 0x20(r3)
-	  fsubs     f0, f6, f10
-	  fsubs     f8, f12, f10
-	  lfs       f2, 0x18(r3)
-	  fsubs     f1, f5, f9
-	  fmuls     f0, f0, f7
-	  fadds     f3, f9, f3
-	  fmuls     f1, f1, f8
-	  fadds     f2, f10, f2
-	  fsubs     f7, f3, f5
-	  fsubs     f0, f1, f0
-	  fsubs     f8, f2, f6
-	  fsubs     f9, f9, f3
-	  fcmpo     cr0, f0, f4
-	  fsubs     f10, f10, f2
-	  ble-      .loc_0x94
-	  li        r3, 0
-	  b         .loc_0xE0
-
-	.loc_0x94:
-	  fsubs     f1, f12, f6
-	  fsubs     f0, f11, f5
-	  fmuls     f1, f7, f1
-	  fmuls     f0, f8, f0
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f4
-	  ble-      .loc_0xB8
-	  li        r3, 0
-	  b         .loc_0xE0
-
-	.loc_0xB8:
-	  fsubs     f1, f12, f2
-	  fsubs     f0, f11, f3
-	  fmuls     f1, f9, f1
-	  fmuls     f0, f10, f0
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f4
-	  ble-      .loc_0xDC
-	  li        r3, 0
-	  b         .loc_0xE0
-
-	.loc_0xDC:
-	  li        r3, 0x1
-
-	.loc_0xE0:
-	  addi      r1, r1, 0x200
-	  blr
-	*/
 }
 
 /*
@@ -1435,240 +1249,72 @@ bool pointInsideTri(KTri& tri, Vector3f& point)
  * Address: 80039024
  * Size:    000260
  */
-f32 triRectDistance(Vector3f* vecA, Vector3f* vecB, Vector3f* vecC, BoundBox& box, bool p5)
+f32 triRectDistance(Vector3f* vertex1, Vector3f* vertex2, Vector3f* vertex3, BoundBox& boundingBox, bool)
 {
-	// project triangle points down onto plane
-	Vector3f A(*vecA); // 0x148
-	Vector3f B(*vecB); // 0x13C
-	Vector3f C(*vecC); // 0x130
+	// Project triangle vertices onto XZ plane (y=0)
+	Vector3f projVertex1 = *vertex1;
+	Vector3f projVertex2 = *vertex2;
+	Vector3f projVertex3 = *vertex3;
+	projVertex1.y = projVertex2.y = projVertex3.y = 0.0f;
 
-	A.y = B.y = C.y = 0.0f;
+	// Create triangle and rectangle objects for intersection tests
+	KTri projTriangle;
+	KRect projRectangle;
+	projTriangle.set(projVertex1, projVertex2, projVertex3);
 
-	KTri tri;
-	KRect rect;
+	// Calculate rectangle corners from bounding box XZ coordinates
+	Vector3f botLeft;
+	Vector3f topLeft;
+	Vector3f botRight;
+	Vector3f topRight;
 
-	tri.set(A, B, C);
-
-	// set rectangle points from XZ of bounding box, projected down to plane
-	Vector3f botLeft;  // 0xDC
-	Vector3f topLeft;  // 0xD0
-	Vector3f botRight; // 0xC4
-	Vector3f topRight; // 0xB8
-
-	botLeft   = box.mMin;
+	botLeft   = boundingBox.mMin;
 	botLeft.y = 0.0f;
 
-	Vector3f boxDiffXZ(box.mMax.x - box.mMin.x, 0.0f, box.mMax.z - box.mMin.z);
+	// Calculate XZ dimensions of rectangle
+	Vector3f rectDimensions(boundingBox.mMax.x - boundingBox.mMin.x, 0.0f, boundingBox.mMax.z - boundingBox.mMin.z);
 
-	topLeft  = botLeft + Vector3f(boxDiffXZ.x, 0.0f, 0.0f);
-	botRight = botLeft + Vector3f(0.0f, 0.0f, boxDiffXZ.z);
-	topRight = botLeft + boxDiffXZ;
+	// Set rectangle corner points
+	topLeft  = botLeft + Vector3f(rectDimensions.x, 0.0f, 0.0f);
+	botRight = botLeft + Vector3f(0.0f, 0.0f, rectDimensions.z);
+	topRight = botLeft + rectDimensions;
 
-	rect.mBotTri.set(botLeft, topLeft, botRight);
+	projRectangle.mBotTri.set(botLeft, topLeft, botRight);
 
-	if (rect.inside(A)) {
-		return 0.0f;
-	}
-	if (rect.inside(B)) {
-		return 0.0f;
-	}
-	if (rect.inside(C)) {
+	// Check if any triangle vertex is inside rectangle
+	if (projRectangle.inside(projVertex1)) {
 		return 0.0f;
 	}
 
-	if (pointInsideTri(tri, botLeft)) {
+	if (projRectangle.inside(projVertex2)) {
 		return 0.0f;
 	}
 
-	if (pointInsideTri(tri, topLeft)) {
+	if (projRectangle.inside(projVertex3)) {
 		return 0.0f;
 	}
 
-	if (pointInsideTri(tri, botRight)) {
+	// Check if any rectangle corner is inside triangle
+	if (pointInsideTri(projTriangle, botLeft)) {
 		return 0.0f;
 	}
 
-	if (pointInsideTri(tri, topRight)) {
+	if (pointInsideTri(projTriangle, topLeft)) {
 		return 0.0f;
 	}
 
+	if (pointInsideTri(projTriangle, botRight)) {
+		return 0.0f;
+	}
+
+	if (pointInsideTri(projTriangle, topRight)) {
+		return 0.0f;
+	}
+
+	// Calculate minimum distance between non-intersecting shapes
 	f32 a, b, c, d;
 	u32 badCompiler[7];
-	return distanceTriRect(tri, rect, &a, &b, &c, &d);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x160(r1)
-	  stw       r31, 0x15C(r1)
-	  mr        r31, r6
-	  lfs       f0, 0x0(r3)
-	  stfs      f0, 0x148(r1)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x14C(r1)
-	  lfs       f0, 0x8(r3)
-	  addi      r3, r1, 0x10C
-	  stfs      f0, 0x150(r1)
-	  lfs       f0, 0x0(r4)
-	  stfs      f0, 0x13C(r1)
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x140(r1)
-	  lfs       f0, 0x8(r4)
-	  stfs      f0, 0x144(r1)
-	  lfs       f0, 0x0(r5)
-	  stfs      f0, 0x130(r1)
-	  lfs       f0, 0x4(r5)
-	  stfs      f0, 0x134(r1)
-	  lfs       f1, 0x8(r5)
-	  lfs       f0, -0x7C60(r2)
-	  stfs      f1, 0x138(r1)
-	  stfs      f0, 0x134(r1)
-	  stfs      f0, 0x140(r1)
-	  stfs      f0, 0x14C(r1)
-	  bl        0x408
-	  addi      r3, r1, 0xE8
-	  bl        0x400
-	  addi      r3, r1, 0x10C
-	  addi      r4, r1, 0x148
-	  addi      r5, r1, 0x13C
-	  addi      r6, r1, 0x130
-	  bl        0x418
-	  lfs       f0, -0x7C60(r2)
-	  addi      r3, r1, 0xE8
-	  addi      r4, r1, 0xDC
-	  stfs      f0, 0xE4(r1)
-	  addi      r5, r1, 0xD0
-	  addi      r6, r1, 0xC4
-	  stfs      f0, 0xE0(r1)
-	  stfs      f0, 0xDC(r1)
-	  stfs      f0, 0xD8(r1)
-	  stfs      f0, 0xD4(r1)
-	  stfs      f0, 0xD0(r1)
-	  stfs      f0, 0xCC(r1)
-	  stfs      f0, 0xC8(r1)
-	  stfs      f0, 0xC4(r1)
-	  stfs      f0, 0xC0(r1)
-	  stfs      f0, 0xBC(r1)
-	  stfs      f0, 0xB8(r1)
-	  lwz       r7, 0x0(r31)
-	  lwz       r0, 0x4(r31)
-	  stw       r7, 0xDC(r1)
-	  stw       r0, 0xE0(r1)
-	  lwz       r0, 0x8(r31)
-	  stw       r0, 0xE4(r1)
-	  stfs      f0, 0xE0(r1)
-	  lfs       f1, 0xC(r31)
-	  lfs       f0, 0x0(r31)
-	  lfs       f4, 0xDC(r1)
-	  fsubs     f1, f1, f0
-	  lfs       f3, 0x14(r31)
-	  lfs       f2, 0x8(r31)
-	  lfs       f0, -0x7A28(r13)
-	  fadds     f5, f4, f1
-	  fsubs     f1, f3, f2
-	  stfs      f5, 0xD0(r1)
-	  lfs       f2, 0xE0(r1)
-	  fadds     f0, f2, f0
-	  stfs      f0, 0xD4(r1)
-	  lfs       f3, 0xE4(r1)
-	  lfs       f0, -0x7A24(r13)
-	  fadds     f6, f3, f1
-	  fadds     f0, f3, f0
-	  stfs      f0, 0xD8(r1)
-	  lfs       f1, -0x7A20(r13)
-	  lfs       f0, -0x7A1C(r13)
-	  fadds     f1, f4, f1
-	  fadds     f0, f2, f0
-	  stfs      f1, 0xC4(r1)
-	  stfs      f0, 0xC8(r1)
-	  stfs      f6, 0xCC(r1)
-	  lfs       f0, -0x7A18(r13)
-	  stfs      f5, 0xB8(r1)
-	  fadds     f0, f2, f0
-	  stfs      f0, 0xBC(r1)
-	  stfs      f6, 0xC0(r1)
-	  bl        0x33C
-	  addi      r3, r1, 0xE8
-	  addi      r4, r1, 0x148
-	  bl        0x294
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x188
-	  lfs       f1, -0x7C60(r2)
-	  b         .loc_0x24C
-
-	.loc_0x188:
-	  addi      r3, r1, 0xE8
-	  addi      r4, r1, 0x13C
-	  bl        0x278
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1A4
-	  lfs       f1, -0x7C60(r2)
-	  b         .loc_0x24C
-
-	.loc_0x1A4:
-	  addi      r3, r1, 0xE8
-	  addi      r4, r1, 0x130
-	  bl        0x25C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1C0
-	  lfs       f1, -0x7C60(r2)
-	  b         .loc_0x24C
-
-	.loc_0x1C0:
-	  addi      r3, r1, 0x10C
-	  addi      r4, r1, 0xDC
-	  bl        -0x2B0
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1DC
-	  lfs       f1, -0x7C60(r2)
-	  b         .loc_0x24C
-
-	.loc_0x1DC:
-	  addi      r3, r1, 0x10C
-	  addi      r4, r1, 0xD0
-	  bl        -0x2CC
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1F8
-	  lfs       f1, -0x7C60(r2)
-	  b         .loc_0x24C
-
-	.loc_0x1F8:
-	  addi      r3, r1, 0x10C
-	  addi      r4, r1, 0xC4
-	  bl        -0x2E8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x214
-	  lfs       f1, -0x7C60(r2)
-	  b         .loc_0x24C
-
-	.loc_0x214:
-	  addi      r3, r1, 0x10C
-	  addi      r4, r1, 0xB8
-	  bl        -0x304
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x230
-	  lfs       f1, -0x7C60(r2)
-	  b         .loc_0x24C
-
-	.loc_0x230:
-	  addi      r3, r1, 0x10C
-	  addi      r4, r1, 0xE8
-	  addi      r5, r1, 0xA8
-	  addi      r6, r1, 0xA4
-	  addi      r7, r1, 0xA0
-	  addi      r8, r1, 0x9C
-	  bl        .loc_0x260
-
-	.loc_0x24C:
-	  lwz       r0, 0x164(r1)
-	  lwz       r31, 0x15C(r1)
-	  addi      r1, r1, 0x160
-	  mtlr      r0
-	  blr
-
-	.loc_0x260:
-	*/
+	return distanceTriRect(projTriangle, projRectangle, &a, &b, &c, &d);
 }
 
 /*
@@ -1676,137 +1322,18 @@ f32 triRectDistance(Vector3f* vecA, Vector3f* vecB, Vector3f* vecC, BoundBox& bo
  * Address: 80039284
  * Size:    0001A8
  */
-f32 distanceTriRect(KTri& tri, KRect& rect, f32* p3, f32* p4, f32* p5, f32* p6)
+f32 distanceTriRect(KTri& tri, KRect& rect, f32* barycentricU, f32* barycentricV, f32* p5, f32* p6)
 {
-	f32 sqrDist = sqrDistance(tri, rect, p3, p4, p5, p6);
+	f32 sqrDist = sqrDistance(tri, rect, barycentricU, barycentricV, p5, p6);
 
-	Vector3f vec;
-	vec = tri.mVertA + tri.mSideAB * *p3 + tri.mSideAC * *p4;
+	Vector3f closestPoint;
+	closestPoint = tri.Origin() + tri.Edge0() * *barycentricU + tri.Edge1() * *barycentricV;
 
-	if (rect.inside(vec)) {
+	if (rect.inside(closestPoint)) {
 		return 0.0f;
 	}
 
-	u32 badCompiler[4];
 	return std::sqrtf(sqrDist);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xC8(r1)
-	  stfd      f31, 0xC0(r1)
-	  stfd      f30, 0xB8(r1)
-	  stfd      f29, 0xB0(r1)
-	  stfd      f28, 0xA8(r1)
-	  stw       r31, 0xA4(r1)
-	  addi      r31, r6, 0
-	  stw       r30, 0xA0(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x9C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x98(r1)
-	  addi      r28, r3, 0
-	  bl        0x4154
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f30, f1
-	  addi      r6, r1, 0x48
-	  stfs      f0, 0x94(r1)
-	  addi      r5, r1, 0x44
-	  addi      r4, r1, 0x40
-	  stfs      f0, 0x90(r1)
-	  addi      r3, r1, 0x74
-	  stfs      f0, 0x8C(r1)
-	  lfs       f1, 0x14(r28)
-	  lfs       f0, 0x0(r30)
-	  lfs       f3, 0x20(r28)
-	  fmuls     f0, f1, f0
-	  lfs       f4, 0x0(r31)
-	  lfs       f2, 0x1C(r28)
-	  lfs       f1, 0x18(r28)
-	  fmuls     f31, f3, f4
-	  stfs      f0, 0x48(r1)
-	  fmuls     f28, f1, f4
-	  fmuls     f29, f2, f4
-	  lfs       f1, 0x10(r28)
-	  lfs       f0, 0x0(r30)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x44(r1)
-	  lfs       f1, 0xC(r28)
-	  lfs       f0, 0x0(r30)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x40(r1)
-	  bl        -0x2218
-	  lfs       f1, 0x0(r28)
-	  mr        r3, r29
-	  lfs       f0, 0x74(r1)
-	  addi      r4, r1, 0x8C
-	  lfs       f2, 0x4(r28)
-	  fadds     f0, f1, f0
-	  lfs       f1, 0x78(r1)
-	  lfs       f3, 0x8(r28)
-	  fadds     f4, f2, f1
-	  lfs       f1, 0x7C(r1)
-	  fadds     f0, f0, f28
-	  fadds     f2, f3, f1
-	  fadds     f1, f4, f29
-	  stfs      f0, 0x8C(r1)
-	  fadds     f0, f2, f31
-	  stfs      f1, 0x90(r1)
-	  stfs      f0, 0x94(r1)
-	  bl        .loc_0x1A8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x10C
-	  lfs       f1, -0x7C60(r2)
-	  b         .loc_0x178
-
-	.loc_0x10C:
-	  lfs       f0, -0x7C60(r2)
-	  fcmpo     cr0, f30, f0
-	  ble-      .loc_0x174
-	  fsqrte    f1, f30
-	  lfd       f3, -0x7C48(r2)
-	  lfd       f2, -0x7C40(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f30, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f30, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f30, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f30, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x58(r1)
-	  lfs       f1, 0x58(r1)
-	  b         .loc_0x178
-
-	.loc_0x174:
-	  fmr       f1, f30
-
-	.loc_0x178:
-	  lwz       r0, 0xCC(r1)
-	  lfd       f31, 0xC0(r1)
-	  lfd       f30, 0xB8(r1)
-	  lfd       f29, 0xB0(r1)
-	  lfd       f28, 0xA8(r1)
-	  lwz       r31, 0xA4(r1)
-	  lwz       r30, 0xA0(r1)
-	  lwz       r29, 0x9C(r1)
-	  lwz       r28, 0x98(r1)
-	  addi      r1, r1, 0xC8
-	  mtlr      r0
-	  blr
-
-	.loc_0x1A8:
-	*/
 }
 
 /*
@@ -1816,46 +1343,16 @@ f32 distanceTriRect(KTri& tri, KRect& rect, f32* p3, f32* p4, f32* p5, f32* p6)
  */
 bool KRect::inside(Vector3f& point)
 {
-	Vector3f botLeft(mBotTri.mVertA);
-	Vector3f topRight(mBotTri.mVertA.x + mBotTri.mSideAB.x + mBotTri.mSideAC.x, 0.0f,
-	                  mBotTri.mVertA.z + mBotTri.mSideAB.z + mBotTri.mSideAC.z);
-	if (point.x >= botLeft.x && point.x <= topRight.x && point.z >= botLeft.z && point.z <= topRight.z) {
+	Vector3f rectMin = mBotTri.Origin();
+
+	Vector3f rectMax;
+	rectMax = (mBotTri.Origin() + mBotTri.Edge0()) + mBotTri.Edge1();
+
+	if (point.x >= rectMin.x && point.x <= rectMax.x && point.z >= rectMin.z && point.z <= rectMax.z) {
 		return true;
 	}
-	return false;
-	/*
-	.loc_0x0:
-	  lfs       f4, 0x8(r3)
-	  lfs       f0, 0x14(r3)
-	  lfs       f5, 0x0(r3)
-	  lfs       f3, 0xC(r3)
-	  fadds     f2, f4, f0
-	  lfs       f6, 0x0(r4)
-	  lfs       f1, 0x20(r3)
-	  fadds     f3, f5, f3
-	  fcmpo     cr0, f6, f5
-	  lfs       f0, 0x18(r3)
-	  fadds     f1, f2, f1
-	  fadds     f0, f3, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x68
-	  fcmpo     cr0, f6, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x68
-	  lfs       f0, 0x8(r4)
-	  fcmpo     cr0, f0, f4
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x68
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x68
-	  li        r3, 0x1
-	  blr
 
-	.loc_0x68:
-	  li        r3, 0
-	  blr
-	*/
+	return false;
 }
 
 /*

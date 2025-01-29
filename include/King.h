@@ -564,13 +564,13 @@ struct KingGenSalivaParticleCallBack : public zen::CallBack2<zen::particleGenera
 		if (minY > ptclPos.y) {
 			CollTriInfo* currTri = mapMgr->getCurrTri(ptclPos.x, ptclPos.z, true);
 			if (currTri) {
-				Vector3f norm(currTri->_28[0].mNormal);
+				Vector3f norm(currTri->mEdgePlanes[0].mNormal);
 				norm.multiply(0.01f);
 				ptclPos.y = minY;
 				ptclGen->killParticle(ptcl);
 				zen::particleGenerator* newGen = effectMgr->create(EffectMgr::EFF_King_SalivaDroplet, ptclPos, nullptr, nullptr);
 				if (newGen) {
-					newGen->setOrientedNormalVector(currTri->mTriangleNormal);
+					newGen->setOrientedNormalVector(currTri->mTriangle.mNormal);
 					newGen->setEmitDir(norm);
 				}
 			}
@@ -598,13 +598,13 @@ struct KingGenSpitPartsParticleCallBack : public zen::CallBack2<zen::particleGen
 		if (minY > ptclPos.y) {
 			CollTriInfo* currTri = mapMgr->getCurrTri(ptclPos.x, ptclPos.z, true);
 			if (currTri) {
-				Vector3f norm(currTri->_28[0].mNormal);
+				Vector3f norm(currTri->mEdgePlanes[0].mNormal);
 				norm.multiply(0.01f);
 				ptclPos.y = minY;
 				ptclGen->killParticle(ptcl);
 				zen::particleGenerator* newGen = effectMgr->create(EffectMgr::EFF_King_SalivaDroplet, ptclPos, nullptr, nullptr);
 				if (newGen) {
-					newGen->setOrientedNormalVector(currTri->mTriangleNormal);
+					newGen->setOrientedNormalVector(currTri->mTriangle.mNormal);
 					newGen->setEmitDir(norm);
 				}
 			}

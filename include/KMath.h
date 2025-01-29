@@ -14,6 +14,10 @@ struct KTri {
 
 	void set(Vector3f& pointA, Vector3f& pointB, Vector3f& pointC);
 
+	inline Vector3f& Origin() { return mVertA; }
+	inline Vector3f& Edge0() { return mSideAB; }
+	inline Vector3f& Edge1() { return mSideAC; }
+
 	// set clockwise
 	Vector3f mVertA;  // _00, vertex
 	Vector3f mSideAB; // _0C, line from vertex A to vertex B

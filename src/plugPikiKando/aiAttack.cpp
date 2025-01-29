@@ -1863,8 +1863,8 @@ void ActJumpAttack::doClimb()
 
 	bool check = true;
 	for (int i = 0; i < 3; i++) {
-		if (mPiki->mClimbingTri->_28[i].dist(mPiki->mPosition) < -2.0f * mPiki->getCentreSize()) {
-			PRINT("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mPiki->mClimbingTri->_28[i].dist(mPiki->mPosition),
+		if (mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mPosition) < -2.0f * mPiki->getCentreSize()) {
+			PRINT("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mPosition),
 			      -2.0f * mPiki->getCentreSize());
 			check = false;
 		}
