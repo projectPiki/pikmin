@@ -41,12 +41,14 @@ void FishGenerator::startAI(int)
 {
 	mFishCount = 32;
 	for (int i = 0; i < mFishCount; i++) {
-		Fish* fish      = &mFish[i];
-		f32 randMag     = randFloat(40.0f);
-		f32 randAngle   = 2.0f * randFloat(PI);
-		fish->mPosition = mPosition + Vector3f(randMag * sinf(randAngle), 4.0f, randMag * cosf(randAngle));
-		fish->_0C.set(0.0f, 0.0f, 0.0f);
-		fish->mDirection = 2.0f * randFloat(PI);
+		Fish& fish = mFish[i];
+
+		f32 randMag   = randFloat(40.0f);
+		f32 randAngle = 2.0f * randFloat(PI);
+
+		fish.mPosition = mPosition + Vector3f(randMag * sinf(randAngle), 4.0f, randMag * cosf(randAngle));
+		fish.mVelocity.set(0.0f, 0.0f, 0.0f);
+		fish.mDirection = 2.0f * randFloat(PI);
 	}
 	/*
 	.loc_0x0:
@@ -192,59 +194,76 @@ void FishGenerator::update()
  */
 void FishGenerator::moveFish(Fish* fish)
 {
-	f32 a         = 20.0f;
-	Fish* theFish = nullptr;
-	Vector3f vec(0.0f, 0.0f, 0.0f);
-	int fishFound = 0;
-	Vector3f vec2(0.0f, 0.0f, 0.0f);
+	f32 closestDistance = 20.0f;
+	Fish* nearestFish   = nullptr;
+	Vector3f averageDirection(0.0f, 0.0f, 0.0f);
+	int nearbyFishCount = 0;
+	Vector3f separationForce(0.0f, 0.0f, 0.0f);
 
+	// Check all other fish for flocking behaviour
 	for (int i = 0; i < mFishCount; i++) {
-		Fish* cFish = &mFish[i];
-		if (cFish != fish) {
-			f32 dist = qdist2(cFish->mPosition.x, cFish->mPosition.z, fish->mPosition.x, fish->mPosition.z);
-			if (dist < 20.0f) {
-				vec = vec + cFish->_0C;
-				fishFound++;
+		Fish* otherFish = &mFish[i];
+
+		if (otherFish == fish) {
+			continue;
+		}
+
+		f32 distanceToFish = qdist2(otherFish->mPosition.x, otherFish->mPosition.z, fish->mPosition.x, fish->mPosition.z);
+
+		// Cohesion - move towards center of nearby fish
+		if (distanceToFish < 20.0f) {
+			averageDirection = averageDirection + otherFish->mVelocity;
+			nearbyFishCount++;
+		}
+
+		// Find closest fish and apply separation if too close
+		if (distanceToFish < closestDistance) {
+			nearestFish = otherFish;
+			if (distanceToFish < 4.0f) {
+				separationForce = fish->mPosition - otherFish->mPosition;
+				separationForce.normalise();
 			}
-			if (dist < a) {
-				theFish = cFish;
-				if (dist < 4.0f) {
-					vec2 = fish->mPosition - cFish->mPosition;
-					vec2.normalise();
-				}
-				a = dist;
-			}
+
+			closestDistance = distanceToFish;
 		}
 	}
 
-	if (fishFound > 0) {
-		f32 size = 1.0f / fishFound;
-		vec      = vec * size;
+	// Average the direction of nearby fish
+	if (nearbyFishCount > 0) {
+		f32 inverseCount = 1.0f / nearbyFishCount;
+		averageDirection = averageDirection * inverseCount;
 	}
 
-	if (theFish) {
+	// Update fish movement
+	if (nearestFish) {
+		// 90% chance to move towards the center of the school
 		if (gsys->getRand(1.0f) >= 0.1f) {
-			f32 c         = (gsys->getRand(1.0f) - 0.5f) * PI * 0.1f;
-			Vector3f diff = mSchoolCentre - fish->mPosition;
-			diff.normalise();
-			diff      = diff * 100.0f;
-			diff      = diff * 100.0f;
-			fish->_0C = diff * 0.4f + diff * 0.2f + diff * 0.4f;
+			f32 randomTurnAngle = (gsys->getRand(1.0f) - 0.5f) * PI * 0.1f;
+
+			Vector3f schoolDirection = mSchoolCentre - fish->mPosition;
+			schoolDirection.normalise();
+			schoolDirection = schoolDirection * 100.0f;
+			schoolDirection = schoolDirection * 100.0f;
+
+			fish->mVelocity = schoolDirection * 0.4f + schoolDirection * 0.2f + schoolDirection * 0.4f;
 		}
 	} else {
-		f32 c            = (gsys->getRand(1.0f) - 0.5f) * PI * 0.1f;
-		fish->mDirection = roundAng(c + fish->mDirection);
-		Vector3f diff    = mSchoolCentre - fish->mPosition;
-		diff.normalise();
-		diff = diff * 100.0f;
-		Vector3f angle(sinf(fish->mDirection), 0.0f, cosf(fish->mDirection));
-		fish->_0C = diff * 0.9f + angle * 0.1f;
+		// No nearby fish - wander and try to return to school
+		f32 randomTurnAngle = (gsys->getRand(1.0f) - 0.5f) * PI * 0.1f;
+		fish->mDirection    = roundAng(randomTurnAngle + fish->mDirection);
+
+		Vector3f schoolDirection = mSchoolCentre - fish->mPosition;
+		schoolDirection.normalise();
+		schoolDirection = schoolDirection * 100.0f;
+
+		Vector3f currentHeading(sinf(fish->mDirection), 0.0f, cosf(fish->mDirection));
+		fish->mVelocity = schoolDirection * 0.9f + currentHeading * 0.1f;
 	}
 
-	MoveTrace trace(fish->mPosition, fish->_0C, 1.0f, false);
+	MoveTrace trace(fish->mPosition, fish->mVelocity, 1.0f, false);
 	mapMgr->traceMove(nullptr, trace, gsys->getFrameTime());
 	fish->mPosition = trace.mPosition;
-	fish->_0C       = trace._0C;
+	fish->mVelocity = trace.mVelocity;
 	/*
 	.loc_0x0:
 	  mflr      r0

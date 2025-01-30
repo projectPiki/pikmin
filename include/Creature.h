@@ -369,7 +369,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Creature* mPrevSticker;              // _190, sticker before this one in the sticker list
 	Vector3f mAttachPosition;            // _194
 	int mPelletStickSlot;                // _1A0
-	u32 _1A4;                            // _1A4
+	u32 mHasCollChangedVelocity;         // _1A4
 	u32 _1A8;                            // _1A8, unknown
 	Vector3f mLastPosition;              // _1AC
 	SearchBuffer mSearchBuffer;          // _1B8

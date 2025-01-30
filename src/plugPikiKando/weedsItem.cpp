@@ -93,22 +93,24 @@ void GrassGen::finishWork()
  */
 void RockGen::resolve()
 {
-	u16 max = _3D6;
+	u16 max = mMaxPebbles;
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < max - 1; j++) {
-			Vector3f* pos = &mPebbles[j].mPosition;
-			for (int k = j + 1; k < max; k++) {
-				Vector3f* pos2 = &mPebbles[k].mPosition;
-				Vector3f diff  = *pos - *pos2;
-				f32 len        = std::sqrtf(diff.x * diff.x + diff.z * diff.z);
-				diff.normalise();
-				if (len < 30.0f) {
-					diff  = diff * 15.0f;
-					*pos  = *pos - diff;
-					*pos2 = *pos2 + diff;
+			Vector3f& pos = mPebbles[j].mPosition;
 
-					pos->y  = mapMgr->getMinY(pos->x, pos->z, true);
-					pos2->y = mapMgr->getMinY(pos2->x, pos2->z, true);
+			for (int k = j + 1; k < max; k++) {
+				Vector3f& pos2 = mPebbles[k].mPosition;
+
+				Vector3f separation = pos - pos2;
+				f32 distance        = std::sqrtf(separation.x * separation.x + separation.z * separation.z);
+				separation.normalise();
+				if (distance < 30.0f) {
+					separation = separation * 15.0f;
+					pos        = pos - separation;
+					pos2       = pos2 + separation;
+
+					pos.y  = mapMgr->getMinY(pos.x, pos.z, true);
+					pos2.y = mapMgr->getMinY(pos2.x, pos2.z, true);
 				}
 			}
 		}
@@ -292,7 +294,7 @@ void RockGen::resolve()
  */
 void GrassGen::resolve()
 {
-	u16 max = _3D2;
+	u16 max = mTotalGrassCount;
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < max - 1; j++) {
 			Vector3f* pos = &mGrass[j].mPosition;
@@ -493,7 +495,7 @@ RockGen::RockGen(Shape* shape, CreatureProp* props)
     : ItemCreature(OBJTYPE_RockGen, props, nullptr)
 {
 	mPebbles       = 0;
-	_3D6           = 0;
+	mMaxPebbles    = 0;
 	mActivePebbles = 0;
 	mSeContext     = new SeContext;
 	mSeContext->setContext(this, 4);
@@ -504,26 +506,27 @@ RockGen::RockGen(Shape* shape, CreatureProp* props)
  * Address:	800E4C74
  * Size:	000284
  */
-void RockGen::create(int num, f32 size, int)
+void RockGen::create(int num, f32 radius, int)
 {
 	mPebbles       = new Pebble[num];
 	mActivePebbles = num;
-	_3D6           = num;
-	mSize          = size;
+	mMaxPebbles    = num;
+	mSize          = radius;
 
 	for (int i = 0; i < num; i++) {
-		f32 a     = gsys->getRand(1.0f);
-		f32 b     = ((1.0f - a) * gsys->getRand(1.0f) + a) * size;
-		f32 angle = gsys->getRand(1.0f) * TAU;
-		Vector3f dir(sinf(angle) * b, 0.0f, cosf(angle) * b);
-		dir   = dir + mPosition;
-		dir.y = mapMgr->getMinY(dir.x, dir.z, true);
+		f32 randomFactor = gsys->getRand(1.0f);
+		f32 finalRadius  = ((1.0f - randomFactor) * gsys->getRand(1.0f) + randomFactor) * radius;
 
-		Pebble* obj    = &mPebbles[i];
-		obj->mPosition = dir;
-		obj->_0C       = gsys->getRand(1.0f) * 0.999999f * 255.0f;
-		obj->_0D       = gsys->getRand(1.0f) * 0.999999f * 3.0f;
-		obj->mHealth   = obj->_0D * 2 + 2;
+		f32 randomAngle = gsys->getRand(1.0f) * TAU;
+		Vector3f pebbleOffset(sinf(randomAngle) * finalRadius, 0.0f, cosf(randomAngle) * finalRadius);
+		pebbleOffset   = pebbleOffset + mPosition;
+		pebbleOffset.y = mapMgr->getMinY(pebbleOffset.x, pebbleOffset.z, true);
+
+		Pebble& obj          = mPebbles[i];
+		obj.mPosition        = pebbleOffset;
+		obj.mRotationDegrees = gsys->getRand(1.0f) * 0.999999f * 255.0f;
+		obj.mShapeIndex      = gsys->getRand(1.0f) * 0.999999f * 3.0f;
+		obj.mHealth          = obj.mShapeIndex * 2 + 2;
 	}
 
 	resolve();
@@ -715,7 +718,7 @@ Pebble::Pebble()
 void RockGen::setSizeAndNum(f32 size, int num)
 {
 	mActivePebbles = num;
-	_3D6           = num;
+	mMaxPebbles    = num;
 	mSize          = size;
 }
 
@@ -727,7 +730,7 @@ void RockGen::setSizeAndNum(f32 size, int num)
 void RockGen::startAI(int state)
 {
 	mWorkingPikis = 0;
-	create(_3D6, mSize, 0);
+	create(mMaxPebbles, mSize, 0);
 	PRINT("++++++++ CREATE ROCK GEN +++++++\n");
 	mGrid.updateGrid(mPosition);
 	mGrid.updateAIGrid(mPosition, false);
@@ -761,8 +764,8 @@ void RockGen::doSave(RandomAccessStream& data)
 void RockGen::doLoad(RandomAccessStream& data)
 {
 	mActivePebbles = data.readByte();
-	for (int i = 0; i < _3D6 - mActivePebbles; i++) {
-		int offset = _3D6 - 1 - i;
+	for (int i = 0; i < mMaxPebbles - mActivePebbles; i++) {
+		int offset = mMaxPebbles - 1 - i;
 
 		mPebbles[offset].mHealth = 0;
 	}
@@ -827,20 +830,24 @@ void RockGen::update()
  */
 void RockGen::refresh(Graphics& gfx)
 {
-	if (gfx.mCamera->isPointVisible(mPosition, getSize() * 4.0f)) {
-		for (int i = 0; i < _3D6; i++) {
-			Pebble* pb = &mPebbles[i];
-			if (pb->mHealth) {
-				Matrix4f mtx;
-				f32 test = pb->_0C / 255.0f * PI * 2;
-				mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, test, 0.0f), pb->mPosition);
-				Matrix4f mtx2;
-				gfx.calcViewMatrix(mtx, mtx2);
-				gfx._324 = 1;
-				gfx.useMatrix(mtx2, 0);
-				itemMgr->getPebbleShape(pb->_0D)->drawshape(gfx, *gfx.mCamera, nullptr);
-			}
+	if (!gfx.mCamera->isPointVisible(mPosition, getSize() * 4.0f)) {
+		return;
+	}
+
+	for (int i = 0; i < mMaxPebbles; i++) {
+		Pebble& pebble = mPebbles[i];
+		if (!pebble.mHealth) {
+			continue;
 		}
+
+		Matrix4f mtx;
+		f32 yRotation = pebble.mRotationDegrees / 255.0f * PI * 2;
+		mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, yRotation, 0.0f), pebble.mPosition);
+		Matrix4f mtx2;
+		gfx.calcViewMatrix(mtx, mtx2);
+		gfx._324 = 1;
+		gfx.useMatrix(mtx2, 0);
+		itemMgr->getPebbleShape(pebble.mShapeIndex)->drawshape(gfx, *gfx.mCamera, nullptr);
 	}
 }
 
@@ -861,19 +868,24 @@ f32 RockGen::getSize()
  */
 Pebble* RockGen::getRandomPebble()
 {
-	if (mActivePebbles <= 0)
+	if (mActivePebbles <= 0) {
 		return nullptr;
-
-	int id = mActivePebbles * gsys->getRand(1.0f) * 0.999999f;
-	for (int i = 0; i < _3D6; i++) {
-		Pebble* pb = &mPebbles[i];
-		if (pb->mHealth) {
-			if (id <= 0) {
-				return pb;
-			}
-			id--;
-		}
 	}
+
+	int randomPebbleCount = mActivePebbles * gsys->getRand(1.0f) * 0.999999f;
+	for (int i = 0; i < mMaxPebbles; i++) {
+		Pebble& pebble = mPebbles[i];
+		if (!pebble.mHealth) {
+			continue;
+		}
+
+		if (randomPebbleCount <= 0) {
+			return &pebble;
+		}
+
+		randomPebbleCount--;
+	}
+
 	return nullptr;
 }
 
@@ -885,10 +897,10 @@ Pebble* RockGen::getRandomPebble()
 GrassGen::GrassGen(Shape* shape, CreatureProp* props)
     : ItemCreature(OBJTYPE_GrassGen, props, nullptr)
 {
-	mGrass       = 0;
-	_3D2         = 0;
-	mActiveGrass = 0;
-	mSeContext   = new SeContext;
+	mGrass           = 0;
+	mTotalGrassCount = 0;
+	mActiveGrass     = 0;
+	mSeContext       = new SeContext;
 	mSeContext->setContext(this, 4);
 }
 
@@ -899,10 +911,10 @@ GrassGen::GrassGen(Shape* shape, CreatureProp* props)
  */
 void GrassGen::create(int num, f32 size, int)
 {
-	mGrass       = new Grass[num];
-	mActiveGrass = num;
-	_3D2         = num;
-	mSize        = size;
+	mGrass           = new Grass[num];
+	mActiveGrass     = num;
+	mTotalGrassCount = num;
+	mSize            = size;
 
 	for (int i = 0; i < num; i++) {
 		f32 a     = gsys->getRand(1.0f);
@@ -1091,9 +1103,9 @@ Grass::Grass()
  */
 void GrassGen::setSizeAndNum(f32 size, int num)
 {
-	mActiveGrass = num;
-	_3D2         = num;
-	mSize        = size;
+	mActiveGrass     = num;
+	mTotalGrassCount = num;
+	mSize            = size;
 }
 
 /*
@@ -1104,7 +1116,7 @@ void GrassGen::setSizeAndNum(f32 size, int num)
 void GrassGen::startAI(int)
 {
 	mWorkingPikis = 0;
-	create(_3D2, mSize, 0);
+	create(mTotalGrassCount, mSize, 0);
 	mGrid.updateGrid(mPosition);
 	mGrid.updateAIGrid(mPosition, false);
 	PRINT("++++++++ CREATE GRASS GEN +++++++\n");
@@ -1130,7 +1142,7 @@ void GrassGen::update()
 void GrassGen::refresh(Graphics& gfx)
 {
 	if (gfx.mCamera->isPointVisible(mPosition, getSize() * 4.0f)) {
-		for (int i = 0; i < _3D2; i++) {
+		for (int i = 0; i < mTotalGrassCount; i++) {
 			Grass* pb = &mGrass[i];
 			if (pb->mHealth) {
 				Matrix4f mtx;
@@ -1167,15 +1179,19 @@ Grass* GrassGen::getRandomGrass()
 		return nullptr;
 
 	int id = mActiveGrass * gsys->getRand(1.0f) * 0.999999f;
-	for (int i = 0; i < _3D2; i++) {
-		Grass* pb = &mGrass[i];
-		if (pb->mHealth) {
-			if (id <= 0) {
-				return pb;
-			}
-			id--;
+	for (int i = 0; i < mTotalGrassCount; i++) {
+		Grass& pb = mGrass[i];
+		if (!pb.mHealth) {
+			continue;
 		}
+
+		if (id <= 0) {
+			return &pb;
+		}
+
+		id--;
 	}
+
 	return nullptr;
 }
 
@@ -1190,10 +1206,10 @@ WeedsGen::WeedsGen(Shape* shape, CreatureProp* props)
 	if (!shape) {
 		ERROR("ERR\n");
 	}
-	_3C8             = 0;
-	_3D0             = props;
+	mWeedsCount      = 0;
+	mWeedsGenProps   = props;
 	mItemShapeObject = nullptr;
-	_3CC             = shape;
+	mWeedShape       = shape;
 }
 
 /*
@@ -1221,23 +1237,28 @@ void WeedsGen::refresh(Graphics&)
  */
 void WeedsGen::startAI(int ai)
 {
-	for (int i = 0; i < _3C8; i++) {
+	for (int i = 0; i < mWeedsCount; i++) {
 		Weed* gen = (Weed*)itemMgr->birth(OBJTYPE_Weed);
-		if (gen) {
-			f32 size  = gsys->getRand(1.0f) * 50.0f;
-			f32 angle = gsys->getRand(1.0f) * TAU;
-			Vector3f offset(sinf(angle) * size, 0.0f, cosf(angle) * size);
-			offset   = offset + mPosition;
-			offset.y = mapMgr->getMinY(offset.x, offset.z, true);
-			if (!_3CC) {
-				ERROR("STAI\n");
-			}
-			gen->mProps = _3D0;
-			gen->mGen   = this;
-			gen->init(offset);
-			gen->mItemShape = _3CC;
-			gen->startAI(0);
+		if (!gen) {
+			continue;
 		}
+
+		f32 size  = gsys->getRand(1.0f) * 50.0f;
+		f32 angle = gsys->getRand(1.0f) * TAU;
+
+		Vector3f offset(sinf(angle) * size, 0.0f, cosf(angle) * size);
+		offset   = offset + mPosition;
+		offset.y = mapMgr->getMinY(offset.x, offset.z, true);
+
+		if (!mWeedShape) {
+			ERROR("STAI\n");
+		}
+
+		gen->mProps = mWeedsGenProps;
+		gen->mGen   = this;
+		gen->init(offset);
+		gen->mItemShape = mWeedShape;
+		gen->startAI(0);
 	}
 
 	f32 badcompiler[2];
@@ -1264,7 +1285,7 @@ Weed::Weed()
 void Weed::startAI(int)
 {
 	mScale.set(0.1f, 0.1f, 0.1f);
-	_3C8 = 0;
+	mIsPulled = 0;
 }
 
 /*
@@ -1274,11 +1295,11 @@ void Weed::startAI(int)
  */
 bool Weed::interactPullout(Creature* item)
 {
-	if (!_3C8) {
-		_3C8      = 1;
-		_3CA      = 0;
-		f32 size  = 20.0f;
-		f32 angle = item->mFaceDirection;
+	if (!mIsPulled) {
+		mIsPulled     = 1;
+		mPulloutTimer = 0;
+		f32 size      = 20.0f;
+		f32 angle     = item->mFaceDirection;
 		Vector3f velocity(sinf(angle) * -size, 370.0f, cosf(angle) * -size);
 
 		mVelocity       = velocity;
@@ -1296,12 +1317,13 @@ bool Weed::interactPullout(Creature* item)
 void Weed::update()
 {
 	ItemCreature::update();
-	if (_3C8 == 1) {
-		_3CA++;
-		if (_3CA > 30) {
+
+	if (mIsPulled == 1) {
+		mPulloutTimer++;
+		if (mPulloutTimer > 30) {
 			kill(nullptr);
 		} else {
-			f32 s = (1.0f - _3CA / 30.0f);
+			f32 s = (1.0f - mPulloutTimer / 30.0f);
 			s *= 0.1f;
 			mScale.set(s, s, s);
 		}
@@ -1332,7 +1354,7 @@ void Weed::refresh(Graphics& gfx)
  */
 bool Weed::isVisible()
 {
-	return _3C8 == 0;
+	return mIsPulled == 0;
 }
 
 /*
@@ -1352,5 +1374,5 @@ bool Weed::isAlive()
  */
 bool Weed::isAtari()
 {
-	return _3C8 == 0;
+	return mIsPulled == 0;
 }

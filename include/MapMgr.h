@@ -15,18 +15,18 @@ struct DayMgr;
  * @brief TODO
  */
 struct MoveTrace {
-	MoveTrace(Vector3f& position, Vector3f& p2, f32 height, bool p4)
+	MoveTrace(Vector3f& position, Vector3f& velocity, f32 height, bool p4)
 	{
 		_20       = p4;
 		mPosition = position;
-		_0C       = p2;
+		mVelocity = velocity;
 		mHeight   = height;
 		_24       = 0;
 		_1C       = 1.0f;
 	}
 
 	Vector3f mPosition; // _00
-	Vector3f _0C;       // _0C
+	Vector3f mVelocity; // _0C
 	f32 mHeight;        // _18
 	f32 _1C;            // _1C
 	bool _20;           // _20

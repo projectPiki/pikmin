@@ -28,18 +28,18 @@ struct FastGrid {
 	static u8* aiGridMap; // type unsure
 	static u16 aiGridSize;
 
-	s16 _00; // _00
-	u16 _02; // _02
-	s16 _04; // _04
-	u16 _06; // _06
-	s16 _08; // _08
-	u16 _0A; // _0A
-	s16 _0C; // _0C
-	u16 _0E; // _0E
-	s16 _10; // _10
-	u16 _12; // _12
-	u16 _14; // _14
-	u16 _16; // _16
+	s16 mGridPositionX; // _00
+	u16 _02;            // _02
+	s16 mGridPositionY; // _04
+	u16 _06;            // _06
+	s16 mGridPositionZ; // _08
+	u16 _0A;            // _0A
+	s16 mWidth;         // _0C
+	u16 _0E;            // _0E
+	s16 mHeight;        // _10
+	u16 _12;            // _12
+	u16 _14;            // _14
+	u16 _16;            // _16
 };
 
 #endif

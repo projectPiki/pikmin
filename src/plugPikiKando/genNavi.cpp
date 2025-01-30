@@ -77,7 +77,7 @@ Creature* GenObjectNavi::birth(BirthInfo& info)
 		newNavi->reset();
 		newNavi->mGenerator  = info.mGenerator;
 		newNavi->mNaviCamera = naviMgr->getNavi()->mNaviCamera;
-		flowCont._230        = 1;
+		flowCont.mNaviOnMap  = 1;
 	}
 
 	return newNavi;

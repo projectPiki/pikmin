@@ -57,8 +57,8 @@ void Action::procMsg(Msg* msg)
 void Action::Child::initialise(Creature* creature)
 {
 	if (mAction) {
-		mAction->mPiki->mEmotion = 10;
-		mAction->mPiki->_408     = 2;
+		mAction->mPiki->mEmotion     = 10;
+		mAction->mPiki->mActionState = 2;
 	}
 
 	if (mAction) {
@@ -361,7 +361,7 @@ int TopAction::exec()
 		_2C            = 1.0f;
 		if (mPiki->mMode != PikiMode::FreeMode) {
 			bool doJoinParty = false;
-			switch (mPiki->_408) {
+			switch (mPiki->mActionState) {
 			case 2:
 				break;
 			case 1:
@@ -397,7 +397,7 @@ int TopAction::exec()
 				PRINT("******** BOMB * FREEEEEEEEEEEEEEEEEEE WHYYYYYYYYYYYYYION !\n");
 			}
 
-			if (mPiki->_408 == 3 && mPiki->isHolding()) {
+			if (mPiki->mActionState == 3 && mPiki->isHolding()) {
 				mPiki->changeMode(PikiMode::PutbombMode, mPiki->mNavi);
 			} else {
 				int emote      = mPiki->mEmotion;

@@ -37,19 +37,19 @@ ActPush::ActPush(Piki* piki)
  */
 void ActPush::init(Creature* target)
 {
-	_1C             = 2;
-	mPiki->_408     = 2;
-	mPiki->mEmotion = 0;
-	mHinderRock     = 0;
+	mPushAnimationState = 2;
+	mPiki->mActionState = 2;
+	mPiki->mEmotion     = 0;
+	mHinderRock         = 0;
 	if (target && target->mObjType == OBJTYPE_WorkObject) {
 		WorkObject* obj = (WorkObject*)target;
 		if (obj->isHinderRock()) {
 			mHinderRock = (HinderRock*)obj;
 		}
 	}
-	mState = STATE_Approach;
-	_3C    = 0;
-	_44    = 0;
+	mState             = STATE_Approach;
+	mPushObjectStopped = 0;
+	mState             = 0;
 }
 
 /*
@@ -73,23 +73,23 @@ bool ActPush::collideRockSurface()
  */
 int ActPush::exec()
 {
-	if (_44 == 1) {
+	if (mState == 1) {
 		return ACTOUT_Continue;
 	}
 
-	if (_44 == 2) {
+	if (mState == 2) {
 		mPiki->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
 
-	if (mHinderRock->isMoving() && _3C) {
-		_3C = 0;
-		_40 = pikiMgr->mPikiParms->mPikiParms._49C();
+	if (mHinderRock->isMoving() && mPushObjectStopped) {
+		mPushObjectStopped = 0;
+		_40                = pikiMgr->mPikiParms->mPikiParms._49C();
 	} else if (!mHinderRock->isMoving()) {
-		_3C = 1;
+		mPushObjectStopped = 1;
 	}
 
-	_44 = 0;
+	mState = 0;
 	switch (mState) {
 	case STATE_Approach:
 		return exeApproach();
@@ -164,21 +164,21 @@ int ActPush::exeApproach()
  */
 void ActPush::initGo()
 {
-	mState = STATE_Go;
-	_46    = 0;
+	mState       = STATE_Go;
+	mIsPushReady = 0;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
-	_1C = 2;
+	mPushAnimationState = 2;
 	if (mHinderRock) {
 		_38 = unitRandFloat();
 	}
 
 	_40 = pikiMgr->mPikiParms->mPikiParms._49C();
-	if (!_3C) {
-		_3C = 1;
+	if (!mPushObjectStopped) {
+		mPushObjectStopped = 1;
 	}
 
-	_46 = 1;
-	_45 = int(randFloat(5.0f)) + 5;
+	mIsPushReady = 1;
+	mPushCount   = int(randFloat(5.0f)) + 5;
 
 	if (mHinderRock) {
 		mHinderRock->beginPush();
@@ -219,10 +219,10 @@ int ActPush::exeGo()
 	if (collideRockSurface()) {
 		InteractPush push(mPiki, 1);
 		mHinderRock->stimulate(push);
-		if (_46) {
+		if (mIsPushReady) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu, this), PaniMotionInfo(PIKIANIM_Osu));
-			_1C = 0;
-			_46 = 0;
+			mPushAnimationState = 0;
+			mIsPushReady        = 0;
 		}
 	}
 
@@ -241,7 +241,7 @@ void ActPush::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	case KEY_Action0:
 	case KEY_Action1:
-		if (_1C == 0 && mHinderRock && mHinderRock->isMoving()) {
+		if (mPushAnimationState == 0 && mHinderRock && mHinderRock->isMoving()) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu_Walk, this), PaniMotionInfo(PIKIANIM_Osu_Walk));
 			f32 frame = 11.0f;
 			if (event.mEventType == KEY_Action0) {
@@ -250,22 +250,22 @@ void ActPush::animationKeyUpdated(PaniAnimKeyEvent& event)
 
 			mPiki->mPikiAnimMgr.getUpperAnimator().mAnimationCounter = frame;
 			mPiki->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = frame;
-			_1C                                                      = 1;
+			mPushAnimationState                                      = 1;
 		}
 		break;
 	case KEY_LoopEnd:
-		if (_1C == 1 && mHinderRock && !mHinderRock->isMoving()) {
+		if (mPushAnimationState == 1 && mHinderRock && !mHinderRock->isMoving()) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu, this), PaniMotionInfo(PIKIANIM_Osu));
-			_45                                                      = int(randFloat(5.0f)) + 5;
+			mPushCount                                               = int(randFloat(5.0f)) + 5;
 			mPiki->mPikiAnimMgr.getUpperAnimator().mAnimationCounter = 30.0f;
 			mPiki->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 30.0f;
-			_1C                                                      = 0;
+			mPushAnimationState                                      = 0;
 		}
 
-		if (_1C == 0) {
-			_45--;
-			PRINT("loopCnt = %d\n", _45);
-			if (_45 <= 0) {
+		if (mPushAnimationState == 0) {
+			mPushCount--;
+			PRINT("loopCnt = %d\n", mPushCount);
+			if (mPushCount <= 0) {
 				PRINT("osu count = 0: finish motion\n");
 				mPiki->mPikiAnimMgr.finishMotion(this);
 			}
@@ -274,14 +274,14 @@ void ActPush::animationKeyUpdated(PaniAnimKeyEvent& event)
 		_24 = 1;
 		break;
 	case KEY_Finished:
-		if (_44) {
-			_44 = 2;
+		if (mState) {
+			mState = 2;
 			break;
 		}
 		if (mState == STATE_Go) {
 			PRINT("restart motion !\n");
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu, this), PaniMotionInfo(PIKIANIM_Osu));
-			_45 = int(randFloat(5.0f)) + 5;
+			mPushCount = int(randFloat(5.0f)) + 5;
 		}
 		break;
 	}

@@ -222,19 +222,19 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	{
 		mLookatTarget = other;
 
-		_340 = 0;
-		_330 = 0;
+		mLookTimer = 0;
+		mIsLooking = 0;
 
 		mLookAtTarget.reset();
 	}
 
 	void forceFinishLook()
 	{
-		mLookatTarget = 0;
-		_348          = 0.0f;
-		_344          = 0.0f;
-		_340          = 0;
-		_330          = 0;
+		mLookatTarget       = 0;
+		mVerticalRotation   = 0.0f;
+		mHorizontalRotation = 0.0f;
+		mLookTimer          = 0;
+		mIsLooking          = 0;
 
 		mLookAtTarget.reset();
 	}
@@ -261,25 +261,25 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Vector3f mSplineControlPts[4];        // _2F8
 	s16 mNumRoutePoints;                  // _328
 	Creature* mRouteTargetCreature;       // _32C
-	u8 _330;                              // _330
+	u8 mIsLooking;                        // _330
 	f32 _334;                             // _334
 	SmartPtr<Creature> mLookAtTarget;     // _338
 	Vector3f* mLookatTarget;              // _33C
-	u8 _340;                              // _340
-	f32 _344;                             // _344
-	f32 _348;                             // _348
+	u8 mLookTimer;                        // _340
+	f32 mHorizontalRotation;              // _344
+	f32 mVerticalRotation;                // _348
 	f32 mOldFaceDirection;                // _34C
 	int mBlendMotionIdx;                  // _350
 	PaniPikiAnimMgr mPikiAnimMgr;         // _354
 	u8 mEmotion;                          // _400
 	Creature* mCarryingShipPart;          // _404
-	u8 _408;                              // _408
+	u8 mActionState;                      // _408
 	bool mIsCallable;                     // _409
 	UpdateContext mPikiUpdateContext;     // _40C
 	UpdateContext mPikiLookUpdateContext; // _418
 	bool mIsPanicked;                     // _424
 	u16 mInWaterTimer;                    // _426
-	PermanentEffect* _428;                // _428
+	PermanentEffect* mPanickedEffect;     // _428
 	BurnEffect* mBurnEffect;              // _42C
 	RippleEffect* mRippleEffect;          // _430
 	FreeLightEffect* mFreeLightEffect;    // _434

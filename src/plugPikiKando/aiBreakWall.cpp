@@ -41,9 +41,9 @@ ActBreakWall::ActBreakWall(Piki* piki)
  */
 void ActBreakWall::init(Creature* creature)
 {
-	_31             = 0;
-	mPiki->_408     = 2;
-	mPiki->mEmotion = 0;
+	_31                 = 0;
+	mPiki->mActionState = 2;
+	mPiki->mEmotion     = 0;
 
 	if (creature->isSluice()) {
 		mWall = static_cast<BuildingItem*>(creature);
@@ -269,8 +269,8 @@ int ActBreakWall::breakWall()
 			}
 			_31++;
 			if (_31 >= int(randFloat(3.0f)) + 3) {
-				mPiki->mEmotion = 1;
-				mPiki->_408     = 0;
+				mPiki->mEmotion     = 1;
+				mPiki->mActionState = 0;
 				return ACTOUT_Fail;
 			}
 		}

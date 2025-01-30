@@ -142,15 +142,18 @@ void ViewPiki::changeShape(int index)
 	if (index == -1) {
 		index = mFormationPriority;
 	}
+
 	mPikiShape = PikiShapeObject::create(index);
 	mPikiAnimMgr.changeContext(&mPikiShape->mAnimatorB, &mPikiShape->mAnimatorA);
 	mCollInfo->initInfo(mPikiShape->mShape, nullptr, nullptr);
+
 	if (isKinoko()) {
 		setColor(mColor);
 		mHappaModel = nullptr;
 	} else {
 		setFlower(mHappa);
 	}
+
 	f32 scale = 1.0f;
 	mScale.set(scale, scale, scale);
 	setLeaves(index + 1);
@@ -216,8 +219,8 @@ void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 	_268 = 0.0f;
 	Piki::init(navi);
-	mLastPosition = mPosition;
-	_58C          = mPosition;
+	mLastPosition       = mPosition;
+	mLastEffectPosition = mPosition;
 
 	f32 badcompiler[4];
 	/*
@@ -413,17 +416,29 @@ void ViewPiki::setLeaves(int)
  * Address:	800D90A0
  * Size:	00017C
  */
-void ViewPiki::postUpdate(int a, f32 b)
+void ViewPiki::postUpdate(int _, f32 __)
 {
-	if ((mMode || pikiMgr->isUpdating(1)) && (mMode != 1 || pikiMgr->isUpdating(2)) && pikiMgr->isUpdating(4)) {
-		if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(8)) {
-			Vector3f diff = mPosition - itemMgr->getUfo()->getGoalPos();
-			if (diff.length() > 100.0f) {
-				return;
-			}
-		}
-		Creature::postUpdate(a, b);
+	if (!mMode && !pikiMgr->isUpdating(1)) {
+		return;
 	}
+
+	if (mMode == 1 && !pikiMgr->isUpdating(2)) {
+		return;
+	}
+
+	if (!pikiMgr->isUpdating(4)) {
+		return;
+	}
+
+	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(8)) {
+		Vector3f toShip = mPosition - itemMgr->getUfo()->getGoalPos();
+		if (toShip.length() > 100.0f) {
+			return;
+		}
+	}
+
+	// Params are unused through all function calls
+	Creature::postUpdate(_, __);
 
 	f32 badcompiler[2];
 }
@@ -447,30 +462,46 @@ void ViewPiki::update()
 	}
 
 	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(8)) {
-		Vector3f diff = mPosition - itemMgr->getUfo()->getGoalPos();
-		if (diff.length() > 100.0f) {
+		Vector3f toShip = mPosition - itemMgr->getUfo()->getGoalPos();
+		if (toShip.length() > 100.0f) {
 			mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 			return;
 		}
 	}
 
 	updateColor();
-	_1A4 = 0;
+	mHasCollChangedVelocity = 0;
 	Creature::update();
 	realAI();
+
 	u32 color = mColor;
-	if ((color != 0 || !(gameflow.mDemoFlags & 8)) && (color != 1 || !(gameflow.mDemoFlags & 0x10))
-	    && (color != 2 || !(gameflow.mDemoFlags & 0x20)) && AIPerf::optLevel == 0 && mFloorTri && gsys->getRand(1.0f) > 0.99f) {
-		Vector3f diff = _58C - mPosition;
-		if (diff.length() > 40.0f) {
+	if (color == 0 && gameflow.mDemoFlags & 8) {
+		return;
+	}
+
+	if (color == 1 && gameflow.mDemoFlags & 0x10) {
+		return;
+	}
+
+	if (color == 2 && gameflow.mDemoFlags & 0x20) {
+		return;
+	}
+
+	if (AIPerf::optLevel == 0 && mFloorTri && gsys->getRand(1.0f) > 0.99f) {
+		Vector3f toLastPosition = mLastEffectPosition - mPosition;
+
+		// If we've moved enough, create an effect
+		if (toLastPosition.length() > 40.0f) {
 			Vector3f pos(mPosition.x, mPosition.y + 1.0f, mPosition.z);
 			Vector3f rot(mVelocity.x * 0.01667f, 1.0f, mVelocity.z * 0.01667f);
 			EffectParm parm(pos, rot);
+
 			int attr = MapCode::getAttribute(mFloorTri);
 			if (attr >= 0 && attr <= 3) {
 				utEffectMgr->cast(attr + 3, parm);
 			}
-			_58C = mPosition;
+
+			mLastEffectPosition = mPosition;
 		}
 	}
 
@@ -769,11 +800,11 @@ void ViewPiki::update()
 void Piki::startHimaLook(Vector3f* pos)
 {
 	mLookatTarget = pos;
-	_340          = false;
-	_330          = false;
+	mLookTimer    = false;
+	mIsLooking    = false;
 	mLookAtTarget.reset();
-	_330 = 1;
-	_334 = gsys->getRand(1.0f) * 3.0f + 4.0f;
+	mIsLooking = 1;
+	_334       = gsys->getRand(1.0f) * 3.0f + 4.0f;
 
 	f32 badcompiler[2];
 }
@@ -786,8 +817,8 @@ void Piki::startHimaLook(Vector3f* pos)
 void Piki::finishLook()
 {
 	mLookatTarget = nullptr;
-	_340          = 10;
-	_330          = false;
+	mLookTimer    = 10;
+	mIsLooking    = false;
 }
 
 /*
@@ -802,7 +833,7 @@ bool Piki::isLooking()
 
 /*
  * --INFO--
- * Address:	800D96F0
+ * Address:	800D96F0, 100DE380 in DLL
  * Size:	000378
  */
 void Piki::updateLook()
@@ -810,74 +841,76 @@ void Piki::updateLook()
 	// for some rediculous reason, the code handling a null target is slapped in the MIDDLE of the code
 	// for when there is a target, so the only way I can make it work is with a double goto
 
-	f32 mod = 0.05f;
+	f32 rotationSpeed = 0.05f;
 	if (!mLookatTarget) {
-		goto dumb2;
+		goto resetLook;
 	}
 
-	Vector3f diff = *mLookatTarget - mPosition;
-	f32 angle     = atan2f(diff.x, diff.z);
-	f32 len       = std::sqrtf(diff.x * diff.x + diff.z * diff.z);
-	f32 angle2    = atan2f(diff.y, len);
-	goto dumb1;
+	Vector3f targetOffset  = *mLookatTarget - mPosition;
+	f32 horizontalAngle    = atan2f(targetOffset.x, targetOffset.z);
+	f32 horizontalDistance = std::sqrtf(targetOffset.x * targetOffset.x + targetOffset.z * targetOffset.z);
+	f32 verticalAngle      = atan2f(targetOffset.y, horizontalDistance);
+	goto updateAngles;
 
-	{
-	dumb2:
-		mod  = 0.2f;
-		_344 = roundAng(mod * angDist(0.0f, _344) + _344);
-		_348 = roundAng(mod * angDist(0.0f, _348) + _348);
-		if (absF(_344) < 0.1f && absF(_348) < 0.1f) {
-			forceFinishLook();
-		}
-		return;
+resetLook: {
+	rotationSpeed       = 0.2f;
+	mHorizontalRotation = roundAng(rotationSpeed * angDist(0.0f, mHorizontalRotation) + mHorizontalRotation);
+	mVerticalRotation   = roundAng(rotationSpeed * angDist(0.0f, mVerticalRotation) + mVerticalRotation);
+	if (absF(mHorizontalRotation) < 0.1f && absF(mVerticalRotation) < 0.1f) {
+		forceFinishLook();
 	}
+	return;
+}
 
-dumb1:
-	f32 dir1 = roundAng(_344 + mFaceDirection);
-	f32 dir2 = roundAng(angle - mFaceDirection);
-	f32 calc;
-	if (dir2 < PI) {
-		if (_344 > PI) {
-			calc = TAU - (_344 - dir2);
+updateAngles: {
+	f32 currentFacingAngle = roundAng(mHorizontalRotation + mFaceDirection);
+	f32 targetAngleDiff    = roundAng(horizontalAngle - mFaceDirection);
+	f32 angleAdjustment;
+
+	if (targetAngleDiff < PI) {
+		if (mHorizontalRotation > PI) {
+			angleAdjustment = TAU - (mHorizontalRotation - targetAngleDiff);
 		} else {
-			calc = angDist(angle, dir1);
+			angleAdjustment = angDist(horizontalAngle, currentFacingAngle);
 		}
-	} else if (_344 <= PI) {
-		calc = (_344 - dir2);
-		calc = TAU - calc;
-		calc = calc * -1.0f;
+	} else if (mHorizontalRotation <= PI) {
+		angleAdjustment = (mHorizontalRotation - targetAngleDiff);
+		angleAdjustment = TAU - angleAdjustment;
+		angleAdjustment = angleAdjustment * -1.0f;
 	} else {
-		calc = angDist(angle, dir1);
+		angleAdjustment = angDist(horizontalAngle, currentFacingAngle);
 	}
 
-	if (absF(calc) < 0.15707964f) {
-		calc = 0.0f;
-	}
-	_344 = roundAng(calc * mod + _344);
-	if (_344 > 1.0471976f && _344 < PI) {
-		_344 = 1.0471976f;
-	} else if (_344 < 5.2359877f && _344 >= PI) {
-		_344 = PI;
+	if (absF(angleAdjustment) < 0.15707964f) {
+		angleAdjustment = 0.0f;
 	}
 
-	calc = angDist(angle2, _348);
-	if (absF(calc) < 0.15707964f) {
-		calc = 0.0f;
+	mHorizontalRotation = roundAng(angleAdjustment * rotationSpeed + mHorizontalRotation);
+	if (mHorizontalRotation > 1.0471976f && mHorizontalRotation < PI) {
+		mHorizontalRotation = 1.0471976f;
+	} else if (mHorizontalRotation < 5.2359877f && mHorizontalRotation >= PI) {
+		mHorizontalRotation = PI;
 	}
 
-	_348 = roundAng(calc * mod + _348);
-	if (_348 > 1.0471976f && _348 < PI) {
-		_348 = 1.0471976f;
-	} else if (_348 < 5.2359877f && _348 >= PI) {
-		_348 = PI;
+	angleAdjustment = angDist(verticalAngle, mVerticalRotation);
+	if (absF(angleAdjustment) < 0.15707964f) {
+		angleAdjustment = 0.0f;
 	}
 
-	if (_340) {
-		_340--;
-		if (_340 == 0) {
+	mVerticalRotation = roundAng(angleAdjustment * rotationSpeed + mVerticalRotation);
+	if (mVerticalRotation > 1.0471976f && mVerticalRotation < PI) {
+		mVerticalRotation = 1.0471976f;
+	} else if (mVerticalRotation < 5.2359877f && mVerticalRotation >= PI) {
+		mVerticalRotation = PI;
+	}
+
+	if (mLookTimer) {
+		mLookTimer--;
+		if (mLookTimer == 0) {
 			forceFinishLook();
 		}
 	}
+}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1165,6 +1198,7 @@ void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
 			mPikiShape->mShape->mMaterialList->setColour(Colour(255, 255, 255, 255));
 		}
 	}
+
 	mPikiShape->mShape->mMaterialList->setColour(mCurrentColour);
 
 	if (aiCullable()) {
@@ -1172,7 +1206,7 @@ void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
 	}
 
 	if (mIsPanicked) {
-		_428->updatePos(mShadowPos);
+		mPanickedEffect->updatePos(mShadowPos);
 	}
 
 	if (aiCullable() && AIPerf::optLevel < 3 && mHappaModel) {
@@ -1188,9 +1222,9 @@ void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
 			pos.y        = act->mCPlateSlotID * act->mCPlateSlotID + 50.0f + pos.y;
 			bool light   = gfx.setLighting(false, nullptr);
 			gfx.useMatrix(Matrix4f::ident, 0);
-			if (act->_2C == 2) {
+			if (act->mFormationState == 2) {
 				gfx.setColour(Colour(255, 10, 50, 255), 1);
-			} else if (act->_2C == 2) {
+			} else if (act->mFormationState == 2) {
 				gfx.setColour(Colour(200, 255, 255, 255), 1);
 			} else {
 				gfx.setColour(Colour(255, 255, 255, 255), 1);
@@ -1200,7 +1234,7 @@ void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
 			char buf[256];
 			int cb = gfx.setCBlending(0);
 			pos.multMatrix(gfx.mCamera->mLookAtMtx);
-			sprintf(buf, "%s%d", strs[act->_2E], act->mCPlateSlotID);
+			sprintf(buf, "%s%d", strs[act->mMode], act->mCPlateSlotID);
 			gfx.perspPrintf(gsys->mConsFont, pos, -(gsys->mConsFont->stringWidth(buf) / 2), 0, buf);
 			gfx.setCBlending(cb);
 			gfx.setLighting(light, nullptr);

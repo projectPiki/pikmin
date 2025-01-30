@@ -45,9 +45,9 @@ void ActBou::init(Creature* creature)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 
 	if (mPiki->isHolding()) {
-		mPiki->_408 = 3;
+		mPiki->mActionState = 3;
 	} else {
-		mPiki->_408 = 2;
+		mPiki->mActionState = 2;
 	}
 
 	mTimeoutCounter = 120;

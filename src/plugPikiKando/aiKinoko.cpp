@@ -38,7 +38,7 @@ ActKinoko::ActKinoko(Piki* piki)
  */
 void ActKinoko::init(Creature* creature)
 {
-	mPiki->_408 = 0;
+	mPiki->mActionState = 0;
 	if (creature) {
 		_18.set(creature);
 	}

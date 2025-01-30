@@ -27,11 +27,11 @@ enum EDemoFlags {
 struct DemoFlag {
 	// TODO: this - only gets returned by DemoFlags::getDemoFlag smh
 
-	char* mName; // _00
-	u16 mIndex;  // _04
-	s16 _06;     // _06
-	u16 _08;     // _08
-	bool _0A;    // _0A
+	char* mName;     // _00
+	u16 mIndex;      // _04
+	s16 mMovieIndex; // _06
+	u16 _08;         // _08
+	bool _0A;        // _0A
 };
 
 /**
@@ -85,7 +85,7 @@ struct DemoFlags {
 	DemoFlag** mFlagDataList;  // _0C
 	Creature* mTargetCreature; // _10
 	f32 mWaitTimer;            // _14
-	s16 _18;                   // _18
+	s16 mCurrentDemoIndex;     // _18
 };
 
 /**

@@ -41,10 +41,10 @@ ActBridge::ActBridge(Piki* piki)
  */
 void ActBridge::init(Creature* creature)
 {
-	_32 = _33       = 0;
-	mPiki->_408     = 2;
-	mPiki->mEmotion = 0;
-	mBridge         = nullptr;
+	_32 = _33           = 0;
+	mPiki->mActionState = 2;
+	mPiki->mEmotion     = 0;
+	mBridge             = nullptr;
 
 	if (creature && creature->mObjType == OBJTYPE_WorkObject) {
 		WorkObject* bridge = static_cast<WorkObject*>(creature);

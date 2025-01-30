@@ -29,8 +29,8 @@ DEFINE_PRINT("fastGrid")
  */
 FastGrid::FastGrid()
 {
-	_00 = _04 = _08 = _0C = _10 = 0;
-	_14                         = 1;
+	mGridPositionX = mGridPositionY = mGridPositionZ = mWidth = mHeight = 0;
+	_14                                                                 = 1;
 }
 
 /*
@@ -69,7 +69,7 @@ void FastGrid::clearAIGrid()
  */
 void FastGrid::addAIGrid()
 {
-	int id = _0C * aiGridSize + _10;
+	int id = mWidth * aiGridSize + mHeight;
 	aiGridMap[id]++;
 }
 
@@ -80,7 +80,7 @@ void FastGrid::addAIGrid()
  */
 void FastGrid::delAIGrid()
 {
-	int id = _0C * aiGridSize + _10;
+	int id = mWidth * aiGridSize + mHeight;
 	if (aiGridMap[id]) {
 		aiGridMap[id]--;
 	}
@@ -100,8 +100,8 @@ bool FastGrid::aiCulling()
 	if (_14 != 1) {
 		return aiCullingLarge(_14);
 	}
-	int a      = _0C;
-	int b      = _10;
+	int a      = mWidth;
+	int b      = mHeight;
 	int offset = b + a * aiGridSize;
 	if (aiGridMap[offset]) {
 		return false;
@@ -453,14 +453,14 @@ bool FastGrid::doCulling(const FastGrid&, f32)
 void FastGrid::updateGrid(const Vector3f& pos)
 {
 	if (AIPerf::useGrid) {
-		_00 = pos.x;
-		_00 = _00 >> AIPerf::gridShift;
+		mGridPositionX = pos.x;
+		mGridPositionX = mGridPositionX >> AIPerf::gridShift;
 
-		_08 = pos.z;
-		_08 = _08 >> AIPerf::gridShift;
+		mGridPositionZ = pos.z;
+		mGridPositionZ = mGridPositionZ >> AIPerf::gridShift;
 		if (AIPerf::useGrid == 1) {
-			_04 = pos.y;
-			_04 = _04 >> AIPerf::gridShift;
+			mGridPositionY = pos.y;
+			mGridPositionY = mGridPositionY >> AIPerf::gridShift;
 		}
 	}
 }
@@ -474,11 +474,11 @@ void FastGrid::updateAIGrid(const Vector3f& pos, bool)
 {
 
 	if (AIPerf::useGrid) {
-		_0C = pos.x;
-		_0C = aiGridSize >> 1 + _0C >> aiGridShift;
+		mWidth = pos.x;
+		mWidth = aiGridSize >> 1 + mWidth >> aiGridShift;
 
-		_10 = pos.z;
-		_10 = aiGridSize >> 1 + _10 >> aiGridShift;
+		mHeight = pos.z;
+		mHeight = aiGridSize >> 1 + mHeight >> aiGridShift;
 	}
 	/*
 	.loc_0x0:

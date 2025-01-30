@@ -249,7 +249,7 @@ Pellet* ActTransport::findPellet()
  */
 void ActTransport::init(Creature* target)
 {
-	mPiki->_408 = 1;
+	mPiki->mActionState = 1;
 	if (!target) {
 		target = findPellet();
 	}
@@ -257,7 +257,7 @@ void ActTransport::init(Creature* target)
 	if (target && target->mObjType == OBJTYPE_Pellet && target->isAlive()) {
 		mPellet.set(static_cast<Pellet*>(target));
 		if (mPellet.getPtr()->isUfoParts()) {
-			mPiki->_408 = 2;
+			mPiki->mActionState = 2;
 		}
 	} else {
 		mPellet.reset();
@@ -1694,7 +1694,7 @@ void ActTransport::decideGoal(Creature* cargo)
 	int optionColors[PikiColorCount];
 	int numOptions = 0;
 	int onyonColor = Blue;
-	bool isVsMode  = flowCont._230 == 1;
+	bool isVsMode  = flowCont.mNaviOnMap == 1;
 
 	PRINT("###### decide goal\n");
 	int i;

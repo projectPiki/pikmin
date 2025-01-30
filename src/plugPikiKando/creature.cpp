@@ -509,7 +509,7 @@ void Creature::init(Vector3f& pos)
 {
 	Creature::init();
 	resetPosition(pos);
-	_1A4 = 0;
+	mHasCollChangedVelocity = 0;
 	resetCreatureFlag(CF_StuckToMouth);
 }
 
@@ -882,8 +882,8 @@ void Creature::update()
 		return;
 	}
 
-	_1A4 = 0;
-	_1A8 = 0;
+	mHasCollChangedVelocity = 0;
+	_1A8                    = 0;
 
 	// Handle AI and animations if not frozen
 	if (!mIsFrozen) {
@@ -1021,7 +1021,7 @@ void Creature::update()
  * Address:	8008B788
  * Size:	0001F4
  */
-void Creature::postUpdate(int, f32 p2)
+void Creature::postUpdate(int, f32 _unused)
 {
 	bool isPikiOrNavi = false;
 	if (mObjType == OBJTYPE_Piki || mObjType == OBJTYPE_Navi) {
@@ -1036,7 +1036,7 @@ void Creature::postUpdate(int, f32 p2)
 		return;
 	}
 
-	collisionCheck(p2);
+	collisionCheck(_unused);
 
 	if (mCollPlatform) {
 		Creature* platCreature = mCollPlatform->mCreature;
@@ -1131,7 +1131,7 @@ f32 sphereDist(Creature* c1, Creature* c2)
  * Address:	8008BC3C
  * Size:	0006E8
  */
-void Creature::collisionCheck(f32 p1)
+void Creature::collisionCheck(f32 _unused)
 {
 	if (!isAlive()) {
 		return;
@@ -1183,7 +1183,7 @@ void Creature::collisionCheck(f32 p1)
 					collisionVec = getCentre() - collider->getCentre();
 					f32 dist     = collisionVec.normalise();
 					collisionVec = -(getCentreSize() + collider->getCentreSize() - dist) * collisionVec;
-					respondColl(collider, p1, nullptr, nullptr, collisionVec);
+					respondColl(collider, _unused, nullptr, nullptr, collisionVec);
 				}
 				continue;
 			}
@@ -1192,7 +1192,7 @@ void Creature::collisionCheck(f32 p1)
 				// we have our collision, but not the incoming object's collision.
 				CollPart* collisionPart = ourInfo->checkCollision(collider, collisionVec);
 				if (collisionPart) {
-					respondColl(collider, p1, collisionPart, nullptr, collisionVec);
+					respondColl(collider, _unused, collisionPart, nullptr, collisionVec);
 				}
 				continue;
 			}
@@ -1202,7 +1202,7 @@ void Creature::collisionCheck(f32 p1)
 				CollPart* collisionPart = colliderInfo->checkCollision(this, collisionVec);
 				if (collisionPart) {
 					collisionVec.multiply(-1.0f);
-					respondColl(collider, p1, nullptr, collisionPart, collisionVec);
+					respondColl(collider, _unused, nullptr, collisionPart, collisionVec);
 				}
 				continue;
 			}
@@ -1212,7 +1212,7 @@ void Creature::collisionCheck(f32 p1)
 			CollPart* ourPart;
 			CollPart* colliderPart;
 			if (ourInfo->checkCollision(colliderInfo, &ourPart, &colliderPart, collisionVec)) {
-				respondColl(collider, p1, ourPart, colliderPart, collisionVec);
+				respondColl(collider, _unused, ourPart, colliderPart, collisionVec);
 			}
 		}
 	}

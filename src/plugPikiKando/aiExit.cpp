@@ -35,7 +35,7 @@ ActExit::ActExit(Piki* piki)
  */
 void ActExit::init(Creature*)
 {
-	mPiki->_408 = 0;
+	mPiki->mActionState = 0;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
 	mPiki->mScale.set(0.0f, 0.0f, 0.0f);
 	mPrevPosition = mPiki->mPosition;

@@ -38,7 +38,7 @@ void ActRope::init(Creature*)
 	mPiki->setCreatureFlag(CF_Unk8);
 	mSpeed = randBalanced(0.5f) * 4.0f + 22.0f;
 	if (mPiki->isHolding()) {
-		mPiki->_408 = 3;
+		mPiki->mActionState = 3;
 	}
 
 	if (mPiki->mStickPart) {

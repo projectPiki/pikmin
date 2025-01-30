@@ -1446,7 +1446,7 @@ void Navi::releasePikis()
 
 		ActFree* action = static_cast<ActFree*>(pikiList[i]->mActiveAction->getCurrAction());
 		action->initBoid(colorCoMs[color], colorSizes[color]);
-		if (flowCont._230 == 1 && pikiList[i]->mPlayerId == -1) {
+		if (flowCont.mNaviOnMap == 1 && pikiList[i]->mPlayerId == -1) {
 			pikiList[i]->mNavi = nullptr;
 		}
 	}

@@ -53,8 +53,8 @@ void ActAttack::init(Creature* creature)
 		return;
 	}
 
-	mPiki->_408     = 0;
-	mPiki->mEmotion = 5;
+	mPiki->mActionState = 0;
+	mPiki->mEmotion     = 5;
 	mPiki->getState(); // this is also just like this in the DLL lol
 
 	if (!creature) {
@@ -345,8 +345,8 @@ ActJumpAttack::ActJumpAttack(Piki* piki)
  */
 void ActJumpAttack::init(Creature* creature)
 {
-	mPiki->_408     = 0;
-	mPiki->mEmotion = 5;
+	mPiki->mActionState = 0;
+	mPiki->mEmotion     = 5;
 	if (creature) {
 		_24.set(creature);
 	}

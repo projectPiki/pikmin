@@ -1935,7 +1935,7 @@ void GameCoreSection::exitStage()
 	PADControlMotor(0, 0);
 	effectMgr->exit();
 	memStat->reset();
-	flowCont._230 = 0;
+	flowCont.mNaviOnMap = 0;
 }
 
 /*
@@ -2028,7 +2028,7 @@ void GameCoreSection::initStage()
 	PRINT("--------------- GeneratorCache : preload done\n");
 
 	memStat->start("initStage");
-	flowCont._230 = 0;
+	flowCont.mNaviOnMap = 0;
 	seMgr->setPikiNum(0);
 	mNavi->_730          = flowCont._250;
 	mNavi->mCurrKeyCount = flowCont._24C;

@@ -68,7 +68,7 @@ Creature* ActPickItem::findItem()
  */
 void ActPickItem::init(Creature* target)
 {
-	mPiki->_408 = 0;
+	mPiki->mActionState = 0;
 	if (!target) {
 		target = findItem();
 	}
@@ -90,8 +90,8 @@ void ActPickItem::init(Creature* target)
 int ActPickItem::exec()
 {
 	if (mPiki->isHolding()) {
-		mPiki->_408     = 0;
-		mPiki->mEmotion = 6;
+		mPiki->mActionState = 0;
+		mPiki->mEmotion     = 6;
 		return ACTOUT_Success;
 	}
 

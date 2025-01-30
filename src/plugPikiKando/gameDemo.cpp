@@ -69,8 +69,8 @@ DemoFlags::DemoFlags()
 	for (i = 0; i < mFlagDataNum; i++) {
 		mFlagDataList[i] = 0;
 	}
-	_18        = -1;
-	mWaitTimer = 0.0f;
+	mCurrentDemoIndex = -1;
+	mWaitTimer        = 0.0f;
 
 	registerDemoFlag(0, "赤コンテナに初めて接近", 4, 0, 0);        // "Approaching the red container for the first time"
 	registerDemoFlag(1, "黄コンテナに初めて接近", 5, 0, 0);        // "Approaching the yellow container for the first time"
@@ -110,7 +110,7 @@ DemoFlags::DemoFlags()
 	}
 
 	// Set main engine discovery text as seen
-	setFlagOnly(36);
+	setFlagOnly(0x24);
 }
 
 /*
@@ -123,8 +123,9 @@ void DemoFlags::initGame()
 	for (int i = 0; i < mFlagCount; i++) {
 		mStoredFlags[i] = 0;
 	}
-	_18        = -1;
-	mWaitTimer = 0.0f;
+
+	mCurrentDemoIndex = -1;
+	mWaitTimer        = 0.0f;
 	setFlagOnly(36);
 }
 
@@ -135,8 +136,8 @@ void DemoFlags::initGame()
  */
 void DemoFlags::initCourse()
 {
-	_18        = -1;
-	mWaitTimer = 0.0f;
+	mCurrentDemoIndex = -1;
+	mWaitTimer        = 0.0f;
 }
 
 /*
@@ -150,11 +151,11 @@ void DemoFlags::update()
 		return;
 	}
 
-	if (_18 == -1) {
+	if (mCurrentDemoIndex == -1) {
 		return;
 	}
 
-	if (isFlag(_18)) {
+	if (isFlag(mCurrentDemoIndex)) {
 		resetTimer();
 		PRINT("リセットシマシタ！\n"); // "Reset!"
 		return;
@@ -169,12 +170,12 @@ void DemoFlags::update()
 		return;
 	}
 
-	if (_18 == 20) {
+	if (mCurrentDemoIndex == 20) {
 		gameflow.mGameInterface->message(0, 20);
 		PRINT("*** BOMB TIME OUT * OG_BOMBINFO!\n");
-		setFlagOnly(_18);
+		setFlagOnly(mCurrentDemoIndex);
 	} else {
-		setFlag(_18, mTargetCreature);
+		setFlag(mCurrentDemoIndex, mTargetCreature);
 	}
 }
 
@@ -207,19 +208,19 @@ void DemoFlags::loadCard(RandomAccessStream& data)
  * Address:	80082448
  * Size:	00007C
  */
-void DemoFlags::registerDemoFlag(int index, char* name, u16 a1, u16 a2, bool a3)
+void DemoFlags::registerDemoFlag(int index, char* name, u16 movieIndex, u16 a2, bool a3)
 {
 	if (mCurrentDataIndex != index) {
 		PRINT("<%s> curr=%d idx=%d\n", name, mCurrentDataIndex, index);
 		ERROR("登録は順序よく!\n"); // "Registration is in order"
 	}
 
-	DemoFlag* flag = new DemoFlag;
-	flag->mName    = name;
-	flag->_06      = a1;
-	flag->_08      = a2;
-	flag->mIndex   = index;
-	flag->_0A      = a3;
+	DemoFlag* flag    = new DemoFlag;
+	flag->mName       = name;
+	flag->mMovieIndex = movieIndex;
+	flag->_08         = a2;
+	flag->mIndex      = index;
+	flag->_0A         = a3;
 
 	mFlagDataList[mCurrentDataIndex] = flag;
 	mCurrentDataIndex++;
@@ -257,32 +258,34 @@ void DemoFlags::setFlag(int index, Creature* obj)
 	if (isFlag(index)) {
 		return;
 	}
+
 	PRINT("FLAG <%s> SET\n", getDemoFlag(index)->mName);
 	mStoredFlags[id] |= 1 << index - id * 8;
 	PRINT("MOVIE INDEX = %d\n", getDemoFlag(index)->mIndex);
+
 	int test = 0;
 	if (getDemoFlag(index)->_0A) {
 		test = playerState->mPartsCollectedByDay[10]; // I dont think this is right but its optimized out from GCN anyway
 	}
 
-	if (getDemoFlag(index)->_06 == 0) {
+	if (getDemoFlag(index)->mMovieIndex == 0) {
 		return;
 	}
 
 	f32 badcompiler[3];
 
 	if (index == 4) {
-		Vector3f pos = obj->mPosition;
-		f32 y        = HALF_PI;
-		Vector3f vec2(0.0f, y, 0.0f);
-		gameflow.mGameInterface->movie(getDemoFlag(index)->_06, 0, obj, obj ? &obj->mPosition : nullptr, &vec2, -1, true);
+		Vector3f objPosition = obj->mPosition;
+		f32 yRotation        = HALF_PI;
+		Vector3f rotation(0.0f, yRotation, 0.0f);
+		gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mPosition : nullptr, &rotation, -1, true);
 	} else {
 		if (obj && obj->mObjType != OBJTYPE_Goal) {
-			Vector3f pos = obj->mPosition;
-			Vector3f vec2(0.0f, getCameraSafeAngle(pos, 200.0f, 10.0f), 0.0f);
-			gameflow.mGameInterface->movie(getDemoFlag(index)->_06, 0, obj, obj ? &obj->mPosition : nullptr, &vec2, -1, true);
+			Vector3f objPosition = obj->mPosition;
+			Vector3f rotation(0.0f, getCameraSafeAngle(objPosition, 200.0f, 10.0f), 0.0f);
+			gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mPosition : nullptr, &rotation, -1, true);
 		} else {
-			gameflow.mGameInterface->movie(getDemoFlag(index)->_06, 0, obj, obj ? &obj->mPosition : nullptr,
+			gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mPosition : nullptr,
 			                               obj ? &obj->mRotation : nullptr, -1, true);
 		}
 	}
@@ -312,8 +315,8 @@ void DemoFlags::setFlagOnly(int index)
  */
 void DemoFlags::setTimer(f32 time, int index, Creature* target)
 {
-	mWaitTimer = time;
-	_18        = index;
+	mWaitTimer        = time;
+	mCurrentDemoIndex = index;
 	PRINT("TIMER SET (%f seconds) <%s>\n", mWaitTimer, getDemoFlag(index)->mName);
 	mTargetCreature = target;
 }
@@ -325,9 +328,9 @@ void DemoFlags::setTimer(f32 time, int index, Creature* target)
  */
 void DemoFlags::resetTimer()
 {
-	mTargetCreature = nullptr;
-	mWaitTimer      = 0.0f;
-	_18             = -1;
+	mTargetCreature   = nullptr;
+	mWaitTimer        = 0.0f;
+	mCurrentDemoIndex = -1;
 }
 
 /*

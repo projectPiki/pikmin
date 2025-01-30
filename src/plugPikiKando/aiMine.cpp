@@ -35,7 +35,7 @@ ActMine::ActMine(Piki* piki)
  */
 void ActMine::init(Creature* target)
 {
-	mPiki->_408 = 0;
+	mPiki->mActionState = 0;
 	if (target->mObjType != OBJTYPE_BombGen) {
 		ERROR("THIS IS NOT BOMB GEN (%s)!\n", ObjType::getName(target->mObjType));
 	}

@@ -49,10 +49,10 @@ struct Pebble {
 	}
 
 	// TODO: members
-	Vector3f mPosition; // _00
-	u8 _0C;             // _0C, unknown
-	u8 _0D;             // _0D
-	u8 mHealth;         // _0E
+	Vector3f mPosition;  // _00
+	u8 mRotationDegrees; // _0C, unknown
+	u8 mShapeIndex;      // _0D
+	u8 mHealth;          // _0E
 };
 
 /**
@@ -83,12 +83,12 @@ struct GrassGen : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	int mWorkingPikis; // _3C8
-	Grass* mGrass;     // _3CC
-	u16 mActiveGrass;  // _3D0
-	u16 _3D2;          // _3D2
-	Vector3f _3D4;     // _3D4
-	f32 mSize;         // _3E0
+	int mWorkingPikis;    // _3C8
+	Grass* mGrass;        // _3CC
+	u16 mActiveGrass;     // _3D0
+	u16 mTotalGrassCount; // _3D2
+	Vector3f _3D4;        // _3D4
+	f32 mSize;            // _3E0
 };
 
 /**
@@ -125,7 +125,7 @@ struct RockGen : public ItemCreature {
 	u8 _3CC;            // _3CC
 	Pebble* mPebbles;   // _3D0
 	u16 mActivePebbles; // _3D4
-	u16 _3D6;           // _3D6
+	u16 mMaxPebbles;    // _3D6
 	Vector3f _3D8;      // _3D8
 	f32 mSize;          // _3E4
 };
@@ -142,9 +142,9 @@ struct WeedsGen : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	int _3C8;           // _3C8
-	Shape* _3CC;        // _3CC
-	CreatureProp* _3D0; // _3D0
+	int mWeedsCount;              // _3C8
+	Shape* mWeedShape;            // _3CC
+	CreatureProp* mWeedsGenProps; // _3D0
 };
 
 /*
@@ -165,9 +165,9 @@ struct Weed : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	u16 _3C8;       // _3C8
-	u16 _3CA;       // _3CA
-	WeedsGen* mGen; // _3CC
+	u16 mIsPulled;     // _3C8
+	u16 mPulloutTimer; // _3CA
+	WeedsGen* mGen;    // _3CC
 };
 
 #endif

@@ -121,9 +121,9 @@ void ActPutBomb::findTeki()
  */
 void ActPutBomb::init(Creature* target)
 {
-	_1B         = 0;
-	mState      = STATE_Unk5;
-	mPiki->_408 = 0;
+	_1B                 = 0;
+	mState              = STATE_Unk5;
+	mPiki->mActionState = 0;
 	if (AIConstant::_instance->mConstants._124() != 0 && mPiki->isHolding()) {
 		findTeki();
 		if (mTarget) {

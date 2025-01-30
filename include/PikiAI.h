@@ -745,17 +745,17 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
 	// _00-_14 = Action
 	// _14     = SlotChangeListner ptr
 	u8 _18[0x2C - 0x18]; // _18, unknown
-	u16 _2C;             // _2C, "md"?
-	u16 _2E;             // _2E, "st"?
+	u16 mFormationState; // _2C, "md"?
+	u16 mMode;           // _2E, "st"?
 	u8 _30[0x58 - 0x30]; // _30, unknown
 	int mCPlateSlotID;   // _58
 	u8 _5C[0x64 - 0x5C]; // _5C, unknown
-	u8 _64;              // _64, "koke"?
+	u8 mIsKokeActive;    // _64, "koke"?
 	u8 _65[0x7C - 0x65]; // _65, unknown
 	u8 _7C;              // _7C
-	u8 _7D;              // _7D, "wait"?
+	u8 mIsWaiting;       // _7D, "wait"?
 	u8 _7E;              // _7E
-	u8 _7F;              // _7F, "route"?
+	u8 mHasRoute;        // _7F, "route"?
 	                     // _80-_88 = SlotChangeListner
 };
 
@@ -1439,18 +1439,18 @@ struct ActPush : public Action, virtual PaniAnimKeyListener {
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
 	HinderRock* mHinderRock; // _18
-	u8 _1C;                  // _1C
+	u8 mPushAnimationState;  // _1C
 	u16 mState;              // _1E
 	u8 _20[0x4];             // _20, unknown
 	int _24;                 // _24
 	u8 _28[0x4];             // _28, unknown
 	Vector3f _2C;            // _2C
 	f32 _38;                 // _38
-	u8 _3C;                  // _3C
+	u8 mPushObjectStopped;   // _3C
 	f32 _40;                 // _40
-	u8 _44;                  // _44
-	s8 _45;                  // _45
-	u8 _46;                  // _46
+	u8 mState;               // _44
+	s8 mPushCount;           // _45
+	u8 mIsPushReady;         // _46
 	                         // _48-_50 = PaniAnimKeyListener
 };
 
@@ -1717,10 +1717,10 @@ struct ActShoot : public AndAction {
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	u8 _18;                     // _18
-	Traversable* _1C;           // _1C, idk *what* but it inherits from Traversable
-	SmartPtr<Creature> mTarget; // _20
-	Navi* mNavi;                // _24
+	u8 mTargetIsPlayer;             // _18
+	Traversable* mTargetObjectPool; // _1C, idk *what* but it inherits from Traversable
+	SmartPtr<Creature> mTarget;     // _20
+	Navi* mNavi;                    // _24
 };
 
 /**
@@ -1731,15 +1731,15 @@ struct ActShoot : public AndAction {
 struct ActShootCreature : public Action, public PaniAnimKeyListener {
 
 	/**
-	 * @brief TODO
+	 * @brief The state of the action.
 	 */
 	enum StateID {
-		STATE_Unk0 = 0,
-		STATE_Unk1 = 1,
-		STATE_Unk2 = 2,
-		STATE_Unk3 = 3,
-		STATE_Unk4 = 4,
-		STATE_Unk5 = 5,
+		STATE_Start        = 0,
+		STATE_ReadyToShoot = 1, // Unused
+		STATE_PrepareShoot = 2,
+		STATE_Shooting     = 3, // Unused
+		STATE_Chasing      = 4,
+		STATE_Complete     = 5,
 	};
 
 	ActShootCreature(Piki*);
@@ -1768,7 +1768,7 @@ struct ActStone : public Action, public PaniAnimKeyListener {
 #define STONE_NECTAR_CHANCE (0.08f)
 
 	/**
-	 * @brief TODO
+	 * @brief The state of the action.
 	 */
 	enum State {
 		STATE_Approach = 0,
@@ -1809,7 +1809,7 @@ struct ActStone : public Action, public PaniAnimKeyListener {
 struct ActTransport : public Action, virtual PaniAnimKeyListener {
 
 	/**
-	 * @brief TODO
+	 * @brief The state of the action.
 	 */
 	enum State {
 		STATE_Go   = 0,
@@ -1949,7 +1949,7 @@ struct ActWeed : public Action, public PaniAnimKeyListener {
 #define GRASS_NECTAR_CHANCE (0.08f)
 
 	/**
-	 * @brief TODO
+	 * @brief The state of the action.
 	 */
 	enum State {
 		STATE_Approach = 0,

@@ -27,7 +27,7 @@ ActShoot::ActShoot(Piki* piki)
 {
 	setChildren(CHILD_COUNT, new ActGoto(piki), new ActGoto::Initialiser(220.0f, 100.0f, nullptr), new ActShootCreature(piki), nullptr);
 	mTarget.clear();
-	_18 = 0;
+	mTargetIsPlayer = 0;
 }
 
 /*
@@ -43,20 +43,21 @@ void ActShoot::init(Creature* target)
 
 	Creature* newTarget;
 	if (target->mObjType == OBJTYPE_Navi) {
-		mNavi     = static_cast<Navi*>(target);
-		newTarget = findTarget();
-		_18       = 1;
+		mNavi           = static_cast<Navi*>(target);
+		newTarget       = findTarget();
+		mTargetIsPlayer = 1;
 	} else {
-		mNavi     = nullptr;
-		_1C       = 0;
-		_18       = 0;
-		newTarget = target;
+		mNavi             = nullptr;
+		mTargetObjectPool = 0;
+		mTargetIsPlayer   = 0;
+		newTarget         = target;
 	}
 
 	if (newTarget) {
 		mTarget.set(newTarget);
 		AndAction::init(newTarget);
 	}
+
 	u32 badCompiler;
 }
 
@@ -92,7 +93,7 @@ Creature* ActShoot::decideTarget()
 	f32 minDist = 12800.0f;
 	u32 unused  = 0;
 	Creature* targets[100];
-	Iterator iter(_1C);
+	Iterator iter(mTargetObjectPool);
 	int count = 0;
 	CI_LOOP(iter)
 	{
@@ -125,7 +126,7 @@ int ActShoot::exec()
 
 	int res = AndAction::exec();
 	if (res != ACTOUT_Continue) {
-		if (_18) {
+		if (mTargetIsPlayer) {
 			Creature* target = findTarget();
 			if (target) {
 				init(mNavi);
@@ -135,6 +136,7 @@ int ActShoot::exec()
 			PRINT("all targets are removed !\n");
 			return ACTOUT_Success;
 		}
+
 		return ACTOUT_Success;
 	}
 
@@ -171,13 +173,13 @@ void ActShootCreature::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
-		mState = STATE_Unk2;
+		mState = STATE_PrepareShoot;
 		break;
 	case KEY_Action1:
-		mState = STATE_Unk1;
+		mState = STATE_ReadyToShoot;
 		break;
 	case KEY_Finished:
-		mState      = STATE_Unk4;
+		mState      = STATE_Chasing;
 		mChaseTimer = 1.8f;
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 		break;
@@ -202,7 +204,7 @@ ActShootCreature::ActShootCreature(Piki* piki)
 void ActShootCreature::init(Creature* target)
 {
 	mTarget.set(target);
-	mState = STATE_Unk0;
+	mState = STATE_Start;
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
@@ -213,15 +215,15 @@ void ActShootCreature::init(Creature* target)
  */
 int ActShootCreature::exec()
 {
-	if (mState == STATE_Unk0) {
-		mState = STATE_Unk1;
+	if (mState == STATE_Start) {
+		mState = STATE_ReadyToShoot;
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Attack, this), PaniMotionInfo(PIKIANIM_Attack));
 	}
 
-	if (mState == STATE_Unk4) {
+	if (mState == STATE_Chasing) {
 		mChaseTimer -= gsys->getFrameTime();
 		if (mChaseTimer < 0.0f) {
-			mState = STATE_Unk5;
+			mState = STATE_Complete;
 		}
 	}
 
@@ -229,30 +231,34 @@ int ActShootCreature::exec()
 		return ACTOUT_Success;
 	}
 
-	if (mState == STATE_Unk4) {
-		Vector3f dir = mTarget.getPtr()->mPosition - mPiki->mPosition;
-		f32 dist     = dir.length();
+	if (mState == STATE_Chasing) {
+		Vector3f dirToTarget = mTarget.getPtr()->mPosition - mPiki->mPosition;
+		f32 distanceToTarget = dirToTarget.length();
 
-		dir = (1.0f / dist) * dir;
-		if (dist < 100.0f) {
-			dir = dir * -1.0f;
-			mPiki->setSpeed(1.0f, dir);
-		} else if (dist > 220.0f) {
-			mPiki->setSpeed(1.0f, dir);
+		dirToTarget = (1.0f / distanceToTarget) * dirToTarget;
+		if (distanceToTarget < 100.0f) {
+			dirToTarget = dirToTarget * -1.0f;
+			mPiki->setSpeed(1.0f, dirToTarget);
+		} else if (distanceToTarget > 220.0f) {
+			mPiki->setSpeed(1.0f, dirToTarget);
 		} else {
 			mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		}
 	}
 
-	Vector3f sep = mTarget.getPtr()->mPosition - mPiki->mPosition;
-	f32 angle    = atan2f(sep.x, sep.z);
-	mPiki->mFaceDirection += 0.4f * angDist(angle, mPiki->mFaceDirection);
+	Vector3f sep    = mTarget.getPtr()->mPosition - mPiki->mPosition;
+	f32 targetAngle = atan2f(sep.x, sep.z);
+
+	mPiki->mFaceDirection += 0.4f * angDist(targetAngle, mPiki->mFaceDirection);
 	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection);
-	if (mState == STATE_Unk5) {
+
+	if (mState == STATE_Complete) {
 		return ACTOUT_Success;
 	}
-	if (mState == STATE_Unk2) {
-		mState = STATE_Unk3;
+
+	if (mState == STATE_PrepareShoot) {
+		mState = STATE_Shooting;
 	}
+
 	return ACTOUT_Continue;
 }

@@ -43,7 +43,7 @@ void Piki::doKill()
 	mLookAtTarget.clear();
 
 	if (mIsPanicked) {
-		_428->kill();
+		mPanickedEffect->kill();
 		mIsPanicked = false;
 	}
 
