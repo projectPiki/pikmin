@@ -209,7 +209,7 @@ public:
 	u32 mMaterialCount;           // _1A8
 	u32 mDispCount;               // _1AC
 	u32 mLightCount;              // _1B0
-	s32 _1B4;                     // _1B4
+	s32 mActiveLightCount;        // _1B4
 	u32 mAnimatedPolygons;        // _1B8
 	u32 mLightingSkips;           // _1BC
 	u32 mLightingSets;            // _1C0

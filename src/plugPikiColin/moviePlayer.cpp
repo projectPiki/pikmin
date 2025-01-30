@@ -196,7 +196,7 @@ void MoviePlayer::initMovie(MovieInfo* info, int)
 		heap->mAllocType = 1;
 	}
 	info->mCin = new CinematicPlayer(info->Name());
-	if (_16C && info->mCin->_00 & 0x200) {
+	if (_16C && info->mCin->mFlags & 0x200) {
 		_164 = 1.0f;
 		_16C = 0;
 	}
@@ -1400,7 +1400,7 @@ void MoviePlayer::addLights(Graphics& gfx)
 	while (info) {
 		CinematicPlayer* cin = info->mCin;
 		MovieInfo* next      = (MovieInfo*)info->mNext;
-		if (cin->_00 & 0x80) {
+		if (cin->mFlags & 0x80) {
 			cin->addLights(gfx);
 		}
 		info = next;

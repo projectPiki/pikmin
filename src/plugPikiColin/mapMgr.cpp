@@ -4496,15 +4496,9 @@ MapMgr::MapMgr(Controller*)
  */
 MapRoom::MapRoom()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  lfs       f0, -0x7884(r2)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  blr
-	*/
+	_08 = 0;
+	_04 = 1.0f;
+	_00 = 1.0f;
 }
 
 /*

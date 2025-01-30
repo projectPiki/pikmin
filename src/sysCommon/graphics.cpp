@@ -4683,8 +4683,8 @@ int Graphics::calcLighting(f32 intensity)
 		setLight((Light*)mLight.mChild, 7);
 	}
 
-	if (lightIndex > gsys->_1B4) {
-		gsys->_1B4 = lightIndex;
+	if (lightIndex > gsys->mActiveLightCount) {
+		gsys->mActiveLightCount = lightIndex;
 	}
 
 	setLighting(true, nullptr);

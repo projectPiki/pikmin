@@ -67,21 +67,21 @@ struct CullFrustum {
 
 	void setBoundOffset(Vector3f* pos)
 	{
-		_154 = pos != nullptr;
-		if (_154) {
-			_158 = *pos;
+		mHasBoundOffset = pos != nullptr;
+		if (mHasBoundOffset) {
+			mBoundOffset = *pos;
 		}
 	}
 
-	int _00;                     // _00
-	int _04;                     // _04
+	int mTotalPlaneCount;        // _00
+	int mActivePlaneCount;       // _04
 	int mViewPlaneIdx;           // _08
 	CullingPlane mCullPlanes[6]; // _0C
 	Plane* mPlanePointers[6];    // _114, idk how many are in this
 	u8 _12C[0x154 - 0x12C];      // _12C, unknown
-	u8 _154;                     // _154
+	u8 mHasBoundOffset;          // _154
 	u8 _155;                     // _155
-	Vector3f _158;               // _158
+	Vector3f mBoundOffset;       // _158
 	Vector3f mPosition;          // _164
 	Vector3f mFocus;             // _170, aka Target Position
 	Vector3f mViewXAxis;         // _17C

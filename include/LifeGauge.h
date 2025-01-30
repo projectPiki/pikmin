@@ -54,8 +54,8 @@ struct LifeGaugeMgr {
 	void addLG(GaugeInfo*);
 	void removeLG(GaugeInfo*);
 
-	GaugeInfo _00;        // _00, probably? definitely CoreNode of some description
-	GaugeInfo _48;        // _48, probably? definitely CoreNode of some description
+	GaugeInfo _00;        // _00
+	GaugeInfo _48;        // _48
 	LFlareGroup* mLFlare; // _90
 };
 

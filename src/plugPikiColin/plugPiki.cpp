@@ -181,7 +181,7 @@ void PlugPikiApp::draw(Graphics& gfx)
 	gsys->mDispCount        = 0;
 	gsys->mMaterialCount    = 0;
 	gsys->_1A4              = 0;
-	gsys->_1B4              = 0;
+	gsys->mActiveLightCount = 0;
 	gsys->mLightCount       = 0;
 	gsys->mAnimatedPolygons = 0;
 	gsys->mLightingSkips    = 0;
