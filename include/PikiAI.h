@@ -1448,7 +1448,7 @@ struct ActPush : public Action, virtual PaniAnimKeyListener {
 	f32 _38;                 // _38
 	u8 mPushObjectStopped;   // _3C
 	f32 _40;                 // _40
-	u8 mState;               // _44
+	u8 _44;                  // _44
 	s8 mPushCount;           // _45
 	u8 mIsPushReady;         // _46
 	                         // _48-_50 = PaniAnimKeyListener

@@ -49,7 +49,7 @@ void ActPush::init(Creature* target)
 	}
 	mState             = STATE_Approach;
 	mPushObjectStopped = 0;
-	mState             = 0;
+	_44                = 0;
 }
 
 /*
@@ -73,11 +73,11 @@ bool ActPush::collideRockSurface()
  */
 int ActPush::exec()
 {
-	if (mState == 1) {
+	if (_44 == 1) {
 		return ACTOUT_Continue;
 	}
 
-	if (mState == 2) {
+	if (_44 == 2) {
 		mPiki->mEmotion = 1;
 		return ACTOUT_Fail;
 	}
@@ -89,7 +89,7 @@ int ActPush::exec()
 		mPushObjectStopped = 1;
 	}
 
-	mState = 0;
+	_44 = 0;
 	switch (mState) {
 	case STATE_Approach:
 		return exeApproach();
@@ -274,10 +274,11 @@ void ActPush::animationKeyUpdated(PaniAnimKeyEvent& event)
 		_24 = 1;
 		break;
 	case KEY_Finished:
-		if (mState) {
-			mState = 2;
+		if (_44) {
+			_44 = 2;
 			break;
 		}
+
 		if (mState == STATE_Go) {
 			PRINT("restart motion !\n");
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu, this), PaniMotionInfo(PIKIANIM_Osu));
