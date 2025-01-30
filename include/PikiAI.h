@@ -1487,16 +1487,29 @@ struct ActPut : public Action {
  * @note Size: 0x30.
  */
 struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Throw = 0,
+		STATE_Aim   = 1,
+		STATE_Set   = 2,
+		STATE_Put   = 3,
+		STATE_Wait  = 4,
+		STATE_Unk5  = 5,
+	};
+
 	ActPutBomb(Piki*);
 
-	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
-	virtual ~ActPutBomb();                               // _44
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual ~ActPutBomb() { }                            // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
 
-	Creature* findTeki();
+	void findTeki();
 	void initSet();
 	int exeSet();
 	void warnPikis();
@@ -1514,8 +1527,13 @@ struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x28 - 0x18]; // _18, unknown
-	                     // _28-_30 = PaniAnimKeyListener
+	u16 mState;        // _18
+	u8 _1A;            // _1A
+	u8 _1B;            // _1B
+	f32 _1C;           // _1C
+	f32 _20;           // _20
+	Creature* mTarget; // _24
+	                   // _28-_30 = PaniAnimKeyListener
 };
 
 /**
@@ -1526,7 +1544,7 @@ struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
 struct ActPutItem : public Action {
 	ActPutItem(Piki*);
 
-	virtual ~ActPutItem();        // _44
+	virtual ~ActPutItem() { }     // _44
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
@@ -1536,7 +1554,8 @@ struct ActPutItem : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x24 - 0x14]; // _14, unknown
+	Vector3f _14;           // _14
+	SmartPtr<Creature> _20; // _20
 };
 
 /**

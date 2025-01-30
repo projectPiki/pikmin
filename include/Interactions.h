@@ -499,13 +499,15 @@ struct InteractThrowAway : public Interaction {
  * @brief TODO
  */
 struct InteractWarn : public Interaction {
-	inline InteractWarn(); // TODO: probably
+	InteractWarn(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
 };
 
 /**
