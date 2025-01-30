@@ -45,7 +45,7 @@ void Creature::respondColl(Creature* obj, f32 a1, CollPart* part1, CollPart* par
 
 		if (!obj->isObjType(OBJTYPE_Plant) && !isObjType(OBJTYPE_Plant) && obj->mObjType != OBJTYPE_Plant) {
 
-			if (obj->mObjType == OBJTYPE_Piki && ((Piki*)this)->getState() == PIKISTATE_Flying) {
+			if (mObjType == OBJTYPE_Piki && ((Piki*)this)->getState() == PIKISTATE_Flying) {
 				PRINT("vs %s : \n", ObjType::getName(obj->mObjType));
 			}
 

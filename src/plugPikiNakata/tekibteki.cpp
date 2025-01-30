@@ -7009,9 +7009,9 @@ void BTeki::playTableSound(int)
  */
 void BTeki::playSound(int param_1)
 {
-{
-  mSeContext->playSound(param_1);
-}
+	{
+		mSeContext->playSound(param_1);
+	}
 }
 
 /*
@@ -7021,7 +7021,7 @@ void BTeki::playSound(int param_1)
  */
 void BTeki::stopSound(int param_1)
 {
-  mSeContext->stopSound(param_1);
+	mSeContext->stopSound(param_1);
 }
 
 /*
@@ -7131,7 +7131,7 @@ int BTeki::getPositionMapCode(Vector3f& pos)
  */
 int BTeki::getPositionMapCode()
 {
-    return getPositionMapCode(getPosition());
+	return getPositionMapCode(getPosition());
 }
 
 /*
@@ -7167,7 +7167,7 @@ void BTeki::startParticleGenerator(int param_1)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
 	if (particleGenerator != nullptr) {
-    	particleGenerator->startGen();
+		particleGenerator->startGen();
 	}
 }
 
@@ -7180,7 +7180,7 @@ void BTeki::stopParticleGenerator(int param_1)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
 	if (particleGenerator != nullptr) {
-    	particleGenerator->stopGen();
+		particleGenerator->stopGen();
 	}
 }
 
@@ -7193,7 +7193,7 @@ void BTeki::setParticleGeneratorPosition(int param_1, Vector3f& effectPos)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
 	if (particleGenerator != nullptr) {
-    	particleGenerator->setEmitPos(effectPos);
+		particleGenerator->setEmitPos(effectPos);
 	}
 }
 
@@ -7206,7 +7206,7 @@ void BTeki::setParticleGeneratorDirection(int param_1, Vector3f& effectDir)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
 	if (particleGenerator != nullptr) {
-    	particleGenerator->setEmitDir(effectDir);
+		particleGenerator->setEmitDir(effectDir);
 	}
 }
 /*
@@ -7218,7 +7218,7 @@ f32 BTeki::calcCollisionDistance(Creature& creature)
 {
 	f32 dist = qdist2(getCentre().x, getCentre().z, creature.getCentre().x, creature.getCentre().z);
 
-	f32 collSize = getCollisionSize();
+	f32 collSize         = getCollisionSize();
 	f32 creatureCollSize = creature.getCentreSize();
 
 	return dist - creatureCollSize - collSize;
