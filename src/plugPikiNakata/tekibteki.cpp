@@ -3189,9 +3189,9 @@ bool BTeki::nearestAngleTarget(Creature*)
 bool BTeki::cullableCenter(Creature&, f32)
 {
 
-//   fVar1 = (float10)(**(code **)(*param_1_00 + 0x5c))();
-//   fVar2 = (float10)(**(code **)(*param_1 + 0x5c))();
-//   roughCull(param_1,(float)(fVar2 + (float10)(float)fVar1 + (float10)param_2));
+	//   fVar1 = (float10)(**(code **)(*param_1_00 + 0x5c))();
+	//   fVar2 = (float10)(**(code **)(*param_1 + 0x5c))();
+	//   roughCull(param_1,(float)(fVar2 + (float10)(float)fVar1 + (float10)param_2));
 
 	/*
 	.loc_0x0:
@@ -4729,8 +4729,8 @@ void BTeki::flick()
  */
 void BTeki::flick(InteractFlick& param_1, InteractFlick& param_2)
 {
-  flickUpper(param_1);
-  flickLower(param_2);
+	flickUpper(param_1);
+	flickLower(param_2);
 }
 
 /*
@@ -5472,10 +5472,10 @@ void BTeki::collisionCallback(CollEvent&)
  */
 bool BTeki::ignoreAtari(Creature* param_1)
 {
-	if(param_1->mStickTarget == this){
+	if (param_1->mStickTarget == this) {
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -6930,9 +6930,9 @@ void BTeki::playTableSound(int)
  */
 void BTeki::playSound(int param_1)
 {
-{
-  mSeContext->playSound(param_1);
-}
+	{
+		mSeContext->playSound(param_1);
+	}
 }
 
 /*
@@ -6942,7 +6942,7 @@ void BTeki::playSound(int param_1)
  */
 void BTeki::stopSound(int param_1)
 {
-  mSeContext->stopSound(param_1);
+	mSeContext->stopSound(param_1);
 }
 
 /*
@@ -7052,7 +7052,7 @@ int BTeki::getPositionMapCode(Vector3f& pos)
  */
 int BTeki::getPositionMapCode()
 {
-    return getPositionMapCode(getPosition());
+	return getPositionMapCode(getPosition());
 }
 
 /*
@@ -7088,7 +7088,7 @@ void BTeki::startParticleGenerator(int param_1)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
 	if (particleGenerator != nullptr) {
-    	particleGenerator->startGen();
+		particleGenerator->startGen();
 	}
 }
 
@@ -7101,7 +7101,7 @@ void BTeki::stopParticleGenerator(int param_1)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
 	if (particleGenerator != nullptr) {
-    	particleGenerator->stopGen();
+		particleGenerator->stopGen();
 	}
 }
 
@@ -7114,7 +7114,7 @@ void BTeki::setParticleGeneratorPosition(int param_1, Vector3f& effectPos)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
 	if (particleGenerator != nullptr) {
-    	particleGenerator->setEmitPos(effectPos);
+		particleGenerator->setEmitPos(effectPos);
 	}
 }
 
@@ -7127,7 +7127,7 @@ void BTeki::setParticleGeneratorDirection(int param_1, Vector3f& effectDir)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
 	if (particleGenerator != nullptr) {
-    	particleGenerator->setEmitDir(effectDir);
+		particleGenerator->setEmitDir(effectDir);
 	}
 }
 /*
@@ -7139,7 +7139,7 @@ f32 BTeki::calcCollisionDistance(Creature& creature)
 {
 	f32 dist = qdist2(getCentre().x, getCentre().z, creature.getCentre().x, creature.getCentre().z);
 
-	f32 collSize = getCollisionSize();
+	f32 collSize         = getCollisionSize();
 	f32 creatureCollSize = creature.getCentreSize();
 
 	return dist - creatureCollSize - collSize;

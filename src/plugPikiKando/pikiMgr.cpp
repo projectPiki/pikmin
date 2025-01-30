@@ -80,8 +80,8 @@ PikiMgr::PikiMgr(Navi* navi)
 	mNavi      = navi;
 	mPikiParms = new PikiProp();
 
-	mLeafModel[0]   = gameflow.loadShape("pikis/happas/leaf.mod", true);
-	mLeafModel[1]    = gameflow.loadShape("pikis/happas/bud.mod", true);
+	mLeafModel[0] = gameflow.loadShape("pikis/happas/leaf.mod", true);
+	mLeafModel[1] = gameflow.loadShape("pikis/happas/bud.mod", true);
 	mLeafModel[2] = gameflow.loadShape("pikis/happas/flower.mod", true);
 
 	PRINT("loading pikiMgr.bin ...\n");
