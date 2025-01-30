@@ -41,10 +41,10 @@ ActBridge::ActBridge(Piki* piki)
  */
 void ActBridge::init(Creature* creature)
 {
-	_32 = _33           = 0;
-	mPiki->mActionState = 2;
-	mPiki->mEmotion     = 0;
-	mBridge             = nullptr;
+	mClimbingBridge = _33 = 0;
+	mPiki->mActionState   = 2;
+	mPiki->mEmotion       = 0;
+	mBridge               = nullptr;
 
 	if (creature && creature->mObjType == OBJTYPE_WorkObject) {
 		WorkObject* bridge = static_cast<WorkObject*>(creature);
@@ -166,8 +166,8 @@ int ActBridge::exeDetour()
  */
 void ActBridge::procWallMsg(Piki* piki, MsgWall* msg)
 {
-	_34 = *msg->mWallNormal;
-	_33 = 8;
+	mBridgeWallNormal = *msg->mWallNormal;
+	_33               = 8;
 }
 
 /*
@@ -179,7 +179,7 @@ void ActBridge::initClimb()
 {
 	mState = STATE_Climb;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
-	Vector3f normal(_34);
+	Vector3f normal(mBridgeWallNormal);
 	normal.y = 0.0f;
 	normal.normalise();
 	normal.multiply(-1.0f);
@@ -197,7 +197,7 @@ void ActBridge::initClimb()
  */
 int ActBridge::exeClimb()
 {
-	if (_32) {
+	if (mClimbingBridge) {
 		PRINT("climbing (%.1f %.1f %.1f)\n", mClimbingVelocity.x, mClimbingVelocity.y, mClimbingVelocity.z);
 		mPiki->setSpeed(1.0f, mClimbingVelocity);
 	} else {
@@ -213,8 +213,8 @@ int ActBridge::exeClimb()
  */
 void ActBridge::initApproach()
 {
-	mState = STATE_Approach;
-	_32    = 0;
+	mState          = STATE_Approach;
+	mClimbingBridge = 0;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
@@ -278,8 +278,8 @@ void ActBridge::doWork(int mins)
 {
 	InteractBuild build(mPiki, mStageIdx, mins / 60.0f);
 	mBridge->stimulate(build);
-	_20 = gameflow.mWorldClock.mMinutes;
-	_24 = 0;
+	mStartWorkTime = gameflow.mWorldClock.mMinutes;
+	mIsAttackReady = 0;
 	// UNUSED FUNCTION
 }
 
@@ -293,7 +293,7 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
 	u32 badCompiler;
 	switch (event.mEventType) {
 	case KEY_LoopEnd:
-		_24 = 1;
+		mIsAttackReady = 1;
 		break;
 	case KEY_PlayEffect:
 		if (mPiki->aiCullable() && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
@@ -301,7 +301,7 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 		break;
 	case KEY_Finished:
-		_4D = 1;
+		mAnimationFinished = 1;
 		break;
 	}
 }
@@ -658,8 +658,8 @@ void ActBridge::newInitGo()
 {
 	mState = STATE_Go;
 	if (mBridge) {
-		mStageIdx = mBridge->getFirstUnfinishedStage();
-		_2C       = randBalanced(0.5f);
+		mStageIdx          = mBridge->getFirstUnfinishedStage();
+		mRandomBridgeWidth = randBalanced(0.5f);
 	} else {
 		mStageIdx = -1;
 	}
@@ -700,7 +700,7 @@ int ActBridge::newExeGo()
 
 	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
 	Vector3f xVec     = mBridge->getBridgeXVec();
-	xVec.multiply(_2C * mBridge->getStageWidth());
+	xVec.multiply(mRandomBridgeWidth * mBridge->getStageWidth());
 	stagePos.add(xVec);
 
 	Vector3f direction = stagePos - mPiki->mPosition;
@@ -947,8 +947,8 @@ int ActBridge::newExeGo()
 void ActBridge::newInitWork()
 {
 	mState          = STATE_Work;
-	_20             = gameflow.mWorldClock.mMinutes;
-	_24             = 0;
+	mStartWorkTime  = gameflow.mWorldClock.mMinutes;
+	mIsAttackReady  = 0;
 	mCollisionCount = 0;
 	_2A             = 0;
 
@@ -957,7 +957,7 @@ void ActBridge::newInitWork()
 	}
 
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
-	_4D = 0;
+	mAnimationFinished = 0;
 	if (AIPerf::bridgeFast) {
 		mPiki->setCreatureFlag(CF_DisableMovement);
 	}
@@ -989,7 +989,7 @@ int ActBridge::newExeWork()
 			mPiki->resetCreatureFlag(CF_DisableMovement);
 		}
 
-		if (mCollisionCount > 15 && _4D) {
+		if (mCollisionCount > 15 && mAnimationFinished) {
 			newInitApproach();
 			mPiki->resetCreatureFlag(CF_DisableMovement);
 			return ACTOUT_Continue;
@@ -1010,9 +1010,9 @@ int ActBridge::newExeWork()
 		return ACTOUT_Continue;
 	}
 
-	int val = (gameflow.mWorldClock.mMinutes - _20 + 60) % 60;
-	if (val > 0 && _24) {
-		doWork(val);
+	int timeSinceLastWork = (gameflow.mWorldClock.mMinutes - mStartWorkTime + 60) % 60;
+	if (timeSinceLastWork > 0 && mIsAttackReady) {
+		doWork(timeSinceLastWork);
 	}
 
 	Vector3f stagePos(mBridge->getStagePos(mStageIdx));

@@ -57,7 +57,7 @@ void ActPick::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 
 	case KEY_Finished:
-		_1C = 1;
+		mIsAnimationFinished = 1;
 		break;
 	}
 }
@@ -69,7 +69,7 @@ void ActPick::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void ActPick::init(Creature* object)
 {
-	_1C = 0;
+	mIsAnimationFinished = 0;
 	mObject.set(object);
 
 	mPiki->startMotion(PaniMotionInfo(4, this), PaniMotionInfo(4));
@@ -95,7 +95,7 @@ void ActPick::cleanup()
 int ActPick::exec()
 {
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	if (_1C) {
+	if (mIsAnimationFinished) {
 		if (!mPiki->isHolding()) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 			mPiki->mEmotion = 1;
@@ -183,7 +183,7 @@ ActAdjust::ActAdjust(Piki* piki)
     : Action(piki, true)
 {
 	mAdjustTimeLimit = 8;
-	_14              = 5.0f;
+	mAdjustDistance  = 5.0f;
 }
 
 /*
@@ -194,7 +194,7 @@ ActAdjust::ActAdjust(Piki* piki)
 void ActAdjust::Initialiser::initialise(Action* action)
 {
 	PRINT(" initialiser called ###################### \n");
-	static_cast<ActAdjust*>(action)->_14              = _04;
+	static_cast<ActAdjust*>(action)->mAdjustDistance  = mAdjustDistance;
 	static_cast<ActAdjust*>(action)->mAdjustTimeLimit = mAdjustTimeLimit;
 }
 
@@ -209,8 +209,8 @@ void ActAdjust::init(Creature* target)
 	if (target) {
 		PRINT(" target is %x\n", target);
 		mForceFail      = 0;
-		_1C             = target->mPosition;
-		Vector3f dir    = _1C - mPiki->mPosition;
+		mTargetPosition = target->mPosition;
+		Vector3f dir    = mTargetPosition - mPiki->mPosition;
 		f32 adjPerFrame = mAdjustTimeLimit * (1.0f / 30.0f);
 		u32 badCompiler;
 		mTurnSpeed = angDist(atan2f(dir.x, dir.z), mPiki->mFaceDirection) / adjPerFrame;
@@ -218,10 +218,10 @@ void ActAdjust::init(Creature* target)
 
 		PRINT(" numFrames = %d \n", mAdjustTimeLimit);
 		PRINT(" d = %f\n", dist);
-		PRINT(" distance : %f\n", _14);
+		PRINT(" distance : %f\n", mAdjustDistance);
 		PRINT(" sec = %f\n", adjPerFrame);
-		PRINT(" (d-distance) is %f : 1.0f/sec = %f\n", dist - _14, 1.0f / adjPerFrame);
-		mVelocity = ((dist - _14) * (1.0f / dist) * (1.0f / adjPerFrame)) * dir;
+		PRINT(" (d-distance) is %f : 1.0f/sec = %f\n", dist - mAdjustDistance, 1.0f / adjPerFrame);
+		mVelocity = ((dist - mAdjustDistance) * (1.0f / dist) * (1.0f / adjPerFrame)) * dir;
 
 		PRINT(" deltaVec(%.1f,%.1f,%.1f) : deltaF(%.1f)\n", mVelocity.x, mVelocity.y, mVelocity.z, mTurnSpeed);
 		mAdjustTimer = 0.0f;

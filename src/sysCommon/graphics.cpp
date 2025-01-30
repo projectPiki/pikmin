@@ -2718,7 +2718,7 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 				}
 			}
 
-			// This is fucking ridiculous, seriously? why?
+			// This is ridiculous, seriously? why?
 			// so much indexing, this isn't even an inline function
 			mChars[charIndex].mCharSpacing         = baselinePos - baseline;
 			mChars[charIndex].mLeftOffset          = baseline - leftEdge;
@@ -3631,7 +3631,7 @@ void TexImg::dumpBti(Texture* tex, char* name, RandomAccessStream& input, Random
 	// now lets get to the fun parts
 
 	// this is wrong btw, I can't be bothered to check if this shows up
-	// but im doing it anyway, fuck it
+	// but im doing it anyway, **** it
 	output.print("// %s (%d colour) format %s : data = %d bytes\n", output.mPath, 0, btipalFmts[tex->mTexFormat]);
 	output.print("// texture size = %d x %d\n");
 	output.print("static u16 %s_palette[%d] ATTRIBUTE_ALIGN(32) = {\n");

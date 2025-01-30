@@ -41,7 +41,7 @@ ActBreakWall::ActBreakWall(Piki* piki)
  */
 void ActBreakWall::init(Creature* creature)
 {
-	_31                 = 0;
+	mFailAttackCounter  = 0;
 	mPiki->mActionState = 2;
 	mPiki->mEmotion     = 0;
 
@@ -52,9 +52,9 @@ void ActBreakWall::init(Creature* creature)
 	}
 
 	mState              = STATE_GotoWall;
-	_32                 = 0;
+	mIsAttackReady      = 0;
 	mPiki->mWantToStick = 0;
-	_30                 = randFloat(4.0f);
+	mWorkTimer          = randFloat(4.0f);
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
@@ -69,7 +69,7 @@ void ActBreakWall::procCollideMsg(Piki* piki, MsgCollide* msg)
 		// Creature* collider = msg->mEvent.mCollider;
 		if (msg->mEvent.mCollider == mWall && mState != STATE_BreakWall && msg->mEvent.mColliderPart->getID() == 'gate'
 		    && !piki->isStickTo()) {
-			_20 = piki->mPosition;
+			mHitPikminPosition = piki->mPosition;
 			initBreakWall();
 		}
 		// msg->mEvent.mCollider->isPiki();
@@ -140,15 +140,15 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
-		_32 = 1;
+		mIsAttackReady = 1;
 		break;
 	case KEY_Action1:
-		_32 = 0;
+		mIsAttackReady = 0;
 		break;
 	case KEY_Finished:
-		_30 = randFloat(4.0f);
+		mWorkTimer = randFloat(4.0f);
 		startWorkMotion();
-		_32 = 0;
+		mIsAttackReady = 0;
 		break;
 	case KEY_PlayEffect:
 		if (!mPiki->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
@@ -184,7 +184,7 @@ int ActBreakWall::exec()
 		return gotoWall();
 
 	case STATE_BreakWall:
-		Vector3f sep = _20 - mPiki->mPosition;
+		Vector3f sep = mHitPikminPosition - mPiki->mPosition;
 		if (sep.length() > 5.0f) {
 			mState = STATE_GotoWall;
 			break;
@@ -215,10 +215,10 @@ int ActBreakWall::gotoWall()
  */
 void ActBreakWall::initBreakWall()
 {
-	_30 = randFloat(4.0f);
+	mWorkTimer = randFloat(4.0f);
 	startWorkMotion();
-	mState = STATE_BreakWall;
-	_2C    = gameflow.mWorldClock.mMinutes;
+	mState           = STATE_BreakWall;
+	mStartAttackTime = gameflow.mWorldClock.mMinutes;
 }
 
 /*
@@ -228,7 +228,7 @@ void ActBreakWall::initBreakWall()
  */
 void ActBreakWall::startWorkMotion()
 {
-	if (_30 == 0) {
+	if (mWorkTimer == 0) {
 		if (mPiki->getCollidePlatformCreature()) {
 			Vector3f normal = mPiki->getCollidePlatformNormal();
 			if (normal.y > 0.7f) {
@@ -236,6 +236,7 @@ void ActBreakWall::startWorkMotion()
 				return;
 			}
 		}
+
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 	}
 }
@@ -247,35 +248,35 @@ void ActBreakWall::startWorkMotion()
  */
 int ActBreakWall::breakWall()
 {
-	if (_30 != 0) {
-		_30--;
-		if (_30 == 0) {
+	if (mWorkTimer != 0) {
+		mWorkTimer--;
+		if (mWorkTimer == 0) {
 			startWorkMotion();
 		}
 		return ACTOUT_Continue;
 	}
 
-	int val = (gameflow.mWorldClock.mMinutes - _2C + 60) % 60;
+	int timeSinceLastAttack = (gameflow.mWorldClock.mMinutes - mStartAttackTime + 60) % 60;
 	if (flowCont.mCurrentStage->mStageID == STAGE_Practice) {
-		val = 1;
+		timeSinceLastAttack = 1;
 	}
 
-	if (val > 0 && _32) {
-		InteractAttack attack(mPiki, nullptr, val / 60.0f, false);
-		_32 = 0;
+	if (timeSinceLastAttack > 0 && mIsAttackReady) {
+		InteractAttack attack(mPiki, nullptr, timeSinceLastAttack / 60.0f, false);
+		mIsAttackReady = 0;
 		if (!mWall->stimulate(attack)) {
 			if (mWall->isCompleted()) {
 				return ACTOUT_Success;
 			}
-			_31++;
-			if (_31 >= int(randFloat(3.0f)) + 3) {
+			mFailAttackCounter++;
+			if (mFailAttackCounter >= int(randFloat(3.0f)) + 3) {
 				mPiki->mEmotion     = 1;
 				mPiki->mActionState = 0;
 				return ACTOUT_Fail;
 			}
 		}
 
-		_2C = gameflow.mWorldClock.mMinutes;
+		mStartAttackTime = gameflow.mWorldClock.mMinutes;
 	}
 
 	mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);

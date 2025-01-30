@@ -91,10 +91,10 @@ struct PikiProp : public CreatureProp {
 		    , _47C(this, 30, 0, 300, "p62", nullptr)
 		    , _48C(this, 10, 0, 300, "p63", nullptr)
 		    , _49C(this, 5.0f, 1.0f, 120.0f, "p64", nullptr)
-		    , _4AC(this, 300.0f, 0.0f, 1000.0f, "p66", nullptr)
-		    , _4BC(this, 110.0f, 0.0f, 1000.0f, "p67", nullptr)
-		    , _4CC(this, 160.0f, 0.0f, 1000.0f, "p68", nullptr)
-		    , _4DC(this, 1.5f, 0.0f, 60.0f, "p69", nullptr)
+		    , mBombTargetSearchRadius(this, 300.0f, 0.0f, 1000.0f, "p66", nullptr)
+		    , mBombPlaceMinDistance(this, 110.0f, 0.0f, 1000.0f, "p67", nullptr)
+		    , mBombThrowMaxDistance(this, 160.0f, 0.0f, 1000.0f, "p68", nullptr)
+		    , mBombPlaceDuration(this, 1.5f, 0.0f, 60.0f, "p69", nullptr)
 		    , _4EC(this, 150.0f, 0.0f, 1000.0f, "p70", nullptr)
 		    , _4FC(this, 300.0f, 0.0f, 1000.0f, "p71", nullptr)
 		    , _50C(this, 0.65f, 0.0f, 10.0f, "p72", nullptr)
@@ -160,7 +160,7 @@ struct PikiProp : public CreatureProp {
 		Parm<f32> _3BC;                     // _3BC, p52
 		Parm<f32> _3CC;                     // _3CC, p53
 		Parm<f32> _3DC;                     // _3DC, p55
-		Parm<f32> mPikiLeaveSeedChance;     // _3EC, p56 chance for a flower to leave a seed upon death
+		Parm<f32> mPikiLeaveSeedChance;     // _3EC, p56, chance for a flower to leave a seed upon death
 		Parm<f32> _3FC;                     // _3FC, p57
 		Parm<f32> _40C;                     // _40C, p58
 		Parm<f32> _41C;                     // _41C, p59
@@ -172,10 +172,10 @@ struct PikiProp : public CreatureProp {
 		Parm<int> _47C;                     // _47C, p62
 		Parm<int> _48C;                     // _48C, p63
 		Parm<f32> _49C;                     // _49C, p64
-		Parm<f32> _4AC;                     // _4AC, p66
-		Parm<f32> _4BC;                     // _4BC, p67
-		Parm<f32> _4CC;                     // _4CC, p68
-		Parm<f32> _4DC;                     // _4DC, p69
+		Parm<f32> mBombTargetSearchRadius;  // _4AC, p66,
+		Parm<f32> mBombPlaceMinDistance;    // _4BC, p67, how far to look for targets
+		Parm<f32> mBombThrowMaxDistance;    // _4CC, p68, maximum distance for throwing bomb
+		Parm<f32> mBombPlaceDuration;       // _4DC, p69, minimum distance for placing bombs
 		Parm<f32> _4EC;                     // _4EC, p70
 		Parm<f32> _4FC;                     // _4FC, p71
 		Parm<f32> _50C;                     // _50C, p72

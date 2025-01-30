@@ -107,13 +107,13 @@ void ActRescue::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
-		if (mState == STATE_Rescue || (!_32 && mState == STATE_Throw)) {
-			_30 = 1;
+		if (mState == STATE_Rescue || (!mThrowReady && mState == STATE_Throw)) {
+			mGotAnimationAction = 1;
 		}
 		break;
 	case KEY_Finished:
-		if (!_32 && mState == STATE_Throw) {
-			_31 = 1;
+		if (!mThrowReady && mState == STATE_Throw) {
+			mAnimationFinished = 1;
 		}
 		break;
 	}
@@ -158,7 +158,7 @@ void ActRescue::initRescue()
 	mState = STATE_Rescue;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_ThrowWait, this), PaniMotionInfo(PIKIANIM_ThrowWait));
 	mPiki->enableMotionBlend();
-	_30 = 0;
+	mGotAnimationAction = 0;
 }
 
 /*
@@ -169,7 +169,7 @@ void ActRescue::initRescue()
 int ActRescue::exeRescue()
 {
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	if (_30) {
+	if (mGotAnimationAction) {
 		mDrowningPiki->mFSM->transit(mDrowningPiki, PIKISTATE_WaterHanged);
 		initGo();
 	}
@@ -184,16 +184,16 @@ int ActRescue::exeRescue()
  */
 void ActRescue::initGo()
 {
-	mState       = STATE_Go;
-	WayPoint* wp = routeMgr->findNearestWayPoint('test', mPiki->mPosition, true);
-	_24          = wp->mPosition;
-	Vector3f dir = mPiki->mPosition - _24;
-	f32 dist     = dir.normalise();
+	mState                = STATE_Go;
+	WayPoint* wp          = routeMgr->findNearestWayPoint('test', mPiki->mPosition, true);
+	mRescueTargetPosition = wp->mPosition;
+	Vector3f dir          = mPiki->mPosition - mRescueTargetPosition;
+	f32 dist              = dir.normalise();
 	if (dist > wp->mRadius) {
-		_24 = _24 + dir * wp->mRadius * 0.8f;
+		mRescueTargetPosition = mRescueTargetPosition + dir * wp->mRadius * 0.8f;
 	}
 
-	_24.y += 30.0f;
+	mRescueTargetPosition.y += 30.0f;
 }
 
 /*
@@ -207,7 +207,7 @@ int ActRescue::exeGo()
 	offset.multiply(-5.0f);
 	offset.y += 10.0f;
 	mDrowningPiki->mPosition = mPiki->mPosition + offset;
-	Vector3f dir             = _24 - mPiki->mPosition;
+	Vector3f dir             = mRescueTargetPosition - mPiki->mPosition;
 	f32 dist                 = dir.normalise();
 	if (dist < 200.0f) {
 		initThrow();
@@ -225,10 +225,10 @@ int ActRescue::exeGo()
  */
 void ActRescue::initThrow()
 {
-	mState = STATE_Throw;
-	_30    = 0;
-	_31    = 0;
-	_32    = 1;
+	mState              = STATE_Throw;
+	mGotAnimationAction = 0;
+	mAnimationFinished  = 0;
+	mThrowReady         = 1;
 }
 
 /*
@@ -241,12 +241,12 @@ int ActRescue::exeThrow()
 	u32 badCompiler[2];
 	int state = mDrowningPiki->getState();
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	if (_32) {
-		Vector3f dir = _24 - mPiki->mPosition;
+	if (mThrowReady) {
+		Vector3f dir = mRescueTargetPosition - mPiki->mPosition;
 		f32 diff     = atan2f(dir.x, dir.z);
 		f32 angle    = angDist(diff, mPiki->mFaceDirection);
 		if (zen::Abs(angle) < 0.25132743f) {
-			_32 = 0;
+			mThrowReady = 0;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Throw, this), PaniMotionInfo(PIKIANIM_Throw));
 			PRINT("THROW MOTION START\n");
 		}
@@ -254,23 +254,23 @@ int ActRescue::exeThrow()
 		mPiki->mFaceDirection = roundAng(angle * gsys->getFrameTime() * 0.3f + mPiki->mFaceDirection);
 	}
 
-	if (_30) {
+	if (mGotAnimationAction) {
 		PRINT("got key : target state = %d\n", mDrowningPiki->getState());
 		Vector3f dir = mDrowningPiki->mPosition - mPiki->mPosition;
 		f32 dist     = dir.length();
 		if (dist < 15.0f) {
 			Vector3f vec1(0.0f, 0.0f, 0.0f);
 			Vector3f throwVel;
-			throwVel = getThrowVelocity(mPiki->mPosition, 200.0f, _24, vec1);
+			throwVel = getThrowVelocity(mPiki->mPosition, 200.0f, mRescueTargetPosition, vec1);
 			mDrowningPiki->mFSM->transit(mDrowningPiki, PIKISTATE_Flying);
 			mDrowningPiki->mVelocity       = throwVel;
 			mDrowningPiki->mTargetVelocity = throwVel;
 			PRINT("throw Piki !\n");
 		}
-		_30 = 0;
+		mGotAnimationAction = 0;
 	}
 
-	if (_31) {
+	if (mAnimationFinished) {
 		mPiki->mEmotion = 6;
 		PRINT("rescue done\n");
 		return ACTOUT_Success;

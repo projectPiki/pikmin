@@ -52,7 +52,7 @@ void ActFreeSelect::init(Creature* creature)
 
 	_1C                  = PI * (randBalanced(0.5f)) / 3.0f;
 	mIsChildActionActive = 0;
-	_1A                  = 0;
+	mIsFinished          = 0;
 }
 
 /*
@@ -72,7 +72,7 @@ void ActFreeSelect::finishRest()
 		mIsChildActionActive = 1;
 		break;
 	default:
-		_1A = 1;
+		mIsFinished = 1;
 		break;
 	}
 }
@@ -84,7 +84,7 @@ void ActFreeSelect::finishRest()
  */
 int ActFreeSelect::exec()
 {
-	if (_1A) {
+	if (mIsFinished) {
 		return ACTOUT_Success;
 	}
 
@@ -131,9 +131,9 @@ void ActFreeSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 	}
 
 	if (mCurrActionIdx == CHILD_BoreTalk) {
-		ActBoreTalk* boreTalk = static_cast<ActBoreTalk*>(mChildActions[mCurrActionIdx].mAction);
-		boreTalk->_18         = 0;
-		boreTalk->mTarget     = msg->mTarget;
+		ActBoreTalk* boreTalk             = static_cast<ActBoreTalk*>(mChildActions[mCurrActionIdx].mAction);
+		boreTalk->mIsLookHandledElsewhere = 0;
+		boreTalk->mTarget                 = msg->mTarget;
 	}
 }
 
@@ -462,7 +462,7 @@ void ActBoreSelect::init(Creature* creature)
 
 	_1C                  = PI * (randBalanced(0.5f)) / 3.0f;
 	mIsChildActionActive = 0;
-	_1A                  = 0;
+	mStop                = 0;
 }
 
 /*
@@ -472,7 +472,7 @@ void ActBoreSelect::init(Creature* creature)
  */
 void ActBoreSelect::stop()
 {
-	_1A = 1;
+	mStop = 1;
 }
 
 /*
@@ -486,7 +486,7 @@ int ActBoreSelect::exec()
 		return mChildActions[mCurrActionIdx].mAction->exec();
 	}
 
-	if (mPiki->mNavi->_738 < 1.0f || _1A) {
+	if (mPiki->mNavi->_738 < 1.0f || mStop) {
 		if (mPiki->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == 3) {
 			return ACTOUT_Success;
 		}
@@ -544,9 +544,9 @@ void ActBoreSelect::procTargetMsg(Piki* piki, MsgTarget* msg)
 	}
 
 	if (mCurrActionIdx == CHILD_BoreTalk) {
-		ActBoreTalk* boreTalk = static_cast<ActBoreTalk*>(mChildActions[mCurrActionIdx].mAction);
-		boreTalk->_18         = 0;
-		boreTalk->mTarget     = msg->mTarget;
+		ActBoreTalk* boreTalk             = static_cast<ActBoreTalk*>(mChildActions[mCurrActionIdx].mAction);
+		boreTalk->mIsLookHandledElsewhere = 0;
+		boreTalk->mTarget                 = msg->mTarget;
 	}
 }
 
@@ -878,8 +878,8 @@ ActBoreTalk::ActBoreTalk(Piki* piki)
  */
 void ActBoreTalk::init(Creature* creature)
 {
-	mIsAnimFinished = false;
-	_18             = 0;
+	mIsAnimFinished         = false;
+	mIsLookHandledElsewhere = 0;
 	Iterator iter(&mPiki->mSearchBuffer);
 	iter.first();
 	mTarget = *iter;
@@ -907,7 +907,7 @@ void ActBoreTalk::startTalk()
 
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Chatting, this), PaniMotionInfo(PIKIANIM_Chatting));
 	mPiki->enableMotionBlend();
-	_20 = 2.0f * System::getRand(1.0f) + 5.0f;
+	mTalkTimer = 2.0f * System::getRand(1.0f) + 5.0f;
 
 	if (mPiki->mMode == PikiMode::FormationMode && mPiki->mNavi->mPlateMgr && mPiki->mNavi->getCurrState()->getID() != NAVISTATE_DemoSunset
 	    && mPiki->mNavi->mCurrState->getID() != NAVISTATE_Dead) {
@@ -926,14 +926,14 @@ int ActBoreTalk::exec()
 		return ACTOUT_Fail;
 	}
 
-	if (_18 == 0) {
+	if (mIsLookHandledElsewhere == 0) {
 		Vector3f dir          = mTarget->mPosition - mPiki->mPosition;
 		f32 ang               = atan2f(dir.x, dir.z);
 		ang                   = angDist(ang, mPiki->mFaceDirection);
 		mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.1f * ang);
 
 		if (quickABS(ang) < 0.1f) {
-			_18 = 1;
+			mIsLookHandledElsewhere = 1;
 			startTalk();
 		}
 	}
@@ -942,8 +942,8 @@ int ActBoreTalk::exec()
 		return ACTOUT_Success;
 	}
 
-	_20 -= gsys->getFrameTime();
-	if (_20 < 0.0f) {
+	mTalkTimer -= gsys->getFrameTime();
+	if (mTalkTimer < 0.0f) {
 		mPiki->mPikiAnimMgr.finishMotion(this);
 	}
 
@@ -966,7 +966,7 @@ void ActBoreTalk::cleanup()
  */
 void ActBoreTalk::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	if (_18 && event.mEventType == KEY_Finished) {
+	if (mIsLookHandledElsewhere && event.mEventType == KEY_Finished) {
 		mIsAnimFinished = true;
 	}
 }
@@ -1111,11 +1111,11 @@ ActBoreRest::ActBoreRest(Piki* piki)
  */
 void ActBoreRest::init(Creature* creature)
 {
-	_1C = 0;
+	mRestState = 0;
 	sitDown();
-	_20 = 5.0f + randFloat(4.0f);
-	_24 = _25 = 0;
-	_18       = 0;
+	mRestTimer      = 5.0f + randFloat(4.0f);
+	mIsAnimFinished = mForceComplete = 0;
+	mIsFinished                      = 0;
 }
 
 /*
@@ -1125,14 +1125,14 @@ void ActBoreRest::init(Creature* creature)
  */
 void ActBoreRest::sitDown()
 {
-	switch (_1C) {
+	switch (mRestState) {
 	case 0:
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
-		_1C = 1;
+		mRestState = 1;
 		break;
 	case 1:
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Neru, this), PaniMotionInfo(PIKIANIM_Neru));
-		_1C = 3;
+		mRestState = 3;
 		break;
 	}
 }
@@ -1144,14 +1144,14 @@ void ActBoreRest::sitDown()
  */
 void ActBoreRest::standUp()
 {
-	switch (_1C) {
+	switch (mRestState) {
 	case 1:
 		mPiki->mPikiAnimMgr.finishMotion(this);
-		_24 = 1;
+		mIsAnimFinished = 1;
 		break;
 	case 3:
 		mPiki->mPikiAnimMgr.finishMotion(this);
-		_24 = 1;
+		mIsAnimFinished = 1;
 		break;
 	}
 }
@@ -1163,13 +1163,13 @@ void ActBoreRest::standUp()
  */
 int ActBoreRest::exec()
 {
-	if (_25) {
+	if (mForceComplete) {
 		return ACTOUT_Success;
 	}
 
-	if (_18) {
-		if (!_24) {
-			if (_1C >= 1) {
+	if (mIsFinished) {
+		if (!mIsAnimFinished) {
+			if (mRestState >= 1) {
 				standUp();
 				return ACTOUT_Continue;
 			}
@@ -1178,16 +1178,16 @@ int ActBoreRest::exec()
 		return ACTOUT_Continue;
 	}
 
-	_20 -= gsys->getFrameTime();
+	mRestTimer -= gsys->getFrameTime();
 
-	if (!_24 && _20 < 0.0f) {
-		if (_1C <= 1 && unitRandFloat() > 0.5f) {
+	if (!mIsAnimFinished && mRestTimer < 0.0f) {
+		if (mRestState <= 1 && unitRandFloat() > 0.5f) {
 			sitDown();
-		} else if (_1C >= 1) {
+		} else if (mRestState >= 1) {
 			standUp();
 		}
 
-		_20 = randFloat(2.0f) + 3.0f;
+		mRestTimer = randFloat(2.0f) + 3.0f;
 	}
 
 	return ACTOUT_Continue;
@@ -1447,16 +1447,16 @@ void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
-		if (_24) {
-			switch (_1C) {
+		if (mIsAnimFinished) {
+			switch (mRestState) {
 			case 1:
-				_24 = 0;
-				_1C = 0;
-				_25 = 1;
+				mIsAnimFinished = 0;
+				mRestState      = 0;
+				mForceComplete  = 1;
 				break;
 			case 3:
-				_24 = 0;
-				_1C = 1;
+				mIsAnimFinished = 0;
+				mRestState      = 1;
 				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Suwaru, this), PaniMotionInfo(PIKIANIM_Suwaru));
 				mPiki->mPikiAnimMgr.getUpperAnimator().mAnimationCounter = 30.0f;
 				mPiki->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 30.0f;

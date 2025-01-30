@@ -906,8 +906,6 @@ void SpiderLeg::setNextDirAndCent()
 		_24C.y = mapMgr->getMinY(_24C.x, _24C.z, true);
 	}
 
-	// this uses every necessary inline according to the DLL, idek man.
-	// if I had to guess, the rand + NsMath inlines are still EVER so slightly fucky.
 	f32 badCompiler[2];
 }
 

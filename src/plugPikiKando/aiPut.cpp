@@ -39,8 +39,8 @@ void ActPutBomb::procCollideMsg(Piki* piki, MsgCollide* msg)
 		Creature* collider = msg->mEvent.mCollider;
 		if (collider->mObjType == OBJTYPE_Navi && !piki->isKinoko() && !collider->mStickListHead) {
 			rumbleMgr->start(2, 0, nullptr);
-			_1B         = 1;
-			piki->mNavi = static_cast<Navi*>(collider);
+			mTouchedPlayer = 1;
+			piki->mNavi    = static_cast<Navi*>(collider);
 		}
 	}
 }
@@ -69,7 +69,7 @@ void ActPutBomb::findTeki()
 	}
 
 	Iterator iterTeki(tekiMgr);
-	f32 minDist = C_PIKI_PROP(mPiki)._4AC();
+	f32 minDist = C_PIKI_PROP(mPiki).mBombTargetSearchRadius();
 	mTarget     = nullptr;
 	CI_LOOP(iterTeki)
 	{
@@ -121,7 +121,7 @@ void ActPutBomb::findTeki()
  */
 void ActPutBomb::init(Creature* target)
 {
-	_1B                 = 0;
+	mTouchedPlayer      = 0;
 	mState              = STATE_Unk5;
 	mPiki->mActionState = 0;
 	if (AIConstant::_instance->mConstants._124() != 0 && mPiki->isHolding()) {
@@ -236,8 +236,8 @@ void ActPutBomb::initAim()
 	PRINT("+++++ INIT AIM\n");
 	mState = STATE_Aim;
 	warnPikis();
-	_1C = C_PIKI_PROP(mPiki)._50C();
-	_20 = 0.0f;
+	mAimTimer   = C_PIKI_PROP(mPiki)._50C();
+	mPlaceTimer = 0.0f;
 }
 
 /*
@@ -252,40 +252,48 @@ int ActPutBomb::exeAim()
 		return ACTOUT_Continue;
 	}
 
-	Vector3f dir          = mTarget->mPosition - mPiki->mPosition;
-	f32 dist              = qdist2(mTarget, mPiki);
-	f32 angle             = angDist(atan2f(dir.x, dir.z), mPiki->mFaceDirection);
-	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.1f * angle);
-	if (_1C > 0.0f) {
-		_1C -= gsys->getFrameTime();
+	Vector3f dirToTarget  = mTarget->mPosition - mPiki->mPosition;
+	f32 distanceToTarget  = qdist2(mTarget, mPiki);
+	f32 angleToTarget     = angDist(atan2f(dirToTarget.x, dirToTarget.z), mPiki->mFaceDirection);
+	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.1f * angleToTarget);
+
+	if (mAimTimer > 0.0f) {
+		mAimTimer -= gsys->getFrameTime();
 	}
 
-	dist -= mTarget->getCentreSize();
-	if (dist > C_PIKI_PROP(mPiki)._4BC() && dist < C_PIKI_PROP(mPiki)._4CC()) {
-		if (zen::Abs(angle) < PI / 10.0f && _1C <= 0.0f) {
+	distanceToTarget -= mTarget->getCentreSize();
+
+	// Check if in valid throwing range
+	if (distanceToTarget > C_PIKI_PROP(mPiki).mBombPlaceMinDistance() && distanceToTarget < C_PIKI_PROP(mPiki).mBombThrowMaxDistance()) {
+
+		// If aimed correctly and aim timer expired, throw the bomb
+		if (zen::Abs(angleToTarget) < PI / 10.0f && mAimTimer <= 0.0f) {
 			initThrow();
 			return ACTOUT_Continue;
 		}
+
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		return ACTOUT_Continue;
 	}
 
-	if (zen::Abs(dir.normalise()) <= 0.01f) {
-		dir.set(0.0f, 0.0f, 1.0f);
+	if (zen::Abs(dirToTarget.normalise()) <= 0.01f) {
+		dirToTarget.set(0.0f, 0.0f, 1.0f);
 	}
 
-	if (dist < C_PIKI_PROP(mPiki)._4BC()) {
-		dir.multiply(-1.0f);
-		_20 += gsys->getFrameTime();
-		if (_20 >= C_PIKI_PROP(mPiki)._4DC()) {
+	// Handle close range placement
+	if (distanceToTarget < C_PIKI_PROP(mPiki).mBombPlaceMinDistance()) {
+		dirToTarget.multiply(-1.0f);
+
+		mPlaceTimer += gsys->getFrameTime();
+		if (mPlaceTimer >= C_PIKI_PROP(mPiki).mBombPlaceDuration()) {
 			initSet();
 			return ACTOUT_Continue;
 		}
 	} else {
-		_20 = 0.0f;
+		mPlaceTimer = 0.0f;
 	}
 
-	mPiki->setSpeed(0.5f, dir);
+	mPiki->setSpeed(0.5f, dirToTarget);
 	return ACTOUT_Continue;
 }
 
@@ -321,7 +329,7 @@ int ActPutBomb::exeWait()
  */
 void ActPutBomb::initThrow()
 {
-	_1A = 0;
+	mAnimationFinished = 0;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Tanemaki, this), PaniMotionInfo(PIKIANIM_Tanemaki));
 	mState = STATE_Throw;
 }
@@ -344,8 +352,8 @@ void ActPutBomb::initPut()
 	MsgUser msg(0);
 	BombItem* bomb = static_cast<BombItem*>(held);
 	static_cast<SimpleAI*>(bomb->mStateMachine)->procMsg(bomb, &msg);
-	_1A    = 0;
-	mState = STATE_Put;
+	mAnimationFinished = 0;
+	mState             = STATE_Put;
 }
 
 /*
@@ -357,7 +365,7 @@ int ActPutBomb::exeThrow()
 {
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
-	if (_1A) {
+	if (mAnimationFinished) {
 		if (mPiki->isHolding()) {
 			Vector3f centre = mTarget->getCentre();
 			Vector3f vel(mTarget->mVelocity);
@@ -404,7 +412,7 @@ int ActPutBomb::exeThrow()
 int ActPutBomb::exePut()
 {
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	if (_1A) {
+	if (mAnimationFinished) {
 		return ACTOUT_Success;
 	}
 
@@ -418,7 +426,7 @@ int ActPutBomb::exePut()
  */
 int ActPutBomb::exec()
 {
-	if (_1B) {
+	if (mTouchedPlayer) {
 		if (mPiki->getState() != PIKISTATE_LookAt) {
 			mPiki->mFSM->transit(mPiki, PIKISTATE_LookAt);
 		}
@@ -465,7 +473,7 @@ void ActPutBomb::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	case KEY_Finished:
 		if (mState == STATE_Put || mState == STATE_Throw) {
-			_1A = 1;
+			mAnimationFinished = 1;
 		}
 	}
 }
@@ -487,7 +495,7 @@ void ActPutBomb::cleanup()
 ActPutItem::ActPutItem(Piki* piki)
     : Action(piki, true)
 {
-	_20.clear();
+	mItem.clear();
 }
 
 /*
@@ -504,7 +512,7 @@ void ActPutItem::findPos()
 	CI_LOOP(iter)
 	{
 		Creature* item = *iter;
-		Vector3f dir   = item->mPosition - _20.getPtr()->mPosition;
+		Vector3f dir   = item->mPosition - mItem.getPtr()->mPosition;
 		f32 dist       = dir.length();
 		lastDist       = dist;
 		if (dist <= minDist) {
@@ -521,7 +529,7 @@ void ActPutItem::findPos()
 			CI_LOOP(iter)
 			{
 				Creature* item = *iter;
-				Vector3f dir   = item->mPosition - _20.getPtr()->mPosition;
+				Vector3f dir   = item->mPosition - mItem.getPtr()->mPosition;
 				f32 dist       = dir.length();
 				if (dist <= minDist && dist >= lastDist) {
 					closestItem = item;
@@ -531,14 +539,14 @@ void ActPutItem::findPos()
 
 			if (!closestItem) {
 				PRINT("no room to place !\n");
-				_14 = _20.getPtr()->mPosition;
+				mItemPosition = mItem.getPtr()->mPosition;
 				return;
 			}
 			lastDist = minDist;
 		}
 
 	} else {
-		_14 = _20.getPtr()->mPosition;
+		mItemPosition = mItem.getPtr()->mPosition;
 	}
 }
 
@@ -549,8 +557,8 @@ void ActPutItem::findPos()
  */
 bool ActPutItem::findAdjacent(Creature* target)
 {
-	Vector3f pos(_20.getPtr()->mPosition);
-	f32 size = (target->getSize() + _20.getPtr()->getSize()) * 1.3f;
+	Vector3f pos(mItem.getPtr()->mPosition);
+	f32 size = (target->getSize() + mItem.getPtr()->getSize()) * 1.3f;
 	Vector3f vec;
 	for (int i = 0; i < 8; i++) {
 		f32 angle = f32(i) * (PI / 4.0f);
@@ -564,13 +572,13 @@ bool ActPutItem::findAdjacent(Creature* target)
 			Creature* item = *iter;
 			Vector3f sep   = item->mPosition - vec;
 			f32 dist       = sep.length();
-			if (dist <= item->getSize() + _20.getPtr()->getSize()) {
+			if (dist <= item->getSize() + mItem.getPtr()->getSize()) {
 				check = true;
 				break;
 			}
 		}
 		if (!check) {
-			_14 = vec;
+			mItemPosition = vec;
 			return true;
 		}
 	}
@@ -585,7 +593,7 @@ bool ActPutItem::findAdjacent(Creature* target)
  */
 void ActPutItem::init(Creature* target)
 {
-	_20.set(target);
+	mItem.set(target);
 	findPos();
 }
 
@@ -596,10 +604,10 @@ void ActPutItem::init(Creature* target)
  */
 int ActPutItem::exec()
 {
-	Vector3f dir = _14 - mPiki->mPosition;
+	Vector3f dir = mItemPosition - mPiki->mPosition;
 	f32 dist     = dir.normalise();
 
-	if (dist <= _20.getPtr()->getSize()) {
+	if (dist <= mItem.getPtr()->getSize()) {
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 		InteractRelease release(mPiki, 1.0f);
@@ -619,5 +627,5 @@ int ActPutItem::exec()
  */
 void ActPutItem::cleanup()
 {
-	_20.reset();
+	mItem.reset();
 }

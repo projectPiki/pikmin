@@ -60,17 +60,17 @@ Creature* ActDecoy::update()
 	Creature* teki = findTeki();
 	if (teki) {
 		if (qdist2(teki, mPiki) < 60.0f) {
-			_18 = 0;
+			mState = 0;
 		} else {
-			_18 = 2;
+			mState = 2;
 		}
 	} else {
-		if (_18 != 3) {
-			_1C = 5.0f;
+		if (mState != 3) {
+			mDecoyTimer = 5.0f;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
 		}
 
-		_18 = 3;
+		mState = 3;
 	}
 
 	return teki;
@@ -112,11 +112,11 @@ void ActDecoy::animationKeyUpdated(PaniAnimKeyEvent&)
 int ActDecoy::exec()
 {
 	Creature* teki = update();
-	switch (_18) {
+	switch (mState) {
 	case 3:
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		_1C -= gsys->getFrameTime();
-		if (_1C < 0.0f) {
+		mDecoyTimer -= gsys->getFrameTime();
+		if (mDecoyTimer < 0.0f) {
 			return ACTOUT_Success;
 		}
 		break;
@@ -143,7 +143,7 @@ int ActDecoy::exec()
 		tekiDir.normalise();
 		mPiki->setSpeed(1.0f, tekiDir);
 		if (dist > 60.0f) {
-			_18 = 2;
+			mState = 2;
 		}
 		break;
 	}

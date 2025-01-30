@@ -170,8 +170,8 @@ void ActWeed::initNuking()
 {
 	mState = STATE_Attack;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Nuku, this), PaniMotionInfo(PIKIANIM_Nuku));
-	_28 = 4;
-	_2A = 0;
+	_28                = 4;
+	mAnimationFinished = 0;
 }
 
 /*
@@ -181,14 +181,15 @@ void ActWeed::initNuking()
  */
 int ActWeed::exeNuking()
 {
-	if (_2A) {
+	if (mAnimationFinished) {
 		initApproach();
 		return ACTOUT_Continue;
 	}
 
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
-	if (_2A) {
+
+	if (mAnimationFinished) {
 		mPiki->mEmotion = 10;
 		return ACTOUT_Success;
 	}
@@ -239,7 +240,7 @@ void ActWeed::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	case KEY_Finished:
 		if (mState == STATE_Attack) {
-			_2A = 1;
+			mAnimationFinished = 1;
 		}
 
 		break;
