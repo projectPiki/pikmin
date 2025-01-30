@@ -4886,7 +4886,7 @@ void BTeki::flickUpper(InteractFlick&)
  * Address:	80148000
  * Size:	000068
  */
-void BTeki::flickLower()
+void BTeki::flickLower() // 50% complete
 {
 
 	InteractFlick& flick = InteractFlick(this, getParameterF(TPF_LowerFlickPower), 0.0f, FLICK_BACKWARDS_ANGLE);
