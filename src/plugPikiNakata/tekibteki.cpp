@@ -16,6 +16,8 @@
 #include "DebugLog.h"
 #include "Creature.h"
 #include "MapCode.h"
+#include "AIConstant.h"
+#include "Route.h"
 
 const int BTeki::TEKI_OPTION_VISIBLE            = 1 << 0;
 const int BTeki::TEKI_OPTION_SHADOW_VISIBLE     = 1 << 1;
@@ -3186,6 +3188,11 @@ bool BTeki::nearestAngleTarget(Creature*)
  */
 bool BTeki::cullableCenter(Creature&, f32)
 {
+
+//   fVar1 = (float10)(**(code **)(*param_1_00 + 0x5c))();
+//   fVar2 = (float10)(**(code **)(*param_1 + 0x5c))();
+//   roughCull(param_1,(float)(fVar2 + (float10)(float)fVar1 + (float10)param_2));
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4711,22 +4718,8 @@ bool BTeki::interactPiki(Interaction&, Condition&)
  */
 void BTeki::flick()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        0x64
-	  mr        r3, r31
-	  bl        0x270
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	flickUpper();
+	flickLower();
 }
 
 /*
@@ -4734,28 +4727,10 @@ void BTeki::flick()
  * Address:	80147DA8
  * Size:	000044
  */
-void BTeki::flick(InteractFlick&, InteractFlick&)
+void BTeki::flick(InteractFlick& param_1, InteractFlick& param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bl        0x90
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x298
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+  flickUpper(param_1);
+  flickLower(param_2);
 }
 
 /*
@@ -4765,37 +4740,8 @@ void BTeki::flick(InteractFlick&, InteractFlick&)
  */
 void BTeki::flickUpper()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x802B
-	  stw       r0, 0x4(r1)
-	  lis       r5, 0x802B
-	  subi      r0, r5, 0x3168
-	  stwu      r1, -0x58(r1)
-	  subi      r6, r6, 0x3064
-	  lwz       r4, 0x2C4(r3)
-	  lfs       f1, -0x58B0(r2)
-	  lwz       r7, 0x84(r4)
-	  addi      r4, r1, 0x40
-	  lfs       f0, -0x5870(r2)
-	  lwz       r7, 0x4(r7)
-	  lwz       r5, 0x0(r7)
-	  lfs       f2, 0x84(r5)
-	  stw       r6, 0x40(r1)
-	  stw       r3, 0x44(r1)
-	  stw       r0, 0x40(r1)
-	  stfs      f2, 0x48(r1)
-	  stfs      f1, 0x4C(r1)
-	  stfs      f0, 0x50(r1)
-	  bl        .loc_0x68
-	  lwz       r0, 0x5C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-
-	.loc_0x68:
-	*/
+	InteractFlick& flick = InteractFlick(this, getParameterF(TPF_UpperFlickPower), 0.0f, FLICK_BACKWARDS_ANGLE);
+	flickUpper(flick);
 }
 
 /*
@@ -4942,6 +4888,10 @@ void BTeki::flickUpper(InteractFlick&)
  */
 void BTeki::flickLower()
 {
+
+	InteractFlick& flick = InteractFlick(this, getParameterF(TPF_LowerFlickPower), 0.0f, FLICK_BACKWARDS_ANGLE);
+	flickLower(flick);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5457,27 +5407,10 @@ int BTeki::getFlickDamageCount(int)
  * Address:	801485FC
  * Size:	000040
  */
-void BTeki::eventPerformed(TekiEvent&)
+void BTeki::eventPerformed(TekiEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  bl        0x324
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r31
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	TekiStrategy* tekiEvent = getStrategy();
+	tekiEvent->eventPerformed(event);
 }
 
 /*
@@ -5537,20 +5470,13 @@ void BTeki::collisionCallback(CollEvent&)
  * Address:	801486D4
  * Size:	00001C
  */
-bool BTeki::ignoreAtari(Creature*)
+bool BTeki::ignoreAtari(Creature* param_1)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x184(r4)
-	  cmplw     r0, r3
-	  bne-      .loc_0x14
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-	*/
+	if(param_1->mStickTarget == this){
+		return true;
+	}
+	
+	return false;
 }
 
 /*
@@ -5766,12 +5692,7 @@ bool BTeki::interactDefault(TekiInteractionKey&)
  */
 f32 BTeki::getGravity()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2F80(r13)
-	  lfs       f1, 0x30(r3)
-	  blr
-	*/
+	return AIConstant::_instance->mConstants.mGravity();
 }
 
 /*
@@ -6014,7 +5935,7 @@ WayPoint* BTeki::getWayPoint(int)
  * Address:	80148B7C
  * Size:	00002C
  */
-WayPoint* BTeki::getRouteWayPoint(int)
+WayPoint* BTeki::getRouteWayPoint(int param_1)
 {
 	/*
 	.loc_0x0:
