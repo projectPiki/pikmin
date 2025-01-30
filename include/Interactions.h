@@ -369,13 +369,17 @@ struct InteractPullout : public Interaction {
  * @brief TODO
  */
 struct InteractPush : public Interaction {
-	inline InteractPush(); // TODO: probably
+	InteractPush(Creature* owner, int p2)
+	    : Interaction(owner)
+	    , _08(p2)
+	{
+	}
 
 	virtual bool actHinderRock(HinderRock*); // _20
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	int _08; // _08
 };
 
 /**

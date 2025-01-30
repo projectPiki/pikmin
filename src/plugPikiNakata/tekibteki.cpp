@@ -4889,7 +4889,8 @@ void BTeki::flickUpper(InteractFlick&)
 void BTeki::flickLower() // 50% complete
 {
 
-	InteractFlick& flick = InteractFlick(this, getParameterF(TPF_LowerFlickPower), 0.0f, FLICK_BACKWARDS_ANGLE);
+	InteractFlick& flick
+	    = InteractFlick(this, getParameterF(TPF_LowerFlickPower), getParameterF(TPF_LowerAttackPower), FLICK_BACKWARDS_ANGLE);
 	flickLower(flick);
 
 	/*

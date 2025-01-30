@@ -174,6 +174,8 @@ struct HinderRock : public WorkObject {
 	int getPlaneIndex(Vector3f&);
 	Vector3f getTangentPos(f32);
 
+	bool isMoving() { return mIsMoving; }
+
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject
 	u16 mPushCount;             // _3C8
@@ -182,13 +184,14 @@ struct HinderRock : public WorkObject {
 	u32 _418;                   // _418
 	u32 _41C;                   // _41C
 	u32 _420;                   // _420
-	WayPoint _424;              // _424
-	u32 _430;                   // _430
+	WayPoint* mWayPoint;        // _424
+	u8 _428[0x8];               // _428, unknown
+	f32 _430;                   // _430
 	DynBuildShape* mBuildShape; // _434
 	Shape* _438;                // _438
-	u8 _43C;                    // _43C
+	u8 mState;                  // _43C
 	f32 _440;                   // _440
-	u32 _444;                   // _444
+	bool mIsMoving;             // _444
 	u32 _448;                   // _448
 	u32 _44C;                   // _44C
 	u32 _450;                   // _450

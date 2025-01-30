@@ -12,8 +12,11 @@ struct BombGenItem;
 struct Bridge;
 struct BuildingItem;
 struct Suckable;
+struct HinderRock;
 struct Pebble;
 struct RockGen;
+struct Grass;
+struct GrassGen;
 struct GoalItem;
 
 namespace zen {
@@ -1407,9 +1410,18 @@ struct ActPulloutCreature : public Action, public PaniAnimKeyListener {
  * @note Size: 0x50.
  */
 struct ActPush : public Action, virtual PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Approach = 0,
+		STATE_Go       = 1,
+	};
+
 	ActPush(Piki*);
 
-	virtual ~ActPush();                                  // _44 (weak)
+	virtual ~ActPush() { }                               // _44 (weak)
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1426,8 +1438,20 @@ struct ActPush : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x48 - 0x18]; // _18, unknown
-	                     // _48-_50 = PaniAnimKeyListener
+	HinderRock* mHinderRock; // _18
+	u8 _1C;                  // _1C
+	u16 mState;              // _1E
+	u8 _20[0x4];             // _20, unknown
+	int _24;                 // _24
+	u8 _28[0x4];             // _28, unknown
+	Vector3f _2C;            // _2C
+	f32 _38;                 // _38
+	u8 _3C;                  // _3C
+	f32 _40;                 // _40
+	u8 _44;                  // _44
+	s8 _45;                  // _45
+	u8 _46;                  // _46
+	                         // _48-_50 = PaniAnimKeyListener
 };
 
 /**
@@ -1632,9 +1656,20 @@ struct ActRope : public Action {
  * @note Size: 0x28.
  */
 struct ActShoot : public AndAction {
+
+	/**
+	 * @brief TODO
+	 */
+	enum ChildID {
+		CHILD_NULL          = -1,
+		CHILD_Goto          = 0,
+		CHILD_ShootCreature = 1,
+		CHILD_COUNT, // 2
+	};
+
 	ActShoot(Piki*);
 
-	virtual ~ActShoot();          // _44
+	virtual ~ActShoot() { }       // _44
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
@@ -1646,16 +1681,34 @@ struct ActShoot : public AndAction {
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	u8 _18[0x28 - 0x18]; // _18, unknown
+	u8 _18;                     // _18
+	Traversable* _1C;           // _1C, idk *what* but it inherits from Traversable
+	SmartPtr<Creature> mTarget; // _20
+	Navi* mNavi;                // _24
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct ActShootCreature : public Action, public PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Unk0 = 0,
+		STATE_Unk1 = 1,
+		STATE_Unk2 = 2,
+		STATE_Unk3 = 3,
+		STATE_Unk4 = 4,
+		STATE_Unk5 = 5,
+	};
+
 	ActShootCreature(Piki*);
 
-	virtual ~ActShootCreature();                         // _44
+	virtual ~ActShootCreature() { }                      // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1664,7 +1717,9 @@ struct ActShootCreature : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	int mState;                 // _18
+	f32 mChaseTimer;            // _1C
+	SmartPtr<Creature> mTarget; // _20
 };
 
 /**
@@ -1854,9 +1909,21 @@ struct ActWatch : public Action {
  * @note Size: 0x2C.
  */
 struct ActWeed : public Action, public PaniAnimKeyListener {
+
+#define GRASS_NECTAR_CHANCE (0.08f)
+
+	/**
+	 * @brief TODO
+	 */
+	enum State {
+		STATE_Approach = 0,
+		STATE_Adjust   = 1,
+		STATE_Attack   = 2,
+	};
+
 	ActWeed(Piki*);
 
-	virtual ~ActWeed();                                  // _44
+	// virtual ~ActWeed() { }                                  // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1872,7 +1939,12 @@ struct ActWeed : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x2C - 0x18]; // _18, unknown
+	u16 mState;          // _18
+	u8 _1A[0x6];         // _1A, unknown
+	Grass* mCurrGrass;   // _20
+	GrassGen* mGrassGen; // _24
+	u16 _28;             // _28
+	u8 _2A;              // _2A
 };
 
 /**

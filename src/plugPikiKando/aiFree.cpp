@@ -102,8 +102,8 @@ void ActFree::init(Creature*)
 		PRINT("### piki is holding !\n");
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait, this), PaniMotionInfo(PIKIANIM_Wait));
 	} else {
-		f32 r         = System::getRand(1.0f);
-		int motionIdx = r * f32(numMotions);
+		f32 r         = unitRandFloat();
+		int motionIdx = f32(numMotions) * r;
 		if (motionIdx >= numMotions) {
 			motionIdx = 0;
 		}
@@ -130,7 +130,7 @@ void ActFree::init(Creature*)
 	mPiki->enableFixPos();
 	mFixedPositionTimer = 3.0f;
 
-	u32 badCompiler[2];
+	// u32 badCompiler[2];
 
 	/*
 	.loc_0x0:

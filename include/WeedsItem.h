@@ -13,23 +13,19 @@ struct Grass {
 
 	bool isAlive() { return mHealth != 0; }
 
-	int attack()
+	int nuku()
 	{
 		if (mHealth != 0) {
-			mHealth--;
-			if (mHealth == 0) {
-				return ACTOUT_Success;
-			}
-			return ACTOUT_Continue;
+			mHealth = 0;
+			return ACTOUT_Success;
 		}
 		return ACTOUT_Fail;
 	}
 
-	// TODO: members
 	Vector3f mPosition; // _00
-	u8 _0C;             // _0C, unknown
+	u8 mHealth;         // _0C
 	u8 _0D;             // _0D
-	u8 mHealth;         // _0E
+	u8 _0E;             // _0E
 };
 
 /*
@@ -82,6 +78,8 @@ struct GrassGen : public ItemCreature {
 	void create(int, f32, int);
 	void setSizeAndNum(f32, int);
 	Grass* getRandomGrass();
+
+	void killGrass() { mActiveGrass--; }
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature

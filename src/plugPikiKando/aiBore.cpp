@@ -1181,18 +1181,17 @@ int ActBoreRest::exec()
 	_20 -= gsys->getFrameTime();
 
 	if (!_24 && _20 < 0.0f) {
-		if (_1C <= 1 && System::getRand(1.0f) > 0.5f) {
+		if (_1C <= 1 && unitRandFloat() > 0.5f) {
 			sitDown();
 		} else if (_1C >= 1) {
 			standUp();
 		}
 
-		_20 = 3.0f + 2.0f * System::getRand(1.0f);
+		_20 = randFloat(2.0f) + 3.0f;
 	}
 
 	return ACTOUT_Continue;
 
-	u32 badCompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0

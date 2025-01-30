@@ -531,6 +531,8 @@ int ActJumpAttack::exec()
 		return ACTOUT_Success;
 	}
 
+	u32 badCompiler1[1];
+
 	switch (_18) {
 	case 6:
 		doClimb();
@@ -583,10 +585,10 @@ int ActJumpAttack::exec()
 				_18 = 4;
 				mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			}
-		} else if ((!_28 || _28->isStickable()) && _2C && System::getRand(1.0f) > 0.9f) {
+		} else if ((!_28 || _28->isStickable()) && _2C && unitRandFloat() > 0.9f) {
 			_18 = 2;
 		} else {
-			if (dist2D < getAttackSize() + mPiki->getCentreSize() && System::getRand(1.0f) > 0.7f) {
+			if (dist2D < getAttackSize() + mPiki->getCentreSize() && unitRandFloat() > 0.7f) {
 				PRINT("jump adjust : dist2d = %.1f d = %.1f\n", dist2D, dist3D);
 				_18 = 2;
 			}
@@ -728,7 +730,7 @@ int ActJumpAttack::exec()
 
 	return ACTOUT_Continue;
 
-	u32 badCompiler[5];
+	u32 badCompiler[1];
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -895,109 +895,13 @@ Creature* GenObjectWorkObject::birth(BirthInfo&)
 HinderRock::HinderRock(Shape* shape)
 {
 	_438 = shape;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r6, 0
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  li        r4, 0x26
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x14(r1)
-	  bl        0x59964
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x1944
-	  stw       r3, 0x0(r30)
-	  addi      r3, r3, 0x114
-	  li        r0, 0x26
-	  stw       r3, 0x2B8(r30)
-	  li        r3, 0x28
-	  stw       r0, 0x6C(r30)
-	  bl        -0x54F68
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x64
-	  bl        0x7CE0
-
-	.loc_0x64:
-	  stw       r29, 0x2C(r30)
-	  addi      r4, r30, 0
-	  li        r5, 0x4
-	  lwz       r3, 0x2C(r30)
-	  bl        0x7DA4
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x1438
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x114
-	  lis       r3, 0x8003
-	  stw       r0, 0x2B8(r30)
-	  subi      r4, r3, 0x7D94
-	  addi      r3, r30, 0x3CC
-	  li        r5, 0
-	  li        r6, 0x10
-	  li        r7, 0x4
-	  bl        0x178AB0
-	  lfs       f0, -0x732C(r2)
-	  lis       r3, 0x8003
-	  addi      r4, r3, 0x5B24
-	  stfs      f0, 0x414(r30)
-	  addi      r3, r30, 0x460
-	  li        r5, 0
-	  stfs      f0, 0x410(r30)
-	  li        r6, 0xC
-	  li        r7, 0x2
-	  stfs      f0, 0x40C(r30)
-	  stfs      f0, 0x45C(r30)
-	  stfs      f0, 0x458(r30)
-	  stfs      f0, 0x454(r30)
-	  bl        0x178A78
-	  stw       r31, 0x438(r30)
-	  li        r3, 0x140
-	  lwz       r4, 0x438(r30)
-	  lwz       r0, 0x14(r4)
-	  ori       r0, r0, 0x10
-	  stw       r0, 0x14(r4)
-	  bl        -0x55010
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x11C
-	  mr        r4, r31
-	  bl        -0x3A040
-	  lis       r3, 0x802B
-	  addi      r0, r3, 0x16A0
-	  stw       r0, 0x0(r29)
-
-	.loc_0x11C:
-	  stw       r29, 0x434(r30)
-	  li        r3, 0x14
-	  lwz       r4, 0x434(r30)
-	  stw       r30, 0x28(r4)
-	  bl        -0x55044
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x144
-	  li        r4, 0x14
-	  bl        -0x1342C
-
-	.loc_0x144:
-	  stw       r29, 0x220(r30)
-	  li        r0, 0
-	  addi      r3, r30, 0
-	  stw       r0, 0x448(r30)
-	  stw       r0, 0x450(r30)
-	  stw       r0, 0x44C(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	_438->mSystemFlags |= 0x10;
+	mBuildShape            = new DynBuildShape(shape);
+	mBuildShape->mCreature = this;
+	mCollInfo              = new CollInfo(20);
+	_448                   = 0;
+	_450                   = 0;
+	_44C                   = 0;
 }
 
 /*
@@ -1053,122 +957,27 @@ bool HinderRock::insideSafeArea(Vector3f&)
  */
 void HinderRock::doLoad(RandomAccessStream& stream)
 {
-	_43C       = stream.readByte();
+	mState     = stream.readByte();
 	_418       = 0;
 	mPushCount = 0;
 
 	_440 = 0.0f;
 
-	if (_43C == 2) {
+	if (mState == 2) {
 		mPosition   = _40C;
 		mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, false);
-		for (int i = 0; i < 10; ++i) { }
-		_424.setFlag(true);
+		for (int i = 0; i < 10; i++) {
+			PRINT("goal Y = %f\n", _40C.y);
+		}
+
+		mWayPoint->setFlag(true);
+		PRINT("********* ROCK WAYPOINT(%d) ON\n", mWayPoint->mIndex);
 	}
 
-	Vector3f scale(1.0f, 1.0f, 1.0f);
-	mWorldMtx.makeSRT(scale, mRotation, mPosition);
+	;
+	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
 
-	DynBuildShape* shape = mBuildShape;
-	// TODO: wtf?
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x4(r4)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x43C(r31)
-	  li        r0, 0
-	  stw       r0, 0x418(r31)
-	  sth       r0, 0x3C8(r31)
-	  lfs       f0, -0x732C(r2)
-	  stfs      f0, 0x440(r31)
-	  lbz       r0, 0x43C(r31)
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0xA0
-	  lwz       r3, 0x40C(r31)
-	  li        r4, 0
-	  lwz       r0, 0x410(r31)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x414(r31)
-	  stw       r0, 0x9C(r31)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x94(r31)
-	  lfs       f2, 0x9C(r31)
-	  bl        -0x34278
-	  li        r3, 0x8
-	  stfs      f1, 0x98(r31)
-	  subfic    r0, r3, 0xA
-	  cmpwi     r3, 0xA
-	  mtctr     r0
-	  bge-      .loc_0x94
-
-	.loc_0x90:
-	  bdnz-     .loc_0x90
-
-	.loc_0x94:
-	  lwz       r3, 0x424(r31)
-	  li        r4, 0x1
-	  bl        0x55CC
-
-	.loc_0xA0:
-	  lfs       f0, -0x5534(r13)
-	  addi      r4, r1, 0x14
-	  lfs       f1, -0x5530(r13)
-	  addi      r3, r31, 0x228
-	  stfs      f0, 0x14(r1)
-	  lfs       f0, -0x552C(r13)
-	  addi      r5, r31, 0x88
-	  stfs      f1, 0x18(r1)
-	  addi      r6, r31, 0x94
-	  stfs      f0, 0x1C(r1)
-	  bl        -0x5E0DC
-	  lwz       r4, 0x434(r31)
-	  lwz       r3, 0x228(r31)
-	  lwz       r0, 0x22C(r31)
-	  stw       r3, 0x5C(r4)
-	  stw       r0, 0x60(r4)
-	  lwz       r3, 0x230(r31)
-	  lwz       r0, 0x234(r31)
-	  stw       r3, 0x64(r4)
-	  stw       r0, 0x68(r4)
-	  lwz       r3, 0x238(r31)
-	  lwz       r0, 0x23C(r31)
-	  stw       r3, 0x6C(r4)
-	  stw       r0, 0x70(r4)
-	  lwz       r3, 0x240(r31)
-	  lwz       r0, 0x244(r31)
-	  stw       r3, 0x74(r4)
-	  stw       r0, 0x78(r4)
-	  lwz       r3, 0x248(r31)
-	  lwz       r0, 0x24C(r31)
-	  stw       r3, 0x7C(r4)
-	  stw       r0, 0x80(r4)
-	  lwz       r3, 0x250(r31)
-	  lwz       r0, 0x254(r31)
-	  stw       r3, 0x84(r4)
-	  stw       r0, 0x88(r4)
-	  lwz       r3, 0x258(r31)
-	  lwz       r0, 0x25C(r31)
-	  stw       r3, 0x8C(r4)
-	  stw       r0, 0x90(r4)
-	  lwz       r3, 0x260(r31)
-	  lwz       r0, 0x264(r31)
-	  stw       r3, 0x94(r4)
-	  stw       r0, 0x98(r4)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mBuildShape->mTransformMtx = mWorldMtx;
 }
 
 /*
@@ -1178,27 +987,8 @@ void HinderRock::doLoad(RandomAccessStream& stream)
  */
 void HinderRock::doSave(RandomAccessStream& stream)
 {
-	stream.writeByte((u32)_438);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x4(r3)
-	  lbz       r4, 0x43C(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	stream.writeByte(mState);
+	PRINT("\tdoSave ******** STATE = %d WIDX = %d\n", mState, mWayPoint->mIndex);
 }
 
 /*
@@ -1208,12 +998,7 @@ void HinderRock::doSave(RandomAccessStream& stream)
  */
 f32 HinderRock::getCentreSize()
 {
-	return 0.0f;
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x430(r3)
-	  blr
-	*/
+	return _430;
 }
 
 /*
@@ -1223,15 +1008,7 @@ f32 HinderRock::getCentreSize()
  */
 bool HinderRock::isFinished()
 {
-	return false;
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x43C(r3)
-	  subfic    r0, r0, 0x2
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
+	return mState == 2;
 }
 
 /*

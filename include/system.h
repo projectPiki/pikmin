@@ -378,19 +378,23 @@ static inline f32 randFloat(f32 max)
 {
 	return max * System::getRand(1.0f);
 }
+static inline f32 unitRandFloat(f32 max = 1.0f)
+{
+	if (max > 0.0f) {
+		return System::getRand(max);
+	}
+
+	return 0.0f;
+}
 static inline bool randChance(f32 chance)
 {
 	f32 r = System::getRand(1.0f);
 	return r >= chance;
 }
+
 static inline bool coinFlip()
 {
 	return System::getRand(1.0f) > 0.5f;
-}
-
-static inline f32 dumbRandFloat(f32 max)
-{
-	return System::getRand(1.0f + max);
 }
 
 // these match according to the plugPiki DLL - move inlines down as they get verified

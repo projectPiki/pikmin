@@ -914,9 +914,9 @@ void GrassGen::create(int num, f32 size, int)
 
 		Grass* obj     = &mGrass[i];
 		obj->mPosition = dir;
-		obj->mHealth   = gsys->getRand(1.0f) * 0.999999f * 255.0f;
+		obj->_0E       = gsys->getRand(1.0f) * 0.999999f * 255.0f;
 		obj->_0D       = 0;
-		obj->_0C       = 1;
+		obj->mHealth   = 1;
 	}
 
 	resolve();
@@ -1132,7 +1132,7 @@ void GrassGen::refresh(Graphics& gfx)
 	if (gfx.mCamera->isPointVisible(mPosition, getSize() * 4.0f)) {
 		for (int i = 0; i < _3D2; i++) {
 			Grass* pb = &mGrass[i];
-			if (pb->_0C) {
+			if (pb->mHealth) {
 				Matrix4f mtx;
 				f32 test = pb->mHealth / 255.0f * PI * 2;
 				mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, test, 0.0f), pb->mPosition);
@@ -1169,7 +1169,7 @@ Grass* GrassGen::getRandomGrass()
 	int id = mActiveGrass * gsys->getRand(1.0f) * 0.999999f;
 	for (int i = 0; i < _3D2; i++) {
 		Grass* pb = &mGrass[i];
-		if (pb->_0C) {
+		if (pb->mHealth) {
 			if (id <= 0) {
 				return pb;
 			}
