@@ -14,6 +14,8 @@
 #include "TekiStrategy.h"
 #include "EffectMgr.h"
 #include "DebugLog.h"
+#include "Creature.h"
+#include "MapCode.h"
 
 const int BTeki::TEKI_OPTION_VISIBLE            = 1 << 0;
 const int BTeki::TEKI_OPTION_SHADOW_VISIBLE     = 1 << 1;
@@ -7005,20 +7007,11 @@ void BTeki::playTableSound(int)
  * Address:	801497A8
  * Size:	000024
  */
-void BTeki::playSound(int)
+void BTeki::playSound(int param_1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2C(r3)
-	  bl        -0xA59E8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+{
+  mSeContext->playSound(param_1);
+}
 }
 
 /*
@@ -7026,20 +7019,9 @@ void BTeki::playSound(int)
  * Address:	801497CC
  * Size:	000024
  */
-void BTeki::stopSound(int)
+void BTeki::stopSound(int param_1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2C(r3)
-	  bl        -0xA5938
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+  mSeContext->stopSound(param_1);
 }
 
 /*
@@ -7047,33 +7029,10 @@ void BTeki::stopSound(int)
  * Address:	801497F0
  * Size:	000058
  */
-void BTeki::createTekiEffect(int)
+void BTeki::createTekiEffect(int param_1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x3160(r13)
-	  lwz       r4, 0x320(r30)
-	  bl        0x1504
-	  lwz       r12, 0x0(r3)
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	TekiStrategy* strategy = tekiMgr->getStrategy(mTekiType);
+	strategy->createEffect(*(Teki*)this, param_1);
 }
 
 /*
@@ -7155,32 +7114,14 @@ void BTeki::outputWorldAnimationPosition(Vector3f&, int, Matrix4f&)
  * Address:	801498F0
  * Size:	000044
  */
-int BTeki::getPositionMapCode(Vector3f&)
+int BTeki::getPositionMapCode(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x0(r4)
-	  lfs       f2, 0x8(r4)
-	  li        r4, 0x1
-	  bl        -0xE1734
-	  cmplwi    r3, 0
-	  bne-      .loc_0x30
-	  li        r3, -0x1
-	  b         .loc_0x34
+	CollTriInfo* currentTri = mapMgr->getCurrTri(pos.x, pos.z, true);
+	if (currentTri == nullptr) {
+		return -1;
+	}
 
-	.loc_0x30:
-	  bl        -0x338A0
-
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return MapCode::getAttribute(currentTri);
 }
 
 /*
@@ -7190,31 +7131,7 @@ int BTeki::getPositionMapCode(Vector3f&)
  */
 int BTeki::getPositionMapCode()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r3, 0x94
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x1
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x0(r5)
-	  lfs       f2, 0x8(r5)
-	  bl        -0xE177C
-	  cmplwi    r3, 0
-	  bne-      .loc_0x34
-	  li        r3, -0x1
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  bl        -0x338E8
-
-	.loc_0x38:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+    return getPositionMapCode(getPosition());
 }
 
 /*
@@ -7224,40 +7141,11 @@ int BTeki::getPositionMapCode()
  */
 bool BTeki::inWaterTeki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r3, 0x94
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x1
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x0(r5)
-	  lfs       f2, 0x8(r5)
-	  bl        -0xE17C4
-	  cmplwi    r3, 0
-	  bne-      .loc_0x34
-	  li        r3, -0x1
-	  b         .loc_0x38
+	if (getPositionMapCode() == ATTR_Water) {
+		return true;
+	}
 
-	.loc_0x34:
-	  bl        -0x33930
-
-	.loc_0x38:
-	  cmpwi     r3, 0x5
-	  bne-      .loc_0x48
-	  li        r3, 0x1
-	  b         .loc_0x4C
-
-	.loc_0x48:
-	  li        r3, 0
-
-	.loc_0x4C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -7267,17 +7155,7 @@ bool BTeki::inWaterTeki()
  */
 void BTeki::moveNestPosition()
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x2C8(r3)
-	  lwz       r4, 0x10(r5)
-	  lwz       r0, 0x14(r5)
-	  stw       r4, 0x94(r3)
-	  stw       r0, 0x98(r3)
-	  lwz       r0, 0x18(r5)
-	  stw       r0, 0x9C(r3)
-	  blr
-	*/
+	mPosition = mPersonality->mScale;
 }
 
 /*
@@ -7285,20 +7163,12 @@ void BTeki::moveNestPosition()
  * Address:	801499F8
  * Size:	000024
  */
-void BTeki::startParticleGenerator(int)
+void BTeki::startParticleGenerator(int param_1)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x3D8(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwzx      r3, r3, r0
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,29,27
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
+	if (particleGenerator != nullptr) {
+    	particleGenerator->startGen();
+	}
 }
 
 /*
@@ -7306,20 +7176,12 @@ void BTeki::startParticleGenerator(int)
  * Address:	80149A1C
  * Size:	000024
  */
-void BTeki::stopParticleGenerator(int)
+void BTeki::stopParticleGenerator(int param_1)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x3D8(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwzx      r3, r3, r0
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x8
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
+	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
+	if (particleGenerator != nullptr) {
+    	particleGenerator->stopGen();
+	}
 }
 
 /*
@@ -7327,23 +7189,12 @@ void BTeki::stopParticleGenerator(int)
  * Address:	80149A40
  * Size:	000030
  */
-void BTeki::setParticleGeneratorPosition(int, Vector3f&)
+void BTeki::setParticleGeneratorPosition(int param_1, Vector3f& effectPos)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x3D8(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwzx      r4, r3, r0
-	  cmplwi    r4, 0
-	  beqlr-
-	  lwz       r3, 0x0(r5)
-	  lwz       r0, 0x4(r5)
-	  stw       r3, 0xC(r4)
-	  stw       r0, 0x10(r4)
-	  lwz       r0, 0x8(r5)
-	  stw       r0, 0x14(r4)
-	  blr
-	*/
+	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
+	if (particleGenerator != nullptr) {
+    	particleGenerator->setEmitPos(effectPos);
+	}
 }
 
 /*
@@ -7351,93 +7202,26 @@ void BTeki::setParticleGeneratorPosition(int, Vector3f&)
  * Address:	80149A70
  * Size:	000030
  */
-void BTeki::setParticleGeneratorDirection(int, Vector3f&)
+void BTeki::setParticleGeneratorDirection(int param_1, Vector3f& effectDir)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x3D8(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwzx      r4, r3, r0
-	  cmplwi    r4, 0
-	  beqlr-
-	  lwz       r3, 0x0(r5)
-	  lwz       r0, 0x4(r5)
-	  stw       r3, 0xA0(r4)
-	  stw       r0, 0xA4(r4)
-	  lwz       r0, 0x8(r5)
-	  stw       r0, 0xA8(r4)
-	  blr
-	*/
+	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
+	if (particleGenerator != nullptr) {
+    	particleGenerator->setEmitDir(effectDir);
+	}
 }
-
 /*
  * --INFO--
  * Address:	80149AA0
  * Size:	0000E0
  */
-f32 BTeki::calcCollisionDistance(Creature&)
+f32 BTeki::calcCollisionDistance(Creature& creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stfd      f30, 0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r4
-	  stw       r30, 0x40(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x10
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r31
-	  lwz       r12, 0x0(r31)
-	  addi      r3, r1, 0x1C
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r3, r1, 0x28
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r4, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r3, r1, 0x34
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, 0x34(r1)
-	  lfs       f2, 0x30(r1)
-	  lfs       f3, 0x1C(r1)
-	  lfs       f4, 0x18(r1)
-	  bl        -0x111508
-	  fmr       f30, f1
-	  mr        r3, r30
-	  bl        .loc_0xE0
-	  mr        r3, r31
-	  fmr       f31, f1
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  fsubs     f0, f30, f1
-	  lwz       r0, 0x5C(r1)
-	  lfd       f30, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  fsubs     f1, f0, f31
-	  lfd       f31, 0x50(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
+	f32 dist = qdist2(getCentre().x, getCentre().z, creature.getCentre().x, creature.getCentre().z);
 
-	.loc_0xE0:
-	*/
+	f32 collSize = getCollisionSize();
+	f32 creatureCollSize = creature.getCentreSize();
+
+	return dist - creatureCollSize - collSize;
 }
 
 /*
@@ -7447,20 +7231,7 @@ f32 BTeki::calcCollisionDistance(Creature&)
  */
 f32 BTeki::getCollisionSize()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return getCentreSize();
 }
 
 /*
