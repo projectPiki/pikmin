@@ -1626,9 +1626,20 @@ struct ActRandomBoid : public Action {
  * @note Size: 0x3C.
  */
 struct ActRescue : public Action, virtual PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Approach = 0,
+		STATE_Rescue   = 1,
+		STATE_Go       = 2,
+		STATE_Throw    = 3,
+	};
+
 	ActRescue(Piki*);
 
-	virtual ~ActRescue();                                // _44
+	virtual ~ActRescue() { }                             // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1646,8 +1657,14 @@ struct ActRescue : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	u8 _18[0x34 - 0x18]; // _18, unknown
-	                     // _34-_3C = PaniAnimKeyListener
+	u16 mState;              // _18
+	Piki* mDrowningPiki;     // _1C
+	u16 mTargetSurviveTimer; // _20
+	Vector3f _24;            // _24
+	u8 _30;                  // _30
+	u8 _31;                  // _31
+	u8 _32;                  // _32
+	                         // _34-_3C = PaniAnimKeyListener
 };
 
 /**
