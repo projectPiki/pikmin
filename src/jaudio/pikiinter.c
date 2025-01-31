@@ -956,7 +956,7 @@ void Jac_DestroyNotThisEvent(void)
  * Address:	80018080
  * Size:	000038
  */
-void Jac_CheckFreeEvents(void)
+int Jac_CheckFreeEvents(void)
 {
 	/*
 	.loc_0x0:
@@ -986,7 +986,7 @@ void Jac_CheckFreeEvents(void)
  * Address:	800180C0
  * Size:	000050
  */
-void Jac_GetActiveEvents(void)
+int Jac_GetActiveEvents(void)
 {
 	/*
 	.loc_0x0:

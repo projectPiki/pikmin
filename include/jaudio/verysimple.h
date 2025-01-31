@@ -11,7 +11,7 @@ extern "C" {
 void Jac_StopSe(s32);
 BOOL Jac_PauseCheck();
 void Jac_SysSEDemoFadeCheck();
-void Jac_PlaySystemSe();
+void Jac_PlaySystemSe(s32);
 void Jac_StopSystemSe(s32);
 BOOL Jac_CheckBootOk();
 void Jac_Start(void* heap, u32 heapSize, u32 aramSize);

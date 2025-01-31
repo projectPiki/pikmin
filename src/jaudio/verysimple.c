@@ -137,7 +137,7 @@ void Jac_SysSEDemoFadeCheck()
  * Address:	80016BA0
  * Size:	0003A0
  */
-void Jac_PlaySystemSe()
+void Jac_PlaySystemSe(s32)
 {
 	/*
 	.loc_0x0:

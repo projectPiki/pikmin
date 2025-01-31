@@ -17,8 +17,8 @@ extern "C" {
 //////////// JAUDIO PIKMIN DEMO FUNCTIONS (C) ////////////
 void Jac_Orima_Walk(u16 soundID, u32 p2); // args uncertain
 void Jac_Orima_Formation(s32, s32);       // args
-void Jac_PlayOrimaSe(void);               // args
-void Jac_StopOrimaSe(void);               // args
+void Jac_PlayOrimaSe(s32);                // args
+void Jac_StopOrimaSe(s32);                // args
 void Jac_Piki_Number(s32);                // args
 
 /////////////////////////////////////////////////////////
