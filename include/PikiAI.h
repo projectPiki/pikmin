@@ -16,6 +16,7 @@ struct HinderRock;
 struct Pebble;
 struct RockGen;
 struct Grass;
+struct CPlate;
 struct GrassGen;
 struct GoalItem;
 
@@ -718,16 +719,26 @@ struct ActChase : public Action {
  * @note Size: 0x88.
  */
 struct ActCrowd : public Action, virtual SlotChangeListner {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Unk0   = 0,
+		STATE_Formed = 1,
+		STATE_Sort   = 2,
+	};
+
 	ActCrowd(Piki*);
 
 	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
 	virtual void procAnimMsg(Piki*, MsgAnim*);       // _20
 	virtual void procWallMsg(Piki*, MsgWall*);       // _28
-	virtual ~ActCrowd();                             // _44
+	virtual ~ActCrowd() { }                          // _44
 	virtual void init(Creature*);                    // _48
 	virtual int exec();                              // _4C
 	virtual void cleanup();                          // _50
-	virtual bool resumable();                        // _5C
+	virtual bool resumable() { return true; }        // _5C
 	virtual void inform(int);                        // _64
 
 	void startSort();
@@ -744,19 +755,31 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = SlotChangeListner ptr
-	u8 _18[0x2C - 0x18]; // _18, unknown
-	u16 mFormationState; // _2C, "md"?
-	u16 mMode;           // _2E, "st"?
-	u8 _30[0x58 - 0x30]; // _30, unknown
-	int mCPlateSlotID;   // _58
-	u8 _5C[0x64 - 0x5C]; // _5C, unknown
-	u8 mIsKokeActive;    // _64, "koke"?
-	u8 _65[0x7C - 0x65]; // _65, unknown
-	u8 _7C;              // _7C
-	u8 mIsWaiting;       // _7D, "wait"?
-	u8 _7E;              // _7E
-	u8 mHasRoute;        // _7F, "route"?
-	                     // _80-_88 = SlotChangeListner
+	OdoMeter mOdometer;           // _18
+	ActBoreSelect* mSelectAction; // _28
+	u16 mState;                   // _2C
+	u16 mMode;                    // _2E
+	u16 _30;                      // _30
+	u16 _32;                      // _32
+	u8 _34;                       // _34
+	u8 _35;                       // _35
+	u8 _36;                       // _36
+	u32 _38;                      // _38, unknown
+	Vector3f _3C;                 // _3C
+	Vector3f _48;                 // _48
+	u8 _54[0x4];                  // _54, unknown
+	int mCPlateSlotID;            // _58
+	int mTripLoopCounter;         // _5C
+	f32 _60;                      // _60
+	bool mIsTripping;             // _64
+	f32 _68;                      // _68
+	CPlate* mPlateMgr;            // _6C
+	Vector3f _70;                 // _70
+	u8 _7C;                       // _7C
+	bool mIsWaiting;              // _7D
+	u8 _7E;                       // _7E
+	bool mHasRoute;               // _7F
+	                              // _80-_88 = SlotChangeListner
 };
 
 /**

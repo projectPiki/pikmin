@@ -1,5 +1,18 @@
 #include "PikiAI.h"
+#include "Navi.h"
+#include "CPlate.h"
+#include "NaviMgr.h"
+#include "gameflow.h"
+#include "PikiInfo.h"
+#include "PikiMgr.h"
+#include "MoviePlayer.h"
+#include "PlayerState.h"
+#include "ViewPiki.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/arith.h"
+#include "GameStat.h"
 #include "DebugLog.h"
+
+static bool newVer = true;
 
 /*
  * --INFO--
@@ -21,78 +34,12 @@ DEFINE_PRINT(nullptr)
  * Size:	0000FC
  */
 ActCrowd::ActCrowd(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  extsh.    r0, r4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r5
-	  stw       r30, 0x18(r1)
-	  stw       r3, 0x8(r1)
-	  beq-      .loc_0x3C
-	  lwz       r4, 0x8(r1)
-	  lis       r3, 0x802B
-	  addi      r0, r3, 0x6390
-	  addi      r3, r4, 0x80
-	  stw       r3, 0x14(r4)
-	  stw       r0, 0x80(r4)
-
-	.loc_0x3C:
-	  lwz       r3, 0x8(r1)
-	  addi      r4, r31, 0
-	  li        r5, 0x1
-	  bl        0xE2DC
-	  lwz       r30, 0x8(r1)
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x631C
-	  stw       r3, 0x0(r30)
-	  addi      r5, r3, 0x68
-	  addi      r0, r30, 0x80
-	  lwz       r4, 0x14(r30)
-	  addi      r3, r30, 0x18
-	  stw       r5, 0x0(r4)
-	  lwz       r4, 0x14(r30)
-	  sub       r0, r0, r4
-	  stw       r0, 0x4(r4)
-	  bl        0x17CDC
-	  lfs       f0, -0x6EF0(r2)
-	  subi      r5, r13, 0x4B54
-	  li        r4, 0
-	  stfs      f0, 0x44(r30)
-	  li        r0, -0x1
-	  li        r3, 0x20
-	  stfs      f0, 0x40(r30)
-	  stfs      f0, 0x3C(r30)
-	  stfs      f0, 0x50(r30)
-	  stfs      f0, 0x4C(r30)
-	  stfs      f0, 0x48(r30)
-	  stfs      f0, 0x78(r30)
-	  stfs      f0, 0x74(r30)
-	  stfs      f0, 0x70(r30)
-	  stw       r5, 0x10(r30)
-	  stw       r4, 0x6C(r30)
-	  stw       r0, 0x58(r30)
-	  bl        -0x6EB6C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xDC
-	  mr        r4, r31
-	  bl        -0xAF8C
-
-	.loc_0xDC:
-	  lwz       r3, 0x8(r1)
-	  stw       r30, 0x28(r3)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	setName("crowd");
+	mPlateMgr     = nullptr;
+	mCPlateSlotID = -1;
+	mSelectAction = new ActBoreSelect(piki);
 }
 
 /*
@@ -100,10 +47,9 @@ ActCrowd::ActCrowd(Piki* piki)
  * Address:	800B5BA8
  * Size:	000008
  */
-void ActCrowd::inform(int a1)
+void ActCrowd::inform(int slotID)
 {
-	// Generated from stw r4, 0x58(r3)
-	// _58 = a1;
+	mCPlateSlotID = slotID;
 }
 
 /*
@@ -113,20 +59,8 @@ void ActCrowd::inform(int a1)
  */
 void ActCrowd::startSort()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x2
-	  stwu      r1, -0x8(r1)
-	  sth       r0, 0x2C(r3)
-	  lwz       r3, 0x28(r3)
-	  bl        -0xADD8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mState = STATE_Sort;
+	mSelectAction->stop();
 }
 
 /*
@@ -134,104 +68,42 @@ void ActCrowd::startSort()
  * Address:	800B5BDC
  * Size:	00015C
  */
-void ActCrowd::init(Creature*)
+void ActCrowd::init(Creature* target)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r3, 0
-	  li        r3, 0x5
-	  stw       r30, 0x30(r1)
-	  sth       r3, 0x2E(r31)
-	  sth       r3, 0x30(r31)
-	  sth       r0, 0x32(r31)
-	  stb       r0, 0x7D(r31)
-	  stb       r0, 0x7E(r31)
-	  lwz       r0, 0x6C(r4)
-	  cmpwi     r0, 0x36
-	  lwz       r0, 0x710(r4)
-	  cmplwi    r31, 0
-	  addi      r30, r4, 0
-	  stw       r0, 0x6C(r31)
-	  mr        r5, r31
-	  beq-      .loc_0x58
-	  lwz       r5, 0x14(r31)
+	mMode      = 5;
+	_30        = 5;
+	_32        = 0;
+	mIsWaiting = false;
+	_7E        = 0;
+	if (target->mObjType != OBJTYPE_Navi) {
+		PRINT("target is not navi (%d)\n", target->mObjType);
+	}
 
-	.loc_0x58:
-	  lwz       r3, 0x6C(r31)
-	  lwz       r4, 0xC(r31)
-	  bl        -0xFF34
-	  stw       r3, 0x58(r31)
-	  lwz       r0, 0x58(r31)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x7C
-	  mr        r3, r30
-	  bl        0x428DC
+	Navi* navi    = static_cast<Navi*>(target);
+	mPlateMgr     = navi->mPlateMgr;
+	mCPlateSlotID = mPlateMgr->getSlot(mPiki, this);
+	if (mCPlateSlotID == -1) {
+		PRINT("slot id is -1\n");
+	} else {
+		navi->incPlatePiki();
+	}
 
-	.loc_0x7C:
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0x2AC(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xB8
-	  addi      r3, r1, 0x20
-	  li        r4, 0
-	  bl        0x692E8
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x28
-	  li        r4, 0
-	  bl        0x692D8
-	  mr        r4, r3
-	  lwz       r3, 0xC(r31)
-	  mr        r5, r30
-	  bl        0x14D48
-
-	.loc_0xB8:
-	  lwz       r3, 0xC(r31)
-	  bl        0x13E6C
-	  li        r30, 0
-	  stb       r30, 0x34(r31)
-	  lis       r4, 0x803D
-	  lis       r3, 0x803D
-	  stb       r30, 0x35(r31)
-	  addi      r4, r4, 0x1E70
-	  addi      r0, r3, 0x1E88
-	  stb       r30, 0x36(r31)
-	  sth       r30, 0x2C(r31)
-	  stw       r30, 0x5C(r31)
-	  lfs       f0, -0x6EF0(r2)
-	  stfs      f0, 0x60(r31)
-	  stb       r30, 0x64(r31)
-	  lwz       r3, 0xC(r31)
-	  lhz       r3, 0x510(r3)
-	  rlwinm    r3,r3,2,0,29
-	  add       r4, r4, r3
-	  lwz       r3, 0x0(r4)
-	  addi      r3, r3, 0x1
-	  stw       r3, 0x0(r4)
-	  lwz       r3, 0xC(r31)
-	  lhz       r3, 0x510(r3)
-	  rlwinm    r3,r3,2,0,29
-	  add       r4, r0, r3
-	  lwz       r3, 0x0(r4)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x0(r4)
-	  bl        0x5C858
-	  stb       r30, 0x7F(r31)
-	  addi      r3, r31, 0x18
-	  lfs       f1, -0x6EEC(r2)
-	  lfs       f2, -0x6EE8(r2)
-	  bl        0x17AF8
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	if (!mPiki->isHolding()) {
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
+	}
+	mPiki->unsetPastel();
+	_34              = 0;
+	_35              = 0;
+	_36              = 0;
+	mState           = STATE_Unk0;
+	mTripLoopCounter = 0;
+	_60              = 0.0f;
+	mIsTripping      = false;
+	GameStat::formationPikis.inc(mPiki->mColor);
+	GameStat::workPikis.dec(mPiki->mColor);
+	GameStat::update();
+	mHasRoute = false;
+	mOdometer.start(2.0f, 20.0f);
 }
 
 /*
@@ -241,7 +113,12 @@ void ActCrowd::init(Creature*)
  */
 void ActCrowd::initRouteMove()
 {
-	// UNUSED FUNCTION
+	mHasRoute = false;
+	if (mPiki->initRouteTraceDynamic(mPiki->mNavi)) {
+		PRINT("OKOK!\n");
+		mHasRoute = true;
+	}
+	_68 = 5.0f;
 }
 
 /*
@@ -251,7 +128,10 @@ void ActCrowd::initRouteMove()
  */
 void ActCrowd::exeRouteMove()
 {
-	// UNUSED FUNCTION
+	if (mPiki->moveRouteTraceDynamic(1.0f) != 2) {
+		PRINT("THE END\n");
+		mHasRoute = false;
+	}
 }
 
 /*
@@ -261,7 +141,10 @@ void ActCrowd::exeRouteMove()
  */
 void ActCrowd::setFormed()
 {
-	// UNUSED FUNCTION
+	mState = STATE_Formed;
+	if (mPiki->hasBomb() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk18)) {
+		playerState->mDemoFlags.setFlag(DEMOFLAG_Unk18, mPiki);
+	}
 }
 
 /*
@@ -269,76 +152,23 @@ void ActCrowd::setFormed()
  * Address:	800B5D38
  * Size:	0000E4
  */
-void ActCrowd::procCollideMsg(Piki*, MsgCollide*)
+void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  lhz       r4, 0x2C(r3)
-	  cmplwi    r4, 0x2
-	  beq-      .loc_0xD0
-	  lwz       r3, 0x4(r5)
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xD0
-	  lhz       r0, 0x4FC(r3)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0xC8
-	  cmplwi    r4, 0
-	  bne-      .loc_0xC8
-	  lwz       r3, 0x4F8(r3)
-	  lha       r0, 0x8(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x5C
-	  li        r3, 0
-	  b         .loc_0x68
+	if (mState == STATE_Sort) {
+		return;
+	}
 
-	.loc_0x5C:
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r0,3,0,28
-	  lwzx      r3, r3, r0
-
-	.loc_0x68:
-	  cmplwi    r3, 0
-	  beq-      .loc_0xC8
-	  lhz       r0, 0x2C(r3)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0xC8
-	  lwz       r3, 0x3138(r13)
-	  bl        0x63F50
-	  li        r0, 0x1
-	  sth       r0, 0x2C(r31)
-	  lwz       r3, 0xC(r31)
-	  bl        0x120A8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC8
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x12
-	  addi      r3, r3, 0x54
-	  bl        -0x3391C
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xC8
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x12
-	  lwz       r5, 0xC(r31)
-	  addi      r3, r3, 0x54
-	  bl        -0x338E0
-
-	.loc_0xC8:
-	  li        r0, 0x1
-	  stb       r0, 0x36(r31)
-
-	.loc_0xD0:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	Piki* collider = static_cast<Piki*>(msg->mEvent.mCollider);
+	if (collider->mObjType == OBJTYPE_Piki) {
+		if (collider->mMode == PikiMode::FormationMode && mState == STATE_Unk0) {
+			ActCrowd* colliderAction = static_cast<ActCrowd*>(collider->mActiveAction->getCurrAction());
+			if (colliderAction && colliderAction->mState == STATE_Formed) {
+				pikiInfo->addFormationPiki();
+				setFormed();
+			}
+		}
+		_36 = 1;
+	}
 }
 
 /*
@@ -346,24 +176,12 @@ void ActCrowd::procCollideMsg(Piki*, MsgCollide*)
  * Address:	800B5E1C
  * Size:	000034
  */
-void ActCrowd::procWallMsg(Piki*, MsgWall*)
+void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x58(r3)
-	  cmpwi     r0, -0x1
-	  beqlr-
-	  lwz       r6, 0x4(r5)
-	  li        r0, 0x1
-	  lwz       r5, 0x0(r6)
-	  lwz       r4, 0x4(r6)
-	  stw       r5, 0x70(r3)
-	  stw       r4, 0x74(r3)
-	  lwz       r4, 0x8(r6)
-	  stw       r4, 0x78(r3)
-	  stb       r0, 0x35(r3)
-	  blr
-	*/
+	if (mCPlateSlotID != -1) {
+		_70 = *msg->mWallNormal;
+		_35 = 1;
+	}
 }
 
 /*
@@ -371,94 +189,30 @@ void ActCrowd::procWallMsg(Piki*, MsgWall*)
  * Address:	800B5E50
  * Size:	00011C
  */
-void ActCrowd::procAnimMsg(Piki*, MsgAnim*)
+void ActCrowd::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  mr        r30, r4
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x44
-	  bge-      .loc_0x38
-	  cmpwi     r0, 0
-	  beq-      .loc_0xC4
-	  b         .loc_0x104
-
-	.loc_0x38:
-	  cmpwi     r0, 0x6
-	  beq-      .loc_0x84
-	  b         .loc_0x104
-
-	.loc_0x44:
-	  lbz       r0, 0x64(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x104
-	  lfs       f0, -0x4B4C(r13)
-	  stfs      f0, 0x70(r30)
-	  lfs       f0, -0x4B48(r13)
-	  stfs      f0, 0x74(r30)
-	  lfs       f0, -0x4B44(r13)
-	  stfs      f0, 0x78(r30)
-	  lfs       f0, -0x4B40(r13)
-	  stfs      f0, 0xA4(r30)
-	  lfs       f0, -0x4B3C(r13)
-	  stfs      f0, 0xA8(r30)
-	  lfs       f0, -0x4B38(r13)
-	  stfs      f0, 0xAC(r30)
-	  b         .loc_0x104
-
-	.loc_0x84:
-	  lbz       r0, 0x64(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x104
-	  lwz       r4, 0x5C(r3)
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x5C(r3)
-	  lwz       r0, 0x5C(r3)
-	  cmpwi     r0, 0
-	  bgt-      .loc_0x104
-	  cmplwi    r30, 0
-	  addi      r4, r30, 0
-	  beq-      .loc_0xB8
-	  addi      r4, r4, 0x2B8
-
-	.loc_0xB8:
-	  addi      r3, r30, 0x354
-	  bl        0x69BB4
-	  b         .loc_0x104
-
-	.loc_0xC4:
-	  lbz       r0, 0x64(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x104
-	  li        r0, 0
-	  stb       r0, 0x64(r3)
-	  addi      r3, r1, 0x14
-	  li        r4, 0x2
-	  bl        0x69028
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x2
-	  bl        0x69018
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0
-	  bl        0x14A88
-
-	.loc_0x104:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_Action1:
+		if (mIsTripping) {
+			piki->mVelocity.set(0.0f, 0.0f, 0.0f);
+			piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		}
+		break;
+	case KEY_LoopEnd:
+		if (mIsTripping) {
+			mTripLoopCounter--;
+			if (mTripLoopCounter <= 0) {
+				piki->mPikiAnimMgr.finishMotion(piki);
+			}
+		}
+		break;
+	case KEY_Finished:
+		if (mIsTripping) {
+			mIsTripping = false;
+			piki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+		}
+		break;
+	}
 }
 
 /*
@@ -468,76 +222,23 @@ void ActCrowd::procAnimMsg(Piki*, MsgAnim*)
  */
 void ActCrowd::cleanup()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  stw       r30, 0x30(r1)
-	  lwz       r3, 0xC(r3)
-	  lwz       r30, 0x2D0(r3)
-	  cmplwi    r30, 0
-	  beq-      .loc_0x40
-	  lis       r4, 0x7465
-	  lwz       r3, 0x302C(r13)
-	  addi      r4, r4, 0x7374
-	  bl        -0x15F90
-	  mr        r4, r30
-	  bl        -0x16874
-
-	.loc_0x40:
-	  lwz       r0, 0x58(r31)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x80
-	  lwz       r3, 0xC(r31)
-	  lwz       r30, 0x4(r3)
-	  lwz       r3, 0x504(r3)
-	  bl        0x42580
-	  lwz       r3, 0x6C(r31)
-	  lwz       r4, 0xC(r31)
-	  lwz       r5, 0x58(r31)
-	  bl        -0x101CC
-	  cmpwi     r30, 0
-	  ble-      .loc_0x80
-	  lwz       r3, 0xC(r31)
-	  lwz       r0, 0x4(r3)
-	  cmpw      r30, r0
-
-	.loc_0x80:
-	  lwz       r3, 0x3138(r13)
-	  bl        0x63D3C
-	  li        r0, 0
-	  stw       r0, 0x6C(r31)
-	  li        r0, -0x1
-	  lis       r4, 0x803D
-	  stw       r0, 0x58(r31)
-	  lis       r3, 0x803D
-	  addi      r4, r4, 0x1E88
-	  lwz       r5, 0xC(r31)
-	  addi      r0, r3, 0x1E70
-	  lhz       r3, 0x510(r5)
-	  rlwinm    r3,r3,2,0,29
-	  add       r4, r4, r3
-	  lwz       r3, 0x0(r4)
-	  addi      r3, r3, 0x1
-	  stw       r3, 0x0(r4)
-	  lwz       r3, 0xC(r31)
-	  lhz       r3, 0x510(r3)
-	  rlwinm    r3,r3,2,0,29
-	  add       r4, r0, r3
-	  lwz       r3, 0x0(r4)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x0(r4)
-	  bl        0x5C514
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	if (mPiki->mRouteHandle) {
+		routeMgr->getPathFinder('test')->releaseHandle(mPiki->mRouteHandle);
+	}
+	if (mCPlateSlotID != -1) {
+		int count = mPiki->getCnt();
+		mPiki->mNavi->decPlatePiki();
+		mPlateMgr->releaseSlot(mPiki, mCPlateSlotID);
+		if (count > 0 && count == mPiki->getCnt()) {
+			ERROR("smart ptr err %d\n", mPiki->getCnt());
+		}
+	}
+	pikiInfo->subFormationPiki();
+	mPlateMgr     = nullptr;
+	mCPlateSlotID = -1;
+	GameStat::workPikis.inc(mPiki->mColor);
+	GameStat::formationPikis.dec(mPiki->mColor);
+	GameStat::update();
 }
 
 /*
@@ -547,6 +248,302 @@ void ActCrowd::cleanup()
  */
 int ActCrowd::exec()
 {
+	_30   = mMode;
+	mMode = 5;
+	if (mHasRoute) {
+		exeRouteMove();
+		if (mPiki->mUseAsyncPathfinding) {
+			_68 -= gsys->getFrameTime();
+			if (_68 < 0.0f) {
+				mPiki->mActionState = 2;
+				return ACTOUT_Fail;
+			}
+		}
+		return ACTOUT_Continue;
+	}
+
+	if (mPiki->mNavi->isStickTo()) {
+		mPiki->mActionState = 2;
+		return ACTOUT_Fail;
+	}
+
+	if (mIsTripping) {
+		if (mPiki->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() != PIKIANIM_Korobu) {
+			mIsTripping = false;
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+		}
+		mPiki->mTargetVelocity = mPiki->mTargetVelocity * 0.955f;
+		return ACTOUT_Continue;
+	}
+
+	if (mIsWaiting && !mPiki->hasBomb()) {
+		int boreRes = mSelectAction->exec();
+		if (boreRes != ACTOUT_Continue) {
+			mIsWaiting = false;
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+		} else {
+			if (mPiki->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == PIKIANIM_Wait) {
+				mIsWaiting = false;
+				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+			} else {
+				return boreRes;
+			}
+		}
+	}
+
+	_7E = mIsWaiting;
+	if (!mPiki->mNavi) {
+		ERROR("piki->navi 0!\n");
+	}
+
+	bool check = false;
+	if (mPiki->mNavi->_764.length() <= C_NAVI_PROP(mPiki->mNavi).mNeutralStickThreshold()) {
+		check = true;
+	}
+
+	if (!mPlateMgr->validSlot(mCPlateSlotID)) {
+		ERROR("invalid slotId!\n");
+	}
+
+	Vector3f platePos = mPlateMgr->mSlotList[mCPlateSlotID].mOffsetFromCenter + mPlateMgr->mPlateCenter;
+
+	Vector3f effDir = static_cast<ViewPiki*>(mPiki)->mLastEffectPosition - mPiki->mPosition;
+	f32 travelDist  = effDir.length();
+
+	if (mPiki->hasBomb() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk18) && travelDist < 100.0f) {
+		playerState->mDemoFlags.setFlag(DEMOFLAG_Unk18, mPiki);
+	}
+
+	_60 += travelDist;
+
+	// - yellows with bombs cannot trip
+	// - have to have moved a certain distance
+	// - have to be moving at at least 110 units of speed
+	if (!mPiki->hasBomb() && _60 >= 100.0f && mPiki->mVelocity.length() > 110.0f) {
+
+		// idk why they did this in two rand checks, but go figure
+		// approximately a 0.003% chance of tripping
+		if (unitRandFloat() >= 0.9999f && unitRandFloat() > 0.7f) {
+			mIsTripping      = true;
+			mTripLoopCounter = int(randFloat(4.0f)) + 3; // length of trip is a random number of anim loops, between 3 and 7
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Korobu, mPiki), PaniMotionInfo(PIKIANIM_Korobu));
+			return ACTOUT_Continue;
+		}
+
+		_60 = 0.0f;
+	}
+
+	Vector3f plateDir = platePos - mPiki->mPosition;
+	f32 plateDist2D   = std::sqrtf(plateDir.x * plateDir.x + plateDir.z * plateDir.z);
+	plateDir.normalise();
+
+	if (plateDist2D < 60.0f && mPiki->mNavi->_724 && mState != STATE_Sort) {
+		if (!mIsWaiting && mPiki->mNavi->_738 - randFloat(2.0f) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+			mIsWaiting = true;
+			return ACTOUT_Continue;
+		}
+
+		if (mState == STATE_Unk0) {
+			mMode           = 0;
+			Piki* minPiki   = nullptr;
+			int minSlotPrio = 256;
+			int minSlotID;
+			Iterator iter(mPiki->mNavi->mPlateMgr);
+			CI_LOOP(iter)
+			{
+				Piki* piki = static_cast<Piki*>(*iter);
+				if (piki->mMode != PikiMode::FormationMode) {
+					piki->changeMode(PikiMode::FreeMode, piki->mNavi);
+				} else {
+					ActCrowd* action = static_cast<ActCrowd*>(piki->mActiveAction->getCurrAction());
+					if (action && piki != mPiki && action->mState == STATE_Formed) {
+						int slotPrio = abs(action->mCPlateSlotID - mCPlateSlotID);
+						if (slotPrio < minSlotPrio) {
+							minPiki     = piki;
+							minSlotPrio = slotPrio;
+							minSlotID   = action->mCPlateSlotID;
+						}
+					}
+				}
+			}
+
+			if (minPiki) {
+				platePos = minPiki->mPosition;
+			} else {
+				platePos = mPiki->mNavi->mPosition;
+			}
+
+			mIsWaiting       = false;
+			Vector3f moveDir = platePos - mPiki->mPosition;
+			f32 unused       = moveDir.normalise();
+			f32 moveDist     = qdist2(platePos.x, platePos.z, mPiki->mPosition.x, mPiki->mPosition.z);
+			if (moveDist <= 40.0f) {
+				if (mState != STATE_Formed) {
+					setFormed();
+					pikiInfo->addFormationPiki();
+					mOdometer.reset();
+				}
+			} else {
+				mPiki->setSpeed(1.0f, moveDir);
+				if (_7E && !mIsWaiting) {
+					mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+					finishZawatuki();
+				}
+			}
+
+			return ACTOUT_Continue;
+		}
+
+		mMode = 1;
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		Vector3f naviDir = mPiki->mNavi->mPosition - mPiki->mPosition;
+		f32 diff         = atan2f(naviDir.x, naviDir.z);
+		mPiki->mFaceDirection += 0.3f * angDist(diff, mPiki->mFaceDirection);
+		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting && mPiki->mNavi->_738 - randFloat(2.0f) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+			mIsWaiting = true;
+			startZawatuki();
+		}
+		return ACTOUT_Continue;
+	}
+
+	if (plateDist2D <= 7.0f) {
+		_32 = 0;
+	} else if (plateDist2D < 15.0f) {
+		_32++;
+		if (_30 == 2 && mPiki->mNavi->_738 > 0.1f) {
+			_32 = 0;
+		}
+		if (_32 >= 6) {
+			_32 = 6;
+		}
+	} else {
+		_32 = 0;
+	}
+
+	if (plateDist2D <= 7.0f || (_32 < 6 && plateDist2D <= 15.0f)) {
+		mMode = 2;
+		mOdometer.reset();
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		plateDir  = mPiki->mNavi->mPosition - mPiki->mPosition;
+		f32 diff  = atan2f(plateDir.x, plateDir.z);
+		f32 angle = angDist(diff, mPiki->mFaceDirection);
+		mPiki->mFaceDirection += 0.3f * angle;
+		if (mState != STATE_Formed) {
+			pikiInfo->addFormationPiki();
+			setFormed();
+		}
+
+		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting && mPiki->mNavi->_738 - randFloat(2.0f) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+			mIsWaiting = true;
+			startZawatuki();
+		}
+	} else if (plateDist2D < 15.0f) {
+		mMode = 3;
+		if (mIsWaiting && plateDist2D < 10.0f) {
+			mIsWaiting = true;
+		}
+
+		mOdometer.reset();
+		Vector3f vel(mPiki->mTargetVelocity);
+		f32 factor = 10.0f / mPiki->mProps->mCreatureProps.mAcceleration();
+		f32 speed  = mPiki->getSpeed(1.0f);
+		f32 f1     = (speed / factor);
+		f32 val1   = 0.5f * f1 * speed;
+		f32 speed2 = mPiki->mVelocity.length();
+		f32 f2     = (speed2 / factor);
+		f32 val2   = 0.5f * f2 * speed2;
+
+		if (plateDist2D < val2) {
+			mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+			if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
+			    && mPiki->mNavi->_738 - randFloat(2.0f) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+				mIsWaiting = true;
+				startZawatuki();
+			}
+			plateDir  = mPiki->mNavi->mPosition - mPiki->mPosition;
+			f32 diff  = atan2f(plateDir.x, plateDir.z);
+			f32 angle = angDist(diff, mPiki->mFaceDirection);
+			mPiki->mFaceDirection += 0.3f * angle;
+		} else if (plateDist2D < val1) {
+			f32 val3               = speed2 + 0.5f * speedy_sqrtf(speed2 * speed2 + 8.0f * factor * plateDist2D);
+			mPiki->mTargetVelocity = plateDir * val3;
+		} else {
+			mPiki->setSpeed(1.0f, plateDir);
+		}
+
+		Vector3f pikiDir      = mPiki->mPosition - mPiki->mNavi->mPosition;
+		Vector3f naviPlateDir = mPiki->mNavi->mPosition - mPlateMgr->mPlateOffset;
+		naviPlateDir.normalise();
+		if (naviPlateDir.DP(pikiDir) > 0.0f) {
+			Vector3f sideDir(-pikiDir.z, 0.0f, pikiDir.x);
+			if (!(mCPlateSlotID & 1)) {
+				sideDir.multiply(-1.0f);
+			}
+			sideDir.normalise();
+
+			if (newVer && !check) {
+				sideDir.set(0.0f, 0.0f, 0.0f);
+			}
+
+			f32 prevSpeed          = mPiki->mTargetVelocity.length();
+			mPiki->mTargetVelocity = mPiki->mTargetVelocity + sideDir * mPiki->getSpeed(0.5f);
+			mPiki->mTargetVelocity.normalise();
+			mPiki->mTargetVelocity = mPiki->mTargetVelocity * prevSpeed;
+		}
+	} else {
+		mMode = 4;
+		mPiki->setSpeed(1.0f, plateDir);
+
+		Vector3f pikiDir      = mPiki->mPosition - mPiki->mNavi->mPosition;
+		Vector3f naviPlateDir = mPiki->mNavi->mPosition - mPlateMgr->mPlateOffset;
+		naviPlateDir.normalise();
+		if (naviPlateDir.DP(pikiDir) > 0.0f) {
+			Vector3f sideDir(-pikiDir.z, 0.0f, pikiDir.x);
+			if (!(mCPlateSlotID & 1)) {
+				sideDir.multiply(-1.0f);
+			}
+			sideDir.normalise();
+
+			if (newVer && !check) {
+				sideDir.set(0.0f, 0.0f, 0.0f);
+			}
+
+			f32 prevSpeed          = mPiki->mTargetVelocity.length();
+			mPiki->mTargetVelocity = mPiki->mTargetVelocity + sideDir * mPiki->getSpeed(0.5f);
+			mPiki->mTargetVelocity.normalise();
+			mPiki->mTargetVelocity = mPiki->mTargetVelocity * prevSpeed;
+		}
+	}
+
+	if (plateDist2D < C_PIKI_PROP(mPiki)._27C()) {
+		_68 = 0.0f;
+		_34 = 0;
+	} else if (plateDist2D < C_PIKI_PROP(mPiki)._28C()) {
+		_68 += gsys->getFrameTime();
+		if (!_34) {
+			if (mCPlateSlotID != -1) {
+				mPlateMgr->releaseSlot(mPiki, mCPlateSlotID);
+				mCPlateSlotID = mPlateMgr->getSlot(mPiki, this);
+			}
+
+			_34 = 1;
+		}
+		if (mCPlateSlotID == -1 || _68 > C_PIKI_PROP(mPiki)._29C()) {
+			return ACTOUT_Fail;
+		}
+	} else {
+		return ACTOUT_Fail;
+	}
+
+	if (_7E && !mIsWaiting) {
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+		finishZawatuki();
+	}
+
+	// some of this needs to be from inlines still (like 0x30 worth lol)
+	u32 badCompiler[20];
+
+	return ACTOUT_Continue;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2130,33 +2127,10 @@ int ActCrowd::exec()
  */
 void ActCrowd::startZawatuki()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0xC(r3)
-	  bl        0x107A4
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x44
-	  li        r0, 0x1
-	  stb       r0, 0x7D(r31)
-	  li        r4, 0
-	  lwz       r3, 0x28(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x44:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (!mPiki->hasBomb()) {
+		mIsWaiting = true;
+		mSelectAction->init(nullptr);
+	}
 }
 
 /*
@@ -2175,7 +2149,17 @@ void ActCrowd::finishZawatuki()
  */
 void ActCrowd::startBoredom()
 {
-	// UNUSED FUNCTION
+	switch (_7C) {
+	case 0:
+		startTalk();
+		break;
+	case 2:
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Akubi), PaniMotionInfo(PIKIANIM_Akubi));
+		break;
+	case 3:
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Rinbow), PaniMotionInfo(PIKIANIM_Rinbow));
+		break;
+	}
 }
 
 /*
@@ -2185,61 +2169,10 @@ void ActCrowd::startBoredom()
  */
 void ActCrowd::startTalk()
 {
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	800B7710
- * Size:	000080
- */
-ActCrowd::~ActCrowd()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x64
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x631C
-	  stw       r3, 0x0(r30)
-	  addi      r6, r3, 0x68
-	  addi      r0, r30, 0x80
-	  lwz       r5, 0x14(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  stw       r6, 0x0(r5)
-	  lwz       r5, 0x14(r30)
-	  sub       r0, r0, r5
-	  stw       r0, 0x4(r5)
-	  bl        0xC6A8
-	  extsh.    r0, r31
-	  ble-      .loc_0x64
-	  mr        r3, r30
-	  bl        -0x705C4
-
-	.loc_0x64:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800B7790
- * Size:	000008
- */
-bool ActCrowd::resumable()
-{
-	return true;
+	Iterator iter(&mPiki->mSearchBuffer);
+	iter.first();
+	Creature* closest     = *iter;
+	Vector3f dir          = closest->mPosition - mPiki->mPosition;
+	mPiki->mFaceDirection = atan2f(dir.x, dir.z);
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Chatting), PaniMotionInfo(PIKIANIM_Chatting));
 }

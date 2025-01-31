@@ -1222,9 +1222,9 @@ void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
 			pos.y        = act->mCPlateSlotID * act->mCPlateSlotID + 50.0f + pos.y;
 			bool light   = gfx.setLighting(false, nullptr);
 			gfx.useMatrix(Matrix4f::ident, 0);
-			if (act->mFormationState == 2) {
+			if (act->mState == 2) {
 				gfx.setColour(Colour(255, 10, 50, 255), 1);
-			} else if (act->mFormationState == 2) {
+			} else if (act->mState == 2) {
 				gfx.setColour(Colour(200, 255, 255, 255), 1);
 			} else {
 				gfx.setColour(Colour(255, 255, 255, 255), 1);
