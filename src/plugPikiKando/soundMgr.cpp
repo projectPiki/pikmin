@@ -400,8 +400,8 @@ SeContext::SeContext()
 	mEventHandle = -1;
 	mGameObj     = nullptr;
 	mEventType   = -1;
-	_10.set(0.0f, 0.0f, 0.0f);
-	_1C.set(0.0f, 0.0f, 0.0f);
+	mCameraPosition.set(0.0f, 0.0f, 0.0f);
+	mPosition.set(0.0f, 0.0f, 0.0f);
 	mClock = 0;
 }
 
@@ -415,8 +415,8 @@ SeContext::SeContext(Creature* obj, int type)
 	mEventHandle = -1;
 	mGameObj     = obj;
 	mEventType   = type;
-	_10.set(0.0f, 0.0f, 0.0f);
-	_1C.set(0.0f, 0.0f, 0.0f);
+	mCameraPosition.set(0.0f, 0.0f, 0.0f);
+	mPosition.set(0.0f, 0.0f, 0.0f);
 	mClock = 0;
 }
 
@@ -435,8 +435,8 @@ void SeContext::setContext(Creature* obj, int type)
 	mEventHandle = -1;
 	mGameObj     = obj;
 	mEventType   = type;
-	_10.set(0.0f, 0.0f, 0.0f);
-	_1C.set(0.0f, 0.0f, 0.0f);
+	mCameraPosition.set(0.0f, 0.0f, 0.0f);
+	mPosition.set(0.0f, 0.0f, 0.0f);
 	mClock = 0;
 }
 
@@ -450,7 +450,7 @@ Vector3f SeContext::getPos()
 	if (mGameObj) {
 		return mGameObj->mPosition;
 	}
-	return _1C;
+	return mPosition;
 }
 
 /*
@@ -474,8 +474,8 @@ int SeContext::getObjType()
 void SeContext::createEvent(int a)
 {
 	mEventType = a;
-	seSystem->calcCameraPos(getPos(), _10);
-	mEventHandle = seSystem->createEvent(this, mEventType, (SVector_*)&_10);
+	seSystem->calcCameraPos(getPos(), mCameraPosition);
+	mEventHandle = seSystem->createEvent(this, mEventType, (SVector_*)&mCameraPosition);
 }
 
 /*
@@ -520,8 +520,8 @@ void SeContext::update()
 	if (mEventHandle == -1) {
 		return;
 	}
-	seSystem->calcCameraPos(getPos(), _10);
-	Jac_UpdateEventPosition(mEventHandle, &_10);
+	seSystem->calcCameraPos(getPos(), mCameraPosition);
+	Jac_UpdateEventPosition(mEventHandle, &mCameraPosition);
 }
 
 /*
@@ -556,7 +556,8 @@ bool SeContext::releaseEvent()
 void SeContext::dump()
 {
 	PRINT("\towner %x(%s) handle %d eventType %d pos( %.1f %.1f %.1f )\n", mGameObj,
-	      mGameObj ? ObjType::getName(mGameObj->mObjType) : "<pos>", mEventHandle, mEventType, _10.x, _10.y, _10.z);
+	      mGameObj ? ObjType::getName(mGameObj->mObjType) : "<pos>", mEventHandle, mEventType, mCameraPosition.x, mCameraPosition.y,
+	      mCameraPosition.z);
 }
 
 /*
@@ -652,7 +653,8 @@ int SeSystem::createEvent(SeContext* context, int a1, SVector_* a2)
 		for (int i = 0; i < num; i++) {
 			SeContext* ctx = mEvents[i].mContext;
 			if (ctx) {
-				f32 cLen = ctx->_10.x * ctx->_10.x + ctx->_10.y * ctx->_10.y + ctx->_10.z * ctx->_10.z;
+				f32 cLen = ctx->mCameraPosition.x * ctx->mCameraPosition.x + ctx->mCameraPosition.y * ctx->mCameraPosition.y
+				         + ctx->mCameraPosition.z * ctx->mCameraPosition.z;
 				if (cLen > length) {
 					length = cLen;
 					index  = i;

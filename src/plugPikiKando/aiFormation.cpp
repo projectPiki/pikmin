@@ -40,18 +40,18 @@ void ActFormation::animationKeyUpdated(PaniAnimKeyEvent& event)
 			break;
 		}
 
-		if (_30 == 0) {
+		if (mHasTripped == 0) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Korobu, this), PaniMotionInfo(PIKIANIM_Korobu));
 			Vector3f dir(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 			f32 speed              = mPiki->mVelocity.length();
 			mPiki->mVelocity       = speed * dir;
 			mPiki->mTargetVelocity = speed * dir;
 			_1C                    = unitRandFloat() + 0.8f;
-			_30                    = 1;
+			mHasTripped            = 1;
 			break;
 		}
 
-		if (_30 == 1) {
+		if (mHasTripped == 1) {
 			_2B = 0;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 			break;
@@ -343,7 +343,7 @@ void ActFormation::init(Creature* target)
 		ERROR("formation kinoko!");
 	}
 
-	_18 = 1;
+	mInFormation = 1;
 
 	if (target->mObjType != OBJTYPE_Navi) {
 		PRINT("target is not navi (%d)\n", target->mObjType);
@@ -355,10 +355,10 @@ void ActFormation::init(Creature* target)
 	_1C        = randFloat(2.0f) + 4.0f;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 	mPiki->unsetPastel();
-	_29 = 0;
-	_2A = 0;
-	_2B = 0;
-	_30 = 0;
+	_29         = 0;
+	_2A         = 0;
+	_2B         = 0;
+	mHasTripped = 0;
 }
 
 /*

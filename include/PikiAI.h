@@ -989,7 +989,7 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18;                 // _18
+	u8 mInFormation;        // _18
 	f32 _1C;                // _1C
 	FormationMgr* mFormMgr; // _20
 	f32 _24;                // _24
@@ -998,7 +998,7 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
 	u8 _2A;                 // _2A
 	u8 _2B;                 // _2B
 	u8 _2C;                 // _2C
-	int _30;                // _30
+	int mHasTripped;        // _30
 };
 
 /**

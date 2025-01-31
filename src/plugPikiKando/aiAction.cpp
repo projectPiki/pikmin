@@ -332,7 +332,7 @@ int TopAction::exec()
 
 	if (mCurrActionIdx == PikiAction::Formation && !mPiki->isFruit()) {
 		ActFormation* form = static_cast<ActFormation*>(getCurrAction());
-		if (form->_18) {
+		if (form->mInFormation) {
 			Iterator iter(itemMgr);
 			CI_LOOP(iter)
 			{

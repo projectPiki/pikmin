@@ -167,6 +167,7 @@ void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 				setFormed();
 			}
 		}
+
 		_36 = 1;
 	}
 }

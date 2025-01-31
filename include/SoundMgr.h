@@ -85,14 +85,14 @@ struct SeContext {
 	void createEvent(int);
 	void dump();
 
-	void setPosition(Vector3f& pos) { _1C = pos; }
+	void setPosition(Vector3f& pos) { mPosition = pos; }
 
-	u32 mClock;         // _00
-	Creature* mGameObj; // _04
-	int mEventHandle;   // _08
-	u16 mEventType;     // _0C
-	Vector3f _10;       // _10
-	Vector3f _1C;       // _1C
+	u32 mClock;               // _00
+	Creature* mGameObj;       // _04
+	int mEventHandle;         // _08
+	u16 mEventType;           // _0C
+	Vector3f mCameraPosition; // _10
+	Vector3f mPosition;       // _1C
 };
 
 /*
