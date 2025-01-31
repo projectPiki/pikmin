@@ -1,4 +1,6 @@
 #include "PikiAI.h"
+#include "FormationMgr.h"
+#include "Navi.h"
 #include "DebugLog.h"
 
 /*
@@ -13,15 +15,57 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("aiFormation")
 
 /*
  * --INFO--
  * Address:	800B98D8
  * Size:	00032C
  */
-void ActFormation::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActFormation::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
+	switch (event.mEventType) {
+	case KEY_Action0:
+		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
+		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		break;
+
+	case KEY_Finished:
+		if (_29 || _2A) {
+			if (_2A) {
+				_1C = randFloat(15.0f) + 15.0f;
+				_2A = 0;
+			}
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait, this), PaniMotionInfo(PIKIANIM_Wait));
+			break;
+		}
+
+		if (_30 == 0) {
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Korobu, this), PaniMotionInfo(PIKIANIM_Korobu));
+			Vector3f dir(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
+			f32 speed              = mPiki->mVelocity.length();
+			mPiki->mVelocity       = speed * dir;
+			mPiki->mTargetVelocity = speed * dir;
+			_1C                    = unitRandFloat() + 0.8f;
+			_30                    = 1;
+			break;
+		}
+
+		if (_30 == 1) {
+			_2B = 0;
+			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
+			break;
+		}
+
+		if (_2C) {
+			_2C = 0;
+			if (_24 > 5.0f) {
+				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
+			}
+		}
+
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -256,34 +300,9 @@ void ActFormation::animationKeyUpdated(PaniAnimKeyEvent&)
  * Size:	00005C
  */
 ActFormation::ActFormation(Piki* piki)
-    : Action(piki, false)
+    : Action(piki, true)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        0xA1B4
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x246C
-	  lis       r3, 0x802B
-	  stw       r0, 0x14(r31)
-	  addi      r3, r3, 0x69B0
-	  stw       r3, 0x0(r31)
-	  addi      r3, r3, 0x64
-	  li        r0, 0
-	  stw       r3, 0x14(r31)
-	  mr        r3, r31
-	  stw       r0, 0x20(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mFormMgr = nullptr;
 }
 
 /*
@@ -293,109 +312,24 @@ ActFormation::ActFormation(Piki* piki)
  */
 void ActFormation::getFormPoint()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  mr        r29, r3
-	  lwz       r3, 0x20(r3)
-	  lwz       r4, 0xC(r29)
-	  bl        -0x3BB5C
-	  lwz       r4, 0xC(r29)
-	  stw       r3, 0x28(r4)
-	  lwz       r31, 0x20(r29)
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r31
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0xC8
+	mPiki->mFormPoint = mFormMgr->getFormPoint(mPiki);
+	PRINT("piki %x got formPt %x owner is %x\n", mPiki, mPiki->mFormPoint, mPiki->mFormPoint->getOwner());
 
-	.loc_0x50:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x74
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x8C
-
-	.loc_0x74:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x8C:
-	  lwz       r4, 0xC(r29)
-	  lwz       r5, 0x28(r3)
-	  lwz       r0, 0x28(r4)
-	  cmplw     r5, r0
-	  bne-      .loc_0xAC
-	  cmplw     r4, r3
-	  beq-      .loc_0xAC
-
-	.loc_0xA8:
-	  b         .loc_0xA8
-
-	.loc_0xAC:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0xC8:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xF0
-	  li        r0, 0x1
-	  b         .loc_0x11C
-
-	.loc_0xF0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x118
-	  li        r0, 0x1
-	  b         .loc_0x11C
-
-	.loc_0x118:
-	  li        r0, 0
-
-	.loc_0x11C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x50
-	  li        r0, 0
-	  stb       r0, 0x28(r29)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	Iterator iter(mFormMgr);
+	CI_LOOP(iter)
+	{
+		Creature* member = *iter;
+		if (member->mFormPoint == mPiki->mFormPoint && mPiki != member) {
+			PRINT("########################################\n");
+			PRINT(" creature %x and piki %x share same formPoint %x\n", member, mPiki, member->mFormPoint);
+			PRINT(" owner is %x\n", member->mFormPoint->getOwner());
+			while (true) {
+				// bad code gets locked in the INFINITE WHILE LOOP
+				;
+			}
+		}
+	}
+	_28 = 0;
 }
 
 /*
@@ -403,72 +337,28 @@ void ActFormation::getFormPoint()
  * Address:	800B9DA8
  * Size:	0000F4
  */
-void ActFormation::init(Creature*)
+void ActFormation::init(Creature* target)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r4
-	  stw       r30, 0x30(r1)
-	  mr        r30, r3
-	  lwz       r3, 0xC(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x1
-	  stb       r0, 0x18(r30)
-	  lwz       r0, 0x6C(r31)
-	  cmpwi     r0, 0x36
-	  lwz       r3, 0x21C(r31)
-	  li        r0, 0x1
-	  stw       r3, 0x20(r30)
-	  stb       r0, 0x28(r30)
-	  bl        0x15E278
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x6D50(r2)
-	  stw       r0, 0x2C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x6D64(r2)
-	  addi      r3, r1, 0x14
-	  stw       r0, 0x28(r1)
-	  lfs       f2, -0x6D68(r2)
-	  li        r4, 0
-	  lfd       f1, 0x28(r1)
-	  lfs       f0, -0x6D2C(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x6D30(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x1C(r30)
-	  bl        0x65114
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x1C
-	  li        r4, 0
-	  bl        0x65104
-	  mr        r4, r3
-	  lwz       r3, 0xC(r30)
-	  mr        r5, r31
-	  bl        0x10B74
-	  lwz       r3, 0xC(r30)
-	  bl        0xFC98
-	  li        r0, 0
-	  stb       r0, 0x29(r30)
-	  stb       r0, 0x2A(r30)
-	  stb       r0, 0x2B(r30)
-	  stw       r0, 0x30(r30)
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	if (mPiki->isKinoko()) {
+		ERROR("formation kinoko!");
+	}
+
+	_18 = 1;
+
+	if (target->mObjType != OBJTYPE_Navi) {
+		PRINT("target is not navi (%d)\n", target->mObjType);
+	}
+
+	Navi* navi = static_cast<Navi*>(target);
+	mFormMgr   = navi->mFormMgr;
+	_28        = 1;
+	_1C        = randFloat(2.0f) + 4.0f;
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
+	mPiki->unsetPastel();
+	_29 = 0;
+	_2A = 0;
+	_2B = 0;
+	_30 = 0;
 }
 
 /*
@@ -478,30 +368,11 @@ void ActFormation::init(Creature*)
  */
 void ActFormation::cleanup()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x20(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x38
-	  lwz       r4, 0xC(r31)
-	  bl        -0x3B9C0
-	  lwz       r3, 0xC(r31)
-	  li        r0, 0
-	  stw       r0, 0x28(r3)
-	  stw       r0, 0x20(r31)
-
-	.loc_0x38:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (mFormMgr) {
+		mFormMgr->exit(mPiki);
+		mPiki->mFormPoint = nullptr;
+		mFormMgr          = nullptr;
+	}
 }
 
 /*

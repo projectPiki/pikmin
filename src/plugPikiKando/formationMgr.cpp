@@ -14,7 +14,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("formation")
 
 /*
  * --INFO--
@@ -23,7 +23,7 @@ DEFINE_PRINT("TODO: Replace")
  */
 Creature* FormationMgr::getCreature(int idx)
 {
-	return _20[idx];
+	return mFormMembers[idx];
 }
 
 /*
@@ -53,7 +53,7 @@ int FormationMgr::getNext(int idx)
  */
 bool FormationMgr::isDone(int idx)
 {
-	if (idx >= _2C) {
+	if (idx >= mCount) {
 		return true;
 	}
 
@@ -189,7 +189,21 @@ Vector3f FormationMgr::getLastCentre()
  */
 FormationMgr::FormationMgr()
 {
-	// UNUSED FUNCTION
+	mMax         = 300;
+	_24          = 0;
+	_0C          = 0.0f;
+	mFormPoints  = new FormPoint[mMax];
+	mFormMembers = new Creature*[mMax];
+	for (int i = 0; i < mMax; i++) {
+		mFormPoints[i].setMgr(this);
+		mFormMembers[i] = nullptr;
+	}
+
+	mCount = 0;
+	clear();
+	_10.set(0.0f, 0.0f, 0.0f);
+	mOffset.set(0.0f, 0.0f, 0.0f);
+	mAngOffset = 0;
 }
 
 /*
@@ -199,7 +213,8 @@ FormationMgr::FormationMgr()
  */
 FormPoint::FormPoint()
 {
-	// UNUSED FUNCTION
+	mOwner.clear();
+	mOffset.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -733,7 +748,6 @@ void FormationMgr::clear()
  */
 void FormationMgr::rearrange()
 {
-	// UNUSED FUNCTION
 }
 
 /*
@@ -741,9 +755,12 @@ void FormationMgr::rearrange()
  * Address:	........
  * Size:	000060
  */
-void FormationMgr::setOffset(Vector3f&)
+void FormationMgr::setOffset(Vector3f& offset)
 {
-	// UNUSED FUNCTION
+	mOffset = offset;
+	for (int i = 0; i < mMax; i++) {
+		mFormPoints[i].mOffset = mOffset;
+	}
 }
 
 /*
@@ -751,9 +768,9 @@ void FormationMgr::setOffset(Vector3f&)
  * Address:	........
  * Size:	000008
  */
-void FormationMgr::setAngOffset(f32)
+void FormationMgr::setAngOffset(f32 offset)
 {
-	// UNUSED FUNCTION
+	mAngOffset = offset;
 }
 
 /*

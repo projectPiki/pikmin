@@ -19,6 +19,7 @@ struct Grass;
 struct CPlate;
 struct GrassGen;
 struct GoalItem;
+struct FormationMgr;
 
 namespace zen {
 struct particleGenerator;
@@ -988,8 +989,16 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18;              // _18
-	u8 _19[0x34 - 0x19]; // _19, unknown
+	u8 _18;                 // _18
+	f32 _1C;                // _1C
+	FormationMgr* mFormMgr; // _20
+	f32 _24;                // _24
+	u8 _28;                 // _28
+	u8 _29;                 // _29
+	u8 _2A;                 // _2A
+	u8 _2B;                 // _2B
+	u8 _2C;                 // _2C
+	int _30;                // _30
 };
 
 /**

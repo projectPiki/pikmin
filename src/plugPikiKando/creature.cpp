@@ -464,7 +464,7 @@ void Creature::init()
 	mCreatureFlags   = 0;
 	mPelletStickSlot = -1;
 	disableAICulling();
-	_21C = 0;
+	mFormMgr = nullptr;
 	setCreatureFlag(CF_Free);
 	resetCreatureFlag(CF_GroundOffsetEnabled | CF_IsAiDisabled | CF_IsClimbing | CF_AIAlwaysActive);
 	mGroundOffset = 0.0f;
@@ -823,7 +823,7 @@ Creature::Creature(CreatureProp* props)
 	mSize            = 10.0f;
 	mCollisionRadius = 16.0f;
 	mProps           = props;
-	_28              = 0;
+	mFormPoint       = nullptr;
 	resetCreatureFlag(CF_Unk10);
 
 	mRotationQuat.fromEuler(Vector3f(0.0f, 0.0f, 0.0f));

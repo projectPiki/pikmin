@@ -20,6 +20,8 @@ struct Condition;
 struct CreatureInf;
 struct CreatureProp;
 struct DynCollObject;
+struct FormationMgr;
+struct FormPoint;
 struct Generator;
 struct Matrix4f;
 struct MoveTrace;
@@ -326,7 +328,7 @@ struct Creature : public RefCountable, public EventTalker {
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker
 	Vector3f mFixedPosition;             // _1C
-	u32 _28;                             // _28, unknown
+	FormPoint* mFormPoint;               // _28
 	SeContext* mSeContext;               // _2C
 	u8 _30;                              // _30
 	int mRebirthDay;                     // _34
@@ -374,7 +376,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Vector3f mLastPosition;              // _1AC
 	SearchBuffer mSearchBuffer;          // _1B8
 	LifeGauge mLifeGauge;                // _1E0
-	u32 _21C;                            // _21C, unknown
+	FormationMgr* mFormMgr;              // _21C
 	CollInfo* mCollInfo;                 // _220
 	CreatureProp* mProps;                // _224, creature properties
 	Matrix4f mWorldMtx;                  // _228

@@ -4,9 +4,13 @@
 #include "types.h"
 #include "Traversable.h"
 #include "Vector.h"
+#include "Colour.h"
+#include "ComplexCreature.h"
+#include "Creature.h"
 
 struct Graphics;
 struct FormArranger;
+struct FormationMgr;
 
 /**
  * @brief Stripped struct.
@@ -41,7 +45,25 @@ struct FormPoint {
 
 	Vector3f getPos();
 
-	// TODO: members
+	// DLL inlines to do:
+	void reset()
+	{
+		if (!mOwner.isNull()) {
+			mOwner.reset();
+		}
+	}
+
+	void setMgr(FormationMgr* mgr) { mFormMgr = mgr; }
+	Creature* getOwner() { return mOwner.getPtr(); }
+
+	bool isFree();
+	void setOwner(Creature*);
+
+	Colour _00;                // _00
+	Vector3f mOffset;          // _04
+	SmartPtr<Creature> mOwner; // _10
+	FormationMgr* mFormMgr;    // _14
+	Vector3f _18;              // _18
 };
 
 /**
@@ -71,14 +93,15 @@ struct FormationMgr : public Traversable {
 
 	// _00     = VTBL
 	// _00-_08 = Traversable
-	u8 _08[0x4];             // _08, unknown
+	f32 mAngOffset;          // _08
 	f32 _0C;                 // _0C
 	Vector3f _10;            // _10
-	u8 _1C[0x4];             // _1C, unknown
-	Creature** _20;          // _20, maybe Piki**?
-	u8 _24[0x8];             // _24, unknown
-	int _2C;                 // _2C
-	u8 _30[0xC];             // _30, unknown
+	FormPoint* mFormPoints;  // _1C
+	Creature** mFormMembers; // _20
+	u32 _24;                 // _24, unknown
+	int mMax;                // _28, total slots
+	int mCount;              // _2C, total used slots
+	Vector3f mOffset;        // _30
 	FormArranger* mArranger; // _3C
 };
 
