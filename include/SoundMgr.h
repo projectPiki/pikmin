@@ -160,7 +160,11 @@ struct SeWin : public GmWin {
 struct SeSystem {
 
 	struct Event {
-		Event();
+		Event()
+		{
+			mHandle  = -1;
+			mContext = nullptr;
+		}
 
 		int mHandle;         // _00
 		SeContext* mContext; // _04
