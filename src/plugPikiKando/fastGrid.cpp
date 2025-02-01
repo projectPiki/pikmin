@@ -30,7 +30,7 @@ DEFINE_PRINT("fastGrid")
 FastGrid::FastGrid()
 {
 	mGridPositionX = mGridPositionY = mGridPositionZ = mWidth = mHeight = 0;
-	_14                                                                 = 1;
+	mNeighbourSize                                                      = 1;
 }
 
 /*
@@ -97,160 +97,48 @@ bool FastGrid::aiCulling()
 		return false;
 	}
 
-	if (_14 != 1) {
-		return aiCullingLarge(_14);
+	if (mNeighbourSize != 1) {
+		return aiCullingLarge(mNeighbourSize);
 	}
-	int a      = mWidth;
-	int b      = mHeight;
-	int offset = b + a * aiGridSize;
+
+	int offset = mHeight + mWidth * aiGridSize;
 	if (aiGridMap[offset]) {
 		return false;
 	}
-	int c = aiGridSize - 1;
-	if (b < c && aiGridMap[offset + 1]) {
+
+	if (mHeight < aiGridSize - 1 && aiGridMap[offset + 1]) {
 		return false;
 	}
 
-	if (b < aiGridMap[offset + 1] && aiGridMap[offset - 1]) {
+	if (mHeight > 0 && aiGridMap[offset - 1]) {
+		return false;
+	}
+
+	if (mWidth < aiGridSize - 1 && aiGridMap[offset + aiGridSize]) {
+		return false;
+	}
+
+	if (mWidth > 0 && aiGridMap[offset - aiGridSize]) {
+		return false;
+	}
+
+	if (mHeight < aiGridSize - 1 && mWidth > 0 && aiGridMap[offset + 1 - aiGridSize]) {
+		return false;
+	}
+
+	if (mHeight < aiGridSize - 1 && mWidth < aiGridSize - 1 && aiGridMap[offset + 1 + aiGridSize]) {
+		return false;
+	}
+
+	if (mHeight > 0 && mWidth > 0 && aiGridMap[offset - 1 - aiGridSize]) {
+		return false;
+	}
+
+	if (mHeight > 0 && mWidth < aiGridSize - 1 && aiGridMap[offset - 1 + aiGridSize]) {
 		return false;
 	}
 
 	return true;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, -0x5F08(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x198
-
-	.loc_0x20:
-	  lhz       r4, 0x14(r3)
-	  cmplwi    r4, 0x1
-	  beq-      .loc_0x34
-	  bl        .loc_0x1A8
-	  b         .loc_0x198
-
-	.loc_0x34:
-	  lha       r0, 0xC(r3)
-	  lhz       r4, 0x300C(r13)
-	  lha       r7, 0x10(r3)
-	  mullw     r5, r0, r4
-	  lwz       r3, 0x3008(r13)
-	  add       r6, r7, r5
-	  lbzx      r5, r3, r6
-	  cmplwi    r5, 0
-	  beq-      .loc_0x60
-	  li        r3, 0
-	  b         .loc_0x198
-
-	.loc_0x60:
-	  subi      r8, r4, 0x1
-	  cmpw      r7, r8
-	  bge-      .loc_0x84
-	  add       r5, r3, r6
-	  lbz       r5, 0x1(r5)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x84
-	  li        r3, 0
-	  b         .loc_0x198
-
-	.loc_0x84:
-	  extsh.    r5, r7
-	  ble-      .loc_0xA4
-	  add       r5, r3, r6
-	  lbz       r5, -0x1(r5)
-	  cmplwi    r5, 0
-	  beq-      .loc_0xA4
-	  li        r3, 0
-	  b         .loc_0x198
-
-	.loc_0xA4:
-	  cmpw      r0, r8
-	  bge-      .loc_0xC4
-	  add       r5, r6, r4
-	  lbzx      r5, r3, r5
-	  cmplwi    r5, 0
-	  beq-      .loc_0xC4
-	  li        r3, 0
-	  b         .loc_0x198
-
-	.loc_0xC4:
-	  extsh.    r5, r0
-	  ble-      .loc_0xE4
-	  sub       r5, r6, r4
-	  lbzx      r5, r3, r5
-	  cmplwi    r5, 0
-	  beq-      .loc_0xE4
-	  li        r3, 0
-	  b         .loc_0x198
-
-	.loc_0xE4:
-	  cmpw      r7, r8
-	  bge-      .loc_0x110
-	  extsh.    r5, r0
-	  ble-      .loc_0x110
-	  addi      r5, r6, 0x1
-	  sub       r5, r5, r4
-	  lbzx      r5, r3, r5
-	  cmplwi    r5, 0
-	  beq-      .loc_0x110
-	  li        r3, 0
-	  b         .loc_0x198
-
-	.loc_0x110:
-	  cmpw      r7, r8
-	  bge-      .loc_0x13C
-	  cmpw      r0, r8
-	  bge-      .loc_0x13C
-	  add       r5, r3, r6
-	  add       r5, r5, r4
-	  lbz       r5, 0x1(r5)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x13C
-	  li        r3, 0
-	  b         .loc_0x198
-
-	.loc_0x13C:
-	  extsh.    r5, r7
-	  ble-      .loc_0x168
-	  extsh.    r5, r0
-	  ble-      .loc_0x168
-	  subi      r5, r6, 0x1
-	  sub       r5, r5, r4
-	  lbzx      r5, r3, r5
-	  cmplwi    r5, 0
-	  beq-      .loc_0x168
-	  li        r3, 0
-	  b         .loc_0x198
-
-	.loc_0x168:
-	  extsh.    r5, r7
-	  ble-      .loc_0x194
-	  cmpw      r0, r8
-	  bge-      .loc_0x194
-	  add       r0, r3, r6
-	  add       r3, r0, r4
-	  lbz       r0, -0x1(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x194
-	  li        r3, 0
-	  b         .loc_0x198
-
-	.loc_0x194:
-	  li        r3, 0x1
-
-	.loc_0x198:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x1A8:
-	*/
 }
 
 /*
@@ -258,69 +146,24 @@ bool FastGrid::aiCulling()
  * Address:	80094338
  * Size:	0000B8
  */
-bool FastGrid::aiCullingLarge(int)
+bool FastGrid::aiCullingLarge(int max)
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, -0x5F08(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x14
-	  li        r3, 0
-	  blr
+	if (!AIPerf::aiGrid) {
+		return false;
+	}
 
-	.loc_0x14:
-	  lha       r9, 0xC(r3)
-	  neg       r8, r4
-	  lhz       r7, 0x300C(r13)
-	  mr        r11, r8
-	  lha       r10, 0x10(r3)
-	  mullw     r3, r9, r7
-	  lwz       r0, 0x3008(r13)
-	  add       r3, r10, r3
-	  mullw     r5, r11, r7
-	  add       r6, r0, r3
-	  b         .loc_0xA8
+	int offset = mHeight + mWidth * aiGridSize;
+	for (int x = -max; x <= max; x++) {
+		if (mWidth + x >= 0 && mWidth + x < aiGridSize) {
+			for (int y = -max; y <= max; y++) {
+				if (mHeight + y >= 0 && mHeight + y < aiGridSize && aiGridMap[offset + x * aiGridSize + y]) {
+					return false;
+				}
+			}
+		}
+	}
 
-	.loc_0x40:
-	  add.      r0, r9, r11
-	  blt-      .loc_0xA0
-	  cmpw      r0, r7
-	  bge-      .loc_0xA0
-	  addi      r12, r8, 0
-	  addi      r0, r4, 0x1
-	  sub       r0, r0, r12
-	  add       r3, r5, r8
-	  mtctr     r0
-	  cmpw      r12, r4
-	  add       r3, r6, r3
-	  bgt-      .loc_0xA0
-
-	.loc_0x70:
-	  add.      r0, r10, r12
-	  blt-      .loc_0x94
-	  cmpw      r0, r7
-	  bge-      .loc_0x94
-	  lbz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x94
-	  li        r3, 0
-	  blr
-
-	.loc_0x94:
-	  addi      r3, r3, 0x1
-	  addi      r12, r12, 0x1
-	  bdnz+     .loc_0x70
-
-	.loc_0xA0:
-	  add       r5, r5, r7
-	  addi      r11, r11, 0x1
-
-	.loc_0xA8:
-	  cmpw      r11, r4
-	  ble+      .loc_0x40
-	  li        r3, 0x1
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -328,121 +171,35 @@ bool FastGrid::aiCullingLarge(int)
  * Address:	800943F0
  * Size:	000130
  */
-bool FastGrid::doCulling(const FastGrid&, f32)
+bool FastGrid::doCulling(const FastGrid& grid, f32 p2)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  fctiwz    f0, f1
-	  lha       r5, 0x0(r4)
-	  lha       r0, 0x0(r3)
-	  stfd      f0, 0x18(r1)
-	  sub       r0, r0, r5
-	  lwz       r6, -0x5F0C(r13)
-	  extsh     r7, r0
-	  lwz       r5, 0x1C(r1)
-	  extsh.    r0, r7
-	  extsh     r0, r5
-	  sraw      r0, r0, r6
-	  extsh     r6, r0
-	  ble-      .loc_0x40
-	  mr        r0, r7
-	  b         .loc_0x44
+	s16 limit = s16(p2) >> AIPerf::gridShift;
+	s16 xDiff = mGridPositionX - grid.mGridPositionX;
+	s16 xAbs  = (xDiff > 0) ? xDiff : -(xDiff);
+	s16 val   = (xAbs == 0) ? 0 : xAbs - 1;
+	if (val > limit) {
+		return true;
+	}
 
-	.loc_0x40:
-	  neg       r0, r7
+	s16 zDiff = mGridPositionZ - grid.mGridPositionZ;
+	s16 zAbs  = (zDiff > 0) ? zDiff : -(zDiff);
+	val       = (zAbs == 0) ? 0 : zAbs - 1;
+	if (val > limit) {
+		return true;
+	}
 
-	.loc_0x44:
-	  extsh     r5, r0
-	  extsh.    r0, r5
-	  bne-      .loc_0x58
-	  li        r0, 0
-	  b         .loc_0x5C
+	if (AIPerf::useGrid != true) {
+		return false;
+	}
 
-	.loc_0x58:
-	  subi      r0, r5, 0x1
+	s16 yDiff = mGridPositionY - grid.mGridPositionY;
+	s16 yAbs  = (yDiff > 0) ? yDiff : -(yDiff);
+	val       = (yAbs == 0) ? 0 : yAbs - 1;
+	if (val > limit) {
+		return true;
+	}
 
-	.loc_0x5C:
-	  extsh     r0, r0
-	  cmpw      r0, r6
-	  ble-      .loc_0x70
-	  li        r3, 0x1
-	  b         .loc_0x128
-
-	.loc_0x70:
-	  lha       r5, 0x8(r4)
-	  lha       r0, 0x8(r3)
-	  sub       r0, r0, r5
-	  extsh     r5, r0
-	  extsh.    r0, r5
-	  ble-      .loc_0x90
-	  mr        r0, r5
-	  b         .loc_0x94
-
-	.loc_0x90:
-	  neg       r0, r5
-
-	.loc_0x94:
-	  extsh     r5, r0
-	  extsh.    r0, r5
-	  bne-      .loc_0xA8
-	  li        r0, 0
-	  b         .loc_0xAC
-
-	.loc_0xA8:
-	  subi      r0, r5, 0x1
-
-	.loc_0xAC:
-	  extsh     r0, r0
-	  cmpw      r0, r6
-	  ble-      .loc_0xC0
-	  li        r3, 0x1
-	  b         .loc_0x128
-
-	.loc_0xC0:
-	  lwz       r0, -0x5F10(r13)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0xD4
-	  li        r3, 0
-	  b         .loc_0x128
-
-	.loc_0xD4:
-	  lha       r4, 0x4(r4)
-	  lha       r0, 0x4(r3)
-	  sub       r0, r0, r4
-	  extsh     r3, r0
-	  extsh.    r0, r3
-	  ble-      .loc_0xF4
-	  mr        r0, r3
-	  b         .loc_0xF8
-
-	.loc_0xF4:
-	  neg       r0, r3
-
-	.loc_0xF8:
-	  extsh     r3, r0
-	  extsh.    r0, r3
-	  bne-      .loc_0x10C
-	  li        r0, 0
-	  b         .loc_0x110
-
-	.loc_0x10C:
-	  subi      r0, r3, 0x1
-
-	.loc_0x110:
-	  extsh     r0, r0
-	  cmpw      r0, r6
-	  ble-      .loc_0x124
-	  li        r3, 0x1
-	  b         .loc_0x128
-
-	.loc_0x124:
-	  li        r3, 0
-
-	.loc_0x128:
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -470,83 +227,29 @@ void FastGrid::updateGrid(const Vector3f& pos)
  * Address:	800945BC
  * Size:	0000E8
  */
-void FastGrid::updateAIGrid(const Vector3f& pos, bool)
+void FastGrid::updateAIGrid(const Vector3f& pos, bool p2)
 {
+	f32 x      = pos.x;
+	f32 z      = pos.z;
+	int width  = mWidth;
+	int height = mHeight;
+	if (AIPerf::aiGrid) {
+		mWidth = x;
+		mWidth = (aiGridSize >> 1) + (mWidth >> aiGridShift);
 
-	if (AIPerf::useGrid) {
-		mWidth = pos.x;
-		mWidth = aiGridSize >> 1 + mWidth >> aiGridShift;
+		mHeight = z;
+		mHeight = (aiGridSize >> 1) + (mHeight >> aiGridShift);
 
-		mHeight = pos.z;
-		mHeight = aiGridSize >> 1 + mHeight >> aiGridShift;
+		if (p2 && (mWidth != width || mHeight != height)) {
+			int offset = height + width * aiGridSize;
+			if (aiGridMap[offset]) {
+				aiGridMap[offset]--;
+			}
+
+			int newOffset = mHeight + mWidth * aiGridSize;
+			aiGridMap[newOffset]++;
+		}
 	}
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x28(r1)
-	  lbz       r0, -0x5F08(r13)
-	  lfs       f0, 0x0(r4)
-	  cmplwi    r0, 0
-	  lfs       f2, 0x8(r4)
-	  lha       r7, 0xC(r3)
-	  lha       r8, 0x10(r3)
-	  beq-      .loc_0xE0
-	  fctiwz    f1, f0
-	  rlwinm.   r0,r5,0,24,31
-	  fctiwz    f0, f2
-	  stfd      f1, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stfd      f0, 0x18(r1)
-	  sth       r0, 0xC(r3)
-	  lwz       r0, 0x1C(r1)
-	  lhz       r6, 0x300C(r13)
-	  lha       r5, 0xC(r3)
-	  lhz       r4, -0x5A08(r13)
-	  srawi     r6, r6, 0x1
-	  sraw      r4, r5, r4
-	  add       r4, r6, r4
-	  sth       r4, 0xC(r3)
-	  sth       r0, 0x10(r3)
-	  lhz       r5, 0x300C(r13)
-	  lha       r4, 0x10(r3)
-	  lhz       r0, -0x5A08(r13)
-	  srawi     r5, r5, 0x1
-	  sraw      r0, r4, r0
-	  add       r0, r5, r0
-	  sth       r0, 0x10(r3)
-	  beq-      .loc_0xE0
-	  lha       r0, 0xC(r3)
-	  cmpw      r0, r7
-	  bne-      .loc_0x98
-	  lha       r0, 0x10(r3)
-	  cmpw      r0, r8
-	  beq-      .loc_0xE0
-
-	.loc_0x98:
-	  lhz       r0, 0x300C(r13)
-	  lwz       r6, 0x3008(r13)
-	  mullw     r0, r7, r0
-	  add       r5, r8, r0
-	  lbzx      r4, r6, r5
-	  cmplwi    r4, 0
-	  beq-      .loc_0xBC
-	  subi      r0, r4, 0x1
-	  stbx      r0, r6, r5
-
-	.loc_0xBC:
-	  lha       r4, 0xC(r3)
-	  lhz       r0, 0x300C(r13)
-	  lwz       r6, 0x3008(r13)
-	  mullw     r0, r4, r0
-	  lha       r5, 0x10(r3)
-	  add       r4, r0, r6
-	  lbzx      r3, r5, r4
-	  addi      r0, r3, 0x1
-	  stbx      r0, r5, r4
-
-	.loc_0xE0:
-	  addi      r1, r1, 0x28
-	  blr
-	*/
 }
 
 /*

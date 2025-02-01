@@ -505,7 +505,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/dualCreature.cpp"),
             Object(Matching, "plugPikiKando/dynCreature.cpp"),
             Object(Matching, "plugPikiKando/eventListener.cpp"),
-            Object(NonMatching, "plugPikiKando/fastGrid.cpp"),
+            Object(Matching, "plugPikiKando/fastGrid.cpp"),
             Object(Matching, "plugPikiKando/ropeCreature.cpp"),
             Object(Matching, "plugPikiKando/objectTypes.cpp"),
             Object(NonMatching, "plugPikiKando/pelletMgr.cpp"),

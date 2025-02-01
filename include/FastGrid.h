@@ -24,10 +24,10 @@ struct FastGrid {
 	static void clearAIGrid();
 	static void renderAIGrid(Graphics&);
 
-	void setNeighbourSize(int size) { _14 = size; }
+	void setNeighbourSize(int size) { mNeighbourSize = size; }
 
 	static u16 aiGridShift;
-	static u8* aiGridMap; // type unsure
+	static u8* aiGridMap;
 	static u16 aiGridSize;
 
 	s16 mGridPositionX; // _00
@@ -40,7 +40,7 @@ struct FastGrid {
 	u16 _0E;            // _0E
 	s16 mHeight;        // _10
 	u16 _12;            // _12
-	u16 _14;            // _14
+	u16 mNeighbourSize; // _14
 	u16 _16;            // _16
 };
 
