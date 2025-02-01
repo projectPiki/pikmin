@@ -265,32 +265,31 @@ int ResultFlags::getDayDocument(int day, int& res)
 int ResultFlags::getDocument(int& out)
 {
 
-	int minimumPriority = 0x1f400;
+	int minimumPriority = 128000;
 	int index           = -1;
-	FlagInfo* flagData  = flagTable;
+	// FlagInfo* flagData  = flagTable;
 
 	for (int i = 0; i < mActiveCount; i++) {
-		int id = flagData[i].mScreenId;
-		if (getFlag(id) == true && minimumPriority > flagData[i].mPriority) {
-			minimumPriority = flagData[i].mPriority;
+		int id = flagTable[i].mScreenId;
+		if (getFlag(id) == true && minimumPriority > flagTable[i].mPriority) {
+			minimumPriority = flagTable[i].mPriority;
 			index           = i;
 		}
 	}
 
 	if (index != -1) {
-		int nextScreenId = flagData[index + 2].mStore;
-		if (nextScreenId == -1) {
+		if (flagTable[index + 1].mScreenId == -1) {
 			out = 1;
 		} else {
-			out = nextScreenId - flagData[index].mScreenId;
+			out = flagTable[index + 1].mScreenId - flagTable[index].mScreenId;
 		}
 
 		setFlag(flagTable[index].mScreenId, 2);
 
 		for (int i = 0; i < mActiveCount; i++) {
-			int id = flagData[i].mScreenId;
+			int id = flagTable[i].mScreenId;
 			if (getFlag(id) == true) {
-				switch (flagData[i].mStore) {
+				switch (flagTable[i].mStore) {
 				case FlagInfo::Store_Forget:
 					setFlag(id, 2);
 					break;
@@ -311,131 +310,6 @@ int ResultFlags::getDocument(int& out)
 	}
 
 	f32 badcompiler[2];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r24, 0x18(r1)
-	  subi      r28, r5, 0x1E20
-	  addi      r31, r28, 0x1C
-	  lis       r5, 0x2
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  addi      r27, r31, 0
-	  subi      r26, r5, 0xC00
-	  li        r25, -0x1
-	  li        r24, 0
-	  b         .loc_0x70
-
-	.loc_0x3C:
-	  lwz       r4, 0x0(r27)
-	  mr        r3, r29
-	  bl        0x248
-	  rlwinm    r0,r3,0,24,31
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x68
-	  lwz       r0, 0x8(r27)
-	  cmpw      r26, r0
-	  ble-      .loc_0x68
-	  mr        r26, r0
-	  addi      r25, r24, 0
-
-	.loc_0x68:
-	  addi      r27, r27, 0x10
-	  addi      r24, r24, 0x1
-
-	.loc_0x70:
-	  lhz       r0, 0x2(r29)
-	  cmpw      r24, r0
-	  blt+      .loc_0x3C
-	  cmpwi     r25, -0x1
-	  beq-      .loc_0x160
-	  rlwinm    r4,r25,4,0,27
-	  add       r3, r28, r4
-	  lwz       r5, 0x2C(r3)
-	  cmpwi     r5, -0x1
-	  bne-      .loc_0xA4
-	  li        r0, 0x1
-	  stw       r0, 0x0(r30)
-	  b         .loc_0xB0
-
-	.loc_0xA4:
-	  lwz       r0, 0x1C(r3)
-	  sub       r0, r5, r0
-	  stw       r0, 0x0(r30)
-
-	.loc_0xB0:
-	  add       r27, r28, r4
-	  lwzu      r4, 0x1C(r27)
-	  addi      r3, r29, 0
-	  li        r5, 0x2
-	  bl        0x1FC
-	  li        r24, 0
-	  b         .loc_0x130
-
-	.loc_0xCC:
-	  lwz       r25, 0x0(r31)
-	  addi      r3, r29, 0
-	  addi      r4, r25, 0
-	  bl        0x1B4
-	  rlwinm    r0,r3,0,24,31
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x128
-	  lwz       r0, 0xC(r31)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x118
-	  bge-      .loc_0x128
-	  cmpwi     r0, 0
-	  bge-      .loc_0x104
-	  b         .loc_0x128
-
-	.loc_0x104:
-	  addi      r3, r29, 0
-	  addi      r4, r25, 0
-	  li        r5, 0x2
-	  bl        0x1AC
-	  b         .loc_0x128
-
-	.loc_0x118:
-	  addi      r3, r29, 0
-	  addi      r4, r25, 0
-	  li        r5, 0
-	  bl        0x198
-
-	.loc_0x128:
-	  addi      r31, r31, 0x10
-	  addi      r24, r24, 0x1
-
-	.loc_0x130:
-	  lhz       r0, 0x2(r29)
-	  cmpw      r24, r0
-	  blt+      .loc_0xCC
-	  lwz       r0, 0x0(r27)
-	  lwz       r3, 0x2F6C(r13)
-	  extsh     r30, r0
-	  bl        -0x30AC
-	  rlwinm    r0,r3,1,0,30
-	  add       r3, r29, r0
-	  sth       r30, 0xC(r3)
-	  lwz       r3, 0x0(r27)
-	  b         .loc_0x16C
-
-	.loc_0x160:
-	  mr        r3, r29
-	  bl        .loc_0x180
-	  li        r3, -0x1
-
-	.loc_0x16C:
-	  lmw       r24, 0x18(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-
-	.loc_0x180:
-	*/
 }
 
 /*
@@ -522,70 +396,22 @@ u8 ResultFlags::getFlag(int index)
  */
 void ResultFlags::setFlag(int index, u8 flag)
 {
-	int a  = mScreenToTableList[index];
-	int b  = a >> 2;
-	u8 old = mStates[b];
-
-	a -= b * 4;
+	int tableIdx = mScreenToTableList[index];
+	int b        = tableIdx >> 2;
+	int c        = tableIdx - 4 * (b);
+	u8 newFlag   = mStates[b];
 
 	if (flag & 1) {
-		old |= (1 << a * 2);
+		newFlag |= (1 << c * 2);
 	} else {
-		old &= ~(1 << a * 2);
+		newFlag &= ~(1 << c * 2);
 	}
 
 	if (flag & 2) {
-		old |= (1 << a * 2 + 1);
+		newFlag |= (1 << c * 2 + 1);
 	} else {
-		old &= ~(1 << a * 2 + 1);
+		newFlag &= ~(1 << c * 2 + 1);
 	}
 
-	mStates[b] = old;
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x48(r3)
-	  rlwinm    r0,r4,2,0,29
-	  lwz       r3, 0x8(r3)
-	  rlwinm    r4,r5,0,24,31
-	  lwzx      r6, r6, r0
-	  rlwinm.   r0,r5,0,31,31
-	  srawi     r7, r6, 0x2
-	  add       r5, r3, r7
-	  rlwinm    r3,r7,2,0,29
-	  lbz       r7, 0x0(r5)
-	  sub       r6, r6, r3
-	  beq-      .loc_0x44
-	  rlwinm    r0,r6,1,0,30
-	  li        r3, 0x1
-	  slw       r0, r3, r0
-	  or        r7, r7, r0
-	  b         .loc_0x54
-
-	.loc_0x44:
-	  rlwinm    r0,r6,1,0,30
-	  li        r3, 0x1
-	  slw       r0, r3, r0
-	  andc      r7, r7, r0
-
-	.loc_0x54:
-	  rlwinm.   r0,r4,0,30,30
-	  beq-      .loc_0x74
-	  rlwinm    r3,r6,1,0,30
-	  addi      r0, r3, 0x1
-	  li        r3, 0x1
-	  slw       r0, r3, r0
-	  or        r7, r7, r0
-	  b         .loc_0x88
-
-	.loc_0x74:
-	  rlwinm    r3,r6,1,0,30
-	  addi      r0, r3, 0x1
-	  li        r3, 0x1
-	  slw       r0, r3, r0
-	  andc      r7, r7, r0
-
-	.loc_0x88:
-	  stb       r7, 0x0(r5)
-	  blr
-	*/
+	mStates[b] = newFlag;
 }
