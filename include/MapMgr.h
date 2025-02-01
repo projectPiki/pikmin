@@ -137,6 +137,18 @@ struct MapObjectPart : public DynCollShape {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
+ */
+struct MapPartsPart {
+	// Fabricated.
+
+	Vector3f _00; // _00
+	Vector3f _0C; // _0C
+};
+
+/**
+ * @brief TODO
  */
 struct MapParts : public DynCollShape {
 	MapParts(Shape* shape)
@@ -148,7 +160,7 @@ struct MapParts : public DynCollShape {
 	virtual void read(RandomAccessStream&);                   // _0C
 	virtual void update();                                    // _10
 	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
-	virtual void init();                                      // _48
+	virtual void init() { }                                   // _48
 
 	static char* getShapeFile(int);
 
@@ -156,8 +168,8 @@ struct MapParts : public DynCollShape {
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	Vector3f* _140; // _140, may also be a ptr to a struct with a Vector3f at _00.
-	Vector3f _144;  // _144
+	MapPartsPart* _140; // _140
+	Vector3f _144;      // _144
 };
 
 /**

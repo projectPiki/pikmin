@@ -180,7 +180,7 @@ void FishGenerator::update()
 		mSchoolCentre = mSchoolCentre + mFish[i].mPosition;
 	}
 
-	mSchoolCentre.scale(1.0f / mFishCount);
+	mSchoolCentre.multiply(1.0f / mFishCount);
 
 	for (int i = 0; i < mFishCount; i++) {
 		moveFish(&mFish[i]);
@@ -194,6 +194,7 @@ void FishGenerator::update()
  */
 void FishGenerator::moveFish(Fish* fish)
 {
+	int i;
 	f32 closestDistance = 20.0f;
 	Fish* nearestFish   = nullptr;
 	Vector3f averageDirection(0.0f, 0.0f, 0.0f);
@@ -201,7 +202,7 @@ void FishGenerator::moveFish(Fish* fish)
 	Vector3f separationForce(0.0f, 0.0f, 0.0f);
 
 	// Check all other fish for flocking behaviour
-	for (int i = 0; i < mFishCount; i++) {
+	for (i = 0; i < mFishCount; i++) {
 		Fish* otherFish = &mFish[i];
 
 		if (otherFish == fish) {
@@ -220,7 +221,7 @@ void FishGenerator::moveFish(Fish* fish)
 		if (distanceToFish < closestDistance) {
 			nearestFish = otherFish;
 			if (distanceToFish < 4.0f) {
-				separationForce = fish->mPosition - otherFish->mPosition;
+				separationForce = fish->mPosition - nearestFish->mPosition;
 				separationForce.normalise();
 			}
 
@@ -230,40 +231,38 @@ void FishGenerator::moveFish(Fish* fish)
 
 	// Average the direction of nearby fish
 	if (nearbyFishCount > 0) {
-		f32 inverseCount = 1.0f / nearbyFishCount;
-		averageDirection = averageDirection * inverseCount;
+		averageDirection = averageDirection * (1.0f / nearbyFishCount);
 	}
 
 	// Update fish movement
-	if (nearestFish) {
+	if (nearestFish && unitRandFloat() > 0.1f) {
 		// 90% chance to move towards the center of the school
-		if (gsys->getRand(1.0f) >= 0.1f) {
-			f32 randomTurnAngle = (gsys->getRand(1.0f) - 0.5f) * PI * 0.1f;
+		Vector3f dir(averageDirection);
+		Vector3f centreDir = mSchoolCentre - fish->mPosition;
+		centreDir.normalise();
+		centreDir       = centreDir * 100.0f;
+		separationForce = separationForce * 100.0f;
+		fish->mVelocity = dir * 0.4f + centreDir * 0.2f + separationForce * 0.4f;
 
-			Vector3f schoolDirection = mSchoolCentre - fish->mPosition;
-			schoolDirection.normalise();
-			schoolDirection = schoolDirection * 100.0f;
-			schoolDirection = schoolDirection * 100.0f;
-
-			fish->mVelocity = schoolDirection * 0.4f + schoolDirection * 0.2f + schoolDirection * 0.4f;
-		}
 	} else {
 		// No nearby fish - wander and try to return to school
-		f32 randomTurnAngle = (gsys->getRand(1.0f) - 0.5f) * PI * 0.1f;
-		fish->mDirection    = roundAng(randomTurnAngle + fish->mDirection);
+		f32 randomTurnAngle = randBalanced(0.5f) * PI * 0.1f;
+		fish->mDirection    = roundAng(fish->mDirection + randomTurnAngle);
 
 		Vector3f schoolDirection = mSchoolCentre - fish->mPosition;
 		schoolDirection.normalise();
 		schoolDirection = schoolDirection * 100.0f;
 
 		Vector3f currentHeading(sinf(fish->mDirection), 0.0f, cosf(fish->mDirection));
-		fish->mVelocity = schoolDirection * 0.9f + currentHeading * 0.1f;
+		currentHeading  = currentHeading * 100.0f;
+		fish->mVelocity = currentHeading * 0.9f + schoolDirection * 0.1f;
 	}
 
 	MoveTrace trace(fish->mPosition, fish->mVelocity, 1.0f, false);
 	mapMgr->traceMove(nullptr, trace, gsys->getFrameTime());
 	fish->mPosition = trace.mPosition;
 	fish->mVelocity = trace.mVelocity;
+
 	/*
 	.loc_0x0:
 	  mflr      r0

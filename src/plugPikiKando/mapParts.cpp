@@ -155,7 +155,7 @@ MapSlider::MapSlider(Shape* shape, int p2, int p3, f32 p4, f32 p5, f32 p6, int p
 void MapSlider::init()
 {
 	if (_140) {
-		_134 = *_140;
+		_134 = _140->_00;
 		_180 = _168;
 		_178 = 2;
 		_17C = 1;
