@@ -382,6 +382,99 @@ void ActFormation::cleanup()
  */
 int ActFormation::exec()
 {
+	if (_2B) {
+		_1C -= gsys->getFrameTime();
+		if (_1C < 0.0f) {
+			mPiki->mPikiAnimMgr.finishMotion(this);
+		}
+
+		return ACTOUT_Continue;
+	}
+
+	Vector3f pos;
+	if (_28) {
+		pos = mFormMgr->getLastCentre();
+	} else {
+		pos = mPiki->mFormPoint->getPos();
+	}
+
+	Vector3f dir = pos - mPiki->mPosition;
+	f32 dist     = dir.length();
+	_24          = dist;
+	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+
+	if (_28 && dist < 100.0f) {
+		getFormPoint();
+	} else if (!_28 && dist < 6.0f) {
+		mInFormation = false;
+		mPiki->mFaceDirection += 2.5f * (angDist(mPiki->mNavi->mFaceDirection, mPiki->mFaceDirection) * gsys->getFrameTime());
+
+		if (!_29) {
+			mPiki->mPikiAnimMgr.finishMotion(this);
+			_29 = 1;
+			_1C = randFloat(15.0f) + 15.0f;
+			_2A = 0;
+		} else {
+			_1C -= gsys->getFrameTime();
+			if (_1C < 0.0f && !_2A) {
+				// this is set up for far more flexibility than it ended up having wtf
+				int baseIdx[1]    = { PIKIANIM_Wait };
+				int randOffsetIdx = int(randFloat(1.0f));
+				if (randOffsetIdx >= 1) {
+					randOffsetIdx = 0;
+				}
+				mPiki->startMotion(PaniMotionInfo(baseIdx[randOffsetIdx], this), PaniMotionInfo(baseIdx[randOffsetIdx]));
+				_2A = 1;
+			}
+		}
+
+		return ACTOUT_Continue;
+	}
+
+	if (!_29 && !_2B && unitRandFloat() > 0.99f && unitRandFloat() > 0.99f && mPiki->mVelocity.length() > mPiki->getSpeed(0.5f)) {
+		mPiki->mPikiAnimMgr.finishMotion(this);
+		mHasTripped = 0;
+		_2B         = 1;
+		return ACTOUT_Continue;
+	}
+
+	if (_29) {
+		_29 = 0;
+		_2C = 0;
+		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
+	}
+	u32 badCompiler;
+	Vector3f zero(0.0f, 0.0f, 0.0f);
+	Vector3f dir2 = pos - mPiki->mPosition;
+	dir2.normalise();
+
+	Vector3f sideDir(-dir2.z, 0.0f, dir2.x);
+	bool unusedCheck = false;
+	Vector3f dir3    = pos - mPiki->mPosition;
+	dir3.y           = 0.0f;
+	f32 dist3        = dir3.length();
+	if (dist3 > 0.0f) {
+		dir3 = (1.0f / dist3) * dir3;
+	} else {
+		f32 randAngle = 2.0f * randFloat(PI);
+		dir3.set(cosf(randAngle), 0.0f, sinf(randAngle));
+	}
+
+	f32 speedRatio = 0.0f;
+	if (dist3 > 30.0f) {
+		speedRatio = (dist3 - 30.0f) / 10.0f;
+		if (speedRatio > 1.0f) {
+			speedRatio = 1.0f;
+		}
+	}
+
+	mPiki->setSpeed(speedRatio, dir3);
+	f32 factor = 1.0f;
+	if (unusedCheck) {
+		mPiki->mTargetVelocity = (1.0f - factor) * mPiki->mTargetVelocity + factor * zero;
+	}
+
+	return ACTOUT_Continue;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -849,47 +942,6 @@ int ActFormation::exec()
 	  lwz       r29, 0x20C(r1)
 	  lwz       r28, 0x208(r1)
 	  addi      r1, r1, 0x230
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800BA58C
- * Size:	00006C
- */
-ActFormation::~ActFormation()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x50
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x69B0
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x64
-	  addi      r3, r30, 0
-	  stw       r0, 0x14(r30)
-	  li        r4, 0
-	  bl        0x9840
-	  extsh.    r0, r31
-	  ble-      .loc_0x50
-	  mr        r3, r30
-	  bl        -0x7342C
-
-	.loc_0x50:
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
 	*/

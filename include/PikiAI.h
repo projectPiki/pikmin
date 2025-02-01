@@ -978,7 +978,7 @@ struct ActFlower : public Action, virtual PaniAnimKeyListener {
 struct ActFormation : public Action, public PaniAnimKeyListener {
 	ActFormation(Piki*);
 
-	virtual ~ActFormation();                             // _44 (weak)
+	virtual ~ActFormation() { }                          // _44 (weak)
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1130,7 +1130,7 @@ struct ActGuard : public Action {
 	ActGuard(Piki*);
 
 	virtual void dump();          // _3C
-	virtual ~ActGuard();          // _44 (weak)
+	virtual ~ActGuard() { }       // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
@@ -1146,7 +1146,17 @@ struct ActGuard : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x4C - 0x14]; // _14, unknown
+	SmartPtr<Creature> mTarget; // _14
+	SmartPtr<Creature> mLeft;   // _18
+	SmartPtr<Creature> mRight;  // _1C
+	Vector3f _20;               // _20
+	f32 _2C;                    // _2C
+	Vector3f mLandPosition;     // _30
+	f32 _3C;                    // _3C
+	f32 mTimer;                 // _40
+	int _44;                    // _44
+	bool mIsWaiting;            // _48
+	u8 _49;                     // _49
 };
 
 /**
