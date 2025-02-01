@@ -143,8 +143,8 @@ struct MapObjectPart : public DynCollShape {
 struct MapPartsPart {
 	// Fabricated.
 
-	Vector3f _00; // _00
-	Vector3f _0C; // _0C
+	Vector3f mStartPosition; // _00
+	Vector3f _0C;            // _0C
 };
 
 /**
@@ -154,7 +154,7 @@ struct MapParts : public DynCollShape {
 	MapParts(Shape* shape)
 	    : DynCollShape(shape)
 	{
-		_140 = nullptr;
+		mCurrentPart = nullptr;
 	}
 
 	virtual void read(RandomAccessStream&);                   // _0C
@@ -168,8 +168,8 @@ struct MapParts : public DynCollShape {
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	MapPartsPart* _140; // _140
-	Vector3f _144;      // _144
+	MapPartsPart* mCurrentPart; // _140
+	Vector3f mVelocity;         // _144
 };
 
 /**
@@ -197,17 +197,17 @@ struct MapSlider : public MapParts {
 
 	// _00      = VTBL
 	// _00-_150 = MapParts
-	Vector3f _150; // _150
-	f32 _15C;      // _15C
-	int _160;      // _160
-	int _164;      // _164
-	f32 _168;      // _168
-	f32 _16C;      // _16C
-	f32 _170;      // _170
-	int _174;      // _174
-	int _178;      // _178
-	int _17C;      // _17C
-	f32 _180;      // _180
+	Vector3f mPosition; // _150
+	f32 mFaceDirection; // _15C
+	int _160;           // _160
+	int _164;           // _164
+	f32 _168;           // _168
+	f32 _16C;           // _16C
+	f32 _170;           // _170
+	int _174;           // _174
+	int _178;           // _178
+	int _17C;           // _17C
+	f32 _180;           // _180
 };
 
 /**
@@ -263,7 +263,7 @@ struct MapMgr {
 	MapRoom* mMapRooms;                    // _14, array of 256 MapRooms
 	u8 _18[0x64 - 0x18];                   // _18, unknown
 	ShapeDynMaterials mDynMaterials;       // _64
-	BaseShape* _74[5];                     // _74
+	BaseShape* mMapPartShapes[5];          // _74
 	DynCollShape* mCollShape;              // _88
 	u8 _8C[0x4];                           // _8C, unknown
 	BoundBox _90;                          // _90

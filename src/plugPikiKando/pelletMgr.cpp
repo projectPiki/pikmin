@@ -181,7 +181,7 @@ void PelletView::becomePellet(u32 id, Vector3f& pos, f32 direction)
  */
 Pellet::Pellet()
 {
-	_450 = true;
+	mUseSpawnPosition = true;
 	mSpawnPosition.set(0.0f, 0.0f, 0.0f);
 	mSeContext = new SeContext();
 	mSeContext->setContext(this, 2);
@@ -968,7 +968,7 @@ bool Pellet::isFree()
  */
 void Pellet::doLoad(RandomAccessStream& input)
 {
-	_450                  = input.readByte();
+	mUseSpawnPosition     = input.readByte();
 	mSpawnPosition.x      = input.readFloat();
 	mSpawnPosition.y      = input.readFloat();
 	mSpawnPosition.z      = input.readFloat();
@@ -1010,7 +1010,7 @@ void Pellet::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void Pellet::doSave(RandomAccessStream& output)
 {
-	output.writeByte(_450);
+	output.writeByte(mUseSpawnPosition);
 	output.writeFloat(mSpawnPosition.x);
 	output.writeFloat(mSpawnPosition.y);
 	output.writeFloat(mSpawnPosition.z);
@@ -1027,7 +1027,7 @@ void Pellet::startAI(int stateID)
 	mRotation.set(0.0f, mFaceDirection, 0.0f);
 	mLastPosition = mPosition;
 	enableFixPos();
-	if (_450) {
+	if (mUseSpawnPosition) {
 		mSpawnPosition = mPosition;
 	}
 
@@ -1165,7 +1165,7 @@ void Pellet::refresh(Graphics& gfx)
  * Address:	80097320
  * Size:	000088
  */
-void Pellet::postUpdate(int p1, f32 p2)
+void Pellet::postUpdate(int _, f32 __)
 {
 	int state = getState();
 	if (state == 3 && !pelletMgr->isMovieFlag(1)) {
@@ -1177,7 +1177,7 @@ void Pellet::postUpdate(int p1, f32 p2)
 	}
 
 	if (pelletMgr->isMovieFlag(4)) {
-		DualCreature::postUpdate(p1, p2);
+		DualCreature::postUpdate(_, __);
 	}
 }
 

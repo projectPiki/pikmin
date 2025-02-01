@@ -178,27 +178,27 @@ struct HinderRock : public WorkObject {
 
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject
-	u16 mPushCount;                // _3C8
+	u16 mPushingPikmin;            // _3C8
 	Plane mPlanes[4];              // _3CC
-	Vector3f _40C;                 // _40C
-	u32 _418;                      // _418
-	u32 _41C;                      // _41C
-	f32 _420;                      // _420
+	Vector3f mDestinationPosition; // _40C
+	u32 mTotalPushStrength;        // _418
+	u32 mAmountPushersToStart;     // _41C
+	f32 mPushSpeed;                // _420
 	WayPoint* mWayPoint;           // _424
 	u8 _428;                       // _428
 	f32 _42C;                      // _42C
-	f32 _430;                      // _430
+	f32 mCentreSize;               // _430
 	DynBuildShape* mBuildShape;    // _434
-	Shape* _438;                   // _438
+	Shape* mBoxShape;              // _438
 	u8 mState;                     // _43C
-	u8 _43D;                       // _43D
-	f32 _440;                      // _440
+	u8 mFxCooldownTimer;           // _43D
+	f32 mPushMoveTimer;            // _440
 	bool mIsMoving;                // _444
-	bool _445;                     // _445
+	bool mIsSoundPlaying;          // _445
 	zen::particleGenerator* mEfxA; // _448
 	zen::particleGenerator* mEfxB; // _44C
 	zen::particleGenerator* mEfxC; // _450
-	Vector3f _454;                 // _454
+	Vector3f mMoveEffectPosition;  // _454
 	Vector3f _460[2];              // _460
 };
 

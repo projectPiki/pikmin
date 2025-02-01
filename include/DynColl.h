@@ -68,8 +68,8 @@ struct DynCollShape : public DynCollObject {
 	Matrix4f mInverseMatrix; // _9C
 	u8 _DC[0x11C - 0xDC];    // _CC, unknown
 	Vector3f _11C;           // _11C
-	Vector3f _128;           // _128
-	Vector3f _134;           // _134
+	Vector3f mRotation;      // _128
+	Vector3f mPosition;      // _134
 };
 
 /**

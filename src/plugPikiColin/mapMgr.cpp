@@ -735,9 +735,9 @@ DynCollShape::DynCollShape(Shape* shape)
 		createDupCollData();
 	}
 
-	_11C = Vector3f(1.0f, 1.0f, 1.0f);
-	_134 = Vector3f(0.0f, 0.0f, 0.0f);
-	_128 = _134;
+	_11C      = Vector3f(1.0f, 1.0f, 1.0f);
+	mPosition = Vector3f(0.0f, 0.0f, 0.0f);
+	mRotation = mPosition;
 	mTransformMtx.makeIdentity();
 	/*
 	.loc_0x0:

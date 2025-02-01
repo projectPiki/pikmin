@@ -31,35 +31,35 @@ void ActFormation::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 
 	case KEY_Finished:
-		if (_29 || _2A) {
-			if (_2A) {
-				_1C = randFloat(15.0f) + 15.0f;
-				_2A = 0;
+		if (mIsIdling || mHasStartedIdleAnim) {
+			if (mHasStartedIdleAnim) {
+				mIdleTimer          = randFloat(15.0f) + 15.0f;
+				mHasStartedIdleAnim = 0;
 			}
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait, this), PaniMotionInfo(PIKIANIM_Wait));
 			break;
 		}
 
-		if (mHasTripped == 0) {
+		if (mIsTripping == 0) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Korobu, this), PaniMotionInfo(PIKIANIM_Korobu));
 			Vector3f dir(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 			f32 speed              = mPiki->mVelocity.length();
 			mPiki->mVelocity       = speed * dir;
 			mPiki->mTargetVelocity = speed * dir;
-			_1C                    = unitRandFloat() + 0.8f;
-			mHasTripped            = 1;
+			mIdleTimer             = unitRandFloat() + 0.8f;
+			mIsTripping            = 1;
 			break;
 		}
 
-		if (mHasTripped == 1) {
-			_2B = 0;
+		if (mIsTripping == 1) {
+			mIsOnFloorTripped = 0;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 			break;
 		}
 
-		if (_2C) {
-			_2C = 0;
-			if (_24 > 5.0f) {
+		if (mHasStartedRunAnim) {
+			mHasStartedRunAnim = 0;
+			if (mDistanceToTarget > 5.0f) {
 				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 			}
 		}
@@ -329,7 +329,7 @@ void ActFormation::getFormPoint()
 			}
 		}
 	}
-	_28 = 0;
+	mUseLastFormationPosition = 0;
 }
 
 /*
@@ -349,16 +349,16 @@ void ActFormation::init(Creature* target)
 		PRINT("target is not navi (%d)\n", target->mObjType);
 	}
 
-	Navi* navi = static_cast<Navi*>(target);
-	mFormMgr   = navi->mFormMgr;
-	_28        = 1;
-	_1C        = randFloat(2.0f) + 4.0f;
+	Navi* navi                = static_cast<Navi*>(target);
+	mFormMgr                  = navi->mFormMgr;
+	mUseLastFormationPosition = 1;
+	mIdleTimer                = randFloat(2.0f) + 4.0f;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 	mPiki->unsetPastel();
-	_29         = 0;
-	_2A         = 0;
-	_2B         = 0;
-	mHasTripped = 0;
+	mIsIdling           = 0;
+	mHasStartedIdleAnim = 0;
+	mIsOnFloorTripped   = 0;
+	mIsTripping         = 0;
 }
 
 /*
@@ -382,9 +382,9 @@ void ActFormation::cleanup()
  */
 int ActFormation::exec()
 {
-	if (_2B) {
-		_1C -= gsys->getFrameTime();
-		if (_1C < 0.0f) {
+	if (mIsOnFloorTripped) {
+		mIdleTimer -= gsys->getFrameTime();
+		if (mIdleTimer < 0.0f) {
 			mPiki->mPikiAnimMgr.finishMotion(this);
 		}
 
@@ -392,31 +392,31 @@ int ActFormation::exec()
 	}
 
 	Vector3f pos;
-	if (_28) {
+	if (mUseLastFormationPosition) {
 		pos = mFormMgr->getLastCentre();
 	} else {
 		pos = mPiki->mFormPoint->getPos();
 	}
 
-	Vector3f dir = pos - mPiki->mPosition;
-	f32 dist     = dir.length();
-	_24          = dist;
+	Vector3f directionToTarget = pos - mPiki->mPosition;
+	f32 distanceToTarget       = directionToTarget.length();
+	mDistanceToTarget          = distanceToTarget;
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
-	if (_28 && dist < 100.0f) {
+	if (mUseLastFormationPosition && distanceToTarget < 100.0f) {
 		getFormPoint();
-	} else if (!_28 && dist < 6.0f) {
+	} else if (!mUseLastFormationPosition && distanceToTarget < 6.0f) {
 		mInFormation = false;
 		mPiki->mFaceDirection += 2.5f * (angDist(mPiki->mNavi->mFaceDirection, mPiki->mFaceDirection) * gsys->getFrameTime());
 
-		if (!_29) {
+		if (!mIsIdling) {
 			mPiki->mPikiAnimMgr.finishMotion(this);
-			_29 = 1;
-			_1C = randFloat(15.0f) + 15.0f;
-			_2A = 0;
+			mIsIdling           = 1;
+			mIdleTimer          = randFloat(15.0f) + 15.0f;
+			mHasStartedIdleAnim = 0;
 		} else {
-			_1C -= gsys->getFrameTime();
-			if (_1C < 0.0f && !_2A) {
+			mIdleTimer -= gsys->getFrameTime();
+			if (mIdleTimer < 0.0f && !mHasStartedIdleAnim) {
 				// this is set up for far more flexibility than it ended up having wtf
 				int baseIdx[1]    = { PIKIANIM_Wait };
 				int randOffsetIdx = int(randFloat(1.0f));
@@ -424,54 +424,57 @@ int ActFormation::exec()
 					randOffsetIdx = 0;
 				}
 				mPiki->startMotion(PaniMotionInfo(baseIdx[randOffsetIdx], this), PaniMotionInfo(baseIdx[randOffsetIdx]));
-				_2A = 1;
+				mHasStartedIdleAnim = 1;
 			}
 		}
 
 		return ACTOUT_Continue;
 	}
 
-	if (!_29 && !_2B && unitRandFloat() > 0.99f && unitRandFloat() > 0.99f && mPiki->mVelocity.length() > mPiki->getSpeed(0.5f)) {
+	if (!mIsIdling && !mIsOnFloorTripped && unitRandFloat() > 0.99f && unitRandFloat() > 0.99f
+	    && mPiki->mVelocity.length() > mPiki->getSpeed(0.5f)) {
 		mPiki->mPikiAnimMgr.finishMotion(this);
-		mHasTripped = 0;
-		_2B         = 1;
+		mIsTripping       = 0;
+		mIsOnFloorTripped = 1;
 		return ACTOUT_Continue;
 	}
 
-	if (_29) {
-		_29 = 0;
-		_2C = 0;
+	if (mIsIdling) {
+		mIsIdling          = 0;
+		mHasStartedRunAnim = 0;
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 	}
-	u32 badCompiler;
-	Vector3f zero(0.0f, 0.0f, 0.0f);
-	Vector3f dir2 = pos - mPiki->mPosition;
-	dir2.normalise();
 
-	Vector3f sideDir(-dir2.z, 0.0f, dir2.x);
-	bool unusedCheck = false;
-	Vector3f dir3    = pos - mPiki->mPosition;
-	dir3.y           = 0.0f;
-	f32 dist3        = dir3.length();
-	if (dist3 > 0.0f) {
-		dir3 = (1.0f / dist3) * dir3;
+	u32 badCompiler;
+	Vector3f zeroVector(0.0f, 0.0f, 0.0f);
+	Vector3f normalisedDirection = pos - mPiki->mPosition;
+	normalisedDirection.normalise();
+
+	Vector3f perpDirection(-normalisedDirection.z, 0.0f, normalisedDirection.x);
+	bool shouldApplyDrag = false;
+
+	Vector3f flatDirection = pos - mPiki->mPosition;
+	flatDirection.y        = 0.0f;
+	f32 flatDistance       = flatDirection.length();
+	if (flatDistance > 0.0f) {
+		flatDirection = (1.0f / flatDistance) * flatDirection;
 	} else {
 		f32 randAngle = 2.0f * randFloat(PI);
-		dir3.set(cosf(randAngle), 0.0f, sinf(randAngle));
+		flatDirection.set(cosf(randAngle), 0.0f, sinf(randAngle));
 	}
 
-	f32 speedRatio = 0.0f;
-	if (dist3 > 30.0f) {
-		speedRatio = (dist3 - 30.0f) / 10.0f;
-		if (speedRatio > 1.0f) {
-			speedRatio = 1.0f;
+	f32 speedMultiplier = 0.0f;
+	if (flatDistance > 30.0f) {
+		speedMultiplier = (flatDistance - 30.0f) / 10.0f;
+		if (speedMultiplier > 1.0f) {
+			speedMultiplier = 1.0f;
 		}
 	}
 
-	mPiki->setSpeed(speedRatio, dir3);
-	f32 factor = 1.0f;
-	if (unusedCheck) {
-		mPiki->mTargetVelocity = (1.0f - factor) * mPiki->mTargetVelocity + factor * zero;
+	mPiki->setSpeed(speedMultiplier, flatDirection);
+	f32 dragFactor = 1.0f;
+	if (shouldApplyDrag) {
+		mPiki->mTargetVelocity = (1.0f - dragFactor) * mPiki->mTargetVelocity + dragFactor * zeroVector;
 	}
 
 	return ACTOUT_Continue;

@@ -53,7 +53,7 @@ DEFINE_PRINT("workObject");
  */
 void HinderRock::beginPush()
 {
-	mPushCount++;
+	mPushingPikmin++;
 }
 
 /*
@@ -63,8 +63,8 @@ void HinderRock::beginPush()
  */
 void HinderRock::endPush()
 {
-	if (mPushCount) {
-		mPushCount--;
+	if (mPushingPikmin) {
+		mPushingPikmin--;
 	}
 }
 
@@ -494,10 +494,10 @@ Creature* GenObjectWorkObject::birth(BirthInfo& info)
 		obj->mGenerator     = info.mGenerator;
 
 		if (mObjectType == 1) {
-			HinderRock* box = (HinderRock*)obj;
-			box->_40C       = mHinderRockPosition;
-			box->_41C       = _38();
-			box->_420       = _48();
+			HinderRock* box            = (HinderRock*)obj;
+			box->mDestinationPosition  = mHinderRockPosition;
+			box->mAmountPushersToStart = _38();
+			box->mPushSpeed            = _48();
 		}
 
 		obj->mHealth    = mDay() * (int)gameflow.mWorldClock.mHoursInDay + mHour();
@@ -519,8 +519,8 @@ Creature* GenObjectWorkObject::birth(BirthInfo& info)
  */
 HinderRock::HinderRock(Shape* shape)
 {
-	_438 = shape;
-	_438->mSystemFlags |= 0x10;
+	mBoxShape = shape;
+	mBoxShape->mSystemFlags |= 0x10;
 	mBuildShape            = new DynBuildShape(shape);
 	mBuildShape->mCreature = this;
 	mCollInfo              = new CollInfo(20);
@@ -537,7 +537,7 @@ HinderRock::HinderRock(Shape* shape)
 bool HinderRock::insideSafeArea(Vector3f& pos)
 {
 	Vector3f pos2 = mPosition;
-	Cylinder cyl(pos2, _40C, 1.0f);
+	Cylinder cyl(pos2, mDestinationPosition, 1.0f);
 	if (cyl.get2dDist(pos) < 120.0f) {
 		return false;
 	}
@@ -551,17 +551,17 @@ bool HinderRock::insideSafeArea(Vector3f& pos)
  */
 void HinderRock::doLoad(RandomAccessStream& stream)
 {
-	mState     = stream.readByte();
-	_418       = 0;
-	mPushCount = 0;
+	mState             = stream.readByte();
+	mTotalPushStrength = 0;
+	mPushingPikmin     = 0;
 
-	_440 = 0.0f;
+	mPushMoveTimer = 0.0f;
 
 	if (mState == 2) {
-		mPosition   = _40C;
+		mPosition   = mDestinationPosition;
 		mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, false);
 		for (int i = 0; i < 10; i++) {
-			PRINT("goal Y = %f\n", _40C.y);
+			PRINT("goal Y = %f\n", mDestinationPosition.y);
 		}
 
 		mWayPoint->setFlag(true);
@@ -592,7 +592,7 @@ void HinderRock::doSave(RandomAccessStream& stream)
  */
 f32 HinderRock::getCentreSize()
 {
-	return _430;
+	return mCentreSize;
 }
 
 /*
@@ -710,7 +710,7 @@ void HinderRock::updatePlanes()
 	mPlanes[2].mNormal = mPlanes[0].mNormal * -1.0f;
 
 	mPlanes[1].mNormal = v2 - v3;
-	_430               = mPlanes[1].mNormal.normalise();
+	mCentreSize        = mPlanes[1].mNormal.normalise();
 	mPlanes[3].mNormal = mPlanes[1].mNormal * -1.0f;
 
 	mPlanes[0].mOffset = mPlanes[0].mNormal.DP(v0);
@@ -718,9 +718,9 @@ void HinderRock::updatePlanes()
 	mPlanes[2].mOffset = mPlanes[2].mNormal.DP(v3);
 	mPlanes[3].mOffset = mPlanes[3].mNormal.DP(v3);
 
-	_454    = 0.5f * (v2 + v3);
-	_460[0] = v0;
-	_460[1] = getVertex(1);
+	mMoveEffectPosition = 0.5f * (v2 + v3);
+	_460[0]             = v0;
+	_460[1]             = getVertex(1);
 }
 
 /*
@@ -777,7 +777,7 @@ bool HinderRock::stimulate(Interaction& act)
 bool InteractPush::actHinderRock(HinderRock* obj)
 {
 	Vector3f unused(0.0f, 110.0f, 0.0f);
-	obj->_418 += mStrength;
+	obj->mTotalPushStrength += mStrength;
 	return true;
 }
 
@@ -790,11 +790,11 @@ void HinderRock::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
-	_438->updateAnim(gfx, mtx, nullptr);
+	mBoxShape->updateAnim(gfx, mtx, nullptr);
 	mBuildShape->mTransformMtx.inverse(&mBuildShape->mInverseMatrix);
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mBuildShape->updateContext();
-	_438->drawshape(gfx, *gfx.mCamera, nullptr);
+	mBoxShape->drawshape(gfx, *gfx.mCamera, nullptr);
 	mCollInfo->updateInfo(gfx, false);
 	updatePlanes();
 }
@@ -829,13 +829,13 @@ void HinderRock::update()
 	mGrid.updateGrid(mPosition);
 	mGrid.updateAIGrid(mPosition, false);
 
-	if (mPushCount) {
-		mLifeGauge.countOn(mLifeGauge.mPosition, mPushCount, _41C);
+	if (mPushingPikmin) {
+		mLifeGauge.countOn(mLifeGauge.mPosition, mPushingPikmin, mAmountPushersToStart);
 	}
 
-	if (mPushCount == 0) {
-		if (++_43D > 10) {
-			_43D = 10;
+	if (mPushingPikmin == 0) {
+		if (++mFxCooldownTimer > 10) {
+			mFxCooldownTimer = 10;
 			mLifeGauge.countOff();
 			if (mEfxA) {
 				mEfxA->stopGen();
@@ -848,15 +848,15 @@ void HinderRock::update()
 			}
 		}
 	} else {
-		_43D = 0;
+		mFxCooldownTimer = 0;
 	}
 
-	if (mState == 0 && _41C < mPushCount) {
+	if (mState == 0 && mAmountPushersToStart < mPushingPikmin) {
 
 		if (mEfxA == nullptr) {
-			mEfxA = effectMgr->create(EffectMgr::EFF_HinderRock_MoveF, _454, nullptr, nullptr);
+			mEfxA = effectMgr->create(EffectMgr::EFF_HinderRock_MoveF, mMoveEffectPosition, nullptr, nullptr);
 			if (mEfxA) {
-				mEfxA->setEmitPosPtr(&_454);
+				mEfxA->setEmitPosPtr(&mMoveEffectPosition);
 				mEfxA->setEmitDir(getXVector());
 			}
 		} else {
@@ -890,9 +890,9 @@ void HinderRock::update()
 		}
 
 		mIsMoving = true;
-		mVelocity = _40C - mPosition;
+		mVelocity = mDestinationPosition - mPosition;
 		if (std::sqrtf(mVelocity.x * mVelocity.x + mVelocity.z * mVelocity.z) < 4.0f) {
-			mPosition = _40C;
+			mPosition = mDestinationPosition;
 			mState    = 2;
 			mWayPoint->setFlag(true);
 			seSystem->playSysSe(SYSSE_WORK_FINISH);
@@ -914,28 +914,28 @@ void HinderRock::update()
 			return;
 		}
 		mVelocity.normalise();
-		mVelocity.multiply(_420 * 0.5f);
+		mVelocity.multiply(mPushSpeed * 0.5f);
 		moveNew(gsys->getFrameTime());
 		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
 		mBuildShape->mTransformMtx = mWorldMtx;
-		_440 += gsys->getFrameTime();
-		if (!_445) {
+		mPushMoveTimer += gsys->getFrameTime();
+		if (!mIsSoundPlaying) {
 			mSeContext->playSound(SEB_BOXMOVE);
-			_445 = true;
+			mIsSoundPlaying = true;
 		}
-		if (_440 > 1.0f) {
-			mState = 1;
-			_440   = gsys->getRand(1.0f) * 0.1f + 0.2f;
+		if (mPushMoveTimer > 1.0f) {
+			mState         = 1;
+			mPushMoveTimer = gsys->getRand(1.0f) * 0.1f + 0.2f;
 		}
 	} else if (mState == 1) {
-		_445      = false;
-		mIsMoving = true;
-		_440 -= gsys->getFrameTime();
-		if (_440 <= 0.0f) {
-			mState = 0;
-			_440   = 0.0f;
+		mIsSoundPlaying = false;
+		mIsMoving       = true;
+		mPushMoveTimer -= gsys->getFrameTime();
+		if (mPushMoveTimer <= 0.0f) {
+			mState         = 0;
+			mPushMoveTimer = 0.0f;
 		}
-		mLifeGauge.countOn(mLifeGauge.mPosition, mPushCount, _41C);
+		mLifeGauge.countOn(mLifeGauge.mPosition, mPushingPikmin, mAmountPushersToStart);
 	} else if ((mVelocity.x * mVelocity.x + mVelocity.z * mVelocity.z) < 1.0f) {
 		if (mEfxA) {
 			mEfxA->stopGen();
@@ -947,7 +947,7 @@ void HinderRock::update()
 			mEfxC->stopGen();
 		}
 	}
-	_418 = 0;
+	mTotalPushStrength = 0;
 
 	f32 badcompiler[14];
 	/*
@@ -1542,25 +1542,25 @@ void HinderRock::update()
  */
 void HinderRock::startAI(int)
 {
-	mPushCount = 0;
-	_43D       = false;
-	_428       = false;
-	mCollInfo->initInfo(_438, nullptr, nullptr);
-	Vector3f dist  = _40C - mPosition;
+	mPushingPikmin   = 0;
+	mFxCooldownTimer = false;
+	_428             = false;
+	mCollInfo->initInfo(mBoxShape, nullptr, nullptr);
+	Vector3f dist  = mDestinationPosition - mPosition;
 	f32 y          = atan2f(dist.x, dist.z);
 	mFaceDirection = y;
 	mRotation.set(0.0f, y, 0.0f);
 	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
 	mBuildShape->mTransformMtx = mWorldMtx;
 	mapMgr->mCollShape->add(mBuildShape);
-	_418      = 0;
-	mState    = 0;
-	_440      = 0.0f;
-	mWayPoint = routeMgr->findNearestWayPointAll('test', mPosition);
+	mTotalPushStrength = 0;
+	mState             = 0;
+	mPushMoveTimer     = 0.0f;
+	mWayPoint          = routeMgr->findNearestWayPointAll('test', mPosition);
 	mWayPoint->setFlag(false);
 	PRINT("********* ROCK WAYPOINT(%d) OFF\n", mWayPoint->mIsOpen);
-	_445        = false;
-	mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, false);
+	mIsSoundPlaying = false;
+	mPosition.y     = mapMgr->getMinY(mPosition.x, mPosition.z, false);
 }
 
 /*
@@ -1758,7 +1758,7 @@ void Bridge::refresh(Graphics& gfx)
 	mBuildShape->mTransformMtx.inverse(&mBuildShape->mInverseMatrix);
 	_414.animate(nullptr);
 	mBuildShape->updateContext();
-	// _40C->drawshape(gfx, )
+	// mDestinationPosition->drawshape(gfx, )
 
 	if (!_3C8) {
 		mCollInfo->updateInfo(gfx, false);

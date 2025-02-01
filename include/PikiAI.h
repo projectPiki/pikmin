@@ -989,16 +989,16 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 mInFormation;        // _18
-	f32 _1C;                // _1C
-	FormationMgr* mFormMgr; // _20
-	f32 _24;                // _24
-	u8 _28;                 // _28
-	u8 _29;                 // _29
-	u8 _2A;                 // _2A
-	u8 _2B;                 // _2B
-	u8 _2C;                 // _2C
-	int mHasTripped;        // _30
+	u8 mInFormation;              // _18
+	f32 mIdleTimer;               // _1C
+	FormationMgr* mFormMgr;       // _20
+	f32 mDistanceToTarget;        // _24
+	u8 mUseLastFormationPosition; // _28
+	u8 mIsIdling;                 // _29
+	u8 mHasStartedIdleAnim;       // _2A
+	u8 mIsOnFloorTripped;         // _2B
+	u8 mHasStartedRunAnim;        // _2C
+	int mIsTripping;              // _30
 };
 
 /**
@@ -1146,17 +1146,17 @@ struct ActGuard : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	SmartPtr<Creature> mTarget; // _14
-	SmartPtr<Creature> mLeft;   // _18
-	SmartPtr<Creature> mRight;  // _1C
-	Vector3f _20;               // _20
-	f32 _2C;                    // _2C
-	Vector3f mLandPosition;     // _30
-	f32 _3C;                    // _3C
-	f32 mTimer;                 // _40
-	int _44;                    // _44
-	bool mIsWaiting;            // _48
-	u8 _49;                     // _49
+	SmartPtr<Creature> mTarget;     // _14
+	SmartPtr<Creature> mLeftGuard;  // _18
+	SmartPtr<Creature> mRightGuard; // _1C
+	Vector3f _20;                   // _20
+	f32 _2C;                        // _2C
+	Vector3f mLandPosition;         // _30
+	f32 mFormationSpacing;          // _3C
+	f32 mTimer;                     // _40
+	int mFormationSide;             // _44
+	bool mIsWaiting;                // _48
+	u8 mIsGuardable;                // _49
 };
 
 /**

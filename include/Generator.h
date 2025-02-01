@@ -355,7 +355,7 @@ struct GenObjectItem : public GenObject {
 	Parm<int> mParameterA; // _18
 	Parm<int> mParameterB; // _28
 	Parm<int> mParameterC; // _38
-	Parm<int> _48;         // _48
+	Parm<int> mParameterD; // _48
 	int mObjType;          // _58
 	char mName1[32];       // _5C
 	char mName2[32];       // _7C
@@ -395,10 +395,10 @@ struct GenObjectMapParts : public GenObject {
 	    , _48(this, 2.0f, 2.0f, 2.0f, "p04", nullptr)
 	    , _58(this, 60.0f, 60.0f, 60.0f, "p03", nullptr)
 	{
-		_6C = 0;
-		_70 = 0;
-		_74 = 0;
-		_78.set(0.0f, 0.0f, 0.0f);
+		mPartKind       = 0;
+		mShapeIndex     = 0;
+		mUseStartOffset = 0;
+		mStartPosition.set(0.0f, 0.0f, 0.0f);
 		_84.set(0.0f, 0.0f, 0.0f);
 	}
 
@@ -412,17 +412,17 @@ struct GenObjectMapParts : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	Parm<int> _18; // _18
-	Parm<int> _28; // _28
-	Parm<f32> _38; // _38
-	Parm<f32> _48; // _48
-	Parm<f32> _58; // _58
-	int _68;       // _68
-	int _6C;       // _6C
-	int _70;       // _70
-	int _74;       // _74
-	Vector3f _78;  // _78
-	Vector3f _84;  // _84
+	Parm<int> _18;           // _18
+	Parm<int> _28;           // _28
+	Parm<f32> _38;           // _38
+	Parm<f32> _48;           // _48
+	Parm<f32> _58;           // _58
+	int _68;                 // _68
+	int mPartKind;           // _6C
+	int mShapeIndex;         // _70
+	int mUseStartOffset;     // _74
+	Vector3f mStartPosition; // _78
+	Vector3f _84;            // _84
 };
 
 /**

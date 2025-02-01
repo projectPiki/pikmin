@@ -36,7 +36,7 @@ GenObjectItem::GenObjectItem()
     , mParameterA(this, 0, 0, 0, "p00", nullptr)
     , mParameterB(this, 0, 0, 0, "p01", nullptr)
     , mParameterC(this, 0, 0, 0, "p02", nullptr)
-    , _48(this, 3, 3, 3, "p03", nullptr)
+    , mParameterD(this, 3, 3, 3, "p03", nullptr)
 {
 	mObjType = 1;
 	sprintf(mName1, " ");
@@ -53,7 +53,7 @@ void GenObjectItem::ramSaveParameters(RandomAccessStream& stream)
 	stream.writeByte(mParameterA() + 1);
 	stream.writeByte(mParameterB() & 255);
 	stream.writeByte(mParameterC() & 255);
-	stream.writeByte(_48() & 255);
+	stream.writeByte(mParameterD() & 255);
 }
 
 /*
@@ -66,7 +66,7 @@ void GenObjectItem::ramLoadParameters(RandomAccessStream& stream)
 	mParameterA() = stream.readByte() - 1;
 	mParameterB() = stream.readByte();
 	mParameterC() = stream.readByte();
-	_48()         = stream.readByte();
+	mParameterD() = stream.readByte();
 }
 
 /*
@@ -215,7 +215,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		case OBJTYPE_SluiceBomb:
 		case OBJTYPE_SluiceBombHard:
 			BuildingItem* wall = (BuildingItem*)item;
-			wall->mEndAnimId   = _48();
+			wall->mEndAnimId   = mParameterD();
 			break;
 		case OBJTYPE_RockGen:
 			RockGen* rock = (RockGen*)item;
@@ -223,7 +223,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 			if ((f32)mParameterA() <= 0.0f) {
 				size = 30.0f;
 			}
-			rock->setSizeAndNum(size, _48());
+			rock->setSizeAndNum(size, mParameterD());
 			break;
 		case OBJTYPE_GrassGen:
 			GrassGen* grass = (GrassGen*)item;
@@ -231,11 +231,11 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 			if (size <= 0.0f) {
 				size = 30.0f;
 			}
-			grass->setSizeAndNum(size, _48());
+			grass->setSizeAndNum(size, mParameterD());
 			break;
 		case OBJTYPE_Weeds:
 			GrassGen* weeds      = (GrassGen*)item;
-			weeds->mWorkingPikis = _48();
+			weeds->mWorkingPikis = mParameterD();
 			break;
 		}
 

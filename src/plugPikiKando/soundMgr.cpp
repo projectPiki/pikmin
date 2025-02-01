@@ -612,7 +612,7 @@ void SeSystem::resetSystem()
  * Address:	800A41FC
  * Size:	00020C
  */
-int SeSystem::createEvent(SeContext* context, int a1, SVector_* a2)
+int SeSystem::createEvent(SeContext* context, int eventType, SVector_* a2)
 {
 	if (mIsClosed) {
 		return -1;
@@ -620,7 +620,7 @@ int SeSystem::createEvent(SeContext* context, int a1, SVector_* a2)
 
 	int ret = -1;
 	if (mCurrentEventCount < mMaxEventCount) {
-		int test = Jac_CreateEvent(a1, a2);
+		int test = Jac_CreateEvent(eventType, a2);
 		if (test == -1) {
 			dumpEvents();
 			for (int x = 0; x < 10; x++) { }
@@ -649,18 +649,18 @@ int SeSystem::createEvent(SeContext* context, int a1, SVector_* a2)
 		}
 
 		if (index != -1) {
-			bool ev  = mEvents[index].mContext->releaseEvent();
-			int test = Jac_CreateEvent(a1, a2);
-			if (test == -1 && ev) {
+			bool ev         = mEvents[index].mContext->releaseEvent();
+			int eventHandle = Jac_CreateEvent(eventType, a2);
+			if (eventHandle == -1 && ev) {
 				dumpEvents();
 				for (int x = 0; x < 10; x++) { }
 			}
-			mEvents[mCurrentEventCount].mHandle  = test;
+			mEvents[mCurrentEventCount].mHandle  = eventHandle;
 			mEvents[mCurrentEventCount].mContext = context;
 			mCurrentEventCount++;
-			context->mEventHandle = test;
-			context->mEventType   = a1;
-			ret                   = test;
+			context->mEventHandle = eventHandle;
+			context->mEventType   = eventType;
+			ret                   = eventHandle;
 		}
 	}
 

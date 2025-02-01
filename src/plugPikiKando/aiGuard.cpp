@@ -25,10 +25,10 @@ ActGuard::ActGuard(Piki* piki)
     : Action(piki, true)
 {
 	mTarget.clear();
-	mLeft.clear();
-	mRight.clear();
-	_49 = 0;
-	_3C = 30.0f;
+	mLeftGuard.clear();
+	mRightGuard.clear();
+	mIsGuardable      = 0;
+	mFormationSpacing = 30.0f;
 }
 
 /*
@@ -39,16 +39,16 @@ ActGuard::ActGuard(Piki* piki)
 void ActGuard::init(Creature*)
 {
 	mTarget.clear();
-	mLeft.clear();
-	mRight.clear();
+	mLeftGuard.clear();
+	mRightGuard.clear();
 	Piki* friendPiki = findFriend();
 	if (friendPiki) {
 		mTarget.set(friendPiki);
 	}
 
-	mTimer     = 6.0f;
-	mIsWaiting = 0;
-	_49        = 1;
+	mTimer       = 6.0f;
+	mIsWaiting   = 0;
+	mIsGuardable = 1;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
 }
 
@@ -60,17 +60,17 @@ void ActGuard::init(Creature*)
 void ActGuard::cleanup()
 {
 	mTarget.reset();
-	if (!mRight.isNull()) {
-		static_cast<ActGuard*>(static_cast<Piki*>(mRight.getPtr())->mActiveAction->getCurrAction())->mLeft.reset();
-		mRight.reset();
+	if (!mRightGuard.isNull()) {
+		static_cast<ActGuard*>(static_cast<Piki*>(mRightGuard.getPtr())->mActiveAction->getCurrAction())->mLeftGuard.reset();
+		mRightGuard.reset();
 	}
 
-	if (!mLeft.isNull()) {
-		static_cast<ActGuard*>(static_cast<Piki*>(mLeft.getPtr())->mActiveAction->getCurrAction())->mRight.reset();
-		mLeft.reset();
+	if (!mLeftGuard.isNull()) {
+		static_cast<ActGuard*>(static_cast<Piki*>(mLeftGuard.getPtr())->mActiveAction->getCurrAction())->mRightGuard.reset();
+		mLeftGuard.reset();
 	}
 
-	_49 = 0;
+	mIsGuardable = 0;
 
 	// this isn't elaborated on in the DLL either.
 	rand();
@@ -114,13 +114,13 @@ int ActGuard::exec()
 	}
 
 	if (mIsWaiting) {
-		Creature* sidePiki = mLeft.getPtr();
+		Creature* sidePiki = mLeftGuard.getPtr();
 		if (sidePiki) {
 			Vector3f dir     = sidePiki->mPosition - mPiki->mPosition;
 			f32 angle        = atan2f(dir.x, dir.z);
 			f32 dist         = dir.length();
 			dir              = dir * (1.0f / dist);
-			Vector3f offset  = (dist - _3C) * dir * gsys->getFrameTime() * 13.0f;
+			Vector3f offset  = (dist - mFormationSpacing) * dir * gsys->getFrameTime() * 13.0f;
 			mPiki->mVelocity = mPiki->mVelocity + offset - mPiki->mVelocity * gsys->getFrameTime() * 0.1f;
 
 			if (angDist(angle, sidePiki->mFaceDirection) > 0.0f) {
@@ -130,43 +130,43 @@ int ActGuard::exec()
 			}
 		}
 
-		sidePiki = mRight.getPtr();
+		sidePiki = mRightGuard.getPtr();
 		if (sidePiki) {
 			Vector3f dir     = sidePiki->mPosition - mPiki->mPosition;
 			f32 dist         = dir.length();
 			dir              = dir * (1.0f / dist);
-			Vector3f offset  = (dist - _3C) * dir * gsys->getFrameTime() * 13.0f;
+			Vector3f offset  = (dist - mFormationSpacing) * dir * gsys->getFrameTime() * 13.0f;
 			mPiki->mVelocity = mPiki->mVelocity + offset - mPiki->mVelocity * gsys->getFrameTime() * 0.1f;
 		}
 
 		return ACTOUT_Continue;
 	}
 
-	if (!mLeft.isNull() || !mRight.isNull()) {
-		PRINT("############ left is %x right is %x but wait is false\n", mLeft.getPtr(), mRight.getPtr());
+	if (!mLeftGuard.isNull() || !mRightGuard.isNull()) {
+		PRINT("############ left is %x right is %x but wait is false\n", mLeftGuard.getPtr(), mRightGuard.getPtr());
 	}
 
 	setGoal();
 
 	bool doSet = false;
-	if (_44 == 1) {
+	if (mFormationSide == 1) {
 		doSet = setRight();
 	} else {
 		doSet = setLeft();
 	}
 
 	if (doSet) {
-		mIsWaiting = true;
-		_3C        = 30.0f;
-		if (_44 == 1) {
-			_44 = 0;
+		mIsWaiting        = true;
+		mFormationSpacing = 30.0f;
+		if (mFormationSide == 1) {
+			mFormationSide = 0;
 		} else {
-			_44 = 1;
+			mFormationSide = 1;
 		}
-		Piki* friendPiki = findFriend(_44);
+		Piki* friendPiki = findFriend(mFormationSide);
 		if (friendPiki) {
 			mTarget.set(friendPiki);
-			if (_44 == 1) {
+			if (mFormationSide == 1) {
 				setRight();
 			} else {
 				setLeft();
@@ -195,7 +195,7 @@ Piki* ActGuard::findFriend()
 	{
 		Piki* piki = static_cast<Piki*>(*iter);
 		if (piki != mPiki && piki->isVisible() && piki->mMode == PikiMode::GuardMode
-		    && static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->_49) {
+		    && static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->mIsGuardable) {
 			f32 dist = qdist2(piki, mPiki);
 			if (dist < minDist && (!getLeft(piki) || !getRight(piki))) {
 				friendPiki = piki;
@@ -258,7 +258,7 @@ Piki* ActGuard::findFriend(int idx)
 	{
 		Piki* piki = static_cast<Piki*>(*iter);
 		if (piki != mTarget.getPtr() && piki != mPiki && piki->isVisible() && piki->mMode == PikiMode::GuardMode
-		    && static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->_49) {
+		    && static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->mIsGuardable) {
 			f32 dist = qdist2(piki, mPiki);
 			if (getLeft(piki) && idx == 0) {
 				continue;
@@ -296,14 +296,14 @@ void ActGuard::setGoal()
 {
 	Piki* target = static_cast<Piki*>(mTarget.getPtr());
 	if (getLeft(target) && !getRight(target)) {
-		_44 = 1;
+		mFormationSide = 1;
 	} else if (!getLeft(target) && getRight(target)) {
-		_44 = 0;
+		mFormationSide = 0;
 	} else if (!getLeft(target) && !getRight(target)) {
 		if (unitRandFloat() > 0.5f) {
-			_44 = 1;
+			mFormationSide = 1;
 		} else {
-			_44 = 0;
+			mFormationSide = 0;
 		}
 	} else {
 		mTarget.reset();
@@ -313,7 +313,7 @@ void ActGuard::setGoal()
 	Vector3f targetPos(target->mPosition);
 	f32 rad = 2.5f * target->getSize();
 
-	f32 angle = (_44 == 1) ? _2C : PI - _2C;
+	f32 angle = (mFormationSide == 1) ? _2C : PI - _2C;
 
 	targetPos = targetPos + Vector3f(rad * sinf(angle), 0.0f, rad * cosf(angle));
 	_20       = targetPos;
@@ -328,7 +328,7 @@ Piki* ActGuard::getLeft(Piki* piki)
 {
 	Piki* left = nullptr;
 	if (piki->isVisible() && piki->mMode == PikiMode::GuardMode) {
-		left = static_cast<Piki*>(static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->mLeft.getPtr());
+		left = static_cast<Piki*>(static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->mLeftGuard.getPtr());
 	}
 
 	return left;
@@ -343,7 +343,7 @@ Piki* ActGuard::getRight(Piki* piki)
 {
 	Piki* right = nullptr;
 	if (piki->isVisible() && piki->mMode == PikiMode::GuardMode) {
-		right = static_cast<Piki*>(static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->mRight.getPtr());
+		right = static_cast<Piki*>(static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->mRightGuard.getPtr());
 	}
 
 	return right;
@@ -362,10 +362,10 @@ bool ActGuard::setLeft()
 			PRINT("CANNOT HAPPEN !!!! left hand duplicates %x->%x\n", mPiki, target);
 		}
 
-		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mLeft.set(mPiki);
+		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mLeftGuard.set(mPiki);
 		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mLandPosition.set(target->mPosition);
 		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mIsWaiting = true;
-		mRight.set(target);
+		mRightGuard.set(target);
 		return true;
 	}
 
@@ -385,10 +385,10 @@ bool ActGuard::setRight()
 			PRINT("CANNOT HAPPEN !!!! right hand duplicates %x->%x\n", mPiki, target);
 		}
 
-		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mRight.set(mPiki);
+		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mRightGuard.set(mPiki);
 		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mLandPosition.set(target->mPosition);
 		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mIsWaiting = true;
-		mLeft.set(target);
+		mLeftGuard.set(target);
 		return true;
 	}
 
