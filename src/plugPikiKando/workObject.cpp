@@ -7,7 +7,12 @@
 #include "gameflow.h"
 #include "DebugLog.h"
 #include "MapMgr.h"
+#include "Graphics.h"
+#include "FlowController.h"
+#include "PlayerState.h"
 #include "RumbleMgr.h"
+
+WorkObjectMgr* workObjectMgr;
 
 char* files[] = { "objects/bridge/brd_test.mod", "objects/bridge/slp_u_4.mod", "objects/bridge/slp_d_4.mod",
 	              "objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod" };
@@ -105,9 +110,16 @@ void WorkObject::doKill()
  * Address:	........
  * Size:	000070
  */
-int WorkObjectMgr::getNameIndex(char*)
+int WorkObjectMgr::getNameIndex(char* name)
 {
-	// UNUSED FUNCTION
+	// mType == 2 is the end
+	for (GenObjInfo* i = info; i->mType != 2; i++) {
+		if (!strcmp(i->mName, name)) {
+			return i->mType;
+		}
+	}
+
+	return -1;
 }
 
 /*
@@ -115,9 +127,16 @@ int WorkObjectMgr::getNameIndex(char*)
  * Address:	........
  * Size:	000038
  */
-char* WorkObjectMgr::getName(int)
+char* WorkObjectMgr::getName(int type)
 {
-	// UNUSED FUNCTION
+	// mType == 2 is the end
+	for (GenObjInfo* i = info; i->mType != 2; i++) {
+		if (i->mType == type) {
+			return i->mName;
+		}
+	}
+
+	return nullptr;
 }
 
 /*
@@ -125,8 +144,16 @@ char* WorkObjectMgr::getName(int)
  * Address:	........
  * Size:	000070
  */
-int WorkObjectMgr::getShapeNameIndex(char*)
+int WorkObjectMgr::getShapeNameIndex(char* name)
 {
+	// mType == 5 is the end
+	for (GenObjInfo* i = shpInfo; i->mType != 5; i++) {
+		if (!strcmp(i->mName, name)) {
+			return i->mType;
+		}
+	}
+
+	return -1;
 	// UNUSED FUNCTION
 }
 
@@ -135,8 +162,16 @@ int WorkObjectMgr::getShapeNameIndex(char*)
  * Address:	........
  * Size:	000038
  */
-char* WorkObjectMgr::getShapeName(int)
+char* WorkObjectMgr::getShapeName(int type)
 {
+	// mType == 5 is the end
+	for (GenObjInfo* i = shpInfo; i->mType != 5; i++) {
+		if (i->mType == type) {
+			return i->mName;
+		}
+	}
+
+	return nullptr;
 	// UNUSED FUNCTION
 }
 
@@ -178,9 +213,9 @@ void WorkObjectMgr::loadShapes()
  * Address:	........
  * Size:	000010
  */
-void WorkObjectMgr::addUseList(int)
+void WorkObjectMgr::addUseList(int index)
 {
-	// UNUSED FUNCTION
+	mShouldThisShapeLoad[index] = true;
 }
 
 /*
@@ -198,15 +233,19 @@ Creature* WorkObjectMgr::birth(int wObjType, int p2)
 		object                             = new Bridge(shape, true);
 		static_cast<Bridge*>(object)->_400 = p2;
 		if (p2 == 4) {
-			object->mGrid._14 = 3;
+			object->mGrid.setNeighbourSize(3);
 		} else {
-			object->mGrid._14 = 1;
+			object->mGrid.setNeighbourSize(1);
 		}
 		break;
 	case 1:
-		object            = new HinderRock(shape);
-		object->mGrid._14 = 1;
+		object = new HinderRock(shape);
+		object->mGrid.setNeighbourSize(1);
 		break;
+	}
+
+	if (!object) {
+		ERROR("DAME DAME\n");
 	}
 
 	WorkObjectNode* node = new WorkObjectNode(object);
@@ -219,56 +258,17 @@ Creature* WorkObjectMgr::birth(int wObjType, int p2)
  * Address:	8009B584
  * Size:	000088
  */
-Creature* WorkObjectMgr::getCreature(int)
+Creature* WorkObjectMgr::getCreature(int index)
 {
-	return nullptr;
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0
-	  lwz       r5, 0x38(r3)
-	  li        r6, 0
-	  ble-      .loc_0x70
-	  cmpwi     r4, 0x8
-	  subi      r3, r4, 0x8
-	  ble-      .loc_0x58
-	  addi      r0, r3, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r3, 0
-	  mtctr     r0
-	  ble-      .loc_0x58
+	WorkObjectNode* node = (WorkObjectNode*)mRootNode.mChild;
+	for (int i = 0; i < index; i++) {
+		node = (WorkObjectNode*)node->mNext;
+	}
 
-	.loc_0x30:
-	  lwz       r3, 0xC(r5)
-	  addi      r6, r6, 0x8
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r5, 0xC(r3)
-	  bdnz+     .loc_0x30
+	if (!node)
+		return nullptr;
 
-	.loc_0x58:
-	  sub       r0, r4, r6
-	  cmpw      r6, r4
-	  mtctr     r0
-	  bge-      .loc_0x70
-
-	.loc_0x68:
-	  lwz       r5, 0xC(r5)
-	  bdnz+     .loc_0x68
-
-	.loc_0x70:
-	  cmplwi    r5, 0
-	  bne-      .loc_0x80
-	  li        r3, 0
-	  blr
-
-	.loc_0x80:
-	  lwz       r3, 0x14(r5)
-	  blr
-	*/
+	return node->mObject;
 }
 
 /*
@@ -296,33 +296,12 @@ int WorkObjectMgr::getNext(int idx)
  * Address:	8009B61C
  * Size:	000044
  */
-bool WorkObjectMgr::isDone(int)
+bool WorkObjectMgr::isDone(int id)
 {
+	if (id >= mRootNode.getChildCount()) {
+		return true;
+	}
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r3, 0x28
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  bl        -0x5AFB4
-	  cmpw      r31, r3
-	  blt-      .loc_0x2C
-	  li        r3, 0x1
-	  b         .loc_0x30
-
-	.loc_0x2C:
-	  li        r3, 0
-
-	.loc_0x30:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -332,19 +311,7 @@ bool WorkObjectMgr::isDone(int)
  */
 int WorkObjectMgr::getSize()
 {
-	return 0;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r3, 0x28
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x5AFF0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return mRootNode.getChildCount();
 }
 
 /*
@@ -353,9 +320,16 @@ int WorkObjectMgr::getSize()
  * Size:	00015C
  */
 GenObjectWorkObject::GenObjectWorkObject()
-    : GenObject(0, nullptr)
+    : GenObject('work', "仕事オブジェクト")
+    , mDay(this, 0, 0, 30, "p00", "day")
+    , mHour(this, 0, 0, 24, "p01", "hour")
+    , _38(this, 10, 0, 100, "p02", "動かすのに必要なピキ数") // "Number of pikis required to move"
+    , _48(this, 30.0f, 0.0f, 400.0f, "p03", "移動速度")      // "movement speed"
+
 {
-	// UNUSED FUNCTION
+	mObjectType = 0;
+	mShapeType  = 0;
+	mHinderRockPosition.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -363,51 +337,12 @@ GenObjectWorkObject::GenObjectWorkObject()
  * Address:	8009B684
  * Size:	0000A0
  */
-void GenObjectWorkObject::ramSaveParameters(RandomAccessStream&)
+void GenObjectWorkObject::ramSaveParameters(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r0, 0x24(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x34(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x44(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lfs       f1, 0x54(r30)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	data.writeByte(mDay());
+	data.writeByte(mHour());
+	data.writeByte(_38());
+	data.writeFloat(_48());
 }
 
 /*
@@ -415,51 +350,12 @@ void GenObjectWorkObject::ramSaveParameters(RandomAccessStream&)
  * Address:	8009B724
  * Size:	0000A0
  */
-void GenObjectWorkObject::ramLoadParameters(RandomAccessStream&)
+void GenObjectWorkObject::ramLoadParameters(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x24(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x34(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x44(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x54(r30)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mDay()  = data.readByte();
+	mHour() = data.readByte();
+	_38()   = data.readByte();
+	_48()   = data.readFloat();
 }
 
 /*
@@ -467,104 +363,9 @@ void GenObjectWorkObject::ramLoadParameters(RandomAccessStream&)
  * Address:	8009B7C4
  * Size:	00016C
  */
-static void makeObjectWorkObject()
+static GenObject* makeObjectWorkObject()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x6C
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  bl        -0x547DC
-	  mr.       r31, r3
-	  beq-      .loc_0x14C
-	  lis       r4, 0x802B
-	  lis       r3, 0x802B
-	  addi      r5, r4, 0x1030
-	  lis       r4, 0x776F
-	  addi      r6, r3, 0x103C
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x726B
-	  bl        0x3F4AC
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5490
-	  lis       r3, 0x802B
-	  stw       r0, 0x4(r31)
-	  addi      r0, r3, 0x1750
-	  stw       r0, 0x4(r31)
-	  addi      r5, r1, 0x24
-	  addi      r4, r31, 0
-	  lwz       r0, -0x5544(r13)
-	  addi      r3, r31, 0x18
-	  stw       r0, 0x2C(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r0, 0x24(r1)
-	  bl        -0x3CDC0
-	  lis       r3, 0x802A
-	  addi      r29, r3, 0x60C4
-	  stw       r29, 0x20(r31)
-	  li        r30, 0
-	  addi      r5, r1, 0x20
-	  stw       r30, 0x24(r31)
-	  mr        r4, r31
-	  addi      r3, r31, 0x28
-	  lwz       r0, -0x5540(r13)
-	  stw       r0, 0x34(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r0, 0x20(r1)
-	  bl        -0x3CDF4
-	  stw       r29, 0x30(r31)
-	  addi      r5, r1, 0x1C
-	  addi      r4, r31, 0
-	  stw       r30, 0x34(r31)
-	  addi      r3, r31, 0x38
-	  lwz       r0, -0x553C(r13)
-	  stw       r0, 0x3C(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r0, 0x1C(r1)
-	  bl        -0x3CE1C
-	  stw       r29, 0x40(r31)
-	  li        r0, 0xA
-	  addi      r5, r1, 0x18
-	  stw       r0, 0x44(r31)
-	  mr        r4, r31
-	  addi      r3, r31, 0x48
-	  lwz       r0, -0x5538(r13)
-	  stw       r0, 0x44(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x18(r1)
-	  bl        -0x3CE48
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x6098
-	  stw       r0, 0x50(r31)
-	  lfs       f0, -0x7330(r2)
-	  stfs      f0, 0x54(r31)
-	  lfs       f0, -0x732C(r2)
-	  stfs      f0, 0x68(r31)
-	  stfs      f0, 0x64(r31)
-	  stfs      f0, 0x60(r31)
-	  stw       r30, 0x58(r31)
-	  stw       r30, 0x5C(r31)
-	  lfs       f0, -0x5550(r13)
-	  stfs      f0, 0x60(r31)
-	  lfs       f0, -0x554C(r13)
-	  stfs      f0, 0x64(r31)
-	  lfs       f0, -0x5548(r13)
-	  stfs      f0, 0x68(r31)
-
-	.loc_0x14C:
-	  mr        r3, r31
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	return new GenObjectWorkObject;
 }
 
 /*
@@ -574,70 +375,7 @@ static void makeObjectWorkObject()
  */
 void GenObjectWorkObject::initialise()
 {
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x3074(r13)
-	  lwz       r5, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  cmpw      r5, r0
-	  bgelr-
-	  lis       r4, 0x776F
-	  lwz       r3, 0x8(r7)
-	  addi      r4, r4, 0x726B
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r6, 0x800A
-	  lis       r4, 0x802B
-	  lwz       r0, 0x0(r7)
-	  lis       r3, 0x7630
-	  lwz       r5, 0x8(r7)
-	  subi      r6, r6, 0x483C
-	  rlwinm    r0,r0,4,0,27
-	  add       r5, r5, r0
-	  stw       r6, 0x4(r5)
-	  addi      r5, r4, 0x1050
-	  addi      r4, r3, 0x2E33
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r7)
-	  blr
-	*/
-}
-
-// 10120600 in plugPiki.dll
-int WorkObject_GetTypeFromInfo(char* name)
-{
-	// mType == 2 is the end
-	for (GenObjInfo* i = info; i->mType != 2; i++) {
-		if (!strcmp(i->mName, name)) {
-			return i->mType;
-		}
-	}
-
-	return -1;
-}
-
-// 101206D0 in plugPiki.dll
-s32 WorkObject_GetTypeFromShapeInfo(char* name)
-{
-	// mType == 5 is the end
-	for (GenObjInfo* i = shpInfo; i->mType != 5; i++) {
-		if (!strcmp(i->mName, name)) {
-			return i->mType;
-		}
-	}
-
-	return -1;
+	GenObjectFactory::factory->registerMember('work', makeObjectWorkObject, "仕事オブジェクトを発生", 'v0.3');
 }
 
 /*
@@ -663,7 +401,7 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 
 	char name[256];
 	stream.readString(name, sizeof(name));
-	mObjectType = WorkObject_GetTypeFromInfo(name);
+	mObjectType = WorkObjectMgr::getNameIndex(name);
 
 	if (mObjectType == -1) {
 		PRINT("ItemGenerator * %s is not item\n", name);
@@ -672,7 +410,7 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 
 	if (mVersion == 'v0.2' || mVersion == 'v0.3') {
 		stream.readString(name, sizeof(name));
-		mShapeType = WorkObject_GetTypeFromShapeInfo(name);
+		mShapeType = WorkObjectMgr::getShapeNameIndex(name);
 
 		if (mShapeType == -1) {
 			PRINT("SHAPE NOT FOUND * %s \n", name);
@@ -688,32 +426,6 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 		mHinderRockPosition.z = stream.readFloat();
 		PRINT("POS (%.1f %.1f %.1f)\n", mHinderRockPosition.x, mHinderRockPosition.y, mHinderRockPosition.z);
 	}
-}
-
-// 10120670 in plugPiki.dll
-char* WorkObject_GetNameFromType(int type)
-{
-	// mType == 2 is the end
-	for (GenObjInfo* i = info; i->mType != 2; i++) {
-		if (i->mType == type) {
-			return i->mName;
-		}
-	}
-
-	return nullptr;
-}
-
-// 101206D0 in plugPiki.dll
-char* WorkObject_GetNameFromShapeType(int type)
-{
-	// mType == 5 is the end
-	for (GenObjInfo* i = info; i->mType != 5; i++) {
-		if (i->mType == type) {
-			return i->mName;
-		}
-	}
-
-	return nullptr;
 }
 
 /*
@@ -737,8 +449,8 @@ void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 		return;
 	}
 
-	stream.writeString(WorkObject_GetNameFromType(mObjectType));
-	stream.writeString(WorkObject_GetNameFromShapeType(mShapeType));
+	stream.writeString(WorkObjectMgr::getName(mObjectType));
+	stream.writeString(WorkObjectMgr::getShapeName(mShapeType));
 
 	// MOVE STONE (hinderrock)
 	if (mObjectType == 1) {
@@ -755,19 +467,11 @@ void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
  * Address:	8009BD7C
  * Size:	000020
  */
-void GenObjectWorkObject::updateUseList(Generator*, int)
+void GenObjectWorkObject::updateUseList(Generator*, int i)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x5C(r3)
-	  cmpwi     r4, -0x1
-	  beqlr-
-	  lwz       r3, 0x3020(r13)
-	  li        r0, 0x1
-	  lwz       r3, 0x44(r3)
-	  stbx      r0, r3, r4
-	  blr
-	*/
+	if (mShapeType != -1) {
+		workObjectMgr->addUseList(mShapeType);
+	}
 }
 
 /*
@@ -775,116 +479,37 @@ void GenObjectWorkObject::updateUseList(Generator*, int)
  * Address:	8009BD9C
  * Size:	000180
  */
-Creature* GenObjectWorkObject::birth(BirthInfo&)
+Creature* GenObjectWorkObject::birth(BirthInfo& info)
 {
-	return nullptr;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x4C(r1)
-	  mr        r29, r3
-	  lwz       r0, 0x58(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x34
-	  li        r3, 0
-	  b         .loc_0x164
+	if (mObjectType == -1) {
+		return nullptr;
+	}
 
-	.loc_0x34:
-	  lwz       r3, 0x3020(r13)
-	  mr        r4, r0
-	  lwz       r5, 0x5C(r29)
-	  bl        -0x984
-	  mr.       r31, r3
-	  beq-      .loc_0x160
-	  lwz       r3, 0x2F00(r13)
-	  li        r4, 0x1
-	  lfs       f1, 0x0(r30)
-	  lfs       f2, 0x8(r30)
-	  bl        -0x33EF4
-	  stfs      f1, 0x4(r30)
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0xC(r30)
-	  lwz       r0, 0x10(r30)
-	  stw       r3, 0x88(r31)
-	  stw       r0, 0x8C(r31)
-	  lwz       r0, 0x14(r30)
-	  stw       r0, 0x90(r31)
-	  lfs       f0, 0x8C(r31)
-	  stfs      f0, 0xA0(r31)
-	  lwz       r0, 0x24(r30)
-	  stw       r0, 0x64(r31)
-	  lwz       r0, 0x58(r29)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0xD8
-	  lwz       r3, 0x60(r29)
-	  lwz       r0, 0x64(r29)
-	  stw       r3, 0x40C(r31)
-	  stw       r0, 0x410(r31)
-	  lwz       r0, 0x68(r29)
-	  stw       r0, 0x414(r31)
-	  lwz       r0, 0x44(r29)
-	  stw       r0, 0x41C(r31)
-	  lfs       f0, 0x54(r29)
-	  stfs      f0, 0x420(r31)
+	Creature* obj = workObjectMgr->birth(mObjectType, mShapeType);
+	if (obj) {
+		info.mPosition.y = mapMgr->getMinY(info.mPosition.x, info.mPosition.z, true);
+		obj->init(info.mPosition);
+		obj->mRotation      = info.mRotation;
+		obj->mFaceDirection = obj->mRotation.y;
+		obj->mGenerator     = info.mGenerator;
 
-	.loc_0xD8:
-	  lis       r3, 0x803A
-	  lwz       r5, 0x24(r29)
-	  subi      r3, r3, 0x2848
-	  lwz       r7, 0x34(r29)
-	  lfs       f0, 0x2DC(r3)
-	  lis       r0, 0x4330
-	  lfd       f1, -0x7328(r2)
-	  mr        r3, r31
-	  fctiwz    f0, f0
-	  li        r4, 0
-	  stfd      f0, 0x40(r1)
-	  lwz       r6, 0x44(r1)
-	  mullw     r5, r6, r5
-	  add       r5, r7, r5
-	  xoris     r5, r5, 0x8000
-	  stw       r5, 0x3C(r1)
-	  stw       r0, 0x38(r1)
-	  lfd       f0, 0x38(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x58(r31)
-	  lfs       f0, 0x58(r31)
-	  stfs      f0, 0x5C(r31)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x24(r30)
-	  lwz       r3, 0x28(r3)
-	  lwz       r0, 0x34(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x160
-	  lwz       r0, 0xC8(r31)
-	  oris      r0, r0, 0x1
-	  stw       r0, 0xC8(r31)
+		if (mObjectType == 1) {
+			HinderRock* box = (HinderRock*)obj;
+			box->_40C       = mHinderRockPosition;
+			box->_41C       = _38();
+			box->_420       = _48();
+		}
 
-	.loc_0x160:
-	  mr        r3, r31
+		obj->mHealth    = mDay() * (int)gameflow.mWorldClock.mHoursInDay + mHour();
+		obj->mMaxHealth = obj->mHealth;
+		obj->startAI(0);
+		if (info.mGenerator->mGenType->mAdjustFaceDirection()) {
+			obj->enableFaceDirAdjust();
+		}
+	}
+	return obj;
 
-	.loc_0x164:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -899,9 +524,9 @@ HinderRock::HinderRock(Shape* shape)
 	mBuildShape            = new DynBuildShape(shape);
 	mBuildShape->mCreature = this;
 	mCollInfo              = new CollInfo(20);
-	_448                   = 0;
-	_450                   = 0;
-	_44C                   = 0;
+	mEfxA                  = 0;
+	mEfxC                  = 0;
+	mEfxB                  = 0;
 }
 
 /*
@@ -909,45 +534,14 @@ HinderRock::HinderRock(Shape* shape)
  * Address:	8009C094
  * Size:	000074
  */
-bool HinderRock::insideSafeArea(Vector3f&)
+bool HinderRock::insideSafeArea(Vector3f& pos)
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  lfs       f2, 0x98(r3)
-	  lfs       f3, 0x9C(r3)
-	  lfs       f1, 0x94(r3)
-	  lfs       f0, -0x7320(r2)
-	  stfs      f1, 0x14(r1)
-	  stfs      f2, 0x18(r1)
-	  stfs      f3, 0x1C(r1)
-	  lfs       f1, 0x40C(r3)
-	  stfs      f1, 0x20(r1)
-	  lfs       f1, 0x410(r3)
-	  stfs      f1, 0x24(r1)
-	  lfs       f1, 0x414(r3)
-	  addi      r3, r1, 0x14
-	  stfs      f1, 0x28(r1)
-	  stfs      f0, 0x2C(r1)
-	  bl        -0x15418
-	  lfs       f0, -0x731C(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x60
-	  li        r3, 0
-	  b         .loc_0x64
-
-	.loc_0x60:
-	  li        r3, 0x1
-
-	.loc_0x64:
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f pos2 = mPosition;
+	Cylinder cyl(pos2, _40C, 1.0f);
+	if (cyl.get2dDist(pos) < 120.0f) {
+		return false;
+	}
+	return true;
 }
 
 /*
@@ -1018,61 +612,12 @@ bool HinderRock::isFinished()
  */
 Vector3f HinderRock::getZVector()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB0(r1)
-	  stfd      f31, 0xA8(r1)
-	  stfd      f30, 0xA0(r1)
-	  stfd      f29, 0x98(r1)
-	  stw       r31, 0x94(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x90(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x5C
-	  bl        0x600
-	  lfs       f31, 0x5C(r1)
-	  mr        r4, r31
-	  lfs       f30, 0x60(r1)
-	  addi      r3, r1, 0x50
-	  lfs       f29, 0x64(r1)
-	  li        r5, 0x3
-	  bl        0x5E4
-	  lfs       f0, 0x50(r1)
-	  lfs       f1, 0x54(r1)
-	  fsubs     f31, f0, f31
-	  lfs       f0, 0x58(r1)
-	  fsubs     f30, f1, f30
-	  fsubs     f29, f0, f29
-	  fmuls     f1, f31, f31
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x8E704
-	  lfs       f0, -0x732C(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x98
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	Vector3f v1 = getVertex(0);
+	Vector3f v2 = getVertex(3);
 
-	.loc_0x98:
-	  stfs      f31, 0x0(r30)
-	  stfs      f30, 0x4(r30)
-	  stfs      f29, 0x8(r30)
-	  lwz       r0, 0xB4(r1)
-	  lfd       f31, 0xA8(r1)
-	  lfd       f30, 0xA0(r1)
-	  lfd       f29, 0x98(r1)
-	  lwz       r31, 0x94(r1)
-	  lwz       r30, 0x90(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f diff = v2 - v1;
+	diff.normalise();
+	return diff;
 }
 
 /*
@@ -1082,61 +627,12 @@ Vector3f HinderRock::getZVector()
  */
 Vector3f HinderRock::getXVector()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB0(r1)
-	  stfd      f31, 0xA8(r1)
-	  stfd      f30, 0xA0(r1)
-	  stfd      f29, 0x98(r1)
-	  stw       r31, 0x94(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x90(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x5C
-	  bl        0x538
-	  lfs       f31, 0x5C(r1)
-	  mr        r4, r31
-	  lfs       f30, 0x60(r1)
-	  addi      r3, r1, 0x50
-	  lfs       f29, 0x64(r1)
-	  li        r5, 0x1
-	  bl        0x51C
-	  lfs       f0, 0x50(r1)
-	  lfs       f1, 0x54(r1)
-	  fsubs     f31, f0, f31
-	  lfs       f0, 0x58(r1)
-	  fsubs     f30, f1, f30
-	  fsubs     f29, f0, f29
-	  fmuls     f1, f31, f31
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x8E7CC
-	  lfs       f0, -0x732C(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x98
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	Vector3f v1 = getVertex(0);
+	Vector3f v2 = getVertex(1);
 
-	.loc_0x98:
-	  stfs      f31, 0x0(r30)
-	  stfs      f30, 0x4(r30)
-	  stfs      f29, 0x8(r30)
-	  lwz       r0, 0xB4(r1)
-	  lfd       f31, 0xA8(r1)
-	  lfd       f30, 0xA0(r1)
-	  lfd       f29, 0x98(r1)
-	  lwz       r31, 0x94(r1)
-	  lwz       r30, 0x90(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f diff = v2 - v1;
+	diff.normalise();
+	return diff;
 }
 
 /*
@@ -1144,9 +640,18 @@ Vector3f HinderRock::getXVector()
  * Address:	........
  * Size:	0000CC
  */
-int HinderRock::getPlaneIndex(Vector3f&)
+int HinderRock::getPlaneIndex(Vector3f& pos)
 {
-	// UNUSED FUNCTION
+	if (mPlanes[0].dist(pos) < 0.0f) {
+		return 0;
+	}
+	if (mPlanes[1].dist(pos) < 0.0f) {
+		return 1;
+	}
+	if (mPlanes[2].dist(pos) < 0.0f) {
+		return 2;
+	}
+	return 3;
 }
 
 /*
@@ -1154,81 +659,22 @@ int HinderRock::getPlaneIndex(Vector3f&)
  * Address:	8009C458
  * Size:	0000F8
  */
-u8 HinderRock::getPlaneFlag(Vector3f&)
+u8 HinderRock::getPlaneFlag(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  lfs       f3, 0x3CC(r3)
-	  li        r0, 0
-	  lfs       f1, 0x0(r4)
-	  lfs       f2, 0x3D0(r3)
-	  lfs       f0, 0x4(r4)
-	  fmuls     f6, f3, f1
-	  lfs       f3, 0x3D4(r3)
-	  fmuls     f5, f2, f0
-	  lfs       f2, 0x8(r4)
-	  lfs       f4, 0x3D8(r3)
-	  fmuls     f7, f3, f2
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fadds     f5, f7, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0x48
-	  li        r0, 0x1
-
-	.loc_0x48:
-	  lfs       f4, 0x3EC(r3)
-	  lfs       f3, 0x3F0(r3)
-	  fmuls     f5, f4, f1
-	  lfs       f6, 0x3F4(r3)
-	  fmuls     f3, f3, f0
-	  lfs       f4, 0x3F8(r3)
-	  fmuls     f6, f6, f2
-	  fadds     f5, f5, f3
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0x80
-	  li        r0, 0x4
-
-	.loc_0x80:
-	  lfs       f4, 0x3DC(r3)
-	  lfs       f3, 0x3E0(r3)
-	  fmuls     f5, f4, f1
-	  lfs       f6, 0x3E4(r3)
-	  fmuls     f3, f3, f0
-	  lfs       f4, 0x3E8(r3)
-	  fmuls     f6, f6, f2
-	  fadds     f5, f5, f3
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0xB8
-	  ori       r0, r0, 0x2
-
-	.loc_0xB8:
-	  lfs       f4, 0x3FC(r3)
-	  lfs       f3, 0x400(r3)
-	  fmuls     f4, f4, f1
-	  lfs       f5, 0x404(r3)
-	  fmuls     f0, f3, f0
-	  lfs       f1, 0x408(r3)
-	  fmuls     f3, f5, f2
-	  fadds     f2, f4, f0
-	  lfs       f0, -0x732C(r2)
-	  fadds     f2, f3, f2
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xF0
-	  ori       r0, r0, 0x8
-
-	.loc_0xF0:
-	  mr        r3, r0
-	  blr
-	*/
+	u8 res = 0;
+	if (mPlanes[0].dist(pos) > 0.0f) {
+		res = 1;
+	}
+	if (mPlanes[2].dist(pos) > 0.0f) {
+		res = 4;
+	}
+	if (mPlanes[1].dist(pos) > 0.0f) {
+		res |= 2;
+	}
+	if (mPlanes[3].dist(pos) > 0.0f) {
+		res |= 8;
+	}
+	return res;
 }
 
 /*
@@ -1236,8 +682,15 @@ u8 HinderRock::getPlaneFlag(Vector3f&)
  * Address:	........
  * Size:	0000E8
  */
-Vector3f HinderRock::getTangentPos(f32)
+Vector3f HinderRock::getTangentPos(f32 mod)
 {
+	Vector3f v1 = getVertex(2);
+	Vector3f v2 = getVertex(3);
+
+	Vector3f diff = v2 - v1;
+	diff          = diff * mod + v1;
+	diff.normalise();
+	return diff;
 	// UNUSED FUNCTION
 }
 
@@ -1248,249 +701,26 @@ Vector3f HinderRock::getTangentPos(f32)
  */
 void HinderRock::updatePlanes()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x1B0(r1)
-	  stfd      f31, 0x1A8(r1)
-	  stfd      f30, 0x1A0(r1)
-	  stfd      f29, 0x198(r1)
-	  stfd      f28, 0x190(r1)
-	  stfd      f27, 0x188(r1)
-	  stfd      f26, 0x180(r1)
-	  stfd      f25, 0x178(r1)
-	  stfd      f24, 0x170(r1)
-	  stw       r31, 0x16C(r1)
-	  addi      r31, r3, 0
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0x134
-	  bl        .loc_0x3A8
-	  lfs       f1, 0x134(r1)
-	  mr        r4, r31
-	  lfs       f0, 0x138(r1)
-	  addi      r3, r1, 0x128
-	  stfs      f1, 0x158(r1)
-	  li        r5, 0x2
-	  stfs      f0, 0x15C(r1)
-	  lfs       f0, 0x13C(r1)
-	  stfs      f0, 0x160(r1)
-	  bl        .loc_0x3A8
-	  lfs       f31, 0x128(r1)
-	  mr        r4, r31
-	  lfs       f30, 0x12C(r1)
-	  addi      r3, r1, 0x11C
-	  lfs       f29, 0x130(r1)
-	  li        r5, 0x3
-	  bl        .loc_0x3A8
-	  lfs       f28, 0x11C(r1)
-	  lfs       f0, 0x158(r1)
-	  lfs       f27, 0x120(r1)
-	  fsubs     f0, f0, f28
-	  lfs       f26, 0x124(r1)
-	  stfs      f0, 0xBC(r1)
-	  lfs       f0, 0xBC(r1)
-	  stfs      f0, 0x110(r1)
-	  lfs       f25, 0x15C(r1)
-	  fsubs     f0, f25, f27
-	  stfs      f0, 0x114(r1)
-	  lfs       f24, 0x160(r1)
-	  fsubs     f0, f24, f26
-	  stfs      f0, 0x118(r1)
-	  lwz       r3, 0x110(r1)
-	  lwz       r0, 0x114(r1)
-	  stw       r3, 0x3CC(r31)
-	  stw       r0, 0x3D0(r31)
-	  lwz       r0, 0x118(r1)
-	  stw       r0, 0x3D4(r31)
-	  lfs       f1, 0x3CC(r31)
-	  lfs       f0, 0x3D0(r31)
-	  lfs       f2, 0x3D4(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x8EA08
-	  lfs       f0, -0x732C(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x12C
-	  lfs       f0, 0x3CC(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3CC(r31)
-	  lfs       f0, 0x3D0(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3D0(r31)
-	  lfs       f0, 0x3D4(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3D4(r31)
+	Vector3f v0 = getVertex(0);
+	Vector3f v2 = getVertex(2);
+	Vector3f v3 = getVertex(3);
 
-	.loc_0x12C:
-	  stfs      f1, 0x42C(r31)
-	  fsubs     f2, f31, f28
-	  fsubs     f1, f30, f27
-	  lfs       f5, -0x5528(r13)
-	  fsubs     f0, f29, f26
-	  lfs       f3, 0x3CC(r31)
-	  lfs       f4, 0x3D4(r31)
-	  fmuls     f3, f3, f5
-	  fmuls     f4, f4, f5
-	  stfs      f3, 0xAC(r1)
-	  lfs       f3, 0xAC(r1)
-	  stfs      f3, 0x104(r1)
-	  lfs       f3, 0x3D0(r31)
-	  fmuls     f3, f3, f5
-	  stfs      f3, 0x108(r1)
-	  stfs      f4, 0x10C(r1)
-	  lwz       r3, 0x104(r1)
-	  lwz       r0, 0x108(r1)
-	  stw       r3, 0x3EC(r31)
-	  stw       r0, 0x3F0(r31)
-	  lwz       r0, 0x10C(r1)
-	  stw       r0, 0x3F4(r31)
-	  stfs      f2, 0xA0(r1)
-	  lfs       f2, 0xA0(r1)
-	  stfs      f2, 0xF8(r1)
-	  stfs      f1, 0xFC(r1)
-	  stfs      f0, 0x100(r1)
-	  lwz       r3, 0xF8(r1)
-	  lwz       r0, 0xFC(r1)
-	  stw       r3, 0x3DC(r31)
-	  stw       r0, 0x3E0(r31)
-	  lwz       r0, 0x100(r1)
-	  stw       r0, 0x3E4(r31)
-	  lfs       f1, 0x3DC(r31)
-	  lfs       f0, 0x3E0(r31)
-	  lfs       f2, 0x3E4(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x8EAE0
-	  lfs       f0, -0x732C(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x204
-	  lfs       f0, 0x3DC(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3DC(r31)
-	  lfs       f0, 0x3E0(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3E0(r31)
-	  lfs       f0, 0x3E4(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3E4(r31)
+	mPlanes[0].mNormal = v0 - v3;
+	_42C               = mPlanes->mNormal.normalise();
+	mPlanes[2].mNormal = mPlanes[0].mNormal * -1.0f;
 
-	.loc_0x204:
-	  stfs      f1, 0x430(r31)
-	  fadds     f2, f31, f28
-	  fadds     f1, f30, f27
-	  mr        r4, r31
-	  lfs       f5, -0x5524(r13)
-	  lfs       f0, 0x3DC(r31)
-	  lfs       f4, 0x3E4(r31)
-	  fmuls     f3, f0, f5
-	  addi      r3, r1, 0xC8
-	  fmuls     f4, f4, f5
-	  li        r5, 0x1
-	  fadds     f0, f29, f26
-	  stfs      f3, 0x90(r1)
-	  lfs       f3, 0x90(r1)
-	  stfs      f3, 0xEC(r1)
-	  lfs       f3, 0x3E0(r31)
-	  fmuls     f3, f3, f5
-	  stfs      f3, 0xF0(r1)
-	  stfs      f4, 0xF4(r1)
-	  lwz       r6, 0xEC(r1)
-	  lwz       r0, 0xF0(r1)
-	  stw       r6, 0x3FC(r31)
-	  stw       r0, 0x400(r31)
-	  lwz       r0, 0xF4(r1)
-	  stw       r0, 0x404(r31)
-	  lfs       f3, 0x3D0(r31)
-	  lfs       f6, 0x3D4(r31)
-	  lfs       f5, 0x3CC(r31)
-	  fmuls     f3, f3, f25
-	  lfs       f4, 0x158(r1)
-	  fmuls     f6, f6, f24
-	  fmuls     f4, f5, f4
-	  fadds     f3, f4, f3
-	  fadds     f3, f6, f3
-	  stfs      f3, 0x3D8(r31)
-	  lfs       f4, 0x3DC(r31)
-	  lfs       f3, 0x3E0(r31)
-	  lfs       f5, 0x3E4(r31)
-	  fmuls     f4, f4, f31
-	  fmuls     f3, f3, f30
-	  fmuls     f5, f5, f29
-	  fadds     f3, f4, f3
-	  fadds     f3, f5, f3
-	  stfs      f3, 0x3E8(r31)
-	  lfs       f4, 0x3EC(r31)
-	  lfs       f3, 0x3F0(r31)
-	  lfs       f5, 0x3F4(r31)
-	  fmuls     f4, f4, f28
-	  fmuls     f3, f3, f27
-	  fmuls     f5, f5, f26
-	  fadds     f3, f4, f3
-	  fadds     f3, f5, f3
-	  stfs      f3, 0x3F8(r31)
-	  lfs       f4, 0x3FC(r31)
-	  lfs       f3, 0x400(r31)
-	  lfs       f5, 0x404(r31)
-	  fmuls     f4, f4, f28
-	  fmuls     f3, f3, f27
-	  fmuls     f5, f5, f26
-	  fadds     f3, f4, f3
-	  fadds     f3, f5, f3
-	  stfs      f3, 0x408(r31)
-	  lfs       f3, -0x5520(r13)
-	  stfs      f2, 0x84(r1)
-	  fmuls     f1, f1, f3
-	  lfs       f2, 0x84(r1)
-	  fmuls     f0, f0, f3
-	  fmuls     f2, f2, f3
-	  stfs      f2, 0x70(r1)
-	  lfs       f2, 0x70(r1)
-	  stfs      f2, 0xE0(r1)
-	  stfs      f1, 0xE4(r1)
-	  stfs      f0, 0xE8(r1)
-	  lwz       r6, 0xE0(r1)
-	  lwz       r0, 0xE4(r1)
-	  stw       r6, 0x454(r31)
-	  stw       r0, 0x458(r31)
-	  lwz       r0, 0xE8(r1)
-	  stw       r0, 0x45C(r31)
-	  lwz       r6, 0x158(r1)
-	  lwz       r0, 0x15C(r1)
-	  stw       r6, 0x460(r31)
-	  stw       r0, 0x464(r31)
-	  lwz       r0, 0x160(r1)
-	  stw       r0, 0x468(r31)
-	  bl        .loc_0x3A8
-	  lwz       r3, 0xC8(r1)
-	  lwz       r0, 0xCC(r1)
-	  stw       r3, 0x46C(r31)
-	  stw       r0, 0x470(r31)
-	  lwz       r0, 0xD0(r1)
-	  stw       r0, 0x474(r31)
-	  lwz       r0, 0x1B4(r1)
-	  lfd       f31, 0x1A8(r1)
-	  lfd       f30, 0x1A0(r1)
-	  lfd       f29, 0x198(r1)
-	  lfd       f28, 0x190(r1)
-	  lfd       f27, 0x188(r1)
-	  lfd       f26, 0x180(r1)
-	  lfd       f25, 0x178(r1)
-	  lfd       f24, 0x170(r1)
-	  lwz       r31, 0x16C(r1)
-	  addi      r1, r1, 0x1B0
-	  mtlr      r0
-	  blr
+	mPlanes[1].mNormal = v2 - v3;
+	_430               = mPlanes[1].mNormal.normalise();
+	mPlanes[3].mNormal = mPlanes[1].mNormal * -1.0f;
 
-	.loc_0x3A8:
-	*/
+	mPlanes[0].mOffset = mPlanes[0].mNormal.DP(v0);
+	mPlanes[1].mOffset = mPlanes[1].mNormal.DP(v2);
+	mPlanes[2].mOffset = mPlanes[2].mNormal.DP(v3);
+	mPlanes[3].mOffset = mPlanes[3].mNormal.DP(v3);
+
+	_454    = 0.5f * (v2 + v3);
+	_460[0] = v0;
+	_460[1] = getVertex(1);
 }
 
 /*
@@ -1530,44 +760,13 @@ Vector3f HinderRock::getVertex(int vtx)
  * Address:	8009C998
  * Size:	000074
  */
-bool HinderRock::stimulate(Interaction&)
+bool HinderRock::stimulate(Interaction& act)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x44
-	  li        r3, 0
-	  b         .loc_0x5C
+	if (!act.actCommon(this)) {
+		return false;
+	}
 
-	.loc_0x44:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x5C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return act.actHinderRock(this);
 }
 
 /*
@@ -1575,18 +774,11 @@ bool HinderRock::stimulate(Interaction&)
  * Address:	8009CA0C
  * Size:	000018
  */
-bool InteractPush::actHinderRock(HinderRock*)
+bool InteractPush::actHinderRock(HinderRock* obj)
 {
+	Vector3f unused(0.0f, 110.0f, 0.0f);
+	obj->_418 += mStrength;
 	return true;
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x8(r3)
-	  li        r3, 0x1
-	  lwz       r5, 0x418(r4)
-	  add       r0, r5, r0
-	  stw       r0, 0x418(r4)
-	  blr
-	*/
 }
 
 /*
@@ -1594,59 +786,17 @@ bool InteractPush::actHinderRock(HinderRock*)
  * Address:	8009CA24
  * Size:	0000C0
  */
-void HinderRock::refresh(Graphics&)
+void HinderRock::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  mr        r31, r4
-	  stw       r30, 0x50(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x2E4(r4)
-	  addi      r4, r30, 0x228
-	  addi      r3, r5, 0x1E0
-	  addi      r5, r1, 0x10
-	  bl        -0x5E97C
-	  lwz       r3, 0x438(r30)
-	  addi      r4, r31, 0
-	  addi      r5, r1, 0x10
-	  li        r6, 0
-	  bl        -0x67750
-	  lwz       r4, 0x434(r30)
-	  addi      r3, r4, 0x5C
-	  addi      r4, r4, 0x9C
-	  bl        -0x5E638
-	  lwz       r12, 0x3B4(r31)
-	  lis       r4, 0x803A
-	  mr        r3, r31
-	  lwz       r12, 0x74(r12)
-	  subi      r4, r4, 0x77C0
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x434(r30)
-	  bl        -0x3AB88
-	  lwz       r3, 0x438(r30)
-	  mr        r4, r31
-	  lwz       r5, 0x2E4(r31)
-	  li        r6, 0
-	  bl        -0x6C644
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  bl        -0x12FD4
-	  mr        r3, r30
-	  bl        -0x578
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	Matrix4f mtx;
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
+	_438->updateAnim(gfx, mtx, nullptr);
+	mBuildShape->mTransformMtx.inverse(&mBuildShape->mInverseMatrix);
+	gfx.useMatrix(Matrix4f::ident, 0);
+	mBuildShape->updateContext();
+	_438->drawshape(gfx, *gfx.mCamera, nullptr);
+	mCollInfo->updateInfo(gfx, false);
+	updatePlanes();
 }
 
 /*
@@ -1654,93 +804,13 @@ void HinderRock::refresh(Graphics&)
  * Address:	8009CAE4
  * Size:	00011C
  */
-bool HinderRock::workable(Vector3f&)
+bool HinderRock::workable(Vector3f& pos)
 {
-	return false;
-	/*
-	.loc_0x0:
-	  lfs       f3, 0x3CC(r3)
-	  li        r0, 0
-	  lfs       f1, 0x0(r4)
-	  lfs       f2, 0x3D0(r3)
-	  lfs       f0, 0x4(r4)
-	  fmuls     f6, f3, f1
-	  lfs       f3, 0x3D4(r3)
-	  fmuls     f5, f2, f0
-	  lfs       f2, 0x8(r4)
-	  lfs       f4, 0x3D8(r3)
-	  fmuls     f7, f3, f2
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fadds     f5, f7, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0x48
-	  li        r0, 0x1
-
-	.loc_0x48:
-	  lfs       f4, 0x3EC(r3)
-	  lfs       f3, 0x3F0(r3)
-	  fmuls     f5, f4, f1
-	  lfs       f6, 0x3F4(r3)
-	  fmuls     f3, f3, f0
-	  lfs       f4, 0x3F8(r3)
-	  fmuls     f6, f6, f2
-	  fadds     f5, f5, f3
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0x80
-	  li        r0, 0x4
-
-	.loc_0x80:
-	  lfs       f4, 0x3DC(r3)
-	  lfs       f3, 0x3E0(r3)
-	  fmuls     f5, f4, f1
-	  lfs       f6, 0x3E4(r3)
-	  fmuls     f3, f3, f0
-	  lfs       f4, 0x3E8(r3)
-	  fmuls     f6, f6, f2
-	  fadds     f5, f5, f3
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0xB8
-	  ori       r0, r0, 0x2
-
-	.loc_0xB8:
-	  lfs       f4, 0x3FC(r3)
-	  lfs       f3, 0x400(r3)
-	  fmuls     f4, f4, f1
-	  lfs       f5, 0x404(r3)
-	  fmuls     f0, f3, f0
-	  lfs       f1, 0x408(r3)
-	  fmuls     f3, f5, f2
-	  fadds     f2, f4, f0
-	  lfs       f0, -0x732C(r2)
-	  fadds     f2, f3, f2
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xF0
-	  ori       r0, r0, 0x8
-
-	.loc_0xF0:
-	  rlwinm    r0,r0,0,24,31
-	  cmplwi    r0, 0x6
-	  beq-      .loc_0x114
-	  cmplwi    r0, 0x4
-	  beq-      .loc_0x114
-	  cmplwi    r0, 0xC
-	  beq-      .loc_0x114
-	  li        r3, 0
-	  blr
-
-	.loc_0x114:
-	  li        r3, 0x1
-	  blr
-	*/
+	u8 flag = getPlaneFlag(pos);
+	if (flag != 6 && flag != 4 && flag != 12) {
+		return false;
+	}
+	return true;
 }
 
 /*
@@ -1750,6 +820,136 @@ bool HinderRock::workable(Vector3f&)
  */
 void HinderRock::update()
 {
+	if (mSeContext) {
+		mSeContext->update();
+	}
+	mLifeGauge.mPosition = mPosition;
+	mLifeGauge.mPosition.y += 40.0f;
+	mIsMoving = false;
+	mGrid.updateGrid(mPosition);
+	mGrid.updateAIGrid(mPosition, false);
+
+	if (mPushCount) {
+		mLifeGauge.countOn(mLifeGauge.mPosition, mPushCount, _41C);
+	}
+
+	if (mPushCount == 0) {
+		if (++_43D > 10) {
+			_43D = 10;
+			mLifeGauge.countOff();
+			if (mEfxA) {
+				mEfxA->stopGen();
+			}
+			if (mEfxB) {
+				mEfxB->stopGen();
+			}
+			if (mEfxC) {
+				mEfxC->stopGen();
+			}
+		}
+	} else {
+		_43D = 0;
+	}
+
+	if (mState == 0 && _41C < mPushCount) {
+
+		if (mEfxA == nullptr) {
+			mEfxA = effectMgr->create(EffectMgr::EFF_HinderRock_MoveF, _454, nullptr, nullptr);
+			if (mEfxA) {
+				mEfxA->setEmitPosPtr(&_454);
+				mEfxA->setEmitDir(getXVector());
+			}
+		} else {
+			mEfxA->startGen();
+		}
+
+		if (mEfxB == nullptr) {
+			mEfxB = effectMgr->create(EffectMgr::EFF_HinderRock_MoveS, _460[0], nullptr, nullptr);
+			if (mEfxB) {
+				mEfxB->setEmitPosPtr(&_460[0]);
+				Vector3f test = mPlanes[3].mNormal * 0.096f;
+				mEfxB->setGravityField(test, true);
+			}
+		} else {
+			mEfxB->startGen();
+		}
+
+		if (mEfxC == nullptr) {
+			mEfxC = effectMgr->create(EffectMgr::EFF_HinderRock_MoveS, _460[0], nullptr, nullptr);
+			if (mEfxC) {
+				mEfxC->setEmitPosPtr(&_460[0]);
+				Vector3f test = mPlanes[1].mNormal * 0.096f;
+				mEfxC->setGravityField(test, true);
+			}
+		} else {
+			mEfxC->startGen();
+		}
+
+		if (flowCont.mCurrentStage->mStageID == 0 && !playerState->mDemoFlags.isFlag(14)) {
+			playerState->mDemoFlags.setFlag(14, nullptr);
+		}
+
+		mIsMoving = true;
+		mVelocity = _40C - mPosition;
+		if (std::sqrtf(mVelocity.x * mVelocity.x + mVelocity.z * mVelocity.z) < 4.0f) {
+			mPosition = _40C;
+			mState    = 2;
+			mWayPoint->setFlag(true);
+			seSystem->playSysSe(SYSSE_WORK_FINISH);
+			if (!playerState->mDemoFlags.isFlag(15)) {
+				playerState->mDemoFlags.setFlag(15, nullptr);
+			}
+			if (mEfxA) {
+				effectMgr->kill(mEfxA, false);
+				mEfxA = nullptr;
+			}
+			if (mEfxB) {
+				effectMgr->kill(mEfxB, false);
+				mEfxB = nullptr;
+			}
+			if (mEfxC) {
+				effectMgr->kill(mEfxC, false);
+				mEfxC = nullptr;
+			}
+			return;
+		}
+		mVelocity.normalise();
+		mVelocity.multiply(_420 * 0.5f);
+		moveNew(gsys->getFrameTime());
+		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
+		mBuildShape->mTransformMtx = mWorldMtx;
+		_440 += gsys->getFrameTime();
+		if (!_445) {
+			mSeContext->playSound(SEB_BOXMOVE);
+			_445 = true;
+		}
+		if (_440 > 1.0f) {
+			mState = 1;
+			_440   = gsys->getRand(1.0f) * 0.1f + 0.2f;
+		}
+	} else if (mState == 1) {
+		_445      = false;
+		mIsMoving = true;
+		_440 -= gsys->getFrameTime();
+		if (_440 <= 0.0f) {
+			mState = 0;
+			_440   = 0.0f;
+		}
+		mLifeGauge.countOn(mLifeGauge.mPosition, mPushCount, _41C);
+	} else if ((mVelocity.x * mVelocity.x + mVelocity.z * mVelocity.z) < 1.0f) {
+		if (mEfxA) {
+			mEfxA->stopGen();
+		}
+		if (mEfxB) {
+			mEfxB->stopGen();
+		}
+		if (mEfxC) {
+			mEfxC->stopGen();
+		}
+	}
+	_418 = 0;
+
+	f32 badcompiler[14];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2342,111 +1542,25 @@ void HinderRock::update()
  */
 void HinderRock::startAI(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r6, 0
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  li        r31, 0
-	  stw       r30, 0x50(r1)
-	  addi      r30, r3, 0
-	  sth       r31, 0x3C8(r3)
-	  stb       r31, 0x43D(r3)
-	  stb       r31, 0x428(r3)
-	  lwz       r3, 0x220(r3)
-	  lwz       r4, 0x438(r30)
-	  bl        -0x13904
-	  lfs       f3, 0x40C(r30)
-	  lfs       f1, 0x94(r30)
-	  lfs       f2, 0x414(r30)
-	  lfs       f0, 0x9C(r30)
-	  fsubs     f1, f3, f1
-	  fsubs     f2, f2, f0
-	  bl        0x17E574
-	  stfs      f1, 0xA0(r30)
-	  addi      r4, r1, 0x2C
-	  addi      r3, r30, 0x228
-	  lfs       f0, -0x5508(r13)
-	  addi      r5, r30, 0x88
-	  addi      r6, r30, 0x94
-	  stfs      f0, 0x88(r30)
-	  stfs      f1, 0x8C(r30)
-	  lfs       f0, -0x5504(r13)
-	  stfs      f0, 0x90(r30)
-	  lfs       f0, -0x5500(r13)
-	  lfs       f1, -0x54FC(r13)
-	  stfs      f0, 0x2C(r1)
-	  lfs       f0, -0x54F8(r13)
-	  stfs      f1, 0x30(r1)
-	  stfs      f0, 0x34(r1)
-	  bl        -0x5F3D4
-	  lwz       r4, 0x434(r30)
-	  lwz       r3, 0x228(r30)
-	  lwz       r0, 0x22C(r30)
-	  stw       r3, 0x5C(r4)
-	  stw       r0, 0x60(r4)
-	  lwz       r3, 0x230(r30)
-	  lwz       r0, 0x234(r30)
-	  stw       r3, 0x64(r4)
-	  stw       r0, 0x68(r4)
-	  lwz       r3, 0x238(r30)
-	  lwz       r0, 0x23C(r30)
-	  stw       r3, 0x6C(r4)
-	  stw       r0, 0x70(r4)
-	  lwz       r3, 0x240(r30)
-	  lwz       r0, 0x244(r30)
-	  stw       r3, 0x74(r4)
-	  stw       r0, 0x78(r4)
-	  lwz       r3, 0x248(r30)
-	  lwz       r0, 0x24C(r30)
-	  stw       r3, 0x7C(r4)
-	  stw       r0, 0x80(r4)
-	  lwz       r3, 0x250(r30)
-	  lwz       r0, 0x254(r30)
-	  stw       r3, 0x84(r4)
-	  stw       r0, 0x88(r4)
-	  lwz       r3, 0x258(r30)
-	  lwz       r0, 0x25C(r30)
-	  stw       r3, 0x8C(r4)
-	  stw       r0, 0x90(r4)
-	  lwz       r3, 0x260(r30)
-	  lwz       r0, 0x264(r30)
-	  stw       r3, 0x94(r4)
-	  stw       r0, 0x98(r4)
-	  lwz       r3, 0x2F00(r13)
-	  lwz       r4, 0x434(r30)
-	  lwz       r3, 0x88(r3)
-	  bl        -0x5CF84
-	  stw       r31, 0x418(r30)
-	  lis       r3, 0x7465
-	  addi      r4, r3, 0x7374
-	  stb       r31, 0x43C(r30)
-	  addi      r5, r30, 0x94
-	  lfs       f0, -0x732C(r2)
-	  stfs      f0, 0x440(r30)
-	  lwz       r3, 0x302C(r13)
-	  bl        0x3FBC
-	  stw       r3, 0x424(r30)
-	  li        r4, 0
-	  lwz       r3, 0x424(r30)
-	  bl        0x41E0
-	  stb       r31, 0x445(r30)
-	  li        r4, 0
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x94(r30)
-	  lfs       f2, 0x9C(r30)
-	  bl        -0x356A4
-	  stfs      f1, 0x98(r30)
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	mPushCount = 0;
+	_43D       = false;
+	_428       = false;
+	mCollInfo->initInfo(_438, nullptr, nullptr);
+	Vector3f dist  = _40C - mPosition;
+	f32 y          = atan2f(dist.x, dist.z);
+	mFaceDirection = y;
+	mRotation.set(0.0f, y, 0.0f);
+	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
+	mBuildShape->mTransformMtx = mWorldMtx;
+	mapMgr->mCollShape->add(mBuildShape);
+	_418      = 0;
+	mState    = 0;
+	_440      = 0.0f;
+	mWayPoint = routeMgr->findNearestWayPointAll('test', mPosition);
+	mWayPoint->setFlag(false);
+	PRINT("********* ROCK WAYPOINT(%d) OFF\n", mWayPoint->mIsOpen);
+	_445        = false;
+	mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, false);
 }
 
 /*
@@ -2454,8 +1568,22 @@ void HinderRock::startAI(int)
  * Address:	8009D5C8
  * Size:	000154
  */
-bool Bridge::workable(Vector3f&)
+bool Bridge::workable(Vector3f& pos)
 {
+	f32 x, z;
+	getBridgePos(pos, x, z);
+	int stage = getFirstUnfinishedStage();
+	if (stage == -1) {
+		PRINT("workable: fst = -1 failed\n");
+		return false;
+	}
+	f32 stageZ = getStageZ(stage);
+	z          = z - 10.0f;
+	if (z > stageZ + 10.0f) {
+		PRINT("endZ is %.1f z is %.1f\n", stageZ, z);
+		return false;
+	}
+
 	return false;
 	/*
 	.loc_0x0:

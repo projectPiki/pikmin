@@ -371,7 +371,7 @@ struct InteractPullout : public Interaction {
 struct InteractPush : public Interaction {
 	InteractPush(Creature* owner, int p2)
 	    : Interaction(owner)
-	    , _08(p2)
+	    , mStrength(p2)
 	{
 	}
 
@@ -379,7 +379,7 @@ struct InteractPush : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	int _08; // _08
+	int mStrength; // _08
 };
 
 /**

@@ -24,6 +24,8 @@ struct FastGrid {
 	static void clearAIGrid();
 	static void renderAIGrid(Graphics&);
 
+	void setNeighbourSize(int size) { _14 = size; }
+
 	static u16 aiGridShift;
 	static u8* aiGridMap; // type unsure
 	static u16 aiGridSize;

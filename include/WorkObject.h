@@ -68,10 +68,10 @@ struct WorkObjectMgr : public ObjectMgr {
 	Creature* birth(int, int);
 
 	// unused/inlined:
-	int getNameIndex(char*);
-	char* getName(int);
-	int getShapeNameIndex(char*);
-	char* getShapeName(int);
+	static int getNameIndex(char*);
+	static char* getName(int);
+	static int getShapeNameIndex(char*);
+	static char* getShapeName(int);
 	void addUseList(int);
 
 	// _00     = VTBL 1
@@ -178,25 +178,28 @@ struct HinderRock : public WorkObject {
 
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject
-	u16 mPushCount;             // _3C8
-	Plane _3CC[4];              // _3CC
-	Vector3f _40C;              // _40C
-	u32 _418;                   // _418
-	u32 _41C;                   // _41C
-	u32 _420;                   // _420
-	WayPoint* mWayPoint;        // _424
-	u8 _428[0x8];               // _428, unknown
-	f32 _430;                   // _430
-	DynBuildShape* mBuildShape; // _434
-	Shape* _438;                // _438
-	u8 mState;                  // _43C
-	f32 _440;                   // _440
-	bool mIsMoving;             // _444
-	u32 _448;                   // _448
-	u32 _44C;                   // _44C
-	u32 _450;                   // _450
-	Vector3f _454;              // _454
-	Vector3f _460[2];           // _460
+	u16 mPushCount;                // _3C8
+	Plane mPlanes[4];              // _3CC
+	Vector3f _40C;                 // _40C
+	u32 _418;                      // _418
+	u32 _41C;                      // _41C
+	f32 _420;                      // _420
+	WayPoint* mWayPoint;           // _424
+	u8 _428;                       // _428
+	f32 _42C;                      // _42C
+	f32 _430;                      // _430
+	DynBuildShape* mBuildShape;    // _434
+	Shape* _438;                   // _438
+	u8 mState;                     // _43C
+	u8 _43D;                       // _43D
+	f32 _440;                      // _440
+	bool mIsMoving;                // _444
+	bool _445;                     // _445
+	zen::particleGenerator* mEfxA; // _448
+	zen::particleGenerator* mEfxB; // _44C
+	zen::particleGenerator* mEfxC; // _450
+	Vector3f _454;                 // _454
+	Vector3f _460[2];              // _460
 };
 
 extern WorkObjectMgr* workObjectMgr;
