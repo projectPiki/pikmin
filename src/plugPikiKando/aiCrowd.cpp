@@ -142,8 +142,8 @@ void ActCrowd::exeRouteMove()
 void ActCrowd::setFormed()
 {
 	mState = STATE_Formed;
-	if (mPiki->hasBomb() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk18)) {
-		playerState->mDemoFlags.setFlag(DEMOFLAG_Unk18, mPiki);
+	if (mPiki->hasBomb() && !playerState->mDemoFlags.isFlag(DEMOFLAG_GrabFirstBomb)) {
+		playerState->mDemoFlags.setFlag(DEMOFLAG_GrabFirstBomb, mPiki);
 	}
 }
 
@@ -311,8 +311,8 @@ int ActCrowd::exec()
 	Vector3f effDir = static_cast<ViewPiki*>(mPiki)->mLastEffectPosition - mPiki->mPosition;
 	f32 travelDist  = effDir.length();
 
-	if (mPiki->hasBomb() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk18) && travelDist < 100.0f) {
-		playerState->mDemoFlags.setFlag(DEMOFLAG_Unk18, mPiki);
+	if (mPiki->hasBomb() && !playerState->mDemoFlags.isFlag(DEMOFLAG_GrabFirstBomb) && travelDist < 100.0f) {
+		playerState->mDemoFlags.setFlag(DEMOFLAG_GrabFirstBomb, mPiki);
 	}
 
 	_60 += travelDist;

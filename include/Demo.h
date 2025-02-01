@@ -11,16 +11,45 @@ struct Creature;
  * @brief TODO
  */
 enum EDemoFlags {
-	DEMOFLAG_Unk0 = 0,
-	DEMOFLAG_Unk1 = 1,
-	// ...
-	DEMOFLAG_Unk9 = 9,
-	// ...
-	DEMOFLAG_Unk18 = 18,
-	// ...
-	DEMOFLAG_Unk27 = 27,
-	DEMOFLAG_Unk28 = 28,
-	DEMOFLAG_Unk29 = 29,
+	DEMOFLAG_NULL                = -1,
+	DEMOFLAG_DiscoverRedOnyon    = 0,
+	DEMOFLAG_DiscoverYellowOnyon = 1,
+	DEMOFLAG_DiscoverBlueOnyon   = 2,
+	DEMOFLAG_ApproachSeed        = 3,
+	DEMOFLAG_PluckRedPikmin      = 4,
+	DEMOFLAG_PluckYellowPikmin   = 5,
+	DEMOFLAG_PluckBluePikmin     = 6,
+	DEMOFLAG_NoPikminTimeout     = 7,
+	DEMOFLAG_CameraInfo          = 8,
+	DEMOFLAG_Unk9                = 9, // 'pellet grass battle timeout'
+	DEMOFLAG_CollectFirstPellet  = 10,
+	DEMOFLAG_FirstSluiceDown     = 11,
+	DEMOFLAG_ApproachEngine      = 12,
+	DEMOFLAG_CollectEngine       = 13,
+	DEMOFLAG_StartBoxPush        = 14,
+	DEMOFLAG_FinishBoxPush       = 15,
+	DEMOFLAG_OnyonMenuInfo       = 16,
+	DEMOFLAG_PostExtinctionSeed  = 17,
+	DEMOFLAG_GrabFirstBomb       = 18,
+	DEMOFLAG_FirstHurryUp        = 19,
+	DEMOFLAG_FirstBombExplode    = 20,
+
+	DEMOFLAG_PikminLimitOffset = 21, // each course's "you've exceeded 100 pikmin" text is this + stageID
+
+	DEMOFLAG_PikminLimitTutorial    = 21,
+	DEMOFLAG_PikminLimitForest      = 22,
+	DEMOFLAG_PikminLimitCave        = 23,
+	DEMOFLAG_PikminLimitYakushima   = 24,
+	DEMOFLAG_PikminLimitLast        = 25,
+	DEMOFLAG_FirstNectar            = 26,
+	DEMOFLAG_FirstBombDeath         = 27,
+	DEMOFLAG_CarryPathBlocked       = 28,
+	DEMOFLAG_OlimarLowHealth        = 29,
+	DEMOFLAG_Pluck15thPikmin        = 30,
+	DEMOFLAG_FirstNoon              = 31,
+	DEMOFLAG_UfoPartDiscoveryOffset = 32, // each part's discovery text is this + partID
+
+	DEMOFLAG_COUNT = DEMOFLAG_UfoPartDiscoveryOffset + 30 + 1,
 };
 
 /**

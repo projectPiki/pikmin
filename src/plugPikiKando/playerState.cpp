@@ -687,7 +687,9 @@ bool PlayerState::happyEndable()
 void PlayerState::setChallengeMode()
 {
 	_1B6 = 1;
-	for (int i = 0; i < 63; i++) {
+
+	// set EVERY demo flag. no cutscenes!!
+	for (int i = 0; i < DEMOFLAG_COUNT; i++) {
 		mDemoFlags.setFlagOnly(i);
 	}
 

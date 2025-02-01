@@ -7,6 +7,7 @@
 #include "TekiYamashita.h"
 #include "Dolphin/os.h"
 #include "TekiParameters.h"
+#include "PlayerState.h"
 #include "DebugLog.h"
 
 /*
@@ -988,19 +989,19 @@ int TekiMgr::getResultFlag(int tekiType)
 	// TODO: make these ResultFlags enum values when we have that enum
 	int resFlag = 0;
 	if (tekiType == TEKI_Collec) {
-		resFlag = 55;
+		resFlag = RESFLAG_Collec;
 
 	} else if (tekiType == TEKI_Frow) {
-		resFlag = 57;
+		resFlag = RESFLAG_Otimoti;
 
 	} else if (tekiType == TEKI_Shell) {
-		resFlag = 54;
+		resFlag = RESFLAG_Shell;
 
 	} else if (tekiType == TEKI_Swallow) {
-		resFlag = 41;
+		resFlag = RESFLAG_Swallow;
 
 	} else if (tekiType == TEKI_Qurione) {
-		resFlag = 44;
+		resFlag = RESFLAG_Mizinko;
 	}
 
 	return resFlag;

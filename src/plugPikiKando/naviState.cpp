@@ -365,7 +365,7 @@ void NaviStuckState::exec(Navi* navi)
 				}
 
 				if (stuck->stimulate(InteractFlick(navi, 220.0f, 5.0f, FLICK_BACKWARDS_ANGLE))) {
-					playerState->mResultFlags.setOn(RESFLAG_Unk42);
+					playerState->mResultFlags.setOn(RESFLAG_Kinoko);
 
 					if (iter.mIndex >= 0) {
 						iter.mIndex--;

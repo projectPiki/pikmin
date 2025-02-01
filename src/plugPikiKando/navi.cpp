@@ -412,8 +412,8 @@ void Navi::startDamageEffect()
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 
 	} else if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
-	           && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk29)) {
-		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk29);
+	           && !playerState->mDemoFlags.isFlag(DEMOFLAG_OlimarLowHealth)) {
+		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_OlimarLowHealth);
 		gameflow.mGameInterface->message(0, 24);
 	}
 
@@ -609,8 +609,8 @@ void Navi::finishDamage()
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 	} else {
 		if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
-		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk29)) {
-			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk29);
+		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_OlimarLowHealth)) {
+			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_OlimarLowHealth);
 			gameflow.mGameInterface->message(0, 24);
 		}
 	}

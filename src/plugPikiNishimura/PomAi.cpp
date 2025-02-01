@@ -438,7 +438,7 @@ void PomAi::calcPetalStickers()
 void PomAi::resultFlagOn()
 {
 	if (mPom->insideAndInSearch()) {
-		playerState->mResultFlags.setOn(RESFLAG_PomFlowerFound);
+		playerState->mResultFlags.setOn(RESFLAG_Pom);
 	}
 }
 
@@ -449,7 +449,7 @@ void PomAi::resultFlagOn()
  */
 void PomAi::resultFlagSeen()
 {
-	playerState->mResultFlags.setSeen(RESFLAG_PomFlowerFound);
+	playerState->mResultFlags.setSeen(RESFLAG_Pom);
 }
 
 /*

@@ -1056,7 +1056,7 @@ void KingAi::resetAttackPriority()
 void KingAi::resultFlagOn()
 {
 	if (mKing->insideAndInSearch()) {
-		playerState->mResultFlags.setOn(RESFLAG_Unk49);
+		playerState->mResultFlags.setOn(RESFLAG_King);
 	}
 }
 
@@ -1067,7 +1067,7 @@ void KingAi::resultFlagOn()
  */
 void KingAi::resultFlagSeen()
 {
-	playerState->mResultFlags.setSeen(RESFLAG_Unk49);
+	playerState->mResultFlags.setSeen(RESFLAG_King);
 }
 
 /*

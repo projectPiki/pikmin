@@ -621,7 +621,7 @@ void BombAI::BombInit::act(AICreature* item)
 	CndBombable cnd;
 	f32 maxRange = pikiMgr->mPikiParms->mPikiParms._40C();
 	item->setMotionSpeed(30.0f);
-	playerState->mResultFlags.setOn(17);
+	playerState->mResultFlags.setOn(RESFLAG_YellowWithBomb);
 	rumbleMgr->start(8, 0, item->mPosition);
 	EffectParm parm(item->mPosition);
 	if (item->mCounter == 1) {
@@ -632,8 +632,8 @@ void BombAI::BombInit::act(AICreature* item)
 		PRINT("USE BOMB EFFECT\n");
 	}
 
-	if (!playerState->mDemoFlags.isFlag(20)) {
-		playerState->mDemoFlags.setTimer(1.5f, 20, nullptr);
+	if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstBombExplode)) {
+		playerState->mDemoFlags.setTimer(1.5f, DEMOFLAG_FirstBombExplode, nullptr);
 	}
 	item->playEventSound(item, SE_BOMB);
 	item->mCurrentItemHealth = 0.0f;
@@ -2454,8 +2454,8 @@ void GoalAI::EmitPiki::act(AICreature* item)
 		GameStat::containerPikis.inc(obj->mOnionColour);
 		GameStat::update();
 		if (!gameflow.mMoviePlayer->mIsActive && !playerState->hasRadar()
-		    && !playerState->mDemoFlags.isFlag(flowCont.mCurrentStage->mStageID + 21)) {
-			playerState->mDemoFlags.setFlagOnly(flowCont.mCurrentStage->mStageID + 21);
+		    && !playerState->mDemoFlags.isFlag(flowCont.mCurrentStage->mStageID + DEMOFLAG_PikminLimitOffset)) {
+			playerState->mDemoFlags.setFlagOnly(flowCont.mCurrentStage->mStageID + DEMOFLAG_PikminLimitOffset);
 			gameflow.mGameInterface->message(0, 21);
 		}
 	}

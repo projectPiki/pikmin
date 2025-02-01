@@ -1110,7 +1110,7 @@ bool SnakeAi::appearType02()
 void SnakeAi::resultFlagOn()
 {
 	if (mSnake->insideAndInSearch()) {
-		playerState->mResultFlags.setOn(RESFLAG_Unk48);
+		playerState->mResultFlags.setOn(RESFLAG_Snake);
 	}
 }
 
@@ -1121,7 +1121,7 @@ void SnakeAi::resultFlagOn()
  */
 void SnakeAi::resultFlagSeen()
 {
-	playerState->mResultFlags.setSeen(RESFLAG_Unk48);
+	playerState->mResultFlags.setSeen(RESFLAG_Snake);
 }
 
 /*

@@ -1625,8 +1625,8 @@ int ActTransport::moveGuruGuru()
 
 		if (mWaitTimer > TAU) {
 			mWaitTimer -= TAU;
-			if (!gameflow.mMoviePlayer->mIsActive && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk28)) {
-				playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk28);
+			if (!gameflow.mMoviePlayer->mIsActive && !playerState->mDemoFlags.isFlag(DEMOFLAG_CarryPathBlocked)) {
+				playerState->mDemoFlags.setFlagOnly(DEMOFLAG_CarryPathBlocked);
 				if (pel->aiCullable()) {
 					gameflow.mGameInterface->message(0, 23);
 				} else {

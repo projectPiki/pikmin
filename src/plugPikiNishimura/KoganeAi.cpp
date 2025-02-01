@@ -491,7 +491,7 @@ void KoganeAi::createPellet()
 void KoganeAi::resultFlagOn()
 {
 	if (mKogane->insideAndInSearch()) {
-		playerState->mResultFlags.setOn(RESFLAG_Unk43);
+		playerState->mResultFlags.setOn(RESFLAG_Kogane);
 	}
 }
 

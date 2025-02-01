@@ -47,11 +47,11 @@ bool InteractBomb::actPiki(Piki* piki)
 		return false;
 	}
 
-	if (piki->aiCullable() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk27)) {
-		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk27);
+	if (piki->aiCullable() && !playerState->mDemoFlags.isFlag(DEMOFLAG_FirstBombDeath)) {
+		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstBombDeath);
 	}
 
-	playerState->mResultFlags.setOn(RESFLAG_Unk24);
+	playerState->mResultFlags.setOn(RESFLAG_PikminBombDeath);
 
 	piki->playEventSound(mOwner, SE_PIKI_DAMAGED);
 
@@ -216,7 +216,7 @@ bool InteractFire::actPiki(Piki* piki)
 		return true;
 	}
 
-	playerState->mResultFlags.setOn(RESFLAG_Unk39);
+	playerState->mResultFlags.setOn(RESFLAG_PikminOnFire);
 	return false;
 }
 

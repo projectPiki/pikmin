@@ -885,8 +885,8 @@ void HinderRock::update()
 			mEfxC->startGen();
 		}
 
-		if (flowCont.mCurrentStage->mStageID == 0 && !playerState->mDemoFlags.isFlag(14)) {
-			playerState->mDemoFlags.setFlag(14, nullptr);
+		if (flowCont.mCurrentStage->mStageID == STAGE_Practice && !playerState->mDemoFlags.isFlag(DEMOFLAG_StartBoxPush)) {
+			playerState->mDemoFlags.setFlag(DEMOFLAG_StartBoxPush, nullptr);
 		}
 
 		mIsMoving = true;
@@ -896,8 +896,8 @@ void HinderRock::update()
 			mState    = 2;
 			mWayPoint->setFlag(true);
 			seSystem->playSysSe(SYSSE_WORK_FINISH);
-			if (!playerState->mDemoFlags.isFlag(15)) {
-				playerState->mDemoFlags.setFlag(15, nullptr);
+			if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FinishBoxPush)) {
+				playerState->mDemoFlags.setFlag(DEMOFLAG_FinishBoxPush, nullptr);
 			}
 			if (mEfxA) {
 				effectMgr->kill(mEfxA, false);

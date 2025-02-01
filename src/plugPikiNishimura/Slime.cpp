@@ -236,7 +236,7 @@ void Slime::collisionCallback(CollEvent& event)
 			}
 
 			if (insideAndInSearch()) {
-				playerState->mResultFlags.setOn(RESFLAG_Unk50);
+				playerState->mResultFlags.setOn(RESFLAG_Slime);
 			}
 		}
 	}

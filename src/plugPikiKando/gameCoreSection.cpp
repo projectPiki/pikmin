@@ -617,24 +617,24 @@ void GameCoreSection::cleanupDayEnd()
 	rumbleMgr->stop();
 
 	switch (flowCont.mCurrentStage->mStageID) {
-	case 0:
-		playerState->mResultFlags.setOn(1);
-		playerState->mResultFlags.setOn(29);
+	case STAGE_Practice:
+		playerState->mResultFlags.setOn(RESFLAG_EndFirstDay);
+		playerState->mResultFlags.setOn(RESFLAG_UnusedControls2);
 		break;
-	case 1:
-		playerState->mResultFlags.setOn(3);
+	case STAGE_Forest:
+		playerState->mResultFlags.setOn(RESFLAG_FirstVisitForest);
 		break;
-	case 3:
-		playerState->mResultFlags.setOn(8);
+	case STAGE_Yakushima:
+		playerState->mResultFlags.setOn(RESFLAG_FirstVisitYakushima);
 		break;
-	case 4:
+	case STAGE_Last:
 		break;
 	}
 	if (playerState->getCurrDay() + 1 == playerState->getTotalDays() - 1) {
-		playerState->mResultFlags.setOn(10);
+		playerState->mResultFlags.setOn(RESFLAG_FinalDay);
 	}
 	if (playerState->getCurrParts() >= 11 && playerState->getCurrDay() >= 9) {
-		playerState->mResultFlags.setOn(26);
+		playerState->mResultFlags.setOn(RESFLAG_Collect10Parts);
 	}
 	int day = playerState->getCurrDay();
 	playerState->setDayCollectCount(day, playerState->getCurrParts());
@@ -754,7 +754,7 @@ void GameCoreSection::cleanupDayEnd()
 			}
 		}
 		if (GameStat::victimPikis > 0) {
-			playerState->mResultFlags.setOn(23);
+			playerState->mResultFlags.setOn(RESFLAG_PikminLeftBehind);
 		}
 	}
 	PRINT("++++++ %d PIKIS KILLED\n", killed);
@@ -2004,20 +2004,20 @@ void GameCoreSection::initStage()
 	}
 
 	switch (flowCont.mCurrentStage->mStageID) {
-	case 2:
-		playerState->mResultFlags.setOn(6);
+	case STAGE_Cave:
+		playerState->mResultFlags.setOn(RESFLAG_FirstVisitCave);
 		break;
-	case 3:
-		playerState->mResultFlags.setOn(8);
+	case STAGE_Yakushima:
+		playerState->mResultFlags.setOn(RESFLAG_FirstVisitYakushima);
 		break;
-	case 4:
+	case STAGE_Last:
 		break;
 	}
 
 	if (gameflow.mWorldClock.mCurrentDay > 10 && gameflow.mWorldClock.mCurrentDay < 20) {
-		playerState->mResultFlags.setOn(20);
+		playerState->mResultFlags.setOn(RESFLAG_OlimarDaydream);
 	} else if (gameflow.mWorldClock.mCurrentDay > 20) {
-		playerState->mResultFlags.setSeen(20);
+		playerState->mResultFlags.setSeen(RESFLAG_OlimarDaydream);
 	}
 	playerState->initCourse();
 	PRINT("--------------- GeneratorCache : preload start\n");
@@ -3246,10 +3246,11 @@ void GameCoreSection::finalSetup()
 	GameStat::dump();
 
 	if (playerState->_BC[0] == 0 && !playerState->isTutorial() && GameStat::allPikis == 0
-	    && ((GameStat::allPikis[0] == 0 && playerState->hasContainer(0)) || (GameStat::allPikis[1] == 0 && playerState->hasContainer(1))
-	        || (GameStat::allPikis[2] == 0 && playerState->hasContainer(2)))) {
-		if (!playerState->mDemoFlags.isFlag(17)) {
-			playerState->mDemoFlags.setFlag(17, nullptr);
+	    && ((GameStat::allPikis[Blue] == 0 && playerState->hasContainer(Blue))
+	        || (GameStat::allPikis[Red] == 0 && playerState->hasContainer(Red))
+	        || (GameStat::allPikis[Yellow] == 0 && playerState->hasContainer(Yellow)))) {
+		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_PostExtinctionSeed)) {
+			playerState->mDemoFlags.setFlag(DEMOFLAG_PostExtinctionSeed, nullptr);
 			playerState->_BC[0] = 1;
 		} else {
 			gameflow.mGameInterface->movie(64, 0, nullptr, nullptr, nullptr, -1, true);
@@ -4552,12 +4553,12 @@ void GameCoreSection::update()
 	if (GameStat::allPikis == 0 && GameStat::maxPikis > 0) {
 		Navi* navi = mNavi;
 		int id     = navi->getCurrState()->getID();
-		if (id != 33 && id != 25 && id != 21 && id != 22) {
+		if (id != NAVISTATE_PikiZero && id != NAVISTATE_DemoSunset && id != NAVISTATE_DemoWait && id != NAVISTATE_DemoInf) {
 			PRINT("**** PIKI ZERO GAME OVER *******\n");
 			PRINT("deadpikis %d pellets %d killtekis %d maxpikis %d", GameStat::deadPikis, GameStat::getPellets, GameStat::killTekis,
 			      GameStat::maxPikis);
-			navi->mStateMachine->transit(navi, 33);
-			playerState->mResultFlags.setOn(14);
+			navi->mStateMachine->transit(navi, NAVISTATE_PikiZero);
+			playerState->mResultFlags.setOn(RESFLAG_PikminExtinction);
 		}
 	}
 
@@ -4848,8 +4849,8 @@ void GameCoreSection::updateAI()
 	} else if (!_38[1] && hours >= gameflow.mWorldClock.mCurrentTime) {
 		_38[1] = 1;
 		seSystem->playSysSe(SYSSE_TIME_SIGNAL);
-		if (!playerState->mDemoFlags.isFlag(31)) {
-			playerState->mDemoFlags.setFlagOnly(31);
+		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstNoon)) {
+			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstNoon);
 			gameflow.mGameInterface->message(0, 31);
 		}
 	} else if (!_38[2] && start >= gameflow.mWorldClock.mCurrentTime) {

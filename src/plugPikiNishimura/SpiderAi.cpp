@@ -227,7 +227,7 @@ void SpiderAi::checkHalfDead()
 void SpiderAi::resultFlagOn()
 {
 	if (mSpider->insideAndInSearch()) {
-		playerState->mResultFlags.setOn(RESFLAG_Unk46);
+		playerState->mResultFlags.setOn(RESFLAG_Spider);
 	}
 }
 
@@ -238,7 +238,7 @@ void SpiderAi::resultFlagOn()
  */
 void SpiderAi::resultFlagSeen()
 {
-	playerState->mResultFlags.setSeen(RESFLAG_Unk46);
+	playerState->mResultFlags.setSeen(RESFLAG_Spider);
 }
 
 /*

@@ -10,23 +10,82 @@ struct Creature;
  * @brief TODO
  */
 enum EResultsFlags {
-	RESFLAG_Unk0 = 0,
-	RESFLAG_Unk1 = 1,
-	// ...
-	RESFLAG_Unk24 = 24,
-	// ...
-	RESFLAG_BluePikminWaterImmunity = 38,
-	RESFLAG_Unk39                   = 39,
-	// ...
-	RESFLAG_Unk42 = 42,
-	RESFLAG_Unk43 = 43,
-	// ...
-	RESFLAG_PomFlowerFound = 45,
-	RESFLAG_Unk46          = 46,
-	// ...
-	RESFLAG_Unk48 = 48,
-	RESFLAG_Unk49 = 49,
-	RESFLAG_Unk50 = 50,
+	RESFLAG_NULL                    = -1,
+	RESFLAG_EndFirstDay             = 1,
+	RESFLAG_FirstVisitForest        = 3,
+	RESFLAG_UnlockCave              = 5,
+	RESFLAG_FirstVisitCave          = 6,
+	RESFLAG_UnlockYakushima         = 7,
+	RESFLAG_FirstVisitYakushima     = 8,
+	RESFLAG_FinalDay                = 10,
+	RESFLAG_Collect25Parts          = 11,
+	RESFLAG_Collect29Parts          = 12,
+	RESFLAG_OlimarDown              = 13,
+	RESFLAG_PikminExtinction        = 14,
+	RESFLAG_CollectAllParts         = 15, // unused
+	RESFLAG_YellowWithBomb          = 17,
+	RESFLAG_MeetBluePikmin          = 18,
+	RESFLAG_PikminRouting           = 19,
+	RESFLAG_OlimarDaydream          = 20,
+	RESFLAG_Collect15Parts          = 21,
+	RESFLAG_PikminLeftBehind        = 23,
+	RESFLAG_PikminBombDeath         = 24,
+	RESFLAG_Collect10Parts          = 26,
+	RESFLAG_UnusedControls1         = 27,
+	RESFLAG_UnusedControls2         = 29,
+	RESFLAG_UnusedControls3         = 31,
+	RESFLAG_BrokenBridge            = 32,
+	RESFLAG_PikminSeeds             = 33,
+	RESFLAG_PikminSeedStageUp       = 35,
+	RESFLAG_Onyons                  = 36,
+	RESFLAG_MeetYellowPikminNoBomb  = 37,
+	RESFLAG_BluePikminWaterImmunity = 38, // unused
+	RESFLAG_PikminOnFire            = 39,
+	RESFLAG_Dororo                  = 40, // Smoky Progg
+	RESFLAG_Swallow                 = 41, // Bulborb
+	RESFLAG_Kinoko                  = 42, // Puffstool
+	RESFLAG_Kogane                  = 43, // Flint Beetle
+	RESFLAG_Mizinko                 = 44, // Honeywisp
+	RESFLAG_Pom                     = 45, // Candypop Bud
+	RESFLAG_Spider                  = 46, // Beady Long Legs
+	RESFLAG_Beatle                  = 47, // Armored Cannon Beetle
+	RESFLAG_Snake                   = 48, // Burrowing Snagret
+	RESFLAG_King                    = 49, // Emperor Bulblax
+	RESFLAG_Slime                   = 50, // Goolix
+	RESFLAG_Miurin                  = 51, // Mamuta
+	RESFLAG_Kabekui                 = 52, // Sheargrub
+	RESFLAG_Tank                    = 53, // Fiery Blowhog
+	RESFLAG_Shell                   = 54, // Pearly Clamclamp
+	RESFLAG_Collec                  = 55, // Breadbug
+	RESFLAG_Mar                     = 56, // Puffy Blowhog
+	RESFLAG_Otimoti                 = 57, // Wollywog
+	RESFLAG_Misc1                   = 58,
+	RESFLAG_Misc2                   = 59,
+	RESFLAG_Misc3                   = 60,
+	RESFLAG_Misc4                   = 61,
+	RESFLAG_Misc5                   = 62,
+	RESFLAG_Misc6                   = 63,
+	RESFLAG_Misc7                   = 64,
+	RESFLAG_Misc8                   = 65,
+	RESFLAG_Misc9                   = 66,
+	RESFLAG_Misc10                  = 67,
+	RESFLAG_Misc11                  = 68,
+	RESFLAG_Misc12                  = 69,
+	RESFLAG_Misc13                  = 70,
+	RESFLAG_Misc14                  = 71,
+	RESFLAG_Misc15                  = 72,
+	RESFLAG_Misc16                  = 73,
+	RESFLAG_Misc17                  = 74,
+	RESFLAG_Misc18                  = 75,
+	RESFLAG_Misc19                  = 76,
+	RESFLAG_Misc20                  = 77,
+	RESFLAG_Misc21                  = 78,
+	RESFLAG_Misc22                  = 79,
+	RESFLAG_Misc23                  = 80,
+	RESFLAG_Misc24                  = 81,
+	RESFLAG_Misc25                  = 82,
+	RESFLAG_Misc26                  = 83,
+	RESFLAG_Misc27                  = 84,
 };
 
 /**
