@@ -654,13 +654,13 @@ void GameCoreSection::cleanupDayEnd()
 	}
 	seSystem->resetSystem();
 
-	if (!playerState->hasRadar() && !playerState->isGameCourse()) {
+	if (!playerState->_1B6 && !playerState->isGameCourse()) {
 		PRINT("** SKIP CLEANUPDAYEND\n");
 		return;
 	}
 
 	PRINT("STEP (1) : Save Generators\n");
-	if (!playerState->hasRadar()) {
+	if (!playerState->_1B6) {
 		generatorCache->beginSave(flowCont.mCurrentStage->mStageIndex);
 		int gens    = 0;
 		int objs    = 0;
@@ -697,7 +697,7 @@ void GameCoreSection::cleanupDayEnd()
 
 	PRINT("STEP (2) : remove objects (teki/boss/pellet/free pikis)\n");
 	int killed = 0;
-	if (!playerState->hasRadar() && !playerState->isTutorial() && !playerState->isEnding()) {
+	if (!playerState->_1B6 && !playerState->isTutorial() && !playerState->isEnding()) {
 		Iterator it(pikiMgr);
 		CI_LOOP(it)
 		{
@@ -810,17 +810,17 @@ void GameCoreSection::cleanupDayEnd()
 	tekiMgr = nullptr;
 	bossMgr = nullptr;
 	mMapMgr->mCollShape->initCore("");
-	if (!playerState->hasRadar()) {
+	if (!playerState->_1B6) {
 		playerState->update();
 	}
 	naviMgr->getNavi()->startMovieInf();
-	if (!playerState->hasRadar()) {
+	if (!playerState->_1B6) {
 		playerState->mResultFlags.dump();
 	}
 
 	PRINT("STEP (4) : record me pikis\n");
 
-	if (!playerState->hasRadar()) {
+	if (!playerState->_1B6) {
 		StageInf* inf = &flowCont.mCurrentStage->mStageInf;
 		Iterator ph_it(itemMgr->getPikiHeadMgr());
 		CI_LOOP(ph_it)
@@ -847,7 +847,7 @@ void GameCoreSection::cleanupDayEnd()
 		PRINT("MECK IS SLEEPY\n");
 	}
 
-	playerState->mSroutedNum += GameStat::bornPikis;
+	playerState->mSproutedNum += GameStat::bornPikis;
 	int lost = GameStat::deadPikis - GameStat::victimPikis;
 	if (lost < 0) {
 		lost = 0;
@@ -1986,7 +1986,7 @@ void asmTest(f32, f32)
 void GameCoreSection::initStage()
 {
 	playerState->setDayEnd(false);
-	if (playerState->hasRadar()) {
+	if (playerState->_1B6) {
 		pikiInfMgr.initGame();
 	}
 
@@ -2219,7 +2219,7 @@ void GameCoreSection::initStage()
 	cameraMgr->update();
 	mNavi->mIsCursorVisible = 1;
 
-	if (!playerState->hasRadar()) {
+	if (!playerState->_1B6) {
 		StageInf* inf = &flowCont.mCurrentStage->mStageInf;
 		PRINT("@@@@ FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
 		for (BaseInf* a = (BaseInf*)inf->mBPikiInfMgr.mActiveList.mChild; a; a = (BaseInf*)a->mNext) {
@@ -3245,20 +3245,20 @@ void GameCoreSection::finalSetup()
 	PRINT("********* BONUS PIKI CHECK\n");
 	GameStat::dump();
 
-	if (playerState->_BC[0] == 0 && !playerState->isTutorial() && GameStat::allPikis == 0
+	if (playerState->_BC == 0 && !playerState->isTutorial() && GameStat::allPikis == 0
 	    && ((GameStat::allPikis[Blue] == 0 && playerState->hasContainer(Blue))
 	        || (GameStat::allPikis[Red] == 0 && playerState->hasContainer(Red))
 	        || (GameStat::allPikis[Yellow] == 0 && playerState->hasContainer(Yellow)))) {
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_PostExtinctionSeed)) {
 			playerState->mDemoFlags.setFlag(DEMOFLAG_PostExtinctionSeed, nullptr);
-			playerState->_BC[0] = 1;
+			playerState->_BC = 1;
 		} else {
 			gameflow.mGameInterface->movie(64, 0, nullptr, nullptr, nullptr, -1, true);
-			playerState->_BC[0] = 1;
+			playerState->_BC = 1;
 		}
 	}
 
-	if (!playerState->isTutorial() && !playerState->hasRadar()) {
+	if (!playerState->isTutorial() && !playerState->_1B6) {
 		PRINT("========== NAVI STARTING STATE START \n");
 		Navi* navi = naviMgr->getNavi();
 		if (navi) {

@@ -285,6 +285,9 @@ struct GamePrefs : public CoreNode {
 		mIsChanged      = false;
 		mHiscores.Initialise();
 	}
+
+	void addBornPikis(u32 count) { mHiscores._00 += count; }
+
 	void setBgmVol(u8);
 	void setSfxVol(u8);
 	void setStereoMode(bool);

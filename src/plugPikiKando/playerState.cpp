@@ -6,8 +6,15 @@
 #include "OnePlayerSection.h"
 #include "Pellet.h"
 #include "sysNew.h"
+#include "GameStat.h"
+#include "UfoItem.h"
+#include "NaviMgr.h"
 #include "Shape.h"
+#include "Graphics.h"
+#include "Interface.h"
+#include "AIConstant.h"
 #include "Piki.h"
+#include "AIPerf.h"
 #include "DebugLog.h"
 
 int PlayerState::totalUfoParts = 30;
@@ -27,7 +34,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("PlayerState")
 
 /*
  * --INFO--
@@ -36,7 +43,9 @@ DEFINE_PRINT("TODO: Replace")
  */
 TimeGraph::TimeGraph()
 {
-	// UNUSED FUNCTION
+	_04 = nullptr;
+	_02 = 0;
+	_00 = 0;
 }
 
 /*
@@ -44,9 +53,13 @@ TimeGraph::TimeGraph()
  * Address:	........
  * Size:	000054
  */
-void TimeGraph::create(u16, u16)
+void TimeGraph::create(u16 a, u16 b)
 {
-	// UNUSED FUNCTION
+	int size = b - a + 1;
+	_00      = a;
+	_02      = b;
+	_04      = new PikiNum[size];
+	init();
 }
 
 /*
@@ -56,7 +69,9 @@ void TimeGraph::create(u16, u16)
  */
 void TimeGraph::init()
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < _02 - _00 + 1; i++) {
+		_04[i].set(-1, -1);
+	}
 }
 
 /*
@@ -64,9 +79,12 @@ void TimeGraph::init()
  * Address:	........
  * Size:	000044
  */
-void TimeGraph::set(u16, int, int)
+void TimeGraph::set(u16 time, int b, int c)
 {
-	// UNUSED FUNCTION
+	if (time - _00 < 0 || (_02 - _00 + 1) < time - _00) {
+		ERROR("illegal time int %d\n", time);
+	}
+	_04[time - _00].set(b, c);
 }
 
 /*
@@ -74,9 +92,12 @@ void TimeGraph::set(u16, int, int)
  * Address:	........
  * Size:	00004C
  */
-void TimeGraph::get(u16, int)
+int TimeGraph::get(u16 time, int color)
 {
-	// UNUSED FUNCTION
+	if (time - _00 < 0 || (_02 - _00 + 1) < time - _00) {
+		ERROR("illegal time int %d\n", time);
+	}
+	return _04[time - _00].get(color);
 }
 
 /*
@@ -104,147 +125,28 @@ bool PlayerState::isEnding()
  * Address:	8007F410
  * Size:	00019C
  */
-bool PlayerState::existUfoParts(u32 p1)
+bool PlayerState::existUfoParts(u32 id)
 {
-	if (hasUfoParts(p1)) {
+	if (hasUfoParts(id)) {
 		return true;
 	}
 
-	if (generatorCache) {
+	if (generatorCache && generatorCache->hasUfoParts(flowCont.mCurrentStage->mStageID, id)) {
 		return true;
+	}
+
+	if (pelletMgr) {
+		Iterator it(pelletMgr);
+		CI_LOOP(it)
+		{
+			Pellet* obj = (Pellet*)*it;
+			if (obj->isAlive() && obj->mConfig->mModelId.mId == id) {
+				return true;
+			}
+		}
 	}
 
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r4
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  stw       r28, 0x28(r1)
-	  bl        0x11D4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x34
-	  li        r3, 0x1
-	  b         .loc_0x17C
-
-	.loc_0x34:
-	  lwz       r3, 0x3098(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x68
-	  lis       r4, 0x803A
-	  subi      r4, r4, 0x24E0
-	  lwz       r4, 0xA8(r4)
-	  mr        r5, r31
-	  lhz       r4, 0x26(r4)
-	  bl        0x60308
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x68
-	  li        r3, 0x1
-	  b         .loc_0x17C
-
-	.loc_0x68:
-	  lwz       r29, 0x301C(r13)
-	  cmplwi    r29, 0
-	  beq-      .loc_0x178
-	  lwz       r12, 0x0(r29)
-	  mr        r3, r29
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x11C
-
-	.loc_0x90:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0xB4
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xCC
-
-	.loc_0xB4:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xCC:
-	  mr        r28, r3
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x100
-	  lwz       r3, 0x55C(r28)
-	  lwz       r0, 0x2C(r3)
-	  cmplw     r0, r31
-	  bne-      .loc_0x100
-	  li        r3, 0x1
-	  b         .loc_0x17C
-
-	.loc_0x100:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x11C:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x144
-	  li        r0, 0x1
-	  b         .loc_0x170
-
-	.loc_0x144:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x16C
-	  li        r0, 0x1
-	  b         .loc_0x170
-
-	.loc_0x16C:
-	  li        r0, 0
-
-	.loc_0x170:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x90
-
-	.loc_0x178:
-	  li        r3, 0
-
-	.loc_0x17C:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -254,138 +156,50 @@ bool PlayerState::existUfoParts(u32 p1)
  */
 void PlayerState::initGame()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x3
-	  mtctr     r0
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  li        r3, 0
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
+	for (int i = 0; i < 30; i++) {
+		mPartsCollectedByDay[i] = 0;
+		mPartsToNextByDay[i]    = 0;
+	}
+	mResultFlags.initGame();
+	mDemoFlags.initGame();
+	_1B6                  = 0;
+	mLeftBehindPikis      = 0;
+	mLostBattlePikis      = 0;
+	mSproutedNum          = 0;
+	_0C                   = 0;
+	_1A0                  = 0;
+	_1A4                  = 0;
+	_1AC                  = 0;
+	_11                   = 8;
+	mTotalRegisteredParts = 0;
+	mTotalParts           = totalUfoParts;
+	_180                  = 0;
+	mCurrParts            = 0;
+	_14                   = 0;
+	_184                  = 0;
+	setContainer(1);
+	setDisplayPikiCount(1);
+	mTotalRegisteredParts = 0;
 
-	.loc_0x30:
-	  add       r4, r31, r6
-	  stb       r3, 0x18(r4)
-	  addi      r5, r4, 0x18
-	  addi      r6, r6, 0x8
-	  stbu      r3, 0x36(r4)
-	  stb       r3, 0x1(r5)
-	  stb       r3, 0x1(r4)
-	  stb       r3, 0x2(r5)
-	  stb       r3, 0x2(r4)
-	  stb       r3, 0x3(r5)
-	  stb       r3, 0x3(r4)
-	  stb       r3, 0x4(r5)
-	  stb       r3, 0x4(r4)
-	  stb       r3, 0x5(r5)
-	  stb       r3, 0x5(r4)
-	  stb       r3, 0x6(r5)
-	  stb       r3, 0x6(r4)
-	  stb       r3, 0x7(r5)
-	  stb       r3, 0x7(r4)
-	  bdnz+     .loc_0x30
-	  subfic    r0, r6, 0x1E
-	  cmpwi     r6, 0x1E
-	  mtctr     r0
-	  bge-      .loc_0xA4
+	int i = 0;
+	for (i = 0; i < mTotalParts; i++) {
+		mUfoParts[i]._DC = 0;
+	}
 
-	.loc_0x90:
-	  add       r4, r31, r6
-	  stb       r3, 0x18(r4)
-	  addi      r6, r6, 0x1
-	  stb       r3, 0x36(r4)
-	  bdnz+     .loc_0x90
+	_185 = true;
+	for (i = 0; i < 5; i++) {
+		_187[i] = false;
+	}
 
-	.loc_0xA4:
-	  addi      r3, r31, 0x70
-	  bl        0x40F4
-	  addi      r3, r31, 0x54
-	  bl        0x2BA8
-	  li        r30, 0
-	  stb       r30, 0x1B6(r31)
-	  li        r0, 0x8
-	  addi      r3, r31, 0
-	  stw       r30, 0x8(r31)
-	  li        r4, 0x1
-	  stw       r30, 0x4(r31)
-	  stw       r30, 0x0(r31)
-	  stw       r30, 0xC(r31)
-	  stw       r30, 0x1A0(r31)
-	  stw       r30, 0x1A4(r31)
-	  stb       r30, 0x1AC(r31)
-	  stb       r0, 0x11(r31)
-	  stw       r30, 0x170(r31)
-	  lwz       r0, -0x6148(r13)
-	  stw       r0, 0x174(r31)
-	  stw       r30, 0x180(r31)
-	  stw       r30, 0x17C(r31)
-	  stw       r30, 0x14(r31)
-	  stb       r30, 0x184(r31)
-	  lbz       r0, 0x184(r31)
-	  ori       r0, r0, 0x2
-	  stb       r0, 0x184(r31)
-	  bl        0xF30
-	  stw       r30, 0x170(r31)
-	  addi      r5, r30, 0
-	  addi      r4, r30, 0
-	  b         .loc_0x138
+	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
+	for (i = 0; i < 5; i++) {
+		if (node->mFileInfoList.getChildCount() > 0) {
+			mCourseFlags[i]->reset();
+		}
+		node = (StageInfo*)node->mNext;
+	}
 
-	.loc_0x124:
-	  lwz       r3, 0x178(r31)
-	  addi      r0, r4, 0xDC
-	  addi      r5, r5, 0x1
-	  stbx      r30, r3, r0
-	  addi      r4, r4, 0xE0
-
-	.loc_0x138:
-	  lwz       r0, 0x174(r31)
-	  cmpw      r5, r0
-	  blt+      .loc_0x124
-	  li        r0, 0x1
-	  stb       r0, 0x185(r31)
-	  li        r29, 0
-	  lis       r3, 0x803A
-	  stb       r29, 0x187(r31)
-	  subi      r3, r3, 0x24E0
-	  rlwinm    r30,r29,2,0,29
-	  stb       r29, 0x188(r31)
-	  stb       r29, 0x189(r31)
-	  stb       r29, 0x18A(r31)
-	  stb       r29, 0x18B(r31)
-	  lwz       r28, 0x10(r3)
-
-	.loc_0x174:
-	  addi      r3, r28, 0x90
-	  bl        -0x3F0A4
-	  cmpwi     r3, 0
-	  ble-      .loc_0x190
-	  lwz       r3, 0x1B0(r31)
-	  lwzx      r3, r3, r30
-	  bl        0x96C24
-
-	.loc_0x190:
-	  addi      r29, r29, 0x1
-	  lwz       r28, 0xC(r28)
-	  cmpwi     r29, 0x5
-	  addi      r30, r30, 0x4
-	  blt+      .loc_0x174
-	  li        r0, 0
-	  stb       r0, 0x10(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mShipUpgradeLevel = 0;
 }
 
 /*
@@ -395,241 +209,56 @@ void PlayerState::initGame()
  */
 PlayerState::PlayerState()
 {
-	mTotalParts = totalUfoParts;
-	mUfoParts   = new UfoParts[mTotalParts];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stmw      r26, 0x30(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r31, 0x54
-	  bl        0x2480
-	  addi      r3, r31, 0x70
-	  bl        0x3DF4
-	  addi      r3, r31, 0xC4
-	  bl        0xA0100
-	  li        r3, 0
-	  stw       r3, 0x190(r31)
-	  li        r0, 0x3
-	  mtctr     r0
-	  li        r6, 0
-	  sth       r3, 0x18E(r31)
-	  sth       r3, 0x18C(r31)
-	  stw       r3, 0x19C(r31)
-	  sth       r3, 0x19A(r31)
-	  sth       r3, 0x198(r31)
-	  lfs       f0, -0x7620(r2)
-	  stfs      f0, 0x1C8(r31)
-	  stfs      f0, 0x1C4(r31)
-	  stfs      f0, 0x1C0(r31)
+	for (int i = 0; i < 30; i++) {
+		mPartsCollectedByDay[i] = 0;
+		mPartsToNextByDay[i]    = 0;
+	}
 
-	.loc_0x64:
-	  add       r4, r31, r6
-	  stb       r3, 0x18(r4)
-	  addi      r5, r4, 0x18
-	  addi      r6, r6, 0x8
-	  stbu      r3, 0x36(r4)
-	  stb       r3, 0x1(r5)
-	  stb       r3, 0x1(r4)
-	  stb       r3, 0x2(r5)
-	  stb       r3, 0x2(r4)
-	  stb       r3, 0x3(r5)
-	  stb       r3, 0x3(r4)
-	  stb       r3, 0x4(r5)
-	  stb       r3, 0x4(r4)
-	  stb       r3, 0x5(r5)
-	  stb       r3, 0x5(r4)
-	  stb       r3, 0x6(r5)
-	  stb       r3, 0x6(r4)
-	  stb       r3, 0x7(r5)
-	  stb       r3, 0x7(r4)
-	  bdnz+     .loc_0x64
-	  subfic    r0, r6, 0x1E
-	  cmpwi     r6, 0x1E
-	  mtctr     r0
-	  bge-      .loc_0xD8
+	_1B6                  = 0;
+	mLeftBehindPikis      = 0;
+	mLostBattlePikis      = 0;
+	mSproutedNum          = 0;
+	_0C                   = 0;
+	_1A0                  = 0;
+	_1A4                  = 0;
+	_1AC                  = 0;
+	_11                   = 8;
+	mTotalRegisteredParts = 0;
+	mTotalParts           = totalUfoParts;
 
-	.loc_0xC4:
-	  add       r4, r31, r6
-	  stb       r3, 0x18(r4)
-	  addi      r6, r6, 0x1
-	  stb       r3, 0x36(r4)
-	  bdnz+     .loc_0xC4
+	mUfoParts  = new UfoParts[mTotalParts];
+	_180       = 0;
+	mCurrParts = 0;
+	_14        = 0;
+	_184       = 0;
+	setContainer(1);
+	setDisplayPikiCount(1);
+	mTotalRegisteredParts = 0;
 
-	.loc_0xD8:
-	  li        r30, 0
-	  stb       r30, 0x1B6(r31)
-	  li        r0, 0x8
-	  stw       r30, 0x8(r31)
-	  stw       r30, 0x4(r31)
-	  stw       r30, 0x0(r31)
-	  stw       r30, 0xC(r31)
-	  stw       r30, 0x1A0(r31)
-	  stw       r30, 0x1A4(r31)
-	  stb       r30, 0x1AC(r31)
-	  stb       r0, 0x11(r31)
-	  stw       r30, 0x170(r31)
-	  lwz       r0, -0x6148(r13)
-	  stw       r0, 0x174(r31)
-	  lwz       r29, 0x174(r31)
-	  mulli     r3, r29, 0xE0
-	  addi      r3, r3, 0x8
-	  bl        -0x38890
-	  lis       r4, 0x8008
-	  subi      r4, r4, 0x52C
-	  addi      r7, r29, 0
-	  li        r5, 0
-	  li        r6, 0xE0
-	  bl        0x19537C
-	  stw       r3, 0x178(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  stw       r30, 0x180(r31)
-	  stw       r30, 0x17C(r31)
-	  stw       r30, 0x14(r31)
-	  stb       r30, 0x184(r31)
-	  lbz       r0, 0x184(r31)
-	  ori       r0, r0, 0x2
-	  stb       r0, 0x184(r31)
-	  bl        0xD14
-	  stw       r30, 0x170(r31)
-	  addi      r5, r30, 0
-	  addi      r4, r30, 0
-	  b         .loc_0x188
+	int i = 0;
+	for (i = 0; i < mTotalParts; i++) {
+		mUfoParts[i]._DC = 0;
+	}
+	_18C.create(getStartHour(), getEndHour());
+	_198.create(0, getTotalDays());
+	_185 = true;
+	for (i = 0; i < 5; i++) {
+		_187[i] = false;
+	}
+	mCourseFlags = new BitFlags*[5];
 
-	.loc_0x174:
-	  lwz       r3, 0x178(r31)
-	  addi      r0, r4, 0xDC
-	  addi      r5, r5, 0x1
-	  stbx      r30, r3, r0
-	  addi      r4, r4, 0xE0
+	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
+	for (i = 0; i < 5; i++) {
+		int size = node->mFileInfoList.getChildCount();
+		if (size > 0) {
+			mCourseFlags[i] = new BitFlags;
+			mCourseFlags[i]->create(size, nullptr);
+			mCourseFlags[i]->reset();
+		}
+		node = (StageInfo*)node->mNext;
+	}
 
-	.loc_0x188:
-	  lwz       r0, 0x174(r31)
-	  cmpw      r5, r0
-	  blt+      .loc_0x174
-	  mr        r3, r31
-	  bl        0x12E4
-	  rlwinm    r29,r3,0,16,31
-	  addi      r3, r31, 0
-	  bl        0x12B0
-	  rlwinm    r0,r3,0,16,31
-	  sth       r3, 0x18C(r31)
-	  sub       r4, r29, r0
-	  addi      r0, r4, 0x1
-	  sth       r29, 0x18E(r31)
-	  mulli     r3, r0, 0xC
-	  bl        -0x38934
-	  li        r29, 0
-	  stw       r3, 0x190(r31)
-	  mulli     r30, r29, 0xC
-	  b         .loc_0x1F0
-
-	.loc_0x1D4:
-	  lwz       r0, 0x190(r31)
-	  li        r4, -0x1
-	  li        r5, -0x1
-	  add       r3, r0, r30
-	  bl        .loc_0x330
-	  addi      r30, r30, 0xC
-	  addi      r29, r29, 0x1
-
-	.loc_0x1F0:
-	  lhz       r3, 0x18C(r31)
-	  lhz       r0, 0x18E(r31)
-	  sub       r3, r0, r3
-	  addi      r0, r3, 0x1
-	  cmpw      r29, r0
-	  blt+      .loc_0x1D4
-	  mr        r3, r31
-	  bl        0x1240
-	  rlwinm    r4,r3,0,16,31
-	  addi      r0, r4, 0x1
-	  li        r29, 0
-	  sth       r29, 0x198(r31)
-	  mulli     r0, r0, 0xC
-	  sth       r3, 0x19A(r31)
-	  mr        r3, r0
-	  bl        -0x389A0
-	  mulli     r30, r29, 0xC
-	  stw       r3, 0x19C(r31)
-	  b         .loc_0x258
-
-	.loc_0x23C:
-	  lwz       r0, 0x19C(r31)
-	  li        r4, -0x1
-	  li        r5, -0x1
-	  add       r3, r0, r30
-	  bl        .loc_0x330
-	  addi      r30, r30, 0xC
-	  addi      r29, r29, 0x1
-
-	.loc_0x258:
-	  lhz       r3, 0x198(r31)
-	  lhz       r0, 0x19A(r31)
-	  sub       r3, r0, r3
-	  addi      r0, r3, 0x1
-	  cmpw      r29, r0
-	  blt+      .loc_0x23C
-	  li        r0, 0x1
-	  stb       r0, 0x185(r31)
-	  li        r27, 0
-	  li        r3, 0x14
-	  stb       r27, 0x187(r31)
-	  stb       r27, 0x188(r31)
-	  stb       r27, 0x189(r31)
-	  stb       r27, 0x18A(r31)
-	  stb       r27, 0x18B(r31)
-	  bl        -0x38A08
-	  lis       r4, 0x803A
-	  stw       r3, 0x1B0(r31)
-	  subi      r3, r4, 0x24E0
-	  lwz       r26, 0x10(r3)
-	  mr        r28, r27
-
-	.loc_0x2AC:
-	  addi      r3, r26, 0x90
-	  bl        -0x3F3A8
-	  mr.       r30, r3
-	  ble-      .loc_0x2FC
-	  li        r3, 0x8
-	  bl        -0x38A34
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x2D4
-	  bl        0x96778
-
-	.loc_0x2D4:
-	  lwz       r3, 0x1B0(r31)
-	  rlwinm    r4,r30,0,16,31
-	  li        r5, 0
-	  stwx      r29, r3, r28
-	  lwz       r3, 0x1B0(r31)
-	  lwzx      r3, r3, r28
-	  bl        0x968A4
-	  lwz       r3, 0x1B0(r31)
-	  lwzx      r3, r3, r28
-	  bl        0x968EC
-
-	.loc_0x2FC:
-	  addi      r27, r27, 0x1
-	  lwz       r26, 0xC(r26)
-	  cmpwi     r27, 0x5
-	  addi      r28, r28, 0x4
-	  blt+      .loc_0x2AC
-	  li        r0, 0
-	  stb       r0, 0x10(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x4C(r1)
-	  lmw       r26, 0x30(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-
-	.loc_0x330:
-	*/
+	mShipUpgradeLevel = 0;
 }
 
 /*
@@ -645,15 +274,6 @@ void TimeGraph::PikiNum::set(int color, int num)
 	}
 
 	mNum[Blue] = mNum[Red] = mNum[Yellow] = num;
-}
-
-/*
- * --INFO--
- * Address:	8007FAD4
- * Size:	000070
- */
-PlayerState::UfoParts::UfoParts()
-{
 }
 
 /*
@@ -707,7 +327,8 @@ void PlayerState::setChallengeMode()
  */
 void PlayerState::setDebugMode()
 {
-	// UNUSED FUNCTION
+	setChallengeMode();
+	_1B6 = false;
 }
 
 /*
@@ -715,14 +336,12 @@ void PlayerState::setDebugMode()
  * Address:	8007FC14
  * Size:	00000C
  */
-int PlayerState::getPartsGetCount(int)
+int PlayerState::getPartsGetCount(int index)
 {
-	/*
-	.loc_0x0:
-	  add       r3, r3, r4
-	  lbz       r3, 0x187(r3)
-	  blr
-	*/
+	if (index < 0 || index > 4) {
+		ERROR("yamsi3 !\n");
+	}
+	return _187[index];
 }
 
 /*
@@ -730,8 +349,11 @@ int PlayerState::getPartsGetCount(int)
  * Address:	........
  * Size:	000048
  */
-int PlayerState::getCardPikiCount(int)
+int PlayerState::getCardPikiCount(int color)
 {
+	if (color < 0 || color > 2) {
+		ERROR("NANDEYANEN-colr %d\n", color);
+	}
 	// UNUSED FUNCTION
 }
 
@@ -752,6 +374,7 @@ int PlayerState::getCardUfoPartsCount()
  */
 int PlayerState::getUfoPercentage()
 {
+	return getTotalParts() / 30.0f * 100.0f;
 	// UNUSED FUNCTION
 }
 
@@ -760,46 +383,18 @@ int PlayerState::getUfoPercentage()
  * Address:	8007FC28
  * Size:	000084
  */
-int PlayerState::getTotalPikiCount(int)
+int PlayerState::getTotalPikiCount(int color)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803D
-	  stw       r0, 0x4(r1)
-	  addi      r0, r3, 0x1DF0
-	  lis       r3, 0x803A
-	  stwu      r1, -0x30(r1)
-	  subi      r3, r3, 0x24E0
-	  stmw      r27, 0x1C(r1)
-	  addi      r27, r4, 0
-	  mulli     r4, r27, 0xC
-	  add       r4, r0, r4
-	  li        r30, 0
-	  li        r28, 0
-	  lwz       r5, 0x8(r4)
-	  lwz       r0, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  add       r31, r0, r5
-	  lwz       r29, 0x10(r3)
-	  add       r31, r4, r31
+	int total = pikiInfMgr.getColorTotal(color);
 
-	.loc_0x4C:
-	  addi      r3, r29, 0x2C
-	  addi      r4, r27, 0
-	  bl        0x46528
-	  addi      r28, r28, 0x1
-	  lwz       r29, 0xC(r29)
-	  cmpwi     r28, 0x5
-	  add       r30, r30, r3
-	  blt+      .loc_0x4C
-	  mr        r3, r31
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	int test        = 0;
+	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
+	for (int i = 0; i < 5; i++) {
+		test += node->mStageInf.mBPikiInfMgr.getPikiCount(color);
+		node = (StageInfo*)node->mNext;
+	}
+
+	return total;
 }
 
 /*
@@ -807,282 +402,85 @@ int PlayerState::getTotalPikiCount(int)
  * Address:	8007FCAC
  * Size:	0003FC
  */
-void PlayerState::saveCard(RandomAccessStream&)
+void PlayerState::saveCard(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x38(r1)
-	  stmw      r26, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  stb       r0, 0x185(r3)
-	  addi      r3, r1, 0x14
-	  bl        -0x3BE74
-	  lis       r4, 0x636F
-	  addi      r3, r1, 0x14
-	  addi      r4, r4, 0x6E74
-	  bl        -0x3BE1C
-	  addi      r3, r1, 0x14
-	  addi      r4, r31, 0
-	  bl        -0x3BCE4
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x1DF0
-	  addi      r4, r31, 0
-	  bl        0x45A00
-	  lis       r4, 0x6361
-	  addi      r3, r1, 0x14
-	  addi      r4, r4, 0x6368
-	  bl        -0x3BE48
-	  addi      r3, r1, 0x14
-	  addi      r4, r31, 0
-	  bl        -0x3BD10
-	  lwz       r3, 0x3098(r13)
-	  mr        r4, r31
-	  bl        0x5F338
-	  lis       r4, 0x6D65
-	  addi      r3, r1, 0x14
-	  addi      r4, r4, 0x636B
-	  bl        -0x3BE70
-	  addi      r3, r1, 0x14
-	  addi      r4, r31, 0
-	  bl        -0x3BD38
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  addi      r28, r3, 0x10
-	  lwz       r27, 0x10(r3)
-	  li        r26, 0
+	_185 = false;
 
-	.loc_0xAC:
-	  addi      r3, r27, 0x2C
-	  addi      r4, r31, 0
-	  bl        0x46718
-	  addi      r26, r26, 0x1
-	  lwz       r27, 0xC(r27)
-	  cmpwi     r26, 0x5
-	  blt+      .loc_0xAC
-	  lis       r4, 0x7566
-	  addi      r3, r1, 0x14
-	  addi      r4, r4, 0x6F70
-	  bl        -0x3BEBC
-	  addi      r3, r1, 0x14
-	  addi      r4, r31, 0
-	  bl        -0x3BD84
-	  mr        r3, r31
-	  lbz       r4, 0x10(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r30, 0x54
-	  addi      r4, r31, 0
-	  bl        0x25B8
-	  addi      r3, r30, 0x70
-	  addi      r4, r31, 0
-	  bl        0x3B04
-	  mr        r3, r31
-	  lwz       r4, 0x170(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  li        r26, 0
-	  mulli     r29, r26, 0xE0
-	  b         .loc_0x160
+	ID32 id;
 
-	.loc_0x138:
-	  mr        r3, r31
-	  lwz       r4, 0x178(r30)
-	  lwz       r12, 0x4(r31)
-	  addi      r0, r29, 0xDC
-	  lbzx      r4, r4, r0
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r29, r29, 0xE0
-	  addi      r26, r26, 0x1
+	id.setID('cont');
+	id.write(data);
+	pikiInfMgr.saveCard(data);
 
-	.loc_0x160:
-	  lwz       r0, 0x170(r30)
-	  cmpw      r26, r0
-	  blt+      .loc_0x138
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x0(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x4(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x8(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0xC(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x17C(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x180(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x184(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x185(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x186(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x11(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x1AC(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  li        r26, 0
+	id.setID('cach');
+	id.write(data);
+	generatorCache->saveCard(data);
 
-	.loc_0x28C:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  addi      r0, r26, 0x187
-	  lbzx      r4, r30, r0
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r26, r26, 0x1
-	  cmpwi     r26, 0x5
-	  blt+      .loc_0x28C
-	  mr        r3, r31
-	  lwz       r4, 0x1A0(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x1A4(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r4, 0x6C69
-	  addi      r3, r1, 0x14
-	  addi      r4, r4, 0x6D67
-	  bl        -0x3C0D8
-	  addi      r3, r1, 0x14
-	  addi      r4, r31, 0
-	  bl        -0x3BFA0
-	  li        r26, 0
-	  lwz       r27, 0x0(r28)
-	  rlwinm    r29,r26,2,0,29
+	id.setID('meck');
+	id.write(data);
+	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
+	int i           = 0;
+	for (i = 0; i < 5; i++) {
+		node->mStageInf.saveCard(data);
+		node = (StageInfo*)node->mNext;
+	}
 
-	.loc_0x30C:
-	  addi      r3, r27, 0x90
-	  bl        -0x3F93C
-	  cmpwi     r3, 0
-	  ble-      .loc_0x32C
-	  lwz       r3, 0x1B0(r30)
-	  mr        r4, r31
-	  lwzx      r3, r3, r29
-	  bl        0x962C4
+	id.setID('ufop');
+	id.write(data);
+	data.writeByte(mShipUpgradeLevel);
 
-	.loc_0x32C:
-	  addi      r26, r26, 0x1
-	  lwz       r27, 0xC(r27)
-	  cmpwi     r26, 0x5
-	  addi      r29, r29, 0x4
-	  blt+      .loc_0x30C
-	  lis       r4, 0x7669
-	  addi      r3, r1, 0x14
-	  addi      r4, r4, 0x7366
-	  bl        -0x3C134
-	  addi      r3, r1, 0x14
-	  addi      r4, r31, 0
-	  bl        -0x3BFFC
-	  mr        r3, r31
-	  lwz       r28, 0x0(r28)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  li        r27, 0
+	mDemoFlags.saveCard(data);
+	mResultFlags.saveCard(data);
+	data.writeInt(mTotalRegisteredParts);
 
-	.loc_0x378:
-	  mr        r3, r31
-	  lwz       r0, 0x20(r28)
-	  lwz       r12, 0x4(r31)
-	  rlwinm    r4,r0,0,24,31
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r27, r27, 0x1
-	  lwz       r28, 0xC(r28)
-	  cmpwi     r27, 0x5
-	  blt+      .loc_0x378
-	  li        r27, 0
+	for (i = 0; i < mTotalRegisteredParts; i++) {
+		data.writeByte(mUfoParts[i]._DC);
+	}
+	PRINT("**** SAVING @ %d (%d,%d,%d)\n", data.getPosition());
+	data.writeInt(mSproutedNum);
+	data.writeInt(mLostBattlePikis);
+	data.writeInt(mLeftBehindPikis);
+	data.writeInt(_0C);
+	data.writeInt(mCurrParts);
+	data.writeInt(_180);
+	data.writeByte(_184);
+	data.writeByte(_185);
+	data.writeByte(_186);
+	data.writeByte(_11);
+	data.writeByte(_1AC);
 
-	.loc_0x3A8:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  add       r28, r30, r27
-	  lbz       r4, 0x18(r28)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x36(r28)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r27, r27, 0x1
-	  cmpwi     r27, 0x1E
-	  blt+      .loc_0x3A8
-	  lmw       r26, 0x20(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	for (i = 0; i < 5; i++) {
+		data.writeByte(_187[i]);
+	}
+	data.writeInt(_1A0);
+	data.writeInt(_1A4);
+
+	id.setID('limg');
+	id.write(data);
+
+	node = (StageInfo*)flowCont.mRootInfo.mChild;
+	for (i = 0; i < 5; i++) {
+		if (node->mFileInfoList.getChildCount() > 0) {
+			mCourseFlags[i]->saveCard(data);
+		}
+		node = (StageInfo*)node->mNext;
+	}
+
+	id.setID('visf');
+	id.write(data);
+
+	node = (StageInfo*)flowCont.mRootInfo.mChild;
+	PRINT("SAVE VISIT FLAGS FROM %d\n", data.getPosition());
+	for (i = 0; i < 5; i++) {
+		PRINT("\t++++ STAGE %d as %s\n", i, node->mHasInitialised ? "VISITED" : "NEVER VISITED");
+		data.writeByte(node->mHasInitialised);
+		node = (StageInfo*)node->mNext;
+	}
+
+	for (i = 0; i < 30; i++) {
+		data.writeByte(mPartsCollectedByDay[i]);
+		data.writeByte(mPartsToNextByDay[i]);
+	}
 }
 
 /*
@@ -1090,270 +488,89 @@ void PlayerState::saveCard(RandomAccessStream&)
  * Address:	800800A8
  * Size:	0003CC
  */
-void PlayerState::loadCard(RandomAccessStream&)
+void PlayerState::loadCard(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r26, 0x28(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  addi      r3, r1, 0x18
-	  bl        -0x3C268
-	  addi      r3, r1, 0x18
-	  addi      r4, r30, 0
-	  bl        -0x3C034
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x1DF0
-	  addi      r4, r30, 0
-	  bl        0x45694
-	  addi      r3, r1, 0x18
-	  addi      r4, r30, 0
-	  bl        -0x3C050
-	  lwz       r3, 0x3098(r13)
-	  mr        r4, r30
-	  bl        0x5F098
-	  addi      r3, r1, 0x18
-	  addi      r4, r30, 0
-	  bl        -0x3C068
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  addi      r31, r3, 0x10
-	  lwz       r27, 0x10(r3)
-	  li        r26, 0
+	ID32 id;
+	PRINT("**************** LOAD CARD (%s) ****************\n", "Container Piki");
+	id.read(data);
+	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
+	pikiInfMgr.loadCard(data);
 
-	.loc_0x74:
-	  addi      r3, r27, 0x2C
-	  addi      r4, r30, 0
-	  bl        0x463DC
-	  addi      r26, r26, 0x1
-	  lwz       r27, 0xC(r27)
-	  cmpwi     r26, 0x5
-	  blt+      .loc_0x74
-	  addi      r3, r1, 0x18
-	  addi      r4, r30, 0
-	  bl        -0x3C0A4
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x10(r29)
-	  addi      r4, r30, 0
-	  addi      r3, r29, 0x54
-	  bl        0x2274
-	  addi      r3, r29, 0x70
-	  addi      r4, r30, 0
-	  bl        0x37F4
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r28, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  li        r26, 0
-	  addi      r27, r26, 0
-	  b         .loc_0x12C
+	PRINT("**************** LOAD CARD (%s) ****************\n", "Generator Cache");
+	id.read(data);
+	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
+	generatorCache->loadCard(data);
 
-	.loc_0x104:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x178(r29)
-	  addi      r0, r27, 0xDC
-	  addi      r26, r26, 0x1
-	  stbx      r3, r4, r0
-	  addi      r27, r27, 0xE0
+	PRINT("**************** LOAD CARD (%s) ****************\n", "Piki Head");
+	id.read(data);
+	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
+	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
+	for (int i = 0; i < 5; i++) {
+		node->mStageInf.loadCard(data);
+		node = (StageInfo*)node->mNext;
+	}
 
-	.loc_0x12C:
-	  cmpw      r26, r28
-	  blt+      .loc_0x104
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x4(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x8(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xC(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x17C(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x180(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x184(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x185(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x186(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x11(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x1AC(r29)
-	  li        r26, 0
+	PRINT("**************** LOAD CARD (%s) ****************\n", "Player State");
+	id.read(data);
+	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
+	mShipUpgradeLevel = data.readByte();
 
-	.loc_0x274:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r26, 0x187
-	  addi      r26, r26, 0x1
-	  stbx      r3, r29, r0
-	  cmpwi     r26, 0x5
-	  blt+      .loc_0x274
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x1A0(r29)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x1A4(r29)
-	  addi      r4, r30, 0
-	  addi      r3, r1, 0x18
-	  bl        -0x3C2E0
-	  li        r26, 0
-	  lwz       r28, 0x0(r31)
-	  rlwinm    r27,r26,2,0,29
+	mDemoFlags.loadCard(data);
+	mResultFlags.loadCard(data);
 
-	.loc_0x2E4:
-	  addi      r3, r28, 0x90
-	  bl        -0x3FD10
-	  cmpwi     r3, 0
-	  ble-      .loc_0x304
-	  lwz       r3, 0x1B0(r29)
-	  mr        r4, r30
-	  lwzx      r3, r3, r27
-	  bl        0x95E80
+	int parts = data.readInt();
+	PRINT("**** BEFORE UFO PARTS :: %d \n", data.getPosition());
+	for (int i = 0; i < parts; i++) {
+		mUfoParts[i]._DC = data.readByte();
+	}
+	PRINT("**** LOADING @ %d\n", data.getPosition());
 
-	.loc_0x304:
-	  addi      r26, r26, 0x1
-	  lwz       r28, 0xC(r28)
-	  cmpwi     r26, 0x5
-	  addi      r27, r27, 0x4
-	  blt+      .loc_0x2E4
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r1, 0x18
-	  addi      r4, r30, 0
-	  bl        -0x3C340
-	  lwz       r27, 0x0(r31)
-	  li        r28, 0
+	mSproutedNum     = data.readInt();
+	mLostBattlePikis = data.readInt();
+	mLeftBehindPikis = data.readInt();
+	_0C              = data.readInt();
+	mCurrParts       = data.readInt();
+	_180             = data.readInt();
+	_184             = data.readByte();
+	_185             = data.readByte();
+	_186             = data.readByte();
+	_11              = data.readByte();
+	_1AC             = data.readByte();
+	for (int i = 0; i < 5; i++) {
+		_187[i] = data.readByte();
+	}
+	_1A0 = data.readInt();
+	_1A4 = data.readInt();
+	PRINT("*** loaded : %d %d %d\n", mCurrParts, _184, _185);
+	PRINT("| ufo level %d ufo parts %d container flag %d tutorialmode %s\n", mShipUpgradeLevel, mCurrParts, _184, _185 ? "yes" : "no");
+	id.read(data);
+	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
+	int i = 0;
 
-	.loc_0x340:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x20(r27)
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x5
-	  lwz       r27, 0xC(r27)
-	  blt+      .loc_0x340
-	  lwz       r3, 0x3098(r13)
-	  bl        0x5FD48
-	  li        r28, 0
+	node = (StageInfo*)flowCont.mRootInfo.mChild;
+	for (i = 0; i < 5; i++) {
+		if (node->mFileInfoList.getChildCount() > 0) {
+			mCourseFlags[i]->loadCard(data);
+		}
+		node = (StageInfo*)node->mNext;
+	}
 
-	.loc_0x378:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  add       r27, r29, r28
-	  stb       r3, 0x18(r27)
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r28, r28, 0x1
-	  stb       r3, 0x36(r27)
-	  cmpwi     r28, 0x1E
-	  blt+      .loc_0x378
-	  lmw       r26, 0x28(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("LOAD VISIT FLAGS FROM %d\n", data.getPosition());
+	id.read(data);
+	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
+	node = (StageInfo*)flowCont.mRootInfo.mChild;
+	for (i = 0; i < 5; i++) {
+		node->mHasInitialised = data.readByte();
+		PRINT("\t+++++++++ STAGE %d : %s\n", i, node->mHasInitialised ? "VISITED BEFORE" : "NEVER BEFORE");
+		node = (StageInfo*)node->mNext;
+	}
+	PRINT("*******************************************************************************\n");
+	generatorCache->dump();
+
+	for (i = 0; i < 30; i++) {
+		mPartsCollectedByDay[i] = data.readByte();
+		mPartsToNextByDay[i]    = data.readByte();
+	}
 }
 
 /*
@@ -1390,43 +607,12 @@ bool PlayerState::isGameCourse()
  * Address:	800804E4
  * Size:	000068
  */
-bool PlayerState::checkLimitGenFlag(int)
+bool PlayerState::checkLimitGenFlag(int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803A
-	  stw       r0, 0x4(r1)
-	  subi      r5, r5, 0x24E0
-	  li        r0, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0xA8(r5)
-	  lhz       r5, 0x24(r5)
-	  cmpwi     r5, 0
-	  blt-      .loc_0x34
-	  cmpwi     r5, 0x5
-	  bge-      .loc_0x34
-	  li        r0, 0x1
-
-	.loc_0x34:
-	  rlwinm.   r0,r0,0,24,31
-	  bne-      .loc_0x44
-	  li        r3, 0x1
-	  b         .loc_0x58
-
-	.loc_0x44:
-	  lwz       r3, 0x1B0(r3)
-	  rlwinm    r0,r5,2,0,29
-	  rlwinm    r4,r4,0,16,31
-	  lwzx      r3, r3, r0
-	  bl        0x95E7C
-
-	.loc_0x58:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!isGameCourse()) {
+		return true;
+	}
+	return mCourseFlags[flowCont.mCurrentStage->mStageIndex]->isFlag(id);
 }
 
 /*
@@ -1434,47 +620,15 @@ bool PlayerState::checkLimitGenFlag(int)
  * Address:	8008054C
  * Size:	000080
  */
-void PlayerState::setLimitGenFlag(int)
+void PlayerState::setLimitGenFlag(int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803A
-	  stw       r0, 0x4(r1)
-	  subi      r5, r5, 0x24E0
-	  li        r0, 0
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r5, 0xA8(r5)
-	  lhz       r5, 0x24(r5)
-	  cmpwi     r5, 0
-	  blt-      .loc_0x40
-	  cmpwi     r5, 0x5
-	  bge-      .loc_0x40
-	  li        r0, 0x1
+	if (isGameCourse()) {
+		int course = flowCont.mCurrentStage->mStageIndex;
+		mCourseFlags[course]->setFlag(id);
+		mCourseFlags[course]->dump();
+	}
 
-	.loc_0x40:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x68
-	  lwz       r3, 0x1B0(r30)
-	  rlwinm    r31,r5,2,0,29
-	  rlwinm    r4,r4,0,16,31
-	  lwzx      r3, r3, r31
-	  bl        0x95DE0
-	  lwz       r3, 0x1B0(r30)
-	  lwzx      r3, r3, r31
-	  bl        0x95C20
-
-	.loc_0x68:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -1482,8 +636,12 @@ void PlayerState::setLimitGenFlag(int)
  * Address:	800805CC
  * Size:	000020
  */
-bool PlayerState::displayPikiCount(int)
+bool PlayerState::displayPikiCount(int color)
 {
+	if (1 << color & _1AC)
+		PRINT("color %d : %x is on\n", color, _1AC);
+	return (1 << color & _1AC) != 0;
+
 	/*
 	.loc_0x0:
 	  li        r5, 0x1
@@ -1502,17 +660,9 @@ bool PlayerState::displayPikiCount(int)
  * Address:	800805EC
  * Size:	000018
  */
-void PlayerState::setDisplayPikiCount(int)
+void PlayerState::setDisplayPikiCount(int color)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x1
-	  lbz       r5, 0x1AC(r3)
-	  slw       r0, r0, r4
-	  or        r0, r5, r0
-	  stb       r0, 0x1AC(r3)
-	  blr
-	*/
+	_1AC |= 1 << color;
 }
 
 /*
@@ -1522,6 +672,7 @@ void PlayerState::setDisplayPikiCount(int)
  */
 void PlayerState::init()
 {
+	pelletMgr = new PelletMgr(nullptr);
 	// UNUSED FUNCTION
 }
 
@@ -1548,6 +699,22 @@ bool PlayerState::hasUfoParts(u32 idx)
  */
 void PlayerState::update()
 {
+	if (!_1B6) {
+		mDemoFlags.update();
+		if (!_1B6 && !_185) {
+			int time = gameflow.mWorldClock.mCurrentTime;
+			if (time != _194) {
+				GameStat::update();
+				_194 = time;
+				_18C.set(_194, 0, GameStat::allPikis[0]);
+				_18C.set(_194, 1, GameStat::allPikis[1]);
+				_18C.set(_194, 2, GameStat::allPikis[2]);
+				PRINT("record (%d %d %d) = %d\n", GameStat::allPikis, GameStat::allPikis[0], GameStat::allPikis[1], GameStat::allPikis[2]);
+			}
+		}
+	}
+
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1623,131 +790,30 @@ void PlayerState::update()
  */
 void PlayerState::initCourse()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x8
-	  stw       r0, 0x4(r1)
-	  subfic    r0, r4, 0xA
-	  cmpwi     r4, 0xA
-	  mtctr     r0
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x20(r1)
-	  bge-      .loc_0x30
-
-	.loc_0x2C:
-	  bdnz-     .loc_0x2C
-
-	.loc_0x30:
-	  li        r5, 0
-	  addi      r6, r5, 0
-	  li        r4, -0x1
-	  b         .loc_0x5C
-
-	.loc_0x40:
-	  lwz       r0, 0x190(r31)
-	  addi      r5, r5, 0x1
-	  add       r3, r0, r6
-	  stw       r4, 0x8(r3)
-	  addi      r6, r6, 0xC
-	  stw       r4, 0x4(r3)
-	  stw       r4, 0x0(r3)
-
-	.loc_0x5C:
-	  lhz       r3, 0x18C(r31)
-	  lhz       r0, 0x18E(r31)
-	  sub       r3, r0, r3
-	  addi      r0, r3, 0x1
-	  cmpw      r5, r0
-	  blt+      .loc_0x40
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        0x204
-	  li        r0, 0
-	  stb       r0, 0x1B5(r31)
-	  li        r3, 0x10
-	  stb       r0, 0xBC(r31)
-	  bl        -0x397D0
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xA4
-	  bl        0x93B84
-
-	.loc_0xA4:
-	  stw       r30, 0x1B8(r31)
-	  li        r3, 0x10
-	  bl        -0x397EC
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xC0
-	  bl        0x93B68
-
-	.loc_0xC0:
-	  stw       r30, 0x1BC(r31)
-	  li        r4, 0x15
-	  lwz       r3, 0x1B8(r31)
-	  bl        0x93C4C
-	  lwz       r3, 0x1BC(r31)
-	  li        r4, 0x16
-	  bl        0x93C40
-	  lwz       r3, 0x1B8(r31)
-	  bl        0x93CB8
-	  lwz       r3, 0x1BC(r31)
-	  bl        0x93CB0
-	  lfs       f0, -0x6144(r13)
-	  addi      r3, r31, 0x70
-	  stfs      f0, 0x1C0(r31)
-	  lfs       f0, -0x6140(r13)
-	  stfs      f0, 0x1C4(r31)
-	  lfs       f0, -0x613C(r13)
-	  stfs      f0, 0x1C8(r31)
-	  bl        0x3448
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  lwz       r4, 0xA8(r3)
-	  lis       r3, 0x1
-	  subi      r0, r3, 0x1
-	  lhz       r3, 0x24(r4)
-	  cmpwi     r3, 0
-	  sth       r0, 0x194(r31)
-	  beq-      .loc_0x138
-	  li        r0, 0
-	  stb       r0, 0x185(r31)
-
-	.loc_0x138:
-	  lwz       r4, 0x3120(r13)
-	  addi      r3, r31, 0xC4
-	  lwz       r0, 0x48(r4)
-	  stw       r0, 0xC0(r31)
-	  lwz       r8, 0xC0(r31)
-	  lwz       r6, 0x3120(r13)
-	  lwz       r4, 0x24(r8)
-	  addi      r5, r8, 0x14
-	  lwz       r7, 0x50(r6)
-	  addi      r6, r8, 0x4
-	  bl        0x9F038
-	  addi      r3, r1, 0x10
-	  li        r4, 0x58
-	  bl        0x9E6A8
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x58
-	  bl        0x9E698
-	  addi      r4, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r31, 0xC4
-	  bl        0x9F198
-	  addi      r3, r31, 0x54
-	  bl        0x1984
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < 10; i++) {
+		PRINT("***************************** PLAYER STAT INIT COURSE!\n");
+	}
+	_18C.init();
+	setNavi(false);
+	setDayEnd(false);
+	_BC  = 0;
+	_1B8 = new PermanentEffect;
+	_1BC = new PermanentEffect;
+	_1B8->changeEffect(EffectMgr::EFF_Navi_Light);
+	_1BC->changeEffect(EffectMgr::EFF_Navi_LightGlow);
+	_1B8->stop();
+	_1BC->stop();
+	_1C0.set(0.0f, 0.0f, 0.0f);
+	mResultFlags.dump();
+	int id = flowCont.mCurrentStage->mStageIndex;
+	_194   = -1;
+	if (id != 0) {
+		_185 = false;
+	}
+	_C0 = naviMgr->mNaviShapeObject[0];
+	mPikiAnimMgr.init(_C0->mAnimMgr, &_C0->mAnimatorB, &_C0->mAnimatorA, naviMgr->mMotionTable);
+	mPikiAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Noru), PaniMotionInfo(PIKIANIM_Noru));
+	mDemoFlags.initCourse();
 }
 
 /*
@@ -1757,71 +823,19 @@ void PlayerState::initCourse()
  */
 void PlayerState::exitCourse()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  addi      r4, r5, 0
-	  li        r6, 0
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  b         .loc_0x44
+	for (int i = 0; i < mTotalRegisteredParts; i++) {
+		mUfoParts[i].mPelletShape = nullptr;
+	}
+	mTotalRegisteredParts = 0;
 
-	.loc_0x30:
-	  lwz       r3, 0x178(r28)
-	  addi      r0, r5, 0xD4
-	  addi      r6, r6, 0x1
-	  stwx      r4, r3, r0
-	  addi      r5, r5, 0xE0
-
-	.loc_0x44:
-	  lwz       r0, 0x170(r28)
-	  cmpw      r6, r0
-	  blt+      .loc_0x30
-	  li        r0, 0
-	  stw       r0, 0x170(r28)
-	  mr        r3, r28
-	  bl        0x27C
-	  mr        r30, r3
-	  b         .loc_0x98
-
-	.loc_0x68:
-	  li        r29, 0
-	  addi      r31, r1, 0xC
-
-	.loc_0x70:
-	  addi      r3, r28, 0
-	  addi      r4, r30, 0
-	  addi      r5, r29, 0
-	  bl        0x2AC
-	  addi      r29, r29, 0x1
-	  stw       r3, 0x0(r31)
-	  cmpwi     r29, 0x3
-	  addi      r31, r31, 0x4
-	  blt+      .loc_0x70
-	  addi      r30, r30, 0x1
-
-	.loc_0x98:
-	  mr        r3, r28
-	  bl        0x264
-	  cmpw      r30, r3
-	  ble+      .loc_0x68
-	  li        r0, 0
-	  stb       r0, 0x185(r28)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	int counts[3];
+	for (int hour = getStartHour(); hour <= getEndHour(); hour++) {
+		for (int color = 0; color < 3; color++) {
+			counts[color] = getPikiHourCount(hour, color);
+		}
+		PRINT("*** HOUR %d : (%3d %3d %3d)\n", hour, counts[0], counts[1], counts[2]);
+	}
+	_185 = false;
 }
 
 /*
@@ -1840,7 +854,7 @@ void PlayerState::setNavi(bool p1)
 		_1B8->restart();
 		_1BC->restart();
 		_1B4 = 1;
-		mPikiAnimMgr.startMotion(PaniMotionInfo(88), PaniMotionInfo(88));
+		mPikiAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Noru), PaniMotionInfo(PIKIANIM_Noru));
 	}
 }
 
@@ -1871,97 +885,15 @@ int PlayerState::getFinalBornPikis()
  */
 void PlayerState::updateFinalResult()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803D
-	  stw       r0, 0x4(r1)
-	  addi      r6, r4, 0x1E58
-	  stwu      r1, -0x58(r1)
-	  stmw      r22, 0x30(r1)
-	  addi      r28, r3, 0
-	  lis       r3, 0x803D
-	  addi      r5, r3, 0x1EAC
-	  lis       r3, 0x803D
-	  addi      r31, r3, 0x1DF0
-	  lis       r3, 0x803A
-	  addi      r29, r5, 0x8
-	  addi      r30, r5, 0x4
-	  subi      r27, r3, 0x24E0
-	  li        r22, 0
-	  lwz       r4, 0x8(r6)
-	  lwz       r0, 0x4(r6)
-	  lwz       r7, 0x1A0(r28)
-	  add       r0, r0, r4
-	  lwz       r4, 0x0(r6)
-	  add       r0, r0, r7
-	  add       r0, r4, r0
-	  stw       r0, 0x1A0(r28)
-	  lwz       r4, 0x8(r5)
-	  lwz       r0, 0x4(r5)
-	  lwz       r6, 0x1A4(r28)
-	  add       r0, r0, r4
-	  lwz       r4, 0x0(r5)
-	  add       r0, r0, r6
-	  add       r0, r4, r0
-	  stw       r0, 0x1A4(r28)
-	  li        r0, 0
-	  stw       r0, 0x1A8(r28)
-
-	.loc_0x88:
-	  lwz       r4, 0x8(r31)
-	  li        r24, 0
-	  lwz       r0, 0x4(r31)
-	  mr        r26, r24
-	  lwz       r3, 0x0(r31)
-	  add       r23, r0, r4
-	  lwz       r25, 0x10(r27)
-	  add       r23, r3, r23
-
-	.loc_0xA8:
-	  addi      r3, r25, 0x2C
-	  addi      r4, r22, 0
-	  bl        0x45694
-	  addi      r26, r26, 0x1
-	  lwz       r25, 0xC(r25)
-	  cmpwi     r26, 0x5
-	  add       r24, r24, r3
-	  blt+      .loc_0xA8
-	  lwz       r0, 0x1A8(r28)
-	  addi      r22, r22, 0x1
-	  cmpwi     r22, 0x3
-	  add       r0, r0, r23
-	  stw       r0, 0x1A8(r28)
-	  addi      r31, r31, 0xC
-	  blt+      .loc_0x88
-	  lis       r3, 0x803D
-	  lwz       r7, 0x1A8(r28)
-	  addi      r5, r3, 0x1EC4
-	  lwz       r6, 0x8(r5)
-	  lis       r4, 0x803A
-	  lwz       r0, 0x4(r5)
-	  lis       r3, 0x803D
-	  lwz       r5, 0x0(r5)
-	  add       r0, r0, r6
-	  add       r0, r0, r7
-	  add       r0, r5, r0
-	  stw       r0, 0x1A8(r28)
-	  subi      r6, r4, 0x2848
-	  addi      r3, r3, 0x1EAC
-	  lwz       r4, 0x0(r29)
-	  lwz       r0, 0x0(r30)
-	  lwz       r5, 0xB8(r6)
-	  add       r0, r0, r4
-	  lwz       r3, 0x0(r3)
-	  add       r0, r0, r5
-	  add       r0, r3, r0
-	  stw       r0, 0xB8(r6)
-	  lwz       r0, 0x5C(r1)
-	  lmw       r22, 0x30(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	_1A0 += GameStat::deadPikis;
+	_1A4 += GameStat::bornPikis;
+	_1A8 = 0;
+	for (int i = 0; i < 3; i++) {
+		_1A8 += getTotalPikiCount(i);
+	}
+	_1A8 += GameStat::mapPikis;
+	PRINT("lastPikmins ===== %d _______________________________\n", _1A8);
+	gameflow.mGamePrefs.addBornPikis(GameStat::bornPikis);
 }
 
 /*
@@ -1991,20 +923,7 @@ int PlayerState::getTotalDays()
  */
 int PlayerState::getStartHour()
 {
-	return 0;
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803A
-	  stwu      r1, -0x20(r1)
-	  subi      r3, r3, 0x2848
-	  lwz       r3, 0x20(r3)
-	  lfs       f0, 0x10(r3)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r3, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	return gameflow.mParameters->mStartHour();
 }
 
 /*
@@ -2014,20 +933,7 @@ int PlayerState::getStartHour()
  */
 int PlayerState::getEndHour()
 {
-	return 0;
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803A
-	  stwu      r1, -0x20(r1)
-	  subi      r3, r3, 0x2848
-	  lwz       r3, 0x20(r3)
-	  lfs       f0, 0x20(r3)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r3, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	return gameflow.mParameters->mEndHour();
 }
 
 /*
@@ -2035,33 +941,9 @@ int PlayerState::getEndHour()
  * Address:	80080C1C
  * Size:	00004C
  */
-int PlayerState::getPikiHourCount(int, int)
+int PlayerState::getPikiHourCount(int time, int color)
 {
-	return 0;
-	/*
-	.loc_0x0:
-	  lhz       r6, 0x18C(r3)
-	  rlwinm    r0,r4,0,16,31
-	  cmpwi     r5, 0
-	  lwz       r3, 0x190(r3)
-	  sub       r0, r0, r6
-	  mulli     r0, r0, 0xC
-	  add       r4, r3, r0
-	  blt-      .loc_0x34
-	  cmpwi     r5, 0x2
-	  bgt-      .loc_0x34
-	  rlwinm    r0,r5,2,0,29
-	  lwzx      r3, r4, r0
-	  blr
-
-	.loc_0x34:
-	  lwz       r3, 0x8(r4)
-	  lwz       r0, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  add       r3, r0, r3
-	  add       r3, r4, r3
-	  blr
-	*/
+	return _18C.get(time, color);
 }
 
 /*
@@ -2091,7 +973,7 @@ int PlayerState::getCurrParts()
  */
 int PlayerState::getRestParts()
 {
-	// UNUSED FUNCTION
+	return mTotalParts - mCurrParts;
 }
 
 /*
@@ -2165,9 +1047,11 @@ void PlayerState::UfoParts::initAnim(PelletShapeObject* shape)
  * Address:	........
  * Size:	00004C
  */
-void PlayerState::UfoParts::startMotion(int)
+void PlayerState::UfoParts::startMotion(int id)
 {
-	// UNUSED FUNCTION
+	if (mPelletShape) {
+		mAnimator.startMotion(PaniMotionInfo(id, this));
+	}
 }
 
 /*
@@ -2175,9 +1059,11 @@ void PlayerState::UfoParts::startMotion(int)
  * Address:	........
  * Size:	000078
  */
-void PlayerState::UfoParts::startMotion(int, int)
+void PlayerState::UfoParts::startMotion(int id1, int id2)
 {
-	// UNUSED FUNCTION
+	if (mPelletShape) {
+		mAnimator.startMotion(PaniMotionInfo(id1, this), PaniMotionInfo(id2));
+	}
 }
 
 /*
@@ -2187,7 +1073,7 @@ void PlayerState::UfoParts::startMotion(int, int)
  */
 void PlayerState::UfoParts::stopMotion()
 {
-	// UNUSED FUNCTION
+	_D8 = 30.0f;
 }
 
 /*
@@ -2195,8 +1081,56 @@ void PlayerState::UfoParts::stopMotion()
  * Address:	80080E00
  * Size:	0001F0
  */
-void PlayerState::UfoParts::animationKeyUpdated(PaniAnimKeyEvent&)
+void PlayerState::UfoParts::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
+	int anim     = mAnimator.mLowerAnimator.mMotionIdx;
+	UfoItem* ufo = itemMgr->getUfo();
+
+	switch (event.mEventType) {
+	case 6:
+		if (anim == 3) {
+			switch (mModelID) {
+			case 'uf03':
+				ufo->playEventSound(ufo, SE_UFO_ANTENNA);
+				break;
+			case 'uf01':
+				ufo->playEventSound(ufo, SE_UFO_SATELLITE);
+				break;
+			}
+		} else {
+			ID32 id(mModelID);
+			switch (mModelID) {
+			case 'ust5':
+				ufo->playEventSound(ufo, SE_UFO_ENGINE);
+			case 'uf01':
+				ufo->playEventSound(ufo, SE_UFO_RADER);
+				break;
+			}
+		}
+		break;
+	case 0:
+		startMotion(2, 2);
+		_D8 = 30.0f;
+		ID32 id2(mModelID);
+		PRINT("*** AFTER MOTION START * (%s)\n", id2.mStringID);
+		break;
+	case 8:
+		if (anim == 1) {
+			PRINT("UFO PARTS * GOT EFFECT KEY : index=%d\n", event.mValue);
+			switch (event.mValue) {
+			case 0:
+				effectMgr->create(EffectMgr::EFF_UfoPart_ASN02, _B8, nullptr, nullptr);
+				PRINT("assign effect 01\n");
+				break;
+			case 1:
+				effectMgr->create(EffectMgr::EFF_UfoPart_KafunB, _B8, nullptr, nullptr);
+				PRINT("assign effect 02\n");
+				break;
+			}
+		}
+	}
+
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2361,71 +1295,20 @@ void PlayerState::UfoParts::animationKeyUpdated(PaniAnimKeyEvent&)
  */
 void PlayerState::ufoAssignStart()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  mr        r29, r3
-	  lwz       r0, 0x14(r3)
-	  cmplwi    r0, 0
-	  mr        r30, r0
-	  beq-      .loc_0xB4
-	  lwz       r3, 0xD4(r30)
-	  lbz       r0, 0x28(r3)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x80
-	  cmplwi    r3, 0
-	  beq-      .loc_0x74
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x3
-	  bl        0x9DF1C
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x14
-	  li        r4, 0x1
-	  bl        0x9DF3C
-	  addi      r4, r3, 0
-	  addi      r5, r31, 0
-	  addi      r3, r30, 0x10
-	  bl        0x18A08
+	UfoParts* parts = _14;
+	if (!parts) {
+		PRINT("after motion を再生すべき ?\n");
+		return;
+	}
 
-	.loc_0x74:
-	  lfs       f0, -0x761C(r2)
-	  stfs      f0, 0xD8(r30)
-	  b         .loc_0xAC
-
-	.loc_0x80:
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA4
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0xC
-	  li        r4, 0x1
-	  bl        0x9DF08
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0x10
-	  bl        0x18A30
-
-	.loc_0xA4:
-	  lfs       f0, -0x761C(r2)
-	  stfs      f0, 0xD8(r30)
-
-	.loc_0xAC:
-	  li        r0, 0
-	  stw       r0, 0x14(r29)
-
-	.loc_0xB4:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	if (parts->mPelletShape->isMotionFlag(2)) {
+		parts->startMotion(1, 3);
+		parts->setMotionSpeed(30.0f);
+	} else {
+		parts->startMotion(1);
+		parts->setMotionSpeed(30.0f);
+	}
+	_14 = nullptr;
 }
 
 /*
@@ -2435,42 +1318,10 @@ void PlayerState::ufoAssignStart()
  */
 void PlayerState::startSpecialMotions()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x7573
-	  stw       r0, 0x4(r1)
-	  addi      r4, r4, 0x7431
-	  li        r5, 0x4
-	  stwu      r1, -0x18(r1)
-	  li        r6, 0
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        0x124
-	  lis       r31, 0x7566
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x3031
-	  li        r5, 0x4
-	  li        r6, 0
-	  bl        0x10C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x3032
-	  li        r5, 0x4
-	  li        r6, 0
-	  bl        0xF8
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x3033
-	  li        r5, 0x4
-	  li        r6, 0
-	  bl        0xE4
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	startUfoPartsMotion('ust1', 4, false);
+	startUfoPartsMotion('uf01', 4, false);
+	startUfoPartsMotion('uf02', 4, false);
+	startUfoPartsMotion('uf03', 4, false);
 }
 
 /*
@@ -2480,67 +1331,15 @@ void PlayerState::startSpecialMotions()
  */
 void PlayerState::startAfterMotions()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  stmw      r27, 0x2C(r1)
-	  addi      r27, r3, 0
-	  li        r29, 0
-	  li        r30, 0
-	  lfs       f31, -0x761C(r2)
-	  b         .loc_0xA4
-
-	.loc_0x28:
-	  lwz       r0, 0x178(r27)
-	  add.      r0, r0, r30
-	  mr        r28, r0
-	  beq-      .loc_0x9C
-	  lbz       r0, 0xDC(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x9C
-	  lwz       r0, 0xD4(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x9C
-	  addi      r3, r1, 0x1C
-	  lwz       r4, 0x8(r28)
-	  bl        -0x3D308
-	  lwz       r0, 0xD4(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x98
-	  addi      r3, r1, 0x14
-	  li        r4, 0x2
-	  bl        0x9DDA4
-	  addi      r31, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0xC
-	  li        r4, 0x2
-	  bl        0x9DDC4
-	  addi      r4, r3, 0
-	  addi      r5, r31, 0
-	  addi      r3, r28, 0x10
-	  bl        0x18890
-
-	.loc_0x98:
-	  stfs      f31, 0xD8(r28)
-
-	.loc_0x9C:
-	  addi      r30, r30, 0xE0
-	  addi      r29, r29, 0x1
-
-	.loc_0xA4:
-	  lwz       r0, 0x170(r27)
-	  cmpw      r29, r0
-	  blt+      .loc_0x28
-	  lmw       r27, 0x2C(r1)
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mTotalRegisteredParts; i++) {
+		UfoParts* part = &mUfoParts[i];
+		if (part && part->_DC && part->mPelletShape) {
+			ID32 id(part->mModelID);
+			PRINT("(%s) : AFTER motion \n", id.mStringID);
+			part->startMotion(2, 2);
+			part->setMotionSpeed(30.0f);
+		}
+	}
 }
 
 /*
@@ -2548,88 +1347,22 @@ void PlayerState::startAfterMotions()
  * Address:	8008120C
  * Size:	00010C
  */
-void PlayerState::startUfoPartsMotion(u32, int, bool)
+void PlayerState::startUfoPartsMotion(u32 id, int anim, bool flag)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  addi      r31, r6, 0
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  addi      r29, r5, 0
-	  bl        0x69C
-	  mr.       r30, r3
-	  beq-      .loc_0xF0
-	  lwz       r3, 0xD4(r30)
-	  lbz       r0, 0x28(r3)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0xC4
-	  rlwinm.   r0,r31,0,24,31
-	  beq-      .loc_0x80
-	  cmplwi    r3, 0
-	  beq-      .loc_0xB8
-	  addi      r3, r1, 0x38
-	  li        r4, 0x3
-	  bl        0x9DCF8
-	  addi      r31, r3, 0
-	  addi      r4, r29, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x30
-	  bl        0x9DD18
-	  addi      r4, r3, 0
-	  addi      r5, r31, 0
-	  addi      r3, r30, 0x10
-	  bl        0x187E4
-	  b         .loc_0xB8
-
-	.loc_0x80:
-	  cmplwi    r3, 0
-	  beq-      .loc_0xB8
-	  addi      r3, r1, 0x28
-	  addi      r4, r29, 0
-	  bl        0x9DCBC
-	  addi      r31, r3, 0
-	  addi      r4, r29, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x20
-	  bl        0x9DCDC
-	  addi      r4, r3, 0
-	  addi      r5, r31, 0
-	  addi      r3, r30, 0x10
-	  bl        0x187A8
-
-	.loc_0xB8:
-	  lfs       f0, -0x761C(r2)
-	  stfs      f0, 0xD8(r30)
-	  b         .loc_0xF0
-
-	.loc_0xC4:
-	  cmplwi    r3, 0
-	  beq-      .loc_0xE8
-	  addi      r4, r29, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  bl        0x9DCA8
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0x10
-	  bl        0x187D0
-
-	.loc_0xE8:
-	  lfs       f0, -0x761C(r2)
-	  stfs      f0, 0xD8(r30)
-
-	.loc_0xF0:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	UfoParts* parts = findUfoParts(id);
+	if (parts) {
+		if (parts->mPelletShape->isMotionFlag(2)) {
+			if (flag) {
+				parts->startMotion(anim, 3);
+			} else {
+				parts->startMotion(anim, anim);
+			}
+			parts->setMotionSpeed(30.0f);
+		} else {
+			parts->startMotion(anim);
+			parts->setMotionSpeed(30.0f);
+		}
+	}
 }
 
 /*
@@ -2637,363 +1370,129 @@ void PlayerState::startUfoPartsMotion(u32, int, bool)
  * Address:	80081318
  * Size:	000458
  */
-void PlayerState::getUfoParts(u32, bool)
+void PlayerState::getUfoParts(u32 partID, bool flag)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stw       r31, 0x9C(r1)
-	  stw       r30, 0x98(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x94(r1)
-	  addi      r29, r3, 0
-	  stw       r28, 0x90(r1)
-	  addi      r28, r4, 0
-	  bl        0x588
-	  mr.       r31, r3
-	  bne-      .loc_0x48
-	  rlwinm.   r0,r30,0,24,31
-	  bne-      .loc_0x48
-	  addi      r3, r1, 0x84
-	  addi      r4, r28, 0
-	  bl        -0x3D4C8
+	UfoParts* parts = findUfoParts(partID);
+	if (!parts && !flag) {
+		ID32 id(partID);
+		PRINT("parts %s is not registered !\n", id.mStringID);
+		ERROR("sorry\n");
+	}
 
-	.loc_0x48:
-	  subis     r0, r28, 0x756E
-	  cmplwi    r0, 0x3034
-	  beq-      .loc_0x80
-	  cmplwi    r0, 0x3039
-	  beq-      .loc_0x80
-	  cmplwi    r0, 0x3130
-	  beq-      .loc_0x80
-	  cmplwi    r0, 0x3131
-	  beq-      .loc_0x80
-	  cmplwi    r0, 0x3134
-	  beq-      .loc_0x80
-	  lwz       r3, 0x180(r29)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x180(r29)
+	// check required part count
+	if (partID != 'un04' && partID != 'un09' && partID != 'un10' && partID != 'un11' && partID != 'un14') {
+		_180++;
+	}
 
-	.loc_0x80:
-	  lis       r3, 0x7566
-	  addi      r0, r3, 0x3130
-	  cmpw      r28, r0
-	  beq-      .loc_0xDC
-	  bge-      .loc_0xA4
-	  addi      r0, r3, 0x3031
-	  cmpw      r28, r0
-	  beq-      .loc_0xB4
-	  b         .loc_0x128
+	switch (partID) {
+	case 'uf01':
+		_11 |= 1;
+		for (int i = 0; i < 10; i++) {
+			PRINT("U GOT RADAR !\n");
+		}
+		if (!hasRadar()) {
+			ERROR("sonna!");
+		}
+		break;
 
-	.loc_0xA4:
-	  addi      r0, r3, 0x3132
-	  cmpw      r28, r0
-	  bge-      .loc_0x128
-	  b         .loc_0x104
+	case 'uf10':
+		_11 |= 2;
+		for (int i = 0; i < 10; i++) {
+			PRINT("U GOT LEFT HORN !\n");
+		}
+		if (!hasUfoLeftControl()) {
+			ERROR("sonna!");
+		}
+		break;
 
-	.loc_0xB4:
-	  lbz       r3, 0x11(r29)
-	  li        r4, 0x8
-	  subfic    r0, r4, 0xA
-	  ori       r3, r3, 0x1
-	  mtctr     r0
-	  cmpwi     r4, 0xA
-	  stb       r3, 0x11(r29)
-	  bge-      .loc_0x128
+	case 'uf11':
+		_11 |= 4;
+		for (int i = 0; i < 10; i++) {
+			PRINT("U GOT RIGHT HORN !\n");
+		}
+		if (!hasUfoRightControl()) {
+			ERROR("sonna!");
+		}
+		break;
+	}
 
-	.loc_0xD4:
-	  bdnz-     .loc_0xD4
-	  b         .loc_0x128
+	_187[flowCont.mCurrentStage->mStageID]++;
+	if (!flag) {
+		parts->_DC = 1;
+	} else {
+		parts->_DC = 2;
+	}
+	mCurrParts++;
+	PRINT("ufo parts %d/%d", _180, mCurrParts);
+	for (int i = 0; i < 33; i++) {
+		PRINT("ufoPartsCount = %d\n", mCurrParts);
+	}
 
-	.loc_0xDC:
-	  lbz       r3, 0x11(r29)
-	  li        r4, 0x8
-	  subfic    r0, r4, 0xA
-	  ori       r3, r3, 0x2
-	  mtctr     r0
-	  cmpwi     r4, 0xA
-	  stb       r3, 0x11(r29)
-	  bge-      .loc_0x128
+	if (mCurrParts >= AIConstant::_instance->mConstants._184()) {
+		mShipUpgradeLevel = 5;
+	} else if (mCurrParts >= AIConstant::_instance->mConstants._174()) {
+		gameflow.mPlayState.openStage(4);
+		playerState->mResultFlags.setSeen(RESFLAG_Collect15Parts);
+		for (int i = 0; i < 10; i++) {
+			PRINT("OPEN STAGE 4 ***\n");
+		}
+		mShipUpgradeLevel = 4;
+	} else if (mCurrParts >= AIConstant::_instance->mConstants._164()) {
+		gameflow.mPlayState.openStage(3);
+		playerState->mResultFlags.setOn(RESFLAG_UnlockYakushima);
+		for (int i = 0; i < 10; i++) {
+			PRINT("OPEN STAGE 3 ***\n");
+		}
+		mShipUpgradeLevel = 3;
+	} else if (mCurrParts >= AIConstant::_instance->mConstants._154()) {
+		playerState->mResultFlags.setOn(RESFLAG_UnlockCave);
+		gameflow.mPlayState.openStage(2);
+		for (int i = 0; i < 10; i++) {
+			PRINT("OPEN STAGE 2 ***\n");
+		}
+		mShipUpgradeLevel = 2;
+	} else if (mCurrParts >= 1) {
+		gameflow.mPlayState.openStage(1);
+		for (int i = 0; i < 10; i++) {
+			PRINT("OPEN STAGE 1 ***\n");
+		}
+		mShipUpgradeLevel = 1;
+	}
 
-	.loc_0xFC:
-	  bdnz-     .loc_0xFC
-	  b         .loc_0x128
+	if (flag) {
+		_14 = nullptr;
+	} else {
+		_14 = parts;
+	}
 
-	.loc_0x104:
-	  lbz       r3, 0x11(r29)
-	  li        r4, 0x8
-	  subfic    r0, r4, 0xA
-	  ori       r3, r3, 0x4
-	  mtctr     r0
-	  cmpwi     r4, 0xA
-	  stb       r3, 0x11(r29)
-	  bge-      .loc_0x128
+	if (mCurrParts >= 15) {
+		playerState->mResultFlags.setOn(RESFLAG_Collect15Parts);
+	}
 
-	.loc_0x124:
-	  bdnz-     .loc_0x124
+	if (mCurrParts >= 11 && gameflow.mWorldClock.mCurrentDay - 1 >= 9) {
+		playerState->mResultFlags.setOn(RESFLAG_Collect10Parts);
+	}
 
-	.loc_0x128:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  lwz       r3, 0xA8(r3)
-	  rlwinm.   r0,r30,0,24,31
-	  lhz       r0, 0x26(r3)
-	  add       r4, r29, r0
-	  lbz       r3, 0x187(r4)
-	  addi      r0, r3, 0x1
-	  stb       r0, 0x187(r4)
-	  bne-      .loc_0x15C
-	  li        r0, 0x1
-	  stb       r0, 0xDC(r31)
-	  b         .loc_0x164
+	if (!flag) {
+		if (parts->mPelletShape->isMotionFlag(2)) {
+			parts->startMotion(1, 3);
+			parts->setMotionSpeed(0.0f);
+		} else {
+			parts->startMotion(1);
+			parts->setMotionSpeed(0.0f);
+		}
+	}
 
-	.loc_0x15C:
-	  li        r0, 0x2
-	  stb       r0, 0xDC(r31)
+	if (mCurrParts == 29) {
+		playerState->mResultFlags.setOn(RESFLAG_Collect29Parts);
+		playerState->mResultFlags.setSeen(RESFLAG_Collect25Parts);
+		playerState->mResultFlags.setSeen(RESFLAG_Collect15Parts);
+	} else if (mCurrParts == 25) {
+		playerState->mResultFlags.setOn(RESFLAG_Collect25Parts);
+		playerState->mResultFlags.setSeen(RESFLAG_Collect15Parts);
+	}
 
-	.loc_0x164:
-	  lwz       r3, 0x17C(r29)
-	  li        r4, 0x20
-	  subfic    r0, r4, 0x21
-	  addi      r3, r3, 0x1
-	  mtctr     r0
-	  cmpwi     r4, 0x21
-	  stw       r3, 0x17C(r29)
-	  bge-      .loc_0x188
-
-	.loc_0x184:
-	  bdnz-     .loc_0x184
-
-	.loc_0x188:
-	  lwz       r4, 0x2F80(r13)
-	  lwz       r5, 0x17C(r29)
-	  lwz       r0, 0x190(r4)
-	  cmpw      r5, r0
-	  blt-      .loc_0x1A8
-	  li        r0, 0x5
-	  stb       r0, 0x10(r29)
-	  b         .loc_0x2E0
-
-	.loc_0x1A8:
-	  lwz       r0, 0x180(r4)
-	  cmpw      r5, r0
-	  blt-      .loc_0x1FC
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r3, r3, 0x1A4
-	  li        r4, 0x4
-	  bl        -0x2D880
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x15
-	  addi      r3, r3, 0x70
-	  bl        0x2564
-	  li        r3, 0x8
-	  subfic    r0, r3, 0xA
-	  cmpwi     r3, 0xA
-	  mtctr     r0
-	  bge-      .loc_0x1F0
-
-	.loc_0x1EC:
-	  bdnz-     .loc_0x1EC
-
-	.loc_0x1F0:
-	  li        r0, 0x4
-	  stb       r0, 0x10(r29)
-	  b         .loc_0x2E0
-
-	.loc_0x1FC:
-	  lwz       r0, 0x170(r4)
-	  cmpw      r5, r0
-	  blt-      .loc_0x250
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r3, r3, 0x1A4
-	  li        r4, 0x3
-	  bl        -0x2D8D4
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x7
-	  addi      r3, r3, 0x70
-	  bl        0x24C0
-	  li        r3, 0x8
-	  subfic    r0, r3, 0xA
-	  cmpwi     r3, 0xA
-	  mtctr     r0
-	  bge-      .loc_0x244
-
-	.loc_0x240:
-	  bdnz-     .loc_0x240
-
-	.loc_0x244:
-	  li        r0, 0x3
-	  stb       r0, 0x10(r29)
-	  b         .loc_0x2E0
-
-	.loc_0x250:
-	  lwz       r0, 0x160(r4)
-	  cmpw      r5, r0
-	  blt-      .loc_0x2A4
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x5
-	  addi      r3, r3, 0x70
-	  bl        0x2480
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r3, r3, 0x1A4
-	  li        r4, 0x2
-	  bl        -0x2D938
-	  li        r3, 0x8
-	  subfic    r0, r3, 0xA
-	  cmpwi     r3, 0xA
-	  mtctr     r0
-	  bge-      .loc_0x298
-
-	.loc_0x294:
-	  bdnz-     .loc_0x294
-
-	.loc_0x298:
-	  li        r0, 0x2
-	  stb       r0, 0x10(r29)
-	  b         .loc_0x2E0
-
-	.loc_0x2A4:
-	  cmpwi     r5, 0x1
-	  blt-      .loc_0x2E0
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r3, r3, 0x1A4
-	  li        r4, 0x1
-	  bl        -0x2D978
-	  li        r3, 0x8
-	  subfic    r0, r3, 0xA
-	  cmpwi     r3, 0xA
-	  mtctr     r0
-	  bge-      .loc_0x2D8
-
-	.loc_0x2D4:
-	  bdnz-     .loc_0x2D4
-
-	.loc_0x2D8:
-	  li        r0, 0x1
-	  stb       r0, 0x10(r29)
-
-	.loc_0x2E0:
-	  rlwinm.   r0,r30,0,24,31
-	  beq-      .loc_0x2F4
-	  li        r0, 0
-	  stw       r0, 0x14(r29)
-	  b         .loc_0x2F8
-
-	.loc_0x2F4:
-	  stw       r31, 0x14(r29)
-
-	.loc_0x2F8:
-	  lwz       r0, 0x17C(r29)
-	  cmpwi     r0, 0xF
-	  blt-      .loc_0x314
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x15
-	  addi      r3, r3, 0x70
-	  bl        0x23D8
-
-	.loc_0x314:
-	  lwz       r0, 0x17C(r29)
-	  cmpwi     r0, 0xB
-	  blt-      .loc_0x348
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r3, 0x2FC(r3)
-	  subi      r0, r3, 0x1
-	  cmpwi     r0, 0x9
-	  blt-      .loc_0x348
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x1A
-	  addi      r3, r3, 0x70
-	  bl        0x23A4
-
-	.loc_0x348:
-	  rlwinm.   r0,r30,0,24,31
-	  bne-      .loc_0x3D0
-	  lwz       r3, 0xD4(r31)
-	  lbz       r0, 0x28(r3)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x3A4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x398
-	  addi      r3, r1, 0x64
-	  li        r4, 0x3
-	  bl        0x9D8D0
-	  addi      r30, r3, 0
-	  addi      r5, r31, 0
-	  addi      r3, r1, 0x5C
-	  li        r4, 0x1
-	  bl        0x9D8F0
-	  addi      r4, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r31, 0x10
-	  bl        0x183BC
-
-	.loc_0x398:
-	  lfs       f0, -0x7620(r2)
-	  stfs      f0, 0xD8(r31)
-	  b         .loc_0x3D0
-
-	.loc_0x3A4:
-	  cmplwi    r3, 0
-	  beq-      .loc_0x3C8
-	  addi      r5, r31, 0
-	  addi      r3, r1, 0x54
-	  li        r4, 0x1
-	  bl        0x9D8BC
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x10
-	  bl        0x183E4
-
-	.loc_0x3C8:
-	  lfs       f0, -0x7620(r2)
-	  stfs      f0, 0xD8(r31)
-
-	.loc_0x3D0:
-	  lwz       r0, 0x17C(r29)
-	  cmpwi     r0, 0x1D
-	  bne-      .loc_0x410
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0xC
-	  addi      r3, r3, 0x70
-	  bl        0x2300
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0xB
-	  addi      r3, r3, 0x70
-	  bl        0x2340
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x15
-	  addi      r3, r3, 0x70
-	  bl        0x2330
-	  b         .loc_0x438
-
-	.loc_0x410:
-	  cmpwi     r0, 0x19
-	  bne-      .loc_0x438
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0xB
-	  addi      r3, r3, 0x70
-	  bl        0x22C4
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x15
-	  addi      r3, r3, 0x70
-	  bl        0x2304
-
-	.loc_0x438:
-	  lwz       r0, 0xA4(r1)
-	  lwz       r31, 0x9C(r1)
-	  lwz       r30, 0x98(r1)
-	  lwz       r29, 0x94(r1)
-	  lwz       r28, 0x90(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -3003,31 +1502,14 @@ void PlayerState::getUfoParts(u32, bool)
  */
 int PlayerState::getNextPowerupNumber()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x50(r1)
-	  li        r0, 0x1
-	  stw       r0, 0x38(r1)
-	  li        r0, 0x1E
-	  lwz       r6, 0x2F80(r13)
-	  addi      r4, r1, 0x38
-	  lwz       r5, 0x160(r6)
-	  stw       r5, 0x3C(r1)
-	  lwz       r5, 0x170(r6)
-	  stw       r5, 0x40(r1)
-	  lwz       r5, 0x180(r6)
-	  stw       r5, 0x44(r1)
-	  lwz       r5, 0x190(r6)
-	  stw       r5, 0x48(r1)
-	  stw       r0, 0x4C(r1)
-	  lbz       r0, 0x10(r3)
-	  lwz       r3, 0x17C(r3)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r4, r0
-	  sub       r3, r0, r3
-	  addi      r1, r1, 0x50
-	  blr
-	*/
+	int counts[6];
+	counts[0] = 1;
+	counts[1] = AIConstant::_instance->mConstants._154();
+	counts[2] = AIConstant::_instance->mConstants._164();
+	counts[3] = AIConstant::_instance->mConstants._174();
+	counts[4] = AIConstant::_instance->mConstants._184();
+	counts[5] = 30;
+	return counts[mShipUpgradeLevel] - mCurrParts;
 }
 
 /*
@@ -3037,85 +1519,24 @@ int PlayerState::getNextPowerupNumber()
  */
 void PlayerState::preloadHenkaMovie()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  lwz       r4, 0x17C(r3)
-	  lbz       r7, 0x10(r3)
-	  addi      r5, r4, 0x1
-	  cmpwi     r5, 0x1
-	  bne-      .loc_0x28
-	  li        r7, 0x1
-	  b         .loc_0x74
+	int level = mShipUpgradeLevel;
+	int parts = mCurrParts + 1;
+	if (parts == 1) {
+		level = 1;
+	} else if (AIConstant::_instance->mConstants._154() == parts) {
+		level = 2;
+	} else if (AIConstant::_instance->mConstants._164() == parts) {
+		level = 3;
+	} else if (AIConstant::_instance->mConstants._174() == parts) {
+		level = 4;
+	} else if (30 == parts) {
+		level = 5;
+	}
 
-	.loc_0x28:
-	  lwz       r6, 0x2F80(r13)
-	  lwz       r0, 0x160(r6)
-	  cmpw      r5, r0
-	  bne-      .loc_0x40
-	  li        r7, 0x2
-	  b         .loc_0x74
-
-	.loc_0x40:
-	  lwz       r0, 0x170(r6)
-	  cmpw      r5, r0
-	  bne-      .loc_0x54
-	  li        r7, 0x3
-	  b         .loc_0x74
-
-	.loc_0x54:
-	  lwz       r0, 0x180(r6)
-	  cmpw      r5, r0
-	  bne-      .loc_0x68
-	  li        r7, 0x4
-	  b         .loc_0x74
-
-	.loc_0x68:
-	  cmpwi     r5, 0x1E
-	  bne-      .loc_0x74
-	  li        r7, 0x5
-
-	.loc_0x74:
-	  lis       r4, 0x8022
-	  addi      r5, r4, 0x23A0
-	  lwz       r4, 0x0(r5)
-	  lwz       r0, 0x4(r5)
-	  stw       r4, 0x2C(r1)
-	  stw       r0, 0x30(r1)
-	  lwz       r4, 0x8(r5)
-	  lwz       r0, 0xC(r5)
-	  stw       r4, 0x34(r1)
-	  stw       r0, 0x38(r1)
-	  lwz       r0, 0x10(r5)
-	  stw       r0, 0x3C(r1)
-	  lbz       r0, 0x10(r3)
-	  cmpw      r7, r0
-	  beq-      .loc_0xF0
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r3, 0x1E8(r3)
-	  rlwinm    r0,r7,2,0,29
-	  addi      r4, r1, 0x28
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0
-	  lwzx      r4, r4, r0
-	  li        r6, 0
-	  lwz       r12, 0xC(r12)
-	  li        r7, 0
-	  mtlr      r12
-	  li        r8, 0
-	  li        r9, -0x1
-	  li        r10, 0x1
-	  blrl
-
-	.loc_0xF0:
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	int movies[5] = { 17, 18, 19, 25, 26 };
+	if (level != mShipUpgradeLevel) {
+		gameflow.mGameInterface->movie(movies[level - 1], 0, nullptr, nullptr, nullptr, -1, true);
+	}
 }
 
 /*
@@ -3123,9 +1544,15 @@ void PlayerState::preloadHenkaMovie()
  * Address:	........
  * Size:	000050
  */
-void PlayerState::lostUfoParts(u32)
+void PlayerState::lostUfoParts(u32 partID)
 {
-	// UNUSED FUNCTION
+	UfoParts* part = findUfoParts(partID);
+	if (!part) {
+		ID32 id(partID);
+		PRINT("parts %s is not registered !\n", id.mStringID);
+		ERROR("sorry\n");
+	}
+	part->_DC = 1;
 }
 
 /*
@@ -3133,36 +1560,14 @@ void PlayerState::lostUfoParts(u32)
  * Address:	800818C8
  * Size:	00004C
  */
-PlayerState::UfoParts* PlayerState::findUfoParts(u32)
+PlayerState::UfoParts* PlayerState::findUfoParts(u32 partID)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x170(r3)
-	  li        r7, 0
-	  li        r5, 0
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x44
-
-	.loc_0x18:
-	  lwz       r6, 0x178(r3)
-	  addi      r0, r5, 0x8
-	  lwzx      r0, r6, r0
-	  cmplw     r4, r0
-	  bne-      .loc_0x38
-	  mulli     r0, r7, 0xE0
-	  add       r3, r6, r0
-	  blr
-
-	.loc_0x38:
-	  addi      r5, r5, 0xE0
-	  addi      r7, r7, 0x1
-	  bdnz+     .loc_0x18
-
-	.loc_0x44:
-	  li        r3, 0
-	  blr
-	*/
+	for (int i = 0; i < mTotalRegisteredParts; i++) {
+		if (mUfoParts[i].mModelID == partID) {
+			return &mUfoParts[i];
+		}
+	}
+	return nullptr;
 }
 
 /*
@@ -3170,8 +1575,52 @@ PlayerState::UfoParts* PlayerState::findUfoParts(u32)
  * Address:	80081914
  * Size:	0002FC
  */
-void PlayerState::renderParts(Graphics&, Shape*)
+void PlayerState::renderParts(Graphics& gfx, Shape* shape)
 {
+	for (int i = 0; i < mTotalRegisteredParts; i++) {
+		UfoParts* parts = &mUfoParts[i];
+		if (parts->_DC == 1 && parts->mPartIndex != -1) {
+			if (parts->mPelletShape == nullptr) {
+				ID32 id(parts->mModelID);
+				PRINT("++++ shapeObject for ufo parts %d is null (%s)\n", i, id.mStringID);
+				ERROR("sorry\n");
+			}
+
+			if (AIPerf::kandoOnly) {
+				char* names[] = { "carry", "assign", "after", "piston", "special", "6" };
+				ID32 id(parts->mModelID);
+				PRINT("* parts(%s) : motion(%s) : (%.1f|%.1f) frame\n", names[parts->_DC], id.mStringID);
+			}
+			parts->mAnimator.updateAnimation(parts->_D8, 30.0f);
+			parts->mAnimator.updateContext();
+			Matrix4f& temp = shape->getAnimMatrix(parts->mPartIndex);
+			parts->_B8.set(0.0f, 0.0f, 0.0f);
+			shape->calcJointWorldPos(gfx, parts->mPartIndex, parts->_B8);
+			Matrix4f mtx = temp;
+			parts->mPelletShape->mShape->updateAnim(gfx, mtx, nullptr);
+			parts->mAnimatedMaterials.animate(nullptr);
+			parts->mPelletShape->mShape->drawshape(gfx, *gfx.mCamera, &parts->mAnimatedMaterials);
+		}
+	}
+
+	f32 badcompiler[6];
+
+	if (_1B4) {
+		mPikiAnimMgr.updateAnimation(30.0f);
+		mPikiAnimMgr.updateContext();
+		Matrix4f& mtx = shape->getAnimMatrix(11);
+		Matrix4f mtx2;
+		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, PI, 0.0f), Vector3f(0.0f, -10.0f, 0.0f));
+		Matrix4f mtx3;
+		mtx.multiplyTo(mtx2, mtx3);
+		_C0->mShape->updateAnim(gfx, mtx3, nullptr);
+		_C0->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
+		_1C0.set(2.0f, 0.0f, 0.0f);
+		_C0->mShape->calcJointWorldPos(gfx, 6, _1C0);
+		_1B8->updatePos(_1C0);
+		_1BC->updatePos(_1C0);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
