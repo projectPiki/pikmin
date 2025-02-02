@@ -123,7 +123,7 @@ int ActBridge::exec()
 		return ACTOUT_Fail;
 	}
 
-	if (mBridge->_3C8) {
+	if (mBridge->mDoUseJointSegments) {
 		switch (mState) {
 		case STATE_Approach:
 			return newExeApproach();

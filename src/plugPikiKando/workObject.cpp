@@ -14,8 +14,23 @@
 
 WorkObjectMgr* workObjectMgr;
 
-char* files[] = { "objects/bridge/brd_test.mod", "objects/bridge/slp_u_4.mod", "objects/bridge/slp_d_4.mod",
-	              "objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod" };
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	00009C
+ */
+DEFINE_ERROR()
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000F4
+ */
+DEFINE_PRINT("workObject");
+
+f32 bridgeFirstPos[5] = { 42.5f, 12.5f, 12.5f, 0.0f, 42.5f };
+f32 bridgeFirstY[5]   = { 10.0f, 0.0f, 0.0f, 0.0f, 10.0f };
+f32 bridgeGrad[5]     = { 0.0f, 8.0f, -8.0f, 0.0f, 0.0f };
 
 struct GenObjInfo {
 	s32 mType;
@@ -32,19 +47,8 @@ GenObjInfo shpInfo[] = {
 	{ 0, "bridge 4" }, { 1, "slope up 4" }, { 2, "slope down 4" }, { 3, "stone 10" }, { 4, "bridge 13" }, { 5, "meck" },
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
- */
-DEFINE_ERROR()
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
- */
-DEFINE_PRINT("workObject");
+char* files[] = { "objects/bridge/brd_test.mod", "objects/bridge/slp_u_4.mod", "objects/bridge/slp_d_4.mod",
+	              "objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod" };
 
 /*
  * --INFO--
@@ -1577,6 +1581,7 @@ bool Bridge::workable(Vector3f& pos)
 		PRINT("workable: fst = -1 failed\n");
 		return false;
 	}
+
 	f32 stageZ = getStageZ(stage);
 	z          = z - 10.0f;
 	if (z > stageZ + 10.0f) {
@@ -1584,109 +1589,26 @@ bool Bridge::workable(Vector3f& pos)
 		return false;
 	}
 
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stfd      f31, 0x28(r1)
-	  addi      r5, r1, 0x1C
-	  addi      r6, r1, 0x18
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  bl        0x1484
-	  mr        r3, r30
-	  bl        0xC44
-	  addi      r4, r3, 0
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x48
-	  li        r3, 0
-	  b         .loc_0x138
+	if (z >= 0.0f && z <= stageZ) {
+		if (absF(x) >= getStageWidth() * 0.5f) {
+			PRINT("haba dame %.1f\n", x);
+			return false;
+		}
 
-	.loc_0x48:
-	  mr        r3, r30
-	  bl        0x13FC
-	  lfs       f2, -0x72F0(r2)
-	  lfs       f3, 0x18(r1)
-	  fadds     f0, f2, f1
-	  fsubs     f2, f3, f2
-	  stfs      f2, 0x18(r1)
-	  lfs       f2, 0x18(r1)
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x78
-	  li        r3, 0
-	  b         .loc_0x138
+		if (mapMgr->getMinY(pos.x, pos.z, true) - 10.0f >= pos.y) {
+			PRINT("lower (max=%.1f srt.t.y=%.1f)\n", x, pos.y);
+			return false;
+		}
+	} else if (z < -100.0f) {
+		return false;
+	}
 
-	.loc_0x78:
-	  lfs       f0, -0x732C(r2)
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xF4
-	  fcmpo     cr0, f2, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xF4
-	  lfs       f0, 0x1C(r1)
-	  mr        r3, r30
-	  fabs      f31, f0
-	  bl        0x16B8
-	  lfs       f0, -0x7300(r2)
-	  fmuls     f0, f0, f1
-	  fcmpo     cr0, f31, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xC0
-	  li        r3, 0
-	  b         .loc_0x138
+	if (absF(x) >= getStageWidth() * 0.7f) {
+		PRINT("haba dame 2 %.1f\n", x);
+		return false;
+	}
 
-	.loc_0xC0:
-	  lwz       r3, 0x2F00(r13)
-	  li        r4, 0x1
-	  lfs       f1, 0x0(r31)
-	  lfs       f2, 0x8(r31)
-	  bl        -0x35794
-	  lfs       f2, -0x72F0(r2)
-	  lfs       f0, 0x4(r31)
-	  fsubs     f1, f1, f2
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x108
-	  li        r3, 0
-	  b         .loc_0x138
-
-	.loc_0xF4:
-	  lfs       f0, -0x72EC(r2)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x108
-	  li        r3, 0
-	  b         .loc_0x138
-
-	.loc_0x108:
-	  lfs       f0, 0x1C(r1)
-	  mr        r3, r30
-	  fabs      f31, f0
-	  bl        0x1644
-	  lfs       f0, -0x72E8(r2)
-	  fmuls     f0, f0, f1
-	  fcmpo     cr0, f31, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x134
-	  li        r3, 0
-	  b         .loc_0x138
-
-	.loc_0x134:
-	  li        r3, 0x1
-
-	.loc_0x138:
-	  lwz       r0, 0x34(r1)
-	  lfd       f31, 0x28(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -1696,16 +1618,16 @@ bool Bridge::workable(Vector3f& pos)
  */
 Bridge::Bridge(Shape* shape, bool a3)
 {
-	_3C8 = a3;
-	_40C = shape;
+	mDoUseJointSegments = a3;
+	mBridgeShape        = shape;
 
-	_40C->mSystemFlags |= 0x10;
-	_40C->mSystemFlags |= 0x4;
+	mBridgeShape->mSystemFlags |= 0x10;
+	mBridgeShape->mSystemFlags |= 0x4;
 
 	mBuildShape            = new DynBuildShape(shape);
 	mBuildShape->mCreature = this;
 
-	if (_3C8) {
+	if (mDoUseJointSegments) {
 		mStageCount  = shape->mJointList->getChildCount() / 2;
 		mStageJoints = new Joint*[mStageCount * 2];
 
@@ -1738,7 +1660,7 @@ Bridge::Bridge(Shape* shape, bool a3)
  */
 bool Bridge::stimulate(Interaction& i)
 {
-	if (!i.actCommon((Creature*)this)) {
+	if (!i.actCommon(this)) {
 		return false;
 	}
 
@@ -1753,84 +1675,21 @@ bool Bridge::stimulate(Interaction& i)
 void Bridge::refresh(Graphics& gfx)
 {
 	Matrix4f animMtx;
-	// gfx.something multiply to, something
-	_40C->updateAnim(gfx, animMtx, nullptr);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, animMtx);
+	mBridgeShape->updateAnim(gfx, animMtx, nullptr);
 	mBuildShape->mTransformMtx.inverse(&mBuildShape->mInverseMatrix);
-	_414.animate(nullptr);
+	mDynMaterial.animate(nullptr);
+	gfx.useMatrix(Matrix4f::ident, 0);
 	mBuildShape->updateContext();
-	// mDestinationPosition->drawshape(gfx, )
+	mBridgeShape->drawshape(gfx, *gfx.mCamera, &mDynMaterial);
 
-	if (!_3C8) {
+	if (!mDoUseJointSegments) {
 		mCollInfo->updateInfo(gfx, false);
 	}
 
 	if (_424) {
 		_424--;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  mr        r31, r4
-	  stw       r30, 0x50(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x2E4(r4)
-	  addi      r4, r30, 0x228
-	  addi      r3, r5, 0x1E0
-	  addi      r5, r1, 0x10
-	  bl        -0x5F9AC
-	  lwz       r3, 0x40C(r30)
-	  addi      r4, r31, 0
-	  addi      r5, r1, 0x10
-	  li        r6, 0
-	  bl        -0x68780
-	  lwz       r4, 0x408(r30)
-	  addi      r3, r4, 0x5C
-	  addi      r4, r4, 0x9C
-	  bl        -0x5F668
-	  addi      r3, r30, 0x414
-	  li        r4, 0
-	  bl        -0x6EA14
-	  lwz       r12, 0x3B4(r31)
-	  lis       r4, 0x803A
-	  mr        r3, r31
-	  lwz       r12, 0x74(r12)
-	  subi      r4, r4, 0x77C0
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x408(r30)
-	  bl        -0x3BBC4
-	  lwz       r3, 0x40C(r30)
-	  mr        r4, r31
-	  lwz       r5, 0x2E4(r31)
-	  addi      r6, r30, 0x414
-	  bl        -0x6D680
-	  lbz       r0, 0x3C8(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xB8
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  bl        -0x1401C
-
-	.loc_0xB8:
-	  lbz       r3, 0x424(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xCC
-	  subi      r0, r3, 0x1
-	  stb       r0, 0x424(r30)
-
-	.loc_0xCC:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1840,69 +1699,31 @@ void Bridge::refresh(Graphics& gfx)
  */
 void Bridge::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x24
-	  bl        0x6394
+	if (mSeContext) {
+		mSeContext->update();
+	}
+	mGrid.updateGrid(mPosition);
+	mGrid.updateAIGrid(mPosition, false);
 
-	.loc_0x24:
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  bl        -0x9644
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  li        r5, 0
-	  bl        -0x95B8
-	  lbz       r3, 0x3CC(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xCC
-	  subi      r0, r3, 0x1
-	  stb       r0, 0x3CC(r31)
-	  lbz       r0, 0x3CC(r31)
-	  cmplwi    r0, 0x1E
-	  bgt-      .loc_0xCC
-	  lha       r4, 0x3CA(r31)
-	  cmpwi     r4, -0x1
-	  beq-      .loc_0xCC
-	  addi      r3, r31, 0
-	  li        r5, 0x1
-	  bl        0xA08
-	  li        r0, -0x1
-	  sth       r0, 0x3CA(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x164(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xCC
-	  lwz       r3, 0x3F8(r31)
-	  li        r4, 0x1
-	  bl        0x3B94
-	  lwz       r3, 0x3FC(r31)
-	  li        r4, 0x1
-	  bl        0x3B88
-	  li        r3, 0x11B
-	  bl        0x7784
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x20
-	  addi      r3, r3, 0x70
-	  bl        -0x1A200
+	if (_3CC == 0) {
+		return;
+	}
+	_3CC--;
+	if (_3CC > 30) {
+		return;
+	}
 
-	.loc_0xCC:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (_3CA != -1) {
+		setStageFinished(_3CA, true);
+		_3CA = -1;
+		if (isFinished()) {
+			mStartWaypoint->setFlag(true);
+			mEndWaypoint->setFlag(true);
+			seSystem->playSysSe(SYSSE_WORK_FINISH);
+			PRINT("橋：完成しました\n");
+			playerState->mResultFlags.setOn(RESFLAG_BrokenBridge);
+		}
+	}
 }
 
 /*
@@ -1912,219 +1733,43 @@ void Bridge::update()
  */
 void Bridge::startAI(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x3
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  stb       r0, 0x424(r3)
-	  lbz       r0, 0x3C8(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x48
-	  lwz       r3, 0x220(r31)
-	  li        r5, 0
-	  lwz       r4, 0x40C(r31)
-	  li        r6, 0
-	  bl        -0x140F8
+	_424 = 3;
+	if (!mDoUseJointSegments) {
+		mCollInfo->initInfo(mBridgeShape, nullptr, nullptr);
+	}
+	mBridgeShape->makeInstance(mDynMaterial, 0);
+	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
+	mBuildShape->mTransformMtx = mWorldMtx;
+	mapMgr->mCollShape->add(mBuildShape);
 
-	.loc_0x48:
-	  lwz       r3, 0x40C(r31)
-	  addi      r4, r31, 0x414
-	  li        r5, 0
-	  bl        -0x6E340
-	  lfs       f0, -0x54F4(r13)
-	  addi      r4, r1, 0x28
-	  lfs       f1, -0x54F0(r13)
-	  addi      r3, r31, 0x228
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x54EC(r13)
-	  addi      r5, r31, 0x88
-	  stfs      f1, 0x2C(r1)
-	  addi      r6, r31, 0x94
-	  stfs      f0, 0x30(r1)
-	  bl        -0x5FBA4
-	  lwz       r4, 0x408(r31)
-	  lwz       r3, 0x228(r31)
-	  lwz       r0, 0x22C(r31)
-	  stw       r3, 0x5C(r4)
-	  stw       r0, 0x60(r4)
-	  lwz       r3, 0x230(r31)
-	  lwz       r0, 0x234(r31)
-	  stw       r3, 0x64(r4)
-	  stw       r0, 0x68(r4)
-	  lwz       r3, 0x238(r31)
-	  lwz       r0, 0x23C(r31)
-	  stw       r3, 0x6C(r4)
-	  stw       r0, 0x70(r4)
-	  lwz       r3, 0x240(r31)
-	  lwz       r0, 0x244(r31)
-	  stw       r3, 0x74(r4)
-	  stw       r0, 0x78(r4)
-	  lwz       r3, 0x248(r31)
-	  lwz       r0, 0x24C(r31)
-	  stw       r3, 0x7C(r4)
-	  stw       r0, 0x80(r4)
-	  lwz       r3, 0x250(r31)
-	  lwz       r0, 0x254(r31)
-	  stw       r3, 0x84(r4)
-	  stw       r0, 0x88(r4)
-	  lwz       r3, 0x258(r31)
-	  lwz       r0, 0x25C(r31)
-	  stw       r3, 0x8C(r4)
-	  stw       r0, 0x90(r4)
-	  lwz       r3, 0x260(r31)
-	  lwz       r0, 0x264(r31)
-	  stw       r3, 0x94(r4)
-	  stw       r0, 0x98(r4)
-	  lwz       r3, 0x2F00(r13)
-	  lwz       r4, 0x408(r31)
-	  lwz       r3, 0x88(r3)
-	  bl        -0x5D754
-	  lbz       r0, 0x3C8(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1C0
-	  lfs       f0, -0x732C(r2)
-	  li        r5, 0
-	  li        r4, 0
-	  b         .loc_0x144
+	if (mDoUseJointSegments) {
+		for (int i = 0; i < mStageCount; i++) {
+			mStageProgressList[i] = 0.0f;
+		}
+		for (int i = 0; i < mStageCount * 2; i++) {
+			mBuildShape->jointVisible(mStageJoints[i]->mIndex, false);
+		}
+		mBuildShape->jointVisible(mStageJoints[0]->mIndex, true);
+	} else {
+		for (int i = 0; i < mStageCount; i++) {
+			mStageProgressList[i] = 0.0f;
+			setStageFinished(i, false);
+		}
+	}
 
-	.loc_0x134:
-	  lwz       r3, 0x3D0(r31)
-	  addi      r5, r5, 0x1
-	  stfsx     f0, r3, r4
-	  addi      r4, r4, 0x4
+	mStartWaypoint = routeMgr->findNearestWayPointAll('test', mPosition);
+	mStartWaypoint->_40 |= 4;
+	mStartWaypoint->mPosition = getStartPos();
+	mStartWaypoint->setFlag(false);
 
-	.loc_0x144:
-	  lwz       r0, 0x404(r31)
-	  cmpw      r5, r0
-	  blt+      .loc_0x134
-	  li        r29, 0
-	  rlwinm    r30,r29,2,0,29
-	  b         .loc_0x188
+	Vector3f pos = getStagePos(mStageCount - 1);
+	mEndWaypoint = routeMgr->findNearestWayPointAll('test', pos);
+	mEndWaypoint->_40 |= 4;
+	mEndWaypoint->mPosition = pos;
+	mEndWaypoint->setFlag(false);
 
-	.loc_0x15C:
-	  lwz       r3, 0x408(r31)
-	  li        r5, 0
-	  lwz       r4, 0x3D4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwzx      r4, r4, r30
-	  lwz       r12, 0x40(r12)
-	  lwz       r4, 0x14(r4)
-	  mtlr      r12
-	  blrl
-	  addi      r30, r30, 0x4
-	  addi      r29, r29, 0x1
-
-	.loc_0x188:
-	  lwz       r0, 0x404(r31)
-	  rlwinm    r0,r0,1,0,30
-	  cmpw      r29, r0
-	  blt+      .loc_0x15C
-	  lwz       r3, 0x408(r31)
-	  li        r5, 0x1
-	  lwz       r4, 0x3D4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x0(r4)
-	  lwz       r12, 0x40(r12)
-	  lwz       r4, 0x14(r4)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x1FC
-
-	.loc_0x1C0:
-	  lfs       f31, -0x732C(r2)
-	  li        r29, 0
-	  li        r30, 0
-	  b         .loc_0x1F0
-
-	.loc_0x1D0:
-	  lwz       r5, 0x3D0(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r29, 0
-	  stfsx     f31, r5, r30
-	  li        r5, 0
-	  bl        0x7B8
-	  addi      r30, r30, 0x4
-	  addi      r29, r29, 0x1
-
-	.loc_0x1F0:
-	  lwz       r0, 0x404(r31)
-	  cmpw      r29, r0
-	  blt+      .loc_0x1D0
-
-	.loc_0x1FC:
-	  lis       r30, 0x7465
-	  lwz       r3, 0x302C(r13)
-	  addi      r4, r30, 0x7374
-	  addi      r5, r31, 0x94
-	  bl        0x3718
-	  stw       r3, 0x3F8(r31)
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0x1C
-	  lwz       r5, 0x3F8(r31)
-	  lbz       r0, 0x40(r5)
-	  ori       r0, r0, 0x4
-	  stb       r0, 0x40(r5)
-	  bl        0xDD8
-	  lwz       r5, 0x3F8(r31)
-	  li        r4, 0
-	  lwz       r3, 0x1C(r1)
-	  lwz       r0, 0x20(r1)
-	  stw       r3, 0x0(r5)
-	  stw       r0, 0x4(r5)
-	  lwz       r0, 0x24(r1)
-	  stw       r0, 0x8(r5)
-	  lwz       r3, 0x3F8(r31)
-	  bl        0x3904
-	  lwz       r5, 0x404(r31)
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0x10
-	  subi      r5, r5, 0x1
-	  bl        0xAC8
-	  lfs       f0, 0x10(r1)
-	  addi      r4, r30, 0x7374
-	  lfs       f1, 0x14(r1)
-	  addi      r5, r1, 0x34
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, 0x18(r1)
-	  stfs      f1, 0x38(r1)
-	  lwz       r3, 0x302C(r13)
-	  stfs      f0, 0x3C(r1)
-	  bl        0x3694
-	  stw       r3, 0x3FC(r31)
-	  li        r4, 0
-	  lwz       r3, 0x3FC(r31)
-	  lbz       r0, 0x40(r3)
-	  ori       r0, r0, 0x4
-	  stb       r0, 0x40(r3)
-	  lwz       r5, 0x3FC(r31)
-	  lwz       r3, 0x34(r1)
-	  lwz       r0, 0x38(r1)
-	  stw       r3, 0x0(r5)
-	  stw       r0, 0x4(r5)
-	  lwz       r0, 0x3C(r1)
-	  stw       r0, 0x8(r5)
-	  lwz       r3, 0x3FC(r31)
-	  bl        0x388C
-	  li        r0, -0x1
-	  sth       r0, 0x3CA(r31)
-	  li        r0, 0
-	  stb       r0, 0x3CC(r31)
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	_3CA = -1;
+	_3CC = false;
 }
 
 /*
@@ -2132,122 +1777,37 @@ void Bridge::startAI(int)
  * Address:	8009DF18
  * Size:	00018C
  */
-void Bridge::doLoad(RandomAccessStream&)
+void Bridge::doLoad(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x90(r1)
-	  stmw      r27, 0x7C(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r4, 0
-	  li        r30, 0x1
-	  li        r29, 0
-	  li        r31, 0
-	  b         .loc_0x8C
+	bool finished = true;
 
-	.loc_0x28:
-	  mr        r3, r28
-	  lwz       r12, 0x4(r28)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3D0(r27)
-	  stfsx     f1, r3, r31
-	  lwz       r3, 0x3D0(r27)
-	  lfs       f0, 0x5C(r27)
-	  lfsx      f1, r3, r31
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x70
-	  addi      r3, r27, 0
-	  addi      r4, r29, 0
-	  li        r5, 0x1
-	  bl        0x634
-	  b         .loc_0x84
+	PRINT("___________ LOADING BRIDGE !\n");
+	for (int i = 0; i < mStageCount; i++) {
+		mStageProgressList[i] = data.readFloat();
+		if (mStageProgressList[i] >= mMaxHealth) {
+			setStageFinished(i, true);
+			PRINT("\tStage %d is FINISHED\n", i);
+		} else {
+			setStageFinished(i, false);
+			PRINT("\tStage %d is NOT FINISHED\n", i);
+			finished = false;
+		}
+	}
 
-	.loc_0x70:
-	  addi      r3, r27, 0
-	  addi      r4, r29, 0
-	  li        r5, 0
-	  bl        0x620
-	  li        r30, 0
+	flatten();
 
-	.loc_0x84:
-	  addi      r31, r31, 0x4
-	  addi      r29, r29, 0x1
+	if (finished) {
+		mStartWaypoint->setFlag(true);
+		mEndWaypoint->setFlag(true);
+	}
 
-	.loc_0x8C:
-	  lwz       r0, 0x404(r27)
-	  cmpw      r29, r0
-	  blt+      .loc_0x28
-	  mr        r3, r27
-	  bl        0x434
-	  rlwinm.   r0,r30,0,24,31
-	  beq-      .loc_0xC0
-	  lwz       r3, 0x3F8(r27)
-	  li        r4, 0x1
-	  bl        0x37A8
-	  lwz       r3, 0x3FC(r27)
-	  li        r4, 0x1
-	  bl        0x379C
+	int stage = getFirstUnfinishedStage();
+	if (stage != -1) {
+		Vector3f pos              = getStagePos(stage) - (5.0f * getBridgeZVec());
+		mStartWaypoint->mPosition = pos;
+	}
 
-	.loc_0xC0:
-	  mr        r3, r27
-	  bl        0x260
-	  addi      r29, r3, 0
-	  cmpwi     r29, -0x1
-	  beq-      .loc_0x178
-	  addi      r3, r1, 0x38
-	  addi      r4, r27, 0
-	  bl        0xB68
-	  lfs       f2, 0x40(r1)
-	  addi      r6, r1, 0x28
-	  lfs       f3, -0x54E8(r13)
-	  addi      r5, r1, 0x24
-	  lfs       f1, 0x3C(r1)
-	  lfs       f0, 0x38(r1)
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  addi      r4, r1, 0x20
-	  fmuls     f0, f0, f3
-	  stfs      f2, 0x28(r1)
-	  addi      r3, r1, 0x44
-	  stfs      f1, 0x24(r1)
-	  stfs      f0, 0x20(r1)
-	  bl        -0x66F14
-	  addi      r4, r27, 0
-	  addi      r5, r29, 0
-	  addi      r3, r1, 0x50
-	  bl        0x908
-	  lfs       f1, 0x50(r1)
-	  lfs       f0, 0x44(r1)
-	  lfs       f3, 0x54(r1)
-	  fsubs     f4, f1, f0
-	  lfs       f2, 0x48(r1)
-	  lfs       f1, 0x58(r1)
-	  lfs       f0, 0x4C(r1)
-	  fsubs     f2, f3, f2
-	  stfs      f4, 0x68(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f2, 0x6C(r1)
-	  stfs      f0, 0x70(r1)
-	  lwz       r4, 0x3F8(r27)
-	  lwz       r3, 0x68(r1)
-	  lwz       r0, 0x6C(r1)
-	  stw       r3, 0x0(r4)
-	  stw       r0, 0x4(r4)
-	  lwz       r0, 0x70(r1)
-	  stw       r0, 0x8(r4)
-
-	.loc_0x178:
-	  lmw       r27, 0x7C(r1)
-	  lwz       r0, 0x94(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("_______________________________\n");
 }
 
 /*
@@ -2255,47 +1815,11 @@ void Bridge::doLoad(RandomAccessStream&)
  * Address:	8009E0A4
  * Size:	000080
  */
-void Bridge::doSave(RandomAccessStream&)
+void Bridge::doSave(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  rlwinm    r31,r30,2,0,29
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  b         .loc_0x54
-
-	.loc_0x30:
-	  mr        r3, r29
-	  lwz       r4, 0x3D0(r28)
-	  lwz       r12, 0x4(r29)
-	  lfsx      f1, r4, r31
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r31, 0x4
-	  addi      r30, r30, 0x1
-
-	.loc_0x54:
-	  lwz       r0, 0x404(r28)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mStageCount; i++) {
+		data.writeFloat(mStageProgressList[i]);
+	}
 }
 
 /*
@@ -2303,60 +1827,15 @@ void Bridge::doSave(RandomAccessStream&)
  * Address:	8009E124
  * Size:	0000B0
  */
-bool Bridge::insideSafeArea(Vector3f&)
+bool Bridge::insideSafeArea(Vector3f& pos)
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stfd      f31, 0x78(r1)
-	  stfd      f30, 0x70(r1)
-	  stfd      f29, 0x68(r1)
-	  stw       r31, 0x64(r1)
-	  mr        r31, r4
-	  mr        r4, r3
-	  lwz       r5, 0x404(r3)
-	  lfs       f31, 0x94(r3)
-	  lfs       f30, 0x98(r3)
-	  subi      r5, r5, 0x1
-	  lfs       f29, 0x9C(r3)
-	  addi      r3, r1, 0x1C
-	  bl        0x7E8
-	  stfs      f31, 0x28(r1)
-	  mr        r4, r31
-	  lfs       f0, 0x1C(r1)
-	  addi      r3, r1, 0x28
-	  stfs      f30, 0x2C(r1)
-	  lfs       f2, 0x20(r1)
-	  stfs      f29, 0x30(r1)
-	  lfs       f1, 0x24(r1)
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, -0x7320(r2)
-	  stfs      f2, 0x38(r1)
-	  stfs      f1, 0x3C(r1)
-	  stfs      f0, 0x40(r1)
-	  bl        -0x174D4
-	  lfs       f0, -0x731C(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x8C
-	  li        r3, 0
-	  b         .loc_0x90
-
-	.loc_0x8C:
-	  li        r3, 0x1
-
-	.loc_0x90:
-	  lwz       r0, 0x84(r1)
-	  lfd       f31, 0x78(r1)
-	  lfd       f30, 0x70(r1)
-	  lfd       f29, 0x68(r1)
-	  lwz       r31, 0x64(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f bridgePos = mPosition;
+	Vector3f stage     = getStagePos(mStageCount - 1);
+	Cylinder cyl(bridgePos, stage);
+	if (cyl.get2dDist(pos) < 120.0f) {
+		return false;
+	}
+	return true;
 }
 
 /*
@@ -2366,44 +1845,12 @@ bool Bridge::insideSafeArea(Vector3f&)
  */
 bool Bridge::isFinished()
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  b         .loc_0x40
-
-	.loc_0x20:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x150
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x3C
-	  li        r3, 0
-	  b         .loc_0x50
-
-	.loc_0x3C:
-	  addi      r31, r31, 0x1
-
-	.loc_0x40:
-	  lwz       r0, 0x404(r30)
-	  cmpw      r31, r0
-	  blt+      .loc_0x20
-	  li        r3, 0x1
-
-	.loc_0x50:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mStageCount; i++) {
+		if (!isStageFinished(i)) {
+			return false;
+		}
+	}
+	return true;
 }
 
 /*
@@ -2413,43 +1860,12 @@ bool Bridge::isFinished()
  */
 int Bridge::getFirstUnfinishedStage()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  b         .loc_0x40
-
-	.loc_0x20:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0xE8
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x3C
-	  mr        r3, r31
-	  b         .loc_0x50
-
-	.loc_0x3C:
-	  addi      r31, r31, 0x1
-
-	.loc_0x40:
-	  lwz       r0, 0x404(r30)
-	  cmpw      r31, r0
-	  blt+      .loc_0x20
-	  li        r3, -0x1
-
-	.loc_0x50:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mStageCount; i++) {
+		if (!isStageFinished(i)) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 /*
@@ -2459,43 +1875,12 @@ int Bridge::getFirstUnfinishedStage()
  */
 int Bridge::getFirstFinishedStage()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  b         .loc_0x40
-
-	.loc_0x20:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x80
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x3C
-	  mr        r3, r31
-	  b         .loc_0x50
-
-	.loc_0x3C:
-	  addi      r31, r31, 0x1
-
-	.loc_0x40:
-	  lwz       r0, 0x404(r30)
-	  cmpw      r31, r0
-	  blt+      .loc_0x20
-	  li        r3, -0x1
-
-	.loc_0x50:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mStageCount; i++) {
+		if (isStageFinished(i)) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 /*
@@ -2503,31 +1888,16 @@ int Bridge::getFirstFinishedStage()
  * Address:	8009E30C
  * Size:	000040
  */
-int Bridge::getJointIndex(int)
+int Bridge::getJointIndex(int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x3C8(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x30
+	if (id < 0 || id > mStageCount) {
+		ERROR(" illegal stage %d\n", id);
+	}
 
-	.loc_0x20:
-	  lwz       r3, 0x410(r3)
-	  bl        -0x16544
-	  lwz       r3, 0x58(r3)
-	  lwz       r3, 0x30(r3)
-
-	.loc_0x30:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mDoUseJointSegments) {
+		return 0;
+	}
+	return _410->getChildAt(id)->mCollInfo->mJointIndex;
 }
 
 /*
@@ -2535,63 +1905,17 @@ int Bridge::getJointIndex(int)
  * Address:	8009E34C
  * Size:	00009C
  */
-bool Bridge::isStageFinished(int)
+bool Bridge::isStageFinished(int id)
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lbz       r0, 0x3C8(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x60
-	  cmpwi     r4, 0
-	  blt-      .loc_0x34
-	  lwz       r0, 0x404(r31)
-	  cmpw      r4, r0
-	  blt-      .loc_0x3C
+	if (mDoUseJointSegments) {
+		if (id < 0 || id >= mStageCount) {
+			return true;
+		}
+		return mBuildShape->mProgressStateList[mStageJoints[id * 2 + 1]->mIndex];
+	}
+	return mBuildShape->mProgressStateList[getJointIndex(id)];
 
-	.loc_0x34:
-	  li        r3, 0x1
-	  b         .loc_0x88
-
-	.loc_0x3C:
-	  lwz       r3, 0x3D4(r31)
-	  rlwinm    r0,r4,3,0,28
-	  lwz       r4, 0x408(r31)
-	  add       r3, r3, r0
-	  lwz       r3, 0x4(r3)
-	  lwz       r4, 0x38(r4)
-	  lwz       r0, 0x14(r3)
-	  lbzx      r3, r4, r0
-	  b         .loc_0x88
-
-	.loc_0x60:
-	  beq-      .loc_0x6C
-	  li        r0, 0
-	  b         .loc_0x7C
-
-	.loc_0x6C:
-	  lwz       r3, 0x410(r31)
-	  bl        -0x165D0
-	  lwz       r3, 0x58(r3)
-	  lwz       r0, 0x30(r3)
-
-	.loc_0x7C:
-	  lwz       r3, 0x408(r31)
-	  lwz       r3, 0x38(r3)
-	  lbzx      r3, r3, r0
-
-	.loc_0x88:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -2601,56 +1925,13 @@ bool Bridge::isStageFinished(int)
  */
 void Bridge::flatten()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  b         .loc_0x7C
-
-	.loc_0x28:
-	  lwz       r0, 0x3D4(r29)
-	  lwz       r3, 0x408(r29)
-	  add       r5, r0, r31
-	  lwz       r4, 0x4(r5)
-	  lwz       r5, 0x0(r5)
-	  lwz       r6, 0x38(r3)
-	  lwz       r0, 0x14(r4)
-	  lwz       r4, 0x14(r5)
-	  lbzx      r0, r6, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x74
-	  lbzx      r0, r6, r4
-	  cmplwi    r0, 0
-	  beq-      .loc_0x74
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x74:
-	  addi      r31, r31, 0x8
-	  addi      r30, r30, 0x1
-
-	.loc_0x7C:
-	  lwz       r0, 0x404(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x28
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mStageCount; i++) {
+		int index = mStageJoints[i * 2]->mIndex;
+		if (mBuildShape->mProgressStateList[mStageJoints[i * 2 + 1]->mIndex] && mBuildShape->mProgressStateList[index]) {
+			mBuildShape->jointVisible(index, false);
+			PRINT("flatten bridge");
+		}
+	}
 }
 
 /*
@@ -2660,91 +1941,24 @@ void Bridge::flatten()
  */
 void Bridge::dump()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x30(r1)
-	  li        r5, 0
-	  lwz       r6, 0x404(r3)
-	  lfs       f5, -0x72E4(r2)
-	  cmpwi     r6, 0
-	  ble-      .loc_0x120
-	  rlwinm.   r0,r6,29,3,31
-	  mtctr     r0
-	  beq-      .loc_0xF8
+	for (int i = 0; i < mStageCount; i++) {
+		char a, b;
+		if (mBuildShape->mProgressStateList[mStageJoints[i * 2 + 1]->mIndex]) {
+			a = '|';
+		} else {
+			a = 'x';
+		}
 
-	.loc_0x24:
-	  lwz       r4, 0x3D0(r3)
-	  lfs       f3, 0x5C(r3)
-	  lfsx      f4, r4, r5
-	  addi      r5, r5, 0x4
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  addi      r5, r5, 0x4
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  stfd      f0, 0x28(r1)
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  stfd      f0, 0x28(r1)
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  stfd      f0, 0x28(r1)
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  stfd      f0, 0x28(r1)
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  stfd      f0, 0x28(r1)
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  stfd      f0, 0x28(r1)
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  stfd      f0, 0x28(r1)
-	  fctiwz    f0, f1
-	  stfd      f0, 0x28(r1)
-	  bdnz+     .loc_0x24
-	  andi.     r6, r6, 0x7
-	  beq-      .loc_0x120
+		if (mBuildShape->mProgressStateList[mStageJoints[i * 2]->mIndex]) {
+			b = '|';
+		} else {
+			b = 'x';
+		}
+		f32 test = mStageProgressList[i] / mMaxHealth * 100.0f;
+		PRINT("brd %d : %d%%(w%s:p%s)\n", i, (int)test, &a, &b);
+	}
 
-	.loc_0xF8:
-	  mtctr     r6
-
-	.loc_0xFC:
-	  lwz       r4, 0x3D0(r3)
-	  lfs       f3, 0x5C(r3)
-	  lfsx      f4, r4, r5
-	  addi      r5, r5, 0x4
-	  fdivs     f2, f4, f3
-	  fmuls     f1, f5, f2
-	  fctiwz    f0, f1
-	  stfd      f0, 0x28(r1)
-	  bdnz+     .loc_0xFC
-
-	.loc_0x120:
-	  addi      r1, r1, 0x30
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -2757,7 +1971,7 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 	FORCE_DONT_INLINE;
 	// Very wrong. Do Not Use.
 
-	if (_3C8) {
+	if (mDoUseJointSegments) {
 
 		Joint* target   = mStageJoints[stageIndex];
 		int targetIndex = target->mIndex;
@@ -2795,7 +2009,7 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 
 		int firstUnfinishedStage = -1;
 		for (int i = 0; i < mStageCount; ++i) {
-			if (mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex] == 0) {
+			if (!mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex]) {
 				firstUnfinishedStage = i;
 				break;
 			}
@@ -3094,67 +2308,15 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
  * Address:	8009E948
  * Size:	0000C8
  */
-Vector3f Bridge::getStagePos(int)
+Vector3f Bridge::getStagePos(int stage)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stfd      f31, 0x78(r1)
-	  stw       r31, 0x74(r1)
-	  mr        r31, r4
-	  stw       r30, 0x70(r1)
-	  addi      r30, r3, 0
-	  lbz       r0, 0x3C8(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x88
-	  addi      r3, r31, 0
-	  addi      r4, r5, 0
-	  bl        .loc_0xC8
-	  fmr       f31, f1
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0x4C
-	  bl        0x1D0
-	  lfs       f0, 0x4C(r1)
-	  lfs       f2, 0x50(r1)
-	  fmuls     f0, f0, f31
-	  lfs       f1, 0x94(r31)
-	  lfs       f4, 0x54(r1)
-	  fmuls     f2, f2, f31
-	  lfs       f3, 0x98(r31)
-	  fadds     f0, f1, f0
-	  lfs       f5, 0x9C(r31)
-	  fmuls     f1, f4, f31
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x0(r30)
-	  fadds     f0, f5, f1
-	  stfs      f2, 0x4(r30)
-	  stfs      f0, 0x8(r30)
-	  b         .loc_0xAC
+	if (mDoUseJointSegments) {
+		Vector3f pos;
+		pos = mPosition + getBridgeZVec() * getStageZ(stage);
+		return pos;
+	}
 
-	.loc_0x88:
-	  lwz       r3, 0x410(r31)
-	  mr        r4, r5
-	  bl        -0x16BEC
-	  lfsu      f0, 0x4(r3)
-	  stfs      f0, 0x0(r30)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x4(r30)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x8(r30)
-
-	.loc_0xAC:
-	  lwz       r0, 0x84(r1)
-	  lfd       f31, 0x78(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-
-	.loc_0xC8:
-	*/
+	return _410->getChildAt(stage)->mCentre;
 }
 
 /*
@@ -3162,38 +2324,13 @@ Vector3f Bridge::getStagePos(int)
  * Address:	8009EA10
  * Size:	000064
  */
-f32 Bridge::getStageZ(int)
+f32 Bridge::getStageZ(int stage)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  cmpwi     r4, 0
-	  lfs       f1, -0x72E0(r2)
-	  ble-      .loc_0x54
-	  subi      r4, r4, 0x1
-	  lbz       r0, 0x400(r3)
-	  xoris     r3, r4, 0x8000
-	  lfd       f1, -0x7328(r2)
-	  stw       r3, 0x14(r1)
-	  lis       r4, 0x4330
-	  lis       r3, 0x802B
-	  lfs       f2, -0x72DC(r2)
-	  stw       r4, 0x10(r1)
-	  rlwinm    r4,r0,2,0,29
-	  lfd       f0, 0x10(r1)
-	  addi      r0, r3, 0xEA4
-	  add       r3, r0, r4
-	  fsubs     f1, f0, f1
-	  lfs       f0, 0x0(r3)
-	  fmuls     f1, f2, f1
-	  fadds     f1, f1, f0
-
-	.loc_0x54:
-	  lfs       f0, -0x72F0(r2)
-	  fsubs     f1, f1, f0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	f32 z = -20.0f;
+	if (stage > 0) {
+		z = (f32)(stage - 1) * 20.0f + bridgeFirstPos[_400];
+	}
+	return z - 10.0f;
 }
 
 /*
@@ -3218,7 +2355,7 @@ void Bridge::getBridgePos(Vector3f& origin, f32& xProjection, f32& zProjection)
 Vector3f Bridge::getBridgeZVec()
 {
 	f32 yRot = mRotation.y;
-	Vector3f zvec(cosf(yRot), 0.0f, sinf(yRot));
+	Vector3f zvec(sinf(yRot), 0.0f, cosf(yRot));
 	return zvec;
 }
 
@@ -3241,86 +2378,9 @@ Vector3f Bridge::getBridgeXVec()
  */
 Vector3f Bridge::getStartPos()
 {
-	// Get the rotation around the Y-axis
-	f32 rotY = mRotation.y;
-
-	// Calculate the direction vector based on the rotation
-	Vector3f directionVector(sinf(rotY), 0.0f, cosf(rotY));
-
-	// Scale the direction vector by 20.0f
-	Vector3f scaledDirection = directionVector;
-	scaledDirection.multiply(20.0f);
-
-	// Calculate the start position based on the direction vector and the bridge's position
-	Vector3f startPos(scaledDirection.x, scaledDirection.y, scaledDirection.z);
-	startPos.sub(mPosition);
-	return startPos;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stfd      f31, 0x80(r1)
-	  stfd      f30, 0x78(r1)
-	  stfd      f29, 0x70(r1)
-	  stfd      f28, 0x68(r1)
-	  stw       r31, 0x64(r1)
-	  stw       r30, 0x60(r1)
-	  mr        r30, r3
-	  lfs       f31, 0x8C(r4)
-	  lfs       f30, 0x94(r4)
-	  fmr       f1, f31
-	  lfs       f29, 0x98(r4)
-	  lfs       f28, 0x9C(r4)
-	  bl        0x17CEFC
-	  stfs      f1, 0x34(r1)
-	  fmr       f1, f31
-	  addi      r31, r1, 0x34
-	  bl        0x17D080
-	  stfs      f1, 0x30(r1)
-	  addi      r4, r1, 0x30
-	  addi      r6, r31, 0
-	  addi      r3, r1, 0x24
-	  subi      r5, r13, 0x54E0
-	  bl        -0x67B64
-	  addi      r3, r1, 0x3C
-	  addi      r4, r1, 0x24
-	  bl        -0x2BB48
-	  lfs       f2, 0x44(r1)
-	  addi      r6, r1, 0x20
-	  lfs       f3, -0x54D8(r13)
-	  addi      r5, r1, 0x1C
-	  lfs       f1, 0x40(r1)
-	  lfs       f0, 0x3C(r1)
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  addi      r4, r1, 0x18
-	  fmuls     f0, f0, f3
-	  stfs      f2, 0x20(r1)
-	  addi      r3, r1, 0x48
-	  stfs      f1, 0x1C(r1)
-	  stfs      f0, 0x18(r1)
-	  bl        -0x67BAC
-	  lfs       f0, 0x48(r1)
-	  lfs       f1, 0x4C(r1)
-	  fsubs     f0, f30, f0
-	  lfs       f2, 0x50(r1)
-	  fsubs     f3, f29, f1
-	  fsubs     f1, f28, f2
-	  stfs      f0, 0x0(r30)
-	  stfs      f3, 0x4(r30)
-	  stfs      f1, 0x8(r30)
-	  lwz       r0, 0x8C(r1)
-	  lfd       f31, 0x80(r1)
-	  lfd       f30, 0x78(r1)
-	  lfd       f29, 0x70(r1)
-	  lfd       f28, 0x68(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f pos = mPosition;
+	pos          = pos - 20.0f * getBridgeZVec();
+	return pos;
 }
 
 /*
@@ -3899,185 +2959,4 @@ bool InteractBreak::actBridge(Bridge*)
 
 	.loc_0x2E8:
 	*/
-}
-
-/*
- * --INFO--
- * Address:	8009F500
- * Size:	000008
- */
-bool Bridge::isBridge()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	8009F508
- * Size:	000014
- */
-bool Bridge::alwaysUpdatePlatform()
-{
-	return _424 != 0;
-}
-
-/*
- * --INFO--
- * Address:	8009F51C
- * Size:	00000C
- */
-void Bridge::finalSetup()
-{
-	_424 = 3;
-}
-
-/*
- * --INFO--
- * Address:	8009F528
- * Size:	000008
- */
-bool WorkObject::isVisible()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	8009F530
- * Size:	000008
- */
-bool WorkObject::isAlive()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	8009F538
- * Size:	000008
- */
-bool WorkObject::isHinderRock()
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	8009F540
- * Size:	000008
- */
-f32 ItemCreature::getHeight()
-{
-	return 0.0f;
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x732C(r2)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8009F548
- * Size:	000008
- */
-bool HinderRock::isHinderRock()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	8009F550
- * Size:	000004
- */
-void DynBuildShape::update()
-{
-}
-
-/*
- * --INFO--
- * Address:	8009F554
- * Size:	000004
- */
-void DynBuildShape::refresh(Graphics&)
-{
-}
-
-/*
- * --INFO--
- * Address:	8009F558
- * Size:	00006C
- */
-WorkObjectMgr::~WorkObjectMgr()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x54
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x1864
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x44
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4F80
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-
-	.loc_0x44:
-	  extsh.    r0, r4
-	  ble-      .loc_0x54
-	  mr        r3, r31
-	  bl        -0x583FC
-
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8009F5C4
- * Size:	000008
- */
-int WorkObjectMgr::getMax()
-{
-	return 0x10000;
-	/*
-	.loc_0x0:
-	  lis       r3, 0x1
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8009F5CC
- * Size:	000008
- */
-bool WorkObject::isFinished()
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	8009F5D4
- * Size:	000008
- */
-bool WorkObject::workable(Vector3f&)
-{
-	return true;
 }

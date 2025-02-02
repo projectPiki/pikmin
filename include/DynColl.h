@@ -57,19 +57,19 @@ struct DynCollShape : public DynCollObject {
 
 	// _00     = VTBL
 	// _00-_2C = DynCollObject
-	Shape* mShape;           // _2C
-	u32 _30;                 // _30
-	u32 _34;                 // _34
-	u32* mProgressStateList; // _38
-	u32 _3C;                 // _3C
-	u32 _40;                 // _40
-	BoundBox _44;            // _44
-	Matrix4f mTransformMtx;  // _5C
-	Matrix4f mInverseMatrix; // _9C
-	u8 _DC[0x11C - 0xDC];    // _CC, unknown
-	Vector3f _11C;           // _11C
-	Vector3f mRotation;      // _128
-	Vector3f mPosition;      // _134
+	Shape* mShape;            // _2C
+	u32 _30;                  // _30
+	u32 _34;                  // _34
+	bool* mProgressStateList; // _38
+	u32 _3C;                  // _3C
+	u32 _40;                  // _40
+	BoundBox _44;             // _44
+	Matrix4f mTransformMtx;   // _5C
+	Matrix4f mInverseMatrix;  // _9C
+	u8 _DC[0x11C - 0xDC];     // _CC, unknown
+	Vector3f _11C;            // _11C
+	Vector3f mRotation;       // _128
+	Vector3f mPosition;       // _134
 };
 
 /**
@@ -104,8 +104,8 @@ struct DynBuildShape : public DynCollShape {
 	{
 	}
 
-	virtual void update();           // _10
-	virtual void refresh(Graphics&); // _44
+	virtual void update() { }           // _10
+	virtual void refresh(Graphics&) { } // _44
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape

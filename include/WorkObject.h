@@ -17,14 +17,14 @@ struct DynBuildShape;
 struct WorkObject : public ItemCreature {
 	WorkObject(); // unused/inlined
 
-	virtual bool isVisible();                 // _74
-	virtual bool isAlive();                   // _88
-	virtual void doKill();                    // _10C
-	virtual void finalSetup() { }             // _158
-	virtual bool isBridge() { return false; } // _15C
-	virtual bool isHinderRock();              // _160
-	virtual bool isFinished();                // _164
-	virtual bool workable(Vector3f&);         // _168
+	virtual bool isVisible() { return true; }         // _74
+	virtual bool isAlive() { return true; }           // _88
+	virtual void doKill();                            // _10C
+	virtual void finalSetup() { }                     // _158
+	virtual bool isBridge() { return false; }         // _15C
+	virtual bool isHinderRock() { return false; }     // _160
+	virtual bool isFinished() { return false; }       // _164
+	virtual bool workable(Vector3f&) { return true; } // _168
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
@@ -55,13 +55,13 @@ struct WorkObjectNode : public CoreNode {
 struct WorkObjectMgr : public ObjectMgr {
 	WorkObjectMgr();
 
-	virtual Creature* getCreature(int); // _08
-	virtual int getFirst();             // _0C
-	virtual int getNext(int);           // _10
-	virtual bool isDone(int);           // _14
-	virtual ~WorkObjectMgr();           // _48
-	virtual int getSize();              // _60
-	virtual int getMax();               // _64
+	virtual Creature* getCreature(int);      // _08
+	virtual int getFirst();                  // _0C
+	virtual int getNext(int);                // _10
+	virtual bool isDone(int);                // _14
+	virtual ~WorkObjectMgr() { }             // _48
+	virtual int getSize();                   // _60
+	virtual int getMax() { return 0x10000; } // _64
 
 	void finalSetup();
 	void loadShapes();
@@ -90,19 +90,19 @@ struct WorkObjectMgr : public ObjectMgr {
 struct Bridge : public WorkObject {
 	Bridge(Shape*, bool);
 
-	virtual bool insideSafeArea(Vector3f&);   // _10
-	virtual bool alwaysUpdatePlatform();      // _18
-	virtual void startAI(int);                // _34
-	virtual void doSave(RandomAccessStream&); // _50
-	virtual void doLoad(RandomAccessStream&); // _54
-	virtual bool stimulate(Interaction&);     // _A0
-	virtual void dump();                      // _C8
-	virtual void update();                    // _E0
-	virtual void refresh(Graphics&);          // _EC
-	virtual void finalSetup();                // _158
-	virtual bool isBridge();                  // _15C
-	virtual bool isFinished();                // _164
-	virtual bool workable(Vector3f&);         // _168
+	virtual bool insideSafeArea(Vector3f&);                   // _10
+	virtual bool alwaysUpdatePlatform() { return _424 != 0; } // _18
+	virtual void startAI(int);                                // _34
+	virtual void doSave(RandomAccessStream&);                 // _50
+	virtual void doLoad(RandomAccessStream&);                 // _54
+	virtual bool stimulate(Interaction&);                     // _A0
+	virtual void dump();                                      // _C8
+	virtual void update();                                    // _E0
+	virtual void refresh(Graphics&);                          // _EC
+	virtual void finalSetup() { _424 = 3; }                   // _158
+	virtual bool isBridge() { return true; }                  // _15C
+	virtual bool isFinished();                                // _164
+	virtual bool workable(Vector3f&);                         // _168
 
 	inline int getStage() { return mStageCount; }
 
@@ -124,22 +124,22 @@ struct Bridge : public WorkObject {
 
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject
-	bool _3C8;                  // _3C8
-	s16 _3CA;                   // _3CA
-	u8 _3CC;                    // _3CC
-	f32* mStageProgressList;    // _3D0, stage items?
-	Joint** mStageJoints;       // _3D4, unknown
-	PermanentEffect _3D8;       // _3D8
-	PermanentEffect _3E8;       // _3E8
-	WayPoint* _3F8;             // _3F8
-	WayPoint* _3FC;             // _3FC
-	u8 _400;                    // _400
-	int mStageCount;            // _404
-	DynBuildShape* mBuildShape; // _408
-	Shape* _40C;                // _40C
-	CollPart* _410;             // _410
-	ShapeDynMaterials _414;     // _414
-	u8 _424;                    // _424, flags (3 = final setup)
+	bool mDoUseJointSegments;       // _3C8
+	s16 _3CA;                       // _3CA
+	u8 _3CC;                        // _3CC
+	f32* mStageProgressList;        // _3D0, stage items?
+	Joint** mStageJoints;           // _3D4, unknown
+	PermanentEffect _3D8;           // _3D8
+	PermanentEffect _3E8;           // _3E8
+	WayPoint* mStartWaypoint;       // _3F8
+	WayPoint* mEndWaypoint;         // _3FC
+	u8 _400;                        // _400
+	int mStageCount;                // _404
+	DynBuildShape* mBuildShape;     // _408
+	Shape* mBridgeShape;            // _40C
+	CollPart* _410;                 // _410
+	ShapeDynMaterials mDynMaterial; // _414
+	u8 _424;                        // _424, flags (3 = final setup)
 };
 
 /**
@@ -150,17 +150,17 @@ struct Bridge : public WorkObject {
 struct HinderRock : public WorkObject {
 	HinderRock(Shape*);
 
-	virtual bool insideSafeArea(Vector3f&);   // _10
-	virtual void startAI(int);                // _34
-	virtual void doSave(RandomAccessStream&); // _50
-	virtual void doLoad(RandomAccessStream&); // _54
-	virtual f32 getCentreSize();              // _5C
-	virtual bool stimulate(Interaction&);     // _A0
-	virtual void update();                    // _E0
-	virtual void refresh(Graphics&);          // _EC
-	virtual bool isHinderRock();              // _160
-	virtual bool isFinished();                // _164
-	virtual bool workable(Vector3f&);         // _168
+	virtual bool insideSafeArea(Vector3f&);      // _10
+	virtual void startAI(int);                   // _34
+	virtual void doSave(RandomAccessStream&);    // _50
+	virtual void doLoad(RandomAccessStream&);    // _54
+	virtual f32 getCentreSize();                 // _5C
+	virtual bool stimulate(Interaction&);        // _A0
+	virtual void update();                       // _E0
+	virtual void refresh(Graphics&);             // _EC
+	virtual bool isHinderRock() { return true; } // _160
+	virtual bool isFinished();                   // _164
+	virtual bool workable(Vector3f&);            // _168
 
 	void beginPush();
 	void endPush();

@@ -2502,7 +2502,7 @@ void Navi::collisionCallback(CollEvent& event)
 		case OBJTYPE_WorkObject:
 			Bridge* bridge = static_cast<Bridge*>(collider);
 			if (bridge->isBridge()) {
-				if (bridge->_3C8 && getCollidePlatformCreature() == bridge) {
+				if (bridge->mDoUseJointSegments && getCollidePlatformCreature() == bridge) {
 					Vector3f normal(getCollidePlatformNormal());
 					if ((normal.DP(bridge->getBridgeZVec()) >= -0.8f)) {
 						return;

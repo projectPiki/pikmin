@@ -3473,7 +3473,7 @@ void Piki::checkBridgeWall(Creature* object, Vector3f& direction)
 				if (workObj->isBridge()) {
 					Bridge* bridge = static_cast<Bridge*>(workObj);
 					f32 zComp      = direction.DP(bridge->getBridgeZVec());
-					if (bridge->_3C8 && zComp < -0.8f && !bridge->isFinished()) {
+					if (bridge->mDoUseJointSegments && zComp < -0.8f && !bridge->isFinished()) {
 						PRINT("** BRIDGE AI START\n");
 						seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 						mActiveAction->abandon(nullptr);

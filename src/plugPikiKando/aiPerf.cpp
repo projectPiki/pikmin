@@ -590,8 +590,8 @@ void AIPerf::breakSluice(Menu& menu)
 				closestBridge->mStageProgressList[i] = 1000.0f;
 			}
 
-			closestBridge->_3F8->setFlag(true);
-			closestBridge->_3FC->setFlag(true);
+			closestBridge->mStartWaypoint->setFlag(true);
+			closestBridge->mEndWaypoint->setFlag(true);
 		}
 	}
 }
