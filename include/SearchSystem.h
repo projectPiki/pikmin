@@ -17,7 +17,7 @@ struct SearchData {
 
 	SmartPtr<Creature> mTargetCreature; // _00
 	f32 mDistance;                      // _04
-	int mSearchIteration;               // _08, unknown
+	int mSearchIteration;               // _08
 };
 
 /**
