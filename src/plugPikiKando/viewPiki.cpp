@@ -1790,10 +1790,10 @@ void ViewPiki::refresh(Graphics& gfx)
 	}
 
 	if ((!mStickTarget || !isStickToPlatform()) && !mRope && ((mStickTarget && mStickPart) || mStickPart->isTubeType())) {
-		mWorldMtx = mRopeOrientMtx;
+		mWorldMtx = mConstrainedMoveMtx;
 	} else {
 		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
-		mRopeOrientMtx = mWorldMtx;
+		mConstrainedMoveMtx = mWorldMtx;
 	}
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 

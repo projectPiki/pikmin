@@ -574,7 +574,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/ufoAnim.cpp"),
             Object(Matching, "plugPikiKando/bombItem.cpp"),
             Object(NonMatching, "plugPikiKando/goalItem.cpp"),
-            Object(NonMatching, "plugPikiKando/pikiheadItem.cpp"),
+            Object(Matching, "plugPikiKando/pikiheadItem.cpp"),
             Object(Matching, "plugPikiKando/keyItem.cpp"),
             Object(Matching, "plugPikiKando/ropeItem.cpp"),
             Object(Matching, "plugPikiKando/seedItem.cpp"),

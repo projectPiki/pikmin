@@ -3620,11 +3620,11 @@ void Navi::draw(Graphics& gfx)
 	}
 
 	if (mRope) {
-		mWorldMtx = mRopeOrientMtx;
+		mWorldMtx = mConstrainedMoveMtx;
 		mWorldMtx.setTranslation(mPosition.x, mPosition.y, mPosition.z);
 	} else {
 		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
-		mRopeOrientMtx = mWorldMtx;
+		mConstrainedMoveMtx = mWorldMtx;
 	}
 
 	gfx.useMatrix(Matrix4f::ident, 0);

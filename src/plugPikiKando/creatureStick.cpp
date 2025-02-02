@@ -711,7 +711,7 @@ void Creature::endStick()
  */
 bool Creature::startRope(RopeCreature* rope, f32 ropeRatio)
 {
-	mRopeOrientMtx.makeIdentity();
+	mConstrainedMoveMtx.makeIdentity();
 	if (mRope) {
 		PRINT("already hold on to something !\n");
 		return false;

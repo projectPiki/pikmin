@@ -457,7 +457,7 @@ void Creature::adjustDistance(Vector3f& targetPos, f32 targetDist)
 void Creature::init()
 {
 	mSearchBuffer.invalidate();
-	mRopeOrientMtx.makeIdentity();
+	mConstrainedMoveMtx.makeIdentity();
 	mWorldMtx.makeIdentity();
 	mRotationQuat.set(0.0f, 0.0f, 0.0f, 1.0f);
 	mWaterFxTimer    = 0;

@@ -356,7 +356,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Quat mPreGrabRotation;               // _F0
 	Quat _100;                           // _100
 	f32 _110;                            // _110
-	Matrix4f mRopeOrientMtx;             // _114
+	Matrix4f mConstrainedMoveMtx;        // _114, moving on a rope or falling along a fixed path, etc
 	Creature* mRopeListHead;             // _154, first holder in list of holders holding onto this rope
 	RopeCreature* mRope;                 // _158
 	f32 mRopePosRatio;                   // _15C, how far along the rope are we

@@ -33,18 +33,18 @@ struct PikiHeadItemProp : public CreatureProp {
 struct PikiHeadItem : public ItemCreature {
 	PikiHeadItem(CreatureProp*, ItemShapeObject*, SimpleAI*);
 
-	virtual void startAI(int);        // _34
-	virtual f32 getiMass();           // _38
-	virtual f32 getSize();            // _3C
-	virtual bool isVisible();         // _74
-	virtual bool isAtari();           // _84
-	virtual bool isAlive();           // _88
-	virtual bool needShadow();        // _90
-	virtual void startWaterEffect();  // _CC
-	virtual void finishWaterEffect(); // _D0
-	virtual void refresh(Graphics&);  // _EC
-	virtual void doKill();            // _10C
-	virtual void playSound(int);      // _128
+	virtual void startAI(int);               // _34
+	virtual f32 getiMass();                  // _38
+	virtual f32 getSize();                   // _3C
+	virtual bool isVisible();                // _74
+	virtual bool isAtari() { return false; } // _84
+	virtual bool isAlive();                  // _88
+	virtual bool needShadow();               // _90
+	virtual void startWaterEffect();         // _CC
+	virtual void finishWaterEffect();        // _D0
+	virtual void refresh(Graphics&);         // _EC
+	virtual void doKill();                   // _10C
+	virtual void playSound(int);             // _128
 
 	bool canPullout();
 	void setPermanentEffects(bool);
