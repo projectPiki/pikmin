@@ -248,8 +248,8 @@ struct BaseShape : public CoreNode {
 	BoundBox _140;                    // _140
 	u8 _158[0x164 - 0x158];           // _158
 	u32 _164;                         // _164
-	u32 _168;                         // _168
-	u32 _16C;                         // _16C
+	int mTriCount;                    // _168
+	CollTriInfo* mTriList;            // _16C
 	u32 _170;                         // _170
 	u32 _174;                         // _174
 	RouteGroup mRouteGroup;           // _178

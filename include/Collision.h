@@ -255,6 +255,8 @@ struct CollGroup { };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
 struct CollTriInfo {
 	CollTriInfo();
@@ -262,10 +264,23 @@ struct CollTriInfo {
 	void init(RoomInfo*, Vector3f*);
 	int behindEdge(Vector3f&);
 
+	bool inTriClampTo(Vector3f& pos)
+	{
+		pos.y      = -(pos.x * mTriangle.mNormal.x + pos.z * mTriangle.mNormal.z - mTriangle.mOffset) / mTriangle.mNormal.y;
+		bool inTri = true;
+		for (int i = 0; inTri && i < 3; i++) {
+			f32 dist = mEdgePlanes[i].dist(pos);
+			if (dist < 0.0f) {
+				inTri = false;
+			}
+		}
+		return inTri;
+	}
+
 	u32 mMapCode;          // _00
 	u32 mVertexIndices[3]; // _04
-	u32 _10;               // _10
-	u32 _14;               // _14
+	u8 _10[0x2];           // _10, unknown
+	s16 _12[3];            // _12
 	Plane mTriangle;       // 18
 	Plane mEdgePlanes[3];  // _28
 };

@@ -5095,16 +5095,6 @@ void MapMgr::update()
 
 /*
  * --INFO--
- * Address:	80065B9C
- * Size:	000008
- */
-bool Creature::alwaysUpdatePlatform()
-{
-	return false;
-}
-
-/*
- * --INFO--
  * Address:	80065BA4
  * Size:	0000F4
  */
@@ -8975,15 +8965,6 @@ void MapMgr::recTraceMove(CollGroup*, MoveTrace&, f32)
  * Size:	000004
  */
 void DynCollObject::touchCallback(Plane&, Vector3f&, Vector3f&)
-{
-}
-
-/*
- * --INFO--
- * Address:	80068E50
- * Size:	000004
- */
-void Creature::wallCallback(Plane&, DynCollObject*)
 {
 }
 

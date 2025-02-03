@@ -80,7 +80,7 @@ struct Creature : public RefCountable, public EventTalker {
 
 	virtual bool insideSafeArea(struct Vector3f&) { return true; }   // _10 (weak)
 	virtual bool platAttachable() { return false; }                  // _14 (weak)
-	virtual bool alwaysUpdatePlatform();                             // _18
+	virtual bool alwaysUpdatePlatform() { return false; }            // _18
 	virtual bool doDoAI() { return true; }                           // _1C (weak)
 	virtual void setRouteTracer(RouteTracer*) { }                    // _20 (weak)
 	virtual void init();                                             // _24
@@ -119,7 +119,7 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual void collisionCallback(struct CollEvent&) { }            // _A8 (weak)
 	virtual void bounceCallback() { }                                // _AC (weak)
 	virtual void jumpCallback() { }                                  // _B0 (weak)
-	virtual void wallCallback(struct Plane&, DynCollObject*);        // _B4
+	virtual void wallCallback(struct Plane&, DynCollObject*) { }     // _B4
 	virtual void offwallCallback(DynCollObject*) { }                 // _B8 (weak)
 	virtual void stickCallback(Creature*) { }                        // _BC (weak)
 	virtual void offstickCallback(Creature*) { }                     // _C0 (weak)

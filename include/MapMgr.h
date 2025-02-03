@@ -261,7 +261,8 @@ struct MapMgr {
 	DayMgr* mDayMgr;                       // _04
 	Vector3f _08;                          // _08
 	MapRoom* mMapRooms;                    // _14, array of 256 MapRooms
-	u8 _18[0x64 - 0x18];                   // _18, unknown
+	u8 _18[0x60 - 0x18];                   // _18, unknown
+	Shape* _60;                            // _60
 	ShapeDynMaterials mDynMaterials;       // _64
 	BaseShape* mMapPartShapes[5];          // _74
 	DynCollShape* mCollShape;              // _88
