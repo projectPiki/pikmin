@@ -64,7 +64,7 @@ struct PikiState : public AState<Piki> {
 	PikiState(int stateID, char* name)
 	    : AState(stateID)
 	{
-		mName = name;
+		setName(name);
 	}
 
 	virtual void transit(Piki*, int);             // _4C
@@ -82,6 +82,8 @@ struct PikiState : public AState<Piki> {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct PikiAbsorbState : public PikiState {
 	PikiAbsorbState();
@@ -93,28 +95,32 @@ struct PikiAbsorbState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x1C - 0x10]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct PikiAutoNukiState : public PikiState {
 	PikiAutoNukiState();
 
-	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
-	virtual void init(Piki*);                  // _38
-	virtual void exec(Piki*);                  // _3C
-	virtual void cleanup(Piki*);               // _40
-	virtual bool useLookUpdate();              // _60
+	virtual void procAnimMsg(Piki*, MsgAnim*);     // _20
+	virtual void init(Piki*);                      // _38
+	virtual void exec(Piki*);                      // _3C
+	virtual void cleanup(Piki*);                   // _40
+	virtual bool useLookUpdate() { return false; } // _60
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct PikiBubbleState : public PikiState {
 	PikiBubbleState();
@@ -125,11 +131,13 @@ struct PikiBubbleState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x20 - 0x10]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct PikiBulletState : public PikiState {
 	PikiBulletState();
@@ -141,11 +149,13 @@ struct PikiBulletState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiBuryState : public PikiState {
 	PikiBuryState();
@@ -156,11 +166,12 @@ struct PikiBuryState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x2C.
  */
 struct PikiCliffState : public PikiState {
 	PikiCliffState();
@@ -179,22 +190,24 @@ struct PikiCliffState : public PikiState {
 	// _00-_10 = PikiState
 	u8 _10[0xC];  // _10, unknown
 	Vector3f _1C; // _1C
+	u8 _28[0x4];  // _28, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiDeadState : public PikiState {
 	PikiDeadState();
 
-	virtual void init(Piki*);     // _38
-	virtual void exec(Piki*);     // _3C
-	virtual void cleanup(Piki*);  // _40
-	virtual bool useLookUpdate(); // _60
+	virtual void init(Piki*);                      // _38
+	virtual void exec(Piki*);                      // _3C
+	virtual void cleanup(Piki*);                   // _40
+	virtual bool useLookUpdate() { return false; } // _60
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
@@ -219,23 +232,26 @@ struct PikiDrownState : public PikiState {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiDyingState : public PikiState {
 	PikiDyingState();
 
-	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
-	virtual void init(Piki*);                  // _38
-	virtual void exec(Piki*);                  // _3C
-	virtual void cleanup(Piki*);               // _40
-	virtual bool useLookUpdate();              // _60
+	virtual void procAnimMsg(Piki*, MsgAnim*);     // _20
+	virtual void init(Piki*);                      // _38
+	virtual void exec(Piki*);                      // _3C
+	virtual void cleanup(Piki*);                   // _40
+	virtual bool useLookUpdate() { return false; } // _60
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct PikiEmitState : public PikiState {
 	PikiEmitState();
@@ -248,11 +264,13 @@ struct PikiEmitState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct PikiEmotionState : public PikiState {
 	PikiEmotionState();
@@ -265,13 +283,16 @@ struct PikiEmotionState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	Vector3f _10; // _10
-	u8 _1C;       // _1C
-	u8 _1D;       // _1D
+	Vector3f _10;        // _10
+	u8 _1C;              // _1C
+	u8 _1D;              // _1D
+	u8 _1E[0x24 - 0x1E]; // _1E, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiFallMeckState : public PikiState {
 	PikiFallMeckState();
@@ -283,11 +304,12 @@ struct PikiFallMeckState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct PikiFallState : public PikiState {
 	PikiFallState();
@@ -300,11 +322,13 @@ struct PikiFallState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct PikiFiredState : public PikiState {
 	PikiFiredState();
@@ -315,7 +339,7 @@ struct PikiFiredState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x20 - 0x10]; // _10, unknown
 };
 
 /**
@@ -360,6 +384,8 @@ struct PikiFlownState : public PikiState {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x44.
  */
 struct PikiFlyingState : public PikiState {
 	PikiFlyingState();
@@ -375,11 +401,13 @@ struct PikiFlyingState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x44 - 0x10]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiGoHangState : public PikiState {
 	PikiGoHangState();
@@ -390,45 +418,48 @@ struct PikiGoHangState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiGrowState : public PikiState {
 	PikiGrowState();
 
-	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
-	virtual void init(Piki*);                  // _38
-	virtual void exec(Piki*);                  // _3C
-	virtual void cleanup(Piki*);               // _40
-	virtual bool useLookUpdate();              // _60
+	virtual void procAnimMsg(Piki*, MsgAnim*);     // _20
+	virtual void init(Piki*);                      // _38
+	virtual void exec(Piki*);                      // _3C
+	virtual void cleanup(Piki*);                   // _40
+	virtual bool useLookUpdate() { return false; } // _60
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiGrowupState : public PikiState {
 	PikiGrowupState();
 
-	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
-	virtual void init(Piki*);                  // _38
-	virtual void exec(Piki*);                  // _3C
-	virtual void cleanup(Piki*);               // _40
-	virtual bool useLookUpdate();              // _60
+	virtual void procAnimMsg(Piki*, MsgAnim*);     // _20
+	virtual void init(Piki*);                      // _38
+	virtual void exec(Piki*);                      // _3C
+	virtual void cleanup(Piki*);                   // _40
+	virtual bool useLookUpdate() { return false; } // _60
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiHangedState : public PikiState {
 	PikiHangedState();
@@ -440,29 +471,32 @@ struct PikiHangedState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct PikiKinokoChangeState : public PikiState {
 	PikiKinokoChangeState();
 
-	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
-	virtual void init(Piki*);                  // _38
-	virtual void exec(Piki*);                  // _3C
-	virtual void cleanup(Piki*);               // _40
-	virtual void restart(Piki*);               // _48
-	virtual bool useLookUpdate();              // _60
+	virtual void procAnimMsg(Piki*, MsgAnim*);     // _20
+	virtual void init(Piki*);                      // _38
+	virtual void exec(Piki*);                      // _3C
+	virtual void cleanup(Piki*);                   // _40
+	virtual void restart(Piki*);                   // _48
+	virtual bool useLookUpdate() { return false; } // _60
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x28.
  */
 struct PikiKinokoState : public PikiState {
 	PikiKinokoState();
@@ -479,10 +513,13 @@ struct PikiKinokoState : public PikiState {
 	// _00-_10 = PikiState
 	u8 _10[0x8];  // _10, unknown
 	Vector3f _18; // _18
+	u8 _24[0x4];  // _24, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct PikiLookAtState : public PikiState {
 	PikiLookAtState();
@@ -494,11 +531,15 @@ struct PikiLookAtState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	f32 _10;     // _10
+	u32 _14;     // _14, unknown
+	u8 _18[0x4]; // _18, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct PikiNormalState : public PikiState {
 	PikiNormalState();
@@ -510,49 +551,53 @@ struct PikiNormalState : public PikiState {
 	virtual void exec(Piki*);                        // _3C
 	virtual void cleanup(Piki*);                     // _40
 	virtual void restart(Piki*);                     // _48
-	virtual bool collideAI();                        // _64
-	virtual bool freeAI();                           // _68
+	virtual bool collideAI() { return true; }        // _64
+	virtual bool freeAI() { return true; }           // _68
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x20 - 0x10]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiNukareState : public PikiState {
 	PikiNukareState();
 
-	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
-	virtual void init(Piki*);                  // _38
-	virtual void exec(Piki*);                  // _3C
-	virtual void cleanup(Piki*);               // _40
-	virtual bool useLookUpdate();              // _60
+	virtual void procAnimMsg(Piki*, MsgAnim*);     // _20
+	virtual void init(Piki*);                      // _38
+	virtual void exec(Piki*);                      // _3C
+	virtual void cleanup(Piki*);                   // _40
+	virtual bool useLookUpdate() { return false; } // _60
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiNukareWaitState : public PikiState {
 	PikiNukareWaitState();
 
-	virtual void init(Piki*);     // _38
-	virtual void exec(Piki*);     // _3C
-	virtual void cleanup(Piki*);  // _40
-	virtual bool useLookUpdate(); // _60
+	virtual void init(Piki*);                      // _38
+	virtual void exec(Piki*);                      // _3C
+	virtual void cleanup(Piki*);                   // _40
+	virtual bool useLookUpdate() { return false; } // _60
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct PikiPressedState : public PikiState {
 	PikiPressedState();
@@ -561,15 +606,17 @@ struct PikiPressedState : public PikiState {
 	virtual void init(Piki*);                        // _38
 	virtual void exec(Piki*);                        // _3C
 	virtual void cleanup(Piki*);                     // _40
-	virtual bool useLookUpdate();                    // _60
+	virtual bool useLookUpdate() { return false; }   // _60
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x8]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct PikiPushPikiState : public PikiState {
 	PikiPushPikiState();
@@ -585,11 +632,13 @@ struct PikiPushPikiState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x18 - 0x10]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct PikiPushState : public PikiState {
 	PikiPushState();
@@ -609,6 +658,8 @@ struct PikiPushState : public PikiState {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct PikiSwallowedState : public PikiState {
 	PikiSwallowedState();
@@ -619,11 +670,13 @@ struct PikiSwallowedState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
+	u8 _10[0x4]; // _10, unknown
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiWaterHangedState : public PikiState {
 	PikiWaterHangedState();
@@ -635,11 +688,12 @@ struct PikiWaterHangedState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct PikiWaveState : public PikiState {
 	PikiWaveState();
@@ -656,7 +710,6 @@ struct PikiWaveState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	// TODO: members
 };
 
 #endif
