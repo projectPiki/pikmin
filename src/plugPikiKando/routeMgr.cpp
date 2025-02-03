@@ -1,6 +1,11 @@
 #include "Route.h"
 #include "Colour.h"
+#include "MapMgr.h"
+#include "MapCode.h"
 #include "DebugLog.h"
+
+u16 PathFinder::mode;
+int PathFinder::avoidWayPointIndex;
 
 /*
  * --INFO--
@@ -14,15 +19,24 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("routeMgr")
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-PathFinder::PathFinder(RouteMgr::Group&)
+PathFinder::PathFinder(RouteMgr::Group& group)
 {
+	mGroup = &group;
+	_04    = group.getNumPoints();
+	PRINT("buffersize = %d\n", _04);
+	mBuffer = new Buffer[_04];
+	clearMode();
+	_0C     = 1;
+	_10     = 0;
+	_14     = 500;
+	mClient = new Client[_14];
 	// UNUSED FUNCTION
 }
 
@@ -42,8 +56,14 @@ PathFinder::Buffer::Buffer()
  * Address:	........
  * Size:	000048
  */
-int PathFinder::handle2idx(u32)
+int PathFinder::handle2idx(u32 handle)
 {
+	for (int i = 0; i < _10; i++) {
+		if (mClient[i]._10 == handle) {
+			return i;
+		}
+	}
+	return -1;
 	// UNUSED FUNCTION
 }
 
@@ -52,62 +72,33 @@ int PathFinder::handle2idx(u32)
  * Address:	8009F5F8
  * Size:	0000B4
  */
-u32 PathFinder::findASync(PathFinder::Buffer*, int, int, bool)
+u32 PathFinder::findASync(PathFinder::Buffer* buf, int a, int b, bool flag)
 {
-	/*
-	.loc_0x0:
-	  lwz       r8, 0x10(r3)
-	  lwz       r0, 0x14(r3)
-	  cmpw      r8, r0
-	  blt-      .loc_0x18
-	  li        r3, 0
-	  blr
+	if (_10 >= _14) {
+		return 0;
+	}
+	int id = _0C++;
+	if (_0C >= 200000) {
+		_0C = 1;
+	}
 
-	.loc_0x18:
-	  lwz       r9, 0xC(r3)
-	  lis       r8, 0x3
-	  addi      r0, r8, 0xD40
-	  addi      r8, r9, 0x1
-	  stw       r8, 0xC(r3)
-	  mr        r11, r9
-	  lwz       r8, 0xC(r3)
-	  cmpw      r8, r0
-	  blt-      .loc_0x44
-	  li        r0, 0x1
-	  stw       r0, 0xC(r3)
-
-	.loc_0x44:
-	  lwz       r9, 0x10(r3)
-	  li        r0, 0
-	  lwz       r10, 0x18(r3)
-	  cmpw      r5, r6
-	  mulli     r8, r9, 0x28
-	  addi      r9, r9, 0x1
-	  stw       r9, 0x10(r3)
-	  add       r8, r10, r8
-	  stw       r4, 0x0(r8)
-	  stw       r5, 0x4(r8)
-	  stw       r6, 0x8(r8)
-	  stb       r7, 0xC(r8)
-	  lhz       r3, 0x3028(r13)
-	  sth       r3, 0x14(r8)
-	  stw       r11, 0x10(r8)
-	  stw       r0, 0x18(r8)
-	  stw       r0, 0x1C(r8)
-	  stb       r0, 0x20(r8)
-	  lwz       r3, 0x0(r8)
-	  stw       r5, 0x0(r3)
-	  bne-      .loc_0xAC
-	  li        r0, 0x1
-	  stw       r0, 0x1C(r8)
-	  mr        r3, r11
-	  stw       r0, 0x24(r8)
-	  blr
-
-	.loc_0xAC:
-	  mr        r3, r11
-	  blr
-	*/
+	Client* c                = &mClient[_10++];
+	c->mBuffer               = buf;
+	c->_04                   = a;
+	c->_08                   = b;
+	c->_0C                   = flag;
+	c->_14                   = mode;
+	c->_10                   = id;
+	c->_18                   = 0;
+	c->_1C                   = 0;
+	c->_20                   = 0;
+	c->mBuffer->mWayPointIdx = a;
+	if (a == b) {
+		c->_1C = 1;
+		c->_24 = 1;
+		return id;
+	}
+	return id;
 }
 
 /*
@@ -115,59 +106,23 @@ u32 PathFinder::findASync(PathFinder::Buffer*, int, int, bool)
  * Address:	8009F6AC
  * Size:	000088
  */
-int PathFinder::checkASync(u32)
+int PathFinder::checkASync(u32 handle)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x10(r3)
-	  li        r6, 0
-	  addi      r7, r6, 0
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x3C
+	int idx = handle2idx(handle);
 
-	.loc_0x18:
-	  lwz       r5, 0x18(r3)
-	  addi      r0, r7, 0x10
-	  lwzx      r0, r5, r0
-	  cmplw     r4, r0
-	  bne-      .loc_0x30
-	  b         .loc_0x40
+	if (idx == -1) {
+		return -3;
+	}
 
-	.loc_0x30:
-	  addi      r7, r7, 0x28
-	  addi      r6, r6, 0x1
-	  bdnz+     .loc_0x18
-
-	.loc_0x3C:
-	  li        r6, -0x1
-
-	.loc_0x40:
-	  cmpwi     r6, -0x1
-	  bne-      .loc_0x50
-	  li        r3, -0x3
-	  blr
-
-	.loc_0x50:
-	  mulli     r0, r6, 0x28
-	  lwz       r3, 0x18(r3)
-	  add       r3, r3, r0
-	  lwz       r0, 0x1C(r3)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x70
-	  li        r3, -0x2
-	  blr
-
-	.loc_0x70:
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x80
-	  lwz       r3, 0x24(r3)
-	  blr
-
-	.loc_0x80:
-	  li        r3, -0x1
-	  blr
-	*/
+	Client* c = &mClient[idx];
+	if (c->_1C == 2) {
+		PRINT("FAIL WHY ? \n");
+		return -2;
+	} else if (c->_1C == 1) {
+		PRINT("SUCCESS\n");
+		return c->_24;
+	}
+	return -1;
 }
 
 /*
@@ -175,77 +130,30 @@ int PathFinder::checkASync(u32)
  * Address:	8009F734
  * Size:	0000D8
  */
-void PathFinder::releaseHandle(u32)
+void PathFinder::releaseHandle(u32 handle)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x10(r3)
-	  li        r6, 0
-	  addi      r7, r6, 0
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x3C
+	int idx = handle2idx(handle);
+	if (idx == -1) {
+		return;
+	}
+	_10--;
 
-	.loc_0x18:
-	  lwz       r5, 0x18(r3)
-	  addi      r0, r7, 0x10
-	  lwzx      r0, r5, r0
-	  cmplw     r4, r0
-	  bne-      .loc_0x30
-	  b         .loc_0x40
+	// No idea why we couldnt just use a normal mClient[i] = mClient[i+1] but ok
+	for (int i = idx; i < _10; i++) {
+		Client& a = mClient[i];
+		Client& b = mClient[i + 1];
 
-	.loc_0x30:
-	  addi      r7, r7, 0x28
-	  addi      r6, r6, 0x1
-	  bdnz+     .loc_0x18
-
-	.loc_0x3C:
-	  li        r6, -0x1
-
-	.loc_0x40:
-	  cmpwi     r6, -0x1
-	  beqlr-
-	  lwz       r4, 0x10(r3)
-	  mulli     r5, r6, 0x28
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x10(r3)
-	  b         .loc_0xC8
-
-	.loc_0x5C:
-	  addi      r0, r6, 0x1
-	  lwz       r4, 0x18(r3)
-	  mulli     r0, r0, 0x28
-	  add       r7, r4, r0
-	  lwz       r0, 0x0(r7)
-	  add       r4, r4, r5
-	  addi      r5, r5, 0x28
-	  stw       r0, 0x0(r4)
-	  addi      r6, r6, 0x1
-	  lwz       r0, 0x4(r7)
-	  stw       r0, 0x4(r4)
-	  lwz       r0, 0x8(r7)
-	  stw       r0, 0x8(r4)
-	  lbz       r0, 0xC(r7)
-	  stb       r0, 0xC(r4)
-	  lwz       r0, 0x10(r7)
-	  stw       r0, 0x10(r4)
-	  lhz       r0, 0x14(r7)
-	  sth       r0, 0x14(r4)
-	  lwz       r0, 0x18(r7)
-	  stw       r0, 0x18(r4)
-	  lwz       r0, 0x1C(r7)
-	  stw       r0, 0x1C(r4)
-	  lbz       r0, 0x20(r7)
-	  stb       r0, 0x20(r4)
-	  lwz       r0, 0x24(r7)
-	  stw       r0, 0x24(r4)
-
-	.loc_0xC8:
-	  lwz       r0, 0x10(r3)
-	  cmpw      r6, r0
-	  blt+      .loc_0x5C
-	  blr
-	*/
+		a.mBuffer = b.mBuffer;
+		a._04     = b._04;
+		a._08     = b._08;
+		a._0C     = b._0C;
+		a._10     = b._10;
+		a._14     = b._14;
+		a._18     = b._18;
+		a._1C     = b._1C;
+		a._20     = b._20;
+		a._24     = b._24;
+	}
 }
 
 /*
@@ -255,6 +163,16 @@ void PathFinder::releaseHandle(u32)
  */
 void PathFinder::updateASync()
 {
+	int a = mode;
+	if (_10) {
+		for (int i = 0; i < _10; i++) {
+			int loops = 0x100 / _10;
+			Client& c = mClient[i];
+			mode      = c._14;
+			updateClient(c, loops);
+		}
+	}
+	mode = a;
 	// UNUSED FUNCTION
 }
 
@@ -263,8 +181,59 @@ void PathFinder::updateASync()
  * Address:	8009F80C
  * Size:	000340
  */
-void PathFinder::updateClient(PathFinder::Client&, int)
+void PathFinder::updateClient(Client& client, int loops)
 {
+	while (client._1C == 0 && loops > 0) {
+		loops--;
+		if (_04 < client._18) {
+			ERROR("buffer full\n");
+		}
+		WayPoint* wp = getWayPoint(client.mBuffer[client._18].mWayPointIdx);
+		if (client._20 == 0) {
+			for (int i = 0; i < 8; i++) {
+				if (wp->_14[i] == -1) {
+					client.mBuffer[client._18].resetFlag(i);
+				} else {
+					client.mBuffer[client._18].setFlag(i);
+				}
+			}
+		}
+		int way = selectWay(client.mBuffer[client._18], client._08, client.mBuffer, client._18, client._0C);
+		if (way != -1) {
+			int flag = wp->_14[way];
+			if (flag == client._08) {
+				client.mBuffer[client._18++].mWayPointIdx = client._08;
+
+				if (_04 < client._18) {
+					ERROR("mem access\n");
+				}
+
+				PRINT("OK FOUND!\n");
+				client._1C = 1;
+				client._24 = client._18 + 1;
+				return;
+			}
+			client.mBuffer[client._18].resetFlag(way);
+			client._18++;
+			if (client._18 >= _04) {
+				client._18--;
+				client._20 = 1;
+			} else {
+				client.mBuffer[client._18].mWayPointIdx = flag;
+				client._20                              = false;
+			}
+		} else {
+			client._20                              = 1;
+			client.mBuffer[client._18].mWayPointIdx = -1;
+			client._18--;
+			if (client._18 < 0) {
+				PRINT("GIVE UP\n");
+				client._1C = 2;
+				client._24 = -2;
+				return;
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -515,52 +484,15 @@ void PathFinder::updateClient(PathFinder::Client&, int)
  * Address:	8009FB4C
  * Size:	000084
  */
-int PathFinder::findSync(WayPoint**, int, int, int, bool)
+int PathFinder::findSync(WayPoint** wp, int a, int b, int c, bool flag)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r26, 0x20(r1)
-	  addi      r30, r4, 0
-	  addi      r27, r5, 0
-	  addi      r5, r6, 0
-	  addi      r6, r7, 0
-	  addi      r26, r3, 0
-	  addi      r7, r8, 0
-	  lwz       r4, 0x8(r3)
-	  bl        .loc_0x84
-	  mr.       r29, r3
-	  ble-      .loc_0x6C
-	  li        r28, 0
-	  rlwinm    r31,r28,3,0,28
-	  b         .loc_0x64
-
-	.loc_0x44:
-	  lwz       r4, 0x8(r26)
-	  mr        r3, r26
-	  lwzx      r4, r4, r31
-	  bl        0x264
-	  stw       r3, 0x0(r30)
-	  addi      r31, r31, 0x8
-	  addi      r30, r30, 0x4
-	  addi      r28, r28, 0x1
-
-	.loc_0x64:
-	  cmpw      r28, r27
-	  blt+      .loc_0x44
-
-	.loc_0x6C:
-	  mr        r3, r29
-	  lmw       r26, 0x20(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-
-	.loc_0x84:
-	*/
+	int res = findSync(mBuffer, b, c, flag);
+	if (res > 0) {
+		for (int i = 0; i < a; i++) {
+			wp[i] = getWayPoint(mBuffer[i].mWayPointIdx);
+		}
+	}
+	return res;
 }
 
 /*
@@ -568,8 +500,72 @@ int PathFinder::findSync(WayPoint**, int, int, int, bool)
  * Address:	8009FBD0
  * Size:	000230
  */
-int PathFinder::findSync(PathFinder::Buffer*, int, int, bool)
+int PathFinder::findSync(PathFinder::Buffer* buffer, int a, int b, bool flag)
 {
+	if (checkMode(1))
+		PRINT("*** AVOID_WATER ROUTE FINDING START (%d - %d)\n", b, a);
+
+	int i                = 0;
+	buffer->mWayPointIdx = a;
+	if (a == b) {
+		return 1;
+	}
+
+	bool res = false;
+	int stat = 0;
+	while (stat == 0) {
+		Buffer* buf2 = buffer + i;
+		if (_04 < i) {
+			ERROR("buffer full\n");
+		}
+		WayPoint* wp = getWayPoint(buf2->mWayPointIdx);
+		if (!res) {
+			for (int i = 0; i < 8; i++) {
+				if (wp->_14[i] == -1) {
+					buf2->resetFlag(i);
+				} else {
+					buf2->setFlag(i);
+				}
+			}
+		}
+		int way = selectWay(*buf2, b, buffer, i, flag);
+		if (way != -1) {
+			int flag = wp->_14[way];
+			if (flag == b) {
+				i++;
+				buffer[i].mWayPointIdx = b;
+
+				if (_04 < i) {
+					ERROR("mem access\n");
+				}
+				stat = 1;
+				break;
+			}
+			buf2->resetFlag(way);
+			int test = i + 1;
+			if (test >= _04) {
+				PRINT("@@ backtrack (full buffer ptr=%d buffSize=%d)\n", test, _04);
+				res = true;
+				i--;
+			} else {
+				buffer[test].mWayPointIdx = flag;
+				i                         = test;
+				res                       = false;
+			}
+		} else {
+			buf2->mWayPointIdx = -1;
+			res                = true;
+			i--;
+			if (i < 0) {
+				stat = 2;
+			}
+		}
+	}
+
+	if (stat == 1) {
+		return i + 1;
+	}
+	return 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -760,16 +756,9 @@ int PathFinder::findSync(PathFinder::Buffer*, int, int, bool)
  * Address:	8009FE00
  * Size:	000014
  */
-WayPoint* PathFinder::getWayPoint(int)
+WayPoint* PathFinder::getWayPoint(int id)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x0(r3)
-	  mulli     r0, r4, 0xC4
-	  lwz       r3, 0x0(r3)
-	  add       r3, r3, r0
-	  blr
-	*/
+	return &mGroup->_00[id];
 }
 
 /*
@@ -777,8 +766,81 @@ WayPoint* PathFinder::getWayPoint(int)
  * Address:	8009FE14
  * Size:	0001FC
  */
-int PathFinder::selectWay(PathFinder::Buffer&, int, PathFinder::Buffer*, int, bool)
+int PathFinder::selectWay(PathFinder::Buffer& buffer, int a, PathFinder::Buffer* buf2, int b, bool flag)
 {
+	int res     = -1;
+	int numWays = 0;
+	int ids[8];
+	f32 distances[8];
+
+	Vector3f pos1 = getWayPoint(buffer.mWayPointIdx)->mPosition;
+	Vector3f pos2 = getWayPoint(a)->mPosition;
+	for (int i = 0; i < 8; i++) {
+		if (!buffer.check(i)) {
+			continue;
+		}
+
+		WayPoint* wp = getWayPoint(buffer.mWayPointIdx);
+		if (!wp) {
+			PRINT("buffer.idx=%d", buffer.mWayPointIdx);
+			ERROR("wp is null!");
+		}
+
+		if ((!checkMode(2) || avoidWayPointIndex == -1 || wp->mIndex != avoidWayPointIndex) && (!checkMode(1) || !wp->inWater())) {
+			int link = wp->_14[i];
+			if (link != buffer.mWayPointIdx) {
+
+				if (link == -1) {
+					buffer.resetFlag(1);
+					continue;
+				}
+
+				if (!getWayPoint(link)) {
+					PRINT("idx=%d", link);
+					ERROR("no getwaypoint!");
+				}
+
+				if (!flag && !getWayPoint(link)->mIsOpen) {
+					buffer.resetFlag(1);
+					continue;
+				}
+
+				bool found = false;
+				for (int j = 0; j < b; j++) {
+					if (buf2->mWayPointIdx == link) {
+						found = true;
+						break;
+					}
+				}
+
+				if (!found) {
+					if (numWays > 7) {
+						PRINT("numWays=%d", numWays);
+						ERROR("numWays>=8");
+					}
+					ids[numWays] = i;
+					if (link == a) {
+						return i;
+					}
+					Vector3f pos3      = getWayPoint(link)->mPosition;
+					distances[numWays] = qdist2(pos3.x, pos3.z, pos2.x, pos2.z);
+					numWays++;
+				}
+			}
+		}
+	}
+
+	f32 maxDist = 12800.0f;
+	for (int i = 0; i < numWays; i++) {
+		if (distances[i] < maxDist) {
+			maxDist = distances[i];
+			res     = ids[i];
+		}
+	}
+
+	return res;
+
+	f32 badcompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -944,34 +1006,13 @@ int PathFinder::selectWay(PathFinder::Buffer&, int, PathFinder::Buffer*, int, bo
  * Address:	800A0010
  * Size:	000048
  */
-PathFinder* RouteMgr::getPathFinder(u32)
+PathFinder* RouteMgr::getPathFinder(u32 handle)
 {
+	int idx = id2idx(handle);
+	if (idx != -1) {
+		return _24[idx];
+	}
 	return 0;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        0x1B1C
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x30
-	  lwz       r4, 0x24(r31)
-	  rlwinm    r0,r3,2,0,29
-	  lwzx      r3, r4, r0
-	  b         .loc_0x34
-
-	.loc_0x30:
-	  li        r3, 0
-
-	.loc_0x34:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -981,6 +1022,10 @@ PathFinder* RouteMgr::getPathFinder(u32)
  */
 void RouteMgr::update()
 {
+	PathFinder* path = getPathFinder('test');
+	if (path) {
+		path->updateASync();
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1045,34 +1090,13 @@ void RouteMgr::update()
  * Address:	800A0108
  * Size:	00004C
  */
-int RouteMgr::getNumWayPoints(u32)
+int RouteMgr::getNumWayPoints(u32 handle)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        0x1A24
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x34
-	  lwz       r4, 0x20(r31)
-	  rlwinm    r0,r3,3,0,28
-	  add       r3, r4, r0
-	  lwz       r3, 0x4(r3)
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  li        r3, -0x1
-
-	.loc_0x38:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	int idx = id2idx(handle);
+	if (idx != -1) {
+		return _20[idx * 2 + 1];
+	}
+	return -1;
 }
 
 /*
@@ -1080,8 +1104,50 @@ int RouteMgr::getNumWayPoints(u32)
  * Address:	800A0154
  * Size:	0003B8
  */
-Vector3f RouteMgr::getSafePosition(u32, Vector3f&)
+Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
 {
+	CollTriInfo* tri = mapMgr->getCurrTri(pos.x, pos.z, true);
+	bool water       = false;
+	if (tri && MapCode::getAttribute(tri) == ATTR_Water) {
+		f32 max = mapMgr->getMaxY(pos.x, pos.z, false);
+		f32 min = mapMgr->getMinY(pos.x, pos.z, true);
+		if (max <= min && pos.y <= min) {
+			PRINT("minY = %.1f < %.1f < %.1f = maxY\n", min, pos.y, max);
+			water = true;
+		}
+	}
+
+	WayPoint* wp;
+	WayPoint* wp2;
+	findNearestEdgeAvoidOff(&wp, &wp2, 'test', pos, false, true, water);
+	if (!wp || !wp2) {
+		PRINT("from=%x to=%x pos(%.1f %.1f %.1f)\n", wp, wp2, pos.x, pos.y, pos.z);
+		ERROR("getSafePos (%.1f %.1f %.1f)", pos.x, pos.y, pos.z);
+	}
+	PRINT("getSafePos (%d-%d)\n", wp->mIndex, wp2->mIndex);
+	Vector3f diff  = wp->mPosition - wp2->mPosition;
+	Vector3f diff2 = diff;
+	f32 nrm        = diff2.normalise();
+	f32 dp         = diff2.DP(pos - wp2->mPosition);
+	dp             = dp / nrm;
+	f32 a          = dp * wp->mRadius + (1.0f - dp) * wp2->mRadius;
+	Vector3f mod;
+	mod     = wp->mPosition + (dp * nrm) * diff2;
+	mod     = mod - pos;
+	mod.y   = 0.0f;
+	f32 len = mod.length() - a;
+
+	if (len > 0.0f || dp < 0.0f || dp > 1.0f) {
+		if (dp < 0.0f) {
+			dp = 0.0f;
+		} else if (dp > 1.0f) {
+			dp = 1.0f;
+		}
+		pos   = wp->mPosition + dp * diff;
+		pos.y = mapMgr->getMinY(pos.x, pos.z, true);
+	}
+
+	return pos;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2723,8 +2789,13 @@ WayPoint* RouteMgr::findNearestWayPointAll(u32, Vector3f&)
  * Address:	800A1678
  * Size:	00005C
  */
-WayPoint* RouteMgr::getWayPoint(u32, int)
+WayPoint* RouteMgr::getWayPoint(u32 id, int)
 {
+	int idx = id2idx(id);
+	if (idx != -1) {
+		return; //_20 + idx;
+	}
+	return 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2763,50 +2834,11 @@ WayPoint* RouteMgr::getWayPoint(u32, int)
  * Size:	00009C
  */
 RouteMgr::RouteMgr()
-    : Node("<Node>")
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x738C
-	  subi      r4, r13, 0x53C4
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r30)
-	  addi      r0, r3, 0x737C
-	  addi      r3, r30, 0
-	  stw       r0, 0x0(r30)
-	  stw       r31, 0x10(r30)
-	  stw       r31, 0xC(r30)
-	  stw       r31, 0x8(r30)
-	  bl        -0x7C848
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0
-	  subi      r4, r13, 0x53C4
-	  bl        -0x60FF8
-	  lis       r3, 0x802B
-	  addi      r0, r3, 0x1B3C
-	  stw       r0, 0x0(r30)
-	  mr        r3, r30
-	  stw       r31, 0x28(r30)
-	  stw       r31, 0x20(r30)
-	  stw       r31, 0x24(r30)
-	  stw       r31, 0x2C(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_28 = 0;
+	_20 = 0;
+	_24 = nullptr;
+	_2C = 0;
 }
 
 /*
@@ -2814,8 +2846,9 @@ RouteMgr::RouteMgr()
  * Address:	800A1770
  * Size:	000014
  */
-void WayPoint::setFlag(bool)
+void WayPoint::setFlag(bool flag)
 {
+	mIsOpen = flag;
 	/*
 	.loc_0x0:
 	  stb       r4, 0x38(r3)

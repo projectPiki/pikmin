@@ -155,12 +155,13 @@ struct WayPoint {
 	int getLinkIndex(int);
 
 	// DLL inlines:
-	bool inWater();
+	bool inWater() { return _40 & 1; }
 
 	Vector3f mPosition;  // _00, probably
 	f32 mRadius;         // _0C
 	int mIndex;          // _10
-	u8 _14[0x38 - 0x14]; // _14, unknown
+	int _14[8];          // _14
+	int _34;             // _34
 	bool mIsOpen;        // _38
 	u8 _39[0x40 - 0x39]; // _39, unknown
 	u8 _40;              // _40, flag?
@@ -177,9 +178,11 @@ struct RouteMgr : public Node {
 	 */
 	struct Group {
 		// DLL inline to do
-		int getNumPoints();
+		int getNumPoints() { return _04; }
 
 		// TODO: members
+		WayPoint* _00;
+		int _04;
 	};
 
 	RouteMgr();
@@ -208,11 +211,10 @@ struct RouteMgr : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
-	int _20; // _20
-	int _24; // _24
-	int _28; // _28
-	int _2C; // _2C
+	int* _20;         // _20
+	PathFinder** _24; // _24
+	int _28;          // _28
+	int _2C;          // _2C
 };
 
 /**
@@ -223,16 +225,27 @@ struct PathFinder {
 		Buffer();
 
 		// DLL inlines to make:
-		bool check(int);
-		void resetFlag(int);
-		void setFlag(int);
+		bool check(int flag) { return _04 & 1 << flag; }
+		void resetFlag(int flag) { _04 ^= (1 << flag); }
+		void setFlag(int flag) { _04 |= (1 << flag); }
 
 		int mWayPointIdx; // _00
 		u8 _04;           // _04
 	};
 
 	struct Client {
-		// TODO: members
+		// NO ctor or ANY functions for this struct
+
+		Buffer* mBuffer; // _00
+		int _04;
+		int _08;
+		bool _0C;
+		int _10;
+		u16 _14;
+		int _18;
+		int _1C;
+		u8 _20;
+		int _24;
 	};
 
 	PathFinder(RouteMgr::Group&);
@@ -264,6 +277,13 @@ struct PathFinder {
 	static u16 mode;
 
 	// TODO: members
+	RouteMgr::Group* mGroup; //_00
+	int _04;
+	Buffer* mBuffer; // _08
+	int _0C;
+	int _10;
+	int _14;
+	Client* mClient; // _18
 };
 
 /**
