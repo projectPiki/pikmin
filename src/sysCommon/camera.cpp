@@ -38,7 +38,7 @@ void CullFrustum::vectorToWorldPlane(Vector3f& vec, CullingPlane& worldPlane)
 bool CullFrustum::isPointVisible(Vector3f& point, f32 cutoff)
 {
 	for (int i = 0; i < mActivePlaneCount; i++) {
-		Plane* plane = mPlanePointers[i];
+		Plane* plane = &mPlanePointers[i]->mPlane;
 		if (point.x * plane->mNormal.x + point.y * plane->mNormal.y + point.z * plane->mNormal.z - plane->mOffset < -cutoff) {
 			return false;
 		}
@@ -1343,7 +1343,7 @@ void CullFrustum::update(f32 aspectRatio, f32 fov, f32 near, f32 far)
 	updateViewPlanes(mAspectRatio, -mAspectRatio, -mVerticalScale, mVerticalScale);
 
 	for (int i = 0; i < mTotalPlaneCount; i++) {
-		mPlanePointers[i] = &mCullPlanes[i].mPlane;
+		mPlanePointers[i] = &mCullPlanes[i];
 	}
 
 	mActivePlaneCount = mTotalPlaneCount;

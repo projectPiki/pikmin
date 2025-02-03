@@ -73,32 +73,70 @@ struct CullFrustum {
 		}
 	}
 
-	int mTotalPlaneCount;        // _00
-	int mActivePlaneCount;       // _04
-	int mViewPlaneIdx;           // _08
-	CullingPlane mCullPlanes[6]; // _0C
-	Plane* mPlanePointers[6];    // _114, idk how many are in this
-	u8 _12C[0x154 - 0x12C];      // _12C, unknown
-	u8 mHasBoundOffset;          // _154
-	u8 _155;                     // _155
-	Vector3f mBoundOffset;       // _158
-	Vector3f mPosition;          // _164
-	Vector3f mFocus;             // _170, aka Target Position
-	Vector3f mViewXAxis;         // _17C
-	Vector3f mViewYAxis;         // _188
-	Vector3f mViewZAxis;         // _194
-	Vector3f mInvXAxis;          // _1A0
-	Vector3f mInvYAxis;          // _1AC
-	Vector3f mInvZAxis;          // _1B8
-	f32 mAspectRatio;            // _1C4
-	f32 mVerticalScale;          // _1C8
-	f32 mFov;                    // _1CC
-	f32 mNear;                   // _1D0
-	f32 mFar;                    // _1D4
-	f32 mDepth;                  // _1D8
-	f32 mWidth;                  // _1DC
-	Matrix4f mLookAtMtx;         // _1E0
-	Matrix4f mInverseLookAtMtx;  // _220
+	int isBoundVisible(BoundBox& bound, int planeFlag)
+	{
+		f32* boundArray = (f32*)&bound;
+		for (int i = 0; i < mActivePlaneCount; i++) {
+			CullingPlane* plane = mPlanePointers[i];
+			if (plane->_28 && (planeFlag & (1 << i))) {
+				if (mHasBoundOffset) {
+					if ((boundArray[plane->_1C] + mBoundOffset.x) * plane->mPlane.mNormal.x
+					        + (boundArray[plane->_20] + mBoundOffset.y) * plane->mPlane.mNormal.y
+					        + (boundArray[plane->_24] + mBoundOffset.z) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
+					    < 0.0f) {
+						return 0;
+					}
+
+					if ((boundArray[plane->_10] + mBoundOffset.x) * plane->mPlane.mNormal.x
+					        + (boundArray[plane->_14] + mBoundOffset.y) * plane->mPlane.mNormal.y
+					        + (boundArray[plane->_18] + mBoundOffset.z) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
+					    >= 0.0f) {
+						planeFlag &= ~(1 << i);
+					}
+				} else {
+					if ((boundArray[plane->_1C]) * plane->mPlane.mNormal.x + (boundArray[plane->_20]) * plane->mPlane.mNormal.y
+					        + (boundArray[plane->_24]) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
+					    < 0.0f) {
+						return 0;
+					}
+
+					if ((boundArray[plane->_10]) * plane->mPlane.mNormal.x + (boundArray[plane->_14]) * plane->mPlane.mNormal.y
+					        + (boundArray[plane->_18]) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
+					    >= 0.0f) {
+						planeFlag &= ~(1 << i);
+					}
+				}
+			}
+		}
+		return planeFlag;
+	}
+
+	int mTotalPlaneCount;            // _00
+	int mActivePlaneCount;           // _04
+	int mViewPlaneIdx;               // _08
+	CullingPlane mCullPlanes[6];     // _0C
+	CullingPlane* mPlanePointers[6]; // _114, idk how many are in this
+	u8 _12C[0x154 - 0x12C];          // _12C, unknown
+	u8 mHasBoundOffset;              // _154
+	u8 _155;                         // _155
+	Vector3f mBoundOffset;           // _158
+	Vector3f mPosition;              // _164
+	Vector3f mFocus;                 // _170, aka Target Position
+	Vector3f mViewXAxis;             // _17C
+	Vector3f mViewYAxis;             // _188
+	Vector3f mViewZAxis;             // _194
+	Vector3f mInvXAxis;              // _1A0
+	Vector3f mInvYAxis;              // _1AC
+	Vector3f mInvZAxis;              // _1B8
+	f32 mAspectRatio;                // _1C4
+	f32 mVerticalScale;              // _1C8
+	f32 mFov;                        // _1CC
+	f32 mNear;                       // _1D0
+	f32 mFar;                        // _1D4
+	f32 mDepth;                      // _1D8
+	f32 mWidth;                      // _1DC
+	Matrix4f mLookAtMtx;             // _1E0
+	Matrix4f mInverseLookAtMtx;      // _220
 };
 
 /**

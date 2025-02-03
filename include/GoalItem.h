@@ -20,6 +20,7 @@ struct ItemShapeObject;
 struct Piki;
 struct SimpleAI;
 struct EffShpInst;
+struct Fulcrum;
 
 /**
  * @brief TODO
@@ -40,6 +41,16 @@ struct GoalItemProp : public CreatureProp {
 /**
  * @brief TODO
  *
+ * @note Completely fabricated - not sure what this corresponds to in the DLL yet.
+ */
+struct GoalLeg {
+	Fulcrum* mFulcrum; // _00
+	RopeItem* mRope;   // _04
+};
+
+/**
+ * @brief TODO
+ *
  * @note Size: 0x494.
  */
 struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
@@ -49,19 +60,19 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 	virtual void startAI(int);                                       // _34
 	virtual f32 getiMass();                                          // _38
 	virtual f32 getSize();                                           // _3C
-	virtual bool isVisible();                                        // _74
-	virtual bool isAlive();                                          // _88
 	virtual bool needShadow();                                       // _90
 	virtual bool ignoreAtari(Creature*);                             // _98
 	virtual void update();                                           // _E0
 	virtual void refresh(Graphics&);                                 // _EC
 	virtual void playEffect(int);                                    // _12C
-	virtual Vector3f getGoalPos();                                   // _15C
-	virtual f32 getGoalPosRadius();                                  // _160
+	virtual Vector3f getGoalPos() { return mPosition; }              // _15C
+	virtual f32 getGoalPosRadius() { return 75.0f; }                 // _160
 	virtual Vector3f getSuckPos();                                   // _164
 	virtual void suckMe(Pellet*);                                    // _168
-	virtual int getRouteIndex();                                     // _170
+	virtual int getRouteIndex() { return mWaypointIdx; }             // _170
 	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _180
+	virtual bool isVisible() { return true; }                        // _74
+	virtual bool isAlive() { return true; }                          // _88
 
 	void setFlowEffect(bool);
 	void setSpotActive(bool);
@@ -126,7 +137,7 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 	s16 mWaypointIdx;                 // _42A
 	u32 mHeldPikis[3];                // _42C, contains counts for leaf/bud/flower
 	ItemShapeObject* _438[3];         // _438
-	int _444;                         // _444
+	GoalLeg* _444;                    // _444
 	RopeItem* mRope[3];               // _448
 	u32 _454;                         // _454
 	u32 _458;                         // _458

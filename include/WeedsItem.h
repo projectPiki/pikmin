@@ -9,7 +9,7 @@
  * @brief TODO
  */
 struct Grass {
-	Grass();
+	Grass() { }
 
 	bool isAlive() { return mHealth != 0; }
 
@@ -32,7 +32,7 @@ struct Grass {
  * @brief TODO
  */
 struct Pebble {
-	Pebble();
+	Pebble() { }
 
 	bool isAlive() { return mHealth != 0; }
 
@@ -64,12 +64,12 @@ struct GrassGen : public ItemCreature {
 	GrassGen(Shape*, CreatureProp*);
 
 	virtual void startAI(int);                           // _34
-	virtual f32 getSize();                               // _3C
-	virtual bool isVisible() { return true; }            // _74
-	virtual bool isAlive() { return mActiveGrass != 0; } // _88
-	virtual bool needFlick(Creature*) { return false; }  // _94
+	virtual f32 getSize() { return mSize; }              // _3C
 	virtual void update();                               // _E0
 	virtual void refresh(Graphics&);                     // _EC
+	virtual bool isAlive() { return mActiveGrass != 0; } // _88
+	virtual bool isVisible() { return true; }            // _74
+	virtual bool needFlick(Creature*) { return false; }  // _94
 
 	bool workable();
 	void startWork();
@@ -99,16 +99,15 @@ struct GrassGen : public ItemCreature {
 struct RockGen : public ItemCreature {
 	RockGen(Shape*, CreatureProp*);
 
-	virtual void startAI(int);                // _34
-	virtual f32 getSize();                    // _3C
-	virtual void doSave(RandomAccessStream&); // _50
-	virtual void doLoad(RandomAccessStream&); // _54
-	virtual bool isVisible() { return true; } // _74
-	virtual bool isAlive() { return mActivePebbles != 0; }
-	// _88
-	virtual bool needFlick(Creature*) { return false; } // _94
-	virtual void update();                              // _E0
-	virtual void refresh(Graphics&);                    // _EC
+	virtual void startAI(int);                             // _34
+	virtual f32 getSize() { return mSize; }                // _3C
+	virtual void doSave(RandomAccessStream&);              // _50
+	virtual void doLoad(RandomAccessStream&);              // _54
+	virtual void update();                                 // _E0
+	virtual void refresh(Graphics&);                       // _EC
+	virtual bool isAlive() { return mActivePebbles != 0; } // _88
+	virtual bool isVisible() { return true; }              // _74
+	virtual bool needFlick(Creature*) { return false; }    // _94
 
 	bool workable();
 	void startWork();

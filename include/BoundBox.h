@@ -6,9 +6,9 @@ struct Graphics;
 
 struct BoundBox {
 	BoundBox(Vector3f& min, Vector3f& max)
-	    : mMin(min)
-	    , mMax(max)
 	{
+		mMin = min;
+		mMax = max;
 	}
 
 	BoundBox() { resetBound(); }

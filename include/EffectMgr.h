@@ -62,8 +62,10 @@ struct EffShpInst : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Vector3f _14; // _14
-	              // TODO: members
+	Vector3f _14;        // _14
+	u8 _20[0x42 - 0x20]; // _20, unknown
+	u8 _42;              // _42
+	                     // TODO: members
 };
 
 /**

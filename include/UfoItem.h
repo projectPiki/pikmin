@@ -169,9 +169,10 @@ struct UfoItem : public Suckable {
 	u8 mShipUpgradeLevel;                                 // _520
 	UfoAnimator mAnimator;                                // _524
 	int mConeEffectId;                                    // _52C
-	Vector3f mPtcllFxPosition;                            // _530
-	Vector3f mPtcl2FxPosition;                            // _53C
-	u8 mIsPtclFxActive;                                   // _548
+	Vector3f mPca1FxPosition;                             // _530
+	Vector3f mPca2FxPosition;                             // _53C
+	u8 mIsPca1FxActive;                                   // _548
+	u8 mIsPca2FxActive;                                   // _549
 	Vector3f mSpotlightPosition;                          // _54C
 	int mWaypointID;                                      // _558
 	UfoShapeObject* mShipModel;                           // _55C
