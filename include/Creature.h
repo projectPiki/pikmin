@@ -223,7 +223,7 @@ struct Creature : public RefCountable, public EventTalker {
 	void startFix() { setCreatureFlag(CF_DisableMovement); }
 	void finishFix() { resetCreatureFlag(CF_DisableMovement); }
 
-	void restartAI() { setCreatureFlag(CF_AIAlwaysActive); }
+	void setInsideView() { setCreatureFlag(CF_AIAlwaysActive); }
 
 	void enableFaceDirAdjust() { setCreatureFlag(CF_FaceDirAdjust); }
 	void disableFaceDirAdjust() { resetCreatureFlag(CF_FaceDirAdjust); }
@@ -247,6 +247,8 @@ struct Creature : public RefCountable, public EventTalker {
 	bool aiCullable() { return !isCreatureFlag(CF_IsAICullingActive); }
 
 	bool isAIActive() { return !isCreatureFlag(CF_IsAiDisabled); }
+	void stopAI() { setCreatureFlag(CF_IsAiDisabled); }
+	void restartAI() { resetCreatureFlag(CF_IsAiDisabled); }
 
 	BOOL isStickToMouth() { return isCreatureFlag(CF_StuckToMouth); }
 
@@ -314,8 +316,6 @@ struct Creature : public RefCountable, public EventTalker {
 
 	    void enableGravity();
 	    void disableGravity();
-
-	    void stopAI();
 
 	    void setCarryOver();
 	    void unsetCarryOver();

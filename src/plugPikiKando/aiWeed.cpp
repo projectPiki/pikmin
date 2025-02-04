@@ -97,7 +97,7 @@ void ActWeed::initApproach()
 int ActWeed::exeApproach()
 {
 	if (!mCurrGrass) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		return ACTOUT_Fail;
 	}
 
@@ -137,7 +137,7 @@ void ActWeed::initAdjust()
 int ActWeed::exeAdjust()
 {
 	if (!mCurrGrass) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		return ACTOUT_Fail;
 	}
 
@@ -190,7 +190,7 @@ int ActWeed::exeNuking()
 	mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 
 	if (mAnimationFinished) {
-		mPiki->mEmotion = 10;
+		mPiki->mEmotion = PikiEmotion::Unk10;
 		return ACTOUT_Success;
 	}
 

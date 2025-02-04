@@ -95,7 +95,9 @@ struct PikiAbsorbState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x1C - 0x10]; // _10, unknown
+	int _10;           // _10
+	u8 _14;            // _14
+	Creature* mNectar; // _18
 };
 
 /**
@@ -131,7 +133,10 @@ struct PikiBubbleState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x20 - 0x10]; // _10, unknown
+	f32 mSurvivalTimer;        // _10
+	f32 mChangeDirectionTimer; // _14
+	f32 mMoveDirection;        // _18
+	f32 mSpeedRatio;           // _1C
 };
 
 /**
@@ -149,7 +154,7 @@ struct PikiBulletState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x4]; // _10, unknown
+	f32 _10; // _10
 };
 
 /**
@@ -188,9 +193,11 @@ struct PikiCliffState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0xC];  // _10, unknown
+	u32 _10;      // _10, unknown
+	int _14;      // _14
+	int _18;      // _18
 	Vector3f _1C; // _1C
-	u8 _28[0x4];  // _28, unknown
+	f32 _28;      // _28
 };
 
 /**
@@ -225,7 +232,11 @@ struct PikiDrownState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0xC];  // _10, unknown
+	u16 _10;      // _10
+	u16 _12;      // _12
+	u16 _14;      // _14
+	u16 _16;      // _16
+	u8 _18[0x4];  // _18, unknown
 	Vector3f _1C; // _1C
 	bool _28;     // _28, probably mIsCalled/mIsWhistled
 };
@@ -283,10 +294,10 @@ struct PikiEmotionState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	Vector3f _10;        // _10
-	u8 _1C;              // _1C
-	u8 _1D;              // _1D
-	u8 _1E[0x24 - 0x1E]; // _1E, unknown
+	Vector3f mGazePosition; // _10
+	u8 mGazeFlag;           // _1C
+	u8 mRapCnt;             // _1D
+	f32 mTimer;             // _20
 };
 
 /**
@@ -322,7 +333,7 @@ struct PikiFallState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x4]; // _10, unknown
+	int _10; // _10
 };
 
 /**
@@ -339,7 +350,10 @@ struct PikiFiredState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x20 - 0x10]; // _10, unknown
+	f32 mSurvivalTimer;        // _10
+	f32 mChangeDirectionTimer; // _14
+	f32 mMoveDirection;        // _18
+	f32 mSpeedRatio;           // _1C
 };
 
 /**
@@ -357,9 +371,11 @@ struct PikiFlickState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x4];         // _10, unknown
-	f32 _14;             // _14
-	u8 _18[0x24 - 0x18]; // _18, unknown
+	u16 _10; // _10
+	f32 _14; // _14
+	f32 _18; // _18
+	f32 _1C; // _1C
+	f32 _20; // _20
 };
 
 /**
@@ -378,8 +394,11 @@ struct PikiFlownState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	f32 _10;             // _10
-	u8 _14[0x24 - 0x14]; // _14, unknown
+	f32 _10; // _10
+	f32 _14; // _14
+	f32 _18; // _18
+	f32 _1C; // _1C
+	u16 _20; // _20
 };
 
 /**
@@ -401,7 +420,10 @@ struct PikiFlyingState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x44 - 0x10]; // _10, unknown
+	PermanentEffect _10; // _10
+	u8 _20[0x2C - 0x20]; // _20, unknown
+	Vector3f _2C;        // _2C
+	u8 _38[0x44 - 0x38]; // _38, unknown
 };
 
 /**
@@ -511,9 +533,10 @@ struct PikiKinokoState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x8];  // _10, unknown
-	Vector3f _18; // _18
-	u8 _24[0x4];  // _24, unknown
+	Creature* _10; // _10, nearest target?
+	f32 _14;       // _14
+	Vector3f _18;  // _18
+	int _24;       // _24
 };
 
 /**
@@ -531,9 +554,9 @@ struct PikiLookAtState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	f32 _10;     // _10
-	u32 _14;     // _14, unknown
-	u8 _18[0x4]; // _18, unknown
+	f32 _10; // _10
+	int _14; // _14
+	f32 _18; // _18
 };
 
 /**
@@ -556,7 +579,10 @@ struct PikiNormalState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x20 - 0x10]; // _10, unknown
+	u32 _10;   // _10, unknown
+	f32 _14;   // _14
+	Piki* _18; // _18, something to do with pushing
+	f32 _1C;   // _1C
 };
 
 /**
@@ -610,7 +636,8 @@ struct PikiPressedState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x8]; // _10, unknown
+	f32 _10; // _10
+	u8 _14;  // _14
 };
 
 /**

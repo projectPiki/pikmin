@@ -57,7 +57,7 @@ void Action::procMsg(Msg* msg)
 void Action::Child::initialise(Creature* creature)
 {
 	if (mAction) {
-		mAction->mPiki->mEmotion     = 10;
+		mAction->mPiki->mEmotion     = PikiEmotion::Unk10;
 		mAction->mPiki->mActionState = 2;
 	}
 
@@ -385,7 +385,7 @@ int TopAction::exec()
 					PRINT("キノコピキ：もとにもどる！"); // 'kinokopiki: back to normal!'
 					mPiki->mFSM->transit(mPiki, PIKISTATE_KinokoChange);
 
-				} else if (emote != 10) {
+				} else if (emote != PikiEmotion::Unk10) {
 					mPiki->mEmotion = emote;
 					mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 				}
@@ -409,7 +409,7 @@ int TopAction::exec()
 					PRINT("キノコピキ：もとにもどる！"); // 'kinokopiki: back to normal!'
 					mPiki->mFSM->transit(mPiki, PIKISTATE_KinokoChange);
 
-				} else if (emote != 10) {
+				} else if (emote != PikiEmotion::Unk10) {
 					mPiki->mEmotion = emote;
 					mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 				}
@@ -417,7 +417,7 @@ int TopAction::exec()
 		} else {
 			int emote = mPiki->mEmotion;
 			mPiki->actOnSituaton();
-			if (emote != 10) {
+			if (emote != PikiEmotion::Unk10) {
 				mPiki->mEmotion = emote;
 				mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 			}

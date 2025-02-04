@@ -1,4 +1,17 @@
 #include "PikiState.h"
+#include "Navi.h"
+#include "Interactions.h"
+#include "MizuItem.h"
+#include "PikiMgr.h"
+#include "NaviState.h"
+#include "NaviMgr.h"
+#include "ItemMgr.h"
+#include "teki.h"
+#include "PikiHeadItem.h"
+#include "BombItem.h"
+#include "PikiAI.h"
+#include "MapCode.h"
+#include "UtilityKando.h"
 #include "SoundMgr.h"
 #include "MemStat.h"
 #include "DebugLog.h"
@@ -138,156 +151,49 @@ void PikiLookAtState::init(Piki* piki)
  * Address:	800D073C
  * Size:	00020C
  */
-void PikiLookAtState::exec(Piki*)
+void PikiLookAtState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  stw       r30, 0x78(r1)
-	  stw       r29, 0x74(r1)
-	  mr        r29, r4
-	  stw       r28, 0x70(r1)
-	  mr        r28, r3
-	  lwz       r4, 0x504(r4)
-	  lfs       f0, -0x3FD8(r13)
-	  lfs       f4, 0x94(r29)
-	  lfs       f1, 0x94(r4)
-	  lfs       f3, 0x9C(r29)
-	  lfs       f2, 0x9C(r4)
-	  fsubs     f1, f4, f1
-	  stfs      f0, 0xA4(r29)
-	  fsubs     f2, f3, f2
-	  lfs       f0, -0x3FD4(r13)
-	  stfs      f0, 0xA8(r29)
-	  lfs       f0, -0x3FD0(r13)
-	  stfs      f0, 0xAC(r29)
-	  lfs       f0, -0x68D0(r2)
-	  stfs      f0, 0x78(r29)
-	  stfs      f0, 0x70(r29)
-	  bl        0x14B258
-	  lfs       f2, 0xA0(r29)
-	  bl        -0x981F4
-	  lfs       f2, -0x68CC(r2)
-	  lfs       f0, 0xA0(r29)
-	  fmuls     f1, f2, f1
-	  fadds     f1, f0, f1
-	  bl        -0x98234
-	  stfs      f1, 0xA0(r29)
-	  lwz       r0, 0x14(r28)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x128
-	  bge-      .loc_0xA8
-	  cmpwi     r0, 0
-	  beq-      .loc_0xB4
-	  bge-      .loc_0x1EC
-	  b         .loc_0x154
+	Vector3f dir = piki->mPosition - piki->mNavi->mPosition;
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	piki->mVelocity.x = piki->mVelocity.z = 0.0f;
+	piki->mFaceDirection                  = roundAng(angDist(atan2f(dir.x, dir.z), piki->mFaceDirection) * 0.1f + piki->mFaceDirection);
 
-	.loc_0xA8:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x154
-	  b         .loc_0x1EC
+	switch (_14) {
+	case 0:
+		_10 -= gsys->getFrameTime();
+		if (_10 < 0.0f) {
+			_10 = 0.0f;
+			piki->startMotion(PaniMotionInfo(PIKIANIM_Kizuku, piki), PaniMotionInfo(PIKIANIM_Kizuku));
+			_14 = 1;
+		}
+		break;
 
-	.loc_0xB4:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r28)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x10(r28)
-	  lfs       f1, 0x10(r28)
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x1EC
-	  cmplwi    r29, 0
-	  stfs      f0, 0x10(r28)
-	  mr        r30, r29
-	  beq-      .loc_0xEC
-	  addi      r30, r30, 0x2B8
+	case 1:
+		break;
 
-	.loc_0xEC:
-	  addi      r3, r1, 0x44
-	  li        r4, 0x2D
-	  bl        0x4E728
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x4C
-	  li        r4, 0x2D
-	  bl        0x4E748
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x5E7C
-	  li        r0, 0x1
-	  stw       r0, 0x14(r28)
-	  b         .loc_0x1EC
+	case 2:
+		piki->mFaceDirection += _18;
+		piki->mRotation.set(0.0f, _18, 0.0f);
+		break;
 
-	.loc_0x128:
-	  lfs       f1, 0xA0(r29)
-	  lfs       f0, 0x18(r28)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xA0(r29)
-	  lfs       f0, -0x3FCC(r13)
-	  stfs      f0, 0x88(r29)
-	  lfs       f0, 0x18(r28)
-	  stfs      f0, 0x8C(r29)
-	  lfs       f0, -0x3FC8(r13)
-	  stfs      f0, 0x90(r29)
-	  b         .loc_0x1EC
+	case 3:
+		break;
 
-	.loc_0x154:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r28)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x10(r28)
-	  lwz       r0, 0x184(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1A8
-	  lfs       f1, -0x68C8(r2)
-	  lfs       f0, 0xA0(r29)
-	  fadds     f1, f1, f0
-	  bl        -0x98334
-	  stfs      f1, 0xA0(r29)
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  lwz       r12, 0x0(r28)
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x1EC
+	default:
+		_10 -= gsys->getFrameTime();
+		if (piki->mStickTarget) {
+			piki->mFaceDirection = roundAng(piki->mFaceDirection + PI);
+			transit(piki, PIKISTATE_Normal);
+			return;
+		}
 
-	.loc_0x1A8:
-	  lfs       f1, 0x10(r28)
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x1EC
-	  stfs      f0, 0x10(r28)
-	  lfs       f1, -0x68C8(r2)
-	  lfs       f0, 0xA0(r29)
-	  fadds     f1, f1, f0
-	  bl        -0x9837C
-	  stfs      f1, 0xA0(r29)
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  lwz       r12, 0x0(r28)
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1EC:
-	  lwz       r0, 0x84(r1)
-	  lwz       r31, 0x7C(r1)
-	  lwz       r30, 0x78(r1)
-	  lwz       r29, 0x74(r1)
-	  lwz       r28, 0x70(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+		if (_10 < 0.0f) {
+			_10                  = 0.0f;
+			piki->mFaceDirection = roundAng(piki->mFaceDirection + PI);
+			transit(piki, PIKISTATE_Normal);
+		}
+		break;
+	}
 }
 
 /*
@@ -295,22 +201,9 @@ void PikiLookAtState::exec(Piki*)
  * Address:	800D0948
  * Size:	00002C
  */
-void PikiLookAtState::cleanup(Piki*)
+void PikiLookAtState::cleanup(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x504(r4)
-	  li        r4, 0x1
-	  bl        -0x3794
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	piki->changeMode(PikiMode::FormationMode, piki->mNavi);
 }
 
 /*
@@ -318,66 +211,23 @@ void PikiLookAtState::cleanup(Piki*)
  * Address:	800D0974
  * Size:	0000B4
  */
-void PikiLookAtState::procAnimMsg(Piki*, MsgAnim*)
+void PikiLookAtState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x48(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x48
-	  bge-      .loc_0x3C
-	  cmpwi     r0, 0
-	  bge-      .loc_0x94
-	  b         .loc_0x9C
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_Action0:
+		_14          = 2;
+		Vector3f dir = piki->mNavi->mPosition - piki->mPosition;
+		_18          = angDist(atan2f(dir.x, dir.z), piki->mFaceDirection) / 7.0f;
+		break;
 
-	.loc_0x3C:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x9C
-	  b         .loc_0x88
+	case KEY_Action1:
+		_14 = 3;
+		break;
 
-	.loc_0x48:
-	  li        r0, 0x2
-	  stw       r0, 0x14(r30)
-	  lwz       r3, 0x504(r31)
-	  lfsu      f3, 0x94(r3)
-	  lfs       f1, 0x94(r31)
-	  lfs       f0, 0x9C(r31)
-	  lfs       f2, 0x8(r3)
-	  fsubs     f1, f3, f1
-	  fsubs     f2, f2, f0
-	  bl        0x14B018
-	  lfs       f2, 0xA0(r31)
-	  bl        -0x98434
-	  lfs       f0, -0x68C4(r2)
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0x18(r30)
-	  b         .loc_0x9C
-
-	.loc_0x88:
-	  li        r0, 0x3
-	  stw       r0, 0x14(r30)
-	  b         .loc_0x9C
-
-	.loc_0x94:
-	  li        r0, 0x4
-	  stw       r0, 0x14(r30)
-
-	.loc_0x9C:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	case KEY_Finished:
+		_14 = 4;
+		break;
+	}
 }
 
 /*
@@ -388,27 +238,6 @@ void PikiLookAtState::procAnimMsg(Piki*, MsgAnim*)
 PikiNormalState::PikiNormalState()
     : PikiState(PIKISTATE_Normal, "NORMAL")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  subi      r6, r5, 0x5DC4
-	  subi      r5, r13, 0x3FC4
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x5F50
-	  stw       r6, 0x0(r3)
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -416,45 +245,13 @@ PikiNormalState::PikiNormalState()
  * Address:	800D0A70
  * Size:	000088
  */
-void PikiNormalState::init(Piki*)
+void PikiNormalState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  addi      r30, r4, 0
-	  li        r4, 0x2
-	  stw       r29, 0x34(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r1, 0x1C
-	  bl        0x4E4C0
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x24
-	  li        r4, 0x2
-	  bl        0x4E4B0
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0
-	  bl        -0x60E0
-	  li        r0, 0
-	  stw       r0, 0x10(r29)
-	  lfs       f0, -0x68D0(r2)
-	  stfs      f0, 0x14(r29)
-	  lwz       r3, 0x224(r30)
-	  lfs       f0, 0x2D8(r3)
-	  stfs      f0, 0x1C(r29)
-	  stw       r0, 0x18(r29)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+	_10 = 0;
+	_14 = 0.0f;
+	_1C = C_PIKI_PROP(piki)._2CC();
+	_18 = 0;
 }
 
 /*
@@ -462,22 +259,9 @@ void PikiNormalState::init(Piki*)
  * Address:	800D0AF8
  * Size:	00002C
  */
-void PikiNormalState::restart(Piki*)
+void PikiNormalState::restart(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	init(piki);
 }
 
 /*
@@ -485,40 +269,11 @@ void PikiNormalState::restart(Piki*)
  * Address:	800D0B24
  * Size:	00006C
  */
-void PikiNormalState::exec(Piki*)
+void PikiNormalState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x54
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x7
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x54:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (!piki->isAlive()) {
+		transit(piki, PIKISTATE_Dead);
+	}
 }
 
 /*
@@ -526,7 +281,7 @@ void PikiNormalState::exec(Piki*)
  * Address:	800D0B90
  * Size:	000004
  */
-void PikiNormalState::cleanup(Piki*)
+void PikiNormalState::cleanup(Piki* piki)
 {
 }
 
@@ -546,14 +301,8 @@ void PikiNormalState::procWallMsg(Piki*, MsgWall*)
  */
 void PikiNormalState::procOffWallMsg(Piki*, MsgOffWall*)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x10(r3)
-	  lfs       f0, -0x68D0(r2)
-	  stfs      f0, 0x14(r3)
-	  blr
-	*/
+	_10 = 0;
+	_14 = 0.0f;
 }
 
 /*
@@ -561,78 +310,29 @@ void PikiNormalState::procOffWallMsg(Piki*, MsgOffWall*)
  * Address:	800D0BAC
  * Size:	0000F4
  */
-void PikiNormalState::procCollideMsg(Piki*, MsgCollide*)
+void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r5
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xD8
-	  lwz       r3, 0x4(r31)
-	  li        r0, 0
-	  lwz       r4, 0x6C(r3)
-	  mr        r31, r3
-	  stw       r0, 0x18(r29)
-	  lbz       r0, 0x2B4(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xD8
-	  lhz       r0, 0x4FC(r30)
-	  cmplwi    r0, 0x9
-	  beq-      .loc_0xD8
-	  cmpwi     r4, 0x1
-	  beq-      .loc_0x84
-	  bge-      .loc_0xD8
-	  cmpwi     r4, 0
-	  bge-      .loc_0xC4
-	  b         .loc_0xD8
-
-	.loc_0x84:
-	  lwz       r0, 0x520(r30)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0xD8
-	  lwz       r5, 0x504(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        -0x3A7C
-	  stw       r31, 0x494(r30)
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  lwz       r12, 0x0(r29)
-	  li        r5, 0x1C
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xD8
-
-	.loc_0xC4:
-	  mr        r3, r31
-	  bl        -0x8720
-	  cmpwi     r3, 0x14
-	  bne-      .loc_0xD8
-	  stw       r31, 0x18(r29)
-
-	.loc_0xD8:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (!piki->isKinoko()) {
+		Creature* collider = msg->mEvent.mCollider;
+		int type           = collider->mObjType;
+		_18                = 0;
+		if (!piki->isDamaged() && piki->mMode != PikiMode::TransportMode) {
+			switch (type) {
+			case OBJTYPE_Water:
+				if (piki->mHappa != Flower) {
+					piki->changeMode(PikiMode::FreeMode, piki->mNavi);
+					piki->mCurrNectar = collider;
+					transit(piki, PIKISTATE_Absorb);
+				}
+				break;
+			case OBJTYPE_Piki:
+				if (static_cast<Piki*>(collider)->getState() == PIKISTATE_Push) {
+					_18 = static_cast<Piki*>(collider);
+				}
+				break;
+			}
+		}
+	}
 }
 
 /*
@@ -643,28 +343,6 @@ void PikiNormalState::procCollideMsg(Piki*, MsgCollide*)
 PikiAbsorbState::PikiAbsorbState()
     : PikiState(PIKISTATE_Absorb, "ABSORB")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1C
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3FBC
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5FE8
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -672,54 +350,13 @@ PikiAbsorbState::PikiAbsorbState()
  * Address:	800D0CEC
  * Size:	0000A4
  */
-void PikiAbsorbState::init(Piki*)
+void PikiAbsorbState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr.       r29, r4
-	  stw       r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x30
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x30:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x2F
-	  bl        0x4E234
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x2F
-	  bl        0x4E254
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x6370
-	  li        r4, 0
-	  stw       r4, 0x10(r28)
-	  mr        r3, r29
-	  lwz       r0, 0x494(r29)
-	  stw       r0, 0x18(r28)
-	  stb       r4, 0x14(r28)
-	  lwz       r4, 0x18(r28)
-	  addi      r4, r4, 0x94
-	  bl        -0x46330
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Mizunomi, piki), PaniMotionInfo(PIKIANIM_Mizunomi));
+	_10     = 0;
+	mNectar = piki->mCurrNectar;
+	_14     = 0;
+	piki->turnTo(mNectar->mPosition);
 }
 
 /*
@@ -727,77 +364,26 @@ void PikiAbsorbState::init(Piki*)
  * Address:	800D0D90
  * Size:	0000E8
  */
-void PikiAbsorbState::exec(Piki*)
+void PikiAbsorbState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  lfs       f0, -0x68D0(r2)
-	  stfs      f0, 0x78(r4)
-	  stfs      f0, 0x70(r4)
-	  lfs       f0, -0x3FB4(r13)
-	  stfs      f0, 0xA4(r4)
-	  lfs       f0, -0x3FB0(r13)
-	  stfs      f0, 0xA8(r4)
-	  lfs       f0, -0x3FAC(r13)
-	  stfs      f0, 0xAC(r4)
-	  lwz       r0, 0x10(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x50
-	  b         .loc_0xA4
+	piki->mVelocity.x = piki->mVelocity.z = 0.0f;
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	switch (_10) {
+	case 1:
+		if (mNectar->isAlive()) {
+			MsgUser msg(0);
+			MizuItem* nectar           = static_cast<MizuItem*>(mNectar);
+			nectar->mCollidingCreature = piki;
+			C_SAI(nectar)->procMsg(nectar, &msg);
+		}
+		_14 = 1;
+		break;
+	}
 
-	.loc_0x50:
-	  lwz       r3, 0x18(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x9C
-	  li        r0, 0xA
-	  stw       r0, 0x10(r1)
-	  li        r0, 0
-	  addi      r5, r1, 0x10
-	  stw       r0, 0x14(r1)
-	  lwz       r4, 0x18(r30)
-	  stw       r31, 0x2BC(r4)
-	  lwz       r3, 0x2E8(r4)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x9C:
-	  li        r0, 0x1
-	  stb       r0, 0x14(r30)
-
-	.loc_0xA4:
-	  mr        r3, r31
-	  bl        -0xA3B8
-	  cmpwi     r3, 0x2F
-	  beq-      .loc_0xD0
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xD0:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (piki->getUpperMotionIndex() != PIKIANIM_Mizunomi) {
+		transit(piki, PIKISTATE_Normal);
+		ERROR("mizunomi err!\n");
+	}
 }
 
 /*
@@ -805,95 +391,29 @@ void PikiAbsorbState::exec(Piki*)
  * Address:	800D0E78
  * Size:	000110
  */
-void PikiAbsorbState::procAnimMsg(Piki*, MsgAnim*)
+void PikiAbsorbState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0x5
-	  beq-      .loc_0x48
-	  bge-      .loc_0x3C
-	  cmpwi     r0, 0
-	  beq-      .loc_0xB0
-	  b         .loc_0xF8
-
-	.loc_0x3C:
-	  cmpwi     r0, 0x7
-	  bge-      .loc_0xF8
-	  b         .loc_0x70
-
-	.loc_0x48:
-	  lwz       r0, 0x10(r30)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x64
-	  lwz       r3, 0x3038(r13)
-	  addi      r5, r31, 0x94
-	  li        r4, 0x103
-	  bl        -0x2CAD0
-
-	.loc_0x64:
-	  li        r0, 0x1
-	  stw       r0, 0x10(r30)
-	  b         .loc_0xF8
-
-	.loc_0x70:
-	  lwz       r3, 0x18(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xF8
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x9C
-	  addi      r4, r4, 0x2B8
-
-	.loc_0x9C:
-	  addi      r3, r31, 0x354
-	  bl        0x4EBA8
-	  li        r0, 0x2
-	  stw       r0, 0x10(r30)
-	  b         .loc_0xF8
-
-	.loc_0xB0:
-	  lbz       r0, 0x14(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xDC
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x13
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xF8
-
-	.loc_0xDC:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xF8:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_LoopStart:
+		if (_10 != 1) {
+			seSystem->playPikiSound(SEF_PIKI_DRINK, piki->mPosition);
+		}
+		_10 = 1;
+		break;
+	case KEY_LoopEnd:
+		if (!mNectar->isAlive()) {
+			piki->mPikiAnimMgr.finishMotion(piki);
+			_10 = 2;
+		}
+		break;
+	case KEY_Finished:
+		if (_14) {
+			transit(piki, PIKISTATE_GrowUp);
+		} else {
+			transit(piki, PIKISTATE_Normal);
+		}
+		break;
+	}
 }
 
 /*
@@ -901,7 +421,7 @@ void PikiAbsorbState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D0F88
  * Size:	000004
  */
-void PikiAbsorbState::cleanup(Piki*)
+void PikiAbsorbState::cleanup(Piki* piki)
 {
 }
 
@@ -913,32 +433,6 @@ void PikiAbsorbState::cleanup(Piki*)
 PikiDrownState::PikiDrownState()
     : PikiState(PIKISTATE_Drown, "DROWN")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x18
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3FA8
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6080
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x68D0(r2)
-	  stfs      f0, 0x24(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x1C(r3)
-	  blr
-	*/
 }
 
 /*
@@ -946,153 +440,39 @@ PikiDrownState::PikiDrownState()
  * Address:	800D0FE8
  * Size:	000208
  */
-void PikiDrownState::init(Piki*)
+void PikiDrownState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x78(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x74(r1)
-	  stw       r28, 0x70(r1)
-	  lhz       r0, 0x524(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x38
-	  mr        r3, r31
-	  bl        -0x9100
+	if (piki->mFiredState != 0) {
+		piki->endFire();
+	}
 
-	.loc_0x38:
-	  lwz       r0, 0x39C(r31)
-	  cmpwi     r0, 0x38
-	  bne-      .loc_0x50
-	  li        r0, 0
-	  sth       r0, 0x10(r30)
-	  b         .loc_0x98
+	if (piki->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == PIKIANIM_TYakusui) {
+		_10 = 0;
+	} else {
+		_10 = 1;
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Oboreru, piki), PaniMotionInfo(PIKIANIM_Oboreru));
+	}
 
-	.loc_0x50:
-	  li        r0, 0x1
-	  cmplwi    r31, 0
-	  sth       r0, 0x10(r30)
-	  mr        r28, r31
-	  beq-      .loc_0x68
-	  addi      r28, r28, 0x2B8
+	_12 = randInt(2.0f, 6);
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	_14 = int(randFloat(2.0f));
+	if (piki->isHolding()) {
+		InteractRelease release(piki, 1.0f);
+		piki->getHoldCreature()->stimulate(release);
+	}
 
-	.loc_0x68:
-	  addi      r3, r1, 0x30
-	  li        r4, 0x39
-	  bl        0x4DF00
-	  addi      r29, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x38
-	  li        r4, 0x39
-	  bl        0x4DF20
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0x66A4
+	seSystem->playSoundDirect(5, SEW_PIKI_DROWN, piki->mPosition);
+	_16 = 0;
 
-	.loc_0x98:
-	  bl        0x146FF0
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x6C(r1)
-	  lis       r29, 0x4330
-	  lfs       f2, -0x68E4(r2)
-	  stw       r29, 0x68(r1)
-	  lfs       f1, -0x68E8(r2)
-	  lfd       f3, 0x68(r1)
-	  lfs       f0, -0x68C0(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x60(r1)
-	  lwz       r3, 0x64(r1)
-	  addi      r0, r3, 0x6
-	  sth       r0, 0x12(r30)
-	  lfs       f0, -0x3FA0(r13)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, -0x3F9C(r13)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, -0x3F98(r13)
-	  stfs      f0, 0xAC(r31)
-	  bl        0x146F8C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x5C(r1)
-	  lfs       f2, -0x68E4(r2)
-	  stw       r29, 0x58(r1)
-	  lfs       f1, -0x68E8(r2)
-	  lfd       f3, 0x58(r1)
-	  lfs       f0, -0x68C0(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f2, f1, f2
-	  fmuls     f0, f0, f2
-	  fctiwz    f0, f0
-	  stfd      f0, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  sth       r0, 0x14(r30)
-	  lwz       r0, 0x2AC(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x184
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x3064
-	  stw       r0, 0x40(r1)
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x2E74
-	  stw       r31, 0x44(r1)
-	  addi      r4, r1, 0x40
-	  stw       r0, 0x40(r1)
-	  stfs      f1, 0x48(r1)
-	  lwz       r3, 0x2AC(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
+	// we already did this, but sure
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	piki->mActiveAction->abandon(nullptr);
+	if (piki->isStickTo()) {
+		piki->endStickObject();
+		piki->endStick();
+	}
 
-	.loc_0x184:
-	  lwz       r3, 0x3038(r13)
-	  addi      r6, r31, 0x94
-	  li        r4, 0x5
-	  li        r5, 0xB5
-	  bl        -0x2CD48
-	  li        r0, 0
-	  sth       r0, 0x16(r30)
-	  li        r4, 0
-	  lfs       f0, -0x3F94(r13)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, -0x3F90(r13)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, -0x3F8C(r13)
-	  stfs      f0, 0xAC(r31)
-	  lwz       r3, 0x4F8(r31)
-	  bl        -0xBE64
-	  lwz       r0, 0x184(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1E0
-	  mr        r3, r31
-	  bl        -0x40944
-	  mr        r3, r31
-	  bl        -0x407E8
-
-	.loc_0x1E0:
-	  li        r0, 0
-	  stb       r0, 0x28(r30)
-	  lwz       r0, 0x84(r1)
-	  lwz       r31, 0x7C(r1)
-	  lwz       r30, 0x78(r1)
-	  lwz       r29, 0x74(r1)
-	  lwz       r28, 0x70(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	_28 = false;
 }
 
 /*
@@ -1100,284 +480,57 @@ void PikiDrownState::init(Piki*)
  * Address:	800D11F0
  * Size:	0003DC
  */
-void PikiDrownState::exec(Piki*)
+void PikiDrownState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x1B8(r1)
-	  stfd      f31, 0x1B0(r1)
-	  stfd      f30, 0x1A8(r1)
-	  stfd      f29, 0x1A0(r1)
-	  stw       r31, 0x19C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x198(r1)
-	  mr        r30, r3
-	  lhz       r0, 0x10(r3)
-	  cmplwi    r0, 0x2
-	  beq-      .loc_0x130
-	  lhz       r0, 0x426(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x130
-	  lhz       r3, 0x16(r30)
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x16(r30)
-	  lhz       r0, 0x16(r30)
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0x138
-	  lfs       f1, 0x98(r31)
-	  lfs       f0, -0x68BC(r2)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x98(r31)
-	  lfs       f1, 0xA0(r31)
-	  bl        0x14A8F8
-	  fmr       f31, f1
-	  lfs       f1, 0xA0(r31)
-	  bl        0x14AA80
-	  stfs      f1, 0x188(r1)
-	  mr        r3, r31
-	  lfs       f0, -0x3F88(r13)
-	  stfs      f0, 0x18C(r1)
-	  stfs      f31, 0x190(r1)
-	  lfs       f0, 0x188(r1)
-	  lfs       f1, -0x68B8(r2)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x188(r1)
-	  lfs       f0, 0x18C(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x18C(r1)
-	  lfs       f0, 0x190(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x190(r1)
-	  lwz       r4, 0x188(r1)
-	  lwz       r0, 0x18C(r1)
-	  stw       r4, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0x190(r1)
-	  stw       r0, 0x78(r31)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x108
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x17
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x3B8
+	if (_10 != 2 && piki->mInWaterTimer == 0) {
+		_16++;
+		if (_16 > 1) {
+			piki->mPosition.y += 20.0f;
+			Vector3f vel(sinf(piki->mFaceDirection), 0.0f, cosf(piki->mFaceDirection));
+			vel.multiply(80.0f);
+			piki->mVelocity = vel;
+			if (piki->isKinoko()) {
+				transit(piki, PIKISTATE_Kinoko);
+			} else {
+				piki->mEmotion = PikiEmotion::Unk3;
+				transit(piki, PIKISTATE_Emotion);
+			}
 
-	.loc_0x108:
-	  li        r0, 0x3
-	  stb       r0, 0x400(r31)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  lwz       r12, 0x0(r30)
-	  li        r5, 0x1F
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x3B8
+			return;
+		}
+	} else {
+		_16 = 0;
+	}
 
-	.loc_0x130:
-	  li        r0, 0
-	  sth       r0, 0x16(r30)
+	if (_10 == 1) {
+		Vector3f dir = piki->mNavi->mPosition - piki->mPosition;
+		dir.normalise();
+		_1C = piki->getSpeed(0.5f) * dir;
+	} else {
+		_1C.set(0.0f, 0.0f, 0.0f);
+	}
 
-	.loc_0x138:
-	  lhz       r0, 0x10(r30)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x1E4
-	  lwz       r3, 0x504(r31)
-	  lfsu      f3, 0x94(r3)
-	  lfs       f1, 0x94(r31)
-	  lfs       f0, 0x98(r31)
-	  lfs       f2, 0x4(r3)
-	  fsubs     f31, f3, f1
-	  lfs       f1, 0x8(r3)
-	  fsubs     f30, f2, f0
-	  lfs       f0, 0x9C(r31)
-	  fsubs     f29, f1, f0
-	  fmuls     f1, f31, f31
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xC3730
-	  lfs       f0, -0x68D0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x19C
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	if (!_28 || piki->isKinoko()) {
+		piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		return;
+	}
 
-	.loc_0x19C:
-	  mr        r3, r31
-	  lfs       f1, -0x68B4(r2)
-	  bl        -0x5630
-	  fmuls     f3, f31, f1
-	  fmuls     f2, f30, f1
-	  fmuls     f0, f29, f1
-	  stfs      f3, 0xAC(r1)
-	  lfs       f1, 0xAC(r1)
-	  stfs      f1, 0x150(r1)
-	  stfs      f2, 0x154(r1)
-	  stfs      f0, 0x158(r1)
-	  lwz       r3, 0x150(r1)
-	  lwz       r0, 0x154(r1)
-	  stw       r3, 0x1C(r30)
-	  stw       r0, 0x20(r30)
-	  lwz       r0, 0x158(r1)
-	  stw       r0, 0x24(r30)
-	  b         .loc_0x1FC
+	Vector3f velOffset = _1C - piki->mTargetVelocity;
+	f32 diff           = velOffset.normalise();
 
-	.loc_0x1E4:
-	  lfs       f0, -0x3F84(r13)
-	  stfs      f0, 0x1C(r30)
-	  lfs       f0, -0x3F80(r13)
-	  stfs      f0, 0x20(r30)
-	  lfs       f0, -0x3F7C(r13)
-	  stfs      f0, 0x24(r30)
+	f32 speed = 15.0f;
+	if (_28) {
+		speed *= 2.0f;
+	}
 
-	.loc_0x1FC:
-	  lbz       r0, 0x28(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x224
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x240
+	f32 frame = gsys->getFrameTime();
+	if (diff > speed * frame) {
+		piki->mTargetVelocity = piki->mTargetVelocity + speed * velOffset * frame;
+	} else {
+		piki->mTargetVelocity = piki->mTargetVelocity + velOffset * frame;
+	}
 
-	.loc_0x224:
-	  lfs       f0, -0x3F78(r13)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, -0x3F74(r13)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, -0x3F70(r13)
-	  stfs      f0, 0xAC(r31)
-	  b         .loc_0x3B8
-
-	.loc_0x240:
-	  lfs       f3, 0x1C(r30)
-	  lfs       f2, 0xA4(r31)
-	  lfs       f1, 0x20(r30)
-	  lfs       f0, 0xA8(r31)
-	  fsubs     f29, f3, f2
-	  lfs       f2, 0x24(r30)
-	  fsubs     f30, f1, f0
-	  lfs       f0, 0xAC(r31)
-	  fmuls     f1, f29, f29
-	  fsubs     f31, f2, f0
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f31, f31
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xC3828
-	  lfs       f0, -0x68D0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x294
-	  fdivs     f29, f29, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f31, f31, f1
-
-	.loc_0x294:
-	  lbz       r0, 0x28(r30)
-	  lfs       f4, -0x68B0(r2)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2AC
-	  lfs       f0, -0x68C0(r2)
-	  fmuls     f4, f4, f0
-
-	.loc_0x2AC:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f3, 0x28C(r3)
-	  fmuls     f0, f4, f3
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x348
-	  fmuls     f2, f29, f4
-	  fmuls     f1, f30, f4
-	  fmuls     f0, f31, f4
-	  stfs      f2, 0x90(r1)
-	  fmuls     f1, f1, f3
-	  lfs       f2, 0x90(r1)
-	  fmuls     f0, f0, f3
-	  fmuls     f2, f2, f3
-	  stfs      f2, 0xEC(r1)
-	  lfs       f2, 0xEC(r1)
-	  stfs      f2, 0x12C(r1)
-	  stfs      f1, 0x130(r1)
-	  stfs      f0, 0x134(r1)
-	  lfs       f1, 0xA4(r31)
-	  lfs       f0, 0x12C(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xE0(r1)
-	  lfs       f0, 0xE0(r1)
-	  stfs      f0, 0x138(r1)
-	  lfs       f1, 0xA8(r31)
-	  lfs       f0, 0x130(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x13C(r1)
-	  lfs       f1, 0xAC(r31)
-	  lfs       f0, 0x134(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x140(r1)
-	  lwz       r3, 0x138(r1)
-	  lwz       r0, 0x13C(r1)
-	  stw       r3, 0xA4(r31)
-	  stw       r0, 0xA8(r31)
-	  lwz       r0, 0x140(r1)
-	  stw       r0, 0xAC(r31)
-	  b         .loc_0x3A0
-
-	.loc_0x348:
-	  fmuls     f2, f29, f3
-	  fmuls     f1, f30, f3
-	  fmuls     f0, f31, f3
-	  stfs      f2, 0xD4(r1)
-	  lfs       f3, 0xA4(r31)
-	  lfs       f2, 0xD4(r1)
-	  fadds     f2, f3, f2
-	  stfs      f2, 0xC8(r1)
-	  lfs       f2, 0xC8(r1)
-	  stfs      f2, 0x114(r1)
-	  lfs       f2, 0xA8(r31)
-	  fadds     f1, f2, f1
-	  stfs      f1, 0x118(r1)
-	  lfs       f1, 0xAC(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x11C(r1)
-	  lwz       r3, 0x114(r1)
-	  lwz       r0, 0x118(r1)
-	  stw       r3, 0xA4(r31)
-	  stw       r0, 0xA8(r31)
-	  lwz       r0, 0x11C(r1)
-	  stw       r0, 0xAC(r31)
-
-	.loc_0x3A0:
-	  lwz       r3, 0xA4(r31)
-	  lwz       r0, 0xA8(r31)
-	  stw       r3, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0xAC(r31)
-	  stw       r0, 0x78(r31)
-
-	.loc_0x3B8:
-	  lwz       r0, 0x1BC(r1)
-	  lfd       f31, 0x1B0(r1)
-	  lfd       f30, 0x1A8(r1)
-	  lfd       f29, 0x1A0(r1)
-	  lwz       r31, 0x19C(r1)
-	  lwz       r30, 0x198(r1)
-	  addi      r1, r1, 0x1B8
-	  mtlr      r0
-	  blr
-	*/
+	piki->mVelocity = piki->mTargetVelocity;
 }
 
 /*
@@ -1385,7 +538,7 @@ void PikiDrownState::exec(Piki*)
  * Address:	800D15CC
  * Size:	000004
  */
-void PikiDrownState::cleanup(Piki*)
+void PikiDrownState::cleanup(Piki* piki)
 {
 }
 
@@ -1394,134 +547,32 @@ void PikiDrownState::cleanup(Piki*)
  * Address:	800D15D0
  * Size:	0001AC
  */
-void PikiDrownState::procAnimMsg(Piki*, MsgAnim*)
+void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x48(r1)
-	  addi      r28, r3, 0
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x38
-	  b         .loc_0x18C
-
-	.loc_0x38:
-	  lhz       r0, 0x10(r28)
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x68
-	  lwz       r3, 0x3038(r13)
-	  addi      r6, r29, 0x94
-	  li        r4, 0x5
-	  li        r5, 0xB6
-	  bl        -0x2D1F0
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  bl        -0x46950
-	  b         .loc_0x18C
-
-	.loc_0x68:
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x128
-	  lhz       r3, 0x12(r28)
-	  subi      r3, r3, 0x1
-	  rlwinm.   r0,r3,0,16,31
-	  sth       r3, 0x12(r28)
-	  bne-      .loc_0xE4
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x94
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x94:
-	  addi      r3, r1, 0x34
-	  li        r4, 0x3A
-	  bl        0x4D8EC
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x3C
-	  li        r4, 0x3A
-	  bl        0x4D90C
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x6CB8
-	  lwz       r3, 0x3038(r13)
-	  addi      r6, r29, 0x94
-	  li        r4, 0x5
-	  li        r5, 0xB7
-	  bl        -0x2D270
-	  li        r0, 0x2
-	  sth       r0, 0x10(r28)
-	  b         .loc_0x18C
-
-	.loc_0xE4:
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0xF4
-	  addi      r30, r30, 0x2B8
-
-	.loc_0xF4:
-	  addi      r3, r1, 0x24
-	  li        r4, 0x39
-	  bl        0x4D88C
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x2C
-	  li        r4, 0x39
-	  bl        0x4D8AC
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x6D18
-	  b         .loc_0x18C
-
-	.loc_0x128:
-	  cmplwi    r0, 0
-	  bne-      .loc_0x18C
-	  li        r0, 0x1
-	  cmplwi    r29, 0
-	  sth       r0, 0x10(r28)
-	  mr        r30, r29
-	  beq-      .loc_0x148
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x148:
-	  addi      r3, r1, 0x14
-	  li        r4, 0x39
-	  bl        0x4D838
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x39
-	  bl        0x4D858
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x6D6C
-	  lwz       r3, 0x3038(r13)
-	  addi      r6, r29, 0x94
-	  li        r4, 0x5
-	  li        r5, 0xB5
-	  bl        -0x2D324
-
-	.loc_0x18C:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  lwz       r28, 0x48(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_Finished:
+		if (_10 == 2) {
+			seSystem->playSoundDirect(5, SEW_PIKI_DEAD, piki->mPosition);
+			piki->kill(false);
+			break;
+		}
+		if (_10 == 1) {
+			if (--_12 == 0) {
+				piki->startMotion(PaniMotionInfo(PIKIANIM_Sizumu, piki), PaniMotionInfo(PIKIANIM_Sizumu));
+				seSystem->playSoundDirect(5, SEW_PIKI_SINK, piki->mPosition);
+				_10 = 2;
+			} else {
+				piki->startMotion(PaniMotionInfo(PIKIANIM_Oboreru, piki), PaniMotionInfo(PIKIANIM_Oboreru));
+			}
+			break;
+		}
+		if (_10 == 0) {
+			_10 = 1;
+			piki->startMotion(PaniMotionInfo(PIKIANIM_Oboreru, piki), PaniMotionInfo(PIKIANIM_Oboreru));
+			seSystem->playSoundDirect(5, SEW_PIKI_DROWN, piki->mPosition);
+		}
+		break;
+	}
 }
 
 /*
@@ -1532,32 +583,6 @@ void PikiDrownState::procAnimMsg(Piki*, MsgAnim*)
 PikiKinokoState::PikiKinokoState()
     : PikiState(PIKISTATE_Kinoko, "KINOKO")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x17
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3F6C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6150
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x68D0(r2)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  blr
-	*/
 }
 
 /*
@@ -1565,54 +590,13 @@ PikiKinokoState::PikiKinokoState()
  * Address:	800D17D8
  * Size:	0000A4
  */
-void PikiKinokoState::init(Piki*)
+void PikiKinokoState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r30, 0
-	  bl        -0x7EAC
-	  lwz       r3, 0x3160(r13)
-	  addi      r4, r30, 0x94
-	  li        r5, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x6C(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x10(r29)
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  bl        .loc_0xA4
-	  addi      r3, r1, 0x10
-	  li        r4, 0x2
-	  bl        0x4D724
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x2
-	  bl        0x4D714
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0
-	  bl        -0x6E7C
-	  li        r0, 0
-	  stw       r0, 0x24(r29)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-
-	.loc_0xA4:
-	*/
+	piki->startKinoko();
+	_10 = tekiMgr->findClosest(piki->mPosition, nullptr);
+	initWalk(piki);
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
+	_24 = 0;
 }
 
 /*
@@ -1620,8 +604,20 @@ void PikiKinokoState::init(Piki*)
  * Address:	800D187C
  * Size:	000268
  */
-void PikiKinokoState::initWalk(Piki*)
+void PikiKinokoState::initWalk(Piki* piki)
 {
+	_14          = randFloat(2.0f) + 1.5f;
+	Vector3f dir = _10->mPosition - piki->mPosition;
+	f32 dist     = dir.normalise();
+	Vector3f orthoDir(dir.z, 0.0f, -dir.x);
+	if (unitRandFloat() > 0.5f) {
+		orthoDir.multiply(-1.0f);
+	}
+
+	f32 r    = 0.2f * (unitRandFloat() - 0.5f);
+	orthoDir = orthoDir + r * dir;
+	orthoDir.normalise();
+	_18 = orthoDir;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1792,36 +788,16 @@ void PikiKinokoState::initWalk(Piki*)
  * Address:	800D1AE4
  * Size:	000044
  */
-void PikiKinokoState::exec(Piki*)
+void PikiKinokoState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x24(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x30
-	  bge-      .loc_0x34
-	  cmpwi     r0, 0
-	  bge-      .loc_0x28
-	  b         .loc_0x34
-
-	.loc_0x28:
-	  bl        0x20
-	  b         .loc_0x34
-
-	.loc_0x30:
-	  bl        .loc_0x44
-
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x44:
-	*/
+	switch (_24) {
+	case 0:
+		exeBoid(piki);
+		break;
+	case 1:
+		exeAttack(piki);
+		break;
+	}
 }
 
 /*
@@ -1829,7 +805,7 @@ void PikiKinokoState::exec(Piki*)
  * Address:	800D1B28
  * Size:	000004
  */
-void PikiKinokoState::exeAttack(Piki*)
+void PikiKinokoState::exeAttack(Piki* piki)
 {
 }
 
@@ -1838,8 +814,75 @@ void PikiKinokoState::exeAttack(Piki*)
  * Address:	800D1B2C
  * Size:	0007B8
  */
-void PikiKinokoState::exeBoid(Piki*)
+void PikiKinokoState::exeBoid(Piki* piki)
 {
+	_14 -= gsys->getFrameTime();
+	if (_14 < 0.0f) {
+		initWalk(piki);
+	}
+
+	Iterator iter(&piki->mSearchBuffer);
+	int count = 0;
+	Vector3f boidPos(0.0f, 0.0f, 0.0f);
+	Vector3f boidVel(0.0f, 0.0f, 0.0f);
+	Vector3f dirNearest(0.0f, 0.0f, 0.0f);
+	bool isNearest = false;
+	f32 minDist    = 50.0f;
+
+	CI_LOOP(iter)
+	{
+		Creature* c = *iter;
+		if (c->mObjType != OBJTYPE_Piki) {
+			continue;
+		}
+		Piki* other = static_cast<Piki*>(c);
+		if (other == piki) {
+			continue;
+		}
+
+		if (other->isKinoko()) {
+			f32 dist = qdist2(other->mPosition.x, other->mPosition.z, piki->mPosition.x, piki->mPosition.z);
+			if (dist < minDist) {
+				minDist    = dist;
+				dirNearest = piki->mPosition - other->mPosition;
+				isNearest  = true;
+			}
+
+			boidPos = boidPos + other->mPosition;
+			boidVel = boidVel + other->mVelocity;
+			count++;
+		}
+	}
+
+	if (count > 0) {
+		dirNearest.normalise();
+		boidPos.multiply(1.0f / f32(count));
+		boidVel.multiply(1.0f / f32(count));
+		boidVel.normalise();
+
+		Vector3f dir = boidPos - piki->mPosition;
+		Vector3f pikiDir(sinf(piki->mFaceDirection), 0.0f, cosf(piki->mFaceDirection));
+		dir.normalise();
+		Vector3f moveDir;
+
+		if (isNearest) {
+			moveDir = pikiDir * 0.01f + dirNearest * 0.99f;
+		} else {
+			moveDir = pikiDir * 0.4f + dir * 0.5f + _18 * 0.1f;
+		}
+
+		moveDir.normalise();
+		piki->setSpeed(0.3f, moveDir);
+	} else {
+		piki->setSpeed(0.3f, _18);
+	}
+
+	Vector3f targetDir = _10->mPosition - piki->mPosition;
+	f32 dist           = targetDir.normalise();
+	if (dist < 100.0f) {
+		return;
+	}
+	piki->setSpeed(0.5f, targetDir);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2388,20 +1431,9 @@ void PikiKinokoState::exeBoid(Piki*)
  * Address:	800D22E4
  * Size:	000024
  */
-void PikiKinokoState::cleanup(Piki*)
+void PikiKinokoState::cleanup(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r3, r4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x8974
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	piki->endKinoko();
 }
 
 /*
@@ -2412,28 +1444,6 @@ void PikiKinokoState::cleanup(Piki*)
 PikiBubbleState::PikiBubbleState()
     : PikiState(PIKISTATE_Bubble, "BUBBLE")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xA
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3F24
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x61E8
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -2441,86 +1451,19 @@ PikiBubbleState::PikiBubbleState()
  * Address:	800D2354
  * Size:	00012C
  */
-void PikiBubbleState::init(Piki*)
+void PikiBubbleState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  stw       r30, 0x70(r1)
-	  mr        r30, r4
-	  stw       r29, 0x6C(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r5, 0x504(r4)
-	  li        r4, 0
-	  bl        -0x51B4
-	  addi      r3, r1, 0x20
-	  li        r4, 0x45
-	  bl        0x4CBCC
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x28
-	  li        r4, 0x45
-	  bl        0x4CBBC
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0
-	  bl        -0x79D4
-	  mr        r3, r30
-	  bl        -0x77A8
-	  lwz       r3, 0x224(r30)
-	  lfs       f0, 0x3E8(r3)
-	  stfs      f0, 0x10(r29)
-	  bl        0x145CAC
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x64(r1)
-	  lis       r0, 0x4330
-	  lfs       f0, -0x68E4(r2)
-	  addi      r4, r1, 0x30
-	  stw       r0, 0x60(r1)
-	  lfs       f3, -0x68E8(r2)
-	  lfd       f2, 0x60(r1)
-	  lfs       f1, -0x68CC(r2)
-	  fsubs     f4, f2, f4
-	  lfs       f2, 0x10(r29)
-	  fdivs     f0, f4, f0
-	  fmuls     f0, f3, f0
-	  fmuls     f0, f1, f0
-	  fadds     f0, f3, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x10(r29)
-	  stfs      f1, 0x14(r29)
-	  lfs       f0, 0xA0(r30)
-	  stfs      f0, 0x18(r29)
-	  stfs      f3, 0x1C(r29)
-	  lfs       f0, -0x68D0(r2)
-	  stfs      f0, 0x38(r1)
-	  stfs      f0, 0x34(r1)
-	  stfs      f0, 0x30(r1)
-	  stfs      f0, 0x44(r1)
-	  stfs      f0, 0x40(r1)
-	  stfs      f0, 0x3C(r1)
-	  stw       r30, 0x58(r1)
-	  lwz       r3, 0x438(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3038(r13)
-	  addi      r5, r30, 0x94
-	  li        r4, 0x104
-	  bl        -0x2E058
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  lwz       r29, 0x6C(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	piki->changeMode(PikiMode::FreeMode, piki->mNavi);
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Moeru), PaniMotionInfo(PIKIANIM_Moeru));
+	piki->enableMotionBlend();
+	mSurvivalTimer = C_PIKI_PROP(piki)._3DC();
+	mSurvivalTimer *= randFloat(0.1f) + 1.0f;
+	mChangeDirectionTimer = 0.1f;
+	mMoveDirection        = piki->mFaceDirection;
+	mSpeedRatio           = 1.0f;
+	EffectParm parm(piki);
+	piki->mSlimeEffect->emit(parm);
+	seSystem->playPikiSound(SEF_PIKI_WATERED, piki->mPosition);
 }
 
 /*
@@ -2528,100 +1471,22 @@ void PikiBubbleState::init(Piki*)
  * Address:	800D2480
  * Size:	000154
  */
-void PikiBubbleState::exec(Piki*)
+void PikiBubbleState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x40(r1)
-	  addi      r30, r3, 0
-	  lfs       f1, 0x1C(r3)
-	  lfs       f2, 0x18(r3)
-	  mr        r3, r31
-	  bl        -0x660C
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r30)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x10(r30)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x14(r30)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x14(r30)
-	  lfs       f0, 0x10(r30)
-	  lfs       f1, -0x68D0(r2)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x84
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x6
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x13C
+	piki->setSpeed(mSpeedRatio, mMoveDirection);
+	mSurvivalTimer -= gsys->getFrameTime();
+	mChangeDirectionTimer -= gsys->getFrameTime();
+	if (mSurvivalTimer < 0.0f) {
+		transit(piki, PIKISTATE_Dying);
+		return;
+	}
 
-	.loc_0x84:
-	  lfs       f0, 0x14(r30)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x13C
-	  bl        0x145B60
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x3C(r1)
-	  lis       r31, 0x4330
-	  lfs       f2, -0x68E4(r2)
-	  stw       r31, 0x38(r1)
-	  lfs       f0, -0x68E8(r2)
-	  lfd       f3, 0x38(r1)
-	  lfs       f1, -0x6890(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r30)
-	  bl        0x145B20
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x68D8(r2)
-	  stw       r0, 0x34(r1)
-	  lfs       f5, -0x68E4(r2)
-	  stw       r31, 0x30(r1)
-	  lfs       f4, -0x68E8(r2)
-	  lfd       f0, 0x30(r1)
-	  lfs       f1, -0x6884(r2)
-	  fsubs     f6, f0, f2
-	  lfs       f0, -0x6880(r2)
-	  lfs       f2, -0x68C8(r2)
-	  lfs       f3, 0x18(r30)
-	  fdivs     f5, f6, f5
-	  fmuls     f4, f4, f5
-	  fmuls     f1, f1, f4
-	  fdivs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x18(r30)
-	  lfs       f1, 0x18(r30)
-	  bl        -0x9A01C
-	  stfs      f1, 0x18(r30)
-	  lfs       f1, 0x1C(r30)
-	  lfs       f0, -0x687C(r2)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x1C(r30)
-
-	.loc_0x13C:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	if (mChangeDirectionTimer < 0.0f) {
+		mChangeDirectionTimer = randFloat(0.2f) + 0.2f;
+		mMoveDirection += randFloat(45.0f) / 180.0f * PI;
+		mMoveDirection = roundAng(mMoveDirection);
+		mSpeedRatio *= 0.99f;
+	}
 }
 
 /*
@@ -2629,43 +1494,11 @@ void PikiBubbleState::exec(Piki*)
  * Address:	800D25D4
  * Size:	000080
  */
-void PikiBubbleState::cleanup(Piki*)
+void PikiBubbleState::cleanup(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r4
-	  addi      r3, r1, 0x10
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x10(r1)
-	  addi      r5, r1, 0x1C
-	  lfs       f1, 0x14(r1)
-	  li        r4, 0x25
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, 0x18(r1)
-	  li        r6, 0
-	  stfs      f1, 0x20(r1)
-	  li        r7, 0
-	  lwz       r3, 0x3180(r13)
-	  stfs      f0, 0x24(r1)
-	  bl        0xCA510
-	  lwz       r3, 0x438(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f centre = piki->getCentre();
+	effectMgr->create(EffectMgr::EFF_Piki_BubbleRecover, centre, nullptr, nullptr);
+	piki->mSlimeEffect->kill();
 }
 
 /*
@@ -2676,28 +1509,6 @@ void PikiBubbleState::cleanup(Piki*)
 PikiFiredState::PikiFiredState()
     : PikiState(PIKISTATE_Fired, "FIRED")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x9
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3F1C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6280
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -2705,68 +1516,16 @@ PikiFiredState::PikiFiredState()
  * Address:	800D26A0
  * Size:	0000E4
  */
-void PikiFiredState::init(Piki*)
+void PikiFiredState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  mr        r30, r4
-	  stw       r29, 0x3C(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r5, 0x504(r4)
-	  li        r4, 0
-	  bl        -0x5500
-	  addi      r3, r1, 0x20
-	  li        r4, 0x45
-	  bl        0x4C880
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x28
-	  li        r4, 0x45
-	  bl        0x4C870
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0
-	  bl        -0x7D20
-	  mr        r3, r30
-	  bl        -0x7AF4
-	  lwz       r3, 0x224(r30)
-	  lfs       f0, 0x3E8(r3)
-	  stfs      f0, 0x10(r29)
-	  bl        0x145960
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x34(r1)
-	  lis       r0, 0x4330
-	  lfs       f0, -0x68E4(r2)
-	  stw       r0, 0x30(r1)
-	  lfs       f3, -0x68E8(r2)
-	  lfd       f2, 0x30(r1)
-	  lfs       f1, -0x68CC(r2)
-	  fsubs     f4, f2, f4
-	  lfs       f2, 0x10(r29)
-	  fdivs     f0, f4, f0
-	  fmuls     f0, f3, f0
-	  fmuls     f0, f1, f0
-	  fadds     f0, f3, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x10(r29)
-	  stfs      f1, 0x14(r29)
-	  lfs       f0, 0xA0(r30)
-	  stfs      f0, 0x18(r29)
-	  stfs      f3, 0x1C(r29)
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	piki->changeMode(PikiMode::FreeMode, piki->mNavi);
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Moeru), PaniMotionInfo(PIKIANIM_Moeru));
+	piki->enableMotionBlend();
+	mSurvivalTimer = C_PIKI_PROP(piki)._3DC();
+	mSurvivalTimer *= randFloat(0.1f) + 1.0f;
+	mChangeDirectionTimer = 0.1f;
+	mMoveDirection        = piki->mFaceDirection;
+	mSpeedRatio           = 1.0f;
 }
 
 /*
@@ -2774,100 +1533,22 @@ void PikiFiredState::init(Piki*)
  * Address:	800D2784
  * Size:	000154
  */
-void PikiFiredState::exec(Piki*)
+void PikiFiredState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x40(r1)
-	  addi      r30, r3, 0
-	  lfs       f1, 0x1C(r3)
-	  lfs       f2, 0x18(r3)
-	  mr        r3, r31
-	  bl        -0x6910
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r30)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x10(r30)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x14(r30)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x14(r30)
-	  lfs       f0, 0x10(r30)
-	  lfs       f1, -0x68D0(r2)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x84
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x6
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x13C
+	piki->setSpeed(mSpeedRatio, mMoveDirection);
+	mSurvivalTimer -= gsys->getFrameTime();
+	mChangeDirectionTimer -= gsys->getFrameTime();
+	if (mSurvivalTimer < 0.0f) {
+		transit(piki, PIKISTATE_Dying);
+		return;
+	}
 
-	.loc_0x84:
-	  lfs       f0, 0x14(r30)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x13C
-	  bl        0x14585C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x3C(r1)
-	  lis       r31, 0x4330
-	  lfs       f2, -0x68E4(r2)
-	  stw       r31, 0x38(r1)
-	  lfs       f0, -0x68E8(r2)
-	  lfd       f3, 0x38(r1)
-	  lfs       f1, -0x6890(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r30)
-	  bl        0x14581C
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x68D8(r2)
-	  stw       r0, 0x34(r1)
-	  lfs       f5, -0x68E4(r2)
-	  stw       r31, 0x30(r1)
-	  lfs       f4, -0x68E8(r2)
-	  lfd       f0, 0x30(r1)
-	  lfs       f1, -0x6884(r2)
-	  fsubs     f6, f0, f2
-	  lfs       f0, -0x6880(r2)
-	  lfs       f2, -0x68C8(r2)
-	  lfs       f3, 0x18(r30)
-	  fdivs     f5, f6, f5
-	  fmuls     f4, f4, f5
-	  fmuls     f1, f1, f4
-	  fdivs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x18(r30)
-	  lfs       f1, 0x18(r30)
-	  bl        -0x9A320
-	  stfs      f1, 0x18(r30)
-	  lfs       f1, 0x1C(r30)
-	  lfs       f0, -0x687C(r2)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x1C(r30)
-
-	.loc_0x13C:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	if (mChangeDirectionTimer < 0.0f) {
+		mChangeDirectionTimer = randFloat(0.2f) + 0.2f;
+		mMoveDirection += randFloat(45.0f) / 180.0f * PI;
+		mMoveDirection = roundAng(mMoveDirection);
+		mSpeedRatio *= 0.99f;
+	}
 }
 
 /*
@@ -2875,7 +1556,7 @@ void PikiFiredState::exec(Piki*)
  * Address:	800D28D8
  * Size:	000004
  */
-void PikiFiredState::cleanup(Piki*)
+void PikiFiredState::cleanup(Piki* piki)
 {
 }
 
@@ -2887,29 +1568,6 @@ void PikiFiredState::cleanup(Piki*)
 PikiSwallowedState::PikiSwallowedState()
     : PikiState(PIKISTATE_Swallowed, "SWALLOWED")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x8
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r4, 0x5DC4
-	  subi      r5, r5, 0x7318
-	  stw       r0, 0x0(r3)
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x6318
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -2917,15 +1575,10 @@ PikiSwallowedState::PikiSwallowedState()
  * Address:	800D292C
  * Size:	000010
  */
-void PikiSwallowedState::init(Piki*)
+void PikiSwallowedState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r4)
-	  ori       r0, r0, 0x800
-	  stw       r0, 0xC8(r4)
-	  blr
-	*/
+	PRINT("swallowed init **** \n");
+	piki->stopAI();
 }
 
 /*
@@ -2933,82 +1586,21 @@ void PikiSwallowedState::init(Piki*)
  * Address:	800D293C
  * Size:	000104
  */
-void PikiSwallowedState::exec(Piki*)
+void PikiSwallowedState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  lwz       r0, 0xC8(r4)
-	  rlwinm.   r0,r0,0,16,16
-	  bne-      .loc_0xA4
-	  lwz       r3, 0x4F8(r31)
-	  lbz       r0, 0x19(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x84
-	  lwz       r3, 0x4F8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x84
-	  lwz       r3, 0x4F8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
+	if (!piki->isStickToMouth()) {
+		PRINT(" piki wa TASUKATTA !\n"); // 'piki was HELPED'
+		if (piki->mActiveAction->mIsSuspended && piki->isAlive() && piki->mActiveAction->resumable()) {
+			piki->mActiveAction->restart();
+		}
+		transit(piki, PIKISTATE_Normal);
+		return;
+	}
 
-	.loc_0x84:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xEC
-
-	.loc_0xA4:
-	  lwz       r3, 0x184(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xEC
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xEC
-	  mr        r3, r31
-	  bl        -0x429EC
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xEC:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (piki->getStickObject() && !piki->getStickObject()->isAlive()) {
+		piki->endStickMouth();
+		transit(piki, PIKISTATE_Normal);
+	}
 }
 
 /*
@@ -3016,17 +1608,10 @@ void PikiSwallowedState::exec(Piki*)
  * Address:	800D2A40
  * Size:	000018
  */
-void PikiSwallowedState::cleanup(Piki*)
+void PikiSwallowedState::cleanup(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x4A4(r4)
-	  lwz       r0, 0xC8(r4)
-	  rlwinm    r0,r0,0,21,19
-	  stw       r0, 0xC8(r4)
-	  blr
-	*/
+	piki->mSwallowMouthPart = nullptr;
+	piki->restartAI();
 }
 
 /*
@@ -3037,28 +1622,6 @@ void PikiSwallowedState::cleanup(Piki*)
 PikiBulletState::PikiBulletState()
     : PikiState(PIKISTATE_Bullet, "BULLET")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1B
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3F14
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x63B4
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -3066,39 +1629,10 @@ PikiBulletState::PikiBulletState()
  * Address:	800D2AA4
  * Size:	000070
  */
-void PikiBulletState::init(Piki*)
+void PikiBulletState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r4, 0
-	  li        r4, 0x22
-	  stw       r29, 0x24(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r1, 0x10
-	  bl        0x4C48C
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x22
-	  bl        0x4C47C
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0
-	  bl        -0x8114
-	  lfs       f0, -0x68D0(r2)
-	  stfs      f0, 0x10(r29)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	piki->startMotion(PaniMotionInfo(PIKIANIM_RollJmp), PaniMotionInfo(PIKIANIM_RollJmp));
+	_10 = 0.0f;
 }
 
 /*
@@ -3106,289 +1640,36 @@ void PikiBulletState::init(Piki*)
  * Address:	800D2B14
  * Size:	0003F0
  */
-void PikiBulletState::exec(Piki*)
+void PikiBulletState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xE8(r1)
-	  stfd      f31, 0xE0(r1)
-	  stfd      f30, 0xD8(r1)
-	  stfd      f29, 0xD0(r1)
-	  stfd      f28, 0xC8(r1)
-	  stmw      r27, 0xB4(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  lwz       r28, 0x3160(r13)
-	  lwz       r12, 0x0(r28)
-	  addi      r3, r28, 0
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f29, -0x68D0(r2)
-	  mr        r27, r3
-	  lfd       f30, -0x68A8(r2)
-	  lfd       f31, -0x68A0(r2)
-	  lfs       f28, -0x6888(r2)
-	  b         .loc_0x1F0
+	Iterator iter(tekiMgr);
+	CI_LOOP(iter)
+	{
+		Creature* teki = *iter;
+		if (teki->isAlive() && teki->isVisible() && !teki->isFlying()) {
+			Vector3f dir = teki->mPosition - piki->mPosition;
+			f32 dist     = dir.length();
+			if (dist < 100.0f) {
+				piki->mActiveAction->abandon(nullptr);
+				piki->mActiveAction->mCurrActionIdx = PikiAction::Attack;
+				piki->mActiveAction->mChildActions[piki->mActiveAction->mCurrActionIdx].initialise(teki);
+				piki->mMode = PikiMode::AttackMode;
+				transit(piki, PIKISTATE_Normal);
+				return;
+			}
+		}
+	}
 
-	.loc_0x58:
-	  cmpwi     r27, -0x1
-	  bne-      .loc_0x80
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-	  b         .loc_0x9C
+	_10 += piki->mVelocity.length() * gsys->getFrameTime();
 
-	.loc_0x80:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
+	if (_10 > 300.0f) {
+		piki->changeMode(PikiMode::FormationMode, piki->mNavi);
+		transit(piki, PIKISTATE_Normal);
+		return;
+	}
 
-	.loc_0x9C:
-	  lwz       r12, 0x0(r29)
-	  mr        r3, r29
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1D4
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1D4
-	  lwz       r0, 0xC8(r29)
-	  rlwinm.   r0,r0,0,25,25
-	  bne-      .loc_0x1D4
-	  lfs       f3, 0x98(r29)
-	  lfs       f2, 0x98(r31)
-	  lfs       f1, 0x94(r29)
-	  lfs       f0, 0x94(r31)
-	  fsubs     f3, f3, f2
-	  lfs       f2, 0x9C(r29)
-	  fsubs     f4, f1, f0
-	  lfs       f1, 0x9C(r31)
-	  fmuls     f0, f3, f3
-	  fsubs     f2, f2, f1
-	  fmuls     f1, f4, f4
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f2, f2, f0
-	  fcmpo     cr0, f2, f29
-	  ble-      .loc_0x170
-	  fsqrte    f1, f2
-	  fmul      f0, f1, f1
-	  fmul      f1, f30, f1
-	  fmul      f0, f2, f0
-	  fsub      f0, f31, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f30, f1
-	  fmul      f0, f2, f0
-	  fsub      f0, f31, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f30, f1
-	  fmul      f0, f2, f0
-	  fsub      f0, f31, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f2, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x68(r1)
-	  lfs       f2, 0x68(r1)
-
-	.loc_0x170:
-	  fcmpo     cr0, f2, f28
-	  bge-      .loc_0x1D4
-	  lwz       r3, 0x4F8(r31)
-	  li        r4, 0
-	  bl        -0xD950
-	  lwz       r3, 0x4F8(r31)
-	  li        r0, 0x8
-	  addi      r4, r29, 0
-	  sth       r0, 0x8(r3)
-	  lwz       r3, 0x4F8(r31)
-	  lha       r0, 0x8(r3)
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r0,3,0,28
-	  add       r3, r3, r0
-	  bl        -0xEF98
-	  li        r0, 0x2
-	  sth       r0, 0x4FC(r31)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  lwz       r12, 0x0(r30)
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x3CC
-
-	.loc_0x1D4:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r27, r3
-
-	.loc_0x1F0:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x218
-	  li        r0, 0x1
-	  b         .loc_0x244
-
-	.loc_0x218:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r27
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x240
-	  li        r0, 0x1
-	  b         .loc_0x244
-
-	.loc_0x240:
-	  li        r0, 0
-
-	.loc_0x244:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x58
-	  lfs       f1, 0x70(r31)
-	  lfs       f0, 0x74(r31)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x78(r31)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x68D0(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x2D0
-	  fsqrte    f1, f4
-	  lfd       f3, -0x68A8(r2)
-	  lfd       f2, -0x68A0(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x60(r1)
-	  lfs       f4, 0x60(r1)
-
-	.loc_0x2D0:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r30)
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f0, f4, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x10(r30)
-	  lfs       f1, 0x10(r30)
-	  lfs       f0, -0x6878(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x328
-	  lwz       r5, 0x504(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x5C4C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x3CC
-
-	.loc_0x328:
-	  lfs       f1, 0x70(r31)
-	  lfs       f0, 0x74(r31)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x78(r31)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xC521C
-	  lfs       f0, -0x68D0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x37C
-	  lfs       f0, 0x70(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x70(r31)
-	  lfs       f0, 0x74(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x74(r31)
-	  lfs       f0, 0x78(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x78(r31)
-
-	.loc_0x37C:
-	  mr        r3, r31
-	  lfs       f1, -0x68E8(r2)
-	  bl        -0x7134
-	  lfs       f0, 0x70(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x50(r1)
-	  lfs       f0, 0x50(r1)
-	  stfs      f0, 0x7C(r1)
-	  lfs       f0, 0x74(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x80(r1)
-	  lfs       f0, 0x78(r31)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x84(r1)
-	  lwz       r3, 0x7C(r1)
-	  lwz       r0, 0x80(r1)
-	  stw       r3, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0x84(r1)
-	  stw       r0, 0x78(r31)
-
-	.loc_0x3CC:
-	  lmw       r27, 0xB4(r1)
-	  lwz       r0, 0xEC(r1)
-	  lfd       f31, 0xE0(r1)
-	  lfd       f30, 0xD8(r1)
-	  lfd       f29, 0xD0(r1)
-	  lfd       f28, 0xC8(r1)
-	  addi      r1, r1, 0xE8
-	  mtlr      r0
-	  blr
-	*/
+	piki->mVelocity.normalise();
+	piki->mVelocity = piki->getSpeed(1.0f) * piki->mVelocity;
 }
 
 /*
@@ -3396,35 +1677,10 @@ void PikiBulletState::exec(Piki*)
  * Address:	800D2F04
  * Size:	000060
  */
-void PikiBulletState::procWallMsg(Piki*, MsgWall*)
+void PikiBulletState::procWallMsg(Piki* piki, MsgWall*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r5, 0x504(r4)
-	  li        r4, 0x1
-	  bl        -0x5D60
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	piki->changeMode(PikiMode::FormationMode, piki->mNavi);
+	transit(piki, PIKISTATE_Normal);
 }
 
 /*
@@ -3432,7 +1688,7 @@ void PikiBulletState::procWallMsg(Piki*, MsgWall*)
  * Address:	800D2F64
  * Size:	000004
  */
-void PikiBulletState::cleanup(Piki*)
+void PikiBulletState::cleanup(Piki* piki)
 {
 }
 
@@ -3444,28 +1700,6 @@ void PikiBulletState::cleanup(Piki*)
 PikiFlickState::PikiFlickState()
     : PikiState(PIKISTATE_Flick, "FLICK")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x16
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3F0C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x644C
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -3473,103 +1707,15 @@ PikiFlickState::PikiFlickState()
  * Address:	800D2FB4
  * Size:	000168
  */
-void PikiFlickState::init(Piki*)
+void PikiFlickState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x4C(r1)
-	  mr        r29, r4
-	  sth       r0, 0x10(r3)
-	  lfs       f0, 0x49C(r4)
-	  stfs      f0, 0x18(r3)
-	  bl        0x14508C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x44(r1)
-	  lis       r31, 0x4330
-	  lfs       f3, -0x68E4(r2)
-	  stw       r31, 0x40(r1)
-	  lfs       f2, -0x68E8(r2)
-	  lfd       f1, 0x40(r1)
-	  lfs       f0, -0x68C8(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x68CC(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x1C(r30)
-	  bl        0x145048
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x3C(r1)
-	  lfs       f3, -0x68E4(r2)
-	  stw       r31, 0x38(r1)
-	  lfs       f2, -0x68E8(r2)
-	  lfd       f1, 0x38(r1)
-	  lfs       f0, -0x688C(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x6888(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x74(r29)
-	  bl        0x145008
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x68D8(r2)
-	  stw       r0, 0x34(r1)
-	  lfs       f2, -0x68E4(r2)
-	  stw       r31, 0x30(r1)
-	  lfs       f1, -0x68E8(r2)
-	  lfd       f0, 0x30(r1)
-	  lfs       f4, 0x498(r29)
-	  fsubs     f3, f0, f3
-	  lfs       f0, -0x68CC(r2)
-	  fmuls     f0, f0, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fadds     f0, f4, f0
-	  stfs      f0, 0x20(r30)
-	  lwz       r3, 0x4F8(r29)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x54(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x11C
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x11C:
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x1F
-	  bl        0x4BE80
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x24
-	  li        r4, 0x1F
-	  bl        0x4BEA0
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x8724
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	_10               = 0;
+	_18               = piki->mRotationAngle;
+	_1C               = 0.1f * randFloat(PI);
+	piki->mVelocity.y = randFloat(50.0f) + 100.0f;
+	_20               = piki->mFlickIntensity * 0.1f * unitRandFloat() + piki->mFlickIntensity;
+	piki->mActiveAction->resume();
+	piki->startMotion(PaniMotionInfo(PIKIANIM_JHit, piki), PaniMotionInfo(PIKIANIM_JHit));
 }
 
 /*
@@ -3577,127 +1723,36 @@ void PikiFlickState::init(Piki*)
  * Address:	800D311C
  * Size:	0001A0
  */
-void PikiFlickState::exec(Piki*)
+void PikiFlickState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x40(r1)
-	  mr        r28, r3
-	  lhz       r0, 0x10(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x74
-	  lfs       f31, 0x20(r28)
-	  lfs       f1, 0x18(r28)
-	  bl        0x148B90
-	  fneg      f31, f31
-	  fmuls     f0, f31, f1
-	  stfs      f0, 0x70(r29)
-	  lfs       f1, 0x18(r28)
-	  bl        0x1489E8
-	  fmuls     f0, f31, f1
-	  stfs      f0, 0x78(r29)
-	  lfs       f1, 0xA0(r29)
-	  lfs       f0, 0x1C(r28)
-	  fadds     f1, f1, f0
-	  bl        -0x9ABFC
-	  stfs      f1, 0xA0(r29)
-	  b         .loc_0x17C
+	PaniAnimator& upper = piki->mPikiAnimMgr.getUpperAnimator();
+	if (upper.getCurrentMotionIndex() == PIKIANIM_Kuttuku) {
+		PRINT("piki %x motion KENKA!\n", piki);
+	}
 
-	.loc_0x74:
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x148
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x14(r28)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x14(r28)
-	  lfs       f1, 0x14(r28)
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f1, f0
-	  blt-      .loc_0xAC
-	  lbz       r0, 0x4A0(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x110
+	if (_10 == 0) {
+		f32 rad              = _20;
+		piki->mVelocity.x    = -rad * sinf(_18);
+		piki->mVelocity.z    = -rad * cosf(_18);
+		piki->mFaceDirection = roundAng(piki->mFaceDirection + _1C);
+		return;
+	}
 
-	.loc_0xAC:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x110
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0xD8
-	  addi      r30, r30, 0x2B8
+	if (_10 == 2) {
+		_14 -= gsys->getFrameTime();
+		if ((_14 < 0.0f || piki->mIsWhistlePending) && piki->isAlive()) {
+			piki->startMotion(PaniMotionInfo(PIKIANIM_GetUp, piki), PaniMotionInfo(PIKIANIM_GetUp));
+			_10 = 3;
+		}
+		piki->mVelocity.x = 0.9f * piki->mVelocity.x;
+		piki->mVelocity.z = 0.9f * piki->mVelocity.z;
+		piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		return;
+	}
 
-	.loc_0xD8:
-	  addi      r3, r1, 0x2C
-	  li        r4, 0x20
-	  bl        0x4BD5C
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x34
-	  li        r4, 0x20
-	  bl        0x4BD7C
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x8848
-	  li        r0, 0x3
-	  sth       r0, 0x10(r28)
-
-	.loc_0x110:
-	  lfs       f1, -0x6874(r2)
-	  lfs       f0, 0x70(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x70(r29)
-	  lfs       f0, 0x78(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x78(r29)
-	  lfs       f0, -0x3F04(r13)
-	  stfs      f0, 0xA4(r29)
-	  lfs       f0, -0x3F00(r13)
-	  stfs      f0, 0xA8(r29)
-	  lfs       f0, -0x3EFC(r13)
-	  stfs      f0, 0xAC(r29)
-	  b         .loc_0x17C
-
-	.loc_0x148:
-	  lfs       f1, -0x6874(r2)
-	  lfs       f0, 0x70(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x70(r29)
-	  lfs       f0, 0x78(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x78(r29)
-	  lfs       f0, -0x3EF8(r13)
-	  stfs      f0, 0xA4(r29)
-	  lfs       f0, -0x3EF4(r13)
-	  stfs      f0, 0xA8(r29)
-	  lfs       f0, -0x3EF0(r13)
-	  stfs      f0, 0xAC(r29)
-
-	.loc_0x17C:
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  lwz       r28, 0x40(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	piki->mVelocity.x = 0.9f * piki->mVelocity.x;
+	piki->mVelocity.z = 0.9f * piki->mVelocity.z;
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -3705,192 +1760,48 @@ void PikiFlickState::exec(Piki*)
  * Address:	800D32BC
  * Size:	000294
  */
-void PikiFlickState::procAnimMsg(Piki*, MsgAnim*)
+void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stfd      f31, 0x70(r1)
-	  stfd      f30, 0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x60(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x5C(r1)
-	  stw       r28, 0x58(r1)
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x40
-	  b         .loc_0x26C
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_Finished:
+		if (_10 == 0) {
+			piki->startMotion(PaniMotionInfo(PIKIANIM_JKoke, piki), PaniMotionInfo(PIKIANIM_JKoke));
+			_10 = 1;
+			break;
+		}
+		if (_10 == 1) {
+			_10     = 2;
+			f32 min = C_PIKI_PROP(piki)._32C();
+			f32 max = C_PIKI_PROP(piki)._31C();
+			_14     = (max - min) * unitRandFloat() + min;
+			if (piki->mHealth <= 0.0f) {
+				PRINT("piki died !\n");
+				transit(piki, PIKISTATE_Dead);
+			}
+			break;
+		}
 
-	.loc_0x40:
-	  lhz       r0, 0x10(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x98
-	  cmplwi    r31, 0
-	  addi      r28, r31, 0
-	  beq-      .loc_0x5C
-	  addi      r28, r28, 0x2B8
+		PRINT("done\n");
+		if (unitRandFloat() < 0.25f && piki->mHappa >= Bud) {
+			piki->mHappa--;
+			piki->setFlower(piki->mHappa);
+			zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Piki_DeflowerPetals, piki->mEffectPos, nullptr, nullptr);
+			if (ptclGen) {
+				ptclGen->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+			}
+			effectMgr->create(EffectMgr::EFF_Piki_DeflowerSpores, piki->mEffectPos, nullptr, nullptr);
+		}
 
-	.loc_0x5C:
-	  addi      r3, r1, 0x3C
-	  li        r4, 0x1E
-	  bl        0x4BC38
-	  addi      r29, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x44
-	  li        r4, 0x1E
-	  bl        0x4BC58
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0x896C
-	  li        r0, 0x1
-	  sth       r0, 0x10(r30)
-	  b         .loc_0x26C
+		if (piki->isKinoko()) {
+			piki->mActiveAction->abandon(nullptr);
+			piki->changeMode(PikiMode::FormationMode, piki->mNavi);
+			transit(piki, PIKISTATE_KinokoChange);
+			break;
+		}
 
-	.loc_0x98:
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x128
-	  li        r0, 0x2
-	  sth       r0, 0x10(r30)
-	  lwz       r4, 0x224(r31)
-	  lfs       f30, 0x328(r4)
-	  lfs       f31, 0x338(r4)
-	  bl        0x144D00
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x54(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x68E4(r2)
-	  fsubs     f0, f30, f31
-	  stw       r0, 0x50(r1)
-	  lfs       f1, -0x68E8(r2)
-	  lfd       f3, 0x50(r1)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fadds     f0, f31, f0
-	  stfs      f0, 0x14(r30)
-	  lfs       f1, 0x58(r31)
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x26C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x7
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x26C
-
-	.loc_0x128:
-	  bl        0x144C8C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x54(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x68E4(r2)
-	  stw       r0, 0x50(r1)
-	  lfs       f1, -0x68E8(r2)
-	  lfd       f3, 0x50(r1)
-	  lfs       f0, -0x6870(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x1F8
-	  lwz       r3, 0x520(r31)
-	  cmpwi     r3, 0x1
-	  blt-      .loc_0x1F8
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x520(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r4, 0x520(r31)
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x464
-	  li        r4, 0x1B
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xC96D8
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1E0
-	  lfs       f0, -0x3EEC(r13)
-	  lfs       f1, -0x3EE8(r13)
-	  stfs      f0, 0x30(r1)
-	  lfs       f0, -0x3EE4(r13)
-	  stfs      f1, 0x34(r1)
-	  stfs      f0, 0x38(r1)
-	  lwz       r4, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x38(r1)
-	  stw       r0, 0x1E4(r3)
-
-	.loc_0x1E0:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x464
-	  li        r4, 0x1C
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xC9688
-
-	.loc_0x1F8:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x250
-	  lwz       r3, 0x4F8(r31)
-	  li        r4, 0
-	  bl        -0xE194
-	  lwz       r5, 0x504(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x631C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x1D
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x26C
-
-	.loc_0x250:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x26C:
-	  lwz       r0, 0x7C(r1)
-	  lfd       f31, 0x70(r1)
-	  lfd       f30, 0x68(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  lwz       r29, 0x5C(r1)
-	  lwz       r28, 0x58(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+		transit(piki, PIKISTATE_Normal);
+		break;
+	}
 }
 
 /*
@@ -3898,79 +1809,29 @@ void PikiFlickState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D3550
  * Size:	0000F8
  */
-void PikiFlickState::cleanup(Piki*)
+void PikiFlickState::cleanup(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xE4
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,16,16
-	  bne-      .loc_0xE4
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x88
-	  lbz       r0, 0x4A0(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x88
-	  lwz       r5, 0x504(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x63F4
-	  mr        r3, r31
-	  bl        -0x42D50
-	  li        r0, 0
-	  stb       r0, 0x4A0(r31)
-	  b         .loc_0xE4
+	PRINT("** flick cleanup %x\n", piki);
+	if (piki->isKinoko()) {
+		return;
+	}
+	if (piki->isStickToMouth()) {
+		return;
+	}
 
-	.loc_0x88:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xD8
-	  lwz       r3, 0x4F8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xD8
-	  lwz       r3, 0x4F8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xE4
+	if (piki->isAlive() && piki->mIsWhistlePending) {
+		piki->changeMode(PikiMode::FormationMode, piki->mNavi);
+		piki->endStickObject();
+		piki->mIsWhistlePending = false;
+		return;
+	}
 
-	.loc_0xD8:
-	  lwz       r3, 0x4F8(r31)
-	  li        r4, 0
-	  bl        -0xE2EC
+	if (piki->isAlive() && piki->mActiveAction->resumable()) {
+		piki->mActiveAction->restart();
+		return;
+	}
 
-	.loc_0xE4:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	piki->mActiveAction->abandon(nullptr);
 }
 
 /*
@@ -3981,28 +1842,6 @@ void PikiFlickState::cleanup(Piki*)
 PikiFlownState::PikiFlownState()
     : PikiState(PIKISTATE_Flown, "FLOWN")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x19
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3EE0
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x64E4
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -4010,86 +1849,13 @@ PikiFlownState::PikiFlownState()
  * Address:	800D3694
  * Size:	000124
  */
-void PikiFlownState::init(Piki*)
+void PikiFlownState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  mr        r29, r4
-	  stw       r28, 0x38(r1)
-	  addi      r28, r3, 0
-	  sth       r0, 0x20(r3)
-	  lfs       f1, 0x70(r4)
-	  lfs       f2, 0x78(r4)
-	  bl        0x148330
-	  stfs      f1, 0x14(r28)
-	  bl        0x1449A0
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x34(r1)
-	  lis       r31, 0x4330
-	  lfs       f3, -0x68E4(r2)
-	  stw       r31, 0x30(r1)
-	  lfs       f2, -0x68E8(r2)
-	  lfd       f1, 0x30(r1)
-	  lfs       f0, -0x68C8(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x68CC(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x18(r28)
-	  bl        0x14495C
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x68D8(r2)
-	  stw       r0, 0x2C(r1)
-	  cmplwi    r29, 0
-	  lfs       f2, -0x68E4(r2)
-	  mr        r30, r29
-	  stw       r31, 0x28(r1)
-	  lfs       f1, -0x68E8(r2)
-	  lfd       f0, 0x28(r1)
-	  lfs       f4, 0x498(r29)
-	  fsubs     f3, f0, f3
-	  lfs       f0, -0x68CC(r2)
-	  fmuls     f0, f0, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fadds     f0, f4, f0
-	  stfs      f0, 0x1C(r28)
-	  beq-      .loc_0xD4
-	  addi      r30, r30, 0x2B8
-
-	.loc_0xD4:
-	  addi      r3, r1, 0x18
-	  li        r4, 0x1F
-	  bl        0x4B7E8
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x20
-	  li        r4, 0x1F
-	  bl        0x4B808
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x8DBC
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  lwz       r28, 0x38(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	_20 = 0;
+	_14 = atan2f(piki->mVelocity.x, piki->mVelocity.z);
+	_18 = 0.1f * randFloat(PI);
+	_1C = 0.1f * piki->mFlickIntensity * unitRandFloat() + piki->mFlickIntensity;
+	piki->startMotion(PaniMotionInfo(PIKIANIM_JHit, piki), PaniMotionInfo(PIKIANIM_JHit));
 }
 
 /*
@@ -4097,53 +1863,12 @@ void PikiFlownState::init(Piki*)
  * Address:	800D37B8
  * Size:	000098
  */
-void PikiFlownState::procBounceMsg(Piki*, MsgBounce*)
+void PikiFlownState::procBounceMsg(Piki* piki, MsgBounce*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x28(r1)
-	  mr        r28, r3
-	  lhz       r0, 0x20(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x78
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x40
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x40:
-	  addi      r3, r1, 0x14
-	  li        r4, 0x1E
-	  bl        0x4B758
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x1E
-	  bl        0x4B778
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x8E4C
-	  li        r0, 0x1
-	  sth       r0, 0x20(r28)
-
-	.loc_0x78:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	if (_20 == 0) {
+		piki->startMotion(PaniMotionInfo(PIKIANIM_JKoke, piki), PaniMotionInfo(PIKIANIM_JKoke));
+		_20 = 1;
+	}
 }
 
 /*
@@ -4151,115 +1876,33 @@ void PikiFlownState::procBounceMsg(Piki*, MsgBounce*)
  * Address:	800D3850
  * Size:	000170
  */
-void PikiFlownState::exec(Piki*)
+void PikiFlownState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x40(r1)
-	  mr        r28, r3
-	  lhz       r0, 0x20(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x48
-	  lfs       f1, 0xA0(r29)
-	  lfs       f0, 0x18(r28)
-	  fadds     f1, f1, f0
-	  bl        -0x9B304
-	  stfs      f1, 0xA0(r29)
-	  b         .loc_0x150
+	PaniAnimator& upper = piki->mPikiAnimMgr.getUpperAnimator();
+	if (upper.getCurrentMotionIndex() == PIKIANIM_Kuttuku) {
+		PRINT("piki %x motion KENKA!\n", piki);
+	}
 
-	.loc_0x48:
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x11C
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r28)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x10(r28)
-	  lfs       f1, 0x10(r28)
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f1, f0
-	  blt-      .loc_0x80
-	  lbz       r0, 0x4A0(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xE4
+	if (_20 == 0) {
+		piki->mFaceDirection = roundAng(piki->mFaceDirection + _18);
+		return;
+	}
 
-	.loc_0x80:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xE4
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0xAC
-	  addi      r30, r30, 0x2B8
+	if (_20 == 2) {
+		_10 -= gsys->getFrameTime();
+		if ((_10 < 0.0f || piki->mIsWhistlePending) && piki->isAlive()) {
+			piki->startMotion(PaniMotionInfo(PIKIANIM_GetUp, piki), PaniMotionInfo(PIKIANIM_GetUp));
+			_20 = 3;
+		}
+		piki->mVelocity.x = 0.9f * piki->mVelocity.x;
+		piki->mVelocity.z = 0.9f * piki->mVelocity.z;
+		piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		return;
+	}
 
-	.loc_0xAC:
-	  addi      r3, r1, 0x2C
-	  li        r4, 0x20
-	  bl        0x4B654
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x34
-	  li        r4, 0x20
-	  bl        0x4B674
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x8F50
-	  li        r0, 0x3
-	  sth       r0, 0x20(r28)
-
-	.loc_0xE4:
-	  lfs       f1, -0x6874(r2)
-	  lfs       f0, 0x70(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x70(r29)
-	  lfs       f0, 0x78(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x78(r29)
-	  lfs       f0, -0x3ED8(r13)
-	  stfs      f0, 0xA4(r29)
-	  lfs       f0, -0x3ED4(r13)
-	  stfs      f0, 0xA8(r29)
-	  lfs       f0, -0x3ED0(r13)
-	  stfs      f0, 0xAC(r29)
-	  b         .loc_0x150
-
-	.loc_0x11C:
-	  lfs       f1, -0x6874(r2)
-	  lfs       f0, 0x70(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x70(r29)
-	  lfs       f0, 0x78(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x78(r29)
-	  lfs       f0, -0x3ECC(r13)
-	  stfs      f0, 0xA4(r29)
-	  lfs       f0, -0x3EC8(r13)
-	  stfs      f0, 0xA8(r29)
-	  lfs       f0, -0x3EC4(r13)
-	  stfs      f0, 0xAC(r29)
-
-	.loc_0x150:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  lwz       r28, 0x40(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	piki->mVelocity.x = 0.9f * piki->mVelocity.x;
+	piki->mVelocity.z = 0.9f * piki->mVelocity.z;
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -4267,163 +1910,43 @@ void PikiFlownState::exec(Piki*)
  * Address:	800D39C0
  * Size:	000230
  */
-void PikiFlownState::procAnimMsg(Piki*, MsgAnim*)
+void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stfd      f31, 0x58(r1)
-	  stfd      f30, 0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x48(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x38
-	  b         .loc_0x210
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_Finished:
+		if (_20 == 1) {
+			_20     = 2;
+			f32 min = C_PIKI_PROP(piki)._32C();
+			f32 max = C_PIKI_PROP(piki)._31C();
+			_10     = (max - min) * unitRandFloat() + min;
+			if (piki->mHealth <= 0.0f) {
+				PRINT("piki died !\n");
+				transit(piki, PIKISTATE_Dead);
+			}
+			break;
+		}
 
-	.loc_0x38:
-	  lhz       r0, 0x20(r30)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0xCC
-	  li        r0, 0x2
-	  sth       r0, 0x20(r30)
-	  lwz       r4, 0x224(r31)
-	  lfs       f30, 0x328(r4)
-	  lfs       f31, 0x338(r4)
-	  bl        0x144658
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x44(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x68E4(r2)
-	  fsubs     f0, f30, f31
-	  stw       r0, 0x40(r1)
-	  lfs       f1, -0x68E8(r2)
-	  lfd       f3, 0x40(r1)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fadds     f0, f31, f0
-	  stfs      f0, 0x10(r30)
-	  lfs       f1, 0x58(r31)
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x210
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x7
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x210
+		PRINT("done\n");
+		if (unitRandFloat() < 0.25f && piki->mHappa >= Bud) {
+			piki->mHappa--;
+			piki->setFlower(piki->mHappa);
+			zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Piki_DeflowerPetals, piki->mEffectPos, nullptr, nullptr);
+			if (ptclGen) {
+				ptclGen->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+			}
+			effectMgr->create(EffectMgr::EFF_Piki_DeflowerSpores, piki->mEffectPos, nullptr, nullptr);
+		}
 
-	.loc_0xCC:
-	  bl        0x1445E4
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x44(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x68E4(r2)
-	  stw       r0, 0x40(r1)
-	  lfs       f1, -0x68E8(r2)
-	  lfd       f3, 0x40(r1)
-	  lfs       f0, -0x6870(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x19C
-	  lwz       r3, 0x520(r31)
-	  cmpwi     r3, 0x1
-	  blt-      .loc_0x19C
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x520(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r4, 0x520(r31)
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x464
-	  li        r4, 0x1B
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xC9030
-	  cmplwi    r3, 0
-	  beq-      .loc_0x184
-	  lfs       f0, -0x3EC0(r13)
-	  lfs       f1, -0x3EBC(r13)
-	  stfs      f0, 0x30(r1)
-	  lfs       f0, -0x3EB8(r13)
-	  stfs      f1, 0x34(r1)
-	  stfs      f0, 0x38(r1)
-	  lwz       r4, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x38(r1)
-	  stw       r0, 0x1E4(r3)
+		if (piki->isKinoko()) {
+			piki->mActiveAction->abandon(nullptr);
+			piki->changeMode(PikiMode::FormationMode, piki->mNavi);
+			transit(piki, PIKISTATE_KinokoChange);
+			break;
+		}
 
-	.loc_0x184:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x464
-	  li        r4, 0x1C
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xC8FE0
-
-	.loc_0x19C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1F4
-	  lwz       r3, 0x4F8(r31)
-	  li        r4, 0
-	  bl        -0xE83C
-	  lwz       r5, 0x504(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x69C4
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x1D
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x210
-
-	.loc_0x1F4:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x210:
-	  lwz       r0, 0x64(r1)
-	  lfd       f31, 0x58(r1)
-	  lfd       f30, 0x50(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+		transit(piki, PIKISTATE_Normal);
+		break;
+	}
 }
 
 /*
@@ -4431,55 +1954,22 @@ void PikiFlownState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D3BF0
  * Size:	0000A0
  */
-void PikiFlownState::cleanup(Piki*)
+void PikiFlownState::cleanup(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x8C
-	  lwz       r0, 0xC8(r31)
-	  rlwinm.   r0,r0,0,16,16
-	  bne-      .loc_0x8C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x80
-	  lbz       r0, 0x4A0(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x80
-	  lwz       r5, 0x504(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x6A94
-	  li        r0, 0
-	  stb       r0, 0x4A0(r31)
-	  b         .loc_0x8C
+	if (piki->isKinoko()) {
+		return;
+	}
+	if (piki->isStickToMouth()) {
+		return;
+	}
 
-	.loc_0x80:
-	  lwz       r3, 0x4F8(r31)
-	  li        r4, 0
-	  bl        -0xE934
+	if (piki->isAlive() && piki->mIsWhistlePending) {
+		piki->changeMode(PikiMode::FormationMode, piki->mNavi);
+		piki->mIsWhistlePending = false;
+		return;
+	}
 
-	.loc_0x8C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	piki->mActiveAction->abandon(nullptr);
 }
 
 /*
@@ -4490,29 +1980,6 @@ void PikiFlownState::cleanup(Piki*)
 PikiFallMeckState::PikiFallMeckState()
     : PikiState(PIKISTATE_FallMeck, "FALLMECK")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1E
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r4, 0x5DC4
-	  subi      r5, r5, 0x730C
-	  stw       r0, 0x0(r3)
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x657C
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -4520,46 +1987,12 @@ PikiFallMeckState::PikiFallMeckState()
  * Address:	800D3CE0
  * Size:	000084
  */
-void PikiFallMeckState::init(Piki*)
+void PikiFallMeckState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr.       r29, r4
-	  addi      r30, r29, 0
-	  beq-      .loc_0x28
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x28:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x1D
-	  bl        0x4B248
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x1D
-	  bl        0x4B268
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x935C
-	  mr        r3, r29
-	  bl        -0x43D20
-	  li        r0, 0
-	  stw       r0, 0x4A4(r29)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("--- fall start\n");
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Fall, piki), PaniMotionInfo(PIKIANIM_Fall));
+	piki->endStickMouth();
+	piki->mSwallowMouthPart = nullptr;
 }
 
 /*
@@ -4567,7 +2000,7 @@ void PikiFallMeckState::init(Piki*)
  * Address:	800D3D64
  * Size:	000004
  */
-void PikiFallMeckState::exec(Piki*)
+void PikiFallMeckState::exec(Piki* piki)
 {
 }
 
@@ -4576,179 +2009,51 @@ void PikiFallMeckState::exec(Piki*)
  * Address:	800D3D68
  * Size:	000288
  */
-void PikiFallMeckState::procBounceMsg(Piki*, MsgBounce*)
+void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stfd      f31, 0x60(r1)
-	  stfd      f30, 0x58(r1)
-	  stmw      r27, 0x44(r1)
-	  mr        r28, r4
-	  addi      r27, r3, 0
-	  li        r30, -0x1
-	  lwz       r0, 0x28C(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3C
-	  mr        r3, r0
-	  bl        0x422E4
-	  mr        r30, r3
+	int attr = ATTR_NULL;
+	if (piki->mFloorTri) {
+		attr = MapCode::getAttribute(piki->mFloorTri);
+	}
 
-	.loc_0x3C:
-	  mr        r3, r28
-	  bl        -0xBF38
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x1D8
-	  addi      r3, r28, 0x94
-	  bl        -0xD860
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1D8
-	  lwz       r3, 0x28C(r28)
-	  bl        0x422E0
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x1D8
-	  cmpwi     r30, 0x5
-	  beq-      .loc_0x1D8
-	  li        r30, 0x1
-	  lwz       r3, 0x30AC(r13)
-	  stb       r30, 0x30A8(r13)
-	  li        r4, 0xF
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x78(r12)
-	  mtlr      r12
-	  blrl
-	  li        r31, 0
-	  mr.       r29, r3
-	  stb       r31, 0x30A8(r13)
-	  beq-      .loc_0x1D8
-	  lfs       f0, 0x94(r28)
-	  li        r4, 0x1
-	  stfs      f0, 0x2C(r1)
-	  lfs       f0, 0x98(r28)
-	  stfs      f0, 0x30(r1)
-	  lfs       f0, 0x9C(r28)
-	  stfs      f0, 0x34(r1)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x2C(r1)
-	  lfs       f2, 0x34(r1)
-	  bl        -0x6BF30
-	  stfs      f1, 0x30(r1)
-	  addi      r5, r1, 0x2C
-	  li        r4, 0x32
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xC8CE8
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x2C
-	  li        r4, 0x33
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xC8CD0
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  addi      r4, r1, 0x2C
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lhz       r4, 0x510(r28)
-	  bl        0x18C14
-	  bl        0x1441E0
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x3C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x68E4(r2)
-	  stw       r0, 0x38(r1)
-	  lfs       f2, -0x68E8(r2)
-	  lfd       f1, 0x38(r1)
-	  lfs       f0, -0x68C8(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x68C0(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fmuls     f30, f1, f0
-	  fmr       f1, f30
-	  bl        0x147C80
-	  lfs       f0, -0x686C(r2)
-	  fmuls     f31, f0, f1
-	  fmr       f1, f30
-	  bl        0x147E04
-	  lfs       f0, -0x686C(r2)
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x70(r29)
-	  lfs       f0, -0x3EB4(r13)
-	  stfs      f0, 0x74(r29)
-	  stfs      f31, 0x78(r29)
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r31, 0x3E0(r29)
-	  addi      r4, r29, 0
-	  li        r5, 0x5
-	  lwz       r3, 0x2E8(r29)
-	  bl        -0x567D0
-	  stb       r30, 0x584(r28)
-	  addi      r3, r28, 0
-	  li        r4, 0x1
-	  bl        -0x49258
-	  b         .loc_0x26C
+	if (!piki->hasBomb() && Piki::isSafeMePos(piki->mPosition) && !MapCode::isBald(piki->mFloorTri) && attr != ATTR_Water) {
+		PikiHeadMgr::buryMode = 1;
+		PikiHeadItem* sprout  = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
+		PikiHeadMgr::buryMode = 0;
 
-	.loc_0x1D8:
-	  mr        r3, r27
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r28, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  bl        -0xC0F0
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x26C
-	  lwz       r30, 0x2AC(r28)
-	  mr        r3, r30
-	  bl        -0x495A0
-	  lwz       r0, 0x6C(r30)
-	  cmpwi     r0, 0xE
-	  bne-      .loc_0x26C
-	  lwz       r12, 0x0(r30)
-	  mr        r3, r30
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x26C
-	  li        r0, 0xA
-	  stw       r0, 0x20(r1)
-	  li        r0, 0x1
-	  addi      r4, r30, 0
-	  stw       r0, 0x24(r1)
-	  addi      r5, r1, 0x20
-	  stw       r0, 0x2D0(r30)
-	  lwz       r3, 0x2E8(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
+		if (sprout) {
+			Vector3f pos(piki->mPosition);
+			pos.y = mapMgr->getMinY(pos.x, pos.z, true);
+			effectMgr->create(EffectMgr::EFF_SD_DirtCloud, pos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_SD_DirtSpray, pos, nullptr, nullptr);
+			sprout->init(pos);
+			sprout->setColor(piki->mColor);
+			f32 randAngle = 2.0f * randFloat(PI);
+			sprout->mVelocity.set(220.0f * sinf(randAngle), 540.0f, 220.0f * cosf(randAngle));
+			sprout->startAI(0);
+			sprout->_3E0 = nullptr;
+			C_SAI(sprout)->start(sprout, 5);
+			piki->setEraseKill();
+			piki->kill(true);
+			u32 badCompiler;
+			return;
+		}
+	}
 
-	.loc_0x26C:
-	  lmw       r27, 0x44(r1)
-	  lwz       r0, 0x6C(r1)
-	  lfd       f31, 0x60(r1)
-	  lfd       f30, 0x58(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	transit(piki, PIKISTATE_Normal);
+	if (piki->hasBomb()) {
+		Creature* held = piki->getHoldCreature();
+		held->resetStateGrabbed();
+		if (held->mObjType == OBJTYPE_Bomb) {
+			AICreature* ai = (AICreature*)held;
+			if (ai->getCurrState()->getID() != 1) {
+				MsgUser msg(1);
+				BombItem* bomb = (BombItem*)held;
+				bomb->_2D0     = 1;
+				C_SAI(bomb)->procMsg(bomb, &msg);
+			}
+		}
+	}
 }
 
 /*
@@ -4756,7 +2061,7 @@ void PikiFallMeckState::procBounceMsg(Piki*, MsgBounce*)
  * Address:	800D3FF0
  * Size:	000004
  */
-void PikiFallMeckState::cleanup(Piki*)
+void PikiFallMeckState::cleanup(Piki* piki)
 {
 }
 
@@ -4768,28 +2073,6 @@ void PikiFallMeckState::cleanup(Piki*)
 PikiFallState::PikiFallState()
     : PikiState(PIKISTATE_Fall, "FALL")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x11
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3EB0
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6618
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -4797,47 +2080,11 @@ PikiFallState::PikiFallState()
  * Address:	800D4040
  * Size:	000088
  */
-void PikiFallState::init(Piki*)
+void PikiFallState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr.       r29, r4
-	  stw       r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x30
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x30:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x1D
-	  bl        0x4AEE0
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x1D
-	  bl        0x4AF00
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x96C4
-	  li        r0, 0
-	  stw       r0, 0x10(r28)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("--- fall start\n");
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Fall, piki), PaniMotionInfo(PIKIANIM_Fall));
+	_10 = 0;
 }
 
 /*
@@ -4845,7 +2092,7 @@ void PikiFallState::init(Piki*)
  * Address:	800D40C8
  * Size:	000004
  */
-void PikiFallState::exec(Piki*)
+void PikiFallState::exec(Piki* piki)
 {
 }
 
@@ -4854,44 +2101,11 @@ void PikiFallState::exec(Piki*)
  * Address:	800D40CC
  * Size:	00007C
  */
-void PikiFallState::procBounceMsg(Piki*, MsgBounce*)
+void PikiFallState::procBounceMsg(Piki* piki, MsgBounce*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  mr.       r29, r4
-	  stw       r0, 0x10(r3)
-	  mr        r30, r29
-	  beq-      .loc_0x30
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x30:
-	  addi      r3, r1, 0x14
-	  li        r4, 0x1E
-	  bl        0x4AE54
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x1E
-	  bl        0x4AE74
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x9750
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("fall : got bounce\n");
+	_10 = 1;
+	piki->startMotion(PaniMotionInfo(PIKIANIM_JKoke, piki), PaniMotionInfo(PIKIANIM_JKoke));
 }
 
 /*
@@ -4899,72 +2113,21 @@ void PikiFallState::procBounceMsg(Piki*, MsgBounce*)
  * Address:	800D4148
  * Size:	0000D4
  */
-void PikiFallState::procAnimMsg(Piki*, MsgAnim*)
+void PikiFallState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x28(r1)
-	  addi      r28, r3, 0
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x38
-	  b         .loc_0xB4
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_Finished:
+		if (_10 == 1) {
+			piki->startMotion(PaniMotionInfo(PIKIANIM_GetUp, piki), PaniMotionInfo(PIKIANIM_GetUp));
+			_10 = 2;
+			break;
+		}
 
-	.loc_0x38:
-	  lwz       r0, 0x10(r28)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x90
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0x54
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x54:
-	  addi      r3, r1, 0x14
-	  li        r4, 0x20
-	  bl        0x4ADB4
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x1C
-	  li        r4, 0x20
-	  bl        0x4ADD4
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x97F0
-	  li        r0, 0x2
-	  stw       r0, 0x10(r28)
-	  b         .loc_0xB4
-
-	.loc_0x90:
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0xB4
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  addi      r4, r29, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xB4:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+		if (_10 == 2) {
+			transit(piki, PIKISTATE_Normal);
+		}
+		break;
+	}
 }
 
 /*
@@ -4972,7 +2135,7 @@ void PikiFallState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D421C
  * Size:	000004
  */
-void PikiFallState::cleanup(Piki*)
+void PikiFallState::cleanup(Piki* piki)
 {
 }
 
@@ -4984,32 +2147,6 @@ void PikiFallState::cleanup(Piki*)
 PikiCliffState::PikiCliffState()
     : PikiState(PIKISTATE_Cliff, "CLIFF")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x10
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3EA8
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x66B0
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x68D0(r2)
-	  stfs      f0, 0x24(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x1C(r3)
-	  blr
-	*/
 }
 
 /*
@@ -5017,97 +2154,20 @@ PikiCliffState::PikiCliffState()
  * Address:	800D427C
  * Size:	000138
  */
-void PikiCliffState::init(Piki*)
+void PikiCliffState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  mr        r29, r4
-	  stw       r28, 0x38(r1)
-	  mr        r28, r3
-	  lwz       r4, 0x70(r4)
-	  lwz       r0, 0x74(r29)
-	  stw       r4, 0x1C(r3)
-	  stw       r0, 0x20(r3)
-	  lwz       r0, 0x78(r29)
-	  stw       r0, 0x24(r3)
-	  lfs       f1, 0x1C(r3)
-	  lfs       f0, 0x20(r3)
-	  lfs       f2, 0x24(r3)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xC6698
-	  lfs       f0, -0x68D0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x90
-	  lfs       f0, 0x1C(r28)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x1C(r28)
-	  lfs       f0, 0x20(r28)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x20(r28)
-	  lfs       f0, 0x24(r28)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x24(r28)
-
-	.loc_0x90:
-	  lfs       f0, -0x68E8(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xA8
-	  li        r0, 0
-	  stw       r0, 0x18(r28)
-	  b         .loc_0xB0
-
-	.loc_0xA8:
-	  li        r0, 0x1
-	  stw       r0, 0x18(r28)
-
-	.loc_0xB0:
-	  cmplwi    r29, 0
-	  addi      r30, r29, 0
-	  beq-      .loc_0xC0
-	  addi      r30, r30, 0x2B8
-
-	.loc_0xC0:
-	  addi      r3, r1, 0x20
-	  li        r4, 0xD
-	  bl        0x4AC14
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x28
-	  li        r4, 0xD
-	  bl        0x4AC34
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x9990
-	  lfs       f0, -0x3EA0(r13)
-	  li        r0, 0
-	  stfs      f0, 0xA4(r29)
-	  lfs       f0, -0x3E9C(r13)
-	  stfs      f0, 0xA8(r29)
-	  lfs       f0, -0x3E98(r13)
-	  stfs      f0, 0xAC(r29)
-	  stw       r0, 0x10(r28)
-	  lfs       f0, 0xA0(r29)
-	  stfs      f0, 0x28(r28)
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  lwz       r28, 0x38(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	_1C       = piki->mVelocity;
+	f32 speed = _1C.normalise();
+	if (speed < 1.0f) {
+		_18 = 0;
+	} else {
+		_18 = 1;
+	}
+	piki->startMotion(PaniMotionInfo(PIKIANIM_LSuberu, piki), PaniMotionInfo(PIKIANIM_LSuberu));
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	_10 = 0;
+	PRINT("%x cliff start :: %s\n", piki, _18 ? "BURAN" : "OTIKAKE"); // 'hang' and 'fall' (i think)
+	_28 = piki->mFaceDirection;
 }
 
 /*
@@ -5115,28 +2175,12 @@ void PikiCliffState::init(Piki*)
  * Address:	800D43B4
  * Size:	00003C
  */
-void PikiCliffState::exec(Piki*)
+void PikiCliffState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x28C(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x2C
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0x11
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!piki->mFloorTri) {
+		PRINT("piki %x: no floor !\n", piki);
+		transit(piki, PIKISTATE_Fall);
+	}
 }
 
 /*
@@ -5144,9 +2188,10 @@ void PikiCliffState::exec(Piki*)
  * Address:	........
  * Size:	000088
  */
-void PikiCliffState::startFall(Piki*)
+void PikiCliffState::startFall(Piki* piki)
 {
-	// UNUSED FUNCTION
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Otiru, piki), PaniMotionInfo(PIKIANIM_Otiru));
+	_10 = 3;
 }
 
 /*
@@ -5154,126 +2199,34 @@ void PikiCliffState::startFall(Piki*)
  * Address:	800D43F0
  * Size:	0001A4
  */
-bool PikiCliffState::nearEnough(Piki*)
+bool PikiCliffState::nearEnough(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stfd      f31, 0x58(r1)
-	  stfd      f30, 0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  mr        r31, r4
-	  lfs       f1, 0xA0(r4)
-	  bl        0x147744
-	  fmr       f31, f1
-	  lfs       f1, 0xA0(r31)
-	  bl        0x1478CC
-	  lwz       r3, 0x28C(r31)
-	  li        r0, -0x1
-	  lfsu      f3, 0x28(r3)
-	  lfs       f5, -0x3E94(r13)
-	  lfs       f2, 0x4(r3)
-	  fmuls     f3, f3, f1
-	  lfs       f4, 0x8(r3)
-	  fmuls     f2, f2, f5
-	  lfs       f0, -0x6894(r2)
-	  fmuls     f4, f4, f31
-	  fadds     f2, f3, f2
-	  fadds     f2, f4, f2
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x6C
-	  li        r0, 0
+	Vector3f dir(sinf(piki->mFaceDirection), 0.0f, cosf(piki->mFaceDirection));
+	f32 maxProj  = -1.0f;
+	int planeIdx = -1;
+	for (int i = 0; i < 3; i++) {
+		f32 proj = piki->mFloorTri->mEdgePlanes[i].mNormal.DP(dir);
+		if (proj > maxProj) {
+			proj     = maxProj; // this is absolutely a typo
+			planeIdx = i;
+		}
+	}
 
-	.loc_0x6C:
-	  lwz       r3, 0x28C(r31)
-	  lfsu      f3, 0x38(r3)
-	  lfs       f2, 0x4(r3)
-	  fmuls     f3, f3, f1
-	  lfs       f4, 0x8(r3)
-	  fmuls     f2, f2, f5
-	  fmuls     f4, f4, f31
-	  fadds     f2, f3, f2
-	  fadds     f2, f4, f2
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x9C
-	  li        r0, 0x1
+	f32 dist = piki->mFloorTri->mEdgePlanes[planeIdx].dist(piki->mPosition);
+	if (dist < piki->mCollisionRadius + 0.2f) {
+		f32 x     = piki->mPosition.x;
+		f32 z     = piki->mPosition.z;
+		f32 currY = piki->mPosition.y;
+		x += dir.x * piki->mCollisionRadius * 1.5f;
+		z += dir.z * piki->mCollisionRadius * 1.5f;
+		f32 botY = mapMgr->getMinY(x, z, true);
+		if (currY - botY >= 5.0f * piki->getCentreSize()) {
+			return true;
+		}
 
-	.loc_0x9C:
-	  lwz       r3, 0x28C(r31)
-	  lfsu      f3, 0x48(r3)
-	  lfs       f2, 0x4(r3)
-	  fmuls     f3, f3, f1
-	  lfs       f4, 0x8(r3)
-	  fmuls     f2, f2, f5
-	  fmuls     f4, f4, f31
-	  fadds     f2, f3, f2
-	  fadds     f2, f4, f2
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0xCC
-	  li        r0, 0x2
-
-	.loc_0xCC:
-	  rlwinm    r3,r0,4,0,27
-	  lwz       r0, 0x28C(r31)
-	  addi      r3, r3, 0x28
-	  lfs       f6, 0x94(r31)
-	  add       r3, r0, r3
-	  lfs       f30, 0x98(r31)
-	  lfs       f2, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f4, f2, f6
-	  lfs       f5, 0x8(r3)
-	  fmuls     f3, f0, f30
-	  lfs       f7, 0x9C(r31)
-	  lfs       f2, 0xC(r3)
-	  fmuls     f5, f5, f7
-	  lfs       f0, -0x6890(r2)
-	  fadds     f3, f4, f3
-	  lfs       f4, 0x270(r31)
-	  fadds     f0, f0, f4
-	  fadds     f3, f5, f3
-	  fsubs     f2, f3, f2
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x184
-	  fmuls     f1, f1, f4
-	  lfs       f2, -0x6898(r2)
-	  fmuls     f0, f31, f4
-	  lwz       r3, 0x2F00(r13)
-	  li        r4, 0x1
-	  fmuls     f1, f2, f1
-	  fmuls     f0, f2, f0
-	  fadds     f1, f6, f1
-	  fadds     f2, f7, f0
-	  bl        -0x6C634
-	  mr        r3, r31
-	  fmr       f31, f1
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f2, -0x6868(r2)
-	  fsubs     f0, f30, f31
-	  fmuls     f1, f2, f1
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x184
-	  li        r3, 0x1
-	  b         .loc_0x188
-
-	.loc_0x184:
-	  li        r3, 0
-
-	.loc_0x188:
-	  lwz       r0, 0x64(r1)
-	  lfd       f31, 0x58(r1)
-	  lfd       f30, 0x50(r1)
-	  lwz       r31, 0x4C(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+		PRINT("currY = %.1f botY = %.1f\n", currY, botY);
+	}
+	return false;
 }
 
 /*
@@ -5281,348 +2234,96 @@ bool PikiCliffState::nearEnough(Piki*)
  * Address:	800D4594
  * Size:	0004A4
  */
-void PikiCliffState::procAnimMsg(Piki*, MsgAnim*)
+void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stfd      f31, 0x98(r1)
-	  stw       r31, 0x94(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x90(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x8C(r1)
-	  stw       r28, 0x88(r1)
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0x6
-	  beq-      .loc_0x190
-	  bge-      .loc_0x480
-	  cmpwi     r0, 0
-	  beq-      .loc_0x48
-	  b         .loc_0x480
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_Finished:
+		switch (_10) {
+		case 0:
+			if (_18 >= 2 || _18 < 0) {
+				return;
+			}
 
-	.loc_0x48:
-	  lwz       r0, 0x10(r30)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x480
-	  bge-      .loc_0x68
-	  cmpwi     r0, 0
-	  beq-      .loc_0x74
-	  bge-      .loc_0x170
-	  b         .loc_0x480
+			_10 = 1;
+			_14 = int(randFloat(2.0f)) + 1;
+			PRINT("otikake motion start\n");
+			piki->startMotion(PaniMotionInfo(PIKIANIM_Otikake, piki), PaniMotionInfo(PIKIANIM_Otikake));
+			break;
 
-	.loc_0x68:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x480
-	  b         .loc_0x124
+		case 3:
+			if (!piki->mFloorTri) {
+				PRINT("piki fall (otiru) %x\n", piki);
+				transit(piki, PIKISTATE_Fall);
+				return;
+			}
+			PRINT("otiru escaped\n");
+			transit(piki, PIKISTATE_Normal);
+			break;
 
-	.loc_0x74:
-	  lwz       r0, 0x18(r30)
-	  cmpwi     r0, 0x2
-	  bge-      .loc_0x480
-	  cmpwi     r0, 0
-	  bge-      .loc_0x8C
-	  b         .loc_0x480
+		case 1:
+			PRINT("goto normal !?\n");
+			transit(piki, PIKISTATE_Normal);
+			break;
+		}
+		break;
 
-	.loc_0x8C:
-	  li        r0, 0x1
-	  stw       r0, 0x10(r30)
-	  bl        0x143A48
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x84(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x68E4(r2)
-	  cmplwi    r31, 0
-	  stw       r0, 0x80(r1)
-	  lfs       f1, -0x68E8(r2)
-	  mr        r28, r31
-	  lfd       f3, 0x80(r1)
-	  lfs       f0, -0x68C0(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x78(r1)
-	  lwz       r3, 0x7C(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x14(r30)
-	  beq-      .loc_0xF0
-	  addi      r28, r28, 0x2B8
+	case KEY_LoopEnd:
+		switch (_10) {
+		case 1:
+			_14--;
+			if (_14 > 0) {
+				break;
+			}
+			if (_18 == 1) {
+				if (piki->mFloorTri && nearEnough(piki)) {
+					piki->mFaceDirection = roundAng(_28 + PI);
+					piki->startMotion(PaniMotionInfo(PIKIANIM_Hikakaru, piki), PaniMotionInfo(PIKIANIM_Hikakaru));
+					Plane* plane = piki->getNearestPlane(piki->mFloorTri);
+					if (plane) {
+						f32 dist = plane->dist(piki->mPosition);
+						PRINT("dist is %.1f ( radius=%f : centresize=%f\n", dist, piki->mCollisionRadius, piki->getCentreSize());
+						if (dist > -0.2f && dist < 3.0f) {
+							PRINT("piki%x : ####### start buran motion :: floor = %s\n", piki, piki->mFloorTri ? "on floor" : "air");
+							_10 = 2;
+							_14 = int(randFloat(2.0f)) + 2;
+							break;
+						}
+						PRINT("buran is not executable : dist is too far\n");
+						transit(piki, PIKISTATE_Normal);
+						break;
+					}
+					PRINT("buran is not executable : no plane\n");
+					transit(piki, PIKISTATE_Normal);
+					break;
+				}
+				PRINT("buran is not executable : no floorCollTri\n");
+				startFall(piki);
+				break;
+			}
 
-	.loc_0xF0:
-	  addi      r3, r1, 0x64
-	  li        r4, 0x3C
-	  bl        0x4A8CC
-	  addi      r29, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x6C
-	  li        r4, 0x3C
-	  bl        0x4A8EC
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0x9CD8
-	  b         .loc_0x480
+			if (piki->mFloorTri) {
+				PRINT("piki escaped from falling!\n");
+				transit(piki, PIKISTATE_Normal);
+				break;
+			}
 
-	.loc_0x124:
-	  lwz       r0, 0x28C(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x150
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x11
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x480
+			PRINT("fall start : \n");
+			startFall(piki);
+			break;
 
-	.loc_0x150:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x480
+		case 2:
+			_14--;
+			if (_14 > 0) {
+				break;
+			}
 
-	.loc_0x170:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x480
-
-	.loc_0x190:
-	  lwz       r0, 0x10(r30)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x41C
-	  bge-      .loc_0x480
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0x1AC
-	  b         .loc_0x480
-
-	.loc_0x1AC:
-	  lwz       r3, 0x14(r30)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x14(r30)
-	  lwz       r0, 0x14(r30)
-	  cmpwi     r0, 0
-	  bgt-      .loc_0x480
-	  lwz       r0, 0x18(r30)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x3A0
-	  lwz       r0, 0x28C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x350
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0x388
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x350
-	  lfs       f1, -0x68C8(r2)
-	  lfs       f0, 0x28(r30)
-	  fadds     f1, f1, f0
-	  bl        -0x9C208
-	  cmplwi    r31, 0
-	  stfs      f1, 0xA0(r31)
-	  mr        r28, r31
-	  beq-      .loc_0x214
-	  addi      r28, r28, 0x2B8
-
-	.loc_0x214:
-	  addi      r3, r1, 0x54
-	  li        r4, 0x3B
-	  bl        0x4A7A8
-	  addi      r29, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x5C
-	  li        r4, 0x3B
-	  bl        0x4A7C8
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0x9DFC
-	  mr        r3, r31
-	  lwz       r4, 0x28C(r31)
-	  bl        -0x454A4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x330
-	  lfs       f3, 0x0(r3)
-	  lfs       f2, 0x94(r31)
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x98(r31)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x8(r3)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x9C(r31)
-	  lwz       r12, 0x0(r31)
-	  fmuls     f3, f4, f3
-	  lfs       f0, 0xC(r3)
-	  fadds     f1, f2, f1
-	  lwz       r12, 0x5C(r12)
-	  mr        r3, r31
-	  mtlr      r12
-	  fadds     f1, f3, f1
-	  fsubs     f31, f1, f0
-	  blrl
-	  lfs       f0, -0x6864(r2)
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x310
-	  lfs       f0, -0x6860(r2)
-	  fcmpo     cr0, f31, f0
-	  bge-      .loc_0x310
-	  li        r0, 0x2
-	  stw       r0, 0x10(r30)
-	  bl        0x14381C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x7C(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x68E4(r2)
-	  stw       r0, 0x78(r1)
-	  lfs       f1, -0x68E8(r2)
-	  lfd       f3, 0x78(r1)
-	  lfs       f0, -0x68C0(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x80(r1)
-	  lwz       r3, 0x84(r1)
-	  addi      r0, r3, 0x2
-	  stw       r0, 0x14(r30)
-	  b         .loc_0x480
-
-	.loc_0x310:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x480
-
-	.loc_0x330:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x480
-
-	.loc_0x350:
-	  cmplwi    r31, 0
-	  addi      r29, r31, 0
-	  addi      r28, r31, 0
-	  beq-      .loc_0x364
-	  addi      r28, r28, 0x2B8
-
-	.loc_0x364:
-	  addi      r3, r1, 0x40
-	  li        r4, 0x3D
-	  bl        0x4A658
-	  addi      r31, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x38
-	  li        r4, 0x3D
-	  bl        0x4A678
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x9F4C
-	  li        r0, 0x3
-	  stw       r0, 0x10(r30)
-	  b         .loc_0x480
-
-	.loc_0x3A0:
-	  lwz       r0, 0x28C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3CC
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x480
-
-	.loc_0x3CC:
-	  cmplwi    r31, 0
-	  addi      r29, r31, 0
-	  addi      r28, r31, 0
-	  beq-      .loc_0x3E0
-	  addi      r28, r28, 0x2B8
-
-	.loc_0x3E0:
-	  addi      r3, r1, 0x30
-	  li        r4, 0x3D
-	  bl        0x4A5DC
-	  addi      r31, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x28
-	  li        r4, 0x3D
-	  bl        0x4A5FC
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0x9FC8
-	  li        r0, 0x3
-	  stw       r0, 0x10(r30)
-	  b         .loc_0x480
-
-	.loc_0x41C:
-	  lwz       r3, 0x14(r30)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x14(r30)
-	  lwz       r0, 0x14(r30)
-	  cmpwi     r0, 0
-	  bgt-      .loc_0x480
-	  mr        r4, r31
-	  lwz       r12, 0x0(r31)
-	  addi      r3, r1, 0x48
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r6, 0x48(r1)
-	  mr        r3, r30
-	  lwz       r0, 0x4C(r1)
-	  addi      r4, r31, 0
-	  li        r5, 0x11
-	  stw       r6, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x50(r1)
-	  stw       r0, 0x9C(r31)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x480:
-	  lwz       r0, 0xA4(r1)
-	  lfd       f31, 0x98(r1)
-	  lwz       r31, 0x94(r1)
-	  lwz       r30, 0x90(r1)
-	  lwz       r29, 0x8C(r1)
-	  lwz       r28, 0x88(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
+			piki->mPosition = piki->getCentre();
+			PRINT("piki %x : do fall\n", piki);
+			transit(piki, PIKISTATE_Fall);
+			break;
+		}
+		break;
+	}
 }
 
 /*
@@ -5630,7 +2331,7 @@ void PikiCliffState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D4A38
  * Size:	000004
  */
-void PikiCliffState::cleanup(Piki*)
+void PikiCliffState::cleanup(Piki* piki)
 {
 }
 
@@ -5642,28 +2343,6 @@ void PikiCliffState::cleanup(Piki*)
 PikiGoHangState::PikiGoHangState()
     : PikiState(PIKISTATE_GoHang, "GOHANG")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xB
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3E90
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6748
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -5671,34 +2350,9 @@ PikiGoHangState::PikiGoHangState()
  * Address:	800D4A88
  * Size:	00005C
  */
-void PikiGoHangState::init(Piki*)
+void PikiGoHangState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r3, r1, 0x10
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  li        r4, 0
-	  bl        0x4A4B0
-	  addi      r31, r3, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0
-	  bl        0x4A4A0
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0
-	  bl        -0xA0F0
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
 
 /*
@@ -5706,110 +2360,19 @@ void PikiGoHangState::init(Piki*)
  * Address:	800D4AE4
  * Size:	000174
  */
-void PikiGoHangState::exec(Piki*)
+void PikiGoHangState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xF0(r1)
-	  stfd      f31, 0xE8(r1)
-	  stfd      f30, 0xE0(r1)
-	  stfd      f29, 0xD8(r1)
-	  stw       r31, 0xD4(r1)
-	  mr        r31, r4
-	  stw       r30, 0xD0(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x504(r4)
-	  lis       r4, 0x7268
-	  addi      r4, r4, 0x6E64
-	  lwz       r3, 0x220(r5)
-	  bl        -0x4B40C
-	  lfs       f3, 0x4(r3)
-	  lfs       f2, 0x94(r31)
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, 0x98(r31)
-	  fsubs     f31, f3, f2
-	  lfs       f2, 0xC(r3)
-	  fsubs     f30, f1, f0
-	  lfs       f0, 0x9C(r31)
-	  fmuls     f1, f31, f31
-	  fsubs     f29, f2, f0
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xC6F18
-	  lfs       f0, -0x68D0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x90
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
-
-	.loc_0x90:
-	  lwz       r3, 0x504(r31)
-	  lfs       f2, -0x68C0(r2)
-	  lwz       r3, 0x224(r3)
-	  lfs       f3, -0x68E8(r2)
-	  lfs       f0, 0x1C8(r3)
-	  fmuls     f0, f2, f0
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xB4
-	  fmr       f3, f2
-
-	.loc_0xB4:
-	  lwz       r3, 0x224(r31)
-	  lfs       f2, 0x78(r3)
-	  fmuls     f1, f31, f2
-	  fmuls     f0, f30, f2
-	  fmuls     f2, f29, f2
-	  stfs      f1, 0x80(r1)
-	  lfs       f1, 0x80(r1)
-	  stfs      f1, 0x98(r1)
-	  stfs      f0, 0x9C(r1)
-	  stfs      f2, 0xA0(r1)
-	  lfs       f0, 0x98(r1)
-	  fmuls     f0, f0, f3
-	  stfs      f0, 0x70(r1)
-	  lfs       f0, 0x70(r1)
-	  stfs      f0, 0xA4(r1)
-	  lfs       f0, 0x9C(r1)
-	  fmuls     f0, f0, f3
-	  stfs      f0, 0xA8(r1)
-	  lfs       f0, 0xA0(r1)
-	  fmuls     f0, f0, f3
-	  stfs      f0, 0xAC(r1)
-	  lwz       r3, 0xA4(r1)
-	  lwz       r0, 0xA8(r1)
-	  stw       r3, 0xA4(r31)
-	  stw       r0, 0xA8(r31)
-	  lwz       r0, 0xAC(r1)
-	  stw       r0, 0xAC(r31)
-	  lwz       r3, 0x504(r31)
-	  lwz       r3, 0xADC(r3)
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x150
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x150:
-	  lwz       r0, 0xF4(r1)
-	  lfd       f31, 0xE8(r1)
-	  lfd       f30, 0xE0(r1)
-	  lfd       f29, 0xD8(r1)
-	  lwz       r31, 0xD4(r1)
-	  lwz       r30, 0xD0(r1)
-	  addi      r1, r1, 0xF0
-	  mtlr      r0
-	  blr
-	*/
+	CollPart* naviHand = piki->mNavi->mCollInfo->getSphere('rhnd');
+	Vector3f dir       = naviHand->mCentre - piki->mPosition;
+	f32 dist           = dir.normalise();
+	f32 speedFactor    = 1.0f;
+	if (dist > 2.0f * C_NAVI_PROP(piki->mNavi)._1BC()) {
+		speedFactor = 2.0f;
+	}
+	piki->mTargetVelocity = dir * C_PIKI_PROP(piki).mMaxLeafMoveSpeed() * speedFactor;
+	if (piki->mNavi->getCurrState()->getID() != NAVISTATE_ThrowWait) {
+		transit(piki, PIKISTATE_Normal);
+	}
 }
 
 /*
@@ -5817,7 +2380,7 @@ void PikiGoHangState::exec(Piki*)
  * Address:	800D4C58
  * Size:	000004
  */
-void PikiGoHangState::cleanup(Piki*)
+void PikiGoHangState::cleanup(Piki* piki)
 {
 }
 
@@ -5829,28 +2392,6 @@ void PikiGoHangState::cleanup(Piki*)
 PikiHangedState::PikiHangedState()
     : PikiState(PIKISTATE_Hanged, "HANGED")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xC
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3E88
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x67E0
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -5858,29 +2399,13 @@ PikiHangedState::PikiHangedState()
  * Address:	800D4CA8
  * Size:	000038
  */
-void PikiHangedState::procAnimMsg(Piki*, MsgAnim*)
+void PikiHangedState::procAnimMsg(Piki*, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r5)
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0x6
-	  beq-      .loc_0x20
-	  b         .loc_0x28
-
-	.loc_0x20:
-	  li        r3, 0x144
-	  bl        -0x2F8F0
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_LoopEnd:
+		SeSystem::playPlayerSe(SE_PIKI_FLYREADY);
+		break;
+	}
 }
 
 /*
@@ -5888,58 +2413,13 @@ void PikiHangedState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D4CE0
  * Size:	0000B4
  */
-void PikiHangedState::init(Piki*)
+void PikiHangedState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr.       r29, r4
-	  lfs       f0, -0x685C(r2)
-	  mr        r30, r29
-	  stfs      f0, 0x47C(r4)
-	  beq-      .loc_0x30
-	  addi      r30, r30, 0x2B8
-
-	.loc_0x30:
-	  addi      r3, r1, 0x10
-	  li        r4, 0x1C
-	  bl        0x4A240
-	  addi      r31, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x18
-	  li        r4, 0x1C
-	  bl        0x4A260
-	  addi      r4, r3, 0
-	  addi      r3, r29, 0
-	  addi      r5, r31, 0
-	  bl        -0xA364
-	  li        r0, 0
-	  stw       r0, 0x1A4(r29)
-	  lfs       f0, -0x3E80(r13)
-	  stfs      f0, 0x70(r29)
-	  lfs       f0, -0x3E7C(r13)
-	  stfs      f0, 0x74(r29)
-	  lfs       f0, -0x3E78(r13)
-	  stfs      f0, 0x78(r29)
-	  lfs       f0, -0x3E74(r13)
-	  stfs      f0, 0xA4(r29)
-	  lfs       f0, -0x3E70(r13)
-	  stfs      f0, 0xA8(r29)
-	  lfs       f0, -0x3E6C(r13)
-	  stfs      f0, 0xAC(r29)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	piki->mMotionSpeed = 30.0f;
+	piki->startMotion(PaniMotionInfo(PIKIANIM_Hang, piki), PaniMotionInfo(PIKIANIM_Hang));
+	piki->mHasCollChangedVelocity = 0;
+	piki->mVelocity.set(0.0f, 0.0f, 0.0f);
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -5947,30 +2427,11 @@ void PikiHangedState::init(Piki*)
  * Address:	800D4D94
  * Size:	000044
  */
-void PikiHangedState::exec(Piki*)
+void PikiHangedState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x504(r4)
-	  lwz       r5, 0xADC(r5)
-	  lwz       r0, 0x4(r5)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x34
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (piki->mNavi->getCurrState()->getID() != NAVISTATE_ThrowWait) {
+		transit(piki, PIKISTATE_Normal);
+	}
 }
 
 /*
@@ -5978,20 +2439,9 @@ void PikiHangedState::exec(Piki*)
  * Address:	800D4DD8
  * Size:	000024
  */
-void PikiHangedState::cleanup(Piki*)
+void PikiHangedState::cleanup(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x144
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x2F9D8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	SeSystem::stopPlayerSe(SE_PIKI_FLYREADY);
 }
 
 /*
@@ -6002,29 +2452,6 @@ void PikiHangedState::cleanup(Piki*)
 PikiWaterHangedState::PikiWaterHangedState()
     : PikiState(PIKISTATE_WaterHanged, "WATERHANGED")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xD
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r4, 0x5DC4
-	  subi      r5, r5, 0x7300
-	  stw       r0, 0x0(r3)
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x6878
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -6062,7 +2489,7 @@ void PikiWaterHangedState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D4E84
  * Size:	0000B4
  */
-void PikiWaterHangedState::init(Piki*)
+void PikiWaterHangedState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -6121,7 +2548,7 @@ void PikiWaterHangedState::init(Piki*)
  * Address:	800D4F38
  * Size:	000044
  */
-void PikiWaterHangedState::exec(Piki*)
+void PikiWaterHangedState::exec(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -6152,7 +2579,7 @@ void PikiWaterHangedState::exec(Piki*)
  * Address:	800D4F7C
  * Size:	000024
  */
-void PikiWaterHangedState::cleanup(Piki*)
+void PikiWaterHangedState::cleanup(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -6176,28 +2603,6 @@ void PikiWaterHangedState::cleanup(Piki*)
 PikiEmitState::PikiEmitState()
     : PikiState(PIKISTATE_Emit, "EMIT")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xF
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3E50
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6918
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -6205,7 +2610,7 @@ PikiEmitState::PikiEmitState()
  * Address:	800D4FEC
  * Size:	0000A4
  */
-void PikiEmitState::init(Piki*)
+void PikiEmitState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -6260,7 +2665,7 @@ void PikiEmitState::init(Piki*)
  * Address:	800D5090
  * Size:	000040
  */
-void PikiEmitState::exec(Piki*)
+void PikiEmitState::exec(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -6288,7 +2693,7 @@ void PikiEmitState::exec(Piki*)
  * Address:	800D50D0
  * Size:	000010
  */
-void PikiEmitState::cleanup(Piki*)
+void PikiEmitState::cleanup(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -6423,44 +2828,6 @@ void PikiEmitState::procAnimMsg(Piki*, MsgAnim*)
 PikiFlyingState::PikiFlyingState()
     : PikiState(PIKISTATE_Flying, "FLYING")
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r1)
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x5E4C
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r31)
-	  li        r0, 0xE
-	  stw       r0, 0x4(r31)
-	  li        r0, 0
-	  stw       r0, 0x8(r31)
-	  subi      r0, r4, 0x5DC4
-	  subi      r4, r13, 0x3E30
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x69B0
-	  addi      r3, r31, 0x10
-	  stw       r4, 0xC(r31)
-	  stw       r0, 0x0(r31)
-	  bl        0x3F0E8
-	  lfs       f0, -0x68D0(r2)
-	  mr        r3, r31
-	  stfs      f0, 0x34(r31)
-	  stfs      f0, 0x30(r31)
-	  stfs      f0, 0x2C(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -6510,7 +2877,7 @@ void PikiFlyingState::restartEffect()
  * Address:	800D52F4
  * Size:	0000B0
  */
-void PikiFlyingState::init(Piki*)
+void PikiFlyingState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -6566,7 +2933,7 @@ void PikiFlyingState::init(Piki*)
  * Address:	800D53A4
  * Size:	0003C0
  */
-void PikiFlyingState::exec(Piki*)
+void PikiFlyingState::exec(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -6844,7 +3211,7 @@ void PikiFlyingState::exec(Piki*)
  * Address:	800D5764
  * Size:	000044
  */
-void PikiFlyingState::cleanup(Piki*)
+void PikiFlyingState::cleanup(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -7464,28 +3831,6 @@ void PikiFlyingState::procBounceMsg(Piki*, MsgBounce*)
 PikiGrowState::PikiGrowState()
     : PikiState(PIKISTATE_Grow, "GROW")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3E28
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6A48
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -7493,7 +3838,7 @@ PikiGrowState::PikiGrowState()
  * Address:	800D5FBC
  * Size:	00007C
  */
-void PikiGrowState::init(Piki*)
+void PikiGrowState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -7538,7 +3883,7 @@ void PikiGrowState::init(Piki*)
  * Address:	800D6038
  * Size:	000004
  */
-void PikiGrowState::exec(Piki*)
+void PikiGrowState::exec(Piki* piki)
 {
 }
 
@@ -7547,7 +3892,7 @@ void PikiGrowState::exec(Piki*)
  * Address:	800D603C
  * Size:	000004
  */
-void PikiGrowState::cleanup(Piki*)
+void PikiGrowState::cleanup(Piki* piki)
 {
 }
 
@@ -7592,29 +3937,6 @@ void PikiGrowState::procAnimMsg(Piki*, MsgAnim*)
 PikiKinokoChangeState::PikiKinokoChangeState()
     : PikiState(PIKISTATE_KinokoChange, "KINOKOCHANGE")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1D
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r4, 0x5DC4
-	  subi      r5, r5, 0x72F0
-	  stw       r0, 0x0(r3)
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x6AE0
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -7622,7 +3944,7 @@ PikiKinokoChangeState::PikiKinokoChangeState()
  * Address:	800D60D4
  * Size:	0000AC
  */
-void PikiKinokoChangeState::init(Piki*)
+void PikiKinokoChangeState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -7683,7 +4005,7 @@ void PikiKinokoChangeState::init(Piki*)
  * Address:	800D6180
  * Size:	00002C
  */
-void PikiKinokoChangeState::restart(Piki*)
+void PikiKinokoChangeState::restart(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -7706,7 +4028,7 @@ void PikiKinokoChangeState::restart(Piki*)
  * Address:	800D61AC
  * Size:	000078
  */
-void PikiKinokoChangeState::exec(Piki*)
+void PikiKinokoChangeState::exec(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -7752,7 +4074,7 @@ void PikiKinokoChangeState::exec(Piki*)
  * Address:	800D6224
  * Size:	000004
  */
-void PikiKinokoChangeState::cleanup(Piki*)
+void PikiKinokoChangeState::cleanup(Piki* piki)
 {
 }
 
@@ -7821,28 +4143,6 @@ void PikiKinokoChangeState::procAnimMsg(Piki*, MsgAnim*)
 PikiGrowupState::PikiGrowupState()
     : PikiState(PIKISTATE_GrowUp, "GROWUP")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x13
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3E08
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6B80
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -7850,7 +4150,7 @@ PikiGrowupState::PikiGrowupState()
  * Address:	800D6308
  * Size:	0000C8
  */
-void PikiGrowupState::init(Piki*)
+void PikiGrowupState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -7920,7 +4220,7 @@ void PikiGrowupState::init(Piki*)
  * Address:	800D63D0
  * Size:	000098
  */
-void PikiGrowupState::exec(Piki*)
+void PikiGrowupState::exec(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -7972,7 +4272,7 @@ void PikiGrowupState::exec(Piki*)
  * Address:	800D6468
  * Size:	000004
  */
-void PikiGrowupState::cleanup(Piki*)
+void PikiGrowupState::cleanup(Piki* piki)
 {
 }
 
@@ -8081,28 +4381,6 @@ void PikiGrowupState::procAnimMsg(Piki*, MsgAnim*)
 PikiWaveState::PikiWaveState()
     : PikiState(PIKISTATE_Wave, "WAVE")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x12
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3DE8
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6C18
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -8110,7 +4388,7 @@ PikiWaveState::PikiWaveState()
  * Address:	800D65EC
  * Size:	000004
  */
-void PikiWaveState::init(Piki*)
+void PikiWaveState::init(Piki* piki)
 {
 }
 
@@ -8119,7 +4397,7 @@ void PikiWaveState::init(Piki*)
  * Address:	800D65F0
  * Size:	000004
  */
-void PikiWaveState::exec(Piki*)
+void PikiWaveState::exec(Piki* piki)
 {
 }
 
@@ -8128,7 +4406,7 @@ void PikiWaveState::exec(Piki*)
  * Address:	800D65F4
  * Size:	000004
  */
-void PikiWaveState::cleanup(Piki*)
+void PikiWaveState::cleanup(Piki* piki)
 {
 }
 
@@ -8137,7 +4415,7 @@ void PikiWaveState::cleanup(Piki*)
  * Address:	800D65F8
  * Size:	000030
  */
-void PikiWaveState::resume(Piki*)
+void PikiWaveState::resume(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -8161,7 +4439,7 @@ void PikiWaveState::resume(Piki*)
  * Address:	800D6628
  * Size:	000004
  */
-void PikiWaveState::restart(Piki*)
+void PikiWaveState::restart(Piki* piki)
 {
 }
 
@@ -8204,7 +4482,7 @@ void PikiWaveState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	........
  * Size:	000004
  */
-void PikiWaveState::waveAttack(Piki*)
+void PikiWaveState::waveAttack(Piki* piki)
 {
 	// UNUSED FUNCTION
 }
@@ -8217,28 +4495,6 @@ void PikiWaveState::waveAttack(Piki*)
 PikiPushState::PikiPushState()
     : PikiState(PIKISTATE_Push, "PUSH")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x14
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3DE0
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6CB0
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -8246,7 +4502,7 @@ PikiPushState::PikiPushState()
  * Address:	800D66C0
  * Size:	000088
  */
-void PikiPushState::init(Piki*)
+void PikiPushState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -8294,7 +4550,7 @@ void PikiPushState::init(Piki*)
  * Address:	800D6748
  * Size:	000150
  */
-void PikiPushState::exec(Piki*)
+void PikiPushState::exec(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -8400,7 +4656,7 @@ void PikiPushState::exec(Piki*)
  * Address:	800D6898
  * Size:	00000C
  */
-void PikiPushState::cleanup(Piki*)
+void PikiPushState::cleanup(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -8415,7 +4671,7 @@ void PikiPushState::cleanup(Piki*)
  * Address:	800D68A4
  * Size:	000030
  */
-void PikiPushState::resume(Piki*)
+void PikiPushState::resume(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -8439,7 +4695,7 @@ void PikiPushState::resume(Piki*)
  * Address:	800D68D4
  * Size:	000004
  */
-void PikiPushState::restart(Piki*)
+void PikiPushState::restart(Piki* piki)
 {
 }
 
@@ -8527,29 +4783,6 @@ void PikiPushState::procAnimMsg(Piki*, MsgAnim*)
 PikiPushPikiState::PikiPushPikiState()
     : PikiState(PIKISTATE_PushPiki, "PUSHPIKI")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x15
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r4, 0x5DC4
-	  subi      r5, r5, 0x72E0
-	  stw       r0, 0x0(r3)
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x6D48
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -8557,7 +4790,7 @@ PikiPushPikiState::PikiPushPikiState()
  * Address:	800D69D8
  * Size:	000090
  */
-void PikiPushPikiState::init(Piki*)
+void PikiPushPikiState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -8607,7 +4840,7 @@ void PikiPushPikiState::init(Piki*)
  * Address:	800D6A68
  * Size:	0000F4
  */
-void PikiPushPikiState::exec(Piki*)
+void PikiPushPikiState::exec(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -8688,7 +4921,7 @@ void PikiPushPikiState::exec(Piki*)
  * Address:	800D6B5C
  * Size:	00000C
  */
-void PikiPushPikiState::cleanup(Piki*)
+void PikiPushPikiState::cleanup(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -8703,7 +4936,7 @@ void PikiPushPikiState::cleanup(Piki*)
  * Address:	800D6B68
  * Size:	000030
  */
-void PikiPushPikiState::resume(Piki*)
+void PikiPushPikiState::resume(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -8727,7 +4960,7 @@ void PikiPushPikiState::resume(Piki*)
  * Address:	800D6B98
  * Size:	000004
  */
-void PikiPushPikiState::restart(Piki*)
+void PikiPushPikiState::restart(Piki* piki)
 {
 }
 
@@ -8855,28 +5088,6 @@ void PikiPushPikiState::procAnimMsg(Piki*, MsgAnim*)
 PikiBuryState::PikiBuryState()
     : PikiState(PIKISTATE_Bury, "BURY")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x2
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3DD4
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6DE4
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -8884,7 +5095,7 @@ PikiBuryState::PikiBuryState()
  * Address:	800D6D10
  * Size:	000004
  */
-void PikiBuryState::init(Piki*)
+void PikiBuryState::init(Piki* piki)
 {
 }
 
@@ -8893,7 +5104,7 @@ void PikiBuryState::init(Piki*)
  * Address:	800D6D14
  * Size:	000200
  */
-void PikiBuryState::exec(Piki*)
+void PikiBuryState::exec(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -9039,7 +5250,7 @@ void PikiBuryState::exec(Piki*)
  * Address:	800D6F14
  * Size:	000004
  */
-void PikiBuryState::cleanup(Piki*)
+void PikiBuryState::cleanup(Piki* piki)
 {
 }
 
@@ -9051,29 +5262,6 @@ void PikiBuryState::cleanup(Piki*)
 PikiNukareWaitState::PikiNukareWaitState()
     : PikiState(PIKISTATE_NukareWait, "NUKAREWAIT")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x4
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r4, 0x5DC4
-	  subi      r5, r5, 0x72D4
-	  stw       r0, 0x0(r3)
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x6E7C
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -9081,7 +5269,7 @@ PikiNukareWaitState::PikiNukareWaitState()
  * Address:	800D6F68
  * Size:	00014C
  */
-void PikiNukareWaitState::init(Piki*)
+void PikiNukareWaitState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -9186,7 +5374,7 @@ void PikiNukareWaitState::init(Piki*)
  * Address:	800D70B4
  * Size:	000078
  */
-void PikiNukareWaitState::exec(Piki*)
+void PikiNukareWaitState::exec(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -9230,7 +5418,7 @@ void PikiNukareWaitState::exec(Piki*)
  * Address:	800D712C
  * Size:	000004
  */
-void PikiNukareWaitState::cleanup(Piki*)
+void PikiNukareWaitState::cleanup(Piki* piki)
 {
 }
 
@@ -9242,28 +5430,6 @@ void PikiNukareWaitState::cleanup(Piki*)
 PikiNukareState::PikiNukareState()
     : PikiState(PIKISTATE_Nukare, "NUKARE")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x3
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3D98
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x6F18
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -9271,7 +5437,7 @@ PikiNukareState::PikiNukareState()
  * Address:	800D717C
  * Size:	0000AC
  */
-void PikiNukareState::init(Piki*)
+void PikiNukareState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -9326,7 +5492,7 @@ void PikiNukareState::init(Piki*)
  * Address:	800D7228
  * Size:	000004
  */
-void PikiNukareState::exec(Piki*)
+void PikiNukareState::exec(Piki* piki)
 {
 }
 
@@ -9335,7 +5501,7 @@ void PikiNukareState::exec(Piki*)
  * Address:	800D722C
  * Size:	000264
  */
-void PikiNukareState::cleanup(Piki*)
+void PikiNukareState::cleanup(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -9633,29 +5799,6 @@ void PikiNukareState::procAnimMsg(Piki*, MsgAnim*)
 PikiAutoNukiState::PikiAutoNukiState()
     : PikiState(PIKISTATE_AutoNuki, "AUTONUKI")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x5
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r4, 0x5DC4
-	  subi      r5, r5, 0x72C8
-	  stw       r0, 0x0(r3)
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x6FB0
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -9663,7 +5806,7 @@ PikiAutoNukiState::PikiAutoNukiState()
  * Address:	800D7670
  * Size:	0000DC
  */
-void PikiAutoNukiState::init(Piki*)
+void PikiAutoNukiState::init(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -9732,7 +5875,7 @@ void PikiAutoNukiState::init(Piki*)
  * Address:	800D774C
  * Size:	000078
  */
-void PikiAutoNukiState::exec(Piki*)
+void PikiAutoNukiState::exec(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -9776,7 +5919,7 @@ void PikiAutoNukiState::exec(Piki*)
  * Address:	800D77C4
  * Size:	000004
  */
-void PikiAutoNukiState::cleanup(Piki*)
+void PikiAutoNukiState::cleanup(Piki* piki)
 {
 }
 
@@ -9845,28 +5988,6 @@ void PikiAutoNukiState::procAnimMsg(Piki*, MsgAnim*)
 PikiPressedState::PikiPressedState()
     : PikiState(PIKISTATE_Pressed, "PRESSED")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x21
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3D48
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x704C
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -9874,20 +5995,12 @@ PikiPressedState::PikiPressedState()
  * Address:	800D78B0
  * Size:	000024
  */
-void PikiPressedState::procCollideMsg(Piki*, MsgCollide*)
+void PikiPressedState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x4(r5)
-	  lwz       r0, 0x6C(r4)
-	  cmpwi     r0, 0x37
-	  bnelr-
-	  lfs       f0, -0x6898(r2)
-	  li        r0, 0x1
-	  stfs      f0, 0x10(r3)
-	  stb       r0, 0x14(r3)
-	  blr
-	*/
+	if (msg->mEvent.mCollider->mObjType == OBJTYPE_Teki) {
+		_10 = 1.5f;
+		_14 = 1;
+	}
 }
 
 /*
@@ -9895,24 +6008,13 @@ void PikiPressedState::procCollideMsg(Piki*, MsgCollide*)
  * Address:	800D78D4
  * Size:	000034
  */
-void PikiPressedState::init(Piki*)
+void PikiPressedState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x224(r4)
-	  li        r0, 0x1
-	  lfs       f1, -0x68C0(r2)
-	  lfs       f0, 0xA8(r5)
-	  fmuls     f1, f1, f0
-	  stfs      f1, 0x7C(r4)
-	  lfs       f0, -0x3D40(r13)
-	  stfs      f0, 0x80(r4)
-	  stfs      f1, 0x84(r4)
-	  lfs       f0, -0x6898(r2)
-	  stfs      f0, 0x10(r3)
-	  stb       r0, 0x14(r3)
-	  blr
-	*/
+	f32 scale = 2.0f * C_PIKI_PROP(piki).mPikiDisplayScale();
+	piki->mScale.set(scale, 0.01f, scale);
+	_10 = 1.5f;
+	_14 = 1;
+	PRINT("pressed init !\n");
 }
 
 /*
@@ -9920,101 +6022,33 @@ void PikiPressedState::init(Piki*)
  * Address:	800D7908
  * Size:	000140
  */
-void PikiPressedState::exec(Piki*)
+void PikiPressedState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x48(r1)
-	  mr        r30, r3
-	  lbz       r0, 0x14(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x3C
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x48C(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x48C(r31)
+	if (!_14) {
+		piki->mDeathTimer -= gsys->getFrameTime();
+	}
 
-	.loc_0x3C:
-	  lwz       r4, 0x224(r31)
-	  lfs       f2, 0x48C(r31)
-	  lfs       f1, 0x168(r4)
-	  lfs       f0, 0x178(r4)
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x8C
-	  lfs       f1, 0x58(r31)
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x8C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x7
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x128
+	if (piki->mDeathTimer > C_PIKI_PROP(piki)._15C() - C_PIKI_PROP(piki)._16C() && piki->mHealth <= 0.0f) {
+		PRINT("*** PRESS DIE ! timer = %.1f\n", piki->mDeathTimer);
+		transit(piki, PIKISTATE_Dead);
+		return;
+	}
 
-	.loc_0x8C:
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0xCC
-	  stfs      f0, 0x48C(r31)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  lwz       r12, 0x0(r30)
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x224(r31)
-	  lfs       f0, 0xA8(r3)
-	  stfs      f0, 0x7C(r31)
-	  stfs      f0, 0x80(r31)
-	  stfs      f0, 0x84(r31)
+	if (piki->mDeathTimer < 0.0f) {
+		piki->mDeathTimer = 0.0f;
+		transit(piki, PIKISTATE_Normal);
+		f32 scale = C_PIKI_PROP(piki).mPikiDisplayScale();
+		piki->mScale.set(scale, scale, scale);
+	}
 
-	.loc_0xCC:
-	  lfs       f0, -0x3D3C(r13)
-	  stfs      f0, 0x70(r31)
-	  lfs       f0, -0x3D38(r13)
-	  stfs      f0, 0x74(r31)
-	  lfs       f0, -0x3D34(r13)
-	  stfs      f0, 0x78(r31)
-	  lfs       f0, -0x3D30(r13)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, -0x3D2C(r13)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, -0x3D28(r13)
-	  stfs      f0, 0xAC(r31)
-	  lfs       f1, 0x10(r30)
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x120
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x10(r30)
-	  b         .loc_0x128
+	piki->mVelocity.set(0.0f, 0.0f, 0.0f);
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
-	.loc_0x120:
-	  li        r0, 0
-	  stb       r0, 0x14(r30)
-
-	.loc_0x128:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	if (_10 > 0.0f) {
+		_10 -= gsys->getFrameTime();
+	} else {
+		_14 = 0;
+	}
 }
 
 /*
@@ -10022,7 +6056,7 @@ void PikiPressedState::exec(Piki*)
  * Address:	800D7A48
  * Size:	000004
  */
-void PikiPressedState::cleanup(Piki*)
+void PikiPressedState::cleanup(Piki* piki)
 {
 }
 
@@ -10034,28 +6068,6 @@ void PikiPressedState::cleanup(Piki*)
 PikiDyingState::PikiDyingState()
     : PikiState(PIKISTATE_Dying, "DYING")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x6
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3D24
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x70E8
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -10063,86 +6075,23 @@ PikiDyingState::PikiDyingState()
  * Address:	800D7A98
  * Size:	00011C
  */
-void PikiDyingState::init(Piki*)
+void PikiDyingState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  stw       r28, 0x48(r1)
-	  mr        r28, r4
-	  lwz       r3, 0x4F8(r4)
-	  li        r4, 0
-	  bl        -0x1277C
-	  lis       r3, 0x8022
-	  addi      r6, r3, 0x24D8
-	  lwz       r5, 0x0(r6)
-	  addi      r3, r1, 0x2C
-	  lwz       r0, 0x4(r6)
-	  li        r4, 0x3
-	  stw       r5, 0x2C(r1)
-	  stw       r0, 0x30(r1)
-	  lwz       r5, 0x8(r6)
-	  lwz       r0, 0xC(r6)
-	  stw       r5, 0x34(r1)
-	  stw       r0, 0x38(r1)
-	  lwz       r5, 0x10(r6)
-	  lwz       r0, 0x14(r6)
-	  stw       r5, 0x3C(r1)
-	  stw       r0, 0x40(r1)
-	  bl        0x3E60C
-	  cmplwi    r28, 0
-	  addi      r29, r3, 0
-	  addi      r30, r28, 0
-	  beq-      .loc_0x84
-	  addi      r30, r30, 0x2B8
+	piki->mActiveAction->abandon(nullptr);
+	Choice motionChoices[3] = {
+		{ PIKIANIM_Dead, 0.33f },
+		{ PIKIANIM_Dead2, 0.33f },
+		{ PIKIANIM_Dead3, 0.33f },
+	};
 
-	.loc_0x84:
-	  addi      r3, r1, 0x14
-	  addi      r4, r29, 0
-	  bl        0x47434
-	  addi      r31, r3, 0
-	  addi      r4, r29, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x1C
-	  bl        0x47454
-	  addi      r4, r3, 0
-	  addi      r3, r28, 0
-	  addi      r5, r31, 0
-	  bl        -0xD170
-	  mr        r3, r28
-	  bl        -0xFCE0
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xFC
-	  lwz       r29, 0x2AC(r28)
-	  li        r3, 0xA
-	  li        r0, 0
-	  stw       r3, 0x24(r1)
-	  addi      r4, r29, 0
-	  addi      r5, r1, 0x24
-	  stw       r0, 0x28(r1)
-	  lwz       r3, 0x2E8(r29)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  bl        -0x4D1BC
-
-	.loc_0xFC:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  lwz       r28, 0x48(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	int motionID = selectRandomly(motionChoices, 3);
+	piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
+	if (piki->hasBomb()) {
+		BombItem* bomb = (BombItem*)piki->getHoldCreature();
+		MsgUser msg(0);
+		C_SAI(bomb)->procMsg(bomb, &msg);
+		bomb->resetStateGrabbed();
+	}
 }
 
 /*
@@ -10150,24 +6099,10 @@ void PikiDyingState::init(Piki*)
  * Address:	800D7BB4
  * Size:	000034
  */
-void PikiDyingState::exec(Piki*)
+void PikiDyingState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x3D1C(r13)
-	  stfs      f0, 0x70(r4)
-	  lfs       f0, -0x3D18(r13)
-	  stfs      f0, 0x74(r4)
-	  lfs       f0, -0x3D14(r13)
-	  stfs      f0, 0x78(r4)
-	  lfs       f0, -0x3D10(r13)
-	  stfs      f0, 0xA4(r4)
-	  lfs       f0, -0x3D0C(r13)
-	  stfs      f0, 0xA8(r4)
-	  lfs       f0, -0x3D08(r13)
-	  stfs      f0, 0xAC(r4)
-	  blr
-	*/
+	piki->mVelocity.set(0.0f, 0.0f, 0.0f);
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -10175,7 +6110,7 @@ void PikiDyingState::exec(Piki*)
  * Address:	800D7BE8
  * Size:	000004
  */
-void PikiDyingState::cleanup(Piki*)
+void PikiDyingState::cleanup(Piki* piki)
 {
 }
 
@@ -10184,53 +6119,17 @@ void PikiDyingState::cleanup(Piki*)
  * Address:	800D7BEC
  * Size:	000090
  */
-void PikiDyingState::procAnimMsg(Piki*, MsgAnim*)
+void PikiDyingState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x30
-	  b         .loc_0x78
-
-	.loc_0x30:
-	  lhz       r0, 0x524(r31)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x5C
-	  mr        r3, r31
-	  bl        -0xFD10
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r31, 0x464
-	  li        r4, 0x1D
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xC4EF4
-
-	.loc_0x5C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0x7
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x78:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_Finished:
+		if (piki->isFired()) {
+			piki->endFire();
+			effectMgr->create(EffectMgr::EFF_Piki_FireRecover, piki->mEffectPos, nullptr, nullptr);
+		}
+		transit(piki, PIKISTATE_Dead);
+		break;
+	}
 }
 
 /*
@@ -10241,28 +6140,6 @@ void PikiDyingState::procAnimMsg(Piki*, MsgAnim*)
 PikiDeadState::PikiDeadState()
     : PikiState(PIKISTATE_Dead, "DEAD")
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x7
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r5, 0x5DC4
-	  subi      r5, r13, 0x3D04
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x7180
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -10270,24 +6147,12 @@ PikiDeadState::PikiDeadState()
  * Address:	800D7CC8
  * Size:	000034
  */
-void PikiDeadState::init(Piki*)
+void PikiDeadState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r3, r4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lfs       f0, -0x6898(r2)
-	  stfs      f0, 0x48C(r4)
-	  lhz       r0, 0x4FC(r4)
-	  subfic    r0, r0, 0x1
-	  bl        -0x47470
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	piki->mDeathTimer = 1.5f;
+	// this is probably some optimised OR check but i haven't figured out which. works for now.
+	if (1 - piki->mMode == 0) { }
+	piki->endStickObject();
 }
 
 /*
@@ -10295,52 +6160,20 @@ void PikiDeadState::init(Piki*)
  * Address:	800D7CFC
  * Size:	00009C
  */
-void PikiDeadState::exec(Piki*)
+void PikiDeadState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lfs       f0, -0x6898(r2)
-	  lfs       f1, 0x48C(r4)
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0x7C(r4)
-	  stfs      f0, 0x80(r4)
-	  stfs      f0, 0x84(r4)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f2, 0x48C(r4)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f1, -0x6834(r2)
-	  fsubs     f0, f2, f0
-	  fcmpo     cr0, f2, f1
-	  stfs      f0, 0x48C(r4)
-	  lfs       f0, -0x3CFC(r13)
-	  stfs      f0, 0xA4(r4)
-	  lfs       f0, -0x3CF8(r13)
-	  stfs      f0, 0xA8(r4)
-	  lfs       f0, -0x3CF4(r13)
-	  stfs      f0, 0xAC(r4)
-	  lfs       f0, -0x3CF0(r13)
-	  stfs      f0, 0x70(r4)
-	  lfs       f0, -0x3CEC(r13)
-	  stfs      f0, 0x74(r4)
-	  lfs       f0, -0x3CE8(r13)
-	  stfs      f0, 0x78(r4)
-	  lfs       f1, 0x48C(r4)
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x8C
-	  addi      r3, r4, 0
-	  li        r4, 0
-	  bl        -0x4D0A4
+	f32 scale = piki->mDeathTimer / 1.5f;
+	piki->mScale.set(scale, scale, scale);
+	if (piki->mDeathTimer > 8.0f) {
+		// also not in the DLL, i assume it's commented out code
+	}
+	piki->mDeathTimer -= gsys->getFrameTime();
 
-	.loc_0x8C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	piki->mVelocity.set(0.0f, 0.0f, 0.0f);
+	if (piki->mDeathTimer < 0.0f) {
+		piki->kill(false);
+	}
 }
 
 /*
@@ -10348,18 +6181,9 @@ void PikiDeadState::exec(Piki*)
  * Address:	800D7D98
  * Size:	00001C
  */
-void PikiDeadState::cleanup(Piki*)
+void PikiDeadState::cleanup(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x3CE4(r13)
-	  stfs      f0, 0x7C(r4)
-	  lfs       f0, -0x3CE0(r13)
-	  stfs      f0, 0x80(r4)
-	  lfs       f0, -0x3CDC(r13)
-	  stfs      f0, 0x84(r4)
-	  blr
-	*/
+	piki->mScale.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -10369,35 +6193,8 @@ void PikiDeadState::cleanup(Piki*)
  */
 PikiEmotionState::PikiEmotionState()
     : PikiState(PIKISTATE_Emotion, "EMOTION")
-    , _1D(0)
+    , mRapCnt(0)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x7E08
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x5E4C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1F
-	  li        r6, 0
-	  stw       r0, 0x4(r3)
-	  lis       r5, 0x802C
-	  subi      r0, r5, 0x5DC4
-	  stw       r6, 0x8(r3)
-	  subi      r5, r13, 0x3CD8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x7218
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x68D0(r2)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  stb       r6, 0x1D(r3)
-	  blr
-	*/
 }
 
 /*
@@ -10405,534 +6202,129 @@ PikiEmotionState::PikiEmotionState()
  * Address:	800D7E14
  * Size:	000784
  */
-void PikiEmotionState::init(Piki*)
+void PikiEmotionState::init(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x190(r1)
-	  stmw      r27, 0x17C(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  stb       r0, 0x1C(r3)
-	  lis       r3, 0x8022
-	  addi      r5, r3, 0x24D8
-	  lbz       r0, 0x400(r4)
-	  cmplwi    r0, 0xA
-	  beq-      .loc_0x770
-	  cmplwi    r0, 0x9
-	  bgt-      .loc_0x770
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x72BC
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r0, 0x18(r5)
-	  lwz       r4, 0x1C(r5)
-	  lwz       r3, -0x6830(r2)
-	  stw       r0, 0x158(r1)
-	  lwz       r0, -0x682C(r2)
-	  stw       r4, 0x15C(r1)
-	  lwz       r6, 0x20(r5)
-	  lwz       r4, 0x24(r5)
-	  stw       r6, 0x160(r1)
-	  stw       r3, 0x150(r1)
-	  stw       r4, 0x164(r1)
-	  stw       r0, 0x154(r1)
-	  bl        0x1401D8
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x174(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x68E4(r2)
-	  addi      r6, r1, 0x158
-	  stw       r0, 0x170(r1)
-	  lfs       f2, -0x68E8(r2)
-	  addi      r4, r1, 0x150
-	  lfd       f1, 0x170(r1)
-	  addi      r5, r31, 0x94
-	  lfs       f0, -0x68C0(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x6820(r2)
-	  lwz       r3, 0x3038(r13)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x168(r1)
-	  lwz       r0, 0x16C(r1)
-	  rlwinm    r7,r0,3,0,28
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r28, r6, r7
-	  lwzx      r4, r4, r0
-	  bl        -0x33AFC
-	  cmplwi    r31, 0
-	  addi      r30, r31, 0
-	  beq-      .loc_0x104
-	  addi      r30, r30, 0x2B8
+	mGazeFlag = 0;
+	if (piki->mEmotion == PikiEmotion::Unk10) {
+		return;
+	}
 
-	.loc_0x104:
-	  addi      r3, r1, 0xB8
-	  addi      r4, r28, 0
-	  bl        0x47038
-	  addi      r29, r3, 0
-	  addi      r4, r28, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0xC0
-	  bl        0x47058
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0xD56C
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x144
-	  addi      r4, r4, 0x2B8
+	switch (piki->mEmotion) {
+	case PikiEmotion::Unk5: {
+		Choice motionChoices[2] = {
+			{ PIKIANIM_Jump_B1, 0.5f },
+			{ PIKIANIM_Gattu, 0.5f },
+		};
 
-	.loc_0x144:
-	  addi      r3, r31, 0x354
-	  bl        0x47B64
-	  b         .loc_0x770
-	  lwz       r3, 0x28(r5)
-	  lwz       r0, 0x2C(r5)
-	  stw       r3, 0x138(r1)
-	  stw       r0, 0x13C(r1)
-	  lwz       r3, 0x30(r5)
-	  lwz       r0, 0x34(r5)
-	  stw       r3, 0x140(r1)
-	  stw       r0, 0x144(r1)
-	  lwz       r3, 0x38(r5)
-	  lwz       r0, 0x3C(r5)
-	  stw       r3, 0x148(r1)
-	  stw       r0, 0x14C(r1)
-	  lwz       r3, 0x40(r5)
-	  lwz       r0, 0x44(r5)
-	  stw       r3, 0x12C(r1)
-	  stw       r0, 0x130(r1)
-	  lwz       r0, 0x48(r5)
-	  stw       r0, 0x134(r1)
-	  bl        0x1400C4
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x16C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x68E4(r2)
-	  addi      r6, r1, 0x138
-	  stw       r0, 0x168(r1)
-	  lfs       f2, -0x68E8(r2)
-	  addi      r4, r1, 0x12C
-	  lfd       f1, 0x168(r1)
-	  addi      r5, r31, 0x94
-	  lfs       f0, -0x6860(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x6820(r2)
-	  lwz       r3, 0x3038(r13)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x170(r1)
-	  lwz       r0, 0x174(r1)
-	  rlwinm    r7,r0,3,0,28
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r28, r6, r7
-	  lwzx      r4, r4, r0
-	  bl        -0x33C10
-	  cmplwi    r31, 0
-	  addi      r30, r31, 0
-	  beq-      .loc_0x218
-	  addi      r30, r30, 0x2B8
+		int soundChoices[2] = {
+			SEF_PIKI_JUMP1,
+			SEF_PIKI_ANGRY1,
+		};
 
-	.loc_0x218:
-	  addi      r3, r1, 0xA8
-	  addi      r4, r28, 0
-	  bl        0x46F24
-	  addi      r29, r3, 0
-	  addi      r4, r28, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0xB0
-	  bl        0x46F44
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0xD680
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x258
-	  addi      r4, r4, 0x2B8
+		int randIdx  = randFloat(2.0f) * 0.9999f;
+		int motionID = motionChoices[randIdx].mValue;
+		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
+		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
+		piki->mPikiAnimMgr.finishMotion(piki);
+		PRINT("play sound %d\n", motionID); // wrong variable kando
+	} break;
 
-	.loc_0x258:
-	  addi      r3, r31, 0x354
-	  bl        0x47A50
-	  b         .loc_0x770
-	  lwz       r6, 0x4C(r5)
-	  addi      r3, r1, 0x11C
-	  lwz       r0, 0x50(r5)
-	  li        r4, 0x2
-	  stw       r6, 0x11C(r1)
-	  stw       r0, 0x120(r1)
-	  lwz       r6, 0x54(r5)
-	  lwz       r0, 0x58(r5)
-	  stw       r6, 0x124(r1)
-	  stw       r0, 0x128(r1)
-	  bl        0x3E070
-	  cmplwi    r31, 0
-	  addi      r28, r3, 0
-	  addi      r30, r31, 0
-	  beq-      .loc_0x2A4
-	  addi      r30, r30, 0x2B8
+	case PikiEmotion::Unk0: {
+		Choice motionChoices[3] = {
+			{ PIKIANIM_Jump_B1, 0.33f },
+			{ PIKIANIM_Jump, 0.33f },
+			{ PIKIANIM_RotJump, 0.33f },
+		};
 
-	.loc_0x2A4:
-	  addi      r3, r1, 0x98
-	  addi      r4, r28, 0
-	  bl        0x46E98
-	  addi      r29, r3, 0
-	  addi      r4, r28, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0xA0
-	  bl        0x46EB8
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0xD70C
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x2E4
-	  addi      r4, r4, 0x2B8
+		int soundChoices[3] = {
+			SEF_PIKI_JUMP1,
+			SEF_PIKI_JUMP2,
+			SEF_PIKI_JUMP3,
+		};
 
-	.loc_0x2E4:
-	  addi      r3, r31, 0x354
-	  bl        0x479C4
-	  b         .loc_0x770
-	  lwz       r0, 0x5C(r5)
-	  lwz       r4, 0x60(r5)
-	  lwz       r3, -0x6828(r2)
-	  stw       r0, 0x10C(r1)
-	  lwz       r0, -0x6824(r2)
-	  stw       r4, 0x110(r1)
-	  lwz       r6, 0x64(r5)
-	  lwz       r4, 0x68(r5)
-	  stw       r6, 0x114(r1)
-	  stw       r3, 0x104(r1)
-	  stw       r4, 0x118(r1)
-	  stw       r0, 0x108(r1)
-	  bl        0x13FF3C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x16C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x68E4(r2)
-	  addi      r6, r1, 0x10C
-	  stw       r0, 0x168(r1)
-	  lfs       f2, -0x68E8(r2)
-	  addi      r4, r1, 0x104
-	  lfd       f1, 0x168(r1)
-	  addi      r5, r31, 0x94
-	  lfs       f0, -0x68C0(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x6820(r2)
-	  lwz       r3, 0x3038(r13)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x170(r1)
-	  lwz       r0, 0x174(r1)
-	  rlwinm    r7,r0,3,0,28
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r28, r6, r7
-	  lwzx      r4, r4, r0
-	  bl        -0x33D98
-	  cmplwi    r31, 0
-	  addi      r30, r31, 0
-	  beq-      .loc_0x3A0
-	  addi      r30, r30, 0x2B8
+		int randIdx  = randFloat(3.0f) * 0.9999f;
+		int motionID = motionChoices[randIdx].mValue;
+		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
+		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
+		piki->mPikiAnimMgr.finishMotion(piki);
+	} break;
 
-	.loc_0x3A0:
-	  addi      r3, r1, 0x88
-	  addi      r4, r28, 0
-	  bl        0x46D9C
-	  addi      r29, r3, 0
-	  addi      r4, r28, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x90
-	  bl        0x46DBC
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0xD808
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x3E0
-	  addi      r4, r4, 0x2B8
+	case PikiEmotion::Unk7: {
+		Choice motionChoices[2] = {
+			{ PIKIANIM_Sagasu, 0.5f },
+			{ PIKIANIM_Sagasu2, 0.5f },
+		};
 
-	.loc_0x3E0:
-	  addi      r3, r31, 0x354
-	  bl        0x478C8
-	  b         .loc_0x770
-	  cmplwi    r31, 0
-	  addi      r30, r31, 0
-	  beq-      .loc_0x3FC
-	  addi      r30, r30, 0x2B8
+		int motionID = selectRandomly(motionChoices, 2);
+		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
+		piki->mPikiAnimMgr.finishMotion(piki);
+	} break;
 
-	.loc_0x3FC:
-	  addi      r3, r1, 0x78
-	  li        r4, 0x49
-	  bl        0x46D40
-	  addi      r29, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x80
-	  li        r4, 0x49
-	  bl        0x46D60
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0xD864
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x43C
-	  addi      r4, r4, 0x2B8
+	case PikiEmotion::Unk8: {
+		Choice motionChoices[2] = {
+			{ PIKIANIM_Gakkari, 0.5f },
+			{ PIKIANIM_Sagasu2, 0.5f },
+		};
 
-	.loc_0x43C:
-	  addi      r3, r31, 0x354
-	  bl        0x4786C
-	  lwz       r3, 0x3038(r13)
-	  addi      r5, r31, 0x94
-	  li        r4, 0xEF
-	  bl        -0x33E5C
-	  b         .loc_0x770
-	  cmplwi    r31, 0
-	  addi      r30, r31, 0
-	  beq-      .loc_0x468
-	  addi      r30, r30, 0x2B8
+		int soundChoices[2] = {
+			SEF_PIKI_GAKKARI,
+			SEF_PIKI_SNEEZE,
+		};
 
-	.loc_0x468:
-	  addi      r3, r1, 0x68
-	  li        r4, 0x54
-	  bl        0x46CD4
-	  addi      r29, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x70
-	  li        r4, 0x54
-	  bl        0x46CF4
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0xD8D0
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x4A8
-	  addi      r4, r4, 0x2B8
+		int randIdx  = randFloat(2.0f) * 0.9999f;
+		int motionID = motionChoices[randIdx].mValue;
+		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
+		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
+		piki->mPikiAnimMgr.finishMotion(piki);
+	} break;
 
-	.loc_0x4A8:
-	  addi      r3, r31, 0x354
-	  bl        0x47800
-	  lwz       r3, 0x3038(r13)
-	  addi      r5, r31, 0x94
-	  li        r4, 0xE9
-	  bl        -0x33EC8
-	  b         .loc_0x770
-	  cmplwi    r31, 0
-	  addi      r30, r31, 0
-	  beq-      .loc_0x4D4
-	  addi      r30, r30, 0x2B8
+	case PikiEmotion::Unk1: {
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Gakkari, piki), PaniMotionInfo(PIKIANIM_Gakkari));
+		piki->mPikiAnimMgr.finishMotion(piki);
+		seSystem->playPikiSound(SEF_PIKI_GAKKARI, piki->mPosition);
+	} break;
 
-	.loc_0x4D4:
-	  addi      r3, r1, 0x58
-	  li        r4, 0x51
-	  bl        0x46C68
-	  addi      r29, r3, 0
-	  addi      r5, r30, 0
-	  addi      r3, r1, 0x60
-	  li        r4, 0x51
-	  bl        0x46C88
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0xD93C
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x514
-	  addi      r4, r4, 0x2B8
+	case PikiEmotion::Unk3: {
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Mizuage, piki), PaniMotionInfo(PIKIANIM_Mizuage));
+		piki->mPikiAnimMgr.finishMotion(piki);
+		seSystem->playPikiSound(SEF_PIKI_BURUBURU, piki->mPosition);
+	} break;
 
-	.loc_0x514:
-	  addi      r3, r31, 0x354
-	  bl        0x47794
-	  lwz       r3, 0x3038(r13)
-	  addi      r5, r31, 0x94
-	  li        r4, 0xFE
-	  bl        -0x33F34
-	  b         .loc_0x770
-	  cmplwi    r31, 0
-	  addi      r28, r31, 0
-	  beq-      .loc_0x540
-	  addi      r28, r28, 0x2B8
+	case PikiEmotion::Unk6: {
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Jump_B1, piki), PaniMotionInfo(PIKIANIM_Jump_B1));
+		piki->mPikiAnimMgr.finishMotion(piki);
+		seSystem->playPikiSound(SEF_PIKI_YATTA, piki->mPosition);
+	} break;
 
-	.loc_0x540:
-	  addi      r3, r1, 0x48
-	  li        r4, 0x3
-	  bl        0x46BFC
-	  addi      r29, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x50
-	  li        r4, 0x3
-	  bl        0x46C1C
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0xD9A8
-	  lwz       r3, 0x404(r31)
-	  li        r29, 0
-	  addi      r0, r3, 0x94
-	  stw       r0, 0x33C(r31)
-	  stb       r29, 0x340(r31)
-	  stb       r29, 0x330(r31)
-	  lwz       r3, 0x338(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x59C
-	  bl        0xBFC4
-	  stw       r29, 0x338(r31)
+	case PikiEmotion::Unk4: {
+		piki->startMotion(PaniMotionInfo(PIKIANIM_Wait, piki), PaniMotionInfo(PIKIANIM_Wait));
+		piki->startLook(&piki->mCarryingShipPart->mPosition);
+		mGazeFlag = 1;
+	} break;
 
-	.loc_0x59C:
-	  li        r0, 0x1
-	  stb       r0, 0x1C(r30)
-	  b         .loc_0x770
-	  lwz       r3, 0x6C(r5)
-	  lwz       r0, 0x70(r5)
-	  stw       r3, 0xDC(r1)
-	  stw       r0, 0xE0(r1)
-	  lwz       r3, 0x74(r5)
-	  lwz       r0, 0x78(r5)
-	  stw       r3, 0xE4(r1)
-	  stw       r0, 0xE8(r1)
-	  lwz       r3, 0x7C(r5)
-	  lwz       r0, 0x80(r5)
-	  stw       r3, 0xEC(r1)
-	  stw       r0, 0xF0(r1)
-	  lwz       r3, 0x84(r5)
-	  lwz       r0, 0x88(r5)
-	  stw       r3, 0xF4(r1)
-	  stw       r0, 0xF8(r1)
-	  lwz       r3, 0x8C(r5)
-	  lwz       r0, 0x90(r5)
-	  stw       r3, 0xFC(r1)
-	  stw       r0, 0x100(r1)
-	  lwz       r3, 0x94(r5)
-	  lwz       r0, 0x98(r5)
-	  stw       r3, 0xC8(r1)
-	  stw       r0, 0xCC(r1)
-	  lwz       r3, 0x9C(r5)
-	  lwz       r0, 0xA0(r5)
-	  stw       r3, 0xD0(r1)
-	  stw       r0, 0xD4(r1)
-	  lwz       r0, 0xA4(r5)
-	  stw       r0, 0xD8(r1)
-	  bl        0x13FC3C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x16C(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x68E4(r2)
-	  addi      r6, r1, 0xDC
-	  stw       r0, 0x168(r1)
-	  lfs       f2, -0x68E8(r2)
-	  addi      r4, r1, 0xC8
-	  lfd       f1, 0x168(r1)
-	  addi      r5, r31, 0x94
-	  lfs       f0, -0x6868(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x6820(r2)
-	  lwz       r3, 0x3038(r13)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x170(r1)
-	  lwz       r0, 0x174(r1)
-	  rlwinm    r7,r0,3,0,28
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r27, r6, r7
-	  lwzx      r4, r4, r0
-	  bl        -0x34098
-	  cmplwi    r31, 0
-	  addi      r28, r31, 0
-	  beq-      .loc_0x6A0
-	  addi      r28, r28, 0x2B8
+	case PikiEmotion::Unk9: {
+		Choice motionChoices[5] = {
+			{ PIKIANIM_Jump, 0.2f },   { PIKIANIM_Jump_B1, 0.2f }, { PIKIANIM_RotJump, 0.2f },
+			{ PIKIANIM_Rinbow, 0.2f }, { PIKIANIM_Gattu, 0.2f },
+		};
 
-	.loc_0x6A0:
-	  addi      r3, r1, 0x38
-	  addi      r4, r27, 0
-	  bl        0x46A9C
-	  addi      r29, r3, 0
-	  addi      r4, r27, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x40
-	  bl        0x46ABC
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0xDB08
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x6E0
-	  addi      r4, r4, 0x2B8
+		int soundChoices[5] = {
+			SEF_PIKI_JUMP1, SEF_PIKI_JUMP2, SEF_PIKI_JUMP3, SEF_PIKI_NOBI, SEF_PIKI_YATTA,
+		};
 
-	.loc_0x6E0:
-	  addi      r3, r31, 0x354
-	  bl        0x475C8
-	  lbz       r0, 0x1D(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x770
-	  li        r0, 0x5
-	  cmplwi    r31, 0
-	  stb       r0, 0x1D(r30)
-	  mr        r28, r31
-	  beq-      .loc_0x70C
-	  addi      r28, r28, 0x2B8
-
-	.loc_0x70C:
-	  addi      r3, r1, 0x28
-	  li        r4, 0x3
-	  bl        0x46A30
-	  addi      r29, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x30
-	  li        r4, 0x3
-	  bl        0x46A50
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  addi      r5, r29, 0
-	  bl        -0xDB74
-	  lwz       r3, 0x404(r31)
-	  li        r29, 0
-	  addi      r0, r3, 0x94
-	  stw       r0, 0x33C(r31)
-	  stb       r29, 0x340(r31)
-	  stb       r29, 0x330(r31)
-	  lwz       r3, 0x338(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x768
-	  bl        0xBDF8
-	  stw       r29, 0x338(r31)
-
-	.loc_0x768:
-	  li        r0, 0x1
-	  stb       r0, 0x1C(r30)
-
-	.loc_0x770:
-	  lmw       r27, 0x17C(r1)
-	  lwz       r0, 0x194(r1)
-	  addi      r1, r1, 0x190
-	  mtlr      r0
-	  blr
-	*/
+		int randIdx  = randFloat(5.0f) * 0.9999f;
+		int motionID = motionChoices[randIdx].mValue;
+		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
+		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
+		piki->mPikiAnimMgr.finishMotion(piki);
+		if (mRapCnt == 0) {
+			mRapCnt = 5;
+			piki->startMotion(PaniMotionInfo(PIKIANIM_Wait, piki), PaniMotionInfo(PIKIANIM_Wait));
+			piki->startLook(&piki->mCarryingShipPart->mPosition);
+			mGazeFlag = 1;
+		}
+	} break;
+	}
 }
 
 /*
@@ -10942,6 +6334,8 @@ void PikiEmotionState::init(Piki*)
  */
 void PikiEmotionState::doDump()
 {
+	PRINT("gazeFlag=%d rapCnt=%d timer=%.1f gazePos(%.1f %.1f %.1f)\n", mGazeFlag, mRapCnt, mTimer, mGazePosition.x, mGazePosition.y,
+	      mGazePosition.z);
 }
 
 /*
@@ -10949,135 +6343,35 @@ void PikiEmotionState::doDump()
  * Address:	800D859C
  * Size:	0001B8
  */
-void PikiEmotionState::exec(Piki*)
+void PikiEmotionState::exec(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x30(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x2C(r1)
-	  lfs       f0, -0x3CD0(r13)
-	  stfs      f0, 0xA4(r4)
-	  lfs       f0, -0x3CCC(r13)
-	  stfs      f0, 0xA8(r4)
-	  lfs       f0, -0x3CC8(r13)
-	  stfs      f0, 0xAC(r4)
-	  lbz       r0, 0x400(r4)
-	  cmplwi    r0, 0xA
-	  bne-      .loc_0x60
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
+	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	if (piki->mEmotion == PikiEmotion::Unk10) {
+		transit(piki, PIKISTATE_Normal);
+	}
 
-	.loc_0x60:
-	  lbz       r0, 0x400(r31)
-	  cmplwi    r0, 0x4
-	  beq-      .loc_0x80
-	  cmplwi    r0, 0x9
-	  bne-      .loc_0x19C
-	  lbz       r0, 0x1D(r30)
-	  cmplwi    r0, 0x5
-	  bne-      .loc_0x19C
-
-	.loc_0x80:
-	  lbz       r0, 0x1C(r30)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x150
-	  bge-      .loc_0x19C
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0xA0
-	  b         .loc_0x19C
-	  b         .loc_0x19C
-
-	.loc_0xA0:
-	  lwz       r3, 0x404(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x19C
-	  li        r0, 0x2
-	  stb       r0, 0x1C(r30)
-	  addi      r0, r30, 0x10
-	  li        r29, 0
-	  lwz       r5, 0x404(r31)
-	  lwz       r4, 0x94(r5)
-	  lwz       r3, 0x98(r5)
-	  stw       r4, 0x10(r30)
-	  stw       r3, 0x14(r30)
-	  lwz       r3, 0x9C(r5)
-	  stw       r3, 0x18(r30)
-	  stw       r0, 0x33C(r31)
-	  stb       r29, 0x340(r31)
-	  stb       r29, 0x330(r31)
-	  lwz       r3, 0x338(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x108
-	  bl        0xBCD0
-	  stw       r29, 0x338(r31)
-
-	.loc_0x108:
-	  bl        0x13F9CC
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x68D8(r2)
-	  stw       r0, 0x24(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x68E4(r2)
-	  stw       r0, 0x20(r1)
-	  lfs       f2, -0x68E8(r2)
-	  lfd       f1, 0x20(r1)
-	  lfs       f0, -0x6840(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x6898(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x20(r30)
-	  b         .loc_0x19C
-
-	.loc_0x150:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x20(r30)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x20(r30)
-	  lfs       f1, 0x20(r30)
-	  lfs       f0, -0x68D0(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x19C
-	  mr        r3, r31
-	  bl        0xFB0
-	  li        r0, 0x3
-	  cmplwi    r31, 0
-	  stb       r0, 0x1C(r30)
-	  mr        r4, r31
-	  beq-      .loc_0x194
-	  addi      r4, r4, 0x2B8
-
-	.loc_0x194:
-	  addi      r3, r31, 0x354
-	  bl        0x4738C
-
-	.loc_0x19C:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	if (piki->mEmotion == PikiEmotion::Unk4 || (piki->mEmotion == PikiEmotion::Unk9 && mRapCnt == 5)) {
+		switch (mGazeFlag) {
+		case 1:
+			if (!piki->mCarryingShipPart->isAlive()) {
+				mGazeFlag     = 2;
+				mGazePosition = piki->mCarryingShipPart->mPosition;
+				piki->startLook(&mGazePosition);
+				mTimer = randFloat(0.4f) + 1.5f;
+			}
+			break;
+		case 2:
+			mTimer -= gsys->getFrameTime();
+			if (mTimer < 0.0f) {
+				piki->finishLook();
+				mGazeFlag = 3;
+				piki->mPikiAnimMgr.finishMotion(piki);
+			}
+			break;
+		case 3:
+			break;
+		}
+	}
 }
 
 /*
@@ -11085,24 +6379,11 @@ void PikiEmotionState::exec(Piki*)
  * Address:	800D8754
  * Size:	000034
  */
-void PikiEmotionState::cleanup(Piki*)
+void PikiEmotionState::cleanup(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0xA
-	  stwu      r1, -0x8(r1)
-	  stb       r0, 0x400(r4)
-	  li        r0, 0
-	  stw       r0, 0x404(r4)
-	  bl        0xF50
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	piki->mEmotion          = PikiEmotion::Unk10;
+	piki->mCarryingShipPart = nullptr;
+	piki->finishLook();
 }
 
 /*
@@ -11110,48 +6391,20 @@ void PikiEmotionState::cleanup(Piki*)
  * Address:	800D8788
  * Size:	000084
  */
-void PikiEmotionState::procAnimMsg(Piki*, MsgAnim*)
+void PikiEmotionState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x4(r5)
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x20
-	  b         .loc_0x74
+	switch (msg->mKeyEvent->mEventType) {
+	case KEY_Finished:
+		if (piki->mEmotion == PikiEmotion::Unk9) {
+			mRapCnt--;
+			if (mRapCnt) {
+				init(piki);
+				break;
+			}
+		}
 
-	.loc_0x20:
-	  lbz       r0, 0x400(r4)
-	  cmplwi    r0, 0x9
-	  bne-      .loc_0x58
-	  lbz       r5, 0x1D(r3)
-	  subi      r0, r5, 0x1
-	  stb       r0, 0x1D(r3)
-	  lbz       r0, 0x1D(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x58
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x74
-
-	.loc_0x58:
-	  li        r0, 0
-	  stb       r0, 0x1D(r3)
-	  li        r5, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x74:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+		mRapCnt = 0;
+		transit(piki, PIKISTATE_Normal);
+		break;
+	}
 }

@@ -595,7 +595,7 @@ bool InteractPress::actPiki(Piki* piki)
 	piki->changeMode(0, piki->mNavi);
 	piki->mFSM->transit(piki, PIKISTATE_Pressed);
 
-	piki->_48C = C_PIKI_PROP(piki)._15C();
+	piki->mDeathTimer = C_PIKI_PROP(piki)._15C();
 	piki->mHealth -= mDamage;
 	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiHealth());
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);

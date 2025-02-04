@@ -43,7 +43,7 @@ void ActBridge::init(Creature* creature)
 {
 	mClimbingBridge = _33 = 0;
 	mPiki->mActionState   = 2;
-	mPiki->mEmotion       = 0;
+	mPiki->mEmotion       = PikiEmotion::Unk0;
 	mBridge               = nullptr;
 
 	if (creature && creature->mObjType == OBJTYPE_WorkObject) {
@@ -118,7 +118,7 @@ int ActBridge::exec()
 {
 	if (!mBridge) {
 		PRINT("no bridge!\n");
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		PRINT("exe:no bridge!");
 		return ACTOUT_Fail;
 	}
@@ -340,7 +340,7 @@ int ActBridge::newExeApproach()
 
 	if (!mBridge) {
 		PRINT("app bri fail");
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		PRINT("app failed\n");
 		return ACTOUT_Fail;
 	}
@@ -376,7 +376,7 @@ int ActBridge::newExeApproach()
 				mPiki->setSpeed(0.7f, direction);
 			} else {
 				PRINT("z:%.1f > 0 : bridge app failed\n", bridgePosY);
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 				return ACTOUT_Fail;
 			}
 		} else {
@@ -681,7 +681,7 @@ int ActBridge::newExeGo()
 	}
 
 	if (!mBridge) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		return ACTOUT_Fail;
 	}
 
@@ -997,7 +997,7 @@ int ActBridge::newExeWork()
 	}
 
 	if (!mBridge->workable(mPiki->mPosition)) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		mPiki->resetCreatureFlag(CF_DisableMovement);
 		return ACTOUT_Fail;
 	}

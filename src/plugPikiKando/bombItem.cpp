@@ -104,7 +104,7 @@ BombItem::BombItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
 void BombItem::startAI(int)
 {
 	enableFixPos();
-	restartAI();
+	setInsideView();
 
 	mSeContext = &mSound;
 	mSeContext->setContext(this, 1);

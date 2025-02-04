@@ -375,11 +375,11 @@ int ActTransport::execJump()
 			int oldSlot = mSlotIndex;
 			mSlotIndex  = pel->getNearestFreeSlotIndex(mPiki->mPosition);
 			if (oldSlot == mSlotIndex) {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 				return ACTOUT_Fail;
 			}
 			if (mSlotIndex == -1) {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 				return ACTOUT_Fail;
 			}
 
@@ -456,12 +456,12 @@ bool ActTransport::gotoLiftPos()
 		int previousSlot = mSlotIndex;
 		mSlotIndex       = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
 		if (previousSlot == mSlotIndex) {
-			mPiki->mEmotion = 1;
+			mPiki->mEmotion = PikiEmotion::Unk1;
 			return false;
 		}
 
 		if (mSlotIndex == -1) {
-			mPiki->mEmotion = 1;
+			mPiki->mEmotion = PikiEmotion::Unk1;
 			return false;
 		}
 
@@ -485,7 +485,7 @@ bool ActTransport::gotoLiftPos()
 		if (!pellet->isSlotFree(mSlotIndex)) {
 			mSlotIndex = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
 			if (mSlotIndex == -1) {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 				return false;
 			}
 
@@ -540,7 +540,7 @@ bool ActTransport::gotoLiftPos()
 		if (mWaitTimer < 0.0f) {
 			mSlotIndex = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
 			if (mSlotIndex == -1) {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 				return false;
 			}
 
@@ -728,22 +728,22 @@ int ActTransport::exec()
 		if (!pel->isVisible()) {
 			if (pel->isUfoParts()) {
 				if (pel->getState() == PELSTATE_Goal) {
-					mPiki->mEmotion          = 9;
+					mPiki->mEmotion          = PikiEmotion::Unk9;
 					mPiki->mCarryingShipPart = pel;
 				} else {
-					mPiki->mEmotion = 1;
+					mPiki->mEmotion = PikiEmotion::Unk1;
 				}
 			} else if (pel->getState() == PELSTATE_Goal) {
-				mPiki->mEmotion          = 4;
+				mPiki->mEmotion          = PikiEmotion::Unk4;
 				mPiki->mCarryingShipPart = pel;
 			} else {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 			}
 			return ACTOUT_Fail;
 		}
 	} else {
 		PRINT("target is NULL!\n");
-		mPiki->mEmotion = 7;
+		mPiki->mEmotion = PikiEmotion::Unk7;
 		return ACTOUT_Fail;
 	}
 
@@ -878,17 +878,17 @@ int ActTransport::exec()
 		Pellet* pel = mPellet.getPtr();
 		if (pel->isUfoParts()) {
 			if (pel->getState() == PELSTATE_Goal) {
-				mPiki->mEmotion          = 9;
+				mPiki->mEmotion          = PikiEmotion::Unk9;
 				mPiki->mCarryingShipPart = mPellet.getPtr();
 			} else {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 			}
 		} else if (pel->getState() == PELSTATE_Goal) {
-			mPiki->mEmotion          = 4;
-			mPiki->mEmotion          = 4;
+			mPiki->mEmotion          = PikiEmotion::Unk4;
+			mPiki->mEmotion          = PikiEmotion::Unk4;
 			mPiki->mCarryingShipPart = mPellet.getPtr();
 		} else {
-			mPiki->mEmotion = 1;
+			mPiki->mEmotion = PikiEmotion::Unk1;
 		}
 		return ACTOUT_Success;
 	}

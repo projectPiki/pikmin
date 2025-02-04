@@ -53,12 +53,12 @@ void ActRescue::init(Creature* target)
 int ActRescue::exec()
 {
 	if (!mDrowningPiki) {
-		mPiki->mEmotion = 7;
+		mPiki->mEmotion = PikiEmotion::Unk7;
 		return ACTOUT_Fail;
 	}
 
 	if (!mDrowningPiki->isAlive()) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		return ACTOUT_Fail;
 	}
 
@@ -75,7 +75,7 @@ int ActRescue::exec()
 	case STATE_Approach:
 		if (mTargetSurviveTimer > 20) {
 			// target survived on their own for long enough
-			mPiki->mEmotion = 6;
+			mPiki->mEmotion = PikiEmotion::Unk6;
 			return ACTOUT_Success;
 		}
 		return exeApproach();
@@ -83,7 +83,7 @@ int ActRescue::exec()
 	case STATE_Go:
 		if (mTargetSurviveTimer > 20) {
 			// target survived on their own for long enough
-			mPiki->mEmotion = 6;
+			mPiki->mEmotion = PikiEmotion::Unk6;
 			return ACTOUT_Success;
 		}
 		return exeGo();
@@ -271,7 +271,7 @@ int ActRescue::exeThrow()
 	}
 
 	if (mAnimationFinished) {
-		mPiki->mEmotion = 6;
+		mPiki->mEmotion = PikiEmotion::Unk6;
 		PRINT("rescue done\n");
 		return ACTOUT_Success;
 	}

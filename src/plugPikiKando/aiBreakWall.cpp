@@ -43,7 +43,7 @@ void ActBreakWall::init(Creature* creature)
 {
 	mFailAttackCounter  = 0;
 	mPiki->mActionState = 2;
-	mPiki->mEmotion     = 0;
+	mPiki->mEmotion     = PikiEmotion::Unk0;
 
 	if (creature->isSluice()) {
 		mWall = static_cast<BuildingItem*>(creature);
@@ -270,7 +270,7 @@ int ActBreakWall::breakWall()
 			}
 			mFailAttackCounter++;
 			if (mFailAttackCounter >= int(randFloat(3.0f)) + 3) {
-				mPiki->mEmotion     = 1;
+				mPiki->mEmotion     = PikiEmotion::Unk1;
 				mPiki->mActionState = 0;
 				return ACTOUT_Fail;
 			}

@@ -99,7 +99,7 @@ int ActBou::gotoLeg()
 	}
 
 	if (--mTimeoutCounter <= 0) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		return ACTOUT_Fail;
 	}
 

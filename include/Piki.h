@@ -99,6 +99,24 @@ DEFINE_ENUM_TYPE(
 );
 // clang-format on
 
+// clang-format off
+DEFINE_ENUM_TYPE(
+	PikiEmotion,
+
+	Unk0 = 0,  // 0
+	Unk1, // 1
+	Unk2, // 2
+	Unk3, // 3
+	Unk4, // 4
+	Unk5, // 5
+	Unk6, // 6
+	Unk7, // 7
+	Unk8, // 8
+	Unk9, // 9
+	Unk10, // 10
+);
+// clang-format on
+
 /**
  * @brief TODO
  */
@@ -296,9 +314,9 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	int _480;                             // _480
 	int _484;                             // _484
 	f32 mMoveSpeed;                       // _488
-	f32 _48C;                             // _48C
+	f32 mDeathTimer;                      // _48C, controls death scale, among other things
 	PikiStateMachine* mFSM;               // _490
-	u8 _494[0x4];                         // _494
+	Creature* mCurrNectar;                // _494
 	f32 mFlickIntensity;                  // _498
 	f32 mRotationAngle;                   // _49C
 	bool mIsWhistlePending;               // _4A0, have been whistled, haven't joined party yet

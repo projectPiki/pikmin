@@ -23,8 +23,10 @@ struct EffectParm {
 		mPosition = pos;
 		_24       = 1.0f;
 	}
+
+	EffectParm(Creature* owner) { _28 = owner; }
+
 	// DLL inline ctors to make/check:
-	EffectParm(Creature*);
 	EffectParm(Vector3f& pos, Vector3f& dir)
 	{
 		// need to confirm
@@ -38,8 +40,7 @@ struct EffectParm {
 	u8 _18[0x8];         // _18, unknown
 	Vector3f* _20;       // _20
 	f32 _24;             // _24
-	Creature* _28;       // _28, I think?
-	                     // TODO: members
+	Creature* _28;       // _28
 };
 
 /**

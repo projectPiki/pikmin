@@ -1210,7 +1210,7 @@ void Navi::callPikis(f32 radius)
 
 				piki->mNavi = this;
 				if (state == PIKISTATE_Emotion) {
-					static_cast<PikiEmotionState*>(piki->getCurrState())->_1D = 0;
+					static_cast<PikiEmotionState*>(piki->getCurrState())->mRapCnt = 0;
 				}
 
 				if (piki->mMode == PikiMode::PutbombMode && piki->isHolding()) {

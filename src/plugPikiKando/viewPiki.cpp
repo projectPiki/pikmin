@@ -1053,12 +1053,12 @@ void ViewPiki::refresh(Graphics& gfx)
 		f32 scaleFactor = pikiMgr->mPikiParms->mPikiParms.mPikiDisplayScale();
 		f32 scaleXZ, scaleY;
 		f32 norm = pikiMgr->mPikiParms->mPikiParms._15C() - pikiMgr->mPikiParms->mPikiParms._16C();
-		if (_48C > pikiMgr->mPikiParms->mPikiParms._15C() - pikiMgr->mPikiParms->mPikiParms._16C()) {
+		if (mDeathTimer > pikiMgr->mPikiParms->mPikiParms._15C() - pikiMgr->mPikiParms->mPikiParms._16C()) {
 			scaleXZ = 2.0f;
 			scaleY  = 0.01f;
 		} else {
-			scaleXZ = (_48C / norm) + 1.0f;
-			scaleY  = (1.0f - (_48C / norm)) * 0.99f + 0.01f;
+			scaleXZ = (mDeathTimer / norm) + 1.0f;
+			scaleY  = (1.0f - (mDeathTimer / norm)) * 0.99f + 0.01f;
 			if (scaleY < 0.0f) {
 				ERROR("sacle minus!\n");
 			}

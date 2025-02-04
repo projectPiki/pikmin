@@ -109,7 +109,7 @@ void ActStone::initApproach()
 int ActStone::exeApproach()
 {
 	if (!mCurrPebble || !mCurrPebble->isAlive()) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		return ACTOUT_Fail;
 	}
 
@@ -144,7 +144,7 @@ void ActStone::initAdjust()
 int ActStone::exeAdjust()
 {
 	if (!mCurrPebble || !mCurrPebble->isAlive()) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		return ACTOUT_Fail;
 	}
 

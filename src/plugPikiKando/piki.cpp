@@ -3714,7 +3714,7 @@ Piki::Piki(CreatureProp* prop)
 	mRippleEffect    = new RippleEffect();
 	mFreeLightEffect = new FreeLightEffect();
 	mSlimeEffect     = new SlimeEffect();
-	_48C             = 0.0f;
+	mDeathTimer      = 0.0f;
 	mSearchBuffer.init(mPikiSearchData, 6);
 	_68              = 1;
 	mPanickedEffect  = new PermanentEffect();
@@ -3870,7 +3870,7 @@ void Piki::init(Navi* navi)
 	mLookatTarget = nullptr;
 	mIsLooking    = 0;
 	forceFinishLook();
-	mEmotion          = 10;
+	mEmotion          = PikiEmotion::Unk10;
 	mCarryingShipPart = nullptr;
 	mLeaderCreature   = nullptr;
 	mInWaterTimer     = 0;

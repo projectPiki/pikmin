@@ -378,6 +378,11 @@ static inline f32 randFloat(f32 max)
 {
 	return max * System::getRand(1.0f);
 }
+
+static inline int randInt(f32 max, int min)
+{
+	return int(randFloat(max)) + min;
+}
 static inline f32 unitRandFloat(f32 max = 1.0f)
 {
 	if (max > 0.0f) {
@@ -386,6 +391,7 @@ static inline f32 unitRandFloat(f32 max = 1.0f)
 
 	return 0.0f;
 }
+
 static inline bool randChance(f32 chance)
 {
 	f32 r = System::getRand(1.0f);
