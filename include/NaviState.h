@@ -98,7 +98,10 @@ struct NaviAttackState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x1C - 0x10]; // _10, unknown
+	u16 _10; // _10
+	u8 _12;  // _12
+	f32 _14; // _14
+	f32 _18; // _18
 };
 
 /**
@@ -109,11 +112,11 @@ struct NaviAttackState : public NaviState {
 struct NaviBuryState : public NaviState {
 	NaviBuryState();
 
-	virtual void procAnimMsg(Navi*, MsgAnim*); // _20
-	virtual void init(Navi*);                  // _38
-	virtual void exec(Navi*);                  // _3C
-	virtual void cleanup(Navi*);               // _40
-	virtual bool invincible(Navi*);            // _50
+	virtual void procAnimMsg(Navi*, MsgAnim*);      // _20
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -149,12 +152,12 @@ struct NaviClearState : public NaviState {
 struct NaviContainerState : public NaviState, virtual public ContainerWin::Listener, virtual public GmWin::CloseListener {
 	NaviContainerState();
 
-	virtual void init(Navi*);       // _38
-	virtual void exec(Navi*);       // _3C
-	virtual void cleanup(Navi*);    // _40
-	virtual bool invincible(Navi*); // _50
-	virtual void informWin(int);    // _54
-	virtual void onCloseWindow();   // _58
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
+	virtual void informWin(int);                    // _54
+	virtual void onCloseWindow();                   // _58
 
 	void enterPikis(Navi*, int);
 	void exitPikis(Navi*, int);
@@ -177,12 +180,12 @@ struct NaviContainerState : public NaviState, virtual public ContainerWin::Liste
 struct NaviDeadState : public NaviState {
 	NaviDeadState();
 
-	virtual void procAnimMsg(Navi*, MsgAnim*); // _20
-	virtual void init(Navi*);                  // _38
-	virtual void exec(Navi*);                  // _3C
-	virtual void cleanup(Navi*);               // _40
-	virtual void restart(Navi*);               // _48
-	virtual bool invincible(Navi*);            // _50
+	virtual void procAnimMsg(Navi*, MsgAnim*);      // _20
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual void restart(Navi*);                    // _48
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -196,10 +199,10 @@ struct NaviDeadState : public NaviState {
 struct NaviDemoInfState : public NaviState {
 	NaviDemoInfState();
 
-	virtual void init(Navi*);       // _38
-	virtual void exec(Navi*);       // _3C
-	virtual void cleanup(Navi*);    // _40
-	virtual bool invincible(Navi*); // _50
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -376,10 +379,10 @@ struct NaviDemoSunsetState : public NaviState {
 struct NaviDemoWaitState : public NaviState {
 	NaviDemoWaitState();
 
-	virtual void init(Navi*);       // _38
-	virtual void exec(Navi*);       // _3C
-	virtual void cleanup(Navi*);    // _40
-	virtual bool invincible(Navi*); // _50
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -394,11 +397,11 @@ struct NaviDemoWaitState : public NaviState {
 struct NaviFlickState : public NaviState {
 	NaviFlickState();
 
-	virtual void procAnimMsg(Navi*, MsgAnim*); // _20
-	virtual void init(Navi*);                  // _38
-	virtual void exec(Navi*);                  // _3C
-	virtual void cleanup(Navi*);               // _40
-	virtual bool invincible(Navi*);            // _50
+	virtual void procAnimMsg(Navi*, MsgAnim*);      // _20
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -456,12 +459,12 @@ struct NaviGatherState : public NaviState {
 struct NaviGeyzerState : public NaviState {
 	NaviGeyzerState();
 
-	virtual void procBounceMsg(Navi*, MsgBounce*); // _0C
-	virtual void procAnimMsg(Navi*, MsgAnim*);     // _20
-	virtual void init(Navi*);                      // _38
-	virtual void exec(Navi*);                      // _3C
-	virtual void cleanup(Navi*);                   // _40
-	virtual bool invincible(Navi*);                // _50
+	virtual void procBounceMsg(Navi*, MsgBounce*);  // _0C
+	virtual void procAnimMsg(Navi*, MsgAnim*);      // _20
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -541,9 +544,9 @@ struct NaviNukuAdjustState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x4];  // _10, unknown
+	f32 _10;      // _10
 	Vector3f _14; // _14
-	u8 _20[0x4];  // _20, unknown
+	u8 _20;       // _20
 	Vector3f _24; // _24
 };
 
@@ -555,15 +558,19 @@ struct NaviNukuAdjustState : public NaviState {
 struct NaviNukuState : public NaviState {
 	NaviNukuState();
 
-	virtual void procAnimMsg(Navi*, MsgAnim*); // _20
-	virtual void init(Navi*);                  // _38
-	virtual void exec(Navi*);                  // _3C
-	virtual void cleanup(Navi*);               // _40
-	virtual bool invincible(Navi*);            // _50
+	virtual void procAnimMsg(Navi*, MsgAnim*);      // _20
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x8]; // _10, unknown
+	u16 _10; // _10
+	u8 _12;  // _12
+	u8 _13;  // _13
+	u8 _14;  // _14
+	u8 _15;  // _15
 };
 
 /**
@@ -574,15 +581,15 @@ struct NaviNukuState : public NaviState {
 struct NaviPartsAccessState : public NaviState {
 	NaviPartsAccessState();
 
-	virtual void procAnimMsg(Navi*, MsgAnim*); // _20
-	virtual void init(Navi*);                  // _38
-	virtual void exec(Navi*);                  // _3C
-	virtual void cleanup(Navi*);               // _40
-	virtual bool invincible(Navi*);            // _50
+	virtual void procAnimMsg(Navi*, MsgAnim*);      // _20
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x4]; // _10, unknown
+	u8 _10; // _10
 };
 
 /**
@@ -593,11 +600,11 @@ struct NaviPartsAccessState : public NaviState {
 struct NaviPelletState : public NaviState {
 	NaviPelletState();
 
-	virtual void procAnimMsg(Navi*, MsgAnim*); // _20
-	virtual void init(Navi*);                  // _38
-	virtual void exec(Navi*);                  // _3C
-	virtual void cleanup(Navi*);               // _40
-	virtual bool invincible(Navi*);            // _50
+	virtual void procAnimMsg(Navi*, MsgAnim*);      // _20
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -629,15 +636,18 @@ struct NaviPickState : public NaviState {
 struct NaviPikiZeroState : public NaviState {
 	NaviPikiZeroState();
 
-	virtual void procAnimMsg(Navi*, MsgAnim*); // _20
-	virtual void init(Navi*);                  // _38
-	virtual void exec(Navi*);                  // _3C
-	virtual void cleanup(Navi*);               // _40
-	virtual bool invincible(Navi*);            // _50
+	virtual void procAnimMsg(Navi*, MsgAnim*);      // _20
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x8]; // _10, unknown
+	u8 _10;  // _10
+	u8 _11;  // _11
+	u16 _12; // _12
+	u32 _14; // _14
 };
 
 /**
@@ -648,10 +658,10 @@ struct NaviPikiZeroState : public NaviState {
 struct NaviPressedState : public NaviState {
 	NaviPressedState();
 
-	virtual void init(Navi*);       // _38
-	virtual void exec(Navi*);       // _3C
-	virtual void cleanup(Navi*);    // _40
-	virtual bool invincible(Navi*); // _50
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -673,7 +683,7 @@ struct NaviPushPikiState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x4]; // _10, unknown
+	int _10; // _10
 };
 
 /**
@@ -692,7 +702,7 @@ struct NaviPushState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x4]; // _10, unknown
+	u8 _10; // _10
 };
 
 /**
@@ -710,7 +720,7 @@ struct NaviReleaseState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x4]; // _10, unknown
+	u8 _10; // _10, unknown
 };
 
 /**
@@ -778,10 +788,12 @@ struct NaviStartingState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x4];  // _10, unknown
+	f32 _10;      // _10
 	Vector3f _14; // _14
 	Vector3f _20; // _20
-	u8 _2C[0x8];  // _2C, unknown
+	u32 _2C;      // _2C
+	u16 _30;      // _30
+	u8 _32;       // _32
 	Vector3f _34; // _34
 };
 
@@ -820,7 +832,9 @@ struct NaviThrowState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x8]; // _10, unknown
+	u8 _10;    // _10
+	u8 _11;    // _11
+	Piki* _14; // _14
 };
 
 /**
@@ -845,7 +859,13 @@ struct NaviThrowWaitState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x2C - 0x10]; // _10, unknown
+	Piki* _10; // _10
+	Piki* _14; // _14
+	int _18;   // _18
+	u8 _1C;    // _1C
+	u32 _20;   // _20
+	f32 _24;   // _24
+	f32 _28;   // _28
 };
 
 /**
@@ -856,15 +876,15 @@ struct NaviThrowWaitState : public NaviState {
 struct NaviUfoAccessState : public NaviState {
 	NaviUfoAccessState();
 
-	virtual void procAnimMsg(Navi*, MsgAnim*); // _20
-	virtual void init(Navi*);                  // _38
-	virtual void exec(Navi*);                  // _3C
-	virtual void cleanup(Navi*);               // _40
-	virtual bool invincible(Navi*);            // _50
+	virtual void procAnimMsg(Navi*, MsgAnim*);      // _20
+	virtual void init(Navi*);                       // _38
+	virtual void exec(Navi*);                       // _3C
+	virtual void cleanup(Navi*);                    // _40
+	virtual bool invincible(Navi*) { return true; } // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10[0x4]; // _10, unknown
+	u8 _10; // _10
 };
 
 /**
@@ -880,7 +900,7 @@ struct NaviUfoState : public NaviState {
 	virtual void init(Navi*);                        // _38
 	virtual void exec(Navi*);                        // _3C
 	virtual void cleanup(Navi*);                     // _40
-	virtual bool invincible(Navi*);                  // _50
+	virtual bool invincible(Navi*) { return true; }  // _50
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -909,10 +929,10 @@ struct NaviWalkState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u32 _10; // _10, unknown
-	f32 _14; // _14
-	int _18; // _18
-	f32 _1C; // _1C
+	Creature* _10; // _10, unknown
+	f32 _14;       // _14
+	int _18;       // _18
+	f32 _1C;       // _1C
 };
 
 /**
