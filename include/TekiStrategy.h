@@ -32,6 +32,9 @@ struct TekiStrategy {
 struct TekiStrategyTable {
 	TekiStrategyTable(int count);
 
+	TekiStrategy* getStrategy(int idx) { return mStrategies[idx]; }
+	void setStrategy(int idx, TekiStrategy* strat) { mStrategies[idx] = strat; }
+
 	int mCount;                 // _00
 	TekiStrategy** mStrategies; // _04
 };

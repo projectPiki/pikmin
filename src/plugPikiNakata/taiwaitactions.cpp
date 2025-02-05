@@ -17,7 +17,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("taiwaitactions")
 
 /*
  * --INFO--
@@ -35,8 +35,9 @@ void TaiWaitTurningAction::start(Teki& teki)
  * Address:	80143B0C
  * Size:	0000E4
  */
-bool TaiWaitTurningAction::act(Teki&)
+bool TaiWaitTurningAction::act(Teki& teki)
 {
+
 	/*
 	.loc_0x0:
 	  mflr      r0

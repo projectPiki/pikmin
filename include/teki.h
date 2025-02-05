@@ -169,12 +169,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	virtual f32 getiMass();                              // _38
 	virtual void doStore(CreatureInf*);                  // _48
 	virtual void doRestore(CreatureInf*);                // _4C
-	virtual f32 getShadowSize();                         // _70
-	virtual bool isVisible();                            // _74
-	virtual bool isOrganic();                            // _78
-	virtual bool isAtari();                              // _84
-	virtual bool isAlive();                              // _88
-	virtual bool needShadow();                           // _90
 	virtual bool ignoreAtari(Creature*);                 // _98
 	virtual bool stimulate(Interaction&);                // _A0
 	virtual void collisionCallback(CollEvent&);          // _A8
@@ -197,7 +191,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	virtual Vector3f viewGetScale();                     // _160
 	virtual f32 viewGetBottomRadius();                   // _164
 	virtual f32 viewGetHeight();                         // _168
-	virtual void init(int);                              // _16C
+	virtual void init(int tekiType);                     // _16C
 	virtual void reset();                                // _170
 	virtual void startMotion(int);                       // _174
 	virtual void die();                                  // _178
@@ -225,15 +219,36 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	{
 		mTekiOptions |= opt;
 	}
-	virtual void clearTekiOption(int);         // _1D0
-	virtual void setTekiOptions(int);          // _1D4
-	virtual void clearTekiOptions();           // _1D8
-	virtual void setAnimationKeyOption(int);   // _1DC
-	virtual void clearAnimationKeyOption(int); // _1E0
-	virtual void setAnimationKeyOptions(int);  // _1E4
-	virtual void clearAnimationKeyOptions();   // _1E8
-	virtual void dieSoon();                    // _1EC
-	virtual void becomeCorpse();               // _1F0
+	virtual void clearTekiOption(int);    // _1D0
+	virtual void setTekiOptions(int opts) // _1D4
+	{
+		mTekiOptions = opts;
+	}
+	virtual void clearTekiOptions() { mTekiOptions = 0; } // _1D8
+	virtual void setAnimationKeyOption(int opt)           // _1DC
+	{
+		mAnimKeyOptions |= opt;
+	}
+	virtual void clearAnimationKeyOption(int opt) // _1E0
+	{
+		mAnimKeyOptions &= ~opt;
+	}
+	virtual void setAnimationKeyOptions(int opts) // _1E4
+	{
+		mAnimKeyOptions = opts;
+	}
+	virtual void clearAnimationKeyOptions() // _1E8
+	{
+		mAnimKeyOptions = 0;
+	}
+	virtual void dieSoon();                                                              // _1EC
+	virtual void becomeCorpse();                                                         // _1F0
+	virtual f32 getShadowSize() { return mTekiParams->getF(TPF_ShadowSize); }            // _70
+	virtual bool isVisible() { return getTekiOption(TEKI_OPTION_VISIBLE) != 0; }         // _74
+	virtual bool isOrganic() { return getTekiOption(TEKI_OPTION_ORGANIC) != 0; }         // _78
+	virtual bool isAtari() { return getTekiOption(TEKI_OPTION_ATARI) != 0; }             // _84
+	virtual bool isAlive() { return getTekiOption(TEKI_OPTION_ALIVE) != 0; }             // _88
+	virtual bool needShadow() { return getTekiOption(TEKI_OPTION_SHADOW_VISIBLE) != 0; } // _90
 
 	void prepareEffects();
 	void startStoppingMove();
@@ -382,12 +397,12 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	f32 getAttackRange() { return getParameterF(TPF_AttackRange) * getScaleRate(); }
 	f32 getScale() { return getScaleRate() * 1.0f; }
 
+	f32 calcSphereDistance(Creature& other) { return getPosition().distance(other.getPosition()); }
 	/*
 	    DLL inlines to make:
 	    bool animationFinished();
 	    bool timerElapsed(int);
 
-	    f32 calcSphereDistance(Creature&);
 	    f32 calcTargetDirection(Vector3f&);
 	    f32 getTerritoryDistance();
 
@@ -520,9 +535,16 @@ struct NTeki : public BTeki {
 struct YTeki : public NTeki {
 	YTeki();
 
-	virtual void doKill();     // _10C
-	virtual void exitCourse(); // _110
-	virtual void init(int);    // _16C
+	virtual void doKill();          // _10C
+	virtual void exitCourse();      // _110
+	virtual void init(int tekiType) // _16C
+	{
+		BTeki::init(tekiType);
+		_478 = 0.0f;
+		for (int i = 0; i < 9; i++) {
+			_498[i] = 0;
+		}
+	}
 
 	bool isNaviWatch();
 	void moveTowardPriorityFaceDir(Vector3f&, f32);
@@ -656,15 +678,15 @@ struct TekiMgr : public MonoObjectMgr {
 	static char* typeNames[TEKI_TypeCount];
 	static int typeIds[TEKI_TypeCount];
 
+	bool isUsingType(int type) { return mUsingType[type]; }
+
 	// DLL inlines to make:
 	// bool hasType(int);
-	// bool isUsingType(int);
 	// bool isVisibleType(int);
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_3C = MonoObjectMgr
-	// TODO: members
 	TekiStrategyTable* mStrategyTable;            // _3C
 	PaniMotionTable* mMotionTable;                // _40
 	PaniSoundTable** mTekiSoundTables;            // _44
