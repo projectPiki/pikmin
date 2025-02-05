@@ -160,7 +160,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	f32 _300;                            // _300
 	Creature* _304;                      // _304, maybe Pellet*?
 	bool mIsInWater;                     // _308
-	u32 _30C;                            // _30C, unknown
+	int _30C;                            // _30C
 	int mIsCursorVisible;                // _310
 	BurnEffect* mBurnEffect;             // _314
 	RippleEffect* mRippleEffect;         // _318

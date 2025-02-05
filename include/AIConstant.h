@@ -69,7 +69,7 @@ struct AIConstant : public Node {
 		Parm<int> _154;                   // _154, p19, meeo: UFO level 2 (forest navel)?
 		Parm<int> _164;                   // _164, p20, meeo: UFO level 3 (distant spring)?
 		Parm<int> _174;                   // _174, p21, meeo: UFO level 4 (final trial)?
-		Parm<int> _184;                   // _174, p22, meeo: UFO level 5 (NOT perfect ending trigger)?
+		Parm<int> _184;                   // _184, p22, meeo: UFO level 5 (NOT perfect ending trigger)?
 	};
 
 	AIConstant();

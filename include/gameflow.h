@@ -7,6 +7,7 @@
 #include "LoadIdler.h"
 #include "Parameters.h"
 #include "String.h"
+#include "OnePlayerSection.h"
 #include "WorldClock.h"
 #include "Ayu.h"
 
@@ -297,6 +298,22 @@ struct GamePrefs : public CoreNode {
 	void checkIsHiscore(GameChalQuickInfo&);
 	void checkIsHiscore(GameQuickInfo&);
 	void fixSoundMode();
+
+	void openStage(int stageIdx)
+	{
+		if (stageIdx <= STAGE_END) {
+			_22 |= (1 << stageIdx);
+		}
+	}
+
+	// DLL inlines to do:
+	bool getChildMode();
+	bool getStereoMode();
+	bool getVibeMode();
+	bool isChallengeOpen();
+	bool isStageOpen(int);
+	u8 getBgmVol();
+	u8 getSfxVol();
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

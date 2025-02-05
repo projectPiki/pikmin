@@ -327,8 +327,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Vector3f _4BC;                        // _4BC
 	Vector3f _4C8;                        // _4C8
 	u8 _4D4[0x4];                         // _4D4, unknown
-	u32 _4D8;                             // _4D8, unknown
-	u32 _4DC;                             // _4DC, unknown
+	int _4D8;                             // _4D8
+	Piki* _4DC;                           // _4DC
 	Plane* mWallPlane;                    // _4E0
 	DynCollObject* mWallObj;              // _4E4
 	int _4E8;                             // _4E8

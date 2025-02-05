@@ -298,7 +298,13 @@ struct InteractGrab : public Interaction {
  * @brief TODO
  */
 struct InteractHitEffect : public Interaction {
-	inline InteractHitEffect(); // TODO: probably
+	InteractHitEffect(Creature* owner, Vector3f& v1, Vector3f& v2, CollPart* part)
+	    : Interaction(owner)
+	    , _08(v1)
+	    , _14(v2)
+	    , mCollPart(part)
+	{
+	}
 
 	virtual bool actTeki(Teki*); // _10
 	virtual bool actBoss(Boss*); // _18

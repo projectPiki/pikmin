@@ -73,11 +73,11 @@ struct DemoParms : public Node {
 	struct Parms : Parameters {
 		Parms();
 
-		Parm<f32> mOnionBootTriggerRadius; // _00
-		Parm<f32> mSeedDemoTriggerRadius;  // _10
-		Parm<f32> mSeedDemoWaitTime;       // _20
-		Parm<f32> _30;                     // _30
-		Parm<f32> mDemoTriggerRadius;      // _40
+		Parm<f32> mOnionBootTriggerRadius; // _24
+		Parm<f32> mSeedDemoTriggerRadius;  // _34
+		Parm<f32> mSeedDemoWaitTime;       // _44
+		Parm<f32> _30;                     // _54
+		Parm<f32> mDemoTriggerRadius;      // _64
 	};
 
 	DemoParms();
@@ -86,7 +86,7 @@ struct DemoParms : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Parms mParms; // _24
+	Parms mParms; // _20
 };
 
 /**

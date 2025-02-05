@@ -116,7 +116,7 @@ struct PikiAutoNukiState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x4]; // _10, unknown
+	u8 _10; // _10
 };
 
 /**
@@ -225,10 +225,10 @@ struct PikiDeadState : public PikiState {
 struct PikiDrownState : public PikiState {
 	PikiDrownState();
 
-	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
 	virtual void init(Piki*);                  // _38
 	virtual void exec(Piki*);                  // _3C
 	virtual void cleanup(Piki*);               // _40
+	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
@@ -275,7 +275,7 @@ struct PikiEmitState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x4]; // _10, unknown
+	u8 _10; // _10
 };
 
 /**
@@ -421,9 +421,14 @@ struct PikiFlyingState : public PikiState {
 	// _00     = VTBL
 	// _00-_10 = PikiState
 	PermanentEffect _10; // _10
-	u8 _20[0x2C - 0x20]; // _20, unknown
+	f32 _20;             // _20
+	u8 _24;              // _24
+	u8 _25;              // _25
+	u8 _26[0x2C - 0x26]; // _26, unknown
 	Vector3f _2C;        // _2C
-	u8 _38[0x44 - 0x38]; // _38, unknown
+	f32 _38;             // _38
+	f32 _3C;             // _3C
+	int _40;             // _40
 };
 
 /**
@@ -512,7 +517,7 @@ struct PikiKinokoChangeState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x4]; // _10, unknown
+	bool mDoBecomeKinoko; // _10, if false, change back to normal piki
 };
 
 /**
@@ -659,7 +664,8 @@ struct PikiPushPikiState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x18 - 0x10]; // _10, unknown
+	int _10; // _10
+	u8 _14;  // _14
 };
 
 /**
