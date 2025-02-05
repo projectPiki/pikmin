@@ -132,26 +132,22 @@ void TaiState::finish(Teki& teki)
  * Address:	801271E4
  * Size:	0000EC
  */
-bool TaiState::act(Teki& volatile teki)
+bool TaiState::act(Teki& teki)
 {
 	Teki* pTeki        = &teki;
 	volatile int count = 0;
 	for (int i = 0; count < mCount; i++, count++) {
 		TaiAction* action = mActions[i];
 		if (action->act(*pTeki) && action->hasNextState()) {
-			if (true) {
-				// idk
-				int motionID = pTeki->mTekiAnimator->getCurrentMotionIndex();
-				PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)pTeki, i, pTeki->mStateID, action->mNextState,
-				      pTeki->mPreviousStateId, pTeki->mTekiType, motionID);
-			}
+			PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)pTeki, count, pTeki->mStateID, action->mNextState,
+			      pTeki->mPreviousStateId, pTeki->mTekiType, pTeki->mTekiAnimator->getCurrentMotionIndex());
 
-			int& val     = pTeki->mStateID;
-			int startVal = pTeki->mStateID;
+			volatile int& state = pTeki->mStateID;
+			int startVal        = pTeki->mStateID;
 			if (action->mNextState == -2) {
-				val = pTeki->mPreviousStateId;
+				state = pTeki->mPreviousStateId;
 			} else {
-				val = action->mNextState;
+				state = action->mNextState;
 			}
 			pTeki->mPreviousStateId = startVal;
 			return true;

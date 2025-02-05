@@ -8,6 +8,15 @@
 
 /////////// Rock AI Actions ///////////
 
+/**
+ * @brief TODO
+ */
+enum TaiIwagonStateID {
+	IWAGONSTATE_Die  = 0,
+	IWAGONSTATE_Roll = 1,
+	IWAGONSTATE_COUNT, // 2
+};
+
 /*
  * @brief TODO
  */
@@ -45,8 +54,8 @@ struct TaiIwagonStrategy : public TaiStrategy {
  * @brief TODO
  */
 struct TaiIwagonDustEffectAction : public TaiAction {
-	inline TaiIwagonDustEffectAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiIwagonDustEffectAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -61,8 +70,8 @@ struct TaiIwagonDustEffectAction : public TaiAction {
  * @brief TODO
  */
 struct TaiIwagonRollingAction : public TaiAction {
-	inline TaiIwagonRollingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiIwagonRollingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -75,6 +84,24 @@ struct TaiIwagonRollingAction : public TaiAction {
 };
 
 /////////// Rock Spawner (unused) AI Actions ///////////
+
+/**
+ * @brief TODO
+ */
+enum TaiIwagenFloatParams {
+	IWAGENPF_IwagonScale = TPF_COUNT,
+	IWAGENPF_COUNT, // 51
+};
+
+/**
+ * @brief TODO
+ */
+enum TaiIwagenStateID {
+	IWAGENSTATE_Wait  = 0,
+	IWAGENSTATE_Shoot = 1,
+	IWAGENSTATE_Reset = 2,
+	IWAGENSTATE_COUNT, // 3
+};
 
 /*
  * @brief TODO
@@ -105,8 +132,8 @@ struct TaiIwagenStrategy : public TaiStrategy {
  * @brief TODO
  */
 struct TaiIwagenShootingAction : public TaiAction {
-	inline TaiIwagenShootingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiIwagenShootingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 

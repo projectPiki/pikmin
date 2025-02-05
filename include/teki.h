@@ -355,6 +355,8 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 
 	f32 getPersonalityF(int idx) { return mPersonality->getF(idx); } // weak
 	int getPersonalityI(int idx) { return mPersonality->getI(idx); } // weak
+	void setPersonalityF(int idx, f32 val) { mPersonality->setF(idx, val); }
+	void setPersonalityI(int idx, int val) { mPersonality->setI(idx, val); }
 
 	f32 getParameterF(int idx) { return mTekiParams->getF(idx); } // see Tekif32Params enum
 	int getParameterI(int idx) { return mTekiParams->getI(idx); } // see TekiIntParams enum
@@ -369,6 +371,10 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	}
 
 	// really nakata, was all this necessary (these are all DLL inlines)
+
+	// NB: THIS INLINE NEEDS TO BE ABOVE STOPMOVE OR TAIIWAGEN SDATA BREAKS
+	static void outputDirectionVector(f32 angle, Vector3f& outVec) { outVec.set(NMathF::sin(angle), 0.0f, NMathF::cos(angle)); }
+
 	void inputVelocity(Vector3f& vel) { mVelocity.input(vel); }
 	void inputDrive(Vector3f& drive) { mTargetVelocity.input(drive); }
 	void stopVelocity() { inputVelocity(Vector3f(0.0f, 0.0f, 0.0f)); }
@@ -381,8 +387,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 
 	void setCreaturePointer(int idx, Creature* target) { mTargetCreatures[idx].set(target); }
 	Creature* getCreaturePointer(int idx) { return mTargetCreatures[idx].getPtr(); }
-
-	static void outputDirectionVector(f32 angle, Vector3f& outVec) { outVec.set(NMathF::sin(angle), 0.0f, NMathF::cos(angle)); }
 
 	f32 getScaleRate()
 	{
@@ -419,8 +423,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 
 	    void inputDirectionVector(Vector3f&);
 
-	    void setPersonalityF(int, f32);
-	    void setPersonalityI(int, int);
 
 	    static f32 calcDirection(Vector3f&);
 	*/
@@ -458,7 +460,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	CreaturePlatMgr mPlatMgr;                     // _2D4
 	int mIsDead;                                  // _31C
 	TekiTypes mTekiType;                          // _320
-	int mStateID;                                 // _324
+	volatile int mStateID;                        // _324
 	bool mIsStateReady;                           // _328
 	u8 _329[0x330 - 0x329];                       // _329, TODO: work out members
 	int mPreviousStateId;                         // _330

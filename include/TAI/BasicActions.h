@@ -44,9 +44,10 @@ struct TaiSetOptionAction : public TaiAction {
  * @brief TODO
  */
 struct TaiPlaySoundAction : public TaiAction {
-	inline TaiPlaySoundAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiPlaySoundAction(int soundID)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mSoundID = soundID;
 	}
 
 	virtual void start(Teki&); // _08
@@ -60,9 +61,10 @@ struct TaiPlaySoundAction : public TaiAction {
  * @brief TODO
  */
 struct TaiStopSoundAction : public TaiAction {
-	inline TaiStopSoundAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiStopSoundAction(int soundID)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mSoundID = soundID;
 	}
 
 	virtual void start(Teki&); // _08

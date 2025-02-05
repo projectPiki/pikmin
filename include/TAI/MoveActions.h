@@ -23,8 +23,8 @@ struct TaiMoveNestPositionAction : public TaiAction {
  * @brief TODO
  */
 struct TaiStopMoveAction : public TaiAction {
-	inline TaiStopMoveAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiStopMoveAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

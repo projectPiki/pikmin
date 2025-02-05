@@ -74,8 +74,8 @@ struct TaiAnimationSwallowingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiBangingAction : public TaiAction {
-	inline TaiBangingAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiBangingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 

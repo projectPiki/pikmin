@@ -642,7 +642,7 @@ config.libs = [
             Object(NonMatching, "plugPikiNakata/taicollec.cpp"),
             Object(Matching, "plugPikiNakata/taicollisionactions.cpp"),
             Object(Matching, "plugPikiNakata/taieffectactions.cpp"),
-            Object(NonMatching, "plugPikiNakata/taiiwagen.cpp"),
+            Object(Matching, "plugPikiNakata/taiiwagen.cpp"),
             Object(NonMatching, "plugPikiNakata/taijudgementactions.cpp"),
             Object(NonMatching, "plugPikiNakata/taikinoko.cpp"),
             Object(Matching, "plugPikiNakata/taimessageactions.cpp"),

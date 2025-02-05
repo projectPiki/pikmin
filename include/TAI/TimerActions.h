@@ -8,8 +8,8 @@
  * @brief TODO
  */
 struct TaiTimerAction : public TaiAction {
-	TaiTimerAction(int p1, int p2, f32 p3, f32 p4)
-	    : TaiAction(p1)
+	TaiTimerAction(int nextState, int p2, f32 p3, f32 p4)
+	    : TaiAction(nextState)
 	    , _08(p2)
 	    , _0C(p3)
 	    , _10(p4)

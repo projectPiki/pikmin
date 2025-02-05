@@ -38,8 +38,8 @@ struct TaiGroundCollisionAction : public TaiAction {
  * @brief TODO
  */
 struct TaiWallCollisionAction : public TaiAction {
-	inline TaiWallCollisionAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiWallCollisionAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -53,8 +53,8 @@ struct TaiWallCollisionAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCreatureCollisionAction : public TaiAction {
-	inline TaiCreatureCollisionAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCreatureCollisionAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -69,6 +69,7 @@ struct TaiCreatureCollisionAction : public TaiAction {
  */
 struct TaiPikiCollisionAction : public TaiCreatureCollisionAction {
 	inline TaiPikiCollisionAction() // TODO: this is a guess
+	    : TaiCreatureCollisionAction(-1)
 	{
 	}
 
@@ -83,6 +84,7 @@ struct TaiPikiCollisionAction : public TaiCreatureCollisionAction {
  */
 struct TaiNaviCollisionAction : public TaiCreatureCollisionAction {
 	inline TaiNaviCollisionAction() // TODO: this is a guess
+	    : TaiCreatureCollisionAction(-1)
 	{
 	}
 
@@ -96,8 +98,10 @@ struct TaiNaviCollisionAction : public TaiCreatureCollisionAction {
  * @brief TODO
  */
 struct TaiTekiTypeCollisionAction : public TaiCreatureCollisionAction {
-	inline TaiTekiTypeCollisionAction() // TODO: this is a guess
+	inline TaiTekiTypeCollisionAction(int nextState, int tekiType)
+	    : TaiCreatureCollisionAction(nextState)
 	{
+		mTekiType = tekiType;
 	}
 
 	virtual bool actByEvent(TekiEvent&); // _14

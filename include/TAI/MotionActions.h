@@ -59,16 +59,17 @@ struct TaiFinishMotionAction : public TaiMotionAction {
  * @brief TODO
  */
 struct TaiAnimationKeyAction : public TaiAction {
-	inline TaiAnimationKeyAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiAnimationKeyAction(int nextState, int animKeyOpt)
+	    : TaiAction(nextState)
 	{
+		mAnimKeyOpt = animKeyOpt;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mAnimKeyOpt; // _08
 };
 
 /**

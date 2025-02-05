@@ -43,9 +43,10 @@ struct TaiStartGenParticleGeneratorAction : public TaiAction {
  * @brief TODO
  */
 struct TaiStopGenParticleGeneratorAction : public TaiAction {
-	inline TaiStopGenParticleGeneratorAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiStopGenParticleGeneratorAction(int p1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		_08 = p1;
 	}
 
 	virtual void start(Teki&); // _08

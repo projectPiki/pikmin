@@ -59,59 +59,11 @@ void YaiStrategy::start(Teki& teki)
 void YaiStrategy::act(Teki& teki)
 {
 	// what on earth did yamashita do
-	int stateID = teki.mStateID;
+	int startState = teki.mStateID;
 	if (mStateList[teki.mStateID]->act(teki)) {
-		mStateList[stateID]->finish(teki);
+		mStateList[startState]->finish(teki);
 		mStateList[teki.mStateID]->start(teki);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  lwz       r0, 0x324(r4)
-	  lwz       r3, 0x8(r3)
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r31, 0x324(r30)
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x90
-	  lwz       r3, 0x8(r29)
-	  rlwinm    r0,r31,2,0,29
-	  addi      r4, r30, 0
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x324(r30)
-	  mr        r4, r30
-	  lwz       r3, 0x8(r29)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x90:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
