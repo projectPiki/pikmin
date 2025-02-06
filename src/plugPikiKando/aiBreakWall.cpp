@@ -155,11 +155,11 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
 			Vector3f vec = mPiki->mEffectPos;
 			EffectParm parm(vec);
 			if (mWall->mObjType == OBJTYPE_SluiceSoft) {
-				UtEffectMgr::cast(11, parm);
+				UtEffectMgr::cast(KandoEffect::WallHit1, parm);
 			} else if (mWall->mObjType == OBJTYPE_SluiceHard) {
-				UtEffectMgr::cast(13, parm);
+				UtEffectMgr::cast(KandoEffect::WallHit2, parm);
 			} else {
-				UtEffectMgr::cast(14, parm);
+				UtEffectMgr::cast(KandoEffect::WallHit3, parm);
 			}
 		}
 		break;

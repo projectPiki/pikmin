@@ -135,7 +135,7 @@ void Plant::refresh(Graphics& gfx)
 			             Vector3f(mPosition.x + rad, mPosition.y + 2.0f * rad, mPosition.z + rad));
 
 			if (!gfx.mCamera->isBoundVisible(box, 0x8000 | 0x20 | 0x10 | 0x1 | 0x2 | 0x4 | 0x8) && !_394) {
-				static_cast<SimpleAI*>(mStateMachine)->start(this, PlantAI::STATE_Wait);
+				C_SAI(this)->start(this, PlantAI::STATE_Wait);
 				_30C = 1;
 				return;
 			}

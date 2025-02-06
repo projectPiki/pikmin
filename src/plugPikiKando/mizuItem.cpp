@@ -1,5 +1,6 @@
 #include "MizuItem.h"
 #include "SimpleAI.h"
+#include "ItemAI.h"
 #include "Dolphin/os.h"
 #include "DebugLog.h"
 
@@ -70,10 +71,10 @@ void MizuItem::startAI(int)
 
 	switch (mObjType) {
 	case OBJTYPE_Water:
-		static_cast<SimpleAI*>(mStateMachine)->start(this, 3);
+		C_SAI(this)->start(this, WaterAI::WATER_Unk3);
 		break;
 	case OBJTYPE_FallWater:
-		static_cast<SimpleAI*>(mStateMachine)->start(this, 0);
+		C_SAI(this)->start(this, FallWaterAI::FALLWATER_Unk0);
 		break;
 	}
 }
@@ -90,7 +91,7 @@ bool MizuItem::isAlive()
 		return false;
 	}
 
-	if (stateID == 4 || stateID == 2) {
+	if (stateID == WaterAI::WATER_Die || stateID == WaterAI::WATER_Unk2) {
 		return false;
 	}
 

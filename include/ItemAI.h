@@ -18,6 +18,7 @@ struct SluiceAI : public SimpleAI {
 		Sluice_AddCount   = 3,
 		Sluice_MotionDone = 4,
 		Sluice_DamageInit = 5,
+		Sluice_COUNT, // 6
 	};
 
 	/**
@@ -106,6 +107,18 @@ struct WaterAI : public SimpleAI {
 	/**
 	 * @brief TODO
 	 */
+	enum WaterStateID {
+		WATER_Unk0 = 0,
+		WATER_Unk1 = 1,
+		WATER_Unk2 = 2,
+		WATER_Unk3 = 3,
+		WATER_Die  = 4,
+		WATER_COUNT, // 5
+	};
+
+	/**
+	 * @brief TODO
+	 */
 	struct CollideChar : public SAICondition {
 
 		virtual bool satisfy(AICreature*); // _10
@@ -138,6 +151,18 @@ struct WaterAI : public SimpleAI {
  * @brief TODO
  */
 struct FallWaterAI : public SimpleAI {
+
+	/**
+	 * @brief TODO
+	 */
+	enum FallWaterStateID {
+		FALLWATER_Unk0      = 0,
+		FALLWATER_Unk1      = 1,
+		FALLWATER_Collide   = 2,
+		FALLWATER_Emit      = 3,
+		FALLWATER_Disappear = 4,
+		FALLWATER_COUNT, // 5
+	};
 
 	/**
 	 * @brief TODO

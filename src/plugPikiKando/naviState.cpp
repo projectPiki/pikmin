@@ -774,7 +774,7 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			f32 randAngle = 2.0f * randFloat(PI);
 			Vector3f dir(40.0f * sinf(randAngle), 80.0f, 40.0f * cosf(randAngle));
 			EffectParm parm(navi->mPosition, dir);
-			UtEffectMgr::cast(3, parm);
+			UtEffectMgr::cast(KandoEffect::SmokeSoil, parm);
 			break;
 		case 3:
 			effectMgr->create(EffectMgr::EFF_SD_DirtCloud, navi->mPosition, nullptr, nullptr);
@@ -3939,10 +3939,10 @@ void NaviGatherState::init(Navi* navi)
 	_10        = 0;
 	SeSystem::playPlayerSe(SE_GATHER);
 
-	int effIDMaybe = (navi->mNaviID == 0) ? 1 : 2;
+	int kEffID = (navi->mNaviID == 0) ? KandoEffect::NaviWhistle0 : KandoEffect::NaviWhistle1;
 	EffectParm parm(navi->mPosition);
-	UtEffectMgr::cast(effIDMaybe, parm);
-	UtEffectMgr::cast(7, parm);
+	UtEffectMgr::cast(kEffID, parm);
+	UtEffectMgr::cast(KandoEffect::NaviFue0, parm);
 	_18 = 0;
 	rumbleMgr->start(3, 0, nullptr);
 }

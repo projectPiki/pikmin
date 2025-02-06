@@ -498,8 +498,8 @@ void ViewPiki::update()
 			EffectParm parm(pos, rot);
 
 			int attr = MapCode::getAttribute(mFloorTri);
-			if (attr >= 0 && attr <= 3) {
-				utEffectMgr->cast(attr + 3, parm);
+			if (attr >= ATTR_Soil && attr <= ATTR_Tree) {
+				utEffectMgr->cast(attr + KandoEffect::SmokeOffset, parm);
 			}
 
 			mLastEffectPosition = mPosition;

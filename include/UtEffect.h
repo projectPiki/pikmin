@@ -10,6 +10,47 @@ struct Navi;
 // NB: could maybe split these into smaller headers down the line
 // Most of their functions are in uteffect in Kando, so they're here for now.
 
+// clang-format off
+DEFINE_ENUM_TYPE(
+	KandoEffect,
+
+	Goal = 0,         // 0
+	NaviWhistle0,     // 1
+	NaviWhistle1,     // 2
+	SmokeSoil,        // 3
+	SmokeRock,        // 4
+	SmokeGrass,       // 5
+	SmokeTree,        // 6
+	NaviFue0,         // 7
+	NaviFue1,         // 8, unused
+	PikiGrowup1,      // 9
+	PikiGrowup2,      // 10
+	WallHit1,         // 11
+	WallHit0,         // 12
+	WallHit2,         // 13
+	WallHit3,         // 14
+	WallBreak0,       // 15
+	WallBreak1,       // 16
+	Bubbles,          // 17
+	Ripples,          // 18
+	Bomb,             // 19
+	BombLight,        // 20
+	UfoSuck,          // 21
+	UfoSuikomi,       // 22
+	WhistleTemplate0, // 23
+	WhistleTemplate1, // 24
+	IdleBluePiki,     // 25
+	IdleRedPiki,      // 26
+	IdleYellowPiki,   // 27
+	COUNT,            // 28
+
+	START = Goal,         // 0
+	END = IdleYellowPiki, // 27
+
+	SmokeOffset = SmokeSoil, // 3, for different map code attributes
+);
+// clang-format on
+
 /**
  * @brief TODO
  */

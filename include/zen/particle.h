@@ -27,6 +27,7 @@ enum ParticleGeneratorFlags {
 	PTCLGEN_Finished   = 0x2,
 	PTCLGEN_Active     = 0x4,
 	PTCLGEN_GenStopped = 0x8,
+	PTCLGEN_Unk5       = 0x10,
 };
 
 /**

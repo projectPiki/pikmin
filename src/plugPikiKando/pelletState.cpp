@@ -333,7 +333,7 @@ void PelletGoalState::init(Pellet* pelt)
 	if (pelt->mTargetGoal->mObjType != OBJTYPE_Ufo) {
 		Vector3f pos = pelt->mTargetGoal->getGoalPos();
 		EffectParm parm(pos);
-		utEffectMgr->cast(0, parm);
+		utEffectMgr->cast(KandoEffect::Goal, parm);
 	}
 
 	mStartScaleX = pelt->mScale.x;
@@ -344,8 +344,8 @@ void PelletGoalState::init(Pellet* pelt)
 		Vector3f goalPos = pelt->mTargetGoal->getGoalPos();
 		Vector3f suckPos = pelt->mTargetGoal->getSuckPos();
 		EffectParm parm(goalPos, suckPos);
-		utEffectMgr->cast(21, parm);
-		utEffectMgr->cast(22, parm);
+		utEffectMgr->cast(KandoEffect::UfoSuck, parm);
+		utEffectMgr->cast(KandoEffect::UfoSuikomi, parm);
 	}
 
 	Stickers stick(pelt);

@@ -1795,7 +1795,7 @@ Creature* GenObjectPiki::birth(BirthInfo& info)
 			sprout->mPosition.y = mapMgr->getMinY(sprout->mPosition.x, sprout->mPosition.z, true);
 			sprout->setColor(color);
 			sprout->startAI(0);
-			static_cast<SimpleAI*>(sprout->mStateMachine)->start(sprout, 6);
+			C_SAI(sprout)->start(sprout, PikiHeadAI::PIKIHEAD_Wait);
 			piki = sprout;
 		}
 		break;
@@ -1810,9 +1810,9 @@ Creature* GenObjectPiki::birth(BirthInfo& info)
 			piki->Creature::init(info.mPosition);
 			static_cast<Piki*>(piki)->initColor(color);
 			if (mSpawnState() == 1) { // free
-				static_cast<Piki*>(piki)->changeMode(0, naviMgr->getNavi());
+				static_cast<Piki*>(piki)->changeMode(PikiMode::FreeMode, naviMgr->getNavi());
 			} else { // in party
-				static_cast<Piki*>(piki)->changeMode(1, naviMgr->getNavi());
+				static_cast<Piki*>(piki)->changeMode(PikiMode::FormationMode, naviMgr->getNavi());
 			}
 		}
 		break;

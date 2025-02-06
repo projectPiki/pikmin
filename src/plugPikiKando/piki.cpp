@@ -2976,7 +2976,7 @@ void Piki::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	if (mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == 56 && event.mEventType == KEY_PlayEffect) {
 		EffectParm parm(mPosition);
-		UtEffectMgr::cast(17, parm);
+		UtEffectMgr::cast(KandoEffect::Bubbles, parm);
 	}
 
 	if (isDamaged() && event.mEventType == KEY_Finished) {
@@ -3301,7 +3301,7 @@ void Piki::bounceCallback()
 		rippleParm._24 = 2.0f;
 
 		mRippleEffect->emit(rippleParm);
-		UtEffectMgr::cast(17, parm);
+		UtEffectMgr::cast(KandoEffect::Bubbles, parm);
 		mInWaterTimer = 1;
 		return;
 	}
@@ -4165,7 +4165,7 @@ void Piki::realAI()
 			AICreature* aiC = static_cast<AICreature*>(held);
 			PRINT("---- aiContext ---\n");
 			PRINT(" creature=%x target=%x\n", aiC->mCollidingCreature, aiC->mTargetCreature);
-			PRINT(" int=%d int2=%d real=%f real1=%f real2=%f\n", aiC->_2D0, aiC->mCounter, aiC->mCurrentItemHealth, aiC->_2DC,
+			PRINT(" int=%d int2=%d real=%f real1=%f real2=%f\n", aiC->mCurrAnimId, aiC->mCounter, aiC->mCurrentItemHealth, aiC->_2DC,
 			      aiC->mMaxHealth);
 			PRINT("  currState=%x\n", aiC->mCurrentState);
 			PRINT("============================================\n");
@@ -4211,7 +4211,7 @@ void Piki::realAI()
 			EffectParm rippleParm(&mShadowPos);
 			EffectParm castParm(mShadowPos);
 			mRippleEffect->emit(rippleParm);
-			UtEffectMgr::cast(17, castParm);
+			UtEffectMgr::cast(KandoEffect::Bubbles, castParm);
 			seSystem->playSoundDirect(5, SEW_PIKI_WATERDROP, mPosition);
 		}
 

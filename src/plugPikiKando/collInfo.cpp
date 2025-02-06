@@ -2126,16 +2126,6 @@ CollPart* CollInfo::checkCollisionSpecial(Vector3f&, f32, CndCollPart*)
 
 /*
  * --INFO--
- * Address:	80088EF8
- * Size:	000008
- */
-bool CndCollPart::satisfy(CollPart*)
-{
-	return false;
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	000008
  */

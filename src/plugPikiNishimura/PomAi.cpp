@@ -360,7 +360,7 @@ void PomAi::createPikiHead()
 			sprout->mVelocity.set(200.0f * sinf(randAngle), 800.0f, 200.0f * cosf(randAngle));
 
 			sprout->startAI(0);
-			static_cast<SimpleAI*>(sprout->mStateMachine)->start(sprout, 0);
+			C_SAI(sprout)->start(sprout, PikiHeadAI::PIKIHEAD_Flying);
 		}
 	}
 

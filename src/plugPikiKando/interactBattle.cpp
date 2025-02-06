@@ -585,8 +585,8 @@ bool InteractPress::actPiki(Piki* piki)
 		bomb->resetStateGrabbed();
 		if (bomb->mObjType == OBJTYPE_Bomb) {
 			MsgUser msg(1);
-			BombItem* bombItem = static_cast<BombItem*>(bomb);
-			bombItem->_2D0     = 0;
+			BombItem* bombItem    = static_cast<BombItem*>(bomb);
+			bombItem->mCurrAnimId = 0;
 			static_cast<SimpleAI*>(bombItem->mStateMachine)->procMsg(bombItem, &msg);
 			PRINT("bomb immediately\n");
 		}

@@ -185,9 +185,9 @@ struct CollEvent {
  * @brief TODO
  */
 struct CndCollPart {
-	virtual bool satisfy(CollPart*); // _08
+	virtual bool satisfy(CollPart*) { return false; } // _08
 
-	// _00 = VTBL?
+	// _00 = VTBL
 	// TODO: members
 };
 
@@ -195,9 +195,15 @@ struct CndCollPart {
  * @brief TODO
  */
 struct CndBombable : public CndCollPart {
-	virtual bool satisfy(CollPart*); // _08 (weak)
+	virtual bool satisfy(CollPart* part) // _08 (weak)
+	{
+		if (part && part->getCode().match('**b*', '*')) {
+			return true;
+		}
+		return false;
+	}
 
-	// _00 = VTBL?
+	// _00 = VTBL
 	// TODO: members
 };
 

@@ -53,7 +53,7 @@ struct AICreature : public Creature, public PaniAnimKeyListener {
 	Creature* mCollidingCreature;            // _2BC
 	Creature* mTargetCreature;               // _2C0, 'target'?
 	Vector3f _2C4;                           // _2C4, could just be floats
-	int _2D0;                                // _2D0, to do with bombs
+	int mCurrAnimId;                         // _2D0, to do with bombs
 	int mCounter;                            // _2D4, used to track stages of gates
 	f32 mCurrentItemHealth;                  // _2D8
 	f32 _2DC;                                // _2DC

@@ -857,7 +857,7 @@ void GoalItem::suckMe(Pellet* item)
 		playEventSound(this, SE_CONTAINER_HANABI);
 		playEventSound(this, SE_CONTAINER_PELLETIN2);
 	} else {
-		_2D0 += pikiNum;
+		mCurrAnimId += pikiNum;
 		MsgUser msg(0);
 		mStateMachine->procMsg(this, &msg);
 		playEventSound(this, SE_CONTAINER_PELLETIN2);
@@ -880,7 +880,7 @@ void GoalItem::enterGoal(Piki* piki)
 	GameStat::containerPikis.inc(piki->mColor);
 	GameStat::update();
 	if (old == 1) {
-		((SimpleAI*)mStateMachine)->start(this, 0);
+		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 	}
 }
 
@@ -943,7 +943,7 @@ Piki* GoalItem::exitPiki()
 	playEventSound(this, SE_PIKI_OUTHOME);
 
 	if (mHeldPikis[0] + mHeldPikis[1] + mHeldPikis[2] == 0) {
-		((SimpleAI*)mStateMachine)->start(this, 0);
+		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 	}
 	return piki;
 }
@@ -1110,7 +1110,7 @@ void GoalItem::updateConeEmit()
 	if (mConeSizeTimer >= 0.8f) {
 		mSpotModelEff->_14 = _3FC;
 		mIsConeEmit        = false;
-		((SimpleAI*)mStateMachine)->start(this, 0);
+		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 	}
 }
 
@@ -1141,8 +1141,8 @@ void GoalItem::startAI(int)
 	    = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mPosition, Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f));
 	f32 scale = 1.0f;
 	mScale.set(scale, scale, scale);
-	_2D0     = 0;
-	mCounter = 0;
+	mCurrAnimId = 0;
+	mCounter    = 0;
 
 	for (int i = 0; i < 3; i++) {
 		GoalLeg* leg    = &_444[i];
@@ -1171,7 +1171,7 @@ void GoalItem::startAI(int)
 	WayPoint* wp = routeMgr->getWayPoint('test', mWaypointIdx);
 	if (!playerState->bootContainer(mOnionColour) || playerState->isTutorial()) {
 		setMotionSpeed(0.0f);
-		((SimpleAI*)mStateMachine)->start(this, 5);
+		C_SAI(this)->start(this, GoalAI::GOAL_BootInit);
 		startConeShrink();
 		enableColorAnim();
 		mColourFadeRate = 0.0f;
@@ -1179,7 +1179,7 @@ void GoalItem::startAI(int)
 	} else {
 		setMotionSpeed(30.0f);
 		mItemAnimator.startMotion(PaniMotionInfo(1));
-		((SimpleAI*)mStateMachine)->start(this, 0);
+		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 		disableColorAnim();
 		wp->setFlag(true);
 	}
@@ -1507,7 +1507,7 @@ void GoalItem::startBoot()
 {
 	_3CC = 3;
 	setMotionSpeed(30.0f);
-	((SimpleAI*)mStateMachine)->start(this, 5);
+	C_SAI(this)->start(this, GoalAI::GOAL_BootInit);
 	playerState->setBootContainer(mOnionColour);
 }
 
@@ -1518,7 +1518,7 @@ void GoalItem::startBoot()
  */
 void GoalItem::emitPiki()
 {
-	((SimpleAI*)mStateMachine)->start(this, 2);
+	C_SAI(this)->start(this, GoalAI::GOAL_Unk2);
 }
 
 /*

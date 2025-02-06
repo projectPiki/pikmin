@@ -224,7 +224,7 @@ void Pellet::startWaterEffect()
 	EffectParm unused(&mPosition); // lol.
 	EffectParm parm(mPosition);
 	unused._24 = 2.0f; // this is so dumb
-	UtEffectMgr::cast(17, parm);
+	UtEffectMgr::cast(KandoEffect::Bubbles, parm);
 }
 
 /*
@@ -266,7 +266,7 @@ int Pellet::getState()
 	if (mCurrentState) {
 		return mCurrentState->getID();
 	}
-	return 0;
+	return PELSTATE_Normal;
 }
 
 /*
@@ -305,10 +305,10 @@ bool Pellet::isAlive()
 bool Pellet::isAtari()
 {
 	int state = getState();
-	if (state == 2) {
+	if (state == PELSTATE_Appear) {
 		return false;
 	}
-	if (state == 3 || state == 1) {
+	if (state == PELSTATE_Swallowed || state == PELSTATE_Goal) {
 		return false;
 	}
 	return true;
@@ -326,7 +326,7 @@ bool Pellet::isVisible()
 		return false;
 	}
 
-	if (state == 1 || state == 2 || state == 4) {
+	if (state == PELSTATE_Goal || state == PELSTATE_Appear || state == PELSTATE_Dead) {
 		return false;
 	}
 	return true;
@@ -443,8 +443,8 @@ void Pellet::finishPick()
 void Pellet::startGoal()
 {
 	finishPick();
-	mStateMachine->transit(this, 1);
-	mPikiCarrier = 0;
+	mStateMachine->transit(this, PELSTATE_Goal);
+	mPikiCarrier = nullptr;
 	mCarryDirection.set(0.0f, 0.0f, 0.0f);
 }
 
@@ -988,7 +988,7 @@ void Pellet::doLoad(RandomAccessStream& input)
 	PRINT("ufo parts %s : (%.1f %.1f %.1f)", mConfig->mModelId.mStringID, mPosition.x, mPosition.y, mPosition.z);
 	disableFixPos();
 	enableFixPos();
-	mStateMachine->transit(this, 5);
+	mStateMachine->transit(this, PELSTATE_UfoLoad);
 }
 
 /*
@@ -1067,9 +1067,9 @@ void Pellet::startAI(int stateID)
 	}
 
 	if (mPelletView || stateID == 1) {
-		mStateMachine->transit(this, 0);
+		mStateMachine->transit(this, PELSTATE_Normal);
 	} else {
-		mStateMachine->transit(this, 2);
+		mStateMachine->transit(this, PELSTATE_Appear);
 	}
 
 	stopMotion();
@@ -1120,7 +1120,7 @@ void Pellet::startAppear()
 		mAnimator.startMotion(PaniMotionInfo(0));
 		mMotionSpeed = 30.0f;
 	}
-	mStateMachine->transit(this, 2);
+	mStateMachine->transit(this, PELSTATE_Appear);
 }
 
 /*
@@ -1147,11 +1147,11 @@ void Pellet::doAnimation()
 void Pellet::refresh(Graphics& gfx)
 {
 	int state = getState();
-	if (state == 3 && !pelletMgr->isMovieFlag(1)) {
+	if (state == PELSTATE_Swallowed && !pelletMgr->isMovieFlag(1)) {
 		return;
 	}
 
-	if (state == 0 && mPickOffset != 0.0f && !pelletMgr->isMovieFlag(2)) {
+	if (state == PELSTATE_Normal && mPickOffset != 0.0f && !pelletMgr->isMovieFlag(2)) {
 		return;
 	}
 
@@ -1168,11 +1168,11 @@ void Pellet::refresh(Graphics& gfx)
 void Pellet::postUpdate(int _, f32 __)
 {
 	int state = getState();
-	if (state == 3 && !pelletMgr->isMovieFlag(1)) {
+	if (state == PELSTATE_Swallowed && !pelletMgr->isMovieFlag(1)) {
 		return;
 	}
 
-	if (state == 0 && mPickOffset != 0.0f && !pelletMgr->isMovieFlag(2)) {
+	if (state == PELSTATE_Normal && mPickOffset != 0.0f && !pelletMgr->isMovieFlag(2)) {
 		return;
 	}
 
@@ -1202,12 +1202,12 @@ void Pellet::update()
 	mIsAIActive = isOnGround;
 	int state   = getState();
 
-	if (state == 3 && !(pelletMgr->mMovieFlags & 1)) {
+	if (state == PELSTATE_Swallowed && !(pelletMgr->mMovieFlags & 1)) {
 		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 		return;
 	}
 
-	if (state == 0 && mPickOffset != 0.0f && !pelletMgr->isMovieFlag(2)) {
+	if (state == PELSTATE_Normal && mPickOffset != 0.0f && !pelletMgr->isMovieFlag(2)) {
 		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 		return;
 	}
@@ -1463,7 +1463,7 @@ void Pellet::doCreateColls(Graphics& gfx)
  */
 bool InteractSwallow::actPellet(Pellet* pellet)
 {
-	if (pellet->getState() == 3) {
+	if (pellet->getState() == PELSTATE_Swallowed) {
 		return false;
 	}
 	pellet->mStuckMouthPart = mMouthPart;

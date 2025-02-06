@@ -27,7 +27,7 @@ void Jac_FinishDemo(void);                   // args
 void Jac_PrepareDemo(void);                  // args
 void Jac_StartPartsFindDemo(u32 p1, int p2); // unsure on first arg
 void Jac_FinishPartsFindDemo(void);          // args
-void Jac_StartTextDemo(int);                // args
+void Jac_StartTextDemo(int);                 // args
 void Jac_FinishTextDemo(void);               // args
 void Jac_SetDemoPartsID(int);                // args
 void Jac_SetDemoOnyons(int);                 // args

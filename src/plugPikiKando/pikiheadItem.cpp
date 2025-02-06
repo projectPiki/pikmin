@@ -150,7 +150,7 @@ void PikiHeadItem::startAI(int)
 
 	enableAirResist(10.0f - randFloat(0.5f));
 
-	static_cast<SimpleAI*>(mStateMachine)->start(this, 6);
+	C_SAI(this)->start(this, PikiHeadAI::PIKIHEAD_Wait);
 
 	if (mSeedColor < 0 || mSeedColor > 2) {
 		ERROR("set pikihead color before startAI\n");
@@ -303,9 +303,9 @@ bool PikiHeadItem::interactBikkuri(InteractBikkuri& act)
 		piki->resetPosition(mPosition);
 
 		PikiMgr::meNukiMode = true;
-		piki->changeMode(0, nullptr);
+		piki->changeMode(PikiMode::FreeMode, nullptr);
 		PikiMgr::meNukiMode = false;
-		piki->mFSM->transit(piki, 5);
+		piki->mFSM->transit(piki, PIKISTATE_AutoNuki);
 
 		kill(false);
 		return true;

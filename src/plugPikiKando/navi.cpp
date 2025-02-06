@@ -1044,7 +1044,7 @@ void Navi::update()
 			EffectParm rippleParm(&mPosition);
 			EffectParm castParm(mPosition);
 			mRippleEffect->emit(rippleParm);
-			UtEffectMgr::cast(17, castParm);
+			UtEffectMgr::cast(KandoEffect::Bubbles, castParm);
 			SeSystem::playPlayerSe(SE_PIKI_WATERDROP);
 		}
 		mIsInWater = true;
@@ -1105,9 +1105,9 @@ void Navi::update()
 
 		Vector3f parmVel(0.01667f * mVelocity.x, 2.0f, 0.01667f * mVelocity.z);
 		int effAttr = MapCode::getAttribute(mFloorTri);
-		if (effAttr >= ATTR_Unk0 && effAttr <= ATTR_Unk3) {
+		if (effAttr >= ATTR_Soil && effAttr <= ATTR_Tree) {
 			EffectParm parm(parmPos, parmVel);
-			UtEffectMgr::cast(effAttr + 3, parm);
+			UtEffectMgr::cast(effAttr + KandoEffect::SmokeOffset, parm);
 			mDayEndPosition = mPosition;
 		}
 	}
@@ -1124,22 +1124,22 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
 	int lowerMotionID = mNaviAnimMgr.getLowerAnimator().getCurrentMotionIndex();
 	int upperMotionID = mNaviAnimMgr.getUpperAnimator().getCurrentMotionIndex();
 	if (event.mEventType == KEY_PlaySound) {
-		int attr = ATTR_Unk0;
+		int attr = ATTR_Soil;
 		if (mFloorTri) {
 			attr = MapCode::getAttribute(mFloorTri);
 		}
 		u16 soundType;
 		switch (attr) {
-		case ATTR_Unk0:
+		case ATTR_Soil:
 			soundType = 1;
 			break;
-		case ATTR_Unk1:
+		case ATTR_Rock:
 			soundType = 3;
 			break;
-		case ATTR_Unk2:
+		case ATTR_Grass:
 			soundType = 0;
 			break;
-		case ATTR_Unk3:
+		case ATTR_Tree:
 			soundType = 2;
 			break;
 		case ATTR_Water:

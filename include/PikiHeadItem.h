@@ -73,6 +73,28 @@ struct PikiHeadAI : public SimpleAI {
 	/**
 	 * @brief TODO
 	 */
+	enum PikiHeadStateID {
+		PIKIHEAD_Flying   = 0,
+		PIKIHEAD_Unk1     = 1,
+		PIKIHEAD_Bounce   = 2,
+		PIKIHEAD_Bury     = 3,
+		PIKIHEAD_Tane     = 4,
+		PIKIHEAD_Unk5     = 5,
+		PIKIHEAD_Wait     = 6,
+		PIKIHEAD_Unk7     = 7,
+		PIKIHEAD_Growuped = 8,
+		PIKIHEAD_Grow     = 9,
+		PIKIHEAD_Unk10    = 10,
+		PIKIHEAD_Kareta   = 11,
+		PIKIHEAD_Dead     = 12,
+		PIKIHEAD_Unk13    = 13,
+		PIKIHEAD_Bury2    = 14,
+		PIKIHEAD_COUNT, // 15
+	};
+
+	/**
+	 * @brief TODO
+	 */
 	struct BounceSound : public SAIAction {
 
 		virtual void act(AICreature*); // _08

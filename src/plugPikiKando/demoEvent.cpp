@@ -149,7 +149,7 @@ void DemoEventMgr::act(int id, int id2)
 		if (goal) {
 			switch (id2) {
 			case 0:
-				goal->_2D0++;
+				goal->mCurrAnimId++;
 				goal->emitPiki();
 				break;
 			case 2:
@@ -187,7 +187,7 @@ void DemoEventMgr::act(int id, int id2)
 				if (playerState->hasContainer(goalID) && GameStat::allPikis[goalID] == 0) {
 					PRINT("***** SUPPLY 1 PiKI (COLOR = %d)\n", goalID);
 					playerState->mResultFlags.setOn(RESFLAG_PikminSeedStageUp);
-					goal->_2D0++;
+					goal->mCurrAnimId++;
 					goal->emitPiki();
 				}
 				break;

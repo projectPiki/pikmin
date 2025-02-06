@@ -68,6 +68,19 @@ struct BombAI : public SimpleAI {
 	/**
 	 * @brief TODO
 	 */
+	enum BombStateID {
+		BOMB_Unk0 = 0,
+		BOMB_Unk1 = 1,
+		BOMB_Set  = 2,
+		BOMB_Bomb = 3,
+		BOMB_Mizu = 4,
+		BOMB_Die  = 5,
+		BOMB_COUNT, // 6
+	};
+
+	/**
+	 * @brief TODO
+	 */
 	struct BombExec : public SAIAction {
 
 		virtual void act(AICreature*); // _08

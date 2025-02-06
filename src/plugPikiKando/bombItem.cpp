@@ -32,9 +32,9 @@ void BombItem::collisionCallback(CollEvent& coll)
 	if (obj->mObjType != OBJTYPE_Piki && state == 1) {
 		if (coll.mColliderPart->getID().mId == 'beat') {
 			PRINT("***BOMB COLLIDE WITH KING COLL PART!!!!!!!!!\n");
-			((SimpleAI*)mStateMachine)->start(this, 4);
+			C_SAI(this)->start(this, BombAI::BOMB_Mizu);
 		} else {
-			((SimpleAI*)mStateMachine)->start(this, 3);
+			C_SAI(this)->start(this, BombAI::BOMB_Bomb);
 		}
 	}
 }
@@ -48,7 +48,7 @@ bool BombItem::isVisible()
 {
 	int state = getCurrState()->getID();
 
-	if (state == 4 || state == 5 || state == 1 || state == 2) {
+	if (state == BombAI::BOMB_Mizu || state == BombAI::BOMB_Die || state == BombAI::BOMB_Unk1 || state == BombAI::BOMB_Set) {
 		return false;
 	}
 
@@ -74,7 +74,7 @@ bool BombItem::isAlive()
 {
 	int state = getCurrState()->getID();
 
-	if (state == 4 || state == 5 || state == 1 || state == 2) {
+	if (state == BombAI::BOMB_Mizu || state == BombAI::BOMB_Die || state == BombAI::BOMB_Unk1 || state == BombAI::BOMB_Set) {
 		return false;
 	}
 
@@ -87,7 +87,7 @@ bool BombItem::isAlive()
  * Size:	0000AC
  */
 BombItem::BombItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
-    : ItemCreature(14, props, nullptr)
+    : ItemCreature(OBJTYPE_Bomb, props, nullptr)
     , mBombColl(0)
 {
 	mLifeGauge._20   = 1;
@@ -118,7 +118,7 @@ void BombItem::startAI(int)
 	f32 scale = 1.0f;
 	mScale.set(scale, scale, scale);
 
-	((SimpleAI*)mStateMachine)->start(this, 0);
+	C_SAI(this)->start(this, BombAI::BOMB_Unk0);
 
 	mLifeGauge.mPosition = mPosition;
 	mLifeGauge.mOffset.set(0.0f, 20.0f, 0.0f);
@@ -158,13 +158,14 @@ void BombItem::update()
 	ItemCreature::update();
 
 	int state = getCurrState()->getID();
-	if (state != 5 && state != 3 && state != 4 && mFloorTri && MapCode::getAttribute(mFloorTri) == ATTR_Water) {
+	if (state != BombAI::BOMB_Die && state != BombAI::BOMB_Bomb && state != BombAI::BOMB_Mizu && mFloorTri
+	    && MapCode::getAttribute(mFloorTri) == ATTR_Water) {
 		PRINT("BOMB WATER START **********\n");
-		mStateMachine->transit(this, 4);
+		mStateMachine->transit(this, BombAI::BOMB_Mizu);
 	}
 
-	if (state == 1 && mFloorTri) {
-		((SimpleAI*)mStateMachine)->start(this, 3);
+	if (state == BombAI::BOMB_Unk1 && mFloorTri) {
+		C_SAI(this)->start(this, BombAI::BOMB_Bomb);
 	}
 }
 
@@ -215,7 +216,7 @@ void BombItem::refresh(Graphics& gfx)
 	aiCullable();
 
 	mCollInfo->updateInfo(gfx, false);
-	if (state == 2) {
+	if (state == BombAI::BOMB_Set) {
 		renderTimer(gfx);
 	}
 }

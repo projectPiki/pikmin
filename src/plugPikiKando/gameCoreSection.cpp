@@ -14,6 +14,7 @@
 #include "WorkObject.h"
 #include "sysNew.h"
 #include "Font.h"
+#include "BombItem.h"
 #include "DynParticle.h"
 #include "Menu.h"
 #include "AIPerf.h"
@@ -715,15 +716,16 @@ void GameCoreSection::cleanupDayEnd()
 					InteractRelease act(piki, 1.0f);
 					AICreature* obj = (AICreature*)piki->getHoldCreature();
 					obj->stimulate(act);
-					((SimpleAI*)obj->mStateMachine)->start(obj, 4);
+					C_SAI(obj)->start(obj, BombAI::BOMB_Mizu);
 					PRINT("BOMB KILL!\n");
 				}
 				int state = piki->getState();
-				if ((mode != 1 || state == 24 || state == 9 || state == 7 || state == 8 || state == 10 || state == 6 || state == 22
+				if ((mode != PikiMode::FormationMode || state == PIKISTATE_Drown || state == PIKISTATE_Fired || state == PIKISTATE_Dead
+				     || state == PIKISTATE_Swallowed || state == PIKISTATE_Bubble || state == PIKISTATE_Dying || state == PIKISTATE_Flick
 				     || !piki->isAlive())
-				    && !(mode == 11 || mode == 12) && state != 26) {
+				    && !(mode == PikiMode::EnterMode || mode == PikiMode::ExitMode) && state != PIKISTATE_LookAt) {
 					bool test = false;
-					if (piki->mMode == 0) {
+					if (piki->mMode == PikiMode::FreeMode) {
 						for (int i = 0; i < 3; i++) {
 							GoalItem* goal = itemMgr->getContainer(i);
 							if (goal
@@ -2230,7 +2232,7 @@ void GameCoreSection::initStage()
 				item->init(item->mPosition);
 				item->setColor(item->mSeedColor);
 				item->startAI(0);
-				((SimpleAI*)item->mStateMachine)->start(item, 6);
+				C_SAI(item)->start(item, PikiHeadAI::PIKIHEAD_Wait);
 				PRINT(" NEW PIKIHEAD ****\n");
 				inf->mBPikiInfMgr.delInf(a);
 				PRINT("@@@@ FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
@@ -2254,9 +2256,9 @@ void GameCoreSection::initStage()
 	PRINT("Teki size is %d\n", sizeof(Teki));
 	PRINT("CollPart size is %d\n", sizeof(CollPart));
 
-	GameStat::containerPikis.set(0, pikiInfMgr.getColorTotal(0));
-	GameStat::containerPikis.set(1, pikiInfMgr.getColorTotal(1));
-	GameStat::containerPikis.set(2, pikiInfMgr.getColorTotal(2));
+	GameStat::containerPikis.set(Blue, pikiInfMgr.getColorTotal(Blue));
+	GameStat::containerPikis.set(Red, pikiInfMgr.getColorTotal(Red));
+	GameStat::containerPikis.set(Yellow, pikiInfMgr.getColorTotal(Yellow));
 	GameStat::update();
 	GameStat::minPikis = GameStat::allPikis;
 	PRINT("*** START WITH %d PIKIS\n", GameStat::minPikis);

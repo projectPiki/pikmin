@@ -571,7 +571,7 @@ void Creature::kill(bool p1)
 			if (ai->getCurrState()->getID() != 1) {
 				BombItem* bomb = static_cast<BombItem*>(held);
 				MsgUser msg(1);
-				bomb->_2D0 = 1;
+				bomb->mCurrAnimId = 1;
 				static_cast<SimpleAI*>(bomb->mStateMachine)->procMsg(bomb, &msg);
 			}
 		}

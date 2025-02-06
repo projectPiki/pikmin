@@ -104,33 +104,33 @@ void SlimeEffect::kill()
 UtEffectMgr::UtEffectMgr()
 {
 	UtEffectMgr::effects = new KEffect*[28];
-	registerEffect(0, new GoalEffect);
-	registerEffect(1, new NaviWhistle(naviMgr->getNavi(0)));
-	registerEffect(2, new NaviWhistle(naviMgr->getNavi(1))); // louie confirmed?
-	registerEffect(3, new SmokeSoilEffect);
-	registerEffect(5, new SmokeGrassEffect);
-	registerEffect(4, new SmokeRockEffect);
-	registerEffect(6, new SmokeTreeEffect);
-	registerEffect(7, new NaviFue(naviMgr->getNavi(0)));
-	registerEffect(9, new SimpleEffect(EffectMgr::EFF_Piki_GrowUp1));
-	registerEffect(10, new SimpleEffect(EffectMgr::EFF_Piki_GrowUp2));
-	registerEffect(11, new SimpleEffect(EffectMgr::EFF_Wl_Hit1));
-	registerEffect(12, new SimpleEffect(EffectMgr::EFF_Wl_Hit0));
-	registerEffect(13, new SimpleEffect(EffectMgr::EFF_WL_Hit2));
-	registerEffect(14, new SimpleEffect(EffectMgr::EFF_WL_Hit3));
-	registerEffect(15, new SimpleEffect(EffectMgr::EFF_Wl_Brk00));
-	registerEffect(16, new SimpleEffect(EffectMgr::EFF_Wl_Brk01));
-	registerEffect(17, new SimpleEffect(EffectMgr::EFF_P_Bubbles));
-	registerEffect(18, new SimpleEffect(EffectMgr::EFF_RippleWhite));
-	registerEffect(19, new BombEffect);
-	registerEffect(20, new BombEffectLight);
-	registerEffect(21, new UfoSuckEffect);
-	registerEffect(22, new UfoSuikomiEffect);
-	registerEffect(23, new WhistleTemplate(0x122, 0x123));
-	registerEffect(24, new WhistleTemplate(0x122, 0x123));
-	registerEffect(25, new SimpleEffect(EffectMgr::EFF_Piki_IdleBlue));
-	registerEffect(26, new SimpleEffect(EffectMgr::EFF_Piki_IdleRed));
-	registerEffect(27, new SimpleEffect(EffectMgr::EFF_Piki_IdleYellow));
+	registerEffect(KandoEffect::Goal, new GoalEffect);
+	registerEffect(KandoEffect::NaviWhistle0, new NaviWhistle(naviMgr->getNavi(0)));
+	registerEffect(KandoEffect::NaviWhistle1, new NaviWhistle(naviMgr->getNavi(1))); // louie confirmed?
+	registerEffect(KandoEffect::SmokeSoil, new SmokeSoilEffect);
+	registerEffect(KandoEffect::SmokeGrass, new SmokeGrassEffect);
+	registerEffect(KandoEffect::SmokeRock, new SmokeRockEffect);
+	registerEffect(KandoEffect::SmokeTree, new SmokeTreeEffect);
+	registerEffect(KandoEffect::NaviFue0, new NaviFue(naviMgr->getNavi(0)));
+	registerEffect(KandoEffect::PikiGrowup1, new SimpleEffect(EffectMgr::EFF_Piki_GrowUp1));
+	registerEffect(KandoEffect::PikiGrowup2, new SimpleEffect(EffectMgr::EFF_Piki_GrowUp2));
+	registerEffect(KandoEffect::WallHit1, new SimpleEffect(EffectMgr::EFF_Wl_Hit1));
+	registerEffect(KandoEffect::WallHit0, new SimpleEffect(EffectMgr::EFF_Wl_Hit0));
+	registerEffect(KandoEffect::WallHit2, new SimpleEffect(EffectMgr::EFF_WL_Hit2));
+	registerEffect(KandoEffect::WallHit3, new SimpleEffect(EffectMgr::EFF_WL_Hit3));
+	registerEffect(KandoEffect::WallBreak0, new SimpleEffect(EffectMgr::EFF_Wl_Brk00));
+	registerEffect(KandoEffect::WallBreak1, new SimpleEffect(EffectMgr::EFF_Wl_Brk01));
+	registerEffect(KandoEffect::Bubbles, new SimpleEffect(EffectMgr::EFF_P_Bubbles));
+	registerEffect(KandoEffect::Ripples, new SimpleEffect(EffectMgr::EFF_RippleWhite));
+	registerEffect(KandoEffect::Bomb, new BombEffect);
+	registerEffect(KandoEffect::BombLight, new BombEffectLight);
+	registerEffect(KandoEffect::UfoSuck, new UfoSuckEffect);
+	registerEffect(KandoEffect::UfoSuikomi, new UfoSuikomiEffect);
+	registerEffect(KandoEffect::WhistleTemplate0, new WhistleTemplate(EffectMgr::EFF_Rocket_Bm2o, EffectMgr::EFF_UfoPart_ASN01));
+	registerEffect(KandoEffect::WhistleTemplate1, new WhistleTemplate(EffectMgr::EFF_Rocket_Bm2o, EffectMgr::EFF_UfoPart_ASN01));
+	registerEffect(KandoEffect::IdleBluePiki, new SimpleEffect(EffectMgr::EFF_Piki_IdleBlue));
+	registerEffect(KandoEffect::IdleRedPiki, new SimpleEffect(EffectMgr::EFF_Piki_IdleRed));
+	registerEffect(KandoEffect::IdleYellowPiki, new SimpleEffect(EffectMgr::EFF_Piki_IdleYellow));
 }
 
 /*
@@ -138,9 +138,9 @@ UtEffectMgr::UtEffectMgr()
  * Address:	801142D0
  * Size:	000010
  */
-void UtEffectMgr::registerEffect(int id, KEffect* efx)
+void UtEffectMgr::registerEffect(int kEffID, KEffect* efx)
 {
-	effects[id] = efx;
+	effects[kEffID] = efx;
 }
 
 /*
@@ -148,15 +148,16 @@ void UtEffectMgr::registerEffect(int id, KEffect* efx)
  * Address:	801142E0
  * Size:	000044
  */
-void UtEffectMgr::cast(int id, EffectParm& parm)
+void UtEffectMgr::cast(int kEffID, EffectParm& parm)
 {
-	if (id < 0 || id > 27) {
-		ERROR("cast oob : %d", id);
+	if (kEffID < KandoEffect::START || kEffID > KandoEffect::END) {
+		ERROR("cast oob : %d", kEffID);
 	}
 
-	KEffect* eff = effects[id];
-	if (eff)
+	KEffect* eff = effects[kEffID];
+	if (eff) {
 		eff->emit(parm);
+	}
 }
 
 /*
@@ -164,13 +165,13 @@ void UtEffectMgr::cast(int id, EffectParm& parm)
  * Address:	80114324
  * Size:	000044
  */
-void UtEffectMgr::kill(int id)
+void UtEffectMgr::kill(int kEffID)
 {
-	if (id < 0 || id > 27) {
-		ERROR("kill oob : %d", id);
+	if (kEffID < KandoEffect::START || kEffID > KandoEffect::END) {
+		ERROR("kill oob : %d", kEffID);
 	}
 
-	KEffect* eff = effects[id];
+	KEffect* eff = effects[kEffID];
 	if (eff)
 		eff->kill();
 }
@@ -191,13 +192,13 @@ PermanentEffect::PermanentEffect()
  * Address:	8011439C
  * Size:	00008C
  */
-void PermanentEffect::init(Vector3f& pos, int id)
+void PermanentEffect::init(Vector3f& pos, int effType)
 {
 	if (mPtclGen) {
 		return;
 	}
 	mPosition = pos;
-	mPtclGen  = effectMgr->create((EffectMgr::effTypeTable)id, mPosition, nullptr, nullptr);
+	mPtclGen  = effectMgr->create((EffectMgr::effTypeTable)effType, mPosition, nullptr, nullptr);
 
 	if (mPtclGen) {
 		mPtclGen->setEmitPosPtr(&mPosition);
@@ -216,22 +217,6 @@ void PermanentEffect::updatePos(Vector3f& pos)
 	if (mPtclGen) {
 		mPtclGen->start();
 	}
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x8(r3)
-	  lwz       r3, 0xC(r3)
-	  cmplwi    r3, 0
-	  beqlr-
-	  lwz       r0, 0x80(r3)
-	  rlwinm    r0,r0,0,0,30
-	  stw       r0, 0x80(r3)
-	  blr
-	*/
 }
 
 /*
@@ -239,12 +224,12 @@ void PermanentEffect::updatePos(Vector3f& pos)
  * Address:	8011445C
  * Size:	000080
  */
-void PermanentEffect::changeEffect(int id)
+void PermanentEffect::changeEffect(int effType)
 {
 	if (mPtclGen) {
 		effectMgr->mPtclMgr.killGenerator(mPtclGen, false);
 	}
-	mPtclGen = effectMgr->create((EffectMgr::effTypeTable)id, mPosition, nullptr, nullptr);
+	mPtclGen = effectMgr->create((EffectMgr::effTypeTable)effType, mPosition, nullptr, nullptr);
 	if (mPtclGen) {
 		mPtclGen->setEmitPosPtr(&mPosition);
 	}
@@ -258,7 +243,7 @@ void PermanentEffect::changeEffect(int id)
 void PermanentEffect::stop()
 {
 	if (mPtclGen) {
-		mPtclGen->pmSwitchOff(0x10);
+		mPtclGen->pmSwitchOff(zen::PTCLGEN_Unk5);
 	}
 }
 
@@ -270,7 +255,7 @@ void PermanentEffect::stop()
 void PermanentEffect::restart()
 {
 	if (mPtclGen) {
-		mPtclGen->pmSwitchOn(0x10);
+		mPtclGen->pmSwitchOn(zen::PTCLGEN_Unk5);
 	}
 }
 
@@ -311,7 +296,7 @@ void FreeLightEffect::emit(EffectParm& parm)
 void FreeLightEffect::stop()
 {
 	if (mEfx) {
-		mEfx->pmSwitchOff(0x10);
+		mEfx->pmSwitchOff(zen::PTCLGEN_Unk5);
 	}
 }
 
@@ -323,7 +308,7 @@ void FreeLightEffect::stop()
 void FreeLightEffect::restart()
 {
 	if (mEfx) {
-		mEfx->pmSwitchOn(0x10);
+		mEfx->pmSwitchOn(zen::PTCLGEN_Unk5);
 	}
 }
 
@@ -410,10 +395,10 @@ void RippleEffect::kill()
 void RippleEffect::stop()
 {
 	if (mEfxB) {
-		mEfxB->pmSwitchOff(0x10);
+		mEfxB->pmSwitchOff(zen::PTCLGEN_Unk5);
 	}
 	if (mEfxA) {
-		mEfxA->pmSwitchOff(0x10);
+		mEfxA->pmSwitchOff(zen::PTCLGEN_Unk5);
 	}
 }
 
@@ -425,10 +410,10 @@ void RippleEffect::stop()
 void RippleEffect::restart()
 {
 	if (mEfxB) {
-		mEfxB->pmSwitchOn(0x10);
+		mEfxB->pmSwitchOn(zen::PTCLGEN_Unk5);
 	}
 	if (mEfxA) {
-		mEfxA->pmSwitchOn(0x10);
+		mEfxA->pmSwitchOn(zen::PTCLGEN_Unk5);
 	}
 }
 
@@ -440,7 +425,7 @@ void RippleEffect::restart()
 void BurnEffect::stop()
 {
 	if (mEfxA) {
-		mEfxA->pmSwitchOff(0x10);
+		mEfxA->pmSwitchOff(zen::PTCLGEN_Unk5);
 	}
 }
 
@@ -452,7 +437,7 @@ void BurnEffect::stop()
 void BurnEffect::restart()
 {
 	if (mEfxA) {
-		mEfxA->pmSwitchOn(0x10);
+		mEfxA->pmSwitchOn(zen::PTCLGEN_Unk5);
 	}
 }
 
@@ -470,7 +455,7 @@ void BurnEffect::emit(EffectParm& parm)
 	mEfxA = effectMgr->create(EffectMgr::EFF_Piki_Fire, *parm._20, this, nullptr);
 	if (mEfxA) {
 		mEfxA->setEmitPosPtr(parm._20);
-		mEfxA->setOrientedNormalVector(Vector3f(0.0f, 0.0f, 1.0f));
+		mEfxA->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
 		Vector3f vel(_0C[0]);
 		vel.y = 0.0f;
 		vel.multiply(0.01f);

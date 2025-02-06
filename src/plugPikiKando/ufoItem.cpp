@@ -258,7 +258,7 @@ void UfoItem::startConeEffect(int)
 	Vector3f goal = getGoalPos();
 	Vector3f suck = getSuckPos();
 	EffectParm eff(goal, suck);
-	mConeEffectId = EffectMgr::EFF_BombLight_Wave;
+	mConeEffectId = KandoEffect::WhistleTemplate1;
 	utEffectMgr->cast(mConeEffectId, eff);
 	mAnimator.startMotion(0, &PaniMotionInfo(1, this));
 	mAnimator.setMotionSpeed(0, 30.0f);
@@ -800,7 +800,7 @@ void UfoItem::startAI(int)
 		effectMgr->create(EffectMgr::EFF_Rocket_Land, mPosition, nullptr, nullptr);
 	}
 
-	mConeEffectId = EffectMgr::EFF_Navi_Light;
+	mConeEffectId = KandoEffect::UfoSuck;
 
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {

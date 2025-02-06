@@ -3703,7 +3703,7 @@ void BuildingItem::doSave(RandomAccessStream& output)
 	output.writeFloat(mMaxHealth);
 	output.writeInt(mStartAnimId);
 	output.writeInt(mEndAnimId);
-	output.writeInt(_2D0);
+	output.writeInt(mCurrAnimId);
 }
 
 /*
@@ -3717,7 +3717,7 @@ void BuildingItem::doLoad(RandomAccessStream& input)
 	mMaxHealth   = input.readFloat();
 	mStartAnimId = input.readInt();
 	mEndAnimId   = input.readInt();
-	_2D0         = input.readInt();
+	mCurrAnimId  = input.readInt();
 	if (mStartAnimId < mEndAnimId) {
 		startMotion(mStartAnimId);
 		mWayPoint->setFlag(false);

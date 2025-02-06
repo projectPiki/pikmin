@@ -223,10 +223,10 @@ void ActStone::animationKeyUpdated(PaniAnimKeyEvent& event)
 		Vector3f effectPos(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 		effectPos = effectPos * 5.0f + mPiki->mPosition;
 		EffectParm parm(effectPos);
-		UtEffectMgr::cast(12, parm);
+		UtEffectMgr::cast(KandoEffect::WallHit0, parm);
 
 		if (pebbleState == ACTOUT_Success) {
-			UtEffectMgr::cast(10, parm);
+			UtEffectMgr::cast(KandoEffect::PikiGrowup2, parm);
 			mRockGen->killPebble();
 			mPiki->playEventSound(mRockGen, SEB_STONE_BREAK);
 			if (System::getRand(1.0f) > (1.0f - STONE_NECTAR_CHANCE)) {

@@ -153,6 +153,20 @@ struct GoalAI : public SimpleAI {
 	/**
 	 * @brief TODO
 	 */
+	enum GoalStateID {
+		GOAL_Wait     = 0,
+		GOAL_Effect   = 1,
+		GOAL_Unk2     = 2,
+		GOAL_EmitPiki = 3,
+		GOAL_EmitWait = 4,
+		GOAL_BootInit = 5,
+		GOAL_BootEmit = 6,
+		GOAL_COUNT, // 7
+	};
+
+	/**
+	 * @brief TODO
+	 */
 	struct NotFinished : public SAICondition {
 
 		virtual bool satisfy(AICreature*); // _10

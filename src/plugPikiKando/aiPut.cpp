@@ -196,7 +196,7 @@ int ActPutBomb::exeSet()
 		held->stimulate(release);
 		BombItem* bomb = static_cast<BombItem*>(held);
 		PRINT("BOMB SET!\n");
-		static_cast<SimpleAI*>(bomb->mStateMachine)->start(bomb, 2);
+		C_SAI(bomb)->start(bomb, BombAI::BOMB_Set);
 		return ACTOUT_Success;
 	}
 
@@ -391,8 +391,8 @@ int ActPutBomb::exeThrow()
 			held->mVelocity       = throwVel;
 			held->mTargetVelocity = throwVel;
 			BombItem* bomb        = static_cast<BombItem*>(held);
-			bomb->_2D0            = 0;
-			static_cast<SimpleAI*>(bomb->mStateMachine)->start(bomb, 1);
+			bomb->mCurrAnimId     = 0;
+			C_SAI(bomb)->start(bomb, BombAI::BOMB_Unk1);
 			bomb->disableFixPos();
 
 			return ACTOUT_Success;

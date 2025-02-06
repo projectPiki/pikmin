@@ -2044,7 +2044,7 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 			sprout->mVelocity.set(220.0f * sinf(randAngle), 540.0f, 220.0f * cosf(randAngle));
 			sprout->startAI(0);
 			sprout->_3E0 = nullptr;
-			C_SAI(sprout)->start(sprout, 5);
+			C_SAI(sprout)->start(sprout, PikiHeadAI::PIKIHEAD_Unk5);
 			piki->setEraseKill();
 			piki->kill(true);
 			u32 badCompiler;
@@ -2060,8 +2060,8 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 			AICreature* ai = (AICreature*)held;
 			if (ai->getCurrState()->getID() != 1) {
 				MsgUser msg(1);
-				BombItem* bomb = (BombItem*)held;
-				bomb->_2D0     = 1;
+				BombItem* bomb    = (BombItem*)held;
+				bomb->mCurrAnimId = 1;
 				C_SAI(bomb)->procMsg(bomb, &msg);
 			}
 		}
@@ -3515,7 +3515,7 @@ void PikiBuryState::exec(Piki* piki)
 		sprout->mFlowerStage = piki->mHappa;
 		sprout->startAI(0);
 		sprout->_3E0 = nullptr;
-		C_SAI(sprout)->start(sprout, 5);
+		C_SAI(sprout)->start(sprout, PikiHeadAI::PIKIHEAD_Unk5);
 		piki->setEraseKill();
 		piki->kill(true);
 		u32 badCompiler;
