@@ -195,6 +195,7 @@ struct TAIAvisiblePikiBeatle : public TaiAction {
  */
 struct TAIAdamageBeatle : public TAIAdamage {
 	inline TAIAdamageBeatle() // TODO: this is a guess
+	    : TAIAdamage(-1, false)
 	{
 	}
 
@@ -210,6 +211,7 @@ struct TAIAdamageBeatle : public TAIAdamage {
  */
 struct TAIAdyingBeatle : public TAIAdying {
 	inline TAIAdyingBeatle() // TODO: this is a guess
+	    : TAIAdying(-1, -1)
 	{
 	}
 

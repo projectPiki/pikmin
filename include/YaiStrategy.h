@@ -17,16 +17,15 @@ struct YaiStrategy : public TekiStrategy {
 	virtual void eventPerformed(TekiEvent&); // _10
 	virtual void draw(Teki&, Graphics&);     // _18
 
-	// Guessed implementation, function exists though
-	inline void setState(int index, TaiState* state) { mStateList[index] = state; }
+	void setState(int index, TaiState* state) { mStateList[index] = state; }
 
 	void init(int, int);
 
 	// _00     = VTBL
 	// _00-_04 = TekiStrategy
 	int mStateCount;       // _04
-	TaiState** mStateList; // _08, array of something
-	int mStateID;          // _0C, _324 in teki
+	TaiState** mStateList; // _08
+	int mStateID;          // _0C
 };
 
 #endif

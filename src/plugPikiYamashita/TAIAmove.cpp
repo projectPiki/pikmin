@@ -26,7 +26,7 @@ void TAIAappearKabekui::start(Teki& teki)
 {
 	TAIAmotion::start(teki);
 	teki.setMotionSpeed(mMotionSpeed);
-	teki.set4C8(0);
+	teki.setStaySwitch(false);
 	if (_10) {
 		teki.setVisible();
 	}

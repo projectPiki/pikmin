@@ -233,6 +233,7 @@ struct TAIAkillTouchPiki : public TaiAction {
  */
 struct TAIAdyingDororo : public TAIAdying {
 	inline TAIAdyingDororo() // TODO: this is a guess
+	    : TAIAdying(-1, -1)
 	{
 	}
 

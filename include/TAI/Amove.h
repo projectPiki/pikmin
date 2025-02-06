@@ -211,8 +211,8 @@ struct TAIAturnToTarget : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAstop : public TaiAction {
-	inline TAIAstop() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAstop(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 

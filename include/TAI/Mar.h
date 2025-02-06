@@ -297,6 +297,7 @@ struct TAIAflyingBaseMar : public TAIAflyingBase {
  */
 struct TAIAdyingMar : public TAIAdying {
 	inline TAIAdyingMar() // TODO: this is a guess
+	    : TAIAdying(-1, -1)
 	{
 	}
 

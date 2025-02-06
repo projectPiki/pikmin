@@ -356,6 +356,7 @@ struct TAIAturnFocusCreatureMiurin : public TAIAturnFocusCreature {
  */
 struct TAIAdyingMiurin : public TAIAdying {
 	inline TAIAdyingMiurin() // TODO: this is a guess
+	    : TAIAdying(-1, -1)
 	{
 	}
 

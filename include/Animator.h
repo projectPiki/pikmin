@@ -22,6 +22,15 @@ struct Shape;
 /**
  * @brief TODO
  */
+enum AnimInfoFlags {
+	ANIMFLAG_Unk1 = 1 << 0, // 0x1
+	ANIMFLAG_Unk2 = 1 << 1, // 0x2
+	ANIMFLAG_Unk3 = 1 << 2, // 0x4
+};
+
+/**
+ * @brief TODO
+ */
 struct DataChunk {
 	DataChunk()
 	{
@@ -235,7 +244,15 @@ struct AnimKey {
 		mPrev = mNext = nullptr;
 	}
 
-	inline void insertAfter(AnimKey* key)
+	AnimKey(int index, int value)
+	{
+		mKeyframeIndex = index;
+		mValue         = value;
+		mPrev          = nullptr;
+		mNext          = nullptr;
+	}
+
+	void insertAfter(AnimKey* key)
 	{
 		key->mNext   = mNext;
 		key->mPrev   = this;
@@ -243,9 +260,12 @@ struct AnimKey {
 		mNext        = key;
 	}
 
+	// these are both fake according to the DLL - may be inlines for AnimInfo?
 	inline void add(AnimKey* key) { mPrev->insertAfter(key); }
-
 	inline f32 getKeyValue() { return mKeyframeIndex; }
+
+	// DLL inlines to do:
+	void remove();
 
 	int mKeyframeIndex; // _00, unknown
 	s16 mEventKeyType;  // _04
@@ -260,16 +280,11 @@ struct AnimKey {
  */
 struct AnimInfo : public CoreNode {
 
-	enum AnimInfoFlags {
-		FLAG_Unk1 = 0x1,
-		FLAG_Unk2 = 0x2,
-	};
-
 	/**
 	 * @brief Fabricated. Offsets relative to AnimInfo for convenience.
 	 */
-	struct AnimInfoParams : public Parameters {
-		inline AnimInfoParams()
+	struct Parms : public Parameters {
+		Parms()
 		    : mFlags(this, 2, 0, 0, "p00", nullptr)
 		    , mSpeed(this, 30.0f, 0.0f, 0.0f, "spd", nullptr)
 		{
@@ -305,17 +320,21 @@ struct AnimInfo : public CoreNode {
 	// unused/inlined:
 	void initAnimData(AnimData*);
 
+	// fake inline apparently
 	inline f32 getAnimSpeed() { return mParams.mSpeed(); }
+
+	// only DLL inline:
+	void addInfoKey(AnimKey* key) { mInfoKeys.mPrev->insertAfter(key); }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	AnimInfoParams mParams; // _14
-	AnimKey mAnimKeys;      // _38
-	AnimKey mEventKeys;     // _48
-	AnimKey mInfoKeys;      // _58
-	AnimData* mData;        // _68
-	int mIndex;             // _6C
-	AnimMgr* mMgr;          // _70
+	Parms mParams;      // _14
+	AnimKey mAnimKeys;  // _38
+	AnimKey mEventKeys; // _48
+	AnimKey mInfoKeys;  // _58
+	AnimData* mData;    // _68
+	int mIndex;         // _6C
+	AnimMgr* mMgr;      // _70
 };
 
 /**

@@ -24,8 +24,8 @@ struct TAIAhitCheckFlyingPiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAdeadCheck : public TaiAction {
-	inline TAIAdeadCheck() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAdeadCheck(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -56,8 +56,8 @@ struct TAIAdie : public TaiAction {
  * @brief TODO
  */
 struct TAIAdying : public TAIAmotion {
-	inline TAIAdying() // TODO: this is a guess
-	    : TAIAmotion(-1, -1)
+	TAIAdying(int nextState, int motionID)
+	    : TAIAmotion(nextState, motionID)
 	{
 	}
 
@@ -74,6 +74,7 @@ struct TAIAdying : public TAIAmotion {
  */
 struct TAIAdyingKabekui : public TAIAdying {
 	inline TAIAdyingKabekui() // TODO: this is a guess
+	    : TAIAdying(-1, -1)
 	{
 	}
 
@@ -104,9 +105,10 @@ struct TAIAdyingCrushKabekui : public TAIAdyingKabekui {
  * @brief TODO
  */
 struct TAIAdamage : public TaiAction {
-	inline TAIAdamage() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAdamage(int nextState, bool p2)
+	    : TaiAction(nextState)
 	{
+		_08 = p2;
 	}
 
 	virtual bool act(Teki&);         // _10
@@ -114,7 +116,7 @@ struct TAIAdamage : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	bool _08; // _08
 };
 
 /**

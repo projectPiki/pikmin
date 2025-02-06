@@ -133,13 +133,13 @@ void PaniPikiAnimMgr::updateAnimation(f32 speed)
 	}
 
 	f32 currSpeed = mAnimSpeed;
-	if (!(mUpperAnimator.mAnimInfo->mParams.mFlags() & AnimInfo::FLAG_Unk2)) {
+	if (!(mUpperAnimator.mAnimInfo->mParams.mFlags() & ANIMFLAG_Unk2)) {
 		setAnimSpeed(mUpperAnimator.mAnimInfo->mParams.mSpeed());
 	}
 
 	mUpperAnimator.animate(mAnimSpeed);
 
-	if (!(mLowerAnimator.mAnimInfo->mParams.mFlags() & AnimInfo::FLAG_Unk2)) {
+	if (!(mLowerAnimator.mAnimInfo->mParams.mFlags() & ANIMFLAG_Unk2)) {
 		setAnimSpeed(mLowerAnimator.mAnimInfo->mParams.mSpeed());
 	}
 

@@ -556,63 +556,88 @@ struct YTeki : public NTeki {
 	void killStickToMouthPiki();
 	bool startNewMotion(int);
 
-	/* INLINED FUNCTIONS
-	    void YTeki::addDesire(f32);
-	    f32 addFrameCounter(f32);
-	    void addSpeed(f32);
-	    f32 getAngle();
-	    bool getBiteSwitch();
-	    bool getChokeSwitch();
+	int getMapAttribute();
+
+	// inlines to make into DLL inlines and/or fake:
+	inline f32 getMotionLoopTimer() { return _478; }                                            // name is a guess
+	inline void updateMotionLoopTimer() { _478 = getMotionLoopTimer() + gsys->getFrameTime(); } // name is a guess
+
+	// DLL inlines that have been checked:
+	void setStaySwitch(bool isAppear) { mTekiSwitches.m3 = isAppear; }
+
+	bool getFlyingSwitch() { return mTekiSwitches.m4; }
+	void setFlyingSwitch(bool isFlying) { mTekiSwitches.m4 = isFlying; }
+
+	/*
+	    DLL INLINED FUNCTIONS TO MAKE:
+
 	    zen::CallBack1<zen::particleGenerator *> * getConeTypePtclCallBack();
 	    zen::CallBack1<zen::particleGenerator *> * getCylinderTypePtclCallBack();
-	    f32 getDesire();
-	    f32 getDororoGravity();
-	    bool getEffectSwitch();
 	    zen::CallBack1<zen::particleGenerator*>* getEventTypePtclCallBack();
-	    f32 getExceptionalGravity();
-	    bool getFlyingSwitch();
-	    f32 getFrameCounter();
-	    f32 getFrameCounterMax();
-	    int getMapCode();
-	    bool getRunAwaySwitch();
-	    f32 getSpeed();
-	    int getStatus();
-	    bool getStaySwitch();
-	    int getTableIndex();
-	    bool getTimerStart();
-	    class WorkObject* getWorkObjectPointer();
 	    void initConeTypePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
 	    void initCylinderTYpePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
 	    void initEventTypePtclCallBack();
-	    void setAngle(f32);
-	    f32 setAnimSpeed(f32);
-	    void setBiteSwitch(bool);
-	    void setChokeSwitch(bool);
+
+	    f32 getDesire();
 	    void setDesire(f32);
-	    void setDororoGravity(f32);
-	    void setEffectSwitch(bool);
-	    void setExceptionalGravity(f32);
-	    void setFlyingSwitch(bool);
+	    void addDesire(f32);
+
+	    f32 getFrameCounter();
 	    void setFrameCounter(f32);
+	    f32 addFrameCounter(f32);
+
+	    f32 setAnimSpeed(f32);
+
+	    f32 getFrameCounterMax();
 	    void setFrameCounterMax(f32);
-	    void setManualAnimation(bool);
-	    void setMapCode(int);
-	    void setRunAwaySwitch(bool);
+
+	    f32 getSpeed();
 	    void setSpeed(f32);
+	    void addSpeed(f32);
+
+	    f32 getAngle();
+	    void setAngle(f32);
+
+	    f32 getDororoGravity();
+	    void setDororoGravity(f32);
+
+	    f32 getExceptionalGravity();
+	    void setExceptionalGravity(f32);
+
+	    int getMapCode();
+	    void setMapCode(int);
+
+	    int getStatus();
 	    void setStatus(int);
-	    void setStaySwitch(bool);
+
+	    int getTableIndex();
 	    void setTableIndex(int);
+
+	    bool getTimerStart();
 	    void setTimerStart(bool);
+
+	    WorkObject* getWorkObjectPointer();
 	    void setWorkObjectPointer(WorkObject*);
+
+	    void setManualAnimation(bool);
+
+	    bool getBiteSwitch();
+	    void setBiteSwitch(bool);
+
+	    bool getChokeSwitch();
+	    void setChokeSwitch(bool);
+
+	    bool getEffectSwitch();
+	    void setEffectSwitch(bool);
+
+
+	    bool getRunAwaySwitch();
+	    void setRunAwaySwitch(bool);
+
+	    bool getStaySwitch();
+	    void setStaySwitch(bool);
+
 	*/
-
-	int getMapAttribute();
-
-	// see TAIAappearKabekui::start
-	inline void set4C8(u32 val) { _4C8 = (_4C8 & ~0xFFFFFFEF); }
-
-	inline f32 getMotionLoopTimer() { return _478; }                                            // name is a guess
-	inline void updateMotionLoopTimer() { _478 = getMotionLoopTimer() + gsys->getFrameTime(); } // name is a guess
 
 	// _00       = VTBL
 	// _000-_46C = NTeki
@@ -625,8 +650,17 @@ struct YTeki : public NTeki {
 	u8 _494[0x4];           // _494, unknown
 	u32 _498[8];            // _498, array of something, probably not u32s
 	u8 _4B8[0x4C8 - 0x4B8]; // _4B8, TODO: work out members
-	u8 _4C8;                // _4C8, bitflag?
-	u8 _4C9[0x538 - 0x4C9]; // _4C9, TODO: work out members
+	struct {
+		u32 m0 : 1;
+		u32 m1 : 1;
+		u32 m2 : 1;
+		u32 m3 : 1;
+		u32 m4 : 1;
+		u32 m5 : 1;
+		u32 m6 : 1;
+		u32 m7 : 1;
+	} mTekiSwitches;        // _4C8
+	u8 _4CC[0x538 - 0x4CC]; // _4CC, TODO: work out members
 	                        // _538 = PaniAnimKeyListener
 };
 

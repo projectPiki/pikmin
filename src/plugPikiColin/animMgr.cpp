@@ -291,7 +291,7 @@ void AnimInfo::setIndex()
  */
 void AnimInfo::setAnimFlags(u32 flags)
 {
-	mParams.mFlags.mValue = flags;
+	mParams.mFlags(flags);
 	updateAnimFlags();
 }
 
@@ -471,7 +471,7 @@ AnimKey* AnimInfo::addKeyFrame()
 {
 	AnimKey* keyFrame        = new AnimKey();
 	keyFrame->mKeyframeIndex = mData->mNumFrames - 1;
-	mAnimKeys.add(keyFrame);
+	mAnimKeys.mPrev->insertAfter(keyFrame);
 	return keyFrame;
 }
 
