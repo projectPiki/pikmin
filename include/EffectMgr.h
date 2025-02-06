@@ -493,6 +493,7 @@ struct EffectMgr : public CoreNode {
 	// _00-_14 = CoreNode
 	zen::particleManager mPtclMgr; // _14
 	u8 _18[0x600];                 // _18
+	bool _6B0;                     // _6B0
 };
 
 extern EffectMgr* effectMgr;

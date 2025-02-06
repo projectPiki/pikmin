@@ -3,9 +3,9 @@
 
 #include "types.h"
 #include "Node.h"
-#include "ModeState.h"
 
 struct Controller;
+struct ModeState;
 
 /**
  * @brief TODO
@@ -24,7 +24,7 @@ struct BaseGameSection : public Node {
 	f32 _2C;                 // _2C
 	f32 _30;                 // _30
 	ModeState* _34;          // _34, unknown
-	u32 _38;                 // _38, unknown
+	ModeState* _38;          // _38, unknown
 	u32 _3C;                 // _3C, unknown
 	u32 _40;                 // _40, unknown
 };

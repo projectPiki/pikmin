@@ -17,6 +17,8 @@ struct GameInterface {
 
 	// _00 = VTBL?
 	// TODO: members?
+	u8 _00[0x10C]; // _00
+	int _10C;      // _10C
 };
 
 /**

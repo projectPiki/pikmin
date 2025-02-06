@@ -67,6 +67,14 @@ struct MoviePlayer {
 	void nextFrame();
 	void backFrame();
 
+	void setGameCamInfo(bool flag, f32 a1, Vector3f& a2, Vector3f& a3)
+	{
+		_16C = flag;
+		_160 = a1;
+		_148 = a2;
+		_154 = a3;
+	}
+
 	MovieInfo mInfoRoot;  // _00
 	MovieInfo mInfoRoot2; // _60
 	MovieInfo mInfoRoot3; // _C0
@@ -77,12 +85,8 @@ struct MoviePlayer {
 	Vector3f _12C;        // _12C
 	Vector3f mLookAtPos;  // _138
 	f32 _144;             // _144
-	f32 _148;             // _148
-	f32 _14C;             // _14C
-	f32 _150;             // _150
-	f32 _154;             // _154
-	f32 _158;             // _158
-	f32 _15C;             // _15C
+	Vector3f _148;        // _148
+	Vector3f _154;        // _154
 	f32 _160;             // _160
 	f32 _164;             // _164
 	f32 _168;             // _168

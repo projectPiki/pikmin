@@ -305,7 +305,8 @@ struct System : public StdSystem {
 	u8 _280[0xC];                 // _280, unknown
 	f32 mDeltaTime;               // _28C
 	u32 _290;                     // _290
-	u8 _294[0x2A4 - 0x294];       // _294, unknown
+	u8 _294[0x2A0 - 0x294];       // _294, unknown
+	u32 _2A0;                     // _2A0
 	u32 _2A4;                     // _2A4, unknown
 	AddressNode _2A8;             // _2A8, unknown size
 	u32 _2BC;                     // _2BC, unknown, could be part of _2A8

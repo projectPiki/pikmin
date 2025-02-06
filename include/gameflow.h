@@ -414,7 +414,8 @@ struct GameFlow : public Node {
 	MoviePlayer* mMoviePlayer;               // _1DC
 	s16 mMovieInfoNum;                       // _1E0
 	s16 mMovieType;                          // _1E2
-	u32 _1E4;                                // _1E4
+	s16 _1E4;                                // _1E4
+	s16 _1E6;                                // _1E6
 	GameInterface* mGameInterface;           // _1E8
 	int _1EC;                                // _1EC
 	int mGameSectionID;                      // _1F0, see GameSectionID enum
@@ -445,10 +446,12 @@ struct GameFlow : public Node {
 	f32 mLevelBannerFadeValue;               // _314
 	Texture* mLoadBannerTexture;             // _318
 	GameLoadIdler mGameLoadIdler;            // _31C
-	u8 _330[0x338 - 0x330];                  // _330, unknown
+	u8 _330;                                 // _330
+	int _334;                                // _334
 	int _338;                                // _338
 	int _33C;                                // _33C, unknown
-	u8 _340[0x350 - 0x340];                  // _340, unknown
+	int _340;                                // _340
+	u8 _344[0x350 - 0x344];                  // _340, unknown
 	int mFilterType;                         // _350
 	u8 mFilters[8];                          // _354
 	u8 _35C;                                 // _35C, maybe Colour?

@@ -62,13 +62,6 @@ void MovieInfo::refresh(Graphics&)
  */
 MoviePlayer::MoviePlayer()
 {
-	_150 = 0.0f;
-	_14C = 0.0f;
-	_148 = 0.0f;
-	_15C = 0.0f;
-	_158 = 0.0f;
-	_154 = 0.0f;
-	_168 = 0.0f;
 }
 
 /*

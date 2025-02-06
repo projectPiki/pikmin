@@ -1576,7 +1576,7 @@ void Jac_FinishPartsFindDemo(void)
  * Address:	8001B260
  * Size:	000084
  */
-void Jac_StartTextDemo(void)
+void Jac_StartTextDemo(int)
 {
 	/*
 	.loc_0x0:

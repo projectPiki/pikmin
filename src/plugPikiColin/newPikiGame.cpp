@@ -5,8 +5,39 @@
 #include "Interface.h"
 #include "NewPikiGame.h"
 #include "sysNew.h"
+#include "jaudio/PikiDemo.h"
 #include "Controller.h"
+#include "SoundMgr.h"
+#include "gameflow.h"
+#include "MapMgr.h"
+#include "zen/DrawGameInfo.h"
+#include "GameCoreSection.h"
+#include "PlayerState.h"
+#include "zen/ogTutorial.h"
+#include "zen/ogMenu.h"
+#include "zen/DrawCountDown.h"
+#include "jaudio/PikiScene.h"
+#include "zen/ogPause.h"
+#include "zen/ogResult.h"
+#include "zen/DrawGameOver.h"
+#include "zen/DrawCM.h"
+#include "MoviePlayer.h"
+#include "Graphics.h"
 #include "DebugLog.h"
+
+bool HasDemoSound;
+bool dontShowFrame;
+bool gameInfoOn;
+bool gameInfoIn;
+bool menuOn;
+zen::DrawCMresult* challengeWindow;
+zen::ogScrTutorialMgr* tutorialWindow;
+zen::ogScrMenuMgr* menuWindow;
+zen::ogScrPauseMgr* pauseWindow;
+zen::DrawCountDown* countWindow;
+zen::DrawGameOver* gameoverWindow;
+zen::ogScrResultMgr* resultWindow;
+GameCoreSection* gamecore;
 
 /*
  * --INFO--
@@ -20,7 +51,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("newPikiGame")
 
 /*
  * --INFO--
@@ -39,6 +70,27 @@ void showFrame(bool, f32)
  */
 void createMenuWindow()
 {
+	gsys->startLoading(nullptr, false, 0);
+	int heapold = gsys->_2A4 != 0;
+	gsys->_2A4  = 0;
+	int heapid  = gsys->mActiveHeapIdx;
+	PRINT("using movie heap!\n");
+
+	gsys->setHeap(5);
+	AyuHeap* heap    = gsys->getHeap(5);
+	int oldtype      = heap->mAllocType;
+	heap->mAllocType = 1;
+
+	menuWindow = new zen::ogScrMenuMgr;
+	menuWindow->start();
+
+	gsys->getHeap(5)->mAllocType = oldtype;
+	gsys->setHeap(heapid);
+	gsys->_2A0 = 0;
+	gsys->_2A4 = heapold;
+	gsys->endLoading();
+	PRINT("menu window attach\n");
+	gsys->attachObjs();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -131,8 +183,46 @@ void deleteMenuWindow()
  * Address:	80056C18
  * Size:	0001B0
  */
-void createTutorialWindow(int, int, bool)
+void createTutorialWindow(int a1, int a2, bool flag)
 {
+	gsys->startLoading(nullptr, false, 0);
+	int heapold = gsys->_2A4 != 0;
+	gsys->_2A4  = 0;
+	int heapid  = gsys->mActiveHeapIdx;
+	PRINT("using movie heap!\n");
+
+	HasDemoSound = (a2 >= 0 && flag);
+
+	if (HasDemoSound) {
+		Jac_StartPartsFindDemo(a2 + 1, flag);
+	} else {
+		Jac_StartTextDemo(a1);
+	}
+	gsys->setHeap(5);
+
+	AyuHeap* heap    = gsys->getHeap(5);
+	int oldtype      = heap->mAllocType;
+	heap->mAllocType = 1;
+	tutorialWindow   = new zen::ogScrTutorialMgr;
+	tutorialWindow->start((zen::ogScrTutorialMgr::EnumTutorial)a1);
+
+	gsys->getHeap(5)->mAllocType = oldtype;
+	gsys->setHeap(heapid);
+
+	if (gameInfoOn && gameInfoIn) {
+		if (!playerState->isTutorial()) {
+			gamecore->mDrawGameInfo->upperFrameOut(0.5f, true);
+		}
+		gamecore->mDrawGameInfo->lowerFrameOut(0.5f, true);
+		gameInfoIn = false;
+	}
+	gameflow._340 = 1;
+	gsys->_2A0    = 0;
+	gsys->_2A4    = heapold;
+	gsys->endLoading();
+	PRINT("tutorial window attach\n");
+	gsys->attachObjs();
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -265,64 +355,24 @@ void createTutorialWindow(int, int, bool)
  */
 void deleteTutorialWindow()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x2E8C(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  bl        -0x3BBE0
-	  b         .loc_0x24
+	if (HasDemoSound) {
+		Jac_FinishPartsFindDemo();
+	} else {
+		Jac_FinishTextDemo();
+	}
+	gameflow._340 = 0;
+	if (!dontShowFrame && gameInfoOn && !gameInfoIn) {
+		if (!playerState->isTutorial()) {
+			gamecore->mDrawGameInfo->upperFrameIn(0.5f, true);
+		}
+		gamecore->mDrawGameInfo->lowerFrameIn(0.5f, true);
+		gameInfoIn = true;
+	}
 
-	.loc_0x20:
-	  bl        -0x3BAE8
+	gameflow._338  = 0;
+	tutorialWindow = 0;
 
-	.loc_0x24:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  li        r0, 0
-	  stw       r0, 0x340(r3)
-	  lbz       r0, 0x2E8D(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x98
-	  lbz       r0, 0x2E81(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x98
-	  lbz       r0, 0x2E82(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x98
-	  lwz       r3, 0x2F6C(r13)
-	  bl        0x29650
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x7C
-	  lwz       r3, 0x2E5C(r13)
-	  li        r4, 0x1
-	  lfs       f1, -0x7A88(r2)
-	  lwz       r3, 0x344(r3)
-	  bl        0x161C84
-
-	.loc_0x7C:
-	  lwz       r3, 0x2E5C(r13)
-	  li        r4, 0x1
-	  lfs       f1, -0x7A88(r2)
-	  lwz       r3, 0x344(r3)
-	  bl        0x161D6C
-	  li        r0, 0x1
-	  stb       r0, 0x2E82(r13)
-
-	.loc_0x98:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  li        r0, 0
-	  stw       r0, 0x338(r3)
-	  stw       r0, 0x2E88(r13)
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	FORCE_DONT_INLINE;
 }
 
 /*
@@ -359,8 +409,41 @@ BaseGameSection::BaseGameSection()
  * Address:	80056F9C
  * Size:	000244
  */
-void BaseGameSection::draw(Graphics&)
+void BaseGameSection::draw(Graphics& gfx)
 {
+	Matrix4f mtx;
+	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+
+	if (_28 < _2C) {
+		_28 += _30 * gsys->getFrameTime();
+		if (_28 > _2C) {
+			_28 = _2C;
+		}
+	} else if (_28 > _2C) {
+		_28 -= _30 * gsys->getFrameTime();
+		if (_28 < _2C) {
+			_28 = _2C;
+		}
+	}
+
+	if (_28 < 1.0f) {
+		f32 test = _28 > 1.0f ? 1.0f : _28 < 0.0f ? 0.0f : _28;
+		test     = (1.0f - test) * 255.0f;
+		gfx.setColour(Colour(0, 0, 0, test), true);
+		gfx.setAuxColour(Colour(0, 0, 0, test));
+		gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	}
+
+	if (gameflow.mLevelBannerTexture && gameflow.mLevelBannerFadeValue > 0.0f) {
+		gameflow.mLevelBannerFadeValue -= gsys->getFrameTime();
+		if (gameflow.mLevelBannerFadeValue < 0.0f) {
+			gameflow.mLevelBannerTexture   = nullptr;
+			gameflow.mLevelBannerFadeValue = 0.0f;
+		} else {
+			gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
+		}
+	}
+	_34->postUpdate();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -539,8 +622,30 @@ void ModeState::postUpdate()
  * Address:	800571E4
  * Size:	000128
  */
-void IntroGameModeState::update(u32&)
+ModeState* IntroGameModeState::update(u32& a)
 {
+	a = 1;
+
+	if (tutorialWindow && tutorialWindow->update(mSection->mController) == (zen::ogScrTutorialMgr::TutorialStatus)4) {
+		if (gameflow.mMoviePlayer->mIsActive) {
+			gameflow.mMoviePlayer->skipScene(2);
+		}
+		deleteTutorialWindow();
+	}
+
+	if (!gameflow.mMoviePlayer->mIsActive) {
+		gameInfoOn = true;
+		if (!gameInfoIn) {
+			if (!playerState->isTutorial()) {
+				gamecore->mDrawGameInfo->upperFrameIn(0.5f, true);
+			}
+			gamecore->mDrawGameInfo->lowerFrameIn(0.5f, true);
+			gameInfoIn = true;
+		}
+
+		new RunningModeState(mSection);
+	}
+	return this;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -637,8 +742,108 @@ void IntroGameModeState::update(u32&)
  * Address:	8005730C
  * Size:	000640
  */
-void RunningModeState::update(u32&)
+ModeState* RunningModeState::update(u32& a)
 {
+	a = 7;
+	if (!gameflow.mMoviePlayer->mIsActive && !gameflow._340 && gameflow._1E4) {
+		a &= ~1;
+		PRINT("*-------------------------------- DAY END !!!!!!!!!!!!!!  --------------------------------*\n");
+		mSection->_40 = gameflow.mLevelIndex;
+		return new DayOverModeState(mSection, 0);
+	}
+
+	if (!gameflow._1E4 && !gameflow.mMoviePlayer->mIsActive && gameflow.mParameters->mEndHour() >= gameflow.mWorldClock.mTimeOfDay) {
+		gameflow._334 = 0;
+		gameflow._1E6 = 1;
+	}
+
+	if (gameflow._1E6 && !gameflow._338) {
+		gameflow._1E4 = 1;
+		gameflow._1E6 = 0;
+		if (playerState->getCurrParts() != 30 && gameflow.mWorldClock.mCurrentDay == 30) {
+			if (playerState->happyEndable()) {
+				flowCont._244 = 1;
+				gameflow.mGameInterface->message(0, 28);
+			} else {
+				gameflow.mGameInterface->message(0, 28);
+			}
+		}
+	}
+
+	if (gameflow._334 && !gameflow._338 && !gameflow._33C && !gameflow.mMoviePlayer->mIsActive) {
+
+		if (mController->keyClick(KBBTN_START) && !gameflow.mGameInterface->_10C) {
+			seSystem->playSysSe(SYSSE_PAUSE);
+			pauseWindow->start(gameflow.mIsChallengeMode != 0);
+			_08           = 1 - (gameflow._338 == 0);
+			gameflow._338 = 1;
+		} else if (mController->keyClick(KBBTN_Y) && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f
+		           && !gameflow.mGameInterface->_10C) {
+			gameflow.mGameInterface->message(17, 0);
+			_08           = 1 - (gameflow._338 == 0);
+			gameflow._338 = 1;
+		}
+	}
+
+	if (flowCont._234) {
+		if (flowCont._234 == 2) {
+			mSection->_40 = 7;
+			return new MessageModeState(mSection, false);
+		}
+		if (flowCont._234 == 1) {
+			mSection->_40 = 7;
+			return new MessageModeState(mSection, true);
+		}
+	}
+
+	if (gameoverWindow) {
+		gameoverWindow->update(mController);
+	}
+
+	if (menuWindow) {
+		int state = menuWindow->update(mController);
+		if (state == 0) {
+			a &= ~1;
+		} else if (state == 3) {
+			gsys->resetHeap(5, 1);
+			gameflow._338 = 0;
+			menuWindow    = nullptr;
+		}
+	}
+
+	if (tutorialWindow && tutorialWindow->update(mController) == (zen::ogScrTutorialMgr::TutorialStatus)4) {
+
+		if (gameflow.mMoviePlayer->mIsActive) {
+			gameflow.mMoviePlayer->skipScene(2);
+		}
+		deleteTutorialWindow();
+	}
+
+	int state = pauseWindow->update(mController);
+	if (state == 0) {
+		a &= ~1;
+	} else if (state == 6) {
+		gamecore->forceDayEnd();
+		gameflow._334 = 0;
+		gameflow._1E6 = 1;
+		gameflow._338 = _08;
+
+	} else if (state == 7) {
+		mSection->_40 = 1;
+		gsys->setFade(0.0f, 3.0f);
+		return new QuittingGameModeState(mSection);
+	} else if (state == 5) {
+		if (gameInfoOn && !gameInfoIn) {
+			if (!playerState->isTutorial()) {
+				gamecore->mDrawGameInfo->upperFrameIn(0.5f, true);
+			}
+			gamecore->mDrawGameInfo->lowerFrameIn(0.5f, true);
+			gameInfoIn    = true;
+			gameflow._338 = _08;
+			seSystem->playSysSe(SYSSE_PAUSE);
+		}
+	}
+	return this;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1104,43 +1309,13 @@ void GameInterface::message(int, int)
  * Address:	80057950
  * Size:	000078
  */
-void IntroGameModeState::postRender(Graphics&)
+void IntroGameModeState::postRender(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r31, r4, 0
-	  lwz       r0, 0x2E88(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x64
-	  lwz       r7, 0x310(r31)
-	  li        r0, 0
-	  lwz       r6, 0x30C(r31)
-	  addi      r5, r1, 0x10
-	  addi      r3, r31, 0
-	  stw       r0, 0x10(r1)
-	  addi      r4, r1, 0x20
-	  stw       r0, 0x14(r1)
-	  stw       r6, 0x18(r1)
-	  stw       r7, 0x1C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E88(r13)
-	  mr        r4, r31
-	  bl        0x12B320
-
-	.loc_0x64:
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	Matrix4f mtx;
+	if (tutorialWindow) {
+		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		tutorialWindow->draw(gfx);
+	}
 }
 
 /*
@@ -1148,186 +1323,45 @@ void IntroGameModeState::postRender(Graphics&)
  * Address:	800579C8
  * Size:	000294
  */
-void RunningModeState::postRender(Graphics&)
+void RunningModeState::postRender(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x130(r1)
-	  stw       r31, 0x12C(r1)
-	  addi      r0, r1, 0x98
-	  mr        r31, r4
-	  stw       r30, 0x128(r1)
-	  mr        r30, r3
-	  addi      r6, r1, 0x80
-	  lfs       f2, -0x724C(r13)
-	  addi      r5, r1, 0x8C
-	  lfs       f1, -0x7258(r13)
-	  mr        r4, r0
-	  lfs       f0, -0x7264(r13)
-	  stfs      f2, 0x80(r1)
-	  addi      r3, r1, 0xA4
-	  lfs       f2, -0x7248(r13)
-	  stfs      f1, 0x8C(r1)
-	  lfs       f1, -0x7254(r13)
-	  stfs      f0, 0x98(r1)
-	  lfs       f0, -0x7260(r13)
-	  stfs      f2, 0x84(r1)
-	  lfs       f2, -0x7244(r13)
-	  stfs      f1, 0x90(r1)
-	  lfs       f1, -0x7250(r13)
-	  stfs      f0, 0x9C(r1)
-	  lfs       f0, -0x725C(r13)
-	  stfs      f2, 0x88(r1)
-	  stfs      f1, 0x94(r1)
-	  stfs      f0, 0xA0(r1)
-	  bl        -0x1994C
-	  lbz       r0, 0x2E80(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xCC
-	  lwz       r7, 0x310(r31)
-	  li        r0, 0
-	  lwz       r6, 0x30C(r31)
-	  addi      r5, r1, 0x70
-	  addi      r3, r31, 0
-	  stw       r0, 0x70(r1)
-	  addi      r4, r1, 0xE4
-	  stw       r0, 0x74(r1)
-	  stw       r6, 0x78(r1)
-	  stw       r7, 0x7C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E5C(r13)
-	  mr        r4, r31
-	  bl        0xB9B60
+	Matrix4f mtx1;
+	Matrix4f mtx2;
+	mtx2.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
 
-	.loc_0xCC:
-	  lis       r3, 0x803A
-	  subi      r4, r3, 0x2848
-	  lwz       r0, 0x33C(r4)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x14C
-	  lwz       r3, 0x1DC(r4)
-	  lbz       r0, 0x124(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x14C
-	  lwz       r3, 0x0(r30)
-	  lwz       r0, 0x3C(r3)
-	  rlwinm.   r0,r0,0,29,29
-	  beq-      .loc_0x14C
-	  lwz       r3, 0x20(r4)
-	  lfs       f2, 0x2F0(r4)
-	  lfs       f3, 0xB0(r3)
-	  lfs       f1, 0x90(r3)
-	  fsubs     f2, f2, f3
-	  lfs       f0, -0x7A84(r2)
-	  fsubs     f1, f1, f3
-	  fdivs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x14C
-	  lfs       f0, -0x7A80(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x14C
-	  lwz       r3, 0x2E6C(r13)
-	  bl        0x19035C
-	  lwz       r3, 0x2E6C(r13)
-	  mr        r4, r31
-	  bl        0x190DC0
+	if (!menuOn) {
+		gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gamecore->draw1D(gfx);
+	}
 
-	.loc_0x14C:
-	  lbz       r0, 0x2E80(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x27C
-	  lwz       r0, 0x2E88(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1A8
-	  lwz       r7, 0x310(r31)
-	  li        r0, 0
-	  lwz       r6, 0x30C(r31)
-	  addi      r5, r1, 0x60
-	  addi      r3, r31, 0
-	  stw       r0, 0x60(r1)
-	  addi      r4, r1, 0xE4
-	  stw       r0, 0x64(r1)
-	  stw       r6, 0x68(r1)
-	  stw       r7, 0x6C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E88(r13)
-	  mr        r4, r31
-	  bl        0x12B164
+	if (gameflow._33C == 0 && !gameflow.mMoviePlayer->mIsActive && mSection->_3C & 4) {
+		f32 time = (gameflow.mWorldClock.mTimeOfDay - gameflow.mParameters->mNightCountdown())
+		         / (gameflow.mParameters->mNightEnd() - gameflow.mParameters->mNightCountdown());
+		if (time >= 0.0f && time < 1.0f) {
+			countWindow->update();
+			countWindow->draw(gfx);
+		}
+	}
 
-	.loc_0x1A8:
-	  lwz       r6, 0x310(r31)
-	  li        r30, 0
-	  lwz       r0, 0x30C(r31)
-	  addi      r5, r1, 0x50
-	  addi      r3, r31, 0
-	  stw       r30, 0x50(r1)
-	  addi      r4, r1, 0xE4
-	  stw       r30, 0x54(r1)
-	  stw       r0, 0x58(r1)
-	  stw       r6, 0x5C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E5C(r13)
-	  mr        r4, r31
-	  bl        0xB9CA0
-	  lwz       r0, 0x2E68(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x238
-	  lwz       r6, 0x310(r31)
-	  addi      r5, r1, 0x40
-	  lwz       r0, 0x30C(r31)
-	  mr        r3, r31
-	  addi      r4, r1, 0xE4
-	  stw       r30, 0x40(r1)
-	  stw       r30, 0x44(r1)
-	  stw       r0, 0x48(r1)
-	  stw       r6, 0x4C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E68(r13)
-	  mr        r4, r31
-	  bl        0x191A18
+	if (menuOn) {
+		return;
+	}
 
-	.loc_0x238:
-	  lwz       r7, 0x310(r31)
-	  li        r0, 0
-	  lwz       r6, 0x30C(r31)
-	  addi      r5, r1, 0x30
-	  addi      r3, r31, 0
-	  stw       r0, 0x30(r1)
-	  addi      r4, r1, 0xE4
-	  stw       r0, 0x34(r1)
-	  stw       r6, 0x38(r1)
-	  stw       r7, 0x3C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E70(r13)
-	  mr        r4, r31
-	  bl        0x12AE48
+	if (tutorialWindow) {
+		gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		tutorialWindow->draw(gfx);
+	}
 
-	.loc_0x27C:
-	  lwz       r0, 0x134(r1)
-	  lwz       r31, 0x12C(r1)
-	  lwz       r30, 0x128(r1)
-	  addi      r1, r1, 0x130
-	  mtlr      r0
-	  blr
-	*/
+	gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gamecore->draw2D(gfx);
+
+	if (gameoverWindow) {
+		gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gameoverWindow->draw(gfx);
+	}
+
+	gfx.setOrthogonal(mtx1.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	pauseWindow->draw(gfx);
 }
 
 /*
@@ -1335,253 +1369,68 @@ void RunningModeState::postRender(Graphics&)
  * Address:	80057C5C
  * Size:	000360
  */
-void MessageModeState::update(u32&)
+ModeState* MessageModeState::update(u32& a)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803A
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x58(r1)
-	  stw       r29, 0x54(r1)
-	  subi      r29, r4, 0x24E0
-	  stw       r28, 0x50(r1)
-	  lwz       r0, 0x234(r29)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x274
-	  lwz       r0, 0xC(r31)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x120
-	  bge-      .loc_0x54
-	  cmpwi     r0, 0
-	  beq-      .loc_0x60
-	  bge-      .loc_0xDC
-	  b         .loc_0x324
+	if (flowCont._234 == 2) {
+		switch (_0C) {
+		case 0:
+			_10 -= gsys->getFrameTime();
+			if (_10 < 0.0f) {
+				_10          = 2.0f;
+				mapMgr->_4C8 = 1.0f;
+				if ((gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == 30) && gameoverWindow) {
+					gameoverWindow->start((zen::DrawGameOver::modeFlag)0, 40.0f);
+				}
+				_0C = 1;
+			}
+			break;
+		case 1:
+			_10 -= gsys->getFrameTime();
+			if (_10 < 0.0f) {
+				_10          = 3.0f;
+				mapMgr->_4CC = 1.0f;
+				_0C          = 2;
+			}
+			break;
+		case 2:
+			_10 -= gsys->getFrameTime();
+			if (_10 < 0.0f) {
+				_10 = 2.0f;
+				_0C = 3;
+			}
+			break;
+		case 3:
+			mapMgr->_4CC = 0.0f;
+			mapMgr->_4C8 = 0.0f;
+			PRINT("DOING FORCE RESULTS SCREEN !!!\n");
+			DayOverModeState* state = new DayOverModeState(mSection, 1);
+			state->_08              = 0;
+			mSection->_38           = state;
+			gamecore->cleanupDayEnd();
+			if (!gameflow.mIsChallengeMode) {
+				if (gameflow.mWorldClock.mCurrentDay != 30) {
+					gameflow.mMoviePlayer->startMovie(52, 0, nullptr, nullptr, nullptr, -1, true);
+					if (gameoverWindow) {
+						gameoverWindow->start((zen::DrawGameOver::modeFlag)0, 40.0f);
+					}
+				}
+			} else {
+				gameoverWindow = nullptr;
+			}
+			break;
+		}
+	} else if (flowCont._234 == 0) {
+		DayOverModeState* state = new DayOverModeState(mSection, 1);
+		gameoverWindow          = nullptr;
+		state->_08              = 0;
+		mSection->_38           = state;
+		mSection->_2C           = 1.0f;
+	}
 
-	.loc_0x54:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x324
-	  b         .loc_0x158
-
-	.loc_0x60:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x10(r31)
-	  lfs       f1, 0x10(r31)
-	  lfs       f0, -0x7A84(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x324
-	  lfs       f0, -0x7A78(r2)
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  stfs      f0, 0x10(r31)
-	  lfs       f0, -0x7A80(r2)
-	  lwz       r4, 0x2F00(r13)
-	  stfs      f0, 0x4C8(r4)
-	  lwz       r0, 0x2B4(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xB8
-	  lwz       r0, 0x2FC(r3)
-	  cmpwi     r0, 0x1E
-	  bne-      .loc_0xD0
-
-	.loc_0xB8:
-	  lwz       r3, 0x2E68(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xD0
-	  lfs       f1, -0x7A64(r2)
-	  li        r4, 0
-	  bl        0x1910A4
-
-	.loc_0xD0:
-	  li        r0, 0x1
-	  stw       r0, 0xC(r31)
-	  b         .loc_0x324
-
-	.loc_0xDC:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x10(r31)
-	  lfs       f1, 0x10(r31)
-	  lfs       f0, -0x7A84(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x324
-	  lfs       f0, -0x7A68(r2)
-	  li        r0, 0x2
-	  stfs      f0, 0x10(r31)
-	  lfs       f0, -0x7A80(r2)
-	  lwz       r3, 0x2F00(r13)
-	  stfs      f0, 0x4CC(r3)
-	  stw       r0, 0xC(r31)
-	  b         .loc_0x324
-
-	.loc_0x120:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x10(r31)
-	  lfs       f1, 0x10(r31)
-	  lfs       f0, -0x7A84(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x324
-	  lfs       f0, -0x7A78(r2)
-	  li        r0, 0x3
-	  stfs      f0, 0x10(r31)
-	  stw       r0, 0xC(r31)
-	  b         .loc_0x324
-
-	.loc_0x158:
-	  lfs       f0, -0x7A84(r2)
-	  li        r3, 0xC
-	  lwz       r4, 0x2F00(r13)
-	  stfs      f0, 0x4CC(r4)
-	  lwz       r4, 0x2F00(r13)
-	  stfs      f0, 0x4C8(r4)
-	  bl        -0x10DC8
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x1F4
-	  lis       r3, 0x802A
-	  lwz       r4, 0x0(r31)
-	  addi      r0, r3, 0x7ECC
-	  stw       r0, 0x4(r28)
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x7E18
-	  stw       r4, 0x0(r28)
-	  li        r30, 0x1
-	  stw       r0, 0x4(r28)
-	  stw       r30, 0x238(r29)
-	  lwz       r3, 0x2E5C(r13)
-	  bl        0xB8C98
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r4, 0x20(r3)
-	  addi      r3, r3, 0x2D8
-	  lfs       f1, 0x20(r4)
-	  bl        -0x6604
-	  lwz       r3, 0x2E5C(r13)
-	  li        r4, 0x1
-	  lfs       f1, -0x7A88(r2)
-	  lwz       r3, 0x344(r3)
-	  bl        0x160D0C
-	  lwz       r3, 0x2E5C(r13)
-	  li        r4, 0x1
-	  lfs       f1, -0x7A88(r2)
-	  lwz       r3, 0x344(r3)
-	  bl        0x160E28
-	  stw       r30, 0x8(r28)
-
-	.loc_0x1F4:
-	  li        r30, 0
-	  stw       r30, 0x8(r28)
-	  lwz       r3, 0x0(r31)
-	  stw       r28, 0x38(r3)
-	  lwz       r3, 0x2E5C(r13)
-	  bl        0xB5F60
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r0, 0x2B4(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x26C
-	  lwz       r0, 0x2FC(r3)
-	  cmpwi     r0, 0x1E
-	  beq-      .loc_0x324
-	  lwz       r3, 0x1DC(r3)
-	  li        r4, 0x34
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0
-	  li        r8, 0
-	  li        r9, -0x1
-	  li        r10, 0x1
-	  bl        0x1F2B8
-	  lwz       r3, 0x2E68(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x324
-	  lfs       f1, -0x7A64(r2)
-	  li        r4, 0
-	  bl        0x190F0C
-	  b         .loc_0x324
-
-	.loc_0x26C:
-	  stw       r30, 0x2E68(r13)
-	  b         .loc_0x324
-
-	.loc_0x274:
-	  cmpwi     r0, 0
-	  bne-      .loc_0x324
-	  li        r3, 0xC
-	  bl        -0x10ED8
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x304
-	  lis       r3, 0x802A
-	  lwz       r4, 0x0(r31)
-	  addi      r0, r3, 0x7ECC
-	  stw       r0, 0x4(r28)
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x7E18
-	  stw       r4, 0x0(r28)
-	  li        r30, 0x1
-	  stw       r0, 0x4(r28)
-	  stw       r30, 0x238(r29)
-	  lwz       r3, 0x2E5C(r13)
-	  bl        0xB8B88
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r4, 0x20(r3)
-	  addi      r3, r3, 0x2D8
-	  lfs       f1, 0x20(r4)
-	  bl        -0x6714
-	  lwz       r3, 0x2E5C(r13)
-	  li        r4, 0x1
-	  lfs       f1, -0x7A88(r2)
-	  lwz       r3, 0x344(r3)
-	  bl        0x160BFC
-	  lwz       r3, 0x2E5C(r13)
-	  li        r4, 0x1
-	  lfs       f1, -0x7A88(r2)
-	  lwz       r3, 0x344(r3)
-	  bl        0x160D18
-	  stw       r30, 0x8(r28)
-
-	.loc_0x304:
-	  li        r0, 0
-	  stw       r0, 0x2E68(r13)
-	  stw       r0, 0x8(r28)
-	  lwz       r3, 0x0(r31)
-	  stw       r28, 0x38(r3)
-	  lfs       f0, -0x7A80(r2)
-	  lwz       r3, 0x0(r31)
-	  stfs      f0, 0x2C(r3)
-
-	.loc_0x324:
-	  lwz       r3, 0x2E68(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x33C
-	  lwz       r4, 0x0(r31)
-	  lwz       r4, 0x24(r4)
-	  bl        0x191054
-
-	.loc_0x33C:
-	  mr        r3, r31
-	  lwz       r0, 0x64(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  lwz       r29, 0x54(r1)
-	  lwz       r28, 0x50(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	if (gameoverWindow) {
+		gameoverWindow->update(mSection->mController);
+	}
+	return this;
 }
 
 /*
@@ -1589,8 +1438,59 @@ void MessageModeState::update(u32&)
  * Address:	80057FBC
  * Size:	000474
  */
-void DayOverModeState::update(u32&)
+ModeState* DayOverModeState::update(u32& a)
 {
+	a = 1;
+
+	if (tutorialWindow && tutorialWindow->update(mSection->mController) == (zen::ogScrTutorialMgr::TutorialStatus)4) {
+		if (gameflow.mMoviePlayer->mIsActive) {
+			gameflow.mMoviePlayer->skipScene(2);
+		}
+		deleteTutorialWindow();
+	}
+
+	if (!gameflow.mMoviePlayer->mIsActive) {
+		ModeState* state = nullptr;
+		switch (_08) {
+		case 0:
+			state = initialisePhaseOne();
+			break;
+		case 1:
+			state = initialisePhaseTwo();
+			break;
+		case 2:
+			state = initialisePhaseThree();
+			break;
+		case 3:
+			state = initialisePhaseFour();
+			break;
+		}
+		if (state) {
+			return state;
+		}
+	}
+
+	if (gameoverWindow) {
+		gameoverWindow->update(mSection->mController);
+	}
+
+	if (challengeWindow && challengeWindow->update(mSection->mController)) {
+		mSection->_40 = 6;
+		gsys->setFade(0.0f, 3.0f);
+		return new QuittingGameModeState(mSection);
+	}
+
+	if (resultWindow && resultWindow->update(mSection->mController)) {
+		gsys->startLoading(nullptr, 1, 120);
+		gamecore->exitDayEnd();
+		gameflow.mMoviePlayer->fixMovieList();
+		Jac_SceneSetup(6, 0);
+		gsys->resetHeap(5, 1);
+		gsys->resetHeap(4, 1);
+		gsys->resetHeap(4, 2);
+		gsys->setHeap(gsys->setHeap(4));
+		gsys->endLoading();
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4259,7 +4159,7 @@ void NewPikiGameSetupSection::update()
  * Address:	8005A2B0
  * Size:	00000C
  */
-void ModeState::update(u32&)
+ModeState* ModeState::update(u32&)
 {
 	/*
 	.loc_0x0:
@@ -5119,7 +5019,7 @@ void MessageModeState::postRender(Graphics&)
  * Address:	8005AD98
  * Size:	00000C
  */
-void QuittingGameModeState::update(u32&)
+ModeState* QuittingGameModeState::update(u32&)
 {
 	/*
 	.loc_0x0:
