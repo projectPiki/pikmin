@@ -28,6 +28,7 @@ struct DrawGameOver {
 	void draw(Graphics&);
 
 	// TODO: members
+	u8 _00[0x1C];
 };
 
 /**

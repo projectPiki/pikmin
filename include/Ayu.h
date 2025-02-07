@@ -60,7 +60,7 @@ struct AyuStack {
 	inline int getFree() { return mSize - mTotalSize; }
 	int getMaxFree();
 	int getSize();
-	int getTopUsed();
+	int getTopUsed() { return mInitialStackLimit - mStackLimit; }
 	int getUsed();
 	void inactivate();
 	void pop();

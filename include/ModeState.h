@@ -70,7 +70,7 @@ struct DayOverModeState : public ModeState {
 
 	// _00     = VTBL?
 	// _00-_04 = ModeState?
-	u32 _08; // _08
+	int _08; // _08
 };
 
 /**
@@ -98,6 +98,7 @@ struct IntroGameModeState : public ModeState {
 	IntroGameModeState(BaseGameSection* c)
 	    : ModeState(c)
 	{
+		_08 = c->mController;
 	}
 
 	virtual ModeState* update(u32&);    // _08
@@ -106,6 +107,7 @@ struct IntroGameModeState : public ModeState {
 	// _00     = VTBL?
 	// _00-_04 = ModeState?
 	// TODO: members
+	Controller* _08;
 };
 
 /**

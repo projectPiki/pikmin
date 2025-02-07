@@ -146,6 +146,8 @@ struct PlayerState {
 	void setBootContainer(int color) { _184 |= 1 << color + 3; }
 	bool bootContainer(int color) { return _184 & (1 << color + 3); }
 
+	int getLastPikmins() { return _1A8; }
+
 	void setContainer(int color) { _184 |= 1 << color; }
 	bool hasContainer(int color) { return _184 & (1 << color); }
 

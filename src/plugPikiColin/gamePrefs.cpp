@@ -319,7 +319,7 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 	info._08           = -1;
 	gsys->mTogglePrint = 1;
 	int index          = info.mOffset;
-	int max            = info._04;
+	int max            = info.mPikis;
 	if (mHiscores.mChalModeRecords[index]._00[0] < max) {
 		info._08 = 0;
 	} else if (mHiscores.mChalModeRecords[index]._00[4] < max) {
@@ -336,7 +336,7 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 		for (int i = 4; i > info._08; i--) {
 			mHiscores.mChalModeRecords[i]._00[0] = mHiscores.mChalModeRecords[i]._00[4];
 		}
-		mHiscores.mChalModeRecords[info._08]._00[0] = info._04;
+		mHiscores.mChalModeRecords[info._08]._00[0] = info.mPikis;
 	}
 
 	gsys->mTogglePrint = 0;

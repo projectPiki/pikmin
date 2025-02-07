@@ -199,6 +199,7 @@ struct DrawCMresult {
 	void createRankInEffect();
 
 	// TODO: members
+	u8 _00[0xa0];
 };
 
 } // namespace zen

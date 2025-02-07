@@ -15,7 +15,7 @@ struct AnimFrameCacher;
 struct BaseApp;
 struct GameQuickInfo;
 struct GameChalQuickInfo;
-struct GameInterface;
+struct GameMovieInterface;
 struct MoviePlayer;
 struct Section;
 struct Shape;
@@ -73,7 +73,7 @@ enum LanguageFileType {
 
 struct GameChalQuickInfo {
 	int mOffset;  // _00
-	int _04;      // _04
+	int mPikis;   // _04
 	int _08;      // _08
 	int mInfo[5]; // _0C
 };
@@ -235,6 +235,19 @@ struct GameRecMinDay {
 
 	u32 _00; // _00, unknown
 	int _04; // _04
+};
+
+struct GameQuickInfo {
+	// This struct has no ctor or any other functions
+
+	int mParts;     // _00
+	int mDay;       // _04
+	int mPikis;     // _08
+	int mDeadPikis; // _0C
+	int _10;        // _10
+	int _14;        // _14
+	int _18;        // _18
+	int _1C;
 };
 
 /**
@@ -416,7 +429,7 @@ struct GameFlow : public Node {
 	s16 mMovieType;                          // _1E2
 	s16 _1E4;                                // _1E4
 	s16 _1E6;                                // _1E6
-	GameInterface* mGameInterface;           // _1E8
+	GameMovieInterface* mGameInterface;      // _1E8
 	int _1EC;                                // _1EC
 	int mGameSectionID;                      // _1F0, see GameSectionID enum
 	s32 mNextOnePlayerSectionID;             // _1F4, see OnePlayerSectionID enum

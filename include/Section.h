@@ -6,6 +6,7 @@
 
 struct Controller;
 struct ModeState;
+struct Menu;
 
 /**
  * @brief TODO
@@ -18,7 +19,7 @@ struct BaseGameSection : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 _20;                 // _20, unknown
+	Menu* _20;               // _20
 	Controller* mController; // _24
 	f32 _28;                 // _28
 	f32 _2C;                 // _2C

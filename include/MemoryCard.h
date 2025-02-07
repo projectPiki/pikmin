@@ -7,6 +7,8 @@
 struct CARDStat;
 struct PlayState;
 
+extern u8 cardData[];
+
 /**
  * @brief TODO
  */

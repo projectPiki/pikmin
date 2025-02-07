@@ -2,12 +2,12 @@
 #define _PVW_H
 
 #include "types.h"
+#include "Colour.h"
+#include "Vector.h"
 
-struct Colour;
 struct Matrix4f;
 struct RandomAccessStream;
 struct ShortColour;
-struct Vector3f;
 
 template <typename T>
 struct PVWAnimInfo1 {

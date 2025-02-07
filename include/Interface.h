@@ -5,6 +5,7 @@
 
 struct Creature;
 struct Vector3f;
+struct NewPikiGameSetupSection;
 
 /**
  * @brief TODO
@@ -17,20 +18,25 @@ struct GameInterface {
 
 	// _00 = VTBL?
 	// TODO: members?
-	u8 _00[0x10C]; // _00
-	int _10C;      // _10C
 };
 
 /**
  * @brief TODO
  */
 struct GameMovieInterface : public GameInterface {
+	GameMovieInterface(NewPikiGameSetupSection* section)
+	{
+		_08        = 32;
+		mMesgCount = 0;
+		mSection   = section;
+	}
 
 	/**
 	 * @brief TODO
 	 */
 	struct SimpleMessage {
-		// TODO: members
+		int _00;
+		int _04;
 	};
 
 	/**
@@ -39,7 +45,13 @@ struct GameMovieInterface : public GameInterface {
 	struct ComplexMessage {
 		ComplexMessage();
 
-		// TODO: members
+		int _00;       // _00
+		int _04;       // _04
+		Creature* _08; // _08
+		Vector3f _0C;  // _0C
+		Vector3f _18;  // _18
+		int _24;       // _24
+		bool _28;      // _28
 	};
 
 	virtual void message(int, int);                                           // _08
@@ -50,6 +62,12 @@ struct GameMovieInterface : public GameInterface {
 
 	// _00 = VTBL?
 	// TODO: members?
+	NewPikiGameSetupSection* mSection; //_04
+	int _08;                           // _08
+	SimpleMessage mMesg[32];           // _00
+	int mMesgCount;                    // _10C
+	ComplexMessage mCompMesg[32];      // _110
+	int mComplexMesgCount;             //_690
 };
 
 /**
