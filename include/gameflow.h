@@ -149,6 +149,14 @@ struct PlayState : public CoreNode {
 		mCourseOpenFlags = 1;
 	}
 
+	inline bool isStageOpen(int stageIdx)
+	{
+		if (stageIdx >= 0 && stageIdx <= 5) {
+			return mCourseOpenFlags & (1 << stageIdx);
+		}
+		return false;
+	}
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	int _14;              // _14, might be u32
@@ -314,17 +322,24 @@ struct GamePrefs : public CoreNode {
 
 	void openStage(int stageIdx)
 	{
-		if (stageIdx <= STAGE_END) {
+		if (stageIdx >= 0 && stageIdx <= STAGE_END) {
 			_22 |= (1 << stageIdx);
 		}
 	}
+
+	bool isStageOpen(int stageIdx)
+	{
+		if (stageIdx >= 0 && stageIdx <= 5) {
+			return _22 & (1 << stageIdx);
+		}
+		return false;
+	}
+	bool isChallengeOpen() { return (mFlags & 4) != 0; }
 
 	// DLL inlines to do:
 	bool getChildMode();
 	bool getStereoMode();
 	bool getVibeMode();
-	bool isChallengeOpen();
-	bool isStageOpen(int);
 	u8 getBgmVol();
 	u8 getSfxVol();
 
@@ -421,7 +436,7 @@ struct GameFlow : public Node {
 	u32 mSaveGameCrc;                        // _1A0
 	PlayState mPlayState;                    // _1A4
 	int _1CC;                                // _1CC
-	u32 mLastUnlockedStageId;                // _1D0
+	int mLastUnlockedStageId;                // _1D0
 	u32 _1D4;                                // _1D4, unknown
 	u32 mDemoFlags;                          // _1D8, bitflag of some description
 	MoviePlayer* mMoviePlayer;               // _1DC
@@ -443,9 +458,9 @@ struct GameFlow : public Node {
 	u32 _2AC;                                // _2AC, unknown
 	u32 _2B0;                                // _2B0, could be int
 	int mIsChallengeMode;                    // _2B4
-	u8 _2B8[0x4];                            // _2B8, unknown
+	u32 _2B8;                                // _2B8, unknown
 	u32 mUpdateTickCount;                    // _2BC, unknown
-	u8 _2C0[0x4];                            // _2C0, unknown
+	u32 _2C0;                                // _2C0, unknown
 	f32 _2C4;                                // _2C4
 	f32 _2C8;                                // _2C8
 	f32 _2CC;                                // _2CC
@@ -477,5 +492,7 @@ struct GameFlow : public Node {
 };
 
 extern GameFlow gameflow;
+
+void preloadLanguage();
 
 #endif

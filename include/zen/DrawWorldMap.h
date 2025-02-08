@@ -101,6 +101,10 @@ struct DrawWorldMap {
 	void setCoursePoint(startPlaceFlag);
 
 	// TODO: members
+	int _00;              // _00
+	int _04;              // _04
+	int _08;              // _08
+	u8 _0C[0x368 - 0x0C]; // _0C
 };
 
 /**

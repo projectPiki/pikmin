@@ -3874,6 +3874,21 @@ ModeState* ModeState::update(u32& a)
  */
 void NewPikiGameSetupSection::draw(Graphics& gfx)
 {
+	Matrix4f mtx;
+
+	if (gameflow._338 == 0 || gameflow._340) {
+		gameflow.mMoviePlayer->update();
+	}
+
+	if (!gameflow.mMoviePlayer->setCamera(gfx)) {
+		gameflow.mMoviePlayer->_168 -= gsys->getFrameTime() * 0.6f;
+		if (gameflow.mMoviePlayer->_168 < 0.0f) {
+			gameflow.mMoviePlayer->_168 = 0.0f;
+		}
+	} else {
+		// gameflow.mMoviePlayer->setGameCamInfo(true,);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0

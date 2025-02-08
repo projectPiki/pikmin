@@ -99,8 +99,10 @@ struct CinematicPlayer {
 	void addScene(char*);
 
 	// TODO: members
-	u32 mFlags;    // _00
-	u8 _04[0x2e4]; // _04
+	u32 mFlags; // _00
+	int _04;
+	Matrix4f mMtx;        // _08
+	u8 _44[0x2e4 - 0x44]; // _44
 };
 
 #endif
