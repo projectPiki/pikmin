@@ -44,7 +44,7 @@ Light::Light()
 	_48             = 0.15f;
 	_44             = 0.05f;
 	mPosition.set(0.0f, 100.0f, 0.0f);
-	_60.set(0.0f, -1.0f, 0.0f);
+	mDirection.set(0.0f, -1.0f, 0.0f);
 	mDiffuseColour.set(255, 255, 255, 255);
 
 	setLightDistAttn(mDistancedRange, mAttenuation, mMode);

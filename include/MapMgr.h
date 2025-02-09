@@ -279,7 +279,7 @@ struct MapMgr {
 	MapProjMatHandler* mMapProjMatHandler; // _4B0
 	Texture* _4B4;                         // _4B4
 	Texture* _4B8;                         // _4B8
-	int _4BC;                              // _4BC
+	int mBlur;                             // _4BC
 	f32 _4C0;                              // _4C0
 	f32 _4C4;                              // _4C4
 	f32 _4C8;                              // _4C8

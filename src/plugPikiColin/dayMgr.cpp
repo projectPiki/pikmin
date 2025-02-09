@@ -1,6 +1,38 @@
 #include "Menu.h"
 #include "DayMgr.h"
+#include "Graphics.h"
+#include "sysNew.h"
+#include "gameflow.h"
+#include "MapMgr.h"
 #include "DebugLog.h"
+
+// THIS OBVIOUSLY BELONGS IN A HEADER BUT OTHER FILES BREAK FROM INCLUDING IT
+struct DaySetMenu : public Menu {
+	DaySetMenu(TimeSetting* time, Controller* control, Font* font, bool flag)
+	    : Menu(control, font, flag)
+	{
+		_B4            = time;
+		mScreenMiddleX = glnWidth / 2;
+		mScreenMiddleY = glnHeight / 2 + 60;
+		mDiffuseColour.set(32, 128, 32, 192);
+		mHighlightColour.set(32, 64, 32, 64);
+		addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
+		addMenu(new ColourMenu(&_B4->_13E8, mController, gsys->mConsFont, true), 0, "ambient colour");
+		addMenu(new FogMenu(&_B4->_13E8, &_B4->_13EC, &_B4->_13F0, mController, gsys->mConsFont, true), 0, "fog");
+		addOption(0, nullptr, nullptr, true);
+		addMenu(new LightMenu(&_B4->mDayPhaseLights[0], &_B4->_13CC[0], mController, gsys->mConsFont, true), 0, "main light");
+		addMenu(new LightMenu(&_B4->mDayPhaseLights[1], &_B4->_13CC[1], mController, gsys->mConsFont, true), 0, "sub light");
+		addMenu(new LightMenu(&_B4->mDayPhaseLights[2], &_B4->_13CC[2], mController, gsys->mConsFont, true), 0, "+1 light");
+		addMenu(new LightMenu(&_B4->mDayPhaseLights[3], &_B4->_13CC[3], mController, gsys->mConsFont, true), 0, "+2 light");
+		addMenu(new LightMenu(&_B4->mDayPhaseLights[4], &_B4->_13CC[4], mController, gsys->mConsFont, true), 0, "+3 light");
+		addMenu(new LightMenu(&_B4->mDayPhaseLights[5], &_B4->_13CC[5], mController, gsys->mConsFont, true), 0, "+4 light");
+		addMenu(new LightMenu(&_B4->mDayPhaseLights[6], &_B4->_13CC[6], mController, gsys->mConsFont, true), 0, "+5 light");
+	}
+
+	// _00     = VTBL
+	// _00-_B4 = Menu
+	TimeSetting* _B4; // _B4
+};
 
 /*
  * --INFO--
@@ -16,13 +48,23 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT(nullptr) //! TODO: Why is the size not proper?
 
+int lightTypes[2]       = { 1, 3 };
+int lightConv[4]        = { 0, 0, 0, 1 };
+char* lightTypeNames[4] = { "OFF", "PARALLEL", "POINT", "SPOT" };
+char* lightMoveNames[2] = { "global", "attach to navi" };
+
 /*
  * --INFO--
  * Address:	800697FC
  * Size:	000058
  */
-void PositionMenu::menuEnterZ(Menu&)
+void PositionMenu::menuEnterZ(Menu& menu)
 {
+	_BC = &_B4->z;
+	_C0 = "Z";
+
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", _C0, *_BC);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -55,8 +97,13 @@ void PositionMenu::menuEnterZ(Menu&)
  * Address:	80069854
  * Size:	000058
  */
-void PositionMenu::menuEnterY(Menu&)
+void PositionMenu::menuEnterY(Menu& menu)
 {
+	_BC = &_B4->y;
+	_C0 = "Y";
+
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", _C0, *_BC);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -89,8 +136,13 @@ void PositionMenu::menuEnterY(Menu&)
  * Address:	800698AC
  * Size:	000054
  */
-void PositionMenu::menuEnterX(Menu&)
+void PositionMenu::menuEnterX(Menu& menu)
 {
+	_BC = &_B4->x;
+	_C0 = "X";
+
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", _C0, *_BC);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -122,8 +174,17 @@ void PositionMenu::menuEnterX(Menu&)
  * Address:	80069900
  * Size:	0000A4
  */
-void PositionMenu::menuIncrease(Menu&)
+void PositionMenu::menuIncrease(Menu& menu)
 {
+	if (!_B8) {
+		*_BC += 10.0f;
+		char* test = menu.mCurrentItem->mName;
+		sprintf(test, "%s = %.2f", _C0, *_BC);
+	} else {
+		*_BC += 0.01f;
+		char* test = menu.mCurrentItem->mName;
+		sprintf(test, "%s = %.2f", _C0, *_BC);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -179,8 +240,17 @@ void PositionMenu::menuIncrease(Menu&)
  * Address:	800699A4
  * Size:	0000A4
  */
-void PositionMenu::menuDecrease(Menu&)
+void PositionMenu::menuDecrease(Menu& menu)
 {
+	if (!_B8) {
+		*_BC -= 10.0f;
+		char* test = menu.mCurrentItem->mName;
+		sprintf(test, "%s = %.2f", _C0, *_BC);
+	} else {
+		*_BC -= 0.01f;
+		char* test = menu.mCurrentItem->mName;
+		sprintf(test, "%s = %.2f", _C0, *_BC);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -236,8 +306,12 @@ void PositionMenu::menuDecrease(Menu&)
  * Address:	80069A48
  * Size:	000050
  */
-void ColourMenu::menuEnterA(Menu&)
+void ColourMenu::menuEnterA(Menu& menu)
 {
+	_B8        = _B4 + 3;
+	_BC        = "A";
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %d", _BC, *_B8);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -268,8 +342,12 @@ void ColourMenu::menuEnterA(Menu&)
  * Address:	80069A98
  * Size:	000050
  */
-void ColourMenu::menuEnterB(Menu&)
+void ColourMenu::menuEnterB(Menu& menu)
 {
+	_B8        = _B4 + 2;
+	_BC        = "B";
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %d", _BC, _B8);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -300,8 +378,12 @@ void ColourMenu::menuEnterB(Menu&)
  * Address:	80069AE8
  * Size:	000050
  */
-void ColourMenu::menuEnterG(Menu&)
+void ColourMenu::menuEnterG(Menu& menu)
 {
+	_B8        = _B4 + 1;
+	_BC        = "G";
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %d", _BC, _B8);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -332,8 +414,12 @@ void ColourMenu::menuEnterG(Menu&)
  * Address:	80069B38
  * Size:	00004C
  */
-void ColourMenu::menuEnterR(Menu&)
+void ColourMenu::menuEnterR(Menu& menu)
 {
+	_B8        = _B4;
+	_BC        = "R";
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %d", _BC, _B8);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -363,8 +449,13 @@ void ColourMenu::menuEnterR(Menu&)
  * Address:	80069B84
  * Size:	000054
  */
-void ColourMenu::menuIncrease(Menu&)
+void ColourMenu::menuIncrease(Menu& menu)
 {
+	if (*_B8 < 255) {
+		*_B8++;
+	}
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %d", _BC, *_B8);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -398,8 +489,13 @@ void ColourMenu::menuIncrease(Menu&)
  * Address:	80069BD8
  * Size:	000054
  */
-void ColourMenu::menuDecrease(Menu&)
+void ColourMenu::menuDecrease(Menu& menu)
 {
+	if (_B8) {
+		_B8--;
+	}
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %d", _BC, _B8);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -433,8 +529,12 @@ void ColourMenu::menuDecrease(Menu&)
  * Address:	80069C2C
  * Size:	000054
  */
-void FogMenu::menuEnterFar(Menu&)
+void FogMenu::menuEnterFar(Menu& menu)
 {
+	_BC        = _B8;
+	_C0        = "Far";
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", _C0, _BC);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -466,8 +566,12 @@ void FogMenu::menuEnterFar(Menu&)
  * Address:	80069C80
  * Size:	000054
  */
-void FogMenu::menuEnterNear(Menu&)
+void FogMenu::menuEnterNear(Menu& menu)
 {
+	_BC        = _B4;
+	_C0        = "Near";
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", _C0, _BC);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -499,8 +603,11 @@ void FogMenu::menuEnterNear(Menu&)
  * Address:	80069CD4
  * Size:	000058
  */
-void FogMenu::menuIncrease(Menu&)
+void FogMenu::menuIncrease(Menu& menu)
 {
+	*_BC += 10.0f;
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", _C0, _BC);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -533,8 +640,11 @@ void FogMenu::menuIncrease(Menu&)
  * Address:	80069D2C
  * Size:	000058
  */
-void FogMenu::menuDecrease(Menu&)
+void FogMenu::menuDecrease(Menu& menu)
 {
+	*_BC -= 10.0f;
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", _C0, _BC);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -567,8 +677,37 @@ void FogMenu::menuDecrease(Menu&)
  * Address:	80069D84
  * Size:	000434
  */
-void LightMenu::menuChangeMove(Menu&)
+void LightMenu::menuChangeMove(Menu& menu)
 {
+	_B8[0] = _B8[0] ^ 1;
+	resetOptions();
+	_B4 = lightConv[(u8)mLight->mLightType];
+	addOption(0, lightTypeNames[(u8)mLight->mLightType], new Delegate1<LightMenu, Menu&>(this, menuChangeType), true);
+	addOption(0, nullptr, nullptr, true);
+	if ((u8)mLight->mLightType == 3) {
+		_C0 = &mLight->mSpotAngle;
+		addOption(0, lightMoveNames[_B8[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
+
+		char* str = new char[0x40];
+		sprintf(str, "Fov = %.2f", *_C0);
+		addOption(0, str, nullptr, true);
+		addKeyEvent(1, 0, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
+		addKeyEvent(4, 0x8000, new Delegate1<LightMenu, Menu&>(this, menuDecrease));
+		addKeyEvent(4, 0x4000, new Delegate1<LightMenu, Menu&>(this, menuIncrease));
+	}
+
+	if ((u8)mLight->mLightType != 1) {
+		addMenu(new PositionMenu(&mLight->mPosition, mController, gsys->mConsFont, true, false), 0, "position");
+	}
+
+	if ((u8)mLight->mLightType == 3) {
+		addMenu(new PositionMenu(&mLight->mDirection, mController, gsys->mConsFont, true, true), 0, "direction");
+	}
+
+	addMenu(new ColourMenu(&mLight->mDiffuseColour, mController, gsys->mConsFont, true), 0, "colour");
+
+	open(false);
+	f32 badcompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -870,8 +1009,38 @@ void LightMenu::menuChangeMove(Menu&)
  * Address:	8006A1B8
  * Size:	000458
  */
-void LightMenu::menuChangeType(Menu&)
+void LightMenu::menuChangeType(Menu& menu)
 {
+	_B4                = _B4 ^ 1;
+	mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[_B4];
+	resetOptions();
+	_B4 = lightConv[(u8)mLight->mLightType];
+	addOption(0, lightTypeNames[(u8)mLight->mLightType], new Delegate1<LightMenu, Menu&>(this, menuChangeType), true);
+	addOption(0, nullptr, nullptr, true);
+	if ((u8)mLight->mLightType == 3) {
+		_C0 = &mLight->mSpotAngle;
+		addOption(0, lightMoveNames[_B8[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
+
+		char* str = new char[0x40];
+		sprintf(str, "Fov = %.2f", *_C0);
+		addOption(0, str, nullptr, true);
+		addKeyEvent(1, 0, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
+		addKeyEvent(4, 0x8000, new Delegate1<LightMenu, Menu&>(this, menuDecrease));
+		addKeyEvent(4, 0x4000, new Delegate1<LightMenu, Menu&>(this, menuIncrease));
+	}
+
+	if ((u8)mLight->mLightType != 1) {
+		addMenu(new PositionMenu(&mLight->mPosition, mController, gsys->mConsFont, true, false), 0, "position");
+	}
+
+	if ((u8)mLight->mLightType == 3) {
+		addMenu(new PositionMenu(&mLight->mDirection, mController, gsys->mConsFont, true, true), 0, "direction");
+	}
+
+	addMenu(new ColourMenu(&mLight->mDiffuseColour, mController, gsys->mConsFont, true), 0, "colour");
+
+	open(false);
+	f32 badcompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1182,8 +1351,12 @@ void LightMenu::menuChangeType(Menu&)
  * Address:	8006A610
  * Size:	000054
  */
-void LightMenu::menuEnterNear(Menu&)
+void LightMenu::menuEnterNear(Menu& menu)
 {
+	_C4        = _C0;
+	_C8        = "Fov";
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", _C8, *_C4);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1215,8 +1388,11 @@ void LightMenu::menuEnterNear(Menu&)
  * Address:	8006A664
  * Size:	000058
  */
-void LightMenu::menuIncrease(Menu&)
+void LightMenu::menuIncrease(Menu& menu)
 {
+	*_C4 += 1.0f;
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", _C8, *_C4);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1249,8 +1425,12 @@ void LightMenu::menuIncrease(Menu&)
  * Address:	8006A6BC
  * Size:	000058
  */
-void LightMenu::menuDecrease(Menu&)
+void LightMenu::menuDecrease(Menu& menu)
 {
+	*_C4 -= 1.0f;
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", _C8, *_C4);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1283,9 +1463,45 @@ void LightMenu::menuDecrease(Menu&)
  * Address:	8006A714
  * Size:	00072C
  */
-ColourMenu::ColourMenu(Colour*, Controller* controller, Font* font, bool p4)
+ColourMenu::ColourMenu(Colour* color, Controller* controller, Font* font, bool p4)
     : Menu(controller, font, p4)
 {
+	_B4            = (u8*)color;
+	_A8            = 1;
+	mScreenMiddleX = glnWidth / 2;
+	mScreenMiddleY = glnHeight / 2;
+	mDiffuseColour.set(32, 128, 128, 192);
+	mHighlightColour.set(32, 64, 32, 64);
+	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
+
+	char* str = new char[0x40];
+	sprintf(str, "R = %d", _B4);
+	addOption(0, str, nullptr, true);
+	addKeyEvent(1, 0, new Delegate1<ColourMenu, Menu&>(this, menuEnterR));
+	addKeyEvent(4, 0x8000, new Delegate1<ColourMenu, Menu&>(this, menuDecrease));
+	addKeyEvent(4, 0x4000, new Delegate1<ColourMenu, Menu&>(this, menuIncrease));
+
+	str = new char[0x40];
+	sprintf(str, "G = %d", _B4);
+	addOption(0, str, nullptr, true);
+	addKeyEvent(1, 0, new Delegate1<ColourMenu, Menu&>(this, menuEnterR));
+	addKeyEvent(4, 0x8000, new Delegate1<ColourMenu, Menu&>(this, menuDecrease));
+	addKeyEvent(4, 0x4000, new Delegate1<ColourMenu, Menu&>(this, menuIncrease));
+
+	str = new char[0x40];
+	sprintf(str, "B = %d", _B4);
+	addOption(0, str, nullptr, true);
+	addKeyEvent(1, 0, new Delegate1<ColourMenu, Menu&>(this, menuEnterR));
+	addKeyEvent(4, 0x8000, new Delegate1<ColourMenu, Menu&>(this, menuDecrease));
+	addKeyEvent(4, 0x4000, new Delegate1<ColourMenu, Menu&>(this, menuIncrease));
+
+	str = new char[0x40];
+	sprintf(str, "A = %d", _B4);
+	addOption(0, str, nullptr, true);
+	addKeyEvent(1, 0, new Delegate1<ColourMenu, Menu&>(this, menuEnterR));
+	addKeyEvent(4, 0x8000, new Delegate1<ColourMenu, Menu&>(this, menuDecrease));
+	addKeyEvent(4, 0x4000, new Delegate1<ColourMenu, Menu&>(this, menuIncrease));
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1784,6 +2000,36 @@ ColourMenu::ColourMenu(Colour*, Controller* controller, Font* font, bool p4)
 PositionMenu::PositionMenu(Vector3f* p1, Controller* controller, Font* font, bool p4, bool p5)
     : Menu(controller, font, p4)
 {
+	_B4            = p1;
+	_B8            = p5;
+	_A8            = 1;
+	mScreenMiddleX = glnWidth / 2;
+	mScreenMiddleY = glnHeight / 2;
+	mDiffuseColour.set(32, 128, 128, 192);
+	mHighlightColour.set(32, 64, 32, 64);
+	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
+
+	char* str = new char[0x40];
+	sprintf(str, "X = %.2f", _B4->x);
+	addOption(0, str, nullptr, true);
+	addKeyEvent(1, 0, new Delegate1<PositionMenu, Menu&>(this, menuEnterX));
+	addKeyEvent(4, 0x8000, new Delegate1<PositionMenu, Menu&>(this, menuDecrease));
+	addKeyEvent(4, 0x4000, new Delegate1<PositionMenu, Menu&>(this, menuIncrease));
+
+	str = new char[0x40];
+	sprintf(str, "Y = %.2f", _B4->y);
+	addOption(0, str, nullptr, true);
+	addKeyEvent(1, 0, new Delegate1<PositionMenu, Menu&>(this, menuEnterY));
+	addKeyEvent(4, 0x8000, new Delegate1<PositionMenu, Menu&>(this, menuDecrease));
+	addKeyEvent(4, 0x4000, new Delegate1<PositionMenu, Menu&>(this, menuIncrease));
+
+	str = new char[0x40];
+	sprintf(str, "Z = %.2f", _B4->z);
+	addOption(0, str, nullptr, true);
+	addKeyEvent(1, 0, new Delegate1<PositionMenu, Menu&>(this, menuEnterY));
+	addKeyEvent(4, 0x8000, new Delegate1<PositionMenu, Menu&>(this, menuDecrease));
+	addKeyEvent(4, 0x4000, new Delegate1<PositionMenu, Menu&>(this, menuIncrease));
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2191,8 +2437,13 @@ void DayMgr::updateComponent(Menu&, char*, int*)
  * Address:	8006B3FC
  * Size:	00005C
  */
-void DayMgr::menuBIncrease(Menu&)
+void DayMgr::menuBIncrease(Menu& menu)
 {
+	if (mMapMgr->mBlur < 255) {
+		mMapMgr->mBlur++;
+	}
+	int blur = mMapMgr->mBlur;
+	sprintf(menu.mCurrentItem->mName, "%s = %d", "Blur", blur);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2228,36 +2479,41 @@ void DayMgr::menuBIncrease(Menu&)
  * Address:	8006B458
  * Size:	00005C
  */
-void DayMgr::menuBDecrease(Menu&)
+void DayMgr::menuBDecrease(Menu& menu)
 {
+	if (mMapMgr->mBlur > 0) {
+		mMapMgr->mBlur--;
+	}
+	int blur = mMapMgr->mBlur;
+	sprintf(menu.mCurrentItem->mName, "%s = %d", "Blur", blur);
 	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x1414(r3)
-	  addi      r6, r5, 0x4BC
-	  lwz       r5, 0x4BC(r5)
-	  cmpwi     r5, 0
-	  ble-      .loc_0x28
-	  subi      r0, r5, 0x1
-	  stw       r0, 0x0(r6)
+	 .loc_0x0:
+	   mflr      r0
+	   stw       r0, 0x4(r1)
+	   stwu      r1, -0x8(r1)
+	   lwz       r5, 0x1414(r3)
+	   addi      r6, r5, 0x4BC
+	   lwz       r5, 0x4BC(r5)
+	   cmpwi     r5, 0
+	   ble-      .loc_0x28
+	   subi      r0, r5, 0x1
+	   stw       r0, 0x0(r6)
 
-	.loc_0x28:
-	  lwz       r5, 0x1414(r3)
-	  crclr     6, 0x6
-	  lwz       r3, 0x30(r4)
-	  subi      r4, r13, 0x6A20
-	  addi      r6, r5, 0x4BC
-	  lwz       r3, 0x18(r3)
-	  subi      r5, r13, 0x69A8
-	  lwz       r6, 0x0(r6)
-	  bl        0x1AB0F8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	 .loc_0x28:
+	   lwz       r5, 0x1414(r3)
+	   crclr     6, 0x6
+	   lwz       r3, 0x30(r4)
+	   subi      r4, r13, 0x6A20
+	   addi      r6, r5, 0x4BC
+	   lwz       r3, 0x18(r3)
+	   subi      r5, r13, 0x69A8
+	   lwz       r6, 0x0(r6)
+	   bl        0x1AB0F8
+	   lwz       r0, 0xC(r1)
+	   addi      r1, r1, 0x8
+	   mtlr      r0
+	   blr
+	 */
 }
 
 /*
@@ -2265,8 +2521,57 @@ void DayMgr::menuBDecrease(Menu&)
  * Address:	8006B4B4
  * Size:	001B80
  */
-DayMgr::DayMgr(MapMgr*, Controller*)
+DayMgr::DayMgr(MapMgr* map, Controller* control)
 {
+	mMapMgr       = map;
+	mLightCount   = 2;
+	mMaxLights    = 7;
+	mTimeSettings = new TimeSetting[5];
+
+	mMenu                 = new Menu(control, gsys->mConsFont, false);
+	mMenu->_A8            = 1;
+	mMenu->mScreenMiddleX = glnWidth / 2;
+	mMenu->mScreenMiddleY = glnHeight / 2 + 90;
+	mMenu->mDiffuseColour.set(32, 128, 32, 192);
+	mMenu->mHighlightColour.set(32, 64, 32, 64);
+	mMenu->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(mMenu, Menu::menuCloseMenu));
+	char* str = new char[0x40];
+	sprintf(str, "Light Count %d", mLightCount);
+	mMenu->addOption(0, str, nullptr, true);
+	mMenu->addKeyEvent(8, 0x8000, new Delegate1<DayMgr, Menu&>(this, menuDecreaseLights));
+	mMenu->addKeyEvent(8, 0x4000, new Delegate1<DayMgr, Menu&>(this, menuIncreaseLights));
+	str = new char[0x40];
+	sprintf(str, "Time : % 2.1f", gameflow.mWorldClock.mTimeOfDay);
+	mMenu->addOption(0, str, nullptr, true);
+	mMenu->addKeyEvent(4, 0x8000, new Delegate1<DayMgr, Menu&>(this, menuDecreaseTime));
+	mMenu->addKeyEvent(4, 0x4000, new Delegate1<DayMgr, Menu&>(this, menuIncreaseTime));
+	mMenu->addOption(0, nullptr, nullptr, true);
+	mMenu->addOption(0, "Dump Settings", new Delegate1<DayMgr, Menu&>(this, menuDumpSettings), true);
+	mMenu->addOption(0, nullptr, nullptr, true);
+
+	str = new char[0x40];
+	sprintf(str, "morning : % 2.1f", gameflow.mParameters->mMorningStart());
+	mMenu->addMenu(new DaySetMenu(&mTimeSettings[0], control, gsys->mConsFont, false), 0, str);
+	str = new char[0x40];
+	sprintf(str, "day     : % 2.1f -> % 2.1f", gameflow.mParameters->mMorningEnd(), gameflow.mParameters->mNightStart());
+	mMenu->addMenu(new DaySetMenu(&mTimeSettings[1], control, gsys->mConsFont, false), 0, str);
+	str = new char[0x40];
+	sprintf(str, "evening : % 2.1f", gameflow.mParameters->mNightStart());
+	mMenu->addMenu(new DaySetMenu(&mTimeSettings[2], control, gsys->mConsFont, false), 0, str);
+	str = new char[0x40];
+	sprintf(str, "night   : % 2.1f -> % 2.1f", gameflow.mParameters->mNightStart(), gameflow.mParameters->mNightEnd());
+	mMenu->addMenu(new DaySetMenu(&mTimeSettings[3], control, gsys->mConsFont, false), 0, str);
+	str = new char[0x40];
+	sprintf(str, "movie   : % 2.1f -> % 2.1f", 25.0f, 25.0f);
+	mMenu->addMenu(new DaySetMenu(&mTimeSettings[4], control, gsys->mConsFont, false), 0, str);
+
+	if (mMapMgr) {
+		str = new char[0x40];
+		sprintf(str, "Blur = %d", mMapMgr->mBlur);
+		mMenu->addOption(0, str, nullptr, true);
+		mMenu->addKeyEvent(4, 0x8000, new Delegate1<DayMgr, Menu&>(this, menuBDecrease));
+		mMenu->addKeyEvent(4, 0x4000, new Delegate1<DayMgr, Menu&>(this, menuBIncrease));
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4169,9 +4474,45 @@ DayMgr::DayMgr(MapMgr*, Controller*)
  * Address:	8006D034
  * Size:	00052C
  */
-LightMenu::LightMenu(Light*, int*, Controller* controller, Font* font, bool p5)
+LightMenu::LightMenu(Light* light, int* a1, Controller* controller, Font* font, bool p5)
     : Menu(controller, font, p5)
 {
+	mLight             = light;
+	_B4                = 0;
+	_B8                = a1;
+	mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[_B4];
+
+	mScreenMiddleX = glnWidth / 2;
+	mScreenMiddleY = glnHeight / 2;
+	mDiffuseColour.set(32, 128, 128, 192);
+	mHighlightColour.set(32, 64, 32, 64);
+	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
+	_B4 = lightConv[(u8)mLight->mLightType];
+	addOption(0, lightTypeNames[(u8)mLight->mLightType], new Delegate1<LightMenu, Menu&>(this, menuChangeType), true);
+	addOption(0, nullptr, nullptr, true);
+	if ((u8)mLight->mLightType == 3) {
+		_C0 = &mLight->mSpotAngle;
+		addOption(0, lightMoveNames[_B8[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
+
+		char* str = new char[0x40];
+		sprintf(str, "Fov = %.2f", *_C0);
+		addOption(0, str, nullptr, true);
+		addKeyEvent(1, 0, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
+		addKeyEvent(4, 0x8000, new Delegate1<LightMenu, Menu&>(this, menuDecrease));
+		addKeyEvent(4, 0x4000, new Delegate1<LightMenu, Menu&>(this, menuIncrease));
+	}
+
+	if ((u8)mLight->mLightType != 1) {
+		addMenu(new PositionMenu(&mLight->mPosition, mController, gsys->mConsFont, true, false), 0, "position");
+	}
+
+	if ((u8)mLight->mLightType == 3) {
+		addMenu(new PositionMenu(&mLight->mDirection, mController, gsys->mConsFont, true, true), 0, "direction");
+	}
+
+	addMenu(new ColourMenu(&mLight->mDiffuseColour, mController, gsys->mConsFont, true), 0, "colour");
+
+	f32 badcompiler[6];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4537,9 +4878,33 @@ LightMenu::LightMenu(Light*, int*, Controller* controller, Font* font, bool p5)
  * Address:	8006D560
  * Size:	000B30
  */
-FogMenu::FogMenu(Colour*, f32*, f32*, Controller* controller, Font* font, bool p6)
+FogMenu::FogMenu(Colour* color, f32* a1, f32* a2, Controller* controller, Font* font, bool p6)
     : Menu(controller, font, p6)
 {
+	_B4            = a1;
+	_B8            = a2;
+	_A8            = 1;
+	mScreenMiddleX = glnWidth / 2;
+	mScreenMiddleY = glnHeight / 2;
+	mDiffuseColour.set(32, 128, 128, 192);
+	mHighlightColour.set(32, 64, 32, 64);
+	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
+
+	addMenu(new ColourMenu(color, mController, gsys->mConsFont, true), 0, "fog colour");
+
+	char* str = new char[0x40];
+	sprintf(str, "Near = %.2f", *a1);
+	addOption(0, str, nullptr, true);
+	addKeyEvent(1, 0, new Delegate1<FogMenu, Menu&>(this, menuEnterNear));
+	addKeyEvent(4, 0x8000, new Delegate1<FogMenu, Menu&>(this, menuDecrease));
+	addKeyEvent(4, 0x4000, new Delegate1<FogMenu, Menu&>(this, menuIncrease));
+
+	str = new char[0x40];
+	sprintf(str, "Far = %.2f", *a1);
+	addOption(0, str, nullptr, true);
+	addKeyEvent(1, 0, new Delegate1<FogMenu, Menu&>(this, menuEnterFar));
+	addKeyEvent(4, 0x8000, new Delegate1<FogMenu, Menu&>(this, menuDecrease));
+	addKeyEvent(4, 0x4000, new Delegate1<FogMenu, Menu&>(this, menuIncrease));
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5305,215 +5670,6 @@ FogMenu::FogMenu(Colour*, f32*, f32*, Controller* controller, Font* font, bool p
 
 /*
  * --INFO--
- * Address:	8006E090
- * Size:	000314
- */
-TimeSetting::TimeSetting()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8003
-	  stw       r0, 0x4(r1)
-	  subi      r4, r4, 0x65B8
-	  li        r5, 0
-	  stwu      r1, -0x20(r1)
-	  li        r6, 0x2D4
-	  li        r7, 0x7
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  bl        0x1A69B0
-	  li        r30, 0xFF
-	  stb       r30, 0x6C(r29)
-	  li        r31, 0x1
-	  addi      r3, r29, 0
-	  stb       r30, 0x6D(r29)
-	  stb       r30, 0x6E(r29)
-	  stb       r30, 0x6F(r29)
-	  lfs       f0, -0x6AD8(r13)
-	  stfs      f0, 0x54(r29)
-	  lfs       f0, -0x6AD4(r13)
-	  stfs      f0, 0x58(r29)
-	  lfs       f0, -0x6AD0(r13)
-	  stfs      f0, 0x5C(r29)
-	  lfs       f0, -0x6ACC(r13)
-	  stfs      f0, 0x60(r29)
-	  lfs       f0, -0x6AC8(r13)
-	  stfs      f0, 0x64(r29)
-	  lfs       f0, -0x6AC4(r13)
-	  stfs      f0, 0x68(r29)
-	  lfs       f0, -0x77FC(r2)
-	  stfs      f0, 0x18(r29)
-	  lfs       f0, -0x77F8(r2)
-	  stfs      f0, 0x20(r29)
-	  stw       r31, 0x14(r29)
-	  bl        -0x4425C
-	  stb       r30, 0x340(r29)
-	  addi      r3, r29, 0x2D4
-	  stb       r30, 0x341(r29)
-	  stb       r30, 0x342(r29)
-	  stb       r30, 0x343(r29)
-	  lfs       f0, -0x6AC0(r13)
-	  stfs      f0, 0x328(r29)
-	  lfs       f0, -0x6ABC(r13)
-	  stfs      f0, 0x32C(r29)
-	  lfs       f0, -0x6AB8(r13)
-	  stfs      f0, 0x330(r29)
-	  lfs       f0, -0x6AB4(r13)
-	  stfs      f0, 0x334(r29)
-	  lfs       f0, -0x6AB0(r13)
-	  stfs      f0, 0x338(r29)
-	  lfs       f0, -0x6AAC(r13)
-	  stfs      f0, 0x33C(r29)
-	  lfs       f0, -0x77F4(r2)
-	  stfs      f0, 0x2EC(r29)
-	  lfs       f0, -0x77F8(r2)
-	  stfs      f0, 0x2F4(r29)
-	  stw       r31, 0x2E8(r29)
-	  bl        -0x442B8
-	  stb       r30, 0x614(r29)
-	  addi      r3, r29, 0x5A8
-	  stb       r30, 0x615(r29)
-	  stb       r30, 0x616(r29)
-	  stb       r30, 0x617(r29)
-	  lfs       f0, -0x6AA8(r13)
-	  stfs      f0, 0x5FC(r29)
-	  lfs       f0, -0x6AA4(r13)
-	  stfs      f0, 0x600(r29)
-	  lfs       f0, -0x6AA0(r13)
-	  stfs      f0, 0x604(r29)
-	  lfs       f0, -0x6A9C(r13)
-	  stfs      f0, 0x608(r29)
-	  lfs       f0, -0x6A98(r13)
-	  stfs      f0, 0x60C(r29)
-	  lfs       f0, -0x6A94(r13)
-	  stfs      f0, 0x610(r29)
-	  lfs       f0, -0x77FC(r2)
-	  stfs      f0, 0x5C0(r29)
-	  lfs       f0, -0x77F8(r2)
-	  stfs      f0, 0x5C8(r29)
-	  stw       r31, 0x5BC(r29)
-	  bl        -0x44314
-	  stb       r30, 0x8E8(r29)
-	  addi      r3, r29, 0x87C
-	  stb       r30, 0x8E9(r29)
-	  stb       r30, 0x8EA(r29)
-	  stb       r30, 0x8EB(r29)
-	  lfs       f0, -0x6A90(r13)
-	  stfs      f0, 0x8D0(r29)
-	  lfs       f0, -0x6A8C(r13)
-	  stfs      f0, 0x8D4(r29)
-	  lfs       f0, -0x6A88(r13)
-	  stfs      f0, 0x8D8(r29)
-	  lfs       f0, -0x6A84(r13)
-	  stfs      f0, 0x8DC(r29)
-	  lfs       f0, -0x6A80(r13)
-	  stfs      f0, 0x8E0(r29)
-	  lfs       f0, -0x6A7C(r13)
-	  stfs      f0, 0x8E4(r29)
-	  lfs       f0, -0x77F4(r2)
-	  stfs      f0, 0x894(r29)
-	  lfs       f0, -0x77F8(r2)
-	  stfs      f0, 0x89C(r29)
-	  stw       r31, 0x890(r29)
-	  bl        -0x44370
-	  stb       r30, 0xBBC(r29)
-	  addi      r3, r29, 0xB50
-	  stb       r30, 0xBBD(r29)
-	  stb       r30, 0xBBE(r29)
-	  stb       r30, 0xBBF(r29)
-	  lfs       f0, -0x6A78(r13)
-	  stfs      f0, 0xBA4(r29)
-	  lfs       f0, -0x6A74(r13)
-	  stfs      f0, 0xBA8(r29)
-	  lfs       f0, -0x6A70(r13)
-	  stfs      f0, 0xBAC(r29)
-	  lfs       f0, -0x6A6C(r13)
-	  stfs      f0, 0xBB0(r29)
-	  lfs       f0, -0x6A68(r13)
-	  stfs      f0, 0xBB4(r29)
-	  lfs       f0, -0x6A64(r13)
-	  stfs      f0, 0xBB8(r29)
-	  lfs       f0, -0x77FC(r2)
-	  stfs      f0, 0xB68(r29)
-	  lfs       f0, -0x77F8(r2)
-	  stfs      f0, 0xB70(r29)
-	  stw       r31, 0xB64(r29)
-	  bl        -0x443CC
-	  stb       r30, 0xE90(r29)
-	  addi      r3, r29, 0xE24
-	  stb       r30, 0xE91(r29)
-	  stb       r30, 0xE92(r29)
-	  stb       r30, 0xE93(r29)
-	  lfs       f0, -0x6A60(r13)
-	  stfs      f0, 0xE78(r29)
-	  lfs       f0, -0x6A5C(r13)
-	  stfs      f0, 0xE7C(r29)
-	  lfs       f0, -0x6A58(r13)
-	  stfs      f0, 0xE80(r29)
-	  lfs       f0, -0x6A54(r13)
-	  stfs      f0, 0xE84(r29)
-	  lfs       f0, -0x6A50(r13)
-	  stfs      f0, 0xE88(r29)
-	  lfs       f0, -0x6A4C(r13)
-	  stfs      f0, 0xE8C(r29)
-	  lfs       f0, -0x77F4(r2)
-	  stfs      f0, 0xE3C(r29)
-	  lfs       f0, -0x77F8(r2)
-	  stfs      f0, 0xE44(r29)
-	  stw       r31, 0xE38(r29)
-	  bl        -0x44428
-	  stb       r30, 0x1164(r29)
-	  addi      r3, r29, 0x10F8
-	  stb       r30, 0x1165(r29)
-	  stb       r30, 0x1166(r29)
-	  stb       r30, 0x1167(r29)
-	  lfs       f0, -0x6A48(r13)
-	  stfs      f0, 0x114C(r29)
-	  lfs       f0, -0x6A44(r13)
-	  stfs      f0, 0x1150(r29)
-	  lfs       f0, -0x6A40(r13)
-	  stfs      f0, 0x1154(r29)
-	  lfs       f0, -0x6A3C(r13)
-	  stfs      f0, 0x1158(r29)
-	  lfs       f0, -0x6A38(r13)
-	  stfs      f0, 0x115C(r29)
-	  lfs       f0, -0x6A34(r13)
-	  stfs      f0, 0x1160(r29)
-	  lfs       f0, -0x77FC(r2)
-	  stfs      f0, 0x1110(r29)
-	  lfs       f0, -0x77F8(r2)
-	  stfs      f0, 0x1118(r29)
-	  stw       r31, 0x110C(r29)
-	  bl        -0x44484
-	  li        r0, 0x30
-	  stb       r0, 0x13E8(r29)
-	  mr        r3, r29
-	  stb       r0, 0x13E9(r29)
-	  stb       r0, 0x13EA(r29)
-	  stb       r0, 0x13EB(r29)
-	  stb       r0, 0x13F4(r29)
-	  stb       r0, 0x13F5(r29)
-	  stb       r0, 0x13F6(r29)
-	  stb       r0, 0x13F7(r29)
-	  lfs       f0, -0x77F0(r2)
-	  stfs      f0, 0x13EC(r29)
-	  lfs       f0, -0x77EC(r2)
-	  stfs      f0, 0x13F0(r29)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	000038
  */
@@ -5527,35 +5683,15 @@ void DayMgr::updateLightCount(Menu&)
  * Address:	8006E3A4
  * Size:	000058
  */
-void DayMgr::menuIncreaseLights(Menu&)
+void DayMgr::menuIncreaseLights(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x0(r3)
-	  addi      r0, r5, 0x1
-	  stw       r0, 0x0(r3)
-	  lwz       r0, 0x0(r3)
-	  lwz       r5, 0x4(r3)
-	  cmpw      r0, r5
-	  ble-      .loc_0x2C
-	  stw       r5, 0x0(r3)
+	mLightCount++;
+	if (mLightCount > mMaxLights) {
+		mLightCount = mMaxLights;
+	}
 
-	.loc_0x2C:
-	  lwz       r6, 0x30(r4)
-	  lis       r4, 0x802B
-	  lwz       r5, 0x0(r3)
-	  subi      r4, r4, 0x68C8
-	  lwz       r3, 0x18(r6)
-	  crclr     6, 0x6
-	  bl        0x1A81B0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "Light Count %d", mLightCount);
 }
 
 /*
@@ -5563,35 +5699,15 @@ void DayMgr::menuIncreaseLights(Menu&)
  * Address:	8006E3FC
  * Size:	000058
  */
-void DayMgr::menuDecreaseLights(Menu&)
+void DayMgr::menuDecreaseLights(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x0(r3)
-	  subi      r0, r5, 0x1
-	  stw       r0, 0x0(r3)
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0
-	  bge-      .loc_0x2C
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
+	mLightCount--;
+	if (mLightCount < 0) {
+		mLightCount = 0;
+	}
 
-	.loc_0x2C:
-	  lwz       r6, 0x30(r4)
-	  lis       r4, 0x802B
-	  lwz       r5, 0x0(r3)
-	  subi      r4, r4, 0x68C8
-	  lwz       r3, 0x18(r6)
-	  crclr     6, 0x6
-	  bl        0x1A8158
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "Light Count %d", mLightCount);
 }
 
 /*
@@ -5609,46 +5725,16 @@ void DayMgr::updateTime(Menu&)
  * Address:	8006E454
  * Size:	000084
  */
-void DayMgr::menuIncreaseTime(Menu&)
+void DayMgr::menuIncreaseTime(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  subi      r3, r3, 0x2848
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0x2F0
-	  stw       r30, 0x10(r1)
-	  mr        r30, r4
-	  lfs       f2, -0x77D8(r2)
-	  lfs       f1, 0x2F0(r3)
-	  lfs       f0, -0x77D4(r2)
-	  fadds     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x40
-	  fmr       f1, f0
+	f32 time = gameflow.mWorldClock.mTimeOfDay + 0.05f;
+	if (time > 23.99f) {
+		time = 23.99f;
+	}
+	gameflow.mWorldClock.setTime(time);
 
-	.loc_0x40:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r3, r3, 0x2D8
-	  bl        -0x1CC84
-	  lwz       r5, 0x30(r30)
-	  lis       r3, 0x802B
-	  subi      r4, r3, 0x68B8
-	  lfs       f1, 0x0(r31)
-	  lwz       r3, 0x18(r5)
-	  crset     6, 0x6
-	  bl        0x1A80DC
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "Time : % 2.1f", gameflow.mWorldClock.mTimeOfDay);
 }
 
 /*
@@ -5656,46 +5742,16 @@ void DayMgr::menuIncreaseTime(Menu&)
  * Address:	8006E4D8
  * Size:	000084
  */
-void DayMgr::menuDecreaseTime(Menu&)
+void DayMgr::menuDecreaseTime(Menu& menu)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  subi      r3, r3, 0x2848
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0x2F0
-	  stw       r30, 0x10(r1)
-	  mr        r30, r4
-	  lfs       f1, -0x77D8(r2)
-	  lfs       f2, 0x2F0(r3)
-	  lfs       f0, -0x77E8(r2)
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x40
-	  fmr       f1, f0
+	f32 time = gameflow.mWorldClock.mTimeOfDay - 0.05f;
+	if (time < 0.0f) {
+		time = 0.0f;
+	}
+	gameflow.mWorldClock.setTime(time);
 
-	.loc_0x40:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r3, r3, 0x2D8
-	  bl        -0x1CD08
-	  lwz       r5, 0x30(r30)
-	  lis       r3, 0x802B
-	  subi      r4, r3, 0x68B8
-	  lfs       f1, 0x0(r31)
-	  lwz       r3, 0x18(r5)
-	  crset     6, 0x6
-	  bl        0x1A8058
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	char* test = menu.mCurrentItem->mName;
+	sprintf(test, "Time : % 2.1f", gameflow.mWorldClock.mTimeOfDay);
 }
 
 /*
@@ -5703,8 +5759,18 @@ void DayMgr::menuDecreaseTime(Menu&)
  * Address:	8006E55C
  * Size:	000A38
  */
-void DayMgr::refresh(Graphics&, f32, int)
+void DayMgr::refresh(Graphics& gfx, f32 a1, int a2)
 {
+	int lights = (mLightCount > a2) ? a2 : mLightCount;
+
+	for (int i = 0; i < lights; i++) {
+		mCurrentTimeSetting.mDayPhaseLights[i].update();
+		mCurrentTimeSetting.mDayPhaseLights[i].initCore("");
+		gsys->mLightCount++;
+		gfx.mLight.add(&mCurrentTimeSetting.mDayPhaseLights[i]);
+	}
+
+	setFog(gfx, nullptr);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -6404,13 +6470,21 @@ void DayMgr::refresh(Graphics&, f32, int)
 	*/
 }
 
+char* settingnames[5] = { "night", "morning", "day", "evening", "movie" };
+char* lightnames[7]   = { "main light", "sub light", "+1", "+2", "+3", "+4", "+5" };
+
 /*
  * --INFO--
  * Address:	8006EF94
  * Size:	000054
  */
-void DayMgr::setFog(Graphics&, Colour*)
+void DayMgr::setFog(Graphics& gfx, Colour* color)
 {
+	if (!color) {
+		color = &mCurrentTimeSetting._13F4;
+	}
+
+	gfx.setFog(true, *color, 1.0f, mCurrentTimeSetting._13EC, mCurrentTimeSetting._13EC);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -6448,48 +6522,50 @@ void DayMgr::setFog(Graphics&, Colour*)
  */
 void DayMgr::menuDumpSettings(Menu&)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x2DEC(r13)
-	  li        r8, 0
-	  li        r0, 0x1
-	  lwz       r11, 0x1C(r5)
-	  addi      r6, r5, 0x1C
-	  addi      r9, r8, 0
-	  stw       r0, 0x0(r6)
-	  li        r12, 0
+	int old            = gsys->mTogglePrint;
+	gsys->mTogglePrint = 1;
 
-	.loc_0x20:
-	  lwz       r0, 0x0(r3)
-	  li        r6, 0
-	  addi      r7, r6, 0
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x64
+	PRINT("\n------- cut here -----------------\n\n");
+	PRINT("dayMgr {\n");
+	PRINT("numsettings %d\n\n", 5);
+	for (int i = 0; i < 5; i++) {
+		PRINT("timesetting %d {\t// %s\n", i, settingnames[i]);
+		for (int j = 0; j < mLightCount; j++) {
+			PRINT("\tlight %d {\t// %s\n", j, lightnames[j]);
+			PRINT("\t\ttype\t%d\n", mTimeSettings[i].mDayPhaseLights[j].mLightType);
+			PRINT("\t\tattach\t%d\n", mTimeSettings[i]._13CC[j]);
+			u8 type = mTimeSettings[i].mDayPhaseLights[j].mLightType;
+			if ((int)type == 3) {
+				PRINT("\t\tfov\t%.1f\n", mTimeSettings[i].mDayPhaseLights[j].mSpotAngle);
+			}
+			if ((int)type != 1) {
+				PRINT("\t\tposition\t%.2f %.2f %.2f\n", mTimeSettings[i].mDayPhaseLights[j].mPosition.x,
+				      mTimeSettings[i].mDayPhaseLights[j].mPosition.y, mTimeSettings[i].mDayPhaseLights[j].mPosition.z);
+			}
+			if ((int)type == 3) {
+				PRINT("\t\tdirection\t%.2f %.2f %.2f\n", mTimeSettings[i].mDayPhaseLights[j].mDirection.x,
+				      mTimeSettings[i].mDayPhaseLights[j].mDirection.y, mTimeSettings[i].mDayPhaseLights[j].mDirection.z);
+			}
+			PRINT("\t\tcolour\t%d %d %d %d\n", mTimeSettings[i].mDayPhaseLights[j].mDiffuseColour.r,
+			      mTimeSettings[i].mDayPhaseLights[j].mDiffuseColour.g, mTimeSettings[i].mDayPhaseLights[j].mDiffuseColour.b,
+			      mTimeSettings[i].mDayPhaseLights[j].mDiffuseColour.a);
+			PRINT("\t\t}\n");
+		}
+		PRINT("\tambient {\n");
+		PRINT("\t\tcolour\t%d %d %d %d\n", mTimeSettings[i]._13E8.r, mTimeSettings[i]._13E8.g, mTimeSettings[i]._13E8.b,
+		      mTimeSettings[i]._13E8.a);
+		PRINT("\t\t}\n");
 
-	.loc_0x38:
-	  lwz       r0, 0x1400(r3)
-	  add       r0, r0, r9
-	  add       r10, r0, r7
-	  lwz       r0, 0x14(r10)
-	  rlwinm    r0,r0,0,24,31
-	  cmpwi     r0, 0x3
-	  cmpwi     r0, 0x1
-	  cmpwi     r0, 0x3
-	  addi      r6, r6, 0x4
-	  addi      r7, r7, 0x2D4
-	  bdnz+     .loc_0x38
+		PRINT("\tfog {\n");
+		PRINT("\t\tcolour\t%d %d %d %d\n", mTimeSettings[i]._13F4.r, mTimeSettings[i]._13F4.g, mTimeSettings[i]._13F4.b,
+		      mTimeSettings[i]._13F4.a);
+		PRINT("\t\tdist\t%.2f %.2f\n", mTimeSettings[i]._13EC, mTimeSettings[i]._13F0);
+		PRINT("\t\t}\n");
+	}
+	PRINT("\t}\n");
+	PRINT("\n------- cut here -----------------\n");
 
-	.loc_0x64:
-	  addi      r12, r12, 0x1
-	  cmpwi     r12, 0x5
-	  addi      r8, r8, 0x4
-	  addi      r9, r9, 0x13F8
-	  blt+      .loc_0x20
-	  lwz       r3, 0x2DEC(r13)
-	  stw       r11, 0x1C(r3)
-	  blr
-	*/
+	gsys->mTogglePrint = old;
 }
 
 /*
@@ -6497,8 +6573,16 @@ void DayMgr::menuDumpSettings(Menu&)
  * Address:	8006F06C
  * Size:	0008C0
  */
-void DayMgr::init(CmdStream*)
+void DayMgr::init(CmdStream* stream)
 {
+	mLightCount = 0;
+	while (!stream->endOfCmds() && !stream->endOfSection()) {
+		stream->getToken(true);
+		if (stream->isToken("numsettings")) {
+			stream->getToken(true);
+			continue;
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -7119,126 +7203,6 @@ void DayMgr::init(CmdStream*)
 	  lwz       r30, 0x88(r1)
 	  lwz       r29, 0x84(r1)
 	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8006F92C
- * Size:	000030
- */
-void Delegate1<DayMgr, Menu&>::invoke(Menu&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r5, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1A53EC
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8006F95C
- * Size:	000030
- */
-void Delegate1<LightMenu, Menu&>::invoke(Menu&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r5, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1A53BC
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8006F98C
- * Size:	000030
- */
-void Delegate1<FogMenu, Menu&>::invoke(Menu&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r5, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1A538C
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8006F9BC
- * Size:	000030
- */
-void Delegate1<ColourMenu, Menu&>::invoke(Menu&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r5, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1A535C
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8006F9EC
- * Size:	000030
- */
-void Delegate1<PositionMenu, Menu&>::invoke(Menu&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r5, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1A532C
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
 	  mtlr      r0
 	  blr
 	*/

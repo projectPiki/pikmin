@@ -132,7 +132,7 @@ struct Light : public CoreNode {
 	f32 _48;                     // _48
 	u8 _4C[0x8];                 // _4C, unknown
 	Vector3f mPosition;          // _54
-	Vector3f _60;                // _60
+	Vector3f mDirection;         // _60
 	Colour mDiffuseColour;       // _6C
 	u32 mLightValuesSet;         // _70
 	CullFrustum* mFrustum;       // _74

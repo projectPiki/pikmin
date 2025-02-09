@@ -5,7 +5,9 @@
 #include "Node.h"
 #include "Delegate.h"
 #include "Colour.h"
+#include "system.h"
 
+struct TimeSetting;
 struct Controller;
 struct Font;
 struct Light;
@@ -156,19 +158,10 @@ struct ColourMenu : public Menu {
 	void menuDecrease(Menu&);
 
 	// _00     = VTBL
-	// _00-_?? = Menu
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct DaySetMenu : public Menu {
-	inline DaySetMenu(); // TODO: fix, not in map but needed
-
-	// _00     = VTBL
-	// _00-_?? = Menu
-	// TODO: members
+	// _00-_B4 = Menu
+	u8* _B4;   // _B4
+	u8* _B8;   // _B8
+	char* _BC; // _BC
 };
 
 /**
@@ -183,8 +176,11 @@ struct FogMenu : public Menu {
 	void menuDecrease(Menu&);
 
 	// _00     = VTBL
-	// _00-_?? = Menu
-	// TODO: members
+	// _00-_B4 = Menu
+	f32* _B4;  // _B4
+	f32* _B8;  // _B8
+	f32* _BC;  // _BC
+	char* _C0; // _C0
 };
 
 /**
@@ -200,8 +196,13 @@ struct LightMenu : public Menu {
 	void menuDecrease(Menu&);
 
 	// _00     = VTBL
-	// _00-_?? = Menu
-	// TODO: members
+	// _00-_B4 = Menu
+	int _B4;       //_B4
+	int* _B8;      //_B8
+	Light* mLight; // _BC
+	f32* _C0;      // _C0
+	f32* _C4;      // _C4
+	char* _C8;     // _C8
 };
 
 /**
@@ -217,8 +218,11 @@ struct PositionMenu : public Menu {
 	void menuDecrease(Menu&);
 
 	// _00     = VTBL
-	// _00-_?? = Menu
-	// TODO: members
+	// _00-_B4 = Menu
+	Vector3f* _B4; // _B4
+	bool _B8;      // _B8
+	f32* _BC;      // _BC
+	char* _C0;     // _C0
 };
 
 #endif
