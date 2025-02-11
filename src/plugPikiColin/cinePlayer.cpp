@@ -1,6 +1,17 @@
 #include "CinematicPlayer.h"
 #include "Creature.h"
 #include "Vector.h"
+#include "Graphics.h"
+#include "sysNew.h"
+#include "UfoItem.h"
+#include "EffectMgr.h"
+#include "NaviMgr.h"
+#include "Interface.h"
+#include "ItemMgr.h"
+#include "gameflow.h"
+#include "zen/Math.h"
+#include "MoviePlayer.h"
+#include "Demo.h"
 #include "DebugLog.h"
 
 /*
@@ -15,16 +26,20 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("CinePlayer")
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000A0
  */
-void CineShapeObject::init(char*, char*, char*)
+void CineShapeObject::init(char* nameA, char* nameB, char* nameC)
 {
-	// UNUSED FUNCTION
+	_14 = gameflow.loadShape(nameA, true);
+	if (nameB) {
+		_30        = new AnimMgr(_14, nameB, 0x8000, nameC);
+		_30->mName = nameB;
+	}
 }
 
 /*
@@ -32,138 +47,32 @@ void CineShapeObject::init(char*, char*, char*)
  * Address:	8006FA1C
  * Size:	0001BC
  */
-void CinematicPlayer::init(char*)
+void CinematicPlayer::init(char* demoName)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r4, 0
-	  stw       r0, 0x4(r1)
-	  subi      r0, r13, 0x6848
-	  stwu      r1, -0x30(r1)
-	  stfd      f31, 0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x20(r1)
-	  li        r30, 0
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
-	  stw       r30, 0x2B0(r3)
-	  stw       r30, 0x7C(r3)
-	  lfs       f0, -0x77B0(r2)
-	  stfs      f0, 0x2A4(r3)
-	  lfs       f0, -0x77AC(r2)
-	  stfs      f0, 0x2A0(r3)
-	  stw       r30, 0x5C(r3)
-	  stw       r30, 0x58(r3)
-	  stw       r30, 0x54(r3)
-	  stw       r0, 0x50(r3)
-	  stw       r30, 0x90(r3)
-	  stw       r30, 0x8C(r3)
-	  stw       r30, 0x88(r3)
-	  stw       r0, 0x84(r3)
-	  stw       r30, 0xC4(r3)
-	  stw       r30, 0xC0(r3)
-	  stw       r30, 0xBC(r3)
-	  stw       r0, 0xB8(r3)
-	  beq-      .loc_0x104
-	  mr        r3, r31
-	  bl        0x41C
-	  stw       r30, 0x2B0(r31)
-	  lwz       r30, 0xC4(r31)
-	  b         .loc_0xB0
+	_2B0          = 0;
+	mCurrentScene = nullptr;
+	_2A4          = 0.0f;
+	_2A0          = 30.0f;
+	_4C.initCore("");
+	_80.initCore("");
+	_B4.initCore("");
 
-	.loc_0x90:
-	  lwz       r3, 0x18(r30)
-	  lwz       r0, 0x1C(r30)
-	  sub       r3, r0, r3
-	  bl        0x1A61E8
-	  lwz       r0, 0x2B0(r31)
-	  add       r0, r0, r3
-	  stw       r0, 0x2B0(r31)
-	  lwz       r30, 0xC(r30)
+	if (demoName) {
+		loadCin(demoName);
+		calcMaxFrames();
+	}
 
-	.loc_0xB0:
-	  cmplwi    r30, 0
-	  bne+      .loc_0x90
-	  lwz       r3, 0x2B0(r31)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x77A0(r2)
-	  xoris     r3, r3, 0x8000
-	  lfs       f1, 0x2A4(r31)
-	  stw       r3, 0x14(r1)
-	  stw       r0, 0x10(r1)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x104
-	  stw       r3, 0x14(r1)
-	  lfs       f0, -0x77A8(r2)
-	  stw       r0, 0x10(r1)
-	  lfd       f1, 0x10(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x2A4(r31)
+	if (mCurrentScene) {
+		int i;
+		for (i = 0; i < mCurrentScene->mNumCameras; i++) {
+			mCurrentScene->mCameraData[i]._28 = 0.0f;
+			mCurrentScene->mCameraData[i].update(0.0f, Matrix4f::ident);
+		}
 
-	.loc_0x104:
-	  lwz       r0, 0x7C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x198
-	  lis       r3, 0x803A
-	  lfs       f31, -0x77B0(r2)
-	  subi      r30, r3, 0x77C0
-	  li        r28, 0
-	  li        r29, 0
-	  b         .loc_0x154
-
-	.loc_0x128:
-	  lwz       r3, 0x1C(r3)
-	  addi      r0, r29, 0x28
-	  fmr       f1, f31
-	  mr        r4, r30
-	  stfsx     f31, r3, r0
-	  lwz       r3, 0x7C(r31)
-	  lwz       r0, 0x1C(r3)
-	  add       r3, r0, r29
-	  bl        -0x451CC
-	  addi      r29, r29, 0x3F8
-	  addi      r28, r28, 0x1
-
-	.loc_0x154:
-	  lwz       r3, 0x7C(r31)
-	  lwz       r0, 0x28(r3)
-	  cmpw      r28, r0
-	  blt+      .loc_0x128
-	  li        r30, 0
-	  mulli     r29, r30, 0x334
-	  b         .loc_0x188
-
-	.loc_0x170:
-	  lwz       r0, 0x20(r3)
-	  lfs       f1, -0x77B0(r2)
-	  add       r3, r0, r29
-	  bl        -0x44ECC
-	  addi      r29, r29, 0x334
-	  addi      r30, r30, 0x1
-
-	.loc_0x188:
-	  lwz       r3, 0x7C(r31)
-	  lwz       r0, 0x2C(r3)
-	  cmpw      r30, r0
-	  blt+      .loc_0x170
-
-	.loc_0x198:
-	  lwz       r0, 0x34(r1)
-	  lfd       f31, 0x28(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+		for (i = 0; i < mCurrentScene->mNumLights; i++) {
+			mCurrentScene->mLightData[i].update(0.0f);
+		}
+	}
 }
 
 /*
@@ -171,8 +80,17 @@ void CinematicPlayer::init(char*)
  * Address:	8006FBD8
  * Size:	0001B0
  */
-CinematicPlayer::CinematicPlayer(char*)
+CinematicPlayer::CinematicPlayer(char* demoName)
 {
+	mFlags = 0;
+	mType  = 0;
+	_48    = 0;
+	_290   = 0;
+	_294   = 0;
+	_2AC   = -1.0f;
+	_2E4   = false;
+	init(demoName);
+	_2B4 = 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -290,99 +208,145 @@ CinematicPlayer::CinematicPlayer(char*)
 
 /*
  * --INFO--
- * Address:	8006FD88
- * Size:	000130
- */
-ActorInstance::ActorInstance()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r1)
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  stwu      r1, -0x20(r1)
-	  subi      r5, r5, 0x6164
-	  lis       r4, 0x802A
-	  stw       r31, 0x1C(r1)
-	  li        r6, 0xC
-	  li        r7, 0x9
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r29)
-	  addi      r0, r3, 0x737C
-	  lis       r3, 0x8003
-	  stw       r0, 0x0(r29)
-	  addi      r31, r3, 0x5B24
-	  addi      r0, r4, 0x5FFC
-	  stw       r30, 0x10(r29)
-	  subi      r3, r13, 0x6848
-	  addi      r4, r31, 0
-	  stw       r30, 0xC(r29)
-	  stw       r30, 0x8(r29)
-	  stw       r3, 0x4(r29)
-	  addi      r3, r29, 0x9C
-	  stw       r5, 0x0(r29)
-	  li        r5, 0
-	  stw       r0, 0x44(r29)
-	  stw       r30, 0x48(r29)
-	  stw       r30, 0x4C(r29)
-	  stw       r30, 0x50(r29)
-	  stw       r30, 0x54(r29)
-	  lfs       f0, -0x77B0(r2)
-	  stfs      f0, 0x8C(r29)
-	  stfs      f0, 0x88(r29)
-	  stfs      f0, 0x84(r29)
-	  stfs      f0, 0x98(r29)
-	  stfs      f0, 0x94(r29)
-	  stfs      f0, 0x90(r29)
-	  bl        0x1A4C3C
-	  addi      r4, r31, 0
-	  addi      r3, r29, 0x108
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x4
-	  bl        0x1A4C24
-	  stw       r30, 0x5C(r29)
-	  li        r5, 0x1
-	  li        r4, -0x1
-	  stw       r30, 0x60(r29)
-	  li        r0, 0x2
-	  addi      r3, r29, 0
-	  stw       r30, 0x64(r29)
-	  stw       r30, 0x14(r29)
-	  stb       r30, 0x19E(r29)
-	  stb       r30, 0x19D(r29)
-	  stb       r30, 0x19F(r29)
-	  stb       r30, 0x19C(r29)
-	  stw       r30, 0x6C(r29)
-	  stw       r5, 0x70(r29)
-	  stw       r4, 0x74(r29)
-	  lfs       f0, -0x77B0(r2)
-	  stfs      f0, 0x80(r29)
-	  stw       r0, 0x68(r29)
-	  stw       r30, 0x78(r29)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	8006FEB8
  * Size:	000720
  */
-void CinematicPlayer::loadCin(char*)
+void CinematicPlayer::loadCin(char* demoName)
 {
+	mCurrentScene = nullptr;
+	Stream* data  = gsys->openFile(demoName, true, true);
+	if (!data) {
+		return;
+	}
+
+	CmdStream* cmd = new CmdStream(data);
+	if (cmd) {
+		while (!cmd->endOfCmds() && !cmd->endOfSection()) {
+			cmd->getToken(true);
+
+			if (cmd->isToken("type")) {
+				sscanf(cmd->getToken(true), "%d", &mType);
+				continue;
+			}
+
+			if (cmd->isToken("flags")) {
+				sscanf(cmd->getToken(true), "%d", &mFlags);
+				continue;
+			}
+
+			if (cmd->isToken("addScene")) {
+				cmd->getToken(true);
+				while (!cmd->endOfCmds() && !cmd->endOfSection()) {
+					cmd->getToken(true);
+					if (cmd->isToken("scene")) {
+						SceneData* data = new SceneData;
+						data->mName     = StdSystem::stringDup(cmd->getToken(true));
+						_4C.add(data);
+					}
+				}
+
+				if (!cmd->endOfCmds()) {
+					cmd->getToken(true);
+				}
+				continue;
+			}
+
+			if (cmd->isToken("addActor")) {
+				cmd->getToken(true);
+				CineShapeObject* shape = nullptr;
+				while (!cmd->endOfCmds() && !cmd->endOfSection()) {
+					cmd->getToken(true);
+					if (cmd->isToken("shape")) {
+						shape        = new CineShapeObject;
+						shape->mName = StdSystem::stringDup(cmd->getToken(true));
+						_80.add(shape);
+					} else if (cmd->isToken("bundle")) {
+						shape->_1C = StdSystem::stringDup(cmd->getToken(true));
+					} else if (cmd->isToken("anims")) {
+						shape->_18 = StdSystem::stringDup(cmd->getToken(true));
+					}
+				}
+
+				if (!cmd->endOfCmds()) {
+					cmd->getToken(true);
+				}
+				continue;
+			}
+
+			if (cmd->isToken("addCut")) {
+				cmd->getToken(true);
+				SceneCut* cut        = nullptr;
+				ActorInstance* actor = nullptr;
+				while (!cmd->endOfCmds() && !cmd->endOfSection()) {
+					cmd->getToken(true);
+
+					int test[3];
+					if (cmd->isToken("cut")) {
+						sscanf(cmd->getToken(true), "%d", &test[0]);
+						sscanf(cmd->getToken(true), "%d", &test[1]);
+						sscanf(cmd->getToken(true), "%d", &test[2]);
+						cut   = addCut(test[0], test[1], test[2]);
+						actor = nullptr;
+						continue;
+					}
+
+					if (cmd->isToken("flags")) {
+						sscanf(cmd->getToken(true), "%d", &cut->_14);
+						continue;
+					}
+
+					if (cmd->isToken("actor")) {
+						actor = cut->addInstance(cmd->getToken(true));
+						continue;
+					}
+
+					if (cmd->isToken("acflags")) {
+						sscanf(cmd->getToken(true), "%d", &actor->_68);
+						continue;
+					}
+
+					if (cmd->isToken("anim")) {
+						sscanf(cmd->getToken(true), "%d", &actor->_70);
+						sscanf(cmd->getToken(true), "%d", &actor->_74);
+						continue;
+					}
+
+					if (cmd->isToken("keys")) {
+						int max;
+						sscanf(cmd->getToken(true), "%d", &max);
+						AnimKey* keys = new AnimKey[max];
+						cmd->getToken(true);
+						int temp[4];
+						for (int i = 0; i < max; i++) {
+							sscanf(cmd->getToken(true), "%d", &temp[0]);
+							sscanf(cmd->getToken(true), "%d", &temp[1]);
+							sscanf(cmd->getToken(true), "%d", &temp[2]);
+							sscanf(cmd->getToken(true), "%d", &temp[3]);
+
+							keys[i].mEventKeyType = temp[0];
+							keys[i].mNext         = (AnimKey*)temp[2];
+							keys[i].mPrev         = &_B4.mKey;
+							//_B4.mKey.add(&keys[i]);
+						}
+						cmd->getToken(true);
+						continue;
+					}
+				}
+				if (!cmd->endOfCmds()) {
+					cmd->getToken(true);
+				}
+			}
+		}
+	}
+
+	data->close();
+	for (SceneData* scene = (SceneData*)_4C.mChild; scene; scene = (SceneData*)scene->mNext) {
+		addScene(scene);
+	}
+	for (CineShapeObject* shape = (CineShapeObject*)_80.mChild; shape; shape = (CineShapeObject*)shape->mNext) {
+		addActor(shape);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -917,62 +881,17 @@ void CinematicPlayer::loadCin(char*)
  * Address:	800705D8
  * Size:	0000B4
  */
-SceneData* CinematicPlayer::addScene(SceneData*)
+SceneData* CinematicPlayer::addScene(SceneData* scene)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  li        r6, 0x1
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  mr        r29, r4
-	  stw       r28, 0x10(r1)
-	  mr        r28, r3
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x4(r4)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r30, r3
-	  beq-      .loc_0x90
-	  li        r3, 0x11C
-	  bl        -0x29624
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x68
-	  mr        r4, r30
-	  bl        -0x2FAC0
-
-	.loc_0x68:
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  beq-      .loc_0x7C
-	  mr        r3, r29
-	  bl        -0x45720
-
-	.loc_0x7C:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x90:
-	  stw       r29, 0x7C(r28)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	Stream* data = gsys->openFile(scene->mName, true, true);
+	if (data) {
+		CmdStream* cmd = new CmdStream(data);
+		if (cmd) {
+			scene->parse(cmd);
+		}
+		data->close();
+	}
+	mCurrentScene = scene;
 }
 
 /*
@@ -980,8 +899,12 @@ SceneData* CinematicPlayer::addScene(SceneData*)
  * Address:	........
  * Size:	000124
  */
-void CinematicPlayer::addScene(char*)
+void CinematicPlayer::addScene(char* name)
 {
+	SceneData* data = new SceneData;
+	data->mName     = name;
+	_4C.add(data);
+	addScene(data);
 	// UNUSED FUNCTION
 }
 
@@ -990,55 +913,13 @@ void CinematicPlayer::addScene(char*)
  * Address:	8007068C
  * Size:	000090
  */
-SceneCut* CinematicPlayer::addCut(int, int, int)
+SceneCut* CinematicPlayer::addCut(int a1, int a2, int a3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r6, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  bl        0x104
-	  stw       r29, 0x20(r3)
-	  li        r5, 0
-	  lwz       r0, 0x20(r3)
-	  lwz       r4, 0x5C(r28)
-	  b         .loc_0x58
-
-	.loc_0x44:
-	  cmpw      r5, r0
-	  bne-      .loc_0x50
-	  b         .loc_0x64
-
-	.loc_0x50:
-	  lwz       r4, 0xC(r4)
-	  addi      r5, r5, 0x1
-
-	.loc_0x58:
-	  cmplwi    r4, 0
-	  bne+      .loc_0x44
-	  li        r4, 0
-
-	.loc_0x64:
-	  stw       r4, 0x24(r3)
-	  stw       r30, 0x18(r3)
-	  stw       r31, 0x1C(r3)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	SceneCut* cut = addSceneCut();
+	cut->_20      = a1;
+	cut->_24      = findScene(cut->_20);
+	cut->_18      = a2;
+	cut->_1C      = a3;
 }
 
 /*
@@ -1046,55 +927,9 @@ SceneCut* CinematicPlayer::addCut(int, int, int)
  * Address:	8007071C
  * Size:	0000A0
  */
-void CinematicPlayer::addActor(CineShapeObject*)
+void CinematicPlayer::addActor(CineShapeObject* shape)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  subi      r3, r3, 0x2848
-	  li        r5, 0x1
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  mr        r28, r4
-	  lwz       r4, 0x4(r4)
-	  lwz       r30, 0x1C(r28)
-	  lwz       r31, 0x18(r28)
-	  bl        -0x1DA44
-	  cmplwi    r31, 0
-	  stw       r3, 0x14(r28)
-	  beq-      .loc_0x80
-	  li        r3, 0xB8
-	  bl        -0x29764
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x74
-	  lis       r6, 0x1
-	  lwz       r4, 0x14(r28)
-	  addi      r5, r31, 0
-	  addi      r7, r30, 0
-	  subi      r6, r6, 0x8000
-	  bl        -0x1FEE8
-
-	.loc_0x74:
-	  stw       r29, 0x30(r28)
-	  lwz       r3, 0x30(r28)
-	  stw       r31, 0x4(r3)
-
-	.loc_0x80:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	shape->init(shape->mName, shape->_18, shape->_1C);
 }
 
 /*
@@ -1102,9 +937,13 @@ void CinematicPlayer::addActor(CineShapeObject*)
  * Address:	........
  * Size:	000128
  */
-void CinematicPlayer::addActor(char*, char*, char*)
+void CinematicPlayer::addActor(char* nameA, char* nameB, char* nameC)
 {
-	// UNUSED FUNCTION
+	CineShapeObject* shape = new CineShapeObject;
+	shape->mName           = nameA;
+	shape->_18             = nameB;
+	shape->_1C             = nameC;
+	addActor(shape);
 }
 
 /*
@@ -1114,97 +953,12 @@ void CinematicPlayer::addActor(char*, char*, char*)
  */
 SceneCut* CinematicPlayer::addSceneCut()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0x1DC
-	  bl        -0x297DC
-	  addi      r29, r3, 0
-	  mr.       r4, r29
-	  beq-      .loc_0xC4
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r29)
-	  addi      r0, r3, 0x737C
-	  stw       r0, 0x0(r29)
-	  li        r30, 0
-	  lis       r3, 0x802B
-	  stw       r30, 0x10(r29)
-	  subi      r31, r13, 0x6848
-	  subi      r0, r3, 0x6134
-	  stw       r30, 0xC(r29)
-	  addi      r3, r4, 0x28
-	  stw       r30, 0x8(r29)
-	  stw       r31, 0x4(r29)
-	  stw       r0, 0x0(r29)
-	  bl        -0xAA8
-	  stw       r30, 0x1C8(r29)
-	  li        r3, 0x3
-	  addi      r0, r29, 0x1C8
-	  sth       r30, 0x1CC(r29)
-	  stb       r30, 0x1CE(r29)
-	  stb       r30, 0x1CF(r29)
-	  stw       r30, 0x1D4(r29)
-	  stw       r30, 0x1D0(r29)
-	  stw       r30, 0x18(r29)
-	  stw       r30, 0x1C(r29)
-	  stw       r30, 0x38(r29)
-	  stw       r30, 0x34(r29)
-	  stw       r30, 0x30(r29)
-	  stw       r31, 0x2C(r29)
-	  stw       r3, 0x14(r29)
-	  stw       r30, 0x20(r29)
-	  stw       r30, 0x24(r29)
-	  stw       r0, 0x1D4(r29)
-	  stw       r0, 0x1D0(r29)
-
-	.loc_0xC4:
-	  stw       r28, 0x1D8(r29)
-	  addi      r4, r29, 0
-	  li        r5, 0
-	  lwz       r0, 0x20(r29)
-	  lwz       r3, 0x5C(r28)
-	  b         .loc_0xF0
-
-	.loc_0xDC:
-	  cmpw      r5, r0
-	  bne-      .loc_0xE8
-	  b         .loc_0xFC
-
-	.loc_0xE8:
-	  lwz       r3, 0xC(r3)
-	  addi      r5, r5, 0x1
-
-	.loc_0xF0:
-	  cmplwi    r3, 0
-	  bne+      .loc_0xDC
-	  li        r3, 0
-
-	.loc_0xFC:
-	  stw       r3, 0x24(r29)
-	  addi      r3, r28, 0xB4
-	  lwz       r5, 0x24(r29)
-	  lwz       r0, 0x24(r5)
-	  stw       r0, 0x1C(r29)
-	  bl        -0x302F4
-	  mr        r3, r29
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	SceneCut* cut = new SceneCut;
+	cut->_1D8     = this;
+	cut->_24      = findScene(cut->_20);
+	cut->_1C      = cut->_24->mNumFrames;
+	_B4.add(cut);
+	return cut;
 }
 
 /*
@@ -1212,46 +966,15 @@ SceneCut* CinematicPlayer::addSceneCut()
  * Address:	800708F4
  * Size:	000084
  */
-void CinematicPlayer::skipScene(int)
+void CinematicPlayer::skipScene(int a)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r5, 0x290(r3)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x6C
-	  lwz       r3, 0x18(r5)
-	  lwz       r0, 0x1C(r5)
-	  sub       r3, r0, r3
-	  bl        0x1A5378
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x77A0(r2)
-	  stw       r0, 0x14(r1)
-	  lis       r0, 0x4330
-	  lfs       f0, 0x29C(r30)
-	  stw       r0, 0x10(r1)
-	  lfd       f1, 0x10(r1)
-	  fsubs     f1, f1, f2
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x2A4(r30)
-	  lfs       f0, 0x2A4(r30)
-	  stfs      f0, 0x29C(r30)
-	  stw       r31, 0x2B4(r30)
-
-	.loc_0x6C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	SceneCut* shape = _290;
+	if (shape) {
+		PRINT("skipping scene!\n");
+		_2A4 = _29C + abs(shape->_1C - shape->_18);
+		_29C = _2A4;
+		_2B4 = a;
+	}
 }
 
 /*
@@ -1261,6 +984,95 @@ void CinematicPlayer::skipScene(int)
  */
 int CinematicPlayer::update()
 {
+	int done = 0;
+	if (_290 && _2E5 && !_2B4 && _298 == 2) {
+		if ((f32)abs(_290->_1C - _290->_18) + _29C >= _2A4) {
+			_2A4 -= abs(_290->_1C - _290->_18);
+			_294 = 0;
+		}
+	}
+
+	if (_2B4 == 2 || _2B0 > (int)_2A4) {
+		done = 1;
+		_2A4 = (f32)_2B0;
+		_2A0 = 0.0f;
+	}
+
+	_2B4 = 0;
+	_2B0 = 0;
+	_290 = nullptr;
+
+	bool done2 = false;
+	for (SceneCut* shape = (SceneCut*)_B4.mChild; shape; shape = (SceneCut*)shape->mNext) {
+		int old = _2B0;
+		_2B0 += abs(shape->_1C - shape->_18);
+		if ((f32)old >= _2A4 && (f32)_2B0 < _2A4) {
+			_290          = shape;
+			mCurrentScene = _290->_24;
+			_298          = _290->_14 >> 1 & 7;
+			done2         = true;
+			_29C          = old;
+			_2A8          = (shape->_1C - shape->_18) * (_2A4 - old) / (f32)zen::Abs(shape->_1C - shape->_18) + shape->_18;
+		}
+	}
+
+	if (_290 != _294) {
+		if (_294) {
+			for (ActorInstance* actor = (ActorInstance*)_294->mActor.mChild; actor; actor = (ActorInstance*)actor->mNext) {
+				actor->exitInstance();
+			}
+		}
+		if (_290) {
+			_2AC = -1.0f;
+			for (ActorInstance* actor = (ActorInstance*)_290->mActor.mChild; actor; actor = (ActorInstance*)actor->mNext) {
+				actor->exitInstance();
+			}
+		}
+		_294 = _290;
+	}
+
+	gameflow.mMoviePlayer->_120 = _2A8 + 0.5f;
+
+	if (_290) {
+		for (AnimKey* key = &_290->mKey; key != &_290->mKey; key = key->mNext) {
+			if (_2AC <= (f32)key->mKeyframeIndex && _2A8 < (f32)key->mKeyframeIndex) {
+				PRINT("(%.3f : %.3f) got event at frame %d : %d, %d, %d\n", _2AC, _2A8, key->mKeyframeIndex, key->mEventKeyType, key->_07,
+				      key->mValue);
+				if (_2E5 && gameflow.mGameInterface && key->mEventKeyType == 0) {
+					gameflow.mGameInterface->message(key->_07, key->mValue);
+				} else if (key->mEventKeyType == 1 && demoEventMgr) {
+					demoEventMgr->act(key->_07, key->mValue);
+				}
+			}
+		}
+		_2AC = _2A8;
+	}
+
+	if (!done2) {
+		_2A8 = 0.0f;
+	}
+
+	if (mCurrentScene) {
+		for (int i = 0; i < mCurrentScene->mNumCameras; i++) {
+			mCurrentScene->mCameraData[i]._28 = _2E0;
+			mCurrentScene->mCameraData[i]._24 = _2DC;
+			mCurrentScene->mCameraData[i]._00 = _2B8;
+			mCurrentScene->mCameraData[i]._0C = _2C4;
+			mCurrentScene->mCameraData[i]._2C = _2E4;
+			mCurrentScene->mCameraData[i]._18 = _2D0;
+			mCurrentScene->mCameraData[i].update(_2A8, mMtx);
+		}
+		for (int i = 0; i < mCurrentScene->mNumLights; i++) {
+			mCurrentScene->mLightData[i].update(_2A8);
+		}
+	}
+
+	_2A4 += 1.0f;
+
+	if (done != 0) {
+		_294 = nullptr;
+	}
+	return done;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1670,8 +1482,20 @@ int CinematicPlayer::update()
  * Address:	80070EEC
  * Size:	0000C4
  */
-void CinematicPlayer::addLights(Graphics&)
+void CinematicPlayer::addLights(Graphics& gfx)
 {
+	if (!mCurrentScene) {
+		return;
+	}
+
+	gfx.useMatrix(Matrix4f::ident, 0);
+	for (int i = 0; i < mCurrentScene->mNumLights; i++) {
+		LightDataInfo* info = &mCurrentScene->mLightData[i];
+		if (info) {
+			// gfx.addLight(info);
+		}
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1739,63 +1563,18 @@ void CinematicPlayer::addLights(Graphics&)
  * Address:	80070FB0
  * Size:	0000A8
  */
-void CinematicPlayer::refresh(Graphics&)
+void CinematicPlayer::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r5, r1, 0x14
-	  stw       r30, 0x60(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x5C(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x3B4(r30)
-	  addi      r4, r29, 0x8
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x700
-	  stw       r0, 0x4(r30)
-	  lwz       r3, 0x290(r29)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x8C
-	  lwz       r31, 0x38(r3)
-	  b         .loc_0x84
+	Matrix4f mtx;
+	f32 badcompiler;
+	gfx.calcViewMatrix(mMtx, mtx);
+	gfx.mRenderState = 0x700;
 
-	.loc_0x58:
-	  lwz       r0, 0x68(r31)
-	  rlwinm.   r0,r0,0,23,23
-	  bne-      .loc_0x6C
-	  addi      r6, r29, 0x2A8
-	  b         .loc_0x70
-
-	.loc_0x6C:
-	  li        r6, 0
-
-	.loc_0x70:
-	  addi      r3, r31, 0
-	  addi      r5, r30, 0
-	  addi      r4, r1, 0x14
-	  bl        0x1208
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x84:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x58
-
-	.loc_0x8C:
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  lwz       r29, 0x5C(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	if (_290) {
+		for (ActorInstance* actor = (ActorInstance*)_290->mActor.mChild; actor; actor = (ActorInstance*)actor->mNext) {
+			actor->refresh(mtx, gfx, !(actor->_68 & 0x100) ? &_2A8 : nullptr);
+		}
+	}
 }
 
 /*
@@ -1803,123 +1582,17 @@ void CinematicPlayer::refresh(Graphics&)
  * Address:	80071058
  * Size:	000190
  */
-ActorInstance* SceneCut::addInstance(char*)
+ActorInstance* SceneCut::addInstance(char* name)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  li        r3, 0x1A0
-	  bl        -0x2A070
-	  mr.       r31, r3
-	  beq-      .loc_0x11C
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  stw       r0, 0x0(r31)
-	  li        r27, 0
-	  lis       r5, 0x802B
-	  stw       r27, 0x10(r31)
-	  lis       r4, 0x802A
-	  lis       r3, 0x8003
-	  stw       r27, 0xC(r31)
-	  addi      r28, r3, 0x5B24
-	  subi      r3, r13, 0x6848
-	  stw       r27, 0x8(r31)
-	  subi      r5, r5, 0x6164
-	  addi      r0, r4, 0x5FFC
-	  stw       r3, 0x4(r31)
-	  addi      r4, r28, 0
-	  addi      r3, r31, 0x9C
-	  stw       r5, 0x0(r31)
-	  li        r5, 0
-	  li        r6, 0xC
-	  stw       r0, 0x44(r31)
-	  li        r7, 0x9
-	  stw       r27, 0x48(r31)
-	  stw       r27, 0x4C(r31)
-	  stw       r27, 0x50(r31)
-	  stw       r27, 0x54(r31)
-	  lfs       f0, -0x77B0(r2)
-	  stfs      f0, 0x8C(r31)
-	  stfs      f0, 0x88(r31)
-	  stfs      f0, 0x84(r31)
-	  stfs      f0, 0x98(r31)
-	  stfs      f0, 0x94(r31)
-	  stfs      f0, 0x90(r31)
-	  bl        0x1A3960
-	  addi      r4, r28, 0
-	  addi      r3, r31, 0x108
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x4
-	  bl        0x1A3948
-	  stw       r27, 0x5C(r31)
-	  li        r4, 0x1
-	  li        r3, -0x1
-	  stw       r27, 0x60(r31)
-	  li        r0, 0x2
-	  stw       r27, 0x64(r31)
-	  stw       r27, 0x14(r31)
-	  stb       r27, 0x19E(r31)
-	  stb       r27, 0x19D(r31)
-	  stb       r27, 0x19F(r31)
-	  stb       r27, 0x19C(r31)
-	  stw       r27, 0x6C(r31)
-	  stw       r4, 0x70(r31)
-	  stw       r3, 0x74(r31)
-	  lfs       f0, -0x77B0(r2)
-	  stfs      f0, 0x80(r31)
-	  stw       r0, 0x68(r31)
-	  stw       r27, 0x78(r31)
-
-	.loc_0x11C:
-	  lwz       r0, 0x1D8(r29)
-	  cmplwi    r30, 0
-	  addi      r28, r31, 0
-	  stw       r0, 0x7C(r31)
-	  beq-      .loc_0x16C
-	  lwz       r3, 0x1D8(r29)
-	  lwz       r27, 0x90(r3)
-	  b         .loc_0x158
-
-	.loc_0x13C:
-	  lwz       r3, 0x4(r27)
-	  mr        r4, r30
-	  bl        0x1A8028
-	  cmpwi     r3, 0
-	  bne-      .loc_0x154
-	  b         .loc_0x164
-
-	.loc_0x154:
-	  lwz       r27, 0xC(r27)
-
-	.loc_0x158:
-	  cmplwi    r27, 0
-	  bne+      .loc_0x13C
-	  li        r27, 0
-
-	.loc_0x164:
-	  stw       r27, 0x5C(r31)
-	  stw       r27, 0x60(r31)
-
-	.loc_0x16C:
-	  addi      r3, r29, 0x28
-	  addi      r4, r28, 0
-	  bl        -0x30BF4
-	  mr        r3, r31
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	ActorInstance* actor = new ActorInstance;
+	actor->_7C           = _1D8;
+	if (name) {
+		CineShapeObject* shape = _1D8->findActor(name);
+		actor->_5C             = shape;
+		actor->_60             = shape;
+	}
+	mActor.add(actor);
+	return actor;
 }
 
 /*
@@ -1929,7 +1602,11 @@ ActorInstance* SceneCut::addInstance(char*)
  */
 int SceneCut::countEKeys()
 {
-	// UNUSED FUNCTION
+	int i = 0;
+	for (AnimKey* key = mKey.mNext; key != &mKey; key = key->mNext) {
+		i++;
+	}
+	return i;
 }
 
 /*
@@ -1939,6 +1616,8 @@ int SceneCut::countEKeys()
  */
 void ActorInstance::onceInit()
 {
+	AnimKey* key        = new AnimKey;
+	key->mKeyframeIndex = mAnim.mLastFrameIndex - 1;
 	// UNUSED FUNCTION
 }
 
@@ -1949,71 +1628,25 @@ void ActorInstance::onceInit()
  */
 void ActorInstance::exitInstance()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r27, 0x14(r1)
-	  addi      r27, r3, 0
-	  lwz       r0, 0x3180(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB0
-	  addi      r30, r27, 0
-	  li        r29, 0
-	  li        r31, 0
-
-	.loc_0x2C:
-	  lwz       r4, 0x138(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x4C
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x130398
-	  stw       r31, 0x138(r30)
-
-	.loc_0x4C:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x9
-	  addi      r30, r30, 0x4
-	  blt+      .loc_0x2C
-	  addi      r29, r27, 0
-	  li        r28, 0
-	  li        r31, 0
-
-	.loc_0x68:
-	  li        r27, 0
-	  addi      r30, r29, 0
-
-	.loc_0x70:
-	  lwz       r4, 0x15C(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x90
-	  lwz       r3, 0x3180(r13)
-	  li        r5, 0
-	  addi      r3, r3, 0x14
-	  bl        0x130354
-	  stw       r31, 0x15C(r30)
-
-	.loc_0x90:
-	  addi      r27, r27, 0x1
-	  cmpwi     r27, 0x4
-	  addi      r30, r30, 0x4
-	  blt+      .loc_0x70
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x4
-	  addi      r29, r29, 0x10
-	  blt+      .loc_0x68
-
-	.loc_0xB0:
-	  lmw       r27, 0x14(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (effectMgr) {
+		for (int i = 0; i < 9; i++) {
+			if (_138[i]) {
+				effectMgr->kill(_138[i], false);
+				_138[i] = nullptr;
+			}
+		}
+		for (int j = 0; j < 4; j++) {
+			for (int i = 0; i < 4; i++) {
+				if (_15C[j][i]) {
+					effectMgr->kill(_15C[j][i], false);
+					_15C[j][i] = nullptr;
+				}
+			}
+		}
+	}
 }
+
+f32 onionColours[] = { 10.0f, 9.0f, 8.0, 13.0, 11.0, 12.0, 7.0, 10.0, 9.0, 8.0, 11.0, 8.0, 9.0, 10.0 };
 
 /*
  * --INFO--
@@ -2022,130 +1655,56 @@ void ActorInstance::exitInstance()
  */
 void ActorInstance::initInstance()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x60(r3)
-	  stw       r3, 0x5C(r31)
-	  stw       r0, 0x158(r31)
-	  stw       r0, 0x154(r31)
-	  stw       r0, 0x150(r31)
-	  stw       r0, 0x14C(r31)
-	  stw       r0, 0x148(r31)
-	  stw       r0, 0x144(r31)
-	  stw       r0, 0x140(r31)
-	  stw       r0, 0x13C(r31)
-	  stw       r0, 0x138(r31)
-	  stw       r0, 0x15C(r31)
-	  stw       r0, 0x160(r31)
-	  stw       r0, 0x164(r31)
-	  stw       r0, 0x168(r31)
-	  stw       r0, 0x16C(r31)
-	  stw       r0, 0x170(r31)
-	  stw       r0, 0x174(r31)
-	  stw       r0, 0x178(r31)
-	  stw       r0, 0x17C(r31)
-	  stw       r0, 0x180(r31)
-	  stw       r0, 0x184(r31)
-	  stw       r0, 0x188(r31)
-	  stw       r0, 0x18C(r31)
-	  stw       r0, 0x190(r31)
-	  stw       r0, 0x194(r31)
-	  stw       r0, 0x198(r31)
-	  lwz       r3, 0x68(r31)
-	  rlwinm.   r0,r3,0,22,22
-	  beq-      .loc_0xE4
-	  rlwinm.   r0,r3,0,13,13
-	  beq-      .loc_0xB4
-	  lwz       r0, 0x74(r31)
-	  lis       r3, 0x802B
-	  subi      r3, r3, 0x62B4
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  lfs       f0, -0x4(r3)
-	  stfs      f0, 0x80(r31)
+	_5C = _60;
 
-	.loc_0xB4:
-	  lwz       r3, 0x3180(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xE4
-	  addi      r5, r31, 0x9C
-	  li        r4, 0x128
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x12B7BC
-	  stw       r3, 0x138(r31)
-	  addi      r0, r31, 0x9C
-	  lwz       r3, 0x138(r31)
-	  stw       r0, 0x18(r3)
+	_138[8] = nullptr;
+	_138[7] = nullptr;
+	_138[6] = nullptr;
+	_138[5] = nullptr;
+	_138[4] = nullptr;
+	_138[3] = nullptr;
+	_138[2] = nullptr;
+	_138[1] = nullptr;
+	_138[0] = nullptr;
 
-	.loc_0xE4:
-	  lwz       r0, 0x68(r31)
-	  rlwinm.   r0,r0,0,26,26
-	  beq-      .loc_0x114
-	  lwz       r3, 0x3120(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x114
-	  bl        0xA601C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x114
-	  lwz       r3, 0x3120(r13)
-	  bl        0xA600C
-	  bl        0x871A8
+	for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < 4; i++) {
+			_15C[j][i] = nullptr;
+		}
+	}
 
-	.loc_0x114:
-	  lwz       r0, 0x78(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x158
-	  li        r0, 0x1
-	  lis       r3, 0x803A
-	  stw       r0, 0x78(r31)
-	  lis       r4, 0x802B
-	  subi      r3, r3, 0x2848
-	  subi      r4, r4, 0x62CC
-	  li        r5, 0x1
-	  bl        -0x1E6D8
-	  stw       r3, 0x58(r31)
-	  addi      r4, r31, 0x48
-	  li        r5, 0
-	  lwz       r3, 0x60(r31)
-	  lwz       r3, 0x14(r3)
-	  bl        -0x41AD4
+	if (_68 & 0x200) {
+		if (_68 & 0x40000) {
+			PRINT("setting onion with multi colour %d\n", _74);
+			_80 = onionColours[_74 - 1];
+		}
+		if (effectMgr) {
+			PRINT("init effect instance!\n");
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_FlowLight, _9C[0], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(_9C);
+		}
+	}
 
-	.loc_0x158:
-	  lwz       r3, 0x5C(r31)
-	  lwz       r4, 0x30(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x1A8
-	  lwz       r0, 0x74(r31)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x1A8
-	  addi      r0, r3, 0x20
-	  stw       r0, 0x18(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0x14
-	  stw       r4, 0x14(r31)
-	  li        r6, 0
-	  li        r7, 0x8
-	  stw       r0, 0x3C(r31)
-	  lfs       f0, -0x77B0(r2)
-	  stfs      f0, 0x40(r31)
-	  lwz       r4, 0x70(r31)
-	  lwz       r5, 0x74(r31)
-	  bl        -0x204E0
+	if (_68 & 0x20 && naviMgr && naviMgr->getNavi()) {
+		naviMgr->getNavi()->startDayEnd();
+	}
 
-	.loc_0x1A8:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	if (!_78) {
+		_78 = 1;
+		_58 = gameflow.loadShape("pikis/happas/leaf.mod", true);
+		_60->_14->makeInstance(mDynMat, 0);
+	}
+
+	AnimMgr* mgr = _5C->_30;
+	if (mgr && _74 >= 0) {
+		mAnim.mContext          = &_5C->mContext;
+		mAnim.mMgr              = mgr;
+		mAnim.mAnimInfo         = nullptr;
+		mAnim.mAnimationCounter = 0.0f;
+		mAnim.startAnim(_70, _74, 0, 8);
+	}
+
+	f32 badcompiler[2];
 }
 
 /*
@@ -2153,8 +1712,241 @@ void ActorInstance::initInstance()
  * Address:	80071468
  * Size:	000DCC
  */
-void ActorInstance::checkEventKeys(f32, f32, Vector3f&)
+void ActorInstance::checkEventKeys(f32 a1, f32 a2, Vector3f& pos)
 {
+	for (int i = 0; i < mAnim.mAnimInfo->countEKeys(); i++) {
+		AnimKey* key = mAnim.mAnimInfo->getEventKey(i);
+		if (a1 > key->mKeyframeIndex) {
+			continue;
+		}
+
+		if (a2 <= key->mKeyframeIndex || key->mEventKeyType == 0 || key->mEventKeyType != 1) {
+			continue;
+		}
+
+		u8 id = key->mValue;
+		if (id > 31) {
+			continue;
+		}
+
+		switch (id) {
+		case 0:
+			if (mapMgr) {
+				pos.y = mapMgr->getMinY(pos.x, pos.z, true);
+			}
+			effectMgr->create(EffectMgr::EFF_SmokeRing_S, pos, nullptr, nullptr);
+			break;
+		case 1:
+			if (mapMgr) {
+				pos.y = mapMgr->getMinY(pos.x, pos.z, true);
+			}
+			effectMgr->create(EffectMgr::EFF_SmokeRing_M, pos, nullptr, nullptr);
+			break;
+		case 2:
+			effectMgr->create(EffectMgr::EFF_Rocket_Bm1, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+			break;
+		case 3:
+			effectMgr->create(EffectMgr::EFF_Rocket_WakeK1, pos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomC, pos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomW, pos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomH, pos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomP, pos, nullptr, nullptr);
+			break;
+		case 4:
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf1, _9C[0], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[0]);
+			_138[1] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf2, _9C[0], nullptr, nullptr);
+			_138[1]->setEmitPosPtr(&_9C[0]);
+			_138[2] = effectMgr->create(EffectMgr::EFF_Rocket_Tbc1, _9C[0], nullptr, nullptr);
+			_138[2]->setEmitPosPtr(&_9C[0]);
+			break;
+		case 5:
+			_138[3] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf1, _9C[1], nullptr, nullptr);
+			_138[3]->setEmitPosPtr(&_9C[1]);
+			_138[4] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf2, _9C[1], nullptr, nullptr);
+			_138[4]->setEmitPosPtr(&_9C[1]);
+			_138[5] = effectMgr->create(EffectMgr::EFF_Rocket_Tbc1, _9C[1], nullptr, nullptr);
+			_138[5]->setEmitPosPtr(&_9C[1]);
+			break;
+		case 6:
+			for (int i = 0; i < 6; i++) {
+				effectMgr->kill(_138[i], false);
+				_138[i] = nullptr;
+			}
+			if (itemMgr && itemMgr->getUfo()) {
+				itemMgr->getUfo()->setJetEffect(0, false);
+			}
+			break;
+		case 7:
+			Vector3f pos7(64.0f, 44.0f, 1913.0f);
+			effectMgr->create(EffectMgr::EFF_Rocket_WakeK1, pos7, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_WakeK2, pos7, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_WakeP1, pos7, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_WakeP2, pos7, nullptr, nullptr);
+			break;
+		case 8:
+			Vector3f pos8(53.0f, 1164.0f, 848.0f);
+			effectMgr->create(EffectMgr::EFF_MC_Bang, pos8, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_MC_Debris, pos8, nullptr, nullptr);
+			break;
+		case 9:
+			_19D = 0;
+			for (int i = 0; i < 4; i++) {
+				for (int j = 0; j < 4; j++) {
+					effectMgr->kill(_15C[j][i], false);
+					_15C[j][i] = nullptr;
+				}
+			}
+			for (int i = 0; i < 9; i++) {
+				if (_138[i]) {
+					effectMgr->kill(_138[i], false);
+					_138[i] = nullptr;
+				}
+			}
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_7Meteor, _84, nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_84);
+			_138[1] = effectMgr->create(EffectMgr::EFF_Rocket_6Meteor, _84, nullptr, nullptr);
+			_138[1]->setEmitPosPtr(&_84);
+			_138[2] = effectMgr->create(EffectMgr::EFF_Rocket_5Meteor, _84, nullptr, nullptr);
+			_138[2]->setEmitPosPtr(&_84);
+			_138[3] = effectMgr->create(EffectMgr::EFF_Rocket_4Meteor, _84, nullptr, nullptr);
+			_138[3]->setEmitPosPtr(&_84);
+			_138[4] = effectMgr->create(EffectMgr::EFF_Rocket_3Meteor, _84, nullptr, nullptr);
+			_138[4]->setEmitPosPtr(&_84);
+			_138[5] = effectMgr->create(EffectMgr::EFF_Rocket_1Meteor, _84, nullptr, nullptr);
+			_138[5]->setEmitPosPtr(&_84);
+			_138[6] = effectMgr->create(EffectMgr::EFF_Rocket_1Meteor, _84, nullptr, nullptr);
+			_138[6]->setEmitPosPtr(&_84);
+			_19C = 1;
+			break;
+		case 10:
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01, _9C[0], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[0]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02, _9C[0], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[0]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03, _9C[0], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[0]);
+			break;
+		case 11:
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, _9C[1], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[1]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, _9C[1], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[1]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, _9C[1], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[1]);
+			break;
+		case 12:
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, _9C[2], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[2]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, _9C[2], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[2]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, _9C[2], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[2]);
+			break;
+		case 13:
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, _9C[3], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[3]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, _9C[3], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[3]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, _9C[3], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[3]);
+			break;
+		case 14:
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, _9C[4], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[4]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, _9C[4], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[4]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, _9C[4], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[4]);
+			break;
+		case 15:
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, _9C[5], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[5]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, _9C[5], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[5]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, _9C[5], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[5]);
+			break;
+		case 16:
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, _9C[6], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[6]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, _9C[6], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[6]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, _9C[6], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[6]);
+			break;
+		case 17:
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, _9C[7], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[7]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, _9C[7], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[7]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, _9C[7], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[7]);
+			break;
+		case 18:
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, _9C[8], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[8]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, _9C[8], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[8]);
+			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, _9C[8], nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_9C[8]);
+			break;
+		case 19:
+			_9C[0].set(-25000.0f, -25000.0f, -25000.0f);
+			_138[1] = effectMgr->create(EffectMgr::EFF_Rocket_PCA1, _9C[0], nullptr, nullptr);
+			_138[1]->setEmitPosPtr(&_9C[0]);
+			_138[2] = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, _9C[0], nullptr, nullptr);
+			_138[2]->setEmitPosPtr(&_9C[0]);
+			_138[2]->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
+			_9C[1].set(-25000.0f, -25000.0f, -25000.0f);
+			_9C[2].set(-25000.0f, -25000.0f, -25000.0f);
+			_9C[3].set(-25000.0f, -25000.0f, -25000.0f);
+			_9C[4].set(-25000.0f, -25000.0f, -25000.0f);
+			for (int i = 0; i < 4; i++) {
+				_15C[i][0] = effectMgr->create(EffectMgr::EFF_Rocket_Sparkles1, _9C[i + 1], nullptr, nullptr);
+				_15C[i][0]->setEmitPosPtr(&_9C[i + 1]);
+
+				_15C[i][1] = effectMgr->create(EffectMgr::EFF_Rocket_NJ3FB2, _9C[i + 1], nullptr, nullptr);
+				_15C[i][1]->setEmitPosPtr(&_9C[i + 1]);
+				_15C[i][1]->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+			}
+			_19D = 1;
+			break;
+		case 20:
+			_138[0] = effectMgr->create(EffectMgr::EFF_MTotl01, _84, nullptr, nullptr);
+			_138[0]->setEmitPosPtr(&_84);
+			_138[1] = effectMgr->create(EffectMgr::EFF_MTotl03, _84, nullptr, nullptr);
+			_138[1]->setEmitPosPtr(&_84);
+			_19E = 1;
+			break;
+		case 21:
+			effectMgr->create(EffectMgr::EFF_Rocket_JetG01, _9C[key->mKeyframeIndex - 21], nullptr, nullptr);
+			break;
+		case 22:
+			_9C[1].set(-25000.0f, -25000.0f, -25000.0f);
+			_9C[2].set(-25000.0f, -25000.0f, -25000.0f);
+			_9C[3].set(-25000.0f, -25000.0f, -25000.0f);
+			_9C[4].set(-25000.0f, -25000.0f, -25000.0f);
+			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _9C[1], nullptr, nullptr)->setEmitPosPtr(&_9C[1]);
+			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _9C[2], nullptr, nullptr)->setEmitPosPtr(&_9C[2]);
+			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _9C[3], nullptr, nullptr)->setEmitPosPtr(&_9C[3]);
+			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _9C[4], nullptr, nullptr)->setEmitPosPtr(&_9C[4]);
+			_19F = 1;
+			break;
+		case 23:
+			effectMgr->create(EffectMgr::EFF_Rocket_Opa1, _84, nullptr, nullptr);
+			break;
+		case 24:
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomC, _9C[0], nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomW, _9C[0], nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomH, _9C[0], nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomP, _9C[0], nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomK, _9C[0], nullptr, nullptr);
+			break;
+		}
+	}
+
+	f32 badcompiler[12];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3074,8 +2866,83 @@ void ActorInstance::checkEventKeys(f32, f32, Vector3f&)
  * Address:	80072234
  * Size:	000F10
  */
-void ActorInstance::refresh(Matrix4f&, Graphics&, f32*)
+void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* a1)
 {
+	if ((_68 & 0xf800) && gameflow.mMoviePlayer->mIsActive && _5C) {
+		return;
+	}
+
+	f32 b = 0.0f;
+	f32 test;
+	int idk;
+	if (mAnim.mMgr) {
+		test = mAnim.mAnimationCounter;
+		if (a1) {
+			mAnim.mAnimationCounter = *a1;
+		} else {
+			mAnim.animate(30.0f);
+		}
+		mAnim.updateContext();
+		b = mAnim.mAnimationCounter;
+	}
+
+	gfx.useMatrix(Matrix4f::ident, 0);
+
+	if (_68 & 0x200) {
+		_9C[0].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 3, _9C[0]);
+		_9C[1].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 1, _9C[1]);
+	}
+
+	if (_68 & 0x10000) {
+		_9C[0].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 9, _9C[0]);
+		_9C[1].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 8, _9C[1]);
+		_9C[2].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 7, _9C[2]);
+		_9C[3].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 6, _9C[3]);
+		_9C[4].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 5, _9C[4]);
+		_9C[5].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 4, _9C[5]);
+		_9C[6].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 3, _9C[6]);
+		_9C[7].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 2, _9C[7]);
+		_9C[8].set(0.0f, 0.0f, 0.0f);
+		_5C->_14->calcJointWorldPos(gfx, 1, _9C[8]);
+	}
+
+	Vector3f pos;
+	_5C->_14->calcJointWorldPos(gfx, 0, pos);
+	checkEventKeys(b, test, pos);
+
+	if (naviMgr && naviMgr->getNavi()) {
+		Vector3f pos;
+		pos.multMatrix(_5C->_14->getAnimMatrix(0));
+		pos.multMatrix(gfx.mCamera->mLookAtMtx);
+		naviMgr->getNavi()->updateDayEnd(pos);
+		naviMgr->getNavi()->demoDraw(gfx, nullptr);
+	} else if (_68 & 0x21) {
+		u32 flags = _5C->_14->mSystemFlags;
+		if (_68 & 0x20000) {
+			_5C->_14->mSystemFlags |= 4;
+		}
+		_5C->_14->drawshape(gfx, *gfx.mCamera, &mDynMat);
+		_5C->_14->mSystemFlags = flags;
+	}
+
+	if (idk == 1) {
+		gfx.useMatrix(_5C->_14->getAnimMatrix(6), 0);
+		_58->drawshape(gfx, *gfx.mCamera, nullptr);
+	} else if (idk == 2) {
+		gfx.useMatrix(_5C->_14->getAnimMatrix(3), 0);
+		_58->drawshape(gfx, *gfx.mCamera, nullptr);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4143,13 +4010,4 @@ void ActorInstance::refresh(Matrix4f&, Graphics&, f32*)
 
 	.loc_0xF10:
 	*/
-}
-
-/*
- * --INFO--
- * Address:	80073160
- * Size:	000004
- */
-void Creature::demoDraw(Graphics&, Matrix4f*)
-{
 }

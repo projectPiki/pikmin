@@ -54,7 +54,7 @@ struct TitleSetupSection : public Node {
 		gameflow.mDemoFlags     = 0;
 		_50                     = new CinematicPlayer("cinemas/opening.cin");
 		_50->mMtx.makeIdentity();
-		_50->_44[0x29d] = 1;
+		_50->_2E4 = 1;
 
 		RandomAccessStream* data = gsys->openFile("cinemas/opening.ini", true, true);
 		if (data) {

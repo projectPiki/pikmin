@@ -250,6 +250,9 @@ struct LightPool : public Node {
  */
 struct LightDataInfo {
 	void update(f32);
+
+	// TODO
+	u8 _00[0x334]; // _00
 };
 
 #endif

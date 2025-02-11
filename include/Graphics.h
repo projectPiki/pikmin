@@ -50,6 +50,8 @@ struct Graphics {
 	int calcSphereLighting(Vector3f&, f32);
 	int calcBoxLighting(BoundBox&);
 
+	void addLight(Light* light) { }
+
 	// _3B4 = VTBL
 	// In the DLL, take the offset of the variable (- 4) to get the real offset here
 	int _00;                                  // _00

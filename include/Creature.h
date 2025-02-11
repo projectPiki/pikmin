@@ -137,7 +137,7 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual void refresh2d(Graphics&) { }                            // _F0 (weak)
 	virtual void renderAtari(Graphics&);                             // _F4
 	virtual void drawShadow(Graphics&);                              // _F8
-	virtual void demoDraw(Graphics&, Matrix4f*);                     // _FC
+	virtual void demoDraw(Graphics&, Matrix4f*) { }                  // _FC
 	virtual Vector3f getCatchPos(Creature*);                         // _100
 	virtual void doAI() { }                                          // _104 (weak)
 	virtual void doAnimation() { }                                   // _108 (weak)
