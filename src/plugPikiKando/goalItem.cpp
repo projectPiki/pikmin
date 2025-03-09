@@ -986,7 +986,7 @@ GoalItem::GoalItem(CreatureProp* prop, ItemShapeObject* shape1, ItemShapeObject*
  */
 bool GoalItem::ignoreAtari(Creature* obj)
 {
-	if (obj->mObjType == OBJTYPE_NULL12) {
+	if (obj->mObjType == OBJTYPE_GemItem) {
 		return true;
 	}
 	return false;

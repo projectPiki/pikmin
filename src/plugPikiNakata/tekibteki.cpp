@@ -156,7 +156,7 @@ void BTeki::viewKill()
  */
 void BTeki::doStore(CreatureInf* info)
 {
-	info->mStartAnimId = mTekiType;
+	info->mObjInfo1 = mTekiType;
 }
 
 /*
@@ -166,7 +166,7 @@ void BTeki::doStore(CreatureInf* info)
  */
 void BTeki::doRestore(CreatureInf* info)
 {
-	mTekiType = (TekiTypes)info->mStartAnimId;
+	mTekiType = (TekiTypes)info->mObjInfo1;
 }
 
 /*

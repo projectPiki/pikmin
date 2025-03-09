@@ -110,7 +110,7 @@ void BombItem::startAI(int)
 	mSeContext->setContext(this, 1);
 
 	mCollInfo = &mBombColl;
-	mCollInfo->initInfo(mItemShapeObject->mShape, mCollParts, &mCollPartIdList);
+	mCollInfo->initInfo(mItemShapeObject->mShape, mCollParts, mCollPartIdList);
 
 	mItemAnimator.startMotion(PaniMotionInfo(0));
 	mMotionSpeed = 0.0f;

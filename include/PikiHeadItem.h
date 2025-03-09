@@ -310,7 +310,7 @@ struct PikiHeadAI : public SimpleAI {
 struct PikiHeadMgr : public MonoObjectMgr {
 	PikiHeadMgr(ItemMgr*);
 
-	virtual ~PikiHeadMgr();           // _48 (weak)
+	virtual ~PikiHeadMgr() { }        // _48 (weak)
 	virtual Creature* birth();        // _78
 	virtual Creature* createObject(); // _80
 

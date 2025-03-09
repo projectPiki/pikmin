@@ -135,12 +135,12 @@ void SluiceAI::WaitInit::act(AICreature* item)
 void SluiceAI::ChangeInit::act(AICreature* item)
 {
 	BuildingItem* obj = (BuildingItem*)item;
-	PRINT("******* CHANGE INIT ******** aiContext.int=%d curr=%d\n", obj->mStartAnimId, obj->mCurrAnimId);
+	PRINT("******* CHANGE INIT ******** aiContext.int=%d curr=%d\n", obj->mCurrStage, obj->mCurrAnimId);
 
 	item->setMotionSpeed(30.0f);
 	item->startMotion(obj->mCurrAnimId);
 	obj->startBreakEffect();
-	if (obj->mCurrAnimId == obj->mEndAnimId - 1) {
+	if (obj->mCurrAnimId == obj->mNumStages - 1) {
 		obj->mWayPoint->setFlag(true);
 	}
 	obj->mCurrAnimId++;
@@ -155,7 +155,7 @@ void SluiceAI::DamageInit::act(AICreature* item)
 {
 	BuildingItem* obj = (BuildingItem*)item;
 
-	if (obj->mStartAnimId < obj->mEndAnimId) {
+	if (obj->mCurrStage < obj->mNumStages) {
 		item->setMotionSpeed(30.0f);
 		item->startMotion(obj->mCurrAnimId + 3);
 	}

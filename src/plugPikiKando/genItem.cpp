@@ -206,7 +206,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 			rope->_2D0     = mParameterA();
 			rope->autoInit();
 			break;
-		case OBJTYPE_NULL12:
+		case OBJTYPE_GemItem:
 			GemItem* gem = (GemItem*)item;
 			gem->setColorType(mParameterA());
 			break;
@@ -215,7 +215,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 		case OBJTYPE_SluiceBomb:
 		case OBJTYPE_SluiceBombHard:
 			BuildingItem* wall = (BuildingItem*)item;
-			wall->mEndAnimId   = mParameterD();
+			wall->mNumStages   = mParameterD();
 			break;
 		case OBJTYPE_RockGen:
 			RockGen* rock = (RockGen*)item;

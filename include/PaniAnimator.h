@@ -158,6 +158,15 @@ struct PaniAnimator : public Animator {
 struct PaniItemAnimator : public PaniAnimator {
 	PaniItemAnimator();
 
+	char* getCurrentMotionName()
+	{
+		if (mMotionIdx < 0) {
+			return "NULL";
+		}
+
+		return motionLabels[mMotionIdx];
+	}
+
 	static PaniMotionTable* createMotionTable();
 
 	static char* motionLabels[15];

@@ -35,7 +35,7 @@ bool GemItem::ignoreAtari(Creature*)
 		return true;
 	}
 
-	if (mObjType == OBJTYPE_NULL12 && mIsFree) {
+	if (mObjType == OBJTYPE_GemItem && mIsFree) {
 		return true;
 	}
 	return false;
@@ -345,8 +345,8 @@ void GemItem::refresh(Graphics& gfx)
  */
 void GemItem::doStore(CreatureInf* inf)
 {
-	inf->mStartAnimId = mGemType;
-	inf->mEndAnimId   = mColor;
+	inf->mObjInfo1 = mGemType;
+	inf->mObjInfo2 = mColor;
 }
 
 /*
@@ -356,8 +356,8 @@ void GemItem::doStore(CreatureInf* inf)
  */
 void GemItem::doRestore(CreatureInf* inf)
 {
-	mGemType = inf->mStartAnimId;
-	mColor   = inf->mEndAnimId;
+	mGemType = inf->mObjInfo1;
+	mColor   = inf->mObjInfo2;
 	initParam(mColor);
 	startAI(0);
 	PRINT("DO RESTORE END ****\n");

@@ -88,7 +88,7 @@ struct ItemMgr : public PolyObjectMgr {
 
 	ItemMgr();
 
-	virtual ~ItemMgr();                // _48 (weak)
+	virtual ~ItemMgr() { }             // _48 (weak)
 	virtual void update();             // _4C (weak)
 	virtual void refresh(Graphics&);   // _58
 	virtual Creature* birth(int);      // _78
@@ -140,7 +140,7 @@ struct ItemMgr : public PolyObjectMgr {
 struct MeltingPotMgr : public CreatureNodeMgr {
 	MeltingPotMgr(ItemMgr*);
 
-	virtual ~MeltingPotMgr(); // _48 (weak)
+	virtual ~MeltingPotMgr() { } // _48 (weak)
 
 	void finalSetup();
 	void prepare(int objType);
