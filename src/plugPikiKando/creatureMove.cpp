@@ -1,4 +1,6 @@
 #include "Creature.h"
+#include "DynColl.h"
+#include "Collision.h"
 #include "DebugLog.h"
 
 /*
@@ -13,7 +15,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("CreatureMove")
 
 /*
  * --INFO--
@@ -174,85 +176,26 @@ void Creature::moveRotation(f32)
  */
 void Creature::moveAttach()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x94(r3)
-	  lwz       r0, 0x98(r30)
-	  stw       r3, 0x29C(r30)
-	  stw       r0, 0x2A0(r30)
-	  lwz       r0, 0x9C(r30)
-	  stw       r0, 0x2A4(r30)
-	  lwz       r4, 0x280(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xA8
-	  mr        r3, r30
-	  lwz       r31, 0x28(r4)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x78
-	  lwz       r0, 0x184(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x94
-	  mr        r3, r30
-	  bl        0x1A18
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x94
+	_29C = mPosition;
+	if (mCollPlatform) {
+		Creature* plat = mCollPlatform->mCreature;
+		if (platAttachable() || mStickTarget && isStickToPlatform()) {
+			if (mCollPlatform) {
+				// this isn't used further in the DLL either
+				int objType = mCollPlatform->mCreature->mObjType;
+			}
 
-	.loc_0x78:
-	  lwz       r3, 0x280(r30)
-	  mr        r4, r30
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x98
+			mCollPlatform->adjust(this);
+		} else {
+			plat = nullptr;
+		}
 
-	.loc_0x94:
-	  li        r31, 0
+		if (!plat) {
+			mCollPlatform = nullptr;
+		}
+	}
 
-	.loc_0x98:
-	  cmplwi    r31, 0
-	  bne-      .loc_0xA8
-	  li        r0, 0
-	  stw       r0, 0x280(r30)
-
-	.loc_0xA8:
-	  lfs       f1, 0x29C(r30)
-	  lfs       f0, 0x94(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x18(r1)
-	  lfs       f0, 0x18(r1)
-	  stfs      f0, 0x24(r1)
-	  lfs       f1, 0x2A0(r30)
-	  lfs       f0, 0x98(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x28(r1)
-	  lfs       f1, 0x2A4(r30)
-	  lfs       f0, 0x9C(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x2C(r1)
-	  lwz       r3, 0x24(r1)
-	  lwz       r0, 0x28(r1)
-	  stw       r3, 0x29C(r30)
-	  stw       r0, 0x2A0(r30)
-	  lwz       r0, 0x2C(r1)
-	  stw       r0, 0x2A4(r30)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	_29C = _29C - mPosition;
 }
 
 /*
@@ -1230,83 +1173,24 @@ CollTriInfo* Creature::getNextTri(CollTriInfo*, Vector3f&, int&)
  * Address:	8008F33C
  * Size:	000100
  */
-Plane* Creature::getNearestPlane(CollTriInfo*)
+Plane* Creature::getNearestPlane(CollTriInfo* tri)
 {
-	/*
-	.loc_0x0:
-	  lfs       f2, 0x94(r3)
-	  li        r0, -0x1
-	  lfs       f3, 0x28(r4)
-	  lfs       f1, 0x2C(r4)
-	  lfs       f0, 0x98(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x30(r4)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x9C(r3)
-	  lfs       f0, 0x34(r4)
-	  fmuls     f3, f4, f3
-	  lfs       f5, -0x74F4(r2)
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f5
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x50
-	  li        r0, 0
-	  fmr       f5, f0
+	int planeIdx = -1;
+	f32 minDist  = 12800.0f;
+	for (int i = 0; i < 3; i++) {
+		f32 dist = tri->mEdgePlanes[i].dist(mPosition);
+		PRINT(" :: plane%d dist is %f\n", i, dist);
+		if (dist <= minDist) {
+			planeIdx = i;
+			minDist  = dist;
+		}
+	}
 
-	.loc_0x50:
-	  lfs       f2, 0x94(r3)
-	  addi      r6, r4, 0x10
-	  lfs       f3, 0x38(r4)
-	  lfs       f0, 0x98(r3)
-	  lfs       f1, 0x3C(r4)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x40(r4)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x9C(r3)
-	  lfs       f0, 0x44(r4)
-	  fmuls     f3, f4, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f5
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x9C
-	  li        r0, 0x1
-	  fmr       f5, f0
+	if (planeIdx != -1) {
+		return &tri->mEdgePlanes[planeIdx];
+	}
 
-	.loc_0x9C:
-	  lfs       f2, 0x94(r3)
-	  lfs       f3, 0x38(r6)
-	  lfs       f0, 0x98(r3)
-	  lfs       f1, 0x3C(r6)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x40(r6)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x9C(r3)
-	  lfs       f0, 0x44(r6)
-	  fmuls     f3, f4, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f5
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xE0
-	  li        r0, 0x2
-
-	.loc_0xE0:
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0xF8
-	  rlwinm    r3,r0,4,0,27
-	  addi      r3, r3, 0x28
-	  add       r3, r4, r3
-	  blr
-
-	.loc_0xF8:
-	  li        r3, 0
-	  blr
-	*/
+	return nullptr;
 }
 
 /*

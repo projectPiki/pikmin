@@ -27,6 +27,14 @@ struct Colour {
 		a = _a;
 	}
 
+	void set(f32 _r, f32 _g, f32 _b)
+	{
+		r = _r;
+		g = _g;
+		b = _b;
+		a = 255;
+	}
+
 	// unused/inlined:
 	void write(struct Stream&);
 

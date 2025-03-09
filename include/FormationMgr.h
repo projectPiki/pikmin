@@ -14,6 +14,8 @@ struct FormationMgr;
 
 /**
  * @brief Stripped struct.
+ *
+ * @note Size: 0x40.
  */
 struct Rope {
 	Rope(); // unused/inlined
@@ -21,6 +23,15 @@ struct Rope {
 	// unused/inlined:
 	void move(Vector3f&, Vector3f&, Vector3f&);
 	void refresh(Graphics&);
+
+	Vector3f _00; // _00
+	Vector3f _0C; // _0C
+	Vector3f _18; // _18
+	Vector3f _24; // _24
+	f32 _30;      // _30
+	u8 _34[0x4];  // _34, unknown
+	Rope* _38;    // _38
+	Rope* _3C;    // _3C
 };
 
 /**
@@ -35,6 +46,12 @@ struct Spine {
 	void postMove();
 	void move();
 	void refresh(Graphics&);
+
+	u8 _00[0x4];            // _00, unknown
+	int _04;                // _04
+	Rope* mRope;            // _08
+	SmartPtr<Creature> _0C; // _0C
+	Vector3f _10;           // _10
 };
 
 /**
@@ -49,15 +66,15 @@ struct FormPoint {
 	void reset()
 	{
 		if (!mOwner.isNull()) {
-			mOwner.reset();
+			mOwner.clear();
 		}
 	}
 
 	void setMgr(FormationMgr* mgr) { mFormMgr = mgr; }
 	Creature* getOwner() { return mOwner.getPtr(); }
 
-	bool isFree();
-	void setOwner(Creature*);
+	bool isFree() { return mOwner.isNull(); }
+	void setOwner(Creature* owner) { mOwner.set(owner); }
 
 	Colour _00;                // _00
 	Vector3f mOffset;          // _04
@@ -98,7 +115,7 @@ struct FormationMgr : public Traversable {
 	Vector3f _10;            // _10
 	FormPoint* mFormPoints;  // _1C
 	Creature** mFormMembers; // _20
-	u32 _24;                 // _24, unknown
+	int _24;                 // _24
 	int mMax;                // _28, total slots
 	int mCount;              // _2C, total used slots
 	Vector3f mOffset;        // _30
