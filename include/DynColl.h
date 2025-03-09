@@ -66,8 +66,8 @@ struct DynCollShape : public DynCollObject {
 	BoundBox _44;             // _44
 	Matrix4f mTransformMtx;   // _5C
 	Matrix4f mInverseMatrix;  // _9C
-	u8 _DC[0x11C - 0xDC];     // _CC, unknown
-	Vector3f _11C;            // _11C
+	Matrix4f _DC;             // _DC
+	Vector3f mScale;          // _11C, these 3 are actually an SRT struct in the DLL
 	Vector3f mRotation;       // _128
 	Vector3f mPosition;       // _134
 };

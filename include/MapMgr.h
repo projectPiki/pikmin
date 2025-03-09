@@ -157,8 +157,8 @@ struct MapParts : public DynCollShape {
 		mCurrentPart = nullptr;
 	}
 
-	virtual void read(RandomAccessStream&);                   // _0C
-	virtual void update();                                    // _10
+	virtual void read(RandomAccessStream&) { }                // _0C
+	virtual void update() { }                                 // _10
 	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
 	virtual void init() { }                                   // _48
 
@@ -197,17 +197,17 @@ struct MapSlider : public MapParts {
 
 	// _00      = VTBL
 	// _00-_150 = MapParts
-	Vector3f mPosition; // _150
-	f32 mFaceDirection; // _15C
-	int _160;           // _160
-	int _164;           // _164
-	f32 _168;           // _168
-	f32 _16C;           // _16C
-	f32 _170;           // _170
-	int _174;           // _174
-	int _178;           // _178
-	int _17C;           // _17C
-	f32 _180;           // _180
+	Vector3f mSliderPosition; // _150
+	f32 mFaceDirection;       // _15C
+	int _160;                 // _160
+	int _164;                 // _164
+	f32 _168;                 // _168
+	f32 _16C;                 // _16C
+	f32 _170;                 // _170
+	int _174;                 // _174
+	int _178;                 // _178
+	int _17C;                 // _17C
+	f32 _180;                 // _180
 };
 
 /**

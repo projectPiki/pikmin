@@ -22,8 +22,8 @@ DEFINE_PRINT("genMapParts")
 MapMgr* GenObjectMapParts::mapMgr;
 int numShapes = 5;
 
-char* shapeNames[] = { "box", "1", "2", "3", "log" };
-char* kindNames[]  = { "slider", "entity", "dynamic" };
+static char* shapeNames[] = { "box", "1", "2", "3", "log" };
+static char* kindNames[]  = { "slider", "entity", "dynamic" };
 
 /*
  * --INFO--
@@ -161,9 +161,9 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 
 	switch (mPartKind) {
 	case 0: // Slider
-		ent                               = new MapSlider((Shape*)shape, _18(), _28(), _38(), _48(), _58(), 0);
-		((MapSlider*)ent)->mPosition      = info.mPosition;
-		((MapSlider*)ent)->mFaceDirection = info.mRotation.y;
+		ent                                = new MapSlider((Shape*)shape, _18(), _28(), _38(), _48(), _58(), 0);
+		((MapSlider*)ent)->mSliderPosition = info.mPosition;
+		((MapSlider*)ent)->mFaceDirection  = info.mRotation.y;
 		break;
 	case 1: // Entity
 		ent            = new MapEntity((Shape*)shape);
