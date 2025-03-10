@@ -390,7 +390,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Vector3f* mCollPlatNormal;           // _284
 	CollTriInfo* mClimbingTri;           // _288
 	CollTriInfo* mFloorTri;              // _28C
-	u32 _290;                            // _290, unknown
+	CollTriInfo* _290;                   // _290
 	u8 _294[0x4];                        // _294, unknown
 	u32 _298;                            // _298, unknown
 	Vector3f _29C;                       // _29C
@@ -406,5 +406,6 @@ f32 sphereDist(Creature*, Creature*);
 f32 qdist2(Creature*, Creature*);
 f32 circleDist(Creature*, Creature*);
 bool roughCull(Creature*, Creature*, f32);
+void traceMove2(Creature*, MoveTrace&, f32);
 
 #endif

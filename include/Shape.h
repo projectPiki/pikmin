@@ -214,6 +214,18 @@ struct BaseShape : public CoreNode {
 	void calcJointWorldScale(Graphics&, int, Vector3f&);
 	CollTriInfo* findCollTri(Vector3f&, Vector3f&, Vector3f&, char*);
 
+	// DLL inlines:
+	CollGroup* getCollTris(Vector3f& pos)
+	{
+		int x = (pos.x - _140.mMin.x) / _158;
+		int z = (pos.z - _140.mMin.z) / _158;
+		if (x < 0 || z < 0 || x >= _15C || z >= _160) {
+			return nullptr;
+		}
+		return _164[x + z * _15C];
+	}
+	void removeMtxDependancy();
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	u32 mSystemFlags;                 // _14
@@ -246,8 +258,10 @@ struct BaseShape : public CoreNode {
 	ObjCollInfo mCollisionInfo;       // _E8
 	u32 _13C;                         // _13C, flag of some kind?
 	BoundBox _140;                    // _140
-	u8 _158[0x164 - 0x158];           // _158
-	u32 _164;                         // _164
+	f32 _158;                         // _158
+	int _15C;                         // _15C
+	int _160;                         // _160
+	CollGroup** _164;                 // _164
 	int mTriCount;                    // _168
 	CollTriInfo* mTriList;            // _16C
 	u32 _170;                         // _170

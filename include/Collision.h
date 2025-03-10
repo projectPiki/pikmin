@@ -12,6 +12,7 @@
 struct CmdStream;
 struct Creature;
 struct DynCollObject;
+struct DynCollShape;
 struct ObjCollInfo;
 struct CollInfo;
 struct CollPart;
@@ -257,7 +258,16 @@ struct CollInfo {
 /**
  * @brief TODO
  */
-struct CollGroup { };
+struct CollGroup {
+	u8 _00[0x4];       // _00, unknown
+	s16 _04;           // _04, unknown
+	u8 _06[0xA];       // _06, unknown
+	Shape* _10;        // _10
+	Vector3f* _14;     // _14
+	int _18;           // _18
+	DynCollShape* _1C; // _1C
+	CollGroup* _20;    // _20
+};
 
 /**
  * @brief TODO

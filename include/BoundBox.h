@@ -67,8 +67,11 @@ struct BoundBox {
 
 	bool intersects(BoundBox& other)
 	{
-		return other.mMax.x <= mMin.x && other.mMin.x >= mMax.x && other.mMax.y <= mMin.y && other.mMin.y >= mMax.y
-		    && other.mMax.z <= mMin.z && other.mMin.z >= mMax.z;
+		if (other.mMin.x <= mMax.x && other.mMax.x >= mMin.x && other.mMin.y <= mMax.y && other.mMax.y >= mMin.y && other.mMin.z <= mMax.z
+		    && other.mMax.z >= mMin.z) {
+			return true;
+		}
+		return false;
 	}
 
 	// void resetBound()
