@@ -501,7 +501,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/creatureCollision.cpp"),
             Object(Matching, "plugPikiKando/creatureCollPart.cpp"),
             Object(Equivalent, "plugPikiKando/creatureMove.cpp"),
-            Object(NonMatching, "plugPikiKando/creatureStick.cpp"),
+            Object(Matching, "plugPikiKando/creatureStick.cpp"),
             Object(Matching, "plugPikiKando/dualCreature.cpp"),
             Object(Matching, "plugPikiKando/dynCreature.cpp"),
             Object(Matching, "plugPikiKando/eventListener.cpp"),

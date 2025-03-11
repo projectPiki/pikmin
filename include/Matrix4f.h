@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Dolphin/mtx.h"
 #include "Vector.h"
+#include "SRT.h"
 
 /**
  * @brief 4x4 Matrix.
@@ -46,7 +47,9 @@ struct Matrix4f {
 	void makeProjection(Vector3f&, struct Plane&);
 	void makeReflection(Plane&);
 	void makeBillVector(Vector3f&, Matrix4f&, Vector3f&);
-	// void makeSRT(SRT);
+
+	// should be without the _ but compiler complains about the vector one
+	void makeSRT_(SRT srt) { makeSRT(srt.mScale, srt.mRotation, srt.mTranslation); }
 
 	inline void set(Matrix4f& other)
 	{

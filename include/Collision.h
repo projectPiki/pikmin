@@ -143,14 +143,14 @@ struct CollPart {
 	bool isTubeType() { return mPartType == PART_Tube || mPartType == PART_TubeChild; }
 	bool isPlatformType() { return mPartType == PART_Platform; }
 	bool isCollisionType() { return mPartType == PART_Collision; }
+	bool isSphereType() { return mPartType == PART_BoundSphere; }
+	bool isBouncySphereType() { return isSphereType() || isCollisionType(); }
 
 	Matrix4f getJointMatrix() { return mJointMatrix; }
 
 	/*
 	    DLL inlines to make:
-	    bool isBouncySphereType();
 	    bool isReferenceType();
-	    bool isSphereType();
 	*/
 
 	f32 mRadius;                   // _00
