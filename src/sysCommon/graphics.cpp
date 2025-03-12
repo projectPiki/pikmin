@@ -3311,15 +3311,15 @@ Graphics::Graphics()
 		costable[i] = NMathF::cos(i / 4096.0f * TAU);
 	}
 
-	mActiveTexture = nullptr;
+	mActiveTexture[0] = nullptr;
+	mActiveTexture[1] = nullptr;
+	mActiveTexture[2] = nullptr;
+	mActiveTexture[3] = nullptr;
+	mActiveTexture[4] = nullptr;
+	mActiveTexture[5] = nullptr;
+	mActiveTexture[6] = nullptr;
+	mActiveTexture[7] = nullptr;
 
-	_2EC = 0;
-	_2F0 = 0;
-	_2F4 = 0;
-	_2F8 = 0;
-	_2FC = 0;
-	_300 = 0;
-	_304 = 0;
 	_308 = 0;
 
 	mCurrentMaterial = nullptr;

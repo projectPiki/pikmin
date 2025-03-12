@@ -45,7 +45,7 @@ struct Material : public CoreNode {
 	u32 _8C;                          // _8C
 	ShortColour* _90;                 // _90
 	u32 mDisplayListSize;             // _94
-	u32* mDisplayListPtr;             // _98
+	u8* mDisplayListPtr;              // _98
 };
 
 /**
