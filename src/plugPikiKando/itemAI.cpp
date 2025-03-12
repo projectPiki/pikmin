@@ -955,7 +955,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 			obj->mHeldPikis[Leaf]++;
 			GameStat::containerPikis.inc(obj->mOnionColour);
 			GameStat::update();
-			if (!gameflow.mMoviePlayer->mIsActive && !playerState->_1B6
+			if (!gameflow.mMoviePlayer->mIsActive && !playerState->mIsChallengeMode
 			    && !playerState->mDemoFlags.isFlag(flowCont.mCurrentStage->mStageID + DEMOFLAG_PikminLimitOffset)) {
 				playerState->mDemoFlags.setFlagOnly(flowCont.mCurrentStage->mStageID + DEMOFLAG_PikminLimitOffset);
 				gameflow.mGameInterface->message(0, 21);

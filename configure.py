@@ -474,7 +474,7 @@ config.libs = [
         "mw_version": "GC/1.2.5n",
         "progress_category" : "game",
         "objects": [
-            Object(NonMatching, "plugPikiKando/omake.cpp"),
+            Object(Equivalent, "plugPikiKando/omake.cpp"),
             Object(Matching, "plugPikiKando/radarInfo.cpp"),
             Object(Matching, "plugPikiKando/interactBattle.cpp"),
             Object(Matching, "plugPikiKando/interactGrab.cpp"),
@@ -484,7 +484,7 @@ config.libs = [
             Object(Equivalent, "plugPikiKando/simpleAI.cpp"),
             Object(Equivalent, "plugPikiKando/formationMgr.cpp"),
             Object(Matching, "plugPikiKando/globalShapes.cpp"),
-            Object(NonMatching, "plugPikiKando/playerState.cpp"),
+            Object(Equivalent, "plugPikiKando/playerState.cpp"),
             Object(Matching, "plugPikiKando/gameDemo.cpp"),
             Object(Matching, "plugPikiKando/demoInvoker.cpp"),
             Object(Matching, "plugPikiKando/demoEvent.cpp"),

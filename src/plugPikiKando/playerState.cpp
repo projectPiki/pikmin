@@ -36,6 +36,12 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT("PlayerState")
 
+UfoPartsInfo partsInfo[5] = {
+	{ 'ust1', 1 }, { 'ust2', 1 }, { 'ust3', 1 }, { 'ust4', 1 }, { 'ust5', 1 },
+};
+
+char unusedStr[] = { "ペレットマネージャ" };
+
 /*
  * --INFO--
  * Address:	........
@@ -81,10 +87,11 @@ void TimeGraph::init()
  */
 void TimeGraph::set(u16 time, int b, int c)
 {
-	if (time - _00 < 0 || (_02 - _00 + 1) < time - _00) {
+	int t = time - _00;
+	if (t < 0 || (_02 - _00 + 1) < t) {
 		ERROR("illegal time int %d\n", time);
 	}
-	_04[time - _00].set(b, c);
+	_04[t].set(b, c);
 }
 
 /*
@@ -156,20 +163,21 @@ bool PlayerState::existUfoParts(u32 id)
  */
 void PlayerState::initGame()
 {
-	for (int i = 0; i < 30; i++) {
+	int i;
+	for (i = 0; i < 30; i++) {
 		mPartsCollectedByDay[i] = 0;
 		mPartsToNextByDay[i]    = 0;
 	}
 	mResultFlags.initGame();
 	mDemoFlags.initGame();
-	_1B6                  = 0;
+	mIsChallengeMode      = 0;
 	mLeftBehindPikis      = 0;
 	mLostBattlePikis      = 0;
 	mSproutedNum          = 0;
 	_0C                   = 0;
 	_1A0                  = 0;
 	_1A4                  = 0;
-	_1AC                  = 0;
+	mDisplayPikiFlag      = 0;
 	_11                   = 8;
 	mTotalRegisteredParts = 0;
 	mTotalParts           = totalUfoParts;
@@ -181,7 +189,6 @@ void PlayerState::initGame()
 	setDisplayPikiCount(1);
 	mTotalRegisteredParts = 0;
 
-	int i = 0;
 	for (i = 0; i < mTotalParts; i++) {
 		mUfoParts[i]._DC = 0;
 	}
@@ -209,19 +216,20 @@ void PlayerState::initGame()
  */
 PlayerState::PlayerState()
 {
-	for (int i = 0; i < 30; i++) {
+	int i;
+	for (i = 0; i < 30; i++) {
 		mPartsCollectedByDay[i] = 0;
 		mPartsToNextByDay[i]    = 0;
 	}
 
-	_1B6                  = 0;
+	mIsChallengeMode      = 0;
 	mLeftBehindPikis      = 0;
 	mLostBattlePikis      = 0;
 	mSproutedNum          = 0;
 	_0C                   = 0;
 	_1A0                  = 0;
 	_1A4                  = 0;
-	_1AC                  = 0;
+	mDisplayPikiFlag      = 0;
 	_11                   = 8;
 	mTotalRegisteredParts = 0;
 	mTotalParts           = totalUfoParts;
@@ -235,7 +243,6 @@ PlayerState::PlayerState()
 	setDisplayPikiCount(1);
 	mTotalRegisteredParts = 0;
 
-	int i = 0;
 	for (i = 0; i < mTotalParts; i++) {
 		mUfoParts[i]._DC = 0;
 	}
@@ -259,21 +266,6 @@ PlayerState::PlayerState()
 	}
 
 	mShipUpgradeLevel = 0;
-}
-
-/*
- * --INFO--
- * Address:	8007FAA8
- * Size:	00002C
- */
-void TimeGraph::PikiNum::set(int color, int num)
-{
-	if (color >= PikiMinColor && color <= PikiMaxColor) {
-		mNum[color] = num;
-		return;
-	}
-
-	mNum[Blue] = mNum[Red] = mNum[Yellow] = num;
 }
 
 /*
@@ -306,18 +298,18 @@ bool PlayerState::happyEndable()
  */
 void PlayerState::setChallengeMode()
 {
-	_1B6 = 1;
+	mIsChallengeMode = 1;
 
 	// set EVERY demo flag. no cutscenes!!
 	for (int i = 0; i < DEMOFLAG_COUNT; i++) {
 		mDemoFlags.setFlagOnly(i);
 	}
 
-	_185 = 0;
-	_184 = 255;
-	_186 = 0;
-	_1AC = 255;
-	_11  = 1;
+	_185             = 0;
+	_184             = 255;
+	_186             = 0;
+	mDisplayPikiFlag = 0xFF;
+	_11              = 1;
 }
 
 /*
@@ -328,7 +320,7 @@ void PlayerState::setChallengeMode()
 void PlayerState::setDebugMode()
 {
 	setChallengeMode();
-	_1B6 = false;
+	mIsChallengeMode = false;
 }
 
 /*
@@ -404,6 +396,7 @@ int PlayerState::getTotalPikiCount(int color)
  */
 void PlayerState::saveCard(RandomAccessStream& data)
 {
+	int i;
 	_185 = false;
 
 	ID32 id;
@@ -419,7 +412,6 @@ void PlayerState::saveCard(RandomAccessStream& data)
 	id.setID('meck');
 	id.write(data);
 	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
-	int i           = 0;
 	for (i = 0; i < 5; i++) {
 		node->mStageInf.saveCard(data);
 		node = (StageInfo*)node->mNext;
@@ -447,7 +439,7 @@ void PlayerState::saveCard(RandomAccessStream& data)
 	data.writeByte(_185);
 	data.writeByte(_186);
 	data.writeByte(_11);
-	data.writeByte(_1AC);
+	data.writeByte(mDisplayPikiFlag);
 
 	for (i = 0; i < 5; i++) {
 		data.writeByte(_187[i]);
@@ -490,6 +482,7 @@ void PlayerState::saveCard(RandomAccessStream& data)
  */
 void PlayerState::loadCard(RandomAccessStream& data)
 {
+	int i;
 	ID32 id;
 	PRINT("**************** LOAD CARD (%s) ****************\n", "Container Piki");
 	id.read(data);
@@ -505,7 +498,7 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	id.read(data);
 	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
 	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
-	for (int i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i++) {
 		node->mStageInf.loadCard(data);
 		node = (StageInfo*)node->mNext;
 	}
@@ -520,7 +513,7 @@ void PlayerState::loadCard(RandomAccessStream& data)
 
 	int parts = data.readInt();
 	PRINT("**** BEFORE UFO PARTS :: %d \n", data.getPosition());
-	for (int i = 0; i < parts; i++) {
+	for (i = 0; i < parts; i++) {
 		mUfoParts[i]._DC = data.readByte();
 	}
 	PRINT("**** LOADING @ %d\n", data.getPosition());
@@ -535,8 +528,8 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	_185             = data.readByte();
 	_186             = data.readByte();
 	_11              = data.readByte();
-	_1AC             = data.readByte();
-	for (int i = 0; i < 5; i++) {
+	mDisplayPikiFlag = data.readByte();
+	for (i = 0; i < 5; i++) {
 		_187[i] = data.readByte();
 	}
 	_1A0 = data.readInt();
@@ -545,7 +538,6 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	PRINT("| ufo level %d ufo parts %d container flag %d tutorialmode %s\n", mShipUpgradeLevel, mCurrParts, _184, _185 ? "yes" : "no");
 	id.read(data);
 	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
-	int i = 0;
 
 	node = (StageInfo*)flowCont.mRootInfo.mChild;
 	for (i = 0; i < 5; i++) {
@@ -584,7 +576,7 @@ bool PlayerState::isTutorial()
 		return false;
 	}
 
-	if (_1B6) {
+	if (mIsChallengeMode) {
 		return false;
 	}
 
@@ -638,21 +630,11 @@ void PlayerState::setLimitGenFlag(int id)
  */
 bool PlayerState::displayPikiCount(int color)
 {
-	if (1 << color & _1AC)
-		PRINT("color %d : %x is on\n", color, _1AC);
-	return (1 << color & _1AC) != 0;
-
-	/*
-	.loc_0x0:
-	  li        r5, 0x1
-	  lbz       r0, 0x1AC(r3)
-	  slw       r3, r5, r4
-	  and.      r4, r3, r0
-	  neg       r3, r4
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
+	bool res = ((1 << color) & mDisplayPikiFlag) != 0;
+	if ((1 << color) & mDisplayPikiFlag) {
+		PRINT("color %d : %x is on\n", color, mDisplayPikiFlag);
+	}
+	return res;
 }
 
 /*
@@ -662,7 +644,7 @@ bool PlayerState::displayPikiCount(int color)
  */
 void PlayerState::setDisplayPikiCount(int color)
 {
-	_1AC |= 1 << color;
+	mDisplayPikiFlag |= 1 << color;
 }
 
 /*
@@ -699,22 +681,23 @@ bool PlayerState::hasUfoParts(u32 idx)
  */
 void PlayerState::update()
 {
-	if (!_1B6) {
+	bool isCM = isChallengeMode();
+	if (!isCM) {
 		mDemoFlags.update();
-		if (!_1B6 && !_185) {
-			int time = gameflow.mWorldClock.mCurrentTime;
-			if (time != _194) {
-				GameStat::update();
-				_194 = time;
-				_18C.set(_194, 0, GameStat::allPikis[0]);
-				_18C.set(_194, 1, GameStat::allPikis[1]);
-				_18C.set(_194, 2, GameStat::allPikis[2]);
-				PRINT("record (%d %d %d) = %d\n", GameStat::allPikis, GameStat::allPikis[0], GameStat::allPikis[1], GameStat::allPikis[2]);
-			}
-		}
 	}
 
-	f32 badcompiler[2];
+	if (isCM || !_185) {
+		int time = gameflow.mWorldClock.mCurrentTime;
+		if (time != _194) {
+			GameStat::update();
+			_194 = time;
+
+			_18C.set(_194, Blue, GameStat::allPikis[Blue]);
+			_18C.set(_194, Red, GameStat::allPikis[Red]);
+			_18C.set(_194, Yellow, GameStat::allPikis[Yellow]);
+			PRINT("record (%d %d %d) = %d\n", GameStat::allPikis, GameStat::allPikis[0], GameStat::allPikis[1], GameStat::allPikis[2]);
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -983,7 +966,7 @@ int PlayerState::getRestParts()
  */
 bool PlayerState::isUfoBroken()
 {
-	if (_1B6) {
+	if (mIsChallengeMode) {
 		return false;
 	}
 
@@ -1087,18 +1070,20 @@ void PlayerState::UfoParts::animationKeyUpdated(PaniAnimKeyEvent& event)
 	UfoItem* ufo = itemMgr->getUfo();
 
 	switch (event.mEventType) {
-	case 6:
+	case KEY_LoopEnd:
 		if (anim == 3) {
 			switch (mModelID) {
-			case 'uf03':
+			case 'uf01':
 				ufo->playEventSound(ufo, SE_UFO_ANTENNA);
 				break;
-			case 'uf01':
+			case 'uf03':
 				ufo->playEventSound(ufo, SE_UFO_SATELLITE);
+				break;
+			case 'ust1':
 				break;
 			}
 		} else {
-			ID32 id(mModelID);
+			ID32(mModelID).mStringID;
 			switch (mModelID) {
 			case 'ust5':
 				ufo->playEventSound(ufo, SE_UFO_ENGINE);
@@ -1108,13 +1093,14 @@ void PlayerState::UfoParts::animationKeyUpdated(PaniAnimKeyEvent& event)
 			}
 		}
 		break;
-	case 0:
+
+	case KEY_Finished:
 		startMotion(2, 2);
 		_D8 = 30.0f;
-		ID32 id2(mModelID);
-		PRINT("*** AFTER MOTION START * (%s)\n", id2.mStringID);
+		PRINT("*** AFTER MOTION START * (%s)\n", ID32(mModelID).mStringID);
 		break;
-	case 8:
+
+	case KEY_PlayEffect:
 		if (anim == 1) {
 			PRINT("UFO PARTS * GOT EFFECT KEY : index=%d\n", event.mValue);
 			switch (event.mValue) {
@@ -1131,161 +1117,6 @@ void PlayerState::UfoParts::animationKeyUpdated(PaniAnimKeyEvent& event)
 	}
 
 	f32 badcompiler[2];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  mr        r29, r4
-	  stw       r28, 0x40(r1)
-	  mr        r28, r3
-	  lwz       r3, 0x30AC(r13)
-	  lwz       r31, 0x54(r28)
-	  bl        0x71E0C
-	  lwz       r0, 0x0(r29)
-	  addi      r30, r3, 0
-	  cmpwi     r0, 0x6
-	  beq-      .loc_0x5C
-	  bge-      .loc_0x50
-	  cmpwi     r0, 0
-	  beq-      .loc_0x124
-	  b         .loc_0x1D0
-
-	.loc_0x50:
-	  cmpwi     r0, 0x8
-	  beq-      .loc_0x178
-	  b         .loc_0x1D0
-
-	.loc_0x5C:
-	  cmpwi     r31, 0x3
-	  bne-      .loc_0xC8
-	  lis       r3, 0x7566
-	  lwz       r4, 0x8(r28)
-	  addi      r0, r3, 0x3033
-	  cmpw      r4, r0
-	  beq-      .loc_0xB4
-	  bge-      .loc_0x8C
-	  addi      r0, r3, 0x3031
-	  cmpw      r4, r0
-	  beq-      .loc_0xA0
-	  b         .loc_0x1D0
-
-	.loc_0x8C:
-	  lis       r3, 0x7573
-	  addi      r0, r3, 0x7431
-	  cmpw      r4, r0
-	  beq-      .loc_0x1D0
-	  b         .loc_0x1D0
-
-	.loc_0xA0:
-	  addi      r3, r30, 0
-	  addi      r4, r30, 0
-	  li        r5, 0xE3
-	  bl        0x9708
-	  b         .loc_0x1D0
-
-	.loc_0xB4:
-	  addi      r3, r30, 0
-	  addi      r4, r30, 0
-	  li        r5, 0xE1
-	  bl        0x96F4
-	  b         .loc_0x1D0
-
-	.loc_0xC8:
-	  addi      r3, r1, 0x2C
-	  lwz       r4, 0x8(r28)
-	  bl        -0x3D03C
-	  lis       r3, 0x7573
-	  lwz       r4, 0x8(r28)
-	  addi      r0, r3, 0x7435
-	  cmpw      r4, r0
-	  beq-      .loc_0x100
-	  bge-      .loc_0x1D0
-	  lis       r3, 0x7566
-	  addi      r0, r3, 0x3031
-	  cmpw      r4, r0
-	  beq-      .loc_0x110
-	  b         .loc_0x1D0
-
-	.loc_0x100:
-	  addi      r3, r30, 0
-	  addi      r4, r30, 0
-	  li        r5, 0xE6
-	  bl        0x96A8
-
-	.loc_0x110:
-	  addi      r3, r30, 0
-	  addi      r4, r30, 0
-	  li        r5, 0xE4
-	  bl        0x9698
-	  b         .loc_0x1D0
-
-	.loc_0x124:
-	  lwz       r0, 0xD4(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x160
-	  addi      r3, r1, 0x18
-	  li        r4, 0x2
-	  bl        0x9E020
-	  addi      r31, r3, 0
-	  addi      r5, r28, 0
-	  addi      r3, r1, 0x10
-	  li        r4, 0x2
-	  bl        0x9E040
-	  addi      r4, r3, 0
-	  addi      r5, r31, 0
-	  addi      r3, r28, 0x10
-	  bl        0x18B0C
-
-	.loc_0x160:
-	  lfs       f0, -0x761C(r2)
-	  addi      r3, r1, 0x20
-	  stfs      f0, 0xD8(r28)
-	  lwz       r4, 0x8(r28)
-	  bl        -0x3D0DC
-	  b         .loc_0x1D0
-
-	.loc_0x178:
-	  cmpwi     r31, 0x1
-	  bne-      .loc_0x1D0
-	  lwz       r0, 0x4(r29)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x1B8
-	  bge-      .loc_0x1D0
-	  cmpwi     r0, 0
-	  bge-      .loc_0x19C
-	  b         .loc_0x1D0
-
-	.loc_0x19C:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r28, 0xB8
-	  li        r4, 0x124
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x11BB88
-	  b         .loc_0x1D0
-
-	.loc_0x1B8:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r28, 0xB8
-	  li        r4, 0x125
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x11BB6C
-
-	.loc_0x1D0:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  lwz       r28, 0x40(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1492,7 +1323,7 @@ void PlayerState::getUfoParts(u32 partID, bool flag)
 		playerState->mResultFlags.setSeen(RESFLAG_Collect15Parts);
 	}
 
-	f32 badcompiler[2];
+	f32 badcompiler2;
 }
 
 /*

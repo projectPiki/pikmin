@@ -655,13 +655,13 @@ void GameCoreSection::cleanupDayEnd()
 	}
 	seSystem->resetSystem();
 
-	if (!playerState->_1B6 && !playerState->isGameCourse()) {
+	if (!playerState->mIsChallengeMode && !playerState->isGameCourse()) {
 		PRINT("** SKIP CLEANUPDAYEND\n");
 		return;
 	}
 
 	PRINT("STEP (1) : Save Generators\n");
-	if (!playerState->_1B6) {
+	if (!playerState->mIsChallengeMode) {
 		generatorCache->beginSave(flowCont.mCurrentStage->mStageIndex);
 		int gens    = 0;
 		int objs    = 0;
@@ -698,7 +698,7 @@ void GameCoreSection::cleanupDayEnd()
 
 	PRINT("STEP (2) : remove objects (teki/boss/pellet/free pikis)\n");
 	int killed = 0;
-	if (!playerState->_1B6 && !playerState->isTutorial() && !playerState->isEnding()) {
+	if (!playerState->mIsChallengeMode && !playerState->isTutorial() && !playerState->isEnding()) {
 		Iterator it(pikiMgr);
 		CI_LOOP(it)
 		{
@@ -812,17 +812,17 @@ void GameCoreSection::cleanupDayEnd()
 	tekiMgr = nullptr;
 	bossMgr = nullptr;
 	mMapMgr->mCollShape->initCore("");
-	if (!playerState->_1B6) {
+	if (!playerState->mIsChallengeMode) {
 		playerState->update();
 	}
 	naviMgr->getNavi()->startMovieInf();
-	if (!playerState->_1B6) {
+	if (!playerState->mIsChallengeMode) {
 		playerState->mResultFlags.dump();
 	}
 
 	PRINT("STEP (4) : record me pikis\n");
 
-	if (!playerState->_1B6) {
+	if (!playerState->mIsChallengeMode) {
 		StageInf* inf = &flowCont.mCurrentStage->mStageInf;
 		Iterator ph_it(itemMgr->getPikiHeadMgr());
 		CI_LOOP(ph_it)
@@ -1988,7 +1988,7 @@ void asmTest(f32, f32)
 void GameCoreSection::initStage()
 {
 	playerState->setDayEnd(false);
-	if (playerState->_1B6) {
+	if (playerState->mIsChallengeMode) {
 		pikiInfMgr.initGame();
 	}
 
@@ -2221,7 +2221,7 @@ void GameCoreSection::initStage()
 	cameraMgr->update();
 	mNavi->mIsCursorVisible = 1;
 
-	if (!playerState->_1B6) {
+	if (!playerState->mIsChallengeMode) {
 		StageInf* inf = &flowCont.mCurrentStage->mStageInf;
 		PRINT("@@@@ FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
 		for (BaseInf* a = (BaseInf*)inf->mBPikiInfMgr.mActiveList.mChild; a; a = (BaseInf*)a->mNext) {
@@ -3260,7 +3260,7 @@ void GameCoreSection::finalSetup()
 		}
 	}
 
-	if (!playerState->isTutorial() && !playerState->_1B6) {
+	if (!playerState->isTutorial() && !playerState->mIsChallengeMode) {
 		PRINT("========== NAVI STARTING STATE START \n");
 		Navi* navi = naviMgr->getNavi();
 		if (navi) {

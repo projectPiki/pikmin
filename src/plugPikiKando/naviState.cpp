@@ -5923,7 +5923,7 @@ void NaviNukuState::init(Navi* navi)
 
 	navi->_814 = 0.0f;
 	_10        = C_NAVI_PROP(navi)._1CC();
-	if (navi->mIsCursorVisible && !playerState->_1B6 && !navi->mIsPlucking && playerState->_0C < 100) {
+	if (navi->mIsCursorVisible && !playerState->mIsChallengeMode && !navi->mIsPlucking && playerState->_0C < 100) {
 		// cameraMgr->mCamera->startMotion(cameraMgr->mCamera->_30);
 		PRINT("> camera START MOTION | NUKU");
 		navi->mIsPlucking       = true;

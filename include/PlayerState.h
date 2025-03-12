@@ -8,12 +8,21 @@
 #include "UtilityKando.h"
 #include "PelletAnimator.h"
 #include "Shape.h"
+#include "Piki.h"
 
 struct Graphics;
 struct PelletShapeObject;
 struct PermanentEffect;
 struct PikiShapeObject;
 struct Shape;
+
+/**
+ * @brief TODO
+ */
+struct UfoPartsInfo {
+	u32 _00; // _00
+	u8 _04;  // _04
+};
 
 /**
  * @brief TODO
@@ -25,14 +34,27 @@ struct TimeGraph {
 	 */
 	struct PikiNum {
 
-		void set(int, int);
+		void set(int color, int num)
+		{
+			if (color >= PikiMinColor && color <= PikiMaxColor) {
+				mNum[color] = num;
+				return;
+			}
+
+			// cannot condense these or this inlines incorrectly lmfao
+			mNum[Yellow] = num;
+			mNum[Red]    = num;
+			mNum[Blue]   = num;
+		}
+
 		int get(int color)
 		{
-			if (color >= 0 && color <= 2) {
+			if (color >= PikiMinColor && color <= PikiMaxColor) {
 				return mNum[color];
 			}
 			return getSum();
 		}
+
 		int getSum() { return mNum[0] + mNum[1] + mNum[2]; }
 
 		int mNum[3]; // _00
@@ -154,6 +176,8 @@ struct PlayerState {
 	bool inDayEnd() { return mInDayEnd; }
 	void setDayEnd(bool set) { mInDayEnd = set; }
 
+	bool isChallengeMode() { return mIsChallengeMode; }
+
 	bool hasUfoLeftControl() { return _11 & 4; }
 	bool hasUfoRightControl() { return _11 & 2; }
 	bool hasRadar() { return _11 & 1; }
@@ -165,8 +189,6 @@ struct PlayerState {
 	    All remaining DLL inlines:
 
 	    int getDayCollectCount(int);
-
-	    bool isChallengeMode;
 	    int getLastPikmins();
 	*/
 
@@ -201,11 +223,11 @@ struct PlayerState {
 	int _1A0;                     // _1A0, final dead pikis count?
 	int _1A4;                     // _1A4
 	int _1A8;                     // _1A8
-	u8 _1AC;                      // _1AC
+	u8 mDisplayPikiFlag;          // _1AC
 	BitFlags** mCourseFlags;      // _1B0
 	u8 _1B4;                      // _1B4
 	bool mInDayEnd;               // _1B5
-	u8 _1B6;                      // _1B6
+	bool mIsChallengeMode;        // _1B6
 	PermanentEffect* _1B8;        // _1B8
 	PermanentEffect* _1BC;        // _1BC
 	Vector3f _1C0;                // _1C0
