@@ -239,8 +239,16 @@ struct particleGenerator : public zenList {
 
 	// these are correct from the DLL
 
-	void pmSwitchOn(u32 flag) { mGeneratorFlags |= flag; }
-	void pmSwitchOff(u32 flag) { mGeneratorFlags &= ~flag; }
+	void pmSwitchOn(u32 flag) { _84 |= flag; }
+	void pmSwitchOff(u32 flag) { _84 &= ~flag; }
+	void pmSwitch(bool turnOn, u32 flag)
+	{
+		if (turnOn) {
+			pmSwitchOn(flag);
+		} else {
+			pmSwitchOff(flag);
+		}
+	}
 
 	zenListManager& getPtclMdlListManager() { return mPtclMdlListManager; }
 
@@ -273,6 +281,8 @@ struct particleGenerator : public zenList {
 	void startGen() { mGeneratorFlags &= ~PTCLGEN_GenStopped; }
 	void stopGen() { mGeneratorFlags |= PTCLGEN_GenStopped; }
 	void finish() { mGeneratorFlags |= PTCLGEN_Finished; }
+	void visible() { mGeneratorFlags |= PTCLGEN_Unk5; }
+	void invisible() { mGeneratorFlags &= ~PTCLGEN_Unk5; }
 
 	bool checkStop() { return mGeneratorFlags & PTCLGEN_Stop; }
 	bool checkEmit() { return !(mGeneratorFlags & PTCLGEN_Finished); }
@@ -293,17 +303,10 @@ struct particleGenerator : public zenList {
 	{
 		_170.set(pos - getGPos());
 		_17C = a;
-		setOrientedConstZAxis(b);
+		pmSwitch(b, 0x100000);
 	}
 
-	void setOrientedConstZAxis(bool set)
-	{
-		if (set) {
-			pmSwitchOn(0x100000);
-		} else {
-			pmSwitchOff(0x100000);
-		}
-	}
+	void setOrientedConstZAxis(bool set) { _68.m2 = set; }
 
 	void setVortexField(Vector3f pos, f32 a, f32 b, f32 c, f32 d, bool set)
 	{
@@ -312,16 +315,19 @@ struct particleGenerator : public zenList {
 		_154 = b; //-0.09f;
 		_158 = c; // 0.3f;
 		_15C = d; // 400.0f;
-		setOrientedConstZAxis(set);
+		pmSwitch(set, 0x40000);
 	}
 
 	void setGravityField(Vector3f& pos, bool set)
 	{
 		_12C.set(pos);
-		setOrientedConstZAxis(set);
+		pmSwitch(set, 0x10000);
 	}
 
 	void setInitVel(f32 vel) { _B8 = vel; }
+
+	// NB: might be getMaxFrame(), unsure
+	s16 getCurrentFrame() { return _90; }
 
 	/*
 	    These are still to be made/assigned from the DLL:
@@ -342,7 +348,6 @@ struct particleGenerator : public zenList {
 	    f32 getNewtonFieldFrc();
 
 	    void pmGetArbitUnitVec(Vector3f&);
-	    void pmSwitch(bool, u32);
 
 	    s16 getCurrentFrame();
 	    s16 getMaxFrame();
@@ -354,16 +359,28 @@ struct particleGenerator : public zenList {
 
 	// _00     = VTBL
 	// _00-_0C = zenList
-	Vector3f mEmitPos;                                       // _0C
-	Vector3f* mEmitPosPtr;                                   // _18
-	Vector3f _1C;                                            // _1C
-	zenListManager mPtclMdlListManager;                      // _28
-	zenListManager _38;                                      // _38
-	bBoardColourAnimData mAnimData;                          // _48
-	u8 _58[0x80 - 0x58];                                     // _58, unknown
+	Vector3f mEmitPos;                  // _0C
+	Vector3f* mEmitPosPtr;              // _18
+	Vector3f _1C;                       // _1C
+	zenListManager mPtclMdlListManager; // _28
+	zenListManager _38;                 // _38
+	bBoardColourAnimData mAnimData;     // _48
+	u8 _58[0x68 - 0x58];                // _58, unknown
+	struct {
+		u32 m0 : 1;
+		u32 m1 : 1;
+		u32 m2 : 1;
+		u32 m3 : 1;
+		u32 m4 : 1;
+		u32 m5 : 1;
+		u32 m6 : 1;
+		u32 m7 : 1;
+	} _68;                                                   // _68
+	u8 _6C[0x80 - 0x6C];                                     // _6C, unknown
 	u32 mGeneratorFlags;                                     // _80
 	u32 _84;                                                 // _84, unknown
-	u8 _88[0x94 - 0x88];                                     // _88, unknown
+	u8 _88[0x90 - 0x88];                                     // _88, unknown
+	s16 _90;                                                 // _90, either current frame or max frame
 	Vector3f _94;                                            // _94
 	Vector3f mEmitDir;                                       // _A0
 	Vector3f _AC;                                            // _AC

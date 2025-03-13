@@ -207,13 +207,13 @@ void GameCoreSection::startMovie(u32 flags, bool b)
 		orima->mNaviLightEfx->changeEffect(EffectMgr::EFF_Navi_Light);
 		orima->mNaviLightGlowEfx->changeEffect(EffectMgr::EFF_Navi_LightGlow);
 		if (orima->mDamageEfxA) {
-			orima->mDamageEfxA->pmSwitchOff(0x10);
+			orima->mDamageEfxA->invisible();
 		}
 		if (orima->mDamageEfxB) {
-			orima->mDamageEfxB->pmSwitchOff(0x10);
+			orima->mDamageEfxB->invisible();
 		}
 		if (orima->mDamageEfxC) {
-			orima->mDamageEfxC->pmSwitchOff(0x10);
+			orima->mDamageEfxC->invisible();
 		}
 		if (orima->isDamaged()) {
 			orima->finishDamage();

@@ -849,7 +849,7 @@ void BTeki::prepareEffects()
 		ptcl->mOrientedNormalVector = Vector3f(0.0f, 0.0f, 0.0f);
 		f32 val                     = ptcl->mScaleSize;
 		ptcl->setScaleSize(val * getParameterF(TPF_RippleScale));
-		ptcl->pmSwitchOn(zen::PTCLGEN_GenStopped);
+		ptcl->stopGen();
 		mParticleGenPack->setPtclGenPtr(i, ptcl);
 	}
 

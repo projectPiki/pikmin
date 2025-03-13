@@ -4,6 +4,10 @@
 #include "types.h"
 #include "KEffect.h"
 #include "EffectMgr.h"
+#include "Collision.h"
+#include "MapMgr.h"
+#include "Matrix3f.h"
+#include "zen/Math.h"
 
 struct Navi;
 
@@ -55,8 +59,20 @@ DEFINE_ENUM_TYPE(
  * @brief TODO
  */
 struct BombEffect : public KEffect {
-	virtual void emit(EffectParm&); // _2C
-	virtual void kill();            // _30
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Bomb_Glow, parm.mPosition, nullptr, nullptr);
+		if (efx) {
+			Vector3f nrm(0.0f, 1.0f, 0.0f);
+			efx->setOrientedNormalVector(nrm);
+		}
+		effectMgr->create(EffectMgr::EFF_Bomb_Wave, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Bomb_DustRing, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Bomb_Bang, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Bomb_FireBang, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Bomb_FireGlow, parm.mPosition, nullptr, nullptr);
+	}
+	virtual void kill() { } // _30
 
 	// _00     = VTBL1
 	// _04     = VTBL2
@@ -71,8 +87,19 @@ struct BombEffect : public KEffect {
  * @note Size: 0xC.
  */
 struct BombEffectLight : public KEffect {
-	virtual void emit(EffectParm&); // _2C
-	virtual void kill();            // _30
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Bomb_Glow, parm.mPosition, nullptr, nullptr);
+		if (efx) {
+			Vector3f nrm(0.0f, 1.0f, 0.0f);
+			efx->setOrientedNormalVector(nrm);
+		}
+		effectMgr->create(EffectMgr::EFF_BombLight_Bang, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_BombLight_Wave, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_BombLight_FireBang, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_BombLight_FireGlow, parm.mPosition, nullptr, nullptr);
+	}
+	virtual void kill() { } // _30
 
 	// _00     = VTBL1
 	// _04     = VTBL2
@@ -135,68 +162,24 @@ struct FreeLightEffect : public KEffect {
  * @brief TODO
  */
 struct GoalEffect : public KEffect {
-	virtual bool invoke(zen::particleGenerator*); // _08
-	virtual void emit(EffectParm&);               // _2C
-
-	// _00     = VTBL1
-	// _04     = VTBL2
-	// _08     = VTBL3
-	// _00-_0C = KEffect
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct NaviFue : public KEffect {
-	NaviFue(Navi* navi)
+	virtual bool invoke(zen::particleGenerator* efx) // _08
 	{
-		mNavi     = navi;
-		mEntryNum = 24;
-		mEntries  = new zen::particleGenerator*[mEntryNum];
-		if (navi) {
-			for (int i = 0; i < mEntryNum; i++) {
-				mEntries[i] = nullptr;
-			}
+		if (efx->getCurrentFrame() >= 50) {
+			Vector3f grav(0.0f, 0.0f, 0.0f);
+			efx->setGravityField(grav, false);
 		}
+		return true;
 	}
-	virtual bool invoke(zen::particleGenerator*); // _08
-	virtual void emit(EffectParm&);               // _2C
-	virtual void kill();                          // _30
-
-	// _00     = VTBL1
-	// _04     = VTBL2
-	// _08     = VTBL3
-	// _00-_0C = KEffect
-	Navi* mNavi;                       // _0C
-	int mEntryNum;                     // _10
-	zen::particleGenerator** mEntries; // _14
-};
-
-/**
- * @brief TODO
- */
-struct NaviWhistle : public KEffect {
-	NaviWhistle(Navi* navi)
+	virtual void emit(EffectParm& parm) // _2C
 	{
-		mNavi = navi;
-		mEfxC = 0;
-		mEfxB = 0;
-		mEfxA = 0;
+		effectMgr->create(EffectMgr::EFF_Onyon_Suck, parm.mPosition, this, this);
 	}
-	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _24
-	virtual void emit(EffectParm&);                                  // _2C
-	virtual void kill();                                             // _30
 
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
 	// TODO: members
-	Navi* mNavi;                   // _0C
-	zen::particleGenerator* mEfxA; // _10
-	zen::particleGenerator* mEfxB; // _14
-	zen::particleGenerator* mEfxC; // _18
 };
 
 /**
@@ -229,13 +212,21 @@ struct RippleEffect : public KEffect {
  * @brief TODO
  */
 struct SimpleEffect : public KEffect {
-	SimpleEffect(u16 id)
+	SimpleEffect(EffectMgr::effTypeTable id)
 	{
 		mEfxId = id;
 		mEfx   = 0;
 	}
-	virtual void emit(EffectParm&); // _2C
-	virtual void kill();            // _30
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		mEfx = effectMgr->create((EffectMgr::effTypeTable)mEfxId, parm.mPosition, nullptr, nullptr);
+	}
+	virtual void kill() // _30
+	{
+		if (mEfx) {
+			effectMgr->mPtclMgr.killGenerator(mEfx, false);
+		}
+	}
 
 	// _00     = VTBL1
 	// _04     = VTBL2
@@ -271,7 +262,10 @@ struct SlimeEffect : public KEffect {
  * @brief TODO
  */
 struct SmokeGrassEffect : public KEffect {
-	virtual void emit(EffectParm&); // _2C
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		effectMgr->create(EffectMgr::EFF_Kogane_Walk1, parm.mPosition, nullptr, nullptr);
+	}
 
 	// _00     = VTBL1
 	// _04     = VTBL2
@@ -284,7 +278,10 @@ struct SmokeGrassEffect : public KEffect {
  * @brief TODO
  */
 struct SmokeRockEffect : public KEffect {
-	virtual void emit(EffectParm&); // _2C
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		effectMgr->create(EffectMgr::EFF_Kogane_Walk2, parm.mPosition, nullptr, nullptr);
+	}
 
 	// _00     = VTBL1
 	// _04     = VTBL2
@@ -297,7 +294,10 @@ struct SmokeRockEffect : public KEffect {
  * @brief TODO
  */
 struct SmokeSoilEffect : public KEffect {
-	virtual void emit(EffectParm&); // _2C
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		effectMgr->create(EffectMgr::EFF_Kogane_Walk0, parm.mPosition, nullptr, nullptr);
+	}
 
 	// _00     = VTBL1
 	// _04     = VTBL2
@@ -310,7 +310,10 @@ struct SmokeSoilEffect : public KEffect {
  * @brief TODO
  */
 struct SmokeTreeEffect : public KEffect {
-	virtual void emit(EffectParm&); // _2C
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		effectMgr->create(EffectMgr::EFF_Kogane_Walk0, parm.mPosition, nullptr, nullptr);
+	}
 
 	// _00     = VTBL1
 	// _04     = VTBL2
@@ -325,8 +328,26 @@ struct SmokeTreeEffect : public KEffect {
 struct UfoSuikomiEffect : public KEffect {
 	UfoSuikomiEffect() { mEfx = 0; }
 
-	virtual void emit(EffectParm&); // _2C
-	virtual void kill();            // _30
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		_0C = parm.mPosition;
+		_18 = parm.mDirection;
+		if (mEfx) {
+			return;
+		}
+		mEfx          = effectMgr->create(EffectMgr::EFF_Rocket_Nke1, _0C, this, this);
+		Vector3f diff = _18 - _0C;
+		mEfx->setNewtonField(Vector3f(_18), 0.0016f, true);
+		diff.normalise();
+		mEfx->setVortexField(Vector3f(diff), -0.12f, -0.09f, 0.3f, 400.0f, true);
+	}
+	virtual void kill() // _30
+	{
+		if (mEfx) {
+			effectMgr->mPtclMgr.killGenerator(mEfx, false);
+			mEfx = nullptr;
+		}
+	}
 
 	// _00     = VTBL1
 	// _04     = VTBL2
@@ -341,27 +362,85 @@ struct UfoSuikomiEffect : public KEffect {
  * @brief TODO
  */
 struct WhistleTemplate : public KEffect {
-	WhistleTemplate(u32 id1, u32 id2)
+	WhistleTemplate(EffectMgr::effTypeTable id1, EffectMgr::effTypeTable id2)
 	{
-		mEfxA = mEfxB = 0;
-		_2C           = id1;
-		_30           = id2;
+		mEfxA = mEfxB = nullptr;
+		mEffIDA       = id1;
+		mEffIDB       = id2;
 	}
 
-	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _24
-	virtual void emit(EffectParm&);                                  // _2C
-	virtual void kill();                                             // _30
+	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _24
+	{
+		// NON-MATCHING
+		Vector3f diff = _0C - _18;
+		f32 ratio     = f32(ptcl->_2E) / f32(ptcl->_2C);
+		f32 compRatio = 1.0f - ratio;
+		ptcl->_18     = _18;
+		ptcl->_0C     = diff * ratio;
+
+		if (_0C.y < _18.y + 15.0f) {
+			CollTriInfo* tri = mapMgr->getCurrTri(_0C.x, _0C.z, true);
+			Matrix3f mtx1;
+			Matrix3f mtx2;
+			Quat q1;
+			Quat q2;
+
+			diff.normalise();
+			zen::makeRotMatrix(diff, mtx1);
+			// some really subtle stack issue here
+			zen::makeRotMatrix(Vector3f(tri->mTriangle.mNormal * -1.0f), mtx2);
+
+			q1.fromMat3f(mtx1);
+			q2.fromMat3f(mtx2);
+			q1.slerp(q2, ratio, 0);
+			q1.genVectorY(ptcl->_5C);
+			q1.genVectorX(ptcl->_34);
+			ptcl->_34.multiply(0.01f);
+		} else {
+			ptcl->_5C.set(diff);
+		}
+
+		return false;
+	}
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		_0C = parm.mPosition;
+		_18 = parm.mDirection;
+		if (mEfxA || mEfxB) {
+			return;
+		}
+		mEfxA = effectMgr->create(mEffIDA, _18, this, this);
+		mEfxB = effectMgr->create(mEffIDB, _18, this, this);
+
+		if (mEfxA) {
+			mEfxA->setOrientedConstZAxis(true);
+		}
+	}
+	virtual void kill() // _30
+	{
+		// PRINT("** KILL WHISTLE TYPE\n");
+		if (mEfxA) {
+			// PRINT("* DO KILL pg2\n");
+			effectMgr->mPtclMgr.killGenerator(mEfxA, false);
+			mEfxA = nullptr;
+		}
+		if (mEfxB) {
+			// PRINT("* DO KILL pg3\n");
+			effectMgr->mPtclMgr.killGenerator(mEfxB, false);
+			mEfxB = nullptr;
+		}
+	}
 
 	// _00     = VTBL1
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	Vector3f _0C;                  // _0C
-	Vector3f _18;                  // _18
-	zen::particleGenerator* mEfxA; // _24
-	zen::particleGenerator* mEfxB; // _28
-	int _2C;                       // _2C
-	int _30;                       // _30
+	Vector3f _0C;                    // _0C
+	Vector3f _18;                    // _18
+	zen::particleGenerator* mEfxA;   // _24
+	zen::particleGenerator* mEfxB;   // _28
+	EffectMgr::effTypeTable mEffIDA; // _2C
+	EffectMgr::effTypeTable mEffIDB; // _30
 };
 
 /**
