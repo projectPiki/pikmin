@@ -19,6 +19,15 @@ struct RoutePoint;
 /**
  * @brief TODO
  */
+enum PathFinderMode {
+	PFMODE_Unk0       = 0,
+	PFMODE_AvoidWater = 1,
+	PFMODE_Unk2       = 2,
+};
+
+/**
+ * @brief TODO
+ */
 struct EditNode : public CoreNode {
 	EditNode(char* name)
 	    : CoreNode(name)
@@ -40,7 +49,7 @@ struct RouteLink : public CoreNode {
 	RouteLink()
 	    : CoreNode("rp")
 	{
-		mPoint = 0;
+		mPoint = nullptr;
 	}
 
 	// _00     = VTBL
@@ -56,10 +65,10 @@ struct RoutePoint : public CoreNode {
 	    : CoreNode("rp")
 	{
 		mLink.initCore("");
-		_20    = 8.0f;
-		mIndex = 0;
-		mState = 1;
-		mWidth = 10.0f;
+		_20     = 8.0f;
+		mIndex  = 0;
+		mState  = 1;
+		mRadius = 10.0f;
 	}
 
 	void loadini(CmdStream*);
@@ -73,7 +82,7 @@ struct RoutePoint : public CoreNode {
 	f32 mScreenY;       // _18
 	f32 mScreenDepth;   // _1C
 	f32 _20;            // _20
-	f32 mWidth;         // _24
+	f32 mRadius;        // _24
 	Vector3f mPosition; // _28
 	u32 mState;         // _34
 	int mIndex;         // _38
@@ -139,12 +148,12 @@ struct WayPoint {
 		// COMPLETELY stripped, exposed in the DLL
 
 		int getInfo(int);
-		void setInfo(int, int);
+		void setInfo(int linkIdx, int value) { mValues[linkIdx] = value; }
 
-		// TODO: members
+		int mValues[4]; // _00
 	};
 
-	WayPoint();
+	WayPoint() { }
 
 	void setFlag(bool);
 	void refresh(Graphics&);
@@ -157,15 +166,15 @@ struct WayPoint {
 	// DLL inlines:
 	bool inWater() { return _40 & 1; }
 
-	Vector3f mPosition;  // _00, probably
-	f32 mRadius;         // _0C
-	int mIndex;          // _10
-	int _14[8];          // _14
-	int _34;             // _34
-	bool mIsOpen;        // _38
-	u8 _39[0x40 - 0x39]; // _39, unknown
-	u8 _40;              // _40, flag?
-	u8 _41[0xC4 - 0x41]; // _41, unknown
+	Vector3f mPosition;      // _00, probably
+	f32 mRadius;             // _0C
+	int mIndex;              // _10
+	int mLinkIndices[8];     // _14
+	int mLinkCount;          // _34
+	bool mIsOpen;            // _38
+	RoutePoint* mRoutePoint; // _3C
+	u8 _40;                  // _40, flag?
+	LinkInfo mLinkInfos[8];  // _44
 };
 
 /**
@@ -178,11 +187,10 @@ struct RouteMgr : public Node {
 	 */
 	struct Group {
 		// DLL inline to do
-		int getNumPoints() { return _04; }
+		int getNumPoints() { return mNumPoints; }
 
-		// TODO: members
-		WayPoint* _00;
-		int _04;
+		WayPoint* mWayPoints; // _00
+		int mNumPoints;       // _04
 	};
 
 	RouteMgr();
@@ -211,41 +219,60 @@ struct RouteMgr : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	int* _20;         // _20
-	PathFinder** _24; // _24
-	int _28;          // _28
-	int _2C;          // _2C
+	Group* mGroupList;         // _20
+	PathFinder** mPathFinders; // _24
+	int mRouteCount;           // _28
+	u32* mRouteGroupIDs;       // _2C
 };
 
 /**
  * @brief TODO
  */
 struct PathFinder {
+
+	/**
+	 * @brief TODO
+	 */
 	struct Buffer {
-		Buffer();
+		Buffer()
+		{
+			mFlag        = 0xFF;
+			mWayPointIdx = -1;
+		}
 
 		// DLL inlines to make:
-		bool check(int flag) { return _04 & 1 << flag; }
-		void resetFlag(int flag) { _04 ^= (1 << flag); }
-		void setFlag(int flag) { _04 |= (1 << flag); }
+		bool check(int flag)
+		{
+			// gross, why do this
+			int r = mFlag;
+			r &= 1 << flag;
+			return r;
+		}
+		void resetFlag(int flag) { mFlag ^= (1 << flag); }
+		void setFlag(int flag) { mFlag |= (1 << flag); }
 
 		int mWayPointIdx; // _00
-		u8 _04;           // _04
+		u8 mFlag;         // _04
 	};
 
+	/**
+	 * @brief TODO
+	 *
+	 * @note Size: 0x28.
+	 */
 	struct Client {
 		// NO ctor or ANY functions for this struct
 
 		Buffer* mBuffer; // _00
-		int _04;
-		int _08;
-		bool _0C;
-		int _10;
-		u16 _14;
-		int _18;
-		int _1C;
-		u8 _20;
-		int _24;
+		int _04;         // _04
+		int _08;         // _08
+		bool _0C;        // _0C
+		int mHandle;     // _10
+		u16 mMode;       // _14
+		int _18;         // _18
+		int _1C;         // _1C
+		u8 _20;          // _20
+		int _24;         // _24
 	};
 
 	PathFinder(RouteMgr::Group&);
@@ -276,14 +303,13 @@ struct PathFinder {
 	static int avoidWayPointIndex;
 	static u16 mode;
 
-	// TODO: members
-	RouteMgr::Group* mGroup; //_00
-	int _04;
-	Buffer* mBuffer; // _08
-	int _0C;
-	int _10;
-	int _14;
-	Client* mClient; // _18
+	RouteMgr::Group* mGroup; // _00
+	int mBufferSize;         // _04, number of points in group
+	Buffer* mBuffer;         // _08
+	int mHandleCount;        // _0C
+	int mClientCount;        // _10
+	int mMaxClients;         // _14
+	Client* mClient;         // _18
 };
 
 /**
@@ -300,7 +326,8 @@ struct RouteTracer {
 		struct PointInfo {
 			PointInfo();
 
-			// TODO: members
+			Vector3f _00; // _00
+			f32 _0C;      // _0C
 		};
 
 		Context();
@@ -309,7 +336,7 @@ struct RouteTracer {
 		void setTarget(RouteTracer*);
 		int recognise(RouteTracer*);
 
-		// TODO: members
+		PointInfo _00[3]; // _00
 	};
 
 	RouteTracer();
@@ -322,6 +349,14 @@ struct RouteTracer {
 	Vector3f getTarget();
 
 	// TODO: members
+	Context mContext;    // _00
+	u8 _30[0x44 - 0x30]; // _30, unknown, might be part of Context?
+	Vector3f _44;        // _44
+	Vector3f _50;        // _50
+	Creature* _5C;       // _5C
+	Vector3f _60;        // _60
+	Vector3f _6C;        // _6C
+	Vector3f _78;        // _78
 };
 
 extern RouteMgr* routeMgr;

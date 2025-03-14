@@ -266,7 +266,7 @@ int Piki::findRoute(int sourceWaypointIndex, int destWaypointIndex, bool isRetry
 					// Copy waypoint data
 					mPathBuffers[i].mWayPointIdx = piki->mPathBuffers[i].mWayPointIdx;
 					int currentPoint             = mPathBuffers[i].mWayPointIdx;
-					mPathBuffers[i]._04          = piki->mPathBuffers[i]._04;
+					mPathBuffers[i].mFlag        = piki->mPathBuffers[i].mFlag;
 					pathLength++;
 
 					// Check if we've reached the destination
