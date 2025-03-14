@@ -495,7 +495,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/aiPerf.cpp"),
             Object(Matching, "plugPikiKando/courseDebug.cpp"),
             Object(Equivalent, "plugPikiKando/memStat.cpp"),
-            Object(NonMatching, "plugPikiKando/collInfo.cpp"),
+            Object(Matching, "plugPikiKando/collInfo.cpp"),
             Object(Matching, "plugPikiKando/complexCreature.cpp"),
             Object(Matching, "plugPikiKando/creature.cpp"),
             Object(Matching, "plugPikiKando/creatureCollision.cpp"),

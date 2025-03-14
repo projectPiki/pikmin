@@ -68,7 +68,7 @@ struct ObjCollInfo : public CoreNode {
 		mCentrePosition.set(0.0f, 0.0f, 0.0f);
 		mParentShape  = nullptr;
 		mPlatformName = nullptr;
-		mIsEnabled    = 0;
+		mPlatShape    = 0;
 		mFlags        = OCF_None;
 	}
 
@@ -83,12 +83,12 @@ struct ObjCollInfo : public CoreNode {
 	// _00-_14 = CoreNode
 	ID32 mId;                 // _14
 	ID32 mCode;               // _20
-	ObjCollType mCollType;    // _2C
+	u32 mCollType;            // _2C, see ObjCollType enum
 	s32 mJointIndex;          // _30
 	Vector3f mCentrePosition; // _34
 	f32 mRadius;              // _40
 	BaseShape* mParentShape;  // _44
-	u32 mIsEnabled;           // _48
+	Shape* mPlatShape;        // _48
 	char* mPlatformName;      // _4C
 	ObjCollFlags mFlags;      // _50
 };
@@ -144,22 +144,23 @@ struct CollPart {
 	bool isPlatformType() { return mPartType == PART_Platform; }
 	bool isCollisionType() { return mPartType == PART_Collision; }
 	bool isSphereType() { return mPartType == PART_BoundSphere; }
+	bool isCylinderType() { return mPartType == PART_Cylinder; }
+	bool isReferenceType() { return mPartType == PART_Reference; }
 	bool isBouncySphereType() { return isSphereType() || isCollisionType(); }
 
 	Matrix4f getJointMatrix() { return mJointMatrix; }
 
 	/*
-	    DLL inlines to make:
-	    bool isReferenceType();
+	    No more DLL inlines to make
 	*/
 
 	f32 mRadius;                   // _00
 	Vector3f mCentre;              // _04
 	Matrix4f mJointMatrix;         // _10
-	u8 _50;                        // _50
+	bool mIsUpdateActive;          // _50
 	bool mIsStickEnabled;          // _51
 	s16 mNextIndex;                // _52, index of next sibling
-	s16 mFirstIndex;               // _54, index of first child
+	s16 mFirstChildIndex;          // _54, index of first child
 	ObjCollInfo* mCollInfo;        // _58
 	u8 mPartType;                  // _5C
 	CollInfo* mParentInfo;         // _60

@@ -39,6 +39,24 @@ struct Timers {
 	void showTimes();
 	void draw(Graphics&, Font*);
 
+	void start(char* name, bool p2)
+	{
+#ifdef __MWERKS__
+		;
+#else
+		_start(name, p2);
+#endif
+	}
+
+	void stop(char* name)
+	{
+#ifdef __MWERKS__
+		;
+#else
+		_stop(name);
+#endif
+	}
+
 	TimerInf* mTimerInf; // _00
 	s32 mFrameCount;     // _04
 	u32 _08;             // _08
