@@ -203,10 +203,14 @@ extern BOOL __OSInIPL;
 
 //////////////////////////////////
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || 1 // Currently necessary for dsp_cardunlock.c
+
+#ifndef ASSERTLINE
+#define ASSERTLINE(line, exp) (void)((exp) || (OSPanic(__FILE__, line, "Failed assertion " #exp), 0))
+#endif
 
 #ifndef ASSERT
-#define ASSERT(exp) (void)((exp) || (OSPanic(__FILE__, __LINE__, "Failed assertion " #exp), 0))
+#define ASSERT(exp) ASSERTLINE(__LINE__, exp)
 #endif
 
 #ifndef ASSERTMSG

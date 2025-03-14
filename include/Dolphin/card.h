@@ -40,6 +40,7 @@ typedef struct CARDHeaderBlock CARDHeaderBlock;
 typedef struct CARDDirectoryBlock CARDDirectoryBlock;
 typedef struct CARDFatBlock CARDFatBlock;
 typedef struct CARDMemoryCard CARDMemoryCard;
+typedef struct CARDDecodeParameters CARDDecodeParameters;
 
 // CARD callback function type.
 typedef void (*CARDCallback)(s32 channel, s32 result);
@@ -192,13 +193,13 @@ struct CARDMemoryCard {
 	CARDFatBlock blockAllocMapBackup;  // _8000
 };
 
-// Struct for use in CARDUnlock.
-typedef struct CARDDecodeParameters {
+// Used by dsp_cardunlock.c in a dubious way.
+struct CARDDecodeParameters {
 	u8* inputAddr;   // _00
 	u32 inputLength; // _04
 	u32 aramAddr;    // _08
 	u8* outputAddr;  // _0C
-} CARDDecodeParameters;
+};
 
 // Enum for 'permission' in CARDDir.
 typedef enum { FilePermPublic = 0x2, FilePermNoCopy = 0x4, FilePermNoMove = 0x8 } CARDFilePermissions;
