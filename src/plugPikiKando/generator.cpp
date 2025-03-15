@@ -761,7 +761,8 @@ void Generator::render(Graphics& gfx)
 		f32 s = 0.5f;
 		scale.set(s, s, s);
 
-		mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), getPos());
+		Vector3f& pos = getPos();
+		mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), pos);
 
 		gfx.calcViewMatrix(mtx1, mtx2);
 		gfx.useMatrix(mtx2, 0);
@@ -783,123 +784,6 @@ void Generator::render(Graphics& gfx)
 			mGenType->render(gfx, this);
 		}
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xE0(r1)
-	  stw       r31, 0xDC(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0xD8(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x2DEC(r13)
-	  lwz       r0, 0x20(r5)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x194
-	  lfs       f0, -0x6790(r2)
-	  addi      r6, r1, 0x38
-	  addi      r5, r1, 0x2C
-	  stfs      f0, 0x54(r1)
-	  addi      r3, r1, 0x98
-	  addi      r4, r1, 0x4C
-	  stfs      f0, 0x50(r1)
-	  stfs      f0, 0x4C(r1)
-	  lfs       f0, -0x6780(r2)
-	  stfs      f0, 0x4C(r1)
-	  stfs      f0, 0x50(r1)
-	  stfs      f0, 0x54(r1)
-	  lfs       f1, 0x98(r30)
-	  lfs       f0, 0xA4(r30)
-	  lfs       f5, 0xA0(r30)
-	  fadds     f1, f1, f0
-	  lfs       f4, 0xAC(r30)
-	  lfs       f3, 0x9C(r30)
-	  lfs       f2, 0xA8(r30)
-	  fadds     f4, f5, f4
-	  stfs      f1, 0x24(r1)
-	  fadds     f3, f3, f2
-	  lfs       f0, -0x3A30(r13)
-	  lfs       f2, 0x24(r1)
-	  stfs      f0, 0x2C(r1)
-	  lfs       f1, -0x3A2C(r13)
-	  stfs      f2, 0x38(r1)
-	  lfs       f0, -0x3A28(r13)
-	  stfs      f3, 0x3C(r1)
-	  stfs      f1, 0x30(r1)
-	  stfs      f4, 0x40(r1)
-	  stfs      f0, 0x34(r1)
-	  bl        -0x9E1E0
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x98
-	  addi      r5, r1, 0x58
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x58
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  li        r5, 0xFF
-	  lwz       r3, 0x2F54(r13)
-	  stb       r5, 0x44(r1)
-	  li        r4, 0x7D
-	  li        r0, 0
-	  stb       r4, 0x45(r1)
-	  addi      r4, r31, 0
-	  li        r6, 0
-	  stb       r0, 0x46(r1)
-	  stb       r5, 0x47(r1)
-	  lwz       r3, 0x44(r3)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x2C(r3)
-	  lwz       r3, 0x2F54(r13)
-	  lwz       r5, 0x2E4(r31)
-	  bl        -0xABEE0
-	  lwz       r3, 0x20(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x14C
-	  lwz       r12, 0x4(r3)
-	  addi      r4, r31, 0
-	  addi      r5, r30, 0
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x14C:
-	  lwz       r3, 0x30(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x170
-	  lwz       r12, 0x4(r3)
-	  addi      r4, r31, 0
-	  addi      r5, r30, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x170:
-	  lwz       r3, 0x28(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x194
-	  lwz       r12, 0x4(r3)
-	  addi      r4, r31, 0
-	  addi      r5, r30, 0
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x194:
-	  lwz       r0, 0xE4(r1)
-	  lwz       r31, 0xDC(r1)
-	  lwz       r30, 0xD8(r1)
-	  addi      r1, r1, 0xE0
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -2026,7 +1910,8 @@ Vector3f GenAreaCircle::getPos(Generator* gen)
 	Vector3f pos = gen->getPos();
 
 	f32 minRadFactor = System::getRand(1.0f);
-	f32 radius       = System::getRand(1.0f) * (1.0f - minRadFactor) + minRadFactor;
+	f32 comp         = 1.0f - minRadFactor;
+	f32 radius       = System::getRand(1.0f) * comp + minRadFactor;
 	radius *= mRadius();
 
 	f32 randAngle = 2.0f * (PI * System::getRand(1.0f));
@@ -2164,6 +2049,8 @@ void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 
 	GlobalShape::enShape->mMaterialList->mColourInfo.mColour = colour;
 	GlobalShape::enShape->drawshape(gfx, *gfx.mCamera, nullptr);
+
+	u32 badCompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0

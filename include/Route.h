@@ -147,10 +147,10 @@ struct WayPoint {
 	struct LinkInfo {
 		// COMPLETELY stripped, exposed in the DLL
 
-		int getInfo(int);
+		int getInfo(int linkIdx) { return mValues[linkIdx]; }
 		void setInfo(int linkIdx, int value) { mValues[linkIdx] = value; }
 
-		int mValues[4]; // _00
+		int mValues[4]; // _00, blue/red/yellow onyons + ufo/ship
 	};
 
 	WayPoint() { }
@@ -241,13 +241,7 @@ struct PathFinder {
 		}
 
 		// DLL inlines to make:
-		bool check(int flag)
-		{
-			// gross, why do this
-			int r = mFlag;
-			r &= 1 << flag;
-			return r;
-		}
+		bool check(int flag) { return mFlag & 1 << flag; }
 		void resetFlag(int flag) { mFlag ^= (1 << flag); }
 		void setFlag(int flag) { mFlag |= (1 << flag); }
 
