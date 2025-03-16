@@ -63,7 +63,16 @@ typedef struct jcs_ {
  * @brief TODO.
  */
 typedef struct Wave_ {
-	// TODO
+	u8 _00;                // _00
+	u8 compBlockIdx;       // _01
+	u8 _02;                // _02
+	s8 _04[12];            // _04
+	s32 isLooping;         // _10
+	s32 loopAddress;       // _14
+	s32 loopStartPosition; // _18
+	s32 _1C;               // _1C
+	s16 loopYN1;           // _20
+	s16 loopYN2;           // _22
 } Wave;
 
 /////////////////////////////////////////////////////
