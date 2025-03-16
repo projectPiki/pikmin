@@ -43,9 +43,13 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 
 	Navi(CreatureProp*, int);
 
+	virtual void viewKill();                             // _154
+	virtual void viewDraw(Graphics&, Matrix4f&);         // _158
+	virtual f32 viewGetBottomRadius();                   // _15C
+	virtual f32 viewGetHeight();                         // _160
+	virtual void viewStartTrembleMotion(f32);            // _164
 	virtual f32 getiMass();                              // _38
 	virtual f32 getSize();                               // _3C
-	virtual f32 getShadowSize() { return 20.0f; }        // _70 (weak)
 	virtual bool isVisible();                            // _74
 	virtual bool isBuried();                             // _80
 	virtual bool isAtari();                              // _84
@@ -59,7 +63,6 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	virtual void offwallCallback(DynCollObject*);        // _B8
 	virtual void dump();                                 // _C8
 	virtual bool isRopable();                            // _D4
-	virtual bool mayIstick() { return false; }           // _D8 (weak)
 	virtual void update();                               // _E0
 	virtual void postUpdate(int, f32);                   // _E4
 	virtual void refresh(Graphics&);                     // _EC
@@ -67,12 +70,9 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	virtual void demoDraw(Graphics&, Matrix4f*);         // _FC
 	virtual void doAI();                                 // _104
 	virtual void doKill();                               // _10C
-	virtual void viewKill();                             // _154 (weak)
-	virtual void viewDraw(Graphics&, Matrix4f&);         // _158 (weak)
-	virtual f32 viewGetBottomRadius();                   // _15C (weak)
-	virtual f32 viewGetHeight();                         // _160 (weak)
-	virtual void viewStartTrembleMotion(f32);            // _164 (weak)
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _168 (weak)
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _168
+	virtual bool mayIstick() { return false; }           // _D8 (weak)
+	virtual f32 getShadowSize() { return 20.0f; }        // _70 (weak)
 
 	bool demoCheck();
 	bool isNuking();

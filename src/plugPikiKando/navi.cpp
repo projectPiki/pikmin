@@ -660,7 +660,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	_ABC    = 0;
 	_AB8    = 0.0f;
 	_AC4    = 0.0f;
-	mHealth = NAVI_PROP.mHealth();
+	mHealth = static_cast<NaviProp*>(props)->mNaviProps.mHealth();
 
 	mDayEndPosition.set(0.0f, 0.0f, 0.0f);
 	_814 = 0.0f;

@@ -4743,6 +4743,9 @@ void Piki::changeMode(int newMode, Navi* navi)
 	mMode = newMode;
 }
 
+char* states_str[] = { "NORMAL",    "GROW",   "BURY",   "NUKARE",  "DYING",   "DEAD",    "BUTUKARI",
+	                   "TRANSFORM", "GROWUP", "ABSORB", "ILLEGAL", "ILLEGAL", "ILLEGAL", "ILLEGAL" };
+
 char* _standStr[] = { "GROUND", "TEKIPLAT", "PLAT", "AIR" };
 
 char* _modeStr[] = {

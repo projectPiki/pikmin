@@ -58,19 +58,22 @@ void makePostureMatrix(Vector3f& col0, Vector3f& col1, Vector3f& col2, Matrix4f&
  * Address:	801127BC
  * Size:	0001B0
  */
-f32 calcImpulse(Vector3f& p1, f32 p2, Vector3f& p3, Matrix4f& p4, Vector3f& p5, Vector3f& p6)
+f32 calcImpulse(Vector3f& relativePos, f32 mass, Vector3f& collisionNormal, Matrix4f& inertiaTensor, Vector3f& relativeVel,
+                Vector3f& separationVel)
 {
-	f32 dot35 = p3.DP(p5);
-	f32 dot36 = p3.DP(p6);
-	f32 ratio = -(dot36 / dot35);
-	Vector3f vec1;
-	Vector3f vec2;
-	vec1 = p1;
-	vec1.CP(p3);
-	vec1.multMatrix(p4);
-	vec1.CP(p1);
-	f32 val = (-1.0f - ratio) * dot35;
-	return val / (vec1.DP(p3) + 1.0f / p2);
+	f32 normalSpeed    = collisionNormal.DP(relativeVel);
+	f32 normalSepSpeed = collisionNormal.DP(separationVel);
+	f32 restitution    = -(normalSepSpeed / normalSpeed);
+
+	Vector3f angularComponent;
+	Vector3f unused;
+
+	angularComponent = relativePos;
+	angularComponent.CP(collisionNormal);
+	angularComponent.multMatrix(inertiaTensor);
+	angularComponent.CP(relativePos);
+	f32 tmp = (-1.0f - restitution) * normalSpeed;
+	return tmp / (angularComponent.DP(collisionNormal) + 1.0f / mass);
 }
 
 /*

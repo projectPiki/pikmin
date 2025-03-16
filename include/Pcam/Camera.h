@@ -11,9 +11,12 @@ struct Font;
 struct Graphics;
 struct Navi;
 struct NVector3f;
+struct PcamCameraParameters;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct PcamMotionInfo {
 	PcamMotionInfo();
@@ -22,7 +25,7 @@ struct PcamMotionInfo {
 	void init(f32, f32, f32, f32, f32, f32);
 	void println();
 
-	// TODO: members
+	u8 _00[0x18]; // _18, unknown
 };
 
 /**
@@ -43,8 +46,6 @@ struct PcamControlInfo {
  */
 struct PcamCamera : public NCamera {
 	PcamCamera(Camera*);
-
-	virtual void update(); // _08
 
 	void startCamera(Creature*);
 	void startCamera(Creature*, int, int);
@@ -83,13 +84,25 @@ struct PcamCamera : public NCamera {
 	void makePolar();
 	void printInfo(Graphics&, Font*);
 
-	// _20     = VTBL
+	// _50     = VTBL
 	// _00-_20 = NCamera
-	u8 _24[0x30 - 0x24];  // _24, unknown
-	u8 _30;               // _30
-	u8 _31[0xC8 - 0x31];  // _31, unknown
-	f32 _C8;              // _C8
-	u8 _CC[0x16C - 0xCC]; // _CC
+	u8 _20;                     // _20
+	u8 _21[0x30 - 0x21];        // _20, unknown
+	u8 _30;                     // _30
+	u8 _31[0x38 - 0x31];        // _31, unknown
+	PcamMotionInfo mMotionInfo; // _38
+
+	// why is this in the middle. this is all one struct according to the DLL, just bizarre.
+	virtual void update(); // _08
+
+	PcamMotionInfo _54;                // _54
+	PcamMotionInfo _6C;                // _6C
+	u8 _84[0xC8 - 0x84];               // _54
+	NPolar3f _C0;                      // _C0
+	u8 _CC[0x4];                       // _CC, unknown
+	PcamCameraParameters* mParameters; // _D0
+	u8 _D4[0xE0 - 0xD4];               // _D4, unknown
+	PcamMotionInfo _E0[6];
 };
 
 #endif

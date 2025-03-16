@@ -81,8 +81,8 @@ struct Controller : public Node {
 	f32 getSubStickY();
 
 	// use KeyboardButtons enum - could maybe rename these from DLL names
-	bool keyDown(u32 button) { return mCurrentInput & button; }
-	bool keyUp(u32 button) { return !(mCurrentInput & button); }
+	bool keyDown(u32 button) { return (mCurrentInput & button) != 0; }
+	bool keyUp(u32 button) { return (mCurrentInput & button) == 0; }
 	bool keyClick(u32 button) { return mInputPressed & button; }
 	bool keyUnClick(u32 button) { return mInputReleased & button; }
 

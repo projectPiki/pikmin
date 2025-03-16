@@ -197,7 +197,7 @@ struct PlayerState {
 	int mSproutedNum;             // _00
 	int mLostBattlePikis;         // _04
 	int mLeftBehindPikis;         // _08
-	u32 _0C;                      // _0C, unknown
+	int _0C;                      // _0C
 	u8 mShipUpgradeLevel;         // _10
 	u8 _11;                       // _11
 	UfoParts* _14;                // _14

@@ -287,10 +287,10 @@ void GameCoreSection::endMovie(int a)
 			angle = mNavi->mFaceDirection + PI;
 			PRINT("use navi back camera\n");
 		} else {
-			angle = cameraMgr->mCamera->_C8;
+			angle = cameraMgr->mCamera->_C0.mAzimuth;
 			PRINT("using previous camera\\n");
 		}
-		angle = cameraMgr->mCamera->_C8;
+		angle = cameraMgr->mCamera->_C0.mAzimuth;
 		if (a == 4 || a == 5 || a == 6 || a == 16) {
 			Vector3f diff = gameflow.mMoviePlayer->_12C - gameflow.mMoviePlayer->mLookAtPos;
 			diff.y        = 0.0f;
