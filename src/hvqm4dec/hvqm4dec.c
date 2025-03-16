@@ -17,7 +17,7 @@ static u32 readTree_signed;
 static u32 readTree_scale;
 
 // forward declarations
-static u8 getByte(BitBuffer* buf);
+static s16 getByte(BitBuffer* buf);
 static u8 getBit(BitBuffer* buf);
 
 /*
@@ -600,40 +600,24 @@ static s16 _readTree(Tree* dst, BitBuffer* src)
  * Address:	8001F384
  * Size:	000064
  */
-static u8 getByte(BitBuffer* buf)
+static s16 getByte(BitBuffer* buf)
 {
-	/*
-	.loc_0x0:
-	  lwz       r8, 0xC(r3)
-	  cmpwi     r8, 0x7
-	  blt-      .loc_0x20
-	  lwz       r7, 0x8(r3)
-	  subi      r0, r8, 0x7
-	  subi      r8, r8, 0x8
-	  srw       r7, r7, r0
-	  b         .loc_0x54
-
-	.loc_0x20:
-	  lwz       r5, 0x0(r3)
-	  subfic    r6, r8, 0x7
-	  lwz       r7, 0x8(r3)
-	  addi      r0, r8, 0x19
-	  addi      r4, r5, 0x4
-	  stw       r4, 0x0(r3)
-	  slw       r7, r7, r6
-	  addi      r8, r8, 0x18
-	  lwz       r4, 0x0(r5)
-	  stw       r4, 0x8(r3)
-	  lwz       r4, 0x8(r3)
-	  srw       r0, r4, r0
-	  or        r7, r7, r0
-
-	.loc_0x54:
-	  stw       r8, 0xC(r3)
-	  rlwinm    r7,r7,0,24,31
-	  extsh     r3, r7
-	  blr
-	*/
+	u32 value;
+	int bit;
+	if ((bit = buf->bit) >= 7) {
+		value = buf->value;
+		value >>= bit - 7;
+		bit -= 8;
+	} else {
+		value      = buf->value;
+		value <<= 7 - bit;
+		buf->value = *((u32*)buf->ptr)++;
+		value = value | (buf->value >> (bit + 25));
+		bit += 24;
+	}
+	buf->bit = bit;
+	value &= 0xFF;
+	return value;
 }
 
 /*
