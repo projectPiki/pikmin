@@ -18,7 +18,7 @@ static u32 readTree_scale;
 
 // forward declarations
 static u8 getByte(BitBuffer* buf);
-static s16 getBit(BitBuffer* buf);
+static u8 getBit(BitBuffer* buf);
 
 /*
  * --INFO--
@@ -1023,31 +1023,19 @@ static void IpicDcvDec(VideoState* state)
  * Address:	8001F7E8
  * Size:	000040
  */
-static s16 getBit(BitBuffer* buf)
+static u8 getBit(BitBuffer* buf)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0xC(r3)
-	  cmpwi     r5, 0
-	  bge-      .loc_0x28
-	  lwz       r4, 0x0(r3)
-	  li        r5, 0x1F
-	  addi      r0, r4, 0x4
-	  stw       r0, 0x0(r3)
-	  lwz       r0, 0x0(r4)
-	  stw       r0, 0x8(r3)
-	  b         .loc_0x2C
-
-	.loc_0x28:
-	  lwz       r0, 0x8(r3)
-
-	.loc_0x2C:
-	  srw       r4, r0, r5
-	  subi      r0, r5, 0x1
-	  stw       r0, 0xC(r3)
-	  rlwinm    r3,r4,0,31,31
-	  blr
-	*/
+	u32 value;
+	int bit;
+	if ((bit = buf->bit) < 0) {
+		value = buf->value = *((u32*)buf->ptr)++;
+		bit                = 31;
+	} else {
+		value = buf->value;
+	}
+	value    = value >> bit & 1;
+	buf->bit = bit - 1;
+	return value;
 }
 
 /*
