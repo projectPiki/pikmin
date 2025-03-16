@@ -1029,45 +1029,11 @@ static u8 getBit(BitBuffer* buf)
  */
 static u32 decodeHuff(BitBufferWithTree* buf)
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x10(r3)
-	  lwz       r7, 0x4(r6)
-	  b         .loc_0x58
-
-	.loc_0xC:
-	  lwz       r5, 0xC(r3)
-	  cmpwi     r5, 0
-	  bge-      .loc_0x34
-	  lwz       r4, 0x0(r3)
-	  li        r5, 0x1F
-	  addi      r0, r4, 0x4
-	  stw       r0, 0x0(r3)
-	  lwz       r0, 0x0(r4)
-	  stw       r0, 0x8(r3)
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  lwz       r0, 0x8(r3)
-
-	.loc_0x38:
-	  srw       r4, r0, r5
-	  subi      r0, r5, 0x1
-	  stw       r0, 0xC(r3)
-	  rlwinm    r4,r4,11,20,20
-	  rlwinm    r0,r7,2,0,29
-	  add       r4, r4, r0
-	  addi      r0, r4, 0x8
-	  lwzx      r7, r6, r0
-
-	.loc_0x58:
-	  cmpwi     r7, 0x100
-	  bge+      .loc_0xC
-	  rlwinm    r0,r7,2,0,29
-	  add       r3, r6, r0
-	  lwz       r3, 0x8(r3)
-	  blr
-	*/
+	Tree* tree = buf->tree;
+	s32 pos    = tree->root;
+	while (pos >= 0x100)
+		pos = tree->array[getBit(&buf->buf)][pos];
+	return tree->array[0][pos];
 }
 
 /*
