@@ -23,10 +23,10 @@ struct DynCollObject : public Node {
 		mCreature = nullptr;
 	}
 
-	virtual void adjust(Creature*);                           // _30
-	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
-	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
-	virtual Shape* getShape();                                // _3C
+	virtual void adjust(Creature*) { }                           // _30
+	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&) { } // _34
+	virtual void touchCallback(Plane&, Vector3f&, Vector3f&) { } // _38
+	virtual Shape* getShape() { return nullptr; }                // _3C
 
 	// _00     = VTBL
 	// _00-_20 = Node
@@ -41,13 +41,24 @@ struct DynCollObject : public Node {
  * @note Size: 0x140.
  */
 struct DynCollShape : public DynCollObject {
-	DynCollShape(Shape* shape);
+	DynCollShape(Shape* shape)
+	{
+		mShape = shape;
+		if (mShape) {
+			createDupCollData();
+		}
 
-	virtual void update();               // _10
-	virtual void adjust(Creature*);      // _30
-	virtual Shape* getShape();           // _3C
-	virtual void jointVisible(int, int); // _40
-	virtual void refresh(Graphics&);     // _44
+		mScale    = Vector3f(1.0f, 1.0f, 1.0f);
+		mPosition = Vector3f(0.0f, 0.0f, 0.0f);
+		mRotation = mPosition;
+		mTransformMtx.makeIdentity();
+	}
+
+	virtual void update();                       // _10
+	virtual void adjust(Creature*);              // _30
+	virtual Shape* getShape() { return mShape; } // _3C
+	virtual void jointVisible(int, int);         // _40
+	virtual void refresh(Graphics&);             // _44
 
 	void createDupCollData();
 	void updatePos();
@@ -84,8 +95,8 @@ struct DynCollObjBody : public DynCollShape {
 	{
 	}
 
-	virtual void update();                                    // _10
-	virtual void adjust(Creature*);                           // _30
+	virtual void update() { }                                 // _10
+	virtual void adjust(Creature*) { }                        // _30
 	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
 	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
 

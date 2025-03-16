@@ -117,13 +117,19 @@ struct InteractBomb : public Interaction {
  * @brief TODO
  */
 struct InteractBreak : public Interaction {
-	inline InteractBreak(); // TODO: probably
+	InteractBreak(Creature* owner, int stage, f32 p3)
+	    : Interaction(owner)
+	{
+		mStageIndex = stage;
+		_0C         = p3;
+	}
 
 	virtual bool actBridge(Bridge*); // _24
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	int mStageIndex; // _08
+	f32 _0C;         // _0C
 };
 
 /**

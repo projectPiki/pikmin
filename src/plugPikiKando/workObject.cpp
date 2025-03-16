@@ -722,9 +722,9 @@ void HinderRock::updatePlanes()
 	mPlanes[2].mOffset = mPlanes[2].mNormal.DP(v3);
 	mPlanes[3].mOffset = mPlanes[3].mNormal.DP(v3);
 
-	mMoveEffectPosition = 0.5f * (v2 + v3);
-	_460[0]             = v0;
-	_460[1]             = getVertex(1);
+	mMoveFrontEfxPos   = 0.5f * (v2 + v3);
+	mMoveSideEfxPos[0] = v0;
+	mMoveSideEfxPos[1] = getVertex(1);
 }
 
 /*
@@ -855,12 +855,13 @@ void HinderRock::update()
 		mFxCooldownTimer = 0;
 	}
 
-	if (mState == 0 && mAmountPushersToStart < mPushingPikmin) {
+	if (mState == 0 && mPushingPikmin >= mAmountPushersToStart) {
 
 		if (mEfxA == nullptr) {
-			mEfxA = effectMgr->create(EffectMgr::EFF_HinderRock_MoveF, mMoveEffectPosition, nullptr, nullptr);
+			mEfxA = effectMgr->create(EffectMgr::EFF_HinderRock_MoveFront, mMoveFrontEfxPos, nullptr, nullptr);
 			if (mEfxA) {
-				mEfxA->setEmitPosPtr(&mMoveEffectPosition);
+				mEfxA->setEmitPosPtr(&mMoveFrontEfxPos);
+				// cannot get the stack around this right
 				mEfxA->setEmitDir(getXVector());
 			}
 		} else {
@@ -868,20 +869,20 @@ void HinderRock::update()
 		}
 
 		if (mEfxB == nullptr) {
-			mEfxB = effectMgr->create(EffectMgr::EFF_HinderRock_MoveS, _460[0], nullptr, nullptr);
+			mEfxB = effectMgr->create(EffectMgr::EFF_HinderRock_MoveSides, mMoveSideEfxPos[0], nullptr, nullptr);
 			if (mEfxB) {
-				mEfxB->setEmitPosPtr(&_460[0]);
-				Vector3f test = mPlanes[3].mNormal * 0.096f;
-				mEfxB->setGravityField(test, true);
+				mEfxB->setEmitPosPtr(&mMoveSideEfxPos[0]);
+				Vector3f gravityPos = mPlanes[3].mNormal * 0.096f;
+				mEfxB->setGravityField(gravityPos, true);
 			}
 		} else {
 			mEfxB->startGen();
 		}
 
 		if (mEfxC == nullptr) {
-			mEfxC = effectMgr->create(EffectMgr::EFF_HinderRock_MoveS, _460[0], nullptr, nullptr);
+			mEfxC = effectMgr->create(EffectMgr::EFF_HinderRock_MoveSides, mMoveSideEfxPos[1], nullptr, nullptr);
 			if (mEfxC) {
-				mEfxC->setEmitPosPtr(&_460[0]);
+				mEfxC->setEmitPosPtr(&mMoveSideEfxPos[1]);
 				Vector3f test = mPlanes[1].mNormal * 0.096f;
 				mEfxC->setGravityField(test, true);
 			}
@@ -900,7 +901,9 @@ void HinderRock::update()
 			mState    = 2;
 			mWayPoint->setFlag(true);
 			seSystem->playSysSe(SYSSE_WORK_FINISH);
+			PRINT("つきざました！\n"); // 'it's here!'
 			if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FinishBoxPush)) {
+				PRINT("************ MOVEROCK END *************\n");
 				playerState->mDemoFlags.setFlag(DEMOFLAG_FinishBoxPush, nullptr);
 			}
 			if (mEfxA) {
@@ -953,7 +956,10 @@ void HinderRock::update()
 	}
 	mTotalPushStrength = 0;
 
-	f32 badcompiler[14];
+	// these are just to try and fix stack, both are fake
+	PRINT("thing", mState ? "yes" : "no", mState ? "yes" : "no", mState ? "yes" : "no", mState ? "yes" : "no", mState ? "yes" : "no",
+	      mState ? "yes" : "no");
+	f32 badcompiler[8];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1720,7 +1726,7 @@ void Bridge::update()
 			mStartWaypoint->setFlag(true);
 			mEndWaypoint->setFlag(true);
 			seSystem->playSysSe(SYSSE_WORK_FINISH);
-			PRINT("橋：完成しました\n");
+			PRINT("橋：完成しました\n"); // 'bridge: completed'
 			playerState->mResultFlags.setOn(RESFLAG_BrokenBridge);
 		}
 	}
@@ -1913,9 +1919,8 @@ bool Bridge::isStageFinished(int id)
 		}
 		return mBuildShape->mProgressStateList[mStageJoints[id * 2 + 1]->mIndex];
 	}
-	return mBuildShape->mProgressStateList[getJointIndex(id)];
-
-	f32 badcompiler[2];
+	int jointIdx = getJointIndex(id);
+	return mBuildShape->mProgressStateList[jointIdx];
 }
 
 /*
@@ -1968,61 +1973,49 @@ void Bridge::dump()
  */
 void Bridge::setStageFinished(int stageIndex, bool isFinished)
 {
-	FORCE_DONT_INLINE;
-	// Very wrong. Do Not Use.
-
 	if (mDoUseJointSegments) {
 
-		Joint* target   = mStageJoints[stageIndex];
-		int targetIndex = target->mIndex;
-		int v6          = -1;
-		if (stageIndex < mStageCount - 1) { }
-		int v9 = 2 * stageIndex - 1;
+		int pIdx    = mStageJoints[2 * stageIndex + 1]->mIndex;
+		int wIdx    = mStageJoints[2 * stageIndex]->mIndex;
+		int nextIdx = -1;
+		if (stageIndex < mStageCount - 1) {
+			nextIdx = mStageJoints[2 * stageIndex + 2]->mIndex;
+		}
+
+		int prevID = 2 * stageIndex - 1;
 		if (isFinished) {
-			mBuildShape->jointVisible(target->mIndex, false);
-			mBuildShape->jointVisible(targetIndex, true);
-			if (v6 != -1) {
-				mBuildShape->jointVisible(v6, true);
+			mBuildShape->jointVisible(wIdx, 0);
+			mBuildShape->jointVisible(pIdx, 1);
+			if (nextIdx != -1) {
+				mBuildShape->jointVisible(nextIdx, 1);
 			}
 		} else {
-			if (v9 > 0) {
-				if (mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex]) {
-					mBuildShape->jointVisible(target->mIndex, true);
+			if (prevID > 0) {
+				if (mBuildShape->mProgressStateList[mStageJoints[prevID]->mIndex]) {
+					mBuildShape->jointVisible(wIdx, 1);
 				} else {
-					mBuildShape->jointVisible(target->mIndex, false);
+					mBuildShape->jointVisible(wIdx, 0);
 				}
 			} else {
-				mBuildShape->jointVisible(target->mIndex, true);
+				mBuildShape->jointVisible(wIdx, 1);
 			}
-			mBuildShape->jointVisible(targetIndex, false);
-			if (v6 != -1) {
-				mBuildShape->jointVisible(v6, false);
-			}
-		}
-
-		for (int i = 0; i < mStageCount; ++i) {
-			if (mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex]
-			    && mBuildShape->mProgressStateList[mStageJoints[v9 + 1]->mIndex]) {
-				mBuildShape->jointVisible(i, false);
+			mBuildShape->jointVisible(pIdx, 0);
+			if (nextIdx != -1) {
+				mBuildShape->jointVisible(nextIdx, 0);
 			}
 		}
 
-		int firstUnfinishedStage = -1;
-		for (int i = 0; i < mStageCount; ++i) {
-			if (!mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex]) {
-				firstUnfinishedStage = i;
-				break;
-			}
+		flatten();
+		int firstUnfinished = getFirstUnfinishedStage();
+		if (firstUnfinished != -1) {
+			Vector3f wpPos            = getStagePos(firstUnfinished) - 5.0f * getBridgeZVec();
+			mStartWaypoint->mPosition = wpPos;
 		}
 
-		if (firstUnfinishedStage != -1) {
-			Vector3f scaledBridgeZVec = getBridgeZVec();
-			scaledBridgeZVec          = scaledBridgeZVec * 20.0f;
-			mPosition                 = getStagePos(firstUnfinishedStage) - scaledBridgeZVec;
-		}
+		// fake to help fix stack, probably remove later
+		PRINT("thing", firstUnfinished ? "yes" : "no", firstUnfinished ? "yes" : "no");
 	} else {
-		int jointIndex = _410->getChildAt(stageIndex)->mCollInfo->mJointIndex;
-		mBuildShape->jointVisible(jointIndex, isFinished);
+		mBuildShape->jointVisible(getJointIndex(stageIndex), isFinished);
 	}
 
 	/*
@@ -2312,7 +2305,8 @@ Vector3f Bridge::getStagePos(int stage)
 {
 	if (mDoUseJointSegments) {
 		Vector3f pos;
-		pos = mPosition + getBridgeZVec() * getStageZ(stage);
+		f32 z = getStageZ(stage);
+		pos   = mPosition + getBridgeZVec() * z;
 		return pos;
 	}
 
@@ -2408,309 +2402,66 @@ f32 Bridge::getStageWidth()
  * Address:	8009ED28
  * Size:	000424
  */
-void Bridge::startStageFinished(int a2, bool a3)
+void Bridge::startStageFinished(int stageIndex, bool isFinished)
 {
 	FORCE_DONT_INLINE;
 
-	if (!a3) {
-		setStageFinished(a2, a3);
-		_3CC = 0;
-		return;
-	}
+	if (isFinished) {
+		if (_3CA != -1) {
+			PRINT("abunai!"); // 'dangerous!'
+		}
+		rumbleMgr->start(7, 0, mPosition);
 
-	rumbleMgr->start(7, 0, mPosition);
+		f32 z = 0.0f;
+		if (stageIndex <= 0) {
+			z = -20.0f;
+		} else {
+			z = (f32)(stageIndex - 1) * 20.0f + bridgeFirstPos[_400];
+		}
+		Vector3f pos(mPosition);
+		pos = pos + getBridgeZVec() * z;
+		if (stageIndex == 1) {
+			pos.y += bridgeFirstY[_400];
+			if (_400 == 1) {
+				pos.y -= 10.0f;
+			}
+		} else {
+			pos.y += bridgeFirstY[_400] + f32(stageIndex - 1) * bridgeGrad[_400];
+			if (_400 == 1) {
+				pos.y -= 10.0f;
+			}
+		}
 
-	if (a2 > 0) {
+		Vector3f pos2(pos);
+		pos2 = pos + 20.0f * getBridgeZVec();
+
+		if (stageIndex > 0) {
+			pos.y += f32(stageIndex) * bridgeGrad[_400];
+			if (_400 == 1) {
+				pos.y -= 10.0f;
+			}
+		}
+
+		PRINT("bridge effect start!\n");
+		zen::particleGenerator* efx1 = effectMgr->create(EffectMgr::EFF_Bridge_FinishStage, pos, nullptr, nullptr);
+		zen::particleGenerator* efx2 = effectMgr->create(EffectMgr::EFF_Bridge_FinishStage, pos2, nullptr, nullptr);
+
+		if (efx1) {
+			efx1->setEmitDir(getBridgeXVec());
+		}
+
+		if (efx2) {
+			efx2->setEmitDir(getBridgeXVec());
+		}
+
+		_3CC = 60;
+		_3CA = stageIndex;
+		playEventSound(this, SEB_BRIDGE_EXTEND);
 
 	} else {
+		setStageFinished(stageIndex, isFinished);
+		_3CC = 0;
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x802B
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r5,0,24,31
-	  stwu      r1, -0x128(r1)
-	  stfd      f31, 0x120(r1)
-	  stfd      f30, 0x118(r1)
-	  stw       r31, 0x114(r1)
-	  addi      r31, r6, 0xE88
-	  stw       r30, 0x110(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x10C(r1)
-	  addi      r29, r3, 0
-	  stw       r28, 0x108(r1)
-	  beq-      .loc_0x3E8
-	  lwz       r3, 0x3178(r13)
-	  addi      r6, r29, 0x94
-	  li        r4, 0x7
-	  li        r5, 0
-	  bl        0xDE060
-	  cmpwi     r30, 0
-	  bgt-      .loc_0x60
-	  lfs       f31, -0x72E0(r2)
-	  b         .loc_0x9C
-
-	.loc_0x60:
-	  subi      r3, r30, 0x1
-	  lbz       r0, 0x400(r29)
-	  xoris     r3, r3, 0x8000
-	  lfd       f2, -0x7328(r2)
-	  stw       r3, 0x104(r1)
-	  lis       r3, 0x4330
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x72DC(r2)
-	  stw       r3, 0x100(r1)
-	  add       r3, r31, r0
-	  lfd       f1, 0x100(r1)
-	  lfs       f0, 0x1C(r3)
-	  fsubs     f1, f1, f2
-	  fmuls     f1, f3, f1
-	  fadds     f31, f1, f0
-
-	.loc_0x9C:
-	  lfs       f0, 0x94(r29)
-	  stfs      f0, 0xF4(r1)
-	  lfs       f0, 0x98(r29)
-	  stfs      f0, 0xF8(r1)
-	  lfs       f0, 0x9C(r29)
-	  stfs      f0, 0xFC(r1)
-	  lfs       f30, 0x8C(r29)
-	  fmr       f1, f30
-	  bl        0x17CD70
-	  stfs      f1, 0x68(r1)
-	  fmr       f1, f30
-	  addi      r28, r1, 0x68
-	  bl        0x17CEF4
-	  stfs      f1, 0x64(r1)
-	  addi      r4, r1, 0x64
-	  addi      r6, r28, 0
-	  addi      r3, r1, 0x58
-	  subi      r5, r13, 0x54E0
-	  bl        -0x67CF0
-	  addi      r3, r1, 0xD0
-	  addi      r4, r1, 0x58
-	  bl        -0x2BCD4
-	  lfs       f0, 0xD0(r1)
-	  cmpwi     r30, 0x1
-	  lfs       f2, 0xD4(r1)
-	  fmuls     f0, f0, f31
-	  lfs       f1, 0xF4(r1)
-	  lfs       f4, 0xD8(r1)
-	  fmuls     f2, f2, f31
-	  lfs       f3, 0xF8(r1)
-	  fadds     f0, f1, f0
-	  lfs       f5, 0xFC(r1)
-	  fmuls     f1, f4, f31
-	  fadds     f2, f3, f2
-	  stfs      f0, 0xF4(r1)
-	  fadds     f0, f5, f1
-	  stfs      f2, 0xF8(r1)
-	  stfs      f0, 0xFC(r1)
-	  bne-      .loc_0x174
-	  lbz       r0, 0x400(r29)
-	  lfs       f1, 0xF8(r1)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r31, r0
-	  lfs       f0, 0x30(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xF8(r1)
-	  lbz       r0, 0x400(r29)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x1D8
-	  lfs       f1, 0xF8(r1)
-	  lfs       f0, -0x72F0(r2)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xF8(r1)
-	  b         .loc_0x1D8
-
-	.loc_0x174:
-	  subi      r0, r30, 0x1
-	  lbz       r3, 0x400(r29)
-	  xoris     r0, r0, 0x8000
-	  lfd       f2, -0x7328(r2)
-	  stw       r0, 0x104(r1)
-	  lis       r0, 0x4330
-	  rlwinm    r3,r3,2,0,29
-	  lfs       f3, 0xF8(r1)
-	  stw       r0, 0x100(r1)
-	  add       r3, r31, r3
-	  lfd       f1, 0x100(r1)
-	  lfs       f0, 0x44(r3)
-	  fsubs     f1, f1, f2
-	  lfs       f2, 0x30(r3)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0xF8(r1)
-	  lbz       r0, 0x400(r29)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x1D8
-	  lfs       f1, 0xF8(r1)
-	  lfs       f0, -0x72F0(r2)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xF8(r1)
-
-	.loc_0x1D8:
-	  lfs       f0, 0xF4(r1)
-	  stfs      f0, 0xE8(r1)
-	  lfs       f0, 0xF8(r1)
-	  stfs      f0, 0xEC(r1)
-	  lfs       f0, 0xFC(r1)
-	  stfs      f0, 0xF0(r1)
-	  lfs       f30, 0x8C(r29)
-	  fmr       f1, f30
-	  bl        0x17CC34
-	  stfs      f1, 0x54(r1)
-	  fmr       f1, f30
-	  addi      r28, r1, 0x54
-	  bl        0x17CDB8
-	  stfs      f1, 0x50(r1)
-	  addi      r4, r1, 0x50
-	  addi      r6, r28, 0
-	  addi      r3, r1, 0x44
-	  subi      r5, r13, 0x54E0
-	  bl        -0x67E2C
-	  addi      r3, r1, 0xB8
-	  addi      r4, r1, 0x44
-	  bl        -0x2BE10
-	  lfs       f2, 0xC0(r1)
-	  addi      r6, r1, 0x40
-	  lfs       f3, -0x54D4(r13)
-	  addi      r5, r1, 0x3C
-	  lfs       f1, 0xBC(r1)
-	  lfs       f0, 0xB8(r1)
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  addi      r4, r1, 0x38
-	  fmuls     f0, f0, f3
-	  stfs      f2, 0x40(r1)
-	  addi      r3, r1, 0xC4
-	  stfs      f1, 0x3C(r1)
-	  stfs      f0, 0x38(r1)
-	  bl        -0x67E74
-	  lfs       f2, 0xF4(r1)
-	  cmpwi     r30, 0
-	  lfs       f1, 0xC4(r1)
-	  lfs       f0, 0xC8(r1)
-	  fadds     f1, f2, f1
-	  stfs      f1, 0xE8(r1)
-	  lfs       f1, 0xF8(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xEC(r1)
-	  lfs       f1, 0xFC(r1)
-	  lfs       f0, 0xCC(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xF0(r1)
-	  ble-      .loc_0x2FC
-	  xoris     r3, r30, 0x8000
-	  lbz       r0, 0x400(r29)
-	  stw       r3, 0x104(r1)
-	  lis       r3, 0x4330
-	  rlwinm    r0,r0,2,0,29
-	  lfd       f2, -0x7328(r2)
-	  stw       r3, 0x100(r1)
-	  add       r3, r31, r0
-	  lfs       f3, 0xF8(r1)
-	  lfd       f1, 0x100(r1)
-	  lfs       f0, 0x44(r3)
-	  fsubs     f1, f1, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0xF8(r1)
-	  lbz       r0, 0x400(r29)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x2FC
-	  lfs       f1, 0xF8(r1)
-	  lfs       f0, -0x72F0(r2)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xF8(r1)
-
-	.loc_0x2FC:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0xF4
-	  li        r4, 0xD7
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xFDB00
-	  mr        r28, r3
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0xE8
-	  li        r4, 0xD7
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xFDAE4
-	  cmplwi    r28, 0
-	  addi      r31, r3, 0
-	  beq-      .loc_0x37C
-	  lfs       f30, 0x8C(r29)
-	  fmr       f1, f30
-	  bl        0x17CC7C
-	  fneg      f31, f1
-	  fmr       f1, f30
-	  bl        0x17CADC
-	  stfs      f1, 0xAC(r1)
-	  lfs       f0, -0x54DC(r13)
-	  stfs      f0, 0xB0(r1)
-	  stfs      f31, 0xB4(r1)
-	  lwz       r3, 0xAC(r1)
-	  lwz       r0, 0xB0(r1)
-	  stw       r3, 0xA0(r28)
-	  stw       r0, 0xA4(r28)
-	  lwz       r0, 0xB4(r1)
-	  stw       r0, 0xA8(r28)
-
-	.loc_0x37C:
-	  cmplwi    r31, 0
-	  beq-      .loc_0x3C4
-	  lfs       f31, 0x8C(r29)
-	  fmr       f1, f31
-	  bl        0x17CC34
-	  fneg      f30, f1
-	  fmr       f1, f31
-	  bl        0x17CA94
-	  stfs      f1, 0xA0(r1)
-	  lfs       f0, -0x54DC(r13)
-	  stfs      f0, 0xA4(r1)
-	  stfs      f30, 0xA8(r1)
-	  lwz       r3, 0xA0(r1)
-	  lwz       r0, 0xA4(r1)
-	  stw       r3, 0xA0(r31)
-	  stw       r0, 0xA4(r31)
-	  lwz       r0, 0xA8(r1)
-	  stw       r0, 0xA8(r31)
-
-	.loc_0x3C4:
-	  li        r0, 0x3C
-	  stb       r0, 0x3CC(r29)
-	  extsh     r0, r30
-	  addi      r3, r29, 0
-	  sth       r0, 0x3CA(r29)
-	  addi      r4, r29, 0
-	  li        r5, 0xB3
-	  bl        -0x14B54
-	  b         .loc_0x3FC
-
-	.loc_0x3E8:
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  bl        -0xB64
-	  li        r0, 0
-	  stb       r0, 0x3CC(r29)
-
-	.loc_0x3FC:
-	  lwz       r0, 0x12C(r1)
-	  lfd       f31, 0x120(r1)
-	  lfd       f30, 0x118(r1)
-	  lwz       r31, 0x114(r1)
-	  lwz       r30, 0x110(r1)
-	  lwz       r29, 0x10C(r1)
-	  lwz       r28, 0x108(r1)
-	  addi      r1, r1, 0x128
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -2739,9 +2490,30 @@ bool InteractBuild::actBridge(Bridge* bridge)
  * Address:	8009F1EC
  * Size:	0002E8
  */
-bool InteractBreak::actBridge(Bridge*)
+bool InteractBreak::actBridge(Bridge* bridge)
 {
-	return false;
+	f32* progress = &bridge->mStageProgressList[mStageIndex];
+	*progress -= _0C;
+	if (*progress <= 0.0f) {
+		*progress = 0.0f;
+		for (int i = mStageIndex; i < bridge->getStage(); i++) {
+			bridge->setStageFinished(i, false);
+			bridge->mStageProgressList[i] = 0.0f;
+		}
+
+		PRINT("こわした！ by やましたさん\n"); // 'I broke it! by Yamashita-san'
+
+		bridge->mStartWaypoint->setFlag(false);
+		bridge->mEndWaypoint->setFlag(false);
+		int firstUnfinished = bridge->getFirstUnfinishedStage();
+		if (firstUnfinished != -1) {
+			Vector3f wpPos                    = bridge->getStagePos(firstUnfinished) - bridge->getBridgeZVec() * 5.0f;
+			bridge->mStartWaypoint->mPosition = wpPos;
+		}
+	}
+
+	u32 badCompiler;
+	return true;
 	/*
 	.loc_0x0:
 	  mflr      r0

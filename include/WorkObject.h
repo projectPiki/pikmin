@@ -91,7 +91,6 @@ struct Bridge : public WorkObject {
 	Bridge(Shape*, bool);
 
 	virtual bool insideSafeArea(Vector3f&);                   // _10
-	virtual bool alwaysUpdatePlatform() { return _424 != 0; } // _18
 	virtual void startAI(int);                                // _34
 	virtual void doSave(RandomAccessStream&);                 // _50
 	virtual void doLoad(RandomAccessStream&);                 // _54
@@ -99,12 +98,13 @@ struct Bridge : public WorkObject {
 	virtual void dump();                                      // _C8
 	virtual void update();                                    // _E0
 	virtual void refresh(Graphics&);                          // _EC
-	virtual void finalSetup() { _424 = 3; }                   // _158
-	virtual bool isBridge() { return true; }                  // _15C
 	virtual bool isFinished();                                // _164
 	virtual bool workable(Vector3f&);                         // _168
+	virtual bool isBridge() { return true; }                  // _15C
+	virtual bool alwaysUpdatePlatform() { return _424 != 0; } // _18
+	virtual void finalSetup() { _424 = 3; }                   // _158
 
-	inline int getStage() { return mStageCount; }
+	int getStage() { return mStageCount; }
 
 	int getFirstUnfinishedStage();
 	int getFirstFinishedStage();
@@ -181,8 +181,8 @@ struct HinderRock : public WorkObject {
 	u16 mPushingPikmin;            // _3C8
 	Plane mPlanes[4];              // _3CC
 	Vector3f mDestinationPosition; // _40C
-	u32 mTotalPushStrength;        // _418
-	u32 mAmountPushersToStart;     // _41C
+	int mTotalPushStrength;        // _418
+	int mAmountPushersToStart;     // _41C
 	f32 mPushSpeed;                // _420
 	WayPoint* mWayPoint;           // _424
 	u8 _428;                       // _428
@@ -198,8 +198,8 @@ struct HinderRock : public WorkObject {
 	zen::particleGenerator* mEfxA; // _448
 	zen::particleGenerator* mEfxB; // _44C
 	zen::particleGenerator* mEfxC; // _450
-	Vector3f mMoveEffectPosition;  // _454
-	Vector3f _460[2];              // _460
+	Vector3f mMoveFrontEfxPos;     // _454
+	Vector3f mMoveSideEfxPos[2];   // _460
 };
 
 extern WorkObjectMgr* workObjectMgr;

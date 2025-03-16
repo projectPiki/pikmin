@@ -333,8 +333,8 @@ struct EffectMgr : public CoreNode {
 		EFF_Bridge_FinishStage          = 215, // bridge.pcr
 		EFF_Onyon_Sparkles              = 216, // ony_kira.pcr
 		EFF_Onyon_Puff                  = 217, // ony_paf.pcr
-		EFF_HinderRock_MoveF            = 218, // stone_mv_f.pcr
-		EFF_HinderRock_MoveS            = 219, // stone_mv_s.pcr
+		EFF_HinderRock_MoveFront        = 218, // stone_mv_f.pcr
+		EFF_HinderRock_MoveSides        = 219, // stone_mv_s.pcr
 		EFF_Wl_Brk01                    = 220, // wl_brk01.pcr
 		EFF_Wl_Brk00                    = 221, // wl_brk00.pcr
 		EFF_Wl_Hit1                     = 222, // wl_hit1.pcr
