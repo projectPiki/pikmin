@@ -17,8 +17,8 @@ static u32 readTree_signed;
 static u32 readTree_scale;
 
 // forward declarations
-static u8 getByte(BitBuffer* buf);
-static s16 getBit(BitBuffer* buf);
+static s16 getByte(BitBuffer* buf);
+static u8 getBit(BitBuffer* buf);
 
 /*
  * --INFO--
@@ -600,40 +600,24 @@ static s16 _readTree(Tree* dst, BitBuffer* src)
  * Address:	8001F384
  * Size:	000064
  */
-static u8 getByte(BitBuffer* buf)
+static s16 getByte(BitBuffer* buf)
 {
-	/*
-	.loc_0x0:
-	  lwz       r8, 0xC(r3)
-	  cmpwi     r8, 0x7
-	  blt-      .loc_0x20
-	  lwz       r7, 0x8(r3)
-	  subi      r0, r8, 0x7
-	  subi      r8, r8, 0x8
-	  srw       r7, r7, r0
-	  b         .loc_0x54
-
-	.loc_0x20:
-	  lwz       r5, 0x0(r3)
-	  subfic    r6, r8, 0x7
-	  lwz       r7, 0x8(r3)
-	  addi      r0, r8, 0x19
-	  addi      r4, r5, 0x4
-	  stw       r4, 0x0(r3)
-	  slw       r7, r7, r6
-	  addi      r8, r8, 0x18
-	  lwz       r4, 0x0(r5)
-	  stw       r4, 0x8(r3)
-	  lwz       r4, 0x8(r3)
-	  srw       r0, r4, r0
-	  or        r7, r7, r0
-
-	.loc_0x54:
-	  stw       r8, 0xC(r3)
-	  rlwinm    r7,r7,0,24,31
-	  extsh     r3, r7
-	  blr
-	*/
+	u32 value;
+	int bit;
+	if ((bit = buf->bit) >= 7) {
+		value = buf->value;
+		value >>= bit - 7;
+		bit -= 8;
+	} else {
+		value      = buf->value;
+		value <<= 7 - bit;
+		buf->value = *((u32*)buf->ptr)++;
+		value = value | (buf->value >> (bit + 25));
+		bit += 24;
+	}
+	buf->bit = bit;
+	value &= 0xFF;
+	return value;
 }
 
 /*
@@ -1023,31 +1007,19 @@ static void IpicDcvDec(VideoState* state)
  * Address:	8001F7E8
  * Size:	000040
  */
-static s16 getBit(BitBuffer* buf)
+static u8 getBit(BitBuffer* buf)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0xC(r3)
-	  cmpwi     r5, 0
-	  bge-      .loc_0x28
-	  lwz       r4, 0x0(r3)
-	  li        r5, 0x1F
-	  addi      r0, r4, 0x4
-	  stw       r0, 0x0(r3)
-	  lwz       r0, 0x0(r4)
-	  stw       r0, 0x8(r3)
-	  b         .loc_0x2C
-
-	.loc_0x28:
-	  lwz       r0, 0x8(r3)
-
-	.loc_0x2C:
-	  srw       r4, r0, r5
-	  subi      r0, r5, 0x1
-	  stw       r0, 0xC(r3)
-	  rlwinm    r3,r4,0,31,31
-	  blr
-	*/
+	u32 value;
+	int bit;
+	if ((bit = buf->bit) < 0) {
+		value = buf->value = *((u32*)buf->ptr)++;
+		bit                = 31;
+	} else {
+		value = buf->value;
+	}
+	value    = value >> bit & 1;
+	buf->bit = bit - 1;
+	return value;
 }
 
 /*
@@ -1057,45 +1029,11 @@ static s16 getBit(BitBuffer* buf)
  */
 static u32 decodeHuff(BitBufferWithTree* buf)
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x10(r3)
-	  lwz       r7, 0x4(r6)
-	  b         .loc_0x58
-
-	.loc_0xC:
-	  lwz       r5, 0xC(r3)
-	  cmpwi     r5, 0
-	  bge-      .loc_0x34
-	  lwz       r4, 0x0(r3)
-	  li        r5, 0x1F
-	  addi      r0, r4, 0x4
-	  stw       r0, 0x0(r3)
-	  lwz       r0, 0x0(r4)
-	  stw       r0, 0x8(r3)
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  lwz       r0, 0x8(r3)
-
-	.loc_0x38:
-	  srw       r4, r0, r5
-	  subi      r0, r5, 0x1
-	  stw       r0, 0xC(r3)
-	  rlwinm    r4,r4,11,20,20
-	  rlwinm    r0,r7,2,0,29
-	  add       r4, r4, r0
-	  addi      r0, r4, 0x8
-	  lwzx      r7, r6, r0
-
-	.loc_0x58:
-	  cmpwi     r7, 0x100
-	  bge+      .loc_0xC
-	  rlwinm    r0,r7,2,0,29
-	  add       r3, r6, r0
-	  lwz       r3, 0x8(r3)
-	  blr
-	*/
+	Tree* tree = buf->tree;
+	s32 pos    = tree->root;
+	while (pos >= 0x100)
+		pos = tree->array[getBit(&buf->buf)][pos];
+	return tree->array[0][pos];
 }
 
 /*
@@ -1528,27 +1466,22 @@ static void WeightImBlock(u8* dst, u32 stride, u8 value, u8 top, u8 bottom, u8 l
  */
 static void OrgBlock(VideoState* state, u8* dst, u32 dstStride, u32 planeIdx)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r6,r6,4,0,27
-	  addi      r6, r6, 0x61DC
-	  add       r6, r3, r6
-	  lwz       r3, 0x0(r6)
-	  add       r10, r4, r5
-	  lwz       r7, 0x4(r3)
-	  addi      r0, r3, 0x10
-	  lwz       r8, 0x8(r3)
-	  lwz       r9, 0xC(r3)
-	  lwz       r3, 0x0(r3)
-	  stw       r3, 0x0(r4)
-	  stw       r7, 0x0(r10)
-	  add       r10, r10, r5
-	  stw       r8, 0x0(r10)
-	  add       r10, r10, r5
-	  stw       r9, 0x0(r10)
-	  stw       r0, 0x0(r6)
-	  blr
-	*/
+	BitBuffer* buf;
+	u32* ptr;
+	u32 temp1;
+	u32 temp2;
+	u32 temp3;
+
+	buf                       = &state->fixvl[planeIdx];
+	ptr                       = (u32*)buf->ptr;
+	temp1                     = ptr[1];
+	temp2                     = ptr[2];
+	temp3                     = ptr[3];
+	*(u32*)(dst)              = ptr[0];
+	*(u32*)(dst += dstStride) = temp1;
+	*(u32*)(dst += dstStride) = temp2;
+	*(u32*)(dst += dstStride) = temp3;
+	buf->ptr                  = ptr + 4;
 }
 
 /*
@@ -6008,48 +5941,17 @@ void HVQM4InitSeqObj(SeqObj* seqObj, VideoInfo* videoInfo)
  * Address:	80023730
  * Size:	000074
  */
-u32 HVQM4BuffSize(SeqObj*)
+u32 HVQM4BuffSize(SeqObj* seqObj)
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x8(r3)
-	  lhz       r4, 0x4(r3)
-	  cmplwi    r0, 0x2
-	  srawi     r6, r4, 0x2
-	  addze     r6, r6
-	  bne-      .loc_0x20
-	  srawi     r4, r6, 0x1
-	  b         .loc_0x24
+	const int h_blocks    = seqObj->width / 4;
+	const int uv_h_blocks = seqObj->h_samp == 2 ? h_blocks >> 1 : h_blocks;
+	const int v_blocks    = seqObj->height / 4;
+	const int uv_v_blocks = seqObj->v_samp == 2 ? v_blocks >> 1 : v_blocks;
 
-	.loc_0x20:
-	  mr        r4, r6
-
-	.loc_0x24:
-	  lbz       r0, 0x9(r3)
-	  lhz       r3, 0x6(r3)
-	  cmplwi    r0, 0x2
-	  srawi     r7, r3, 0x2
-	  addze     r7, r7
-	  bne-      .loc_0x44
-	  srawi     r5, r7, 0x1
-	  b         .loc_0x48
-
-	.loc_0x44:
-	  mr        r5, r7
-
-	.loc_0x48:
-	  addi      r3, r4, 0x2
-	  addi      r0, r5, 0x2
-	  mullw     r0, r3, r0
-	  addi      r4, r6, 0x2
-	  addi      r3, r7, 0x2
-	  mullw     r3, r4, r3
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  rlwinm    r3,r0,1,0,30
-	  addi      r3, r3, 0x6CD8
-	  blr
-	*/
+	const int y_blocks  = (h_blocks + 2) * (v_blocks + 2);
+	const int uv_blocks = (uv_h_blocks + 2) * (uv_v_blocks + 2);
+	// TODO: What is this constant '8' doing here?
+	return sizeof(VideoState) + 8 + (y_blocks + uv_blocks * 2) * sizeof(u16);
 }
 
 /*
