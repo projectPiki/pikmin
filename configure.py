@@ -338,7 +338,7 @@ config.libs = [
             Object(Matching, "jaudio/dspboot.c"),
             Object(Matching, "jaudio/dspproc.c"),
             Object(Matching, "jaudio/ipldec.c"),
-            Object(NonMatching, "jaudio/dsp_cardunlock.c"),
+            Object(Matching, "jaudio/dsp_cardunlock.c"),
             Object(NonMatching, "jaudio/driverinterface.c"),
             Object(NonMatching, "jaudio/dspdriver.c"),
             Object(NonMatching, "jaudio/dspinterface.c"),
