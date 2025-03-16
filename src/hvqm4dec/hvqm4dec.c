@@ -1466,27 +1466,22 @@ static void WeightImBlock(u8* dst, u32 stride, u8 value, u8 top, u8 bottom, u8 l
  */
 static void OrgBlock(VideoState* state, u8* dst, u32 dstStride, u32 planeIdx)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r6,r6,4,0,27
-	  addi      r6, r6, 0x61DC
-	  add       r6, r3, r6
-	  lwz       r3, 0x0(r6)
-	  add       r10, r4, r5
-	  lwz       r7, 0x4(r3)
-	  addi      r0, r3, 0x10
-	  lwz       r8, 0x8(r3)
-	  lwz       r9, 0xC(r3)
-	  lwz       r3, 0x0(r3)
-	  stw       r3, 0x0(r4)
-	  stw       r7, 0x0(r10)
-	  add       r10, r10, r5
-	  stw       r8, 0x0(r10)
-	  add       r10, r10, r5
-	  stw       r9, 0x0(r10)
-	  stw       r0, 0x0(r6)
-	  blr
-	*/
+	BitBuffer* buf;
+	u32* ptr;
+	u32 temp1;
+	u32 temp2;
+	u32 temp3;
+
+	buf                       = &state->fixvl[planeIdx];
+	ptr                       = (u32*)buf->ptr;
+	temp1                     = ptr[1];
+	temp2                     = ptr[2];
+	temp3                     = ptr[3];
+	*(u32*)(dst)              = ptr[0];
+	*(u32*)(dst += dstStride) = temp1;
+	*(u32*)(dst += dstStride) = temp2;
+	*(u32*)(dst += dstStride) = temp3;
+	buf->ptr                  = ptr + 4;
 }
 
 /*
