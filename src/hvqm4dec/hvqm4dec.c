@@ -5946,48 +5946,17 @@ void HVQM4InitSeqObj(SeqObj* seqObj, VideoInfo* videoInfo)
  * Address:	80023730
  * Size:	000074
  */
-u32 HVQM4BuffSize(SeqObj*)
+u32 HVQM4BuffSize(SeqObj* seqObj)
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x8(r3)
-	  lhz       r4, 0x4(r3)
-	  cmplwi    r0, 0x2
-	  srawi     r6, r4, 0x2
-	  addze     r6, r6
-	  bne-      .loc_0x20
-	  srawi     r4, r6, 0x1
-	  b         .loc_0x24
+	const int h_blocks    = seqObj->width / 4;
+	const int uv_h_blocks = seqObj->h_samp == 2 ? h_blocks >> 1 : h_blocks;
+	const int v_blocks    = seqObj->height / 4;
+	const int uv_v_blocks = seqObj->v_samp == 2 ? v_blocks >> 1 : v_blocks;
 
-	.loc_0x20:
-	  mr        r4, r6
-
-	.loc_0x24:
-	  lbz       r0, 0x9(r3)
-	  lhz       r3, 0x6(r3)
-	  cmplwi    r0, 0x2
-	  srawi     r7, r3, 0x2
-	  addze     r7, r7
-	  bne-      .loc_0x44
-	  srawi     r5, r7, 0x1
-	  b         .loc_0x48
-
-	.loc_0x44:
-	  mr        r5, r7
-
-	.loc_0x48:
-	  addi      r3, r4, 0x2
-	  addi      r0, r5, 0x2
-	  mullw     r0, r3, r0
-	  addi      r4, r6, 0x2
-	  addi      r3, r7, 0x2
-	  mullw     r3, r4, r3
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  rlwinm    r3,r0,1,0,30
-	  addi      r3, r3, 0x6CD8
-	  blr
-	*/
+	const int y_blocks  = (h_blocks + 2) * (v_blocks + 2);
+	const int uv_blocks = (uv_h_blocks + 2) * (uv_v_blocks + 2);
+	// TODO: What is this constant '8' doing here?
+	return sizeof(VideoState) + 8 + (y_blocks + uv_blocks * 2) * sizeof(u16);
 }
 
 /*
