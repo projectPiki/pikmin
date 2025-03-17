@@ -12,6 +12,26 @@ struct CPlate;
 /**
  * @brief TODO
  */
+enum PikiMgrRefreshFlags {
+	PMREF_FreePiki      = 0x1,
+	PMREF_FormationPiki = 0x2,
+	PMREF_WorkPiki      = 0x4,
+	PMREF_Unk4          = 0x8,
+};
+
+/**
+ * @brief TODO
+ */
+enum PikiMgrUpdatingFlags {
+	PMUPDATE_FreePiki      = 0x1,
+	PMUPDATE_FormationPiki = 0x2,
+	PMUPDATE_WorkPiki      = 0x4,
+	PMUPDATE_Unk4          = 0x8,
+};
+
+/**
+ * @brief TODO
+ */
 struct PikiProp : public CreatureProp {
 	PikiProp() { mCreatureProps.mFriction.setValue(0.1f); }
 

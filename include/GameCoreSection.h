@@ -83,10 +83,12 @@ struct GameCoreSection : public Node {
 	u8 _30;                           // _30
 	u8 _31;                           // _31
 	u32 _34;                          // _34, unknown
-	u8 _38[0x4];                      // _38, unknown
+	u8 _38;                           // _38
+	u8 _39;                           // _39
+	u8 _3A;                           // _3A
 	Menu* mAiPerfDebugMenu;           // _3C, unknown
 	u8 _40[0x50 - 0x40];              // _40, unknown
-	Shape* _50;                       // _50, unknown
+	Shape* mPikiShape;                // _50, unknown
 	SearchSystem* _54;                // _54
 	Navi* mNavi;                      // _58
 	u8 _5C[0x64 - 0x5C];              // _5C, unknown

@@ -185,14 +185,14 @@ void KingBody::killCallBackEffect(bool p1)
 {
 	int i;
 	for (i = 0; i < 3; i++) {
-		effectMgr->killGenerator(&mSalivaCallBacks[i], mSalivaParticleCallBack, p1);
+		effectMgr->kill(&mSalivaCallBacks[i], mSalivaParticleCallBack, p1);
 	}
 
-	effectMgr->killGenerator(mSpreadSalivaCallBack, mSalivaParticleCallBack, p1);
-	effectMgr->killGenerator(mDamageStarCallBack, nullptr, p1);
+	effectMgr->kill(mSpreadSalivaCallBack, mSalivaParticleCallBack, p1);
+	effectMgr->kill(mDamageStarCallBack, nullptr, p1);
 
 	for (i = 0; i < 2; i++) {
-		effectMgr->killGenerator(&mRippleCallBacks[i], nullptr, p1);
+		effectMgr->kill(&mRippleCallBacks[i], nullptr, p1);
 	}
 }
 

@@ -481,13 +481,23 @@ struct EffectMgr : public CoreNode {
 	                               zen::CallBack1<zen::particleMdl*>*);
 	void putShapeInst(EffShpInst*);
 
-	inline void killGenerator(zen::CallBack1<zen::particleGenerator*>* cb1, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2,
-	                          bool p3)
+	void kill(zen::CallBack1<zen::particleGenerator*>* cb1, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2,
+	          bool doForceFinish)
 	{
-		mPtclMgr.killGenerator(cb1, cb2, p3);
+		mPtclMgr.killGenerator(cb1, cb2, doForceFinish);
 	}
 
-	inline void kill(zen::particleGenerator* gen, bool p3) { mPtclMgr.killGenerator(gen, p3); }
+	void kill(zen::particleGenerator* gen, bool doForceFinish) { mPtclMgr.killGenerator(gen, doForceFinish); }
+
+	void killAll()
+	{
+		mPtclMgr.killAllGenarator(true);
+		killAllShapes();
+	}
+
+	// DLL inlines to do:
+	void cullingOff();
+	void cullingOn();
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

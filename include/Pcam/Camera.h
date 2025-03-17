@@ -97,7 +97,7 @@ struct PcamCamera : public NCamera {
 
 	PcamMotionInfo _54;                // _54
 	PcamMotionInfo _6C;                // _6C
-	u8 _84[0xC8 - 0x84];               // _54
+	u8 _84[0xC0 - 0x84];               // _54
 	NPolar3f _C0;                      // _C0
 	u8 _CC[0x4];                       // _CC, unknown
 	PcamCameraParameters* mParameters; // _D0

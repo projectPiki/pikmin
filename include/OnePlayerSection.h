@@ -84,7 +84,7 @@ struct StageInfo : public CoreNode {
 	char* mStageName;          // _14
 	char* mFileName;           // _18
 	BOOL mIsVisible;           // _1C
-	u32 mHasInitialised;       // _20, unknown
+	BOOL mHasInitialised;      // _20
 	u16 mStageIndex;           // _24, order stage is loaded in from file
 	u16 mStageID;              // _26, see StageID enum
 	u16 mChalStageID;          // _28, see ChalStageID enum

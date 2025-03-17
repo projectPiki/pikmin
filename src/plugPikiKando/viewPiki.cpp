@@ -418,19 +418,19 @@ void ViewPiki::setLeaves(int)
  */
 void ViewPiki::postUpdate(int _, f32 __)
 {
-	if (!mMode && !pikiMgr->isUpdating(1)) {
+	if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(PMUPDATE_FreePiki)) {
 		return;
 	}
 
-	if (mMode == 1 && !pikiMgr->isUpdating(2)) {
+	if (mMode == PikiMode::FormationMode && !pikiMgr->isUpdating(PMUPDATE_FormationPiki)) {
 		return;
 	}
 
-	if (!pikiMgr->isUpdating(4)) {
+	if (!pikiMgr->isUpdating(PMUPDATE_WorkPiki)) {
 		return;
 	}
 
-	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(8)) {
+	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(PMUPDATE_Unk4)) {
 		Vector3f toShip = mPosition - itemMgr->getUfo()->getGoalPos();
 		if (toShip.length() > 100.0f) {
 			return;
@@ -450,20 +450,20 @@ void ViewPiki::postUpdate(int _, f32 __)
  */
 void ViewPiki::update()
 {
-	if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(1)) {
+	if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(PMUPDATE_FreePiki)) {
 		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 		return;
 	}
-	if (mMode == PikiMode::FormationMode && !pikiMgr->isUpdating(2)) {
+	if (mMode == PikiMode::FormationMode && !pikiMgr->isUpdating(PMUPDATE_FormationPiki)) {
 		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 		return;
 	}
-	if (!pikiMgr->isUpdating(4)) {
+	if (!pikiMgr->isUpdating(PMUPDATE_WorkPiki)) {
 		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 		return;
 	}
 
-	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(8)) {
+	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(PMUPDATE_Unk4)) {
 		Vector3f toShip = mPosition - itemMgr->getUfo()->getGoalPos();
 		if (toShip.length() > 100.0f) {
 			mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
@@ -1019,17 +1019,17 @@ void ViewPiki::refresh(Graphics& gfx)
 	if (color == Yellow && gameflow.mDemoFlags & 32) {
 		return;
 	}
-	if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(1)) {
+	if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(PMUPDATE_FreePiki)) {
 		return;
 	}
-	if (mMode == PikiMode::FormationMode && !pikiMgr->isUpdating(2)) {
+	if (mMode == PikiMode::FormationMode && !pikiMgr->isUpdating(PMUPDATE_FormationPiki)) {
 		return;
 	}
-	if (!pikiMgr->isUpdating(4)) {
+	if (!pikiMgr->isUpdating(PMUPDATE_WorkPiki)) {
 		return;
 	}
 
-	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(8)) {
+	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(PMUPDATE_Unk4)) {
 		Vector3f diff = mPosition - itemMgr->getUfo()->getGoalPos();
 		if (diff.length() > 100.0f) {
 			return;

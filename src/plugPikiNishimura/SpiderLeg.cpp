@@ -304,13 +304,13 @@ void SpiderLeg::killCallBackEffect(bool doForceFinish)
 {
 	int i;
 	for (i = 0; i < 4; i++) {
-		effectMgr->killGenerator(&mHalfDeadCallBackJoints[i], nullptr, doForceFinish);
+		effectMgr->kill(&mHalfDeadCallBackJoints[i], nullptr, doForceFinish);
 	}
 	for (i = 0; i < 12; i++) {
-		effectMgr->killGenerator(&mPerishCallBacks[i], nullptr, doForceFinish);
+		effectMgr->kill(&mPerishCallBacks[i], nullptr, doForceFinish);
 	}
 	for (i = 0; i < 4; i++) {
-		effectMgr->killGenerator(&mRippleCallBacks[i], nullptr, doForceFinish);
+		effectMgr->kill(&mRippleCallBacks[i], nullptr, doForceFinish);
 	}
 }
 

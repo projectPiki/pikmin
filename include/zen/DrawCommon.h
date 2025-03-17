@@ -13,6 +13,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xFC.
  */
 struct DrawScreen {
 

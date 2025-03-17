@@ -609,10 +609,10 @@ static s16 getByte(BitBuffer* buf)
 		value >>= bit - 7;
 		bit -= 8;
 	} else {
-		value      = buf->value;
+		value = buf->value;
 		value <<= 7 - bit;
 		buf->value = *((u32*)buf->ptr)++;
-		value = value | (buf->value >> (bit + 25));
+		value      = value | (buf->value >> (bit + 25));
 		bit += 24;
 	}
 	buf->bit = bit;
