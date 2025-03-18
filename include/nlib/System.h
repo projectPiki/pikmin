@@ -2,6 +2,8 @@
 #define _NLIB_SYSTEM_H
 
 #include "types.h"
+#include "nlib/Array.h"
+#include <system.h>
 
 struct System;
 
@@ -11,18 +13,29 @@ struct System;
 struct NHeap {
 	NHeap(int); // unused/inlined
 
-	virtual void release();       // _08
-	virtual void addHeap(NHeap*); // _0C
+	virtual void release();           // _08
+	virtual void addHeap(NHeap* heap) // _0C
+	{
+		mHeapArray->add(heap);
+	}
 
-	// TODO: members
+	// _00 = VTBL
+	NArray<NHeap>* mHeapArray; // _04
 };
 
 namespace NSystem {
-void initSystem(System*);
-void randomInt(int);
-int getFreeHeap();
+extern ::System* system;
 
-extern System* system;
+void initSystem(::System*);
+int randomInt(int);
+u32 getFreeHeap();
+
+inline f32 getFrameTime();
+inline f32 random()
+{
+	return unitRandFloat();
+}
+
 }; // namespace NSystem
 
 #endif

@@ -45,6 +45,10 @@ struct PeveEvent : public NNode {
 		mEventOptions = opts;
 	}
 
+	// DLL inlines to do:
+	PeveEvent* getEvent(int idx) { return (PeveEvent*)getChild(idx); }
+	void makeEvent(PeveCondition*);
+
 	// _00     = VTBL
 	// _00-_08 = NNode
 	PeveCondition* mCondition; // _08

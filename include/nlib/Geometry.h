@@ -397,7 +397,11 @@ struct NPosture3D {
 		inputWatchpoint(other.getWatchpoint());
 	}
 
-	void output(NPosture3D&); // DLL, to do
+	void output(NPosture3D& output)
+	{
+		output.inputViewpoint(mViewpoint);
+		output.inputWatchpoint(mWatchpoint);
+	}
 
 	// _00 = VTBL
 	NVector3f mViewpoint;  // _04, i.e. where we *are*

@@ -153,6 +153,9 @@ struct PeveInterpolationEvent : public PeveEvent {
 	// unused/inlined:
 	void makeInterpolationEvent(PeveCondition*, NPosture3DIO*);
 
+	// DLL inlines:
+	SplineKeyFrame* getFrame(int);
+
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
 	// TODO: members

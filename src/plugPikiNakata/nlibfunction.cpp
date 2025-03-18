@@ -244,7 +244,6 @@ f32 NVibrationFunction::getValue(f32 p1)
  */
 NFunction3D::NFunction3D()
 {
-	// UNUSED FUNCTION
 }
 
 /*
@@ -252,9 +251,11 @@ NFunction3D::NFunction3D()
  * Address:	........
  * Size:	000010
  */
-void NFunction3D::construct(NFunction*, NFunction*, NFunction*)
+void NFunction3D::construct(NFunction* funX, NFunction* funY, NFunction* funZ)
 {
-	// UNUSED FUNCTION
+	mFunctionX = funX;
+	mFunctionY = funY;
+	mFunctionZ = funZ;
 }
 
 /*

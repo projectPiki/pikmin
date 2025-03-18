@@ -1563,7 +1563,7 @@ void PcamCamera::makeWatchObjectViewpoint(NVector3f&, NVector3f&)
  * Address:	80122F00
  * Size:	000030
  */
-void NArray<Creature>::get(int)
+Creature* NArray<Creature>::get(int)
 {
 	/*
 	.loc_0x0:
@@ -2412,7 +2412,7 @@ void PcamCamera::printInfo(Graphics&, Font*)
  * Address:	80123778
  * Size:	000054
  */
-void NArray<Creature>::indexOf(Creature*, int)
+int NArray<Creature>::indexOf(Creature*, int)
 {
 	/*
 	.loc_0x0:
@@ -2708,7 +2708,7 @@ void NArray<Creature>::insert(int, Creature*)
  * Address:	80123AA8
  * Size:	000030
  */
-void NArray<Creature>::firstElement()
+Creature* NArray<Creature>::firstElement()
 {
 	/*
 	.loc_0x0:
@@ -2732,7 +2732,7 @@ void NArray<Creature>::firstElement()
  * Address:	80123AD8
  * Size:	000034
  */
-void NArray<Creature>::lastElement()
+Creature* NArray<Creature>::lastElement()
 {
 	/*
 	.loc_0x0:
@@ -2850,7 +2850,7 @@ void NArray<Creature>::add(int, Creature*)
  * Address:	80123BE0
  * Size:	000030
  */
-void NArray<Creature>::indexOf(Creature*)
+int NArray<Creature>::indexOf(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -2874,7 +2874,7 @@ void NArray<Creature>::indexOf(Creature*)
  * Address:	80123C10
  * Size:	000044
  */
-void NArray<Creature>::contains(Creature*)
+bool NArray<Creature>::contains(Creature*)
 {
 	/*
 	.loc_0x0:

@@ -19,6 +19,9 @@ struct NNode {
 
 	NNode* getChild(int);
 
+	// DLL inline:
+	int getChildCount();
+
 	// _00 = VTBL
 	NArray<NNode>* mNodeArray; // _04
 };

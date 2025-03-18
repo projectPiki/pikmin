@@ -149,8 +149,8 @@ void DSP_SetMixerInitVolume(volatile u8 idx, volatile u8 mixer, s16 volume, u8 p
 	idxNonvolatile   = idx;
 	mixerNonvolatile = mixer;
 
-	buf      = &CH_BUF[idxNonvolatile];
-	mixChan  = &buf->mixChannels[mixerNonvolatile];
+	buf     = &CH_BUF[idxNonvolatile];
+	mixChan = &buf->mixChannels[mixerNonvolatile];
 
 	mixChan->currentVolume = volume;
 	mixChan->targetVolume  = volume;
@@ -164,8 +164,8 @@ void DSP_SetMixerInitVolume(volatile u8 idx, volatile u8 mixer, s16 volume, u8 p
  */
 void DSP_SetMixerVolume(u8 idx, u8 mixer, s16 volume, u8 param_4)
 {
-	DSPBuffer* buf            = &CH_BUF[idx];
-	DSPMixerChannel* mixChan  = &buf->mixChannels[mixer];
+	DSPBuffer* buf           = &CH_BUF[idx];
+	DSPMixerChannel* mixChan = &buf->mixChannels[mixer];
 	if (buf->endRequested)
 		return;
 	mixChan->targetVolume = volume;
@@ -232,9 +232,9 @@ void DSP_SetWaveInfo(u8 idx, Wave* wave, u32 baseAddress)
  */
 void DSP_SetBusConnect(u8 idx, u8 mixer, u8 busConnect)
 {
-	DSPBuffer* buf            = &CH_BUF[idx];
-	DSPMixerChannel* mixChan  = &buf->mixChannels[mixer];
-	mixChan->id               = connect_table[busConnect];
+	DSPBuffer* buf           = &CH_BUF[idx];
+	DSPMixerChannel* mixChan = &buf->mixChannels[mixer];
+	mixChan->id              = connect_table[busConnect];
 }
 
 /*

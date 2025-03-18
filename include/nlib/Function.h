@@ -16,6 +16,7 @@ struct NFunction {
  * @brief TODO
  */
 struct NPolynomialFunction : public NFunction {
+	NPolynomialFunction() { }
 	NPolynomialFunction(f32*, int);                  // unused/inlined
 	NPolynomialFunction(f32*, NPolynomialFunction&); // unused/inlined
 
