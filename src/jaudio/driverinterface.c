@@ -856,7 +856,7 @@ static void __UpdateJcToDSP(jc_* jc)
 {
 	u8 uVar1;
 
-	uVar1 = jc->_20->_00;
+	uVar1 = jc->_20->buffer_idx;
 	for (u32 i = 0; i < 6; ++i) {
 		DSP_SetMixerVolume(uVar1, i, jc->_114[i], jc->mMgr->_5A[i]);
 	}
@@ -878,7 +878,7 @@ static void __UpdateJcToDSP(jc_* jc)
 void UpdateJcToDSP(jc_* jc)
 {
 	__UpdateJcToDSP(jc);
-	DSP_FlushChannel(jc->_20->_00);
+	DSP_FlushChannel(jc->_20->buffer_idx);
 }
 
 /*

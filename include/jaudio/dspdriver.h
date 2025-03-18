@@ -6,13 +6,15 @@
 
 /////////// JAUDIO DSP DRIVER DEFINITIONS ///////////
 // Global functions (all C++, so no extern C wrap).
+
+dspch_* GetDSPchannelHandle(u32 idx);
 void InitDSPchannel();
-void AllocDSPchannel(u32, u32);
+dspch_* AllocDSPchannel(u32, u32);
 void DeAlloDSPchannel(dspch_*, u32);
-void GetLowerDSPchannel();
-void GetLowerActiveDSPchannel();
-void ForceStopDSPchannel(dspch_*);
-void BreakLowerDSPchannel(u8);
+dspch_* GetLowerDSPchannel();
+dspch_* GetLowerActiveDSPchannel();
+BOOL ForceStopDSPchannel(dspch_* volatile);
+BOOL BreakLowerDSPchannel(volatile u8);
 void BreakLowerActiveDSPchannel(u8);
 void UpdateDSPchannelAll();
 
