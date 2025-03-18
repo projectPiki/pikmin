@@ -4,7 +4,7 @@
 #include "types.h"
 
 typedef struct dspch_ dspch_;
-typedef struct DSPchannel_ DSPchannel_;
+typedef struct DSPchannel_ DSPchannel_; // TODO: WHAT ARE YOU?
 typedef struct StreamCtrl_ StreamCtrl_;
 typedef struct BufControl_ BufControl_;
 
@@ -12,11 +12,6 @@ typedef struct BufControl_ BufControl_;
 extern "C" {
 #endif // ifdef __cplusplus
 
-void Stop_DirectPCM(dspch_*);
-void Play_DirectPCM(dspch_*, s16*, u16, u32);
-void Get_DirectPCM_LoopRemain(DSPchannel_*);
-void Get_DirectPCM_Counter(DSPchannel_*);
-void Get_DirectPCM_Remain(DSPchannel_*);
 void Init_StreamAudio(void);
 void Get_StreamAudio_Handle(void);
 void StreamAudio_Start(void);

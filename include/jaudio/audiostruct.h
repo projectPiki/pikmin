@@ -12,7 +12,7 @@ extern "C" {
 // Members and names from AC and SMS Decomp with gratitude.
 
 typedef struct ALHeap ALHeap;
-typedef struct dspch_ dspch_;
+typedef struct dspch_ dspch_; // TODO: Figure out why there is another struct named `DSPChannel_` in syncstream.c.
 typedef struct Jac_MessageQueue Jac_MessageQueue;
 typedef struct JCMgr JCMgr;
 typedef struct jc_ jc_;
@@ -32,19 +32,22 @@ struct ALHeap {
 	u8* last;    // _10
 };
 
+typedef BOOL (*DSPChannelCallback)(dspch_*, u32);
+
 /**
  * @brief TODO.
  */
 struct dspch_ {
-	u8 _00;                   // 00
-	u8 _01;                   // 01
-	u8 _02;                   // 02
-	u8 _03;                   // 03
-	u16 _04;                  // 04
-	u16 _06;                  // 06
-	u32 _08;                  // 08
-	void* _0C;                // 0C
-	int (*_10)(dspch_*, u32); // 10
+	u8 buffer_idx;          // _00
+	u8 _01;                 // _00
+	u8 _02;                 // _00
+	u8 _03;                 // _00
+	u16 _04;                // _04
+	u16 _06;                // _06
+	u32 _08;                // _08
+	DSPChannelCallback _0C; // _0C
+
+	// DSPBuffer* _0C; // TODO: SMS says this exists, Pikmin 1 disagrees.
 };
 
 struct JCMgr {
