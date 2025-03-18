@@ -1,4 +1,8 @@
 #include "zen/ogPause.h"
+#include "zen/DrawMenu.h"
+#include "P2D/Screen.h"
+#include "P2D/TextBox.h"
+#include "P2D/Picture.h"
 #include "P2D/Graph.h"
 #include "DebugLog.h"
 
@@ -14,7 +18,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("OgPauseSection")
 
 /*
  * --INFO--
@@ -23,6 +27,40 @@ DEFINE_PRINT("TODO: Replace")
  */
 zen::ogScrPauseMgr::ogScrPauseMgr()
 {
+	
+	mMode = 0;
+	mBlackScreen = new P2DScreen();
+	mBlackScreen->set("screen/blo/black.blo", false, false, true);
+	mBlackPane = mBlackScreen->search('blck', true);
+	mDrawMenu1      = new DrawMenu("screen/blo/pause.blo", false, false);
+	//_14 = mDrawMenu1->_04;
+
+	P2DTextBox* textBox4 = static_cast<P2DTextBox*>(_14->search('yame', true));
+	mTextBox4 = textBox4;
+	P2DTextBox* textBox5 = static_cast<P2DTextBox*>(_14->search('he02', true));
+	mTextBox5 = textBox5;
+	P2DTextBox* textBox6 = static_cast<P2DTextBox*>(_14->search('hm02', true));
+	mTextBox6 = textBox6;
+
+	mDrawMenu2      = new DrawMenu("screen/blo/pause_ok.blo", false, false);
+
+	P2DTextBox* textBox1 = static_cast<P2DTextBox*>(_18->search('yame', true));
+	mTextBox1 = textBox1;
+	P2DTextBox* textBox2 = static_cast<P2DTextBox*>(_18->search('titl', true));
+	mTextBox2 = textBox2;
+	P2DTextBox* textBox3 = static_cast<P2DTextBox*>(_18->search('even', true));
+	mTextBox3 = textBox3;
+
+	mState = PAUSE_NULL;
+	_00 = 0;
+
+	mBackPane1 = _14->search('back', true);
+
+	mBackPane2 = _18->search('back', true);
+
+	
+	
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -240,50 +278,24 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
  * Address:	8018263C
  * Size:	00008C
  */
-void zen::ogScrPauseMgr::start(bool)
+void zen::ogScrPauseMgr::start(bool p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  stb       r4, 0x44(r3)
-	  lbz       r0, 0x44(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x40
-	  lwz       r0, 0x3C(r31)
-	  lwz       r3, 0x34(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0x3C(r31)
-	  lwz       r3, 0x38(r31)
-	  stw       r0, 0x10C(r3)
-	  b         .loc_0x58
+	u32 badCompiler[8];
 
-	.loc_0x40:
-	  lwz       r0, 0x40(r31)
-	  lwz       r3, 0x34(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0x40(r31)
-	  lwz       r3, 0x38(r31)
-	  stw       r0, 0x10C(r3)
+	mMode = p1;
 
-	.loc_0x58:
-	  lwz       r3, 0xC(r31)
-	  li        r4, -0x1
-	  bl        0x4161C
-	  li        r0, 0x1
-	  stw       r0, 0x4(r31)
-	  lfs       f0, -0x5098(r2)
-	  stfs      f0, 0x50(r31)
-	  stb       r0, 0x0(r31)
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	if (mMode != 0){
+		mTextBox5->mText = _3c;
+		mTextBox6->mText = _3c;
+	} else {
+		mTextBox5->mText = _40;
+		mTextBox6->mText = _40;
+	}
+
+	mDrawMenu1->start(-1);
+	mState = PAUSE_Unk1;
+	mFrameTimer = 0.0f;
+	_00 = 1;
 }
 
 /*
@@ -291,8 +303,34 @@ void zen::ogScrPauseMgr::start(bool)
  * Address:	801826C8
  * Size:	0003C0
  */
-zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller*)
+zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controller)
 {
+	if (mState == PAUSE_NULL) {
+		return mState;
+	}
+
+	
+
+	
+
+	mBlackScreen->update();
+	mDrawMenu1->update(controller);
+	mDrawMenu2->update(controller);
+	mFrameTimer += gsys->getFrameTime();
+
+	switch (mState) {
+	case PAUSE_Unk2:
+		if (0.5 < mFrameTimer) {
+			_00 = 0;
+		} else {
+			mMode = 1;
+		}
+
+			
+		break;
+
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -599,8 +637,17 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller*)
  * Address:	80182A88
  * Size:	0000B0
  */
-void zen::ogScrPauseMgr::draw(Graphics&)
+void zen::ogScrPauseMgr::draw(Graphics& gfx)
 {
+	if (mState == PAUSE_NULL) {
+		return;
+	}
+
+	P2DPerspGraph perspGraph(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
+	perspGraph.setPort();
+	mBlackScreen->draw(0, 0, &perspGraph);
+	mDrawMenu1->draw(gfx);
+	mDrawMenu2->draw(gfx);
 	/*
 	.loc_0x0:
 	  mflr      r0
