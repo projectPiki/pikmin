@@ -362,7 +362,7 @@ config.libs = [
             Object(NonMatching, "jaudio/centcalc.c"),
             Object(NonMatching, "jaudio/jamosc.c"),
             Object(NonMatching, "jaudio/oneshot.c"),
-            Object(NonMatching, "jaudio/interface.c"),
+            Object(Matching, "jaudio/interface.c"),
             Object(NonMatching, "jaudio/verysimple.c"),
             Object(NonMatching, "jaudio/app_inter.c"),
             Object(NonMatching, "jaudio/pikiinter.c"),
