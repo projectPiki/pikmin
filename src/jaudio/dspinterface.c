@@ -1,22 +1,71 @@
-#include "types.h"
 #include "jaudio/dspinterface.h"
+
+#include "Dolphin/os.h"
+#include "jaudio/sample.h"
+#include "jaudio/dspproc.h"
+#include "jaudio/dspdriver.h"
+#include "jaudio/driverinterface.h"
+#include "jaudio/fxinterface.h"
+
+#include "limits.h"
+
+static u8 COMP_BLOCKSAMPLES[] = {
+	0x10, 0x10, 0x01, 0x01, 0x01, 0x10, 0x10, 0x01,
+};
+static u8 COMP_BLOCKBYTES[] = {
+	0x09, 0x05, 0x08, 0x10, 0x01, 0x01, 0x01, 0x01,
+};
+
+static u16 connect_table[] = {
+	0x0000, 0x0D00, 0x0D60, 0x0DC0, 0x0E20, 0x0E80, 0x0EE0, 0x0CA0, 0x0F40, 0x0FA0, 0x0B00, 0x09A0,
+};
+
+static u32 DSPADPCM_FILTER[] ATTRIBUTE_ALIGN(32) = {
+	0x00000000, 0x08000000, 0x00000800, 0x04000400, 0x1000f800, 0x0e00fa00, 0x0c00fc00, 0x1200f600,
+	0x1068f738, 0x12c0f704, 0x1400f400, 0x0800f800, 0x0400fc00, 0xfc000400, 0xfc000000, 0xf8000000,
+};
+
+static u32 DSPRES_FILTER[] ATTRIBUTE_ALIGN(32) = {
+	0x0c3966ad, 0x0d46ffdf, 0x0b396696, 0x0e5fffd8, 0x0a446669, 0x0f83ffd0, 0x095a6626, 0x10b4ffc8, 0x087d65cd, 0x11f0ffbf, 0x07ab655e,
+	0x1338ffb6, 0x06e464d9, 0x148cffac, 0x0628643f, 0x15ebffa1, 0x0577638f, 0x1756ff96, 0x04d162cb, 0x18cbff8a, 0x043561f3, 0x1a4cff7e,
+	0x03a46106, 0x1bd7ff71, 0x031c6007, 0x1d6cff64, 0x029f5ef5, 0x1f0bff56, 0x022a5dd0, 0x20b3ff48, 0x01be5c9a, 0x2264ff3a, 0x015b5b53,
+	0x241eff2c, 0x010159fc, 0x25e0ff1e, 0x00ae5896, 0x27a9ff10, 0x00635720, 0x297aff02, 0x001f559d, 0x2b50fef4, 0xffe2540d, 0x2d2cfee8,
+	0xffac5270, 0x2f0dfedb, 0xff7c50c7, 0x30f3fed0, 0xff534f14, 0x32dcfec6, 0xff2e4d57, 0x34c8febd, 0xff0f4b91, 0x36b6feb6, 0xfef549c2,
+	0x38a5feb0, 0xfedf47ed, 0x3a95feac, 0xfece4611, 0x3c85feab, 0xfec04430, 0x3e74feac, 0xfeb6424a, 0x4060feaf, 0xfeaf4060, 0x424afeb6,
+	0xfeac3e74, 0x4430fec0, 0xfeab3c85, 0x4611fece, 0xfeac3a95, 0x47edfedf, 0xfeb038a5, 0x49c2fef5, 0xfeb636b6, 0x4b91ff0f, 0xfebd34c8,
+	0x4d57ff2e, 0xfec632dc, 0x4f14ff53, 0xfed030f3, 0x50c7ff7c, 0xfedb2f0d, 0x5270ffac, 0xfee82d2c, 0x540dffe2, 0xfef42b50, 0x559d001f,
+	0xff02297a, 0x57200063, 0xff1027a9, 0x589600ae, 0xff1e25e0, 0x59fc0101, 0xff2c241e, 0x5b53015b, 0xff3a2264, 0x5c9a01be, 0xff4820b3,
+	0x5dd0022a, 0xff561f0b, 0x5ef5029f, 0xff641d6c, 0x6007031c, 0xff711bd7, 0x610603a4, 0xff7e1a4c, 0x61f30435, 0xff8a18cb, 0x62cb04d1,
+	0xff961756, 0x638f0577, 0xffa115eb, 0x643f0628, 0xffac148c, 0x64d906e4, 0xffb61338, 0x655e07ab, 0xffbf11f0, 0x65cd087d, 0xffc810b4,
+	0x6626095a, 0xffd00f83, 0x66690a44, 0xffd80e5f, 0x66960b39, 0xffdf0d46, 0x66ad0c39, 0x00000c8b, 0x18f82527, 0x30fb3c56, 0x471c5133,
+	0x5a8262f1, 0x6a6d70e2, 0x76417a7c, 0x7d897f61, 0x7fff7f61, 0x7d897a7c, 0x764170e2, 0x6a6d62f1, 0x5a825133, 0x471c3c56, 0x30fb2527,
+	0x18f80c8b, 0x0000f375, 0xe708dad9, 0xcf05c3aa, 0xb8e4aecd, 0xa57e9d0f, 0x95938f1e, 0x89bf8584, 0x8277809f, 0x8001809f, 0x82778584,
+	0x89bf8f1e, 0x95939d0f, 0xa57eaecd, 0xb8e4c3aa, 0xcf05dad9, 0xe708f375, 0x000007ff, 0x0fff17ff, 0x1fff27ff, 0x2fff37ff, 0x3fff47ff,
+	0x4fff57ff, 0x5fff67ff, 0x6fff77ff, 0x7fff7800, 0x70006800, 0x60005800, 0x50004800, 0x40003800, 0x30002800, 0x20001800, 0x10000800,
+	0x0000f801, 0xf001e801, 0xe001d801, 0xd001c801, 0xc001b801, 0xb001a801, 0xa0019801, 0x90018801, 0x00000000, 0x90009800, 0xa000a800,
+	0xb000b800, 0xc000c800, 0xd000d800, 0xe000e800, 0xf000f800, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x1fff3fff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x1fffc001,
+};
+
+#define CH_BUF_LENGTH (64)
+#define FX_BUF_LENGTH (4)
+
+static DSPBuffer CH_BUF[CH_BUF_LENGTH];
+static FXBuffer FX_BUF[FX_BUF_LENGTH];
 
 /*
  * --INFO--
  * Address:	8000B560
  * Size:	000018
  */
-void GetDspHandle(u8)
+DSPBuffer* GetDspHandle(u8 idx)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r4, r0, 0x180
-	  addi      r0, r3, 0x6A60
-	  add       r3, r0, r4
-	  blr
-	*/
+	return &CH_BUF[idx];
 }
 
 /*
@@ -24,7 +73,7 @@ void GetDspHandle(u8)
  * Address:	........
  * Size:	000034
  */
-void GetDspHandleNc(u8)
+DSPBuffer* GetDspHandleNc(u8)
 {
 	// UNUSED FUNCTION
 }
@@ -34,16 +83,9 @@ void GetDspHandleNc(u8)
  * Address:	8000B580
  * Size:	000014
  */
-void GetFxHandle(u8)
+FXBuffer* GetFxHandle(u8 idx)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8031
-	  rlwinm    r3,r3,5,19,26
-	  subi      r0, r4, 0x35A0
-	  add       r3, r0, r3
-	  blr
-	*/
+	return &FX_BUF[idx];
 }
 
 /*
@@ -51,7 +93,7 @@ void GetFxHandle(u8)
  * Address:	........
  * Size:	000030
  */
-void GetFxHandleNc(u8)
+FXBuffer* GetFxHandleNc(u8 idx)
 {
 	// UNUSED FUNCTION
 }
@@ -61,24 +103,12 @@ void GetFxHandleNc(u8)
  * Address:	8000B5A0
  * Size:	00002C
  */
-void DSP_SetPitch(u8, u16)
+void DSP_SetPitch(u8 idx, u16 pitch)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r5,r3,0,24,31
-	  rlwinm    r0,r4,0,16,31
-	  mulli     r5, r5, 0x180
-	  lis       r3, 0x8030
-	  cmplwi    r0, 0x7FFF
-	  addi      r0, r3, 0x6A60
-	  add       r3, r0, r5
-	  blt-      .loc_0x24
-	  li        r4, 0x7FFF
-
-	.loc_0x24:
-	  sth       r4, 0x4(r3)
-	  blr
-	*/
+	DSPBuffer* buf = &CH_BUF[idx];
+	if (pitch >= SHRT_MAX)
+		pitch = SHRT_MAX;
+	buf->resamplingRatio = pitch;
 }
 
 /*
@@ -86,7 +116,7 @@ void DSP_SetPitch(u8, u16)
  * Address:	........
  * Size:	000050
  */
-void DSP_SetPitch_Indirect(u8, f32, f32)
+void DSP_SetPitch_Indirect(u8 idx, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -96,19 +126,10 @@ void DSP_SetPitch_Indirect(u8, f32, f32)
  * Address:	8000B5E0
  * Size:	000020
  */
-void DSP_SetMixerInitDelayMax(u8, u8)
+void DSP_SetMixerInitDelayMax(u8 idx, u8 initDelayMax)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r5, r0, 0x180
-	  addi      r0, r3, 0x6A60
-	  rlwinm    r4,r4,0,24,31
-	  add       r3, r0, r5
-	  sth       r4, 0xE(r3)
-	  blr
-	*/
+	DSPBuffer* buf          = &CH_BUF[idx];
+	buf->samplesToKeepCount = initDelayMax;
 }
 
 /*
@@ -116,30 +137,24 @@ void DSP_SetMixerInitDelayMax(u8, u8)
  * Address:	8000B600
  * Size:	00004C
  */
-void DSP_SetMixerInitVolume(u8, u8, s16, u8)
+void DSP_SetMixerInitVolume(volatile u8 idx, volatile u8 mixer, s16 volume, u8 param_4) // volatile memes... grah!
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  rlwinm    r0,r6,8,16,23
-	  rlwimi    r0,r6,0,24,31
-	  stb       r3, 0x8(r1)
-	  lis       r3, 0x8030
-	  addi      r7, r3, 0x6A60
-	  lbz       r3, 0x8(r1)
-	  stb       r4, 0x9(r1)
-	  mulli     r4, r3, 0x180
-	  lbz       r3, 0x9(r1)
-	  add       r4, r7, r4
-	  rlwinm    r3,r3,3,0,28
-	  add       r3, r4, r3
-	  addi      r3, r3, 0x10
-	  sth       r5, 0x4(r3)
-	  sth       r5, 0x2(r3)
-	  sth       r0, 0x6(r3)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	u32 badCompiler[2];
+
+	DSPBuffer* buf;
+	DSPMixerChannel* mixChan;
+
+	u8 idxNonvolatile;
+	u8 mixerNonvolatile;
+	idxNonvolatile   = idx;
+	mixerNonvolatile = mixer;
+
+	buf      = &CH_BUF[idxNonvolatile];
+	mixChan  = &buf->mixChannels[mixerNonvolatile];
+
+	mixChan->currentVolume = volume;
+	mixChan->targetVolume  = volume;
+	mixChan->_06           = (param_4 << 8) | (param_4);
 }
 
 /*
@@ -147,28 +162,14 @@ void DSP_SetMixerInitVolume(u8, u8, s16, u8)
  * Address:	8000B660
  * Size:	000044
  */
-void DSP_SetMixerVolume(u8, u8, s16, u8)
+void DSP_SetMixerVolume(u8 idx, u8 mixer, s16 volume, u8 param_4)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r7, r0, 0x180
-	  addi      r0, r3, 0x6A60
-	  rlwinm    r3,r4,3,21,28
-	  addi      r3, r3, 0x10
-	  add       r4, r0, r7
-	  lhz       r0, 0x10A(r4)
-	  add       r3, r4, r3
-	  cmplwi    r0, 0
-	  bnelr-
-	  sth       r5, 0x2(r3)
-	  lhz       r0, 0x6(r3)
-	  rlwinm    r0,r0,0,24,31
-	  rlwimi    r0,r6,8,16,23
-	  sth       r0, 0x6(r3)
-	  blr
-	*/
+	DSPBuffer* buf            = &CH_BUF[idx];
+	DSPMixerChannel* mixChan  = &buf->mixChannels[mixer];
+	if (buf->endRequested)
+		return;
+	mixChan->targetVolume = volume;
+	mixChan->_06          = (param_4 << 8) | (mixChan->_06 & 0xff);
 }
 
 /*
@@ -176,22 +177,12 @@ void DSP_SetMixerVolume(u8, u8, s16, u8)
  * Address:	8000B6C0
  * Size:	00002C
  */
-void DSP_SetOscInfo(u8, u32)
+void DSP_SetOscInfo(u8 idx, u32 samplesSourceType)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r6, r0, 0x180
-	  addi      r5, r3, 0x6A60
-	  li        r3, 0
-	  li        r0, 0x10
-	  add       r5, r5, r6
-	  stw       r3, 0x118(r5)
-	  sth       r0, 0x64(r5)
-	  sth       r4, 0x100(r5)
-	  blr
-	*/
+	DSPBuffer* buf                  = &CH_BUF[idx];
+	buf->baseAddress                = 0;
+	buf->afcRemainingDecodedSamples = 16;
+	buf->samplesSourceType          = samplesSourceType;
 }
 
 /*
@@ -199,19 +190,10 @@ void DSP_SetOscInfo(u8, u32)
  * Address:	8000B700
  * Size:	000020
  */
-void DSP_SetPauseFlag(u8, u8)
+void DSP_SetPauseFlag(u8 idx, u8 pauseFlag)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r5, r0, 0x180
-	  addi      r0, r3, 0x6A60
-	  rlwinm    r4,r4,0,24,31
-	  add       r3, r0, r5
-	  sth       r4, 0xC(r3)
-	  blr
-	*/
+	DSPBuffer* buf         = &CH_BUF[idx];
+	buf->useConstantSample = pauseFlag;
 }
 
 /*
@@ -219,61 +201,28 @@ void DSP_SetPauseFlag(u8, u8)
  * Address:	8000B720
  * Size:	0000B0
  */
-void DSP_SetWaveInfo(u8, Wave_*, u32)
+void DSP_SetWaveInfo(u8 idx, Wave* wave, u32 baseAddress)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r7, r0, 0x180
-	  addi      r0, r3, 0x6A60
-	  subi      r6, r13, 0x7FE0
-	  subi      r3, r13, 0x7FD8
-	  add       r7, r0, r7
-	  stw       r5, 0x118(r7)
-	  lbz       r0, 0x1(r4)
-	  lbzx      r0, r6, r0
-	  sth       r0, 0x64(r7)
-	  lbz       r0, 0x1(r4)
-	  lbzx      r0, r3, r0
-	  sth       r0, 0x100(r7)
-	  lhz       r0, 0x100(r7)
-	  cmplwi    r0, 0x4
-	  bltlr-
-	  lwz       r0, 0x1C(r4)
-	  stw       r0, 0x11C(r7)
-	  lwz       r0, 0x10(r4)
-	  sth       r0, 0x102(r7)
-	  lhz       r0, 0x102(r7)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  lwz       r0, 0x14(r4)
-	  stw       r0, 0x110(r7)
-	  lwz       r0, 0x18(r4)
-	  stw       r0, 0x114(r7)
-	  lha       r0, 0x20(r4)
-	  sth       r0, 0x104(r7)
-	  lha       r0, 0x22(r4)
-	  sth       r0, 0x106(r7)
-	  b         .loc_0x8C
+	DSPBuffer* buf = &CH_BUF[idx];
 
-	.loc_0x84:
-	  lwz       r0, 0x11C(r7)
-	  stw       r0, 0x114(r7)
-
-	.loc_0x8C:
-	  li        r3, 0
-	  li        r0, 0x10
-	  addi      r4, r3, 0
-	  mtctr     r0
-
-	.loc_0x9C:
-	  addi      r0, r3, 0xB0
-	  addi      r3, r3, 0x2
-	  sthx      r4, r7, r0
-	  bdnz+     .loc_0x9C
-	  blr
-	*/
+	buf->baseAddress                = baseAddress;
+	buf->afcRemainingDecodedSamples = COMP_BLOCKSAMPLES[wave->compBlockIdx];
+	buf->samplesSourceType          = COMP_BLOCKBYTES[wave->compBlockIdx];
+	if (buf->samplesSourceType < 4)
+		return;
+	buf->_11C      = wave->_1C;
+	buf->isLooping = wave->isLooping;
+	if (buf->isLooping) {
+		buf->loopAddress       = wave->loopAddress;
+		buf->loopStartPosition = wave->loopStartPosition;
+		buf->loopYN1           = wave->loopYN1;
+		buf->loopYN2           = wave->loopYN2;
+	} else {
+		buf->loopStartPosition = buf->_11C;
+	}
+	for (int i = 0; i < 16; ++i) {
+		buf->afcRemainingSamples[i] = 0;
+	}
 }
 
 /*
@@ -281,25 +230,11 @@ void DSP_SetWaveInfo(u8, Wave_*, u32)
  * Address:	8000B7E0
  * Size:	000038
  */
-void DSP_SetBusConnect(u8, u8, u8)
+void DSP_SetBusConnect(u8 idx, u8 mixer, u8 busConnect)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r7, 0x8022
-	  mulli     r6, r0, 0x180
-	  lis       r3, 0x8030
-	  rlwinm    r5,r5,1,23,30
-	  addi      r0, r7, 0x49A0
-	  add       r5, r0, r5
-	  addi      r0, r3, 0x6A60
-	  add       r3, r0, r6
-	  rlwinm    r0,r4,3,21,28
-	  lhz       r4, 0x0(r5)
-	  add       r3, r3, r0
-	  sth       r4, 0x10(r3)
-	  blr
-	*/
+	DSPBuffer* buf            = &CH_BUF[idx];
+	DSPMixerChannel* mixChan  = &buf->mixChannels[mixer];
+	mixChan->id               = connect_table[busConnect];
 }
 
 /*
@@ -307,19 +242,10 @@ void DSP_SetBusConnect(u8, u8, u8)
  * Address:	8000B820
  * Size:	000020
  */
-void DSP_PlayStop(u8)
+void DSP_PlayStop(u8 idx)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r4, r0, 0x180
-	  addi      r0, r3, 0x6A60
-	  li        r5, 0
-	  add       r3, r0, r4
-	  sth       r5, 0x0(r3)
-	  blr
-	*/
+	DSPBuffer* buf = &CH_BUF[idx];
+	buf->enabled   = DSP_FALSE;
 }
 
 /*
@@ -327,35 +253,15 @@ void DSP_PlayStop(u8)
  * Address:	8000B840
  * Size:	000060
  */
-void DSP_AllocInit(u8)
+void DSP_AllocInit(u8 idx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  rlwinm    r0,r31,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r5, r0, 0x180
-	  addi      r4, r3, 0x6A60
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  add       r4, r4, r5
-	  sth       r0, 0xC(r4)
-	  sth       r0, 0x2(r4)
-	  sth       r0, 0x10A(r4)
-	  sth       r0, 0x0(r4)
-	  bl        0x1E0
-	  mr        r3, r31
-	  bl        0x298
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	DSPBuffer* buf         = &CH_BUF[idx];
+	buf->useConstantSample = DSP_FALSE;
+	buf->done              = DSP_FALSE;
+	buf->endRequested      = DSP_FALSE;
+	buf->enabled           = DSP_FALSE;
+	DSP_InitFilter(idx);
+	DSP_FlushChannel(idx);
 }
 
 /*
@@ -363,46 +269,24 @@ void DSP_AllocInit(u8)
  * Address:	8000B8A0
  * Size:	00007C
  */
-void DSP_PlayStart(u8)
+void DSP_PlayStart(u8 idx)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r6, r0, 0x180
-	  addi      r0, r3, 0x6A60
-	  li        r5, 0
-	  li        r4, 0x1
-	  add       r6, r0, r6
-	  li        r0, 0x4
-	  stw       r5, 0x10C(r6)
-	  mr        r3, r5
-	  stw       r5, 0x68(r6)
-	  sth       r5, 0x60(r6)
-	  sth       r4, 0x8(r6)
-	  sth       r5, 0x66(r6)
-	  mtctr     r0
+	u32 i;
 
-	.loc_0x3C:
-	  add       r4, r6, r3
-	  addi      r3, r3, 0x2
-	  sth       r5, 0x78(r4)
-	  sth       r5, 0xA8(r4)
-	  bdnz+     .loc_0x3C
-	  li        r0, 0x14
-	  li        r4, 0
-	  li        r3, 0
-	  mtctr     r0
-
-	.loc_0x60:
-	  addi      r0, r3, 0x80
-	  addi      r3, r3, 0x2
-	  sthx      r4, r6, r0
-	  bdnz+     .loc_0x60
-	  li        r0, 0x1
-	  sth       r0, 0x0(r6)
-	  blr
-	*/
+	DSPBuffer* buf       = &CH_BUF[idx];
+	buf->_10C            = 0;
+	buf->currentPosition = 0;
+	buf->currentPosFrac  = 0;
+	buf->resetVpb        = DSP_TRUE;
+	buf->constantSample  = 0;
+	for (i = 0; i < 4; ++i) {
+		buf->resampleBuffer[i] = 0;
+		buf->biquadHistory[i]  = 0;
+	}
+	for (i = 0; i < 20; ++i) {
+		buf->variableFirHistory[i] = 0;
+	}
+	buf->enabled = DSP_TRUE;
 }
 
 /*
@@ -410,18 +294,10 @@ void DSP_PlayStart(u8)
  * Address:	8000B920
  * Size:	00001C
  */
-void DSP_SetDistFilter(u8, s16)
+void DSP_SetDistFilter(u8 idx, s16 distFilter)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r5, r0, 0x180
-	  addi      r0, r3, 0x6A60
-	  add       r3, r0, r5
-	  sth       r4, 0x150(r3)
-	  blr
-	*/
+	DSPBuffer* buf    = &CH_BUF[idx];
+	buf->lowPassCoeff = distFilter;
 }
 
 /*
@@ -429,22 +305,11 @@ void DSP_SetDistFilter(u8, s16)
  * Address:	8000B940
  * Size:	000024
  */
-void DSP_SetFilterTable(s16*, s16*, u32)
+void DSP_SetFilterTable(s16* dst, s16* src, u32 len)
 {
-	/*
-	.loc_0x0:
-	  mtctr     r5
-	  cmplwi    r5, 0
-	  blelr-
-
-	.loc_0xC:
-	  lha       r0, 0x0(r4)
-	  addi      r4, r4, 0x2
-	  sth       r0, 0x0(r3)
-	  addi      r3, r3, 0x2
-	  bdnz+     .loc_0xC
-	  blr
-	*/
+	for (int i = 0; i < len; ++i) {
+		*dst++ = *src++;
+	}
 }
 
 /*
@@ -452,26 +317,10 @@ void DSP_SetFilterTable(s16*, s16*, u32)
  * Address:	8000B980
  * Size:	00003C
  */
-void DSP_SetIIRFilterParam(u8, s16*)
+void DSP_SetIIRFilterParam(u8 idx, s16* param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r3,0,24,31
-	  mulli     r5, r0, 0x180
-	  lis       r3, 0x8030
-	  addi      r0, r3, 0x6A60
-	  stwu      r1, -0x8(r1)
-	  add       r3, r0, r5
-	  li        r5, 0x4
-	  addi      r3, r3, 0x148
-	  bl        -0x68
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DSPBuffer* buf = &CH_BUF[idx];
+	DSP_SetFilterTable(buf->biquadFilterCoeffs, param_2, 4);
 }
 
 /*
@@ -479,26 +328,10 @@ void DSP_SetIIRFilterParam(u8, s16*)
  * Address:	8000B9C0
  * Size:	00003C
  */
-void DSP_SetFIR8FilterParam(u8, s16*)
+void DSP_SetFIR8FilterParam(u8 idx, s16* param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r3,0,24,31
-	  mulli     r5, r0, 0x180
-	  lis       r3, 0x8030
-	  addi      r0, r3, 0x6A60
-	  stwu      r1, -0x8(r1)
-	  add       r3, r0, r5
-	  li        r5, 0x8
-	  addi      r3, r3, 0x120
-	  bl        -0xA8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DSPBuffer* buf = &CH_BUF[idx];
+	DSP_SetFilterTable(buf->variableFirCoeffs, param_2, 8);
 }
 
 /*
@@ -506,36 +339,22 @@ void DSP_SetFIR8FilterParam(u8, s16*)
  * Address:	8000BA00
  * Size:	000054
  */
-void DSP_SetFilterMode(u8, u16)
+void DSP_SetFilterMode(u8 idx, u16 filterMode)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r5,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r5, r5, 0x180
-	  rlwinm.   r0,r4,0,26,26
-	  addi      r3, r3, 0x6A60
-	  rlwinm    r6,r4,0,26,26
-	  rlwinm    r0,r4,0,27,31
-	  add       r4, r3, r5
-	  beq-      .loc_0x34
-	  cmplwi    r0, 0x14
-	  ble-      .loc_0x40
-	  li        r0, 0x14
-	  b         .loc_0x40
+	DSPBuffer* buf = &CH_BUF[idx];
 
-	.loc_0x34:
-	  cmplwi    r0, 0x18
-	  ble-      .loc_0x40
-	  li        r0, 0x18
-
-	.loc_0x40:
-	  rlwinm    r3,r6,0,24,31
-	  rlwinm    r0,r0,0,24,31
-	  add       r0, r3, r0
-	  sth       r0, 0x108(r4)
-	  blr
-	*/
+	u8 enableBiquadFilter    = filterMode & 0b100000;
+	u8 variableFirFilterSize = filterMode & 0b011111;
+	if (enableBiquadFilter) {
+		if (variableFirFilterSize > 20) {
+			variableFirFilterSize = 20;
+		}
+	} else {
+		if (variableFirFilterSize > 24) {
+			variableFirFilterSize = 24;
+		}
+	}
+	buf->filterMode = enableBiquadFilter + variableFirFilterSize;
 }
 
 /*
@@ -543,43 +362,22 @@ void DSP_SetFilterMode(u8, u16)
  * Address:	8000BA60
  * Size:	000070
  */
-void DSP_InitFilter(u8)
+void DSP_InitFilter(u8 idx)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x8030
-	  mulli     r6, r0, 0x180
-	  addi      r5, r3, 0x6A60
-	  li        r3, 0
-	  li        r0, 0x8
-	  addi      r4, r3, 0
-	  add       r5, r5, r6
-	  mtctr     r0
+	int i;
+	DSPBuffer* buf = &CH_BUF[idx];
 
-	.loc_0x24:
-	  addi      r0, r3, 0x120
-	  addi      r3, r3, 0x2
-	  sthx      r4, r5, r0
-	  bdnz+     .loc_0x24
-	  li        r3, 0x7FFF
-	  li        r0, 0x4
-	  sth       r3, 0x120(r5)
-	  li        r4, 0
-	  li        r3, 0
-	  mtctr     r0
+	for (i = 0; i < 8; ++i) {
+		buf->variableFirCoeffs[i] = 0;
+	}
+	buf->variableFirCoeffs[0] = SHRT_MAX;
 
-	.loc_0x4C:
-	  addi      r0, r3, 0x148
-	  addi      r3, r3, 0x2
-	  sthx      r4, r5, r0
-	  bdnz+     .loc_0x4C
-	  li        r3, 0x7FFF
-	  li        r0, 0
-	  sth       r3, 0x148(r5)
-	  sth       r0, 0x150(r5)
-	  blr
-	*/
+	for (i = 0; i < 4; ++i) {
+		buf->biquadFilterCoeffs[i] = 0;
+	}
+	buf->biquadFilterCoeffs[0] = SHRT_MAX;
+
+	buf->lowPassCoeff = 0;
 }
 
 /*
@@ -589,24 +387,8 @@ void DSP_InitFilter(u8)
  */
 void DSP_FlushBuffer()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8030
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x6000
-	  addi      r3, r3, 0x6A60
-	  stwu      r1, -0x8(r1)
-	  bl        0x1EB0F0
-	  lis       r3, 0x8031
-	  li        r4, 0x80
-	  subi      r3, r3, 0x35A0
-	  bl        0x1EB0E0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DCFlushRange(CH_BUF, sizeof(CH_BUF));
+	DCFlushRange(FX_BUF, sizeof(FX_BUF));
 }
 
 /*
@@ -614,25 +396,9 @@ void DSP_FlushBuffer()
  * Address:	8000BB20
  * Size:	000038
  */
-void DSP_FlushChannel(u8)
+void DSP_FlushChannel(u8 idx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x180
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r3,0,24,31
-	  mulli     r5, r0, 0x180
-	  lis       r3, 0x8030
-	  addi      r0, r3, 0x6A60
-	  stwu      r1, -0x8(r1)
-	  add       r3, r0, r5
-	  bl        0x1EB10C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DCFlushRangeNoSync(&CH_BUF[idx], sizeof(DSPBuffer));
 }
 
 /*
@@ -640,7 +406,7 @@ void DSP_FlushChannel(u8)
  * Address:	........
  * Size:	000038
  */
-void DSP_CacheChannel(u8)
+void DSP_CacheChannel(u8 idx)
 {
 	// UNUSED FUNCTION
 }
@@ -672,20 +438,7 @@ void DSP_CacheChannelAll()
  */
 void DSP_InvalChannelAll()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8030
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x6000
-	  addi      r3, r3, 0x6A60
-	  stwu      r1, -0x8(r1)
-	  bl        0x1EB040
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DCInvalidateRange(CH_BUF, sizeof(CH_BUF));
 }
 
 /*
@@ -695,31 +448,9 @@ void DSP_InvalChannelAll()
  */
 void DSP_ClearBuffer()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8030
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stmw      r29, 0xC(r1)
-	  li        r29, 0
-	  addi      r30, r3, 0x6A60
-	  li        r31, 0
-
-	.loc_0x20:
-	  add       r3, r30, r31
-	  li        r4, 0x180
-	  bl        -0x5B08
-	  addi      r29, r29, 0x1
-	  addi      r31, r31, 0x180
-	  cmpwi     r29, 0x40
-	  blt+      .loc_0x20
-	  lmw       r29, 0xC(r1)
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < CH_BUF_LENGTH; ++i) {
+		Jac_bzero(&CH_BUF[i], sizeof(DSPBuffer));
+	}
 }
 
 /*
@@ -729,26 +460,7 @@ void DSP_ClearBuffer()
  */
 void DSP_SetupBuffer()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8030
-	  stw       r0, 0x4(r1)
-	  lis       r5, 0x8022
-	  lis       r6, 0x8022
-	  lis       r3, 0x8031
-	  stwu      r1, -0x8(r1)
-	  subi      r7, r3, 0x35A0
-	  addi      r4, r4, 0x6A60
-	  addi      r5, r5, 0x4A00
-	  addi      r6, r6, 0x49C0
-	  li        r3, 0x40
-	  bl        -0x33F0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DsetupTable((u32)CH_BUF_LENGTH, (u32)CH_BUF, (u32)DSPRES_FILTER, (u32)DSPADPCM_FILTER, (u32)FX_BUF);
 }
 
 /*
@@ -758,31 +470,12 @@ void DSP_SetupBuffer()
  */
 void DSP_InitBuffer()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-
-	.loc_0x14:
-	  rlwinm    r3,r31,0,24,31
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x40
-	  addi      r31, r31, 0x1
-	  cmpwi     r31, 0x4
-	  blt+      .loc_0x14
-	  bl        -0xF0
-	  bl        -0x94
-	  bl        -0xF98
-	  bl        -0x20BC
-	  bl        -0x1C0
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler;
+	for (int i = 0; i < 4; ++i)
+		DFX_SetFxLine(i, (s16*)NULL, (FxlineConfig*)NULL);
+	DSP_ClearBuffer();
+	DSP_SetupBuffer();
+	InitDSPchannel();
+	InitGlobalChannel();
+	DSP_FlushBuffer();
 }
