@@ -1,7 +1,9 @@
 #include "Pcam/CameraManager.h"
 #include "Pcam/Camera.h"
+#include "Pcam/MotionEvents.h"
 #include "Peve/Event.h"
 #include "Peve/Condition.h"
+#include "NaviMgr.h"
 #include "sysNew.h"
 #include "DebugLog.h"
 
@@ -17,7 +19,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("pcamcameramanager")
 
 /*
  * --INFO--
@@ -30,147 +32,37 @@ PcamCameraManager::PcamCameraManager(Camera* camera, Controller* controller)
 	mCamera          = new PcamCamera(camera);
 	mController      = controller;
 	mVibrationEvents = new PeveEvent*[PCAMVIB_VibrationCount];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r6, 0x738C
-	  li        r7, 0
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8022
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  addi      r29, r5, 0
-	  stw       r28, 0x28(r1)
-	  addi      r28, r4, 0
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r31)
-	  addi      r6, r3, 0x5274
-	  lis       r3, 0x8023
-	  stw       r7, 0x10(r31)
-	  subi      r0, r3, 0x71E0
-	  addi      r3, r31, 0
-	  stw       r7, 0xC(r31)
-	  addi      r4, r6, 0
-	  stw       r7, 0x8(r31)
-	  stw       r6, 0x4(r31)
-	  stw       r0, 0x0(r31)
-	  bl        -0xE3588
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x52D0
-	  stw       r0, 0x0(r31)
-	  li        r3, 0x170
-	  bl        -0xDCCD4
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x9C
-	  mr        r4, r28
-	  bl        -0x20E0
 
-	.loc_0x9C:
-	  stw       r30, 0x20(r31)
-	  li        r3, 0x14
-	  stw       r29, 0x24(r31)
-	  bl        -0xDCCF8
-	  stw       r3, 0x2C(r31)
-	  li        r3, 0x60
-	  bl        -0xDCD04
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0xCC
-	  lwz       r4, 0x20(r31)
-	  bl        0x630
+	PcamVibrationEvent* vib1             = new PcamVibrationEvent(mCamera);
+	vib1->_48                            = 0.6f;
+	vib1->_4C                            = 0.2f;
+	vib1->_50                            = 8.0f;
+	mVibrationEvents[PCAMVIB_Vibration1] = vib1;
 
-	.loc_0xCC:
-	  lfs       f0, -0x5F00(r2)
-	  li        r3, 0x60
-	  stfs      f0, 0x48(r30)
-	  lfs       f0, -0x5EFC(r2)
-	  stfs      f0, 0x4C(r30)
-	  lfs       f0, -0x5EF8(r2)
-	  stfs      f0, 0x50(r30)
-	  lwz       r4, 0x2C(r31)
-	  stw       r30, 0x8(r4)
-	  bl        -0xDCD40
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x108
-	  lwz       r4, 0x20(r31)
-	  bl        0x5F4
+	PcamVibrationEvent* vib2             = new PcamVibrationEvent(mCamera);
+	vib2->_48                            = 0.6f;
+	vib2->_4C                            = 0.2f;
+	vib2->_50                            = 4.0f;
+	mVibrationEvents[PCAMVIB_Vibration2] = vib2;
 
-	.loc_0x108:
-	  lfs       f0, -0x5F00(r2)
-	  li        r3, 0x28
-	  stfs      f0, 0x48(r30)
-	  lfs       f0, -0x5EFC(r2)
-	  stfs      f0, 0x4C(r30)
-	  lfs       f0, -0x5EF4(r2)
-	  stfs      f0, 0x50(r30)
-	  lwz       r4, 0x2C(r31)
-	  stw       r30, 0xC(r4)
-	  bl        -0xDCD7C
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x144
-	  lwz       r4, 0x20(r31)
-	  bl        0x414
+	mVibrationEvents[PCAMVIB_LongVibration] = new PcamLongVibrationEvent(mCamera);
 
-	.loc_0x144:
-	  lwz       r4, 0x2C(r31)
-	  li        r3, 0x60
-	  stw       r29, 0x10(r4)
-	  bl        -0xDCDA0
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x168
-	  lwz       r4, 0x20(r31)
-	  bl        0x690
+	PcamDamageEvent* damage = new PcamDamageEvent(mCamera);
+	// nice typo.
+	vib2->_48 = 0.6f;
+	vib2->_4C = 0.2f;
 
-	.loc_0x168:
-	  lfs       f0, -0x5F00(r2)
-	  li        r3, 0x48
-	  stfs      f0, 0x48(r30)
-	  lfs       f0, -0x5EFC(r2)
-	  stfs      f0, 0x4C(r30)
-	  lfs       f0, -0x5EF0(r2)
-	  stfs      f0, 0x50(r29)
-	  lwz       r4, 0x2C(r31)
-	  stw       r29, 0x4(r4)
-	  bl        -0xDCDDC
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x1A4
-	  lwz       r4, 0x20(r31)
-	  bl        0x9CC
+	damage->_50                      = 30.0f;
+	mVibrationEvents[PCAMVIB_Damage] = damage;
 
-	.loc_0x1A4:
-	  lfs       f0, -0x5F00(r2)
-	  li        r0, -0x1
-	  addi      r3, r31, 0
-	  stfs      f0, 0x48(r30)
-	  lfs       f0, -0x5EFC(r2)
-	  stfs      f0, 0x4C(r30)
-	  lfs       f1, -0x1CA4(r13)
-	  lfs       f0, -0x5EEC(r2)
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0x18(r29)
-	  lwz       r4, 0x2C(r31)
-	  stw       r29, 0x0(r4)
-	  stw       r0, 0x28(r31)
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	PcamSideVibrationEvent* sideVib = new PcamSideVibrationEvent(mCamera);
+	// nice typo.
+	vib2->_48 = 0.6f;
+	vib2->_4C = 0.2f;
+
+	sideVib->_18                            = NMathF::pi / 48.0f;
+	mVibrationEvents[PCAMVIB_SideVibration] = sideVib;
+	mCurrEventIndex                         = -1;
 }
 
 /*
@@ -178,20 +70,9 @@ PcamCameraManager::PcamCameraManager(Camera* camera, Controller* controller)
  * Address:	80123E4C
  * Size:	000024
  */
-void PcamCameraManager::startCamera(Creature*)
+void PcamCameraManager::startCamera(Creature* target)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x20(r3)
-	  bl        -0x211C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mCamera->startCamera(target);
 }
 
 /*
@@ -201,31 +82,9 @@ void PcamCameraManager::startCamera(Creature*)
  */
 void PcamCameraManager::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x20(r3)
-	  lwz       r4, 0x24(r31)
-	  bl        -0x19A8
-	  lwz       r3, 0x20(r31)
-	  lwz       r12, 0x50(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  bl        .loc_0x50
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x50:
-	*/
+	mCamera->control(*mController);
+	mCamera->update();
+	updateVibrationEvent();
 }
 
 /*
@@ -233,9 +92,9 @@ void PcamCameraManager::update()
  * Address:	........
  * Size:	000024
  */
-void PcamCameraManager::startMotion(PcamMotionInfo&)
+void PcamCameraManager::startMotion(PcamMotionInfo& info)
 {
-	// UNUSED FUNCTION
+	mCamera->startMotion(info);
 }
 
 /*
@@ -245,7 +104,7 @@ void PcamCameraManager::startMotion(PcamMotionInfo&)
  */
 void PcamCameraManager::finishMotion()
 {
-	// UNUSED FUNCTION
+	mCamera->finishMotion();
 }
 
 /*
@@ -274,109 +133,32 @@ void PcamCameraManager::updateVibrationEvent()
  * Address:	80123FD8
  * Size:	000148
  */
-void PcamCameraManager::startVibrationEvent(int, Vector3f&)
+void PcamCameraManager::startVibrationEvent(int eventIdx, Vector3f& p2)
 {
-	PeveEvent* event = mVibrationEvents[mCurrEventIndex];
-	event->reset();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x68(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x64(r1)
-	  mr        r29, r3
-	  lwz       r0, 0x28(r3)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x38
-	  cmpw      r0, r30
-	  blt-      .loc_0x12C
-
-	.loc_0x38:
-	  addi      r3, r1, 0x50
-	  bl        -0x71C0
-	  addi      r3, r29, 0
-	  addi      r4, r1, 0x50
-	  bl        0x13C
-	  lfs       f3, 0x58(r1)
-	  lfs       f2, 0x8(r31)
-	  lfs       f1, 0x50(r1)
-	  lfs       f0, 0x0(r31)
-	  fsubs     f2, f3, f2
-	  fsubs     f1, f1, f0
-	  fmuls     f0, f2, f2
-	  fmuls     f1, f1, f1
-	  fadds     f1, f1, f0
-	  bl        -0x116408
-	  lwz       r3, 0x20(r29)
-	  lwz       r3, 0xD0(r3)
-	  lwz       r3, 0x24(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f0, 0xD4(r3)
-	  fcmpo     cr0, f1, f0
-	  bgt-      .loc_0x12C
-	  stw       r30, 0x28(r29)
-	  lwz       r4, 0x28(r29)
-	  lwz       r3, 0x2C(r29)
-	  rlwinm    r0,r4,2,0,29
-	  cmpwi     r4, 0x2
-	  lwzx      r31, r3, r0
-	  bne-      .loc_0xBC
-	  mr        r3, r31
-	  bl        0x338
-	  b         .loc_0x118
-
-	.loc_0xBC:
-	  cmpwi     r4, 0x3
-	  bne-      .loc_0xD0
-	  mr        r3, r31
-	  bl        0x324
-	  b         .loc_0x118
-
-	.loc_0xD0:
-	  cmpwi     r4, 0x4
-	  bne-      .loc_0xF4
-	  lfs       f1, -0x5EE8(r2)
-	  mr        r3, r31
-	  lfs       f2, -0x5F00(r2)
-	  lfs       f3, -0x5EFC(r2)
-	  lfs       f4, -0x5EE4(r2)
-	  bl        0x1B0
-	  b         .loc_0x118
-
-	.loc_0xF4:
-	  cmpwi     r4, 0x1
-	  bne-      .loc_0x108
-	  mr        r3, r31
-	  bl        0x3E8
-	  b         .loc_0x118
-
-	.loc_0x108:
-	  cmpwi     r4, 0
-	  bne-      .loc_0x118
-	  mr        r3, r31
-	  bl        0x798
-
-	.loc_0x118:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x12C:
-	  lwz       r0, 0x74(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  lwz       r29, 0x64(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("startVibrationEvent:%d,%d\n", mCurrEventIndex, eventIdx);
+	if (mCurrEventIndex < 0 || mCurrEventIndex >= eventIdx) {
+		NVector3f vec1;
+		outputNaviPosition(vec1);
+		f32 dist = vec1.distanceXZ(p2);
+		if (dist > mCamera->getParameterF(53)) {
+			PRINT("startVibrationEvent:distance>:%f\n", dist);
+		} else {
+			mCurrEventIndex  = eventIdx;
+			PeveEvent* event = mVibrationEvents[mCurrEventIndex];
+			if (mCurrEventIndex == PCAMVIB_Vibration1) {
+				static_cast<PcamVibrationEvent*>(event)->makePcamVibrationEvent();
+			} else if (mCurrEventIndex == PCAMVIB_Vibration2) {
+				static_cast<PcamVibrationEvent*>(event)->makePcamVibrationEvent();
+			} else if (mCurrEventIndex == PCAMVIB_LongVibration) {
+				static_cast<PcamLongVibrationEvent*>(event)->makePcamLongVibrationEvent(0.4f, 0.6f, 0.2f, 3.0f);
+			} else if (mCurrEventIndex == PCAMVIB_Damage) {
+				static_cast<PcamDamageEvent*>(event)->makePcamDamageEvent();
+			} else if (mCurrEventIndex == PCAMVIB_SideVibration) {
+				static_cast<PcamSideVibrationEvent*>(event)->makePcamSideVibrationEvent();
+			}
+			event->reset();
+		}
+	}
 }
 
 /*
@@ -384,28 +166,8 @@ void PcamCameraManager::startVibrationEvent(int, Vector3f&)
  * Address:	8012415C
  * Size:	00004C
  */
-void PcamCameraManager::outputNaviPosition(Vector3f&)
+void PcamCameraManager::outputNaviPosition(Vector3f& naviPos)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  li        r4, 0
-	  lwz       r3, 0x3120(r13)
-	  bl        -0xCD40
-	  lfsu      f0, 0x94(r3)
-	  stfs      f0, 0x0(r31)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x4(r31)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x8(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	Navi* navi = naviMgr->getNavi(0);
+	naviPos.input(navi->getPosition());
 }

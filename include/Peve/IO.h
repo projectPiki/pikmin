@@ -18,7 +18,9 @@ struct PeveCameraPostureIO : public NPosture3DIO {
 
 	void construct(PcamCamera*);
 
-	// TODO: members
+	// _00     = VTBL
+	// _00-_04 = NPosture3DIO
+	PcamCamera* mCamera; // _04
 };
 
 /**

@@ -5,6 +5,7 @@
 #include "Vector.h"
 #include "Dolphin/mtx.h"
 #include <system.h>
+#include "nlib/System.h"
 
 template <typename T>
 struct NMath {
@@ -98,10 +99,11 @@ struct NMathF {
 		return angle;
 	}
 
+	static inline f32 rangeRandom(f32 min, f32 max) { return (max - min) * NSystem::random() + min; }
+
 	// inlines from DLL, to be created:
 	static inline f32 acos(f32);
 	static inline f32 angleDifference(f32, f32);
-	static inline f32 rangeRandom(f32, f32);
 	static inline f32 rateRandom(f32, f32);
 	static inline f32 sqrt(f32);
 	static inline int quotient(f32, f32);

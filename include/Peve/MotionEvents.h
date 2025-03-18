@@ -194,6 +194,8 @@ struct PeveParabolaEvent : public PeveAccelerationEvent {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x48.
  */
 struct PeveVibrationEvent : public PeveEvent {
 	PeveVibrationEvent();
@@ -204,7 +206,11 @@ struct PeveVibrationEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	// TODO: members
+	u8 _10[0x4];                       // _10, unknown
+	NVector3f _14;                     // _14
+	PeveTimeCondition mTimeCondition;  // _20
+	NVibrationFunction mVibFunction;   // _2C
+	NPolynomialFunction mPolyFunction; // _3C
 };
 
 /**

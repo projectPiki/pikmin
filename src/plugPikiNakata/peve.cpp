@@ -178,30 +178,6 @@ bool PeveParallelEvent::isFinished()
 PeveSerialEvent::PeveSerialEvent(int count)
     : PeveEvent(count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x7638
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x5DD8
-	  stw       r0, 0x0(r31)
-	  li        r4, 0
-	  lis       r3, 0x802C
-	  stw       r4, 0x8(r31)
-	  addi      r0, r3, 0x5D38
-	  addi      r3, r31, 0
-	  stw       r4, 0xC(r31)
-	  stw       r0, 0x0(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -211,37 +187,10 @@ PeveSerialEvent::PeveSerialEvent(int count)
  */
 void PeveSerialEvent::reset()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x8(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x30
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x30:
-	  li        r0, 0
-	  stw       r0, 0x10(r31)
-	  mr        r3, r31
-	  lwz       r4, 0x10(r31)
-	  bl        -0x736C
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	PeveEvent::reset();
+	mEventIdx            = 0;
+	PeveEvent* currEvent = getCurrentEvent();
+	currEvent->reset();
 }
 
 /*
@@ -413,31 +362,7 @@ void PeveCameraWatchpointIO::construct(PcamCamera*)
  */
 PeveCameraPostureIO::PeveCameraPostureIO()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x5C74
-	  li        r4, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x5C64
-	  addi      r3, r31, 0
-	  stw       r0, 0x0(r31)
-	  bl        .loc_0x50
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x50:
-	*/
+	construct(nullptr);
 }
 
 /*
@@ -445,10 +370,9 @@ PeveCameraPostureIO::PeveCameraPostureIO()
  * Address:	80125968
  * Size:	000008
  */
-void PeveCameraPostureIO::construct(PcamCamera* a1)
+void PeveCameraPostureIO::construct(PcamCamera* camera)
 {
-	// Generated from stw r4, 0x4(r3)
-	// _04 = a1;
+	mCamera = camera;
 }
 
 /*
@@ -478,35 +402,7 @@ void PeveCreaturePositionIO::construct(Creature*)
  */
 PeveClampVector3fIO::PeveClampVector3fIO()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x5CEC
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x5BF0
-	  addi      r3, r31, 0x4
-	  stw       r0, 0x0(r31)
-	  bl        -0x8B4C
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x5BE0
-	  stw       r0, 0x0(r31)
-	  mr        r3, r31
-	  bl        .loc_0x60
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x60:
-	*/
+	construct();
 }
 
 /*

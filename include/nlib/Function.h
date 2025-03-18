@@ -14,6 +14,8 @@ struct NFunction {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct NPolynomialFunction : public NFunction {
 	NPolynomialFunction() { }
@@ -69,6 +71,8 @@ struct NClampLinearFunction : public NLinearFunction {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NVibrationFunction : public NFunction {
 	NVibrationFunction();

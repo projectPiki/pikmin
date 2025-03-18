@@ -12,6 +12,8 @@ struct NTransform3D;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct NVector {
 	NVector();
@@ -415,7 +417,7 @@ struct NPosture3DIO {
 	virtual void input(NPosture3D&)  = 0; // _08
 	virtual void output(NPosture3D&) = 0; // _0C
 
-	// TODO: members
+	// _00 = VTBL
 };
 
 /**

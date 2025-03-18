@@ -88,6 +88,8 @@ struct PeveDistanceCondition : public PeveBooleanCondition {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct PeveTimeCondition : public PeveCondition {
 	PeveTimeCondition();
@@ -99,10 +101,14 @@ struct PeveTimeCondition : public PeveCondition {
 	// unused/inlined:
 	void construct(f32);
 
+	// DLL inlines:
+	f32 getTime() { return mCurrTime; }
+	void setPeriod(f32 limit) { mLimit = limit; }
+
 	// _00     = VTBL
 	// _00-_04 = PeveCondition
 	f32 mCurrTime; // _04, in seconds
-	f32 mLimit;    // _08, in seconds
+	f32 mLimit;    // _08, in seconds, a.k.a. period
 };
 
 #endif
