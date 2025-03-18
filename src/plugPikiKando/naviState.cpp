@@ -3969,7 +3969,7 @@ void NaviNukuState::init(Navi* navi)
 	navi->_814 = 0.0f;
 	_10        = C_NAVI_PROP(navi)._1CC();
 	if (navi->mIsCursorVisible && !playerState->isChallengeMode() && !navi->mIsPlucking && playerState->_0C < 100) {
-		cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mMotionInfo);
+		cameraMgr->mCamera->startMotion(cameraMgr->mCamera->_38);
 		PRINT("> camera START MOTION | NUKU");
 		navi->mIsPlucking       = true;
 		cameraMgr->mCamera->_30 = 0;
@@ -4958,7 +4958,7 @@ void NaviDeadState::init(Navi* navi)
 	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
-	cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mMotionInfo);
+	cameraMgr->mCamera->startMotion(cameraMgr->mCamera->_38);
 	cameraMgr->mCamera->_20 = 0;
 	seMgr->setPikiNum(0);
 	navi->releasePikis();

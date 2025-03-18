@@ -628,7 +628,7 @@ config.libs = [
             Object(Matching, "plugPikiNakata/panitekianimator.cpp"),
             Object(NonMatching, "plugPikiNakata/panitestsection.cpp"),
             Object(Matching, "plugPikiNakata/paraparameters.cpp"),
-            Object(NonMatching, "plugPikiNakata/pcamcamera.cpp"),
+            Object(Matching, "plugPikiNakata/pcamcamera.cpp"),
             Object(NonMatching, "plugPikiNakata/pcamcameramanager.cpp"),
             Object(NonMatching, "plugPikiNakata/pcammotionevents.cpp"),
             Object(NonMatching, "plugPikiNakata/pcamcameraparameters.cpp"),

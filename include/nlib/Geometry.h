@@ -270,7 +270,7 @@ struct NPolar3f {
 	NPolar3f(NPolar3f&);     // unused/inlined
 
 	void construct(Vector3f&);
-	void set(f32, f32, f32);
+	void set(f32 radius, f32 incl, f32 azimuth);
 	void input(Vector3f&);
 	void output(Vector3f&);
 
@@ -302,7 +302,7 @@ struct NPolar3f {
 		round();
 	}
 
-	void rotateAzimuth(f32); // DLL, to do
+	void rotateAzimuth(f32 amt) { mAzimuth += amt; }
 
 	f32 mRadius;      // _00
 	f32 mInclination; // _04, a.k.a. meridian

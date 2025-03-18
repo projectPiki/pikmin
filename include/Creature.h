@@ -270,9 +270,10 @@ struct Creature : public RefCountable, public EventTalker {
 		mAirResistance = res;
 	}
 
+	// were these necessary Nakata.
 	Vector3f& getPosition() { return mPosition; }
 	void inputPosition(Vector3f& pos) { mPosition = pos; }
-	// void outputPosition(Vector3f& pos); // DLL inline - to do
+	void outputPosition(Vector3f& pos) { pos = mPosition; }
 
 	// we're grabbed if we're held by something
 	bool isGrabbed() { return !mHoldingCreature.isNull(); }

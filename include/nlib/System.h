@@ -30,7 +30,10 @@ void initSystem(::System*);
 int randomInt(int);
 u32 getFreeHeap();
 
-inline f32 getFrameTime();
+inline f32 getFrameTime()
+{
+	return system->getFrameTime();
+}
 inline f32 random()
 {
 	return unitRandFloat();

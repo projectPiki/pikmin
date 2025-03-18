@@ -102,10 +102,10 @@ struct Controller : public Node {
 	s8 mMainStickY;           // _46
 	s8 mSubStickX;            // _47
 	s8 mSubStickY;            // _48
-	s8 mAnalogA;              // _49
-	s8 mAnalogB;              // _4A
-	s8 mTriggerL;             // _4B
-	s8 mTriggerR;             // _4C
+	u8 mAnalogA;              // _49
+	u8 mAnalogB;              // _4A
+	u8 mTriggerL;             // _4B
+	u8 mTriggerR;             // _4C
 };
 
 /**

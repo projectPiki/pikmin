@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "nlib/Geometry.h"
+#include "Camera.h"
 
 struct Camera;
 
@@ -18,19 +19,27 @@ struct NCamera {
 	void makeCamera();
 
 	NVector3f& getViewpoint() { return mViewpoint; }
-	void inputWatchpoint(Vector3f&);
+	void inputViewpoint(Vector3f& viewPt) { mViewpoint.input(viewPt); }
 
 	NVector3f& getWatchpoint() { return mWatchpoint; }
-	void inputViewpoint(Vector3f&);
+	void inputWatchpoint(Vector3f& watchPt) { mWatchpoint.input(watchPt); }
 
-	f32 getAspect();
-	void setAspect(f32);
+	f32 getAspect() { return mCamera->mAspectRatio; }
+	void setAspect(f32 aspect) { mCamera->mAspectRatio = aspect; }
 
-	f32 getFov();
-	void setFov(f32);
+	f32 getFov() { return mCamera->mFov; }
+	void setFov(f32 fov) { mCamera->mFov = fov; }
 
-	void outputPosture(NPosture3D&);
-	void inputPosture(NPosture3D&);
+	void outputPosture(NPosture3D& outPosture)
+	{
+		outPosture.inputViewpoint(mViewpoint);
+		outPosture.inputWatchpoint(mWatchpoint);
+	}
+	void inputPosture(NPosture3D& posture)
+	{
+		inputViewpoint(posture.getViewpoint());
+		inputWatchpoint(posture.getWatchpoint());
+	}
 
 	f32 mRotationAngle;    // _00
 	Camera* mCamera;       // _04

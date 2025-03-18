@@ -160,7 +160,7 @@ struct Camera : public CullFrustum {
 	Vector3f mRotation;          // _320
 	Vector3f _32C;               // _32C
 	Vector3f _338;               // _338
-	f32 _344;                    // _344
+	f32 mBlur;                   // _344
 };
 
 /**
