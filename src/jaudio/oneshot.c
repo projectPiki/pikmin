@@ -1,25 +1,11 @@
-#include "types.h"
-
-typedef struct jc_ jc_;
-typedef struct Inst_ Inst_;
-typedef struct Pmap_ Pmap_;
-typedef struct Osc_ Osc_;
-typedef struct jcs_ jcs_;
-typedef struct CtrlWave_ CtrlWave_;
-typedef enum JCSTATUS {
-	// TODO: this
-} JCSTATUS;
-
-typedef enum SOUNDID_ {
-	// TODO: this
-} SOUNDID_;
+#include "jaudio/oneshot.h"
 
 /*
  * --INFO--
  * Address:	80015140
  * Size:	000034
  */
-void __GetTrigger(jc_*, u8)
+static void __GetTrigger(jc_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -50,7 +36,7 @@ void __GetTrigger(jc_*, u8)
  * Address:	80015180
  * Size:	000028
  */
-void __Clamp01(f32)
+static void __Clamp01(f32)
 {
 	/*
 	.loc_0x0:
@@ -74,7 +60,7 @@ void __Clamp01(f32)
  * Address:	800151C0
  * Size:	000054
  */
-void __Clamp01InitPan(jc_*)
+static void __Clamp01InitPan(jc_*)
 {
 	/*
 	.loc_0x0:
@@ -109,7 +95,7 @@ void __Clamp01InitPan(jc_*)
  * Address:	80015220
  * Size:	000068
  */
-void __DoEffect(jc_*, u8, f32)
+static void __DoEffect(jc_*, u8, f32)
 {
 	/*
 	.loc_0x0:
@@ -159,7 +145,7 @@ void __DoEffect(jc_*, u8, f32)
  * Address:	800152A0
  * Size:	000138
  */
-void EffecterInit(jc_*, Inst_*)
+static void EffecterInit(jc_*, Inst_*)
 {
 	/*
 	.loc_0x0:
@@ -259,7 +245,7 @@ void EffecterInit(jc_*, Inst_*)
  * Address:	800153E0
  * Size:	0000D0
  */
-void EffecterInit_Perc(jc_*, Pmap_*, u16)
+static void EffecterInit_Perc(jc_*, Pmap_*, u16)
 {
 	/*
 	.loc_0x0:
@@ -327,7 +313,7 @@ void EffecterInit_Perc(jc_*, Pmap_*, u16)
  * Address:	800154C0
  * Size:	00007C
  */
-void EffecterInit_Osc(jc_*)
+static void EffecterInit_Osc(jc_*)
 {
 	/*
 	.loc_0x0:
@@ -423,7 +409,7 @@ void Effecter_Overwrite_1Shot(jc_*, Osc_*, Osc_*)
  * Address:	800155C0
  * Size:	00010C
  */
-void __Oneshot_Play_Start(jcs_*, jc_*, u32)
+static void __Oneshot_Play_Start(jcs_*, jc_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -516,7 +502,7 @@ void __Oneshot_Play_Start(jcs_*, jc_*, u32)
  * Address:	800156E0
  * Size:	000154
  */
-void __Oneshot_GetLogicalChannel(jcs_*, CtrlWave_*)
+static void __Oneshot_GetLogicalChannel(jcs_*, CtrlWave_*)
 {
 	/*
 	.loc_0x0:
@@ -718,7 +704,7 @@ void VmapRead(Inst_*, u8, u8)
  * Address:	80015940
  * Size:	000010
  */
-void __Oneshot_WavePause(jc_*, u8)
+static void __Oneshot_WavePause(jc_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -734,7 +720,7 @@ void __Oneshot_WavePause(jc_*, u8)
  * Address:	80015960
  * Size:	00014C
  */
-void __Oneshot_StartMonoPolyCheck(jc_*, u32)
+static void __Oneshot_StartMonoPolyCheck(jc_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -855,7 +841,7 @@ void __Oneshot_StartMonoPolyCheck(jc_*, u32)
  * Address:	80015AC0
  * Size:	0000E8
  */
-void __Oneshot_StopMonoPolyCheck(jc_*, u32)
+static void __Oneshot_StopMonoPolyCheck(jc_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -1085,7 +1071,7 @@ void AllStop_1Shot(jcs_*)
  * Address:	80015D40
  * Size:	00006C
  */
-void Extra_Update(jc_*, JCSTATUS)
+static void Extra_Update(jc_*, JCSTATUS)
 {
 	/*
 	.loc_0x0:
@@ -1425,7 +1411,7 @@ void FlushRelease_1Shot(jcs_*)
  * Address:	800160A0
  * Size:	0001C4
  */
-void Jesus1Shot_Update(jc_*, JCSTATUS)
+static void Jesus1Shot_Update(jc_*, JCSTATUS)
 {
 	/*
 	.loc_0x0:

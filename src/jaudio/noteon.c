@@ -1,6 +1,4 @@
-#include "types.h"
-
-typedef struct seqp_ seqp_;
+#include "jaudio/noteon.h"
 
 /*
  * --INFO--

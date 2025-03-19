@@ -1,6 +1,4 @@
-#include "types.h"
-
-typedef struct seqp_ seqp_;
+#include "jaudio/seqsetup.h"
 
 /*
  * --INFO--
@@ -73,7 +71,7 @@ void Jaq_GetRemainFreeTracks(void)
  * Address:	80013E40
  * Size:	000088
  */
-void BackTrack(seqp_*)
+static void BackTrack(seqp_*)
 {
 	/*
 	.loc_0x0:
@@ -127,7 +125,7 @@ void BackTrack(seqp_*)
  * Address:	80013EE0
  * Size:	000064
  */
-void GetNewTrack()
+static void GetNewTrack()
 {
 	/*
 	.loc_0x0:
@@ -255,7 +253,7 @@ void Jaq_HandleToSeq(void)
  * Address:	80014040
  * Size:	000368
  */
-void Init_Track(seqp_*, u32, seqp_*)
+static void Init_Track(seqp_*, u32, seqp_*)
 {
 	/*
 	.loc_0x0:
@@ -577,7 +575,7 @@ void Jaq_StopSeq(void)
  * Address:	80014460
  * Size:	000054
  */
-void __StopSeq(seqp_*)
+static void __StopSeq(seqp_*)
 {
 	/*
 	.loc_0x0:
@@ -1135,7 +1133,7 @@ void Jaq_CloseTrack(void)
  * Address:	80014AC0
  * Size:	0000E8
  */
-void Jaq_RootCallback(void*)
+static void Jaq_RootCallback(void*)
 {
 	/*
 	.loc_0x0:

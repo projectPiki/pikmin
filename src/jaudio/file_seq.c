@@ -1,4 +1,4 @@
-#include "types.h"
+#include "jaudio/file_seq.h"
 
 /*
  * --INFO--
@@ -392,7 +392,7 @@ void Jaf_LoadStartFinish(u32)
  * Address:	8001B7A0
  * Size:	000028
  */
-void Jaf_LoadFinish(u32)
+static void Jaf_LoadFinish(u32)
 {
 	/*
 	.loc_0x0:

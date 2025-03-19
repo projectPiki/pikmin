@@ -1,6 +1,4 @@
-#include "types.h"
-
-typedef struct JPorthead_ JPorthead_;
+#include "jaudio/cmdstack.h"
 
 /*
  * --INFO--
@@ -107,7 +105,7 @@ void Add_Portcmd(void)
  * Address:	8000E3E0
  * Size:	000040
  */
-void Get_Portcmd(JPorthead_*)
+static void Get_Portcmd(JPorthead_*)
 {
 	/*
 	.loc_0x0:
@@ -232,7 +230,7 @@ void Jac_Portcmd_Proc_Stay(void)
  * Address:	8000E4E0
  * Size:	000030
  */
-void Portcmd_Main(void*)
+static void Portcmd_Main(void*)
 {
 	/*
 	.loc_0x0:

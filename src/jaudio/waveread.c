@@ -1,11 +1,11 @@
-#include "types.h"
+#include "jaudio/waveread.h"
 
 /*
  * --INFO--
  * Address:	8000C200
  * Size:	000038
  */
-void PTconvert(void**, u32)
+static void PTconvert(void**, u32)
 {
 	/*
 	.loc_0x0:
@@ -380,7 +380,7 @@ void WaveidToWavegroup(u32, u32)
  * Address:	8000C640
  * Size:	00008C
  */
-void __WaveScene_Set(u32, u32, int)
+static void __WaveScene_Set(u32, u32, int)
 {
 	/*
 	.loc_0x0:
@@ -477,7 +477,7 @@ void WaveScene_Load(u32, u32)
  * Address:	8000C760
  * Size:	000074
  */
-void __WaveScene_Close(u32, u32, int)
+static void __WaveScene_Close(u32, u32, int)
 {
 	/*
 	.loc_0x0:

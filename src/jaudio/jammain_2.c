@@ -1,6 +1,4 @@
-#include "types.h"
-
-typedef struct seqp_ seqp_;
+#include "jaudio/jammain_2.h"
 
 /*
  * --INFO--
@@ -48,7 +46,7 @@ void Jam_OfsToAddr(void)
  * Address:	8000F460
  * Size:	000054
  */
-void __ByteReadOfs(seqp_*, u32)
+static void __ByteReadOfs(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -89,7 +87,7 @@ void __ByteReadOfs(seqp_*, u32)
  * Address:	8000F4C0
  * Size:	000050
  */
-void __WordReadOfs(seqp_*, u32)
+static void __WordReadOfs(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -121,7 +119,7 @@ void __WordReadOfs(seqp_*, u32)
  * Address:	8000F520
  * Size:	000068
  */
-void __24ReadOfs(seqp_*, u32)
+static void __24ReadOfs(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -159,7 +157,7 @@ void __24ReadOfs(seqp_*, u32)
  * Address:	8000F5A0
  * Size:	000050
  */
-void __LongReadOfs(seqp_*, u32)
+static void __LongReadOfs(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -191,7 +189,7 @@ void __LongReadOfs(seqp_*, u32)
  * Address:	8000F600
  * Size:	000070
  */
-void __ByteRead(seqp_*)
+static void __ByteRead(seqp_*)
 {
 	/*
 	.loc_0x0:
@@ -239,7 +237,7 @@ void __ByteRead(seqp_*)
  * Address:	8000F680
  * Size:	000048
  */
-void __WordRead(seqp_*)
+static void __WordRead(seqp_*)
 {
 	/*
 	.loc_0x0:
@@ -269,7 +267,7 @@ void __WordRead(seqp_*)
  * Address:	8000F6E0
  * Size:	00005C
  */
-void __24Read(seqp_*)
+static void __24Read(seqp_*)
 {
 	/*
 	.loc_0x0:
@@ -304,7 +302,7 @@ void __24Read(seqp_*)
  * Address:	........
  * Size:	000048
  */
-void __32Read(seqp_*)
+static void __32Read(seqp_*)
 {
 	// UNUSED FUNCTION
 }
@@ -314,7 +312,7 @@ void __32Read(seqp_*)
  * Address:	8000F740
  * Size:	0000D0
  */
-void __ConditionCheck(seqp_*, u8)
+static void __ConditionCheck(seqp_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -673,7 +671,7 @@ void Jam_WriteRegDirect(void)
  * Address:	8000FB60
  * Size:	000098
  */
-void LoadTbl(seqp_*, u32, u32, u32)
+static void LoadTbl(seqp_*, u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -2263,7 +2261,7 @@ void Jam_SetTrackExtPanPower(void)
  * Address:	80010A80
  * Size:	00004C
  */
-void __PanCalc(f32, f32, f32, u8)
+static void __PanCalc(f32, f32, f32, u8)
 {
 	/*
 	.loc_0x0:
@@ -2542,7 +2540,7 @@ void Jam_UpdateTrackAll(void)
  * Address:	80010E00
  * Size:	00000C
  */
-void OSf32tos8(void)
+static void OSf32tos8(void)
 {
 	/*
 	.loc_0x0:
@@ -3375,7 +3373,7 @@ void Jam_TryInterrupt(void)
  * Address:	80011800
  * Size:	000038
  */
-void Cmd_OpenTrack()
+static void Cmd_OpenTrack()
 {
 	/*
 	.loc_0x0:
@@ -3401,7 +3399,7 @@ void Cmd_OpenTrack()
  * Address:	80011840
  * Size:	000050
  */
-void Cmd_OpenTrackBros()
+static void Cmd_OpenTrackBros()
 {
 	/*
 	.loc_0x0:
@@ -3439,7 +3437,7 @@ void Cmd_OpenTrackBros()
  * Address:	800118A0
  * Size:	00003C
  */
-void Cmd_Call()
+static void Cmd_Call()
 {
 	/*
 	.loc_0x0:
@@ -3466,7 +3464,7 @@ void Cmd_Call()
  * Address:	800118E0
  * Size:	000100
  */
-void Cmd_CallF()
+static void Cmd_CallF()
 {
 	/*
 	.loc_0x0:
@@ -3554,7 +3552,7 @@ void Cmd_CallF()
  * Address:	800119E0
  * Size:	000028
  */
-void Cmd_Ret()
+static void Cmd_Ret()
 {
 	/*
 	.loc_0x0:
@@ -3576,7 +3574,7 @@ void Cmd_Ret()
  * Address:	80011A20
  * Size:	000060
  */
-void Cmd_RetF()
+static void Cmd_RetF()
 {
 	/*
 	.loc_0x0:
@@ -3614,7 +3612,7 @@ void Cmd_RetF()
  * Address:	80011A80
  * Size:	00001C
  */
-void Cmd_Jmp()
+static void Cmd_Jmp()
 {
 	/*
 	.loc_0x0:
@@ -3633,7 +3631,7 @@ void Cmd_Jmp()
  * Address:	80011AA0
  * Size:	000020
  */
-void Cmd_JmpF()
+static void Cmd_JmpF()
 {
 	/*
 	.loc_0x0:
@@ -3653,7 +3651,7 @@ void Cmd_JmpF()
  * Address:	80011AC0
  * Size:	000048
  */
-void Cmd_LoopS()
+static void Cmd_LoopS()
 {
 	/*
 	.loc_0x0:
@@ -3683,7 +3681,7 @@ void Cmd_LoopS()
  * Address:	80011B20
  * Size:	000078
  */
-void Cmd_LoopE()
+static void Cmd_LoopE()
 {
 	/*
 	.loc_0x0:
@@ -3731,7 +3729,7 @@ void Cmd_LoopE()
  * Address:	80011BA0
  * Size:	000054
  */
-void Cmd_ReadPort()
+static void Cmd_ReadPort()
 {
 	/*
 	.loc_0x0:
@@ -3764,7 +3762,7 @@ void Cmd_ReadPort()
  * Address:	80011C00
  * Size:	000040
  */
-void Cmd_WritePort()
+static void Cmd_WritePort()
 {
 	/*
 	.loc_0x0:
@@ -3792,7 +3790,7 @@ void Cmd_WritePort()
  * Address:	80011C40
  * Size:	000044
  */
-void Cmd_CheckPortImport()
+static void Cmd_CheckPortImport()
 {
 	/*
 	.loc_0x0:
@@ -3821,7 +3819,7 @@ void Cmd_CheckPortImport()
  * Address:	80011CA0
  * Size:	000044
  */
-void Cmd_CheckPortExport()
+static void Cmd_CheckPortExport()
 {
 	/*
 	.loc_0x0:
@@ -3850,7 +3848,7 @@ void Cmd_CheckPortExport()
  * Address:	80011D00
  * Size:	00002C
  */
-void Cmd_WaitReg()
+static void Cmd_WaitReg()
 {
 	/*
 	.loc_0x0:
@@ -3875,7 +3873,7 @@ void Cmd_WaitReg()
  * Address:	80011D40
  * Size:	000028
  */
-void Cmd_ConnectName()
+static void Cmd_ConnectName()
 {
 	/*
 	.loc_0x0:
@@ -3897,7 +3895,7 @@ void Cmd_ConnectName()
  * Address:	80011D80
  * Size:	000040
  */
-void Cmd_ParentWritePort()
+static void Cmd_ParentWritePort()
 {
 	/*
 	.loc_0x0:
@@ -3925,7 +3923,7 @@ void Cmd_ParentWritePort()
  * Address:	80011DC0
  * Size:	000048
  */
-void Cmd_ChildWritePort()
+static void Cmd_ChildWritePort()
 {
 	/*
 	.loc_0x0:
@@ -3955,7 +3953,7 @@ void Cmd_ChildWritePort()
  * Address:	80011E20
  * Size:	000030
  */
-void Cmd_SetLastNote()
+static void Cmd_SetLastNote()
 {
 	/*
 	.loc_0x0:
@@ -3979,7 +3977,7 @@ void Cmd_SetLastNote()
  * Address:	80011E60
  * Size:	00001C
  */
-void Cmd_TimeRelate()
+static void Cmd_TimeRelate()
 {
 	/*
 	.loc_0x0:
@@ -3998,7 +3996,7 @@ void Cmd_TimeRelate()
  * Address:	80011E80
  * Size:	000034
  */
-void Cmd_SimpleOsc()
+static void Cmd_SimpleOsc()
 {
 	/*
 	.loc_0x0:
@@ -4023,7 +4021,7 @@ void Cmd_SimpleOsc()
  * Address:	80011EC0
  * Size:	000038
  */
-void Cmd_SimpleEnv()
+static void Cmd_SimpleEnv()
 {
 	/*
 	.loc_0x0:
@@ -4049,7 +4047,7 @@ void Cmd_SimpleEnv()
  * Address:	80011F00
  * Size:	000064
  */
-void Cmd_SimpleADSR()
+static void Cmd_SimpleADSR()
 {
 	/*
 	.loc_0x0:
@@ -4088,7 +4086,7 @@ void Cmd_SimpleADSR()
  * Address:	80011F80
  * Size:	000048
  */
-void Cmd_Transpose()
+static void Cmd_Transpose()
 {
 	/*
 	.loc_0x0:
@@ -4122,7 +4120,7 @@ void Cmd_Transpose()
  * Address:	80011FE0
  * Size:	000068
  */
-void Cmd_CloseTrack()
+static void Cmd_CloseTrack()
 {
 	/*
 	.loc_0x0:
@@ -4164,7 +4162,7 @@ void Cmd_CloseTrack()
  * Address:	80012060
  * Size:	000038
  */
-void Cmd_OutSwitch()
+static void Cmd_OutSwitch()
 {
 	/*
 	.loc_0x0:
@@ -4192,7 +4190,7 @@ void Cmd_OutSwitch()
  * Address:	800120A0
  * Size:	000034
  */
-void Cmd_UpdateSync()
+static void Cmd_UpdateSync()
 {
 	/*
 	.loc_0x0:
@@ -4217,7 +4215,7 @@ void Cmd_UpdateSync()
  * Address:	800120E0
  * Size:	00002C
  */
-void Cmd_BusConnect()
+static void Cmd_BusConnect()
 {
 	/*
 	.loc_0x0:
@@ -4242,7 +4240,7 @@ void Cmd_BusConnect()
  * Address:	80012120
  * Size:	00001C
  */
-void Cmd_PauseStatus()
+static void Cmd_PauseStatus()
 {
 	/*
 	.loc_0x0:
@@ -4261,7 +4259,7 @@ void Cmd_PauseStatus()
  * Address:	80012140
  * Size:	000044
  */
-void Cmd_SetInterrupt()
+static void Cmd_SetInterrupt()
 {
 	/*
 	.loc_0x0:
@@ -4290,7 +4288,7 @@ void Cmd_SetInterrupt()
  * Address:	800121A0
  * Size:	000030
  */
-void Cmd_DisInterrupt()
+static void Cmd_DisInterrupt()
 {
 	/*
 	.loc_0x0:
@@ -4314,7 +4312,7 @@ void Cmd_DisInterrupt()
  * Address:	800121E0
  * Size:	000014
  */
-void Cmd_ClrI()
+static void Cmd_ClrI()
 {
 	/*
 	.loc_0x0:
@@ -4331,7 +4329,7 @@ void Cmd_ClrI()
  * Address:	80012200
  * Size:	000014
  */
-void Cmd_SetI()
+static void Cmd_SetI()
 {
 	/*
 	.loc_0x0:
@@ -4348,7 +4346,7 @@ void Cmd_SetI()
  * Address:	80012220
  * Size:	00002C
  */
-void Cmd_RetI()
+static void Cmd_RetI()
 {
 	/*
 	.loc_0x0:
@@ -4371,7 +4369,7 @@ void Cmd_RetI()
  * Address:	80012260
  * Size:	000034
  */
-void Cmd_IntTimer()
+static void Cmd_IntTimer()
 {
 	/*
 	.loc_0x0:
@@ -4396,7 +4394,7 @@ void Cmd_IntTimer()
  * Address:	800122A0
  * Size:	00002C
  */
-void Cmd_ConnectOpen()
+static void Cmd_ConnectOpen()
 {
 	/*
 	.loc_0x0:
@@ -4419,7 +4417,7 @@ void Cmd_ConnectOpen()
  * Address:	800122E0
  * Size:	000028
  */
-void Cmd_ConnectClose()
+static void Cmd_ConnectClose()
 {
 	/*
 	.loc_0x0:
@@ -4441,7 +4439,7 @@ void Cmd_ConnectClose()
  * Address:	80012320
  * Size:	000060
  */
-void Cmd_SyncCPU()
+static void Cmd_SyncCPU()
 {
 	/*
 	.loc_0x0:
@@ -4481,7 +4479,7 @@ void Cmd_SyncCPU()
  * Address:	80012380
  * Size:	000038
  */
-void Cmd_FlushAll()
+static void Cmd_FlushAll()
 {
 	/*
 	.loc_0x0:
@@ -4507,7 +4505,7 @@ void Cmd_FlushAll()
  * Address:	800123C0
  * Size:	00002C
  */
-void Cmd_FlushRelease()
+static void Cmd_FlushRelease()
 {
 	/*
 	.loc_0x0:
@@ -4530,7 +4528,7 @@ void Cmd_FlushRelease()
  * Address:	80012400
  * Size:	00002C
  */
-void Cmd_Wait3()
+static void Cmd_Wait3()
 {
 	/*
 	.loc_0x0:
@@ -4555,7 +4553,7 @@ void Cmd_Wait3()
  * Address:	80012440
  * Size:	000044
  */
-void Cmd_TimeBase()
+static void Cmd_TimeBase()
 {
 	/*
 	.loc_0x0:
@@ -4586,7 +4584,7 @@ void Cmd_TimeBase()
  * Address:	800124A0
  * Size:	000050
  */
-void Cmd_Tempo()
+static void Cmd_Tempo()
 {
 	/*
 	.loc_0x0:
@@ -4622,7 +4620,7 @@ void Cmd_Tempo()
  * Address:	80012500
  * Size:	0000CC
  */
-void Cmd_Finish()
+static void Cmd_Finish()
 {
 	/*
 	.loc_0x0:
@@ -4693,7 +4691,7 @@ void Cmd_Finish()
  * Address:	800125E0
  * Size:	000008
  */
-u32 Cmd_Nop()
+static u32 Cmd_Nop()
 {
 	return 0x0;
 }
@@ -4703,7 +4701,7 @@ u32 Cmd_Nop()
  * Address:	80012600
  * Size:	0000AC
  */
-void Cmd_PanPowSet()
+static void Cmd_PanPowSet()
 {
 	/*
 	.loc_0x0:
@@ -4762,7 +4760,7 @@ void Cmd_PanPowSet()
  * Address:	800126C0
  * Size:	000094
  */
-void Cmd_IIRSet()
+static void Cmd_IIRSet()
 {
 	/*
 	.loc_0x0:
@@ -4813,7 +4811,7 @@ void Cmd_IIRSet()
  * Address:	80012760
  * Size:	000044
  */
-void Cmd_FIRSet()
+static void Cmd_FIRSet()
 {
 	/*
 	.loc_0x0:
@@ -4842,7 +4840,7 @@ void Cmd_FIRSet()
  * Address:	800127C0
  * Size:	000050
  */
-void Cmd_EXTSet()
+static void Cmd_EXTSet()
 {
 	/*
 	.loc_0x0:
@@ -4874,7 +4872,7 @@ void Cmd_EXTSet()
  * Address:	80012820
  * Size:	0000C4
  */
-void Cmd_PanSwSet()
+static void Cmd_PanSwSet()
 {
 	/*
 	.loc_0x0:
@@ -4937,7 +4935,7 @@ void Cmd_PanSwSet()
  * Address:	80012900
  * Size:	000040
  */
-void Cmd_OscRoute()
+static void Cmd_OscRoute()
 {
 	/*
 	.loc_0x0:
@@ -4967,7 +4965,7 @@ void Cmd_OscRoute()
  * Address:	80012940
  * Size:	0000A0
  */
-void Cmd_IIRCutOff()
+static void Cmd_IIRCutOff()
 {
 	/*
 	.loc_0x0:
@@ -5021,7 +5019,7 @@ void Cmd_IIRCutOff()
  * Address:	800129E0
  * Size:	000040
  */
-void Cmd_OscFull()
+static void Cmd_OscFull()
 {
 	/*
 	.loc_0x0:
@@ -5049,7 +5047,7 @@ void Cmd_OscFull()
  * Address:	80012A20
  * Size:	000068
  */
-void Cmd_CheckWave()
+static void Cmd_CheckWave()
 {
 	/*
 	.loc_0x0:
@@ -5087,7 +5085,7 @@ void Cmd_CheckWave()
  * Address:	80012AA0
  * Size:	000204
  */
-void Cmd_Printf()
+static void Cmd_Printf()
 {
 	/*
 	.loc_0x0:
