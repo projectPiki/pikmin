@@ -140,7 +140,7 @@ void PcamCameraManager::startVibrationEvent(int eventIdx, Vector3f& p2)
 		NVector3f vec1;
 		outputNaviPosition(vec1);
 		f32 dist = vec1.distanceXZ(p2);
-		if (dist > mCamera->getParameterF(53)) {
+		if (dist > mCamera->getParameterF(PCAMF_VibrationDistance)) {
 			PRINT("startVibrationEvent:distance>:%f\n", dist);
 		} else {
 			mCurrEventIndex  = eventIdx;

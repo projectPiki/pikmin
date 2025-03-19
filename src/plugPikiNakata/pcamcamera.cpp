@@ -66,13 +66,13 @@ void PcamMotionInfo::println()
  */
 PcamControlInfo::PcamControlInfo()
 {
-	_00                  = false;
-	mDoSlowFollow        = false;
-	mDoAttentionCamera   = false;
-	mDoToggleZoom        = false;
-	mDoAdjustInclination = false;
-	_05                  = false;
-	_06                  = false;
+	_00                = false;
+	mDoRotate          = false;
+	mDoAttentionCamera = false;
+	mDoToggleZoom      = false;
+	mDoAdjustAngle     = false;
+	_05                = false;
+	_06                = false;
 }
 
 /*
@@ -80,13 +80,14 @@ PcamControlInfo::PcamControlInfo()
  * Address:	80121BE0
  * Size:	00002C
  */
-void PcamControlInfo::init(bool p1, bool p2, bool p3, bool p4, bool p5, bool p6, bool p7, f32 azimuthRot, f32 p9, f32 p10)
+void PcamControlInfo::init(bool p1, bool doRotate, bool doAttention, bool toggleZoom, bool adjustAngle, bool p6, bool p7, f32 azimuthRot,
+                           f32 p9, f32 p10)
 {
 	_00                  = p1;
-	mDoSlowFollow        = p2;
-	mDoAttentionCamera   = p3;
-	mDoToggleZoom        = p4;
-	mDoAdjustInclination = p5;
+	mDoRotate            = doRotate;
+	mDoAttentionCamera   = doAttention;
+	mDoToggleZoom        = toggleZoom;
+	mDoAdjustAngle       = adjustAngle;
 	_05                  = p6;
 	_06                  = p7;
 	mAzimuthRotIntensity = azimuthRot;
@@ -117,7 +118,7 @@ PcamCamera::PcamCamera(Camera* camera)
  */
 void PcamCamera::startCamera(Creature* target)
 {
-	startCamera(target, 0, 0);
+	startCamera(target, PCAMZOOM_Near, PCAMANGLE_Low);
 }
 
 /*
@@ -125,16 +126,16 @@ void PcamCamera::startCamera(Creature* target)
  * Address:	80121D68
  * Size:	00018C
  */
-void PcamCamera::startCamera(Creature* target, int p2, int p3)
+void PcamCamera::startCamera(Creature* target, int zoom, int angle)
 {
-	PRINT("startCamera:%08x,%d,%d\n", this, p2, p3);
+	PRINT("startCamera:%08x,%d,%d\n", this, zoom, angle);
 	setTarget(target);
 	parameterUpdated();
-	mZoomLevel        = p2;
-	mInclinationLevel = p3;
+	mZoomLevel        = zoom;
+	mInclinationLevel = angle;
 
-	_6C = getBasicMotionInfo(mZoomLevel, mInclinationLevel);
-	startMotion(_6C);
+	mTargetMotionInfo = getBasicMotionInfo(mZoomLevel, mInclinationLevel);
+	startMotion(mTargetMotionInfo);
 	setFov(getCurrentFov());
 	setAspect(1.0f);
 	setBlur(getCurrentBlur());
@@ -168,7 +169,7 @@ void PcamCamera::startCamera(Creature* target, int p2, int p3)
  */
 void PcamCamera::makeCurrentPosition(f32 azimuth)
 {
-	mPolarDir.set(_6C.mDistance, angleToMeridian(_6C.mAngle), azimuth);
+	mPolarDir.set(mTargetMotionInfo.mDistance, angleToMeridian(mTargetMotionInfo.mAngle), azimuth);
 	_A8 = mPolarDir.mRadius;
 	NVector3f watchPt;
 	outputTargetWatchpoint(watchPt);
@@ -188,21 +189,30 @@ void PcamCamera::makeCurrentPosition(f32 azimuth)
  */
 void PcamCamera::parameterUpdated()
 {
-	getBasicMotionInfo(0, 0).init(getParameterF(0), getParameterF(1), getParameterF(2), getParameterF(3), getParameterF(4),
-	                              getParameterF(5));
-	getBasicMotionInfo(1, 0).init(getParameterF(6), getParameterF(7), getParameterF(8), getParameterF(9), getParameterF(10),
-	                              getParameterF(11));
-	getBasicMotionInfo(2, 0).init(getParameterF(12), getParameterF(13), getParameterF(14), getParameterF(15), getParameterF(16),
-	                              getParameterF(17));
+	getBasicMotionInfo(PCAMZOOM_Near, PCAMANGLE_Low)
+	    .init(getParameterF(PCAMF_NearLowDistance), getParameterF(PCAMF_NearLowAngle), getParameterF(PCAMF_NearLowFov),
+	          getParameterF(PCAMF_NearLowWatchAdjust), getParameterF(PCAMF_NearLowNaviWatchWeight), getParameterF(PCAMF_NearLowBlur));
+	getBasicMotionInfo(PCAMZOOM_Middle, PCAMANGLE_Low)
+	    .init(getParameterF(PCAMF_MiddleLowDistance), getParameterF(PCAMF_MiddleLowAngle), getParameterF(PCAMF_MiddleLowFov),
+	          getParameterF(PCAMF_MiddleLowWatchAdjust), getParameterF(PCAMF_MiddleLowNaviWatchWeight), getParameterF(PCAMF_MiddleLowBlur));
+	getBasicMotionInfo(PCAMZOOM_Far, PCAMANGLE_Low)
+	    .init(getParameterF(PCAMF_FarLowDistance), getParameterF(PCAMF_FarLowAngle), getParameterF(PCAMF_FarLowFov),
+	          getParameterF(PCAMF_FarLowWatchAdjust), getParameterF(PCAMF_FarLowNaviWatchWeight), getParameterF(PCAMF_FarLowBlur));
 
-	getBasicMotionInfo(0, 1).init(getParameterF(18), getParameterF(19), getParameterF(20), getParameterF(21), getParameterF(22),
-	                              getParameterF(23));
-	getBasicMotionInfo(1, 1).init(getParameterF(24), getParameterF(25), getParameterF(26), getParameterF(27), getParameterF(28),
-	                              getParameterF(29));
-	getBasicMotionInfo(2, 1).init(getParameterF(30), getParameterF(31), getParameterF(32), getParameterF(33), getParameterF(34),
-	                              getParameterF(35));
+	getBasicMotionInfo(PCAMZOOM_Near, PCAMANGLE_High)
+	    .init(getParameterF(PCAMF_NearHighDistance), getParameterF(PCAMF_NearHighAngle), getParameterF(PCAMF_NearHighFov),
+	          getParameterF(PCAMF_NearHighWatchAdjust), getParameterF(PCAMF_NearHighNaviWatchWeight), getParameterF(PCAMF_NearHighBlur));
+	getBasicMotionInfo(PCAMZOOM_Middle, PCAMANGLE_High)
+	    .init(getParameterF(PCAMF_MiddleHighDistance), getParameterF(PCAMF_MiddleHighAngle), getParameterF(PCAMF_MiddleHighFov),
+	          getParameterF(PCAMF_MiddleHighWatchAdjust), getParameterF(PCAMF_MiddleHighNaviWatchWeight),
+	          getParameterF(PCAMF_MiddleHighBlur));
+	getBasicMotionInfo(PCAMZOOM_Far, PCAMANGLE_High)
+	    .init(getParameterF(PCAMF_FarHighDistance), getParameterF(PCAMF_FarHighAngle), getParameterF(PCAMF_FarHighFov),
+	          getParameterF(PCAMF_FarHighWatchAdjust), getParameterF(PCAMF_FarHighNaviWatchWeight), getParameterF(PCAMF_FarHighBlur));
 
-	_38.init(getParameterF(36), getParameterF(37), getParameterF(38), getParameterF(39), getParameterF(40), getParameterF(41));
+	mAttentionInfo.init(getParameterF(PCAMF_AttentionDistance), getParameterF(PCAMF_AttentionAngle), getParameterF(PCAMF_AttentionFov),
+	                    getParameterF(PCAMF_AttentionWatchAdjust), getParameterF(PCAMF_AttentionNaviWatchWeight),
+	                    getParameterF(PCAMF_AttentionBlur));
 }
 
 /*
@@ -214,8 +224,8 @@ void PcamCamera::control(Controller& controller)
 {
 	u32 badCompiler[2];
 
-	bool doSlowFollow = controller.mTriggerL / 170.0f >= getParameterF(49);
-	bool isZClick     = false;
+	bool doRotate = controller.mTriggerL / 170.0f >= getParameterF(PCAMF_RotationButtonThreshold);
+	bool isZClick = false;
 	if (controller.keyClick(KBBTN_Z)) {
 		isZClick = true;
 	}
@@ -224,7 +234,7 @@ void PcamCamera::control(Controller& controller)
 		xSubY = controller.getSubStickY();
 	}
 	PcamControlInfo info;
-	info.init(true, doSlowFollow, controller.keyClick(KBBTN_L) != 0, controller.keyClick(KBBTN_R) && !controller.keyDown(KBBTN_X), isZClick,
+	info.init(true, doRotate, controller.keyClick(KBBTN_L) != 0, controller.keyClick(KBBTN_R) && !controller.keyDown(KBBTN_X), isZClick,
 	          false, false, controller.getMainStickX(), xSubY, controller.getSubStickY());
 	control(info);
 }
@@ -248,7 +258,7 @@ void PcamCamera::control(PcamControlInfo& info)
 		if (info.mDoToggleZoom) {
 			mToggleZoomPending = 1;
 		}
-		if (info.mDoAdjustInclination) {
+		if (info.mDoAdjustAngle) {
 			mAdjustInclinationPending = 1;
 		} else if (info._05) {
 			mAdjustInclinationPending = 2;
@@ -264,12 +274,12 @@ void PcamCamera::control(PcamControlInfo& info)
 	}
 
 	f32 fTime = NSystem::getFrameTime();
-	if (info.mDoSlowFollow) {
+	if (info.mDoRotate) {
 		if (NMath<f32>::absolute(info.mAzimuthRotIntensity) <= 0.01f) {
 			info.mAzimuthRotIntensity = 0.0f;
 		}
 
-		f32 p      = -getParameterF(44);
+		f32 p      = -getParameterF(PCAMF_RotationSpeed);
 		f32 rotAmt = p * info.mAzimuthRotIntensity * fTime;
 		mPolarDir.rotateAzimuth(rotAmt);
 		mPolarDir.roundAzimuth();
@@ -283,7 +293,7 @@ void PcamCamera::control(PcamControlInfo& info)
  */
 void PcamCamera::startAttention()
 {
-	mTimers[1] = getParameterF(47);
+	mTimers[1] = getParameterF(PCAMF_AttentionPeriod);
 	_9C        = 1;
 	_B0        = mPolarDir.mAzimuth;
 }
@@ -309,8 +319,8 @@ void PcamCamera::update()
 	mCurrDistance = calcCurrentDistance();
 	if (mToggleZoomPending == TRUE) {
 		mZoomLevel++;
-		if (mZoomLevel >= 3) {
-			mZoomLevel = 0;
+		if (mZoomLevel >= PCAMZOOM_COUNT) {
+			mZoomLevel = PCAMZOOM_Near;
 		}
 		startMotion(getBasicMotionInfo(mZoomLevel, mInclinationLevel));
 		mToggleZoomPending = FALSE;
@@ -319,8 +329,8 @@ void PcamCamera::update()
 
 	if (mAdjustInclinationPending == TRUE) {
 		mInclinationLevel++;
-		if (mInclinationLevel >= 2) {
-			mInclinationLevel = 0;
+		if (mInclinationLevel >= PCAMANGLE_COUNT) {
+			mInclinationLevel = PCAMANGLE_Low;
 		}
 		startMotion(getBasicMotionInfo(mZoomLevel, mInclinationLevel));
 		mAdjustInclinationPending = FALSE;
@@ -355,8 +365,8 @@ void PcamCamera::makePosture()
 		} else {
 			f32 cursorDir = NMathF::roundAngle(NMathF::pi + getCursorDirection());
 			cursorDir     = NMathF::calcNearerDirection(_B0, cursorDir);
-			f32 a         = (cursorDir - _B0) * getParameterF(46);
-			f32 b         = getParameterF(54);
+			f32 a         = (cursorDir - _B0) * getParameterF(PCAMF_AttentionHomingSpeed);
+			f32 b         = getParameterF(PCAMF_AttentionAngleMaxSpeed);
 			if (a > b) {
 				a = b;
 			} else if (a < -b) {
@@ -381,7 +391,7 @@ void PcamCamera::makePosture()
 	inputPosture(posture);
 
 	f32 fov = getFov();
-	fov += (getCurrentFov() - fov) * getParameterF(43);
+	fov += (getCurrentFov() - fov) * getParameterF(PCAMF_FovHomingSpeed);
 	setFov(fov);
 	setBlur(getCurrentBlur());
 
@@ -488,9 +498,9 @@ void PcamCamera::startMotion(int zoom, int incl)
 void PcamCamera::startMotion(PcamMotionInfo& info)
 {
 	PRINT("startMotion\n");
-	_54        = _6C;
-	_6C        = info;
-	mTimers[0] = getParameterF(48);
+	mPrevMotionInfo   = mTargetMotionInfo;
+	mTargetMotionInfo = info;
+	mTimers[0]        = getParameterF(PCAMF_ChangingMotionPeriod);
 }
 
 /*
@@ -500,7 +510,7 @@ void PcamCamera::startMotion(PcamMotionInfo& info)
  */
 void PcamCamera::finishMotion()
 {
-	startMotion(PcamMotionInfo(_54));
+	startMotion(PcamMotionInfo(mPrevMotionInfo));
 }
 
 /*
@@ -510,7 +520,7 @@ void PcamCamera::finishMotion()
  */
 f32 PcamCamera::getChangingMotionRate()
 {
-	f32 ratio = mTimers[0] / getParameterF(48);
+	f32 ratio = mTimers[0] / getParameterF(PCAMF_ChangingMotionPeriod);
 	return 1.0f - ratio;
 }
 
@@ -521,7 +531,7 @@ f32 PcamCamera::getChangingMotionRate()
  */
 f32 PcamCamera::getGoalDistance()
 {
-	return NMathF::interpolate(_54.mDistance, _6C.mDistance, getChangingMotionRate()) * _A4;
+	return NMathF::interpolate(mPrevMotionInfo.mDistance, mTargetMotionInfo.mDistance, getChangingMotionRate()) * _A4;
 }
 
 /*
@@ -531,7 +541,7 @@ f32 PcamCamera::getGoalDistance()
  */
 f32 PcamCamera::getCurrentAngle()
 {
-	return NMathF::interpolate(_54.mAngle, _6C.mAngle, getChangingMotionRate());
+	return NMathF::interpolate(mPrevMotionInfo.mAngle, mTargetMotionInfo.mAngle, getChangingMotionRate());
 }
 
 /*
@@ -542,7 +552,7 @@ f32 PcamCamera::getCurrentAngle()
 f32 PcamCamera::getCurrentFov()
 {
 	f32 rate = getChangingMotionRate();
-	return NMathF::interpolate(_54.mFov, _6C.mFov, rate);
+	return NMathF::interpolate(mPrevMotionInfo.mFov, mTargetMotionInfo.mFov, rate);
 }
 
 /*
@@ -552,7 +562,7 @@ f32 PcamCamera::getCurrentFov()
  */
 f32 PcamCamera::getCurrentHomingSpeed()
 {
-	return getParameterF(42);
+	return getParameterF(PCAMF_HomingSpeed);
 }
 
 /*
@@ -562,7 +572,7 @@ f32 PcamCamera::getCurrentHomingSpeed()
  */
 f32 PcamCamera::getCurrentWatchAdjustment()
 {
-	return NMathF::interpolate(_54.mWatchAdjustment, _6C.mWatchAdjustment, getChangingMotionRate());
+	return NMathF::interpolate(mPrevMotionInfo.mWatchAdjustment, mTargetMotionInfo.mWatchAdjustment, getChangingMotionRate());
 }
 
 /*
@@ -572,7 +582,7 @@ f32 PcamCamera::getCurrentWatchAdjustment()
  */
 f32 PcamCamera::getCurrentNaviWatchWeight()
 {
-	return NMathF::interpolate(_54.mNaviWatchWeight, _6C.mNaviWatchWeight, getChangingMotionRate());
+	return NMathF::interpolate(mPrevMotionInfo.mNaviWatchWeight, mTargetMotionInfo.mNaviWatchWeight, getChangingMotionRate());
 }
 
 /*
@@ -582,7 +592,7 @@ f32 PcamCamera::getCurrentNaviWatchWeight()
  */
 f32 PcamCamera::getCurrentBlur()
 {
-	return NMathF::interpolate(_54.mBlur, _6C.mBlur, getChangingMotionRate());
+	return NMathF::interpolate(mPrevMotionInfo.mBlur, mTargetMotionInfo.mBlur, getChangingMotionRate());
 }
 
 /*
@@ -689,7 +699,7 @@ void PcamCamera::outputFormationWatchpoint(Navi* navi, NVector3f& outWatchPt)
 			{
 				Creature* piki = *iter;
 				f32 dist       = pos.distanceXZ(piki->getPosition());
-				if (dist <= getParameterF(52)) {
+				if (dist <= getParameterF(PCAMF_IgnoringPikiDistance)) {
 					outWatchPt.add(piki->getPosition());
 					pikiCount++;
 				}

@@ -16,6 +16,25 @@ struct PcamCameraParameters;
 
 /**
  * @brief TODO
+ */
+enum PcamZoomLevels {
+	PCAMZOOM_Near   = 0,
+	PCAMZOOM_Middle = 1,
+	PCAMZOOM_Far    = 2,
+	PCAMZOOM_COUNT, // 3
+};
+
+/**
+ * @brief TODO
+ */
+enum PcamAngleLevels {
+	PCAMANGLE_Low  = 0,
+	PCAMANGLE_High = 1,
+	PCAMANGLE_COUNT, // 2
+};
+
+/**
+ * @brief TODO
  *
  * @note Size: 0x18.
  */
@@ -42,16 +61,16 @@ struct PcamControlInfo {
 
 	void init(bool, bool, bool, bool, bool, bool, bool, f32, f32, f32);
 
-	bool _00;                  // _00
-	bool mDoSlowFollow;        // _01, slow tracking left/right when partially holding L
-	bool mDoAttentionCamera;   // _02, front-facing snap when clicking L
-	bool mDoToggleZoom;        // _03, toggle zoom level with R
-	bool mDoAdjustInclination; // _04, toggle inclination/angle with Z
-	bool _05;                  // _05
-	bool _06;                  // _06
-	f32 mAzimuthRotIntensity;  // _08
-	f32 _0C;                   // _0C
-	f32 _10;                   // _10
+	bool _00;                 // _00
+	bool mDoRotate;           // _01, slow tracking left/right when partially holding L
+	bool mDoAttentionCamera;  // _02, front-facing snap when clicking L
+	bool mDoToggleZoom;       // _03, toggle zoom level with R
+	bool mDoAdjustAngle;      // _04, toggle inclination/angle with Z
+	bool _05;                 // _05
+	bool _06;                 // _06
+	f32 mAzimuthRotIntensity; // _08
+	f32 _0C;                  // _0C
+	f32 _10;                  // _10
 };
 
 /**
@@ -114,19 +133,19 @@ struct PcamCamera : public NCamera {
 
 	// _50     = VTBL
 	// _00-_20 = NCamera
-	u8 _20;              // _20
-	u8 _21[0x28 - 0x21]; // _21, unknown
-	u8 _28;              // _28
-	u8 _29[0x30 - 0x29]; // _29, unknown
-	u8 _30;              // _30
-	u8 _31[0x38 - 0x31]; // _31, unknown
-	PcamMotionInfo _38;  // _38
+	u8 _20;                        // _20
+	u8 _21[0x28 - 0x21];           // _21, unknown
+	u8 _28;                        // _28
+	u8 _29[0x30 - 0x29];           // _29, unknown
+	u8 _30;                        // _30
+	u8 _31[0x38 - 0x31];           // _31, unknown
+	PcamMotionInfo mAttentionInfo; // _38
 
 	// why is this in the middle. this is all one struct according to the DLL, just bizarre.
 	virtual void update(); // _08
 
-	PcamMotionInfo _54;                     // _54
-	PcamMotionInfo _6C;                     // _6C
+	PcamMotionInfo mPrevMotionInfo;         // _54
+	PcamMotionInfo mTargetMotionInfo;       // _6C
 	NArray<Creature>* mCreatureArray;       // _84
 	int mZoomLevel;                         // _88
 	BOOL mToggleZoomPending;                // _8C

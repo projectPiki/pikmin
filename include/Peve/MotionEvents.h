@@ -5,6 +5,7 @@
 #include "Peve/Event.h"
 #include "nlib/Spline.h"
 #include "nlib/Geometry.h"
+#include "Peve/IO.h"
 
 struct NFunction3D;
 struct NPosture3DIO;
@@ -26,7 +27,9 @@ struct PeveAccelerationEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	u8 _10[0xC]; // _10, unknown
+	NVector3fIO* _10; // _10
+	NVector3fIO* _14; // _14
+	NVector3fIO* _18; // _18
 };
 
 /**
@@ -46,7 +49,14 @@ struct PeveCircleMoveEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	u8 _10[0x38 - 0x10]; // _10, unknown
+	f32 mAngle;                       // _10
+	PeveTimeCondition mTimeCondition; // _14
+	NVector3fIO* _20;                 // _20
+	NVector3fIO* _24;                 // _24
+	f32 _28;                          // _28
+	f32 _2C;                          // _2C
+	f32 _30;                          // _30
+	f32 _34;                          // _34
 };
 
 /**
@@ -77,7 +87,12 @@ struct PeveFunctionCurveEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	// TODO: members
+	f32 _10;                // _10
+	NVector3fIO* _14;       // _14
+	NFunction3D* mFunction; // _18
+	f32 _1C;                // _1C
+	f32 _20;                // _20
+	bool _24;               // _24
 };
 
 /**
@@ -93,7 +108,9 @@ struct PeveHomingPositionEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	// TODO: members
+	NVector3fIO* _10; // _10
+	NVector3fIO* _14; // _14
+	f32 _18;          // _18
 };
 
 /**
@@ -128,9 +145,13 @@ struct PeveHorizontalSinWaveEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	u8 _10[0x4];         // _10, unknown
-	NVector3f _14;       // _14
-	u8 _20[0x34 - 0x20]; // _20, unknown
+	NVector3fIO* _10;   // _10
+	NVector3f _14;      // _14
+	f32 mOffset;        // _20
+	f32 mAmplitude;     // _24
+	f32 mStartingTheta; // _28
+	f32 _2C;            // _2C
+	f32 mTheta;         // _30
 };
 
 /**
@@ -139,26 +160,30 @@ struct PeveHorizontalSinWaveEvent : public PeveEvent {
 struct PeveInterpolationEvent : public PeveEvent {
 	PeveInterpolationEvent(int, NPool<SplineSegment>*);
 
-	virtual void reset();           // _20
-	virtual void update();          // _24
-	virtual bool isFinished();      // _28
-	virtual void setStartTime(f32); // _3C
-	virtual f32 getStartTime();     // _40
-	virtual void setPeriod(f32);    // _44
-	virtual f32 getPeriod();        // _48
-	virtual void setTime(f32);      // _4C
-	virtual f32 getTime();          // _50
-	virtual f32 getEndTime();       // _54
+	virtual void reset();                                                // _20
+	virtual void update();                                               // _24
+	virtual bool isFinished() { return mAlpha.isFinished(); }            // _28
+	virtual void setStartTime(f32 start) { mAlpha.setStartTime(start); } // _3C
+	virtual f32 getStartTime() { return mAlpha.getStartTime(); }         // _40
+	virtual void setPeriod(f32 period) { mAlpha.setPeriod(period); }     // _44
+	virtual f32 getPeriod() { return mAlpha.getPeriod(); }               // _48
+	virtual void setTime(f32 time) { mAlpha.setTime(time); }             // _4C
+	virtual f32 getTime() { return mAlpha.getTime(); }                   // _50
+	virtual f32 getEndTime() { return mAlpha.getEndTime(); }             // _54
 
 	// unused/inlined:
 	void makeInterpolationEvent(PeveCondition*, NPosture3DIO*);
 
 	// DLL inlines:
-	SplineKeyFrame* getFrame(int);
+	SplineKeyFrame* getFrame(int idx) { return mSplineInterpolator->getFrame(idx); }
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	// TODO: members
+	int _10;                                 // _10
+	f32 _14;                                 // _14
+	NAlpha mAlpha;                           // _18
+	SplineInterpolator* mSplineInterpolator; // _2C
+	NPosture3DIO* mPostureIO;                // _30
 };
 
 /**
@@ -174,7 +199,9 @@ struct PeveMoveEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	// TODO: members
+	PeveBooleanCondition mBoolCondition; // _10
+	NPosture3DIO* mPostureIO;            // _18
+	NPosture3D mPosture;                 // _1C
 };
 
 /**
@@ -189,7 +216,8 @@ struct PeveParabolaEvent : public PeveAccelerationEvent {
 
 	// _00     = VTBL
 	// _00-_1C = PeveAccelerationEvent
-	u8 _1C[0x40 - 0x1C]; // _1C, unknown
+	NVector3fIOClass _1C;    // _1C
+	PeveClampVector3fIO _2C; // _2C
 };
 
 /**
@@ -206,7 +234,7 @@ struct PeveVibrationEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	u8 _10[0x4];                       // _10, unknown
+	NPosture3DIO* mPostureIO;          // _10
 	NVector3f _14;                     // _14
 	PeveTimeCondition mTimeCondition;  // _20
 	NVibrationFunction mVibFunction;   // _2C
@@ -224,7 +252,7 @@ struct PeveWaitEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	// TODO: members
+	PeveTimeCondition mTimeCondition; // _10
 };
 
 #endif

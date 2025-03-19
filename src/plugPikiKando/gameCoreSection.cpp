@@ -1191,7 +1191,7 @@ void GameCoreSection::finalSetup()
 		if (playerState->isTutorial()) {
 			cameraMgr->mCamera->startCamera(mNavi, 0, 0);
 			if (playerState->isTutorial() && playerState->_11 & 8) {
-				cameraMgr->mCamera->startMotion(cameraMgr->mCamera->_38);
+				cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
 				cameraMgr->mCamera->_30 = 0;
 			}
 		} else {

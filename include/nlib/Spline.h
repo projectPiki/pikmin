@@ -109,7 +109,7 @@ struct SplineInterpolator {
 	void removeAllFrames();
 
 	// DLL inlines:
-	SplineKeyFrame* getFrame(int);
+	SplineKeyFrame* getFrame(int idx) { return mFrameArray->get(idx); }
 
 	// TODO: members
 	NArray<SplineKeyFrame>* mFrameArray; // _00

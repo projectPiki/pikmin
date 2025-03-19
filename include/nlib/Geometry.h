@@ -74,6 +74,8 @@ struct NVector3f : public Vector3f {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x4.
  */
 struct NVector3fIO {
 	virtual void input(NVector3f&)  = 0; // _08
@@ -84,14 +86,16 @@ struct NVector3fIO {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct NVector3fIOClass : public NVector3fIO {
-	virtual void input(NVector3f&);  // _08
-	virtual void output(NVector3f&); // _0C
+	virtual void input(NVector3f& vec) { _04.input(vec); }         // _08
+	virtual void output(NVector3f& outVec) { _04.output(outVec); } // _0C
 
 	// _00 = VTBL
 	// _00-_04 = NVector3fIO
-	NVector3f _04; // _04, maybe in NVector3fIO, no idea.
+	NVector3f _04; // _04
 };
 
 /**
@@ -474,21 +478,26 @@ struct NAlpha {
 	static f32 fadeInOutValue(f32 x);
 	static f32 fadeOutInValue(f32 x);
 
-	bool isFinished();      // DLL, to do
-	f32 getEndTime();       // DLL, to do
-	f32 getPeriod();        // DLL, to do
-	f32 getStartTime();     // DLL, to do
-	f32 getTime();          // DLL, to do
-	f32 getValue();         // DLL, to do
-	void passTime(f32);     // DLL, to do
-	void setPeriod(f32);    // DLL, to do
-	void setStartTime(f32); // DLL, to do
-	void setTime(f32);      // DLL, to do
+	f32 getValue() { return getValue(mValue); }
+	void passTime(f32 inc) { mValue += inc; }
+
+	bool isFinished() { return mValue >= getEndTime(); }
+
+	f32 getStartTime() { return mOffset; }
+	void setStartTime(f32 start) { mOffset = start; }
+
+	f32 getPeriod() { return mScale; }
+	void setPeriod(f32 period) { mScale = period; }
+
+	f32 getTime() { return mValue; }
+	void setTime(f32 time) { mValue = time; }
+
+	f32 getEndTime() { return mOffset + mScale; }
 
 	// _00 = VTBL
-	f32 mValue;  // _04
-	f32 mOffset; // _08
-	f32 mScale;  // _0C, actually named 'period'
+	f32 mValue;  // _04, a.k.a. time
+	f32 mOffset; // _08, a.k.a. start time
+	f32 mScale;  // _0C, a.k.a. period
 	u8 mMode;    // _10
 };
 
