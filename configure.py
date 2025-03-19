@@ -376,7 +376,7 @@ config.libs = [
             Object(NonMatching, "jaudio/syncstream.c"),
             Object(NonMatching, "jaudio/bankloader.c"),
             Object(NonMatching, "jaudio/interleave.c"),
-            Object(NonMatching, "jaudio/pikiseq.c"),
+            Object(Matching, "jaudio/pikiseq.c"),
             Object(NonMatching, "jaudio/hplaybss.c"),
             Object(NonMatching, "jaudio/hplaybss2.c"),
             Object(NonMatching, "jaudio/hvqm_play.c"),
