@@ -1,13 +1,12 @@
-#include "types.h"
+#include "jaudio/cmdqueue.h"
 
-typedef struct cmdqueue_ cmdqueue_;
 
 /*
  * --INFO--
  * Address:	8001B960
  * Size:	00003C
  */
-void Add_Queue(cmdqueue_*)
+static void Add_Queue(cmdqueue_*)
 {
 	/*
 	.loc_0x0:
@@ -163,7 +162,7 @@ void Jal_SendCmdQueue_Force(void)
  * Address:	8001BAA0
  * Size:	000078
  */
-void Jal_FrameWork(void*)
+static void Jal_FrameWork(void*)
 {
 	/*
 	.loc_0x0:
