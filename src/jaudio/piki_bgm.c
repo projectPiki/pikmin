@@ -961,7 +961,7 @@ void Jac_GameVolume(u8 bgmVol, u8 seVol)
  * Address:	80019500
  * Size:	0000E4
  */
-void Jac_EasyCrossFade(void)
+void Jac_EasyCrossFade(unknown, unknown)
 {
 	/*
 	.loc_0x0:

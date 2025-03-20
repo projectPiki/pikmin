@@ -295,7 +295,7 @@ static void InitAudio1(StreamHeader*, u8*, u32)
  * Address:	8001E020
  * Size:	0003BC
  */
-void Jac_HVQM_Init(void)
+void Jac_HVQM_Init(const char* filepath, u8*, int)
 {
 	/*
 	.loc_0x0:
@@ -1000,7 +1000,7 @@ void Jac_CountReadyPictures(void)
  * Address:	8001E860
  * Size:	000228
  */
-void Jac_GetPicture(void)
+int Jac_GetPicture(void)
 {
 	/*
 	.loc_0x0:

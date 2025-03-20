@@ -1,5 +1,11 @@
 #include "jaudio/app_inter.h"
 
+#include "jaudio/PikiScene.h"
+#include "jaudio/PikiBgm.h"
+#include "jaudio/hvqm_play.h"
+
+static BOOL demo_fade_flag;
+
 /*
  * --INFO--
  * Address:	........
@@ -15,41 +21,14 @@ void Jac_Pause(void)
  * Address:	80017460
  * Size:	000070
  */
-void Jac_StreamMovieInit(void)
+void Jac_StreamMovieInit(const char* filepath, u8* param_2, int param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  addi      r31, r5, 0
-	  bl        0x23C4
-	  cmplwi    r3, 0x1
-	  bne-      .loc_0x48
-	  lwz       r0, 0x2C78(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x48
-	  li        r3, 0x1
-	  li        r4, 0x32
-	  bl        0x2064
-	  li        r0, 0x1
-	  stw       r0, 0x2C78(r13)
-
-	.loc_0x48:
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  bl        0x6B6C
-	  bl        0x2948
-	  lmw       r29, 0x1C(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (Jac_GetCurrentScene() == 1 && !demo_fade_flag) {
+		Jac_EasyCrossFade(1, 50);
+		demo_fade_flag = TRUE;
+	}
+	Jac_HVQM_Init(filepath, param_2, param_3);
+	Jac_UpdateStreamLevel();
 }
 
 /*
@@ -59,30 +38,11 @@ void Jac_StreamMovieInit(void)
  */
 void Jac_StreamMovieStop(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x72F4
-	  bl        0x2350
-	  cmplwi    r3, 0x1
-	  bne-      .loc_0x3C
-	  lwz       r0, 0x2C78(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x3C
-	  li        r3, 0
-	  li        r4, 0x64
-	  bl        0x1FF0
-	  li        r0, 0
-	  stw       r0, 0x2C78(r13)
-
-	.loc_0x3C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Jac_HVQM_ForceStop();
+	if (Jac_GetCurrentScene() == 1 && demo_fade_flag) {
+		Jac_EasyCrossFade(0, 100);
+		demo_fade_flag = FALSE;
+	}
 }
 
 /*
@@ -92,17 +52,7 @@ void Jac_StreamMovieStop(void)
  */
 void Jac_StreamMovieUpdate(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x6EF4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Jac_HVQM_Update();
 }
 
 /*
@@ -110,36 +60,18 @@ void Jac_StreamMovieUpdate(void)
  * Address:	80017560
  * Size:	000064
  */
-void Jac_StreamMovieGetPicture(void)
+int Jac_StreamMovieGetPicture(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  bl        0x72F0
-	  addi      r31, r3, 0
-	  cmpwi     r31, -0x1
-	  bne-      .loc_0x4C
-	  bl        0x22C0
-	  cmplwi    r3, 0x1
-	  bne-      .loc_0x4C
-	  lwz       r0, 0x2C78(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x4C
-	  li        r3, 0
-	  li        r4, 0x64
-	  bl        0x1F60
-	  li        r0, 0
-	  stw       r0, 0x2C78(r13)
+	u32 badCompiler[3];
 
-	.loc_0x4C:
-	  mr        r3, r31
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	int picture;
+
+	picture = Jac_GetPicture();
+	if (picture == -1) {
+		if (Jac_GetCurrentScene() == 1 && demo_fade_flag) {
+			Jac_EasyCrossFade(0, 100);
+			demo_fade_flag = FALSE;
+		}
+	}
+	return picture;
 }

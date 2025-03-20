@@ -19,7 +19,7 @@ void Jac_BgmFrameWork(void);      // args
 void Jac_MoveBgmTrackVol(void);   // args
 void Jac_ChangeBgmTrackVol(void); // args
 void Jac_GameVolume(u8 bgmVol, u8 seVol);
-void Jac_EasyCrossFade(void);     // args
+void Jac_EasyCrossFade(unknown8, unknown); // args
 void Jac_DemoFade(f32, int, int); // TODO: types unsure
 void Jac_EnterBossMode(void);     // args
 void Jac_ExitBossMode(void);      // args
