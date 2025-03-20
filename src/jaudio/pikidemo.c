@@ -74,7 +74,7 @@ void Jac_DemoEventUnPauseCheck()
  * Address:	8001A180
  * Size:	000048
  */
-void Jac_DemoCheck()
+BOOL Jac_DemoCheck()
 {
 	/*
 	.loc_0x0:

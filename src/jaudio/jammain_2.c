@@ -1445,7 +1445,7 @@ void Jam_CheckPortIndirect(void)
  * Address:	80010380
  * Size:	000078
  */
-void Jam_WritePortAppDirect(void)
+int Jam_WritePortAppDirect(seqp_*, int, int)
 {
 	/*
 	.loc_0x0:
@@ -1495,7 +1495,7 @@ void Jam_WritePortAppDirect(void)
  * Address:	80010400
  * Size:	000030
  */
-void Jam_ReadPortAppDirect(void)
+void Jam_ReadPortAppDirect(seqp_*, unknown32, u16*)
 {
 	/*
 	.loc_0x0:
@@ -1521,7 +1521,7 @@ void Jam_ReadPortAppDirect(void)
  * Address:	80010440
  * Size:	00006C
  */
-void Jam_CheckPortAppDirect(void)
+int Jam_CheckPortAppDirect(seqp_*, int, int)
 {
 	/*
 	.loc_0x0:
@@ -1761,7 +1761,7 @@ void Jam_UnRegistTrack(void)
  * Address:	80010660
  * Size:	000050
  */
-void Jam_GetTrackHandle(void)
+seqp_* Jam_GetTrackHandle(u32)
 {
 	/*
 	.loc_0x0:
@@ -2236,7 +2236,7 @@ void Jam_CheckRunningCounter(void)
  * Address:	80010A60
  * Size:	00000C
  */
-void Jam_RegisterTrackCallback(void)
+void Jam_RegisterTrackCallback(TrackCallback)
 {
 	/*
 	.loc_0x0:
@@ -3103,7 +3103,7 @@ void Jam_MuteChildTracks(void)
  * Address:	800114E0
  * Size:	00013C
  */
-void Jam_PauseTrack(void)
+void Jam_PauseTrack(seqp_*, u32) // TODO: types uncertain
 {
 	/*
 	.loc_0x0:
@@ -3214,7 +3214,7 @@ void Jam_PauseTrack(void)
  * Address:	80011620
  * Size:	0000EC
  */
-void Jam_UnPauseTrack(void)
+void Jam_UnPauseTrack(seqp_*, u32)
 {
 	/*
 	.loc_0x0:

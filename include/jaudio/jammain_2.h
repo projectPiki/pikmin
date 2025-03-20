@@ -5,6 +5,18 @@
 
 typedef struct seqp_ seqp_;
 
+/**
+ * @brief TODO
+ *
+ * @note Size: ?.
+ */
+struct seqp_ {
+	u8 _00[0x88 - 0x00]; // _00
+	u32 _88;             // _88;
+};
+
+typedef unknown32 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
+
 #ifdef __cplusplus
 extern "C" {
 #endif // ifdef __cplusplus
@@ -22,16 +34,16 @@ void Jam_CheckImportApp(void);
 void Jam_WritePortIndirect(void);
 void Jam_ReadPortIndirect(void);
 void Jam_CheckPortIndirect(void);
-void Jam_WritePortAppDirect(void);
-void Jam_ReadPortAppDirect(void);
-void Jam_CheckPortAppDirect(void);
+int Jam_WritePortAppDirect(seqp_*, int, int);        // TODO: types unknown;
+void Jam_ReadPortAppDirect(seqp_*, unknown32, u16*); // TODO: types unknown
+int Jam_CheckPortAppDirect(seqp_*, int, int);        // TODO: types unknown
 void Jam_WritePort(void);
 void Jam_ReadPort(void);
 void Jam_WritePortChild(void);
 void Jam_WritePortBros(void);
 void Jam_InitRegistTrack(void);
 void Jam_UnRegistTrack(void);
-void Jam_GetTrackHandle(void);
+seqp_* Jam_GetTrackHandle(u32);
 void Jam_InitExtBuffer(void);
 void Jam_AssignExtBuffer(void);
 void Jam_AssignExtBufferP(void);
@@ -51,15 +63,15 @@ void Jam_OnExtSwitchP(void);
 void Jam_OffExtSwitchP(void);
 void Jam_SetExtSwitchDirectP(void);
 void Jam_CheckRunningCounter(void);
-void Jam_RegisterTrackCallback(void);
+void Jam_RegisterTrackCallback(TrackCallback);
 void Jam_SetTrackExtPanPower(void);
 void Jam_UpdateTrackAll(void);
 void Jam_UpdateTrack(void);
 void Jam_UpdateTempo(void);
 void Jam_MuteTrack(void);
 void Jam_MuteChildTracks(void);
-void Jam_PauseTrack(void);
-void Jam_UnPauseTrack(void);
+void Jam_PauseTrack(seqp_*, u32); // TODO: types uncertain
+void Jam_UnPauseTrack(seqp_*, u32);
 void Jam_SetInterrupt(void);
 void Jam_TryInterrupt(void);
 void Jam_SeqmainNote(void);

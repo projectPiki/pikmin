@@ -1,15 +1,17 @@
 #include "jaudio/PikiScene.h"
+
 #include "jaudio/PikiBgm.h"
+#include "jaudio/waveread.h"
 
 static u32 current_bgm;
 static u32 current_ready; // type
 static u32 now_loading;   // type
 static u32 first_load;    // type
-static u32 chgmode;       // type
+static BOOL chgmode;      // type
 
-static u32 current_scene   = 0xFFFFFFFF;
-static u32 current_stage   = 0xFFFFFFFF;
-static u32 current_prepare = 0xFFFFFFFF;
+static u32 current_scene   = -1;
+static u32 current_stage   = -1;
+static u32 current_prepare = -1;
 static u16 stream_level    = 8000;
 static u16 stream_se_level = 8000;
 
@@ -22,24 +24,7 @@ void Jac_Delete_CurrentBgmWave()
 {
 	Jac_StopBgm(0);
 	Jac_StopBgm(1);
-	// WaveScene_Close(current_bgm, 0);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xBF0
-	  li        r3, 0x1
-	  bl        -0xBF8
-	  lwz       r3, 0x2D08(r13)
-	  li        r4, 0
-	  bl        -0xCFA4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	WaveScene_Close(current_bgm, 0);
 }
 
 /*
@@ -116,7 +101,7 @@ u32 Jac_GetCurrentScene()
  * Address:	80019860
  * Size:	000008
  */
-u32 Jac_TellChgMode()
+BOOL Jac_TellChgMode()
 {
 	return chgmode;
 }
