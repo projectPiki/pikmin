@@ -5,7 +5,7 @@
 
 //////////// JAUDIO PIKMIN DEMO FUNCTIONS (C++) ////////////
 void Jac_DemoEventUnPauseCheck();
-void Jac_DemoCheck();
+BOOL Jac_DemoCheck();
 void Jac_DemoWalkCheck();
 void Jac_DemoCheckEvent(u8);
 void Jac_PlayDemoSequenceDirect(u32);

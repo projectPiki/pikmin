@@ -777,7 +777,7 @@ void Jac_StopEventAction(void)
  * Address:	80017EC0
  * Size:	000070
  */
-void MML_StopEventAction(void)
+void MML_StopEventAction(u8, u8, u16)
 {
 	/*
 	.loc_0x0:
@@ -821,7 +821,7 @@ void MML_StopEventAction(void)
  * Address:	80017F40
  * Size:	00005C
  */
-void MML_StopEventAll(void)
+void MML_StopEventAll(u8, u16)
 {
 	/*
 	.loc_0x0:

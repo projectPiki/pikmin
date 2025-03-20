@@ -159,7 +159,7 @@ void Jac_InitBgm(void)
  * Address:	80018B40
  * Size:	00002C
  */
-void Jac_FadeOutBgm(void)
+void Jac_FadeOutBgm(unknown, unknown)
 {
 	/*
 	.loc_0x0:
@@ -494,7 +494,7 @@ void Jac_ChangeBgmMode(void)
  * Address:	80018F40
  * Size:	0000A8
  */
-void Jac_SetBgmModeFlag(void)
+void Jac_SetBgmModeFlag(unknown, unknown, unknown)
 {
 	/*
 	.loc_0x0:
@@ -1042,7 +1042,7 @@ void Jac_EasyCrossFade(void)
  * Address:	80019600
  * Size:	0000C8
  */
-void Jac_DemoFade(void)
+void Jac_DemoFade(f32, int, int)
 {
 	/*
 	.loc_0x0:

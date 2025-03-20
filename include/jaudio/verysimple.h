@@ -14,7 +14,7 @@ void Jac_SysSEDemoFadeCheck();
 void Jac_PlaySystemSe(s32);
 void Jac_StopSystemSe(s32);
 BOOL Jac_CheckBootOk();
-void Jac_Start(void* heap, u32 heapSize, u32 aramSize);
+void Jac_Start(void* heap, u32 heapSize, u32 aramSize, char* rootPath);
 void Jac_Freeze_Precall();
 void Jac_Freeze();
 void Jac_AddDVDBuffer(u8* buf, u32);

@@ -24,7 +24,7 @@ void RegisterStreamCallback(void);
 void Jac_Decode_ADPCM(void);
 void StreamSyncCheckReady(void);
 void StreamSyncCheckReadyID(void);
-void StreamSyncCheckBusy(void);
+BOOL StreamSyncCheckBusy(unknown, unknown);
 void StreamSyncPlayAudio(void);
 void StreamSyncStopAudio(void);
 void StreamChgPitch(void);

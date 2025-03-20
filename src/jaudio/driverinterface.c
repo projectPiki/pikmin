@@ -31,7 +31,7 @@ void Channel_SetMixerLevel(f32)
  * Address:	80009440
  * Size:	00000C
  */
-void Get_GlobalHandle()
+JCS* Get_GlobalHandle()
 {
 	/*
 	.loc_0x0:
