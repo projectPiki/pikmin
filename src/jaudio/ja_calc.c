@@ -4,7 +4,8 @@
 #include "Dolphin/math.h"
 #include "stl/math.h"
 
-static f32 SINTABLE[257];
+#define SINTABLE_LENGTH (257)
+static f32 SINTABLE[SINTABLE_LENGTH];
 
 /*
  * --INFO--
@@ -53,48 +54,9 @@ void sinf2(f32)
  */
 void Jac_InitSinTable()
 {
-	for (u32 i = 0; i < 257; i++) {
-		SINTABLE[i] = sinf(HALF_PI * f32(i) * 0.00390625f);
+	for (u32 i = 0; i < SINTABLE_LENGTH; i++) {
+		SINTABLE[i] = sinf(i * HALF_PI / 256.0f);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  addi      r11, r1, 0x38
-	  bl        0x207150
-	  stmw      r28, 0x10(r1)
-	  lis       r3, 0x8031
-	  lfs       f29, -0x7F48(r2)
-	  lfd       f30, -0x7F40(r2)
-	  subi      r30, r3, 0x2520
-	  lfs       f31, -0x7F44(r2)
-	  li        r28, 0
-	  li        r31, 0
-	  lis       r29, 0x4330
-
-	.loc_0x38:
-	  stw       r28, 0xC(r1)
-	  stw       r29, 0x8(r1)
-	  lfd       f0, 0x8(r1)
-	  fsubs     f0, f0, f30
-	  fmuls     f0, f29, f0
-	  fmuls     f1, f0, f31
-	  bl        0x20DF98
-	  addi      r28, r28, 0x1
-	  add       r3, r30, r31
-	  cmplwi    r28, 0x101
-	  stfs      f1, 0x0(r3)
-	  addi      r31, r31, 0x4
-	  blt+      .loc_0x38
-	  lwz       r0, 0x3C(r1)
-	  addi      r11, r1, 0x38
-	  bl        0x207138
-	  lmw       r28, 0x10(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -104,5 +66,5 @@ void Jac_InitSinTable()
  */
 f32 sinf3(f32 x)
 {
-	return SINTABLE[int(256.0f * x)];
+	return SINTABLE[(int)(256.0f * x)];
 }
