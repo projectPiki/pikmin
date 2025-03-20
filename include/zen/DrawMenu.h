@@ -64,6 +64,16 @@ struct DrawMenu : public DrawScreen {
 	void setMirror(P2DPane*);
 	void updateSpectPanes(P2DPane*, P2DPicture**, bool);
 
+	u8 _00; // _00, unknown
+	u8 _04; // _04, unknown
+	u8 _08[0x98]; // _08, unknown
+	int _100; // _100, unknown
+	u8 _104[0xc]; // _104, unknown
+	int _110; // _110, unknown
+	u8 _114[0xb8]; // _114, unknown
+	int _1d0; // _1d0, unknown
+	char _1d4; // _1d4, unknown
+
 	// TODO: members
 };
 

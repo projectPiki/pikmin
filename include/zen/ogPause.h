@@ -29,7 +29,9 @@ struct ogScrPauseMgr {
 		PAUSE_Unk0 = 0,
 		PAUSE_Unk1 = 1,
 		PAUSE_Unk2 = 2,
+		PAUSE_Unk3 = 3,
 		PAUSE_Unk4 = 4,
+		PAUSE_Unk5 = 5,
 	};
 
 	ogScrPauseMgr();
@@ -40,7 +42,7 @@ struct ogScrPauseMgr {
 
 	u8 _00; // _00, unknown
 	PauseStatus mState; // _04
-	u8 _08; // _08, unknown
+	PauseStatus mState2; // _08
 	DrawMenu* mDrawMenu1; // _0c
 	DrawMenu* mDrawMenu2; // _10
 	P2DScreen* _14; // _14

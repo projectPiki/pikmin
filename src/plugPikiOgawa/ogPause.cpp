@@ -5,6 +5,8 @@
 #include "P2D/Picture.h"
 #include "P2D/Graph.h"
 #include "DebugLog.h"
+#include "sysNew.h"
+#include "PlayerState.h"
 
 /*
  * --INFO--
@@ -27,14 +29,15 @@ DEFINE_PRINT("OgPauseSection")
  */
 zen::ogScrPauseMgr::ogScrPauseMgr()
 {
+	u32 badCompiler[14];
 	
 	mMode = 0;
 	mBlackScreen = new P2DScreen();
 	mBlackScreen->set("screen/blo/black.blo", false, false, true);
 	mBlackPane = mBlackScreen->search('blck', true);
-	mDrawMenu1      = new DrawMenu("screen/blo/pause.blo", false, false);
-	//_14 = mDrawMenu1->_04;
 
+	mDrawMenu1      = new DrawMenu("screen/blo/pause.blo", false, false);
+	_14 = static_cast<P2DScreen*>(&mDrawMenu1->mPane);
 	P2DTextBox* textBox4 = static_cast<P2DTextBox*>(_14->search('yame', true));
 	mTextBox4 = textBox4;
 	P2DTextBox* textBox5 = static_cast<P2DTextBox*>(_14->search('he02', true));
@@ -42,8 +45,13 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
 	P2DTextBox* textBox6 = static_cast<P2DTextBox*>(_14->search('hm02', true));
 	mTextBox6 = textBox6;
 
-	mDrawMenu2      = new DrawMenu("screen/blo/pause_ok.blo", false, false);
+	_3c = mTextBox4->getText();
+	_40 = mTextBox5->getText();
 
+	mTextBox4->setFlag(0, 7, 1);
+
+	mDrawMenu2      = new DrawMenu("screen/blo/pause_ok.blo", false, false);
+	_18 = static_cast<P2DScreen*>(&mDrawMenu2->mPane);
 	P2DTextBox* textBox1 = static_cast<P2DTextBox*>(_18->search('yame', true));
 	mTextBox1 = textBox1;
 	P2DTextBox* textBox2 = static_cast<P2DTextBox*>(_18->search('titl', true));
@@ -51,12 +59,21 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
 	P2DTextBox* textBox3 = static_cast<P2DTextBox*>(_18->search('even', true));
 	mTextBox3 = textBox3;
 
+	mTextBox1->setFlag(0, 7, 1);
+	mTextBox2->setFlag(0, 7, 1);
+	mTextBox3->setFlag(0, 7, 1);
+
 	mState = PAUSE_NULL;
 	_00 = 0;
 
 	mBackPane1 = _14->search('back', true);
 
+	mBackPane1->setFlag(0, 7, 1);
+
 	mBackPane2 = _18->search('back', true);
+
+	mBackPane2->setFlag(0, 7, 1);
+
 
 	
 	
@@ -311,8 +328,19 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 
 	
 
-	
 
+	int day = playerState->getCurrDay();
+
+	if (day != 0){
+		day = playerState->getTotalDays();
+		int day2 = playerState->getCurrDay();
+		if (day2 != --day ){
+			mDrawMenu1->setMenuItemActiveSw(1, true);
+		}
+
+	}
+
+	mDrawMenu1->setMenuItemActiveSw(1, false);
 	mBlackScreen->update();
 	mDrawMenu1->update(controller);
 	mDrawMenu2->update(controller);
@@ -320,14 +348,59 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 
 	switch (mState) {
 	case PAUSE_Unk2:
-		if (0.5 < mFrameTimer) {
+		if (0.5f < mFrameTimer) {
+			
+			mState = mState2;
 			_00 = 0;
 		} else {
-			mMode = 1;
+
+		}
+		break;
+	case PAUSE_Unk1:
+		
+		if (mDrawMenu1->_1d0 < 0){
+			if (mDrawMenu1->_1d4 == 0){
+
+			} else {
+				 
+			}
 		}
 
-			
+
+		if (mDrawMenu1->_100 == 0){
+			if (mDrawMenu1->_110 == 0){
+				mState2 = PAUSE_Unk5;
+				mState = PAUSE_Unk2;
+				mFrameTimer = 0.0f;
+
+			}
+			if (mDrawMenu1->_110 == 1){
+				mState = PAUSE_Unk3;
+				mDrawMenu2->start(0);
+				mTextBox1->setFlag(0, 7, 1);
+				mTextBox2->setFlag(0, 7, 1);
+				mTextBox3->setFlag(0, 7, 1);
+
+			}
+			if (mDrawMenu1->_110 == 2){
+				mState = PAUSE_Unk4;
+				mDrawMenu2->start(0);
+				mTextBox1->setFlag(0, 7, 1);
+				mTextBox2->setFlag(0, 7, 1);
+				mTextBox3->setFlag(0, 7, 1);
+				if (mMode == 0){
+					mTextBox2->setFlag(0, 7, 1);
+				}else {
+					mTextBox1->setFlag(0, 7, 1);
+				}
+				
+			}
+
+
+		} 
+
 		break;
+
 
 	}
 
