@@ -1,5 +1,7 @@
 #include "jaudio/bankread.h"
 
+static u8 bankp[0x400]; // TODO: placeholder
+
 /*
  * --INFO--
  * Address:	8000BE00

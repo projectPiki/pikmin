@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-void Bank_Setup(char*);
+void Bank_Setup(char* filename);
 
 #endif;
