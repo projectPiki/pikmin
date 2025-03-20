@@ -7,7 +7,7 @@
 extern "C" {
 #endif // ifdef __cplusplus
 
-void Jam_PitchToCent(void);
+f32 Jam_PitchToCent(f32, f32);
 
 #ifdef __cplusplus
 };
