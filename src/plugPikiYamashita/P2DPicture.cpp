@@ -342,7 +342,7 @@ P2DPicture::P2DPicture(Texture*)
  * Address:	801B1C24
  * Size:	00009C
  */
-void P2DPicture::insert(Texture*, u8, f32)
+bool P2DPicture::insert(Texture*, u8, f32)
 {
 	/*
 	.loc_0x0:

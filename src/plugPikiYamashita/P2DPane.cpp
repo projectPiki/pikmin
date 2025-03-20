@@ -75,8 +75,8 @@ P2DPaneCallBackBase::P2DPaneCallBackBase(P2DPane* pane, P2DPaneType type)
  */
 void P2DPaneCallBackBase::checkPaneType(P2DPane* pane, P2DPaneType type)
 {
-	if (pane && pane->getPaneType() != type) {
-		PRINT("This pane type is [%d]. not [%d] \n", pane->getPaneType(), type);
+	if (pane && pane->getTypeID() != type) {
+		PRINT("This pane type is [%d]. not [%d] \n", pane->getTypeID(), type);
 		ERROR("Can't set Call Back class.");
 	}
 }
@@ -88,7 +88,14 @@ void P2DPaneCallBackBase::checkPaneType(P2DPane* pane, P2DPaneType type)
  */
 void P2DPane::init()
 {
-	// UNUSED FUNCTION
+	_B8      = 0;
+	_BA      = 0;
+	mFlag.m2 = 0;
+	_BC      = 0.0f;
+	_C0.set(1.0f, 1.0f, 1.0f);
+	mCullMode = GX_CULL_NONE;
+	mCallBack = nullptr;
+	mPaneZ    = 0.0f;
 }
 
 /*
@@ -222,12 +229,12 @@ P2DPane::P2DPane()
 {
 	mPaneType = PANETYPE_Unk16;
 
-	setFlag(1, 7, 1);
+	show();
 	mTagName = 0;
 	mRectTransform.set(0, 0, 0, 0);
 	_B8 = 0;
 	_BA = 0;
-	setFlag(0, 5, 2);
+	show(); // wrong
 	_BC = 0.0f;
 	_C0.set(1.0f, 1.0f, 1.0f);
 	mCullMode = GX_CULL_NONE;
@@ -274,21 +281,14 @@ P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5
     : mPaneTree(this)
 {
 	mPaneType = paneType;
-	setFlag(1, 7, 1);
+	show();
 	mTagName       = tag;
 	mRectTransform = p5;
 	if (parent) {
-		parent->mPaneTree.append(getPaneTree());
+		parent->mPaneTree.appendChild(&mPaneTree);
 	}
 
-	_B8 = 0;
-	_BA = 0;
-	setFlag(0, 5, 2);
-	_BC = 0.0f;
-	_C0.set(1.0f, 1.0f, 1.0f);
-	mCullMode = GX_CULL_NONE;
-	mCallBack = nullptr;
-	mPaneZ    = 0.0f;
+	init();
 }
 
 /*
@@ -323,9 +323,9 @@ P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 {
 	mPaneType = paneType;
 	if (input->checkInput()) {
-		setFlag(1, 7, 1);
+		show();
 	} else {
-		setFlag(0, 7, 1);
+		hide();
 	}
 
 	u8 tag[4];
@@ -346,14 +346,7 @@ P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 		parent->mPaneTree.append(getPaneTree());
 	}
 
-	_B8 = 0;
-	_BA = 0;
-	setFlag(0, 5, 2);
-	_BC = 0.0f;
-	_C0.set(1.0f, 1.0f, 1.0f);
-	mCullMode = GX_CULL_NONE;
-	mCallBack = nullptr;
-	mPaneZ    = 0.0f;
+	init();
 }
 
 /*
@@ -706,11 +699,11 @@ void P2DPane::draw(int, int, const P2DGrafContext*, bool)
  * Address:	801B1348
  * Size:	00004C
  */
-bool P2DPane::clip(const PUTRect& rect)
+void P2DPane::clip(const PUTRect& rect)
 {
 	PUTRect newRect = rect;
 	newRect.add(_20.mMin.x, _20.mMin.y);
-	return _28.intersect(newRect);
+	_28.intersect(newRect);
 }
 
 /*

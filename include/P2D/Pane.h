@@ -75,30 +75,54 @@ struct P2DPane {
 	void printTagName(bool);
 	void update();
 	void draw(int, int, const P2DGrafContext*, bool);
-	bool clip(const PUTRect&);
+	void clip(const PUTRect&);
 	void loadChildResource();
 	void rotate(P2DRotateAxis, f32);
-	void hide();
-
-	inline u16 getPaneType() const { return mPaneType; }
-	inline PSUTree<P2DPane>* getPaneTree() { return &mPaneTree; }
-
-	// don't ask. pls fix later if there's a better way to generate this rlwimi
-	inline void setFlag(u32 newFlag, u32 shift, u32 size)
-	{
-		u32 flag = newFlag;
-		_0C      = __rlwimi((int)_0C, flag, shift, 32 - shift - size, 31 - shift);
-	}
 
 	// unused/inlined:
 	void init();
 	void setCullBack(bool);
 
+	u16 getTypeID() { return mPaneType; }
+	PSUTree<P2DPane>* getPaneTree() { return &mPaneTree; }
+
+	void show() { mFlag.mIsVisible = true; }
+	void hide() { mFlag.mIsVisible = false; }
+
+	// DLL inlines to do:
+	void setBounds(const PUTRect&);
+	void updateSelf();
+	s32 getWidth();
+	s32 getHeight();
+	bool IsVisible();
+	bool alone();
+	bool appendChild(P2DPane*);
+	PSUTree<P2DPane>* getFirstChild();
+	PSUTree<P2DPane>* getEndChild();
+	const PUTRect& getBounds();
+	Vector3f& getScale();
+	f32 getRotate();
+	int getPosH();
+	int getPosV();
+	void getDispPos(Vector3f*);
+	void place(const PUTRect&);
+	void rotate(int, int P2DRotateAxis, f32);
+	void rotateX(f32);
+	void rotateZ(f32);
+	void rotateZ(int, int, f32);
+	void setOffset(int, int);
+	void setScale(const Vector3f&);
+	void setScale(f32);
+	void setScale(f32, f32, f32);
+
 	// _00 = VTBL
 	P2DPaneCallBack* mCallBack; // _04
 	u16 mPaneType;              // _08, see P2DPaneType enum
 	u16 _0A;                    // _0A, maybe?
-	u8 _0C;                     // _0C, flag of some description
+	struct {
+		bool mIsVisible : 1;
+		u16 m2 : 2;
+	} mFlag;                    // _0C
 	u32 mTagName;               // _10, unknown
 	f32 mPaneZ;                 // _14
 	PUTRect mRectTransform;     // _18

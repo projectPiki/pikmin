@@ -50,6 +50,14 @@ struct DrawMenuBase : public DrawScreen {
  * @brief TODO
  */
 struct DrawMenu : public DrawScreen {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StatusFlag {
+		// TODO.
+	};
+
 	DrawMenu(char*, bool, bool);
 
 	void start(int);
@@ -64,17 +72,26 @@ struct DrawMenu : public DrawScreen {
 	void setMirror(P2DPane*);
 	void updateSpectPanes(P2DPane*, P2DPicture**, bool);
 
-	u8 _00; // _00, unknown
-	u8 _04; // _04, unknown
-	u8 _08[0x98]; // _08, unknown
-	int _100; // _100, unknown
-	u8 _104[0xc]; // _104, unknown
-	int _110; // _110, unknown
-	u8 _114[0xb8]; // _114, unknown
-	int _1d0; // _1d0, unknown
-	char _1d4; // _1d4, unknown
+	P2DScreen* getScreenPtr() { return &mScreen; }
 
-	// TODO: members
+	// DLL inlines, to do:
+	bool checkSelectMenuCancel();
+	StatusFlag getStatusFlag();
+	f32 getRatio();
+	int getSelectMenu();
+	void setCancelKeyAssign(u32);
+	void setCancelSE(int);
+	void setDecideKeyAssign(u32);
+
+	// _00     = VTBL
+	// _00-_FC = DrawScreen
+	u8 _FC[0x4];   // _FC, unknown
+	int _100;      // _100, unknown
+	u8 _104[0xc];  // _104, unknown
+	int _110;      // _110, unknown
+	u8 _114[0xBC]; // _114, unknown
+	int _1D0;      // _1D0, unknown
+	u8 _1D4;       // _1D4, unknown
 };
 
 /**

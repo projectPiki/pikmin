@@ -29,265 +29,46 @@ DEFINE_PRINT("OgPauseSection")
  */
 zen::ogScrPauseMgr::ogScrPauseMgr()
 {
-	u32 badCompiler[14];
-	
-	mMode = 0;
+	mMode        = 0;
 	mBlackScreen = new P2DScreen();
 	mBlackScreen->set("screen/blo/black.blo", false, false, true);
-	mBlackPane = mBlackScreen->search('blck', true);
+	// this might be P2DTextBox instead, unsure
+	mBlackPane = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));
+	mBlackPane->setAlpha(0);
 
-	mDrawMenu1      = new DrawMenu("screen/blo/pause.blo", false, false);
-	_14 = static_cast<P2DScreen*>(&mDrawMenu1->mPane);
-	P2DTextBox* textBox4 = static_cast<P2DTextBox*>(_14->search('yame', true));
-	mTextBox4 = textBox4;
-	P2DTextBox* textBox5 = static_cast<P2DTextBox*>(_14->search('he02', true));
-	mTextBox5 = textBox5;
-	P2DTextBox* textBox6 = static_cast<P2DTextBox*>(_14->search('hm02', true));
-	mTextBox6 = textBox6;
+	mDrawMenu1 = new DrawMenu("screen/blo/pause.blo", false, false);
+	_14        = mDrawMenu1->getScreenPtr();
+	mTextBox4  = static_cast<P2DTextBox*>(_14->search('yame', true));
+	mTextBox5  = static_cast<P2DTextBox*>(_14->search('he02', true));
+	mTextBox6  = static_cast<P2DTextBox*>(_14->search('hm02', true));
 
-	_3c = mTextBox4->getText();
-	_40 = mTextBox5->getText();
+	_3C = mTextBox4->getString();
+	_40 = mTextBox5->getString();
 
-	mTextBox4->setFlag(0, 7, 1);
+	mTextBox4->hide();
 
-	mDrawMenu2      = new DrawMenu("screen/blo/pause_ok.blo", false, false);
-	_18 = static_cast<P2DScreen*>(&mDrawMenu2->mPane);
-	P2DTextBox* textBox1 = static_cast<P2DTextBox*>(_18->search('yame', true));
-	mTextBox1 = textBox1;
-	P2DTextBox* textBox2 = static_cast<P2DTextBox*>(_18->search('titl', true));
-	mTextBox2 = textBox2;
-	P2DTextBox* textBox3 = static_cast<P2DTextBox*>(_18->search('even', true));
-	mTextBox3 = textBox3;
+	mDrawMenu2 = new DrawMenu("screen/blo/pause_ok.blo", false, false);
+	_18        = mDrawMenu2->getScreenPtr();
+	mTextBox1  = static_cast<P2DTextBox*>(_18->search('yame', true));
+	mTextBox2  = static_cast<P2DTextBox*>(_18->search('titl', true));
+	mTextBox3  = static_cast<P2DTextBox*>(_18->search('even', true));
 
-	mTextBox1->setFlag(0, 7, 1);
-	mTextBox2->setFlag(0, 7, 1);
-	mTextBox3->setFlag(0, 7, 1);
+	mTextBox1->hide();
+	mTextBox2->hide();
+	mTextBox3->hide();
 
 	mState = PAUSE_NULL;
-	_00 = 0;
+	_00    = 0;
 
-	mBackPane1 = _14->search('back', true);
+	// this might be P2DTextBox instead, unsure
+	mBackPane1 = static_cast<P2DPicture*>(_14->search('back', true));
+	mBackPane1->setAlpha(0);
+	mBackPane1->hide();
 
-	mBackPane1->setFlag(0, 7, 1);
-
-	mBackPane2 = _18->search('back', true);
-
-	mBackPane2->setFlag(0, 7, 1);
-
-
-	
-	
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  stw       r30, 0x70(r1)
-	  addi      r30, r3, 0
-	  lis       r3, 0x802D
-	  stw       r29, 0x6C(r1)
-	  addi      r31, r3, 0x30C0
-	  li        r29, 0
-	  stw       r28, 0x68(r1)
-	  li        r3, 0xF8
-	  stb       r29, 0x44(r30)
-	  bl        -0x13B348
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x94
-	  addi      r3, r1, 0x60
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x312B8
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x60
-	  addi      r3, r28, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x2E63C
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  stb       r29, 0xEC(r28)
-	  stw       r29, 0xF0(r28)
-	  stw       r29, 0xF4(r28)
-
-	.loc_0x94:
-	  stw       r28, 0x1C(r30)
-	  addi      r4, r31, 0x1C
-	  li        r5, 0
-	  lwz       r3, 0x1C(r30)
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        0x3083C
-	  lwz       r3, 0x1C(r30)
-	  lis       r4, 0x626C
-	  addi      r4, r4, 0x636B
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x20(r30)
-	  li        r0, 0
-	  li        r3, 0x1D8
-	  lwz       r4, 0x20(r30)
-	  stb       r0, 0xF0(r4)
-	  bl        -0x13B3F8
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x104
-	  addi      r4, r31, 0x34
-	  li        r5, 0
-	  li        r6, 0
-	  bl        0x40CE4
-
-	.loc_0x104:
-	  stw       r28, 0xC(r30)
-	  lis       r3, 0x7961
-	  addi      r4, r3, 0x6D65
-	  lwz       r3, 0xC(r30)
-	  li        r5, 0x1
-	  addi      r0, r3, 0x4
-	  stw       r0, 0x14(r30)
-	  lwz       r3, 0x14(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x30(r30)
-	  lis       r3, 0x6865
-	  addi      r4, r3, 0x3032
-	  lwz       r3, 0x14(r30)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x34(r30)
-	  lis       r3, 0x686D
-	  addi      r4, r3, 0x3032
-	  lwz       r3, 0x14(r30)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x38(r30)
-	  li        r5, 0
-	  li        r3, 0x1D8
-	  lwz       r4, 0x30(r30)
-	  lwz       r0, 0x10C(r4)
-	  stw       r0, 0x3C(r30)
-	  lwz       r4, 0x34(r30)
-	  lwz       r0, 0x10C(r4)
-	  stw       r0, 0x40(r30)
-	  lwz       r4, 0x30(r30)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  bl        -0x13B4C4
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x1D0
-	  addi      r4, r31, 0x4C
-	  li        r5, 0
-	  li        r6, 0
-	  bl        0x40C18
-
-	.loc_0x1D0:
-	  stw       r28, 0x10(r30)
-	  lis       r3, 0x7961
-	  addi      r4, r3, 0x6D65
-	  lwz       r3, 0x10(r30)
-	  li        r5, 0x1
-	  addi      r0, r3, 0x4
-	  stw       r0, 0x18(r30)
-	  lwz       r3, 0x18(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x24(r30)
-	  lis       r3, 0x7469
-	  addi      r4, r3, 0x746C
-	  lwz       r3, 0x18(r30)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x28(r30)
-	  lis       r3, 0x6576
-	  addi      r4, r3, 0x656E
-	  lwz       r3, 0x18(r30)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2C(r30)
-	  lis       r31, 0x6261
-	  li        r29, 0
-	  lwz       r6, 0x24(r30)
-	  li        r0, -0x1
-	  addi      r4, r31, 0x636B
-	  lbz       r3, 0xC(r6)
-	  rlwimi    r3,r29,7,24,24
-	  li        r5, 0x1
-	  stb       r3, 0xC(r6)
-	  lwz       r6, 0x28(r30)
-	  lbz       r3, 0xC(r6)
-	  rlwimi    r3,r29,7,24,24
-	  stb       r3, 0xC(r6)
-	  lwz       r6, 0x2C(r30)
-	  lbz       r3, 0xC(r6)
-	  rlwimi    r3,r29,7,24,24
-	  stb       r3, 0xC(r6)
-	  stw       r0, 0x4(r30)
-	  stb       r29, 0x0(r30)
-	  lwz       r3, 0x14(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x48(r30)
-	  addi      r4, r31, 0x636B
-	  li        r5, 0x1
-	  lwz       r3, 0x48(r30)
-	  stb       r29, 0xF0(r3)
-	  lwz       r3, 0x48(r30)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r29,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x18(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x4C(r30)
-	  mr        r3, r30
-	  lwz       r4, 0x4C(r30)
-	  stb       r29, 0xF0(r4)
-	  lwz       r4, 0x4C(r30)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r29,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  lwz       r29, 0x6C(r1)
-	  lwz       r28, 0x68(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	// this might be P2DTextBox instead, unsure
+	mBackPane2 = static_cast<P2DPicture*>(_18->search('back', true));
+	mBackPane2->setAlpha(0);
+	mBackPane2->hide();
 }
 
 /*
@@ -297,22 +78,20 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
  */
 void zen::ogScrPauseMgr::start(bool p1)
 {
-	u32 badCompiler[8];
-
 	mMode = p1;
 
-	if (mMode != 0){
-		mTextBox5->mText = _3c;
-		mTextBox6->mText = _3c;
+	if (mMode != 0) {
+		mTextBox5->setString(_3C);
+		mTextBox6->setString(_3C);
 	} else {
-		mTextBox5->mText = _40;
-		mTextBox6->mText = _40;
+		mTextBox5->setString(_40);
+		mTextBox6->setString(_40);
 	}
 
 	mDrawMenu1->start(-1);
-	mState = PAUSE_Unk1;
+	mState      = PAUSE_Unk1;
 	mFrameTimer = 0.0f;
-	_00 = 1;
+	_00         = 1;
 }
 
 /*
@@ -326,21 +105,17 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 		return mState;
 	}
 
-	
-
-
-	int day = playerState->getCurrDay();
-
-	if (day != 0){
-		day = playerState->getTotalDays();
-		int day2 = playerState->getCurrDay();
-		if (day2 != --day ){
-			mDrawMenu1->setMenuItemActiveSw(1, true);
-		}
-
+	if (mState >= PAUSE_Unk5) {
+		mState = PAUSE_NULL;
+		return mState;
 	}
 
-	mDrawMenu1->setMenuItemActiveSw(1, false);
+	if (!playerState->getCurrDay() || playerState->getCurrDay() == playerState->getTotalDays() - 1) {
+		mDrawMenu1->setMenuItemActiveSw(1, false);
+	} else {
+		mDrawMenu1->setMenuItemActiveSw(1, true);
+	}
+
 	mBlackScreen->update();
 	mDrawMenu1->update(controller);
 	mDrawMenu2->update(controller);
@@ -349,59 +124,49 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 	switch (mState) {
 	case PAUSE_Unk2:
 		if (0.5f < mFrameTimer) {
-			
-			mState = mState2;
-			_00 = 0;
-		} else {
 
+			mState = mState2;
+			_00    = 0;
+		} else {
 		}
 		break;
 	case PAUSE_Unk1:
-		
-		if (mDrawMenu1->_1d0 < 0){
-			if (mDrawMenu1->_1d4 == 0){
+
+		if (mDrawMenu1->_1D0 < 0) {
+			if (mDrawMenu1->_1D4 == 0) {
 
 			} else {
-				 
 			}
 		}
 
-
-		if (mDrawMenu1->_100 == 0){
-			if (mDrawMenu1->_110 == 0){
-				mState2 = PAUSE_Unk5;
-				mState = PAUSE_Unk2;
+		if (mDrawMenu1->_100 == 0) {
+			if (mDrawMenu1->_110 == 0) {
+				mState2     = PAUSE_Unk5;
+				mState      = PAUSE_Unk2;
 				mFrameTimer = 0.0f;
-
 			}
-			if (mDrawMenu1->_110 == 1){
+			if (mDrawMenu1->_110 == 1) {
 				mState = PAUSE_Unk3;
 				mDrawMenu2->start(0);
-				mTextBox1->setFlag(0, 7, 1);
-				mTextBox2->setFlag(0, 7, 1);
-				mTextBox3->setFlag(0, 7, 1);
-
+				mTextBox1->hide();
+				mTextBox2->hide();
+				mTextBox3->show();
 			}
-			if (mDrawMenu1->_110 == 2){
+			if (mDrawMenu1->_110 == 2) {
 				mState = PAUSE_Unk4;
 				mDrawMenu2->start(0);
-				mTextBox1->setFlag(0, 7, 1);
-				mTextBox2->setFlag(0, 7, 1);
-				mTextBox3->setFlag(0, 7, 1);
-				if (mMode == 0){
-					mTextBox2->setFlag(0, 7, 1);
-				}else {
-					mTextBox1->setFlag(0, 7, 1);
+				mTextBox1->hide();
+				mTextBox2->hide();
+				mTextBox3->hide();
+				if (mMode) {
+					mTextBox1->show();
+				} else {
+					mTextBox2->show();
 				}
-				
 			}
-
-
-		} 
+		}
 
 		break;
-
-
 	}
 
 	/*
@@ -721,53 +486,4 @@ void zen::ogScrPauseMgr::draw(Graphics& gfx)
 	mBlackScreen->draw(0, 0, &perspGraph);
 	mDrawMenu1->draw(gfx);
 	mDrawMenu2->draw(gfx);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x100(r1)
-	  stw       r31, 0xFC(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0xF8(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x98
-	  lfs       f1, -0x508C(r2)
-	  addi      r3, r1, 0x10
-	  lfs       f2, -0x5088(r2)
-	  li        r4, 0
-	  lfs       f3, -0x5084(r2)
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x2D6C0
-	  addi      r3, r1, 0x10
-	  bl        0x2D7C8
-	  lwz       r3, 0x1C(r30)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x303E8
-	  lwz       r3, 0xC(r30)
-	  mr        r4, r31
-	  bl        0x41DE8
-	  lwz       r3, 0x10(r30)
-	  mr        r4, r31
-	  bl        0x41DDC
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x698
-	  lis       r3, 0x802E
-	  stw       r0, 0x10(r1)
-	  addi      r0, r3, 0x5D4
-	  stw       r0, 0x10(r1)
-
-	.loc_0x98:
-	  lwz       r0, 0x104(r1)
-	  lwz       r31, 0xFC(r1)
-	  lwz       r30, 0xF8(r1)
-	  addi      r1, r1, 0x100
-	  mtlr      r0
-	  blr
-	*/
 }
