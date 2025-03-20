@@ -346,7 +346,7 @@ config.libs = [
             Object(NonMatching, "jaudio/bankread.c"),
             Object(NonMatching, "jaudio/waveread.c"),
             Object(NonMatching, "jaudio/connect.c"),
-            Object(NonMatching, "jaudio/tables.c"),
+            Object(Matching, "jaudio/tables.c"),
             Object(NonMatching, "jaudio/bankdrv.c"),
             Object(Matching, "jaudio/random.c"),
             Object(NonMatching, "jaudio/aramcall.c"),
