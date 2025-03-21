@@ -31,6 +31,8 @@ struct ogScrPauseMgr {
 		PAUSE_Unk3 = 3,
 		PAUSE_Unk4 = 4,
 		PAUSE_Unk5 = 5,
+		PAUSE_Unk6 = 6,
+		PAUSE_Unk7 = 7,
 	};
 
 	ogScrPauseMgr();
