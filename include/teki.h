@@ -388,12 +388,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	void setCreaturePointer(int idx, Creature* target) { mTargetCreatures[idx].set(target); }
 	Creature* getCreaturePointer(int idx) { return mTargetCreatures[idx].getPtr(); }
 
-	f32 getScaleRate()
-	{
-		f32 size  = getPersonalityF(TekiPersonality::FLT_Size);
-		f32 scale = getParameterF(TPF_Scale);
-		return scale * size;
-	}
+	f32 getScaleRate() { return getParameterF(TPF_Scale) * getPersonalityF(TekiPersonality::FLT_Size); }
 
 	f32 getAttackableRange() { return getParameterF(TPF_AttackableRange) * getScaleRate(); }
 	f32 getAttackHitRange() { return getParameterF(TPF_AttackHitRange) * getScaleRate(); }
@@ -699,7 +694,7 @@ struct TekiMgr : public MonoObjectMgr {
 	void setUsingTypeTable(bool);
 	void setVisibleTypeTable(bool);
 	void setVisibleType(int, bool);
-	bool hasModel(int);
+	bool hasModel(int type);
 	int getResultFlag(int);
 
 	// unused/inlined:
@@ -715,10 +710,8 @@ struct TekiMgr : public MonoObjectMgr {
 	static int typeIds[TEKI_TypeCount];
 
 	bool isUsingType(int type) { return mUsingType[type]; }
-
-	// DLL inlines to make:
-	// bool hasType(int);
-	// bool isVisibleType(int);
+	bool hasType(int type) { return mTekiParams[type] != nullptr; }
+	bool isVisibleType(int type) { return mVisibleType[type]; }
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
