@@ -36,6 +36,12 @@ typedef volatile f32 vf32;
 typedef volatile f64 vf64;
 typedef volatile f128 vf128;
 
+typedef u32 unknown;
+typedef u8 unknown8;
+typedef u16 unknown16;
+typedef u32 unknown32;
+typedef u64 unknown64;
+
 #ifndef __cplusplus
 typedef u16 wchar_t;
 #endif
@@ -61,10 +67,16 @@ typedef u16 wchar_t;
 #define TRUE (1)
 #undef FALSE
 #define FALSE (0)
-#undef NULL
-#define NULL ((void*)0)
-#undef nullptr
-#define nullptr (0)
+
+#if !defined(__cplusplus)
+#define NULL    ((void*)0)
+#define nullptr 0
+#elif __cplusplus >= 201103L
+#define NULL nullptr
+#else
+#define NULL    0
+#define nullptr 0
+#endif
 
 // Random and useful macros
 #define PATH_MAX  (256)                     // Max path length
