@@ -18,9 +18,16 @@ struct P2DWindow : public P2DPane {
 	 * @brief TODO
 	 */
 	struct P2DWindowTexture {
+		P2DWindowTexture(Texture*); // DLL, to do
+
 		void draw(int, int, int, int, u16, u16, u16, u16);
 		void draw(int, int, bool, bool);
 		void setTevMode();
+
+		// DLL inlines:
+		u16 getHeight();
+		u16 getWidth();
+		void makeResident();
 
 		// TODO: members
 	};
@@ -39,9 +46,12 @@ struct P2DWindow : public P2DPane {
 	// unused/inlined:
 	Texture* loadResource(char*);
 
+	// DLL inlines:
+	void setTexture(Texture*);
+
 	// _00     = VTBL
-	// _00-_?? = P2DPane
-	// TODO: members
+	// _00-_EC = P2DPane
+	u8 _EC[0x12C - 0xEC]; // _EC, unknown
 };
 
 #endif

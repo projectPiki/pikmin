@@ -2668,23 +2668,6 @@ void zen::WorldMapConfirmMgr::init(zen::WorldMapConfirmMgr::statusFlag)
 
 /*
  * --INFO--
- * Address:	801DD72C
- * Size:	000014
- */
-void P2DPane::hide()
-{
-	/*
-	.loc_0x0:
-	  lbz       r0, 0xC(r3)
-	  li        r4, 0
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	801DD740
  * Size:	00002C
  */

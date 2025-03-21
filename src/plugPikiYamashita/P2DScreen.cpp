@@ -329,7 +329,7 @@ void P2DScreen::makeHiearachyPanes(P2DPane*, RandomAccessStream*, bool, bool)
  * Address:	801B2ECC
  * Size:	000008
  */
-void P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
+P2DPane* P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
 {
 	// return 0x0;
 }

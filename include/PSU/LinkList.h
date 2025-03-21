@@ -14,6 +14,7 @@ struct PSUPtrLink {
 
 	~PSUPtrLink();
 
+	// these are also fake according to the DLL (no inlines aside from ctor/dtor):
 	void* getObjectPtr() const { return mObject; }
 	PSUPtrLink* getNext() const { return mNext; }
 
@@ -44,6 +45,8 @@ struct PSUPtrList {
 	bool insert(PSUPtrLink*, PSUPtrLink*);
 	void getNthLink(u32) const;
 
+	// no more DLL inlines.
+
 	PSUPtrLink* mHead; // _00
 	PSUPtrLink* mTail; // _04
 	u32 mLinkCount;    // _08
@@ -61,9 +64,10 @@ struct PSULink : public PSUPtrLink {
 
 	~PSULink(); // unused/inlined
 
+	// this is fake according to the DLL (no inlines at all aside from ctor/dtor):
 	inline T* getObject() const { return (T*)getObjectPtr(); }
 
-	// TODO: members
+	// _00-_10 = PSUPtrLink
 };
 
 /**
@@ -73,13 +77,17 @@ struct PSULink : public PSUPtrLink {
  */
 template <typename T>
 struct PSUList : public PSUPtrList {
+	PSUList() { } // DLL, to do/check
+
 	~PSUList(); // unused/inlined
 
+	bool append(PSULink<T>* link) { return PSUPtrList::append((PSUPtrLink*)link); }
+	bool remove(PSULink<T>* link); // DLL, to do
+
+	// this one doesn't exist according to the DLL:
 	inline PSULink<T>* getFirst() const { return (PSULink<T>*)getFirstLink(); }
 
-	bool append(PSULink<T>* link) { return PSUPtrList::append((PSUPtrLink*)link); }
-
-	// TODO: members
+	// _00-_0C = PSUPtrList
 };
 
 #endif

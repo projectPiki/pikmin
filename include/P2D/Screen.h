@@ -11,7 +11,7 @@
  * @note Size: 0xF8.
  */
 struct P2DScreen : public P2DPane {
-	inline P2DScreen()
+	P2DScreen()
 	    : P2DPane(nullptr, PANETYPE_Screen, true, 'root', PUTRect(640, 480))
 	{
 		_EC = 0;
@@ -19,10 +19,10 @@ struct P2DScreen : public P2DPane {
 		_F4 = 0;
 	}
 
-	virtual void loadResource();                                   // _08
-	virtual ~P2DScreen();                                          // _10
-	virtual P2DPane* search(u32, bool);                            // _34
-	virtual void makeUserPane(u16, P2DPane*, RandomAccessStream*); // _3C
+	virtual void loadResource();                                       // _08
+	virtual ~P2DScreen();                                              // _10
+	virtual P2DPane* search(u32, bool);                                // _34
+	virtual P2DPane* makeUserPane(u16, P2DPane*, RandomAccessStream*); // _3C
 
 	void update();
 	void set(const char*, bool, bool, bool);
@@ -33,6 +33,9 @@ struct P2DScreen : public P2DPane {
 	// unused/inlined:
 	void set(RandomAccessStream*);
 	P2DPane* stop();
+
+	// DLL inlines to do:
+	void set(const char*, bool);
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane

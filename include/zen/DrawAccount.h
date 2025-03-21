@@ -38,7 +38,7 @@ struct DrawAccount : public DrawScreen {
 
 	DrawAccount();
 
-	virtual bool update(); // _08
+	virtual void update(); // _08
 
 	void start(AccountData&);
 	void draw(Graphics&);
