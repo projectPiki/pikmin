@@ -1,3 +1,6 @@
+#ifndef _JAUDIO_FXINTERFACE_H
+#define _JAUDIO_FXINTERFACE_H
+
 #include "jaudio/dspinterface.h"
 
 typedef struct FxlineConfig_ FxlineConfig;
@@ -13,3 +16,5 @@ struct FxlineConfig_ {
 };
 
 BOOL DFX_SetFxLine(u8 idx, s16* volatile circularBufferBase, FxlineConfig* fxlineConfig);
+
+#endif
