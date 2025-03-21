@@ -257,59 +257,9 @@ bool TekiVisibleHeightCondition::satisfy(Creature* target)
  */
 bool TekiLowerCondition::satisfy(Creature* target)
 {
-	TekiAndCondition& rangeAndNoStickCond
-	    = TekiAndCondition(&TekiLowerRangeCondition(mTeki), &TekiNotCondition(&TekiStickerCondition(mTeki)));
-	return rangeAndNoStickCond.satisfy(target);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r1)
-	  subi      r10, r5, 0xF68
-	  lis       r5, 0x802C
-	  stwu      r1, -0x80(r1)
-	  addi      r9, r5, 0x6964
-	  lis       r6, 0x802D
-	  lwz       r11, 0x4(r3)
-	  lis       r5, 0x802C
-	  addi      r0, r5, 0x6890
-	  stw       r10, 0x5C(r1)
-	  lis       r7, 0x802D
-	  subi      r6, r6, 0x2A4C
-	  stw       r10, 0x64(r1)
-	  addi      r8, r1, 0x5C
-	  lis       r5, 0x802C
-	  stw       r9, 0x5C(r1)
-	  subi      r7, r7, 0x2A84
-	  stw       r6, 0x5C(r1)
-	  addi      r6, r5, 0x685C
-	  addi      r5, r1, 0x6C
-	  stw       r9, 0x64(r1)
-	  stw       r0, 0x64(r1)
-	  addi      r0, r1, 0x64
-	  stw       r11, 0x60(r1)
-	  addi      r11, r1, 0x74
-	  stw       r8, 0x68(r1)
-	  lwz       r8, 0x4(r3)
-	  mr        r3, r11
-	  stw       r10, 0x74(r1)
-	  stw       r10, 0x6C(r1)
-	  stw       r9, 0x74(r1)
-	  stw       r9, 0x6C(r1)
-	  stw       r6, 0x74(r1)
-	  stw       r7, 0x6C(r1)
-	  stw       r5, 0x78(r1)
-	  stw       r8, 0x70(r1)
-	  stw       r0, 0x7C(r1)
-	  lwz       r12, 0x0(r11)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x84(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	// fucking amazing work nakata.
+	return TekiAndCondition(&TekiLowerRangeCondition(mTeki), &TekiNotCondition(&TekiStickerCondition(mTeki))).satisfy(target);
+	return TekiAndCondition(&TekiLowerRangeCondition(mTeki), &TekiNotCondition(&TekiStickerCondition(mTeki))).satisfy(target);
 }
 
 /*

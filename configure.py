@@ -660,7 +660,7 @@ config.libs = [
             Object(Matching, "plugPikiNakata/teki.cpp"),
             Object(Matching, "plugPikiNakata/tekianimationmanager.cpp"),
             Object(NonMatching, "plugPikiNakata/tekibteki.cpp"),
-            Object(Equivalent, "plugPikiNakata/tekiconditions.cpp"),
+            Object(Matching, "plugPikiNakata/tekiconditions.cpp"),
             Object(Matching, "plugPikiNakata/tekievent.cpp"),
             Object(Matching, "plugPikiNakata/tekiinteraction.cpp"),
             Object(Matching, "plugPikiNakata/tekimgr.cpp"),

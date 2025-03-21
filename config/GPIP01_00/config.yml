@@ -7,5 +7,5 @@ symbols: config/GPIP01_00/symbols.txt
 splits: config/GPIP01_00/splits.txt
 
 mw_comment_version: 8 # GC Linker 1.2.5
-symbols_known: true # Very fast analysis
+symbols_known: false # Very fast analysis
 fill_gaps: false # Alignments known

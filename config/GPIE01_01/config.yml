@@ -7,5 +7,5 @@ symbols: config/GPIE01_01/symbols.txt
 splits: config/GPIE01_01/splits.txt
 
 mw_comment_version: 8 # GC Linker 1.2.5
-symbols_known: true # Very fast analysis
+symbols_known: false # Very fast analysis
 fill_gaps: false # Alignments known
