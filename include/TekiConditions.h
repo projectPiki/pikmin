@@ -133,7 +133,11 @@ struct TekiCreaturePointerCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiDistanceCondition : public TekiCondition {
-	TekiDistanceCondition(Teki* teki, f32 distance); // DLL, to do
+	TekiDistanceCondition(Teki* teki, f32 distance)
+	{
+		mTeki     = teki;
+		mDistance = distance;
+	}
 
 	virtual bool satisfy(Creature*); // _08
 
@@ -355,7 +359,7 @@ struct TekiStickerCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiStickingCondition : public TekiCondition {
-	TekiStickingCondition(); // DLL, to do
+	TekiStickingCondition() { }
 
 	virtual bool satisfy(Creature*); // _08
 

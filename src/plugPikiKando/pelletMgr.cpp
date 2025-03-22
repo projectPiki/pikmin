@@ -1021,7 +1021,7 @@ void Pellet::doSave(RandomAccessStream& output)
  * Address:	80096E7C
  * Size:	0003B8
  */
-void Pellet::startAI(int stateID)
+void Pellet::startAI(BOOL doSpawnScaleOff)
 {
 	mRotationQuat.fromEuler(Vector3f(0.0f, mFaceDirection, 0.0f));
 	mRotation.set(0.0f, mFaceDirection, 0.0f);
@@ -1066,7 +1066,7 @@ void Pellet::startAI(int stateID)
 		ERROR("DAME DESU YO !\n"); // 'no you can't!'
 	}
 
-	if (mPelletView || stateID == 1) {
+	if (mPelletView || doSpawnScaleOff == TRUE) {
 		mStateMachine->transit(this, PELSTATE_Normal);
 	} else {
 		mStateMachine->transit(this, PELSTATE_Appear);

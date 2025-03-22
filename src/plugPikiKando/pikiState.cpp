@@ -2809,12 +2809,12 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 
 	if (colliderType == OBJTYPE_Teki || collider->isBoss()) {
-		Vector3f dir = collider->mPosition - piki->mPosition;
-		dir.normalise();
-		Vector3f centreCentre(dir);
-		dir.multiply(piki->getCentreSize() * 1.5f);
-		dir.add(piki->mPosition);
-		InteractHitEffect hit(piki, dir, centreCentre, msg->mEvent.mColliderPart);
+		Vector3f effPos = collider->mPosition - piki->mPosition;
+		effPos.normalise();
+		Vector3f effDir(effPos);
+		effPos.multiply(piki->getCentreSize() * 1.5f);
+		effPos.add(piki->mPosition);
+		InteractHitEffect hit(piki, effPos, effDir, msg->mEvent.mColliderPart);
 		collider->stimulate(hit);
 	}
 

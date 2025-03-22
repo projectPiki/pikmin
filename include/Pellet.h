@@ -61,6 +61,8 @@ enum NumPelletType {
  * @brief TODO
  */
 enum PelletColor {
+	PELCOLOR_Part = -2, // ship part (or other item, technically)
+
 	PELCOLOR_NULL = -1,
 
 	PELCOLOR_Blue   = 0,

@@ -226,6 +226,8 @@ struct Creature : public RefCountable, public EventTalker {
 	void finishFix() { resetCreatureFlag(CF_DisableMovement); }
 
 	void setInsideView() { setCreatureFlag(CF_AIAlwaysActive); }
+	void setOutsideView() { resetCreatureFlag(CF_AIAlwaysActive); }
+	bool insideView() { return isCreatureFlag(CF_AIAlwaysActive); }
 
 	void enableFaceDirAdjust() { setCreatureFlag(CF_FaceDirAdjust); }
 	void disableFaceDirAdjust() { resetCreatureFlag(CF_FaceDirAdjust); }
@@ -322,9 +324,6 @@ struct Creature : public RefCountable, public EventTalker {
 
 	    void setCarryOver();
 	    void unsetCarryOver();
-
-	    void setInsideView();
-	    void setOutsideView();
 	*/
 
 	// _00     = VTBL

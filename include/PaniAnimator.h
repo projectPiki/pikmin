@@ -119,9 +119,20 @@ struct PaniAnimator : public Animator {
 
 	PaniMotion* getMotion(int motionIdx) { return mMotionTable->getMotion(motionIdx); }
 
+	bool getCurrentOption(int opt) { return mAnimInfo->mParams.mFlags() & opt; }
+
+	f32 getAnimationSpeed() { return mAnimInfo->mParams.mSpeed(); }
+
+	int getFrameCount()
+	{
+		if (!mAnimInfo) {
+			return -1;
+		}
+		return mAnimInfo->mData->mNumFrames;
+	}
+
 	/*
 	    remaining DLL inlines:
-	    bool getCurrentOption(int);
 	    bool isFinishing();
 
 	    AnimKey* getEventKey(int);
@@ -130,7 +141,6 @@ struct PaniAnimator : public Animator {
 	    f32 getKeyValueByKeyType(int);
 
 	    int getEventKeyCount();
-	    int getFrameCount();
 	    int getKeyIndex(int);
 	    int getKeyInfoCount();
 	    int getKeyType(int);
@@ -213,9 +223,18 @@ struct PaniTekiAnimator : public PaniAnimator {
 
 	static char* motionLabels[15];
 
+	// DLL inline:
+	char* getCurrentMotionName()
+	{
+		if (mMotionIdx < 0) {
+			return "NULL";
+		}
+
+		return motionLabels[mMotionIdx];
+	}
+
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
-	// TODO: members
 };
 
 /**
@@ -265,9 +284,8 @@ struct PaniSound {
 struct PaniSoundTable {
 	PaniSoundTable(int);
 
-	// DLL inlines to do:
-	// PaniSound* getSound(int);
-	// int getSize();
+	int getSize() { return mSoundCount; }
+	PaniSound* getSound(int idx) { return mSounds[idx]; }
 
 	int mSoundCount;     // _00
 	PaniSound** mSounds; // _04, array of mSoundCount sounds

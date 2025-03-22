@@ -6,9 +6,9 @@
  * Address:	8014A398
  * Size:	000034
  */
-TekiEvent::TekiEvent(int p1, Teki* teki)
+TekiEvent::TekiEvent(int collisionType, Teki* teki)
 {
-	init(p1, teki, nullptr);
+	init(collisionType, teki, nullptr);
 }
 
 /*
@@ -16,9 +16,9 @@ TekiEvent::TekiEvent(int p1, Teki* teki)
  * Address:	8014A3CC
  * Size:	000030
  */
-TekiEvent::TekiEvent(int p1, Teki* teki, Creature* creature)
+TekiEvent::TekiEvent(int collisionType, Teki* teki, Creature* creature)
 {
-	init(p1, teki, creature);
+	init(collisionType, teki, creature);
 }
 
 /*

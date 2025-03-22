@@ -99,22 +99,42 @@ struct NMathF {
 		return angle;
 	}
 
+	static inline f32 angleDifference(f32 angleA, f32 angleB)
+	{
+		f32 tau = 2.0f * pi;
+		if (angleA >= angleB) {
+			f32 mainDiff = angleA - angleB;
+			f32 compDiff = tau - mainDiff;
+			if (mainDiff < compDiff) {
+				return mainDiff;
+			}
+
+			return compDiff;
+		}
+		f32 mainDiff = angleB - angleA;
+		f32 compDiff = tau - mainDiff;
+		if (mainDiff < compDiff) {
+			return mainDiff;
+		}
+
+		return compDiff;
+	}
+
 	static inline f32 rangeRandom(f32 min, f32 max) { return (max - min) * NSystem::random() + min; }
+	static inline bool occurred(f32 chance) { return NSystem::random() < chance; }
 
 	// inlines from DLL, to be created:
 	static inline f32 acos(f32);
-	static inline f32 angleDifference(f32, f32);
 	static inline f32 rateRandom(f32, f32);
 	static inline f32 sqrt(f32);
 	static inline int quotient(f32, f32);
-	static inline bool occurred(f32);
 
 	// this is fake or needs renaming
 	static inline f32 getRandomAngle() { return 2.0f * System::getRand(1.0f) * pi; }
 };
 
 struct NMathI {
-	static int rangeRandom(int, int);
+	static int rangeRandom(int min, int max) { return min + NSystem::randomInt(max - min); }
 	static bool checkBit(int flag, int bit) { return (flag & bit); }
 };
 

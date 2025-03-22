@@ -304,10 +304,10 @@ struct InteractGrab : public Interaction {
  * @brief TODO
  */
 struct InteractHitEffect : public Interaction {
-	InteractHitEffect(Creature* owner, Vector3f& v1, Vector3f& v2, CollPart* part)
+	InteractHitEffect(Creature* owner, Vector3f& effPos, Vector3f& effDir, CollPart* part)
 	    : Interaction(owner)
-	    , _08(v1)
-	    , _14(v2)
+	    , mEffectPos(effPos)
+	    , mEffectDir(effDir)
 	    , mCollPart(part)
 	{
 	}
@@ -317,8 +317,8 @@ struct InteractHitEffect : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	Vector3f _08;        // _08
-	Vector3f _14;        // _14
+	Vector3f mEffectPos; // _08
+	Vector3f mEffectDir; // _14
 	CollPart* mCollPart; // _20
 };
 

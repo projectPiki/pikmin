@@ -102,6 +102,14 @@ enum TekiCullingType {
 
 /**
  * @brief TODO
+ */
+enum TekiCorpseType {
+	TEKICORPSE_NoCorpse    = 0, // leave no corpse when dead
+	TEKICORPSE_LeaveCorpse = 1, // leave a corpse when dead
+};
+
+/**
+ * @brief TODO
  *
  * @note Size: 0x88.
  */
