@@ -1,5 +1,8 @@
 #include "TAI/Palm.h"
+#include "TAI/TimerActions.h"
+#include "SoundMgr.h"
 #include "DebugLog.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -23,48 +26,9 @@ DEFINE_PRINT(nullptr)
 TaiPalmSoundTable::TaiPalmSoundTable()
     : PaniSoundTable(5)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x5
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  bl        -0x1EA60
-	  li        r30, 0
-	  li        r31, 0
-	  b         .loc_0x58
-
-	.loc_0x30:
-	  li        r3, 0x4
-	  bl        -0xF6AE4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x48
-	  addi      r0, r30, 0x2E
-	  stw       r0, 0x0(r3)
-
-	.loc_0x48:
-	  lwz       r4, 0x4(r29)
-	  addi      r30, r30, 0x1
-	  stwx      r3, r4, r31
-	  addi      r31, r31, 0x4
-
-	.loc_0x58:
-	  lwz       r0, 0x0(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  mr        r3, r29
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mSoundCount; i++) {
+		mSounds[i] = new PaniSound(i + SE_FLOWER_DOWN);
+	}
 }
 
 /*
@@ -73,136 +37,39 @@ TaiPalmSoundTable::TaiPalmSoundTable()
  * Size:	0001F4
  */
 TaiPalmParameters::TaiPalmParameters()
-    : TekiParameters(20, 53)
+    : TekiParameters(TPI_COUNT, PALMPF_COUNT)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802D
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x35
-	  stwu      r1, -0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x68(r1)
-	  subi      r30, r4, 0x4E68
-	  li        r4, 0x14
-	  bl        0xE1E8
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x496C
-	  stw       r0, 0x0(r31)
-	  li        r4, 0x32
-	  li        r3, 0x33
-	  lwz       r5, 0x84(r31)
-	  li        r0, 0x34
-	  mulli     r4, r4, 0xC
-	  lwz       r5, 0x4(r5)
-	  lwz       r6, 0x8(r5)
-	  mulli     r3, r3, 0xC
-	  add       r5, r6, r4
-	  addi      r4, r30, 0xC
-	  stw       r4, 0x0(r5)
-	  mulli     r0, r0, 0xC
-	  lfs       f3, -0x5A28(r2)
-	  add       r7, r6, r3
-	  stfs      f3, 0x4(r5)
-	  addi      r4, r30, 0x24
-	  add       r8, r6, r0
-	  lfs       f0, -0x5A24(r2)
-	  addi      r3, r30, 0x48
-	  li        r6, 0
-	  stfs      f0, 0x8(r5)
-	  li        r5, -0x1
-	  li        r0, 0x1
-	  stw       r4, 0x0(r7)
-	  stfs      f3, 0x4(r7)
-	  lfs       f2, -0x5A20(r2)
-	  stfs      f2, 0x8(r7)
-	  stw       r3, 0x0(r8)
-	  stfs      f3, 0x4(r8)
-	  stfs      f0, 0x8(r8)
-	  lwz       r4, 0x84(r31)
-	  lwz       r3, 0x0(r4)
-	  lwz       r3, 0x0(r3)
-	  stw       r6, 0x8(r3)
-	  lwz       r3, 0x0(r4)
-	  lwz       r3, 0x0(r3)
-	  stw       r5, 0xC(r3)
-	  lwz       r3, 0x0(r4)
-	  lwz       r3, 0x0(r3)
-	  stw       r0, 0x14(r3)
-	  lwz       r3, 0x0(r4)
-	  lwz       r3, 0x0(r3)
-	  stw       r0, 0x44(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f1, -0x5A1C(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f1, 0x0(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f2, 0x0(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f2, 0x4(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5A18(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x8(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5A14(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x78(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5A10(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x7C(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5A0C(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x44(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5A08(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x48(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5A04(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x50(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x54(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f1, 0x9C(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5A00(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0xA0(r3)
-	  lwz       r5, 0x4(r4)
-	  mr        r3, r31
-	  lwz       r5, 0x0(r5)
-	  stfs      f2, 0xAC(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x59FC(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xB0(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x59F8(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xC8(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f3, 0xCC(r5)
-	  lwz       r4, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  stfs      f2, 0xD0(r4)
-	  lwz       r0, 0x74(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler;
+
+	int j                           = TPF_COUNT;
+	ParaParameterInfo<f32>* fParams = mParameters->mFloatParams->mParaInfo;
+	fParams[j++].init("CHANGING_COLOR_PERIOD", 0.0f, 3600.0f);
+	fParams[j++].init("CHANGING_COLOR_PERIOD_RANDOM_RATE", 0.0f, 1.0f);
+	fParams[j++].init("GROWING_PERIOD", 0.0f, 3600.0f);
+
+	ParaMultiParameters* multiP = mParameters;
+	multiP->setI(TPI_CullingType, CULLAI_CullAIOffCamera);
+	multiP->setI(TPI_SpawnType, -1);
+	multiP->setI(TPI_AnimationType, 1);
+	multiP->setI(TPI_SpawnPelletScaleOff, TRUE);
+
+	multiP->setF(TPF_Life, 50.0f);
+	multiP->setF(TPF_Life, 1.0f);
+	multiP->setF(TPF_Scale, 1.0f);
+	multiP->setF(TPF_Weight, -1.0f);
+	multiP->setF(TPF_DamageMotionPeriod, 0.3f);
+	multiP->setF(TPF_DamageMotionAmplitude, 0.2f);
+	multiP->setF(TPF_LifeGaugeOffset, 100.0f);
+	multiP->setF(TPF_ShadowSize, 25.0f);
+	multiP->setF(TPF_CorpseSize, 10.0f);
+	multiP->setF(TPF_CorpseHeight, 10.0f);
+	multiP->setF(TPF_SpawnPelletVelocityHoriz, 50.0f);
+	multiP->setF(TPF_SpawnPelletVelocityVert, 200.0f);
+	multiP->setF(TPF_BombDamageRate, 1.0f);
+	multiP->setF(TPF_CollisionRadius, 16.0f);
+	multiP->setF(PALMPF_ChangingColorPeriod, 2.0f);
+	multiP->setF(PALMPF_ChangingColorPeriodRandomRate, 0.0f);
+	multiP->setF(PALMPF_GrowingPeriod, 1.0f);
 }
 
 /*
@@ -210,360 +77,60 @@ TaiPalmParameters::TaiPalmParameters()
  * Address:	8013DD2C
  * Size:	0004F0
  */
-TaiPalmStrategy::TaiPalmStrategy(TekiParameters*)
-    : TaiStrategy(0, 0) // TODO: fix
+TaiPalmStrategy::TaiPalmStrategy(TekiParameters* params)
+    : TaiStrategy(PALMSTATE_COUNT, PALMSTATE_Normal)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xC0(r1)
-	  stmw      r23, 0x9C(r1)
-	  addi      r26, r4, 0
-	  addi      r31, r3, 0
-	  li        r4, 0x4
-	  bl        -0x16968
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x4A40
-	  stw       r0, 0x0(r31)
-	  li        r3, 0x8
-	  bl        -0xF6D5C
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x64
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r28)
-	  li        r0, 0
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r28)
-	  subi      r0, r3, 0x42D8
-	  stw       r0, 0x4(r28)
+	TaiDeadAction* deadAction                     = new TaiDeadAction(PALMSTATE_Dead);
+	TaiDamageAction* damageAction                 = new TaiDamageAction(PALMSTATE_Damage);
+	TaiPalmFlowerDamageAction* flowerDamageAction = new TaiPalmFlowerDamageAction(PALMSTATE_Dead);
+	TaiPalmChangingColorAction* changingColorAction
+	    = new TaiPalmChangingColorAction(1, params->getF(PALMPF_ChangingColorPeriod), params->getF(PALMPF_ChangingColorPeriodRandomRate));
+	TaiPalmSettingPelletAction* settingPelletAction = new TaiPalmSettingPelletAction();
+	TaiPalmDyingAction* dyingAction                 = new TaiPalmDyingAction(0);
 
-	.loc_0x64:
-	  li        r3, 0x8
-	  bl        -0xF6D90
-	  addi      r27, r3, 0
-	  mr.       r0, r27
-	  beq-      .loc_0x98
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r27)
-	  li        r0, 0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r27)
-	  subi      r0, r3, 0x4580
-	  stw       r0, 0x4(r27)
+	// DEAD STATE - dead.
+	TaiState* state = new TaiState(2);
+	int j           = 0;
+	state->setAction(j++, settingPelletAction);
+	state->setAction(j++, dyingAction);
+	setState(PALMSTATE_Dead, state);
 
-	.loc_0x98:
-	  li        r3, 0x8
-	  bl        -0xF6DC4
-	  addi      r29, r3, 0
-	  mr.       r0, r29
-	  beq-      .loc_0xCC
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r29)
-	  li        r0, 0
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r29)
-	  subi      r0, r3, 0x4D14
-	  stw       r0, 0x4(r29)
+	TaiPalmDamagingAction* damagingAction = new TaiPalmDamagingAction(PALMSTATE_Normal, 1);
 
-	.loc_0xCC:
-	  li        r3, 0x14
-	  bl        -0xF6DF8
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0x124
-	  lwz       r5, 0x84(r26)
-	  lis       r4, 0x802C
-	  lis       r3, 0x802D
-	  lwz       r6, 0x4(r5)
-	  addi      r5, r4, 0x6620
-	  li        r4, -0x1
-	  lwz       r6, 0x0(r6)
-	  subi      r3, r3, 0x4DDC
-	  li        r0, 0x1
-	  lfs       f0, 0xCC(r6)
-	  lfs       f1, 0xC8(r6)
-	  stw       r5, 0x4(r30)
-	  stw       r4, 0x0(r30)
-	  stw       r3, 0x4(r30)
-	  stw       r0, 0x8(r30)
-	  stfs      f1, 0xC(r30)
-	  stfs      f0, 0x10(r30)
+	// DAMAGE STATE - taking damage (and screaming about it)
+	state = new TaiState(4);
+	j     = 0;
+	state->setAction(j++, deadAction);         // if dead, transit to dead
+	state->setAction(j++, flowerDamageAction); // if hit directly on flower, transit to dead
+	state->setAction(j++, damagingAction);     // when damaging motion complete, transit to normal state
+	state->setAction(j++, changingColorAction);
+	setState(PALMSTATE_Damage, state);
 
-	.loc_0x124:
-	  li        r3, 0x8
-	  bl        -0xF6E50
-	  addi      r25, r3, 0
-	  mr.       r0, r25
-	  beq-      .loc_0x158
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r25)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r25)
-	  subi      r0, r3, 0x4D98
-	  stw       r0, 0x4(r25)
+	TaiPalmMotionAction* motionAction1  = new TaiPalmMotionAction(PALMSTATE_Normal, 4);
+	TaiPalmGrowingAction* growingAction = new TaiPalmGrowingAction();
+	TaiTimerAction* timerAction         = new TaiTimerAction(TAI_NO_TRANSIT, 0, params->getF(PALMPF_GrowingPeriod), 0.0f);
 
-	.loc_0x158:
-	  li        r3, 0xC
-	  bl        -0xF6E84
-	  addi      r24, r3, 0
-	  mr.       r0, r24
-	  beq-      .loc_0x1AC
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r24)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r24)
-	  subi      r0, r3, 0x6A6C
-	  lis       r4, 0x802D
-	  stw       r0, 0x4(r24)
-	  li        r0, 0
-	  lis       r3, 0x802D
-	  stw       r0, 0x8(r24)
-	  subi      r4, r4, 0x447C
-	  subi      r0, r3, 0x4B94
-	  stw       r4, 0x4(r24)
-	  stw       r0, 0x4(r24)
+	// GROW STATE - growing to new stage
+	state = new TaiState(3);
+	j     = 0;
+	state->setAction(j++, motionAction1); // when motion complete, transit to normal state
+	state->setAction(j++, growingAction);
+	state->setAction(j++, timerAction);
+	setState(PALMSTATE_Grow, state);
 
-	.loc_0x1AC:
-	  li        r3, 0xC
-	  bl        -0xF6ED8
-	  addi      r23, r3, 0
-	  mr.       r3, r23
-	  beq-      .loc_0x1C8
-	  li        r4, 0x2
-	  bl        -0x16E58
+	TaiPalmGrowAction* growAction      = new TaiPalmGrowAction(PALMSTATE_Grow, 0);
+	TaiPalmMotionAction* motionAction2 = new TaiPalmMotionAction(TAI_NO_TRANSIT, 2);
 
-	.loc_0x1C8:
-	  li        r0, 0
-	  lwz       r3, 0x8(r23)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r25, r3, r0
-	  li        r0, 0x1
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r4, 0x8(r23)
-	  li        r3, 0xC
-	  stwx      r24, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r23, 0x0(r4)
-	  bl        -0xF6F1C
-	  addi      r24, r3, 0
-	  mr.       r0, r24
-	  beq-      .loc_0x244
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r24)
-	  li        r0, 0x3
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r24)
-	  subi      r0, r3, 0x6A6C
-	  lis       r4, 0x802D
-	  stw       r0, 0x4(r24)
-	  li        r0, 0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x8(r24)
-	  subi      r4, r4, 0x4650
-	  subi      r0, r3, 0x4C04
-	  stw       r4, 0x4(r24)
-	  stw       r0, 0x4(r24)
-
-	.loc_0x244:
-	  li        r3, 0xC
-	  bl        -0xF6F70
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x260
-	  li        r4, 0x4
-	  bl        -0x16EF0
-
-	.loc_0x260:
-	  li        r0, 0
-	  lwz       r3, 0x8(r25)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r28, r3, r0
-	  li        r0, 0x1
-	  li        r4, 0x2
-	  lwz       r3, 0x8(r25)
-	  rlwinm    r0,r0,2,0,29
-	  li        r5, 0x3
-	  stwx      r29, r3, r0
-	  rlwinm    r4,r4,2,0,29
-	  rlwinm    r0,r5,2,0,29
-	  lwz       r5, 0x8(r25)
-	  li        r3, 0xC
-	  stwx      r24, r5, r4
-	  lwz       r4, 0x8(r25)
-	  stwx      r30, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r25, 0x4(r4)
-	  bl        -0xF6FD4
-	  addi      r24, r3, 0
-	  mr.       r0, r24
-	  beq-      .loc_0x2F0
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r24)
-	  li        r0, 0x3
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r24)
-	  subi      r0, r3, 0x6A6C
-	  lis       r3, 0x802D
-	  stw       r0, 0x4(r24)
-	  li        r4, 0x4
-	  subi      r0, r3, 0x4B50
-	  stw       r4, 0x8(r24)
-	  stw       r0, 0x4(r24)
-
-	.loc_0x2F0:
-	  li        r3, 0x8
-	  bl        -0xF701C
-	  addi      r25, r3, 0
-	  mr.       r0, r25
-	  beq-      .loc_0x324
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r25)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r25)
-	  subi      r0, r3, 0x4C98
-	  stw       r0, 0x4(r25)
-
-	.loc_0x324:
-	  li        r3, 0x14
-	  bl        -0xF7050
-	  addi      r23, r3, 0
-	  mr.       r0, r23
-	  beq-      .loc_0x37C
-	  lwz       r5, 0x84(r26)
-	  lis       r4, 0x802C
-	  lis       r3, 0x802D
-	  lwz       r6, 0x4(r5)
-	  addi      r5, r4, 0x6620
-	  li        r4, -0x1
-	  lwz       r6, 0x0(r6)
-	  subi      r3, r3, 0x35D8
-	  li        r0, 0
-	  lfs       f0, 0xD0(r6)
-	  stw       r5, 0x4(r23)
-	  stw       r4, 0x0(r23)
-	  stw       r3, 0x4(r23)
-	  stw       r0, 0x8(r23)
-	  stfs      f0, 0xC(r23)
-	  lfs       f0, -0x5A28(r2)
-	  stfs      f0, 0x10(r23)
-
-	.loc_0x37C:
-	  li        r3, 0xC
-	  bl        -0xF70A8
-	  addi      r26, r3, 0
-	  mr.       r3, r26
-	  beq-      .loc_0x398
-	  li        r4, 0x3
-	  bl        -0x17028
-
-	.loc_0x398:
-	  li        r0, 0
-	  lwz       r3, 0x8(r26)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r24, r3, r0
-	  li        r0, 0x1
-	  li        r5, 0x2
-	  lwz       r4, 0x8(r26)
-	  rlwinm    r3,r0,2,0,29
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r25, r4, r3
-	  li        r3, 0xC
-	  lwz       r4, 0x8(r26)
-	  stwx      r23, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r26, 0x8(r4)
-	  bl        -0xF70FC
-	  addi      r23, r3, 0
-	  mr.       r0, r23
-	  beq-      .loc_0x40C
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r23)
-	  li        r0, 0x2
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r23)
-	  subi      r3, r3, 0x4CD8
-	  li        r0, 0
-	  stw       r3, 0x4(r23)
-	  stw       r0, 0x8(r23)
-
-	.loc_0x40C:
-	  li        r3, 0xC
-	  bl        -0xF7138
-	  addi      r24, r3, 0
-	  mr.       r0, r24
-	  beq-      .loc_0x454
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r24)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r24)
-	  subi      r0, r3, 0x6A6C
-	  lis       r3, 0x802D
-	  stw       r0, 0x4(r24)
-	  li        r4, 0x2
-	  subi      r0, r3, 0x4B50
-	  stw       r4, 0x8(r24)
-	  stw       r0, 0x4(r24)
-
-	.loc_0x454:
-	  li        r3, 0xC
-	  bl        -0xF7180
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x470
-	  li        r4, 0x6
-	  bl        -0x17100
-
-	.loc_0x470:
-	  li        r0, 0
-	  lwz       r3, 0x8(r25)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r28, r3, r0
-	  li        r0, 0x1
-	  li        r4, 0x2
-	  lwz       r3, 0x8(r25)
-	  rlwinm    r0,r0,2,0,29
-	  li        r5, 0x3
-	  stwx      r29, r3, r0
-	  li        r6, 0x4
-	  li        r7, 0x5
-	  lwz       r3, 0x8(r25)
-	  rlwinm    r0,r4,2,0,29
-	  rlwinm    r5,r5,2,0,29
-	  stwx      r27, r3, r0
-	  rlwinm    r4,r6,2,0,29
-	  rlwinm    r0,r7,2,0,29
-	  lwz       r6, 0x8(r25)
-	  mr        r3, r31
-	  stwx      r24, r6, r5
-	  lwz       r5, 0x8(r25)
-	  stwx      r30, r5, r4
-	  lwz       r4, 0x8(r25)
-	  stwx      r23, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r25, 0xC(r4)
-	  lwz       r0, 0xC4(r1)
-	  lmw       r23, 0x9C(r1)
-	  addi      r1, r1, 0xC0
-	  mtlr      r0
-	  blr
-	*/
+	// NORMAL STATE - straight chillin
+	state = new TaiState(6);
+	j     = 0;
+	state->setAction(j++, deadAction);         // if dead, transit to dead
+	state->setAction(j++, flowerDamageAction); // if hit directly on flower, transit to dead
+	state->setAction(j++, damageAction);       // if taking damage, transit to damage
+	state->setAction(j++, motionAction2);
+	state->setAction(j++, changingColorAction);
+	state->setAction(j++, growAction); // if time to grow, transit to grow
+	setState(PALMSTATE_Normal, state);
 }
 
 /*
@@ -571,8 +138,9 @@ TaiPalmStrategy::TaiPalmStrategy(TekiParameters*)
  * Address:	8013E21C
  * Size:	0002B4
  */
-void TaiPalmStrategy::start(Teki&)
+void TaiPalmStrategy::start(Teki& teki)
 {
+
 	/*
 	.loc_0x0:
 	  mflr      r0

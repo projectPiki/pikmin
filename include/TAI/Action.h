@@ -135,6 +135,8 @@ struct TaiState {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct TaiStrategy : public TekiStrategy {
 	TaiStrategy(int, int);

@@ -17,27 +17,26 @@ enum TaiIwagonStateID {
 	IWAGONSTATE_COUNT, // 2
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiIwagonParameters : public TekiParameters {
 	TaiIwagonParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_88 = TekiParameters
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiIwagonSoundTable : public PaniSoundTable {
 	TaiIwagonSoundTable();
 
-	// TODO: members
+	// _00-_08 = PaniSoundTable
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiIwagonStrategy : public TaiStrategy {
@@ -46,8 +45,7 @@ struct TaiIwagonStrategy : public TaiStrategy {
 	virtual void start(Teki&); // _08
 
 	// _00     = VTBL
-	// _00-_10 = TaiStrategy
-	// TODO: members
+	// _00-_14 = TaiStrategy
 };
 
 /**

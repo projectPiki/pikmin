@@ -120,7 +120,7 @@ struct TaiCreateDeadEffectAction : public TaiAction {
  */
 struct TaiDyingAction : public TaiMotionAction {
 	TaiDyingAction(int p1)
-	    : TaiMotionAction(-1, p1)
+	    : TaiMotionAction(TAI_NO_TRANSIT, p1)
 	{
 	}
 

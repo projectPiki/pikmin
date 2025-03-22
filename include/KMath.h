@@ -40,7 +40,10 @@ struct KSegment {
 	// unused/inlined:
 	KSegment();
 
-	Vector3f mPoint;     // _00
+	Vector3f& Origin() { return mPoint; }
+	Vector3f& Direction() { return mDirection; }
+
+	Vector3f mPoint;     // _00, a.k.a. origin
 	Vector3f mDirection; // _0C
 };
 

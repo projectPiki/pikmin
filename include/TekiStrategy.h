@@ -10,6 +10,8 @@ struct TekiInteractionKey;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x4.
  */
 struct TekiStrategy {
 	TekiStrategy();

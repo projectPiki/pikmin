@@ -280,6 +280,8 @@ struct PaniSound {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct PaniSoundTable {
 	PaniSoundTable(int);
