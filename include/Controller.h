@@ -83,8 +83,8 @@ struct Controller : public Node {
 	// use KeyboardButtons enum - could maybe rename these from DLL names
 	bool keyDown(u32 button) { return (mCurrentInput & button) != 0; }
 	bool keyUp(u32 button) { return (mCurrentInput & button) == 0; }
-	bool keyClick(u32 button) { return mInputPressed & button; }
-	bool keyUnClick(u32 button) { return mInputReleased & button; }
+	bool keyClick(u32 button) { return (mInputPressed & button) != 0; }
+	bool keyUnClick(u32 button) { return (mInputReleased & button) != 0; }
 
 	// _00     = VTBL
 	// _00-_20 = Node

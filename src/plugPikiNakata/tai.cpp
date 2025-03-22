@@ -134,22 +134,21 @@ void TaiState::finish(Teki& teki)
  */
 bool TaiState::act(Teki& teki)
 {
-	Teki* pTeki        = &teki;
-	volatile int count = 0;
-	for (int i = 0; count < mCount; i++, count++) {
+	Teki* pTeki = &teki;
+	for (int i = 0; i < mCount; i++) {
 		TaiAction* action = mActions[i];
-		if (action->act(*pTeki) && action->hasNextState()) {
-			PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)pTeki, count, pTeki->mStateID, action->mNextState,
-			      pTeki->mReturnStateID, pTeki->mTekiType, pTeki->mTekiAnimator->getCurrentMotionIndex());
+		if (action->act(teki) && action->hasNextState()) {
+			PRINT("transit:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)pTeki, i, teki.mStateID, action->mNextState, teki.mReturnStateID,
+			      teki.mTekiType, teki.mTekiAnimator->getCurrentMotionIndex());
 
-			volatile int& state = pTeki->mStateID;
-			int startVal        = pTeki->mStateID;
+			volatile int& stateID = teki.mStateID;
+			int startVal          = teki.mStateID;
 			if (action->mNextState == -2) {
-				state = pTeki->mReturnStateID;
+				stateID = teki.mReturnStateID;
 			} else {
-				state = action->mNextState;
+				stateID = action->mNextState;
 			}
-			pTeki->mReturnStateID = startVal;
+			teki.mReturnStateID = startVal;
 			return true;
 		}
 	}
@@ -238,24 +237,20 @@ bool TaiState::act(Teki& teki)
  */
 bool TaiState::eventPerformed(TekiEvent& event)
 {
-	// LOLLLLLLLLLLLLLLLLLLL
-	volatile int count = 0;
-	for (int i = 0; count < mCount; i++, count++) {
+	// NON-MATCHING
+	for (int i = 0; i < mCount; i++) {
 		TaiAction* action = mActions[i];
 		if (action->actByEvent(event) && action->hasNextState()) {
-			Teki* volatile teki = event.mTeki;
-			if (true) {
-				// idk
-				int motionID = event.mTeki->mTekiAnimator->getCurrentMotionIndex();
-				PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", (u32)teki, i, event.mTeki->mStateID, action->mNextState,
-				      event.mTeki->mReturnStateID, event.mTeki->mTekiType, motionID);
-			}
+			PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", event.mTeki, i, event.mTeki->mStateID, action->mNextState,
+			      event.mTeki->mReturnStateID, event.mTeki->mTekiType, event.mTeki->mTekiAnimator->getCurrentMotionIndex());
 
-			int startVal = event.mTeki->mStateID;
-			if (action->mNextState == -2) {
-				event.mTeki->mStateID = event.mTeki->mReturnStateID;
+			int startVal          = event.mTeki->mStateID;
+			volatile int& stateID = event.mTeki->mStateID;
+			int nextState         = action->mNextState;
+			if (nextState == -2) {
+				stateID = event.mTeki->mReturnStateID;
 			} else {
-				event.mTeki->mStateID = action->mNextState;
+				stateID = nextState;
 			}
 			event.mTeki->mReturnStateID = startVal;
 			return true;
@@ -315,64 +310,6 @@ void TaiStrategy::act(Teki& teki)
 		mStateList[stateID]->finish(teki);
 		teki.mIsStateReady = true;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  mr        r30, r4
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  lbz       r0, 0x328(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x58
-	  lwz       r0, 0x324(r30)
-	  mr        r4, r30
-	  lwz       r3, 0x8(r29)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0
-	  stb       r0, 0x328(r30)
-
-	.loc_0x58:
-	  lwz       r0, 0x324(r30)
-	  mr        r4, r30
-	  lwz       r3, 0x8(r29)
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r31, 0x324(r30)
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xB0
-	  lwz       r3, 0x8(r29)
-	  rlwinm    r0,r31,2,0,29
-	  addi      r4, r30, 0
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x1
-	  stb       r0, 0x328(r30)
-
-	.loc_0xB0:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -388,45 +325,4 @@ void TaiStrategy::eventPerformed(TekiEvent& event)
 		mStateList[stateID]->finish(*teki);
 		teki->mIsStateReady = true;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  mr        r29, r3
-	  lwz       r31, 0x4(r4)
-	  lwz       r3, 0x8(r3)
-	  lwz       r0, 0x324(r31)
-	  lwz       r30, 0x324(r31)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x74
-	  lwz       r3, 0x8(r29)
-	  rlwinm    r0,r30,2,0,29
-	  addi      r4, r31, 0
-	  lwzx      r3, r3, r0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x1
-	  stb       r0, 0x328(r31)
-
-	.loc_0x74:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }

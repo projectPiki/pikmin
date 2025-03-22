@@ -50,7 +50,12 @@ struct Graphics {
 	int calcSphereLighting(Vector3f&, f32);
 	int calcBoxLighting(BoundBox&);
 
-	void addLight(Light* light) { }
+	void addLight(Light* light)
+	{
+		light->initCore("");
+		gsys->mLightCount++;
+		mLight.add(light);
+	}
 
 	// _3B4 = VTBL
 	// In the DLL, take the offset of the variable (- 4) to get the real offset here
@@ -58,7 +63,7 @@ struct Graphics {
 	u32 mRenderState;                         // _08
 	Matrix4f* mMatrix;                        // _0C
 	Matrix4f* mActiveMatrix;                  // _10
-	Light mLight;                             // _10
+	Light mLight;                             // _14
 	Camera* mCamera;                          // _2E4
 	Texture* mActiveTexture[8];               // _2E8
 	u32 _308;                                 // _308

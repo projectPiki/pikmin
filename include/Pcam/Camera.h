@@ -122,11 +122,12 @@ struct PcamCamera : public NCamera {
 	PcamMotionInfo& getBasicMotionInfo(int zoom, int incl) { return mBasicMotionInfos[incl][zoom]; }
 	f32 getParameterF(int idx) { return mParameters->getF(idx); }
 
-	// DLL inlines to do:
 	bool timerElapsed(int idx) { return mTimers[idx] <= 0.0f; }
-	NPolar3f& getPolar();
-	f32 getDirection();
+	NPolar3f& getPolar() { return mPolarDir; }
 	void setBlur(f32 blur) { mCamera->mBlur = blur; }
+
+	// DLL inlines to do:
+	f32 getDirection();
 
 	static f32 angleToMeridian(f32 angle) { return NMathF::d2r(90.0f - angle); }
 	static f32 calcDirection(Vector3f& vec) { return NMathF::atan2(vec.x, vec.z); }
