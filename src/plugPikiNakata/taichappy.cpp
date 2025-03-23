@@ -2590,16 +2590,6 @@ void TaiChappyLegEffectAction::setType(Vector3f&, int, int)
 
 /*
  * --INFO--
- * Address:	8012A970
- * Size:	000008
- */
-bool TaiOnceAction::act(Teki&)
-{
-	return true;
-}
-
-/*
- * --INFO--
  * Address:	8012A978
  * Size:	000060
  */

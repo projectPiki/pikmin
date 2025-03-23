@@ -654,7 +654,7 @@ config.libs = [
             Object(Matching, "plugPikiNakata/taipalm.cpp"),
             Object(NonMatching, "plugPikiNakata/taireactionactions.cpp"),
             Object(NonMatching, "plugPikiNakata/taiswallow.cpp"),
-            Object(Equivalent, "plugPikiNakata/taishell.cpp"),
+            Object(Matching, "plugPikiNakata/taishell.cpp"),
             Object(NonMatching, "plugPikiNakata/taitimeractions.cpp"),
             Object(NonMatching, "plugPikiNakata/taiwaitactions.cpp"),
             Object(Matching, "plugPikiNakata/teki.cpp"),
