@@ -29,7 +29,7 @@ DEFINE_PRINT(nullptr)
  * Address: ........
  * Size:    0000C0
  */
-bool Plane::equal(Plane&)
+bool Plane::equal(Plane& other)
 {
 	// UNUSED FUNCTION
 }
@@ -123,6 +123,15 @@ void CullingPlane::CheckMinMaxDir()
  */
 void Vector3f::rotateTranspose(Matrix4f&)
 {
+	// FAKE but easiest way to juggle the float ordering
+	Vector3f vec;
+	vec.x = 1.0f;
+	vec.y = 1.0f;
+	vec.z = 1.0f;
+	vec.x *= 2.0f;
+	vec.y *= 2.0f;
+	vec.z *= 2.0f;
+	*this = vec;
 	// UNUSED FUNCTION
 }
 
@@ -634,7 +643,7 @@ void BoundBox::draw(Graphics& gfx)
  * Address: 80038F3C
  * Size:    0000E8
  */
-bool pointInsideTri(KTri& tri, Vector3f& point)
+static bool pointInsideTri(KTri& tri, Vector3f& point)
 {
 	Vector3f vertex1;
 	Vector3f vertex2;
@@ -692,17 +701,19 @@ f32 triRectDistance(Vector3f* vertex1, Vector3f* vertex2, Vector3f* vertex3, Bou
 	Vector3f topLeft;
 	Vector3f botRight;
 	Vector3f topRight;
+	Vector3f rectDims;
 
 	botLeft   = boundingBox.mMin;
 	botLeft.y = 0.0f;
 
 	// Calculate XZ dimensions of rectangle
-	Vector3f rectDimensions(boundingBox.mMax.x - boundingBox.mMin.x, 0.0f, boundingBox.mMax.z - boundingBox.mMin.z);
+	rectDims   = boundingBox.mMax - boundingBox.mMin;
+	rectDims.y = 0.0f;
 
 	// Set rectangle corner points
-	topLeft  = botLeft + Vector3f(rectDimensions.x, 0.0f, 0.0f);
-	botRight = botLeft + Vector3f(0.0f, 0.0f, rectDimensions.z);
-	topRight = botLeft + rectDimensions;
+	topLeft  = botLeft + Vector3f(rectDims.x, 0.0f, 0.0f);
+	botRight = botLeft + Vector3f(0.0f, 0.0f, rectDims.z);
+	topRight = botLeft + Vector3f(rectDims.x, 0.0f, rectDims.z);
 
 	projRectangle.mBotTri.set(botLeft, topLeft, botRight);
 
@@ -738,7 +749,6 @@ f32 triRectDistance(Vector3f* vertex1, Vector3f* vertex2, Vector3f* vertex3, Bou
 
 	// Calculate minimum distance between non-intersecting shapes
 	f32 a, b, c, d;
-	u32 badCompiler[7];
 	return distanceTriRect(projTriangle, projRectangle, &a, &b, &c, &d);
 }
 
@@ -818,1667 +828,502 @@ f32 gs_fTolerance = 0.00001f;
  * Address: 8003958C
  * Size:    0018C4
  */
-f32 sqrDistance(KSegment&, KTri&, f32*, f32*, f32*)
+f32 sqrDistance(KSegment& segment, KTri& tri, f32* outP3, f32* outP4, f32* outP5)
 {
-	FORCE_DONT_INLINE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x6A8(r1)
-	  stfd      f31, 0x6A0(r1)
-	  stfd      f30, 0x698(r1)
-	  stfd      f29, 0x690(r1)
-	  stfd      f28, 0x688(r1)
-	  stfd      f27, 0x680(r1)
-	  stfd      f26, 0x678(r1)
-	  stfd      f25, 0x670(r1)
-	  stfd      f24, 0x668(r1)
-	  stfd      f23, 0x660(r1)
-	  stfd      f22, 0x658(r1)
-	  stfd      f21, 0x650(r1)
-	  stfd      f20, 0x648(r1)
-	  stmw      r24, 0x628(r1)
-	  addi      r25, r4, 0
-	  addi      r24, r3, 0
-	  addi      r31, r24, 0xC
-	  addi      r30, r25, 0xC
-	  addi      r29, r25, 0x18
-	  mr        r26, r5
-	  mr        r27, r6
-	  mr        r28, r7
-	  lfs       f3, 0x4(r4)
-	  lfs       f2, 0x4(r3)
-	  lfs       f28, 0x10(r4)
-	  fsubs     f9, f3, f2
-	  lfs       f22, 0x10(r3)
-	  lfs       f2, 0x1C(r4)
-	  fmuls     f26, f28, f28
-	  lfs       f29, 0xC(r4)
-	  lfs       f3, 0x18(r4)
-	  fmuls     f20, f22, f28
-	  lfs       f7, 0xC(r3)
-	  fmuls     f12, f9, f22
-	  lfs       f5, 0x14(r4)
-	  fmuls     f21, f7, f29
-	  lfs       f1, 0x0(r4)
-	  fmuls     f27, f29, f29
-	  lfs       f0, 0x0(r3)
-	  fmuls     f25, f29, f3
-	  fsubs     f10, f1, f0
-	  lfs       f11, 0x14(r3)
-	  fmuls     f1, f7, f3
-	  lfs       f4, 0x20(r4)
-	  fmuls     f0, f22, f2
-	  fmuls     f13, f10, f7
-	  lfs       f8, 0x8(r4)
-	  lfs       f6, 0x8(r3)
-	  fadds     f21, f21, f20
-	  fmuls     f20, f11, f4
-	  fsubs     f8, f8, f6
-	  fmuls     f6, f22, f22
-	  fadds     f0, f1, f0
-	  fmuls     f22, f11, f5
-	  fmuls     f7, f7, f7
-	  fadds     f0, f20, f0
-	  fadds     f1, f22, f21
-	  fadds     f20, f13, f12
-	  fmuls     f21, f8, f11
-	  fmuls     f13, f10, f29
-	  fmuls     f12, f9, f28
-	  fmuls     f24, f28, f2
-	  fadds     f28, f7, f6
-	  fadds     f21, f21, f20
-	  fadds     f6, f27, f26
-	  fmuls     f30, f5, f5
-	  fadds     f7, f25, f24
-	  fmuls     f26, f5, f4
-	  fmuls     f23, f3, f3
-	  fmuls     f22, f2, f2
-	  fmuls     f29, f11, f11
-	  fmuls     f20, f8, f5
-	  fadds     f12, f13, f12
-	  fadds     f5, f29, f28
-	  fmuls     f24, f4, f4
-	  fadds     f11, f23, f22
-	  fneg      f29, f1
-	  fneg      f28, f0
-	  fadds     f6, f30, f6
-	  fadds     f7, f26, f7
-	  fadds     f11, f24, f11
-	  fneg      f27, f21
-	  fadds     f12, f20, f12
-	  lfs       f1, -0x7C60(r2)
-	  fmuls     f21, f6, f11
-	  fmuls     f20, f7, f7
-	  stfs      f1, 0x5F0(r1)
-	  fmuls     f13, f28, f7
-	  fmuls     f0, f29, f11
-	  stfs      f1, 0x5EC(r1)
-	  fsubs     f31, f21, f20
-	  fsubs     f13, f13, f0
-	  stfs      f1, 0x5E8(r1)
-	  fmuls     f21, f29, f7
-	  fmuls     f0, f28, f6
-	  stfs      f1, 0x5FC(r1)
-	  fmuls     f20, f5, f31
-	  fsubs     f30, f21, f0
-	  stfs      f1, 0x5F8(r1)
-	  fmuls     f0, f29, f13
-	  fmuls     f21, f10, f3
-	  stfs      f1, 0x5F4(r1)
-	  fmuls     f3, f28, f30
-	  fadds     f0, f20, f0
-	  stfs      f1, 0x5E4(r1)
-	  fmuls     f2, f9, f2
-	  stfs      f1, 0x5E0(r1)
-	  fadds     f20, f3, f0
-	  fmuls     f3, f8, f4
-	  lfs       f0, -0x7A14(r13)
-	  fadds     f2, f21, f2
-	  stfs      f1, 0x5DC(r1)
-	  fabs      f4, f20
-	  fadds     f2, f3, f2
-	  fcmpo     cr0, f4, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x161C
-	  lfs       f0, -0x7C5C(r2)
-	  fneg      f3, f27
-	  fneg      f4, f12
-	  fdivs     f20, f0, f20
-	  fmuls     f3, f3, f20
-	  fmuls     f26, f4, f20
-	  fneg      f4, f2
-	  fmuls     f22, f31, f3
-	  fmuls     f21, f13, f26
-	  fmuls     f31, f4, f20
-	  fmuls     f20, f28, f29
-	  fmuls     f4, f5, f7
-	  fmuls     f24, f5, f11
-	  fmuls     f23, f28, f28
-	  fsubs     f4, f20, f4
-	  fmuls     f20, f30, f31
-	  fadds     f21, f22, f21
-	  fsubs     f23, f24, f23
-	  fmuls     f24, f5, f6
-	  fmuls     f25, f29, f29
-	  fadds     f21, f20, f21
-	  fmuls     f22, f13, f3
-	  fmuls     f23, f23, f26
-	  fsubs     f25, f24, f25
-	  stfs      f21, 0x5D8(r1)
-	  fmuls     f30, f30, f3
-	  fmuls     f13, f4, f26
-	  lfs       f3, 0x5D8(r1)
-	  fmuls     f21, f4, f31
-	  fadds     f24, f22, f23
-	  fmuls     f26, f25, f31
-	  fadds     f4, f30, f13
-	  fadds     f13, f21, f24
-	  fcmpo     cr0, f3, f1
-	  fadds     f4, f26, f4
-	  stfs      f13, 0x5D4(r1)
-	  stfs      f4, 0x5D0(r1)
-	  bge-      .loc_0x8E4
-	  lfs       f3, 0x5D4(r1)
-	  lfs       f4, 0x5D0(r1)
-	  fadds     f2, f3, f4
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x4E4
-	  fcmpo     cr0, f3, f1
-	  bge-      .loc_0x428
-	  fcmpo     cr0, f4, f1
-	  bge-      .loc_0x398
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D0
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0x18(r25)
-	  lwz       r0, 0x1C(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x20(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D4(r1)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  lwz       r7, 0x0(r25)
-	  addi      r6, r1, 0x5C8
-	  lwz       r0, 0x4(r25)
-	  stw       r7, 0x5E8(r1)
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0xC(r25)
-	  lwz       r0, 0x10(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5C4(r1)
-	  bge-      .loc_0x358
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C8(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f0, 0x5D4(r1)
-	  stfs      f3, 0x5D0(r1)
+	Vector3f segToTri    = tri.Origin() - segment.Origin();
+	f32 sqrLenSeg        = segment.Direction().squaredLength();
+	f32 dotSegEdge0      = -segment.Direction().DP(tri.Edge0());
+	f32 dotSegEdge1      = -segment.Direction().DP(tri.Edge1());
+	f32 sqrLenEdge0      = tri.Edge0().squaredLength(); // why'd you do this this way...
+	f32 dotEdge01        = tri.Edge0().DP(tri.Edge1());
+	f32 sqrLenEdge1      = tri.Edge1().DP(tri.Edge1()); // ... and this this way. w/e man.
+	f32 dotSegToTriSeg   = -segToTri.DP(segment.Direction());
+	f32 dotSegToTriEdge0 = segToTri.DP(tri.Edge0());
+	f32 dotSegToTriEdge1 = segToTri.DP(tri.Edge1());
 
-	.loc_0x358:
-	  addi      r3, r24, 0
-	  addi      r4, r25, 0
-	  addi      r5, r1, 0x5C8
-	  addi      r6, r1, 0x5C4
-	  bl        0x3F88
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+	f32 a   = sqrLenEdge0 * sqrLenEdge1 - dotEdge01 * dotEdge01;
+	f32 b   = dotSegEdge1 * dotEdge01 - dotSegEdge0 * sqrLenEdge1;
+	f32 c   = dotSegEdge0 * dotEdge01 - dotSegEdge1 * sqrLenEdge0;
+	f32 det = sqrLenSeg * a + dotSegEdge0 * b + dotSegEdge1 * c;
 
-	.loc_0x398:
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D0
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0x18(r25)
-	  lwz       r0, 0x1C(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x20(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D4(r1)
-	  addi      r4, r25, 0
-	  addi      r5, r1, 0x5C8
-	  addi      r6, r1, 0x5C4
-	  bl        0x3EF8
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+	KSegment tmpSeg;
+	Vector3f point;
+	f32 sqrDist, tmpDist;
+	f32 currP3, currP4, currP5;
+	f32 tmpP3, tmpP4, tmpP5;
 
-	.loc_0x428:
-	  fcmpo     cr0, f4, f1
-	  bge-      .loc_0x4C0
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D4
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0xC(r25)
-	  lwz       r0, 0x10(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D0(r1)
-	  addi      r4, r25, 0
-	  addi      r5, r1, 0x5C8
-	  addi      r6, r1, 0x5C4
-	  bl        0x3E60
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+	if (absF(det) >= gs_fTolerance) {
+		// A
 
-	.loc_0x4C0:
-	  addi      r3, r24, 0
-	  addi      r4, r25, 0
-	  addi      r5, r1, 0x5D4
-	  addi      r6, r1, 0x5D0
-	  bl        0x3E20
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  stfs      f0, 0x5D8(r1)
-	  b         .loc_0x184C
+		f32 d    = sqrLenSeg * sqrLenEdge1 - dotSegEdge1 * dotSegEdge1;
+		f32 e    = dotSegEdge1 * dotSegEdge0 - sqrLenSeg * dotEdge01;
+		f32 f    = sqrLenSeg * sqrLenEdge0 - dotSegEdge0 * dotSegEdge0;
+		f32 norm = 1.0f / det;
+		f32 g    = -dotSegToTriSeg * norm;
+		f32 h    = -dotSegToTriEdge0 * norm;
+		f32 i    = -dotSegToTriEdge1 * norm;
+		currP3   = a * g + b * h + c * i;
+		currP4   = b * g + d * h + e * i;
+		currP5   = c * g + e * h + f * i;
 
-	.loc_0x4E4:
-	  fcmpo     cr0, f3, f1
-	  bge-      .loc_0x660
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D0
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0x18(r25)
-	  lwz       r0, 0x1C(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x20(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D4(r1)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  lfs       f1, 0x0(r25)
-	  addi      r6, r1, 0x5C4
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x480(r1)
-	  lfs       f0, 0x480(r1)
-	  stfs      f0, 0x5A4(r1)
-	  lfs       f1, 0x4(r25)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5A8(r1)
-	  lfs       f1, 0x8(r25)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5AC(r1)
-	  lwz       r0, 0x5A4(r1)
-	  lwz       r7, 0x5A8(r1)
-	  stw       r0, 0x5E8(r1)
-	  lwz       r0, 0x5AC(r1)
-	  stw       r7, 0x5EC(r1)
-	  stw       r0, 0x5F0(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x46C(r1)
-	  lfs       f0, 0x46C(r1)
-	  stfs      f0, 0x598(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x59C(r1)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x8(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x5A0(r1)
-	  lwz       r7, 0x598(r1)
-	  lwz       r0, 0x59C(r1)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x5A0(r1)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C5C(r2)
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, 0x5C4(r1)
-	  fsubs     f0, f0, f3
-	  stfs      f0, 0x5C8(r1)
-	  bge-      .loc_0x620
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C8(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f0, 0x5D4(r1)
-	  stfs      f3, 0x5D0(r1)
+		if (currP3 < 0.0f) {
+			if (currP4 + currP5 <= 1.0f) {
+				if (currP4 < 0.0f) {
+					if (currP5 < 0.0f) {
+						// B
 
-	.loc_0x620:
-	  addi      r3, r24, 0
-	  addi      r4, r25, 0
-	  addi      r5, r1, 0x5C8
-	  addi      r6, r1, 0x5C4
-	  bl        0x3CC0
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+						tmpSeg.Origin()    = tri.Origin();
+						tmpSeg.Direction() = tri.Edge1();
+						sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+						currP4             = 0.0f;
 
-	.loc_0x660:
-	  fcmpo     cr0, f4, f1
-	  bge-      .loc_0x7DC
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D4
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0xC(r25)
-	  lwz       r0, 0x10(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D0(r1)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  lfs       f1, 0x0(r25)
-	  addi      r6, r1, 0x5C4
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x458(r1)
-	  lfs       f0, 0x458(r1)
-	  stfs      f0, 0x58C(r1)
-	  lfs       f1, 0x4(r25)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x590(r1)
-	  lfs       f1, 0x8(r25)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x594(r1)
-	  lwz       r0, 0x58C(r1)
-	  lwz       r7, 0x590(r1)
-	  stw       r0, 0x5E8(r1)
-	  lwz       r0, 0x594(r1)
-	  stw       r7, 0x5EC(r1)
-	  stw       r0, 0x5F0(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x444(r1)
-	  lfs       f0, 0x444(r1)
-	  stfs      f0, 0x580(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x584(r1)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x8(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x588(r1)
-	  lwz       r7, 0x580(r1)
-	  lwz       r0, 0x584(r1)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x588(r1)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C5C(r2)
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, 0x5C4(r1)
-	  fsubs     f0, f0, f3
-	  stfs      f0, 0x5C8(r1)
-	  bge-      .loc_0x79C
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C8(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f0, 0x5D4(r1)
-	  stfs      f3, 0x5D0(r1)
+						tmpSeg.Origin()    = tri.Origin();
+						tmpSeg.Direction() = tri.Edge0();
+						tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+						tmpP5              = 0.0f;
 
-	.loc_0x79C:
-	  addi      r3, r24, 0
-	  addi      r4, r25, 0
-	  addi      r5, r1, 0x5C8
-	  addi      r6, r1, 0x5C4
-	  bl        0x3B44
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+						if (tmpDist < sqrDist) {
+							sqrDist = tmpDist;
+							currP3  = tmpP3;
+							currP4  = tmpP4;
+							currP5  = tmpP5;
+						}
 
-	.loc_0x7DC:
-	  lfs       f1, 0x0(r25)
-	  mr        r3, r24
-	  lfs       f0, 0x0(r30)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x5D0
-	  stfs      f0, 0x430(r1)
-	  lfs       f0, 0x430(r1)
-	  stfs      f0, 0x574(r1)
-	  lfs       f1, 0x4(r25)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x578(r1)
-	  lfs       f1, 0x8(r25)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x57C(r1)
-	  lwz       r0, 0x574(r1)
-	  lwz       r7, 0x578(r1)
-	  stw       r0, 0x5E8(r1)
-	  lwz       r0, 0x57C(r1)
-	  stw       r7, 0x5EC(r1)
-	  stw       r0, 0x5F0(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x41C(r1)
-	  lfs       f0, 0x41C(r1)
-	  stfs      f0, 0x568(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x56C(r1)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x8(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x570(r1)
-	  lwz       r7, 0x568(r1)
-	  lwz       r0, 0x56C(r1)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x570(r1)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f2, -0x7C5C(r2)
-	  fmr       f31, f1
-	  lfs       f0, 0x5D0(r1)
-	  mr        r3, r24
-	  addi      r4, r25, 0
-	  fsubs     f0, f2, f0
-	  addi      r5, r1, 0x5C8
-	  addi      r6, r1, 0x5C4
-	  stfs      f0, 0x5D4(r1)
-	  bl        0x3A3C
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+						tmpDist = sqrDistance(segment.Origin(), tri, &tmpP4, &tmpP5);
+						tmpP3   = 0.0f;
+						if (tmpDist < sqrDist) {
+							sqrDist = tmpDist;
+							currP3  = tmpP3;
+							currP4  = tmpP4;
+							currP5  = tmpP5;
+						}
+					} else {
+						// C
 
-	.loc_0x8E4:
-	  fcmpo     cr0, f3, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xE5C
-	  lfs       f4, 0x5D4(r1)
-	  lfs       f13, 0x5D0(r1)
-	  fadds     f26, f4, f13
-	  fcmpo     cr0, f26, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xB10
-	  fcmpo     cr0, f4, f1
-	  bge-      .loc_0xA2C
-	  fcmpo     cr0, f13, f1
-	  bge-      .loc_0x9D8
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D0
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0x18(r25)
-	  lwz       r0, 0x1C(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x20(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D4(r1)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  lwz       r7, 0x0(r25)
-	  addi      r6, r1, 0x5C8
-	  lwz       r0, 0x4(r25)
-	  stw       r7, 0x5E8(r1)
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0xC(r25)
-	  lwz       r0, 0x10(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5C4(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C8(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f0, 0x5D4(r1)
-	  stfs      f3, 0x5D0(r1)
-	  b         .loc_0x184C
+						tmpSeg.Origin()    = tri.Origin();
+						tmpSeg.Direction() = tri.Edge1();
+						sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+						currP4             = 0.0f;
 
-	.loc_0x9D8:
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D0
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0x18(r25)
-	  lwz       r0, 0x1C(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x20(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  stfs      f0, 0x5D4(r1)
-	  b         .loc_0x184C
+						tmpDist = sqrDistance(segment.Origin(), tri, &tmpP4, &tmpP5);
+						tmpP3   = 0.0f;
 
-	.loc_0xA2C:
-	  fcmpo     cr0, f13, f1
-	  bge-      .loc_0xA88
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D4
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0xC(r25)
-	  lwz       r0, 0x10(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+						if (tmpDist < sqrDist) {
+							sqrDist = tmpDist;
+							currP3  = tmpP3;
+							currP4  = tmpP4;
+							currP5  = tmpP5;
+						}
+					}
+				} else {
+					if (currP5 < 0.0f) {
+						// D
 
-	.loc_0xA88:
-	  fmuls     f26, f5, f3
-	  lfs       f31, -0x7C58(r2)
-	  fmuls     f5, f29, f4
-	  fmuls     f1, f29, f3
-	  fmuls     f0, f6, f4
-	  fmuls     f30, f28, f3
-	  fmuls     f29, f7, f4
-	  fmuls     f28, f28, f13
-	  fadds     f6, f26, f5
-	  fmuls     f5, f7, f13
-	  fadds     f0, f1, f0
-	  fmuls     f26, f11, f13
-	  fadds     f11, f30, f29
-	  fmuls     f7, f31, f27
-	  fadds     f6, f28, f6
-	  fmuls     f1, f31, f12
-	  fadds     f0, f5, f0
-	  fadds     f5, f7, f6
-	  fmuls     f6, f31, f2
-	  fadds     f2, f26, f11
-	  fadds     f0, f1, f0
-	  fmuls     f3, f3, f5
-	  fadds     f5, f6, f2
-	  fmuls     f2, f4, f0
-	  fmuls     f1, f10, f10
-	  fmuls     f0, f9, f9
-	  fmuls     f4, f13, f5
-	  fadds     f3, f3, f2
-	  fmuls     f2, f8, f8
-	  fadds     f0, f1, f0
-	  fadds     f1, f4, f3
-	  fadds     f0, f2, f0
-	  fadds     f31, f1, f0
-	  b         .loc_0x184C
+						tmpSeg.Origin()    = tri.Origin();
+						tmpSeg.Direction() = tri.Edge0();
+						sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+						currP5             = 0.0f;
 
-	.loc_0xB10:
-	  fcmpo     cr0, f4, f1
-	  bge-      .loc_0xC50
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D0
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0x18(r25)
-	  lwz       r0, 0x1C(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x20(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D4(r1)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  lfs       f1, 0x0(r25)
-	  addi      r6, r1, 0x5C4
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x408(r1)
-	  lfs       f0, 0x408(r1)
-	  stfs      f0, 0x55C(r1)
-	  lfs       f1, 0x4(r25)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x560(r1)
-	  lfs       f1, 0x8(r25)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x564(r1)
-	  lwz       r0, 0x55C(r1)
-	  lwz       r7, 0x560(r1)
-	  stw       r0, 0x5E8(r1)
-	  lwz       r0, 0x564(r1)
-	  stw       r7, 0x5EC(r1)
-	  stw       r0, 0x5F0(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x3F4(r1)
-	  lfs       f0, 0x3F4(r1)
-	  stfs      f0, 0x550(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x554(r1)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x8(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x558(r1)
-	  lwz       r7, 0x550(r1)
-	  lwz       r0, 0x554(r1)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x558(r1)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C5C(r2)
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, 0x5C4(r1)
-	  fsubs     f0, f0, f3
-	  stfs      f0, 0x5C8(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C8(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f0, 0x5D4(r1)
-	  stfs      f3, 0x5D0(r1)
-	  b         .loc_0x184C
+						tmpDist = sqrDistance(segment.Origin(), tri, &tmpP4, &tmpP5);
+						tmpP3   = 0.0f;
 
-	.loc_0xC50:
-	  fcmpo     cr0, f13, f1
-	  bge-      .loc_0xD90
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D4
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0xC(r25)
-	  lwz       r0, 0x10(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D0(r1)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  lfs       f1, 0x0(r25)
-	  addi      r6, r1, 0x5C4
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x3E0(r1)
-	  lfs       f0, 0x3E0(r1)
-	  stfs      f0, 0x544(r1)
-	  lfs       f1, 0x4(r25)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x548(r1)
-	  lfs       f1, 0x8(r25)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x54C(r1)
-	  lwz       r0, 0x544(r1)
-	  lwz       r7, 0x548(r1)
-	  stw       r0, 0x5E8(r1)
-	  lwz       r0, 0x54C(r1)
-	  stw       r7, 0x5EC(r1)
-	  stw       r0, 0x5F0(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x3CC(r1)
-	  lfs       f0, 0x3CC(r1)
-	  stfs      f0, 0x538(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x53C(r1)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x8(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x540(r1)
-	  lwz       r7, 0x538(r1)
-	  lwz       r0, 0x53C(r1)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x540(r1)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C5C(r2)
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, 0x5C4(r1)
-	  fsubs     f0, f0, f3
-	  stfs      f0, 0x5C8(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C8(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f0, 0x5D4(r1)
-	  stfs      f3, 0x5D0(r1)
-	  b         .loc_0x184C
+						if (tmpDist < sqrDist) {
+							sqrDist = tmpDist;
+							currP3  = tmpP3;
+							currP4  = tmpP4;
+							currP5  = tmpP5;
+						}
+					} else {
+						// E
 
-	.loc_0xD90:
-	  lfs       f1, 0x0(r25)
-	  mr        r3, r24
-	  lfs       f0, 0x0(r30)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x5D0
-	  stfs      f0, 0x3B8(r1)
-	  lfs       f0, 0x3B8(r1)
-	  stfs      f0, 0x52C(r1)
-	  lfs       f1, 0x4(r25)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x530(r1)
-	  lfs       f1, 0x8(r25)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x534(r1)
-	  lwz       r0, 0x52C(r1)
-	  lwz       r7, 0x530(r1)
-	  stw       r0, 0x5E8(r1)
-	  lwz       r0, 0x534(r1)
-	  stw       r7, 0x5EC(r1)
-	  stw       r0, 0x5F0(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x3A4(r1)
-	  lfs       f0, 0x3A4(r1)
-	  stfs      f0, 0x520(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x524(r1)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x8(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x528(r1)
-	  lwz       r7, 0x520(r1)
-	  lwz       r0, 0x524(r1)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x528(r1)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f2, -0x7C5C(r2)
-	  fmr       f31, f1
-	  lfs       f0, 0x5D0(r1)
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x5D4(r1)
-	  b         .loc_0x184C
+						sqrDist = sqrDistance(segment.Origin(), tri, &currP4, &currP5);
+						currP3  = 0.0f;
+					}
+				}
+			} else if (currP4 < 0.0f) {
+				// F
 
-	.loc_0xE5C:
-	  lfs       f3, 0x5D4(r1)
-	  lfs       f4, 0x5D0(r1)
-	  fadds     f2, f3, f4
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x118C
-	  fcmpo     cr0, f3, f1
-	  bge-      .loc_0x1070
-	  fcmpo     cr0, f4, f1
-	  bge-      .loc_0xFB0
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D0
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0x18(r25)
-	  lwz       r0, 0x1C(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x20(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D4(r1)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  lwz       r7, 0x0(r25)
-	  addi      r6, r1, 0x5C8
-	  lwz       r0, 0x4(r25)
-	  stw       r7, 0x5E8(r1)
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0xC(r25)
-	  lwz       r0, 0x10(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5C4(r1)
-	  bge-      .loc_0xF40
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C8(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f0, 0x5D4(r1)
-	  stfs      f3, 0x5D0(r1)
+				tmpSeg.Origin()    = tri.Origin();
+				tmpSeg.Direction() = tri.Edge1();
+				sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+				currP4             = 0.0f;
 
-	.loc_0xF40:
-	  lfs       f1, 0x0(r24)
-	  mr        r4, r25
-	  lfs       f0, 0xC(r24)
-	  addi      r3, r1, 0x5DC
-	  lfs       f3, 0x4(r24)
-	  lfs       f2, 0x10(r24)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r24)
-	  addi      r5, r1, 0x5C8
-	  lfs       f1, 0x14(r24)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x5DC(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x5C4
-	  stfs      f2, 0x5E0(r1)
-	  stfs      f0, 0x5E4(r1)
-	  bl        0x3370
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+				tmpSeg.Origin()    = tri.Origin() + tri.Edge0();
+				tmpSeg.Direction() = tri.Edge1() - tri.Edge0();
+				tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP5);
+				tmpP4              = 1.0f - tmpP5;
 
-	.loc_0xFB0:
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D0
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0x18(r25)
-	  lwz       r0, 0x1C(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x20(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r4, r25
-	  stfs      f0, 0x5D4(r1)
-	  addi      r3, r1, 0x5DC
-	  addi      r5, r1, 0x5C8
-	  lfs       f1, 0x0(r24)
-	  addi      r6, r1, 0x5C4
-	  lfs       f0, 0x0(r31)
-	  lfs       f2, 0x4(r24)
-	  fadds     f0, f1, f0
-	  lfs       f1, 0x4(r31)
-	  lfs       f4, 0x8(r24)
-	  lfs       f3, 0x8(r31)
-	  fadds     f1, f2, f1
-	  stfs      f0, 0x5DC(r1)
-	  fadds     f0, f4, f3
-	  stfs      f1, 0x5E0(r1)
-	  stfs      f0, 0x5E4(r1)
-	  bl        0x32B0
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
 
-	.loc_0x1070:
-	  fcmpo     cr0, f4, f1
-	  bge-      .loc_0x1138
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D4
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0xC(r25)
-	  lwz       r0, 0x10(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r4, r25
-	  stfs      f0, 0x5D0(r1)
-	  addi      r3, r1, 0x5DC
-	  addi      r5, r1, 0x5C8
-	  lfs       f1, 0x0(r24)
-	  addi      r6, r1, 0x5C4
-	  lfs       f0, 0x0(r31)
-	  lfs       f2, 0x4(r24)
-	  fadds     f0, f1, f0
-	  lfs       f1, 0x4(r31)
-	  lfs       f4, 0x8(r24)
-	  lfs       f3, 0x8(r31)
-	  fadds     f1, f2, f1
-	  stfs      f0, 0x5DC(r1)
-	  fadds     f0, f4, f3
-	  stfs      f1, 0x5E0(r1)
-	  stfs      f0, 0x5E4(r1)
-	  bl        0x31E8
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+				tmpDist = sqrDistance(segment.Origin(), tri, &tmpP4, &tmpP5);
+				tmpP3   = 0.0f;
 
-	.loc_0x1138:
-	  lfs       f1, 0x0(r24)
-	  mr        r4, r25
-	  lfs       f0, 0x0(r31)
-	  addi      r3, r1, 0x5DC
-	  lfs       f3, 0x4(r24)
-	  lfs       f2, 0x4(r31)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r24)
-	  addi      r5, r1, 0x5D4
-	  lfs       f1, 0x8(r31)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x5DC(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x5D0
-	  stfs      f2, 0x5E0(r1)
-	  stfs      f0, 0x5E4(r1)
-	  bl        0x3178
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  stfs      f0, 0x5D8(r1)
-	  b         .loc_0x184C
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
+			} else if (currP5 < 0.0f) {
+				// G
 
-	.loc_0x118C:
-	  fcmpo     cr0, f3, f1
-	  bge-      .loc_0x1338
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D0
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0x18(r25)
-	  lwz       r0, 0x1C(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x20(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D4(r1)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  lfs       f1, 0x0(r25)
-	  addi      r6, r1, 0x5C4
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x360(r1)
-	  lfs       f0, 0x360(r1)
-	  stfs      f0, 0x514(r1)
-	  lfs       f1, 0x4(r25)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x518(r1)
-	  lfs       f1, 0x8(r25)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x51C(r1)
-	  lwz       r0, 0x514(r1)
-	  lwz       r7, 0x518(r1)
-	  stw       r0, 0x5E8(r1)
-	  lwz       r0, 0x51C(r1)
-	  stw       r7, 0x5EC(r1)
-	  stw       r0, 0x5F0(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x34C(r1)
-	  lfs       f0, 0x34C(r1)
-	  stfs      f0, 0x508(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x50C(r1)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x8(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x510(r1)
-	  lwz       r7, 0x508(r1)
-	  lwz       r0, 0x50C(r1)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x510(r1)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C5C(r2)
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, 0x5C4(r1)
-	  fsubs     f0, f0, f3
-	  stfs      f0, 0x5C8(r1)
-	  bge-      .loc_0x12C8
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C8(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f0, 0x5D4(r1)
-	  stfs      f3, 0x5D0(r1)
+				tmpSeg.Origin()    = tri.Origin();
+				tmpSeg.Direction() = tri.Edge0();
+				sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+				currP5             = 0.0f;
 
-	.loc_0x12C8:
-	  lfs       f1, 0x0(r24)
-	  mr        r4, r25
-	  lfs       f0, 0xC(r24)
-	  addi      r3, r1, 0x5DC
-	  lfs       f3, 0x4(r24)
-	  lfs       f2, 0x10(r24)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r24)
-	  addi      r5, r1, 0x5C8
-	  lfs       f1, 0x14(r24)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x5DC(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x5C4
-	  stfs      f2, 0x5E0(r1)
-	  stfs      f0, 0x5E4(r1)
-	  bl        0x2FE8
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+				tmpSeg.Origin()    = tri.Origin() + tri.Edge0();
+				tmpSeg.Direction() = tri.Edge1() - tri.Edge0();
+				tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP5);
+				tmpP4              = 1.0f - tmpP5;
 
-	.loc_0x1338:
-	  fcmpo     cr0, f4, f1
-	  bge-      .loc_0x14E4
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D4
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0xC(r25)
-	  lwz       r0, 0x10(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D0(r1)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  lfs       f1, 0x0(r25)
-	  addi      r6, r1, 0x5C4
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x32C(r1)
-	  lfs       f0, 0x32C(r1)
-	  stfs      f0, 0x4FC(r1)
-	  lfs       f1, 0x4(r25)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x500(r1)
-	  lfs       f1, 0x8(r25)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x504(r1)
-	  lwz       r0, 0x4FC(r1)
-	  lwz       r7, 0x500(r1)
-	  stw       r0, 0x5E8(r1)
-	  lwz       r0, 0x504(r1)
-	  stw       r7, 0x5EC(r1)
-	  stw       r0, 0x5F0(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x318(r1)
-	  lfs       f0, 0x318(r1)
-	  stfs      f0, 0x4F0(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4F4(r1)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x8(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4F8(r1)
-	  lwz       r7, 0x4F0(r1)
-	  lwz       r0, 0x4F4(r1)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x4F8(r1)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C5C(r2)
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, 0x5C4(r1)
-	  fsubs     f0, f0, f3
-	  stfs      f0, 0x5C8(r1)
-	  bge-      .loc_0x1474
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C8(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f0, 0x5D4(r1)
-	  stfs      f3, 0x5D0(r1)
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
 
-	.loc_0x1474:
-	  lfs       f1, 0x0(r24)
-	  mr        r4, r25
-	  lfs       f0, 0xC(r24)
-	  addi      r3, r1, 0x5DC
-	  lfs       f3, 0x4(r24)
-	  lfs       f2, 0x10(r24)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r24)
-	  addi      r5, r1, 0x5C8
-	  lfs       f1, 0x14(r24)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x5DC(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x5C4
-	  stfs      f2, 0x5E0(r1)
-	  stfs      f0, 0x5E4(r1)
-	  bl        0x2E3C
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+				tmpDist = sqrDistance(segment.Origin(), tri, &tmpP4, &tmpP5);
+				tmpP3   = 0.0f;
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
+			} else {
+				// H
 
-	.loc_0x14E4:
-	  lfs       f1, 0x0(r25)
-	  mr        r3, r24
-	  lfs       f0, 0x0(r30)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x5D0
-	  stfs      f0, 0x2F8(r1)
-	  lfs       f0, 0x2F8(r1)
-	  stfs      f0, 0x4E4(r1)
-	  lfs       f1, 0x4(r25)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4E8(r1)
-	  lfs       f1, 0x8(r25)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4EC(r1)
-	  lwz       r0, 0x4E4(r1)
-	  lwz       r7, 0x4E8(r1)
-	  stw       r0, 0x5E8(r1)
-	  lwz       r0, 0x4EC(r1)
-	  stw       r7, 0x5EC(r1)
-	  stw       r0, 0x5F0(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x2E4(r1)
-	  lfs       f0, 0x2E4(r1)
-	  stfs      f0, 0x4D8(r1)
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x4(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4DC(r1)
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x8(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4E0(r1)
-	  lwz       r7, 0x4D8(r1)
-	  lwz       r0, 0x4DC(r1)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x4E0(r1)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f2, -0x7C5C(r2)
-	  fmr       f31, f1
-	  lfs       f0, 0x5D0(r1)
-	  addi      r4, r25, 0
-	  addi      r3, r1, 0x5DC
-	  fsubs     f0, f2, f0
-	  addi      r5, r1, 0x5C8
-	  addi      r6, r1, 0x5C4
-	  stfs      f0, 0x5D4(r1)
-	  lfs       f1, 0x0(r24)
-	  lfs       f0, 0x0(r31)
-	  lfs       f3, 0x4(r24)
-	  lfs       f2, 0x4(r31)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r24)
-	  lfs       f1, 0x8(r31)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x5DC(r1)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x5E0(r1)
-	  stfs      f0, 0x5E4(r1)
-	  bl        0x2D04
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
-	  b         .loc_0x184C
+				tmpSeg.Origin()    = tri.Origin() + tri.Edge0();
+				tmpSeg.Direction() = tri.Edge1() - tri.Edge0();
+				sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+				currP4             = 1.0f - currP5;
 
-	.loc_0x161C:
-	  lwz       r6, 0x0(r25)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5D8
-	  stw       r6, 0x5E8(r1)
-	  addi      r6, r1, 0x5D4
-	  stw       r0, 0x5EC(r1)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x5F0(r1)
-	  lwz       r7, 0xC(r25)
-	  lwz       r0, 0x10(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r24
-	  stfs      f0, 0x5D0(r1)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  lwz       r7, 0x18(r25)
-	  addi      r6, r1, 0x5C4
-	  lwz       r0, 0x1C(r25)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x20(r25)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5C8(r1)
-	  bge-      .loc_0x16C0
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f3, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
+				tmpDist = sqrDistance(segment.Origin(), tri, &tmpP4, &tmpP5);
+				tmpP3   = 0.0f;
 
-	.loc_0x16C0:
-	  lfs       f1, 0x0(r25)
-	  mr        r3, r24
-	  lfs       f0, 0xC(r25)
-	  addi      r4, r1, 0x5E8
-	  addi      r5, r1, 0x5CC
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x5C4
-	  stfs      f0, 0x2C4(r1)
-	  lfs       f0, 0x2C4(r1)
-	  stfs      f0, 0x4CC(r1)
-	  lfs       f1, 0x4(r25)
-	  lfs       f0, 0x10(r25)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4D0(r1)
-	  lfs       f1, 0x8(r25)
-	  lfs       f0, 0x14(r25)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4D4(r1)
-	  lwz       r0, 0x4CC(r1)
-	  lwz       r7, 0x4D0(r1)
-	  stw       r0, 0x5E8(r1)
-	  lwz       r0, 0x4D4(r1)
-	  stw       r7, 0x5EC(r1)
-	  stw       r0, 0x5F0(r1)
-	  lfs       f1, 0x18(r25)
-	  lfs       f0, 0xC(r25)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x2B0(r1)
-	  lfs       f0, 0x2B0(r1)
-	  stfs      f0, 0x4C0(r1)
-	  lfs       f1, 0x1C(r25)
-	  lfs       f0, 0x10(r25)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4C4(r1)
-	  lfs       f1, 0x20(r25)
-	  lfs       f0, 0x14(r25)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4C8(r1)
-	  lwz       r7, 0x4C0(r1)
-	  lwz       r0, 0x4C4(r1)
-	  stw       r7, 0x5F4(r1)
-	  stw       r0, 0x5F8(r1)
-	  lwz       r0, 0x4C8(r1)
-	  stw       r0, 0x5FC(r1)
-	  bl        .loc_0x18C4
-	  lfs       f0, -0x7C5C(r2)
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, 0x5C4(r1)
-	  fsubs     f0, f0, f3
-	  stfs      f0, 0x5C8(r1)
-	  bge-      .loc_0x17A4
-	  lfs       f2, 0x5CC(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C8(r1)
-	  stfs      f2, 0x5D8(r1)
-	  stfs      f0, 0x5D4(r1)
-	  stfs      f3, 0x5D0(r1)
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
+			}
 
-	.loc_0x17A4:
-	  addi      r3, r24, 0
-	  addi      r4, r25, 0
-	  addi      r5, r1, 0x5C8
-	  addi      r6, r1, 0x5C4
-	  bl        0x2B3C
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x17E0
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
+		} else if (currP3 <= 1.0f) {
+			if (currP4 + currP5 <= 1.0f) {
+				if (currP4 < 0.0f) {
+					if (currP5 < 0.0f) {
+						// I
 
-	.loc_0x17E0:
-	  lfs       f1, 0x0(r24)
-	  mr        r4, r25
-	  lfs       f0, 0xC(r24)
-	  addi      r3, r1, 0x5DC
-	  lfs       f3, 0x4(r24)
-	  lfs       f2, 0x10(r24)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r24)
-	  addi      r5, r1, 0x5C8
-	  lfs       f1, 0x14(r24)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x5DC(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x5C4
-	  stfs      f2, 0x5E0(r1)
-	  stfs      f0, 0x5E4(r1)
-	  bl        0x2AD0
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x5CC(r1)
-	  bge-      .loc_0x184C
-	  lfs       f2, 0x5C8(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x5C4(r1)
-	  stfs      f3, 0x5D8(r1)
-	  stfs      f2, 0x5D4(r1)
-	  stfs      f0, 0x5D0(r1)
+						tmpSeg.Origin()    = tri.Origin();
+						tmpSeg.Direction() = tri.Edge1();
+						sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+						currP4             = 0.0f;
 
-	.loc_0x184C:
-	  cmplwi    r26, 0
-	  beq-      .loc_0x185C
-	  lfs       f0, 0x5D8(r1)
-	  stfs      f0, 0x0(r26)
+						tmpSeg.Origin()    = tri.Origin();
+						tmpSeg.Direction() = tri.Edge0();
+						tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+						tmpP5              = 0.0f;
 
-	.loc_0x185C:
-	  cmplwi    r27, 0
-	  beq-      .loc_0x186C
-	  lfs       f0, 0x5D4(r1)
-	  stfs      f0, 0x0(r27)
+						if (tmpDist < sqrDist) {
+							sqrDist = tmpDist;
+							currP3  = tmpP3;
+							currP4  = tmpP4;
+							currP5  = tmpP5;
+						}
+					} else {
+						// J
 
-	.loc_0x186C:
-	  cmplwi    r28, 0
-	  beq-      .loc_0x187C
-	  lfs       f0, 0x5D0(r1)
-	  stfs      f0, 0x0(r28)
+						tmpSeg.Origin()    = tri.Origin();
+						tmpSeg.Direction() = tri.Edge1();
+						sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+						currP4             = 0.0f;
+					}
+				} else if (currP5 < 0.0f) {
+					// K
 
-	.loc_0x187C:
-	  lmw       r24, 0x628(r1)
-	  fabs      f1, f31
-	  lwz       r0, 0x6AC(r1)
-	  lfd       f31, 0x6A0(r1)
-	  lfd       f30, 0x698(r1)
-	  lfd       f29, 0x690(r1)
-	  lfd       f28, 0x688(r1)
-	  lfd       f27, 0x680(r1)
-	  lfd       f26, 0x678(r1)
-	  lfd       f25, 0x670(r1)
-	  lfd       f24, 0x668(r1)
-	  lfd       f23, 0x660(r1)
-	  lfd       f22, 0x658(r1)
-	  lfd       f21, 0x650(r1)
-	  lfd       f20, 0x648(r1)
-	  addi      r1, r1, 0x6A8
-	  mtlr      r0
-	  blr
+					tmpSeg.Origin()    = tri.Origin();
+					tmpSeg.Direction() = tri.Edge0();
+					sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+					currP5             = 0.0f;
 
-	.loc_0x18C4:
-	*/
+				} else {
+					// L
+
+					sqrDist = (sqrLenSeg * currP3 + dotSegEdge0 * currP4 + dotSegEdge1 * currP5 + 2.0f * dotSegToTriSeg) * currP3
+					        + (dotSegEdge0 * currP3 + sqrLenEdge0 * currP4 + dotEdge01 * currP5 + 2.0f * dotSegToTriEdge0) * currP4
+					        + (dotSegEdge1 * currP3 + dotEdge01 * currP4 + sqrLenEdge1 * currP5 + 2.0f * dotSegToTriEdge1) * currP5
+					        + segToTri.squaredLength();
+				}
+			} else if (currP4 < 0.0f) {
+				// M
+
+				tmpSeg.Origin()    = tri.Origin();
+				tmpSeg.Direction() = tri.Edge1();
+				sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+				currP4             = 0.0f;
+
+				tmpSeg.Origin()    = tri.Origin() + tri.Edge0();
+				tmpSeg.Direction() = tri.Edge1() - tri.Edge0();
+				tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP5);
+				tmpP4              = 1.0f - tmpP5;
+
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
+			} else if (currP5 < 0.0f) {
+				// N
+
+				tmpSeg.Origin()    = tri.Origin();
+				tmpSeg.Direction() = tri.Edge0();
+				sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+				currP5             = 0.0f;
+
+				tmpSeg.Origin()    = tri.Origin() + tri.Edge0();
+				tmpSeg.Direction() = tri.Edge1() - tri.Edge0();
+				tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP5);
+				tmpP4              = 1.0f - tmpP5;
+
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
+			} else {
+				// O
+
+				tmpSeg.Origin()    = tri.Origin() + tri.Edge0();
+				tmpSeg.Direction() = tri.Edge1() - tri.Edge0();
+				sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+				currP4             = 1.0f - currP5;
+			}
+		} else {
+			if (currP4 + currP5 <= 1.0f) {
+				if (currP4 < 0.0f) {
+					if (currP5 < 0.0f) {
+						// P
+
+						tmpSeg.Origin()    = tri.Origin();
+						tmpSeg.Direction() = tri.Edge1();
+						sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+						currP4             = 0.0f;
+
+						tmpSeg.Origin()    = tri.Origin();
+						tmpSeg.Direction() = tri.Edge0();
+						tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+						tmpP5              = 0.0f;
+						if (tmpDist < sqrDist) {
+							sqrDist = tmpDist;
+							currP3  = tmpP3;
+							currP4  = tmpP4;
+							currP5  = tmpP5;
+						}
+
+						point   = segment.Origin() + segment.Direction();
+						tmpDist = sqrDistance(point, tri, &tmpP4, &tmpP5);
+						tmpP3   = 1.0f;
+
+						if (tmpDist < sqrDist) {
+							sqrDist = tmpDist;
+							currP3  = tmpP3;
+							currP4  = tmpP4;
+							currP5  = tmpP5;
+						}
+					} else {
+						// Q
+
+						tmpSeg.Origin()    = tri.Origin();
+						tmpSeg.Direction() = tri.Edge1();
+						sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+						currP4             = 0.0f;
+
+						point   = segment.Origin() + segment.Direction();
+						tmpDist = sqrDistance(point, tri, &tmpP4, &tmpP5);
+						tmpP3   = 1.0f;
+						if (tmpDist < sqrDist) {
+							sqrDist = tmpDist;
+							currP3  = tmpP3;
+							currP4  = tmpP4;
+							currP5  = tmpP5;
+						}
+					}
+				} else if (currP5 < 0.0f) {
+					// R
+
+					tmpSeg.Origin()    = tri.Origin();
+					tmpSeg.Direction() = tri.Edge0();
+					sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+					currP5             = 0.0f;
+
+					point   = segment.Origin() + segment.Direction();
+					tmpDist = sqrDistance(point, tri, &tmpP4, &tmpP5);
+					tmpP3   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				} else {
+					// S
+
+					point   = segment.Origin() + segment.Direction();
+					sqrDist = sqrDistance(point, tri, &currP4, &currP5);
+					currP3  = 1.0f;
+				}
+			} else if (currP4 < 0.0f) {
+				// T
+
+				tmpSeg.Origin()    = tri.Origin();
+				tmpSeg.Direction() = tri.Edge1();
+				sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+				currP4             = 0.0f;
+
+				tmpSeg.Origin()    = tri.Origin() + tri.Edge0();
+				tmpSeg.Direction() = tri.Edge1() - tri.Edge0();
+				tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP5);
+				tmpP4              = 1.0f - tmpP5;
+
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
+
+				point   = segment.Origin() + segment.Direction();
+				tmpDist = sqrDistance(point, tri, &tmpP4, &tmpP5);
+				tmpP3   = 1.0f;
+
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
+			} else if (currP5 < 0.0f) {
+				// U
+
+				tmpSeg.Origin()    = tri.Origin();
+				tmpSeg.Direction() = tri.Edge0();
+				sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+				currP5             = 0.0f;
+
+				tmpSeg.Origin()    = tri.Origin() + tri.Edge0();
+				tmpSeg.Direction() = tri.Edge1() - tri.Edge0();
+				tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP5);
+				tmpP4              = 1.0f - tmpP5;
+
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
+
+				point   = segment.Origin() + segment.Direction();
+				tmpDist = sqrDistance(point, tri, &tmpP4, &tmpP5);
+				tmpP3   = 1.0f;
+
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
+			} else {
+				// V
+
+				tmpSeg.Origin()    = tri.Origin() + tri.Edge0();
+				tmpSeg.Direction() = tri.Edge1() - tri.Edge0();
+				sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+				currP4             = 1.0f - currP5;
+
+				point   = segment.Origin() + segment.Direction();
+				tmpDist = sqrDistance(point, tri, &tmpP4, &tmpP5);
+				tmpP3   = 1.0f;
+				if (tmpDist < sqrDist) {
+					sqrDist = tmpDist;
+					currP3  = tmpP3;
+					currP4  = tmpP4;
+					currP5  = tmpP5;
+				}
+			}
+		}
+	} else {
+		// W
+
+		tmpSeg.Origin()    = tri.Origin();
+		tmpSeg.Direction() = tri.Edge0();
+		sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+		currP5             = 0.0f;
+
+		tmpSeg.Direction() = tri.Edge1();
+		tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP5);
+		tmpP4              = 0.0f;
+
+		if (tmpDist < sqrDist) {
+			sqrDist = tmpDist;
+			currP3  = tmpP3;
+			currP4  = tmpP4;
+			currP5  = tmpP5;
+		}
+
+		tmpSeg.Origin()    = tri.Origin() + tri.Edge0();
+		tmpSeg.Direction() = tri.Edge1() - tri.Edge0();
+		tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP5);
+		tmpP4              = 1.0f - tmpP5;
+
+		if (tmpDist < sqrDist) {
+			sqrDist = tmpDist;
+			currP3  = tmpP3;
+			currP4  = tmpP4;
+			currP5  = tmpP5;
+		}
+
+		tmpDist = sqrDistance(segment.Origin(), tri, &tmpP4, &tmpP5);
+		tmpP3   = 0.0f;
+		if (tmpDist < sqrDist) {
+			sqrDist = tmpDist;
+			currP3  = tmpP3;
+			currP4  = tmpP4;
+			currP5  = tmpP5;
+		}
+
+		point   = segment.Origin() + segment.Direction();
+		tmpDist = sqrDistance(point, tri, &tmpP4, &tmpP5);
+		tmpP3   = 1.0f;
+		if (tmpDist < sqrDist) {
+			sqrDist = tmpDist;
+			currP3  = tmpP3;
+			currP4  = tmpP4;
+			currP5  = tmpP5;
+		}
+	}
+
+	if (outP3) {
+		*outP3 = currP3;
+	}
+	if (outP4) {
+		*outP4 = currP4;
+	}
+	if (outP5) {
+		*outP5 = currP5;
+	}
+
+	return absF(sqrDist);
 }
 
 /*
@@ -2486,620 +1331,277 @@ f32 sqrDistance(KSegment&, KTri&, f32*, f32*, f32*)
  * Address: 8003AE50
  * Size:    000828
  */
-f32 sqrDistance(KSegment&, KSegment&, f32*, f32*)
+f32 sqrDistance(KSegment& segment1, KSegment& segment2, f32* outP3, f32* outP4)
 {
-	FORCE_DONT_INLINE;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0xE8(r1)
-	  stfd      f31, 0xE0(r1)
-	  stfd      f30, 0xD8(r1)
-	  stfd      f29, 0xD0(r1)
-	  stfd      f28, 0xC8(r1)
-	  stfd      f27, 0xC0(r1)
-	  stfd      f26, 0xB8(r1)
-	  stfd      f25, 0xB0(r1)
-	  lfs       f9, 0xC(r3)
-	  lfs       f1, 0xC(r4)
-	  lfs       f8, 0x10(r3)
-	  fmuls     f28, f9, f9
-	  lfs       f0, 0x10(r4)
-	  fmuls     f4, f9, f1
-	  lfs       f10, 0x14(r3)
-	  fmuls     f3, f8, f0
-	  lfs       f2, 0x14(r4)
-	  fmuls     f13, f8, f8
-	  fmuls     f7, f1, f1
-	  lfs       f26, 0x4(r3)
-	  fmuls     f6, f0, f0
-	  lfs       f27, 0x4(r4)
-	  fadds     f3, f4, f3
-	  fmuls     f5, f10, f2
-	  lfs       f31, 0x0(r3)
-	  fadds     f13, f28, f13
-	  lfs       f30, 0x0(r4)
-	  fadds     f11, f5, f3
-	  fsubs     f5, f31, f30
-	  lfs       f25, 0x8(r3)
-	  fsubs     f4, f26, f27
-	  lfs       f3, 0x8(r4)
-	  fmuls     f29, f10, f10
-	  fadds     f7, f7, f6
-	  lfs       f12, -0x7A14(r13)
-	  fmuls     f28, f2, f2
-	  fadds     f6, f29, f13
-	  fneg      f11, f11
-	  fmuls     f29, f5, f9
-	  fmuls     f30, f4, f8
-	  fadds     f7, f28, f7
-	  fsubs     f3, f25, f3
-	  fmuls     f13, f11, f11
-	  fmuls     f8, f6, f7
-	  fmuls     f31, f5, f5
-	  fmuls     f9, f4, f4
-	  fsubs     f8, f8, f13
-	  fmuls     f28, f3, f10
-	  fadds     f30, f29, f30
-	  fabs      f10, f8
-	  fmuls     f13, f3, f3
-	  fadds     f9, f31, f9
-	  fcmpo     cr0, f10, f12
-	  fadds     f8, f28, f30
-	  fadds     f9, f13, f9
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x664
-	  fmuls     f1, f5, f1
-	  lfs       f5, -0x7C60(r2)
-	  fmuls     f0, f4, f0
-	  fmuls     f4, f3, f2
-	  fmuls     f3, f7, f8
-	  fadds     f0, f1, f0
-	  fmuls     f2, f11, f8
-	  fadds     f0, f4, f0
-	  fneg      f0, f0
-	  fmuls     f4, f11, f0
-	  fmuls     f1, f6, f0
-	  fsubs     f3, f4, f3
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f3, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x4A4
-	  fcmpo     cr0, f3, f10
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x270
-	  fcmpo     cr0, f1, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x218
-	  fcmpo     cr0, f1, f10
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x198
-	  lfs       f2, -0x7C5C(r2)
-	  lfs       f12, -0x7C58(r2)
-	  fdivs     f2, f2, f10
-	  fmuls     f10, f3, f2
-	  fmuls     f1, f1, f2
-	  fmuls     f8, f12, f8
-	  fmuls     f5, f6, f10
-	  fmuls     f4, f11, f1
-	  fmuls     f3, f11, f10
-	  fmuls     f2, f7, f1
-	  fadds     f5, f5, f4
-	  fmuls     f4, f12, f0
-	  fadds     f0, f3, f2
-	  fadds     f2, f8, f5
-	  fadds     f0, f4, f0
-	  fmuls     f2, f10, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+	Vector3f origToOrig   = segment1.Origin() - segment2.Origin();
+	f32 sqrLenSeg1        = segment1.Direction().squaredLength();
+	f32 dotSegSeg         = -segment1.Direction().DP(segment2.Direction());
+	f32 sqrLenSeg2        = segment2.Direction().squaredLength();
+	f32 dotOrigToOrigSeg1 = origToOrig.DP(segment1.Direction());
+	f32 sqrDistOrigToOrig = origToOrig.squaredLength();
 
-	.loc_0x198:
-	  fadds     f4, f11, f8
-	  lfs       f1, -0x7C5C(r2)
-	  fcmpo     cr0, f4, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x1C4
-	  lfs       f2, -0x7C58(r2)
-	  fmr       f10, f5
-	  fmuls     f0, f2, f0
-	  fadds     f0, f7, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+	f32 absDet = absF(sqrLenSeg1 * sqrLenSeg2 - dotSegSeg * dotSegSeg);
 
-	.loc_0x1C4:
-	  fneg      f2, f4
-	  fcmpo     cr0, f2, f6
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x1F4
-	  fadds     f3, f6, f7
-	  lfs       f2, -0x7C58(r2)
-	  fadds     f0, f0, f4
-	  fmr       f10, f1
-	  fadds     f3, f9, f3
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  b         .loc_0x7E8
+	f32 dotOrigToOrigSeg2;
+	f32 currP3;
+	f32 currP4;
+	f32 sqrDist;
 
-	.loc_0x1F4:
-	  fdivs     f5, f2, f6
-	  lfs       f3, -0x7C58(r2)
-	  fmuls     f2, f4, f5
-	  fmuls     f3, f3, f0
-	  fmr       f10, f5
-	  fadds     f0, f7, f2
-	  fadds     f0, f3, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+	if (absDet >= gs_fTolerance) {
+		// A
 
-	.loc_0x218:
-	  fcmpo     cr0, f8, f5
-	  fmr       f1, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x234
-	  fmr       f10, f5
-	  fmr       f0, f9
-	  b         .loc_0x7E8
+		dotOrigToOrigSeg2 = -origToOrig.DP(segment2.Direction());
+		currP3            = dotSegSeg * dotOrigToOrigSeg2 - sqrLenSeg2 * dotOrigToOrigSeg1;
+		currP4            = dotSegSeg * dotOrigToOrigSeg1 - sqrLenSeg1 * dotOrigToOrigSeg2;
 
-	.loc_0x234:
-	  fneg      f0, f8
-	  fcmpo     cr0, f0, f6
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x25C
-	  lfs       f0, -0x7C58(r2)
-	  lfs       f10, -0x7C5C(r2)
-	  fmuls     f0, f0, f8
-	  fadds     f0, f6, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+		if (currP3 >= 0.0f) {
+			if (currP3 <= absDet) {
+				if (currP4 >= 0.0f) {
+					if (currP4 <= absDet) {
+						// B
 
-	.loc_0x25C:
-	  fdivs     f2, f0, f6
-	  fmuls     f0, f8, f2
-	  fmr       f10, f2
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+						f32 norm = 1.0f / absDet;
+						currP3 *= norm;
+						currP4 *= norm;
+						sqrDist = (sqrLenSeg1 * currP3 + dotSegSeg * currP4 + 2.0f * dotOrigToOrigSeg1) * currP3
+						        + (dotSegSeg * currP3 + sqrLenSeg2 * currP4 + 2.0f * dotOrigToOrigSeg2) * currP4 + sqrDistOrigToOrig;
 
-	.loc_0x270:
-	  fcmpo     cr0, f1, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x3E8
-	  fcmpo     cr0, f1, f10
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x308
-	  fadds     f0, f11, f0
-	  lfs       f10, -0x7C5C(r2)
-	  fcmpo     cr0, f0, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x2B4
-	  lfs       f0, -0x7C58(r2)
-	  fmr       f1, f5
-	  fmuls     f0, f0, f8
-	  fadds     f0, f6, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+					} else {
+						// C
 
-	.loc_0x2B4:
-	  fneg      f1, f0
-	  fcmpo     cr0, f1, f7
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x2E4
-	  fadds     f3, f6, f7
-	  lfs       f2, -0x7C58(r2)
-	  fadds     f0, f8, f0
-	  fmr       f1, f10
-	  fadds     f3, f9, f3
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  b         .loc_0x7E8
+						currP4  = 1.0f;
+						f32 tmp = dotSegSeg + dotOrigToOrigSeg1;
+						if (tmp >= 0.0f) {
+							currP3  = 0.0f;
+							sqrDist = sqrLenSeg2 + 2.0f * dotOrigToOrigSeg2 + sqrDistOrigToOrig;
+						} else if (-tmp >= sqrLenSeg1) {
+							currP3  = 1.0f;
+							sqrDist = sqrLenSeg1 + sqrLenSeg2 + sqrDistOrigToOrig + 2.0f * (dotOrigToOrigSeg2 + tmp);
+						} else {
+							currP3  = -tmp / sqrLenSeg1;
+							sqrDist = tmp * currP3 + sqrLenSeg2 + 2.0f * dotOrigToOrigSeg2 + sqrDistOrigToOrig;
+						}
+					}
 
-	.loc_0x2E4:
-	  fdivs     f3, f1, f7
-	  lfs       f1, -0x7C58(r2)
-	  fmuls     f0, f0, f3
-	  fmuls     f2, f1, f8
-	  fmr       f1, f3
-	  fadds     f0, f6, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+				} else {
+					// D
 
-	.loc_0x308:
-	  fadds     f4, f11, f8
-	  fneg      f2, f4
-	  fcmpo     cr0, f2, f6
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x368
-	  fcmpo     cr0, f4, f5
-	  lfs       f1, -0x7C5C(r2)
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x344
-	  lfs       f2, -0x7C58(r2)
-	  fmr       f10, f5
-	  fmuls     f0, f2, f0
-	  fadds     f0, f7, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+					currP4 = 0.0f;
+					if (dotOrigToOrigSeg1 >= 0.0f) {
+						currP3  = 0.0f;
+						sqrDist = sqrDistOrigToOrig;
+					} else if (-dotOrigToOrigSeg1 >= sqrLenSeg1) {
+						currP3  = 1.0f;
+						sqrDist = sqrLenSeg1 + 2.0f * dotOrigToOrigSeg1 + sqrDistOrigToOrig;
+					} else {
+						currP3  = -dotOrigToOrigSeg1 / sqrLenSeg1;
+						sqrDist = dotOrigToOrigSeg1 * currP3 + sqrDistOrigToOrig;
+					}
+				}
 
-	.loc_0x344:
-	  fdivs     f5, f2, f6
-	  lfs       f3, -0x7C58(r2)
-	  fmuls     f2, f4, f5
-	  fmuls     f3, f3, f0
-	  fmr       f10, f5
-	  fadds     f0, f7, f2
-	  fadds     f0, f3, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+			} else {
+				if (currP4 >= 0.0f) {
+					if (currP4 <= absDet) {
+						// E
 
-	.loc_0x368:
-	  fadds     f0, f11, f0
-	  lfs       f10, -0x7C5C(r2)
-	  fcmpo     cr0, f0, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x394
-	  lfs       f0, -0x7C58(r2)
-	  fmr       f1, f5
-	  fmuls     f0, f0, f8
-	  fadds     f0, f6, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+						currP3  = 1.0f;
+						f32 tmp = dotSegSeg + dotOrigToOrigSeg2;
+						if (tmp >= 0.0f) {
+							currP4  = 0.0f;
+							sqrDist = sqrLenSeg1 + 2.0f * dotOrigToOrigSeg1 + sqrDistOrigToOrig;
+						} else if (-tmp >= sqrLenSeg2) {
+							currP4  = 1.0f;
+							sqrDist = sqrLenSeg1 + sqrLenSeg2 + sqrDistOrigToOrig + 2.0f * (dotOrigToOrigSeg1 + tmp);
+						} else {
+							currP4  = -tmp / sqrLenSeg2;
+							sqrDist = tmp * currP4 + sqrLenSeg1 + 2.0f * dotOrigToOrigSeg1 + sqrDistOrigToOrig;
+						}
 
-	.loc_0x394:
-	  fneg      f1, f0
-	  fcmpo     cr0, f1, f7
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x3C4
-	  fadds     f3, f6, f7
-	  lfs       f2, -0x7C58(r2)
-	  fadds     f0, f8, f0
-	  fmr       f1, f10
-	  fadds     f3, f9, f3
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  b         .loc_0x7E8
+					} else {
+						// F
 
-	.loc_0x3C4:
-	  fdivs     f3, f1, f7
-	  lfs       f1, -0x7C58(r2)
-	  fmuls     f0, f0, f3
-	  fmuls     f2, f1, f8
-	  fmr       f1, f3
-	  fadds     f0, f6, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+						f32 tmp = dotSegSeg + dotOrigToOrigSeg1;
+						if (-tmp <= sqrLenSeg1) {
+							currP4 = 1.0f;
+							if (tmp >= 0.0f) {
+								currP3  = 0.0f;
+								sqrDist = sqrLenSeg2 + 2.0f * dotOrigToOrigSeg2 + sqrDistOrigToOrig;
+							} else {
+								currP3  = -tmp / sqrLenSeg1;
+								sqrDist = tmp * currP3 + sqrLenSeg2 + 2.0f * dotOrigToOrigSeg2 + sqrDistOrigToOrig;
+							}
+						} else {
+							currP3 = 1.0f;
+							tmp    = dotSegSeg + dotOrigToOrigSeg2;
+							if (tmp >= 0.0f) {
+								currP4  = 0.0f;
+								sqrDist = sqrLenSeg1 + 2.0f * dotOrigToOrigSeg1 + sqrDistOrigToOrig;
+							} else if (-tmp >= sqrLenSeg2) {
+								currP4  = 1.0f;
+								sqrDist = sqrLenSeg1 + sqrLenSeg2 + sqrDistOrigToOrig + 2.0f * (dotOrigToOrigSeg1 + tmp);
+							} else {
+								currP4  = -tmp / sqrLenSeg2;
+								sqrDist = tmp * currP4 + sqrLenSeg1 + 2.0f * dotOrigToOrigSeg1 + sqrDistOrigToOrig;
+							}
+						}
+					}
 
-	.loc_0x3E8:
-	  fneg      f2, f8
-	  fcmpo     cr0, f2, f6
-	  bge-      .loc_0x424
-	  fcmpo     cr0, f8, f5
-	  fmr       f1, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x410
-	  fmr       f10, f5
-	  fmr       f0, f9
-	  b         .loc_0x7E8
+				} else {
+					// G
 
-	.loc_0x410:
-	  fdivs     f2, f2, f6
-	  fmuls     f0, f8, f2
-	  fmr       f10, f2
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+					if (-dotOrigToOrigSeg1 < sqrLenSeg1) {
+						currP4 = 0.0f;
+						if (dotOrigToOrigSeg1 >= 0.0f) {
+							currP3  = 0.0f;
+							sqrDist = sqrDistOrigToOrig;
+						} else {
+							currP3  = -dotOrigToOrigSeg1 / sqrLenSeg1;
+							sqrDist = dotOrigToOrigSeg1 * currP3 + sqrDistOrigToOrig;
+						}
+					} else {
+						currP3  = 1.0f;
+						f32 tmp = dotSegSeg + dotOrigToOrigSeg2;
+						if (tmp >= 0.0f) {
+							currP4  = 0.0f;
+							sqrDist = sqrLenSeg1 + 2.0f * dotOrigToOrigSeg1 + sqrDistOrigToOrig;
+						} else if (-tmp >= sqrLenSeg2) {
+							currP4  = 1.0f;
+							sqrDist = sqrLenSeg1 + sqrLenSeg2 + sqrDistOrigToOrig + 2.0f * (dotOrigToOrigSeg1 + tmp);
+						} else {
+							currP4  = -tmp / sqrLenSeg2;
+							sqrDist = tmp * currP4 + sqrLenSeg1 + 2.0f * dotOrigToOrigSeg1 + sqrDistOrigToOrig;
+						}
+					}
+				}
+			}
+		} else {
+			if (currP4 >= 0.0f) {
+				if (currP4 <= absDet) {
+					// H
 
-	.loc_0x424:
-	  fadds     f0, f11, f0
-	  lfs       f10, -0x7C5C(r2)
-	  fcmpo     cr0, f0, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x450
-	  lfs       f0, -0x7C58(r2)
-	  fmr       f1, f5
-	  fmuls     f0, f0, f8
-	  fadds     f0, f6, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+					currP3 = 0.0f;
+					if (dotOrigToOrigSeg2 >= 0.0f) {
+						currP4  = 0.0f;
+						sqrDist = sqrDistOrigToOrig;
+					} else if (-dotOrigToOrigSeg2 >= sqrLenSeg2) {
+						currP4  = 1.0f;
+						sqrDist = sqrLenSeg2 + 2.0f * dotOrigToOrigSeg2 + sqrDistOrigToOrig;
+					} else {
+						currP4  = -dotOrigToOrigSeg2 / sqrLenSeg2;
+						sqrDist = dotOrigToOrigSeg2 * currP4 + sqrDistOrigToOrig;
+					}
+				} else {
+					// I
 
-	.loc_0x450:
-	  fneg      f1, f0
-	  fcmpo     cr0, f1, f7
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x480
-	  fadds     f3, f6, f7
-	  lfs       f2, -0x7C58(r2)
-	  fadds     f0, f8, f0
-	  fmr       f1, f10
-	  fadds     f3, f9, f3
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  b         .loc_0x7E8
+					f32 tmp = dotSegSeg + dotOrigToOrigSeg1;
+					if (tmp < 0.0f) {
+						currP4 = 1.0f;
+						if (-tmp >= sqrLenSeg1) {
+							currP3  = 1.0f;
+							sqrDist = sqrLenSeg1 + sqrLenSeg2 + sqrDistOrigToOrig + 2.0f * (dotOrigToOrigSeg2 + tmp);
+						} else {
+							currP3  = -tmp / sqrLenSeg1;
+							sqrDist = tmp * currP3 + sqrLenSeg2 + 2.0f * dotOrigToOrigSeg2 + sqrDistOrigToOrig;
+						}
+					} else {
+						currP3 = 0.0f;
+						if (dotOrigToOrigSeg2 >= 0.0f) {
+							currP4  = 0.0f;
+							sqrDist = sqrDistOrigToOrig;
+						} else if (-dotOrigToOrigSeg2 >= sqrLenSeg2) {
+							currP4  = 1.0f;
+							sqrDist = sqrLenSeg2 + 2.0f * dotOrigToOrigSeg2 + sqrDistOrigToOrig;
+						} else {
+							currP4  = -dotOrigToOrigSeg2 / sqrLenSeg2;
+							sqrDist = dotOrigToOrigSeg2 * currP4 + sqrDistOrigToOrig;
+						}
+					}
+				}
 
-	.loc_0x480:
-	  fdivs     f3, f1, f7
-	  lfs       f1, -0x7C58(r2)
-	  fmuls     f0, f0, f3
-	  fmuls     f2, f1, f8
-	  fmr       f1, f3
-	  fadds     f0, f6, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+			} else {
+				// J
 
-	.loc_0x4A4:
-	  fcmpo     cr0, f1, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x5C8
-	  fcmpo     cr0, f1, f10
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x510
-	  fcmpo     cr0, f0, f5
-	  fmr       f10, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x4D8
-	  fmr       f1, f5
-	  fmr       f0, f9
-	  b         .loc_0x7E8
+				if (dotOrigToOrigSeg1 < 0.0f) {
+					currP4 = 0.0f;
+					if (-dotOrigToOrigSeg1 >= sqrLenSeg1) {
+						currP3  = 1.0f;
+						sqrDist = sqrLenSeg1 + 2.0f * dotOrigToOrigSeg1 + sqrDistOrigToOrig;
+					} else {
+						currP3  = -dotOrigToOrigSeg1 / sqrLenSeg1;
+						sqrDist = dotOrigToOrigSeg1 * currP3 + sqrDistOrigToOrig;
+					}
+				} else {
+					currP3 = 0.0f;
+					if (dotOrigToOrigSeg2 >= 0.0f) {
+						currP4  = 0.0f;
+						sqrDist = sqrDistOrigToOrig;
+					} else if (-dotOrigToOrigSeg2 >= sqrLenSeg2) {
+						currP4  = 1.0f;
+						sqrDist = sqrLenSeg2 + 2.0f * dotOrigToOrigSeg2 + sqrDistOrigToOrig;
+					} else {
+						currP4  = -dotOrigToOrigSeg2 / sqrLenSeg2;
+						sqrDist = dotOrigToOrigSeg2 * currP4 + sqrDistOrigToOrig;
+					}
+				}
+			}
+		}
+	} else {
+		// K
 
-	.loc_0x4D8:
-	  fneg      f1, f0
-	  fcmpo     cr0, f1, f7
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x500
-	  lfs       f2, -0x7C58(r2)
-	  lfs       f1, -0x7C5C(r2)
-	  fmuls     f0, f2, f0
-	  fadds     f0, f7, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+		if (dotSegSeg > 0.0f) {
+			if (dotOrigToOrigSeg1 >= 0.0f) {
+				currP3  = 0.0f;
+				currP4  = 0.0f;
+				sqrDist = sqrDistOrigToOrig;
+			} else if (-dotOrigToOrigSeg1 <= sqrLenSeg1) {
+				currP3  = -dotOrigToOrigSeg1 / sqrLenSeg1;
+				currP4  = 0.0f;
+				sqrDist = dotOrigToOrigSeg1 * currP3 + sqrDistOrigToOrig;
+			} else {
+				dotOrigToOrigSeg2 = -origToOrig.DP(segment2.Direction());
+				currP3            = 1.0f;
+				f32 tmp           = sqrLenSeg1 + dotOrigToOrigSeg1;
 
-	.loc_0x500:
-	  fdivs     f1, f1, f7
-	  fmuls     f0, f0, f1
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
+				if (-tmp >= dotSegSeg) {
+					currP4  = 1.0f;
+					sqrDist = sqrLenSeg1 + sqrLenSeg2 + sqrDistOrigToOrig + 2.0f * (dotSegSeg + dotOrigToOrigSeg1 + dotOrigToOrigSeg2);
+				} else {
+					currP4  = -tmp / dotSegSeg;
+					sqrDist = sqrLenSeg1 + 2.0f * dotOrigToOrigSeg1 + sqrDistOrigToOrig
+					        + (sqrLenSeg2 * currP4 + 2.0f * (dotSegSeg + dotOrigToOrigSeg2)) * currP4;
+				}
+			}
+		} else {
+			if (-dotOrigToOrigSeg1 >= sqrLenSeg1) {
+				currP3  = 1.0f;
+				currP4  = 0.0f;
+				sqrDist = sqrLenSeg1 + 2.0f * dotOrigToOrigSeg1 + sqrDistOrigToOrig;
+			} else if (dotOrigToOrigSeg1 <= 0.0f) {
+				currP3  = -dotOrigToOrigSeg1 / sqrLenSeg1;
+				currP4  = 0.0f;
+				sqrDist = dotOrigToOrigSeg1 * currP3 + sqrDistOrigToOrig;
+			} else {
+				dotOrigToOrigSeg2 = -origToOrig.DP(segment2.Direction());
+				currP3            = 0.0f;
+				if (dotOrigToOrigSeg1 >= -dotSegSeg) {
+					currP4  = 1.0f;
+					sqrDist = sqrLenSeg2 + 2.0f * dotOrigToOrigSeg2 + sqrDistOrigToOrig;
+				} else {
+					currP4  = -dotOrigToOrigSeg1 / dotSegSeg;
+					sqrDist = (2.0f * dotOrigToOrigSeg2 + sqrLenSeg2 * currP4) * currP4 + sqrDistOrigToOrig;
+				}
+			}
+		}
+	}
 
-	.loc_0x510:
-	  fadds     f4, f11, f8
-	  fcmpo     cr0, f4, f5
-	  bge-      .loc_0x574
-	  fneg      f2, f4
-	  lfs       f1, -0x7C5C(r2)
-	  fcmpo     cr0, f2, f6
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x550
-	  fadds     f3, f6, f7
-	  lfs       f2, -0x7C58(r2)
-	  fadds     f0, f0, f4
-	  fmr       f10, f1
-	  fadds     f3, f9, f3
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  b         .loc_0x7E8
+	if (outP3) {
+		*outP3 = currP3;
+	}
+	if (outP4) {
+		*outP4 = currP4;
+	}
 
-	.loc_0x550:
-	  fdivs     f5, f2, f6
-	  lfs       f3, -0x7C58(r2)
-	  fmuls     f2, f4, f5
-	  fmuls     f3, f3, f0
-	  fmr       f10, f5
-	  fadds     f0, f7, f2
-	  fadds     f0, f3, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x574:
-	  fcmpo     cr0, f0, f5
-	  fmr       f10, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x590
-	  fmr       f1, f5
-	  fmr       f0, f9
-	  b         .loc_0x7E8
-
-	.loc_0x590:
-	  fneg      f1, f0
-	  fcmpo     cr0, f1, f7
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x5B8
-	  lfs       f2, -0x7C58(r2)
-	  lfs       f1, -0x7C5C(r2)
-	  fmuls     f0, f2, f0
-	  fadds     f0, f7, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x5B8:
-	  fdivs     f1, f1, f7
-	  fmuls     f0, f0, f1
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x5C8:
-	  fcmpo     cr0, f8, f5
-	  bge-      .loc_0x610
-	  fneg      f0, f8
-	  fmr       f1, f5
-	  fcmpo     cr0, f0, f6
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x5FC
-	  lfs       f0, -0x7C58(r2)
-	  lfs       f10, -0x7C5C(r2)
-	  fmuls     f0, f0, f8
-	  fadds     f0, f6, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x5FC:
-	  fdivs     f2, f0, f6
-	  fmuls     f0, f8, f2
-	  fmr       f10, f2
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x610:
-	  fcmpo     cr0, f0, f5
-	  fmr       f10, f5
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x62C
-	  fmr       f1, f5
-	  fmr       f0, f9
-	  b         .loc_0x7E8
-
-	.loc_0x62C:
-	  fneg      f1, f0
-	  fcmpo     cr0, f1, f7
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x654
-	  lfs       f2, -0x7C58(r2)
-	  lfs       f1, -0x7C5C(r2)
-	  fmuls     f0, f2, f0
-	  fadds     f0, f7, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x654:
-	  fdivs     f1, f1, f7
-	  fmuls     f0, f0, f1
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x664:
-	  lfs       f12, -0x7C60(r2)
-	  fcmpo     cr0, f11, f12
-	  ble-      .loc_0x738
-	  fcmpo     cr0, f8, f12
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x68C
-	  fmr       f10, f12
-	  fmr       f1, f12
-	  fmr       f0, f9
-	  b         .loc_0x7E8
-
-	.loc_0x68C:
-	  fneg      f10, f8
-	  fcmpo     cr0, f10, f6
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x6B4
-	  fdivs     f1, f10, f6
-	  fmuls     f0, f8, f1
-	  fmr       f10, f1
-	  fmr       f1, f12
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x6B4:
-	  fadds     f12, f6, f8
-	  lfs       f10, -0x7C5C(r2)
-	  fmuls     f5, f5, f1
-	  fmuls     f1, f4, f0
-	  fneg      f0, f12
-	  fmuls     f2, f3, f2
-	  fadds     f1, f5, f1
-	  fcmpo     cr0, f0, f11
-	  fadds     f1, f2, f1
-	  fneg      f5, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x708
-	  fadds     f0, f11, f8
-	  lfs       f2, -0x7C58(r2)
-	  fadds     f3, f6, f7
-	  fmr       f1, f10
-	  fadds     f0, f5, f0
-	  fadds     f3, f9, f3
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  b         .loc_0x7E8
-
-	.loc_0x708:
-	  fdivs     f1, f0, f11
-	  lfs       f4, -0x7C58(r2)
-	  fadds     f0, f11, f5
-	  fmuls     f3, f4, f8
-	  fmuls     f2, f7, f1
-	  fmuls     f0, f4, f0
-	  fadds     f3, f6, f3
-	  fadds     f0, f2, f0
-	  fadds     f2, f9, f3
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  b         .loc_0x7E8
-
-	.loc_0x738:
-	  fneg      f13, f8
-	  fcmpo     cr0, f13, f6
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x764
-	  lfs       f0, -0x7C58(r2)
-	  fmr       f1, f12
-	  lfs       f10, -0x7C5C(r2)
-	  fmuls     f0, f0, f8
-	  fadds     f0, f6, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x764:
-	  fcmpo     cr0, f8, f12
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x788
-	  fdivs     f1, f13, f6
-	  fmuls     f0, f8, f1
-	  fmr       f10, f1
-	  fmr       f1, f12
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x788:
-	  fmuls     f5, f5, f1
-	  fmuls     f1, f4, f0
-	  fneg      f0, f11
-	  fmuls     f2, f3, f2
-	  fadds     f1, f5, f1
-	  fcmpo     cr0, f8, f0
-	  fmr       f10, f12
-	  fadds     f0, f2, f1
-	  fneg      f2, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x7CC
-	  lfs       f0, -0x7C58(r2)
-	  lfs       f1, -0x7C5C(r2)
-	  fmuls     f0, f0, f2
-	  fadds     f0, f7, f0
-	  fadds     f0, f9, f0
-	  b         .loc_0x7E8
-
-	.loc_0x7CC:
-	  fdivs     f1, f13, f11
-	  lfs       f0, -0x7C58(r2)
-	  fmuls     f2, f0, f2
-	  fmuls     f0, f7, f1
-	  fadds     f0, f2, f0
-	  fmuls     f0, f1, f0
-	  fadds     f0, f9, f0
-
-	.loc_0x7E8:
-	  cmplwi    r5, 0
-	  beq-      .loc_0x7F4
-	  stfs      f10, 0x0(r5)
-
-	.loc_0x7F4:
-	  cmplwi    r6, 0
-	  beq-      .loc_0x800
-	  stfs      f1, 0x0(r6)
-
-	.loc_0x800:
-	  fabs      f1, f0
-	  lfd       f31, 0xE0(r1)
-	  lfd       f30, 0xD8(r1)
-	  lfd       f29, 0xD0(r1)
-	  lfd       f28, 0xC8(r1)
-	  lfd       f27, 0xC0(r1)
-	  lfd       f26, 0xB8(r1)
-	  lfd       f25, 0xB0(r1)
-	  addi      r1, r1, 0xE8
-	  blr
-	*/
+	return absF(sqrDist);
 }
 
 /*
@@ -3110,1991 +1612,761 @@ f32 sqrDistance(KSegment&, KSegment&, f32*, f32*)
 f32 sqrDistance(KSegment& segment, KRect& rect, f32* p3, f32* p4, f32* p5)
 {
 
-	FORCE_DONT_INLINE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x720(r1)
-	  stfd      f31, 0x718(r1)
-	  stfd      f30, 0x710(r1)
-	  stfd      f29, 0x708(r1)
-	  stfd      f28, 0x700(r1)
-	  stfd      f27, 0x6F8(r1)
-	  stfd      f26, 0x6F0(r1)
-	  stfd      f25, 0x6E8(r1)
-	  stfd      f24, 0x6E0(r1)
-	  stfd      f23, 0x6D8(r1)
-	  stfd      f22, 0x6D0(r1)
-	  stfd      f21, 0x6C8(r1)
-	  stmw      r25, 0x6AC(r1)
-	  lfs       f31, 0xC(r3)
-	  mr        r26, r4
-	  lfs       f5, 0xC(r4)
-	  mr        r25, r3
-	  lfs       f2, 0x18(r4)
-	  lfs       f13, 0x10(r3)
-	  fmuls     f12, f31, f5
-	  lfs       f4, 0x10(r4)
-	  fmuls     f10, f31, f2
-	  lfs       f0, 0x1C(r4)
-	  fmuls     f11, f13, f4
-	  fmuls     f9, f13, f0
-	  lfs       f30, 0x14(r3)
-	  lfs       f6, 0x14(r4)
-	  fmuls     f8, f31, f31
-	  lfs       f3, 0x20(r4)
-	  fadds     f12, f12, f11
-	  lfs       f25, 0x4(r4)
-	  fmuls     f21, f30, f6
-	  lfs       f24, 0x4(r3)
-	  fadds     f9, f10, f9
-	  fadds     f21, f21, f12
-	  lfs       f23, 0x0(r4)
-	  fmuls     f11, f30, f3
-	  lfs       f22, 0x0(r3)
-	  fmuls     f7, f13, f13
-	  fadds     f12, f11, f9
-	  lfs       f28, 0x8(r4)
-	  fsubs     f11, f23, f22
-	  lfs       f27, 0x8(r3)
-	  fsubs     f10, f25, f24
-	  fsubs     f9, f28, f27
-	  lfs       f1, -0x7C60(r2)
-	  fneg      f26, f21
-	  addi      r31, r25, 0xC
-	  fneg      f25, f12
-	  fmuls     f23, f5, f5
-	  stfs      f1, 0x678(r1)
-	  fmuls     f21, f4, f4
-	  addi      r8, r26, 0xC
-	  fmuls     f22, f2, f2
-	  fmuls     f12, f0, f0
-	  stfs      f1, 0x674(r1)
-	  fmuls     f27, f6, f6
-	  addi      r30, r26, 0x18
-	  fadds     f24, f23, f21
-	  fmuls     f23, f3, f3
-	  stfs      f1, 0x670(r1)
-	  fadds     f12, f22, f12
-	  mr        r27, r5
-	  fadds     f7, f8, f7
-	  fmuls     f28, f30, f30
-	  stfs      f1, 0x684(r1)
-	  fadds     f12, f23, f12
-	  mr        r28, r6
-	  fneg      f23, f26
-	  stfs      f1, 0x680(r1)
-	  fadds     f8, f27, f24
-	  fneg      f22, f25
-	  mr        r29, r7
-	  fadds     f7, f28, f7
-	  stfs      f1, 0x67C(r1)
-	  fmuls     f27, f22, f8
-	  fmuls     f29, f23, f12
-	  stfs      f1, 0x66C(r1)
-	  fmuls     f28, f8, f12
-	  stfs      f1, 0x668(r1)
-	  fmuls     f22, f26, f29
-	  fmuls     f23, f7, f28
-	  lfs       f21, -0x7A14(r13)
-	  fmuls     f24, f25, f27
-	  stfs      f1, 0x664(r1)
-	  fadds     f22, f23, f22
-	  fmuls     f23, f9, f30
-	  fmuls     f31, f11, f31
-	  fmuls     f13, f10, f13
-	  fadds     f30, f24, f22
-	  fmuls     f5, f11, f5
-	  fadds     f13, f31, f13
-	  fmuls     f4, f10, f4
-	  fabs      f22, f30
-	  fadds     f13, f23, f13
-	  fmuls     f2, f11, f2
-	  fmuls     f0, f10, f0
-	  fcmpo     cr0, f22, f21
-	  fmuls     f6, f9, f6
-	  fadds     f4, f5, f4
-	  fadds     f0, f2, f0
-	  fmuls     f3, f9, f3
-	  fneg      f13, f13
-	  cror      2, 0x1, 0x2
-	  fadds     f2, f6, f4
-	  fadds     f3, f3, f0
-	  bne-      .loc_0x1A94
-	  lfs       f0, -0x7C5C(r2)
-	  fneg      f4, f13
-	  fneg      f5, f2
-	  fdivs     f21, f0, f30
-	  fmuls     f4, f4, f21
-	  fmuls     f6, f5, f21
-	  fneg      f5, f3
-	  fmuls     f23, f28, f4
-	  fmuls     f22, f29, f6
-	  fmuls     f28, f5, f21
-	  fmuls     f30, f7, f12
-	  fmuls     f5, f25, f26
-	  fmuls     f24, f25, f25
-	  fmuls     f21, f27, f28
-	  fadds     f22, f23, f22
-	  fsubs     f24, f30, f24
-	  fmuls     f31, f7, f8
-	  fmuls     f30, f26, f26
-	  fadds     f22, f21, f22
-	  fmuls     f23, f29, f4
-	  fmuls     f24, f24, f6
-	  fsubs     f29, f31, f30
-	  stfs      f22, 0x660(r1)
-	  fmuls     f27, f27, f4
-	  fmuls     f6, f5, f6
-	  lfs       f4, 0x660(r1)
-	  fmuls     f31, f5, f28
-	  fadds     f30, f23, f24
-	  fmuls     f28, f29, f28
-	  fadds     f5, f27, f6
-	  fadds     f6, f31, f30
-	  fcmpo     cr0, f4, f1
-	  fadds     f5, f28, f5
-	  stfs      f6, 0x65C(r1)
-	  stfs      f5, 0x658(r1)
-	  bge-      .loc_0xA48
-	  lfs       f2, 0x65C(r1)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x528
-	  lfs       f2, 0x658(r1)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x358
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x658
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0xAC4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lwz       r7, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lwz       r0, 0x4(r26)
-	  stw       r7, 0x670(r1)
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0xB14
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x318
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
+	Vector3f segToRect    = rect.mBotTri.Origin() - segment.Origin();
+	f32 sqrLenSeg         = segment.Direction().squaredLength();
+	f32 dotSegEdge0       = -segment.Direction().DP(rect.mBotTri.Edge0());
+	f32 dotSegEdge1       = -segment.Direction().DP(rect.mBotTri.Edge1());
+	f32 sqrLenEdge0       = rect.mBotTri.Edge0().squaredLength();
+	f32 sqrLenEdge1       = rect.mBotTri.Edge1().squaredLength();
+	f32 dotSegToRectSeg   = -segToRect.DP(segment.Direction());
+	f32 dotSegToRectEdge0 = segToRect.DP(rect.mBotTri.Edge0());
+	f32 dotSegToRectEdge1 = segToRect.DP(rect.mBotTri.Edge1());
 
-	.loc_0x318:
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x650
-	  addi      r6, r1, 0x64C
-	  bl        0x1EDC
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+	f32 sqr01    = sqrLenEdge0 * sqrLenEdge1;
+	f32 dotSqr01 = -dotSegEdge0 * sqrLenEdge1;
+	f32 dotSqr10 = -dotSegEdge1 * sqrLenEdge0;
+	f32 det      = sqrLenSeg * sqr01 + dotSegEdge0 * dotSqr01 + dotSegEdge1 * dotSqr10;
 
-	.loc_0x358:
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x3F4
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x658
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0xBCC
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x650
-	  addi      r6, r1, 0x64C
-	  bl        0x1E40
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+	KSegment tmpSeg;
+	Vector3f point;
+	f32 currP3, currP4, currP5, tmpP3, tmpP4, tmpP5;
 
-	.loc_0x3F4:
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x658
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0xC5C
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lfs       f1, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x514(r1)
-	  lfs       f0, 0x514(r1)
-	  stfs      f0, 0x62C(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x630(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x634(r1)
-	  lwz       r0, 0x62C(r1)
-	  lwz       r7, 0x630(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x634(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0xCE4
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x4E8
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
+	f32 sqrDist;
+	f32 tmpDist;
 
-	.loc_0x4E8:
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x650
-	  addi      r6, r1, 0x64C
-	  bl        0x1D0C
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+	if (absF(det) >= gs_fTolerance) {
+		// A
 
-	.loc_0x528:
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x6C8
-	  lfs       f2, 0x658(r1)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x5D0
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x65C
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0xDA8
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x658(r1)
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x650
-	  addi      r6, r1, 0x64C
-	  bl        0x1C64
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+		f32 a    = sqrLenSeg * sqrLenEdge1 - dotSegEdge1 * dotSegEdge1;
+		f32 b    = dotSegEdge1 * dotSegEdge0;
+		f32 c    = sqrLenSeg * sqrLenEdge0 - dotSegEdge0 * dotSegEdge0;
+		f32 norm = 1.0f / det;
+		f32 d    = -dotSegToRectSeg * norm;
+		f32 e    = -dotSegToRectEdge0 * norm;
+		f32 f    = -dotSegToRectEdge1 * norm;
 
-	.loc_0x5D0:
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x600
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x65C
-	  addi      r6, r1, 0x658
-	  bl        0x1C18
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  stfs      f0, 0x660(r1)
-	  b         .loc_0x1D28
+		currP3 = sqr01 * d + dotSqr01 * e + dotSqr10 * f;
+		currP4 = dotSqr01 * d + a * e + b * f;
+		currP5 = dotSqr10 * d + b * e + c * f;
 
-	.loc_0x600:
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r30)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x65C
-	  stfs      f0, 0x500(r1)
-	  lfs       f0, 0x500(r1)
-	  stfs      f0, 0x620(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x624(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x628(r1)
-	  lwz       r0, 0x620(r1)
-	  lwz       r7, 0x624(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x628(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0xEA0
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x658(r1)
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x650
-	  addi      r6, r1, 0x64C
-	  bl        0x1B6C
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+		if (currP3 < 0.0f) {
+			if (currP4 < 0.0f) {
+				if (currP5 < 0.0f) {
+					// B
+					// Origin to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
 
-	.loc_0x6C8:
-	  lfs       f2, 0x658(r1)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x808
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r8)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x658
-	  stfs      f0, 0x4EC(r1)
-	  lfs       f0, 0x4EC(r1)
-	  stfs      f0, 0x614(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x618(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x61C(r1)
-	  lwz       r0, 0x614(r1)
-	  lwz       r7, 0x618(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x61C(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0xF74
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lwz       r7, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lwz       r0, 0x4(r26)
-	  stw       r7, 0x670(r1)
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0xFC4
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x7C8
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 0.0f;
 
-	.loc_0x7C8:
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x650
-	  addi      r6, r1, 0x64C
-	  bl        0x1A2C
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					// Origin to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
 
-	.loc_0x808:
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x8DC
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r8)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x658
-	  stfs      f0, 0x4D8(r1)
-	  lfs       f0, 0x4D8(r1)
-	  stfs      f0, 0x608(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x60C(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x610(r1)
-	  lwz       r0, 0x608(r1)
-	  lwz       r7, 0x60C(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x610(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x10B4
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x650
-	  addi      r6, r1, 0x64C
-	  bl        0x1958
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 0.0f;
 
-	.loc_0x8DC:
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r8)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x658
-	  stfs      f0, 0x4C4(r1)
-	  lfs       f0, 0x4C4(r1)
-	  stfs      f0, 0x5FC(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x600(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x604(r1)
-	  lwz       r0, 0x5FC(r1)
-	  lwz       r7, 0x600(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x604(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x117C
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lfs       f1, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x4B0(r1)
-	  lfs       f0, 0x4B0(r1)
-	  stfs      f0, 0x5F0(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5F4(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5F8(r1)
-	  lwz       r0, 0x5F0(r1)
-	  lwz       r7, 0x5F4(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x5F8(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1204
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0xA08
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
 
-	.loc_0xA08:
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x650
-	  addi      r6, r1, 0x64C
-	  bl        0x17EC
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					// Segment origin to rect - comparison 2
+					tmpDist = sqrDistance(segment.Origin(), rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 0.0f;
 
-	.loc_0xA48:
-	  fcmpo     cr0, f4, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x10CC
-	  lfs       f5, 0x65C(r1)
-	  fcmpo     cr0, f5, f1
-	  bge-      .loc_0xC84
-	  lfs       f2, 0x658(r1)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0xB2C
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x658
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x12D4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lwz       r7, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lwz       r0, 0x4(r26)
-	  stw       r7, 0x670(r1)
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1324
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
-	  b         .loc_0x1D28
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				} else if (currP5 <= 1.0f) {
+					// C
 
-	.loc_0xB2C:
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xB8C
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x658
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x13A0
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  stfs      f0, 0x65C(r1)
-	  b         .loc_0x1D28
+					// Origin to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
 
-	.loc_0xB8C:
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x658
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x13F4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lfs       f1, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x49C(r1)
-	  lfs       f0, 0x49C(r1)
-	  stfs      f0, 0x5E4(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5E8(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5EC(r1)
-	  lwz       r0, 0x5E4(r1)
-	  lwz       r7, 0x5E8(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x5EC(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x147C
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
-	  b         .loc_0x1D28
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 0.0f;
 
-	.loc_0xC84:
-	  fcmpo     cr0, f5, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xE00
-	  lfs       f6, 0x658(r1)
-	  fcmpo     cr0, f6, f1
-	  bge-      .loc_0xCF0
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x65C
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1504
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					// Segment origin to rect - comparison 1
+					tmpDist = sqrDistance(segment.Origin(), rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 0.0f;
 
-	.loc_0xCF0:
-	  fcmpo     cr0, f6, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xD74
-	  fmuls     f7, f7, f4
-	  lfs       f28, -0x7C58(r2)
-	  fmuls     f0, f26, f5
-	  fmuls     f27, f25, f6
-	  fmuls     f1, f26, f4
-	  fadds     f7, f7, f0
-	  fmuls     f0, f8, f5
-	  fmuls     f25, f25, f4
-	  fmuls     f12, f12, f6
-	  fmuls     f8, f28, f13
-	  fadds     f7, f27, f7
-	  fmuls     f2, f28, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f8, f7
-	  fmuls     f8, f28, f3
-	  fadds     f7, f25, f12
-	  fadds     f0, f2, f0
-	  fmuls     f3, f4, f1
-	  fadds     f4, f8, f7
-	  fmuls     f2, f5, f0
-	  fmuls     f1, f11, f11
-	  fmuls     f0, f10, f10
-	  fmuls     f4, f6, f4
-	  fadds     f3, f3, f2
-	  fmuls     f2, f9, f9
-	  fadds     f0, f1, f0
-	  fadds     f1, f4, f3
-	  fadds     f0, f2, f0
-	  fadds     f31, f1, f0
-	  b         .loc_0x1D28
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				} else {
+					// D
 
-	.loc_0xD74:
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r30)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x65C
-	  stfs      f0, 0x488(r1)
-	  lfs       f0, 0x488(r1)
-	  stfs      f0, 0x5D8(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5DC(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5E0(r1)
-	  lwz       r0, 0x5D8(r1)
-	  lwz       r7, 0x5DC(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x5E0(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1614
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					// Origin to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
 
-	.loc_0xE00:
-	  lfs       f2, 0x658(r1)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0xF04
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r8)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x658
-	  stfs      f0, 0x474(r1)
-	  lfs       f0, 0x474(r1)
-	  stfs      f0, 0x5CC(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5D0(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5D4(r1)
-	  lwz       r0, 0x5CC(r1)
-	  lwz       r7, 0x5D0(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x5D4(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x16AC
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lwz       r7, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lwz       r0, 0x4(r26)
-	  stw       r7, 0x670(r1)
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x16FC
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
-	  b         .loc_0x1D28
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 0.0f;
 
-	.loc_0xF04:
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xF9C
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r8)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x658
-	  stfs      f0, 0x460(r1)
-	  lfs       f0, 0x460(r1)
-	  stfs      f0, 0x5C0(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5C4(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5C8(r1)
-	  lwz       r0, 0x5C0(r1)
-	  lwz       r7, 0x5C4(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x5C8(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x17B0
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  stfs      f0, 0x65C(r1)
-	  b         .loc_0x1D28
+					// Point C to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge1();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
 
-	.loc_0xF9C:
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r8)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x658
-	  stfs      f0, 0x44C(r1)
-	  lfs       f0, 0x44C(r1)
-	  stfs      f0, 0x5B4(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5B8(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5BC(r1)
-	  lwz       r0, 0x5B4(r1)
-	  lwz       r7, 0x5B8(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x5BC(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x183C
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lfs       f1, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x438(r1)
-	  lfs       f0, 0x438(r1)
-	  stfs      f0, 0x5A8(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5AC(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5B0(r1)
-	  lwz       r0, 0x5A8(r1)
-	  lwz       r7, 0x5AC(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x5B0(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x18C4
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
-	  b         .loc_0x1D28
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 1.0f;
 
-	.loc_0x10CC:
-	  lfs       f2, 0x65C(r1)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x1454
-	  lfs       f2, 0x658(r1)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x1210
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x658
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x194C
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lwz       r7, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lwz       r0, 0x4(r26)
-	  stw       r7, 0x670(r1)
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x199C
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x11A0
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
 
-	.loc_0x11A0:
-	  lfs       f1, 0x0(r25)
-	  mr        r4, r26
-	  lfs       f0, 0xC(r25)
-	  addi      r3, r1, 0x664
-	  lfs       f3, 0x4(r25)
-	  lfs       f2, 0x10(r25)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r25)
-	  addi      r5, r1, 0x650
-	  lfs       f1, 0x14(r25)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x664(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x64C
-	  stfs      f2, 0x668(r1)
-	  stfs      f0, 0x66C(r1)
-	  bl        0x1024
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					// Segment origin to rect - comparison 2
+					tmpDist = sqrDistance(segment.Origin(), rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 0.0f;
 
-	.loc_0x1210:
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x12F0
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x658
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1A84
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x650
-	  addi      r6, r1, 0x64C
-	  bl        0xF88
-	  lfs       f1, 0x0(r25)
-	  mr        r4, r26
-	  lfs       f0, 0x0(r31)
-	  addi      r3, r1, 0x664
-	  lfs       f3, 0x4(r25)
-	  lfs       f2, 0x4(r31)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r25)
-	  addi      r5, r1, 0x650
-	  lfs       f1, 0x8(r31)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x664(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x64C
-	  stfs      f2, 0x668(r1)
-	  stfs      f0, 0x66C(r1)
-	  bl        0xF44
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				}
+			} else if (currP4 <= 1.0f) {
+				if (currP5 < 0.0f) {
+					// E
 
-	.loc_0x12F0:
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x658
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1B58
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lfs       f1, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x40C(r1)
-	  lfs       f0, 0x40C(r1)
-	  stfs      f0, 0x59C(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5A0(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x5A4(r1)
-	  lwz       r0, 0x59C(r1)
-	  lwz       r7, 0x5A0(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x5A4(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1BE0
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x13E4
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
+					// Origin to Edge 0 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
 
-	.loc_0x13E4:
-	  lfs       f1, 0x0(r25)
-	  mr        r4, r26
-	  lfs       f0, 0xC(r25)
-	  addi      r3, r1, 0x664
-	  lfs       f3, 0x4(r25)
-	  lfs       f2, 0x10(r25)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r25)
-	  addi      r5, r1, 0x650
-	  lfs       f1, 0x14(r25)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x664(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x64C
-	  stfs      f2, 0x668(r1)
-	  stfs      f0, 0x66C(r1)
-	  bl        0xDE0
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+					currP5  = 0.0f;
 
-	.loc_0x1454:
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x1684
-	  lfs       f2, 0x658(r1)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x152C
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x65C
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1CD4
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r4, r26
-	  stfs      f0, 0x658(r1)
-	  addi      r3, r1, 0x664
-	  addi      r5, r1, 0x650
-	  lfs       f1, 0x0(r25)
-	  addi      r6, r1, 0x64C
-	  lfs       f0, 0x0(r31)
-	  lfs       f2, 0x4(r25)
-	  fadds     f0, f1, f0
-	  lfs       f1, 0x4(r31)
-	  lfs       f4, 0x8(r25)
-	  lfs       f3, 0x8(r31)
-	  fadds     f1, f2, f1
-	  stfs      f0, 0x664(r1)
-	  fadds     f0, f4, f3
-	  stfs      f1, 0x668(r1)
-	  stfs      f0, 0x66C(r1)
-	  bl        0xD08
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					// Segment origin to rect - comparison 1
+					tmpDist = sqrDistance(segment.Origin(), rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 0.0f;
 
-	.loc_0x152C:
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x158C
-	  lfs       f1, 0x0(r25)
-	  mr        r4, r26
-	  lfs       f0, 0x0(r31)
-	  addi      r3, r1, 0x664
-	  lfs       f3, 0x4(r25)
-	  lfs       f2, 0x4(r31)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r25)
-	  addi      r5, r1, 0x65C
-	  lfs       f1, 0x8(r31)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x664(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x658
-	  stfs      f2, 0x668(r1)
-	  stfs      f0, 0x66C(r1)
-	  bl        0xC8C
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  stfs      f0, 0x660(r1)
-	  b         .loc_0x1D28
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				} else if (currP5 <= 1.0f) {
+					// F
 
-	.loc_0x158C:
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r30)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x65C
-	  stfs      f0, 0x3D4(r1)
-	  lfs       f0, 0x3D4(r1)
-	  stfs      f0, 0x590(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x594(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x598(r1)
-	  lwz       r0, 0x590(r1)
-	  lwz       r7, 0x594(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x598(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1E2C
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  mr        r4, r26
-	  stfs      f0, 0x658(r1)
-	  addi      r3, r1, 0x664
-	  addi      r5, r1, 0x650
-	  lfs       f1, 0x0(r25)
-	  addi      r6, r1, 0x64C
-	  lfs       f0, 0x0(r31)
-	  lfs       f2, 0x4(r25)
-	  fadds     f0, f1, f0
-	  lfs       f1, 0x4(r31)
-	  lfs       f4, 0x8(r25)
-	  lfs       f3, 0x8(r31)
-	  fadds     f1, f2, f1
-	  stfs      f0, 0x664(r1)
-	  fadds     f0, f4, f3
-	  stfs      f1, 0x668(r1)
-	  stfs      f0, 0x66C(r1)
-	  bl        0xBB0
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					// Segment origin to rect
+					sqrDist = sqrDistance(segment.Origin(), rect.mBotTri, &currP4, &currP5);
+					currP3  = 0.0f;
 
-	.loc_0x1684:
-	  lfs       f2, 0x658(r1)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x17F4
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r8)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x658
-	  stfs      f0, 0x3B4(r1)
-	  lfs       f0, 0x3B4(r1)
-	  stfs      f0, 0x584(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x588(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x58C(r1)
-	  lwz       r0, 0x584(r1)
-	  lwz       r7, 0x588(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x58C(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1F30
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lwz       r7, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lwz       r0, 0x4(r26)
-	  stw       r7, 0x670(r1)
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x1F80
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x1784
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
+				} else {
+					// G
 
-	.loc_0x1784:
-	  lfs       f1, 0x0(r25)
-	  mr        r4, r26
-	  lfs       f0, 0xC(r25)
-	  addi      r3, r1, 0x664
-	  lfs       f3, 0x4(r25)
-	  lfs       f2, 0x10(r25)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r25)
-	  addi      r5, r1, 0x650
-	  lfs       f1, 0x14(r25)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x664(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x64C
-	  stfs      f2, 0x668(r1)
-	  stfs      f0, 0x66C(r1)
-	  bl        0xA40
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					// Point C to Edge 0 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge1();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
 
-	.loc_0x17F4:
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x18F8
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r8)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x658
-	  stfs      f0, 0x394(r1)
-	  lfs       f0, 0x394(r1)
-	  stfs      f0, 0x578(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x57C(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x580(r1)
-	  lwz       r0, 0x578(r1)
-	  lwz       r7, 0x57C(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x580(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x20A0
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  mr        r4, r26
-	  stfs      f0, 0x65C(r1)
-	  addi      r3, r1, 0x664
-	  addi      r5, r1, 0x650
-	  lfs       f1, 0x0(r25)
-	  addi      r6, r1, 0x64C
-	  lfs       f0, 0x0(r31)
-	  lfs       f2, 0x4(r25)
-	  fadds     f0, f1, f0
-	  lfs       f1, 0x4(r31)
-	  lfs       f4, 0x8(r25)
-	  lfs       f3, 0x8(r31)
-	  fadds     f1, f2, f1
-	  stfs      f0, 0x664(r1)
-	  fadds     f0, f4, f3
-	  stfs      f1, 0x668(r1)
-	  stfs      f0, 0x66C(r1)
-	  bl        0x93C
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+					currP5  = 1.0f;
 
-	.loc_0x18F8:
-	  lfs       f1, 0x0(r26)
-	  mr        r3, r25
-	  lfs       f0, 0x0(r8)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x658
-	  stfs      f0, 0x374(r1)
-	  lfs       f0, 0x374(r1)
-	  stfs      f0, 0x56C(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x570(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r8)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x574(r1)
-	  lwz       r0, 0x56C(r1)
-	  lwz       r7, 0x570(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x574(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x2198
-	  lfs       f0, -0x7C5C(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x65C(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lfs       f1, 0x0(r26)
-	  addi      r6, r1, 0x650
-	  lfs       f0, 0x0(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x360(r1)
-	  lfs       f0, 0x360(r1)
-	  stfs      f0, 0x560(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x4(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x564(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x8(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x568(r1)
-	  lwz       r0, 0x560(r1)
-	  lwz       r7, 0x564(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x568(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x2220
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x1A24
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
+					// Segment origin to rect - comparison 1
+					tmpDist = sqrDistance(segment.Origin(), rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 0.0f;
 
-	.loc_0x1A24:
-	  lfs       f1, 0x0(r25)
-	  mr        r4, r26
-	  lfs       f0, 0xC(r25)
-	  addi      r3, r1, 0x664
-	  lfs       f3, 0x4(r25)
-	  lfs       f2, 0x10(r25)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r25)
-	  addi      r5, r1, 0x650
-	  lfs       f1, 0x14(r25)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x664(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x64C
-	  stfs      f2, 0x668(r1)
-	  stfs      f0, 0x66C(r1)
-	  bl        0x7A0
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
-	  b         .loc_0x1D28
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				}
+			} else {
+				if (currP5 < 0.0f) {
+					// H
 
-	.loc_0x1A94:
-	  lwz       r6, 0x0(r26)
-	  mr        r3, r25
-	  lwz       r0, 0x4(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x660
-	  stw       r6, 0x670(r1)
-	  addi      r6, r1, 0x65C
-	  stw       r0, 0x674(r1)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x22FC
-	  lfs       f0, -0x7C60(r2)
-	  fmr       f31, f1
-	  mr        r3, r25
-	  stfs      f0, 0x658(r1)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  lwz       r7, 0x18(r26)
-	  addi      r6, r1, 0x64C
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x2334
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x650(r1)
-	  bge-      .loc_0x1B38
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f3, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
+					// Point B to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge0();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
 
-	.loc_0x1B38:
-	  lfs       f1, 0x0(r26)
-	  addi      r3, r25, 0
-	  lfs       f0, 0x18(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x650
-	  stfs      f0, 0x340(r1)
-	  lfs       f0, 0x340(r1)
-	  stfs      f0, 0x554(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x1C(r26)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x558(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x20(r26)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x55C(r1)
-	  lwz       r0, 0x554(r1)
-	  lwz       r7, 0x558(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x55C(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0xC(r26)
-	  lwz       r0, 0x10(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x23D8
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x64C(r1)
-	  bge-      .loc_0x1BDC
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x650(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f0, 0x65C(r1)
-	  stfs      f3, 0x658(r1)
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 1.0f;
 
-	.loc_0x1BDC:
-	  lfs       f1, 0x0(r26)
-	  addi      r3, r25, 0
-	  lfs       f0, 0xC(r26)
-	  addi      r4, r1, 0x670
-	  addi      r5, r1, 0x654
-	  fadds     f0, f1, f0
-	  addi      r6, r1, 0x64C
-	  stfs      f0, 0x32C(r1)
-	  lfs       f0, 0x32C(r1)
-	  stfs      f0, 0x548(r1)
-	  lfs       f1, 0x4(r26)
-	  lfs       f0, 0x10(r26)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x54C(r1)
-	  lfs       f1, 0x8(r26)
-	  lfs       f0, 0x14(r26)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x550(r1)
-	  lwz       r0, 0x548(r1)
-	  lwz       r7, 0x54C(r1)
-	  stw       r0, 0x670(r1)
-	  lwz       r0, 0x550(r1)
-	  stw       r7, 0x674(r1)
-	  stw       r0, 0x678(r1)
-	  lwz       r7, 0x18(r26)
-	  lwz       r0, 0x1C(r26)
-	  stw       r7, 0x67C(r1)
-	  stw       r0, 0x680(r1)
-	  lwz       r0, 0x20(r26)
-	  stw       r0, 0x684(r1)
-	  bl        -0x247C
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x650(r1)
-	  bge-      .loc_0x1C80
-	  lfs       f2, 0x654(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f2, 0x660(r1)
-	  stfs      f3, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
+					// Origin to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
 
-	.loc_0x1C80:
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0
-	  addi      r5, r1, 0x650
-	  addi      r6, r1, 0x64C
-	  bl        0x574
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C60(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1CBC
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 0.0f;
 
-	.loc_0x1CBC:
-	  lfs       f1, 0x0(r25)
-	  mr        r4, r26
-	  lfs       f0, 0xC(r25)
-	  addi      r3, r1, 0x664
-	  lfs       f3, 0x4(r25)
-	  lfs       f2, 0x10(r25)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r25)
-	  addi      r5, r1, 0x650
-	  lfs       f1, 0x14(r25)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x664(r1)
-	  fadds     f0, f4, f1
-	  addi      r6, r1, 0x64C
-	  stfs      f2, 0x668(r1)
-	  stfs      f0, 0x66C(r1)
-	  bl        0x508
-	  fcmpo     cr0, f1, f31
-	  lfs       f3, -0x7C5C(r2)
-	  stfs      f3, 0x654(r1)
-	  bge-      .loc_0x1D28
-	  lfs       f2, 0x650(r1)
-	  fmr       f31, f1
-	  lfs       f0, 0x64C(r1)
-	  stfs      f3, 0x660(r1)
-	  stfs      f2, 0x65C(r1)
-	  stfs      f0, 0x658(r1)
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
 
-	.loc_0x1D28:
-	  cmplwi    r27, 0
-	  beq-      .loc_0x1D38
-	  lfs       f0, 0x660(r1)
-	  stfs      f0, 0x0(r27)
+					// Segment origin to rect - comparison 2
+					tmpDist = sqrDistance(segment.Origin(), rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 0.0f;
 
-	.loc_0x1D38:
-	  cmplwi    r28, 0
-	  beq-      .loc_0x1D48
-	  lfs       f0, 0x65C(r1)
-	  stfs      f0, 0x0(r28)
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
 
-	.loc_0x1D48:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x1D58
-	  lfs       f0, 0x658(r1)
-	  stfs      f0, 0x0(r29)
+				} else if (currP5 <= 1.0f) {
+					// I
 
-	.loc_0x1D58:
-	  lmw       r25, 0x6AC(r1)
-	  fabs      f1, f31
-	  lwz       r0, 0x724(r1)
-	  lfd       f31, 0x718(r1)
-	  lfd       f30, 0x710(r1)
-	  lfd       f29, 0x708(r1)
-	  lfd       f28, 0x700(r1)
-	  lfd       f27, 0x6F8(r1)
-	  lfd       f26, 0x6F0(r1)
-	  lfd       f25, 0x6E8(r1)
-	  lfd       f24, 0x6E0(r1)
-	  lfd       f23, 0x6D8(r1)
-	  lfd       f22, 0x6D0(r1)
-	  lfd       f21, 0x6C8(r1)
-	  addi      r1, r1, 0x720
-	  mtlr      r0
-	  blr
-	*/
+					// Point B to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge0();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 1.0f;
+
+					// Segment origin to rect - comparison 1
+					tmpDist = sqrDistance(segment.Origin(), rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 0.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+				} else {
+					// J
+
+					// Point B to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge0();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 1.0f;
+
+					// Point C to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge1();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+					// Segment origin to rect - comparison 1
+					tmpDist = sqrDistance(segment.Origin(), rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 0.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				}
+			}
+		} else if (currP3 <= 1.0f) {
+			if (currP4 < 0.0f) {
+				if (currP5 < 0.0f) {
+					// K
+
+					// Origin to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 0.0f;
+
+					// Origin to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 0.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+				} else if (currP5 <= 1.0f) {
+					// L
+
+					// Origin to Edge 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 0.0f;
+
+				} else {
+					// M
+
+					// Origin to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 0.0f;
+
+					// Point C to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge1();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				}
+
+			} else if (currP4 <= 1.0f) {
+				if (currP5 < 0.0f) {
+					// N
+
+					// Origin to Edge 0
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+					currP5  = 0.0f;
+
+				} else if (currP5 <= 1.0f) {
+					// O
+
+					sqrDist = ((sqrLenSeg * currP3 + dotSegEdge0 * currP4 + dotSegEdge1 * currP5 + 2.0f * dotSegToRectSeg) * currP3
+					           + (dotSegEdge0 * currP3 + sqrLenEdge0 * currP4 + 2.0f * dotSegToRectEdge0) * currP4
+					           + (dotSegEdge1 * currP3 + sqrLenEdge1 * currP5 + 2.0f * dotSegToRectEdge1) * currP5)
+					        + segToRect.squaredLength();
+
+				} else {
+					// P
+
+					// Point C to Edge 0
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge1();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+					currP5  = 1.0f;
+				}
+
+			} else {
+				if (currP5 < 0.0f) {
+					// Q
+
+					// Point B to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge0();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 1.0f;
+
+					// Origin to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 0.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+				} else if (currP5 <= 1.0f) {
+					// R
+
+					// Point B to Edge 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge0();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 1.0f;
+
+				} else {
+					// S
+
+					// Point B to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge0();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 1.0f;
+
+					// Point C to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge1();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				}
+			}
+		} else {
+			if (currP4 < 0.0f) {
+				if (currP5 < 0.0f) {
+					// T
+
+					// Origin to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 0.0f;
+
+					// Origin to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 0.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+					// Segment end to rect - comparison 2
+
+					point   = segment.Origin() + segment.Direction();
+					tmpDist = sqrDistance(point, rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+				} else if (currP5 <= 1.0f) {
+					// U
+
+					// Origin to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 0.0f;
+
+					// accidental copy-paste?
+					tmpDist = sqrDistance(segment.Origin(), rect.mBotTri, &tmpP4, &tmpP5);
+
+					// Seg end to rect - comparison 1
+					point   = segment.Origin() + segment.Direction();
+					tmpDist = sqrDistance(point, rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+				} else {
+					// V
+
+					// Origin to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 0.0f;
+
+					// Point C to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge1();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+					// Seg end to rect - comparison 2
+					point   = segment.Origin() + segment.Direction();
+					tmpDist = sqrDistance(point, rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				}
+
+			} else if (currP4 <= 1.0f) {
+				if (currP5 < 0.0f) {
+					// W
+
+					// Origin to Edge 0
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+					currP5  = 0.0f;
+
+					// Seg end to rect - comparison 1
+					point   = segment.Origin() + segment.Direction();
+					tmpDist = sqrDistance(point, rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+				} else if (currP5 <= 1.0f) {
+					// X
+
+					// Seg end to rect
+					point   = segment.Origin() + segment.Direction();
+					sqrDist = sqrDistance(point, rect.mBotTri, &currP4, &currP5);
+					currP3  = 1.0f;
+
+				} else {
+					// Y
+
+					// Point C to Edge 0 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge1();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+					currP5  = 1.0f;
+
+					// Seg end to rect - comparison 1
+					point   = segment.Origin() + segment.Direction();
+					tmpDist = sqrDistance(point, rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				}
+
+			} else {
+				if (currP5 < 0.0f) {
+					// Z
+
+					// Point B to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge0();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 1.0f;
+
+					// Origin to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 0.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+					// Segment end - comparison 2
+					point   = segment.Origin() + segment.Direction();
+					tmpDist = sqrDistance(point, rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+				} else if (currP5 <= 1.0f) {
+					// AA
+
+					// Point B to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge0();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 1.0f;
+
+					// Segment end - comparison 1
+					point   = segment.Origin() + segment.Direction();
+					tmpDist = sqrDistance(point, rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+				} else {
+					// AB
+
+					// Point B to Edge 1 - base case to compare to
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge0();
+					tmpSeg.Direction() = rect.mBotTri.Edge1();
+
+					sqrDist = sqrDistance(segment, tmpSeg, &currP3, &currP5);
+					currP4  = 1.0f;
+
+					// Point C to Edge 0 - comparison 1
+					tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge1();
+					tmpSeg.Direction() = rect.mBotTri.Edge0();
+
+					tmpDist = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+					tmpP5   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+
+					// Segment end - comparison 2
+					point   = segment.Origin() + segment.Direction();
+					tmpDist = sqrDistance(point, rect.mBotTri, &tmpP4, &tmpP5);
+					tmpP3   = 1.0f;
+
+					if (tmpDist < sqrDist) {
+						sqrDist = tmpDist;
+						currP3  = tmpP3;
+						currP4  = tmpP4;
+						currP5  = tmpP5;
+					}
+				}
+			}
+		}
+
+	} else {
+		// AC
+
+		// Origin to Edge 0 - base case to compare to
+		tmpSeg.Origin()    = rect.mBotTri.Origin();
+		tmpSeg.Direction() = rect.mBotTri.Edge0();
+		sqrDist            = sqrDistance(segment, tmpSeg, &currP3, &currP4);
+		currP5             = 0.0f;
+
+		// Origin to Edge 1 - comparison 1
+		tmpSeg.Direction() = rect.mBotTri.Edge1();
+		tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP5);
+		tmpP4              = 0.0f;
+
+		if (tmpDist < sqrDist) {
+			sqrDist = tmpDist;
+			currP3  = tmpP3;
+			currP4  = tmpP4;
+			currP5  = tmpP5;
+		}
+
+		// Point C to Edge 0 - comparison 2
+		tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge1();
+		tmpSeg.Direction() = rect.mBotTri.Edge0();
+		tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP4);
+		tmpP5              = 1.0f;
+
+		if (tmpDist < sqrDist) {
+			sqrDist = tmpDist;
+			currP3  = tmpP3;
+			currP4  = tmpP4;
+			currP5  = tmpP5;
+		}
+
+		// Point B to Edge 1 - comparison 3
+		tmpSeg.Origin()    = rect.mBotTri.Origin() + rect.mBotTri.Edge0();
+		tmpSeg.Direction() = rect.mBotTri.Edge1();
+		tmpDist            = sqrDistance(segment, tmpSeg, &tmpP3, &tmpP5);
+		tmpP4              = 1.0f;
+
+		if (tmpDist < sqrDist) {
+			sqrDist = tmpDist;
+			currP3  = tmpP3;
+			currP4  = tmpP4;
+			currP5  = tmpP5;
+		}
+
+		// Seg origin to rect - comparison 4
+		tmpDist = sqrDistance(segment.Origin(), rect.mBotTri, &tmpP4, &tmpP5);
+		tmpP3   = 0.0f;
+
+		if (tmpDist < sqrDist) {
+			sqrDist = tmpDist;
+			currP3  = tmpP3;
+			currP4  = tmpP4;
+			currP5  = tmpP5;
+		}
+
+		// Seg origin to rect - comparison 4
+		point   = segment.Origin() + segment.Direction();
+		tmpDist = sqrDistance(point, rect.mBotTri, &tmpP4, &tmpP5);
+		tmpP3   = 1.0f;
+
+		if (tmpDist < sqrDist) {
+			sqrDist = tmpDist;
+			currP3  = tmpP3;
+			currP4  = tmpP4;
+			currP5  = tmpP5;
+		}
+	}
+
+	if (p3) {
+		*p3 = currP3;
+	}
+	if (p4) {
+		*p4 = currP4;
+	}
+	if (p5) {
+		*p5 = currP5;
+	}
+
+	return absF(sqrDist);
 }
 
 /*
