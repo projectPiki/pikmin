@@ -109,6 +109,7 @@ struct PaniAnimator : public Animator {
 
 	// these are all DLL inlines
 	bool isFinished() { return mIsFinished; }
+	bool isFinishing() { return mCurrentKeyIndex < 0; }
 
 	f32 getCounter() { return mAnimationCounter; }
 	void setCounter(f32 frame) { mAnimationCounter = frame; }
@@ -133,7 +134,6 @@ struct PaniAnimator : public Animator {
 
 	/*
 	    remaining DLL inlines:
-	    bool isFinishing();
 
 	    AnimKey* getEventKey(int);
 

@@ -120,7 +120,7 @@ struct TekiCollecTargetPelletCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiCreaturePointerCondition : public TekiCondition {
-	TekiCreaturePointerCondition(Creature* target); // DLL, to do
+	TekiCreaturePointerCondition(Creature* target) { mCreature = target; }
 
 	virtual bool satisfy(Creature*); // _08
 

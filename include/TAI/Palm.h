@@ -138,14 +138,14 @@ struct TaiPalmGrowAction : public TaiAction {
 	TaiPalmGrowAction(int nextState, int p2)
 	    : TaiAction(nextState)
 	{
-		_08 = p2;
+		mTimerIdx = p2;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08; // _08
+	int mTimerIdx; // _08
 };
 
 /**
@@ -203,9 +203,9 @@ struct TaiPalmChangingColorAction : public TaiAction {
 	TaiPalmChangingColorAction(int p1, f32 p2, f32 p3)
 	    : TaiAction(TAI_NO_TRANSIT)
 	{
-		_08 = p1;
-		_0C = p2;
-		_10 = p3;
+		mTimerIdx      = p1;
+		mAvgTimerValue = p2;
+		mTimerRange    = p3;
 	}
 
 	virtual void start(Teki&); // _08
@@ -215,9 +215,9 @@ struct TaiPalmChangingColorAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08; // _08
-	f32 _0C; // _0C
-	f32 _10; // _10
+	int mTimerIdx;      // _08
+	f32 mAvgTimerValue; // _0C
+	f32 mTimerRange;    // _10
 };
 
 #endif

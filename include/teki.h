@@ -414,9 +414,10 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 		return calcDirection(dir);
 	}
 
+	bool animationFinished() { return mTekiAnimator->isFinishing(); }
+
 	/*
 	    DLL inlines to make:
-	    bool animationFinished();
 
 	    f32 calcTargetDirection(Vector3f&);
 	    f32 getTerritoryDistance();
@@ -489,7 +490,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	u32 _3B0;                                     // _3B0, unknown
 	f32 mMotionSpeed;                             // _3B4
 	f32 mPreStopAnimationSpeed;                   // _3B8
-	int _3BC;                                     // _3BC
+	int _3BC;                                     // _3BC, possibly mPelletPosyColor?
 	f32 _3C0;                                     // _3C0
 	f32 mTimers[5];                               // _3C4
 	zen::particleGenerator** mParticleGenerators; // _3D8

@@ -125,7 +125,11 @@ struct NMathF {
 
 	// inlines from DLL, to be created:
 	static inline f32 acos(f32);
-	static inline f32 rateRandom(f32, f32);
+	static inline f32 rateRandom(f32 min, f32 range)
+	{
+		f32 r = 2.0f * (System::getRand(1.0f) - 0.5f);
+		return min * r * range + min;
+	}
 	static inline f32 sqrt(f32);
 	static inline int quotient(f32, f32);
 

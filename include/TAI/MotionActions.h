@@ -9,7 +9,7 @@
 struct TaiMotionAction : public TaiAction {
 	TaiMotionAction(int nextState, int p2)
 	    : TaiAction(nextState)
-	    , _08(p2)
+	    , mMotionIdx(p2)
 	{
 	}
 
@@ -18,7 +18,7 @@ struct TaiMotionAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08; // _08
+	int mMotionIdx; // _08
 };
 
 /**
