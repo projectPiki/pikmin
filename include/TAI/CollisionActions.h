@@ -68,8 +68,8 @@ struct TaiCreatureCollisionAction : public TaiAction {
  * @brief TODO
  */
 struct TaiPikiCollisionAction : public TaiCreatureCollisionAction {
-	inline TaiPikiCollisionAction() // TODO: this is a guess
-	    : TaiCreatureCollisionAction(-1)
+	TaiPikiCollisionAction(int nextState)
+	    : TaiCreatureCollisionAction(nextState)
 	{
 	}
 

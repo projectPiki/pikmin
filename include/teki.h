@@ -392,6 +392,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	f32 getDriveLength() { return mTargetVelocity.length(); }
 
 	Vector3f& getNestPosition() { return mPersonality->mNestPosition; }
+	f32 getTerritoryDistance() { return getNestPosition().distance(getPosition()); }
 
 	ID32& getCorpsePartID(int paraID) { return mTekiParams->mParaIDs[paraID]; }
 
@@ -420,7 +421,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	    DLL inlines to make:
 
 	    f32 calcTargetDirection(Vector3f&);
-	    f32 getTerritoryDistance();
 
 
 	    Vector3f& getDrive();
@@ -478,9 +478,9 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	int mRouteWayPointCount;                      // _34C
 	u32 mPathHandle;                              // _350
 	int _354;                                     // _354
-	NVector3fIOClass _358;                        // _358
-	NVector3fIOClass _368;                        // _368
-	NVector3fIOClass _378;                        // _378
+	NVector3fIOClass mPositionIO;                 // _358
+	NVector3fIOClass mVelocityIO;                 // _368
+	NVector3fIOClass mAccelerationIO;             // _378
 	NVector3f mTargetPosition;                    // _388, possibly position
 	f32 mTargetAngle;                             // _394
 	NVector3f _398;                               // _398

@@ -118,16 +118,16 @@ void PeveParabolaEvent::makeParabolaEvent(PeveCondition* cond, NVector3fIO* vecI
  * Address:	801261F8
  * Size:	000034
  */
-void PeveHorizontalSinWaveEvent::makeHorizontalSinWaveEvent(PeveCondition* cond, NVector3fIO* vecIO, NVector3f p3, f32 p4, f32 p5, f32 p6,
-                                                            f32 p7)
+void PeveHorizontalSinWaveEvent::makeHorizontalSinWaveEvent(PeveCondition* cond, NVector3fIO* vecIO, NVector3f p3, f32 offset, f32 amp,
+                                                            f32 startTheta, f32 angularVel)
 {
 	makeEvent(cond);
 	_10 = vecIO;
 	_14.input(p3);
-	mOffset        = p4;
-	mAmplitude     = p5;
-	mStartingTheta = p6;
-	_2C            = p7;
+	mOffset          = offset;
+	mAmplitude       = amp;
+	mStartingTheta   = startTheta;
+	mAngularVelocity = angularVel;
 }
 
 /*
@@ -151,7 +151,7 @@ void PeveHorizontalSinWaveEvent::update()
 	PeveEvent::update();
 	f32 fTime = NSystem::getFrameTime();
 	f32 y     = mAmplitude * NMathF::sin(mTheta) + mOffset;
-	mTheta += fTime * _2C;
+	mTheta += fTime * mAngularVelocity;
 
 	Vector3f vec1(_14);
 	vec1.scale(fTime);

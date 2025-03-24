@@ -7,9 +7,9 @@
  * @brief TODO
  */
 struct TaiMotionAction : public TaiAction {
-	TaiMotionAction(int nextState, int p2)
+	TaiMotionAction(int nextState, int motionIdx)
 	    : TaiAction(nextState)
-	    , mMotionIdx(p2)
+	    , mMotionIdx(motionIdx)
 	{
 	}
 
@@ -23,10 +23,12 @@ struct TaiMotionAction : public TaiAction {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct TaiContinuousMotionAction : public TaiMotionAction {
-	TaiContinuousMotionAction(int p1, int p2) // TODO: this is a guess
-	    : TaiMotionAction(p1, p2)
+	TaiContinuousMotionAction(int nextState, int motionIdx)
+	    : TaiMotionAction(nextState, motionIdx)
 	{
 	}
 
@@ -35,16 +37,15 @@ struct TaiContinuousMotionAction : public TaiMotionAction {
 	virtual bool motionStarted(Teki&); // _1C
 
 	// _04     = VTBL
-	// _00-_08 = TaiMotionAction
-	// TODO: members
+	// _00-_0C = TaiMotionAction
 };
 
 /**
  * @brief TODO
  */
 struct TaiFinishMotionAction : public TaiMotionAction {
-	inline TaiFinishMotionAction() // TODO: this is a guess
-	    : TaiMotionAction(0, 0)
+	TaiFinishMotionAction(int nextState)
+	    : TaiMotionAction(nextState, 0)
 	{
 	}
 
@@ -126,9 +127,10 @@ struct TaiOutsideKeyStopMoveAction : public TaiAction {
  * @brief TODO
  */
 struct TaiStoppingMoveAction : public TaiAction {
-	inline TaiStoppingMoveAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiStoppingMoveAction(int p1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		_08 = p1;
 	}
 
 	virtual void start(Teki&);  // _08
@@ -137,15 +139,15 @@ struct TaiStoppingMoveAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int _08; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiFinishStoppingMoveAction : public TaiAction {
-	inline TaiFinishStoppingMoveAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiFinishStoppingMoveAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

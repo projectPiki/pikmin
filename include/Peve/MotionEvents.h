@@ -145,13 +145,13 @@ struct PeveHorizontalSinWaveEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	NVector3fIO* _10;   // _10
-	NVector3f _14;      // _14
-	f32 mOffset;        // _20
-	f32 mAmplitude;     // _24
-	f32 mStartingTheta; // _28
-	f32 _2C;            // _2C
-	f32 mTheta;         // _30
+	NVector3fIO* _10;     // _10
+	NVector3f _14;        // _14
+	f32 mOffset;          // _20
+	f32 mAmplitude;       // _24
+	f32 mStartingTheta;   // _28
+	f32 mAngularVelocity; // _2C
+	f32 mTheta;           // _30
 };
 
 /**

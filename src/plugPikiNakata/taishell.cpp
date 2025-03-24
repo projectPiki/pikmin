@@ -329,9 +329,6 @@ bool TaiShellNaviPikiInsideAction::act(Teki& teki)
  */
 bool TaiShellEatAction::act(Teki& teki)
 {
-	// u32 badCompiler[6];
-	// some ungodly combination of these things will fix the stack, but i cannot work out *what*
-
 	TekiAndCondition andCond(&TekiRecognitionCondition(&teki), &TekiNotCondition(&TekiStickerCondition(&teki)));
 
 	NVector3f spawnPos;
@@ -339,6 +336,7 @@ bool TaiShellEatAction::act(Teki& teki)
 	TekiAndCondition posDistAndAnd(&andCond, &TekiPositionDistanceCondition(spawnPos, teki.getAttackableRange()));
 	return teki.interactNaviPiki(InteractSwallow(&teki, nullptr, 0), posDistAndAnd);
 
+	// i am not proud of what this project has required of me spiritually
 	TekiAndCondition(nullptr, nullptr);
 	TekiAndCondition(nullptr, nullptr);
 	TekiNotCondition(nullptr);

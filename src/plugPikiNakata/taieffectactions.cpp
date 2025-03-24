@@ -54,7 +54,7 @@ void TaiStopGenParticleGeneratorAction::start(Teki& teki)
  * Size:	00008C
  */
 TaiJointEffectAction::TaiJointEffectAction(f32 p1, int p2, int p3, int p4, int p5, int p6)
-    : TAIAeffCloudOfDust(p1, p2, p3, p4, p5, p6)
+    : TAIAeffCloudOfDust(TAI_NO_TRANSIT, EffectMgr::EFF_NULL, p1, p2, p3, p4, p5, p6)
 {
 	_20 = false;
 }

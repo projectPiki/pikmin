@@ -58,6 +58,8 @@ struct TaiStopGenParticleGeneratorAction : public TaiAction {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct TaiJointEffectAction : public TAIAeffCloudOfDust {
 	TaiJointEffectAction(f32, int, int, int, int, int);
@@ -65,8 +67,7 @@ struct TaiJointEffectAction : public TAIAeffCloudOfDust {
 	virtual void setType(Vector3f&, int, int); // _1C
 
 	// _04     = VTBL
-	// _00-_08 = TAIAeffCloudOfDust?
-	// TODO: members
+	// _00-_24 = TAIAeffCloudOfDust
 };
 
 #endif

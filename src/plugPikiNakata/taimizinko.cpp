@@ -1,5 +1,16 @@
 #include "TAI/Mizinko.h"
+#include "TAI/MoveActions.h"
+#include "TAI/CollisionActions.h"
+#include "TAI/BasicActions.h"
+#include "TAI/ReactionActions.h"
+#include "Peve/MotionEvents.h"
+#include "MizuItem.h"
+#include "teki.h"
+#include "NaviMgr.h"
+#include "SoundMgr.h"
+#include "Graphics.h"
 #include "DebugLog.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -13,7 +24,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("taimizinko")
 
 /*
  * --INFO--
@@ -21,55 +32,17 @@ DEFINE_PRINT("TODO: Replace")
  * Size:	0000B0
  */
 TaiMizigenParameters::TaiMizigenParameters()
-    : TekiParameters(20, 50)
+    : TekiParameters(TPI_COUNT, TPF_COUNT)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x14
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x32
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  bl        0x19DC8
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x6DA0
-	  stw       r0, 0x0(r31)
-	  li        r5, 0x6
-	  li        r0, 0x1
-	  lwz       r6, 0x84(r31)
-	  mr        r3, r31
-	  lwz       r4, 0x0(r6)
-	  lwz       r4, 0x0(r4)
-	  stw       r5, 0xC(r4)
-	  lwz       r4, 0x0(r6)
-	  lwz       r4, 0x0(r4)
-	  stw       r0, 0x1C(r4)
-	  lwz       r4, 0x4(r6)
-	  lfs       f0, -0x5C18(r2)
-	  lwz       r4, 0x0(r4)
-	  stfs      f0, 0x3C(r4)
-	  lwz       r4, 0x4(r6)
-	  lfs       f0, -0x5C14(r2)
-	  lwz       r4, 0x0(r4)
-	  stfs      f0, 0x34(r4)
-	  lwz       r4, 0x4(r6)
-	  lfs       f0, -0x5C10(r2)
-	  lwz       r4, 0x0(r4)
-	  stfs      f0, 0x58(r4)
-	  lwz       r4, 0x4(r6)
-	  lwz       r4, 0x0(r4)
-	  stfs      f0, 0x5C(r4)
-	  lwz       r4, 0x4(r6)
-	  lwz       r4, 0x0(r4)
-	  stfs      f0, 0x60(r4)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	ParaMultiParameters* multiP = mParameters;
+	multiP->setI(TPI_SpawnType, TEKI_Qurione);
+	multiP->setI(TPI_ModelType, 1);
+
+	multiP->setF(TPF_DangerTerritoryRange, 50.0f);
+	multiP->setF(TPF_AttackWaitPeriod, 10.0f);
+	multiP->setF(TPF_SpawnDistance, 0.0f);
+	multiP->setF(TPF_SpawnHeight, 0.0f);
+	multiP->setF(TPF_SpawnVelocity, 0.0f);
 }
 
 /*
@@ -77,117 +50,25 @@ TaiMizigenParameters::TaiMizigenParameters()
  * Address:	80132014
  * Size:	00017C
  */
-TaiMizigenStrategy::TaiMizigenStrategy(TekiParameters*)
-    : TaiStrategy(0, 0) // TODO: fix
+TaiMizigenStrategy::TaiMizigenStrategy(TekiParameters* params)
+    : TaiStrategy(MIZIGENSTATE_COUNT, MIZIGENSTATE_Wait)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  addi      r29, r4, 0
-	  li        r4, 0x2
-	  bl        -0xAC58
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x6E20
-	  stw       r0, 0x0(r31)
-	  li        r3, 0x14
-	  bl        -0xEB04C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x8C
-	  lwz       r6, 0x84(r29)
-	  lis       r5, 0x802C
-	  lis       r4, 0x802D
-	  lwz       r7, 0x4(r6)
-	  addi      r6, r5, 0x6620
-	  li        r5, 0x1
-	  lwz       r7, 0x0(r7)
-	  subi      r4, r4, 0x35D8
-	  li        r0, 0
-	  lfs       f0, 0x34(r7)
-	  stw       r6, 0x4(r3)
-	  stw       r5, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  stw       r0, 0x8(r3)
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, -0x5C0C(r2)
-	  stfs      f0, 0x10(r3)
+	// unused timer
+	TaiTimerAction* timerAction = new TaiTimerAction(MIZIGENSTATE_Generate, 0, params->getF(TPF_AttackWaitPeriod), 0.5f);
 
-	.loc_0x8C:
-	  li        r3, 0x8
-	  bl        -0xEB0A0
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0xC0
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r30)
-	  li        r0, 0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r30)
-	  subi      r0, r3, 0x6EA8
-	  stw       r0, 0x4(r30)
+	TaiMizigenNaviApprouchAction* naviApproachAction = new TaiMizigenNaviApprouchAction(MIZIGENSTATE_Generate);
 
-	.loc_0xC0:
-	  li        r3, 0xC
-	  bl        -0xEB0D4
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0xDC
-	  li        r4, 0x1
-	  bl        -0xB054
+	TaiState* state = new TaiState(1);
+	int j           = 0;
+	state->setAction(j++, naviApproachAction); // when navi enter territory, transit to generate
+	setState(MIZIGENSTATE_Wait, state);
 
-	.loc_0xDC:
-	  li        r0, 0
-	  lwz       r3, 0x8(r29)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r30, r3, r0
-	  li        r3, 0x8
-	  lwz       r4, 0x8(r31)
-	  stw       r29, 0x0(r4)
-	  bl        -0xEB108
-	  addi      r29, r3, 0
-	  mr.       r0, r29
-	  beq-      .loc_0x128
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r29)
-	  li        r0, 0
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r29)
-	  subi      r0, r3, 0x6E64
-	  stw       r0, 0x4(r29)
+	TaiMizigenGeneratingAction* genAction = new TaiMizigenGeneratingAction(MIZIGENSTATE_Wait);
 
-	.loc_0x128:
-	  li        r3, 0xC
-	  bl        -0xEB13C
-	  addi      r30, r3, 0
-	  mr.       r3, r30
-	  beq-      .loc_0x144
-	  li        r4, 0x1
-	  bl        -0xB0BC
-
-	.loc_0x144:
-	  li        r0, 0
-	  lwz       r3, 0x8(r30)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r29, r3, r0
-	  mr        r3, r31
-	  lwz       r4, 0x8(r31)
-	  stw       r30, 0x4(r4)
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	state = new TaiState(1);
+	j     = 0;
+	state->setAction(j++, genAction); // when done generating, transit to wait
+	setState(MIZIGENSTATE_Generate, state);
 }
 
 /*
@@ -195,46 +76,13 @@ TaiMizigenStrategy::TaiMizigenStrategy(TekiParameters*)
  * Address:	80132190
  * Size:	00008C
  */
-void TaiMizigenStrategy::start(Teki&)
+void TaiMizigenStrategy::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  bl        -0xAD10
-	  mr        r3, r31
-	  lwz       r4, -0x9D4(r13)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x1D0(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, -0x9C0(r13)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x1D0(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, -0x9D0(r13)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x1D0(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, -0x9C8(r13)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x1D0(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	TaiStrategy::start(teki);
+	teki.clearTekiOption(BTeki::TEKI_OPTION_VISIBLE);
+	teki.clearTekiOption(BTeki::TEKI_OPTION_ORGANIC);
+	teki.clearTekiOption(BTeki::TEKI_OPTION_SHADOW_VISIBLE);
+	teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
 }
 
 /*
@@ -242,104 +90,29 @@ void TaiMizigenStrategy::start(Teki&)
  * Address:	8013221C
  * Size:	000164
  */
-void TaiMizigenGeneratingAction::start(Teki&)
+void TaiMizigenGeneratingAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xD0(r1)
-	  stfd      f31, 0xC8(r1)
-	  stfd      f30, 0xC0(r1)
-	  stw       r31, 0xBC(r1)
-	  stw       r30, 0xB8(r1)
-	  mr        r30, r4
-	  mr        r3, r30
-	  lwz       r4, 0x2C4(r4)
-	  lwz       r12, 0x0(r30)
-	  lwz       r4, 0x84(r4)
-	  lwz       r12, 0x194(r12)
-	  lwz       r4, 0x0(r4)
-	  mtlr      r12
-	  lwz       r4, 0x0(r4)
-	  lwz       r4, 0xC(r4)
-	  blrl
-	  mr.       r31, r3
-	  beq-      .loc_0x144
-	  lwz       r4, 0x2C8(r30)
-	  li        r0, 0
-	  addi      r3, r1, 0xAC
-	  lwz       r4, 0x34(r4)
-	  lwz       r4, 0x0(r4)
-	  lwz       r4, 0x0(r4)
-	  stw       r0, 0x10(r4)
-	  bl        -0x15434
-	  lfs       f30, 0xA0(r30)
-	  fmr       f1, f30
-	  bl        0xE98C0
-	  fmr       f31, f1
-	  fmr       f1, f30
-	  bl        0xE9A48
-	  stfs      f1, 0xAC(r1)
-	  lfs       f0, -0x1320(r13)
-	  stfs      f0, 0xB0(r1)
-	  stfs      f31, 0xB4(r1)
-	  lwz       r3, 0x2C8(r30)
-	  lfs       f0, -0x5C10(r2)
-	  lwz       r3, 0x34(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0x8(r3)
-	  fcmpo     cr0, f1, f0
-	  fmr       f5, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xC4
-	  lfs       f5, -0x5C08(r2)
+	PRINT("TaiMizigenGeneratingAction::start:%08x\n", &teki);
+	Teki* wisp = teki.generateTeki(teki.getParameterI(TPI_SpawnType));
+	if (!wisp) {
+		PRINT("TaiMizigenGeneratingAction::start:teki==null:%08x\n", &teki);
+		return;
+	}
 
-	.loc_0xC4:
-	  lfs       f0, 0xAC(r1)
-	  mr        r3, r31
-	  li        r4, 0
-	  fmuls     f0, f0, f5
-	  stfs      f0, 0xAC(r1)
-	  lfs       f0, 0xB0(r1)
-	  fmuls     f0, f0, f5
-	  stfs      f0, 0xB0(r1)
-	  lfs       f0, 0xB4(r1)
-	  fmuls     f0, f0, f5
-	  stfs      f0, 0xB4(r1)
-	  lfs       f1, 0x94(r30)
-	  lfs       f0, 0xAC(r1)
-	  lfs       f3, 0x98(r30)
-	  lfs       f2, 0xB0(r1)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x9C(r30)
-	  lfs       f1, 0xB4(r1)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x388(r31)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x38C(r31)
-	  stfs      f0, 0x390(r31)
-	  lwz       r5, 0x2C8(r31)
-	  lwz       r5, 0x34(r5)
-	  lwz       r5, 0x4(r5)
-	  lwz       r5, 0x0(r5)
-	  stfs      f5, 0x8(r5)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
+	teki.setPersonalityI(TekiPersonality::INT_Parameter0, 0);
+	NVector3f dir;
+	teki.outputDirectionVector(dir);
+	f32 distance = teki.getPersonalityF(TekiPersonality::FLT_TerritoryRange);
+	if (distance <= 0.0f) {
+		PRINT("!TaiMizigenGeneratingAction::start:%08x:distance<=0:%f\n", &teki, distance);
+		distance = 1.0f;
+	}
 
-	.loc_0x144:
-	  lwz       r0, 0xD4(r1)
-	  lfd       f31, 0xC8(r1)
-	  lfd       f30, 0xC0(r1)
-	  lwz       r31, 0xBC(r1)
-	  lwz       r30, 0xB8(r1)
-	  addi      r1, r1, 0xD0
-	  mtlr      r0
-	  blr
-	*/
+	dir.scale(distance);
+	wisp->mTargetPosition.add2(teki.getPosition(), dir);
+	wisp->setPersonalityF(TekiPersonality::FLT_TerritoryRange, distance);
+	wisp->startAI(0);
+	PRINT("TaiMizigenGeneratingAction::start<%08x\n", &teki);
 }
 
 /*
@@ -347,7 +120,7 @@ void TaiMizigenGeneratingAction::start(Teki&)
  * Address:	80132380
  * Size:	000008
  */
-bool TaiMizigenGeneratingAction::act(Teki&)
+bool TaiMizigenGeneratingAction::act(Teki& teki)
 {
 	return true;
 }
@@ -357,63 +130,22 @@ bool TaiMizigenGeneratingAction::act(Teki&)
  * Address:	80132388
  * Size:	0000B8
  */
-bool TaiMizigenNaviApprouchAction::act(Teki&)
+bool TaiMizigenNaviApprouchAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA8(r1)
-	  stw       r31, 0xA4(r1)
-	  mr        r31, r4
-	  lwz       r3, 0x2C8(r4)
-	  lwz       r3, 0x34(r3)
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x0(r3)
-	  lwz       r0, 0x10(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x38
-	  li        r3, 0
-	  b         .loc_0xA4
+	if (teki.getPersonalityI(TekiPersonality::INT_Parameter0) == 0) {
+		return false;
+	}
 
-	.loc_0x38:
-	  addi      r4, r31, 0x94
-	  addi      r3, r1, 0x90
-	  bl        -0x15548
-	  lwz       r3, 0x3120(r13)
-	  li        r4, 0
-	  bl        -0x1AF9C
-	  addi      r3, r3, 0x94
-	  lfs       f3, 0x98(r1)
-	  lfs       f2, 0x8(r3)
-	  lfs       f1, 0x90(r1)
-	  lfs       f0, 0x0(r3)
-	  fsubs     f2, f3, f2
-	  fsubs     f1, f1, f0
-	  fmuls     f0, f2, f2
-	  fmuls     f1, f1, f1
-	  fadds     f1, f1, f0
-	  bl        -0x1247C0
-	  lwz       r3, 0x2C4(r31)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f0, 0x3C(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xA0
-	  li        r3, 0
-	  b         .loc_0xA4
+	NVector3f wispPos(teki.getPosition());
+	Navi* navi   = naviMgr->getNavi(0);
+	f32 naviDist = wispPos.distanceXZ(navi->getPosition());
+	f32 range    = teki.getParameterF(TPF_DangerTerritoryRange);
+	if (naviDist > range) {
+		return false;
+	}
 
-	.loc_0xA0:
-	  li        r3, 0x1
-
-	.loc_0xA4:
-	  lwz       r0, 0xAC(r1)
-	  lwz       r31, 0xA4(r1)
-	  addi      r1, r1, 0xA8
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("TaiMizigenNaviApprouchAction::act:%08x:%f,%f\n", &teki, naviDist, range);
+	return true;
 }
 
 /*
@@ -422,235 +154,55 @@ bool TaiMizigenNaviApprouchAction::act(Teki&)
  * Size:	000380
  */
 TaiMizinkoParameters::TaiMizinkoParameters()
-    : TekiParameters(20, 64)
+    : TekiParameters(TPI_COUNT, MIZINKOPF_COUNT)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802D
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x40
-	  stwu      r1, -0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  subi      r31, r4, 0x73A8
-	  li        r4, 0x14
-	  stw       r30, 0x78(r1)
-	  addi      r30, r3, 0
-	  bl        0x198E0
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x6F04
-	  stw       r0, 0x0(r30)
-	  li        r0, 0x32
-	  li        r6, 0x33
-	  lwz       r3, 0x84(r30)
-	  li        r5, 0x34
-	  li        r4, 0x35
-	  lwz       r8, 0x4(r3)
-	  li        r3, 0x36
-	  mulli     r7, r0, 0xC
-	  lwz       r0, 0x8(r8)
-	  add       r8, r0, r7
-	  addi      r7, r31, 0x1C
-	  stw       r7, 0x0(r8)
-	  mulli     r7, r6, 0xC
-	  lfs       f1, -0x5C10(r2)
-	  mulli     r6, r5, 0xC
-	  stfs      f1, 0x4(r8)
-	  lfs       f0, -0x5C18(r2)
-	  mulli     r5, r4, 0xC
-	  stfs      f0, 0x8(r8)
-	  add       r8, r0, r7
-	  addi      r4, r31, 0x2C
-	  stw       r4, 0x0(r8)
-	  mulli     r4, r3, 0xC
-	  stfs      f1, 0x4(r8)
-	  li        r3, 0x37
-	  lfs       f6, -0x5C04(r2)
-	  mulli     r7, r3, 0xC
-	  stfs      f6, 0x8(r8)
-	  add       r9, r0, r6
-	  addi      r3, r31, 0x3C
-	  stw       r3, 0x0(r9)
-	  li        r3, 0x38
-	  mulli     r6, r3, 0xC
-	  stfs      f1, 0x4(r9)
-	  lfs       f0, -0x5C00(r2)
-	  add       r10, r0, r5
-	  addi      r8, r31, 0x54
-	  stfs      f0, 0x8(r9)
-	  li        r3, 0x39
-	  mulli     r5, r3, 0xC
-	  stw       r8, 0x0(r10)
-	  stfs      f1, 0x4(r10)
-	  add       r9, r0, r4
-	  addi      r8, r31, 0x70
-	  stfs      f0, 0x8(r10)
-	  li        r3, 0x3A
-	  mulli     r4, r3, 0xC
-	  stw       r8, 0x0(r9)
-	  stfs      f1, 0x4(r9)
-	  li        r3, 0x3B
-	  mulli     r3, r3, 0xC
-	  lfs       f5, -0x5BFC(r2)
-	  stfs      f5, 0x8(r9)
-	  add       r8, r0, r7
-	  addi      r7, r31, 0x7C
-	  stw       r7, 0x0(r8)
-	  add       r7, r0, r6
-	  addi      r6, r31, 0x8C
-	  stfs      f1, 0x4(r8)
-	  add       r9, r0, r5
-	  addi      r5, r31, 0xA8
-	  lfs       f0, -0x5BF8(r2)
-	  add       r10, r0, r4
-	  addi      r4, r31, 0xC4
-	  stfs      f0, 0x8(r8)
-	  add       r8, r0, r3
-	  stw       r6, 0x0(r7)
-	  stfs      f1, 0x4(r7)
-	  lfs       f4, -0x5C08(r2)
-	  stfs      f4, 0x8(r7)
-	  stw       r5, 0x0(r9)
-	  stfs      f1, 0x4(r9)
-	  stfs      f4, 0x8(r9)
-	  stw       r4, 0x0(r10)
-	  stfs      f1, 0x4(r10)
-	  stfs      f6, 0x8(r10)
-	  addi      r3, r31, 0xD8
-	  stw       r3, 0x0(r8)
-	  li        r3, 0x3C
-	  mulli     r4, r3, 0xC
-	  stfs      f1, 0x4(r8)
-	  stfs      f4, 0x8(r8)
-	  li        r3, 0x3D
-	  add       r6, r0, r4
-	  addi      r4, r31, 0xF8
-	  stw       r4, 0x0(r6)
-	  mulli     r5, r3, 0xC
-	  stfs      f1, 0x4(r6)
-	  li        r3, 0x3E
-	  lfs       f3, -0x1CA4(r13)
-	  mulli     r4, r3, 0xC
-	  stfs      f3, 0x8(r6)
-	  add       r5, r0, r5
-	  addi      r3, r31, 0x10C
-	  stw       r3, 0x0(r5)
-	  li        r3, 0x3F
-	  mulli     r3, r3, 0xC
-	  stfs      f1, 0x4(r5)
-	  stfs      f4, 0x8(r5)
-	  add       r6, r0, r4
-	  addi      r4, r31, 0x12C
-	  stw       r4, 0x0(r6)
-	  add       r4, r0, r3
-	  addi      r3, r31, 0x138
-	  stfs      f1, 0x4(r6)
-	  li        r5, -0x1
-	  li        r0, 0x1
-	  stfs      f0, 0x8(r6)
-	  stw       r3, 0x0(r4)
-	  stfs      f1, 0x4(r4)
-	  stfs      f4, 0x8(r4)
-	  lwz       r4, 0x84(r30)
-	  lwz       r3, 0x0(r4)
-	  lwz       r3, 0x0(r3)
-	  stw       r5, 0xC(r3)
-	  lwz       r3, 0x0(r4)
-	  lwz       r3, 0x0(r3)
-	  stw       r0, 0x20(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f4, 0x8(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f4, 0x4(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f4, 0x0(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f2, -0x5BF4(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f2, 0xC(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5BF0(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x74(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f1, -0x5BEC(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f1, 0x64(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f5, 0x44(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f2, 0x48(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f2, 0x50(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5C14(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x54(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f4, 0xAC(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0xC8(r3)
-	  lwz       r5, 0x4(r4)
-	  mr        r3, r30
-	  lfs       f0, -0x5BE8(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xCC(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5BE4(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xD0(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f6, 0xD4(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f4, 0xD8(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0xDC(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5BE0(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xE0(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xE4(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f5, 0xE8(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xEC(r5)
-	  lfs       f0, -0x5BDC(r2)
-	  lwz       r5, 0x4(r4)
-	  fmuls     f0, f3, f0
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xF0(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5BD8(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xF4(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0xF8(r5)
-	  lwz       r4, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  stfs      f0, 0xFC(r4)
-	  lwz       r0, 0x84(r1)
-	  lwz       r31, 0x7C(r1)
-	  lwz       r30, 0x78(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	int j                           = TPF_COUNT;
+	ParaParameterInfo<f32>* fParams = mParameters->mFloatParams->mParaInfo;
+	fParams[j++].init("DROP_DISTANCE", 0.0f, 50.0f);
+	fParams[j++].init("PATH_DISTANCE", 0.0f, 100.0f);
+	fParams[j++].init("FLYING_AWAY_VELOCITY", 0.0f, 1000.0f);
+	fParams[j++].init("FLYING_AWAY_ACCELERATION", 0.0f, 1000.0f);
+	fParams[j++].init("FADE_PERIOD", 0.0f, 30.0f);
+	fParams[j++].init("HIDING_PERIOD", 0.0f, 60.0f);
+	fParams[j++].init("HIDING_PERIOD_RANDOM_RATE", 0.0f, 1.0f);
+	fParams[j++].init("FLIGHT_HEIGHT_RANDOM_RATE", 0.0f, 1.0f);
+	fParams[j++].init("FLIGHT_AMPLITUDE", 0.0f, 100.0f);
+	fParams[j++].init("FLIGHT_AMPLITUDE_RANDOM_RATE", 0.0f, 1.0f);
+	fParams[j++].init("ANGULAR_VELOCITY", 0.0f, NMathF::pi);
+	fParams[j++].init("ANGULAR_VELOCITY_RANDOM_RATE", 0.0f, 1.0f);
+	fParams[j++].init("CRY_PERIOD", 0.0f, 60.0f);
+	fParams[j++].init("CRY_PERIOD_RANDOM_RATE", 0.0f, 1.0f);
+
+	ParaMultiParameters* multiP = mParameters;
+	multiP->setI(TPI_SpawnType, -1);
+	multiP->setI(TPI_LightType, 1);
+
+	multiP->setF(TPF_Weight, 1.0f);
+	multiP->setF(TPF_Scale, 1.0f);
+	multiP->setF(TPF_Life, 1.0f);
+	multiP->setF(TPF_WalkVelocity, 20.0f);
+	multiP->setF(TPF_FlightHeight, 90.0f);
+	multiP->setF(TPF_LifePeriod, 5.0f);
+	multiP->setF(TPF_LifeGaugeOffset, 30.0f);
+	multiP->setF(TPF_ShadowSize, 20.0f);
+	multiP->setF(TPF_CorpseSize, 20.0f);
+	multiP->setF(TPF_CorpseHeight, 10.0f);
+	multiP->setF(TPF_BombDamageRate, 1.0f);
+
+	multiP->setF(MIZINKOPF_DropDistance, 10.0f);
+	multiP->setF(MIZINKOPF_PathDistance, 40.0f);
+	multiP->setF(MIZINKOPF_FlyingAwayVelocity, 200.0f);
+	multiP->setF(MIZINKOPF_FlyingAwayAccel, 100.0f);
+	multiP->setF(MIZINKOPF_FadePeriod, 1.0f);
+	multiP->setF(MIZINKOPF_HidingPeriod, 5.0f);
+	multiP->setF(MIZINKOPF_HidingPeriodRandomRate, 0.2f);
+	multiP->setF(MIZINKOPF_FlightHeightRandomRate, 0.2f);
+	multiP->setF(MIZINKOPF_FlightAmplitude, 30.0f);
+	multiP->setF(MIZINKOPF_FlightAmplitudeRandomRate, 0.2f);
+	multiP->setF(MIZINKOPF_AngularVelocity, NMathF::pi / 4.0f);
+	multiP->setF(MIZINKOPF_AngularVelocityRandomRate, 0.3f);
+	multiP->setF(MIZINKOPF_CryPeriod, 5.0f);
+	multiP->setF(MIZINKOPF_CryPeriodRandomRate, 0.3f);
 }
 
 /*
@@ -661,48 +213,9 @@ TaiMizinkoParameters::TaiMizinkoParameters()
 TaiMizinkoSoundTable::TaiMizinkoSoundTable()
     : PaniSoundTable(4)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  bl        -0x1376C
-	  li        r30, 0
-	  li        r31, 0
-	  b         .loc_0x58
-
-	.loc_0x30:
-	  li        r3, 0x4
-	  bl        -0xEB7F0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x48
-	  addi      r0, r30, 0x89
-	  stw       r0, 0x0(r3)
-
-	.loc_0x48:
-	  lwz       r4, 0x4(r29)
-	  addi      r30, r30, 0x1
-	  stwx      r3, r4, r31
-	  addi      r31, r31, 0x4
-
-	.loc_0x58:
-	  lwz       r0, 0x0(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  mr        r3, r29
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mSoundCount; i++) {
+		mSounds[i] = new PaniSound(i + SE_KURIONE_HIT);
+	}
 }
 
 /*
@@ -710,627 +223,106 @@ TaiMizinkoSoundTable::TaiMizinkoSoundTable()
  * Address:	80132844
  * Size:	0008B4
  */
-TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters*)
-    : TaiStrategy(0, 0) // TODO: fix
+TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters* params)
+    : TaiStrategy(MIZINKOSTATE_COUNT, MIZINKOSTATE_Going)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x168(r1)
-	  stmw      r18, 0x130(r1)
-	  addi      r21, r4, 0
-	  addi      r31, r3, 0
-	  li        r4, 0x7
-	  bl        -0xB480
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x6FC0
-	  stw       r0, 0x0(r31)
-	  li        r3, 0x8
-	  bl        -0xEB874
-	  addi      r22, r3, 0
-	  mr.       r0, r22
-	  beq-      .loc_0x64
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r22)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r22)
-	  subi      r0, r3, 0x6318
-	  stw       r0, 0x4(r22)
+	TaiAccelerationAction* accelAction         = new TaiAccelerationAction();
+	TaiHorizontalSinWaveAction* hSinWaveAction = new TaiHorizontalSinWaveAction();
+	TaiMakingNextVelocityAction* nextVelAction = new TaiMakingNextVelocityAction();
+	TaiMizinkoWaitingAction* waitingAction     = new TaiMizinkoWaitingAction();
+	TaiMotionAction* motionAction1             = new TaiMotionAction(TAI_NO_TRANSIT, 2);
+	TaiMizinkoFadingAction* fadingAction       = new TaiMizinkoFadingAction();
+	TaiPikiCollisionAction* pikiCollAction     = new TaiPikiCollisionAction(MIZINKOSTATE_DropWater);
+	TaiDamageAction* damageAction              = new TaiDamageAction(MIZINKOSTATE_DropWater);
+	TaiMizinkoCryTimerAction* cryTimerAction
+	    = new TaiMizinkoCryTimerAction(1, params->getF(MIZINKOPF_CryPeriod), params->getF(MIZINKOPF_CryPeriodRandomRate));
+	TaiMizinkoGoingAction* goingAction              = new TaiMizinkoGoingAction();
+	TaiMizinkoMovingTimerAction* movingTimerAction1 = new TaiMizinkoMovingTimerAction(MIZINKOSTATE_HidingDest);
 
-	.loc_0x64:
-	  li        r3, 0x8
-	  bl        -0xEB8A8
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0x98
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r30)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r30)
-	  subi      r0, r3, 0x63D0
-	  stw       r0, 0x4(r30)
+	// GOING STATE - travel from spawn pos to target pos
+	TaiState* state = new TaiState(9);
+	int j           = 0;
+	state->setAction(j++, pikiCollAction); // if hit by piki, transit to drop water
+	state->setAction(j++, damageAction);   // if takes damage, transit to drop water
+	state->setAction(j++, motionAction1);
+	state->setAction(j++, hSinWaveAction);
+	state->setAction(j++, nextVelAction);
+	state->setAction(j++, movingTimerAction1); // after timer elapses, transit to wait end
+	state->setAction(j++, goingAction);
+	state->setAction(j++, fadingAction);
+	state->setAction(j++, cryTimerAction);
+	setState(MIZINKOSTATE_Going, state);
 
-	.loc_0x98:
-	  li        r3, 0x8
-	  bl        -0xEB8DC
-	  addi      r23, r3, 0
-	  mr.       r0, r23
-	  beq-      .loc_0xCC
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r23)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r23)
-	  subi      r0, r3, 0x6290
-	  stw       r0, 0x4(r23)
+	TaiTimerAction* timerAction1
+	    = new TaiTimerAction(MIZINKOSTATE_Coming, 0, params->getF(MIZINKOPF_HidingPeriod), params->getF(MIZINKOPF_HidingPeriodRandomRate));
 
-	.loc_0xCC:
-	  li        r3, 0x8
-	  bl        -0xEB910
-	  addi      r24, r3, 0
-	  mr.       r0, r24
-	  beq-      .loc_0x100
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r24)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r24)
-	  subi      r0, r3, 0x71E4
-	  stw       r0, 0x4(r24)
+	// HIDING DEST STATE - hiding at target pos before returning
+	state = new TaiState(2);
+	j     = 0;
+	state->setAction(j++, timerAction1); // after timer elapses, transit to coming
+	state->setAction(j++, waitingAction);
+	setState(MIZINKOSTATE_HidingDest, state);
 
-	.loc_0x100:
-	  li        r3, 0xC
-	  bl        -0xEB944
-	  addi      r29, r3, 0
-	  mr.       r0, r29
-	  beq-      .loc_0x13C
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r29)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r29)
-	  subi      r3, r3, 0x6A6C
-	  li        r0, 0x2
-	  stw       r3, 0x4(r29)
-	  stw       r0, 0x8(r29)
+	TaiMizinkoComingAction* comingAction            = new TaiMizinkoComingAction();
+	TaiMizinkoMovingTimerAction* movingTimerAction2 = new TaiMizinkoMovingTimerAction(MIZINKOSTATE_HidingStart);
 
-	.loc_0x13C:
-	  li        r3, 0x8
-	  bl        -0xEB980
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x170
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r28)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r28)
-	  subi      r0, r3, 0x70E0
-	  stw       r0, 0x4(r28)
+	// COMING STATE - returning from target pos to spawn pos
+	state = new TaiState(9);
+	j     = 0;
+	state->setAction(j++, pikiCollAction); // if hit by piki, transit to drop water
+	state->setAction(j++, damageAction);   // if takes damage, transit to drop water
+	state->setAction(j++, motionAction1);
+	state->setAction(j++, hSinWaveAction);
+	state->setAction(j++, nextVelAction);
+	state->setAction(j++, movingTimerAction2); // if timer elapses, transit to wait start
+	state->setAction(j++, comingAction);
+	state->setAction(j++, fadingAction);
+	state->setAction(j++, cryTimerAction);
+	setState(MIZINKOSTATE_Coming, state);
 
-	.loc_0x170:
-	  li        r3, 0x8
-	  bl        -0xEB9B4
-	  addi      r27, r3, 0
-	  mr.       r0, r27
-	  beq-      .loc_0x1B0
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r27)
-	  li        r0, 0x4
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r27)
-	  addi      r0, r3, 0x7D8C
-	  lis       r3, 0x802C
-	  stw       r0, 0x4(r27)
-	  addi      r0, r3, 0x7D70
-	  stw       r0, 0x4(r27)
+	TaiTimerAction* timerAction2
+	    = new TaiTimerAction(MIZINKOSTATE_Going, 0, params->getF(MIZINKOPF_HidingPeriod), params->getF(MIZINKOPF_HidingPeriodRandomRate));
 
-	.loc_0x1B0:
-	  li        r3, 0x8
-	  bl        -0xEB9F4
-	  addi      r26, r3, 0
-	  mr.       r0, r26
-	  beq-      .loc_0x1E4
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r26)
-	  li        r0, 0x4
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r26)
-	  subi      r0, r3, 0x4580
-	  stw       r0, 0x4(r26)
+	// HIDING START STATE - hiding at spawn pos before travelling to target pos
+	state = new TaiState(2);
+	j     = 0;
+	state->setAction(j++, timerAction2); // if timer elapses, transit to going
+	state->setAction(j++, waitingAction);
+	setState(MIZINKOSTATE_HidingStart, state);
 
-	.loc_0x1E4:
-	  li        r3, 0x14
-	  bl        -0xEBA28
-	  addi      r25, r3, 0
-	  mr.       r0, r25
-	  beq-      .loc_0x248
-	  lwz       r3, 0x84(r21)
-	  lis       r5, 0x802C
-	  lis       r4, 0x802D
-	  lwz       r6, 0x4(r3)
-	  lis       r3, 0x802D
-	  addi      r7, r5, 0x6620
-	  lwz       r8, 0x0(r6)
-	  li        r6, -0x1
-	  subi      r5, r4, 0x35D8
-	  lfs       f0, 0xFC(r8)
-	  li        r4, 0x1
-	  lfs       f1, 0xF8(r8)
-	  subi      r0, r3, 0x702C
-	  stw       r7, 0x4(r25)
-	  stw       r6, 0x0(r25)
-	  stw       r5, 0x4(r25)
-	  stw       r4, 0x8(r25)
-	  stfs      f1, 0xC(r25)
-	  stfs      f0, 0x10(r25)
-	  stw       r0, 0x4(r25)
+	TaiTypeNaviWatchResultOnAction* naviWatchResAction = new TaiTypeNaviWatchResultOnAction();
+	TaiDamagingAction* damagingAction                  = new TaiDamagingAction(MIZINKOSTATE_FlyingAway, 1);
+	TaiMizinkoDropWaterAction* dropWaterAction         = new TaiMizinkoDropWaterAction();
 
-	.loc_0x248:
-	  li        r3, 0x8
-	  bl        -0xEBA8C
-	  addi      r20, r3, 0
-	  mr.       r0, r20
-	  beq-      .loc_0x27C
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r20)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r20)
-	  subi      r0, r3, 0x7120
-	  stw       r0, 0x4(r20)
+	// DROP WATER STATE - has been hit, dropping nectar
+	state = new TaiState(3);
+	j     = 0;
+	state->setAction(j++, damagingAction); // when motion finishes, transit to flying away
+	state->setAction(j++, dropWaterAction);
+	state->setAction(j++, naviWatchResAction);
+	setState(MIZINKOSTATE_DropWater, state);
 
-	.loc_0x27C:
-	  li        r3, 0x14
-	  bl        -0xEBAC0
-	  addi      r19, r3, 0
-	  mr.       r0, r19
-	  beq-      .loc_0x2D0
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r19)
-	  li        r0, 0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r19)
-	  subi      r0, r3, 0x35D8
-	  li        r4, 0
-	  stw       r0, 0x4(r19)
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x7078
-	  stw       r4, 0x8(r19)
-	  lfs       f0, -0x5C10(r2)
-	  stfs      f0, 0xC(r19)
-	  stfs      f0, 0x10(r19)
-	  stw       r0, 0x4(r19)
+	TaiTimerAction* timerAction3                 = new TaiTimerAction(MIZINKOSTATE_Dead, 0, params->getF(TPF_LifePeriod), 0.0f);
+	TaiMizinkoFlyingAwayAction* flyingAwayAction = new TaiMizinkoFlyingAwayAction();
+	TaiMotionAction* motionAction2               = new TaiMotionAction(TAI_NO_TRANSIT, 0);
 
-	.loc_0x2D0:
-	  li        r3, 0xC
-	  bl        -0xEBB14
-	  addi      r18, r3, 0
-	  mr.       r3, r18
-	  beq-      .loc_0x2EC
-	  li        r4, 0x9
-	  bl        -0xBA94
+	// FLYING AWAY STATE - has dropped nectar, disappearing
+	state = new TaiState(5);
+	j     = 0;
+	state->setAction(j++, timerAction3); // when timer elapses, transit to dead
+	state->setAction(j++, motionAction2);
+	state->setAction(j++, accelAction);
+	state->setAction(j++, nextVelAction);
+	state->setAction(j++, flyingAwayAction);
+	setState(MIZINKOSTATE_FlyingAway, state);
 
-	.loc_0x2EC:
-	  li        r0, 0
-	  lwz       r3, 0x8(r18)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r27, r3, r0
-	  li        r0, 0x1
-	  li        r4, 0x2
-	  lwz       r3, 0x8(r18)
-	  rlwinm    r0,r0,2,0,29
-	  li        r5, 0x3
-	  stwx      r26, r3, r0
-	  li        r6, 0x4
-	  li        r7, 0x5
-	  lwz       r3, 0x8(r18)
-	  rlwinm    r0,r4,2,0,29
-	  li        r8, 0x6
-	  stwx      r29, r3, r0
-	  li        r9, 0x7
-	  li        r10, 0x8
-	  lwz       r4, 0x8(r18)
-	  rlwinm    r0,r5,2,0,29
-	  rlwinm    r3,r6,2,0,29
-	  stwx      r30, r4, r0
-	  rlwinm    r6,r7,2,0,29
-	  rlwinm    r5,r8,2,0,29
-	  lwz       r7, 0x8(r18)
-	  rlwinm    r4,r9,2,0,29
-	  rlwinm    r0,r10,2,0,29
-	  stwx      r23, r7, r3
-	  li        r3, 0x14
-	  lwz       r7, 0x8(r18)
-	  stwx      r19, r7, r6
-	  lwz       r6, 0x8(r18)
-	  stwx      r20, r6, r5
-	  lwz       r5, 0x8(r18)
-	  stwx      r28, r5, r4
-	  lwz       r4, 0x8(r18)
-	  stwx      r25, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r18, 0x0(r4)
-	  bl        -0xEBBC8
-	  addi      r18, r3, 0
-	  mr.       r0, r18
-	  beq-      .loc_0x3DC
-	  lwz       r5, 0x84(r21)
-	  lis       r4, 0x802C
-	  lis       r3, 0x802D
-	  lwz       r6, 0x4(r5)
-	  addi      r5, r4, 0x6620
-	  li        r4, 0x2
-	  lwz       r6, 0x0(r6)
-	  subi      r3, r3, 0x35D8
-	  li        r0, 0
-	  lfs       f0, 0xE0(r6)
-	  lfs       f1, 0xDC(r6)
-	  stw       r5, 0x4(r18)
-	  stw       r4, 0x0(r18)
-	  stw       r3, 0x4(r18)
-	  stw       r0, 0x8(r18)
-	  stfs      f1, 0xC(r18)
-	  stfs      f0, 0x10(r18)
+	TaiDyeAction* dyeAction = new TaiDyeAction();
 
-	.loc_0x3DC:
-	  li        r3, 0xC
-	  bl        -0xEBC20
-	  addi      r19, r3, 0
-	  mr.       r3, r19
-	  beq-      .loc_0x3F8
-	  li        r4, 0x2
-	  bl        -0xBBA0
-
-	.loc_0x3F8:
-	  li        r0, 0
-	  lwz       r3, 0x8(r19)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r18, r3, r0
-	  li        r0, 0x1
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r4, 0x8(r19)
-	  li        r3, 0x8
-	  stwx      r24, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r19, 0x4(r4)
-	  bl        -0xEBC64
-	  addi      r18, r3, 0
-	  mr.       r0, r18
-	  beq-      .loc_0x454
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r18)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r18)
-	  subi      r0, r3, 0x7160
-	  stw       r0, 0x4(r18)
-
-	.loc_0x454:
-	  li        r3, 0x14
-	  bl        -0xEBC98
-	  addi      r19, r3, 0
-	  mr.       r0, r19
-	  beq-      .loc_0x4A8
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r19)
-	  li        r0, 0x3
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r19)
-	  subi      r0, r3, 0x35D8
-	  li        r4, 0
-	  stw       r0, 0x4(r19)
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x7078
-	  stw       r4, 0x8(r19)
-	  lfs       f0, -0x5C10(r2)
-	  stfs      f0, 0xC(r19)
-	  stfs      f0, 0x10(r19)
-	  stw       r0, 0x4(r19)
-
-	.loc_0x4A8:
-	  li        r3, 0xC
-	  bl        -0xEBCEC
-	  addi      r20, r3, 0
-	  mr.       r3, r20
-	  beq-      .loc_0x4C4
-	  li        r4, 0x9
-	  bl        -0xBC6C
-
-	.loc_0x4C4:
-	  li        r0, 0
-	  lwz       r3, 0x8(r20)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r27, r3, r0
-	  li        r0, 0x1
-	  li        r4, 0x2
-	  lwz       r3, 0x8(r20)
-	  rlwinm    r0,r0,2,0,29
-	  li        r5, 0x3
-	  stwx      r26, r3, r0
-	  li        r6, 0x4
-	  li        r7, 0x5
-	  lwz       r3, 0x8(r20)
-	  rlwinm    r0,r4,2,0,29
-	  li        r8, 0x6
-	  stwx      r29, r3, r0
-	  li        r9, 0x7
-	  li        r10, 0x8
-	  lwz       r4, 0x8(r20)
-	  rlwinm    r0,r5,2,0,29
-	  rlwinm    r3,r6,2,0,29
-	  stwx      r30, r4, r0
-	  rlwinm    r6,r7,2,0,29
-	  rlwinm    r5,r8,2,0,29
-	  lwz       r7, 0x8(r20)
-	  rlwinm    r4,r9,2,0,29
-	  rlwinm    r0,r10,2,0,29
-	  stwx      r23, r7, r3
-	  li        r3, 0x14
-	  lwz       r7, 0x8(r20)
-	  stwx      r19, r7, r6
-	  lwz       r6, 0x8(r20)
-	  stwx      r18, r6, r5
-	  lwz       r5, 0x8(r20)
-	  stwx      r28, r5, r4
-	  lwz       r4, 0x8(r20)
-	  stwx      r25, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r20, 0x8(r4)
-	  bl        -0xEBDA0
-	  addi      r18, r3, 0
-	  mr.       r0, r18
-	  beq-      .loc_0x5B0
-	  lwz       r5, 0x84(r21)
-	  lis       r4, 0x802C
-	  lis       r3, 0x802D
-	  lwz       r6, 0x4(r5)
-	  addi      r5, r4, 0x6620
-	  li        r4, 0
-	  lwz       r6, 0x0(r6)
-	  subi      r0, r3, 0x35D8
-	  lfs       f0, 0xE0(r6)
-	  lfs       f1, 0xDC(r6)
-	  stw       r5, 0x4(r18)
-	  stw       r4, 0x0(r18)
-	  stw       r0, 0x4(r18)
-	  stw       r4, 0x8(r18)
-	  stfs      f1, 0xC(r18)
-	  stfs      f0, 0x10(r18)
-
-	.loc_0x5B0:
-	  li        r3, 0xC
-	  bl        -0xEBDF4
-	  addi      r19, r3, 0
-	  mr.       r3, r19
-	  beq-      .loc_0x5CC
-	  li        r4, 0x2
-	  bl        -0xBD74
-
-	.loc_0x5CC:
-	  li        r0, 0
-	  lwz       r3, 0x8(r19)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r18, r3, r0
-	  li        r0, 0x1
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r4, 0x8(r19)
-	  li        r3, 0x8
-	  stwx      r24, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r19, 0xC(r4)
-	  bl        -0xEBE38
-	  addi      r18, r3, 0
-	  mr.       r0, r18
-	  beq-      .loc_0x628
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r18)
-	  li        r0, -0x1
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r18)
-	  addi      r0, r3, 0x6A60
-	  stw       r0, 0x4(r18)
-
-	.loc_0x628:
-	  li        r3, 0xC
-	  bl        -0xEBE6C
-	  addi      r19, r3, 0
-	  mr.       r0, r19
-	  beq-      .loc_0x670
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r19)
-	  li        r0, 0x5
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r19)
-	  subi      r0, r3, 0x6A6C
-	  lis       r3, 0x802D
-	  stw       r0, 0x4(r19)
-	  li        r4, 0x1
-	  subi      r0, r3, 0x4650
-	  stw       r4, 0x8(r19)
-	  stw       r0, 0x4(r19)
-
-	.loc_0x670:
-	  li        r3, 0x8
-	  bl        -0xEBEB4
-	  addi      r20, r3, 0
-	  mr.       r0, r20
-	  beq-      .loc_0x6A4
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r20)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r20)
-	  subi      r0, r3, 0x71A0
-	  stw       r0, 0x4(r20)
-
-	.loc_0x6A4:
-	  li        r3, 0xC
-	  bl        -0xEBEE8
-	  addi      r24, r3, 0
-	  mr.       r3, r24
-	  beq-      .loc_0x6C0
-	  li        r4, 0x3
-	  bl        -0xBE68
-
-	.loc_0x6C0:
-	  li        r0, 0
-	  lwz       r3, 0x8(r24)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r19, r3, r0
-	  li        r0, 0x1
-	  li        r5, 0x2
-	  lwz       r4, 0x8(r24)
-	  rlwinm    r3,r0,2,0,29
-	  rlwinm    r0,r5,2,0,29
-	  stwx      r20, r4, r3
-	  li        r3, 0x14
-	  lwz       r4, 0x8(r24)
-	  stwx      r18, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r24, 0x10(r4)
-	  bl        -0xEBF3C
-	  addi      r18, r3, 0
-	  mr.       r0, r18
-	  beq-      .loc_0x750
-	  lwz       r5, 0x84(r21)
-	  lis       r4, 0x802C
-	  lis       r3, 0x802D
-	  lwz       r6, 0x4(r5)
-	  addi      r5, r4, 0x6620
-	  li        r4, 0x6
-	  lwz       r6, 0x0(r6)
-	  subi      r3, r3, 0x35D8
-	  li        r0, 0
-	  lfs       f0, 0x64(r6)
-	  stw       r5, 0x4(r18)
-	  stw       r4, 0x0(r18)
-	  stw       r3, 0x4(r18)
-	  stw       r0, 0x8(r18)
-	  stfs      f0, 0xC(r18)
-	  lfs       f0, -0x5C10(r2)
-	  stfs      f0, 0x10(r18)
-
-	.loc_0x750:
-	  li        r3, 0x8
-	  bl        -0xEBF94
-	  addi      r19, r3, 0
-	  mr.       r0, r19
-	  beq-      .loc_0x784
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r19)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r19)
-	  subi      r0, r3, 0x7224
-	  stw       r0, 0x4(r19)
-
-	.loc_0x784:
-	  li        r3, 0xC
-	  bl        -0xEBFC8
-	  addi      r20, r3, 0
-	  mr.       r0, r20
-	  beq-      .loc_0x7C0
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r20)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r20)
-	  subi      r3, r3, 0x6A6C
-	  li        r0, 0
-	  stw       r3, 0x4(r20)
-	  stw       r0, 0x8(r20)
-
-	.loc_0x7C0:
-	  li        r3, 0xC
-	  bl        -0xEC004
-	  addi      r21, r3, 0
-	  mr.       r3, r21
-	  beq-      .loc_0x7DC
-	  li        r4, 0x5
-	  bl        -0xBF84
-
-	.loc_0x7DC:
-	  li        r0, 0
-	  lwz       r3, 0x8(r21)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r18, r3, r0
-	  li        r0, 0x1
-	  li        r4, 0x2
-	  lwz       r3, 0x8(r21)
-	  rlwinm    r0,r0,2,0,29
-	  li        r6, 0x3
-	  stwx      r20, r3, r0
-	  li        r0, 0x4
-	  rlwinm    r3,r4,2,0,29
-	  lwz       r5, 0x8(r21)
-	  rlwinm    r4,r6,2,0,29
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r22, r5, r3
-	  li        r3, 0x8
-	  lwz       r5, 0x8(r21)
-	  stwx      r23, r5, r4
-	  lwz       r4, 0x8(r21)
-	  stwx      r19, r4, r0
-	  lwz       r4, 0x8(r31)
-	  stw       r21, 0x14(r4)
-	  bl        -0xEC078
-	  addi      r18, r3, 0
-	  mr.       r0, r18
-	  beq-      .loc_0x868
-	  lis       r3, 0x802C
-	  addi      r0, r3, 0x6620
-	  stw       r0, 0x4(r18)
-	  li        r0, -0x1
-	  lis       r3, 0x802D
-	  stw       r0, 0x0(r18)
-	  subi      r0, r3, 0x4388
-	  stw       r0, 0x4(r18)
-
-	.loc_0x868:
-	  li        r3, 0xC
-	  bl        -0xEC0AC
-	  addi      r19, r3, 0
-	  mr.       r3, r19
-	  beq-      .loc_0x884
-	  li        r4, 0x1
-	  bl        -0xC02C
-
-	.loc_0x884:
-	  li        r0, 0
-	  lwz       r3, 0x8(r19)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r18, r3, r0
-	  mr        r3, r31
-	  lwz       r4, 0x8(r31)
-	  stw       r19, 0x18(r4)
-	  lwz       r0, 0x16C(r1)
-	  lmw       r18, 0x130(r1)
-	  addi      r1, r1, 0x168
-	  mtlr      r0
-	  blr
-	*/
+	// DEAD STATE - nectar is dropped, wisp is done
+	state = new TaiState(1);
+	j     = 0;
+	state->setAction(j++, dyeAction);
+	setState(MIZINKOSTATE_Dead, state);
 }
 
 /*
@@ -1338,53 +330,12 @@ TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters*)
  * Address:	801330F8
  * Size:	0000A8
  */
-void TaiMizinkoStrategy::start(Teki&)
+void TaiMizinkoStrategy::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  li        r7, 0
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r4
-	  addi      r5, r1, 0x10
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  li        r4, 0x56
-	  lfs       f0, -0x131C(r13)
-	  lfs       f1, -0x1318(r13)
-	  stfs      f0, 0x10(r1)
-	  lfs       f0, -0x1314(r13)
-	  stfs      f1, 0x14(r1)
-	  lwz       r3, 0x3180(r13)
-	  stfs      f0, 0x18(r1)
-	  bl        0x699F8
-	  lwz       r5, 0x3D8(r31)
-	  mr        r4, r31
-	  stw       r3, 0x0(r5)
-	  mr        r3, r30
-	  bl        -0xBCC0
-	  lwz       r0, 0xC8(r31)
-	  addi      r3, r31, 0
-	  ori       r0, r0, 0x40
-	  stw       r0, 0xC8(r31)
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,31,29
-	  stw       r0, 0xC8(r31)
-	  lwz       r12, 0x0(r31)
-	  lwz       r4, -0x9CC(r13)
-	  lwz       r12, 0x1D0(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	teki.mParticleGenerators[0] = effectMgr->create(EffectMgr::EFF_Mizinko_Spawn, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+	TaiStrategy::start(teki);
+	teki.startFlying();
+	teki.clearTekiOption(BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE);
 }
 
 /*
@@ -1392,90 +343,36 @@ void TaiMizinkoStrategy::start(Teki&)
  * Address:	801331A0
  * Size:	00010C
  */
-void TaiMizinkoStrategy::draw(Teki&, Graphics&)
+void TaiMizinkoStrategy::draw(Teki& teki, Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x70(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x6C(r1)
-	  addi      r29, r3, 0
-	  bl        .loc_0x10C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x44
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  bl        0x19FE8
-	  b         .loc_0x54
+	if (hasWater(teki)) { // amazing
+		TekiStrategy::draw(teki, gfx);
+	} else {
+		TekiStrategy::draw(teki, gfx);
+	}
 
-	.loc_0x44:
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  bl        0x19FD4
+	if (!teki.mParticleGenerators[0]) {
+		return;
+	}
 
-	.loc_0x54:
-	  lwz       r3, 0x3D8(r30)
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xF0
-	  lwz       r3, 0x410(r30)
-	  lwz       r0, -0x9AC(r13)
-	  and.      r0, r3, r0
-	  bne-      .loc_0x84
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x16800
-	  b         .loc_0xF0
+	if (!teki.getTekiOption(BTeki::TEKI_OPTION_DRAWED)) {
+		teki.stopParticleGenerator(0);
+		return;
+	}
 
-	.loc_0x84:
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  bl        .loc_0x10C
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xA8
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x167DC
-	  b         .loc_0xF0
+	if (!hasWater(teki)) {
+		teki.stopParticleGenerator(0);
+		return;
+	}
 
-	.loc_0xA8:
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x167A8
-	  lwz       r3, 0x2E4(r31)
-	  addi      r4, r1, 0x24
-	  addi      r3, r3, 0x1E0
-	  bl        -0xF4E24
-	  addi      r3, r1, 0x18
-	  bl        -0x16414
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x18
-	  addi      r6, r1, 0x24
-	  li        r5, 0xD
-	  bl        0x165CC
-	  addi      r3, r30, 0
-	  addi      r5, r1, 0x18
-	  li        r4, 0
-	  bl        0x167B4
+	teki.startParticleGenerator(0);
+	Matrix4f invCamMtx;
+	gfx.mCamera->mLookAtMtx.inverse(&invCamMtx);
+	NVector3f worldPos;
+	teki.outputWorldAnimationPosition(worldPos, 13, invCamMtx);
+	teki.setParticleGeneratorPosition(0, worldPos);
 
-	.loc_0xF0:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  lwz       r29, 0x6C(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-
-	.loc_0x10C:
-	*/
+	u32 badCompiler;
 }
 
 /*
@@ -1483,16 +380,9 @@ void TaiMizinkoStrategy::draw(Teki&, Graphics&)
  * Address:	801332AC
  * Size:	000014
  */
-bool TaiMizinkoStrategy::hasWater(Teki&)
+bool TaiMizinkoStrategy::hasWater(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x420(r4)
-	  neg       r0, r0
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
+	return teki.getCreaturePointer(2) == nullptr;
 }
 
 /*
@@ -1500,44 +390,14 @@ bool TaiMizinkoStrategy::hasWater(Teki&)
  * Address:	801332C0
  * Size:	00007C
  */
-bool TaiMizinkoCryTimerAction::act(Teki&)
+bool TaiMizinkoCryTimerAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x8(r3)
-	  lfs       f0, -0x5C10(r2)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r31, r0
-	  lfs       f1, 0x3C4(r3)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x60
-	  lwz       r12, 0x0(r31)
-	  mr        r3, r31
-	  li        r4, 0x8C
-	  lwz       r12, 0x1C0(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x103FC
-
-	.loc_0x60:
-	  lwz       r0, 0x24(r1)
-	  li        r3, 0
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (teki.timerElapsed(mTimerIdx)) {
+		PRINT("TaiMizinkoCryTimerAction::act:%08x,%f\n", &teki, teki.mTimers[mTimerIdx]);
+		teki.playSound(SE_KURIONE_FLYING);
+		resetTimer(teki);
+	}
+	return false;
 }
 
 /*
@@ -1545,31 +405,10 @@ bool TaiMizinkoCryTimerAction::act(Teki&)
  * Address:	8013333C
  * Size:	000050
  */
-void TaiMizinkoMovingTimerAction::start(Teki&)
+void TaiMizinkoMovingTimerAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r6, 0x2C8(r4)
-	  lwz       r5, 0x2C4(r4)
-	  lwz       r6, 0x34(r6)
-	  lwz       r5, 0x84(r5)
-	  lwz       r6, 0x4(r6)
-	  lwz       r5, 0x4(r5)
-	  lwz       r6, 0x0(r6)
-	  lwz       r5, 0x0(r5)
-	  lfs       f1, 0x8(r6)
-	  lfs       f0, 0xC(r5)
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0xC(r3)
-	  bl        0x103A0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mTimerLength = teki.getPersonalityF(TekiPersonality::FLT_TerritoryRange) / teki.getParameterF(TPF_WalkVelocity);
+	resetTimer(teki);
 }
 
 /*
@@ -1577,51 +416,22 @@ void TaiMizinkoMovingTimerAction::start(Teki&)
  * Address:	8013338C
  * Size:	000088
  */
-bool TaiMizinkoFadingAction::act(Teki&)
+bool TaiMizinkoFadingAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x2C4(r4)
-	  lwz       r3, 0x2C8(r4)
-	  lwz       r5, 0x84(r5)
-	  lwz       r3, 0x34(r3)
-	  lwz       r5, 0x4(r5)
-	  lwz       r3, 0x4(r3)
-	  lwz       r5, 0x0(r5)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xC(r5)
-	  lfs       f0, 0x8(r3)
-	  lfs       f2, 0x3C4(r4)
-	  fdivs     f0, f0, f1
-	  lfs       f1, 0xD8(r5)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x4C
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3C0(r4)
-	  b         .loc_0x68
+	f32 travelTime = teki.getPersonalityF(TekiPersonality::FLT_TerritoryRange) / teki.getParameterF(TPF_WalkVelocity);
+	f32 timeLeft   = teki.mTimers[0];
+	f32 fadePeriod = teki.getParameterF(MIZINKOPF_FadePeriod);
 
-	.loc_0x4C:
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x60
-	  fdivs     f0, f2, f1
-	  stfs      f0, 0x3C0(r4)
-	  b         .loc_0x68
+	if (travelTime - timeLeft < fadePeriod) {
+		teki._3C0 = (travelTime - timeLeft) / fadePeriod;
+	} else if (timeLeft < fadePeriod) {
+		teki._3C0 = timeLeft / fadePeriod;
+	} else {
+		teki._3C0 = 1.0f;
+	}
 
-	.loc_0x60:
-	  lfs       f0, -0x5C08(r2)
-	  stfs      f0, 0x3C0(r4)
-
-	.loc_0x68:
-	  lwz       r5, 0x2C8(r4)
-	  li        r3, 0
-	  lfs       f0, 0x3C0(r4)
-	  lwz       r4, 0x34(r5)
-	  lwz       r4, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  stfs      f0, 0x0(r4)
-	  blr
-	*/
+	teki.setPersonalityF(TekiPersonality::FLT_Size, teki._3C0);
+	return false;
 }
 
 /*
@@ -1629,8 +439,41 @@ bool TaiMizinkoFadingAction::act(Teki&)
  * Address:	80133414
  * Size:	0003C4
  */
-void TaiMizinkoGoingAction::start(Teki&)
+void TaiMizinkoGoingAction::start(Teki& teki)
 {
+	// why.
+	teki.stopMove();
+	teki.setTekiOption(BTeki::TEKI_OPTION_VISIBLE | BTeki::TEKI_OPTION_ATARI | BTeki::TEKI_OPTION_SHAPE_VISIBLE
+	                   | BTeki::TEKI_OPTION_SHADOW_VISIBLE);
+
+	NVector3f nestPos(teki.getNestPosition());
+	NVector3f targetPos(teki.mTargetPosition);
+	teki.mPositionIO.input(nestPos);
+
+	NVector3f dir;
+	dir.sub2(targetPos, nestPos);
+	if (!dir.normalizeCheck()) {
+		PRINT("!TaiMizinkoGoingAction::start:%08x\n", &teki);
+		teki.outputDirectionVector(dir);
+	}
+
+	teki.setDirection(teki.calcDirection(dir));
+	dir.scale(teki.getParameterF(TPF_WalkVelocity));
+
+	f32 offset = NMathF::rateRandom(teki.getParameterF(TPF_FlightHeight) + nestPos.y, teki.getParameterF(MIZINKOPF_FlightHeightRandomRate));
+	f32 amp    = NMathF::rateRandom(teki.getParameterF(MIZINKOPF_FlightAmplitude), teki.getParameterF(MIZINKOPF_FlightAmplitudeRandomRate));
+	f32 startTheta = NMathF::rangeRandom(0.0f, 2.0f * NMathF::pi);
+	f32 angularVel
+	    = NMathF::rateRandom(teki.getParameterF(MIZINKOPF_AngularVelocity), teki.getParameterF(MIZINKOPF_AngularVelocityRandomRate));
+	teki.mSinWaveEvent->makeHorizontalSinWaveEvent(nullptr, &teki.mPositionIO, dir, offset, amp, startTheta, angularVel);
+	teki.mSinWaveEvent->reset();
+	teki.mSinWaveEvent->update();
+
+	NVector3f pos;
+	teki.mPositionIO.output(pos);
+	teki.inputPosition(pos);
+
+	PRINT("fake", &teki ? "yes" : "no", &teki ? "yes" : "no", &teki ? "yes" : "no");
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1884,8 +727,55 @@ void TaiMizinkoGoingAction::start(Teki&)
  * Address:	801337D8
  * Size:	00051C
  */
-void TaiMizinkoComingAction::start(Teki&)
+void TaiMizinkoComingAction::start(Teki& teki)
 {
+	teki.stopMove();
+	teki.setTekiOption(BTeki::TEKI_OPTION_VISIBLE | BTeki::TEKI_OPTION_ATARI | BTeki::TEKI_OPTION_SHAPE_VISIBLE
+	                   | BTeki::TEKI_OPTION_SHADOW_VISIBLE);
+
+	NVector3f targetPos(teki.mTargetPosition);
+	NVector3f nestPos(teki.getNestPosition());
+	NVector3f dir;
+	dir.sub2(targetPos, nestPos);
+
+	NVector3f ortho;
+	ortho.cross(NVector3f(0.0f, 1.0f, 0.0f), dir);
+
+	if (!ortho.normalizeCheck()) {
+		PRINT("!TaiMizinkoComingAction::start:%08x\n", &teki);
+		ortho.set(1.0f, 0.0f, 0.0f);
+	}
+	ortho.scale(teki.getParameterF(MIZINKOPF_PathDistance));
+	targetPos.add(ortho);
+	nestPos.add(ortho);
+
+	teki.mPositionIO.input(targetPos);
+
+	NVector3f dir2;
+	dir2.sub2(nestPos, targetPos);
+	if (!dir2.normalizeCheck()) {
+		PRINT("!TaiMizinkoComingAction::start:%08x\n", &teki);
+		dir2.set(1.0f, 0.0f, 0.0f);
+	}
+
+	teki.setDirection(teki.calcDirection(dir2));
+	dir2.scale(teki.getParameterF(TPF_WalkVelocity));
+
+	f32 offset
+	    = NMathF::rateRandom(teki.getParameterF(TPF_FlightHeight) + targetPos.y, teki.getParameterF(MIZINKOPF_FlightHeightRandomRate));
+	f32 amp = NMathF::rateRandom(teki.getParameterF(MIZINKOPF_FlightAmplitude), teki.getParameterF(MIZINKOPF_FlightAmplitudeRandomRate));
+	f32 startTheta = NMathF::rangeRandom(0.0f, 2.0f * NMathF::pi);
+	f32 angularVel
+	    = NMathF::rateRandom(teki.getParameterF(MIZINKOPF_AngularVelocity), teki.getParameterF(MIZINKOPF_AngularVelocityRandomRate));
+	teki.mSinWaveEvent->makeHorizontalSinWaveEvent(nullptr, &teki.mPositionIO, dir2, offset, amp, startTheta, angularVel);
+	teki.mSinWaveEvent->reset();
+	teki.mSinWaveEvent->update();
+
+	NVector3f pos;
+	teki.mPositionIO.output(pos);
+	teki.inputPosition(pos);
+
+	PRINT("fake", &teki ? "yes" : "no", &teki ? "yes" : "no", &teki ? "yes" : "no");
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2227,84 +1117,24 @@ void TaiMizinkoComingAction::start(Teki&)
  * Address:	80133CF4
  * Size:	000104
  */
-bool TaiMizinkoDropWaterAction::act(Teki&)
+bool TaiMizinkoDropWaterAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  mr        r30, r4
-	  lwz       r0, -0x99C(r13)
-	  lwz       r3, 0x414(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0xE8
-	  lwz       r3, 0x30AC(r13)
-	  li        r4, 0x6
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x78(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r31, r3
-	  bne-      .loc_0x50
-	  li        r3, 0
-	  b         .loc_0xEC
+	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
+		MizuItem* nectar = (MizuItem*)itemMgr->birth(OBJTYPE_FallWater);
+		if (!nectar) {
+			PRINT("!TaiMizinkoDropWaterAction::act:%08x\n", this); // think this is a type and is meant to be &teki like the rest
+			return false;
+		}
 
-	.loc_0x50:
-	  lfs       f0, 0x94(r30)
-	  mr        r3, r31
-	  addi      r4, r1, 0x40
-	  stfs      f0, 0x40(r1)
-	  lfs       f0, 0x98(r30)
-	  stfs      f0, 0x44(r1)
-	  lfs       f0, 0x9C(r30)
-	  stfs      f0, 0x48(r1)
-	  lwz       r5, 0x2C4(r30)
-	  lfs       f1, 0x44(r1)
-	  lwz       r5, 0x84(r5)
-	  lwz       r5, 0x4(r5)
-	  lwz       r5, 0x0(r5)
-	  lfs       f0, 0xC8(r5)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x44(r1)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x420(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xD4
-	  beq-      .loc_0xD4
-	  bl        -0x4FA50
-	  li        r0, 0
-	  stw       r0, 0x420(r30)
+		Vector3f pos(teki.getPosition());
+		f32 dropDist = teki.getParameterF(MIZINKOPF_DropDistance);
+		pos.y -= dropDist;
+		nectar->init(pos);
+		nectar->startAI(0);
+		teki.setCreaturePointer(2, nectar);
+	}
 
-	.loc_0xD4:
-	  stw       r31, 0x420(r30)
-	  lwz       r3, 0x420(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xE8
-	  bl        -0x4FA7C
-
-	.loc_0xE8:
-	  li        r3, 0
-
-	.loc_0xEC:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -2312,53 +1142,11 @@ bool TaiMizinkoDropWaterAction::act(Teki&)
  * Address:	80133DF8
  * Size:	0000A8
  */
-void TaiMizinkoWaitingAction::start(Teki&)
+void TaiMizinkoWaitingAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  subi      r5, r13, 0x1328
-	  stw       r0, 0x4(r1)
-	  subi      r6, r13, 0x1324
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  addi      r3, r1, 0x1C
-	  subi      r4, r13, 0x132C
-	  bl        -0xFCD00
-	  addi      r3, r31, 0x70
-	  addi      r4, r1, 0x1C
-	  addi      r5, r1, 0x20
-	  addi      r6, r1, 0x24
-	  bl        -0xD67A4
-	  addi      r3, r1, 0x10
-	  subi      r4, r13, 0x1338
-	  subi      r5, r13, 0x1334
-	  subi      r6, r13, 0x1330
-	  bl        -0xFCD28
-	  addi      r3, r31, 0xA4
-	  addi      r4, r1, 0x10
-	  addi      r5, r1, 0x14
-	  addi      r6, r1, 0x18
-	  bl        -0xD67CC
-	  mr        r3, r31
-	  lwz       r4, -0x9D4(r13)
-	  lwz       r12, 0x0(r31)
-	  lwz       r0, -0x9C8(r13)
-	  lwz       r12, 0x1D0(r12)
-	  lwz       r5, -0x9A8(r13)
-	  or        r0, r4, r0
-	  lwz       r4, -0x9D0(r13)
-	  mtlr      r12
-	  or        r0, r5, r0
-	  or        r4, r4, r0
-	  blrl
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	teki.stopMove();
+	teki.clearTekiOption(BTeki::TEKI_OPTION_VISIBLE | BTeki::TEKI_OPTION_ATARI | BTeki::TEKI_OPTION_SHAPE_VISIBLE
+	                     | BTeki::TEKI_OPTION_SHADOW_VISIBLE);
 }
 
 /*
@@ -2366,103 +1154,18 @@ void TaiMizinkoWaitingAction::start(Teki&)
  * Address:	80133EA0
  * Size:	000178
  */
-void TaiMizinkoFlyingAwayAction::start(Teki&)
+void TaiMizinkoFlyingAwayAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  subi      r5, r13, 0x1328
-	  stw       r0, 0x4(r1)
-	  subi      r6, r13, 0x1324
-	  stwu      r1, -0xA0(r1)
-	  stw       r31, 0x9C(r1)
-	  mr        r31, r4
-	  addi      r3, r1, 0x64
-	  lwz       r0, 0xC8(r4)
-	  subi      r4, r13, 0x132C
-	  ori       r0, r0, 0x40
-	  stw       r0, 0xC8(r31)
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,31,29
-	  stw       r0, 0xC8(r31)
-	  bl        -0xFCDC0
-	  addi      r3, r31, 0x70
-	  addi      r4, r1, 0x64
-	  addi      r5, r1, 0x68
-	  addi      r6, r1, 0x6C
-	  bl        -0xD6864
-	  addi      r3, r1, 0x58
-	  subi      r4, r13, 0x1338
-	  subi      r5, r13, 0x1334
-	  subi      r6, r13, 0x1330
-	  bl        -0xFCDE8
-	  addi      r3, r31, 0xA4
-	  addi      r4, r1, 0x58
-	  addi      r5, r1, 0x5C
-	  addi      r6, r1, 0x60
-	  bl        -0xD688C
-	  mr        r3, r31
-	  lwz       r4, -0x9D4(r13)
-	  lwz       r12, 0x0(r31)
-	  lwz       r0, -0x9C8(r13)
-	  lwz       r12, 0x1D0(r12)
-	  or        r4, r4, r0
-	  mtlr      r12
-	  blrl
-	  addi      r4, r31, 0x94
-	  addi      r3, r1, 0x70
-	  bl        -0x170C4
-	  lwz       r12, 0x358(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x358
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x2C4(r31)
-	  addi      r3, r1, 0x88
-	  lfs       f1, -0x5C10(r2)
-	  lwz       r4, 0x84(r4)
-	  fmr       f3, f1
-	  lwz       r4, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  lfs       f2, 0xD0(r4)
-	  bl        -0x170A4
-	  addi      r3, r31, 0x368
-	  lwz       r12, 0x368(r31)
-	  addi      r4, r1, 0x88
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x2C4(r31)
-	  addi      r3, r1, 0x7C
-	  lfs       f1, -0x5C10(r2)
-	  lwz       r4, 0x84(r4)
-	  fmr       f3, f1
-	  lwz       r4, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  lfs       f2, 0xD4(r4)
-	  bl        -0x170E0
-	  addi      r3, r31, 0x378
-	  lwz       r12, 0x378(r31)
-	  addi      r4, r1, 0x7C
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x460(r31)
-	  addi      r5, r31, 0x358
-	  addi      r6, r31, 0x368
-	  addi      r7, r31, 0x378
-	  li        r4, 0
-	  bl        -0xE0A8
-	  lwz       r3, 0x460(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xA4(r1)
-	  lwz       r31, 0x9C(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
+	teki.startFlying();
+	teki.stopMove();
+	teki.clearTekiOption(BTeki::TEKI_OPTION_VISIBLE | BTeki::TEKI_OPTION_ATARI);
+
+	teki.mPositionIO.input(NVector3f(teki.getPosition()));
+	NVector3f vel(0.0f, teki.getParameterF(MIZINKOPF_FlyingAwayVelocity), 0.0f);
+	teki.mVelocityIO.input(vel);
+	NVector3f accel(0.0f, teki.getParameterF(MIZINKOPF_FlyingAwayAccel), 0.0f);
+	teki.mAccelerationIO.input(accel);
+
+	teki.mAccelEvent->makeAccelerationEvent(nullptr, &teki.mPositionIO, &teki.mVelocityIO, &teki.mAccelerationIO);
+	teki.mAccelEvent->reset();
 }

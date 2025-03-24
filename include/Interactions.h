@@ -428,13 +428,15 @@ struct InteractSlimeAttack : public Interaction {
  * @brief TODO
  */
 struct InteractSpore : public Interaction {
-	inline InteractSpore(); // TODO: probably
+	InteractSpore(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
 };
 
 /**

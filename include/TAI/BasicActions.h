@@ -78,8 +78,8 @@ struct TaiStopSoundAction : public TaiAction {
  * @brief TODO
  */
 struct TaiTypeNaviWatchResultOnAction : public TaiAction {
-	inline TaiTypeNaviWatchResultOnAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTypeNaviWatchResultOnAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

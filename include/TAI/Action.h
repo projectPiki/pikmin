@@ -54,6 +54,8 @@ struct TaiSerialAction : public TaiAction {
 	virtual bool act(Teki& teki);              // _10
 	virtual bool actByEvent(TekiEvent& event); // _14
 
+	void setAction(int idx, TaiAction* action) { mActionQueue[idx] = action; }
+
 	// _04 = VTBL
 	// _00-_08 = TaiAction
 	int mCount;               // _08
@@ -64,36 +66,54 @@ struct TaiSerialAction : public TaiAction {
  * @brief TODO
  */
 struct TaiAndAction : public TaiAction {
-	inline TaiAndAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiAndAction(int nextState, TaiAction* actionA, TaiAction* actionB)
+	    : TaiAction(nextState)
 	{
+		mActionA = actionA;
+		mActionB = actionB;
 	}
 
-	virtual void start(Teki&);  // _08
-	virtual void finish(Teki&); // _0C
-	virtual bool act(Teki&);    // _10
+	virtual void start(Teki& teki) // _08
+	{
+		mActionA->start(teki);
+		mActionB->start(teki);
+	}
+	virtual void finish(Teki& teki) // _0C
+	{
+		mActionA->finish(teki);
+		mActionB->finish(teki);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		bool isA = mActionA->act(teki);
+		bool isB = mActionB->act(teki);
+
+		return isA && isB;
+	}
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	TaiAction* mActionA; // _08
+	TaiAction* mActionB; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TaiNotAction : public TaiAction {
-	inline TaiNotAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiNotAction(int nextState, TaiAction* notAction)
+	    : TaiAction(nextState)
 	{
+		mNotAction = notAction;
 	}
 
-	virtual void start(Teki&);  // _08
-	virtual void finish(Teki&); // _0C
-	virtual bool act(Teki&);    // _10
+	virtual void start(Teki& teki) { mNotAction->start(teki); }     // _08
+	virtual void finish(Teki& teki) { mNotAction->finish(teki); }   // _0C
+	virtual bool act(Teki& teki) { return !mNotAction->act(teki); } // _10
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	TaiAction* mNotAction; // _08
 };
 
 /**

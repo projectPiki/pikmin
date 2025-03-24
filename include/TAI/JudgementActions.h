@@ -8,8 +8,8 @@
  * @brief TODO
  */
 struct TaiVisibleTargetAction : public TaiAction {
-	inline TaiVisibleTargetAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiVisibleTargetAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -72,32 +72,34 @@ struct TaiTargetLostAction : public TaiAction {
  * @brief TODO
  */
 struct TaiOutsideTerritoryAction : public TaiAction {
-	inline TaiOutsideTerritoryAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOutsideTerritoryAction(int nextState, f32 p2)
+	    : TaiAction(nextState)
 	{
+		_08 = p2;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 _08; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiInsideTerritoryAction : public TaiAction {
-	inline TaiInsideTerritoryAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiInsideTerritoryAction(int nextState, f32 p2)
+	    : TaiAction(nextState)
 	{
+		_08 = p2;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 _08; // _08
 };
 
 /**
@@ -120,8 +122,8 @@ struct TaiTargetVisibleNaviPikiAction : public TaiAction {
  * @brief TODO
  */
 struct TaiTargetVisibleNaviAction : public TaiAction {
-	inline TaiTargetVisibleNaviAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTargetVisibleNaviAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 

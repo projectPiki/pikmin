@@ -12,11 +12,15 @@ struct CollPart;
  * @brief TODO
  */
 struct TAIAeffCloudOfDust : public TaiAction {
-	inline TAIAeffCloudOfDust(f32 p1, int p2, int p3, int p4, int p5, int p6)
-	    : TaiAction(-1)
+	TAIAeffCloudOfDust(int nextState, EffectMgr::effTypeTable p2, f32 p3, int p4, int p5, int p6, int p7, int p8)
+	    : TaiAction(nextState)
 	{
-		init((EffectMgr::effTypeTable)(-1), true, -1, RUMBLE_NONE, p1, p2, p3, p4, p5, p6);
+		init(p2, true, -1, RUMBLE_NONE, p3, p4, p5, p6, p7, p8);
 	}
+
+	// DLL inlines to do:
+	TAIAeffCloudOfDust(int p1, EffectMgr::effTypeTable p2, int p3, f32 p4, int p5, int p6, int p7, int p8, int p9);
+	TAIAeffCloudOfDust(int p1, EffectMgr::effTypeTable p2, int p3, int p4, f32 p5, int p6, int p7, int p8, int p9, int p10);
 
 	virtual void start(Teki&);                 // _08
 	virtual bool act(Teki&);                   // _10
@@ -26,7 +30,7 @@ struct TAIAeffCloudOfDust : public TaiAction {
 	void createCloudOfDust(Teki&, int);
 	CollPart* getCollPart(Teki&, int);
 
-	static int RUMBLE_NONE;
+	static const int RUMBLE_NONE;
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction

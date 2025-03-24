@@ -130,7 +130,7 @@ struct NMathF {
 		f32 r = 2.0f * (System::getRand(1.0f) - 0.5f);
 		return min * r * range + min;
 	}
-	static inline f32 sqrt(f32);
+	static inline f32 sqrt(f32 x) { return std::sqrtf(x); }
 	static inline int quotient(f32, f32);
 
 	// this is fake or needs renaming
