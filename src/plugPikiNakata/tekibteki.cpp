@@ -329,16 +329,16 @@ void BTeki::reset()
 	mCurrentQueueId   = 0;
 	mHealth           = getParameterF(TPF_Life);
 	mStoredDamage     = 0.0f;
-	_340              = 0.0f;
+	mDamageCount      = 0.0f;
 	_344              = -1;
 	_3C0              = 0.0f;
 	_3BC              = 0;
 	mCurrentAnimEvent = -1;
 
 	clearAnimationKeyOptions();
-	_3B0            = 0;
-	mMotionSpeed    = 0.0f;
-	mAnimationSpeed = 0.0f;
+	mMotionLoopCount = 0;
+	mMotionSpeed     = 0.0f;
+	mAnimationSpeed  = 0.0f;
 
 	int i;
 	for (i = 0; i < 4; i++) {
@@ -858,11 +858,11 @@ void BTeki::makeDamaged()
  * Address:	80145BF4
  * Size:	00004C
  */
-void BTeki::startDamageMotion(f32 p1, f32 p2)
+void BTeki::startDamageMotion(f32 period, f32 amp)
 {
 	if (timerElapsed(3)) {
-		mTimers[3] = p1;
-		mVibrationController->makeVibrationFunction(0.0f, p1, p2);
+		mTimers[3] = period;
+		mVibrationController->makeVibrationFunction(0.0f, period, amp);
 	}
 }
 
@@ -1168,7 +1168,7 @@ void BTeki::dump()
 	int stickPikiCount  = countPikis(TekiStickerCondition(static_cast<Teki*>(this)));
 	PRINT("battlePikiCount:%d,stickPikiCount:%d\n", battlePikiCount, stickPikiCount);
 	int flickCount = getFlickDamageCount(battlePikiCount);
-	PRINT("DamageCount:%f/%f\n", _340, flickCount);
+	PRINT("DamageCount:%f/%f\n", mDamageCount, flickCount);
 	PRINT("damage:%f\n", mStoredDamage);
 	PRINT("tekiState:%d\n", mStateID);
 	PRINT("returnState:%d\n", mReturnStateID);
@@ -1882,7 +1882,7 @@ bool BTeki::interactDefault(TekiInteractionKey& key)
 		_344 = attack->getDamagePortion();
 		mStoredDamage += attack->mDamage;
 		if (getTekiOption(TEKIOPT_DamageCountable)) {
-			_340++;
+			mDamageCount++;
 		}
 		setCreaturePointer(1, attack->mOwner);
 		return true;

@@ -122,11 +122,11 @@ struct NMathF {
 
 	static inline f32 rangeRandom(f32 min, f32 max) { return (max - min) * NSystem::random() + min; }
 	static inline bool occurred(f32 chance) { return NSystem::random() < chance; }
+	static inline f32 rateRandom(f32 min, f32 range) { return min * (2.0f * (NSystem::random() - 0.5f)) * range + min; }
+	static inline f32 sqrt(f32 x) { return std::sqrtf(x); }
 
 	// inlines from DLL, to be created:
 	static inline f32 acos(f32);
-	static inline f32 rateRandom(f32 min, f32 range) { return min * (2.0f * (NSystem::random() - 0.5f)) * range + min; }
-	static inline f32 sqrt(f32 x) { return std::sqrtf(x); }
 	static inline int quotient(f32, f32);
 };
 

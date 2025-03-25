@@ -66,8 +66,7 @@ struct NVector3f : public Vector3f {
 	static void printlnVector3f(Vector3f&);
 
 	f32 distanceXZ(Vector3f& other) { return NMathF::length(x - other.x, z - other.z); }
-
-	f32 lengthXZ(); // DLL, to do
+	f32 lengthXZ() { return NMathF::length(x, z); }
 
 	// _00-_0C = Vector3f
 };

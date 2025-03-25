@@ -213,7 +213,7 @@ struct TekiNapkidTargetPikiCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiNaviCondition : public TekiCondition {
-	TekiNaviCondition(); // DLL, to do
+	TekiNaviCondition() { }
 
 	virtual bool satisfy(Creature*); // _08
 
@@ -225,7 +225,7 @@ struct TekiNaviCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiNaviPikiCondition : public TekiCondition {
-	TekiNaviPikiCondition(); // DLL, to do
+	TekiNaviPikiCondition() { }
 
 	virtual bool satisfy(Creature*); // _08
 

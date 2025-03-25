@@ -121,7 +121,7 @@ struct TekiInteractionKey {
 	Interaction* mInteraction; // _04
 };
 
-DEFINE_ENUM_TYPE(TekiEventType, Ground = 0, Entity = 1, Wall = 2);
+DEFINE_ENUM_TYPE(TekiEventType, Ground = 0, Entity = 1, Wall = 2, Pressed = 3);
 
 /**
  * @brief TODO
@@ -221,8 +221,8 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	{
 		mTekiOptions |= opt;
 	}
-	virtual void clearTekiOption(int);    // _1D0
-	virtual void setTekiOptions(int opts) // _1D4
+	virtual void clearTekiOption(int opt) { mTekiOptions &= ~opt; } // _1D0
+	virtual void setTekiOptions(int opts)                           // _1D4
 	{
 		mTekiOptions = opts;
 	}
@@ -376,8 +376,9 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 
 	// NB: THIS INLINE NEEDS TO BE ABOVE STOPMOVE OR TAIIWAGEN SDATA BREAKS
 	static void outputDirectionVector(f32 angle, Vector3f& outVec) { outVec.set(NMathF::sin(angle), 0.0f, NMathF::cos(angle)); }
-
 	static f32 calcDirection(Vector3f& dir) { return NMathF::atan2(dir.x, dir.z); }
+
+	void inputDirectionVector(Vector3f& dir) { setDirection(calcDirection(dir)); }
 
 	void inputVelocity(Vector3f& vel) { mVelocity.input(vel); }
 	void inputDrive(Vector3f& drive) { mTargetVelocity.input(drive); }
@@ -389,6 +390,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 		stopDrive();
 	}
 
+	Vector3f& getDrive() { return mTargetVelocity; }
 	f32 getDriveLength() { return mTargetVelocity.length(); }
 
 	Vector3f& getNestPosition() { return mPersonality->mNestPosition; }
@@ -398,6 +400,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 
 	void setCreaturePointer(int idx, Creature* target) { mTargetCreatures[idx].set(target); }
 	Creature* getCreaturePointer(int idx) { return mTargetCreatures[idx].getPtr(); }
+	void clearCreaturePointer(int idx) { mTargetCreatures[idx].reset(); }
 
 	f32 getScaleRate() { return getParameterF(TPF_Scale) * getPersonalityF(TekiPersonality::FLT_Size); }
 
@@ -419,17 +422,8 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 
 	/*
 	    DLL inlines to make:
-
-	    f32 calcTargetDirection(Vector3f&);
-
-
-	    Vector3f& getDrive();
-
 	    Vector3f& getVelocity();
 
-	    void clearCreaturePointer(int);
-
-	    void inputDirectionVector(Vector3f&);
 	*/
 
 	// this is basically two static enums smh
@@ -472,7 +466,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	int mCurrentQueueId;                          // _334
 	int mActionStateId;                           // _338
 	f32 mStoredDamage;                            // _33C, damage waiting to be applied on next makeDamaged call
-	f32 _340;                                     // _340
+	f32 mDamageCount;                             // _340
 	int _344;                                     // _344
 	int mRouteWayPointMax;                        // _348, size of mRouteWayPoints array
 	int mRouteWayPointCount;                      // _34C
@@ -487,7 +481,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	f32 _3A4;                                     // _3A4
 	int mCurrentAnimEvent;                        // _3A8
 	f32 mAnimationSpeed;                          // _3AC
-	u32 _3B0;                                     // _3B0, unknown
+	int mMotionLoopCount;                         // _3B0
 	f32 mMotionSpeed;                             // _3B4
 	f32 mPreStopAnimationSpeed;                   // _3B8
 	int _3BC;                                     // _3BC, possibly mPelletPosyColor?

@@ -326,7 +326,7 @@ struct InteractHitEffect : public Interaction {
  * @brief TODO
  */
 struct InteractKill : public Interaction {
-	inline InteractKill(Creature* owner, int p2)
+	InteractKill(Creature* owner, int p2)
 	    : Interaction(owner)
 	{
 		_08 = p2;

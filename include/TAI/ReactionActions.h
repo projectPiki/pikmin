@@ -39,16 +39,17 @@ struct TaiLifeZeroAction : public TaiAction {
  * @brief TODO
  */
 struct TaiLifeDamageAction : public TaiAction {
-	inline TaiLifeDamageAction(int nextState) // TODO: this is a guess
-	    : TaiAction(nextState)
+	TaiLifeDamageAction(f32 damage)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mDamage = damage;
 	}
 
 	virtual void start(Teki&); // _08
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 mDamage; // _08
 };
 
 /**
@@ -152,34 +153,34 @@ struct TaiDamageCountResetAction : public TaiAction {
  * @brief TODO
  */
 struct TaiDamageCountAction : public TaiAction {
-	TaiDamageCountAction(int nextState, int p2)
+	TaiDamageCountAction(int nextState, int maxDamageCnt)
 	    : TaiAction(nextState)
 	{
-		_08 = p2;
+		mMaxDamageCount = maxDamageCnt;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08; // _08
+	int mMaxDamageCount; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiDamageScaleAction : public TaiAction {
-	TaiDamageScaleAction(f32 p1)
+	TaiDamageScaleAction(f32 scale)
 	    : TaiAction(TAI_NO_TRANSIT)
 	{
-		_08 = p1;
+		mScale = scale;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	f32 _08; // _08
+	f32 mScale; // _08
 };
 
 /**
@@ -363,7 +364,7 @@ struct TaiWarnAction : public TaiAction {
  * @brief TODO
  */
 struct TaiDangerLifeAction : public TaiAction {
-	inline TaiDangerLifeAction(int nextState) // TODO: this is a guess
+	TaiDangerLifeAction(int nextState) // straight up never used
 	    : TaiAction(nextState)
 	{
 	}
@@ -372,7 +373,7 @@ struct TaiDangerLifeAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 mDangerHealth; // _08
 };
 
 #endif

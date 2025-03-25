@@ -72,34 +72,34 @@ struct TaiTargetLostAction : public TaiAction {
  * @brief TODO
  */
 struct TaiOutsideTerritoryAction : public TaiAction {
-	TaiOutsideTerritoryAction(int nextState, f32 p2)
+	TaiOutsideTerritoryAction(int nextState, f32 radius)
 	    : TaiAction(nextState)
 	{
-		_08 = p2;
+		mTerritoryRadius = radius;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	f32 _08; // _08
+	f32 mTerritoryRadius; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiInsideTerritoryAction : public TaiAction {
-	TaiInsideTerritoryAction(int nextState, f32 p2)
+	TaiInsideTerritoryAction(int nextState, f32 radius)
 	    : TaiAction(nextState)
 	{
-		_08 = p2;
+		mTerritoryRadius = radius;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	f32 _08; // _08
+	f32 mTerritoryRadius; // _08
 };
 
 /**
