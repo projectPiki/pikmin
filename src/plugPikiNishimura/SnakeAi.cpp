@@ -253,7 +253,7 @@ void SnakeAi::setUnderPosition()
 void SnakeAi::setAppearPosition01()
 {
 	Vector3f appearPos;
-	f32 randAngle    = NsMathF::getRand1(TAU);
+	f32 randAngle    = NsMathF::getRand(TAU);
 	Creature* target = mSnake->getTargetCreature();
 	appearPos.x      = C_SNAKE_PROP(mSnake).mType1AppearDist() * cosf(randAngle) + target->mPosition.x;
 	appearPos.z      = C_SNAKE_PROP(mSnake).mType1AppearDist() * sinf(randAngle) + target->mPosition.z;

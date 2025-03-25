@@ -470,7 +470,7 @@ void KingAi::pikiStickToKingMouth()
 					}
 
 					// Randomly select slots to stick the piki in
-					int randSlotIndex = NsMathI::getRand1(mMaxMouthSlots);
+					int randSlotIndex = NsMathI::getRand(mMaxMouthSlots);
 					for (int i = 0; i < mMaxMouthSlots; i++) {
 						if (randSlotIndex > lastSlot) {
 							randSlotIndex = 0;
@@ -1027,12 +1027,13 @@ void KingAi::setAttackPriority()
 
 		f32 jumpChance = boundedFactor * C_KING_PROP(mKing).mJumpAttackEatBombChance()
 		               + (1.0f - boundedFactor) * C_KING_PROP(mKing).mJumpAttackNoEatBombChance();
-		if (NsMathF::getRand1(1.0f) < jumpChance) {
+		if (NsMathF::getRand(1.0f) < jumpChance) {
 			mAttackType           = KINGATK_Jump;
 			mConsecutiveJumpCount = 0;
 			endFallSaliva();
 		}
 	}
+	u32 badCompiler[2];
 }
 
 /*

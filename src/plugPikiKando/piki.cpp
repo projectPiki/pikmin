@@ -3368,7 +3368,7 @@ void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 		Creature* target = mLookAtTarget.getPtr();
 		if (!isLooking()) {
 			if (!target) {
-				int rand = System::getRand(1.0f) * 2.0f;
+				int rand = gsys->getRand(1.0f) * 2.0f;
 				if (rand == 0) {
 					startHimaLook(&mNavi->mCursorWorldPos);
 				} else {
@@ -3920,7 +3920,7 @@ void Piki::init(Navi* navi)
 	mFloweringTimer = 0;
 	mFSM->transit(this, PIKISTATE_Normal);
 	mPikiSize = pikiMgr->mPikiParms->mPikiParms._23C()
-	          + (pikiMgr->mPikiParms->mPikiParms._24C() - pikiMgr->mPikiParms->mPikiParms._23C()) * System::getRand(1.0f);
+	          + (pikiMgr->mPikiParms->mPikiParms._24C() - pikiMgr->mPikiParms->mPikiParms._23C()) * gsys->getRand(1.0f);
 	mOldFaceDirection = mFaceDirection;
 	initBirth();
 	mRouteDestinationIndex = -1;
@@ -4004,11 +4004,11 @@ void Piki::updateLookCreature()
 		}
 	}
 
-	if (target != newTarget && System::getRand(1.0f) > 0.2f) {
+	if (target != newTarget && gsys->getRand(1.0f) > 0.2f) {
 		if (target) {
 			mLookAtTarget.reset();
 		}
-		if (System::getRand(1.0f) > 0.2f) {
+		if (gsys->getRand(1.0f) > 0.2f) {
 			newTarget = mNavi;
 		}
 

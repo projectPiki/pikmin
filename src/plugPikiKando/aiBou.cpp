@@ -169,7 +169,7 @@ int ActBou::climb()
 	}
 
 	mLastPosition    = mPiki->mPosition;
-	f32 mag          = (22.0f + randFloat(4.0f));
+	f32 mag          = (22.0f + 4.0f * gsys->getRand(1.0f));
 	mPiki->mVelocity = mClimbDirection * mag;
 	return ACTOUT_Continue;
 }

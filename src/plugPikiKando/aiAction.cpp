@@ -589,7 +589,7 @@ void TopAction::ObjBore::update()
 		if (mIsMaxBored[i]) {
 			mBoredomLevels[i] -= gsys->getFrameTime() * (1.0f / 15.0f);
 			if (mBoredomLevels[i] <= 0.0f) {
-				mBoredomLevels[i] = System::getRand(1.0f) * 0.01f;
+				mBoredomLevels[i] = gsys->getRand(1.0f) * 0.01f;
 				mIsMaxBored[i]    = false;
 			}
 		}

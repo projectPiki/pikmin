@@ -320,7 +320,7 @@ void ActTransport::animationKeyUpdated(PaniAnimKeyEvent& event)
 		if (mState == STATE_Lift) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
 			mIsLiftActionDone = 0;
-			mLiftRetryCount   = int(randFloat(3.0f)) + 5;
+			mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		}
 		break;
 	}
@@ -400,7 +400,7 @@ int ActTransport::execJump()
 
 		Vector3f pelNorm(0.0f, pel->getCylinderHeight(), 0.0f);
 		mIsLiftActionDone = 0;
-		mLiftRetryCount   = int(randFloat(3.0f)) + 5;
+		mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		mPiki->startStickObject(pel, nullptr, mSlotIndex, 0.0f);
 
 		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mPosition);
@@ -509,7 +509,7 @@ bool ActTransport::gotoLiftPos()
 
 		Vector3f pelNorm(0.0f, pellet->getCylinderHeight(), 0.0f);
 		mIsLiftActionDone = 0;
-		mLiftRetryCount   = int(randFloat(3.0f)) + 5;
+		mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		mPiki->startStickObject(pellet, nullptr, mSlotIndex, 0.0f);
 		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mPosition);
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -1734,7 +1734,7 @@ void ActTransport::decideGoal(Creature* cargo)
 		}
 	}
 
-	int randColor = randFloat(f32(numOptions));
+	int randColor = (f32(numOptions) * gsys->getRand(1.0f));
 	if (randColor >= numOptions) {
 		PRINT("random select color=%d : maxcols=%d\n", randColor, numOptions);
 		randColor = Blue;
@@ -1749,6 +1749,7 @@ void ActTransport::decideGoal(Creature* cargo)
 		PRINT("SORRY *** goal(color%d) is required !!\n", onyonColor);
 		ERROR("zannnen\n"); // 'too bad'
 	}
+	u32 badCompiler;
 }
 
 /*

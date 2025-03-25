@@ -122,7 +122,7 @@ void GoalItem::playEffect(int id)
 				effectMgr->create(EffectMgr::EFF_Onyon_Sparkles, pos[3], nullptr, nullptr);
 			}
 
-			int randIdx                 = (int)(randFloat(3.0f) * 0.999999f);
+			int randIdx                 = (int)((3.0f * gsys->getRand(1.0f)) * 0.999999f);
 			zen::particleGenerator* gen = effectMgr->create(EffectMgr::EFF_Onyon_Puff, pos[randIdx], nullptr, nullptr);
 			if (gen) {
 				int legIDs[3] = { 2, 1, 0 };

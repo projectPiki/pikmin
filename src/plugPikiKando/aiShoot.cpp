@@ -108,7 +108,7 @@ Creature* ActShoot::decideTarget()
 	}
 
 	if (count != 0) {
-		return targets[int(unitRandFloat() * count)];
+		return targets[int(gsys->getRand(1.0f) * count)];
 	}
 	return nullptr;
 }

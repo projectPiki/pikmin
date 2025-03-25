@@ -324,9 +324,9 @@ int ActCrowd::exec()
 
 		// idk why they did this in two rand checks, but go figure
 		// approximately a 0.003% chance of tripping
-		if (unitRandFloat() >= 0.9999f && unitRandFloat() > 0.7f) {
+		if (gsys->getRand(1.0f) >= 0.9999f && gsys->getRand(1.0f) > 0.7f) {
 			mIsTripping      = true;
-			mTripLoopCounter = int(randFloat(4.0f)) + 3; // length of trip is a random number of anim loops, between 3 and 7
+			mTripLoopCounter = int((4.0f * gsys->getRand(1.0f))) + 3; // length of trip is a random number of anim loops, between 3 and 7
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Korobu, mPiki), PaniMotionInfo(PIKIANIM_Korobu));
 			return ACTOUT_Continue;
 		}
@@ -339,7 +339,7 @@ int ActCrowd::exec()
 	plateDir.normalise();
 
 	if (plateDist2D < 60.0f && mPiki->mNavi->_724 && mState != STATE_Sort) {
-		if (!mIsWaiting && mPiki->mNavi->_738 - randFloat(2.0f) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+		if (!mIsWaiting && mPiki->mNavi->_738 - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 			mIsWaiting = true;
 			return ACTOUT_Continue;
 		}
@@ -400,7 +400,8 @@ int ActCrowd::exec()
 		Vector3f naviDir = mPiki->mNavi->mPosition - mPiki->mPosition;
 		f32 diff         = atan2f(naviDir.x, naviDir.z);
 		mPiki->mFaceDirection += 0.3f * angDist(diff, mPiki->mFaceDirection);
-		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting && mPiki->mNavi->_738 - randFloat(2.0f) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
+		    && mPiki->mNavi->_738 - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 			mIsWaiting = true;
 			startZawatuki();
 		}
@@ -434,7 +435,8 @@ int ActCrowd::exec()
 			setFormed();
 		}
 
-		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting && mPiki->mNavi->_738 - randFloat(2.0f) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
+		    && mPiki->mNavi->_738 - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 			mIsWaiting = true;
 			startZawatuki();
 		}
@@ -457,7 +459,7 @@ int ActCrowd::exec()
 		if (plateDist2D < val2) {
 			mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
-			    && mPiki->mNavi->_738 - randFloat(2.0f) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+			    && mPiki->mNavi->_738 - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 				mIsWaiting = true;
 				startZawatuki();
 			}

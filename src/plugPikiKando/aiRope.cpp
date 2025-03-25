@@ -36,7 +36,7 @@ void ActRope::init(Creature*)
 {
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
 	mPiki->setCreatureFlag(CF_Unk8);
-	mSpeed = randBalanced(0.5f) * 4.0f + 22.0f;
+	mSpeed = (gsys->getRand(1.0f) - 0.5f) * 4.0f + 22.0f;
 	if (mPiki->isHolding()) {
 		mPiki->mActionState = 3;
 	}

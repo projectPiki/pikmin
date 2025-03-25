@@ -49,7 +49,7 @@ void ActGoto::Initialiser::initialise(Action* action)
  */
 void ActGoto::init(Creature* target)
 {
-	mTimeoutDuration = randFloat(2.0f) + 4.0f;
+	mTimeoutDuration = (2.0f * gsys->getRand(1.0f)) + 4.0f;
 	mTarget.set(target);
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
@@ -117,7 +117,7 @@ int ActGoto::exec()
 		moveDirection = (1.0f / horizontalDistance) * moveDirection;
 	} else {
 		// If no clear direction, pick random angle in horizontal plane
-		f32 randomAngle = 2.0f * randFloat(PI);
+		f32 randomAngle = 2.0f * (PI * gsys->getRand(1.0f));
 		moveDirection.set(cosf(randomAngle), 0.0f, sinf(randomAngle));
 	}
 

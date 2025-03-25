@@ -42,7 +42,7 @@ void ActChase::Initialiser::initialise(Action*)
  */
 void ActChase::init(Creature* target)
 {
-	mChaseTimer = randFloat(2.0f) + 4.0f;
+	mChaseTimer = 2.0f * gsys->getRand(1.0f) + 4.0f;
 	mTarget.set(target);
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 }
@@ -89,7 +89,7 @@ int ActChase::exec()
 	if (chaseDist > 0.0f) {
 		chaseDir = (1.0f / chaseDist) * chaseDir;
 	} else {
-		f32 randAngle = 2.0f * (randFloat(PI));
+		f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
 		chaseDir.set(cosf(randAngle), 0.0f, sinf(randAngle));
 	}
 

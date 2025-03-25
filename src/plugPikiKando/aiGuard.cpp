@@ -300,7 +300,7 @@ void ActGuard::setGoal()
 	} else if (!getLeft(target) && getRight(target)) {
 		mFormationSide = 0;
 	} else if (!getLeft(target) && !getRight(target)) {
-		if (unitRandFloat() > 0.5f) {
+		if (gsys->getRand(1.0f) > 0.5f) {
 			mFormationSide = 1;
 		} else {
 			mFormationSide = 0;

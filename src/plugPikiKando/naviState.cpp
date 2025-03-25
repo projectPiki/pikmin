@@ -374,7 +374,7 @@ void NaviStuckState::exec(Navi* navi)
 			CI_LOOP(iter)
 			{
 				Creature* stuck = *iter; // 50/50 chance to flick a given puffmin
-				if (!stuck || !(unitRandFloat() > 0.5f)) {
+				if (!stuck || !(gsys->getRand(1.0f) > 0.5f)) {
 					continue;
 				}
 
@@ -501,7 +501,7 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	case KEY_LoopEnd:
 		switch (mBuryState) {
 		case 0:
-			if (unitRandFloat() > 0.66f) {
+			if (gsys->getRand(1.0f) > 0.66f) {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GWait2, navi), PaniMotionInfo(PIKIANIM_GWait2));
 			} else {
 				navi->startMotion(PaniMotionInfo(PIKIANIM_GWait1, navi), PaniMotionInfo(PIKIANIM_GWait1));
@@ -534,7 +534,7 @@ void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	case KEY_PlayEffect:
 		switch (mBuryState) {
 		case 2:
-			f32 randAngle = 2.0f * randFloat(PI);
+			f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
 			f32 height    = 80.0f;
 			Vector3f dir(40.0f * sinf(randAngle), height, 40.0f * cosf(randAngle));
 			EffectParm parm(navi->mPosition, dir);
@@ -2478,9 +2478,9 @@ void NaviFlickState::init(Navi* navi)
 {
 	mFlickState       = 0;
 	mDirection        = navi->mFaceDirection;
-	mRandVariation    = 0.1f * randFloat(PI);
+	mRandVariation    = 0.1f * (PI * gsys->getRand(1.0f));
 	navi->mVelocity.y = 0.0f;
-	mIntensity        = navi->_704 + 0.1f * navi->_704 * unitRandFloat();
+	mIntensity        = navi->_704 + 0.1f * navi->_704 * gsys->getRand(1.0f);
 	PRINT("** flick\n");
 	navi->startMotion(PaniMotionInfo(PIKIANIM_JHit, navi), PaniMotionInfo(PIKIANIM_JHit));
 }
@@ -2533,7 +2533,7 @@ void NaviFlickState::procAnimMsg(Navi* navi, MsgAnim* msg)
 		}
 		if (mFlickState == 1) {
 			mFlickState          = 2;
-			mGetupAnimationTimer = randFloat(0.1f);
+			mGetupAnimationTimer = (0.1f * gsys->getRand(1.0f));
 			break;
 		}
 		if (navi->mHealth <= 1.0f) {
@@ -2577,7 +2577,7 @@ void NaviGeyzerState::init(Navi* navi)
 {
 	mGeyserState     = 1; // why
 	mPlayerDirection = navi->mFaceDirection;
-	_1C              = 0.1f * randFloat(PI);
+	_1C              = 0.1f * (PI * gsys->getRand(1.0f));
 	navi->startMotion(PaniMotionInfo(PIKIANIM_JHit, navi), PaniMotionInfo(PIKIANIM_JHit));
 	_30 = 0;
 	navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_OCarry, navi), PaniMotionInfo(PIKIANIM_OCarry));
@@ -2669,7 +2669,7 @@ void NaviGeyzerState::procBounceMsg(Navi* navi, MsgBounce* msg)
 {
 	if (mGeyserState != 0) {
 		mGeyserState = 3;
-		_14          = 0.3f + randFloat(0.2f);
+		_14          = 0.3f + (0.2f * gsys->getRand(1.0f));
 		rumbleMgr->start(10, 0, nullptr);
 	}
 }

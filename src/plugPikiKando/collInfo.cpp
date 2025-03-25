@@ -965,7 +965,7 @@ CollPart* CollInfo::getRandomCollPart(u32 tag)
 	}
 
 	if (count > 0) {
-		f32 r       = unitRandFloat();
+		f32 r       = gsys->getRand(1.0f);
 		int randIdx = count * r * 0.999f;
 		return partList[randIdx];
 	}

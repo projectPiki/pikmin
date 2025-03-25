@@ -148,7 +148,7 @@ PikiLookAtState::PikiLookAtState()
  */
 void PikiLookAtState::init(Piki* piki)
 {
-	_10 = randFloat(0.3f);
+	_10 = (0.3f * gsys->getRand(1.0f));
 	_14 = 0;
 	SeSystem::playPlayerSe(SE_PIKI_CALLED);
 	seSystem->playPikiSound(SEF_PIKI_CALLED, piki->mPosition);
@@ -463,9 +463,9 @@ void PikiDrownState::init(Piki* piki)
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Oboreru, piki), PaniMotionInfo(PIKIANIM_Oboreru));
 	}
 
-	_12 = randInt(2.0f, 6);
+	_12 = int(2.0f * gsys->getRand(1.0f)) + 6;
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	_14 = int(randFloat(2.0f));
+	_14 = int((2.0f * gsys->getRand(1.0f)));
 	if (piki->isHolding()) {
 		InteractRelease release(piki, 1.0f);
 		piki->getHoldCreature()->stimulate(release);
@@ -483,6 +483,7 @@ void PikiDrownState::init(Piki* piki)
 	}
 
 	_28 = false;
+	PRINT("fake", _28 ? "fake" : "fake");
 }
 
 /*
@@ -616,15 +617,15 @@ void PikiKinokoState::init(Piki* piki)
  */
 void PikiKinokoState::initWalk(Piki* piki)
 {
-	_14          = randFloat(2.0f) + 1.5f;
+	_14          = (2.0f * gsys->getRand(1.0f)) + 1.5f;
 	Vector3f dir = _10->mPosition - piki->mPosition;
 	f32 d        = dir.normalise();
 	Vector3f orthoDir(dir.z, 0.0f, -dir.x);
-	if (unitRandFloat() > 0.5f) {
+	if (gsys->getRand(1.0f) > 0.5f) {
 		orthoDir.multiply(-1.0f);
 	}
 
-	f32 r    = 0.2f * (unitRandFloat() - 0.5f);
+	f32 r    = 0.2f * (gsys->getRand(1.0f) - 0.5f);
 	orthoDir = orthoDir + r * dir;
 	orthoDir.normalise();
 	_18 = orthoDir;
@@ -1469,7 +1470,7 @@ void PikiBubbleState::init(Piki* piki)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Moeru), PaniMotionInfo(PIKIANIM_Moeru));
 	piki->enableMotionBlend();
 	mSurvivalTimer = C_PIKI_PROP(piki)._3DC();
-	mSurvivalTimer *= randFloat(0.1f) + 1.0f;
+	mSurvivalTimer *= (0.1f * gsys->getRand(1.0f)) + 1.0f;
 	mChangeDirectionTimer = 0.1f;
 	mMoveDirection        = piki->mFaceDirection;
 	mSpeedRatio           = 1.0f;
@@ -1494,8 +1495,8 @@ void PikiBubbleState::exec(Piki* piki)
 	}
 
 	if (mChangeDirectionTimer < 0.0f) {
-		mChangeDirectionTimer = randFloat(0.2f) + 0.2f;
-		mMoveDirection += randFloat(45.0f) / 180.0f * PI;
+		mChangeDirectionTimer = (0.2f * gsys->getRand(1.0f)) + 0.2f;
+		mMoveDirection += (45.0f * gsys->getRand(1.0f)) / 180.0f * PI;
 		mMoveDirection = roundAng(mMoveDirection);
 		mSpeedRatio *= 0.99f;
 	}
@@ -1534,7 +1535,7 @@ void PikiFiredState::init(Piki* piki)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Moeru), PaniMotionInfo(PIKIANIM_Moeru));
 	piki->enableMotionBlend();
 	mSurvivalTimer = C_PIKI_PROP(piki)._3DC();
-	mSurvivalTimer *= randFloat(0.1f) + 1.0f;
+	mSurvivalTimer *= (0.1f * gsys->getRand(1.0f)) + 1.0f;
 	mChangeDirectionTimer = 0.1f;
 	mMoveDirection        = piki->mFaceDirection;
 	mSpeedRatio           = 1.0f;
@@ -1556,8 +1557,8 @@ void PikiFiredState::exec(Piki* piki)
 	}
 
 	if (mChangeDirectionTimer < 0.0f) {
-		mChangeDirectionTimer = randFloat(0.2f) + 0.2f;
-		mMoveDirection += randFloat(45.0f) / 180.0f * PI;
+		mChangeDirectionTimer = (0.2f * gsys->getRand(1.0f)) + 0.2f;
+		mMoveDirection += (45.0f * gsys->getRand(1.0f)) / 180.0f * PI;
 		mMoveDirection = roundAng(mMoveDirection);
 		mSpeedRatio *= 0.99f;
 	}
@@ -1723,9 +1724,9 @@ void PikiFlickState::init(Piki* piki)
 {
 	_10               = 0;
 	_18               = piki->mRotationAngle;
-	_1C               = 0.1f * randFloat(PI);
-	piki->mVelocity.y = randFloat(50.0f) + 100.0f;
-	_20               = piki->mFlickIntensity * 0.1f * unitRandFloat() + piki->mFlickIntensity;
+	_1C               = 0.1f * (PI * gsys->getRand(1.0f));
+	piki->mVelocity.y = (50.0f * gsys->getRand(1.0f)) + 100.0f;
+	_20               = piki->mFlickIntensity * 0.1f * gsys->getRand(1.0f) + piki->mFlickIntensity;
 	piki->mActiveAction->resume();
 	piki->startMotion(PaniMotionInfo(PIKIANIM_JHit, piki), PaniMotionInfo(PIKIANIM_JHit));
 }
@@ -1785,7 +1786,7 @@ void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			_10     = 2;
 			f32 min = C_PIKI_PROP(piki)._32C();
 			f32 max = C_PIKI_PROP(piki)._31C();
-			_14     = (max - min) * unitRandFloat() + min;
+			_14     = (max - min) * gsys->getRand(1.0f) + min;
 			if (piki->mHealth <= 0.0f) {
 				PRINT("piki died !\n");
 				transit(piki, PIKISTATE_Dead);
@@ -1794,7 +1795,7 @@ void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		}
 
 		PRINT("done\n");
-		if (unitRandFloat() < 0.25f && piki->mHappa >= Bud) {
+		if (gsys->getRand(1.0f) < 0.25f && piki->mHappa >= Bud) {
 			piki->mHappa--;
 			piki->setFlower(piki->mHappa);
 			zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Piki_DeflowerPetals, piki->mEffectPos, nullptr, nullptr);
@@ -1865,8 +1866,8 @@ void PikiFlownState::init(Piki* piki)
 {
 	_20 = 0;
 	_14 = atan2f(piki->mVelocity.x, piki->mVelocity.z);
-	_18 = 0.1f * randFloat(PI);
-	_1C = 0.1f * piki->mFlickIntensity * unitRandFloat() + piki->mFlickIntensity;
+	_18 = 0.1f * (PI * gsys->getRand(1.0f));
+	_1C = 0.1f * piki->mFlickIntensity * gsys->getRand(1.0f) + piki->mFlickIntensity;
 	piki->startMotion(PaniMotionInfo(PIKIANIM_JHit, piki), PaniMotionInfo(PIKIANIM_JHit));
 }
 
@@ -1930,7 +1931,7 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			_20     = 2;
 			f32 min = C_PIKI_PROP(piki)._32C();
 			f32 max = C_PIKI_PROP(piki)._31C();
-			_10     = (max - min) * unitRandFloat() + min;
+			_10     = (max - min) * gsys->getRand(1.0f) + min;
 			if (piki->mHealth <= 0.0f) {
 				PRINT("piki died !\n");
 				transit(piki, PIKISTATE_Dead);
@@ -1939,7 +1940,7 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		}
 
 		PRINT("done\n");
-		if (unitRandFloat() < 0.25f && piki->mHappa >= Bud) {
+		if (gsys->getRand(1.0f) < 0.25f && piki->mHappa >= Bud) {
 			piki->mHappa--;
 			piki->setFlower(piki->mHappa);
 			zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Piki_DeflowerPetals, piki->mEffectPos, nullptr, nullptr);
@@ -2040,7 +2041,7 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 			effectMgr->create(EffectMgr::EFF_SD_DirtSpray, pos, nullptr, nullptr);
 			sprout->init(pos);
 			sprout->setColor(piki->mColor);
-			f32 randAngle = 2.0f * randFloat(PI);
+			f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
 			sprout->mVelocity.set(220.0f * sinf(randAngle), 540.0f, 220.0f * cosf(randAngle));
 			sprout->startAI(0);
 			sprout->_3E0 = nullptr;
@@ -2257,7 +2258,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			}
 
 			_10 = 1;
-			_14 = int(randFloat(2.0f)) + 1;
+			_14 = int((2.0f * gsys->getRand(1.0f))) + 1;
 			PRINT("otikake motion start\n");
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Otikake, piki), PaniMotionInfo(PIKIANIM_Otikake));
 			break;
@@ -2297,7 +2298,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 						if (dist > -0.2f && dist < 3.0f) {
 							PRINT("piki%x : ####### start buran motion :: floor = %s\n", piki, piki->mFloorTri ? "on floor" : "air");
 							_10 = 2;
-							_14 = int(randFloat(2.0f)) + 2;
+							_14 = int((2.0f * gsys->getRand(1.0f))) + 2;
 							break;
 						}
 						PRINT("buran is not executable : dist is too far\n");
@@ -2710,7 +2711,7 @@ void PikiFlyingState::exec(Piki* piki)
 
 	piki->mFaceDirection = roundAng(gsys->getFrameTime() * PI / 0.42f + piki->mFaceDirection);
 	_20 += gsys->getFrameTime();
-	f32 rval = (unitRandFloat() - 0.5f) * 0.01f;
+	f32 rval = (gsys->getRand(1.0f) - 0.5f) * 0.01f;
 
 	PRINT("please save me fake stack fixing device", rval > 0.0f ? "yes" : "no");
 
@@ -3510,7 +3511,7 @@ void PikiBuryState::exec(Piki* piki)
 		effectMgr->create(EffectMgr::EFF_SD_DirtSpray, pos, nullptr, nullptr);
 		sprout->init(pos);
 		sprout->setColor(piki->mColor);
-		f32 angle = 2.0f * randFloat(PI);
+		f32 angle = 2.0f * (PI * gsys->getRand(1.0f));
 		sprout->mVelocity.set(220.0f * sinf(angle), 540.0f, 220.0f * cosf(angle));
 		sprout->mFlowerStage = piki->mHappa;
 		sprout->startAI(0);
@@ -4014,7 +4015,7 @@ void PikiEmotionState::init(Piki* piki)
 			SEF_PIKI_ANGRY1,
 		};
 
-		int randIdx  = randFloat(2.0f) * 0.9999f;
+		int randIdx  = (2.0f * gsys->getRand(1.0f)) * 0.9999f;
 		int motionID = motionChoices[randIdx].mValue;
 		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
@@ -4035,7 +4036,7 @@ void PikiEmotionState::init(Piki* piki)
 			SEF_PIKI_JUMP3,
 		};
 
-		int randIdx  = randFloat(3.0f) * 0.9999f;
+		int randIdx  = (3.0f * gsys->getRand(1.0f)) * 0.9999f;
 		int motionID = motionChoices[randIdx].mValue;
 		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
@@ -4064,7 +4065,7 @@ void PikiEmotionState::init(Piki* piki)
 			SEF_PIKI_SNEEZE,
 		};
 
-		int randIdx  = randFloat(2.0f) * 0.9999f;
+		int randIdx  = (2.0f * gsys->getRand(1.0f)) * 0.9999f;
 		int motionID = motionChoices[randIdx].mValue;
 		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
@@ -4105,7 +4106,7 @@ void PikiEmotionState::init(Piki* piki)
 			SEF_PIKI_JUMP1, SEF_PIKI_JUMP2, SEF_PIKI_JUMP3, SEF_PIKI_NOBI, SEF_PIKI_YATTA,
 		};
 
-		int randIdx  = randFloat(5.0f) * 0.9999f;
+		int randIdx  = (5.0f * gsys->getRand(1.0f)) * 0.9999f;
 		int motionID = motionChoices[randIdx].mValue;
 		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
@@ -4150,7 +4151,7 @@ void PikiEmotionState::exec(Piki* piki)
 				mGazeFlag     = 2;
 				mGazePosition = piki->mCarryingShipPart->mPosition;
 				piki->startLook(&mGazePosition);
-				mTimer = randFloat(0.4f) + 1.5f;
+				mTimer = (0.4f * gsys->getRand(1.0f)) + 1.5f;
 			}
 			break;
 		case 2:

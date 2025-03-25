@@ -8,8 +8,8 @@
  * @brief TODO
  */
 struct TaiWaitTurningAction : public TaiMotionAction {
-	inline TaiWaitTurningAction() // TODO: this is a guess
-	    : TaiMotionAction(-1, 0)
+	TaiWaitTurningAction(int nextState, int motionIdx)
+	    : TaiMotionAction(nextState, motionIdx)
 	{
 	}
 
@@ -17,8 +17,7 @@ struct TaiWaitTurningAction : public TaiMotionAction {
 	virtual bool act(Teki&);   // _10
 
 	// _04     = VTBL
-	// _00-_08 = TaiMotionAction?
-	// TODO: members
+	// _00-_0C = TaiMotionAction
 };
 
 #endif

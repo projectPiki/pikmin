@@ -2198,7 +2198,7 @@ bool TAIAflyingDistanceMar::act(Teki& teki)
 		// - weight = 1 (no pikis in range), A = 100, chance of success is 0.3%
 		// - weight = 51 (50 pikis in range), A = 100/51, chance of success is 8.6%
 		// - weight = 101 (100 pikis in range), A = 100/101, chance of success is 14.8%
-		f32 successChance = System::getRand(100.0f / weight) * System::getRand(30.0f);
+		f32 successChance = gsys->getRand(100.0f / weight) * gsys->getRand(30.0f);
 		if (successChance <= 1.0f) {
 			return true;
 		}

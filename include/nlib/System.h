@@ -36,7 +36,7 @@ inline f32 getFrameTime()
 }
 inline f32 random()
 {
-	return unitRandFloat();
+	return system->getRand(1.0f);
 }
 
 }; // namespace NSystem

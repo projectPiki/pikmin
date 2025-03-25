@@ -1665,7 +1665,7 @@ Creature* GenObjectPiki::birth(BirthInfo& info)
 	getLatestVersion();
 	int color = mSpawnColor();
 	if (color == 3) {
-		color = System::getRand(1.0f) * 3.0f;
+		color = gsys->getRand(1.0f) * 3.0f;
 		if (color >= 3) {
 			color = Blue;
 		}
@@ -1846,7 +1846,7 @@ int GenTypeInitRand::getMaxCount()
  */
 void GenTypeInitRand::init(Generator* gen)
 {
-	int randCount = _38() + int(System::getRand(1.0f) * f32(mMaxCount() - _38()));
+	int randCount = _38() + int(gsys->getRand(1.0f) * f32(mMaxCount() - _38()));
 	for (int i = 0; i < randCount; i++) {
 		BirthInfo info;
 		setBirthInfo(info, gen);
@@ -1909,12 +1909,12 @@ Vector3f GenAreaCircle::getPos(Generator* gen)
 {
 	Vector3f pos = gen->getPos();
 
-	f32 minRadFactor = System::getRand(1.0f);
+	f32 minRadFactor = gsys->getRand(1.0f);
 	f32 comp         = 1.0f - minRadFactor;
-	f32 radius       = System::getRand(1.0f) * comp + minRadFactor;
+	f32 radius       = gsys->getRand(1.0f) * comp + minRadFactor;
 	radius *= mRadius();
 
-	f32 randAngle = 2.0f * (PI * System::getRand(1.0f));
+	f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
 	pos           = Vector3f(radius * sinf(randAngle), 0.0f, radius * cosf(randAngle)) + pos;
 
 	return pos;

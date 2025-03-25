@@ -32,9 +32,12 @@ struct TaiTimerAction : public TaiAction {
  * @brief TODO
  */
 struct TaiResetTimerAction : public TaiAction {
-	inline TaiResetTimerAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiResetTimerAction(int timerIdx, f32 length, f32 randomRate)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mTimerIdx    = timerIdx;
+		mTimerLength = length;
+		mRandomRate  = randomRate;
 	}
 
 	virtual void start(Teki&); // _08
@@ -43,41 +46,44 @@ struct TaiResetTimerAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mTimerIdx;    // _08
+	f32 mTimerLength; // _0C
+	f32 mRandomRate;  // _10
 };
 
 /**
  * @brief TODO
  */
 struct TaiTimerElapsedAction : public TaiAction {
-	TaiTimerElapsedAction(int nextState, int p2)
+	TaiTimerElapsedAction(int nextState, int timerIdx)
 	    : TaiAction(nextState)
 	{
-		_08 = p2;
+		mTimerIdx = timerIdx;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08; // _08
+	int mTimerIdx; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiStartingTimerAction : public TaiTimerAction {
-	inline TaiStartingTimerAction() // TODO: this is a guess
-	    : TaiTimerAction(0, 0, 0.0f, 0.0f)
+	TaiStartingTimerAction(int nextState, int timerIdx, f32 length, f32 randomRate, f32 chance)
+	    : TaiTimerAction(nextState, timerIdx, length, randomRate)
 	{
+		mChance = chance;
 	}
 
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
 	// _04     = VTBL
-	// _00-_08 = TaiTimerAction?
-	// TODO: members
+	// _00-_14 = TaiTimerAction
+	f32 mChance; // _14
 };
 
 #endif

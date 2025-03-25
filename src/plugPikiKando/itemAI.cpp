@@ -351,8 +351,6 @@ void PikiHeadAI::WaitInit::act(AICreature* item)
 		item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms._3AC() + gsys->getRand(1.0f) * 2.0f;
 	}
 	item->mCounter = 0;
-
-	f32 badcompiler[2];
 }
 
 /*
@@ -427,7 +425,7 @@ void PikiHeadAI::KaretaInit::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 
-	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms._3CC() + randFloat(2.0f);
+	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms._3CC() + 2.0f * gsys->getRand(1.0f);
 	obj->mFlowerStage        = Leaf;
 }
 
@@ -968,7 +966,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 		obj->finishMotion();
 	}
 
-	f32 badcompiler2[5];
+	f32 badcompiler2[4];
 }
 
 /*

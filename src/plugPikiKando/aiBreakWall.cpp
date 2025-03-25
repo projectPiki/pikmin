@@ -54,7 +54,7 @@ void ActBreakWall::init(Creature* creature)
 	mState              = STATE_GotoWall;
 	mIsAttackReady      = 0;
 	mPiki->mWantToStick = 0;
-	mWorkTimer          = randFloat(4.0f);
+	mWorkTimer          = (4.0f * gsys->getRand(1.0f));
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
@@ -66,69 +66,13 @@ void ActBreakWall::init(Creature* creature)
 void ActBreakWall::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	if (piki->getState() != PIKISTATE_LookAt) {
-		// Creature* collider = msg->mEvent.mCollider;
-		if (msg->mEvent.mCollider == mWall && mState != STATE_BreakWall && msg->mEvent.mColliderPart->getID() == 'gate'
-		    && !piki->isStickTo()) {
+		Creature* collider = msg->mEvent.mCollider;
+		if (collider == mWall && mState != STATE_BreakWall && msg->mEvent.mColliderPart->getID() == 'gate' && !piki->isStickTo()) {
 			mHitPikminPosition = piki->mPosition;
 			initBreakWall();
 		}
-		// msg->mEvent.mCollider->isPiki();
+		collider->isPiki();
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  addi      r3, r29, 0
-	  bl        0x1A228
-	  cmpwi     r3, 0x1A
-	  beq-      .loc_0xA4
-	  lwz       r31, 0x4(r30)
-	  lwz       r0, 0x18(r28)
-	  cmplw     r31, r0
-	  bne-      .loc_0xA4
-	  lhz       r0, 0x1C(r28)
-	  cmplwi    r0, 0x1
-	  beq-      .loc_0xA4
-	  addi      r3, r1, 0x14
-	  lwz       r4, 0x8(r30)
-	  bl        -0x264BC
-	  lis       r4, 0x6761
-	  addi      r3, r1, 0x14
-	  addi      r4, r4, 0x7465
-	  bl        -0x6A38C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xA4
-	  lwz       r0, 0x184(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xA4
-	  lwz       r4, 0x94(r29)
-	  mr        r3, r28
-	  lwz       r0, 0x98(r29)
-	  stw       r4, 0x20(r28)
-	  stw       r0, 0x24(r28)
-	  lwz       r0, 0x9C(r29)
-	  stw       r0, 0x28(r28)
-	  bl        0x3E4
-
-	.loc_0xA4:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -146,7 +90,7 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
 		mIsAttackReady = 0;
 		break;
 	case KEY_Finished:
-		mWorkTimer = randFloat(4.0f);
+		mWorkTimer = (4.0f * gsys->getRand(1.0f));
 		startWorkMotion();
 		mIsAttackReady = 0;
 		break;
@@ -215,7 +159,7 @@ int ActBreakWall::gotoWall()
  */
 void ActBreakWall::initBreakWall()
 {
-	mWorkTimer = randFloat(4.0f);
+	mWorkTimer = (4.0f * gsys->getRand(1.0f));
 	startWorkMotion();
 	mState           = STATE_BreakWall;
 	mStartAttackTime = gameflow.mWorldClock.mMinutes;
@@ -269,7 +213,7 @@ int ActBreakWall::breakWall()
 				return ACTOUT_Success;
 			}
 			mFailAttackCounter++;
-			if (mFailAttackCounter >= int(randFloat(3.0f)) + 3) {
+			if (mFailAttackCounter >= int((3.0f * gsys->getRand(1.0f))) + 3) {
 				mPiki->mEmotion     = PikiEmotion::Unk1;
 				mPiki->mActionState = 0;
 				return ACTOUT_Fail;

@@ -53,7 +53,7 @@ void ActPullout::init(Creature* target)
 			}
 		}
 		if (count > 0) {
-			int randIdx = System::getRand(1.0f) * f32(count);
+			int randIdx = gsys->getRand(1.0f) * f32(count);
 			if (randIdx >= count) {
 				randIdx = count - 1;
 			}

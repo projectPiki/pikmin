@@ -136,10 +136,10 @@ struct StdSystem {
 
 	// Static functions
 	static char* stringDup(char*);
-	static f32 getRand(f32 max) { return max * (f32(rand()) / 32767.0f); }
 	static f32 getHalfRand(f32 max) { return max * (f32(rand()) / 32767.0f - 0.5f); }
 
 	// Inline functions
+	f32 getRand(f32 max) { return max * (f32(rand()) / 32767.0f); }
 	inline f32 getFade() { return mCurrentFade; }
 	inline void setFade(f32 start, f32 end)
 	{
@@ -367,48 +367,6 @@ struct DVDStream : public RandomAccessStream {
 
 extern int glnWidth;
 extern int glnHeight;
-
-// this doesn't exist in the DLL, but ActFreeBore::init is so dumb
-// you can pry this out of my cold dead hands when you fix that
-static inline f32 randBalanced(f32 centre)
-{
-	return System::getRand(1.0f) - centre;
-}
-
-static inline f32 randFloat(f32 max)
-{
-	return max * System::getRand(1.0f);
-}
-
-static inline int randInt(f32 max, int min)
-{
-	return int(randFloat(max)) + min;
-}
-static inline f32 unitRandFloat(f32 max = 1.0f)
-{
-	if (max > 0.0f) {
-		return System::getRand(max);
-	}
-
-	return 0.0f;
-}
-
-static inline bool randChance(f32 chance)
-{
-	f32 r = System::getRand(1.0f);
-	return r >= chance;
-}
-
-static inline bool coinFlip()
-{
-	return System::getRand(1.0f) > 0.5f;
-}
-
-// these match according to the plugPiki DLL - move inlines down as they get verified
-static inline f32 randFloat()
-{
-	return System::getRand(1.0f);
-}
 
 extern "C" void OSPanic(const char* filename, int line, const char* msg, ...);
 

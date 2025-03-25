@@ -114,5 +114,5 @@ void Piki::doKill()
 	pikiMgr->mDeadPikis++;
 	pikiMgr->kill(this);
 
-	f32 badcompiler[11];
+	f32 badcompiler[10];
 }

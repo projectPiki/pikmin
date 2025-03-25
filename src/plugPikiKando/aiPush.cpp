@@ -169,7 +169,7 @@ void ActPush::initGo()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 	mPushAnimationState = 2;
 	if (mHinderRock) {
-		_38 = unitRandFloat();
+		_38 = gsys->getRand(1.0f);
 	}
 
 	_40 = pikiMgr->mPikiParms->mPikiParms._49C();
@@ -178,7 +178,7 @@ void ActPush::initGo()
 	}
 
 	mIsPushReady = 1;
-	mPushCount   = int(randFloat(5.0f)) + 5;
+	mPushCount   = int(5.0f * gsys->getRand(1.0f)) + 5;
 
 	if (mHinderRock) {
 		mHinderRock->beginPush();
@@ -256,7 +256,7 @@ void ActPush::animationKeyUpdated(PaniAnimKeyEvent& event)
 	case KEY_LoopEnd:
 		if (mPushAnimationState == 1 && mHinderRock && !mHinderRock->isMoving()) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu, this), PaniMotionInfo(PIKIANIM_Osu));
-			mPushCount                                               = int(randFloat(5.0f)) + 5;
+			mPushCount                                               = int(5.0f * gsys->getRand(1.0f)) + 5;
 			mPiki->mPikiAnimMgr.getUpperAnimator().mAnimationCounter = 30.0f;
 			mPiki->mPikiAnimMgr.getLowerAnimator().mAnimationCounter = 30.0f;
 			mPushAnimationState                                      = 0;
@@ -282,7 +282,7 @@ void ActPush::animationKeyUpdated(PaniAnimKeyEvent& event)
 		if (mState == STATE_Go) {
 			PRINT("restart motion !\n");
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu, this), PaniMotionInfo(PIKIANIM_Osu));
-			mPushCount = int(randFloat(5.0f)) + 5;
+			mPushCount = int(5.0f * gsys->getRand(1.0f)) + 5;
 		}
 		break;
 	}

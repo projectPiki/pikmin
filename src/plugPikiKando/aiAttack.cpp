@@ -206,7 +206,7 @@ Creature* ActAttack::decideTarget()
 	}
 
 	if (count != 0) {
-		return targetList[int(System::getRand(1.0f)) * count];
+		return targetList[int(gsys->getRand(1.0f)) * count];
 	}
 
 	return nullptr;
@@ -531,8 +531,6 @@ int ActJumpAttack::exec()
 		return ACTOUT_Success;
 	}
 
-	u32 badCompiler1[1];
-
 	switch (mState) {
 	case 6:
 		doClimb();
@@ -585,10 +583,10 @@ int ActJumpAttack::exec()
 				mState       = 4;
 				mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			}
-		} else if ((!mTargetCollider || mTargetCollider->isStickable()) && _2C && unitRandFloat() > 0.9f) {
+		} else if ((!mTargetCollider || mTargetCollider->isStickable()) && _2C && gsys->getRand(1.0f) > 0.9f) {
 			mState = 2;
 		} else {
-			if (dist2D < getAttackSize() + mPiki->getCentreSize() && unitRandFloat() > 0.7f) {
+			if (dist2D < getAttackSize() + mPiki->getCentreSize() && gsys->getRand(1.0f) > 0.7f) {
 				PRINT("jump adjust : dist2d = %.1f d = %.1f\n", dist2D, dist3D);
 				mState = 2;
 			}
@@ -730,7 +728,7 @@ int ActJumpAttack::exec()
 
 	return ACTOUT_Continue;
 
-	u32 badCompiler[1];
+	u32 badCompiler[3];
 	/*
 	.loc_0x0:
 	  mflr      r0

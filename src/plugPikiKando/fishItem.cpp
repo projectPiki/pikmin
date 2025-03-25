@@ -43,12 +43,12 @@ void FishGenerator::startAI(int)
 	for (int i = 0; i < mFishCount; i++) {
 		Fish& fish = mFish[i];
 
-		f32 randMag   = randFloat(40.0f);
-		f32 randAngle = 2.0f * randFloat(PI);
+		f32 randMag   = (40.0f * gsys->getRand(1.0f));
+		f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
 
 		fish.mPosition = mPosition + Vector3f(randMag * sinf(randAngle), 4.0f, randMag * cosf(randAngle));
 		fish.mVelocity.set(0.0f, 0.0f, 0.0f);
-		fish.mDirection = 2.0f * randFloat(PI);
+		fish.mDirection = 2.0f * (PI * gsys->getRand(1.0f));
 	}
 	/*
 	.loc_0x0:
@@ -235,7 +235,7 @@ void FishGenerator::moveFish(Fish* fish)
 	}
 
 	// Update fish movement
-	if (nearestFish && unitRandFloat() > 0.1f) {
+	if (nearestFish && gsys->getRand(1.0f) > 0.1f) {
 		// 90% chance to move towards the center of the school
 		Vector3f dir(averageDirection);
 		Vector3f centreDir = mSchoolCentre - fish->mPosition;
@@ -246,7 +246,7 @@ void FishGenerator::moveFish(Fish* fish)
 
 	} else {
 		// No nearby fish - wander and try to return to school
-		f32 randomTurnAngle = randBalanced(0.5f) * PI * 0.1f;
+		f32 randomTurnAngle = (gsys->getRand(1.0f) - 0.5f) * PI * 0.1f;
 		fish->mDirection    = roundAng(fish->mDirection + randomTurnAngle);
 
 		Vector3f schoolDirection = mSchoolCentre - fish->mPosition;

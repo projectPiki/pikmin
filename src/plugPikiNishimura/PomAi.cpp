@@ -367,9 +367,7 @@ void PomAi::createPikiHead()
 	rumbleMgr->start(10, 0, mPom->mPosition);
 	playSound(3);
 	mReleasedSeedCount++;
-
-	// I cannot get getRand to match the stack and ordering in both this and Boss without doing this.
-	u32 badCompiler[2];
+	u32 badCompiler;
 }
 
 /*

@@ -174,19 +174,19 @@ void RockGen::create(int num, f32 radius, int)
 	mSize          = radius;
 
 	for (int i = 0; i < num; i++) {
-		f32 randomFactor = unitRandFloat();
-		f32 finalRadius  = ((1.0f - randomFactor) * unitRandFloat() + randomFactor);
+		f32 randomFactor = gsys->getRand(1.0f);
+		f32 finalRadius  = ((1.0f - randomFactor) * gsys->getRand(1.0f) + randomFactor);
 		finalRadius *= radius;
 
-		f32 randomAngle = randFloat(TAU);
+		f32 randomAngle = (TAU * gsys->getRand(1.0f));
 		Vector3f pebbleOffset(sinf(randomAngle) * finalRadius, 0.0f, cosf(randomAngle) * finalRadius);
 		pebbleOffset   = pebbleOffset + mPosition;
 		pebbleOffset.y = mapMgr->getMinY(pebbleOffset.x, pebbleOffset.z, true);
 
 		Pebble& obj          = mPebbles[i];
 		obj.mPosition        = pebbleOffset;
-		obj.mRotationDegrees = 0.99999f * randFloat(255.0f);
-		obj.mShapeIndex      = 0.99999f * randFloat(3.0f);
+		obj.mRotationDegrees = 0.99999f * (255.0f * gsys->getRand(1.0f));
+		obj.mShapeIndex      = 0.99999f * (3.0f * gsys->getRand(1.0f));
 		obj.mHealth          = obj.mShapeIndex * 2 + 2;
 	}
 
@@ -307,7 +307,7 @@ Pebble* RockGen::getRandomPebble()
 		return nullptr;
 	}
 
-	int randomPebbleCount = mActivePebbles * unitRandFloat() * 0.99999f;
+	int randomPebbleCount = mActivePebbles * gsys->getRand(1.0f) * 0.99999f;
 	for (int i = 0; i < mMaxPebbles; i++) {
 		Pebble& pebble = mPebbles[i];
 		if (!pebble.mHealth) {
@@ -352,18 +352,18 @@ void GrassGen::create(int num, f32 size, int)
 	mSize            = size;
 
 	for (int i = 0; i < num; i++) {
-		f32 finalRadius = unitRandFloat();
-		finalRadius     = ((1.0f - finalRadius) * unitRandFloat() + finalRadius);
+		f32 finalRadius = gsys->getRand(1.0f);
+		finalRadius     = ((1.0f - finalRadius) * gsys->getRand(1.0f) + finalRadius);
 		finalRadius *= size;
 
-		f32 randomAngle = randFloat(TAU);
+		f32 randomAngle = (TAU * gsys->getRand(1.0f));
 		Vector3f grassOffset(sinf(randomAngle) * finalRadius, 0.0f, cosf(randomAngle) * finalRadius);
 		grassOffset   = grassOffset + mPosition;
 		grassOffset.y = mapMgr->getMinY(grassOffset.x, grassOffset.z, true);
 
 		Grass& obj    = mGrass[i];
 		obj.mPosition = grassOffset;
-		obj._0E       = 0.99999f * randFloat(255.0f);
+		obj._0E       = 0.99999f * (255.0f * gsys->getRand(1.0f));
 		obj._0D       = 0;
 		obj.mHealth   = 1;
 	}
@@ -443,7 +443,7 @@ Grass* GrassGen::getRandomGrass()
 	if (mActiveGrass <= 0)
 		return nullptr;
 
-	int id = mActiveGrass * unitRandFloat() * 0.99999f;
+	int id = mActiveGrass * gsys->getRand(1.0f) * 0.99999f;
 	for (int i = 0; i < mTotalGrassCount; i++) {
 		Grass& pb = mGrass[i];
 		if (!pb.mHealth) {
@@ -525,8 +525,6 @@ void WeedsGen::startAI(int ai)
 		gen->mItemShape = mWeedShape;
 		gen->startAI(0);
 	}
-
-	f32 badcompiler[2];
 }
 
 /*

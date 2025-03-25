@@ -119,8 +119,6 @@ void GemItem::setColorType(int col)
 	if (mItemShapeObject) {
 		mItemAnimator.init(&mItemShapeObject->mAnimContext, mItemShapeObject->mAnimMgr, itemMgr->mItemMotionTable);
 	}
-
-	f32 badcompiler[2];
 }
 
 /*
@@ -311,7 +309,7 @@ void GemItem::split()
 			Vector3f pos  = mPosition;
 			mPosition.y += 10.0f;
 
-			f32 angle      = 2.0f * randFloat(PI);
+			f32 angle      = 2.0f * (PI * gsys->getRand(1.0f));
 			f32 vertSpeed  = 240.0f;
 			f32 horizSpeed = 40.0f;
 

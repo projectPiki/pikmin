@@ -148,7 +148,7 @@ void PikiHeadItem::startAI(int)
 	f32 scale = 1.0f;
 	mScale.set(scale, scale, scale);
 
-	enableAirResist(10.0f - randFloat(0.5f));
+	enableAirResist(10.0f - (0.5f * gsys->getRand(1.0f)));
 
 	C_SAI(this)->start(this, PikiHeadAI::PIKIHEAD_Wait);
 

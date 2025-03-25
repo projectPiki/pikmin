@@ -42,7 +42,7 @@ void ActEscape::Initialiser::initialise(Action*)
  */
 void ActEscape::init(Creature* target)
 {
-	mEscapeTimer = randFloat(2.0f) + 4.0f;
+	mEscapeTimer = (2.0f * gsys->getRand(1.0f)) + 4.0f;
 	mTarget.set(target);
 	mState = STATE_Normal;
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -91,7 +91,7 @@ int ActEscape::exec()
 		if (dist > 0.0f) {
 			escapeDirection = (1.0f / dist) * escapeDirection;
 		} else {
-			f32 randAngle = 2.0f * randFloat(PI);
+			f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
 			escapeDirection.set(cosf(randAngle), 0.0f, sinf(randAngle));
 		}
 

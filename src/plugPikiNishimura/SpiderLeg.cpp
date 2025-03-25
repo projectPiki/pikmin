@@ -225,18 +225,19 @@ void SpiderLeg::createDeadBombEffect()
  */
 void SpiderLeg::createSmallSparkEffect(int count)
 {
+	int i;
 	int legVals[12] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	};
 
 	int boundedCount = NsLibMath<int>::revice(count, 1, 11);
-	for (int i = 0; i < boundedCount; i++) {
+	for (i = 0; i < boundedCount; i++) {
 		legVals[i] = 1;
 	}
 
 	// shuffle
-	for (int i = 0; i < 12; i++) {
-		int rand      = NsMathI::getRand1(12);
+	for (i = 0; i < 12; i++) {
+		int rand      = NsMathI::getRand(12);
 		int tmp       = legVals[i];
 		legVals[i]    = legVals[rand];
 		legVals[rand] = tmp;
@@ -851,11 +852,11 @@ void SpiderLeg::setNextDirAndCent()
 {
 	if (!_09[0] && _15[0] && !_07) {
 		f32 centreDist = C_SPIDER_PROP(mSpider)._2B4()
-		               + NsMathF::getRand1(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._2C4() - C_SPIDER_PROP(mSpider)._2B4()));
+		               + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._2C4() - C_SPIDER_PROP(mSpider)._2B4()));
 		f32 dirChangeThreshold = C_SPIDER_PROP(mSpider)._2F4()
-		                       + NsMathF::getRand1(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._304() - C_SPIDER_PROP(mSpider)._2F4()));
+		                       + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._304() - C_SPIDER_PROP(mSpider)._2F4()));
 		f32 distFactor = C_SPIDER_PROP(mSpider)._4D4()
-		               + NsMathF::getRand1(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._4E4() - C_SPIDER_PROP(mSpider)._4D4()));
+		               + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._4E4() - C_SPIDER_PROP(mSpider)._4D4()));
 		f32 factorThreshold
 		    = qdist2(mSpider->mPosition.x, mSpider->mPosition.z, mSpider->getTargetPosition()->x, mSpider->getTargetPosition()->z);
 
@@ -922,7 +923,7 @@ void SpiderLeg::setWalkNewPosition()
 			f32 vals[4] = { 1.75f, 1.25f, 0.25f, 0.75f };
 			f32 angle   = _E4 - PI * vals[i];
 			f32 dist    = C_SPIDER_PROP(mSpider)._2D4()
-			         + NsMathF::getRand1(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._2E4() - C_SPIDER_PROP(mSpider)._2D4()));
+			         + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._2E4() - C_SPIDER_PROP(mSpider)._2D4()));
 
 			vec.x = dist * sinf(angle);
 			vec.z = dist * cosf(angle);
@@ -1169,7 +1170,7 @@ void SpiderLeg::setRealCentre(Vector3f& centre)
 
 	f32 dist = _258.length();
 
-	if (dist > 0.0f) {
+	if (dist > 6.0f) {
 		_258.normalise();
 		_258.multiply(6.0f);
 	}
@@ -1401,9 +1402,9 @@ void SpiderLeg::stepShakeOffPiki(int legNum)
 			for (int i = 0; i < childCount; i++) {
 				if (legNum == Kumo::legId[i] && piki->getStickPart() && boundPart && boundPart->getChildAt(i)
 				    && boundPart->getChildAt(i)->getID().mId == piki->getStickPart()->getID().mId) {
-					if (NsMathF::getRand1(1.0f) < C_SPIDER_PROP(mSpider)._354()) {
-						f32 damage = C_SPIDER_PROP(mSpider)._374();
-						piki->stimulate(InteractFlick(mSpider, C_SPIDER_PROP(mSpider)._364(), damage, FLICK_BACKWARDS_ANGLE));
+					if (NsMathF::getRand(1.0f) < C_SPIDER_PROP(mSpider)._354()) {
+						piki->stimulate(
+						    InteractFlick(mSpider, C_SPIDER_PROP(mSpider)._364(), C_SPIDER_PROP(mSpider)._374(), FLICK_BACKWARDS_ANGLE));
 						iter.dec();
 					}
 				}

@@ -94,12 +94,11 @@ void KoganeAi::initAI(Kogane* kogane)
 	mKogane->setCurrentState(1);
 	mKogane->setNextState(1);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(6, this));
-	mInWater    = 0;
-	mDropCount  = 0;
-	mEffectType = EffectMgr::EFF_NULL;
-	mAppearTimer
-	    = C_KOGANE_PROP(mKogane).mAppearTimeMin()
-	    + NsMathF::getRand1(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mAppearTimeMax() - C_KOGANE_PROP(mKogane).mAppearTimeMin()));
+	mInWater     = 0;
+	mDropCount   = 0;
+	mEffectType  = EffectMgr::EFF_NULL;
+	mAppearTimer = C_KOGANE_PROP(mKogane).mAppearTimeMin()
+	             + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mAppearTimeMax() - C_KOGANE_PROP(mKogane).mAppearTimeMin()));
 }
 
 /*
@@ -311,10 +310,10 @@ void KoganeAi::setNewTargetPosition()
 
 	f32 randGoalDist
 	    = (C_KOGANE_PROP(mKogane).mGoalDistMin()
-	       + NsMathF::getRand1(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalDistMax() - C_KOGANE_PROP(mKogane).mGoalDistMin())));
+	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalDistMax() - C_KOGANE_PROP(mKogane).mGoalDistMin())));
 
 	Vector3f targetPos;
-	if (NsMathF::getRand1(1.0f) > 0.5f) {
+	if (NsMathF::getRand(1.0f) > 0.5f) {
 		angle += randGoalAngle;
 	} else {
 		angle -= randGoalAngle;
@@ -342,10 +341,10 @@ void KoganeAi::setRouteTargetPosition()
 
 	f32 randGoalDist
 	    = (C_KOGANE_PROP(mKogane).mGoalDistMin()
-	       + NsMathF::getRand1(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalDistMax() - C_KOGANE_PROP(mKogane).mGoalDistMin())));
+	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalDistMax() - C_KOGANE_PROP(mKogane).mGoalDistMin())));
 
 	Vector3f targetPos;
-	if (NsMathF::getRand1(1.0f) > 0.5f) {
+	if (NsMathF::getRand(1.0f) > 0.5f) {
 		angle += randGoalAngle;
 	} else {
 		angle -= randGoalAngle;
@@ -675,7 +674,7 @@ void KoganeAi::initStopWalk(int nextState)
 	mKogane->mAnimator.startMotion(PaniMotionInfo(2, this));
 	makeStopMoving();
 	_1C = C_KOGANE_PROP(mKogane).mIdleTimeMin()
-	    + NsMathF::getRand1(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mIdleTimeMax() - C_KOGANE_PROP(mKogane).mIdleTimeMin()));
+	    + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mIdleTimeMax() - C_KOGANE_PROP(mKogane).mIdleTimeMin()));
 
 	if (mEffectType >= 0) {
 		effectMgr->create(mEffectType, mKogane->mPosition, nullptr, nullptr);

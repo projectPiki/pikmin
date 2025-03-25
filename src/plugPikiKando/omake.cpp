@@ -152,7 +152,7 @@ void NoiseFunction::init(int count)
 	mCount  = count;
 	mValues = new f32[mCount];
 	for (int i = 0; i < count; i++) {
-		mValues[i] = System::getRand(1.0f);
+		mValues[i] = gsys->getRand(1.0f);
 	}
 }
 

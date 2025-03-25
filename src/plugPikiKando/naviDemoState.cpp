@@ -74,10 +74,10 @@ void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 	f32 dist      = std::sqrtf(diff.x * diff.x + diff.z * diff.z);
 	f32 nrm       = diff.normalise() / state->_2C;
 
-	if (nrm > 0.7f && nrm < 0.71f && randChance(0.9999f)) {
+	if (nrm > 0.7f && nrm < 0.71f && gsys->getRand(1.0f) >= 0.9999f) {
 		_14 = true;
 		state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Korobu, state->mNavi), PaniMotionInfo(PIKIANIM_Korobu));
-		_10 = (int)(randFloat(4.0f)) + 2;
+		_10 = (int)(4.0f * gsys->getRand(1.0f)) + 2;
 		return;
 	}
 

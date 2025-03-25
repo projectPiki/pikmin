@@ -53,7 +53,7 @@ void ActWatch::Initialiser::initialise(Action*)
 void ActWatch::init(Creature* target)
 {
 	if (target) {
-		mWatchRetryTimer = int(randFloat(20.0f)) + 50;
+		mWatchRetryTimer = int(20.0f * gsys->getRand(1.0f)) + 50;
 		mTarget.set(target);
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
 		mPiki->enableMotionBlend();

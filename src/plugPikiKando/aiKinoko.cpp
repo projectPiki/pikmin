@@ -193,15 +193,15 @@ void ActKinoko::initBoid()
 		return;
 	}
 
-	mStateTimer  = 2.0f * System::getRand(1.0f) + 1.5f;
+	mStateTimer  = 2.0f * gsys->getRand(1.0f) + 1.5f;
 	Vector3f sep = target->mPosition - mPiki->mPosition;
 	f32 dist     = sep.normalise();
 	Vector3f orthoDir(sep.z, 0.0f, -sep.x);
-	if (System::getRand(1.0f) > 0.5f) {
+	if (gsys->getRand(1.0f) > 0.5f) {
 		orthoDir.multiply(-1.0f);
 	}
 
-	orthoDir = orthoDir + (0.2f * (System::getRand(1.0f) - 0.5f)) * sep;
+	orthoDir = orthoDir + (0.2f * (gsys->getRand(1.0f) - 0.5f)) * sep;
 	orthoDir.normalise();
 	mTargetDirection = orthoDir;
 

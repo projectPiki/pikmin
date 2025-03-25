@@ -54,7 +54,7 @@ void ActBridge::init(Creature* creature)
 	}
 
 	mState         = STATE_Approach;
-	mActionCounter = randFloat(4.0f);
+	mActionCounter = (4.0f * gsys->getRand(1.0f));
 }
 
 /*
@@ -352,7 +352,6 @@ int ActBridge::newExeApproach()
 	}
 
 	Vector3f direction = mBridge->getStartPos() - mPiki->getPosition();
-	u32 badCompiler2;
 	if (direction.normalise() < 300.0f) {
 		f32 bridgePosY;
 		f32 bridgePosX;
@@ -364,7 +363,8 @@ int ActBridge::newExeApproach()
 			return ACTOUT_Success;
 		}
 
-		bridgePosY -= (20.0f + mBridge->getStageZ(currStage));
+		f32 stageZ = mBridge->getStageZ(currStage);
+		bridgePosY -= (20.0f + stageZ);
 
 		if (zen::Abs(bridgePosX) < 0.8f * (0.5f * mBridge->getStageWidth())) {
 			if (bridgePosY <= 0.0f) {
@@ -380,6 +380,7 @@ int ActBridge::newExeApproach()
 				return ACTOUT_Fail;
 			}
 		} else {
+			u32 badCommpiler;
 			Vector3f newDir;
 			if (bridgePosY > -10.0f) {
 				newDir = mBridge->getBridgeZVec();
@@ -398,7 +399,7 @@ int ActBridge::newExeApproach()
 
 	return ACTOUT_Continue;
 
-	u32 badCompiler;
+	PRINT("fake", mBridge ? "fake" : "fake");
 
 	/*
 	.loc_0x0:
@@ -659,7 +660,7 @@ void ActBridge::newInitGo()
 	mState = STATE_Go;
 	if (mBridge) {
 		mStageIdx          = mBridge->getFirstUnfinishedStage();
-		mRandomBridgeWidth = randBalanced(0.5f);
+		mRandomBridgeWidth = gsys->getRand(1.0f) - 0.5f;
 	} else {
 		mStageIdx = -1;
 	}

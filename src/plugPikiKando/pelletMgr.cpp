@@ -719,7 +719,7 @@ int Pellet::getNearestFreeSlotIndex(Vector3f& pos)
 int Pellet::getRandomFreeSlotIndex()
 {
 	int maxCarryNum = mConfig->mCarryMaxPikis();
-	int randIdx     = System::getRand(1.0f) * maxCarryNum;
+	int randIdx     = gsys->getRand(1.0f) * maxCarryNum;
 	int idDist      = 128;
 	int outIdx      = -1;
 	for (int i = 0; i < maxCarryNum; i++) {

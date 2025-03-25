@@ -433,7 +433,7 @@ void Navi::startDamageEffect()
 	mDamageEfxC = ptclGenC;
 
 	int vibTypes[2] = { 0, 1 };
-	f32 randIdx     = System::getRand(1.0f);
+	f32 randIdx     = gsys->getRand(1.0f);
 	int vib         = vibTypes[int(2.0f * randIdx * 0.9999999f)];
 	cameraMgr->startVibrationEvent(vib, mPosition);
 

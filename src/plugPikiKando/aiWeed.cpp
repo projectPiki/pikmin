@@ -222,12 +222,12 @@ void ActWeed::animationKeyUpdated(PaniAnimKeyEvent& event)
 			}
 			mGrassGen->killGrass();
 
-			if (unitRandFloat() > (1.0f - GRASS_NECTAR_CHANCE)) {
+			if (gsys->getRand(1.0f) > (1.0f - GRASS_NECTAR_CHANCE)) {
 				MizuItem* nectar = static_cast<MizuItem*>(itemMgr->birth(OBJTYPE_FallWater));
 				if (nectar) {
 					Vector3f nectarPos(mCurrGrass->mPosition);
 					nectarPos.y += 10.0f;
-					f32 randAngle  = 2.0f * randFloat(PI);
+					f32 randAngle  = 2.0f * (PI * gsys->getRand(1.0f));
 					f32 horizSpeed = 30.0f;
 					f32 vertSpeed  = 400.0f;
 					Vector3f vel(30.0f * sinf(randAngle), vertSpeed, 30.0f * cosf(randAngle));

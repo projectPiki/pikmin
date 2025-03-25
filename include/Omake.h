@@ -201,7 +201,7 @@ struct ClothFader : public AttentionCamera::Fader {
 			for (j = 0; j < _10; j++) {
 				Vector3f vec(0.0f, 0.0f, 0.0f);
 				if (i != 0 && j != 0 && i != _0E - 1 && j != _10 - 1) {
-					vec.set(System::getRand(1.0f) - 2.0f, System::getRand(1.0f) - 2.0f, 0.0f);
+					vec.set(gsys->getRand(1.0f) - 2.0f, gsys->getRand(1.0f) - 2.0f, 0.0f);
 					vec.multiply(8.0f);
 					mParticles[i + j * _0E]._00.add(vec);
 				}

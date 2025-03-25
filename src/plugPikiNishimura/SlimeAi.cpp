@@ -667,8 +667,6 @@ void SlimeAi::makeTargetRandom()
 		mSlime->setTargetPosition(newTarget);
 		mSlime->setWalkTimer(0.0f);
 	}
-
-	u32 badCompiler;
 }
 
 /*

@@ -1340,7 +1340,7 @@ void Spine::init(Creature* target)
 	f32 rad    = 7.0f;
 	mRope->_30 = 7.0f;
 	_04        = 10;
-	f32 angle  = 2.0f * randFloat(PI);
+	f32 angle  = 2.0f * (PI * gsys->getRand(1.0f));
 	pos        = pos + Vector3f(rad * sinf(angle), 0.0f, rad * cosf(angle));
 	mRope->_18 = pos;
 	Rope* rope = mRope;
@@ -1350,7 +1350,7 @@ void Spine::init(Creature* target)
 		rope       = rope->_3C;
 		rope->_38  = prev;
 
-		f32 angle2 = 2.0f * randFloat(PI);
+		f32 angle2 = 2.0f * (PI * gsys->getRand(1.0f));
 		pos        = pos + Vector3f(rad * sinf(angle2), 0.0f, rad * cosf(angle2));
 		rope->_18  = pos;
 		rope->_30  = rad;
