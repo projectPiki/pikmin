@@ -20,7 +20,7 @@ enum TaiChappyIntParams {
  * @brief TODO
  */
 enum TaiChappyFloatParams {
-	CHAPPYPF_PressedPeriod = TPF_COUNT, // _50
+	CHAPPYPF_PressedPeriod = TPF_COUNT, // 50
 	CHAPPYPF_CryingPeriod,              // 51
 	CHAPPYPF_SmashDamage,               // 52
 	CHAPPYPF_COUNT,                     // 53

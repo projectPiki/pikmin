@@ -9,38 +9,72 @@
 
 /////////// (Big) Bulborb AI Actions ///////////
 
-/*
+/**
+ * @brief TODO
+ */
+enum TaiSwallowFloatParams {
+	SWALLOWPF_NoticeDistance = TPF_COUNT, // 50
+	SWALLOWPF_LowerDamageRate,            // 51
+	SWALLOWPF_LowerDamageCountRate,       // 52
+	SWALLOWPF_TurnVelocityFuncMaxCount,   // 53
+	SWALLOWPF_TurnVelocityFuncMaxRate,    // 54
+	SWALLOWPF_FlickLowerAngle,            // 55
+	SWALLOWPF_COUNT,                      // 56
+};
+
+/**
+ * @brief TODO
+ */
+enum TaiSwallowStateID {
+	SWALLOWSTATE_Unk0  = 0,
+	SWALLOWSTATE_Unk1  = 1,
+	SWALLOWSTATE_Unk2  = 2,
+	SWALLOWSTATE_Unk3  = 3,
+	SWALLOWSTATE_Unk4  = 4,
+	SWALLOWSTATE_Unk5  = 5,
+	SWALLOWSTATE_Unk6  = 6,
+	SWALLOWSTATE_Unk7  = 7,
+	SWALLOWSTATE_Unk8  = 8,
+	SWALLOWSTATE_Unk9  = 9,
+	SWALLOWSTATE_Unk10 = 10,
+	SWALLOWSTATE_Unk11 = 11,
+	SWALLOWSTATE_Unk12 = 12,
+	SWALLOWSTATE_Unk13 = 13,
+	SWALLOWSTATE_Unk14 = 14,
+	SWALLOWSTATE_Unk15 = 15,
+	SWALLOWSTATE_COUNT, // 16
+};
+
+/**
  * @brief TODO
  */
 struct TaiSwallowSoundTable : public PaniSoundTable {
 	TaiSwallowSoundTable();
 
-	// TODO: members
+	// _00-_08 = PaniSoundTable
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiSwallowParameters : public TekiParameters {
 	TaiSwallowParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_88 = TekiParameters
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiBlackSwallowParameters : public TekiParameters {
 	TaiBlackSwallowParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_88 = TekiParameters
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiSwallowStrategy : public TaiStrategy {
@@ -54,48 +88,49 @@ struct TaiSwallowStrategy : public TaiStrategy {
 	bool isSleeping(Teki&);
 
 	// _00     = VTBL
-	// _00-_10 = TaiStrategy
-	// TODO: members
+	// _00-_14 = TaiStrategy
 };
 
 /**
  * @brief TODO
  */
 struct TaiSwallowReceiveMessageAction : public TaiAction {
-	inline TaiSwallowReceiveMessageAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiSwallowReceiveMessageAction(int nextState, int p2)
+	    : TaiAction(nextState)
 	{
+		_08 = p2;
 	}
 
 	virtual bool actByEvent(TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int _08; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiSwallowTurningAction : public TaiContinuousMotionAction {
-	inline TaiSwallowTurningAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	TaiSwallowTurningAction(int nextState, int motionIdx, f32 turnSpeed)
+	    : TaiContinuousMotionAction(nextState, motionIdx)
 	{
+		mTurnSpeed = turnSpeed;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
-	// _00-_08 = TaiContinuousMotionAction?
-	// TODO: members
+	// _00-_0C = TaiContinuousMotionAction
+	f32 mTurnSpeed; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TaiSwallowFlickingAction : public TaiMotionAction {
-	inline TaiSwallowFlickingAction() // TODO: this is a guess
-	    : TaiMotionAction(-1, 0)
+	TaiSwallowFlickingAction(int nextState, int motionIdx)
+	    : TaiMotionAction(nextState, motionIdx)
 	{
 	}
 
@@ -130,8 +165,8 @@ struct TaiSwallowSwallowingFlickAction : public TaiAction {
  * @brief TODO
  */
 struct TaiSwallowSnoreAction : public TaiAction {
-	inline TaiSwallowSnoreAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiSwallowSnoreAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -147,8 +182,8 @@ struct TaiSwallowSnoreAction : public TaiAction {
  * @brief TODO
  */
 struct TaiSwallowNoticeAction : public TaiAction {
-	inline TaiSwallowNoticeAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiSwallowNoticeAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 

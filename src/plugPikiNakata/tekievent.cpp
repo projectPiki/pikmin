@@ -28,7 +28,7 @@ TekiEvent::TekiEvent(int collisionType, Teki* teki, Creature* creature)
  */
 void TekiEvent::init(int collisionType, Teki* teki, Creature* creature)
 {
-	mCollisionType = (TekiEventType::Type)collisionType;
-	mTeki          = teki;
-	mOther         = creature;
+	mEventType = (TekiEventType::Type)collisionType;
+	mTeki      = teki;
+	mOther     = creature;
 }

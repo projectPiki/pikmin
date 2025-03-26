@@ -346,8 +346,8 @@ struct TaiPressedAction : public TaiAction {
  * @brief TODO
  */
 struct TaiWarnAction : public TaiAction {
-	inline TaiWarnAction(int nextState) // TODO: this is a guess
-	    : TaiAction(nextState)
+	TaiWarnAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

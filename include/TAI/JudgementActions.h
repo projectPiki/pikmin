@@ -24,8 +24,8 @@ struct TaiVisibleTargetAction : public TaiAction {
  * @brief TODO
  */
 struct TaiContactTargetAction : public TaiAction {
-	inline TaiContactTargetAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiContactTargetAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -33,15 +33,14 @@ struct TaiContactTargetAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TaiSeparateTargetAction : public TaiAction {
-	inline TaiSeparateTargetAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiSeparateTargetAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -49,7 +48,6 @@ struct TaiSeparateTargetAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**

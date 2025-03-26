@@ -121,7 +121,7 @@ struct TekiInteractionKey {
 	Interaction* mInteraction; // _04
 };
 
-DEFINE_ENUM_TYPE(TekiEventType, Ground = 0, Entity = 1, Wall = 2, Pressed = 3);
+DEFINE_ENUM_TYPE(TekiEventType, Ground = 0, Entity = 1, Wall = 2, Pressed = 3, WakeUpCall = 4);
 
 /**
  * @brief TODO
@@ -134,9 +134,9 @@ struct TekiEvent {
 
 	void init(int collisionType, Teki* teki, Creature* other);
 
-	TekiEventType::Type mCollisionType; // _00
-	Teki* mTeki;                        // _04
-	Creature* mOther;                   // _08
+	TekiEventType::Type mEventType; // _00
+	Teki* mTeki;                    // _04
+	Creature* mOther;               // _08
 };
 
 /**

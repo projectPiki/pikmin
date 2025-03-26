@@ -572,5 +572,5 @@ void TaiKinokoLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 		mEffectType = EffectMgr::EFF_SmokeRing_S;
 	}
 
-	_18 = EffectMgr::EFF_SmokeRing_M;
+	_18 = 67;
 }

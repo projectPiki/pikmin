@@ -235,7 +235,7 @@ void TaiAnimationSwallowingAction::finish(Teki& teki)
  */
 bool TaiBangingAction::actByEvent(TekiEvent& event)
 {
-	if (event.mCollisionType == TekiEventType::Entity) {
+	if (event.mEventType == TekiEventType::Entity) {
 		event.mOther->stimulate(InteractPress(event.mTeki, event.mTeki->getParameterF(TPF_AttackPower)));
 		return true;
 	}

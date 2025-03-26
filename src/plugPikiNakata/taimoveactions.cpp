@@ -663,7 +663,7 @@ void TaiTargetNestAction::start(Teki& teki)
  */
 bool TaiHeadOnCollisionAvoidanceAction::actByEvent(TekiEvent& event)
 {
-	if (event.mCollisionType == TekiEventType::Entity) {
+	if (event.mEventType == TekiEventType::Entity) {
 		Creature* other = event.mOther;
 		if (other->mObjType == OBJTYPE_Teki) {
 			Teki* otherTeki = (Teki*)other;

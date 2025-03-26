@@ -251,7 +251,7 @@ bool TaiTargetNearestAssailantAction::act(Teki& teki)
 bool TaiTargetNearestCollisionAction::actByEvent(TekiEvent& event)
 {
 	Teki* teki = event.mTeki;
-	if (event.mCollisionType != TekiEventType::Entity) {
+	if (event.mEventType != TekiEventType::Entity) {
 		return false;
 	}
 	Creature* target = event.mOther;
@@ -287,7 +287,7 @@ bool TaiStickedAction::act(Teki& teki)
  */
 bool TaiSmashedAction::actByEvent(TekiEvent& event)
 {
-	if (event.mCollisionType == TekiEventType::Entity) {
+	if (event.mEventType == TekiEventType::Entity) {
 		Teki* teki      = event.mTeki;
 		Creature* other = event.mOther;
 		if (other->mObjType == OBJTYPE_Piki && static_cast<Piki*>(other)->getState() == PIKISTATE_Flying) {
@@ -317,7 +317,7 @@ void TaiBeingPressedAction::start(Teki& teki)
  */
 bool TaiPressedAction::actByEvent(TekiEvent& event)
 {
-	if (event.mCollisionType == TekiEventType::Pressed) {
+	if (event.mEventType == TekiEventType::Pressed) {
 		PRINT("TaiPressedAction::actByEvent:EVENT_PRESSED:%08x\n", event.mTeki);
 		return true;
 	}

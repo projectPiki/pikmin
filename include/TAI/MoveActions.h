@@ -384,8 +384,8 @@ struct TaiTraceTurningAction : public TaiContinuousMotionAction {
  * @brief TODO
  */
 struct TaiOutOfTraceAngleAction : public TaiAction {
-	inline TaiOutOfTraceAngleAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOutOfTraceAngleAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 

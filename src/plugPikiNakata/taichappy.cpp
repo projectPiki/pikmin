@@ -593,5 +593,5 @@ void TaiChappyLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 		mEffectType = EffectMgr::EFF_SmokeRing_S;
 	}
 
-	_18 = EffectMgr::EFF_Bomb_Glow;
+	_18 = 32;
 }
