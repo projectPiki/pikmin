@@ -39,7 +39,7 @@ enum PikiSoundID {
 	SE_SOFTWALL_HIT      = 0x1D,
 	SE_WALL_DOWN         = 0x1E,
 	SE_BOMB              = 0x1F,
-	SE_MINIC_WALK        = 0x20,
+	SE_MINIC_WALK        = 0x20, // mini-chappy, i.e. chappy
 	SE_MINIC_FOOTDAMAGE  = 0x21,
 	SE_MINIC_DIE         = 0x22,
 	SE_MINIC_SWING       = 0x23,
@@ -169,7 +169,7 @@ enum PikiSoundID {
 	SE_PONGASHI_SHOT     = 0x9F,
 	SE_PONGASHI_DEAD     = 0xA0,
 	SE_PONGASHI_TOUCH    = 0xA1,
-	SE_NAMAZU_WALK       = 0xA2,
+	SE_NAMAZU_WALK       = 0xA2, // a.k.a. catfish
 	SE_NAMAZU_EAT        = 0xA3,
 	SE_NAMAZU_DEAD       = 0xA4,
 	SE_OTAMA_JUMP        = 0xA5,

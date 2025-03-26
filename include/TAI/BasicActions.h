@@ -8,9 +8,10 @@
  * @brief TODO
  */
 struct TaiActionStateAction : public TaiAction {
-	inline TaiActionStateAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiActionStateAction(int nextState, int actionState)
+	    : TaiAction(nextState)
 	{
+		mActionState = actionState;
 	}
 
 	virtual void start(Teki&); // _08
@@ -18,7 +19,7 @@ struct TaiActionStateAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int mStateID; // _08
+	int mActionState; // _08
 };
 
 /**

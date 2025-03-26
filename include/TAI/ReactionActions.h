@@ -23,8 +23,8 @@ struct TaiDeadAction : public TaiAction {
  * @brief TODO
  */
 struct TaiLifeZeroAction : public TaiAction {
-	inline TaiLifeZeroAction(int nextState) // TODO: this is a guess
-	    : TaiAction(nextState)
+	TaiLifeZeroAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -120,8 +120,8 @@ struct TaiCreateDeadEffectAction : public TaiAction {
  * @brief TODO
  */
 struct TaiDyingAction : public TaiMotionAction {
-	TaiDyingAction(int p1)
-	    : TaiMotionAction(TAI_NO_TRANSIT, p1)
+	TaiDyingAction(int motionIdx)
+	    : TaiMotionAction(TAI_NO_TRANSIT, motionIdx)
 	{
 	}
 
@@ -300,7 +300,7 @@ struct TaiStickedAction : public TaiAction {
  * @brief TODO
  */
 struct TaiSmashedAction : public TaiAction {
-	inline TaiSmashedAction(int nextState) // TODO: this is a guess
+	TaiSmashedAction(int nextState)
 	    : TaiAction(nextState)
 	{
 	}
@@ -309,7 +309,6 @@ struct TaiSmashedAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
@@ -332,7 +331,7 @@ struct TaiBeingPressedAction : public TaiAction {
  * @brief TODO
  */
 struct TaiPressedAction : public TaiAction {
-	inline TaiPressedAction(int nextState) // TODO: this is a guess
+	TaiPressedAction(int nextState)
 	    : TaiAction(nextState)
 	{
 	}
@@ -341,7 +340,6 @@ struct TaiPressedAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**

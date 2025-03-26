@@ -54,27 +54,26 @@ enum TaiKinokoStateID {
 	KINOKOSTATE_COUNT, // 13
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiKinokoSoundTable : public PaniSoundTable {
 	TaiKinokoSoundTable();
 
-	// TODO: members
+	// _00-_08 = PaniSoundTable
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiKinokoParameters : public TekiParameters {
 	TaiKinokoParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_88 = TekiParameters
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiKinokoStrategy : public TaiStrategy {
@@ -85,8 +84,7 @@ struct TaiKinokoStrategy : public TaiStrategy {
 	virtual void draw(Teki&, Graphics&);   // _18
 
 	// _00     = VTBL
-	// _00-_10 = TaiStrategy
-	// TODO: members
+	// _00-_14 = TaiStrategy
 };
 
 /**

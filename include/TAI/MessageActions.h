@@ -8,9 +8,11 @@
  * @brief TODO
  */
 struct TaiKeySendMessageAction : public TaiAction {
-	inline TaiKeySendMessageAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiKeySendMessageAction(int msg, int animKeyOpt)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mMessage    = msg;
+		mAnimKeyOpt = animKeyOpt;
 	}
 
 	virtual bool act(Teki&); // _10

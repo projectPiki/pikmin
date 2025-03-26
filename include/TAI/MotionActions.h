@@ -95,16 +95,15 @@ struct TaiCountLoopAction : public TaiAction {
  * @brief TODO
  */
 struct TaiSwitchMotionAction : public TaiMotionAction {
-	inline TaiSwitchMotionAction() // TODO: this is a guess
-	    : TaiMotionAction(0, 0)
+	TaiSwitchMotionAction(int nextState, int motionIdx)
+	    : TaiMotionAction(nextState, motionIdx)
 	{
 	}
 
 	virtual void start(Teki&); // _08
 
 	// _04     = VTBL
-	// _00-_08 = TaiMotionAction
-	// TODO: members
+	// _00-_0C = TaiMotionAction
 };
 
 /**

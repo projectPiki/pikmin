@@ -56,8 +56,8 @@ struct TaiSeparateTargetAction : public TaiAction {
  * @brief TODO
  */
 struct TaiTargetLostAction : public TaiAction {
-	inline TaiTargetLostAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTargetLostAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -106,8 +106,8 @@ struct TaiInsideTerritoryAction : public TaiAction {
  * @brief TODO
  */
 struct TaiTargetVisibleNaviPikiAction : public TaiAction {
-	inline TaiTargetVisibleNaviPikiAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTargetVisibleNaviPikiAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -115,7 +115,6 @@ struct TaiTargetVisibleNaviPikiAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**

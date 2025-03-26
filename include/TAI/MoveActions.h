@@ -467,8 +467,8 @@ struct TaiRunningAwayAction : public TaiContinuousMotionAction {
  * @brief TODO
  */
 struct TaiWatchOffTerritoryCenterAction : public TaiAction {
-	inline TaiWatchOffTerritoryCenterAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiWatchOffTerritoryCenterAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
