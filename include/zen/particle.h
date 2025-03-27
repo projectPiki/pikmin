@@ -27,7 +27,7 @@ enum ParticleGeneratorFlags {
 	PTCLGEN_Finished   = 0x2,
 	PTCLGEN_Active     = 0x4,
 	PTCLGEN_GenStopped = 0x8,
-	PTCLGEN_Unk5       = 0x10,
+	PTCLGEN_Visible    = 0x10,
 };
 
 /**
@@ -281,8 +281,8 @@ struct particleGenerator : public zenList {
 	void startGen() { mGeneratorFlags &= ~PTCLGEN_GenStopped; }
 	void stopGen() { mGeneratorFlags |= PTCLGEN_GenStopped; }
 	void finish() { mGeneratorFlags |= PTCLGEN_Finished; }
-	void visible() { mGeneratorFlags |= PTCLGEN_Unk5; }
-	void invisible() { mGeneratorFlags &= ~PTCLGEN_Unk5; }
+	void visible() { mGeneratorFlags |= PTCLGEN_Visible; }
+	void invisible() { mGeneratorFlags &= ~PTCLGEN_Visible; }
 
 	bool checkStop() { return mGeneratorFlags & PTCLGEN_Stop; }
 	bool checkEmit() { return !(mGeneratorFlags & PTCLGEN_Finished); }

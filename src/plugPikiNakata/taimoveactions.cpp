@@ -299,34 +299,35 @@ bool TaiRandomWanderingRouteAction::act(Teki& teki)
 		return false;
 	}
 
-	if (teki.mRouteWayPointCount > teki.mRouteWayPointMax && teki._354 > teki.mRouteWayPointMax - 1) {
-		PRINT("TaiRandomWanderingRouteAction::act:o.routeWayPointCount>o.routeWayPointMax:%08x,%d/%d\n", &teki, teki._354,
+	if (teki.mRouteWayPointCount > teki.mRouteWayPointMax && teki.mCurrRouteWayPointID > teki.mRouteWayPointMax - 1) {
+		PRINT("TaiRandomWanderingRouteAction::act:o.routeWayPointCount>o.routeWayPointMax:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID,
 		      teki.mRouteWayPointCount);
 		makeTargetPosition(teki);
 		return false;
 	}
 
-	if (teki._354 > teki.mRouteWayPointCount - 1) {
+	if (teki.mCurrRouteWayPointID > teki.mRouteWayPointCount - 1) {
 		makeTargetPosition(teki);
 		return false;
 	}
 
-	WayPoint* wp = teki.getRouteWayPoint(teki._354);
+	WayPoint* wp = teki.getRouteWayPoint(teki.mCurrRouteWayPointID);
 	if (!wp) {
-		PRINT("?TaiRandomWanderingRouteAction::act:%08x:wayPoint==null:%d/%d\n", &teki, teki._354, teki.mRouteWayPointCount);
+		PRINT("?TaiRandomWanderingRouteAction::act:%08x:wayPoint==null:%d/%d\n", &teki, teki.mCurrRouteWayPointID,
+		      teki.mRouteWayPointCount);
 		makeTargetPosition(teki);
 		return false;
 	}
 
 	if (!wp->mIsOpen) {
-		PRINT("!TaiRandomWanderingRouteAction::act:%08x:!wayPoint->on:%d/%d\n", &teki, teki._354, teki.mRouteWayPointCount);
+		PRINT("!TaiRandomWanderingRouteAction::act:%08x:!wayPoint->on:%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
 		makeTargetPosition(teki);
 		return false;
 	}
 
 	if (teki.moveToward(wp->mPosition, _0C)) {
-		PRINT("TaiRandomWanderingRouteAction::act:%08x,%d/%d\n", &teki, teki._354, teki.mRouteWayPointCount);
-		teki._354++;
+		PRINT("TaiRandomWanderingRouteAction::act:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
+		teki.mCurrRouteWayPointID++;
 	}
 	return false;
 }
@@ -341,7 +342,7 @@ void TaiRandomWanderingRouteAction::makeTargetPosition(Teki& teki)
 	int wpIdx        = teki.getTargetNearestWayPoint(teki.getPosition())->mIndex;
 	int randRouteNum = NSystem::randomInt(routeMgr->getNumWayPoints(teki.mPathHandle) - 1);
 	teki.makeWayPointRoute(wpIdx, randRouteNum, false);
-	teki._354 = 0;
+	teki.mCurrRouteWayPointID = 0;
 }
 
 /*

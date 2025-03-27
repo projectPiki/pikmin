@@ -345,8 +345,8 @@ void BTeki::reset()
 		mTargetCreatures[i].clear();
 	}
 
-	mPathHandle = 'test';
-	_354        = -1;
+	mPathHandle          = 'test';
+	mCurrRouteWayPointID = -1;
 	mTargetPosition.set(0.0f, 0.0f, 0.0f);
 	mTargetAngle = 0.0f;
 	mActionVelocity.set(0.0f, 0.0f, 0.0f);

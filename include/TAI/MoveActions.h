@@ -8,8 +8,8 @@
  * @brief TODO
  */
 struct TaiMoveNestPositionAction : public TaiAction {
-	inline TaiMoveNestPositionAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMoveNestPositionAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

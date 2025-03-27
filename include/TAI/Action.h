@@ -120,19 +120,42 @@ struct TaiNotAction : public TaiAction {
  * @brief TODO
  */
 struct TaiDependenceAction : public TaiAction {
-	inline TaiDependenceAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiDependenceAction(int nextState, TaiAction* dependent, TaiAction* primary)
+	    : TaiAction(nextState)
 	{
+		mDependentAction = dependent;
+		mPrimaryAction   = primary;
 	}
 
-	virtual void start(Teki&);           // _08
-	virtual void finish(Teki&);          // _0C
-	virtual bool act(Teki&);             // _10
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual void start(Teki& teki) // _08
+	{
+		mDependentAction->start(teki);
+		mPrimaryAction->start(teki);
+	}
+	virtual void finish(Teki& teki) // _0C
+	{
+		mDependentAction->finish(teki);
+		mPrimaryAction->finish(teki);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		if (mPrimaryAction->act(teki)) {
+			return mDependentAction->act(teki);
+		}
+		return false;
+	}
+	virtual bool actByEvent(TekiEvent& event) // _14
+	{
+		if (mPrimaryAction->actByEvent(event)) {
+			return mDependentAction->actByEvent(event);
+		}
+		return false;
+	}
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	TaiAction* mDependentAction; // _08
+	TaiAction* mPrimaryAction;   // _0C
 };
 
 /**

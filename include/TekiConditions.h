@@ -107,13 +107,18 @@ struct TekiAttackableCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiCollecTargetPelletCondition : public TekiCondition {
-	TekiCollecTargetPelletCondition(Teki*, int); // DLL, to do
+	TekiCollecTargetPelletCondition(Teki* collec, int carryPower)
+	{
+		mCollec     = collec;
+		mCarryPower = carryPower;
+	}
 
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Teki* mCollec;   // _04
+	int mCarryPower; // _08
 };
 
 /**

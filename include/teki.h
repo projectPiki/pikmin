@@ -471,7 +471,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	int mRouteWayPointMax;                        // _348, size of mRouteWayPoints array
 	int mRouteWayPointCount;                      // _34C
 	u32 mPathHandle;                              // _350
-	int _354;                                     // _354
+	int mCurrRouteWayPointID;                     // _354
 	NVector3fIOClass mPositionIO;                 // _358
 	NVector3fIOClass mVelocityIO;                 // _368
 	NVector3fIOClass mAccelerationIO;             // _378
