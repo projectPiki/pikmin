@@ -54,12 +54,12 @@ PeveAccelerationEvent::PeveAccelerationEvent()
  * Address:	80125F44
  * Size:	000014
  */
-void PeveAccelerationEvent::makeAccelerationEvent(PeveCondition* cond, NVector3fIO* vecIOA, NVector3fIO* vecIOB, NVector3fIO* vecIOC)
+void PeveAccelerationEvent::makeAccelerationEvent(PeveCondition* cond, NVector3fIO* posIO, NVector3fIO* velIO, NVector3fIO* accelIO)
 {
 	makeEvent(cond);
-	_10 = vecIOA;
-	_14 = vecIOB;
-	_18 = vecIOC;
+	mPositionIO = posIO;
+	mVelocityIO = velIO;
+	mAccelIO    = accelIO;
 }
 
 /*
@@ -70,23 +70,25 @@ void PeveAccelerationEvent::makeAccelerationEvent(PeveCondition* cond, NVector3f
 void PeveAccelerationEvent::update()
 {
 	PeveEvent::update();
-	NVector3f& vec1 = NVector3f();
-	NVector3f& vec2 = NVector3f();
-	NVector3f& vec3 = NVector3f();
+	NVector3f& pos   = NVector3f();
+	NVector3f& vel   = NVector3f();
+	NVector3f& accel = NVector3f();
 
-	_10->output(vec1);
-	_14->output(vec2);
-	_18->output(vec3);
+	mPositionIO->output(pos);
+	mVelocityIO->output(vel);
+	mAccelIO->output(accel);
 
 	f32 fTime = NSystem::getFrameTime();
-	Vector3f offs1(vec2);
-	offs1.scale(fTime);
-	Vector3f offs2(vec3);
-	offs2.scale(fTime);
-	vec1.add(offs1);
-	vec2.add(offs2);
-	_10->input(vec1);
-	_14->input(vec2);
+	Vector3f posChange(vel);
+	posChange.scale(fTime);
+	Vector3f velChange(accel);
+	velChange.scale(fTime);
+
+	pos.add(posChange);
+	vel.add(velChange);
+
+	mPositionIO->input(pos);
+	mVelocityIO->input(vel);
 }
 
 /*

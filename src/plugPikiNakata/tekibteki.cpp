@@ -349,7 +349,7 @@ void BTeki::reset()
 	_354        = -1;
 	mTargetPosition.set(0.0f, 0.0f, 0.0f);
 	mTargetAngle = 0.0f;
-	_398.set(0.0f, 0.0f, 0.0f);
+	mActionVelocity.set(0.0f, 0.0f, 0.0f);
 	_3A4 = 0.0f;
 
 	mPellet = nullptr;
@@ -769,11 +769,11 @@ void BTeki::exitCourse()
  * Address:	80145908
  * Size:	0000AC
  */
-void BTeki::gravitate(f32 speed)
+void BTeki::gravitate(f32 accel)
 {
 	f32 fTime = NSystem::getFrameTime();
-	_398.y -= speed * fTime;
-	Vector3f vec(_398);
+	mActionVelocity.y -= accel * fTime;
+	Vector3f vec(mActionVelocity);
 	vec.scale(fTime);
 	mPosition.add(vec);
 	f32 seaLevel = getSeaLevel();

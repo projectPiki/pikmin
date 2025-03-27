@@ -145,8 +145,8 @@ struct TaiAccelerationAction : public TaiAction {
  * @brief TODO
  */
 struct TaiParabolaAction : public TaiAction {
-	inline TaiParabolaAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiParabolaAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

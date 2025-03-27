@@ -8,47 +8,96 @@
 
 /////////// Frog (Yellow and White) AI Actions ///////////
 
-/*
+/**
+ * @brief TODO
+ */
+enum TaiOtimotiIntParams {
+	OTIMOTIPI_ReadyForJumpLoopCount = TPI_COUNT,
+	OTIMOTIPI_COUNT, // 21
+};
+
+/**
+ * @brief TODO
+ */
+enum TaiOtimotiFloatParams {
+	OTIMOTIPF_DropVelocity = TPF_COUNT, // 50
+	OTIMOTIPF_AttackStartHeight,        // 51
+	OTIMOTIPF_WaitingWashPeriod,        // 52
+	OTIMOTIPF_WaitingWashChance,        // 53
+	OTIMOTIPF_WaitingTurnPeriod,        // 54
+	OTIMOTIPF_WaitingTurnChance,        // 55
+	OTIMOTIPF_ImpassablePeriod,         // 56
+	OTIMOTIPF_ImpassableDistance,       // 57
+	OTIMOTIPF_MissFuncMinCount,         // 58
+	OTIMOTIPF_MissFuncMaxCount,         // 59
+	OTIMOTIPF_MissFuncMinChance,        // 60
+	OTIMOTIPF_MissFuncMaxChance,        // 61
+	OTIMOTIPF_COUNT,                    // 62
+};
+
+/**
+ * @brief TODO
+ */
+enum TaiOtimotiStateID {
+	OTIMOTISTATE_Unk0  = 0,
+	OTIMOTISTATE_Unk1  = 1,
+	OTIMOTISTATE_Unk2  = 2,
+	OTIMOTISTATE_Unk3  = 3,
+	OTIMOTISTATE_Unk4  = 4,
+	OTIMOTISTATE_Unk5  = 5,
+	OTIMOTISTATE_Unk6  = 6,
+	OTIMOTISTATE_Unk7  = 7,
+	OTIMOTISTATE_Unk8  = 8,
+	OTIMOTISTATE_Unk9  = 9,
+	OTIMOTISTATE_Unk10 = 10,
+	OTIMOTISTATE_Unk11 = 11,
+	OTIMOTISTATE_Unk12 = 12,
+	OTIMOTISTATE_Unk13 = 13,
+	OTIMOTISTATE_Unk14 = 14,
+	OTIMOTISTATE_Unk15 = 15,
+	OTIMOTISTATE_Unk16 = 16,
+	OTIMOTISTATE_COUNT, // 17
+};
+
+/**
  * @brief TODO
  */
 struct TaiOtimotiSoundTable : public PaniSoundTable {
 	TaiOtimotiSoundTable();
 
-	// TODO: members
+	// _00-_08 = PaniSoundTable
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiOtimotiParameters : public TekiParameters {
 	TaiOtimotiParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_88 = TekiParameters
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiBlackFrogSoundTable : public PaniSoundTable {
 	TaiBlackFrogSoundTable();
 
-	// TODO: members
+	// _00-_08 = PaniSoundTable
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiBlackFrogParameters : public TekiParameters {
 	TaiBlackFrogParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_88 = TekiParameters
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiOtimotiStrategy : public TaiStrategy {
@@ -59,16 +108,15 @@ struct TaiOtimotiStrategy : public TaiStrategy {
 	virtual void drawDebugInfo(Teki&, Graphics&); // _1C
 
 	// _00     = VTBL
-	// _00-_10 = TaiStrategy
-	// TODO: members
+	// _00-_14 = TaiStrategy
 };
 
 /**
  * @brief TODO
  */
 struct TaiOtimotiStartDroppingWaterAction : public TaiAction {
-	inline TaiOtimotiStartDroppingWaterAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOtimotiStartDroppingWaterAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -83,8 +131,8 @@ struct TaiOtimotiStartDroppingWaterAction : public TaiAction {
  * @brief TODO
  */
 struct TaiOtimotiFlickAction : public TaiAction {
-	inline TaiOtimotiFlickAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOtimotiFlickAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -92,15 +140,14 @@ struct TaiOtimotiFlickAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TaiOtimotiFailToJumpAction : public TaiAction {
-	inline TaiOtimotiFailToJumpAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOtimotiFailToJumpAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -108,15 +155,14 @@ struct TaiOtimotiFailToJumpAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TaiOtimotiJumpingAction : public TaiAction {
-	inline TaiOtimotiJumpingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOtimotiJumpingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -132,8 +178,8 @@ struct TaiOtimotiJumpingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiOtimotiAirWaitingAction : public TaiAction {
-	inline TaiOtimotiAirWaitingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOtimotiAirWaitingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -149,8 +195,8 @@ struct TaiOtimotiAirWaitingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiOtimotiDroppingAction : public TaiAction {
-	inline TaiOtimotiDroppingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOtimotiDroppingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -167,8 +213,8 @@ struct TaiOtimotiDroppingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiOtimotiPressingAction : public TaiAction {
-	inline TaiOtimotiPressingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOtimotiPressingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -185,8 +231,8 @@ struct TaiOtimotiPressingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiOtimotiBouncingAction : public TaiAction {
-	inline TaiOtimotiBouncingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOtimotiBouncingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -202,8 +248,8 @@ struct TaiOtimotiBouncingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiOtimotiAttackingAction : public TaiAction {
-	inline TaiOtimotiAttackingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOtimotiAttackingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 

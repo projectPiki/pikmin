@@ -166,7 +166,7 @@ bool TaiIwagonDustEffectAction::act(Teki& teki)
  */
 void TaiIwagonRollingAction::start(Teki& teki)
 {
-	teki._398.input(teki.mVelocity);
+	teki.mActionVelocity.input(teki.mVelocity);
 }
 
 /*
@@ -176,7 +176,7 @@ void TaiIwagonRollingAction::start(Teki& teki)
  */
 bool TaiIwagonRollingAction::act(Teki& teki)
 {
-	teki.mTargetVelocity.input(teki._398);
+	teki.mTargetVelocity.input(teki.mActionVelocity);
 	return false;
 }
 

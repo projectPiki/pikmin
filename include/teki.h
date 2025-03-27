@@ -477,7 +477,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	NVector3fIOClass mAccelerationIO;             // _378
 	NVector3f mTargetPosition;                    // _388, possibly position
 	f32 mTargetAngle;                             // _394
-	NVector3f _398;                               // _398
+	NVector3f mActionVelocity;                    // _398
 	f32 _3A4;                                     // _3A4
 	int mCurrentAnimEvent;                        // _3A8
 	f32 mAnimationSpeed;                          // _3AC

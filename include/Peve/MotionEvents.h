@@ -27,9 +27,9 @@ struct PeveAccelerationEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	NVector3fIO* _10; // _10
-	NVector3fIO* _14; // _14
-	NVector3fIO* _18; // _18
+	NVector3fIO* mPositionIO; // _10
+	NVector3fIO* mVelocityIO; // _14
+	NVector3fIO* mAccelIO;    // _18
 };
 
 /**
