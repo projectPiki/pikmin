@@ -3638,10 +3638,10 @@ void Navi::draw(Graphics& gfx)
 
 	bool hasAnimError = false;
 	for (int i = 0; i < mNaviShapeObject->mShape->mJointCount; i++) {
-		if (mNaviShapeObject->mShape->mAnimContextList[i]->mData && &mNaviShapeObject->mShape->mAnimContextList[i]->mCurrentFrame) {
-			int frame1 = mNaviShapeObject->mShape->mAnimContextList[i]->mCurrentFrame;
-			int frame2 = mNaviShapeObject->mShape->mAnimContextList[i]->mCurrentFrame;
-			if (frame1 < 0 || frame2 >= mNaviShapeObject->mShape->mAnimContextList[i]->mData->mNumFrames) {
+		if (mNaviShapeObject->mShape->mAnimOverrides[i]->mData && &mNaviShapeObject->mShape->mAnimOverrides[i]->mCurrentFrame) {
+			int frame1 = mNaviShapeObject->mShape->mAnimOverrides[i]->mCurrentFrame;
+			int frame2 = mNaviShapeObject->mShape->mAnimOverrides[i]->mCurrentFrame;
+			if (frame1 < 0 || frame2 >= mNaviShapeObject->mShape->mAnimOverrides[i]->mData->mNumFrames) {
 				PRINT(" NAVI -------- error : joint is %d\n", i);
 				PRINT(" motion is %s\n", mNaviAnimMgr.getUpperAnimator().getCurrentMotionName());
 				hasAnimError = true;

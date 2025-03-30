@@ -10,6 +10,7 @@
 
 struct CmdStream;
 struct Graphics;
+struct SceneData;
 struct Shape;
 struct Texture;
 
@@ -249,10 +250,17 @@ struct LightPool : public Node {
  * @brief TODO
  */
 struct LightDataInfo {
+	LightDataInfo() { mLight.mDistancedRange = 1000.0f; }
+
 	void update(f32);
 
-	// TODO
-	u8 _00[0x334]; // _00
+	AnimParam mLightPosAnims[3];     // _00
+	AnimParam mLightColourAnims[3];  // _24
+	AnimParam mLightVisibleAnims[1]; // _48
+	int _54;                         // _54
+	Light mLight;                    // _58
+	int mLightIdx;                   // _32C
+	SceneData* mSceneData;           // _330
 };
 
 #endif

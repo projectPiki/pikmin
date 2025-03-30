@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Colour.h"
 #include "Vector.h"
+#include "Matrix4f.h"
 
 struct Matrix4f;
 struct RandomAccessStream;
@@ -182,7 +183,7 @@ struct PVWTextureInfo {
 	void read(RandomAccessStream&);
 
 	Vector3f _00;                 // _00
-	u32 mTextureDataCount;        // _0C
+	int mTextureDataCount;        // _0C
 	u32 mTexGenDataCount;         // _10
 	u32 _14;                      // _14
 	u32 mTevStageCount;           // _18
@@ -193,10 +194,28 @@ struct PVWTextureInfo {
 /**
  * @brief TODO
  */
+struct PVWTevColReg {
+	PVWTevColReg() { _20 = 0.0f; }
+
+	void animate(f32*, ShortColour&);
+
+	ShortColour _00;    // _00
+	u32 _08;            // _08, unknown
+	u8 _0C[0x20 - 0xC]; // _0C, unknown
+	f32 _20;            // _20
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x84.
+ */
 struct PVWTevInfo {
 	void read(RandomAccessStream&);
 
-	char _00[0x84];
+	PVWTevColReg mTevColRegs[3]; // _00
+	Colour _6C[4];               // _6C
+	u8 _7C[0x8];                 // _7C, unknown
 };
 
 /**
@@ -219,6 +238,8 @@ struct PVWTextureData {
 	u8 _12;                         // _12
 	u8 _13;                         // _13
 	u8 _14;                         // _14
+	u8 _15;                         // _15
+	u8 _16;                         // _16
 	u32 _18;                        // _18
 	f32 _1C;                        // _1C
 	f32 _20;                        // _20
@@ -232,6 +253,8 @@ struct PVWTextureData {
 	PVWAnimInfo1<PVWKeyInfoU8> _40; // _40
 	PVWAnimInfo1<PVWKeyInfoU8> _48; // _48
 	PVWAnimInfo1<PVWKeyInfoU8> _50; // _50
+	u32 _58;                        // _58, unknown
+	Matrix4f _5C;                   // _5C
 };
 
 /**
@@ -240,15 +263,6 @@ struct PVWTextureData {
 struct PVWTexGenData {
 	// unused/inlined:
 	void read(RandomAccessStream&);
-};
-
-/**
- * @brief TODO
- */
-struct PVWTevColReg {
-	PVWTevColReg();
-
-	void animate(f32*, ShortColour&);
 };
 
 /**

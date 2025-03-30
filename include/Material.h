@@ -11,7 +11,19 @@
  * @note Size: 0x9C.
  */
 struct Material : public CoreNode {
-	Material();
+	Material()
+	    : CoreNode("material")
+	{
+		mIndex = 0;
+		_28    = 0;
+		_24    = 0;
+		_20    = 0;
+		_28    = 0;
+		mFlags = 0x100;
+		Colour().set(0xFF, 0xFF, 0xFF, 0xFF);
+		_8C             = 0;
+		mDisplayListPtr = nullptr;
+	}
 
 	virtual void read(RandomAccessStream&); // _0C
 	virtual void attach();                  // _10
@@ -21,10 +33,10 @@ struct Material : public CoreNode {
 	void setColour(struct Colour& color)
 	{
 		if (mLightingInfo._00 & 2) {
-			_90->r = color.r;
-			_90->g = color.g;
-			_90->b = color.b;
-			_90->a = color.a;
+			mTevInfo->mTevColRegs[0]._00.r = color.r;
+			mTevInfo->mTevColRegs[0]._00.g = color.g;
+			mTevInfo->mTevColRegs[0]._00.b = color.b;
+			mTevInfo->mTevColRegs[0]._00.a = color.a;
 		} else {
 			mColourInfo.mColour = color;
 		}
@@ -43,7 +55,7 @@ struct Material : public CoreNode {
 	PVWPeInfo mPeInfo;                // _58 [0x10]
 	PVWTextureInfo mTextureInfo;      // _68 [0x24]
 	u32 _8C;                          // _8C
-	ShortColour* _90;                 // _90
+	PVWTevInfo* mTevInfo;             // _90
 	u32 mDisplayListSize;             // _94
 	u8* mDisplayListPtr;              // _98
 };

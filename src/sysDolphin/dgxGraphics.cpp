@@ -253,11 +253,11 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 	}
 
-	GXSetTevKColor(GX_KCOLOR0, *(GXColor*)((GXColor*)mat->_90 + 27)); // this probably isnt right
-	GXSetTevKColor(GX_KCOLOR1, *(GXColor*)((GXColor*)mat->_90 + 28));
-	GXSetTevKColor(GX_KCOLOR2, *(GXColor*)((GXColor*)mat->_90 + 29));
-	GXSetTevKColor(GX_KCOLOR3, *(GXColor*)((GXColor*)mat->_90 + 30));
-	for (int i = 0; i < mat->_90->r; i++) { }
+	GXSetTevKColor(GX_KCOLOR0, *(GXColor*)((GXColor*)mat->mTevInfo + 27)); // this probably isnt right
+	GXSetTevKColor(GX_KCOLOR1, *(GXColor*)((GXColor*)mat->mTevInfo + 28));
+	GXSetTevKColor(GX_KCOLOR2, *(GXColor*)((GXColor*)mat->mTevInfo + 29));
+	GXSetTevKColor(GX_KCOLOR3, *(GXColor*)((GXColor*)mat->mTevInfo + 30));
+	for (int i = 0; i < mat->mTevInfo->mTevColRegs[0]._00.r; i++) { }
 	/*
 	.loc_0x0:
 	  mflr      r0

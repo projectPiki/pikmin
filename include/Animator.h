@@ -39,7 +39,22 @@ struct DataChunk {
 		mData      = nullptr;
 	}
 
-	void addData(f32);
+	void addData(f32 data)
+	{
+		if (mDataIndex >= mDataSize) {
+			mDataSize    = mDataIndex + 0x800;
+			f32* newData = new f32[mDataSize];
+
+			if (mDataIndex) {
+				memcpy(newData, mData, mDataIndex * sizeof(f32));
+			}
+
+			delete mData;
+			mData = newData;
+		}
+
+		mData[mDataIndex++] = data;
+	}
 	void setDataSize(int size)
 	{
 		mData     = new f32[size];
@@ -58,7 +73,7 @@ struct DataChunk {
 	void getData(CmdStream* stream)
 	{
 		stream->getToken(true);
-		int dataSize   = 0;
+		int dataSize;
 		int tokenCount = 0;
 
 		while (!stream->endOfCmds() && !stream->endOfSection()) {
@@ -93,7 +108,7 @@ struct DataChunk {
  * @brief TODO
  */
 struct AnimCacheInfo : public CacheInfo {
-	AnimCacheInfo();
+	AnimCacheInfo() { initData(); }
 
 	void initData()
 	{
@@ -104,8 +119,8 @@ struct AnimCacheInfo : public CacheInfo {
 	// _00 - _0C = CacheInfo
 	u32 _0C;        // _0C
 	CacheInfo* _10; // _10
-	u32 _14;        // _14
-	u32 _18;        // _18
+	Matrix4f* _14;  // _14
+	Matrix4f** _18; // _18
 };
 
 /**
@@ -121,7 +136,7 @@ struct AnimParam {
  * @brief Information about animation data, read in from a file.
  */
 struct AnimDataInfo {
-	AnimDataInfo();
+	AnimDataInfo() { mFlags = 0; }
 
 	AnimParam mScale[3];       // _00, x y and z
 	AnimParam mRotation[3];    // _24, x y and z
@@ -165,7 +180,7 @@ struct AnimData : public CoreNode {
 	DataChunk* mScaleDataBlock;       // _14
 	DataChunk* mRotateDataBlock;      // _18
 	DataChunk* mTranslationDataBlock; // _1C
-	int _20;                          // _20
+	u16* _20;                         // _20
 	int mAnimFlags;                   // _24
 	int mNumJoints;                   // _28
 	int _2C;                          // _2C
