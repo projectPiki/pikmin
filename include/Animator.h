@@ -170,7 +170,7 @@ struct AnimData : public CoreNode {
 	virtual void extractSRT(struct SRT&, int, AnimDataInfo*, f32);                  // _10
 	virtual void makeAnimSRT(int, struct Matrix4f*, Matrix4f*, AnimDataInfo*, f32); // _14
 	virtual void detach();                                                          // _18
-	virtual void writeType(RandomAccessStream&);                                    // _1C
+	virtual void writeType(RandomAccessStream&) { }                                 // _1C
 
 	void checkMask();
 	void initData();
@@ -444,6 +444,18 @@ struct AnimMgr : public CoreNode {
 };
 
 /**
+ * @brief Fabricated
+ */
+struct FrameCacher : public CacheInfo {
+	// _00-_0C = CacheInfo
+	CacheInfo** _0C; // _0C
+	u8 _10[4];       // _10, unknown
+	u32* _14;        // _14
+	u32* _18;        // _18
+	u32 _1C[1];      // _1C
+};
+
+/**
  * @brief TODO
  *
  * @note Size: 0x18.
@@ -454,7 +466,9 @@ struct AnimFrameCacher {
 	void removeOldest();
 	void cacheFrameSpace(int, AnimCacheInfo*);
 
-	u8 _00[0x18]; // _00, unknown
+	AyuCache* mCache; // _00
+	CacheInfo mInfo;  // _04
+	u8 _10[0x8];      // _10, unknown
 };
 
 #endif

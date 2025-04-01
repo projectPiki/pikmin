@@ -1348,7 +1348,7 @@ void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 		}
 
 		CollGroup* coll = mapMgr->_60->getCollTris(trace.mPosition);
-		if (coll && coll->_04) {
+		if (coll && coll->mTriCount) {
 			coll->_10 = mapMgr->_60;
 			coll->_14 = mapMgr->_60->mVertexList;
 			coll->_1C = nullptr;

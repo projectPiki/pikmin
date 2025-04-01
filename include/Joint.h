@@ -40,7 +40,12 @@ struct Joint : public CoreNode {
 		Joint* mJointList;   // _24
 	};
 
-	Joint();
+	Joint()
+	    : CoreNode(nullptr)
+	{
+		mFlags = 1;
+		_10C   = 0;
+	}
 
 	virtual void read(RandomAccessStream&); // _0C
 

@@ -25,7 +25,6 @@ struct RouteGroup;
 struct VtxMatrix;
 struct Texture;
 struct CollTriInfo;
-struct BaseRoomInfo;
 struct NBT;
 struct DispList;
 struct PVWTevInfo;
@@ -51,7 +50,17 @@ struct NBT {
  * @brief TODO
  */
 struct VtxMatrix {
-	void read(RandomAccessStream&);
+	void read(RandomAccessStream& input)
+	{
+		int weights        = input.readShort();
+		mHasPartialWeights = (weights >= 0) ? true : false;
+		if (mHasPartialWeights) {
+			mIndex = weights;
+		} else {
+			mIndex = -1 - weights;
+		}
+	}
+
 	void write(RandomAccessStream&);
 
 	bool mHasPartialWeights; // _00
@@ -62,7 +71,12 @@ struct VtxMatrix {
  * @brief TODO
  */
 struct Envelope {
-	Envelope();
+	Envelope()
+	{
+		mIndexCount = 0;
+		mIndices    = nullptr;
+		mWeights    = nullptr;
+	}
 
 	void read(RandomAccessStream& stream);
 
@@ -246,62 +260,62 @@ struct BaseShape : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 mSystemFlags;                  // _14
-	AnimContext* mCurrentAnimation;    // _18
-	AnimContext** mAnimOverrides;      // _1C
-	AnimContext* mBackupAnimOverrides; // _20
-	AnimFrameCacher* mFrameCacher;     // _24
-	Matrix4f* mAnimMatrices;           // _28
-	u32 mAnimMatrixId;                 // _2C
-	s32 mEnvelopeCount;                // _30
-	Envelope* mEnvelopeList;           // _34
-	s32 mVtxMatrixCount;               // _38
-	VtxMatrix* mVtxMatrixList;         // _3C
-	s32 mMaterialCount;                // _40
-	Material* mMaterialList;           // _44
-	s32 mTevInfoCount;                 // _48
-	PVWTevInfo* mTevInfoList;          // _4C
-	s32 mMeshCount;                    // _50
-	Mesh* mMeshList;                   // _54
-	s32 mJointCount;                   // _58
-	Joint* mJointList;                 // _5C
-	s32 mTotalMatpolyCount;            // _60
-	Joint::MatPoly** mMatpolyList;     // _64
-	s32 mTexAttrCount;                 // _68
-	TexAttr* mTexAttrList;             // _6C
-	s32 _70;                           // _70
-	s32 mTextureCount;                 // _74
-	TexImg* mTextureList;              // _78
+	u32 mSystemFlags;                   // _14
+	AnimContext* mCurrentAnimation;     // _18
+	AnimContext** mAnimOverrides;       // _1C
+	AnimContext** mBackupAnimOverrides; // _20
+	AnimFrameCacher* mFrameCacher;      // _24
+	Matrix4f* mAnimMatrices;            // _28
+	u32 mAnimMatrixId;                  // _2C
+	s32 mEnvelopeCount;                 // _30
+	Envelope* mEnvelopeList;            // _34
+	s32 mVtxMatrixCount;                // _38
+	VtxMatrix* mVtxMatrixList;          // _3C
+	s32 mMaterialCount;                 // _40
+	Material* mMaterialList;            // _44
+	s32 mTevInfoCount;                  // _48
+	PVWTevInfo* mTevInfoList;           // _4C
+	s32 mMeshCount;                     // _50
+	Mesh* mMeshList;                    // _54
+	s32 mJointCount;                    // _58
+	Joint* mJointList;                  // _5C
+	s32 mTotalMatpolyCount;             // _60
+	Joint::MatPoly** mMatpolyList;      // _64
+	s32 mTexAttrCount;                  // _68
+	TexAttr* mTexAttrList;              // _6C
+	s32 _70;                            // _70
+	s32 mTextureCount;                  // _74
+	TexImg* mTextureList;               // _78
 	// NB: there's an extra AnimData debugData; here in the DLL, so everything is shifted by 0x44.
-	LightGroup mLightGroup;      // _7C
-	ObjCollInfo mCollisionInfo;  // _E8
-	u32 _13C;                    // _13C, flag of some kind?
-	BoundBox mCourseExtents;     // _140
-	f32 mGridSize;               // _158, maybe grid scale?
-	int mGridSizeX;              // _15C
-	int mGridSizeY;              // _160
-	CollGroup** mCollGroups;     // _164
-	int mTriCount;               // _168
-	CollTriInfo* mTriList;       // _16C
-	s32 mBaseRoomCount;          // _170
-	BaseRoomInfo* mRoomInfoList; // _174
-	RouteGroup mRouteGroup;      // _178
-	s32 mVertexCount;            // _238
-	Vector3f* mVertexList;       // _23C
-	u32 mNbtCount;               // _240
-	NBT* mNbtList;               // _244
-	s32 mTotalActiveTexCoords;   // _248
-	s32 mTexCoordCounts[8];      // _24C
-	Vector2f* mTexCoordList[8];  // _250
-	s32 mNormalCount;            // _28C
-	Vector3f* mNormalList;       // _290
-	u8 _294[0x4];                // _294
-	u32 _298;                    // _298
-	u32 _29C;                    // _29C
-	Texture* _2A0;               // _2A0
-	s32 mAttrListMatCount;       // _2A4
-	u32 _2A8;                    // _2A8
-	u8 _2AC;                     // _2AC
+	LightGroup mLightGroup;     // _7C
+	ObjCollInfo mCollisionInfo; // _E8
+	u32 _13C;                   // _13C, flag of some kind?
+	BoundBox mCourseExtents;    // _140
+	f32 mGridSize;              // _158, maybe grid scale?
+	int mGridSizeX;             // _15C
+	int mGridSizeY;             // _160
+	CollGroup** mCollGroups;    // _164
+	int mTriCount;              // _168
+	CollTriInfo* mTriList;      // _16C
+	s32 mBaseRoomCount;         // _170
+	RoomInfo* mRoomInfoList;    // _174
+	RouteGroup mRouteGroup;     // _178
+	s32 mVertexCount;           // _238
+	Vector3f* mVertexList;      // _23C
+	int mVtxColorCount;         // _240
+	Colour* mVtxColorList;      // _244
+	s32 mTotalActiveTexCoords;  // _248
+	s32 mTexCoordCounts[8];     // _24C
+	Vector2f* mTexCoordList[8]; // _250
+	s32 mNormalCount;           // _28C
+	Vector3f* mNormalList;      // _290
+	int mNBTCount;              // _294
+	NBT* mNBTList;              // _298
+	int _29C;                   // _29C
+	Texture** _2A0;             // _2A0
+	int mAttrListMatCount;      // _2A4
+	char* _2A8;                 // _2A8
+	u8 _2AC;                    // _2AC
 };
 
 /**

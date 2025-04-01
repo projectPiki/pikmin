@@ -10,7 +10,13 @@ struct MtxGroup;
  * @brief TODO
  */
 struct Mesh : public CoreNode {
-	Mesh();
+	Mesh()
+	    : CoreNode("mesh")
+	{
+		mJointList        = nullptr;
+		mParentJoint      = -1;
+		mVertexDescriptor = 1;
+	}
 
 	virtual void read(RandomAccessStream&); // _0C
 

@@ -88,6 +88,12 @@ struct BoundBox {
 
 	void draw(Graphics&);
 
+	void read(RandomAccessStream& input)
+	{
+		mMin.read(input);
+		mMax.read(input);
+	}
+
 	Vector3f mMin; // _00
 	Vector3f mMax; // _0C
 };

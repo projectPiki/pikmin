@@ -53,6 +53,22 @@ enum CollPartType {
 
 /**
  * @brief TODO
+ */
+struct BaseRoomInfo {
+	void read(RandomAccessStream& input) { _00 = input.readInt(); }
+
+	int _00; // _00
+};
+
+/**
+ * @brief TODO
+ */
+struct RoomInfo : public BaseRoomInfo {
+	// _00-_04 = BaseRoomInfo
+};
+
+/**
+ * @brief TODO
  *
  * @note Size: 0x54.
  */
@@ -259,15 +275,26 @@ struct CollInfo {
 /**
  * @brief TODO
  */
-struct CollGroup {
-	u8 _00[0x4];       // _00, unknown
-	s16 _04;           // _04, unknown
-	u8 _06[0xA];       // _06, unknown
-	Shape* _10;        // _10
-	Vector3f* _14;     // _14
-	int _18;           // _18
-	DynCollShape* _1C; // _1C
-	CollGroup* _20;    // _20
+struct BaseCollTriInfo {
+
+	void read(RandomAccessStream& input)
+	{
+		mMapCode          = input.readInt();
+		mVertexIndices[0] = input.readInt();
+		mVertexIndices[1] = input.readInt();
+		mVertexIndices[2] = input.readInt();
+		_10               = input.readShort();
+		_12[0]            = input.readShort();
+		_12[1]            = input.readShort();
+		_12[2]            = input.readShort();
+		mTriangle.read(input);
+	}
+
+	u32 mMapCode;          // _00
+	u32 mVertexIndices[3]; // _04
+	s16 _10;               // _10
+	s16 _12[3];            // _12
+	Plane mTriangle;       // _18
 };
 
 /**
@@ -275,7 +302,7 @@ struct CollGroup {
  *
  * @note Size: 0x58.
  */
-struct CollTriInfo {
+struct CollTriInfo : public BaseCollTriInfo {
 	CollTriInfo();
 
 	void init(RoomInfo*, Vector3f*);
@@ -294,12 +321,32 @@ struct CollTriInfo {
 		return inTri;
 	}
 
-	u32 mMapCode;          // _00
-	u32 mVertexIndices[3]; // _04
-	u8 _10[0x2];           // _10, unknown
-	s16 _12[3];            // _12
-	Plane mTriangle;       // 18
-	Plane mEdgePlanes[3];  // _28
+	// _00-_28 = BaseCollTriInfo
+	Plane mEdgePlanes[3]; // _28
+};
+
+/**
+ * @brief TODO
+ */
+struct CollGroup {
+	CollGroup()
+	{
+		mTris     = nullptr;
+		mTriCount = 0;
+		_18       = 0;
+		_0C       = nullptr;
+	}
+
+	u8 _00[0x4];         // _00, unknown
+	s16 mTriCount;       // _04
+	s16 _06;             // _06
+	CollTriInfo** mTris; // _08
+	u8* _0C;             // _0C
+	Shape* _10;          // _10
+	Vector3f* _14;       // _14
+	int _18;             // _18
+	DynCollShape* _1C;   // _1C
+	CollGroup* _20;      // _20
 };
 
 /**

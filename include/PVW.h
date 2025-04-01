@@ -10,48 +10,6 @@ struct Matrix4f;
 struct RandomAccessStream;
 struct ShortColour;
 
-template <typename T>
-struct PVWAnimInfo1 {
-	int mSize;     // _00
-	T* mKeyframes; // _04
-
-	void read(RandomAccessStream& stream)
-	{
-		mSize = stream.readInt();
-
-		if (!mSize) {
-			return;
-		}
-
-		mKeyframes = new T[mSize];
-		for (int i = 0; i < mSize; i++) {
-			mKeyframes[i].read(stream);
-		}
-	}
-};
-
-template <typename T>
-struct PVWAnimInfo3 {
-	int mSize;        // _00
-	T* mKeyframes[3]; // _04
-
-	void read(RandomAccessStream& stream)
-	{
-		mSize = stream.readInt();
-
-		if (!mSize) {
-			return;
-		}
-
-		mKeyframes = new T[mSize];
-		for (int i = 0; i < mSize; i++) {
-			for (int j = 0; j < mSize; ++j) {
-				mKeyframes[i][j].read(stream);
-			}
-		}
-	}
-};
-
 /**
  * @brief TODO
  */
@@ -64,12 +22,92 @@ struct PVWKeyInfoU8 {
 /**
  * @brief TODO
  */
-struct PVWKeyInfoS10 { };
+struct PVWKeyInfoS10 {
+	void read(RandomAccessStream& input)
+	{
+		_00        = input.readShort();
+		u16 unused = input.readShort();
+		_04        = input.readFloat();
+		_08        = input.readFloat();
+	}
+
+	s16 _00; // _00
+	f32 _04; // _04
+	f32 _08; // _08
+};
 
 struct PVWKeyInfoF32 {
 	f32 _00; // _00
 	f32 _04; // _04
 	f32 _08; // _08
+};
+
+template <typename T>
+struct PVWAnimInfo1Intermediate {
+	void read(RandomAccessStream& input)
+	{
+		_00 = input.readInt();
+		_04.read(input);
+	}
+
+	int _00; // _00
+	T _04;   // _04
+};
+
+template <typename T>
+struct PVWAnimInfo3Intermediate {
+	void read(RandomAccessStream& input)
+	{
+		_00 = input.readInt();
+		_04.read(input);
+		_14.read(input);
+		_24.read(input);
+	}
+
+	int _00; // _00
+	T _04;   // _04
+	T _14;   // _14
+	T _24;   // _24
+};
+
+template <typename T>
+struct PVWAnimInfo1 {
+	u32 mSize;                               // _00
+	PVWAnimInfo1Intermediate<T>* mKeyframes; // _04
+
+	void read(RandomAccessStream& stream)
+	{
+		mSize = stream.readInt();
+
+		if (!mSize) {
+			return;
+		}
+
+		mKeyframes = new PVWAnimInfo1Intermediate<T>[mSize];
+		for (int i = 0; i < mSize; i++) {
+			mKeyframes[i].read(stream);
+		}
+	}
+};
+
+template <typename T>
+struct PVWAnimInfo3 {
+	u32 mSize;                               // _00
+	PVWAnimInfo3Intermediate<T>* mKeyframes; // _04
+
+	void read(RandomAccessStream& stream)
+	{
+		mSize = stream.readInt();
+
+		if (!mSize) {
+			return;
+		}
+
+		mKeyframes = new PVWAnimInfo3Intermediate<T>[mSize];
+		for (int i = 0; i < (int)mSize; i++) {
+			mKeyframes[i].read(stream);
+		}
+	}
 };
 
 /**
@@ -199,10 +237,83 @@ struct PVWTevColReg {
 
 	void animate(f32*, ShortColour&);
 
-	ShortColour _00;    // _00
-	u32 _08;            // _08, unknown
-	u8 _0C[0x20 - 0xC]; // _0C, unknown
-	f32 _20;            // _20
+	void read(RandomAccessStream& input)
+	{
+		_00.read(input);
+		_08 = input.readInt();
+		_0C = input.readFloat();
+		_10.read(input);
+		_18.read(input);
+	}
+
+	ShortColour _00;                 // _00
+	u32 _08;                         // _08, unknown
+	f32 _0C;                         // _0C
+	PVWAnimInfo3<PVWKeyInfoS10> _10; // _10
+	PVWAnimInfo1<PVWKeyInfoS10> _18; // _10
+	f32 _20;                         // _20
+};
+
+/**
+ * @brief TODO
+ */
+struct PVWCombiner {
+	void read(RandomAccessStream& input)
+	{
+		_00 = input.readByte();
+		_01 = input.readByte();
+		_02 = input.readByte();
+		_03 = input.readByte();
+		_04 = input.readByte();
+		_05 = input.readByte();
+		_06 = input.readByte();
+		_07 = input.readByte();
+		_08 = input.readByte();
+		_09 = input.readByte();
+		_0A = input.readByte();
+		_0B = input.readByte();
+	}
+
+	u8 _00; // _00
+	u8 _01; // _01
+	u8 _02; // _02
+	u8 _03; // _03
+	u8 _04; // _04
+	u8 _05; // _05
+	u8 _06; // _06
+	u8 _07; // _07
+	u8 _08; // _08
+	u8 _09; // _09
+	u8 _0A; // _0A
+	u8 _0B; // _0B
+};
+
+/**
+ * @brief TODO
+ */
+struct PVWTevStage {
+	void read(RandomAccessStream& input)
+	{
+		_00        = input.readByte();
+		_01        = input.readByte();
+		_02        = input.readByte();
+		_03        = input.readByte();
+		_04        = input.readByte();
+		_05        = input.readByte();
+		u8 unused  = input.readByte();
+		u8 unused2 = input.readByte();
+		_06.read(input);
+		_12.read(input);
+	}
+
+	u8 _00;          // _00
+	u8 _01;          // _01
+	u8 _02;          // _02
+	u8 _03;          // _03
+	u8 _04;          // _04
+	u8 _05;          // _05
+	PVWCombiner _06; // _06
+	PVWCombiner _12; // _12
 };
 
 /**
@@ -211,11 +322,28 @@ struct PVWTevColReg {
  * @note Size: 0x84.
  */
 struct PVWTevInfo {
-	void read(RandomAccessStream&);
+	void read(RandomAccessStream& input)
+	{
+		mTevColRegs[0].read(input);
+		mTevColRegs[1].read(input);
+		mTevColRegs[2].read(input);
+		_6C[0].read(input);
+		_6C[1].read(input);
+		_6C[2].read(input);
+		_6C[3].read(input);
+		mTevStageCount = input.readInt();
+		if (mTevStageCount) {
+			mTevStages = new PVWTevStage[mTevStageCount];
+			for (int i = 0; i < mTevStageCount; i++) {
+				mTevStages[i].read(input);
+			}
+		}
+	}
 
 	PVWTevColReg mTevColRegs[3]; // _00
 	Colour _6C[4];               // _6C
-	u8 _7C[0x8];                 // _7C, unknown
+	u32 mTevStageCount;          // _7C
+	PVWTevStage* mTevStages;     // _80
 };
 
 /**
@@ -262,13 +390,6 @@ struct PVWTextureData {
  */
 struct PVWTexGenData {
 	// unused/inlined:
-	void read(RandomAccessStream&);
-};
-
-/**
- * @brief TODO
- */
-struct PVWTevStage {
 	void read(RandomAccessStream&);
 };
 

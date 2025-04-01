@@ -2,6 +2,7 @@
 #define _COLOUR_H
 
 #include "types.h"
+#include "Stream.h"
 
 /**
  * @brief TODO
@@ -47,7 +48,13 @@ struct Colour {
 	}
 
 	// DLL inlines (there are more in sysCore, but they never make it to plugPiki)
-	void read(Stream&);
+	void read(Stream& input)
+	{
+		r = input.readByte();
+		g = input.readByte();
+		b = input.readByte();
+		a = input.readByte();
+	}
 
 	u8 r, g, b, a; // _00-_04
 };
@@ -56,6 +63,14 @@ struct Colour {
  * @brief TODO
  */
 struct ShortColour {
+	void read(RandomAccessStream& input)
+	{
+		r = input.readShort();
+		g = input.readShort();
+		b = input.readShort();
+		a = input.readShort();
+	}
+
 	s16 r, g, b, a; // _00-_0A
 };
 

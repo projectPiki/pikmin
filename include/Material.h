@@ -64,6 +64,13 @@ struct Material : public CoreNode {
  * @brief TODO
  */
 struct MatobjInfo : public GfxobjInfo {
+	MatobjInfo()
+	{
+		mTarget = nullptr;
+		mString = "material";
+		mId.setID('_gfx');
+	}
+
 	virtual void attach() { mTarget->attach(); } // _08
 	virtual void detach() { }                    // _0C
 
