@@ -69,7 +69,7 @@ bool Navi::demoCheck()
 	// pikmin seed in ground cutscene
 	if (!playerState->mDemoFlags.isFlag(DEMOFLAG_ApproachSeed) && playerState->isTutorial()) {
 		PikiHeadItem* item = (PikiHeadItem*)itemMgr->getPikiHeadMgr()->findClosest(mPosition, nullptr);
-		if (item && item->mFloorTri && item->getCurrState()->getID() == 6
+		if (item && item->mGroundTriangle && item->getCurrState()->getID() == 6
 		    && qdist2(item, this) <= demoParms->mParms.mSeedDemoTriggerRadius()) {
 			playerState->mDemoFlags.setFlag(DEMOFLAG_ApproachSeed, item);
 			PRINT("** SET TIMER %.1f\n", demoParms->mParms.mSeedDemoTriggerRadius());

@@ -114,7 +114,7 @@ void Creature::moveAttach()
  * Address:	8008E5DC
  * Size:	000D60
  */
-void Creature::moveNew(f32 p1)
+void Creature::moveNew(f32 deltaTime)
 {
 	if (mPosition.y < -2000.0f && isAlive()) {
 		if (mObjType == OBJTYPE_Piki) {
@@ -142,70 +142,76 @@ void Creature::moveNew(f32 p1)
 
 	if (!isCreatureFlag(CF_IsFlying) && !mRope && (!mStickTarget || !isStickToPlatform() || !mStickPart->isClimbable())
 	    && !isCreatureFlag(CF_Unk8) && (!mStickTarget || mPelletStickSlot == -1)) {
-		mVelocity.y -= AIConstant::_instance->mConstants.mGravity() * p1;
+		mVelocity.y -= AIConstant::_instance->mConstants.mGravity() * deltaTime;
 	}
 
 	if (isCreatureFlag(CF_Unk5)) {
-		mVelocity.y -= p1 * mAirResistance * mVelocity.y;
+		mVelocity.y -= deltaTime * mAirResistance * mVelocity.y;
 		f32 scale = 0.2f;
-		mVelocity.x -= p1 * mAirResistance * scale * mVelocity.x;
-		mVelocity.z -= p1 * mAirResistance * scale * mVelocity.z;
+		mVelocity.x -= deltaTime * mAirResistance * scale * mVelocity.x;
+		mVelocity.z -= deltaTime * mAirResistance * scale * mVelocity.z;
 	}
 
-	mFloorTri = nullptr;
+	mGroundTriangle = nullptr;
 
 	if (mObjType == OBJTYPE_Rope) {
 		RopeCreature* rope = static_cast<RopeCreature*>(this);
-		Cylinder ropeCyl(rope->mParentRope->mPosition, rope->mPosition, 1.0f);
+		Cylinder ropeBoundary(rope->mParentRope->mPosition, rope->mPosition, 1.0f);
 		Vector3f pushVec;
-		RopeItem* item = static_cast<RopeItem*>(rope);
+		RopeItem* ropeItem = static_cast<RopeItem*>(rope);
 		Iterator iter(pikiMgr);
+
 		CI_LOOP(iter)
 		{
-			Piki* piki = static_cast<Piki*>(*iter);
-			bool check = true;
-			if (item->mOwner->mObjType == OBJTYPE_Goal) {
-				GoalItem* onyon = static_cast<GoalItem*>(item->mOwner);
-				if (onyon->mOnionColour != piki->mColor) {
-					check = false;
+			Piki* piki     = static_cast<Piki*>(*iter);
+			bool canAttach = true;
+			if (ropeItem->mOwner->mObjType == OBJTYPE_Goal) {
+				GoalItem* base = static_cast<GoalItem*>(ropeItem->mOwner);
+				if (base->mOnionColour != piki->mColor) {
+					canAttach = false;
 				}
 			}
 
-			if (check && piki->isRopable() && piki->isAlive() && !piki->isBuried()) {
-				Vector3f centre = piki->getCentre();
-				Sphere pikiBound(centre, piki->getCentreSize());
-				f32 ratio;
-				if (ropeCyl.collide(pikiBound, pushVec, ratio) && !piki->mRope) {
-					Vector3f ropePos = rope->getRopePos(ratio);
-					Vector3f dir     = ropePos - piki->mPosition;
-					f32 angle        = atan2f(dir.x, dir.z);
-					if (ratio < 0.0f) {
-						ratio = 0.0f;
+			if (canAttach && piki->isRopable() && piki->isAlive() && !piki->isBuried()) {
+				Vector3f centerPoint = piki->getCentre();
+				Sphere pikminBounds(centerPoint, piki->getCentreSize());
+				f32 collisionRatio;
+
+				if (ropeBoundary.collide(pikminBounds, pushVec, collisionRatio) && !piki->mRope) {
+					Vector3f attachPoint     = rope->getRopePos(collisionRatio);
+					Vector3f directionVector = attachPoint - piki->mPosition;
+					f32 angle                = atan2f(directionVector.x, directionVector.z);
+
+					if (collisionRatio < 0.0f) {
+						collisionRatio = 0.0f;
 					}
-					if (ratio > 1.0f) {
-						ratio = 1.0f;
+					if (collisionRatio > 1.0f) {
+						collisionRatio = 1.0f;
 					}
 
-					piki->startRope(rope, ratio);
+					piki->startRope(rope, collisionRatio);
 					piki->mFaceDirection = angle;
 					piki->mFSM->transit(piki, PIKISTATE_Normal);
 				}
 			}
 		}
 
-		Vector3f dir     = mPosition - rope->mParentRope->mPosition;
-		f32 dist         = dir.normalise();
-		f32 ropeSpeed    = mVelocity.DP(dir);
-		Vector3f ropeVel = ropeSpeed * dir;
-		Vector3f newVel  = mVelocity - ropeVel;
-		mVelocity        = newVel;
-		mVelocity        = mVelocity - mVelocity * gsys->getFrameTime();
-		mTargetVelocity  = newVel;
+		Vector3f dir = mPosition - rope->mParentRope->mPosition;
+		f32 distance = dir.normalise();
+
+		f32 speedAlongRope            = mVelocity.DP(dir);
+		Vector3f ropeDirectedVelocity = speedAlongRope * dir;
+		Vector3f perpVelocity         = mVelocity - ropeDirectedVelocity;
+
+		mVelocity = perpVelocity;
+		mVelocity = mVelocity - mVelocity * gsys->getFrameTime();
+
+		mTargetVelocity = perpVelocity;
 		if (rope->mParentRope->mObjType == OBJTYPE_Rope) {
-			rope->mParentRope->mVelocity = rope->mParentRope->mVelocity + ropeVel;
+			rope->mParentRope->mVelocity = rope->mParentRope->mVelocity + ropeDirectedVelocity;
 		}
 
-		if (dist != rope->mRopeLength) {
+		if (distance != rope->mRopeLength) {
 			mPosition = rope->mParentRope->mPosition + rope->mRopeLength * dir;
 		}
 	}
@@ -213,19 +219,19 @@ void Creature::moveNew(f32 p1)
 	mCollPlatform = nullptr;
 
 	if (mObjType != OBJTYPE_Pellet) {
-		Vector3f pos(mPosition);
+		Vector3f adjustedPos(mPosition);
 		if (isCreatureFlag(CF_GroundOffsetEnabled)) {
-			pos.y -= mGroundOffset;
+			adjustedPos.y -= mGroundOffset;
 		}
 
 		if (mObjType == OBJTYPE_Pikihead) {
-			MoveTrace trace(pos, mVelocity, mCollisionRadius, true);
-			mapMgr->traceMove(this, trace, p1);
+			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, true);
+			mapMgr->traceMove(this, trace, deltaTime);
 			mVelocity = trace.mVelocity;
 			mPosition = trace.mPosition;
 		} else {
-			MoveTrace trace(pos, mVelocity, mCollisionRadius, false);
-			mapMgr->traceMove(this, trace, p1);
+			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, false);
+			mapMgr->traceMove(this, trace, deltaTime);
 			mVelocity = trace.mVelocity;
 			mPosition = trace.mPosition;
 		}
@@ -236,27 +242,32 @@ void Creature::moveNew(f32 p1)
 	} else {
 		Pellet* pellet = static_cast<Pellet*>(this);
 		if (pellet->isRealDynamics()) {
-			f32 height     = pellet->getCylinderHeight();
-			f32 pickOffset = -pellet->getPickOffset();
-			Vector3f vec(0.0f, 0.5f * height, 0.0f);
-			Matrix4f mtx;
-			mtx.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), pellet->mRotationQuat, Vector3f(1.0f, 1.0f, 1.0f));
-			vec.multMatrix(mtx);
-			Vector3f tmp = vec;
-			vec          = vec + mPosition;
-			MoveTrace trace(vec, mVelocity, 0.5f * height + pickOffset, false);
-			traceMove2(this, trace, p1);
-			mVelocity = trace.mVelocity;
-			mPosition = trace.mPosition - tmp;
+			f32 cylinderHeight = pellet->getCylinderHeight();
+			f32 grabOffset     = -pellet->getPickOffset();
+
+			Vector3f heightVector(0.0f, 0.5f * cylinderHeight, 0.0f);
+			Matrix4f rotationMtx;
+			rotationMtx.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), pellet->mRotationQuat, Vector3f(1.0f, 1.0f, 1.0f));
+			heightVector.multMatrix(rotationMtx);
+
+			Vector3f tmpHeightVec = heightVector;
+			heightVector          = heightVector + mPosition;
+
+			MoveTrace movePath(heightVector, mVelocity, 0.5f * cylinderHeight + grabOffset, false);
+			traceMove2(this, movePath, deltaTime);
+
+			mVelocity = movePath.mVelocity;
+			mPosition = movePath.mPosition - tmpHeightVec;
 
 		} else {
-			Vector3f pos(mPosition);
+			Vector3f adjustedPos(mPosition);
 			if (isCreatureFlag(CF_GroundOffsetEnabled)) {
-				pos.y -= mGroundOffset;
+				adjustedPos.y -= mGroundOffset;
 			}
 
-			MoveTrace trace(pos, mVelocity, mCollisionRadius, false);
-			mapMgr->traceMove(this, trace, p1);
+			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, false);
+			mapMgr->traceMove(this, trace, deltaTime);
+
 			mVelocity = trace.mVelocity;
 			mPosition = trace.mPosition;
 
@@ -266,9 +277,10 @@ void Creature::moveNew(f32 p1)
 		}
 	}
 
-	if (mFloorTri) {
-		if (!_290) {
+	if (mGroundTriangle) {
+		if (!mPreviousTriangle) {
 			Creature* platCreature = (mCollPlatform) ? mCollPlatform->mCreature : nullptr;
+
 			if (!platCreature || platCreature->mObjType == OBJTYPE_WorkObject) {
 				bounceCallback();
 			}
@@ -277,14 +289,14 @@ void Creature::moveNew(f32 p1)
 		setCreatureFlag(CF_IsOnGround);
 	} else {
 		resetCreatureFlag(CF_IsOnGround);
-		if (_290) {
+		if (mPreviousTriangle) {
 			int planeIdx = -1;
 			f32 minDist  = 12800.0f;
 
 			for (int i = 0; i < 3; i++) {
-				f32 dist = _290->mEdgePlanes[i].dist(mPosition);
+				f32 dist = mPreviousTriangle->mEdgePlanes[i].dist(mPosition);
 				if (dist <= minDist) {
-					planeIdx = _290->_12[i];
+					planeIdx = mPreviousTriangle->mAdjacentTriIndices[i];
 					minDist  = dist;
 				}
 			}
@@ -292,15 +304,16 @@ void Creature::moveNew(f32 p1)
 			if (planeIdx < 0) {
 				jumpCallback();
 			} else {
-				CollTriInfo* tri = &mapMgr->_60->mTriList[planeIdx];
-				if (tri->mTriangle.mNormal.DP(_290->mTriangle.mNormal) < cosf(AIConstant::_instance->mConstants._D4() / 180.0f * PI)) {
+				CollTriInfo* tri = &mapMgr->mMapShape->mTriList[planeIdx];
+				if (tri->mTriangle.mNormal.DP(mPreviousTriangle->mTriangle.mNormal)
+				    < cosf(AIConstant::_instance->mConstants.mJumpTriangleAngleThreshold() / 180.0f * PI)) {
 					jumpCallback();
 				}
 			}
 		}
 	}
 
-	_290 = mFloorTri;
+	mPreviousTriangle = mGroundTriangle;
 
 	u32 badCompiler2[8];
 	/*
@@ -1308,22 +1321,24 @@ void Creature::renderCollTriInfo(Graphics&, CollTriInfo*, Colour&)
  */
 void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 {
-	int a         = 1;
-	int iterCount = 0;
-	for (f32 i = trace.mVelocity.length() * p3; iterCount < 100 && i >= trace.mRadius; i *= 0.5f) {
-		iterCount++;
-		a *= 2;
+	int stepMultiplier = 1;
+	int iterationCount = 0;
+
+	for (f32 distanceToMove = trace.mVelocity.length() * p3; iterationCount < 100 && distanceToMove >= trace.mRadius;
+	     distanceToMove *= 0.5f) {
+		iterationCount++;
+		stepMultiplier *= 2;
 	}
 
-	if (iterCount > 50) {
+	if (iterationCount > 50) {
 		PRINT("Too many iterations [cr %08x : rad = %f : spd = %f]!!\n", target, trace.mRadius, trace.mVelocity.length() * p3);
 	}
 
-	mapMgr->_10C++;
+	mapMgr->mCollisionCheckCount++;
 
-	trace._1C = 1.0f / a;
+	trace.mStepFraction = 1.0f / stepMultiplier;
 
-	for (int i = 0; i < a; i++) {
+	for (int i = 0; i < stepMultiplier; i++) {
 		BoundBox box;
 		box.expandBound(trace.mPosition);
 
@@ -1334,33 +1349,33 @@ void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 		CollGroup* prevColl = nullptr;
 		FOREACH_NODE(DynCollShape, mapMgr->mCollShape->mChild, collShape)
 		{
-			if ((!collShape->mCreature || collShape->mCreature != target) && box.intersects(collShape->_44)) {
-				for (int i = 0; i < collShape->_3C; i++) {
-					if (collShape->mProgressStateList[collShape->_40[i]->_18]) {
-						collShape->_40[i]->_10 = collShape->mShape;
-						collShape->_40[i]->_14 = collShape->_30;
-						collShape->_40[i]->_1C = collShape;
-						collShape->_40[i]->_20 = prevColl;
-						prevColl               = collShape->_40[i];
+			if ((!collShape->mCreature || collShape->mCreature != target) && box.intersects(collShape->mBoundingBox)) {
+				for (int i = 0; i < collShape->mColliderCount; i++) {
+					if (collShape->mProgressStateList[collShape->mColliderList[i]->mStateIndex]) {
+						collShape->mColliderList[i]->mShape          = collShape->mShape;
+						collShape->mColliderList[i]->mVertexList     = collShape->mVertexList;
+						collShape->mColliderList[i]->mSourceCollider = collShape;
+						collShape->mColliderList[i]->mNextCollider   = prevColl;
+						prevColl                                     = collShape->mColliderList[i];
 					}
 				}
 			}
 		}
 
-		CollGroup* coll = mapMgr->_60->getCollTris(trace.mPosition);
+		CollGroup* coll = mapMgr->mMapShape->getCollTris(trace.mPosition);
 		if (coll && coll->mTriCount) {
-			coll->_10 = mapMgr->_60;
-			coll->_14 = mapMgr->_60->mVertexList;
-			coll->_1C = nullptr;
-			coll->_20 = prevColl;
-			prevColl  = coll;
+			coll->mShape          = mapMgr->mMapShape;
+			coll->mVertexList     = mapMgr->mMapShape->mVertexList;
+			coll->mSourceCollider = nullptr;
+			coll->mNextCollider   = prevColl;
+			prevColl              = coll;
 		}
 
 		if (prevColl) {
 			mapMgr->recTraceMove(prevColl, trace, p3);
 		} else {
 			Vector3f vel(trace.mVelocity);
-			vel.multiply(p3 * trace._1C);
+			vel.multiply(p3 * trace.mStepFraction);
 			trace.mPosition.add(vel);
 		}
 	}

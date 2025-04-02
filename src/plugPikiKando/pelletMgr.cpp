@@ -223,7 +223,7 @@ void Pellet::startWaterEffect()
 {
 	EffectParm unused(&mPosition); // lol.
 	EffectParm parm(mPosition);
-	unused._24 = 2.0f; // this is so dumb
+	unused.mScale = 2.0f; // this is so dumb
 	UtEffectMgr::cast(KandoEffect::Bubbles, parm);
 }
 
@@ -1329,7 +1329,7 @@ void Pellet::update()
 			f32 val = ((6.0f / getBottomRadius()) * 0.7f);
 			rotateY(gsys->getFrameTime() * angle * val);
 		}
-	} else if (mFloorTri) {
+	} else if (mGroundTriangle) {
 		f32 rate    = 3.0f * gsys->getFrameTime();
 		mVelocity.x = mVelocity.x - mVelocity.x * rate;
 		mVelocity.z = mVelocity.z - mVelocity.z * rate;
@@ -1341,7 +1341,7 @@ void Pellet::update()
 	DualCreature::update();
 	// removed nan check here
 
-	if (mFloorTri && isDynFlag(1)) {
+	if (mGroundTriangle && isDynFlag(1)) {
 		mVelocity = mVelocity - mVelocity * 2.0f * gsys->getFrameTime();
 	}
 }

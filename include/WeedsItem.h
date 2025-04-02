@@ -24,7 +24,7 @@ struct Grass {
 
 	Vector3f mPosition; // _00
 	u8 mHealth;         // _0C
-	u8 _0D;             // _0D
+	u8 mGrassShapeId;   // _0D
 	u8 _0E;             // _0E
 };
 

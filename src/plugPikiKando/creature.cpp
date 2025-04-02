@@ -325,7 +325,7 @@ f32 Creature::getCentreSize()
  */
 int Creature::getStandType()
 {
-	if (!mFloorTri) {
+	if (!mGroundTriangle) {
 		if (mCollPlatform) {
 			if (mCollPlatform->mCreature) {
 				// standing on a platform creature?
@@ -639,9 +639,9 @@ Creature::Creature(CreatureProp* props)
 	mSeContext     = nullptr;
 	mCreatureFlags = 0;
 	resetCreatureFlag(CF_IsFlying);
-	mCollInfo = nullptr;
-	mFloorTri = nullptr;
-	_30       = 0;
+	mCollInfo       = nullptr;
+	mGroundTriangle = nullptr;
+	_30             = 0;
 
 	disableFaceDirAdjust();
 	setRebirthDay(0);
@@ -672,11 +672,11 @@ Creature::Creature(CreatureProp* props)
 	mHoldingCreature.clear();
 	mGrabbedCreature.clear();
 
-	mIsBeingDamaged = false;
-	mCollPlatform   = nullptr;
-	_290            = 0;
-	_298            = 0;
-	mIsFrozen       = 0;
+	mIsBeingDamaged   = false;
+	mCollPlatform     = nullptr;
+	mPreviousTriangle = 0;
+	_298              = 0;
+	mIsFrozen         = 0;
 }
 
 /*
@@ -768,8 +768,8 @@ void Creature::update()
 
 	// Handle effects if we're on the floor
 	int terrainAttribute = ATTR_NULL;
-	if (mFloorTri) {
-		terrainAttribute = MapCode::getAttribute(mFloorTri);
+	if (mGroundTriangle) {
+		terrainAttribute = MapCode::getAttribute(mGroundTriangle);
 	}
 
 	// Handle water effects if walking in water
@@ -800,8 +800,8 @@ void Creature::update()
 	moveNew(deltaTime);
 
 	// Handle fixed position on non-slippery surfaces, with a slope < 60 degrees
-	if (mVolatileVelocity.length() > 0.0f && isCreatureFlag(CF_AllowFixPosition) && isCreatureFlag(CF_IsPositionFixed) && mFloorTri
-	    && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->mTriangle.mNormal.y > sinf(THIRD_PI)) {
+	if (mVolatileVelocity.length() > 0.0f && isCreatureFlag(CF_AllowFixPosition) && isCreatureFlag(CF_IsPositionFixed) && mGroundTriangle
+	    && MapCode::getSlipCode(mGroundTriangle) == 0 && mGroundTriangle->mTriangle.mNormal.y > sinf(THIRD_PI)) {
 		mFixedPosition = mPosition;
 	}
 
@@ -811,7 +811,7 @@ void Creature::update()
 	// Update the fixed position status
 	if (isCreatureFlag(CF_AllowFixPosition)) {
 		// If we're on the ground, it's not slippery, and the slope is < 60 degrees
-		if (mFloorTri && MapCode::getSlipCode(mFloorTri) == 0 && mFloorTri->mTriangle.mNormal.y > sinf(THIRD_PI)) {
+		if (mGroundTriangle && MapCode::getSlipCode(mGroundTriangle) == 0 && mGroundTriangle->mTriangle.mNormal.y > sinf(THIRD_PI)) {
 
 			// If we're barely moving, just stay still
 			if (mTargetVelocity.length() < 0.01f) {
@@ -1105,7 +1105,7 @@ void showTri(Graphics& gfx, Vector3f& vec, CollTriInfo* tri)
 
 	f32 val = (30.0f / checkRadius) * (1.0f / 64.0f);
 	for (int i = 0; i < 3; i++) {
-		tmpV3[i] = tri->mTriangle.mNormal * 0.1f + mapMgr->_60->mVertexList[tri->mVertexIndices[i]];
+		tmpV3[i] = tri->mTriangle.mNormal * 0.1f + mapMgr->mMapShape->mVertexList[tri->mVertexIndices[i]];
 		tmpV2[i].set((tmpV3[i].x - vec.x) * val + 0.5f, (tmpV3[i].z - vec.z) * val + 0.5f);
 	}
 
@@ -1123,11 +1123,12 @@ static void recTraceShadowTris(Graphics& gfx, Vector3f& vec, CollTriInfo* tri)
 
 	for (int i = 0; i < 3; i++) {
 		if (tri->mEdgePlanes[i].dist(vec) < checkRadius) {
-			int idx = tri->_12[i];
+			int idx = tri->mAdjacentTriIndices[i];
 			if (idx < 0) {
 				continue;
 			}
-			CollTriInfo* currTri = &mapMgr->_60->mTriList[idx];
+
+			CollTriInfo* currTri = &mapMgr->mMapShape->mTriList[idx];
 			if (baseTri->mTriangle.mNormal.DP(currTri->mTriangle.mNormal) > 0.5f) {
 				bool check = false;
 				for (int j = 0; j < numTris; j++) {
@@ -1287,14 +1288,14 @@ void Creature::moveVelocity()
 	Vector3f vec(0.0f, 0.0f, 0.0f);
 	f32 y       = mVelocity.y;
 	bool unused = false;
-	if (mFloorTri) {
-		Vector3f normal(mFloorTri->mTriangle.mNormal);
+	if (mGroundTriangle) {
+		Vector3f normal(mGroundTriangle->mTriangle.mNormal);
 		f32 speed = vel.length();
 		vel       = vel - vel.DP(normal) * normal;
 		vel.normalise();
 		vel = vel * speed;
 
-		int slipCode = MapCode::getSlipCode(mFloorTri);
+		int slipCode = MapCode::getSlipCode(mGroundTriangle);
 		if (slipCode == 0) {
 			if (speed < 0.1f) {
 				Vector3f tmp1(0.0f, -(AIConstant::_instance->mConstants.mGravity() * gsys->getFrameTime()), 0.0f);

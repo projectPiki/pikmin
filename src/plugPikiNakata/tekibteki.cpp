@@ -235,23 +235,23 @@ f32 BTeki::calcSphereDistanceStatic(Vector3f& pos1, f32 rad1, Vector3f& pos2, f3
  * Address:	80144338
  * Size:	000238
  */
-bool BTeki::moveTowardStatic(Vector3f& p1, Vector3f& p2, f32 p3, Vector3f& p4)
+bool BTeki::moveTowardStatic(Vector3f& currentPosition, Vector3f& targetPosition, f32 speed, Vector3f& output)
 {
-	NVector3f vec1(p2);
+	NVector3f vec1(targetPosition);
 	vec1.y = 0.0f;
 
-	NVector3f vec2(p1);
+	NVector3f vec2(currentPosition);
 	vec2.y = 0.0f;
 
-	p4.sub2(vec1, vec2);
+	output.sub2(vec1, vec2);
 
-	f32 dist = p4.length();
+	f32 dist = output.length();
 	if (!NMathF::isZero(dist)) {
-		p4.normalize();
+		output.normalize();
 	}
-	p4.scale(p3);
+	output.scale(speed);
 	f32 dist2 = vec1.distance(vec2);
-	return (BTeki::arrivedAt(dist2, p3)) ? true : false;
+	return (BTeki::arrivedAt(dist2, speed)) ? true : false;
 }
 
 /*
@@ -259,10 +259,10 @@ bool BTeki::moveTowardStatic(Vector3f& p1, Vector3f& p2, f32 p3, Vector3f& p4)
  * Address:	80144570
  * Size:	000028
  */
-bool BTeki::arrivedAt(f32 p1, f32 p2)
+bool BTeki::arrivedAt(f32 distance, f32 speed)
 {
-	f32 speed = 2.0f * p2 * NSystem::getFrameTime();
-	return p1 <= speed;
+	f32 threshold = 2.0f * speed * NSystem::getFrameTime();
+	return distance <= threshold;
 }
 
 /*
@@ -603,10 +603,10 @@ void BTeki::doAI()
 		mCurrentAnimEvent = -1;
 		clearAnimationKeyOptions();
 
-		if (!mFloorTri) {
+		if (!mGroundTriangle) {
 			mParticleGenPack->stopGen();
 		} else {
-			int attr         = MapCode::getAttribute(mFloorTri);
+			int attr         = MapCode::getAttribute(mGroundTriangle);
 			bool isActiveGen = !mParticleGenPack->checkStopGen();
 			if (isActiveGen) {
 				if (attr != ATTR_Water) {
@@ -1402,9 +1402,9 @@ f32 BTeki::calcTargetAngle(Vector3f& targetPos)
  * Address:	801473F0
  * Size:	0001DC
  */
-bool BTeki::moveToward(Vector3f& p1, f32 p2)
+bool BTeki::moveToward(Vector3f& target, f32 speed)
 {
-	return moveTowardStatic(getPosition(), p1, p2, mTargetVelocity);
+	return moveTowardStatic(getPosition(), target, speed, mTargetVelocity);
 }
 
 /*

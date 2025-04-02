@@ -268,7 +268,7 @@ struct TaiRandomWanderingRouteAction : public TaiContinuousMotionAction {
 	TaiRandomWanderingRouteAction(int motionIdx, f32 p2)
 	    : TaiContinuousMotionAction(TAI_NO_TRANSIT, motionIdx)
 	{
-		_0C = p2;
+		mTargetPosition = p2;
 	}
 
 	virtual void start(Teki& teki);  // _08
@@ -279,21 +279,21 @@ struct TaiRandomWanderingRouteAction : public TaiContinuousMotionAction {
 
 	// _04 = VTBL
 	// _00-_0C = TaiContinuousMotionAction
-	f32 _0C; // _0C
+	f32 mTargetPosition; // _0C
 };
 
 struct TaiTracingAction : public TaiContinuousMotionAction {
 	inline TaiTracingAction(int motionIdx, f32 p2)
 	    : TaiContinuousMotionAction(TAI_NO_TRANSIT, motionIdx)
 	{
-		_0C = p2;
+		mTraceSpeed = p2;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
 	// _00-_0C = TaiContinuousMotionAction
-	f32 _0C; // _0C
+	f32 mTraceSpeed; // _0C
 };
 
 /**
@@ -303,7 +303,7 @@ struct TaiGoingHomeAction : public TaiContinuousMotionAction {
 	TaiGoingHomeAction(int motionIdx, f32 p2)
 	    : TaiContinuousMotionAction(TAI_NO_TRANSIT, motionIdx)
 	{
-		_0C = p2;
+		mMoveSpeed = p2;
 	}
 
 	virtual void finish(Teki& teki); // _0C
@@ -311,7 +311,7 @@ struct TaiGoingHomeAction : public TaiContinuousMotionAction {
 
 	// _04 = VTBL
 	// _00-_0C = TaiContinuousMotionAction
-	f32 _0C; // _0C
+	f32 mMoveSpeed; // _0C
 };
 
 /**

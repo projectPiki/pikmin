@@ -121,7 +121,7 @@ void ActKinoko::initJump()
  */
 int ActKinoko::exeJump()
 {
-	if (mPiki->mFloorTri) {
+	if (mPiki->mGroundTriangle) {
 		initAttack();
 		return ACTOUT_Continue;
 	}

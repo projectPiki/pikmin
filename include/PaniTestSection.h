@@ -44,14 +44,14 @@ struct PaniTestNode : public Node, public PaniAnimKeyListener {
 	// _00-_20 = Node
 	// _20-_24 = PaniAnimKeyListener
 	PcamCameraManager* mCamMgr; // _24
-	u32 _28;                    // _28, unknown
+	u32 mFadeState;             // _28, unknown
 	Controller* mController;    // _2C
 	Font* mConsFont;            // _30, maybe an array if Font has members with ctors
 	u8 _34[0x4];                // _34, unknown
 	Camera mActiveCamera;       // _38
 	u8 _380[0x8];               // _380, unknown (may be part of Camera)
 	Texture* mShadowTexture;    // _388
-	Colour _38C;                // _38C
+	Colour mFogColour;          // _38C
 	Light mMainLight;           // _390
 	Piki** mTestPikiList;       // _664
 	Teki** mTestTekiList;       // _668
@@ -61,8 +61,8 @@ struct PaniTestNode : public Node, public PaniAnimKeyListener {
 	u8 _678[0x4];               // _678, unknown
 	int mAnimationEvent;        // _67C, unknown
 	int mTestMode;              // _680
-	int _684;                   // _684
-	f32 _688;                   // _688
+	int mMotionId;              // _684
+	f32 mAnimationSpeed;        // _688
 	u8 _68C;                    // _68C
 	u32 _690;                   // _690, unknown
 };

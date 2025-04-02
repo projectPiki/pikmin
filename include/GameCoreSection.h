@@ -79,9 +79,9 @@ struct GameCoreSection : public Node {
 	Controller* mController;          // _20
 	u8 _24[0x4];                      // _24, unknown
 	int mDrawHideType;                // _28, enum todo
-	u32 _2C;                          // _2C, unknown
-	u8 _30;                           // _30
-	u8 _31;                           // _31
+	u32 mHideFlags;                   // _2C, unknown
+	u8 mMovieBackCamera;              // _30
+	u8 mDoneSundownWarn;              // _31
 	u32 _34;                          // _34, unknown
 	u8 _38;                           // _38
 	u8 _39;                           // _39
@@ -89,7 +89,7 @@ struct GameCoreSection : public Node {
 	Menu* mAiPerfDebugMenu;           // _3C, unknown
 	u8 _40[0x50 - 0x40];              // _40, unknown
 	Shape* mPikiShape;                // _50, unknown
-	SearchSystem* _54;                // _54
+	SearchSystem* mSearchSystem;      // _54
 	Navi* mNavi;                      // _58
 	u8 _5C[0x64 - 0x5C];              // _5C, unknown
 	MapMgr* mMapMgr;                  // _64

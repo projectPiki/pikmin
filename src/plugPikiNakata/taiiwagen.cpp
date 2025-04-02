@@ -146,8 +146,8 @@ void TaiIwagonStrategy::start(Teki& teki)
  */
 bool TaiIwagonDustEffectAction::act(Teki& teki)
 {
-	if (teki.mFloorTri) {
-		if (MapCode::getAttribute(teki.mFloorTri) != ATTR_Water) {
+	if (teki.mGroundTriangle) {
+		if (MapCode::getAttribute(teki.mGroundTriangle) != ATTR_Water) {
 			teki.startParticleGenerator(0);
 		} else {
 			teki.stopParticleGenerator(0);

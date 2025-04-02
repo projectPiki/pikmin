@@ -324,7 +324,7 @@ void ViewPiki::update()
 		return;
 	}
 
-	if (AIPerf::optLevel == 0 && mFloorTri && gsys->getRand(1.0f) > 0.99f) {
+	if (AIPerf::optLevel == 0 && mGroundTriangle && gsys->getRand(1.0f) > 0.99f) {
 		Vector3f toLastPosition = mLastEffectPosition - mPosition;
 
 		// If we've moved enough, create an effect
@@ -333,7 +333,7 @@ void ViewPiki::update()
 			Vector3f rot(mVelocity.x * 0.01667f, 1.0f, mVelocity.z * 0.01667f);
 			EffectParm parm(pos, rot);
 
-			int attr = MapCode::getAttribute(mFloorTri);
+			int attr = MapCode::getAttribute(mGroundTriangle);
 			if (attr >= ATTR_Soil && attr <= ATTR_Tree) {
 				utEffectMgr->cast(attr + KandoEffect::SmokeOffset, parm);
 			}

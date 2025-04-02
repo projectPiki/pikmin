@@ -3270,8 +3270,8 @@ void Piki::bounceCallback()
 	sendMsg(&msg);
 
 	int attr = ATTR_NULL;
-	if (mFloorTri) {
-		attr = MapCode::getAttribute(mFloorTri);
+	if (mGroundTriangle) {
+		attr = MapCode::getAttribute(mGroundTriangle);
 	}
 
 	int state = getState();
@@ -3284,7 +3284,7 @@ void Piki::bounceCallback()
 		isDrownSurface = true;
 	} else if (isStickTo() && mInWaterTimer == 0 && mColor != Blue) {
 		Creature* obj = getStickObject();
-		if (obj && obj->mFloorTri && MapCode::getAttribute(obj->mFloorTri) == ATTR_Water) {
+		if (obj && obj->mGroundTriangle && MapCode::getAttribute(obj->mGroundTriangle) == ATTR_Water) {
 			if (zen::Abs(obj->mPosition.y - mPosition.y) < 10.0f) {
 				isDrownSurface = true;
 			}
@@ -3298,7 +3298,7 @@ void Piki::bounceCallback()
 		mFSM->transit(this, PIKISTATE_Drown);
 		EffectParm rippleParm(&mPosition);
 		EffectParm parm(mPosition);
-		rippleParm._24 = 2.0f;
+		rippleParm.mScale = 2.0f;
 
 		mRippleEffect->emit(rippleParm);
 		UtEffectMgr::cast(KandoEffect::Bubbles, parm);
@@ -4191,8 +4191,8 @@ void Piki::realAI()
 	}
 
 	int attr = ATTR_NULL;
-	if (mFloorTri) {
-		attr = MapCode::getAttribute(mFloorTri);
+	if (mGroundTriangle) {
+		attr = MapCode::getAttribute(mGroundTriangle);
 	}
 
 	bool isInWater = false;
@@ -4200,7 +4200,7 @@ void Piki::realAI()
 		isInWater = true;
 	} else if (isStickTo()) {
 		Creature* stickObj = getStickObject();
-		if (stickObj && stickObj->mFloorTri && MapCode::getAttribute(stickObj->mFloorTri) == ATTR_Water
+		if (stickObj && stickObj->mGroundTriangle && MapCode::getAttribute(stickObj->mGroundTriangle) == ATTR_Water
 		    && zen::Abs(stickObj->mPosition.y - mPosition.y) < 10.0f) {
 			isInWater = true;
 		}
@@ -4814,7 +4814,7 @@ void Piki::dump()
 
 		PRINT(" _stickObject=%x(%d) : _stickToObject=%s\n", getStickObject(), getStickObject() ? getStickObject()->mObjType : -1,
 		      mStickPart ? mStickPart->getTypeString() : "none");
-		PRINT(" floorCollTri=%x\n", mFloorTri);
+		PRINT(" floorCollTri=%x\n", mGroundTriangle);
 		PRINT(" standType = %s fluteBooking = %s\n", _standStr[getStandType()], mIsWhistlePending ? "true" : "-");
 		PRINT(" wantToStick = %s\n", mWantToStick ? "true" : "false");
 
@@ -4862,7 +4862,7 @@ void Piki::dump()
 		static_cast<PikiState*>(getCurrState())->dump();
 		PRINT(" _stickObject=%x(%d) : _stickToObject=%s\n", getStickObject(), getStickObject() ? getStickObject()->mObjType : -1,
 		      mStickPart ? mStickPart->getTypeString() : "none");
-		PRINT(" floorCollTri=%x\n", mFloorTri);
+		PRINT(" floorCollTri=%x\n", mGroundTriangle);
 		PRINT(" standType = %s fluteBooking = %s\n", _standStr[getStandType()], mIsWhistlePending ? "true" : "-");
 		PRINT(" wantToStick = %s\n", mWantToStick ? "true" : "false");
 

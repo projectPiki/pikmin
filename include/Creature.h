@@ -389,8 +389,8 @@ struct Creature : public RefCountable, public EventTalker {
 	DynCollObject* mCollPlatform;        // _280
 	Vector3f* mCollPlatNormal;           // _284
 	CollTriInfo* mClimbingTri;           // _288
-	CollTriInfo* mFloorTri;              // _28C
-	CollTriInfo* _290;                   // _290
+	CollTriInfo* mGroundTriangle;        // _28C
+	CollTriInfo* mPreviousTriangle;      // _290
 	u8 _294[0x4];                        // _294, unknown
 	u32 _298;                            // _298, unknown
 	Vector3f _29C;                       // _29C

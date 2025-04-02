@@ -416,7 +416,7 @@ int ActTransport::execJump()
 		return ACTOUT_Continue;
 	}
 
-	if (mPiki->mFloorTri) {
+	if (mPiki->mGroundTriangle) {
 		mJumpRetryTimer++;
 		if (mJumpRetryTimer > 6) {
 			mPiki->mVelocity.y = 0.5f * AIConstant::_instance->mConstants.mGravity();
@@ -693,7 +693,7 @@ void ActTransport::doLift()
 bool ActTransport::useWaterRoute()
 {
 	Pellet* pel      = mPellet.getPtr();
-	CollTriInfo* tri = pel->mFloorTri;
+	CollTriInfo* tri = pel->mGroundTriangle;
 	if (tri && MapCode::getAttribute(tri) == ATTR_Water) {
 		return true;
 	}

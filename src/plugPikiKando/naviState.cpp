@@ -664,17 +664,17 @@ void NaviWalkState::exec(Navi* navi)
 	}
 
 	navi->findNextThrowPiki();
-	if (navi->mFloorTri && navi->_AD0 && (navi->_AD0 != navi->mFloorTri)) {
+	if (navi->mGroundTriangle && navi->_AD0 && (navi->_AD0 != navi->mGroundTriangle)) {
 		Vector3f vel(navi->mVelocity);
 		vel.normalise();
 		f32 nrm1   = navi->_AD0->mTriangle.mNormal.DP(vel);
 		f32 nrm2   = navi->_AD0->mTriangle.mNormal.DP(Vector3f(0.0f, 1.0f, 0.0f));
-		f32 nrm3   = navi->_AD0->mTriangle.mNormal.DP(navi->mFloorTri->mTriangle.mNormal);
-		f32 y      = navi->mFloorTri->mTriangle.mNormal.y;
+		f32 nrm3   = navi->_AD0->mTriangle.mNormal.DP(navi->mGroundTriangle->mTriangle.mNormal);
+		f32 y      = navi->mGroundTriangle->mTriangle.mNormal.y;
 		f32 maxLen = -1.0f;
 		int index  = -1;
 		for (int i = 0; i < 3; i++) {
-			f32 len = navi->mFloorTri->mEdgePlanes[i].mNormal.DP(vel);
+			f32 len = navi->mGroundTriangle->mEdgePlanes[i].mNormal.DP(vel);
 			if (len > maxLen) {
 				len   = maxLen; // nice one kando.
 				index = i;
@@ -682,10 +682,10 @@ void NaviWalkState::exec(Navi* navi)
 		}
 
 		// this needs to adjusted somehow to not show up AS MUCH in the assembly smh
-		f32 dist = navi->mFloorTri->mEdgePlanes[index].dist(navi->mPosition) - navi->mCollisionRadius;
+		f32 dist = navi->mGroundTriangle->mEdgePlanes[index].dist(navi->mPosition) - navi->mCollisionRadius;
 		if (quickABS(navi->_AD0->mTriangle.mNormal.y) <= 0.01f) {
 			PRINT(" cliff dist = %.1f\n", dist);
-			navi->_AD8 = navi->mFloorTri->mEdgePlanes[index].dist(navi->mPosition);
+			navi->_AD8 = navi->mGroundTriangle->mEdgePlanes[index].dist(navi->mPosition);
 		} else {
 			navi->_AD8 = 0.0f;
 		}
@@ -700,7 +700,7 @@ void NaviWalkState::exec(Navi* navi)
 
 	navi->makeVelocity(false);
 
-	if (!playerState->isTutorial() && navi->mFloorTri && navi->mKontroller->keyClick(KBBTN_DPAD_DOWN)) {
+	if (!playerState->isTutorial() && navi->mGroundTriangle && navi->mKontroller->keyClick(KBBTN_DPAD_DOWN)) {
 		navi->mStateMachine->transit(navi, NAVISTATE_Pellet);
 		return;
 	}
@@ -713,7 +713,7 @@ void NaviWalkState::exec(Navi* navi)
 		if (pikiMgr->findClosest(navi->mPosition, nullptr)) {
 			PRINT("here is %s\n", navi->mNextThrowPiki->isSafeMePos(navi->mPosition) ? 'o' : 'x');
 		}
-		if (navi->mFloorTri && MapCode::isBald(navi->mFloorTri)) {
+		if (navi->mGroundTriangle && MapCode::isBald(navi->mGroundTriangle)) {
 			PRINT("\tcurr polygon is bald\n");
 		} else {
 			PRINT("\tno teppe!\n");

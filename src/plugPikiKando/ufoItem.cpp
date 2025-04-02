@@ -842,9 +842,9 @@ void UfoItem::startAI(int)
 	if (!playerState->isTutorial()) {
 		setSpotActive(true);
 		for (int i = 0; i < 3; i++) {
-			mSpots[i]._10 = i * 2.0943952f;
-			mSpots[i]._0C = 9.0f;
-			mSpots[i]._14 = 0.0f;
+			mSpots[i].mAngleOffset  = i * 2.0943952f;
+			mSpots[i].mRadius       = 9.0f;
+			mSpots[i].mRotationTime = 0.0f;
 		}
 	} else {
 		setSpotActive(false);
@@ -1051,16 +1051,18 @@ void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
 	for (int i = 0; i < 3; i++) {
 		CollPart* part = mCollInfo->getSphere('gol1');
 		if (part) {
-			f32 test = mFaceDirection + mSpots[i]._10;
+			f32 anglePosition = mFaceDirection + mSpots[i].mAngleOffset;
+
 			if (mShouldLightActivate) {
-				mSpots[i]._14 += gsys->getFrameTime() * 37.69911193847656f;
-				if (mSpots[i]._14 > TAU) {
-					mSpots[i]._14 = 0.0f;
+				mSpots[i].mRotationTime += gsys->getFrameTime() * (12.0f * PI);
+				if (mSpots[i].mRotationTime > TAU) {
+					mSpots[i].mRotationTime = 0.0f;
 				}
-				test += mSpots[i]._14;
+				anglePosition += mSpots[i].mRotationTime;
 			}
-			Vector3f dir(mSpots[i]._0C * sinf(test), 0.0f, mSpots[i]._0C * cosf(test));
-			mSpots[i]._00 = part->mCentre + dir;
+
+			Vector3f dir(mSpots[i].mRadius * sinf(anglePosition), 0.0f, mSpots[i].mRadius * cosf(anglePosition));
+			mSpots[i].mPosition = part->mCentre + dir;
 		}
 	}
 

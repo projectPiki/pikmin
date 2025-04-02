@@ -325,7 +325,7 @@ bool TaiRandomWanderingRouteAction::act(Teki& teki)
 		return false;
 	}
 
-	if (teki.moveToward(wp->mPosition, _0C)) {
+	if (teki.moveToward(wp->mPosition, mTargetPosition)) {
 		PRINT("TaiRandomWanderingRouteAction::act:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
 		teki.mCurrRouteWayPointID++;
 	}
@@ -363,7 +363,7 @@ bool TaiTracingAction::act(Teki& teki)
 		return false;
 	}
 
-	teki.moveToward(target->getPosition(), _0C);
+	teki.moveToward(target->getPosition(), mTraceSpeed);
 	return false;
 }
 
@@ -387,7 +387,7 @@ bool TaiGoingHomeAction::act(Teki& teki)
 	if (!motionStarted(teki)) {
 		return false;
 	}
-	teki.moveToward(teki.getNestPosition(), _0C);
+	teki.moveToward(teki.getNestPosition(), mMoveSpeed);
 	return false;
 }
 

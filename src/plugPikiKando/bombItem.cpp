@@ -158,13 +158,13 @@ void BombItem::update()
 	ItemCreature::update();
 
 	int state = getCurrState()->getID();
-	if (state != BombAI::BOMB_Die && state != BombAI::BOMB_Bomb && state != BombAI::BOMB_Mizu && mFloorTri
-	    && MapCode::getAttribute(mFloorTri) == ATTR_Water) {
+	if (state != BombAI::BOMB_Die && state != BombAI::BOMB_Bomb && state != BombAI::BOMB_Mizu && mGroundTriangle
+	    && MapCode::getAttribute(mGroundTriangle) == ATTR_Water) {
 		PRINT("BOMB WATER START **********\n");
 		mStateMachine->transit(this, BombAI::BOMB_Mizu);
 	}
 
-	if (state == BombAI::BOMB_Unk1 && mFloorTri) {
+	if (state == BombAI::BOMB_Unk1 && mGroundTriangle) {
 		C_SAI(this)->start(this, BombAI::BOMB_Bomb);
 	}
 }

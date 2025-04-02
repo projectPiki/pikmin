@@ -148,7 +148,7 @@ void PcamCamera::startCamera(Creature* target, int zoom, int angle)
 	mToggleZoomPending        = FALSE;
 	mAdjustInclinationPending = FALSE;
 	_98                       = 0;
-	_9C                       = 0;
+	mAttentionState           = 0;
 
 	for (int i = 0; i < 3; i++) {
 		mTimers[i] = 0.0f;
@@ -265,11 +265,11 @@ void PcamCamera::control(PcamControlInfo& info)
 		}
 	}
 
-	if (_28 && info.mDoAttentionCamera && !_9C) {
+	if (_28 && info.mDoAttentionCamera && !mAttentionState) {
 		startAttention();
 	}
 
-	if (_9C == 1) {
+	if (mAttentionState == 1) {
 		return;
 	}
 
@@ -293,9 +293,9 @@ void PcamCamera::control(PcamControlInfo& info)
  */
 void PcamCamera::startAttention()
 {
-	mTimers[1] = getParameterF(PCAMF_AttentionPeriod);
-	_9C        = 1;
-	_B0        = mPolarDir.mAzimuth;
+	mTimers[1]      = getParameterF(PCAMF_AttentionPeriod);
+	mAttentionState = 1;
+	mCurrentAzimuth = mPolarDir.mAzimuth;
 }
 
 /*
@@ -350,30 +350,33 @@ void PcamCamera::update()
  */
 void PcamCamera::makePosture()
 {
-	NVector3f& watchPt = NVector3f();
-	NVector3f& polar   = NVector3f();
-	outputTargetWatchpoint(watchPt);
-	f32 homingSpeed = getCurrentHomingSpeed();
-	NVector3f& vec  = NVector3f();
-	vec.sub2(watchPt, getWatchpoint());
-	vec.scale(homingSpeed);
-	watchPt.add2(getWatchpoint(), vec);
+	NVector3f& target = NVector3f();
+	NVector3f& polar  = NVector3f();
+	outputTargetWatchpoint(target);
 
-	if (_9C == 1) {
+	f32 homingSpeed    = getCurrentHomingSpeed();
+	NVector3f& moveDir = NVector3f();
+	moveDir.sub2(target, getWatchpoint());
+	moveDir.scale(homingSpeed);
+	target.add2(getWatchpoint(), moveDir);
+
+	if (mAttentionState == 1) {
 		if (timerElapsed(1)) {
-			_9C = 0;
+			mAttentionState = 0;
 		} else {
-			f32 cursorDir = NMathF::roundAngle(NMathF::pi + getCursorDirection());
-			cursorDir     = NMathF::calcNearerDirection(_B0, cursorDir);
-			f32 a         = (cursorDir - _B0) * getParameterF(PCAMF_AttentionHomingSpeed);
-			f32 b         = getParameterF(PCAMF_AttentionAngleMaxSpeed);
-			if (a > b) {
-				a = b;
-			} else if (a < -b) {
-				a = -b;
+			f32 cursorDir       = NMathF::roundAngle(NMathF::pi + getCursorDirection());
+			cursorDir           = NMathF::calcNearerDirection(mCurrentAzimuth, cursorDir);
+			f32 azimuthDelta    = (cursorDir - mCurrentAzimuth) * getParameterF(PCAMF_AttentionHomingSpeed);
+			f32 maxAzimuthSpeed = getParameterF(PCAMF_AttentionAngleMaxSpeed);
+
+			if (azimuthDelta > maxAzimuthSpeed) {
+				azimuthDelta = maxAzimuthSpeed;
+			} else if (azimuthDelta < -maxAzimuthSpeed) {
+				azimuthDelta = -maxAzimuthSpeed;
 			}
-			_B0 += a;
-			mPolarDir.mAzimuth = _B0;
+
+			mCurrentAzimuth += azimuthDelta;
+			mPolarDir.mAzimuth = mCurrentAzimuth;
 		}
 	}
 
@@ -381,13 +384,13 @@ void PcamCamera::makePosture()
 	mPolarDir.roundAzimuth();
 	mPolarDir.mInclination = angleToMeridian(getCurrentAngle());
 	mPolarDir.output(polar);
-	polar.add(watchPt);
-	vec.sub2(polar, getViewpoint());
-	vec.scale(homingSpeed);
-	polar.add2(getViewpoint(), vec);
-	makeWatchObjectViewpoint(watchPt, polar);
+	polar.add(target);
+	moveDir.sub2(polar, getViewpoint());
+	moveDir.scale(homingSpeed);
+	polar.add2(getViewpoint(), moveDir);
+	makeWatchObjectViewpoint(target, polar);
 
-	NPosture3D& posture = NPosture3D(polar, watchPt);
+	NPosture3D& posture = NPosture3D(polar, target);
 	inputPosture(posture);
 
 	f32 fov = getFov();

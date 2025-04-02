@@ -1002,7 +1002,7 @@ void Navi::postUpdate(int p1, f32 p2)
  */
 void Navi::update()
 {
-	if (!mFloorTri) {
+	if (!mGroundTriangle) {
 		f32 maxY = mapMgr->getMaxY(mPosition.x, mPosition.z, true);
 		if (maxY > mPosition.y) {
 			PRINT("navi(%.1f %.1f %.1f) : map(%.1f %.1f %.1f)\n", mPosition.x, mPosition.y, mPosition.z, mPosition.x, maxY, mPosition.z);
@@ -1034,8 +1034,8 @@ void Navi::update()
 	}
 
 	int attr = ATTR_NULL;
-	if (mFloorTri) {
-		attr = MapCode::getAttribute(mFloorTri);
+	if (mGroundTriangle) {
+		attr = MapCode::getAttribute(mGroundTriangle);
 	}
 
 	if (attr == ATTR_Water) {
@@ -1100,11 +1100,11 @@ void Navi::update()
 	mapMgr->updatePos(mPosition.x, mPosition.z);
 
 	Vector3f dayEndSep = mDayEndPosition - mPosition;
-	if (dayEndSep.length() > 35.0f && mFloorTri) {
+	if (dayEndSep.length() > 35.0f && mGroundTriangle) {
 		Vector3f parmPos(mPosition.x, mPosition.y + 1.0f, mPosition.z);
 
 		Vector3f parmVel(0.01667f * mVelocity.x, 2.0f, 0.01667f * mVelocity.z);
-		int effAttr = MapCode::getAttribute(mFloorTri);
+		int effAttr = MapCode::getAttribute(mGroundTriangle);
 		if (effAttr >= ATTR_Soil && effAttr <= ATTR_Tree) {
 			EffectParm parm(parmPos, parmVel);
 			UtEffectMgr::cast(effAttr + KandoEffect::SmokeOffset, parm);
@@ -1125,8 +1125,8 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
 	int upperMotionID = mNaviAnimMgr.getUpperAnimator().getCurrentMotionIndex();
 	if (event.mEventType == KEY_PlaySound) {
 		int attr = ATTR_Soil;
-		if (mFloorTri) {
-			attr = MapCode::getAttribute(mFloorTri);
+		if (mGroundTriangle) {
+			attr = MapCode::getAttribute(mGroundTriangle);
 		}
 		u16 soundType;
 		switch (attr) {
@@ -2675,10 +2675,10 @@ void Navi::makeVelocity(bool p1)
 			mTargetVelocity = (stickVec * NAVI_PROP._CC()) * drag;
 		}
 
-		if (mFloorTri) {
+		if (mGroundTriangle) {
 			// ?? this does nothing.
 			f32 speed    = mTargetVelocity.length();
-			Vector3f vec = mTargetVelocity - mTargetVelocity.DP(mFloorTri->mTriangle.mNormal) * mFloorTri->mTriangle.mNormal;
+			Vector3f vec = mTargetVelocity - mTargetVelocity.DP(mGroundTriangle->mTriangle.mNormal) * mGroundTriangle->mTriangle.mNormal;
 			vec.normalise();
 			vec = vec * speed;
 		}

@@ -14,17 +14,17 @@ struct Creature;
 struct EffectParm {
 	EffectParm(Vector3f* p1)
 	{
-		_20 = p1;
-		_24 = 1.0f;
+		mPositionRef = p1;
+		mScale       = 1.0f;
 	}
 
 	EffectParm(Vector3f& pos)
 	{
 		mPosition = pos;
-		_24       = 1.0f;
+		mScale    = 1.0f;
 	}
 
-	EffectParm(Creature* owner) { _28 = owner; }
+	EffectParm(Creature* owner) { mOwner = owner; }
 
 	// DLL inline ctors to make/check:
 	EffectParm(Vector3f& pos, Vector3f& dir)
@@ -32,15 +32,15 @@ struct EffectParm {
 		// need to confirm
 		mPosition  = pos;
 		mDirection = dir;
-		_24        = 1.0f;
+		mScale     = 1.0f;
 	}
 
-	Vector3f mPosition;  // _00
-	Vector3f mDirection; // _0C
-	u8 _18[0x8];         // _18, unknown
-	Vector3f* _20;       // _20
-	f32 _24;             // _24
-	Creature* _28;       // _28
+	Vector3f mPosition;     // _00
+	Vector3f mDirection;    // _0C
+	u8 _18[0x8];            // _18, unknown
+	Vector3f* mPositionRef; // _20
+	f32 mScale;             // _24
+	Creature* mOwner;       // _28
 };
 
 /**

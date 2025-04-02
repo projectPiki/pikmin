@@ -111,16 +111,16 @@ PaniTestNode::PaniTestNode()
 	mFocusTekiType = TEKI_Napkid;
 	tekiMgr->startStage();
 
-	_28 = 0;
+	mFadeState = 0;
 
 	Texture* fontTex = gsys->loadTexture("consFont.bti", true);
 	mConsFont        = new Font();
 	mConsFont->setTexture(fontTex, 16, 8);
 
 	gsys->setFade(1.0f, 3.0f);
-	mCamMgr = new PcamCameraManager(&mActiveCamera, mController);
-	_688    = 30.0f;
-	_68C    = 0;
+	mCamMgr         = new PcamCameraManager(&mActiveCamera, mController);
+	mAnimationSpeed = 30.0f;
+	_68C            = 0;
 
 	setTestMode(PANITEST_Teki);
 }
@@ -144,7 +144,7 @@ void PaniTestNode::setTestMode(int mode)
 	}
 
 	mCamMgr->mCamera->startCamera(camTarget, 1, 0);
-	_684 = 0;
+	mMotionId = 0;
 }
 
 /*
@@ -212,16 +212,16 @@ void PaniTestNode::update()
 	}
 
 	if (mController->keyDown(KBBTN_CSTICK_UP)) {
-		_688 += 0.2f;
-		if (_688 > 60.0f) {
-			_688 = 60.0f;
+		mAnimationSpeed += 0.2f;
+		if (mAnimationSpeed > 60.0f) {
+			mAnimationSpeed = 60.0f;
 		}
 	}
 
 	if (mController->keyDown(KBBTN_CSTICK_DOWN)) {
-		_688 -= 0.2f;
-		if (_688 < 0.0f) {
-			_688 = 0.0f;
+		mAnimationSpeed -= 0.2f;
+		if (mAnimationSpeed < 0.0f) {
+			mAnimationSpeed = 0.0f;
 		}
 	}
 
@@ -236,26 +236,26 @@ void PaniTestNode::update()
 	}
 
 	if (!mController->keyDown(KBBTN_L) && mController->keyUnClick(KBBTN_CSTICK_LEFT)) {
-		_684--;
-		if (_684 < 0) {
-			_684 = amt - 1;
+		mMotionId--;
+		if (mMotionId < 0) {
+			mMotionId = amt - 1;
 		}
 	}
 
 	if (!mController->keyDown(KBBTN_L) && mController->keyUnClick(KBBTN_CSTICK_RIGHT)) {
-		_684++;
-		if (_684 > amt - 1) {
-			_684 = 0;
+		mMotionId++;
+		if (mMotionId > amt - 1) {
+			mMotionId = 0;
 		}
 	}
 
-	if (_28 == 0) {
+	if (mFadeState == 0) {
 		if (mController->keyUnClick(KBBTN_START)) {
-			_28 = 1;
+			mFadeState = 1;
 			gsys->setFade(0.0f, 3.0f);
 		}
 		Node::update();
-	} else if (_28 == 1) {
+	} else if (mFadeState == 1) {
 		if (gsys->getFade() == 0.0f) {
 			gameflow.mGameSectionID = SECTION_Titles;
 			gsys->softReset();
@@ -283,7 +283,7 @@ void PaniTestNode::updatePikis()
 		if (mController->keyUnClick(KBBTN_A)) {
 			for (i = 0; i < mTestPikiCount; i++) {
 				for (int j = 0; j < 10; j++) {
-					mTestPikiList[i]->mPikiAnimMgr.updateAnimation(_688);
+					mTestPikiList[i]->mPikiAnimMgr.updateAnimation(mAnimationSpeed);
 				}
 			}
 		}
@@ -291,14 +291,14 @@ void PaniTestNode::updatePikis()
 	}
 
 	for (i = 0; i < mTestPikiCount; i++) {
-		mTestPikiList[i]->mPikiAnimMgr.updateAnimation(_688);
+		mTestPikiList[i]->mPikiAnimMgr.updateAnimation(mAnimationSpeed);
 	}
 
 	if (mController->keyUnClick(KBBTN_A)) {
-		mTestPikiList[0]->mPikiAnimMgr.startMotion(&PaniMotionInfo(_684, this), &PaniMotionInfo(_684));
+		mTestPikiList[0]->mPikiAnimMgr.startMotion(&PaniMotionInfo(mMotionId, this), &PaniMotionInfo(mMotionId));
 
 		for (i = 1; i < mTestPikiCount; i++) {
-			mTestPikiList[i]->mPikiAnimMgr.startMotion(&PaniMotionInfo(_684, nullptr), &PaniMotionInfo(_684));
+			mTestPikiList[i]->mPikiAnimMgr.startMotion(&PaniMotionInfo(mMotionId, nullptr), &PaniMotionInfo(mMotionId));
 		}
 	}
 
@@ -325,16 +325,16 @@ void PaniTestNode::updateTekis()
 	if (_68C) {
 		if (mController->keyUnClick(KBBTN_A)) {
 			for (int i = 0; i < 10; i++) {
-				mTestTekiList[mFocusTekiType]->mTekiAnimator->animate(_688);
+				mTestTekiList[mFocusTekiType]->mTekiAnimator->animate(mAnimationSpeed);
 			}
 		}
 		return;
 	}
 
-	mTestTekiList[mFocusTekiType]->mTekiAnimator->animate(_688);
+	mTestTekiList[mFocusTekiType]->mTekiAnimator->animate(mAnimationSpeed);
 
 	if (mController->keyUnClick(KBBTN_A)) {
-		mTestTekiList[mFocusTekiType]->mTekiAnimator->startMotion(PaniMotionInfo(_684, this));
+		mTestTekiList[mFocusTekiType]->mTekiAnimator->startMotion(PaniMotionInfo(mMotionId, this));
 	}
 
 	if (mController->keyUnClick(KBBTN_X)) {
@@ -383,7 +383,7 @@ void PaniTestNode::draw(Graphics& gfx)
 	gfx.setPerspective(mActiveCamera.mPerspectiveMatrix.mMtx, mActiveCamera.mFov, mActiveCamera.mAspectRatio, mActiveCamera.mNear,
 	                   mActiveCamera.mFar, 1.0f);
 	gfx.setLighting(true, nullptr);
-	gfx.setFog(true, _38C, 1.0f, 750.0f, mActiveCamera.mFar);
+	gfx.setFog(true, mFogColour, 1.0f, 750.0f, mActiveCamera.mFar);
 	switch (mTestMode) {
 	case PANITEST_Piki:
 		for (int i = 0; i < mTestPikiCount; i++) {
@@ -417,18 +417,18 @@ void PaniTestNode::draw(Graphics& gfx)
 	Node::draw(gfx);
 
 	gfx.texturePrintf(gsys->mConsFont, 0, 440, "VerticalDegree:%d", int(NMathF::r2d(mCamMgr->mCamera->getPolar().mInclination)));
-	gfx.texturePrintf(gsys->mConsFont, 0, 430, "Speed:%3.1f", _688);
+	gfx.texturePrintf(gsys->mConsFont, 0, 430, "Speed:%3.1f", mAnimationSpeed);
 
 	char* motionLabel = nullptr;
 	switch (mTestMode) {
 	case PANITEST_Piki:
-		motionLabel = PaniPikiAnimator::motionLabels[_684];
+		motionLabel = PaniPikiAnimator::motionLabels[mMotionId];
 		break;
 	case PANITEST_Teki:
-		motionLabel = PaniTekiAnimator::motionLabels[_684];
+		motionLabel = PaniTekiAnimator::motionLabels[mMotionId];
 		break;
 	}
-	gfx.texturePrintf(gsys->mConsFont, 0, 420, "Motion:%d:%s", _684, motionLabel);
+	gfx.texturePrintf(gsys->mConsFont, 0, 420, "Motion:%d:%s", mMotionId, motionLabel);
 
 	f32 animCounter = 0.0f;
 	int frameCount  = 0;

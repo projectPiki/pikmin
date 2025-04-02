@@ -517,14 +517,14 @@ PeveVibrationEvent::PeveVibrationEvent()
  * Address:	80126C18
  * Size:	000088
  */
-void PeveVibrationEvent::makeVibrationEvent(f32 p1, NPosture3DIO* postureIO, NVector3f& p3, f32 p4, f32 p5, f32 p6)
+void PeveVibrationEvent::makeVibrationEvent(f32 duration, NPosture3DIO* postureIO, NVector3f& up, f32 intensity, f32 frequency, f32 p6)
 {
 	mPostureIO = postureIO;
-	mTimeCondition.setPeriod(p1);
+	mTimeCondition.setPeriod(duration);
 	makeEvent(&mTimeCondition);
-	_14.input(p3);
-	mVibFunction.makeVibrationFunction(0.0f, p4, 1.0f);
-	mPolyFunction.mData.mValues[0] = p5;
+	mUpVector.input(up);
+	mVibFunction.makeVibrationFunction(0.0f, intensity, 1.0f);
+	mPolyFunction.mData.mValues[0] = frequency;
 	mPolyFunction.mData.mValues[1] = p6;
 }
 
@@ -540,7 +540,7 @@ void PeveVibrationEvent::update()
 	f32 val  = mPolyFunction.getValue(time) * mVibFunction.getValue(time);
 
 	NVector3f vec;
-	vec.scale2(val, _14);
+	vec.scale2(val, mUpVector);
 
 	NPosture3D posture;
 	mPostureIO->output(posture);

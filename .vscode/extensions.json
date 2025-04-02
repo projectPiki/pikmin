@@ -1,6 +1,8 @@
 {
-    "recommendations": [
-        "ms-vscode.cpptools",
-        "ms-vscode.makefile-tools"
-    ]
+  "recommendations": [
+    "ms-vscode.cpptools", // For C/C++ IntelliSense and debugging
+    "ms-vscode.makefile-tools", // For Makefile support
+    "xaver.clang-format", // For formatting C/C++ code
+    "discretegames.f5anything" // For running ninja easily with F5
+  ]
 }

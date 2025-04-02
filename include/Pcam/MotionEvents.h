@@ -17,9 +17,9 @@ struct PcamDamageEvent : public PeveVibrationEvent {
 
 	// _00     = VTBL
 	// _00-_48 = PeveVibrationEvent
-	f32 _48;                        // _48
-	f32 _4C;                        // _4C
-	f32 _50;                        // _50
+	f32 mVibrationDuration;         // _48
+	f32 mVibrationAmplitude;        // _4C
+	f32 mVibrationFrequency;        // _50
 	PcamCamera* mCamera;            // _54
 	PeveCameraPostureIO mPostureIO; // _58
 };
@@ -36,8 +36,8 @@ struct PcamLongVibrationEvent : public PeveSerialEvent {
 
 	// _00     = VTBL
 	// _00-_14 = PeveSerialEvent
-	PeveVibrationEvent* _14;        // _14
-	PeveVibrationEvent* _18;        // _18
+	PeveVibrationEvent* mEventA;    // _14
+	PeveVibrationEvent* mEventB;    // _18
 	PcamCamera* mCamera;            // _1C
 	PeveCameraPostureIO mPostureIO; // _20
 };
@@ -56,7 +56,7 @@ struct PcamRandomMoveEvent : public PeveEvent {
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
 	f32 _10;                          // _10
-	f32 _14;                          // _14
+	f32 mMoveScale;                   // _14
 	PeveTimeCondition mTimeCondition; // _18
 	PcamCamera* mCamera;              // _24
 };
@@ -74,9 +74,9 @@ struct PcamSideVibrationEvent : public PeveEvent {
 
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	f32 _10;                           // _10
-	f32 _14;                           // _14
-	f32 _18;                           // _18
+	f32 mEventPeriod;                  // _10
+	f32 mVibrationMagnitude;           // _14
+	f32 mMaxRotation;                  // _18
 	PeveTimeCondition mTimeCondition;  // _1C
 	PcamCamera* mCamera;               // _28
 	NVibrationFunction mVibFunction;   // _2C
@@ -95,9 +95,9 @@ struct PcamVibrationEvent : public PeveVibrationEvent {
 
 	// _00     = VTBL
 	// _00-_48 = PeveVibrationEvent
-	f32 _48;                        // _48
-	f32 _4C;                        // _4C
-	f32 _50;                        // _50
+	f32 mVibrationDuration;         // _48
+	f32 mVibrationAmplitude;        // _4C
+	f32 mVibrationFrequency;        // _50
 	PcamCamera* mCamera;            // _54
 	PeveCameraPostureIO mPostureIO; // _58
 };

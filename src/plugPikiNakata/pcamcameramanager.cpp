@@ -34,33 +34,33 @@ PcamCameraManager::PcamCameraManager(Camera* camera, Controller* controller)
 	mVibrationEvents = new PeveEvent*[PCAMVIB_VibrationCount];
 
 	PcamVibrationEvent* vib1             = new PcamVibrationEvent(mCamera);
-	vib1->_48                            = 0.6f;
-	vib1->_4C                            = 0.2f;
-	vib1->_50                            = 8.0f;
+	vib1->mVibrationDuration             = 0.6f;
+	vib1->mVibrationAmplitude            = 0.2f;
+	vib1->mVibrationFrequency            = 8.0f;
 	mVibrationEvents[PCAMVIB_Vibration1] = vib1;
 
 	PcamVibrationEvent* vib2             = new PcamVibrationEvent(mCamera);
-	vib2->_48                            = 0.6f;
-	vib2->_4C                            = 0.2f;
-	vib2->_50                            = 4.0f;
+	vib2->mVibrationDuration             = 0.6f;
+	vib2->mVibrationAmplitude            = 0.2f;
+	vib2->mVibrationFrequency            = 4.0f;
 	mVibrationEvents[PCAMVIB_Vibration2] = vib2;
 
 	mVibrationEvents[PCAMVIB_LongVibration] = new PcamLongVibrationEvent(mCamera);
 
 	PcamDamageEvent* damage = new PcamDamageEvent(mCamera);
 	// nice typo.
-	vib2->_48 = 0.6f;
-	vib2->_4C = 0.2f;
+	vib2->mVibrationDuration  = 0.6f;
+	vib2->mVibrationAmplitude = 0.2f;
 
-	damage->_50                      = 30.0f;
+	damage->mVibrationFrequency      = 30.0f;
 	mVibrationEvents[PCAMVIB_Damage] = damage;
 
 	PcamSideVibrationEvent* sideVib = new PcamSideVibrationEvent(mCamera);
 	// nice typo.
-	vib2->_48 = 0.6f;
-	vib2->_4C = 0.2f;
+	vib2->mVibrationDuration  = 0.6f;
+	vib2->mVibrationAmplitude = 0.2f;
 
-	sideVib->_18                            = NMathF::pi / 48.0f;
+	sideVib->mMaxRotation                   = NMathF::pi / 48.0f;
 	mVibrationEvents[PCAMVIB_SideVibration] = sideVib;
 	mCurrEventIndex                         = -1;
 }

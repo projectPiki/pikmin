@@ -17,18 +17,18 @@ struct DayMgr;
 struct MoveTrace {
 	MoveTrace(Vector3f& position, Vector3f& velocity, f32 radius, bool p4)
 	{
-		_20       = p4;
-		mPosition = position;
-		mVelocity = velocity;
-		mRadius   = radius;
-		mObject   = nullptr;
-		_1C       = 1.0f;
+		_20           = p4;
+		mPosition     = position;
+		mVelocity     = velocity;
+		mRadius       = radius;
+		mObject       = nullptr;
+		mStepFraction = 1.0f;
 	}
 
 	Vector3f mPosition; // _00
 	Vector3f mVelocity; // _0C
 	f32 mRadius;        // _18
-	f32 _1C;            // _1C
+	f32 mStepFraction;  // _1C
 	bool _20;           // _20
 	Creature* mObject;  // _24, the thing moving
 };
@@ -144,7 +144,7 @@ struct MapPartsPart {
 	// Fabricated.
 
 	Vector3f mStartPosition; // _00
-	Vector3f _0C;            // _0C
+	Vector3f mEndPosition;   // _0C
 };
 
 /**
@@ -199,15 +199,15 @@ struct MapSlider : public MapParts {
 	// _00-_150 = MapParts
 	Vector3f mSliderPosition; // _150
 	f32 mFaceDirection;       // _15C
-	int _160;                 // _160
-	int _164;                 // _164
-	f32 _168;                 // _168
-	f32 _16C;                 // _16C
-	f32 _170;                 // _170
-	int _174;                 // _174
-	int _178;                 // _178
-	int _17C;                 // _17C
-	f32 _180;                 // _180
+	int mActivationCount;     // _160
+	int mTriggerCount;        // _164
+	f32 mHoldTime1;           // _168
+	f32 mHoldTime2;           // _16C
+	f32 mMoveSpeed;           // _170
+	int mMoveMode;            // _174
+	int mStateMode;           // _178
+	int mDirectionMode;       // _17C
+	f32 mCurrentTimer;        // _180
 };
 
 /**
@@ -262,7 +262,7 @@ struct MapMgr {
 	Vector3f _08;                          // _08
 	MapRoom* mMapRooms;                    // _14, array of 256 MapRooms
 	u8 _18[0x60 - 0x18];                   // _18, unknown
-	Shape* _60;                            // _60
+	Shape* mMapShape;                      // _60
 	ShapeDynMaterials mDynMaterials;       // _64
 	BaseShape* mMapPartShapes[5];          // _74
 	DynCollShape* mCollShape;              // _88
@@ -273,7 +273,7 @@ struct MapMgr {
 	BoundBox _C0;                          // _C0
 	BoundBox _D8;                          // _D8
 	u8 _F0[0x10C - 0xF0];                  // _F0, unknown
-	int _10C;                              // _10C
+	int mCollisionCheckCount;              // _10C
 	u8 _110[0x4];                          // _110, unknown
 	ShadowCaster mShadowCaster;            // _114
 	u8 _4A8[0x4];                          // _4A8, unknown

@@ -80,7 +80,7 @@ bool InteractBury::actPiki(Piki* piki)
 		return false;
 	}
 
-	if (!piki->isSafeMePos(piki->mPosition) || MapCode::isBald(piki->mFloorTri)) {
+	if (!piki->isSafeMePos(piki->mPosition) || MapCode::isBald(piki->mGroundTriangle)) {
 		return false;
 	}
 

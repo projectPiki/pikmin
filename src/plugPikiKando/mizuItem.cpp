@@ -38,7 +38,7 @@ MizuItem::MizuItem(int objType, CreatureProp* props, ItemShapeObject* shape, Sim
 void MizuItem::update()
 {
 	ItemCreature::update();
-	if (mFloorTri && mObjType == OBJTYPE_FallWater) {
+	if (mGroundTriangle && mObjType == OBJTYPE_FallWater) {
 		MsgGround msg;
 		if (static_cast<SimpleAI*>(mStateMachine)) {
 			static_cast<SimpleAI*>(mStateMachine)->procMsg(this, &msg);

@@ -63,7 +63,7 @@ void SlimeEffect::restart()
  */
 void SlimeEffect::emit(EffectParm& parm)
 {
-	mObj         = parm._28;
+	mObj         = parm.mOwner;
 	Vector3f pos = mObj->mPosition;
 	if (!mEfxGen) {
 		mEfxGen = effectMgr->create(EffectMgr::EFF_Piki_Bubble, pos, this, this);
@@ -284,10 +284,10 @@ void PermanentEffect::kill()
 void FreeLightEffect::emit(EffectParm& parm)
 {
 	if (!mEfx) {
-		mEfx = effectMgr->create((EffectMgr::effTypeTable)(EffectMgr::EFF_Piki_IdleBlue - mColor), *parm._20, nullptr, nullptr);
+		mEfx = effectMgr->create((EffectMgr::effTypeTable)(EffectMgr::EFF_Piki_IdleBlue - mColor), *parm.mPositionRef, nullptr, nullptr);
 		if (mEfx) {
 			mScale = mEfx->getScaleSize();
-			mEfx->setEmitPosPtr(parm._20);
+			mEfx->setEmitPosPtr(parm.mPositionRef);
 		}
 	}
 }
@@ -351,20 +351,20 @@ void RippleEffect::emit(EffectParm& parm)
 	if (mEfxA) {
 		return;
 	}
-	f32 a = parm._24;
+	f32 a = parm.mScale;
 
-	mEfxB = effectMgr->create(EffectMgr::EFF_RippleBlack, *parm._20, nullptr, nullptr);
+	mEfxB = effectMgr->create(EffectMgr::EFF_RippleBlack, *parm.mPositionRef, nullptr, nullptr);
 	if (mEfxB) {
 		f32 scale = a * mEfxB->getScaleSize();
-		mEfxB->setEmitPosPtr(parm._20);
+		mEfxB->setEmitPosPtr(parm.mPositionRef);
 		mEfxB->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		mEfxB->setScaleSize(scale);
 	}
 
-	mEfxA = effectMgr->create(EffectMgr::EFF_RippleWhite, *parm._20, nullptr, nullptr);
+	mEfxA = effectMgr->create(EffectMgr::EFF_RippleWhite, *parm.mPositionRef, nullptr, nullptr);
 	if (mEfxA) {
 		f32 scale = a * mEfxA->getScaleSize();
-		mEfxA->setEmitPosPtr(parm._20);
+		mEfxA->setEmitPosPtr(parm.mPositionRef);
 		mEfxA->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		mEfxA->setScaleSize(scale);
 	}
@@ -456,9 +456,9 @@ void BurnEffect::emit(EffectParm& parm)
 		return;
 	}
 
-	mEfxA = effectMgr->create(EffectMgr::EFF_Piki_Fire, *parm._20, this, nullptr);
+	mEfxA = effectMgr->create(EffectMgr::EFF_Piki_Fire, *parm.mPositionRef, this, nullptr);
 	if (mEfxA) {
-		mEfxA->setEmitPosPtr(parm._20);
+		mEfxA->setEmitPosPtr(parm.mPositionRef);
 		mEfxA->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
 		Vector3f vel(_0C[0]);
 		vel.y = 0.0f;
@@ -466,9 +466,9 @@ void BurnEffect::emit(EffectParm& parm)
 		mEfxA->setEmitVelocity(Vector3f(vel));
 	}
 
-	mEfxB = effectMgr->create(EffectMgr::EFF_Piki_FireSparkles, *parm._20, this, nullptr);
+	mEfxB = effectMgr->create(EffectMgr::EFF_Piki_FireSparkles, *parm.mPositionRef, this, nullptr);
 	if (mEfxB) {
-		mEfxB->setEmitPosPtr(parm._20);
+		mEfxB->setEmitPosPtr(parm.mPositionRef);
 		Vector3f vel(_0C[0]);
 		vel.y = 0.0f;
 		vel.multiply(0.01f);

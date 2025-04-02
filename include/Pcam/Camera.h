@@ -153,12 +153,12 @@ struct PcamCamera : public NCamera {
 	int mInclinationLevel;                  // _90
 	int mAdjustInclinationPending;          // _94, not a BOOL bc it can be 2, but never actually used beyond 0/1
 	u32 _98;                                // _98, unknown
-	int _9C;                                // _9C
+	int mAttentionState;                    // _9C
 	int _A0;                                // _A0
 	f32 _A4;                                // _A4
 	f32 _A8;                                // _A8
 	f32 mCurrDistance;                      // _AC
-	f32 _B0;                                // _B0
+	f32 mCurrentAzimuth;                    // _B0
 	f32 _B4;                                // _B4
 	f32 _B8;                                // _B8
 	f32 _BC;                                // _BC

@@ -88,7 +88,7 @@ int ActExit::exec()
 		mPiki->mScale.set(1.0f, 1.0f, 1.0f);
 	}
 
-	if (mPiki->mFloorTri) {
+	if (mPiki->mGroundTriangle) {
 		return ACTOUT_Success;
 	}
 

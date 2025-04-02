@@ -235,7 +235,7 @@ struct PeveVibrationEvent : public PeveEvent {
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
 	NPosture3DIO* mPostureIO;          // _10
-	NVector3f _14;                     // _14
+	NVector3f mUpVector;               // _14
 	PeveTimeCondition mTimeCondition;  // _20
 	NVibrationFunction mVibFunction;   // _2C
 	NPolynomialFunction mPolyFunction; // _3C

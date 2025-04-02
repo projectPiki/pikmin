@@ -129,7 +129,7 @@ void GameCoreSection::updateTextDemo()
  */
 void GameCoreSection::startMovie(u32 flags, bool b)
 {
-	_30                    = b;
+	mMovieBackCamera       = b;
 	GoalItem::demoHideFlag = 0;
 	if (flags & 0x100000) {
 		GoalItem::demoHideFlag = 2;
@@ -243,7 +243,7 @@ void GameCoreSection::startMovie(u32 flags, bool b)
 	}
 
 	if (flags & 0x400) {
-		_2C |= 4;
+		mHideFlags |= 4;
 	}
 }
 
@@ -278,11 +278,11 @@ void GameCoreSection::endMovie(int a)
 
 	mNavi->mNaviLightEfx->restart();
 	mNavi->mNaviLightGlowEfx->restart();
-	_2C = 0;
+	mHideFlags = 0;
 
 	if (mNavi) {
 		f32 angle;
-		if (_30) {
+		if (mMovieBackCamera) {
 			angle = mNavi->mFaceDirection + PI;
 			PRINT("use navi back camera\n");
 		} else {
@@ -310,7 +310,7 @@ void GameCoreSection::endMovie(int a)
  */
 bool GameCoreSection::hideTeki()
 {
-	return gameflow.mMoviePlayer->mIsActive && !(_2C & 4);
+	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & 4);
 }
 
 /*
@@ -320,7 +320,7 @@ bool GameCoreSection::hideTeki()
  */
 bool GameCoreSection::hideAllPellet()
 {
-	return gameflow.mMoviePlayer->mIsActive && !(_2C & 1);
+	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & 1);
 }
 
 /*
@@ -330,7 +330,7 @@ bool GameCoreSection::hideAllPellet()
  */
 bool GameCoreSection::hidePelletExceptSucked()
 {
-	return gameflow.mMoviePlayer->mIsActive && !(_2C & 2);
+	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & 2);
 }
 
 /*
@@ -371,10 +371,10 @@ void GameCoreSection::forceDayEnd()
 	seSystem->resetSystem();
 	playerState->setDayEnd(true);
 	PRINT("------------ forceDayEnd --------------\n");
-	_3A = 1;
-	_39 = 1;
-	_38 = 1;
-	_31 = 1;
+	_3A              = 1;
+	_39              = 1;
+	_38              = 1;
+	mDoneSundownWarn = 1;
 	clearDeadlyPikmins();
 	enterFreePikmins();
 
@@ -1234,11 +1234,11 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	mDrawHideType = 0;
 	textDemoState = 0;
 	finishPause();
-	_2C          = 0;
-	demoEventMgr = new DemoEventMgr();
-	radarInfo    = new RadarInfo();
-	_34          = 0;
-	_31          = 0;
+	mHideFlags       = 0;
+	demoEventMgr     = new DemoEventMgr();
+	radarInfo        = new RadarInfo();
+	_34              = 0;
+	mDoneSundownWarn = 0;
 
 	memStat->start("gamecore");
 	seSystem      = new SeSystem();
@@ -1313,7 +1313,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	KeyConfig::createInstance();
 	gameflow.addGenNode("Key Setting", KeyConfig::_instance);
 
-	_54 = new SearchSystem();
+	mSearchSystem = new SearchSystem();
 
 	PikiShapeObject::init();
 	SAIEventInit();
@@ -1412,8 +1412,8 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 void GameCoreSection::update()
 {
 	u32 badCompiler[2];
-	if (!gameflow.mMoviePlayer->mIsActive && _31 == false && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mNightWarning()
-	    && (flowCont._234 != 1 || flowCont._234 != 2)) {
+	if (!gameflow.mMoviePlayer->mIsActive && mDoneSundownWarn == false
+	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mNightWarning() && (flowCont._234 != 1 || flowCont._234 != 2)) {
 		if (playerState->inDayEnd()) {
 			PRINT("======== IN DAY END *** \n");
 		} else {
@@ -1500,7 +1500,7 @@ void GameCoreSection::startContainerDemo()
  */
 void GameCoreSection::startSundownWarn()
 {
-	_31 = 1;
+	mDoneSundownWarn = 1;
 	PRINT("***** START HURRY UP WINDOW\n");
 	hurryupWindow->start(zen::DrawHurryUp::MesgType1);
 	seSystem->playSysSe(SYSSE_EVENING_ALERT);
@@ -1587,9 +1587,9 @@ void GameCoreSection::updateAI()
 				plantMgr->invalidateSearch();
 				workObjectMgr->invalidateSearch();
 				itemMgr->mMeltingPotMgr->invalidateSearch();
-				_54->update();
+				mSearchSystem->update();
 			} else {
-				_54->update();
+				mSearchSystem->update();
 			}
 		}
 

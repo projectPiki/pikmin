@@ -361,11 +361,11 @@ void GrassGen::create(int num, f32 size, int)
 		grassOffset   = grassOffset + mPosition;
 		grassOffset.y = mapMgr->getMinY(grassOffset.x, grassOffset.z, true);
 
-		Grass& obj    = mGrass[i];
-		obj.mPosition = grassOffset;
-		obj._0E       = 0.99999f * (255.0f * gsys->getRand(1.0f));
-		obj._0D       = 0;
-		obj.mHealth   = 1;
+		Grass& obj        = mGrass[i];
+		obj.mPosition     = grassOffset;
+		obj._0E           = 0.99999f * (255.0f * gsys->getRand(1.0f));
+		obj.mGrassShapeId = 0;
+		obj.mHealth       = 1;
 	}
 
 	resolve();
@@ -427,7 +427,7 @@ void GrassGen::refresh(Graphics& gfx)
 				gfx.calcViewMatrix(mtx, mtx2);
 				gfx._324 = 1;
 				gfx.useMatrix(mtx2, 0);
-				itemMgr->getGrassShape(pb._0D)->drawshape(gfx, *gfx.mCamera, nullptr);
+				itemMgr->getGrassShape(pb.mGrassShapeId)->drawshape(gfx, *gfx.mCamera, nullptr);
 			}
 		}
 	}

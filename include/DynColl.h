@@ -18,9 +18,9 @@ struct DynCollObject : public Node {
 	DynCollObject()
 	    : Node("")
 	{
-		_20       = 0;
-		_24       = -1;
-		mCreature = nullptr;
+		mContactCount = 0;
+		_24           = -1;
+		mCreature     = nullptr;
 	}
 
 	virtual void adjust(Creature*) { }                           // _30
@@ -30,7 +30,7 @@ struct DynCollObject : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 _20;             // _20, unknown
+	u32 mContactCount;   // _20, unknown
 	u32 _24;             // _24, maybe int?
 	Creature* mCreature; // _28
 };
@@ -69,19 +69,19 @@ struct DynCollShape : public DynCollObject {
 
 	// _00     = VTBL
 	// _00-_2C = DynCollObject
-	Shape* mShape;            // _2C
-	Vector3f* _30;            // _30
-	u32 _34;                  // _34
-	bool* mProgressStateList; // _38
-	int _3C;                  // _3C
-	CollGroup** _40;          // _40
-	BoundBox _44;             // _44
-	Matrix4f mTransformMtx;   // _5C
-	Matrix4f mInverseMatrix;  // _9C
-	Matrix4f _DC;             // _DC
-	Vector3f mScale;          // _11C, these 3 are actually an SRT struct in the DLL
-	Vector3f mRotation;       // _128
-	Vector3f mPosition;       // _134
+	Shape* mShape;             // _2C
+	Vector3f* mVertexList;     // _30
+	u32 _34;                   // _34
+	bool* mProgressStateList;  // _38
+	int mColliderCount;        // _3C
+	CollGroup** mColliderList; // _40
+	BoundBox mBoundingBox;     // _44
+	Matrix4f mTransformMtx;    // _5C
+	Matrix4f mInverseMatrix;   // _9C
+	Matrix4f mWorldMatrix;     // _DC
+	Vector3f mScale;           // _11C, these 3 are actually an SRT struct in the DLL
+	Vector3f mRotation;        // _128
+	Vector3f mPosition;        // _134
 };
 
 /**

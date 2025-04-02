@@ -2850,17 +2850,17 @@ void BaseShape::read(RandomAccessStream& stream)
 			CollGroup* tmpGroups = new CollGroup[numGroups];
 
 			for (int i = 0; i < numGroups; i++) {
-				tmpGroups[i]._06       = stream.readShort();
-				tmpGroups[i].mTriCount = stream.readShort();
-				tmpGroups[i].mTris     = new CollTriInfo*[tmpGroups[i].mTriCount];
+				tmpGroups[i]._06           = stream.readShort();
+				tmpGroups[i].mTriCount     = stream.readShort();
+				tmpGroups[i].mTriangleList = new CollTriInfo*[tmpGroups[i].mTriCount];
 
 				if (tmpGroups[i].mTriCount > maxTris) {
 					maxTris = tmpGroups[i].mTriCount;
 				}
 
 				for (int j = 0; j < tmpGroups[i].mTriCount; j++) {
-					int idx               = stream.readInt();
-					tmpGroups[i].mTris[j] = &mTriList[idx];
+					int idx                       = stream.readInt();
+					tmpGroups[i].mTriangleList[j] = &mTriList[idx];
 				}
 
 				if (tmpGroups[i]._06) {
@@ -2873,11 +2873,11 @@ void BaseShape::read(RandomAccessStream& stream)
 
 			PRINT("got a max of %d col tris in one block!\n", maxTris);
 
-			CollGroup* group = new CollGroup();
-			group->mTriCount = 0;
-			group->mTris     = nullptr;
-			int groupCount   = 0;
-			f32 maxDist      = 0.0f;
+			CollGroup* group     = new CollGroup();
+			group->mTriCount     = 0;
+			group->mTriangleList = nullptr;
+			int groupCount       = 0;
+			f32 maxDist          = 0.0f;
 			for (int i = 0; i < mGridSizeY; i++) {
 				for (int j = 0; j < mGridSizeX; j++) {
 					int groupIdx = stream.readInt();
@@ -2898,7 +2898,7 @@ void BaseShape::read(RandomAccessStream& stream)
 					box.expandBound(upper);
 
 					for (int k = 0; k < tmpGroups[groupIdx].mTriCount; k++) {
-						CollTriInfo* tri = tmpGroups[groupIdx].mTris[k];
+						CollTriInfo* tri = tmpGroups[groupIdx].mTriangleList[k];
 						f32 dist         = triRectDistance(&mVertexList[tri->mVertexIndices[0]], &mVertexList[tri->mVertexIndices[1]],
 						                                   &mVertexList[tri->mVertexIndices[2]], box, false);
 						if (dist >= 0.001f) {

@@ -26,10 +26,10 @@ PcamLongVibrationEvent::PcamLongVibrationEvent(PcamCamera* camera)
     : PeveSerialEvent(2)
 {
 	mCamera = camera;
-	_14     = new PeveVibrationEvent();
-	_18     = new PeveVibrationEvent();
-	addChild(_14);
-	addChild(_18);
+	mEventA = new PeveVibrationEvent();
+	mEventB = new PeveVibrationEvent();
+	addChild(mEventA);
+	addChild(mEventB);
 	mPostureIO.construct(mCamera);
 }
 
@@ -44,8 +44,8 @@ void PcamLongVibrationEvent::makePcamLongVibrationEvent(f32 p1, f32 p2, f32 p3, 
 	dir.normalize();
 	NOrientation& orient = NOrientation(dir);
 	orient.normalize();
-	_14->makeVibrationEvent(p1, &mPostureIO, orient.getUp(), p3, p4, 0.0f);
-	_18->makeVibrationEvent(p2, &mPostureIO, orient.getUp(), p3, p4, -p4 / p2);
+	mEventA->makeVibrationEvent(p1, &mPostureIO, orient.getUp(), p3, p4, 0.0f);
+	mEventB->makeVibrationEvent(p2, &mPostureIO, orient.getUp(), p3, p4, -p4 / p2);
 }
 
 /*
@@ -57,9 +57,9 @@ PcamVibrationEvent::PcamVibrationEvent(PcamCamera* camera)
 {
 	mCamera = camera;
 	mPostureIO.construct(mCamera);
-	_48 = 0.8f;
-	_4C = 0.2f;
-	_50 = 16.0f;
+	mVibrationDuration  = 0.8f;
+	mVibrationAmplitude = 0.2f;
+	mVibrationFrequency = 16.0f;
 }
 
 /*
@@ -73,7 +73,8 @@ void PcamVibrationEvent::makePcamVibrationEvent()
 	dir.normalize();
 	NOrientation& orient = NOrientation(dir);
 	orient.normalize();
-	makeVibrationEvent(_48, &mPostureIO, orient.getUp(), _4C, _50, -_50 / _48);
+	makeVibrationEvent(mVibrationDuration, &mPostureIO, orient.getUp(), mVibrationAmplitude, mVibrationFrequency,
+	                   -mVibrationFrequency / mVibrationDuration);
 }
 
 /*
@@ -85,9 +86,9 @@ PcamDamageEvent::PcamDamageEvent(PcamCamera* camera)
 {
 	mCamera = camera;
 	mPostureIO.construct(mCamera);
-	_48 = 0.8f;
-	_4C = 0.2f;
-	_50 = 16.0f;
+	mVibrationDuration  = 0.8f;
+	mVibrationAmplitude = 0.2f;
+	mVibrationFrequency = 16.0f;
 }
 
 /*
@@ -99,7 +100,8 @@ void PcamDamageEvent::makePcamDamageEvent()
 {
 	NVector3f& dir = NVector3f(mCamera->getViewpoint(), mCamera->getWatchpoint());
 	dir.normalize();
-	makeVibrationEvent(_48, &mPostureIO, dir, _4C, _50, -_50 / _48);
+	makeVibrationEvent(mVibrationDuration, &mPostureIO, dir, mVibrationAmplitude, mVibrationFrequency,
+	                   -mVibrationFrequency / mVibrationDuration);
 }
 
 /*
@@ -110,9 +112,9 @@ void PcamDamageEvent::makePcamDamageEvent()
 PcamRandomMoveEvent::PcamRandomMoveEvent(PcamCamera* camera)
     : PeveEvent(0)
 {
-	mCamera = camera;
-	_10     = 1.0f;
-	_14     = 1.0f;
+	mCamera    = camera;
+	_10        = 1.0f;
+	mMoveScale = 1.0f;
 }
 
 /*
@@ -138,13 +140,13 @@ void PcamRandomMoveEvent::update()
 	offset.x = NMathF::rangeRandom(-1.0f, 1.0f);
 	offset.y = NMathF::rangeRandom(-1.0f, 1.0f);
 	offset.z = NMathF::rangeRandom(-1.0f, 1.0f);
-	offset.scale(_14);
+	offset.scale(mMoveScale);
 	mCamera->getViewpoint().add(offset);
 
 	offset.x = NMathF::rangeRandom(-1.0f, 1.0f);
 	offset.y = NMathF::rangeRandom(-1.0f, 1.0f);
 	offset.z = NMathF::rangeRandom(-1.0f, 1.0f);
-	offset.scale(_14);
+	offset.scale(mMoveScale);
 	mCamera->getWatchpoint().add(offset);
 }
 
@@ -160,9 +162,9 @@ PcamSideVibrationEvent::PcamSideVibrationEvent(PcamCamera* camera)
 
 	mPolyFunction.construct(new f32[2], 2);
 	mTimeCondition.construct(0.0f);
-	_10 = 0.6f;
-	_14 = 0.2f;
-	_18 = NMathF::pi / 8.0f;
+	mEventPeriod        = 0.6f;
+	mVibrationMagnitude = 0.2f;
+	mMaxRotation        = NMathF::pi / 8.0f;
 }
 
 /*
@@ -172,11 +174,11 @@ PcamSideVibrationEvent::PcamSideVibrationEvent(PcamCamera* camera)
  */
 void PcamSideVibrationEvent::makePcamSideVibrationEvent()
 {
-	mTimeCondition.setPeriod(_10);
+	mTimeCondition.setPeriod(mEventPeriod);
 	makeEvent(&mTimeCondition);
-	mVibFunction.makeVibrationFunction(0.0f, _14, 1.0f);
-	mPolyFunction.mData.mValues[0] = _18;
-	mPolyFunction.mData.mValues[1] = -_18 / _10;
+	mVibFunction.makeVibrationFunction(0.0f, mVibrationMagnitude, 1.0f);
+	mPolyFunction.mData.mValues[0] = mMaxRotation;
+	mPolyFunction.mData.mValues[1] = -mMaxRotation / mEventPeriod;
 }
 
 /*

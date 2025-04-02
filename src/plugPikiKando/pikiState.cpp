@@ -2025,11 +2025,11 @@ void PikiFallMeckState::exec(Piki* piki)
 void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 {
 	int attr = ATTR_NULL;
-	if (piki->mFloorTri) {
-		attr = MapCode::getAttribute(piki->mFloorTri);
+	if (piki->mGroundTriangle) {
+		attr = MapCode::getAttribute(piki->mGroundTriangle);
 	}
 
-	if (!piki->hasBomb() && Piki::isSafeMePos(piki->mPosition) && !MapCode::isBald(piki->mFloorTri) && attr != ATTR_Water) {
+	if (!piki->hasBomb() && Piki::isSafeMePos(piki->mPosition) && !MapCode::isBald(piki->mGroundTriangle) && attr != ATTR_Water) {
 		PikiHeadMgr::buryMode = 1;
 		PikiHeadItem* sprout  = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
 		PikiHeadMgr::buryMode = 0;
@@ -2190,7 +2190,7 @@ void PikiCliffState::init(Piki* piki)
  */
 void PikiCliffState::exec(Piki* piki)
 {
-	if (!piki->mFloorTri) {
+	if (!piki->mGroundTriangle) {
 		PRINT("piki %x: no floor !\n", piki);
 		transit(piki, PIKISTATE_Fall);
 	}
@@ -2218,14 +2218,14 @@ bool PikiCliffState::nearEnough(Piki* piki)
 	f32 maxProj  = -1.0f;
 	int planeIdx = -1;
 	for (int i = 0; i < 3; i++) {
-		f32 proj = piki->mFloorTri->mEdgePlanes[i].mNormal.DP(dir);
+		f32 proj = piki->mGroundTriangle->mEdgePlanes[i].mNormal.DP(dir);
 		if (proj > maxProj) {
 			proj     = maxProj; // this is absolutely a typo
 			planeIdx = i;
 		}
 	}
 
-	f32 dist = piki->mFloorTri->mEdgePlanes[planeIdx].dist(piki->mPosition);
+	f32 dist = piki->mGroundTriangle->mEdgePlanes[planeIdx].dist(piki->mPosition);
 	if (dist < piki->mCollisionRadius + 0.2f) {
 		f32 x     = piki->mPosition.x;
 		f32 z     = piki->mPosition.z;
@@ -2264,7 +2264,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			break;
 
 		case 3:
-			if (!piki->mFloorTri) {
+			if (!piki->mGroundTriangle) {
 				PRINT("piki fall (otiru) %x\n", piki);
 				transit(piki, PIKISTATE_Fall);
 				return;
@@ -2288,15 +2288,15 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 				break;
 			}
 			if (_18 == 1) {
-				if (piki->mFloorTri && nearEnough(piki)) {
+				if (piki->mGroundTriangle && nearEnough(piki)) {
 					piki->mFaceDirection = roundAng(_28 + PI);
 					piki->startMotion(PaniMotionInfo(PIKIANIM_Hikakaru, piki), PaniMotionInfo(PIKIANIM_Hikakaru));
-					Plane* plane = piki->getNearestPlane(piki->mFloorTri);
+					Plane* plane = piki->getNearestPlane(piki->mGroundTriangle);
 					if (plane) {
 						f32 dist = plane->dist(piki->mPosition);
 						PRINT("dist is %.1f ( radius=%f : centresize=%f\n", dist, piki->mCollisionRadius, piki->getCentreSize());
 						if (dist > -0.2f && dist < 3.0f) {
-							PRINT("piki%x : ####### start buran motion :: floor = %s\n", piki, piki->mFloorTri ? "on floor" : "air");
+							PRINT("piki%x : ####### start buran motion :: floor = %s\n", piki, piki->mGroundTriangle ? "on floor" : "air");
 							_10 = 2;
 							_14 = int((2.0f * gsys->getRand(1.0f))) + 2;
 							break;
@@ -2314,7 +2314,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 				break;
 			}
 
-			if (piki->mFloorTri) {
+			if (piki->mGroundTriangle) {
 				PRINT("piki escaped from falling!\n");
 				transit(piki, PIKISTATE_Normal);
 				break;
@@ -3500,8 +3500,8 @@ void PikiBuryState::exec(Piki* piki)
 	PikiHeadItem* sprout  = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
 	PikiHeadMgr::buryMode = 0;
 	int attr              = ATTR_NULL;
-	if (piki->mFloorTri) {
-		attr = MapCode::getAttribute(piki->mFloorTri);
+	if (piki->mGroundTriangle) {
+		attr = MapCode::getAttribute(piki->mGroundTriangle);
 	}
 
 	if (sprout && attr != ATTR_Water) {
@@ -3676,7 +3676,7 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
 		rumbleMgr->start(0, 0, nullptr);
-		if (piki->mFloorTri && MapCode::getAttribute(piki->mFloorTri) == ATTR_Water) {
+		if (piki->mGroundTriangle && MapCode::getAttribute(piki->mGroundTriangle) == ATTR_Water) {
 			effectMgr->create(EffectMgr::EFF_P_Bubbles, piki->mPosition, nullptr, nullptr);
 		} else {
 			effectMgr->create(EffectMgr::EFF_SD_DirtCloud, piki->mPosition, nullptr, nullptr);

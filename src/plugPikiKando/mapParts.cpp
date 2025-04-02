@@ -39,9 +39,9 @@ char* MapParts::getShapeFile(int idx)
  * Address:	801184C0
  * Size:	00005C
  */
-void MapParts::applyVelocity(Plane&, Vector3f&, Vector3f& p3)
+void MapParts::applyVelocity(Plane&, Vector3f&, Vector3f& force)
 {
-	mVelocity = mVelocity + p3;
+	mVelocity = mVelocity + force;
 }
 
 /*
@@ -72,16 +72,16 @@ void MapEntity::update()
  * Address:	80118694
  * Size:	0000D0
  */
-MapSlider::MapSlider(Shape* shape, int p2, int p3, f32 p4, f32 p5, f32 p6, int p7)
+MapSlider::MapSlider(Shape* shape, int activationCount, int triggerCount, f32 holdTime1, f32 holdTime2, f32 moveSpeed, int moveMode)
     : MapParts(shape)
 {
-	_160           = p2;
-	_164           = p3;
-	_168           = p4;
-	_16C           = p5;
-	_170           = p6;
-	_174           = p7;
-	mFaceDirection = 0.0f;
+	mActivationCount = activationCount;
+	mTriggerCount    = triggerCount;
+	mHoldTime1       = holdTime1;
+	mHoldTime2       = holdTime2;
+	mMoveSpeed       = moveSpeed;
+	mMoveMode        = moveMode;
+	mFaceDirection   = 0.0f;
 }
 
 /*
@@ -92,10 +92,10 @@ MapSlider::MapSlider(Shape* shape, int p2, int p3, f32 p4, f32 p5, f32 p6, int p
 void MapSlider::init()
 {
 	if (mCurrentPart) {
-		mPosition = mCurrentPart->mStartPosition;
-		_180      = _168;
-		_178      = 2;
-		_17C      = 1;
+		mPosition      = mCurrentPart->mStartPosition;
+		mCurrentTimer  = mHoldTime1;
+		mStateMode     = 2;
+		mDirectionMode = 1;
 	}
 }
 
@@ -106,53 +106,54 @@ void MapSlider::init()
  */
 void MapSlider::update()
 {
-	bool check1 = _20 >= _160;
-	bool check2 = _20 >= _164;
+	bool activationReached = mContactCount >= mActivationCount;
+	bool triggerReached    = mContactCount >= mTriggerCount;
 
-	f32 val;
-	if (_17C == 1) {
-		val = _168;
+	f32 holdTime;
+	if (mDirectionMode == 1) {
+		holdTime = mHoldTime1;
 	} else {
-		val = _16C;
+		holdTime = mHoldTime2;
 	}
 
 	if (mCurrentPart) {
 		mPosition = mPosition + mVelocity * gsys->getFrameTime();
-		Vector3f vec;
-		vec = (_17C == 1) ? mCurrentPart->mStartPosition : mCurrentPart->_0C;
 
-		Vector3f dir = vec - mPosition;
-		f32 dist     = dir.normalise();
-		mVelocity    = dir * _170;
+		Vector3f targetPosition;
+		targetPosition = (mDirectionMode == 1) ? mCurrentPart->mStartPosition : mCurrentPart->mEndPosition;
 
-		switch (_178) {
+		Vector3f dir = targetPosition - mPosition;
+		f32 distance = dir.normalise();
+		mVelocity    = dir * mMoveSpeed;
+
+		switch (mStateMode) {
 		case 0:
 		case 1:
-			if (dist < 1.0f) {
-				_178 = 3;
-				_180 = val;
+			if (distance < 1.0f) {
+				mStateMode    = 3;
+				mCurrentTimer = holdTime;
 			}
 			break;
 		case 2:
-			_180 -= gsys->getFrameTime();
+			mCurrentTimer -= gsys->getFrameTime();
 			mVelocity.set(0.0f, 0.0f, 0.0f);
-			if (_174 == 1 || _17C == 1) {
-				if (_180 < 0.0f && check1) {
-					_17C = (_17C == 1) ? 0 : 1;
-					_178 = _17C;
-				} else if (_160 >= 1 && !check1) {
-					_180 = val;
+			if (mMoveMode == 1 || mDirectionMode == 1) {
+				if (mCurrentTimer < 0.0f && activationReached) {
+					mDirectionMode = (mDirectionMode == 1) ? 0 : 1;
+					mStateMode     = mDirectionMode;
+				} else if (mActivationCount >= 1 && !activationReached) {
+					mCurrentTimer = holdTime;
 				}
-			} else if (_180 < 0.0f) {
-				_17C = (_17C == 1) ? 0 : 1;
-				_178 = _17C;
+			} else if (mCurrentTimer < 0.0f) {
+				mDirectionMode = (mDirectionMode == 1) ? 0 : 1;
+				mStateMode     = mDirectionMode;
 			}
 			break;
 		case 3:
 			mVelocity.set(0.0f, 0.0f, 0.0f);
-			if (!_20) {
-				_178 = 2;
-				_180 = val;
+			if (!mContactCount) {
+				mStateMode    = 2;
+				mCurrentTimer = holdTime;
 			}
 			break;
 		}
@@ -175,7 +176,7 @@ void MapSlider::update()
 void MapSlider::refresh(Graphics& gfx)
 {
 	Vector3f textPos(0.0f, 20.0f, 0.0f);
-	textPos.multMatrix(_DC);
+	textPos.multMatrix(mWorldMatrix);
 	bool light = gfx.setLighting(false, nullptr);
 	gfx.useMatrix(Matrix4f::ident, 0);
 	gfx.setColour(Colour(255, 255, 255, 255), true);
@@ -183,7 +184,7 @@ void MapSlider::refresh(Graphics& gfx)
 	int blend = gfx.setCBlending(0);
 
 	char buf[256];
-	int dist = _160 - _20;
+	int dist = mActivationCount - mContactCount;
 	if (dist < 0) {
 		dist = 0;
 	}
@@ -194,6 +195,6 @@ void MapSlider::refresh(Graphics& gfx)
 
 	gfx.setCBlending(blend);
 	gfx.setLighting(light, nullptr);
-	gfx.useMatrix(_DC, 0);
+	gfx.useMatrix(mWorldMatrix, 0);
 	DynCollShape::refresh(gfx);
 }

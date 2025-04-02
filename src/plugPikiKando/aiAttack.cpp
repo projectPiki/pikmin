@@ -595,7 +595,7 @@ int ActJumpAttack::exec()
 			mPiki->setSpeed(1.0f, direction);
 		}
 
-		if (mPiki->isStickTo() && !mPiki->mFloorTri) {
+		if (mPiki->isStickTo() && !mPiki->mGroundTriangle) {
 			mState = 5;
 			PRINT("start ATTACK(KUTTUKU)!\n");
 			mIsCriticalHit = 0;
@@ -608,7 +608,7 @@ int ActJumpAttack::exec()
 
 	case 4: {
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		if (mPiki->isStickTo() && !mPiki->mFloorTri) {
+		if (mPiki->isStickTo() && !mPiki->mGroundTriangle) {
 			mState         = 5;
 			mIsCriticalHit = 0;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));

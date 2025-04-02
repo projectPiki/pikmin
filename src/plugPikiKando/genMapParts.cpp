@@ -180,7 +180,7 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 		if (mUseStartOffset == 1) {
 			MapPartsPart* part   = new MapPartsPart(); // this is wrong
 			part->mStartPosition = mStartPosition + info.mPosition;
-			part->_0C            = _84 + info.mPosition;
+			part->mEndPosition   = _84 + info.mPosition;
 			PRINT("start(%.1f %.1f %.1f)\n", part->mStartPosition.x, part->mStartPosition.y, part->mStartPosition.z);
 			PRINT("start (%.1f %.1f %.1f) + info(%.1f %.1f %.1f)\n", mStartPosition.x, mStartPosition.y, mStartPosition.z, info.mPosition.x,
 			      info.mPosition.y, info.mPosition.z);
