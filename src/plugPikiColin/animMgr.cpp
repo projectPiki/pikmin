@@ -42,8 +42,8 @@ void AnimInfo::checkAnimData()
 {
 	AnimKey* key1 = mAnimKeys.mNext;
 	for (key1; key1 != &mAnimKeys; key1 = key1->mNext) {
-		if (key1->mKeyframeIndex > mData->mNumFrames - 1) {
-			key1->mKeyframeIndex = mData->mNumFrames - 1;
+		if (key1->mKeyframeIndex > mData->mTotalFrameCount - 1) {
+			key1->mKeyframeIndex = mData->mTotalFrameCount - 1;
 		}
 	}
 
@@ -56,8 +56,8 @@ void AnimInfo::checkAnimData()
 
 	AnimKey* eventKey = mEventKeys.mNext;
 	for (eventKey; eventKey != &mEventKeys; eventKey = eventKey->mNext) {
-		if (eventKey->mKeyframeIndex > mData->mNumFrames - 1) {
-			eventKey->mKeyframeIndex = mData->mNumFrames - 1;
+		if (eventKey->mKeyframeIndex > mData->mTotalFrameCount - 1) {
+			eventKey->mKeyframeIndex = mData->mTotalFrameCount - 1;
 		}
 	}
 }
@@ -91,7 +91,7 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
 	mAnimKeys.add(key1);
 
 	AnimKey* key2        = new AnimKey();
-	key2->mKeyframeIndex = mData->mNumFrames - 1;
+	key2->mKeyframeIndex = mData->mTotalFrameCount - 1;
 	mAnimKeys.add(key2);
 
 	checkAnimData();
@@ -429,7 +429,7 @@ void AnimInfo::doread(RandomAccessStream& input, int p2)
 			for (int i = 0; i < numKeys2; i++) {
 				keys[i].mKeyframeIndex = input.readInt();
 				keys[i].mEventKeyType  = input.readShort();
-				keys[i]._07            = input.readByte();
+				keys[i].mEventId       = input.readByte();
 				keys[i].mValue         = input.readByte();
 				mInfoKeys.add(&keys[i]);
 			}
@@ -442,7 +442,7 @@ void AnimInfo::doread(RandomAccessStream& input, int p2)
 		for (int i = 0; i < numKeys3; i++) {
 			keys[i].mKeyframeIndex = input.readInt();
 			keys[i].mEventKeyType  = input.readShort();
-			keys[i]._07            = input.readByte();
+			keys[i].mEventId       = input.readByte();
 			keys[i].mValue         = input.readByte();
 			if (keys[i].mEventKeyType >= 3) {
 				keys[i].mEventKeyType = 0;
@@ -470,7 +470,7 @@ void AnimInfo::updateAnimFlags()
 AnimKey* AnimInfo::addKeyFrame()
 {
 	AnimKey* keyFrame        = new AnimKey();
-	keyFrame->mKeyframeIndex = mData->mNumFrames - 1;
+	keyFrame->mKeyframeIndex = mData->mTotalFrameCount - 1;
 	mAnimKeys.mPrev->insertAfter(keyFrame);
 	return keyFrame;
 }

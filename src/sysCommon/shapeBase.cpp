@@ -298,7 +298,7 @@ void AnimContext::animate(f32 time)
 	mCurrentFrame += gsys->getFrameTime() * time;
 
 	int frame = static_cast<int>(mCurrentFrame);
-	if (frame >= mData->mNumFrames) {
+	if (frame >= mData->mTotalFrameCount) {
 		mCurrentFrame = 0.0f;
 	}
 }
@@ -509,7 +509,7 @@ CamDataInfo::CamDataInfo()
 	mCamera.mNear        = 1.0f;
 	mCamera.mFar         = 15000.0f;
 	mCamera.mAspectRatio = 640.0f / 480.0f;
-	_2C                  = 0;
+	mUseStaticCam        = 0;
 };
 
 /*
@@ -588,19 +588,19 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 	mCamera.mFocus.multMatrix(mtx);
 	mCamera.mFov = vals[0];
 
-	if (_28 > 0.0f) {
-		mCamera.mFov = (_24 - mCamera.mFov) * _28 + mCamera.mFov;
+	if (mBlendRatio > 0.0f) {
+		mCamera.mFov = (mTargetFov - mCamera.mFov) * mBlendRatio + mCamera.mFov;
 
-		mCamera.mPosition.x += (_00.x - mCamera.mPosition.x) * _28;
-		mCamera.mPosition.y += (_00.y - mCamera.mPosition.y) * _28;
-		mCamera.mPosition.z += (_00.z - mCamera.mPosition.z) * _28;
+		mCamera.mPosition.x += (mCameraPosition.x - mCamera.mPosition.x) * mBlendRatio;
+		mCamera.mPosition.y += (mCameraPosition.y - mCamera.mPosition.y) * mBlendRatio;
+		mCamera.mPosition.z += (mCameraPosition.z - mCamera.mPosition.z) * mBlendRatio;
 
-		mCamera.mFocus.x += (_0C.x - mCamera.mFocus.x) * _28;
-		mCamera.mFocus.y += (_0C.y - mCamera.mFocus.y) * _28;
-		mCamera.mFocus.z += (_0C.z - mCamera.mFocus.z) * _28;
+		mCamera.mFocus.x += (mCameraLookAt.x - mCamera.mFocus.x) * mBlendRatio;
+		mCamera.mFocus.y += (mCameraLookAt.y - mCamera.mFocus.y) * mBlendRatio;
+		mCamera.mFocus.z += (mCameraLookAt.z - mCamera.mFocus.z) * mBlendRatio;
 
-	} else if (_2C) {
-		mCamera.mFocus = _18;
+	} else if (mUseStaticCam) {
+		mCamera.mFocus = mStaticLookAt;
 	}
 
 	mCamera.calcLookAt(mCamera.mPosition, mCamera.mFocus, nullptr);
@@ -1214,44 +1214,44 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
  * Address:	8002C2BC
  * Size:	000150
  */
-void AnimData::makeAnimSRT(int p1, Matrix4f* p2, Matrix4f* p3, AnimDataInfo* info, f32 p5)
+void AnimData::makeAnimSRT(int boneId, Matrix4f* parent, Matrix4f* output, AnimDataInfo* info, f32 pos)
 {
-	int frameNum = p5;
-	if (frameNum < 0 || frameNum > mNumFrames) {
-		ERROR("makeSRT too large a frame number : %d / %d : %f\n", frameNum, mNumFrames, p5);
+	int frameNum = pos;
+	if (frameNum < 0 || frameNum > mTotalFrameCount) {
+		ERROR("makeSRT too large a frame number : %d / %d : %f\n", frameNum, mTotalFrameCount, pos);
 	}
 
 	Matrix4f mtx;
 	bool check = true;
-	Matrix4f* mtxPtr;
-	if ((info->mFlags & 0x777) != 0x777 && mAnimInfoList[frameNum]._10) {
-		AnimCacheInfo* cache = (AnimCacheInfo*)mAnimInfoList[frameNum]._10;
-		if (cache->_18[p1]) {
+	Matrix4f* boneTransform;
+	if ((info->mFlags & 0x777) != 0x777 && mAnimInfoList[frameNum].mCachedMtxBlock) {
+		AnimCacheInfo* cache = (AnimCacheInfo*)mAnimInfoList[frameNum].mCachedMtxBlock;
+		if (cache->mBoneMtxList[boneId]) {
 			check = false;
 		} else {
-			cache->_18[p1] = &cache->_14[p1];
+			cache->mBoneMtxList[boneId] = &cache->mBoneMatrices[boneId];
 		}
-		mtxPtr = cache->_18[p1];
+		boneTransform = cache->mBoneMtxList[boneId];
 	} else {
-		mtxPtr = &mtx;
+		boneTransform = &mtx;
 	}
 
 	if (check) {
 		SRT& srt = info->mSRT;
-		extractSRT(info->mSRT, p1, info, p5);
+		extractSRT(info->mSRT, boneId, info, pos);
 		if ((info->mFlags & 0x777) == 0x777) {
-			mtxPtr = &info->mMtx;
+			boneTransform = &info->mMtx;
 			if (!(info->mFlags & 0x8000)) {
-				mtxPtr->makeSRT(srt.mScale, srt.mRotation, srt.mTranslation);
+				boneTransform->makeSRT(srt.mScale, srt.mRotation, srt.mTranslation);
 				info->mFlags |= 0x8000;
 			}
 		} else {
-			p3->makeConcatSRT(p2, *mtxPtr, srt);
+			output->makeConcatSRT(parent, *boneTransform, srt);
 			return;
 		}
 	}
 
-	PSMTXConcat(p2->mMtx, mtxPtr->mMtx, p3->mMtx);
+	PSMTXConcat(parent->mMtx, boneTransform->mMtx, output->mMtx);
 }
 
 /*
@@ -1261,7 +1261,7 @@ void AnimData::makeAnimSRT(int p1, Matrix4f* p2, Matrix4f* p3, AnimDataInfo* inf
  */
 void AnimData::detach()
 {
-	for (int i = 0; i < mNumFrames; i++) {
+	for (int i = 0; i < mTotalFrameCount; i++) {
 		mAnimInfoList[i].initData();
 	}
 }
@@ -1273,7 +1273,7 @@ void AnimData::detach()
  */
 void AnimData::initData()
 {
-	mAnimInfoList = new AnimCacheInfo[mNumFrames];
+	mAnimInfoList = new AnimCacheInfo[mTotalFrameCount];
 }
 
 /*
@@ -1283,7 +1283,7 @@ void AnimData::initData()
  */
 void AnimData::checkMask()
 {
-	for (int i = 0; i < mNumJoints; i++) {
+	for (int i = 0; i < mJointCount; i++) {
 		mAnimInfo[i].mFlags = 0;
 		int scaleFlag       = 0;
 		for (int j = 0; j < 3; j++) {
@@ -1313,24 +1313,24 @@ void AnimData::checkMask()
 		}
 	}
 
-	_20                  = new u16[mNumJoints];
-	int jointCount       = 0;
-	int unusedJointCount = 0;
+	mAnimJointIndices    = new u16[mJointCount];
+	int animJointCount   = 0;
+	int staticJointCount = 0;
 
-	for (int i = 0; i < mNumJoints; i++) {
+	for (int i = 0; i < mJointCount; i++) {
 		if (i >= mModel->mJointCount) {
 			continue;
 		}
 
 		if ((mAnimInfo[i].mFlags & 0x777) != 0x777) {
-			_20[i] = jointCount++;
+			mAnimJointIndices[i] = animJointCount++;
 		} else {
-			_20[i] = 0;
-			unusedJointCount++;
+			mAnimJointIndices[i] = 0;
+			staticJointCount++;
 		}
 	}
 
-	_2C = mNumJoints - unusedJointCount;
+	mActiveJointCount = mJointCount - staticJointCount;
 }
 
 /*
@@ -1340,8 +1340,8 @@ void AnimData::checkMask()
  */
 void AnimDca::read(RandomAccessStream& input)
 {
-	mNumJoints = input.readInt();
-	mNumFrames = input.readInt();
+	mJointCount      = input.readInt();
+	mTotalFrameCount = input.readInt();
 
 	mScaleDataBlock = new DataChunk();
 	mScaleDataBlock->read(input);
@@ -1352,9 +1352,9 @@ void AnimDca::read(RandomAccessStream& input)
 	mTranslationDataBlock = new DataChunk();
 	mTranslationDataBlock->read(input);
 
-	mAnimInfo = new AnimDataInfo[mNumJoints];
+	mAnimInfo = new AnimDataInfo[mJointCount];
 
-	for (int i = 0; i < mNumJoints; i++) {
+	for (int i = 0; i < mJointCount; i++) {
 		mAnimInfo[i].mGroupIndex = input.readInt();
 
 		int parentIndex          = input.readInt();
@@ -1542,15 +1542,15 @@ void AnimDca::getAnimInfo(CmdStream* stream)
 		stream->getToken(true);
 
 		if (stream->isToken("numjoints")) {
-			sscanf(stream->getToken(true), "%d", &mNumJoints);
-			mAnimInfo = new AnimDataInfo[mNumJoints];
+			sscanf(stream->getToken(true), "%d", &mJointCount);
+			mAnimInfo = new AnimDataInfo[mJointCount];
 
-			for (int i = 0; i < mNumJoints; i++) {
+			for (int i = 0; i < mJointCount; i++) {
 				mAnimInfo[i].mGroupIndex = i;
 			}
 
 		} else if (stream->isToken("numframes")) {
-			sscanf(stream->getToken(true), "%d", &mNumFrames);
+			sscanf(stream->getToken(true), "%d", &mTotalFrameCount);
 
 		} else {
 			stream->skipLine();
@@ -1569,10 +1569,10 @@ void AnimDca::getAnimInfo(CmdStream* stream)
  */
 AnimDck::AnimDck(BaseShape* model, int joints)
 {
-	mModel     = model;
-	mNumJoints = joints;
-	mNumFrames = 0;
-	mAnimInfo  = new AnimDataInfo[mNumJoints];
+	mModel           = model;
+	mJointCount      = joints;
+	mTotalFrameCount = 0;
+	mAnimInfo        = new AnimDataInfo[mJointCount];
 
 	for (int i = 0; i < joints; i++) {
 		int parentIndex          = model->mJointList[i].mParentIndex;
@@ -1588,8 +1588,8 @@ AnimDck::AnimDck(BaseShape* model, int joints)
 void AnimDck::read(RandomAccessStream& stream)
 {
 	// Read the number of joints and frames
-	mNumJoints = stream.readInt();
-	mNumFrames = stream.readInt();
+	mJointCount      = stream.readInt();
+	mTotalFrameCount = stream.readInt();
 
 	// Read scale data
 	mScaleDataBlock = new DataChunk;
@@ -1604,8 +1604,8 @@ void AnimDck::read(RandomAccessStream& stream)
 	mTranslationDataBlock->read(stream);
 
 	// Read animation info for each joint
-	mAnimInfo = new AnimDataInfo[mNumJoints];
-	for (int i = 0; i < mNumJoints; i++) {
+	mAnimInfo = new AnimDataInfo[mJointCount];
+	for (int i = 0; i < mJointCount; i++) {
 		mAnimInfo[i].mGroupIndex = stream.readInt();
 
 		int parentIndex          = stream.readInt();
@@ -1797,7 +1797,7 @@ void AnimDck::parse(CmdStream* stream)
 		checks[i] = false;
 	}
 
-	for (int i = 0; i < mNumJoints; i++) {
+	for (int i = 0; i < mJointCount; i++) {
 		for (int j = 0; j < 3; j++) {
 			// this is insane but required
 			int* param = (int*)&mAnimInfo[i].mRotation[j];
@@ -1840,13 +1840,13 @@ void AnimDck::getAnimInfo(CmdStream* stream)
 	while (!stream->endOfCmds() && !stream->endOfSection()) {
 		stream->getToken(true);
 		if (stream->isToken("numjoints")) {
-			sscanf(stream->getToken(true), "%d", &mNumJoints);
-			mAnimInfo = new AnimDataInfo[mNumJoints];
-			for (int i = 0; i < mNumJoints; i++) {
+			sscanf(stream->getToken(true), "%d", &mJointCount);
+			mAnimInfo = new AnimDataInfo[mJointCount];
+			for (int i = 0; i < mJointCount; i++) {
 				mAnimInfo[i].mGroupIndex = i;
 			}
 		} else if (stream->isToken("numframes")) {
-			sscanf(stream->getToken(true), "%d", &mNumFrames);
+			sscanf(stream->getToken(true), "%d", &mTotalFrameCount);
 		} else {
 			stream->skipLine();
 		}
@@ -4317,7 +4317,7 @@ AnimData* BaseShape::loadDck(char* name, RandomAccessStream& s)
 	AnimDck* pDck = new AnimDck(name);
 	pDck->mModel  = this;
 	pDck->read(s);
-	if (pDck->mNumJoints != mJointCount) {
+	if (pDck->mJointCount != mJointCount) {
 		PRINT("(%s) NUMJOINTS DOES NOT MATCH, THINGS MIGHT GO WRONG!!!\n", name);
 	}
 
@@ -4484,7 +4484,7 @@ AnimData* BaseShape::loadDca(char* name, RandomAccessStream& s)
 	AnimDca* pDca = new AnimDca(name);
 	pDca->mModel  = this;
 	pDca->read(s);
-	if (pDca->mNumJoints != mJointCount) {
+	if (pDca->mJointCount != mJointCount) {
 		PRINT("(%s) NUMJOINTS DOES NOT MATCH, THINGS MIGHT GO WRONG!!!\n", name);
 	}
 
@@ -4747,9 +4747,9 @@ AnimFrameCacher::AnimFrameCacher(int num)
  */
 void AnimFrameCacher::updateInfo(AnimCacheInfo* info)
 {
-	if (mInfo.mNext != info->_10) {
-		info->_10->remove();
-		mInfo.insertAfter(info->_10);
+	if (mInfo.mNext != info->mCachedMtxBlock) {
+		info->mCachedMtxBlock->remove();
+		mInfo.insertAfter(info->mCachedMtxBlock);
 	}
 }
 
@@ -4782,13 +4782,13 @@ void AnimFrameCacher::cacheFrameSpace(int p1, AnimCacheInfo* info)
 			FrameCacher* alloc = (FrameCacher*)mCache->mallocL(texSize);
 			alloc->_18         = &alloc->_1C[0];
 			alloc->_14         = &alloc->_1C[p1];
-			alloc->_0C         = &info->_10;
+			alloc->_0C         = &info->mCachedMtxBlock;
 
 			for (int i = 0; i < p1; i++) {
 				alloc->_18[i] = 0;
 			}
 
-			info->_10 = alloc;
+			info->mCachedMtxBlock = alloc;
 			mInfo.insertAfter(alloc);
 			break;
 		}

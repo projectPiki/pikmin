@@ -112,15 +112,15 @@ struct AnimCacheInfo : public CacheInfo {
 
 	void initData()
 	{
-		_14 = 0;
-		_10 = 0;
+		mBoneMatrices   = 0;
+		mCachedMtxBlock = 0;
 	}
 
 	// _00 - _0C = CacheInfo
-	u32 _0C;        // _0C
-	CacheInfo* _10; // _10
-	Matrix4f* _14;  // _14
-	Matrix4f** _18; // _18
+	u32 _0C;                    // _0C
+	CacheInfo* mCachedMtxBlock; // _10
+	Matrix4f* mBoneMatrices;    // _14
+	Matrix4f** mBoneMtxList;    // _18
 };
 
 /**
@@ -180,11 +180,11 @@ struct AnimData : public CoreNode {
 	DataChunk* mScaleDataBlock;       // _14
 	DataChunk* mRotateDataBlock;      // _18
 	DataChunk* mTranslationDataBlock; // _1C
-	u16* _20;                         // _20
+	u16* mAnimJointIndices;           // _20
 	int mAnimFlags;                   // _24
-	int mNumJoints;                   // _28
-	int _2C;                          // _2C
-	int mNumFrames;                   // _30
+	int mJointCount;                  // _28
+	int mActiveJointCount;            // _2C
+	int mTotalFrameCount;             // _30
 	BaseShape* mModel;                // _34
 	int _38;                          // _38
 	AnimDataInfo* mAnimInfo;          // _3C
@@ -255,7 +255,7 @@ struct AnimKey {
 		mKeyframeIndex = 0;
 		mEventKeyType  = 0;
 		mValue         = 0;
-		_07            = 0;
+		mEventId       = 0;
 		mPrev = mNext = nullptr;
 	}
 
@@ -285,7 +285,7 @@ struct AnimKey {
 	int mKeyframeIndex; // _00, unknown
 	s16 mEventKeyType;  // _04
 	u8 mValue;          // _06
-	u8 _07;             // _07
+	u8 mEventId;        // _07
 	AnimKey* mPrev;     // _08
 	AnimKey* mNext;     // _0C
 };

@@ -201,7 +201,7 @@ void PaniAnimator::finishMotion(PaniMotionInfo& info)
 	mListener   = info.mListener;
 	mIsFinished = true;
 
-	f32 maxFrame = (f32)((!mAnimInfo) ? -1 : mAnimInfo->mData->mNumFrames);
+	f32 maxFrame = (f32)((!mAnimInfo) ? -1 : mAnimInfo->mData->mTotalFrameCount);
 	if (mAnimationCounter >= maxFrame) {
 		PRINT("!!!finishMotion:%08x:%f,%f\n", this, mAnimationCounter, maxFrame);
 		mAnimationCounter = maxFrame;
@@ -388,8 +388,8 @@ f32 PaniAnimator::getKeyValueByKeyType(int type)
  */
 void PaniAnimator::checkCounter_4DEBUG()
 {
-	if (mAnimationCounter < 0.0f || mAnimInfo->mData->mNumFrames <= mAnimationCounter) {
-		PRINT("!checkCounter_4DEBUG:%08x:%d,%f/%f\n", this, mMotionIdx, mAnimationCounter, mAnimInfo->mData->mNumFrames);
-		ERROR("!checkCounter_4DEBUG:%08x:%d,%f/%f\n", this, mMotionIdx, mAnimationCounter, mAnimInfo->mData->mNumFrames);
+	if (mAnimationCounter < 0.0f || mAnimInfo->mData->mTotalFrameCount <= mAnimationCounter) {
+		PRINT("!checkCounter_4DEBUG:%08x:%d,%f/%f\n", this, mMotionIdx, mAnimationCounter, mAnimInfo->mData->mTotalFrameCount);
+		ERROR("!checkCounter_4DEBUG:%08x:%d,%f/%f\n", this, mMotionIdx, mAnimationCounter, mAnimInfo->mData->mTotalFrameCount);
 	}
 }

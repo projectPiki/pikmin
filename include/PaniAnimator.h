@@ -129,7 +129,7 @@ struct PaniAnimator : public Animator {
 		if (!mAnimInfo) {
 			return -1;
 		}
-		return mAnimInfo->mData->mNumFrames;
+		return mAnimInfo->mData->mTotalFrameCount;
 	}
 
 	/*

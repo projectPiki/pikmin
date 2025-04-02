@@ -49,13 +49,13 @@ void CineShapeObject::init(char* nameA, char* nameB, char* nameC)
  */
 void CinematicPlayer::init(char* demoName)
 {
-	_2B0          = 0;
-	mCurrentScene = nullptr;
-	_2A4          = 0.0f;
-	_2A0          = 30.0f;
+	mTotalSceneDuration  = 0;
+	mCurrentScene        = nullptr;
+	mCurrentPlaybackTime = 0.0f;
+	mPlaybackSpeed       = 30.0f;
 	_4C.initCore("");
 	_80.initCore("");
-	_B4.initCore("");
+	mCutList.initCore("");
 
 	if (demoName) {
 		loadCin(demoName);
@@ -65,7 +65,7 @@ void CinematicPlayer::init(char* demoName)
 	if (mCurrentScene) {
 		int i;
 		for (i = 0; i < mCurrentScene->mNumCameras; i++) {
-			mCurrentScene->mCameraData[i]._28 = 0.0f;
+			mCurrentScene->mCameraData[i].mBlendRatio = 0.0f;
 			mCurrentScene->mCameraData[i].update(0.0f, Matrix4f::ident);
 		}
 
@@ -82,15 +82,15 @@ void CinematicPlayer::init(char* demoName)
  */
 CinematicPlayer::CinematicPlayer(char* demoName)
 {
-	mFlags = 0;
-	mType  = 0;
-	_48    = 0;
-	_290   = 0;
-	_294   = 0;
-	_2AC   = -1.0f;
-	_2E4   = false;
+	mFlags                 = 0;
+	mType                  = 0;
+	_48                    = 0;
+	mCurrentCut            = 0;
+	mPreviousCut           = 0;
+	mPreviousFramePosition = -1.0f;
+	_2E4                   = false;
 	init(demoName);
-	_2B4 = 0;
+	mCutTransitionFlag = 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -291,7 +291,7 @@ void CinematicPlayer::loadCin(char* demoName)
 					}
 
 					if (cmd->isToken("flags")) {
-						sscanf(cmd->getToken(true), "%d", &cut->_14);
+						sscanf(cmd->getToken(true), "%d", &cut->mFlags);
 						continue;
 					}
 
@@ -325,7 +325,7 @@ void CinematicPlayer::loadCin(char* demoName)
 
 							keys[i].mEventKeyType = temp[0];
 							keys[i].mNext         = (AnimKey*)temp[2];
-							keys[i].mPrev         = &_B4.mKey;
+							keys[i].mPrev         = &mCutList.mKey;
 							//_B4.mKey.add(&keys[i]);
 						}
 						cmd->getToken(true);
@@ -915,11 +915,11 @@ void CinematicPlayer::addScene(char* name)
  */
 SceneCut* CinematicPlayer::addCut(int a1, int a2, int a3)
 {
-	SceneCut* cut = addSceneCut();
-	cut->_20      = a1;
-	cut->_24      = findScene(cut->_20);
-	cut->_18      = a2;
-	cut->_1C      = a3;
+	SceneCut* cut    = addSceneCut();
+	cut->_20         = a1;
+	cut->mSceneData  = findScene(cut->_20);
+	cut->mStartFrame = a2;
+	cut->mEndFrame   = a3;
 }
 
 /*
@@ -953,11 +953,11 @@ void CinematicPlayer::addActor(char* nameA, char* nameB, char* nameC)
  */
 SceneCut* CinematicPlayer::addSceneCut()
 {
-	SceneCut* cut = new SceneCut;
-	cut->_1D8     = this;
-	cut->_24      = findScene(cut->_20);
-	cut->_1C      = cut->_24->mNumFrames;
-	_B4.add(cut);
+	SceneCut* cut   = new SceneCut;
+	cut->_1D8       = this;
+	cut->mSceneData = findScene(cut->_20);
+	cut->mEndFrame  = cut->mSceneData->mNumFrames;
+	mCutList.add(cut);
 	return cut;
 }
 
@@ -968,12 +968,12 @@ SceneCut* CinematicPlayer::addSceneCut()
  */
 void CinematicPlayer::skipScene(int a)
 {
-	SceneCut* shape = _290;
+	SceneCut* shape = mCurrentCut;
 	if (shape) {
 		PRINT("skipping scene!\n");
-		_2A4 = _29C + abs(shape->_1C - shape->_18);
-		_29C = _2A4;
-		_2B4 = a;
+		mCurrentPlaybackTime = mCurrentCutStartTime + abs(shape->mEndFrame - shape->mStartFrame);
+		mCurrentCutStartTime = mCurrentPlaybackTime;
+		mCutTransitionFlag   = a;
 	}
 }
 
@@ -984,95 +984,98 @@ void CinematicPlayer::skipScene(int a)
  */
 int CinematicPlayer::update()
 {
-	int done = 0;
-	if (_290 && _2E5 && !_2B4 && _298 == 2) {
-		if ((f32)abs(_290->_1C - _290->_18) + _29C >= _2A4) {
-			_2A4 -= abs(_290->_1C - _290->_18);
-			_294 = 0;
+	int isFinished = 0;
+	if (mCurrentCut && mIsPlaying && !mCutTransitionFlag && mPlaybackMode == 2) {
+		if ((f32)abs(mCurrentCut->mEndFrame - mCurrentCut->mStartFrame) + mCurrentCutStartTime >= mCurrentPlaybackTime) {
+			mCurrentPlaybackTime -= abs(mCurrentCut->mEndFrame - mCurrentCut->mStartFrame);
+			mPreviousCut = 0;
 		}
 	}
 
-	if (_2B4 == 2 || _2B0 > (int)_2A4) {
-		done = 1;
-		_2A4 = (f32)_2B0;
-		_2A0 = 0.0f;
+	if (mCutTransitionFlag == 2 || mTotalSceneDuration > (int)mCurrentPlaybackTime) {
+		isFinished           = 1;
+		mCurrentPlaybackTime = (f32)mTotalSceneDuration;
+		mPlaybackSpeed       = 0.0f;
 	}
 
-	_2B4 = 0;
-	_2B0 = 0;
-	_290 = nullptr;
+	mCutTransitionFlag  = 0;
+	mTotalSceneDuration = 0;
+	mCurrentCut         = nullptr;
 
-	bool done2 = false;
-	for (SceneCut* shape = (SceneCut*)_B4.mChild; shape; shape = (SceneCut*)shape->mNext) {
-		int old = _2B0;
-		_2B0 += abs(shape->_1C - shape->_18);
-		if ((f32)old >= _2A4 && (f32)_2B0 < _2A4) {
-			_290          = shape;
-			mCurrentScene = _290->_24;
-			_298          = _290->_14 >> 1 & 7;
-			done2         = true;
-			_29C          = old;
-			_2A8          = (shape->_1C - shape->_18) * (_2A4 - old) / (f32)zen::Abs(shape->_1C - shape->_18) + shape->_18;
+	bool foundActiveCut = false;
+	for (SceneCut* shape = (SceneCut*)mCutList.mChild; shape; shape = (SceneCut*)shape->mNext) {
+		int prevDuration = mTotalSceneDuration;
+		mTotalSceneDuration += abs(shape->mEndFrame - shape->mStartFrame);
+		if ((f32)prevDuration >= mCurrentPlaybackTime && (f32)mTotalSceneDuration < mCurrentPlaybackTime) {
+			mCurrentCut           = shape;
+			mCurrentScene         = mCurrentCut->mSceneData;
+			mPlaybackMode         = mCurrentCut->mFlags >> 1 & 7;
+			foundActiveCut        = true;
+			mCurrentCutStartTime  = prevDuration;
+			mCurrentFramePosition = (shape->mEndFrame - shape->mStartFrame) * (mCurrentPlaybackTime - prevDuration)
+			                          / (f32)zen::Abs(shape->mEndFrame - shape->mStartFrame)
+			                      + shape->mStartFrame;
 		}
 	}
 
-	if (_290 != _294) {
-		if (_294) {
-			for (ActorInstance* actor = (ActorInstance*)_294->mActor.mChild; actor; actor = (ActorInstance*)actor->mNext) {
+	if (mCurrentCut != mPreviousCut) {
+		if (mPreviousCut) {
+			for (ActorInstance* actor = (ActorInstance*)mPreviousCut->mActor.mChild; actor; actor = (ActorInstance*)actor->mNext) {
 				actor->exitInstance();
 			}
 		}
-		if (_290) {
-			_2AC = -1.0f;
-			for (ActorInstance* actor = (ActorInstance*)_290->mActor.mChild; actor; actor = (ActorInstance*)actor->mNext) {
+
+		if (mCurrentCut) {
+			mPreviousFramePosition = -1.0f;
+			for (ActorInstance* actor = (ActorInstance*)mCurrentCut->mActor.mChild; actor; actor = (ActorInstance*)actor->mNext) {
 				actor->exitInstance();
 			}
 		}
-		_294 = _290;
+		mPreviousCut = mCurrentCut;
 	}
 
-	gameflow.mMoviePlayer->_120 = _2A8 + 0.5f;
+	gameflow.mMoviePlayer->mCurrentFrame = mCurrentFramePosition + 0.5f;
 
-	if (_290) {
-		for (AnimKey* key = &_290->mKey; key != &_290->mKey; key = key->mNext) {
-			if (_2AC <= (f32)key->mKeyframeIndex && _2A8 < (f32)key->mKeyframeIndex) {
-				PRINT("(%.3f : %.3f) got event at frame %d : %d, %d, %d\n", _2AC, _2A8, key->mKeyframeIndex, key->mEventKeyType, key->_07,
-				      key->mValue);
-				if (_2E5 && gameflow.mGameInterface && key->mEventKeyType == 0) {
-					gameflow.mGameInterface->message(key->_07, key->mValue);
+	if (mCurrentCut) {
+		for (AnimKey* key = &mCurrentCut->mKey; key != &mCurrentCut->mKey; key = key->mNext) {
+			if (mPreviousFramePosition <= (f32)key->mKeyframeIndex && mCurrentFramePosition < (f32)key->mKeyframeIndex) {
+				PRINT("(%.3f : %.3f) got event at frame %d : %d, %d, %d\n", mPreviousFramePosition, mCurrentFramePosition,
+				      key->mKeyframeIndex, key->mEventKeyType, key->mEventId, key->mValue);
+				if (mIsPlaying && gameflow.mGameInterface && key->mEventKeyType == 0) {
+					gameflow.mGameInterface->message(key->mEventId, key->mValue);
 				} else if (key->mEventKeyType == 1 && demoEventMgr) {
-					demoEventMgr->act(key->_07, key->mValue);
+					demoEventMgr->act(key->mEventId, key->mValue);
 				}
 			}
 		}
-		_2AC = _2A8;
+		mPreviousFramePosition = mCurrentFramePosition;
 	}
 
-	if (!done2) {
-		_2A8 = 0.0f;
+	if (!foundActiveCut) {
+		mCurrentFramePosition = 0.0f;
 	}
 
 	if (mCurrentScene) {
 		for (int i = 0; i < mCurrentScene->mNumCameras; i++) {
-			mCurrentScene->mCameraData[i]._28 = _2E0;
-			mCurrentScene->mCameraData[i]._24 = _2DC;
-			mCurrentScene->mCameraData[i]._00 = _2B8;
-			mCurrentScene->mCameraData[i]._0C = _2C4;
-			mCurrentScene->mCameraData[i]._2C = _2E4;
-			mCurrentScene->mCameraData[i]._18 = _2D0;
-			mCurrentScene->mCameraData[i].update(_2A8, mMtx);
+			mCurrentScene->mCameraData[i].mBlendRatio     = mCameraBlendRatio;
+			mCurrentScene->mCameraData[i].mTargetFov      = mCameraTargetFov;
+			mCurrentScene->mCameraData[i].mCameraPosition = mCameraPosition;
+			mCurrentScene->mCameraData[i].mCameraLookAt   = mCameraLookAt;
+			mCurrentScene->mCameraData[i].mUseStaticCam   = _2E4;
+			mCurrentScene->mCameraData[i].mStaticLookAt   = _2D0;
+			mCurrentScene->mCameraData[i].update(mCurrentFramePosition, mMtx);
 		}
 		for (int i = 0; i < mCurrentScene->mNumLights; i++) {
-			mCurrentScene->mLightData[i].update(_2A8);
+			mCurrentScene->mLightData[i].update(mCurrentFramePosition);
 		}
 	}
 
-	_2A4 += 1.0f;
+	mCurrentPlaybackTime += 1.0f;
 
-	if (done != 0) {
-		_294 = nullptr;
+	if (isFinished != 0) {
+		mPreviousCut = nullptr;
 	}
-	return done;
+	return isFinished;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1570,9 +1573,9 @@ void CinematicPlayer::refresh(Graphics& gfx)
 	gfx.calcViewMatrix(mMtx, mtx);
 	gfx.mRenderState = 0x700;
 
-	if (_290) {
-		for (ActorInstance* actor = (ActorInstance*)_290->mActor.mChild; actor; actor = (ActorInstance*)actor->mNext) {
-			actor->refresh(mtx, gfx, !(actor->_68 & 0x100) ? &_2A8 : nullptr);
+	if (mCurrentCut) {
+		for (ActorInstance* actor = (ActorInstance*)mCurrentCut->mActor.mChild; actor; actor = (ActorInstance*)actor->mNext) {
+			actor->refresh(mtx, gfx, !(actor->_68 & 0x100) ? &mCurrentFramePosition : nullptr);
 		}
 	}
 }

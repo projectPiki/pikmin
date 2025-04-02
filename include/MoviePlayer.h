@@ -78,7 +78,7 @@ struct MoviePlayer {
 	MovieInfo mInfoRoot;  // _00
 	MovieInfo mInfoRoot2; // _60
 	MovieInfo mInfoRoot3; // _C0
-	int _120;             // _120
+	int mCurrentFrame;    // _120
 	u8 mIsActive;         // _124
 	u8 _125;              // _125
 	f32 _128;             // _128

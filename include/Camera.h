@@ -190,12 +190,12 @@ struct CamDataInfo {
 
 	void update(f32, Matrix4f&);
 
-	Vector3f _00;                // _00
-	Vector3f _0C;                // _0C
-	Vector3f _18;                // _18
-	f32 _24;                     // _24
-	f32 _28;                     // _28
-	u8 _2C;                      // _2C
+	Vector3f mCameraPosition;    // _00
+	Vector3f mCameraLookAt;      // _0C
+	Vector3f mStaticLookAt;      // _18
+	f32 mTargetFov;              // _24
+	f32 mBlendRatio;             // _28
+	u8 mUseStaticCam;            // _2C
 	AnimParam mCamPosAnims[3];   // _30
 	AnimParam mCamLatAnims[3];   // _54
 	AnimParam mCamTwistAnims[1]; // _78

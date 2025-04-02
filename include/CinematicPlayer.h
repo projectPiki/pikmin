@@ -111,12 +111,12 @@ struct SceneCut : public CoreNode {
 	SceneCut()
 	    : CoreNode("")
 	{
-		_18 = 0;
-		_1C = 0;
+		mStartFrame = 0;
+		mEndFrame   = 0;
 		mActor.initCore("");
-		_14        = 3;
+		mFlags     = 3;
 		_20        = 0;
-		_24        = 0;
+		mSceneData = 0;
 		mKey.mNext = &mKey;
 		mKey.mPrev = &mKey;
 	}
@@ -128,11 +128,11 @@ struct SceneCut : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int _14;               // _14
-	int _18;               // _18
-	int _1C;               // _1C
+	int mFlags;            // _14
+	int mStartFrame;       // _18
+	int mEndFrame;         // _1C
 	int _20;               // _20
-	SceneData* _24;        // _24
+	SceneData* mSceneData; // _24
 	ActorInstance mActor;  // _28
 	AnimKey mKey;          // _1C8
 	CinematicPlayer* _1D8; // _1D8
@@ -212,13 +212,13 @@ struct CinematicPlayer {
 	void ageSave(AgeServer&);
 	void calcMaxFrames()
 	{
-		_2B0 = 0;
-		for (CineShapeObject* shape = (CineShapeObject*)_B4.mChild; shape; shape = (CineShapeObject*)shape->mNext) {
-			_2B0 += abs(shape->_1C - shape->_18);
+		mTotalSceneDuration = 0;
+		for (CineShapeObject* shape = (CineShapeObject*)mCutList.mChild; shape; shape = (CineShapeObject*)shape->mNext) {
+			mTotalSceneDuration += abs(shape->_1C - shape->_18);
 		}
 
-		if (_2A4 >= (f32)_2B0) {
-			_2A4 = (f32)_2B0 - 1.0f;
+		if (mCurrentPlaybackTime >= (f32)mTotalSceneDuration) {
+			mCurrentPlaybackTime = (f32)mTotalSceneDuration - 1.0f;
 		}
 	}
 	void genAge(AgeServer&);
@@ -227,31 +227,31 @@ struct CinematicPlayer {
 	void truncateName(char*);
 
 	// TODO: members
-	u32 mFlags;               // _00
-	int mType;                // _04
-	Matrix4f mMtx;            // _08
-	u32 _48;                  // _48
-	SceneData _4C;            // _4C
-	SceneData* mCurrentScene; // _7C
-	CineShapeObject _80;      // _80
-	SceneCut _B4;             // _B4
-	SceneCut* _290;           // _290
-	SceneCut* _294;           // _294
-	int _298;                 // _298
-	f32 _29C;                 // _29C
-	f32 _2A0;                 // _2A0
-	f32 _2A4;                 // _2A4
-	f32 _2A8;                 // _2A8
-	f32 _2AC;                 // _2AC
-	int _2B0;                 // _2B0
-	int _2B4;                 // _2B4
-	Vector3f _2B8;            // _2B8
-	Vector3f _2C4;            // _2CC
-	Vector3f _2D0;            // _2D0
-	f32 _2DC;                 // _2DC
-	f32 _2E0;                 // _2E0
-	bool _2E4;                // _2E4
-	bool _2E5;                // _2E5
+	u32 mFlags;                 // _00
+	int mType;                  // _04
+	Matrix4f mMtx;              // _08
+	u32 _48;                    // _48
+	SceneData _4C;              // _4C
+	SceneData* mCurrentScene;   // _7C
+	CineShapeObject _80;        // _80
+	SceneCut mCutList;          // _B4
+	SceneCut* mCurrentCut;      // _290
+	SceneCut* mPreviousCut;     // _294
+	int mPlaybackMode;          // _298
+	f32 mCurrentCutStartTime;   // _29C
+	f32 mPlaybackSpeed;         // _2A0
+	f32 mCurrentPlaybackTime;   // _2A4
+	f32 mCurrentFramePosition;  // _2A8
+	f32 mPreviousFramePosition; // _2AC
+	int mTotalSceneDuration;    // _2B0
+	int mCutTransitionFlag;     // _2B4
+	Vector3f mCameraPosition;   // _2B8
+	Vector3f mCameraLookAt;     // _2CC
+	Vector3f _2D0;              // _2D0
+	f32 mCameraTargetFov;       // _2DC
+	f32 mCameraBlendRatio;      // _2E0
+	bool _2E4;                  // _2E4
+	bool mIsPlaying;            // _2E5
 };
 
 #endif
