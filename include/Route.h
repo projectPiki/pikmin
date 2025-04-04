@@ -14,6 +14,8 @@ struct MapMgr;
 struct Plane;
 struct BaseShape;
 struct PathFinder;
+struct Texture;
+struct TexAttr;
 struct RoutePoint;
 
 /**
@@ -131,7 +133,7 @@ struct RouteGroup : public EditNode {
 	char mStringID[8];         // _5C
 	BaseShape* mParentShape;   // _64
 	RoutePoint mPointListRoot; // _68
-	u32 _BC;                   // _BC
+	Texture* _BC;              // _BC
 };
 
 /**

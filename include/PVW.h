@@ -9,6 +9,8 @@
 struct Matrix4f;
 struct RandomAccessStream;
 struct ShortColour;
+struct TexAttr;
+struct Texture;
 
 /**
  * @brief TODO
@@ -357,8 +359,8 @@ struct PVWTextureData {
 	void read(RandomAccessStream&);
 
 	u32 _00;                        // _00
-	u32 _04;                        // _04
-	u32 _08;                        // _08
+	TexAttr* _04;                   // _04
+	Texture* _08;                   // _08
 	u16 _0C;                        // _0C
 	u16 _0E;                        // _0E
 	u8 _10;                         // _10

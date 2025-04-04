@@ -46,9 +46,9 @@ struct Material : public CoreNode {
 	// _00-_14 = CoreNode
 	u32 mIndex;                       // _14
 	u32 mFlags;                       // _18 (PVW & 1, TEX & 2, XLU & 4)
-	u32 mTextureIndex;                // _1C
-	u32 _20;                          // _20
-	u32 _24;                          // _24
+	int mTextureIndex;                // _1C
+	TexAttr* _20;                     // _20
+	Texture* _24;                     // _24
 	u32 _28;                          // _28
 	PVWPolygonColourInfo mColourInfo; // _2C [0x20]
 	PVWLightingInfo mLightingInfo;    // _4C [0x0C]

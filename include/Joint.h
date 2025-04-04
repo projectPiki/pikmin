@@ -62,7 +62,7 @@ struct Joint : public CoreNode {
 	int mParentIndex;            // _18
 	int mType;                   // _1C
 	int mFlags;                  // _20
-	Vector3f mScale;             // _24
+	Vector3f mScale;             // _24, this is an SRT apparently
 	Vector3f mRotation;          // _30
 	Vector3f mTranslation;       // _3C
 	Matrix4f mAnimMatrix;        // _48

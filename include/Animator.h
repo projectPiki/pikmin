@@ -195,6 +195,11 @@ struct AnimData : public CoreNode {
  * @brief TODO
  */
 struct AnimDca : public AnimData {
+	AnimDca(BaseShape*, int)
+	    : AnimData()
+	{
+	}
+
 	AnimDca(char* name)
 	    : AnimData(StdSystem::stringDup(name))
 	{

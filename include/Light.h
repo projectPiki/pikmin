@@ -205,8 +205,8 @@ struct LightGroup : public CoreNode {
 	Texture* mTexture;        // _20
 	Vector3f mDirection;      // _24
 	Colour mLightColour;      // _30
-	s8* mTexSource;           // _34
-	s8* mMatSource;           // _38
+	char* mTexSource;         // _34
+	char* mMatSource;         // _38
 	Texture* mHaloTex;        // _3C
 	LightFlare mFlares;       // _40
 	Shape* mParentShape;      // _64

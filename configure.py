@@ -404,7 +404,7 @@ config.libs = [
             Object(Matching, "sysCommon/string.cpp"),
             Object(NonMatching, "sysCommon/graphics.cpp"),
             Object(Matching, "sysCommon/grLight.cpp"),
-            Object(NonMatching, "sysCommon/shapeBase.cpp"),
+            Object(Equivalent, "sysCommon/shapeBase.cpp"),
             Object(Matching, "sysCommon/shpLightFlares.cpp"),
             Object(Matching, "sysCommon/shpObjColl.cpp"),
             Object(NonMatching, "sysCommon/shpRoutes.cpp"),

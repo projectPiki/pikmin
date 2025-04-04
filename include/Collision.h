@@ -106,7 +106,7 @@ struct ObjCollInfo : public CoreNode {
 	BaseShape* mParentShape;  // _44
 	Shape* mPlatShape;        // _48
 	char* mPlatformName;      // _4C
-	ObjCollFlags mFlags;      // _50
+	u32 mFlags;               // _50, see ObjCollFlags enum
 };
 
 /**
