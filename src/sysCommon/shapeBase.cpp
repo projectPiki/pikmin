@@ -327,41 +327,46 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 		return data.mData[dataSize * (param.mEntryNum - 1) + param.mDataOffset + 1];
 	}
 
-	f32 f2;
-	f32 f4;
-	f32 f7;
-	f32 f8;
-	f32 f9;
-	f32 f0;
+	f32 time1;
+	f32 startTangent;
+	f32 startValue;
+	f32 time2;
+	f32 endValue;
+	f32 endTangent;
 	if (dataSize == 3) {
-		f4 = data.mData[offset];
-		f8 = data.mData[offset + 2];
-		f7 = data.mData[offset + 1];
+		startTangent = data.mData[offset + 2];
+		time1        = data.mData[offset];
+		startValue   = data.mData[offset + 1];
 		offset += dataSize;
-		f2 = data.mData[offset];
-		f0 = data.mData[offset + 2];
-		f9 = data.mData[offset + 1];
+		endTangent = data.mData[offset + 2];
+		time2      = data.mData[offset];
+		endValue   = data.mData[offset + 1];
 
 	} else {
-		f4 = data.mData[offset];
-		f7 = data.mData[offset + 1];
-		f8 = data.mData[offset + 3];
+		time1        = data.mData[offset];
+		startTangent = data.mData[offset + 3];
+		startValue   = data.mData[offset + 1];
 		offset += dataSize;
-		f2 = data.mData[offset];
-		f9 = data.mData[offset + 1];
-		f0 = data.mData[offset + 2];
+		time2      = data.mData[offset];
+		endValue   = data.mData[offset + 1];
+		endTangent = data.mData[offset + 2];
 	}
 
 	// Interpolation calculations
-	f32 t          = (currTime - f4) * (1.0f / 30.0f);
-	f32 frameDelta = 30.0f / (f2 - f4);
-	f32 tSqr       = t * t;
-	f32 deltaSqr   = frameDelta * frameDelta;
-	f32 tCube      = tSqr * t;
-	f32 deltaCube  = deltaSqr * frameDelta;
+	// Chat-GPT says Hermite Interpolation
+	const f32 fps /*maybe*/ = 30.f;
+	f32 t                   = (currTime - time1) * (1.0f / fps);
+	f32 frameDelta          = fps / (time2 - time1);
+	f32 tSqr                = t * t;
+	f32 deltaSqr            = frameDelta * frameDelta;
+	f32 tCube               = tSqr * t;
+	f32 deltaCube           = deltaSqr * frameDelta;
 
-	return (2.0f * tCube * deltaCube - 3.0f * tSqr * deltaSqr + 1.0f) * f7 + (-2.0f * tCube * deltaCube + 3.0f * tSqr * deltaSqr) * f9
-	     + (tCube * deltaSqr - 2.0f * tSqr * frameDelta + t) * f8 + (tCube * deltaSqr - tSqr * frameDelta) * f0;
+	return (2.0f * tCube * deltaCube - 3.0f * tSqr * deltaSqr + 1.0f) * startValue
+	     + (-2.0f * tCube * deltaCube + 3.0f * tSqr * deltaSqr) * endValue
+	     + (tCube * deltaSqr - 2.0f * tSqr * frameDelta + t) * startTangent + (tCube * deltaSqr - tSqr * frameDelta) * endTangent;
+
+	u8 badCompiler[0x24];
 
 	/*
 	.loc_0x0:
@@ -519,7 +524,8 @@ CamDataInfo::CamDataInfo()
  */
 void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 {
-	f32 vals[2];
+	volatile f32 val1;
+	volatile f32 val2;
 	AnimParam* params1 = mCamPosAnims;
 	for (int i = 0; i < 3; i++) { // x, y, z
 		AnimParam& thisParam = params1[i];
@@ -557,13 +563,13 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 		AnimParam& thisParam = params3[i];
 		switch (thisParam.mEntryNum) {
 		case 0:
-			vals[i + 1] = 1.0f;
+			val1 = 1.0f;
 			break;
 		case 1:
-			vals[i + 1] = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
+			val1 = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
 			break;
 		default:
-			vals[i + 1] = extract(p1, thisParam, *mSceneData->mCameraAnimations);
+			val1 = extract(p1, thisParam, *mSceneData->mCameraAnimations);
 			break;
 		}
 	}
@@ -573,20 +579,20 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 		AnimParam& thisParam = params4[i];
 		switch (thisParam.mEntryNum) {
 		case 0:
-			vals[i] = 1.0f;
+			val2 = 1.0f;
 			break;
 		case 1:
-			vals[i] = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
+			val2 = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
 			break;
 		default:
-			vals[i] = extract(p1, thisParam, *mSceneData->mCameraAnimations);
+			val2 = extract(p1, thisParam, *mSceneData->mCameraAnimations);
 			break;
 		}
 	}
 
 	mCamera.mPosition.multMatrix(mtx);
 	mCamera.mFocus.multMatrix(mtx);
-	mCamera.mFov = vals[0];
+	mCamera.mFov = val2;
 
 	if (mBlendRatio > 0.0f) {
 		mCamera.mFov = (mTargetFov - mCamera.mFov) * mBlendRatio + mCamera.mFov;
@@ -606,254 +612,6 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 	mCamera.calcLookAt(mCamera.mPosition, mCamera.mFocus, nullptr);
 
 	u32 badCompiler[4];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stfd      f31, 0x60(r1)
-	  stfd      f30, 0x58(r1)
-	  fmr       f30, f1
-	  stmw      r27, 0x44(r1)
-	  mr        r30, r3
-	  addi      r31, r4, 0
-	  addi      r29, r30, 0x30
-	  addi      r28, r30, 0x20C
-	  li        r27, 0
-	  lfs       f31, -0x7D20(r2)
-
-	.loc_0x34:
-	  lwz       r0, 0x0(r29)
-	  addi      r3, r29, 0
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x5C
-	  bge-      .loc_0x7C
-	  cmpwi     r0, 0
-	  bge-      .loc_0x54
-	  b         .loc_0x7C
-
-	.loc_0x54:
-	  stfs      f31, 0x0(r28)
-	  b         .loc_0x90
-
-	.loc_0x5C:
-	  lwz       r3, 0x3F4(r30)
-	  lwz       r0, 0x4(r29)
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r3, 0x8(r3)
-	  lfsx      f0, r3, r0
-	  stfs      f0, 0x0(r28)
-	  b         .loc_0x90
-
-	.loc_0x7C:
-	  lwz       r4, 0x3F4(r30)
-	  fmr       f1, f30
-	  lwz       r4, 0x14(r4)
-	  bl        -0x2C8
-	  stfs      f1, 0x0(r28)
-
-	.loc_0x90:
-	  addi      r27, r27, 0x1
-	  cmpwi     r27, 0x3
-	  addi      r29, r29, 0xC
-	  addi      r28, r28, 0x4
-	  blt+      .loc_0x34
-	  lfs       f31, -0x7D20(r2)
-	  addi      r28, r30, 0x54
-	  addi      r29, r30, 0x218
-	  li        r27, 0
-
-	.loc_0xB4:
-	  lwz       r0, 0x0(r28)
-	  addi      r3, r28, 0
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0xDC
-	  bge-      .loc_0xFC
-	  cmpwi     r0, 0
-	  bge-      .loc_0xD4
-	  b         .loc_0xFC
-
-	.loc_0xD4:
-	  stfs      f31, 0x0(r29)
-	  b         .loc_0x110
-
-	.loc_0xDC:
-	  lwz       r3, 0x3F4(r30)
-	  lwz       r0, 0x4(r28)
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r3, 0x8(r3)
-	  lfsx      f0, r3, r0
-	  stfs      f0, 0x0(r29)
-	  b         .loc_0x110
-
-	.loc_0xFC:
-	  lwz       r4, 0x3F4(r30)
-	  fmr       f1, f30
-	  lwz       r4, 0x14(r4)
-	  bl        -0x348
-	  stfs      f1, 0x0(r29)
-
-	.loc_0x110:
-	  addi      r27, r27, 0x1
-	  cmpwi     r27, 0x3
-	  addi      r28, r28, 0xC
-	  addi      r29, r29, 0x4
-	  blt+      .loc_0xB4
-	  lwz       r0, 0x78(r30)
-	  addi      r28, r30, 0x78
-	  lfs       f0, -0x7D0C(r2)
-	  addi      r3, r28, 0
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x154
-	  bge-      .loc_0x174
-	  cmpwi     r0, 0
-	  bge-      .loc_0x14C
-	  b         .loc_0x174
-
-	.loc_0x14C:
-	  stfs      f0, 0x38(r1)
-	  b         .loc_0x188
-
-	.loc_0x154:
-	  lwz       r3, 0x3F4(r30)
-	  lwz       r0, 0x4(r28)
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r3, 0x8(r3)
-	  lfsx      f0, r3, r0
-	  stfs      f0, 0x38(r1)
-	  b         .loc_0x188
-
-	.loc_0x174:
-	  lwz       r4, 0x3F4(r30)
-	  fmr       f1, f30
-	  lwz       r4, 0x14(r4)
-	  bl        -0x3C0
-	  stfs      f1, 0x38(r1)
-
-	.loc_0x188:
-	  lwz       r0, 0x84(r30)
-	  addi      r28, r30, 0x84
-	  lfs       f0, -0x7D0C(r2)
-	  addi      r3, r28, 0
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x1B8
-	  bge-      .loc_0x1D8
-	  cmpwi     r0, 0
-	  bge-      .loc_0x1B0
-	  b         .loc_0x1D8
-
-	.loc_0x1B0:
-	  stfs      f0, 0x34(r1)
-	  b         .loc_0x1EC
-
-	.loc_0x1B8:
-	  lwz       r3, 0x3F4(r30)
-	  lwz       r0, 0x4(r28)
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r0,r0,2,0,29
-	  lwz       r3, 0x8(r3)
-	  lfsx      f0, r3, r0
-	  stfs      f0, 0x34(r1)
-	  b         .loc_0x1EC
-
-	.loc_0x1D8:
-	  lwz       r4, 0x3F4(r30)
-	  fmr       f1, f30
-	  lwz       r4, 0x14(r4)
-	  bl        -0x424
-	  stfs      f1, 0x34(r1)
-
-	.loc_0x1EC:
-	  addi      r4, r31, 0
-	  addi      r3, r30, 0x20C
-	  bl        0xCBC0
-	  addi      r3, r30, 0x218
-	  addi      r4, r31, 0
-	  bl        0xCBB4
-	  lfs       f0, 0x34(r1)
-	  stfs      f0, 0x274(r30)
-	  lfs       f1, 0x28(r30)
-	  lfs       f0, -0x7D20(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x2E0
-	  lfs       f2, 0x274(r30)
-	  lfs       f0, 0x24(r30)
-	  fsubs     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x274(r30)
-	  lfs       f2, 0x20C(r30)
-	  lfs       f0, 0x0(r30)
-	  lfs       f1, 0x28(r30)
-	  fsubs     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x20C(r30)
-	  lfs       f2, 0x210(r30)
-	  lfs       f0, 0x4(r30)
-	  lfs       f1, 0x28(r30)
-	  fsubs     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x210(r30)
-	  lfs       f2, 0x214(r30)
-	  lfs       f0, 0x8(r30)
-	  lfs       f1, 0x28(r30)
-	  fsubs     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x214(r30)
-	  lfs       f2, 0x218(r30)
-	  lfs       f0, 0xC(r30)
-	  lfs       f1, 0x28(r30)
-	  fsubs     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x218(r30)
-	  lfs       f2, 0x21C(r30)
-	  lfs       f0, 0x10(r30)
-	  lfs       f1, 0x28(r30)
-	  fsubs     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x21C(r30)
-	  lfs       f2, 0x220(r30)
-	  lfs       f0, 0x14(r30)
-	  lfs       f1, 0x28(r30)
-	  fsubs     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x220(r30)
-	  b         .loc_0x304
-
-	.loc_0x2E0:
-	  lbz       r0, 0x2C(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x304
-	  lwz       r3, 0x18(r30)
-	  lwz       r0, 0x1C(r30)
-	  stw       r3, 0x218(r30)
-	  stw       r0, 0x21C(r30)
-	  lwz       r0, 0x20(r30)
-	  stw       r0, 0x220(r30)
-
-	.loc_0x304:
-	  addi      r3, r30, 0xA8
-	  addi      r4, r30, 0x20C
-	  addi      r5, r30, 0x218
-	  li        r6, 0
-	  bl        0x18360
-	  lmw       r27, 0x44(r1)
-	  lwz       r0, 0x6C(r1)
-	  lfd       f31, 0x60(r1)
-	  lfd       f30, 0x58(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -3818,7 +3576,7 @@ void BaseShape::makeNormalIndexes(u16* indices)
 					if (!first) {
 						dataLen = 0;
 					} else {
-						int count = data[1] | (data[0] << 8);
+						int count = (data[0] << 8) | data[1];
 						data += 2;
 						for (int m = 0; m < count; m++) {
 							if (mesh->mVertexDescriptor & 1) {
@@ -3829,8 +3587,8 @@ void BaseShape::makeNormalIndexes(u16* indices)
 								data++;
 							}
 							int shift       = 6;
-							u16 idxIdx      = u16(data[1] | (data[0] << 8));
-							u16 idx         = u16(data[3] | (data[2] << 8));
+							u16 idxIdx      = u16((data[0] << 8) | data[1]);
+							u16 idx         = u16((data[2] << 8) | data[3]);
 							indices[idxIdx] = idx;
 							if (mesh->mVertexDescriptor & 4) {
 								shift = 8;
@@ -3843,117 +3601,6 @@ void BaseShape::makeNormalIndexes(u16* indices)
 			}
 		}
 	}
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x30(r1)
-	  li        r7, 0
-	  li        r6, 0
-	  stmw      r27, 0x1C(r1)
-	  b         .loc_0x128
-
-	.loc_0x14:
-	  lwz       r8, 0x64(r3)
-	  li        r9, 0
-	  lwz       r10, 0x54(r3)
-	  li        r5, 0
-	  lwzx      r8, r8, r6
-	  lwz       r0, 0x20(r8)
-	  mulli     r0, r0, 0x30
-	  add       r8, r10, r0
-	  b         .loc_0x114
-
-	.loc_0x38:
-	  lwz       r0, 0x24(r8)
-	  li        r10, 0
-	  add       r31, r0, r5
-	  lwz       r30, 0xC(r31)
-	  b         .loc_0x100
-
-	.loc_0x4C:
-	  lwz       r29, 0x1C(r30)
-	  lwz       r28, 0x18(r30)
-	  b         .loc_0xE0
-
-	.loc_0x58:
-	  lbz       r0, 0x0(r29)
-	  addi      r29, r29, 0x1
-	  cmpwi     r0, 0
-	  bne-      .loc_0x70
-	  li        r28, 0
-	  b         .loc_0xE0
-
-	.loc_0x70:
-	  lbz       r11, 0x0(r29)
-	  lbz       r0, 0x1(r29)
-	  addi      r29, r29, 0x2
-	  rlwimi.   r0,r11,8,16,23
-	  mtctr     r0
-	  ble-      .loc_0xE0
-
-	.loc_0x88:
-	  lwz       r11, 0x2C(r8)
-	  rlwinm.   r0,r11,0,31,31
-	  beq-      .loc_0x98
-	  addi      r29, r29, 0x1
-
-	.loc_0x98:
-	  rlwinm.   r0,r11,0,30,30
-	  beq-      .loc_0xA4
-	  addi      r29, r29, 0x1
-
-	.loc_0xA4:
-	  lbz       r11, 0x0(r29)
-	  li        r27, 0x6
-	  lbz       r0, 0x1(r29)
-	  rlwimi    r0,r11,8,16,23
-	  lbz       r12, 0x2(r29)
-	  lbz       r11, 0x3(r29)
-	  rlwinm    r0,r0,1,15,30
-	  rlwimi    r11,r12,8,16,23
-	  sthx      r11, r4, r0
-	  lwz       r0, 0x2C(r8)
-	  rlwinm.   r0,r0,0,29,29
-	  beq-      .loc_0xD8
-	  li        r27, 0x8
-
-	.loc_0xD8:
-	  add       r29, r29, r27
-	  bdnz+     .loc_0x88
-
-	.loc_0xE0:
-	  cmplwi    r28, 0
-	  beq-      .loc_0xF8
-	  lwz       r0, 0x1C(r30)
-	  add       r0, r0, r28
-	  cmplw     r29, r0
-	  blt+      .loc_0x58
-
-	.loc_0xF8:
-	  addi      r30, r30, 0x74
-	  addi      r10, r10, 0x1
-
-	.loc_0x100:
-	  lwz       r0, 0x8(r31)
-	  cmpw      r10, r0
-	  blt+      .loc_0x4C
-	  addi      r5, r5, 0x10
-	  addi      r9, r9, 0x1
-
-	.loc_0x114:
-	  lwz       r0, 0x20(r8)
-	  cmpw      r9, r0
-	  blt+      .loc_0x38
-	  addi      r6, r6, 0x4
-	  addi      r7, r7, 0x1
-
-	.loc_0x128:
-	  lwz       r0, 0x60(r3)
-	  cmpw      r7, r0
-	  blt+      .loc_0x14
-	  lmw       r27, 0x1C(r1)
-	  addi      r1, r1, 0x30
-	  blr
-	*/
 }
 
 /*
