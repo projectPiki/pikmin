@@ -11,27 +11,36 @@ struct DaySetMenu : public Menu {
 	DaySetMenu(TimeSetting* time, Controller* control, Font* font, bool flag)
 	    : Menu(control, font, flag)
 	{
-		_B4            = time;
+		mTimeSettings  = time;
 		mScreenMiddleX = glnWidth / 2;
 		mScreenMiddleY = glnHeight / 2 + 60;
 		mDiffuseColour.set(32, 128, 32, 192);
 		mHighlightColour.set(32, 64, 32, 64);
 		addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
-		addMenu(new ColourMenu(&_B4->_13E8, mController, gsys->mConsFont, true), 0, "ambient colour");
-		addMenu(new FogMenu(&_B4->_13E8, &_B4->_13EC, &_B4->_13F0, mController, gsys->mConsFont, true), 0, "fog");
+		addMenu(new ColourMenu(&mTimeSettings->mAmbientColour, mController, gsys->mConsFont, true), 0, "ambient colour");
+		addMenu(new FogMenu(&mTimeSettings->mAmbientColour, &mTimeSettings->mFogNear, &mTimeSettings->mFogFar, mController, gsys->mConsFont,
+		                    true),
+		        0, "fog");
 		addOption(0, nullptr, nullptr, true);
-		addMenu(new LightMenu(&_B4->mDayPhaseLights[0], &_B4->_13CC[0], mController, gsys->mConsFont, true), 0, "main light");
-		addMenu(new LightMenu(&_B4->mDayPhaseLights[1], &_B4->_13CC[1], mController, gsys->mConsFont, true), 0, "sub light");
-		addMenu(new LightMenu(&_B4->mDayPhaseLights[2], &_B4->_13CC[2], mController, gsys->mConsFont, true), 0, "+1 light");
-		addMenu(new LightMenu(&_B4->mDayPhaseLights[3], &_B4->_13CC[3], mController, gsys->mConsFont, true), 0, "+2 light");
-		addMenu(new LightMenu(&_B4->mDayPhaseLights[4], &_B4->_13CC[4], mController, gsys->mConsFont, true), 0, "+3 light");
-		addMenu(new LightMenu(&_B4->mDayPhaseLights[5], &_B4->_13CC[5], mController, gsys->mConsFont, true), 0, "+4 light");
-		addMenu(new LightMenu(&_B4->mDayPhaseLights[6], &_B4->_13CC[6], mController, gsys->mConsFont, true), 0, "+5 light");
+		addMenu(new LightMenu(&mTimeSettings->mDayPhaseLights[0], &mTimeSettings->mAttachType[0], mController, gsys->mConsFont, true), 0,
+		        "main light");
+		addMenu(new LightMenu(&mTimeSettings->mDayPhaseLights[1], &mTimeSettings->mAttachType[1], mController, gsys->mConsFont, true), 0,
+		        "sub light");
+		addMenu(new LightMenu(&mTimeSettings->mDayPhaseLights[2], &mTimeSettings->mAttachType[2], mController, gsys->mConsFont, true), 0,
+		        "+1 light");
+		addMenu(new LightMenu(&mTimeSettings->mDayPhaseLights[3], &mTimeSettings->mAttachType[3], mController, gsys->mConsFont, true), 0,
+		        "+2 light");
+		addMenu(new LightMenu(&mTimeSettings->mDayPhaseLights[4], &mTimeSettings->mAttachType[4], mController, gsys->mConsFont, true), 0,
+		        "+3 light");
+		addMenu(new LightMenu(&mTimeSettings->mDayPhaseLights[5], &mTimeSettings->mAttachType[5], mController, gsys->mConsFont, true), 0,
+		        "+4 light");
+		addMenu(new LightMenu(&mTimeSettings->mDayPhaseLights[6], &mTimeSettings->mAttachType[6], mController, gsys->mConsFont, true), 0,
+		        "+5 light");
 	}
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
-	TimeSetting* _B4; // _B4
+	TimeSetting* mTimeSettings; // _B4
 };
 
 /*
@@ -60,11 +69,11 @@ char* lightMoveNames[2] = { "global", "attach to navi" };
  */
 void PositionMenu::menuEnterZ(Menu& menu)
 {
-	_BC = &_B4->z;
-	_C0 = "Z";
+	mComponentValue = &mPosition->z;
+	mComponentName  = "Z";
 
 	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %.2f", _C0, *_BC);
+	sprintf(test, "%s = %.2f", mComponentName, *mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -99,11 +108,11 @@ void PositionMenu::menuEnterZ(Menu& menu)
  */
 void PositionMenu::menuEnterY(Menu& menu)
 {
-	_BC = &_B4->y;
-	_C0 = "Y";
+	mComponentValue = &mPosition->y;
+	mComponentName  = "Y";
 
 	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %.2f", _C0, *_BC);
+	sprintf(test, "%s = %.2f", mComponentName, *mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -138,11 +147,11 @@ void PositionMenu::menuEnterY(Menu& menu)
  */
 void PositionMenu::menuEnterX(Menu& menu)
 {
-	_BC = &_B4->x;
-	_C0 = "X";
+	mComponentValue = &mPosition->x;
+	mComponentName  = "X";
 
 	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %.2f", _C0, *_BC);
+	sprintf(test, "%s = %.2f", mComponentName, *mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -176,14 +185,14 @@ void PositionMenu::menuEnterX(Menu& menu)
  */
 void PositionMenu::menuIncrease(Menu& menu)
 {
-	if (!_B8) {
-		*_BC += 10.0f;
+	if (!mIsSmallAdjustment) {
+		*mComponentValue += 10.0f;
 		char* test = menu.mCurrentItem->mName;
-		sprintf(test, "%s = %.2f", _C0, *_BC);
+		sprintf(test, "%s = %.2f", mComponentName, *mComponentValue);
 	} else {
-		*_BC += 0.01f;
+		*mComponentValue += 0.01f;
 		char* test = menu.mCurrentItem->mName;
-		sprintf(test, "%s = %.2f", _C0, *_BC);
+		sprintf(test, "%s = %.2f", mComponentName, *mComponentValue);
 	}
 	/*
 	.loc_0x0:
@@ -242,14 +251,14 @@ void PositionMenu::menuIncrease(Menu& menu)
  */
 void PositionMenu::menuDecrease(Menu& menu)
 {
-	if (!_B8) {
-		*_BC -= 10.0f;
+	if (!mIsSmallAdjustment) {
+		*mComponentValue -= 10.0f;
 		char* test = menu.mCurrentItem->mName;
-		sprintf(test, "%s = %.2f", _C0, *_BC);
+		sprintf(test, "%s = %.2f", mComponentName, *mComponentValue);
 	} else {
-		*_BC -= 0.01f;
+		*mComponentValue -= 0.01f;
 		char* test = menu.mCurrentItem->mName;
-		sprintf(test, "%s = %.2f", _C0, *_BC);
+		sprintf(test, "%s = %.2f", mComponentName, *mComponentValue);
 	}
 	/*
 	.loc_0x0:
@@ -308,10 +317,10 @@ void PositionMenu::menuDecrease(Menu& menu)
  */
 void ColourMenu::menuEnterA(Menu& menu)
 {
-	_B8        = _B4 + 3;
-	_BC        = "A";
-	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %d", _BC, *_B8);
+	mComponentValue = mColour + 3;
+	mComponentName  = "A";
+	char* test      = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %d", mComponentName, *mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -344,10 +353,10 @@ void ColourMenu::menuEnterA(Menu& menu)
  */
 void ColourMenu::menuEnterB(Menu& menu)
 {
-	_B8        = _B4 + 2;
-	_BC        = "B";
-	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %d", _BC, _B8);
+	mComponentValue = mColour + 2;
+	mComponentName  = "B";
+	char* test      = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %d", mComponentName, mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -380,10 +389,10 @@ void ColourMenu::menuEnterB(Menu& menu)
  */
 void ColourMenu::menuEnterG(Menu& menu)
 {
-	_B8        = _B4 + 1;
-	_BC        = "G";
-	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %d", _BC, _B8);
+	mComponentValue = mColour + 1;
+	mComponentName  = "G";
+	char* test      = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %d", mComponentName, mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -416,10 +425,10 @@ void ColourMenu::menuEnterG(Menu& menu)
  */
 void ColourMenu::menuEnterR(Menu& menu)
 {
-	_B8        = _B4;
-	_BC        = "R";
-	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %d", _BC, _B8);
+	mComponentValue = mColour;
+	mComponentName  = "R";
+	char* test      = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %d", mComponentName, mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -451,11 +460,11 @@ void ColourMenu::menuEnterR(Menu& menu)
  */
 void ColourMenu::menuIncrease(Menu& menu)
 {
-	if (*_B8 < 255) {
-		*_B8++;
+	if (*mComponentValue < 255) {
+		*mComponentValue++;
 	}
 	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %d", _BC, *_B8);
+	sprintf(test, "%s = %d", mComponentName, *mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -491,11 +500,11 @@ void ColourMenu::menuIncrease(Menu& menu)
  */
 void ColourMenu::menuDecrease(Menu& menu)
 {
-	if (_B8) {
-		_B8--;
+	if (mComponentValue) {
+		mComponentValue--;
 	}
 	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %d", _BC, _B8);
+	sprintf(test, "%s = %d", mComponentName, mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -531,10 +540,10 @@ void ColourMenu::menuDecrease(Menu& menu)
  */
 void FogMenu::menuEnterFar(Menu& menu)
 {
-	_BC        = _B8;
-	_C0        = "Far";
-	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %.2f", _C0, _BC);
+	mComponentValue = mFar;
+	mComponentName  = "Far";
+	char* test      = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", mComponentName, mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -568,10 +577,10 @@ void FogMenu::menuEnterFar(Menu& menu)
  */
 void FogMenu::menuEnterNear(Menu& menu)
 {
-	_BC        = _B4;
-	_C0        = "Near";
-	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %.2f", _C0, _BC);
+	mComponentValue = mNear;
+	mComponentName  = "Near";
+	char* test      = menu.mCurrentItem->mName;
+	sprintf(test, "%s = %.2f", mComponentName, mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -605,9 +614,9 @@ void FogMenu::menuEnterNear(Menu& menu)
  */
 void FogMenu::menuIncrease(Menu& menu)
 {
-	*_BC += 10.0f;
+	*mComponentValue += 10.0f;
 	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %.2f", _C0, _BC);
+	sprintf(test, "%s = %.2f", mComponentName, mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -642,9 +651,9 @@ void FogMenu::menuIncrease(Menu& menu)
  */
 void FogMenu::menuDecrease(Menu& menu)
 {
-	*_BC -= 10.0f;
+	*mComponentValue -= 10.0f;
 	char* test = menu.mCurrentItem->mName;
-	sprintf(test, "%s = %.2f", _C0, _BC);
+	sprintf(test, "%s = %.2f", mComponentName, mComponentValue);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -679,17 +688,17 @@ void FogMenu::menuDecrease(Menu& menu)
  */
 void LightMenu::menuChangeMove(Menu& menu)
 {
-	_B8[0] = _B8[0] ^ 1;
+	mLightAttachType[0] = mLightAttachType[0] ^ 1;
 	resetOptions();
-	_B4 = lightConv[(u8)mLight->mLightType];
+	mSelectedLightType = lightConv[(u8)mLight->mLightType];
 	addOption(0, lightTypeNames[(u8)mLight->mLightType], new Delegate1<LightMenu, Menu&>(this, menuChangeType), true);
 	addOption(0, nullptr, nullptr, true);
 	if ((u8)mLight->mLightType == 3) {
-		_C0 = &mLight->mSpotAngle;
-		addOption(0, lightMoveNames[_B8[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
+		mSpotFov = &mLight->mSpotAngle;
+		addOption(0, lightMoveNames[mLightAttachType[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
 
 		char* str = new char[0x40];
-		sprintf(str, "Fov = %.2f", *_C0);
+		sprintf(str, "Fov = %.2f", *mSpotFov);
 		addOption(0, str, nullptr, true);
 		addKeyEvent(1, 0, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
 		addKeyEvent(4, 0x8000, new Delegate1<LightMenu, Menu&>(this, menuDecrease));
@@ -1011,18 +1020,18 @@ void LightMenu::menuChangeMove(Menu& menu)
  */
 void LightMenu::menuChangeType(Menu& menu)
 {
-	_B4                = _B4 ^ 1;
-	mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[_B4];
+	mSelectedLightType = mSelectedLightType ^ 1;
+	mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[mSelectedLightType];
 	resetOptions();
-	_B4 = lightConv[(u8)mLight->mLightType];
+	mSelectedLightType = lightConv[(u8)mLight->mLightType];
 	addOption(0, lightTypeNames[(u8)mLight->mLightType], new Delegate1<LightMenu, Menu&>(this, menuChangeType), true);
 	addOption(0, nullptr, nullptr, true);
 	if ((u8)mLight->mLightType == 3) {
-		_C0 = &mLight->mSpotAngle;
-		addOption(0, lightMoveNames[_B8[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
+		mSpotFov = &mLight->mSpotAngle;
+		addOption(0, lightMoveNames[mLightAttachType[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
 
 		char* str = new char[0x40];
-		sprintf(str, "Fov = %.2f", *_C0);
+		sprintf(str, "Fov = %.2f", *mSpotFov);
 		addOption(0, str, nullptr, true);
 		addKeyEvent(1, 0, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
 		addKeyEvent(4, 0x8000, new Delegate1<LightMenu, Menu&>(this, menuDecrease));
@@ -1353,7 +1362,7 @@ void LightMenu::menuChangeType(Menu& menu)
  */
 void LightMenu::menuEnterNear(Menu& menu)
 {
-	_C4        = _C0;
+	_C4        = mSpotFov;
 	_C8        = "Fov";
 	char* test = menu.mCurrentItem->mName;
 	sprintf(test, "%s = %.2f", _C8, *_C4);
@@ -1466,8 +1475,8 @@ void LightMenu::menuDecrease(Menu& menu)
 ColourMenu::ColourMenu(Colour* color, Controller* controller, Font* font, bool p4)
     : Menu(controller, font, p4)
 {
-	_B4            = (u8*)color;
-	_A8            = 1;
+	mColour        = (u8*)color;
+	mIsCustomMenu  = 1;
 	mScreenMiddleX = glnWidth / 2;
 	mScreenMiddleY = glnHeight / 2;
 	mDiffuseColour.set(32, 128, 128, 192);
@@ -1475,28 +1484,28 @@ ColourMenu::ColourMenu(Colour* color, Controller* controller, Font* font, bool p
 	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
 
 	char* str = new char[0x40];
-	sprintf(str, "R = %d", _B4);
+	sprintf(str, "R = %d", mColour);
 	addOption(0, str, nullptr, true);
 	addKeyEvent(1, 0, new Delegate1<ColourMenu, Menu&>(this, menuEnterR));
 	addKeyEvent(4, 0x8000, new Delegate1<ColourMenu, Menu&>(this, menuDecrease));
 	addKeyEvent(4, 0x4000, new Delegate1<ColourMenu, Menu&>(this, menuIncrease));
 
 	str = new char[0x40];
-	sprintf(str, "G = %d", _B4);
+	sprintf(str, "G = %d", mColour);
 	addOption(0, str, nullptr, true);
 	addKeyEvent(1, 0, new Delegate1<ColourMenu, Menu&>(this, menuEnterR));
 	addKeyEvent(4, 0x8000, new Delegate1<ColourMenu, Menu&>(this, menuDecrease));
 	addKeyEvent(4, 0x4000, new Delegate1<ColourMenu, Menu&>(this, menuIncrease));
 
 	str = new char[0x40];
-	sprintf(str, "B = %d", _B4);
+	sprintf(str, "B = %d", mColour);
 	addOption(0, str, nullptr, true);
 	addKeyEvent(1, 0, new Delegate1<ColourMenu, Menu&>(this, menuEnterR));
 	addKeyEvent(4, 0x8000, new Delegate1<ColourMenu, Menu&>(this, menuDecrease));
 	addKeyEvent(4, 0x4000, new Delegate1<ColourMenu, Menu&>(this, menuIncrease));
 
 	str = new char[0x40];
-	sprintf(str, "A = %d", _B4);
+	sprintf(str, "A = %d", mColour);
 	addOption(0, str, nullptr, true);
 	addKeyEvent(1, 0, new Delegate1<ColourMenu, Menu&>(this, menuEnterR));
 	addKeyEvent(4, 0x8000, new Delegate1<ColourMenu, Menu&>(this, menuDecrease));
@@ -1997,34 +2006,34 @@ ColourMenu::ColourMenu(Colour* color, Controller* controller, Font* font, bool p
  * Address:	8006AE40
  * Size:	0005BC
  */
-PositionMenu::PositionMenu(Vector3f* p1, Controller* controller, Font* font, bool p4, bool p5)
+PositionMenu::PositionMenu(Vector3f* pos, Controller* controller, Font* font, bool p4, bool smlAdjust)
     : Menu(controller, font, p4)
 {
-	_B4            = p1;
-	_B8            = p5;
-	_A8            = 1;
-	mScreenMiddleX = glnWidth / 2;
-	mScreenMiddleY = glnHeight / 2;
+	mPosition          = pos;
+	mIsSmallAdjustment = smlAdjust;
+	mIsCustomMenu      = 1;
+	mScreenMiddleX     = glnWidth / 2;
+	mScreenMiddleY     = glnHeight / 2;
 	mDiffuseColour.set(32, 128, 128, 192);
 	mHighlightColour.set(32, 64, 32, 64);
 	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
 
 	char* str = new char[0x40];
-	sprintf(str, "X = %.2f", _B4->x);
+	sprintf(str, "X = %.2f", mPosition->x);
 	addOption(0, str, nullptr, true);
 	addKeyEvent(1, 0, new Delegate1<PositionMenu, Menu&>(this, menuEnterX));
 	addKeyEvent(4, 0x8000, new Delegate1<PositionMenu, Menu&>(this, menuDecrease));
 	addKeyEvent(4, 0x4000, new Delegate1<PositionMenu, Menu&>(this, menuIncrease));
 
 	str = new char[0x40];
-	sprintf(str, "Y = %.2f", _B4->y);
+	sprintf(str, "Y = %.2f", mPosition->y);
 	addOption(0, str, nullptr, true);
 	addKeyEvent(1, 0, new Delegate1<PositionMenu, Menu&>(this, menuEnterY));
 	addKeyEvent(4, 0x8000, new Delegate1<PositionMenu, Menu&>(this, menuDecrease));
 	addKeyEvent(4, 0x4000, new Delegate1<PositionMenu, Menu&>(this, menuIncrease));
 
 	str = new char[0x40];
-	sprintf(str, "Z = %.2f", _B4->z);
+	sprintf(str, "Z = %.2f", mPosition->z);
 	addOption(0, str, nullptr, true);
 	addKeyEvent(1, 0, new Delegate1<PositionMenu, Menu&>(this, menuEnterY));
 	addKeyEvent(4, 0x8000, new Delegate1<PositionMenu, Menu&>(this, menuDecrease));
@@ -2529,7 +2538,7 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 	mTimeSettings = new TimeSetting[5];
 
 	mMenu                 = new Menu(control, gsys->mConsFont, false);
-	mMenu->_A8            = 1;
+	mMenu->mIsCustomMenu  = 1;
 	mMenu->mScreenMiddleX = glnWidth / 2;
 	mMenu->mScreenMiddleY = glnHeight / 2 + 90;
 	mMenu->mDiffuseColour.set(32, 128, 32, 192);
@@ -4474,28 +4483,28 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
  * Address:	8006D034
  * Size:	00052C
  */
-LightMenu::LightMenu(Light* light, int* a1, Controller* controller, Font* font, bool p5)
+LightMenu::LightMenu(Light* light, int* attachType, Controller* controller, Font* font, bool p5)
     : Menu(controller, font, p5)
 {
 	mLight             = light;
-	_B4                = 0;
-	_B8                = a1;
-	mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[_B4];
+	mSelectedLightType = 0;
+	mLightAttachType   = attachType;
+	mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[mSelectedLightType];
 
 	mScreenMiddleX = glnWidth / 2;
 	mScreenMiddleY = glnHeight / 2;
 	mDiffuseColour.set(32, 128, 128, 192);
 	mHighlightColour.set(32, 64, 32, 64);
 	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
-	_B4 = lightConv[(u8)mLight->mLightType];
+	mSelectedLightType = lightConv[(u8)mLight->mLightType];
 	addOption(0, lightTypeNames[(u8)mLight->mLightType], new Delegate1<LightMenu, Menu&>(this, menuChangeType), true);
 	addOption(0, nullptr, nullptr, true);
 	if ((u8)mLight->mLightType == 3) {
-		_C0 = &mLight->mSpotAngle;
-		addOption(0, lightMoveNames[_B8[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
+		mSpotFov = &mLight->mSpotAngle;
+		addOption(0, lightMoveNames[mLightAttachType[0]], new Delegate1<LightMenu, Menu&>(this, menuChangeMove), true);
 
 		char* str = new char[0x40];
-		sprintf(str, "Fov = %.2f", *_C0);
+		sprintf(str, "Fov = %.2f", *mSpotFov);
 		addOption(0, str, nullptr, true);
 		addKeyEvent(1, 0, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
 		addKeyEvent(4, 0x8000, new Delegate1<LightMenu, Menu&>(this, menuDecrease));
@@ -4878,12 +4887,12 @@ LightMenu::LightMenu(Light* light, int* a1, Controller* controller, Font* font, 
  * Address:	8006D560
  * Size:	000B30
  */
-FogMenu::FogMenu(Colour* color, f32* a1, f32* a2, Controller* controller, Font* font, bool p6)
+FogMenu::FogMenu(Colour* color, f32* near, f32* far, Controller* controller, Font* font, bool p6)
     : Menu(controller, font, p6)
 {
-	_B4            = a1;
-	_B8            = a2;
-	_A8            = 1;
+	mNear          = near;
+	mFar           = far;
+	mIsCustomMenu  = 1;
 	mScreenMiddleX = glnWidth / 2;
 	mScreenMiddleY = glnHeight / 2;
 	mDiffuseColour.set(32, 128, 128, 192);
@@ -4893,14 +4902,14 @@ FogMenu::FogMenu(Colour* color, f32* a1, f32* a2, Controller* controller, Font* 
 	addMenu(new ColourMenu(color, mController, gsys->mConsFont, true), 0, "fog colour");
 
 	char* str = new char[0x40];
-	sprintf(str, "Near = %.2f", *a1);
+	sprintf(str, "Near = %.2f", *near);
 	addOption(0, str, nullptr, true);
 	addKeyEvent(1, 0, new Delegate1<FogMenu, Menu&>(this, menuEnterNear));
 	addKeyEvent(4, 0x8000, new Delegate1<FogMenu, Menu&>(this, menuDecrease));
 	addKeyEvent(4, 0x4000, new Delegate1<FogMenu, Menu&>(this, menuIncrease));
 
 	str = new char[0x40];
-	sprintf(str, "Far = %.2f", *a1);
+	sprintf(str, "Far = %.2f", *near);
 	addOption(0, str, nullptr, true);
 	addKeyEvent(1, 0, new Delegate1<FogMenu, Menu&>(this, menuEnterFar));
 	addKeyEvent(4, 0x8000, new Delegate1<FogMenu, Menu&>(this, menuDecrease));
@@ -6481,10 +6490,10 @@ char* lightnames[7]   = { "main light", "sub light", "+1", "+2", "+3", "+4", "+5
 void DayMgr::setFog(Graphics& gfx, Colour* color)
 {
 	if (!color) {
-		color = &mCurrentTimeSetting._13F4;
+		color = &mCurrentTimeSetting.mFogColour;
 	}
 
-	gfx.setFog(true, *color, 1.0f, mCurrentTimeSetting._13EC, mCurrentTimeSetting._13EC);
+	gfx.setFog(true, *color, 1.0f, mCurrentTimeSetting.mFogNear, mCurrentTimeSetting.mFogNear);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -6533,7 +6542,7 @@ void DayMgr::menuDumpSettings(Menu&)
 		for (int j = 0; j < mLightCount; j++) {
 			PRINT("\tlight %d {\t// %s\n", j, lightnames[j]);
 			PRINT("\t\ttype\t%d\n", mTimeSettings[i].mDayPhaseLights[j].mLightType);
-			PRINT("\t\tattach\t%d\n", mTimeSettings[i]._13CC[j]);
+			PRINT("\t\tattach\t%d\n", mTimeSettings[i].mAttachType[j]);
 			u8 type = mTimeSettings[i].mDayPhaseLights[j].mLightType;
 			if ((int)type == 3) {
 				PRINT("\t\tfov\t%.1f\n", mTimeSettings[i].mDayPhaseLights[j].mSpotAngle);
@@ -6552,14 +6561,14 @@ void DayMgr::menuDumpSettings(Menu&)
 			PRINT("\t\t}\n");
 		}
 		PRINT("\tambient {\n");
-		PRINT("\t\tcolour\t%d %d %d %d\n", mTimeSettings[i]._13E8.r, mTimeSettings[i]._13E8.g, mTimeSettings[i]._13E8.b,
-		      mTimeSettings[i]._13E8.a);
+		PRINT("\t\tcolour\t%d %d %d %d\n", mTimeSettings[i].mAmbientColour.r, mTimeSettings[i].mAmbientColour.g,
+		      mTimeSettings[i].mAmbientColour.b, mTimeSettings[i].mAmbientColour.a);
 		PRINT("\t\t}\n");
 
 		PRINT("\tfog {\n");
-		PRINT("\t\tcolour\t%d %d %d %d\n", mTimeSettings[i]._13F4.r, mTimeSettings[i]._13F4.g, mTimeSettings[i]._13F4.b,
-		      mTimeSettings[i]._13F4.a);
-		PRINT("\t\tdist\t%.2f %.2f\n", mTimeSettings[i]._13EC, mTimeSettings[i]._13F0);
+		PRINT("\t\tcolour\t%d %d %d %d\n", mTimeSettings[i].mFogColour.r, mTimeSettings[i].mFogColour.g, mTimeSettings[i].mFogColour.b,
+		      mTimeSettings[i].mFogColour.a);
+		PRINT("\t\tdist\t%.2f %.2f\n", mTimeSettings[i].mFogNear, mTimeSettings[i].mFogFar);
 		PRINT("\t\t}\n");
 	}
 	PRINT("\t}\n");

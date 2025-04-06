@@ -139,7 +139,7 @@ struct Menu : public Node {
 	Font* mFont;                                // _9C
 	int _A0;                                    // _A0
 	int mInputCode;                             // _A4
-	u32 _A8;                                    // _A8, unknown
+	u32 mIsCustomMenu;                          // _A8, unknown
 	int mState;                                 // _AC, see MenuState enum
 	f32 mOpeningFadeProgress;                   // _B0
 };
@@ -159,9 +159,9 @@ struct ColourMenu : public Menu {
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
-	u8* _B4;   // _B4
-	u8* _B8;   // _B8
-	char* _BC; // _BC
+	u8* mColour;          // _B4
+	u8* mComponentValue;  // _B8, this is a pointer to the component value (R, G, B, A) of mColour
+	char* mComponentName; // _BC, this is the component name ("R", "G", "B", "A")
 };
 
 /**
@@ -177,10 +177,10 @@ struct FogMenu : public Menu {
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
-	f32* _B4;  // _B4
-	f32* _B8;  // _B8
-	f32* _BC;  // _BC
-	char* _C0; // _C0
+	f32* mNear;           // _B4
+	f32* mFar;            // _B8
+	f32* mComponentValue; // _BC
+	char* mComponentName; // _C0
 };
 
 /**
@@ -197,12 +197,12 @@ struct LightMenu : public Menu {
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
-	int _B4;       //_B4
-	int* _B8;      //_B8
-	Light* mLight; // _BC
-	f32* _C0;      // _C0
-	f32* _C4;      // _C4
-	char* _C8;     // _C8
+	int mSelectedLightType; //_B4, basically, is this a SPOT or a POINT light?
+	int* mLightAttachType;  //_B8
+	Light* mLight;          // _BC
+	f32* mSpotFov;          // _C0
+	f32* _C4;               // _C4
+	char* _C8;              // _C8
 };
 
 /**
@@ -219,10 +219,10 @@ struct PositionMenu : public Menu {
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
-	Vector3f* _B4; // _B4
-	bool _B8;      // _B8
-	f32* _BC;      // _BC
-	char* _C0;     // _C0
+	Vector3f* mPosition;     // _B4
+	bool mIsSmallAdjustment; // _B8
+	f32* mComponentValue;    // _BC
+	char* mComponentName;    // _C0
 };
 
 #endif

@@ -331,10 +331,12 @@ int Creature::getStandType()
 				// standing on a platform creature?
 				return STANDTYPE_TekiPlatform;
 			}
+
 			// standing on a platform with no creature?
 			return STANDTYPE_Platform;
 		}
-		// no platform, _2BC == 0
+
+		// no platform
 		return STANDTYPE_Air;
 	}
 
@@ -343,11 +345,12 @@ int Creature::getStandType()
 			// standing on a platform creature?
 			return STANDTYPE_TekiPlatform;
 		}
+
 		// standing on a platform with no creature?
 		return STANDTYPE_Platform;
 	}
 
-	// no platform, _2BC != 0
+	// no platform
 	return STANDTYPE_Ground;
 }
 

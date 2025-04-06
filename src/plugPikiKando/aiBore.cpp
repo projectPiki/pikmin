@@ -266,7 +266,7 @@ int ActBoreSelect::exec()
 		return mChildActions[mCurrActionIdx].mAction->exec();
 	}
 
-	if (mPiki->mNavi->_738 < 1.0f || mStop) {
+	if (mPiki->mNavi->mNeutralTime < 1.0f || mStop) {
 		if (mPiki->mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == 3) {
 			return ACTOUT_Success;
 		}

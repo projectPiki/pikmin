@@ -24,14 +24,14 @@ struct Rope {
 	void move(Vector3f&, Vector3f&, Vector3f&);
 	void refresh(Graphics&);
 
-	Vector3f _00; // _00
-	Vector3f _0C; // _0C
-	Vector3f _18; // _18
-	Vector3f _24; // _24
-	f32 _30;      // _30
-	u8 _34[0x4];  // _34, unknown
-	Rope* _38;    // _38
-	Rope* _3C;    // _3C
+	Vector3f _00;       // _00
+	Vector3f mVelocity; // _0C
+	Vector3f mPosition; // _18
+	Vector3f _24;       // _24
+	f32 mRadius;        // _30
+	u8 _34[0x4];        // _34, unknown
+	Rope* mPrevLink;    // _38
+	Rope* mNextLink;    // _3C
 };
 
 /**
@@ -47,11 +47,11 @@ struct Spine {
 	void move();
 	void refresh(Graphics&);
 
-	u8 _00[0x4];            // _00, unknown
-	int _04;                // _04
-	Rope* mRope;            // _08
-	SmartPtr<Creature> _0C; // _0C
-	Vector3f _10;           // _10
+	u8 _00[0x4];                        // _00, unknown
+	int mLinkCount;                     // _04
+	Rope* mRope;                        // _08
+	SmartPtr<Creature> mTargetCreature; // _0C
+	Vector3f _10;                       // _10
 };
 
 /**

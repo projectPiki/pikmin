@@ -788,7 +788,7 @@ void NaviWalkState::exec(Navi* navi)
 	}
 
 	_10 = 0;
-	if (navi->_738 > 10.0f) {
+	if (navi->mNeutralTime > 10.0f) {
 		transit(navi, NAVISTATE_Idle);
 	}
 
@@ -2412,7 +2412,7 @@ void NaviIdleState::init(Navi* navi)
 void NaviIdleState::exec(Navi* navi)
 {
 	navi->makeVelocity(false);
-	if ((!mStopBeingIdle && navi->_738 < 1.0f) || navi->mKontroller->keyDown(KBBTN_A) || navi->mKontroller->keyDown(KBBTN_B)
+	if ((!mStopBeingIdle && navi->mNeutralTime < 1.0f) || navi->mKontroller->keyDown(KBBTN_A) || navi->mKontroller->keyDown(KBBTN_B)
 	    || navi->mKontroller->keyDown(KBBTN_X) || navi->mKontroller->keyDown(KBBTN_L) || navi->mKontroller->keyDown(KBBTN_R)
 	    || navi->mKontroller->keyDown(KBBTN_MSTICK_LEFT) || navi->mKontroller->keyDown(KBBTN_MSTICK_RIGHT)
 	    || navi->mKontroller->keyDown(KBBTN_MSTICK_UP) || navi->mKontroller->keyDown(KBBTN_MSTICK_DOWN)
@@ -2424,9 +2424,9 @@ void NaviIdleState::exec(Navi* navi)
 		return;
 	}
 
-	if (!playerState->isTutorial() && navi->_738 > 140.0f) {
-		PRINT("navi : neutral time = %.1fseconds\n", navi->_738);
-		navi->_738 = 1.0f;
+	if (!playerState->isTutorial() && navi->mNeutralTime > 140.0f) {
+		PRINT("navi : neutral time = %.1fseconds\n", navi->mNeutralTime);
+		navi->mNeutralTime = 1.0f;
 		transit(navi, NAVISTATE_Pellet);
 	}
 }
@@ -2456,7 +2456,7 @@ void NaviIdleState::procAnimMsg(Navi* navi, MsgAnim* msg)
  */
 void NaviIdleState::cleanup(Navi* navi)
 {
-	navi->_738 = 0.0f;
+	navi->mNeutralTime = 0.0f;
 }
 
 /*

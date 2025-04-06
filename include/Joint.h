@@ -74,7 +74,7 @@ struct Joint : public CoreNode {
 	MatPoly mMatPoly;            // _E4
 	int _10C;                    // _10C
 	int mMatPolyCount;           // _110
-	int _114;                    // _114
+	int mCullIndex;              // _114
 	BaseShape* mParentShape;     // _118
 };
 

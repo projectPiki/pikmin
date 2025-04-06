@@ -440,7 +440,7 @@ void NaviDemoSunsetState::exec(Navi* navi)
 {
 	navi->findNextThrowPiki();
 	navi->makeCStick(true);
-	navi->_738 = 0.0f;
+	navi->mNeutralTime = 0.0f;
 	mStateMachine->exec(this);
 	_30 -= gsys->getFrameTime();
 

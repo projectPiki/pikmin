@@ -648,7 +648,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mNaviID          = naviID;
 	_ACC             = 0;
 	_AD0             = 0;
-	_738             = 0.0f;
+	mNeutralTime     = 0.0f;
 	_718             = 0;
 	_720             = 0;
 	_71C             = 0;
@@ -2624,10 +2624,10 @@ void Navi::reviseController(Vector3f& stickPos)
 void Navi::makeVelocity(bool p1)
 {
 
-	_738 += gsys->getFrameTime();
+	mNeutralTime += gsys->getFrameTime();
 
 	if (mKontroller->keyDown(KBBTN_B) || mKontroller->keyDown(KBBTN_A) || mKontroller->keyDown(KBBTN_X) || mKontroller->keyDown(KBBTN_Z)) {
-		_738 = 0.0f;
+		mNeutralTime = 0.0f;
 	}
 
 	NVector3f stickVec(mKontroller->getMainStickX(), 0.0f, -mKontroller->getMainStickY());
@@ -2708,11 +2708,11 @@ void Navi::makeVelocity(bool p1)
 	mCursorTargetPosition = targetPos;
 
 	if (!(stickMag <= NAVI_PROP.mNeutralStickThreshold())) {
-		_738 = 0.0f;
+		mNeutralTime = 0.0f;
 	}
 
 	bool check = false;
-	if (_738 >= NAVI_PROP._33C()) {
+	if (mNeutralTime >= NAVI_PROP._33C()) {
 		check = true;
 	}
 
@@ -3394,10 +3394,10 @@ void Navi::makeCStick(bool p1)
 	_764.set(0.0f, 0.0f, 0.0f);
 
 	if (subStick.length() > 0.05f) {
-		_738       = 0.0f;
-		_764       = subStick;
-		f32 angle1 = atan2f(subStick.x, subStick.z);
-		f32 angle2 = mPlateMgr->mDirectionAngle;
+		mNeutralTime = 0.0f;
+		_764         = subStick;
+		f32 angle1   = atan2f(subStick.x, subStick.z);
+		f32 angle2   = mPlateMgr->mDirectionAngle;
 		Vector3f dir1(sinf(angle1), 0.0f, cosf(angle1));
 		Vector3f dir2(sinf(angle2), 0.0f, cosf(angle2));
 
@@ -4224,14 +4224,14 @@ void Navi::dump()
 		      isCreatureFlag(CF_IsFlying) ? "true" : "false");
 		PRINT(" isAlive=%s isVisible=%s isBuried=%s\n", isAlive() ? "true" : "false", isVisible() ? "true" : "false",
 		      isBuried() ? "true" : "false");
-		PRINT(" neutralTime = %.2f\n", _738);
+		PRINT(" neutralTime = %.2f\n", mNeutralTime);
 	} else {
 		PRINT("-- navi : mode = %d\n", mStateMachine->getCurrID(this));
 		PRINT(" onground : %s isFlying %s\n", isCreatureFlag(CF_IsOnGround) ? "true" : "false",
 		      isCreatureFlag(CF_IsFlying) ? "true" : "false");
 		PRINT(" isAlive=%s isVisible=%s isBuried=%s\n", isAlive() ? "true" : "false", isVisible() ? "true" : "false",
 		      isBuried() ? "true" : "false");
-		PRINT(" neutralTime = %.2f\n", _738);
+		PRINT(" neutralTime = %.2f\n", mNeutralTime);
 	}
 }
 

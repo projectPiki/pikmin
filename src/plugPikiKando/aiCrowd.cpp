@@ -339,7 +339,7 @@ int ActCrowd::exec()
 	plateDir.normalise();
 
 	if (plateDist2D < 60.0f && mPiki->mNavi->_724 && mState != STATE_Sort) {
-		if (!mIsWaiting && mPiki->mNavi->_738 - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+		if (!mIsWaiting && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 			mIsWaiting = true;
 			return ACTOUT_Continue;
 		}
@@ -401,7 +401,7 @@ int ActCrowd::exec()
 		f32 diff         = atan2f(naviDir.x, naviDir.z);
 		mPiki->mFaceDirection += 0.3f * angDist(diff, mPiki->mFaceDirection);
 		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
-		    && mPiki->mNavi->_738 - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+		    && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 			mIsWaiting = true;
 			startZawatuki();
 		}
@@ -412,7 +412,7 @@ int ActCrowd::exec()
 		_32 = 0;
 	} else if (plateDist2D < 15.0f) {
 		_32++;
-		if (_30 == 2 && mPiki->mNavi->_738 > 0.1f) {
+		if (_30 == 2 && mPiki->mNavi->mNeutralTime > 0.1f) {
 			_32 = 0;
 		}
 		if (_32 >= 6) {
@@ -436,7 +436,7 @@ int ActCrowd::exec()
 		}
 
 		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
-		    && mPiki->mNavi->_738 - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+		    && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 			mIsWaiting = true;
 			startZawatuki();
 		}
@@ -459,7 +459,7 @@ int ActCrowd::exec()
 		if (plateDist2D < val2) {
 			mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
-			    && mPiki->mNavi->_738 - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+			    && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 				mIsWaiting = true;
 				startZawatuki();
 			}

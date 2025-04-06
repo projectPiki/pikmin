@@ -49,12 +49,12 @@ struct DayOverModeState : public ModeState {
 			gamecore->cleanupDayEnd();
 
 			if (gameflow.mWorldClock.mCurrentDay < 30 && playerState->getCurrParts() != 30 && !gameflow.mIsChallengeMode) {
-				mSection->_28 = -0.1f;
+				mSection->mCurrentFade = -0.1f;
 				gameflow.mMoviePlayer->startMovie(28, 0, nullptr, nullptr, nullptr, -1, true);
 			}
 
-			mSection->_2C = 1.0f;
-			mSection->_30 = 0.5f;
+			mSection->mTargetFade = 1.0f;
+			mSection->mFadeSpeed  = 0.5f;
 		}
 		_08 = flag;
 	}

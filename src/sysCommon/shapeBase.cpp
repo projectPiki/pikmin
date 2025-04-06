@@ -217,75 +217,7 @@ void Joint::read(RandomAccessStream& stream)
  */
 void Joint::render(Graphics& gfx)
 {
-	// if (!this->m_flags)
-	// 	return;
-
-	// for (Joint::MatPoly* matPoly = this->m_matpolyE4.m_child; matPoly; matPoly = matPoly->m_next) {
-	// 	Mesh* mesh = matPoly->m_mesh;
-	// 	if ((graphics->m_dword8 & matPoly->m_material->mFlags) == 0) {
-	// 		continue;
-	// 	}
-
-	// 	graphics->useMaterial(matPoly->m_material);
-	// 	for (int j = 0; j < mesh->m_mtxGroupCount; ++j) {
-	// 		MtxGroup* mtxGroup               = &mesh->m_groups[j];
-	// 		struct Matrix4f* matrixArray[10] = { &Matrix4f::ident };
-	// 		for (int k = 0; k < mtxGroup->m_dependencyCount; ++k) {
-	// 			int depIndex = mtxGroup->m_dependancies[k];
-	// 			if (depIndex == -1)
-	// 				continue;
-
-	// 			VtxMatrix* vtxMatrix = &this->m_shape->m_vtxMatrix[depIndex];
-	// 			struct Matrix4f* matrix
-	// 			    = this->m_shape->m_currentAnims->m_state
-	// 			        ? BaseShape::getAnimMatrix(this->m_shape,
-	// 			                                   vtxMatrix->m_index + (vtxMatrix->m_partiallyWeighted ? 0 : this->m_shape->m_jointCount))
-	// 			        : &this->m_shape->m_joints[vtxMatrix->m_index].m_animMatrix;
-	// 			matrixArray[k] = matrix;
-	// 		}
-	// 		Vector3f* vertices  = this->m_shape->m_vertices;
-	// 		Vector2f* texCoords = this->m_shape->m_texCoords[0];
-	// 		Vector3f* normal    = (mesh->m_vcd & 0x10000) != 0 ? this->m_shape->m_nbt : this->m_shape->m_normals;
-	// 		int normalStride    = (mesh->m_vcd & 0x10000) != 0 ? 3 : 1;
-	// 		DispList* dispList  = mtxGroup->m_dispLists;
-	// 		for (int l = 0; l < mtxGroup->m_dispListCount; ++l, dispList++) {
-	// 			graphics->setCullFront(graphics->m_dword338 ^ dispList->m_flags & 3);
-
-	// 			for (FaceNode* faceNode = dispList->m_face.m_child; faceNode; faceNode = faceNode->m_next) {
-	// 				int* vertexIndex   = faceNode->m_vtxIdx;
-	// 				int* matrixIndex   = faceNode->m_mtxIdx;
-	// 				int* normalIndex   = faceNode->m_nrmIdx;
-	// 				int* texCoordIndex = faceNode->m_texcoords[0];
-	// 				for (int n = 0; n < faceNode->m_faceCount; ++n) {
-	// 					struct Matrix4f* matrix            = matrixIndex ? matrixArray[*matrixIndex++] : matrixArray[0];
-	// 					Vector3f* vertex                   = &vertices[*vertexIndex++];
-	// 					struct Vector3f* transformedVertex = &unk_101C8B68++;
-	// 					vertex->multMatrixTo(matrix, transformedVertex);
-	// 					if (normalIndex) {
-	// 						Vector3f* normalPtr                = &normal[normalStride * *normalIndex++];
-	// 						struct Vector3f* transformedNormal = &unk_101C7368++;
-	// 						normalPtr->rotateTo(matrix, transformedNormal);
-	// 					}
-	// 					if (texCoordIndex) {
-	// 						Vector3f* texCoord = &unk_101C6368++; // Assuming unk_101C6368 is a pointer to a
-	// 						                                      // Vector3f or similar structure for texture
-	// 						                                      // coordinates
-	// 						texCoord->x = texCoords[*texCoordIndex].m_x;
-	// 						texCoord->y = texCoords[*texCoordIndex++].m_y;
-	// 					}
-	// 				}
-	// 				if (dispList->m_flags & 0x1000000) {
-	// 					graphics->drawOneStrip(&unk_101C8B68, normalIndex ? &unk_101C7368 : 0, texCoordIndex ? &unk_101C6368 : 0,
-	// 					                       faceNode->m_faceCount);
-	// 				} else {
-	// 					graphics->drawOneTri(&unk_101C8B68, normalIndex ? &unk_101C7368 : 0, texCoordIndex ? &unk_101C6368 : 0,
-	// 					                     faceNode->m_faceCount);
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 	graphics->useMaterial(nullptr);
-	// }
+	// Only in the DLL.
 }
 
 /*
@@ -2092,7 +2024,7 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 {
 	Matrix4f* mtx = gfx.mActiveMatrix;
 	gfx.initMesh((Shape*)this);
-	int count = 0;
+	int culledJointCount = 0;
 	if (dynMats) {
 		for (ShapeDynMaterials* iMat = dynMats; iMat; iMat = iMat->mParent) {
 			iMat->updateContext();
@@ -2108,8 +2040,8 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 				}
 			}
 		} else {
-			count++;
-			mJointList[i]._114 = -1;
+			culledJointCount++;
+			mJointList[i].mCullIndex = -1;
 		}
 	}
 
@@ -2133,7 +2065,7 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 				                (box.mMax.z + box.mMin.z) * 0.5f);
 				centre.multMatrix(gfx.mCamera->mLookAtMtx);
 				char buf[PATH_MAX];
-				sprintf(buf, "%d", mJointList[i]._114);
+				sprintf(buf, "%d", mJointList[i].mCullIndex);
 				gfx.perspPrintf(gsys->mConsFont, centre, -(gsys->mConsFont->stringWidth(buf) / 2), 0, buf);
 				gfx.setCBlending(blend);
 				gfx.setLighting(lighting, nullptr);
@@ -2603,17 +2535,17 @@ void BaseShape::read(RandomAccessStream& stream)
 			mGridSizeY = stream.readInt();
 
 			mCollGroups          = new CollGroup*[mGridSizeX * mGridSizeY];
-			int numGroups        = stream.readInt();
-			int maxTris          = 0;
-			CollGroup* tmpGroups = new CollGroup[numGroups];
+			int groupCount       = stream.readInt();
+			int maxTrisPerGroup  = 0;
+			CollGroup* tmpGroups = new CollGroup[groupCount];
 
-			for (int i = 0; i < numGroups; i++) {
+			for (int i = 0; i < groupCount; i++) {
 				tmpGroups[i]._06           = stream.readShort();
 				tmpGroups[i].mTriCount     = stream.readShort();
 				tmpGroups[i].mTriangleList = new CollTriInfo*[tmpGroups[i].mTriCount];
 
-				if (tmpGroups[i].mTriCount > maxTris) {
-					maxTris = tmpGroups[i].mTriCount;
+				if (tmpGroups[i].mTriCount > maxTrisPerGroup) {
+					maxTrisPerGroup = tmpGroups[i].mTriCount;
 				}
 
 				for (int j = 0; j < tmpGroups[i].mTriCount; j++) {
@@ -2629,12 +2561,12 @@ void BaseShape::read(RandomAccessStream& stream)
 				}
 			}
 
-			PRINT("got a max of %d col tris in one block!\n", maxTris);
+			PRINT("got a max of %d col tris in one block!\n", maxTrisPerGroup);
 
 			CollGroup* group     = new CollGroup();
 			group->mTriCount     = 0;
 			group->mTriangleList = nullptr;
-			int groupCount       = 0;
+			int validTriCount    = 0;
 			f32 maxDist          = 0.0f;
 			for (int i = 0; i < mGridSizeY; i++) {
 				for (int j = 0; j < mGridSizeX; j++) {
@@ -2645,22 +2577,24 @@ void BaseShape::read(RandomAccessStream& stream)
 					}
 
 					mCollGroups[j + i * mGridSizeX] = &tmpGroups[groupIdx];
-					f32 b                           = 64.0f;
-					f32 maxX                        = mCourseExtents.mMin.x + f32(j) * b;
-					f32 maxZ                        = mCourseExtents.mMin.z + f32(i) * b;
-					f32 a                           = 64.0f * 1.0f;
-					BoundBox box;
-					Vector3f lower(maxX - 64.0f, mCourseExtents.mMin.y - a, maxZ - 64.0f);
-					box.expandBound(lower);
-					Vector3f upper(maxX + b + a, mCourseExtents.mMax.y + a, maxZ + b + a);
-					box.expandBound(upper);
+					f32 cellSize                    = 64.0f;
+					f32 cellMinX                    = mCourseExtents.mMin.x + f32(j) * cellSize;
+					f32 cellMinZ                    = mCourseExtents.mMin.z + f32(i) * cellSize;
+
+					f32 expansionSize = 64.0f * 1.0f;
+					BoundBox cellBox;
+					Vector3f lower(cellMinX - 64.0f, mCourseExtents.mMin.y - expansionSize, cellMinZ - 64.0f);
+					cellBox.expandBound(lower);
+					Vector3f upper(cellMinX + cellSize + expansionSize, mCourseExtents.mMax.y + expansionSize,
+					               cellMinZ + cellSize + expansionSize);
+					cellBox.expandBound(upper);
 
 					for (int k = 0; k < tmpGroups[groupIdx].mTriCount; k++) {
 						CollTriInfo* tri = tmpGroups[groupIdx].mTriangleList[k];
 						f32 dist         = triRectDistance(&mVertexList[tri->mVertexIndices[0]], &mVertexList[tri->mVertexIndices[1]],
-						                                   &mVertexList[tri->mVertexIndices[2]], box, false);
+						                                   &mVertexList[tri->mVertexIndices[2]], cellBox, false);
 						if (dist >= 0.001f) {
-							groupCount++;
+							validTriCount++;
 							if (dist > maxDist) {
 								maxDist = dist;
 							}
@@ -2669,7 +2603,7 @@ void BaseShape::read(RandomAccessStream& stream)
 				}
 			}
 
-			PRINT("maxDist = %f : got a total of %d col tris in lists mem = %d bytes!\n", maxDist, groupCount, 8 * groupCount);
+			PRINT("maxDist = %f : got a total of %d col tris in lists mem = %d bytes!\n", maxDist, validTriCount, 8 * groupCount);
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
 			PRINT("!!!!!!!!!!!!!!!!! COLLGRID USING %.2f kbytes\n", (before - after) / 1024.0f);

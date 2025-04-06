@@ -419,15 +419,15 @@ void handleTutorialWindow(u32&, Controller*)
 BaseGameSection::BaseGameSection()
     : Node("")
 {
-	_40         = 6;
-	_20         = 0;
-	_34         = 0;
-	_38         = 0;
-	mController = new Controller;
-	_3C         = 0;
-	_28         = 0.0f;
-	_2C         = 1.0f;
-	_30         = 0.5f;
+	_40          = 6;
+	_20          = 0;
+	_34          = 0;
+	_38          = 0;
+	mController  = new Controller;
+	_3C          = 0;
+	mCurrentFade = 0.0f;
+	mTargetFade  = 1.0f;
+	mFadeSpeed   = 0.5f;
 }
 
 /*
@@ -440,20 +440,20 @@ void BaseGameSection::draw(Graphics& gfx)
 	Matrix4f mtx;
 	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 
-	if (_28 < _2C) {
-		_28 += _30 * gsys->getFrameTime();
-		if (_28 > _2C) {
-			_28 = _2C;
+	if (mCurrentFade < mTargetFade) {
+		mCurrentFade += mFadeSpeed * gsys->getFrameTime();
+		if (mCurrentFade > mTargetFade) {
+			mCurrentFade = mTargetFade;
 		}
-	} else if (_28 > _2C) {
-		_28 -= _30 * gsys->getFrameTime();
-		if (_28 < _2C) {
-			_28 = _2C;
+	} else if (mCurrentFade > mTargetFade) {
+		mCurrentFade -= mFadeSpeed * gsys->getFrameTime();
+		if (mCurrentFade < mTargetFade) {
+			mCurrentFade = mTargetFade;
 		}
 	}
 
-	if (_28 < 1.0f) {
-		f32 test = _28 > 1.0f ? 1.0f : _28 < 0.0f ? 0.0f : _28;
+	if (mCurrentFade < 1.0f) {
+		f32 test = mCurrentFade > 1.0f ? 1.0f : mCurrentFade < 0.0f ? 0.0f : mCurrentFade;
 		test     = (1.0f - test) * 255.0f;
 		gfx.setColour(Colour(0, 0, 0, test), true);
 		gfx.setAuxColour(Colour(0, 0, 0, test));
@@ -1450,7 +1450,7 @@ ModeState* MessageModeState::update(u32& a)
 		gameoverWindow          = nullptr;
 		state->_08              = 0;
 		mSection->_38           = state;
-		mSection->_2C           = 1.0f;
+		mSection->mTargetFade   = 1.0f;
 	}
 
 	if (gameoverWindow) {
@@ -2134,16 +2134,16 @@ ModeState* DayOverModeState::initialisePhaseOne()
 		if (!(flags & 0x4000)) {
 			flags |= 0x8000;
 		}
-		mSection->_28 = -0.1f;
-		mSection->_2C = 1.0f;
+		mSection->mCurrentFade = -0.1f;
+		mSection->mTargetFade  = 1.0f;
 		gameflow.mMoviePlayer->startMovie(69, 0, nullptr, nullptr, nullptr, flags | 0xffff07ff, true);
 		gameoverWindow = nullptr;
 		gsys->setHeap(old);
 	} else {
 		gsys->resetHeap(4, 2);
-		int old        = gsys->setHeap(4);
-		gameoverWindow = nullptr;
-		mSection->_28  = -0.1f;
+		int old                = gsys->setHeap(4);
+		gameoverWindow         = nullptr;
+		mSection->mCurrentFade = -0.1f;
 		gameflow.mMoviePlayer->startMovie(32, 0, nullptr, nullptr, nullptr, -1, true);
 		if (!playerState->isTutorial() && !gameflow.mIsChallengeMode) {
 			u32 flags  = 0;
@@ -2485,9 +2485,9 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 
 	gsys->setHeap(old);
 	gsys->endLoading();
-	mSection->_2C = 1.0f;
-	mSection->_30 = 0.5f;
-	_08           = 2;
+	mSection->mTargetFade = 1.0f;
+	mSection->mFadeSpeed  = 0.5f;
+	_08                   = 2;
 	return nullptr;
 }
 
@@ -2842,13 +2842,13 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		gamecore->endMovie(index);
 		break;
 	case 9:
-		mSection->_2C = 0.0f;
-		mSection->_30 = 4.5f;
+		mSection->mTargetFade = 0.0f;
+		mSection->mFadeSpeed  = 4.5f;
 		break;
 	case 10:
-		mSection->_28 = 0.0f;
-		mSection->_2C = 1.0f;
-		mSection->_30 = 2.5f;
+		mSection->mCurrentFade = 0.0f;
+		mSection->mTargetFade  = 1.0f;
+		mSection->mFadeSpeed   = 2.5f;
 		break;
 	case 11:
 		gamecore->cleanupDayEnd();

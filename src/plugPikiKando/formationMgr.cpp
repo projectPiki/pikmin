@@ -1269,8 +1269,8 @@ void WingArranger::arrange(FormationMgr* mgr)
  */
 Rope::Rope()
 {
-	_38 = _3C = nullptr;
-	_0C.set(0.0f, 0.0f, 0.0f);
+	mPrevLink = mNextLink = nullptr;
+	mVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -1278,23 +1278,23 @@ Rope::Rope()
  * Address:	........
  * Size:	000A1C
  */
-void Rope::move(Vector3f& p1, Vector3f& p2, Vector3f& p3)
+void Rope::move(Vector3f& targetPos, Vector3f& initialVel, Vector3f& p3)
 {
-	Vector3f vec1 = p1 + p2 * gsys->getFrameTime();
-	Vector3f vec2 = vec1 - _18;
-	f32 dist      = vec2.length();
-	vec2          = vec2 * (1.0f / dist) * (dist - _30);
-	if (_3C) {
-		_0C = _0C + (vec2 - _0C) * gsys->getFrameTime() / 0.1f;
-		_3C->move(_18, _0C, p3);
+	Vector3f projectedPos = targetPos + initialVel * gsys->getFrameTime();
+	Vector3f vec2         = projectedPos - mPosition;
+	f32 dist              = vec2.length();
+	vec2                  = vec2 * (1.0f / dist) * (dist - mRadius);
+	if (mNextLink) {
+		mVelocity = mVelocity + (vec2 - mVelocity) * gsys->getFrameTime() / 0.1f;
+		mNextLink->move(mPosition, mVelocity, p3);
 	} else {
-		_0C = _0C + (vec2 - _0C) * gsys->getFrameTime() / 0.1f + 10.0f * p3;
+		mVelocity = mVelocity + (vec2 - mVelocity) * gsys->getFrameTime() / 0.1f + 10.0f * p3;
 	}
 
-	_18           = _18 + _0C * gsys->getFrameTime();
-	Vector3f vec3 = _18 - vec1;
+	mPosition     = mPosition + mVelocity * gsys->getFrameTime();
+	Vector3f vec3 = mPosition - projectedPos;
 	vec3.normalise();
-	_18 = vec1 + _30 * vec3;
+	mPosition = projectedPos + mRadius * vec3;
 }
 
 /*
@@ -1308,12 +1308,12 @@ void Rope::refresh(Graphics& gfx)
 	Vector3f vec;
 	Matrix4f mtx2;
 	f32 scale = 0.15f;
-	mtx1.makeSRT(Vector3f(scale, 2.0f * scale, scale), Vector3f(0.0f, 0.0f, 0.0f), _18);
+	mtx1.makeSRT(Vector3f(scale, 2.0f * scale, scale), Vector3f(0.0f, 0.0f, 0.0f), mPosition);
 	gfx.calcViewMatrix(mtx1, mtx2);
 	gfx.useMatrix(mtx2, 0);
 	GlobalShape::arrowShape->drawshape(gfx, *gfx.mCamera, nullptr);
-	if (_3C) {
-		_3C->refresh(gfx);
+	if (mNextLink) {
+		mNextLink->refresh(gfx);
 	}
 }
 
@@ -1324,7 +1324,7 @@ void Rope::refresh(Graphics& gfx)
  */
 Spine::Spine()
 {
-	_0C.clear();
+	mTargetCreature.clear();
 }
 
 /*
@@ -1334,26 +1334,29 @@ Spine::Spine()
  */
 void Spine::init(Creature* target)
 {
-	Vector3f pos = target->mPosition;
-	_0C.set(target);
-	mRope      = new Rope();
-	f32 rad    = 7.0f;
-	mRope->_30 = 7.0f;
-	_04        = 10;
-	f32 angle  = 2.0f * (PI * gsys->getRand(1.0f));
-	pos        = pos + Vector3f(rad * sinf(angle), 0.0f, rad * cosf(angle));
-	mRope->_18 = pos;
-	Rope* rope = mRope;
-	for (int i = 0; i < _04 - 1; i++) {
-		rope->_3C  = new Rope();
-		Rope* prev = rope;
-		rope       = rope->_3C;
-		rope->_38  = prev;
+	Vector3f startPosition = target->mPosition;
+	mTargetCreature.set(target);
 
-		f32 angle2 = 2.0f * (PI * gsys->getRand(1.0f));
-		pos        = pos + Vector3f(rad * sinf(angle2), 0.0f, rad * cosf(angle2));
-		rope->_18  = pos;
-		rope->_30  = rad;
+	mRope            = new Rope();
+	f32 rad          = 7.0f;
+	mRope->mRadius   = 7.0f;
+	mLinkCount       = 10;
+
+	f32 initialAngle        = 2.0f * (PI * gsys->getRand(1.0f));
+	startPosition              = startPosition + Vector3f(rad * sinf(initialAngle), 0.0f, rad * cosf(initialAngle));
+	mRope->mPosition = startPosition;
+	Rope* rope       = mRope;
+
+	for (int i = 0; i < mLinkCount - 1; i++) {
+		rope->mNextLink = new Rope();
+		Rope* prev      = rope;
+		rope            = rope->mNextLink;
+		rope->mPrevLink = prev;
+
+		f32 linkAngle      = 2.0f * (PI * gsys->getRand(1.0f));
+		startPosition             = startPosition + Vector3f(rad * sinf(linkAngle), 0.0f, rad * cosf(linkAngle));
+		rope->mPosition = startPosition;
+		rope->mRadius   = rad;
 	}
 
 	_10.set(0.0f, 0.0f, 0.0f);
@@ -1386,7 +1389,7 @@ void Spine::postMove()
  */
 void Spine::move()
 {
-	_0C.getPtr();
+	mTargetCreature.getPtr();
 	preMove();
 }
 

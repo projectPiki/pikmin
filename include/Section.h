@@ -21,9 +21,9 @@ struct BaseGameSection : public Node {
 	// _00-_20 = Node
 	Menu* _20;               // _20
 	Controller* mController; // _24
-	f32 _28;                 // _28
-	f32 _2C;                 // _2C
-	f32 _30;                 // _30
+	f32 mCurrentFade;        // _28
+	f32 mTargetFade;         // _2C
+	f32 mFadeSpeed;          // _30
 	ModeState* _34;          // _34, unknown
 	ModeState* _38;          // _38, unknown
 	u32 _3C;                 // _3C, unknown

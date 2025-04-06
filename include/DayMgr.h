@@ -75,18 +75,18 @@ struct TimeSetting {
 		mDayPhaseLights[6].mLightType      = 1;
 		mDayPhaseLights[6].update();
 
-		_13E8.set(48, 48, 48, 48);
-		_13F4.set(48, 48, 48, 48);
-		_13EC = 1000.0f;
-		_13F0 = 30000.0f;
+		mAmbientColour.set(48, 48, 48, 48);
+		mFogColour.set(48, 48, 48, 48);
+		mFogNear = 1000.0f;
+		mFogFar  = 30000.0f;
 	}
 
 	Light mDayPhaseLights[7]; // _00
-	int _13CC[7];             // _13CC
-	Colour _13E8;             // _13E8, probably
-	f32 _13EC;                // _13EC
-	f32 _13F0;                // _13F0
-	Colour _13F4;             // _13F4, probably
+	int mAttachType[7];       // _13CC
+	Colour mAmbientColour;    // _13E8
+	f32 mFogNear;             // _13EC
+	f32 mFogFar;              // _13F0
+	Colour mFogColour;        // _13F4
 };
 
 /**
