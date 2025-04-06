@@ -3,12 +3,22 @@
 
 #include "types.h"
 #include "Animator.h"
+#include "teki.h"
 
 /**
  * @brief TODO
  */
 struct TAIanimation {
-	// TAIanimation(int, char*); // DLL inline, to do
+	TAIanimation(int tekiType, char* bunFile)
+	{
+		if (tekiMgr->isUsingType(tekiType)) {
+			mAnimmgr = tekiMgr->mTekiShapes[tekiType]->mAnimMgr;
+			gsys->loadBundle(bunFile, false);
+		} else {
+			mAnimmgr = nullptr;
+		}
+		mAnimInfo = nullptr;
+	}
 
 	AnimInfo* addAnimation(char* anim);
 

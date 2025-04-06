@@ -36,8 +36,10 @@ struct TAIdororoParameters : public TekiParameters {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct TAIdororoStrategy : public YaiStrategy {
 	TAIdororoStrategy();
@@ -50,14 +52,19 @@ struct TAIdororoStrategy : public YaiStrategy {
 	void createCloudOfDust(Teki&, CollPart*);
 
 	// _00     = VTBL
-	// _00-_10 = YaiStrategy?
-	// TODO: members
+	// _00-_10 = YaiStrategy
+	u8 _10[0x8]; // _10, unknown
 };
 
 /**
  * @brief TODO
  */
 struct TAIdororoAnimation : public TAIanimation {
+	TAIdororoAnimation()
+	    : TAIanimation(TEKI_Dororo, "tekis/dororo/anims.bun")
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL

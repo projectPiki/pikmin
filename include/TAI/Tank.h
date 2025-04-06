@@ -52,6 +52,11 @@ struct TAItankStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAItankAnimation : public TAIanimation {
+	TAItankAnimation()
+	    : TAIanimation(TEKI_Tank, "tekis/tank/anims.bun")
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL

@@ -48,6 +48,11 @@ struct TAItamagoStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAItamagoAnimation : public TAIanimation {
+	TAItamagoAnimation()
+	    : TAIanimation(TEKI_KabekuiB, "tekis/tamago/anims.bun") // yep, they really had this
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL

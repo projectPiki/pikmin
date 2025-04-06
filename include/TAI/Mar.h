@@ -53,6 +53,11 @@ struct TAImarStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAImarAnimation : public TAIanimation {
+	TAImarAnimation()
+	    : TAIanimation(TEKI_Mar, "tekis/mar/anims.bun")
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL

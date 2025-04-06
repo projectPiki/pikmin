@@ -57,6 +57,11 @@ struct TAIusubaStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAIusubaAnimation : public TAIanimation {
+	TAIusubaAnimation()
+	    : TAIanimation(TEKI_KabekuiB, "tekis/usuba/anims.bun") // yep, really had this.
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL
