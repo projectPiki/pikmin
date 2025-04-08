@@ -189,7 +189,7 @@ int ActPutBomb::exeSet()
 	f32 dist              = qdist2(mTarget, mPiki);
 	f32 angle             = angDist(atan2f(dir.x, dir.z), mPiki->mFaceDirection);
 	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.1f * angle);
-	if (dist <= C_PIKI_PROP(mPiki)._51C() && zen::Abs(angle) < PI / 10.0f) {
+	if (dist <= C_PIKI_PROP(mPiki)._51C() && absF(angle) < PI / 10.0f) {
 		warnPikis();
 		InteractRelease release(mPiki, 1.0f);
 		Creature* held = mPiki->getHoldCreature();
@@ -267,7 +267,7 @@ int ActPutBomb::exeAim()
 	if (distanceToTarget > C_PIKI_PROP(mPiki).mBombPlaceMinDistance() && distanceToTarget < C_PIKI_PROP(mPiki).mBombThrowMaxDistance()) {
 
 		// If aimed correctly and aim timer expired, throw the bomb
-		if (zen::Abs(angleToTarget) < PI / 10.0f && mAimTimer <= 0.0f) {
+		if (absF(angleToTarget) < PI / 10.0f && mAimTimer <= 0.0f) {
 			initThrow();
 			return ACTOUT_Continue;
 		}
@@ -276,7 +276,7 @@ int ActPutBomb::exeAim()
 		return ACTOUT_Continue;
 	}
 
-	if (zen::Abs(dirToTarget.normalise()) <= 0.01f) {
+	if (absF(dirToTarget.normalise()) <= 0.01f) {
 		dirToTarget.set(0.0f, 0.0f, 1.0f);
 	}
 

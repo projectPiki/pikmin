@@ -245,7 +245,7 @@ int ActRescue::exeThrow()
 		Vector3f dir = mRescueTargetPosition - mPiki->mPosition;
 		f32 diff     = atan2f(dir.x, dir.z);
 		f32 angle    = angDist(diff, mPiki->mFaceDirection);
-		if (zen::Abs(angle) < 0.25132743f) {
+		if (absF(angle) < 0.25132743f) {
 			mThrowReady = 0;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Throw, this), PaniMotionInfo(PIKIANIM_Throw));
 			PRINT("THROW MOTION START\n");

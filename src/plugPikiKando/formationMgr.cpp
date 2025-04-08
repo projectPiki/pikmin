@@ -1337,13 +1337,13 @@ void Spine::init(Creature* target)
 	Vector3f startPosition = target->mPosition;
 	mTargetCreature.set(target);
 
-	mRope            = new Rope();
-	f32 rad          = 7.0f;
-	mRope->mRadius   = 7.0f;
-	mLinkCount       = 10;
+	mRope          = new Rope();
+	f32 rad        = 7.0f;
+	mRope->mRadius = 7.0f;
+	mLinkCount     = 10;
 
-	f32 initialAngle        = 2.0f * (PI * gsys->getRand(1.0f));
-	startPosition              = startPosition + Vector3f(rad * sinf(initialAngle), 0.0f, rad * cosf(initialAngle));
+	f32 initialAngle = 2.0f * (PI * gsys->getRand(1.0f));
+	startPosition    = startPosition + Vector3f(rad * sinf(initialAngle), 0.0f, rad * cosf(initialAngle));
 	mRope->mPosition = startPosition;
 	Rope* rope       = mRope;
 
@@ -1353,8 +1353,8 @@ void Spine::init(Creature* target)
 		rope            = rope->mNextLink;
 		rope->mPrevLink = prev;
 
-		f32 linkAngle      = 2.0f * (PI * gsys->getRand(1.0f));
-		startPosition             = startPosition + Vector3f(rad * sinf(linkAngle), 0.0f, rad * cosf(linkAngle));
+		f32 linkAngle   = 2.0f * (PI * gsys->getRand(1.0f));
+		startPosition   = startPosition + Vector3f(rad * sinf(linkAngle), 0.0f, rad * cosf(linkAngle));
 		rope->mPosition = startPosition;
 		rope->mRadius   = rad;
 	}

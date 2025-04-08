@@ -531,7 +531,7 @@ int Piki::moveRouteTrace(f32 speedRatio)
 	f32 distToPath = dirToPath.normalise();
 
 	f32 ctrlPtsWeight     = (1.0f - ctrlRatio) * crGetRadius(mCurrRoutePoint) + ctrlRatio * crGetRadius(mCurrRoutePoint + 1);
-	f32 alignToPathWeight = zen::Abs(distToPath) / ctrlPtsWeight;
+	f32 alignToPathWeight = absF(distToPath) / ctrlPtsWeight;
 	if (alignToPathWeight > 1.0f) {
 		alignToPathWeight = 1.0f;
 	} else if (alignToPathWeight < 0.0f) {
@@ -3285,7 +3285,7 @@ void Piki::bounceCallback()
 	} else if (isStickTo() && mInWaterTimer == 0 && mColor != Blue) {
 		Creature* obj = getStickObject();
 		if (obj && obj->mGroundTriangle && MapCode::getAttribute(obj->mGroundTriangle) == ATTR_Water) {
-			if (zen::Abs(obj->mPosition.y - mPosition.y) < 10.0f) {
+			if (absF(obj->mPosition.y - mPosition.y) < 10.0f) {
 				isDrownSurface = true;
 			}
 		}
@@ -4060,7 +4060,7 @@ void Piki::updateWalkAnimation()
 		}
 
 		int upperMotionID = mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex();
-		f32 angleDiff     = zen::Abs(mFaceDirection - mOldFaceDirection);
+		f32 angleDiff     = absF(mFaceDirection - mOldFaceDirection);
 		doMotionBlend();
 		int newMotionID;
 		if (speed < pikiMgr->mPikiParms->mPikiParms._19C()) {
@@ -4201,7 +4201,7 @@ void Piki::realAI()
 	} else if (isStickTo()) {
 		Creature* stickObj = getStickObject();
 		if (stickObj && stickObj->mGroundTriangle && MapCode::getAttribute(stickObj->mGroundTriangle) == ATTR_Water
-		    && zen::Abs(stickObj->mPosition.y - mPosition.y) < 10.0f) {
+		    && absF(stickObj->mPosition.y - mPosition.y) < 10.0f) {
 			isInWater = true;
 		}
 	}

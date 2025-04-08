@@ -15,17 +15,25 @@ f32 getDistPointAndLine(Vector3f, Vector3f, Vector3f, f32&);
 void makeRotMatrix(Vector3f&, Matrix3f&);
 
 // DLL inlines:
-int RoundOff(f32);
-f32 Rand(f32);
+inline int RoundOff(f32);
+inline f32 Rand(f32);
+inline f32 correctRad(f32 val);
 
 inline f32 Abs(f32 val)
 {
-	return fabsf(val);
+	if (val < 0.0f) {
+		return -val;
+	}
+	return val;
 }
 
+// TODO: check this/check it didn't break anything else
 inline int Abs(int val)
 {
-	return fabs(val);
+	if (val < 0) {
+		return -val;
+	}
+	return val;
 }
 } // namespace zen
 

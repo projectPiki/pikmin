@@ -572,7 +572,7 @@ int ActJumpAttack::exec()
 		Vector3f direction = getAttackPos() - mPiki->mPosition;
 		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
 		f32 dist3D         = direction.normalise();
-		f32 angle          = zen::Abs(angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection));
+		f32 angle          = absF(angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection));
 		if ((!_2C || (_2C && mTargetCollider && !mTargetCollider->isStickable())) && angle < PI / 10.0f
 		    && dist3D < getAttackSize() + mPiki->getCentreSize() + 10.0f) {
 			if (!mPiki->isStickTo()) {
@@ -622,7 +622,7 @@ int ActJumpAttack::exec()
 			f32 angle          = angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection);
 			f32 sep            = direction.length();
 			f32 dist           = sep - getAttackSize() - mPiki->getCentreSize();
-			if (dist < 10.0f && zen::Abs(angle) < PI / 4.0f && (target->isBoss() || target->isTeki()) && target->isAlive()
+			if (dist < 10.0f && absF(angle) < PI / 4.0f && (target->isBoss() || target->isTeki()) && target->isAlive()
 			    && target->isVisible()) {
 				f32 damage = mPiki->getAttackPower();
 				if (CourseDebug::pikiNoAttack) {

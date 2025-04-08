@@ -88,7 +88,7 @@ bool Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
 	f32 projectionRatio = normalised.dot(sphere.mCentre - mStartPoint) / length;
 
 	// Calculate distance from center projection to cylinder ends (0.5 = center)
-	f32 distToEnds = zen::Abs(projectionRatio - 0.5f) * length;
+	f32 distToEnds = absF(projectionRatio - 0.5f) * length;
 
 	// Calculate penetration along cylinder length
 	f32 endPenetration = (0.5f * length) - (distToEnds - sphere.mRadius);
@@ -151,7 +151,7 @@ bool Tube::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
 	f32 tmpDepth     = dir.DP(sphere.mCentre - mStartPoint) / len;
 
 	// this is completely unused lol
-	f32 unused = 0.5f * len - (zen::Abs(tmpDepth - 0.5f) * len - sphere.mRadius);
+	f32 unused = 0.5f * len - (absF(tmpDepth - 0.5f) * len - sphere.mRadius);
 
 	Vector3f pushDir;
 	pushDir = tmpDepth * axisVec + mStartPoint - sphere.mCentre;

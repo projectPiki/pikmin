@@ -15,6 +15,7 @@
 #include "TekiPersonality.h"
 #include "Shape.h"
 #include "system.h"
+#include "TAI/EffectAttack.h"
 #include "zen/CallBack.h"
 
 struct CollEvent;
@@ -532,7 +533,7 @@ struct YTeki : public NTeki {
 		BTeki::init(tekiType);
 		_478 = 0.0f;
 		for (int i = 0; i < 9; i++) {
-			_498[i] = 0;
+			_498[i] = nullptr;
 		}
 	}
 
@@ -629,15 +630,15 @@ struct YTeki : public NTeki {
 
 	// _00       = VTBL
 	// _000-_46C = NTeki
-	u8 _46C[0x470 - 0x46C]; // _46C, TODO: work out members
-	u32 _470;               // _470, unknown
-	u8 _474[0x4];           // _474, TODO: work out members
-	f32 _478;               // _478
-	u8 _47C[0x490 - 0x47C]; // _47C, TODO: work out members
-	f32 _490;               // _490
-	u8 _494[0x4];           // _494, unknown
-	u32 _498[8];            // _498, array of something, probably not u32s
-	u8 _4B8[0x4C8 - 0x4B8]; // _4B8, TODO: work out members
+	u8 _46C[0x470 - 0x46C];          // _46C, TODO: work out members
+	u32 _470;                        // _470, unknown
+	u8 _474[0x4];                    // _474, TODO: work out members
+	f32 _478;                        // _478
+	u8 _47C[0x490 - 0x47C];          // _47C, TODO: work out members
+	f32 _490;                        // _490
+	u8 _494[0x4];                    // _494, unknown
+	zen::particleGenerator* _498[8]; // _498
+	u8 _4B8[0x4C8 - 0x4B8];          // _4B8, TODO: work out members
 	struct {
 		u32 m0 : 1;
 		u32 m1 : 1;
@@ -647,9 +648,15 @@ struct YTeki : public NTeki {
 		u32 m5 : 1;
 		u32 m6 : 1;
 		u32 m7 : 1;
-	} mTekiSwitches;        // _4C8
-	u8 _4CC[0x538 - 0x4CC]; // _4CC, TODO: work out members
-	                        // _538 = PaniAnimKeyListener
+	} mTekiSwitches;                         // _4C8
+	TAIeffectAttackParam mEffectAttackParam; // _4CC
+	ConeTypeCallBack mConeCallBack;          // _51C
+	u8 _520[0x8];                            // _520, unknown - maybe part of ConeTypeCallBack?
+	CylinderTypeCallBack mCylinderCallBack;  // _528
+	u8 _52C[0x4];                            // _52C, unknown - maybe part of CylinderCallBack?
+	EventTypeCallBack mEventCallBack;        // _530
+	u8 _534[0x4];                            // _534, unknown - maybe part of EventTypeCallBack?
+	                                         // _538 = PaniAnimKeyListener
 };
 
 /**

@@ -370,7 +370,7 @@ int ActTransport::execJump()
 		return ACTOUT_Continue;
 	}
 
-	if (zen::Abs(slotHeight) <= 8.8f) {
+	if (absF(slotHeight) <= 8.8f) {
 		if (!pel->isSlotFree(mSlotIndex)) {
 			int oldSlot = mSlotIndex;
 			mSlotIndex  = pel->getNearestFreeSlotIndex(mPiki->mPosition);
@@ -2636,13 +2636,13 @@ bool ActTransport::crMove()
 	f32 val1         = vec.normalise();
 	f32 weightedProj = crGetRadius(mNextPathIndex) * (1.0f - factor) + crGetRadius(mNextPathIndex + 1) * factor;
 
-	f32 blend = zen::Abs(val1) / weightedProj;
+	f32 blend = absF(val1) / weightedProj;
 
 	if (blend < 0.3f) {
 		blend = 0.0f;
 	}
 
-	if (blend > 2.0f && zen::Abs(val1) > 130.0f) {
+	if (blend > 2.0f && absF(val1) > 130.0f) {
 		PRINT("danger root strayed:blend %.2f\n", blend);
 		doLift();
 		return true;

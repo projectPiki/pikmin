@@ -152,7 +152,7 @@ void PelletView::becomePellet(u32 id, Vector3f& pos, f32 direction)
 	f32 minY = mapMgr->getMinY(pos.x, pos.z, true);
 	f32 maxY = mapMgr->getMaxY(pos.x, pos.z, true);
 
-	if (zen::Abs(pos.y - maxY) < zen::Abs(pos.y - minY)) {
+	if (absF(pos.y - maxY) < absF(pos.y - minY)) {
 		pos.y = maxY;
 	} else {
 		pos.y = minY;
@@ -1325,7 +1325,7 @@ void Pellet::update()
 		}
 
 		f32 angle = angDist(atan2f(mVelocity.x, mVelocity.z), targetAngle);
-		if (zen::Abs(angle) > PI / 20.0f) {
+		if (absF(angle) > PI / 20.0f) {
 			f32 val = ((6.0f / getBottomRadius()) * 0.7f);
 			rotateY(gsys->getFrameTime() * angle * val);
 		}

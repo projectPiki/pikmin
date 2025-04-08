@@ -135,8 +135,6 @@ f32 calcPuruPuruScale(f32);
 int getSpecialNumber(int);
 void cnvSpecialNumber(char*);
 void cnvSpecialNumberHyphen(char*);
-f32 getDistPointAndLine(Vector3f, Vector3f, Vector3f, f32&);
-f32 correctRad(f32);
 bool getStringCVS(char*, char*, short);
 ::Texture* loadTexExp(const char*, bool, bool);
 void makePathName(const char*, const char*, char*);

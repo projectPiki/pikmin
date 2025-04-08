@@ -909,7 +909,7 @@ void Navi::updateWalkAnimation()
 		return;
 	}
 
-	f32 angle      = zen::Abs(mFaceDirection - _7DC);
+	f32 angle      = absF(mFaceDirection - _7DC);
 	Navi* listener = nullptr;
 	int newMotionID;
 	if (speed < NAVI_PROP._23C()) {
@@ -1594,7 +1594,7 @@ bool Navi::procActionButton()
 
 			Vector3f sproutNaviSep = sprout->mPosition - mPosition;
 			f32 sproutDist         = std::sqrtf(sproutNaviSep.x * sproutNaviSep.x + sproutNaviSep.z * sproutNaviSep.z);
-			f32 heightDiff         = zen::Abs(sproutNaviSep.y);
+			f32 heightDiff         = absF(sproutNaviSep.y);
 			if (sprout->canPullout() && sproutDist < minDist && heightDiff < 25.0f) {
 				minDist       = sproutDist;
 				closestSprout = sprout;
@@ -4340,7 +4340,7 @@ void Navi::updateLook()
 		f32 tmp2   = angDist(0.0f, _2F8);
 		_2F8       = roundAng(tmp2 * factor + _2F8);
 
-		if (zen::Abs(_2F4) < 0.1f && zen::Abs(_2F8) < 0.1f) {
+		if (absF(_2F4) < 0.1f && absF(_2F8) < 0.1f) {
 			forceFinishLook();
 		}
 		return;
@@ -4363,7 +4363,7 @@ void Navi::updateLook()
 		angle5 = angDist(angle2, angle3);
 	}
 
-	if (zen::Abs(angle5) < PI / 20.0f) {
+	if (absF(angle5) < PI / 20.0f) {
 		angle5 = 0.0f;
 	}
 
@@ -4376,7 +4376,7 @@ void Navi::updateLook()
 	}
 
 	f32 angle6 = angDist(angle1, _2F8);
-	if (zen::Abs(angle6) < PI / 20.0f) {
+	if (absF(angle6) < PI / 20.0f) {
 		angle6 = 0.0f;
 	}
 

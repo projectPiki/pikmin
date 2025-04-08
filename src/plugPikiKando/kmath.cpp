@@ -122,7 +122,7 @@ Vector3f getThrowVelocity(Vector3f& startPos, f32 horizSpeed, Vector3f& targetPo
 	Vector3f displacement = startPos - targetPos;
 
 	// approx time to reach target position at given speed
-	f32 timeToTarget = displacement.length() / zen::Abs(horizSpeed);
+	f32 timeToTarget = displacement.length() / absF(horizSpeed);
 
 	// flatten target direction
 	targetDir.y = 0.0f;

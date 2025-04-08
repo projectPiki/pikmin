@@ -366,7 +366,7 @@ int ActBridge::newExeApproach()
 		f32 stageZ = mBridge->getStageZ(currStage);
 		bridgePosY -= (20.0f + stageZ);
 
-		if (zen::Abs(bridgePosX) < 0.8f * (0.5f * mBridge->getStageWidth())) {
+		if (absF(bridgePosX) < 0.8f * (0.5f * mBridge->getStageWidth())) {
 			if (bridgePosY <= 0.0f) {
 				mBridge->getStagePos(mStageIdx);
 				// stagePos = stagePos - mActor->mPosition;
@@ -1023,19 +1023,19 @@ int ActBridge::newExeWork()
 	f32 zDist = sep.DP(zVec);
 	f32 xDist = sep.DP(xVec);
 
-	if (zen::Abs(zDist) > 24.0f) {
+	if (absF(zDist) > 24.0f) {
 		mPiki->resetCreatureFlag(CF_DisableMovement);
 	} else {
 		mPiki->setCreatureFlag(CF_DisableMovement);
 	}
 
-	if (zen::Abs(xDist) > 0.5f * mBridge->getStageWidth()) {
+	if (absF(xDist) > 0.5f * mBridge->getStageWidth()) {
 		PRINT("work : x is out of range\n");
 		newInitApproach();
 		return ACTOUT_Continue;
 	}
 
-	if (zen::Abs(xDist) > 0.3f * mBridge->getStageWidth()) {
+	if (absF(xDist) > 0.3f * mBridge->getStageWidth()) {
 		Vector3f dir;
 		if (xDist < 0.0f) {
 			xVec.multiply(-1.0f);

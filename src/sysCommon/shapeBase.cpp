@@ -2603,7 +2603,7 @@ void BaseShape::read(RandomAccessStream& stream)
 				}
 			}
 
-			PRINT("maxDist = %f : got a total of %d col tris in lists mem = %d bytes!\n", maxDist, validTriCount, 8 * groupCount);
+			PRINT("maxDist = %f : got a total of %d col tris in lists mem = %d bytes!\n", maxDist, validTriCount, 8 * validTriCount);
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
 			PRINT("!!!!!!!!!!!!!!!!! COLLGRID USING %.2f kbytes\n", (before - after) / 1024.0f);

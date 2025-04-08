@@ -115,8 +115,7 @@ int ActEnter::exec()
 		if (PikiMgr::containerDebug) {
 			PRINT("  %x enter (%.1f %.1f %.1f) : ropePos %f\n", mPiki, mPiki->mPosition.x, mPiki->mPosition.y, mPiki->mPosition.z,
 			      mPiki->mRopePosRatio);
-			if (zen::Abs(mPiki->mPosition.x) > 10000.0f || zen::Abs(mPiki->mPosition.y) > 10000.0f
-			    || zen::Abs(mPiki->mPosition.z) > 10000.0f) {
+			if (absF(mPiki->mPosition.x) > 10000.0f || absF(mPiki->mPosition.y) > 10000.0f || absF(mPiki->mPosition.z) > 10000.0f) {
 				ERROR("stoP!\n");
 			}
 		}

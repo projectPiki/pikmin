@@ -1013,7 +1013,7 @@ int CinematicPlayer::update()
 			foundActiveCut        = true;
 			mCurrentCutStartTime  = prevDuration;
 			mCurrentFramePosition = (shape->mEndFrame - shape->mStartFrame) * (mCurrentPlaybackTime - prevDuration)
-			                          / (f32)zen::Abs(shape->mEndFrame - shape->mStartFrame)
+			                          / (f32)absF(shape->mEndFrame - shape->mStartFrame)
 			                      + shape->mStartFrame;
 		}
 	}

@@ -80,7 +80,7 @@ int ActGoto::exec()
 	mTimeoutDuration -= gsys->getFrameTime();
 
 	f32 distanceToTarget = qdist2(target, mPiki);
-	f32 verticalDistance = zen::Abs(target->mPosition.y - mPiki->mPosition.y);
+	f32 verticalDistance = absF(target->mPosition.y - mPiki->mPosition.y);
 
 	// If distance is within the range, return success
 	if (distanceToTarget >= mMinDistance && distanceToTarget <= mMaxDistance + mPiki->getCentreSize() + target->getCentreSize()) {
