@@ -7,6 +7,7 @@
  * @brief Sound effect identifiers for use with SeContext and SeSystem.
  */
 enum PikiSoundID {
+	SOUND_NULL           = -1,
 	SE_BATTLE_START      = 0x0,
 	SE_CHAPPY_WALK       = 0x1,
 	SE_CHAPPY_DIE        = 0x2,

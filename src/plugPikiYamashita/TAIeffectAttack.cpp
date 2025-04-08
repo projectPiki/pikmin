@@ -1,5 +1,9 @@
 #include "TAI/EffectAttack.h"
+#include "teki.h"
+#include "NaviMgr.h"
+#include "PikiMgr.h"
 #include "Vector.h"
+#include "zen/Math.h"
 #include "DebugLog.h"
 
 /*
@@ -14,32 +18,17 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("TAIeffectAttack")
 
 /*
  * --INFO--
  * Address:	801C4960
  * Size:	000038
  */
-bool EventTypeCallBack::invoke(zen::particleGenerator*)
+bool EventTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x4(r3)
-	  lwz       r3, 0x44(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x1
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mParam->_44->ptclHitMap(ptclGen, mParam);
+	return true;
 }
 
 /*
@@ -47,135 +36,26 @@ bool EventTypeCallBack::invoke(zen::particleGenerator*)
  * Address:	801C4998
  * Size:	0001E0
  */
-void CylinderTypeCallBack::init(TAIeffectAttackParam*, Teki*, Vector3f&, Vector3f, f32, f32, f32, f32, TAIeffectAttackEventCallBack*)
+void CylinderTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, Vector3f& p3, Vector3f p4, f32 p5, f32 p6, f32 p7, f32 p8,
+                                TAIeffectAttackEventCallBack* eventCB)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  fmr       f31, f4
-	  stfd      f30, 0x48(r1)
-	  fmr       f30, f2
-	  stw       r31, 0x44(r1)
-	  mr        r31, r8
-	  stw       r30, 0x40(r1)
-	  mr        r30, r3
-	  stw       r29, 0x3C(r1)
-	  stw       r4, 0x4(r3)
-	  li        r3, 0
-	  lwz       r4, 0x4(r30)
-	  stw       r3, 0x38(r4)
-	  addi      r0, r4, 0x48
-	  lfs       f2, -0x4648(r2)
-	  stfs      f2, 0x0(r4)
-	  stfs      f2, 0x4(r4)
-	  stfs      f2, 0xC(r4)
-	  lfs       f0, 0x1BB0(r13)
-	  stfs      f0, 0x10(r4)
-	  lfs       f0, 0x1BB4(r13)
-	  stfs      f0, 0x14(r4)
-	  lfs       f0, 0x1BB8(r13)
-	  stfs      f0, 0x18(r4)
-	  lfs       f0, 0x1BBC(r13)
-	  stfs      f0, 0x1C(r4)
-	  lfs       f0, 0x1BC0(r13)
-	  stfs      f0, 0x20(r4)
-	  lfs       f0, 0x1BC4(r13)
-	  stfs      f0, 0x24(r4)
-	  lfs       f0, 0x1BC8(r13)
-	  stfs      f0, 0x28(r4)
-	  lfs       f0, 0x1BCC(r13)
-	  stfs      f0, 0x2C(r4)
-	  lfs       f0, 0x1BD0(r13)
-	  stfs      f0, 0x30(r4)
-	  stfs      f2, 0x34(r4)
-	  stw       r3, 0x40(r4)
-	  stw       r3, 0x3C(r4)
-	  stw       r0, 0x44(r4)
-	  stb       r3, 0x4C(r4)
-	  lfs       f0, -0x4644(r2)
-	  stfs      f0, 0x8(r4)
-	  lwz       r3, 0x4(r30)
-	  stw       r5, 0x38(r3)
-	  lwz       r3, 0x4(r30)
-	  stfs      f2, 0x0(r3)
-	  lwz       r3, 0x4(r30)
-	  stfs      f1, 0x4(r3)
-	  lwz       r3, 0x4(r30)
-	  stfs      f3, 0xC(r3)
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  stw       r3, 0x1C(r4)
-	  stw       r0, 0x20(r4)
-	  lwz       r0, 0x8(r7)
-	  stw       r0, 0x24(r4)
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x0(r6)
-	  lwz       r0, 0x4(r6)
-	  stw       r3, 0x10(r4)
-	  stw       r0, 0x14(r4)
-	  lwz       r0, 0x8(r6)
-	  stw       r0, 0x18(r4)
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  stw       r3, 0x28(r4)
-	  stw       r0, 0x2C(r4)
-	  lwz       r0, 0x8(r7)
-	  stw       r0, 0x30(r4)
-	  lwz       r3, 0x4(r30)
-	  lfs       f1, 0x28(r3)
-	  addi      r29, r3, 0x28
-	  lfs       f0, 0x2C(r3)
-	  lfs       f2, 0x30(r3)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x1B6EAC
-	  lfs       f0, -0x4648(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x188
-	  lfs       f0, 0x0(r29)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r29)
-	  lfs       f0, 0x4(r29)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x4(r29)
-	  lfs       f0, 0x8(r29)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x8(r29)
+	mParam = param;
+	mParam->init();
+	mParam->mTeki = teki;
+	mParam->_00   = 0.0f;
+	mParam->_04   = p5;
+	mParam->_0C   = p7;
+	mParam->_1C   = p4;
+	mParam->_10   = p3;
+	mParam->_28   = p4;
+	mParam->_28.normalize();
+	mParam->_34 = p6;
+	mParam->_08 = p8;
+	if (eventCB) {
+		mParam->_44 = eventCB;
+	}
 
-	.loc_0x188:
-	  lwz       r3, 0x4(r30)
-	  cmplwi    r31, 0
-	  stfs      f30, 0x34(r3)
-	  lwz       r3, 0x4(r30)
-	  stfs      f31, 0x8(r3)
-	  beq-      .loc_0x1A8
-	  lwz       r3, 0x4(r30)
-	  stw       r31, 0x44(r3)
-
-	.loc_0x1A8:
-	  lwz       r3, 0x4(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0x4C(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0x4C(r3)
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lfd       f30, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	mParam->_4C.m0 = 1;
 }
 
 /*
@@ -183,120 +63,19 @@ void CylinderTypeCallBack::init(TAIeffectAttackParam*, Teki*, Vector3f&, Vector3
  * Address:	801C4B78
  * Size:	00019C
  */
-void CylinderTypeCallBack::hitCheckCommon(zen::particleGenerator*, Creature*)
+void CylinderTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB8(r1)
-	  stfd      f31, 0xB0(r1)
-	  stw       r31, 0xAC(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0xA8(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0xA4(r1)
-	  mr        r29, r3
-	  lwz       r6, 0x4(r3)
-	  lwz       r3, 0x44(r6)
-	  addi      r5, r6, 0
-	  mr        r6, r31
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x17C
-	  lwz       r9, 0x18(r30)
-	  cmplwi    r9, 0
-	  beq-      .loc_0x60
-	  b         .loc_0x64
+	f32 lineDist;
+	Vector3f vec1;
+	Vector3f vec2;
 
-	.loc_0x60:
-	  addi      r9, r30, 0xC
-
-	.loc_0x64:
-	  lwz       r7, 0x4(r29)
-	  addi      r5, r1, 0x60
-	  addi      r4, r1, 0x6C
-	  lfs       f0, 0x28(r7)
-	  addi      r3, r1, 0x78
-	  lfs       f4, 0x8(r7)
-	  addi      r6, r1, 0x9C
-	  lfs       f1, 0x2C(r7)
-	  fmuls     f0, f0, f4
-	  lfs       f2, 0x30(r7)
-	  fmuls     f3, f1, f4
-	  fmuls     f1, f2, f4
-	  stfs      f0, 0x48(r1)
-	  lfs       f0, 0x48(r1)
-	  stfs      f0, 0x54(r1)
-	  stfs      f3, 0x58(r1)
-	  stfs      f1, 0x5C(r1)
-	  lfsu      f1, 0x10(r7)
-	  lfs       f0, 0x54(r1)
-	  lfs       f4, 0x8(r7)
-	  fadds     f0, f1, f0
-	  lfs       f3, 0x5C(r1)
-	  lfs       f2, 0x4(r7)
-	  lfs       f1, 0x58(r1)
-	  fadds     f3, f4, f3
-	  stfs      f0, 0x44(r1)
-	  fadds     f1, f2, f1
-	  lfs       f0, 0x44(r1)
-	  stfs      f0, 0x60(r1)
-	  stfs      f1, 0x64(r1)
-	  stfs      f3, 0x68(r1)
-	  lfs       f0, 0x0(r9)
-	  stfs      f0, 0x6C(r1)
-	  lfs       f0, 0x4(r9)
-	  stfs      f0, 0x70(r1)
-	  lfs       f0, 0x8(r9)
-	  stfs      f0, 0x74(r1)
-	  lfs       f0, 0x94(r31)
-	  stfs      f0, 0x78(r1)
-	  lfs       f0, 0x98(r31)
-	  stfs      f0, 0x7C(r1)
-	  lfs       f0, 0x9C(r31)
-	  stfs      f0, 0x80(r1)
-	  bl        -0x29368
-	  mr        r3, r31
-	  fmr       f31, f1
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x4(r29)
-	  lfs       f0, 0x8(r4)
-	  fadds     f0, f0, f1
-	  fcmpo     cr0, f31, f0
-	  bge-      .loc_0x17C
-	  lfs       f1, 0x9C(r1)
-	  lfs       f0, -0x4648(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x17C
-	  lfs       f0, -0x4630(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x17C
-	  lwz       r3, 0x44(r4)
-	  mr        r5, r31
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x17C:
-	  lwz       r0, 0xBC(r1)
-	  lfd       f31, 0xB0(r1)
-	  lwz       r31, 0xAC(r1)
-	  lwz       r30, 0xA8(r1)
-	  lwz       r29, 0xA4(r1)
-	  addi      r1, r1, 0xB8
-	  mtlr      r0
-	  blr
-	*/
+	if (mParam->_44->hitCheckCulling(ptclGen, mParam, creature)) {
+		f32 pointDist
+		    = zen::getDistPointAndLine(creature->getPosition(), ptclGen->getEmitPos(), mParam->_10 + mParam->_28 * mParam->_08, lineDist);
+		if (pointDist < creature->getCentreSize() + mParam->_08 && lineDist >= 0.0f && lineDist <= 1.0f) {
+			mParam->_44->hitCreature(mParam, creature);
+		}
+	}
 }
 
 /*
@@ -304,9 +83,16 @@ void CylinderTypeCallBack::hitCheckCommon(zen::particleGenerator*, Creature*)
  * Address:	........
  * Size:	0003E4
  */
-void CylinderTypeCallBack::hitCheck(zen::particleGenerator*)
+void CylinderTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
 {
-	// UNUSED FUNCTION
+	Navi* navi = naviMgr->getNavi();
+	hitCheckCommon(ptclGen, navi);
+
+	Iterator iter(pikiMgr);
+	CI_LOOP(iter)
+	{
+		hitCheckCommon(ptclGen, *iter);
+	}
 }
 
 /*
@@ -314,262 +100,31 @@ void CylinderTypeCallBack::hitCheck(zen::particleGenerator*)
  * Address:	801C4D14
  * Size:	000384
  */
-bool CylinderTypeCallBack::invoke(zen::particleGenerator*)
+bool CylinderTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stw       r31, 0x9C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x98(r1)
-	  mr        r30, r3
-	  stw       r29, 0x94(r1)
-	  lwz       r5, 0x4(r3)
-	  lwz       r3, 0x44(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x4(r30)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x0(r4)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f1, f1, f0
-	  stfs      f1, 0x0(r4)
-	  lwz       r4, 0x4(r30)
-	  lfs       f0, 0x4(r4)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x348
-	  lwz       r3, 0x38(r4)
-	  lfs       f0, -0x4648(r2)
-	  lfs       f1, 0x58(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x348
-	  lbz       r0, 0x4C(r4)
-	  rlwinm.   r0,r0,25,31,31
-	  beq-      .loc_0x260
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r7, r4, 0x1C
-	  lfs       f0, 0x24(r4)
-	  addi      r6, r1, 0x40
-	  lfs       f1, 0x28C(r3)
-	  addi      r5, r1, 0x3C
-	  fmuls     f0, f0, f1
-	  addi      r4, r1, 0x38
-	  addi      r3, r1, 0x68
-	  stfs      f0, 0x40(r1)
-	  lfs       f0, 0x4(r7)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x3C(r1)
-	  lfs       f0, 0x0(r7)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x38(r1)
-	  bl        -0x18DCB8
-	  lwz       r3, 0x4(r30)
-	  lfs       f0, 0x68(r1)
-	  lfsu      f1, 0x10(r3)
-	  lfs       f2, 0x6C(r1)
-	  fadds     f0, f1, f0
-	  lfs       f3, 0x70(r1)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fadds     f0, f0, f2
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fadds     f0, f0, f3
-	  stfs      f0, 0x8(r3)
-	  lwz       r4, 0x18(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x108
-	  b         .loc_0x10C
+	mParam->_44->playEventSound(ptclGen, mParam);
+	f32 nextTime = gsys->getFrameTime() + mParam->_00;
+	mParam->_00  = nextTime;
 
-	.loc_0x108:
-	  addi      r4, r31, 0xC
+	if (nextTime < mParam->_04 && mParam->mTeki->mHealth > 0.0f) {
+		Vector3f vec1;
 
-	.loc_0x10C:
-	  lwz       r3, 0x4(r30)
-	  lfs       f2, 0x4(r4)
-	  addi      r3, r3, 0x10
-	  lfs       f0, 0x0(r4)
-	  lfs       f3, 0x4(r3)
-	  lfs       f1, 0x0(r3)
-	  fsubs     f4, f3, f2
-	  lfs       f2, 0x8(r3)
-	  fsubs     f5, f1, f0
-	  lfs       f1, 0x8(r4)
-	  lfs       f0, -0x4648(r2)
-	  fsubs     f3, f2, f1
-	  fmuls     f2, f5, f5
-	  fmuls     f1, f4, f4
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x1B0
-	  fsqrte    f1, f4
-	  lfd       f3, -0x4640(r2)
-	  lfd       f2, -0x4638(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x4C(r1)
-	  lfs       f4, 0x4C(r1)
+		if (mParam->_4C.m0) {
+			mParam->_10.add(Vector3f(mParam->_1C * gsys->getFrameTime()));
+			vec1 = mParam->_10 - ptclGen->getEmitPos();
+			if (vec1.length() > mParam->_0C) {
+				mParam->_4C.m0 = 0;
+				mParam->_1C.normalize();
+			} else if (mParam->_44->hitMap(mParam)) {
+				mParam->_4C.m0 = 0;
+			}
+		}
 
-	.loc_0x1B0:
-	  lwz       r4, 0x4(r30)
-	  lfs       f0, 0xC(r4)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x230
-	  lbz       r0, 0x4C(r4)
-	  li        r3, 0
-	  rlwimi    r0,r3,7,24,24
-	  stb       r0, 0x4C(r4)
-	  lwz       r3, 0x4(r30)
-	  addi      r29, r3, 0x1C
-	  lfs       f1, 0x1C(r3)
-	  lfs       f0, 0x20(r3)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x24(r3)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x1B72CC
-	  lfs       f0, -0x4648(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x260
-	  lfs       f0, 0x0(r29)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r29)
-	  lfs       f0, 0x4(r29)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x4(r29)
-	  lfs       f0, 0x8(r29)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x8(r29)
-	  b         .loc_0x260
+		hitCheck(ptclGen);
+	}
 
-	.loc_0x230:
-	  lwz       r3, 0x44(r4)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x260
-	  lwz       r3, 0x4(r30)
-	  li        r4, 0
-	  lbz       r0, 0x4C(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0x4C(r3)
-
-	.loc_0x260:
-	  lwz       r3, 0x3120(r13)
-	  bl        -0xADBB4
-	  addi      r5, r3, 0
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0x410
-	  lwz       r3, 0x3068(r13)
-	  li        r0, 0
-	  stw       r3, 0x54(r1)
-	  addi      r3, r1, 0x50
-	  stw       r0, 0x58(r1)
-	  bl        -0x1351E4
-	  b         .loc_0x2EC
-
-	.loc_0x294:
-	  lwz       r4, 0x50(r1)
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x2C0
-	  lwz       r3, 0x54(r1)
-	  li        r4, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r5, r3
-	  b         .loc_0x2D8
-
-	.loc_0x2C0:
-	  lwz       r3, 0x54(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r5, r3
-
-	.loc_0x2D8:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0x47C
-	  addi      r3, r1, 0x50
-	  bl        -0x135364
-
-	.loc_0x2EC:
-	  lwz       r3, 0x54(r1)
-	  lwz       r4, 0x50(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x314
-	  li        r0, 0x1
-	  b         .loc_0x340
-
-	.loc_0x314:
-	  lwz       r3, 0x54(r1)
-	  lwz       r4, 0x50(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x33C
-	  li        r0, 0x1
-	  b         .loc_0x340
-
-	.loc_0x33C:
-	  li        r0, 0
-
-	.loc_0x340:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x294
-
-	.loc_0x348:
-	  lwz       r5, 0x4(r30)
-	  mr        r4, r31
-	  lwz       r3, 0x44(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xA4(r1)
-	  li        r3, 0x1
-	  lwz       r31, 0x9C(r1)
-	  lwz       r30, 0x98(r1)
-	  lwz       r29, 0x94(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
+	mParam->_44->ptclHitMap(ptclGen, mParam);
+	return true;
 }
 
 /*
@@ -577,137 +132,31 @@ bool CylinderTypeCallBack::invoke(zen::particleGenerator*)
  * Address:	801C5098
  * Size:	0001E8
  */
-void ConeTypeCallBack::init(TAIeffectAttackParam*, Teki*, Vector3f&, Vector3f, f32, f32, f32, f32, TAIeffectAttackEventCallBack*)
+void ConeTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, Vector3f& p3, Vector3f p4, f32 p5, f32 p6, f32 p7, f32 p8,
+                            TAIeffectAttackEventCallBack* eventCB)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stfd      f31, 0x58(r1)
-	  fmr       f31, f4
-	  stfd      f30, 0x50(r1)
-	  fmr       f30, f2
-	  stw       r31, 0x4C(r1)
-	  mr        r31, r8
-	  stw       r30, 0x48(r1)
-	  addi      r30, r7, 0
-	  stw       r29, 0x44(r1)
-	  mr        r29, r3
-	  stw       r28, 0x40(r1)
-	  stw       r4, 0x4(r3)
-	  li        r3, 0
-	  lwz       r4, 0x4(r29)
-	  stw       r3, 0x38(r4)
-	  addi      r0, r4, 0x48
-	  lfs       f2, -0x4648(r2)
-	  stfs      f2, 0x0(r4)
-	  stfs      f2, 0x4(r4)
-	  stfs      f2, 0xC(r4)
-	  lfs       f0, 0x1BB0(r13)
-	  stfs      f0, 0x10(r4)
-	  lfs       f0, 0x1BB4(r13)
-	  stfs      f0, 0x14(r4)
-	  lfs       f0, 0x1BB8(r13)
-	  stfs      f0, 0x18(r4)
-	  lfs       f0, 0x1BBC(r13)
-	  stfs      f0, 0x1C(r4)
-	  lfs       f0, 0x1BC0(r13)
-	  stfs      f0, 0x20(r4)
-	  lfs       f0, 0x1BC4(r13)
-	  stfs      f0, 0x24(r4)
-	  lfs       f0, 0x1BC8(r13)
-	  stfs      f0, 0x28(r4)
-	  lfs       f0, 0x1BCC(r13)
-	  stfs      f0, 0x2C(r4)
-	  lfs       f0, 0x1BD0(r13)
-	  stfs      f0, 0x30(r4)
-	  stfs      f2, 0x34(r4)
-	  stw       r3, 0x40(r4)
-	  stw       r3, 0x3C(r4)
-	  stw       r0, 0x44(r4)
-	  stb       r3, 0x4C(r4)
-	  lfs       f0, -0x4644(r2)
-	  stfs      f0, 0x8(r4)
-	  lwz       r3, 0x4(r29)
-	  stw       r5, 0x38(r3)
-	  lwz       r3, 0x4(r29)
-	  stfs      f2, 0x0(r3)
-	  lwz       r3, 0x4(r29)
-	  stfs      f1, 0x4(r3)
-	  lwz       r3, 0x4(r29)
-	  stfs      f3, 0xC(r3)
-	  lwz       r4, 0x4(r29)
-	  lwz       r3, 0x0(r6)
-	  lwz       r0, 0x4(r6)
-	  stw       r3, 0x10(r4)
-	  stw       r0, 0x14(r4)
-	  lwz       r0, 0x8(r6)
-	  stw       r0, 0x18(r4)
-	  lwz       r4, 0x4(r29)
-	  lwz       r3, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  stw       r3, 0x28(r4)
-	  stw       r0, 0x2C(r4)
-	  lwz       r0, 0x8(r7)
-	  stw       r0, 0x30(r4)
-	  lwz       r3, 0x4(r29)
-	  lfs       f1, 0x28(r3)
-	  addi      r28, r3, 0x28
-	  lfs       f0, 0x2C(r3)
-	  lfs       f2, 0x30(r3)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x1B7598
-	  lfs       f0, -0x4648(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x174
-	  lfs       f0, 0x0(r28)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r28)
-	  lfs       f0, 0x4(r28)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x4(r28)
-	  lfs       f0, 0x8(r28)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x8(r28)
-
-	.loc_0x174:
-	  lwz       r5, 0x4(r29)
-	  li        r0, 0
-	  lwz       r4, 0x0(r30)
-	  cmplwi    r31, 0
-	  lwz       r3, 0x4(r30)
-	  stw       r4, 0x1C(r5)
-	  stw       r3, 0x20(r5)
-	  lwz       r3, 0x8(r30)
-	  stw       r3, 0x24(r5)
-	  lwz       r3, 0x4(r29)
-	  stfs      f31, 0x34(r3)
-	  lwz       r3, 0x4(r29)
-	  stw       r0, 0x40(r3)
-	  lwz       r3, 0x4(r29)
-	  stw       r0, 0x3C(r3)
-	  beq-      .loc_0x1BC
-	  lwz       r3, 0x4(r29)
-	  stw       r31, 0x44(r3)
-
-	.loc_0x1BC:
-	  stfs      f30, 0x8(r29)
-	  lwz       r0, 0x64(r1)
-	  lfd       f31, 0x58(r1)
-	  lfd       f30, 0x50(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  lwz       r28, 0x40(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	mParam = param;
+	mParam->init();
+	mParam->mTeki = teki;
+	mParam->_00   = 0.0f;
+	mParam->_04   = p5;
+	mParam->_0C   = p7;
+	mParam->_10   = p3;
+	mParam->_28   = p4;
+	mParam->_28.normalize();
+	mParam->_1C = p4;
+	mParam->_34 = p8;
+	if (mParam->_3C && !mParam->_3C->checkEmit()) {
+		ERROR("EMIT IS ALIVE! ");
+	}
+	if (mParam->_40 && !mParam->_40->checkEmit()) {
+		ERROR("EMIT IS ALIVE! ");
+	}
+	mParam->_3C = mParam->_40 = nullptr;
+	if (eventCB) {
+		mParam->_44 = eventCB;
+	}
+	_08 = p6;
 }
 
 /*
@@ -715,8 +164,56 @@ void ConeTypeCallBack::init(TAIeffectAttackParam*, Teki*, Vector3f&, Vector3f, f
  * Address:	801C5280
  * Size:	000320
  */
-void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator*, Creature*)
+void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature* creature)
 {
+	Vector3f emitPos(ptclGen->getEmitPos());
+	Vector3f cPos(creature->getPosition());
+	Vector3f dir1 = mParam->_10 - ptclGen->getEmitPos();
+	Vector3f dir2(cPos.x - emitPos.x, cPos.y - emitPos.y, cPos.z - emitPos.z);
+
+	if (dir1.DP(dir2) > 0.0f) {
+		f32 dist1 = dir1.length();
+		f32 dist2 = dir2.length();
+
+		f32 val;
+		if (mParam->_1C.x == 0.0f && mParam->_1C.y == 0.0f && mParam->_1C.z == 0.0f) {
+			val = mParam->_0C;
+		} else {
+			val = dist1;
+		}
+
+		if (dist2 < val) {
+			if (dist1 != 0.0f) {
+				dir1.div(dist1);
+			}
+			if (dist2 != 0.0f) {
+				dir2.div(dist2);
+			}
+
+			// idk why the instruction order is getting weird here.
+			f32 dot12 = dir1.DP(dir2);
+			f32 angle = cosf(_08);
+
+			if (dot12 > angle) {
+				Vector3f vec1;
+				f32 scale = (dot12 - angle) / (1.0f - angle);
+				scale *= 1.005f;
+				if (scale >= 1.0f) {
+					scale = 3.0f;
+				}
+
+				vec1.set(dir2.x - dir1.x, 0.5f, dir2.z - dir1.z);
+				vec1.normalize();
+				vec1.multiply(scale);
+
+				u32 flag = ptclGen->getControlFlag();
+
+				mParam->_44->hitCreature(ptclGen, mParam, creature, vec1);
+			}
+		}
+	}
+
+	PRINT("fake", ptclGen ? "fake" : "fake");
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -953,9 +450,19 @@ void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator*, Creature*)
  * Address:	........
  * Size:	000214
  */
-void ConeTypeCallBack::hitCheck(zen::particleGenerator*)
+void ConeTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
 {
-	// UNUSED FUNCTION
+	Iterator iterN(naviMgr);
+	CI_LOOP(iterN)
+	{
+		hitCheckCommon(ptclGen, *iterN);
+	}
+
+	Iterator iterP(pikiMgr);
+	CI_LOOP(iterP)
+	{
+		hitCheckCommon(ptclGen, *iterP);
+	}
 }
 
 /*
@@ -963,322 +470,38 @@ void ConeTypeCallBack::hitCheck(zen::particleGenerator*)
  * Address:	801C55A0
  * Size:	000434
  */
-bool ConeTypeCallBack::invoke(zen::particleGenerator*)
+bool ConeTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA8(r1)
-	  stw       r31, 0xA4(r1)
-	  mr        r31, r4
-	  stw       r30, 0xA0(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r5, 0x4(r30)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f1, 0x0(r5)
-	  fadds     f1, f1, f0
-	  stfs      f1, 0x0(r5)
-	  lwz       r4, 0x4(r30)
-	  lfs       f0, 0x4(r4)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x39C
-	  lwz       r3, 0x38(r4)
-	  lfs       f0, -0x4648(r2)
-	  lfs       f1, 0x58(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x39C
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r7, r4, 0x1C
-	  lfs       f0, 0x24(r4)
-	  addi      r6, r1, 0x3C
-	  lfs       f1, 0x28C(r3)
-	  addi      r5, r1, 0x38
-	  fmuls     f0, f0, f1
-	  addi      r4, r1, 0x34
-	  addi      r3, r1, 0x78
-	  stfs      f0, 0x3C(r1)
-	  lfs       f0, 0x4(r7)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x38(r1)
-	  lfs       f0, 0x0(r7)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x34(r1)
-	  bl        -0x18E51C
-	  lwz       r3, 0x4(r30)
-	  lfs       f0, 0x78(r1)
-	  lfsu      f1, 0x10(r3)
-	  lfs       f2, 0x7C(r1)
-	  fadds     f0, f1, f0
-	  lfs       f3, 0x80(r1)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fadds     f0, f0, f2
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x8(r3)
-	  fadds     f0, f0, f3
-	  stfs      f0, 0x8(r3)
-	  lwz       r4, 0x18(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xE0
-	  b         .loc_0xE4
+	f32 nextTime = mParam->_00 + gsys->getFrameTime();
+	mParam->_00  = nextTime;
 
-	.loc_0xE0:
-	  addi      r4, r31, 0xC
+	if (nextTime < mParam->_04 && mParam->mTeki->mHealth > 0.0f) {
+		Vector3f vec1;
 
-	.loc_0xE4:
-	  lwz       r3, 0x4(r30)
-	  lfs       f2, 0x4(r4)
-	  addi      r3, r3, 0x10
-	  lfs       f0, 0x0(r4)
-	  lfs       f3, 0x4(r3)
-	  lfs       f1, 0x0(r3)
-	  fsubs     f4, f3, f2
-	  lfs       f2, 0x8(r3)
-	  fsubs     f5, f1, f0
-	  lfs       f1, 0x8(r4)
-	  lfs       f0, -0x4648(r2)
-	  fsubs     f3, f2, f1
-	  fmuls     f2, f5, f5
-	  fmuls     f1, f4, f4
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x188
-	  fsqrte    f1, f4
-	  lfd       f3, -0x4640(r2)
-	  lfd       f2, -0x4638(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x48(r1)
-	  lfs       f4, 0x48(r1)
+		mParam->_10.add(Vector3f(mParam->_1C * gsys->getFrameTime()));
+		vec1 = mParam->_10 - ptclGen->getEmitPos();
+		if (vec1.length() > mParam->_0C) {
+			mParam->_1C.set(0.0f, 0.0f, 0.0f);
+		} else if (ptclGen->checkEmit()) {
+			if (mParam->_44->hitMap(mParam)) {
+				mParam->_1C.set(0.0f, 0.0f, 0.0f);
+			}
+		} else {
+			ERROR("HEN! %f %f \n", mParam->_00, mParam->_04);
+		}
 
-	.loc_0x188:
-	  lwz       r4, 0x4(r30)
-	  lfs       f0, 0xC(r4)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x1B4
-	  lfs       f0, 0x1BD8(r13)
-	  stfs      f0, 0x1C(r4)
-	  lfs       f0, 0x1BDC(r13)
-	  stfs      f0, 0x20(r4)
-	  lfs       f0, 0x1BE0(r13)
-	  stfs      f0, 0x24(r4)
-	  b         .loc_0x1F8
+		hitCheck(ptclGen);
+	} else {
+		ptclGen->finish();
+		if (mParam->_3C) {
+			mParam->_3C->finish();
+		}
+		if (mParam->_40) {
+			mParam->_40->finish();
+		}
+	}
 
-	.loc_0x1B4:
-	  lwz       r0, 0x80(r31)
-	  rlwinm.   r0,r0,0,30,30
-	  bne-      .loc_0x1F8
-	  lwz       r3, 0x44(r4)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1F8
-	  lwz       r3, 0x4(r30)
-	  lfs       f0, 0x1BE4(r13)
-	  stfsu     f0, 0x1C(r3)
-	  lfs       f0, 0x1BE8(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x1BEC(r13)
-	  stfs      f0, 0x8(r3)
-
-	.loc_0x1F8:
-	  lwz       r3, 0x3120(r13)
-	  li        r0, 0
-	  stw       r3, 0x58(r1)
-	  addi      r3, r1, 0x54
-	  stw       r0, 0x5C(r1)
-	  bl        -0x1359F0
-	  b         .loc_0x26C
-
-	.loc_0x214:
-	  lwz       r4, 0x54(r1)
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x240
-	  lwz       r3, 0x58(r1)
-	  li        r4, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r5, r3
-	  b         .loc_0x258
-
-	.loc_0x240:
-	  lwz       r3, 0x58(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r5, r3
-
-	.loc_0x258:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0x580
-	  addi      r3, r1, 0x54
-	  bl        -0x135B70
-
-	.loc_0x26C:
-	  lwz       r3, 0x58(r1)
-	  lwz       r4, 0x54(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x294
-	  li        r0, 0x1
-	  b         .loc_0x2C0
-
-	.loc_0x294:
-	  lwz       r3, 0x58(r1)
-	  lwz       r4, 0x54(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x2BC
-	  li        r0, 0x1
-	  b         .loc_0x2C0
-
-	.loc_0x2BC:
-	  li        r0, 0
-
-	.loc_0x2C0:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x214
-	  lwz       r3, 0x3068(r13)
-	  li        r0, 0
-	  stw       r3, 0x64(r1)
-	  addi      r3, r1, 0x60
-	  stw       r0, 0x68(r1)
-	  bl        -0x135AC0
-	  b         .loc_0x33C
-
-	.loc_0x2E4:
-	  lwz       r4, 0x60(r1)
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x310
-	  lwz       r3, 0x64(r1)
-	  li        r4, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r5, r3
-	  b         .loc_0x328
-
-	.loc_0x310:
-	  lwz       r3, 0x64(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r5, r3
-
-	.loc_0x328:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0x650
-	  addi      r3, r1, 0x60
-	  bl        -0x135C40
-
-	.loc_0x33C:
-	  lwz       r3, 0x64(r1)
-	  lwz       r4, 0x60(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x364
-	  li        r0, 0x1
-	  b         .loc_0x390
-
-	.loc_0x364:
-	  lwz       r3, 0x64(r1)
-	  lwz       r4, 0x60(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x38C
-	  li        r0, 0x1
-	  b         .loc_0x390
-
-	.loc_0x38C:
-	  li        r0, 0
-
-	.loc_0x390:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x2E4
-	  b         .loc_0x3E0
-
-	.loc_0x39C:
-	  lwz       r0, 0x80(r31)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r31)
-	  lwz       r3, 0x4(r30)
-	  lwz       r3, 0x3C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x3C4
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r3)
-
-	.loc_0x3C4:
-	  lwz       r3, 0x4(r30)
-	  lwz       r3, 0x40(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x3E0
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r3)
-
-	.loc_0x3E0:
-	  lwz       r5, 0x4(r30)
-	  mr        r4, r31
-	  lwz       r3, 0x44(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x4(r30)
-	  mr        r4, r31
-	  lwz       r3, 0x44(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xAC(r1)
-	  li        r3, 0x1
-	  lwz       r31, 0xA4(r1)
-	  lwz       r30, 0xA0(r1)
-	  addi      r1, r1, 0xA8
-	  mtlr      r0
-	  blr
-	*/
+	mParam->_44->ptclHitMap(ptclGen, mParam);
+	mParam->_44->playEventSound(ptclGen, mParam);
+	return true;
 }

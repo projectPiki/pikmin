@@ -1210,7 +1210,7 @@ void TaiCollecLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 		mEffectType = EffectMgr::EFF_SmokeRing_S;
 	}
 
-	_18 = 112;
+	mSoundID = 112;
 }
 
 /*

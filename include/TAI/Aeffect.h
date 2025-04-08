@@ -4,6 +4,7 @@
 #include "types.h"
 #include "TAI/Action.h"
 #include "EffectMgr.h"
+#include "SoundID.h"
 
 struct Vector3f;
 struct CollPart;
@@ -12,10 +13,11 @@ struct CollPart;
  * @brief TODO
  */
 struct TAIAeffCloudOfDust : public TaiAction {
-	TAIAeffCloudOfDust(int nextState, EffectMgr::effTypeTable p2, f32 p3, int p4, int p5, int p6, int p7, int p8)
+	TAIAeffCloudOfDust(int nextState, EffectMgr::effTypeTable effID, f32 sinkThreshold, int footNum, int jointID0, int jointID1,
+	                   int jointID2, int jointID3)
 	    : TaiAction(nextState)
 	{
-		init(p2, true, -1, RUMBLE_NONE, p3, p4, p5, p6, p7, p8);
+		init(effID, true, SOUND_NULL, RUMBLE_NONE, sinkThreshold, footNum, jointID0, jointID1, jointID2, jointID3);
 	}
 
 	// DLL inlines to do:
@@ -26,7 +28,8 @@ struct TAIAeffCloudOfDust : public TaiAction {
 	virtual bool act(Teki&);                   // _10
 	virtual void setType(Vector3f&, int, int); // _1C
 
-	void init(EffectMgr::effTypeTable, bool, int, int, f32, int, int, int, int, int);
+	void init(EffectMgr::effTypeTable effID, bool p2, int soundID, int rumbleType, f32 sinkThreshold, int footNum, int jointID0,
+	          int jointID1, int jointID2, int jointID3);
 	void createCloudOfDust(Teki&, int);
 	CollPart* getCollPart(Teki&, int);
 
@@ -34,12 +37,12 @@ struct TAIAeffCloudOfDust : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int* _08;                            // _08, array of something
-	int _0C;                             // _0C
-	f32 _10;                             // _10
+	int* mFootJointID;                   // _08
+	int mFootNum;                        // _0C
+	f32 mFootSinkThreshold;              // _10
 	EffectMgr::effTypeTable mEffectType; // _14
-	int _18;                             // _18
-	int _1C;                             // _1C
+	int mSoundID;                        // _18
+	int mRumbleType;                     // _1C
 	bool _20;                            // _20
 };
 

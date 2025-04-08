@@ -53,8 +53,8 @@ void TaiStopGenParticleGeneratorAction::start(Teki& teki)
  * Address:	8012E638
  * Size:	00008C
  */
-TaiJointEffectAction::TaiJointEffectAction(f32 p1, int p2, int p3, int p4, int p5, int p6)
-    : TAIAeffCloudOfDust(TAI_NO_TRANSIT, EffectMgr::EFF_NULL, p1, p2, p3, p4, p5, p6)
+TaiJointEffectAction::TaiJointEffectAction(f32 sinkThreshold, int footNum, int jointID0, int jointID1, int jointID2, int jointID3)
+    : TAIAeffCloudOfDust(TAI_NO_TRANSIT, EffectMgr::EFF_NULL, sinkThreshold, footNum, jointID0, jointID1, jointID2, jointID3)
 {
 	_20 = false;
 }

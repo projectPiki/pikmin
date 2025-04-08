@@ -34,17 +34,17 @@ struct TAIeffectAttackParam {
 
 	void init()
 	{
-		_38 = 0;
-		_00 = 0.0f;
-		_04 = 0.0f;
-		_0C = 0.0f;
+		mTeki = nullptr;
+		_00   = 0.0f;
+		_04   = 0.0f;
+		_0C   = 0.0f;
 		_10.set(0.0f, 0.0f, 0.0f);
 		_1C.set(0.0f, 0.0f, 0.0f);
 		_28.set(0.0f, 0.0f, 0.0f);
 		_34 = 0.0f;
-		_3C = _40 = 0;
+		_3C = _40 = nullptr;
 		_44       = &mEventCallBack;
-		_4C       = 0;
+		_4C.b     = 0;
 		_08       = 100.0f;
 	}
 
@@ -56,12 +56,15 @@ struct TAIeffectAttackParam {
 	Vector3f _1C;                                // _1C
 	Vector3f _28;                                // _28
 	f32 _34;                                     // _34
-	u32 _38;                                     // _38, unknown
-	u32 _3C;                                     // _3C, unknown
-	u32 _40;                                     // _40, unknown
+	Teki* mTeki;                                 // _38
+	zen::particleGenerator* _3C;                 // _3C
+	zen::particleGenerator* _40;                 // _40
 	TAIeffectAttackEventCallBack* _44;           // _44
 	TAIeffectAttackEventCallBack mEventCallBack; // _48
-	u8 _4C;                                      // _4C
+	union {
+		u32 m0 : 1;
+		u8 b;
+	} _4C; // _4C
 };
 
 /**
@@ -71,8 +74,8 @@ struct EventTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator*); // _08
 
 	// _00     = VTBL
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
+	// _00-_04 = zen::CallBack1
+	TAIeffectAttackParam* mParam; // _04
 };
 
 /**
@@ -88,8 +91,8 @@ struct CylinderTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	void hitCheck(zen::particleGenerator*);
 
 	// _00     = VTBL
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
+	// _00-_04 = zen::CallBack1
+	TAIeffectAttackParam* mParam; // _04
 };
 
 /**
@@ -105,8 +108,9 @@ struct ConeTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	void hitCheck(zen::particleGenerator*);
 
 	// _00     = VTBL
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
+	// _00-_04 = zen::CallBack1
+	TAIeffectAttackParam* mParam; // _04
+	f32 _08;                      // _08
 };
 
 #endif

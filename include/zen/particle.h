@@ -273,6 +273,15 @@ struct particleGenerator : public zenList {
 		return mEmitPos;
 	}
 
+	// these are the same for some reason
+	Vector3f& getEmitPos()
+	{
+		if (mEmitPosPtr) {
+			return *mEmitPosPtr;
+		}
+		return mEmitPos;
+	}
+
 	f32 getScaleSize() { return mScaleSize; }
 	void setScaleSize(f32 scale) { mScaleSize = scale; }
 
@@ -288,6 +297,8 @@ struct particleGenerator : public zenList {
 	bool checkEmit() { return !(mGeneratorFlags & PTCLGEN_Finished); }
 	bool checkActive() { return mGeneratorFlags & PTCLGEN_Active; }
 	bool checkStopGen() { return mGeneratorFlags & PTCLGEN_GenStopped; }
+
+	u32 getControlFlag() { return mGeneratorFlags; }
 
 	void killParticle(particleMdl* ptcl) { pmPutParticle(ptcl); }
 	void pmPutParticle(zenList* ptcl) { mMdlMgr->putPtcl(ptcl); }
@@ -353,8 +364,6 @@ struct particleGenerator : public zenList {
 	    s16 getMaxFrame();
 
 	    Vector3f& getEmitPos();
-
-	    u32 getControlFlag();
 	*/
 
 	// _00     = VTBL

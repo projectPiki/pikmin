@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "TAI/Amotion.h"
+#include "EffectMgr.h"
 
 /**
  * @brief TODO
@@ -66,39 +67,39 @@ struct TAIAdying : public TAIAmotion {
 
 	// _04     = VTBL
 	// _00-_0C = TAIAmotion
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TAIAdyingKabekui : public TAIAdying {
-	inline TAIAdyingKabekui() // TODO: this is a guess
-	    : TAIAdying(-1, -1)
+	TAIAdyingKabekui(int nextState, int motionID, EffectMgr::effTypeTable effID)
+	    : TAIAdying(nextState, motionID)
 	{
+		mEffectType = effID;
 	}
 
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
 	// _04     = VTBL
-	// _00-_0C = TAIAdying?
-	// TODO: members
+	// _00-_0C = TAIAdying
+	EffectMgr::effTypeTable mEffectType; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TAIAdyingCrushKabekui : public TAIAdyingKabekui {
-	inline TAIAdyingCrushKabekui() // TODO: this is a guess
+	TAIAdyingCrushKabekui(int nextState, int motionID, EffectMgr::effTypeTable effID)
+	    : TAIAdyingKabekui(nextState, motionID, effID)
 	{
 	}
 
 	virtual void start(Teki&); // _08
 
 	// _04     = VTBL
-	// _00-_0C = TAIAdyingKabekui?
-	// TODO: members
+	// _00-_10 = TAIAdyingKabekui
 };
 
 /**
@@ -111,8 +112,8 @@ struct TAIAdamage : public TaiAction {
 		_08 = p2;
 	}
 
-	virtual bool act(Teki&);         // _10
-	virtual bool judgeDamage(Teki&); // _1C
+	virtual bool act(Teki&);                         // _10
+	virtual bool judgeDamage(Teki&) { return true; } // _1C
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -123,8 +124,8 @@ struct TAIAdamage : public TaiAction {
  * @brief TODO
  */
 struct TAIAinWater : public TaiAction {
-	inline TAIAinWater() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAinWater(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -140,8 +141,11 @@ struct TAIAinWater : public TaiAction {
  * @brief TODO
  */
 struct TAIAinWaterDamage : public TAIAinWater {
-	inline TAIAinWaterDamage() // TODO: this is a guess
+	TAIAinWaterDamage(int nextState, f32 damage, bool p3)
+	    : TAIAinWater(nextState)
 	{
+		mDamage = damage;
+		_0C     = p3;
 	}
 
 	virtual bool act(Teki&);             // _10
@@ -150,8 +154,9 @@ struct TAIAinWaterDamage : public TAIAinWater {
 	void createEffect(Teki&);
 
 	// _04     = VTBL
-	// _00-_08 = TAIAinWater?
-	// TODO: members
+	// _00-_08 = TAIAinWater
+	f32 mDamage; // _08
+	bool _0C;    // _0C
 };
 
 /**

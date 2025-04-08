@@ -786,7 +786,7 @@ void TaiSwallowLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 		mEffectType = EffectMgr::EFF_SmokeRing_M;
 	}
 
-	_18 = 1;
+	mSoundID = 1;
 
 	rumbleMgr->start(15, 0, effectPos);
 }

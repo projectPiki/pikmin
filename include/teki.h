@@ -524,6 +524,21 @@ struct NTeki : public BTeki {
  * @brief TODO
  */
 struct YTeki : public NTeki {
+
+	/**
+	 * @brief TODO
+	 */
+	enum effFootIndexFlag {
+		// TODO: this
+	};
+
+	/**
+	 * @brief TODO
+	 */
+	enum ptclIndexFlag {
+		// TODO: this
+	};
+
 	YTeki();
 
 	virtual void doKill();          // _10C
@@ -552,10 +567,26 @@ struct YTeki : public NTeki {
 	inline void updateMotionLoopTimer() { _478 = getMotionLoopTimer() + gsys->getFrameTime(); } // name is a guess
 
 	// DLL inlines that have been checked:
-	void setStaySwitch(bool isAppear) { mTekiSwitches.m3 = isAppear; }
+	void setStaySwitch(bool isAppear) { mTekiSwitches.mStay = isAppear; }
 
-	bool getFlyingSwitch() { return mTekiSwitches.m4; }
-	void setFlyingSwitch(bool isFlying) { mTekiSwitches.m4 = isFlying; }
+	bool getFlyingSwitch() { return mTekiSwitches.mFlying; }
+	void setFlyingSwitch(bool isFlying) { mTekiSwitches.mFlying = isFlying; }
+
+	f32 getFootPosY(effFootIndexFlag footID) { return mFootPosY[footID]; }
+	void setFootPosY(effFootIndexFlag footID, f32 posY) { mFootPosY[footID] = posY; }
+
+	bool getFootEffectSwitch(effFootIndexFlag footID) { return (mTekiSwitches.mFootEffect) & (1 << footID); }
+	void setFootEffectSwitch(effFootIndexFlag footID, bool isEff)
+	{
+		if (isEff) {
+			mTekiSwitches.mFootEffect |= (1 << footID);
+		} else {
+			mTekiSwitches.mFootEffect &= ~(1 << footID);
+		}
+	}
+
+	void setMapCode(int mapCode) { mMapCode = mapCode; }
+	int getMapCode() { return mMapCode; }
 
 	/*
 	    DLL INLINED FUNCTIONS TO MAKE:
@@ -566,6 +597,9 @@ struct YTeki : public NTeki {
 	    void initConeTypePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
 	    void initCylinderTYpePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
 	    void initEventTypePtclCallBack();
+
+	    zen::particleGenerator* getPtclGenPtr(ptclIndexFlag);
+	    void setPtclGenPtr(ptclIndexFlag, zen::particleGenerator*);
 
 	    f32 getDesire();
 	    void setDesire(f32);
@@ -593,9 +627,6 @@ struct YTeki : public NTeki {
 	    f32 getExceptionalGravity();
 	    void setExceptionalGravity(f32);
 
-	    int getMapCode();
-	    void setMapCode(int);
-
 	    int getStatus();
 	    void setStatus(int);
 
@@ -619,22 +650,20 @@ struct YTeki : public NTeki {
 	    bool getEffectSwitch();
 	    void setEffectSwitch(bool);
 
-
 	    bool getRunAwaySwitch();
 	    void setRunAwaySwitch(bool);
 
 	    bool getStaySwitch();
-	    void setStaySwitch(bool);
-
 	*/
 
 	// _00       = VTBL
 	// _000-_46C = NTeki
 	u8 _46C[0x470 - 0x46C];          // _46C, TODO: work out members
 	u32 _470;                        // _470, unknown
-	u8 _474[0x4];                    // _474, TODO: work out members
+	int mMapCode;                    // _474
 	f32 _478;                        // _478
-	u8 _47C[0x490 - 0x47C];          // _47C, TODO: work out members
+	u8 _47C[0x4];                    // _47C, unknown
+	f32 mFootPosY[4];                // _480, indexed by effFootIndexFlag
 	f32 _490;                        // _490
 	u8 _494[0x4];                    // _494, unknown
 	zen::particleGenerator* _498[8]; // _498
@@ -643,19 +672,15 @@ struct YTeki : public NTeki {
 		u32 m0 : 1;
 		u32 m1 : 1;
 		u32 m2 : 1;
-		u32 m3 : 1;
-		u32 m4 : 1;
-		u32 m5 : 1;
-		u32 m6 : 1;
-		u32 m7 : 1;
+		u32 mStay : 1;
+		u32 mFlying : 1;
+		u32 m5 : 2;
+		u32 mFootEffect : 4;
 	} mTekiSwitches;                         // _4C8
 	TAIeffectAttackParam mEffectAttackParam; // _4CC
 	ConeTypeCallBack mConeCallBack;          // _51C
-	u8 _520[0x8];                            // _520, unknown - maybe part of ConeTypeCallBack?
 	CylinderTypeCallBack mCylinderCallBack;  // _528
-	u8 _52C[0x4];                            // _52C, unknown - maybe part of CylinderCallBack?
 	EventTypeCallBack mEventCallBack;        // _530
-	u8 _534[0x4];                            // _534, unknown - maybe part of EventTypeCallBack?
 	                                         // _538 = PaniAnimKeyListener
 };
 

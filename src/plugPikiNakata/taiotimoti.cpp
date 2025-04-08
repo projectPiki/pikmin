@@ -958,5 +958,5 @@ void TaiOtimotiLegEffectAction::setType(Vector3f& effectPos, int type, int id)
 		mEffectType = EffectMgr::EFF_SmokeRing_S;
 	}
 
-	_18 = -1;
+	mSoundID = -1;
 }
