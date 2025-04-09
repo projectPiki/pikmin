@@ -132,7 +132,7 @@ bool TAIAdyingKabekui::act(Teki& teki)
 
 	Vector3f pos(teki.getPosition());
 	if (zen::Abs(mapMgr->getMinY(pos.x, pos.z, true) - pos.y) < 1.0f) {
-		if (teki.mVelocity.y < -2.0f * teki.getGravity() * gsys->getFrameTime() || teki.mCurrentAnimEvent == 1) {
+		if (teki.mVelocity.y < -2.0f * teki.getGravity() * gsys->getFrameTime() || teki.mCurrentAnimEvent == KEY_Action0) {
 			effectMgr->create(mEffectType, teki.getPosition(), nullptr, nullptr);
 		}
 	}

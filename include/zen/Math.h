@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "stl/math.h"
+#include "system.h"
 
 struct Vector3f;
 struct Matrix3f;
@@ -16,8 +17,12 @@ void makeRotMatrix(Vector3f&, Matrix3f&);
 
 // DLL inlines:
 inline int RoundOff(f32);
-inline f32 Rand(f32);
 inline f32 correctRad(f32 val);
+
+inline f32 Rand(f32 max)
+{
+	return 1.0f * gsys->getRand(max);
+}
 
 inline f32 Abs(f32 val)
 {

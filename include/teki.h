@@ -546,7 +546,7 @@ struct YTeki : public NTeki {
 	virtual void init(int tekiType) // _16C
 	{
 		BTeki::init(tekiType);
-		_478 = 0.0f;
+		mFrameCounter = 0.0f;
 		for (int i = 0; i < 9; i++) {
 			_498[i] = nullptr;
 		}
@@ -561,10 +561,6 @@ struct YTeki : public NTeki {
 	bool startNewMotion(int);
 
 	int getMapAttribute();
-
-	// inlines to make into DLL inlines and/or fake:
-	inline f32 getMotionLoopTimer() { return _478; }                                            // name is a guess
-	inline void updateMotionLoopTimer() { _478 = getMotionLoopTimer() + gsys->getFrameTime(); } // name is a guess
 
 	// DLL inlines that have been checked:
 	void setStaySwitch(bool isAppear) { mTekiSwitches.mStay = isAppear; }
@@ -588,6 +584,13 @@ struct YTeki : public NTeki {
 	void setMapCode(int mapCode) { mMapCode = mapCode; }
 	int getMapCode() { return mMapCode; }
 
+	f32 getFrameCounter() { return mFrameCounter; }
+	void setFrameCounter(f32 count) { mFrameCounter = count; }
+	f32 addFrameCounter(f32 amt) { return mFrameCounter = mFrameCounter + amt; } // yeah.
+
+	f32 getFrameCounterMax() { return mFrameCounterMax; }
+	void setFrameCounterMax(f32 max) { mFrameCounterMax = max; }
+
 	/*
 	    DLL INLINED FUNCTIONS TO MAKE:
 
@@ -605,14 +608,7 @@ struct YTeki : public NTeki {
 	    void setDesire(f32);
 	    void addDesire(f32);
 
-	    f32 getFrameCounter();
-	    void setFrameCounter(f32);
-	    f32 addFrameCounter(f32);
-
 	    f32 setAnimSpeed(f32);
-
-	    f32 getFrameCounterMax();
-	    void setFrameCounterMax(f32);
 
 	    f32 getSpeed();
 	    void setSpeed(f32);
@@ -661,8 +657,8 @@ struct YTeki : public NTeki {
 	u8 _46C[0x470 - 0x46C];          // _46C, TODO: work out members
 	u32 _470;                        // _470, unknown
 	int mMapCode;                    // _474
-	f32 _478;                        // _478
-	u8 _47C[0x4];                    // _47C, unknown
+	f32 mFrameCounter;               // _478
+	f32 mFrameCounterMax;            // _47C
 	f32 mFootPosY[4];                // _480, indexed by effFootIndexFlag
 	f32 _490;                        // _490
 	u8 _494[0x4];                    // _494, unknown

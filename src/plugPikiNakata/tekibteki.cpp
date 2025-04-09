@@ -333,7 +333,7 @@ void BTeki::reset()
 	_344              = -1;
 	_3C0              = 0.0f;
 	_3BC              = 0;
-	mCurrentAnimEvent = -1;
+	mCurrentAnimEvent = KEY_NULL;
 
 	clearAnimationKeyOptions();
 	mMotionLoopCount = 0;
@@ -523,7 +523,7 @@ void BTeki::doAnimation()
 void BTeki::startMotion(int motionID)
 {
 	mTekiAnimator->startMotion(PaniMotionInfo(motionID, this));
-	mCurrentAnimEvent = -1;
+	mCurrentAnimEvent = KEY_NULL;
 	clearAnimationKeyOptions();
 }
 
@@ -600,7 +600,7 @@ void BTeki::doAI()
 	if (!mDeadState && (AIPerf::optLevel < 3 || mOptUpdateContext.updatable())) {
 		TekiStrategy* strat = getStrategy();
 		strat->act(*static_cast<Teki*>(this));
-		mCurrentAnimEvent = -1;
+		mCurrentAnimEvent = KEY_NULL;
 		clearAnimationKeyOptions();
 
 		if (!mGroundTriangle) {

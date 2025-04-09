@@ -64,7 +64,8 @@ struct TAIkabekuiAAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIAsleepKabekuiA : public TAIAtimerReaction {
-	inline TAIAsleepKabekuiA() // TODO: this is a guess
+	TAIAsleepKabekuiA(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 
@@ -79,7 +80,8 @@ struct TAIAsleepKabekuiA : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAdiveKabekuiA : public TAIAtimerReaction {
-	inline TAIAdiveKabekuiA() // TODO: this is a guess
+	TAIAdiveKabekuiA(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 

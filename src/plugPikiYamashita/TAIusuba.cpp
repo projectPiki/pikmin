@@ -119,7 +119,7 @@ TAIusubaStrategy::TAIusubaStrategy()
  */
 void TAIusubaAnimation::makeDefaultAnimations()
 {
-	if (!mAnimmgr) {
+	if (!mAnimMgr) {
 		return;
 	}
 

@@ -801,7 +801,7 @@ config.libs = [
             Object(NonMatching, "plugPikiYamashita/TAIkabekuiA.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIkabekuiB.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIkabekuiC.cpp"),
-            Object(NonMatching, "plugPikiYamashita/TAItamago.cpp"),
+            Object(Matching, "plugPikiYamashita/TAItamago.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIdororo.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIhibaA.cpp"),
             Object(Matching, "plugPikiYamashita/TAIAeffect.cpp"),

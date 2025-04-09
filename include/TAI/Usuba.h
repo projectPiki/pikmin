@@ -39,7 +39,6 @@ struct TAIusubaParameters : public TekiParameters {
 
 	// _00     = VTBL
 	// _00-_88 = TekiParameters
-	// TODO: members
 };
 
 /**
@@ -49,8 +48,7 @@ struct TAIusubaStrategy : public YaiStrategy {
 	TAIusubaStrategy();
 
 	// _00     = VTBL
-	// _00-_10 = YaiStrategy?
-	// TODO: members
+	// _00-_10 = YaiStrategy
 };
 
 /**
@@ -95,7 +93,7 @@ struct TAIAflyUsuba : public TAIAmotion {
 		Vector3f vec3;
 		// NB: this struct was probably *in* TAIusuba.cpp - could move it eventually sometime if we want.
 		// PRINT("Usuba is flying. %f\n", teki.mTargetVelocity.y);
-		if (teki.mCurrentAnimEvent == 1) {
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
 			teki.setFlyingSwitch(true);
 		}
 

@@ -12,10 +12,10 @@ struct TAIanimation {
 	TAIanimation(int tekiType, char* bunFile)
 	{
 		if (tekiMgr->isUsingType(tekiType)) {
-			mAnimmgr = tekiMgr->mTekiShapes[tekiType]->mAnimMgr;
+			mAnimMgr = tekiMgr->mTekiShapes[tekiType]->mAnimMgr;
 			gsys->loadBundle(bunFile, false);
 		} else {
-			mAnimmgr = nullptr;
+			mAnimMgr = nullptr;
 		}
 		mAnimInfo = nullptr;
 	}
@@ -33,7 +33,7 @@ struct TAIanimation {
 	void setAnimFlags(u32 flags) { mAnimInfo->setAnimFlags(flags); }
 
 	u32 _00;             // _00
-	AnimMgr* mAnimmgr;   // _04
+	AnimMgr* mAnimMgr;   // _04
 	AnimInfo* mAnimInfo; // _08
 };
 

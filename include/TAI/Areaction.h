@@ -179,18 +179,29 @@ struct TAIAnoReaction : public TaiAction {
  * @brief TODO
  */
 struct TAIAtimerReaction : public TaiAction {
-	inline TAIAtimerReaction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAtimerReaction(int nextState, f32 frameMax)
+	    : TaiAction(nextState)
 	{
+		mFrameMax = frameMax;
 	}
 
-	virtual void start(Teki&);      // _08
-	virtual bool act(Teki&);        // _10
-	virtual f32 getFrameMax(Teki&); // _1C
+	virtual void start(Teki& teki) // _08
+	{
+		teki.setFrameCounter(0.0f);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		f32 counter = teki.addFrameCounter(gsys->getFrameTime());
+		if (counter > getFrameMax(teki)) {
+			return true;
+		}
+		return false;
+	}
+	virtual f32 getFrameMax(Teki& teki) { return mFrameMax; } // _1C
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 mFrameMax; // _08
 };
 
 /**

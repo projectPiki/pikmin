@@ -46,7 +46,7 @@ void TAIAmotion::start(Teki& teki)
  */
 bool TAIAmotion::act(Teki& teki)
 {
-	if (teki.mCurrentAnimEvent == 0) {
+	if (teki.mCurrentAnimEvent == KEY_Finished) {
 		return true;
 	}
 
@@ -107,7 +107,7 @@ bool TAIAreserveMotion::act(Teki& teki)
 	if (mMotionID != teki.mTekiAnimator->mMotionIdx) {
 		if (teki.mTekiAnimator->getCurrentKeyIndex() < 0) {
 			teki.mTekiAnimator->startMotion(PaniMotionInfo(mMotionID, &teki));
-			teki.mCurrentAnimEvent = 9;
+			teki.mCurrentAnimEvent = KEY_Reserved;
 			return true;
 		}
 		return false;
@@ -124,7 +124,7 @@ bool TAIAreserveMotion::act(Teki& teki)
 void TAIAmotionLoop::start(Teki& teki)
 {
 	TAIAreserveMotion::start(teki);
-	teki._478 = 0.0f;
+	teki.mFrameCounter = 0.0f;
 }
 
 /*
@@ -136,8 +136,8 @@ bool TAIAmotionLoop::act(Teki& teki)
 {
 	bool res = false;
 	if (TAIAreserveMotion::act(teki)) {
-		teki.updateMotionLoopTimer();
-		if (teki.getMotionLoopTimer() > getFrameMax(teki)) {
+		teki.addFrameCounter(gsys->getFrameTime());
+		if (teki.getFrameCounter() > getFrameMax(teki)) {
 			res = true;
 			teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
 		}

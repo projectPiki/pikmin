@@ -163,15 +163,15 @@ struct TAIAflyingDistanceMar : public TAIAflyingDistance {
  * @brief TODO
  */
 struct TAIAtimerTakeOffMar : public TAIAtimerReaction {
-	inline TAIAtimerTakeOffMar() // TODO: this is a guess
+	TAIAtimerTakeOffMar(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 
 	virtual f32 getFrameMax(Teki&); // _1C
 
 	// _04     = VTBL
-	// _00-_08 = TAIAtimerReaction?
-	// TODO: members
+	// _00-_0C = TAIAtimerReaction
 };
 
 /**

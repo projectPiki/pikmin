@@ -9,39 +9,61 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "Pcam/CameraManager.h"
+#include "RumbleMgr.h"
+#include "SoundMgr.h"
 #include "PaniAnimator.h"
+#include "zen/Math.h"
 
 /////////// Giant Egg AI Actions ///////////
 
-/*
+/**
+ * @brief TODO
+ */
+enum TAItamagoStateID {
+	TAMAGOSTATE_Dead      = 0,
+	TAMAGOSTATE_Wait      = 1,
+	TAMAGOSTATE_CountDown = 2,
+	TAMAGOSTATE_Hatch     = 3,
+	TAMAGOSTATE_COUNT, // 4
+};
+
+/**
+ * @brief TODO
+ */
+enum TAItamagoFloatParams {
+	TAMAGOPF_MinEmergenceTime = TPF_COUNT, // 50
+	TAMAGOPF_MaxEmergenceTime,             // 51
+	TAMAGOPF_COUNT,                        // 52
+};
+
+/**
  * @brief TODO
  */
 struct TAItamagoSoundTable : public PaniSoundTable {
 	TAItamagoSoundTable();
 
-	// TODO: members
+	// _00-_08 = PaniSoundTable
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TAItamagoParameters : public TekiParameters {
 	TAItamagoParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_88 = TekiParameters
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TAItamagoStrategy : public YaiStrategy {
 	TAItamagoStrategy();
 
 	// _00     = VTBL
-	// _00-_10 = YaiStrategy?
-	// TODO: members
+	// _00-_10 = YaiStrategy
 };
 
 /**
@@ -64,63 +86,133 @@ struct TAItamagoAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIAcountStartTamago : public TaiAction {
-	inline TAIAcountStartTamago() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAcountStartTamago(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
-	virtual bool act(Teki&); // _10
+	virtual bool act(Teki& teki) // _10
+	{
+		return teki.isNaviWatch();
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TAIAhatch : public TAIAmotion {
-	inline TAIAhatch() // TODO: this is a guess
-	    : TAIAmotion(-1, -1)
+	TAIAhatch(int nextState, int motionIdx)
+	    : TAIAmotion(nextState, motionIdx)
 	{
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAmotion::start(teki);
+		teki.disableStick();
+		teki.setTekiOption(BTeki::TEKI_OPTION_INVINCIBLE);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res = false;
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			birth(teki);
+			teki.flick();
+		}
+		if (teki.mCurrentAnimEvent == KEY_Finished) {
+			teki.die();
+			res = true;
+		}
+
+		return res;
+	}
+
+	void birth(Teki& teki)
+	{
+		Vector3f effPos(teki.getPosition());
+		effPos.y += 35.0f;
+		effectMgr->create(EffectMgr::EFF_Tamago_DeadFragments, effPos, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Tamago_DeadSmoke, effPos, nullptr, nullptr);
+		teki.flick();
+		teki.clearTekiOption(BTeki::TEKI_OPTION_ALIVE);
+		teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
+		teki.mPlatMgr.release();
+
+		teki.spawnTeki(teki.getParameterI(TPI_SpawnType));
+		teki.playEventSound(&teki, SE_DORORO_EGG_CRASH);
+		cameraMgr->startVibrationEvent(2, teki.getPosition());
+		rumbleMgr->start(11, 0, teki.getPosition());
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAmotion
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TAIAtimerReactionTamago : public TAIAtimerReaction {
-	inline TAIAtimerReactionTamago() // TODO: this is a guess
+	TAIAtimerReactionTamago(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 
-	virtual void start(Teki&);      // _08
-	virtual bool act(Teki&);        // _10
-	virtual f32 getFrameMax(Teki&); // _1C
+	virtual void start(Teki& teki) // _08
+	{
+		teki.setFrameCounter(0.0f);
+		teki.setFrameCounterMax(teki.getParameterF(TAMAGOPF_MinEmergenceTime)
+		                        + zen::Rand(teki.getParameterF(TAMAGOPF_MaxEmergenceTime) - teki.getParameterF(TAMAGOPF_MinEmergenceTime)));
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		return TAIAtimerReaction::act(teki);
+	}
+	virtual f32 getFrameMax(Teki& teki) // _1C
+	{
+		return teki.getFrameCounterMax();
+	}
 
 	// _04     = VTBL
-	// _00-_08 = TAIAtimerReaction?
-	// TODO: members
+	// _00-_0C = TAIAtimerReaction
 };
 
 /**
  * @brief TODO
  */
 struct TAIAdyingTamago : public TAIAmotion {
-	inline TAIAdyingTamago() // TODO: this is a guess
-	    : TAIAmotion(-1, -1)
+	TAIAdyingTamago(int nextState, int motionIdx)
+	    : TAIAmotion(nextState, motionIdx)
 	{
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAmotion::start(teki);
+		teki.disableStick();
+		teki.setTekiOption(BTeki::TEKI_OPTION_INVINCIBLE);
+		teki.clearTekiOption(BTeki::TEKI_OPTION_ALIVE);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res = false;
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			Vector3f effPos(teki.getPosition());
+			effPos.y += 35.0f;
+			effectMgr->create(EffectMgr::EFF_Tamago_DeadFragments, effPos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Tamago_EyeGlow, effPos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Tamago_DeadFumes, effPos, nullptr, nullptr);
+			teki.playEventSound(&teki, SE_DORORO_EGG_CRASH);
+		}
+		if (teki.mCurrentAnimEvent == KEY_Finished) {
+			teki.die();
+			res = true;
+		}
+
+		return res;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAmotion

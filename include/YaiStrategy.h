@@ -8,6 +8,8 @@ struct TaiState;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct YaiStrategy : public TekiStrategy {
 	YaiStrategy(int, int);

@@ -114,7 +114,8 @@ struct TAIAfireAttackHibaA : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAtimerReactionHibaA : public TAIAtimerReaction {
-	inline TAIAtimerReactionHibaA() // TODO: this is a guess
+	TAIAtimerReactionHibaA(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 
