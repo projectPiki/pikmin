@@ -5,6 +5,8 @@
 #include "AICreature.h"
 #include "StateMachine.h"
 
+#define C_SAI(obj) static_cast<SimpleAI*>(obj->mStateMachine)
+
 struct SAIEvent;
 
 /**
@@ -167,8 +169,8 @@ struct SAIArrow : public CoreNode {
 		mEvent       = nullptr;
 	}
 
-	// TODO: these are DLL inlines, need to make them
-	SAIArrow* addCondition(SAICondition*);
+	SAIArrow* addCondition(SAICondition* cond) { mCondition.add(cond); }
+
 	void setEventContext()
 	{
 		if (mEvent) {

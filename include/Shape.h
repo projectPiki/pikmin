@@ -25,7 +25,6 @@ struct RouteGroup;
 struct VtxMatrix;
 struct Texture;
 struct CollTriInfo;
-struct BaseRoomInfo;
 struct NBT;
 struct DispList;
 struct PVWTevInfo;
@@ -51,7 +50,17 @@ struct NBT {
  * @brief TODO
  */
 struct VtxMatrix {
-	void read(RandomAccessStream&);
+	void read(RandomAccessStream& input)
+	{
+		int weights        = input.readShort();
+		mHasPartialWeights = (weights >= 0) ? true : false;
+		if (mHasPartialWeights) {
+			mIndex = weights;
+		} else {
+			mIndex = -1 - weights;
+		}
+	}
+
 	void write(RandomAccessStream&);
 
 	bool mHasPartialWeights; // _00
@@ -62,7 +71,12 @@ struct VtxMatrix {
  * @brief TODO
  */
 struct Envelope {
-	Envelope();
+	Envelope()
+	{
+		mIndexCount = 0;
+		mIndices    = nullptr;
+		mWeights    = nullptr;
+	}
 
 	void read(RandomAccessStream& stream);
 
@@ -75,7 +89,12 @@ struct Envelope {
  * @brief TODO
  */
 struct MtxGroup {
-	MtxGroup();
+	MtxGroup()
+	{
+		mDependencyLength = 0;
+		mDispListLength   = 0;
+		mDispList         = 0;
+	}
 
 	void read(RandomAccessStream&);
 
@@ -91,10 +110,10 @@ struct MtxGroup {
  */
 struct ShapeDynMaterials {
 	ShapeDynMaterials()
-	    : mParent(0)
-	    , _04(0)
-	    , _08(0)
-	    , _0C(0)
+	    : mParent(nullptr)
+	    , mMatCount(0)
+	    , mMaterials(nullptr)
+	    , mShape(nullptr)
 	{
 	}
 
@@ -102,9 +121,9 @@ struct ShapeDynMaterials {
 	void updateContext();
 
 	ShapeDynMaterials* mParent; // _00
-	u32 _04;                    // _04
-	Material* _08;              // _08
-	u32 _0C;                    // _0C
+	int mMatCount;              // _04
+	Material* mMaterials;       // _08
+	BaseShape* mShape;          // _0C
 };
 
 DEFINE_ENUM_TYPE(DisplayListFlags, Front = 0, Other = 1, Both = 2, Stripped = 0x1000000);
@@ -113,7 +132,15 @@ DEFINE_ENUM_TYPE(DisplayListFlags, Front = 0, Other = 1, Both = 2, Stripped = 0x
  * @brief TODO
  */
 struct DispList : public CoreNode {
-	DispList();
+	DispList()
+	{
+		mFaceNode.initCore("");
+
+		mNodeCount = 0;
+		mFaceCount = 0;
+		mFlags     = 0;
+		_20        = -1;
+	}
 
 	virtual void read(RandomAccessStream&); // _0C
 
@@ -175,7 +202,12 @@ struct BaseShape : public CoreNode {
 	virtual void update() { }                 // _14
 	virtual void render(struct Graphics&) { } // _18
 	virtual void render2d(Graphics&) { }      // _1C
-	virtual RouteGroup* makeRouteGroup();     // _20
+	virtual RouteGroup* makeRouteGroup()      // _20
+	{
+		RouteGroup* newGroup   = new RouteGroup;
+		newGroup->mParentShape = this;
+		return newGroup;
+	}
 
 	void importIni(RandomAccessStream&);
 	void countMaterials(Joint*, u32);
@@ -214,61 +246,76 @@ struct BaseShape : public CoreNode {
 	void calcJointWorldScale(Graphics&, int, Vector3f&);
 	CollTriInfo* findCollTri(Vector3f&, Vector3f&, Vector3f&, char*);
 
+	// DLL inlines:
+	CollGroup* getCollTris(Vector3f& pos)
+	{
+		int x = (pos.x - mCourseExtents.mMin.x) / mGridSize;
+		int z = (pos.z - mCourseExtents.mMin.z) / mGridSize;
+		if (x < 0 || z < 0 || x >= mGridSizeX || z >= mGridSizeY) {
+			return nullptr;
+		}
+		return mCollGroups[x + z * mGridSizeX];
+	}
+	void removeMtxDependancy();
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 mSystemFlags;                 // _14
-	AnimContext* mCurrentAnimContext; // _18, current animation
-	AnimContext** mAnimContextList;   // _1C
-	u32 _20;                          // _20
-	AnimFrameCacher* mFrameCacher;    // _24
-	Matrix4f* mAnimMatrices;          // _28
-	u32 mAnimMatrixId;                // _2C
-	s32 mEnvelopeCount;               // _30
-	Envelope* mEnvelopeList;          // _34
-	s32 mVtxMatrixCount;              // _38
-	VtxMatrix* mVtxMatrixList;        // _3C
-	s32 mMaterialCount;               // _40
-	Material* mMaterialList;          // _44
-	s32 mTevInfoCount;                // _48
-	PVWTevInfo* mTevInfoList;         // _4C
-	s32 mMeshCount;                   // _50
-	Mesh* mMeshList;                  // _54
-	s32 mJointCount;                  // _58
-	Joint* mJointList;                // _5C
-	s32 mTotalMatpolyCount;           // _60
-	Joint::MatPoly** mMatpolyList;    // _64
-	s32 mTexAttrCount;                // _68
-	TexAttr* mTexAttrList;            // _6C
-	s32 _70;                          // _70
-	s32 mTextureCount;                // _74
-	TexImg* mTextureList;             // _78
-	LightGroup mLightGroup;           // _7C
-	ObjCollInfo mCollisionInfo;       // _E8
-	u32 _13C;                         // _13C, flag of some kind?
-	BoundBox _140;                    // _140
-	u8 _158[0x164 - 0x158];           // _158
-	u32 _164;                         // _164
-	u32 _168;                         // _168
-	u32 _16C;                         // _16C
-	u32 _170;                         // _170
-	u32 _174;                         // _174
-	RouteGroup mRouteGroup;           // _178
-	s32 mVertexCount;                 // _238 - from here down might match the names/types from _27C on from the DLL?
-	Vector3f* mVertexList;            // _23C
-	u32 mNbtCount;                    // _240
-	NBT* mNbtList;                    // _244
-	s32 mTotalActiveTexCoords;        // _248
-	s32 mTexCoordCounts[8];           // _24C
-	Vector2f* mTexCoordList[8];       // _250
-	s32 mNormalCount;                 // _28C
-	Vector3f* mNormalList;            // _290
-	u8 _294[0x4];                     // _294
-	u32 _298;                         // _298
-	u32 _29C;                         // _29C
-	Texture* _2A0;                    // _2A0
-	u32 _2A4;                         // _2A4
-	u32 _2A8;                         // _2A8
-	u8 _2AC;                          // _2AC
+	u32 mSystemFlags;                   // _14
+	AnimContext* mCurrentAnimation;     // _18
+	AnimContext** mAnimOverrides;       // _1C
+	AnimContext** mBackupAnimOverrides; // _20
+	AnimFrameCacher* mFrameCacher;      // _24
+	Matrix4f* mAnimMatrices;            // _28
+	u32 mAnimMatrixId;                  // _2C
+	s32 mEnvelopeCount;                 // _30
+	Envelope* mEnvelopeList;            // _34
+	s32 mVtxMatrixCount;                // _38
+	VtxMatrix* mVtxMatrixList;          // _3C
+	s32 mMaterialCount;                 // _40
+	Material* mMaterialList;            // _44
+	s32 mTevInfoCount;                  // _48
+	PVWTevInfo* mTevInfoList;           // _4C
+	s32 mMeshCount;                     // _50
+	Mesh* mMeshList;                    // _54
+	s32 mJointCount;                    // _58
+	Joint* mJointList;                  // _5C
+	s32 mTotalMatpolyCount;             // _60
+	Joint::MatPoly** mMatpolyList;      // _64
+	s32 mTexAttrCount;                  // _68
+	TexAttr* mTexAttrList;              // _6C
+	s32 _70;                            // _70
+	s32 mTextureCount;                  // _74
+	TexImg* mTextureList;               // _78
+	// NB: there's an extra AnimData debugData; here in the DLL, so everything is shifted by 0x44.
+	LightGroup mLightGroup;     // _7C
+	ObjCollInfo mCollisionInfo; // _E8
+	u32 _13C;                   // _13C, flag of some kind?
+	BoundBox mCourseExtents;    // _140
+	f32 mGridSize;              // _158, maybe grid scale?
+	int mGridSizeX;             // _15C
+	int mGridSizeY;             // _160
+	CollGroup** mCollGroups;    // _164
+	int mTriCount;              // _168
+	CollTriInfo* mTriList;      // _16C
+	s32 mBaseRoomCount;         // _170
+	RoomInfo* mRoomInfoList;    // _174
+	RouteGroup mRouteGroup;     // _178
+	s32 mVertexCount;           // _238
+	Vector3f* mVertexList;      // _23C
+	int mVtxColorCount;         // _240
+	Colour* mVtxColorList;      // _244
+	s32 mTotalActiveTexCoords;  // _248
+	s32 mTexCoordCounts[8];     // _24C
+	Vector2f* mTexCoordList[8]; // _250
+	s32 mNormalCount;           // _28C
+	Vector3f* mNormalList;      // _290
+	int mNBTCount;              // _294
+	NBT* mNBTList;              // _298
+	int _29C;                   // _29C
+	Texture** _2A0;             // _2A0
+	int mAttrListMatCount;      // _2A4
+	char* _2A8;                 // _2A8
+	u8 _2AC;                    // _2AC
 };
 
 /**

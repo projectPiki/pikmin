@@ -2297,13 +2297,13 @@ void zen::cnvSpecialNumber(char*)
 zen::TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
 {
 	mTextBox = textBox;
-	mTextPtr = textBox->getText();
+	mTextPtr = textBox->getString();
 	sprintf(mTextBuf, "");
 	_00  = 0;
 	_410 = 0.0f;
 	_414 = 0;
 
-	textBox->setFlag(0, 7, 1);
+	textBox->hide();
 	mCtrlTagMgr = new ogMsgCtrlTagMgr();
 }
 
@@ -2320,8 +2320,8 @@ void zen::TypingTextMgr::start()
 	_410 = 0.0f;
 	_414 = 0;
 	sprintf(mTextBuf, "");
-	mTextBox->setFlag(1, 7, 1);
-	mTextBox->setText(mTextBuf);
+	mTextBox->show();
+	mTextBox->setString(mTextBuf);
 }
 
 /*

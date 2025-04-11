@@ -78,7 +78,7 @@ void PelletAnimInfo::read(RandomAccessStream& stream)
  * Address:	8009982C
  * Size:	000140
  */
-PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char* str3, int a)
+PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char* str3, int animationFlag)
 {
 	mShape               = shape;
 	mShape->mFrameCacher = nullptr;
@@ -95,8 +95,8 @@ PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char*
 	mShape->overrideAnim(0, &mAnimatorA);
 	mMotionFlag = 1;
 
-	if (a != -1) {
-		mShape->overrideAnim(a, &mAnimatorB);
+	if (animationFlag != -1) {
+		mShape->overrideAnim(animationFlag, &mAnimatorB);
 		setMotionFlag(2);
 	}
 }

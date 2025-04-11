@@ -1,16 +1,11 @@
-#include "types.h"
-
-typedef struct WaveArchive_ WaveArchive_;
-typedef struct WaveArchiveBank_ WaveArchiveBank_;
-typedef struct Ctrl_ Ctrl_;
-typedef struct CtrlGroup_ CtrlGroup_;
+#include "jaudio/connect.h"
 
 /*
  * --INFO--
  * Address:	8000C860
  * Size:	0000A0
  */
-void UpdateWave(WaveArchive_*, Ctrl_*, u32)
+static void UpdateWave(WaveArchive_*, Ctrl_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -68,7 +63,7 @@ void UpdateWave(WaveArchive_*, Ctrl_*, u32)
  * Address:	8000C900
  * Size:	000174
  */
-void UpdateWave_Extern(WaveArchiveBank_*, CtrlGroup_*, Ctrl_*)
+static void UpdateWave_Extern(WaveArchiveBank_*, CtrlGroup_*, Ctrl_*)
 {
 	/*
 	.loc_0x0:
@@ -365,7 +360,7 @@ void Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, u32, int)
  * Address:	8000CC80
  * Size:	000044
  */
-void SearchWave(Ctrl_*, u32)
+static void SearchWave(Ctrl_*, u32)
 {
 	/*
 	.loc_0x0:

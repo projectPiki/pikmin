@@ -1,7 +1,16 @@
 #include "MapSelect.h"
 #include "Delegate.h"
+#include "sysNew.h"
+#include "Graphics.h"
+#include "jaudio/PikiScene.h"
 #include "Menu.h"
+#include "Demo.h"
+#include "gameflow.h"
+#include "FlowController.h"
 #include "DebugLog.h"
+
+zen::DrawWorldMap* mapWindow;
+zen::DrawCMcourseSelect* selectWindow;
 
 /*
  * --INFO--
@@ -15,15 +24,43 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("MapSelect")
 
 /*
  * --INFO--
  * Address:	8005570C
  * Size:	000368
  */
-void MapSelectSetupSection::openAllChMaps(Menu&)
+void MapSelectSetupSection::openAllChMaps(Menu& parent)
 {
+	for (int i = 0; i < STAGE_COUNT; i++) {
+		gameflow.mGamePrefs.openStage(i);
+	}
+
+	mMenu                 = new Menu(_30, mFont, false);
+	mMenu->mScreenMiddleX = glnWidth / 2;
+	mMenu->mScreenMiddleY = glnHeight / 2 + 30;
+	mMenu->addKeyEvent(0x10, 0x1001000, new Delegate1<MapSelectSetupSection, Menu&>(this, menuSelectOption));
+	mMenu->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(mMenu, Menu::menuCloseMenu));
+
+	for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
+		if (gameflow.mIsChallengeMode) {
+			PRINT("checking map in challenge mode!\n");
+			bool valid = gameflow.mGamePrefs.isStageOpen(inf->mChalStageID);
+			if (inf->mIsVisible && valid) {
+				mMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
+			}
+		} else {
+			bool valid = gameflow.mPlayState.isStageOpen(inf->mStageID);
+			if (inf->mIsVisible && valid && inf->mChalStageID == 7) {
+				mMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
+			}
+		}
+	}
+
+	parent.mPreviousMenu = mMenu;
+
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -284,8 +321,35 @@ void MapSelectSetupSection::openAllChMaps(Menu&)
  * Address:	80055A74
  * Size:	0002D0
  */
-void MapSelectSetupSection::openAllMaps(Menu&)
+void MapSelectSetupSection::openAllMaps(Menu& parent)
 {
+	for (int i = 0; i < STAGE_COUNT + 1; i++) {
+		gameflow.mPlayState.openStage(i);
+	}
+
+	mMenu                 = new Menu(_30, mFont, false);
+	mMenu->mScreenMiddleX = glnWidth / 2;
+	mMenu->mScreenMiddleY = glnHeight / 2 + 30;
+	mMenu->addKeyEvent(0x10, 0x1001000, new Delegate1<MapSelectSetupSection, Menu&>(this, menuSelectOption));
+	mMenu->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(mMenu, Menu::menuCloseMenu));
+
+	for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
+		if (gameflow.mIsChallengeMode) {
+			bool valid = gameflow.mGamePrefs.isStageOpen(inf->mChalStageID);
+			if (inf->mIsVisible && valid) {
+				mMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
+			}
+		} else {
+			bool valid = gameflow.mPlayState.isStageOpen(inf->mStageID);
+			if (inf->mIsVisible && valid && inf->mChalStageID == 7) {
+				mMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
+			}
+		}
+	}
+
+	parent.mPreviousMenu = mMenu;
+
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -500,80 +564,23 @@ void MapSelectSetupSection::openAllMaps(Menu&)
  * Address:	80055D44
  * Size:	00010C
  */
-void MapSelectSetupSection::menuSelectOption(Menu&)
+void MapSelectSetupSection::menuSelectOption(Menu& parent)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  crclr     6, 0x6
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  lwz       r5, 0x30(r4)
-	  lis       r4, 0x803A
-	  subi      r31, r4, 0x24E0
-	  lwz       r30, 0x1C(r5)
-	  addi      r3, r31, 0x130
-	  subi      r4, r13, 0x72F8
-	  stw       r30, 0xA8(r31)
-	  lwz       r5, 0x18(r30)
-	  bl        0x1C080C
-	  lwz       r5, 0x18(r30)
-	  addi      r3, r31, 0x1B0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x72F8
-	  bl        0x1C07F8
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r5, r3, 0xB6
-	  lbz       r3, 0xB6(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x9C
-	  lhz       r4, 0x26(r30)
-	  cmpwi     r4, 0
-	  blt-      .loc_0x9C
-	  cmpwi     r4, 0x5
-	  bgt-      .loc_0x9C
-	  li        r0, 0x1
-	  slw       r0, r0, r4
-	  or        r0, r3, r0
-	  stb       r0, 0x0(r5)
+	StageInfo* info = (StageInfo*)parent.mCurrentItem->mFilterIndex;
 
-	.loc_0x9C:
-	  lis       r0, 0x7
-	  stw       r0, 0x24(r28)
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r4, 0x20(r3)
-	  addi      r3, r3, 0x2D8
-	  lfs       f1, 0x10(r4)
-	  bl        -0x45F4
-	  li        r0, 0x1
-	  stw       r0, 0x20(r28)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, -0x7A98(r2)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, -0x7A94(r2)
-	  stfs      f0, 0xC(r3)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	flowCont.mCurrentStage = info;
+	sprintf(flowCont.mStagePath1, "%s", info->mFileName);
+	sprintf(flowCont.mStagePath2, "%s", info->mFileName);
+
+	if (gameflow.mGamePrefs._22)
+		gameflow.mGamePrefs.openStage(info->mStageID);
+
+	_24 = 0x70000;
+	parent.close();
+
+	gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
+	_20 = 1;
+	gsys->setFade(0.0f, 3.0f);
 }
 
 /*
@@ -583,6 +590,29 @@ void MapSelectSetupSection::menuSelectOption(Menu&)
  */
 MapSelectSection::MapSelectSection()
 {
+	Node::init("<MapSelectSection>");
+	gsys->mFrameRate = 1;
+	flowCont._254    = 0;
+	flowCont._258    = 0;
+	flowCont._24C    = 0;
+	flowCont._250    = 0;
+	int size         = 0x19800;
+	gsys->mHeaps[SYSHEAP_Message].init("message", 2, System::alloc(size), size);
+	gsys->startLoading(nullptr, true, 60);
+
+	add(new MapSelectSetupSection);
+	gsys->endLoading();
+
+	if (gameflow.mIsChallengeMode) {
+		Jac_SceneSetup(10, 0);
+	} else {
+		Jac_SceneSetup(3, 0);
+	}
+
+	demoParms->initCore("");
+	gameflow.addGenNode("DemoFlag Parms", demoParms);
+
+	f32 badcompiler[14];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -908,6 +938,27 @@ MapSelectSection::MapSelectSection()
  */
 void MapSelectSetupSection::makeMapsMenu()
 {
+	mMenu                 = new Menu(_30, mFont, false);
+	mMenu->mScreenMiddleX = glnWidth / 2;
+	mMenu->mScreenMiddleY = glnHeight / 2 + 30;
+	mMenu->addKeyEvent(0x10, 0x1001000, new Delegate1<MapSelectSetupSection, Menu&>(this, menuSelectOption));
+	mMenu->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(mMenu, Menu::menuCloseMenu));
+
+	for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
+		if (gameflow.mIsChallengeMode) {
+			bool valid = gameflow.mGamePrefs.isStageOpen(inf->mChalStageID);
+			if (inf->mIsVisible && valid) {
+				mMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
+			}
+		} else {
+			bool valid = gameflow.mPlayState.isStageOpen(inf->mStageID);
+			if (inf->mIsVisible && valid && inf->mChalStageID == 7) {
+				mMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
+			}
+		}
+	}
+
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1107,239 +1158,73 @@ void MapSelectSetupSection::makeMapsMenu()
  */
 void MapSelectSetupSection::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r3
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  lwz       r3, 0x30(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2C(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x58
-	  lwz       r12, 0x0(r3)
-	  li        r4, 0
-	  lwz       r12, 0x50(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2C(r31)
-	  b         .loc_0x2AC
+	_30->update();
 
-	.loc_0x58:
-	  lwz       r0, 0x20(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x2AC
-	  lwz       r3, 0x2E50(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x188
-	  lwz       r4, 0x30(r31)
-	  bl        0x196A54
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x188
-	  lwz       r3, 0x2E50(r13)
-	  bl        0x196C34
-	  cmpwi     r3, -0x2
-	  bne-      .loc_0xB0
-	  li        r0, 0x1
-	  stw       r0, 0x20(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, -0x7A98(r2)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, -0x7A94(r2)
-	  stfs      f0, 0xC(r3)
-	  b         .loc_0x188
+	if (_2C) {
+		_2C = _2C->doUpdate(false);
+	} else if (!_20) {
 
-	.loc_0xB0:
-	  lis       r4, 0x803A
-	  subi      r4, r4, 0x24E0
-	  lwz       r29, 0x10(r4)
-	  b         .loc_0x180
+		if (selectWindow && selectWindow->update(_30)) {
+			int status = selectWindow->getReturnStatusFlag();
+			if (status == -2) {
+				_20 = 1;
+				gsys->setFade(0.0f, 3.0f);
+			} else {
+				for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
+					if (inf->mChalStageID == status) {
+						flowCont.mCurrentStage = inf;
+						sprintf(flowCont.mStagePath1, "%s", inf->mFileName);
+						sprintf(flowCont.mStagePath2, "%s", inf->mFileName);
 
-	.loc_0xC0:
-	  lhz       r0, 0x28(r29)
-	  cmpw      r0, r3
-	  bne-      .loc_0x17C
-	  lis       r3, 0x803A
-	  crclr     6, 0x6
-	  subi      r30, r3, 0x24E0
-	  stw       r29, 0xA8(r30)
-	  addi      r3, r30, 0x130
-	  subi      r4, r13, 0x72F8
-	  lwz       r5, 0x18(r29)
-	  bl        0x1BFF60
-	  lwz       r5, 0x18(r29)
-	  addi      r3, r30, 0x1B0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x72F8
-	  bl        0x1BFF4C
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r5, r3, 0xB6
-	  lbz       r3, 0xB6(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x13C
-	  lhz       r4, 0x26(r29)
-	  cmpwi     r4, 0
-	  blt-      .loc_0x13C
-	  cmpwi     r4, 0x5
-	  bgt-      .loc_0x13C
-	  li        r0, 0x1
-	  slw       r0, r0, r4
-	  or        r0, r3, r0
-	  stb       r0, 0x0(r5)
+						if (gameflow.mGamePrefs._22)
+							gameflow.mGamePrefs.openStage(inf->mStageID);
 
-	.loc_0x13C:
-	  lis       r0, 0x7
-	  lis       r3, 0x803A
-	  stw       r0, 0x24(r31)
-	  subi      r3, r3, 0x2848
-	  lwz       r4, 0x20(r3)
-	  addi      r3, r3, 0x2D8
-	  lfs       f1, 0x10(r4)
-	  bl        -0x4E8C
-	  li        r0, 0x1
-	  stw       r0, 0x20(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, -0x7A98(r2)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, -0x7A94(r2)
-	  stfs      f0, 0xC(r3)
-	  b         .loc_0x188
+						_24 = 0x70000;
 
-	.loc_0x17C:
-	  lwz       r29, 0xC(r29)
+						gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
+						_20 = 1;
+						gsys->setFade(0.0f, 3.0f);
+						break;
+					}
+				}
+			}
+		}
 
-	.loc_0x180:
-	  cmplwi    r29, 0
-	  bne+      .loc_0xC0
+		if (mapWindow && mapWindow->update(_30)) {
+			int status = mapWindow->_08;
+			if (status == 6) {
+				_20 = 1;
+				gsys->setFade(0.0f, 3.0f);
+			} else {
+				for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
+					if (inf->mStageID == status) {
+						flowCont.mCurrentStage = inf;
+						sprintf(flowCont.mStagePath1, "%s", inf->mFileName);
+						sprintf(flowCont.mStagePath2, "%s", inf->mFileName);
 
-	.loc_0x188:
-	  lwz       r3, 0x2E54(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x2AC
-	  lwz       r4, 0x30(r31)
-	  bl        0x18802C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2AC
-	  lwz       r3, 0x2E54(r13)
-	  lwz       r4, 0x8(r3)
-	  cmpwi     r4, 0x6
-	  bne-      .loc_0x1D4
-	  li        r0, 0x1
-	  stw       r0, 0x20(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, -0x7A98(r2)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, -0x7A94(r2)
-	  stfs      f0, 0xC(r3)
-	  b         .loc_0x2AC
+						if (gameflow.mGamePrefs._22)
+							gameflow.mGamePrefs.openStage(inf->mStageID);
 
-	.loc_0x1D4:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  lwz       r29, 0x10(r3)
-	  b         .loc_0x2A4
+						_24 = 0x70000;
 
-	.loc_0x1E4:
-	  lhz       r0, 0x26(r29)
-	  cmpw      r0, r4
-	  bne-      .loc_0x2A0
-	  lis       r3, 0x803A
-	  crclr     6, 0x6
-	  subi      r30, r3, 0x24E0
-	  stw       r29, 0xA8(r30)
-	  addi      r3, r30, 0x130
-	  subi      r4, r13, 0x72F8
-	  lwz       r5, 0x18(r29)
-	  bl        0x1BFE3C
-	  lwz       r5, 0x18(r29)
-	  addi      r3, r30, 0x1B0
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x72F8
-	  bl        0x1BFE28
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r5, r3, 0xB6
-	  lbz       r3, 0xB6(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x260
-	  lhz       r4, 0x26(r29)
-	  cmpwi     r4, 0
-	  blt-      .loc_0x260
-	  cmpwi     r4, 0x5
-	  bgt-      .loc_0x260
-	  li        r0, 0x1
-	  slw       r0, r0, r4
-	  or        r0, r3, r0
-	  stb       r0, 0x0(r5)
+						gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
+						_20 = 1;
+						gsys->setFade(0.0f, 3.0f);
+						break;
+					}
+				}
+			}
+		}
+	}
 
-	.loc_0x260:
-	  lis       r0, 0x7
-	  lis       r3, 0x803A
-	  stw       r0, 0x24(r31)
-	  subi      r3, r3, 0x2848
-	  lwz       r4, 0x20(r3)
-	  addi      r3, r3, 0x2D8
-	  lfs       f1, 0x10(r4)
-	  bl        -0x4FB0
-	  li        r0, 0x1
-	  stw       r0, 0x20(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, -0x7A98(r2)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, -0x7A94(r2)
-	  stfs      f0, 0xC(r3)
-	  b         .loc_0x2AC
+	if (_20 == 1 && !_2C && gsys->getFade() == 0.0f) {
+		_20                              = -1;
+		gameflow.mNextOnePlayerSectionID = _24 >> 0x10;
+		Jac_SceneExit(13, 0);
+		gsys->softReset();
+	}
 
-	.loc_0x2A0:
-	  lwz       r29, 0xC(r29)
-
-	.loc_0x2A4:
-	  cmplwi    r29, 0
-	  bne+      .loc_0x1E4
-
-	.loc_0x2AC:
-	  lwz       r0, 0x20(r31)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x30C
-	  lwz       r0, 0x2C(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x30C
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x7A98(r2)
-	  lfs       f0, 0x4(r3)
-	  fcmpu     cr0, f1, f0
-	  bne-      .loc_0x30C
-	  li        r0, -0x1
-	  stw       r0, 0x20(r31)
-	  lis       r3, 0x803A
-	  subi      r5, r3, 0x2848
-	  lwz       r0, 0x24(r31)
-	  li        r3, 0xD
-	  li        r4, 0
-	  rlwinm    r0,r0,16,16,31
-	  stw       r0, 0x1F4(r5)
-	  bl        -0x3CB6C
-	  lwz       r3, 0x2DEC(r13)
-	  li        r0, 0x1
-	  stb       r0, 0x0(r3)
-
-	.loc_0x30C:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -1347,154 +1232,30 @@ void MapSelectSetupSection::update()
  * Address:	80056878
  * Size:	000224
  */
-void MapSelectSetupSection::draw(Graphics&)
+void MapSelectSetupSection::draw(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x100(r1)
-	  stw       r31, 0xFC(r1)
-	  mr        r31, r4
-	  stw       r30, 0xF8(r1)
-	  mr        r30, r3
-	  mr        r3, r31
-	  stw       r29, 0xF4(r1)
-	  stw       r28, 0xF0(r1)
-	  li        r28, 0
-	  lwz       r5, 0x310(r4)
-	  lwz       r0, 0x30C(r4)
-	  addi      r4, r1, 0x5C
-	  stw       r28, 0x5C(r1)
-	  stw       r28, 0x60(r1)
-	  stw       r0, 0x64(r1)
-	  stw       r5, 0x68(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x310(r31)
-	  addi      r4, r1, 0x4C
-	  lwz       r0, 0x30C(r31)
-	  mr        r3, r31
-	  stw       r28, 0x4C(r1)
-	  stw       r28, 0x50(r1)
-	  stw       r0, 0x54(r1)
-	  stw       r5, 0x58(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x50(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r28, 0x48(r1)
-	  addi      r4, r1, 0x48
-	  addi      r3, r31, 0
-	  stb       r28, 0x49(r1)
-	  stb       r28, 0x4A(r1)
-	  stb       r28, 0x4B(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xB4(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0x3
-	  li        r5, 0
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r6, 0x310(r31)
-	  addi      r5, r1, 0x38
-	  lwz       r0, 0x30C(r31)
-	  mr        r3, r31
-	  addi      r4, r1, 0xAC
-	  stw       r28, 0x38(r1)
-	  stw       r28, 0x3C(r1)
-	  stw       r0, 0x40(r1)
-	  stw       r6, 0x44(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r28, 0x34(r1)
-	  li        r29, 0xFF
-	  addi      r4, r1, 0x34
-	  stb       r28, 0x35(r1)
-	  mr        r3, r31
-	  li        r5, 0x1
-	  stb       r28, 0x36(r1)
-	  stb       r29, 0x37(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r28, 0x30(r1)
-	  li        r0, 0x40
-	  addi      r4, r1, 0x30
-	  stb       r28, 0x31(r1)
-	  mr        r3, r31
-	  stb       r0, 0x32(r1)
-	  stb       r29, 0x33(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x310(r31)
-	  addi      r4, r1, 0x20
-	  lwz       r0, 0x30C(r31)
-	  mr        r3, r31
-	  stw       r28, 0x20(r1)
-	  stw       r28, 0x24(r1)
-	  stw       r0, 0x28(r1)
-	  stw       r5, 0x2C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xD4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E50(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1A0
-	  mr        r4, r31
-	  bl        0x196764
+	gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setClearColour(Colour(0, 0, 0, 0));
+	gfx.clearBuffer(3, false);
+	Matrix4f mtx;
+	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setColour(Colour(0, 0, 0, 255), true);
+	gfx.setAuxColour(Colour(0, 0, 64, 255));
+	gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 
-	.loc_0x1A0:
-	  lwz       r3, 0x2E54(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1B4
-	  mr        r4, r31
-	  bl        0x18A310
+	if (selectWindow) {
+		selectWindow->draw(gfx);
+	}
+	if (mapWindow) {
+		mapWindow->draw(gfx);
+	}
+	Matrix4f mtx2;
+	gfx.setOrthogonal(mtx2.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 
-	.loc_0x1B4:
-	  lwz       r7, 0x310(r31)
-	  li        r0, 0
-	  lwz       r6, 0x30C(r31)
-	  addi      r5, r1, 0x10
-	  addi      r3, r31, 0
-	  stw       r0, 0x10(r1)
-	  addi      r4, r1, 0x6C
-	  stw       r0, 0x14(r1)
-	  stw       r6, 0x18(r1)
-	  stw       r7, 0x1C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2C(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x204
-	  lfs       f1, -0x7A90(r2)
-	  mr        r4, r31
-	  bl        0x7998
-
-	.loc_0x204:
-	  lwz       r0, 0x104(r1)
-	  lwz       r31, 0xFC(r1)
-	  lwz       r30, 0xF8(r1)
-	  lwz       r29, 0xF4(r1)
-	  lwz       r28, 0xF0(r1)
-	  addi      r1, r1, 0x100
-	  mtlr      r0
-	  blr
-	*/
+	if (_2C) {
+		_2C->draw(gfx, 1.0f);
+	}
 }
 
 /*
@@ -1504,52 +1265,4 @@ void MapSelectSetupSection::draw(Graphics&)
  */
 void MapSelectSection::init()
 {
-}
-
-/*
- * --INFO--
- * Address:	80056AA0
- * Size:	000030
- */
-void Delegate1<Menu, Menu&>::invoke(Menu&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r5, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1BE278
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80056AD0
- * Size:	000030
- */
-void Delegate1<MapSelectSetupSection, Menu&>::invoke(Menu&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r5, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1BE248
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }

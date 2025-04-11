@@ -43,7 +43,7 @@ void CreaturePlatMgr::init(Creature* creature, MapMgr* map, Shape* shape)
 	mPlatShape = shape;
 	FOREACH_NODE(ObjCollInfo, mPlatShape->mCollisionInfo.mChild, collInfo)
 	{
-		if (collInfo->mIsEnabled) {
+		if (collInfo->mPlatShape) {
 			CreatureCollPart* part   = map->requestCollPart(collInfo, creature);
 			mPlatParts[mPartCount++] = part;
 		}

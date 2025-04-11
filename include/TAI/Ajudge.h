@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "TAI/Action.h"
+#include "teki.h"
 
 /**
  * @brief TODO
@@ -25,12 +26,14 @@ struct TAIAsearchWorkObject : public TaiAction {
  * @brief TODO
  */
 struct TAIAjudgeLife : public TaiAction {
-	inline TAIAjudgeLife() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAjudgeLife(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
 	virtual f32 getLifePercentThreshold(Teki&) = 0; // _1C
+
+	f32 getLifePercent(Teki& teki) { return teki.mHealth / teki.getParameterF(TPF_Life); }
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -41,7 +44,8 @@ struct TAIAjudgeLife : public TaiAction {
  * @brief TODO
  */
 struct TAIAlessLife : public TAIAjudgeLife {
-	inline TAIAlessLife() // TODO: this is a guess
+	TAIAlessLife(int nextState)
+	    : TAIAjudgeLife(nextState)
 	{
 	}
 
@@ -57,7 +61,8 @@ struct TAIAlessLife : public TAIAjudgeLife {
  * @brief TODO
  */
 struct TAIAmoreLife : public TAIAjudgeLife {
-	inline TAIAmoreLife() // TODO: this is a guess
+	TAIAmoreLife(int nextState)
+	    : TAIAjudgeLife(nextState)
 	{
 	}
 
@@ -100,7 +105,7 @@ struct TAIAinsideOptionalRange : public TAIAjudgeOptionalRange {
 
 	virtual bool setTargetPosition(Teki&) = 0; // _1C
 	virtual f32 getOptionalRange(Teki&)   = 0; // _20
-	virtual bool judgement(Teki&)         = 0; // _24
+	virtual bool judgement(Teki&);             // _24
 
 	// _04     = VTBL
 	// _00-_08 = TAIAjudgeOptionalRange?
@@ -117,7 +122,7 @@ struct TAIAoutsideOptionalRange : public TAIAjudgeOptionalRange {
 
 	virtual bool setTargetPosition(Teki&) = 0; // _1C
 	virtual f32 getOptionalRange(Teki&)   = 0; // _20
-	virtual bool judgement(Teki&)         = 0; // _24
+	virtual bool judgement(Teki&);             // _24
 
 	// _04     = VTBL
 	// _00-_08 = TAIAjudgeOptionalRange?
@@ -128,18 +133,21 @@ struct TAIAoutsideOptionalRange : public TAIAjudgeOptionalRange {
  * @brief TODO
  */
 struct TAIAcheckInsideRangePiki : public TaiAction {
-	inline TAIAcheckInsideRangePiki() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAcheckInsideRangePiki(int nextState, int pikiMax, f32 range)
+	    : TaiAction(nextState)
 	{
+		mPikiMax = pikiMax;
+		mRange   = range;
 	}
 
-	virtual bool act(Teki&);       // _10
-	virtual int getPikiMax(Teki&); // _1C
-	virtual f32 getRange(Teki&);   // _20
+	virtual bool act(Teki&);                           // _10
+	virtual int getPikiMax(Teki&) { return mPikiMax; } // _1C
+	virtual f32 getRange(Teki&) { return mRange; }     // _20
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mPikiMax; // _08
+	f32 mRange;   // _0C
 };
 
 /**
@@ -194,8 +202,8 @@ struct TAIAvisibleNavi : public TaiAction {
  * @brief TODO
  */
 struct TAIAvisiblePiki : public TaiAction {
-	inline TAIAvisiblePiki() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAvisiblePiki(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -253,9 +261,9 @@ struct TAIAstickingPiki : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&);     // _08
-	virtual bool act(Teki&);       // _10
-	virtual int getPikiNum(Teki&); // _1C
+	virtual void start(Teki&) { }                              // _08
+	virtual bool act(Teki&);                                   // _10
+	virtual int getPikiNum(Teki&) { return mStickingPikiNum; } // _1C
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -266,8 +274,8 @@ struct TAIAstickingPiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAdistanceTarget : public TaiAction {
-	inline TAIAdistanceTarget() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAdistanceTarget() // this never gets called, so who knows
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -276,16 +284,19 @@ struct TAIAdistanceTarget : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 _08;       // _08
+	f32 mDistance; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TAIAcheckTurnAngle : public TaiAction {
-	inline TAIAcheckTurnAngle() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAcheckTurnAngle(int nextState, f32 p2, bool p3)
+	    : TaiAction(nextState)
 	{
+		_08 = p2;
+		_0C = p3;
 	}
 
 	virtual void start(Teki&); // _08
@@ -293,7 +304,8 @@ struct TAIAcheckTurnAngle : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 _08;  // _08
+	bool _0C; // _0C
 };
 
 /**

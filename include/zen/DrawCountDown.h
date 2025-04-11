@@ -19,6 +19,7 @@ struct DrawCountDown {
 	void draw(Graphics&);
 
 	// TODO: members
+	u8 _00[0x38];
 };
 
 } // namespace zen

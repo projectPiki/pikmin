@@ -57,7 +57,7 @@ void RoutePoint::loadini(CmdStream* s)
 		} else if (s->isToken("state")) {
 			sscanf(s->getToken(true), "%d", &mState);
 		} else if (s->isToken("width")) {
-			sscanf(s->getToken(true), "%f", &mWidth);
+			sscanf(s->getToken(true), "%f", &mRadius);
 		}
 	}
 

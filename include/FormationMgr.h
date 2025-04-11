@@ -4,12 +4,18 @@
 #include "types.h"
 #include "Traversable.h"
 #include "Vector.h"
+#include "Colour.h"
+#include "ComplexCreature.h"
+#include "Creature.h"
 
 struct Graphics;
 struct FormArranger;
+struct FormationMgr;
 
 /**
  * @brief Stripped struct.
+ *
+ * @note Size: 0x40.
  */
 struct Rope {
 	Rope(); // unused/inlined
@@ -17,6 +23,15 @@ struct Rope {
 	// unused/inlined:
 	void move(Vector3f&, Vector3f&, Vector3f&);
 	void refresh(Graphics&);
+
+	Vector3f _00;       // _00
+	Vector3f mVelocity; // _0C
+	Vector3f mPosition; // _18
+	Vector3f _24;       // _24
+	f32 mRadius;        // _30
+	u8 _34[0x4];        // _34, unknown
+	Rope* mPrevLink;    // _38
+	Rope* mNextLink;    // _3C
 };
 
 /**
@@ -31,6 +46,12 @@ struct Spine {
 	void postMove();
 	void move();
 	void refresh(Graphics&);
+
+	u8 _00[0x4];                        // _00, unknown
+	int mLinkCount;                     // _04
+	Rope* mRope;                        // _08
+	SmartPtr<Creature> mTargetCreature; // _0C
+	Vector3f _10;                       // _10
 };
 
 /**
@@ -41,7 +62,25 @@ struct FormPoint {
 
 	Vector3f getPos();
 
-	// TODO: members
+	// DLL inlines to do:
+	void reset()
+	{
+		if (!mOwner.isNull()) {
+			mOwner.clear();
+		}
+	}
+
+	void setMgr(FormationMgr* mgr) { mFormMgr = mgr; }
+	Creature* getOwner() { return mOwner.getPtr(); }
+
+	bool isFree() { return mOwner.isNull(); }
+	void setOwner(Creature* owner) { mOwner.set(owner); }
+
+	Colour _00;                // _00
+	Vector3f mOffset;          // _04
+	SmartPtr<Creature> mOwner; // _10
+	FormationMgr* mFormMgr;    // _14
+	Vector3f _18;              // _18
 };
 
 /**
@@ -71,14 +110,15 @@ struct FormationMgr : public Traversable {
 
 	// _00     = VTBL
 	// _00-_08 = Traversable
-	u8 _08[0x4];             // _08, unknown
+	f32 mAngOffset;          // _08
 	f32 _0C;                 // _0C
 	Vector3f _10;            // _10
-	u8 _1C[0x4];             // _1C, unknown
-	Creature** _20;          // _20, maybe Piki**?
-	u8 _24[0x8];             // _24, unknown
-	int _2C;                 // _2C
-	u8 _30[0xC];             // _30, unknown
+	FormPoint* mFormPoints;  // _1C
+	Creature** mFormMembers; // _20
+	int _24;                 // _24
+	int mMax;                // _28, total slots
+	int mCount;              // _2C, total used slots
+	Vector3f mOffset;        // _30
 	FormArranger* mArranger; // _3C
 };
 

@@ -30,10 +30,10 @@ LightPool::LightPool()
 
 	_64C = 0;
 
-	_65C = TAU * randFloat();
+	_65C = TAU * (gsys->getRand(1.0f));
 
 	mCamera.mPosition.set(0.0f, 50.0f, 0.0f);
-	mCamera.mFocus.set(0.0f, 10.0f, 0.0f);
+	mCamera.mFocus.set(0.0f, 10.0f, 0.00001f);
 	mCamera.mRotation.set(0.0f, 0.0f, 0.0f);
 	mCamera.mFov  = 5.0f;
 	mCamera.mNear = 1.0f;

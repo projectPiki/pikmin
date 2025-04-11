@@ -38,7 +38,7 @@ enum PikiNaviAnim {
 	PIKIANIM_Throw       = 27, // Throw
 	PIKIANIM_Hang        = 28, // Hang
 	PIKIANIM_Fall        = 29, // Fall
-	PIKIANIM_JKoke       = 30, // 'J Moss(?)'
+	PIKIANIM_JKoke       = 30, // J 'trip'
 	PIKIANIM_JHit        = 31, // J Hit
 	PIKIANIM_GetUp       = 32, // Get up
 	PIKIANIM_NewJmp      = 33, // New jump

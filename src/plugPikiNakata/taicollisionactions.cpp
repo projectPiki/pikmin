@@ -24,7 +24,7 @@ DEFINE_PRINT("taicollisionactions")
  */
 bool TaiBounceAction::actByEvent(TekiEvent& event)
 {
-	return event.mCollisionType == TekiEventType::Ground;
+	return event.mEventType == TekiEventType::Ground;
 }
 
 /*
@@ -34,7 +34,7 @@ bool TaiBounceAction::actByEvent(TekiEvent& event)
  */
 bool TaiGroundCollisionAction::actByEvent(TekiEvent& event)
 {
-	return event.mCollisionType == TekiEventType::Ground;
+	return event.mEventType == TekiEventType::Ground;
 }
 
 /*
@@ -44,7 +44,7 @@ bool TaiGroundCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiWallCollisionAction::actByEvent(TekiEvent& event)
 {
-	return event.mCollisionType == TekiEventType::Wall;
+	return event.mEventType == TekiEventType::Wall;
 }
 
 /*
@@ -54,7 +54,7 @@ bool TaiWallCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event)
 {
-	return event.mCollisionType == TekiEventType::Entity;
+	return event.mEventType == TekiEventType::Entity;
 }
 
 /*
@@ -64,7 +64,7 @@ bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiPikiCollisionAction::actByEvent(TekiEvent& event)
 {
-	if (event.mCollisionType != TekiEventType::Entity) {
+	if (event.mEventType != TekiEventType::Entity) {
 		return false;
 	}
 
@@ -82,7 +82,7 @@ bool TaiPikiCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiNaviCollisionAction::actByEvent(TekiEvent& event)
 {
-	if (event.mCollisionType != TekiEventType::Entity) {
+	if (event.mEventType != TekiEventType::Entity) {
 		return false;
 	}
 
@@ -100,7 +100,7 @@ bool TaiNaviCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiTekiTypeCollisionAction::actByEvent(TekiEvent& event)
 {
-	if (event.mCollisionType != TekiEventType::Entity) {
+	if (event.mEventType != TekiEventType::Entity) {
 		return false;
 	}
 

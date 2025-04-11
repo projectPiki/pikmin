@@ -777,7 +777,7 @@ void Jac_StopEventAction(void)
  * Address:	80017EC0
  * Size:	000070
  */
-void MML_StopEventAction(void)
+void MML_StopEventAction(u8, u8, u16)
 {
 	/*
 	.loc_0x0:
@@ -821,7 +821,7 @@ void MML_StopEventAction(void)
  * Address:	80017F40
  * Size:	00005C
  */
-void MML_StopEventAll(void)
+void MML_StopEventAll(u8, u16)
 {
 	/*
 	.loc_0x0:
@@ -956,7 +956,7 @@ void Jac_DestroyNotThisEvent(void)
  * Address:	80018080
  * Size:	000038
  */
-void Jac_CheckFreeEvents(void)
+int Jac_CheckFreeEvents(void)
 {
 	/*
 	.loc_0x0:
@@ -986,7 +986,7 @@ void Jac_CheckFreeEvents(void)
  * Address:	800180C0
  * Size:	000050
  */
-void Jac_GetActiveEvents(void)
+int Jac_GetActiveEvents(void)
 {
 	/*
 	.loc_0x0:

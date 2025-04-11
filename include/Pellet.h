@@ -61,6 +61,8 @@ enum NumPelletType {
  * @brief TODO
  */
 enum PelletColor {
+	PELCOLOR_Part = -2, // ship part (or other item, technically)
+
 	PELCOLOR_NULL = -1,
 
 	PELCOLOR_Blue   = 0,
@@ -271,7 +273,7 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	// _00-_440  = DualCreature
 	// _440-_444 = PaniAnimKeyListener
 	Vector3f mSpawnPosition;              // _444
-	bool _450;                            // _450
+	bool mUseSpawnPosition;               // _450
 	bool mIsPlayTrySound;                 // _451
 	u8 mMotionFlag;                       // _452
 	RippleEffect* mRippleEffect;          // _454

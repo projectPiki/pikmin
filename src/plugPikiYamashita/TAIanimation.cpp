@@ -7,6 +7,6 @@
  */
 AnimInfo* TAIanimation::addAnimation(char* anim)
 {
-	mAnimInfo = mAnimmgr->addAnimation(anim, true);
+	mAnimInfo = mAnimMgr->addAnimation(anim, true);
 	return mAnimInfo;
 }

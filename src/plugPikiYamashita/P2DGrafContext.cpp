@@ -37,10 +37,8 @@ P2DGrafContext::P2DGrafContext(int x0, int y0, int width, int height)
     : _08(x0, y0, x0 + width, y0 + height)
     , _10(x0, y0, x0 + width, y0 + height)
 {
-	_2A = 0;
-	_2C = 0;
 	Colour colour(255, 255, 255, 255);
-	setColor(colour, colour, colour, colour);
+	setColor(colour);
 	setLineWidth(6);
 }
 
@@ -51,7 +49,7 @@ P2DGrafContext::P2DGrafContext(int x0, int y0, int width, int height)
  */
 void P2DGrafContext::setPort()
 {
-	GXSetViewport(_08.mMin.x, _08.mMin.y, _08.getWidth(), _08.getHeight(), 0.0f, 1.0f);
+	GXSetViewport(_08.mMinX, _08.mMinY, _08.getWidth(), _08.getHeight(), 0.0f, 1.0f);
 	setScissor();
 	setup2D();
 }
@@ -102,7 +100,7 @@ void P2DGrafContext::setScissor()
 	scissor.normalize();
 	scissor.add(0, -1);
 	if (scissor.intersect(bounds)) {
-		GXSetScissor(scissor.mMin.x, scissor.mMin.y, scissor.getWidth(), scissor.getHeight());
+		GXSetScissor(scissor.mMinX, scissor.mMinY, scissor.getWidth(), scissor.getHeight());
 	}
 }
 
@@ -139,37 +137,37 @@ void P2DGrafContext::setColor(Colour& p1, Colour& p2, Colour& p3, Colour& p4)
 	_20 = p3;
 	_24 = p4;
 
-	_B0 = 1;
-	_B4 = 4;
-	_B8 = 5;
+	_B0[0] = 1;
+	_B0[1] = 4;
+	_B8    = 5;
 
-	_BC = 1;
-	_C0 = 4;
-	_C4 = 5;
+	_BC[0] = 1;
+	_BC[1] = 4;
+	_C4    = 5;
 
-	_C8 = 1;
-	_CC = 4;
-	_D0 = 5;
+	_C8[0] = 1;
+	_C8[1] = 4;
+	_D0    = 5;
 
 	if (_18.a != 255) {
 		return;
 	}
-	_B0 = 0;
-	_B4 = 1;
-	_B8 = 0;
+	_B0[0] = 0;
+	_B0[1] = 1;
+	_B8    = 0;
 
 	if (_20.a != 255) {
 		return;
 	}
 
-	_BC = 0;
-	_C0 = 1;
-	_C4 = 0;
+	_BC[0] = 0;
+	_BC[1] = 1;
+	_C4    = 0;
 
 	if (_1C.a == 255 && _24.a == 255) {
-		_C8 = 0;
-		_CC = 1;
-		_D0 = 0;
+		_C8[0] = 0;
+		_C8[1] = 1;
+		_D0    = 0;
 	}
 }
 

@@ -5,13 +5,24 @@
 #include "Demo.h"
 #include "ResultFlags.h"
 #include "PaniPikiAnimator.h"
+#include "UtilityKando.h"
 #include "PelletAnimator.h"
 #include "Shape.h"
+#include "Piki.h"
 
 struct Graphics;
 struct PelletShapeObject;
 struct PermanentEffect;
+struct PikiShapeObject;
 struct Shape;
+
+/**
+ * @brief TODO
+ */
+struct UfoPartsInfo {
+	u32 _00; // _00
+	u8 _04;  // _04
+};
 
 /**
  * @brief TODO
@@ -23,7 +34,28 @@ struct TimeGraph {
 	 */
 	struct PikiNum {
 
-		void set(int, int);
+		void set(int color, int num)
+		{
+			if (color >= PikiMinColor && color <= PikiMaxColor) {
+				mNum[color] = num;
+				return;
+			}
+
+			// cannot condense these or this inlines incorrectly lmfao
+			mNum[Yellow] = num;
+			mNum[Red]    = num;
+			mNum[Blue]   = num;
+		}
+
+		int get(int color)
+		{
+			if (color >= PikiMinColor && color <= PikiMaxColor) {
+				return mNum[color];
+			}
+			return getSum();
+		}
+
+		int getSum() { return mNum[0] + mNum[1] + mNum[2]; }
 
 		int mNum[3]; // _00
 	};
@@ -34,9 +66,11 @@ struct TimeGraph {
 	void create(u16, u16);
 	void init();
 	void set(u16, int, int);
-	void get(u16, int);
+	int get(u16, int);
 
-	// TODO: members
+	u16 _00;      // _00
+	u16 _02;      // _02
+	PikiNum* _04; // _04
 };
 
 /**
@@ -50,7 +84,7 @@ struct PlayerState {
 	 * @note Size: 0xE0.
 	 */
 	struct UfoParts : public PaniAnimKeyListener {
-		UfoParts();
+		UfoParts() { }
 
 		virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
@@ -62,7 +96,7 @@ struct PlayerState {
 		void stopMotion();
 
 		// DLL inlines:
-		void setMotionSpeed(f32);
+		void setMotionSpeed(f32 speed) { _D8 = speed; }
 
 		// _00 = VTBL
 		int mPartIndex;                       // _04
@@ -134,45 +168,45 @@ struct PlayerState {
 	void setBootContainer(int color) { _184 |= 1 << color + 3; }
 	bool bootContainer(int color) { return _184 & (1 << color + 3); }
 
+	int getLastPikmins() { return _1A8; }
+
 	void setContainer(int color) { _184 |= 1 << color; }
 	bool hasContainer(int color) { return _184 & (1 << color); }
 
 	bool inDayEnd() { return mInDayEnd; }
 	void setDayEnd(bool set) { mInDayEnd = set; }
 
+	bool isChallengeMode() { return mIsChallengeMode; }
+
 	bool hasUfoLeftControl() { return _11 & 4; }
 	bool hasUfoRightControl() { return _11 & 2; }
+	bool hasRadar() { return _11 & 1; }
 
 	void setDayCollectCount(int day, int parts) { mPartsCollectedByDay[day] = parts; }
 	void setDayPowerupCount(int day, int parts) { mPartsToNextByDay[day] = parts; }
-
-	// I dont think this is right, but this is definitely one of the inlines
-	bool hasRadar() { return _1B6; }
 
 	/*
 	    All remaining DLL inlines:
 
 	    int getDayCollectCount(int);
-
-	    bool hasRadar();
-	    bool isChallengeMode;
 	    int getLastPikmins();
 	*/
 
 	static int totalUfoParts;
 
-	int mSroutedNum;              // _00
+	int mSproutedNum;             // _00
 	int mLostBattlePikis;         // _04
 	int mLeftBehindPikis;         // _08
-	u32 _0C;                      // _0C, unknown
+	int _0C;                      // _0C
 	u8 mShipUpgradeLevel;         // _10
 	u8 _11;                       // _11
-	u32 _14;                      // _14
+	UfoParts* _14;                // _14
 	u8 mPartsCollectedByDay[30];  // _18
 	u8 mPartsToNextByDay[30];     // _38
 	DemoFlags mDemoFlags;         // _54
 	ResultFlags mResultFlags;     // _70
-	u8 _BC[0xC4 - 0xBC];          // _BC, unknown
+	u8 _BC;                       // _BC
+	PikiShapeObject* _C0;         // _C0
 	PaniPikiAnimMgr mPikiAnimMgr; // _C4
 	int mTotalRegisteredParts;    // _170
 	int mTotalParts;              // _174
@@ -181,20 +215,19 @@ struct PlayerState {
 	int _180;                     // _180
 	u8 _184;                      // _184
 	bool _185;                    // _185
-	u8 _186;                      // _186
-	u8 _187;                      // _187
-	u8 _188;                      // _188, might be piki discovery flag?
-	u8 _189;                      // _189
-	u8 _18A;                      // _18A
-	u8 _18B;                      // _18B
-	u8 _18C[0x1A0 - 0x18C];       // _18C, unknown
+	bool _186;                    // _186
+	u8 _187[5];                   // _187
+	TimeGraph _18C;               // _18C
+	u16 _194;                     // _194
+	TimeGraph _198;               // _198
 	int _1A0;                     // _1A0, final dead pikis count?
-	u8 _1A4[0x1AC - 0x1A4];       // _1A4, unknown
-	u8 _1AC;                      // _1AC
-	u8 _1AD[0x1B4 - 0x1AD];       // _1AD, unknown
+	int _1A4;                     // _1A4
+	int _1A8;                     // _1A8
+	u8 mDisplayPikiFlag;          // _1AC
+	BitFlags** mCourseFlags;      // _1B0
 	u8 _1B4;                      // _1B4
 	bool mInDayEnd;               // _1B5
-	u8 _1B6;                      // _1B6
+	bool mIsChallengeMode;        // _1B6
 	PermanentEffect* _1B8;        // _1B8
 	PermanentEffect* _1BC;        // _1BC
 	Vector3f _1C0;                // _1C0

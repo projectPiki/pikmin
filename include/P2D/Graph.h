@@ -17,6 +17,13 @@ enum P2DGrafType {
 /**
  * @brief TODO
  *
+ * @note Fabricated, idk what struct this corresponds to but it's SOMETHING.
+ */
+struct P2DGrafPoint { };
+
+/**
+ * @brief TODO
+ *
  * @note Size: 0xD4.
  */
 struct P2DGrafContext {
@@ -48,28 +55,26 @@ struct P2DGrafContext {
 	void polylineTo(PUTPoint*, int);
 	void polylineTo(int*, int);
 
+	void setColor(Colour& colour) { setColor(colour, colour, colour, colour); }
+
 	// _00 = VTBL
-	int mGrafType;       // _04, see P2DGrafType enum
-	PUTRect _08;         // _08
-	PUTRect _10;         // _10
-	Colour _18;          // _18
-	Colour _1C;          // _1C
-	Colour _20;          // _20
-	Colour _24;          // _24
-	u8 mLineWidth;       // _28
-	u16 _2A;             // _2A
-	u16 _2C;             // _2C
-	u8 _2E[0x70 - 0x2E]; // _2E, unknown
-	Matrix4f _70;        // _70
-	int _B0;             // _B0
-	int _B4;             // _B4
-	int _B8;             // _B8
-	int _BC;             // _BC
-	int _C0;             // _C0
-	int _C4;             // _C4
-	int _C8;             // _C8
-	int _CC;             // _CC
-	int _D0;             // _D0
+	int mGrafType; // _04, see P2DGrafType enum
+	PUTRect _08;   // _08
+	PUTRect _10;   // _10
+	Colour _18;    // _18
+	Colour _1C;    // _1C
+	Colour _20;    // _20
+	Colour _24;    // _24
+	u8 mLineWidth; // _28
+	PUTPoint _2A;  // _2A
+	Matrix4f _30;  // _30
+	Matrix4f _70;  // _70
+	int _B0[2];    // _B0
+	int _B8;       // _B8
+	int _BC[2];    // _BC
+	int _C4;       // _C4
+	int _C8[2];    // _C8
+	int _D0;       // _D0
 };
 
 /**

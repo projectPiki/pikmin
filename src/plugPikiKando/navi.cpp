@@ -412,8 +412,8 @@ void Navi::startDamageEffect()
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 
 	} else if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
-	           && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk29)) {
-		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk29);
+	           && !playerState->mDemoFlags.isFlag(DEMOFLAG_OlimarLowHealth)) {
+		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_OlimarLowHealth);
 		gameflow.mGameInterface->message(0, 24);
 	}
 
@@ -433,7 +433,7 @@ void Navi::startDamageEffect()
 	mDamageEfxC = ptclGenC;
 
 	int vibTypes[2] = { 0, 1 };
-	f32 randIdx     = System::getRand(1.0f);
+	f32 randIdx     = gsys->getRand(1.0f);
 	int vib         = vibTypes[int(2.0f * randIdx * 0.9999999f)];
 	cameraMgr->startVibrationEvent(vib, mPosition);
 
@@ -609,8 +609,8 @@ void Navi::finishDamage()
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 	} else {
 		if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
-		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk29)) {
-			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk29);
+		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_OlimarLowHealth)) {
+			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_OlimarLowHealth);
 			gameflow.mGameInterface->message(0, 24);
 		}
 	}
@@ -648,7 +648,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mNaviID          = naviID;
 	_ACC             = 0;
 	_AD0             = 0;
-	_738             = 0.0f;
+	mNeutralTime     = 0.0f;
 	_718             = 0;
 	_720             = 0;
 	_71C             = 0;
@@ -660,7 +660,7 @@ Navi::Navi(CreatureProp* props, int naviID)
 	_ABC    = 0;
 	_AB8    = 0.0f;
 	_AC4    = 0.0f;
-	mHealth = NAVI_PROP.mHealth();
+	mHealth = static_cast<NaviProp*>(props)->mNaviProps.mHealth();
 
 	mDayEndPosition.set(0.0f, 0.0f, 0.0f);
 	_814 = 0.0f;
@@ -909,7 +909,7 @@ void Navi::updateWalkAnimation()
 		return;
 	}
 
-	f32 angle      = zen::Abs(mFaceDirection - _7DC);
+	f32 angle      = absF(mFaceDirection - _7DC);
 	Navi* listener = nullptr;
 	int newMotionID;
 	if (speed < NAVI_PROP._23C()) {
@@ -1002,7 +1002,7 @@ void Navi::postUpdate(int p1, f32 p2)
  */
 void Navi::update()
 {
-	if (!mFloorTri) {
+	if (!mGroundTriangle) {
 		f32 maxY = mapMgr->getMaxY(mPosition.x, mPosition.z, true);
 		if (maxY > mPosition.y) {
 			PRINT("navi(%.1f %.1f %.1f) : map(%.1f %.1f %.1f)\n", mPosition.x, mPosition.y, mPosition.z, mPosition.x, maxY, mPosition.z);
@@ -1034,8 +1034,8 @@ void Navi::update()
 	}
 
 	int attr = ATTR_NULL;
-	if (mFloorTri) {
-		attr = MapCode::getAttribute(mFloorTri);
+	if (mGroundTriangle) {
+		attr = MapCode::getAttribute(mGroundTriangle);
 	}
 
 	if (attr == ATTR_Water) {
@@ -1044,7 +1044,7 @@ void Navi::update()
 			EffectParm rippleParm(&mPosition);
 			EffectParm castParm(mPosition);
 			mRippleEffect->emit(rippleParm);
-			UtEffectMgr::cast(17, castParm);
+			UtEffectMgr::cast(KandoEffect::Bubbles, castParm);
 			SeSystem::playPlayerSe(SE_PIKI_WATERDROP);
 		}
 		mIsInWater = true;
@@ -1100,14 +1100,14 @@ void Navi::update()
 	mapMgr->updatePos(mPosition.x, mPosition.z);
 
 	Vector3f dayEndSep = mDayEndPosition - mPosition;
-	if (dayEndSep.length() > 35.0f && mFloorTri) {
+	if (dayEndSep.length() > 35.0f && mGroundTriangle) {
 		Vector3f parmPos(mPosition.x, mPosition.y + 1.0f, mPosition.z);
 
 		Vector3f parmVel(0.01667f * mVelocity.x, 2.0f, 0.01667f * mVelocity.z);
-		int effAttr = MapCode::getAttribute(mFloorTri);
-		if (effAttr >= ATTR_Unk0 && effAttr <= ATTR_Unk3) {
+		int effAttr = MapCode::getAttribute(mGroundTriangle);
+		if (effAttr >= ATTR_Soil && effAttr <= ATTR_Tree) {
 			EffectParm parm(parmPos, parmVel);
-			UtEffectMgr::cast(effAttr + 3, parm);
+			UtEffectMgr::cast(effAttr + KandoEffect::SmokeOffset, parm);
 			mDayEndPosition = mPosition;
 		}
 	}
@@ -1124,22 +1124,22 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
 	int lowerMotionID = mNaviAnimMgr.getLowerAnimator().getCurrentMotionIndex();
 	int upperMotionID = mNaviAnimMgr.getUpperAnimator().getCurrentMotionIndex();
 	if (event.mEventType == KEY_PlaySound) {
-		int attr = ATTR_Unk0;
-		if (mFloorTri) {
-			attr = MapCode::getAttribute(mFloorTri);
+		int attr = ATTR_Soil;
+		if (mGroundTriangle) {
+			attr = MapCode::getAttribute(mGroundTriangle);
 		}
 		u16 soundType;
 		switch (attr) {
-		case ATTR_Unk0:
+		case ATTR_Soil:
 			soundType = 1;
 			break;
-		case ATTR_Unk1:
+		case ATTR_Rock:
 			soundType = 3;
 			break;
-		case ATTR_Unk2:
+		case ATTR_Grass:
 			soundType = 0;
 			break;
-		case ATTR_Unk3:
+		case ATTR_Tree:
 			soundType = 2;
 			break;
 		case ATTR_Water:
@@ -1210,7 +1210,7 @@ void Navi::callPikis(f32 radius)
 
 				piki->mNavi = this;
 				if (state == PIKISTATE_Emotion) {
-					static_cast<PikiEmotionState*>(piki->getCurrState())->_1D = 0;
+					static_cast<PikiEmotionState*>(piki->getCurrState())->mRapCnt = 0;
 				}
 
 				if (piki->mMode == PikiMode::PutbombMode && piki->isHolding()) {
@@ -1446,7 +1446,7 @@ void Navi::releasePikis()
 
 		ActFree* action = static_cast<ActFree*>(pikiList[i]->mActiveAction->getCurrAction());
 		action->initBoid(colorCoMs[color], colorSizes[color]);
-		if (flowCont._230 == 1 && pikiList[i]->mPlayerId == -1) {
+		if (flowCont.mNaviOnMap == 1 && pikiList[i]->mPlayerId == -1) {
 			pikiList[i]->mNavi = nullptr;
 		}
 	}
@@ -1594,7 +1594,7 @@ bool Navi::procActionButton()
 
 			Vector3f sproutNaviSep = sprout->mPosition - mPosition;
 			f32 sproutDist         = std::sqrtf(sproutNaviSep.x * sproutNaviSep.x + sproutNaviSep.z * sproutNaviSep.z);
-			f32 heightDiff         = zen::Abs(sproutNaviSep.y);
+			f32 heightDiff         = absF(sproutNaviSep.y);
 			if (sprout->canPullout() && sproutDist < minDist && heightDiff < 25.0f) {
 				minDist       = sproutDist;
 				closestSprout = sprout;
@@ -2502,7 +2502,7 @@ void Navi::collisionCallback(CollEvent& event)
 		case OBJTYPE_WorkObject:
 			Bridge* bridge = static_cast<Bridge*>(collider);
 			if (bridge->isBridge()) {
-				if (bridge->_3C8 && getCollidePlatformCreature() == bridge) {
+				if (bridge->mDoUseJointSegments && getCollidePlatformCreature() == bridge) {
 					Vector3f normal(getCollidePlatformNormal());
 					if ((normal.DP(bridge->getBridgeZVec()) >= -0.8f)) {
 						return;
@@ -2624,10 +2624,10 @@ void Navi::reviseController(Vector3f& stickPos)
 void Navi::makeVelocity(bool p1)
 {
 
-	_738 += gsys->getFrameTime();
+	mNeutralTime += gsys->getFrameTime();
 
 	if (mKontroller->keyDown(KBBTN_B) || mKontroller->keyDown(KBBTN_A) || mKontroller->keyDown(KBBTN_X) || mKontroller->keyDown(KBBTN_Z)) {
-		_738 = 0.0f;
+		mNeutralTime = 0.0f;
 	}
 
 	NVector3f stickVec(mKontroller->getMainStickX(), 0.0f, -mKontroller->getMainStickY());
@@ -2675,10 +2675,10 @@ void Navi::makeVelocity(bool p1)
 			mTargetVelocity = (stickVec * NAVI_PROP._CC()) * drag;
 		}
 
-		if (mFloorTri) {
+		if (mGroundTriangle) {
 			// ?? this does nothing.
 			f32 speed    = mTargetVelocity.length();
-			Vector3f vec = mTargetVelocity - mTargetVelocity.DP(mFloorTri->mTriangle.mNormal) * mFloorTri->mTriangle.mNormal;
+			Vector3f vec = mTargetVelocity - mTargetVelocity.DP(mGroundTriangle->mTriangle.mNormal) * mGroundTriangle->mTriangle.mNormal;
 			vec.normalise();
 			vec = vec * speed;
 		}
@@ -2708,11 +2708,11 @@ void Navi::makeVelocity(bool p1)
 	mCursorTargetPosition = targetPos;
 
 	if (!(stickMag <= NAVI_PROP.mNeutralStickThreshold())) {
-		_738 = 0.0f;
+		mNeutralTime = 0.0f;
 	}
 
 	bool check = false;
-	if (_738 >= NAVI_PROP._33C()) {
+	if (mNeutralTime >= NAVI_PROP._33C()) {
 		check = true;
 	}
 
@@ -3394,10 +3394,10 @@ void Navi::makeCStick(bool p1)
 	_764.set(0.0f, 0.0f, 0.0f);
 
 	if (subStick.length() > 0.05f) {
-		_738       = 0.0f;
-		_764       = subStick;
-		f32 angle1 = atan2f(subStick.x, subStick.z);
-		f32 angle2 = mPlateMgr->mDirectionAngle;
+		mNeutralTime = 0.0f;
+		_764         = subStick;
+		f32 angle1   = atan2f(subStick.x, subStick.z);
+		f32 angle2   = mPlateMgr->mDirectionAngle;
 		Vector3f dir1(sinf(angle1), 0.0f, cosf(angle1));
 		Vector3f dir2(sinf(angle2), 0.0f, cosf(angle2));
 
@@ -3620,11 +3620,11 @@ void Navi::draw(Graphics& gfx)
 	}
 
 	if (mRope) {
-		mWorldMtx = mRopeOrientMtx;
+		mWorldMtx = mConstrainedMoveMtx;
 		mWorldMtx.setTranslation(mPosition.x, mPosition.y, mPosition.z);
 	} else {
 		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
-		mRopeOrientMtx = mWorldMtx;
+		mConstrainedMoveMtx = mWorldMtx;
 	}
 
 	gfx.useMatrix(Matrix4f::ident, 0);
@@ -3638,10 +3638,10 @@ void Navi::draw(Graphics& gfx)
 
 	bool hasAnimError = false;
 	for (int i = 0; i < mNaviShapeObject->mShape->mJointCount; i++) {
-		if (mNaviShapeObject->mShape->mAnimContextList[i]->mData && &mNaviShapeObject->mShape->mAnimContextList[i]->mCurrentFrame) {
-			int frame1 = mNaviShapeObject->mShape->mAnimContextList[i]->mCurrentFrame;
-			int frame2 = mNaviShapeObject->mShape->mAnimContextList[i]->mCurrentFrame;
-			if (frame1 < 0 || frame2 >= mNaviShapeObject->mShape->mAnimContextList[i]->mData->mNumFrames) {
+		if (mNaviShapeObject->mShape->mAnimOverrides[i]->mData && &mNaviShapeObject->mShape->mAnimOverrides[i]->mCurrentFrame) {
+			int frame1 = mNaviShapeObject->mShape->mAnimOverrides[i]->mCurrentFrame;
+			int frame2 = mNaviShapeObject->mShape->mAnimOverrides[i]->mCurrentFrame;
+			if (frame1 < 0 || frame2 >= mNaviShapeObject->mShape->mAnimOverrides[i]->mData->mTotalFrameCount) {
 				PRINT(" NAVI -------- error : joint is %d\n", i);
 				PRINT(" motion is %s\n", mNaviAnimMgr.getUpperAnimator().getCurrentMotionName());
 				hasAnimError = true;
@@ -4224,14 +4224,14 @@ void Navi::dump()
 		      isCreatureFlag(CF_IsFlying) ? "true" : "false");
 		PRINT(" isAlive=%s isVisible=%s isBuried=%s\n", isAlive() ? "true" : "false", isVisible() ? "true" : "false",
 		      isBuried() ? "true" : "false");
-		PRINT(" neutralTime = %.2f\n", _738);
+		PRINT(" neutralTime = %.2f\n", mNeutralTime);
 	} else {
 		PRINT("-- navi : mode = %d\n", mStateMachine->getCurrID(this));
 		PRINT(" onground : %s isFlying %s\n", isCreatureFlag(CF_IsOnGround) ? "true" : "false",
 		      isCreatureFlag(CF_IsFlying) ? "true" : "false");
 		PRINT(" isAlive=%s isVisible=%s isBuried=%s\n", isAlive() ? "true" : "false", isVisible() ? "true" : "false",
 		      isBuried() ? "true" : "false");
-		PRINT(" neutralTime = %.2f\n", _738);
+		PRINT(" neutralTime = %.2f\n", mNeutralTime);
 	}
 }
 
@@ -4340,7 +4340,7 @@ void Navi::updateLook()
 		f32 tmp2   = angDist(0.0f, _2F8);
 		_2F8       = roundAng(tmp2 * factor + _2F8);
 
-		if (zen::Abs(_2F4) < 0.1f && zen::Abs(_2F8) < 0.1f) {
+		if (absF(_2F4) < 0.1f && absF(_2F8) < 0.1f) {
 			forceFinishLook();
 		}
 		return;
@@ -4363,7 +4363,7 @@ void Navi::updateLook()
 		angle5 = angDist(angle2, angle3);
 	}
 
-	if (zen::Abs(angle5) < PI / 20.0f) {
+	if (absF(angle5) < PI / 20.0f) {
 		angle5 = 0.0f;
 	}
 
@@ -4376,7 +4376,7 @@ void Navi::updateLook()
 	}
 
 	f32 angle6 = angDist(angle1, _2F8);
-	if (zen::Abs(angle6) < PI / 20.0f) {
+	if (absF(angle6) < PI / 20.0f) {
 		angle6 = 0.0f;
 	}
 

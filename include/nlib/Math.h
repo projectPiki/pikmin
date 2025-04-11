@@ -5,6 +5,7 @@
 #include "Vector.h"
 #include "Dolphin/mtx.h"
 #include <system.h>
+#include "nlib/System.h"
 
 template <typename T>
 struct NMath {
@@ -38,7 +39,7 @@ struct NMath {
 
 	// inlines to make, per the DLL:
 	static f32 maxValue(f32, f32);
-	static f32 minValue(f32, f32);
+	static T minValue(T x, T y) { return (x < y) ? x : y; }
 };
 
 typedef NMath<f32> NMathf;
@@ -52,6 +53,7 @@ struct NMathF {
 
 	static f32 cos(f32 x) { return cosf(x); }
 	static f32 sin(f32 x) { return sinf(x); }
+	static f32 tan(f32 x) { return tanf(x); }
 
 	static f32 atan2(f32, f32);
 	static f32 remainder(f32, f32);
@@ -70,32 +72,66 @@ struct NMathF {
 		return angle;
 	}
 
-	static inline f32 interpolate(f32 x, f32 y, f32 t) { return (1.0f - t) * x + t * y; }
+	static inline f32 interpolate(f32 x, f32 y, f32 t) { return x * (1.0f - t) + y * t; }
 	static inline f32 length(f32 x, f32 y) { return std::sqrtf(x * x + y * y); }
 
 	static inline bool equals(f32 x, f32 y) { return NMathF::isZero(x - y); }
 	static inline bool isPositive(f32 x) { return x >= error; }
 	static inline bool isZero(f32 value) { return NMathf::absolute(value) <= error; }
 
+	static inline f32 d2r(f32 degrees) { return degrees * radianPerDegree; }
+	static inline f32 r2d(f32 radians) { return radians * degreePerRadian; }
+
+	static inline f32 calcNearerDirection(f32 target, f32 angle)
+	{
+		f32 tau = 2.0f * pi;
+		if (angle >= target) {
+			f32 diff = angle - target;
+			if (tau - diff < diff) {
+				angle -= tau;
+			}
+		} else {
+			f32 diff = target - angle;
+			if (tau - diff < diff) {
+				angle += tau;
+			}
+		}
+		return angle;
+	}
+
+	static inline f32 angleDifference(f32 angleA, f32 angleB)
+	{
+		f32 tau = 2.0f * pi;
+		if (angleA >= angleB) {
+			f32 mainDiff = angleA - angleB;
+			f32 compDiff = tau - mainDiff;
+			if (mainDiff < compDiff) {
+				return mainDiff;
+			}
+
+			return compDiff;
+		}
+		f32 mainDiff = angleB - angleA;
+		f32 compDiff = tau - mainDiff;
+		if (mainDiff < compDiff) {
+			return mainDiff;
+		}
+
+		return compDiff;
+	}
+
+	static inline f32 rangeRandom(f32 min, f32 max) { return (max - min) * NSystem::random() + min; }
+	static inline bool occurred(f32 chance) { return NSystem::random() < chance; }
+	static inline f32 rateRandom(f32 min, f32 range) { return min * (2.0f * (NSystem::random() - 0.5f)) * range + min; }
+	static inline f32 sqrt(f32 x) { return std::sqrtf(x); }
+
 	// inlines from DLL, to be created:
 	static inline f32 acos(f32);
-	static inline f32 angleDifference(f32, f32);
-	static inline f32 calcNearerDirection(f32, f32);
-	static inline f32 d2r(f32);
-	static inline f32 r2d(f32);
-	static inline f32 rangeRandom(f32, f32);
-	static inline f32 rateRandom(f32, f32);
-	static inline f32 sqrt(f32);
-	static inline f32 tan(f32);
 	static inline int quotient(f32, f32);
-	static inline bool occurred(f32);
-
-	// this is fake or needs renaming
-	static inline f32 getRandomAngle() { return 2.0f * System::getRand(1.0f) * pi; }
 };
 
 struct NMathI {
-	static int rangeRandom(int, int);
+	static int rangeRandom(int min, int max) { return min + NSystem::randomInt(max - min); }
 	static bool checkBit(int flag, int bit) { return (flag & bit); }
 };
 

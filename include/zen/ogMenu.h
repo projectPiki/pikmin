@@ -99,6 +99,7 @@ struct ogScrMenuMgr {
 	void updateCont(Controller*);
 
 	// TODO: members
+	u8 _00[0x6C]; // _00
 };
 
 // unused global functions:

@@ -109,7 +109,7 @@ void ActStone::initApproach()
 int ActStone::exeApproach()
 {
 	if (!mCurrPebble || !mCurrPebble->isAlive()) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		return ACTOUT_Fail;
 	}
 
@@ -144,7 +144,7 @@ void ActStone::initAdjust()
 int ActStone::exeAdjust()
 {
 	if (!mCurrPebble || !mCurrPebble->isAlive()) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		return ACTOUT_Fail;
 	}
 
@@ -223,25 +223,24 @@ void ActStone::animationKeyUpdated(PaniAnimKeyEvent& event)
 		Vector3f effectPos(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 		effectPos = effectPos * 5.0f + mPiki->mPosition;
 		EffectParm parm(effectPos);
-		UtEffectMgr::cast(12, parm);
+		UtEffectMgr::cast(KandoEffect::WallHit0, parm);
 
 		if (pebbleState == ACTOUT_Success) {
-			UtEffectMgr::cast(10, parm);
+			UtEffectMgr::cast(KandoEffect::PikiGrowup2, parm);
 			mRockGen->killPebble();
 			mPiki->playEventSound(mRockGen, SEB_STONE_BREAK);
-			if (System::getRand(1.0f) > (1.0f - STONE_NECTAR_CHANCE)) {
+			if (gsys->getRand(1.0f) > (1.0f - STONE_NECTAR_CHANCE)) {
 				MizuItem* nectar = static_cast<MizuItem*>(itemMgr->birth(OBJTYPE_FallWater));
 				if (nectar) {
 					Vector3f nectarPos(effectPos);
 					nectarPos.y += 10.0f;
-					f32 randAngle  = 2.0f * (PI * System::getRand(1.0f));
+					f32 randAngle  = 2.0f * (PI * gsys->getRand(1.0f));
 					f32 horizSpeed = 30.0f;
 					f32 vertSpeed  = 400.0f;
 					Vector3f vel(30.0f * sinf(randAngle), vertSpeed, 30.0f * cosf(randAngle));
 					nectar->init(nectarPos);
 					nectar->mVelocity = vel;
 					nectar->startAI(0);
-					u32 badCompiler[2];
 				}
 			}
 		} else {

@@ -7,6 +7,7 @@
 #include "gameflow.h"
 #include "Graphics.h"
 #include "jaudio/PikiScene.h"
+#include "sysNew.h"
 #include "DebugLog.h"
 
 /*
@@ -39,9 +40,11 @@ IntroGameSection::IntroGameSection()
 	igss   = nullptr;
 
 	gsys->startLoading(0, true, 60);
-	igss = new IntroGameSetupSection();
-	add(igss);
+	IntroGameSetupSection* intro = new IntroGameSetupSection();
+	add(intro);
+	gsys->endLoading();
 
+	f32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -226,15 +229,14 @@ IntroGameSection::IntroGameSection()
  * Address:	8005B0B4
  * Size:	000080
  */
-void IntroModeState::update(u32& a2)
+ModeState* IntroModeState::update(u32& a2)
 {
 	a2 = 1;
 	if (!gameflow.mMoviePlayer->mIsActive) {
 		PRINT("quitting!\n");
-		// TODO: this has regswap issues.
-		// return new QuittingModeState(_04);
+		return new QuittingModeState(mSection);
 	}
-	// return this;
+	return this;
 }
 
 /*
@@ -251,7 +253,7 @@ void IntroModeState::postRender(Graphics&)
  * Address:	8005B138
  * Size:	00000C
  */
-void QuittingModeState::update(u32& a)
+ModeState* QuittingModeState::update(u32& a)
 {
 	PRINT("quitter updating!\n");
 	a = 0;
@@ -293,10 +295,50 @@ void IntroGameSetupSection::update()
  */
 void IntroGameSetupSection::draw(Graphics& gfx)
 {
+	Matrix4f mtx;
+
 	gameflow.mMoviePlayer->update();
 	if (!gameflow.mMoviePlayer->setCamera(gfx)) {
 		gfx.setCamera(&_50);
-		_50.update(gfx.mScreenWidth / gfx.mScreenHeight, gfx.mScreenHeight, 100.0f, _398);
+		f32 w = gfx.mScreenWidth;
+		f32 h = gfx.mScreenHeight;
+		_50.update(w / h, _50.mFov, 100.0f, _398);
+	}
+
+	mainRender(gfx);
+
+	if (effectMgr) {
+		if (gameflow._33C == 0 && gameflow._338 == 0 && (gsys->_258 < 0)) {
+			effectMgr->update();
+		}
+		effectMgr->draw(gfx);
+	}
+
+	if (!(gameflow.mDemoFlags & 0x80)) {
+		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		postRender(gfx);
+	}
+
+	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+
+	BaseGameSection::draw(gfx);
+
+	if (!_3A4) {
+		if (!gsys->getPending() && (!_20 || gameflow.mMoviePlayer->mIsActive)) {
+			if (_38) {
+				_34 = _38;
+				_38 = nullptr;
+			}
+			_34 = _34->update(_3C);
+		}
+	} else {
+		_3A4 = false;
+	}
+
+	if (_38) {
+		_34 = _38;
+		_38 = nullptr;
 	}
 	/*
 	.loc_0x0:

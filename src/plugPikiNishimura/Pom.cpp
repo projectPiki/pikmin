@@ -1,6 +1,7 @@
 #include "Pom.h"
 #include "Collision.h"
 #include "Piki.h"
+#include "NsMath.h"
 #include "Graphics.h"
 #include "Shape.h"
 #include "sysNew.h"
@@ -79,7 +80,7 @@ void Pom::setColor(int color)
 {
 	mColor = color;
 	if (mColor < PikiMinColor || mColor > PikiMaxColor) {
-		mColor = randFloat(2.999997f);
+		mColor = NsMathI::getRand(3);
 	}
 
 	mShapeObject->mShape->makeInstance(mDynMaterial, 0);

@@ -11,11 +11,22 @@ namespace zen {
  * @brief TODO
  */
 struct KeyRepeat {
+	KeyRepeat(u32 button)
+	{
+		mButton = button;
+		_04     = 0.0f;
+		_08     = repeatTime;
+		_0C     = 0;
+	}
+
 	bool update(Controller*);
 
 	static f32 repeatTime;
 
-	// TODO: members
+	u32 mButton; // _00
+	f32 _04;     // _04
+	f32 _08;     // _08
+	u8 _0C;      // _0C
 };
 
 /**
@@ -28,16 +39,15 @@ struct ZenController {
 
 	void update();
 
-	/* Inlined:
-	    void setRepeatTime(f32);
-	*/
+	bool keyRepeat(u32 button) { return mRepeatInput & button; }
+	void setContPtr(Controller* controller) { mController = controller; }
 
-	inline BOOL keyRepeat(u32 button) { return mRepeatInput & button; }
-	inline void setContPtr(Controller* controller) { mController = controller; }
+	// DLL inline to do:
+	void setRepeatTime(f32 time) { KeyRepeat::repeatTime = time; }
 
-	Controller* mController; // _00
-	u32 mRepeatInput;        // _04, probably some form of input
-	u8 _08[0x6C - 0x8];      // _08, unknown
+	Controller* mController;    // _00
+	u32 mRepeatInput;           // _04, probably some form of input
+	KeyRepeat* mKeyRepeats[25]; // _08
 };
 
 } // namespace zen

@@ -110,7 +110,7 @@ void Piki::startDemo()
 		mBurnEffect->stop();
 		mSlimeEffect->stop();
 		mRippleEffect->stop();
-		_428->stop();
+		mPanickedEffect->stop();
 		PikiState* state = static_cast<PikiState*>(getCurrState());
 		if (state) {
 			state->stopEffect();
@@ -129,7 +129,7 @@ void Piki::finishDemo()
 	mBurnEffect->restart();
 	mSlimeEffect->restart();
 	mRippleEffect->restart();
-	_428->restart();
+	mPanickedEffect->restart();
 	PikiState* state = static_cast<PikiState*>(getCurrState());
 	if (state) {
 		state->restartEffect();
@@ -149,11 +149,11 @@ bool Piki::appearDemo()
 		return false;
 	} else if (mColor == Yellow && gameflow.mDemoFlags & 0x20) {
 		return false;
-	} else if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(1)) {
+	} else if (mMode == PikiMode::FreeMode && !pikiMgr->isUpdating(PMUPDATE_FreePiki)) {
 		return false;
-	} else if (mMode == PikiMode::FormationMode && !pikiMgr->isUpdating(2)) {
+	} else if (mMode == PikiMode::FormationMode && !pikiMgr->isUpdating(PMUPDATE_FormationPiki)) {
 		return false;
-	} else if (!pikiMgr->isUpdating(4)) {
+	} else if (!pikiMgr->isUpdating(PMUPDATE_WorkPiki)) {
 		return false;
 	}
 
@@ -266,7 +266,7 @@ int Piki::findRoute(int sourceWaypointIndex, int destWaypointIndex, bool isRetry
 					// Copy waypoint data
 					mPathBuffers[i].mWayPointIdx = piki->mPathBuffers[i].mWayPointIdx;
 					int currentPoint             = mPathBuffers[i].mWayPointIdx;
-					mPathBuffers[i]._04          = piki->mPathBuffers[i]._04;
+					mPathBuffers[i].mFlag        = piki->mPathBuffers[i].mFlag;
 					pathLength++;
 
 					// Check if we've reached the destination
@@ -531,7 +531,7 @@ int Piki::moveRouteTrace(f32 speedRatio)
 	f32 distToPath = dirToPath.normalise();
 
 	f32 ctrlPtsWeight     = (1.0f - ctrlRatio) * crGetRadius(mCurrRoutePoint) + ctrlRatio * crGetRadius(mCurrRoutePoint + 1);
-	f32 alignToPathWeight = zen::Abs(distToPath) / ctrlPtsWeight;
+	f32 alignToPathWeight = absF(distToPath) / ctrlPtsWeight;
 	if (alignToPathWeight > 1.0f) {
 		alignToPathWeight = 1.0f;
 	} else if (alignToPathWeight < 0.0f) {
@@ -716,7 +716,7 @@ bool Piki::isTeki(Piki* target)
 		return true;
 	}
 
-	if (flowCont._230 == 1) {
+	if (flowCont.mNaviOnMap == 1) {
 		return target->mNavi != mNavi;
 	}
 
@@ -2711,7 +2711,7 @@ int Piki::graspSituation(Creature** outTarget)
 void Piki::initColor(int color)
 {
 	mColor = color;
-	if (flowCont._230 == 1) {
+	if (flowCont.mNaviOnMap == 1) {
 		switch (color) {
 		case Blue:
 			mPlayerId = 0;
@@ -2976,7 +2976,7 @@ void Piki::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	if (mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == 56 && event.mEventType == KEY_PlayEffect) {
 		EffectParm parm(mPosition);
-		UtEffectMgr::cast(17, parm);
+		UtEffectMgr::cast(KandoEffect::Bubbles, parm);
 	}
 
 	if (isDamaged() && event.mEventType == KEY_Finished) {
@@ -3270,8 +3270,8 @@ void Piki::bounceCallback()
 	sendMsg(&msg);
 
 	int attr = ATTR_NULL;
-	if (mFloorTri) {
-		attr = MapCode::getAttribute(mFloorTri);
+	if (mGroundTriangle) {
+		attr = MapCode::getAttribute(mGroundTriangle);
 	}
 
 	int state = getState();
@@ -3284,8 +3284,8 @@ void Piki::bounceCallback()
 		isDrownSurface = true;
 	} else if (isStickTo() && mInWaterTimer == 0 && mColor != Blue) {
 		Creature* obj = getStickObject();
-		if (obj && obj->mFloorTri && MapCode::getAttribute(obj->mFloorTri) == ATTR_Water) {
-			if (zen::Abs(obj->mPosition.y - mPosition.y) < 10.0f) {
+		if (obj && obj->mGroundTriangle && MapCode::getAttribute(obj->mGroundTriangle) == ATTR_Water) {
+			if (absF(obj->mPosition.y - mPosition.y) < 10.0f) {
 				isDrownSurface = true;
 			}
 		}
@@ -3298,10 +3298,10 @@ void Piki::bounceCallback()
 		mFSM->transit(this, PIKISTATE_Drown);
 		EffectParm rippleParm(&mPosition);
 		EffectParm parm(mPosition);
-		rippleParm._24 = 2.0f;
+		rippleParm.mScale = 2.0f;
 
 		mRippleEffect->emit(rippleParm);
-		UtEffectMgr::cast(17, parm);
+		UtEffectMgr::cast(KandoEffect::Bubbles, parm);
 		mInWaterTimer = 1;
 		return;
 	}
@@ -3368,7 +3368,7 @@ void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 		Creature* target = mLookAtTarget.getPtr();
 		if (!isLooking()) {
 			if (!target) {
-				int rand = System::getRand(1.0f) * 2.0f;
+				int rand = gsys->getRand(1.0f) * 2.0f;
 				if (rand == 0) {
 					startHimaLook(&mNavi->mCursorWorldPos);
 				} else {
@@ -3382,7 +3382,7 @@ void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 			return;
 		}
 
-		if (_330 && target) {
+		if (mIsLooking && target) {
 			CollPart* part = nullptr;
 			if (target->mCollInfo) {
 				part = target->mCollInfo->getRandomCollPart('****');
@@ -3468,12 +3468,12 @@ void Piki::checkBridgeWall(Creature* object, Vector3f& direction)
 	if (state != PIKISTATE_Pressed && state != PIKISTATE_Dead && state != PIKISTATE_Dying) {
 		if (object && object->mObjType == OBJTYPE_WorkObject) {
 			Action* action = mActiveAction->getCurrAction();
-			if (action && static_cast<ActCrowd*>(action)->_2C == 1) {
+			if (action && static_cast<ActCrowd*>(action)->mState == 1) {
 				WorkObject* workObj = static_cast<WorkObject*>(object);
 				if (workObj->isBridge()) {
 					Bridge* bridge = static_cast<Bridge*>(workObj);
 					f32 zComp      = direction.DP(bridge->getBridgeZVec());
-					if (bridge->_3C8 && zComp < -0.8f && !bridge->isFinished()) {
+					if (bridge->mDoUseJointSegments && zComp < -0.8f && !bridge->isFinished()) {
 						PRINT("** BRIDGE AI START\n");
 						seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 						mActiveAction->abandon(nullptr);
@@ -3519,7 +3519,7 @@ void Piki::collisionCallback(CollEvent& event)
 			bool crowdCheck = false;
 			if (mMode == PikiMode::FormationMode) {
 				ActCrowd* action = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-				if (action && action->_2C != 1) {
+				if (action && action->mState != 1) {
 					crowdCheck = true;
 				}
 			}
@@ -3566,7 +3566,7 @@ void Piki::collisionCallback(CollEvent& event)
 	if (AIConstant::_instance->mConstants.mDoCStickAttack() && (collider->mObjType == OBJTYPE_Teki || collider->isBoss())
 	    && collider->isOrganic() && mMode == PikiMode::FormationMode && getState() != PIKISTATE_Pressed) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-		if (crowd && crowd->_2C == 1) {
+		if (crowd && crowd->mState == 1) {
 			mActiveAction->abandon(nullptr);
 			mActiveAction->mCurrActionIdx = PikiAction::Attack;
 			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);
@@ -3578,7 +3578,7 @@ void Piki::collisionCallback(CollEvent& event)
 	if (!isKinoko() && collider->mObjType == OBJTYPE_Piki && mMode == PikiMode::FormationMode && getState() != PIKISTATE_Pressed
 	    && static_cast<Piki*>(collider)->isTeki(this)) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-		if (crowd && crowd->_2C == 1) {
+		if (crowd && crowd->mState == 1) {
 			mActiveAction->abandon(nullptr);
 			mActiveAction->mCurrActionIdx = PikiAction::Attack;
 			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);
@@ -3589,7 +3589,7 @@ void Piki::collisionCallback(CollEvent& event)
 
 	if (distCheck && collider->isSluice() && mMode == PikiMode::FormationMode && collider->isAlive()) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-		if (collPart->getID().match('gate', '*') && crowd && crowd->_2C == 1) {
+		if (collPart->getID().match('gate', '*') && crowd && crowd->mState == 1) {
 			mActiveAction->abandon(nullptr);
 			mActiveAction->mCurrActionIdx = PikiAction::BreakWall;
 			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);
@@ -3604,7 +3604,7 @@ void Piki::collisionCallback(CollEvent& event)
 			HinderRock* rock = static_cast<HinderRock*>(obj);
 			if (!rock->isFinished()) {
 				ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-				if (crowd && crowd->_2C == 1) {
+				if (crowd && crowd->mState == 1) {
 					mActiveAction->abandon(nullptr);
 					mActiveAction->mCurrActionIdx = PikiAction::Push;
 					mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);
@@ -3619,7 +3619,7 @@ void Piki::collisionCallback(CollEvent& event)
 		Pellet* pellet = static_cast<Pellet*>(collider);
 		if (pellet->isAlive() && pellet->getMinFreeSlotIndex() != -1) {
 			ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-			if (crowd && crowd->_2C == 1) {
+			if (crowd && crowd->mState == 1) {
 				mActiveAction->abandon(nullptr);
 				mActiveAction->mCurrActionIdx = PikiAction::Transport;
 				mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);
@@ -3649,7 +3649,7 @@ void Piki::collisionCallback(CollEvent& event)
 		GrassGen* grass = static_cast<GrassGen*>(collider);
 		if (grass->workable()) {
 			ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-			if (crowd && crowd->_2C == 1) {
+			if (crowd && crowd->mState == 1) {
 				seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 				mActiveAction->abandon(nullptr);
 				mActiveAction->mCurrActionIdx = PikiAction::Weed;
@@ -3662,7 +3662,7 @@ void Piki::collisionCallback(CollEvent& event)
 
 	if (distCheck && collider->isAlive() && collider->mObjType == OBJTYPE_BoBase && mMode == PikiMode::FormationMode && !isHolding()) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-		if (crowd && crowd->_2C == 1) {
+		if (crowd && crowd->mState == 1) {
 			seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 			mActiveAction->abandon(nullptr);
 			mActiveAction->mCurrActionIdx = PikiAction::BoMake;
@@ -3677,7 +3677,7 @@ void Piki::collisionCallback(CollEvent& event)
 		RockGen* pebble = static_cast<RockGen*>(collider);
 		if (pebble->workable()) {
 			ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-			if (crowd && crowd->_2C == 1) {
+			if (crowd && crowd->mState == 1) {
 				seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 				mActiveAction->abandon(nullptr);
 				mActiveAction->mCurrActionIdx = PikiAction::Stone;
@@ -3714,10 +3714,10 @@ Piki::Piki(CreatureProp* prop)
 	mRippleEffect    = new RippleEffect();
 	mFreeLightEffect = new FreeLightEffect();
 	mSlimeEffect     = new SlimeEffect();
-	_48C             = 0.0f;
+	mDeathTimer      = 0.0f;
 	mSearchBuffer.init(mPikiSearchData, 6);
 	_68              = 1;
-	_428             = new PermanentEffect();
+	mPanickedEffect  = new PermanentEffect();
 	mIsPanicked      = false;
 	_4DC             = 0;
 	mCurrentState    = nullptr;
@@ -3860,17 +3860,17 @@ void Piki::resetPosition(Vector3f& pos)
  */
 void Piki::init(Navi* navi)
 {
-	_344 = 0.0f;
-	_348 = 0.0f;
+	mHorizontalRotation = 0.0f;
+	mVerticalRotation   = 0.0f;
 	mScale.set(1.0f, 1.0f, 1.0f);
 	mRouteHandle         = 0;
 	mUseAsyncPathfinding = false;
 	_528                 = 0.0f;
 	mLookAtTarget.clear();
 	mLookatTarget = nullptr;
-	_330          = 0;
+	mIsLooking    = 0;
 	forceFinishLook();
-	mEmotion          = 10;
+	mEmotion          = PikiEmotion::Unk10;
 	mCarryingShipPart = nullptr;
 	mLeaderCreature   = nullptr;
 	mInWaterTimer     = 0;
@@ -3920,7 +3920,7 @@ void Piki::init(Navi* navi)
 	mFloweringTimer = 0;
 	mFSM->transit(this, PIKISTATE_Normal);
 	mPikiSize = pikiMgr->mPikiParms->mPikiParms._23C()
-	          + (pikiMgr->mPikiParms->mPikiParms._24C() - pikiMgr->mPikiParms->mPikiParms._23C()) * System::getRand(1.0f);
+	          + (pikiMgr->mPikiParms->mPikiParms._24C() - pikiMgr->mPikiParms->mPikiParms._23C()) * gsys->getRand(1.0f);
 	mOldFaceDirection = mFaceDirection;
 	initBirth();
 	mRouteDestinationIndex = -1;
@@ -4004,11 +4004,11 @@ void Piki::updateLookCreature()
 		}
 	}
 
-	if (target != newTarget && System::getRand(1.0f) > 0.2f) {
+	if (target != newTarget && gsys->getRand(1.0f) > 0.2f) {
 		if (target) {
 			mLookAtTarget.reset();
 		}
-		if (System::getRand(1.0f) > 0.2f) {
+		if (gsys->getRand(1.0f) > 0.2f) {
 			newTarget = mNavi;
 		}
 
@@ -4060,7 +4060,7 @@ void Piki::updateWalkAnimation()
 		}
 
 		int upperMotionID = mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex();
-		f32 angleDiff     = zen::Abs(mFaceDirection - mOldFaceDirection);
+		f32 angleDiff     = absF(mFaceDirection - mOldFaceDirection);
 		doMotionBlend();
 		int newMotionID;
 		if (speed < pikiMgr->mPikiParms->mPikiParms._19C()) {
@@ -4165,7 +4165,7 @@ void Piki::realAI()
 			AICreature* aiC = static_cast<AICreature*>(held);
 			PRINT("---- aiContext ---\n");
 			PRINT(" creature=%x target=%x\n", aiC->mCollidingCreature, aiC->mTargetCreature);
-			PRINT(" int=%d int2=%d real=%f real1=%f real2=%f\n", aiC->_2D0, aiC->mCounter, aiC->mCurrentItemHealth, aiC->_2DC,
+			PRINT(" int=%d int2=%d real=%f real1=%f real2=%f\n", aiC->mCurrAnimId, aiC->mCounter, aiC->mCurrentItemHealth, aiC->_2DC,
 			      aiC->mMaxHealth);
 			PRINT("  currState=%x\n", aiC->mCurrentState);
 			PRINT("============================================\n");
@@ -4191,8 +4191,8 @@ void Piki::realAI()
 	}
 
 	int attr = ATTR_NULL;
-	if (mFloorTri) {
-		attr = MapCode::getAttribute(mFloorTri);
+	if (mGroundTriangle) {
+		attr = MapCode::getAttribute(mGroundTriangle);
 	}
 
 	bool isInWater = false;
@@ -4200,8 +4200,8 @@ void Piki::realAI()
 		isInWater = true;
 	} else if (isStickTo()) {
 		Creature* stickObj = getStickObject();
-		if (stickObj && stickObj->mFloorTri && MapCode::getAttribute(stickObj->mFloorTri) == ATTR_Water
-		    && zen::Abs(stickObj->mPosition.y - mPosition.y) < 10.0f) {
+		if (stickObj && stickObj->mGroundTriangle && MapCode::getAttribute(stickObj->mGroundTriangle) == ATTR_Water
+		    && absF(stickObj->mPosition.y - mPosition.y) < 10.0f) {
 			isInWater = true;
 		}
 	}
@@ -4211,7 +4211,7 @@ void Piki::realAI()
 			EffectParm rippleParm(&mShadowPos);
 			EffectParm castParm(mShadowPos);
 			mRippleEffect->emit(rippleParm);
-			UtEffectMgr::cast(17, castParm);
+			UtEffectMgr::cast(KandoEffect::Bubbles, castParm);
 			seSystem->playSoundDirect(5, SEW_PIKI_WATERDROP, mPosition);
 		}
 
@@ -4743,6 +4743,9 @@ void Piki::changeMode(int newMode, Navi* navi)
 	mMode = newMode;
 }
 
+char* states_str[] = { "NORMAL",    "GROW",   "BURY",   "NUKARE",  "DYING",   "DEAD",    "BUTUKARI",
+	                   "TRANSFORM", "GROWUP", "ABSORB", "ILLEGAL", "ILLEGAL", "ILLEGAL", "ILLEGAL" };
+
 char* _standStr[] = { "GROUND", "TEKIPLAT", "PLAT", "AIR" };
 
 char* _modeStr[] = {
@@ -4782,7 +4785,7 @@ void Piki::dump()
 		PRINT(" * motion    <%s/%s>\n", mPikiAnimMgr.getUpperAnimator().getCurrentMotionName(),
 		      mPikiAnimMgr.getLowerAnimator().getCurrentMotionName());
 
-		if (flowCont._230 == 1) {
+		if (flowCont.mNaviOnMap == 1) {
 			char* naviName;
 			if (mNavi) {
 				naviName = (mNavi == naviMgr->getNavi(0)) ? "player1" : "player2";
@@ -4805,13 +4808,13 @@ void Piki::dump()
 		if (mActiveAction->getCurrAction() && mMode == PikiMode::FormationMode) {
 			ActCrowd* action = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
 
-			PRINT("<form> md %d koke %s route %s wait %s st %d", action->_2E, action->_64 ? "Y" : "N", action->_7F ? "Y" : "N",
-			      action->_7D ? "Y" : "N", action->_2C);
+			PRINT("<form> md %d koke %s route %s wait %s st %d", action->mMode, action->mIsTripping ? "Y" : "N",
+			      action->mHasRoute ? "Y" : "N", action->mIsWaiting ? "Y" : "N", action->mState);
 		}
 
 		PRINT(" _stickObject=%x(%d) : _stickToObject=%s\n", getStickObject(), getStickObject() ? getStickObject()->mObjType : -1,
 		      mStickPart ? mStickPart->getTypeString() : "none");
-		PRINT(" floorCollTri=%x\n", mFloorTri);
+		PRINT(" floorCollTri=%x\n", mGroundTriangle);
 		PRINT(" standType = %s fluteBooking = %s\n", _standStr[getStandType()], mIsWhistlePending ? "true" : "-");
 		PRINT(" wantToStick = %s\n", mWantToStick ? "true" : "false");
 
@@ -4838,7 +4841,7 @@ void Piki::dump()
 		PRINT(" * motion    <%s/%s>\n", mPikiAnimMgr.getUpperAnimator().getCurrentMotionName(),
 		      mPikiAnimMgr.getLowerAnimator().getCurrentMotionName());
 
-		if (flowCont._230 == 1) {
+		if (flowCont.mNaviOnMap == 1) {
 			char* naviName;
 			if (mNavi) {
 				naviName = (mNavi == naviMgr->getNavi(0)) ? "player1" : "player2";
@@ -4859,7 +4862,7 @@ void Piki::dump()
 		static_cast<PikiState*>(getCurrState())->dump();
 		PRINT(" _stickObject=%x(%d) : _stickToObject=%s\n", getStickObject(), getStickObject() ? getStickObject()->mObjType : -1,
 		      mStickPart ? mStickPart->getTypeString() : "none");
-		PRINT(" floorCollTri=%x\n", mFloorTri);
+		PRINT(" floorCollTri=%x\n", mGroundTriangle);
 		PRINT(" standType = %s fluteBooking = %s\n", _standStr[getStandType()], mIsWhistlePending ? "true" : "-");
 		PRINT(" wantToStick = %s\n", mWantToStick ? "true" : "false");
 

@@ -16,6 +16,12 @@ struct OdoMeter {
 	void start(f32 startTime, f32 maxDistance);
 	bool moving(Vector3f& start, Vector3f& target);
 
+	void reset()
+	{
+		mTotalDistance = 0.0f;
+		mRemainingTime = mResetTimeValue;
+	}
+
 	f32 mTotalDistance;      // _00
 	f32 mRemainingTime;      // _04
 	f32 mMinAllowedDistance; // _08

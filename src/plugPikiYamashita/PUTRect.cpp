@@ -7,11 +7,11 @@
  */
 void PUTRect::set(int x0, int y0, int x1, int y1)
 {
-	mMin.x = x0;
-	mMin.y = y0;
+	mMinX = x0;
+	mMinY = y0;
 
-	mMax.x = x1;
-	mMax.y = y1;
+	mMaxX = x1;
+	mMaxY = y1;
 }
 
 /*
@@ -21,11 +21,11 @@ void PUTRect::set(int x0, int y0, int x1, int y1)
  */
 void PUTRect::copy(const PUTRect& other)
 {
-	mMin.x = other.mMin.x;
-	mMin.y = other.mMin.y;
+	mMinX = other.mMinX;
+	mMinY = other.mMinY;
 
-	mMax.x = other.mMax.x;
-	mMax.y = other.mMax.y;
+	mMaxX = other.mMaxX;
+	mMaxY = other.mMaxY;
 }
 
 /*
@@ -35,11 +35,11 @@ void PUTRect::copy(const PUTRect& other)
  */
 void PUTRect::add(const PUTPoint& point)
 {
-	mMin.x += point.x;
-	mMax.x += point.x;
+	mMinX += point.x;
+	mMaxX += point.x;
 
-	mMin.y += point.y;
-	mMax.y += point.y;
+	mMinY += point.y;
+	mMaxY += point.y;
 }
 
 /*
@@ -49,11 +49,11 @@ void PUTRect::add(const PUTPoint& point)
  */
 void PUTRect::add(int x, int y)
 {
-	mMin.x += x;
-	mMax.x += x;
+	mMinX += x;
+	mMaxX += x;
 
-	mMin.y += y;
-	mMax.y += y;
+	mMinY += y;
+	mMaxY += y;
 }
 
 /*
@@ -63,20 +63,20 @@ void PUTRect::add(int x, int y)
  */
 bool PUTRect::intersect(const PUTRect& other)
 {
-	if (mMin.x < other.mMin.x) {
-		mMin.x = other.mMin.x;
+	if (mMinX < other.mMinX) {
+		mMinX = other.mMinX;
 	}
 
-	if (mMin.y < other.mMin.y) {
-		mMin.y = other.mMin.y;
+	if (mMinY < other.mMinY) {
+		mMinY = other.mMinY;
 	}
 
-	if (mMax.x > other.mMax.x) {
-		mMax.x = other.mMax.x;
+	if (mMaxX > other.mMaxX) {
+		mMaxX = other.mMaxX;
 	}
 
-	if (mMax.y > other.mMax.y) {
-		mMax.y = other.mMax.y;
+	if (mMaxY > other.mMaxY) {
+		mMaxY = other.mMaxY;
 	}
 
 	bool res = !isEmpty();
@@ -94,11 +94,11 @@ void PUTRect::move(const PUTPoint& point)
 	s16 width  = getWidth();
 	s16 height = getHeight();
 
-	mMin.x = point.x;
-	mMin.y = point.y;
+	mMinX = point.x;
+	mMinY = point.y;
 
-	mMax.x = mMin.x + width;
-	mMax.y = mMin.y + height;
+	mMaxX = mMinX + width;
+	mMaxY = mMinY + height;
 }
 
 /*
@@ -111,11 +111,11 @@ void PUTRect::move(int newMinX, int newMinY)
 	s16 width  = getWidth();
 	s16 height = getHeight();
 
-	mMin.x = newMinX;
-	mMin.y = newMinY;
+	mMinX = newMinX;
+	mMinY = newMinY;
 
-	mMax.x = mMin.x + width;
-	mMax.y = mMin.y + height;
+	mMaxX = mMinX + width;
+	mMaxY = mMinY + height;
 }
 
 /*
@@ -125,8 +125,8 @@ void PUTRect::move(int newMinX, int newMinY)
  */
 void PUTRect::resize(int width, int height)
 {
-	mMax.x = mMin.x + width;
-	mMax.y = mMin.y + height;
+	mMaxX = mMinX + width;
+	mMaxY = mMinY + height;
 }
 
 /*
@@ -146,16 +146,16 @@ void PUTRect::reform(int, int, int, int)
  */
 void PUTRect::normalize()
 {
-	if (mMin.x > mMax.x) {
-		int max = mMax.x;
-		mMax.x  = mMin.x;
-		mMin.x  = max;
+	if (mMinX > mMaxX) {
+		int max = mMaxX;
+		mMaxX   = mMinX;
+		mMinX   = max;
 	}
 
-	if (mMin.y > mMax.y) {
-		int max = mMax.y;
-		mMax.y  = mMin.y;
-		mMin.y  = max;
+	if (mMinY > mMaxY) {
+		int max = mMaxY;
+		mMaxY   = mMinY;
+		mMinY   = max;
 	}
 }
 
@@ -166,5 +166,5 @@ void PUTRect::normalize()
  */
 bool PUTRect::isEmpty() const
 {
-	return (mMin.x >= mMax.x) || (mMin.y >= mMax.y);
+	return (mMinX >= mMaxX) || (mMinY >= mMaxY);
 }

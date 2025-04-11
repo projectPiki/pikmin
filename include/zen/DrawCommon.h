@@ -13,19 +13,25 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xFC.
  */
 struct DrawScreen {
 
 	DrawScreen(char*, P2DGrafContext*, bool, bool);
 
-	virtual bool update(); // _08
+	virtual void update(); // _08
 	virtual void draw();   // _0C
 
 	// unused/inlined:
 	~DrawScreen();
 
+	// DLL inlines to do:
+	P2DScreen* getScreenPtr() { return &mScreen; }
+	void makeResident();
+
 	// _00 = VTBL
-	P2DScreen mPane; // _04
+	P2DScreen mScreen; // _04
 };
 
 /**

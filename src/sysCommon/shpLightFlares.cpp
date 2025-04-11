@@ -113,7 +113,7 @@ void LightGroup::loadini(CmdStream* commands)
 		if (commands->isToken("texture")) {
 			char* texSrc = commands->getToken(true);
 			if (strcmp(texSrc, "NULL") != 0) {
-				mTexSource = (s8*)StdSystem::stringDup(texSrc);
+				mTexSource = StdSystem::stringDup(texSrc);
 			} else {
 				mTexSource = nullptr;
 			}
@@ -123,7 +123,7 @@ void LightGroup::loadini(CmdStream* commands)
 		if (commands->isToken("material")) {
 			char* matSrc = commands->getToken(true);
 			if (strcmp(matSrc, "NULL") != 0) {
-				mMatSource = (s8*)StdSystem::stringDup(matSrc);
+				mMatSource = StdSystem::stringDup(matSrc);
 			} else {
 				mMatSource = nullptr;
 			}

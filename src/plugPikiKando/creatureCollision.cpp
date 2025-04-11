@@ -22,123 +22,140 @@ DEFINE_PRINT("CreatureColl")
  * Address:	8008D954
  * Size:	000768
  */
-void Creature::respondColl(Creature* obj, f32 a1, CollPart* part1, CollPart* part2, const Vector3f& pos)
+void Creature::respondColl(Creature* other, f32, CollPart* selfCollider, CollPart* otherCollider, const Vector3f& point)
 {
-	if (!ignoreAtari(obj) && !obj->ignoreAtari(this)) {
+	if (!ignoreAtari(other) && !other->ignoreAtari(this)) {
 
-		CollEvent evt1(this, part1, part2);
-		CollEvent evt2(obj, part2, part1);
-		obj->collisionCallback(evt1);
-		collisionCallback(evt2);
+		CollEvent selfEvent(this, selfCollider, otherCollider);
+		CollEvent otherEvent(other, otherCollider, selfCollider);
+		other->collisionCallback(selfEvent);
+		collisionCallback(otherEvent);
 
-		if (!needFlick(obj) || !obj->needFlick(this)) {
+		if (!needFlick(other) || !other->needFlick(this)) {
 			return;
 		}
 
-		if (!obj->isAtari() || !isAtari()) {
+		if (!other->isAtari() || !isAtari()) {
 			return;
 		}
 
-		if (!isAlive() || !obj->isAlive()) {
+		if (!isAlive() || !other->isAlive()) {
 			return;
 		}
 
-		if (!obj->isObjType(OBJTYPE_Plant) && !isObjType(OBJTYPE_Plant) && obj->mObjType != OBJTYPE_Plant) {
-
+		if (!other->isObjType(OBJTYPE_Plant) && !isObjType(OBJTYPE_Plant) && other->mObjType != OBJTYPE_Plant) {
+			// If the Pikmin has been thrown at something and hits it, print the name of the hit object
 			if (mObjType == OBJTYPE_Piki && ((Piki*)this)->getState() == PIKISTATE_Flying) {
-				PRINT("vs %s : \n", ObjType::getName(obj->mObjType));
+				PRINT("vs %s : \n", ObjType::getName(other->mObjType));
 			}
 
-			Vector3f offset = pos;
-			if (offset.DP(offset) == 0.0f) {
+			// Calculate collision response vectors
+			Vector3f collisionNormal = point;
+			if (collisionNormal.DP(collisionNormal) == 0.0f) {
 				f32 angle = 0.0f;
-				offset.set(sinf(angle), 0.0f, cosf(angle));
-			}
-			Vector3f velocityDiff = mVelocity;
-			velocityDiff          = velocityDiff - obj->mVelocity;
-			f32 dp                = velocityDiff.DP(offset);
-			f32 massA             = getiMass();
-			f32 massB             = obj->getiMass();
-			if (massA + massB < 0.0001f) {
-				massA = 1e-05;
-				massB = 1e-05;
+				collisionNormal.set(sinf(angle), 0.0f, cosf(angle));
 			}
 
-			f32 scale     = 1.35f;
-			f32 calc      = -scale * dp;
-			calc          = calc / ((massA + massB) * offset.DP(offset));
-			offset        = calc * offset;
-			Vector3f diff = offset;
+			// Calculate relative velocity
+			Vector3f relativeVelocity = mVelocity;
+			relativeVelocity          = relativeVelocity - other->mVelocity;
+			f32 impactSpeed           = relativeVelocity.DP(collisionNormal);
 
-			f32 unused = massA;
+			// Get inverse masses for collision response
+			f32 selfInvMass  = getiMass();
+			f32 otherInvMass = other->getiMass();
 
-			diff      = massA * diff;
-			mVelocity = mVelocity + diff;
+			// Prevent division by zero in mass calculations
+			if (selfInvMass + otherInvMass < 0.0001f) {
+				selfInvMass  = 1e-05;
+				otherInvMass = 1e-05;
+			}
 
-			diff           = offset;
-			diff           = -massB * diff;
-			obj->mVelocity = obj->mVelocity + diff;
+			// Calculate impulse scalar
+			f32 restitution   = 1.35f; // Coefficient of restitution
+			f32 impulseScalar = -restitution * impactSpeed;
+			impulseScalar     = impulseScalar / ((selfInvMass + otherInvMass) * collisionNormal.DP(collisionNormal));
+			collisionNormal   = impulseScalar * collisionNormal;
 
-			Vector3f diff2 = -1.0f * pos;
-			f32 nrm        = diff2.normalise();
-			if (nrm > 0.0f) {
-				f32 forceA, forceB;
+			// Apply impulse to self
+			Vector3f impulse = collisionNormal;
+			impulse          = selfInvMass * impulse;
+			mVelocity        = mVelocity + impulse;
 
-				f32 mass = getiMass() + obj->getiMass();
-				if (mass > 0) {
-					forceA = getiMass() / mass;
-					forceB = 1.0f - forceA;
+			// Apply impulse to other
+			f32 unused;
+			impulse          = collisionNormal;
+			impulse          = -otherInvMass * impulse;
+			other->mVelocity = other->mVelocity + impulse;
+
+			// Calculate separation vector
+			Vector3f separationVector = -1.0f * point;
+			f32 distance              = separationVector.normalise();
+			if (distance > 0.0f) {
+				// Calculate mass ratios for separation
+				f32 sepRatioSelf, sepRatioOther;
+				f32 totalMass = getiMass() + other->getiMass();
+
+				if (totalMass > 0) {
+					sepRatioSelf  = getiMass() / totalMass;
+					sepRatioOther = 1.0f - sepRatioSelf;
 				} else {
-					forceB = 0.5f;
-					forceA = 0.5f;
+					sepRatioOther = 0.5f;
+					sepRatioSelf  = 0.5f;
 				}
 
-				if (isFixed() && !obj->isFixed()) {
-					forceA = 0.0f;
-					forceB = 1.0f;
-				} else if (!isFixed() && obj->isFixed()) {
-					forceA = 1.0f;
-					forceB = 0.0f;
-				} else if (isFixed() && obj->isFixed()) {
-					forceB = 0.0f;
-					forceA = 0.0f;
+				// Adjust ratios based on fixed status
+				if (isFixed() && !other->isFixed()) {
+					sepRatioSelf  = 0.0f;
+					sepRatioOther = 1.0f;
+				} else if (!isFixed() && other->isFixed()) {
+					sepRatioSelf  = 1.0f;
+					sepRatioOther = 0.0f;
+				} else if (isFixed() && other->isFixed()) {
+					sepRatioOther = 0.0f;
+					sepRatioSelf  = 0.0f;
 				}
 
-				f32 y     = 0.0f;
-				f32 xz    = 0.5f;
-				f32 timeA = nrm * forceA / gsys->getFrameTime();
-				f32 timeB = nrm * forceB / gsys->getFrameTime();
+				// Separation velocity scaling factors
+				f32 verticalScale   = 0.0f;
+				f32 horizontalScale = 0.5f;
+
+				// Calculate time-scaled separation velocities
+				f32 sepSpeedSelf  = distance * sepRatioSelf / gsys->getFrameTime();
+				f32 sepSpeedOther = distance * sepRatioOther / gsys->getFrameTime();
 
 				if (mObjType != OBJTYPE_Navi) {
-					mVolatileVelocity.x = timeA * diff2.x * xz;
-					mVolatileVelocity.z = timeA * diff2.z * xz;
-					mVolatileVelocity.y = timeA * diff2.y * y;
+					mVolatileVelocity.x = sepSpeedSelf * separationVector.x * horizontalScale;
+					mVolatileVelocity.z = sepSpeedSelf * separationVector.z * horizontalScale;
+					mVolatileVelocity.y = sepSpeedSelf * separationVector.y * verticalScale;
 				} else {
-					mVolatileVelocity.x += timeA * diff2.x * xz;
-					mVolatileVelocity.z += timeA * diff2.z * xz;
-					mVolatileVelocity.y += timeA * diff2.y * y;
+					mVolatileVelocity.x += sepSpeedSelf * separationVector.x * horizontalScale;
+					mVolatileVelocity.z += sepSpeedSelf * separationVector.z * horizontalScale;
+					mVolatileVelocity.y += sepSpeedSelf * separationVector.y * verticalScale;
 				}
 
-				if (obj->mObjType != OBJTYPE_Navi) {
-					obj->mVolatileVelocity.x = -timeB * diff2.x * xz;
-					obj->mVolatileVelocity.z = -timeB * diff2.z * xz;
-					obj->mVolatileVelocity.y = -timeB * diff2.y * y;
+				if (other->mObjType != OBJTYPE_Navi) {
+					other->mVolatileVelocity.x = -sepSpeedOther * separationVector.x * horizontalScale;
+					other->mVolatileVelocity.z = -sepSpeedOther * separationVector.z * horizontalScale;
+					other->mVolatileVelocity.y = -sepSpeedOther * separationVector.y * verticalScale;
 				} else {
-					obj->mVolatileVelocity.x += -timeB * diff2.x * xz;
-					obj->mVolatileVelocity.z += -timeB * diff2.z * xz;
-					obj->mVolatileVelocity.y += -timeB * diff2.y * y;
+					other->mVolatileVelocity.x += -sepSpeedOther * separationVector.x * horizontalScale;
+					other->mVolatileVelocity.z += -sepSpeedOther * separationVector.z * horizontalScale;
+					other->mVolatileVelocity.y += -sepSpeedOther * separationVector.y * verticalScale;
 				}
 
 				if (!isFixed()) {
-					_1A4 = 1;
+					mHasCollChangedVelocity = 1;
 				}
-				if (!obj->isFixed()) {
-					obj->_1A4 = 1;
+
+				if (!other->isFixed()) {
+					other->mHasCollChangedVelocity = 1;
 				}
+
 				return;
 			}
 
-			_1A4 = 0;
+			mHasCollChangedVelocity = 0;
 		}
 	}
 }

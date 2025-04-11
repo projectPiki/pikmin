@@ -7,7 +7,6 @@
 
 #define SQUARE(v) ((v) * (v))
 
-// this needs fixing but idk how to do so
 static inline f32 quickABS(f32 x)
 {
 	union {

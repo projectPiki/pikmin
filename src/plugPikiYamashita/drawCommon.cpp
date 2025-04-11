@@ -106,7 +106,7 @@ zen::DrawScreen::DrawScreen(char*, P2DGrafContext*, bool, bool)
  * Address:	801BF67C
  * Size:	000024
  */
-bool zen::DrawScreen::update()
+void zen::DrawScreen::update()
 {
 	/*
 	.loc_0x0:

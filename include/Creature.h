@@ -20,6 +20,8 @@ struct Condition;
 struct CreatureInf;
 struct CreatureProp;
 struct DynCollObject;
+struct FormationMgr;
+struct FormPoint;
 struct Generator;
 struct Matrix4f;
 struct MoveTrace;
@@ -78,7 +80,7 @@ struct Creature : public RefCountable, public EventTalker {
 
 	virtual bool insideSafeArea(struct Vector3f&) { return true; }   // _10 (weak)
 	virtual bool platAttachable() { return false; }                  // _14 (weak)
-	virtual bool alwaysUpdatePlatform();                             // _18
+	virtual bool alwaysUpdatePlatform() { return false; }            // _18
 	virtual bool doDoAI() { return true; }                           // _1C (weak)
 	virtual void setRouteTracer(RouteTracer*) { }                    // _20 (weak)
 	virtual void init();                                             // _24
@@ -117,7 +119,7 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual void collisionCallback(struct CollEvent&) { }            // _A8 (weak)
 	virtual void bounceCallback() { }                                // _AC (weak)
 	virtual void jumpCallback() { }                                  // _B0 (weak)
-	virtual void wallCallback(struct Plane&, DynCollObject*);        // _B4
+	virtual void wallCallback(struct Plane&, DynCollObject*) { }     // _B4
 	virtual void offwallCallback(DynCollObject*) { }                 // _B8 (weak)
 	virtual void stickCallback(Creature*) { }                        // _BC (weak)
 	virtual void offstickCallback(Creature*) { }                     // _C0 (weak)
@@ -135,7 +137,7 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual void refresh2d(Graphics&) { }                            // _F0 (weak)
 	virtual void renderAtari(Graphics&);                             // _F4
 	virtual void drawShadow(Graphics&);                              // _F8
-	virtual void demoDraw(Graphics&, Matrix4f*);                     // _FC
+	virtual void demoDraw(Graphics&, Matrix4f*) { }                  // _FC
 	virtual Vector3f getCatchPos(Creature*);                         // _100
 	virtual void doAI() { }                                          // _104 (weak)
 	virtual void doAnimation() { }                                   // _108 (weak)
@@ -210,6 +212,8 @@ struct Creature : public RefCountable, public EventTalker {
 	inline void setFlag80() { setCreatureFlag(CF_Unk8); }
 	inline void unsetFlag80() { resetCreatureFlag(CF_Unk8); }
 
+	inline void setFlag400() { setCreatureFlag(CF_Unk11); }
+
 	// these are setFlag/resetFlag/isFlag in the DLL, but this is clearer.
 	void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
 	void resetCreatureFlag(u32 flag) { mCreatureFlags &= ~flag; }
@@ -221,7 +225,9 @@ struct Creature : public RefCountable, public EventTalker {
 	void startFix() { setCreatureFlag(CF_DisableMovement); }
 	void finishFix() { resetCreatureFlag(CF_DisableMovement); }
 
-	void restartAI() { setCreatureFlag(CF_AIAlwaysActive); }
+	void setInsideView() { setCreatureFlag(CF_AIAlwaysActive); }
+	void setOutsideView() { resetCreatureFlag(CF_AIAlwaysActive); }
+	bool insideView() { return isCreatureFlag(CF_AIAlwaysActive); }
 
 	void enableFaceDirAdjust() { setCreatureFlag(CF_FaceDirAdjust); }
 	void disableFaceDirAdjust() { resetCreatureFlag(CF_FaceDirAdjust); }
@@ -245,6 +251,8 @@ struct Creature : public RefCountable, public EventTalker {
 	bool aiCullable() { return !isCreatureFlag(CF_IsAICullingActive); }
 
 	bool isAIActive() { return !isCreatureFlag(CF_IsAiDisabled); }
+	void stopAI() { setCreatureFlag(CF_IsAiDisabled); }
+	void restartAI() { resetCreatureFlag(CF_IsAiDisabled); }
 
 	BOOL isStickToMouth() { return isCreatureFlag(CF_StuckToMouth); }
 
@@ -264,9 +272,10 @@ struct Creature : public RefCountable, public EventTalker {
 		mAirResistance = res;
 	}
 
+	// were these necessary Nakata.
 	Vector3f& getPosition() { return mPosition; }
 	void inputPosition(Vector3f& pos) { mPosition = pos; }
-	// void outputPosition(Vector3f& pos); // DLL inline - to do
+	void outputPosition(Vector3f& pos) { pos = mPosition; }
 
 	// we're grabbed if we're held by something
 	bool isGrabbed() { return !mHoldingCreature.isNull(); }
@@ -313,20 +322,15 @@ struct Creature : public RefCountable, public EventTalker {
 	    void enableGravity();
 	    void disableGravity();
 
-	    void stopAI();
-
 	    void setCarryOver();
 	    void unsetCarryOver();
-
-	    void setInsideView();
-	    void setOutsideView();
 	*/
 
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker
 	Vector3f mFixedPosition;             // _1C
-	u32 _28;                             // _28, unknown
+	FormPoint* mFormPoint;               // _28
 	SeContext* mSeContext;               // _2C
 	u8 _30;                              // _30
 	int mRebirthDay;                     // _34
@@ -354,7 +358,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Quat mPreGrabRotation;               // _F0
 	Quat _100;                           // _100
 	f32 _110;                            // _110
-	Matrix4f mRopeOrientMtx;             // _114
+	Matrix4f mConstrainedMoveMtx;        // _114, moving on a rope or falling along a fixed path, etc
 	Creature* mRopeListHead;             // _154, first holder in list of holders holding onto this rope
 	RopeCreature* mRope;                 // _158
 	f32 mRopePosRatio;                   // _15C, how far along the rope are we
@@ -369,12 +373,12 @@ struct Creature : public RefCountable, public EventTalker {
 	Creature* mPrevSticker;              // _190, sticker before this one in the sticker list
 	Vector3f mAttachPosition;            // _194
 	int mPelletStickSlot;                // _1A0
-	u32 _1A4;                            // _1A4
+	u32 mHasCollChangedVelocity;         // _1A4
 	u32 _1A8;                            // _1A8, unknown
 	Vector3f mLastPosition;              // _1AC
 	SearchBuffer mSearchBuffer;          // _1B8
 	LifeGauge mLifeGauge;                // _1E0
-	u32 _21C;                            // _21C, unknown
+	FormationMgr* mFormMgr;              // _21C
 	CollInfo* mCollInfo;                 // _220
 	CreatureProp* mProps;                // _224, creature properties
 	Matrix4f mWorldMtx;                  // _228
@@ -385,8 +389,8 @@ struct Creature : public RefCountable, public EventTalker {
 	DynCollObject* mCollPlatform;        // _280
 	Vector3f* mCollPlatNormal;           // _284
 	CollTriInfo* mClimbingTri;           // _288
-	CollTriInfo* mFloorTri;              // _28C
-	u32 _290;                            // _290, unknown
+	CollTriInfo* mGroundTriangle;        // _28C
+	CollTriInfo* mPreviousTriangle;      // _290
 	u8 _294[0x4];                        // _294, unknown
 	u32 _298;                            // _298, unknown
 	Vector3f _29C;                       // _29C
@@ -402,5 +406,6 @@ f32 sphereDist(Creature*, Creature*);
 f32 qdist2(Creature*, Creature*);
 f32 circleDist(Creature*, Creature*);
 bool roughCull(Creature*, Creature*, f32);
+void traceMove2(Creature*, MoveTrace&, f32);
 
 #endif

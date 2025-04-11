@@ -43,9 +43,10 @@ struct TaiStartGenParticleGeneratorAction : public TaiAction {
  * @brief TODO
  */
 struct TaiStopGenParticleGeneratorAction : public TaiAction {
-	inline TaiStopGenParticleGeneratorAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiStopGenParticleGeneratorAction(int p1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		_08 = p1;
 	}
 
 	virtual void start(Teki&); // _08
@@ -57,15 +58,16 @@ struct TaiStopGenParticleGeneratorAction : public TaiAction {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct TaiJointEffectAction : public TAIAeffCloudOfDust {
-	TaiJointEffectAction(f32, int, int, int, int, int);
+	TaiJointEffectAction(f32 sinkThreshold, int footNum, int jointID0, int jointID1, int jointID2, int jointID3);
 
 	virtual void setType(Vector3f&, int, int); // _1C
 
 	// _04     = VTBL
-	// _00-_08 = TAIAeffCloudOfDust?
-	// TODO: members
+	// _00-_24 = TAIAeffCloudOfDust
 };
 
 #endif

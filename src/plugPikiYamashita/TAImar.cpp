@@ -2198,7 +2198,7 @@ bool TAIAflyingDistanceMar::act(Teki& teki)
 		// - weight = 1 (no pikis in range), A = 100, chance of success is 0.3%
 		// - weight = 51 (50 pikis in range), A = 100/51, chance of success is 8.6%
 		// - weight = 101 (100 pikis in range), A = 100/101, chance of success is 14.8%
-		f32 successChance = System::getRand(100.0f / weight) * System::getRand(30.0f);
+		f32 successChance = gsys->getRand(100.0f / weight) * gsys->getRand(30.0f);
 		if (successChance <= 1.0f) {
 			return true;
 		}
@@ -2437,74 +2437,6 @@ f32 TAIAtimerTakeOffMar::getFrameMax(Teki&)
 
 /*
  * --INFO--
- * Address:	801A7610
- * Size:	00000C
- */
-void TAIAtimerReaction::start(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x4B20(r2)
-	  stfs      f0, 0x478(r4)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801A761C
- * Size:	00005C
- */
-bool TAIAtimerReaction::act(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stfd      f31, 0x28(r1)
-	  lwz       r5, 0x2DEC(r13)
-	  lfs       f1, 0x478(r4)
-	  lfs       f0, 0x28C(r5)
-	  fadds     f31, f1, f0
-	  stfs      f31, 0x478(r4)
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  fcmpo     cr0, f31, f1
-	  ble-      .loc_0x44
-	  li        r3, 0x1
-	  b         .loc_0x48
-
-	.loc_0x44:
-	  li        r3, 0
-
-	.loc_0x48:
-	  lwz       r0, 0x34(r1)
-	  lfd       f31, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801A7678
- * Size:	000008
- */
-f32 TAIAtimerReaction::getFrameMax(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	801A7680
  * Size:	0000CC
  */
@@ -2584,15 +2516,6 @@ int TAIAstickingPikiMar::getPikiNum(Teki&)
 	  lwz       r3, 0x58(r3)
 	  blr
 	*/
-}
-
-/*
- * --INFO--
- * Address:	801A7764
- * Size:	000004
- */
-void TAIAstickingPiki::start(Teki&)
-{
 }
 
 /*

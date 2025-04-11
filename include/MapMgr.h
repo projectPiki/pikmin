@@ -15,22 +15,22 @@ struct DayMgr;
  * @brief TODO
  */
 struct MoveTrace {
-	MoveTrace(Vector3f& position, Vector3f& p2, f32 height, bool p4)
+	MoveTrace(Vector3f& position, Vector3f& velocity, f32 radius, bool p4)
 	{
-		_20       = p4;
-		mPosition = position;
-		_0C       = p2;
-		mHeight   = height;
-		_24       = 0;
-		_1C       = 1.0f;
+		_20           = p4;
+		mPosition     = position;
+		mVelocity     = velocity;
+		mRadius       = radius;
+		mObject       = nullptr;
+		mStepFraction = 1.0f;
 	}
 
 	Vector3f mPosition; // _00
-	Vector3f _0C;       // _0C
-	f32 mHeight;        // _18
-	f32 _1C;            // _1C
+	Vector3f mVelocity; // _0C
+	f32 mRadius;        // _18
+	f32 mStepFraction;  // _1C
 	bool _20;           // _20
-	u32 _24;            // _24, unknown
+	Creature* mObject;  // _24, the thing moving
 };
 
 /**
@@ -137,18 +137,30 @@ struct MapObjectPart : public DynCollShape {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
+ */
+struct MapPartsPart {
+	// Fabricated.
+
+	Vector3f mStartPosition; // _00
+	Vector3f mEndPosition;   // _0C
+};
+
+/**
+ * @brief TODO
  */
 struct MapParts : public DynCollShape {
 	MapParts(Shape* shape)
 	    : DynCollShape(shape)
 	{
-		_140 = nullptr;
+		mCurrentPart = nullptr;
 	}
 
-	virtual void read(RandomAccessStream&);                   // _0C
-	virtual void update();                                    // _10
+	virtual void read(RandomAccessStream&) { }                // _0C
+	virtual void update() { }                                 // _10
 	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
-	virtual void init();                                      // _48
+	virtual void init() { }                                   // _48
 
 	static char* getShapeFile(int);
 
@@ -156,8 +168,8 @@ struct MapParts : public DynCollShape {
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	Vector3f* _140; // _140, may also be a ptr to a struct with a Vector3f at _00.
-	Vector3f _144;  // _144
+	MapPartsPart* mCurrentPart; // _140
+	Vector3f mVelocity;         // _144
 };
 
 /**
@@ -185,17 +197,17 @@ struct MapSlider : public MapParts {
 
 	// _00      = VTBL
 	// _00-_150 = MapParts
-	Vector3f _150; // _150
-	f32 _15C;      // _15C
-	int _160;      // _160
-	int _164;      // _164
-	f32 _168;      // _168
-	f32 _16C;      // _16C
-	f32 _170;      // _170
-	int _174;      // _174
-	int _178;      // _178
-	int _17C;      // _17C
-	f32 _180;      // _180
+	Vector3f mSliderPosition; // _150
+	f32 mFaceDirection;       // _15C
+	int mActivationCount;     // _160
+	int mTriggerCount;        // _164
+	f32 mHoldTime1;           // _168
+	f32 mHoldTime2;           // _16C
+	f32 mMoveSpeed;           // _170
+	int mMoveMode;            // _174
+	int mStateMode;           // _178
+	int mDirectionMode;       // _17C
+	f32 mCurrentTimer;        // _180
 };
 
 /**
@@ -249,9 +261,10 @@ struct MapMgr {
 	DayMgr* mDayMgr;                       // _04
 	Vector3f _08;                          // _08
 	MapRoom* mMapRooms;                    // _14, array of 256 MapRooms
-	u8 _18[0x64 - 0x18];                   // _18, unknown
+	u8 _18[0x60 - 0x18];                   // _18, unknown
+	Shape* mMapShape;                      // _60
 	ShapeDynMaterials mDynMaterials;       // _64
-	BaseShape* _74[5];                     // _74
+	BaseShape* mMapPartShapes[5];          // _74
 	DynCollShape* mCollShape;              // _88
 	u8 _8C[0x4];                           // _8C, unknown
 	BoundBox _90;                          // _90
@@ -259,14 +272,16 @@ struct MapMgr {
 	Vector3f _B4;                          // _B4
 	BoundBox _C0;                          // _C0
 	BoundBox _D8;                          // _D8
-	u8 _F0[0x114 - 0xF0];                  // _F0, unknown
+	u8 _F0[0x10C - 0xF0];                  // _F0, unknown
+	int mCollisionCheckCount;              // _10C
+	u8 _110[0x4];                          // _110, unknown
 	ShadowCaster mShadowCaster;            // _114
 	u8 _4A8[0x4];                          // _4A8, unknown
 	MapShadMatHandler* mMapShadMatHandler; // _4AC
 	MapProjMatHandler* mMapProjMatHandler; // _4B0
 	Texture* _4B4;                         // _4B4
 	Texture* _4B8;                         // _4B8
-	int _4BC;                              // _4BC
+	int mBlur;                             // _4BC
 	f32 _4C0;                              // _4C0
 	f32 _4C4;                              // _4C4
 	f32 _4C8;                              // _4C8

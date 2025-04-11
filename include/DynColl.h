@@ -7,6 +7,7 @@
 
 struct Creature;
 struct MapAnimShapeObject;
+struct CollGroup;
 struct MapMgr;
 struct Shape;
 
@@ -17,19 +18,19 @@ struct DynCollObject : public Node {
 	DynCollObject()
 	    : Node("")
 	{
-		_20       = 0;
-		_24       = -1;
-		mCreature = nullptr;
+		mContactCount = 0;
+		_24           = -1;
+		mCreature     = nullptr;
 	}
 
-	virtual void adjust(Creature*);                           // _30
-	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
-	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
-	virtual Shape* getShape();                                // _3C
+	virtual void adjust(Creature*) { }                           // _30
+	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&) { } // _34
+	virtual void touchCallback(Plane&, Vector3f&, Vector3f&) { } // _38
+	virtual Shape* getShape() { return nullptr; }                // _3C
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 _20;             // _20, unknown
+	u32 mContactCount;   // _20, unknown
 	u32 _24;             // _24, maybe int?
 	Creature* mCreature; // _28
 };
@@ -40,13 +41,24 @@ struct DynCollObject : public Node {
  * @note Size: 0x140.
  */
 struct DynCollShape : public DynCollObject {
-	DynCollShape(Shape* shape);
+	DynCollShape(Shape* shape)
+	{
+		mShape = shape;
+		if (mShape) {
+			createDupCollData();
+		}
 
-	virtual void update();               // _10
-	virtual void adjust(Creature*);      // _30
-	virtual Shape* getShape();           // _3C
-	virtual void jointVisible(int, int); // _40
-	virtual void refresh(Graphics&);     // _44
+		mScale    = Vector3f(1.0f, 1.0f, 1.0f);
+		mPosition = Vector3f(0.0f, 0.0f, 0.0f);
+		mRotation = mPosition;
+		mTransformMtx.makeIdentity();
+	}
+
+	virtual void update();                       // _10
+	virtual void adjust(Creature*);              // _30
+	virtual Shape* getShape() { return mShape; } // _3C
+	virtual void jointVisible(int, int);         // _40
+	virtual void refresh(Graphics&);             // _44
 
 	void createDupCollData();
 	void updatePos();
@@ -57,19 +69,19 @@ struct DynCollShape : public DynCollObject {
 
 	// _00     = VTBL
 	// _00-_2C = DynCollObject
-	Shape* mShape;           // _2C
-	u32 _30;                 // _30
-	u32 _34;                 // _34
-	u32* mProgressStateList; // _38
-	u32 _3C;                 // _3C
-	u32 _40;                 // _40
-	BoundBox _44;            // _44
-	Matrix4f mTransformMtx;  // _5C
-	Matrix4f mInverseMatrix; // _9C
-	u8 _DC[0x11C - 0xDC];    // _CC, unknown
-	Vector3f _11C;           // _11C
-	Vector3f _128;           // _128
-	Vector3f _134;           // _134
+	Shape* mShape;             // _2C
+	Vector3f* mVertexList;     // _30
+	u32 _34;                   // _34
+	bool* mProgressStateList;  // _38
+	int mColliderCount;        // _3C
+	CollGroup** mColliderList; // _40
+	BoundBox mBoundingBox;     // _44
+	Matrix4f mTransformMtx;    // _5C
+	Matrix4f mInverseMatrix;   // _9C
+	Matrix4f mWorldMatrix;     // _DC
+	Vector3f mScale;           // _11C, these 3 are actually an SRT struct in the DLL
+	Vector3f mRotation;        // _128
+	Vector3f mPosition;        // _134
 };
 
 /**
@@ -83,8 +95,8 @@ struct DynCollObjBody : public DynCollShape {
 	{
 	}
 
-	virtual void update();                                    // _10
-	virtual void adjust(Creature*);                           // _30
+	virtual void update() { }                                 // _10
+	virtual void adjust(Creature*) { }                        // _30
 	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
 	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
 
@@ -104,8 +116,8 @@ struct DynBuildShape : public DynCollShape {
 	{
 	}
 
-	virtual void update();           // _10
-	virtual void refresh(Graphics&); // _44
+	virtual void update() { }           // _10
+	virtual void refresh(Graphics&) { } // _44
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape

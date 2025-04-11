@@ -37,6 +37,16 @@ void exitCourse()
 
 void init()
 {
+	PRINT("* loading global shapes ...\n");
+	// DLL only:
+	// arrowShape = gameflow.loadShape("shapes/arrow.mod", true);
+	// arrowShape->removeMtxDependancy();
+	// markerShape = gameflow.loadShape("shapes/oldMarkr.mod", true);
+	// markerShape->removeMtxDependancy();
+	// axisShape = gameflow.loadShape("shapes/axis.mod", true);
+	// axisShape->removeMtxDependancy();
+	// enShape = gameflow.loadShape("shapes/en.mod", true);
+	// enShape->removeMtxDependancy();
 	markerShape2 = gameflow.loadShape("shapes/cursor/marker.mod", true);
 	cursorShape  = gameflow.loadShape("shapes/cursor/cursor.mod", true);
 	gameflow.loadShape("pikis/happas/leaf.mod", true);
@@ -47,5 +57,6 @@ void init()
 	gameflow.loadShape("pikis/happas/leaf.mod", true);
 	gameflow.loadShape("pikis/happas/leaf.mod", true);
 	gameflow.loadShape("pikis/happas/leaf.mod", true);
+	PRINT("* done\n");
 }
 } // namespace GlobalShape

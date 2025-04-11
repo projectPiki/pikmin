@@ -1,11 +1,13 @@
-#include "types.h"
+#include "jaudio/bankread.h"
+
+static u8 bankp[0x400]; // TODO: placeholder
 
 /*
  * --INFO--
  * Address:	8000BE00
  * Size:	000024
  */
-void PTconvert(void**, u32)
+static void PTconvert(void**, u32)
 {
 	/*
 	.loc_0x0:
@@ -236,7 +238,7 @@ void Bank_Test(u8*)
  * Address:	8000C0C0
  * Size:	000068
  */
-void __Bank_Regist_Inner(u8*, u32, u32)
+static void __Bank_Regist_Inner(u8*, u32, u32)
 {
 	/*
 	.loc_0x0:

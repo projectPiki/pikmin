@@ -23,7 +23,9 @@ struct SeInfo {
  * @brief TODO
  */
 struct SVector_ {
-	// TODO: members
+	f32 x;
+	f32 y;
+	f32 z;
 };
 
 /**
@@ -83,13 +85,14 @@ struct SeContext {
 	void createEvent(int);
 	void dump();
 
-	// TODO: members
-	u32 _00;       // _00, unknown
-	Creature* _04; // _04, unknown
-	int _08;       // _08, could be s32 or u32
-	u16 _0C;       // _0C, could be s16
-	Vector3f _10;  // _10
-	Vector3f _1C;  // _1C
+	void setPosition(Vector3f& pos) { mPosition = pos; }
+
+	u32 mClock;               // _00
+	Creature* mGameObj;       // _04
+	int mEventHandle;         // _08
+	u16 mEventType;           // _0C
+	Vector3f mCameraPosition; // _10
+	Vector3f mPosition;       // _1C
 };
 
 /*
@@ -156,13 +159,15 @@ struct SeWin : public GmWin {
  */
 struct SeSystem {
 
-	/*
-	 * @brief TODO
-	 */
 	struct Event {
-		Event();
+		Event()
+		{
+			mHandle  = -1;
+			mContext = nullptr;
+		}
 
-		// TODO: members
+		int mHandle;         // _00
+		SeContext* mContext; // _04
 	};
 
 	SeSystem();
@@ -172,7 +177,7 @@ struct SeSystem {
 	int createEvent(SeContext*, int, SVector_*);
 	void playPikiSound(int, Vector3f&);
 	void playSoundDirect(int, int, Vector3f&);
-	void destroyEvent(SeContext*, s32);
+	bool destroyEvent(SeContext*, s32);
 	int getEvent(SeContext*);
 	void draw3d(Graphics&);
 	void draw2d(Graphics&);
@@ -183,7 +188,7 @@ struct SeSystem {
 	void exitCourse();
 
 	// unused/inlined:
-	void getEvent(s32);
+	int getEvent(s32);
 	char* getSoundName(int);
 	int getEventType(int);
 	bool isLoopType(int);
@@ -193,8 +198,20 @@ struct SeSystem {
 	static void playPlayerSe(int);
 	static void stopPlayerSe(int);
 
-	// TODO: members
-	u8 _00[0x78]; // _00, unknown
+	int mMaxSoundID;          // _00
+	Matrix4f mMtx;            // _04
+	f32 _44;                  // _44, unused?
+	Vector3f mPosition;       // _48
+	int mCurrentContextCount; // _54
+	int mMaxContextCount;     // _58
+	SeContext* mContext;      // _5C
+	SeConstant* mConstant;    // _60
+	u32 mClock;               // _64
+	int mCurrentEventCount;   // _68
+	int mMaxEventCount;       // _6C
+	Event* mEvents;           // _70
+	bool mBossActive;         // _74
+	bool mIsClosed;           // _75
 };
 
 extern SeSystem* seSystem;

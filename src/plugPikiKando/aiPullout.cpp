@@ -53,7 +53,7 @@ void ActPullout::init(Creature* target)
 			}
 		}
 		if (count > 0) {
-			int randIdx = System::getRand(1.0f) * f32(count);
+			int randIdx = gsys->getRand(1.0f) * f32(count);
 			if (randIdx >= count) {
 				randIdx = count - 1;
 			}
@@ -118,14 +118,14 @@ void ActPullout::cleanup()
  */
 void ActPulloutCreature::cleanup()
 {
-	if (!_24) {
-		Piki* piki = static_cast<Piki*>(_20.getPtr());
+	if (!mPulloutSuccess) {
+		Piki* piki = static_cast<Piki*>(mTarget.getPtr());
 		if (piki) {
 			piki->mFSM->transit(piki, PIKISTATE_Bury);
 		}
 	}
 
-	_20.reset();
+	mTarget.reset();
 }
 
 /*
@@ -137,8 +137,8 @@ void ActPulloutCreature::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action1:
-		_24        = 1;
-		Piki* piki = static_cast<Piki*>(_20.getPtr());
+		mPulloutSuccess = 1;
+		Piki* piki      = static_cast<Piki*>(mTarget.getPtr());
 		if (piki) {
 			piki->changeShape(piki->mFormationPriority);
 		}
@@ -167,9 +167,9 @@ ActPulloutCreature::ActPulloutCreature(Piki* piki)
 void ActPulloutCreature::init(Creature* target)
 {
 	mState = STATE_Unk0;
-	_20.set(target);
+	mTarget.set(target);
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	_24 = 0;
+	mPulloutSuccess = 0;
 }
 
 /*
@@ -185,22 +185,22 @@ int ActPulloutCreature::exec()
 		return ACTOUT_Success;
 
 	case STATE_Unk0:
-		Vector3f dir = _20.getPtr()->mPosition - mPiki->mPosition;
+		Vector3f dir = mTarget.getPtr()->mPosition - mPiki->mPosition;
 		f32 angleSep = atan2f(dir.x, dir.z);
 		mPiki->mFaceDirection += 0.4f * angDist(angleSep, mPiki->mFaceDirection);
 		mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection);
 		if (quickABS(angDist(angleSep, mPiki->mFaceDirection)) < 0.1f) {
 			mState = STATE_Unk1;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Nuku, this), PaniMotionInfo(PIKIANIM_Nuku));
-			_20.getPtr()->stimulate(InteractPullout(mPiki));
-			_1C = 0.0f;
+			mTarget.getPtr()->stimulate(InteractPullout(mPiki));
+			mPulloutTimer = 0.0f;
 		}
 		break;
 	case STATE_Unk1:
-		Piki* target = static_cast<Piki*>(_20.getPtr());
-		_1C += gsys->getFrameTime();
+		Piki* target = static_cast<Piki*>(mTarget.getPtr());
+		mPulloutTimer += gsys->getFrameTime();
 
-		if (_1C >= f32(target->mFormationPriority)) {
+		if (mPulloutTimer >= f32(target->mFormationPriority)) {
 			mPiki->mPikiAnimMgr.finishMotion(this);
 			target->mPikiAnimMgr.finishMotion(target);
 		}

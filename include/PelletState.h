@@ -99,7 +99,7 @@ struct PelletGoalState : public PelletState {
 	f32 mSuckProgress;
 	Vector3f mStartPosition; // _24
 	u8 mIsFirstMove;         // _30
-	u8 mTargetIsOnion;       // _31
+	u8 mTargetIsShip;        // _31
 	f32 mSuckSpeed;          // _34
 };
 

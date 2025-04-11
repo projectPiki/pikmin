@@ -68,7 +68,7 @@ void KoganeAi::createWaterEffect()
  */
 void KoganeAi::killCallBackEffect(bool p1)
 {
-	effectMgr->killGenerator(mRippleCallBack, nullptr, p1);
+	effectMgr->kill(mRippleCallBack, nullptr, p1);
 }
 
 /*
@@ -94,12 +94,11 @@ void KoganeAi::initAI(Kogane* kogane)
 	mKogane->setCurrentState(1);
 	mKogane->setNextState(1);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(6, this));
-	mInWater    = 0;
-	mDropCount  = 0;
-	mEffectType = EffectMgr::EFF_NULL;
-	mAppearTimer
-	    = C_KOGANE_PROP(mKogane).mAppearTimeMin()
-	    + NsMathF::getRand1(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mAppearTimeMax() - C_KOGANE_PROP(mKogane).mAppearTimeMin()));
+	mInWater     = 0;
+	mDropCount   = 0;
+	mEffectType  = EffectMgr::EFF_NULL;
+	mAppearTimer = C_KOGANE_PROP(mKogane).mAppearTimeMin()
+	             + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mAppearTimeMax() - C_KOGANE_PROP(mKogane).mAppearTimeMin()));
 }
 
 /*
@@ -235,16 +234,16 @@ void KoganeAi::setMapAttribute()
 {
 	int mapAttr = mKogane->getMapAttribute(mKogane->mPosition);
 	switch (mapAttr) {
-	case ATTR_Unk0:
+	case ATTR_Soil:
 		mEffectType = EffectMgr::EFF_Kogane_Walk0;
 		break;
-	case ATTR_Unk1:
+	case ATTR_Rock:
 		mEffectType = EffectMgr::EFF_Kogane_Walk2;
 		break;
-	case ATTR_Unk2:
+	case ATTR_Grass:
 		mEffectType = EffectMgr::EFF_Kogane_Walk1;
 		break;
-	case ATTR_Unk3:
+	case ATTR_Tree:
 		mEffectType = EffectMgr::EFF_Kogane_Walk3;
 		break;
 	case ATTR_Unk4:
@@ -311,10 +310,10 @@ void KoganeAi::setNewTargetPosition()
 
 	f32 randGoalDist
 	    = (C_KOGANE_PROP(mKogane).mGoalDistMin()
-	       + NsMathF::getRand1(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalDistMax() - C_KOGANE_PROP(mKogane).mGoalDistMin())));
+	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalDistMax() - C_KOGANE_PROP(mKogane).mGoalDistMin())));
 
 	Vector3f targetPos;
-	if (NsMathF::getRand1(1.0f) > 0.5f) {
+	if (NsMathF::getRand(1.0f) > 0.5f) {
 		angle += randGoalAngle;
 	} else {
 		angle -= randGoalAngle;
@@ -342,10 +341,10 @@ void KoganeAi::setRouteTargetPosition()
 
 	f32 randGoalDist
 	    = (C_KOGANE_PROP(mKogane).mGoalDistMin()
-	       + NsMathF::getRand1(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalDistMax() - C_KOGANE_PROP(mKogane).mGoalDistMin())));
+	       + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mGoalDistMax() - C_KOGANE_PROP(mKogane).mGoalDistMin())));
 
 	Vector3f targetPos;
-	if (NsMathF::getRand1(1.0f) > 0.5f) {
+	if (NsMathF::getRand(1.0f) > 0.5f) {
 		angle += randGoalAngle;
 	} else {
 		angle -= randGoalAngle;
@@ -491,7 +490,7 @@ void KoganeAi::createPellet()
 void KoganeAi::resultFlagOn()
 {
 	if (mKogane->insideAndInSearch()) {
-		playerState->mResultFlags.setOn(RESFLAG_Unk43);
+		playerState->mResultFlags.setOn(RESFLAG_Kogane);
 	}
 }
 
@@ -675,7 +674,7 @@ void KoganeAi::initStopWalk(int nextState)
 	mKogane->mAnimator.startMotion(PaniMotionInfo(2, this));
 	makeStopMoving();
 	_1C = C_KOGANE_PROP(mKogane).mIdleTimeMin()
-	    + NsMathF::getRand1(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mIdleTimeMax() - C_KOGANE_PROP(mKogane).mIdleTimeMin()));
+	    + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mIdleTimeMax() - C_KOGANE_PROP(mKogane).mIdleTimeMin()));
 
 	if (mEffectType >= 0) {
 		effectMgr->create(mEffectType, mKogane->mPosition, nullptr, nullptr);

@@ -40,17 +40,21 @@ struct KSegment {
 	// unused/inlined:
 	KSegment();
 
-	Vector3f mPoint;     // _00
+	Vector3f& Origin() { return mPoint; }
+	Vector3f& Direction() { return mDirection; }
+
+	Vector3f mPoint;     // _00, a.k.a. origin
 	Vector3f mDirection; // _0C
 };
 
 // Global utility functions:
-bool isNan(f32);
-void makePostureMatrix(Vector3f&, Vector3f&, Vector3f&, Matrix4f&);
-f32 calcImpulse(Vector3f&, f32, Vector3f&, Matrix4f&, Vector3f&, Vector3f&);
-Vector3f CRSpline(f32, Vector3f*);
-Vector3f CRSplineTangent(f32, Vector3f*);
-Vector3f getThrowVelocity(Vector3f&, f32, Vector3f&, Vector3f&);
-f32 getCameraSafeAngle(Vector3f&, f32, f32);
+bool isNan(f32 x);
+void makePostureMatrix(Vector3f& col0, Vector3f& col1, Vector3f& col2, Matrix4f& outMtx);
+f32 calcImpulse(Vector3f& relativePos, f32 mass, Vector3f& collisionNormal, Matrix4f& inertiaTensor, Vector3f& relativeVel,
+                Vector3f& separationVel);
+Vector3f CRSpline(f32 t, Vector3f* ctrlPts);
+Vector3f CRSplineTangent(f32 t, Vector3f* ctrlPts);
+Vector3f getThrowVelocity(Vector3f& startPos, f32 horizSpeed, Vector3f& targetPos, Vector3f& targetDir);
+f32 getCameraSafeAngle(Vector3f& cameraPos, f32 checkDistance, f32 heightWeighting);
 
 #endif

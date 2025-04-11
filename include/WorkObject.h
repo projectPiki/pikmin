@@ -17,14 +17,14 @@ struct DynBuildShape;
 struct WorkObject : public ItemCreature {
 	WorkObject(); // unused/inlined
 
-	virtual bool isVisible();                 // _74
-	virtual bool isAlive();                   // _88
-	virtual void doKill();                    // _10C
-	virtual void finalSetup() { }             // _158
-	virtual bool isBridge() { return false; } // _15C
-	virtual bool isHinderRock();              // _160
-	virtual bool isFinished();                // _164
-	virtual bool workable(Vector3f&);         // _168
+	virtual bool isVisible() { return true; }         // _74
+	virtual bool isAlive() { return true; }           // _88
+	virtual void doKill();                            // _10C
+	virtual void finalSetup() { }                     // _158
+	virtual bool isBridge() { return false; }         // _15C
+	virtual bool isHinderRock() { return false; }     // _160
+	virtual bool isFinished() { return false; }       // _164
+	virtual bool workable(Vector3f&) { return true; } // _168
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
@@ -55,23 +55,23 @@ struct WorkObjectNode : public CoreNode {
 struct WorkObjectMgr : public ObjectMgr {
 	WorkObjectMgr();
 
-	virtual Creature* getCreature(int); // _08
-	virtual int getFirst();             // _0C
-	virtual int getNext(int);           // _10
-	virtual bool isDone(int);           // _14
-	virtual ~WorkObjectMgr();           // _48
-	virtual int getSize();              // _60
-	virtual int getMax();               // _64
+	virtual Creature* getCreature(int);      // _08
+	virtual int getFirst();                  // _0C
+	virtual int getNext(int);                // _10
+	virtual bool isDone(int);                // _14
+	virtual ~WorkObjectMgr() { }             // _48
+	virtual int getSize();                   // _60
+	virtual int getMax() { return 0x10000; } // _64
 
 	void finalSetup();
 	void loadShapes();
 	Creature* birth(int, int);
 
 	// unused/inlined:
-	int getNameIndex(char*);
-	char* getName(int);
-	int getShapeNameIndex(char*);
-	char* getShapeName(int);
+	static int getNameIndex(char*);
+	static char* getName(int);
+	static int getShapeNameIndex(char*);
+	static char* getShapeName(int);
 	void addUseList(int);
 
 	// _00     = VTBL 1
@@ -90,21 +90,21 @@ struct WorkObjectMgr : public ObjectMgr {
 struct Bridge : public WorkObject {
 	Bridge(Shape*, bool);
 
-	virtual bool insideSafeArea(Vector3f&);   // _10
-	virtual bool alwaysUpdatePlatform();      // _18
-	virtual void startAI(int);                // _34
-	virtual void doSave(RandomAccessStream&); // _50
-	virtual void doLoad(RandomAccessStream&); // _54
-	virtual bool stimulate(Interaction&);     // _A0
-	virtual void dump();                      // _C8
-	virtual void update();                    // _E0
-	virtual void refresh(Graphics&);          // _EC
-	virtual void finalSetup();                // _158
-	virtual bool isBridge();                  // _15C
-	virtual bool isFinished();                // _164
-	virtual bool workable(Vector3f&);         // _168
+	virtual bool insideSafeArea(Vector3f&);                   // _10
+	virtual void startAI(int);                                // _34
+	virtual void doSave(RandomAccessStream&);                 // _50
+	virtual void doLoad(RandomAccessStream&);                 // _54
+	virtual bool stimulate(Interaction&);                     // _A0
+	virtual void dump();                                      // _C8
+	virtual void update();                                    // _E0
+	virtual void refresh(Graphics&);                          // _EC
+	virtual bool isFinished();                                // _164
+	virtual bool workable(Vector3f&);                         // _168
+	virtual bool isBridge() { return true; }                  // _15C
+	virtual bool alwaysUpdatePlatform() { return _424 != 0; } // _18
+	virtual void finalSetup() { _424 = 3; }                   // _158
 
-	inline int getStage() { return mStageCount; }
+	int getStage() { return mStageCount; }
 
 	int getFirstUnfinishedStage();
 	int getFirstFinishedStage();
@@ -124,22 +124,22 @@ struct Bridge : public WorkObject {
 
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject
-	bool _3C8;                  // _3C8
-	s16 _3CA;                   // _3CA
-	u8 _3CC;                    // _3CC
-	f32* mStageProgressList;    // _3D0, stage items?
-	Joint** mStageJoints;       // _3D4, unknown
-	PermanentEffect _3D8;       // _3D8
-	PermanentEffect _3E8;       // _3E8
-	WayPoint* _3F8;             // _3F8
-	WayPoint* _3FC;             // _3FC
-	u8 _400;                    // _400
-	int mStageCount;            // _404
-	DynBuildShape* mBuildShape; // _408
-	Shape* _40C;                // _40C
-	CollPart* _410;             // _410
-	ShapeDynMaterials _414;     // _414
-	u8 _424;                    // _424, flags (3 = final setup)
+	bool mDoUseJointSegments;       // _3C8
+	s16 _3CA;                       // _3CA
+	u8 _3CC;                        // _3CC
+	f32* mStageProgressList;        // _3D0, stage items?
+	Joint** mStageJoints;           // _3D4, unknown
+	PermanentEffect _3D8;           // _3D8
+	PermanentEffect _3E8;           // _3E8
+	WayPoint* mStartWaypoint;       // _3F8
+	WayPoint* mEndWaypoint;         // _3FC
+	u8 _400;                        // _400
+	int mStageCount;                // _404
+	DynBuildShape* mBuildShape;     // _408
+	Shape* mBridgeShape;            // _40C
+	CollPart* _410;                 // _410
+	ShapeDynMaterials mDynMaterial; // _414
+	u8 _424;                        // _424, flags (3 = final setup)
 };
 
 /**
@@ -150,17 +150,17 @@ struct Bridge : public WorkObject {
 struct HinderRock : public WorkObject {
 	HinderRock(Shape*);
 
-	virtual bool insideSafeArea(Vector3f&);   // _10
-	virtual void startAI(int);                // _34
-	virtual void doSave(RandomAccessStream&); // _50
-	virtual void doLoad(RandomAccessStream&); // _54
-	virtual f32 getCentreSize();              // _5C
-	virtual bool stimulate(Interaction&);     // _A0
-	virtual void update();                    // _E0
-	virtual void refresh(Graphics&);          // _EC
-	virtual bool isHinderRock();              // _160
-	virtual bool isFinished();                // _164
-	virtual bool workable(Vector3f&);         // _168
+	virtual bool insideSafeArea(Vector3f&);      // _10
+	virtual void startAI(int);                   // _34
+	virtual void doSave(RandomAccessStream&);    // _50
+	virtual void doLoad(RandomAccessStream&);    // _54
+	virtual f32 getCentreSize();                 // _5C
+	virtual bool stimulate(Interaction&);        // _A0
+	virtual void update();                       // _E0
+	virtual void refresh(Graphics&);             // _EC
+	virtual bool isHinderRock() { return true; } // _160
+	virtual bool isFinished();                   // _164
+	virtual bool workable(Vector3f&);            // _168
 
 	void beginPush();
 	void endPush();
@@ -174,26 +174,32 @@ struct HinderRock : public WorkObject {
 	int getPlaneIndex(Vector3f&);
 	Vector3f getTangentPos(f32);
 
+	bool isMoving() { return mIsMoving; }
+
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject
-	u16 mPushCount;             // _3C8
-	Plane _3CC[4];              // _3CC
-	Vector3f _40C;              // _40C
-	u32 _418;                   // _418
-	u32 _41C;                   // _41C
-	u32 _420;                   // _420
-	WayPoint _424;              // _424
-	u32 _430;                   // _430
-	DynBuildShape* mBuildShape; // _434
-	Shape* _438;                // _438
-	u8 _43C;                    // _43C
-	f32 _440;                   // _440
-	u32 _444;                   // _444
-	u32 _448;                   // _448
-	u32 _44C;                   // _44C
-	u32 _450;                   // _450
-	Vector3f _454;              // _454
-	Vector3f _460[2];           // _460
+	u16 mPushingPikmin;            // _3C8
+	Plane mPlanes[4];              // _3CC
+	Vector3f mDestinationPosition; // _40C
+	int mTotalPushStrength;        // _418
+	int mAmountPushersToStart;     // _41C
+	f32 mPushSpeed;                // _420
+	WayPoint* mWayPoint;           // _424
+	u8 _428;                       // _428
+	f32 _42C;                      // _42C
+	f32 mCentreSize;               // _430
+	DynBuildShape* mBuildShape;    // _434
+	Shape* mBoxShape;              // _438
+	u8 mState;                     // _43C
+	u8 mFxCooldownTimer;           // _43D
+	f32 mPushMoveTimer;            // _440
+	bool mIsMoving;                // _444
+	bool mIsSoundPlaying;          // _445
+	zen::particleGenerator* mEfxA; // _448
+	zen::particleGenerator* mEfxB; // _44C
+	zen::particleGenerator* mEfxC; // _450
+	Vector3f mMoveFrontEfxPos;     // _454
+	Vector3f mMoveSideEfxPos[2];   // _460
 };
 
 extern WorkObjectMgr* workObjectMgr;

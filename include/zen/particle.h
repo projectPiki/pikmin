@@ -22,11 +22,25 @@ struct particleMdlManager;
 /**
  * @brief TODO
  */
+enum ParticleGeneratorControlFlags {
+	PTCLCTRL_Stop       = 0x1,
+	PTCLCTRL_Finished   = 0x2,
+	PTCLCTRL_Active     = 0x4,
+	PTCLCTRL_GenStopped = 0x8,
+	PTCLCTRL_Visible    = 0x10,
+};
+
+/**
+ * @brief TODO
+ */
 enum ParticleGeneratorFlags {
-	PTCLGEN_Stop       = 0x1,
-	PTCLGEN_Finished   = 0x2,
-	PTCLGEN_Active     = 0x4,
-	PTCLGEN_GenStopped = 0x8,
+	PTCLFLAG_Unk0 = 1 << 0, // 0x1
+	// ...
+	PTCLFLAG_Unk16 = 1 << 16, // 0x10000
+	PTCLFLAG_Unk17 = 1 << 17, // 0x20000
+	PTCLFLAG_Unk18 = 1 << 18, // 0x40000
+	PTCLFLAG_Unk19 = 1 << 19, // 0x80000
+	PTCLFLAG_Unk20 = 1 << 20, // 0x100000
 };
 
 /**
@@ -195,10 +209,10 @@ struct particleGenerator : public zenList {
 	particleGenerator()
 	{
 		ClearPtclsStatus(nullptr, nullptr);
-		mCallBack1      = nullptr;
-		mCallBack2      = nullptr;
-		_84             = 0;
-		mGeneratorFlags = 0;
+		mCallBack1     = nullptr;
+		mCallBack2     = nullptr;
+		mParticleFlags = 0;
+		mControlFlags  = 0;
 	}
 
 	virtual void remove(); // _0C
@@ -238,14 +252,23 @@ struct particleGenerator : public zenList {
 
 	// these are correct from the DLL
 
-	void pmSwitchOn(u32 flag) { mGeneratorFlags |= flag; }
-	void pmSwitchOff(u32 flag) { mGeneratorFlags &= ~flag; }
+	void pmSwitchOn(u32 flag) { mParticleFlags |= flag; }
+	void pmSwitchOff(u32 flag) { mParticleFlags &= ~flag; }
+	void pmSwitch(bool turnOn, u32 flag)
+	{
+		if (turnOn) {
+			pmSwitchOn(flag);
+		} else {
+			pmSwitchOff(flag);
+		}
+	}
 
 	zenListManager& getPtclMdlListManager() { return mPtclMdlListManager; }
 
 	void setEmitPos(Vector3f& pos) { mEmitPos = pos; }
 	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
 	void setEmitDir(Vector3f& dir) { mEmitDir = dir; }
+	void setEmitVelocity(Vector3f& vel) { mEmitVelocity = vel; }
 	void setOrientedNormalVector(Vector3f& vec) { mOrientedNormalVector = vec; }
 	void setCallBack(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2)
 	{
@@ -264,105 +287,112 @@ struct particleGenerator : public zenList {
 		return mEmitPos;
 	}
 
+	// these are the same for some reason
+	Vector3f& getEmitPos()
+	{
+		if (mEmitPosPtr) {
+			return *mEmitPosPtr;
+		}
+		return mEmitPos;
+	}
+
 	f32 getScaleSize() { return mScaleSize; }
 	void setScaleSize(f32 scale) { mScaleSize = scale; }
 
-	void start() { mGeneratorFlags &= ~PTCLGEN_Stop; }
-	void stop() { mGeneratorFlags |= PTCLGEN_Stop; }
-	void startGen() { mGeneratorFlags &= ~PTCLGEN_GenStopped; }
-	void stopGen() { mGeneratorFlags |= PTCLGEN_GenStopped; }
-	void finish() { mGeneratorFlags |= PTCLGEN_Finished; }
+	void start() { mControlFlags &= ~PTCLCTRL_Stop; }
+	void stop() { mControlFlags |= PTCLCTRL_Stop; }
+	void startGen() { mControlFlags &= ~PTCLCTRL_GenStopped; }
+	void stopGen() { mControlFlags |= PTCLCTRL_GenStopped; }
+	void finish() { mControlFlags |= PTCLCTRL_Finished; }
+	void visible() { mControlFlags |= PTCLCTRL_Visible; }
+	void invisible() { mControlFlags &= ~PTCLCTRL_Visible; }
 
-	bool checkStop() { return mGeneratorFlags & PTCLGEN_Stop; }
-	bool checkEmit() { return !(mGeneratorFlags & PTCLGEN_Finished); }
-	bool checkActive() { return mGeneratorFlags & PTCLGEN_Active; }
-	bool checkStopGen() { return mGeneratorFlags & PTCLGEN_GenStopped; }
+	bool checkStop() { return mControlFlags & PTCLCTRL_Stop; }
+	bool checkEmit() { return !(mControlFlags & PTCLCTRL_Finished); }
+	bool checkActive() { return mControlFlags & PTCLCTRL_Active; }
+	bool checkStopGen() { return mControlFlags & PTCLCTRL_GenStopped; }
+
+	u32 getControlFlag() { return mControlFlags; }
 
 	void killParticle(particleMdl* ptcl) { pmPutParticle(ptcl); }
 	void pmPutParticle(zenList* ptcl) { mMdlMgr->putPtcl(ptcl); }
 	void pmPutParticleChild(zenList* child) { mMdlMgr->putPtclChild(child); }
 
-	void setEmitVelocity(Vector3f& pos)
+	// might be setGravityField
+	void setAirField(Vector3f& field, bool set)
 	{
-		_138.set(pos);
-		_84 |= 0x20000;
+		_138.set(field);
+		pmSwitch(set, PTCLFLAG_Unk17);
 	}
 
-	void setNewtonField(Vector3f pos, f32 a, bool b)
+	void setNewtonField(Vector3f pos, f32 a, bool set)
 	{
 		_170.set(pos - getGPos());
 		_17C = a;
-		setOrientedConstZAxis(b);
+		pmSwitch(set, PTCLFLAG_Unk20);
 	}
 
-	void setOrientedConstZAxis(bool set)
-	{
-		if (set) {
-			pmSwitchOn(0x100000);
-		} else {
-			pmSwitchOff(0x100000);
-		}
-	}
+	void setOrientedConstZAxis(bool set) { _68.m2 = set; }
 
 	void setVortexField(Vector3f pos, f32 a, f32 b, f32 c, f32 d, bool set)
 	{
 		_144.set(pos);
-		_150 = a; //-0.12f;
-		_154 = b; //-0.09f;
+		_150 = a; // -0.12f;
+		_154 = b; // -0.09f;
 		_158 = c; // 0.3f;
 		_15C = d; // 400.0f;
-		setOrientedConstZAxis(set);
+		pmSwitch(set, PTCLFLAG_Unk18);
 	}
 
+	// might be setAirField
 	void setGravityField(Vector3f& pos, bool set)
 	{
 		_12C.set(pos);
-		setOrientedConstZAxis(set);
+		pmSwitch(set, PTCLFLAG_Unk16);
 	}
 
+	// might be setFreqFrm
 	void setInitVel(f32 vel) { _B8 = vel; }
+
+	// NB: might be getMaxFrame(), unsure
+	s16 getCurrentFrame() { return _90; }
 
 	/*
 	    These are still to be made/assigned from the DLL:
 
-	    void visible();
-	    void invisible();
-
-	    void setAirField(Vector3f&, bool);
-	    void setEmitVelocity(Vector3f&);
-	    void setGravityField(Vector3f&, bool);
-	    void setVortexField(Vector3f, f32, f32, f32, f32, bool);
-
+	    f32 getFreqFrm();
 	    void setFreqFrm(f32);
+
+	    f32 getInitVel();
 	    void setInitVel(f32);
 
-	    f32 getFreqFrm();
-	    f32 getInitVel();
 	    f32 getNewtonFieldFrc();
 
 	    void pmGetArbitUnitVec(Vector3f&);
-	    void pmSwitch(bool, u32);
 
 	    s16 getCurrentFrame();
 	    s16 getMaxFrame();
-
-	    Vector3f& getEmitPos();
-
-	    u32 getControlFlag();
 	*/
 
 	// _00     = VTBL
 	// _00-_0C = zenList
-	Vector3f mEmitPos;                                       // _0C
-	Vector3f* mEmitPosPtr;                                   // _18
-	Vector3f _1C;                                            // _1C
-	zenListManager mPtclMdlListManager;                      // _28
-	zenListManager _38;                                      // _38
-	bBoardColourAnimData mAnimData;                          // _48
-	u8 _58[0x80 - 0x58];                                     // _58, unknown
-	u32 mGeneratorFlags;                                     // _80
-	u32 _84;                                                 // _84, unknown
-	u8 _88[0x94 - 0x88];                                     // _88, unknown
+	Vector3f mEmitPos;                  // _0C
+	Vector3f* mEmitPosPtr;              // _18
+	Vector3f mEmitVelocity;             // _1C
+	zenListManager mPtclMdlListManager; // _28
+	zenListManager _38;                 // _38
+	bBoardColourAnimData mAnimData;     // _48
+	u8 _58[0x68 - 0x58];                // _58, unknown
+	struct {
+		u32 m0 : 1;
+		u32 m1 : 1;
+		u32 m2 : 1;
+	} _68;                                                   // _68
+	u8 _6C[0x80 - 0x6C];                                     // _6C, unknown
+	u32 mControlFlags;                                       // _80, see ParticleGeneratorControlFlags enum
+	u32 mParticleFlags;                                      // _84, see ParticleGeneratorFlags enum
+	u8 _88[0x90 - 0x88];                                     // _88, unknown
+	s16 _90;                                                 // _90, either current frame or max frame
 	Vector3f _94;                                            // _94
 	Vector3f mEmitDir;                                       // _A0
 	Vector3f _AC;                                            // _AC
@@ -398,10 +428,22 @@ struct particleGenerator : public zenList {
  * @brief TODO
  */
 struct PCRData : public zenList {
+	PCRData(char* name, u32 bufSize) { pmSet(name, bufSize); }
+
+	// DLL inlines to do:
+	u8* pmSet(char* name, u32 bufSize)
+	{
+		mName    = StdSystem::stringDup(name);
+		mDataBuf = new (0x20) u8[bufSize];
+	}
+
+	char* getName() { return mName; }
+	u8* getDataBuf() { return mDataBuf; }
 
 	// _00     = VTBL
 	// _00-_0C = zenList
-	// TODO: members
+	char* mName;  // _0C
+	u8* mDataBuf; // _10
 };
 
 /**
@@ -414,7 +456,16 @@ struct particleLoader {
 	// unused/inlined:
 	~particleLoader();
 
+	// DLL inlines to do:
+	PCRData* pmCreatePCRData(char* name, u32 bufSize)
+	{
+		PCRData* data = new PCRData(name, bufSize);
+		_00.put(data);
+		return data;
+	}
+
 	// TODO: members
+	zenListManager _00; // _00, members are (probably) PCRData*
 };
 
 /**

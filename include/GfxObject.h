@@ -32,12 +32,12 @@ struct GfxobjInfo {
 		mPrev->mNext = mNext;
 	}
 
-	// _00 = VTBL
-	GfxobjInfo* mPrev; // _04
-	GfxobjInfo* mNext; // _08
-	char* mString;     // _0C
-	ID32 mId;          // _10
-	u32 mAttached;     // _1C, check type/name later
+	// _1C = VTBL
+	GfxobjInfo* mPrev; // _00
+	GfxobjInfo* mNext; // _04
+	char* mString;     // _08
+	ID32 mId;          // _0C
+	u32 mAttached;     // _18, check type/name later
 
 	// vtable
 	virtual void attach() { } // _08

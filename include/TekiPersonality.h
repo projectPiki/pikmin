@@ -56,10 +56,10 @@ struct TekiPersonality {
 
 	// _00 = VTBL
 	Vector3f mPosition;           // _04
-	Vector3f mScale;              // _10
+	Vector3f mNestPosition;       // _10
 	f32 mFaceDirection;           // _1C
-	u32 _20;                      // _20, unknown
-	u32 _24;                      // _24, unknown
+	int mPelletKind;              // _20
+	int mPelletColor;             // _24
 	ID32 mID;                     // _28
 	ParaMultiParameters* mParams; // _34
 };

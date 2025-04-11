@@ -36,8 +36,8 @@ ActAttack::ActAttack(Piki* piki)
 {
 	setName("attack");
 	setChildren(1, new ActJumpAttack(piki), nullptr);
-	_24.clear();
-	_1F = 0;
+	mOther.clear();
+	mIsPlayer = 0;
 }
 
 /*
@@ -53,27 +53,27 @@ void ActAttack::init(Creature* creature)
 		return;
 	}
 
-	mPiki->_408     = 0;
-	mPiki->mEmotion = 5;
+	mPiki->mActionState = 0;
+	mPiki->mEmotion     = PikiEmotion::Unk5;
 	mPiki->getState(); // this is also just like this in the DLL lol
 
 	if (!creature) {
 		PRINT("commander is 0 karl gotti!!!!!!!!!!1\n"); // lol
-		_28 = nullptr;
-		_20 = 0;
-		_1F = 0;
+		mPlayerObject = nullptr;
+		_20           = 0;
+		mIsPlayer     = 0;
 	} else if (creature->mObjType == OBJTYPE_Navi) {
-		_28      = creature;
-		_1F      = 1;
-		creature = findTarget();
+		mPlayerObject = creature;
+		mIsPlayer     = 1;
+		creature      = findTarget();
 	} else {
-		_28 = nullptr;
-		_20 = 0;
-		_1F = 0;
+		mPlayerObject = nullptr;
+		_20           = 0;
+		mIsPlayer     = 0;
 	}
 
 	if (creature) {
-		_24.set(creature);
+		mOther.set(creature);
 
 		AndAction::init(creature);
 		if (creature->isTeki() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk9) && static_cast<Teki*>(creature)->mTekiType == TEKI_Palm) {
@@ -82,8 +82,8 @@ void ActAttack::init(Creature* creature)
 	}
 
 	seMgr->joinBattle();
-	_1C = 0;
-	_1D = 0;
+	mHasLost          = 0;
+	mIsAttackFinished = 0;
 }
 
 /*
@@ -93,8 +93,8 @@ void ActAttack::init(Creature* creature)
  */
 void ActAttack::startLost()
 {
-	_1C = 1;
-	_1D = 0;
+	mHasLost          = 1;
+	mIsAttackFinished = 0;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, this), PaniMotionInfo(PIKIANIM_Sagasu2));
 }
 
@@ -107,14 +107,14 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
-		if (_1C) {
-			_1D = 1;
+		if (mHasLost) {
+			mIsAttackFinished = 1;
 		}
 		break;
 	case KEY_PlayEffect:
 		if (mPiki->aiCullable() && (AIPerf::optLevel <= 1 || mPiki->mOptUpdateContext.updatable())) {
 			Vector3f vec(mPiki->mEffectPos);
-			if (_1E) {
+			if (mIsCriticalHit) {
 				effectMgr->create(EffectMgr::EFF_Piki_BigHit, vec, nullptr, nullptr);
 			} else {
 				effectMgr->create(EffectMgr::EFF_Piki_HitA, vec, nullptr, nullptr);
@@ -132,7 +132,7 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void ActAttack::resume()
 {
-	_1C = 0;
+	mHasLost = 0;
 }
 
 /*
@@ -142,9 +142,9 @@ void ActAttack::resume()
  */
 void ActAttack::restart()
 {
-	if (!_24.isNull()) {
+	if (!mOther.isNull()) {
 		seMgr->leaveBattle();
-		init(_24.getPtr());
+		init(mOther.getPtr());
 	}
 }
 
@@ -206,7 +206,7 @@ Creature* ActAttack::decideTarget()
 	}
 
 	if (count != 0) {
-		return targetList[int(System::getRand(1.0f)) * count];
+		return targetList[int(gsys->getRand(1.0f)) * count];
 	}
 
 	return nullptr;
@@ -223,16 +223,16 @@ int ActAttack::exec()
 		return ACTOUT_Success;
 	}
 
-	if (_1C) {
+	if (mHasLost) {
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		if (_1D) {
+		if (mIsAttackFinished) {
 			return ACTOUT_Success;
 		}
 
 		return ACTOUT_Continue;
 	}
 
-	if (_24.isNull()) {
+	if (mOther.isNull()) {
 		Creature* target = findTarget();
 		if (target) {
 			seMgr->leaveBattle();
@@ -244,22 +244,22 @@ int ActAttack::exec()
 		return ACTOUT_Success;
 	}
 
-	if (!_24.getPtr()->isAlive()) {
+	if (!mOther.getPtr()->isAlive()) {
 		if (mPiki->isStickTo()) {
 			mPiki->endStickObject();
 		}
 		return ACTOUT_Success;
 	}
 
-	if (_24.getPtr()->isPiki()) {
-		Piki* targetPiki = static_cast<Piki*>(_24.getPtr());
+	if (mOther.getPtr()->isPiki()) {
+		Piki* targetPiki = static_cast<Piki*>(mOther.getPtr());
 		if (!targetPiki->isKinoko() || (targetPiki->isKinoko() && targetPiki->getState() == PIKISTATE_KinokoChange)) {
-			mPiki->mEmotion = 7;
+			mPiki->mEmotion = PikiEmotion::Unk7;
 			return ACTOUT_Success;
 		}
 	}
 
-	if (!mPiki->isStickTo() && (_24.getPtr()->isFlying() || !_24.getPtr()->isVisible())) {
+	if (!mPiki->isStickTo() && (mOther.getPtr()->isFlying() || !mOther.getPtr()->isVisible())) {
 		PRINT("target start flying\n");
 
 		Creature* target = findTarget();
@@ -275,12 +275,12 @@ int ActAttack::exec()
 
 	int andRet = AndAction::exec();
 	if (andRet != ACTOUT_Continue) {
-		if (_1F) {
+		if (mIsPlayer) {
 			Creature* target = findTarget();
 			PRINT("piki attack : res is %s\n", (andRet == 2) ? "success" : (andRet == 1) ? "failed" : "not");
 			if (target && andRet == ACTOUT_Success) {
 				seMgr->leaveBattle();
-				init(_28);
+				init(mPlayerObject);
 				return ACTOUT_Success;
 			}
 
@@ -288,7 +288,7 @@ int ActAttack::exec()
 			return ACTOUT_Success;
 		}
 
-		Creature* target = _24.getPtr();
+		Creature* target = mOther.getPtr();
 		if (AIConstant::_instance->mConstants._C4() == 0) {
 			if (target->isAlive()) {
 				seMgr->leaveBattle();
@@ -323,7 +323,7 @@ void ActAttack::cleanup()
 	mPiki->endClimb();
 	seMgr->leaveBattle();
 	mPiki->endStickObject();
-	_24.reset();
+	mOther.reset();
 	mPiki->_519 = 0;
 }
 
@@ -335,7 +335,7 @@ void ActAttack::cleanup()
 ActJumpAttack::ActJumpAttack(Piki* piki)
     : Action(piki, true)
 {
-	_24.clear(); // lol
+	mTarget.clear(); // lol
 }
 
 /*
@@ -345,30 +345,30 @@ ActJumpAttack::ActJumpAttack(Piki* piki)
  */
 void ActJumpAttack::init(Creature* creature)
 {
-	mPiki->_408     = 0;
-	mPiki->mEmotion = 5;
+	mPiki->mActionState = 0;
+	mPiki->mEmotion     = PikiEmotion::Unk5;
 	if (creature) {
-		_24.set(creature);
+		mTarget.set(creature);
 	}
-	_18 = 0;
-	_2C = 0;
+	mState = 0;
+	_2C    = 0;
 	if (mPiki->isStickTo()) {
 		PRINT("jump attack : piki sticks to %s\n", mPiki->mStickPart ? mPiki->mStickPart->mCollInfo->mId.mStringID : "?");
 		if (mPiki->mStickPart && mPiki->mStickPart->isClimbable()) {
 			mPiki->startClimb();
-			_18 = 6;
+			mState = 6;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
 		} else {
-			_18 = 5;
-			_2D = 0;
+			mState         = 5;
+			mIsCriticalHit = 0;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 		}
-		_20 = 0;
+		mAttackState = 0;
 	} else {
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
 	}
 
-	_28 = creature->getNearestCollPart(mPiki->mPosition, '*t**');
+	mTargetCollider = creature->getNearestCollPart(mPiki->mPosition, '*t**');
 }
 
 /*
@@ -378,10 +378,10 @@ void ActJumpAttack::init(Creature* creature)
  */
 Vector3f ActJumpAttack::getAttackPos()
 {
-	if (_28) {
-		return _28->mCentre;
+	if (mTargetCollider) {
+		return mTargetCollider->mCentre;
 	}
-	return _24.getPtr()->getCentre();
+	return mTarget.getPtr()->getCentre();
 }
 
 /*
@@ -391,10 +391,10 @@ Vector3f ActJumpAttack::getAttackPos()
  */
 f32 ActJumpAttack::getAttackSize()
 {
-	if (_28) {
-		return _28->mRadius;
+	if (mTargetCollider) {
+		return mTargetCollider->mRadius;
 	}
-	return _24.getPtr()->getCentreSize();
+	return mTarget.getPtr()->getCentreSize();
 }
 
 /*
@@ -404,10 +404,10 @@ f32 ActJumpAttack::getAttackSize()
  */
 void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
 {
-	_18 = 5;
-	_2D = 0;
+	mState         = 5;
+	mIsCriticalHit = 0;
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
-	_20                = 0;
+	mAttackState       = 0;
 	piki->mWantToStick = 0;
 }
 
@@ -418,9 +418,9 @@ void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
  */
 void ActJumpAttack::procBounceMsg(Piki* piki, MsgBounce* msg)
 {
-	if (_18 == 1) {
-		_18 = 0;
-		_2C = 0;
+	if (mState == 1) {
+		mState = 0;
+		_2C    = 0;
 	}
 }
 
@@ -433,20 +433,20 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	// this definitely has inlines somewhere, the control flow is so wacky.
 
-	if (!_24.getPtr() || !_24.getPtr()->isAlive() || piki->getState() == PIKISTATE_LookAt) {
+	if (!mTarget.getPtr() || !mTarget.getPtr()->isAlive() || piki->getState() == PIKISTATE_LookAt) {
 		return;
 	}
 
-	if (_24.getPtr()->mObjType == OBJTYPE_Piki && !static_cast<Piki*>(_24.getPtr())->isKinoko()) {
+	if (mTarget.getPtr()->mObjType == OBJTYPE_Piki && !static_cast<Piki*>(mTarget.getPtr())->isKinoko()) {
 		_2C = 1;
 		return;
 	}
 
-	if (msg->mEvent.mCollider != _24.getPtr()) {
+	if (msg->mEvent.mCollider != mTarget.getPtr()) {
 		return;
 	}
 
-	if (_18 != 1) {
+	if (mState != 1) {
 		return;
 	}
 
@@ -489,17 +489,17 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 		}
 	}
 
-	_18 = 5;
+	mState = 5;
 	if (msg->mEvent.mColliderPart && msg->mEvent.mColliderPart->mPartType == PART_Platform && msg->mEvent.mColliderPart->isClimbable()) {
 		piki->startClimb();
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
-		_18 = 6;
+		mState = 6;
 	} else {
-		_2D = 0;
+		mIsCriticalHit = 0;
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 	}
 
-	_20                = 0;
+	mAttackState       = 0;
 	piki->mWantToStick = 0;
 
 	u32 badCompiler[2];
@@ -512,7 +512,7 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
  */
 int ActJumpAttack::exec()
 {
-	Creature* target = _24.getPtr();
+	Creature* target = mTarget.getPtr();
 	if (!target || !target->isVisible() || !target->isAlive()) {
 		if (mPiki->isStickTo()) {
 			mPiki->endStickObject();
@@ -531,7 +531,7 @@ int ActJumpAttack::exec()
 		return ACTOUT_Success;
 	}
 
-	switch (_18) {
+	switch (mState) {
 	case 6:
 		doClimb();
 		break;
@@ -558,7 +558,7 @@ int ActJumpAttack::exec()
 			f32 vertSpeed = 200.0f;
 			mPiki->mVelocity.set(100.0f * direction.x, vertSpeed, 100.0f * direction.z);
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_StillJump, this), PaniMotionInfo(PIKIANIM_StillJump));
-			_18                 = 1;
+			mState              = 1;
 			mPiki->mWantToStick = 1;
 			PRINT("jump !\n");
 			break;
@@ -572,57 +572,57 @@ int ActJumpAttack::exec()
 		Vector3f direction = getAttackPos() - mPiki->mPosition;
 		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
 		f32 dist3D         = direction.normalise();
-		f32 angle          = zen::Abs(angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection));
-		if ((!_2C || (_2C && _28 && !_28->isStickable())) && angle < PI / 10.0f
+		f32 angle          = absF(angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection));
+		if ((!_2C || (_2C && mTargetCollider && !mTargetCollider->isStickable())) && angle < PI / 10.0f
 		    && dist3D < getAttackSize() + mPiki->getCentreSize() + 10.0f) {
 			if (!mPiki->isStickTo()) {
-				_2D = 0;
+				mIsCriticalHit = 0;
 				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Attack, this), PaniMotionInfo(PIKIANIM_Attack));
 				mPiki->playEventSound(target, SE_PIKI_ATTACK_VOICE);
-				_20 = 0;
-				_18 = 4;
+				mAttackState = 0;
+				mState       = 4;
 				mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			}
-		} else if ((!_28 || _28->isStickable()) && _2C && System::getRand(1.0f) > 0.9f) {
-			_18 = 2;
+		} else if ((!mTargetCollider || mTargetCollider->isStickable()) && _2C && gsys->getRand(1.0f) > 0.9f) {
+			mState = 2;
 		} else {
-			if (dist2D < getAttackSize() + mPiki->getCentreSize() && System::getRand(1.0f) > 0.7f) {
+			if (dist2D < getAttackSize() + mPiki->getCentreSize() && gsys->getRand(1.0f) > 0.7f) {
 				PRINT("jump adjust : dist2d = %.1f d = %.1f\n", dist2D, dist3D);
-				_18 = 2;
+				mState = 2;
 			}
 
 			mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.2f * angle);
 			mPiki->setSpeed(1.0f, direction);
 		}
 
-		if (mPiki->isStickTo() && !mPiki->mFloorTri) {
-			_18 = 5;
+		if (mPiki->isStickTo() && !mPiki->mGroundTriangle) {
+			mState = 5;
 			PRINT("start ATTACK(KUTTUKU)!\n");
-			_2D = 0;
+			mIsCriticalHit = 0;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 			mPiki->playEventSound(target, SE_PIKI_ATTACK_VOICE);
-			_20 = 0;
+			mAttackState = 0;
 		}
 
 	} break;
 
 	case 4: {
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		if (mPiki->isStickTo() && !mPiki->mFloorTri) {
-			_18 = 5;
-			_2D = 0;
+		if (mPiki->isStickTo() && !mPiki->mGroundTriangle) {
+			mState         = 5;
+			mIsCriticalHit = 0;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 			mPiki->playEventSound(target, SE_PIKI_ATTACK_VOICE);
-			_20 = 0;
+			mAttackState = 0;
 			break;
 		}
 
-		if (_20 == 1) {
+		if (mAttackState == 1) {
 			Vector3f direction = getAttackPos() - mPiki->mPosition;
 			f32 angle          = angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection);
 			f32 sep            = direction.length();
 			f32 dist           = sep - getAttackSize() - mPiki->getCentreSize();
-			if (dist < 10.0f && zen::Abs(angle) < PI / 4.0f && (target->isBoss() || target->isTeki()) && target->isAlive()
+			if (dist < 10.0f && absF(angle) < PI / 4.0f && (target->isBoss() || target->isTeki()) && target->isAlive()
 			    && target->isVisible()) {
 				f32 damage = mPiki->getAttackPower();
 				if (CourseDebug::pikiNoAttack) {
@@ -633,10 +633,10 @@ int ActJumpAttack::exec()
 				if (target->stimulate(attack)) {
 					PRINT("ATTACK SUCCESS\n");
 					attackHit();
-					_20 = 2;
+					mAttackState = 2;
 					break;
 				}
-				_2D = 1;
+				mIsCriticalHit = 1;
 				break;
 			}
 
@@ -652,25 +652,25 @@ int ActJumpAttack::exec()
 					if (target->stimulate(attack)) {
 						PRINT("ATTACK SUCCESS\n");
 						attackHit();
-						_20 = 2;
+						mAttackState = 2;
 						break;
 					}
-					_2D = 1;
+					mIsCriticalHit = 1;
 					break;
 				}
 				break;
 			}
-			_2D = 1;
+			mIsCriticalHit = 1;
 			break;
 		}
-		if (_20 == 4) {
+		if (mAttackState == 4) {
 			return ACTOUT_Success;
 		}
 	} break;
 	case 5: {
 		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		if (_20 == 1) {
+		if (mAttackState == 1) {
 			if (mPiki->isStickTo()) {
 				Creature* stickObj = mPiki->getStickObject();
 				if ((stickObj->isBoss() || stickObj->isTeki()) && stickObj->isAlive() && stickObj->isVisible()) {
@@ -687,9 +687,9 @@ int ActJumpAttack::exec()
 						}
 
 						attackHit();
-						_20 = 2;
+						mAttackState = 2;
 					} else {
-						_2D = 1;
+						mIsCriticalHit = 1;
 					}
 				}
 
@@ -706,21 +706,21 @@ int ActJumpAttack::exec()
 							PRINT("ATTACK SUCCESS\n");
 
 							attackHit();
-							_20 = 2;
+							mAttackState = 2;
 						} else {
-							_2D = 1;
+							mIsCriticalHit = 1;
 						}
 					}
 				}
 			}
-		} else if (_20 == 4) {
+		} else if (mAttackState == 4) {
 			return ACTOUT_Success;
 		}
 
 		if (!mPiki->isStickTo()) {
 			PRINT("jump attack : finish stick\n");
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
-			_18 = 0;
+			mState = 0;
 			return ACTOUT_Continue;
 		}
 	} break;
@@ -728,7 +728,7 @@ int ActJumpAttack::exec()
 
 	return ACTOUT_Continue;
 
-	u32 badCompiler[5];
+	u32 badCompiler[3];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1778,7 +1778,7 @@ int ActJumpAttack::exec()
  */
 void ActJumpAttack::cleanup()
 {
-	_24.reset();
+	mTarget.reset();
 	mPiki->mWantToStick = 0;
 }
 
@@ -1789,7 +1789,7 @@ void ActJumpAttack::cleanup()
  */
 void ActJumpAttack::attackHit()
 {
-	mPiki->playEventSound(_24.getPtr(), 25);
+	mPiki->playEventSound(mTarget.getPtr(), 25);
 }
 
 /*
@@ -1801,21 +1801,21 @@ void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
-		_20 = 1;
+		mAttackState = 1;
 		break;
 	case KEY_Action1:
-		_20 = 0;
+		mAttackState = 0;
 		break;
 	case KEY_Finished:
-		if (_18 == 1) {
-			_18 = 0;
+		if (mState == 1) {
+			mState = 0;
 		}
-		_20 = 4;
+		mAttackState = 4;
 		break;
 	case KEY_PlayEffect:
 		if (mPiki->aiCullable() && (AIPerf::optLevel <= 1 || mPiki->mOptUpdateContext.updatable())) {
 			Vector3f vec(mPiki->mEffectPos);
-			if (_2D) {
+			if (mIsCriticalHit) {
 				effectMgr->create(EffectMgr::EFF_Piki_BigHit, vec, nullptr, nullptr);
 			} else {
 				effectMgr->create(EffectMgr::EFF_Piki_HitA, vec, nullptr, nullptr);
@@ -1833,7 +1833,7 @@ void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void ActJumpAttack::doClimb()
 {
-	Creature* target = _24.getPtr();
+	Creature* target = mTarget.getPtr();
 	if (target && target->mCollInfo && target->mCollInfo->hasInfo()) {
 		CollPart* part = target->mCollInfo->getSphere('cent');
 		if (part) {
@@ -1842,12 +1842,12 @@ void ActJumpAttack::doClimb()
 			f32 dist     = sep - part->mRadius - mPiki->getCentreSize();
 			PRINT("  :: climb target distance = %.1f\n", dist);
 			if (dist < 5.0f) {
-				_18 = 5;
-				_2D = 0;
+				mState         = 5;
+				mIsCriticalHit = 0;
 				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 				mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 				mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-				_20 = 0;
+				mAttackState = 0;
 				mPiki->endClimb();
 				return;
 			}
@@ -1856,7 +1856,7 @@ void ActJumpAttack::doClimb()
 
 	PRINT("climbing ...\n");
 	if (!mPiki->mClimbingTri) {
-		_18 = 0;
+		mState = 0;
 		mPiki->endClimb();
 		return;
 	}
@@ -1872,7 +1872,7 @@ void ActJumpAttack::doClimb()
 
 	if (!check) {
 		mPiki->endStick();
-		_18 = 0;
+		mState = 0;
 		PRINT("finish stick :: out of tri\n");
 		return;
 	}

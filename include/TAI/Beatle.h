@@ -53,6 +53,11 @@ struct TAIbeatleStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAIbeatleAnimation : public TAIanimation {
+	TAIbeatleAnimation()
+	    : TAIanimation(TEKI_Beatle, "tekis/beatle/anims.bun")
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL
@@ -81,7 +86,8 @@ struct TAIAinitBeatle : public TaiAction {
  * @brief TODO
  */
 struct TAIAcheckInsideRangePikiBeatle : public TAIAcheckInsideRangePiki {
-	inline TAIAcheckInsideRangePikiBeatle() // TODO: this is a guess
+	TAIAcheckInsideRangePikiBeatle(int nextState, int pikiMax)
+	    : TAIAcheckInsideRangePiki(nextState, pikiMax, 0.0f)
 	{
 	}
 
@@ -112,7 +118,8 @@ struct TAIAdisableStick : public TaiAction {
  * @brief TODO
  */
 struct TAIAflickingBeatle : public TAIAflicking {
-	inline TAIAflickingBeatle() // TODO: this is a guess
+	TAIAflickingBeatle(int nextState, int motionIdx)
+	    : TAIAflicking(nextState, motionIdx)
 	{
 	}
 
@@ -127,7 +134,8 @@ struct TAIAflickingBeatle : public TAIAflicking {
  * @brief TODO
  */
 struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
-	inline TAIAflickingAfterMotionLoopBeatle() // TODO: this is a guess
+	TAIAflickingAfterMotionLoopBeatle(int nextState, int motionIdx) // TODO: check this when used
+	    : TAIAflickingAfterMotionLoop(nextState, motionIdx, 0.0f)
 	{
 	}
 
@@ -195,6 +203,7 @@ struct TAIAvisiblePikiBeatle : public TaiAction {
  */
 struct TAIAdamageBeatle : public TAIAdamage {
 	inline TAIAdamageBeatle() // TODO: this is a guess
+	    : TAIAdamage(-1, false)
 	{
 	}
 
@@ -210,6 +219,7 @@ struct TAIAdamageBeatle : public TAIAdamage {
  */
 struct TAIAdyingBeatle : public TAIAdying {
 	inline TAIAdyingBeatle() // TODO: this is a guess
+	    : TAIAdying(-1, -1)
 	{
 	}
 

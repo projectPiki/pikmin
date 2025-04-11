@@ -19,7 +19,7 @@ struct GmWin : public CoreNode {
 	 * @brief TODO
 	 */
 	struct CloseListener {
-		virtual void onCloseWindow(); // _08
+		virtual void onCloseWindow() { } // _08
 
 		// _00 = VTBL
 		// TODO: members

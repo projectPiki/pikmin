@@ -54,6 +54,11 @@ struct TAImiurinStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAImiurinAnimation : public TAIanimation {
+	TAImiurinAnimation()
+	    : TAIanimation(TEKI_KabekuiB, "tekis/miurin/anims.bun") // yep, really had this.
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL
@@ -228,7 +233,8 @@ struct TAIAflickingMiurin : public TAIAflickingReserveMotion {
  * @brief TODO
  */
 struct TAIAflickCheckMiurin : public TAIAflickCheck {
-	inline TAIAflickCheckMiurin() // TODO: this is a guess
+	TAIAflickCheckMiurin(int nextState) // TODO: check this when used
+	    : TAIAflickCheck(nextState, 0)
 	{
 	}
 
@@ -356,6 +362,7 @@ struct TAIAturnFocusCreatureMiurin : public TAIAturnFocusCreature {
  */
 struct TAIAdyingMiurin : public TAIAdying {
 	inline TAIAdyingMiurin() // TODO: this is a guess
+	    : TAIAdying(-1, -1)
 	{
 	}
 

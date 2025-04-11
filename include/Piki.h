@@ -99,6 +99,24 @@ DEFINE_ENUM_TYPE(
 );
 // clang-format on
 
+// clang-format off
+DEFINE_ENUM_TYPE(
+	PikiEmotion,
+
+	Unk0 = 0,  // 0
+	Unk1, // 1
+	Unk2, // 2
+	Unk3, // 3
+	Unk4, // 4
+	Unk5, // 5
+	Unk6, // 6
+	Unk7, // 7
+	Unk8, // 8
+	Unk9, // 9
+	Unk10, // 10
+);
+// clang-format on
+
 /**
  * @brief TODO
  */
@@ -222,19 +240,19 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	{
 		mLookatTarget = other;
 
-		_340 = 0;
-		_330 = 0;
+		mLookTimer = 0;
+		mIsLooking = 0;
 
 		mLookAtTarget.reset();
 	}
 
 	void forceFinishLook()
 	{
-		mLookatTarget = 0;
-		_348          = 0.0f;
-		_344          = 0.0f;
-		_340          = 0;
-		_330          = 0;
+		mLookatTarget       = 0;
+		mVerticalRotation   = 0.0f;
+		mHorizontalRotation = 0.0f;
+		mLookTimer          = 0;
+		mIsLooking          = 0;
 
 		mLookAtTarget.reset();
 	}
@@ -261,25 +279,25 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Vector3f mSplineControlPts[4];        // _2F8
 	s16 mNumRoutePoints;                  // _328
 	Creature* mRouteTargetCreature;       // _32C
-	u8 _330;                              // _330
+	u8 mIsLooking;                        // _330
 	f32 _334;                             // _334
 	SmartPtr<Creature> mLookAtTarget;     // _338
 	Vector3f* mLookatTarget;              // _33C
-	u8 _340;                              // _340
-	f32 _344;                             // _344
-	f32 _348;                             // _348
+	u8 mLookTimer;                        // _340
+	f32 mHorizontalRotation;              // _344
+	f32 mVerticalRotation;                // _348
 	f32 mOldFaceDirection;                // _34C
 	int mBlendMotionIdx;                  // _350
 	PaniPikiAnimMgr mPikiAnimMgr;         // _354
 	u8 mEmotion;                          // _400
 	Creature* mCarryingShipPart;          // _404
-	u8 _408;                              // _408
+	u8 mActionState;                      // _408
 	bool mIsCallable;                     // _409
 	UpdateContext mPikiUpdateContext;     // _40C
 	UpdateContext mPikiLookUpdateContext; // _418
 	bool mIsPanicked;                     // _424
 	u16 mInWaterTimer;                    // _426
-	PermanentEffect* _428;                // _428
+	PermanentEffect* mPanickedEffect;     // _428
 	BurnEffect* mBurnEffect;              // _42C
 	RippleEffect* mRippleEffect;          // _430
 	FreeLightEffect* mFreeLightEffect;    // _434
@@ -296,9 +314,9 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	int _480;                             // _480
 	int _484;                             // _484
 	f32 mMoveSpeed;                       // _488
-	f32 _48C;                             // _48C
+	f32 mDeathTimer;                      // _48C, controls death scale, among other things
 	PikiStateMachine* mFSM;               // _490
-	u8 _494[0x4];                         // _494
+	Creature* mCurrNectar;                // _494
 	f32 mFlickIntensity;                  // _498
 	f32 mRotationAngle;                   // _49C
 	bool mIsWhistlePending;               // _4A0, have been whistled, haven't joined party yet
@@ -309,8 +327,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Vector3f _4BC;                        // _4BC
 	Vector3f _4C8;                        // _4C8
 	u8 _4D4[0x4];                         // _4D4, unknown
-	u32 _4D8;                             // _4D8, unknown
-	u32 _4DC;                             // _4DC, unknown
+	int _4D8;                             // _4D8
+	Piki* _4DC;                           // _4DC
 	Plane* mWallPlane;                    // _4E0
 	DynCollObject* mWallObj;              // _4E4
 	int _4E8;                             // _4E8

@@ -145,6 +145,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct DrawGameInfo {
 
@@ -176,10 +178,11 @@ struct DrawGameInfo {
 	bool isLowerFrameOut();
 
 	// TODO: members
-	int _00; // _00
-	u16 _04; // _04
-	u16 _06; // _06
-	u16 _08; // _08
+	int mEncodedNextThrowType; // _00
+	u16 mFormationPikiNum;     // _04
+	u16 mMapPikiNum;           // _06
+	u16 mTotalPikiNum;         // _08
+	u8 _0A[0x1C - 0xC];        // _0A, unknown
 };
 
 extern DrawGameInfo* pGameInfo;

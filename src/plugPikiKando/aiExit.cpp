@@ -35,7 +35,7 @@ ActExit::ActExit(Piki* piki)
  */
 void ActExit::init(Creature*)
 {
-	mPiki->_408 = 0;
+	mPiki->mActionState = 0;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
 	mPiki->mScale.set(0.0f, 0.0f, 0.0f);
 	mPrevPosition = mPiki->mPosition;
@@ -88,7 +88,7 @@ int ActExit::exec()
 		mPiki->mScale.set(1.0f, 1.0f, 1.0f);
 	}
 
-	if (mPiki->mFloorTri) {
+	if (mPiki->mGroundTriangle) {
 		return ACTOUT_Success;
 	}
 
@@ -97,7 +97,7 @@ int ActExit::exec()
 	}
 
 	f32 baseVelocity = 70.0f;
-	f32 sideVelocity = 8.0f * randBalanced(0.5f);
+	f32 sideVelocity = 8.0f * (gsys->getRand(1.0f) - 0.5f);
 	Vector3f ropeDir(mPiki->mRope->mRopeDirection);
 	Vector3f faceDir(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 	Vector3f sideDir(faceDir);

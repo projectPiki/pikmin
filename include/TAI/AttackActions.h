@@ -8,8 +8,8 @@
  * @brief TODO
  */
 struct TaiAttackableNaviPikiAction : public TaiAction {
-	inline TaiAttackableNaviPikiAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiAttackableNaviPikiAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -56,8 +56,8 @@ struct TaiAttackableNaviAction : public TaiAction {
  * @brief TODO
  */
 struct TaiAnimationSwallowingAction : public TaiAction {
-	inline TaiAnimationSwallowingAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiAnimationSwallowingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -74,8 +74,8 @@ struct TaiAnimationSwallowingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiBangingAction : public TaiAction {
-	inline TaiBangingAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiBangingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -90,8 +90,8 @@ struct TaiBangingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiFlickAction : public TaiAction {
-	inline TaiFlickAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiFlickAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -122,8 +122,8 @@ struct TaiTargetStickAction : public TaiAction {
  * @brief TODO
  */
 struct TaiFlickingAction : public TaiMotionAction {
-	inline TaiFlickingAction() // TODO: this is a guess
-	    : TaiMotionAction(0, 0)
+	TaiFlickingAction(int nextState, int motionIdx)
+	    : TaiMotionAction(nextState, motionIdx)
 	{
 	}
 
@@ -132,8 +132,7 @@ struct TaiFlickingAction : public TaiMotionAction {
 	virtual bool act(Teki&);    // _10
 
 	// _04     = VTBL
-	// _00-_08 = TaiMotionAction
-	// TODO: members
+	// _00-_0C = TaiMotionAction
 };
 
 /**

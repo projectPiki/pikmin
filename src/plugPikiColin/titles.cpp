@@ -1,7 +1,18 @@
 #include "TitlesSection.h"
 #include "Interface.h"
 #include "Delegate.h"
+#include "gameflow.h"
+#include "jaudio/PikiScene.h"
+#include "Menu.h"
+#include "jaudio/verysimple.h"
 #include "DebugLog.h"
+
+zen::ogScrStartMgr* startWindow;
+zen::ogScrTitleMgr* titleWindow;
+zen::DrawHiScore* totalWindow;
+bool startWindowOn;
+bool titleWindowOn;
+bool totalWindowOn;
 
 /*
  * --INFO--
@@ -22,46 +33,14 @@ DEFINE_PRINT(nullptr)
  * Address:	8005F804
  * Size:	00008C
  */
-void TitleSetupSection::menuSelectOption(Menu&)
+void TitleSetupSection::menuSelectOption(Menu& parent)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  lis       r3, 0x803A
-	  lwz       r4, 0x30(r4)
-	  subi      r5, r3, 0x2848
-	  li        r3, 0xD
-	  lwz       r4, 0x1C(r4)
-	  stw       r4, 0x24(r30)
-	  li        r4, 0
-	  stw       r0, 0x2B4(r5)
-	  bl        -0x45B64
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x1
-	  stw       r0, 0x20(r30)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, -0x7930(r2)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, -0x792C(r2)
-	  stfs      f0, 0xC(r3)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_24                       = parent.mCurrentItem->mFilterIndex;
+	gameflow.mIsChallengeMode = 0;
+	Jac_SceneExit(13, 0);
+	parent.close();
+	_20 = 1;
+	gsys->setFade(0.0f, 3.0f);
 }
 
 /*
@@ -69,29 +48,14 @@ void TitleSetupSection::menuSelectOption(Menu&)
  * Address:	8005F890
  * Size:	000038
  */
-void TitlesMovieInterface::message(int, int)
+void TitlesMovieInterface::message(int a1, int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x18
-	  b         .loc_0x28
-
-	.loc_0x18:
-	  lwz       r3, 0x2EC8(r13)
-	  bl        0x1391D4
-	  li        r0, 0x1
-	  stb       r0, 0x2ECC(r13)
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	switch (a1) {
+	case 0:
+		startWindow->start();
+		startWindowOn = true;
+		break;
+	}
 }
 
 /*
@@ -101,6 +65,37 @@ void TitlesMovieInterface::message(int, int)
  */
 void TitlesSection::init()
 {
+	Node::init("<TitlesSection>");
+	Jac_BackDVDBuffer();
+	gsys->mTimerState = 0;
+	gsys->setFrameClamp(1);
+	gsys->setDataRoot("dataDir/");
+	gameflow.mLevelBannerTexture     = nullptr;
+	gameflow.mLevelBannerFadeValue   = 1.0f;
+	gameflow.mGamePrefs.mHasSaveGame = 0;
+
+	if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mErrorCode >= 0) {
+		gameflow.mMemoryCard.loadOptions();
+	}
+	gameflow.mGamePrefs.fixSoundMode();
+	gsys->startLoading(&gameflow.mGameLoadIdler, false, gameflow.mIsChallengeMode ? 0 : 60);
+
+	int beforeLang          = gameflow.mLanguageIndex;
+	gameflow.mLanguageIndex = gameflow.mGamePrefs.isChallengeOpen();
+	if (gameflow.mLanguageIndex != beforeLang) {
+		preloadLanguage();
+	}
+	gameflow.mIsChallengeMode = 0;
+	gameflow._2B8             = 0;
+	gameflow._2B0             = 0;
+
+	if (!gameflow.mNextOnePlayerSectionID) {
+		add(new TitleSetupSection);
+	}
+	PRINT("ending loading!\n");
+	gsys->endLoading();
+	PRINT("done!\n");
+	Jac_SceneSetup(1, 0);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1935,30 +1930,6 @@ void TitleSetupSection::drawMenu(Graphics&, Menu*, f32)
 	  lwz       r0, 0x3C(r1)
 	  lfd       f31, 0x30(r1)
 	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80061220
- * Size:	000030
- */
-void Delegate1<TitleSetupSection, Menu&>::invoke(Menu&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r5, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1B3AF8
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
 	  mtlr      r0
 	  blr
 	*/

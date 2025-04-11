@@ -22,6 +22,12 @@ struct Plane {
 
 	f32 dist(Vector3f& point) { return mNormal.DP(point) - mOffset; }
 
+	void read(RandomAccessStream& input)
+	{
+		mNormal.read(input);
+		mOffset = input.readFloat();
+	}
+
 	Vector3f mNormal; // _00
 	f32 mOffset;      // _0C
 };

@@ -45,6 +45,10 @@ struct PeveEvent : public NNode {
 		mEventOptions = opts;
 	}
 
+	// DLL inlines to do:
+	PeveEvent* getEvent(int idx) { return (PeveEvent*)getChild(idx); }
+	void makeEvent(PeveCondition* condition) { mCondition = condition; }
+
 	// _00     = VTBL
 	// _00-_08 = NNode
 	PeveCondition* mCondition; // _08
@@ -76,9 +80,12 @@ struct PeveSerialEvent : public PeveEvent {
 	virtual void update();     // _24
 	virtual bool isFinished(); // _28
 
+	// DLL inlines:
+	PeveEvent* getCurrentEvent() { return getEvent(mEventIdx); }
+
 	// _00     = VTBL
 	// _00-_10 = PeveEvent
-	// TODO: members
+	int mEventIdx; // _10
 };
 
 #endif

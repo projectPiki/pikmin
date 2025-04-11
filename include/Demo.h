@@ -11,14 +11,45 @@ struct Creature;
  * @brief TODO
  */
 enum EDemoFlags {
-	DEMOFLAG_Unk0 = 0,
-	DEMOFLAG_Unk1 = 1,
-	// ...
-	DEMOFLAG_Unk9 = 9,
-	// ...
-	DEMOFLAG_Unk27 = 27,
-	DEMOFLAG_Unk28 = 28,
-	DEMOFLAG_Unk29 = 29,
+	DEMOFLAG_NULL                = -1,
+	DEMOFLAG_DiscoverRedOnyon    = 0,
+	DEMOFLAG_DiscoverYellowOnyon = 1,
+	DEMOFLAG_DiscoverBlueOnyon   = 2,
+	DEMOFLAG_ApproachSeed        = 3,
+	DEMOFLAG_PluckRedPikmin      = 4,
+	DEMOFLAG_PluckYellowPikmin   = 5,
+	DEMOFLAG_PluckBluePikmin     = 6,
+	DEMOFLAG_NoPikminTimeout     = 7,
+	DEMOFLAG_CameraInfo          = 8,
+	DEMOFLAG_Unk9                = 9, // 'pellet grass battle timeout'
+	DEMOFLAG_CollectFirstPellet  = 10,
+	DEMOFLAG_FirstSluiceDown     = 11,
+	DEMOFLAG_ApproachEngine      = 12,
+	DEMOFLAG_CollectEngine       = 13,
+	DEMOFLAG_StartBoxPush        = 14,
+	DEMOFLAG_FinishBoxPush       = 15,
+	DEMOFLAG_OnyonMenuInfo       = 16,
+	DEMOFLAG_PostExtinctionSeed  = 17,
+	DEMOFLAG_GrabFirstBomb       = 18,
+	DEMOFLAG_FirstHurryUp        = 19,
+	DEMOFLAG_FirstBombExplode    = 20,
+
+	DEMOFLAG_PikminLimitOffset = 21, // each course's "you've exceeded 100 pikmin" text is this + stageID
+
+	DEMOFLAG_PikminLimitTutorial    = 21,
+	DEMOFLAG_PikminLimitForest      = 22,
+	DEMOFLAG_PikminLimitCave        = 23,
+	DEMOFLAG_PikminLimitYakushima   = 24,
+	DEMOFLAG_PikminLimitLast        = 25,
+	DEMOFLAG_FirstNectar            = 26,
+	DEMOFLAG_FirstBombDeath         = 27,
+	DEMOFLAG_CarryPathBlocked       = 28,
+	DEMOFLAG_OlimarLowHealth        = 29,
+	DEMOFLAG_Pluck15thPikmin        = 30,
+	DEMOFLAG_FirstNoon              = 31,
+	DEMOFLAG_UfoPartDiscoveryOffset = 32, // each part's discovery text is this + partID
+
+	DEMOFLAG_COUNT = DEMOFLAG_UfoPartDiscoveryOffset + 30 + 1,
 };
 
 /**
@@ -27,11 +58,11 @@ enum EDemoFlags {
 struct DemoFlag {
 	// TODO: this - only gets returned by DemoFlags::getDemoFlag smh
 
-	char* mName; // _00
-	u16 mIndex;  // _04
-	s16 _06;     // _06
-	u16 _08;     // _08
-	bool _0A;    // _0A
+	char* mName;     // _00
+	u16 mIndex;      // _04
+	s16 mMovieIndex; // _06
+	u16 _08;         // _08
+	bool _0A;        // _0A
 };
 
 /**
@@ -42,11 +73,11 @@ struct DemoParms : public Node {
 	struct Parms : Parameters {
 		Parms();
 
-		Parm<f32> mOnionBootTriggerRadius; // _00
-		Parm<f32> mSeedDemoTriggerRadius;  // _10
-		Parm<f32> mSeedDemoWaitTime;       // _20
-		Parm<f32> _30;                     // _30
-		Parm<f32> mDemoTriggerRadius;      // _40
+		Parm<f32> mOnionBootTriggerRadius; // _24
+		Parm<f32> mSeedDemoTriggerRadius;  // _34
+		Parm<f32> mSeedDemoWaitTime;       // _44
+		Parm<f32> _30;                     // _54
+		Parm<f32> mDemoTriggerRadius;      // _64
 	};
 
 	DemoParms();
@@ -55,7 +86,7 @@ struct DemoParms : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Parms mParms; // _24
+	Parms mParms; // _20
 };
 
 /**
@@ -85,7 +116,7 @@ struct DemoFlags {
 	DemoFlag** mFlagDataList;  // _0C
 	Creature* mTargetCreature; // _10
 	f32 mWaitTimer;            // _14
-	s16 _18;                   // _18
+	s16 mCurrentDemoIndex;     // _18
 };
 
 /**

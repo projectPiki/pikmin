@@ -55,9 +55,9 @@ void TekiPersonality::reset()
 {
 	mPosition.set(0.0f, 0.0f, 0.0f);
 	mFaceDirection = 0.0f;
-	mScale.set(0.0f, 0.0f, 0.0f);
-	_20 = 0;
-	_24 = 0;
+	mNestPosition.set(0.0f, 0.0f, 0.0f);
+	mPelletKind  = 0;
+	mPelletColor = 0;
 	mID.setID('none');
 
 	setI(INT_PelletMinCount, 0);
@@ -82,10 +82,10 @@ void TekiPersonality::input(TekiPersonality& other)
 {
 	mPosition.input(other.mPosition);
 	mFaceDirection = other.mFaceDirection;
-	mScale.set(other.mScale);
-	_20 = other._20;
-	_24 = other._24;
-	mID = other.mID;
+	mNestPosition.set(other.mNestPosition);
+	mPelletKind  = other.mPelletKind;
+	mPelletColor = other.mPelletColor;
+	mID          = other.mID;
 	mParams->input(*other.mParams);
 }
 
@@ -102,16 +102,16 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
 
 	if (version <= 7) {
 		ERROR("TekiPersonality::read:too old version:%d\n", version);
-		_20 = input.readInt();
-		_24 = input.readInt();
+		mPelletKind  = input.readInt();
+		mPelletColor = input.readInt();
 		mID.setID('none');
 		params->read(input);
 		return;
 	}
 
 	if (version <= 8) {
-		_20 = input.readInt();
-		_24 = input.readInt();
+		mPelletKind  = input.readInt();
+		mPelletColor = input.readInt();
 		mID.read(input);
 
 		int i;
@@ -132,8 +132,8 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
 	}
 
 	if (version <= 9) {
-		_20 = (s8)input.readByte();
-		_24 = (s8)input.readByte();
+		mPelletKind  = (s8)input.readByte();
+		mPelletColor = (s8)input.readByte();
 		mID.read(input);
 
 		int i;
@@ -153,11 +153,11 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
 		return;
 	}
 
-	_20 = (s8)input.readByte();
-	_24 = (s8)input.readByte();
+	mPelletKind  = (s8)input.readByte();
+	mPelletColor = (s8)input.readByte();
 	mID.read(input);
 	params->read(input);
-	PRINT("TekiPersonality::read:pelletColor:%d\n", _24);
+	PRINT("TekiPersonality::read:pelletColor:%d\n", mPelletColor);
 }
 
 /*
@@ -168,8 +168,8 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
 void TekiPersonality::write(RandomAccessStream& output)
 {
 	PRINT("TekiPersonality::write>\n");
-	output.writeByte((s8)_20);
-	output.writeByte((s8)_24);
+	output.writeByte((s8)mPelletKind);
+	output.writeByte((s8)mPelletColor);
 	mID.write(output);
 	mParams->write(output);
 	PRINT("TekiPersonality::write<\n");

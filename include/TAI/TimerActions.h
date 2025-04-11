@@ -8,11 +8,11 @@
  * @brief TODO
  */
 struct TaiTimerAction : public TaiAction {
-	TaiTimerAction(int p1, int p2, f32 p3, f32 p4)
-	    : TaiAction(p1)
-	    , _08(p2)
-	    , _0C(p3)
-	    , _10(p4)
+	TaiTimerAction(int nextState, int timerIdx, f32 length, f32 randomRate)
+	    : TaiAction(nextState)
+	    , mTimerIdx(timerIdx)
+	    , mTimerLength(length)
+	    , mRandomRate(randomRate)
 	{
 	}
 
@@ -23,18 +23,21 @@ struct TaiTimerAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int _08; // _08
-	f32 _0C; // _0C
-	f32 _10; // _10
+	int mTimerIdx;    // _08
+	f32 mTimerLength; // _0C
+	f32 mRandomRate;  // _10
 };
 
 /**
  * @brief TODO
  */
 struct TaiResetTimerAction : public TaiAction {
-	inline TaiResetTimerAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiResetTimerAction(int timerIdx, f32 length, f32 randomRate)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mTimerIdx    = timerIdx;
+		mTimerLength = length;
+		mRandomRate  = randomRate;
 	}
 
 	virtual void start(Teki&); // _08
@@ -43,40 +46,44 @@ struct TaiResetTimerAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mTimerIdx;    // _08
+	f32 mTimerLength; // _0C
+	f32 mRandomRate;  // _10
 };
 
 /**
  * @brief TODO
  */
 struct TaiTimerElapsedAction : public TaiAction {
-	inline TaiTimerElapsedAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTimerElapsedAction(int nextState, int timerIdx)
+	    : TaiAction(nextState)
 	{
+		mTimerIdx = timerIdx;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mTimerIdx; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiStartingTimerAction : public TaiTimerAction {
-	inline TaiStartingTimerAction() // TODO: this is a guess
-	    : TaiTimerAction(0, 0, 0.0f, 0.0f)
+	TaiStartingTimerAction(int nextState, int timerIdx, f32 length, f32 randomRate, f32 chance)
+	    : TaiTimerAction(nextState, timerIdx, length, randomRate)
 	{
+		mChance = chance;
 	}
 
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
 	// _04     = VTBL
-	// _00-_08 = TaiTimerAction?
-	// TODO: members
+	// _00-_14 = TaiTimerAction
+	f32 mChance; // _14
 };
 
 #endif

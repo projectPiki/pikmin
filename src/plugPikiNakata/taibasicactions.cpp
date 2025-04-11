@@ -35,7 +35,7 @@ void TaiActionStateAction::start(Teki& teki)
  */
 bool TaiActionStateAction::act(Teki& teki)
 {
-	if (teki.mActionStateId == mStateID) {
+	if (teki.mActionStateId == mActionState) {
 		return true;
 	}
 	return false;

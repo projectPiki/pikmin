@@ -40,7 +40,12 @@ struct Joint : public CoreNode {
 		Joint* mJointList;   // _24
 	};
 
-	Joint();
+	Joint()
+	    : CoreNode(nullptr)
+	{
+		mFlags = 1;
+		_10C   = 0;
+	}
 
 	virtual void read(RandomAccessStream&); // _0C
 
@@ -57,7 +62,7 @@ struct Joint : public CoreNode {
 	int mParentIndex;            // _18
 	int mType;                   // _1C
 	int mFlags;                  // _20
-	Vector3f mScale;             // _24
+	Vector3f mScale;             // _24, this is an SRT apparently
 	Vector3f mRotation;          // _30
 	Vector3f mTranslation;       // _3C
 	Matrix4f mAnimMatrix;        // _48
@@ -69,7 +74,7 @@ struct Joint : public CoreNode {
 	MatPoly mMatPoly;            // _E4
 	int _10C;                    // _10C
 	int mMatPolyCount;           // _110
-	int _114;                    // _114
+	int mCullIndex;              // _114
 	BaseShape* mParentShape;     // _118
 };
 

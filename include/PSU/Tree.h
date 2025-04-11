@@ -17,12 +17,18 @@ struct PSUTree : public PSUList<T>, public PSULink<T> {
 	{
 	}
 
-	~PSUTree();
+	~PSUTree() { }
 
-	PSUTree<T>* getFirstChild() const { return (PSUTree<T>*)getFirst(); }
+	PSUTree<T>* getFirstChild() const { return (PSUTree<T>*)getFirstLink(); }
 	PSUTree<T>* getEndChild() const { return nullptr; }
 	PSUTree<T>* getNextChild() const { return (PSUTree<T>*)mNext; }
 	T* getObject() const { return (T*)mObject; }
+
+	bool appendChild(PSUTree<T>* child) { return PSUList::append(child); }
+	PSUTree<T>* getParent() const { return (PSUTree<T>*)mList; }
+
+	// DLL inlines to do:
+	bool removeChild(PSUTree<T>* child);
 
 	// PSUList at _00
 	// PSULink at _0C
@@ -42,25 +48,25 @@ struct PSUTreeIterator {
 	{
 	}
 
-	bool operator==(PSUTree<T>* other) { return mTree == other; }
+	// these are all the inlines according to the DLL:
 	bool operator!=(const PSUTree<T>* other) const { return mTree != other; };
 
-	inline PSUTreeIterator<T> operator++(int)
+	PSUTreeIterator<T>& operator=(PSUTree<T>*); // DLL, to do
+
+	PSUTreeIterator<T> operator++(int)
 	{
 		PSUTreeIterator<T> prev = *this;
 		mTree                   = mTree->getNextChild();
 		return prev;
 	}
 
-	inline PSUTreeIterator<T>& operator++()
+	PSUTreeIterator<T>& operator++()
 	{
 		mTree = mTree->getNextChild();
 		return *this;
 	}
 
-	T& operator*() { return *(getObject()); }
 	T* operator->() const { return mTree->getObject(); }
-
 	T* getObject() const { return mTree->getObject(); }
 
 	PSUTree<T>* mTree; // _00

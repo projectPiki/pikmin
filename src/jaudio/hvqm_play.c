@@ -1,13 +1,11 @@
-#include "types.h"
-
-typedef struct StreamHeader_ StreamHeader;
+#include "jaudio/hvqm_play.h"
 
 /*
  * --INFO--
  * Address:	8001DC80
  * Size:	000104
  */
-void __ReLoad()
+static void __ReLoad()
 {
 	/*
 	.loc_0x0:
@@ -92,7 +90,7 @@ void __ReLoad()
  * Address:	8001DDA0
  * Size:	000074
  */
-void __LoadFin(u32)
+static void __LoadFin(u32)
 {
 	/*
 	.loc_0x0:
@@ -133,7 +131,7 @@ void __LoadFin(u32)
  * Address:	8001DE20
  * Size:	000198
  */
-void __VirtualLoad(u32, u32, u8*)
+static void __VirtualLoad(u32, u32, u8*)
 {
 	/*
 	.loc_0x0:
@@ -265,7 +263,7 @@ void __VirtualLoad(u32, u32, u8*)
  * Address:	8001DFC0
  * Size:	000050
  */
-void InitAudio1(StreamHeader_*, u8*, u32)
+static void InitAudio1(StreamHeader*, u8*, u32)
 {
 	/*
 	.loc_0x0:
@@ -297,7 +295,7 @@ void InitAudio1(StreamHeader_*, u8*, u32)
  * Address:	8001E020
  * Size:	0003BC
  */
-void Jac_HVQM_Init(void)
+void Jac_HVQM_Init(const char* filepath, u8*, int)
 {
 	/*
 	.loc_0x0:
@@ -602,7 +600,7 @@ void OSInitFastCast(void)
  * Address:	8001E3E0
  * Size:	000050
  */
-void hvqm_forcestop()
+static void hvqm_forcestop()
 {
 	/*
 	.loc_0x0:
@@ -1002,7 +1000,7 @@ void Jac_CountReadyPictures(void)
  * Address:	8001E860
  * Size:	000228
  */
-void Jac_GetPicture(void)
+int Jac_GetPicture(void)
 {
 	/*
 	.loc_0x0:
@@ -1186,7 +1184,7 @@ void Jac_GetPicture(void)
  * Address:	8001EAA0
  * Size:	000040
  */
-void InitPic()
+static void InitPic()
 {
 	/*
 	.loc_0x0:
@@ -1216,7 +1214,7 @@ void InitPic()
  * Address:	8001EAE0
  * Size:	000044
  */
-void CheckDraw(u32)
+static void CheckDraw(u32)
 {
 	/*
 	.loc_0x0:
@@ -1247,7 +1245,7 @@ void CheckDraw(u32)
  * Address:	8001EB40
  * Size:	0000FC
  */
-void Decode1(u8*, u32, u8)
+static void Decode1(u8*, u32, u8)
 {
 	/*
 	.loc_0x0:

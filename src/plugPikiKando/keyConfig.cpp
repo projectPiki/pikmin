@@ -38,23 +38,12 @@ void KeyConfig::createInstance()
  */
 KeyConfig::KeyConfig()
 {
-	mThrowKey.setName("投げ"); // 'throw'
-	mThrowKey._20 = 0x1000;
-
-	mSetCursorKey.setName("集合カーソル"); // 'set cursor'
-	mSetCursorKey._20 = 0x2000;
-
-	mExtractKey.setName("抜き"); // 'extract'
-	mExtractKey._20 = 0x2000;
-
-	mAttackKey.setName("アタック"); // 'attack'
-	mAttackKey._20 = 0x1000;
-
-	mDisbandKey.setName("解散"); // 'disband'
-	mDisbandKey._20 = 0x4000;
-
-	mMenuKey.setName("メニュー"); // 'menu'
-	mMenuKey._20 = 0x8000;
+	mThrowKey.set("投げ", KBBTN_A);             // 'throw'
+	mSetCursorKey.set("集合カーソル", KBBTN_B); // 'set cursor'
+	mExtractKey.set("抜き", KBBTN_B);           // 'extract'
+	mAttackKey.set("アタック", KBBTN_A);        // 'attack'
+	mDisbandKey.set("解散", KBBTN_X);           // 'disband'
+	mMenuKey.set("メニュー", KBBTN_Y);          // 'menu'
 
 	load("parms/", "key.bin", 1);
 }
@@ -81,5 +70,5 @@ void KeyConfig::read(RandomAccessStream& input)
  */
 void KeyConfig::Key::read(RandomAccessStream& input)
 {
-	_20 = input.readInt();
+	mBind = input.readInt();
 }

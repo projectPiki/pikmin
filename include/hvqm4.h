@@ -57,12 +57,12 @@ typedef struct BlockData {
 /**
  * @brief TODO
  *
- * @note Size: 0x808.
+ * @note Size: 0x1008.
  */
 typedef struct Tree {
 	u32 pos;             // _00
 	int root;            // _04
-	u16 array[2][0x200]; // _08, may be u32s, need to check our version
+	u32 array[2][0x200]; // _08
 } Tree;
 
 /**
@@ -135,26 +135,26 @@ typedef struct StackState {
 typedef struct VideoState {
 	HVQPlaneDesc planes[HVQM_PLANE_COUNT];             // _00
 	Tree trees[6];                                     // _A8
-	BitBufferWithTree dc_values[HVQM_PLANE_COUNT];     // _30D8, DC values
-	BitBufferWithTree dc_rle[HVQM_PLANE_COUNT];        // _3114, DC run lengths
-	BitBufferWithTree bufTree0[HVQM_PLANE_COUNT];      // _3150
-	BitBufferWithTree basis_num[HVQM_LUMA_CHROMA];     // _318C
-	BitBufferWithTree basis_num_run[HVQM_LUMA_CHROMA]; // _31B4
-	BitBuffer fixvl[HVQM_PLANE_COUNT];                 // _31DC, uncompressed high-entropy data
-	BitBufferWithTree mv_h;                            // _320C, horizontal motion vectors
-	BitBufferWithTree mv_v;                            // _3220, vertical motion vectors
-	BitBufferWithTree mcb_proc;                        // _3234, macroblock proc
-	BitBufferWithTree mcb_type;                        // _3248, macroblock type
-	u16 h_nest_size;                                   // _325C
-	u16 v_nest_size;                                   // _325E
-	u8 is_landscape;                                   // _3260
-	u8 nest_data[70 * 38];                             // _3261
-	u16 dc_max;                                        // _3CC6
-	u16 dc_min;                                        // _3CC8
-	u8 unk_shift;                                      // _3CCA
-	u8 dc_shift;                                       // _3CCB
-	u8 mc_residual_bits_h[2];                          // _3CCC, num res bits to read from mv_h, past + future
-	u8 mc_residual_bits_v[2];                          // _3CCE, num res bits to read from mv_v, past + future
+	BitBufferWithTree dc_values[HVQM_PLANE_COUNT];     // _60D8, DC values
+	BitBufferWithTree dc_rle[HVQM_PLANE_COUNT];        // _6114, DC run lengths
+	BitBufferWithTree bufTree0[HVQM_PLANE_COUNT];      // _6150
+	BitBufferWithTree basis_num[HVQM_LUMA_CHROMA];     // _618C
+	BitBufferWithTree basis_num_run[HVQM_LUMA_CHROMA]; // _61B4
+	BitBuffer fixvl[HVQM_PLANE_COUNT];                 // _61DC, uncompressed high-entropy data
+	BitBufferWithTree mv_h;                            // _620C, horizontal motion vectors
+	BitBufferWithTree mv_v;                            // _6220, vertical motion vectors
+	BitBufferWithTree mcb_proc;                        // _6234, macroblock proc
+	BitBufferWithTree mcb_type;                        // _6248, macroblock type
+	u16 h_nest_size;                                   // _625C
+	u16 v_nest_size;                                   // _625E
+	u8 is_landscape;                                   // _6260
+	u8 nest_data[70 * 38];                             // _6261
+	u16 dc_max;                                        // _6CC6
+	u16 dc_min;                                        // _6CC8
+	u8 unk_shift;                                      // _6CCA
+	u8 dc_shift;                                       // _6CCB
+	u8 mc_residual_bits_h[2];                          // _6CCC, num res bits to read from mv_h, past + future
+	u8 mc_residual_bits_v[2];                          // _6CCE, num res bits to read from mv_v, past + future
 } VideoState;
 
 /**

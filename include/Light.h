@@ -10,6 +10,7 @@
 
 struct CmdStream;
 struct Graphics;
+struct SceneData;
 struct Shape;
 struct Texture;
 
@@ -132,7 +133,7 @@ struct Light : public CoreNode {
 	f32 _48;                     // _48
 	u8 _4C[0x8];                 // _4C, unknown
 	Vector3f mPosition;          // _54
-	Vector3f _60;                // _60
+	Vector3f mDirection;         // _60
 	Colour mDiffuseColour;       // _6C
 	u32 mLightValuesSet;         // _70
 	CullFrustum* mFrustum;       // _74
@@ -204,8 +205,8 @@ struct LightGroup : public CoreNode {
 	Texture* mTexture;        // _20
 	Vector3f mDirection;      // _24
 	Colour mLightColour;      // _30
-	s8* mTexSource;           // _34
-	s8* mMatSource;           // _38
+	char* mTexSource;         // _34
+	char* mMatSource;         // _38
 	Texture* mHaloTex;        // _3C
 	LightFlare mFlares;       // _40
 	Shape* mParentShape;      // _64
@@ -230,25 +231,36 @@ struct LightPool : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Light mLight;   // _20
-	Camera mCamera; // _2F4
-	u32 _63C;       // _63C
-	u32 _640;       // _640
-	u32 _644;       // _644
-	u32 _648;       // _648
-	u32 _64C;       // _64C
-	Vector3f _650;  // _650
-	f32 _65C;       // _65C
-	Colour mColour; // _660
-	u8 _664[8];     // _664
-	u8 mFlags;      // _66C, use LightPoolFlags
+	Light mLight;      // _20
+	Camera mCamera;    // _2F4
+	u32 _63C;          // _63C
+	u32 _640;          // _640
+	u32 _644;          // _644
+	u32 _648;          // _648
+	u32 _64C;          // _64C
+	Vector3f _650;     // _650
+	f32 _65C;          // _65C
+	Colour mColour;    // _660
+	u8 _664[4];        // _664
+	Texture* mTexture; // _668
+	u8 mFlags;         // _66C, use LightPoolFlags
 };
 
 /**
  * @brief TODO
  */
 struct LightDataInfo {
+	LightDataInfo() { mLight.mDistancedRange = 1000.0f; }
+
 	void update(f32);
+
+	AnimParam mLightPosAnims[3];     // _00
+	AnimParam mLightColourAnims[3];  // _24
+	AnimParam mLightVisibleAnims[1]; // _48
+	int _54;                         // _54
+	Light mLight;                    // _58
+	int mLightIdx;                   // _32C
+	SceneData* mSceneData;           // _330
 };
 
 #endif

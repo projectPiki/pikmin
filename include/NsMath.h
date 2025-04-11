@@ -54,7 +54,15 @@ struct NsLibMath {
 
 	static T toGoal(T start, T goal, T step)
 	{
-		return (NsLibMath::abs(start - goal) < step) ? goal : (start < goal) ? start + step : start - step;
+		f32 val = start - goal;
+		if (NsLibMath::abs(val) < step) {
+			val = goal;
+		} else if (start < goal) {
+			val = start + step;
+		} else {
+			val = start - step;
+		}
+		return val;
 	}
 };
 
@@ -76,17 +84,9 @@ inline f32 calcNearerDirection(f32 from, f32 to)
 	return to;
 }
 
-// i cannot get these two to both work in every case they need to be in. stack seems better with the getRand1
-// but dies when trying to pass something straight from a Parm<f32>::operator() call.
 inline f32 getRand(f32 val)
 {
-	return System::getRand(1.0f) * (val * 0.99999899f);
-}
-
-inline f32 getRand1(f32 val)
-{
-	f32 fval = val * 0.99999899f;
-	return System::getRand(1.0f) * fval;
+	return gsys->getRand(1.0f) * (val * 0.99999899f);
 }
 
 inline f32 roundAngle(f32 angle)
@@ -104,14 +104,9 @@ inline f32 roundAngle(f32 angle)
 } // namespace NsMathF
 
 namespace NsMathI {
-// this isn't correct according to the DLL, but this matches the best for stack in Boss and PomAi
 inline int getRand(int val)
 {
-	return NsMathF::getRand(val);
-}
-inline int getRand1(int val)
-{
-	return System::getRand(1.0f) * (val * 0.99999899f);
+	return gsys->getRand(1.0f) * (val * 0.99999899f);
 }
 
 // this COULD be revice instead, but i haven't seen a f32 version yet. TBD.

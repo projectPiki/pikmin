@@ -7,6 +7,7 @@
 #include "FlowController.h"
 #include "PlayerState.h"
 #include "GoalItem.h"
+#include "UfoItem.h"
 #include "Interface.h"
 #include "Stickers.h"
 #include "DebugLog.h"
@@ -290,14 +291,16 @@ PelletGoalState::PelletGoalState()
  */
 void PelletGoalState::init(Pellet* pelt)
 {
-	mTargetIsOnion = 0;
+	mTargetIsShip = false;
 	if (pelt->mTargetGoal->mObjType == OBJTYPE_Ufo) {
-		mTargetIsOnion = true;
-		if (!playerState->mDemoFlags.isFlag(13)) {
+		mTargetIsShip = true;
+		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_CollectEngine)) {
 			gameflow.mMovieInfoNum = -1;
 			gameflow.mMovieType    = -1;
-			playerState->mDemoFlags.setFlag(13, (Creature*)itemMgr->getUfo());
-			playerState->mDemoFlags.setFlagOnly(12);
+			playerState->mDemoFlags.setFlag(DEMOFLAG_CollectEngine, itemMgr->getUfo());
+			// just in case we got the engine without triggering the approach engine cutscene (somehow)
+			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_ApproachEngine);
+
 		} else {
 			bool check = playerState->getNextPowerupNumber() == true;
 			for (int i = 0; i < 30; i++) {
@@ -310,10 +313,10 @@ void PelletGoalState::init(Pellet* pelt)
 		}
 		playerState->preloadHenkaMovie();
 
-	} else if (flowCont.mCurrentStage->mStageID == 0) {
-		if (!playerState->mDemoFlags.isFlag(10)) {
+	} else if (flowCont.mCurrentStage->mStageID == STAGE_Practice) {
+		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_CollectFirstPellet)) {
 			PRINT("** FIRST PELLET IN\n");
-			playerState->mDemoFlags.setFlag(10, pelt);
+			playerState->mDemoFlags.setFlag(DEMOFLAG_CollectFirstPellet, pelt);
 		}
 	}
 
@@ -330,7 +333,7 @@ void PelletGoalState::init(Pellet* pelt)
 	if (pelt->mTargetGoal->mObjType != OBJTYPE_Ufo) {
 		Vector3f pos = pelt->mTargetGoal->getGoalPos();
 		EffectParm parm(pos);
-		utEffectMgr->cast(0, parm);
+		utEffectMgr->cast(KandoEffect::Goal, parm);
 	}
 
 	mStartScaleX = pelt->mScale.x;
@@ -341,8 +344,8 @@ void PelletGoalState::init(Pellet* pelt)
 		Vector3f goalPos = pelt->mTargetGoal->getGoalPos();
 		Vector3f suckPos = pelt->mTargetGoal->getSuckPos();
 		EffectParm parm(goalPos, suckPos);
-		utEffectMgr->cast(21, parm);
-		utEffectMgr->cast(22, parm);
+		utEffectMgr->cast(KandoEffect::UfoSuck, parm);
+		utEffectMgr->cast(KandoEffect::UfoSuikomi, parm);
 	}
 
 	Stickers stick(pelt);
@@ -410,7 +413,7 @@ void PelletGoalState::exec(Pellet* pelt)
  */
 void PelletGoalState::cleanup(Pellet*)
 {
-	if (mTargetIsOnion) {
+	if (mTargetIsShip) {
 		utEffectMgr->kill(21);
 	}
 }

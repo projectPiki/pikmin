@@ -37,8 +37,8 @@ void CullFrustum::vectorToWorldPlane(Vector3f& vec, CullingPlane& worldPlane)
  */
 bool CullFrustum::isPointVisible(Vector3f& point, f32 cutoff)
 {
-	for (int i = 0; i < _04; i++) {
-		Plane* plane = mPlanePointers[i];
+	for (int i = 0; i < mActivePlaneCount; i++) {
+		Plane* plane = &mPlanePointers[i]->mPlane;
 		if (point.x * plane->mNormal.x + point.y * plane->mNormal.y + point.z * plane->mNormal.z - plane->mOffset < -cutoff) {
 			return false;
 		}
@@ -1241,7 +1241,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	planes[3].CheckMinMaxDir();
 	planes[3]._28 = 1;
 
-	_00 = &planes[4] - mCullPlanes;
+	mTotalPlaneCount = &planes[4] - mCullPlanes;
 }
 
 /*
@@ -1253,9 +1253,9 @@ void CullFrustum::createViewPlanes()
 {
 	CullingPlane* planes = mCullPlanes;
 	Vector3f vec;
-	_00    = 0;
-	mDepth = sinf(PI * (0.5f * mFov) / 180.0f);
-	mWidth = cosf(PI * (0.5f * mFov) / 180.0f);
+	mTotalPlaneCount = 0;
+	mDepth           = sinf(PI * (0.5f * mFov) / 180.0f);
+	mWidth           = cosf(PI * (0.5f * mFov) / 180.0f);
 	vectorToWorldPlane(Vector3f(0.0f, 0.0f, 1.0f), planes[0]);
 	planes[0].mPlane.mOffset += mNear;
 	planes[0].CheckMinMaxDir();
@@ -1342,12 +1342,12 @@ void CullFrustum::update(f32 aspectRatio, f32 fov, f32 near, f32 far)
 	createViewPlanes();
 	updateViewPlanes(mAspectRatio, -mAspectRatio, -mVerticalScale, mVerticalScale);
 
-	for (int i = 0; i < _00; i++) {
-		mPlanePointers[i] = &mCullPlanes[i].mPlane;
+	for (int i = 0; i < mTotalPlaneCount; i++) {
+		mPlanePointers[i] = &mCullPlanes[i];
 	}
 
-	_04 = _00;
-	_158.set(0.0f, 0.0f, 0.0f);
+	mActivePlaneCount = mTotalPlaneCount;
+	mBoundOffset.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -1468,7 +1468,7 @@ Camera::Camera()
 	mRotation.set(0.0f, 4.363323f, 0.0f);
 	_32C.set(0.0f, 0.0f, 0.0f);
 	mAspectRatio = 1.0f;
-	_344         = 110.0f;
+	mBlur        = 110.0f;
 }
 
 /*

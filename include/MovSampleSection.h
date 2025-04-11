@@ -4,7 +4,7 @@
 #include "types.h"
 #include "Section.h"
 #include "Controller.h"
-#include "jaudio/interface.h"
+#include "jaudio/app_inter.h"
 #include "system.h"
 #include "gameflow.h"
 

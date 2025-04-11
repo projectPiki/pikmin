@@ -13,7 +13,7 @@ struct Fish {
 	Fish() { }
 
 	Vector3f mPosition; // _00
-	Vector3f _0C;       // _0C
+	Vector3f mVelocity; // _0C
 	f32 mDirection;     // _18
 };
 

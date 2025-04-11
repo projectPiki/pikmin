@@ -13,7 +13,18 @@ namespace zen {
  * @brief TODO
  */
 struct TotalScoreRecord {
-	// TODO: members
+	int mParts;     // _00
+	int mDay;       // _04
+	int mPikis;     // _08
+	int mDeadPikis; // _0C
+	int _10;        // _10
+	s16 _14;        // _14
+	s16 _16;        // _16
+	s16 _18;        // _18
+	s16 _1A[5];     // _1A
+	s16 _24[5];     // _24
+	s16 _2E[5];     // _2E
+	s16 _38[5];     // _38
 };
 
 /**
@@ -65,6 +76,7 @@ struct DrawFinalResult {
 	void setMode(modeFlag);
 
 	// TODO: members
+	u8 _00[0x1b4]; // _00
 };
 
 } // namespace zen

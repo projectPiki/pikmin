@@ -3,6 +3,8 @@
 
 #include "types.h"
 #include "CoreNode.h"
+#include "Material.h"
+#include "Colour.h"
 #include "Vector.h"
 
 struct Colour;
@@ -47,6 +49,8 @@ struct GaugeInfo : public CoreNode {
  * @brief TODO
  */
 struct LifeGaugeMgr {
+	LifeGaugeMgr() { init(66); }
+
 	void init(int);
 	void update();
 	void refresh(Graphics&);
@@ -54,9 +58,10 @@ struct LifeGaugeMgr {
 	void addLG(GaugeInfo*);
 	void removeLG(GaugeInfo*);
 
-	GaugeInfo _00;        // _00, probably? definitely CoreNode of some description
-	GaugeInfo _48;        // _48, probably? definitely CoreNode of some description
+	GaugeInfo _00;        // _00
+	GaugeInfo _48;        // _48
 	LFlareGroup* mLFlare; // _90
+	Material _94;         // _94
 };
 
 /**

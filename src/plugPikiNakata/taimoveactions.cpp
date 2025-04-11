@@ -1,5 +1,8 @@
 #include "TAI/MoveActions.h"
+#include "Peve/MotionEvents.h"
 #include "teki.h"
+#include "PikiMgr.h"
+#include "TekiConditions.h"
 #include "DebugLog.h"
 
 /*
@@ -14,7 +17,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("taimoveactions")
 
 /*
  * --INFO--
@@ -34,39 +37,7 @@ bool TaiMoveNestPositionAction::act(Teki& teki)
  */
 void TaiStopMoveAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  subi      r5, r13, 0x11B0
-	  stw       r0, 0x4(r1)
-	  subi      r6, r13, 0x11AC
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  addi      r3, r1, 0x1C
-	  subi      r4, r13, 0x11B4
-	  bl        -0xFD490
-	  addi      r3, r31, 0x70
-	  addi      r4, r1, 0x1C
-	  addi      r5, r1, 0x20
-	  addi      r6, r1, 0x24
-	  bl        -0xD6F34
-	  addi      r3, r1, 0x10
-	  subi      r4, r13, 0x11C0
-	  subi      r5, r13, 0x11BC
-	  subi      r6, r13, 0x11B8
-	  bl        -0xFD4B8
-	  addi      r3, r31, 0xA4
-	  addi      r4, r1, 0x10
-	  addi      r5, r1, 0x14
-	  addi      r6, r1, 0x18
-	  bl        -0xD6F5C
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	teki.stopMove();
 }
 
 /*
@@ -76,8 +47,7 @@ void TaiStopMoveAction::start(Teki& teki)
  */
 void TaiStartFlyingAction::start(Teki& teki)
 {
-	teki.setCreatureFlag(CF_IsFlying);
-	teki.resetCreatureFlag(CF_GravityEnabled);
+	teki.startFlying();
 }
 
 /*
@@ -87,8 +57,7 @@ void TaiStartFlyingAction::start(Teki& teki)
  */
 void TaiFinishFlyingAction::start(Teki& teki)
 {
-	teki.resetCreatureFlag(CF_IsFlying);
-	teki.setCreatureFlag(CF_GravityEnabled);
+	teki.finishFlying();
 }
 
 /*
@@ -98,43 +67,12 @@ void TaiFinishFlyingAction::start(Teki& teki)
  */
 bool TaiMakeVelocityDirectionAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  addi      r3, r1, 0x1C
-	  bl        -0x177FC
-	  addi      r3, r31, 0x368
-	  lwz       r12, 0x368(r31)
-	  addi      r4, r1, 0x1C
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x24(r1)
-	  lfs       f1, 0x1C(r1)
-	  fmuls     f0, f0, f0
-	  fmuls     f1, f1, f1
-	  fadds     f1, f1, f0
-	  bl        -0x126A40
-	  lfs       f0, -0x5BB0(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x68
-	  lfs       f1, 0x1C(r1)
-	  lfs       f2, 0x24(r1)
-	  bl        -0x16890
-	  stfs      f1, 0xA0(r31)
-
-	.loc_0x68:
-	  lwz       r0, 0x34(r1)
-	  li        r3, 0
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f dir;
+	teki.mVelocityIO.output(dir);
+	if (dir.lengthXZ() > 0.0f) {
+		teki.inputDirectionVector(dir);
+	}
+	return false;
 }
 
 /*
@@ -144,43 +82,12 @@ bool TaiMakeVelocityDirectionAction::act(Teki& teki)
  */
 bool TaiMakeAccelerationDirectionAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  addi      r3, r1, 0x1C
-	  bl        -0x1787C
-	  addi      r3, r31, 0x378
-	  lwz       r12, 0x378(r31)
-	  addi      r4, r1, 0x1C
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x24(r1)
-	  lfs       f1, 0x1C(r1)
-	  fmuls     f0, f0, f0
-	  fmuls     f1, f1, f1
-	  fadds     f1, f1, f0
-	  bl        -0x126AC0
-	  lfs       f0, -0x5BB0(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x68
-	  lfs       f1, 0x1C(r1)
-	  lfs       f2, 0x24(r1)
-	  bl        -0x16910
-	  stfs      f1, 0xA0(r31)
-
-	.loc_0x68:
-	  lwz       r0, 0x34(r1)
-	  li        r3, 0
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f dir;
+	teki.mAccelerationIO.output(dir);
+	if (dir.lengthXZ() > 0.0f) {
+		teki.inputDirectionVector(dir);
+	}
+	return false;
 }
 
 /*
@@ -190,61 +97,13 @@ bool TaiMakeAccelerationDirectionAction::act(Teki& teki)
  */
 bool TaiMakingNextVelocityAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stfd      f31, 0x38(r1)
-	  addi      r3, r1, 0x20
-	  stw       r31, 0x34(r1)
-	  addi      r31, r4, 0
-	  lwz       r5, 0x3150(r13)
-	  lfs       f31, 0x28C(r5)
-	  bl        -0x17908
-	  addi      r3, r31, 0x358
-	  lwz       r12, 0x358(r31)
-	  addi      r4, r1, 0x20
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, 0x20(r1)
-	  li        r3, 0
-	  lfs       f0, 0x94(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x20(r1)
-	  lfs       f1, 0x24(r1)
-	  lfs       f0, 0x98(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x24(r1)
-	  lfs       f1, 0x28(r1)
-	  lfs       f0, 0x9C(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x5BAC(r2)
-	  lfs       f1, 0x20(r1)
-	  fdivs     f2, f0, f31
-	  fmuls     f0, f1, f2
-	  stfs      f0, 0x20(r1)
-	  lfs       f0, 0x24(r1)
-	  fmuls     f0, f0, f2
-	  stfs      f0, 0x24(r1)
-	  lfs       f0, 0x28(r1)
-	  fmuls     f0, f0, f2
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, 0x20(r1)
-	  stfs      f0, 0x70(r31)
-	  lfs       f0, 0x24(r1)
-	  stfs      f0, 0x74(r31)
-	  lfs       f0, 0x28(r1)
-	  stfs      f0, 0x78(r31)
-	  lwz       r0, 0x44(r1)
-	  lfd       f31, 0x38(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	f32 fTime = NSystem::getFrameTime();
+	NVector3f vel;
+	teki.mPositionIO.output(vel);
+	vel.sub(teki.getPosition());
+	vel.scale(1.0f / fTime);
+	teki.inputVelocity(vel);
+	return false;
 }
 
 /*
@@ -254,61 +113,13 @@ bool TaiMakingNextVelocityAction::act(Teki& teki)
  */
 bool TaiMakingNextDriveAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x14
-	  bl        -0x179D4
-	  addi      r3, r31, 0x358
-	  lwz       r12, 0x358(r31)
-	  addi      r4, r1, 0x14
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, 0x14(r1)
-	  addi      r3, r1, 0x14
-	  lfs       f0, 0x94(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x14(r1)
-	  lfs       f1, 0x18(r1)
-	  lfs       f0, 0x98(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x18(r1)
-	  lfs       f1, 0x1C(r1)
-	  lfs       f0, 0x9C(r31)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x1C(r1)
-	  bl        -0x17860
-	  lfs       f1, 0x8(r30)
-	  li        r3, 0
-	  lfs       f0, 0x14(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x14(r1)
-	  lfs       f0, 0x18(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x18(r1)
-	  lfs       f0, 0x1C(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, 0x14(r1)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0x18(r1)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0x1C(r1)
-	  stfs      f0, 0xAC(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f drive;
+	teki.mPositionIO.output(drive);
+	drive.sub(teki.getPosition());
+	drive.normalizeCheck();
+	drive.scale(mDriveMag);
+	teki.inputDrive(drive);
+	return false;
 }
 
 /*
@@ -318,22 +129,8 @@ bool TaiMakingNextDriveAction::act(Teki& teki)
  */
 bool TaiAccelerationAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x460(r4)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	teki.mAccelEvent->update();
+	return false;
 }
 
 /*
@@ -343,22 +140,8 @@ bool TaiAccelerationAction::act(Teki& teki)
  */
 bool TaiParabolaAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x45C(r4)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	teki.mParabolaEvent->update();
+	return false;
 }
 
 /*
@@ -368,22 +151,8 @@ bool TaiParabolaAction::act(Teki& teki)
  */
 bool TaiCircleMoveAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x464(r4)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	teki.mCircleMoveEvent->update();
+	return false;
 }
 
 /*
@@ -393,22 +162,8 @@ bool TaiCircleMoveAction::act(Teki& teki)
  */
 bool TaiHorizontalSinWaveAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x468(r4)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	teki.mSinWaveEvent->update();
+	return false;
 }
 
 /*
@@ -418,55 +173,14 @@ bool TaiHorizontalSinWaveAction::act(Teki& teki)
  */
 bool TaiClampMaxHeightAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x10
-	  bl        -0x17B74
-	  addi      r3, r31, 0x358
-	  lwz       r12, 0x358(r31)
-	  addi      r4, r1, 0x10
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  bl        0x13F78
-	  lfs       f2, 0x8(r30)
-	  lfs       f0, 0x14(r1)
-	  fadds     f1, f2, f1
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x8C
-	  mr        r3, r31
-	  bl        0x13F5C
-	  lfs       f0, 0x8(r30)
-	  addi      r3, r31, 0x358
-	  addi      r4, r1, 0x10
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x14(r1)
-	  lwz       r12, 0x358(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x1
-	  b         .loc_0x90
-
-	.loc_0x8C:
-	  li        r3, 0
-
-	.loc_0x90:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f pos;
+	teki.mPositionIO.output(pos);
+	if (pos.y > teki.getSeaLevel() + mMaxHeight) {
+		pos.y = teki.getSeaLevel() + mMaxHeight;
+		teki.mPositionIO.input(pos);
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -476,55 +190,14 @@ bool TaiClampMaxHeightAction::act(Teki& teki)
  */
 bool TaiClampMinHeightAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x10
-	  bl        -0x17C1C
-	  addi      r3, r31, 0x358
-	  lwz       r12, 0x358(r31)
-	  addi      r4, r1, 0x10
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  bl        0x13ED0
-	  lfs       f2, 0x8(r30)
-	  lfs       f0, 0x14(r1)
-	  fadds     f1, f2, f1
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x8C
-	  mr        r3, r31
-	  bl        0x13EB4
-	  lfs       f0, 0x8(r30)
-	  addi      r3, r31, 0x358
-	  addi      r4, r1, 0x10
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x14(r1)
-	  lwz       r12, 0x358(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x1
-	  b         .loc_0x90
-
-	.loc_0x8C:
-	  li        r3, 0
-
-	.loc_0x90:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f pos;
+	teki.mPositionIO.output(pos);
+	if (pos.y < teki.getSeaLevel() + mMinHeight) {
+		pos.y = teki.getSeaLevel() + mMinHeight;
+		teki.mPositionIO.input(pos);
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -534,48 +207,15 @@ bool TaiClampMinHeightAction::act(Teki& teki)
  */
 bool TaiClampMinVelocityYAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x10
-	  bl        -0x17CC4
-	  addi      r3, r31, 0x368
-	  lwz       r12, 0x368(r31)
-	  addi      r4, r1, 0x10
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x14(r1)
-	  lfs       f1, 0x8(r30)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x70
-	  stfs      f1, 0x14(r1)
-	  addi      r3, r31, 0x368
-	  addi      r4, r1, 0x10
-	  lwz       r12, 0x368(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x1
-	  b         .loc_0x74
-
-	.loc_0x70:
-	  li        r3, 0
-
-	.loc_0x74:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f vel;
+	teki.mVelocityIO.output(vel);
+	if (vel.y < mMinVertSpeed) {
+		PRINT("TaiClampMinVelocityYAction::act:%08x:%f,%f\n", &teki, vel.y, mMinVertSpeed);
+		vel.y = mMinVertSpeed;
+		teki.mVelocityIO.input(vel);
+		return true;
+	}
+	return false;
 }
 
 /*
@@ -595,60 +235,20 @@ void TaiImpassableAction::start(Teki& teki)
  */
 bool TaiImpassableAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r4
-	  stw       r30, 0x40(r1)
-	  mr        r30, r3
-	  lfs       f2, 0x9C(r4)
-	  lfs       f3, 0x390(r4)
-	  lfs       f1, 0x388(r31)
-	  lfs       f0, 0x94(r31)
-	  fsubs     f2, f3, f2
-	  fsubs     f1, f1, f0
-	  fmuls     f0, f2, f2
-	  fmuls     f1, f1, f1
-	  fadds     f1, f1, f0
-	  bl        -0x126FA4
-	  lfs       f0, 0x10(r30)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x68
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0xAC
-	  li        r3, 0
-	  b         .loc_0x94
+	f32 distXZ = teki.mTargetPosition.distanceXZ(teki.getPosition());
+	if (distXZ >= mMaxDistance) {
+		resetPosition(teki);
+		return false;
+	}
 
-	.loc_0x68:
-	  lwz       r0, 0x8(r30)
-	  lfs       f0, -0x5BB0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r31, r0
-	  lfs       f1, 0x3C4(r3)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  beq-      .loc_0x90
-	  li        r3, 0
-	  b         .loc_0x94
+	if (!teki.timerElapsed(mTimerIdx)) {
+		return false;
+	}
 
-	.loc_0x90:
-	  li        r3, 0x1
+	PRINT("TaiImpassableAction::act:%08x:%f,%f,%f\n", &teki, distXZ, mMaxDistance, mTimerLength);
+	return true;
 
-	.loc_0x94:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-
-	.loc_0xAC:
-	*/
+	u32 badCompiler[2];
 }
 
 /*
@@ -658,21 +258,8 @@ bool TaiImpassableAction::act(Teki& teki)
  */
 void TaiImpassableAction::resetPosition(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x94(r4)
-	  stfs      f0, 0x388(r4)
-	  lfs       f0, 0x98(r4)
-	  stfs      f0, 0x38C(r4)
-	  lfs       f0, 0x9C(r4)
-	  stfs      f0, 0x390(r4)
-	  lwz       r0, 0x8(r3)
-	  lfs       f0, 0xC(r3)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r4, r0
-	  stfs      f0, 0x3C4(r3)
-	  blr
-	*/
+	teki.mTargetPosition.input(teki.getPosition());
+	teki.mTimers[mTimerIdx] = mTimerLength;
 }
 
 /*
@@ -682,26 +269,8 @@ void TaiImpassableAction::resetPosition(Teki& teki)
  */
 void TaiRandomWanderingRouteAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0xC2C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x15C
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	TaiContinuousMotionAction::start(teki);
+	makeTargetPosition(teki);
 }
 
 /*
@@ -720,106 +289,47 @@ void TaiRandomWanderingRouteAction::finish(Teki& teki)
  */
 bool TaiRandomWanderingRouteAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0xB78
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x48
-	  li        r3, 0
-	  b         .loc_0x124
+	TaiContinuousMotionAction::act(teki);
+	if (!motionStarted(teki)) {
+		return false;
+	}
 
-	.loc_0x48:
-	  lwz       r5, 0x34C(r31)
-	  cmpwi     r5, 0
-	  bne-      .loc_0x68
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x13C
-	  li        r3, 0
-	  b         .loc_0x124
+	if (teki.mRouteWayPointCount == 0) {
+		makeTargetPosition(teki);
+		return false;
+	}
 
-	.loc_0x68:
-	  lwz       r4, 0x348(r31)
-	  cmpw      r5, r4
-	  ble-      .loc_0x98
-	  lwz       r3, 0x354(r31)
-	  subi      r0, r4, 0x1
-	  cmpw      r3, r0
-	  ble-      .loc_0x98
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x13C
-	  li        r3, 0
-	  b         .loc_0x124
+	if (teki.mRouteWayPointCount > teki.mRouteWayPointMax && teki.mCurrRouteWayPointID > teki.mRouteWayPointMax - 1) {
+		PRINT("TaiRandomWanderingRouteAction::act:o.routeWayPointCount>o.routeWayPointMax:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID,
+		      teki.mRouteWayPointCount);
+		makeTargetPosition(teki);
+		return false;
+	}
 
-	.loc_0x98:
-	  lwz       r4, 0x354(r31)
-	  subi      r0, r5, 0x1
-	  cmpw      r4, r0
-	  ble-      .loc_0xBC
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x13C
-	  li        r3, 0
-	  b         .loc_0x124
+	if (teki.mCurrRouteWayPointID > teki.mRouteWayPointCount - 1) {
+		makeTargetPosition(teki);
+		return false;
+	}
 
-	.loc_0xBC:
-	  mr        r3, r31
-	  bl        0x13DF4
-	  mr.       r4, r3
-	  bne-      .loc_0xE0
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x13C
-	  li        r3, 0
-	  b         .loc_0x124
+	WayPoint* wp = teki.getRouteWayPoint(teki.mCurrRouteWayPointID);
+	if (!wp) {
+		PRINT("?TaiRandomWanderingRouteAction::act:%08x:wayPoint==null:%d/%d\n", &teki, teki.mCurrRouteWayPointID,
+		      teki.mRouteWayPointCount);
+		makeTargetPosition(teki);
+		return false;
+	}
 
-	.loc_0xE0:
-	  lbz       r0, 0x38(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x100
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        .loc_0x13C
-	  li        r3, 0
-	  b         .loc_0x124
+	if (!wp->mIsOpen) {
+		PRINT("!TaiRandomWanderingRouteAction::act:%08x:!wayPoint->on:%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
+		makeTargetPosition(teki);
+		return false;
+	}
 
-	.loc_0x100:
-	  lfs       f1, 0xC(r30)
-	  mr        r3, r31
-	  bl        0x12620
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x120
-	  lwz       r3, 0x354(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x354(r31)
-
-	.loc_0x120:
-	  li        r3, 0
-
-	.loc_0x124:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x13C:
-	*/
+	if (teki.moveToward(wp->mPosition, mTargetPosition)) {
+		PRINT("TaiRandomWanderingRouteAction::act:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
+		teki.mCurrRouteWayPointID++;
+	}
+	return false;
 }
 
 /*
@@ -829,37 +339,10 @@ bool TaiRandomWanderingRouteAction::act(Teki& teki)
  */
 void TaiRandomWanderingRouteAction::makeTargetPosition(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r4, 0
-	  addi      r4, r30, 0x94
-	  addi      r3, r30, 0
-	  bl        0x13CC0
-	  lwz       r31, 0x10(r3)
-	  lwz       r3, 0x302C(r13)
-	  lwz       r4, 0x350(r30)
-	  bl        -0x94D2C
-	  subi      r3, r3, 0x1
-	  bl        -0x16598
-	  addi      r5, r3, 0
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  li        r6, 0
-	  bl        0x13BFC
-	  li        r0, 0
-	  stw       r0, 0x354(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	int wpIdx        = teki.getTargetNearestWayPoint(teki.getPosition())->mIndex;
+	int randRouteNum = NSystem::randomInt(routeMgr->getNumWayPoints(teki.mPathHandle) - 1);
+	teki.makeWayPointRoute(wpIdx, randRouteNum, false);
+	teki.mCurrRouteWayPointID = 0;
 }
 
 /*
@@ -869,49 +352,19 @@ void TaiRandomWanderingRouteAction::makeTargetPosition(Teki& teki)
  */
 bool TaiTracingAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  bl        -0xD24
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x48
-	  li        r3, 0
-	  b         .loc_0x70
+	TaiContinuousMotionAction::act(teki);
+	if (!motionStarted(teki)) {
+		return false;
+	}
 
-	.loc_0x48:
-	  lwz       r3, 0x418(r31)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x5C
-	  li        r3, 0
-	  b         .loc_0x70
+	Creature* target = teki.getCreaturePointer(0);
+	if (!target) {
+		PRINT("!TaiTracingAction::act:target==null:%08x\n", &teki);
+		return false;
+	}
 
-	.loc_0x5C:
-	  lfs       f1, 0xC(r30)
-	  addi      r4, r3, 0x94
-	  mr        r3, r31
-	  bl        0x12514
-	  li        r3, 0
-
-	.loc_0x70:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	teki.moveToward(target->getPosition(), mTraceSpeed);
+	return false;
 }
 
 /*
@@ -930,43 +383,12 @@ void TaiGoingHomeAction::finish(Teki& teki)
  */
 bool TaiGoingHomeAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  bl        -0xDB0
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x48
-	  li        r3, 0
-	  b         .loc_0x60
-
-	.loc_0x48:
-	  lwz       r4, 0x2C8(r31)
-	  mr        r3, r31
-	  lfs       f1, 0xC(r30)
-	  addi      r4, r4, 0x10
-	  bl        0x12498
-	  li        r3, 0
-
-	.loc_0x60:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	TaiContinuousMotionAction::act(teki);
+	if (!motionStarted(teki)) {
+		return false;
+	}
+	teki.moveToward(teki.getNestPosition(), mMoveSpeed);
+	return false;
 }
 
 /*
@@ -976,30 +398,14 @@ bool TaiGoingHomeAction::act(Teki& teki)
  */
 bool TaiDirectTurnAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x418(r4)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x34
+	Creature* target = teki.getCreaturePointer(0);
+	if (!target) {
+		PRINT("!TaiDirectTurnAction::start:target==null:%08x\n", &teki); // that's not what this function is, nakata.
+		return false;
+	}
 
-	.loc_0x20:
-	  addi      r0, r3, 0x94
-	  addi      r3, r4, 0
-	  mr        r4, r0
-	  bl        -0xAA568
-	  li        r3, 0
-
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	teki.turnTo(target->getPosition());
+	return false;
 }
 
 /*
@@ -1009,102 +415,30 @@ bool TaiDirectTurnAction::act(Teki& teki)
  */
 bool TaiTurningAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  stw       r30, 0x70(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x6C(r1)
-	  addi      r29, r3, 0
-	  bl        -0xE70
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x4C
-	  li        r3, 0
-	  b         .loc_0x130
+	TaiContinuousMotionAction::act(teki);
+	if (!motionStarted(teki)) {
+		return false;
+	}
 
-	.loc_0x4C:
-	  lwz       r31, 0x418(r30)
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  bne-      .loc_0x64
-	  li        r3, 0x1
-	  b         .loc_0x130
+	Creature* target = teki.getCreaturePointer(0);
+	if (!target) {
+		PRINT("!TaiTurnAction::act:target==null:%08x\n", &teki);
+		return true;
+	}
 
-	.loc_0x64:
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0xF68
-	  lis       r3, 0x802C
-	  stw       r0, 0x5C(r1)
-	  addi      r0, r3, 0x6964
-	  lis       r3, 0x802D
-	  stw       r0, 0x5C(r1)
-	  subi      r0, r3, 0x295C
-	  stw       r0, 0x5C(r1)
-	  addi      r3, r1, 0x5C
-	  stw       r30, 0x60(r1)
-	  bl        0x14E44
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xA4
-	  li        r3, 0x1
-	  b         .loc_0x130
+	TekiRecognitionCondition recogCond(&teki);
+	if (!recogCond.satisfy(target)) {
+		PRINT("!TaiTurnAction::act:!condition.satisfy:%08x\n", &teki);
+		return true;
+	}
 
-	.loc_0xA4:
-	  lwz       r3, 0x2CC(r30)
-	  li        r4, 0
-	  bl        -0x15874
-	  lwz       r3, 0x2CC(r30)
-	  lfs       f0, 0x2C(r3)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0xC8
-	  li        r3, 0
-	  b         .loc_0x130
+	f32 key = teki.mTekiAnimator->getKeyValueByKeyType(0);
+	if (teki.mTekiAnimator->getCounter() < key) {
+		return false;
+	}
 
-	.loc_0xC8:
-	  lfs       f0, -0x5BB0(r2)
-	  stfs      f0, 0x4C(r1)
-	  stfs      f0, 0x48(r1)
-	  stfs      f0, 0x44(r1)
-	  lfs       f1, 0x94(r31)
-	  lfs       f0, 0x94(r30)
-	  lfs       f4, 0x9C(r31)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x9C(r30)
-	  lfs       f2, 0x98(r31)
-	  lfs       f1, 0x98(r30)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x38(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x38(r1)
-	  stfs      f0, 0x44(r1)
-	  stfs      f1, 0x48(r1)
-	  stfs      f3, 0x4C(r1)
-	  lfs       f1, 0x44(r1)
-	  lfs       f2, 0x4C(r1)
-	  bl        -0x172CC
-	  stfs      f1, 0x394(r30)
-	  mr        r3, r30
-	  lfs       f1, 0x394(r30)
-	  lfs       f2, 0xC(r29)
-	  bl        0x124E4
-
-	.loc_0x130:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  lwz       r29, 0x6C(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	teki.mTargetAngle = teki.calcTargetDirection(target->getPosition());
+	return teki.turnToward(teki.mTargetAngle, mTurnSpeed);
 }
 
 /*
@@ -1114,106 +448,31 @@ bool TaiTurningAction::act(Teki& teki)
  */
 bool TaiTurningAwayAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  stw       r30, 0x70(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x6C(r1)
-	  addi      r29, r3, 0
-	  bl        -0xFBC
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x4C
-	  li        r3, 0
-	  b         .loc_0x140
+	TaiContinuousMotionAction::act(teki);
+	if (!motionStarted(teki)) {
+		return false;
+	}
 
-	.loc_0x4C:
-	  lwz       r31, 0x418(r30)
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  bne-      .loc_0x64
-	  li        r3, 0x1
-	  b         .loc_0x140
+	Creature* target = teki.getCreaturePointer(0);
+	if (!target) {
+		PRINT("!TaiTurningAwayAction::act:target==null:%08x\n", &teki);
+		return true;
+	}
 
-	.loc_0x64:
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0xF68
-	  lis       r3, 0x802C
-	  stw       r0, 0x5C(r1)
-	  addi      r0, r3, 0x6964
-	  lis       r3, 0x802D
-	  stw       r0, 0x5C(r1)
-	  subi      r0, r3, 0x295C
-	  stw       r0, 0x5C(r1)
-	  addi      r3, r1, 0x5C
-	  stw       r30, 0x60(r1)
-	  bl        0x14CF8
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xA4
-	  li        r3, 0x1
-	  b         .loc_0x140
+	TekiRecognitionCondition recogCond(&teki);
+	if (!recogCond.satisfy(target)) {
+		PRINT("!TaiTurningAwayAction::act:!condition.satisfy:%08x\n", &teki);
+		return true;
+	}
 
-	.loc_0xA4:
-	  lwz       r3, 0x2CC(r30)
-	  li        r4, 0
-	  bl        -0x159C0
-	  lwz       r3, 0x2CC(r30)
-	  lfs       f0, 0x2C(r3)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0xC8
-	  li        r3, 0
-	  b         .loc_0x140
+	f32 key = teki.mTekiAnimator->getKeyValueByKeyType(0);
+	if (teki.mTekiAnimator->getCounter() < key) {
+		return false;
+	}
 
-	.loc_0xC8:
-	  lfs       f0, -0x5BB0(r2)
-	  stfs      f0, 0x4C(r1)
-	  stfs      f0, 0x48(r1)
-	  stfs      f0, 0x44(r1)
-	  lfs       f1, 0x94(r31)
-	  lfs       f0, 0x94(r30)
-	  lfs       f4, 0x9C(r31)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x9C(r30)
-	  lfs       f2, 0x98(r31)
-	  lfs       f1, 0x98(r30)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x38(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x38(r1)
-	  stfs      f0, 0x44(r1)
-	  stfs      f1, 0x48(r1)
-	  stfs      f3, 0x4C(r1)
-	  lfs       f1, 0x44(r1)
-	  lfs       f2, 0x4C(r1)
-	  bl        -0x17418
-	  stfs      f1, 0x394(r30)
-	  mr        r3, r30
-	  lfs       f1, 0x394(r30)
-	  lfs       f0, -0x1CA4(r13)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x394(r30)
-	  lfs       f1, 0x394(r30)
-	  lfs       f2, 0xC(r29)
-	  bl        0x12388
-
-	.loc_0x140:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  lwz       r29, 0x6C(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	teki.mTargetAngle = teki.calcTargetDirection(target->getPosition());
+	teki.mTargetAngle += NMathF::pi;
+	return teki.turnToward(teki.mTargetAngle, mTurnSpeed);
 }
 
 /*
@@ -1223,122 +482,34 @@ bool TaiTurningAwayAction::act(Teki& teki)
  */
 bool TaiTraceTurningAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB0(r1)
-	  stw       r31, 0xAC(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0xA8(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0xA4(r1)
-	  bl        -0x1118
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x4C
-	  li        r3, 0
-	  b         .loc_0x178
+	TaiContinuousMotionAction::act(teki);
+	if (!motionStarted(teki)) {
+		return false;
+	}
 
-	.loc_0x4C:
-	  lwz       r29, 0x418(r31)
-	  cmplwi    r29, 0
-	  addi      r4, r29, 0
-	  bne-      .loc_0x64
-	  li        r3, 0x1
-	  b         .loc_0x178
+	Creature* target = teki.getCreaturePointer(0);
+	if (!target) {
+		PRINT("!TaiTurningAwayAction::act:target==null:%08x\n", &teki);
+		return true;
+	}
 
-	.loc_0x64:
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0xF68
-	  lis       r3, 0x802C
-	  stw       r0, 0x98(r1)
-	  addi      r0, r3, 0x6964
-	  lis       r3, 0x802D
-	  stw       r0, 0x98(r1)
-	  subi      r0, r3, 0x295C
-	  stw       r0, 0x98(r1)
-	  addi      r3, r1, 0x98
-	  stw       r31, 0x9C(r1)
-	  bl        0x14B9C
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xA4
-	  li        r3, 0x1
-	  b         .loc_0x178
+	TekiRecognitionCondition recogCond(&teki);
+	if (!recogCond.satisfy(target)) {
+		PRINT("!TaiTurningAwayAction::act:!condition.satisfy:%08x\n", &teki);
+		return true;
+	}
 
-	.loc_0xA4:
-	  lwz       r3, 0x2CC(r31)
-	  li        r4, 0
-	  bl        -0x15B1C
-	  lwz       r3, 0x2CC(r31)
-	  lfs       f0, 0x2C(r3)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0xC8
-	  li        r3, 0
-	  b         .loc_0x178
+	f32 key = teki.mTekiAnimator->getKeyValueByKeyType(0);
+	if (teki.mTekiAnimator->getCounter() < key) {
+		return false;
+	}
 
-	.loc_0xC8:
-	  addi      r29, r29, 0x94
-	  addi      r3, r31, 0
-	  addi      r4, r29, 0
-	  bl        0x11FC8
-	  lwz       r3, 0x2C4(r31)
-	  lfs       f2, -0x5BA8(r2)
-	  lwz       r3, 0x84(r3)
-	  lfs       f0, -0x1CA8(r13)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f3, 0x98(r3)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f2, f0
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x110
-	  li        r3, 0x1
-	  b         .loc_0x178
+	if (teki.calcTargetAngle(target->getPosition()) <= NMathF::d2r(teki.getParameterF(TPF_TraceAngle) / 2.0f)) {
+		return true;
+	}
 
-	.loc_0x110:
-	  lfs       f0, -0x5BB0(r2)
-	  stfs      f0, 0x80(r1)
-	  stfs      f0, 0x7C(r1)
-	  stfs      f0, 0x78(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x94(r31)
-	  lfs       f4, 0x8(r29)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x9C(r31)
-	  lfs       f2, 0x4(r29)
-	  lfs       f1, 0x98(r31)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x68(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x68(r1)
-	  stfs      f0, 0x78(r1)
-	  stfs      f1, 0x7C(r1)
-	  stfs      f3, 0x80(r1)
-	  lfs       f1, 0x78(r1)
-	  lfs       f2, 0x80(r1)
-	  bl        -0x175BC
-	  stfs      f1, 0x394(r31)
-	  mr        r3, r31
-	  lfs       f1, 0x394(r31)
-	  lfs       f2, 0xC(r30)
-	  bl        0x121F4
-
-	.loc_0x178:
-	  lwz       r0, 0xB4(r1)
-	  lwz       r31, 0xAC(r1)
-	  lwz       r30, 0xA8(r1)
-	  lwz       r29, 0xA4(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	teki.mTargetAngle = teki.calcTargetDirection(target->getPosition());
+	return teki.turnToward(teki.mTargetAngle, mTurnSpeed);
 }
 
 /*
@@ -1348,69 +519,22 @@ bool TaiTraceTurningAction::act(Teki& teki)
  */
 bool TaiOutOfTraceAngleAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  stw       r30, 0x60(r1)
-	  mr        r30, r4
-	  lwz       r31, 0x418(r4)
-	  cmplwi    r31, 0
-	  addi      r4, r31, 0
-	  bne-      .loc_0x30
-	  li        r3, 0
-	  b         .loc_0xB8
+	Creature* target = teki.getCreaturePointer(0);
+	if (!target) {
+		PRINT("!TaiOutOfTraceAngleAction::act:target==null:%08x\n", &teki);
+		return false;
+	}
 
-	.loc_0x30:
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0xF68
-	  lis       r3, 0x802C
-	  stw       r0, 0x58(r1)
-	  addi      r0, r3, 0x6964
-	  lis       r3, 0x802D
-	  stw       r0, 0x58(r1)
-	  subi      r0, r3, 0x295C
-	  stw       r0, 0x58(r1)
-	  addi      r3, r1, 0x58
-	  stw       r30, 0x5C(r1)
-	  bl        0x14A3C
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x70
-	  li        r3, 0
-	  b         .loc_0xB8
+	TekiRecognitionCondition recogCond(&teki);
+	if (!recogCond.satisfy(target)) {
+		return false;
+	}
 
-	.loc_0x70:
-	  addi      r4, r31, 0x94
-	  addi      r3, r30, 0
-	  bl        0x11E90
-	  lwz       r3, 0x2C4(r30)
-	  lfs       f2, -0x5BA8(r2)
-	  lwz       r3, 0x84(r3)
-	  lfs       f0, -0x1CA8(r13)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f3, 0x98(r3)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f2, f0
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xB4
-	  li        r3, 0
-	  b         .loc_0xB8
+	if (teki.calcTargetAngle(target->getPosition()) <= NMathF::d2r(teki.getParameterF(TPF_TraceAngle) / 2.0f)) {
+		return false;
+	}
 
-	.loc_0xB4:
-	  li        r3, 0x1
-
-	.loc_0xB8:
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -1420,93 +544,22 @@ bool TaiOutOfTraceAngleAction::act(Teki& teki)
  */
 bool TaiTurningToTargetPositionAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x78(r1)
-	  addi      r30, r3, 0
-	  bl        -0x1378
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x48
-	  li        r3, 0
-	  b         .loc_0x118
+	TaiContinuousMotionAction::act(teki);
+	if (!motionStarted(teki)) {
+		return false;
+	}
 
-	.loc_0x48:
-	  lwz       r3, 0x2CC(r31)
-	  li        r4, 0
-	  bl        -0x15D24
-	  lwz       r3, 0x2CC(r31)
-	  lfs       f0, 0x2C(r3)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x6C
-	  li        r3, 0
-	  b         .loc_0x118
+	f32 keyValue = teki.mTekiAnimator->getKeyValueByKeyType(0);
+	if (teki.mTekiAnimator->getCounter() < keyValue) {
+		return false;
+	}
 
-	.loc_0x6C:
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0x388
-	  bl        0x11DC4
-	  lwz       r3, 0x2C4(r31)
-	  lfs       f2, -0x5BA8(r2)
-	  lwz       r3, 0x84(r3)
-	  lfs       f0, -0x1CA8(r13)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f3, 0x98(r3)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f2, f0
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xB0
-	  li        r3, 0x1
-	  b         .loc_0x118
+	if (teki.calcTargetAngle(teki.mTargetPosition) <= NMathF::d2r(teki.getParameterF(TPF_TraceAngle) / 2.0f)) {
+		return true;
+	}
 
-	.loc_0xB0:
-	  lfs       f0, -0x5BB0(r2)
-	  stfs      f0, 0x6C(r1)
-	  stfs      f0, 0x68(r1)
-	  stfs      f0, 0x64(r1)
-	  lfs       f1, 0x388(r31)
-	  lfs       f0, 0x94(r31)
-	  lfs       f4, 0x390(r31)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x9C(r31)
-	  lfs       f2, 0x38C(r31)
-	  lfs       f1, 0x98(r31)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0x5C(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0x5C(r1)
-	  stfs      f0, 0x64(r1)
-	  stfs      f1, 0x68(r1)
-	  stfs      f3, 0x6C(r1)
-	  lfs       f1, 0x64(r1)
-	  lfs       f2, 0x6C(r1)
-	  bl        -0x177C0
-	  stfs      f1, 0x394(r31)
-	  mr        r3, r31
-	  lfs       f1, 0x394(r31)
-	  lfs       f2, 0xC(r30)
-	  bl        0x11FF0
-
-	.loc_0x118:
-	  lwz       r0, 0x84(r1)
-	  lwz       r31, 0x7C(r1)
-	  lwz       r30, 0x78(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	teki.mTargetAngle = teki.calcTargetDirection(teki.mTargetPosition);
+	return teki.turnToward(teki.mTargetAngle, mTurnSpeed);
 }
 
 /*
@@ -1516,20 +569,8 @@ bool TaiTurningToTargetPositionAction::act(Teki& teki)
  */
 bool TaiRotatingAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lfs       f1, 0x8(r3)
-	  mr        r3, r4
-	  bl        0x12088
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	teki.rotateTeki(mRotateSpeed);
+	return false;
 }
 
 /*
@@ -1539,56 +580,15 @@ bool TaiRotatingAction::act(Teki& teki)
  */
 bool TaiRunningAwayToTargetDirectionAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  stfd      f30, 0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x30(r1)
-	  addi      r30, r3, 0
-	  bl        -0x14DC
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x50
-	  li        r3, 0
-	  b         .loc_0x8C
+	TaiContinuousMotionAction::act(teki);
+	if (!motionStarted(teki)) {
+		return false;
+	}
 
-	.loc_0x50:
-	  lfs       f30, 0x394(r31)
-	  fmr       f1, f30
-	  bl        0xE64D8
-	  fmr       f31, f1
-	  fmr       f1, f30
-	  bl        0xE6660
-	  lfs       f0, 0xC(r30)
-	  li        r3, 0
-	  lfs       f3, -0x11A8(r13)
-	  fmuls     f2, f0, f1
-	  fmuls     f1, f0, f3
-	  fmuls     f0, f0, f31
-	  stfs      f2, 0xA4(r31)
-	  stfs      f1, 0xA8(r31)
-	  stfs      f0, 0xAC(r31)
-
-	.loc_0x8C:
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  lfd       f30, 0x38(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f dir;
+	BTeki::outputDirectionVector(teki.mTargetAngle, dir);
+	teki.mTargetVelocity.scale2(mRunningSpeed, dir);
+	return false;
 }
 
 /*
@@ -1598,250 +598,43 @@ bool TaiRunningAwayToTargetDirectionAction::act(Teki& teki)
  */
 bool TaiRunningAwayAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x128(r1)
-	  stfd      f31, 0x120(r1)
-	  stfd      f30, 0x118(r1)
-	  stfd      f29, 0x110(r1)
-	  stmw      r23, 0xEC(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  bl        -0x1588
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x50
-	  li        r3, 0
-	  b         .loc_0x34C
+	TaiContinuousMotionAction::act(teki);
+	if (!motionStarted(teki)) {
+		return false;
+	}
 
-	.loc_0x50:
-	  lfs       f1, -0x5BB0(r2)
-	  addi      r3, r1, 0xD8
-	  fmr       f2, f1
-	  fmr       f3, f1
-	  bl        -0x18854
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0xF68
-	  lis       r3, 0x802C
-	  stw       r0, 0xD0(r1)
-	  addi      r0, r3, 0x6964
-	  lis       r3, 0x802D
-	  stw       r0, 0xD0(r1)
-	  subi      r0, r3, 0x295C
-	  stw       r0, 0xD0(r1)
-	  addi      r3, r1, 0xB4
-	  addi      r4, r1, 0xC8
-	  stw       r30, 0xD4(r1)
-	  lwz       r5, 0x2C4(r30)
-	  lwz       r5, 0x84(r5)
-	  lwz       r5, 0x4(r5)
-	  lwz       r5, 0x0(r5)
-	  lfs       f30, 0x18(r5)
-	  bl        -0x19F00
-	  lfs       f1, -0x5BB0(r2)
-	  fmr       f3, f30
-	  lfs       f2, -0x5BA4(r2)
-	  addi      r3, r1, 0xB4
-	  fmr       f4, f1
-	  bl        -0x19E74
-	  lwz       r31, 0x3068(r13)
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f31, -0x5BB0(r2)
-	  addi      r23, r3, 0
-	  addi      r27, r30, 0x94
-	  addi      r26, r1, 0x50
-	  addi      r25, r1, 0x4C
-	  addi      r24, r1, 0x48
-	  b         .loc_0x29C
-
-	.loc_0xF8:
-	  cmpwi     r23, -0x1
-	  bne-      .loc_0x120
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-	  b         .loc_0x13C
-
-	.loc_0x120:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r23
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x13C:
-	  cmplwi    r28, 0
-	  addi      r4, r28, 0
-	  beq-      .loc_0x2F8
-	  addi      r3, r1, 0xD0
-	  bl        0x14674
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x280
-	  stfs      f31, 0x70(r1)
-	  addi      r28, r28, 0x94
-	  addi      r4, r24, 0
-	  stfs      f31, 0x6C(r1)
-	  addi      r5, r25, 0
-	  addi      r6, r26, 0
-	  stfs      f31, 0x68(r1)
-	  addi      r3, r1, 0x68
-	  lfs       f1, 0x8(r28)
-	  lfs       f0, 0x8(r27)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x50(r1)
-	  lfs       f1, 0x4(r28)
-	  lfs       f0, 0x4(r27)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4C(r1)
-	  lfs       f1, 0x0(r28)
-	  lfs       f0, 0x0(r27)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x48(r1)
-	  bl        -0xD81EC
-	  lfs       f1, 0x68(r1)
-	  lfs       f0, 0x6C(r1)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x70(r1)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x127C5C
-	  fcmpo     cr0, f1, f30
-	  fmr       f29, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x280
-	  addi      r3, r1, 0x9C
-	  bl        -0x18A60
-	  lfs       f1, 0x0(r27)
-	  addi      r3, r1, 0x9C
-	  lfs       f0, 0x0(r28)
-	  lfs       f3, 0x4(r27)
-	  lfs       f2, 0x4(r28)
-	  fsubs     f0, f1, f0
-	  lfs       f4, 0x8(r27)
-	  lfs       f1, 0x8(r28)
-	  fsubs     f2, f3, f2
-	  stfs      f0, 0x9C(r1)
-	  fsubs     f0, f4, f1
-	  stfs      f2, 0xA0(r1)
-	  stfs      f0, 0xA4(r1)
-	  bl        -0x188D4
-	  addi      r3, r1, 0xB4
-	  fmr       f1, f29
-	  bl        -0x19F4C
-	  lfs       f0, 0x9C(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x9C(r1)
-	  lfs       f0, 0xA0(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xA0(r1)
-	  lfs       f0, 0xA4(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xA4(r1)
-	  lfs       f1, 0xD8(r1)
-	  lfs       f0, 0x9C(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xD8(r1)
-	  lfs       f1, 0xDC(r1)
-	  lfs       f0, 0xA0(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xDC(r1)
-	  lfs       f1, 0xE0(r1)
-	  lfs       f0, 0xA4(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xE0(r1)
-
-	.loc_0x280:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r23
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r23, r3
-
-	.loc_0x29C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r23
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2C4
-	  li        r0, 0x1
-	  b         .loc_0x2F0
-
-	.loc_0x2C4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r23
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x2EC
-	  li        r0, 0x1
-	  b         .loc_0x2F0
-
-	.loc_0x2EC:
-	  li        r0, 0
-
-	.loc_0x2F0:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0xF8
-
-	.loc_0x2F8:
-	  lfs       f0, -0x5BB0(r2)
-	  addi      r3, r1, 0xD8
-	  stfs      f0, 0xDC(r1)
-	  bl        -0x189BC
-	  lfs       f1, 0xC(r29)
-	  li        r3, 0
-	  lfs       f0, 0xD8(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xD8(r1)
-	  lfs       f0, 0xDC(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xDC(r1)
-	  lfs       f0, 0xE0(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xE0(r1)
-	  lfs       f0, 0xD8(r1)
-	  stfs      f0, 0xA4(r30)
-	  lfs       f0, 0xDC(r1)
-	  stfs      f0, 0xA8(r30)
-	  lfs       f0, 0xE0(r1)
-	  stfs      f0, 0xAC(r30)
-
-	.loc_0x34C:
-	  lmw       r23, 0xEC(r1)
-	  lwz       r0, 0x12C(r1)
-	  lfd       f31, 0x120(r1)
-	  lfd       f30, 0x118(r1)
-	  lfd       f29, 0x110(r1)
-	  addi      r1, r1, 0x128
-	  mtlr      r0
-	  blr
-	*/
+	NVector3f drive(0.0f, 0.0f, 0.0f);
+	TekiRecognitionCondition recogCond(&teki);
+	f32 range = teki.getParameterF(TPF_VisibleRange);
+	f32 linFuncValues[2];
+	NClampLinearFunction linFunc(linFuncValues);
+	linFunc.makeClampLinearFunction(0.0f, 10.0f, range, 0.0f);
+	Iterator iter(pikiMgr);
+	CI_LOOP(iter)
+	{
+		Creature* piki = *iter;
+		if (!piki) {
+			PRINT("?TaiRunningAwayAction::act:%08x:creature==null\n", &teki);
+			break;
+		}
+		if (!recogCond.satisfy(piki)) {
+			continue;
+		}
+		f32 dist = teki.calcSphereDistance(*piki);
+		if (dist <= range) {
+			NVector3f dir;
+			dir.sub2(teki.getPosition(), piki->getPosition());
+			dir.normalizeCheck();
+			f32 val = linFunc.getValue(dist);
+			dir.scale(val);
+			drive.add(dir);
+		}
+	}
+	drive.y = 0.0f;
+	drive.normalizeCheck();
+	drive.scale(mRunningSpeed);
+	teki.inputDrive(drive);
+	return false;
 }
 
 /*
@@ -1851,26 +644,7 @@ bool TaiRunningAwayAction::act(Teki& teki)
  */
 bool TaiWatchOffTerritoryCenterAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x2C8(r4)
-	  addi      r4, r5, 0x10
-	  bl        0x118AC
-	  lfs       f2, -0x5BA0(r2)
-	  lfs       f0, -0x1CA4(r13)
-	  fmuls     f0, f2, f0
-	  fcmpo     cr0, f1, f0
-	  mfcr      r0
-	  rlwinm    r3,r0,2,31,31
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return (teki.calcTargetAngle(teki.getNestPosition()) > NMathF::pi * 0.1f);
 }
 
 /*
@@ -1880,22 +654,7 @@ bool TaiWatchOffTerritoryCenterAction::act(Teki& teki)
  */
 void TaiTargetNestAction::start(Teki& teki)
 {
-	// f32 from pointer and vec3f?
-	// void* ptr = teki._2C8;
-	// teki._388.x = ptr->_10;
-	// teki._388.y = ptr->_04;
-	// teki._388.z = ptr->_08;
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C8(r4)
-	  lfsu      f0, 0x10(r3)
-	  stfs      f0, 0x388(r4)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x38C(r4)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x390(r4)
-	  blr
-	*/
+	teki.mTargetPosition.input(teki.getNestPosition());
 }
 
 /*
@@ -1903,107 +662,27 @@ void TaiTargetNestAction::start(Teki& teki)
  * Address:	80135AA0
  * Size:	000180
  */
-bool TaiHeadOnCollisionAvoidanceAction::actByEvent(TekiEvent&)
+bool TaiHeadOnCollisionAvoidanceAction::actByEvent(TekiEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stfd      f31, 0x68(r1)
-	  stfd      f30, 0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  stw       r30, 0x58(r1)
-	  addi      r30, r3, 0
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x15C
-	  lwz       r3, 0x8(r4)
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0x37
-	  bne-      .loc_0x15C
-	  lwz       r31, 0x4(r4)
-	  lwz       r3, 0x320(r3)
-	  lwz       r0, 0x320(r31)
-	  cmpw      r3, r0
-	  bne-      .loc_0x15C
-	  addi      r3, r1, 0x44
-	  bl        -0x18CA0
-	  lfs       f30, 0xA0(r31)
-	  fmr       f1, f30
-	  bl        0xE6054
-	  fmr       f31, f1
-	  fmr       f1, f30
-	  bl        0xE61DC
-	  stfs      f1, 0x44(r1)
-	  addi      r3, r1, 0x38
-	  lfs       f0, -0x11A8(r13)
-	  stfs      f0, 0x48(r1)
-	  stfs      f31, 0x4C(r1)
-	  bl        -0x18CD0
-	  lfs       f1, -0x5BB0(r2)
-	  addi      r3, r1, 0x2C
-	  lfs       f2, -0x5BAC(r2)
-	  fmr       f3, f1
-	  bl        -0x18C5C
-	  lfs       f0, 0x48(r1)
-	  addi      r3, r1, 0x38
-	  lfs       f2, 0x34(r1)
-	  lfs       f3, 0x4C(r1)
-	  lfs       f1, 0x30(r1)
-	  fmuls     f5, f0, f2
-	  lfs       f6, 0x2C(r1)
-	  fmuls     f4, f3, f1
-	  lfs       f7, 0x44(r1)
-	  fmuls     f0, f0, f6
-	  fmuls     f1, f7, f1
-	  fsubs     f4, f5, f4
-	  fmuls     f3, f3, f6
-	  fmuls     f2, f7, f2
-	  fsubs     f0, f1, f0
-	  stfs      f4, 0x38(r1)
-	  fsubs     f1, f3, f2
-	  stfs      f1, 0x3C(r1)
-	  stfs      f0, 0x40(r1)
-	  bl        -0x18B70
-	  lfs       f1, 0x8(r30)
-	  lfs       f0, 0x38(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x38(r1)
-	  lfs       f0, 0x3C(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x3C(r1)
-	  lfs       f0, 0x40(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x40(r1)
-	  lfs       f1, 0x38(r1)
-	  lfs       f0, 0xA4(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x38(r1)
-	  lfs       f1, 0x3C(r1)
-	  lfs       f0, 0xA8(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x3C(r1)
-	  lfs       f1, 0x40(r1)
-	  lfs       f0, 0xAC(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x40(r1)
-	  lfs       f0, 0x38(r1)
-	  stfs      f0, 0x70(r31)
-	  lfs       f0, 0x3C(r1)
-	  stfs      f0, 0x74(r31)
-	  lfs       f0, 0x40(r1)
-	  stfs      f0, 0x78(r31)
+	if (event.mEventType == TekiEventType::Entity) {
+		Creature* other = event.mOther;
+		if (other->mObjType == OBJTYPE_Teki) {
+			Teki* otherTeki = (Teki*)other;
+			Teki* teki      = event.mTeki;
 
-	.loc_0x15C:
-	  lwz       r0, 0x74(r1)
-	  li        r3, 0
-	  lfd       f31, 0x68(r1)
-	  lfd       f30, 0x60(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+			if (otherTeki->mTekiType == teki->mTekiType) {
+				NVector3f thisDir;
+				teki->outputDirectionVector(thisDir);
+
+				NVector3f newVel;
+				newVel.cross(thisDir, NVector3f(0.0f, 1.0f, 0.0f));
+				newVel.normalizeCheck();
+				newVel.scale(_08);
+				newVel.add(teki->getDrive());
+				teki->inputVelocity(newVel);
+			}
+		}
+	}
+
+	return false;
 }

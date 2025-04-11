@@ -5,7 +5,9 @@
 #include "Node.h"
 #include "Delegate.h"
 #include "Colour.h"
+#include "system.h"
 
+struct TimeSetting;
 struct Controller;
 struct Font;
 struct Light;
@@ -137,7 +139,7 @@ struct Menu : public Node {
 	Font* mFont;                                // _9C
 	int _A0;                                    // _A0
 	int mInputCode;                             // _A4
-	u32 _A8;                                    // _A8, unknown
+	u32 mIsCustomMenu;                          // _A8, unknown
 	int mState;                                 // _AC, see MenuState enum
 	f32 mOpeningFadeProgress;                   // _B0
 };
@@ -156,19 +158,10 @@ struct ColourMenu : public Menu {
 	void menuDecrease(Menu&);
 
 	// _00     = VTBL
-	// _00-_?? = Menu
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct DaySetMenu : public Menu {
-	inline DaySetMenu(); // TODO: fix, not in map but needed
-
-	// _00     = VTBL
-	// _00-_?? = Menu
-	// TODO: members
+	// _00-_B4 = Menu
+	u8* mColour;          // _B4
+	u8* mComponentValue;  // _B8, this is a pointer to the component value (R, G, B, A) of mColour
+	char* mComponentName; // _BC, this is the component name ("R", "G", "B", "A")
 };
 
 /**
@@ -183,8 +176,11 @@ struct FogMenu : public Menu {
 	void menuDecrease(Menu&);
 
 	// _00     = VTBL
-	// _00-_?? = Menu
-	// TODO: members
+	// _00-_B4 = Menu
+	f32* mNear;           // _B4
+	f32* mFar;            // _B8
+	f32* mComponentValue; // _BC
+	char* mComponentName; // _C0
 };
 
 /**
@@ -200,8 +196,13 @@ struct LightMenu : public Menu {
 	void menuDecrease(Menu&);
 
 	// _00     = VTBL
-	// _00-_?? = Menu
-	// TODO: members
+	// _00-_B4 = Menu
+	int mSelectedLightType; //_B4, basically, is this a SPOT or a POINT light?
+	int* mLightAttachType;  //_B8
+	Light* mLight;          // _BC
+	f32* mSpotFov;          // _C0
+	f32* _C4;               // _C4
+	char* _C8;              // _C8
 };
 
 /**
@@ -217,8 +218,11 @@ struct PositionMenu : public Menu {
 	void menuDecrease(Menu&);
 
 	// _00     = VTBL
-	// _00-_?? = Menu
-	// TODO: members
+	// _00-_B4 = Menu
+	Vector3f* mPosition;     // _B4
+	bool mIsSmallAdjustment; // _B8
+	f32* mComponentValue;    // _BC
+	char* mComponentName;    // _C0
 };
 
 #endif

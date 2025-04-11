@@ -127,8 +127,8 @@ ParaMultiParameters::ParaMultiParameters(int iCount, ParaParameterInfoI* iInfo, 
  */
 void ParaMultiParameters::input(ParaMultiParameters& other)
 {
-	mIntParams->input(other.mIntParams);
-	mFloatParams->input(other.mFloatParams);
+	mIntParams->input(*other.mIntParams);
+	mFloatParams->input(*other.mFloatParams);
 }
 
 /*

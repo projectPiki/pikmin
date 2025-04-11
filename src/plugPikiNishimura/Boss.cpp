@@ -110,7 +110,7 @@ void Boss::createPellet(Vector3f& bossPos, f32 vertSpeed, bool hasUfoPart)
 {
 	if (mItemCount != 0) {
 		// release first item in a random 180 degree cone
-		f32 randStartAngle = System::getRand(PI);
+		f32 randStartAngle = gsys->getRand(PI);
 
 		// release each item after that equally spaced around a circle
 		f32 angleOffset = TAU / mItemCount;
@@ -251,9 +251,6 @@ void Boss::makeTargetRandom(f32 p1)
 		mTargetPosition.z = vec.z;
 
 		mWalkTimer = 0.0f;
-
-		// whatever.
-		u32 badCompiler[2];
 	}
 }
 
@@ -707,23 +704,23 @@ bool InteractHitEffect::actBoss(Boss* boss)
 {
 	switch (boss->mObjType) {
 	case OBJTYPE_Spider:
-		effectMgr->create(EffectMgr::EFF_Piki_BigHit, _08, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_BigHit, mEffectPos, nullptr, nullptr);
 		return true;
 
 	case OBJTYPE_Snake:
-		effectMgr->create(EffectMgr::EFF_Piki_BigHit, _08, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_BigHit, mEffectPos, nullptr, nullptr);
 		return true;
 		;
 
 	case OBJTYPE_King:
-		effectMgr->create(EffectMgr::EFF_Piki_BigHit, _08, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_BigHit, mEffectPos, nullptr, nullptr);
 		if (mCollPart && boss->mSeContext && mCollPart->isBouncy()) {
 			boss->mSeContext->playSound(SE_MUSH_GETUP);
 		}
 		return true;
 
 	case OBJTYPE_Pom:
-		effectMgr->create(EffectMgr::EFF_Piki_BigHit, _08, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_BigHit, mEffectPos, nullptr, nullptr);
 		return true;
 		;
 	}

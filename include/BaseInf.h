@@ -71,8 +71,8 @@ struct CreatureInf : public BaseInf {
 	int mCurrentDay;          // _30, or something related to it, maybe last seen day etc
 	int mRebirthDay;          // _34
 	int mAdjustFaceDirection; // _38
-	int mStartAnimId;         // _3C
-	int mEndAnimId;           // _40
+	int mObjInfo1;            // _3C, usually 'type', current stage num for walls
+	int mObjInfo2;            // _40, total num stages for walls
 	f32 mHealth;              // _44
 	f32 mMaxHealth;           // _48
 };

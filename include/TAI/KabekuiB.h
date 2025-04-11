@@ -48,6 +48,11 @@ struct TAIkabekuiBStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAIkabekuiBAnimation : public TAIanimation {
+	TAIkabekuiBAnimation()
+	    : TAIanimation(TEKI_KabekuiB, "tekis/kabekuiB/anims.bun")
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL
@@ -59,7 +64,8 @@ struct TAIkabekuiBAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIAsleepKabekuiB : public TAIAtimerReaction {
-	inline TAIAsleepKabekuiB() // TODO: this is a guess
+	TAIAsleepKabekuiB(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 
@@ -74,7 +80,8 @@ struct TAIAsleepKabekuiB : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAdiveKabekuiB : public TAIAtimerReaction {
-	inline TAIAdiveKabekuiB() // TODO: this is a guess
+	TAIAdiveKabekuiB(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 

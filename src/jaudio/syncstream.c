@@ -1,10 +1,6 @@
-#include "types.h"
-#include "Dolphin/dvd.h"
+#include "jaudio/syncstream.h"
 
-typedef struct dspch_ dspch_;
-typedef struct DSPchannel_ DSPchannel_;
-typedef struct StreamCtrl_ StreamCtrl_;
-typedef struct BufControl_ BufControl_;
+#include "Dolphin/dvd.h"
 
 /*
  * --INFO--
@@ -149,7 +145,7 @@ void Get_DirectPCM_Remain(DSPchannel_*)
  * Address:	8001BD40
  * Size:	00003C
  */
-void __DVDReadAsyncRetry()
+static void __DVDReadAsyncRetry()
 {
 	/*
 	.loc_0x0:
@@ -176,7 +172,7 @@ void __DVDReadAsyncRetry()
  * Address:	8001BD80
  * Size:	000048
  */
-void DVDReadAsyncPrio2(DVDFileInfo*, void*, s32, s32, void (*)(s32, DVDFileInfo*), s32)
+static void DVDReadAsyncPrio2(DVDFileInfo*, void*, s32, s32, void (*)(s32, DVDFileInfo*), s32)
 {
 	/*
 	.loc_0x0:
@@ -206,7 +202,7 @@ void DVDReadAsyncPrio2(DVDFileInfo*, void*, s32, s32, void (*)(s32, DVDFileInfo*
  * Address:	8001BDE0
  * Size:	00014C
  */
-void __LoadFin(s32, DVDFileInfo*)
+static void __LoadFin(s32, DVDFileInfo*)
 {
 	/*
 	.loc_0x0:
@@ -309,7 +305,7 @@ void __LoadFin(s32, DVDFileInfo*)
  * Address:	8001BF40
  * Size:	000190
  */
-void LoadADPCM(StreamCtrl_*, int)
+static void LoadADPCM(StreamCtrl_*, int)
 {
 	/*
 	.loc_0x0:
@@ -433,7 +429,7 @@ void LoadADPCM(StreamCtrl_*, int)
  * Address:	8001C0E0
  * Size:	000020
  */
-void BufContInit(BufControl_*, u8, u8, u8, u8, u32, u32, u32)
+static void BufContInit(BufControl_*, u8, u8, u8, u8, u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -731,7 +727,7 @@ void StreamAudio_Start(void)
  * Address:	8001C460
  * Size:	0008A8
  */
-void StreamAudio_Callback(void*)
+static void StreamAudio_Callback(void*)
 {
 	/*
 	.loc_0x0:
@@ -1516,7 +1512,7 @@ void Jac_Decode_ADPCM(void)
  * Address:	8001CEE0
  * Size:	0000D0
  */
-void __DecodeADPCM(StreamCtrl_*)
+static void __DecodeADPCM(StreamCtrl_*)
 {
 	/*
 	.loc_0x0:
@@ -1584,7 +1580,7 @@ void __DecodeADPCM(StreamCtrl_*)
  * Address:	8001CFC0
  * Size:	000024
  */
-void Clamp16(s32)
+static void Clamp16(s32)
 {
 	/*
 	.loc_0x0:
@@ -1609,7 +1605,7 @@ void Clamp16(s32)
  * Address:	8001D000
  * Size:	00019C
  */
-void __DecodeADPCM4X(StreamCtrl_*)
+static void __DecodeADPCM4X(StreamCtrl_*)
 {
 	/*
 	.loc_0x0:
@@ -1734,7 +1730,7 @@ void __DecodeADPCM4X(StreamCtrl_*)
  * Address:	8001D1A0
  * Size:	000054
  */
-void __Decode(StreamCtrl_*)
+static void __Decode(StreamCtrl_*)
 {
 	/*
 	.loc_0x0:
@@ -1773,7 +1769,7 @@ void __Decode(StreamCtrl_*)
  * Address:	8001D200
  * Size:	00013C
  */
-void __PcmToLoop(StreamCtrl_*)
+static void __PcmToLoop(StreamCtrl_*)
 {
 	/*
 	.loc_0x0:
@@ -1945,7 +1941,7 @@ void StreamSyncCheckReadyID(void)
  * Address:	8001D3E0
  * Size:	000054
  */
-void StreamSyncCheckBusy(void)
+BOOL StreamSyncCheckBusy(unknown, unknown)
 {
 	/*
 	.loc_0x0:
@@ -2058,7 +2054,7 @@ void StreamSyncStopAudio(void)
  * Address:	8001D500
  * Size:	0000A8
  */
-void __StreamChgPitch(StreamCtrl_*)
+static void __StreamChgPitch(StreamCtrl_*)
 {
 	/*
 	.loc_0x0:
@@ -2126,7 +2122,7 @@ void StreamChgPitch(void)
  * Address:	8001D5C0
  * Size:	000124
  */
-void __StreamChgVolume(StreamCtrl_*)
+static void __StreamChgVolume(StreamCtrl_*)
 {
 	/*
 	.loc_0x0:
@@ -2397,7 +2393,7 @@ void StreamGetCurrentFrame(void)
  * Address:	8001D920
  * Size:	00003C
  */
-void StreamSetDVDPause(void)
+void StreamSetDVDPause(unknown, unknown)
 {
 	/*
 	.loc_0x0:

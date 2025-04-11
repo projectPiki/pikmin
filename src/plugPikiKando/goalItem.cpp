@@ -10,7 +10,9 @@
 #include "gameflow.h"
 #include "PlayerState.h"
 #include "Graphics.h"
+#include "MoviePlayer.h"
 #include "PikiMgr.h"
+#include "ItemObject.h"
 #include "PikiState.h"
 #include "NaviMgr.h"
 #include "CreatureCollPart.h"
@@ -40,7 +42,6 @@ u8 GoalItem::demoHideFlag;
  */
 void printMatrix(char*, Matrix4f&)
 {
-	// UNUSED FUNCTION
 }
 
 /*
@@ -121,12 +122,12 @@ void GoalItem::playEffect(int id)
 				effectMgr->create(EffectMgr::EFF_Onyon_Sparkles, pos[3], nullptr, nullptr);
 			}
 
-			int randIdx                 = (int)(gsys->getRand(1.0f) * 3.0f * 0.999999f);
+			int randIdx                 = (int)((3.0f * gsys->getRand(1.0f)) * 0.999999f);
 			zen::particleGenerator* gen = effectMgr->create(EffectMgr::EFF_Onyon_Puff, pos[randIdx], nullptr, nullptr);
 			if (gen) {
 				int legIDs[3] = { 2, 1, 0 };
 
-				Vector3f test = -1.0f * mRope[legIDs[randIdx]]->mRopeDirection;
+				Vector3f test = -1.0f * mRope[2 * legIDs[randIdx]]->mRopeDirection;
 				gen->setEmitDir(test);
 			}
 
@@ -152,7 +153,6 @@ void GoalItem::playEffect(int id)
 				effectMgr->create(EffectMgr::EFF_Onyon_Bubbles, pos2, nullptr, nullptr);
 				zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Onyon_Ripples2, pos2, nullptr, nullptr);
 				if (efx) {
-					// Vector3f nrm(0.0f, 1.0f, 0.0f);
 					efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 				}
 				efx = effectMgr->create(EffectMgr::EFF_Onyon_Ripples1, pos2, nullptr, nullptr);
@@ -191,7 +191,7 @@ void GoalItem::playEffect(int id)
 		break;
 	}
 
-	u32 badCompiler[2];
+	u32 badCompiler;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -857,7 +857,7 @@ void GoalItem::suckMe(Pellet* item)
 		playEventSound(this, SE_CONTAINER_HANABI);
 		playEventSound(this, SE_CONTAINER_PELLETIN2);
 	} else {
-		_2D0 += pikiNum;
+		mCurrAnimId += pikiNum;
 		MsgUser msg(0);
 		mStateMachine->procMsg(this, &msg);
 		playEventSound(this, SE_CONTAINER_PELLETIN2);
@@ -880,7 +880,7 @@ void GoalItem::enterGoal(Piki* piki)
 	GameStat::containerPikis.inc(piki->mColor);
 	GameStat::update();
 	if (old == 1) {
-		((SimpleAI*)mStateMachine)->start(this, 0);
+		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 	}
 }
 
@@ -943,7 +943,7 @@ Piki* GoalItem::exitPiki()
 	playEventSound(this, SE_PIKI_OUTHOME);
 
 	if (mHeldPikis[0] + mHeldPikis[1] + mHeldPikis[2] == 0) {
-		((SimpleAI*)mStateMachine)->start(this, 0);
+		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 	}
 	return piki;
 }
@@ -986,7 +986,7 @@ GoalItem::GoalItem(CreatureProp* prop, ItemShapeObject* shape1, ItemShapeObject*
  */
 bool GoalItem::ignoreAtari(Creature* obj)
 {
-	if (obj->mObjType == OBJTYPE_NULL12) {
+	if (obj->mObjType == OBJTYPE_GemItem) {
 		return true;
 	}
 	return false;
@@ -1110,7 +1110,7 @@ void GoalItem::updateConeEmit()
 	if (mConeSizeTimer >= 0.8f) {
 		mSpotModelEff->_14 = _3FC;
 		mIsConeEmit        = false;
-		((SimpleAI*)mStateMachine)->start(this, 0);
+		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 	}
 }
 
@@ -1137,30 +1137,30 @@ void GoalItem::startAI(int)
 	mCollInfo->initInfo(mItemShapeObject->mShape, nullptr, nullptr);
 	mWaypointIdx = routeMgr->findNearestWayPoint('test', mPosition, false)->mIndex;
 
-	Vector3f a(0.0f, 0.0f, 0.0f);
-	Vector3f b(1.0f, 1.0f, 1.0f);
-	mSpotModelEff = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mPosition, a, b);
-	mScale.set(1.0f, 1.0f, 1.0f);
-	_2D0     = 0;
-	mCounter = 0;
+	mSpotModelEff
+	    = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mPosition, Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f));
+	f32 scale = 1.0f;
+	mScale.set(scale, scale, scale);
+	mCurrAnimId = 0;
+	mCounter    = 0;
 
 	for (int i = 0; i < 3; i++) {
-		RopeItem* rope  = mRope[i];
+		GoalLeg* leg    = &_444[i];
 		CollPart* coll  = mCollInfo->getSphere(leg_ids[i]);
 		CollPart* child = coll->getChild();
 		Vector3f diff   = coll->mCentre - child->mCentre;
 		f32 len         = diff.length();
 
-		Creature* obj = itemMgr->birth(OBJTYPE_Fulcrum);
-		obj->init(coll->mCentre);
-		obj->startAI(0);
+		leg->mFulcrum = (Fulcrum*)itemMgr->birth(OBJTYPE_Fulcrum);
+		leg->mFulcrum->init(coll->mCentre);
+		leg->mFulcrum->startAI(0);
 
-		rope = (RopeItem*)itemMgr->birth(OBJTYPE_Rope);
-		rope->init(coll->mCentre);
-		rope->setRope(obj);
-		rope->mRopeLength = len;
-		rope->mOwner      = this;
-		rope->startAI(0);
+		leg->mRope = (RopeItem*)itemMgr->birth(OBJTYPE_Rope);
+		leg->mRope->init(child->mCentre);
+		leg->mRope->setRope(leg->mFulcrum);
+		leg->mRope->mRopeLength = len;
+		leg->mRope->mOwner      = this;
+		leg->mRope->startAI(0);
 	}
 
 	for (int i = 0; i < 3; i++) {
@@ -1171,7 +1171,7 @@ void GoalItem::startAI(int)
 	WayPoint* wp = routeMgr->getWayPoint('test', mWaypointIdx);
 	if (!playerState->bootContainer(mOnionColour) || playerState->isTutorial()) {
 		setMotionSpeed(0.0f);
-		((SimpleAI*)mStateMachine)->start(this, 5);
+		C_SAI(this)->start(this, GoalAI::GOAL_BootInit);
 		startConeShrink();
 		enableColorAnim();
 		mColourFadeRate = 0.0f;
@@ -1179,7 +1179,7 @@ void GoalItem::startAI(int)
 	} else {
 		setMotionSpeed(30.0f);
 		mItemAnimator.startMotion(PaniMotionInfo(1));
-		((SimpleAI*)mStateMachine)->start(this, 0);
+		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 		disableColorAnim();
 		wp->setFlag(true);
 	}
@@ -1507,7 +1507,7 @@ void GoalItem::startBoot()
 {
 	_3CC = 3;
 	setMotionSpeed(30.0f);
-	((SimpleAI*)mStateMachine)->start(this, 5);
+	C_SAI(this)->start(this, GoalAI::GOAL_BootInit);
 	playerState->setBootContainer(mOnionColour);
 }
 
@@ -1518,7 +1518,7 @@ void GoalItem::startBoot()
  */
 void GoalItem::emitPiki()
 {
-	((SimpleAI*)mStateMachine)->start(this, 2);
+	C_SAI(this)->start(this, GoalAI::GOAL_Unk2);
 }
 
 /*
@@ -1596,28 +1596,29 @@ void GoalItem::update()
  */
 void GoalItem::refresh(Graphics& gfx)
 {
-	if (!gameflow.mGamePrefs._22 || demoHideFlag & 1 << mOnionColour) {
+	if (gameflow.mMoviePlayer->mIsActive && demoHideFlag & 1 << mOnionColour) {
 		return;
 	}
 
-	mScale.set(1.0f, 1.0f, 1.0f);
+	f32 scale = 1.0f;
+	mScale.set(scale, scale, scale);
 	Matrix4f mtx1;
 	Vector3f pos = mPosition;
 	mWorldMtx.makeSRT(mScale, mRotation, pos);
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx1);
 	if (!gfx.mCamera->isPointVisible(mPosition, 200.0f)) {
 		enableAICulling();
-		if (!gameflow.mGamePrefs._22) {
-			// mSpotModelEff->_38.mOrigin = 0;
+		if (!gameflow.mMoviePlayer->mIsActive) {
+			mSpotModelEff->_42 = 0;
 		}
 	} else {
 		disableAICulling();
-		// mSpotModelEff->_38.mOrigin = 0;
+		mSpotModelEff->_42 = 1;
 	}
 
 	gfx.setLighting(true, nullptr);
 	gfx.useMatrix(Matrix4f::ident, 0);
-	mItemAnimator.finishLoop();
+	mItemAnimator.updateContext();
 
 	f32 rate;
 	if (mColourAnimationEnabled) {
@@ -1633,22 +1634,25 @@ void GoalItem::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 
 	for (int i = 0; i < 3; i++) {
-		RopeItem* rope = mRope[i];
+		GoalLeg* leg = &_444[i];
 		if (pikiMgr->containerDebug) {
-			PRINT("leg %d : (%.1f %.1f %.1f) \n", i);
+			PRINT("leg %d : (%.1f %.1f %.1f) \n", i, leg->mRope->mPosition.x, leg->mRope->mPosition.y, leg->mRope->mPosition.z);
 		}
-		CollPart* coll  = mCollInfo->getSphere(leg_ids[i]);
-		CollPart* child = coll->getChild();
-		rope->mPosition = coll->mCentre;
-		rope->mPosition = child->mCentre;
+		CollPart* coll           = mCollInfo->getSphere(leg_ids[i]);
+		CollPart* child          = coll->getChild();
+		leg->mFulcrum->mPosition = coll->mCentre;
+		leg->mRope->mPosition    = child->mCentre;
 
-		Vector3f diff     = coll->mCentre - child->mCentre;
-		rope->mRopeLength = diff.length();
+		Vector3f diff           = leg->mFulcrum->mPosition - leg->mRope->mPosition;
+		leg->mRope->mRopeLength = diff.length();
 		if (pikiMgr->containerDebug) {
-			PRINT("==> (%.1f %.1f %.1f) : motion %d\n");
+			PRINT("==> (%.1f %.1f %.1f) : motion %d\n", leg->mRope->mPosition.x, leg->mRope->mPosition.y, leg->mRope->mPosition.z,
+			      mItemAnimator.getCurrentMotionIndex());
 			printMatrix("invCam", gfx.mCamera->mInverseLookAtMtx);
 		}
 	}
+
+	u32 badCompiler[8];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1892,54 +1896,4 @@ void GoalItem::refresh(Graphics& gfx)
 	  mtlr      r0
 	  blr
 	*/
-}
-
-/*
- * --INFO--
- * Address:	800EC484
- * Size:	00001C
- */
-Vector3f GoalItem::getGoalPos()
-{
-	return mPosition;
-}
-
-/*
- * --INFO--
- * Address:	800EC4A0
- * Size:	000008
- */
-f32 GoalItem::getGoalPosRadius()
-{
-	return 75.0f;
-}
-
-/*
- * --INFO--
- * Address:	800EC4A8
- * Size:	000008
- */
-int GoalItem::getRouteIndex()
-{
-	return mWaypointIdx;
-}
-
-/*
- * --INFO--
- * Address:	800EC4B0
- * Size:	000008
- */
-bool GoalItem::isVisible()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	800EC4B8
- * Size:	000008
- */
-bool GoalItem::isAlive()
-{
-	return true;
 }

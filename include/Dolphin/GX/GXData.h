@@ -173,7 +173,6 @@ extern void* __peReg;
 #define GX_PI_ADDR  (0x0C003000)
 #define GX_MEM_ADDR (0x0C004000)
 
-// i hate writing out the damn volatile shit so many times
 #define GX_GET_MEM_REG(offset) (*(vu16*)((vu16*)(__memReg) + (offset)))
 #define GX_GET_CP_REG(offset)  (*(vu16*)((vu16*)(__cpReg) + (offset)))
 #define GX_GET_PE_REG(offset)  (*(vu16*)((vu16*)(__peReg) + (offset)))

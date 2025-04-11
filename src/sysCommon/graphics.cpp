@@ -2718,7 +2718,7 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 				}
 			}
 
-			// This is fucking ridiculous, seriously? why?
+			// This is ridiculous, seriously? why?
 			// so much indexing, this isn't even an inline function
 			mChars[charIndex].mCharSpacing         = baselinePos - baseline;
 			mChars[charIndex].mLeftOffset          = baseline - leftEdge;
@@ -3311,15 +3311,15 @@ Graphics::Graphics()
 		costable[i] = NMathF::cos(i / 4096.0f * TAU);
 	}
 
-	mActiveTexture = nullptr;
+	mActiveTexture[0] = nullptr;
+	mActiveTexture[1] = nullptr;
+	mActiveTexture[2] = nullptr;
+	mActiveTexture[3] = nullptr;
+	mActiveTexture[4] = nullptr;
+	mActiveTexture[5] = nullptr;
+	mActiveTexture[6] = nullptr;
+	mActiveTexture[7] = nullptr;
 
-	_2EC = 0;
-	_2F0 = 0;
-	_2F4 = 0;
-	_2F8 = 0;
-	_2FC = 0;
-	_300 = 0;
-	_304 = 0;
 	_308 = 0;
 
 	mCurrentMaterial = nullptr;
@@ -3631,7 +3631,7 @@ void TexImg::dumpBti(Texture* tex, char* name, RandomAccessStream& input, Random
 	// now lets get to the fun parts
 
 	// this is wrong btw, I can't be bothered to check if this shows up
-	// but im doing it anyway, fuck it
+	// but im doing it anyway, **** it
 	output.print("// %s (%d colour) format %s : data = %d bytes\n", output.mPath, 0, btipalFmts[tex->mTexFormat]);
 	output.print("// texture size = %d x %d\n");
 	output.print("static u16 %s_palette[%d] ATTRIBUTE_ALIGN(32) = {\n");
@@ -4683,8 +4683,8 @@ int Graphics::calcLighting(f32 intensity)
 		setLight((Light*)mLight.mChild, 7);
 	}
 
-	if (lightIndex > gsys->_1B4) {
-		gsys->_1B4 = lightIndex;
+	if (lightIndex > gsys->mActiveLightCount) {
+		gsys->mActiveLightCount = lightIndex;
 	}
 
 	setLighting(true, nullptr);

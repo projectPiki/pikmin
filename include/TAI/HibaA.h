@@ -50,6 +50,11 @@ struct TAIhibaAStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAIhibaAAnimation : public TAIanimation {
+	TAIhibaAAnimation()
+	    : TAIanimation(TEKI_KabekuiB, "tekis/hibaA/anims.bun") // yep, really had this.
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL
@@ -100,6 +105,8 @@ struct TAIAfireAttackHibaA : public TAIAreserveMotion {
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
+	static TAIeffectAttackEventCallBackHibaA eventCallBack;
+
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
@@ -109,7 +116,8 @@ struct TAIAfireAttackHibaA : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAtimerReactionHibaA : public TAIAtimerReaction {
-	inline TAIAtimerReactionHibaA() // TODO: this is a guess
+	TAIAtimerReactionHibaA(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 

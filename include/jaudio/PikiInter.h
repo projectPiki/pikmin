@@ -8,19 +8,19 @@ extern "C" {
 #endif // ifdef __cplusplus
 
 //////////// JAUDIO PIKMIN INTERFACE FUNCTIONS ////////////
-void Jac_InitEventSystem(void);     // args
-void Jac_EventFrameCheck(void);     // args
-void Jac_UpdateCamera(void);        // args
-void Jac_CreateEvent(void);         // args
-void Jac_UpdateEventPosition(void); // args
-void Jac_PlayEventAction(void);     // args
-void Jac_StopEventAction(void);     // args
-void MML_StopEventAction(void);     // args
-void MML_StopEventAll(void);        // args
-void Jac_DestroyEvent(void);        // args
-void Jac_InitAllEvent(void);        // args
-void Jac_CheckFreeEvents(void);     // args
-void Jac_GetActiveEvents(void);     // args
+void Jac_InitEventSystem(void);                            // args
+void Jac_EventFrameCheck(void);                            // args
+void Jac_UpdateCamera(struct Vector3f*, struct Vector3f*); // args
+int Jac_CreateEvent(int, struct SVector_*);                // args
+void Jac_UpdateEventPosition(int, struct Vector3f*);       // args
+void Jac_PlayEventAction(int, int);                        // args
+void Jac_StopEventAction(int, int);                        // args
+void MML_StopEventAction(u8, u8, u16);                     // args
+void MML_StopEventAll(u8, u16);                            // args
+void Jac_DestroyEvent(s32);                                // args
+void Jac_InitAllEvent(void);                               // args
+int Jac_CheckFreeEvents(void);                             // args
+int Jac_GetActiveEvents(u8*);                              // args
 
 ///////////////////////////////////////////////////////////
 

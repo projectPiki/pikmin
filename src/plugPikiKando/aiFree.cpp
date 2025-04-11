@@ -93,7 +93,7 @@ void ActFree::init(Creature*)
 {
 	mIsBoidActive           = 0;
 	mCollisionCooldownTimer = 1.0f;
-	mBoidTimer              = C_PIKI_PROP(mPiki)._2EC() + randFloat(3.0f);
+	mBoidTimer              = C_PIKI_PROP(mPiki)._2EC() + (3.0f * gsys->getRand(1.0f));
 	_20                     = 0.9f * mBoidTimer;
 	_24                     = 0.8f * mBoidTimer;
 
@@ -102,8 +102,8 @@ void ActFree::init(Creature*)
 		PRINT("### piki is holding !\n");
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait, this), PaniMotionInfo(PIKIANIM_Wait));
 	} else {
-		f32 r         = System::getRand(1.0f);
-		int motionIdx = r * f32(numMotions);
+		f32 r         = gsys->getRand(1.0f);
+		int motionIdx = f32(numMotions) * r;
 		if (motionIdx >= numMotions) {
 			motionIdx = 0;
 		}
@@ -130,7 +130,7 @@ void ActFree::init(Creature*)
 	mPiki->enableFixPos();
 	mFixedPositionTimer = 3.0f;
 
-	u32 badCompiler[2];
+	// u32 badCompiler[2];
 
 	/*
 	.loc_0x0:

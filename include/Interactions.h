@@ -80,7 +80,10 @@ struct InteractAttack : public Interaction {
  * @brief TODO
  */
 struct InteractBikkuri : public Interaction {
-	inline InteractBikkuri(); // TODO: probably
+	InteractBikkuri(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actItem(ItemCreature*); // _28
 
@@ -117,13 +120,19 @@ struct InteractBomb : public Interaction {
  * @brief TODO
  */
 struct InteractBreak : public Interaction {
-	inline InteractBreak(); // TODO: probably
+	InteractBreak(Creature* owner, int stage, f32 p3)
+	    : Interaction(owner)
+	{
+		mStageIndex = stage;
+		_0C         = p3;
+	}
 
 	virtual bool actBridge(Bridge*); // _24
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	int mStageIndex; // _08
+	f32 _0C;         // _0C
 };
 
 /**
@@ -298,15 +307,21 @@ struct InteractGrab : public Interaction {
  * @brief TODO
  */
 struct InteractHitEffect : public Interaction {
-	inline InteractHitEffect(); // TODO: probably
+	InteractHitEffect(Creature* owner, Vector3f& effPos, Vector3f& effDir, CollPart* part)
+	    : Interaction(owner)
+	    , mEffectPos(effPos)
+	    , mEffectDir(effDir)
+	    , mCollPart(part)
+	{
+	}
 
 	virtual bool actTeki(Teki*); // _10
 	virtual bool actBoss(Boss*); // _18
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	Vector3f _08;        // _08
-	Vector3f _14;        // _14
+	Vector3f mEffectPos; // _08
+	Vector3f mEffectDir; // _14
 	CollPart* mCollPart; // _20
 };
 
@@ -314,7 +329,7 @@ struct InteractHitEffect : public Interaction {
  * @brief TODO
  */
 struct InteractKill : public Interaction {
-	inline InteractKill(Creature* owner, int p2)
+	InteractKill(Creature* owner, int p2)
 	    : Interaction(owner)
 	{
 		_08 = p2;
@@ -369,13 +384,17 @@ struct InteractPullout : public Interaction {
  * @brief TODO
  */
 struct InteractPush : public Interaction {
-	inline InteractPush(); // TODO: probably
+	InteractPush(Creature* owner, int p2)
+	    : Interaction(owner)
+	    , mStrength(p2)
+	{
+	}
 
 	virtual bool actHinderRock(HinderRock*); // _20
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
+	int mStrength; // _08
 };
 
 /**
@@ -412,13 +431,15 @@ struct InteractSlimeAttack : public Interaction {
  * @brief TODO
  */
 struct InteractSpore : public Interaction {
-	inline InteractSpore(); // TODO: probably
+	InteractSpore(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
 };
 
 /**
@@ -495,13 +516,15 @@ struct InteractThrowAway : public Interaction {
  * @brief TODO
  */
 struct InteractWarn : public Interaction {
-	inline InteractWarn(); // TODO: probably
+	InteractWarn(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	// TODO: members
 };
 
 /**

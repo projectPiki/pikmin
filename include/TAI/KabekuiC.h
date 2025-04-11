@@ -64,6 +64,11 @@ struct TAIkabekuiCStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAIkabekuiCAnimation : public TAIanimation {
+	TAIkabekuiCAnimation()
+	    : TAIanimation(TEKI_KabekuiC, "tekis/kabekuiC/anims.bun")
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL
@@ -75,7 +80,8 @@ struct TAIkabekuiCAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIAsleepKabekuiC : public TAIAtimerReaction {
-	inline TAIAsleepKabekuiC() // TODO: this is a guess
+	TAIAsleepKabekuiC(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 
@@ -90,7 +96,8 @@ struct TAIAsleepKabekuiC : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAdiveKabekuiC : public TAIAtimerReaction {
-	inline TAIAdiveKabekuiC() // TODO: this is a guess
+	TAIAdiveKabekuiC(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 
@@ -141,7 +148,8 @@ struct TAIAlandingKabekuiC : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAmoreLifeKabekuiC : public TAIAmoreLife {
-	inline TAIAmoreLifeKabekuiC() // TODO: this is a guess
+	TAIAmoreLifeKabekuiC(int nextState)
+	    : TAIAmoreLife(nextState)
 	{
 	}
 
@@ -156,7 +164,8 @@ struct TAIAmoreLifeKabekuiC : public TAIAmoreLife {
  * @brief TODO
  */
 struct TAIAlessLifeKabekuiC : public TAIAlessLife {
-	inline TAIAlessLifeKabekuiC() // TODO: this is a guess
+	TAIAlessLifeKabekuiC(int nextState)
+	    : TAIAlessLife(nextState)
 	{
 	}
 

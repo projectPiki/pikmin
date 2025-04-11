@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "TAI/Amotion.h"
+#include "EffectMgr.h"
 
 /**
  * @brief TODO
@@ -24,8 +25,8 @@ struct TAIAhitCheckFlyingPiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAdeadCheck : public TaiAction {
-	inline TAIAdeadCheck() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAdeadCheck(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -56,8 +57,8 @@ struct TAIAdie : public TaiAction {
  * @brief TODO
  */
 struct TAIAdying : public TAIAmotion {
-	inline TAIAdying() // TODO: this is a guess
-	    : TAIAmotion(-1, -1)
+	TAIAdying(int nextState, int motionID)
+	    : TAIAmotion(nextState, motionID)
 	{
 	}
 
@@ -66,63 +67,65 @@ struct TAIAdying : public TAIAmotion {
 
 	// _04     = VTBL
 	// _00-_0C = TAIAmotion
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TAIAdyingKabekui : public TAIAdying {
-	inline TAIAdyingKabekui() // TODO: this is a guess
+	TAIAdyingKabekui(int nextState, int motionID, EffectMgr::effTypeTable effID)
+	    : TAIAdying(nextState, motionID)
 	{
+		mEffectType = effID;
 	}
 
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
 	// _04     = VTBL
-	// _00-_0C = TAIAdying?
-	// TODO: members
+	// _00-_0C = TAIAdying
+	EffectMgr::effTypeTable mEffectType; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TAIAdyingCrushKabekui : public TAIAdyingKabekui {
-	inline TAIAdyingCrushKabekui() // TODO: this is a guess
+	TAIAdyingCrushKabekui(int nextState, int motionID, EffectMgr::effTypeTable effID)
+	    : TAIAdyingKabekui(nextState, motionID, effID)
 	{
 	}
 
 	virtual void start(Teki&); // _08
 
 	// _04     = VTBL
-	// _00-_0C = TAIAdyingKabekui?
-	// TODO: members
+	// _00-_10 = TAIAdyingKabekui
 };
 
 /**
  * @brief TODO
  */
 struct TAIAdamage : public TaiAction {
-	inline TAIAdamage() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAdamage(int nextState, bool p2)
+	    : TaiAction(nextState)
 	{
+		_08 = p2;
 	}
 
-	virtual bool act(Teki&);         // _10
-	virtual bool judgeDamage(Teki&); // _1C
+	virtual bool act(Teki&);                         // _10
+	virtual bool judgeDamage(Teki&) { return true; } // _1C
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	bool _08; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TAIAinWater : public TaiAction {
-	inline TAIAinWater() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAinWater(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -138,8 +141,11 @@ struct TAIAinWater : public TaiAction {
  * @brief TODO
  */
 struct TAIAinWaterDamage : public TAIAinWater {
-	inline TAIAinWaterDamage() // TODO: this is a guess
+	TAIAinWaterDamage(int nextState, f32 damage, bool p3)
+	    : TAIAinWater(nextState)
 	{
+		mDamage = damage;
+		_0C     = p3;
 	}
 
 	virtual bool act(Teki&);             // _10
@@ -148,20 +154,21 @@ struct TAIAinWaterDamage : public TAIAinWater {
 	void createEffect(Teki&);
 
 	// _04     = VTBL
-	// _00-_08 = TAIAinWater?
-	// TODO: members
+	// _00-_08 = TAIAinWater
+	f32 mDamage; // _08
+	bool _0C;    // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TAIAnoReaction : public TaiAction {
-	inline TAIAnoReaction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAnoReaction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
-	virtual bool act(Teki&); // _10
+	virtual bool act(Teki&) { return true; } // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -172,18 +179,29 @@ struct TAIAnoReaction : public TaiAction {
  * @brief TODO
  */
 struct TAIAtimerReaction : public TaiAction {
-	inline TAIAtimerReaction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAtimerReaction(int nextState, f32 frameMax)
+	    : TaiAction(nextState)
 	{
+		mFrameMax = frameMax;
 	}
 
-	virtual void start(Teki&);      // _08
-	virtual bool act(Teki&);        // _10
-	virtual f32 getFrameMax(Teki&); // _1C
+	virtual void start(Teki& teki) // _08
+	{
+		teki.setFrameCounter(0.0f);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		f32 counter = teki.addFrameCounter(gsys->getFrameTime());
+		if (counter > getFrameMax(teki)) {
+			return true;
+		}
+		return false;
+	}
+	virtual f32 getFrameMax(Teki& teki) { return mFrameMax; } // _1C
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 mFrameMax; // _08
 };
 
 /**

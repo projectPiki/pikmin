@@ -725,140 +725,6 @@ DynMapObject::DynMapObject(MapMgr*, MapAnimShapeObject* obj)
 
 /*
  * --INFO--
- * Address:	80061FE8
- * Size:	0001BC
- */
-DynCollShape::DynCollShape(Shape* shape)
-{
-	mShape = shape;
-	if (mShape) {
-		createDupCollData();
-	}
-
-	_11C = Vector3f(1.0f, 1.0f, 1.0f);
-	_134 = Vector3f(0.0f, 0.0f, 0.0f);
-	_128 = _134;
-	mTransformMtx.makeIdentity();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r5, 0x738C
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8022
-	  stw       r30, 0x38(r1)
-	  li        r30, 0
-	  stw       r29, 0x34(r1)
-	  addi      r29, r4, 0
-	  subi      r4, r13, 0x6CD0
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  addi      r3, r31, 0
-	  stw       r0, 0x0(r31)
-	  stw       r30, 0x10(r31)
-	  stw       r30, 0xC(r31)
-	  stw       r30, 0x8(r31)
-	  bl        -0x3D164
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r31)
-	  addi      r3, r31, 0
-	  subi      r4, r13, 0x6CD0
-	  bl        -0x21914
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x6C4C
-	  stw       r0, 0x0(r31)
-	  lis       r3, 0x802B
-	  li        r4, -0x1
-	  stw       r30, 0x20(r31)
-	  subi      r0, r3, 0x6BCC
-	  stw       r4, 0x24(r31)
-	  stw       r30, 0x28(r31)
-	  stw       r0, 0x0(r31)
-	  lfs       f1, -0x78B0(r2)
-	  stfs      f1, 0x4C(r31)
-	  stfs      f1, 0x48(r31)
-	  stfs      f1, 0x44(r31)
-	  stfs      f1, 0x58(r31)
-	  stfs      f1, 0x54(r31)
-	  stfs      f1, 0x50(r31)
-	  lfs       f0, -0x6D18(r13)
-	  stfs      f0, 0x44(r31)
-	  lfs       f0, -0x6D14(r13)
-	  stfs      f0, 0x48(r31)
-	  lfs       f0, -0x6D10(r13)
-	  stfs      f0, 0x4C(r31)
-	  lfs       f0, -0x6D0C(r13)
-	  stfs      f0, 0x50(r31)
-	  lfs       f0, -0x6D08(r13)
-	  stfs      f0, 0x54(r31)
-	  lfs       f0, -0x6D04(r13)
-	  stfs      f0, 0x58(r31)
-	  stfs      f1, 0x124(r31)
-	  stfs      f1, 0x120(r31)
-	  stfs      f1, 0x11C(r31)
-	  stfs      f1, 0x130(r31)
-	  stfs      f1, 0x12C(r31)
-	  stfs      f1, 0x128(r31)
-	  stfs      f1, 0x13C(r31)
-	  stfs      f1, 0x138(r31)
-	  stfs      f1, 0x134(r31)
-	  stw       r29, 0x2C(r31)
-	  lwz       r0, 0x2C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x11C
-	  mr        r3, r31
-	  bl        -0x940
-
-	.loc_0x11C:
-	  lfs       f0, -0x6D00(r13)
-	  addi      r3, r31, 0x5C
-	  lfs       f1, -0x6CFC(r13)
-	  stfs      f0, 0x24(r1)
-	  lfs       f0, -0x6CF8(r13)
-	  stfs      f1, 0x28(r1)
-	  stfs      f0, 0x2C(r1)
-	  lwz       r4, 0x24(r1)
-	  lwz       r0, 0x28(r1)
-	  stw       r4, 0x11C(r31)
-	  stw       r0, 0x120(r31)
-	  lwz       r0, 0x2C(r1)
-	  stw       r0, 0x124(r31)
-	  lfs       f0, -0x6CF4(r13)
-	  lfs       f1, -0x6CF0(r13)
-	  stfs      f0, 0x18(r1)
-	  lfs       f0, -0x6CEC(r13)
-	  stfs      f1, 0x1C(r1)
-	  stfs      f0, 0x20(r1)
-	  lwz       r4, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r4, 0x134(r31)
-	  stw       r0, 0x138(r31)
-	  lwz       r0, 0x20(r1)
-	  stw       r0, 0x13C(r31)
-	  lwz       r4, 0x134(r31)
-	  lwz       r0, 0x138(r31)
-	  stw       r4, 0x128(r31)
-	  stw       r0, 0x12C(r31)
-	  lwz       r0, 0x13C(r31)
-	  stw       r0, 0x130(r31)
-	  bl        -0x243C4
-	  mr        r3, r31
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	800621A4
  * Size:	000024
  */
@@ -4496,15 +4362,9 @@ MapMgr::MapMgr(Controller*)
  */
 MapRoom::MapRoom()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  lfs       f0, -0x7884(r2)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  blr
-	*/
+	_08 = 0;
+	_04 = 1.0f;
+	_00 = 1.0f;
 }
 
 /*
@@ -5097,16 +4957,6 @@ void MapMgr::update()
 	  mtlr      r0
 	  blr
 	*/
-}
-
-/*
- * --INFO--
- * Address:	80065B9C
- * Size:	000008
- */
-bool Creature::alwaysUpdatePlatform()
-{
-	return false;
 }
 
 /*
@@ -8977,24 +8827,6 @@ void MapMgr::recTraceMove(CollGroup*, MoveTrace&, f32)
 
 /*
  * --INFO--
- * Address:	80068E4C
- * Size:	000004
- */
-void DynCollObject::touchCallback(Plane&, Vector3f&, Vector3f&)
-{
-}
-
-/*
- * --INFO--
- * Address:	80068E50
- * Size:	000004
- */
-void Creature::wallCallback(Plane&, DynCollObject*)
-{
-}
-
-/*
- * --INFO--
  * Address:	80068E54
  * Size:	0005D0
  */
@@ -9726,56 +9558,6 @@ void MapShadMatHandler::setMaterial(Material*)
 
 /*
  * --INFO--
- * Address:	80069740
- * Size:	000004
- */
-void DynObjPushable::touchCallback(Plane&, Vector3f&, Vector3f&)
-{
-}
-
-/*
- * --INFO--
- * Address:	80069744
- * Size:	000004
- */
-void DynCollObjBody::update()
-{
-}
-
-/*
- * --INFO--
- * Address:	80069748
- * Size:	000004
- */
-void DynCollObjBody::adjust(Creature*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8006974C
- * Size:	000008
- */
-Shape* DynCollShape::getShape()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80069754
- * Size:	000004
- */
-void DynCollObject::applyVelocity(Plane&, Vector3f&, Vector3f&)
-{
-}
-
-/*
- * --INFO--
  * Address:	80069758
  * Size:	000004
  */
@@ -9818,25 +9600,6 @@ void MapObjectPart::touchCallback(Plane&, Vector3f&, Vector3f&)
 	  mtlr      r0
 	  blr
 	*/
-}
-
-/*
- * --INFO--
- * Address:	80069798
- * Size:	000004
- */
-void DynCollObject::adjust(Creature*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8006979C
- * Size:	000008
- */
-Shape* DynCollObject::getShape()
-{
-	return nullptr;
 }
 
 /*

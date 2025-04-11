@@ -12,9 +12,14 @@ struct BombGenItem;
 struct Bridge;
 struct BuildingItem;
 struct Suckable;
+struct HinderRock;
 struct Pebble;
 struct RockGen;
+struct Grass;
+struct CPlate;
+struct GrassGen;
 struct GoalItem;
+struct FormationMgr;
 
 namespace zen {
 struct particleGenerator;
@@ -298,7 +303,7 @@ struct ActAdjust : public Action {
 		virtual void initialise(Action*); // _08
 
 		// _00 = VTBL
-		f32 _04;              // _04, same as _14 in ActAdjust
+		f32 mAdjustDistance;  // _04, same as _14 in ActAdjust
 		int mAdjustTimeLimit; // _08, same as _18 in ActAdjust
 	};
 
@@ -307,7 +312,7 @@ struct ActAdjust : public Action {
 	virtual ~ActAdjust() { }          // _44 (weak)
 	virtual void defaultInitialiser() // _38 (weak)
 	{
-		_14              = 10.0f;
+		mAdjustDistance  = 10.0f;
 		mAdjustTimeLimit = 8;
 	}
 	virtual void init(Creature*); // _48
@@ -316,13 +321,13 @@ struct ActAdjust : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	f32 _14;              // _14
-	int mAdjustTimeLimit; // _18
-	Vector3f _1C;         // _1C
-	f32 mAdjustTimer;     // _28
-	f32 mTurnSpeed;       // _2C
-	Vector3f mVelocity;   // _30
-	u8 mForceFail;        // _3C
+	f32 mAdjustDistance;      // _14
+	int mAdjustTimeLimit;     // _18
+	Vector3f mTargetPosition; // _1C
+	f32 mAdjustTimer;         // _28
+	f32 mTurnSpeed;           // _2C
+	Vector3f mVelocity;       // _30
+	u8 mForceFail;            // _3C
 };
 
 /**
@@ -351,13 +356,13 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_18 = AndAction
 	// _18     = PaniAnimKeyListener
-	u8 _1C;                 // _1C
-	u8 _1D;                 // _1D
-	u8 _1E;                 // _1E
-	u8 _1F;                 // _1F
-	Traversable* _20;       // _20, idk what this is but it's something inheriting from this
-	SmartPtr<Creature> _24; // _24
-	Creature* _28;          // _28
+	u8 mHasLost;               // _1C
+	u8 mIsAttackFinished;      // _1D
+	u8 mIsCriticalHit;         // _1E
+	u8 mIsPlayer;              // _1F
+	Traversable* _20;          // _20, idk what this is but it's something inheriting from this
+	SmartPtr<Creature> mOther; // _24
+	Creature* mPlayerObject;   // _28
 };
 
 /**
@@ -454,17 +459,17 @@ struct ActBoreRest : public Action, virtual PaniAnimKeyListener {
 	// unused/inlined:
 	void standUp();
 
-	void finishRest() { _18 = 1; }
+	void finishRest() { mIsFinished = 1; }
 
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	u8 _18;  // _18
-	int _1C; // _1C
-	f32 _20; // _20, unknown
-	u8 _24;  // _24
-	u8 _25;  // _25
-	         // _28-_30 = PaniAnimKeyListener
+	u8 mIsFinished;     // _18
+	int mRestState;     // _1C
+	f32 mRestTimer;     // _20, unknown
+	u8 mIsAnimFinished; // _24
+	u8 mForceComplete;  // _25
+	                    // _28-_30 = PaniAnimKeyListener
 };
 
 /**
@@ -501,7 +506,7 @@ struct ActBoreSelect : public Action {
 	f32 mActionTimer;          // _14
 	bool mIsTimerActive;       // _18
 	bool mIsChildActionActive; // _19
-	u8 _1A;                    // _1A
+	u8 mStop;                  // _1A
 	f32 _1C;                   // _1C
 };
 
@@ -524,11 +529,11 @@ struct ActBoreTalk : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	int _18;              // _18
-	Creature* mTarget;    // _1C
-	f32 _20;              // _20
-	bool mIsAnimFinished; // _24
-	                      // _28-_30 = PaniAnimKeyListener
+	int mIsLookHandledElsewhere; // _18
+	Creature* mTarget;           // _1C
+	f32 mTalkTimer;              // _20
+	bool mIsAnimFinished;        // _24
+	                             // _28-_30 = PaniAnimKeyListener
 };
 
 /**
@@ -600,13 +605,13 @@ struct ActBreakWall : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	BuildingItem* mWall; // _18
-	u16 mState;          // _1C
-	Vector3f _20;        // _20
-	int _2C;             // _2C, unknown, same as gameflow._300
-	u8 _30;              // _30
-	u8 _31;              // _31
-	u8 _32;              // _32
+	BuildingItem* mWall;         // _18
+	u16 mState;                  // _1C
+	Vector3f mHitPikminPosition; // _20
+	int mStartAttackTime;        // _2C
+	u8 mWorkTimer;               // _30
+	u8 mFailAttackCounter;       // _31
+	u8 mIsAttackReady;           // _32
 };
 
 /**
@@ -664,18 +669,18 @@ struct ActBridge : public Action, virtual PaniAnimKeyListener {
 	// _14     = PaniAnimKeyListener ptr
 	Bridge* mBridge;            // _18, unknown
 	u16 mState;                 // _1C
-	int _20;                    // _20, unknown - same as _300 in gameflow
-	int _24;                    // _24
+	int mStartWorkTime;         // _20, unknown - same as _300 in gameflow
+	int mIsAttackReady;         // _24
 	u16 mCollisionCount;        // _28
 	u16 _2A;                    // _2A
-	f32 _2C;                    // _2C
+	f32 mRandomBridgeWidth;     // _2C
 	s16 mStageIdx;              // _30
-	u8 _32;                     // _32
+	u8 mClimbingBridge;         // _32
 	u8 _33;                     // _33
-	Vector3f _34;               // _34
+	Vector3f mBridgeWallNormal; // _34
 	Vector3f mClimbingVelocity; // _40
 	u8 mActionCounter;          // _4C
-	u8 _4D;                     // _4D
+	u8 mAnimationFinished;      // _4D
 	                            // _50-_58 = PaniAnimKeyListener
 };
 
@@ -715,16 +720,26 @@ struct ActChase : public Action {
  * @note Size: 0x88.
  */
 struct ActCrowd : public Action, virtual SlotChangeListner {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Unk0   = 0,
+		STATE_Formed = 1,
+		STATE_Sort   = 2,
+	};
+
 	ActCrowd(Piki*);
 
 	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
 	virtual void procAnimMsg(Piki*, MsgAnim*);       // _20
 	virtual void procWallMsg(Piki*, MsgWall*);       // _28
-	virtual ~ActCrowd();                             // _44
+	virtual ~ActCrowd() { }                          // _44
 	virtual void init(Creature*);                    // _48
 	virtual int exec();                              // _4C
 	virtual void cleanup();                          // _50
-	virtual bool resumable();                        // _5C
+	virtual bool resumable() { return true; }        // _5C
 	virtual void inform(int);                        // _64
 
 	void startSort();
@@ -741,19 +756,31 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = SlotChangeListner ptr
-	u8 _18[0x2C - 0x18]; // _18, unknown
-	u16 _2C;             // _2C, "md"?
-	u16 _2E;             // _2E, "st"?
-	u8 _30[0x58 - 0x30]; // _30, unknown
-	int mCPlateSlotID;   // _58
-	u8 _5C[0x64 - 0x5C]; // _5C, unknown
-	u8 _64;              // _64, "koke"?
-	u8 _65[0x7C - 0x65]; // _65, unknown
-	u8 _7C;              // _7C
-	u8 _7D;              // _7D, "wait"?
-	u8 _7E;              // _7E
-	u8 _7F;              // _7F, "route"?
-	                     // _80-_88 = SlotChangeListner
+	OdoMeter mOdometer;           // _18
+	ActBoreSelect* mSelectAction; // _28
+	u16 mState;                   // _2C
+	u16 mMode;                    // _2E
+	u16 _30;                      // _30
+	u16 _32;                      // _32
+	u8 _34;                       // _34
+	u8 _35;                       // _35
+	u8 _36;                       // _36
+	u32 _38;                      // _38, unknown
+	Vector3f _3C;                 // _3C
+	Vector3f _48;                 // _48
+	u8 _54[0x4];                  // _54, unknown
+	int mCPlateSlotID;            // _58
+	int mTripLoopCounter;         // _5C
+	f32 _60;                      // _60
+	bool mIsTripping;             // _64
+	f32 _68;                      // _68
+	CPlate* mPlateMgr;            // _6C
+	Vector3f _70;                 // _70
+	u8 _7C;                       // _7C
+	bool mIsWaiting;              // _7D
+	u8 _7E;                       // _7E
+	bool mHasRoute;               // _7F
+	                              // _80-_88 = SlotChangeListner
 };
 
 /**
@@ -778,8 +805,8 @@ struct ActDecoy : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	int _18; // _18
-	f32 _1C; // _1C
+	int mState;      // _18
+	f32 mDecoyTimer; // _1C
 };
 
 /**
@@ -951,7 +978,7 @@ struct ActFlower : public Action, virtual PaniAnimKeyListener {
 struct ActFormation : public Action, public PaniAnimKeyListener {
 	ActFormation(Piki*);
 
-	virtual ~ActFormation();                             // _44 (weak)
+	virtual ~ActFormation() { }                          // _44 (weak)
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -962,8 +989,16 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18;              // _18
-	u8 _19[0x34 - 0x19]; // _19, unknown
+	u8 mInFormation;              // _18
+	f32 mIdleTimer;               // _1C
+	FormationMgr* mFormMgr;       // _20
+	f32 mDistanceToTarget;        // _24
+	u8 mUseLastFormationPosition; // _28
+	u8 mIsIdling;                 // _29
+	u8 mHasStartedIdleAnim;       // _2A
+	u8 mIsOnFloorTripped;         // _2B
+	u8 mHasStartedRunAnim;        // _2C
+	int mIsTripping;              // _30
 };
 
 /**
@@ -999,7 +1034,7 @@ struct ActFreeSelect : public Action {
 	f32 mActionTimer;             // _14, timer?
 	volatile bool mIsTimerActive; // _18
 	bool mIsChildActionActive;    // _19
-	u8 _1A;                       // _1A
+	u8 mIsFinished;               // _1A
 	f32 _1C;                      // _1C
 };
 
@@ -1095,7 +1130,7 @@ struct ActGuard : public Action {
 	ActGuard(Piki*);
 
 	virtual void dump();          // _3C
-	virtual ~ActGuard();          // _44 (weak)
+	virtual ~ActGuard() { }       // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
@@ -1111,7 +1146,17 @@ struct ActGuard : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x4C - 0x14]; // _14, unknown
+	SmartPtr<Creature> mTarget;     // _14
+	SmartPtr<Creature> mLeftGuard;  // _18
+	SmartPtr<Creature> mRightGuard; // _1C
+	Vector3f _20;                   // _20
+	f32 _2C;                        // _2C
+	Vector3f mLandPosition;         // _30
+	f32 mFormationSpacing;          // _3C
+	f32 mTimer;                     // _40
+	int mFormationSide;             // _44
+	bool mIsWaiting;                // _48
+	u8 mIsGuardable;                // _49
 };
 
 /**
@@ -1141,13 +1186,13 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	int _18;                // _18
-	u8 _1C[0x20 - 0x1C];    // _1C, unknown
-	int _20;                // _20
-	SmartPtr<Creature> _24; // _24
-	CollPart* _28;          // _28
-	u8 _2C;                 // _2C
-	u8 _2D;                 // _2D
+	int mState;                 // _18
+	u8 _1C[0x20 - 0x1C];        // _1C, unknown
+	int mAttackState;           // _20
+	SmartPtr<Creature> mTarget; // _24
+	CollPart* mTargetCollider;  // _28
+	u8 _2C;                     // _2C
+	u8 mIsCriticalHit;          // _2D
 };
 
 /**
@@ -1189,11 +1234,11 @@ struct ActKinoko : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	SmartPtr<Creature> _18; // _18
-	int mState;             // _1C, unknown
-	f32 _20;                // _20, unknown
-	Vector3f _24;           // _24
-	                        // _30-_38 = PaniAnimKeyListener
+	SmartPtr<Creature> mTarget; // _18
+	int mState;                 // _1C, unknown
+	f32 mStateTimer;            // _20, unknown
+	Vector3f mTargetDirection;  // _24
+	                            // _30-_38 = PaniAnimKeyListener
 };
 
 /**
@@ -1269,7 +1314,7 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
 	SmartPtr<Creature> mObject; // _18, thing to be picked up
-	u8 _1C;                     // _1C
+	u8 mIsAnimationFinished;    // _1C
 };
 
 /**
@@ -1395,10 +1440,10 @@ struct ActPulloutCreature : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	int mState;             // _18
-	f32 _1C;                // _1C
-	SmartPtr<Creature> _20; // _20
-	u8 _24;                 // _24
+	int mState;                 // _18
+	f32 mPulloutTimer;          // _1C
+	SmartPtr<Creature> mTarget; // _20
+	u8 mPulloutSuccess;         // _24
 };
 
 /**
@@ -1407,9 +1452,18 @@ struct ActPulloutCreature : public Action, public PaniAnimKeyListener {
  * @note Size: 0x50.
  */
 struct ActPush : public Action, virtual PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Approach = 0,
+		STATE_Go       = 1,
+	};
+
 	ActPush(Piki*);
 
-	virtual ~ActPush();                                  // _44 (weak)
+	virtual ~ActPush() { }                               // _44 (weak)
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1426,8 +1480,20 @@ struct ActPush : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x48 - 0x18]; // _18, unknown
-	                     // _48-_50 = PaniAnimKeyListener
+	HinderRock* mHinderRock; // _18
+	u8 mPushAnimationState;  // _1C
+	u16 mState;              // _1E
+	u8 _20[0x4];             // _20, unknown
+	int _24;                 // _24
+	u8 _28[0x4];             // _28, unknown
+	Vector3f _2C;            // _2C
+	f32 _38;                 // _38
+	u8 mPushObjectStopped;   // _3C
+	f32 _40;                 // _40
+	u8 _44;                  // _44
+	s8 mPushCount;           // _45
+	u8 mIsPushReady;         // _46
+	                         // _48-_50 = PaniAnimKeyListener
 };
 
 /**
@@ -1463,16 +1529,29 @@ struct ActPut : public Action {
  * @note Size: 0x30.
  */
 struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Throw = 0,
+		STATE_Aim   = 1,
+		STATE_Set   = 2,
+		STATE_Put   = 3,
+		STATE_Wait  = 4,
+		STATE_Unk5  = 5,
+	};
+
 	ActPutBomb(Piki*);
 
-	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
-	virtual ~ActPutBomb();                               // _44
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual ~ActPutBomb() { }                            // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
 
-	Creature* findTeki();
+	void findTeki();
 	void initSet();
 	int exeSet();
 	void warnPikis();
@@ -1490,8 +1569,13 @@ struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x28 - 0x18]; // _18, unknown
-	                     // _28-_30 = PaniAnimKeyListener
+	u16 mState;            // _18
+	u8 mAnimationFinished; // _1A
+	u8 mTouchedPlayer;     // _1B
+	f32 mAimTimer;         // _1C
+	f32 mPlaceTimer;       // _20
+	Creature* mTarget;     // _24
+	                       // _28-_30 = PaniAnimKeyListener
 };
 
 /**
@@ -1502,7 +1586,7 @@ struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
 struct ActPutItem : public Action {
 	ActPutItem(Piki*);
 
-	virtual ~ActPutItem();        // _44
+	virtual ~ActPutItem() { }     // _44
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
@@ -1512,7 +1596,8 @@ struct ActPutItem : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	u8 _14[0x24 - 0x14]; // _14, unknown
+	Vector3f mItemPosition;   // _14
+	SmartPtr<Creature> mItem; // _20
 };
 
 /**
@@ -1583,9 +1668,20 @@ struct ActRandomBoid : public Action {
  * @note Size: 0x3C.
  */
 struct ActRescue : public Action, virtual PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum StateID {
+		STATE_Approach = 0,
+		STATE_Rescue   = 1,
+		STATE_Go       = 2,
+		STATE_Throw    = 3,
+	};
+
 	ActRescue(Piki*);
 
-	virtual ~ActRescue();                                // _44
+	virtual ~ActRescue() { }                             // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1603,8 +1699,14 @@ struct ActRescue : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	u8 _18[0x34 - 0x18]; // _18, unknown
-	                     // _34-_3C = PaniAnimKeyListener
+	u16 mState;                     // _18
+	Piki* mDrowningPiki;            // _1C
+	u16 mTargetSurviveTimer;        // _20
+	Vector3f mRescueTargetPosition; // _24
+	u8 mGotAnimationAction;         // _30
+	u8 mAnimationFinished;          // _31
+	u8 mThrowReady;                 // _32
+	                                // _34-_3C = PaniAnimKeyListener
 };
 
 /**
@@ -1632,9 +1734,20 @@ struct ActRope : public Action {
  * @note Size: 0x28.
  */
 struct ActShoot : public AndAction {
+
+	/**
+	 * @brief TODO
+	 */
+	enum ChildID {
+		CHILD_NULL          = -1,
+		CHILD_Goto          = 0,
+		CHILD_ShootCreature = 1,
+		CHILD_COUNT, // 2
+	};
+
 	ActShoot(Piki*);
 
-	virtual ~ActShoot();          // _44
+	virtual ~ActShoot() { }       // _44
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
@@ -1646,16 +1759,34 @@ struct ActShoot : public AndAction {
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	u8 _18[0x28 - 0x18]; // _18, unknown
+	u8 mTargetIsPlayer;             // _18
+	Traversable* mTargetObjectPool; // _1C, idk *what* but it inherits from Traversable
+	SmartPtr<Creature> mTarget;     // _20
+	Navi* mNavi;                    // _24
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24.
  */
 struct ActShootCreature : public Action, public PaniAnimKeyListener {
+
+	/**
+	 * @brief The state of the action.
+	 */
+	enum StateID {
+		STATE_Start        = 0,
+		STATE_ReadyToShoot = 1, // Unused
+		STATE_PrepareShoot = 2,
+		STATE_Shooting     = 3, // Unused
+		STATE_Chasing      = 4,
+		STATE_Complete     = 5,
+	};
+
 	ActShootCreature(Piki*);
 
-	virtual ~ActShootCreature();                         // _44
+	virtual ~ActShootCreature() { }                      // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1664,7 +1795,9 @@ struct ActShootCreature : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	// TODO: members
+	int mState;                 // _18
+	f32 mChaseTimer;            // _1C
+	SmartPtr<Creature> mTarget; // _20
 };
 
 /**
@@ -1677,7 +1810,7 @@ struct ActStone : public Action, public PaniAnimKeyListener {
 #define STONE_NECTAR_CHANCE (0.08f)
 
 	/**
-	 * @brief TODO
+	 * @brief The state of the action.
 	 */
 	enum State {
 		STATE_Approach = 0,
@@ -1718,7 +1851,7 @@ struct ActStone : public Action, public PaniAnimKeyListener {
 struct ActTransport : public Action, virtual PaniAnimKeyListener {
 
 	/**
-	 * @brief TODO
+	 * @brief The state of the action.
 	 */
 	enum State {
 		STATE_Go   = 0,
@@ -1793,7 +1926,7 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
 	f32 mWaitTimer;                // _A4
 	int mPathIndex;                // _A8
 	int mGoalWPIndex;              // _AC
-	Suckable* mGoal;               // _B0, either GoalItem* or UfoItem*, depending
+	Suckable* mGoal;               // _B0, either GoalItem* or UfoItem*
 	u8 mCanCarry;                  // _B4
 	                               // _B8-_C0 = PaniAnimKeyListener
 };
@@ -1854,9 +1987,21 @@ struct ActWatch : public Action {
  * @note Size: 0x2C.
  */
 struct ActWeed : public Action, public PaniAnimKeyListener {
+
+#define GRASS_NECTAR_CHANCE (0.08f)
+
+	/**
+	 * @brief The state of the action.
+	 */
+	enum State {
+		STATE_Approach = 0,
+		STATE_Adjust   = 1,
+		STATE_Attack   = 2,
+	};
+
 	ActWeed(Piki*);
 
-	virtual ~ActWeed();                                  // _44
+	// virtual ~ActWeed() { }                                  // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -1872,7 +2017,12 @@ struct ActWeed : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 _18[0x2C - 0x18]; // _18, unknown
+	u16 mState;            // _18
+	u8 _1A[0x6];           // _1A, unknown
+	Grass* mCurrGrass;     // _20
+	GrassGen* mGrassGen;   // _24
+	u16 _28;               // _28
+	u8 mAnimationFinished; // _2A
 };
 
 /**

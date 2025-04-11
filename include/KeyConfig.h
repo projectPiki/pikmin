@@ -19,9 +19,15 @@ struct KeyConfig : public Node {
 	struct Key : public Node {
 		virtual void read(RandomAccessStream&); // _0C
 
+		void set(char* name, int bind)
+		{
+			setName(name);
+			mBind = bind;
+		}
+
 		// _00     = VTBL
 		// _00-_20 = Node
-		int _20; // _20, unknown
+		int mBind; // _20, unknown
 	};
 
 	KeyConfig();

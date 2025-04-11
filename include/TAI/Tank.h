@@ -52,6 +52,11 @@ struct TAItankStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAItankAnimation : public TAIanimation {
+	TAItankAnimation()
+	    : TAIanimation(TEKI_Tank, "tekis/tank/anims.bun")
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL
@@ -94,7 +99,8 @@ struct TAIAinitTank : public TaiAction {
  * @brief TODO
  */
 struct TAIAflickingTank : public TAIAflicking {
-	inline TAIAflickingTank() // TODO: this is a guess
+	TAIAflickingTank(int nextState, int motionIdx)
+	    : TAIAflicking(nextState, motionIdx)
 	{
 	}
 

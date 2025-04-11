@@ -45,10 +45,10 @@ Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 	mController        = controller;
 	mUseCustomPosition = useCustomPosition;
 
-	mFont       = font;
-	mParentMenu = 0;
-	_A8         = 0;
-	mLastItem   = new MenuItem(0, 0, "menu", nullptr);
+	mFont         = font;
+	mParentMenu   = 0;
+	mIsCustomMenu = 0;
+	mLastItem     = new MenuItem(0, 0, "menu", nullptr);
 
 	resetMenuItem(mLastItem);
 

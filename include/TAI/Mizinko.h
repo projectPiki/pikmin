@@ -8,18 +8,26 @@
 
 /////////// Honeywisp Spawner AI Actions ///////////
 
-/*
+/**
+ * @brief TODO
+ */
+enum TaiMizigenStateID {
+	MIZIGENSTATE_Wait     = 0,
+	MIZIGENSTATE_Generate = 1,
+	MIZIGENSTATE_COUNT, // 2
+};
+
+/**
  * @brief TODO
  */
 struct TaiMizigenParameters : public TekiParameters {
 	TaiMizigenParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_88 = TekiParameters
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiMizigenStrategy : public TaiStrategy {
@@ -36,8 +44,8 @@ struct TaiMizigenStrategy : public TaiStrategy {
  * @brief TODO
  */
 struct TaiMizigenGeneratingAction : public TaiAction {
-	inline TaiMizigenGeneratingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMizigenGeneratingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -53,8 +61,8 @@ struct TaiMizigenGeneratingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiMizigenNaviApprouchAction : public TaiAction {
-	inline TaiMizigenNaviApprouchAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMizigenNaviApprouchAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -67,7 +75,42 @@ struct TaiMizigenNaviApprouchAction : public TaiAction {
 
 /////////// Honeywisp AI Actions ///////////
 
-/*
+/**
+ * @brief TODO
+ */
+enum TaiMizinkoFloatParams {
+	MIZINKOPF_DropDistance = TPF_COUNT,  // 50
+	MIZINKOPF_PathDistance,              // 51
+	MIZINKOPF_FlyingAwayVelocity,        // 52
+	MIZINKOPF_FlyingAwayAccel,           // 53
+	MIZINKOPF_FadePeriod,                // 54
+	MIZINKOPF_HidingPeriod,              // 55
+	MIZINKOPF_HidingPeriodRandomRate,    // 56
+	MIZINKOPF_FlightHeightRandomRate,    // 57
+	MIZINKOPF_FlightAmplitude,           // 58
+	MIZINKOPF_FlightAmplitudeRandomRate, // 59
+	MIZINKOPF_AngularVelocity,           // 60
+	MIZINKOPF_AngularVelocityRandomRate, // 61
+	MIZINKOPF_CryPeriod,                 // 62
+	MIZINKOPF_CryPeriodRandomRate,       // 63
+	MIZINKOPF_COUNT,                     // 64
+};
+
+/**
+ * @brief TODO
+ */
+enum TaiMizinkoStateID {
+	MIZINKOSTATE_Going       = 0,
+	MIZINKOSTATE_HidingDest  = 1,
+	MIZINKOSTATE_Coming      = 2,
+	MIZINKOSTATE_HidingStart = 3,
+	MIZINKOSTATE_DropWater   = 4,
+	MIZINKOSTATE_FlyingAway  = 5,
+	MIZINKOSTATE_Dead        = 6,
+	MIZINKOSTATE_COUNT, // 7
+};
+
+/**
  * @brief TODO
  */
 struct TaiMizinkoSoundTable : public PaniSoundTable {
@@ -76,7 +119,7 @@ struct TaiMizinkoSoundTable : public PaniSoundTable {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiMizinkoParameters : public TekiParameters {
@@ -87,7 +130,7 @@ struct TaiMizinkoParameters : public TekiParameters {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiMizinkoStrategy : public TaiStrategy {
@@ -107,8 +150,8 @@ struct TaiMizinkoStrategy : public TaiStrategy {
  * @brief TODO
  */
 struct TaiMizinkoCryTimerAction : public TaiTimerAction {
-	inline TaiMizinkoCryTimerAction() // TODO: this is a guess
-	    : TaiTimerAction(0, 0, 0.0f, 0.0f)
+	TaiMizinkoCryTimerAction(int p1, f32 p2, f32 p3)
+	    : TaiTimerAction(TAI_NO_TRANSIT, p1, p2, p3)
 	{
 	}
 
@@ -123,24 +166,23 @@ struct TaiMizinkoCryTimerAction : public TaiTimerAction {
  * @brief TODO
  */
 struct TaiMizinkoMovingTimerAction : public TaiTimerAction {
-	inline TaiMizinkoMovingTimerAction() // TODO: this is a guess
-	    : TaiTimerAction(0, 0, 0.0f, 0.0f)
+	TaiMizinkoMovingTimerAction(int nextState)
+	    : TaiTimerAction(nextState, 0, 0.0f, 0.0f)
 	{
 	}
 
 	virtual void start(Teki&); // _08
 
 	// _04     = VTBL
-	// _00-_08 = TaiTimerAction?
-	// TODO: members
+	// _00-_10 = TaiTimerAction
 };
 
 /**
  * @brief TODO
  */
 struct TaiMizinkoFadingAction : public TaiAction {
-	inline TaiMizinkoFadingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMizinkoFadingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -155,8 +197,8 @@ struct TaiMizinkoFadingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiMizinkoGoingAction : public TaiAction {
-	inline TaiMizinkoGoingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMizinkoGoingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -171,8 +213,8 @@ struct TaiMizinkoGoingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiMizinkoComingAction : public TaiAction {
-	inline TaiMizinkoComingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMizinkoComingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -187,8 +229,8 @@ struct TaiMizinkoComingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiMizinkoDropWaterAction : public TaiAction {
-	inline TaiMizinkoDropWaterAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMizinkoDropWaterAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -203,8 +245,8 @@ struct TaiMizinkoDropWaterAction : public TaiAction {
  * @brief TODO
  */
 struct TaiMizinkoWaitingAction : public TaiAction {
-	inline TaiMizinkoWaitingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMizinkoWaitingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -219,8 +261,8 @@ struct TaiMizinkoWaitingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiMizinkoFlyingAwayAction : public TaiAction {
-	inline TaiMizinkoFlyingAwayAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMizinkoFlyingAwayAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

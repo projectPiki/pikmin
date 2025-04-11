@@ -1,4 +1,16 @@
 #include "Creature.h"
+#include "DynColl.h"
+#include "CreatureProp.h"
+#include "GameStat.h"
+#include "Piki.h"
+#include "MapMgr.h"
+#include "GoalItem.h"
+#include "Pellet.h"
+#include "PikiState.h"
+#include "RopeCreature.h"
+#include "PikiMgr.h"
+#include "AIConstant.h"
+#include "Collision.h"
 #include "DebugLog.h"
 
 /*
@@ -13,158 +25,59 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("CreatureMove")
 
 /*
  * --INFO--
  * Address:	8008E2CC
  * Size:	000200
  */
-void Creature::moveRotation(f32)
+void Creature::moveRotation(f32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x90(r1)
-	  stfd      f31, 0x88(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x84(r1)
-	  mr        r31, r3
-	  lwz       r0, 0xC8(r3)
-	  rlwinm.   r0,r0,0,22,22
-	  beq-      .loc_0xE8
-	  lfs       f2, 0xD8(r31)
-	  addi      r3, r1, 0x54
-	  lfs       f1, 0xD4(r31)
-	  addi      r4, r1, 0x64
-	  lfs       f3, 0xDC(r31)
-	  lfs       f0, -0x7510(r2)
-	  fmuls     f4, f1, f31
-	  fmuls     f2, f2, f31
-	  stfs      f0, 0x6C(r1)
-	  fmuls     f1, f3, f31
-	  stfs      f0, 0x68(r1)
-	  stfs      f0, 0x64(r1)
-	  stfs      f4, 0x64(r1)
-	  stfs      f2, 0x68(r1)
-	  stfs      f1, 0x6C(r1)
-	  stfs      f0, 0x70(r1)
-	  lfs       f0, 0xE0(r31)
-	  stfs      f0, 0x54(r1)
-	  lfs       f0, 0xE4(r31)
-	  stfs      f0, 0x58(r1)
-	  lfs       f0, 0xE8(r31)
-	  stfs      f0, 0x5C(r1)
-	  lfs       f0, 0xEC(r31)
-	  stfs      f0, 0x60(r1)
-	  bl        -0x56510
-	  lfs       f6, -0x750C(r2)
-	  addi      r3, r31, 0xE0
-	  lfs       f0, 0x54(r1)
-	  lfs       f2, 0x58(r1)
-	  fmuls     f0, f6, f0
-	  lfs       f1, 0xE0(r31)
-	  lfs       f4, 0x5C(r1)
-	  fmuls     f2, f6, f2
-	  lfs       f3, 0xE4(r31)
-	  lfs       f5, 0x60(r1)
-	  fadds     f0, f1, f0
-	  fmuls     f1, f6, f4
-	  lfs       f4, 0xE8(r31)
-	  lfs       f7, 0xEC(r31)
-	  fmuls     f5, f6, f5
-	  fadds     f2, f3, f2
-	  stfs      f0, 0xE0(r31)
-	  fadds     f0, f4, f1
-	  fadds     f1, f7, f5
-	  stfs      f2, 0xE4(r31)
-	  stfs      f0, 0xE8(r31)
-	  stfs      f1, 0xEC(r31)
-	  bl        -0x56480
+	if (isCreatureFlag(CF_Unk10)) {
+		Vector3f vec1 = mPrevAngularVelocity * p1;
+		Quat q1(vec1.x, vec1.y, vec1.z, 0.0f);
+		Quat q2(mRotationQuat);
 
-	.loc_0xE8:
-	  lwz       r3, 0xC8(r31)
-	  rlwinm.   r4,r3,0,22,22
-	  bne-      .loc_0x1C0
-	  rlwinm.   r0,r3,0,21,21
-	  bne-      .loc_0x1C0
-	  lfs       f1, 0xA4(r31)
-	  lfs       f2, 0xAC(r31)
-	  fmuls     f4, f1, f1
-	  lfs       f0, -0x7508(r2)
-	  fmuls     f3, f2, f2
-	  fadds     f3, f4, f3
-	  fcmpo     cr0, f3, f0
-	  ble-      .loc_0x18C
-	  bl        0x18D610
-	  lfs       f2, 0xA0(r31)
-	  bl        -0x55E3C
-	  lwz       r3, 0x224(r31)
-	  lfs       f2, -0x7504(r2)
-	  lfs       f3, 0x30(r3)
-	  lfs       f0, 0xA0(r31)
-	  fmuls     f1, f1, f3
-	  fmuls     f1, f31, f1
-	  fmuls     f1, f2, f1
-	  fadds     f0, f0, f1
-	  stfs      f0, 0xA0(r31)
-	  lfs       f1, 0xA0(r31)
-	  bl        -0x55E94
-	  stfs      f1, 0xA0(r31)
-	  lwz       r0, 0x158(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x170
-	  lfs       f0, 0xA0(r31)
-	  stfs      f0, 0x8C(r31)
-	  b         .loc_0x1E8
+		q2.multiply(q1);
 
-	.loc_0x170:
-	  lfs       f0, -0x5C70(r13)
-	  stfs      f0, 0x88(r31)
-	  lfs       f0, 0xA0(r31)
-	  stfs      f0, 0x8C(r31)
-	  lfs       f0, -0x5C6C(r13)
-	  stfs      f0, 0x90(r31)
-	  b         .loc_0x1E8
+		f32 scale = 0.5f;
+		mRotationQuat.set(scale * q2.v.x + mRotationQuat.v.x, scale * q2.v.y + mRotationQuat.v.y, scale * q2.v.z + mRotationQuat.v.z,
+		                  scale * q2.s + mRotationQuat.s);
+		mRotationQuat.normalise();
+	}
 
-	.loc_0x18C:
-	  lwz       r0, 0x158(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1A4
-	  lfs       f0, 0xA0(r31)
-	  stfs      f0, 0x8C(r31)
-	  b         .loc_0x1E8
+	if (!isCreatureFlag(CF_Unk10) && !isCreatureFlag(CF_Unk11)) {
+		if (SQUARE(mTargetVelocity.x) + SQUARE(mTargetVelocity.z) > 1.0f) {
+			f32 angle = atan2f(mTargetVelocity.x, mTargetVelocity.z);
 
-	.loc_0x1A4:
-	  lfs       f0, -0x5C68(r13)
-	  stfs      f0, 0x88(r31)
-	  lfs       f0, 0xA0(r31)
-	  stfs      f0, 0x8C(r31)
-	  lfs       f0, -0x5C64(r13)
-	  stfs      f0, 0x90(r31)
-	  b         .loc_0x1E8
+			// DLL only:
+			// if (isNan(angle)) {
+			// 	dump();
+			// 	ERROR("meck is eating B-teishoku!");
+			// }
 
-	.loc_0x1C0:
-	  cmplwi    r4, 0
-	  bne-      .loc_0x1E8
-	  rlwinm.   r0,r3,0,21,21
-	  beq-      .loc_0x1E8
-	  lfs       f0, -0x5C60(r13)
-	  stfs      f0, 0x88(r31)
-	  lfs       f0, 0xA0(r31)
-	  stfs      f0, 0x8C(r31)
-	  lfs       f0, -0x5C5C(r13)
-	  stfs      f0, 0x90(r31)
+			mFaceDirection += angDist(angle, mFaceDirection) * mProps->mCreatureProps.mFaceDirAdjust() * p1 * 10.0f;
+			mFaceDirection = roundAng(mFaceDirection);
+			if (mRope) {
+				mRotation.y = mFaceDirection;
+			} else {
+				mRotation.set(0.0f, mFaceDirection, 0.0f);
+			}
+			return;
+		}
 
-	.loc_0x1E8:
-	  lwz       r0, 0x94(r1)
-	  lfd       f31, 0x88(r1)
-	  lwz       r31, 0x84(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
+		if (mRope) {
+			mRotation.y = mFaceDirection;
+		} else {
+			mRotation.set(0.0f, mFaceDirection, 0.0f);
+		}
+		return;
+	}
+
+	if (!isCreatureFlag(CF_Unk10) && isCreatureFlag(CF_Unk11)) {
+		mRotation.set(0.0f, mFaceDirection, 0.0f);
+	}
 }
 
 /*
@@ -174,85 +87,26 @@ void Creature::moveRotation(f32)
  */
 void Creature::moveAttach()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x94(r3)
-	  lwz       r0, 0x98(r30)
-	  stw       r3, 0x29C(r30)
-	  stw       r0, 0x2A0(r30)
-	  lwz       r0, 0x9C(r30)
-	  stw       r0, 0x2A4(r30)
-	  lwz       r4, 0x280(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xA8
-	  mr        r3, r30
-	  lwz       r31, 0x28(r4)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x78
-	  lwz       r0, 0x184(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x94
-	  mr        r3, r30
-	  bl        0x1A18
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x94
+	_29C = mPosition;
+	if (mCollPlatform) {
+		Creature* plat = mCollPlatform->mCreature;
+		if (platAttachable() || mStickTarget && isStickToPlatform()) {
+			if (mCollPlatform) {
+				// this isn't used further in the DLL either
+				int objType = mCollPlatform->mCreature->mObjType;
+			}
 
-	.loc_0x78:
-	  lwz       r3, 0x280(r30)
-	  mr        r4, r30
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x98
+			mCollPlatform->adjust(this);
+		} else {
+			plat = nullptr;
+		}
 
-	.loc_0x94:
-	  li        r31, 0
+		if (!plat) {
+			mCollPlatform = nullptr;
+		}
+	}
 
-	.loc_0x98:
-	  cmplwi    r31, 0
-	  bne-      .loc_0xA8
-	  li        r0, 0
-	  stw       r0, 0x280(r30)
-
-	.loc_0xA8:
-	  lfs       f1, 0x29C(r30)
-	  lfs       f0, 0x94(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x18(r1)
-	  lfs       f0, 0x18(r1)
-	  stfs      f0, 0x24(r1)
-	  lfs       f1, 0x2A0(r30)
-	  lfs       f0, 0x98(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x28(r1)
-	  lfs       f1, 0x2A4(r30)
-	  lfs       f0, 0x9C(r30)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x2C(r1)
-	  lwz       r3, 0x24(r1)
-	  lwz       r0, 0x28(r1)
-	  stw       r3, 0x29C(r30)
-	  stw       r0, 0x2A0(r30)
-	  lwz       r0, 0x2C(r1)
-	  stw       r0, 0x2A4(r30)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	_29C = _29C - mPosition;
 }
 
 /*
@@ -260,8 +114,208 @@ void Creature::moveAttach()
  * Address:	8008E5DC
  * Size:	000D60
  */
-void Creature::moveNew(f32)
+void Creature::moveNew(f32 deltaTime)
 {
+	if (mPosition.y < -2000.0f && isAlive()) {
+		if (mObjType == OBJTYPE_Piki) {
+			Piki* piki = static_cast<Piki*>(this);
+			GameStat::fallPikis.inc(piki->mColor);
+			PRINT("fall piki %x\n", piki);
+		}
+
+		if (mObjType == OBJTYPE_Pellet) {
+			Pellet* pellet = static_cast<Pellet*>(this);
+			for (int i = 0; i < 20; i++) {
+				PRINT("++++ PELLET (%s) FALL !!!!!!!\n", pellet->mConfig->mModelId.mStringID);
+			}
+			// not used any further in the DLL either.
+			// pellet->isUfoParts();
+
+			pellet->mPosition.y = mapMgr->getMinY(pellet->mPosition.x, pellet->mPosition.z, true) + 30.0f;
+
+		} else {
+			kill(false);
+		}
+
+		return;
+	}
+
+	if (!isCreatureFlag(CF_IsFlying) && !mRope && (!mStickTarget || !isStickToPlatform() || !mStickPart->isClimbable())
+	    && !isCreatureFlag(CF_Unk8) && (!mStickTarget || mPelletStickSlot == -1)) {
+		mVelocity.y -= AIConstant::_instance->mConstants.mGravity() * deltaTime;
+	}
+
+	if (isCreatureFlag(CF_Unk5)) {
+		mVelocity.y -= deltaTime * mAirResistance * mVelocity.y;
+		f32 scale = 0.2f;
+		mVelocity.x -= deltaTime * mAirResistance * scale * mVelocity.x;
+		mVelocity.z -= deltaTime * mAirResistance * scale * mVelocity.z;
+	}
+
+	mGroundTriangle = nullptr;
+
+	if (mObjType == OBJTYPE_Rope) {
+		RopeCreature* rope = static_cast<RopeCreature*>(this);
+		Cylinder ropeBoundary(rope->mParentRope->mPosition, rope->mPosition, 1.0f);
+		Vector3f pushVec;
+		RopeItem* ropeItem = static_cast<RopeItem*>(rope);
+		Iterator iter(pikiMgr);
+
+		CI_LOOP(iter)
+		{
+			Piki* piki     = static_cast<Piki*>(*iter);
+			bool canAttach = true;
+			if (ropeItem->mOwner->mObjType == OBJTYPE_Goal) {
+				GoalItem* base = static_cast<GoalItem*>(ropeItem->mOwner);
+				if (base->mOnionColour != piki->mColor) {
+					canAttach = false;
+				}
+			}
+
+			if (canAttach && piki->isRopable() && piki->isAlive() && !piki->isBuried()) {
+				Vector3f centerPoint = piki->getCentre();
+				Sphere pikminBounds(centerPoint, piki->getCentreSize());
+				f32 collisionRatio;
+
+				if (ropeBoundary.collide(pikminBounds, pushVec, collisionRatio) && !piki->mRope) {
+					Vector3f attachPoint     = rope->getRopePos(collisionRatio);
+					Vector3f directionVector = attachPoint - piki->mPosition;
+					f32 angle                = atan2f(directionVector.x, directionVector.z);
+
+					if (collisionRatio < 0.0f) {
+						collisionRatio = 0.0f;
+					}
+					if (collisionRatio > 1.0f) {
+						collisionRatio = 1.0f;
+					}
+
+					piki->startRope(rope, collisionRatio);
+					piki->mFaceDirection = angle;
+					piki->mFSM->transit(piki, PIKISTATE_Normal);
+				}
+			}
+		}
+
+		Vector3f dir = mPosition - rope->mParentRope->mPosition;
+		f32 distance = dir.normalise();
+
+		f32 speedAlongRope            = mVelocity.DP(dir);
+		Vector3f ropeDirectedVelocity = speedAlongRope * dir;
+		Vector3f perpVelocity         = mVelocity - ropeDirectedVelocity;
+
+		mVelocity = perpVelocity;
+		mVelocity = mVelocity - mVelocity * gsys->getFrameTime();
+
+		mTargetVelocity = perpVelocity;
+		if (rope->mParentRope->mObjType == OBJTYPE_Rope) {
+			rope->mParentRope->mVelocity = rope->mParentRope->mVelocity + ropeDirectedVelocity;
+		}
+
+		if (distance != rope->mRopeLength) {
+			mPosition = rope->mParentRope->mPosition + rope->mRopeLength * dir;
+		}
+	}
+
+	mCollPlatform = nullptr;
+
+	if (mObjType != OBJTYPE_Pellet) {
+		Vector3f adjustedPos(mPosition);
+		if (isCreatureFlag(CF_GroundOffsetEnabled)) {
+			adjustedPos.y -= mGroundOffset;
+		}
+
+		if (mObjType == OBJTYPE_Pikihead) {
+			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, true);
+			mapMgr->traceMove(this, trace, deltaTime);
+			mVelocity = trace.mVelocity;
+			mPosition = trace.mPosition;
+		} else {
+			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, false);
+			mapMgr->traceMove(this, trace, deltaTime);
+			mVelocity = trace.mVelocity;
+			mPosition = trace.mPosition;
+		}
+
+		if (isCreatureFlag(CF_GroundOffsetEnabled)) {
+			mPosition.y += mGroundOffset;
+		}
+	} else {
+		Pellet* pellet = static_cast<Pellet*>(this);
+		if (pellet->isRealDynamics()) {
+			f32 cylinderHeight = pellet->getCylinderHeight();
+			f32 grabOffset     = -pellet->getPickOffset();
+
+			Vector3f heightVector(0.0f, 0.5f * cylinderHeight, 0.0f);
+			Matrix4f rotationMtx;
+			rotationMtx.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), pellet->mRotationQuat, Vector3f(1.0f, 1.0f, 1.0f));
+			heightVector.multMatrix(rotationMtx);
+
+			Vector3f tmpHeightVec = heightVector;
+			heightVector          = heightVector + mPosition;
+
+			MoveTrace movePath(heightVector, mVelocity, 0.5f * cylinderHeight + grabOffset, false);
+			traceMove2(this, movePath, deltaTime);
+
+			mVelocity = movePath.mVelocity;
+			mPosition = movePath.mPosition - tmpHeightVec;
+
+		} else {
+			Vector3f adjustedPos(mPosition);
+			if (isCreatureFlag(CF_GroundOffsetEnabled)) {
+				adjustedPos.y -= mGroundOffset;
+			}
+
+			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, false);
+			mapMgr->traceMove(this, trace, deltaTime);
+
+			mVelocity = trace.mVelocity;
+			mPosition = trace.mPosition;
+
+			if (isCreatureFlag(CF_GroundOffsetEnabled)) {
+				mPosition.y += mGroundOffset;
+			}
+		}
+	}
+
+	if (mGroundTriangle) {
+		if (!mPreviousTriangle) {
+			Creature* platCreature = (mCollPlatform) ? mCollPlatform->mCreature : nullptr;
+
+			if (!platCreature || platCreature->mObjType == OBJTYPE_WorkObject) {
+				bounceCallback();
+			}
+		}
+
+		setCreatureFlag(CF_IsOnGround);
+	} else {
+		resetCreatureFlag(CF_IsOnGround);
+		if (mPreviousTriangle) {
+			int planeIdx = -1;
+			f32 minDist  = 12800.0f;
+
+			for (int i = 0; i < 3; i++) {
+				f32 dist = mPreviousTriangle->mEdgePlanes[i].dist(mPosition);
+				if (dist <= minDist) {
+					planeIdx = mPreviousTriangle->mAdjacentTriIndices[i];
+					minDist  = dist;
+				}
+			}
+
+			if (planeIdx < 0) {
+				jumpCallback();
+			} else {
+				CollTriInfo* tri = &mapMgr->mMapShape->mTriList[planeIdx];
+				if (tri->mTriangle.mNormal.DP(mPreviousTriangle->mTriangle.mNormal)
+				    < cosf(AIConstant::_instance->mConstants.mJumpTriangleAngleThreshold() / 180.0f * PI)) {
+					jumpCallback();
+				}
+			}
+		}
+	}
+
+	mPreviousTriangle = mGroundTriangle;
+
+	u32 badCompiler2[8];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1230,83 +1284,24 @@ CollTriInfo* Creature::getNextTri(CollTriInfo*, Vector3f&, int&)
  * Address:	8008F33C
  * Size:	000100
  */
-Plane* Creature::getNearestPlane(CollTriInfo*)
+Plane* Creature::getNearestPlane(CollTriInfo* tri)
 {
-	/*
-	.loc_0x0:
-	  lfs       f2, 0x94(r3)
-	  li        r0, -0x1
-	  lfs       f3, 0x28(r4)
-	  lfs       f1, 0x2C(r4)
-	  lfs       f0, 0x98(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x30(r4)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x9C(r3)
-	  lfs       f0, 0x34(r4)
-	  fmuls     f3, f4, f3
-	  lfs       f5, -0x74F4(r2)
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f5
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x50
-	  li        r0, 0
-	  fmr       f5, f0
+	int planeIdx = -1;
+	f32 minDist  = 12800.0f;
+	for (int i = 0; i < 3; i++) {
+		f32 dist = tri->mEdgePlanes[i].dist(mPosition);
+		PRINT(" :: plane%d dist is %f\n", i, dist);
+		if (dist <= minDist) {
+			planeIdx = i;
+			minDist  = dist;
+		}
+	}
 
-	.loc_0x50:
-	  lfs       f2, 0x94(r3)
-	  addi      r6, r4, 0x10
-	  lfs       f3, 0x38(r4)
-	  lfs       f0, 0x98(r3)
-	  lfs       f1, 0x3C(r4)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x40(r4)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x9C(r3)
-	  lfs       f0, 0x44(r4)
-	  fmuls     f3, f4, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f5
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x9C
-	  li        r0, 0x1
-	  fmr       f5, f0
+	if (planeIdx != -1) {
+		return &tri->mEdgePlanes[planeIdx];
+	}
 
-	.loc_0x9C:
-	  lfs       f2, 0x94(r3)
-	  lfs       f3, 0x38(r6)
-	  lfs       f0, 0x98(r3)
-	  lfs       f1, 0x3C(r6)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x40(r6)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x9C(r3)
-	  lfs       f0, 0x44(r6)
-	  fmuls     f3, f4, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f5
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xE0
-	  li        r0, 0x2
-
-	.loc_0xE0:
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0xF8
-	  rlwinm    r3,r0,4,0,27
-	  addi      r3, r3, 0x28
-	  add       r3, r4, r3
-	  blr
-
-	.loc_0xF8:
-	  li        r3, 0
-	  blr
-	*/
+	return nullptr;
 }
 
 /*
@@ -1324,419 +1319,64 @@ void Creature::renderCollTriInfo(Graphics&, CollTriInfo*, Colour&)
  * Address:	8008F43C
  * Size:	000588
  */
-void traceMove2(Creature*, MoveTrace&, f32)
+void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xD8(r1)
-	  stfd      f31, 0xD0(r1)
-	  stfd      f30, 0xC8(r1)
-	  stfd      f29, 0xC0(r1)
-	  stfd      f28, 0xB8(r1)
-	  fmr       f28, f1
-	  stw       r31, 0xB4(r1)
-	  li        r31, 0x1
-	  stw       r30, 0xB0(r1)
-	  stw       r29, 0xAC(r1)
-	  mr        r29, r4
-	  stw       r28, 0xA8(r1)
-	  mr        r28, r3
-	  li        r3, 0
-	  lfs       f2, 0xC(r4)
-	  lfs       f1, 0x10(r4)
-	  fmuls     f2, f2, f2
-	  lfs       f3, 0x14(r4)
-	  fmuls     f1, f1, f1
-	  lfs       f0, -0x7510(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0xC4
-	  fsqrte    f1, f4
-	  lfd       f3, -0x74E8(r2)
-	  lfd       f2, -0x74E0(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x38(r1)
-	  lfs       f4, 0x38(r1)
+	int stepMultiplier = 1;
+	int iterationCount = 0;
 
-	.loc_0xC4:
-	  fmuls     f2, f28, f4
-	  lfs       f1, -0x750C(r2)
-	  b         .loc_0xDC
+	for (f32 distanceToMove = trace.mVelocity.length() * p3; iterationCount < 100 && distanceToMove >= trace.mRadius;
+	     distanceToMove *= 0.5f) {
+		iterationCount++;
+		stepMultiplier *= 2;
+	}
 
-	.loc_0xD0:
-	  fmuls     f2, f2, f1
-	  rlwinm    r31,r31,1,0,30
-	  addi      r3, r3, 0x1
+	if (iterationCount > 50) {
+		PRINT("Too many iterations [cr %08x : rad = %f : spd = %f]!!\n", target, trace.mRadius, trace.mVelocity.length() * p3);
+	}
 
-	.loc_0xDC:
-	  cmpwi     r3, 0x64
-	  bge-      .loc_0xF4
-	  lfs       f0, 0x18(r29)
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0x1, 0x2
-	  beq+      .loc_0xD0
+	mapMgr->mCollisionCheckCount++;
 
-	.loc_0xF4:
-	  cmpwi     r3, 0x32
-	  ble-      .loc_0x180
-	  lfs       f1, 0xC(r29)
-	  lfs       f0, 0x10(r29)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x14(r29)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x7510(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x180
-	  fsqrte    f1, f4
-	  lfd       f3, -0x74E8(r2)
-	  lfd       f2, -0x74E0(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x34(r1)
-	  lfs       f4, 0x34(r1)
+	trace.mStepFraction = 1.0f / stepMultiplier;
 
-	.loc_0x180:
-	  lwz       r4, 0x2F00(r13)
-	  xoris     r0, r31, 0x8000
-	  stw       r0, 0xA4(r1)
-	  lis       r0, 0x4330
-	  lwz       r3, 0x10C(r4)
-	  stw       r0, 0xA0(r1)
-	  li        r30, 0
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x10C(r4)
-	  lfd       f0, 0xA0(r1)
-	  lfd       f1, -0x74D0(r2)
-	  lfs       f2, -0x7508(r2)
-	  fsubs     f0, f0, f1
-	  fdivs     f0, f2, f0
-	  stfs      f0, 0x1C(r29)
-	  lfs       f29, -0x7510(r2)
-	  lfs       f30, -0x74D8(r2)
-	  lfs       f31, -0x74D4(r2)
-	  b         .loc_0x550
+	for (int i = 0; i < stepMultiplier; i++) {
+		BoundBox box;
+		box.expandBound(trace.mPosition);
 
-	.loc_0x1CC:
-	  stfs      f29, 0x7C(r1)
-	  stfs      f29, 0x78(r1)
-	  stfs      f29, 0x74(r1)
-	  stfs      f29, 0x88(r1)
-	  stfs      f29, 0x84(r1)
-	  stfs      f29, 0x80(r1)
-	  lfs       f1, -0x5C88(r13)
-	  lfs       f0, -0x5C84(r13)
-	  stfs      f1, 0x74(r1)
-	  stfs      f0, 0x78(r1)
-	  lfs       f0, -0x5C80(r13)
-	  stfs      f0, 0x7C(r1)
-	  lfs       f0, -0x5C7C(r13)
-	  stfs      f0, 0x80(r1)
-	  lfs       f0, -0x5C78(r13)
-	  stfs      f0, 0x84(r1)
-	  lfs       f0, -0x5C74(r13)
-	  stfs      f0, 0x88(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x74(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x228
-	  stfs      f1, 0x74(r1)
+		box.mMin.sub(Vector3f(2.0f * trace.mRadius, 4.0f * trace.mRadius, 2.0f * trace.mRadius));
+		box.mMax.add(Vector3f(2.0f * trace.mRadius, 4.0f * trace.mRadius, 2.0f * trace.mRadius));
+		trace.mObject = target;
 
-	.loc_0x228:
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x78(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x23C
-	  stfs      f1, 0x78(r1)
+		CollGroup* prevColl = nullptr;
+		FOREACH_NODE(DynCollShape, mapMgr->mCollShape->mChild, collShape)
+		{
+			if ((!collShape->mCreature || collShape->mCreature != target) && box.intersects(collShape->mBoundingBox)) {
+				for (int i = 0; i < collShape->mColliderCount; i++) {
+					if (collShape->mProgressStateList[collShape->mColliderList[i]->mStateIndex]) {
+						collShape->mColliderList[i]->mShape          = collShape->mShape;
+						collShape->mColliderList[i]->mVertexList     = collShape->mVertexList;
+						collShape->mColliderList[i]->mSourceCollider = collShape;
+						collShape->mColliderList[i]->mNextCollider   = prevColl;
+						prevColl                                     = collShape->mColliderList[i];
+					}
+				}
+			}
+		}
 
-	.loc_0x23C:
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x7C(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x250
-	  stfs      f1, 0x7C(r1)
+		CollGroup* coll = mapMgr->mMapShape->getCollTris(trace.mPosition);
+		if (coll && coll->mTriCount) {
+			coll->mShape          = mapMgr->mMapShape;
+			coll->mVertexList     = mapMgr->mMapShape->mVertexList;
+			coll->mSourceCollider = nullptr;
+			coll->mNextCollider   = prevColl;
+			prevColl              = coll;
+		}
 
-	.loc_0x250:
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x80(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x264
-	  stfs      f1, 0x80(r1)
-
-	.loc_0x264:
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x84(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x278
-	  stfs      f1, 0x84(r1)
-
-	.loc_0x278:
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x88(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x28C
-	  stfs      f1, 0x88(r1)
-
-	.loc_0x28C:
-	  lfs       f0, 0x18(r29)
-	  li        r4, 0
-	  lfs       f1, 0x74(r1)
-	  fmuls     f2, f30, f0
-	  fmuls     f0, f31, f0
-	  fsubs     f1, f1, f2
-	  stfs      f1, 0x74(r1)
-	  lfs       f1, 0x78(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x78(r1)
-	  lfs       f0, 0x7C(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f0, 0x7C(r1)
-	  lfs       f0, 0x18(r29)
-	  lfs       f1, 0x80(r1)
-	  fmuls     f2, f30, f0
-	  fmuls     f0, f31, f0
-	  fadds     f1, f1, f2
-	  stfs      f1, 0x80(r1)
-	  lfs       f1, 0x84(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x84(r1)
-	  lfs       f0, 0x88(r1)
-	  fadds     f0, f0, f2
-	  stfs      f0, 0x88(r1)
-	  stw       r28, 0x24(r29)
-	  lwz       r3, 0x2F00(r13)
-	  lwz       r3, 0x88(r3)
-	  lwz       r7, 0x10(r3)
-	  b         .loc_0x41C
-
-	.loc_0x304:
-	  lwz       r0, 0x28(r7)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x318
-	  cmplw     r0, r28
-	  beq-      .loc_0x418
-
-	.loc_0x318:
-	  lfs       f1, 0x44(r7)
-	  lfs       f0, 0x80(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x398
-	  lfs       f1, 0x50(r7)
-	  lfs       f0, 0x74(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x398
-	  lfs       f1, 0x48(r7)
-	  lfs       f0, 0x84(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x398
-	  lfs       f1, 0x54(r7)
-	  lfs       f0, 0x78(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x398
-	  lfs       f1, 0x4C(r7)
-	  lfs       f0, 0x88(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x398
-	  lfs       f1, 0x58(r7)
-	  lfs       f0, 0x7C(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x398
-	  li        r0, 0x1
-	  b         .loc_0x39C
-
-	.loc_0x398:
-	  li        r0, 0
-
-	.loc_0x39C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x418
-	  li        r8, 0
-	  li        r6, 0
-	  b         .loc_0x40C
-
-	.loc_0x3B0:
-	  lwz       r3, 0x40(r7)
-	  lwz       r5, 0x38(r7)
-	  lwzx      r3, r3, r6
-	  lwz       r0, 0x18(r3)
-	  lbzx      r0, r5, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x404
-	  lwz       r0, 0x2C(r7)
-	  stw       r0, 0x10(r3)
-	  lwz       r3, 0x40(r7)
-	  lwz       r0, 0x30(r7)
-	  lwzx      r3, r3, r6
-	  stw       r0, 0x14(r3)
-	  lwz       r3, 0x40(r7)
-	  lwzx      r3, r3, r6
-	  stw       r7, 0x1C(r3)
-	  lwz       r3, 0x40(r7)
-	  lwzx      r3, r3, r6
-	  stw       r4, 0x20(r3)
-	  lwz       r3, 0x40(r7)
-	  lwzx      r4, r3, r6
-
-	.loc_0x404:
-	  addi      r6, r6, 0x4
-	  addi      r8, r8, 0x1
-
-	.loc_0x40C:
-	  lwz       r0, 0x3C(r7)
-	  cmpw      r8, r0
-	  blt+      .loc_0x3B0
-
-	.loc_0x418:
-	  lwz       r7, 0xC(r7)
-
-	.loc_0x41C:
-	  cmplwi    r7, 0
-	  bne+      .loc_0x304
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f3, 0x0(r29)
-	  lwz       r7, 0x60(r3)
-	  lfs       f1, 0x8(r29)
-	  lfs       f2, 0x140(r7)
-	  lfs       f0, 0x148(r7)
-	  fsubs     f2, f3, f2
-	  lfs       f3, 0x158(r7)
-	  fsubs     f0, f1, f0
-	  fdivs     f1, f2, f3
-	  fctiwz    f1, f1
-	  fdivs     f0, f0, f3
-	  stfd      f1, 0x90(r1)
-	  lwz       r0, 0x94(r1)
-	  stfd      f1, 0xA0(r1)
-	  cmpwi     r0, 0
-	  fctiwz    f0, f0
-	  lwz       r5, 0xA4(r1)
-	  stfd      f0, 0x98(r1)
-	  lwz       r3, 0x9C(r1)
-	  blt-      .loc_0x498
-	  cmpwi     r3, 0
-	  blt-      .loc_0x498
-	  lwz       r6, 0x15C(r7)
-	  cmpw      r5, r6
-	  bge-      .loc_0x498
-	  lwz       r0, 0x160(r7)
-	  cmpw      r3, r0
-	  blt-      .loc_0x4A0
-
-	.loc_0x498:
-	  li        r5, 0
-	  b         .loc_0x4B4
-
-	.loc_0x4A0:
-	  mullw     r0, r3, r6
-	  lwz       r3, 0x164(r7)
-	  add       r0, r5, r0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r5, r3, r0
-
-	.loc_0x4B4:
-	  cmplwi    r5, 0
-	  beq-      .loc_0x4EC
-	  lha       r0, 0x4(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x4EC
-	  stw       r7, 0x10(r5)
-	  li        r0, 0
-	  lwz       r3, 0x2F00(r13)
-	  lwz       r3, 0x60(r3)
-	  lwz       r3, 0x23C(r3)
-	  stw       r3, 0x14(r5)
-	  stw       r0, 0x1C(r5)
-	  stw       r4, 0x20(r5)
-	  mr        r4, r5
-
-	.loc_0x4EC:
-	  cmplwi    r4, 0
-	  beq-      .loc_0x508
-	  fmr       f1, f28
-	  lwz       r3, 0x2F00(r13)
-	  mr        r5, r29
-	  bl        -0x2731C
-	  b         .loc_0x54C
-
-	.loc_0x508:
-	  lfs       f0, 0x1C(r29)
-	  lfs       f2, 0xC(r29)
-	  fmuls     f1, f28, f0
-	  lfs       f3, 0x10(r29)
-	  lfs       f4, 0x14(r29)
-	  lfs       f0, 0x0(r29)
-	  fmuls     f2, f2, f1
-	  fmuls     f3, f3, f1
-	  fmuls     f4, f4, f1
-	  fadds     f0, f0, f2
-	  stfs      f0, 0x0(r29)
-	  lfs       f0, 0x4(r29)
-	  fadds     f0, f0, f3
-	  stfs      f0, 0x4(r29)
-	  lfs       f0, 0x8(r29)
-	  fadds     f0, f0, f4
-	  stfs      f0, 0x8(r29)
-
-	.loc_0x54C:
-	  addi      r30, r30, 0x1
-
-	.loc_0x550:
-	  cmpw      r30, r31
-	  blt+      .loc_0x1CC
-	  lwz       r0, 0xDC(r1)
-	  lfd       f31, 0xD0(r1)
-	  lfd       f30, 0xC8(r1)
-	  lfd       f29, 0xC0(r1)
-	  lfd       f28, 0xB8(r1)
-	  lwz       r31, 0xB4(r1)
-	  lwz       r30, 0xB0(r1)
-	  lwz       r29, 0xAC(r1)
-	  lwz       r28, 0xA8(r1)
-	  addi      r1, r1, 0xD8
-	  mtlr      r0
-	  blr
-	*/
+		if (prevColl) {
+			mapMgr->recTraceMove(prevColl, trace, p3);
+		} else {
+			Vector3f vel(trace.mVelocity);
+			vel.multiply(p3 * trace.mStepFraction);
+			trace.mPosition.add(vel);
+		}
+	}
 }

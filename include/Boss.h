@@ -164,7 +164,7 @@ struct Boss : public Creature {
 	virtual void doKill() { }                             // _10C
 	virtual void exitCourse() { }                         // _110
 	virtual void collisionCallback(CollEvent&) { }        // _A8
-	virtual bool isBossBgm();                             // _114
+	virtual bool isBossBgm() { return false; }            // _114
 	virtual bool attackDefaultPortion() { return false; } // _118
 	virtual void bombDamageCounter(CollPart*) { }         // _11C
 	virtual void drawShape(Graphics&);                    // _120

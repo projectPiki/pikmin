@@ -48,10 +48,10 @@ struct ParaParameters {
 
 	void set(int idx, T val) { mParameters[idx] = val; }
 
-	inline void input(ParaParameters* other)
+	inline void input(ParaParameters& other)
 	{
 		for (int i = 0; i < mParaCount; i++) {
-			mParameters[i] = other->mParameters[i];
+			mParameters[i] = other.mParameters[i];
 		}
 	}
 

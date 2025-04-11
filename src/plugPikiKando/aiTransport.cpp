@@ -249,7 +249,7 @@ Pellet* ActTransport::findPellet()
  */
 void ActTransport::init(Creature* target)
 {
-	mPiki->_408 = 1;
+	mPiki->mActionState = 1;
 	if (!target) {
 		target = findPellet();
 	}
@@ -257,7 +257,7 @@ void ActTransport::init(Creature* target)
 	if (target && target->mObjType == OBJTYPE_Pellet && target->isAlive()) {
 		mPellet.set(static_cast<Pellet*>(target));
 		if (mPellet.getPtr()->isUfoParts()) {
-			mPiki->_408 = 2;
+			mPiki->mActionState = 2;
 		}
 	} else {
 		mPellet.reset();
@@ -320,7 +320,7 @@ void ActTransport::animationKeyUpdated(PaniAnimKeyEvent& event)
 		if (mState == STATE_Lift) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
 			mIsLiftActionDone = 0;
-			mLiftRetryCount   = int(randFloat(3.0f)) + 5;
+			mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		}
 		break;
 	}
@@ -370,16 +370,16 @@ int ActTransport::execJump()
 		return ACTOUT_Continue;
 	}
 
-	if (zen::Abs(slotHeight) <= 8.8f) {
+	if (absF(slotHeight) <= 8.8f) {
 		if (!pel->isSlotFree(mSlotIndex)) {
 			int oldSlot = mSlotIndex;
 			mSlotIndex  = pel->getNearestFreeSlotIndex(mPiki->mPosition);
 			if (oldSlot == mSlotIndex) {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 				return ACTOUT_Fail;
 			}
 			if (mSlotIndex == -1) {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 				return ACTOUT_Fail;
 			}
 
@@ -400,7 +400,7 @@ int ActTransport::execJump()
 
 		Vector3f pelNorm(0.0f, pel->getCylinderHeight(), 0.0f);
 		mIsLiftActionDone = 0;
-		mLiftRetryCount   = int(randFloat(3.0f)) + 5;
+		mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		mPiki->startStickObject(pel, nullptr, mSlotIndex, 0.0f);
 
 		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mPosition);
@@ -416,7 +416,7 @@ int ActTransport::execJump()
 		return ACTOUT_Continue;
 	}
 
-	if (mPiki->mFloorTri) {
+	if (mPiki->mGroundTriangle) {
 		mJumpRetryTimer++;
 		if (mJumpRetryTimer > 6) {
 			mPiki->mVelocity.y = 0.5f * AIConstant::_instance->mConstants.mGravity();
@@ -456,12 +456,12 @@ bool ActTransport::gotoLiftPos()
 		int previousSlot = mSlotIndex;
 		mSlotIndex       = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
 		if (previousSlot == mSlotIndex) {
-			mPiki->mEmotion = 1;
+			mPiki->mEmotion = PikiEmotion::Unk1;
 			return false;
 		}
 
 		if (mSlotIndex == -1) {
-			mPiki->mEmotion = 1;
+			mPiki->mEmotion = PikiEmotion::Unk1;
 			return false;
 		}
 
@@ -485,7 +485,7 @@ bool ActTransport::gotoLiftPos()
 		if (!pellet->isSlotFree(mSlotIndex)) {
 			mSlotIndex = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
 			if (mSlotIndex == -1) {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 				return false;
 			}
 
@@ -509,7 +509,7 @@ bool ActTransport::gotoLiftPos()
 
 		Vector3f pelNorm(0.0f, pellet->getCylinderHeight(), 0.0f);
 		mIsLiftActionDone = 0;
-		mLiftRetryCount   = int(randFloat(3.0f)) + 5;
+		mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		mPiki->startStickObject(pellet, nullptr, mSlotIndex, 0.0f);
 		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mPosition);
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -540,7 +540,7 @@ bool ActTransport::gotoLiftPos()
 		if (mWaitTimer < 0.0f) {
 			mSlotIndex = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
 			if (mSlotIndex == -1) {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 				return false;
 			}
 
@@ -693,7 +693,7 @@ void ActTransport::doLift()
 bool ActTransport::useWaterRoute()
 {
 	Pellet* pel      = mPellet.getPtr();
-	CollTriInfo* tri = pel->mFloorTri;
+	CollTriInfo* tri = pel->mGroundTriangle;
 	if (tri && MapCode::getAttribute(tri) == ATTR_Water) {
 		return true;
 	}
@@ -728,22 +728,22 @@ int ActTransport::exec()
 		if (!pel->isVisible()) {
 			if (pel->isUfoParts()) {
 				if (pel->getState() == PELSTATE_Goal) {
-					mPiki->mEmotion          = 9;
+					mPiki->mEmotion          = PikiEmotion::Unk9;
 					mPiki->mCarryingShipPart = pel;
 				} else {
-					mPiki->mEmotion = 1;
+					mPiki->mEmotion = PikiEmotion::Unk1;
 				}
 			} else if (pel->getState() == PELSTATE_Goal) {
-				mPiki->mEmotion          = 4;
+				mPiki->mEmotion          = PikiEmotion::Unk4;
 				mPiki->mCarryingShipPart = pel;
 			} else {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 			}
 			return ACTOUT_Fail;
 		}
 	} else {
 		PRINT("target is NULL!\n");
-		mPiki->mEmotion = 7;
+		mPiki->mEmotion = PikiEmotion::Unk7;
 		return ACTOUT_Fail;
 	}
 
@@ -878,17 +878,17 @@ int ActTransport::exec()
 		Pellet* pel = mPellet.getPtr();
 		if (pel->isUfoParts()) {
 			if (pel->getState() == PELSTATE_Goal) {
-				mPiki->mEmotion          = 9;
+				mPiki->mEmotion          = PikiEmotion::Unk9;
 				mPiki->mCarryingShipPart = mPellet.getPtr();
 			} else {
-				mPiki->mEmotion = 1;
+				mPiki->mEmotion = PikiEmotion::Unk1;
 			}
 		} else if (pel->getState() == PELSTATE_Goal) {
-			mPiki->mEmotion          = 4;
-			mPiki->mEmotion          = 4;
+			mPiki->mEmotion          = PikiEmotion::Unk4;
+			mPiki->mEmotion          = PikiEmotion::Unk4;
 			mPiki->mCarryingShipPart = mPellet.getPtr();
 		} else {
-			mPiki->mEmotion = 1;
+			mPiki->mEmotion = PikiEmotion::Unk1;
 		}
 		return ACTOUT_Success;
 	}
@@ -1625,8 +1625,8 @@ int ActTransport::moveGuruGuru()
 
 		if (mWaitTimer > TAU) {
 			mWaitTimer -= TAU;
-			if (!gameflow.mMoviePlayer->mIsActive && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk28)) {
-				playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk28);
+			if (!gameflow.mMoviePlayer->mIsActive && !playerState->mDemoFlags.isFlag(DEMOFLAG_CarryPathBlocked)) {
+				playerState->mDemoFlags.setFlagOnly(DEMOFLAG_CarryPathBlocked);
 				if (pel->aiCullable()) {
 					gameflow.mGameInterface->message(0, 23);
 				} else {
@@ -1694,7 +1694,7 @@ void ActTransport::decideGoal(Creature* cargo)
 	int optionColors[PikiColorCount];
 	int numOptions = 0;
 	int onyonColor = Blue;
-	bool isVsMode  = flowCont._230 == 1;
+	bool isVsMode  = flowCont.mNaviOnMap == 1;
 
 	PRINT("###### decide goal\n");
 	int i;
@@ -1734,7 +1734,7 @@ void ActTransport::decideGoal(Creature* cargo)
 		}
 	}
 
-	int randColor = randFloat(f32(numOptions));
+	int randColor = (f32(numOptions) * gsys->getRand(1.0f));
 	if (randColor >= numOptions) {
 		PRINT("random select color=%d : maxcols=%d\n", randColor, numOptions);
 		randColor = Blue;
@@ -1749,6 +1749,7 @@ void ActTransport::decideGoal(Creature* cargo)
 		PRINT("SORRY *** goal(color%d) is required !!\n", onyonColor);
 		ERROR("zannnen\n"); // 'too bad'
 	}
+	u32 badCompiler;
 }
 
 /*
@@ -2635,13 +2636,13 @@ bool ActTransport::crMove()
 	f32 val1         = vec.normalise();
 	f32 weightedProj = crGetRadius(mNextPathIndex) * (1.0f - factor) + crGetRadius(mNextPathIndex + 1) * factor;
 
-	f32 blend = zen::Abs(val1) / weightedProj;
+	f32 blend = absF(val1) / weightedProj;
 
 	if (blend < 0.3f) {
 		blend = 0.0f;
 	}
 
-	if (blend > 2.0f && zen::Abs(val1) > 130.0f) {
+	if (blend > 2.0f && absF(val1) > 130.0f) {
 		PRINT("danger root strayed:blend %.2f\n", blend);
 		doLift();
 		return true;

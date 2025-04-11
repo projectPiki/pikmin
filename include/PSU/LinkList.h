@@ -14,8 +14,7 @@ struct PSUPtrLink {
 
 	~PSUPtrLink();
 
-	void* getObjectPtr() const { return mObject; }
-	PSUPtrLink* getNext() const { return mNext; }
+	// no DLL inlines.
 
 	void* mObject;     // _00
 	PSUPtrList* mList; // _04
@@ -44,6 +43,8 @@ struct PSUPtrList {
 	bool insert(PSUPtrLink*, PSUPtrLink*);
 	void getNthLink(u32) const;
 
+	// no more DLL inlines.
+
 	PSUPtrLink* mHead; // _00
 	PSUPtrLink* mTail; // _04
 	u32 mLinkCount;    // _08
@@ -59,27 +60,27 @@ struct PSULink : public PSUPtrLink {
 	{
 	}
 
-	~PSULink(); // unused/inlined
+	~PSULink() { } // unused/inlined
 
-	inline T* getObject() const { return (T*)getObjectPtr(); }
+	// no DLL inlines.
 
-	// TODO: members
+	// _00-_10 = PSUPtrLink
 };
 
 /**
  * @brief TODO
- *
- * @note Does this inherit from PSUPtrList? Check later.
  */
 template <typename T>
 struct PSUList : public PSUPtrList {
-	~PSUList(); // unused/inlined
+	PSUList() { } // DLL, to do/check
 
-	inline PSULink<T>* getFirst() const { return (PSULink<T>*)getFirstLink(); }
+	~PSUList() { } // unused/inlined
 
+	// only DLL inlines:
 	bool append(PSULink<T>* link) { return PSUPtrList::append((PSUPtrLink*)link); }
+	bool remove(PSULink<T>* link); // DLL, to do
 
-	// TODO: members
+	// _00-_0C = PSUPtrList
 };
 
 #endif

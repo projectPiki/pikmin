@@ -28,7 +28,7 @@ ActKinoko::ActKinoko(Piki* piki)
     : Action(piki, true)
 {
 	mName = "kinoko";
-	_18.clear();
+	mTarget.clear();
 }
 
 /*
@@ -38,9 +38,9 @@ ActKinoko::ActKinoko(Piki* piki)
  */
 void ActKinoko::init(Creature* creature)
 {
-	mPiki->_408 = 0;
+	mPiki->mActionState = 0;
 	if (creature) {
-		_18.set(creature);
+		mTarget.set(creature);
 	}
 
 	mState = STATE_Boid;
@@ -121,7 +121,7 @@ void ActKinoko::initJump()
  */
 int ActKinoko::exeJump()
 {
-	if (mPiki->mFloorTri) {
+	if (mPiki->mGroundTriangle) {
 		initAttack();
 		return ACTOUT_Continue;
 	}
@@ -153,7 +153,7 @@ void ActKinoko::initAttack()
  */
 int ActKinoko::exeAttack()
 {
-	Creature* target = _18.getPtr();
+	Creature* target = mTarget.getPtr();
 	if (!target || !target->isAlive()) {
 		return ACTOUT_Fail;
 	}
@@ -188,22 +188,22 @@ void ActKinoko::initBoid()
 	// also, DLL doesn't have any more inlines than this so idek.
 
 	mState           = STATE_Boid;
-	Creature* target = _18.getPtr();
+	Creature* target = mTarget.getPtr();
 	if (!target) {
 		return;
 	}
 
-	_20          = 2.0f * System::getRand(1.0f) + 1.5f;
+	mStateTimer  = 2.0f * gsys->getRand(1.0f) + 1.5f;
 	Vector3f sep = target->mPosition - mPiki->mPosition;
 	f32 dist     = sep.normalise();
 	Vector3f orthoDir(sep.z, 0.0f, -sep.x);
-	if (System::getRand(1.0f) > 0.5f) {
+	if (gsys->getRand(1.0f) > 0.5f) {
 		orthoDir.multiply(-1.0f);
 	}
 
-	orthoDir = orthoDir + (0.2f * (System::getRand(1.0f) - 0.5f)) * sep;
+	orthoDir = orthoDir + (0.2f * (gsys->getRand(1.0f) - 0.5f)) * sep;
 	orthoDir.normalise();
-	_24 = orthoDir;
+	mTargetDirection = orthoDir;
 
 	mPiki->playEventSound(target, SE_KINOKOPIKI_DANCE);
 	u32 badCompiler[3];
@@ -389,7 +389,7 @@ void ActKinoko::initBoid()
  */
 int ActKinoko::exeBoid()
 {
-	Creature* target = _18.getPtr();
+	Creature* target = mTarget.getPtr();
 	if (!target || !target->isAlive()) {
 		return ACTOUT_Fail;
 	}
@@ -399,8 +399,8 @@ int ActKinoko::exeBoid()
 		return ACTOUT_Continue;
 	}
 
-	_20 -= gsys->getFrameTime();
-	if (_20 < 0.0f) {
+	mStateTimer -= gsys->getFrameTime();
+	if (mStateTimer < 0.0f) {
 		initBoid();
 	}
 
@@ -444,14 +444,14 @@ int ActKinoko::exeBoid()
 		if (isClosePartner) {
 			moveDir = offset * 0.01f + closestPartnerDir * 0.99f;
 		} else {
-			moveDir = offset * 0.4f + boidDir * 0.5f + _24 * 0.1f;
+			moveDir = offset * 0.4f + boidDir * 0.5f + mTargetDirection * 0.1f;
 		}
 
 		moveDir.normalise();
 		mPiki->setSpeed(0.3f, moveDir);
 
 	} else {
-		mPiki->setSpeed(0.3f, _24);
+		mPiki->setSpeed(0.3f, mTargetDirection);
 	}
 
 	Vector3f newMoveDir = target->mPosition - mPiki->mPosition;

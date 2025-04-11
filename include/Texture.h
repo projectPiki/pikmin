@@ -41,7 +41,16 @@ struct TexAttr : public CoreNode {
 		FLAG_XLU = 4,
 	};
 
-	TexAttr();
+	TexAttr()
+	    : CoreNode("texattr")
+	{
+		mTextureName = nullptr;
+		mTexture     = nullptr;
+		mImage       = nullptr;
+		mTilingType  = TILING_REPEAT;
+		_20          = 0;
+		_24          = 0.0f;
+	}
 
 	virtual void read(RandomAccessStream&); // _0C
 
@@ -49,16 +58,16 @@ struct TexAttr : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mIndex;        // _14
-	int mTextureIndex; // _18
-	s16 mTilingType;   // _1C
-	s16 mFlags;        // _1E
-	u16 _20;           // _20
-	s16 _22;           // _22
-	f32 _24;           // _24
-	char* mName;       // _28
-	Texture* mTexture; // _2C
-	TexImg* mImage;    // _30
+	int mIndex;         // _14
+	int mTextureIndex;  // _18
+	s16 mTilingType;    // _1C
+	s16 mFlags;         // _1E
+	u16 _20;            // _20
+	s16 _22;            // _22
+	f32 _24;            // _24
+	char* mTextureName; // _28
+	Texture* mTexture;  // _2C
+	TexImg* mImage;     // _30
 };
 
 /**
@@ -169,8 +178,8 @@ struct TexobjInfo : public GfxobjInfo {
 	virtual void attach() { mTexture->attach(); } // _08
 	virtual void detach() { mTexture->detach(); } // _0C
 
-	// _20     = VTBL
-	// _00-_20 = GfxobjInfo
+	// _1C     = VTBL
+	// _00-_1C = GfxobjInfo
 	GfxObject* mTexture; // _20,  yes this is a GfxObject*, not a Texture*
 };
 

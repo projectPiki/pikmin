@@ -22,6 +22,15 @@ struct Shape;
 /**
  * @brief TODO
  */
+enum AnimInfoFlags {
+	ANIMFLAG_Unk1 = 1 << 0, // 0x1
+	ANIMFLAG_Unk2 = 1 << 1, // 0x2
+	ANIMFLAG_Unk3 = 1 << 2, // 0x4
+};
+
+/**
+ * @brief TODO
+ */
 struct DataChunk {
 	DataChunk()
 	{
@@ -30,7 +39,22 @@ struct DataChunk {
 		mData      = nullptr;
 	}
 
-	void addData(f32);
+	void addData(f32 data)
+	{
+		if (mDataIndex >= mDataSize) {
+			mDataSize    = mDataIndex + 0x800;
+			f32* newData = new f32[mDataSize];
+
+			if (mDataIndex) {
+				memcpy(newData, mData, mDataIndex * sizeof(f32));
+			}
+
+			delete mData;
+			mData = newData;
+		}
+
+		mData[mDataIndex++] = data;
+	}
 	void setDataSize(int size)
 	{
 		mData     = new f32[size];
@@ -49,7 +73,7 @@ struct DataChunk {
 	void getData(CmdStream* stream)
 	{
 		stream->getToken(true);
-		int dataSize   = 0;
+		int dataSize;
 		int tokenCount = 0;
 
 		while (!stream->endOfCmds() && !stream->endOfSection()) {
@@ -84,19 +108,19 @@ struct DataChunk {
  * @brief TODO
  */
 struct AnimCacheInfo : public CacheInfo {
-	AnimCacheInfo();
+	AnimCacheInfo() { initData(); }
 
 	void initData()
 	{
-		_14 = 0;
-		_10 = 0;
+		mBoneMatrices   = 0;
+		mCachedMtxBlock = 0;
 	}
 
 	// _00 - _0C = CacheInfo
-	u32 _0C;        // _0C
-	CacheInfo* _10; // _10
-	u32 _14;        // _14
-	u32 _18;        // _18
+	u32 _0C;                    // _0C
+	CacheInfo* mCachedMtxBlock; // _10
+	Matrix4f* mBoneMatrices;    // _14
+	Matrix4f** mBoneMtxList;    // _18
 };
 
 /**
@@ -112,7 +136,7 @@ struct AnimParam {
  * @brief Information about animation data, read in from a file.
  */
 struct AnimDataInfo {
-	AnimDataInfo();
+	AnimDataInfo() { mFlags = 0; }
 
 	AnimParam mScale[3];       // _00, x y and z
 	AnimParam mRotation[3];    // _24, x y and z
@@ -146,7 +170,7 @@ struct AnimData : public CoreNode {
 	virtual void extractSRT(struct SRT&, int, AnimDataInfo*, f32);                  // _10
 	virtual void makeAnimSRT(int, struct Matrix4f*, Matrix4f*, AnimDataInfo*, f32); // _14
 	virtual void detach();                                                          // _18
-	virtual void writeType(RandomAccessStream&);                                    // _1C
+	virtual void writeType(RandomAccessStream&) { }                                 // _1C
 
 	void checkMask();
 	void initData();
@@ -156,11 +180,11 @@ struct AnimData : public CoreNode {
 	DataChunk* mScaleDataBlock;       // _14
 	DataChunk* mRotateDataBlock;      // _18
 	DataChunk* mTranslationDataBlock; // _1C
-	int _20;                          // _20
+	u16* mAnimJointIndices;           // _20
 	int mAnimFlags;                   // _24
-	int mNumJoints;                   // _28
-	int _2C;                          // _2C
-	int mNumFrames;                   // _30
+	int mJointCount;                  // _28
+	int mActiveJointCount;            // _2C
+	int mTotalFrameCount;             // _30
 	BaseShape* mModel;                // _34
 	int _38;                          // _38
 	AnimDataInfo* mAnimInfo;          // _3C
@@ -171,6 +195,11 @@ struct AnimData : public CoreNode {
  * @brief TODO
  */
 struct AnimDca : public AnimData {
+	AnimDca(BaseShape*, int)
+	    : AnimData()
+	{
+	}
+
 	AnimDca(char* name)
 	    : AnimData(StdSystem::stringDup(name))
 	{
@@ -231,11 +260,19 @@ struct AnimKey {
 		mKeyframeIndex = 0;
 		mEventKeyType  = 0;
 		mValue         = 0;
-		_07            = 0;
+		mEventId       = 0;
 		mPrev = mNext = nullptr;
 	}
 
-	inline void insertAfter(AnimKey* key)
+	AnimKey(int index, int value)
+	{
+		mKeyframeIndex = index;
+		mValue         = value;
+		mPrev          = nullptr;
+		mNext          = nullptr;
+	}
+
+	void insertAfter(AnimKey* key)
 	{
 		key->mNext   = mNext;
 		key->mPrev   = this;
@@ -243,14 +280,17 @@ struct AnimKey {
 		mNext        = key;
 	}
 
+	// these are both fake according to the DLL - may be inlines for AnimInfo?
 	inline void add(AnimKey* key) { mPrev->insertAfter(key); }
-
 	inline f32 getKeyValue() { return mKeyframeIndex; }
+
+	// DLL inlines to do:
+	void remove();
 
 	int mKeyframeIndex; // _00, unknown
 	s16 mEventKeyType;  // _04
 	u8 mValue;          // _06
-	u8 _07;             // _07
+	u8 mEventId;        // _07
 	AnimKey* mPrev;     // _08
 	AnimKey* mNext;     // _0C
 };
@@ -260,16 +300,11 @@ struct AnimKey {
  */
 struct AnimInfo : public CoreNode {
 
-	enum AnimInfoFlags {
-		FLAG_Unk1 = 0x1,
-		FLAG_Unk2 = 0x2,
-	};
-
 	/**
 	 * @brief Fabricated. Offsets relative to AnimInfo for convenience.
 	 */
-	struct AnimInfoParams : public Parameters {
-		inline AnimInfoParams()
+	struct Parms : public Parameters {
+		Parms()
 		    : mFlags(this, 2, 0, 0, "p00", nullptr)
 		    , mSpeed(this, 30.0f, 0.0f, 0.0f, "spd", nullptr)
 		{
@@ -305,17 +340,21 @@ struct AnimInfo : public CoreNode {
 	// unused/inlined:
 	void initAnimData(AnimData*);
 
+	// fake inline apparently
 	inline f32 getAnimSpeed() { return mParams.mSpeed(); }
+
+	// only DLL inline:
+	void addInfoKey(AnimKey* key) { mInfoKeys.mPrev->insertAfter(key); }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	AnimInfoParams mParams; // _14
-	AnimKey mAnimKeys;      // _38
-	AnimKey mEventKeys;     // _48
-	AnimKey mInfoKeys;      // _58
-	AnimData* mData;        // _68
-	int mIndex;             // _6C
-	AnimMgr* mMgr;          // _70
+	Parms mParams;      // _14
+	AnimKey mAnimKeys;  // _38
+	AnimKey mEventKeys; // _48
+	AnimKey mInfoKeys;  // _58
+	AnimData* mData;    // _68
+	int mIndex;         // _6C
+	AnimMgr* mMgr;      // _70
 };
 
 /**
@@ -410,6 +449,18 @@ struct AnimMgr : public CoreNode {
 };
 
 /**
+ * @brief Fabricated
+ */
+struct FrameCacher : public CacheInfo {
+	// _00-_0C = CacheInfo
+	CacheInfo** _0C; // _0C
+	u8 _10[4];       // _10, unknown
+	u32* _14;        // _14
+	u32* _18;        // _18
+	u32 _1C[1];      // _1C
+};
+
+/**
  * @brief TODO
  *
  * @note Size: 0x18.
@@ -420,7 +471,9 @@ struct AnimFrameCacher {
 	void removeOldest();
 	void cacheFrameSpace(int, AnimCacheInfo*);
 
-	u8 _00[0x18]; // _00, unknown
+	AyuCache* mCache; // _00
+	CacheInfo mInfo;  // _04
+	u8 _10[0x8];      // _10, unknown
 };
 
 #endif

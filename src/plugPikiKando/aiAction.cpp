@@ -57,8 +57,8 @@ void Action::procMsg(Msg* msg)
 void Action::Child::initialise(Creature* creature)
 {
 	if (mAction) {
-		mAction->mPiki->mEmotion = 10;
-		mAction->mPiki->_408     = 2;
+		mAction->mPiki->mEmotion     = PikiEmotion::Unk10;
+		mAction->mPiki->mActionState = 2;
 	}
 
 	if (mAction) {
@@ -332,7 +332,7 @@ int TopAction::exec()
 
 	if (mCurrActionIdx == PikiAction::Formation && !mPiki->isFruit()) {
 		ActFormation* form = static_cast<ActFormation*>(getCurrAction());
-		if (form->_18) {
+		if (form->mInFormation) {
 			Iterator iter(itemMgr);
 			CI_LOOP(iter)
 			{
@@ -361,7 +361,7 @@ int TopAction::exec()
 		_2C            = 1.0f;
 		if (mPiki->mMode != PikiMode::FreeMode) {
 			bool doJoinParty = false;
-			switch (mPiki->_408) {
+			switch (mPiki->mActionState) {
 			case 2:
 				break;
 			case 1:
@@ -385,7 +385,7 @@ int TopAction::exec()
 					PRINT("キノコピキ：もとにもどる！"); // 'kinokopiki: back to normal!'
 					mPiki->mFSM->transit(mPiki, PIKISTATE_KinokoChange);
 
-				} else if (emote != 10) {
+				} else if (emote != PikiEmotion::Unk10) {
 					mPiki->mEmotion = emote;
 					mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 				}
@@ -397,7 +397,7 @@ int TopAction::exec()
 				PRINT("******** BOMB * FREEEEEEEEEEEEEEEEEEE WHYYYYYYYYYYYYYION !\n");
 			}
 
-			if (mPiki->_408 == 3 && mPiki->isHolding()) {
+			if (mPiki->mActionState == 3 && mPiki->isHolding()) {
 				mPiki->changeMode(PikiMode::PutbombMode, mPiki->mNavi);
 			} else {
 				int emote      = mPiki->mEmotion;
@@ -409,7 +409,7 @@ int TopAction::exec()
 					PRINT("キノコピキ：もとにもどる！"); // 'kinokopiki: back to normal!'
 					mPiki->mFSM->transit(mPiki, PIKISTATE_KinokoChange);
 
-				} else if (emote != 10) {
+				} else if (emote != PikiEmotion::Unk10) {
 					mPiki->mEmotion = emote;
 					mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 				}
@@ -417,7 +417,7 @@ int TopAction::exec()
 		} else {
 			int emote = mPiki->mEmotion;
 			mPiki->actOnSituaton();
-			if (emote != 10) {
+			if (emote != PikiEmotion::Unk10) {
 				mPiki->mEmotion = emote;
 				mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 			}
@@ -589,7 +589,7 @@ void TopAction::ObjBore::update()
 		if (mIsMaxBored[i]) {
 			mBoredomLevels[i] -= gsys->getFrameTime() * (1.0f / 15.0f);
 			if (mBoredomLevels[i] <= 0.0f) {
-				mBoredomLevels[i] = System::getRand(1.0f) * 0.01f;
+				mBoredomLevels[i] = gsys->getRand(1.0f) * 0.01f;
 				mIsMaxBored[i]    = false;
 			}
 		}

@@ -1,5 +1,6 @@
 #include "MovSampleSection.h"
 #include "Dolphin/gx.h"
+#include "jaudio/app_inter.h"
 #include "Graphics.h"
 #include "DebugLog.h"
 

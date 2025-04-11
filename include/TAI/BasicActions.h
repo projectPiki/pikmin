@@ -8,9 +8,10 @@
  * @brief TODO
  */
 struct TaiActionStateAction : public TaiAction {
-	inline TaiActionStateAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiActionStateAction(int nextState, int actionState)
+	    : TaiAction(nextState)
 	{
+		mActionState = actionState;
 	}
 
 	virtual void start(Teki&); // _08
@@ -18,7 +19,7 @@ struct TaiActionStateAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	int mStateID; // _08
+	int mActionState; // _08
 };
 
 /**
@@ -44,9 +45,10 @@ struct TaiSetOptionAction : public TaiAction {
  * @brief TODO
  */
 struct TaiPlaySoundAction : public TaiAction {
-	inline TaiPlaySoundAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiPlaySoundAction(int soundID)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mSoundID = soundID;
 	}
 
 	virtual void start(Teki&); // _08
@@ -60,9 +62,10 @@ struct TaiPlaySoundAction : public TaiAction {
  * @brief TODO
  */
 struct TaiStopSoundAction : public TaiAction {
-	inline TaiStopSoundAction() // TODO: this is a guess
-	    : TaiAction(0)
+	TaiStopSoundAction(int soundID)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mSoundID = soundID;
 	}
 
 	virtual void start(Teki&); // _08
@@ -76,8 +79,8 @@ struct TaiStopSoundAction : public TaiAction {
  * @brief TODO
  */
 struct TaiTypeNaviWatchResultOnAction : public TaiAction {
-	inline TaiTypeNaviWatchResultOnAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTypeNaviWatchResultOnAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

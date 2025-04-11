@@ -69,48 +69,50 @@ DemoFlags::DemoFlags()
 	for (i = 0; i < mFlagDataNum; i++) {
 		mFlagDataList[i] = 0;
 	}
-	_18        = -1;
-	mWaitTimer = 0.0f;
+	mCurrentDemoIndex = DEMOFLAG_NULL;
+	mWaitTimer        = 0.0f;
 
-	registerDemoFlag(0, "赤コンテナに初めて接近", 4, 0, 0);        // "Approaching the red container for the first time"
-	registerDemoFlag(1, "黄コンテナに初めて接近", 5, 0, 0);        // "Approaching the yellow container for the first time"
-	registerDemoFlag(2, "青コンテナに初めて接近", 6, 0, 0);        // "Approaching the blue container for the first time"
-	registerDemoFlag(3, "芽ピキに初めて接近", 7, 0, 0);            // "Approaching Mepiki for the first time" (pikmin seed)
-	registerDemoFlag(4, "赤ピキ抜いた", 9, 0, 0);                  // "I pulled out the red piki"
-	registerDemoFlag(5, "黄ピキ抜いた", 10, 0, 0);                 // "I pulled out the yellow piki"
-	registerDemoFlag(6, "青ピキ抜いた", 11, 0, 0);                 // "I pulled out the blue piki"
-	registerDemoFlag(7, "ピキ抜かずタイムアウト", 8, 0, 0);        // "Timeout without piki"
-	registerDemoFlag(8, "カメラ説明", 0, 0, 0);                    // "camera description"
-	registerDemoFlag(9, "ペレット草バトルタイムアウト", 13, 0, 0); // "pellet grass battle timeout"
-	registerDemoFlag(10, "最初のペレットイン", 14, 0, 0);          // "first pellet in"
-	registerDemoFlag(11, "初めて水門を開けた", 0, 0, 0);           // "opened the floodgates for the first time"
-	registerDemoFlag(12, "初めてエンジンに接近", 16, 0, 0);        // "Approaching the engine for the first time"
-	registerDemoFlag(13, "エンジンを吸い込み", 20, 0, 0);          // "suck the engine"
-	registerDemoFlag(14, "岩を押し始めた", 15, 0, 0);              // "started pushing the rock"
-	registerDemoFlag(15, "岩を押し切った", -1, 0, 0);              // "pushed through the rock"
-	registerDemoFlag(16, "コンテナ出し入れ説明", 44, 0, 1);        // "Explanation of container loading and unloading"
-	registerDemoFlag(17, "ピキ全滅で１匹まく説明", 60, 0, 1);      // "Explanation of how to sow one piki when all of them are wiped out"
-	registerDemoFlag(18, "ボム持ち帰り", 68, 0, 0);                // "Take home the bomb"
-	registerDemoFlag(19, "First HurryUp", 12, 0, 0);
-	registerDemoFlag(20, "First Bomb Explode", 12, 0, 0);
-	registerDemoFlag(21, "Exceed 100 pikis Tutorial", 12, 0, 0);
-	registerDemoFlag(22, "Exceed 100 pikis Forest", 12, 0, 0);
-	registerDemoFlag(23, "Exceed 100 pikis Cave", 12, 0, 0);
-	registerDemoFlag(24, "Exceed 100 pikis Yakushima", 12, 0, 0);
-	registerDemoFlag(25, "Exceed 100 pikis Last", 12, 0, 0);
-	registerDemoFlag(26, "First Honey Dew", 12, 0, 0);
-	registerDemoFlag(27, "First Bomb Dead", 12, 0, 0);
-	registerDemoFlag(28, "GURU GURU", 12, 0, 0);
-	registerDemoFlag(29, "ORIMA DAMAGED", 12, 0, 0);
-	registerDemoFlag(30, "15 NUKI", 12, 0, 0);
-	registerDemoFlag(31, "FIRST NOON", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_DiscoverRedOnyon, "赤コンテナに初めて接近", 4, 0, 0); // "Approaching the red container for the first time"
+	registerDemoFlag(DEMOFLAG_DiscoverYellowOnyon, "黄コンテナに初めて接近", 5, 0,
+	                 0); // "Approaching the yellow container for the first time"
+	registerDemoFlag(DEMOFLAG_DiscoverBlueOnyon, "青コンテナに初めて接近", 6, 0, 0); // "Approaching the blue container for the first time"
+	registerDemoFlag(DEMOFLAG_ApproachSeed, "芽ピキに初めて接近", 7, 0, 0);        // "Approaching Mepiki for the first time" (pikmin seed)
+	registerDemoFlag(DEMOFLAG_PluckRedPikmin, "赤ピキ抜いた", 9, 0, 0);            // "I pulled out the red piki"
+	registerDemoFlag(DEMOFLAG_PluckYellowPikmin, "黄ピキ抜いた", 10, 0, 0);        // "I pulled out the yellow piki"
+	registerDemoFlag(DEMOFLAG_PluckBluePikmin, "青ピキ抜いた", 11, 0, 0);          // "I pulled out the blue piki"
+	registerDemoFlag(DEMOFLAG_NoPikminTimeout, "ピキ抜かずタイムアウト", 8, 0, 0); // "Timeout without piki"
+	registerDemoFlag(DEMOFLAG_CameraInfo, "カメラ説明", 0, 0, 0);                  // "camera description"
+	registerDemoFlag(DEMOFLAG_Unk9, "ペレット草バトルタイムアウト", 13, 0, 0);     // "pellet grass battle timeout"
+	registerDemoFlag(DEMOFLAG_CollectFirstPellet, "最初のペレットイン", 14, 0, 0); // "first pellet in"
+	registerDemoFlag(DEMOFLAG_FirstSluiceDown, "初めて水門を開けた", 0, 0, 0);     // "opened the floodgates for the first time"
+	registerDemoFlag(DEMOFLAG_ApproachEngine, "初めてエンジンに接近", 16, 0, 0);   // "Approaching the engine for the first time"
+	registerDemoFlag(DEMOFLAG_CollectEngine, "エンジンを吸い込み", 20, 0, 0);      // "suck the engine"
+	registerDemoFlag(DEMOFLAG_StartBoxPush, "岩を押し始めた", 15, 0, 0);           // "started pushing the rock"
+	registerDemoFlag(DEMOFLAG_FinishBoxPush, "岩を押し切った", -1, 0, 0);          // "pushed through the rock"
+	registerDemoFlag(DEMOFLAG_OnyonMenuInfo, "コンテナ出し入れ説明", 44, 0, 1);    // "Explanation of container loading and unloading"
+	registerDemoFlag(DEMOFLAG_PostExtinctionSeed, "ピキ全滅で１匹まく説明", 60, 0,
+	                 1); // "Explanation of how to sow one piki when all of them are wiped out"
+	registerDemoFlag(DEMOFLAG_GrabFirstBomb, "ボム持ち帰り", 68, 0, 0); // "Take home the bomb"
+	registerDemoFlag(DEMOFLAG_FirstHurryUp, "First HurryUp", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_FirstBombExplode, "First Bomb Explode", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_PikminLimitTutorial, "Exceed 100 pikis Tutorial", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_PikminLimitForest, "Exceed 100 pikis Forest", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_PikminLimitCave, "Exceed 100 pikis Cave", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_PikminLimitYakushima, "Exceed 100 pikis Yakushima", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_PikminLimitLast, "Exceed 100 pikis Last", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_FirstNectar, "First Honey Dew", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_FirstBombDeath, "First Bomb Dead", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_CarryPathBlocked, "GURU GURU", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_OlimarLowHealth, "ORIMA DAMAGED", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_Pluck15thPikmin, "15 NUKI", 12, 0, 0);
+	registerDemoFlag(DEMOFLAG_FirstNoon, "FIRST NOON", 12, 0, 0);
 
 	for (int i = 0; i < 30; i++) {
-		registerDemoFlag(i + 32, "UFO PARTS", 12, i, 0);
+		registerDemoFlag(i + DEMOFLAG_UfoPartDiscoveryOffset, "UFO PARTS", 12, i, 0);
 	}
 
 	// Set main engine discovery text as seen
-	setFlagOnly(36);
+	setFlagOnly(DEMOFLAG_UfoPartDiscoveryOffset + 4);
 }
 
 /*
@@ -123,9 +125,12 @@ void DemoFlags::initGame()
 	for (int i = 0; i < mFlagCount; i++) {
 		mStoredFlags[i] = 0;
 	}
-	_18        = -1;
-	mWaitTimer = 0.0f;
-	setFlagOnly(36);
+
+	mCurrentDemoIndex = DEMOFLAG_NULL;
+	mWaitTimer        = 0.0f;
+
+	// Set main engine discovery text as seen
+	setFlagOnly(DEMOFLAG_UfoPartDiscoveryOffset + 4);
 }
 
 /*
@@ -135,8 +140,8 @@ void DemoFlags::initGame()
  */
 void DemoFlags::initCourse()
 {
-	_18        = -1;
-	mWaitTimer = 0.0f;
+	mCurrentDemoIndex = DEMOFLAG_NULL;
+	mWaitTimer        = 0.0f;
 }
 
 /*
@@ -150,11 +155,11 @@ void DemoFlags::update()
 		return;
 	}
 
-	if (_18 == -1) {
+	if (mCurrentDemoIndex == DEMOFLAG_NULL) {
 		return;
 	}
 
-	if (isFlag(_18)) {
+	if (isFlag(mCurrentDemoIndex)) {
 		resetTimer();
 		PRINT("リセットシマシタ！\n"); // "Reset!"
 		return;
@@ -169,12 +174,12 @@ void DemoFlags::update()
 		return;
 	}
 
-	if (_18 == 20) {
+	if (mCurrentDemoIndex == DEMOFLAG_FirstBombExplode) {
 		gameflow.mGameInterface->message(0, 20);
 		PRINT("*** BOMB TIME OUT * OG_BOMBINFO!\n");
-		setFlagOnly(_18);
+		setFlagOnly(mCurrentDemoIndex);
 	} else {
-		setFlag(_18, mTargetCreature);
+		setFlag(mCurrentDemoIndex, mTargetCreature);
 	}
 }
 
@@ -207,19 +212,19 @@ void DemoFlags::loadCard(RandomAccessStream& data)
  * Address:	80082448
  * Size:	00007C
  */
-void DemoFlags::registerDemoFlag(int index, char* name, u16 a1, u16 a2, bool a3)
+void DemoFlags::registerDemoFlag(int index, char* name, u16 movieIndex, u16 a2, bool a3)
 {
 	if (mCurrentDataIndex != index) {
 		PRINT("<%s> curr=%d idx=%d\n", name, mCurrentDataIndex, index);
 		ERROR("登録は順序よく!\n"); // "Registration is in order"
 	}
 
-	DemoFlag* flag = new DemoFlag;
-	flag->mName    = name;
-	flag->_06      = a1;
-	flag->_08      = a2;
-	flag->mIndex   = index;
-	flag->_0A      = a3;
+	DemoFlag* flag    = new DemoFlag;
+	flag->mName       = name;
+	flag->mMovieIndex = movieIndex;
+	flag->_08         = a2;
+	flag->mIndex      = index;
+	flag->_0A         = a3;
 
 	mFlagDataList[mCurrentDataIndex] = flag;
 	mCurrentDataIndex++;
@@ -257,32 +262,34 @@ void DemoFlags::setFlag(int index, Creature* obj)
 	if (isFlag(index)) {
 		return;
 	}
+
 	PRINT("FLAG <%s> SET\n", getDemoFlag(index)->mName);
 	mStoredFlags[id] |= 1 << index - id * 8;
 	PRINT("MOVIE INDEX = %d\n", getDemoFlag(index)->mIndex);
+
 	int test = 0;
 	if (getDemoFlag(index)->_0A) {
 		test = playerState->mPartsCollectedByDay[10]; // I dont think this is right but its optimized out from GCN anyway
 	}
 
-	if (getDemoFlag(index)->_06 == 0) {
+	if (getDemoFlag(index)->mMovieIndex == 0) {
 		return;
 	}
 
 	f32 badcompiler[3];
 
 	if (index == 4) {
-		Vector3f pos = obj->mPosition;
-		f32 y        = HALF_PI;
-		Vector3f vec2(0.0f, y, 0.0f);
-		gameflow.mGameInterface->movie(getDemoFlag(index)->_06, 0, obj, obj ? &obj->mPosition : nullptr, &vec2, -1, true);
+		Vector3f objPosition = obj->mPosition;
+		f32 yRotation        = HALF_PI;
+		Vector3f rotation(0.0f, yRotation, 0.0f);
+		gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mPosition : nullptr, &rotation, -1, true);
 	} else {
 		if (obj && obj->mObjType != OBJTYPE_Goal) {
-			Vector3f pos = obj->mPosition;
-			Vector3f vec2(0.0f, getCameraSafeAngle(pos, 200.0f, 10.0f), 0.0f);
-			gameflow.mGameInterface->movie(getDemoFlag(index)->_06, 0, obj, obj ? &obj->mPosition : nullptr, &vec2, -1, true);
+			Vector3f objPosition = obj->mPosition;
+			Vector3f rotation(0.0f, getCameraSafeAngle(objPosition, 200.0f, 10.0f), 0.0f);
+			gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mPosition : nullptr, &rotation, -1, true);
 		} else {
-			gameflow.mGameInterface->movie(getDemoFlag(index)->_06, 0, obj, obj ? &obj->mPosition : nullptr,
+			gameflow.mGameInterface->movie(getDemoFlag(index)->mMovieIndex, 0, obj, obj ? &obj->mPosition : nullptr,
 			                               obj ? &obj->mRotation : nullptr, -1, true);
 		}
 	}
@@ -312,8 +319,8 @@ void DemoFlags::setFlagOnly(int index)
  */
 void DemoFlags::setTimer(f32 time, int index, Creature* target)
 {
-	mWaitTimer = time;
-	_18        = index;
+	mWaitTimer        = time;
+	mCurrentDemoIndex = index;
 	PRINT("TIMER SET (%f seconds) <%s>\n", mWaitTimer, getDemoFlag(index)->mName);
 	mTargetCreature = target;
 }
@@ -325,9 +332,9 @@ void DemoFlags::setTimer(f32 time, int index, Creature* target)
  */
 void DemoFlags::resetTimer()
 {
-	mTargetCreature = nullptr;
-	mWaitTimer      = 0.0f;
-	_18             = -1;
+	mTargetCreature   = nullptr;
+	mWaitTimer        = 0.0f;
+	mCurrentDemoIndex = DEMOFLAG_NULL;
 }
 
 /*

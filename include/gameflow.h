@@ -7,6 +7,7 @@
 #include "LoadIdler.h"
 #include "Parameters.h"
 #include "String.h"
+#include "OnePlayerSection.h"
 #include "WorldClock.h"
 #include "Ayu.h"
 
@@ -14,7 +15,7 @@ struct AnimFrameCacher;
 struct BaseApp;
 struct GameQuickInfo;
 struct GameChalQuickInfo;
-struct GameInterface;
+struct GameMovieInterface;
 struct MoviePlayer;
 struct Section;
 struct Shape;
@@ -72,7 +73,7 @@ enum LanguageFileType {
 
 struct GameChalQuickInfo {
 	int mOffset;  // _00
-	int _04;      // _04
+	int mPikis;   // _04
 	int _08;      // _08
 	int mInfo[5]; // _0C
 };
@@ -146,6 +147,14 @@ struct PlayState : public CoreNode {
 		_21              = 1;
 		_22              = 0;
 		mCourseOpenFlags = 1;
+	}
+
+	inline bool isStageOpen(int stageIdx)
+	{
+		if (stageIdx >= 0 && stageIdx <= 5) {
+			return mCourseOpenFlags & (1 << stageIdx);
+		}
+		return false;
 	}
 
 	// _00     = VTBL
@@ -236,6 +245,19 @@ struct GameRecMinDay {
 	int _04; // _04
 };
 
+struct GameQuickInfo {
+	// This struct has no ctor or any other functions
+
+	int mParts;     // _00
+	int mDay;       // _04
+	int mPikis;     // _08
+	int mDeadPikis; // _0C
+	int _10;        // _10
+	int _14;        // _14
+	int _18;        // _18
+	int _1C;
+};
+
 /**
  * @brief TODO
  */
@@ -285,6 +307,9 @@ struct GamePrefs : public CoreNode {
 		mIsChanged      = false;
 		mHiscores.Initialise();
 	}
+
+	void addBornPikis(u32 count) { mHiscores._00 += count; }
+
 	void setBgmVol(u8);
 	void setSfxVol(u8);
 	void setStereoMode(bool);
@@ -294,6 +319,29 @@ struct GamePrefs : public CoreNode {
 	void checkIsHiscore(GameChalQuickInfo&);
 	void checkIsHiscore(GameQuickInfo&);
 	void fixSoundMode();
+
+	void openStage(int stageIdx)
+	{
+		if (stageIdx >= 0 && stageIdx <= STAGE_END) {
+			_22 |= (1 << stageIdx);
+		}
+	}
+
+	bool isStageOpen(int stageIdx)
+	{
+		if (stageIdx >= 0 && stageIdx <= 5) {
+			return _22 & (1 << stageIdx);
+		}
+		return false;
+	}
+	bool isChallengeOpen() { return (mFlags & 4) != 0; }
+
+	// DLL inlines to do:
+	bool getChildMode();
+	bool getStereoMode();
+	bool getVibeMode();
+	u8 getBgmVol();
+	u8 getSfxVol();
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
@@ -388,14 +436,15 @@ struct GameFlow : public Node {
 	u32 mSaveGameCrc;                        // _1A0
 	PlayState mPlayState;                    // _1A4
 	int _1CC;                                // _1CC
-	u32 mLastUnlockedStageId;                // _1D0
+	int mLastUnlockedStageId;                // _1D0
 	u32 _1D4;                                // _1D4, unknown
 	u32 mDemoFlags;                          // _1D8, bitflag of some description
 	MoviePlayer* mMoviePlayer;               // _1DC
 	s16 mMovieInfoNum;                       // _1E0
 	s16 mMovieType;                          // _1E2
-	u32 _1E4;                                // _1E4
-	GameInterface* mGameInterface;           // _1E8
+	s16 _1E4;                                // _1E4
+	s16 _1E6;                                // _1E6
+	GameMovieInterface* mGameInterface;      // _1E8
 	int _1EC;                                // _1EC
 	int mGameSectionID;                      // _1F0, see GameSectionID enum
 	s32 mNextOnePlayerSectionID;             // _1F4, see OnePlayerSectionID enum
@@ -409,9 +458,9 @@ struct GameFlow : public Node {
 	u32 _2AC;                                // _2AC, unknown
 	u32 _2B0;                                // _2B0, could be int
 	int mIsChallengeMode;                    // _2B4
-	u8 _2B8[0x4];                            // _2B8, unknown
+	u32 _2B8;                                // _2B8, unknown
 	u32 mUpdateTickCount;                    // _2BC, unknown
-	u8 _2C0[0x4];                            // _2C0, unknown
+	u32 _2C0;                                // _2C0, unknown
 	f32 _2C4;                                // _2C4
 	f32 _2C8;                                // _2C8
 	f32 _2CC;                                // _2CC
@@ -425,10 +474,12 @@ struct GameFlow : public Node {
 	f32 mLevelBannerFadeValue;               // _314
 	Texture* mLoadBannerTexture;             // _318
 	GameLoadIdler mGameLoadIdler;            // _31C
-	u8 _330[0x338 - 0x330];                  // _330, unknown
+	u8 _330;                                 // _330
+	int _334;                                // _334
 	int _338;                                // _338
 	int _33C;                                // _33C, unknown
-	u8 _340[0x350 - 0x340];                  // _340, unknown
+	int _340;                                // _340
+	u8 _344[0x350 - 0x344];                  // _340, unknown
 	int mFilterType;                         // _350
 	u8 mFilters[8];                          // _354
 	u8 _35C;                                 // _35C, maybe Colour?
@@ -441,5 +492,7 @@ struct GameFlow : public Node {
 };
 
 extern GameFlow gameflow;
+
+void preloadLanguage();
 
 #endif

@@ -21,9 +21,13 @@ DEFINE_PRINT("TODO: Replace")
  * Address:	........
  * Size:	0000E8
  */
-SplineInterpolator::SplineInterpolator(int, NPool<SplineSegment>*)
+SplineInterpolator::SplineInterpolator(int size, NPool<SplineSegment>* segPool)
 {
-	// UNUSED FUNCTION
+	mFrameArray      = new NArray<SplineKeyFrame>(size);
+	_04              = segPool;
+	mViewpointCurve  = new SplineCurve(size - 1);
+	mWatchpointCurve = new SplineCurve(size - 1);
+	_10              = 0;
 }
 
 /*
@@ -33,8 +37,7 @@ SplineInterpolator::SplineInterpolator(int, NPool<SplineSegment>*)
  */
 void SplineInterpolator::reset()
 {
-	// Generated from stb r0, 0x10(r3)
-	// _10 = 0;
+	_10 = 0;
 }
 
 /*
@@ -44,7 +47,27 @@ void SplineInterpolator::reset()
  */
 void SplineInterpolator::makeSpline()
 {
-	// UNUSED FUNCTION
+	f32 fVals[16];
+	NVector3f* vecVals[16];
+	if (mFrameArray->getSize() < 2) {
+		return;
+	}
+
+	for (int i = 0; i < mFrameArray->getSize(); i++) {
+		fVals[i] = mFrameArray->get(i)->getParameter();
+	}
+
+	for (int i = 0; i < mFrameArray->getSize(); i++) {
+		vecVals[i] = &mFrameArray->get(i)->getPosture().getViewpoint();
+	}
+
+	mViewpointCurve->makeCurve(fVals, vecVals, mFrameArray->getSize());
+
+	for (int i = 0; i < mFrameArray->getSize(); i++) {
+		vecVals[i] = &mFrameArray->get(i)->getPosture().getWatchpoint();
+	}
+
+	mWatchpointCurve->makeCurve(fVals, vecVals, mFrameArray->getSize());
 }
 
 /*
@@ -52,19 +75,13 @@ void SplineInterpolator::makeSpline()
  * Address:	........
  * Size:	000030
  */
-void NArray<SplineKeyFrame>::get(int)
+bool SplineInterpolator::interpolate(f32 t, NPosture3D& outPosture, bool isDirect)
 {
-	// UNUSED FUNCTION
-}
+	if (isDirect) {
+		return interpolateDirect(t, outPosture);
+	}
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
- */
-bool SplineInterpolator::interpolate(f32, NPosture3D&, bool)
-{
-	// UNUSED FUNCTION
+	return interpolateNext(t, outPosture);
 }
 
 /*
@@ -72,77 +89,26 @@ bool SplineInterpolator::interpolate(f32, NPosture3D&, bool)
  * Address:	8011DE6C
  * Size:	0000E0
  */
-bool SplineInterpolator::interpolateNext(f32, NPosture3D&)
+bool SplineInterpolator::interpolateNext(f32 t, NPosture3D& outPosture)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x38(r1)
-	  mr        r30, r4
-	  lwz       r3, 0x0(r3)
-	  lwz       r0, 0x8(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x3C
-	  li        r3, 0
-	  b         .loc_0xC4
+	if (mFrameArray->getSize() == 0) {
+		return false;
+	}
 
-	.loc_0x3C:
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x8C
-	  lwz       r12, 0x0(r3)
-	  li        r4, 0
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r3, 0x4
-	  addi      r4, r31, 0x4
-	  addi      r3, r30, 0x4
-	  addi      r5, r4, 0x4
-	  addi      r6, r4, 0x8
-	  bl        -0xC084C
-	  addi      r4, r31, 0x10
-	  addi      r3, r30, 0x10
-	  addi      r5, r4, 0x4
-	  addi      r6, r4, 0x8
-	  bl        -0xC0860
-	  li        r3, 0x1
-	  b         .loc_0xC4
+	if (mFrameArray->getSize() == 1) {
+		outPosture.input(mFrameArray->get(0)->getPosture());
+		return true;
+	}
 
-	.loc_0x8C:
-	  fmr       f1, f31
-	  lbz       r4, 0x10(r31)
-	  mr        r3, r31
-	  bl        0x138
-	  cmpwi     r3, 0
-	  bge-      .loc_0xAC
-	  li        r3, 0
-	  b         .loc_0xC4
+	int idx = searchSegmentIndex(t, _10);
+	if (idx < 0) {
+		PRINT("?interpolateNext:nextIndex<0\n");
+		return false;
+	}
 
-	.loc_0xAC:
-	  fmr       f1, f31
-	  stb       r3, 0x10(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        .loc_0xE0
-	  li        r3, 0x1
-
-	.loc_0xC4:
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-
-	.loc_0xE0:
-	*/
+	_10 = idx;
+	outputPosture(t, outPosture);
+	return true;
 }
 
 /*
@@ -150,9 +116,13 @@ bool SplineInterpolator::interpolateNext(f32, NPosture3D&)
  * Address:	........
  * Size:	0000FC
  */
-bool SplineInterpolator::interpolateDirect(f32, NPosture3D&)
+bool SplineInterpolator::interpolateDirect(f32 t, NPosture3D& outPosture)
 {
-	// UNUSED FUNCTION
+	u8 prev  = _10;
+	_10      = 0;
+	bool res = interpolateNext(t, outPosture);
+	_10      = prev;
+	return res;
 }
 
 /*
@@ -160,81 +130,13 @@ bool SplineInterpolator::interpolateDirect(f32, NPosture3D&)
  * Address:	8011DF4C
  * Size:	0000F0
  */
-void SplineInterpolator::outputPosture(f32, NPosture3D&)
+void SplineInterpolator::outputPosture(f32 t, NPosture3D& outPosture)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stfd      f30, 0x48(r1)
-	  fmr       f30, f1
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  mr        r30, r4
-	  stw       r29, 0x3C(r1)
-	  mr        r29, r3
-	  lwz       r3, 0x0(r3)
-	  lbz       r4, 0x10(r29)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f31, 0x20(r3)
-	  lwz       r3, 0x0(r29)
-	  lbz       r4, 0x10(r29)
-	  lwz       r12, 0x0(r3)
-	  addi      r4, r4, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x20(r3)
-	  fsubs     f1, f30, f31
-	  lwz       r3, 0x8(r29)
-	  addi      r31, r30, 0x4
-	  fsubs     f0, f0, f31
-	  lwz       r3, 0x0(r3)
-	  lbz       r4, 0x10(r29)
-	  fdivs     f31, f1, f0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  fmr       f1, f31
-	  mr        r4, r31
-	  bl        -0x2410
-	  lwz       r3, 0xC(r29)
-	  addi      r31, r30, 0x10
-	  lbz       r4, 0x10(r29)
-	  lwz       r3, 0x0(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  fmr       f1, f31
-	  mr        r4, r31
-	  bl        -0x243C
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lfd       f30, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
- */
-void NArray<SplineSegment>::get(int)
-{
-	// UNUSED FUNCTION
+	f32 thisParam = mFrameArray->get(_10)->getParameter();
+	f32 nextParam = mFrameArray->get(_10 + 1)->getParameter();
+	f32 newT      = (t - thisParam) / (nextParam - thisParam);
+	mViewpointCurve->getSegment(_10)->outputPosition(newT, outPosture.getViewpoint());
+	mWatchpointCurve->getSegment(_10)->outputPosition(newT, outPosture.getWatchpoint());
 }
 
 /*
@@ -242,68 +144,20 @@ void NArray<SplineSegment>::get(int)
  * Address:	8011E03C
  * Size:	0000BC
  */
-int SplineInterpolator::searchSegmentIndex(f32, int)
+int SplineInterpolator::searchSegmentIndex(f32 targetParam, int startIdx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x0(r3)
-	  lwz       r0, 0x8(r3)
-	  cmpwi     r0, 0x2
-	  bge-      .loc_0x38
-	  li        r3, 0
-	  b         .loc_0xA0
+	if (mFrameArray->getSize() < 2) {
+		return 0;
+	}
 
-	.loc_0x38:
-	  mr        r31, r4
-	  b         .loc_0x70
+	for (int i = startIdx; i < mFrameArray->getSize() - 1; i++) {
+		if (targetParam <= mFrameArray->get(i + 1)->getParameter()) {
+			return i;
+		}
+	}
 
-	.loc_0x40:
-	  lwz       r12, 0x0(r3)
-	  addi      r4, r31, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, 0x20(r3)
-	  fcmpo     cr0, f31, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x6C
-	  mr        r3, r31
-	  b         .loc_0xA0
-
-	.loc_0x6C:
-	  addi      r31, r31, 0x1
-
-	.loc_0x70:
-	  lwz       r3, 0x0(r30)
-	  lwz       r4, 0x8(r3)
-	  subi      r4, r4, 0x1
-	  cmpw      r31, r4
-	  blt+      .loc_0x40
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x0(r30)
-	  lwz       r3, 0x8(r3)
-	  subi      r3, r3, 0x2
-
-	.loc_0xA0:
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("?searchSegmentIndex:%f,%f,%d\n", targetParam, mFrameArray->get(mFrameArray->getSize() - 1)->getParameter(), startIdx);
+	return mFrameArray->getSize() - 2;
 }
 
 /*
@@ -513,7 +367,10 @@ void SplineKeyFrame::readData(Stream&, int)
  */
 SplineSegment::SplineSegment()
 {
-	// UNUSED FUNCTION
+	mPolyFunX.construct(mCoeffsX, 3);
+	mPolyFunY.construct(mCoeffsY, 3);
+	mPolyFunZ.construct(mCoeffsZ, 3);
+	mFunction3D.construct(&mPolyFunX, &mPolyFunY, &mPolyFunZ);
 }
 
 /*
@@ -561,7 +418,7 @@ void SplineCurve::makeFunctions(int, f32*, f32*, NPolynomialFunction**)
  * Address:	........
  * Size:	000054
  */
-void NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*, int)
+int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -601,7 +458,7 @@ void NArray<SplineKeyFrame>::insert(int, SplineKeyFrame*)
  * Address:	........
  * Size:	000030
  */
-void NArray<SplineKeyFrame>::firstElement()
+SplineKeyFrame* NArray<SplineKeyFrame>::firstElement()
 {
 	// UNUSED FUNCTION
 }
@@ -611,7 +468,7 @@ void NArray<SplineKeyFrame>::firstElement()
  * Address:	........
  * Size:	000034
  */
-void NArray<SplineKeyFrame>::lastElement()
+SplineKeyFrame* NArray<SplineKeyFrame>::lastElement()
 {
 	// UNUSED FUNCTION
 }
@@ -621,7 +478,7 @@ void NArray<SplineKeyFrame>::lastElement()
  * Address:	........
  * Size:	000054
  */
-void NArray<SplineSegment>::indexOf(SplineSegment*, int)
+int NArray<SplineSegment>::indexOf(SplineSegment*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -661,7 +518,7 @@ void NArray<SplineSegment>::insert(int, SplineSegment*)
  * Address:	........
  * Size:	000030
  */
-void NArray<SplineSegment>::firstElement()
+SplineSegment* NArray<SplineSegment>::firstElement()
 {
 	// UNUSED FUNCTION
 }
@@ -671,7 +528,7 @@ void NArray<SplineSegment>::firstElement()
  * Address:	........
  * Size:	000034
  */
-void NArray<SplineSegment>::lastElement()
+SplineSegment* NArray<SplineSegment>::lastElement()
 {
 	// UNUSED FUNCTION
 }
@@ -701,7 +558,7 @@ void NArray<SplineSegment>::add(int, SplineSegment*)
  * Address:	........
  * Size:	000030
  */
-void NArray<SplineSegment>::indexOf(SplineSegment*)
+int NArray<SplineSegment>::indexOf(SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -711,7 +568,7 @@ void NArray<SplineSegment>::indexOf(SplineSegment*)
  * Address:	........
  * Size:	000044
  */
-void NArray<SplineSegment>::contains(SplineSegment*)
+bool NArray<SplineSegment>::contains(SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -741,7 +598,7 @@ void NArray<SplineKeyFrame>::add(int, SplineKeyFrame*)
  * Address:	........
  * Size:	000030
  */
-void NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*)
+int NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
 }
@@ -751,7 +608,7 @@ void NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*)
  * Address:	........
  * Size:	000044
  */
-void NArray<SplineKeyFrame>::contains(SplineKeyFrame*)
+bool NArray<SplineKeyFrame>::contains(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
 }

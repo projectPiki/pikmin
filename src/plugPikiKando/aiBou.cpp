@@ -45,9 +45,9 @@ void ActBou::init(Creature* creature)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 
 	if (mPiki->isHolding()) {
-		mPiki->_408 = 3;
+		mPiki->mActionState = 3;
 	} else {
-		mPiki->_408 = 2;
+		mPiki->mActionState = 2;
 	}
 
 	mTimeoutCounter = 120;
@@ -99,7 +99,7 @@ int ActBou::gotoLeg()
 	}
 
 	if (--mTimeoutCounter <= 0) {
-		mPiki->mEmotion = 1;
+		mPiki->mEmotion = PikiEmotion::Unk1;
 		return ACTOUT_Fail;
 	}
 
@@ -169,7 +169,7 @@ int ActBou::climb()
 	}
 
 	mLastPosition    = mPiki->mPosition;
-	f32 mag          = (22.0f + randFloat(4.0f));
+	f32 mag          = (22.0f + 4.0f * gsys->getRand(1.0f));
 	mPiki->mVelocity = mClimbDirection * mag;
 	return ACTOUT_Continue;
 }

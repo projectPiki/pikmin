@@ -38,7 +38,7 @@ struct GameStat {
 		operator int() { return mCounts[Blue] + mCounts[Red] + mCounts[Yellow]; }
 		int operator[](int color) { return mCounts[color]; }
 
-		void set(int color, int val) { mCounts[color] = val; }
+		void set(int val, int color) { mCounts[color] = val; }
 		void add(int color, int amt) { mCounts[color] += amt; }
 		void dec(int color) { mCounts[color]--; }
 		void inc(int color) { mCounts[color]++; }

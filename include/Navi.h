@@ -43,9 +43,13 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 
 	Navi(CreatureProp*, int);
 
+	virtual void viewKill();                             // _154
+	virtual void viewDraw(Graphics&, Matrix4f&);         // _158
+	virtual f32 viewGetBottomRadius();                   // _15C
+	virtual f32 viewGetHeight();                         // _160
+	virtual void viewStartTrembleMotion(f32);            // _164
 	virtual f32 getiMass();                              // _38
 	virtual f32 getSize();                               // _3C
-	virtual f32 getShadowSize() { return 20.0f; }        // _70 (weak)
 	virtual bool isVisible();                            // _74
 	virtual bool isBuried();                             // _80
 	virtual bool isAtari();                              // _84
@@ -59,7 +63,6 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	virtual void offwallCallback(DynCollObject*);        // _B8
 	virtual void dump();                                 // _C8
 	virtual bool isRopable();                            // _D4
-	virtual bool mayIstick() { return false; }           // _D8 (weak)
 	virtual void update();                               // _E0
 	virtual void postUpdate(int, f32);                   // _E4
 	virtual void refresh(Graphics&);                     // _EC
@@ -67,12 +70,9 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	virtual void demoDraw(Graphics&, Matrix4f*);         // _FC
 	virtual void doAI();                                 // _104
 	virtual void doKill();                               // _10C
-	virtual void viewKill();                             // _154 (weak)
-	virtual void viewDraw(Graphics&, Matrix4f&);         // _158 (weak)
-	virtual f32 viewGetBottomRadius();                   // _15C (weak)
-	virtual f32 viewGetHeight();                         // _160 (weak)
-	virtual void viewStartTrembleMotion(f32);            // _164 (weak)
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _168 (weak)
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _168
+	virtual bool mayIstick() { return false; }           // _D8 (weak)
+	virtual f32 getShadowSize() { return 20.0f; }        // _70 (weak)
 
 	bool demoCheck();
 	bool isNuking();
@@ -134,11 +134,11 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 		_2F0        = 0;
 	}
 
-	/*
-	    DLL inlines:
-
-	    void startLook(Vector3f*);
-	*/
+	void startLook(Vector3f* pos)
+	{
+		mLookAtPosPtr = pos;
+		_2F0          = 0;
+	}
 
 	// _00       = VTBL
 	// _000-_2B8 = Creature
@@ -160,7 +160,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	f32 _300;                            // _300
 	Creature* _304;                      // _304, maybe Pellet*?
 	bool mIsInWater;                     // _308
-	u32 _30C;                            // _30C, unknown
+	int _30C;                            // _30C
 	int mIsCursorVisible;                // _310
 	BurnEffect* mBurnEffect;             // _314
 	RippleEffect* mRippleEffect;         // _318
@@ -191,7 +191,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u32 _72C;                            // _72C, unknown
 	u32 _730;                            // _730, unknown
 	int mCurrKeyCount;                   // _734
-	f32 _738;                            // _738, sleep button held timer?
+	f32 mNeutralTime;                    // _738, sleep button held timer?
 	u8 _73C[0x4];                        // _73C, TODO: work out members
 	Vector3f _740;                       // _740
 	Vector3f _74C;                       // _74C
@@ -219,13 +219,14 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	f32 _7DC;                            // _7DC
 	int mPreBlendLowerMotionID;          // _7E0
 	bool mIsPlucking;                    // _7E4
-	bool mIsFastPluckEnabled;            // _7E5
+	u8 mIsFastPluckEnabled;              // _7E5
 	u8 mNoPluckTimer;                    // _7E6, count after plucking stops to zoom out camera/stop fast pluck
 	u8 _7E7[0x7F8 - 0x7E7];              // _7E7, TODO: work out members
 	Piki* mNextThrowPiki;                // _7F8
 	u8 _7FC;                             // _7FC
 	f32 _800;                            // _800
-	u8 _804[0x8];                        // _804, unknown
+	f32 _804;                            // _804
+	f32 _808;                            // _808
 	int _80C;                            // _80C
 	u32 _810;                            // _810, unknown
 	f32 _814;                            // _814
@@ -238,7 +239,8 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	SearchData mNaviSearchData[6];       // _8E0
 	u32 _928;                            // _928, unknown
 	int mNaviID;                         // _92C
-	u8 _930[0x8];                        // _930, unknown
+	u8 _930;                             // _930
+	int _934;                            // _934
 	Vector3f _938[32];                   // _938
 	f32 _AB8;                            // _AB8
 	int _ABC;                            // _ABC
@@ -246,7 +248,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	f32 _AC4;                            // _AC4
 	f32 _AC8;                            // _AC8
 	u8 _ACC;                             // _ACC
-	u32 _AD0;                            // _AD0, unknown
+	CollTriInfo* _AD0;                   // _AD0
 	u8 _AD4[0x4];                        // _AD4, unknown
 	f32 _AD8;                            // _AD8
 	AState<Navi>* mCurrState;            // _ADC

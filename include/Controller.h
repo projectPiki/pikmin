@@ -81,10 +81,10 @@ struct Controller : public Node {
 	f32 getSubStickY();
 
 	// use KeyboardButtons enum - could maybe rename these from DLL names
-	bool keyDown(u32 button) { return mCurrentInput & button; }
-	bool keyUp(u32 button) { return !(mCurrentInput & button); }
-	bool keyClick(u32 button) { return mInputPressed & button; }
-	bool keyUnClick(u32 button) { return mInputReleased & button; }
+	bool keyDown(u32 button) { return (mCurrentInput & button) != 0; }
+	bool keyUp(u32 button) { return (mCurrentInput & button) == 0; }
+	bool keyClick(u32 button) { return (mInputPressed & button) != 0; }
+	bool keyUnClick(u32 button) { return (mInputReleased & button) != 0; }
 
 	// _00     = VTBL
 	// _00-_20 = Node
@@ -102,10 +102,10 @@ struct Controller : public Node {
 	s8 mMainStickY;           // _46
 	s8 mSubStickX;            // _47
 	s8 mSubStickY;            // _48
-	s8 mAnalogA;              // _49
-	s8 mAnalogB;              // _4A
-	s8 mTriggerL;             // _4B
-	s8 mTriggerR;             // _4C
+	u8 mAnalogA;              // _49
+	u8 mAnalogB;              // _4A
+	u8 mTriggerL;             // _4B
+	u8 mTriggerR;             // _4C
 };
 
 /**

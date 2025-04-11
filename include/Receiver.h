@@ -9,7 +9,6 @@
  */
 template <typename T>
 struct Receiver {
-
 	virtual void procMsg(T* target, Msg* msg) // _08 (weak)
 	{
 		switch (msg->mMsgType) {

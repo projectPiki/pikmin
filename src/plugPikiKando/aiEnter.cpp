@@ -100,7 +100,7 @@ void ActEnter::findLeg()
 	legs[1] = mOnyon->mCollInfo->getSphere('bas2');
 	legs[2] = mOnyon->mCollInfo->getSphere('bas3');
 
-	int randIdx = int(3.0f * randFloat(0.99999988f));
+	int randIdx = int(3.0f * (0.99999988f * gsys->getRand(1.0f)));
 	mLeg        = legs[randIdx];
 }
 
@@ -115,8 +115,7 @@ int ActEnter::exec()
 		if (PikiMgr::containerDebug) {
 			PRINT("  %x enter (%.1f %.1f %.1f) : ropePos %f\n", mPiki, mPiki->mPosition.x, mPiki->mPosition.y, mPiki->mPosition.z,
 			      mPiki->mRopePosRatio);
-			if (zen::Abs(mPiki->mPosition.x) > 10000.0f || zen::Abs(mPiki->mPosition.y) > 10000.0f
-			    || zen::Abs(mPiki->mPosition.z) > 10000.0f) {
+			if (absF(mPiki->mPosition.x) > 10000.0f || absF(mPiki->mPosition.y) > 10000.0f || absF(mPiki->mPosition.z) > 10000.0f) {
 				ERROR("stoP!\n");
 			}
 		}
@@ -202,7 +201,7 @@ int ActEnter::climb()
 		mPiki->mScale.set(scale, scale, scale);
 	}
 
-	f32 sideWeight = 8.0f * randBalanced(0.5f);
+	f32 sideWeight = 8.0f * (gsys->getRand(1.0f) - 0.5f);
 	Vector3f ropeDir(mPiki->mRope->mRopeDirection);
 	Vector3f facingVector(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 	Vector3f sideDir(facingVector);

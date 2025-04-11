@@ -39,24 +39,24 @@ struct ItemShapeObject {
 struct ItemCreature : public AICreature {
 	ItemCreature(int objType, CreatureProp*, Shape*);
 
-	virtual void init(Vector3f&);          // _28
-	virtual f32 getHeight();               // _40
-	virtual bool stimulate(Interaction&);  // _A0
-	virtual void update();                 // _E0
-	virtual void refresh(Graphics&);       // _EC
-	virtual void doAI();                   // _104
-	virtual void doAnimation();            // _108
-	virtual void doKill();                 // _10C
-	virtual void startMotion(int);         // _130
-	virtual void finishMotion();           // _134
-	virtual void finishMotion(f32);        // _138
-	virtual void startMotion(int, f32);    // _13C
-	virtual char* getCurrentMotionName();  // _140
-	virtual f32 getCurrentMotionCounter(); // _144
-	virtual f32 getMotionSpeed();          // _148
-	virtual void setMotionSpeed(f32);      // _14C
-	virtual void stopMotion();             // _150
-	virtual void finalSetup();             // _158 (weak)
+	virtual void init(Vector3f&);            // _28
+	virtual f32 getHeight() { return 0.0f; } // _40
+	virtual bool stimulate(Interaction&);    // _A0
+	virtual void update();                   // _E0
+	virtual void refresh(Graphics&);         // _EC
+	virtual void doAI();                     // _104
+	virtual void doAnimation();              // _108
+	virtual void doKill();                   // _10C
+	virtual void startMotion(int);           // _130
+	virtual void finishMotion();             // _134
+	virtual void finishMotion(f32);          // _138
+	virtual void startMotion(int, f32);      // _13C
+	virtual char* getCurrentMotionName();    // _140
+	virtual f32 getCurrentMotionCounter();   // _144
+	virtual f32 getMotionSpeed();            // _148
+	virtual void setMotionSpeed(f32);        // _14C
+	virtual void stopMotion();               // _150
+	virtual void finalSetup();               // _158 (weak)
 
 	// _00      = VTBL
 	// _00-_304 = AICreature
@@ -88,7 +88,7 @@ struct ItemMgr : public PolyObjectMgr {
 
 	ItemMgr();
 
-	virtual ~ItemMgr();                // _48 (weak)
+	virtual ~ItemMgr() { }             // _48 (weak)
 	virtual void update();             // _4C (weak)
 	virtual void refresh(Graphics&);   // _58
 	virtual Creature* birth(int);      // _78
@@ -114,14 +114,14 @@ struct ItemMgr : public PolyObjectMgr {
 	PikiHeadMgr* getPikiHeadMgr() { return mPikiHeadMgr; }
 
 	// DLL inlines to make:
-	Shape* getPebbleShape(int i) { return _4C[i]; }
-	Shape* getGrassShape(int i) { return _58[i]; }
+	Shape* getPebbleShape(int i) { return mPebbleShapeList[i]; }
+	Shape* getGrassShape(int i) { return mGrassShapeList[i]; }
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_4C = PolyObjectMgr
-	Shape* _4C[3];                     // _4C
-	Shape* _58[3];                     // _58
+	Shape* mPebbleShapeList[3];        // _4C
+	Shape* mGrassShapeList[3];         // _58
 	PikiHeadMgr* mPikiHeadMgr;         // _64
 	MeltingPotMgr* mMeltingPotMgr;     // _68
 	UseNode mRootUseNode;              // _6C
@@ -140,7 +140,7 @@ struct ItemMgr : public PolyObjectMgr {
 struct MeltingPotMgr : public CreatureNodeMgr {
 	MeltingPotMgr(ItemMgr*);
 
-	virtual ~MeltingPotMgr(); // _48 (weak)
+	virtual ~MeltingPotMgr() { } // _48 (weak)
 
 	void finalSetup();
 	void prepare(int objType);

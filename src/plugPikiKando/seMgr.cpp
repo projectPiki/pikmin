@@ -219,7 +219,7 @@ void SeWin::update()
 		if (!mAnimFramesRemaining) {
 			mStatus = 0x1001;
 		}
-		if (zen::Abs(mController->getMainStickY()) > 0.5f) {
+		if (absF(mController->getMainStickY()) > 0.5f) {
 			mStickWasPushed = true;
 		}
 		return;
@@ -234,7 +234,7 @@ void SeWin::update()
 	}
 	case 0x1001: {
 		if (mStickWasPushed) {
-			if (zen::Abs(mController->getMainStickY()) > 0.5f) {
+			if (absF(mController->getMainStickY()) > 0.5f) {
 				return;
 			}
 			mStickWasPushed = false;

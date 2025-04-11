@@ -80,8 +80,8 @@ void SnakeBody::setBodyOnGroundEffect()
  */
 void SnakeBody::killCallBackEffect(bool doForceFinish)
 {
-	effectMgr->killGenerator(mOnGroundCallBack, nullptr, doForceFinish);
-	effectMgr->killGenerator(mRotateCallBack, nullptr, doForceFinish);
+	effectMgr->kill(mOnGroundCallBack, nullptr, doForceFinish);
+	effectMgr->kill(mRotateCallBack, nullptr, doForceFinish);
 }
 
 /*

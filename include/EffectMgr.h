@@ -62,8 +62,10 @@ struct EffShpInst : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Vector3f _14; // _14
-	              // TODO: members
+	Vector3f _14;        // _14
+	u8 _20[0x42 - 0x20]; // _20, unknown
+	u8 _42;              // _42
+	                     // TODO: members
 };
 
 /**
@@ -331,8 +333,8 @@ struct EffectMgr : public CoreNode {
 		EFF_Bridge_FinishStage          = 215, // bridge.pcr
 		EFF_Onyon_Sparkles              = 216, // ony_kira.pcr
 		EFF_Onyon_Puff                  = 217, // ony_paf.pcr
-		EFF_HinderRock_MoveF            = 218, // stone_mv_f.pcr
-		EFF_HinderRock_MoveS            = 219, // stone_mv_s.pcr
+		EFF_HinderRock_MoveFront        = 218, // stone_mv_f.pcr
+		EFF_HinderRock_MoveSides        = 219, // stone_mv_s.pcr
 		EFF_Wl_Brk01                    = 220, // wl_brk01.pcr
 		EFF_Wl_Brk00                    = 221, // wl_brk00.pcr
 		EFF_Wl_Hit1                     = 222, // wl_hit1.pcr
@@ -479,18 +481,29 @@ struct EffectMgr : public CoreNode {
 	                               zen::CallBack1<zen::particleMdl*>*);
 	void putShapeInst(EffShpInst*);
 
-	inline void killGenerator(zen::CallBack1<zen::particleGenerator*>* cb1, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2,
-	                          bool p3)
+	void kill(zen::CallBack1<zen::particleGenerator*>* cb1, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2,
+	          bool doForceFinish)
 	{
-		mPtclMgr.killGenerator(cb1, cb2, p3);
+		mPtclMgr.killGenerator(cb1, cb2, doForceFinish);
 	}
 
-	inline void kill(zen::particleGenerator* gen, bool p3) { mPtclMgr.killGenerator(gen, p3); }
+	void kill(zen::particleGenerator* gen, bool doForceFinish) { mPtclMgr.killGenerator(gen, doForceFinish); }
+
+	void killAll()
+	{
+		mPtclMgr.killAllGenarator(true);
+		killAllShapes();
+	}
+
+	// DLL inlines to do:
+	void cullingOff();
+	void cullingOn();
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	zen::particleManager mPtclMgr; // _14
 	u8 _18[0x600];                 // _18
+	bool _6B0;                     // _6B0
 };
 
 extern EffectMgr* effectMgr;

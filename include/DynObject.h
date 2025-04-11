@@ -55,8 +55,8 @@ struct DynObjBridge : public DynObjBody {
  * @brief TODO
  */
 struct DynObjPushable : public DynObjBody {
-	virtual void render(Graphics&);                           // _18
-	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _70
+	virtual void render(Graphics&);                              // _18
+	virtual void touchCallback(Plane&, Vector3f&, Vector3f&) { } // _70
 
 	// _00     = VTBL
 	// _00-_?? = DynObjBody?

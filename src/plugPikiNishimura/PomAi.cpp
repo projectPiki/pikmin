@@ -360,16 +360,14 @@ void PomAi::createPikiHead()
 			sprout->mVelocity.set(200.0f * sinf(randAngle), 800.0f, 200.0f * cosf(randAngle));
 
 			sprout->startAI(0);
-			static_cast<SimpleAI*>(sprout->mStateMachine)->start(sprout, 0);
+			C_SAI(sprout)->start(sprout, PikiHeadAI::PIKIHEAD_Flying);
 		}
 	}
 
 	rumbleMgr->start(10, 0, mPom->mPosition);
 	playSound(3);
 	mReleasedSeedCount++;
-
-	// I cannot get getRand to match the stack and ordering in both this and Boss without doing this.
-	u32 badCompiler[2];
+	u32 badCompiler;
 }
 
 /*
@@ -438,7 +436,7 @@ void PomAi::calcPetalStickers()
 void PomAi::resultFlagOn()
 {
 	if (mPom->insideAndInSearch()) {
-		playerState->mResultFlags.setOn(RESFLAG_PomFlowerFound);
+		playerState->mResultFlags.setOn(RESFLAG_Pom);
 	}
 }
 
@@ -449,7 +447,7 @@ void PomAi::resultFlagOn()
  */
 void PomAi::resultFlagSeen()
 {
-	playerState->mResultFlags.setSeen(RESFLAG_PomFlowerFound);
+	playerState->mResultFlags.setSeen(RESFLAG_Pom);
 }
 
 /*

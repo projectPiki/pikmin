@@ -667,8 +667,6 @@ void SlimeAi::makeTargetRandom()
 		mSlime->setTargetPosition(newTarget);
 		mSlime->setWalkTimer(0.0f);
 	}
-
-	u32 badCompiler;
 }
 
 /*
@@ -951,7 +949,7 @@ void SlimeAi::initDie(int nextState)
 	mSlime->setAttackTimer(0.0f);
 	setContractGoal();
 	setExpansionGoal();
-	playerState->mResultFlags.setSeen(RESFLAG_Unk50);
+	playerState->mResultFlags.setSeen(RESFLAG_Slime);
 
 	for (int i = 0; i < SLIMECREATURE_COUNT; i++) {
 		zen::particleGenerator* ptclGenK

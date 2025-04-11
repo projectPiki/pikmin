@@ -11,7 +11,7 @@ struct Teki;
  * @brief TODO
  */
 struct TekiCondition : public Condition {
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature*) { return true; } // _08
 
 	// _00     = VTBL
 	// _00-_04 = Condition
@@ -27,7 +27,10 @@ struct TekiAndCondition : public TekiCondition {
 		mConditionB = condB;
 	}
 
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature* target) // _08
+	{
+		return mConditionA->satisfy(target) && mConditionB->satisfy(target);
+	}
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
@@ -39,11 +42,21 @@ struct TekiAndCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiOrCondition : public TekiCondition {
-	virtual bool satisfy(Creature*); // _08
+	TekiOrCondition(Condition* condA, Condition* condB)
+	{
+		mConditionA = condA;
+		mConditionB = condB;
+	}
+
+	virtual bool satisfy(Creature* target) // _08
+	{
+		return mConditionA->satisfy(target) || mConditionB->satisfy(target);
+	}
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Condition* mConditionA; // _04
+	Condition* mConditionB; // _08
 };
 
 /**
@@ -52,7 +65,7 @@ struct TekiOrCondition : public TekiCondition {
 struct TekiNotCondition : public TekiCondition {
 	TekiNotCondition(Condition* notCond) { mNotCondition = notCond; }
 
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature* target) { return !mNotCondition->satisfy(target); } // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
@@ -63,18 +76,25 @@ struct TekiNotCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiAngleCondition : public TekiCondition {
+	TekiAngleCondition(Teki* teki, f32 angle)
+	{
+		mTeki  = teki;
+		mAngle = angle;
+	}
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Teki* mTeki; // _04
+	f32 mAngle;  // _08
 };
 
 /**
  * @brief TODO
  */
 struct TekiAttackableCondition : public TekiCondition {
-	inline TekiAttackableCondition(Teki* teki) { mTeki = teki; }
+	TekiAttackableCondition(Teki* teki) { mTeki = teki; }
 
 	virtual bool satisfy(Creature*); // _08
 
@@ -87,33 +107,49 @@ struct TekiAttackableCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiCollecTargetPelletCondition : public TekiCondition {
+	TekiCollecTargetPelletCondition(Teki* collec, int carryPower)
+	{
+		mCollec     = collec;
+		mCarryPower = carryPower;
+	}
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Teki* mCollec;   // _04
+	int mCarryPower; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TekiCreaturePointerCondition : public TekiCondition {
+	TekiCreaturePointerCondition(Creature* target) { mCreature = target; }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Creature* mCreature; // _04
 };
 
 /**
  * @brief TODO
  */
 struct TekiDistanceCondition : public TekiCondition {
+	TekiDistanceCondition(Teki* teki, f32 distance)
+	{
+		mTeki     = teki;
+		mDistance = distance;
+	}
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Teki* mTeki;   // _04
+	f32 mDistance; // _08
 };
 
 /**
@@ -124,35 +160,40 @@ struct TekiFreeCondition : public TekiCondition {
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TekiLowerCondition : public TekiCondition {
+	TekiLowerCondition(Teki* teki) { mTeki = teki; }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Teki* mTeki; // _04
 };
 
 /**
  * @brief TODO
  */
 struct TekiLowerRangeCondition : public TekiCondition {
+	TekiLowerRangeCondition(Teki* teki) { mTeki = teki; }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Teki* mTeki; // _04
 };
 
 /**
  * @brief TODO
  */
 struct TekiNapkidShortRangeCondition : public TekiCondition {
+	TekiNapkidShortRangeCondition(Teki* teki); // DLL, to do
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
@@ -164,6 +205,8 @@ struct TekiNapkidShortRangeCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiNapkidTargetPikiCondition : public TekiCondition {
+	TekiNapkidTargetPikiCondition(Teki* teki); // DLL, to do
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
@@ -175,22 +218,24 @@ struct TekiNapkidTargetPikiCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiNaviCondition : public TekiCondition {
+	TekiNaviCondition() { }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TekiNaviPikiCondition : public TekiCondition {
+	TekiNaviPikiCondition() { }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
 };
 
 /**
@@ -201,18 +246,19 @@ struct TekiPelletCondition : public TekiCondition {
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TekiPikiStateCondition : public TekiCondition {
+	TekiPikiStateCondition(int stateID) { mPikiStateID = stateID; }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	int mPikiStateID; // _04
 };
 
 /**
@@ -223,7 +269,8 @@ struct TekiPositionCircleDistanceCondition : public TekiCondition {
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Vector3f mPosition; // _04
+	f32 mRadius;        // _10
 };
 
 /**
@@ -248,11 +295,18 @@ struct TekiPositionDistanceCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiPositionSphereDistanceCondition : public TekiCondition {
+	TekiPositionSphereDistanceCondition(Vector3f pos, f32 dist)
+	{
+		mPosition.input(pos);
+		mRadius = dist;
+	}
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Vector3f mPosition; // _04
+	f32 mRadius;        // _10
 };
 
 /**
@@ -276,18 +330,21 @@ struct TekiSphereDistanceCondition : public TekiCondition {
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Teki* mTeki;   // _04
+	f32 mDistance; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TekiStateCondition : public TekiCondition {
+	TekiStateCondition(int stateID) { mStateID = stateID; }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	int mStateID; // _04
 };
 
 /**
@@ -307,6 +364,8 @@ struct TekiStickerCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiStickingCondition : public TekiCondition {
+	TekiStickingCondition() { }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
@@ -318,33 +377,39 @@ struct TekiStickingCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiTypeCondition : public TekiCondition {
+	TekiTypeCondition(int type) { mTekiType = type; }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	int mTekiType; // _04
 };
 
 /**
  * @brief TODO
  */
 struct TekiVisibleCondition : public TekiCondition {
+	TekiVisibleCondition(Teki* teki) { mTeki = teki; }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Teki* mTeki; // _04
 };
 
 /**
  * @brief TODO
  */
 struct TekiVisibleHeightCondition : public TekiCondition {
+	TekiVisibleHeightCondition(Teki* teki) { mTeki = teki; }
+
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Teki* mTeki; // _04
 };
 
 #endif

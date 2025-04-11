@@ -47,11 +47,11 @@ bool InteractBomb::actPiki(Piki* piki)
 		return false;
 	}
 
-	if (piki->aiCullable() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Unk27)) {
-		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Unk27);
+	if (piki->aiCullable() && !playerState->mDemoFlags.isFlag(DEMOFLAG_FirstBombDeath)) {
+		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstBombDeath);
 	}
 
-	playerState->mResultFlags.setOn(RESFLAG_Unk24);
+	playerState->mResultFlags.setOn(RESFLAG_PikminBombDeath);
 
 	piki->playEventSound(mOwner, SE_PIKI_DAMAGED);
 
@@ -80,7 +80,7 @@ bool InteractBury::actPiki(Piki* piki)
 		return false;
 	}
 
-	if (!piki->isSafeMePos(piki->mPosition) || MapCode::isBald(piki->mFloorTri)) {
+	if (!piki->isSafeMePos(piki->mPosition) || MapCode::isBald(piki->mGroundTriangle)) {
 		return false;
 	}
 
@@ -216,7 +216,7 @@ bool InteractFire::actPiki(Piki* piki)
 		return true;
 	}
 
-	playerState->mResultFlags.setOn(RESFLAG_Unk39);
+	playerState->mResultFlags.setOn(RESFLAG_PikminOnFire);
 	return false;
 }
 
@@ -585,8 +585,8 @@ bool InteractPress::actPiki(Piki* piki)
 		bomb->resetStateGrabbed();
 		if (bomb->mObjType == OBJTYPE_Bomb) {
 			MsgUser msg(1);
-			BombItem* bombItem = static_cast<BombItem*>(bomb);
-			bombItem->_2D0     = 0;
+			BombItem* bombItem    = static_cast<BombItem*>(bomb);
+			bombItem->mCurrAnimId = 0;
 			static_cast<SimpleAI*>(bombItem->mStateMachine)->procMsg(bombItem, &msg);
 			PRINT("bomb immediately\n");
 		}
@@ -595,7 +595,7 @@ bool InteractPress::actPiki(Piki* piki)
 	piki->changeMode(0, piki->mNavi);
 	piki->mFSM->transit(piki, PIKISTATE_Pressed);
 
-	piki->_48C = C_PIKI_PROP(piki)._15C();
+	piki->mDeathTimer = C_PIKI_PROP(piki)._15C();
 	piki->mHealth -= mDamage;
 	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiHealth());
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);

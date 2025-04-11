@@ -17,7 +17,7 @@ enum EObjType {
 	OBJTYPE_Gem20        = 9,  // 20-pellet
 	OBJTYPE_Gem50        = 10, // 50-pellet
 	OBJTYPE_Gem1         = 11, // 1-pellet
-	OBJTYPE_NULL12       = 12,
+	OBJTYPE_GemItem      = 12, // unused
 	OBJTYPE_BombGen      = 13,
 	OBJTYPE_Bomb         = 14,
 	OBJTYPE_Pikihead     = 15,

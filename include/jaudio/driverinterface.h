@@ -7,7 +7,7 @@
 /////////// JAUDIO DRIVER INTERFACE DEFINITIONS ///////////
 // Global functions (all C++, so no extern C wrap).
 void Channel_SetMixerLevel(f32);
-void Get_GlobalHandle();
+JCS* Get_GlobalHandle();
 void List_CountChannel(JC**);
 void List_CutChannel(JC*);
 void List_GetChannel(JC**);

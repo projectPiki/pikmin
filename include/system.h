@@ -91,7 +91,7 @@ struct BinobjInfo : public GfxobjInfo {
 
 	// _1C     = VTBL
 	// _00-_20 = GfxobjInfo
-	char* mData;
+	char* mData; // _20
 };
 
 DEFINE_ENUM_TYPE(SystemFlags, Shutdown = 0x80000000);
@@ -136,10 +136,10 @@ struct StdSystem {
 
 	// Static functions
 	static char* stringDup(char*);
-	static f32 getRand(f32 max) { return max * (f32(rand()) / 32767.0f); }
 	static f32 getHalfRand(f32 max) { return max * (f32(rand()) / 32767.0f - 0.5f); }
 
 	// Inline functions
+	f32 getRand(f32 max) { return max * (f32(rand()) / 32767.0f); }
 	inline f32 getFade() { return mCurrentFade; }
 	inline void setFade(f32 start, f32 end)
 	{
@@ -209,7 +209,7 @@ public:
 	u32 mMaterialCount;           // _1A8
 	u32 mDispCount;               // _1AC
 	u32 mLightCount;              // _1B0
-	s32 _1B4;                     // _1B4
+	s32 mActiveLightCount;        // _1B4
 	u32 mAnimatedPolygons;        // _1B8
 	u32 mLightingSkips;           // _1BC
 	u32 mLightingSets;            // _1C0
@@ -305,7 +305,8 @@ struct System : public StdSystem {
 	u8 _280[0xC];                 // _280, unknown
 	f32 mDeltaTime;               // _28C
 	u32 _290;                     // _290
-	u8 _294[0x2A4 - 0x294];       // _294, unknown
+	u8 _294[0x2A0 - 0x294];       // _294, unknown
+	u32 _2A0;                     // _2A0
 	u32 _2A4;                     // _2A4, unknown
 	AddressNode _2A8;             // _2A8, unknown size
 	u32 _2BC;                     // _2BC, unknown, could be part of _2A8
@@ -366,38 +367,6 @@ struct DVDStream : public RandomAccessStream {
 
 extern int glnWidth;
 extern int glnHeight;
-
-// this doesn't exist in the DLL, but ActFreeBore::init is so dumb
-// you can pry this out of my cold dead hands when you fix that
-static inline f32 randBalanced(f32 centre)
-{
-	return System::getRand(1.0f) - centre;
-}
-
-static inline f32 randFloat(f32 max)
-{
-	return max * System::getRand(1.0f);
-}
-static inline bool randChance(f32 chance)
-{
-	f32 r = System::getRand(1.0f);
-	return r >= chance;
-}
-static inline bool coinFlip()
-{
-	return System::getRand(1.0f) > 0.5f;
-}
-
-static inline f32 dumbRandFloat(f32 max)
-{
-	return System::getRand(1.0f + max);
-}
-
-// these match according to the plugPiki DLL - move inlines down as they get verified
-static inline f32 randFloat()
-{
-	return System::getRand(1.0f);
-}
 
 extern "C" void OSPanic(const char* filename, int line, const char* msg, ...);
 

@@ -93,7 +93,7 @@ void MizuAi::killCallBackEffect(bool p1)
 		_0C = nullptr;
 	}
 
-	effectMgr->killGenerator(mPuffCallBack, nullptr, p1);
+	effectMgr->kill(mPuffCallBack, nullptr, p1);
 }
 
 /*

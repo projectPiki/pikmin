@@ -15,8 +15,8 @@ struct Navi;
 struct FlowController {
 	inline FlowController()
 	{
-		_244 = 0;
-		_230 = 0;
+		_244       = 0;
+		mNaviOnMap = 0;
 	}
 
 	void readMapList(char*);
@@ -31,9 +31,9 @@ struct FlowController {
 	char mAnimationTestPath[0x80]; // _B0
 	char mStagePath1[0x80];        // _130
 	char mStagePath2[0x80];        // _1B0, identical to above
-	int _230;                      // _230, unknown
+	int mNaviOnMap;                // _230, unknown
 	int _234;                      // _234
-	u8 _238;                       // _238
+	u32 _238;                      // _238
 	u32 _23C;                      // _23C
 	int _240;                      // _240
 	int _244;                      // _244

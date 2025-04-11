@@ -32,54 +32,54 @@ DEFINE_PRINT("demoInvoker");
 bool Navi::demoCheck()
 {
 	int stage = flowCont.mCurrentStage->mStageID;
-	if (!playerState->isTutorial() && !playerState->mDemoFlags.isFlag(16) && stage <= 1) {
-		playerState->mDemoFlags.setFlag(16, nullptr);
+	if (!playerState->isTutorial() && !playerState->mDemoFlags.isFlag(DEMOFLAG_OnyonMenuInfo) && stage <= STAGE_Forest) {
+		playerState->mDemoFlags.setFlag(DEMOFLAG_OnyonMenuInfo, nullptr);
 		return true;
 	}
 
 	// red onion check
-	if (stage == 0 && !playerState->mDemoFlags.isFlag(0)) {
-		Creature* goal = (Creature*)itemMgr->getContainer(1);
-		if (goal && qdist2(goal, this) <= demoParms->mParms.mOnionBootTriggerRadius()) {
-			playerState->mDemoFlags.setFlag(0, goal);
+	if (stage == STAGE_Practice && !playerState->mDemoFlags.isFlag(DEMOFLAG_DiscoverRedOnyon)) {
+		GoalItem* redOnyon = itemMgr->getContainer(Red);
+		if (redOnyon && qdist2(redOnyon, this) <= demoParms->mParms.mOnionBootTriggerRadius()) {
+			playerState->mDemoFlags.setFlag(DEMOFLAG_DiscoverRedOnyon, redOnyon);
 			return true;
 		}
 	}
 
 	// blue onion check
-	if (stage == 2 && !playerState->mDemoFlags.isFlag(2)) {
-		GoalItem* goal = itemMgr->getContainer(0);
-		if (goal && qdist2(goal, this) <= demoParms->mParms.mOnionBootTriggerRadius()) {
-			playerState->mDemoFlags.setFlag(2, goal);
-			goal->setMotionSpeed(30.0f);
+	if (stage == STAGE_Cave && !playerState->mDemoFlags.isFlag(DEMOFLAG_DiscoverBlueOnyon)) {
+		GoalItem* blueOnyon = itemMgr->getContainer(Blue);
+		if (blueOnyon && qdist2(blueOnyon, this) <= demoParms->mParms.mOnionBootTriggerRadius()) {
+			playerState->mDemoFlags.setFlag(DEMOFLAG_DiscoverBlueOnyon, blueOnyon);
+			blueOnyon->setMotionSpeed(30.0f);
 			return true;
 		}
 	}
 
 	// yellow onion check
-	if (stage == 1 && !playerState->mDemoFlags.isFlag(1)) {
-		GoalItem* goal = itemMgr->getContainer(2);
-		if (goal && qdist2(goal, this) <= demoParms->mParms.mOnionBootTriggerRadius()) {
-			playerState->mDemoFlags.setFlag(1, goal);
-			goal->setMotionSpeed(30.0f);
+	if (stage == STAGE_Forest && !playerState->mDemoFlags.isFlag(DEMOFLAG_DiscoverYellowOnyon)) {
+		GoalItem* yellowOnyon = itemMgr->getContainer(Yellow);
+		if (yellowOnyon && qdist2(yellowOnyon, this) <= demoParms->mParms.mOnionBootTriggerRadius()) {
+			playerState->mDemoFlags.setFlag(DEMOFLAG_DiscoverYellowOnyon, yellowOnyon);
+			yellowOnyon->setMotionSpeed(30.0f);
 			return true;
 		}
 	}
 
 	// pikmin seed in ground cutscene
-	if (!playerState->mDemoFlags.isFlag(3) && playerState->isTutorial()) {
+	if (!playerState->mDemoFlags.isFlag(DEMOFLAG_ApproachSeed) && playerState->isTutorial()) {
 		PikiHeadItem* item = (PikiHeadItem*)itemMgr->getPikiHeadMgr()->findClosest(mPosition, nullptr);
-		if (item && item->mFloorTri && item->getCurrState()->getID() == 6
+		if (item && item->mGroundTriangle && item->getCurrState()->getID() == 6
 		    && qdist2(item, this) <= demoParms->mParms.mSeedDemoTriggerRadius()) {
-			playerState->mDemoFlags.setFlag(3, item);
+			playerState->mDemoFlags.setFlag(DEMOFLAG_ApproachSeed, item);
 			PRINT("** SET TIMER %.1f\n", demoParms->mParms.mSeedDemoTriggerRadius());
-			playerState->mDemoFlags.setTimer(demoParms->mParms.mSeedDemoWaitTime(), 7, item);
+			playerState->mDemoFlags.setTimer(demoParms->mParms.mSeedDemoWaitTime(), DEMOFLAG_NoPikminTimeout, item);
 			return true;
 		}
 	}
 
 	// find main engine
-	if (stage == 0 && !playerState->mDemoFlags.isFlag(12)) {
+	if (stage == STAGE_Practice && !playerState->mDemoFlags.isFlag(DEMOFLAG_ApproachEngine)) {
 		Iterator it(pelletMgr);
 		f32 maxDist = demoParms->mParms.mDemoTriggerRadius();
 		CI_LOOP(it)
@@ -90,7 +90,7 @@ bool Navi::demoCheck()
 				f32 len       = sqrtf(diff.x * diff.x + diff.z * diff.z);
 				len -= obj->getBottomRadius();
 				if (len <= maxDist) {
-					playerState->mDemoFlags.setFlag(12, obj);
+					playerState->mDemoFlags.setFlag(DEMOFLAG_ApproachEngine, obj);
 					return true;
 				}
 			}
@@ -109,10 +109,10 @@ bool Navi::demoCheck()
 			len -= obj->getBottomRadius();
 			if (len <= maxDist) {
 				int id = PelletMgr::getUfoIndexFromID(obj->mConfig->mModelId.mId);
-				if (!playerState->mDemoFlags.isFlag(id + 32)) {
+				if (!playerState->mDemoFlags.isFlag(id + DEMOFLAG_UfoPartDiscoveryOffset)) {
 					gameflow.mMovieType    = 3;
 					gameflow.mMovieInfoNum = id;
-					playerState->mDemoFlags.setFlag(id + 32, obj);
+					playerState->mDemoFlags.setFlag(id + DEMOFLAG_UfoPartDiscoveryOffset, obj);
 					return true;
 				}
 			}
@@ -128,7 +128,9 @@ bool Navi::demoCheck()
  */
 void Piki::demoCheck()
 {
-	if (mPikiUpdateContext.updatable() && flowCont.mCurrentStage->mStageID == 0 && !playerState->mDemoFlags.isFlag(12)) {
+	// pikmin also trigger the approach engine cutscene - can't avoid it by throwing/csticking
+	if (mPikiUpdateContext.updatable() && flowCont.mCurrentStage->mStageID == STAGE_Practice
+	    && !playerState->mDemoFlags.isFlag(DEMOFLAG_ApproachEngine)) {
 		Iterator it(pelletMgr);
 		f32 maxDist = demoParms->mParms.mDemoTriggerRadius();
 		CI_LOOP(it)
@@ -139,7 +141,7 @@ void Piki::demoCheck()
 				f32 len       = sqrtf(diff.x * diff.x + diff.z * diff.z);
 				len -= obj->getBottomRadius();
 				if (len <= maxDist) {
-					playerState->mDemoFlags.setFlag(12, obj);
+					playerState->mDemoFlags.setFlag(DEMOFLAG_ApproachEngine, obj);
 				}
 			}
 		}

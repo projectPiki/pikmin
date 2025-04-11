@@ -4,6 +4,7 @@
 #include "types.h"
 #include "nlib/Graphics.h"
 #include "nlib/Array.h"
+#include "Pcam/CameraParameters.h"
 
 struct Controller;
 struct Creature;
@@ -11,18 +12,45 @@ struct Font;
 struct Graphics;
 struct Navi;
 struct NVector3f;
+struct PcamCameraParameters;
 
 /**
  * @brief TODO
+ */
+enum PcamZoomLevels {
+	PCAMZOOM_Near   = 0,
+	PCAMZOOM_Middle = 1,
+	PCAMZOOM_Far    = 2,
+	PCAMZOOM_COUNT, // 3
+};
+
+/**
+ * @brief TODO
+ */
+enum PcamAngleLevels {
+	PCAMANGLE_Low  = 0,
+	PCAMANGLE_High = 1,
+	PCAMANGLE_COUNT, // 2
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x18.
  */
 struct PcamMotionInfo {
 	PcamMotionInfo();
 
 	// unused/inlined:
-	void init(f32, f32, f32, f32, f32, f32);
+	void init(f32 dist, f32 angle, f32 fov, f32 watchAdjust, f32 naviWatchWeight, f32 blur);
 	void println();
 
-	// TODO: members
+	f32 mDistance;        // _00
+	f32 mAngle;           // _04
+	f32 mFov;             // _08
+	f32 mWatchAdjustment; // _0C
+	f32 mNaviWatchWeight; // _10
+	f32 mBlur;            // _14
 };
 
 /**
@@ -33,7 +61,16 @@ struct PcamControlInfo {
 
 	void init(bool, bool, bool, bool, bool, bool, bool, f32, f32, f32);
 
-	// TODO: members
+	bool _00;                 // _00
+	bool mDoRotate;           // _01, slow tracking left/right when partially holding L
+	bool mDoAttentionCamera;  // _02, front-facing snap when clicking L
+	bool mDoToggleZoom;       // _03, toggle zoom level with R
+	bool mDoAdjustAngle;      // _04, toggle inclination/angle with Z
+	bool _05;                 // _05
+	bool _06;                 // _06
+	f32 mAzimuthRotIntensity; // _08
+	f32 _0C;                  // _0C
+	f32 _10;                  // _10
 };
 
 /**
@@ -43,8 +80,6 @@ struct PcamControlInfo {
  */
 struct PcamCamera : public NCamera {
 	PcamCamera(Camera*);
-
-	virtual void update(); // _08
 
 	void startCamera(Creature*);
 	void startCamera(Creature*, int, int);
@@ -83,13 +118,55 @@ struct PcamCamera : public NCamera {
 	void makePolar();
 	void printInfo(Graphics&, Font*);
 
-	// _20     = VTBL
+	void setTarget(Creature* target) { mTargetCreature = target; }
+	PcamMotionInfo& getBasicMotionInfo(int zoom, int incl) { return mBasicMotionInfos[incl][zoom]; }
+	f32 getParameterF(int idx) { return mParameters->getF(idx); }
+
+	bool timerElapsed(int idx) { return mTimers[idx] <= 0.0f; }
+	NPolar3f& getPolar() { return mPolarDir; }
+	void setBlur(f32 blur) { mCamera->mBlur = blur; }
+
+	// DLL inlines to do:
+	f32 getDirection();
+
+	static f32 angleToMeridian(f32 angle) { return NMathF::d2r(90.0f - angle); }
+	static f32 calcDirection(Vector3f& vec) { return NMathF::atan2(vec.x, vec.z); }
+
+	// _50     = VTBL
 	// _00-_20 = NCamera
-	u8 _24[0x30 - 0x24];  // _24, unknown
-	u8 _30;               // _30
-	u8 _31[0xC8 - 0x31];  // _31, unknown
-	f32 _C8;              // _C8
-	u8 _CC[0x16C - 0xCC]; // _CC
+	u8 _20;                        // _20
+	u8 _21[0x28 - 0x21];           // _21, unknown
+	u8 _28;                        // _28
+	u8 _29[0x30 - 0x29];           // _29, unknown
+	u8 _30;                        // _30
+	u8 _31[0x38 - 0x31];           // _31, unknown
+	PcamMotionInfo mAttentionInfo; // _38
+
+	// why is this in the middle. this is all one struct according to the DLL, just bizarre.
+	virtual void update(); // _08
+
+	PcamMotionInfo mPrevMotionInfo;         // _54
+	PcamMotionInfo mTargetMotionInfo;       // _6C
+	NArray<Creature>* mCreatureArray;       // _84
+	int mZoomLevel;                         // _88
+	BOOL mToggleZoomPending;                // _8C
+	int mInclinationLevel;                  // _90
+	int mAdjustInclinationPending;          // _94, not a BOOL bc it can be 2, but never actually used beyond 0/1
+	u32 _98;                                // _98, unknown
+	int mAttentionState;                    // _9C
+	int _A0;                                // _A0
+	f32 _A4;                                // _A4
+	f32 _A8;                                // _A8
+	f32 mCurrDistance;                      // _AC
+	f32 mCurrentAzimuth;                    // _B0
+	f32 _B4;                                // _B4
+	f32 _B8;                                // _B8
+	f32 _BC;                                // _BC
+	NPolar3f mPolarDir;                     // _C0
+	Creature* mTargetCreature;              // _CC
+	PcamCameraParameters* mParameters;      // _D0
+	f32 mTimers[3];                         // _D4
+	PcamMotionInfo mBasicMotionInfos[2][3]; // _E0, 2 inclination angles, 3 zoom levels
 };
 
 #endif

@@ -218,7 +218,7 @@ void Jac_Orima_Formation(s32, s32)
  * Address:	800183A0
  * Size:	000250
  */
-void Jac_PlayOrimaSe(void)
+void Jac_PlayOrimaSe(s32)
 {
 	/*
 	.loc_0x0:
@@ -466,7 +466,7 @@ void Jac_UnPauseOrimaSe()
  * Address:	80018680
  * Size:	0000B8
  */
-void Jac_StopOrimaSe(void)
+void Jac_StopOrimaSe(s32)
 {
 	/*
 	.loc_0x0:

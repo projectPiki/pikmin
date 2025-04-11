@@ -12,7 +12,54 @@ struct NVector3f;
 
 /////////// Breadbug AI Actions ///////////
 
-/*
+/**
+ * @brief TODO
+ */
+enum TaiCollecIntParams {
+	COLLECPI_CarryPower = TPI_COUNT,
+	COLLECPI_COUNT, // 21
+};
+
+/**
+ * @brief TODO
+ */
+enum TaiCollecFloatParams {
+	COLLECPF_BouncingDamage = TPF_COUNT,  // 50
+	COLLECPF_PressedDamage,               // 51
+	COLLECPF_GoingUndergroundDistance,    // 52
+	COLLECPF_UndergroundPeriod,           // 53
+	COLLECPF_UndergroundPeriodRandomRate, // 54
+	COLLECPF_FallingRotationVelocity,     // 55
+	COLLECPF_DangerLife,                  // 56
+	COLLECPF_RunningAwayPeriod,           // 57
+	COLLECPF_ImpassablePeriod,            // 58
+	COLLECPF_ImpassableDistance,          // 59
+	COLLECPF_COUNT,                       // 60
+};
+
+/**
+ * @brief TODO
+ */
+enum TaiCollecStateID {
+	COLLECSTATE_Unk0  = 0,
+	COLLECSTATE_Unk1  = 1,
+	COLLECSTATE_Unk2  = 2,
+	COLLECSTATE_Unk3  = 3,
+	COLLECSTATE_Unk4  = 4,
+	COLLECSTATE_Unk5  = 5,
+	COLLECSTATE_Unk6  = 6,
+	COLLECSTATE_Unk7  = 7,
+	COLLECSTATE_Unk8  = 8,
+	COLLECSTATE_Unk9  = 9,
+	COLLECSTATE_Unk10 = 10,
+	COLLECSTATE_Unk11 = 11,
+	COLLECSTATE_Unk12 = 12,
+	COLLECSTATE_Unk13 = 13,
+	COLLECSTATE_Unk14 = 14,
+	COLLECSTATE_COUNT, // 15
+};
+
+/**
  * @brief TODO
  */
 struct TaiCollecSoundTable : public PaniSoundTable {
@@ -21,7 +68,7 @@ struct TaiCollecSoundTable : public PaniSoundTable {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiCollecParameters : public TekiParameters {
@@ -32,7 +79,7 @@ struct TaiCollecParameters : public TekiParameters {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiCollecStrategy : public TaiStrategy {
@@ -53,9 +100,12 @@ struct TaiCollecStrategy : public TaiStrategy {
  * @brief TODO
  */
 struct TaiCollecImpassableAction : public TaiAction {
-	inline TaiCollecImpassableAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecImpassableAction(int nextState, int p2, f32 p3, f32 p4)
+	    : TaiAction(nextState)
 	{
+		mTimerIdx    = p2;
+		mTimerLength = p3;
+		mMaxDistance = p4;
 	}
 
 	virtual void start(Teki&); // _08
@@ -65,15 +115,17 @@ struct TaiCollecImpassableAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mTimerIdx;    // _08
+	f32 mTimerLength; // _0C
+	f32 mMaxDistance; // _10
 };
 
 /**
  * @brief TODO
  */
 struct TaiCollecLetGoOfPelletAction : public TaiAction {
-	inline TaiCollecLetGoOfPelletAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecLetGoOfPelletAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -89,8 +141,8 @@ struct TaiCollecLetGoOfPelletAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecTargetPelletAction : public TaiAction {
-	inline TaiCollecTargetPelletAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecTargetPelletAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -105,8 +157,8 @@ struct TaiCollecTargetPelletAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecVisibleHeightPelletLostAction : public TaiAction {
-	inline TaiCollecVisibleHeightPelletLostAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecVisibleHeightPelletLostAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -121,8 +173,8 @@ struct TaiCollecVisibleHeightPelletLostAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecVisibleHeightPelletLostTimerAction : public TaiTimerAction {
-	inline TaiCollecVisibleHeightPelletLostTimerAction() // TODO: this is a guess
-	    : TaiTimerAction(0, 0, 0.0f, 0.0f)
+	TaiCollecVisibleHeightPelletLostTimerAction(int timerIdx, f32 timerLength)
+	    : TaiTimerAction(TAI_NO_TRANSIT, timerIdx, timerLength, 0.0f)
 	{
 	}
 
@@ -137,8 +189,8 @@ struct TaiCollecVisibleHeightPelletLostTimerAction : public TaiTimerAction {
  * @brief TODO
  */
 struct TaiCollecPelletLostAction : public TaiAction {
-	inline TaiCollecPelletLostAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecPelletLostAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -153,8 +205,8 @@ struct TaiCollecPelletLostAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecPelletDisappearedAction : public TaiAction {
-	inline TaiCollecPelletDisappearedAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecPelletDisappearedAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -162,15 +214,14 @@ struct TaiCollecPelletDisappearedAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TaiCollecHoldPelletAction : public TaiAction {
-	inline TaiCollecHoldPelletAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecHoldPelletAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -185,8 +236,8 @@ struct TaiCollecHoldPelletAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecCatchingAction : public TaiAction {
-	inline TaiCollecCatchingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecCatchingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -202,8 +253,8 @@ struct TaiCollecCatchingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecCarryingAction : public TaiAction {
-	inline TaiCollecCarryingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecCarryingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -220,8 +271,8 @@ struct TaiCollecCarryingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecBeingDraggedAction : public TaiAction {
-	inline TaiCollecBeingDraggedAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecBeingDraggedAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -237,8 +288,8 @@ struct TaiCollecBeingDraggedAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecWinCarryingAction : public TaiAction {
-	inline TaiCollecWinCarryingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecWinCarryingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -253,8 +304,8 @@ struct TaiCollecWinCarryingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecDefeatCarryingAction : public TaiAction {
-	inline TaiCollecDefeatCarryingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecDefeatCarryingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -269,8 +320,8 @@ struct TaiCollecDefeatCarryingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecPutAction : public TaiAction {
-	inline TaiCollecPutAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecPutAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -285,8 +336,8 @@ struct TaiCollecPutAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecPuttingPelletAction : public TaiAction {
-	inline TaiCollecPuttingPelletAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecPuttingPelletAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -303,9 +354,10 @@ struct TaiCollecPuttingPelletAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecCarryingToNestAction : public TaiContinuousMotionAction {
-	inline TaiCollecCarryingToNestAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	TaiCollecCarryingToNestAction(int nextState, int motionIdx, int p3)
+	    : TaiContinuousMotionAction(nextState, motionIdx)
 	{
+		_0C = p3;
 	}
 
 	virtual void start(Teki&); // _08
@@ -314,16 +366,16 @@ struct TaiCollecCarryingToNestAction : public TaiContinuousMotionAction {
 	void makePositionRoute(Teki&);
 
 	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
+	// _00-_0C = TaiContinuousMotionAction
+	int _0C; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TaiCollecRouteImpassableAction : public TaiAction {
-	inline TaiCollecRouteImpassableAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecRouteImpassableAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -338,8 +390,8 @@ struct TaiCollecRouteImpassableAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecRoundCarryAction : public TaiAction {
-	inline TaiCollecRoundCarryAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecRoundCarryAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -355,8 +407,8 @@ struct TaiCollecRoundCarryAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecPelletStartContainerizedAction : public TaiAction {
-	inline TaiCollecPelletStartContainerizedAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecPelletStartContainerizedAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -371,8 +423,8 @@ struct TaiCollecPelletStartContainerizedAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecPelletFinishContainerizedAction : public TaiAction {
-	inline TaiCollecPelletFinishContainerizedAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecPelletFinishContainerizedAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -387,8 +439,8 @@ struct TaiCollecPelletFinishContainerizedAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecDeadFallingAction : public TaiAction {
-	inline TaiCollecDeadFallingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecDeadFallingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -403,8 +455,8 @@ struct TaiCollecDeadFallingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecFallingAction : public TaiAction {
-	inline TaiCollecFallingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecFallingAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -419,8 +471,8 @@ struct TaiCollecFallingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiCollecGetOutAction : public TaiAction {
-	inline TaiCollecGetOutAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiCollecGetOutAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -446,18 +498,25 @@ struct TaiCollecLegEffectAction : public TaiJointEffectAction {
 
 /////////// Breadbug Nest AI Actions ///////////
 
-/*
+/**
+ * @brief TODO
+ */
+enum TaiHollecStateID {
+	HOLLECSTATE_Unk0 = 0,
+	HOLLECSTATE_COUNT, // 1
+};
+
+/**
  * @brief TODO
  */
 struct TaiHollecParameters : public TekiParameters {
 	TaiHollecParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_88 = TekiParameters
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiHollecStrategy : public TaiStrategy {
@@ -467,8 +526,7 @@ struct TaiHollecStrategy : public TaiStrategy {
 	virtual void draw(Teki&, Graphics&); // _18
 
 	// _00     = VTBL
-	// _00-_10 = TaiStrategy
-	// TODO: members
+	// _00-_14 = TaiStrategy
 };
 
 #endif

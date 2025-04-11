@@ -120,7 +120,7 @@ Creature* GenObjectTeki::birth(BirthInfo& info)
 	}
 
 	mPersonality->mPosition.set(info.mPosition);
-	mPersonality->mScale.set(info.mScale);
+	mPersonality->mNestPosition.set(info.mScale);
 	mPersonality->mFaceDirection = info.mRotation.y;
 	teki->mPersonality->input(*mPersonality);
 	teki->reset();

@@ -41,9 +41,9 @@ ActBreakWall::ActBreakWall(Piki* piki)
  */
 void ActBreakWall::init(Creature* creature)
 {
-	_31             = 0;
-	mPiki->_408     = 2;
-	mPiki->mEmotion = 0;
+	mFailAttackCounter  = 0;
+	mPiki->mActionState = 2;
+	mPiki->mEmotion     = PikiEmotion::Unk0;
 
 	if (creature->isSluice()) {
 		mWall = static_cast<BuildingItem*>(creature);
@@ -52,9 +52,9 @@ void ActBreakWall::init(Creature* creature)
 	}
 
 	mState              = STATE_GotoWall;
-	_32                 = 0;
+	mIsAttackReady      = 0;
 	mPiki->mWantToStick = 0;
-	_30                 = randFloat(4.0f);
+	mWorkTimer          = (4.0f * gsys->getRand(1.0f));
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
@@ -66,69 +66,13 @@ void ActBreakWall::init(Creature* creature)
 void ActBreakWall::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	if (piki->getState() != PIKISTATE_LookAt) {
-		// Creature* collider = msg->mEvent.mCollider;
-		if (msg->mEvent.mCollider == mWall && mState != STATE_BreakWall && msg->mEvent.mColliderPart->getID() == 'gate'
-		    && !piki->isStickTo()) {
-			_20 = piki->mPosition;
+		Creature* collider = msg->mEvent.mCollider;
+		if (collider == mWall && mState != STATE_BreakWall && msg->mEvent.mColliderPart->getID() == 'gate' && !piki->isStickTo()) {
+			mHitPikminPosition = piki->mPosition;
 			initBreakWall();
 		}
-		// msg->mEvent.mCollider->isPiki();
+		collider->isPiki();
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  addi      r3, r29, 0
-	  bl        0x1A228
-	  cmpwi     r3, 0x1A
-	  beq-      .loc_0xA4
-	  lwz       r31, 0x4(r30)
-	  lwz       r0, 0x18(r28)
-	  cmplw     r31, r0
-	  bne-      .loc_0xA4
-	  lhz       r0, 0x1C(r28)
-	  cmplwi    r0, 0x1
-	  beq-      .loc_0xA4
-	  addi      r3, r1, 0x14
-	  lwz       r4, 0x8(r30)
-	  bl        -0x264BC
-	  lis       r4, 0x6761
-	  addi      r3, r1, 0x14
-	  addi      r4, r4, 0x7465
-	  bl        -0x6A38C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xA4
-	  lwz       r0, 0x184(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xA4
-	  lwz       r4, 0x94(r29)
-	  mr        r3, r28
-	  lwz       r0, 0x98(r29)
-	  stw       r4, 0x20(r28)
-	  stw       r0, 0x24(r28)
-	  lwz       r0, 0x9C(r29)
-	  stw       r0, 0x28(r28)
-	  bl        0x3E4
-
-	.loc_0xA4:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -140,26 +84,26 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
-		_32 = 1;
+		mIsAttackReady = 1;
 		break;
 	case KEY_Action1:
-		_32 = 0;
+		mIsAttackReady = 0;
 		break;
 	case KEY_Finished:
-		_30 = randFloat(4.0f);
+		mWorkTimer = (4.0f * gsys->getRand(1.0f));
 		startWorkMotion();
-		_32 = 0;
+		mIsAttackReady = 0;
 		break;
 	case KEY_PlayEffect:
 		if (!mPiki->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
 			Vector3f vec = mPiki->mEffectPos;
 			EffectParm parm(vec);
 			if (mWall->mObjType == OBJTYPE_SluiceSoft) {
-				UtEffectMgr::cast(11, parm);
+				UtEffectMgr::cast(KandoEffect::WallHit1, parm);
 			} else if (mWall->mObjType == OBJTYPE_SluiceHard) {
-				UtEffectMgr::cast(13, parm);
+				UtEffectMgr::cast(KandoEffect::WallHit2, parm);
 			} else {
-				UtEffectMgr::cast(14, parm);
+				UtEffectMgr::cast(KandoEffect::WallHit3, parm);
 			}
 		}
 		break;
@@ -184,7 +128,7 @@ int ActBreakWall::exec()
 		return gotoWall();
 
 	case STATE_BreakWall:
-		Vector3f sep = _20 - mPiki->mPosition;
+		Vector3f sep = mHitPikminPosition - mPiki->mPosition;
 		if (sep.length() > 5.0f) {
 			mState = STATE_GotoWall;
 			break;
@@ -215,10 +159,10 @@ int ActBreakWall::gotoWall()
  */
 void ActBreakWall::initBreakWall()
 {
-	_30 = randFloat(4.0f);
+	mWorkTimer = (4.0f * gsys->getRand(1.0f));
 	startWorkMotion();
-	mState = STATE_BreakWall;
-	_2C    = gameflow.mWorldClock.mMinutes;
+	mState           = STATE_BreakWall;
+	mStartAttackTime = gameflow.mWorldClock.mMinutes;
 }
 
 /*
@@ -228,7 +172,7 @@ void ActBreakWall::initBreakWall()
  */
 void ActBreakWall::startWorkMotion()
 {
-	if (_30 == 0) {
+	if (mWorkTimer == 0) {
 		if (mPiki->getCollidePlatformCreature()) {
 			Vector3f normal = mPiki->getCollidePlatformNormal();
 			if (normal.y > 0.7f) {
@@ -236,6 +180,7 @@ void ActBreakWall::startWorkMotion()
 				return;
 			}
 		}
+
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 	}
 }
@@ -247,35 +192,35 @@ void ActBreakWall::startWorkMotion()
  */
 int ActBreakWall::breakWall()
 {
-	if (_30 != 0) {
-		_30--;
-		if (_30 == 0) {
+	if (mWorkTimer != 0) {
+		mWorkTimer--;
+		if (mWorkTimer == 0) {
 			startWorkMotion();
 		}
 		return ACTOUT_Continue;
 	}
 
-	int val = (gameflow.mWorldClock.mMinutes - _2C + 60) % 60;
+	int timeSinceLastAttack = (gameflow.mWorldClock.mMinutes - mStartAttackTime + 60) % 60;
 	if (flowCont.mCurrentStage->mStageID == STAGE_Practice) {
-		val = 1;
+		timeSinceLastAttack = 1;
 	}
 
-	if (val > 0 && _32) {
-		InteractAttack attack(mPiki, nullptr, val / 60.0f, false);
-		_32 = 0;
+	if (timeSinceLastAttack > 0 && mIsAttackReady) {
+		InteractAttack attack(mPiki, nullptr, timeSinceLastAttack / 60.0f, false);
+		mIsAttackReady = 0;
 		if (!mWall->stimulate(attack)) {
 			if (mWall->isCompleted()) {
 				return ACTOUT_Success;
 			}
-			_31++;
-			if (_31 >= int(randFloat(3.0f)) + 3) {
-				mPiki->mEmotion = 1;
-				mPiki->_408     = 0;
+			mFailAttackCounter++;
+			if (mFailAttackCounter >= int((3.0f * gsys->getRand(1.0f))) + 3) {
+				mPiki->mEmotion     = PikiEmotion::Unk1;
+				mPiki->mActionState = 0;
 				return ACTOUT_Fail;
 			}
 		}
 
-		_2C = gameflow.mWorldClock.mMinutes;
+		mStartAttackTime = gameflow.mWorldClock.mMinutes;
 	}
 
 	mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);

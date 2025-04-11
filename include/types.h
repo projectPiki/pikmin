@@ -33,6 +33,10 @@ typedef volatile f64 vf64;
 typedef volatile f128 vf128;
 
 typedef u32 unknown;
+typedef u8 unknown8;
+typedef u16 unknown16;
+typedef u32 unknown32;
+typedef u64 unknown64;
 
 #define DEFINE_ENUM_TYPE(name, ...)  \
 	struct name {                    \
@@ -48,6 +52,10 @@ typedef u16 wchar_t;
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
+/* int<x>_t */
+typedef char int8_t;
+typedef short int16_t;
+typedef int int32_t;
 
 typedef int intptr_t;
 typedef unsigned int uintptr_t;

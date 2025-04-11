@@ -9,27 +9,47 @@
 
 /////////// Pellet Posy AI Actions ///////////
 
-/*
+/**
+ * @brief TODO
+ */
+enum TaiPalmFloatParams {
+	PALMPF_ChangingColorPeriod = TPF_COUNT, // 50
+	PALMPF_ChangingColorPeriodRandomRate,   // 51
+	PALMPF_GrowingPeriod,                   // 52
+	PALMPF_COUNT,                           // 53
+};
+
+/**
+ * @brief TODO
+ */
+enum TaiPalmStateID {
+	PALMSTATE_Dead   = 0,
+	PALMSTATE_Damage = 1,
+	PALMSTATE_Grow   = 2,
+	PALMSTATE_Normal = 3,
+	PALMSTATE_COUNT, // 4
+};
+
+/**
  * @brief TODO
  */
 struct TaiPalmSoundTable : public PaniSoundTable {
 	TaiPalmSoundTable();
 
-	// TODO: members
+	// _00-_08 = PaniSoundTable
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiPalmParameters : public TekiParameters {
 	TaiPalmParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_88 = TekiParameters
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TaiPalmStrategy : public TaiStrategy {
@@ -42,7 +62,7 @@ struct TaiPalmStrategy : public TaiStrategy {
 	int translateMotionIndex(Teki&, int);
 
 	// _00     = VTBL
-	// _00-_10 = TaiStrategy
+	// _00-_14 = TaiStrategy
 	// TODO: members
 };
 
@@ -50,8 +70,8 @@ struct TaiPalmStrategy : public TaiStrategy {
  * @brief TODO
  */
 struct TaiPalmMotionAction : public TaiMotionAction {
-	inline TaiPalmMotionAction() // TODO: this is a guess
-	    : TaiMotionAction(-1, 0)
+	TaiPalmMotionAction(int nextState, int p2)
+	    : TaiMotionAction(nextState, p2)
 	{
 	}
 
@@ -66,8 +86,8 @@ struct TaiPalmMotionAction : public TaiMotionAction {
  * @brief TODO
  */
 struct TaiPalmDyingAction : public TaiDyingAction {
-	inline TaiPalmDyingAction() // TODO: this is a guess
-	    : TaiDyingAction(0)
+	TaiPalmDyingAction(int p1)
+	    : TaiDyingAction(p1)
 	{
 	}
 
@@ -83,8 +103,8 @@ struct TaiPalmDyingAction : public TaiDyingAction {
  * @brief TODO
  */
 struct TaiPalmDamagingAction : public TaiDamagingAction {
-	inline TaiPalmDamagingAction() // TODO: this is a guess
-	    : TaiDamagingAction(0, 0)
+	TaiPalmDamagingAction(int nextState, int p2)
+	    : TaiDamagingAction(nextState, p2)
 	{
 	}
 
@@ -99,8 +119,8 @@ struct TaiPalmDamagingAction : public TaiDamagingAction {
  * @brief TODO
  */
 struct TaiPalmGrowingAction : public TaiAction {
-	inline TaiPalmGrowingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiPalmGrowingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -115,24 +135,25 @@ struct TaiPalmGrowingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiPalmGrowAction : public TaiAction {
-	inline TaiPalmGrowAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiPalmGrowAction(int nextState, int p2)
+	    : TaiAction(nextState)
 	{
+		mTimerIdx = p2;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mTimerIdx; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiPalmFlowerDamageAction : public TaiAction {
-	inline TaiPalmFlowerDamageAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiPalmFlowerDamageAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -147,8 +168,8 @@ struct TaiPalmFlowerDamageAction : public TaiAction {
  * @brief TODO
  */
 struct TaiPalmSunflowerAction : public TaiAction {
-	inline TaiPalmSunflowerAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiPalmSunflowerAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -163,8 +184,8 @@ struct TaiPalmSunflowerAction : public TaiAction {
  * @brief TODO
  */
 struct TaiPalmSettingPelletAction : public TaiAction {
-	inline TaiPalmSettingPelletAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiPalmSettingPelletAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -179,9 +200,12 @@ struct TaiPalmSettingPelletAction : public TaiAction {
  * @brief TODO
  */
 struct TaiPalmChangingColorAction : public TaiAction {
-	inline TaiPalmChangingColorAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiPalmChangingColorAction(int p1, f32 p2, f32 p3)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mTimerIdx      = p1;
+		mAvgTimerValue = p2;
+		mTimerRange    = p3;
 	}
 
 	virtual void start(Teki&); // _08
@@ -191,7 +215,9 @@ struct TaiPalmChangingColorAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	int mTimerIdx;      // _08
+	f32 mAvgTimerValue; // _0C
+	f32 mTimerRange;    // _10
 };
 
 #endif

@@ -81,6 +81,16 @@ struct GemAI : public SimpleAI {
 	/**
 	 * @brief TODO
 	 */
+	enum GemStateID {
+		GEM_Unk0 = 0,
+		GEM_Rise = 1,
+		GEM_Die  = 2,
+		GEM_COUNT, // 3
+	};
+
+	/**
+	 * @brief TODO
+	 */
 	struct Die : public SAIAction {
 
 		virtual void act(AICreature*); // _08

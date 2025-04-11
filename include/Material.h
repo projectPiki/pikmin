@@ -11,7 +11,19 @@
  * @note Size: 0x9C.
  */
 struct Material : public CoreNode {
-	Material();
+	Material()
+	    : CoreNode("material")
+	{
+		mIndex = 0;
+		_28    = 0;
+		_24    = 0;
+		_20    = 0;
+		_28    = 0;
+		mFlags = 0x100;
+		Colour().set(0xFF, 0xFF, 0xFF, 0xFF);
+		_8C             = 0;
+		mDisplayListPtr = nullptr;
+	}
 
 	virtual void read(RandomAccessStream&); // _0C
 	virtual void attach();                  // _10
@@ -21,10 +33,10 @@ struct Material : public CoreNode {
 	void setColour(struct Colour& color)
 	{
 		if (mLightingInfo._00 & 2) {
-			_90->r = color.r;
-			_90->g = color.g;
-			_90->b = color.b;
-			_90->a = color.a;
+			mTevInfo->mTevColRegs[0]._00.r = color.r;
+			mTevInfo->mTevColRegs[0]._00.g = color.g;
+			mTevInfo->mTevColRegs[0]._00.b = color.b;
+			mTevInfo->mTevColRegs[0]._00.a = color.a;
 		} else {
 			mColourInfo.mColour = color;
 		}
@@ -34,24 +46,31 @@ struct Material : public CoreNode {
 	// _00-_14 = CoreNode
 	u32 mIndex;                       // _14
 	u32 mFlags;                       // _18 (PVW & 1, TEX & 2, XLU & 4)
-	u32 mTextureIndex;                // _1C
-	u32 _20;                          // _20
-	u32 _24;                          // _24
+	int mTextureIndex;                // _1C
+	TexAttr* _20;                     // _20
+	Texture* _24;                     // _24
 	u32 _28;                          // _28
 	PVWPolygonColourInfo mColourInfo; // _2C [0x20]
 	PVWLightingInfo mLightingInfo;    // _4C [0x0C]
 	PVWPeInfo mPeInfo;                // _58 [0x10]
 	PVWTextureInfo mTextureInfo;      // _68 [0x24]
 	u32 _8C;                          // _8C
-	ShortColour* _90;                 // _90
+	PVWTevInfo* mTevInfo;             // _90
 	u32 mDisplayListSize;             // _94
-	u32* mDisplayListPtr;             // _98
+	u8* mDisplayListPtr;              // _98
 };
 
 /**
  * @brief TODO
  */
 struct MatobjInfo : public GfxobjInfo {
+	MatobjInfo()
+	{
+		mTarget = nullptr;
+		mString = "material";
+		mId.setID('_gfx');
+	}
+
 	virtual void attach() { mTarget->attach(); } // _08
 	virtual void detach() { }                    // _0C
 

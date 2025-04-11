@@ -50,22 +50,22 @@ struct Graphics {
 	int calcSphereLighting(Vector3f&, f32);
 	int calcBoxLighting(BoundBox&);
 
+	void addLight(Light* light)
+	{
+		light->initCore("");
+		gsys->mLightCount++;
+		mLight.add(light);
+	}
+
 	// _3B4 = VTBL
 	// In the DLL, take the offset of the variable (- 4) to get the real offset here
 	int _00;                                  // _00
 	u32 mRenderState;                         // _08
 	Matrix4f* mMatrix;                        // _0C
 	Matrix4f* mActiveMatrix;                  // _10
-	Light mLight;                             // _10
+	Light mLight;                             // _14
 	Camera* mCamera;                          // _2E4
-	Texture* mActiveTexture;                  // _2E8
-	u32 _2EC;                                 // _2EC
-	u32 _2F0;                                 // _2F0
-	u32 _2F4;                                 // _2F4
-	u32 _2F8;                                 // _2F8
-	u32 _2FC;                                 // _2FC
-	u32 _300;                                 // _300
-	u32 _304;                                 // _304
+	Texture* mActiveTexture[8];               // _2E8
 	u32 _308;                                 // _308
 	int mScreenWidth;                         // _30C
 	int mScreenHeight;                        // _310
@@ -77,7 +77,7 @@ struct Graphics {
 	u32 _324;                                 // _324
 	u32 _328;                                 // _328
 	u32 mBlendMode;                           // _32C, 0 is normal, 1 is additive, 2 is subtractive, 3 is alpha additive, 4 is no blend
-	u32 mCullMode;                            // _330
+	int mCullMode;                            // _330
 	u32 _334;                                 // _334
 	LightCamera* mLightCam;                   // _338
 	Vector3f _33C;                            // _33C
@@ -124,11 +124,11 @@ struct Graphics {
 	virtual void setViewportOffset(RectArea&) = 0;                                         // _4C
 	virtual void setScissor(RectArea&)        = 0;                                         // _50
 	virtual void setBlendMode(u8, u8, u8);                                                 // _54
-	virtual void setCullFront(int)                                                    = 0; // _58
-	virtual void setDepth(bool)                                                       = 0; // _5C
+	virtual int setCullFront(int)                                                     = 0; // _58
+	virtual u8 setDepth(bool)                                                         = 0; // _5C
 	virtual int setCBlending(int)                                                     = 0; // _60
 	virtual void setPointSize(f32)                                                    = 0; // _64
-	virtual void setLineWidth(f32)                                                    = 0; // _68
+	virtual f32 setLineWidth(f32)                                                     = 0; // _68
 	virtual void setCamera(Camera*)                                                   = 0; // _6C
 	virtual void calcViewMatrix(Matrix4f&, Matrix4f&)                                 = 0; // _70
 	virtual void useMatrix(Matrix4f&, int)                                            = 0; // _74
@@ -136,7 +136,7 @@ struct Graphics {
 	virtual void initMesh(Shape*)                                                     = 0; // _7C
 	virtual void drawSingleMatpoly(Shape*, Joint::MatPoly*)                           = 0; // _80
 	virtual void drawMeshes(Camera&, Shape*)                                          = 0; // _84
-	virtual void initParticle(bool)                                                   = 0; // _88
+	virtual bool initParticle(bool)                                                   = 0; // _88
 	virtual void drawParticle(Camera&, Vector3f&, f32)                                = 0; // _8C
 	virtual void drawRotParticle(Camera&, Vector3f&, u16, f32)                        = 0; // _90
 	virtual void drawCamParticle(Camera&, Vector3f&, Vector2f&, Vector2f&, Vector2f&) = 0; // _94
@@ -190,11 +190,11 @@ struct DGXGraphics : public Graphics {
 	virtual void setViewportOffset(RectArea&);                                         // _4C
 	virtual void setScissor(RectArea&);                                                // _50
 	virtual void setBlendMode(u8, u8, u8);                                             // _54
-	virtual void setCullFront(int);                                                    // _58
-	virtual void setDepth(bool);                                                       // _5C
+	virtual int setCullFront(int);                                                     // _58
+	virtual u8 setDepth(bool);                                                         // _5C
 	virtual int setCBlending(int);                                                     // _60
 	virtual void setPointSize(f32);                                                    // _64 (weak)
-	virtual void setLineWidth(f32);                                                    // _68
+	virtual f32 setLineWidth(f32);                                                     // _68
 	virtual void setCamera(Camera*);                                                   // _6C
 	virtual void calcViewMatrix(Matrix4f&, Matrix4f&);                                 // _70
 	virtual void useMatrix(Matrix4f&, int);                                            // _74
@@ -202,7 +202,7 @@ struct DGXGraphics : public Graphics {
 	virtual void initMesh(Shape*);                                                     // _7C
 	virtual void drawSingleMatpoly(Shape*, Joint::MatPoly*);                           // _80
 	virtual void drawMeshes(Camera&, Shape*);                                          // _84
-	virtual void initParticle(bool);                                                   // _88
+	virtual bool initParticle(bool);                                                   // _88
 	virtual void drawParticle(Camera&, Vector3f&, f32);                                // _8C
 	virtual void drawRotParticle(Camera&, Vector3f&, u16, f32);                        // _90
 	virtual void drawCamParticle(Camera&, Vector3f&, Vector2f&, Vector2f&, Vector2f&); // _94
@@ -234,7 +234,7 @@ struct DGXGraphics : public Graphics {
 	void doneRender();
 	void waitRetrace();
 	void waitPostRetrace();
-	void retraceProc(u32);
+	static void retraceProc(u32);
 	void setMatMatrices(Material*, int);
 	void setupVtxDesc(Shape*, Material*, Mesh*);
 
@@ -249,7 +249,31 @@ struct DGXGraphics : public Graphics {
 
 	// _3B4      = VTBL
 	// _000-_3B8 = Graphics
+	GXFifoObj* _3B8;
+	u8* _3BC;
+	u8* _3C0;
+	u8* _3C4;
+	u8* _3C8;
+	int _3CC;
+	u32 _3D0;
+	bool _3D4;
+	int _3D8;
+	int _3DC;
+
+	Matrix4f _3E0;
+
+	u8 _420[0x1F0];
+
+	u8* _610;
+	int _614;
+	int _618;
+	int _61C;
+	VIRetraceCallback _620;
+	OSMessageQueue _624;
+	OSMessage _644;
 };
+
+extern DGXGraphics* gfx;
 
 /**
  * @brief Stripped, only has one unused/inlined function in map

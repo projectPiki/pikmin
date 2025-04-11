@@ -8,8 +8,8 @@
  * @brief TODO
  */
 struct TaiVisibleTargetAction : public TaiAction {
-	inline TaiVisibleTargetAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiVisibleTargetAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -24,8 +24,8 @@ struct TaiVisibleTargetAction : public TaiAction {
  * @brief TODO
  */
 struct TaiContactTargetAction : public TaiAction {
-	inline TaiContactTargetAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiContactTargetAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -33,15 +33,14 @@ struct TaiContactTargetAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TaiSeparateTargetAction : public TaiAction {
-	inline TaiSeparateTargetAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiSeparateTargetAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -49,15 +48,14 @@ struct TaiSeparateTargetAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TaiTargetLostAction : public TaiAction {
-	inline TaiTargetLostAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTargetLostAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -72,40 +70,42 @@ struct TaiTargetLostAction : public TaiAction {
  * @brief TODO
  */
 struct TaiOutsideTerritoryAction : public TaiAction {
-	inline TaiOutsideTerritoryAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOutsideTerritoryAction(int nextState, f32 radius)
+	    : TaiAction(nextState)
 	{
+		mTerritoryRadius = radius;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 mTerritoryRadius; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiInsideTerritoryAction : public TaiAction {
-	inline TaiInsideTerritoryAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiInsideTerritoryAction(int nextState, f32 radius)
+	    : TaiAction(nextState)
 	{
+		mTerritoryRadius = radius;
 	}
 
 	virtual bool act(Teki&); // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 mTerritoryRadius; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiTargetVisibleNaviPikiAction : public TaiAction {
-	inline TaiTargetVisibleNaviPikiAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTargetVisibleNaviPikiAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -113,15 +113,14 @@ struct TaiTargetVisibleNaviPikiAction : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /**
  * @brief TODO
  */
 struct TaiTargetVisibleNaviAction : public TaiAction {
-	inline TaiTargetVisibleNaviAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTargetVisibleNaviAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 

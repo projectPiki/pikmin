@@ -7,10 +7,30 @@
 #include "gameflow.h"
 #include "DebugLog.h"
 #include "MapMgr.h"
+#include "Graphics.h"
+#include "FlowController.h"
+#include "PlayerState.h"
 #include "RumbleMgr.h"
 
-char* files[] = { "objects/bridge/brd_test.mod", "objects/bridge/slp_u_4.mod", "objects/bridge/slp_d_4.mod",
-	              "objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod" };
+WorkObjectMgr* workObjectMgr;
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	00009C
+ */
+DEFINE_ERROR()
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000F4
+ */
+DEFINE_PRINT("workObject");
+
+f32 bridgeFirstPos[5] = { 42.5f, 12.5f, 12.5f, 0.0f, 42.5f };
+f32 bridgeFirstY[5]   = { 10.0f, 0.0f, 0.0f, 0.0f, 10.0f };
+f32 bridgeGrad[5]     = { 0.0f, 8.0f, -8.0f, 0.0f, 0.0f };
 
 struct GenObjInfo {
 	s32 mType;
@@ -27,19 +47,8 @@ GenObjInfo shpInfo[] = {
 	{ 0, "bridge 4" }, { 1, "slope up 4" }, { 2, "slope down 4" }, { 3, "stone 10" }, { 4, "bridge 13" }, { 5, "meck" },
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
- */
-DEFINE_ERROR()
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
- */
-DEFINE_PRINT("workObject");
+char* files[] = { "objects/bridge/brd_test.mod", "objects/bridge/slp_u_4.mod", "objects/bridge/slp_d_4.mod",
+	              "objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod" };
 
 /*
  * --INFO--
@@ -48,7 +57,7 @@ DEFINE_PRINT("workObject");
  */
 void HinderRock::beginPush()
 {
-	mPushCount++;
+	mPushingPikmin++;
 }
 
 /*
@@ -58,8 +67,8 @@ void HinderRock::beginPush()
  */
 void HinderRock::endPush()
 {
-	if (mPushCount) {
-		mPushCount--;
+	if (mPushingPikmin) {
+		mPushingPikmin--;
 	}
 }
 
@@ -105,9 +114,16 @@ void WorkObject::doKill()
  * Address:	........
  * Size:	000070
  */
-int WorkObjectMgr::getNameIndex(char*)
+int WorkObjectMgr::getNameIndex(char* name)
 {
-	// UNUSED FUNCTION
+	// mType == 2 is the end
+	for (GenObjInfo* i = info; i->mType != 2; i++) {
+		if (!strcmp(i->mName, name)) {
+			return i->mType;
+		}
+	}
+
+	return -1;
 }
 
 /*
@@ -115,9 +131,16 @@ int WorkObjectMgr::getNameIndex(char*)
  * Address:	........
  * Size:	000038
  */
-char* WorkObjectMgr::getName(int)
+char* WorkObjectMgr::getName(int type)
 {
-	// UNUSED FUNCTION
+	// mType == 2 is the end
+	for (GenObjInfo* i = info; i->mType != 2; i++) {
+		if (i->mType == type) {
+			return i->mName;
+		}
+	}
+
+	return nullptr;
 }
 
 /*
@@ -125,8 +148,16 @@ char* WorkObjectMgr::getName(int)
  * Address:	........
  * Size:	000070
  */
-int WorkObjectMgr::getShapeNameIndex(char*)
+int WorkObjectMgr::getShapeNameIndex(char* name)
 {
+	// mType == 5 is the end
+	for (GenObjInfo* i = shpInfo; i->mType != 5; i++) {
+		if (!strcmp(i->mName, name)) {
+			return i->mType;
+		}
+	}
+
+	return -1;
 	// UNUSED FUNCTION
 }
 
@@ -135,8 +166,16 @@ int WorkObjectMgr::getShapeNameIndex(char*)
  * Address:	........
  * Size:	000038
  */
-char* WorkObjectMgr::getShapeName(int)
+char* WorkObjectMgr::getShapeName(int type)
 {
+	// mType == 5 is the end
+	for (GenObjInfo* i = shpInfo; i->mType != 5; i++) {
+		if (i->mType == type) {
+			return i->mName;
+		}
+	}
+
+	return nullptr;
 	// UNUSED FUNCTION
 }
 
@@ -178,9 +217,9 @@ void WorkObjectMgr::loadShapes()
  * Address:	........
  * Size:	000010
  */
-void WorkObjectMgr::addUseList(int)
+void WorkObjectMgr::addUseList(int index)
 {
-	// UNUSED FUNCTION
+	mShouldThisShapeLoad[index] = true;
 }
 
 /*
@@ -198,15 +237,19 @@ Creature* WorkObjectMgr::birth(int wObjType, int p2)
 		object                             = new Bridge(shape, true);
 		static_cast<Bridge*>(object)->_400 = p2;
 		if (p2 == 4) {
-			object->mGrid._14 = 3;
+			object->mGrid.setNeighbourSize(3);
 		} else {
-			object->mGrid._14 = 1;
+			object->mGrid.setNeighbourSize(1);
 		}
 		break;
 	case 1:
-		object            = new HinderRock(shape);
-		object->mGrid._14 = 1;
+		object = new HinderRock(shape);
+		object->mGrid.setNeighbourSize(1);
 		break;
+	}
+
+	if (!object) {
+		ERROR("DAME DAME\n");
 	}
 
 	WorkObjectNode* node = new WorkObjectNode(object);
@@ -219,56 +262,17 @@ Creature* WorkObjectMgr::birth(int wObjType, int p2)
  * Address:	8009B584
  * Size:	000088
  */
-Creature* WorkObjectMgr::getCreature(int)
+Creature* WorkObjectMgr::getCreature(int index)
 {
-	return nullptr;
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0
-	  lwz       r5, 0x38(r3)
-	  li        r6, 0
-	  ble-      .loc_0x70
-	  cmpwi     r4, 0x8
-	  subi      r3, r4, 0x8
-	  ble-      .loc_0x58
-	  addi      r0, r3, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r3, 0
-	  mtctr     r0
-	  ble-      .loc_0x58
+	WorkObjectNode* node = (WorkObjectNode*)mRootNode.mChild;
+	for (int i = 0; i < index; i++) {
+		node = (WorkObjectNode*)node->mNext;
+	}
 
-	.loc_0x30:
-	  lwz       r3, 0xC(r5)
-	  addi      r6, r6, 0x8
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r3, 0xC(r3)
-	  lwz       r5, 0xC(r3)
-	  bdnz+     .loc_0x30
+	if (!node)
+		return nullptr;
 
-	.loc_0x58:
-	  sub       r0, r4, r6
-	  cmpw      r6, r4
-	  mtctr     r0
-	  bge-      .loc_0x70
-
-	.loc_0x68:
-	  lwz       r5, 0xC(r5)
-	  bdnz+     .loc_0x68
-
-	.loc_0x70:
-	  cmplwi    r5, 0
-	  bne-      .loc_0x80
-	  li        r3, 0
-	  blr
-
-	.loc_0x80:
-	  lwz       r3, 0x14(r5)
-	  blr
-	*/
+	return node->mObject;
 }
 
 /*
@@ -296,33 +300,12 @@ int WorkObjectMgr::getNext(int idx)
  * Address:	8009B61C
  * Size:	000044
  */
-bool WorkObjectMgr::isDone(int)
+bool WorkObjectMgr::isDone(int id)
 {
+	if (id >= mRootNode.getChildCount()) {
+		return true;
+	}
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r3, 0x28
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  bl        -0x5AFB4
-	  cmpw      r31, r3
-	  blt-      .loc_0x2C
-	  li        r3, 0x1
-	  b         .loc_0x30
-
-	.loc_0x2C:
-	  li        r3, 0
-
-	.loc_0x30:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -332,19 +315,7 @@ bool WorkObjectMgr::isDone(int)
  */
 int WorkObjectMgr::getSize()
 {
-	return 0;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r3, 0x28
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x5AFF0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return mRootNode.getChildCount();
 }
 
 /*
@@ -353,9 +324,16 @@ int WorkObjectMgr::getSize()
  * Size:	00015C
  */
 GenObjectWorkObject::GenObjectWorkObject()
-    : GenObject(0, nullptr)
+    : GenObject('work', "仕事オブジェクト")
+    , mDay(this, 0, 0, 30, "p00", "day")
+    , mHour(this, 0, 0, 24, "p01", "hour")
+    , _38(this, 10, 0, 100, "p02", "動かすのに必要なピキ数") // "Number of pikis required to move"
+    , _48(this, 30.0f, 0.0f, 400.0f, "p03", "移動速度")      // "movement speed"
+
 {
-	// UNUSED FUNCTION
+	mObjectType = 0;
+	mShapeType  = 0;
+	mHinderRockPosition.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -363,51 +341,12 @@ GenObjectWorkObject::GenObjectWorkObject()
  * Address:	8009B684
  * Size:	0000A0
  */
-void GenObjectWorkObject::ramSaveParameters(RandomAccessStream&)
+void GenObjectWorkObject::ramSaveParameters(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r0, 0x24(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x34(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x44(r30)
-	  lwz       r12, 0x28(r12)
-	  rlwinm    r4,r0,0,24,31
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lfs       f1, 0x54(r30)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	data.writeByte(mDay());
+	data.writeByte(mHour());
+	data.writeByte(_38());
+	data.writeFloat(_48());
 }
 
 /*
@@ -415,51 +354,12 @@ void GenObjectWorkObject::ramSaveParameters(RandomAccessStream&)
  * Address:	8009B724
  * Size:	0000A0
  */
-void GenObjectWorkObject::ramLoadParameters(RandomAccessStream&)
+void GenObjectWorkObject::ramLoadParameters(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x24(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x34(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,24,31
-	  stw       r0, 0x44(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x54(r30)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mDay()  = data.readByte();
+	mHour() = data.readByte();
+	_38()   = data.readByte();
+	_48()   = data.readFloat();
 }
 
 /*
@@ -467,104 +367,9 @@ void GenObjectWorkObject::ramLoadParameters(RandomAccessStream&)
  * Address:	8009B7C4
  * Size:	00016C
  */
-static void makeObjectWorkObject()
+static GenObject* makeObjectWorkObject()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x6C
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  bl        -0x547DC
-	  mr.       r31, r3
-	  beq-      .loc_0x14C
-	  lis       r4, 0x802B
-	  lis       r3, 0x802B
-	  addi      r5, r4, 0x1030
-	  lis       r4, 0x776F
-	  addi      r6, r3, 0x103C
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x726B
-	  bl        0x3F4AC
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5490
-	  lis       r3, 0x802B
-	  stw       r0, 0x4(r31)
-	  addi      r0, r3, 0x1750
-	  stw       r0, 0x4(r31)
-	  addi      r5, r1, 0x24
-	  addi      r4, r31, 0
-	  lwz       r0, -0x5544(r13)
-	  addi      r3, r31, 0x18
-	  stw       r0, 0x2C(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r0, 0x24(r1)
-	  bl        -0x3CDC0
-	  lis       r3, 0x802A
-	  addi      r29, r3, 0x60C4
-	  stw       r29, 0x20(r31)
-	  li        r30, 0
-	  addi      r5, r1, 0x20
-	  stw       r30, 0x24(r31)
-	  mr        r4, r31
-	  addi      r3, r31, 0x28
-	  lwz       r0, -0x5540(r13)
-	  stw       r0, 0x34(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r0, 0x20(r1)
-	  bl        -0x3CDF4
-	  stw       r29, 0x30(r31)
-	  addi      r5, r1, 0x1C
-	  addi      r4, r31, 0
-	  stw       r30, 0x34(r31)
-	  addi      r3, r31, 0x38
-	  lwz       r0, -0x553C(r13)
-	  stw       r0, 0x3C(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r0, 0x1C(r1)
-	  bl        -0x3CE1C
-	  stw       r29, 0x40(r31)
-	  li        r0, 0xA
-	  addi      r5, r1, 0x18
-	  stw       r0, 0x44(r31)
-	  mr        r4, r31
-	  addi      r3, r31, 0x48
-	  lwz       r0, -0x5538(r13)
-	  stw       r0, 0x44(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x18(r1)
-	  bl        -0x3CE48
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x6098
-	  stw       r0, 0x50(r31)
-	  lfs       f0, -0x7330(r2)
-	  stfs      f0, 0x54(r31)
-	  lfs       f0, -0x732C(r2)
-	  stfs      f0, 0x68(r31)
-	  stfs      f0, 0x64(r31)
-	  stfs      f0, 0x60(r31)
-	  stw       r30, 0x58(r31)
-	  stw       r30, 0x5C(r31)
-	  lfs       f0, -0x5550(r13)
-	  stfs      f0, 0x60(r31)
-	  lfs       f0, -0x554C(r13)
-	  stfs      f0, 0x64(r31)
-	  lfs       f0, -0x5548(r13)
-	  stfs      f0, 0x68(r31)
-
-	.loc_0x14C:
-	  mr        r3, r31
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	return new GenObjectWorkObject;
 }
 
 /*
@@ -574,70 +379,7 @@ static void makeObjectWorkObject()
  */
 void GenObjectWorkObject::initialise()
 {
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x3074(r13)
-	  lwz       r5, 0x0(r7)
-	  lwz       r0, 0x4(r7)
-	  cmpw      r5, r0
-	  bgelr-
-	  lis       r4, 0x776F
-	  lwz       r3, 0x8(r7)
-	  addi      r4, r4, 0x726B
-	  rlwinm    r0,r5,4,0,27
-	  stwx      r4, r3, r0
-	  lis       r6, 0x800A
-	  lis       r4, 0x802B
-	  lwz       r0, 0x0(r7)
-	  lis       r3, 0x7630
-	  lwz       r5, 0x8(r7)
-	  subi      r6, r6, 0x483C
-	  rlwinm    r0,r0,4,0,27
-	  add       r5, r5, r0
-	  stw       r6, 0x4(r5)
-	  addi      r5, r4, 0x1050
-	  addi      r4, r3, 0x2E33
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r5, 0x8(r3)
-	  lwz       r0, 0x0(r7)
-	  lwz       r3, 0x8(r7)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r3, r0
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r7)
-	  blr
-	*/
-}
-
-// 10120600 in plugPiki.dll
-int WorkObject_GetTypeFromInfo(char* name)
-{
-	// mType == 2 is the end
-	for (GenObjInfo* i = info; i->mType != 2; i++) {
-		if (!strcmp(i->mName, name)) {
-			return i->mType;
-		}
-	}
-
-	return -1;
-}
-
-// 101206D0 in plugPiki.dll
-s32 WorkObject_GetTypeFromShapeInfo(char* name)
-{
-	// mType == 5 is the end
-	for (GenObjInfo* i = shpInfo; i->mType != 5; i++) {
-		if (!strcmp(i->mName, name)) {
-			return i->mType;
-		}
-	}
-
-	return -1;
+	GenObjectFactory::factory->registerMember('work', makeObjectWorkObject, "仕事オブジェクトを発生", 'v0.3');
 }
 
 /*
@@ -663,7 +405,7 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 
 	char name[256];
 	stream.readString(name, sizeof(name));
-	mObjectType = WorkObject_GetTypeFromInfo(name);
+	mObjectType = WorkObjectMgr::getNameIndex(name);
 
 	if (mObjectType == -1) {
 		PRINT("ItemGenerator * %s is not item\n", name);
@@ -672,7 +414,7 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 
 	if (mVersion == 'v0.2' || mVersion == 'v0.3') {
 		stream.readString(name, sizeof(name));
-		mShapeType = WorkObject_GetTypeFromShapeInfo(name);
+		mShapeType = WorkObjectMgr::getShapeNameIndex(name);
 
 		if (mShapeType == -1) {
 			PRINT("SHAPE NOT FOUND * %s \n", name);
@@ -688,32 +430,6 @@ void GenObjectWorkObject::doRead(RandomAccessStream& stream)
 		mHinderRockPosition.z = stream.readFloat();
 		PRINT("POS (%.1f %.1f %.1f)\n", mHinderRockPosition.x, mHinderRockPosition.y, mHinderRockPosition.z);
 	}
-}
-
-// 10120670 in plugPiki.dll
-char* WorkObject_GetNameFromType(int type)
-{
-	// mType == 2 is the end
-	for (GenObjInfo* i = info; i->mType != 2; i++) {
-		if (i->mType == type) {
-			return i->mName;
-		}
-	}
-
-	return nullptr;
-}
-
-// 101206D0 in plugPiki.dll
-char* WorkObject_GetNameFromShapeType(int type)
-{
-	// mType == 5 is the end
-	for (GenObjInfo* i = info; i->mType != 5; i++) {
-		if (i->mType == type) {
-			return i->mName;
-		}
-	}
-
-	return nullptr;
 }
 
 /*
@@ -737,8 +453,8 @@ void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
 		return;
 	}
 
-	stream.writeString(WorkObject_GetNameFromType(mObjectType));
-	stream.writeString(WorkObject_GetNameFromShapeType(mShapeType));
+	stream.writeString(WorkObjectMgr::getName(mObjectType));
+	stream.writeString(WorkObjectMgr::getShapeName(mShapeType));
 
 	// MOVE STONE (hinderrock)
 	if (mObjectType == 1) {
@@ -755,19 +471,11 @@ void GenObjectWorkObject::doWrite(RandomAccessStream& stream)
  * Address:	8009BD7C
  * Size:	000020
  */
-void GenObjectWorkObject::updateUseList(Generator*, int)
+void GenObjectWorkObject::updateUseList(Generator*, int i)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x5C(r3)
-	  cmpwi     r4, -0x1
-	  beqlr-
-	  lwz       r3, 0x3020(r13)
-	  li        r0, 0x1
-	  lwz       r3, 0x44(r3)
-	  stbx      r0, r3, r4
-	  blr
-	*/
+	if (mShapeType != -1) {
+		workObjectMgr->addUseList(mShapeType);
+	}
 }
 
 /*
@@ -775,116 +483,37 @@ void GenObjectWorkObject::updateUseList(Generator*, int)
  * Address:	8009BD9C
  * Size:	000180
  */
-Creature* GenObjectWorkObject::birth(BirthInfo&)
+Creature* GenObjectWorkObject::birth(BirthInfo& info)
 {
-	return nullptr;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x4C(r1)
-	  mr        r29, r3
-	  lwz       r0, 0x58(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x34
-	  li        r3, 0
-	  b         .loc_0x164
+	if (mObjectType == -1) {
+		return nullptr;
+	}
 
-	.loc_0x34:
-	  lwz       r3, 0x3020(r13)
-	  mr        r4, r0
-	  lwz       r5, 0x5C(r29)
-	  bl        -0x984
-	  mr.       r31, r3
-	  beq-      .loc_0x160
-	  lwz       r3, 0x2F00(r13)
-	  li        r4, 0x1
-	  lfs       f1, 0x0(r30)
-	  lfs       f2, 0x8(r30)
-	  bl        -0x33EF4
-	  stfs      f1, 0x4(r30)
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0xC(r30)
-	  lwz       r0, 0x10(r30)
-	  stw       r3, 0x88(r31)
-	  stw       r0, 0x8C(r31)
-	  lwz       r0, 0x14(r30)
-	  stw       r0, 0x90(r31)
-	  lfs       f0, 0x8C(r31)
-	  stfs      f0, 0xA0(r31)
-	  lwz       r0, 0x24(r30)
-	  stw       r0, 0x64(r31)
-	  lwz       r0, 0x58(r29)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0xD8
-	  lwz       r3, 0x60(r29)
-	  lwz       r0, 0x64(r29)
-	  stw       r3, 0x40C(r31)
-	  stw       r0, 0x410(r31)
-	  lwz       r0, 0x68(r29)
-	  stw       r0, 0x414(r31)
-	  lwz       r0, 0x44(r29)
-	  stw       r0, 0x41C(r31)
-	  lfs       f0, 0x54(r29)
-	  stfs      f0, 0x420(r31)
+	Creature* obj = workObjectMgr->birth(mObjectType, mShapeType);
+	if (obj) {
+		info.mPosition.y = mapMgr->getMinY(info.mPosition.x, info.mPosition.z, true);
+		obj->init(info.mPosition);
+		obj->mRotation      = info.mRotation;
+		obj->mFaceDirection = obj->mRotation.y;
+		obj->mGenerator     = info.mGenerator;
 
-	.loc_0xD8:
-	  lis       r3, 0x803A
-	  lwz       r5, 0x24(r29)
-	  subi      r3, r3, 0x2848
-	  lwz       r7, 0x34(r29)
-	  lfs       f0, 0x2DC(r3)
-	  lis       r0, 0x4330
-	  lfd       f1, -0x7328(r2)
-	  mr        r3, r31
-	  fctiwz    f0, f0
-	  li        r4, 0
-	  stfd      f0, 0x40(r1)
-	  lwz       r6, 0x44(r1)
-	  mullw     r5, r6, r5
-	  add       r5, r7, r5
-	  xoris     r5, r5, 0x8000
-	  stw       r5, 0x3C(r1)
-	  stw       r0, 0x38(r1)
-	  lfd       f0, 0x38(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x58(r31)
-	  lfs       f0, 0x58(r31)
-	  stfs      f0, 0x5C(r31)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x24(r30)
-	  lwz       r3, 0x28(r3)
-	  lwz       r0, 0x34(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x160
-	  lwz       r0, 0xC8(r31)
-	  oris      r0, r0, 0x1
-	  stw       r0, 0xC8(r31)
+		if (mObjectType == 1) {
+			HinderRock* box            = (HinderRock*)obj;
+			box->mDestinationPosition  = mHinderRockPosition;
+			box->mAmountPushersToStart = _38();
+			box->mPushSpeed            = _48();
+		}
 
-	.loc_0x160:
-	  mr        r3, r31
+		obj->mHealth    = mDay() * (int)gameflow.mWorldClock.mHoursInDay + mHour();
+		obj->mMaxHealth = obj->mHealth;
+		obj->startAI(0);
+		if (info.mGenerator->mGenType->mAdjustFaceDirection()) {
+			obj->enableFaceDirAdjust();
+		}
+	}
+	return obj;
 
-	.loc_0x164:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -894,110 +523,14 @@ Creature* GenObjectWorkObject::birth(BirthInfo&)
  */
 HinderRock::HinderRock(Shape* shape)
 {
-	_438 = shape;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r6, 0
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  li        r4, 0x26
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x14(r1)
-	  bl        0x59964
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x1944
-	  stw       r3, 0x0(r30)
-	  addi      r3, r3, 0x114
-	  li        r0, 0x26
-	  stw       r3, 0x2B8(r30)
-	  li        r3, 0x28
-	  stw       r0, 0x6C(r30)
-	  bl        -0x54F68
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x64
-	  bl        0x7CE0
-
-	.loc_0x64:
-	  stw       r29, 0x2C(r30)
-	  addi      r4, r30, 0
-	  li        r5, 0x4
-	  lwz       r3, 0x2C(r30)
-	  bl        0x7DA4
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x1438
-	  stw       r3, 0x0(r30)
-	  addi      r0, r3, 0x114
-	  lis       r3, 0x8003
-	  stw       r0, 0x2B8(r30)
-	  subi      r4, r3, 0x7D94
-	  addi      r3, r30, 0x3CC
-	  li        r5, 0
-	  li        r6, 0x10
-	  li        r7, 0x4
-	  bl        0x178AB0
-	  lfs       f0, -0x732C(r2)
-	  lis       r3, 0x8003
-	  addi      r4, r3, 0x5B24
-	  stfs      f0, 0x414(r30)
-	  addi      r3, r30, 0x460
-	  li        r5, 0
-	  stfs      f0, 0x410(r30)
-	  li        r6, 0xC
-	  li        r7, 0x2
-	  stfs      f0, 0x40C(r30)
-	  stfs      f0, 0x45C(r30)
-	  stfs      f0, 0x458(r30)
-	  stfs      f0, 0x454(r30)
-	  bl        0x178A78
-	  stw       r31, 0x438(r30)
-	  li        r3, 0x140
-	  lwz       r4, 0x438(r30)
-	  lwz       r0, 0x14(r4)
-	  ori       r0, r0, 0x10
-	  stw       r0, 0x14(r4)
-	  bl        -0x55010
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x11C
-	  mr        r4, r31
-	  bl        -0x3A040
-	  lis       r3, 0x802B
-	  addi      r0, r3, 0x16A0
-	  stw       r0, 0x0(r29)
-
-	.loc_0x11C:
-	  stw       r29, 0x434(r30)
-	  li        r3, 0x14
-	  lwz       r4, 0x434(r30)
-	  stw       r30, 0x28(r4)
-	  bl        -0x55044
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x144
-	  li        r4, 0x14
-	  bl        -0x1342C
-
-	.loc_0x144:
-	  stw       r29, 0x220(r30)
-	  li        r0, 0
-	  addi      r3, r30, 0
-	  stw       r0, 0x448(r30)
-	  stw       r0, 0x450(r30)
-	  stw       r0, 0x44C(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mBoxShape = shape;
+	mBoxShape->mSystemFlags |= 0x10;
+	mBuildShape            = new DynBuildShape(shape);
+	mBuildShape->mCreature = this;
+	mCollInfo              = new CollInfo(20);
+	mEfxA                  = 0;
+	mEfxC                  = 0;
+	mEfxB                  = 0;
 }
 
 /*
@@ -1005,45 +538,14 @@ HinderRock::HinderRock(Shape* shape)
  * Address:	8009C094
  * Size:	000074
  */
-bool HinderRock::insideSafeArea(Vector3f&)
+bool HinderRock::insideSafeArea(Vector3f& pos)
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  lfs       f2, 0x98(r3)
-	  lfs       f3, 0x9C(r3)
-	  lfs       f1, 0x94(r3)
-	  lfs       f0, -0x7320(r2)
-	  stfs      f1, 0x14(r1)
-	  stfs      f2, 0x18(r1)
-	  stfs      f3, 0x1C(r1)
-	  lfs       f1, 0x40C(r3)
-	  stfs      f1, 0x20(r1)
-	  lfs       f1, 0x410(r3)
-	  stfs      f1, 0x24(r1)
-	  lfs       f1, 0x414(r3)
-	  addi      r3, r1, 0x14
-	  stfs      f1, 0x28(r1)
-	  stfs      f0, 0x2C(r1)
-	  bl        -0x15418
-	  lfs       f0, -0x731C(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x60
-	  li        r3, 0
-	  b         .loc_0x64
-
-	.loc_0x60:
-	  li        r3, 0x1
-
-	.loc_0x64:
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f pos2 = mPosition;
+	Cylinder cyl(pos2, mDestinationPosition, 1.0f);
+	if (cyl.get2dDist(pos) < 120.0f) {
+		return false;
+	}
+	return true;
 }
 
 /*
@@ -1053,122 +555,27 @@ bool HinderRock::insideSafeArea(Vector3f&)
  */
 void HinderRock::doLoad(RandomAccessStream& stream)
 {
-	_43C       = stream.readByte();
-	_418       = 0;
-	mPushCount = 0;
+	mState             = stream.readByte();
+	mTotalPushStrength = 0;
+	mPushingPikmin     = 0;
 
-	_440 = 0.0f;
+	mPushMoveTimer = 0.0f;
 
-	if (_43C == 2) {
-		mPosition   = _40C;
+	if (mState == 2) {
+		mPosition   = mDestinationPosition;
 		mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, false);
-		for (int i = 0; i < 10; ++i) { }
-		_424.setFlag(true);
+		for (int i = 0; i < 10; i++) {
+			PRINT("goal Y = %f\n", mDestinationPosition.y);
+		}
+
+		mWayPoint->setFlag(true);
+		PRINT("********* ROCK WAYPOINT(%d) ON\n", mWayPoint->mIndex);
 	}
 
-	Vector3f scale(1.0f, 1.0f, 1.0f);
-	mWorldMtx.makeSRT(scale, mRotation, mPosition);
+	;
+	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
 
-	DynBuildShape* shape = mBuildShape;
-	// TODO: wtf?
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x4(r4)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x43C(r31)
-	  li        r0, 0
-	  stw       r0, 0x418(r31)
-	  sth       r0, 0x3C8(r31)
-	  lfs       f0, -0x732C(r2)
-	  stfs      f0, 0x440(r31)
-	  lbz       r0, 0x43C(r31)
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0xA0
-	  lwz       r3, 0x40C(r31)
-	  li        r4, 0
-	  lwz       r0, 0x410(r31)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x414(r31)
-	  stw       r0, 0x9C(r31)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x94(r31)
-	  lfs       f2, 0x9C(r31)
-	  bl        -0x34278
-	  li        r3, 0x8
-	  stfs      f1, 0x98(r31)
-	  subfic    r0, r3, 0xA
-	  cmpwi     r3, 0xA
-	  mtctr     r0
-	  bge-      .loc_0x94
-
-	.loc_0x90:
-	  bdnz-     .loc_0x90
-
-	.loc_0x94:
-	  lwz       r3, 0x424(r31)
-	  li        r4, 0x1
-	  bl        0x55CC
-
-	.loc_0xA0:
-	  lfs       f0, -0x5534(r13)
-	  addi      r4, r1, 0x14
-	  lfs       f1, -0x5530(r13)
-	  addi      r3, r31, 0x228
-	  stfs      f0, 0x14(r1)
-	  lfs       f0, -0x552C(r13)
-	  addi      r5, r31, 0x88
-	  stfs      f1, 0x18(r1)
-	  addi      r6, r31, 0x94
-	  stfs      f0, 0x1C(r1)
-	  bl        -0x5E0DC
-	  lwz       r4, 0x434(r31)
-	  lwz       r3, 0x228(r31)
-	  lwz       r0, 0x22C(r31)
-	  stw       r3, 0x5C(r4)
-	  stw       r0, 0x60(r4)
-	  lwz       r3, 0x230(r31)
-	  lwz       r0, 0x234(r31)
-	  stw       r3, 0x64(r4)
-	  stw       r0, 0x68(r4)
-	  lwz       r3, 0x238(r31)
-	  lwz       r0, 0x23C(r31)
-	  stw       r3, 0x6C(r4)
-	  stw       r0, 0x70(r4)
-	  lwz       r3, 0x240(r31)
-	  lwz       r0, 0x244(r31)
-	  stw       r3, 0x74(r4)
-	  stw       r0, 0x78(r4)
-	  lwz       r3, 0x248(r31)
-	  lwz       r0, 0x24C(r31)
-	  stw       r3, 0x7C(r4)
-	  stw       r0, 0x80(r4)
-	  lwz       r3, 0x250(r31)
-	  lwz       r0, 0x254(r31)
-	  stw       r3, 0x84(r4)
-	  stw       r0, 0x88(r4)
-	  lwz       r3, 0x258(r31)
-	  lwz       r0, 0x25C(r31)
-	  stw       r3, 0x8C(r4)
-	  stw       r0, 0x90(r4)
-	  lwz       r3, 0x260(r31)
-	  lwz       r0, 0x264(r31)
-	  stw       r3, 0x94(r4)
-	  stw       r0, 0x98(r4)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mBuildShape->mTransformMtx = mWorldMtx;
 }
 
 /*
@@ -1178,27 +585,8 @@ void HinderRock::doLoad(RandomAccessStream& stream)
  */
 void HinderRock::doSave(RandomAccessStream& stream)
 {
-	stream.writeByte((u32)_438);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x4(r3)
-	  lbz       r4, 0x43C(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	stream.writeByte(mState);
+	PRINT("\tdoSave ******** STATE = %d WIDX = %d\n", mState, mWayPoint->mIndex);
 }
 
 /*
@@ -1208,12 +596,7 @@ void HinderRock::doSave(RandomAccessStream& stream)
  */
 f32 HinderRock::getCentreSize()
 {
-	return 0.0f;
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x430(r3)
-	  blr
-	*/
+	return mCentreSize;
 }
 
 /*
@@ -1223,15 +606,7 @@ f32 HinderRock::getCentreSize()
  */
 bool HinderRock::isFinished()
 {
-	return false;
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x43C(r3)
-	  subfic    r0, r0, 0x2
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
+	return mState == 2;
 }
 
 /*
@@ -1241,61 +616,12 @@ bool HinderRock::isFinished()
  */
 Vector3f HinderRock::getZVector()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB0(r1)
-	  stfd      f31, 0xA8(r1)
-	  stfd      f30, 0xA0(r1)
-	  stfd      f29, 0x98(r1)
-	  stw       r31, 0x94(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x90(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x5C
-	  bl        0x600
-	  lfs       f31, 0x5C(r1)
-	  mr        r4, r31
-	  lfs       f30, 0x60(r1)
-	  addi      r3, r1, 0x50
-	  lfs       f29, 0x64(r1)
-	  li        r5, 0x3
-	  bl        0x5E4
-	  lfs       f0, 0x50(r1)
-	  lfs       f1, 0x54(r1)
-	  fsubs     f31, f0, f31
-	  lfs       f0, 0x58(r1)
-	  fsubs     f30, f1, f30
-	  fsubs     f29, f0, f29
-	  fmuls     f1, f31, f31
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x8E704
-	  lfs       f0, -0x732C(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x98
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	Vector3f v1 = getVertex(0);
+	Vector3f v2 = getVertex(3);
 
-	.loc_0x98:
-	  stfs      f31, 0x0(r30)
-	  stfs      f30, 0x4(r30)
-	  stfs      f29, 0x8(r30)
-	  lwz       r0, 0xB4(r1)
-	  lfd       f31, 0xA8(r1)
-	  lfd       f30, 0xA0(r1)
-	  lfd       f29, 0x98(r1)
-	  lwz       r31, 0x94(r1)
-	  lwz       r30, 0x90(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f diff = v2 - v1;
+	diff.normalise();
+	return diff;
 }
 
 /*
@@ -1305,61 +631,12 @@ Vector3f HinderRock::getZVector()
  */
 Vector3f HinderRock::getXVector()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB0(r1)
-	  stfd      f31, 0xA8(r1)
-	  stfd      f30, 0xA0(r1)
-	  stfd      f29, 0x98(r1)
-	  stw       r31, 0x94(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x90(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r1, 0x5C
-	  bl        0x538
-	  lfs       f31, 0x5C(r1)
-	  mr        r4, r31
-	  lfs       f30, 0x60(r1)
-	  addi      r3, r1, 0x50
-	  lfs       f29, 0x64(r1)
-	  li        r5, 0x1
-	  bl        0x51C
-	  lfs       f0, 0x50(r1)
-	  lfs       f1, 0x54(r1)
-	  fsubs     f31, f0, f31
-	  lfs       f0, 0x58(r1)
-	  fsubs     f30, f1, f30
-	  fsubs     f29, f0, f29
-	  fmuls     f1, f31, f31
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x8E7CC
-	  lfs       f0, -0x732C(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x98
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	Vector3f v1 = getVertex(0);
+	Vector3f v2 = getVertex(1);
 
-	.loc_0x98:
-	  stfs      f31, 0x0(r30)
-	  stfs      f30, 0x4(r30)
-	  stfs      f29, 0x8(r30)
-	  lwz       r0, 0xB4(r1)
-	  lfd       f31, 0xA8(r1)
-	  lfd       f30, 0xA0(r1)
-	  lfd       f29, 0x98(r1)
-	  lwz       r31, 0x94(r1)
-	  lwz       r30, 0x90(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f diff = v2 - v1;
+	diff.normalise();
+	return diff;
 }
 
 /*
@@ -1367,9 +644,18 @@ Vector3f HinderRock::getXVector()
  * Address:	........
  * Size:	0000CC
  */
-int HinderRock::getPlaneIndex(Vector3f&)
+int HinderRock::getPlaneIndex(Vector3f& pos)
 {
-	// UNUSED FUNCTION
+	if (mPlanes[0].dist(pos) < 0.0f) {
+		return 0;
+	}
+	if (mPlanes[1].dist(pos) < 0.0f) {
+		return 1;
+	}
+	if (mPlanes[2].dist(pos) < 0.0f) {
+		return 2;
+	}
+	return 3;
 }
 
 /*
@@ -1377,81 +663,22 @@ int HinderRock::getPlaneIndex(Vector3f&)
  * Address:	8009C458
  * Size:	0000F8
  */
-u8 HinderRock::getPlaneFlag(Vector3f&)
+u8 HinderRock::getPlaneFlag(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  lfs       f3, 0x3CC(r3)
-	  li        r0, 0
-	  lfs       f1, 0x0(r4)
-	  lfs       f2, 0x3D0(r3)
-	  lfs       f0, 0x4(r4)
-	  fmuls     f6, f3, f1
-	  lfs       f3, 0x3D4(r3)
-	  fmuls     f5, f2, f0
-	  lfs       f2, 0x8(r4)
-	  lfs       f4, 0x3D8(r3)
-	  fmuls     f7, f3, f2
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fadds     f5, f7, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0x48
-	  li        r0, 0x1
-
-	.loc_0x48:
-	  lfs       f4, 0x3EC(r3)
-	  lfs       f3, 0x3F0(r3)
-	  fmuls     f5, f4, f1
-	  lfs       f6, 0x3F4(r3)
-	  fmuls     f3, f3, f0
-	  lfs       f4, 0x3F8(r3)
-	  fmuls     f6, f6, f2
-	  fadds     f5, f5, f3
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0x80
-	  li        r0, 0x4
-
-	.loc_0x80:
-	  lfs       f4, 0x3DC(r3)
-	  lfs       f3, 0x3E0(r3)
-	  fmuls     f5, f4, f1
-	  lfs       f6, 0x3E4(r3)
-	  fmuls     f3, f3, f0
-	  lfs       f4, 0x3E8(r3)
-	  fmuls     f6, f6, f2
-	  fadds     f5, f5, f3
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0xB8
-	  ori       r0, r0, 0x2
-
-	.loc_0xB8:
-	  lfs       f4, 0x3FC(r3)
-	  lfs       f3, 0x400(r3)
-	  fmuls     f4, f4, f1
-	  lfs       f5, 0x404(r3)
-	  fmuls     f0, f3, f0
-	  lfs       f1, 0x408(r3)
-	  fmuls     f3, f5, f2
-	  fadds     f2, f4, f0
-	  lfs       f0, -0x732C(r2)
-	  fadds     f2, f3, f2
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xF0
-	  ori       r0, r0, 0x8
-
-	.loc_0xF0:
-	  mr        r3, r0
-	  blr
-	*/
+	u8 res = 0;
+	if (mPlanes[0].dist(pos) > 0.0f) {
+		res = 1;
+	}
+	if (mPlanes[2].dist(pos) > 0.0f) {
+		res = 4;
+	}
+	if (mPlanes[1].dist(pos) > 0.0f) {
+		res |= 2;
+	}
+	if (mPlanes[3].dist(pos) > 0.0f) {
+		res |= 8;
+	}
+	return res;
 }
 
 /*
@@ -1459,8 +686,15 @@ u8 HinderRock::getPlaneFlag(Vector3f&)
  * Address:	........
  * Size:	0000E8
  */
-Vector3f HinderRock::getTangentPos(f32)
+Vector3f HinderRock::getTangentPos(f32 mod)
 {
+	Vector3f v1 = getVertex(2);
+	Vector3f v2 = getVertex(3);
+
+	Vector3f diff = v2 - v1;
+	diff          = diff * mod + v1;
+	diff.normalise();
+	return diff;
 	// UNUSED FUNCTION
 }
 
@@ -1471,249 +705,26 @@ Vector3f HinderRock::getTangentPos(f32)
  */
 void HinderRock::updatePlanes()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x1B0(r1)
-	  stfd      f31, 0x1A8(r1)
-	  stfd      f30, 0x1A0(r1)
-	  stfd      f29, 0x198(r1)
-	  stfd      f28, 0x190(r1)
-	  stfd      f27, 0x188(r1)
-	  stfd      f26, 0x180(r1)
-	  stfd      f25, 0x178(r1)
-	  stfd      f24, 0x170(r1)
-	  stw       r31, 0x16C(r1)
-	  addi      r31, r3, 0
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0x134
-	  bl        .loc_0x3A8
-	  lfs       f1, 0x134(r1)
-	  mr        r4, r31
-	  lfs       f0, 0x138(r1)
-	  addi      r3, r1, 0x128
-	  stfs      f1, 0x158(r1)
-	  li        r5, 0x2
-	  stfs      f0, 0x15C(r1)
-	  lfs       f0, 0x13C(r1)
-	  stfs      f0, 0x160(r1)
-	  bl        .loc_0x3A8
-	  lfs       f31, 0x128(r1)
-	  mr        r4, r31
-	  lfs       f30, 0x12C(r1)
-	  addi      r3, r1, 0x11C
-	  lfs       f29, 0x130(r1)
-	  li        r5, 0x3
-	  bl        .loc_0x3A8
-	  lfs       f28, 0x11C(r1)
-	  lfs       f0, 0x158(r1)
-	  lfs       f27, 0x120(r1)
-	  fsubs     f0, f0, f28
-	  lfs       f26, 0x124(r1)
-	  stfs      f0, 0xBC(r1)
-	  lfs       f0, 0xBC(r1)
-	  stfs      f0, 0x110(r1)
-	  lfs       f25, 0x15C(r1)
-	  fsubs     f0, f25, f27
-	  stfs      f0, 0x114(r1)
-	  lfs       f24, 0x160(r1)
-	  fsubs     f0, f24, f26
-	  stfs      f0, 0x118(r1)
-	  lwz       r3, 0x110(r1)
-	  lwz       r0, 0x114(r1)
-	  stw       r3, 0x3CC(r31)
-	  stw       r0, 0x3D0(r31)
-	  lwz       r0, 0x118(r1)
-	  stw       r0, 0x3D4(r31)
-	  lfs       f1, 0x3CC(r31)
-	  lfs       f0, 0x3D0(r31)
-	  lfs       f2, 0x3D4(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x8EA08
-	  lfs       f0, -0x732C(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x12C
-	  lfs       f0, 0x3CC(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3CC(r31)
-	  lfs       f0, 0x3D0(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3D0(r31)
-	  lfs       f0, 0x3D4(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3D4(r31)
+	Vector3f v0 = getVertex(0);
+	Vector3f v2 = getVertex(2);
+	Vector3f v3 = getVertex(3);
 
-	.loc_0x12C:
-	  stfs      f1, 0x42C(r31)
-	  fsubs     f2, f31, f28
-	  fsubs     f1, f30, f27
-	  lfs       f5, -0x5528(r13)
-	  fsubs     f0, f29, f26
-	  lfs       f3, 0x3CC(r31)
-	  lfs       f4, 0x3D4(r31)
-	  fmuls     f3, f3, f5
-	  fmuls     f4, f4, f5
-	  stfs      f3, 0xAC(r1)
-	  lfs       f3, 0xAC(r1)
-	  stfs      f3, 0x104(r1)
-	  lfs       f3, 0x3D0(r31)
-	  fmuls     f3, f3, f5
-	  stfs      f3, 0x108(r1)
-	  stfs      f4, 0x10C(r1)
-	  lwz       r3, 0x104(r1)
-	  lwz       r0, 0x108(r1)
-	  stw       r3, 0x3EC(r31)
-	  stw       r0, 0x3F0(r31)
-	  lwz       r0, 0x10C(r1)
-	  stw       r0, 0x3F4(r31)
-	  stfs      f2, 0xA0(r1)
-	  lfs       f2, 0xA0(r1)
-	  stfs      f2, 0xF8(r1)
-	  stfs      f1, 0xFC(r1)
-	  stfs      f0, 0x100(r1)
-	  lwz       r3, 0xF8(r1)
-	  lwz       r0, 0xFC(r1)
-	  stw       r3, 0x3DC(r31)
-	  stw       r0, 0x3E0(r31)
-	  lwz       r0, 0x100(r1)
-	  stw       r0, 0x3E4(r31)
-	  lfs       f1, 0x3DC(r31)
-	  lfs       f0, 0x3E0(r31)
-	  lfs       f2, 0x3E4(r31)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x8EAE0
-	  lfs       f0, -0x732C(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x204
-	  lfs       f0, 0x3DC(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3DC(r31)
-	  lfs       f0, 0x3E0(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3E0(r31)
-	  lfs       f0, 0x3E4(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3E4(r31)
+	mPlanes[0].mNormal = v0 - v3;
+	_42C               = mPlanes->mNormal.normalise();
+	mPlanes[2].mNormal = mPlanes[0].mNormal * -1.0f;
 
-	.loc_0x204:
-	  stfs      f1, 0x430(r31)
-	  fadds     f2, f31, f28
-	  fadds     f1, f30, f27
-	  mr        r4, r31
-	  lfs       f5, -0x5524(r13)
-	  lfs       f0, 0x3DC(r31)
-	  lfs       f4, 0x3E4(r31)
-	  fmuls     f3, f0, f5
-	  addi      r3, r1, 0xC8
-	  fmuls     f4, f4, f5
-	  li        r5, 0x1
-	  fadds     f0, f29, f26
-	  stfs      f3, 0x90(r1)
-	  lfs       f3, 0x90(r1)
-	  stfs      f3, 0xEC(r1)
-	  lfs       f3, 0x3E0(r31)
-	  fmuls     f3, f3, f5
-	  stfs      f3, 0xF0(r1)
-	  stfs      f4, 0xF4(r1)
-	  lwz       r6, 0xEC(r1)
-	  lwz       r0, 0xF0(r1)
-	  stw       r6, 0x3FC(r31)
-	  stw       r0, 0x400(r31)
-	  lwz       r0, 0xF4(r1)
-	  stw       r0, 0x404(r31)
-	  lfs       f3, 0x3D0(r31)
-	  lfs       f6, 0x3D4(r31)
-	  lfs       f5, 0x3CC(r31)
-	  fmuls     f3, f3, f25
-	  lfs       f4, 0x158(r1)
-	  fmuls     f6, f6, f24
-	  fmuls     f4, f5, f4
-	  fadds     f3, f4, f3
-	  fadds     f3, f6, f3
-	  stfs      f3, 0x3D8(r31)
-	  lfs       f4, 0x3DC(r31)
-	  lfs       f3, 0x3E0(r31)
-	  lfs       f5, 0x3E4(r31)
-	  fmuls     f4, f4, f31
-	  fmuls     f3, f3, f30
-	  fmuls     f5, f5, f29
-	  fadds     f3, f4, f3
-	  fadds     f3, f5, f3
-	  stfs      f3, 0x3E8(r31)
-	  lfs       f4, 0x3EC(r31)
-	  lfs       f3, 0x3F0(r31)
-	  lfs       f5, 0x3F4(r31)
-	  fmuls     f4, f4, f28
-	  fmuls     f3, f3, f27
-	  fmuls     f5, f5, f26
-	  fadds     f3, f4, f3
-	  fadds     f3, f5, f3
-	  stfs      f3, 0x3F8(r31)
-	  lfs       f4, 0x3FC(r31)
-	  lfs       f3, 0x400(r31)
-	  lfs       f5, 0x404(r31)
-	  fmuls     f4, f4, f28
-	  fmuls     f3, f3, f27
-	  fmuls     f5, f5, f26
-	  fadds     f3, f4, f3
-	  fadds     f3, f5, f3
-	  stfs      f3, 0x408(r31)
-	  lfs       f3, -0x5520(r13)
-	  stfs      f2, 0x84(r1)
-	  fmuls     f1, f1, f3
-	  lfs       f2, 0x84(r1)
-	  fmuls     f0, f0, f3
-	  fmuls     f2, f2, f3
-	  stfs      f2, 0x70(r1)
-	  lfs       f2, 0x70(r1)
-	  stfs      f2, 0xE0(r1)
-	  stfs      f1, 0xE4(r1)
-	  stfs      f0, 0xE8(r1)
-	  lwz       r6, 0xE0(r1)
-	  lwz       r0, 0xE4(r1)
-	  stw       r6, 0x454(r31)
-	  stw       r0, 0x458(r31)
-	  lwz       r0, 0xE8(r1)
-	  stw       r0, 0x45C(r31)
-	  lwz       r6, 0x158(r1)
-	  lwz       r0, 0x15C(r1)
-	  stw       r6, 0x460(r31)
-	  stw       r0, 0x464(r31)
-	  lwz       r0, 0x160(r1)
-	  stw       r0, 0x468(r31)
-	  bl        .loc_0x3A8
-	  lwz       r3, 0xC8(r1)
-	  lwz       r0, 0xCC(r1)
-	  stw       r3, 0x46C(r31)
-	  stw       r0, 0x470(r31)
-	  lwz       r0, 0xD0(r1)
-	  stw       r0, 0x474(r31)
-	  lwz       r0, 0x1B4(r1)
-	  lfd       f31, 0x1A8(r1)
-	  lfd       f30, 0x1A0(r1)
-	  lfd       f29, 0x198(r1)
-	  lfd       f28, 0x190(r1)
-	  lfd       f27, 0x188(r1)
-	  lfd       f26, 0x180(r1)
-	  lfd       f25, 0x178(r1)
-	  lfd       f24, 0x170(r1)
-	  lwz       r31, 0x16C(r1)
-	  addi      r1, r1, 0x1B0
-	  mtlr      r0
-	  blr
+	mPlanes[1].mNormal = v2 - v3;
+	mCentreSize        = mPlanes[1].mNormal.normalise();
+	mPlanes[3].mNormal = mPlanes[1].mNormal * -1.0f;
 
-	.loc_0x3A8:
-	*/
+	mPlanes[0].mOffset = mPlanes[0].mNormal.DP(v0);
+	mPlanes[1].mOffset = mPlanes[1].mNormal.DP(v2);
+	mPlanes[2].mOffset = mPlanes[2].mNormal.DP(v3);
+	mPlanes[3].mOffset = mPlanes[3].mNormal.DP(v3);
+
+	mMoveFrontEfxPos   = 0.5f * (v2 + v3);
+	mMoveSideEfxPos[0] = v0;
+	mMoveSideEfxPos[1] = getVertex(1);
 }
 
 /*
@@ -1753,44 +764,13 @@ Vector3f HinderRock::getVertex(int vtx)
  * Address:	8009C998
  * Size:	000074
  */
-bool HinderRock::stimulate(Interaction&)
+bool HinderRock::stimulate(Interaction& act)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x44
-	  li        r3, 0
-	  b         .loc_0x5C
+	if (!act.actCommon(this)) {
+		return false;
+	}
 
-	.loc_0x44:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x5C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return act.actHinderRock(this);
 }
 
 /*
@@ -1798,18 +778,11 @@ bool HinderRock::stimulate(Interaction&)
  * Address:	8009CA0C
  * Size:	000018
  */
-bool InteractPush::actHinderRock(HinderRock*)
+bool InteractPush::actHinderRock(HinderRock* obj)
 {
+	Vector3f unused(0.0f, 110.0f, 0.0f);
+	obj->mTotalPushStrength += mStrength;
 	return true;
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x8(r3)
-	  li        r3, 0x1
-	  lwz       r5, 0x418(r4)
-	  add       r0, r5, r0
-	  stw       r0, 0x418(r4)
-	  blr
-	*/
 }
 
 /*
@@ -1817,59 +790,17 @@ bool InteractPush::actHinderRock(HinderRock*)
  * Address:	8009CA24
  * Size:	0000C0
  */
-void HinderRock::refresh(Graphics&)
+void HinderRock::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  mr        r31, r4
-	  stw       r30, 0x50(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x2E4(r4)
-	  addi      r4, r30, 0x228
-	  addi      r3, r5, 0x1E0
-	  addi      r5, r1, 0x10
-	  bl        -0x5E97C
-	  lwz       r3, 0x438(r30)
-	  addi      r4, r31, 0
-	  addi      r5, r1, 0x10
-	  li        r6, 0
-	  bl        -0x67750
-	  lwz       r4, 0x434(r30)
-	  addi      r3, r4, 0x5C
-	  addi      r4, r4, 0x9C
-	  bl        -0x5E638
-	  lwz       r12, 0x3B4(r31)
-	  lis       r4, 0x803A
-	  mr        r3, r31
-	  lwz       r12, 0x74(r12)
-	  subi      r4, r4, 0x77C0
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x434(r30)
-	  bl        -0x3AB88
-	  lwz       r3, 0x438(r30)
-	  mr        r4, r31
-	  lwz       r5, 0x2E4(r31)
-	  li        r6, 0
-	  bl        -0x6C644
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  bl        -0x12FD4
-	  mr        r3, r30
-	  bl        -0x578
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	Matrix4f mtx;
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
+	mBoxShape->updateAnim(gfx, mtx, nullptr);
+	mBuildShape->mTransformMtx.inverse(&mBuildShape->mInverseMatrix);
+	gfx.useMatrix(Matrix4f::ident, 0);
+	mBuildShape->updateContext();
+	mBoxShape->drawshape(gfx, *gfx.mCamera, nullptr);
+	mCollInfo->updateInfo(gfx, false);
+	updatePlanes();
 }
 
 /*
@@ -1877,93 +808,13 @@ void HinderRock::refresh(Graphics&)
  * Address:	8009CAE4
  * Size:	00011C
  */
-bool HinderRock::workable(Vector3f&)
+bool HinderRock::workable(Vector3f& pos)
 {
-	return false;
-	/*
-	.loc_0x0:
-	  lfs       f3, 0x3CC(r3)
-	  li        r0, 0
-	  lfs       f1, 0x0(r4)
-	  lfs       f2, 0x3D0(r3)
-	  lfs       f0, 0x4(r4)
-	  fmuls     f6, f3, f1
-	  lfs       f3, 0x3D4(r3)
-	  fmuls     f5, f2, f0
-	  lfs       f2, 0x8(r4)
-	  lfs       f4, 0x3D8(r3)
-	  fmuls     f7, f3, f2
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fadds     f5, f7, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0x48
-	  li        r0, 0x1
-
-	.loc_0x48:
-	  lfs       f4, 0x3EC(r3)
-	  lfs       f3, 0x3F0(r3)
-	  fmuls     f5, f4, f1
-	  lfs       f6, 0x3F4(r3)
-	  fmuls     f3, f3, f0
-	  lfs       f4, 0x3F8(r3)
-	  fmuls     f6, f6, f2
-	  fadds     f5, f5, f3
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0x80
-	  li        r0, 0x4
-
-	.loc_0x80:
-	  lfs       f4, 0x3DC(r3)
-	  lfs       f3, 0x3E0(r3)
-	  fmuls     f5, f4, f1
-	  lfs       f6, 0x3E4(r3)
-	  fmuls     f3, f3, f0
-	  lfs       f4, 0x3E8(r3)
-	  fmuls     f6, f6, f2
-	  fadds     f5, f5, f3
-	  lfs       f3, -0x732C(r2)
-	  fadds     f5, f6, f5
-	  fsubs     f4, f5, f4
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0xB8
-	  ori       r0, r0, 0x2
-
-	.loc_0xB8:
-	  lfs       f4, 0x3FC(r3)
-	  lfs       f3, 0x400(r3)
-	  fmuls     f4, f4, f1
-	  lfs       f5, 0x404(r3)
-	  fmuls     f0, f3, f0
-	  lfs       f1, 0x408(r3)
-	  fmuls     f3, f5, f2
-	  fadds     f2, f4, f0
-	  lfs       f0, -0x732C(r2)
-	  fadds     f2, f3, f2
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xF0
-	  ori       r0, r0, 0x8
-
-	.loc_0xF0:
-	  rlwinm    r0,r0,0,24,31
-	  cmplwi    r0, 0x6
-	  beq-      .loc_0x114
-	  cmplwi    r0, 0x4
-	  beq-      .loc_0x114
-	  cmplwi    r0, 0xC
-	  beq-      .loc_0x114
-	  li        r3, 0
-	  blr
-
-	.loc_0x114:
-	  li        r3, 0x1
-	  blr
-	*/
+	u8 flag = getPlaneFlag(pos);
+	if (flag != 6 && flag != 4 && flag != 12) {
+		return false;
+	}
+	return true;
 }
 
 /*
@@ -1973,6 +824,142 @@ bool HinderRock::workable(Vector3f&)
  */
 void HinderRock::update()
 {
+	if (mSeContext) {
+		mSeContext->update();
+	}
+	mLifeGauge.mPosition = mPosition;
+	mLifeGauge.mPosition.y += 40.0f;
+	mIsMoving = false;
+	mGrid.updateGrid(mPosition);
+	mGrid.updateAIGrid(mPosition, false);
+
+	if (mPushingPikmin) {
+		mLifeGauge.countOn(mLifeGauge.mPosition, mPushingPikmin, mAmountPushersToStart);
+	}
+
+	if (mPushingPikmin == 0) {
+		if (++mFxCooldownTimer > 10) {
+			mFxCooldownTimer = 10;
+			mLifeGauge.countOff();
+			if (mEfxA) {
+				mEfxA->stopGen();
+			}
+			if (mEfxB) {
+				mEfxB->stopGen();
+			}
+			if (mEfxC) {
+				mEfxC->stopGen();
+			}
+		}
+	} else {
+		mFxCooldownTimer = 0;
+	}
+
+	if (mState == 0 && mPushingPikmin >= mAmountPushersToStart) {
+
+		if (mEfxA == nullptr) {
+			mEfxA = effectMgr->create(EffectMgr::EFF_HinderRock_MoveFront, mMoveFrontEfxPos, nullptr, nullptr);
+			if (mEfxA) {
+				mEfxA->setEmitPosPtr(&mMoveFrontEfxPos);
+				// cannot get the stack around this right
+				mEfxA->setEmitDir(getXVector());
+			}
+		} else {
+			mEfxA->startGen();
+		}
+
+		if (mEfxB == nullptr) {
+			mEfxB = effectMgr->create(EffectMgr::EFF_HinderRock_MoveSides, mMoveSideEfxPos[0], nullptr, nullptr);
+			if (mEfxB) {
+				mEfxB->setEmitPosPtr(&mMoveSideEfxPos[0]);
+				Vector3f gravityPos = mPlanes[3].mNormal * 0.096f;
+				mEfxB->setGravityField(gravityPos, true);
+			}
+		} else {
+			mEfxB->startGen();
+		}
+
+		if (mEfxC == nullptr) {
+			mEfxC = effectMgr->create(EffectMgr::EFF_HinderRock_MoveSides, mMoveSideEfxPos[1], nullptr, nullptr);
+			if (mEfxC) {
+				mEfxC->setEmitPosPtr(&mMoveSideEfxPos[1]);
+				Vector3f test = mPlanes[1].mNormal * 0.096f;
+				mEfxC->setGravityField(test, true);
+			}
+		} else {
+			mEfxC->startGen();
+		}
+
+		if (flowCont.mCurrentStage->mStageID == STAGE_Practice && !playerState->mDemoFlags.isFlag(DEMOFLAG_StartBoxPush)) {
+			playerState->mDemoFlags.setFlag(DEMOFLAG_StartBoxPush, nullptr);
+		}
+
+		mIsMoving = true;
+		mVelocity = mDestinationPosition - mPosition;
+		if (std::sqrtf(mVelocity.x * mVelocity.x + mVelocity.z * mVelocity.z) < 4.0f) {
+			mPosition = mDestinationPosition;
+			mState    = 2;
+			mWayPoint->setFlag(true);
+			seSystem->playSysSe(SYSSE_WORK_FINISH);
+			PRINT("つきざました！\n"); // 'it's here!'
+			if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FinishBoxPush)) {
+				PRINT("************ MOVEROCK END *************\n");
+				playerState->mDemoFlags.setFlag(DEMOFLAG_FinishBoxPush, nullptr);
+			}
+			if (mEfxA) {
+				effectMgr->kill(mEfxA, false);
+				mEfxA = nullptr;
+			}
+			if (mEfxB) {
+				effectMgr->kill(mEfxB, false);
+				mEfxB = nullptr;
+			}
+			if (mEfxC) {
+				effectMgr->kill(mEfxC, false);
+				mEfxC = nullptr;
+			}
+			return;
+		}
+		mVelocity.normalise();
+		mVelocity.multiply(mPushSpeed * 0.5f);
+		moveNew(gsys->getFrameTime());
+		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
+		mBuildShape->mTransformMtx = mWorldMtx;
+		mPushMoveTimer += gsys->getFrameTime();
+		if (!mIsSoundPlaying) {
+			mSeContext->playSound(SEB_BOXMOVE);
+			mIsSoundPlaying = true;
+		}
+		if (mPushMoveTimer > 1.0f) {
+			mState         = 1;
+			mPushMoveTimer = gsys->getRand(1.0f) * 0.1f + 0.2f;
+		}
+	} else if (mState == 1) {
+		mIsSoundPlaying = false;
+		mIsMoving       = true;
+		mPushMoveTimer -= gsys->getFrameTime();
+		if (mPushMoveTimer <= 0.0f) {
+			mState         = 0;
+			mPushMoveTimer = 0.0f;
+		}
+		mLifeGauge.countOn(mLifeGauge.mPosition, mPushingPikmin, mAmountPushersToStart);
+	} else if ((mVelocity.x * mVelocity.x + mVelocity.z * mVelocity.z) < 1.0f) {
+		if (mEfxA) {
+			mEfxA->stopGen();
+		}
+		if (mEfxB) {
+			mEfxB->stopGen();
+		}
+		if (mEfxC) {
+			mEfxC->stopGen();
+		}
+	}
+	mTotalPushStrength = 0;
+
+	// these are just to try and fix stack, both are fake
+	PRINT("thing", mState ? "yes" : "no", mState ? "yes" : "no", mState ? "yes" : "no", mState ? "yes" : "no", mState ? "yes" : "no",
+	      mState ? "yes" : "no");
+	f32 badcompiler[8];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2565,111 +1552,25 @@ void HinderRock::update()
  */
 void HinderRock::startAI(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  li        r6, 0
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  li        r31, 0
-	  stw       r30, 0x50(r1)
-	  addi      r30, r3, 0
-	  sth       r31, 0x3C8(r3)
-	  stb       r31, 0x43D(r3)
-	  stb       r31, 0x428(r3)
-	  lwz       r3, 0x220(r3)
-	  lwz       r4, 0x438(r30)
-	  bl        -0x13904
-	  lfs       f3, 0x40C(r30)
-	  lfs       f1, 0x94(r30)
-	  lfs       f2, 0x414(r30)
-	  lfs       f0, 0x9C(r30)
-	  fsubs     f1, f3, f1
-	  fsubs     f2, f2, f0
-	  bl        0x17E574
-	  stfs      f1, 0xA0(r30)
-	  addi      r4, r1, 0x2C
-	  addi      r3, r30, 0x228
-	  lfs       f0, -0x5508(r13)
-	  addi      r5, r30, 0x88
-	  addi      r6, r30, 0x94
-	  stfs      f0, 0x88(r30)
-	  stfs      f1, 0x8C(r30)
-	  lfs       f0, -0x5504(r13)
-	  stfs      f0, 0x90(r30)
-	  lfs       f0, -0x5500(r13)
-	  lfs       f1, -0x54FC(r13)
-	  stfs      f0, 0x2C(r1)
-	  lfs       f0, -0x54F8(r13)
-	  stfs      f1, 0x30(r1)
-	  stfs      f0, 0x34(r1)
-	  bl        -0x5F3D4
-	  lwz       r4, 0x434(r30)
-	  lwz       r3, 0x228(r30)
-	  lwz       r0, 0x22C(r30)
-	  stw       r3, 0x5C(r4)
-	  stw       r0, 0x60(r4)
-	  lwz       r3, 0x230(r30)
-	  lwz       r0, 0x234(r30)
-	  stw       r3, 0x64(r4)
-	  stw       r0, 0x68(r4)
-	  lwz       r3, 0x238(r30)
-	  lwz       r0, 0x23C(r30)
-	  stw       r3, 0x6C(r4)
-	  stw       r0, 0x70(r4)
-	  lwz       r3, 0x240(r30)
-	  lwz       r0, 0x244(r30)
-	  stw       r3, 0x74(r4)
-	  stw       r0, 0x78(r4)
-	  lwz       r3, 0x248(r30)
-	  lwz       r0, 0x24C(r30)
-	  stw       r3, 0x7C(r4)
-	  stw       r0, 0x80(r4)
-	  lwz       r3, 0x250(r30)
-	  lwz       r0, 0x254(r30)
-	  stw       r3, 0x84(r4)
-	  stw       r0, 0x88(r4)
-	  lwz       r3, 0x258(r30)
-	  lwz       r0, 0x25C(r30)
-	  stw       r3, 0x8C(r4)
-	  stw       r0, 0x90(r4)
-	  lwz       r3, 0x260(r30)
-	  lwz       r0, 0x264(r30)
-	  stw       r3, 0x94(r4)
-	  stw       r0, 0x98(r4)
-	  lwz       r3, 0x2F00(r13)
-	  lwz       r4, 0x434(r30)
-	  lwz       r3, 0x88(r3)
-	  bl        -0x5CF84
-	  stw       r31, 0x418(r30)
-	  lis       r3, 0x7465
-	  addi      r4, r3, 0x7374
-	  stb       r31, 0x43C(r30)
-	  addi      r5, r30, 0x94
-	  lfs       f0, -0x732C(r2)
-	  stfs      f0, 0x440(r30)
-	  lwz       r3, 0x302C(r13)
-	  bl        0x3FBC
-	  stw       r3, 0x424(r30)
-	  li        r4, 0
-	  lwz       r3, 0x424(r30)
-	  bl        0x41E0
-	  stb       r31, 0x445(r30)
-	  li        r4, 0
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x94(r30)
-	  lfs       f2, 0x9C(r30)
-	  bl        -0x356A4
-	  stfs      f1, 0x98(r30)
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	mPushingPikmin   = 0;
+	mFxCooldownTimer = false;
+	_428             = false;
+	mCollInfo->initInfo(mBoxShape, nullptr, nullptr);
+	Vector3f dist  = mDestinationPosition - mPosition;
+	f32 y          = atan2f(dist.x, dist.z);
+	mFaceDirection = y;
+	mRotation.set(0.0f, y, 0.0f);
+	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
+	mBuildShape->mTransformMtx = mWorldMtx;
+	mapMgr->mCollShape->add(mBuildShape);
+	mTotalPushStrength = 0;
+	mState             = 0;
+	mPushMoveTimer     = 0.0f;
+	mWayPoint          = routeMgr->findNearestWayPointAll('test', mPosition);
+	mWayPoint->setFlag(false);
+	PRINT("********* ROCK WAYPOINT(%d) OFF\n", mWayPoint->mIsOpen);
+	mIsSoundPlaying = false;
+	mPosition.y     = mapMgr->getMinY(mPosition.x, mPosition.z, false);
 }
 
 /*
@@ -2677,111 +1578,43 @@ void HinderRock::startAI(int)
  * Address:	8009D5C8
  * Size:	000154
  */
-bool Bridge::workable(Vector3f&)
+bool Bridge::workable(Vector3f& pos)
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stfd      f31, 0x28(r1)
-	  addi      r5, r1, 0x1C
-	  addi      r6, r1, 0x18
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  bl        0x1484
-	  mr        r3, r30
-	  bl        0xC44
-	  addi      r4, r3, 0
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x48
-	  li        r3, 0
-	  b         .loc_0x138
+	f32 x, z;
+	getBridgePos(pos, x, z);
+	int stage = getFirstUnfinishedStage();
+	if (stage == -1) {
+		PRINT("workable: fst = -1 failed\n");
+		return false;
+	}
 
-	.loc_0x48:
-	  mr        r3, r30
-	  bl        0x13FC
-	  lfs       f2, -0x72F0(r2)
-	  lfs       f3, 0x18(r1)
-	  fadds     f0, f2, f1
-	  fsubs     f2, f3, f2
-	  stfs      f2, 0x18(r1)
-	  lfs       f2, 0x18(r1)
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x78
-	  li        r3, 0
-	  b         .loc_0x138
+	f32 stageZ = getStageZ(stage);
+	z          = z - 10.0f;
+	if (z > stageZ + 10.0f) {
+		PRINT("endZ is %.1f z is %.1f\n", stageZ, z);
+		return false;
+	}
 
-	.loc_0x78:
-	  lfs       f0, -0x732C(r2)
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xF4
-	  fcmpo     cr0, f2, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xF4
-	  lfs       f0, 0x1C(r1)
-	  mr        r3, r30
-	  fabs      f31, f0
-	  bl        0x16B8
-	  lfs       f0, -0x7300(r2)
-	  fmuls     f0, f0, f1
-	  fcmpo     cr0, f31, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xC0
-	  li        r3, 0
-	  b         .loc_0x138
+	if (z >= 0.0f && z <= stageZ) {
+		if (absF(x) >= getStageWidth() * 0.5f) {
+			PRINT("haba dame %.1f\n", x);
+			return false;
+		}
 
-	.loc_0xC0:
-	  lwz       r3, 0x2F00(r13)
-	  li        r4, 0x1
-	  lfs       f1, 0x0(r31)
-	  lfs       f2, 0x8(r31)
-	  bl        -0x35794
-	  lfs       f2, -0x72F0(r2)
-	  lfs       f0, 0x4(r31)
-	  fsubs     f1, f1, f2
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x108
-	  li        r3, 0
-	  b         .loc_0x138
+		if (mapMgr->getMinY(pos.x, pos.z, true) - 10.0f >= pos.y) {
+			PRINT("lower (max=%.1f srt.t.y=%.1f)\n", x, pos.y);
+			return false;
+		}
+	} else if (z < -100.0f) {
+		return false;
+	}
 
-	.loc_0xF4:
-	  lfs       f0, -0x72EC(r2)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x108
-	  li        r3, 0
-	  b         .loc_0x138
+	if (absF(x) >= getStageWidth() * 0.7f) {
+		PRINT("haba dame 2 %.1f\n", x);
+		return false;
+	}
 
-	.loc_0x108:
-	  lfs       f0, 0x1C(r1)
-	  mr        r3, r30
-	  fabs      f31, f0
-	  bl        0x1644
-	  lfs       f0, -0x72E8(r2)
-	  fmuls     f0, f0, f1
-	  fcmpo     cr0, f31, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x134
-	  li        r3, 0
-	  b         .loc_0x138
-
-	.loc_0x134:
-	  li        r3, 0x1
-
-	.loc_0x138:
-	  lwz       r0, 0x34(r1)
-	  lfd       f31, 0x28(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -2791,16 +1624,16 @@ bool Bridge::workable(Vector3f&)
  */
 Bridge::Bridge(Shape* shape, bool a3)
 {
-	_3C8 = a3;
-	_40C = shape;
+	mDoUseJointSegments = a3;
+	mBridgeShape        = shape;
 
-	_40C->mSystemFlags |= 0x10;
-	_40C->mSystemFlags |= 0x4;
+	mBridgeShape->mSystemFlags |= 0x10;
+	mBridgeShape->mSystemFlags |= 0x4;
 
 	mBuildShape            = new DynBuildShape(shape);
 	mBuildShape->mCreature = this;
 
-	if (_3C8) {
+	if (mDoUseJointSegments) {
 		mStageCount  = shape->mJointList->getChildCount() / 2;
 		mStageJoints = new Joint*[mStageCount * 2];
 
@@ -2833,7 +1666,7 @@ Bridge::Bridge(Shape* shape, bool a3)
  */
 bool Bridge::stimulate(Interaction& i)
 {
-	if (!i.actCommon((Creature*)this)) {
+	if (!i.actCommon(this)) {
 		return false;
 	}
 
@@ -2848,84 +1681,21 @@ bool Bridge::stimulate(Interaction& i)
 void Bridge::refresh(Graphics& gfx)
 {
 	Matrix4f animMtx;
-	// gfx.something multiply to, something
-	_40C->updateAnim(gfx, animMtx, nullptr);
+	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, animMtx);
+	mBridgeShape->updateAnim(gfx, animMtx, nullptr);
 	mBuildShape->mTransformMtx.inverse(&mBuildShape->mInverseMatrix);
-	_414.animate(nullptr);
+	mDynMaterial.animate(nullptr);
+	gfx.useMatrix(Matrix4f::ident, 0);
 	mBuildShape->updateContext();
-	// _40C->drawshape(gfx, )
+	mBridgeShape->drawshape(gfx, *gfx.mCamera, &mDynMaterial);
 
-	if (!_3C8) {
+	if (!mDoUseJointSegments) {
 		mCollInfo->updateInfo(gfx, false);
 	}
 
 	if (_424) {
 		_424--;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  mr        r31, r4
-	  stw       r30, 0x50(r1)
-	  addi      r30, r3, 0
-	  lwz       r5, 0x2E4(r4)
-	  addi      r4, r30, 0x228
-	  addi      r3, r5, 0x1E0
-	  addi      r5, r1, 0x10
-	  bl        -0x5F9AC
-	  lwz       r3, 0x40C(r30)
-	  addi      r4, r31, 0
-	  addi      r5, r1, 0x10
-	  li        r6, 0
-	  bl        -0x68780
-	  lwz       r4, 0x408(r30)
-	  addi      r3, r4, 0x5C
-	  addi      r4, r4, 0x9C
-	  bl        -0x5F668
-	  addi      r3, r30, 0x414
-	  li        r4, 0
-	  bl        -0x6EA14
-	  lwz       r12, 0x3B4(r31)
-	  lis       r4, 0x803A
-	  mr        r3, r31
-	  lwz       r12, 0x74(r12)
-	  subi      r4, r4, 0x77C0
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x408(r30)
-	  bl        -0x3BBC4
-	  lwz       r3, 0x40C(r30)
-	  mr        r4, r31
-	  lwz       r5, 0x2E4(r31)
-	  addi      r6, r30, 0x414
-	  bl        -0x6D680
-	  lbz       r0, 0x3C8(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xB8
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  bl        -0x1401C
-
-	.loc_0xB8:
-	  lbz       r3, 0x424(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xCC
-	  subi      r0, r3, 0x1
-	  stb       r0, 0x424(r30)
-
-	.loc_0xCC:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -2935,69 +1705,31 @@ void Bridge::refresh(Graphics& gfx)
  */
 void Bridge::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x2C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x24
-	  bl        0x6394
+	if (mSeContext) {
+		mSeContext->update();
+	}
+	mGrid.updateGrid(mPosition);
+	mGrid.updateAIGrid(mPosition, false);
 
-	.loc_0x24:
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  bl        -0x9644
-	  addi      r3, r31, 0x40
-	  addi      r4, r31, 0x94
-	  li        r5, 0
-	  bl        -0x95B8
-	  lbz       r3, 0x3CC(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xCC
-	  subi      r0, r3, 0x1
-	  stb       r0, 0x3CC(r31)
-	  lbz       r0, 0x3CC(r31)
-	  cmplwi    r0, 0x1E
-	  bgt-      .loc_0xCC
-	  lha       r4, 0x3CA(r31)
-	  cmpwi     r4, -0x1
-	  beq-      .loc_0xCC
-	  addi      r3, r31, 0
-	  li        r5, 0x1
-	  bl        0xA08
-	  li        r0, -0x1
-	  sth       r0, 0x3CA(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x164(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xCC
-	  lwz       r3, 0x3F8(r31)
-	  li        r4, 0x1
-	  bl        0x3B94
-	  lwz       r3, 0x3FC(r31)
-	  li        r4, 0x1
-	  bl        0x3B88
-	  li        r3, 0x11B
-	  bl        0x7784
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x20
-	  addi      r3, r3, 0x70
-	  bl        -0x1A200
+	if (_3CC == 0) {
+		return;
+	}
+	_3CC--;
+	if (_3CC > 30) {
+		return;
+	}
 
-	.loc_0xCC:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (_3CA != -1) {
+		setStageFinished(_3CA, true);
+		_3CA = -1;
+		if (isFinished()) {
+			mStartWaypoint->setFlag(true);
+			mEndWaypoint->setFlag(true);
+			seSystem->playSysSe(SYSSE_WORK_FINISH);
+			PRINT("橋：完成しました\n"); // 'bridge: completed'
+			playerState->mResultFlags.setOn(RESFLAG_BrokenBridge);
+		}
+	}
 }
 
 /*
@@ -3007,219 +1739,43 @@ void Bridge::update()
  */
 void Bridge::startAI(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x3
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  stb       r0, 0x424(r3)
-	  lbz       r0, 0x3C8(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x48
-	  lwz       r3, 0x220(r31)
-	  li        r5, 0
-	  lwz       r4, 0x40C(r31)
-	  li        r6, 0
-	  bl        -0x140F8
+	_424 = 3;
+	if (!mDoUseJointSegments) {
+		mCollInfo->initInfo(mBridgeShape, nullptr, nullptr);
+	}
+	mBridgeShape->makeInstance(mDynMaterial, 0);
+	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
+	mBuildShape->mTransformMtx = mWorldMtx;
+	mapMgr->mCollShape->add(mBuildShape);
 
-	.loc_0x48:
-	  lwz       r3, 0x40C(r31)
-	  addi      r4, r31, 0x414
-	  li        r5, 0
-	  bl        -0x6E340
-	  lfs       f0, -0x54F4(r13)
-	  addi      r4, r1, 0x28
-	  lfs       f1, -0x54F0(r13)
-	  addi      r3, r31, 0x228
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x54EC(r13)
-	  addi      r5, r31, 0x88
-	  stfs      f1, 0x2C(r1)
-	  addi      r6, r31, 0x94
-	  stfs      f0, 0x30(r1)
-	  bl        -0x5FBA4
-	  lwz       r4, 0x408(r31)
-	  lwz       r3, 0x228(r31)
-	  lwz       r0, 0x22C(r31)
-	  stw       r3, 0x5C(r4)
-	  stw       r0, 0x60(r4)
-	  lwz       r3, 0x230(r31)
-	  lwz       r0, 0x234(r31)
-	  stw       r3, 0x64(r4)
-	  stw       r0, 0x68(r4)
-	  lwz       r3, 0x238(r31)
-	  lwz       r0, 0x23C(r31)
-	  stw       r3, 0x6C(r4)
-	  stw       r0, 0x70(r4)
-	  lwz       r3, 0x240(r31)
-	  lwz       r0, 0x244(r31)
-	  stw       r3, 0x74(r4)
-	  stw       r0, 0x78(r4)
-	  lwz       r3, 0x248(r31)
-	  lwz       r0, 0x24C(r31)
-	  stw       r3, 0x7C(r4)
-	  stw       r0, 0x80(r4)
-	  lwz       r3, 0x250(r31)
-	  lwz       r0, 0x254(r31)
-	  stw       r3, 0x84(r4)
-	  stw       r0, 0x88(r4)
-	  lwz       r3, 0x258(r31)
-	  lwz       r0, 0x25C(r31)
-	  stw       r3, 0x8C(r4)
-	  stw       r0, 0x90(r4)
-	  lwz       r3, 0x260(r31)
-	  lwz       r0, 0x264(r31)
-	  stw       r3, 0x94(r4)
-	  stw       r0, 0x98(r4)
-	  lwz       r3, 0x2F00(r13)
-	  lwz       r4, 0x408(r31)
-	  lwz       r3, 0x88(r3)
-	  bl        -0x5D754
-	  lbz       r0, 0x3C8(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1C0
-	  lfs       f0, -0x732C(r2)
-	  li        r5, 0
-	  li        r4, 0
-	  b         .loc_0x144
+	if (mDoUseJointSegments) {
+		for (int i = 0; i < mStageCount; i++) {
+			mStageProgressList[i] = 0.0f;
+		}
+		for (int i = 0; i < mStageCount * 2; i++) {
+			mBuildShape->jointVisible(mStageJoints[i]->mIndex, false);
+		}
+		mBuildShape->jointVisible(mStageJoints[0]->mIndex, true);
+	} else {
+		for (int i = 0; i < mStageCount; i++) {
+			mStageProgressList[i] = 0.0f;
+			setStageFinished(i, false);
+		}
+	}
 
-	.loc_0x134:
-	  lwz       r3, 0x3D0(r31)
-	  addi      r5, r5, 0x1
-	  stfsx     f0, r3, r4
-	  addi      r4, r4, 0x4
+	mStartWaypoint = routeMgr->findNearestWayPointAll('test', mPosition);
+	mStartWaypoint->_40 |= 4;
+	mStartWaypoint->mPosition = getStartPos();
+	mStartWaypoint->setFlag(false);
 
-	.loc_0x144:
-	  lwz       r0, 0x404(r31)
-	  cmpw      r5, r0
-	  blt+      .loc_0x134
-	  li        r29, 0
-	  rlwinm    r30,r29,2,0,29
-	  b         .loc_0x188
+	Vector3f pos = getStagePos(mStageCount - 1);
+	mEndWaypoint = routeMgr->findNearestWayPointAll('test', pos);
+	mEndWaypoint->_40 |= 4;
+	mEndWaypoint->mPosition = pos;
+	mEndWaypoint->setFlag(false);
 
-	.loc_0x15C:
-	  lwz       r3, 0x408(r31)
-	  li        r5, 0
-	  lwz       r4, 0x3D4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwzx      r4, r4, r30
-	  lwz       r12, 0x40(r12)
-	  lwz       r4, 0x14(r4)
-	  mtlr      r12
-	  blrl
-	  addi      r30, r30, 0x4
-	  addi      r29, r29, 0x1
-
-	.loc_0x188:
-	  lwz       r0, 0x404(r31)
-	  rlwinm    r0,r0,1,0,30
-	  cmpw      r29, r0
-	  blt+      .loc_0x15C
-	  lwz       r3, 0x408(r31)
-	  li        r5, 0x1
-	  lwz       r4, 0x3D4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x0(r4)
-	  lwz       r12, 0x40(r12)
-	  lwz       r4, 0x14(r4)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x1FC
-
-	.loc_0x1C0:
-	  lfs       f31, -0x732C(r2)
-	  li        r29, 0
-	  li        r30, 0
-	  b         .loc_0x1F0
-
-	.loc_0x1D0:
-	  lwz       r5, 0x3D0(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r29, 0
-	  stfsx     f31, r5, r30
-	  li        r5, 0
-	  bl        0x7B8
-	  addi      r30, r30, 0x4
-	  addi      r29, r29, 0x1
-
-	.loc_0x1F0:
-	  lwz       r0, 0x404(r31)
-	  cmpw      r29, r0
-	  blt+      .loc_0x1D0
-
-	.loc_0x1FC:
-	  lis       r30, 0x7465
-	  lwz       r3, 0x302C(r13)
-	  addi      r4, r30, 0x7374
-	  addi      r5, r31, 0x94
-	  bl        0x3718
-	  stw       r3, 0x3F8(r31)
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0x1C
-	  lwz       r5, 0x3F8(r31)
-	  lbz       r0, 0x40(r5)
-	  ori       r0, r0, 0x4
-	  stb       r0, 0x40(r5)
-	  bl        0xDD8
-	  lwz       r5, 0x3F8(r31)
-	  li        r4, 0
-	  lwz       r3, 0x1C(r1)
-	  lwz       r0, 0x20(r1)
-	  stw       r3, 0x0(r5)
-	  stw       r0, 0x4(r5)
-	  lwz       r0, 0x24(r1)
-	  stw       r0, 0x8(r5)
-	  lwz       r3, 0x3F8(r31)
-	  bl        0x3904
-	  lwz       r5, 0x404(r31)
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0x10
-	  subi      r5, r5, 0x1
-	  bl        0xAC8
-	  lfs       f0, 0x10(r1)
-	  addi      r4, r30, 0x7374
-	  lfs       f1, 0x14(r1)
-	  addi      r5, r1, 0x34
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, 0x18(r1)
-	  stfs      f1, 0x38(r1)
-	  lwz       r3, 0x302C(r13)
-	  stfs      f0, 0x3C(r1)
-	  bl        0x3694
-	  stw       r3, 0x3FC(r31)
-	  li        r4, 0
-	  lwz       r3, 0x3FC(r31)
-	  lbz       r0, 0x40(r3)
-	  ori       r0, r0, 0x4
-	  stb       r0, 0x40(r3)
-	  lwz       r5, 0x3FC(r31)
-	  lwz       r3, 0x34(r1)
-	  lwz       r0, 0x38(r1)
-	  stw       r3, 0x0(r5)
-	  stw       r0, 0x4(r5)
-	  lwz       r0, 0x3C(r1)
-	  stw       r0, 0x8(r5)
-	  lwz       r3, 0x3FC(r31)
-	  bl        0x388C
-	  li        r0, -0x1
-	  sth       r0, 0x3CA(r31)
-	  li        r0, 0
-	  stb       r0, 0x3CC(r31)
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	_3CA = -1;
+	_3CC = false;
 }
 
 /*
@@ -3227,122 +1783,37 @@ void Bridge::startAI(int)
  * Address:	8009DF18
  * Size:	00018C
  */
-void Bridge::doLoad(RandomAccessStream&)
+void Bridge::doLoad(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x90(r1)
-	  stmw      r27, 0x7C(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r4, 0
-	  li        r30, 0x1
-	  li        r29, 0
-	  li        r31, 0
-	  b         .loc_0x8C
+	bool finished = true;
 
-	.loc_0x28:
-	  mr        r3, r28
-	  lwz       r12, 0x4(r28)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3D0(r27)
-	  stfsx     f1, r3, r31
-	  lwz       r3, 0x3D0(r27)
-	  lfs       f0, 0x5C(r27)
-	  lfsx      f1, r3, r31
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x70
-	  addi      r3, r27, 0
-	  addi      r4, r29, 0
-	  li        r5, 0x1
-	  bl        0x634
-	  b         .loc_0x84
+	PRINT("___________ LOADING BRIDGE !\n");
+	for (int i = 0; i < mStageCount; i++) {
+		mStageProgressList[i] = data.readFloat();
+		if (mStageProgressList[i] >= mMaxHealth) {
+			setStageFinished(i, true);
+			PRINT("\tStage %d is FINISHED\n", i);
+		} else {
+			setStageFinished(i, false);
+			PRINT("\tStage %d is NOT FINISHED\n", i);
+			finished = false;
+		}
+	}
 
-	.loc_0x70:
-	  addi      r3, r27, 0
-	  addi      r4, r29, 0
-	  li        r5, 0
-	  bl        0x620
-	  li        r30, 0
+	flatten();
 
-	.loc_0x84:
-	  addi      r31, r31, 0x4
-	  addi      r29, r29, 0x1
+	if (finished) {
+		mStartWaypoint->setFlag(true);
+		mEndWaypoint->setFlag(true);
+	}
 
-	.loc_0x8C:
-	  lwz       r0, 0x404(r27)
-	  cmpw      r29, r0
-	  blt+      .loc_0x28
-	  mr        r3, r27
-	  bl        0x434
-	  rlwinm.   r0,r30,0,24,31
-	  beq-      .loc_0xC0
-	  lwz       r3, 0x3F8(r27)
-	  li        r4, 0x1
-	  bl        0x37A8
-	  lwz       r3, 0x3FC(r27)
-	  li        r4, 0x1
-	  bl        0x379C
+	int stage = getFirstUnfinishedStage();
+	if (stage != -1) {
+		Vector3f pos              = getStagePos(stage) - (5.0f * getBridgeZVec());
+		mStartWaypoint->mPosition = pos;
+	}
 
-	.loc_0xC0:
-	  mr        r3, r27
-	  bl        0x260
-	  addi      r29, r3, 0
-	  cmpwi     r29, -0x1
-	  beq-      .loc_0x178
-	  addi      r3, r1, 0x38
-	  addi      r4, r27, 0
-	  bl        0xB68
-	  lfs       f2, 0x40(r1)
-	  addi      r6, r1, 0x28
-	  lfs       f3, -0x54E8(r13)
-	  addi      r5, r1, 0x24
-	  lfs       f1, 0x3C(r1)
-	  lfs       f0, 0x38(r1)
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  addi      r4, r1, 0x20
-	  fmuls     f0, f0, f3
-	  stfs      f2, 0x28(r1)
-	  addi      r3, r1, 0x44
-	  stfs      f1, 0x24(r1)
-	  stfs      f0, 0x20(r1)
-	  bl        -0x66F14
-	  addi      r4, r27, 0
-	  addi      r5, r29, 0
-	  addi      r3, r1, 0x50
-	  bl        0x908
-	  lfs       f1, 0x50(r1)
-	  lfs       f0, 0x44(r1)
-	  lfs       f3, 0x54(r1)
-	  fsubs     f4, f1, f0
-	  lfs       f2, 0x48(r1)
-	  lfs       f1, 0x58(r1)
-	  lfs       f0, 0x4C(r1)
-	  fsubs     f2, f3, f2
-	  stfs      f4, 0x68(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f2, 0x6C(r1)
-	  stfs      f0, 0x70(r1)
-	  lwz       r4, 0x3F8(r27)
-	  lwz       r3, 0x68(r1)
-	  lwz       r0, 0x6C(r1)
-	  stw       r3, 0x0(r4)
-	  stw       r0, 0x4(r4)
-	  lwz       r0, 0x70(r1)
-	  stw       r0, 0x8(r4)
-
-	.loc_0x178:
-	  lmw       r27, 0x7C(r1)
-	  lwz       r0, 0x94(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("_______________________________\n");
 }
 
 /*
@@ -3350,47 +1821,11 @@ void Bridge::doLoad(RandomAccessStream&)
  * Address:	8009E0A4
  * Size:	000080
  */
-void Bridge::doSave(RandomAccessStream&)
+void Bridge::doSave(RandomAccessStream& data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  rlwinm    r31,r30,2,0,29
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  b         .loc_0x54
-
-	.loc_0x30:
-	  mr        r3, r29
-	  lwz       r4, 0x3D0(r28)
-	  lwz       r12, 0x4(r29)
-	  lfsx      f1, r4, r31
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r31, 0x4
-	  addi      r30, r30, 0x1
-
-	.loc_0x54:
-	  lwz       r0, 0x404(r28)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mStageCount; i++) {
+		data.writeFloat(mStageProgressList[i]);
+	}
 }
 
 /*
@@ -3398,60 +1833,15 @@ void Bridge::doSave(RandomAccessStream&)
  * Address:	8009E124
  * Size:	0000B0
  */
-bool Bridge::insideSafeArea(Vector3f&)
+bool Bridge::insideSafeArea(Vector3f& pos)
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stfd      f31, 0x78(r1)
-	  stfd      f30, 0x70(r1)
-	  stfd      f29, 0x68(r1)
-	  stw       r31, 0x64(r1)
-	  mr        r31, r4
-	  mr        r4, r3
-	  lwz       r5, 0x404(r3)
-	  lfs       f31, 0x94(r3)
-	  lfs       f30, 0x98(r3)
-	  subi      r5, r5, 0x1
-	  lfs       f29, 0x9C(r3)
-	  addi      r3, r1, 0x1C
-	  bl        0x7E8
-	  stfs      f31, 0x28(r1)
-	  mr        r4, r31
-	  lfs       f0, 0x1C(r1)
-	  addi      r3, r1, 0x28
-	  stfs      f30, 0x2C(r1)
-	  lfs       f2, 0x20(r1)
-	  stfs      f29, 0x30(r1)
-	  lfs       f1, 0x24(r1)
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, -0x7320(r2)
-	  stfs      f2, 0x38(r1)
-	  stfs      f1, 0x3C(r1)
-	  stfs      f0, 0x40(r1)
-	  bl        -0x174D4
-	  lfs       f0, -0x731C(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x8C
-	  li        r3, 0
-	  b         .loc_0x90
-
-	.loc_0x8C:
-	  li        r3, 0x1
-
-	.loc_0x90:
-	  lwz       r0, 0x84(r1)
-	  lfd       f31, 0x78(r1)
-	  lfd       f30, 0x70(r1)
-	  lfd       f29, 0x68(r1)
-	  lwz       r31, 0x64(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f bridgePos = mPosition;
+	Vector3f stage     = getStagePos(mStageCount - 1);
+	Cylinder cyl(bridgePos, stage);
+	if (cyl.get2dDist(pos) < 120.0f) {
+		return false;
+	}
+	return true;
 }
 
 /*
@@ -3461,44 +1851,12 @@ bool Bridge::insideSafeArea(Vector3f&)
  */
 bool Bridge::isFinished()
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  b         .loc_0x40
-
-	.loc_0x20:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x150
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x3C
-	  li        r3, 0
-	  b         .loc_0x50
-
-	.loc_0x3C:
-	  addi      r31, r31, 0x1
-
-	.loc_0x40:
-	  lwz       r0, 0x404(r30)
-	  cmpw      r31, r0
-	  blt+      .loc_0x20
-	  li        r3, 0x1
-
-	.loc_0x50:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mStageCount; i++) {
+		if (!isStageFinished(i)) {
+			return false;
+		}
+	}
+	return true;
 }
 
 /*
@@ -3508,43 +1866,12 @@ bool Bridge::isFinished()
  */
 int Bridge::getFirstUnfinishedStage()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  b         .loc_0x40
-
-	.loc_0x20:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0xE8
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x3C
-	  mr        r3, r31
-	  b         .loc_0x50
-
-	.loc_0x3C:
-	  addi      r31, r31, 0x1
-
-	.loc_0x40:
-	  lwz       r0, 0x404(r30)
-	  cmpw      r31, r0
-	  blt+      .loc_0x20
-	  li        r3, -0x1
-
-	.loc_0x50:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mStageCount; i++) {
+		if (!isStageFinished(i)) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 /*
@@ -3554,43 +1881,12 @@ int Bridge::getFirstUnfinishedStage()
  */
 int Bridge::getFirstFinishedStage()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  b         .loc_0x40
-
-	.loc_0x20:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x80
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x3C
-	  mr        r3, r31
-	  b         .loc_0x50
-
-	.loc_0x3C:
-	  addi      r31, r31, 0x1
-
-	.loc_0x40:
-	  lwz       r0, 0x404(r30)
-	  cmpw      r31, r0
-	  blt+      .loc_0x20
-	  li        r3, -0x1
-
-	.loc_0x50:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mStageCount; i++) {
+		if (isStageFinished(i)) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 /*
@@ -3598,31 +1894,16 @@ int Bridge::getFirstFinishedStage()
  * Address:	8009E30C
  * Size:	000040
  */
-int Bridge::getJointIndex(int)
+int Bridge::getJointIndex(int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x3C8(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x30
+	if (id < 0 || id > mStageCount) {
+		ERROR(" illegal stage %d\n", id);
+	}
 
-	.loc_0x20:
-	  lwz       r3, 0x410(r3)
-	  bl        -0x16544
-	  lwz       r3, 0x58(r3)
-	  lwz       r3, 0x30(r3)
-
-	.loc_0x30:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (mDoUseJointSegments) {
+		return 0;
+	}
+	return _410->getChildAt(id)->mCollInfo->mJointIndex;
 }
 
 /*
@@ -3630,63 +1911,16 @@ int Bridge::getJointIndex(int)
  * Address:	8009E34C
  * Size:	00009C
  */
-bool Bridge::isStageFinished(int)
+bool Bridge::isStageFinished(int id)
 {
-	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  lbz       r0, 0x3C8(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x60
-	  cmpwi     r4, 0
-	  blt-      .loc_0x34
-	  lwz       r0, 0x404(r31)
-	  cmpw      r4, r0
-	  blt-      .loc_0x3C
-
-	.loc_0x34:
-	  li        r3, 0x1
-	  b         .loc_0x88
-
-	.loc_0x3C:
-	  lwz       r3, 0x3D4(r31)
-	  rlwinm    r0,r4,3,0,28
-	  lwz       r4, 0x408(r31)
-	  add       r3, r3, r0
-	  lwz       r3, 0x4(r3)
-	  lwz       r4, 0x38(r4)
-	  lwz       r0, 0x14(r3)
-	  lbzx      r3, r4, r0
-	  b         .loc_0x88
-
-	.loc_0x60:
-	  beq-      .loc_0x6C
-	  li        r0, 0
-	  b         .loc_0x7C
-
-	.loc_0x6C:
-	  lwz       r3, 0x410(r31)
-	  bl        -0x165D0
-	  lwz       r3, 0x58(r3)
-	  lwz       r0, 0x30(r3)
-
-	.loc_0x7C:
-	  lwz       r3, 0x408(r31)
-	  lwz       r3, 0x38(r3)
-	  lbzx      r3, r3, r0
-
-	.loc_0x88:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (mDoUseJointSegments) {
+		if (id < 0 || id >= mStageCount) {
+			return true;
+		}
+		return mBuildShape->mProgressStateList[mStageJoints[id * 2 + 1]->mIndex];
+	}
+	int jointIdx = getJointIndex(id);
+	return mBuildShape->mProgressStateList[jointIdx];
 }
 
 /*
@@ -3696,56 +1930,13 @@ bool Bridge::isStageFinished(int)
  */
 void Bridge::flatten()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  li        r31, 0
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  b         .loc_0x7C
-
-	.loc_0x28:
-	  lwz       r0, 0x3D4(r29)
-	  lwz       r3, 0x408(r29)
-	  add       r5, r0, r31
-	  lwz       r4, 0x4(r5)
-	  lwz       r5, 0x0(r5)
-	  lwz       r6, 0x38(r3)
-	  lwz       r0, 0x14(r4)
-	  lwz       r4, 0x14(r5)
-	  lbzx      r0, r6, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x74
-	  lbzx      r0, r6, r4
-	  cmplwi    r0, 0
-	  beq-      .loc_0x74
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x74:
-	  addi      r31, r31, 0x8
-	  addi      r30, r30, 0x1
-
-	.loc_0x7C:
-	  lwz       r0, 0x404(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x28
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mStageCount; i++) {
+		int index = mStageJoints[i * 2]->mIndex;
+		if (mBuildShape->mProgressStateList[mStageJoints[i * 2 + 1]->mIndex] && mBuildShape->mProgressStateList[index]) {
+			mBuildShape->jointVisible(index, false);
+			PRINT("flatten bridge");
+		}
+	}
 }
 
 /*
@@ -3755,91 +1946,24 @@ void Bridge::flatten()
  */
 void Bridge::dump()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x30(r1)
-	  li        r5, 0
-	  lwz       r6, 0x404(r3)
-	  lfs       f5, -0x72E4(r2)
-	  cmpwi     r6, 0
-	  ble-      .loc_0x120
-	  rlwinm.   r0,r6,29,3,31
-	  mtctr     r0
-	  beq-      .loc_0xF8
+	for (int i = 0; i < mStageCount; i++) {
+		char a, b;
+		if (mBuildShape->mProgressStateList[mStageJoints[i * 2 + 1]->mIndex]) {
+			a = '|';
+		} else {
+			a = 'x';
+		}
 
-	.loc_0x24:
-	  lwz       r4, 0x3D0(r3)
-	  lfs       f3, 0x5C(r3)
-	  lfsx      f4, r4, r5
-	  addi      r5, r5, 0x4
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  addi      r5, r5, 0x4
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  stfd      f0, 0x28(r1)
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  stfd      f0, 0x28(r1)
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  stfd      f0, 0x28(r1)
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  stfd      f0, 0x28(r1)
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  lfsx      f4, r4, r5
-	  stfd      f0, 0x28(r1)
-	  addi      r5, r5, 0x4
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  fdivs     f2, f4, f3
-	  stfd      f0, 0x28(r1)
-	  fctiwz    f0, f1
-	  fmuls     f1, f5, f2
-	  stfd      f0, 0x28(r1)
-	  fctiwz    f0, f1
-	  stfd      f0, 0x28(r1)
-	  bdnz+     .loc_0x24
-	  andi.     r6, r6, 0x7
-	  beq-      .loc_0x120
+		if (mBuildShape->mProgressStateList[mStageJoints[i * 2]->mIndex]) {
+			b = '|';
+		} else {
+			b = 'x';
+		}
+		f32 test = mStageProgressList[i] / mMaxHealth * 100.0f;
+		PRINT("brd %d : %d%%(w%s:p%s)\n", i, (int)test, &a, &b);
+	}
 
-	.loc_0xF8:
-	  mtctr     r6
-
-	.loc_0xFC:
-	  lwz       r4, 0x3D0(r3)
-	  lfs       f3, 0x5C(r3)
-	  lfsx      f4, r4, r5
-	  addi      r5, r5, 0x4
-	  fdivs     f2, f4, f3
-	  fmuls     f1, f5, f2
-	  fctiwz    f0, f1
-	  stfd      f0, 0x28(r1)
-	  bdnz+     .loc_0xFC
-
-	.loc_0x120:
-	  addi      r1, r1, 0x30
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -3849,61 +1973,49 @@ void Bridge::dump()
  */
 void Bridge::setStageFinished(int stageIndex, bool isFinished)
 {
-	FORCE_DONT_INLINE;
-	// Very wrong. Do Not Use.
+	if (mDoUseJointSegments) {
 
-	if (_3C8) {
+		int pIdx    = mStageJoints[2 * stageIndex + 1]->mIndex;
+		int wIdx    = mStageJoints[2 * stageIndex]->mIndex;
+		int nextIdx = -1;
+		if (stageIndex < mStageCount - 1) {
+			nextIdx = mStageJoints[2 * stageIndex + 2]->mIndex;
+		}
 
-		Joint* target   = mStageJoints[stageIndex];
-		int targetIndex = target->mIndex;
-		int v6          = -1;
-		if (stageIndex < mStageCount - 1) { }
-		int v9 = 2 * stageIndex - 1;
+		int prevID = 2 * stageIndex - 1;
 		if (isFinished) {
-			mBuildShape->jointVisible(target->mIndex, false);
-			mBuildShape->jointVisible(targetIndex, true);
-			if (v6 != -1) {
-				mBuildShape->jointVisible(v6, true);
+			mBuildShape->jointVisible(wIdx, 0);
+			mBuildShape->jointVisible(pIdx, 1);
+			if (nextIdx != -1) {
+				mBuildShape->jointVisible(nextIdx, 1);
 			}
 		} else {
-			if (v9 > 0) {
-				if (mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex]) {
-					mBuildShape->jointVisible(target->mIndex, true);
+			if (prevID > 0) {
+				if (mBuildShape->mProgressStateList[mStageJoints[prevID]->mIndex]) {
+					mBuildShape->jointVisible(wIdx, 1);
 				} else {
-					mBuildShape->jointVisible(target->mIndex, false);
+					mBuildShape->jointVisible(wIdx, 0);
 				}
 			} else {
-				mBuildShape->jointVisible(target->mIndex, true);
+				mBuildShape->jointVisible(wIdx, 1);
 			}
-			mBuildShape->jointVisible(targetIndex, false);
-			if (v6 != -1) {
-				mBuildShape->jointVisible(v6, false);
-			}
-		}
-
-		for (int i = 0; i < mStageCount; ++i) {
-			if (mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex]
-			    && mBuildShape->mProgressStateList[mStageJoints[v9 + 1]->mIndex]) {
-				mBuildShape->jointVisible(i, false);
+			mBuildShape->jointVisible(pIdx, 0);
+			if (nextIdx != -1) {
+				mBuildShape->jointVisible(nextIdx, 0);
 			}
 		}
 
-		int firstUnfinishedStage = -1;
-		for (int i = 0; i < mStageCount; ++i) {
-			if (mBuildShape->mProgressStateList[mStageJoints[v9]->mIndex] == 0) {
-				firstUnfinishedStage = i;
-				break;
-			}
+		flatten();
+		int firstUnfinished = getFirstUnfinishedStage();
+		if (firstUnfinished != -1) {
+			Vector3f wpPos            = getStagePos(firstUnfinished) - 5.0f * getBridgeZVec();
+			mStartWaypoint->mPosition = wpPos;
 		}
 
-		if (firstUnfinishedStage != -1) {
-			Vector3f scaledBridgeZVec = getBridgeZVec();
-			scaledBridgeZVec          = scaledBridgeZVec * 20.0f;
-			mPosition                 = getStagePos(firstUnfinishedStage) - scaledBridgeZVec;
-		}
+		// fake to help fix stack, probably remove later
+		PRINT("thing", firstUnfinished ? "yes" : "no", firstUnfinished ? "yes" : "no");
 	} else {
-		int jointIndex = _410->getChildAt(stageIndex)->mCollInfo->mJointIndex;
-		mBuildShape->jointVisible(jointIndex, isFinished);
+		mBuildShape->jointVisible(getJointIndex(stageIndex), isFinished);
 	}
 
 	/*
@@ -4189,67 +2301,16 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
  * Address:	8009E948
  * Size:	0000C8
  */
-Vector3f Bridge::getStagePos(int)
+Vector3f Bridge::getStagePos(int stage)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stfd      f31, 0x78(r1)
-	  stw       r31, 0x74(r1)
-	  mr        r31, r4
-	  stw       r30, 0x70(r1)
-	  addi      r30, r3, 0
-	  lbz       r0, 0x3C8(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x88
-	  addi      r3, r31, 0
-	  addi      r4, r5, 0
-	  bl        .loc_0xC8
-	  fmr       f31, f1
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0x4C
-	  bl        0x1D0
-	  lfs       f0, 0x4C(r1)
-	  lfs       f2, 0x50(r1)
-	  fmuls     f0, f0, f31
-	  lfs       f1, 0x94(r31)
-	  lfs       f4, 0x54(r1)
-	  fmuls     f2, f2, f31
-	  lfs       f3, 0x98(r31)
-	  fadds     f0, f1, f0
-	  lfs       f5, 0x9C(r31)
-	  fmuls     f1, f4, f31
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x0(r30)
-	  fadds     f0, f5, f1
-	  stfs      f2, 0x4(r30)
-	  stfs      f0, 0x8(r30)
-	  b         .loc_0xAC
+	if (mDoUseJointSegments) {
+		Vector3f pos;
+		f32 z = getStageZ(stage);
+		pos   = mPosition + getBridgeZVec() * z;
+		return pos;
+	}
 
-	.loc_0x88:
-	  lwz       r3, 0x410(r31)
-	  mr        r4, r5
-	  bl        -0x16BEC
-	  lfsu      f0, 0x4(r3)
-	  stfs      f0, 0x0(r30)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x4(r30)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x8(r30)
-
-	.loc_0xAC:
-	  lwz       r0, 0x84(r1)
-	  lfd       f31, 0x78(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-
-	.loc_0xC8:
-	*/
+	return _410->getChildAt(stage)->mCentre;
 }
 
 /*
@@ -4257,38 +2318,13 @@ Vector3f Bridge::getStagePos(int)
  * Address:	8009EA10
  * Size:	000064
  */
-f32 Bridge::getStageZ(int)
+f32 Bridge::getStageZ(int stage)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  cmpwi     r4, 0
-	  lfs       f1, -0x72E0(r2)
-	  ble-      .loc_0x54
-	  subi      r4, r4, 0x1
-	  lbz       r0, 0x400(r3)
-	  xoris     r3, r4, 0x8000
-	  lfd       f1, -0x7328(r2)
-	  stw       r3, 0x14(r1)
-	  lis       r4, 0x4330
-	  lis       r3, 0x802B
-	  lfs       f2, -0x72DC(r2)
-	  stw       r4, 0x10(r1)
-	  rlwinm    r4,r0,2,0,29
-	  lfd       f0, 0x10(r1)
-	  addi      r0, r3, 0xEA4
-	  add       r3, r0, r4
-	  fsubs     f1, f0, f1
-	  lfs       f0, 0x0(r3)
-	  fmuls     f1, f2, f1
-	  fadds     f1, f1, f0
-
-	.loc_0x54:
-	  lfs       f0, -0x72F0(r2)
-	  fsubs     f1, f1, f0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	f32 z = -20.0f;
+	if (stage > 0) {
+		z = (f32)(stage - 1) * 20.0f + bridgeFirstPos[_400];
+	}
+	return z - 10.0f;
 }
 
 /*
@@ -4313,7 +2349,7 @@ void Bridge::getBridgePos(Vector3f& origin, f32& xProjection, f32& zProjection)
 Vector3f Bridge::getBridgeZVec()
 {
 	f32 yRot = mRotation.y;
-	Vector3f zvec(cosf(yRot), 0.0f, sinf(yRot));
+	Vector3f zvec(sinf(yRot), 0.0f, cosf(yRot));
 	return zvec;
 }
 
@@ -4336,86 +2372,9 @@ Vector3f Bridge::getBridgeXVec()
  */
 Vector3f Bridge::getStartPos()
 {
-	// Get the rotation around the Y-axis
-	f32 rotY = mRotation.y;
-
-	// Calculate the direction vector based on the rotation
-	Vector3f directionVector(sinf(rotY), 0.0f, cosf(rotY));
-
-	// Scale the direction vector by 20.0f
-	Vector3f scaledDirection = directionVector;
-	scaledDirection.multiply(20.0f);
-
-	// Calculate the start position based on the direction vector and the bridge's position
-	Vector3f startPos(scaledDirection.x, scaledDirection.y, scaledDirection.z);
-	startPos.sub(mPosition);
-	return startPos;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stfd      f31, 0x80(r1)
-	  stfd      f30, 0x78(r1)
-	  stfd      f29, 0x70(r1)
-	  stfd      f28, 0x68(r1)
-	  stw       r31, 0x64(r1)
-	  stw       r30, 0x60(r1)
-	  mr        r30, r3
-	  lfs       f31, 0x8C(r4)
-	  lfs       f30, 0x94(r4)
-	  fmr       f1, f31
-	  lfs       f29, 0x98(r4)
-	  lfs       f28, 0x9C(r4)
-	  bl        0x17CEFC
-	  stfs      f1, 0x34(r1)
-	  fmr       f1, f31
-	  addi      r31, r1, 0x34
-	  bl        0x17D080
-	  stfs      f1, 0x30(r1)
-	  addi      r4, r1, 0x30
-	  addi      r6, r31, 0
-	  addi      r3, r1, 0x24
-	  subi      r5, r13, 0x54E0
-	  bl        -0x67B64
-	  addi      r3, r1, 0x3C
-	  addi      r4, r1, 0x24
-	  bl        -0x2BB48
-	  lfs       f2, 0x44(r1)
-	  addi      r6, r1, 0x20
-	  lfs       f3, -0x54D8(r13)
-	  addi      r5, r1, 0x1C
-	  lfs       f1, 0x40(r1)
-	  lfs       f0, 0x3C(r1)
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  addi      r4, r1, 0x18
-	  fmuls     f0, f0, f3
-	  stfs      f2, 0x20(r1)
-	  addi      r3, r1, 0x48
-	  stfs      f1, 0x1C(r1)
-	  stfs      f0, 0x18(r1)
-	  bl        -0x67BAC
-	  lfs       f0, 0x48(r1)
-	  lfs       f1, 0x4C(r1)
-	  fsubs     f0, f30, f0
-	  lfs       f2, 0x50(r1)
-	  fsubs     f3, f29, f1
-	  fsubs     f1, f28, f2
-	  stfs      f0, 0x0(r30)
-	  stfs      f3, 0x4(r30)
-	  stfs      f1, 0x8(r30)
-	  lwz       r0, 0x8C(r1)
-	  lfd       f31, 0x80(r1)
-	  lfd       f30, 0x78(r1)
-	  lfd       f29, 0x70(r1)
-	  lfd       f28, 0x68(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f pos = mPosition;
+	pos          = pos - 20.0f * getBridgeZVec();
+	return pos;
 }
 
 /*
@@ -4443,309 +2402,66 @@ f32 Bridge::getStageWidth()
  * Address:	8009ED28
  * Size:	000424
  */
-void Bridge::startStageFinished(int a2, bool a3)
+void Bridge::startStageFinished(int stageIndex, bool isFinished)
 {
 	FORCE_DONT_INLINE;
 
-	if (!a3) {
-		setStageFinished(a2, a3);
-		_3CC = 0;
-		return;
-	}
+	if (isFinished) {
+		if (_3CA != -1) {
+			PRINT("abunai!"); // 'dangerous!'
+		}
+		rumbleMgr->start(7, 0, mPosition);
 
-	rumbleMgr->start(7, 0, mPosition);
+		f32 z = 0.0f;
+		if (stageIndex <= 0) {
+			z = -20.0f;
+		} else {
+			z = (f32)(stageIndex - 1) * 20.0f + bridgeFirstPos[_400];
+		}
+		Vector3f pos(mPosition);
+		pos = pos + getBridgeZVec() * z;
+		if (stageIndex == 1) {
+			pos.y += bridgeFirstY[_400];
+			if (_400 == 1) {
+				pos.y -= 10.0f;
+			}
+		} else {
+			pos.y += bridgeFirstY[_400] + f32(stageIndex - 1) * bridgeGrad[_400];
+			if (_400 == 1) {
+				pos.y -= 10.0f;
+			}
+		}
 
-	if (a2 > 0) {
+		Vector3f pos2(pos);
+		pos2 = pos + 20.0f * getBridgeZVec();
+
+		if (stageIndex > 0) {
+			pos.y += f32(stageIndex) * bridgeGrad[_400];
+			if (_400 == 1) {
+				pos.y -= 10.0f;
+			}
+		}
+
+		PRINT("bridge effect start!\n");
+		zen::particleGenerator* efx1 = effectMgr->create(EffectMgr::EFF_Bridge_FinishStage, pos, nullptr, nullptr);
+		zen::particleGenerator* efx2 = effectMgr->create(EffectMgr::EFF_Bridge_FinishStage, pos2, nullptr, nullptr);
+
+		if (efx1) {
+			efx1->setEmitDir(getBridgeXVec());
+		}
+
+		if (efx2) {
+			efx2->setEmitDir(getBridgeXVec());
+		}
+
+		_3CC = 60;
+		_3CA = stageIndex;
+		playEventSound(this, SEB_BRIDGE_EXTEND);
 
 	} else {
+		setStageFinished(stageIndex, isFinished);
+		_3CC = 0;
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x802B
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r5,0,24,31
-	  stwu      r1, -0x128(r1)
-	  stfd      f31, 0x120(r1)
-	  stfd      f30, 0x118(r1)
-	  stw       r31, 0x114(r1)
-	  addi      r31, r6, 0xE88
-	  stw       r30, 0x110(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x10C(r1)
-	  addi      r29, r3, 0
-	  stw       r28, 0x108(r1)
-	  beq-      .loc_0x3E8
-	  lwz       r3, 0x3178(r13)
-	  addi      r6, r29, 0x94
-	  li        r4, 0x7
-	  li        r5, 0
-	  bl        0xDE060
-	  cmpwi     r30, 0
-	  bgt-      .loc_0x60
-	  lfs       f31, -0x72E0(r2)
-	  b         .loc_0x9C
-
-	.loc_0x60:
-	  subi      r3, r30, 0x1
-	  lbz       r0, 0x400(r29)
-	  xoris     r3, r3, 0x8000
-	  lfd       f2, -0x7328(r2)
-	  stw       r3, 0x104(r1)
-	  lis       r3, 0x4330
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x72DC(r2)
-	  stw       r3, 0x100(r1)
-	  add       r3, r31, r0
-	  lfd       f1, 0x100(r1)
-	  lfs       f0, 0x1C(r3)
-	  fsubs     f1, f1, f2
-	  fmuls     f1, f3, f1
-	  fadds     f31, f1, f0
-
-	.loc_0x9C:
-	  lfs       f0, 0x94(r29)
-	  stfs      f0, 0xF4(r1)
-	  lfs       f0, 0x98(r29)
-	  stfs      f0, 0xF8(r1)
-	  lfs       f0, 0x9C(r29)
-	  stfs      f0, 0xFC(r1)
-	  lfs       f30, 0x8C(r29)
-	  fmr       f1, f30
-	  bl        0x17CD70
-	  stfs      f1, 0x68(r1)
-	  fmr       f1, f30
-	  addi      r28, r1, 0x68
-	  bl        0x17CEF4
-	  stfs      f1, 0x64(r1)
-	  addi      r4, r1, 0x64
-	  addi      r6, r28, 0
-	  addi      r3, r1, 0x58
-	  subi      r5, r13, 0x54E0
-	  bl        -0x67CF0
-	  addi      r3, r1, 0xD0
-	  addi      r4, r1, 0x58
-	  bl        -0x2BCD4
-	  lfs       f0, 0xD0(r1)
-	  cmpwi     r30, 0x1
-	  lfs       f2, 0xD4(r1)
-	  fmuls     f0, f0, f31
-	  lfs       f1, 0xF4(r1)
-	  lfs       f4, 0xD8(r1)
-	  fmuls     f2, f2, f31
-	  lfs       f3, 0xF8(r1)
-	  fadds     f0, f1, f0
-	  lfs       f5, 0xFC(r1)
-	  fmuls     f1, f4, f31
-	  fadds     f2, f3, f2
-	  stfs      f0, 0xF4(r1)
-	  fadds     f0, f5, f1
-	  stfs      f2, 0xF8(r1)
-	  stfs      f0, 0xFC(r1)
-	  bne-      .loc_0x174
-	  lbz       r0, 0x400(r29)
-	  lfs       f1, 0xF8(r1)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r31, r0
-	  lfs       f0, 0x30(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xF8(r1)
-	  lbz       r0, 0x400(r29)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x1D8
-	  lfs       f1, 0xF8(r1)
-	  lfs       f0, -0x72F0(r2)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xF8(r1)
-	  b         .loc_0x1D8
-
-	.loc_0x174:
-	  subi      r0, r30, 0x1
-	  lbz       r3, 0x400(r29)
-	  xoris     r0, r0, 0x8000
-	  lfd       f2, -0x7328(r2)
-	  stw       r0, 0x104(r1)
-	  lis       r0, 0x4330
-	  rlwinm    r3,r3,2,0,29
-	  lfs       f3, 0xF8(r1)
-	  stw       r0, 0x100(r1)
-	  add       r3, r31, r3
-	  lfd       f1, 0x100(r1)
-	  lfs       f0, 0x44(r3)
-	  fsubs     f1, f1, f2
-	  lfs       f2, 0x30(r3)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0xF8(r1)
-	  lbz       r0, 0x400(r29)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x1D8
-	  lfs       f1, 0xF8(r1)
-	  lfs       f0, -0x72F0(r2)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xF8(r1)
-
-	.loc_0x1D8:
-	  lfs       f0, 0xF4(r1)
-	  stfs      f0, 0xE8(r1)
-	  lfs       f0, 0xF8(r1)
-	  stfs      f0, 0xEC(r1)
-	  lfs       f0, 0xFC(r1)
-	  stfs      f0, 0xF0(r1)
-	  lfs       f30, 0x8C(r29)
-	  fmr       f1, f30
-	  bl        0x17CC34
-	  stfs      f1, 0x54(r1)
-	  fmr       f1, f30
-	  addi      r28, r1, 0x54
-	  bl        0x17CDB8
-	  stfs      f1, 0x50(r1)
-	  addi      r4, r1, 0x50
-	  addi      r6, r28, 0
-	  addi      r3, r1, 0x44
-	  subi      r5, r13, 0x54E0
-	  bl        -0x67E2C
-	  addi      r3, r1, 0xB8
-	  addi      r4, r1, 0x44
-	  bl        -0x2BE10
-	  lfs       f2, 0xC0(r1)
-	  addi      r6, r1, 0x40
-	  lfs       f3, -0x54D4(r13)
-	  addi      r5, r1, 0x3C
-	  lfs       f1, 0xBC(r1)
-	  lfs       f0, 0xB8(r1)
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f3
-	  addi      r4, r1, 0x38
-	  fmuls     f0, f0, f3
-	  stfs      f2, 0x40(r1)
-	  addi      r3, r1, 0xC4
-	  stfs      f1, 0x3C(r1)
-	  stfs      f0, 0x38(r1)
-	  bl        -0x67E74
-	  lfs       f2, 0xF4(r1)
-	  cmpwi     r30, 0
-	  lfs       f1, 0xC4(r1)
-	  lfs       f0, 0xC8(r1)
-	  fadds     f1, f2, f1
-	  stfs      f1, 0xE8(r1)
-	  lfs       f1, 0xF8(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xEC(r1)
-	  lfs       f1, 0xFC(r1)
-	  lfs       f0, 0xCC(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xF0(r1)
-	  ble-      .loc_0x2FC
-	  xoris     r3, r30, 0x8000
-	  lbz       r0, 0x400(r29)
-	  stw       r3, 0x104(r1)
-	  lis       r3, 0x4330
-	  rlwinm    r0,r0,2,0,29
-	  lfd       f2, -0x7328(r2)
-	  stw       r3, 0x100(r1)
-	  add       r3, r31, r0
-	  lfs       f3, 0xF8(r1)
-	  lfd       f1, 0x100(r1)
-	  lfs       f0, 0x44(r3)
-	  fsubs     f1, f1, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0xF8(r1)
-	  lbz       r0, 0x400(r29)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x2FC
-	  lfs       f1, 0xF8(r1)
-	  lfs       f0, -0x72F0(r2)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xF8(r1)
-
-	.loc_0x2FC:
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0xF4
-	  li        r4, 0xD7
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xFDB00
-	  mr        r28, r3
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0xE8
-	  li        r4, 0xD7
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0xFDAE4
-	  cmplwi    r28, 0
-	  addi      r31, r3, 0
-	  beq-      .loc_0x37C
-	  lfs       f30, 0x8C(r29)
-	  fmr       f1, f30
-	  bl        0x17CC7C
-	  fneg      f31, f1
-	  fmr       f1, f30
-	  bl        0x17CADC
-	  stfs      f1, 0xAC(r1)
-	  lfs       f0, -0x54DC(r13)
-	  stfs      f0, 0xB0(r1)
-	  stfs      f31, 0xB4(r1)
-	  lwz       r3, 0xAC(r1)
-	  lwz       r0, 0xB0(r1)
-	  stw       r3, 0xA0(r28)
-	  stw       r0, 0xA4(r28)
-	  lwz       r0, 0xB4(r1)
-	  stw       r0, 0xA8(r28)
-
-	.loc_0x37C:
-	  cmplwi    r31, 0
-	  beq-      .loc_0x3C4
-	  lfs       f31, 0x8C(r29)
-	  fmr       f1, f31
-	  bl        0x17CC34
-	  fneg      f30, f1
-	  fmr       f1, f31
-	  bl        0x17CA94
-	  stfs      f1, 0xA0(r1)
-	  lfs       f0, -0x54DC(r13)
-	  stfs      f0, 0xA4(r1)
-	  stfs      f30, 0xA8(r1)
-	  lwz       r3, 0xA0(r1)
-	  lwz       r0, 0xA4(r1)
-	  stw       r3, 0xA0(r31)
-	  stw       r0, 0xA4(r31)
-	  lwz       r0, 0xA8(r1)
-	  stw       r0, 0xA8(r31)
-
-	.loc_0x3C4:
-	  li        r0, 0x3C
-	  stb       r0, 0x3CC(r29)
-	  extsh     r0, r30
-	  addi      r3, r29, 0
-	  sth       r0, 0x3CA(r29)
-	  addi      r4, r29, 0
-	  li        r5, 0xB3
-	  bl        -0x14B54
-	  b         .loc_0x3FC
-
-	.loc_0x3E8:
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  bl        -0xB64
-	  li        r0, 0
-	  stb       r0, 0x3CC(r29)
-
-	.loc_0x3FC:
-	  lwz       r0, 0x12C(r1)
-	  lfd       f31, 0x120(r1)
-	  lfd       f30, 0x118(r1)
-	  lwz       r31, 0x114(r1)
-	  lwz       r30, 0x110(r1)
-	  lwz       r29, 0x10C(r1)
-	  lwz       r28, 0x108(r1)
-	  addi      r1, r1, 0x128
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -4774,9 +2490,30 @@ bool InteractBuild::actBridge(Bridge* bridge)
  * Address:	8009F1EC
  * Size:	0002E8
  */
-bool InteractBreak::actBridge(Bridge*)
+bool InteractBreak::actBridge(Bridge* bridge)
 {
-	return false;
+	f32* progress = &bridge->mStageProgressList[mStageIndex];
+	*progress -= _0C;
+	if (*progress <= 0.0f) {
+		*progress = 0.0f;
+		for (int i = mStageIndex; i < bridge->getStage(); i++) {
+			bridge->setStageFinished(i, false);
+			bridge->mStageProgressList[i] = 0.0f;
+		}
+
+		PRINT("こわした！ by やましたさん\n"); // 'I broke it! by Yamashita-san'
+
+		bridge->mStartWaypoint->setFlag(false);
+		bridge->mEndWaypoint->setFlag(false);
+		int firstUnfinished = bridge->getFirstUnfinishedStage();
+		if (firstUnfinished != -1) {
+			Vector3f wpPos                    = bridge->getStagePos(firstUnfinished) - bridge->getBridgeZVec() * 5.0f;
+			bridge->mStartWaypoint->mPosition = wpPos;
+		}
+	}
+
+	u32 badCompiler;
+	return true;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4994,185 +2731,4 @@ bool InteractBreak::actBridge(Bridge*)
 
 	.loc_0x2E8:
 	*/
-}
-
-/*
- * --INFO--
- * Address:	8009F500
- * Size:	000008
- */
-bool Bridge::isBridge()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	8009F508
- * Size:	000014
- */
-bool Bridge::alwaysUpdatePlatform()
-{
-	return _424 != 0;
-}
-
-/*
- * --INFO--
- * Address:	8009F51C
- * Size:	00000C
- */
-void Bridge::finalSetup()
-{
-	_424 = 3;
-}
-
-/*
- * --INFO--
- * Address:	8009F528
- * Size:	000008
- */
-bool WorkObject::isVisible()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	8009F530
- * Size:	000008
- */
-bool WorkObject::isAlive()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	8009F538
- * Size:	000008
- */
-bool WorkObject::isHinderRock()
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	8009F540
- * Size:	000008
- */
-f32 ItemCreature::getHeight()
-{
-	return 0.0f;
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x732C(r2)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8009F548
- * Size:	000008
- */
-bool HinderRock::isHinderRock()
-{
-	return true;
-}
-
-/*
- * --INFO--
- * Address:	8009F550
- * Size:	000004
- */
-void DynBuildShape::update()
-{
-}
-
-/*
- * --INFO--
- * Address:	8009F554
- * Size:	000004
- */
-void DynBuildShape::refresh(Graphics&)
-{
-}
-
-/*
- * --INFO--
- * Address:	8009F558
- * Size:	00006C
- */
-WorkObjectMgr::~WorkObjectMgr()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x54
-	  lis       r3, 0x802B
-	  addi      r3, r3, 0x1864
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-	  beq-      .loc_0x44
-	  lis       r3, 0x802C
-	  subi      r3, r3, 0x4F80
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x18
-	  stw       r0, 0x8(r31)
-
-	.loc_0x44:
-	  extsh.    r0, r4
-	  ble-      .loc_0x54
-	  mr        r3, r31
-	  bl        -0x583FC
-
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8009F5C4
- * Size:	000008
- */
-int WorkObjectMgr::getMax()
-{
-	return 0x10000;
-	/*
-	.loc_0x0:
-	  lis       r3, 0x1
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8009F5CC
- * Size:	000008
- */
-bool WorkObject::isFinished()
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	8009F5D4
- * Size:	000008
- */
-bool WorkObject::workable(Vector3f&)
-{
-	return true;
 }

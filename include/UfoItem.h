@@ -95,11 +95,11 @@ struct UfoItem : public Suckable {
 	struct Spot {
 		Spot() { }
 
-		Vector3f _00; // _00
-		f32 _0C;      // _0C
-		f32 _10;      // _10
-		f32 _14;      // _14
-		f32 _18;      // _18
+		Vector3f mPosition; // _00
+		f32 mRadius;        // _0C
+		f32 mAngleOffset;   // _10
+		f32 mRotationTime;  // _14
+		f32 _18;            // _18
 	};
 
 	UfoItem(CreatureProp*, UfoShapeObject*);
@@ -169,9 +169,10 @@ struct UfoItem : public Suckable {
 	u8 mShipUpgradeLevel;                                 // _520
 	UfoAnimator mAnimator;                                // _524
 	int mConeEffectId;                                    // _52C
-	Vector3f mPtcllFxPosition;                            // _530
-	Vector3f mPtcl2FxPosition;                            // _53C
-	u8 mIsPtclFxActive;                                   // _548
+	Vector3f mPca1FxPosition;                             // _530
+	Vector3f mPca2FxPosition;                             // _53C
+	u8 mIsPca1FxActive;                                   // _548
+	u8 mIsPca2FxActive;                                   // _549
 	Vector3f mSpotlightPosition;                          // _54C
 	int mWaypointID;                                      // _558
 	UfoShapeObject* mShipModel;                           // _55C

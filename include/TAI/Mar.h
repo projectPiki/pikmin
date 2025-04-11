@@ -53,6 +53,11 @@ struct TAImarStrategy : public YaiStrategy {
  * @brief TODO
  */
 struct TAImarAnimation : public TAIanimation {
+	TAImarAnimation()
+	    : TAIanimation(TEKI_Mar, "tekis/mar/anims.bun")
+	{
+	}
+
 	virtual void makeDefaultAnimations(); // _08
 
 	// _0C     = VTBL
@@ -158,15 +163,15 @@ struct TAIAflyingDistanceMar : public TAIAflyingDistance {
  * @brief TODO
  */
 struct TAIAtimerTakeOffMar : public TAIAtimerReaction {
-	inline TAIAtimerTakeOffMar() // TODO: this is a guess
+	TAIAtimerTakeOffMar(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 
 	virtual f32 getFrameMax(Teki&); // _1C
 
 	// _04     = VTBL
-	// _00-_08 = TAIAtimerReaction?
-	// TODO: members
+	// _00-_0C = TAIAtimerReaction
 };
 
 /**
@@ -203,7 +208,8 @@ struct TAIAstickingPikiMar : public TAIAstickingPiki {
  * @brief TODO
  */
 struct TAIAflickCheckMar : public TAIAflickCheck {
-	inline TAIAflickCheckMar() // TODO: this is a guess
+	TAIAflickCheckMar(int nextState) // TODO: check this when used
+	    : TAIAflickCheck(nextState, 0)
 	{
 	}
 
@@ -248,7 +254,8 @@ struct TAIAstickingPikiMarFly : public TAIAstickingPiki {
  * @brief TODO
  */
 struct TAIAflickingMar : public TAIAflicking {
-	inline TAIAflickingMar() // TODO: this is a guess
+	TAIAflickingMar(int nextState, int motionIdx)
+	    : TAIAflicking(nextState, motionIdx)
 	{
 	}
 
@@ -297,6 +304,7 @@ struct TAIAflyingBaseMar : public TAIAflyingBase {
  */
 struct TAIAdyingMar : public TAIAdying {
 	inline TAIAdyingMar() // TODO: this is a guess
+	    : TAIAdying(-1, -1)
 	{
 	}
 

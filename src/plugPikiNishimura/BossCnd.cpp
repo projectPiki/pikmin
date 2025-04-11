@@ -1,6 +1,7 @@
 #include "BossConditions.h"
 #include "Boss.h"
 #include "Collision.h"
+#include "NsMath.h"
 #include "Dolphin/os.h"
 #include "sysNew.h"
 #include "DebugLog.h"
@@ -40,7 +41,7 @@ bool CndIsAlive::satisfy(Creature* target)
 bool CndBossFlick::satisfy(Creature* target)
 {
 	if (target && target->isAlive() && !target->isStickToMouth() && target->getStickObject() == mBoss) {
-		if (randFloat(0.999999f) < static_cast<BossProp*>(mBoss->mProps)->mBossProps.mFlickChance()) {
+		if (NsMathF::getRand(1.0f) < static_cast<BossProp*>(mBoss->mProps)->mBossProps.mFlickChance()) {
 			return true;
 		}
 	}

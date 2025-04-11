@@ -258,7 +258,7 @@ void UfoItem::startConeEffect(int)
 	Vector3f goal = getGoalPos();
 	Vector3f suck = getSuckPos();
 	EffectParm eff(goal, suck);
-	mConeEffectId = EffectMgr::EFF_BombLight_Wave;
+	mConeEffectId = KandoEffect::WhistleTemplate1;
 	utEffectMgr->cast(mConeEffectId, eff);
 	mAnimator.startMotion(0, &PaniMotionInfo(1, this));
 	mAnimator.setMotionSpeed(0, 30.0f);
@@ -298,13 +298,13 @@ void UfoItem::startLevelFlag(int flag)
 	Vector3f pos = mPosition;
 	if (playerState->mShipUpgradeLevel == 5) {
 		efx = effectMgr->create(EffectMgr::EFF_Rocket_Complete1, pos, nullptr, nullptr);
-		efx->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 1.0f));
+		efx->setOrientedNormalVector(Vector3f(0.0f, 0.0f, 1.0f));
 		efx = effectMgr->create(EffectMgr::EFF_Rocket_Complete2, pos, nullptr, nullptr);
-		efx->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 1.0f));
+		efx->setOrientedNormalVector(Vector3f(0.0f, 0.0f, 1.0f));
 	} else {
 		pos.y += 60.0f;
 		efx = effectMgr->create(EffectMgr::EFF_Rocket_NJ1CA, pos, nullptr, nullptr);
-		efx->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 1.0f));
+		efx->setOrientedNormalVector(Vector3f(0.0f, 0.0f, 1.0f));
 	}
 	mAnimator.startFlagMotions(flag);
 }
@@ -697,7 +697,7 @@ void UfoItem::animationKeyUpdated(PaniAnimKeyEvent& event)
 					efx->setEmitPosPtr(&coll->mCentre);
 					efx = effectMgr->create(EffectMgr::EFF_Rocket_Bst1fb, coll->mCentre, nullptr, nullptr);
 					efx->setEmitPosPtr(&coll->mCentre);
-					Vector3f nrm(0.0f, 0.0f, 1.0f);
+					Vector3f nrm(1.0f, 0.0f, 0.0f);
 					efx->setOrientedNormalVector(nrm);
 					efx = effectMgr->create(EffectMgr::EFF_Rocket_Bst1fa, coll->mCentre, nullptr, nullptr);
 					efx->setEmitPosPtr(&coll->mCentre);
@@ -800,7 +800,7 @@ void UfoItem::startAI(int)
 		effectMgr->create(EffectMgr::EFF_Rocket_Land, mPosition, nullptr, nullptr);
 	}
 
-	mConeEffectId = EffectMgr::EFF_Navi_Light;
+	mConeEffectId = KandoEffect::UfoSuck;
 
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
@@ -842,9 +842,9 @@ void UfoItem::startAI(int)
 	if (!playerState->isTutorial()) {
 		setSpotActive(true);
 		for (int i = 0; i < 3; i++) {
-			mSpots[i]._10 = i * 2.0943952f;
-			mSpots[i]._0C = 9.0f;
-			mSpots[i]._14 = 0.0f;
+			mSpots[i].mAngleOffset  = i * 2.0943952f;
+			mSpots[i].mRadius       = 9.0f;
+			mSpots[i].mRotationTime = 0.0f;
 		}
 	} else {
 		setSpotActive(false);
@@ -938,16 +938,16 @@ void UfoItem::update()
  */
 void UfoItem::setPca1Effect(bool set)
 {
-	mIsPtclFxActive = set;
+	mIsPca1FxActive = set;
 	if (set) {
 		Vector3f dir(1.0f, 0.0f, 0.0f);
 		dir.rotate(mWorldMtx);
 
-		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPtcllFxPosition, nullptr, nullptr);
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPca1FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 
-		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, mPtcllFxPosition, nullptr, nullptr);
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, mPca1FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 	}
@@ -960,16 +960,16 @@ void UfoItem::setPca1Effect(bool set)
  */
 void UfoItem::setPca2Effect(bool set)
 {
-	mIsPtclFxActive = set;
+	mIsPca2FxActive = set;
 	if (set) {
-		Vector3f dir(1.0f, 0.0f, 0.0f);
+		Vector3f dir(-1.0f, 0.0f, 0.0f);
 		dir.rotate(mWorldMtx);
 
-		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPtcl2FxPosition, nullptr, nullptr);
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPca2FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 
-		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, mPtcl2FxPosition, nullptr, nullptr);
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, mPca2FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 	}
@@ -1019,11 +1019,11 @@ void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
 	u32 badCompiler;
 	pos.set(0.0f, 14.0f, 0.0f);
 	mShipModel->mShape->calcJointWorldPos(gfx, 48, pos);
-	mPtcl2FxPosition = pos;
+	mPca2FxPosition = pos;
 
 	pos.set(0.0f, 14.0f, 0.0f);
 	mShipModel->mShape->calcJointWorldPos(gfx, 49, pos);
-	mPtcllFxPosition = pos;
+	mPca1FxPosition = pos;
 
 	if (playerState->isTutorial()) {
 
@@ -1051,16 +1051,18 @@ void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
 	for (int i = 0; i < 3; i++) {
 		CollPart* part = mCollInfo->getSphere('gol1');
 		if (part) {
-			f32 test = mFaceDirection + mSpots[i]._10;
+			f32 anglePosition = mFaceDirection + mSpots[i].mAngleOffset;
+
 			if (mShouldLightActivate) {
-				mSpots[i]._14 += gsys->getFrameTime() * 37.69911193847656f;
-				if (mSpots[i]._14 > TAU) {
-					mSpots[i]._14 = 0.0f;
+				mSpots[i].mRotationTime += gsys->getFrameTime() * (12.0f * PI);
+				if (mSpots[i].mRotationTime > TAU) {
+					mSpots[i].mRotationTime = 0.0f;
 				}
-				test += mSpots[i]._14;
+				anglePosition += mSpots[i].mRotationTime;
 			}
-			Vector3f dir(mSpots[i]._0C * sinf(test), 0.0f, mSpots[i]._0C * cosf(test));
-			mSpots[i]._00 = part->mCentre + dir;
+
+			Vector3f dir(mSpots[i].mRadius * sinf(anglePosition), 0.0f, mSpots[i].mRadius * cosf(anglePosition));
+			mSpots[i].mPosition = part->mCentre + dir;
 		}
 	}
 

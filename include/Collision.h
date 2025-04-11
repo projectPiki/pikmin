@@ -12,6 +12,7 @@
 struct CmdStream;
 struct Creature;
 struct DynCollObject;
+struct DynCollShape;
 struct ObjCollInfo;
 struct CollInfo;
 struct CollPart;
@@ -52,6 +53,22 @@ enum CollPartType {
 
 /**
  * @brief TODO
+ */
+struct BaseRoomInfo {
+	void read(RandomAccessStream& input) { _00 = input.readInt(); }
+
+	int _00; // _00
+};
+
+/**
+ * @brief TODO
+ */
+struct RoomInfo : public BaseRoomInfo {
+	// _00-_04 = BaseRoomInfo
+};
+
+/**
+ * @brief TODO
  *
  * @note Size: 0x54.
  */
@@ -67,7 +84,7 @@ struct ObjCollInfo : public CoreNode {
 		mCentrePosition.set(0.0f, 0.0f, 0.0f);
 		mParentShape  = nullptr;
 		mPlatformName = nullptr;
-		mIsEnabled    = 0;
+		mPlatShape    = 0;
 		mFlags        = OCF_None;
 	}
 
@@ -82,14 +99,14 @@ struct ObjCollInfo : public CoreNode {
 	// _00-_14 = CoreNode
 	ID32 mId;                 // _14
 	ID32 mCode;               // _20
-	ObjCollType mCollType;    // _2C
+	u32 mCollType;            // _2C, see ObjCollType enum
 	s32 mJointIndex;          // _30
 	Vector3f mCentrePosition; // _34
 	f32 mRadius;              // _40
 	BaseShape* mParentShape;  // _44
-	u32 mIsEnabled;           // _48
+	Shape* mPlatShape;        // _48
 	char* mPlatformName;      // _4C
-	ObjCollFlags mFlags;      // _50
+	u32 mFlags;               // _50, see ObjCollFlags enum
 };
 
 /**
@@ -142,23 +159,24 @@ struct CollPart {
 	bool isTubeType() { return mPartType == PART_Tube || mPartType == PART_TubeChild; }
 	bool isPlatformType() { return mPartType == PART_Platform; }
 	bool isCollisionType() { return mPartType == PART_Collision; }
+	bool isSphereType() { return mPartType == PART_BoundSphere; }
+	bool isCylinderType() { return mPartType == PART_Cylinder; }
+	bool isReferenceType() { return mPartType == PART_Reference; }
+	bool isBouncySphereType() { return isSphereType() || isCollisionType(); }
 
 	Matrix4f getJointMatrix() { return mJointMatrix; }
 
 	/*
-	    DLL inlines to make:
-	    bool isBouncySphereType();
-	    bool isReferenceType();
-	    bool isSphereType();
+	    No more DLL inlines to make
 	*/
 
 	f32 mRadius;                   // _00
 	Vector3f mCentre;              // _04
 	Matrix4f mJointMatrix;         // _10
-	u8 _50;                        // _50
+	bool mIsUpdateActive;          // _50
 	bool mIsStickEnabled;          // _51
 	s16 mNextIndex;                // _52, index of next sibling
-	s16 mFirstIndex;               // _54, index of first child
+	s16 mFirstChildIndex;          // _54, index of first child
 	ObjCollInfo* mCollInfo;        // _58
 	u8 mPartType;                  // _5C
 	CollInfo* mParentInfo;         // _60
@@ -185,9 +203,9 @@ struct CollEvent {
  * @brief TODO
  */
 struct CndCollPart {
-	virtual bool satisfy(CollPart*); // _08
+	virtual bool satisfy(CollPart*) { return false; } // _08
 
-	// _00 = VTBL?
+	// _00 = VTBL
 	// TODO: members
 };
 
@@ -195,9 +213,15 @@ struct CndCollPart {
  * @brief TODO
  */
 struct CndBombable : public CndCollPart {
-	virtual bool satisfy(CollPart*); // _08 (weak)
+	virtual bool satisfy(CollPart* part) // _08 (weak)
+	{
+		if (part && part->getCode().match('**b*', '*')) {
+			return true;
+		}
+		return false;
+	}
 
-	// _00 = VTBL?
+	// _00 = VTBL
 	// TODO: members
 };
 
@@ -251,23 +275,78 @@ struct CollInfo {
 /**
  * @brief TODO
  */
-struct CollGroup { };
+struct BaseCollTriInfo {
+
+	void read(RandomAccessStream& input)
+	{
+		mMapCode               = input.readInt();
+		mVertexIndices[0]      = input.readInt();
+		mVertexIndices[1]      = input.readInt();
+		mVertexIndices[2]      = input.readInt();
+		_10                    = input.readShort();
+		mAdjacentTriIndices[0] = input.readShort();
+		mAdjacentTriIndices[1] = input.readShort();
+		mAdjacentTriIndices[2] = input.readShort();
+		mTriangle.read(input);
+	}
+
+	u32 mMapCode;               // _00
+	u32 mVertexIndices[3];      // _04
+	s16 _10;                    // _10
+	s16 mAdjacentTriIndices[3]; // _12
+	Plane mTriangle;            // _18
+};
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x58.
  */
-struct CollTriInfo {
+struct CollTriInfo : public BaseCollTriInfo {
 	CollTriInfo();
 
 	void init(RoomInfo*, Vector3f*);
 	int behindEdge(Vector3f&);
 
-	u32 mMapCode;          // _00
-	u32 mVertexIndices[3]; // _04
-	u32 _10;               // _10
-	u32 _14;               // _14
-	Plane mTriangle;       // 18
-	Plane mEdgePlanes[3];  // _28
+	bool inTriClampTo(Vector3f& pos)
+	{
+		pos.y      = -(pos.x * mTriangle.mNormal.x + pos.z * mTriangle.mNormal.z - mTriangle.mOffset) / mTriangle.mNormal.y;
+		bool inTri = true;
+		for (int i = 0; inTri && i < 3; i++) {
+			f32 dist = mEdgePlanes[i].dist(pos);
+			if (dist < 0.0f) {
+				inTri = false;
+			}
+		}
+		return inTri;
+	}
+
+	// _00-_28 = BaseCollTriInfo
+	Plane mEdgePlanes[3]; // _28
+};
+
+/**
+ * @brief TODO
+ */
+struct CollGroup {
+	CollGroup()
+	{
+		mTriangleList = nullptr;
+		mTriCount     = 0;
+		mStateIndex   = 0;
+		_0C           = nullptr;
+	}
+
+	u8 _00[0x4];                   // _00, unknown
+	s16 mTriCount;                 // _04
+	s16 _06;                       // _06
+	CollTriInfo** mTriangleList;   // _08
+	u8* _0C;                       // _0C
+	Shape* mShape;                 // _10
+	Vector3f* mVertexList;         // _14
+	int mStateIndex;               // _18
+	DynCollShape* mSourceCollider; // _1C
+	CollGroup* mNextCollider;      // _20
 };
 
 /**

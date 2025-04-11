@@ -264,7 +264,7 @@ f64 x, y;
 	// take one:
 	if (((((s32)hx >> 31) + 1) | yisint) == 0) {
 		errno = 33;
-		return (f64)__float_nan;
+		return (f64)*__float_nan;
 	};
 
 	// closer?

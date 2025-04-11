@@ -8,8 +8,8 @@
  * @brief TODO
  */
 struct TaiMoveNestPositionAction : public TaiAction {
-	inline TaiMoveNestPositionAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMoveNestPositionAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -23,8 +23,8 @@ struct TaiMoveNestPositionAction : public TaiAction {
  * @brief TODO
  */
 struct TaiStopMoveAction : public TaiAction {
-	inline TaiStopMoveAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiStopMoveAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -98,8 +98,8 @@ struct TaiMakeAccelerationDirectionAction : public TaiAction {
  * @brief TODO
  */
 struct TaiMakingNextVelocityAction : public TaiAction {
-	inline TaiMakingNextVelocityAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMakingNextVelocityAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -113,23 +113,25 @@ struct TaiMakingNextVelocityAction : public TaiAction {
  * @brief TODO
  */
 struct TaiMakingNextDriveAction : public TaiAction {
-	inline TaiMakingNextDriveAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiMakingNextDriveAction(f32 driveMag)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mDriveMag = driveMag;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction
+	f32 mDriveMag; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiAccelerationAction : public TaiAction {
-	inline TaiAccelerationAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiAccelerationAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -143,8 +145,8 @@ struct TaiAccelerationAction : public TaiAction {
  * @brief TODO
  */
 struct TaiParabolaAction : public TaiAction {
-	inline TaiParabolaAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiParabolaAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -173,8 +175,8 @@ struct TaiCircleMoveAction : public TaiAction {
  * @brief TODO
  */
 struct TaiHorizontalSinWaveAction : public TaiAction {
-	inline TaiHorizontalSinWaveAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiHorizontalSinWaveAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -188,54 +190,63 @@ struct TaiHorizontalSinWaveAction : public TaiAction {
  * @brief TODO
  */
 struct TaiClampMaxHeightAction : public TaiAction {
-	inline TaiClampMaxHeightAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiClampMaxHeightAction(int nextState, f32 maxHeight)
+	    : TaiAction(nextState)
 	{
+		mMaxHeight = maxHeight;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction
+	f32 mMaxHeight; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiClampMinHeightAction : public TaiAction {
-	inline TaiClampMinHeightAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiClampMinHeightAction(int nextState, f32 minHeight)
+	    : TaiAction(nextState)
 	{
+		mMinHeight = minHeight;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction
+	f32 mMinHeight; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiClampMinVelocityYAction : public TaiAction {
-	inline TaiClampMinVelocityYAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiClampMinVelocityYAction(int nextState, f32 minVSpeed)
+	    : TaiAction(nextState)
 	{
+		mMinVertSpeed = minVSpeed;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction
+	f32 mMinVertSpeed; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiImpassableAction : public TaiAction {
-	inline TaiImpassableAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiImpassableAction(int nextState, int timerIdx, f32 length, f32 maxDist)
+	    : TaiAction(nextState)
 	{
+		mTimerIdx    = timerIdx;
+		mTimerLength = length;
+		mMaxDistance = maxDist;
 	}
 
 	virtual void start(Teki& teki); // _08
@@ -245,15 +256,19 @@ struct TaiImpassableAction : public TaiAction {
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction
+	int mTimerIdx;    // _08
+	f32 mTimerLength; // _0C
+	f32 mMaxDistance; // _10
 };
 
 /**
  * @brief TODO
  */
 struct TaiRandomWanderingRouteAction : public TaiContinuousMotionAction {
-	inline TaiRandomWanderingRouteAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	TaiRandomWanderingRouteAction(int motionIdx, f32 p2)
+	    : TaiContinuousMotionAction(TAI_NO_TRANSIT, motionIdx)
 	{
+		mTargetPosition = p2;
 	}
 
 	virtual void start(Teki& teki);  // _08
@@ -263,32 +278,40 @@ struct TaiRandomWanderingRouteAction : public TaiContinuousMotionAction {
 	void makeTargetPosition(Teki& teki);
 
 	// _04 = VTBL
-	// _00-_08 = TaiContinuousMotionAction?
+	// _00-_0C = TaiContinuousMotionAction
+	f32 mTargetPosition; // _0C
 };
 
 struct TaiTracingAction : public TaiContinuousMotionAction {
-	inline TaiTracingAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	inline TaiTracingAction(int motionIdx, f32 p2)
+	    : TaiContinuousMotionAction(TAI_NO_TRANSIT, motionIdx)
 	{
+		mTraceSpeed = p2;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
-	// _00-_08 = TaiContinuousMotionAction?
+	// _00-_0C = TaiContinuousMotionAction
+	f32 mTraceSpeed; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TaiGoingHomeAction : public TaiContinuousMotionAction {
-	inline TaiGoingHomeAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	TaiGoingHomeAction(int motionIdx, f32 p2)
+	    : TaiContinuousMotionAction(TAI_NO_TRANSIT, motionIdx)
 	{
+		mMoveSpeed = p2;
 	}
 
 	virtual void finish(Teki& teki); // _0C
 	virtual bool act(Teki& teki);    // _10
+
+	// _04 = VTBL
+	// _00-_0C = TaiContinuousMotionAction
+	f32 mMoveSpeed; // _0C
 };
 
 /**
@@ -310,53 +333,59 @@ struct TaiDirectTurnAction : public TaiAction {
  * @brief TODO
  */
 struct TaiTurningAction : public TaiContinuousMotionAction {
-	inline TaiTurningAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	TaiTurningAction(int nextState, int motionIdx, f32 turnSpeed)
+	    : TaiContinuousMotionAction(nextState, motionIdx)
 	{
+		mTurnSpeed = turnSpeed;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
-	// _00-_08 = TaiContinuousMotionAction?
+	// _00-_0C = TaiContinuousMotionAction
+	f32 mTurnSpeed; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TaiTurningAwayAction : public TaiContinuousMotionAction {
-	inline TaiTurningAwayAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	TaiTurningAwayAction(int nextState, int motionIdx, f32 turnSpeed)
+	    : TaiContinuousMotionAction(nextState, motionIdx)
 	{
+		mTurnSpeed = turnSpeed;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
-	// _00-_08 = TaiContinuousMotionAction?
+	// _00-_10 = TaiContinuousMotionAction
+	f32 mTurnSpeed; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TaiTraceTurningAction : public TaiContinuousMotionAction {
-	inline TaiTraceTurningAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	TaiTraceTurningAction(int nextState, int motionIdx, f32 turnSpeed)
+	    : TaiContinuousMotionAction(nextState, motionIdx)
 	{
+		mTurnSpeed = turnSpeed;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
-	// _00-_08 = TaiContinuousMotionAction?
+	// _00-_0C = TaiContinuousMotionAction
+	f32 mTurnSpeed; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TaiOutOfTraceAngleAction : public TaiAction {
-	inline TaiOutOfTraceAngleAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiOutOfTraceAngleAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -370,68 +399,76 @@ struct TaiOutOfTraceAngleAction : public TaiAction {
  * @brief TODO
  */
 struct TaiTurningToTargetPositionAction : public TaiContinuousMotionAction {
-	inline TaiTurningToTargetPositionAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	TaiTurningToTargetPositionAction(int nextState, int motionIdx, f32 turnSpeed)
+	    : TaiContinuousMotionAction(nextState, motionIdx)
 	{
+		mTurnSpeed = turnSpeed;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
-	// _00-_08 = TaiContinuousMotionAction?
+	// _00-_0C = TaiContinuousMotionAction
+	f32 mTurnSpeed; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TaiRotatingAction : public TaiAction {
-	inline TaiRotatingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiRotatingAction(f32 p1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mRotateSpeed = p1;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction
+	f32 mRotateSpeed; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TaiRunningAwayToTargetDirectionAction : public TaiContinuousMotionAction {
-	inline TaiRunningAwayToTargetDirectionAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	TaiRunningAwayToTargetDirectionAction(int nextState, int motionIdx, f32 p3)
+	    : TaiContinuousMotionAction(nextState, motionIdx)
 	{
+		mRunningSpeed = p3;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
-	// _00-_08 = TaiContinuousMotionAction?
+	// _00-_0C = TaiContinuousMotionAction
+	f32 mRunningSpeed; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TaiRunningAwayAction : public TaiContinuousMotionAction {
-	inline TaiRunningAwayAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	TaiRunningAwayAction(int nextState, int motionIdx, f32 speed) // this is unused and just a guess
+	    : TaiContinuousMotionAction(nextState, motionIdx)
 	{
+		mRunningSpeed = speed;
 	}
 
 	virtual bool act(Teki& teki); // _10
 
 	// _04 = VTBL
-	// _00-_08 = TaiContinuousMotionAction?
+	// _00-_08 = TaiContinuousMotionAction
+	f32 mRunningSpeed; // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TaiWatchOffTerritoryCenterAction : public TaiAction {
-	inline TaiWatchOffTerritoryCenterAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiWatchOffTerritoryCenterAction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -445,8 +482,8 @@ struct TaiWatchOffTerritoryCenterAction : public TaiAction {
  * @brief TODO
  */
 struct TaiTargetNestAction : public TaiAction {
-	inline TaiTargetNestAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiTargetNestAction()
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -460,15 +497,17 @@ struct TaiTargetNestAction : public TaiAction {
  * @brief TODO
  */
 struct TaiHeadOnCollisionAvoidanceAction : public TaiAction {
-	inline TaiHeadOnCollisionAvoidanceAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TaiHeadOnCollisionAvoidanceAction(f32 speed)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		_08 = speed;
 	}
 
 	virtual bool actByEvent(TekiEvent& event); // _14
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction
+	f32 _08; // _08
 };
 
 #endif

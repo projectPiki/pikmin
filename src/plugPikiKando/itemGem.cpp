@@ -35,7 +35,7 @@ bool GemItem::ignoreAtari(Creature*)
 		return true;
 	}
 
-	if (mObjType == OBJTYPE_NULL12 && mIsFree) {
+	if (mObjType == OBJTYPE_GemItem && mIsFree) {
 		return true;
 	}
 	return false;
@@ -119,8 +119,6 @@ void GemItem::setColorType(int col)
 	if (mItemShapeObject) {
 		mItemAnimator.init(&mItemShapeObject->mAnimContext, mItemShapeObject->mAnimMgr, itemMgr->mItemMotionTable);
 	}
-
-	f32 badcompiler[2];
 }
 
 /*
@@ -137,7 +135,7 @@ void GemItem::startAI(int)
 	mScale.set(1.0f, 1.0f, 1.0f);
 	mRotation.set(1.0f, mFaceDirection, 1.0f);
 	resetCreatureFlag(CF_Unk8);
-	((SimpleAI*)mStateMachine)->start(this, 0);
+	C_SAI(this)->start(this, GemAI::GEM_Unk0);
 	mIsBeingLifted = false;
 	mIsRising      = false;
 	playSound(0);
@@ -311,7 +309,7 @@ void GemItem::split()
 			Vector3f pos  = mPosition;
 			mPosition.y += 10.0f;
 
-			f32 angle      = 2.0f * randFloat(PI);
+			f32 angle      = 2.0f * (PI * gsys->getRand(1.0f));
 			f32 vertSpeed  = 240.0f;
 			f32 horizSpeed = 40.0f;
 
@@ -345,8 +343,8 @@ void GemItem::refresh(Graphics& gfx)
  */
 void GemItem::doStore(CreatureInf* inf)
 {
-	inf->mStartAnimId = mGemType;
-	inf->mEndAnimId   = mColor;
+	inf->mObjInfo1 = mGemType;
+	inf->mObjInfo2 = mColor;
 }
 
 /*
@@ -356,8 +354,8 @@ void GemItem::doStore(CreatureInf* inf)
  */
 void GemItem::doRestore(CreatureInf* inf)
 {
-	mGemType = inf->mStartAnimId;
-	mColor   = inf->mEndAnimId;
+	mGemType = inf->mObjInfo1;
+	mColor   = inf->mObjInfo2;
 	initParam(mColor);
 	startAI(0);
 	PRINT("DO RESTORE END ****\n");

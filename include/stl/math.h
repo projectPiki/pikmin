@@ -38,9 +38,9 @@ extern "C" {
 
 #endif
 
-extern int __float_nan[];
-extern int __float_huge[];
-extern int __double_huge[];
+extern const f32 __float_nan[];
+extern const f32 __float_huge[];
+extern const f64 __double_huge[];
 
 f64 cos(f64);
 f32 cosf(f32);

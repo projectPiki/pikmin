@@ -8,6 +8,7 @@ struct PaniMotion;
 struct PaniMotionTable;
 
 enum KeyEventTypes {
+	KEY_NULL       = -1,
 	KEY_Finished   = 0,
 	KEY_Action0    = 1,
 	KEY_Action1    = 2,
@@ -17,6 +18,7 @@ enum KeyEventTypes {
 	KEY_LoopEnd    = 6,
 	KEY_PlaySound  = 7,
 	KEY_PlayEffect = 8,
+	KEY_Reserved   = 9,
 };
 
 /**
@@ -109,6 +111,7 @@ struct PaniAnimator : public Animator {
 
 	// these are all DLL inlines
 	bool isFinished() { return mIsFinished; }
+	bool isFinishing() { return mCurrentKeyIndex < 0; }
 
 	f32 getCounter() { return mAnimationCounter; }
 	void setCounter(f32 frame) { mAnimationCounter = frame; }
@@ -119,10 +122,20 @@ struct PaniAnimator : public Animator {
 
 	PaniMotion* getMotion(int motionIdx) { return mMotionTable->getMotion(motionIdx); }
 
+	bool getCurrentOption(int opt) { return mAnimInfo->mParams.mFlags() & opt; }
+
+	f32 getAnimationSpeed() { return mAnimInfo->mParams.mSpeed(); }
+
+	int getFrameCount()
+	{
+		if (!mAnimInfo) {
+			return -1;
+		}
+		return mAnimInfo->mData->mTotalFrameCount;
+	}
+
 	/*
 	    remaining DLL inlines:
-	    bool getCurrentOption(int);
-	    bool isFinishing();
 
 	    AnimKey* getEventKey(int);
 
@@ -130,7 +143,6 @@ struct PaniAnimator : public Animator {
 	    f32 getKeyValueByKeyType(int);
 
 	    int getEventKeyCount();
-	    int getFrameCount();
 	    int getKeyIndex(int);
 	    int getKeyInfoCount();
 	    int getKeyType(int);
@@ -157,6 +169,15 @@ struct PaniAnimator : public Animator {
  */
 struct PaniItemAnimator : public PaniAnimator {
 	PaniItemAnimator();
+
+	char* getCurrentMotionName()
+	{
+		if (mMotionIdx < 0) {
+			return "NULL";
+		}
+
+		return motionLabels[mMotionIdx];
+	}
 
 	static PaniMotionTable* createMotionTable();
 
@@ -204,9 +225,18 @@ struct PaniTekiAnimator : public PaniAnimator {
 
 	static char* motionLabels[15];
 
+	// DLL inline:
+	char* getCurrentMotionName()
+	{
+		if (mMotionIdx < 0) {
+			return "NULL";
+		}
+
+		return motionLabels[mMotionIdx];
+	}
+
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
-	// TODO: members
 };
 
 /**
@@ -252,13 +282,14 @@ struct PaniSound {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct PaniSoundTable {
 	PaniSoundTable(int);
 
-	// DLL inlines to do:
-	// PaniSound* getSound(int);
-	// int getSize();
+	int getSize() { return mSoundCount; }
+	PaniSound* getSound(int idx) { return mSounds[idx]; }
 
 	int mSoundCount;     // _00
 	PaniSound** mSounds; // _04, array of mSoundCount sounds
