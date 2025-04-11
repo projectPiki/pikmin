@@ -6,7 +6,8 @@
 
 struct Teki;
 
-#define TAI_NO_TRANSIT (-1)
+#define TAI_NO_TRANSIT     (-1)
+#define TAI_RETURN_TRANSIT (-2)
 
 /**
  * @brief TODO

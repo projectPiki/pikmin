@@ -72,6 +72,7 @@ enum TekiOptions {
  * @brief TODO
  */
 enum TekiTypes {
+	TEKI_NULL     = -1, // INVALID TEKI
 	TEKI_START    = 0,  // START OF VALID TEKI TYPES
 	TEKI_Frog     = 0,  // 0, Yellow Wollywog
 	TEKI_Iwagen   = 1,  // 1, Iwagen (unused enemy)
@@ -537,7 +538,13 @@ struct YTeki : public NTeki {
 	 * @brief TODO
 	 */
 	enum ptclIndexFlag {
-		// TODO: this
+		PTCL_Unk0 = 0,
+		PTCL_Unk1 = 1,
+		PTCL_Unk2 = 2,
+		PTCL_Unk3 = 3,
+		PTCL_Unk4 = 4,
+		PTCL_Unk5 = 5,
+		PTCL_Unk6 = 6,
 	};
 
 	YTeki();
@@ -549,7 +556,7 @@ struct YTeki : public NTeki {
 		BTeki::init(tekiType);
 		mFrameCounter = 0.0f;
 		for (int i = 0; i < 9; i++) {
-			_498[i] = nullptr;
+			mPtclGenPtrs[i] = nullptr;
 		}
 	}
 
@@ -595,8 +602,18 @@ struct YTeki : public NTeki {
 	f32 getAngle() { return mTurnAngle; }
 	void setAngle(f32 angle) { mTurnAngle = angle; }
 
+	f32 getDororoGravity() { return mDororoGravity; }
+	void setDororoGravity(f32 grav) { mDororoGravity = grav; }
+
+	f32 getDesire() { return mDororoBarkDesire; }
+	void setDesire(f32 val) { mDororoBarkDesire = val; }
+	void addDesire(f32 amt) { mDororoBarkDesire += amt; }
+
 	WorkObject* getWorkObjectPointer() { return mWorkObject; }
 	void setWorkObjectPointer(WorkObject* obj) { mWorkObject = obj; }
+
+	zen::particleGenerator* getPtclGenPtr(ptclIndexFlag idx) { return mPtclGenPtrs[idx]; }
+	void setPtclGenPtr(ptclIndexFlag idx, zen::particleGenerator* ptclGen) { mPtclGenPtrs[idx] = ptclGen; }
 
 	/*
 	    DLL INLINED FUNCTIONS TO MAKE:
@@ -608,21 +625,11 @@ struct YTeki : public NTeki {
 	    void initCylinderTYpePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
 	    void initEventTypePtclCallBack();
 
-	    zen::particleGenerator* getPtclGenPtr(ptclIndexFlag);
-	    void setPtclGenPtr(ptclIndexFlag, zen::particleGenerator*);
-
-	    f32 getDesire();
-	    void setDesire(f32);
-	    void addDesire(f32);
-
 	    f32 setAnimSpeed(f32);
 
 	    f32 getSpeed();
 	    void setSpeed(f32);
 	    void addSpeed(f32);
-
-	    f32 getDororoGravity();
-	    void setDororoGravity(f32);
 
 	    f32 getExceptionalGravity();
 	    void setExceptionalGravity(f32);
@@ -655,18 +662,19 @@ struct YTeki : public NTeki {
 
 	// _00       = VTBL
 	// _000-_46C = NTeki
-	u8 _46C[0x470 - 0x46C];          // _46C, TODO: work out members
-	u32 _470;                        // _470, unknown
-	int mMapCode;                    // _474
-	f32 mFrameCounter;               // _478
-	f32 mFrameCounterMax;            // _47C
-	f32 mFootPosY[4];                // _480, indexed by effFootIndexFlag
-	f32 _490;                        // _490
-	f32 mTurnAngle;                  // _494
-	zen::particleGenerator* _498[8]; // _498
-	u8 _4B8[0x4];                    // _4B8, unknown
-	WorkObject* mWorkObject;         // _4BC
-	u8 _4C0[0x8];                    // _4C0, unknown
+	u8 _46C[0x470 - 0x46C];                  // _46C, TODO: work out members
+	u32 _470;                                // _470, unknown
+	int mMapCode;                            // _474
+	f32 mFrameCounter;                       // _478
+	f32 mFrameCounterMax;                    // _47C
+	f32 mFootPosY[4];                        // _480, indexed by effFootIndexFlag
+	f32 _490;                                // _490
+	f32 mTurnAngle;                          // _494
+	zen::particleGenerator* mPtclGenPtrs[8]; // _498, indexed by ptclIndexFlag
+	u8 _4B8[0x4];                            // _4B8, unknown
+	WorkObject* mWorkObject;                 // _4BC
+	f32 mDororoGravity;                      // _4C0
+	f32 mDororoBarkDesire;                   // _4C4
 	struct {
 		u32 m0 : 1;
 		u32 m1 : 1;

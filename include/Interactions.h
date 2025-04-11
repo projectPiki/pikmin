@@ -80,7 +80,10 @@ struct InteractAttack : public Interaction {
  * @brief TODO
  */
 struct InteractBikkuri : public Interaction {
-	inline InteractBikkuri(); // TODO: probably
+	InteractBikkuri(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actItem(ItemCreature*); // _28
 

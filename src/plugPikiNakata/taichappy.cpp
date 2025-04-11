@@ -363,7 +363,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	state->setAction(j++, dye);
 	setState(CHAPPYSTATE_Unk3, state);
 
-	TaiFlickingAction* flicking = new TaiFlickingAction(-2, 9);
+	TaiFlickingAction* flicking = new TaiFlickingAction(TAI_RETURN_TRANSIT, 9);
 
 	//  STATE -
 	state = new TaiState(6);
@@ -481,7 +481,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	state->setAction(j++, legEffect);
 	setState(CHAPPYSTATE_Unk11, state);
 
-	TaiMotionAction* motion2                     = new TaiMotionAction(-2, 8);
+	TaiMotionAction* motion2                     = new TaiMotionAction(TAI_RETURN_TRANSIT, 8);
 	TaiAnimationSwallowingAction* animSwallowing = new TaiAnimationSwallowingAction(CHAPPYSTATE_Unk9);
 	TaiActionStateAction* actionState            = new TaiActionStateAction(CHAPPYSTATE_Unk9, 1);
 

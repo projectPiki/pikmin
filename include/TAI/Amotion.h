@@ -35,11 +35,14 @@ struct TAIAreserveMotion : public TaiAction {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct TAIAmotionLoop : public TAIAreserveMotion {
-	inline TAIAmotionLoop() // this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAmotionLoop(int nextState, int motionIdx, f32 frameMax)
+	    : TAIAreserveMotion(nextState, motionIdx)
 	{
+		mFrameMax = frameMax;
 	}
 
 	virtual void start(Teki&);     // _08

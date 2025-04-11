@@ -34,7 +34,8 @@ struct TAIAattackWorkObject : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAflickingAfterMotionLoop : public TAIAmotionLoop {
-	inline TAIAflickingAfterMotionLoop() // TODO: this is a guess
+	TAIAflickingAfterMotionLoop(int nextState, int motionIdx, f32 frameMax)
+	    : TAIAmotionLoop(nextState, motionIdx, frameMax)
 	{
 	}
 
@@ -103,9 +104,10 @@ struct TAIAfireBreath : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAflickCheck : public TaiAction {
-	inline TAIAflickCheck() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAflickCheck(int nextState, int damageCountLimit)
+	    : TaiAction(nextState)
 	{
+		mDamageCountLimit = damageCountLimit;
 	}
 
 	virtual bool act(Teki&);                // _10
@@ -120,8 +122,8 @@ struct TAIAflickCheck : public TaiAction {
  * @brief TODO
  */
 struct TAIAflicking : public TAIAmotion {
-	inline TAIAflicking() // TODO: this is a guess
-	    : TAIAmotion(-1, -1)
+	TAIAflicking(int nextState, int motionIdx)
+	    : TAIAmotion(nextState, motionIdx)
 	{
 	}
 

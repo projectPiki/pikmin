@@ -208,7 +208,8 @@ struct TAIAstickingPikiMar : public TAIAstickingPiki {
  * @brief TODO
  */
 struct TAIAflickCheckMar : public TAIAflickCheck {
-	inline TAIAflickCheckMar() // TODO: this is a guess
+	TAIAflickCheckMar(int nextState) // TODO: check this when used
+	    : TAIAflickCheck(nextState, 0)
 	{
 	}
 
@@ -253,7 +254,8 @@ struct TAIAstickingPikiMarFly : public TAIAstickingPiki {
  * @brief TODO
  */
 struct TAIAflickingMar : public TAIAflicking {
-	inline TAIAflickingMar() // TODO: this is a guess
+	TAIAflickingMar(int nextState, int motionIdx)
+	    : TAIAflicking(nextState, motionIdx)
 	{
 	}
 

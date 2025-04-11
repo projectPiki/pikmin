@@ -38,9 +38,9 @@ void YTeki::doKill()
 {
 	BTeki::doKill();
 	for (int i = 0; i < 9; i++) {
-		if (_498[i]) {
+		if (mPtclGenPtrs[i]) {
 			PRINT("KILL PTCL -----------------------------\n");
-			_498[i]->finish();
+			mPtclGenPtrs[i]->finish();
 		}
 	}
 }
@@ -54,9 +54,9 @@ void YTeki::exitCourse()
 {
 	BTeki::exitCourse();
 	for (int i = 0; i < 9; i++) {
-		if (_498[i]) {
+		if (mPtclGenPtrs[i]) {
 			PRINT("KILL PTCL -----------------------------\n");
-			_498[i]->forceFinish();
+			mPtclGenPtrs[i]->forceFinish();
 		}
 	}
 }

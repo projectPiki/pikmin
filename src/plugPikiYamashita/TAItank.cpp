@@ -1820,16 +1820,6 @@ void TAItankAnimation::makeDefaultAnimations()
 
 /*
  * --INFO--
- * Address:	801A4EAC
- * Size:	000008
- */
-bool TAIAnoReaction::act(Teki&)
-{
-	return true;
-}
-
-/*
- * --INFO--
  * Address:	801A4EB4
  * Size:	00000C
  */

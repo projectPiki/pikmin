@@ -99,7 +99,8 @@ struct TAIAinitTank : public TaiAction {
  * @brief TODO
  */
 struct TAIAflickingTank : public TAIAflicking {
-	inline TAIAflickingTank() // TODO: this is a guess
+	TAIAflickingTank(int nextState, int motionIdx)
+	    : TAIAflicking(nextState, motionIdx)
 	{
 	}
 

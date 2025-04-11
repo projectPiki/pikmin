@@ -118,7 +118,8 @@ struct TAIAdisableStick : public TaiAction {
  * @brief TODO
  */
 struct TAIAflickingBeatle : public TAIAflicking {
-	inline TAIAflickingBeatle() // TODO: this is a guess
+	TAIAflickingBeatle(int nextState, int motionIdx)
+	    : TAIAflicking(nextState, motionIdx)
 	{
 	}
 
@@ -133,7 +134,8 @@ struct TAIAflickingBeatle : public TAIAflicking {
  * @brief TODO
  */
 struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
-	inline TAIAflickingAfterMotionLoopBeatle() // TODO: this is a guess
+	TAIAflickingAfterMotionLoopBeatle(int nextState, int motionIdx) // TODO: check this when used
+	    : TAIAflickingAfterMotionLoop(nextState, motionIdx, 0.0f)
 	{
 	}
 

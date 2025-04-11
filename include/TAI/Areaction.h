@@ -163,12 +163,12 @@ struct TAIAinWaterDamage : public TAIAinWater {
  * @brief TODO
  */
 struct TAIAnoReaction : public TaiAction {
-	inline TAIAnoReaction() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAnoReaction(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
-	virtual bool act(Teki&); // _10
+	virtual bool act(Teki&) { return true; } // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction

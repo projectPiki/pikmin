@@ -202,8 +202,8 @@ struct TAIAvisibleNavi : public TaiAction {
  * @brief TODO
  */
 struct TAIAvisiblePiki : public TaiAction {
-	inline TAIAvisiblePiki() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAvisiblePiki(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 

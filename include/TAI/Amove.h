@@ -43,8 +43,8 @@ struct TAIAsetTargetPointWorkObject : public TaiAction {
  * @brief TODO
  */
 struct TAIAgoTargetPriorityFaceDir : public TAIAreserveMotion {
-	inline TAIAgoTargetPriorityFaceDir() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAgoTargetPriorityFaceDir(int nextState, int motionIdx)
+	    : TAIAreserveMotion(nextState, motionIdx)
 	{
 	}
 
@@ -62,12 +62,30 @@ struct TAIAgoTargetPriorityFaceDir : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAgoTargetPiki : public TAIAgoTargetPriorityFaceDir {
-	inline TAIAgoTargetPiki() // TODO: this is a guess
+	TAIAgoTargetPiki(int nextState, int motionIdx)
+	    : TAIAgoTargetPriorityFaceDir(nextState, motionIdx)
 	{
 	}
 
-	virtual bool act(Teki&);          // _10
-	virtual bool checkArrival(Teki&); // _1C
+	virtual bool act(Teki& teki) // _10
+	{
+		Creature* target = teki.getCreaturePointer(0);
+		if (target) {
+			if (target->isAlive()) {
+				if (teki.getPosition().distance(target->getPosition()) < teki.getParameterF(TPF_VisibleRange)) {
+					teki.mTargetPosition.set(target->getPosition());
+					return TAIAgoTargetPriorityFaceDir::act(teki);
+				}
+				// were
+				return true;
+			}
+			// these
+			return true;
+		}
+		// necessary
+		return true;
+	}
+	virtual bool checkArrival(Teki&) { return false; } // _1C
 
 	// _04     = VTBL
 	// _00-_0C = TAIAgoTargetPriorityFaceDir?
@@ -78,7 +96,8 @@ struct TAIAgoTargetPiki : public TAIAgoTargetPriorityFaceDir {
  * @brief TODO
  */
 struct TAIAgoGoalPath : public TAIAgoTargetPriorityFaceDir {
-	inline TAIAgoGoalPath() // TODO: this is a guess
+	TAIAgoGoalPath(int nextState, int motionIdx)
+	    : TAIAgoTargetPriorityFaceDir(nextState, motionIdx)
 	{
 	}
 
@@ -279,9 +298,10 @@ struct TAIAturnFocusCreature : public TAIAturnToTarget {
  * @brief TODO
  */
 struct TAIAwait : public TAIAreserveMotion {
-	inline TAIAwait() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAwait(int nextState, int motionIdx, f32 p3)
+	    : TAIAreserveMotion(nextState, motionIdx)
 	{
+		_0C = p3;
 	}
 
 	virtual void start(Teki&);            // _08
@@ -290,7 +310,7 @@ struct TAIAwait : public TAIAreserveMotion {
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-	// TODO: members
+	f32 _0C; // _0C
 };
 
 /**
