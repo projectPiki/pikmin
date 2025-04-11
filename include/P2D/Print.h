@@ -3,8 +3,8 @@
 
 #include "types.h"
 #include "P2D/Util.h"
+#include "Colour.h"
 
-struct Colour;
 struct P2DFont;
 
 /**
@@ -31,7 +31,19 @@ struct P2DPrint {
 	void doCtrlCode(int);
 	void getNumber(const u8**, s32, s32, int);
 
-	// TODO: members
+	P2DFont* mFont;      // _00
+	int _04;             // _04
+	int _08;             // _08
+	u8 _0C;              // _0C
+	u8 _0D;              // _0D
+	u8 _0E[0x24 - 0x0E]; // _0E, unknown
+	Colour _24;          // _24
+	Colour _28;          // _28
+	Colour _2C;          // _2C
+	Colour _30;          // _30
+	int _34;             // _34
+	int _38;             // _38
+	int _3C;             // _3C
 };
 
 #endif
