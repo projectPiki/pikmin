@@ -1,5 +1,20 @@
 #include "jaudio/virload.h"
 
+#include "jaudio/dvdthread.h"
+
+#include "stl/string.h"
+
+#define JV_DIR_NAME_LENGTH (16)
+static char JV_DIR_NAME[JV_DIR_NAME_LENGTH][16];
+
+#define JV_ARC_NAME_LENGTH (16)
+static char JV_ARC_NAME[JV_ARC_NAME_LENGTH][32];
+
+#define JV_ARC_LENGTH ()
+static Barc* JV_ARC[16]; // Pointers to BARC metadata (*.hed). In practice, just the first element points to pikiseq.hed.
+
+static u32 JV_CURRENT_ARCS = 0; // TODO: type unknown, init unclear
+
 /*
  * --INFO--
  * Address:	........
@@ -121,52 +136,19 @@ void JV_InitHeader_M(char*, u8*, u8*)
  * Address:	8000E6C0
  * Size:	00007C
  */
-u32 JV_GetArchiveHandle(char*)
+u32 JV_GetArchiveHandle(char* name)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8031
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  subi      r30, r4, 0x918
-	  li        r29, 0
-	  li        r31, 0
-	  b         .loc_0x44
+	u32 i;
 
-	.loc_0x28:
-	  add       r4, r30, r31
-	  addi      r3, r28, 0
-	  bl        0x20AAD4
-	  cmpwi     r3, 0
-	  beq-      .loc_0x50
-	  addi      r29, r29, 0x1
-	  addi      r31, r31, 0x20
-
-	.loc_0x44:
-	  lwz       r0, 0x2C10(r13)
-	  cmplw     r29, r0
-	  blt+      .loc_0x28
-
-	.loc_0x50:
-	  lwz       r0, 0x2C10(r13)
-	  cmplw     r29, r0
-	  beq-      .loc_0x64
-	  rlwinm    r3,r29,16,0,15
-	  b         .loc_0x68
-
-	.loc_0x64:
-	  li        r3, -0x1
-
-	.loc_0x68:
-	  lmw       r28, 0x10(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (i = 0; i < JV_CURRENT_ARCS; ++i) {
+		if (!strcmp(name, JV_ARC_NAME[i])) {
+			break;
+		}
+	}
+	if (i != JV_CURRENT_ARCS) {
+		return i * 0x10000;
+	}
+	return -1;
 }
 
 /*
@@ -204,53 +186,28 @@ void JV_GetHandle(u32)
  * Address:	8000E740
  * Size:	000080
  */
-void JV_GetRealHandle(u32)
+BarcEntry* JV_GetRealHandle(u32 handle)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2C10(r13)
-	  rlwinm    r4,r3,16,16,31
-	  rlwinm    r5,r3,0,16,31
-	  cmplw     r4, r0
-	  blt-      .loc_0x1C
-	  li        r3, 0
-	  blr
+	u32 i;
+	Barc* hed;
+	u16 temp;
+	u16 temp2;
 
-	.loc_0x1C:
-	  lis       r3, 0x8031
-	  rlwinm    r4,r4,2,0,29
-	  subi      r0, r3, 0x718
-	  add       r3, r0, r4
-	  lwz       r4, 0x0(r3)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x40
-	  li        r3, 0
-	  blr
+	temp2 = (handle & 0x0000ffff);
+	temp  = (handle & 0xffff0000) >> 16;
 
-	.loc_0x40:
-	  lwz       r0, 0xC(r4)
-	  cmplw     r5, r0
-	  blt-      .loc_0x54
-	  li        r3, 0
-	  blr
-
-	.loc_0x54:
-	  rlwinm    r3,r5,5,0,26
-	  addi      r3, r3, 0x20
-	  add       r3, r4, r3
-	  b         .loc_0x70
-
-	.loc_0x64:
-	  rlwinm    r3,r0,5,0,26
-	  addi      r3, r3, 0x20
-	  add       r3, r4, r3
-
-	.loc_0x70:
-	  lhz       r0, 0xE(r3)
-	  cmplwi    r0, 0xFFFF
-	  bne+      .loc_0x64
-	  blr
-	*/
+	if (temp >= JV_CURRENT_ARCS) {
+		return 0;
+	}
+	hed = JV_ARC[temp];
+	if (!hed) {
+		return NULL;
+	}
+	if (temp2 >= hed->meta.seqCount) {
+		return NULL;
+	}
+	for (i = temp2; hed[i].entry.isDummy != 0xffff; ++i) { }
+	return &hed[i].entry;
 }
 
 /*
@@ -258,28 +215,14 @@ void JV_GetRealHandle(u32)
  * Address:	8000E7C0
  * Size:	000034
  */
-u32 JV_CheckSize(u32)
+u32 JV_CheckSize(u32 handle)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x8C
-	  cmplwi    r3, 0
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x24
+	BarcEntry* entry;
 
-	.loc_0x20:
-	  lwz       r3, 0x1C(r3)
-
-	.loc_0x24:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	entry = JV_GetRealHandle(handle);
+	if (!entry)
+		return 0;
+	return entry->size;
 }
 
 /*
@@ -297,65 +240,22 @@ void __JV_Callback(u32)
  * Address:	8000E800
  * Size:	0000D0
  */
-unknown JV_LoadFile(u32, u8*, u32, u32)
+u32 JV_LoadFile(volatile u32 handle, u8* volatile dst, u32 param_3, volatile u32 length)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0xC8(r1)
-	  stmw      r30, 0xC0(r1)
-	  addi      r30, r5, 0
-	  stw       r3, 0x8(r1)
-	  lwz       r3, 0x8(r1)
-	  stw       r4, 0xC(r1)
-	  rlwinm    r31,r3,16,16,31
-	  stw       r6, 0x14(r1)
-	  stw       r0, 0x30(r1)
-	  bl        -0xF0
-	  lwz       r5, 0x18(r3)
-	  lis       r3, 0x8031
-	  subi      r0, r3, 0xD18
-	  rlwinm    r4,r31,6,0,25
-	  stw       r5, 0xB4(r1)
-	  add       r4, r0, r4
-	  addi      r3, r1, 0x34
-	  lwz       r0, 0xB4(r1)
-	  add       r0, r0, r30
-	  stw       r0, 0xB4(r1)
-	  bl        0x20AAFC
-	  addi      r3, r1, 0x34
-	  subi      r4, r2, 0x7F30
-	  bl        0x20AA80
-	  lis       r3, 0x8031
-	  rlwinm    r4,r31,2,0,29
-	  subi      r0, r3, 0x718
-	  addi      r3, r1, 0x34
-	  add       r4, r0, r4
-	  lwz       r4, 0x0(r4)
-	  addi      r4, r4, 0x10
-	  bl        0x20AA60
-	  lwz       r5, 0xC(r1)
-	  addi      r4, r1, 0x34
-	  lwz       r6, 0xB4(r1)
-	  addi      r8, r1, 0x30
-	  lwz       r7, 0x14(r1)
-	  li        r3, 0
-	  li        r9, 0
-	  bl        -0x6FA8
+	BarcEntry* entry;
+	volatile u32 status;
+	u32 src;
+	u32 badCompiler;
+	char name[128];
 
-	.loc_0xAC:
-	  lwz       r0, 0x30(r1)
-	  cmplwi    r0, 0
-	  beq+      .loc_0xAC
-	  lwz       r3, 0x30(r1)
-	  lwz       r0, 0xCC(r1)
-	  lmw       r30, 0xC0(r1)
-	  addi      r1, r1, 0xC8
-	  mtlr      r0
-	  blr
-	*/
+	status = 0;
+	src    = JV_GetRealHandle(handle)->offset + param_3;
+	strcpy(name, JV_DIR_NAME[handle >> 16]);
+	strcat(name, "/");
+	strcat(name, JV_ARC[handle >> 16]->meta.arcName);
+	DVDT_LoadtoDRAM(0, name, (u32)dst, src, length, &status, NULL);
+	while (!status) { }
+	return status;
 }
 
 /*
