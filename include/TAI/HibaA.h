@@ -105,6 +105,8 @@ struct TAIAfireAttackHibaA : public TAIAreserveMotion {
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
+	static TAIeffectAttackEventCallBackHibaA eventCallBack;
+
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members

@@ -91,7 +91,7 @@ struct BinobjInfo : public GfxobjInfo {
 
 	// _1C     = VTBL
 	// _00-_20 = GfxobjInfo
-	char* mData;
+	char* mData; // _20
 };
 
 DEFINE_ENUM_TYPE(SystemFlags, Shutdown = 0x80000000);

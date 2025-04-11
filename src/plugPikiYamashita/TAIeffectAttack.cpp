@@ -65,14 +65,14 @@ void CylinderTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, Vector3
  */
 void CylinderTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature* creature)
 {
-	f32 lineDist;
+	f32 t;
 	Vector3f vec1;
 	Vector3f vec2;
 
 	if (mParam->_44->hitCheckCulling(ptclGen, mParam, creature)) {
 		f32 pointDist
-		    = zen::getDistPointAndLine(creature->getPosition(), ptclGen->getEmitPos(), mParam->_10 + mParam->_28 * mParam->_08, lineDist);
-		if (pointDist < creature->getCentreSize() + mParam->_08 && lineDist >= 0.0f && lineDist <= 1.0f) {
+		    = zen::getDistPointAndLine(creature->getPosition(), ptclGen->getEmitPos(), mParam->_10 + mParam->_28 * mParam->_08, t);
+		if (pointDist < creature->getCentreSize() + mParam->_08 && t >= 0.0f && t <= 1.0f) {
 			mParam->_44->hitCreature(mParam, creature);
 		}
 	}

@@ -13,7 +13,9 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("TAIhibaA")
+
+TAIeffectAttackEventCallBackHibaA TAIAfireAttackHibaA::eventCallBack;
 
 /*
  * --INFO--
@@ -1354,22 +1356,6 @@ void TAIAinitHibaA::start(Teki&)
 bool TAIAinitHibaA::act(Teki&)
 {
 	return true;
-}
-
-/*
- * --INFO--
- * Address:	801D59C8
- * Size:	000010
- */
-void __sinit_TAIhibaA_cpp(void)
-{
-	/*
-	.loc_0x0:
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x4ADC
-	  stw       r0, 0x31B8(r13)
-	  blr
-	*/
 }
 
 /*

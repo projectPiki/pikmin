@@ -428,10 +428,22 @@ struct particleGenerator : public zenList {
  * @brief TODO
  */
 struct PCRData : public zenList {
+	PCRData(char* name, u32 bufSize) { pmSet(name, bufSize); }
+
+	// DLL inlines to do:
+	u8* pmSet(char* name, u32 bufSize)
+	{
+		mName    = StdSystem::stringDup(name);
+		mDataBuf = new (0x20) u8[bufSize];
+	}
+
+	char* getName() { return mName; }
+	u8* getDataBuf() { return mDataBuf; }
 
 	// _00     = VTBL
 	// _00-_0C = zenList
-	// TODO: members
+	char* mName;  // _0C
+	u8* mDataBuf; // _10
 };
 
 /**
@@ -444,7 +456,16 @@ struct particleLoader {
 	// unused/inlined:
 	~particleLoader();
 
+	// DLL inlines to do:
+	PCRData* pmCreatePCRData(char* name, u32 bufSize)
+	{
+		PCRData* data = new PCRData(name, bufSize);
+		_00.put(data);
+		return data;
+	}
+
 	// TODO: members
+	zenListManager _00; // _00, members are (probably) PCRData*
 };
 
 /**
