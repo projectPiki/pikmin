@@ -25,6 +25,15 @@ enum P2DPaneType {
 /**
  * @brief TODO
  */
+enum P2DAxis {
+	PANEAXIS_X = 0,
+	PANEAXIS_Y = 1,
+	PANEAXIS_Z = 2,
+};
+
+/**
+ * @brief TODO
+ */
 struct P2DPaneCallBackBase {
 	P2DPaneCallBackBase(P2DPane*, P2DPaneType);
 
@@ -57,16 +66,25 @@ struct P2DPane {
 	P2DPane(u16, u32, const PUTRect&);           // unused/inlined
 	P2DPane(P2DPane*, RandomAccessStream*, u16); // unused/inlined
 
-	virtual void loadResource();                // _08
-	virtual void makeResident();                // _0C
-	virtual ~P2DPane();                         // _10
-	virtual void move(int, int);                // _14 (weak)
-	virtual void move(Vector3f&);               // _18
-	virtual void move(int, int, f32);           // _1C
-	virtual void moveZ(f32);                    // _20
-	virtual void add(int, int);                 // _24
-	virtual void resize(int, int);              // _28
-	virtual void drawSelf(int, int);            // _2C
+	virtual void loadResource() { }     // _08
+	virtual void makeResident() { }     // _0C
+	virtual ~P2DPane();                 // _10
+	virtual void move(int, int);        // _14 (weak)
+	virtual void move(Vector3f& newPos) // _18
+	{
+		mRectTransform.move(newPos.x, newPos.y);
+		mPaneZ = newPos.z;
+	}
+	virtual void move(int, int, f32);                                                    // _1C
+	virtual void moveZ(f32 newZ) { mPaneZ = newZ; }                                      // _20
+	virtual void add(int x, int y) { mRectTransform.add(x, y); }                         // _24
+	virtual void resize(int width, int height) { mRectTransform.resize(width, height); } // _28
+	virtual void drawSelf(int x, int y)                                                  // _2C
+	{
+		Matrix4f mtx;
+		mtx.makeIdentity();
+		drawSelf(x, y, &mtx);
+	}
 	virtual void drawSelf(int, int, Matrix4f*); // _30
 	virtual P2DPane* search(u32, bool);         // _34
 	virtual void makeMatrix(int, int);          // _38
@@ -88,29 +106,44 @@ struct P2DPane {
 
 	void show() { mFlag.mIsVisible = true; }
 	void hide() { mFlag.mIsVisible = false; }
+	bool IsVisible() { return mFlag.mIsVisible; }
 
 	// DLL inlines to do:
+	void updateSelf()
+	{
+		if (mCallBack) {
+			mCallBack->invoke(this);
+		}
+	}
+
+	const PUTRect& getBounds();
 	void setBounds(const PUTRect&);
-	void updateSelf();
+
 	s32 getWidth();
 	s32 getHeight();
-	bool IsVisible();
+
+	int getPosH();
+	int getPosV();
+
 	bool alone();
+
 	bool appendChild(P2DPane*);
 	PSUTree<P2DPane>* getFirstChild();
 	PSUTree<P2DPane>* getEndChild();
-	const PUTRect& getBounds();
-	Vector3f& getScale();
-	f32 getRotate();
-	int getPosH();
-	int getPosV();
-	void getDispPos(Vector3f*);
+
 	void place(const PUTRect&);
+
+	f32 getRotate();
 	void rotate(int, int P2DRotateAxis, f32);
 	void rotateX(f32);
 	void rotateZ(f32);
 	void rotateZ(int, int, f32);
+
 	void setOffset(int, int);
+
+	void getDispPos(Vector3f*);
+
+	Vector3f& getScale();
 	void setScale(const Vector3f&);
 	void setScale(f32);
 	void setScale(f32, f32, f32);
@@ -121,7 +154,7 @@ struct P2DPane {
 	u16 _0A;                    // _0A, maybe?
 	struct {
 		bool mIsVisible : 1;
-		u16 m2 : 2;
+		u16 mRotationAxis : 2;
 	} mFlag;                    // _0C
 	u32 mTagName;               // _10, unknown
 	f32 mPaneZ;                 // _14
@@ -129,12 +162,12 @@ struct P2DPane {
 	PUTRect _20;                // _20
 	PUTRect _28;                // _28
 	PUTRect _30;                // _30
-	u8 _38[0x78 - 0x38];        // _38, unknown
+	Matrix4f _38;               // _38
 	Matrix4f _78;               // _78
-	u16 _B8;                    // _B8
-	u16 _BA;                    // _BA
-	f32 _BC;                    // _BC
-	Vector3f _C0;               // _C0
+	s16 _B8;                    // _B8, maybe mOffsetX
+	s16 _BA;                    // _BA, maybe mOffsetY
+	f32 mRotation;              // _BC
+	Vector3f mScale;            // _C0
 	int mCullMode;              // _CC
 	PSUTree<P2DPane> mPaneTree; // _D0
 };

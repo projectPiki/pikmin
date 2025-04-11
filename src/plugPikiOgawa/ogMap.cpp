@@ -36,8 +36,8 @@ void zen::ogScrMapMgr::start(s16 p1)
 	if (mMode == 1) {
 		mCurrentScreen = mTest2Screen;
 		mPic1          = mCurrentScreen->search('pic1', true);
-		mPic1PositionX = mPic1->mRectTransform.mMin.x;
-		mPic1PositionY = mPic1->mRectTransform.mMin.y;
+		mPic1PositionX = mPic1->mRectTransform.mMinX;
+		mPic1PositionY = mPic1->mRectTransform.mMinY;
 		mTypingTextMgr->start();
 
 	} else {

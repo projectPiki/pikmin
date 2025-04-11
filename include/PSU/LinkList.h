@@ -14,9 +14,7 @@ struct PSUPtrLink {
 
 	~PSUPtrLink();
 
-	// these are also fake according to the DLL (no inlines aside from ctor/dtor):
-	void* getObjectPtr() const { return mObject; }
-	PSUPtrLink* getNext() const { return mNext; }
+	// no DLL inlines.
 
 	void* mObject;     // _00
 	PSUPtrList* mList; // _04
@@ -62,30 +60,25 @@ struct PSULink : public PSUPtrLink {
 	{
 	}
 
-	~PSULink(); // unused/inlined
+	~PSULink() { } // unused/inlined
 
-	// this is fake according to the DLL (no inlines at all aside from ctor/dtor):
-	inline T* getObject() const { return (T*)getObjectPtr(); }
+	// no DLL inlines.
 
 	// _00-_10 = PSUPtrLink
 };
 
 /**
  * @brief TODO
- *
- * @note Does this inherit from PSUPtrList? Check later.
  */
 template <typename T>
 struct PSUList : public PSUPtrList {
 	PSUList() { } // DLL, to do/check
 
-	~PSUList(); // unused/inlined
+	~PSUList() { } // unused/inlined
 
+	// only DLL inlines:
 	bool append(PSULink<T>* link) { return PSUPtrList::append((PSUPtrLink*)link); }
 	bool remove(PSULink<T>* link); // DLL, to do
-
-	// this one doesn't exist according to the DLL:
-	inline PSULink<T>* getFirst() const { return (PSULink<T>*)getFirstLink(); }
 
 	// _00-_0C = PSUPtrList
 };

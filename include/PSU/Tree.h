@@ -17,17 +17,18 @@ struct PSUTree : public PSUList<T>, public PSULink<T> {
 	{
 	}
 
-	~PSUTree();
+	~PSUTree() { }
 
-	PSUTree<T>* getFirstChild() const { return (PSUTree<T>*)getFirst(); }
+	PSUTree<T>* getFirstChild() const { return (PSUTree<T>*)getFirstLink(); }
 	PSUTree<T>* getEndChild() const { return nullptr; }
 	PSUTree<T>* getNextChild() const { return (PSUTree<T>*)mNext; }
 	T* getObject() const { return (T*)mObject; }
 
-	// DLL inlines to do:
 	bool appendChild(PSUTree<T>* child) { return PSUList::append(child); }
+	PSUTree<T>* getParent() const { return (PSUTree<T>*)mList; }
+
+	// DLL inlines to do:
 	bool removeChild(PSUTree<T>* child);
-	PSUTree<T>* getParent() const;
 
 	// PSUList at _00
 	// PSULink at _0C

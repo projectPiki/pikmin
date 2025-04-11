@@ -776,7 +776,7 @@ config.libs = [
             Object(Matching, "plugPikiYamashita/P2DGrafContext.cpp"),
             Object(NonMatching, "plugPikiYamashita/P2DOrthoGraph.cpp"),
             Object(NonMatching, "plugPikiYamashita/P2DPerspGraph.cpp"),
-            Object(NonMatching, "plugPikiYamashita/P2DPane.cpp"),
+            Object(Matching, "plugPikiYamashita/P2DPane.cpp"),
             Object(NonMatching, "plugPikiYamashita/P2DPicture.cpp"),
             Object(NonMatching, "plugPikiYamashita/P2DScreen.cpp"),
             Object(Matching, "plugPikiYamashita/P2DStream.cpp"),

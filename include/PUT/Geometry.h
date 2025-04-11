@@ -8,6 +8,12 @@
  * @brief TODO
  */
 struct PUTPoint {
+	PUTPoint()
+	{
+		x = 0;
+		y = 0;
+	}
+
 	s16 x, y; // _00, _02
 };
 
@@ -32,16 +38,18 @@ struct PUTRect {
 	void normalize();
 	bool isEmpty() const;
 
-	int getWidth() const { return mMax.x - mMin.x; }
-	int getHeight() const { return mMax.y - mMin.y; }
+	int getWidth() const { return mMaxX - mMinX; }
+	int getHeight() const { return mMaxY - mMinY; }
 
 	// unused/inlined:
 	void add(const PUTPoint&);
 	void move(const PUTPoint&);
 	void reform(int, int, int, int);
 
-	PUTPoint mMin; // _00
-	PUTPoint mMax; // _04
+	s16 mMinX; // _00
+	s16 mMinY; // _02
+	s16 mMaxX; // _04
+	s16 mMaxY; // _06
 };
 
 #endif
