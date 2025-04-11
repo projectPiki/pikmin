@@ -33,6 +33,7 @@ struct TekiParameters;
 struct TekiPersonality;
 struct TekiStrategy;
 struct TekiStrategyTable;
+struct WorkObject;
 
 namespace zen {
 struct PtclGenPack;
@@ -586,10 +587,16 @@ struct YTeki : public NTeki {
 
 	f32 getFrameCounter() { return mFrameCounter; }
 	void setFrameCounter(f32 count) { mFrameCounter = count; }
-	f32 addFrameCounter(f32 amt) { return mFrameCounter = mFrameCounter + amt; } // yeah.
+	f32 addFrameCounter(f32 amt) { return mFrameCounter += amt; } // yeah.
 
 	f32 getFrameCounterMax() { return mFrameCounterMax; }
 	void setFrameCounterMax(f32 max) { mFrameCounterMax = max; }
+
+	f32 getAngle() { return mTurnAngle; }
+	void setAngle(f32 angle) { mTurnAngle = angle; }
+
+	WorkObject* getWorkObjectPointer() { return mWorkObject; }
+	void setWorkObjectPointer(WorkObject* obj) { mWorkObject = obj; }
 
 	/*
 	    DLL INLINED FUNCTIONS TO MAKE:
@@ -614,9 +621,6 @@ struct YTeki : public NTeki {
 	    void setSpeed(f32);
 	    void addSpeed(f32);
 
-	    f32 getAngle();
-	    void setAngle(f32);
-
 	    f32 getDororoGravity();
 	    void setDororoGravity(f32);
 
@@ -631,9 +635,6 @@ struct YTeki : public NTeki {
 
 	    bool getTimerStart();
 	    void setTimerStart(bool);
-
-	    WorkObject* getWorkObjectPointer();
-	    void setWorkObjectPointer(WorkObject*);
 
 	    void setManualAnimation(bool);
 
@@ -661,9 +662,11 @@ struct YTeki : public NTeki {
 	f32 mFrameCounterMax;            // _47C
 	f32 mFootPosY[4];                // _480, indexed by effFootIndexFlag
 	f32 _490;                        // _490
-	u8 _494[0x4];                    // _494, unknown
+	f32 mTurnAngle;                  // _494
 	zen::particleGenerator* _498[8]; // _498
-	u8 _4B8[0x4C8 - 0x4B8];          // _4B8, TODO: work out members
+	u8 _4B8[0x4];                    // _4B8, unknown
+	WorkObject* mWorkObject;         // _4BC
+	u8 _4C0[0x8];                    // _4C0, unknown
 	struct {
 		u32 m0 : 1;
 		u32 m1 : 1;

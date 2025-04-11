@@ -771,7 +771,7 @@ config.libs = [
             Object(Matching, "plugPikiYamashita/TAIAreaction.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIAmove.cpp"),
             Object(Matching, "plugPikiYamashita/TAIAmotion.cpp"),
-            Object(NonMatching, "plugPikiYamashita/TAIAjudge.cpp"),
+            Object(Matching, "plugPikiYamashita/TAIAjudge.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIAattack.cpp"),
             Object(Matching, "plugPikiYamashita/P2DGrafContext.cpp"),
             Object(NonMatching, "plugPikiYamashita/P2DOrthoGraph.cpp"),

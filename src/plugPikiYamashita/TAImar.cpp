@@ -2520,15 +2520,6 @@ int TAIAstickingPikiMar::getPikiNum(Teki&)
 
 /*
  * --INFO--
- * Address:	801A7764
- * Size:	000004
- */
-void TAIAstickingPiki::start(Teki&)
-{
-}
-
-/*
- * --INFO--
  * Address:	801A7768
  * Size:	000018
  */

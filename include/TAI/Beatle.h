@@ -86,7 +86,8 @@ struct TAIAinitBeatle : public TaiAction {
  * @brief TODO
  */
 struct TAIAcheckInsideRangePikiBeatle : public TAIAcheckInsideRangePiki {
-	inline TAIAcheckInsideRangePikiBeatle() // TODO: this is a guess
+	TAIAcheckInsideRangePikiBeatle(int nextState, int pikiMax)
+	    : TAIAcheckInsideRangePiki(nextState, pikiMax, 0.0f)
 	{
 	}
 

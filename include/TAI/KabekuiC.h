@@ -148,7 +148,8 @@ struct TAIAlandingKabekuiC : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAmoreLifeKabekuiC : public TAIAmoreLife {
-	inline TAIAmoreLifeKabekuiC() // TODO: this is a guess
+	TAIAmoreLifeKabekuiC(int nextState)
+	    : TAIAmoreLife(nextState)
 	{
 	}
 
@@ -163,7 +164,8 @@ struct TAIAmoreLifeKabekuiC : public TAIAmoreLife {
  * @brief TODO
  */
 struct TAIAlessLifeKabekuiC : public TAIAlessLife {
-	inline TAIAlessLifeKabekuiC() // TODO: this is a guess
+	TAIAlessLifeKabekuiC(int nextState)
+	    : TAIAlessLife(nextState)
 	{
 	}
 
