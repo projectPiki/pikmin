@@ -3,8 +3,8 @@
 
 #include "types.h"
 #include "GfxObject.h"
+#include "Colour.h"
 
-struct Colour;
 struct Font;
 
 /**
@@ -31,7 +31,28 @@ struct P2DFont {
 	// unused/inlined:
 	int charToIndex(int);
 
-	// TODO: members
+	// DLL inlines to do:
+	int getAscent();
+	int getDescent();
+	int getHeight();
+	int getNormalWidth();
+	u16 getFontType();
+	u16 getLeading();
+	u16 getWidth();
+	u8 getAlpha();
+	void loadFontTexture();
+	void makeResident();
+
+	Font* mFont; // _00
+	u16 _04;     // _04
+	u16 _06;     // _06
+	u16 _08;     // _08
+	u16 _0A;     // _0A
+	u16 _0C;     // _0C
+	Colour _10;  // _10
+	Colour _14;  // _14
+	Colour _18;  // _18
+	Colour _1C;  // _1C
 };
 
 #endif
