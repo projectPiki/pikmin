@@ -16,8 +16,13 @@ f32 getDistPointAndLine(Vector3f, Vector3f, Vector3f, f32&);
 void makeRotMatrix(Vector3f&, Matrix3f&);
 
 // DLL inlines:
-inline int RoundOff(f32);
 inline f32 correctRad(f32 val);
+
+// this VERY delicately matches zen::BalloonPane::invoke, change at your own risk
+inline int RoundOff(f32 val)
+{
+	return int((val >= 0.0f) ? val + 0.5f : val - 0.5f);
+}
 
 inline f32 Rand(f32 max)
 {

@@ -89,8 +89,8 @@ void P2DPaneCallBackBase::checkPaneType(P2DPane* pane, P2DPaneType type)
  */
 void P2DPane::init()
 {
-	_B8                 = 0;
-	_BA                 = 0;
+	mOffsetX            = 0;
+	mOffsetY            = 0;
 	mFlag.mRotationAxis = PANEAXIS_X;
 	mRotation           = 0.0f;
 	mScale.set(1.0f, 1.0f, 1.0f);
@@ -350,10 +350,10 @@ void P2DPane::makeMatrix(int x, int y)
 		break;
 	}
 
-	_38.makeSRT(mScale, rotAxis, Vector3f(f32(_B8) + f32(x), f32(_BA) + f32(y), mPaneZ));
-	_38.mMtx[0][3] += _38.mMtx[0][0] * -_B8 + _38.mMtx[0][1] * -_BA;
-	_38.mMtx[1][3] += _38.mMtx[1][0] * -_B8 + _38.mMtx[1][1] * -_BA;
-	_38.mMtx[2][3] += _38.mMtx[2][0] * -_B8 + _38.mMtx[2][1] * -_BA;
+	_38.makeSRT(mScale, rotAxis, Vector3f(f32(mOffsetX) + f32(x), f32(mOffsetY) + f32(y), mPaneZ));
+	_38.mMtx[0][3] += _38.mMtx[0][0] * -mOffsetX + _38.mMtx[0][1] * -mOffsetY;
+	_38.mMtx[1][3] += _38.mMtx[1][0] * -mOffsetX + _38.mMtx[1][1] * -mOffsetY;
+	_38.mMtx[2][3] += _38.mMtx[2][0] * -mOffsetX + _38.mMtx[2][1] * -mOffsetY;
 }
 
 /*

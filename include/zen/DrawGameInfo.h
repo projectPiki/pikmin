@@ -15,6 +15,8 @@ namespace {
  * @brief TODO
  */
 struct DateCallBack : public P2DPaneCallBack, public zen::NumberTex {
+	DateCallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	void setTex();
@@ -26,6 +28,8 @@ struct DateCallBack : public P2DPaneCallBack, public zen::NumberTex {
  * @brief TODO
  */
 struct LifePinchCallBack : public P2DPaneCallBack {
+	LifePinchCallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	// TODO: members
@@ -35,6 +39,8 @@ struct LifePinchCallBack : public P2DPaneCallBack {
  * @brief TODO
  */
 struct LifeIconCallBack : public P2DPaneCallBack {
+	LifeIconCallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 	virtual bool draw(P2DPane*);   // _0C
 
@@ -45,6 +51,8 @@ struct LifeIconCallBack : public P2DPaneCallBack {
  * @brief TODO
  */
 struct NaviTexCallBack : public P2DPaneCallBack {
+	NaviTexCallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	// TODO: members
@@ -54,6 +62,8 @@ struct NaviTexCallBack : public P2DPaneCallBack {
  * @brief TODO
  */
 struct NaviIconCallBack : public P2DPaneCallBack {
+	NaviIconCallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	// TODO: members
@@ -73,6 +83,8 @@ struct SunMove {
  * @brief TODO
  */
 struct MoonIconCallBack : public P2DPaneCallBack, public SunMove {
+	MoonIconCallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	// TODO: members
@@ -89,6 +101,8 @@ struct SunAnim {
  * @brief TODO
  */
 struct SunIcon2CallBack : public P2DPaneCallBack, public SunMove, public SunAnim {
+	SunIcon2CallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	// TODO: members
@@ -98,6 +112,8 @@ struct SunIcon2CallBack : public P2DPaneCallBack, public SunMove, public SunAnim
  * @brief TODO
  */
 struct SunIcon1CallBack : public P2DPaneCallBack, public SunAnim {
+	SunIcon1CallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	// TODO: members
@@ -107,6 +123,8 @@ struct SunIcon1CallBack : public P2DPaneCallBack, public SunAnim {
  * @brief TODO
  */
 struct SunCapsuleCallBack : public P2DPaneCallBack {
+	SunCapsuleCallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	// TODO: members
@@ -116,6 +134,8 @@ struct SunCapsuleCallBack : public P2DPaneCallBack {
  * @brief TODO
  */
 struct SunBaseCallBack : public SunMove, public P2DPaneCallBack {
+	SunBaseCallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	// TODO: members
@@ -125,6 +145,8 @@ struct SunBaseCallBack : public SunMove, public P2DPaneCallBack {
  * @brief TODO
  */
 struct MapPikminWindowCallBack : public P2DPaneCallBack {
+	MapPikminWindowCallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	// TODO: members
@@ -134,6 +156,8 @@ struct MapPikminWindowCallBack : public P2DPaneCallBack {
  * @brief TODO
  */
 struct PikiIconCallBack : public P2DPaneCallBack {
+	PikiIconCallBack(); // not in the DLL, but something's required here
+
 	virtual bool invoke(P2DPane*); // _08
 
 	// TODO: members

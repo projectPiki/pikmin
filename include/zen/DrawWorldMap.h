@@ -42,6 +42,7 @@ struct WorldMapTitleObj {
  * @brief TODO
  */
 struct DrawWorldMapDateCallBack : public P2DPaneCallBack, public zen::NumberTex {
+	DrawWorldMapDateCallBack(); // not in the DLL, but needed?
 
 	virtual bool invoke(P2DPane*); // _08
 

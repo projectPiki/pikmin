@@ -43,6 +43,7 @@ struct DrawMenuBase : public DrawScreen {
 	// unused/inlined:
 	~DrawMenuBase();
 
+	// _00-_100 = DrawScreen
 	// TODO: members
 };
 
@@ -93,8 +94,7 @@ struct DrawMenu : public DrawScreen {
 	void setDecideKeyAssign(u32);
 
 	// _00     = VTBL
-	// _00-_FC = DrawScreen
-	u8 _FC[0x4];            // _FC, unknown
+	// _00-_100 = DrawScreen
 	int _100;               // _100, unknown
 	u8 _104[0xc];           // _104, unknown
 	int _110;               // _110, unknown

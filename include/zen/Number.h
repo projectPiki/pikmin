@@ -4,6 +4,8 @@
 #include "types.h"
 #include "P2D/Pane.h"
 
+struct Texture;
+
 namespace zen {
 
 /**
@@ -12,8 +14,8 @@ namespace zen {
 struct NumberTex {
 	NumberTex();
 
-	static u32 texTable;       // unknown type
-	static u32 shadowTexTable; // unknown type
+	static Texture* texTable[10];       // unknown type
+	static Texture* shadowTexTable[10]; // unknown type
 
 	// TODO: members
 };
@@ -36,6 +38,7 @@ struct FigureTex : public NumberTex {
  */
 template <typename T>
 struct NumberPicCallBack : public P2DPaneCallBack, public FigureTex<T> {
+	NumberPicCallBack(P2DPane*, T*, int, bool); // DLL, to do
 
 	virtual bool invoke(P2DPane*); // _08
 

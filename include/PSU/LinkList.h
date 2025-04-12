@@ -78,7 +78,7 @@ struct PSUList : public PSUPtrList {
 
 	// only DLL inlines:
 	bool append(PSULink<T>* link) { return PSUPtrList::append((PSUPtrLink*)link); }
-	bool remove(PSULink<T>* link); // DLL, to do
+	bool remove(PSULink<T>* link) { return PSUPtrList::remove((PSUPtrLink*)link); }
 
 	// _00-_0C = PSUPtrList
 };

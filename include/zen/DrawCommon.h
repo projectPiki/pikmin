@@ -14,7 +14,7 @@ namespace zen {
 /**
  * @brief TODO
  *
- * @note Size: 0xFC.
+ * @note Size: 0x100.
  */
 struct DrawScreen {
 
@@ -31,7 +31,8 @@ struct DrawScreen {
 	void makeResident();
 
 	// _00 = VTBL
-	P2DScreen mScreen; // _04
+	P2DScreen mScreen;            // _04
+	P2DGrafContext* mGrafContext; // _FC
 };
 
 /**
@@ -45,7 +46,15 @@ struct BalloonPane : public P2DPaneCallBack {
 	void setGoalPos();
 	void setGoalRotate();
 
-	// TODO: members
+	// _00     = VTBL
+	// _00-_04 = P2DPaneCallBack
+	f32 mGoalRadius;    // _04
+	Vector3f mHomePos;  // _08
+	Vector3f mCurrPos;  // _14
+	Vector3f mGoalPos;  // _20
+	Vector3f mVelocity; // _2C
+	f32 mCurrRotate;    // _38
+	f32 mGoalRotate;    // _3C
 };
 
 /**
@@ -58,7 +67,7 @@ void makeResident(P2DPane*);
 void setFamilyAlpha(P2DPane*, u8);
 void setAlpha(P2DPane*, u8);
 void setFamilyMirror(P2DPane*, P2DMirror);
-void getParentPane(P2DPane*);
+P2DPane* getParentPane(P2DPane*);
 void getWorldPos(P2DPane*, int*, int*);
 void changeParent(P2DPane*, P2DPane*);
 

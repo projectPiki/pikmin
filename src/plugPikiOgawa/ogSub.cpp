@@ -3086,16 +3086,6 @@ void zen::cnvSpecialNumberHyphen(char*)
 
 /*
  * --INFO--
- * Address:	80180E54
- * Size:	000008
- */
-bool P2DPaneCallBack::draw(P2DPane*)
-{
-	return true;
-}
-
-/*
- * --INFO--
  * Address:	80180E5C
  * Size:	0001F8
  */

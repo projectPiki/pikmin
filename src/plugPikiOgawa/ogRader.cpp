@@ -1781,38 +1781,6 @@ void zen::ogRaderMgr::startSub()
 
 /*
  * --INFO--
- * Address:	8018680C
- * Size:	000048
- */
-void P2DPane::rotate(P2DRotateAxis, f32)
-{
-	/*
-	.loc_0x0:
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,5,25,26
-	  stb       r0, 0xC(r3)
-	  stfs      f1, 0xBC(r3)
-	  lfs       f1, 0xBC(r3)
-	  lfs       f0, -0x5014(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x30
-	  lfs       f0, -0x5004(r2)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xBC(r3)
-	  blr
-
-	.loc_0x30:
-	  lfs       f0, -0x5004(r2)
-	  fcmpo     cr0, f1, f0
-	  blelr-
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xBC(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	000084
  */

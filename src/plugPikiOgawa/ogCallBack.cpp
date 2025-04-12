@@ -21,6 +21,7 @@ DEFINE_PRINT("TODO: Replace")
  * Size:	0000EC
  */
 zen::TextColorCallBack::TextColorCallBack(P2DPane*)
+    : P2DPaneCallBack(nullptr, PANETYPE_Pane) // TODO: fix
 {
 	/*
 	.loc_0x0:

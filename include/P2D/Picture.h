@@ -67,6 +67,8 @@ struct P2DPicture : public P2DPane {
 		GXLoadTexObj(texture->mTexObj, texMapID);
 	}
 
+	char* getTexName() { return mTexName; }
+
 	// DLL inlines:
 
 	Colour getBlack();
@@ -74,8 +76,6 @@ struct P2DPicture : public P2DPane {
 
 	Colour getWhite();
 	void setWhite(Colour);
-
-	char* getTexName();
 
 	Texture* getTexture(u8) const;
 	void setTexture(Texture*, u8);

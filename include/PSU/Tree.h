@@ -28,7 +28,7 @@ struct PSUTree : public PSUList<T>, public PSULink<T> {
 	PSUTree<T>* getParent() const { return (PSUTree<T>*)mList; }
 
 	// DLL inlines to do:
-	bool removeChild(PSUTree<T>* child);
+	bool removeChild(PSUTree<T>* child) { return PSUList::remove(child); }
 
 	// PSUList at _00
 	// PSULink at _0C
@@ -51,7 +51,11 @@ struct PSUTreeIterator {
 	// these are all the inlines according to the DLL:
 	bool operator!=(const PSUTree<T>* other) const { return mTree != other; };
 
-	PSUTreeIterator<T>& operator=(PSUTree<T>*); // DLL, to do
+	PSUTreeIterator<T>& operator=(PSUTree<T>* tree)
+	{
+		mTree = tree;
+		return *this;
+	}
 
 	PSUTreeIterator<T> operator++(int)
 	{

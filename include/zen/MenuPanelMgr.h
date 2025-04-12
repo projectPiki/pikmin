@@ -11,17 +11,6 @@ namespace zen {
 /**
  * @brief TODO
  */
-struct MenuPanel : public P2DPaneCallBack {
-	virtual bool invoke(P2DPane*); // _08 (weak)
-
-	void update(P2DPane*);
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
 struct MenuPanelMgr {
 
 	void setCallBack(P2DScreen*, P2DPane*);
@@ -30,6 +19,19 @@ struct MenuPanelMgr {
 
 	// unused/inlined:
 	void operation();
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct MenuPanel : public P2DPaneCallBack {
+	MenuPanel(P2DPane*, P2DPane*, MenuPanelMgr*); // DLL, to do
+
+	virtual bool invoke(P2DPane*); // _08 (weak)
+
+	void update(P2DPane*);
 
 	// TODO: members
 };

@@ -62,6 +62,8 @@ struct ArrowBasicCallBack {
  * @brief TODO
  */
 struct ArrowCenterCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
+	ArrowCenterCallBack();                              // DLL inline, to do
+	ArrowCenterCallBack(P2DPane*, DrawContainer*, f32); // DLL inline, to do
 
 	virtual bool invoke(P2DPane*); // _08
 
@@ -77,6 +79,7 @@ struct ArrowCenterCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
  * @brief TODO
  */
 struct ArrowLRCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
+	ArrowLRCallBack(P2DPane*, DrawContainer*, f32); // DLL inline, to do
 
 	virtual bool invoke(P2DPane*); // _08
 
@@ -90,6 +93,8 @@ struct ArrowLRCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
  * @brief TODO
  */
 struct StickCallBack : public P2DPaneCallBack {
+	StickCallBack();                         // DLL inline, to do
+	StickCallBack(P2DPane*, DrawContainer*); // DLL inline, to do
 
 	virtual bool invoke(P2DPane*); // _08
 

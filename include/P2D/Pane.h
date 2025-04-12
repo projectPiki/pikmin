@@ -39,25 +39,34 @@ enum P2DAxis {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1 (empty).
  */
 struct P2DPaneCallBackBase {
 	P2DPaneCallBackBase(P2DPane*, P2DPaneType);
 
 	void checkPaneType(P2DPane*, P2DPaneType);
 
-	// TODO: members
+	// empty struct
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x4.
  */
 struct P2DPaneCallBack : public zen::CallBack1<P2DPane*>, public P2DPaneCallBackBase {
-	inline P2DPaneCallBack(); // TODO: make this
+	P2DPaneCallBack(P2DPane* pane, P2DPaneType type)
+	    : P2DPaneCallBackBase(pane, type)
+	{
+	}
 
-	virtual bool invoke(P2DPane*) = 0; // _08
-	virtual bool draw(P2DPane*);       // _0C (weak)
+	virtual bool invoke(P2DPane*) = 0;           // _08
+	virtual bool draw(P2DPane*) { return true; } // _0C (weak)
 
-	// TODO: members
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1
+	// _04-_04 = P2DPaneCallBackBase (empty)
 };
 
 /**
@@ -101,7 +110,18 @@ struct P2DPane {
 	void draw(int, int, const P2DGrafContext*, bool);
 	void clip(const PUTRect&);
 	void loadChildResource();
-	void rotate(P2DRotateAxis, f32);
+
+	// weak
+	void rotate(P2DRotateAxis axis, f32 angle)
+	{
+		mFlag.mRotationAxis = axis & 3;
+		mRotation           = angle;
+		if (mRotation < 0.0f) {
+			mRotation += TAU;
+		} else if (mRotation > TAU) {
+			mRotation -= TAU;
+		}
+	}
 
 	// unused/inlined:
 	void init();
@@ -113,8 +133,6 @@ struct P2DPane {
 	void show() { mFlag.mIsVisible = true; }
 	void hide() { mFlag.mIsVisible = false; }
 	bool IsVisible() { return mFlag.mIsVisible; }
-
-	// DLL inlines to do:
 	void updateSelf()
 	{
 		if (mCallBack) {
@@ -122,7 +140,9 @@ struct P2DPane {
 		}
 	}
 
-	const PUTRect& getBounds();
+	int getPosH() { return mBounds.mMinX; }
+	int getPosV() { return mBounds.mMinY; }
+
 	void setBounds(const PUTRect& bounds) { mBounds = bounds; }
 
 	// these seem to genuinely be the same
@@ -131,22 +151,28 @@ struct P2DPane {
 	s32 getWidth() { return mBounds.getWidth(); }
 	s32 getHeight() { return mBounds.getHeight(); }
 
-	int getPosH();
-	int getPosV();
+	void setOffset(int offX, int offY)
+	{
+		mOffsetX = offX;
+		mOffsetY = offY;
+	}
 
-	bool alone();
+	f32 getRotate() { return mRotation; }
+	void rotateZ(f32 angle) { rotate(P2DROTATE_Z, angle); }
 
-	bool appendChild(P2DPane*);
-	PSUTree<P2DPane>* getFirstChild();
-	PSUTree<P2DPane>* getEndChild();
+	PSUTree<P2DPane>* getFirstChild() { return mPaneTree.getFirstChild(); }
+	PSUTree<P2DPane>* getEndChild() { return mPaneTree.getEndChild(); }
 
-	f32 getRotate();
-	void rotate(int, int P2DRotateAxis, f32);
+	bool appendChild(P2DPane* child) { return mPaneTree.appendChild(&child->mPaneTree); }
+
+	bool alone() { return mPaneTree.getParent()->removeChild(&mPaneTree); }
+
+	// DLL inlines to do:
+	const PUTRect& getBounds();
+
+	void rotate(int, int, P2DRotateAxis, f32);
 	void rotateX(f32);
-	void rotateZ(f32);
 	void rotateZ(int, int, f32);
-
-	void setOffset(int, int);
 
 	void getDispPos(Vector3f*);
 
@@ -158,7 +184,7 @@ struct P2DPane {
 	// _00 = VTBL
 	P2DPaneCallBack* mCallBack; // _04
 	u16 mPaneType;              // _08, see P2DPaneType enum
-	u16 _0A;                    // _0A, maybe?
+	u16 _0A;                    // _0A
 	struct {
 		bool mIsVisible : 1;
 		u16 mRotationAxis : 2;
@@ -171,8 +197,8 @@ struct P2DPane {
 	PUTRect _30;                // _30
 	Matrix4f _38;               // _38
 	Matrix4f _78;               // _78
-	s16 _B8;                    // _B8, maybe mOffsetX
-	s16 _BA;                    // _BA, maybe mOffsetY
+	s16 mOffsetX;               // _B8
+	s16 mOffsetY;               // _BA
 	f32 mRotation;              // _BC
 	Vector3f mScale;            // _C0
 	int mCullMode;              // _CC

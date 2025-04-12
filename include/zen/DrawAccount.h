@@ -45,8 +45,8 @@ struct DrawAccount : public DrawScreen {
 
 	// unused/inlined:
 
-	// _00-_FC = DrawScreen
-	u8 _FC[0x120 - 0xFC]; // _FC, unknown
+	// _00-_100 = DrawScreen
+	u8 _100[0x120 - 0x100]; // _100, unknown
 };
 
 } // namespace zen

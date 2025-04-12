@@ -26,6 +26,12 @@ struct P2DTextBox : public P2DPane {
 	char* getString() const { return mText; }
 	void setString(char* text) { mText = text; }
 
+	void setAlpha(u8 alpha)
+	{
+		_F4.a = alpha;
+		_F8.a = alpha;
+	}
+
 	// DLL inlines to do:
 	Colour getCharColor() const;
 	Colour getGradColor() const;
@@ -35,7 +41,6 @@ struct P2DTextBox : public P2DPane {
 	u8 getAlphaChar();
 	u8 getAlphaGrad();
 	void getFontColor(Colour&, Colour&);
-	void setAlpha(u8);
 	void setAlpha(u8, u8);
 	void setCharColor(Colour);
 	void setGradColor(Colour);
