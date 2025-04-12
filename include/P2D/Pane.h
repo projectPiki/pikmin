@@ -18,9 +18,14 @@ struct RandomAccessStream;
  * @brief TODO
  */
 enum P2DPaneType {
+	PANETYPE_Unk0    = 0x0,
+	PANETYPE_Unk1    = 0x1,
+	PANETYPE_Unk2    = 0x2,
 	PANETYPE_Screen  = 0x8,
-	PANETYPE_Unk16   = 0x10,
+	PANETYPE_Pane    = 0x10,
+	PANETYPE_Window  = 0x11,
 	PANETYPE_Picture = 0x12,
+	PANETYPE_TextBox = 0x13,
 };
 
 /**
@@ -120,6 +125,9 @@ struct P2DPane {
 	const PUTRect& getBounds();
 	void setBounds(const PUTRect& bounds) { mBounds = bounds; }
 
+	// these seem to genuinely be the same
+	void place(const PUTRect& bounds) { mBounds = bounds; }
+
 	s32 getWidth() { return mBounds.getWidth(); }
 	s32 getHeight() { return mBounds.getHeight(); }
 
@@ -131,8 +139,6 @@ struct P2DPane {
 	bool appendChild(P2DPane*);
 	PSUTree<P2DPane>* getFirstChild();
 	PSUTree<P2DPane>* getEndChild();
-
-	void place(const PUTRect&);
 
 	f32 getRotate();
 	void rotate(int, int P2DRotateAxis, f32);

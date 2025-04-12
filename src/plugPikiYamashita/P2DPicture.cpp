@@ -118,7 +118,7 @@ P2DPicture::P2DPicture(Texture* texture)
 	mTextureCount = 0;
 	if (texture) {
 		append(texture, 1.0f);
-		setBounds(PUTRect(0, 0, mTextures[0]->mWidth, mTextures[0]->mHeight));
+		place(PUTRect(0, 0, mTextures[0]->mWidth, mTextures[0]->mHeight));
 	}
 
 	initinfo();

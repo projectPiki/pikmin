@@ -5,6 +5,11 @@
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
 
+namespace zen {
+struct PikaAlphaMgr;
+struct ogTexAnimMgr;
+} // namespace zen
+
 /**
  * @brief TODO
  *
@@ -14,9 +19,9 @@ struct P2DScreen : public P2DPane {
 	P2DScreen()
 	    : P2DPane(nullptr, PANETYPE_Screen, true, 'root', PUTRect(640, 480))
 	{
-		_EC = 0;
-		_F0 = 0;
-		_F4 = 0;
+		_EC         = 0;
+		mAlphaMgr   = nullptr;
+		mTexAnimMgr = nullptr;
 	}
 
 	virtual void loadResource();                                       // _08
@@ -39,9 +44,9 @@ struct P2DScreen : public P2DPane {
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane
-	u8 _EC;  // _EC
-	u32 _F0; // _F0, unknown
-	u32 _F4; // _F4, unknown
+	bool _EC;                       // _EC
+	zen::PikaAlphaMgr* mAlphaMgr;   // _F0
+	zen::ogTexAnimMgr* mTexAnimMgr; // _F4, unknown
 };
 
 #endif

@@ -123,7 +123,7 @@ void P2DPane::update()
 P2DPane::P2DPane()
     : mPaneTree(this)
 {
-	mPaneType = PANETYPE_Unk16;
+	mPaneType = PANETYPE_Pane;
 
 	show();
 	mTagName = 0;
@@ -158,7 +158,7 @@ P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5
 P2DPane::P2DPane(u32 tag, const PUTRect& rect)
     : mPaneTree(this)
 {
-	mPaneType = PANETYPE_Unk16;
+	mPaneType = PANETYPE_Pane;
 	show();
 	mTagName = tag;
 	mBounds  = rect;
@@ -277,7 +277,7 @@ void P2DPane::draw(int p1, int p2, const P2DGrafContext* grafContext, bool p4)
 			}
 
 			GXSetCullMode((GXCullMode)mCullMode);
-			drawSelf(p1, p2, &context._70);
+			drawSelf(p1, p2, &context.mViewMtx);
 			if (mCallBack) {
 				mCallBack->draw(this);
 			}

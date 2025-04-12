@@ -34,8 +34,8 @@ P2DGrafContext::P2DGrafContext(const PUTRect&)
  * Size:	0000B4
  */
 P2DGrafContext::P2DGrafContext(int x0, int y0, int width, int height)
-    : _08(x0, y0, x0 + width, y0 + height)
-    , _10(x0, y0, x0 + width, y0 + height)
+    : mViewportBounds(x0, y0, x0 + width, y0 + height)
+    , mScissorBounds(x0, y0, x0 + width, y0 + height)
 {
 	Colour colour(255, 255, 255, 255);
 	setColor(colour);
@@ -49,7 +49,7 @@ P2DGrafContext::P2DGrafContext(int x0, int y0, int width, int height)
  */
 void P2DGrafContext::setPort()
 {
-	GXSetViewport(_08.mMinX, _08.mMinY, _08.getWidth(), _08.getHeight(), 0.0f, 1.0f);
+	GXSetViewport(mViewportBounds.mMinX, mViewportBounds.mMinY, mViewportBounds.getWidth(), mViewportBounds.getHeight(), 0.0f, 1.0f);
 	setScissor();
 	setup2D();
 }
@@ -65,7 +65,7 @@ void P2DGrafContext::setup2D()
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
 	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
 	GXSetVtxDesc(GX_VA_TEX0, GX_NONE);
-	GXLoadPosMtxImm(_70.mMtx, 0);
+	GXLoadPosMtxImm(mViewMtx.mMtx, 0);
 	GXSetNumChans(1);
 	GXSetNumTexGens(0);
 	GXSetNumTevStages(1);
@@ -95,8 +95,8 @@ void P2DGrafContext::setup2D()
 void P2DGrafContext::setScissor()
 {
 	PUTRect bounds(0, 0, 1000, 1000);
-	PUTRect scissor = _10;
-	_10.intersect(bounds);
+	PUTRect scissor = mScissorBounds;
+	mScissorBounds.intersect(bounds);
 	scissor.normalize();
 	scissor.add(0, -1);
 	if (scissor.intersect(bounds)) {
@@ -111,7 +111,7 @@ void P2DGrafContext::setScissor()
  */
 void P2DGrafContext::scissor(const PUTRect& rect)
 {
-	_10 = rect;
+	mScissorBounds = rect;
 }
 
 /*
@@ -121,8 +121,8 @@ void P2DGrafContext::scissor(const PUTRect& rect)
  */
 void P2DGrafContext::place(const PUTRect& position)
 {
-	_08 = position;
-	_10 = position;
+	mViewportBounds = position;
+	mScissorBounds  = position;
 }
 
 /*

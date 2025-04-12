@@ -15,6 +15,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x198
  */
 struct PikaAlphaMgr {
 	PikaAlphaMgr(P2DScreen*);
@@ -25,6 +27,7 @@ struct PikaAlphaMgr {
 	void update();
 
 	// TODO: members
+	u8 _00[0x198]; // _00, unknown
 };
 
 /**
@@ -75,6 +78,8 @@ struct ogFadeMgr {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x194.
  */
 struct ogTexAnimMgr {
 	ogTexAnimMgr(P2DScreen*);
@@ -82,6 +87,7 @@ struct ogTexAnimMgr {
 	void update();
 
 	// TODO: members
+	u8 _00[0x194]; // _00, unknown
 };
 
 /**
