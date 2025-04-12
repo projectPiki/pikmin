@@ -4,6 +4,8 @@
 #include "types.h"
 #include "Stream.h"
 
+#define COLOUR_TO_U32(colour) ((u8)(colour.a) | (((u8)(colour.b) << 8) | (((u8)(colour.g) << 16) | ((u8)(colour.r) << 24))))
+
 /**
  * @brief TODO
  */
@@ -55,6 +57,17 @@ struct Colour {
 		b = input.readByte();
 		a = input.readByte();
 	}
+
+	bool operator==(u32 other)
+	{
+		u32 color = a | ((b << 8) | ((g << 16) | (r << 24)));
+		if (color == other) {
+			return true;
+		}
+		return false;
+	}
+
+	bool operator!=(u32 other) { return !(*this == other); }
 
 	u8 r, g, b, a; // _00-_04
 };

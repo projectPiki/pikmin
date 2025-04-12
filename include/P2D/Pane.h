@@ -18,8 +18,9 @@ struct RandomAccessStream;
  * @brief TODO
  */
 enum P2DPaneType {
-	PANETYPE_Screen = 8,
-	PANETYPE_Unk16  = 16,
+	PANETYPE_Screen  = 0x8,
+	PANETYPE_Unk16   = 0x10,
+	PANETYPE_Picture = 0x12,
 };
 
 /**
@@ -72,14 +73,14 @@ struct P2DPane {
 	virtual void move(int, int);        // _14 (weak)
 	virtual void move(Vector3f& newPos) // _18
 	{
-		mRectTransform.move(newPos.x, newPos.y);
+		mBounds.move(newPos.x, newPos.y);
 		mPaneZ = newPos.z;
 	}
-	virtual void move(int, int, f32);                                                    // _1C
-	virtual void moveZ(f32 newZ) { mPaneZ = newZ; }                                      // _20
-	virtual void add(int x, int y) { mRectTransform.add(x, y); }                         // _24
-	virtual void resize(int width, int height) { mRectTransform.resize(width, height); } // _28
-	virtual void drawSelf(int x, int y)                                                  // _2C
+	virtual void move(int, int, f32);                                             // _1C
+	virtual void moveZ(f32 newZ) { mPaneZ = newZ; }                               // _20
+	virtual void add(int x, int y) { mBounds.add(x, y); }                         // _24
+	virtual void resize(int width, int height) { mBounds.resize(width, height); } // _28
+	virtual void drawSelf(int x, int y)                                           // _2C
 	{
 		Matrix4f mtx;
 		mtx.makeIdentity();
@@ -117,10 +118,10 @@ struct P2DPane {
 	}
 
 	const PUTRect& getBounds();
-	void setBounds(const PUTRect&);
+	void setBounds(const PUTRect& bounds) { mBounds = bounds; }
 
-	s32 getWidth();
-	s32 getHeight();
+	s32 getWidth() { return mBounds.getWidth(); }
+	s32 getHeight() { return mBounds.getHeight(); }
 
 	int getPosH();
 	int getPosV();
@@ -158,7 +159,7 @@ struct P2DPane {
 	} mFlag;                    // _0C
 	u32 mTagName;               // _10, unknown
 	f32 mPaneZ;                 // _14
-	PUTRect mRectTransform;     // _18
+	PUTRect mBounds;            // _18
 	PUTRect _20;                // _20
 	PUTRect _28;                // _28
 	PUTRect _30;                // _30

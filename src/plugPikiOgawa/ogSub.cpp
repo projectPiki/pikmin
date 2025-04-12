@@ -1774,7 +1774,7 @@ void zen::movePicturePos(P2DPicture*, P2DPicture*)
  */
 void P2DPane::move(int x, int y)
 {
-	mRectTransform.move(x, y);
+	mBounds.move(x, y);
 	/*
 	.loc_0x0:
 	  mflr      r0

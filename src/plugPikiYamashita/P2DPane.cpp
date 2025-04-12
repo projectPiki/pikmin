@@ -127,7 +127,7 @@ P2DPane::P2DPane()
 
 	show();
 	mTagName = 0;
-	mRectTransform.set(0, 0, 0, 0);
+	mBounds.set(0, 0, 0, 0);
 	init();
 }
 
@@ -141,8 +141,8 @@ P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5
 {
 	mPaneType = paneType;
 	show();
-	mTagName       = tag;
-	mRectTransform = p5;
+	mTagName = tag;
+	mBounds  = p5;
 	if (parent) {
 		parent->mPaneTree.appendChild(&mPaneTree);
 	}
@@ -160,8 +160,8 @@ P2DPane::P2DPane(u32 tag, const PUTRect& rect)
 {
 	mPaneType = PANETYPE_Unk16;
 	show();
-	mTagName       = tag;
-	mRectTransform = rect;
+	mTagName = tag;
+	mBounds  = rect;
 	init();
 }
 
@@ -175,8 +175,8 @@ P2DPane::P2DPane(u16 paneType, u32 tag, const PUTRect& rect)
 {
 	mPaneType = paneType;
 	show();
-	mTagName       = tag;
-	mRectTransform = rect;
+	mTagName = tag;
+	mBounds  = rect;
 	init();
 }
 
@@ -204,10 +204,10 @@ P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 
 	mTagName = *(u32*)tag;
 
-	mRectTransform.mMinX = (int)input->readShort();
-	mRectTransform.mMinY = (int)input->readShort();
-	mRectTransform.mMaxX = mRectTransform.mMinX + (int)input->readShort();
-	mRectTransform.mMaxY = mRectTransform.mMinY + (int)input->readShort();
+	mBounds.mMinX = (int)input->readShort();
+	mBounds.mMinY = (int)input->readShort();
+	mBounds.mMaxX = mBounds.mMinX + (int)input->readShort();
+	mBounds.mMaxY = mBounds.mMinY + (int)input->readShort();
 
 	if (parent) {
 		parent->mPaneTree.appendChild(&mPaneTree);
@@ -248,10 +248,10 @@ void P2DPane::draw(int p1, int p2, const P2DGrafContext* grafContext, bool p4)
 		parentPane = parentTree->getObject();
 	}
 
-	if (IsVisible() && !mRectTransform.isEmpty()) {
-		_20 = mRectTransform;
-		_28 = mRectTransform;
-		makeMatrix(mRectTransform.mMinX + p1, mRectTransform.mMinY + p2);
+	if (IsVisible() && !mBounds.isEmpty()) {
+		_20 = mBounds;
+		_28 = mBounds;
+		makeMatrix(mBounds.mMinX + p1, mBounds.mMinY + p2);
 
 		if (parentPane) {
 			_20.add(parentPane->_20.mMinX, parentPane->_20.mMinY);
