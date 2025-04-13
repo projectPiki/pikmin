@@ -67,6 +67,13 @@ struct P2DPicture : public P2DPane {
 		GXLoadTexObj(texture->mTexObj, texMapID);
 	}
 
+	void setTexture(Texture* texture, u8 idx)
+	{
+		if (idx < mTextureCount) {
+			mTextures[idx] = texture;
+		}
+	}
+
 	char* getTexName() { return mTexName; }
 
 	// DLL inlines:
@@ -78,7 +85,6 @@ struct P2DPicture : public P2DPane {
 	void setWhite(Colour);
 
 	Texture* getTexture(u8) const;
-	void setTexture(Texture*, u8);
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane

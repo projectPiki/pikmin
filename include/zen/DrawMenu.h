@@ -3,24 +3,113 @@
 
 #include "types.h"
 #include "zen/DrawCommon.h"
+#include "P2D/Picture.h"
+#include "Colour.h"
 
 struct Colour;
 struct Graphics;
 struct Controller;
 struct P2DScreen;
 struct P2DPicture;
+struct P2DTextBox;
 
 namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x18.
+ */
+struct DrawMenuText {
+	DrawMenuText()
+	{
+		_10 = 0.0f;
+		_00 = 0;
+		_14 = 1;
+		_04 = 0;
+		_00 = 0;
+	}
+
+	void init(bool, Colour&, Colour&);
+	void setPane(P2DPane*, P2DPane*);
+	void update(bool, Colour&, Colour&);
+
+	// unused/inlined:
+	void setScale(f32, f32);
+
+	// DLL to do:
+	bool getActiveSw();
+	void setActiveSw(bool);
+	u8 colorBlend(u8, f32, u8, f32);
+
+	static const f32 frameMax;
+
+	P2DTextBox* _00; // _00
+	P2DTextBox* _04; // _04
+	Colour _08;      // _08
+	Colour _0C;      // _0C
+	f32 _10;         // _10
+	u8 _14;          // _14
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct DrawMenuItem {
-	DrawMenuItem();
+	DrawMenuItem()
+	{
+		mText      = new DrawMenuText();
+		mIconLPane = nullptr;
+		mIconRPane = nullptr;
+	}
 
-	~DrawMenuItem();
+	~DrawMenuItem() { delete mText; }
 
-	// TODO: members
+	// DLL:
+	void setTextPane(P2DPane* pane1, P2DPane* pane2) { mText->setPane(pane1, pane2); }
+
+	bool setIconLPane(P2DPane* iconPane, P2DPane* iconParent)
+	{
+		bool isNotPic = true;
+		if (iconPane->getTypeID() == PANETYPE_Picture) {
+			mIconLPane = (P2DPicture*)iconPane;
+			mIconLPane->hide();
+			P2DPaneLibrary::changeParent(mIconLPane, iconParent);
+			isNotPic = false;
+		}
+
+		return isNotPic;
+	}
+
+	bool setIconRPane(P2DPane* iconPane, P2DPane* iconParent)
+	{
+		bool isNotPic = true;
+		if (iconPane->getTypeID() == PANETYPE_Picture) {
+			mIconRPane = (P2DPicture*)iconPane;
+			mIconRPane->hide();
+			P2DPaneLibrary::changeParent(mIconRPane, iconParent);
+			isNotPic = false;
+		}
+
+		return isNotPic;
+	}
+
+	// DLL inlines to do:
+	void init(bool, Colour&, Colour&);
+	bool getActiveSw();
+	void setActiveSw(bool);
+	void setScale(f32, f32);
+	void update(bool, Colour&, Colour&);
+	int getIconLPosH();
+	int getIconLPosV();
+	int getIconRPosH();
+	int getIconRPosV();
+
+	DrawMenuText* mText;    // _00
+	P2DPicture* mIconLPane; // _04
+	P2DPicture* mIconRPane; // _08
 };
 
 /**
@@ -57,6 +146,9 @@ struct DrawMenu : public DrawScreen {
 	 */
 	enum StatusFlag {
 		STATUS_Unk0 = 0,
+		STATUS_Unk1 = 1,
+		STATUS_Unk2 = 2,
+		STATUS_Unk3 = 3,
 	};
 
 	DrawMenu(char*, bool, bool);
@@ -86,35 +178,23 @@ struct DrawMenu : public DrawScreen {
 		return (mSelectMenuCancel) ? -1 : _110;
 	}
 
+	f32 getRatio() { return mRatio; }
+
 	// DLL inlines, to do:
 	bool checkSelectMenuCancel() { return mSelectMenuCancel; }
-	f32 getRatio();
 	void setCancelKeyAssign(u32);
 	void setCancelSE(int);
 	void setDecideKeyAssign(u32);
 
 	// _00     = VTBL
 	// _00-_100 = DrawScreen
-	int _100;               // _100, unknown
-	u8 _104[0xc];           // _104, unknown
-	int _110;               // _110, unknown
+	int _100;               // _100
+	u8 _104[0x8];           // _104, unknown
+	f32 mRatio;             // _10C
+	int _110;               // _110
 	u8 _114[0xBC];          // _114, unknown
-	int _1D0;               // _1D0, unknown
-	bool mSelectMenuCancel; // _1D4, unknown
-};
-
-/**
- * @brief TODO
- */
-struct DrawMenuText {
-	void init(bool, Colour&, Colour&);
-	void setPane(P2DPane*, P2DPane*);
-	void update(bool, Colour&, Colour&);
-
-	// unused/inlined:
-	void setScale(f32, f32);
-
-	// TODO: members
+	int _1D0;               // _1D0
+	bool mSelectMenuCancel; // _1D4
 };
 
 /**

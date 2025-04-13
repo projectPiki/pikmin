@@ -351,8 +351,12 @@ struct particleGenerator : public zenList {
 		pmSwitch(set, PTCLFLAG_Unk16);
 	}
 
-	// might be setFreqFrm
+	// might be get/setFreqFrm
+	f32 getInitVel() { return _B8; }
 	void setInitVel(f32 vel) { _B8 = vel; }
+
+	// might be get/setInitVel
+	f32 getFreqFrm() { return _CC; }
 
 	// NB: might be getMaxFrame(), unsure
 	s16 getCurrentFrame() { return _90; }
@@ -360,17 +364,12 @@ struct particleGenerator : public zenList {
 	/*
 	    These are still to be made/assigned from the DLL:
 
-	    f32 getFreqFrm();
 	    void setFreqFrm(f32);
-
-	    f32 getInitVel();
-	    void setInitVel(f32);
 
 	    f32 getNewtonFieldFrc();
 
 	    void pmGetArbitUnitVec(Vector3f&);
 
-	    s16 getCurrentFrame();
 	    s16 getMaxFrame();
 	*/
 
@@ -397,7 +396,9 @@ struct particleGenerator : public zenList {
 	Vector3f mEmitDir;                                       // _A0
 	Vector3f _AC;                                            // _AC
 	f32 _B8;                                                 // _B8
-	u8 _BC[0xF0 - 0xBC];                                     // _BC, unknown
+	u8 _BC[0xCC - 0xBC];                                     // _BC, unknown
+	f32 _CC;                                                 // _CC
+	u8 _D0[0xF0 - 0xD0];                                     // _BC, unknown
 	f32 mScaleSize;                                          // _F0
 	u8 _F4[0x120 - 0xF4];                                    // _F4, unknown
 	Colour _120;                                             // _120

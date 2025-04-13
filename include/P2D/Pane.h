@@ -167,6 +167,8 @@ struct P2DPane {
 
 	bool alone() { return mPaneTree.getParent()->removeChild(&mPaneTree); }
 
+	void setScale(f32 scale) { mScale.set(scale, scale, scale); }
+
 	// DLL inlines to do:
 	const PUTRect& getBounds();
 
@@ -178,7 +180,6 @@ struct P2DPane {
 
 	Vector3f& getScale();
 	void setScale(const Vector3f&);
-	void setScale(f32);
 	void setScale(f32, f32, f32);
 
 	// _00 = VTBL

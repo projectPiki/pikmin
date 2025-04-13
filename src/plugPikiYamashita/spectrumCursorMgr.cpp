@@ -748,7 +748,7 @@ void zen::SpectrumCursorMgr::initScale(f32)
  * Address:	801DB104
  * Size:	000048
  */
-void zen::SpectrumCursorMgr::makeTag(u32, int)
+u32 zen::SpectrumCursorMgr::makeTag(u32, int)
 {
 	/*
 	.loc_0x0:

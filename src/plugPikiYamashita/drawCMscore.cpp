@@ -479,61 +479,6 @@ void zen::DrawCMscoreMgr::init(P2DScreen*)
 
 /*
  * --INFO--
- * Address:	801EDEE8
- * Size:	00009C
- */
-void zen::NumberPicCallBack<int>::setTexture(P2DPane*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  lbz       r0, 0x18(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x58
-	  addi      r3, r5, 0x4
-	  lwz       r4, 0x4(r5)
-	  bl        -0x6CEC0
-	  lbz       r0, 0xF1(r31)
-	  lis       r4, 0x803D
-	  rlwinm    r5,r3,2,0,29
-	  addi      r3, r4, 0x2388
-	  add       r3, r3, r5
-	  cmplwi    r0, 0
-	  lwz       r0, 0x0(r3)
-	  ble-      .loc_0x88
-	  stw       r0, 0xEC(r31)
-	  b         .loc_0x88
-
-	.loc_0x58:
-	  addi      r3, r5, 0x4
-	  lwz       r4, 0x4(r5)
-	  bl        -0x6CEF4
-	  lbz       r0, 0xF1(r31)
-	  lis       r4, 0x803D
-	  rlwinm    r5,r3,2,0,29
-	  addi      r3, r4, 0x2360
-	  add       r3, r3, r5
-	  cmplwi    r0, 0
-	  lwz       r0, 0x0(r3)
-	  ble-      .loc_0x88
-	  stw       r0, 0xEC(r31)
-
-	.loc_0x88:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	801EDF84
  * Size:	000074
  */

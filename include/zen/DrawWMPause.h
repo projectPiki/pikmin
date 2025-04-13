@@ -5,8 +5,11 @@
 
 struct Graphics;
 struct Controller;
+struct P2DPicture;
 
 namespace zen {
+
+struct DrawMenu;
 
 /**
  * @brief TODO
@@ -17,7 +20,9 @@ struct DrawWMPause {
 	 * @brief TODO
 	 */
 	enum returnStatusFlag {
-		// TODO: this
+		RETURN_NULL = -1,
+		RETURN_Unk0 = 0,
+		RETURN_Unk1 = 1,
 	};
 
 	DrawWMPause();
@@ -26,7 +31,9 @@ struct DrawWMPause {
 	returnStatusFlag update(Controller*);
 	void draw(Graphics&);
 
-	// TODO: members
+	DrawMenu* mPauseMenu;         // _00
+	returnStatusFlag mReturnFlag; // _04
+	P2DPicture* mBackPane;        // _08
 };
 
 } // namespace zen

@@ -207,8 +207,8 @@ zen::EffectMgr2D::EffectMgr2D(int, int, int)
  * Address:	801E9B3C
  * Size:	00004C
  */
-void zen::EffectMgr2D::create(u32, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
-                              zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
+zen::particleGenerator* zen::EffectMgr2D::create(u32, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
+                                                 zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
 {
 	/*
 	.loc_0x0:

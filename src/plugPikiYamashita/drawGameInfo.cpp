@@ -2356,33 +2356,6 @@ void DateCallBack::setTex()
 
 /*
  * --INFO--
- * Address:	801B8544
- * Size:	00003C
- */
-void zen::FigureTex<s16>::getNumber()
-{
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x0(r3)
-	  lis       r4, 0x6666
-	  addi      r0, r4, 0x6667
-	  lwz       r3, 0x4(r3)
-	  lha       r4, 0x0(r5)
-	  divw      r4, r4, r3
-	  mulhw     r0, r0, r4
-	  srawi     r0, r0, 0x2
-	  rlwinm    r3,r0,1,31,31
-	  add       r0, r0, r3
-	  mulli     r0, r0, 0xA
-	  sub.      r3, r4, r0
-	  bgelr-
-	  li        r3, 0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	801B8580
  * Size:	000454
  */
@@ -4702,32 +4675,5 @@ bool zen::NumberPicCallBack<s16>::invoke(P2DPane*)
 	  blr
 
 	.loc_0x1F8:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801BA0F8
- * Size:	00003C
- */
-void zen::FigureTex<s16>::getNumber(s16&)
-{
-	/*
-	.loc_0x0:
-	  lha       r5, 0x0(r4)
-	  lis       r4, 0x6666
-	  lwz       r3, 0x4(r3)
-	  addi      r0, r4, 0x6667
-	  divw      r4, r5, r3
-	  mulhw     r0, r0, r4
-	  srawi     r0, r0, 0x2
-	  rlwinm    r3,r0,1,31,31
-	  add       r0, r0, r3
-	  mulli     r0, r0, 0xA
-	  sub.      r0, r4, r0
-	  mr        r3, r0
-	  bgelr-
-	  li        r3, 0
-	  blr
 	*/
 }

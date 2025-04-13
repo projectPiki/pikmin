@@ -76,6 +76,13 @@ void setMirror(P2DPane*, P2DMirror);
 void printTag(P2DPane*);
 void printUseTexName(P2DPane*, IDelegate1<char*>*);
 void printUseTexName(char*, IDelegate1<char*>*);
+
+// DLL inlines:
+inline int makeTag(char* str)
+{
+	return ((u8)str[0] << 24) | ((u8)str[1] << 16) | ((u8)str[2] << 8) | (u8)str[3];
+}
+
 }; // namespace P2DPaneLibrary
 
 } // namespace zen
