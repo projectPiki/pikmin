@@ -96,16 +96,18 @@ struct DrawMenuItem {
 		return isNotPic;
 	}
 
+	void init(bool p1, Colour& p2, Colour& p3) { mText->init(p1, p2, p3); }
+
+	int getIconLPosH() { return mIconLPane->getPosH(); }
+	int getIconLPosV() { return mIconLPane->getPosV(); }
+	int getIconRPosH() { return mIconRPane->getPosH(); }
+	int getIconRPosV() { return mIconRPane->getPosV(); }
+
 	// DLL inlines to do:
-	void init(bool, Colour&, Colour&);
 	bool getActiveSw();
 	void setActiveSw(bool);
 	void setScale(f32, f32);
 	void update(bool, Colour&, Colour&);
-	int getIconLPosH();
-	int getIconLPosV();
-	int getIconRPosH();
-	int getIconRPosV();
 
 	DrawMenuText* mText;    // _00
 	P2DPicture* mIconLPane; // _04

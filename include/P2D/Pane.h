@@ -159,6 +159,13 @@ struct P2DPane {
 
 	f32 getRotate() { return mRotation; }
 	void rotateZ(f32 angle) { rotate(P2DROTATE_Z, angle); }
+	void rotateZ(int x, int y, f32 rotZ) { rotate(x, y, P2DROTATE_Z, rotZ); }
+	void rotate(int x, int y, P2DRotateAxis axis, f32 angle)
+	{
+		mOffsetX = x;
+		mOffsetY = y;
+		rotate(axis, angle);
+	}
 
 	PSUTree<P2DPane>* getFirstChild() { return mPaneTree.getFirstChild(); }
 	PSUTree<P2DPane>* getEndChild() { return mPaneTree.getEndChild(); }
@@ -167,19 +174,17 @@ struct P2DPane {
 
 	bool alone() { return mPaneTree.getParent()->removeChild(&mPaneTree); }
 
+	Vector3f& getScale() { return mScale; }
 	void setScale(f32 scale) { mScale.set(scale, scale, scale); }
+	void setScale(const Vector3f& scale) { mScale = scale; }
 
 	// DLL inlines to do:
 	const PUTRect& getBounds();
 
-	void rotate(int, int, P2DRotateAxis, f32);
 	void rotateX(f32);
-	void rotateZ(int, int, f32);
 
 	void getDispPos(Vector3f*);
 
-	Vector3f& getScale();
-	void setScale(const Vector3f&);
 	void setScale(f32, f32, f32);
 
 	// _00 = VTBL

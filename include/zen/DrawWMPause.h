@@ -23,6 +23,7 @@ struct DrawWMPause {
 		RETURN_NULL = -1,
 		RETURN_Unk0 = 0,
 		RETURN_Unk1 = 1,
+		RETURN_Unk2 = 2,
 	};
 
 	DrawWMPause();

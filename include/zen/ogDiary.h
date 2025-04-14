@@ -75,7 +75,7 @@ struct ogDrawSelectDiary {
 	 * @brief TODO
 	 */
 	enum SelectDiaryStatus {
-		// TODO: this
+		SELECT_NULL = -1,
 	};
 
 	ogDrawSelectDiary();
