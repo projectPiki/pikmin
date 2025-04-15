@@ -357,6 +357,7 @@ struct particleGenerator : public zenList {
 
 	// might be get/setInitVel
 	f32 getFreqFrm() { return _CC; }
+	void setFreqFrm(f32 freq) { _CC = freq; }
 
 	// NB: might be getMaxFrame(), unsure
 	s16 getCurrentFrame() { return _90; }
@@ -364,7 +365,7 @@ struct particleGenerator : public zenList {
 	/*
 	    These are still to be made/assigned from the DLL:
 
-	    void setFreqFrm(f32);
+
 
 	    f32 getNewtonFieldFrc();
 

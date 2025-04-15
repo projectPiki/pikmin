@@ -98,6 +98,8 @@ struct DrawMenuItem {
 
 	void init(bool p1, Colour& p2, Colour& p3) { mText->init(p1, p2, p3); }
 
+	void update(bool p1, Colour& p2, Colour& p3) { mText->update(p1, p2, p3); }
+
 	int getIconLPosH() { return mIconLPane->getPosH(); }
 	int getIconLPosV() { return mIconLPane->getPosV(); }
 	int getIconRPosH() { return mIconRPane->getPosH(); }
@@ -107,7 +109,6 @@ struct DrawMenuItem {
 	bool getActiveSw();
 	void setActiveSw(bool);
 	void setScale(f32, f32);
-	void update(bool, Colour&, Colour&);
 
 	DrawMenuText* mText;    // _00
 	P2DPicture* mIconLPane; // _04

@@ -14,6 +14,8 @@
 #include "zen/SpectrumCursorMgr.h"
 #include "zen/DrawCommon.h"
 #include "zen/DrawMenu.h"
+#include "zen/EffectMgr2D.h"
+#include "nlib/Math.h"
 
 struct Controller;
 struct Graphics;
@@ -24,6 +26,10 @@ struct EffectMgr2D;
 } // namespace zen
 
 namespace {
+
+extern zen::EffectMgr2D* WMeffMgr;
+extern u8 mapNoScr2Game[5];
+extern u8 mapNoGame2Scr[5];
 
 /**
  * @brief Enum for course point ordering in actual game - equivalent to StageID
@@ -69,7 +75,25 @@ struct WorldMapTitleObj {
 	}
 
 	// weak:
-	void update();
+	void update()
+	{
+		switch (_00) {
+		case 0:
+			break;
+		case 1:
+			if (move(0.25f)) {
+				_00 = 0;
+			}
+			break;
+		case 2:
+			if (move(0.5f)) {
+				_00 = 0;
+				hide();
+			}
+			break;
+		}
+		u32 badCompiler;
+	}
 
 	// DLL requires these inlines, they aren't in the list though, so fabricated name
 	void init(P2DPane* titlePane)
@@ -87,15 +111,46 @@ struct WorldMapTitleObj {
 	}
 	void hide() { _04->hide(); }
 
-	// DLL to do:
-	bool move(f32);
-	void show();
-	void appear();
-	void wait();
+	bool move(f32 p1)
+	{
+		bool res = false;
+		_08 += gsys->getFrameTime();
+		if (_08 > p1) {
+			_08 = p1;
+			res = true;
+		}
 
-	u32 _00;      // _00, unknown
+		f32 t     = sinf(_08 / p1 * HALF_PI);
+		f32 tComp = 1.0f - t;
+		_04->move(zen::RoundOff(_10.x * tComp + _1C.x * t), zen::RoundOff(_10.y * tComp + _1C.y * t));
+		return res;
+	}
+
+	void show() { _04->show(); }
+
+	// might be wait
+	void appear()
+	{
+		_10.set(640.0f, 30.0f, 0.0f);
+		_1C.set(40.0f, 30.0f, 0.0f);
+		_08 = 0.0f;
+		_00 = 1;
+		show();
+	}
+
+	void wait()
+	{
+		_10.set(_04->getPosH(), _04->getPosV(), 0.0f);
+		_1C.set(_10.x, _10.y - 320.0f, _10.z);
+		_08 = 0.0f;
+		_00 = 2;
+		show();
+	}
+
+	int _00;      // _00
 	P2DPane* _04; // _04, could be a pane subtype
-	u8 _08[0x8];  // _08, unknown
+	f32 _08;      // _08
+	u8 _0C[0x4];  // _0C, unknown
 	Vector3f _10; // _10
 	Vector3f _1C; // _1C
 };
@@ -120,7 +175,11 @@ struct DrawWorldMapDateCallBack : public P2DPaneCallBack, public zen::NumberTex 
 		setTex();
 	}
 
-	virtual bool invoke(P2DPane*); // _08
+	virtual bool invoke(P2DPane*) // _08
+	{
+		setTex();
+		return true;
+	}
 
 	// weak
 	void setTex()
@@ -160,10 +219,10 @@ struct WorldMapCoursePoint {
 	 * @brief TODO
 	 */
 	enum linkFlag {
-		LINK_Unk0 = 0,
-		LINK_Unk1 = 1,
-		LINK_Unk2 = 2,
-		LINK_Unk3 = 3,
+		LINK_Up    = 0,
+		LINK_Down  = 1,
+		LINK_Left  = 2,
+		LINK_Right = 3,
 		LINK_COUNT, // 4
 	};
 
@@ -212,12 +271,12 @@ struct WorldMapCoursePoint {
 	}
 
 	// DLL:
-	void setLink(WorldMapCoursePoint* pt1, WorldMapCoursePoint* pt2, WorldMapCoursePoint* pt3, WorldMapCoursePoint* pt4)
+	void setLink(WorldMapCoursePoint* upPt, WorldMapCoursePoint* downPt, WorldMapCoursePoint* leftPt, WorldMapCoursePoint* rightPt)
 	{
-		mLinkPoints[LINK_Unk0] = pt1;
-		mLinkPoints[LINK_Unk1] = pt2;
-		mLinkPoints[LINK_Unk2] = pt3;
-		mLinkPoints[LINK_Unk3] = pt4;
+		mLinkPoints[LINK_Up]    = upPt;
+		mLinkPoints[LINK_Down]  = downPt;
+		mLinkPoints[LINK_Left]  = leftPt;
+		mLinkPoints[LINK_Right] = rightPt;
 	}
 
 	void setCursorPoint(P2DScreen* pointScreen, u32 onyTag, u32 chaTag)
@@ -268,17 +327,66 @@ struct WorldMapCoursePoint {
 	P2DPane* getLandPane() { return mLandPane; }
 	WorldMapName getNumber() { return mGameStageID; }
 
-	// DLL inlines:
-	void createCourseInEffect();
-	bool update(bool);
-	u32 getEventFlag();
-	bool getOpenSw();
-	WorldMapCoursePoint* getLinkCoursePointPtr(linkFlag);
+	void createCourseInEffect()
+	{
+		P2DPicture* pic = _14;
+		Vector3f vec1;
+		vec1.set(pic->getPosH() + (pic->getWidth() >> 1), 480 - (pic->getPosV() + (pic->getHeight() >> 1)), 0.0f);
+		WMeffMgr->create(45, vec1, nullptr, nullptr);
+	}
+
+	bool update(bool isSelected)
+	{
+		bool res   = false;
+		mEventFlag = EVENT_NONE;
+		switch (_04) {
+		case 0:
+			res = true;
+			break;
+		case 1:
+			f32 timer1 = _08 += gsys->getFrameTime();
+			if (timer1 > 0.5f) {
+				Vector3f vec1;
+				vec1.set(_14->getPosH() + (_14->getWidth() >> 1), 480 - (_14->getPosV() + (_14->getHeight() >> 1)), 0.0f);
+				WMeffMgr->create(46, vec1, nullptr, nullptr);
+				WMeffMgr->create(47, vec1, nullptr, nullptr);
+				SeSystem::playSysSe(SYSSE_SELECT_COURSEOPEN);
+				_04 = 2;
+				_08 = 0.0f;
+			}
+			break;
+		case 2:
+			f32 timer2 = _08 += gsys->getFrameTime();
+			if (timer2 > 1.0f) {
+				_08 = 0.0f;
+				_04 = 3;
+				_1C->show();
+			}
+			break;
+		case 3:
+			f32 timer3 = _08 += gsys->getFrameTime();
+			if (timer3 > 1.0f) {
+				_08 = 0.0f;
+				_04 = 0;
+				mEventFlag |= EVENT_APPEAR_FINISH;
+				res = true;
+			}
+			break;
+		}
+
+		return res;
+	}
+
+	u32 getEventFlag() { return mEventFlag; }
+
+	bool getOpenSw() { return mIsVisible; }
+
+	WorldMapCoursePoint* getLinkCoursePointPtr(linkFlag id) { return mLinkPoints[id]; }
 
 	static const int EVENT_NONE;          // 0
 	static const int EVENT_APPEAR_FINISH; // 1
 
-	u8 _00[0x4];                                  // _00, unknown
+	u32 mEventFlag;                               // _00
 	int _04;                                      // _04
 	f32 _08;                                      // _08
 	bool mIsVisible;                              // _0C
@@ -292,9 +400,6 @@ struct WorldMapCoursePoint {
 	WorldMapCoursePoint* mLinkPoints[LINK_COUNT]; // _2C, indexed by linkFlag presumably
 };
 
-extern zen::EffectMgr2D* WMeffMgr;
-extern u8 mapNoScr2Game[5];
-extern u8 mapNoGame2Scr[5];
 } // namespace
 
 namespace zen {
@@ -304,159 +409,9 @@ struct DrawScreen;
 /**
  * @brief TODO
  *
- * @note Size: 0x138.
+ * @note Size: 0x138. In drawWorldMap.cpp.
  */
-struct WorldMapCoursePointMgr {
-	WorldMapCoursePointMgr()
-	{
-		mSelectedPoint = 0;
-		_134           = 0;
-		_00            = 0;
-	}
-
-	bool modeAppear();
-	bool modeOperation(Controller*, bool);
-
-	// DLL:
-	void setSelectCourse(WorldMapName gameStageID)
-	{
-		mSelectedPoint = &mCoursePoints[mapNoGame2Scr[gameStageID]];
-		mSelectedPoint->select();
-	}
-
-	void init(P2DScreen* pointScreen, P2DScreen* lineScreen, WorldMapName startStageID)
-	{
-		WorldMapCoursePoint* point;
-		_134 = 0;
-		if (playerState) {
-			point = &mCoursePoints[0];
-			point->setPane(pointScreen, 'x_1', 'x_1s', 'po01', lineScreen, 'sli1');
-			point->setLink(&mCoursePoints[4], &mCoursePoints[1], nullptr, &mCoursePoints[3]);
-			if (playerState->courseOpen(STAGE_Yakushima)) {
-				point = &mCoursePoints[1];
-				point->setPane(pointScreen, 'x_2', 'x_2s', 'po02', lineScreen, 'sli2');
-				point->setLink(&mCoursePoints[0], nullptr, nullptr, &mCoursePoints[2]);
-			} else {
-				point = &mCoursePoints[1];
-				point->setPane(pointScreen, 'x_2', 'x_2s', 'po02', lineScreen, 'sli2');
-				point->setLink(&mCoursePoints[3], nullptr, nullptr, &mCoursePoints[2]);
-			}
-
-			point = &mCoursePoints[2];
-			point->setPane(pointScreen, 'x_3', 'x_3s', 'po03', lineScreen, 'sli3');
-			point->setLink(&mCoursePoints[3], nullptr, &mCoursePoints[1], nullptr);
-			if (playerState->courseOpen(STAGE_Yakushima)) {
-				point = &mCoursePoints[3];
-				point->setPane(pointScreen, 'x_4', 'x_4s', 'po04', lineScreen, 'sli4');
-				point->setLink(&mCoursePoints[4], &mCoursePoints[2], &mCoursePoints[0], nullptr);
-			} else {
-				point = &mCoursePoints[3];
-				point->setPane(pointScreen, 'x_4', 'x_4s', 'po04', lineScreen, 'sli4');
-				point->setLink(&mCoursePoints[4], &mCoursePoints[2], &mCoursePoints[1], nullptr);
-			}
-
-			point = &mCoursePoints[4];
-			point->setPane(pointScreen, 'x_5', 'x_5s', 'po05', lineScreen, 'sli5');
-			point->setLink(nullptr, &mCoursePoints[3], &mCoursePoints[0], nullptr);
-
-		} else {
-			point = &mCoursePoints[0];
-			point->setPane(pointScreen, 'x_1', 'x_1s', 'po01', lineScreen, 'sli1');
-			point->setLink(&mCoursePoints[4], &mCoursePoints[1], nullptr, &mCoursePoints[3]);
-
-			point = &mCoursePoints[1];
-			point->setPane(pointScreen, 'x_2', 'x_2s', 'po02', lineScreen, 'sli2');
-			point->setLink(&mCoursePoints[0], nullptr, nullptr, &mCoursePoints[2]);
-
-			point = &mCoursePoints[2];
-			point->setPane(pointScreen, 'x_3', 'x_3s', 'po03', lineScreen, 'sli3');
-			point->setLink(&mCoursePoints[3], nullptr, &mCoursePoints[1], nullptr);
-
-			point = &mCoursePoints[3];
-			point->setPane(pointScreen, 'x_4', 'x_4s', 'po04', lineScreen, 'sli4');
-			point->setLink(&mCoursePoints[4], &mCoursePoints[2], &mCoursePoints[0], nullptr);
-
-			point = &mCoursePoints[4];
-			point->setPane(pointScreen, 'x_5', 'x_5s', 'po05', lineScreen, 'sli5');
-			point->setLink(nullptr, &mCoursePoints[3], &mCoursePoints[0], nullptr);
-		}
-
-		for (int i = WM_START; i < WM_COUNT; i++) {
-			WorldMapName gameStageID = (WorldMapName)mapNoScr2Game[i];
-			char onyStr[8];
-			sprintf(onyStr, "ony%d", i + 1);
-			char chaStr[8];
-			sprintf(chaStr, "cha%d", i + 1);
-
-			mCoursePoints[i].setCursorPoint(pointScreen, P2DPaneLibrary::makeTag(onyStr), P2DPaneLibrary::makeTag(chaStr));
-			mCoursePoints[i].setNumber(gameStageID);
-			mCoursePoints[i].nonSelect();
-			mCoursePoints[i].openCourse();
-			if (playerState && !playerState->courseOpen(gameStageID)) {
-				mCoursePoints[i].closeCourse();
-			}
-		}
-
-		setSelectCourse(startStageID);
-	}
-
-	// might be appear
-	void start(WorldMapName id)
-	{
-		_00 = 0;
-		for (int i = 0; i < WM_COUNT; i++) {
-			mCoursePoints[i].nonSelect();
-		}
-		setSelectCourse(id);
-	}
-
-	void getLandPos(int* x, int* y)
-	{
-		P2DPane* landPane = mSelectedPoint->getLandPane();
-		*x                = landPane->getPosH();
-		*y                = landPane->getPosV();
-	}
-	void getStayPos(int* x, int* y)
-	{
-		P2DPane* landPane = mSelectedPoint->getStayPane();
-		*x                = landPane->getPosH();
-		*y                = landPane->getPosV();
-	}
-
-	void appear(WorldMapName id)
-	{
-		_00 = 1;
-		for (int i = 0; i < WM_COUNT; i++) {
-			if (mSelectedPoint != &mCoursePoints[i]) {
-				mCoursePoints[i].nonSelect();
-			} else {
-				mCoursePoints[i].select();
-			}
-		}
-
-		mCoursePoints[mapNoGame2Scr[id]].appear();
-	}
-
-	WorldMapName getSelectCourseNumber()
-	{
-		WorldMapName id = WM_NULL;
-		if (mSelectedPoint) {
-			id = mSelectedPoint->getNumber();
-		}
-		return id;
-	}
-
-	// DLL inlines to do:
-	bool update(Controller*, bool);
-	u32 getEventFlag();
-	void createCourseInEffect();
-	void keyOperation(Controller*, u32, WorldMapCoursePoint::linkFlag);
-
-	int _00;                              // _00
-	WorldMapCoursePoint* mSelectedPoint;  // _04
-	WorldMapCoursePoint mCoursePoints[5]; // _08
-	u32 _134;                             // _134, unknown
-};
+struct WorldMapCoursePointMgr;
 
 /**
  * @brief TODO
@@ -481,101 +436,10 @@ struct WorldMapCursorMgr;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x24. In drawWorldMap.cpp.
  */
-struct WorldMapMapImageMgr {
-	WorldMapMapImageMgr()
-	{
-		_04 = 2;
-		_08 = -1;
-		_00 = 0.0f;
-		_20 = 0;
-		for (int i = 0; i < 5; i++) {
-			mMapImagePanes[i] = nullptr;
-		}
-	}
-
-	// weak:
-	void init()
-	{
-		_04 = 0;
-		for (int i = 0; i < 5; i++) {
-			if (mMapImagePanes[i]) {
-				mMapImagePanes[i]->hide();
-				mMapImagePanes[i]->setOffset(mMapImagePanes[i]->getWidth() >> 1, mMapImagePanes[i]->getHeight() >> 1);
-			}
-		}
-
-		_08 = 0;
-
-		closeMapImage();
-	}
-	void modeOpen();
-	void modeClose();
-
-	// DLL:
-	void init(P2DScreen* moniScreen)
-	{
-		P2DPane* pane1 = moniScreen->search('mi_1', true);
-		if (pane1->getTypeID() == PANETYPE_Picture) {
-			mMapImagePanes[0] = (P2DPicture*)pane1;
-		}
-		P2DPane* pane2 = moniScreen->search('mi_2', true);
-		if (pane2->getTypeID() == PANETYPE_Picture) {
-			mMapImagePanes[1] = (P2DPicture*)pane2;
-		}
-		P2DPane* pane3 = moniScreen->search('mi_3', true);
-		if (pane3->getTypeID() == PANETYPE_Picture) {
-			mMapImagePanes[2] = (P2DPicture*)pane3;
-		}
-		P2DPane* pane4 = moniScreen->search('mi_4', true);
-		if (pane4->getTypeID() == PANETYPE_Picture) {
-			mMapImagePanes[3] = (P2DPicture*)pane4;
-		}
-		P2DPane* pane5 = moniScreen->search('mi_5', true);
-		if (pane5->getTypeID() == PANETYPE_Picture) {
-			mMapImagePanes[4] = (P2DPicture*)pane5;
-		}
-
-		init();
-	}
-
-	void closeMapImage()
-	{
-		switch (_04) {
-		case 0:
-			_00 = 0.0f;
-			_04 = 1;
-			break;
-		case 2:
-			_20 = 1;
-			break;
-		}
-	}
-
-	void update()
-	{
-		switch (_04) {
-		case 0:
-			if (_08 != -1) {
-				mMapImagePanes[_08]->show();
-				mMapImagePanes[_08]->setScale(1.0f);
-			}
-			break;
-		case 1:
-			modeClose();
-			break;
-		case 2:
-			modeOpen();
-			break;
-		}
-	}
-
-	f32 _00;                       // _00
-	int _04;                       // _04
-	int _08;                       // _08
-	P2DPicture* mMapImagePanes[5]; // _0C
-	u8 _20;                        // _20
-};
+struct WorldMapMapImageMgr;
 
 /**
  * @brief TODO
@@ -624,8 +488,22 @@ struct WorldMapTitleMgr {
 		}
 	}
 
-	// DLL inlines to do:
-	void exitTitle();
+	void setTitle(WorldMapName id)
+	{
+		WorldMapScreenID scrID = (WorldMapScreenID)mapNoScr2Game[id];
+		if (_04 != scrID) {
+			_04 = scrID;
+			mTitleObjects[_04].appear();
+		}
+	}
+
+	void exitTitle()
+	{
+		if (_04 != -1) {
+			mTitleObjects[_04].wait();
+			_04 = -1;
+		}
+	}
 
 	static const int OBJ_NUM;
 
@@ -648,26 +526,43 @@ struct WorldMapWipe;
 struct WorldMapWipeMgr;
 
 /**
- * @brief PRETTY sure this is what this is.
+ * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct WorldMapShootingStarMgr {
 	WorldMapShootingStarMgr()
 	{
-		_00 = 0.2f;
-		_04 = false;
+		mStarFallChance  = 0.2f;
+		mIsRapidFireMode = false;
 	}
 
 	void rapidFire()
 	{
-		_04 = true;
-		_00 = 200.0f;
+		mIsRapidFireMode = true;
+
+		// make star falls certain for 0.25 * 100 = 400 frames after opening Final Trial
+		// - chance then drops from 100% by 0.25% per frame, down to a minimum chance of 0.2% per frame
+		mStarFallChance = 200.0f;
 	}
 
-	// DLL inlines to do:
-	void update();
+	void update()
+	{
+		if (zen::Rand(100.0f) < mStarFallChance) {
+			WMeffMgr->create(51, Vector3f(zen::Rand(640.0f), 500.0f - zen::Rand(50.0f), -zen::Rand(150.0f)), nullptr, nullptr);
+		}
+		if (mIsRapidFireMode) {
+			if (mStarFallChance < 0.0f) {
+				mIsRapidFireMode = false;
+				mStarFallChance  = 0.2f;
+			} else {
+				mStarFallChance -= 0.25f;
+			}
+		}
+	}
 
-	f32 _00;  // _00
-	bool _04; // _04
+	f32 mStarFallChance;   // _00, as a percent
+	bool mIsRapidFireMode; // _04
 };
 
 /**

@@ -177,15 +177,12 @@ struct P2DPane {
 	Vector3f& getScale() { return mScale; }
 	void setScale(f32 scale) { mScale.set(scale, scale, scale); }
 	void setScale(const Vector3f& scale) { mScale = scale; }
+	void setScale(f32 x, f32 y, f32 z) { mScale.set(x, y, z); }
 
 	// DLL inlines to do:
 	const PUTRect& getBounds();
-
 	void rotateX(f32);
-
 	void getDispPos(Vector3f*);
-
-	void setScale(f32, f32, f32);
 
 	// _00 = VTBL
 	P2DPaneCallBack* mCallBack; // _04
