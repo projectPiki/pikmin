@@ -50,13 +50,13 @@ TaiNapkidSoundTable::TaiNapkidSoundTable()
  * Size:	000564
  */
 TaiNapkidParameters::TaiNapkidParameters()
-    : TekiParameters(NAPKIDPI_COUNT, NAPKIDPF_COUNT)
+    : TekiParameters(TaiNapkidIntParms::COUNT, TaiNapkidFloatParms::COUNT)
 {
-	int i                           = NAPKIDPI_Unk0;
+	int i                           = TaiNapkidIntParms::StruggleLoopCount;
 	ParaParameterInfo<int>* iParams = mParameters->mIntParams->mParaInfo;
 	iParams[i++].init("STRUGGLE_LOOP_COUNT", 0, 10);
 
-	int j                           = NAPKIDPF_Unk0;
+	int j                           = TaiNapkidFloatParms::CarryingVelocity;
 	ParaParameterInfo<f32>* fParams = mParameters->mFloatParams->mParaInfo;
 	fParams[j++].init("CARRYING_VELOCITY", 0.0f, 200.0f);
 	fParams[j++].init("CARRYING_FLIGHT_HEIGHT", 0.0f, 200.0f);
@@ -120,21 +120,21 @@ TaiNapkidParameters::TaiNapkidParameters()
 	multiP->setF(TPF_BombDamageRate, 1.0f);
 	multiP->setF(TPF_CollisionRadius, 16.0f);
 
-	multiP->setI(NAPKIDPI_Unk0, 1);
+	multiP->setI(TaiNapkidIntParms::StruggleLoopCount, 1);
 
-	multiP->setF(NAPKIDPF_Unk0, 90.0f);
-	multiP->setF(NAPKIDPF_CarryFlightHeight, 60.0f);
-	multiP->setF(NAPKIDPF_Unk2, 60.0f);
-	multiP->setF(NAPKIDPF_Unk3, 3.0f);
-	multiP->setF(NAPKIDPF_Unk4, 0.5f);
-	multiP->setF(NAPKIDPF_Unk5, 3.0f);
-	multiP->setF(NAPKIDPF_Unk6, 0.5f);
-	multiP->setF(NAPKIDPF_Unk7, 3.0f);
-	multiP->setF(NAPKIDPF_Unk8, 0.2f);
-	multiP->setF(NAPKIDPF_Unk9, 3.0f);
-	multiP->setF(NAPKIDPF_Unk10, 0.7f);
-	multiP->setF(NAPKIDPF_Unk11, 4.0f);
-	multiP->setF(NAPKIDPF_Unk12, 200.0f);
+	multiP->setF(TaiNapkidFloatParms::CarryingVelocity, 90.0f);
+	multiP->setF(TaiNapkidFloatParms::CarryFlightHeight, 60.0f);
+	multiP->setF(TaiNapkidFloatParms::TakingOffFlightHeight, 60.0f);
+	multiP->setF(TaiNapkidFloatParms::WanderingHoverPeriod, 3.0f);
+	multiP->setF(TaiNapkidFloatParms::WanderingHoverProbability, 0.5f);
+	multiP->setF(TaiNapkidFloatParms::HoveringWanderPeriod, 3.0f);
+	multiP->setF(TaiNapkidFloatParms::HoveringWanderProbability, 0.5f);
+	multiP->setF(TaiNapkidFloatParms::HoveringWashPeriod, 3.0f);
+	multiP->setF(TaiNapkidFloatParms::HoveringWashProbability, 0.2f);
+	multiP->setF(TaiNapkidFloatParms::WashingWanderPeriod, 3.0f);
+	multiP->setF(TaiNapkidFloatParms::WashingWanderProbability, 0.7f);
+	multiP->setF(TaiNapkidFloatParms::ThrowPeriod, 4.0f);
+	multiP->setF(TaiNapkidFloatParms::ThrowVelocity, 200.0f);
 }
 
 /*
@@ -143,7 +143,7 @@ TaiNapkidParameters::TaiNapkidParameters()
  * Size:	0022C4
  */
 TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
-    : TaiStrategy(NAPKIDSTATE_COUNT, NAPKIDSTATE_Wandering)
+    : TaiStrategy(TaiNapkidStateID::COUNT, TaiNapkidStateID::Wandering)
 {
 	TaiStopMoveAction* stopMove                = new TaiStopMoveAction;
 	TaiStartFlyingAction* startFlying          = new TaiStartFlyingAction;
@@ -153,17 +153,21 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	TaiCircleMoveAction* circleMove            = new TaiCircleMoveAction;
 	TaiMakingNextVelocityAction* makingNextVel = new TaiMakingNextVelocityAction;
 	TaiMakeVelocityDirectionAction* makeVelDir = new TaiMakeVelocityDirectionAction;
+
 	new TaiMakeAccelerationDirectionAction; // never actually used
-	TaiHasStickersOnBodyAction* hasStickersToFall = new TaiHasStickersOnBodyAction(NAPKIDSTATE_ShockFalling);
-	TaiDeadAction* midairDying                    = new TaiDeadAction(NAPKIDSTATE_ShockFalling);
-	TaiDeadAction* groundedDying                  = new TaiDeadAction(NAPKIDSTATE_Dying);
-	new TaiFlickAction(NAPKIDSTATE_Flicking); // never actually used
-	TaiNapkidTargetPikiAction* targetPikiChase = new TaiNapkidTargetPikiAction(NAPKIDSTATE_Chasing);
+
+	TaiHasStickersOnBodyAction* hasStickersToFall = new TaiHasStickersOnBodyAction(TaiNapkidStateID::ShockFalling);
+	TaiDeadAction* midairDying                    = new TaiDeadAction(TaiNapkidStateID::ShockFalling);
+	TaiDeadAction* groundedDying                  = new TaiDeadAction(TaiNapkidStateID::Dying);
+
+	new TaiFlickAction(TaiNapkidStateID::Flicking); // never actually used
+
+	TaiNapkidTargetPikiAction* targetPikiChase = new TaiNapkidTargetPikiAction(TaiNapkidStateID::Chasing);
 	TaiSimultaneousDamageAction* simDamage     = new TaiSimultaneousDamageAction(TAI_NO_TRANSIT);
 	TaiNapkidFlyingAction* napkidFlying1       = new TaiNapkidFlyingAction(params->getF(TPF_FlightHeight));
-	TaiNapkidFlyingAction* napkidCarryFlying   = new TaiNapkidFlyingAction(params->getF(NAPKIDPF_CarryFlightHeight));
+	TaiNapkidFlyingAction* napkidCarryFlying   = new TaiNapkidFlyingAction(params->getF(TaiNapkidFloatParms::CarryFlightHeight));
 
-	TaiDyingAction* dying           = new TaiDyingAction(NAPKIDANIM_Dead);
+	TaiDyingAction* dying           = new TaiDyingAction(TaiNapkidMotionID::Dead);
 	TaiStartDyingAction* startDying = new TaiStartDyingAction;
 
 	// STATE 0 - Dying
@@ -172,11 +176,13 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, stopMove);
 	state->setAction(j++, startDying);
 	state->setAction(j++, dying);
-	setState(NAPKIDSTATE_Dying, state);
+	setState(TaiNapkidStateID::Dying, state);
 
-	TaiNapkidWanderingRouteAction* flyWanderRoute = new TaiNapkidWanderingRouteAction(NAPKIDANIM_Fly, params->getF(TPF_WalkVelocity));
+	TaiNapkidWanderingRouteAction* flyWanderRoute
+	    = new TaiNapkidWanderingRouteAction(TaiNapkidMotionID::Fly, params->getF(TPF_WalkVelocity));
 	TaiStartingTimerAction* idleChanceTimer
-	    = new TaiStartingTimerAction(NAPKIDSTATE_IdleFlying, 0, params->getF(NAPKIDPF_Unk3), 0.5f, params->getF(NAPKIDPF_Unk4));
+	    = new TaiStartingTimerAction(TaiNapkidStateID::IdleFlying, 0, params->getF(TaiNapkidFloatParms::WanderingHoverPeriod), 0.5f,
+	                                 params->getF(TaiNapkidFloatParms::WanderingHoverProbability));
 	TaiHeadOnCollisionAvoidanceAction* headOnAvoidance = new TaiHeadOnCollisionAvoidanceAction(50.0f);
 
 	// STATE 1 - Wandering routes
@@ -191,13 +197,15 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, idleChanceTimer);
 	state->setAction(j++, flyWanderRoute);
 	state->setAction(j++, headOnAvoidance);
-	setState(NAPKIDSTATE_Wandering, state);
+	setState(TaiNapkidStateID::Wandering, state);
 
-	TaiContinuousMotionAction* flyMotion1 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Fly);
+	TaiContinuousMotionAction* flyMotion1 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::Fly);
 	TaiStartingTimerAction* wanderChanceTimer1
-	    = new TaiStartingTimerAction(NAPKIDSTATE_Wandering, 0, params->getF(NAPKIDPF_Unk5), 0.5f, params->getF(NAPKIDPF_Unk6));
+	    = new TaiStartingTimerAction(TaiNapkidStateID::Wandering, 0, params->getF(TaiNapkidFloatParms::HoveringWanderPeriod), 0.5f,
+	                                 params->getF(TaiNapkidFloatParms::HoveringWanderProbability));
 	TaiStartingTimerAction* idleChatChanceTimer
-	    = new TaiStartingTimerAction(NAPKIDSTATE_IdleChatting, 1, params->getF(NAPKIDPF_Unk7), 0.5f, params->getF(NAPKIDPF_Unk8));
+	    = new TaiStartingTimerAction(TaiNapkidStateID::IdleChatting, 1, params->getF(TaiNapkidFloatParms::HoveringWashPeriod), 0.5f,
+	                                 params->getF(TaiNapkidFloatParms::HoveringWashProbability));
 
 	// STATE 2 - IdleFly (flying in place)
 	state = new TaiState(9);
@@ -211,11 +219,12 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, wanderChanceTimer1);
 	state->setAction(j++, idleChatChanceTimer);
 	state->setAction(j++, flyMotion1);
-	setState(NAPKIDSTATE_IdleFlying, state);
+	setState(TaiNapkidStateID::IdleFlying, state);
 
 	TaiStartingTimerAction* wanderChanceTimer2
-	    = new TaiStartingTimerAction(NAPKIDSTATE_Wandering, 0, params->getF(NAPKIDPF_Unk9), 0.5f, params->getF(NAPKIDPF_Unk10));
-	TaiContinuousMotionAction* idleMotion = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Idle);
+	    = new TaiStartingTimerAction(TaiNapkidStateID::Wandering, 0, params->getF(TaiNapkidFloatParms::WashingWanderPeriod), 0.5f,
+	                                 params->getF(TaiNapkidFloatParms::WashingWanderProbability));
+	TaiContinuousMotionAction* idleMotion = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::Idle);
 
 	// STATE 3 - IdleChatting (hands rubbing)
 	state = new TaiState(7);
@@ -227,13 +236,13 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, napkidFlying1);
 	state->setAction(j++, wanderChanceTimer2);
 	state->setAction(j++, idleMotion);
-	setState(NAPKIDSTATE_IdleChatting, state);
+	setState(TaiNapkidStateID::IdleChatting, state);
 
 	TaiNapkidTargetPikiAction* targetPikiLoop = new TaiNapkidTargetPikiAction(TAI_NO_TRANSIT);
-	TaiNapkidApproachPikiAction* approachPiki = new TaiNapkidApproachPikiAction(NAPKIDSTATE_AttackingSetup);
-	TaiNapkidPikiLostAction* lostPiki         = new TaiNapkidPikiLostAction(NAPKIDSTATE_Wandering);
-	TaiNapkidShortRangeAction* shortRange     = new TaiNapkidShortRangeAction(NAPKIDSTATE_Outrunning);
-	TaiTracingAction* tracing                 = new TaiTracingAction(NAPKIDANIM_Fly, params->getF(TPF_RunVelocity));
+	TaiNapkidApproachPikiAction* approachPiki = new TaiNapkidApproachPikiAction(TaiNapkidStateID::AttackingSetup);
+	TaiNapkidPikiLostAction* lostPiki         = new TaiNapkidPikiLostAction(TaiNapkidStateID::Wandering);
+	TaiNapkidShortRangeAction* shortRange     = new TaiNapkidShortRangeAction(TaiNapkidStateID::Outrunning);
+	TaiTracingAction* tracing                 = new TaiTracingAction(TaiNapkidMotionID::Fly, params->getF(TPF_RunVelocity));
 
 	// STATE 4 - Chasing target
 	state = new TaiState(9);
@@ -247,11 +256,11 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, napkidFlying1);
 	state->setAction(j++, lostPiki);
 	state->setAction(j++, tracing);
-	setState(NAPKIDSTATE_Chasing, state);
+	setState(TaiNapkidStateID::Chasing, state);
 
-	TaiNapkidStraightFlyingAction* straightFlying = new TaiNapkidStraightFlyingAction(NAPKIDSTATE_Evading, 160.0f);
-	TaiTimerAction* timeUntilEvade                = new TaiTimerAction(NAPKIDSTATE_Evading, 0, 5.0f, 0.0f);
-	TaiContinuousMotionAction* flyMotion2         = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Fly);
+	TaiNapkidStraightFlyingAction* straightFlying = new TaiNapkidStraightFlyingAction(TaiNapkidStateID::Evading, 160.0f);
+	TaiTimerAction* timeUntilEvade                = new TaiTimerAction(TaiNapkidStateID::Evading, 0, 5.0f, 0.0f);
+	TaiContinuousMotionAction* flyMotion2         = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::Fly);
 
 	// STATE 5 - Outrunning target
 	state = new TaiState(8);
@@ -264,9 +273,9 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, straightFlying);
 	state->setAction(j++, timeUntilEvade);
 	state->setAction(j++, flyMotion2);
-	setState(NAPKIDSTATE_Outrunning, state);
+	setState(TaiNapkidStateID::Outrunning, state);
 
-	TaiNapkidCirclingAction* circling       = new TaiNapkidCirclingAction(NAPKIDSTATE_Wandering);
+	TaiNapkidCirclingAction* circling       = new TaiNapkidCirclingAction(TaiNapkidStateID::Wandering);
 	TaiMakingNextDriveAction* makeNextDrive = new TaiMakingNextDriveAction(150.0f);
 
 	// STATE 6 - Evading / Circling (turning around after outrunning)
@@ -278,9 +287,9 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, circleMove);
 	state->setAction(j++, makeNextDrive);
 	state->setAction(j++, circling);
-	setState(NAPKIDSTATE_Evading, state);
+	setState(TaiNapkidStateID::Evading, state);
 
-	TaiFinishMotionAction* finishMotionToAttack = new TaiFinishMotionAction(NAPKIDSTATE_Attacking);
+	TaiFinishMotionAction* finishMotionToAttack = new TaiFinishMotionAction(TaiNapkidStateID::Attacking);
 
 	// STATE 7 - AttackingSetup (finishing current animation before attacking)
 	state = new TaiState(5);
@@ -290,13 +299,13 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, midairDying);
 	state->setAction(j++, napkidFlying1);
 	state->setAction(j++, finishMotionToAttack);
-	setState(NAPKIDSTATE_AttackingSetup, state);
+	setState(TaiNapkidStateID::AttackingSetup, state);
 
 	TaiNapkidCatchTracingAction* catchTracing       = new TaiNapkidCatchTracingAction;
-	TaiNapkidCatchingAction* catching               = new TaiNapkidCatchingAction(NAPKIDSTATE_AttackDeciding);
-	TaiMotionAction* attackMotion                   = new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Attack);
+	TaiNapkidCatchingAction* catching               = new TaiNapkidCatchingAction(TaiNapkidStateID::AttackDeciding);
+	TaiMotionAction* attackMotion                   = new TaiMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::Attack);
 	TaiNapkidCatchDescendingAction* catchDescending = new TaiNapkidCatchDescendingAction;
-	TaiClampMinHeightAction* catchOnMinHeight       = new TaiClampMinHeightAction(NAPKIDSTATE_Catching, 10.0f);
+	TaiClampMinHeightAction* catchOnMinHeight       = new TaiClampMinHeightAction(TaiNapkidStateID::Catching, 10.0f);
 
 	// STATE 8 - Attacking
 	state = new TaiState(9);
@@ -310,7 +319,7 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, attackMotion);
 	state->setAction(j++, catching);
 	state->setAction(j++, makeVelDir);
-	setState(NAPKIDSTATE_Attacking, state);
+	setState(TaiNapkidStateID::Attacking, state);
 
 	TaiNapkidCatchFlyingAction* catchFlying = new TaiNapkidCatchFlyingAction;
 	TaiClampMinHeightAction* catchMinHeight = new TaiClampMinHeightAction(TAI_NO_TRANSIT, 10.0f);
@@ -326,10 +335,10 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, makingNextVel);
 	state->setAction(j++, catching);
 	state->setAction(j++, makeVelDir);
-	setState(NAPKIDSTATE_Catching, state);
+	setState(TaiNapkidStateID::Catching, state);
 
-	TaiHasStickersInMouthAction* stickersInMouth = new TaiHasStickersInMouthAction(NAPKIDSTATE_CarryingSetup);
-	TaiOnceAction* onceThenMiss                  = new TaiOnceAction(NAPKIDSTATE_AttackMissing);
+	TaiHasStickersInMouthAction* stickersInMouth = new TaiHasStickersInMouthAction(TaiNapkidStateID::CarryingSetup);
+	TaiOnceAction* onceThenMiss                  = new TaiOnceAction(TaiNapkidStateID::AttackMissing);
 
 	// STATE 10 - AttackDeciding (decides which state to go to next, after attacking)
 	state = new TaiState(5);
@@ -339,13 +348,13 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, makingNextVel);
 	state->setAction(j++, stickersInMouth);
 	state->setAction(j++, onceThenMiss);
-	setState(NAPKIDSTATE_AttackDeciding, state);
+	setState(TaiNapkidStateID::AttackDeciding, state);
 
 	TaiNapkidCatchAscendingAction* ascending    = new TaiNapkidCatchAscendingAction;
-	TaiClampMaxHeightAction* wanderOnMaxHeight1 = new TaiClampMaxHeightAction(NAPKIDSTATE_Wandering, params->getF(TPF_FlightHeight));
-	TaiSerialAction* missingSerial              = new TaiSerialAction(NAPKIDSTATE_GettingUp, 2);
-	missingSerial->setAction(0, new TaiSwitchMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_AttackMiss));
-	missingSerial->setAction(1, new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Fly));
+	TaiClampMaxHeightAction* wanderOnMaxHeight1 = new TaiClampMaxHeightAction(TaiNapkidStateID::Wandering, params->getF(TPF_FlightHeight));
+	TaiSerialAction* missingSerial              = new TaiSerialAction(TaiNapkidStateID::GettingUp, 2);
+	missingSerial->setAction(0, new TaiSwitchMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::AttackMiss));
+	missingSerial->setAction(1, new TaiMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::Fly));
 
 	// STATE 12 - AttackMissing
 	state = new TaiState(7);
@@ -357,12 +366,12 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, missingSerial);
 	state->setAction(j++, ascending);
 	state->setAction(j++, wanderOnMaxHeight1);
-	setState(NAPKIDSTATE_AttackMissing, state);
+	setState(TaiNapkidStateID::AttackMissing, state);
 
 	TaiNapkidCatchAscendingAction* catchAscending = new TaiNapkidCatchAscendingAction;
 	TaiClampMaxHeightAction* carryingOnMaxHeight
-	    = new TaiClampMaxHeightAction(NAPKIDSTATE_Carrying, params->getF(NAPKIDPF_CarryFlightHeight));
-	TaiContinuousMotionAction* carryFlyMotion = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_CarryFly);
+	    = new TaiClampMaxHeightAction(TaiNapkidStateID::Carrying, params->getF(TaiNapkidFloatParms::CarryFlightHeight));
+	TaiContinuousMotionAction* carryFlyMotion = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::CarryFly);
 
 	// STATE 11 - CarryingSetup (setting up for Carrying after a max height is met)
 	state = new TaiState(7);
@@ -374,10 +383,11 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, catchMinHeight);
 	state->setAction(j++, carryingOnMaxHeight);
 	state->setAction(j++, makingNextVel);
-	setState(NAPKIDSTATE_CarryingSetup, state);
+	setState(TaiNapkidStateID::CarryingSetup, state);
 
-	TaiNapkidWanderingRouteAction* carryWanderRoute = new TaiNapkidWanderingRouteAction(NAPKIDANIM_CarryFly, params->getF(NAPKIDPF_Unk0));
-	TaiTimerAction* throwTimer                      = new TaiTimerAction(NAPKIDSTATE_Throwing, 0, params->getF(NAPKIDPF_Unk11), 0.5f);
+	TaiNapkidWanderingRouteAction* carryWanderRoute
+	    = new TaiNapkidWanderingRouteAction(TaiNapkidMotionID::CarryFly, params->getF(TaiNapkidFloatParms::CarryingVelocity));
+	TaiTimerAction* throwTimer = new TaiTimerAction(TaiNapkidStateID::Throwing, 0, params->getF(TaiNapkidFloatParms::ThrowPeriod), 0.5f);
 
 	// STATE 13 - Carrying
 	state = new TaiState(6);
@@ -388,11 +398,13 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, throwTimer);
 	state->setAction(j++, carryWanderRoute);
 	state->setAction(j++, napkidCarryFlying);
-	setState(NAPKIDSTATE_Carrying, state);
+	setState(TaiNapkidStateID::Carrying, state);
 
-	TaiContinuousMotionAction* throwMotionThenCarrying = new TaiContinuousMotionAction(NAPKIDSTATE_Carrying, NAPKIDANIM_Throw);
-	TaiNapkidThrowingPikiAction* throwPiki             = new TaiNapkidThrowingPikiAction;
-	TaiNotAction* noMouthStickersThenWander = new TaiNotAction(NAPKIDSTATE_Wandering, new TaiHasStickersInMouthAction(TAI_NO_TRANSIT));
+	TaiContinuousMotionAction* throwMotionThenCarrying
+	    = new TaiContinuousMotionAction(TaiNapkidStateID::Carrying, TaiNapkidMotionID::Throw);
+	TaiNapkidThrowingPikiAction* throwPiki = new TaiNapkidThrowingPikiAction;
+	TaiNotAction* noMouthStickersThenWander
+	    = new TaiNotAction(TaiNapkidStateID::Wandering, new TaiHasStickersInMouthAction(TAI_NO_TRANSIT));
 
 	// STATE 14 - Throwing pikmin
 	state = new TaiState(5);
@@ -402,13 +414,13 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, throwMotionThenCarrying);
 	state->setAction(j++, throwPiki);
 	state->setAction(j++, noMouthStickersThenWander);
-	setState(NAPKIDSTATE_Throwing, state);
+	setState(TaiNapkidStateID::Throwing, state);
 
-	TaiMotionAction* fallMotion                 = new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Fall);
+	TaiMotionAction* fallMotion                 = new TaiMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::Fall);
 	TaiNapkidFallingAction* napkidFalling       = new TaiNapkidFallingAction;
 	TaiNapkidShockFallingAction* shockFalling   = new TaiNapkidShockFallingAction;
 	TaiRotatingAction* fallRotation             = new TaiRotatingAction(NMathF::pi * 8.0f);
-	TaiClampMinHeightAction* minHeightToLanding = new TaiClampMinHeightAction(NAPKIDSTATE_Landing, 10.0f);
+	TaiClampMinHeightAction* minHeightToLanding = new TaiClampMinHeightAction(TaiNapkidStateID::Landing, 10.0f);
 
 	// STATE 15 - ShockFalling (falling when a pikmin is first thrown on it)
 	state = new TaiState(8);
@@ -421,7 +433,7 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, parabola);
 	state->setAction(j++, minHeightToLanding);
 	state->setAction(j++, makingNextVel);
-	setState(NAPKIDSTATE_ShockFalling, state);
+	setState(TaiNapkidStateID::ShockFalling, state);
 
 	TaiRotatingAction* slowFallRotation = new TaiRotatingAction(NMathF::pi * 4.0f);
 
@@ -436,9 +448,9 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, minHeightToLanding);
 	state->setAction(j++, makingNextVel);
 	state->setAction(j++, makingNextVel);
-	setState(NAPKIDSTATE_LoopFalling, state);
+	setState(TaiNapkidStateID::LoopFalling, state);
 
-	TaiFinishMotionAction* finishMotionToFlailing         = new TaiFinishMotionAction(NAPKIDSTATE_Flailing);
+	TaiFinishMotionAction* finishMotionToFlailing         = new TaiFinishMotionAction(TaiNapkidStateID::Struggling);
 	TaiNapkidFallingWaterEffectAction* fallingWaterEffect = new TaiNapkidFallingWaterEffectAction;
 
 	// STATE 18 - Landing (hitting the ground after falling)
@@ -449,12 +461,12 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, simDamage);
 	state->setAction(j++, finishMotionToFlailing);
 	state->setAction(j++, fallingWaterEffect);
-	setState(NAPKIDSTATE_Landing, state);
+	setState(TaiNapkidStateID::Landing, state);
 
-	TaiContinuousMotionAction* flailMotion = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Flail);
+	TaiContinuousMotionAction* flailMotion = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::Flail);
 
-	TaiSerialAction* flailSerialToGetup = new TaiSerialAction(NAPKIDSTATE_GettingUp, 2);
-	TaiCountLoopAction* flailLoop       = new TaiCountLoopAction(TAI_NO_TRANSIT, params->getI(NAPKIDPI_Unk0));
+	TaiSerialAction* flailSerialToGetup = new TaiSerialAction(TaiNapkidStateID::GettingUp, 2);
+	TaiCountLoopAction* flailLoop       = new TaiCountLoopAction(TAI_NO_TRANSIT, params->getI(TaiNapkidIntParms::StruggleLoopCount));
 	flailSerialToGetup->setAction(0, flailLoop);
 
 	TaiFinishMotionAction* flailFinishMotion = new TaiFinishMotionAction(TAI_NO_TRANSIT);
@@ -467,13 +479,14 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, simDamage);
 	state->setAction(j++, flailSerialToGetup);
 	state->setAction(j++, flailMotion);
-	setState(NAPKIDSTATE_Flailing, state);
+	setState(TaiNapkidStateID::Struggling, state);
 
 	TaiNapkidStartDroppingWaterAction* startDroppingWater = new TaiNapkidStartDroppingWaterAction;
 	TaiNapkidTakingOffAscendingAction* takingOffAscend    = new TaiNapkidTakingOffAscendingAction;
-	TaiClampMaxHeightAction* maxHeightToDecide  = new TaiClampMaxHeightAction(NAPKIDSTATE_HeightDeciding, params->getF(NAPKIDPF_Unk2));
-	TaiContinuousMotionAction* ascendMotion     = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Ascend);
-	TaiClampMinVelocityYAction* minYVelToDecide = new TaiClampMinVelocityYAction(NAPKIDSTATE_HeightDeciding, 0.0f);
+	TaiClampMaxHeightAction* maxHeightToDecide
+	    = new TaiClampMaxHeightAction(TaiNapkidStateID::HeightDeciding, params->getF(TaiNapkidFloatParms::TakingOffFlightHeight));
+	TaiContinuousMotionAction* ascendMotion     = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::Ascend);
+	TaiClampMinVelocityYAction* minYVelToDecide = new TaiClampMinVelocityYAction(TaiNapkidStateID::HeightDeciding, 0.0f);
 
 	// STATE 19 - GettingUp (getting up after landing)
 	state = new TaiState(9);
@@ -487,11 +500,11 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, makingNextVel);
 	state->setAction(j++, ascendMotion);
 	state->setAction(j++, startDroppingWater);
-	setState(NAPKIDSTATE_GettingUp, state);
+	setState(TaiNapkidStateID::GettingUp, state);
 
-	TaiNotAction* noStickersOnBody                   = new TaiNotAction(NAPKIDSTATE_Rising, new TaiHasStickersOnBodyAction(TAI_NO_TRANSIT));
-	TaiNapkidFlickAction* napkidFlick                = new TaiNapkidFlickAction(NAPKIDSTATE_Flicking);
-	TaiOnceAction* onceToLoopFall                    = new TaiOnceAction(NAPKIDSTATE_LoopFalling);
+	TaiNotAction* noStickersOnBody    = new TaiNotAction(TaiNapkidStateID::Rising, new TaiHasStickersOnBodyAction(TAI_NO_TRANSIT));
+	TaiNapkidFlickAction* napkidFlick = new TaiNapkidFlickAction(TaiNapkidStateID::Flicking);
+	TaiOnceAction* onceToLoopFall     = new TaiOnceAction(TaiNapkidStateID::LoopFalling);
 	TaiStopGenParticleGeneratorAction* stopParticles = new TaiStopGenParticleGeneratorAction(0);
 
 	// STATE 20 - HeightDeciding (deciding next state at the top of GettingUp's height)
@@ -501,20 +514,20 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, noStickersOnBody);
 	state->setAction(j++, napkidFlick);
 	state->setAction(j++, onceToLoopFall);
-	setState(NAPKIDSTATE_HeightDeciding, state);
+	setState(TaiNapkidStateID::HeightDeciding, state);
 
-	TaiFlickingUpperAction* flickUpperToRising = new TaiFlickingUpperAction(NAPKIDSTATE_Rising, NAPKIDANIM_Flick);
+	TaiFlickingUpperAction* flickUpperToRising = new TaiFlickingUpperAction(TaiNapkidStateID::Rising, TaiNapkidMotionID::Flick);
 
 	// STATE 21 - Flicking
 	state = new TaiState(2);
 	j     = 0;
 	state->setAction(j++, simDamage);
 	state->setAction(j++, flickUpperToRising);
-	setState(NAPKIDSTATE_Flicking, state);
+	setState(TaiNapkidStateID::Flicking, state);
 
 	TaiNapkidRisingAscendingAction* napkidRisingAscending = new TaiNapkidRisingAscendingAction;
-	TaiClampMaxHeightAction* wanderOnMaxHeight2 = new TaiClampMaxHeightAction(NAPKIDSTATE_Wandering, params->getF(TPF_FlightHeight));
-	TaiContinuousMotionAction* flyMotion3       = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Fly);
+	TaiClampMaxHeightAction* wanderOnMaxHeight2 = new TaiClampMaxHeightAction(TaiNapkidStateID::Wandering, params->getF(TPF_FlightHeight));
+	TaiContinuousMotionAction* flyMotion3       = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TaiNapkidMotionID::Fly);
 
 	// STATE 22 - Rising (rising back to flying height)
 	state = new TaiState(8);
@@ -527,7 +540,7 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, wanderOnMaxHeight2);
 	state->setAction(j++, makingNextVel);
 	state->setAction(j++, flyMotion3);
-	setState(NAPKIDSTATE_Rising, state);
+	setState(TaiNapkidStateID::Rising, state);
 }
 
 /*
@@ -574,7 +587,7 @@ void TaiNapkidStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 	teki.drawRange(gfx, teki.getPosition(), 130.0f, Colour(30, 30, 30, 255));
 	teki.drawRange(gfx, teki.getPosition(), teki.getAttackableRange(), Colour(255, 255, 0, 255));
 
-	if (teki.mTekiAnimator->getCurrentMotionIndex() == NAPKIDANIM_Attack) {
+	if (teki.mTekiAnimator->getCurrentMotionIndex() == TaiNapkidMotionID::Attack) {
 		f32 counter  = teki.mTekiAnimator->getCounter();
 		f32 startKey = teki.mTekiAnimator->getKeyValueByKeyType(2);
 		f32 endKey   = teki.mTekiAnimator->getKeyValueByKeyType(3);
@@ -1612,7 +1625,7 @@ bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 	if (teki.getAnimationKeyOption(Teki::ANIMATION_KEY_OPTION_ACTION_0)) {
 		PRINT("TaiNapkidThrowingPikiAction::act:%08x:ACTION_0\n", &teki);
 		NVector3f throwVel(teki.getVelocity());
-		throwVel.y = -teki.getParameterF(NAPKIDPF_Unk12);
+		throwVel.y = -teki.getParameterF(TaiNapkidFloatParms::ThrowVelocity);
 
 		Stickers stickers(&teki);
 		Iterator iter(&stickers);

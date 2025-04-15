@@ -16,45 +16,37 @@
 /**
  * @brief
  */
-enum TAIkabekuiAFloatParms {
-	KABEKUIAPF_Unk0 = TPF_COUNT,
-	KABEKUIAPF_Unk1,
-	KABEKUIAPF_Unk2,
-	KABEKUIAPF_Unk3,
-	KABEKUIAPF_COUNT,
-};
+DEFINE_ENUM_TYPE(TAIkabekuiAFloatParms, BridgeAttackRange = TPF_COUNT, BridgeDamage, BurrowingTime, SleepTime, COUNT, );
 
 /**
  * @brief
  */
-enum TAIkabekuiAStateID {
-	KABEKUIASTATE_Unk0,
-	KABEKUIASTATE_Unk1,
-	KABEKUIASTATE_Unk2,
-	KABEKUIASTATE_Unk3,
-	KABEKUIASTATE_Unk4,
-	KABEKUIASTATE_Unk5,
-	KABEKUIASTATE_Unk6,
-	KABEKUIASTATE_Unk7,
-	KABEKUIASTATE_Unk8,
-	KABEKUIASTATE_Unk9,
-	KABEKUIASTATE_Unk10,
-	KABEKUIASTATE_COUNT,
-};
+DEFINE_ENUM_TYPE(TAIkabekuiAStateID,
+                 Dying        = 0,  //
+                 Waiting      = 1,  //
+                 Appearing    = 2,  //
+                 MovingSetup  = 3,  //
+                 Moving       = 4,  //
+                 CrushDying   = 5,  //
+                 ChasingSetup = 6,  //
+                 Chasing      = 7,  //
+                 Eating       = 8,  //
+                 Burrowing    = 9,  //
+                 WaitingSetup = 10, //
+                 COUNT,             //
+);
 
 /**
  * @brief
  */
-enum TAIkabekuiAMotionID {
-	KABEKUIAANIM_Unk0,
-	KABEKUIAANIM_Unk1,
-	KABEKUIAANIM_Unk2,
-	KABEKUIAANIM_Unk3,
-	KABEKUIAANIM_Unk4,
-	KABEKUIAANIM_Unk5,
-	KABEKUIAANIM_Unk6,
-	KABEKUIAANIM_COUNT,
-};
+DEFINE_ENUM_TYPE(TAIkabekuiAMotionID,
+                 Dead   = 0, // 'dead'
+                 Press  = 1, // 'damage'
+                 Appear = 4, // 'waitact1'
+                 Burrow = 5, // 'waitact2'
+                 Move   = 6, // 'move1'
+                 Eat    = 8, // 'attack'
+);
 
 /*
  * @brief TODO
@@ -140,7 +132,7 @@ struct TAIAdiveKabekuiA : public TAIAtimerReaction {
  */
 struct TAIAattackWorkObjectKabekuiA : public TAIAattackWorkObject {
 	inline TAIAattackWorkObjectKabekuiA(int nextState, int motionID, int p3) // TODO: this is a guess
-		: TAIAattackWorkObject(nextState, motionID, p3)
+	    : TAIAattackWorkObject(nextState, motionID, p3)
 	{
 	}
 

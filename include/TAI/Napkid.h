@@ -11,78 +11,74 @@
 /**
  * @brief TODO: name members
  */
-enum TaiNapkidIntParms {
-	NAPKIDPI_Unk0 = TPI_COUNT,
-	NAPKIDPI_COUNT,
-};
+DEFINE_ENUM_TYPE(TaiNapkidIntParms, StruggleLoopCount = TPI_COUNT, COUNT, );
 
 /**
  * @brief TODO: name members
  */
-enum TaiNapkidFloatParms {
-	NAPKIDPF_Unk0 = TPF_COUNT,
-	NAPKIDPF_CarryFlightHeight,
-	NAPKIDPF_Unk2,
-	NAPKIDPF_Unk3,
-	NAPKIDPF_Unk4,
-	NAPKIDPF_Unk5,
-	NAPKIDPF_Unk6,
-	NAPKIDPF_Unk7,
-	NAPKIDPF_Unk8,
-	NAPKIDPF_Unk9,
-	NAPKIDPF_Unk10,
-	NAPKIDPF_Unk11,
-	NAPKIDPF_Unk12,
-	NAPKIDPF_COUNT,
-};
+DEFINE_ENUM_TYPE(TaiNapkidFloatParms,
+                 CarryingVelocity = TPF_COUNT, //
+                 CarryFlightHeight,            //
+                 TakingOffFlightHeight,        //
+                 WanderingHoverPeriod,         //
+                 WanderingHoverProbability,    //
+                 HoveringWanderPeriod,         //
+                 HoveringWanderProbability,    //
+                 HoveringWashPeriod,           //
+                 HoveringWashProbability,      //
+                 WashingWanderPeriod,          //
+                 WashingWanderProbability,     //
+                 ThrowPeriod,                  //
+                 ThrowVelocity,                //
+                 COUNT,                        //
+);
 
 /**
  * @brief TODO: name members
  */
-enum TaiNapkidStateID {
-	NAPKIDSTATE_Dying          = 0,
-	NAPKIDSTATE_Wandering      = 1,
-	NAPKIDSTATE_IdleFlying     = 2,
-	NAPKIDSTATE_IdleChatting   = 3,
-	NAPKIDSTATE_Chasing        = 4,
-	NAPKIDSTATE_Outrunning     = 5,
-	NAPKIDSTATE_Evading        = 6,
-	NAPKIDSTATE_AttackingSetup = 7,
-	NAPKIDSTATE_Attacking      = 8,
-	NAPKIDSTATE_Catching       = 9,
-	NAPKIDSTATE_AttackDeciding = 10,
-	NAPKIDSTATE_CarryingSetup  = 11,
-	NAPKIDSTATE_AttackMissing  = 12,
-	NAPKIDSTATE_Carrying       = 13,
-	NAPKIDSTATE_Throwing       = 14,
-	NAPKIDSTATE_ShockFalling   = 15,
-	NAPKIDSTATE_LoopFalling    = 16,
-	NAPKIDSTATE_Landing        = 17,
-	NAPKIDSTATE_Flailing       = 18,
-	NAPKIDSTATE_GettingUp      = 19,
-	NAPKIDSTATE_HeightDeciding = 20,
-	NAPKIDSTATE_Flicking       = 21,
-	NAPKIDSTATE_Rising         = 22,
-	NAPKIDSTATE_COUNT, // 23
-};
+DEFINE_ENUM_TYPE(TaiNapkidStateID,
+                 Dying          = 0,  //
+                 Wandering      = 1,  //
+                 IdleFlying     = 2,  //
+                 IdleChatting   = 3,  //
+                 Chasing        = 4,  //
+                 Outrunning     = 5,  //
+                 Evading        = 6,  //
+                 AttackingSetup = 7,  //
+                 Attacking      = 8,  //
+                 Catching       = 9,  //
+                 AttackDeciding = 10, //
+                 CarryingSetup  = 11, //
+                 AttackMissing  = 12, //
+                 Carrying       = 13, //
+                 Throwing       = 14, //
+                 ShockFalling   = 15, //
+                 LoopFalling    = 16, //
+                 Landing        = 17, //
+                 Struggling     = 18, //
+                 GettingUp      = 19, //
+                 HeightDeciding = 20, //
+                 Flicking       = 21, //
+                 Rising         = 22, //
+                 COUNT,               // 23
+);
 
 /**
  * @brief Napkid animation indices.
  */
-enum TaiNapkidMotionID {
-	NAPKIDANIM_Dead       = 0,  // 'dead'
-	NAPKIDANIM_Idle       = 2,  // 'wait1'
-	NAPKIDANIM_Throw      = 4,  // 'waitact1'
-	NAPKIDANIM_CarryFly   = 5,  // 'waitact2'
-	NAPKIDANIM_Fly        = 6,  // 'move1'
-	NAPKIDANIM_Attack     = 8,  // 'attack'
-	NAPKIDANIM_Flick      = 9,  // 'flick'
-	NAPKIDANIM_Fall       = 10, // 'type1'
-	NAPKIDANIM_Flail      = 11, // 'type2'
-	NAPKIDANIM_Ascend     = 12, // 'type3'
-	NAPKIDANIM_AttackMiss = 13, // 'type4'
-	NAPKIDANIM_COUNT,           // 14
-};
+DEFINE_ENUM_TYPE(TaiNapkidMotionID,
+                 Dead       = 0,  // 'dead'
+                 Idle       = 2,  // 'wait1'
+                 Throw      = 4,  // 'waitact1'
+                 CarryFly   = 5,  // 'waitact2'
+                 Fly        = 6,  // 'move1'
+                 Attack     = 8,  // 'attack'
+                 Flick      = 9,  // 'flick'
+                 Fall       = 10, // 'type1'
+                 Flail      = 11, // 'type2'
+                 Ascend     = 12, // 'type3'
+                 AttackMiss = 13, // 'type4'
+);
 
 /*
  * @brief TODO
