@@ -213,7 +213,10 @@ struct TAIAinvincibleOff : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&); // _08
+	virtual void start(Teki& teki) // _08
+	{
+		teki.clearTekiOption(Teki::TEKI_OPTION_INVINCIBLE);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -229,7 +232,10 @@ struct TAIAinvincibleOn : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&); // _08
+	virtual void start(Teki& teki) // _08
+	{
+		teki.setTekiOption(Teki::TEKI_OPTION_INVINCIBLE);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -245,7 +251,11 @@ struct TAIAshadowOff : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&); // _08
+	virtual void start(Teki& teki) // _08
+	{
+		teki.clearTekiOption(Teki::TEKI_OPTION_LIFE_GAUGE_VISIBLE);
+		teki.clearTekiOption(Teki::TEKI_OPTION_SHADOW_VISIBLE);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -261,7 +271,11 @@ struct TAIAshadowOn : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&); // _08
+	virtual void start(Teki& teki) // _08
+	{
+		teki.setTekiOption(Teki::TEKI_OPTION_LIFE_GAUGE_VISIBLE);
+		teki.setTekiOption(Teki::TEKI_OPTION_SHADOW_VISIBLE);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction

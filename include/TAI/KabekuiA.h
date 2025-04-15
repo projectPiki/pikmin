@@ -10,6 +10,8 @@
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
 #include "PaniAnimator.h"
+#include "SoundID.h"
+#include "PlayerState.h"
 
 /////////// Female Sheargrub AI Actions ///////////
 
@@ -104,7 +106,10 @@ struct TAIAsleepKabekuiA : public TAIAtimerReaction {
 	{
 	}
 
-	virtual f32 getFrameMax(Teki&); // _1C
+	virtual f32 getFrameMax(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIkabekuiAFloatParms::SleepTime);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAtimerReaction?
@@ -120,7 +125,10 @@ struct TAIAdiveKabekuiA : public TAIAtimerReaction {
 	{
 	}
 
-	virtual f32 getFrameMax(Teki&); // _1C
+	virtual f32 getFrameMax(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIkabekuiAFloatParms::BurrowingTime);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAtimerReaction?
@@ -136,11 +144,54 @@ struct TAIAattackWorkObjectKabekuiA : public TAIAattackWorkObject {
 	{
 	}
 
-	virtual void start(Teki&);               // _08
-	virtual bool act(Teki&);                 // _10
-	virtual f32 getDamage(Teki&);            // _1C
-	virtual f32 getAttackPointRadius(Teki&); // _20
-	virtual void attackEffect(Teki&);        // _24
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAattackWorkObject::start(teki);
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		TAIAattackWorkObject::act(teki);
+	}
+
+	virtual f32 getDamage(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIkabekuiAFloatParms::BridgeDamage);
+	}
+
+	virtual f32 getAttackPointRadius(Teki& teki) // _20
+	{
+		return teki.getParameterF(TAIkabekuiAFloatParms::BridgeAttackRange);
+	}
+
+	virtual void attackEffect(Teki& teki) // _24
+	{
+		CollPart* mouthSlot = teki.mCollInfo->getSphere('slot');
+		if (mouthSlot == nullptr) {
+			return;
+		}
+
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			zen::particleGenerator* generator = effectMgr->create(
+			    EffectMgr::EFF_Kabekui_EatBridgeA, mouthSlot->getChildAt(mouthSlot->getChildCount() - 1)->mCentre, nullptr, nullptr);
+			if (generator != nullptr) {
+				generator->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
+			}
+
+			teki.playEventSound(&teki, SE_WALLEAT_EAT);
+			if (teki.aiCullable()) {
+				playerState->mResultFlags.setOn(RESFLAG_Kabekui);
+			}
+		}
+
+		if (teki.mCurrentAnimEvent != KEY_Action1 && teki.mCurrentAnimEvent == KEY_Action2) {
+			zen::particleGenerator* generator = effectMgr->create(
+			    EffectMgr::EFF_Kabekui_EatBridgeB, mouthSlot->getChildAt(mouthSlot->getChildCount() - 1)->mCentre, nullptr, nullptr);
+			if (generator != nullptr) {
+				generator->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
+			}
+		}
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAattackWorkObject?

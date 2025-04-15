@@ -798,7 +798,7 @@ config.libs = [
             Object(Equivalent, "plugPikiYamashita/TAIeffectAttack.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIbeatle.cpp"),
             Object(NonMatching, "plugPikiYamashita/menuPanelMgr.cpp"),
-            Object(NonMatching, "plugPikiYamashita/TAIkabekuiA.cpp"),
+            Object(Matching, "plugPikiYamashita/TAIkabekuiA.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIkabekuiB.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIkabekuiC.cpp"),
             Object(Matching, "plugPikiYamashita/TAItamago.cpp"),
