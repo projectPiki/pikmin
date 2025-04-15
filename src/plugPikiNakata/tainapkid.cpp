@@ -123,7 +123,7 @@ TaiNapkidParameters::TaiNapkidParameters()
 	multiP->setI(NAPKIDPI_Unk0, 1);
 
 	multiP->setF(NAPKIDPF_Unk0, 90.0f);
-	multiP->setF(NAPKIDPF_Unk1, 60.0f);
+	multiP->setF(NAPKIDPF_CarryFlightHeight, 60.0f);
 	multiP->setF(NAPKIDPF_Unk2, 60.0f);
 	multiP->setF(NAPKIDPF_Unk3, 3.0f);
 	multiP->setF(NAPKIDPF_Unk4, 0.5f);
@@ -143,7 +143,7 @@ TaiNapkidParameters::TaiNapkidParameters()
  * Size:	0022C4
  */
 TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
-    : TaiStrategy(NAPKIDSTATE_COUNT, NAPKIDSTATE_Unk1)
+    : TaiStrategy(NAPKIDSTATE_COUNT, NAPKIDSTATE_Wandering)
 {
 	TaiStopMoveAction* stopMove                = new TaiStopMoveAction;
 	TaiStartFlyingAction* startFlying          = new TaiStartFlyingAction;
@@ -154,16 +154,17 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	TaiMakingNextVelocityAction* makingNextVel = new TaiMakingNextVelocityAction;
 	TaiMakeVelocityDirectionAction* makeVelDir = new TaiMakeVelocityDirectionAction;
 	new TaiMakeAccelerationDirectionAction; // never actually used
-	TaiHasStickersOnBodyAction* stickersOnBody1 = new TaiHasStickersOnBodyAction(NAPKIDSTATE_Unk15);
-	TaiDeadAction* dead1                        = new TaiDeadAction(NAPKIDSTATE_Unk15);
-	TaiDeadAction* dead2                        = new TaiDeadAction(NAPKIDSTATE_Dying);
-	new TaiFlickAction(NAPKIDSTATE_Unk21); // never actually used
-	TaiNapkidTargetPikiAction* targetPiki1 = new TaiNapkidTargetPikiAction(NAPKIDSTATE_Unk4);
-	TaiSimultaneousDamageAction* simDamage = new TaiSimultaneousDamageAction(TAI_NO_TRANSIT);
-	TaiNapkidFlyingAction* napkidFlying1   = new TaiNapkidFlyingAction(params->getF(TPF_FlightHeight));
-	TaiNapkidFlyingAction* napkidFlying2   = new TaiNapkidFlyingAction(params->getF(NAPKIDPF_Unk1));
-	TaiDyingAction* dying                  = new TaiDyingAction(NAPKIDANIM_Unk0);
-	TaiStartDyingAction* startDying        = new TaiStartDyingAction;
+	TaiHasStickersOnBodyAction* hasStickersToFall = new TaiHasStickersOnBodyAction(NAPKIDSTATE_ShockFalling);
+	TaiDeadAction* midairDying                    = new TaiDeadAction(NAPKIDSTATE_ShockFalling);
+	TaiDeadAction* groundedDying                  = new TaiDeadAction(NAPKIDSTATE_Dying);
+	new TaiFlickAction(NAPKIDSTATE_Flicking); // never actually used
+	TaiNapkidTargetPikiAction* targetPikiChase = new TaiNapkidTargetPikiAction(NAPKIDSTATE_Chasing);
+	TaiSimultaneousDamageAction* simDamage     = new TaiSimultaneousDamageAction(TAI_NO_TRANSIT);
+	TaiNapkidFlyingAction* napkidFlying1       = new TaiNapkidFlyingAction(params->getF(TPF_FlightHeight));
+	TaiNapkidFlyingAction* napkidCarryFlying   = new TaiNapkidFlyingAction(params->getF(NAPKIDPF_CarryFlightHeight));
+
+	TaiDyingAction* dying           = new TaiDyingAction(NAPKIDANIM_Dead);
+	TaiStartDyingAction* startDying = new TaiStartDyingAction;
 
 	// STATE 0 - Dying
 	TaiState* state = new TaiState(3);
@@ -173,359 +174,360 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	state->setAction(j++, dying);
 	setState(NAPKIDSTATE_Dying, state);
 
-	TaiNapkidWanderingRouteAction* wanderRoute1 = new TaiNapkidWanderingRouteAction(NAPKIDANIM_Unk6, params->getF(TPF_WalkVelocity));
-	TaiStartingTimerAction* chanceTimer1
-	    = new TaiStartingTimerAction(NAPKIDSTATE_Unk2, 0, params->getF(NAPKIDPF_Unk3), 0.5f, params->getF(NAPKIDPF_Unk4));
+	TaiNapkidWanderingRouteAction* flyWanderRoute = new TaiNapkidWanderingRouteAction(NAPKIDANIM_Fly, params->getF(TPF_WalkVelocity));
+	TaiStartingTimerAction* idleChanceTimer
+	    = new TaiStartingTimerAction(NAPKIDSTATE_IdleFlying, 0, params->getF(NAPKIDPF_Unk3), 0.5f, params->getF(NAPKIDPF_Unk4));
 	TaiHeadOnCollisionAvoidanceAction* headOnAvoidance = new TaiHeadOnCollisionAvoidanceAction(50.0f);
 
-	// STATE 1 - Wandering?
+	// STATE 1 - Wandering routes
 	state = new TaiState(9);
 	j     = 0;
 	state->setAction(j++, startFlying);
 	state->setAction(j++, simDamage);
-	state->setAction(j++, stickersOnBody1);
-	state->setAction(j++, dead1);
-	state->setAction(j++, targetPiki1);
+	state->setAction(j++, hasStickersToFall);
+	state->setAction(j++, midairDying);
+	state->setAction(j++, targetPikiChase);
 	state->setAction(j++, napkidFlying1);
-	state->setAction(j++, chanceTimer1);
-	state->setAction(j++, wanderRoute1);
+	state->setAction(j++, idleChanceTimer);
+	state->setAction(j++, flyWanderRoute);
 	state->setAction(j++, headOnAvoidance);
-	setState(NAPKIDSTATE_Unk1, state);
+	setState(NAPKIDSTATE_Wandering, state);
 
-	TaiContinuousMotionAction* continousMotion1 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk6);
-	TaiStartingTimerAction* chanceTimer2
-	    = new TaiStartingTimerAction(NAPKIDSTATE_Unk1, 0, params->getF(NAPKIDPF_Unk5), 0.5f, params->getF(NAPKIDPF_Unk6));
-	TaiStartingTimerAction* chanceTimer3
-	    = new TaiStartingTimerAction(NAPKIDSTATE_Unk3, 1, params->getF(NAPKIDPF_Unk7), 0.5f, params->getF(NAPKIDPF_Unk8));
+	TaiContinuousMotionAction* flyMotion1 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Fly);
+	TaiStartingTimerAction* wanderChanceTimer1
+	    = new TaiStartingTimerAction(NAPKIDSTATE_Wandering, 0, params->getF(NAPKIDPF_Unk5), 0.5f, params->getF(NAPKIDPF_Unk6));
+	TaiStartingTimerAction* idleChatChanceTimer
+	    = new TaiStartingTimerAction(NAPKIDSTATE_IdleChatting, 1, params->getF(NAPKIDPF_Unk7), 0.5f, params->getF(NAPKIDPF_Unk8));
 
-	// STATE 2 - Idle?
+	// STATE 2 - IdleFly (flying in place)
 	state = new TaiState(9);
 	j     = 0;
 	state->setAction(j++, stopMove);
 	state->setAction(j++, simDamage);
-	state->setAction(j++, stickersOnBody1);
-	state->setAction(j++, dead1);
-	state->setAction(j++, targetPiki1);
+	state->setAction(j++, hasStickersToFall);
+	state->setAction(j++, midairDying);
+	state->setAction(j++, targetPikiChase);
 	state->setAction(j++, napkidFlying1);
-	state->setAction(j++, chanceTimer2);
-	state->setAction(j++, chanceTimer3);
-	state->setAction(j++, continousMotion1);
-	setState(NAPKIDSTATE_Unk2, state);
+	state->setAction(j++, wanderChanceTimer1);
+	state->setAction(j++, idleChatChanceTimer);
+	state->setAction(j++, flyMotion1);
+	setState(NAPKIDSTATE_IdleFlying, state);
 
-	TaiStartingTimerAction* chanceTimer4
-	    = new TaiStartingTimerAction(NAPKIDSTATE_Unk1, 0, params->getF(NAPKIDPF_Unk9), 0.5f, params->getF(NAPKIDPF_Unk10));
-	TaiContinuousMotionAction* continousMotion2 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk2);
+	TaiStartingTimerAction* wanderChanceTimer2
+	    = new TaiStartingTimerAction(NAPKIDSTATE_Wandering, 0, params->getF(NAPKIDPF_Unk9), 0.5f, params->getF(NAPKIDPF_Unk10));
+	TaiContinuousMotionAction* idleMotion = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Idle);
 
-	// STATE 3 - Go home?
+	// STATE 3 - IdleChatting (hands rubbing)
 	state = new TaiState(7);
 	j     = 0;
 	state->setAction(j++, simDamage);
-	state->setAction(j++, stickersOnBody1);
-	state->setAction(j++, dead1);
-	state->setAction(j++, targetPiki1);
+	state->setAction(j++, hasStickersToFall);
+	state->setAction(j++, midairDying);
+	state->setAction(j++, targetPikiChase);
 	state->setAction(j++, napkidFlying1);
-	state->setAction(j++, chanceTimer4);
-	state->setAction(j++, continousMotion2);
-	setState(NAPKIDSTATE_Unk3, state);
+	state->setAction(j++, wanderChanceTimer2);
+	state->setAction(j++, idleMotion);
+	setState(NAPKIDSTATE_IdleChatting, state);
 
-	TaiNapkidTargetPikiAction* targetPiki2    = new TaiNapkidTargetPikiAction(TAI_NO_TRANSIT);
-	TaiNapkidApproachPikiAction* approachPiki = new TaiNapkidApproachPikiAction(NAPKIDSTATE_Unk7);
-	TaiNapkidPikiLostAction* lostPiki         = new TaiNapkidPikiLostAction(NAPKIDSTATE_Unk1);
-	TaiNapkidShortRangeAction* shortRange     = new TaiNapkidShortRangeAction(NAPKIDSTATE_Unk5);
-	TaiTracingAction* tracing                 = new TaiTracingAction(NAPKIDANIM_Unk6, params->getF(TPF_RunVelocity));
+	TaiNapkidTargetPikiAction* targetPikiLoop = new TaiNapkidTargetPikiAction(TAI_NO_TRANSIT);
+	TaiNapkidApproachPikiAction* approachPiki = new TaiNapkidApproachPikiAction(NAPKIDSTATE_AttackingSetup);
+	TaiNapkidPikiLostAction* lostPiki         = new TaiNapkidPikiLostAction(NAPKIDSTATE_Wandering);
+	TaiNapkidShortRangeAction* shortRange     = new TaiNapkidShortRangeAction(NAPKIDSTATE_Outrunning);
+	TaiTracingAction* tracing                 = new TaiTracingAction(NAPKIDANIM_Fly, params->getF(TPF_RunVelocity));
 
-	// STATE 4 - Chasing?
+	// STATE 4 - Chasing target
 	state = new TaiState(9);
 	j     = 0;
 	state->setAction(j++, simDamage);
-	state->setAction(j++, stickersOnBody1);
-	state->setAction(j++, dead1);
+	state->setAction(j++, hasStickersToFall);
+	state->setAction(j++, midairDying);
 	state->setAction(j++, approachPiki);
-	state->setAction(j++, targetPiki2);
+	state->setAction(j++, targetPikiLoop);
 	state->setAction(j++, shortRange);
 	state->setAction(j++, napkidFlying1);
 	state->setAction(j++, lostPiki);
 	state->setAction(j++, tracing);
-	setState(NAPKIDSTATE_Unk4, state);
+	setState(NAPKIDSTATE_Chasing, state);
 
-	TaiNapkidStraightFlyingAction* straightFlying = new TaiNapkidStraightFlyingAction(NAPKIDSTATE_Unk6, 160.0f);
-	TaiTimerAction* timer                         = new TaiTimerAction(NAPKIDSTATE_Unk6, 0, 5.0f, 0.0f);
-	TaiContinuousMotionAction* continousMotion3   = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk6);
+	TaiNapkidStraightFlyingAction* straightFlying = new TaiNapkidStraightFlyingAction(NAPKIDSTATE_Evading, 160.0f);
+	TaiTimerAction* timeUntilEvade                = new TaiTimerAction(NAPKIDSTATE_Evading, 0, 5.0f, 0.0f);
+	TaiContinuousMotionAction* flyMotion2         = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Fly);
 
-	// STATE 5 - Outrun target?
+	// STATE 5 - Outrunning target
 	state = new TaiState(8);
 	j     = 0;
 	state->setAction(j++, simDamage);
-	state->setAction(j++, stickersOnBody1);
-	state->setAction(j++, dead1);
+	state->setAction(j++, hasStickersToFall);
+	state->setAction(j++, midairDying);
 	state->setAction(j++, approachPiki);
 	state->setAction(j++, napkidFlying1);
 	state->setAction(j++, straightFlying);
-	state->setAction(j++, timer);
-	state->setAction(j++, continousMotion3);
-	setState(NAPKIDSTATE_Unk5, state);
+	state->setAction(j++, timeUntilEvade);
+	state->setAction(j++, flyMotion2);
+	setState(NAPKIDSTATE_Outrunning, state);
 
-	TaiNapkidCirclingAction* circling       = new TaiNapkidCirclingAction(NAPKIDSTATE_Unk1);
+	TaiNapkidCirclingAction* circling       = new TaiNapkidCirclingAction(NAPKIDSTATE_Wandering);
 	TaiMakingNextDriveAction* makeNextDrive = new TaiMakingNextDriveAction(150.0f);
 
-	// STATE 6 - Circle target?
+	// STATE 6 - Evading / Circling (turning around after outrunning)
 	state = new TaiState(6);
 	j     = 0;
 	state->setAction(j++, simDamage);
-	state->setAction(j++, stickersOnBody1);
-	state->setAction(j++, dead1);
+	state->setAction(j++, hasStickersToFall);
+	state->setAction(j++, midairDying);
 	state->setAction(j++, circleMove);
 	state->setAction(j++, makeNextDrive);
 	state->setAction(j++, circling);
-	setState(NAPKIDSTATE_Unk6, state);
+	setState(NAPKIDSTATE_Evading, state);
 
-	TaiFinishMotionAction* finishMotion1 = new TaiFinishMotionAction(NAPKIDSTATE_Unk8);
+	TaiFinishMotionAction* finishMotionToAttack = new TaiFinishMotionAction(NAPKIDSTATE_Attacking);
 
-	// STATE 7 - (Unknown)
+	// STATE 7 - AttackingSetup (finishing current animation before attacking)
 	state = new TaiState(5);
 	j     = 0;
 	state->setAction(j++, simDamage);
-	state->setAction(j++, stickersOnBody1);
-	state->setAction(j++, dead1);
+	state->setAction(j++, hasStickersToFall);
+	state->setAction(j++, midairDying);
 	state->setAction(j++, napkidFlying1);
-	state->setAction(j++, finishMotion1);
-	setState(NAPKIDSTATE_Unk7, state);
+	state->setAction(j++, finishMotionToAttack);
+	setState(NAPKIDSTATE_AttackingSetup, state);
 
 	TaiNapkidCatchTracingAction* catchTracing       = new TaiNapkidCatchTracingAction;
-	TaiNapkidCatchingAction* catching               = new TaiNapkidCatchingAction(NAPKIDSTATE_Unk10);
-	TaiMotionAction* motion1                        = new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk8);
+	TaiNapkidCatchingAction* catching               = new TaiNapkidCatchingAction(NAPKIDSTATE_AttackDeciding);
+	TaiMotionAction* attackMotion                   = new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Attack);
 	TaiNapkidCatchDescendingAction* catchDescending = new TaiNapkidCatchDescendingAction;
-	TaiClampMinHeightAction* clampMinHeight1        = new TaiClampMinHeightAction(NAPKIDSTATE_Unk9, 10.0f);
+	TaiClampMinHeightAction* catchOnMinHeight       = new TaiClampMinHeightAction(NAPKIDSTATE_Catching, 10.0f);
 
-	// STATE 8 - (Unknown)
+	// STATE 8 - Attacking
 	state = new TaiState(9);
 	j     = 0;
 	state->setAction(j++, simDamage);
 	state->setAction(j++, catchDescending);
 	state->setAction(j++, catchTracing);
 	state->setAction(j++, acceleration);
-	state->setAction(j++, clampMinHeight1);
+	state->setAction(j++, catchOnMinHeight);
 	state->setAction(j++, makingNextVel);
-	state->setAction(j++, motion1);
+	state->setAction(j++, attackMotion);
 	state->setAction(j++, catching);
 	state->setAction(j++, makeVelDir);
-	setState(NAPKIDSTATE_Unk8, state);
+	setState(NAPKIDSTATE_Attacking, state);
 
-	TaiNapkidCatchFlyingAction* catchFlying  = new TaiNapkidCatchFlyingAction;
-	TaiClampMinHeightAction* clampMinHeight2 = new TaiClampMinHeightAction(TAI_NO_TRANSIT, 10.0f);
+	TaiNapkidCatchFlyingAction* catchFlying = new TaiNapkidCatchFlyingAction;
+	TaiClampMinHeightAction* catchMinHeight = new TaiClampMinHeightAction(TAI_NO_TRANSIT, 10.0f);
 
-	// State 9 - (Unknown)
+	// State 9 - Catching pikmin
 	state = new TaiState(8);
 	j     = 0;
 	state->setAction(j++, simDamage);
 	state->setAction(j++, catchFlying);
 	state->setAction(j++, catchTracing);
 	state->setAction(j++, acceleration);
-	state->setAction(j++, clampMinHeight2);
+	state->setAction(j++, catchMinHeight);
 	state->setAction(j++, makingNextVel);
 	state->setAction(j++, catching);
 	state->setAction(j++, makeVelDir);
-	setState(NAPKIDSTATE_Unk9, state);
+	setState(NAPKIDSTATE_Catching, state);
 
-	TaiHasStickersInMouthAction* stickersInMouth = new TaiHasStickersInMouthAction(NAPKIDSTATE_Unk11);
-	TaiOnceAction* once1                         = new TaiOnceAction(NAPKIDSTATE_Unk12);
+	TaiHasStickersInMouthAction* stickersInMouth = new TaiHasStickersInMouthAction(NAPKIDSTATE_CarryingSetup);
+	TaiOnceAction* onceThenMiss                  = new TaiOnceAction(NAPKIDSTATE_AttackMissing);
 
-	// STATE 10 - (Unknown)
+	// STATE 10 - AttackDeciding (decides which state to go to next, after attacking)
 	state = new TaiState(5);
 	j     = 0;
 	state->setAction(j++, acceleration);
-	state->setAction(j++, clampMinHeight2);
+	state->setAction(j++, catchMinHeight);
 	state->setAction(j++, makingNextVel);
 	state->setAction(j++, stickersInMouth);
-	state->setAction(j++, once1);
-	setState(NAPKIDSTATE_Unk10, state);
+	state->setAction(j++, onceThenMiss);
+	setState(NAPKIDSTATE_AttackDeciding, state);
 
-	TaiNapkidCatchAscendingAction* ascending = new TaiNapkidCatchAscendingAction;
-	TaiClampMaxHeightAction* clampMaxHeight1 = new TaiClampMaxHeightAction(NAPKIDSTATE_Unk1, params->getF(TPF_FlightHeight));
+	TaiNapkidCatchAscendingAction* ascending    = new TaiNapkidCatchAscendingAction;
+	TaiClampMaxHeightAction* wanderOnMaxHeight1 = new TaiClampMaxHeightAction(NAPKIDSTATE_Wandering, params->getF(TPF_FlightHeight));
+	TaiSerialAction* missingSerial              = new TaiSerialAction(NAPKIDSTATE_GettingUp, 2);
+	missingSerial->setAction(0, new TaiSwitchMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_AttackMiss));
+	missingSerial->setAction(1, new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Fly));
 
-	TaiSerialAction* serial1 = new TaiSerialAction(NAPKIDSTATE_Unk19, 2);
-	serial1->setAction(0, new TaiSwitchMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk13));
-	serial1->setAction(1, new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk6));
-
-	// STATE 12 - (Unknown)
+	// STATE 12 - AttackMissing
 	state = new TaiState(7);
 	j     = 0;
 	state->setAction(j++, simDamage);
 	state->setAction(j++, acceleration);
-	state->setAction(j++, clampMinHeight2);
+	state->setAction(j++, catchMinHeight);
 	state->setAction(j++, makingNextVel);
-	state->setAction(j++, serial1);
+	state->setAction(j++, missingSerial);
 	state->setAction(j++, ascending);
-	state->setAction(j++, clampMaxHeight1);
-	setState(NAPKIDSTATE_Unk12, state);
+	state->setAction(j++, wanderOnMaxHeight1);
+	setState(NAPKIDSTATE_AttackMissing, state);
 
 	TaiNapkidCatchAscendingAction* catchAscending = new TaiNapkidCatchAscendingAction;
-	TaiClampMaxHeightAction* clampMaxHeight2      = new TaiClampMaxHeightAction(NAPKIDSTATE_Unk13, params->getF(NAPKIDPF_Unk1));
-	TaiContinuousMotionAction* continousMotion4   = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk5);
+	TaiClampMaxHeightAction* carryingOnMaxHeight
+	    = new TaiClampMaxHeightAction(NAPKIDSTATE_Carrying, params->getF(NAPKIDPF_CarryFlightHeight));
+	TaiContinuousMotionAction* carryFlyMotion = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_CarryFly);
 
-	// STATE 11 - (Unknown)
+	// STATE 11 - CarryingSetup (setting up for Carrying after a max height is met)
 	state = new TaiState(7);
 	j     = 0;
 	state->setAction(j++, simDamage);
-	state->setAction(j++, continousMotion4);
+	state->setAction(j++, carryFlyMotion);
 	state->setAction(j++, catchAscending);
 	state->setAction(j++, acceleration);
-	state->setAction(j++, clampMinHeight2);
-	state->setAction(j++, clampMaxHeight2);
+	state->setAction(j++, catchMinHeight);
+	state->setAction(j++, carryingOnMaxHeight);
 	state->setAction(j++, makingNextVel);
-	setState(NAPKIDSTATE_Unk11, state);
+	setState(NAPKIDSTATE_CarryingSetup, state);
 
-	TaiNapkidWanderingRouteAction* wanderRoute2 = new TaiNapkidWanderingRouteAction(NAPKIDANIM_Unk5, params->getF(NAPKIDPF_Unk0));
-	TaiTimerAction* timer2                      = new TaiTimerAction(NAPKIDSTATE_Unk14, 0, params->getF(NAPKIDPF_Unk11), 0.5f);
+	TaiNapkidWanderingRouteAction* carryWanderRoute = new TaiNapkidWanderingRouteAction(NAPKIDANIM_CarryFly, params->getF(NAPKIDPF_Unk0));
+	TaiTimerAction* throwTimer                      = new TaiTimerAction(NAPKIDSTATE_Throwing, 0, params->getF(NAPKIDPF_Unk11), 0.5f);
 
-	// STATE 13 - (Unknown)
+	// STATE 13 - Carrying
 	state = new TaiState(6);
 	j     = 0;
 	state->setAction(j++, simDamage);
-	state->setAction(j++, stickersOnBody1);
-	state->setAction(j++, dead1);
-	state->setAction(j++, timer2);
-	state->setAction(j++, wanderRoute2);
-	state->setAction(j++, napkidFlying2);
-	setState(NAPKIDSTATE_Unk13, state);
+	state->setAction(j++, hasStickersToFall);
+	state->setAction(j++, midairDying);
+	state->setAction(j++, throwTimer);
+	state->setAction(j++, carryWanderRoute);
+	state->setAction(j++, napkidCarryFlying);
+	setState(NAPKIDSTATE_Carrying, state);
 
-	TaiContinuousMotionAction* continousMotion5 = new TaiContinuousMotionAction(NAPKIDSTATE_Unk13, NAPKIDANIM_Unk4);
-	TaiNapkidThrowingPikiAction* throwPiki      = new TaiNapkidThrowingPikiAction;
-	TaiNotAction* notStickersInMouth            = new TaiNotAction(NAPKIDSTATE_Unk1, new TaiHasStickersInMouthAction(TAI_NO_TRANSIT));
+	TaiContinuousMotionAction* throwMotionThenCarrying = new TaiContinuousMotionAction(NAPKIDSTATE_Carrying, NAPKIDANIM_Throw);
+	TaiNapkidThrowingPikiAction* throwPiki             = new TaiNapkidThrowingPikiAction;
+	TaiNotAction* noMouthStickersThenWander = new TaiNotAction(NAPKIDSTATE_Wandering, new TaiHasStickersInMouthAction(TAI_NO_TRANSIT));
 
-	// STATE 14 - (Unknown)
+	// STATE 14 - Throwing pikmin
 	state = new TaiState(5);
 	j     = 0;
-	state->setAction(j++, stickersOnBody1);
-	state->setAction(j++, dead1);
-	state->setAction(j++, continousMotion5);
+	state->setAction(j++, hasStickersToFall);
+	state->setAction(j++, midairDying);
+	state->setAction(j++, throwMotionThenCarrying);
 	state->setAction(j++, throwPiki);
-	state->setAction(j++, notStickersInMouth);
-	setState(NAPKIDSTATE_Unk14, state);
+	state->setAction(j++, noMouthStickersThenWander);
+	setState(NAPKIDSTATE_Throwing, state);
 
-	TaiMotionAction* motion3                  = new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk10);
-	TaiNapkidFallingAction* napkidFalling     = new TaiNapkidFallingAction;
-	TaiNapkidShockFallingAction* shockFalling = new TaiNapkidShockFallingAction;
-	TaiRotatingAction* rotating1              = new TaiRotatingAction(NMathF::pi * 8.0f);
-	TaiClampMinHeightAction* clampMinHeight3  = new TaiClampMinHeightAction(NAPKIDSTATE_Unk17, 10.0f);
+	TaiMotionAction* fallMotion                 = new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Fall);
+	TaiNapkidFallingAction* napkidFalling       = new TaiNapkidFallingAction;
+	TaiNapkidShockFallingAction* shockFalling   = new TaiNapkidShockFallingAction;
+	TaiRotatingAction* fallRotation             = new TaiRotatingAction(NMathF::pi * 8.0f);
+	TaiClampMinHeightAction* minHeightToLanding = new TaiClampMinHeightAction(NAPKIDSTATE_Landing, 10.0f);
 
-	// STATE 15 - Falling?
+	// STATE 15 - ShockFalling (falling when a pikmin is first thrown on it)
 	state = new TaiState(8);
 	j     = 0;
 	state->setAction(j++, simDamage);
 	state->setAction(j++, shockFalling);
-	state->setAction(j++, motion3);
+	state->setAction(j++, fallMotion);
 	state->setAction(j++, napkidFalling);
-	state->setAction(j++, rotating1);
+	state->setAction(j++, fallRotation);
 	state->setAction(j++, parabola);
-	state->setAction(j++, clampMinHeight3);
+	state->setAction(j++, minHeightToLanding);
 	state->setAction(j++, makingNextVel);
-	setState(NAPKIDSTATE_Unk15, state);
+	setState(NAPKIDSTATE_ShockFalling, state);
 
-	TaiRotatingAction* rotating2 = new TaiRotatingAction(NMathF::pi * 4.0f);
+	TaiRotatingAction* slowFallRotation = new TaiRotatingAction(NMathF::pi * 4.0f);
 
-	// STATE 16 - ...Also falling?
+	// STATE 16 - LoopFalling (falling when there are already pikmin on its body)
 	state = new TaiState(8);
 	j     = 0;
 	state->setAction(j++, simDamage);
-	state->setAction(j++, motion3);
+	state->setAction(j++, fallMotion);
 	state->setAction(j++, napkidFalling);
-	state->setAction(j++, rotating2);
+	state->setAction(j++, slowFallRotation);
 	state->setAction(j++, parabola);
-	state->setAction(j++, clampMinHeight3);
+	state->setAction(j++, minHeightToLanding);
 	state->setAction(j++, makingNextVel);
 	state->setAction(j++, makingNextVel);
-	setState(NAPKIDSTATE_Unk16, state);
+	setState(NAPKIDSTATE_LoopFalling, state);
 
-	TaiFinishMotionAction* finishMotion2                  = new TaiFinishMotionAction(NAPKIDSTATE_Unk18);
+	TaiFinishMotionAction* finishMotionToFlailing         = new TaiFinishMotionAction(NAPKIDSTATE_Flailing);
 	TaiNapkidFallingWaterEffectAction* fallingWaterEffect = new TaiNapkidFallingWaterEffectAction;
 
-	// STATE 18 - Falling in water?
+	// STATE 18 - Landing (hitting the ground after falling)
 	state = new TaiState(5);
 	j     = 0;
 	state->setAction(j++, stopMove);
 	state->setAction(j++, finishFlying);
 	state->setAction(j++, simDamage);
-	state->setAction(j++, finishMotion2);
+	state->setAction(j++, finishMotionToFlailing);
 	state->setAction(j++, fallingWaterEffect);
-	setState(NAPKIDSTATE_Unk17, state);
+	setState(NAPKIDSTATE_Landing, state);
 
-	TaiContinuousMotionAction* continousMotion6 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk11);
+	TaiContinuousMotionAction* flailMotion = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Flail);
 
-	TaiSerialAction* serial2      = new TaiSerialAction(NAPKIDSTATE_Unk19, 2);
-	TaiCountLoopAction* countLoop = new TaiCountLoopAction(TAI_NO_TRANSIT, params->getI(NAPKIDPI_Unk0));
-	serial2->setAction(0, countLoop);
+	TaiSerialAction* flailSerialToGetup = new TaiSerialAction(NAPKIDSTATE_GettingUp, 2);
+	TaiCountLoopAction* flailLoop       = new TaiCountLoopAction(TAI_NO_TRANSIT, params->getI(NAPKIDPI_Unk0));
+	flailSerialToGetup->setAction(0, flailLoop);
 
-	TaiFinishMotionAction* finishMotion3 = new TaiFinishMotionAction(TAI_NO_TRANSIT);
-	serial2->setAction(1, finishMotion3);
+	TaiFinishMotionAction* flailFinishMotion = new TaiFinishMotionAction(TAI_NO_TRANSIT);
+	flailSerialToGetup->setAction(1, flailFinishMotion);
 
-	// STATE 18 - (Unknown)
+	// STATE 18 - Flailing on ground
 	state = new TaiState(4);
 	j     = 0;
-	state->setAction(j++, dead2);
+	state->setAction(j++, groundedDying);
 	state->setAction(j++, simDamage);
-	state->setAction(j++, serial2);
-	state->setAction(j++, continousMotion6);
-	setState(NAPKIDSTATE_Unk18, state);
+	state->setAction(j++, flailSerialToGetup);
+	state->setAction(j++, flailMotion);
+	setState(NAPKIDSTATE_Flailing, state);
 
 	TaiNapkidStartDroppingWaterAction* startDroppingWater = new TaiNapkidStartDroppingWaterAction;
 	TaiNapkidTakingOffAscendingAction* takingOffAscend    = new TaiNapkidTakingOffAscendingAction;
-	TaiClampMaxHeightAction* clampMaxHeight3              = new TaiClampMaxHeightAction(NAPKIDSTATE_Unk20, params->getF(NAPKIDPF_Unk2));
-	TaiContinuousMotionAction* continousMotion7           = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk12);
-	TaiClampMinVelocityYAction* clampMinYVel              = new TaiClampMinVelocityYAction(NAPKIDSTATE_Unk20, 0.0f);
+	TaiClampMaxHeightAction* maxHeightToDecide  = new TaiClampMaxHeightAction(NAPKIDSTATE_HeightDeciding, params->getF(NAPKIDPF_Unk2));
+	TaiContinuousMotionAction* ascendMotion     = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Ascend);
+	TaiClampMinVelocityYAction* minYVelToDecide = new TaiClampMinVelocityYAction(NAPKIDSTATE_HeightDeciding, 0.0f);
 
-	// STATE 19 - (Unknown)
+	// STATE 19 - GettingUp (getting up after landing)
 	state = new TaiState(9);
 	j     = 0;
 	state->setAction(j++, startFlying);
 	state->setAction(j++, simDamage);
 	state->setAction(j++, takingOffAscend);
 	state->setAction(j++, acceleration);
-	state->setAction(j++, clampMinYVel);
-	state->setAction(j++, clampMaxHeight3);
+	state->setAction(j++, minYVelToDecide);
+	state->setAction(j++, maxHeightToDecide);
 	state->setAction(j++, makingNextVel);
-	state->setAction(j++, continousMotion7);
+	state->setAction(j++, ascendMotion);
 	state->setAction(j++, startDroppingWater);
-	setState(NAPKIDSTATE_Unk19, state);
+	setState(NAPKIDSTATE_GettingUp, state);
 
-	TaiNotAction* notStickersOnBody   = new TaiNotAction(NAPKIDSTATE_Unk22, new TaiHasStickersOnBodyAction(TAI_NO_TRANSIT));
-	TaiNapkidFlickAction* napkidFlick = new TaiNapkidFlickAction(NAPKIDSTATE_Unk21);
-	TaiOnceAction* once2              = new TaiOnceAction(NAPKIDSTATE_Unk16);
-	TaiStopGenParticleGeneratorAction* stopParticleGen = new TaiStopGenParticleGeneratorAction(0);
+	TaiNotAction* noStickersOnBody                   = new TaiNotAction(NAPKIDSTATE_Rising, new TaiHasStickersOnBodyAction(TAI_NO_TRANSIT));
+	TaiNapkidFlickAction* napkidFlick                = new TaiNapkidFlickAction(NAPKIDSTATE_Flicking);
+	TaiOnceAction* onceToLoopFall                    = new TaiOnceAction(NAPKIDSTATE_LoopFalling);
+	TaiStopGenParticleGeneratorAction* stopParticles = new TaiStopGenParticleGeneratorAction(0);
 
-	// STATE 20 - (Unknown)
+	// STATE 20 - HeightDeciding (deciding next state at the top of GettingUp's height)
 	state = new TaiState(4);
 	j     = 0;
-	state->setAction(j++, stopParticleGen);
-	state->setAction(j++, notStickersOnBody);
+	state->setAction(j++, stopParticles);
+	state->setAction(j++, noStickersOnBody);
 	state->setAction(j++, napkidFlick);
-	state->setAction(j++, once2);
-	setState(NAPKIDSTATE_Unk20, state);
+	state->setAction(j++, onceToLoopFall);
+	setState(NAPKIDSTATE_HeightDeciding, state);
 
-	TaiFlickingUpperAction* flickUpper = new TaiFlickingUpperAction(NAPKIDSTATE_Unk22, NAPKIDANIM_Unk9);
+	TaiFlickingUpperAction* flickUpperToRising = new TaiFlickingUpperAction(NAPKIDSTATE_Rising, NAPKIDANIM_Flick);
 
-	// STATE 21 - Flick?
+	// STATE 21 - Flicking
 	state = new TaiState(2);
 	j     = 0;
 	state->setAction(j++, simDamage);
-	state->setAction(j++, flickUpper);
-	setState(NAPKIDSTATE_Unk21, state);
+	state->setAction(j++, flickUpperToRising);
+	setState(NAPKIDSTATE_Flicking, state);
 
 	TaiNapkidRisingAscendingAction* napkidRisingAscending = new TaiNapkidRisingAscendingAction;
-	TaiClampMaxHeightAction* clampMaxHeight4              = new TaiClampMaxHeightAction(NAPKIDSTATE_Unk1, params->getF(TPF_FlightHeight));
-	TaiContinuousMotionAction* continousMotion8           = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk6);
+	TaiClampMaxHeightAction* wanderOnMaxHeight2 = new TaiClampMaxHeightAction(NAPKIDSTATE_Wandering, params->getF(TPF_FlightHeight));
+	TaiContinuousMotionAction* flyMotion3       = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Fly);
 
+	// STATE 22 - Rising (rising back to flying height)
 	state = new TaiState(8);
 	j     = 0;
 	state->setAction(j++, simDamage);
-	state->setAction(j++, stickersOnBody1);
-	state->setAction(j++, dead1);
+	state->setAction(j++, hasStickersToFall);
+	state->setAction(j++, midairDying);
 	state->setAction(j++, napkidRisingAscending);
 	state->setAction(j++, acceleration);
-	state->setAction(j++, clampMaxHeight4);
+	state->setAction(j++, wanderOnMaxHeight2);
 	state->setAction(j++, makingNextVel);
-	state->setAction(j++, continousMotion8);
-	setState(NAPKIDSTATE_Unk22, state);
+	state->setAction(j++, flyMotion3);
+	setState(NAPKIDSTATE_Rising, state);
 }
 
 /*
@@ -572,7 +574,7 @@ void TaiNapkidStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 	teki.drawRange(gfx, teki.getPosition(), 130.0f, Colour(30, 30, 30, 255));
 	teki.drawRange(gfx, teki.getPosition(), teki.getAttackableRange(), Colour(255, 255, 0, 255));
 
-	if (teki.mTekiAnimator->getCurrentMotionIndex() == NAPKIDANIM_Unk8) {
+	if (teki.mTekiAnimator->getCurrentMotionIndex() == NAPKIDANIM_Attack) {
 		f32 counter  = teki.mTekiAnimator->getCounter();
 		f32 startKey = teki.mTekiAnimator->getKeyValueByKeyType(2);
 		f32 endKey   = teki.mTekiAnimator->getKeyValueByKeyType(3);
@@ -1089,7 +1091,7 @@ bool TaiNapkidCirclingAction::act(Teki& teki)
 bool TaiNapkidFlyingAction::act(Teki& teki)
 {
 	f32 seaLevel = teki.getSeaLevel();
-	teki.getPosition().y += 0.15f * (_08 + seaLevel - teki.getPosition().y);
+	teki.getPosition().y += 0.15f * (mFlightHeight + seaLevel - teki.getPosition().y);
 	return false;
 }
 

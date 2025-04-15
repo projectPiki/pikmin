@@ -21,7 +21,7 @@ enum TaiNapkidIntParms {
  */
 enum TaiNapkidFloatParms {
 	NAPKIDPF_Unk0 = TPF_COUNT,
-	NAPKIDPF_Unk1,
+	NAPKIDPF_CarryFlightHeight,
 	NAPKIDPF_Unk2,
 	NAPKIDPF_Unk3,
 	NAPKIDPF_Unk4,
@@ -40,51 +40,48 @@ enum TaiNapkidFloatParms {
  * @brief TODO: name members
  */
 enum TaiNapkidStateID {
-	NAPKIDSTATE_Dying,
-	NAPKIDSTATE_Unk1,
-	NAPKIDSTATE_Unk2,
-	NAPKIDSTATE_Unk3,
-	NAPKIDSTATE_Unk4,
-	NAPKIDSTATE_Unk5,
-	NAPKIDSTATE_Unk6,
-	NAPKIDSTATE_Unk7,
-	NAPKIDSTATE_Unk8,
-	NAPKIDSTATE_Unk9,
-	NAPKIDSTATE_Unk10,
-	NAPKIDSTATE_Unk11,
-	NAPKIDSTATE_Unk12,
-	NAPKIDSTATE_Unk13,
-	NAPKIDSTATE_Unk14,
-	NAPKIDSTATE_Unk15,
-	NAPKIDSTATE_Unk16,
-	NAPKIDSTATE_Unk17,
-	NAPKIDSTATE_Unk18,
-	NAPKIDSTATE_Unk19,
-	NAPKIDSTATE_Unk20,
-	NAPKIDSTATE_Unk21,
-	NAPKIDSTATE_Unk22,
-	NAPKIDSTATE_COUNT,
+	NAPKIDSTATE_Dying          = 0,
+	NAPKIDSTATE_Wandering      = 1,
+	NAPKIDSTATE_IdleFlying     = 2,
+	NAPKIDSTATE_IdleChatting   = 3,
+	NAPKIDSTATE_Chasing        = 4,
+	NAPKIDSTATE_Outrunning     = 5,
+	NAPKIDSTATE_Evading        = 6,
+	NAPKIDSTATE_AttackingSetup = 7,
+	NAPKIDSTATE_Attacking      = 8,
+	NAPKIDSTATE_Catching       = 9,
+	NAPKIDSTATE_AttackDeciding = 10,
+	NAPKIDSTATE_CarryingSetup  = 11,
+	NAPKIDSTATE_AttackMissing  = 12,
+	NAPKIDSTATE_Carrying       = 13,
+	NAPKIDSTATE_Throwing       = 14,
+	NAPKIDSTATE_ShockFalling   = 15,
+	NAPKIDSTATE_LoopFalling    = 16,
+	NAPKIDSTATE_Landing        = 17,
+	NAPKIDSTATE_Flailing       = 18,
+	NAPKIDSTATE_GettingUp      = 19,
+	NAPKIDSTATE_HeightDeciding = 20,
+	NAPKIDSTATE_Flicking       = 21,
+	NAPKIDSTATE_Rising         = 22,
+	NAPKIDSTATE_COUNT, // 23
 };
 
 /**
- * @brief TODO: name members
+ * @brief Napkid animation indices.
  */
 enum TaiNapkidMotionID {
-	NAPKIDANIM_Unk0,
-	NAPKIDANIM_Unk1,
-	NAPKIDANIM_Unk2,
-	NAPKIDANIM_Unk3,
-	NAPKIDANIM_Unk4,
-	NAPKIDANIM_Unk5,
-	NAPKIDANIM_Unk6,
-	NAPKIDANIM_Unk7,
-	NAPKIDANIM_Unk8,
-	NAPKIDANIM_Unk9,
-	NAPKIDANIM_Unk10,
-	NAPKIDANIM_Unk11,
-	NAPKIDANIM_Unk12,
-	NAPKIDANIM_Unk13,
-	NAPKIDANIM_COUNT,
+	NAPKIDANIM_Dead       = 0,  // 'dead'
+	NAPKIDANIM_Idle       = 2,  // 'wait1'
+	NAPKIDANIM_Throw      = 4,  // 'waitact1'
+	NAPKIDANIM_CarryFly   = 5,  // 'waitact2'
+	NAPKIDANIM_Fly        = 6,  // 'move1'
+	NAPKIDANIM_Attack     = 8,  // 'attack'
+	NAPKIDANIM_Flick      = 9,  // 'flick'
+	NAPKIDANIM_Fall       = 10, // 'type1'
+	NAPKIDANIM_Flail      = 11, // 'type2'
+	NAPKIDANIM_Ascend     = 12, // 'type3'
+	NAPKIDANIM_AttackMiss = 13, // 'type4'
+	NAPKIDANIM_COUNT,           // 14
 };
 
 /*
@@ -233,10 +230,10 @@ struct TaiNapkidCirclingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiNapkidFlyingAction : public TaiAction {
-	inline TaiNapkidFlyingAction(f32 p1) // TODO: this is a guess
+	inline TaiNapkidFlyingAction(f32 flightHeight) // TODO: this is a guess
 	    : TaiAction(TAI_NO_TRANSIT)
 	{
-		_08 = p1;
+		mFlightHeight = flightHeight;
 	}
 
 	virtual bool act(Teki&); // _10
@@ -244,7 +241,7 @@ struct TaiNapkidFlyingAction : public TaiAction {
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
-	f32 _08;
+	f32 mFlightHeight;
 };
 
 /**
