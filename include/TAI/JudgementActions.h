@@ -135,8 +135,8 @@ struct TaiTargetVisibleNaviAction : public TaiAction {
  * @brief TODO
  */
 struct TaiHasStickersInMouthAction : public TaiAction {
-	inline TaiHasStickersInMouthAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiHasStickersInMouthAction(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -151,8 +151,8 @@ struct TaiHasStickersInMouthAction : public TaiAction {
  * @brief TODO
  */
 struct TaiHasStickersOnBodyAction : public TaiAction {
-	inline TaiHasStickersOnBodyAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiHasStickersOnBodyAction(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 

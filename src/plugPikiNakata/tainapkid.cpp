@@ -1,6 +1,21 @@
 #include "TAI/Napkid.h"
+#include "TAI/MoveActions.h"
+#include "TAI/JudgementActions.h"
+#include "TAI/ReactionActions.h"
+#include "TAI/AttackActions.h"
+#include "TAI/TimerActions.h"
+#include "TAI/EffectActions.h"
 #include "TekiConditions.h"
 #include "DebugLog.h"
+#include "SoundID.h"
+#include "nlib/Math.h"
+#include "teki.h"
+#include "PikiState.h"
+#include "PikiMgr.h"
+#include "Peve/MotionEvents.h"
+#include "MapCode.h"
+#include "Stickers.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -14,7 +29,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("tainapkid")
 
 /*
  * --INFO--
@@ -24,48 +39,9 @@ DEFINE_PRINT("TODO: Replace")
 TaiNapkidSoundTable::TaiNapkidSoundTable()
     : PaniSoundTable(4)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  bl        -0x16BCC
-	  li        r30, 0
-	  li        r31, 0
-	  b         .loc_0x58
-
-	.loc_0x30:
-	  li        r3, 0x4
-	  bl        -0xEEC50
-	  cmplwi    r3, 0
-	  beq-      .loc_0x48
-	  addi      r0, r30, 0x78
-	  stw       r0, 0x0(r3)
-
-	.loc_0x48:
-	  lwz       r4, 0x4(r29)
-	  addi      r30, r30, 0x1
-	  stwx      r3, r4, r31
-	  addi      r31, r31, 0x4
-
-	.loc_0x58:
-	  lwz       r0, 0x0(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  mr        r3, r29
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mSoundCount; i++) {
+		mSounds[i] = new PaniSound(SE_SARAI_HOVER + i);
+	}
 }
 
 /*
@@ -74,356 +50,91 @@ TaiNapkidSoundTable::TaiNapkidSoundTable()
  * Size:	000564
  */
 TaiNapkidParameters::TaiNapkidParameters()
-    : TekiParameters(21, 63)
+    : TekiParameters(NAPKIDPI_COUNT, NAPKIDPF_COUNT)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802D
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x3F
-	  stwu      r1, -0x110(r1)
-	  stw       r31, 0x10C(r1)
-	  subi      r31, r4, 0x60E0
-	  li        r4, 0x15
-	  stw       r30, 0x108(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x104(r1)
-	  bl        0x16078
-	  lis       r3, 0x802D
-	  subi      r0, r3, 0x562C
-	  stw       r0, 0x0(r30)
-	  li        r3, 0x14
-	  li        r0, 0x32
-	  lwz       r4, 0x84(r30)
-	  li        r10, 0x33
-	  li        r9, 0x34
-	  lwz       r4, 0x0(r4)
-	  li        r8, 0x35
-	  mulli     r3, r3, 0xC
-	  lwz       r4, 0x8(r4)
-	  add       r4, r4, r3
-	  addi      r3, r31, 0x1C
-	  stw       r3, 0x0(r4)
-	  li        r3, 0
-	  li        r7, 0x36
-	  stw       r3, 0x4(r4)
-	  li        r3, 0xA
-	  li        r6, 0x37
-	  stw       r3, 0x8(r4)
-	  li        r5, 0x38
-	  li        r4, 0x39
-	  lwz       r11, 0x84(r30)
-	  mulli     r12, r0, 0xC
-	  lwz       r29, 0x4(r11)
-	  addi      r11, r31, 0x30
-	  lwz       r0, 0x8(r29)
-	  mulli     r10, r10, 0xC
-	  add       r12, r0, r12
-	  stw       r11, 0x0(r12)
-	  mulli     r9, r9, 0xC
-	  lfs       f8, -0x5B98(r2)
-	  mulli     r8, r8, 0xC
-	  stfs      f8, 0x4(r12)
-	  lfs       f7, -0x5B94(r2)
-	  mulli     r7, r7, 0xC
-	  stfs      f7, 0x8(r12)
-	  add       r11, r0, r10
-	  addi      r10, r31, 0x44
-	  stw       r10, 0x0(r11)
-	  mulli     r6, r6, 0xC
-	  stfs      f8, 0x4(r11)
-	  add       r10, r0, r9
-	  stfs      f7, 0x8(r11)
-	  addi      r9, r31, 0x5C
-	  mulli     r5, r5, 0xC
-	  stw       r9, 0x0(r10)
-	  stfs      f8, 0x4(r10)
-	  add       r9, r0, r8
-	  addi      r8, r31, 0x78
-	  stfs      f7, 0x8(r10)
-	  mulli     r4, r4, 0xC
-	  stw       r8, 0x0(r9)
-	  add       r8, r0, r7
-	  stfs      f8, 0x4(r9)
-	  addi      r7, r31, 0x90
-	  add       r10, r0, r6
-	  lfs       f6, -0x5B90(r2)
-	  addi      r6, r31, 0xAC
-	  add       r11, r0, r5
-	  stfs      f6, 0x8(r9)
-	  addi      r5, r31, 0xC4
-	  add       r9, r0, r4
-	  stw       r7, 0x0(r8)
-	  addi      r4, r31, 0xE0
-	  stfs      f8, 0x4(r8)
-	  lfs       f5, -0x5B8C(r2)
-	  stfs      f5, 0x8(r8)
-	  stw       r6, 0x0(r10)
-	  stfs      f8, 0x4(r10)
-	  stfs      f6, 0x8(r10)
-	  stw       r5, 0x0(r11)
-	  stfs      f8, 0x4(r11)
-	  stfs      f5, 0x8(r11)
-	  stw       r4, 0x0(r9)
-	  stfs      f8, 0x4(r9)
-	  li        r4, 0x3A
-	  stfs      f6, 0x8(r9)
-	  mulli     r4, r4, 0xC
-	  add       r5, r0, r4
-	  addi      r4, r31, 0xF8
-	  stw       r4, 0x0(r5)
-	  li        r4, 0x3B
-	  mulli     r4, r4, 0xC
-	  stfs      f8, 0x4(r5)
-	  stfs      f5, 0x8(r5)
-	  add       r5, r0, r4
-	  addi      r4, r31, 0x114
-	  stw       r4, 0x0(r5)
-	  li        r4, 0x3C
-	  mulli     r4, r4, 0xC
-	  stfs      f8, 0x4(r5)
-	  stfs      f6, 0x8(r5)
-	  add       r5, r0, r4
-	  addi      r4, r31, 0x12C
-	  stw       r4, 0x0(r5)
-	  li        r4, 0x3D
-	  mulli     r4, r4, 0xC
-	  stfs      f8, 0x4(r5)
-	  stfs      f5, 0x8(r5)
-	  add       r5, r0, r4
-	  addi      r4, r31, 0x148
-	  stw       r4, 0x0(r5)
-	  li        r4, 0x3E
-	  mulli     r4, r4, 0xC
-	  stfs      f8, 0x4(r5)
-	  lfs       f4, -0x5B88(r2)
-	  add       r6, r0, r4
-	  addi      r4, r31, 0x158
-	  stfs      f4, 0x8(r5)
-	  li        r0, 0x1
-	  li        r12, 0x2
-	  stw       r4, 0x0(r6)
-	  li        r11, -0x1
-	  li        r10, 0x3
-	  stfs      f8, 0x4(r6)
-	  li        r9, 0x8
-	  li        r8, 0xF
-	  lfs       f0, -0x5B84(r2)
-	  li        r7, 0x5
-	  li        r5, 0x14
-	  stfs      f0, 0x8(r6)
-	  lwz       r4, 0x84(r30)
-	  lwz       r6, 0x0(r4)
-	  lwz       r6, 0x0(r6)
-	  stw       r0, 0x0(r6)
-	  lwz       r6, 0x0(r4)
-	  lwz       r6, 0x0(r6)
-	  stw       r12, 0x18(r6)
-	  lwz       r6, 0x0(r4)
-	  lwz       r6, 0x0(r6)
-	  stw       r11, 0xC(r6)
-	  lwz       r6, 0x0(r4)
-	  lwz       r6, 0x0(r6)
-	  stw       r0, 0x24(r6)
-	  lwz       r6, 0x0(r4)
-	  lwz       r6, 0x0(r6)
-	  stw       r0, 0x8(r6)
-	  lwz       r6, 0x0(r4)
-	  lwz       r6, 0x0(r6)
-	  stw       r10, 0x28(r6)
-	  lwz       r6, 0x0(r4)
-	  lwz       r6, 0x0(r6)
-	  stw       r9, 0x2C(r6)
-	  lwz       r6, 0x0(r4)
-	  lwz       r6, 0x0(r6)
-	  stw       r8, 0x30(r6)
-	  lwz       r6, 0x0(r4)
-	  lwz       r6, 0x0(r6)
-	  stw       r7, 0x34(r6)
-	  lwz       r6, 0x0(r4)
-	  lwz       r6, 0x0(r6)
-	  stw       r3, 0x38(r6)
-	  lwz       r3, 0x0(r4)
-	  lwz       r3, 0x0(r3)
-	  stw       r8, 0x3C(r3)
-	  lwz       r3, 0x0(r4)
-	  lwz       r3, 0x0(r3)
-	  stw       r5, 0x40(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B80(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x0(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f5, 0x4(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f5, 0x8(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f6, 0xC(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f1, -0x5B7C(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f1, 0x10(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B78(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x18(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B74(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x1C(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f1, 0x70(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f7, 0x20(r3)
-	  lfs       f0, -0x1CA4(r13)
-	  lfs       f3, -0x5B70(r2)
-	  lwz       r3, 0x4(r4)
-	  fdivs     f0, f0, f3
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x24(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B6C(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x28(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B68(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x2C(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B64(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0xB4(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B60(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x3C(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f4, 0x40(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B5C(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x44(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f2, -0x5B58(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f2, 0x48(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B54(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x4C(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B50(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x50(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f4, 0x54(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f0, -0x5B4C(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f0, 0x78(r3)
-	  lwz       r3, 0x4(r4)
-	  lfs       f1, -0x5B48(r2)
-	  lwz       r3, 0x0(r3)
-	  stfs      f1, 0x7C(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f5, 0x80(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f6, 0x84(r3)
-	  lwz       r3, 0x4(r4)
-	  lwz       r3, 0x0(r3)
-	  stfs      f2, 0x88(r3)
-	  lwz       r5, 0x4(r4)
-	  mr        r3, r30
-	  lwz       r5, 0x0(r5)
-	  stfs      f8, 0x8C(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f8, 0x90(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5B44(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0x74(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f8, 0x94(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f2, 0x9C(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5B40(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xA0(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f5, 0xAC(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5B3C(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xB0(r5)
-	  lwz       r5, 0x0(r4)
-	  lwz       r5, 0x0(r5)
-	  stw       r0, 0x50(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5B38(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xC8(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f6, 0xCC(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f6, 0xD0(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f3, 0xD4(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5B34(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xD8(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f3, 0xDC(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xE0(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f3, 0xE4(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f1, 0xE8(r5)
-	  lwz       r5, 0x4(r4)
-	  lwz       r5, 0x0(r5)
-	  stfs      f3, 0xEC(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5B30(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xF0(r5)
-	  lwz       r5, 0x4(r4)
-	  lfs       f0, -0x5B2C(r2)
-	  lwz       r5, 0x0(r5)
-	  stfs      f0, 0xF4(r5)
-	  lwz       r4, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  stfs      f7, 0xF8(r4)
-	  lwz       r0, 0x114(r1)
-	  lwz       r31, 0x10C(r1)
-	  lwz       r30, 0x108(r1)
-	  lwz       r29, 0x104(r1)
-	  addi      r1, r1, 0x110
-	  mtlr      r0
-	  blr
-	*/
+	int i                           = NAPKIDPI_Unk0;
+	ParaParameterInfo<int>* iParams = mParameters->mIntParams->mParaInfo;
+	iParams[i++].init("STRUGGLE_LOOP_COUNT", 0, 10);
+
+	int j                           = NAPKIDPF_Unk0;
+	ParaParameterInfo<f32>* fParams = mParameters->mFloatParams->mParaInfo;
+	fParams[j++].init("CARRYING_VELOCITY", 0.0f, 200.0f);
+	fParams[j++].init("CARRYING_FLIGHT_HEIGHT", 0.0f, 200.0f);
+	fParams[j++].init("TAKING_OFF_FLIGHT_HEIGHT", 0.0f, 200.0f);
+	fParams[j++].init("WANDERING_HOVER_PERIOD", 0.0f, 60.0f);
+	fParams[j++].init("WANDERING_HOVER_PROBABILITY", 0.0f, 1.0f);
+	fParams[j++].init("HOVERING_WANDER_PERIOD", 0.0f, 60.0f);
+	fParams[j++].init("HOVERING_WANDER_PROBABILITY", 0.0f, 1.0f);
+	fParams[j++].init("HOVERING_WASH_PERIOD", 0.0f, 60.0f);
+	fParams[j++].init("HOVERING_WASH_PROBABILITY", 0.0f, 1.0f);
+	fParams[j++].init("WASHING_WANDER_PERIOD", 0.0f, 60.0f);
+	fParams[j++].init("WASHING_WANDER_PROBABILITY", 0.0f, 1.0f);
+	fParams[j++].init("THROW_PERIOD", 0.0f, 10.0f);
+	fParams[j++].init("THROW_VELOCITY", 0.0f, 1000.0f);
+
+	ParaMultiParameters* multiP = mParameters;
+	multiP->setI(TPI_CorpseType, TEKICORPSE_LeaveCorpse);
+	multiP->setI(TPI_CarcassSize, 2);
+	multiP->setI(TPI_SpawnType, -1);
+	multiP->setI(TPI_SwallowCount, 1);
+	multiP->setI(TPI_CullingType, 1);
+	multiP->setI(TPI_FlickPikiCount1, 3);
+	multiP->setI(TPI_FlickPikiCount2, 8);
+	multiP->setI(TPI_FlickPikiCount3, 15);
+	multiP->setI(TPI_FlickDamageCount1, 5);
+	multiP->setI(TPI_FlickDamageCount2, 10);
+	multiP->setI(TPI_FlickDamageCount3, 15);
+	multiP->setI(TPI_FlickDamageCount4, 20);
+
+	multiP->setF(TPF_Life, 2000.0f);
+	multiP->setF(TPF_Scale, 1.0f);
+	multiP->setF(TPF_Weight, 1.0f);
+	multiP->setF(TPF_WalkVelocity, 60.0f);
+	multiP->setF(TPF_RunVelocity, 100.0f);
+	multiP->setF(TPF_VisibleRange, 420.0f);
+	multiP->setF(TPF_VisibleAngle, 180.0f);
+	multiP->setF(TPF_VisibleHeight, 100.0f);
+	multiP->setF(TPF_AttackableRange, 200.0f);
+	multiP->setF(TPF_AttackableAngle, NMathF::pi / 3.0f);
+	multiP->setF(TPF_AttackRange, 12.0f);
+	multiP->setF(TPF_AttackHitRange, 15.0f);
+	multiP->setF(TPF_LowerRange, 20.0f);
+	multiP->setF(TPF_DangerTerritoryRange, 500.0f);
+	multiP->setF(TPF_SafetyTerritoryRange, 10.0f);
+	multiP->setF(TPF_LifeGaugeOffset, 30.0f);
+	multiP->setF(TPF_ShadowSize, 50.0f);
+	multiP->setF(TPF_RippleScale, 2.0f);
+	multiP->setF(TPF_CorpseSize, 17.0f);
+	multiP->setF(TPF_CorpseHeight, 10.0f);
+	multiP->setF(TPF_DamageMotionPeriod, 0.3f);
+	multiP->setF(TPF_DamageMotionAmplitude, 0.2f);
+	multiP->setF(TPF_FlickProbability, 1.0f);
+	multiP->setF(TPF_UpperFlickPower, 60.0f);
+	multiP->setF(TPF_LowerFlickPower, 50.0f);
+	multiP->setF(TPF_UpperAttackPower, 0.0f);
+	multiP->setF(TPF_LowerAttackPower, 0.0f);
+	multiP->setF(TPF_FlightHeight, 85.0f);
+	multiP->setF(TPF_LifeRecoverRate, 0.0f);
+	multiP->setF(TPF_SpawnPelletVelocityHoriz, 50.0f);
+	multiP->setF(TPF_SpawnPelletVelocityVert, 400.0f);
+	multiP->setF(TPF_BombDamageRate, 1.0f);
+	multiP->setF(TPF_CollisionRadius, 16.0f);
+
+	multiP->setI(NAPKIDPI_Unk0, 1);
+
+	multiP->setF(NAPKIDPF_Unk0, 90.0f);
+	multiP->setF(NAPKIDPF_Unk1, 60.0f);
+	multiP->setF(NAPKIDPF_Unk2, 60.0f);
+	multiP->setF(NAPKIDPF_Unk3, 3.0f);
+	multiP->setF(NAPKIDPF_Unk4, 0.5f);
+	multiP->setF(NAPKIDPF_Unk5, 3.0f);
+	multiP->setF(NAPKIDPF_Unk6, 0.5f);
+	multiP->setF(NAPKIDPF_Unk7, 3.0f);
+	multiP->setF(NAPKIDPF_Unk8, 0.2f);
+	multiP->setF(NAPKIDPF_Unk9, 3.0f);
+	multiP->setF(NAPKIDPF_Unk10, 0.7f);
+	multiP->setF(NAPKIDPF_Unk11, 4.0f);
+	multiP->setF(NAPKIDPF_Unk12, 200.0f);
 }
 
 /*
@@ -431,9 +142,393 @@ TaiNapkidParameters::TaiNapkidParameters()
  * Address:	80136208
  * Size:	0022C4
  */
-TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters*)
-    : TaiStrategy(0, 0) // TODO: fix
+TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
+    : TaiStrategy(NAPKIDSTATE_COUNT, NAPKIDSTATE_Unk1)
 {
+	TaiStopMoveAction* stopMove                      = new TaiStopMoveAction;
+	TaiStartFlyingAction* startFlying                = new TaiStartFlyingAction;
+	TaiFinishFlyingAction* finishFlying              = new TaiFinishFlyingAction;
+	TaiAccelerationAction* acceleration              = new TaiAccelerationAction;
+	TaiParabolaAction* parabola                      = new TaiParabolaAction;
+	TaiCircleMoveAction* circleMove                  = new TaiCircleMoveAction;
+	TaiMakingNextVelocityAction* makingNextVel       = new TaiMakingNextVelocityAction;
+	TaiMakeVelocityDirectionAction* makeVelDir       = new TaiMakeVelocityDirectionAction;
+	TaiMakeAccelerationDirectionAction* makeAccelDir = new TaiMakeAccelerationDirectionAction;
+	TaiHasStickersOnBodyAction* stickersOnBody1      = new TaiHasStickersOnBodyAction(NAPKIDSTATE_Unk15);
+	TaiDeadAction* dead1                             = new TaiDeadAction(NAPKIDSTATE_Unk15);
+	TaiDeadAction* dead2                             = new TaiDeadAction(NAPKIDSTATE_Dying);
+	TaiFlickAction* flick                            = new TaiFlickAction(NAPKIDSTATE_Unk21);
+	TaiNapkidTargetPikiAction* targetPiki1           = new TaiNapkidTargetPikiAction(NAPKIDSTATE_Unk4);
+	TaiSimultaneousDamageAction* simDamage           = new TaiSimultaneousDamageAction(TAI_NO_TRANSIT);
+	TaiNapkidFlyingAction* napkidFlying1             = new TaiNapkidFlyingAction(params->getF(TPF_FlightHeight));
+	TaiNapkidFlyingAction* napkidFlying2             = new TaiNapkidFlyingAction(params->getF(NAPKIDPF_Unk1));
+	TaiDyingAction* dying                            = new TaiDyingAction(NAPKIDANIM_Unk0);
+	TaiStartDyingAction* startDying                  = new TaiStartDyingAction;
+
+	// STATE 0 - Dying
+	TaiState* stateDying = new TaiState(3);
+	int j                = 0;
+	stateDying->setAction(j++, stopMove);
+	stateDying->setAction(j++, startDying);
+	stateDying->setAction(j++, dying);
+	setState(NAPKIDSTATE_Dying, stateDying);
+
+	TaiNapkidWanderingRouteAction* wanderRoute1 = new TaiNapkidWanderingRouteAction(NAPKIDANIM_Unk6, params->getF(TPF_WalkVelocity));
+	TaiStartingTimerAction* chanceTimer1
+	    = new TaiStartingTimerAction(NAPKIDSTATE_Unk2, 0, params->getF(NAPKIDPF_Unk3), 0.5f, params->getF(NAPKIDPF_Unk4));
+	TaiHeadOnCollisionAvoidanceAction* headOnAvoidance = new TaiHeadOnCollisionAvoidanceAction(50.0f);
+
+	// STATE 1 - Wandering?
+	TaiState* stateWandering = new TaiState(9);
+	j                        = 0;
+	stateWandering->setAction(j++, startFlying);
+	stateWandering->setAction(j++, simDamage);
+	stateWandering->setAction(j++, stickersOnBody1);
+	stateWandering->setAction(j++, dead1);
+	stateWandering->setAction(j++, targetPiki1);
+	stateWandering->setAction(j++, napkidFlying1);
+	stateWandering->setAction(j++, chanceTimer1);
+	stateWandering->setAction(j++, wanderRoute1);
+	stateWandering->setAction(j++, headOnAvoidance);
+	setState(NAPKIDSTATE_Unk1, stateWandering);
+
+	TaiContinuousMotionAction* continousMotion1 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk6);
+	TaiStartingTimerAction* chanceTimer2
+	    = new TaiStartingTimerAction(NAPKIDSTATE_Unk1, 0, params->getF(NAPKIDPF_Unk5), 0.5f, params->getF(NAPKIDPF_Unk6));
+	TaiStartingTimerAction* chanceTimer3
+	    = new TaiStartingTimerAction(NAPKIDSTATE_Unk3, 1, params->getF(NAPKIDPF_Unk7), 0.5f, params->getF(NAPKIDPF_Unk8));
+
+	// STATE 2 - Idle?
+	TaiState* stateIdle = new TaiState(9);
+	j                   = 0;
+	stateIdle->setAction(j++, stopMove);
+	stateIdle->setAction(j++, simDamage);
+	stateIdle->setAction(j++, stickersOnBody1);
+	stateIdle->setAction(j++, dead1);
+	stateIdle->setAction(j++, targetPiki1);
+	stateIdle->setAction(j++, napkidFlying1);
+	stateIdle->setAction(j++, chanceTimer2);
+	stateIdle->setAction(j++, chanceTimer3);
+	stateIdle->setAction(j++, continousMotion1);
+	setState(NAPKIDSTATE_Unk2, stateIdle);
+
+	TaiStartingTimerAction* chanceTimer4
+	    = new TaiStartingTimerAction(NAPKIDSTATE_Unk1, 0, params->getF(NAPKIDPF_Unk9), 0.5f, params->getF(NAPKIDPF_Unk10));
+	TaiContinuousMotionAction* continousMotion2 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk2);
+
+	// STATE 3 - Go home?
+	TaiState* stateGoHome = new TaiState(7);
+	j                     = 0;
+	stateGoHome->setAction(j++, simDamage);
+	stateGoHome->setAction(j++, stickersOnBody1);
+	stateGoHome->setAction(j++, dead1);
+	stateGoHome->setAction(j++, targetPiki1);
+	stateGoHome->setAction(j++, napkidFlying1);
+	stateGoHome->setAction(j++, chanceTimer4);
+	stateGoHome->setAction(j++, continousMotion2);
+	setState(NAPKIDSTATE_Unk3, stateGoHome);
+
+	TaiNapkidTargetPikiAction* targetPiki2    = new TaiNapkidTargetPikiAction(TAI_NO_TRANSIT);
+	TaiNapkidApproachPikiAction* approachPiki = new TaiNapkidApproachPikiAction(NAPKIDSTATE_Unk7);
+	TaiNapkidPikiLostAction* lostPiki         = new TaiNapkidPikiLostAction(NAPKIDSTATE_Unk1);
+	TaiNapkidShortRangeAction* shortRange     = new TaiNapkidShortRangeAction(NAPKIDSTATE_Unk5);
+	TaiTracingAction* tracing                 = new TaiTracingAction(NAPKIDANIM_Unk6, params->getF(TPF_RunVelocity));
+
+	// STATE 4 - Chasing?
+	TaiState* stateChase = new TaiState(9);
+	j                    = 0;
+	stateChase->setAction(j++, simDamage);
+	stateChase->setAction(j++, stickersOnBody1);
+	stateChase->setAction(j++, dead1);
+	stateChase->setAction(j++, approachPiki);
+	stateChase->setAction(j++, targetPiki2);
+	stateChase->setAction(j++, shortRange);
+	stateChase->setAction(j++, napkidFlying1);
+	stateChase->setAction(j++, lostPiki);
+	stateChase->setAction(j++, tracing);
+	setState(NAPKIDSTATE_Unk4, stateChase);
+
+	TaiNapkidStraightFlyingAction* straightFlying = new TaiNapkidStraightFlyingAction(NAPKIDSTATE_Unk6, 160.0f);
+	TaiTimerAction* timer                         = new TaiTimerAction(NAPKIDSTATE_Unk6, 0, 5.0f, 0.0f);
+	TaiContinuousMotionAction* continousMotion3   = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk6);
+
+	// STATE 5 - Outrun target?
+	TaiState* stateOutrun = new TaiState(8);
+	j                     = 0;
+	stateOutrun->setAction(j++, simDamage);
+	stateOutrun->setAction(j++, stickersOnBody1);
+	stateOutrun->setAction(j++, dead1);
+	stateOutrun->setAction(j++, approachPiki);
+	stateOutrun->setAction(j++, napkidFlying1);
+	stateOutrun->setAction(j++, straightFlying);
+	stateOutrun->setAction(j++, timer);
+	stateOutrun->setAction(j++, continousMotion3);
+	setState(NAPKIDSTATE_Unk5, stateOutrun);
+
+	TaiNapkidCirclingAction* circling       = new TaiNapkidCirclingAction(NAPKIDSTATE_Unk1);
+	TaiMakingNextDriveAction* makeNextDrive = new TaiMakingNextDriveAction(150.0f);
+
+	// STATE 6 - Circle target?
+	TaiState* stateCircle = new TaiState(6);
+	j                     = 0;
+	stateCircle->setAction(j++, simDamage);
+	stateCircle->setAction(j++, stickersOnBody1);
+	stateCircle->setAction(j++, dead1);
+	stateCircle->setAction(j++, circleMove);
+	stateCircle->setAction(j++, makeNextDrive);
+	stateCircle->setAction(j++, circling);
+	setState(NAPKIDSTATE_Unk6, stateCircle);
+
+	TaiFinishMotionAction* finishMotion1 = new TaiFinishMotionAction(NAPKIDSTATE_Unk8);
+
+	// STATE 7 - (Unknown)
+	TaiState* state7 = new TaiState(5);
+	j                = 0;
+	state7->setAction(j++, simDamage);
+	state7->setAction(j++, stickersOnBody1);
+	state7->setAction(j++, dead1);
+	state7->setAction(j++, napkidFlying1);
+	state7->setAction(j++, finishMotion1);
+	setState(NAPKIDSTATE_Unk7, state7);
+
+	TaiNapkidCatchTracingAction* catchTracing       = new TaiNapkidCatchTracingAction;
+	TaiNapkidCatchingAction* catching               = new TaiNapkidCatchingAction(NAPKIDSTATE_Unk10);
+	TaiMotionAction* motion1                        = new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk8);
+	TaiNapkidCatchDescendingAction* catchDescending = new TaiNapkidCatchDescendingAction;
+	TaiClampMinHeightAction* clampMinHeight1        = new TaiClampMinHeightAction(NAPKIDSTATE_Unk9, 10.0f);
+
+	// STATE 8 - (Unknown)
+	TaiState* state8 = new TaiState(9);
+	j                = 0;
+	state8->setAction(j++, simDamage);
+	state8->setAction(j++, catchDescending);
+	state8->setAction(j++, catchTracing);
+	state8->setAction(j++, acceleration);
+	state8->setAction(j++, clampMinHeight1);
+	state8->setAction(j++, makingNextVel);
+	state8->setAction(j++, motion1);
+	state8->setAction(j++, catching);
+	state8->setAction(j++, makeVelDir);
+	setState(NAPKIDSTATE_Unk8, state8);
+
+	TaiNapkidCatchFlyingAction* catchFlying  = new TaiNapkidCatchFlyingAction;
+	TaiClampMinHeightAction* clampMinHeight2 = new TaiClampMinHeightAction(TAI_NO_TRANSIT, 10.0f);
+
+	// State 9 - (Unknown)
+	TaiState* state9 = new TaiState(8);
+	j                = 0;
+	state9->setAction(j++, simDamage);
+	state9->setAction(j++, catchFlying);
+	state9->setAction(j++, catchTracing);
+	state9->setAction(j++, acceleration);
+	state9->setAction(j++, clampMinHeight2);
+	state9->setAction(j++, makingNextVel);
+	state9->setAction(j++, catching);
+	state9->setAction(j++, makeVelDir);
+	setState(NAPKIDSTATE_Unk9, state9);
+
+	TaiHasStickersInMouthAction* stickersInMouth = new TaiHasStickersInMouthAction(NAPKIDSTATE_Unk11);
+	TaiOnceAction* once1                         = new TaiOnceAction(NAPKIDSTATE_Unk12);
+
+	// STATE 10 - (Unknown)
+	TaiState* state10 = new TaiState(5);
+	j                 = 0;
+	state10->setAction(j++, acceleration);
+	state10->setAction(j++, clampMinHeight2);
+	state10->setAction(j++, makingNextVel);
+	state10->setAction(j++, stickersInMouth);
+	state10->setAction(j++, once1);
+	setState(NAPKIDSTATE_Unk10, state10);
+
+	TaiNapkidCatchAscendingAction* ascending = new TaiNapkidCatchAscendingAction;
+	TaiClampMaxHeightAction* clampMaxHeight1 = new TaiClampMaxHeightAction(NAPKIDSTATE_Unk1, params->getF(TPF_FlightHeight));
+
+	TaiSerialAction* serial1            = new TaiSerialAction(NAPKIDSTATE_Unk19, 2);
+	TaiSwitchMotionAction* switchMotion = new TaiSwitchMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk13);
+	serial1->setAction(0, switchMotion);
+
+	TaiMotionAction* motion2 = new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk6);
+	serial1->setAction(1, motion2);
+
+	// STATE 12 - (Unknown)
+	TaiState* state12 = new TaiState(7);
+	j                 = 0;
+	state12->setAction(j++, simDamage);
+	state12->setAction(j++, acceleration);
+	state12->setAction(j++, clampMinHeight2);
+	state12->setAction(j++, makingNextVel);
+	state12->setAction(j++, serial1);
+	state12->setAction(j++, ascending);
+	state12->setAction(j++, clampMaxHeight1);
+	setState(NAPKIDSTATE_Unk12, state12);
+
+	TaiNapkidCatchAscendingAction* catchAscending = new TaiNapkidCatchAscendingAction;
+	TaiClampMaxHeightAction* clampMaxHeight2      = new TaiClampMaxHeightAction(NAPKIDSTATE_Unk13, params->getF(NAPKIDPF_Unk1));
+	TaiContinuousMotionAction* continousMotion4   = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk5);
+
+	// STATE 11 - (Unknown)
+	TaiState* state11 = new TaiState(7);
+	j                 = 0;
+	state11->setAction(j++, simDamage);
+	state11->setAction(j++, continousMotion4);
+	state11->setAction(j++, catchAscending);
+	state11->setAction(j++, acceleration);
+	state11->setAction(j++, clampMinHeight2);
+	state11->setAction(j++, clampMaxHeight2);
+	state11->setAction(j++, makingNextVel);
+	setState(NAPKIDSTATE_Unk11, state11);
+
+	TaiNapkidWanderingRouteAction* wanderRoute2 = new TaiNapkidWanderingRouteAction(NAPKIDANIM_Unk5, params->getF(NAPKIDPF_Unk0));
+	TaiTimerAction* timer2                      = new TaiTimerAction(NAPKIDSTATE_Unk14, 0, params->getF(NAPKIDPF_Unk11), 0.5f);
+
+	// STATE 13 - (Unknown)
+	TaiState* state13 = new TaiState(6);
+	j                 = 0;
+	state13->setAction(j++, simDamage);
+	state13->setAction(j++, stickersOnBody1);
+	state13->setAction(j++, dead1);
+	state13->setAction(j++, timer2);
+	state13->setAction(j++, wanderRoute2);
+	state13->setAction(j++, napkidFlying2);
+	setState(NAPKIDSTATE_Unk13, state13);
+
+	TaiContinuousMotionAction* continousMotion5 = new TaiContinuousMotionAction(NAPKIDSTATE_Unk13, NAPKIDANIM_Unk4);
+	TaiNapkidThrowingPikiAction* throwPiki      = new TaiNapkidThrowingPikiAction;
+	TaiNotAction* notStickersInMouth            = new TaiNotAction(NAPKIDSTATE_Unk1, new TaiHasStickersInMouthAction(TAI_NO_TRANSIT));
+
+	// STATE 14 - (Unknown)
+	TaiState* state14 = new TaiState(5);
+	j                 = 0;
+	state14->setAction(j++, stickersOnBody1);
+	state14->setAction(j++, dead1);
+	state14->setAction(j++, continousMotion5);
+	state14->setAction(j++, throwPiki);
+	state14->setAction(j++, notStickersInMouth);
+	setState(NAPKIDSTATE_Unk14, state14);
+
+	TaiMotionAction* motion3                  = new TaiMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk10);
+	TaiNapkidFallingAction* napkidFalling     = new TaiNapkidFallingAction;
+	TaiNapkidShockFallingAction* shockFalling = new TaiNapkidShockFallingAction;
+	TaiRotatingAction* rotating1              = new TaiRotatingAction(NMathF::pi * 8.0f);
+	TaiClampMinHeightAction* clampMinHeight3  = new TaiClampMinHeightAction(NAPKIDSTATE_Unk17, 10.0f);
+
+	// STATE 15 - Falling?
+	TaiState* state15 = new TaiState(8);
+	j                 = 0;
+	state15->setAction(j++, simDamage);
+	state15->setAction(j++, shockFalling);
+	state15->setAction(j++, motion3);
+	state15->setAction(j++, napkidFalling);
+	state15->setAction(j++, rotating1);
+	state15->setAction(j++, parabola);
+	state15->setAction(j++, clampMinHeight3);
+	state15->setAction(j++, makingNextVel);
+	setState(NAPKIDSTATE_Unk15, state15);
+
+	TaiRotatingAction* rotating2 = new TaiRotatingAction(NMathF::pi * 4.0f);
+
+	// STATE 16 - ...Also falling?
+	TaiState* state16 = new TaiState(8);
+	j                 = 0;
+	state16->setAction(j++, simDamage);
+	state16->setAction(j++, motion3);
+	state16->setAction(j++, napkidFalling);
+	state16->setAction(j++, rotating2);
+	state16->setAction(j++, parabola);
+	state16->setAction(j++, clampMinHeight3);
+	state16->setAction(j++, makingNextVel);
+	state16->setAction(j++, makingNextVel);
+	setState(NAPKIDSTATE_Unk16, state16);
+
+	TaiFinishMotionAction* finishMotion2                  = new TaiFinishMotionAction(NAPKIDSTATE_Unk18);
+	TaiNapkidFallingWaterEffectAction* fallingWaterEffect = new TaiNapkidFallingWaterEffectAction;
+
+	// STATE 18 - Falling in water?
+	TaiState* state17 = new TaiState(5);
+	j                 = 0;
+	state17->setAction(j++, stopMove);
+	state17->setAction(j++, finishFlying);
+	state17->setAction(j++, simDamage);
+	state17->setAction(j++, finishMotion2);
+	state17->setAction(j++, fallingWaterEffect);
+	setState(NAPKIDSTATE_Unk17, state17);
+
+	TaiContinuousMotionAction* continousMotion6 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk11);
+
+	TaiSerialAction* serial2      = new TaiSerialAction(NAPKIDSTATE_Unk19, 2);
+	TaiCountLoopAction* countLoop = new TaiCountLoopAction(TAI_NO_TRANSIT, params->getI(NAPKIDPI_Unk0));
+	serial2->setAction(0, countLoop);
+
+	TaiFinishMotionAction* finishMotion3 = new TaiFinishMotionAction(TAI_NO_TRANSIT);
+	serial2->setAction(1, finishMotion3);
+
+	// STATE 18 - (Unknown)
+	TaiState* state18 = new TaiState(4);
+	j                 = 0;
+	state18->setAction(j++, dead2);
+	state18->setAction(j++, simDamage);
+	state18->setAction(j++, serial2);
+	state18->setAction(j++, continousMotion6);
+	setState(NAPKIDSTATE_Unk18, state18);
+
+	TaiNapkidStartDroppingWaterAction* startDroppingWater = new TaiNapkidStartDroppingWaterAction;
+	TaiNapkidTakingOffAscendingAction* takingOffAscend    = new TaiNapkidTakingOffAscendingAction;
+	TaiClampMaxHeightAction* clampMaxHeight3              = new TaiClampMaxHeightAction(NAPKIDSTATE_Unk20, params->getF(NAPKIDPF_Unk2));
+	TaiContinuousMotionAction* continousMotion7           = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk12);
+	TaiClampMinVelocityYAction* clampMinYVel              = new TaiClampMinVelocityYAction(NAPKIDSTATE_Unk20, 0.0f);
+
+	// STATE 19 - (Unknown)
+	TaiState* state19 = new TaiState(9);
+	j                 = 0;
+	state19->setAction(j++, startFlying);
+	state19->setAction(j++, simDamage);
+	state19->setAction(j++, takingOffAscend);
+	state19->setAction(j++, acceleration);
+	state19->setAction(j++, clampMinYVel);
+	state19->setAction(j++, clampMaxHeight3);
+	state19->setAction(j++, makingNextVel);
+	state19->setAction(j++, continousMotion7);
+	state19->setAction(j++, startDroppingWater);
+	setState(NAPKIDSTATE_Unk19, state19);
+
+	TaiNotAction* notStickersOnBody   = new TaiNotAction(NAPKIDSTATE_Unk22, new TaiHasStickersOnBodyAction(TAI_NO_TRANSIT));
+	TaiNapkidFlickAction* napkidFlick = new TaiNapkidFlickAction(NAPKIDSTATE_Unk21);
+	TaiOnceAction* once2              = new TaiOnceAction(NAPKIDSTATE_Unk16);
+	TaiStopGenParticleGeneratorAction* stopParticleGen = new TaiStopGenParticleGeneratorAction(0);
+
+	// STATE 20 - (Unknown)
+	TaiState* state20 = new TaiState(4);
+	j                 = 0;
+	state20->setAction(j++, stopParticleGen);
+	state20->setAction(j++, notStickersOnBody);
+	state20->setAction(j++, napkidFlick);
+	state20->setAction(j++, once2);
+	setState(NAPKIDSTATE_Unk20, state20);
+
+	TaiFlickingUpperAction* flickUpper = new TaiFlickingUpperAction(NAPKIDSTATE_Unk22, NAPKIDANIM_Unk9);
+
+	// STATE 21 - Flick?
+	TaiState* state21 = new TaiState(2);
+	j                 = 0;
+	state21->setAction(j++, simDamage);
+	state21->setAction(j++, flickUpper);
+	setState(NAPKIDSTATE_Unk21, state21);
+
+	TaiNapkidRisingAscendingAction* napkidRisingAscending = new TaiNapkidRisingAscendingAction;
+	TaiClampMaxHeightAction* clampMaxHeight4              = new TaiClampMaxHeightAction(NAPKIDSTATE_Unk1, params->getF(TPF_FlightHeight));
+	TaiContinuousMotionAction* continousMotion8           = new TaiContinuousMotionAction(TAI_NO_TRANSIT, NAPKIDANIM_Unk6);
+
+	TaiState* state22 = new TaiState(8);
+	j                 = 0;
+	state22->setAction(j++, simDamage);
+	state22->setAction(j++, stickersOnBody1);
+	state22->setAction(j++, dead1);
+	state22->setAction(j++, napkidRisingAscending);
+	state22->setAction(j++, acceleration);
+	state22->setAction(j++, clampMaxHeight4);
+	state22->setAction(j++, makingNextVel);
+	state22->setAction(j++, continousMotion8);
+	setState(NAPKIDSTATE_Unk22, state22);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2889,8 +2984,11 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters*)
  * Address:	801384CC
  * Size:	000084
  */
-void TaiNapkidStrategy::start(Teki&)
+void TaiNapkidStrategy::start(Teki& teki)
 {
+	teki.mParticleGenerators[0] = effectMgr->create(EffectMgr::EFF_Frog_Water2, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+	teki.stopParticleGenerator(0);
+	TaiStrategy::start(teki);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2934,8 +3032,20 @@ void TaiNapkidStrategy::start(Teki&)
  * Address:	80138550
  * Size:	0000BC
  */
-void TaiNapkidStrategy::draw(Teki&, Graphics&)
+void TaiNapkidStrategy::draw(Teki& teki, Graphics& gfx)
 {
+	TekiStrategy::draw(teki, gfx);
+	if (teki.mParticleGenerators[0] == nullptr) {
+		return;
+	}
+
+	NVector3f direction;
+	teki.outputDirectionVector(direction);
+	teki.setParticleGeneratorDirection(0, direction);
+
+	NVector3f position;
+	teki.outputPosition(position);
+	teki.setParticleGeneratorPosition(0, position);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2995,161 +3105,24 @@ void TaiNapkidStrategy::draw(Teki&, Graphics&)
  * Address:	8013860C
  * Size:	000250
  */
-void TaiNapkidStrategy::drawDebugInfo(Teki&, Graphics&)
+void TaiNapkidStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x110(r1)
-	  stfd      f31, 0x108(r1)
-	  addi      r6, r1, 0xD0
-	  stfd      f30, 0x100(r1)
-	  stmw      r26, 0xE8(r1)
-	  addi      r30, r4, 0
-	  li        r28, 0
-	  addi      r31, r5, 0
-	  addi      r26, r30, 0x94
-	  li        r29, 0xFF
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  addi      r5, r26, 0
-	  stb       r28, 0xD0(r1)
-	  stb       r28, 0xD1(r1)
-	  stb       r29, 0xD2(r1)
-	  stb       r29, 0xD3(r1)
-	  lwz       r7, 0x2C4(r30)
-	  lwz       r7, 0x84(r7)
-	  lwz       r7, 0x4(r7)
-	  lwz       r7, 0x0(r7)
-	  lfs       f1, 0x18(r7)
-	  bl        0x10D08
-	  li        r0, 0x1E
-	  lfs       f1, -0x5B18(r2)
-	  stb       r0, 0xCC(r1)
-	  addi      r6, r1, 0xCC
-	  addi      r3, r30, 0
-	  stb       r0, 0xCD(r1)
-	  addi      r4, r31, 0
-	  mr        r5, r26
-	  stb       r0, 0xCE(r1)
-	  stb       r29, 0xCF(r1)
-	  bl        0x10CDC
-	  stb       r29, 0xC8(r1)
-	  addi      r27, r1, 0xC8
-	  li        r4, 0
-	  stb       r29, 0xC9(r1)
-	  stb       r28, 0xCA(r1)
-	  stb       r29, 0xCB(r1)
-	  lwz       r3, 0x2C8(r30)
-	  lwz       r3, 0x34(r3)
-	  bl        -0x154AC
-	  lwz       r3, 0x2C4(r30)
-	  fmr       f31, f1
-	  li        r4, 0x1
-	  lwz       r3, 0x84(r3)
-	  bl        -0x154C0
-	  lwz       r3, 0x2C4(r30)
-	  fmr       f30, f1
-	  li        r4, 0x8
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  bl        -0x16214
-	  fmuls     f0, f30, f31
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  addi      r5, r26, 0
-	  fmuls     f1, f1, f0
-	  addi      r6, r27, 0
-	  bl        0x10C70
-	  lwz       r3, 0x2CC(r30)
-	  lwz       r0, 0x44(r3)
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x1C0
-	  lfs       f31, 0x2C(r3)
-	  li        r4, 0x2
-	  bl        -0x18F2C
-	  fmr       f30, f1
-	  lwz       r3, 0x2CC(r30)
-	  li        r4, 0x3
-	  bl        -0x18F3C
-	  fcmpo     cr0, f30, f31
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x1C0
-	  fcmpo     cr0, f31, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x1C0
-	  addi      r3, r1, 0xD4
-	  bl        -0x1B8FC
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0xD4
-	  bl        0xF2B4
-	  stb       r29, 0xC4(r1)
-	  addi      r26, r1, 0xC4
-	  li        r4, 0
-	  stb       r28, 0xC5(r1)
-	  stb       r28, 0xC6(r1)
-	  stb       r29, 0xC7(r1)
-	  lwz       r3, 0x2C8(r30)
-	  lwz       r3, 0x34(r3)
-	  bl        -0x15570
-	  lwz       r3, 0x2C4(r30)
-	  fmr       f31, f1
-	  li        r4, 0x1
-	  lwz       r3, 0x84(r3)
-	  bl        -0x15584
-	  lwz       r3, 0x2C4(r30)
-	  fmr       f30, f1
-	  li        r4, 0xB
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  bl        -0x162D8
-	  fmuls     f0, f30, f31
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  addi      r6, r26, 0
-	  fmuls     f1, f1, f0
-	  addi      r5, r1, 0xD4
-	  bl        0x10BAC
+	teki.drawRange(gfx, teki.getPosition(), teki.getParameterF(TPF_VisibleRange), Colour(0, 0, 255, 255));
+	teki.drawRange(gfx, teki.getPosition(), 130.0f, Colour(30, 30, 30, 255));
+	teki.drawRange(gfx, teki.getPosition(), teki.getAttackableRange(), Colour(255, 255, 0, 255));
 
-	.loc_0x1C0:
-	  li        r3, 0xFF
-	  stb       r3, 0xC0(r1)
-	  li        r0, 0
-	  addi      r26, r1, 0xC0
-	  stb       r0, 0xC1(r1)
-	  li        r4, 0
-	  stb       r3, 0xC2(r1)
-	  stb       r3, 0xC3(r1)
-	  lwz       r3, 0x2C8(r30)
-	  lwz       r3, 0x34(r3)
-	  bl        -0x155E4
-	  lwz       r3, 0x2C4(r30)
-	  fmr       f30, f1
-	  li        r4, 0x1
-	  lwz       r3, 0x84(r3)
-	  bl        -0x155F8
-	  lwz       r3, 0x2C4(r30)
-	  fmr       f31, f1
-	  li        r4, 0x2D
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  bl        -0x1634C
-	  fmuls     f0, f31, f30
-	  addi      r5, r30, 0x94
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  fmuls     f1, f1, f0
-	  mr        r6, r26
-	  bl        0x10B38
-	  lmw       r26, 0xE8(r1)
-	  lwz       r0, 0x114(r1)
-	  lfd       f31, 0x108(r1)
-	  lfd       f30, 0x100(r1)
-	  addi      r1, r1, 0x110
-	  mtlr      r0
-	  blr
-	*/
+	if (teki.mTekiAnimator->getCurrentMotionIndex() == NAPKIDANIM_Unk8) {
+		f32 counter  = teki.mTekiAnimator->getCounter();
+		f32 startKey = teki.mTekiAnimator->getKeyValueByKeyType(2);
+		f32 endKey   = teki.mTekiAnimator->getKeyValueByKeyType(3);
+		if (startKey <= counter && counter <= endKey) {
+			NVector3f hitCenter;
+			teki.outputHitCenter(hitCenter);
+			teki.drawRange(gfx, hitCenter, teki.getAttackHitRange(), Colour(255, 0, 0, 255));
+		}
+	}
+
+	teki.drawRange(gfx, teki.getPosition(), teki.getLowerRange(), Colour(255, 0, 255, 255));
 }
 
 /*
@@ -3157,8 +3130,26 @@ void TaiNapkidStrategy::drawDebugInfo(Teki&, Graphics&)
  * Address:	8013885C
  * Size:	0000BC
  */
-bool TekiNapkidTargetPikiCondition::satisfy(Creature*)
+bool TekiNapkidTargetPikiCondition::satisfy(Creature* target)
 {
+	if (target->mObjType != OBJTYPE_Piki) {
+		return false;
+	}
+
+	if (target->isStickTo()) {
+		return false;
+	}
+
+	if (!TekiVisibleCondition(mTeki).satisfy(target)) {
+		return false;
+	}
+
+	if (static_cast<Piki*>(target)->getState() == PIKISTATE_FallMeck) {
+		return false;
+	}
+
+	TekiVisibleCondition(nullptr);
+	return true;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3226,8 +3217,22 @@ bool TekiNapkidTargetPikiCondition::satisfy(Creature*)
  * Address:	80138918
  * Size:	0000A0
  */
-bool TekiNapkidShortRangeCondition::satisfy(Creature*)
+bool TekiNapkidShortRangeCondition::satisfy(Creature* target)
 {
+	if (target->mObjType != OBJTYPE_Piki) {
+		return false;
+	}
+
+	if (target->isStickTo()) {
+		return false;
+	}
+
+	if (TekiDistanceCondition(mTeki, 130.0f).satisfy(target)) {
+		return true;
+	}
+
+	u32 bad[6];
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3286,8 +3291,11 @@ bool TekiNapkidShortRangeCondition::satisfy(Creature*)
  * Address:	801389B8
  * Size:	000054
  */
-void TaiNapkidWanderingRouteAction::start(Teki&)
+void TaiNapkidWanderingRouteAction::start(Teki& teki)
 {
+	TaiContinuousMotionAction::start(teki);
+	teki.mCurrRouteWayPointID = teki.getNearestWayPoint()->mIndex;
+	makeTargetPosition(teki);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3319,8 +3327,24 @@ void TaiNapkidWanderingRouteAction::start(Teki&)
  * Address:	80138A0C
  * Size:	0000AC
  */
-bool TaiNapkidWanderingRouteAction::act(Teki&)
+bool TaiNapkidWanderingRouteAction::act(Teki& teki)
 {
+	TaiContinuousMotionAction::act(teki);
+	if (!motionStarted(teki)) {
+		return false;
+	}
+
+	WayPoint* currWaypoint = teki.getWayPoint(teki.mCurrRouteWayPointID);
+	if (currWaypoint == nullptr) {
+		makeTargetPosition(teki);
+		return false;
+	}
+
+	if (teki.moveToward(currWaypoint->mPosition, _0C)) {
+		makeTargetPosition(teki);
+	}
+
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3384,8 +3408,24 @@ bool TaiNapkidWanderingRouteAction::act(Teki&)
  * Address:	80138AB8
  * Size:	0000A8
  */
-void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki&)
+void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki& teki)
 {
+	WayPoint* currWaypoint = teki.getWayPoint(teki.mCurrRouteWayPointID);
+	if (currWaypoint == nullptr) {
+		return;
+	}
+
+	int i           = 0;
+	int randomIndex = NSystem::randomInt(currWaypoint->mLinkCount - 1);
+	for (int j = 0; j < currWaypoint->mLinkCount; j++) {
+		if (currWaypoint->mLinkIndices[j] > -1) {
+			if (i == randomIndex) {
+				teki.mCurrRouteWayPointID = currWaypoint->mLinkIndices[j];
+				break;
+			}
+			i++;
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3448,8 +3488,19 @@ void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki&)
  * Address:	80138B60
  * Size:	0000B8
  */
-bool TaiNapkidTargetPikiAction::act(Teki&)
+bool TaiNapkidTargetPikiAction::act(Teki& teki)
 {
+	Creature* nearestPiki = pikiMgr->findClosest(teki.getPosition(), &TekiNapkidTargetPikiCondition(&teki));
+	if (nearestPiki == nullptr) {
+		return false;
+	} else {
+		teki.setCreaturePointer(0, nearestPiki);
+		return true;
+	}
+
+	return false;
+
+	TekiNapkidTargetPikiCondition(nullptr);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3514,8 +3565,22 @@ bool TaiNapkidTargetPikiAction::act(Teki&)
  * Address:	80138C18
  * Size:	0000A8
  */
-bool TaiNapkidPikiLostAction::act(Teki&)
+bool TaiNapkidPikiLostAction::act(Teki& teki)
 {
+
+	Creature* targetCreature = teki.getCreaturePointer(0);
+	if (targetCreature == nullptr) {
+		return true;
+	}
+
+	if (!TekiNapkidTargetPikiCondition(&teki).satisfy(targetCreature)) {
+		teki.clearCreaturePointer(0);
+		return true;
+	}
+
+	return false;
+
+	u32 badCompiler[8];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3576,8 +3641,20 @@ bool TaiNapkidPikiLostAction::act(Teki&)
  * Address:	80138CC0
  * Size:	000088
  */
-bool TaiNapkidShortRangeAction::act(Teki&)
+bool TaiNapkidShortRangeAction::act(Teki& teki)
 {
+	Creature* targetCreature = teki.getCreaturePointer(0);
+	if (targetCreature == nullptr) {
+		return true;
+	}
+
+	if (TekiNapkidShortRangeCondition(&teki).satisfy(targetCreature)) {
+		return true;
+	}
+
+	return false;
+
+	u32 badCompiler[8];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3628,8 +3705,12 @@ bool TaiNapkidShortRangeAction::act(Teki&)
  * Address:	80138D48
  * Size:	0000A8
  */
-void TaiNapkidStraightFlyingAction::start(Teki&)
+void TaiNapkidStraightFlyingAction::start(Teki& teki)
 {
+	NVector3f directionVec;
+	teki.outputDirectionVector(directionVec);
+	directionVec.scale(150.0f);
+	teki.inputDrive(directionVec);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3682,8 +3763,20 @@ void TaiNapkidStraightFlyingAction::start(Teki&)
  * Address:	80138DF0
  * Size:	000098
  */
-bool TaiNapkidStraightFlyingAction::act(Teki&)
+bool TaiNapkidStraightFlyingAction::act(Teki& teki)
 {
+	Creature* targetCreature = teki.getCreaturePointer(0);
+	if (targetCreature == nullptr) {
+		return true;
+	}
+
+	NVector3f targetPosition(targetCreature->getPosition());
+	if (targetPosition.distanceXZ(teki.getPosition()) >= _08) {
+		return true;
+	}
+
+	u32 badCompiler[6];
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3738,8 +3831,50 @@ bool TaiNapkidStraightFlyingAction::act(Teki&)
  * Address:	80138E88
  * Size:	00029C
  */
-void TaiNapkidCirclingAction::start(Teki&)
+void TaiNapkidCirclingAction::start(Teki& teki)
 {
+	Creature* targetCreature = teki.getCreaturePointer(0);
+	if (targetCreature == nullptr) {
+		return;
+	}
+
+	// im probably not gonna try to properly annotate this math rn
+	NVector3f sep;
+	sep.sub2(targetCreature->getPosition(), teki.getPosition());
+	sep.y = 0;
+	sep.normalizeCheck();
+
+	NVector3f directionVec;
+	teki.outputDirectionVector(directionVec);
+
+	NVector3f cross;
+	NVector3f up(0.0f, 1.0f, 0.0f);
+	cross.cross(up, directionVec);
+	cross.normalizeCheck();
+
+	f32 dotprod   = cross.dot(sep);
+	f32 scaledPi  = NMathF::pi * 50.0f / 150.0f;
+	f32 piDivisor = NMathF::pi / scaledPi;
+
+	NVector3f normalized(cross);
+	normalized.scale(50.0f);
+	if (dotprod < 0.0f) {
+		normalized.negate();
+		piDivisor = -piDivisor;
+	}
+
+	NVector3f targetVelocity;
+	targetVelocity.add2(teki.getPosition(), normalized);
+	teki.mVelocityIO.input(targetVelocity);
+
+	NVector3f targetPos(teki.getPosition());
+	teki.mPositionIO.input(targetPos);
+
+	teki.mCircleMoveEvent->makeCircleMoveEvent(scaledPi, &teki.mPositionIO, &teki.mVelocityIO, 1.0f, 50.0f, 0.0f, piDivisor);
+	teki.mCircleMoveEvent->reset();
+
+	teki.mTargetAngle = teki.mCircleMoveEvent->mAngle;
+	teki.setCreatureFlag(CF_Unk10);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3923,17 +4058,10 @@ void TaiNapkidCirclingAction::start(Teki&)
  * Address:	80139124
  * Size:	000018
  */
-void TaiNapkidCirclingAction::finish(Teki&)
+void TaiNapkidCirclingAction::finish(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r4)
-	  rlwinm    r0,r0,0,23,21
-	  stw       r0, 0xC8(r4)
-	  lfs       f0, -0x5B98(r2)
-	  stfs      f0, 0x3A4(r4)
-	  blr
-	*/
+	teki.resetCreatureFlag(CF_Unk10);
+	teki._3A4 = 0.0f;
 }
 
 /*
@@ -3941,8 +4069,29 @@ void TaiNapkidCirclingAction::finish(Teki&)
  * Address:	8013913C
  * Size:	000124
  */
-bool TaiNapkidCirclingAction::act(Teki&)
+bool TaiNapkidCirclingAction::act(Teki& teki)
 {
+	NVector3f velocity;
+	teki.mVelocityIO.output(velocity);
+
+	NVector3f sep;
+	sep.sub2(velocity, teki.getPosition());
+	sep.normalizeCheck();
+
+	NVector3f direction;
+	direction.add2(sep, teki.getDrive());
+	teki.inputDirectionVector(direction);
+
+	f32 temp  = NMathF::sin(teki.mCircleMoveEvent->mAngle - teki.mTargetAngle);
+	teki._3A4 = -NMathF::pi * 0.25 * temp;
+
+	if (teki.mCircleMoveEvent->isFinished()) {
+		return true;
+	}
+
+	return false;
+
+	u32 badCompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4030,8 +4179,11 @@ bool TaiNapkidCirclingAction::act(Teki&)
  * Address:	80139260
  * Size:	000060
  */
-bool TaiNapkidFlyingAction::act(Teki&)
+bool TaiNapkidFlyingAction::act(Teki& teki)
 {
+	f32 seaLevel = teki.getSeaLevel();
+	teki.getPosition().y += 0.15f * (_08 + seaLevel - teki.getPosition().y);
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4066,20 +4218,10 @@ bool TaiNapkidFlyingAction::act(Teki&)
  * Address:	801392C0
  * Size:	000024
  */
-bool TaiNapkidAscendingAction::act(Teki&)
+bool TaiNapkidAscendingAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x3150(r13)
-	  lfs       f1, 0x8(r3)
-	  li        r3, 0
-	  lfs       f0, 0x28C(r5)
-	  lfs       f2, 0x98(r4)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x98(r4)
-	  blr
-	*/
+	teki.getPosition().y += NSystem::getFrameTime() * _08;
+	return false;
 }
 
 /*
@@ -4087,44 +4229,19 @@ bool TaiNapkidAscendingAction::act(Teki&)
  * Address:	801392E4
  * Size:	00006C
  */
-bool TaiNapkidApproachPikiAction::act(Teki&)
+bool TaiNapkidApproachPikiAction::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x418(r4)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x5C
+	Creature* targetCreature = teki.getCreaturePointer(0);
+	if (targetCreature == nullptr) {
+		return false;
+	}
 
-	.loc_0x20:
-	  lwz       r5, 0x2C4(r4)
-	  addi      r0, r3, 0x94
-	  addi      r3, r4, 0
-	  lwz       r5, 0x84(r5)
-	  mr        r4, r0
-	  lwz       r5, 0x4(r5)
-	  lwz       r5, 0x0(r5)
-	  lfs       f2, 0x24(r5)
-	  lfs       f1, 0x20(r5)
-	  bl        0xD930
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x58
-	  li        r3, 0
-	  b         .loc_0x5C
+	if (!teki.inSectorPosition(targetCreature->getPosition(), teki.getParameterF(TPF_AttackableRange),
+	                           teki.getParameterF(TPF_AttackableAngle))) {
+		return false;
+	}
 
-	.loc_0x58:
-	  li        r3, 0x1
-
-	.loc_0x5C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -4132,8 +4249,52 @@ bool TaiNapkidApproachPikiAction::act(Teki&)
  * Address:	80139350
  * Size:	000364
  */
-bool TaiNapkidCatchingAction::act(Teki&)
+bool TaiNapkidCatchingAction::act(Teki& teki)
 {
+	f32 counter = teki.mTekiAnimator->getCounter();
+	f32 key     = teki.mTekiAnimator->getKeyValueByKeyType(2);
+	if (key > counter) {
+		return false;
+	}
+
+	key = teki.mTekiAnimator->getKeyValueByKeyType(3);
+	if (counter > key) {
+		return true;
+	}
+
+	Vector3f direction;
+	teki.outputDirectionVector(direction);
+	direction.scale(teki.getParameterF(TPF_AttackRange));
+
+	NVector3f offset;
+	offset.add2(teki.getPosition(), direction);
+
+	TekiAndCondition notStickerAndIsRecognizedCond(&TekiRecognitionCondition(&teki), &TekiNotCondition(&TekiStickerCondition(&teki)));
+
+	Vector3f spherePos;
+	spherePos.set(offset);
+	TekiPositionSphereDistanceCondition insideSphereCond(spherePos, teki.getParameterF(TPF_AttackHitRange));
+
+	Iterator iter(pikiMgr);
+	CI_LOOP(iter)
+	{
+		Creature* piki = *iter;
+		if (piki == nullptr) {
+			return false;
+		}
+
+		if (TekiAndCondition(&notStickerAndIsRecognizedCond, &insideSphereCond).satisfy(piki)) {
+			CollPart* freeSlot = teki.getFreeSlot();
+			if (freeSlot == nullptr) {
+				return false;
+			}
+
+			InteractSwallow swallow(&teki, freeSlot, 0);
+			piki->stimulate(swallow);
+		}
+	}
+
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4387,8 +4548,24 @@ bool TaiNapkidCatchingAction::act(Teki&)
  * Address:	801396B4
  * Size:	00017C
  */
-void TaiNapkidCatchDescendingAction::start(Teki&)
+void TaiNapkidCatchDescendingAction::start(Teki& teki)
 {
+	teki.stopMove();
+
+	NVector3f position(teki.getPosition());
+	teki.mPositionIO.input(position);
+
+	NVector3f velocity;
+	teki.outputDirectionVector(velocity);
+	velocity.scale(160.0f);
+	velocity.y = -240.0f;
+	teki.mVelocityIO.input(velocity);
+
+	NVector3f acceleration(0.0f, -320.0f, 0.0f);
+	teki.mAccelerationIO.input(acceleration);
+
+	teki.mAccelEvent->makeAccelerationEvent(nullptr, &teki.mPositionIO, &teki.mVelocityIO, &teki.mAccelerationIO);
+	teki.mAccelEvent->reset();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4494,8 +4671,58 @@ void TaiNapkidCatchDescendingAction::start(Teki&)
  * Address:	80139830
  * Size:	0002CC
  */
-bool TaiNapkidCatchTracingAction::act(Teki&)
+bool TaiNapkidCatchTracingAction::act(Teki& teki)
 {
+	Creature* target = teki.getCreaturePointer(0);
+	NVector3f targetPos;
+	target->outputPosition(targetPos);
+	targetPos.y = 0.0f;
+
+	NVector3f pos;
+	teki.outputPosition(pos);
+	pos.y = 0.0f;
+
+	NVector3f dir;
+	teki.outputDirectionVector(dir);
+
+	NVector3f sep;
+	sep.sub2(targetPos, pos);
+	sep.normalizeCheck();
+
+	NVector3f crossVec;
+	crossVec.cross(sep, dir);
+
+	NVector3f acceleration;
+	teki.mAccelerationIO.output(acceleration);
+
+	if (NMathf::absolute(crossVec.y) < 0.1f) {
+		acceleration.x = 0.0f;
+		acceleration.z = 0.0f;
+	} else {
+		NVector3f crossVec2;
+		crossVec2.cross(dir, NVector3f(0.0f, 1.0f, 0.0f));
+		crossVec2.normalizeCheck();
+		crossVec2.scale(300.0f);
+
+		if (crossVec.y > 0.0f) {
+			acceleration.x = crossVec2.x;
+			acceleration.z = crossVec2.z;
+		} else {
+			acceleration.x = -crossVec2.x;
+			acceleration.z = -crossVec2.z;
+		}
+	}
+
+	teki.mAccelerationIO.input(acceleration);
+
+	// okay i guess
+	NVector3f velocity;
+	teki.mVelocityIO.output(velocity);
+	teki.mVelocityIO.input(velocity);
+
+	return false;
+
+	u32 bad[6];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4695,68 +4922,20 @@ bool TaiNapkidCatchTracingAction::act(Teki&)
  * Address:	80139AFC
  * Size:	0000E4
  */
-void TaiNapkidCatchFlyingAction::start(Teki&)
+void TaiNapkidCatchFlyingAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r4, 0
-	  addi      r4, r31, 0x94
-	  addi      r3, r1, 0x10
-	  bl        -0x1CC98
-	  lwz       r12, 0x358(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x358
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r1, 0x28
-	  bl        -0x1CCE4
-	  addi      r3, r31, 0x368
-	  lwz       r12, 0x368(r31)
-	  addi      r4, r1, 0x28
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x5B98(r2)
-	  addi      r3, r31, 0x368
-	  addi      r4, r1, 0x28
-	  stfs      f0, 0x2C(r1)
-	  lwz       r12, 0x368(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, -0x5B98(r2)
-	  addi      r3, r1, 0x1C
-	  fmr       f2, f1
-	  fmr       f3, f1
-	  bl        -0x1CCA8
-	  addi      r3, r31, 0x378
-	  lwz       r12, 0x378(r31)
-	  addi      r4, r1, 0x1C
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x460(r31)
-	  addi      r5, r31, 0x358
-	  addi      r6, r31, 0x368
-	  addi      r7, r31, 0x378
-	  li        r4, 0
-	  bl        -0x13C70
-	  lwz       r3, 0x460(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	teki.mPositionIO.input(NVector3f(teki.getPosition()));
+
+	NVector3f vel;
+	teki.mVelocityIO.output(vel);
+	vel.y = 0.0f;
+	teki.mVelocityIO.input(vel);
+
+	NVector3f accel(0.0f, 0.0f, 0.0f);
+	teki.mAccelerationIO.input(accel);
+
+	teki.mAccelEvent->makeAccelerationEvent(nullptr, &teki.mPositionIO, &teki.mVelocityIO, &teki.mAccelerationIO);
+	teki.mAccelEvent->reset();
 }
 
 /*
@@ -4764,68 +4943,20 @@ void TaiNapkidCatchFlyingAction::start(Teki&)
  * Address:	80139BE0
  * Size:	0000E4
  */
-void TaiNapkidCatchAscendingAction::start(Teki&)
+void TaiNapkidCatchAscendingAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r4, 0
-	  addi      r4, r31, 0x94
-	  addi      r3, r1, 0x10
-	  bl        -0x1CD7C
-	  lwz       r12, 0x358(r31)
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0x358
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r1, 0x28
-	  bl        -0x1CDC8
-	  addi      r3, r31, 0x368
-	  lwz       r12, 0x368(r31)
-	  addi      r4, r1, 0x28
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x5B98(r2)
-	  addi      r3, r31, 0x368
-	  addi      r4, r1, 0x28
-	  stfs      f0, 0x2C(r1)
-	  lwz       r12, 0x368(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, -0x5B98(r2)
-	  addi      r3, r1, 0x1C
-	  lfs       f2, -0x5B94(r2)
-	  fmr       f3, f1
-	  bl        -0x1CD8C
-	  addi      r3, r31, 0x378
-	  lwz       r12, 0x378(r31)
-	  addi      r4, r1, 0x1C
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x460(r31)
-	  addi      r5, r31, 0x358
-	  addi      r6, r31, 0x368
-	  addi      r7, r31, 0x378
-	  li        r4, 0
-	  bl        -0x13D54
-	  lwz       r3, 0x460(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	teki.mPositionIO.input(NVector3f(teki.getPosition()));
+
+	NVector3f vel;
+	teki.mVelocityIO.output(vel);
+	vel.y = 0.0f;
+	teki.mVelocityIO.input(vel);
+
+	NVector3f accel(0.0f, 200.0f, 0.0f);
+	teki.mAccelerationIO.input(accel);
+
+	teki.mAccelEvent->makeAccelerationEvent(nullptr, &teki.mPositionIO, &teki.mVelocityIO, &teki.mAccelerationIO);
+	teki.mAccelEvent->reset();
 }
 
 /*
@@ -4833,8 +4964,29 @@ void TaiNapkidCatchAscendingAction::start(Teki&)
  * Address:	80139CC4
  * Size:	000198
  */
-void TaiNapkidTakingOffAscendingAction::start(Teki&)
+void TaiNapkidTakingOffAscendingAction::start(Teki& teki)
 {
+	Stickers stickers(&teki);
+	int stickerCount = stickers.getCount();
+
+	f32 values[2];
+	NClampLinearFunction linearFunc(values);
+	linearFunc.makeClampLinearFunction(0.0f, 1.0f, 10.0f, 0.7f);
+	f32 linFuncValue = linearFunc.getValue(f32(stickerCount));
+
+	teki.mPositionIO.input(NVector3f(teki.getPosition()));
+
+	NVector3f takeOffVel;
+	teki.outputDirectionVector(takeOffVel);
+	takeOffVel.scale(30.0f);
+	takeOffVel.y = linFuncValue * 270.0f;
+	teki.mVelocityIO.input(takeOffVel);
+
+	NVector3f accel(0.0f, -300.0f, 0.0f);
+	teki.mAccelerationIO.input(accel);
+
+	teki.mAccelEvent->makeAccelerationEvent(nullptr, &teki.mPositionIO, &teki.mVelocityIO, &teki.mAccelerationIO);
+	teki.mAccelEvent->reset();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4947,8 +5099,21 @@ void TaiNapkidTakingOffAscendingAction::start(Teki&)
  * Address:	80139E5C
  * Size:	00012C
  */
-void TaiNapkidRisingAscendingAction::start(Teki&)
+void TaiNapkidRisingAscendingAction::start(Teki& teki)
 {
+	teki.mPositionIO.input(NVector3f(teki.getPosition()));
+
+	NVector3f newVel;
+	teki.outputDirectionVector(newVel);
+	newVel.scale(30.0f);
+	newVel.y = 0.0f;
+	teki.mVelocityIO.input(newVel);
+
+	NVector3f ascendingAccel(0.0f, 200.0f, 0.0f);
+	teki.mAccelerationIO.input(ascendingAccel);
+
+	teki.mAccelEvent->makeAccelerationEvent(nullptr, &teki.mPositionIO, &teki.mVelocityIO, &teki.mAccelerationIO);
+	teki.mAccelEvent->reset();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5034,8 +5199,36 @@ void TaiNapkidRisingAscendingAction::start(Teki&)
  * Address:	80139F88
  * Size:	0001D4
  */
-bool TaiNapkidThrowingPikiAction::act(Teki&)
+bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 {
+
+	// regswaps here
+	if (teki.getAnimationKeyOption(Teki::ANIMATION_KEY_OPTION_ACTION_0)) {
+		NVector3f throwVel(teki.mVelocity);
+		throwVel.y = -teki.getParameterF(NAPKIDPF_Unk12);
+
+		Stickers stickers(&teki);
+		Iterator iter(&stickers);
+		CI_LOOP(iter)
+		{
+			Creature* throwPiki = *iter;
+			if (throwPiki != nullptr) {
+				if (throwPiki->isStickToMouth()) {
+					throwPiki->endStickMouth();
+
+					throwPiki->stimulate(InteractThrowAway(&teki));
+
+					throwPiki->mVelocity.set(throwVel);
+					return false;
+				}
+			} else {
+				break;
+			}
+		}
+	}
+
+	u32 bad[8];
+	return false;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5183,8 +5376,22 @@ bool TaiNapkidThrowingPikiAction::act(Teki&)
  * Address:	8013A15C
  * Size:	0000C4
  */
-bool TaiNapkidFlickAction::act(Teki&)
+bool TaiNapkidFlickAction::act(Teki& teki)
 {
+	Stickers stickers(&teki);
+	int stickCount = stickers.getCount();
+
+	f32 linValues[1];
+	NClampLinearFunction cLinearFunc(linValues);
+	cLinearFunc.makeClampLinearFunction(1.0f, 0.1f, 5.0f, 0.7f);
+
+	f32 flickChance = cLinearFunc.getValue(f32(stickCount));
+	if (NMathF::occurred(flickChance)) {
+		return false;
+	}
+
+	u32 bad[4];
+	return true;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5248,8 +5455,30 @@ bool TaiNapkidFlickAction::act(Teki&)
  * Address:	8013A220
  * Size:	0001A8
  */
-void TaiNapkidFallingAction::start(Teki&)
+void TaiNapkidFallingAction::start(Teki& teki)
 {
+	teki.mPositionIO.input(NVector3f(teki.getPosition()));
+
+	NVector3f fallVel(0.0f, -20.0f, 0.0f);
+	teki.mParabolaEvent->makeParabolaEvent(nullptr, &teki.mPositionIO, fallVel, 1000.0f, teki.getGravity());
+	teki.mParabolaEvent->reset();
+
+	Stickers stickers(&teki);
+	Iterator iter(&stickers);
+	CI_LOOP(iter)
+	{
+		Creature* heldPiki = *iter;
+		if (heldPiki == nullptr) {
+			return;
+		}
+
+		if (heldPiki != nullptr && heldPiki->isStickToMouth()) {
+			heldPiki->endStickMouth();
+			iter.dec();
+		}
+	}
+
+	u32 bad[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5394,16 +5623,9 @@ bool TaiNapkidFallingAction::act(Teki&)
  * Address:	8013A3D0
  * Size:	000014
  */
-void TaiNapkidShockFallingAction::start(Teki&)
+void TaiNapkidShockFallingAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x98(r4)
-	  lfs       f0, -0x5B88(r2)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x98(r4)
-	  blr
-	*/
+	teki.getPosition().y += 10.0f;
 }
 
 /*
@@ -5411,8 +5633,23 @@ void TaiNapkidShockFallingAction::start(Teki&)
  * Address:	8013A3E4
  * Size:	0000D8
  */
-void TaiNapkidFallingWaterEffectAction::start(Teki&)
+void TaiNapkidFallingWaterEffectAction::start(Teki& teki)
 {
+	int mapCode = teki.getPositionMapCode();
+
+	Vector3f pos(teki.getPosition());
+	f32 minY = mapMgr->getMinY(pos.x, pos.z, true);
+	pos.y    = minY;
+
+	if (mapCode == ATTR_Water) {
+		effectMgr->create(EffectMgr::EFF_Frog_BubbleRingS, pos, nullptr, nullptr);
+		teki.playSound(SE_FLOG_WATERLAND);
+	} else {
+		effectMgr->create(EffectMgr::EFF_SmokeRing_S, pos, nullptr, nullptr);
+		teki.playSound(SE_FLOG_LAND);
+	}
+
+	u32 bad[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5481,28 +5718,9 @@ void TaiNapkidFallingWaterEffectAction::start(Teki&)
  * Address:	8013A4BC
  * Size:	000044
  */
-void TaiNapkidStartDroppingWaterAction::start(Teki&)
+void TaiNapkidStartDroppingWaterAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  addi      r3, r31, 0
-	  bl        0xF460
-	  cmpwi     r3, 0x5
-	  bne-      .loc_0x30
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        0xF510
-
-	.loc_0x30:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (teki.getPositionMapCode() == ATTR_Water) {
+		teki.startParticleGenerator(0);
+	}
 }

@@ -139,8 +139,8 @@ struct TaiFlickingAction : public TaiMotionAction {
  * @brief TODO
  */
 struct TaiFlickingUpperAction : public TaiMotionAction {
-	inline TaiFlickingUpperAction() // TODO: this is a guess
-	    : TaiMotionAction(0, 0)
+	inline TaiFlickingUpperAction(int nextState, int motionIdx) // TODO: this is a guess
+	    : TaiMotionAction(nextState, motionIdx)
 	{
 	}
 

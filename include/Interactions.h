@@ -503,7 +503,10 @@ struct InteractTalk : public Interaction {
  * @brief TODO
  */
 struct InteractThrowAway : public Interaction {
-	inline InteractThrowAway(); // TODO: probably
+	InteractThrowAway(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 
