@@ -858,7 +858,7 @@ config.libs = [
             Object(Matching, "os/OSMessage.c"),
             Object(Matching, "os/OSMemory.c"),
             Object(Matching, "os/OSMutex.c"),
-            Object(NonMatching, "os/OSReboot.c"),
+            Object(Matching, "os/OSReboot.c"),
             Object(Matching, "os/OSReset.c"),
             Object(Matching, "os/OSResetSW.c"),
             Object(Matching, "os/OSRtc.c"),
@@ -908,7 +908,7 @@ config.libs = [
     DolphinLib(
         "pad",
         [
-            Object(NonMatching, "pad/Padclamp.c"),
+            Object(Matching, "pad/Padclamp.c"),
             Object(NonMatching, "pad/Pad.c"),
         ]
     ),

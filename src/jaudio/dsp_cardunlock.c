@@ -1,3 +1,4 @@
+#define DEBUG
 #include "Dolphin/os.h"
 #include "Dolphin/card.h"
 #include "Dolphin/rand.h"

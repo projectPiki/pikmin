@@ -1,5 +1,6 @@
 #include "types.h"
 #include "fdlibm.h"
+#include "Dolphin/os.h"
 #include "Dolphin/mtx.h"
 #include "Dolphin/math.h"
 
@@ -522,25 +523,25 @@ void MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f3
 	f32 angle;
 	f32 cot;
 
-	angle = fovY * 0.5f;
-	angle = MTXDegToRad(angle);
+	ASSERTMSGLINE(2605, m, "MTXLightPerspective():  NULL MtxPtr 'm' ");
+	ASSERTMSGLINE(2606, (fovY > 0.0) && (fovY < 180.0), "MTXLightPerspective():  'fovY' out of range ");
+	ASSERTMSGLINE(2607, 0 != aspect, "MTXLightPerspective():  'aspect' is 0 ");
 
-	cot = 1.0f / tanf(angle);
-
-	m[0][0] = (cot / aspect) * scaleS;
-	m[0][1] = 0.0f;
+	angle   = (0.5f * fovY);
+	angle   = MTXDegToRad(angle);
+	cot     = 1 / tanf(angle);
+	m[0][0] = (scaleS * (cot / aspect));
+	m[0][1] = 0;
 	m[0][2] = -transS;
-	m[0][3] = 0.0f;
-
-	m[1][0] = 0.0f;
-	m[1][1] = cot * scaleT;
+	m[0][3] = 0;
+	m[1][0] = 0;
+	m[1][1] = (cot * scaleT);
 	m[1][2] = -transT;
-	m[1][3] = 0.0f;
-
-	m[2][0] = 0.0f;
-	m[2][1] = 0.0f;
-	m[2][2] = -1.0f;
-	m[2][3] = 0.0f;
+	m[1][3] = 0;
+	m[2][0] = 0;
+	m[2][1] = 0;
+	m[2][2] = -1;
+	m[2][3] = 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
