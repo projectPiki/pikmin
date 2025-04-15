@@ -393,6 +393,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 		stopDrive();
 	}
 
+	Vector3f& getVelocity() { return mVelocity; }
 	Vector3f& getDrive() { return mTargetVelocity; }
 	f32 getDriveLength() { return mTargetVelocity.length(); }
 
@@ -422,12 +423,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	}
 
 	bool animationFinished() { return mTekiAnimator->isFinishing(); }
-
-	/*
-	    DLL inlines to make:
-	    Vector3f& getVelocity();
-
-	*/
 
 	// this is basically two static enums smh
 	static const int TEKI_OPTION_VISIBLE;

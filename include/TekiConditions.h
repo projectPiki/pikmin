@@ -192,8 +192,8 @@ struct TekiLowerRangeCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiNapkidShortRangeCondition : public TekiCondition {
-	inline TekiNapkidShortRangeCondition(Teki* teki) // DLL, to do
-		: mTeki(teki)
+	TekiNapkidShortRangeCondition(Teki* teki)
+	    : mTeki(teki)
 	{
 	}
 
@@ -208,7 +208,7 @@ struct TekiNapkidShortRangeCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiNapkidTargetPikiCondition : public TekiCondition {
-	inline TekiNapkidTargetPikiCondition(Teki* teki) // DLL, to do
+	TekiNapkidTargetPikiCondition(Teki* teki)
 	    : mTeki(teki)
 	{
 	}
