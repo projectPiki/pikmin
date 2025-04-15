@@ -61,9 +61,10 @@ struct TAIAmotionLoop : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAsetMotionSpeed : public TAIAmotion {
-	inline TAIAsetMotionSpeed() // this is a guess
-	    : TAIAmotion(-1, -1)
+	inline TAIAsetMotionSpeed(int nextState, int motionID, f32 motionSpeed) // this is a guess
+	    : TAIAmotion(nextState, motionID)
 	{
+		mMotionSpeed = motionSpeed;
 	}
 
 	virtual void start(Teki& teki) // _08

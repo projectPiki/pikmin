@@ -10,8 +10,10 @@ struct Vector3f;
  * @brief TODO
  */
 struct TAIAappearKabekui : public TAIAsetMotionSpeed {
-	inline TAIAappearKabekui() // TODO: this is a guess
+	inline TAIAappearKabekui(int nextState, int motionID, f32 motionSpeed, u8 p4) // TODO: this is a guess
+		: TAIAsetMotionSpeed(nextState, motionID, motionSpeed)
 	{
+		_10 = p4;
 	}
 
 	virtual void start(Teki&); // _08
@@ -26,8 +28,8 @@ struct TAIAappearKabekui : public TAIAsetMotionSpeed {
  * @brief TODO
  */
 struct TAIAsetTargetPointWorkObject : public TaiAction {
-	inline TAIAsetTargetPointWorkObject() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAsetTargetPointWorkObject(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -116,8 +118,8 @@ struct TAIAgoGoalPath : public TAIAgoTargetPriorityFaceDir {
  * @brief TODO
  */
 struct TAIAsetTargetPointCircleRandom : public TaiAction {
-	inline TAIAsetTargetPointCircleRandom() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAsetTargetPointCircleRandom(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -246,8 +248,8 @@ struct TAIAstop : public TaiAction {
  * @brief TODO
  */
 struct TAIArandomWalk : public TAIAreserveMotion {
-	inline TAIArandomWalk() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIArandomWalk(int nextState, int motionID) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 

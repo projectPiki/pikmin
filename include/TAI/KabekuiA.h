@@ -13,6 +13,49 @@
 
 /////////// Female Sheargrub AI Actions ///////////
 
+/**
+ * @brief
+ */
+enum TAIkabekuiAFloatParms {
+	KABEKUIAPF_Unk0 = TPF_COUNT,
+	KABEKUIAPF_Unk1,
+	KABEKUIAPF_Unk2,
+	KABEKUIAPF_Unk3,
+	KABEKUIAPF_COUNT,
+};
+
+/**
+ * @brief
+ */
+enum TAIkabekuiAStateID {
+	KABEKUIASTATE_Unk0,
+	KABEKUIASTATE_Unk1,
+	KABEKUIASTATE_Unk2,
+	KABEKUIASTATE_Unk3,
+	KABEKUIASTATE_Unk4,
+	KABEKUIASTATE_Unk5,
+	KABEKUIASTATE_Unk6,
+	KABEKUIASTATE_Unk7,
+	KABEKUIASTATE_Unk8,
+	KABEKUIASTATE_Unk9,
+	KABEKUIASTATE_Unk10,
+	KABEKUIASTATE_COUNT,
+};
+
+/**
+ * @brief
+ */
+enum TAIkabekuiAMotionID {
+	KABEKUIAANIM_Unk0,
+	KABEKUIAANIM_Unk1,
+	KABEKUIAANIM_Unk2,
+	KABEKUIAANIM_Unk3,
+	KABEKUIAANIM_Unk4,
+	KABEKUIAANIM_Unk5,
+	KABEKUIAANIM_Unk6,
+	KABEKUIAANIM_COUNT,
+};
+
 /*
  * @brief TODO
  */
@@ -65,7 +108,7 @@ struct TAIkabekuiAAnimation : public TAIanimation {
  */
 struct TAIAsleepKabekuiA : public TAIAtimerReaction {
 	TAIAsleepKabekuiA(int nextState)
-	    : TAIAtimerReaction(nextState, 0.0f)
+	    : TAIAtimerReaction(nextState, 3.0f)
 	{
 	}
 
@@ -81,7 +124,7 @@ struct TAIAsleepKabekuiA : public TAIAtimerReaction {
  */
 struct TAIAdiveKabekuiA : public TAIAtimerReaction {
 	TAIAdiveKabekuiA(int nextState)
-	    : TAIAtimerReaction(nextState, 0.0f)
+	    : TAIAtimerReaction(nextState, 3.0f)
 	{
 	}
 
@@ -96,7 +139,8 @@ struct TAIAdiveKabekuiA : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAattackWorkObjectKabekuiA : public TAIAattackWorkObject {
-	inline TAIAattackWorkObjectKabekuiA() // TODO: this is a guess
+	inline TAIAattackWorkObjectKabekuiA(int nextState, int motionID, int p3) // TODO: this is a guess
+		: TAIAattackWorkObject(nextState, motionID, p3)
 	{
 	}
 

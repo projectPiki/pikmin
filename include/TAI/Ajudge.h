@@ -9,8 +9,8 @@
  * @brief TODO
  */
 struct TAIAsearchWorkObject : public TaiAction {
-	inline TAIAsearchWorkObject() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAsearchWorkObject(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -186,8 +186,8 @@ struct TAIAoutsideTerritoryRangeNavi : public TaiAction {
  * @brief TODO
  */
 struct TAIAvisibleNavi : public TaiAction {
-	inline TAIAvisibleNavi() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAvisibleNavi(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 

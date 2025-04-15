@@ -9,8 +9,8 @@
  * @brief TODO
  */
 struct TAIAhitCheckFlyingPiki : public TaiAction {
-	inline TAIAhitCheckFlyingPiki() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAhitCheckFlyingPiki(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -208,8 +208,8 @@ struct TAIAtimerReaction : public TaiAction {
  * @brief TODO
  */
 struct TAIAinvincibleOff : public TaiAction {
-	inline TAIAinvincibleOff() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAinvincibleOff(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -224,8 +224,8 @@ struct TAIAinvincibleOff : public TaiAction {
  * @brief TODO
  */
 struct TAIAinvincibleOn : public TaiAction {
-	inline TAIAinvincibleOn() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAinvincibleOn(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -240,8 +240,8 @@ struct TAIAinvincibleOn : public TaiAction {
  * @brief TODO
  */
 struct TAIAshadowOff : public TaiAction {
-	inline TAIAshadowOff() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAshadowOff(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -256,8 +256,8 @@ struct TAIAshadowOff : public TaiAction {
  * @brief TODO
  */
 struct TAIAshadowOn : public TaiAction {
-	inline TAIAshadowOn() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAshadowOn(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 

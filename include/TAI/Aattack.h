@@ -10,9 +10,11 @@ struct Bridge;
  * @brief TODO
  */
 struct TAIAattackWorkObject : public TAIAreserveMotion {
-	inline TAIAattackWorkObject() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIAattackWorkObject(int nextState, int motionID, int p3) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionID)
 	{
+		_0C = motionID;
+		_10 = p3;
 	}
 
 	virtual void start(Teki&);               // _08
@@ -28,6 +30,8 @@ struct TAIAattackWorkObject : public TAIAreserveMotion {
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
+	int _0C;
+	int _10;
 };
 
 /**
