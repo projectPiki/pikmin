@@ -96,7 +96,8 @@ struct TAIAdiveKabekuiB : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAattackWorkObjectKabekuiB : public TAIAattackWorkObject {
-	inline TAIAattackWorkObjectKabekuiB() // TODO: this is a guess
+	inline TAIAattackWorkObjectKabekuiB(int nextState, int motionID, int p3) // TODO: this is a guess
+		: TAIAattackWorkObject(nextState, motionID, p3)
 	{
 	}
 

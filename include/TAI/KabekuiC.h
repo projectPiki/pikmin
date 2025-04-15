@@ -112,7 +112,8 @@ struct TAIAdiveKabekuiC : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAattackWorkObjectKabekuiC : public TAIAattackWorkObject {
-	inline TAIAattackWorkObjectKabekuiC() // TODO: this is a guess
+	inline TAIAattackWorkObjectKabekuiC(int nextState, int motionID, int p3) // TODO: this is a guess
+	    : TAIAattackWorkObject(nextState, motionID, p3)
 	{
 	}
 
@@ -180,7 +181,8 @@ struct TAIAlessLifeKabekuiC : public TAIAlessLife {
  * @brief TODO
  */
 struct TAIAcheckPikiFlyKabekuiC : public TAIAhitCheckFlyingPiki {
-	inline TAIAcheckPikiFlyKabekuiC() // TODO: this is a guess
+	inline TAIAcheckPikiFlyKabekuiC(int nextState) // TODO: this is a guess
+		: TAIAhitCheckFlyingPiki(nextState)
 	{
 	}
 
