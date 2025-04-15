@@ -7,6 +7,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct zenList {
 	zenList() { mPrev = mNext = this; }
@@ -31,6 +33,8 @@ struct zenList {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct zenListManager {
 	zenListManager()

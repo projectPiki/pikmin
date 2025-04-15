@@ -14,6 +14,17 @@ struct Graphics;
 struct Texture;
 struct Vector3f;
 
+/**
+ * @brief TODO
+ *
+ * @note Size 0xC. This is used by effectMgr and effectMgr2D to load in particle file addresses.
+ */
+struct PtclLoadInfo {
+	char* mPCRPath;  // _00
+	char* mTex1Path; // _04
+	char* mTex2Path; // _08
+};
+
 namespace zen {
 
 struct particleMdl;
@@ -177,7 +188,11 @@ struct particleChildMdl : public particleMdlBase {
  * @brief TODO
  */
 struct particleMdlManager {
-	// particleMdlManager();
+	particleMdlManager()
+	{
+		mPtclList      = nullptr;
+		mChildPtclList = nullptr;
+	}
 
 	void init(u32, u32);
 
@@ -451,7 +466,7 @@ struct PCRData : public zenList {
 /**
  * @brief TODO
  */
-struct particleLoader {
+struct particleLoader : public zenListManager {
 	u8* load(char*, bool);
 	u8* pmFind(char*);
 
@@ -462,19 +477,18 @@ struct particleLoader {
 	PCRData* pmCreatePCRData(char* name, u32 bufSize)
 	{
 		PCRData* data = new PCRData(name, bufSize);
-		_00.put(data);
+		put(data);
 		return data;
 	}
 
-	// TODO: members
-	zenListManager _00; // _00, members are (probably) PCRData*
+	// _00-_10 = zenListManager (members are PCRData*)
 };
 
 /**
  * @brief TODO
  */
 struct simplePtclManager {
-	// simplePtclManager();
+	simplePtclManager() { mMdlMgr = nullptr; }
 
 	void update(f32);
 	void draw(Graphics&);
@@ -499,7 +513,11 @@ struct simplePtclManager {
  * @brief TODO
  */
 struct particleManager {
-	// particleManager();
+	particleManager()
+	{
+		mPtclGenList = nullptr;
+		_5C          = 0;
+	}
 
 	void init(u32 numPtclGens, u32 numParticles, u32 numChildParticles, f32 p4);
 	particleGenerator* createGenerator(u8*, Texture*, Texture*, Vector3f&, CallBack1<particleGenerator*>*,
@@ -534,7 +552,7 @@ struct particleManager {
 	zenListManager _20;               // _20
 	particleGenerator* mPtclGenList;  // _30, array of up to 0x1000 particleGenerators
 	particleMdlManager mMdlMgr;       // _34
-	u8 _5C[4];                        // _5C, unknown, might be in particleMdlManager
+	u32 _5C;                          // _5C, unknown, might be in particleMdlManager
 	simplePtclManager mSimplePtclMgr; // _60
 	u32 mMaxPtclGens;                 // _74
 	u32 mMaxParticles;                // _78

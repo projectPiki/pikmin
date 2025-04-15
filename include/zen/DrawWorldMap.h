@@ -332,7 +332,7 @@ struct WorldMapCoursePoint {
 		P2DPicture* pic = _14;
 		Vector3f vec1;
 		vec1.set(pic->getPosH() + (pic->getWidth() >> 1), 480 - (pic->getPosV() + (pic->getHeight() >> 1)), 0.0f);
-		WMeffMgr->create(45, vec1, nullptr, nullptr);
+		WMeffMgr->create(EFF2D_MapRocketIn, vec1, nullptr, nullptr);
 	}
 
 	bool update(bool isSelected)
@@ -348,8 +348,8 @@ struct WorldMapCoursePoint {
 			if (timer1 > 0.5f) {
 				Vector3f vec1;
 				vec1.set(_14->getPosH() + (_14->getWidth() >> 1), 480 - (_14->getPosV() + (_14->getHeight() >> 1)), 0.0f);
-				WMeffMgr->create(46, vec1, nullptr, nullptr);
-				WMeffMgr->create(47, vec1, nullptr, nullptr);
+				WMeffMgr->create(EFF2D_MapAppear1, vec1, nullptr, nullptr);
+				WMeffMgr->create(EFF2D_MapAppear2, vec1, nullptr, nullptr);
 				SeSystem::playSysSe(SYSSE_SELECT_COURSEOPEN);
 				_04 = 2;
 				_08 = 0.0f;
@@ -549,7 +549,8 @@ struct WorldMapShootingStarMgr {
 	void update()
 	{
 		if (zen::Rand(100.0f) < mStarFallChance) {
-			WMeffMgr->create(51, Vector3f(zen::Rand(640.0f), 500.0f - zen::Rand(50.0f), -zen::Rand(150.0f)), nullptr, nullptr);
+			WMeffMgr->create(EFF2D_MapShootingStar, Vector3f(zen::Rand(640.0f), 500.0f - zen::Rand(50.0f), -zen::Rand(150.0f)), nullptr,
+			                 nullptr);
 		}
 		if (mIsRapidFireMode) {
 			if (mStarFallChance < 0.0f) {

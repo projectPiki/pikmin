@@ -237,7 +237,7 @@ struct WorldMapCursorOnyon {
 		_1C.set(0.0f, 0.0f, 0.0f);
 		mBottomPos.set(0.0f, bottomLengthDefault, 0.0f);
 
-		_38 = WMeffMgr->create(50, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+		_38 = WMeffMgr->create(EFF2D_MapOnyonSparkle, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 	}
 	void update(Vector3f& scale)
 	{
@@ -443,12 +443,12 @@ struct WorldMapCursorMgr {
 			}
 		}
 
-		_110[0] = WMeffMgr->create(48, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+		_110[0] = WMeffMgr->create(EFF2D_MapRocketFire, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 		_110[0]->invisible();
 		_118 = _110[0]->getInitVel();
 		_120 = _110[0]->getFreqFrm();
 
-		_110[1] = WMeffMgr->create(49, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+		_110[1] = WMeffMgr->create(EFF2D_MapRocketSmoke, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 		_110[1]->invisible();
 		_11C = _110[1]->getInitVel();
 		_124 = _110[0]->getFreqFrm(); // maybe typo?
