@@ -43,7 +43,7 @@ int PADReset(u32 mask);
 BOOL PADRecalibrate(u32 mask);
 BOOL PADInit();
 static void PADReceiveCheckCallback(s32 chan, u32 error, OSContext* arg2);
-void PADRead(struct PADStatus* status);
+u32 PADRead(struct PADStatus* status);
 void PADSetSamplingRate(u32 msec);
 void __PADTestSamplingRate(u32 tvmode);
 void PADControlAllMotors(const u32* commandArray);
@@ -328,177 +328,14 @@ static void PADFixCallback(s32 unused, u32 error, struct OSContext* context)
 			return;
 		}
 		if ((type & 0x40000000) && !(type & 0x80000) && !(type & 0x40000)) {
-			frame = 0x41000000;
-			SITransfer(ResettingChan, &frame, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
+			SITransfer(ResettingChan, &cmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
 			return;
 		}
 		frame = (ResettingChan << 0x16) | 0x4D000000 | (__OSWirelessPadFixMode << 8) & 0x3FFF00u;
-		SITransfer(ResettingChan, &frame, 3, &Origin[ResettingChan], 8, PADProbeCallback, 0);
+		SITransfer(ResettingChan, &cmdProbeDevice[ResettingChan], 3, &Origin[ResettingChan], 8, PADProbeCallback, 0);
 		return;
 	}
 	DoReset();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803D
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,28,31
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r3, 0x33B0
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  bne-      .loc_0x19C
-	  lwz       r30, 0x2A38(r13)
-	  rlwinm    r0,r30,2,0,29
-	  add       r3, r31, r0
-	  lwz       r29, 0x10(r3)
-	  bl        -0x9A34
-	  rlwinm    r0,r30,1,0,30
-	  add       r3, r3, r0
-	  lhz       r30, 0x1C(r3)
-	  li        r3, 0
-	  bl        -0x96C0
-	  rlwinm.   r0,r29,0,11,11
-	  rlwinm    r4,r30,8,0,23
-	  beq-      .loc_0x74
-	  lis       r3, 0xD0
-	  subi      r0, r3, 0x100
-	  and       r3, r4, r0
-	  and       r0, r29, r0
-	  cmplw     r3, r0
-	  beq-      .loc_0x114
-
-	.loc_0x74:
-	  lwz       r0, 0x3360(r13)
-	  cntlzw    r0, r0
-	  stw       r0, 0x2A38(r13)
-	  lwz       r0, 0x2A38(r13)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x238
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x238
-	  mulli     r0, r0, 0xC
-	  add       r3, r31, r0
-	  li        r4, 0
-	  li        r5, 0xC
-	  addi      r3, r3, 0x20
-	  bl        -0x201128
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x45F4
-	  rlwinm    r0,r3,2,0,29
-	  li        r30, 0
-	  add       r6, r31, r0
-	  stwu      r30, 0x10(r6)
-	  addi      r4, r13, 0x3374
-	  stwx      r30, r31, r0
-	  li        r5, 0x1
-	  li        r7, 0x3
-	  li        r10, 0
-	  li        r9, 0
-	  bl        -0x8C94
-	  lwz       r0, 0x2A38(r13)
-	  lis       r4, 0x8000
-	  lwz       r5, 0x3360(r13)
-	  cmpwi     r3, 0
-	  srw       r0, r4, r0
-	  andc      r0, r5, r0
-	  stw       r0, 0x3360(r13)
-	  bne-      .loc_0x238
-	  li        r0, 0x20
-	  stw       r30, 0x3360(r13)
-	  stw       r0, 0x2A38(r13)
-	  b         .loc_0x238
-
-	.loc_0x114:
-	  rlwinm.   r0,r29,0,1,1
-	  beq-      .loc_0x160
-	  rlwinm.   r0,r29,0,12,12
-	  bne-      .loc_0x160
-	  rlwinm.   r0,r29,0,13,13
-	  bne-      .loc_0x160
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x4248
-	  mulli     r0, r3, 0xC
-	  add       r6, r31, r0
-	  addi      r4, r13, 0x2A4C
-	  li        r5, 0x1
-	  li        r7, 0xA
-	  li        r10, 0
-	  li        r9, 0
-	  addi      r6, r6, 0x20
-	  bl        -0x8D0C
-	  b         .loc_0x238
-
-	.loc_0x160:
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x3ED8
-	  mulli     r0, r3, 0xC
-	  rlwinm    r4,r3,2,0,29
-	  add       r4, r31, r4
-	  add       r6, r31, r0
-	  li        r5, 0x3
-	  li        r7, 0x8
-	  li        r10, 0
-	  li        r9, 0
-	  addi      r4, r4, 0x50
-	  addi      r6, r6, 0x20
-	  bl        -0x8D48
-	  b         .loc_0x238
-
-	.loc_0x19C:
-	  lwz       r0, 0x3360(r13)
-	  cntlzw    r0, r0
-	  stw       r0, 0x2A38(r13)
-	  lwz       r0, 0x2A38(r13)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x238
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x238
-	  mulli     r0, r0, 0xC
-	  add       r3, r31, r0
-	  li        r4, 0
-	  li        r5, 0xC
-	  addi      r3, r3, 0x20
-	  bl        -0x201250
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x45F4
-	  rlwinm    r0,r3,2,0,29
-	  li        r30, 0
-	  add       r6, r31, r0
-	  stwu      r30, 0x10(r6)
-	  addi      r4, r13, 0x3374
-	  stwx      r30, r31, r0
-	  li        r5, 0x1
-	  li        r7, 0x3
-	  li        r10, 0
-	  li        r9, 0
-	  bl        -0x8DBC
-	  lwz       r0, 0x2A38(r13)
-	  lis       r4, 0x8000
-	  lwz       r5, 0x3360(r13)
-	  cmpwi     r3, 0
-	  srw       r0, r4, r0
-	  andc      r0, r5, r0
-	  stw       r0, 0x3360(r13)
-	  bne-      .loc_0x238
-	  li        r0, 0x20
-	  stw       r30, 0x3360(r13)
-	  stw       r0, 0x2A38(r13)
-
-	.loc_0x238:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  mtlr      r0
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  blr
-	*/
 }
 
 u32 __PADFixBits; // size: 0x4, address: 0x24
@@ -515,13 +352,16 @@ static void PADResetCallback(s32 unused, u32 error, struct OSContext* context)
 	u32 recalibrate;
 	u32 chanBit;
 	int fix;
-	u32 frame;
 
 	ASSERTLINE(0x2E9, 0 <= ResettingChan && ResettingChan < SI_MAX_CHAN);
 
-	type        = Type[ResettingChan];
-	chanBit     = 0x80000000 >> ResettingChan;
-	recalibrate = RecalibrateBits & chanBit;
+	if (error & 0xF) {
+		Type[ResettingChan] = 0;
+	}
+
+	PADType[ResettingChan] = type = Type[ResettingChan];
+	chanBit                       = 0x80000000 >> ResettingChan;
+	recalibrate                   = RecalibrateBits & chanBit;
 	RecalibrateBits &= ~chanBit;
 	fix = __PADFixBits & chanBit;
 	__PADFixBits &= ~chanBit;
@@ -542,18 +382,16 @@ static void PADResetCallback(s32 unused, u32 error, struct OSContext* context)
 			return;
 		}
 		if (recalibrate != 0) {
-			frame = 0x42000000;
-			SITransfer(ResettingChan, &frame, 3, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
+			SITransfer(ResettingChan, &cmdCalibrate, 3, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
 			return;
 		}
-		frame = 0x41000000;
-		SITransfer(ResettingChan, &frame, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
+		SITransfer(ResettingChan, &cmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
 		return;
 	}
 	id = (GetWirelessID(ResettingChan) << 8);
 	if ((fix != 0) && (id & 0x100000)) {
-		frame = (id & 0xCFFF00) | 0x4E000000 | 0x100000;
-		SITransfer(ResettingChan, &frame, 3, &Type[ResettingChan], 3, PADFixCallback, 0);
+		cmdFixDevice[ResettingChan] = (id & 0xCFFF00) | 0x4E000000 | 0x100000;
+		SITransfer(ResettingChan, &cmdFixDevice[ResettingChan], 3, &Type[ResettingChan], 3, PADFixCallback, 0);
 		return;
 	}
 	if (type & 0x100000) {
@@ -563,547 +401,28 @@ static void PADResetCallback(s32 unused, u32 error, struct OSContext* context)
 				id |= 0x100000;
 				SetWirelessID(ResettingChan, (u16)(id >> 8) & 0xFFFFFF);
 			}
-			frame = id | 0x4E000000;
-			SITransfer(ResettingChan, &frame, 3, &Type[ResettingChan], 3, PADFixCallback, 0);
+			cmdFixDevice[ResettingChan] = id | 0x4E000000;
+			SITransfer(ResettingChan, &cmdFixDevice[ResettingChan], 3, &Type[ResettingChan], 3, PADFixCallback, 0);
 			return;
 		}
 		if ((type & 0x40000000) && !(type & 0x80000) && !(type & 0x40000)) {
-			frame = 0x41000000;
-			SITransfer(ResettingChan, &frame, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
+			SITransfer(ResettingChan, &cmdReadOrigin, 1, &Origin[ResettingChan], 0xA, PADOriginCallback, 0);
 			return;
 		}
-		frame = (ResettingChan << 0x16) | 0x4D000000 | ((__OSWirelessPadFixMode << 8) & 0x3FFF00u);
-		SITransfer(ResettingChan, &frame, 3, &Origin[ResettingChan], 8, PADProbeCallback, 0);
+		SITransfer(ResettingChan, &cmdProbeDevice[ResettingChan], 3, &Origin[ResettingChan], 8, PADProbeCallback, 0);
 		return;
 	}
 	if (type & 0x40000000) {
 		u32 id = (type & 0xCFFF00);
 		id |= 0x100000;
 		SetWirelessID(ResettingChan, (u16)(id >> 8) & 0xFFFFFF);
-		frame = id | 0x4E000000;
-		SITransfer(ResettingChan, &frame, 3, &Type[ResettingChan], 3, PADFixCallback, 0);
+		cmdFixDevice[ResettingChan] = id | 0x4E000000;
+		SITransfer(ResettingChan, &cmdFixDevice[ResettingChan], 3, &Type[ResettingChan], 3, PADFixCallback, 0);
 		return;
 	}
 	SetWirelessID(ResettingChan, 0);
 	ProbeWireless(ResettingChan);
 	DoReset();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  rlwinm.   r5,r4,0,28,31
-	  stw       r0, 0x4(r1)
-	  lis       r3, 0x803D
-	  stwu      r1, -0x60(r1)
-	  stmw      r26, 0x48(r1)
-	  addi      r31, r3, 0x33B0
-	  beq-      .loc_0x34
-	  lwz       r0, 0x2A38(r13)
-	  li        r4, 0
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r31, r0
-	  stw       r4, 0x10(r3)
-
-	.loc_0x34:
-	  lwz       r29, 0x2A38(r13)
-	  lis       r30, 0x8000
-	  cmplwi    r5, 0
-	  rlwinm    r0,r29,2,0,29
-	  add       r3, r31, r0
-	  lwz       r28, 0x10(r3)
-	  srw       r7, r30, r29
-	  not       r6, r7
-	  stwx      r28, r31, r0
-	  lwz       r5, 0x3368(r13)
-	  lwz       r3, 0x3380(r13)
-	  and       r4, r5, r6
-	  and       r0, r3, r6
-	  stw       r4, 0x3368(r13)
-	  and       r27, r5, r7
-	  stw       r0, 0x3380(r13)
-	  and       r26, r3, r7
-	  bne-      .loc_0x8C
-	  rlwinm    r3,r28,0,3,4
-	  subis     r0, r3, 0x800
-	  cmplwi    r0, 0
-	  beq-      .loc_0x160
-
-	.loc_0x8C:
-	  bl        -0x9CDC
-	  rlwinm    r0,r29,1,0,30
-	  add       r3, r3, r0
-	  lhzu      r0, 0x1C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB8
-	  li        r0, 0
-	  sth       r0, 0x0(r3)
-	  li        r3, 0x1
-	  bl        -0x9978
-	  b         .loc_0xC0
-
-	.loc_0xB8:
-	  li        r3, 0
-	  bl        -0x9984
-
-	.loc_0xC0:
-	  lwz       r0, 0x3360(r13)
-	  cntlzw    r0, r0
-	  stw       r0, 0x2A38(r13)
-	  lwz       r0, 0x2A38(r13)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x71C
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x71C
-	  mulli     r0, r0, 0xC
-	  add       r3, r31, r0
-	  li        r4, 0
-	  li        r5, 0xC
-	  addi      r3, r3, 0x20
-	  bl        -0x2013C8
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x45F4
-	  rlwinm    r0,r3,2,0,29
-	  li        r27, 0
-	  add       r6, r31, r0
-	  stwu      r27, 0x10(r6)
-	  addi      r4, r13, 0x3374
-	  stwx      r27, r31, r0
-	  li        r5, 0x1
-	  li        r7, 0x3
-	  li        r10, 0
-	  li        r9, 0
-	  bl        -0x8F34
-	  lwz       r0, 0x2A38(r13)
-	  lis       r4, 0x8000
-	  lwz       r5, 0x3360(r13)
-	  cmpwi     r3, 0
-	  srw       r0, r4, r0
-	  andc      r0, r5, r0
-	  stw       r0, 0x3360(r13)
-	  bne-      .loc_0x71C
-	  li        r0, 0x20
-	  stw       r27, 0x3360(r13)
-	  stw       r0, 0x2A38(r13)
-	  b         .loc_0x71C
-
-	.loc_0x160:
-	  lwz       r0, 0x2A44(r13)
-	  cmplwi    r0, 0x2
-	  bge-      .loc_0x238
-	  lwz       r0, 0x335C(r13)
-	  addi      r3, r29, 0
-	  addi      r4, r1, 0x38
-	  or        r0, r0, r7
-	  stw       r0, 0x335C(r13)
-	  bl        -0x9038
-	  lwz       r0, 0x2A40(r13)
-	  addi      r3, r29, 0
-	  oris      r4, r0, 0x40
-	  bl        -0x91D4
-	  lwz       r3, 0x335C(r13)
-	  bl        -0x9158
-	  lwz       r0, 0x3360(r13)
-	  cntlzw    r0, r0
-	  stw       r0, 0x2A38(r13)
-	  lwz       r0, 0x2A38(r13)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x71C
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x71C
-	  mulli     r0, r0, 0xC
-	  add       r3, r31, r0
-	  li        r4, 0
-	  li        r5, 0xC
-	  addi      r3, r3, 0x20
-	  bl        -0x2014A4
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x45F4
-	  rlwinm    r0,r3,2,0,29
-	  li        r27, 0
-	  add       r6, r31, r0
-	  stwu      r27, 0x10(r6)
-	  addi      r4, r13, 0x3374
-	  stwx      r27, r31, r0
-	  li        r5, 0x1
-	  li        r7, 0x3
-	  li        r10, 0
-	  li        r9, 0
-	  bl        -0x9010
-	  lwz       r0, 0x2A38(r13)
-	  cmpwi     r3, 0
-	  lwz       r3, 0x3360(r13)
-	  srw       r0, r30, r0
-	  andc      r0, r3, r0
-	  stw       r0, 0x3360(r13)
-	  bne-      .loc_0x71C
-	  li        r0, 0x20
-	  stw       r27, 0x3360(r13)
-	  stw       r0, 0x2A38(r13)
-	  b         .loc_0x71C
-
-	.loc_0x238:
-	  rlwinm.   r0,r28,0,0,0
-	  beq-      .loc_0x248
-	  rlwinm.   r0,r28,0,5,5
-	  beq-      .loc_0x394
-
-	.loc_0x248:
-	  bl        -0x9E98
-	  rlwinm    r0,r29,1,0,30
-	  add       r3, r3, r0
-	  lhzu      r0, 0x1C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x274
-	  li        r0, 0
-	  sth       r0, 0x0(r3)
-	  li        r3, 0x1
-	  bl        -0x9B34
-	  b         .loc_0x27C
-
-	.loc_0x274:
-	  li        r3, 0
-	  bl        -0x9B40
-
-	.loc_0x27C:
-	  rlwinm.   r0,r28,0,7,7
-	  bne-      .loc_0x324
-	  lwz       r0, 0x3360(r13)
-	  cntlzw    r0, r0
-	  stw       r0, 0x2A38(r13)
-	  lwz       r0, 0x2A38(r13)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x71C
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x71C
-	  mulli     r0, r0, 0xC
-	  add       r3, r31, r0
-	  li        r4, 0
-	  li        r5, 0xC
-	  addi      r3, r3, 0x20
-	  bl        -0x20158C
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x45F4
-	  rlwinm    r0,r3,2,0,29
-	  li        r27, 0
-	  add       r6, r31, r0
-	  stwu      r27, 0x10(r6)
-	  addi      r4, r13, 0x3374
-	  stwx      r27, r31, r0
-	  li        r5, 0x1
-	  li        r7, 0x3
-	  li        r10, 0
-	  li        r9, 0
-	  bl        -0x90F8
-	  lwz       r0, 0x2A38(r13)
-	  lis       r4, 0x8000
-	  lwz       r5, 0x3360(r13)
-	  cmpwi     r3, 0
-	  srw       r0, r4, r0
-	  andc      r0, r5, r0
-	  stw       r0, 0x3360(r13)
-	  bne-      .loc_0x71C
-	  li        r0, 0x20
-	  stw       r27, 0x3360(r13)
-	  stw       r0, 0x2A38(r13)
-	  b         .loc_0x71C
-
-	.loc_0x324:
-	  cmplwi    r27, 0
-	  beq-      .loc_0x360
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x4248
-	  mulli     r0, r3, 0xC
-	  add       r6, r31, r0
-	  addi      r4, r13, 0x2A50
-	  li        r5, 0x3
-	  li        r7, 0xA
-	  li        r10, 0
-	  li        r9, 0
-	  addi      r6, r6, 0x20
-	  bl        -0x9160
-	  b         .loc_0x71C
-
-	.loc_0x360:
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x4248
-	  mulli     r0, r3, 0xC
-	  add       r6, r31, r0
-	  addi      r4, r13, 0x2A4C
-	  li        r5, 0x1
-	  li        r7, 0xA
-	  li        r10, 0
-	  li        r9, 0
-	  addi      r6, r6, 0x20
-	  bl        -0x9194
-	  b         .loc_0x71C
-
-	.loc_0x394:
-	  bl        -0x9FE4
-	  rlwinm    r0,r29,1,0,30
-	  add       r3, r3, r0
-	  lhz       r27, 0x1C(r3)
-	  li        r3, 0
-	  bl        -0x9C70
-	  cmpwi     r26, 0
-	  rlwinm    r29,r27,8,0,23
-	  beq-      .loc_0x408
-	  rlwinm.   r0,r29,0,11,11
-	  beq-      .loc_0x408
-	  lis       r4, 0xD0
-	  lwz       r3, 0x2A38(r13)
-	  subi      r0, r4, 0x100
-	  and       r0, r29, r0
-	  rlwinm    r6,r3,2,0,29
-	  add       r4, r31, r6
-	  oris      r0, r0, 0x4E10
-	  lis       r5, 0x8020
-	  stwu      r0, 0x60(r4)
-	  add       r6, r31, r6
-	  addi      r8, r5, 0x43A0
-	  li        r5, 0x3
-	  li        r7, 0x3
-	  li        r10, 0
-	  li        r9, 0
-	  addi      r6, r6, 0x10
-	  bl        -0x9208
-	  b         .loc_0x71C
-
-	.loc_0x408:
-	  rlwinm.   r0,r28,0,11,11
-	  beq-      .loc_0x530
-	  lis       r3, 0xD0
-	  subi      r3, r3, 0x100
-	  and       r0, r29, r3
-	  and       r3, r28, r3
-	  cmplw     r0, r3
-	  beq-      .loc_0x4A8
-	  rlwinm.   r0,r29,0,11,11
-	  bne-      .loc_0x46C
-	  oris      r29, r3, 0x10
-	  lwz       r27, 0x2A38(r13)
-	  bl        -0xA088
-	  rlwinm    r0,r27,1,0,30
-	  add       r4, r3, r0
-	  lhzu      r0, 0x1C(r4)
-	  rlwinm    r3,r29,24,16,31
-	  cmplw     r0, r3
-	  beq-      .loc_0x464
-	  sth       r3, 0x0(r4)
-	  li        r3, 0x1
-	  bl        -0x9D24
-	  b         .loc_0x46C
-
-	.loc_0x464:
-	  li        r3, 0
-	  bl        -0x9D30
-
-	.loc_0x46C:
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  oris      r0, r29, 0x4E00
-	  rlwinm    r5,r3,2,0,29
-	  addi      r8, r4, 0x43A0
-	  add       r4, r31, r5
-	  stwu      r0, 0x60(r4)
-	  add       r6, r31, r5
-	  li        r5, 0x3
-	  li        r7, 0x3
-	  li        r10, 0
-	  li        r9, 0
-	  addi      r6, r6, 0x10
-	  bl        -0x92A8
-	  b         .loc_0x71C
-
-	.loc_0x4A8:
-	  rlwinm.   r0,r28,0,1,1
-	  beq-      .loc_0x4F4
-	  rlwinm.   r0,r28,0,12,12
-	  bne-      .loc_0x4F4
-	  rlwinm.   r0,r28,0,13,13
-	  bne-      .loc_0x4F4
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x4248
-	  mulli     r0, r3, 0xC
-	  add       r6, r31, r0
-	  addi      r4, r13, 0x2A4C
-	  li        r5, 0x1
-	  li        r7, 0xA
-	  li        r10, 0
-	  li        r9, 0
-	  addi      r6, r6, 0x20
-	  bl        -0x92F4
-	  b         .loc_0x71C
-
-	.loc_0x4F4:
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x3ED8
-	  mulli     r0, r3, 0xC
-	  rlwinm    r4,r3,2,0,29
-	  add       r4, r31, r4
-	  add       r6, r31, r0
-	  li        r5, 0x3
-	  li        r7, 0x8
-	  li        r10, 0
-	  li        r9, 0
-	  addi      r4, r4, 0x50
-	  addi      r6, r6, 0x20
-	  bl        -0x9330
-	  b         .loc_0x71C
-
-	.loc_0x530:
-	  rlwinm.   r0,r28,0,1,1
-	  beq-      .loc_0x5BC
-	  lis       r3, 0xD0
-	  lwz       r27, 0x2A38(r13)
-	  subi      r0, r3, 0x100
-	  and       r26, r28, r0
-	  oris      r26, r26, 0x10
-	  bl        -0xA19C
-	  rlwinm    r0,r27,1,0,30
-	  add       r4, r3, r0
-	  lhzu      r0, 0x1C(r4)
-	  rlwinm    r3,r26,24,16,31
-	  cmplw     r0, r3
-	  beq-      .loc_0x578
-	  sth       r3, 0x0(r4)
-	  li        r3, 0x1
-	  bl        -0x9E38
-	  b         .loc_0x580
-
-	.loc_0x578:
-	  li        r3, 0
-	  bl        -0x9E44
-
-	.loc_0x580:
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  oris      r0, r26, 0x4E00
-	  rlwinm    r5,r3,2,0,29
-	  addi      r8, r4, 0x43A0
-	  add       r4, r31, r5
-	  stwu      r0, 0x60(r4)
-	  add       r6, r31, r5
-	  li        r5, 0x3
-	  li        r7, 0x3
-	  li        r10, 0
-	  li        r9, 0
-	  addi      r6, r6, 0x10
-	  bl        -0x93BC
-	  b         .loc_0x71C
-
-	.loc_0x5BC:
-	  lwz       r27, 0x2A38(r13)
-	  bl        -0xA210
-	  rlwinm    r0,r27,1,0,30
-	  add       r3, r3, r0
-	  lhzu      r0, 0x1C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x5EC
-	  li        r0, 0
-	  sth       r0, 0x0(r3)
-	  li        r3, 0x1
-	  bl        -0x9EAC
-	  b         .loc_0x5F4
-
-	.loc_0x5EC:
-	  li        r3, 0
-	  bl        -0x9EB8
-
-	.loc_0x5F4:
-	  lwz       r29, 0x2A38(r13)
-	  lis       r27, 0x8000
-	  lwz       r3, 0x335C(r13)
-	  addi      r4, r1, 0x1C
-	  srw       r5, r27, r29
-	  lwz       r0, 0x3364(r13)
-	  or        r3, r3, r5
-	  stw       r3, 0x335C(r13)
-	  mr        r3, r29
-	  or        r0, r0, r5
-	  stw       r0, 0x3364(r13)
-	  bl        -0x94D8
-	  rlwinm    r0,r29,2,0,29
-	  add       r3, r31, r0
-	  lwz       r4, 0x10(r3)
-	  rlwinm.   r0,r4,0,6,6
-	  bne-      .loc_0x650
-	  lhz       r0, 0x30E0(r27)
-	  rlwinm    r3,r29,14,0,17
-	  oris      r3, r3, 0x4D
-	  rlwinm    r0,r0,0,18,31
-	  or        r4, r3, r0
-	  b         .loc_0x670
-
-	.loc_0x650:
-	  rlwinm    r3,r4,0,12,13
-	  subis     r0, r3, 0x4
-	  cmplwi    r0, 0
-	  bne-      .loc_0x668
-	  lis       r4, 0x50
-	  b         .loc_0x670
-
-	.loc_0x668:
-	  rlwinm    r3,r4,0,13,15
-	  addis     r4, r3, 0x44
-
-	.loc_0x670:
-	  mr        r3, r29
-	  bl        -0x96B8
-	  lwz       r3, 0x335C(r13)
-	  bl        -0x963C
-	  lwz       r0, 0x3360(r13)
-	  cntlzw    r0, r0
-	  stw       r0, 0x2A38(r13)
-	  lwz       r0, 0x2A38(r13)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x71C
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x71C
-	  mulli     r0, r0, 0xC
-	  add       r3, r31, r0
-	  li        r4, 0
-	  li        r5, 0xC
-	  addi      r3, r3, 0x20
-	  bl        -0x201988
-	  lwz       r3, 0x2A38(r13)
-	  lis       r4, 0x8020
-	  addi      r8, r4, 0x45F4
-	  rlwinm    r0,r3,2,0,29
-	  li        r27, 0
-	  add       r6, r31, r0
-	  stwu      r27, 0x10(r6)
-	  addi      r4, r13, 0x3374
-	  stwx      r27, r31, r0
-	  li        r5, 0x1
-	  li        r7, 0x3
-	  li        r10, 0
-	  li        r9, 0
-	  bl        -0x94F4
-	  lwz       r0, 0x2A38(r13)
-	  lis       r4, 0x8000
-	  lwz       r5, 0x3360(r13)
-	  cmpwi     r3, 0
-	  srw       r0, r4, r0
-	  andc      r0, r5, r0
-	  stw       r0, 0x3360(r13)
-	  bne-      .loc_0x71C
-	  li        r0, 0x20
-	  stw       r27, 0x3360(r13)
-	  stw       r0, 0x2A38(r13)
-
-	.loc_0x71C:
-	  lmw       r26, 0x48(r1)
-	  lwz       r0, 0x64(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1167,148 +486,29 @@ u32 __PADSpec; // size: 0x4, address: 0x20
  */
 BOOL PADInit()
 {
-	if (!Initialized) {
-		if (__PADSpec)
-			PADSetSpec(__PADSpec);
+	s32 chan;
+	OSTime time;
 
-		if (__PADFixBits == 0xFFFFFFFF) {
-			OSTime time = OSGetTime();
+	if (!Initialized) {
+		if (__PADSpec) {
+			PADSetSpec(__PADSpec);
+		}
+
+		if (__PADFixBits == -1) {
+			time = OSGetTime();
 			__OSWirelessPadFixMode
 			    = (u16)((((time) & 0xffff) + ((time >> 16) & 0xffff) + ((time >> 32) & 0xffff) + ((time >> 48) & 0xffff)) & 0x3fffu);
 		}
 
-		Initialized = TRUE;
+		for (chan = 0; chan < SI_MAX_CHAN; chan++) {
+			cmdProbeDevice[chan] = 0x4D000000 | (chan << 22) | (__OSWirelessPadFixMode & 0x3FFF) << 8;
+		}
 
+		Initialized = TRUE;
 		PADSetSamplingRate(0);
 		OSRegisterResetFunction(&ResetFunctionInfo);
 	}
 	return PADReset(PAD_CHAN0_BIT | PAD_CHAN1_BIT | PAD_CHAN2_BIT | PAD_CHAN3_BIT);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r25, 0x1C(r1)
-	  addi      r31, r3, 0x33B0
-	  lwz       r0, 0x3358(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x124
-	  lwz       r3, 0x337C(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  bl        0x794
-
-	.loc_0x34:
-	  lwz       r3, 0x3380(r13)
-	  addis     r0, r3, 0x1
-	  cmplwi    r0, 0xFFFF
-	  bne-      .loc_0xC4
-	  bl        -0x7C88
-	  addi      r25, r4, 0
-	  addi      r26, r3, 0
-	  li        r5, 0x10
-	  bl        0x102E0
-	  lis       r5, 0x1
-	  subi      r27, r5, 0x1
-	  li        r28, 0
-	  and       r6, r4, r27
-	  and       r4, r25, r27
-	  and       r5, r3, r28
-	  and       r0, r26, r28
-	  addc      r29, r4, r6
-	  addi      r3, r26, 0
-	  addi      r4, r25, 0
-	  adde      r30, r0, r5
-	  li        r5, 0x20
-	  bl        0x102AC
-	  and       r4, r4, r27
-	  and       r0, r3, r28
-	  addc      r29, r4, r29
-	  addi      r3, r26, 0
-	  addi      r4, r25, 0
-	  adde      r30, r0, r30
-	  li        r5, 0x30
-	  bl        0x1028C
-	  and       r0, r4, r27
-	  addc      r4, r0, r29
-	  li        r0, 0x3FFF
-	  and       r0, r4, r0
-	  lis       r3, 0x8000
-	  sth       r0, 0x30E0(r3)
-
-	.loc_0xC4:
-	  lis       r5, 0x8000
-	  lhz       r4, 0x30E0(r5)
-	  li        r0, 0x1
-	  li        r3, 0
-	  rlwinm    r4,r4,8,10,23
-	  oris      r4, r4, 0x4D00
-	  stw       r4, 0x50(r31)
-	  lhz       r4, 0x30E0(r5)
-	  rlwinm    r4,r4,8,10,23
-	  oris      r4, r4, 0x4D40
-	  stw       r4, 0x54(r31)
-	  lhz       r4, 0x30E0(r5)
-	  rlwinm    r4,r4,8,10,23
-	  oris      r4, r4, 0x4D80
-	  stw       r4, 0x58(r31)
-	  lhz       r4, 0x30E0(r5)
-	  rlwinm    r4,r4,8,10,23
-	  oris      r4, r4, 0x4DC0
-	  stw       r4, 0x5C(r31)
-	  stw       r0, 0x3358(r13)
-	  bl        0x544
-	  lis       r3, 0x802F
-	  subi      r3, r3, 0x74B8
-	  bl        -0xB044
-
-	.loc_0x124:
-	  lis       r29, 0xF000
-	  li        r27, 0
-	  bl        -0xC194
-	  lwz       r0, 0x3364(r13)
-	  mr        r28, r3
-	  lwz       r6, 0x336C(r13)
-	  lwz       r4, 0x3370(r13)
-	  or        r3, r0, r6
-	  lwz       r0, 0x2A44(r13)
-	  or        r3, r4, r3
-	  lwz       r4, 0x3360(r13)
-	  andc      r29, r29, r3
-	  lwz       r3, 0x335C(r13)
-	  or        r5, r4, r29
-	  not       r7, r29
-	  stw       r5, 0x3360(r13)
-	  and       r4, r3, r7
-	  and       r3, r6, r7
-	  stw       r4, 0x335C(r13)
-	  cmplwi    r0, 0x4
-	  stw       r3, 0x336C(r13)
-	  bne-      .loc_0x188
-	  lwz       r0, 0x3368(r13)
-	  or        r0, r0, r29
-	  stw       r0, 0x3368(r13)
-
-	.loc_0x188:
-	  lwz       r3, 0x3360(r13)
-	  bl        -0x9AA0
-	  lwz       r0, 0x2A38(r13)
-	  cmpwi     r0, 0x20
-	  bne-      .loc_0x1A4
-	  bl        -0x137C
-	  mr        r27, r3
-
-	.loc_0x1A4:
-	  mr        r3, r28
-	  bl        -0xC1E8
-	  mr        r3, r27
-	  lmw       r25, 0x1C(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1339,15 +539,17 @@ static void PADReceiveCheckCallback(s32 chan, u32 error, OSContext* arg2)
  * Address:	80205304
  * Size:	000338
  */
-void PADRead(PADStatus* status)
+u32 PADRead(PADStatus* status)
 {
 	s32 chan;
 	u32 data[2];
 	u32 chanBit;
 	u32 sr;
 	int chanShift;
-	u32 frame;
 	int enabled;
+	u32 motor;
+
+	motor = 0;
 
 	for (chan = 0; chan < 4; chan++, status++) {
 		chanBit   = 0x80000000 >> chan;
@@ -1359,15 +561,14 @@ void PADRead(PADStatus* status)
 			status->err = -1;
 			memset(status, 0, 0xA);
 		} else {
-			sr = SIGetStatus(chan);
+			sr = SIGetStatus(3 - chan);
 			if (sr & (8 << chanShift)) {
 				if (WaitingBits & chanBit) {
 					status->err = 0;
 					memset(status, 0, 0xA);
 					if (!(CheckingBits & chanBit)) {
 						enabled = OSDisableInterrupts();
-						frame   = 0;
-						if (SITransfer(chan, &frame, 1, &Type[chan], 3, PADReceiveCheckCallback, 0) != 0) {
+						if (SITransfer(chan, &cmdTypeAndStatus, 1, &Type[chan], 3, PADReceiveCheckCallback, 0) != 0) {
 							CheckingBits |= chanBit;
 						}
 						OSRestoreInterrupts(enabled);
@@ -1377,269 +578,37 @@ void PADRead(PADStatus* status)
 					status->err = -1;
 					memset(status, 0, 0xA);
 				}
-			} else if (!(sr & (0x20 << chanShift))) {
-				status->err = -3;
-				memset(status, 0, 0xA);
 			} else {
-				SIGetResponse(chan, &data);
-				if (data[0] & 0x80000000) {
+				if (!(ProbingBits & chanBit) && !(Type[chan] & SI_GC_NOMOTOR)) {
+					motor |= chanBit;
+				}
+				if (!(sr & (0x20 << chanShift))) {
 					status->err = -3;
 					memset(status, 0, 0xA);
-				} else if (ProbingBits & chanBit) {
-					status->err = -1;
-					memset(status, 0, 0xA);
-				} else if (status->button & 0x2000) {
-					status->err = -3;
-					memset(status, 0, 0xA);
-					frame = 0x41000000;
-					SITransfer(chan, &frame, 1, &Origin[chan], 0xA, PADOriginUpdateCallback, 0);
 				} else {
-					status->err = 0;
-					MakeStatus(chan, status, data);
-					status->button &= 0xFFFFFF7F;
+					SIGetResponse(chan, &data);
+					if (data[0] & 0x80000000) {
+						status->err = -3;
+						memset(status, 0, 0xA);
+					} else if (ProbingBits & chanBit) {
+						status->err = -1;
+						memset(status, 0, 0xA);
+					} else {
+						MakeStatus(chan, status, data);
+						if (status->button & 0x2000) {
+							status->err = -3;
+							memset(status, 0, 0xA);
+							SITransfer(chan, &cmdReadOrigin, 1, &Origin[chan], 0xA, PADOriginUpdateCallback, 0);
+						} else {
+							status->err = 0;
+							status->button &= 0xFFFFFF7F;
+						}
+					}
 				}
 			}
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803D
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x33D0
-	  lis       r6, 0x803D
-	  stwu      r1, -0x48(r1)
-	  lis       r4, 0x8020
-	  stmw      r21, 0x1C(r1)
-	  li        r23, 0
-	  mulli     r5, r23, 0xC
-	  add       r25, r0, r5
-	  lis       r5, 0x8020
-	  rlwinm    r7,r23,2,0,29
-	  addi      r0, r6, 0x33C0
-	  add       r27, r0, r7
-	  addi      r21, r3, 0
-	  addi      r31, r4, 0x4364
-	  addi      r30, r5, 0x51A8
-	  li        r22, 0
-	  li        r26, 0
-	  lis       r29, 0x8000
-
-	.loc_0x54:
-	  lwz       r0, 0x3360(r13)
-	  srw       r24, r29, r23
-	  subfic    r3, r23, 0x3
-	  and.      r0, r0, r24
-	  rlwinm    r28,r3,3,0,28
-	  bne-      .loc_0x78
-	  lwz       r0, 0x2A38(r13)
-	  cmpw      r0, r23
-	  bne-      .loc_0x94
-
-	.loc_0x78:
-	  li        r0, -0x2
-	  stb       r0, 0xA(r21)
-	  addi      r3, r21, 0
-	  li        r4, 0
-	  li        r5, 0xA
-	  bl        -0x202070
-	  b         .loc_0x304
-
-	.loc_0x94:
-	  lwz       r0, 0x335C(r13)
-	  and.      r0, r0, r24
-	  bne-      .loc_0xBC
-	  li        r0, -0x1
-	  stb       r0, 0xA(r21)
-	  addi      r3, r21, 0
-	  li        r4, 0
-	  li        r5, 0xA
-	  bl        -0x202098
-	  b         .loc_0x304
-
-	.loc_0xBC:
-	  bl        -0x9E20
-	  li        r0, 0x8
-	  slw       r0, r0, r28
-	  and.      r0, r3, r0
-	  beq-      .loc_0x1E8
-	  lwz       r0, 0x336C(r13)
-	  and.      r0, r0, r24
-	  beq-      .loc_0x14C
-	  li        r0, 0
-	  stb       r0, 0xA(r21)
-	  addi      r3, r21, 0
-	  li        r4, 0
-	  li        r5, 0xA
-	  bl        -0x2020D4
-	  lwz       r0, 0x3370(r13)
-	  and.      r0, r0, r24
-	  bne-      .loc_0x304
-	  bl        -0xC488
-	  addi      r28, r3, 0
-	  addi      r3, r23, 0
-	  addi      r6, r27, 0
-	  addi      r8, r30, 0
-	  addi      r4, r13, 0x3374
-	  li        r5, 0x1
-	  li        r7, 0x3
-	  li        r10, 0
-	  li        r9, 0
-	  bl        -0x9C40
-	  cmpwi     r3, 0
-	  beq-      .loc_0x140
-	  lwz       r0, 0x3370(r13)
-	  or        r0, r0, r24
-	  stw       r0, 0x3370(r13)
-
-	.loc_0x140:
-	  mr        r3, r28
-	  bl        -0xC4A4
-	  b         .loc_0x304
-
-	.loc_0x14C:
-	  bl        -0xC4D4
-	  addi      r28, r3, 0
-	  addi      r3, r24, 0
-	  bl        -0x9D8C
-	  lwz       r0, 0x335C(r13)
-	  not       r6, r24
-	  lwz       r4, 0x336C(r13)
-	  lwz       r3, 0x3370(r13)
-	  and       r5, r0, r6
-	  lwz       r0, 0x3364(r13)
-	  and       r4, r4, r6
-	  and       r3, r3, r6
-	  and       r0, r0, r6
-	  stw       r5, 0x335C(r13)
-	  stw       r4, 0x336C(r13)
-	  stw       r3, 0x3370(r13)
-	  stw       r0, 0x3364(r13)
-	  bl        -0xAAF0
-	  addi      r4, r26, 0x1C
-	  add       r4, r3, r4
-	  lhz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1BC
-	  li        r0, 0
-	  sth       r0, 0x0(r4)
-	  li        r3, 0x1
-	  bl        -0xA78C
-	  b         .loc_0x1C4
-
-	.loc_0x1BC:
-	  li        r3, 0
-	  bl        -0xA798
-
-	.loc_0x1C4:
-	  mr        r3, r28
-	  bl        -0xC528
-	  li        r0, -0x1
-	  stb       r0, 0xA(r21)
-	  addi      r3, r21, 0
-	  li        r4, 0
-	  li        r5, 0xA
-	  bl        -0x2021C4
-	  b         .loc_0x304
-
-	.loc_0x1E8:
-	  lwz       r0, 0x3364(r13)
-	  and.      r0, r0, r24
-	  bne-      .loc_0x204
-	  lwz       r0, 0x0(r27)
-	  rlwinm.   r0,r0,0,2,2
-	  bne-      .loc_0x204
-	  or        r22, r22, r24
-
-	.loc_0x204:
-	  li        r0, 0x20
-	  slw       r0, r0, r28
-	  and.      r0, r3, r0
-	  bne-      .loc_0x230
-	  li        r0, -0x3
-	  stb       r0, 0xA(r21)
-	  addi      r3, r21, 0
-	  li        r4, 0
-	  li        r5, 0xA
-	  bl        -0x20220C
-	  b         .loc_0x304
-
-	.loc_0x230:
-	  addi      r3, r23, 0
-	  addi      r4, r1, 0xC
-	  bl        -0x9E00
-	  lwz       r0, 0xC(r1)
-	  rlwinm.   r0,r0,0,0,0
-	  beq-      .loc_0x264
-	  li        r0, -0x3
-	  stb       r0, 0xA(r21)
-	  addi      r3, r21, 0
-	  li        r4, 0
-	  li        r5, 0xA
-	  bl        -0x202240
-	  b         .loc_0x304
-
-	.loc_0x264:
-	  lwz       r0, 0x3364(r13)
-	  and.      r0, r0, r24
-	  beq-      .loc_0x28C
-	  li        r0, -0x1
-	  stb       r0, 0xA(r21)
-	  addi      r3, r21, 0
-	  li        r4, 0
-	  li        r5, 0xA
-	  bl        -0x202268
-	  b         .loc_0x304
-
-	.loc_0x28C:
-	  lwz       r12, 0x2A48(r13)
-	  addi      r3, r23, 0
-	  addi      r4, r21, 0
-	  mtlr      r12
-	  addi      r5, r1, 0xC
-	  blrl
-	  lhz       r0, 0x0(r21)
-	  rlwinm.   r0,r0,0,18,18
-	  beq-      .loc_0x2F0
-	  li        r0, -0x3
-	  stb       r0, 0xA(r21)
-	  addi      r3, r21, 0
-	  li        r4, 0
-	  li        r5, 0xA
-	  bl        -0x2022A8
-	  addi      r3, r23, 0
-	  addi      r6, r25, 0
-	  addi      r8, r31, 0
-	  addi      r4, r13, 0x2A4C
-	  li        r5, 0x1
-	  li        r7, 0xA
-	  li        r10, 0
-	  li        r9, 0
-	  bl        -0x9E00
-	  b         .loc_0x304
-
-	.loc_0x2F0:
-	  li        r0, 0
-	  stb       r0, 0xA(r21)
-	  lhz       r0, 0x0(r21)
-	  rlwinm    r0,r0,0,25,23
-	  sth       r0, 0x0(r21)
-
-	.loc_0x304:
-	  addi      r23, r23, 0x1
-	  cmpwi     r23, 0x4
-	  addi      r27, r27, 0x4
-	  addi      r26, r26, 0x2
-	  addi      r25, r25, 0xC
-	  addi      r21, r21, 0xC
-	  blt+      .loc_0x54
-	  mr        r3, r22
-	  lmw       r21, 0x1C(r1)
-	  lwz       r0, 0x4C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	return motor;
 }
 
 typedef struct XY {

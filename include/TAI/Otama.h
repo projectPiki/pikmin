@@ -97,7 +97,7 @@ struct TAIAappealOtama : public TAIAflickingReserveMotion {
  */
 struct TAIAsetTargetOtama : public TAIAsetTargetPointCircleRandom {
 	inline TAIAsetTargetOtama(int nextState) // TODO: this is a guess
-		: TAIAsetTargetPointCircleRandom(nextState)
+	    : TAIAsetTargetPointCircleRandom(nextState)
 	{
 	}
 

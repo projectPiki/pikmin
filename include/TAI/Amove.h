@@ -11,7 +11,7 @@ struct Vector3f;
  */
 struct TAIAappearKabekui : public TAIAsetMotionSpeed {
 	inline TAIAappearKabekui(int nextState, int motionID, f32 motionSpeed, u8 p4) // TODO: this is a guess
-		: TAIAsetMotionSpeed(nextState, motionID, motionSpeed)
+	    : TAIAsetMotionSpeed(nextState, motionID, motionSpeed)
 	{
 		_10 = p4;
 	}

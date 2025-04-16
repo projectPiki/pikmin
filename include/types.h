@@ -46,7 +46,7 @@ typedef u64 unknown64;
 
 #define BEGIN_ENUM_TYPE(name) \
 	struct name {             \
-		typedef 
+		typedef
 
 #define END_ENUM_TYPE \
 	Type;             \

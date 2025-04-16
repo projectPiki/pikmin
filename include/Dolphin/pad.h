@@ -90,7 +90,7 @@ typedef struct PADStatus {
 
 BOOL PADInit(void);
 BOOL PADReset(u32 mask);
-void PADRead(PADStatus* status);
+u32 PADRead(PADStatus* status);
 void PADSetSamplingRate(u32 msec);
 void PADClamp(PADStatus* status);
 void PADClampCircle(PADStatus* status);

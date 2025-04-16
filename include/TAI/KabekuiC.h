@@ -182,7 +182,7 @@ struct TAIAlessLifeKabekuiC : public TAIAlessLife {
  */
 struct TAIAcheckPikiFlyKabekuiC : public TAIAhitCheckFlyingPiki {
 	inline TAIAcheckPikiFlyKabekuiC(int nextState) // TODO: this is a guess
-		: TAIAhitCheckFlyingPiki(nextState)
+	    : TAIAhitCheckFlyingPiki(nextState)
 	{
 	}
 
@@ -246,7 +246,7 @@ struct TAIAtakeOffKabekuiC : public TAIAreserveMotion {
  */
 struct TAIAbiteForKabekuiC : public TAIAbiteForKabekui {
 	inline TAIAbiteForKabekuiC(int nextState, int p2, int motionID) // TODO: this is a guess
-		: TAIAbiteForKabekui(nextState, p2, motionID)
+	    : TAIAbiteForKabekui(nextState, p2, motionID)
 	{
 	}
 
