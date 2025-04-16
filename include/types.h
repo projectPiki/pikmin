@@ -44,6 +44,14 @@ typedef u64 unknown64;
 		typedef Values Type;         \
 	}
 
+#define BEGIN_ENUM_TYPE(name) \
+	struct name {             \
+		typedef 
+
+#define END_ENUM_TYPE \
+	Type;             \
+	}
+
 #ifndef __cplusplus
 typedef u16 wchar_t;
 #endif

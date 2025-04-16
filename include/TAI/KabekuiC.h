@@ -245,7 +245,8 @@ struct TAIAtakeOffKabekuiC : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAbiteForKabekuiC : public TAIAbiteForKabekui {
-	inline TAIAbiteForKabekuiC() // TODO: this is a guess
+	inline TAIAbiteForKabekuiC(int nextState, int p2, int motionID) // TODO: this is a guess
+		: TAIAbiteForKabekui(nextState, p2, motionID)
 	{
 	}
 

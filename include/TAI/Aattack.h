@@ -164,9 +164,11 @@ struct TAIAflickingReserveMotion : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAbiteForKabekui : public TAIAreserveMotion {
-	inline TAIAbiteForKabekui() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIAbiteForKabekui(int nextState, int p2, int motionID) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionID)
 	{
+		_0C = nextState;
+		_10 = p2;
 	}
 
 	virtual void start(Teki&);            // _08
@@ -179,14 +181,16 @@ struct TAIAbiteForKabekui : public TAIAreserveMotion {
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
+	int _0C;
+	int _10;
 };
 
 /**
  * @brief TODO
  */
 struct TAIAeatPiki : public TAIAreserveMotion {
-	inline TAIAeatPiki() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIAeatPiki(int nextState, int motionID) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 

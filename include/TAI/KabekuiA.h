@@ -18,37 +18,46 @@
 /**
  * @brief
  */
-DEFINE_ENUM_TYPE(TAIkabekuiAFloatParms, BridgeAttackRange = TPF_COUNT, BridgeDamage, BurrowingTime, SleepTime, COUNT, );
+BEGIN_ENUM_TYPE(TAIkabekuiAFloatParms)
+enum {
+	BridgeAttackRange = TPF_COUNT,
+	BridgeDamage,
+	TimeUntilBurrow,
+	MaxSleepTime,
+	COUNT,
+} END_ENUM_TYPE;
 
 /**
  * @brief
  */
-DEFINE_ENUM_TYPE(TAIkabekuiAStateID,
-                 Dying        = 0,  //
-                 Waiting      = 1,  //
-                 Appearing    = 2,  //
-                 MovingSetup  = 3,  //
-                 Moving       = 4,  //
-                 CrushDying   = 5,  //
-                 ChasingSetup = 6,  //
-                 Chasing      = 7,  //
-                 Eating       = 8,  //
-                 Burrowing    = 9,  //
-                 WaitingSetup = 10, //
-                 COUNT,             //
-);
+BEGIN_ENUM_TYPE(TAIkabekuiAStateID)
+enum {
+	Dying        = 0,
+	Waiting      = 1,
+	Appearing    = 2,
+	MovingSetup  = 3,
+	Moving       = 4,
+	CrushDying   = 5,
+	ChasingSetup = 6,
+	Chasing      = 7,
+	Eating       = 8,
+	Burrowing    = 9,
+	WaitingSetup = 10,
+	COUNT,
+} END_ENUM_TYPE;
 
 /**
  * @brief
  */
-DEFINE_ENUM_TYPE(TAIkabekuiAMotionID,
-                 Dead   = 0, // 'dead'
-                 Press  = 1, // 'damage'
-                 Appear = 4, // 'waitact1'
-                 Burrow = 5, // 'waitact2'
-                 Move   = 6, // 'move1'
-                 Eat    = 8, // 'attack'
-);
+BEGIN_ENUM_TYPE(TAIkabekuiAMotionID)
+enum {
+	Dead   = 0, // 'dead'
+	Press  = 1, // 'damage'
+	Appear = 4, // 'waitact1'
+	Burrow = 5, // 'waitact2'
+	Move   = 6, // 'move1'
+	Eat    = 8, // 'attack'
+} END_ENUM_TYPE;
 
 /*
  * @brief TODO
@@ -108,7 +117,7 @@ struct TAIAsleepKabekuiA : public TAIAtimerReaction {
 
 	virtual f32 getFrameMax(Teki& teki) // _1C
 	{
-		return teki.getParameterF(TAIkabekuiAFloatParms::SleepTime);
+		return teki.getParameterF(TAIkabekuiAFloatParms::MaxSleepTime);
 	}
 
 	// _04     = VTBL
@@ -127,7 +136,7 @@ struct TAIAdiveKabekuiA : public TAIAtimerReaction {
 
 	virtual f32 getFrameMax(Teki& teki) // _1C
 	{
-		return teki.getParameterF(TAIkabekuiAFloatParms::BurrowingTime);
+		return teki.getParameterF(TAIkabekuiAFloatParms::TimeUntilBurrow);
 	}
 
 	// _04     = VTBL
@@ -151,7 +160,7 @@ struct TAIAattackWorkObjectKabekuiA : public TAIAattackWorkObject {
 
 	virtual bool act(Teki& teki) // _10
 	{
-		TAIAattackWorkObject::act(teki);
+		return TAIAattackWorkObject::act(teki);
 	}
 
 	virtual f32 getDamage(Teki& teki) // _1C

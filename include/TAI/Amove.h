@@ -172,8 +172,8 @@ struct TAIAgoTarget : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAapproachTargetPriorityFaceDir : public TAIAreserveMotion {
-	inline TAIAapproachTargetPriorityFaceDir() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIAapproachTargetPriorityFaceDir(int nextState, int motionID) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 

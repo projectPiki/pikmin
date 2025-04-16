@@ -50,8 +50,8 @@ TAIkabekuiAParameters::TAIkabekuiAParameters()
 
 	multiP->setF(TAIkabekuiAFloatParms::BridgeAttackRange, 8.0f);
 	multiP->setF(TAIkabekuiAFloatParms::BridgeDamage, 0.00000001f);
-	multiP->setF(TAIkabekuiAFloatParms::BurrowingTime, 3.0f);
-	multiP->setF(TAIkabekuiAFloatParms::SleepTime, 3.0f);
+	multiP->setF(TAIkabekuiAFloatParms::TimeUntilBurrow, 3.0f);
+	multiP->setF(TAIkabekuiAFloatParms::MaxSleepTime, 3.0f);
 
 	multiP->setI(TPI_CorpseType, TEKICORPSE_LeaveCorpse);
 	multiP->setI(TPI_SpawnType, TEKI_NULL);

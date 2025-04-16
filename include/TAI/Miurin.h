@@ -314,7 +314,8 @@ struct TAIAattackPosture : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAattackableTargetMiurin : public TAIAattackableTarget {
-	inline TAIAattackableTargetMiurin() // TODO: this is a guess
+	inline TAIAattackableTargetMiurin(int nextState) // TODO: this is a guess
+	    : TAIAattackableTarget(nextState)
 	{
 	}
 
@@ -329,7 +330,8 @@ struct TAIAattackableTargetMiurin : public TAIAattackableTarget {
  * @brief TODO
  */
 struct TAIAapproachTargetPriorityFaceDirMiurin : public TAIAapproachTargetPriorityFaceDir {
-	inline TAIAapproachTargetPriorityFaceDirMiurin() // TODO: this is a guess
+	inline TAIAapproachTargetPriorityFaceDirMiurin(int nextState, int motionID) // TODO: this is a guess
+	    : TAIAapproachTargetPriorityFaceDir(nextState, motionID)
 	{
 	}
 

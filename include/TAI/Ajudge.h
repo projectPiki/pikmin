@@ -218,8 +218,8 @@ struct TAIAvisiblePiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAattackableTarget : public TaiAction {
-	inline TAIAattackableTarget() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAattackableTarget(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -240,8 +240,8 @@ struct TAIAattackableTarget : public TaiAction {
  * @brief TODO
  */
 struct TAIAunvisibleTarget : public TaiAction {
-	inline TAIAunvisibleTarget() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAunvisibleTarget(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -328,7 +328,8 @@ struct TAIAoutsideTerritory : public TaiAction {
  * @brief TODO
  */
 struct TAIAattackableAngleTarget : public TAIAattackableTarget {
-	inline TAIAattackableAngleTarget() // TODO: this is a guess
+	inline TAIAattackableAngleTarget(int nextState) // TODO: this is a guess
+	    : TAIAattackableTarget(nextState)
 	{
 	}
 

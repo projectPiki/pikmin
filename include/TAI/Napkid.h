@@ -11,74 +11,81 @@
 /**
  * @brief TODO: name members
  */
-DEFINE_ENUM_TYPE(TaiNapkidIntParms, StruggleLoopCount = TPI_COUNT, COUNT, );
+BEGIN_ENUM_TYPE(TaiNapkidIntParms)
+enum {
+	StruggleLoopCount = TPI_COUNT,
+	COUNT,
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO: name members
  */
-DEFINE_ENUM_TYPE(TaiNapkidFloatParms,
-                 CarryingVelocity = TPF_COUNT, //
-                 CarryFlightHeight,            //
-                 TakingOffFlightHeight,        //
-                 WanderingHoverPeriod,         //
-                 WanderingHoverProbability,    //
-                 HoveringWanderPeriod,         //
-                 HoveringWanderProbability,    //
-                 HoveringWashPeriod,           //
-                 HoveringWashProbability,      //
-                 WashingWanderPeriod,          //
-                 WashingWanderProbability,     //
-                 ThrowPeriod,                  //
-                 ThrowVelocity,                //
-                 COUNT,                        //
-);
+BEGIN_ENUM_TYPE(TaiNapkidFloatParms)
+enum {
+	CarryingVelocity = TPF_COUNT,
+	CarryFlightHeight,
+	TakingOffFlightHeight,
+	WanderingHoverPeriod,
+	WanderingHoverProbability,
+	HoveringWanderPeriod,
+	HoveringWanderProbability,
+	HoveringWashPeriod,
+	HoveringWashProbability,
+	WashingWanderPeriod,
+	WashingWanderProbability,
+	ThrowPeriod,
+	ThrowVelocity,
+	COUNT,
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO: name members
  */
-DEFINE_ENUM_TYPE(TaiNapkidStateID,
-                 Dying          = 0,  //
-                 Wandering      = 1,  //
-                 IdleFlying     = 2,  //
-                 IdleChatting   = 3,  //
-                 Chasing        = 4,  //
-                 Outrunning     = 5,  //
-                 Evading        = 6,  //
-                 AttackingSetup = 7,  //
-                 Attacking      = 8,  //
-                 Catching       = 9,  //
-                 AttackDeciding = 10, //
-                 CarryingSetup  = 11, //
-                 AttackMissing  = 12, //
-                 Carrying       = 13, //
-                 Throwing       = 14, //
-                 ShockFalling   = 15, //
-                 LoopFalling    = 16, //
-                 Landing        = 17, //
-                 Struggling     = 18, //
-                 GettingUp      = 19, //
-                 HeightDeciding = 20, //
-                 Flicking       = 21, //
-                 Rising         = 22, //
-                 COUNT,               // 23
-);
+BEGIN_ENUM_TYPE(TaiNapkidStateID)
+enum {
+	Dying          = 0,
+	Wandering      = 1,
+	IdleFlying     = 2,
+	IdleChatting   = 3,
+	Chasing        = 4,
+	Outrunning     = 5,
+	Evading        = 6,
+	AttackingSetup = 7,
+	Attacking      = 8,
+	Catching       = 9,
+	AttackDeciding = 10,
+	CarryingSetup  = 11,
+	AttackMissing  = 12,
+	Carrying       = 13,
+	Throwing       = 14,
+	ShockFalling   = 15,
+	LoopFalling    = 16,
+	Landing        = 17,
+	Struggling     = 18,
+	GettingUp      = 19,
+	HeightDeciding = 20,
+	Flicking       = 21,
+	Rising         = 22,
+	COUNT, // 23
+} END_ENUM_TYPE;
 
 /**
  * @brief Napkid animation indices.
  */
-DEFINE_ENUM_TYPE(TaiNapkidMotionID,
-                 Dead       = 0,  // 'dead'
-                 Idle       = 2,  // 'wait1'
-                 Throw      = 4,  // 'waitact1'
-                 CarryFly   = 5,  // 'waitact2'
-                 Fly        = 6,  // 'move1'
-                 Attack     = 8,  // 'attack'
-                 Flick      = 9,  // 'flick'
-                 Fall       = 10, // 'type1'
-                 Flail      = 11, // 'type2'
-                 Ascend     = 12, // 'type3'
-                 AttackMiss = 13, // 'type4'
-);
+BEGIN_ENUM_TYPE(TaiNapkidMotionID)
+enum {
+	Dead       = 0,  // 'dead'
+	Idle       = 2,  // 'wait1'
+	Throw      = 4,  // 'waitact1'
+	CarryFly   = 5,  // 'waitact2'
+	Fly        = 6,  // 'move1'
+	Attack     = 8,  // 'attack'
+	Flick      = 9,  // 'flick'
+	Fall       = 10, // 'type1'
+	Flail      = 11, // 'type2'
+	Ascend     = 12, // 'type3'
+	AttackMiss = 13, // 'type4'
+} END_ENUM_TYPE;
 
 /*
  * @brief TODO
