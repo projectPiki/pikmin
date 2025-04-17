@@ -404,8 +404,8 @@ struct TAIAgoingHomePriorityFaceDir : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAflyingBase : public TaiAction {
-	inline TAIAflyingBase() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAflyingBase(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -422,9 +422,10 @@ struct TAIAflyingBase : public TaiAction {
  * @brief TODO
  */
 struct TAIAflyingInTerritory : public TaiAction {
-	inline TAIAflyingInTerritory() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAflyingInTerritory(int nextState, f32 p2) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
+		_08 = p2;
 	}
 
 	virtual void start(Teki&); // _08
@@ -436,6 +437,7 @@ struct TAIAflyingInTerritory : public TaiAction {
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
+	f32 _08;
 };
 
 /**

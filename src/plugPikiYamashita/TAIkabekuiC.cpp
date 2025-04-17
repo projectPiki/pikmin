@@ -13,7 +13,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("TAIkabekuiC")
 
 /*
  * --INFO--
@@ -23,48 +23,9 @@ DEFINE_PRINT("TODO: Replace")
 TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
     : PaniSoundTable(3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  bl        -0xAE6CC
-	  li        r30, 0
-	  li        r31, 0
-	  b         .loc_0x58
-
-	.loc_0x30:
-	  li        r3, 0x4
-	  bl        -0x186750
-	  cmplwi    r3, 0
-	  beq-      .loc_0x48
-	  addi      r0, r30, 0x7C
-	  stw       r0, 0x0(r3)
-
-	.loc_0x48:
-	  lwz       r4, 0x4(r29)
-	  addi      r30, r30, 0x1
-	  stwx      r3, r4, r31
-	  addi      r31, r31, 0x4
-
-	.loc_0x58:
-	  lwz       r0, 0x0(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  mr        r3, r29
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mSoundCount; i++) {
+		mSounds[i] = new PaniSound(i + SE_WALLEAT_WALK);
+	}
 }
 
 /*
@@ -73,8 +34,89 @@ TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
  * Size:	000478
  */
 TAIkabekuiCParameters::TAIkabekuiCParameters()
-    : TekiParameters(20, 60)
+    : TekiParameters(TPI_COUNT, TAIkabekuiCFloatParms::COUNT)
 {
+	int j                           = TAIkabekuiCFloatParms::BridgeAttackRange;
+	ParaMultiParameters* multiP     = mParameters;
+	ParaParameterInfo<f32>* fParams = mParameters->mFloatParams->mParaInfo;
+	fParams[j++].init("壁食いポイントの大きさ", 0.0f, 1000.0f);              // 'Size of wall bite point'
+	fParams[j++].init("壁食いダメージ", 0.0f, 100.0f);                       // 'wall eating damage'
+	fParams[j++].init("空中に逃げる時のライフのパーセンテージ", 0.0f, 1.0f); // 'Life percentage when fleeing into the air'
+	fParams[j++].init("地上に降りる時のライフのパーセンテージ", 0.0f, 1.0f); // 'Life percentage when descending to the ground'
+	fParams[j++].init("滞空中のｙ軸方向の速度", 0.0f, 1000.0f);              // 'Y-axis velocity while airborne'
+	fParams[j++].init("離陸する時のｙ軸方向の速度", 0.0f, 1000.0f);          // 'Velocity in the y-axis direction when taking off'
+	fParams[j++].init("潜るまでの時間（秒）", 0.0f, 100.0f);                 // 'Time until diving (sec)'
+	fParams[j++].init("スリープ時間（秒）", 0.0f, 100.0f);                   // 'Sleep Time (seconds)'
+	fParams[j++].init("ピキ攻撃判定サイズ", 0.0f, 100.0f);                   // 'Piki attack detection size'
+	fParams[j++].init("ナビ攻撃判定サイズ", 0.0f, 100.0f);                   // 'Navi attack detection size'
+
+	multiP->setF(TAIkabekuiCFloatParms::BridgeAttackRange, 8.0f);
+	multiP->setF(TAIkabekuiCFloatParms::BridgeDamage, 1.0f);
+	multiP->setF(TAIkabekuiCFloatParms::FlightAlertLifePercent, 0.5f);
+	multiP->setF(TAIkabekuiCFloatParms::MaxFlightLifePercent, 0.8f);
+	multiP->setF(TAIkabekuiCFloatParms::FlightYVelocity, 20.0f);
+	multiP->setF(TAIkabekuiCFloatParms::TakeoffYVelocity, 70.0f);
+	multiP->setF(TAIkabekuiCFloatParms::TimeUntilBurrow, 3.0f);
+	multiP->setF(TAIkabekuiCFloatParms::MaxSleepTime, 3.0f);
+	multiP->setF(TAIkabekuiCFloatParms::PikiAttackRange, 15.0f);
+	multiP->setF(TAIkabekuiCFloatParms::NaviAttackRange, 15.0f);
+
+	multiP->setI(TPI_CorpseType, TEKICORPSE_LeaveCorpse);
+	multiP->setI(TPI_SpawnType, TEKI_NULL);
+	multiP->setI(TPI_SwallowCount, 5);
+	multiP->setI(TPI_FlickPikiCount1, 2);
+	multiP->setI(TPI_FlickPikiCount2, 5);
+	multiP->setI(TPI_FlickPikiCount3, 10);
+	multiP->setI(TPI_FlickDamageCount1, 3);
+	multiP->setI(TPI_FlickDamageCount2, 3);
+	multiP->setI(TPI_FlickDamageCount3, 3);
+	multiP->setI(TPI_FlickDamageCount4, 3);
+	multiP->setI(TPI_CullingType, CULLAI_NeverCullAI);
+	multiP->setI(TPI_CarcassSize, 2);
+
+	multiP->setF(TPF_Weight, 100.0f);
+	multiP->setF(TPF_Scale, 1.0f);
+	multiP->setF(TPF_Life, 50.0f);
+
+	multiP->setF(TPF_WalkVelocity, 50.0f);
+	multiP->setF(TPF_RunVelocity, 120.0f);
+	multiP->setF(TPF_TurnVelocity, 1.5009831f);
+
+	multiP->setF(TPF_VisibleRange, 150.0f);
+	multiP->setF(TPF_VisibleAngle, 360.0f);
+	multiP->setF(TPF_VisibleHeight, 100.0f);
+
+	multiP->setF(TPF_AttackableRange, 40.0f);
+	multiP->setF(TPF_AttackableAngle, 60.0f);
+	multiP->setF(TPF_AttackRange, 30.0f);
+	multiP->setF(TPF_AttackHitRange, 9.0f);
+	multiP->setF(TPF_AttackPower, 5.0f);
+
+	multiP->setF(TPF_DangerTerritoryRange, 400.0f);
+	multiP->setF(TPF_SafetyTerritoryRange, 120.0f);
+
+	multiP->setF(TPF_DamageMotionPeriod, 0.3f);
+	multiP->setF(TPF_DamageMotionAmplitude, 0.2f);
+
+	multiP->setF(TPF_FlickProbability, 1.0f);
+	multiP->setF(TPF_UpperFlickPower, 300.0f);
+	multiP->setF(TPF_LowerFlickPower, 300.0f);
+	multiP->setF(TPF_UpperAttackPower, 20.0f);
+	multiP->setF(TPF_LowerAttackPower, 10.0f);
+
+	multiP->setF(TPF_LifeRecoverRate, 0.05f);
+	multiP->setF(TPF_LifeGaugeOffset, 20.0f);
+
+	multiP->setF(TPF_ShadowSize, 10.0f);
+	multiP->setF(TPF_TraceAngle, 60.0f);
+
+	multiP->setF(TPF_CorpseSize, 10.0f);
+	multiP->setF(TPF_CorpseHeight, 10.0f);
+
+	multiP->setF(TPF_FlightHeight, 50.0f);
+	multiP->setF(TPF_RippleScale, 1.0f);
+
+	u32 bad;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -372,8 +414,210 @@ TAIkabekuiCParameters::TAIkabekuiCParameters()
  * Size:	00129C
  */
 TAIkabekuiCStrategy::TAIkabekuiCStrategy()
-    : YaiStrategy(0, 0) // TODO: fix
+    : YaiStrategy(TAIkabekuiCStateID::COUNT, TAIkabekuiCStateID::Unk1)
 {
+	TAIAdeadCheck* deadCheck       = new TAIAdeadCheck(TAIkabekuiCStateID::Unk0);
+	TAIAdyingKabekui* dyingKabekui = new TAIAdyingKabekui(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk0, EffectMgr::EFF_SmokeRing_S);
+	TAIAdamage* damage             = new TAIAdamage(TAI_NO_TRANSIT, 1);
+	TAIAstop* stop                 = new TAIAstop(TAI_NO_TRANSIT);
+
+	new TAIArandomWalk(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk6); // unused
+
+	TAIAsetMotionSpeed* setMotionSpeedAppear = new TAIAsetMotionSpeed(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk4, 0.0f);
+	TAIAvisibleNavi* visibleNaviThenAppear   = new TAIAvisibleNavi(TAIkabekuiCStateID::Unk2);
+
+	new TAIAvisiblePiki(TAIkabekuiCStateID::Unk2); // unused
+
+	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiCStateID::Unk3, TAIkabekuiCMotionID::Unk4, 30.0f, 1);
+	TAIAsetTargetPointCircleRandom* setTargetThenMove = new TAIAsetTargetPointCircleRandom(TAIkabekuiCStateID::Unk4);
+	TAIAgoTargetPriorityFaceDir* turnToTargetThenSetup
+	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiCStateID::Unk3, TAIkabekuiCMotionID::Unk6);
+
+	TAIAvisibleNavi* visibleNavi2                     = new TAIAvisibleNavi(TAIkabekuiCStateID::Unk5);
+	TAIAvisiblePiki* visiblePiki                      = new TAIAvisiblePiki(TAIkabekuiCStateID::Unk5);
+	TAIAapproachTargetPriorityFaceDir* approachTarget = new TAIAapproachTargetPriorityFaceDir(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk6);
+	TAIAattackableTarget* attackableTarget            = new TAIAattackableTarget(TAIkabekuiCStateID::Unk6);
+	TAIAunvisibleTarget* unvisibleTarget              = new TAIAunvisibleTarget(TAIkabekuiCStateID::Unk3);
+	TAIAbiteForKabekuiC* kabekuiBite                  = new TAIAbiteForKabekuiC(TAIkabekuiCStateID::Unk7, 3, TAIkabekuiCMotionID::Unk10);
+	TAIAeatPiki* eatPiki                              = new TAIAeatPiki(TAIkabekuiCStateID::Unk3, TAIkabekuiCMotionID::Unk11);
+
+	TAIAlessLifeKabekuiC* alertFlightLife     = new TAIAlessLifeKabekuiC(TAIkabekuiCStateID::Unk8);
+	TAIAtakeOffKabekuiC* takeoff              = new TAIAtakeOffKabekuiC(TAIkabekuiCStateID::Unk9, TAIkabekuiCMotionID::Unk12);
+	
+	TAIAflyingInTerritory* flyingInTerritory  = new TAIAflyingInTerritory(TAI_NO_TRANSIT, 0.25f);
+	TAIAflyingBaseKabekuiC* flyingBase        = new TAIAflyingBaseKabekuiC(TAI_NO_TRANSIT);
+	TAIAflyingMotionKabekuiC* flyingMotion    = new TAIAflyingMotionKabekuiC(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk3);
+	TAIAcheckPikiFlyKabekuiC* flyingHitCheck  = new TAIAcheckPikiFlyKabekuiC(TAIkabekuiCStateID::Unk0);
+	TAIAmoreLifeKabekuiC* flyingLifeThreshold = new TAIAmoreLifeKabekuiC(TAIkabekuiCStateID::Unk10);
+	TAIAlandingKabekuiC* landing              = new TAIAlandingKabekuiC(TAIkabekuiCStateID::Unk3, TAIkabekuiCMotionID::Unk13);
+
+	TAIAhitCheckFlyingPiki* pressCheck = new TAIAhitCheckFlyingPiki(TAIkabekuiCStateID::Unk11);
+	TAIAdyingCrushKabekui* crushDying  = new TAIAdyingCrushKabekui(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk1, EffectMgr::EFF_SmokeRing_S);
+	TAIAsearchWorkObject* searchWorkObjectThenChase   = new TAIAsearchWorkObject(TAIkabekuiCStateID::Unk12);
+	TAIAinvincibleOn* invincibleOn                    = new TAIAinvincibleOn(TAI_NO_TRANSIT);
+	TAIAinvincibleOff* invincibleOff                  = new TAIAinvincibleOff(TAI_NO_TRANSIT);
+	TAIAsetTargetPointWorkObject* setTargetWorkObject = new TAIAsetTargetPointWorkObject(TAIkabekuiCStateID::Unk13);
+	TAIAgoTargetPriorityFaceDir* targetFaceDirThenEat
+	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiCStateID::Unk14	, TAIkabekuiCMotionID::Unk6);
+
+	TAIAattackWorkObjectKabekuiC* attackWorkObject
+	    = new TAIAattackWorkObjectKabekuiC(TAIkabekuiCStateID::Unk4, TAIkabekuiCMotionID::Unk6, 8);
+
+	TAIAsearchWorkObject* searchWorkObjectThenAppear = new TAIAsearchWorkObject(TAIkabekuiCStateID::Unk2);
+	TAIAdiveKabekuiC* diveKabekuiC                   = new TAIAdiveKabekuiC(TAIkabekuiCStateID::Unk15);
+	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiCStateID::Unk16, TAIkabekuiCMotionID::Unk5, 30.0f, 0);
+	TAIAsleepKabekuiC* sleepKabekuiC = new TAIAsleepKabekuiC(TAIkabekuiCStateID::Unk1);
+	TAIAshadowOn* shadowOn           = new TAIAshadowOn(TAI_NO_TRANSIT);
+	TAIAshadowOff* shadowOff         = new TAIAshadowOff(TAI_NO_TRANSIT);
+	TAIAinWaterDamage* inWaterDamage = new TAIAinWaterDamage(TAI_NO_TRANSIT, 20.0f, 1);
+
+	TaiState* state = new TaiState(2);
+	int j           = 0;
+	state->setAction(j++, dyingKabekui);
+	state->setAction(j++, stop);
+	setState(TAIkabekuiCStateID::Unk0, state);
+
+	state = new TaiState(5);
+	j     = 0;
+	state->setAction(j++, shadowOff);
+	state->setAction(j++, invincibleOn);
+	state->setAction(j++, setMotionSpeedAppear);
+	state->setAction(j++, visibleNaviThenAppear);
+	state->setAction(j++, searchWorkObjectThenAppear);
+	setState(TAIkabekuiCStateID::Unk1, state);
+
+	state = new TaiState(2);
+	j     = 0;
+	state->setAction(j++, shadowOn);
+	state->setAction(j++, appearThenSetupMove);
+	setState(TAIkabekuiCStateID::Unk2, state);
+
+	state = new TaiState(2);
+	j     = 0;
+	state->setAction(j++, invincibleOff);
+	state->setAction(j++, setTargetThenMove);
+	setState(TAIkabekuiCStateID::Unk3, state);
+
+	state = new TaiState(10);
+	j     = 0;
+	state->setAction(j++, inWaterDamage);
+	state->setAction(j++, pressCheck);
+	state->setAction(j++, damage);
+	state->setAction(j++, deadCheck);
+	state->setAction(j++, alertFlightLife);
+	state->setAction(j++, turnToTargetThenSetup);
+	state->setAction(j++, visiblePiki);
+	state->setAction(j++, visibleNavi2);
+	state->setAction(j++, searchWorkObjectThenChase);
+	state->setAction(j++, diveKabekuiC);
+	setState(TAIkabekuiCStateID::Unk4, state);
+
+	state = new TaiState(10);
+	j     = 0;
+	state->setAction(j++, inWaterDamage);
+	state->setAction(j++, pressCheck);
+	state->setAction(j++, damage);
+	state->setAction(j++, deadCheck);
+	state->setAction(j++, alertFlightLife);
+	state->setAction(j++, approachTarget);
+	state->setAction(j++, attackableTarget);
+	state->setAction(j++, unvisibleTarget);
+	state->setAction(j++, visiblePiki);
+	state->setAction(j++, visibleNavi2);
+	setState(TAIkabekuiCStateID::Unk5, state);
+
+	state = new TaiState(3);
+	j     = 0;
+	state->setAction(j++, inWaterDamage);
+	state->setAction(j++, pressCheck);
+	state->setAction(j++, kabekuiBite);
+	setState(TAIkabekuiCStateID::Unk6, state);
+
+	state = new TaiState(4);
+	j     = 0;
+	state->setAction(j++, inWaterDamage);
+	state->setAction(j++, stop);
+	state->setAction(j++, pressCheck);
+	state->setAction(j++, eatPiki);
+	setState(TAIkabekuiCStateID::Unk7, state);
+
+	state = new TaiState(4);
+	j     = 0;
+	state->setAction(j++, deadCheck);
+	state->setAction(j++, flyingHitCheck);
+	state->setAction(j++, takeoff);
+	state->setAction(j++, inWaterDamage);
+	setState(TAIkabekuiCStateID::Unk8, state);
+
+	state = new TaiState(7);
+	j     = 0;
+	state->setAction(j++, deadCheck);
+	state->setAction(j++, flyingHitCheck);
+	state->setAction(j++, flyingLifeThreshold);
+	state->setAction(j++, flyingBase);
+	state->setAction(j++, flyingInTerritory);
+	state->setAction(j++, flyingMotion);
+	state->setAction(j++, inWaterDamage);
+	setState(TAIkabekuiCStateID::Unk9, state);
+
+	state = new TaiState(4);
+	j     = 0;
+	state->setAction(j++, deadCheck);
+	state->setAction(j++, flyingHitCheck);
+	state->setAction(j++, landing);
+	state->setAction(j++, inWaterDamage);
+	setState(TAIkabekuiCStateID::Unk10, state);
+
+	state = new TaiState(2);
+	j     = 0;
+	state->setAction(j++, crushDying);
+	state->setAction(j++, stop);
+	setState(TAIkabekuiCStateID::Unk11, state);
+
+	state = new TaiState(1);
+	j     = 0;
+	state->setAction(j++, setTargetWorkObject);
+	setState(TAIkabekuiCStateID::Unk12, state);
+
+	state = new TaiState(8);
+	j     = 0;
+	state->setAction(j++, inWaterDamage);
+	state->setAction(j++, damage);
+	state->setAction(j++, deadCheck);
+	state->setAction(j++, alertFlightLife);
+	state->setAction(j++, visiblePiki);
+	state->setAction(j++, visibleNavi2);
+	state->setAction(j++, pressCheck);
+	state->setAction(j++, targetFaceDirThenEat);
+	setState(TAIkabekuiCStateID::Unk13, state);
+
+	state = new TaiState(8);
+	j     = 0;
+	state->setAction(j++, inWaterDamage);
+	state->setAction(j++, damage);
+	state->setAction(j++, deadCheck);
+	state->setAction(j++, alertFlightLife);
+	state->setAction(j++, visiblePiki);
+	state->setAction(j++, visibleNavi2);
+	state->setAction(j++, pressCheck);
+	state->setAction(j++, attackWorkObject);
+	setState(TAIkabekuiCStateID::Unk14, state);
+
+	state = new TaiState(3);
+	j     = 0;
+	state->setAction(j++, invincibleOn);
+	state->setAction(j++, burrowKabekui);
+	state->setAction(j++, stop);
+	setState(TAIkabekuiCStateID::Unk15, state);
+
+	state = new TaiState(2);
+	j     = 0;
+	state->setAction(j++, shadowOff);
+	state->setAction(j++, sleepKabekuiC);
+	setState(TAIkabekuiCStateID::Unk16, state);
+
+	u32 bad[2];
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1693,6 +1937,65 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
  */
 void TAIkabekuiCAnimation::makeDefaultAnimations()
 {
+	if (!mAnimMgr) {
+		return;
+	}
+
+	// lol, these are so just copy pasted
+	gsys->mCurrentShape = tekiMgr->mTekiShapes[TEKI_KabekuiB]->mShape;
+	addAnimation("tekis/kabekuiC/motion/dead.dca");
+
+	addAnimation("tekis/kabekuiC/motion/damage.dca");
+
+	addAnimation("tekis/kabekuiC/motion/wait1.dca");
+	addInfoKey(0, 0);
+	addInfoKey(1, 1);
+
+	addAnimation("tekis/kabekuiC/motion/wait2.dca");
+	addInfoKey(0, 0);
+	addInfoKey(1, 1);
+
+	addAnimation("tekis/kabekuiC/motion/waitact1.dck");
+	setAnimFlags(ANIMFLAG_Unk2 | ANIMFLAG_Unk3);
+	addKeyFrame(7);
+	addKeyFrame(27);
+	addInfoKey(1, 0);
+	addInfoKey(2, 1);
+
+	addAnimation("tekis/kabekuiC/motion/waitact2.dca");
+	setAnimFlags(ANIMFLAG_Unk2 | ANIMFLAG_Unk3);
+	addKeyFrame(7);
+	addKeyFrame(27);
+	addInfoKey(1, 0);
+	addInfoKey(2, 1);
+
+	addAnimation("tekis/kabekuiC/motion/move1.dck");
+	setAnimFlags(ANIMFLAG_Unk2 | ANIMFLAG_Unk3);
+	addKeyFrame(10);
+	addKeyFrame(40);
+	addInfoKey(1, 0);
+	addInfoKey(2, 1);
+
+	addAnimation("tekis/kabekuiC/motion/move2.dck");
+	setAnimFlags(ANIMFLAG_Unk2 | ANIMFLAG_Unk3);
+	addKeyFrame(10);
+	addKeyFrame(40);
+	addInfoKey(1, 0);
+	addInfoKey(2, 1);
+
+	addAnimation("tekis/kabekuiC/motion/attack.dca");
+	addKeyFrame(58);
+	addInfoKey(1, 2);
+
+	addAnimation("tekis/kabekuiC/motion/type1.dck");
+	addKeyFrame(8);
+	addKeyFrame(43);
+	addInfoKey(1, 0);
+	addInfoKey(2, 1);
+
+	addAnimation("tekis/kabekuiC/motion/type2.dca");
+	addKeyFrame(32);
+	addInfoKey(1, 2);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2175,794 +2478,6 @@ void TAIkabekuiCAnimation::makeDefaultAnimations()
 	  lwz       r30, 0xD0(r1)
 	  addi      r1, r1, 0xD8
 	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CF5B4
- * Size:	000018
- */
-f32 TAIAsleepKabekuiC::getFrameMax(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r4)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xE4(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CF5CC
- * Size:	000018
- */
-f32 TAIAdiveKabekuiC::getFrameMax(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r4)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xE0(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CF5E4
- * Size:	000020
- */
-void TAIAattackWorkObjectKabekuiC::start(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x21454
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CF604
- * Size:	000020
- */
-bool TAIAattackWorkObjectKabekuiC::act(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x21438
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CF624
- * Size:	000018
- */
-f32 TAIAattackWorkObjectKabekuiC::getDamage(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r4)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xCC(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CF63C
- * Size:	000018
- */
-f32 TAIAattackWorkObjectKabekuiC::getAttackPointRadius(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r4)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xC8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CF654
- * Size:	00016C
- */
-void TAIAattackWorkObjectKabekuiC::attackEffect(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  addi      r30, r4, 0
-	  lis       r4, 0x736C
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r4, 0x6F74
-	  bl        -0x145F68
-	  mr.       r31, r3
-	  beq-      .loc_0x154
-	  lwz       r0, 0x3A8(r30)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0xD4
-	  mr        r3, r31
-	  bl        -0x147904
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  subi      r4, r4, 0x1
-	  bl        -0x1478B8
-	  mr        r4, r3
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r4, 0x4
-	  li        r4, 0x4F
-	  li        r6, 0
-	  li        r7, 0
-	  bl        -0x32B88
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA8
-	  lfs       f0, 0x1F28(r13)
-	  lfs       f1, 0x1F2C(r13)
-	  stfs      f0, 0x20(r1)
-	  lfs       f0, 0x1F30(r13)
-	  stfs      f1, 0x24(r1)
-	  stfs      f0, 0x28(r1)
-	  lwz       r4, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x28(r1)
-	  stw       r0, 0x1E4(r3)
-
-	.loc_0xA8:
-	  addi      r3, r30, 0
-	  addi      r4, r30, 0
-	  li        r5, 0x7E
-	  bl        -0x145154
-	  lwz       r0, 0xC8(r30)
-	  rlwinm.   r0,r0,0,12,12
-	  bne-      .loc_0xD4
-	  lwz       r3, 0x2F6C(r13)
-	  li        r4, 0x34
-	  addi      r3, r3, 0x70
-	  bl        -0x14BD24
-
-	.loc_0xD4:
-	  lwz       r0, 0x3A8(r30)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x154
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x154
-	  mr        r3, r31
-	  bl        -0x1479B0
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  subi      r4, r4, 0x1
-	  bl        -0x147964
-	  mr        r4, r3
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r4, 0x4
-	  li        r4, 0x50
-	  li        r6, 0
-	  li        r7, 0
-	  bl        -0x32C34
-	  cmplwi    r3, 0
-	  beq-      .loc_0x154
-	  lfs       f0, 0x1F34(r13)
-	  lfs       f1, 0x1F38(r13)
-	  stfs      f0, 0x14(r1)
-	  lfs       f0, 0x1F3C(r13)
-	  stfs      f1, 0x18(r1)
-	  stfs      f0, 0x1C(r1)
-	  lwz       r4, 0x14(r1)
-	  lwz       r0, 0x18(r1)
-	  stw       r4, 0x1DC(r3)
-	  stw       r0, 0x1E0(r3)
-	  lwz       r0, 0x1C(r1)
-	  stw       r0, 0x1E4(r3)
-
-	.loc_0x154:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CF7C0
- * Size:	000068
- */
-void TAIAlandingKabekuiC::start(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  bl        -0x22AD0
-	  lwz       r0, 0xC8(r31)
-	  li        r3, 0x1
-	  ori       r0, r0, 0x400
-	  stw       r0, 0xC8(r31)
-	  lwz       r0, 0xC8(r31)
-	  ori       r0, r0, 0x40
-	  stw       r0, 0xC8(r31)
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,31,29
-	  stw       r0, 0xC8(r31)
-	  lbz       r0, 0x4C8(r31)
-	  rlwimi    r0,r3,3,28,28
-	  stb       r0, 0x4C8(r31)
-	  lfs       f0, -0x4448(r2)
-	  stfs      f0, 0x4C0(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CF828
- * Size:	0001E4
- */
-bool TAIAlandingKabekuiC::act(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stfd      f31, 0x80(r1)
-	  stfd      f30, 0x78(r1)
-	  stw       r31, 0x74(r1)
-	  li        r31, 0
-	  stw       r30, 0x70(r1)
-	  addi      r30, r4, 0
-	  bl        -0x22994
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1C0
-	  lbz       r0, 0x4C8(r30)
-	  rlwinm.   r0,r0,29,31,31
-	  beq-      .loc_0xB0
-	  lwz       r4, 0x2C4(r30)
-	  mr        r3, r30
-	  lwz       r4, 0x84(r4)
-	  lwz       r4, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  lfs       f30, 0xC(r4)
-	  bl        -0x86EE8
-	  lfs       f2, 0xA8(r30)
-	  lfs       f3, -0x443C(r2)
-	  lfs       f0, -0x43D4(r2)
-	  fmuls     f2, f2, f3
-	  fsubs     f1, f2, f1
-	  fmuls     f0, f0, f1
-	  fdivs     f0, f0, f3
-	  stfs      f0, 0x4C0(r30)
-	  lfs       f1, 0xA0(r30)
-	  bl        0x4C2B0
-	  lfs       f0, 0xA0(r30)
-	  fmr       f31, f1
-	  fmr       f1, f0
-	  bl        0x4C434
-	  fmuls     f1, f30, f1
-	  li        r3, 0
-	  fmuls     f0, f30, f31
-	  stfs      f1, 0xA4(r30)
-	  stfs      f0, 0xAC(r30)
-	  lbz       r0, 0x4C8(r30)
-	  rlwimi    r0,r3,3,28,28
-	  stb       r0, 0x4C8(r30)
-
-	.loc_0xB0:
-	  lwz       r0, 0xC8(r30)
-	  rlwinm.   r0,r0,0,25,25
-	  beq-      .loc_0x168
-	  mr        r3, r30
-	  bl        -0x86F54
-	  lfs       f0, -0x4420(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x14C
-	  lfs       f0, 0x94(r30)
-	  li        r4, 0x1
-	  stfs      f0, 0x5C(r1)
-	  lfs       f0, 0x98(r30)
-	  stfs      f0, 0x60(r1)
-	  lfs       f0, 0x9C(r30)
-	  stfs      f0, 0x64(r1)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x5C(r1)
-	  lfs       f2, 0x64(r1)
-	  bl        -0x167A1C
-	  stfs      f1, 0x60(r1)
-	  addi      r5, r1, 0x5C
-	  li        r4, 0x44
-	  lwz       r3, 0x3180(r13)
-	  li        r6, 0
-	  li        r7, 0
-	  bl        -0x32E04
-	  lwz       r0, 0xC8(r30)
-	  rlwinm    r0,r0,0,26,24
-	  stw       r0, 0xC8(r30)
-	  lwz       r0, 0xC8(r30)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0xC8(r30)
-	  lfs       f0, 0xA4(r30)
-	  lfs       f1, -0x43D0(r2)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xA4(r30)
-	  lfs       f0, 0xAC(r30)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xAC(r30)
-
-	.loc_0x14C:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x4C0(r30)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0xA8(r30)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0xA8(r30)
-
-	.loc_0x168:
-	  lwz       r0, 0x3A8(r30)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x1A8
-	  addi      r3, r30, 0
-	  addi      r4, r30, 0
-	  li        r5, 0x78
-	  bl        -0x1453BC
-	  lwz       r0, 0xC8(r30)
-	  li        r31, 0x1
-	  rlwinm    r0,r0,0,26,24
-	  stw       r0, 0xC8(r30)
-	  lwz       r0, 0xC8(r30)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0xC8(r30)
-	  lfs       f0, -0x4448(r2)
-	  stfs      f0, 0xA8(r30)
-
-	.loc_0x1A8:
-	  lwz       r3, 0xA4(r30)
-	  lwz       r0, 0xA8(r30)
-	  stw       r3, 0x70(r30)
-	  stw       r0, 0x74(r30)
-	  lwz       r0, 0xAC(r30)
-	  stw       r0, 0x78(r30)
-
-	.loc_0x1C0:
-	  mr        r3, r31
-	  lwz       r0, 0x8C(r1)
-	  lfd       f31, 0x80(r1)
-	  lfd       f30, 0x78(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CFA0C
- * Size:	000018
- */
-f32 TAIAmoreLifeKabekuiC::getLifePercentThreshold(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r4)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xD4(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CFA24
- * Size:	000008
- */
-bool TAIAcheckPikiFlyKabekuiC::act(Teki&)
-{
-	return false;
-}
-
-/*
- * --INFO--
- * Address:	801CFA2C
- * Size:	00003C
- */
-void TAIAflyingMotionKabekuiC::start(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  bl        -0x22D3C
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0x78
-	  bl        -0x14549C
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CFA68
- * Size:	00003C
- */
-f32 TAIAflyingBaseKabekuiC::getFlyingStayVelocity(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x4C8(r4)
-	  rlwinm.   r0,r0,31,31,31
-	  beq-      .loc_0x24
-	  lwz       r3, 0x2C4(r4)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xD8(r3)
-	  blr
-
-	.loc_0x24:
-	  lwz       r3, 0x2C4(r4)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xDC(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CFAA4
- * Size:	000028
- */
-bool rippleEffect::invoke(zen::particleGenerator*)
-{
-	/*
-	.loc_0x0:
-	  lha       r3, 0x1C8(r4)
-	  lha       r5, 0x90(r4)
-	  subi      r0, r3, 0x1
-	  cmpw      r5, r0
-	  blt-      .loc_0x20
-	  lwz       r0, 0x80(r4)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r4)
-
-	.loc_0x20:
-	  li        r3, 0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CFACC
- * Size:	0000C8
- */
-void TAIAtakeOffKabekuiC::start(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r3, 0
-	  bl        -0x22DE4
-	  lwz       r0, 0xC8(r31)
-	  li        r4, 0x1D
-	  ori       r0, r0, 0x400
-	  stw       r0, 0xC8(r31)
-	  lwz       r0, 0xC8(r31)
-	  ori       r0, r0, 0x40
-	  stw       r0, 0xC8(r31)
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,31,29
-	  stw       r0, 0xC8(r31)
-	  lfs       f0, 0x1F40(r13)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0x1F44(r13)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0x1F48(r13)
-	  stfs      f0, 0xAC(r31)
-	  lwz       r3, 0xA4(r31)
-	  lwz       r0, 0xA8(r31)
-	  stw       r3, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0xAC(r31)
-	  stw       r0, 0x78(r31)
-	  lwz       r3, 0x2C4(r31)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  bl        -0xAD67C
-	  lfs       f0, -0x43D4(r2)
-	  li        r3, 0
-	  lfs       f2, 0xC(r30)
-	  fmuls     f1, f0, f1
-	  fmuls     f0, f2, f2
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0x4C0(r31)
-	  lbz       r0, 0x4C8(r31)
-	  rlwimi    r0,r3,3,28,28
-	  stb       r0, 0x4C8(r31)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CFB94
- * Size:	000230
- */
-bool TAIAtakeOffKabekuiC::act(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x98(r1)
-	  stfd      f31, 0x90(r1)
-	  stfd      f30, 0x88(r1)
-	  stfd      f29, 0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x78(r1)
-	  stw       r29, 0x74(r1)
-	  addi      r29, r3, 0
-	  bl        -0x22D08
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x204
-	  lwz       r0, 0x3A8(r31)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x17C
-	  lwz       r4, 0x2C4(r31)
-	  li        r3, 0x1
-	  lbz       r0, 0x4C8(r31)
-	  rlwimi    r0,r3,3,28,28
-	  lwz       r3, 0x84(r4)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f30, 0xC(r3)
-	  stb       r0, 0x4C8(r31)
-	  lfs       f2, 0xC(r29)
-	  lfs       f0, 0x4C0(r31)
-	  lfs       f1, 0xA0(r31)
-	  fmuls     f29, f2, f0
-	  bl        0x4BF48
-	  lfs       f0, 0xA0(r31)
-	  fmr       f31, f1
-	  fmr       f1, f0
-	  bl        0x4C0CC
-	  fmuls     f1, f30, f1
-	  addi      r30, r31, 0x94
-	  fmuls     f0, f30, f31
-	  li        r4, 0x1
-	  stfs      f1, 0xA4(r31)
-	  stfs      f29, 0xA8(r31)
-	  stfs      f0, 0xAC(r31)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x94(r31)
-	  lfs       f2, 0x9C(r31)
-	  bl        -0x167A70
-	  cmplwi    r3, 0
-	  beq-      .loc_0x17C
-	  bl        -0xB9BD4
-	  cmpwi     r3, 0x5
-	  bne-      .loc_0x17C
-	  lfs       f0, -0x4448(r2)
-	  mr        r5, r30
-	  li        r4, 0xF
-	  stfs      f0, 0x5C(r1)
-	  li        r6, 0
-	  li        r7, 0
-	  stfs      f0, 0x58(r1)
-	  stfs      f0, 0x54(r1)
-	  lwz       r3, 0x3180(r13)
-	  bl        -0x3314C
-	  lfs       f0, 0x0(r30)
-	  li        r4, 0x1
-	  stfs      f0, 0x54(r1)
-	  lfs       f0, 0x4(r30)
-	  stfs      f0, 0x58(r1)
-	  lfs       f0, 0x8(r30)
-	  stfs      f0, 0x5C(r1)
-	  lwz       r3, 0x2F00(r13)
-	  lfs       f1, 0x54(r1)
-	  lfs       f2, 0x5C(r1)
-	  bl        -0x167DAC
-	  stfs      f1, 0x58(r1)
-	  addi      r5, r1, 0x54
-	  addi      r6, r29, 0x10
-	  lwz       r3, 0x3180(r13)
-	  li        r4, 0xE
-	  li        r7, 0
-	  bl        -0x33194
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x54
-	  addi      r6, r29, 0x10
-	  li        r4, 0xD
-	  li        r7, 0
-	  bl        -0x331AC
-	  lwz       r3, 0x3180(r13)
-	  addi      r5, r1, 0x54
-	  addi      r6, r29, 0x10
-	  li        r4, 0xC
-	  li        r7, 0
-	  bl        -0x331C4
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  li        r5, 0xA7
-	  bl        -0x145758
-
-	.loc_0x17C:
-	  lbz       r0, 0x4C8(r31)
-	  rlwinm.   r0,r0,29,31,31
-	  beq-      .loc_0x1C0
-	  lfs       f0, 0x4C0(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  fneg      f1, f0
-	  lfs       f2, 0xA8(r31)
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0xA8(r31)
-	  lwz       r3, 0xA4(r31)
-	  lwz       r0, 0xA8(r31)
-	  stw       r3, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0xAC(r31)
-	  stw       r0, 0x78(r31)
-
-	.loc_0x1C0:
-	  lwz       r0, 0x3A8(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x1FC
-	  lfs       f1, 0xA8(r31)
-	  li        r3, 0x1
-	  lfs       f0, -0x43CC(r2)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xA8(r31)
-	  lwz       r4, 0xA4(r31)
-	  lwz       r0, 0xA8(r31)
-	  stw       r4, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0xAC(r31)
-	  stw       r0, 0x78(r31)
-	  b         .loc_0x208
-
-	.loc_0x1FC:
-	  li        r3, 0
-	  b         .loc_0x208
-
-	.loc_0x204:
-	  li        r3, 0
-
-	.loc_0x208:
-	  lwz       r0, 0x9C(r1)
-	  lfd       f31, 0x90(r1)
-	  lfd       f30, 0x88(r1)
-	  lfd       f29, 0x80(r1)
-	  lwz       r31, 0x7C(r1)
-	  lwz       r30, 0x78(r1)
-	  lwz       r29, 0x74(r1)
-	  addi      r1, r1, 0x98
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CFDC4
- * Size:	000018
- */
-f32 TAIAlessLifeKabekuiC::getLifePercentThreshold(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r4)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xD0(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CFDDC
- * Size:	000018
- */
-f32 TAIAbiteForKabekuiC::getPikiAttackSize(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r4)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xE8(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801CFDF4
- * Size:	000018
- */
-f32 TAIAbiteForKabekuiC::getNaviAttackSize(Teki&)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C4(r4)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f1, 0xEC(r3)
 	  blr
 	*/
 }

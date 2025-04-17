@@ -72,7 +72,7 @@ enum {
 struct TAIkabekuiBSoundTable : public PaniSoundTable {
 	TAIkabekuiBSoundTable();
 
-	// TODO: members
+	// _00-_08 = PaniSoundTable
 };
 
 /*
@@ -82,8 +82,7 @@ struct TAIkabekuiBParameters : public TekiParameters {
 	TAIkabekuiBParameters();
 
 	// _00     = VTBL
-	// _00-_20 = TekiParameters?
-	// TODO: members
+	// _00-_20 = TekiParameters
 };
 
 /*
@@ -93,8 +92,7 @@ struct TAIkabekuiBStrategy : public YaiStrategy {
 	TAIkabekuiBStrategy();
 
 	// _00     = VTBL
-	// _00-_10 = YaiStrategy?
-	// TODO: members
+	// _00-_10 = YaiStrategy
 };
 
 /**
@@ -110,7 +108,6 @@ struct TAIkabekuiBAnimation : public TAIanimation {
 
 	// _0C     = VTBL
 	// _00-_0C = TAIanimation
-	// TODO: members
 };
 
 /**
@@ -128,8 +125,7 @@ struct TAIAsleepKabekuiB : public TAIAtimerReaction {
 	}
 
 	// _04     = VTBL
-	// _00-_08 = TAIAtimerReaction?
-	// TODO: members
+	// _00-_0C = TAIAtimerReaction
 };
 
 /**
@@ -147,8 +143,7 @@ struct TAIAdiveKabekuiB : public TAIAtimerReaction {
 	}
 
 	// _04     = VTBL
-	// _00-_08 = TAIAtimerReaction?
-	// TODO: members
+	// _00-_0C = TAIAtimerReaction
 };
 
 /**
@@ -210,8 +205,7 @@ struct TAIAattackWorkObjectKabekuiB : public TAIAattackWorkObject {
 	}
 
 	// _04     = VTBL
-	// _00-_08 = TAIAattackWorkObject?
-	// TODO: members
+	// _00-_14 = TAIAattackWorkObject
 };
 
 /**
@@ -234,7 +228,7 @@ struct TAIAbiteForKabekuiB : public TAIAbiteForKabekui {
 	}
 
 	// _04     = VTBL
-	// _00-_08 = TAIAbiteForKabekui?
+	// _00-_014 = TAIAbiteForKabekui?
 	// TODO: members
 };
 

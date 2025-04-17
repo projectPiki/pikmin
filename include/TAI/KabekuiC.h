@@ -13,8 +13,63 @@
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 #include "PaniAnimator.h"
+#include "SoundID.h"
+#include "PlayerState.h"
+#include "MapCode.h"
 
 /////////// Shearwig AI Actions ///////////
+
+BEGIN_ENUM_TYPE(TAIkabekuiCFloatParms)
+enum {
+	BridgeAttackRange = TPF_COUNT,
+	BridgeDamage,
+	FlightAlertLifePercent,
+	MaxFlightLifePercent,
+	FlightYVelocity,
+	TakeoffYVelocity,
+	TimeUntilBurrow,
+	MaxSleepTime,
+	PikiAttackRange,
+	NaviAttackRange,
+	COUNT,
+} END_ENUM_TYPE;
+
+BEGIN_ENUM_TYPE(TAIkabekuiCStateID)
+enum {
+	Unk0  = 0,
+	Unk1  = 1,
+	Unk2  = 2,
+	Unk3  = 3,
+	Unk4  = 4,
+	Unk5  = 5,
+	Unk6  = 6,
+	Unk7  = 7,
+	Unk8  = 8,
+	Unk9  = 9,
+	Unk10 = 10,
+	Unk11 = 11,
+	Unk12 = 12,
+	Unk13 = 13,
+	Unk14 = 14,
+	Unk15 = 15,
+	Unk16 = 16,
+	COUNT, // 17
+} END_ENUM_TYPE;
+
+BEGIN_ENUM_TYPE(TAIkabekuiCMotionID)
+enum {
+	Unk0  = 0, // 'dead'
+	Unk1  = 1, // 'damage'
+	Unk3  = 3,
+	Unk4  = 4,  // 'waitact1'
+	Unk5  = 5,  // 'waitact2'
+	Unk6  = 6,  // 'move1'
+	Unk8  = 8,  // 'attack'
+	Unk10 = 10, //
+	Unk11 = 11, //
+	Unk12 = 12, //
+	Unk13 = 13, //
+} END_ENUM_TYPE;
 
 namespace {
 
@@ -22,7 +77,29 @@ namespace {
  * @brief TODO
  */
 struct rippleEffect : public zen::CallBack1<zen::particleGenerator*> {
-	virtual bool invoke(zen::particleGenerator*); // _08
+	virtual bool invoke(zen::particleGenerator* generator) // _08
+	{
+		if (generator->getCurrentFrame() >= generator->getMaxFrame() - 1) {
+			generator->finish();
+		}
+		return false;
+	}
+
+	void create(Teki& teki)
+	{
+		Vector3f effectPos;
+
+		effectMgr->create(EffectMgr::EFF_P_Bubbles, teki.getPosition(), nullptr, nullptr);
+
+		effectPos.set(teki.getPosition());
+		effectPos.y = mapMgr->getMinY(effectPos.x, effectPos.z, true);
+
+		effectMgr->create(EffectMgr::EFF_RippleWhite, effectPos, this, nullptr);
+		effectMgr->create(EffectMgr::EFF_RippleBlack, effectPos, this, nullptr);
+		effectMgr->create(EffectMgr::EFF_RippleSurface, effectPos, this, nullptr);
+
+		teki.playEventSound(&teki, SE_OTAMA_WATERJUMP);
+	}
 
 	// TODO: members
 };
@@ -81,11 +158,14 @@ struct TAIkabekuiCAnimation : public TAIanimation {
  */
 struct TAIAsleepKabekuiC : public TAIAtimerReaction {
 	TAIAsleepKabekuiC(int nextState)
-	    : TAIAtimerReaction(nextState, 0.0f)
+	    : TAIAtimerReaction(nextState, 3.0f)
 	{
 	}
 
-	virtual f32 getFrameMax(Teki&); // _1C
+	virtual f32 getFrameMax(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIkabekuiCFloatParms::MaxSleepTime);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAtimerReaction?
@@ -97,11 +177,14 @@ struct TAIAsleepKabekuiC : public TAIAtimerReaction {
  */
 struct TAIAdiveKabekuiC : public TAIAtimerReaction {
 	TAIAdiveKabekuiC(int nextState)
-	    : TAIAtimerReaction(nextState, 0.0f)
+	    : TAIAtimerReaction(nextState, 3.0f)
 	{
 	}
 
-	virtual f32 getFrameMax(Teki&); // _1C
+	virtual f32 getFrameMax(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIkabekuiCFloatParms::TimeUntilBurrow);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAtimerReaction?
@@ -117,11 +200,54 @@ struct TAIAattackWorkObjectKabekuiC : public TAIAattackWorkObject {
 	{
 	}
 
-	virtual void start(Teki&);               // _08
-	virtual bool act(Teki&);                 // _10
-	virtual f32 getDamage(Teki&);            // _1C
-	virtual f32 getAttackPointRadius(Teki&); // _20
-	virtual void attackEffect(Teki&);        // _24
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAattackWorkObject::start(teki);
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		return TAIAattackWorkObject::act(teki);
+	}
+
+	virtual f32 getDamage(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIkabekuiCFloatParms::BridgeDamage);
+	}
+
+	virtual f32 getAttackPointRadius(Teki& teki) // _20
+	{
+		return teki.getParameterF(TAIkabekuiCFloatParms::BridgeAttackRange);
+	}
+
+	virtual void attackEffect(Teki& teki) // _24
+	{
+		CollPart* mouthSlot = teki.mCollInfo->getSphere('slot');
+		if (mouthSlot == nullptr) {
+			return;
+		}
+
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			zen::particleGenerator* generator = effectMgr->create(
+			    EffectMgr::EFF_Kabekui_EatBridgeA, mouthSlot->getChildAt(mouthSlot->getChildCount() - 1)->mCentre, nullptr, nullptr);
+			if (generator != nullptr) {
+				generator->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
+			}
+
+			teki.playEventSound(&teki, SE_WALLEAT_EAT);
+			if (teki.aiCullable()) {
+				playerState->mResultFlags.setOn(RESFLAG_Kabekui);
+			}
+		}
+
+		if (teki.mCurrentAnimEvent != KEY_Action1 && teki.mCurrentAnimEvent == KEY_Action2) {
+			zen::particleGenerator* generator = effectMgr->create(
+			    EffectMgr::EFF_Kabekui_EatBridgeB, mouthSlot->getChildAt(mouthSlot->getChildCount() - 1)->mCentre, nullptr, nullptr);
+			if (generator != nullptr) {
+				generator->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
+			}
+		}
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAattackWorkObject?
@@ -132,13 +258,62 @@ struct TAIAattackWorkObjectKabekuiC : public TAIAattackWorkObject {
  * @brief TODO
  */
 struct TAIAlandingKabekuiC : public TAIAreserveMotion {
-	inline TAIAlandingKabekuiC() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIAlandingKabekuiC(int nextState, int motionID) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAreserveMotion::start(teki);
+		teki.setFlag400();
+		teki.startFlying();
+		teki.setFlyingSwitch(true);
+		teki.setDororoGravity(0.0f);
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		bool output = false;
+		if (TAIAreserveMotion::act(teki)) {
+			if (teki.getFlyingSwitch()) {
+				f32 walkSpeed = teki.getParameterF(TPF_WalkVelocity);
+				f32 scale     = 1.0f;
+				teki.setDororoGravity((teki.mTargetVelocity.y * scale - teki.getYFromSeaLevel()) * 2.0f / scale);
+				f32 zDir = cosf(teki.mFaceDirection);
+				f32 xDir = sinf(teki.mFaceDirection);
+				teki.mTargetVelocity.set(walkSpeed * xDir, teki.mTargetVelocity.y, walkSpeed * zDir);
+				teki.setFlyingSwitch(false);
+			}
+
+			if (teki.isFlying()) {
+				if (teki.getYFromSeaLevel() < 15.0f) {
+					Vector3f effectPos(teki.getPosition());
+					effectPos.y = mapMgr->getMinY(effectPos.x, effectPos.z, true);
+					effectMgr->create(EffectMgr::EFF_SmokeRing_S, effectPos, nullptr, nullptr);
+
+					teki.finishFlying();
+					teki.mTargetVelocity.x *= 0.15f;
+					teki.mTargetVelocity.z *= 0.15f;
+				}
+
+				teki.mTargetVelocity.y += teki.getDororoGravity() * gsys->getFrameTime();
+			}
+
+			if (teki.mCurrentAnimEvent == KEY_Finished) {
+				teki.stopEventSound(&teki, SE_SARAI_HOVER);
+				teki.finishFlying();
+
+				teki.mTargetVelocity.y = 0.0f;
+				output                 = true;
+			}
+
+			teki.mVelocity = teki.mTargetVelocity;
+		}
+
+		u32 bad[2];
+		return output;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
@@ -154,7 +329,10 @@ struct TAIAmoreLifeKabekuiC : public TAIAmoreLife {
 	{
 	}
 
-	virtual f32 getLifePercentThreshold(Teki&); // _1C
+	virtual f32 getLifePercentThreshold(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIkabekuiCFloatParms::MaxFlightLifePercent);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAmoreLife?
@@ -170,7 +348,10 @@ struct TAIAlessLifeKabekuiC : public TAIAlessLife {
 	{
 	}
 
-	virtual f32 getLifePercentThreshold(Teki&); // _1C
+	virtual f32 getLifePercentThreshold(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIkabekuiCFloatParms::FlightAlertLifePercent);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAmoreLife?
@@ -186,7 +367,10 @@ struct TAIAcheckPikiFlyKabekuiC : public TAIAhitCheckFlyingPiki {
 	{
 	}
 
-	virtual bool act(Teki&); // _10
+	virtual bool act(Teki&) // _10
+	{
+		return false;
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAhitCheckFlyingPiki?
@@ -197,12 +381,16 @@ struct TAIAcheckPikiFlyKabekuiC : public TAIAhitCheckFlyingPiki {
  * @brief TODO
  */
 struct TAIAflyingMotionKabekuiC : public TAIAreserveMotion {
-	inline TAIAflyingMotionKabekuiC() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIAflyingMotionKabekuiC(int nextState, int motionID) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
-	virtual void start(Teki&); // _08
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAreserveMotion::start(teki);
+		teki.playEventSound(&teki, SE_SARAI_HOVER);
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
@@ -213,11 +401,19 @@ struct TAIAflyingMotionKabekuiC : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAflyingBaseKabekuiC : public TAIAflyingBase {
-	inline TAIAflyingBaseKabekuiC() // TODO: this is a guess
+	inline TAIAflyingBaseKabekuiC(int nextState) // TODO: this is a guess
+	    : TAIAflyingBase(nextState)
 	{
 	}
 
-	virtual f32 getFlyingStayVelocity(Teki&); // _1C
+	virtual f32 getFlyingStayVelocity(Teki& teki) // _1C
+	{
+		if (teki.getFlyingSwitch()) {
+			return teki.getParameterF(TAIkabekuiCFloatParms::TakeoffYVelocity);
+		}
+
+		return teki.getParameterF(TAIkabekuiCFloatParms::FlightYVelocity);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAflyingBase?
@@ -228,17 +424,66 @@ struct TAIAflyingBaseKabekuiC : public TAIAflyingBase {
  * @brief TODO
  */
 struct TAIAtakeOffKabekuiC : public TAIAreserveMotion {
-	inline TAIAtakeOffKabekuiC() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIAtakeOffKabekuiC(int nextState, int motionID) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionID)
 	{
+		mTakeoffSpeed = 0.7f;
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAreserveMotion::start(teki);
+		teki.setFlag400();
+		teki.startFlying();
+		teki.mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		teki.mVelocity = teki.mTargetVelocity;
+
+		teki.setDororoGravity(teki.getParameterF(TPF_FlightHeight) * 2.0f / SQUARE(mTakeoffSpeed));
+		teki.setFlyingSwitch(false);
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		if (TAIAreserveMotion::act(teki)) {
+			if (teki.mCurrentAnimEvent == KEY_Action0) {
+				f32 walkSpeed = teki.getParameterF(TPF_WalkVelocity);
+
+				teki.setFlyingSwitch(true);
+
+				f32 flyVel = teki.getDororoGravity() * mTakeoffSpeed;
+				f32 zVel   = cosf(teki.mFaceDirection);
+				f32 xVel   = sinf(teki.mFaceDirection);
+				teki.mTargetVelocity.set(walkSpeed * xVel, flyVel, walkSpeed * zVel);
+
+				CollTriInfo* currTriInfo = mapMgr->getCurrTri(teki.getPosition().x, teki.getPosition().z, true);
+				if (currTriInfo != nullptr && MapCode::getAttribute(currTriInfo) == ATTR_Water) {
+					mRippleEffect.create(teki);
+				}
+			}
+
+			if (teki.getFlyingSwitch()) {
+				teki.mTargetVelocity.y += -teki.getDororoGravity() * gsys->getFrameTime();
+				teki.mVelocity = teki.mTargetVelocity;
+			}
+
+			if (teki.mCurrentAnimEvent == KEY_Finished) {
+				teki.mTargetVelocity.y *= 0.1f;
+				teki.mVelocity = teki.mTargetVelocity;
+				return true;
+			}
+
+			return false;
+		}
+
+		u32 bad[2];
+		return false;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
+	f32 mTakeoffSpeed;
+	rippleEffect mRippleEffect;
 };
 
 /**
@@ -250,8 +495,15 @@ struct TAIAbiteForKabekuiC : public TAIAbiteForKabekui {
 	{
 	}
 
-	virtual f32 getPikiAttackSize(Teki&); // _1C
-	virtual f32 getNaviAttackSize(Teki&); // _20
+	virtual f32 getPikiAttackSize(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIkabekuiCFloatParms::PikiAttackRange);
+	}
+
+	virtual f32 getNaviAttackSize(Teki& teki) // _20
+	{
+		return teki.getParameterF(TAIkabekuiCFloatParms::NaviAttackRange);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAbiteForKabekui?

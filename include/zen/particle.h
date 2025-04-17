@@ -388,6 +388,7 @@ struct particleGenerator : public zenList {
 
 	// NB: might be getMaxFrame(), unsure
 	s16 getCurrentFrame() { return mCurrentFrame; }
+	s16 getMaxFrame() { return mMaxFrame; }
 
 	void pmGetArbitUnitVec(Vector3f& unitVec)
 	{
@@ -405,8 +406,6 @@ struct particleGenerator : public zenList {
 	    These are still to be made/assigned from the DLL:
 	    Vector3f getAirField();
 	    f32 getNewtonFieldFrc();
-
-	    s16 getMaxFrame();
 	*/
 
 	// _00     = VTBL
