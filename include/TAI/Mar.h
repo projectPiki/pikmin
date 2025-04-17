@@ -288,7 +288,8 @@ struct TAIAflickCheckTimerMar : public TaiAction {
  * @brief TODO
  */
 struct TAIAflyingBaseMar : public TAIAflyingBase {
-	inline TAIAflyingBaseMar() // TODO: this is a guess
+	inline TAIAflyingBaseMar(int nextState) // TODO: this is a guess
+		: TAIAflyingBase(nextState)
 	{
 	}
 
