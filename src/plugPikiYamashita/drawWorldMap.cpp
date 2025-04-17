@@ -405,18 +405,18 @@ struct WorldMapCursorMgr {
 			SeSystem::playSysSe(SYSSE_SELECT_DECIDE);
 
 			if (_110[0]) {
-				_110[0]->setInitVel(4.0f * _118);
+				_110[0]->setFreqFrm(4.0f * _118);
 			}
 			if (_110[1]) {
-				_110[1]->setInitVel(5.0f * _11C);
+				_110[1]->setFreqFrm(5.0f * _11C);
 			}
 		} else {
 			_34 = 0;
 			if (_110[0]) {
-				_110[0]->setInitVel(_118);
+				_110[0]->setFreqFrm(_118);
 			}
 			if (_110[1]) {
-				_110[1]->setInitVel(_11C);
+				_110[1]->setFreqFrm(_11C);
 			}
 		}
 	}
@@ -445,13 +445,13 @@ struct WorldMapCursorMgr {
 
 		_110[0] = WMeffMgr->create(EFF2D_MapRocketFire, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 		_110[0]->invisible();
-		_118 = _110[0]->getInitVel();
-		_120 = _110[0]->getFreqFrm();
+		_118 = _110[0]->getFreqFrm();
+		_120 = _110[0]->getInitVel();
 
 		_110[1] = WMeffMgr->create(EFF2D_MapRocketSmoke, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 		_110[1]->invisible();
-		_11C = _110[1]->getInitVel();
-		_124 = _110[0]->getFreqFrm(); // maybe typo?
+		_11C = _110[1]->getFreqFrm();
+		_124 = _110[0]->getInitVel(); // maybe typo?
 
 		if (playerState) {
 			for (i = 0; i < PikiColorCount; i++) {
@@ -666,11 +666,11 @@ struct WorldMapCursorMgr {
 			_110[0]->setEmitPos(vec1);
 			_110[0]->setEmitDir(Vector3f(-NMathF::cos(angle), NMathF::sin(angle), 0.0f));
 			_110[0]->setScaleSize(mRocketIcon->getScale().x * 0.5f);
-			_110[0]->setFreqFrm(_120 * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
+			_110[0]->setInitVel(_120 * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
 			if (mUfoStatus == UFO_Unk0) {
-				_110[0]->setInitVel(_118);
+				_110[0]->setFreqFrm(_118);
 			} else {
-				_110[0]->setInitVel(2.0f * _118);
+				_110[0]->setFreqFrm(2.0f * _118);
 			}
 		}
 
@@ -679,11 +679,11 @@ struct WorldMapCursorMgr {
 			_110[1]->setEmitPos(vec1);
 			_110[1]->setEmitDir(Vector3f(-NMathF::cos(angle), NMathF::sin(angle), 0.0f));
 			_110[1]->setScaleSize(mRocketIcon->getScale().x * 0.7f);
-			_110[1]->setFreqFrm(_124 * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
+			_110[1]->setInitVel(_124 * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
 			if (mUfoStatus == UFO_Unk0) {
-				_110[1]->setInitVel(_11C * 0.25f);
+				_110[1]->setFreqFrm(_11C * 0.25f);
 			} else {
-				_110[1]->setInitVel(_11C);
+				_110[1]->setFreqFrm(_11C);
 			}
 		}
 	}

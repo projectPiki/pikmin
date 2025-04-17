@@ -807,7 +807,7 @@ void GoalItem::setSpotActive(bool set)
 bool GoalItem::invoke(zen::particleGenerator* efx, zen::particleMdl* mdl)
 {
 	if (mdl) {
-		mdl->_18 = mCollInfo->getSphere('llit')->mCentre;
+		mdl->mLocalOffset = mCollInfo->getSphere('llit')->mCentre;
 	}
 	return true;
 }

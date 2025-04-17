@@ -553,9 +553,9 @@ struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
 struct KingGenSalivaParticleCallBack : public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
 	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _08
 	{
-		if (ptcl->_2E == 0) {
-			ptcl->_34.x += (mKing->mKingBody->mSalivaEffectPosition.x - mKing->mKingBody->_E4.x) / 2.0f;
-			ptcl->_34.z += (mKing->mKingBody->mSalivaEffectPosition.z - mKing->mKingBody->_E4.z) / 2.0f;
+		if (ptcl->mAge == 0) {
+			ptcl->mVelocity.x += (mKing->mKingBody->mSalivaEffectPosition.x - mKing->mKingBody->_E4.x) / 2.0f;
+			ptcl->mVelocity.z += (mKing->mKingBody->mSalivaEffectPosition.z - mKing->mKingBody->_E4.z) / 2.0f;
 		}
 
 		Vector3f ptclPos = ptcl->getPos();

@@ -54,6 +54,13 @@ inline int Abs(int val)
 	}
 	return val;
 }
+
+// TODO: I have no idea what this actually is in the map, but it exists as a function
+// in particleGenerator at least, so who knows.
+inline f32 RandShift(f32 min)
+{
+	return Rand(2.0f * min) - min;
+}
 } // namespace zen
 
 namespace ZenQuat {

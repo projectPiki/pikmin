@@ -1,4 +1,6 @@
 #include "zen/particle.h"
+#include "Matrix3f.h"
+#include "Graphics.h"
 #include "DebugLog.h"
 
 /*
@@ -13,16 +15,127 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("particleGenerator")
+
+static u8 lpsPos[48] ATTRIBUTE_ALIGN(32) = {
+	255, 231, 0, 25, 0,   0,   0, 25, 0, 25, 0, 0,  0, 25, 255, 231, 0, 0,  255, 231, 255, 231, 0,   0,
+	0,   0,   0, 25, 255, 231, 0, 0,  0, 25, 0, 25, 0, 0,  255, 231, 0, 25, 0,   0,   255, 231, 255, 231,
+};
+
+static u8 lpsCoord[8] = {
+	0, 0, 1, 0, 1, 1, 0, 1,
+};
+
+static inline void readDDF_U32(u32* outVal, u8*& data, u32 size)
+{
+	*outVal = *((u32*)data);
+	data += size;
+}
+
+static inline void readDDF_Vector(Vector3f* outVec, u8*& data)
+{
+	outVec->set(u32ToFloat(((u32*)data)[0]), u32ToFloat(((u32*)data)[1]), u32ToFloat(((u32*)data)[2]));
+	data += sizeof(Vector3f);
+}
+
+static inline void readDDF_Float(f32* outVal, u8*& data, u32 size)
+{
+	*outVal = u32ToFloat(((u32*)data)[0]);
+	data += size;
+}
+
+static inline void readDDF_U8(u8* outVal, u8*& data, u32 size)
+{
+	*outVal = (data)[0];
+	data += size;
+}
+
+static inline void readDDF_FloatArray(f32** outArray, u8*& data, u32 size)
+{
+	*outArray = (f32*)(data);
+	for (u32 i = 0; i < size; i++) {
+		data += 4;
+	}
+}
+
+static inline void readDDF_Short(s16* outVal, u8*& data, u32 size)
+{
+	*outVal = *(s16*)data;
+	data += size;
+}
+
+static inline void readDDF_Colour(Colour* outColour, u8*& data, u32 size)
+{
+	outColour->r = (data)[0];
+	outColour->g = (data)[1];
+	outColour->b = (data)[2];
+	outColour->a = (data)[3];
+	data += size;
+}
 
 /*
  * --INFO--
  * Address:	8019CD0C
  * Size:	00024C
  */
-void zen::particleGenerator::init(u8*, Texture*, Texture*, Vector3f&, zen::particleMdlManager*, zen::CallBack1<zen::particleGenerator*>*,
-                                  zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
+void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, Vector3f& pos, zen::particleMdlManager* mdlMgr,
+                                  zen::CallBack1<zen::particleGenerator*>* cb1,
+                                  zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2)
 {
+	if (data) {
+		if (false) { // this is unreachable in the DLL, had to do some digging to drag it out
+			PRINT("VERSION FLAG [%s]\n", 1);
+			ERROR(" [%c%c%c%c] is wrong pcr version.\n", data[0], data[1], data[2], data[3]);
+		}
+
+		ClearPtclsStatus(tex1, tex2);
+		mControlFlags = PTCLCTRL_Active | PTCLCTRL_Visible;
+
+		if (data[6]) {
+			mAnimData.set(&data[8]);
+			mDrawCallBack = &drawPtclBillboard;
+		} else {
+			u32 badCompiler;
+			_60 = u32ToFloat(((u32*)data)[2]);
+			_64 = u32ToFloat(((u32*)data)[3]);
+			mAnimData.set(&data[16]);
+			u8 rotType = mAnimData._02;
+			_68.m0     = mAnimData._02;
+			_68.m1     = mAnimData._02;
+			_68.m2     = 0;
+			mAnimData._02 &= 0x1;
+			mDrawCallBack = &drawPtclOriented;
+
+			switch ((rotType >> 4) & 0x7) {
+			case 0:
+				mRotAxisCallBack = &RotAxisY;
+				break;
+			case 1:
+				mRotAxisCallBack = &RotAxisX;
+				break;
+			case 2:
+				mRotAxisCallBack = &RotAxisZ;
+				break;
+			case 3:
+				mRotAxisCallBack = &RotAxisXY;
+				break;
+			case 4:
+				mRotAxisCallBack = &RotAxisXZ;
+				break;
+			case 5:
+				mRotAxisCallBack = &RotAxisYZ;
+				break;
+			case 6:
+				mRotAxisCallBack = &RotAxisXYZ;
+				break;
+			}
+		}
+
+		pmSetDDF(&data[((u16*)data)[2]]);
+		mMdlMgr  = mdlMgr;
+		mEmitPos = pos;
+		setCallBack(cb1, cb2);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -188,106 +301,42 @@ void zen::particleGenerator::init(u8*, Texture*, Texture*, Vector3f&, zen::parti
  * Address:	8019CF58
  * Size:	000154
  */
-bool zen::particleGenerator::update(f32)
+bool zen::particleGenerator::update(f32 timeStep)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stfd      f31, 0x30(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x2C(r1)
-	  li        r31, 0
-	  stw       r30, 0x28(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x80(r3)
-	  rlwinm.   r0,r3,0,31,31
-	  bne-      .loc_0x134
-	  rlwinm.   r0,r3,0,30,30
-	  bne-      .loc_0x4C
-	  rlwinm.   r0,r3,0,28,28
-	  bne-      .loc_0x7C
-	  mr        r3, r30
-	  bl        0xDE0
-	  b         .loc_0x7C
+	bool res = false;
+	if (!(mControlFlags & PTCLCTRL_Stop)) {
+		if (!(mControlFlags & PTCLCTRL_Finished)) {
+			if (!(mControlFlags & PTCLCTRL_GenStopped)) {
+				SetPtclsLife();
+			}
+		} else if (mPtclMdlListManager.getOrigin() == mPtclMdlListManager.getTopList()
+		           && mPtclChildListManager.getOrigin() == mPtclChildListManager.getTopList()) {
+			mControlFlags ^= ~PTCLCTRL_Active;
+			res = true;
+		}
 
-	.loc_0x4C:
-	  lwz       r4, 0x28(r30)
-	  lwz       r0, 0x8(r4)
-	  cmplw     r4, r0
-	  bne-      .loc_0x7C
-	  lwz       r4, 0x38(r30)
-	  lwz       r0, 0x8(r4)
-	  cmplw     r4, r0
-	  bne-      .loc_0x7C
-	  xoris     r0, r3, 0xFFFF
-	  xori      r0, r0, 0xFFFB
-	  stw       r0, 0x80(r30)
-	  li        r31, 0x1
+		UpdatePtclsStatus(timeStep);
+		if (!(mControlFlags & PTCLCTRL_GenStopped)) {
+			mPassTimer += timeStep;
+		}
+		mCurrentFrame = mPassTimer;
+		if (mCurrentFrame >= mMaxFrame) {
+			mPassTimer    = 0.0f;
+			mCurrentFrame = 0;
+			if (++mCurrentPass >= mMaxPasses) {
+				if (mMaxPasses) {
+					mCurrentPass = mMaxPasses;
+					finish();
+				}
+			}
+		}
 
-	.loc_0x7C:
-	  mr        r3, r30
-	  fmr       f1, f31
-	  bl        0x26EC
-	  lwz       r0, 0x80(r30)
-	  rlwinm.   r0,r0,0,28,28
-	  bne-      .loc_0xA0
-	  lfs       f0, 0x8C(r30)
-	  fadds     f0, f0, f31
-	  stfs      f0, 0x8C(r30)
+		if (!(mControlFlags & PTCLCTRL_Finished) && mCallBack1) {
+			mCallBack1->invoke(this);
+		}
+	}
 
-	.loc_0xA0:
-	  lfs       f0, 0x8C(r30)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  sth       r0, 0x90(r30)
-	  lha       r3, 0x90(r30)
-	  lha       r0, 0x1C8(r30)
-	  cmpw      r3, r0
-	  blt-      .loc_0x108
-	  lfs       f0, -0x4C70(r2)
-	  li        r0, 0
-	  stfs      f0, 0x8C(r30)
-	  sth       r0, 0x90(r30)
-	  lbz       r3, 0x92(r30)
-	  addi      r0, r3, 0x1
-	  stb       r0, 0x92(r30)
-	  rlwinm    r3,r0,0,24,31
-	  lbz       r0, 0x1CA(r30)
-	  cmplw     r3, r0
-	  blt-      .loc_0x108
-	  cmplwi    r0, 0
-	  beq-      .loc_0x108
-	  stb       r0, 0x92(r30)
-	  lwz       r0, 0x80(r30)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r30)
-
-	.loc_0x108:
-	  lwz       r0, 0x80(r30)
-	  rlwinm.   r0,r0,0,30,30
-	  bne-      .loc_0x134
-	  lwz       r3, 0x1D4(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x134
-	  lwz       r12, 0x0(r3)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x134:
-	  mr        r3, r31
-	  lwz       r0, 0x3C(r1)
-	  lfd       f31, 0x30(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	return res;
 }
 
 /*
@@ -295,111 +344,27 @@ bool zen::particleGenerator::update(f32)
  * Address:	8019D0AC
  * Size:	000178
  */
-void zen::particleGenerator::draw(Graphics&)
+void zen::particleGenerator::draw(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x10(r1)
-	  mr        r28, r3
-	  lwz       r0, 0x80(r3)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0x158
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r3, 0
-	  addi      r3, r29, 0
-	  lwz       r12, 0x3B4(r29)
-	  mr        r31, r0
-	  li        r4, 0x1
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r3, 0
-	  addi      r3, r29, 0
-	  lwz       r12, 0x3B4(r29)
-	  mr        r30, r0
-	  li        r4, 0
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x5C(r28)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xB4
-	  lwz       r12, 0x3B4(r29)
-	  mr        r3, r29
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xD0
+	if (mControlFlags & PTCLCTRL_Visible) {
+		bool light = gfx.setLighting(false, nullptr);
+		int blend  = gfx.setCBlending(1);
+		gfx.setDepth(false);
 
-	.loc_0xB4:
-	  mr        r3, r29
-	  lwz       r4, 0x58(r28)
-	  lwz       r12, 0x3B4(r29)
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
+		if (mChildTexture) {
+			gfx.useTexture(mChildTexture, 0);
+		} else {
+			gfx.useTexture(mTexture, 0);
+		}
+		drawPtclChildren(gfx);
 
-	.loc_0xD0:
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  bl        0x3930
-	  mr        r3, r29
-	  lwz       r4, 0x58(r28)
-	  lwz       r12, 0x3B4(r29)
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  addi      r12, r28, 0x1E8
-	  bl        0x77B80
-	  nop
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  li        r4, 0x1
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  mr        r4, r30
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
+		gfx.useTexture(mTexture, 0);
+		(this->*mDrawCallBack)(gfx);
 
-	.loc_0x158:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+		gfx.setDepth(true);
+		gfx.setCBlending(blend);
+		gfx.setLighting(light, nullptr);
+	}
 }
 
 /*
@@ -407,841 +372,155 @@ void zen::particleGenerator::draw(Graphics&)
  * Address:	8019D224
  * Size:	000B58
  */
-void zen::particleGenerator::pmSetDDF(u8*)
+void zen::particleGenerator::pmSetDDF(u8* data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x510(r1)
-	  stfd      f31, 0x508(r1)
-	  stfd      f30, 0x500(r1)
-	  stfd      f29, 0x4F8(r1)
-	  stfd      f28, 0x4F0(r1)
-	  stfd      f27, 0x4E8(r1)
-	  stw       r31, 0x4E4(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x4E0(r1)
-	  beq-      .loc_0xB2C
-	  lwz       r0, 0x0(r4)
-	  stw       r0, 0x84(r31)
-	  lwz       r0, 0xC(r4)
-	  stw       r0, 0x324(r1)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x31C(r1)
-	  lwz       r0, 0x4(r4)
-	  stw       r0, 0x314(r1)
-	  lfs       f0, 0x314(r1)
-	  stfs      f0, 0x94(r31)
-	  lfs       f0, 0x31C(r1)
-	  stfs      f0, 0x98(r31)
-	  lfs       f0, 0x324(r1)
-	  stfs      f0, 0x9C(r31)
-	  lwz       r0, 0x18(r4)
-	  stw       r0, 0x30C(r1)
-	  lwz       r0, 0x14(r4)
-	  stw       r0, 0x304(r1)
-	  lwz       r0, 0x10(r4)
-	  stw       r0, 0x2FC(r1)
-	  lfs       f0, 0x2FC(r1)
-	  stfs      f0, 0xA0(r31)
-	  lfs       f0, 0x304(r1)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0x30C(r1)
-	  stfs      f0, 0xA8(r31)
-	  lwz       r0, 0x24(r4)
-	  stw       r0, 0x2F4(r1)
-	  lwz       r0, 0x20(r4)
-	  stw       r0, 0x2EC(r1)
-	  lwz       r0, 0x1C(r4)
-	  stw       r0, 0x2E4(r1)
-	  lfs       f0, 0x2E4(r1)
-	  stfs      f0, 0xAC(r31)
-	  lfs       f0, 0x2EC(r1)
-	  stfs      f0, 0xB0(r31)
-	  lfs       f0, 0x2F4(r1)
-	  stfs      f0, 0xB4(r31)
-	  lwz       r0, 0x28(r4)
-	  stw       r0, 0x424(r1)
-	  lfs       f0, 0x424(r1)
-	  stfs      f0, 0xC0(r31)
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,24,25
-	  beq-      .loc_0x1A8
-	  lbz       r0, 0x2C(r4)
-	  addi      r3, r4, 0x30
-	  li        r4, 0
-	  stb       r0, 0x1C4(r31)
-	  lbz       r5, 0x1C4(r31)
-	  cmplwi    r5, 0
-	  stw       r3, 0x1AC(r31)
-	  ble-      .loc_0x14C
-	  cmplwi    r5, 0x8
-	  subi      r6, r5, 0x8
-	  ble-      .loc_0x134
-	  addi      r0, r6, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmplwi    r6, 0
-	  mtctr     r0
-	  ble-      .loc_0x134
+	if (!data) {
+		return;
+	}
 
-	.loc_0x128:
-	  addi      r3, r3, 0x20
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x128
+	readDDF_U32(&mParticleFlags, data, 4);
+	readDDF_Vector(&mEmitPosOffset, data);
+	readDDF_Vector(&mEmitDir, data);
+	readDDF_Vector(&_AC, data);
+	readDDF_Float(&_C0, data, 4);
 
-	.loc_0x134:
-	  sub       r0, r5, r4
-	  cmplw     r4, r5
-	  mtctr     r0
-	  bge-      .loc_0x14C
+	if (mParticleFlags & (PTCLFLAG_Unk6 | PTCLFLAG_Unk7)) {
+		readDDF_U8(&_1C4, data, 4);
+		readDDF_FloatArray(&_1AC, data, _1C4);
+		readDDF_FloatArray(&_1B0, data, _1C4);
+	} else {
+		readDDF_Float(&_B8, data, 4);
+	}
 
-	.loc_0x144:
-	  addi      r3, r3, 0x4
-	  bdnz+     .loc_0x144
+	readDDF_Float(&_BC, data, 4);
+	readDDF_Float(&_C4, data, 4);
 
-	.loc_0x14C:
-	  lbz       r5, 0x1C4(r31)
-	  li        r4, 0
-	  cmplwi    r5, 0
-	  stw       r3, 0x1B0(r31)
-	  ble-      .loc_0x1BC
-	  cmplwi    r5, 0x8
-	  subi      r6, r5, 0x8
-	  ble-      .loc_0x18C
-	  addi      r0, r6, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmplwi    r6, 0
-	  mtctr     r0
-	  ble-      .loc_0x18C
+	if (mParticleFlags & (PTCLFLAG_Unk8 | PTCLFLAG_Unk9)) {
+		readDDF_U8(&_1C5, data, 4);
+		readDDF_FloatArray(&_1B4, data, _1C5);
+		readDDF_FloatArray(&_1B8, data, _1C5);
+	} else {
+		readDDF_Float(&_C8, data, 4);
+	}
 
-	.loc_0x180:
-	  addi      r3, r3, 0x20
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x180
+	if (mParticleFlags & (PTCLFLAG_Unk10 | PTCLFLAG_Unk11)) {
+		readDDF_U8(&_1C6, data, 4);
+		readDDF_FloatArray(&_1BC, data, _1C6);
+		readDDF_FloatArray(&_1C0, data, _1C6);
+	} else {
+		readDDF_Float(&mInitVel, data, 4);
+	}
 
-	.loc_0x18C:
-	  sub       r0, r5, r4
-	  cmplw     r4, r5
-	  mtctr     r0
-	  bge-      .loc_0x1BC
+	readDDF_Float(&_D0, data, 4);
+	readDDF_Float(&mDrag, data, 4);
+	readDDF_Float(&mDragJitter, data, 4);
+	readDDF_Float(&mMaxVel, data, 4);
+	readDDF_Float(&_E0, data, 4);
+	readDDF_Float(&_E4, data, 4);
+	readDDF_Float(&_E8, data, 4);
+	readDDF_Float(&_EC, data, 4);
+	readDDF_Float(&mScaleSize, data, 4);
+	readDDF_Float(&_F4, data, 4);
+	readDDF_Float(&_F8, data, 4);
+	readDDF_Float(&_FC, data, 4);
+	readDDF_Float(&_100, data, 4);
+	readDDF_Float(&_10C, data, 4);
 
-	.loc_0x19C:
-	  addi      r3, r3, 0x4
-	  bdnz+     .loc_0x19C
-	  b         .loc_0x1BC
+	readDDF_Short(&_104, data, 2);
+	readDDF_Short(&_106, data, 2);
+	readDDF_Short(&_108, data, 2);
+	readDDF_Short(&_110, data, 2);
+	readDDF_Short(&mMaxFrame, data, 2);
+	readDDF_U8(&mFreePtclMotionTime, data, 1);
+	readDDF_U8(&_112, data, 1);
+	readDDF_U8(&mMaxPasses, data, 1);
+	readDDF_U8(&_1CB, data, 1);
+	readDDF_U8(&_1CC, data, 2);
 
-	.loc_0x1A8:
-	  lwz       r0, 0x2C(r4)
-	  addi      r3, r4, 0x30
-	  stw       r0, 0x41C(r1)
-	  lfs       f0, 0x41C(r1)
-	  stfs      f0, 0xB8(r31)
+	if (mParticleFlags & PTCLFLAG_UseGravityField) {
+		readDDF_Vector(&mGravFieldAccel, data);
+	}
 
-	.loc_0x1BC:
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x414(r1)
-	  lfs       f0, 0x414(r1)
-	  stfs      f0, 0xBC(r31)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x40C(r1)
-	  lfs       f0, 0x40C(r1)
-	  stfs      f0, 0xC4(r31)
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,22,23
-	  beq-      .loc_0x2A8
-	  lbz       r0, 0x8(r3)
-	  addi      r3, r3, 0xC
-	  li        r4, 0
-	  stb       r0, 0x1C5(r31)
-	  lbz       r5, 0x1C5(r31)
-	  cmplwi    r5, 0
-	  stw       r3, 0x1B4(r31)
-	  ble-      .loc_0x24C
-	  cmplwi    r5, 0x8
-	  subi      r6, r5, 0x8
-	  ble-      .loc_0x234
-	  addi      r0, r6, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmplwi    r6, 0
-	  mtctr     r0
-	  ble-      .loc_0x234
+	if (mParticleFlags & PTCLFLAG_UseAirField) {
+		readDDF_Vector(&mAirFieldVelocity, data);
+	}
 
-	.loc_0x228:
-	  addi      r3, r3, 0x20
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x228
+	if (mParticleFlags & PTCLFLAG_UseVortexField) {
+		readDDF_Vector(&mVortexCenter, data);
+		readDDF_Float(&mVortexRotationSpeed, data, 4);
+		readDDF_Float(&mVortexStrength, data, 4);
+		readDDF_Float(&_158, data, 4);
+		readDDF_Float(&_15C, data, 4);
+	}
 
-	.loc_0x234:
-	  sub       r0, r5, r4
-	  cmplw     r4, r5
-	  mtctr     r0
-	  bge-      .loc_0x24C
+	if (mParticleFlags & PTCLFLAG_UseDampedNewtonField) {
+		readDDF_Vector(&mDampedNewtonFieldDir, data);
+		readDDF_Float(&mDampedNewtonFieldStrength, data, 4);
+	}
 
-	.loc_0x244:
-	  addi      r3, r3, 0x4
-	  bdnz+     .loc_0x244
+	if (mParticleFlags & PTCLFLAG_UseNewtonField) {
+		readDDF_Vector(&mNewtonFieldDir, data);
+		readDDF_Float(&mNewtonFieldStrength, data, 4);
+	}
 
-	.loc_0x24C:
-	  lbz       r5, 0x1C5(r31)
-	  li        r4, 0
-	  cmplwi    r5, 0
-	  stw       r3, 0x1B8(r31)
-	  ble-      .loc_0x2BC
-	  cmplwi    r5, 0x8
-	  subi      r6, r5, 0x8
-	  ble-      .loc_0x28C
-	  addi      r0, r6, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmplwi    r6, 0
-	  mtctr     r0
-	  ble-      .loc_0x28C
+	if (mParticleFlags & PTCLFLAG_UseSolidTex) {
+		readDDF_Vector(&_180, data);
+		readDDF_U8(&_18C, data, 1);
+		readDDF_U8(&mSolidFieldType, data, 1);
+		readDDF_U8(&_18D, data, 2);
+		mSolidTexFieldData = UseSolidTex[mSolidFieldType];
+	}
 
-	.loc_0x280:
-	  addi      r3, r3, 0x20
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x280
+	if (mParticleFlags & PTCLFLAG_UseJitter) {
+		readDDF_Float(&mJitterStrength, data, 4);
+	}
 
-	.loc_0x28C:
-	  sub       r0, r5, r4
-	  cmplw     r4, r5
-	  mtctr     r0
-	  bge-      .loc_0x2BC
+	if (mParticleFlags & PTCLFLAG_Unk23) {
+		readDDF_Vector(&_194, data);
+		readDDF_Float(&_1A0, data, 4);
+		readDDF_Float(&_1A4, data, 4);
+	}
 
-	.loc_0x29C:
-	  addi      r3, r3, 0x4
-	  bdnz+     .loc_0x29C
-	  b         .loc_0x2BC
+	if (mParticleFlags & PTCLFLAG_Unk13) {
+		readDDF_Float(&_114, data, 4);
+		readDDF_Float(&_118, data, 4);
+		readDDF_Float(&_11C, data, 4);
+		readDDF_Colour(&_120, data, 4);
+		readDDF_U8(&_124, data, 1);
+		readDDF_U8(&_125, data, 3);
+	}
 
-	.loc_0x2A8:
-	  lwz       r0, 0x8(r3)
-	  addi      r3, r3, 0xC
-	  stw       r0, 0x404(r1)
-	  lfs       f0, 0x404(r1)
-	  stfs      f0, 0xC8(r31)
+	f32 len;
+	if (mParticleFlags & PTCLFLAG_UseVortexField) {
+		len = mVortexCenter.x * mVortexCenter.x + mVortexCenter.y * mVortexCenter.y + mVortexCenter.z * mVortexCenter.z;
+		if (len == 0.0f) {
+			pmGetArbitUnitVec(mVortexCenter);
+		} else {
+			len = std::sqrtf(len);
+			mVortexCenter.x /= len;
+			mVortexCenter.y /= len;
+			mVortexCenter.z /= len;
+		}
+	}
 
-	.loc_0x2BC:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,20,21
-	  beq-      .loc_0x388
-	  lbz       r0, 0x0(r3)
-	  addi      r3, r3, 0x4
-	  li        r4, 0
-	  stb       r0, 0x1C6(r31)
-	  lbz       r5, 0x1C6(r31)
-	  cmplwi    r5, 0
-	  stw       r3, 0x1BC(r31)
-	  ble-      .loc_0x32C
-	  cmplwi    r5, 0x8
-	  subi      r6, r5, 0x8
-	  ble-      .loc_0x314
-	  addi      r0, r6, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmplwi    r6, 0
-	  mtctr     r0
-	  ble-      .loc_0x314
+	if (mParticleFlags & PTCLFLAG_Unk23) {
+		len = _194.x * _194.x + _194.y * _194.y + _194.z * _194.z;
+		if (len == 0.0f) {
+			pmGetArbitUnitVec(_194);
+		} else {
+			len = std::sqrtf(len);
+			_194.x /= len;
+			_194.y /= len;
+			_194.z /= len;
+		}
+	}
 
-	.loc_0x308:
-	  addi      r3, r3, 0x20
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x308
+	_6C = (_E0 == 0.0f) ? 1.0f : (1.0f - _E8) / _E0;
+	_70 = (_E4 == 1.0f) ? 1.0f : (1.0f - _EC) / (1.0f - _E4);
+	_74 = (_F8 == 0.0f) ? 1.0f : 1.0f / _F8;
+	_78 = (_FC == 1.0f) ? 1.0f : 1.0f / (1.0f - _FC);
 
-	.loc_0x314:
-	  sub       r0, r5, r4
-	  cmplw     r4, r5
-	  mtctr     r0
-	  bge-      .loc_0x32C
-
-	.loc_0x324:
-	  addi      r3, r3, 0x4
-	  bdnz+     .loc_0x324
-
-	.loc_0x32C:
-	  lbz       r5, 0x1C6(r31)
-	  li        r4, 0
-	  cmplwi    r5, 0
-	  stw       r3, 0x1C0(r31)
-	  ble-      .loc_0x39C
-	  cmplwi    r5, 0x8
-	  subi      r6, r5, 0x8
-	  ble-      .loc_0x36C
-	  addi      r0, r6, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmplwi    r6, 0
-	  mtctr     r0
-	  ble-      .loc_0x36C
-
-	.loc_0x360:
-	  addi      r3, r3, 0x20
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x360
-
-	.loc_0x36C:
-	  sub       r0, r5, r4
-	  cmplw     r4, r5
-	  mtctr     r0
-	  bge-      .loc_0x39C
-
-	.loc_0x37C:
-	  addi      r3, r3, 0x4
-	  bdnz+     .loc_0x37C
-	  b         .loc_0x39C
-
-	.loc_0x388:
-	  lwz       r0, 0x0(r3)
-	  addi      r3, r3, 0x4
-	  stw       r0, 0x3FC(r1)
-	  lfs       f0, 0x3FC(r1)
-	  stfs      f0, 0xCC(r31)
-
-	.loc_0x39C:
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x3F4(r1)
-	  lfs       f0, 0x3F4(r1)
-	  stfs      f0, 0xD0(r31)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x3EC(r1)
-	  lfs       f0, 0x3EC(r1)
-	  stfs      f0, 0xD4(r31)
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x3E4(r1)
-	  lfs       f0, 0x3E4(r1)
-	  stfs      f0, 0xD8(r31)
-	  lwz       r0, 0xC(r3)
-	  stw       r0, 0x3DC(r1)
-	  lfs       f0, 0x3DC(r1)
-	  stfs      f0, 0xDC(r31)
-	  lwz       r0, 0x10(r3)
-	  stw       r0, 0x3D4(r1)
-	  lfs       f0, 0x3D4(r1)
-	  stfs      f0, 0xE0(r31)
-	  lwz       r0, 0x14(r3)
-	  stw       r0, 0x3CC(r1)
-	  lfs       f0, 0x3CC(r1)
-	  stfs      f0, 0xE4(r31)
-	  lwz       r0, 0x18(r3)
-	  stw       r0, 0x3C4(r1)
-	  lfs       f0, 0x3C4(r1)
-	  stfs      f0, 0xE8(r31)
-	  lwz       r0, 0x1C(r3)
-	  stw       r0, 0x3BC(r1)
-	  lfs       f0, 0x3BC(r1)
-	  stfs      f0, 0xEC(r31)
-	  lwz       r0, 0x20(r3)
-	  stw       r0, 0x3B4(r1)
-	  lfs       f0, 0x3B4(r1)
-	  stfs      f0, 0xF0(r31)
-	  lwz       r0, 0x24(r3)
-	  stw       r0, 0x3AC(r1)
-	  lfs       f0, 0x3AC(r1)
-	  stfs      f0, 0xF4(r31)
-	  lwz       r0, 0x28(r3)
-	  stw       r0, 0x3A4(r1)
-	  lfs       f0, 0x3A4(r1)
-	  stfs      f0, 0xF8(r31)
-	  lwz       r0, 0x2C(r3)
-	  stw       r0, 0x39C(r1)
-	  lfs       f0, 0x39C(r1)
-	  stfs      f0, 0xFC(r31)
-	  lwz       r0, 0x30(r3)
-	  stw       r0, 0x394(r1)
-	  lfs       f0, 0x394(r1)
-	  stfs      f0, 0x100(r31)
-	  lwz       r0, 0x34(r3)
-	  stw       r0, 0x38C(r1)
-	  lfs       f0, 0x38C(r1)
-	  stfs      f0, 0x10C(r31)
-	  lha       r0, 0x38(r3)
-	  sth       r0, 0x104(r31)
-	  lha       r0, 0x3A(r3)
-	  sth       r0, 0x106(r31)
-	  lha       r0, 0x3C(r3)
-	  sth       r0, 0x108(r31)
-	  lha       r0, 0x3E(r3)
-	  sth       r0, 0x110(r31)
-	  lha       r0, 0x40(r3)
-	  sth       r0, 0x1C8(r31)
-	  lbz       r0, 0x42(r3)
-	  stb       r0, 0x1A8(r31)
-	  lbz       r0, 0x43(r3)
-	  stb       r0, 0x112(r31)
-	  lbz       r0, 0x44(r3)
-	  stb       r0, 0x1CA(r31)
-	  lbz       r0, 0x45(r3)
-	  stb       r0, 0x1CB(r31)
-	  lbz       r0, 0x46(r3)
-	  addi      r3, r3, 0x48
-	  stb       r0, 0x1CC(r31)
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,15,15
-	  beq-      .loc_0x510
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x2DC(r1)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x2D4(r1)
-	  lwz       r0, 0x0(r3)
-	  addi      r3, r3, 0xC
-	  stw       r0, 0x2CC(r1)
-	  lfs       f0, 0x2CC(r1)
-	  stfs      f0, 0x12C(r31)
-	  lfs       f0, 0x2D4(r1)
-	  stfs      f0, 0x130(r31)
-	  lfs       f0, 0x2DC(r1)
-	  stfs      f0, 0x134(r31)
-
-	.loc_0x510:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,14,14
-	  beq-      .loc_0x550
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x2C4(r1)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x2BC(r1)
-	  lwz       r0, 0x0(r3)
-	  addi      r3, r3, 0xC
-	  stw       r0, 0x2B4(r1)
-	  lfs       f0, 0x2B4(r1)
-	  stfs      f0, 0x138(r31)
-	  lfs       f0, 0x2BC(r1)
-	  stfs      f0, 0x13C(r31)
-	  lfs       f0, 0x2C4(r1)
-	  stfs      f0, 0x140(r31)
-
-	.loc_0x550:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,13,13
-	  beq-      .loc_0x5D0
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x2AC(r1)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x2A4(r1)
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x29C(r1)
-	  lfs       f0, 0x29C(r1)
-	  stfs      f0, 0x144(r31)
-	  lfs       f0, 0x2A4(r1)
-	  stfs      f0, 0x148(r31)
-	  lfs       f0, 0x2AC(r1)
-	  stfs      f0, 0x14C(r31)
-	  lwz       r0, 0xC(r3)
-	  stw       r0, 0x384(r1)
-	  lfs       f0, 0x384(r1)
-	  stfs      f0, 0x150(r31)
-	  lwz       r0, 0x10(r3)
-	  stw       r0, 0x37C(r1)
-	  lfs       f0, 0x37C(r1)
-	  stfs      f0, 0x154(r31)
-	  lwz       r0, 0x14(r3)
-	  stw       r0, 0x374(r1)
-	  lfs       f0, 0x374(r1)
-	  stfs      f0, 0x158(r31)
-	  lwz       r0, 0x18(r3)
-	  addi      r3, r3, 0x1C
-	  stw       r0, 0x36C(r1)
-	  lfs       f0, 0x36C(r1)
-	  stfs      f0, 0x15C(r31)
-
-	.loc_0x5D0:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,12,12
-	  beq-      .loc_0x620
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x294(r1)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x28C(r1)
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x284(r1)
-	  lfs       f0, 0x284(r1)
-	  stfs      f0, 0x160(r31)
-	  lfs       f0, 0x28C(r1)
-	  stfs      f0, 0x164(r31)
-	  lfs       f0, 0x294(r1)
-	  stfs      f0, 0x168(r31)
-	  lwz       r0, 0xC(r3)
-	  addi      r3, r3, 0x10
-	  stw       r0, 0x364(r1)
-	  lfs       f0, 0x364(r1)
-	  stfs      f0, 0x16C(r31)
-
-	.loc_0x620:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,11,11
-	  beq-      .loc_0x670
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x27C(r1)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x274(r1)
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x26C(r1)
-	  lfs       f0, 0x26C(r1)
-	  stfs      f0, 0x170(r31)
-	  lfs       f0, 0x274(r1)
-	  stfs      f0, 0x174(r31)
-	  lfs       f0, 0x27C(r1)
-	  stfs      f0, 0x178(r31)
-	  lwz       r0, 0xC(r3)
-	  addi      r3, r3, 0x10
-	  stw       r0, 0x35C(r1)
-	  lfs       f0, 0x35C(r1)
-	  stfs      f0, 0x17C(r31)
-
-	.loc_0x670:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,10,10
-	  beq-      .loc_0x6E4
-	  lwz       r5, 0x8(r3)
-	  lis       r4, 0x802E
-	  subi      r0, r4, 0x2878
-	  stw       r5, 0x264(r1)
-	  lwz       r4, 0x4(r3)
-	  stw       r4, 0x25C(r1)
-	  lwz       r4, 0x0(r3)
-	  stw       r4, 0x254(r1)
-	  lfs       f0, 0x254(r1)
-	  stfs      f0, 0x180(r31)
-	  lfs       f0, 0x25C(r1)
-	  stfs      f0, 0x184(r31)
-	  lfs       f0, 0x264(r1)
-	  stfs      f0, 0x188(r31)
-	  lbz       r4, 0xC(r3)
-	  stb       r4, 0x18C(r31)
-	  lbz       r4, 0xD(r3)
-	  stb       r4, 0x18E(r31)
-	  lbz       r4, 0xE(r3)
-	  addi      r3, r3, 0x10
-	  stb       r4, 0x18D(r31)
-	  lbz       r4, 0x18E(r31)
-	  rlwinm    r4,r4,2,0,29
-	  add       r4, r0, r4
-	  lwz       r0, 0x0(r4)
-	  stw       r0, 0x7C(r31)
-
-	.loc_0x6E4:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,9,9
-	  beq-      .loc_0x704
-	  lwz       r0, 0x0(r3)
-	  addi      r3, r3, 0x4
-	  stw       r0, 0x354(r1)
-	  lfs       f0, 0x354(r1)
-	  stfs      f0, 0x190(r31)
-
-	.loc_0x704:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,8,8
-	  beq-      .loc_0x764
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x24C(r1)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x244(r1)
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x23C(r1)
-	  lfs       f0, 0x23C(r1)
-	  stfs      f0, 0x194(r31)
-	  lfs       f0, 0x244(r1)
-	  stfs      f0, 0x198(r31)
-	  lfs       f0, 0x24C(r1)
-	  stfs      f0, 0x19C(r31)
-	  lwz       r0, 0xC(r3)
-	  stw       r0, 0x34C(r1)
-	  lfs       f0, 0x34C(r1)
-	  stfs      f0, 0x1A0(r31)
-	  lwz       r0, 0x10(r3)
-	  addi      r3, r3, 0x14
-	  stw       r0, 0x344(r1)
-	  lfs       f0, 0x344(r1)
-	  stfs      f0, 0x1A4(r31)
-
-	.loc_0x764:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,18,18
-	  beq-      .loc_0x7D0
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x33C(r1)
-	  lfs       f0, 0x33C(r1)
-	  stfs      f0, 0x114(r31)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x334(r1)
-	  lfs       f0, 0x334(r1)
-	  stfs      f0, 0x118(r31)
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x32C(r1)
-	  lfs       f0, 0x32C(r1)
-	  stfs      f0, 0x11C(r31)
-	  lbz       r0, 0xC(r3)
-	  stb       r0, 0x120(r31)
-	  lbz       r0, 0xD(r3)
-	  stb       r0, 0x121(r31)
-	  lbz       r0, 0xE(r3)
-	  stb       r0, 0x122(r31)
-	  lbz       r0, 0xF(r3)
-	  stb       r0, 0x123(r31)
-	  lbz       r0, 0x10(r3)
-	  stb       r0, 0x124(r31)
-	  lbz       r0, 0x11(r3)
-	  stb       r0, 0x125(r31)
-
-	.loc_0x7D0:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,13,13
-	  beq-      .loc_0x938
-	  lfs       f1, 0x144(r31)
-	  lfs       f0, 0x148(r31)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x14C(r31)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x4C70(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpu     cr0, f0, f1
-	  fmr       f4, f1
-	  bne-      .loc_0x8AC
-	  bl        0x7A640
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x4C48(r2)
-	  stw       r0, 0x4DC(r1)
-	  lis       r30, 0x4330
-	  lfs       f1, -0x4C68(r2)
-	  stw       r30, 0x4D8(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f2, 0x4D8(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f29, f0, f1
-	  bl        0x7A610
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  stw       r0, 0x4D4(r1)
-	  fmr       f1, f29
-	  lfs       f2, -0x4C68(r2)
-	  stw       r30, 0x4D0(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f3, 0x4D0(r1)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f28, f0, f2
-	  bl        0x7E258
-	  fmr       f31, f1
-	  fmr       f1, f29
-	  bl        0x7E0B8
-	  fmr       f30, f1
-	  fmr       f1, f28
-	  bl        0x7E240
-	  fmr       f29, f1
-	  fmr       f1, f28
-	  bl        0x7E0A0
-	  fmuls     f1, f31, f1
-	  fmuls     f0, f31, f29
-	  stfs      f1, 0x144(r31)
-	  stfs      f0, 0x148(r31)
-	  stfs      f30, 0x14C(r31)
-	  b         .loc_0x938
-
-	.loc_0x8AC:
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x910
-	  fsqrte    f1, f4
-	  lfd       f3, -0x4C60(r2)
-	  lfd       f2, -0x4C58(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x434(r1)
-	  lfs       f1, 0x434(r1)
-	  b         .loc_0x914
-
-	.loc_0x910:
-	  fmr       f1, f4
-
-	.loc_0x914:
-	  lfs       f0, 0x144(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x144(r31)
-	  lfs       f0, 0x148(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x148(r31)
-	  lfs       f0, 0x14C(r31)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x14C(r31)
-
-	.loc_0x938:
-	  lwz       r0, 0x84(r31)
-	  rlwinm.   r0,r0,0,8,8
-	  beq-      .loc_0xA94
-	  lfs       f1, 0x194(r31)
-	  lfs       f0, 0x198(r31)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x19C(r31)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x4C70(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpu     cr0, f0, f4
-	  bne-      .loc_0xA10
-	  bl        0x7A4DC
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x4C48(r2)
-	  stw       r0, 0x4D4(r1)
-	  lis       r30, 0x4330
-	  lfs       f1, -0x4C68(r2)
-	  stw       r30, 0x4D0(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f2, 0x4D0(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f28, f0, f1
-	  bl        0x7A4AC
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  stw       r0, 0x4DC(r1)
-	  fmr       f1, f28
-	  lfs       f2, -0x4C68(r2)
-	  stw       r30, 0x4D8(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f3, 0x4D8(r1)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f27, f0, f2
-	  bl        0x7E0F4
-	  fmr       f29, f1
-	  fmr       f1, f28
-	  bl        0x7DF54
-	  fmr       f30, f1
-	  fmr       f1, f27
-	  bl        0x7E0DC
-	  fmr       f31, f1
-	  fmr       f1, f27
-	  bl        0x7DF3C
-	  fmuls     f1, f29, f1
-	  fmuls     f0, f29, f31
-	  stfs      f1, 0x194(r31)
-	  stfs      f0, 0x198(r31)
-	  stfs      f30, 0x19C(r31)
-	  b         .loc_0xA94
-
-	.loc_0xA10:
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0xA70
-	  fsqrte    f1, f4
-	  lfd       f3, -0x4C60(r2)
-	  lfd       f2, -0x4C58(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x428(r1)
-	  lfs       f4, 0x428(r1)
-
-	.loc_0xA70:
-	  lfs       f0, 0x194(r31)
-	  fdivs     f0, f0, f4
-	  stfs      f0, 0x194(r31)
-	  lfs       f0, 0x198(r31)
-	  fdivs     f0, f0, f4
-	  stfs      f0, 0x198(r31)
-	  lfs       f0, 0x19C(r31)
-	  fdivs     f0, f0, f4
-	  stfs      f0, 0x19C(r31)
-
-	.loc_0xA94:
-	  lfs       f0, -0x4C70(r2)
-	  lfs       f2, 0xE0(r31)
-	  fcmpu     cr0, f0, f2
-	  bne-      .loc_0xAAC
-	  lfs       f0, -0x4C50(r2)
-	  b         .loc_0xABC
-
-	.loc_0xAAC:
-	  lfs       f1, -0x4C50(r2)
-	  lfs       f0, 0xE8(r31)
-	  fsubs     f0, f1, f0
-	  fdivs     f0, f0, f2
-
-	.loc_0xABC:
-	  stfs      f0, 0x6C(r31)
-	  lfs       f2, -0x4C50(r2)
-	  lfs       f0, 0xE4(r31)
-	  fcmpu     cr0, f2, f0
-	  bne-      .loc_0xAD4
-	  b         .loc_0xAE4
-
-	.loc_0xAD4:
-	  lfs       f1, 0xEC(r31)
-	  fsubs     f0, f2, f0
-	  fsubs     f1, f2, f1
-	  fdivs     f2, f1, f0
-
-	.loc_0xAE4:
-	  stfs      f2, 0x70(r31)
-	  lfs       f0, -0x4C70(r2)
-	  lfs       f1, 0xF8(r31)
-	  fcmpu     cr0, f0, f1
-	  bne-      .loc_0xB00
-	  lfs       f0, -0x4C50(r2)
-	  b         .loc_0xB08
-
-	.loc_0xB00:
-	  lfs       f0, -0x4C50(r2)
-	  fdivs     f0, f0, f1
-
-	.loc_0xB08:
-	  stfs      f0, 0x74(r31)
-	  lfs       f1, -0x4C50(r2)
-	  lfs       f0, 0xFC(r31)
-	  fcmpu     cr0, f1, f0
-	  bne-      .loc_0xB20
-	  b         .loc_0xB28
-
-	.loc_0xB20:
-	  fsubs     f0, f1, f0
-	  fdivs     f1, f1, f0
-
-	.loc_0xB28:
-	  stfs      f1, 0x78(r31)
-
-	.loc_0xB2C:
-	  lwz       r0, 0x514(r1)
-	  lfd       f31, 0x508(r1)
-	  lfd       f30, 0x500(r1)
-	  lfd       f29, 0x4F8(r1)
-	  lfd       f28, 0x4F0(r1)
-	  lfd       f27, 0x4E8(r1)
-	  lwz       r31, 0x4E4(r1)
-	  lwz       r30, 0x4E0(r1)
-	  addi      r1, r1, 0x510
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler[6];
 }
 
 /*
@@ -1249,9 +528,13 @@ void zen::particleGenerator::pmSetDDF(u8*)
  * Address:	........
  * Size:	000074
  */
-f32 zen::particleGenerator::pmIntpManual(f32*, f32*)
+f32 zen::particleGenerator::pmIntpManual(f32* frameThresholds, f32* values)
 {
-	// UNUSED FUNCTION
+	int i;
+	for (i = 1; mCurrentFrame > mMaxFrame * frameThresholds[i]; i++) {
+		;
+	}
+	return values[i - 1];
 }
 
 /*
@@ -1259,9 +542,15 @@ f32 zen::particleGenerator::pmIntpManual(f32*, f32*)
  * Address:	........
  * Size:	0000A0
  */
-f32 zen::particleGenerator::pmIntpLinear(f32*, f32*)
+f32 zen::particleGenerator::pmIntpLinear(f32* frameThresholds, f32* values)
 {
-	// UNUSED FUNCTION
+	int i;
+	f32 ratio = f32(mCurrentFrame) / f32(mMaxFrame);
+	for (i = 1; ratio > frameThresholds[i]; i++) {
+		;
+	}
+	return (values[i] * (ratio - frameThresholds[i - 1]) + values[i - 1] * (frameThresholds[i] - ratio))
+	     / (frameThresholds[i] - frameThresholds[i - 1]);
 }
 
 /*
@@ -1271,6 +560,36 @@ f32 zen::particleGenerator::pmIntpLinear(f32*, f32*)
  */
 void zen::particleGenerator::SetPtclsLife()
 {
+	if (mParticleFlags & PTCLFLAG_Unk12) {
+		return;
+	}
+
+	f32 a;
+	if (mParticleFlags & (PTCLFLAG_Unk6 | PTCLFLAG_Unk7)) {
+		if (mParticleFlags & PTCLFLAG_Unk6) {
+			a = pmIntpManual(_1AC, _1B0);
+		} else {
+			a = pmIntpLinear(_1AC, _1B0);
+		}
+	} else {
+		a = _B8;
+	}
+
+	_88 += a + RandShift(a * _BC);
+	int max = _88;
+	_88     = _88 - max;
+
+	for (int i = 0; i < max; i++) {
+		particleMdl* ptcl = pmGetParticle();
+		if (ptcl) {
+			ptcl->mLifeTime = _110 * (1.0f - Rand(_10C));
+			ptcl->_6C.init(&mAnimData, ptcl->mLifeTime);
+			PtclsGen(ptcl);
+			if (mCallBack2) {
+				mCallBack2->invoke(this, ptcl);
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1501,1039 +820,200 @@ void zen::particleGenerator::SetPtclsLife()
  * Address:	8019E074
  * Size:	000F00
  */
-void zen::particleGenerator::PtclsGen(zen::particleMdl*)
+void zen::particleGenerator::PtclsGen(zen::particleMdl* ptcl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x290(r1)
-	  stfd      f31, 0x288(r1)
-	  stfd      f30, 0x280(r1)
-	  stfd      f29, 0x278(r1)
-	  stfd      f28, 0x270(r1)
-	  stfd      f27, 0x268(r1)
-	  stfd      f26, 0x260(r1)
-	  stfd      f25, 0x258(r1)
-	  stfd      f24, 0x250(r1)
-	  stfd      f23, 0x248(r1)
-	  stfd      f22, 0x240(r1)
-	  stfd      f21, 0x238(r1)
-	  stfd      f20, 0x230(r1)
-	  stw       r31, 0x22C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x228(r1)
-	  mr        r30, r3
-	  stw       r29, 0x224(r1)
-	  lfs       f28, 0xA0(r3)
-	  lfs       f29, 0xA4(r3)
-	  fmuls     f2, f28, f28
-	  lfs       f30, 0xA8(r3)
-	  fmuls     f1, f29, f29
-	  lfs       f0, -0x4C70(r2)
-	  fmuls     f3, f30, f30
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpu     cr0, f0, f1
-	  fmr       f4, f1
-	  bne-      .loc_0x114
-	  bl        0x79F7C
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x4C48(r2)
-	  stw       r0, 0x21C(r1)
-	  lis       r29, 0x4330
-	  lfs       f1, -0x4C68(r2)
-	  stw       r29, 0x218(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f2, 0x218(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f20, f0, f1
-	  bl        0x79F4C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  stw       r0, 0x214(r1)
-	  fmr       f1, f20
-	  lfs       f2, -0x4C68(r2)
-	  stw       r29, 0x210(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f3, 0x210(r1)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f22, f0, f2
-	  bl        0x7DB94
-	  fmr       f21, f1
-	  fmr       f1, f20
-	  bl        0x7D9F4
-	  fmr       f30, f1
-	  fmr       f1, f22
-	  bl        0x7DB7C
-	  fmr       f20, f1
-	  fmr       f1, f22
-	  bl        0x7D9DC
-	  fmuls     f28, f21, f1
-	  fmuls     f29, f21, f20
-	  b         .loc_0x188
+	Vector3f ptclPos;
+	Vector3f ptclVel;
+	Vector3f emitDir;
+	Vector3f tmp4;
+	Vector3f tmp5;
+	Vector3f tmp6;
+	f32 scale;
+	f32 c;
+	f32 initVel;
+	f32 b;
+	emitDir.x = mEmitDir.x;
+	emitDir.y = mEmitDir.y;
+	emitDir.z = mEmitDir.z;
+	scale     = emitDir.x * emitDir.x + emitDir.y * emitDir.y + emitDir.z * emitDir.z;
+	if (scale == 0.0f) {
+		pmGetArbitUnitVec(emitDir);
+	} else {
+		scale = std::sqrtf(scale);
+		emitDir.x /= scale;
+		emitDir.y /= scale;
+		emitDir.z /= scale;
+	}
 
-	.loc_0x114:
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x178
-	  fsqrte    f1, f4
-	  lfd       f3, -0x4C60(r2)
-	  lfd       f2, -0x4C58(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x178(r1)
-	  lfs       f0, 0x178(r1)
-	  b         .loc_0x17C
+	tmp4.x = _AC.x;
+	tmp4.y = _AC.y;
+	tmp4.z = _AC.z;
 
-	.loc_0x178:
-	  fmr       f0, f4
+	if (mParticleFlags & (PTCLFLAG_Unk10 | PTCLFLAG_Unk11)) {
+		if (mParticleFlags & PTCLFLAG_Unk10) {
+			initVel = pmIntpManual(_1BC, _1C0);
+		} else {
+			initVel = pmIntpLinear(_1BC, _1C0);
+		}
+	} else {
+		initVel = mInitVel;
+	}
 
-	.loc_0x17C:
-	  fdivs     f28, f28, f0
-	  fdivs     f29, f29, f0
-	  fdivs     f30, f30, f0
+	if (mParticleFlags & (PTCLFLAG_Unk8 | PTCLFLAG_Unk9)) {
+		if (mParticleFlags & PTCLFLAG_Unk8) {
+			b = pmIntpManual(_1B4, _1B8);
+		} else {
+			b = pmIntpLinear(_1B4, _1B8);
+		}
+	} else {
+		b = _C8;
+	}
 
-	.loc_0x188:
-	  lwz       r0, 0x84(r30)
-	  lfs       f22, 0xAC(r30)
-	  rlwinm.   r3,r0,0,20,21
-	  lfs       f20, 0xB0(r30)
-	  lfs       f24, 0xB4(r30)
-	  beq-      .loc_0x2BC
-	  rlwinm.   r3,r0,0,21,21
-	  beq-      .loc_0x21C
-	  lwz       r3, 0x1BC(r30)
-	  li        r6, 0x1
-	  lha       r9, 0x1C8(r30)
-	  lis       r4, 0x4330
-	  lha       r5, 0x90(r30)
-	  lwz       r7, 0x1C0(r30)
-	  addi      r8, r3, 0x4
-	  lfd       f3, -0x4C48(r2)
-	  xoris     r5, r5, 0x8000
-	  xoris     r3, r9, 0x8000
-	  b         .loc_0x1DC
+	c = _C4 * b;
 
-	.loc_0x1D4:
-	  addi      r8, r8, 0x4
-	  addi      r6, r6, 0x1
+	if (int(mParticleFlags & (PTCLFLAG_Unk0 | PTCLFLAG_Unk1)) == 1) {
+		if (int(mParticleFlags & (PTCLFLAG_Unk2 | PTCLFLAG_Unk3)) == 4) {
+			pmGetArbitUnitVec(ptclVel);
+			tmp5.x = ptclVel.x;
+			tmp5.y = ptclVel.y;
+			tmp5.z = ptclVel.z;
 
-	.loc_0x1DC:
-	  stw       r3, 0x21C(r1)
-	  lfs       f0, 0x0(r8)
-	  stw       r4, 0x218(r1)
-	  stw       r5, 0x214(r1)
-	  lfd       f1, 0x218(r1)
-	  stw       r4, 0x210(r1)
-	  fsubs     f1, f1, f3
-	  lfd       f2, 0x210(r1)
-	  fsubs     f2, f2, f3
-	  fmuls     f0, f1, f0
-	  fcmpo     cr0, f2, f0
-	  bgt+      .loc_0x1D4
-	  rlwinm    r3,r6,2,0,29
-	  add       r3, r7, r3
-	  lfs       f31, -0x4(r3)
-	  b         .loc_0x2C0
+			scale = c + Rand(b - c);
+			tmp5.x *= scale;
+			tmp5.y *= scale;
+			tmp5.z *= scale;
 
-	.loc_0x21C:
-	  lha       r5, 0x90(r30)
-	  lis       r4, 0x4330
-	  lha       r3, 0x1C8(r30)
-	  li        r6, 0x1
-	  xoris     r5, r5, 0x8000
-	  xoris     r3, r3, 0x8000
-	  stw       r5, 0x214(r1)
-	  lwz       r7, 0x1BC(r30)
-	  stw       r3, 0x21C(r1)
-	  lfd       f2, -0x4C48(r2)
-	  addi      r3, r7, 0x4
-	  stw       r4, 0x210(r1)
-	  lwz       r5, 0x1C0(r30)
-	  stw       r4, 0x218(r1)
-	  lfd       f1, 0x210(r1)
-	  lfd       f0, 0x218(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f0, f2
-	  fdivs     f3, f1, f0
-	  b         .loc_0x274
+			ptclPos.x = mEmitPosOffset.x + tmp5.x;
+			ptclPos.y = mEmitPosOffset.y + tmp5.y;
+			ptclPos.z = mEmitPosOffset.z + tmp5.z;
 
-	.loc_0x26C:
-	  addi      r3, r3, 0x4
-	  addi      r6, r6, 0x1
+			scale = initVel + RandShift(initVel * _D0);
+			ptclVel.x *= scale;
+			ptclVel.y *= scale;
+			ptclVel.z *= scale;
 
-	.loc_0x274:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f3, f0
-	  bgt+      .loc_0x26C
-	  rlwinm    r4,r6,2,0,29
-	  add       r3, r7, r4
-	  lfsx      f5, r7, r4
-	  lfs       f0, -0x4(r3)
-	  add       r3, r5, r4
-	  fsubs     f1, f5, f3
-	  lfs       f2, -0x4(r3)
-	  fsubs     f3, f3, f0
-	  lfsx      f4, r5, r4
-	  fsubs     f0, f5, f0
-	  fmuls     f3, f4, f3
-	  fmuls     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fdivs     f31, f1, f0
-	  b         .loc_0x2C0
+		} else if (int(mParticleFlags & (PTCLFLAG_Unk2 | PTCLFLAG_Unk3)) == 8) {
+			ptclPos.x = mEmitPosOffset.x;
+			ptclPos.y = mEmitPosOffset.y;
+			ptclPos.z = mEmitPosOffset.z;
+			pmGetArbitUnitVec(tmp5);
+			tmp5.cross(tmp5, emitDir);
 
-	.loc_0x2BC:
-	  lfs       f31, 0xCC(r30)
+			scale = Rand(_C0);
+			tmp5.x *= scale;
+			tmp5.y *= scale;
+			tmp5.z *= scale;
 
-	.loc_0x2C0:
-	  rlwinm.   r3,r0,0,22,23
-	  beq-      .loc_0x3E4
-	  rlwinm.   r3,r0,0,23,23
-	  beq-      .loc_0x344
-	  lwz       r3, 0x1B4(r30)
-	  li        r6, 0x1
-	  lha       r9, 0x1C8(r30)
-	  lis       r4, 0x4330
-	  lha       r5, 0x90(r30)
-	  lwz       r7, 0x1B8(r30)
-	  addi      r8, r3, 0x4
-	  lfd       f3, -0x4C48(r2)
-	  xoris     r5, r5, 0x8000
-	  xoris     r3, r9, 0x8000
-	  b         .loc_0x304
+			ptclVel.x = emitDir.x + tmp5.x;
+			ptclVel.y = emitDir.y + tmp5.y;
+			ptclVel.z = emitDir.z + tmp5.z;
 
-	.loc_0x2FC:
-	  addi      r8, r8, 0x4
-	  addi      r6, r6, 0x1
+			ptclVel.normalize();
 
-	.loc_0x304:
-	  stw       r3, 0x21C(r1)
-	  lfs       f0, 0x0(r8)
-	  stw       r4, 0x218(r1)
-	  stw       r5, 0x214(r1)
-	  lfd       f1, 0x218(r1)
-	  stw       r4, 0x210(r1)
-	  fsubs     f1, f1, f3
-	  lfd       f2, 0x210(r1)
-	  fsubs     f2, f2, f3
-	  fmuls     f0, f1, f0
-	  fcmpo     cr0, f2, f0
-	  bgt+      .loc_0x2FC
-	  rlwinm    r3,r6,2,0,29
-	  add       r3, r7, r3
-	  lfs       f26, -0x4(r3)
-	  b         .loc_0x3E8
+			scale = initVel + RandShift(initVel * _D0);
+			ptclVel.x *= scale;
+			ptclVel.y *= scale;
+			ptclVel.z *= scale;
 
-	.loc_0x344:
-	  lha       r5, 0x90(r30)
-	  lis       r4, 0x4330
-	  lha       r3, 0x1C8(r30)
-	  li        r6, 0x1
-	  xoris     r5, r5, 0x8000
-	  xoris     r3, r3, 0x8000
-	  stw       r5, 0x214(r1)
-	  lwz       r7, 0x1B4(r30)
-	  stw       r3, 0x21C(r1)
-	  lfd       f2, -0x4C48(r2)
-	  addi      r3, r7, 0x4
-	  stw       r4, 0x210(r1)
-	  lwz       r5, 0x1B8(r30)
-	  stw       r4, 0x218(r1)
-	  lfd       f1, 0x210(r1)
-	  lfd       f0, 0x218(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f0, f2
-	  fdivs     f3, f1, f0
-	  b         .loc_0x39C
+		} else {
+			pmGetArbitUnitVec(tmp5);
+			ptclVel.cross(tmp5, emitDir);
+			scale = ptclVel.x * ptclVel.x + ptclVel.y * ptclVel.y + ptclVel.z * ptclVel.z;
+			if (scale == 0.0f) {
+				ptcl->mLifeTime = 1;
+				ptcl->mAge      = 0;
+				ptcl->_30       = 0.0f;
+			} else {
+				scale = std::sqrtf(scale);
+				ptclVel.x /= scale;
+				ptclVel.y /= scale;
+				ptclVel.z /= scale;
+			}
 
-	.loc_0x394:
-	  addi      r3, r3, 0x4
-	  addi      r6, r6, 0x1
+			tmp5.x = ptclVel.x;
+			tmp5.y = ptclVel.y;
+			tmp5.z = ptclVel.z;
+			scale  = c + Rand(b - c);
+			tmp5.x *= scale;
+			tmp5.y *= scale;
+			tmp5.z *= scale;
 
-	.loc_0x39C:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f3, f0
-	  bgt+      .loc_0x394
-	  rlwinm    r4,r6,2,0,29
-	  add       r3, r7, r4
-	  lfsx      f5, r7, r4
-	  lfs       f0, -0x4(r3)
-	  add       r3, r5, r4
-	  fsubs     f1, f5, f3
-	  lfs       f2, -0x4(r3)
-	  fsubs     f3, f3, f0
-	  lfsx      f4, r5, r4
-	  fsubs     f0, f5, f0
-	  fmuls     f3, f4, f3
-	  fmuls     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fdivs     f26, f1, f0
-	  b         .loc_0x3E8
+			ptclPos.x = mEmitPosOffset.x + tmp5.x;
+			ptclPos.y = mEmitPosOffset.y + tmp5.y;
+			ptclPos.z = mEmitPosOffset.z + tmp5.z;
 
-	.loc_0x3E4:
-	  lfs       f26, 0xC8(r30)
+			scale = initVel + RandShift(initVel * _D0);
+			ptclVel.x *= scale;
+			ptclVel.y *= scale;
+			ptclVel.z *= scale;
+		}
+	} else if (int(mParticleFlags & (PTCLFLAG_Unk0 | PTCLFLAG_Unk1)) == 2) {
+		ptclPos.x = RandShift(1.0f) * tmp4.x + mEmitPosOffset.x;
+		ptclPos.y = RandShift(1.0f) * tmp4.y + mEmitPosOffset.y;
+		ptclPos.z = RandShift(1.0f) * tmp4.z + mEmitPosOffset.z;
 
-	.loc_0x3E8:
-	  lfs       f21, 0xC4(r30)
-	  rlwinm    r3,r0,0,30,31
-	  cmpwi     r3, 0x1
-	  fmuls     f27, f21, f26
-	  bne-      .loc_0x8CC
-	  rlwinm    r0,r0,0,28,29
-	  cmpwi     r0, 0x4
-	  bne-      .loc_0x53C
-	  bl        0x79BF4
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x4C48(r2)
-	  stw       r0, 0x214(r1)
-	  lis       r29, 0x4330
-	  lfs       f1, -0x4C68(r2)
-	  stw       r29, 0x210(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f2, 0x210(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f20, f0, f1
-	  bl        0x79BC4
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  stw       r0, 0x21C(r1)
-	  fmr       f1, f20
-	  lfs       f2, -0x4C68(r2)
-	  stw       r29, 0x218(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f3, 0x218(r1)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f22, f0, f2
-	  bl        0x7D80C
-	  fmr       f21, f1
-	  fmr       f1, f20
-	  bl        0x7D66C
-	  fmr       f25, f1
-	  fmr       f1, f22
-	  bl        0x7D7F4
-	  fmr       f20, f1
-	  fmr       f1, f22
-	  bl        0x7D654
-	  fmuls     f24, f21, f20
-	  fmuls     f23, f21, f1
-	  bl        0x79B64
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, 0xD0(r30)
-	  stw       r0, 0x20C(r1)
-	  fsubs     f3, f26, f27
-	  lfd       f1, -0x4C48(r2)
-	  fmuls     f26, f31, f0
-	  stw       r29, 0x208(r1)
-	  lfs       f4, -0x4C68(r2)
-	  lfd       f0, 0x208(r1)
-	  lfs       f2, 0x94(r30)
-	  fsubs     f5, f0, f1
-	  lfs       f1, 0x98(r30)
-	  lfs       f0, 0x9C(r30)
-	  fdivs     f4, f5, f4
-	  fmuls     f3, f3, f4
-	  fadds     f3, f27, f3
-	  fmuls     f5, f23, f3
-	  fmuls     f4, f24, f3
-	  fmuls     f3, f25, f3
-	  fadds     f22, f2, f5
-	  fadds     f21, f1, f4
-	  fadds     f20, f0, f3
-	  bl        0x79B08
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, -0x4C40(r2)
-	  stw       r0, 0x204(r1)
-	  lfd       f3, -0x4C48(r2)
-	  fmuls     f0, f0, f26
-	  stw       r29, 0x200(r1)
-	  lfs       f1, -0x4C68(r2)
-	  lfd       f2, 0x200(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f0, f0, f1
-	  fsubs     f0, f0, f26
-	  fadds     f0, f31, f0
-	  fmuls     f23, f23, f0
-	  fmuls     f24, f24, f0
-	  fmuls     f25, f25, f0
-	  b         .loc_0xCA4
+		scale     = initVel + RandShift(initVel * _D0);
+		ptclVel.x = emitDir.x * scale;
+		ptclVel.y = emitDir.y * scale;
+		ptclVel.z = emitDir.z * scale;
+	} else {
+		f32 d = _C4;
+		pmGetArbitUnitVec(tmp5);
+		ptclVel.cross(tmp5, emitDir);
+		scale = ptclVel.x * ptclVel.x + ptclVel.y * ptclVel.y + ptclVel.z * ptclVel.z;
+		if (scale == 0.0f) {
+			ptcl->mLifeTime = 1;
+			ptcl->mAge      = 0;
+			ptcl->_30       = 0.0f;
 
-	.loc_0x53C:
-	  cmpwi     r0, 0x8
-	  bne-      .loc_0x6CC
-	  lfs       f22, 0x94(r30)
-	  lfs       f21, 0x98(r30)
-	  lfs       f20, 0x9C(r30)
-	  bl        0x79AAC
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x4C48(r2)
-	  stw       r0, 0x204(r1)
-	  lis       r29, 0x4330
-	  lfs       f1, -0x4C68(r2)
-	  stw       r29, 0x200(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f2, 0x200(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f23, f0, f1
-	  bl        0x79A7C
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  stw       r0, 0x20C(r1)
-	  fmr       f1, f23
-	  lfs       f2, -0x4C68(r2)
-	  stw       r29, 0x208(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f3, 0x208(r1)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f26, f0, f2
-	  bl        0x7D6C4
-	  fmr       f25, f1
-	  fmr       f1, f23
-	  bl        0x7D524
-	  fmr       f24, f1
-	  fmr       f1, f26
-	  bl        0x7D6AC
-	  fmr       f23, f1
-	  fmr       f1, f26
-	  bl        0x7D50C
-	  fmuls     f0, f25, f23
-	  lfs       f23, 0xC0(r30)
-	  fmuls     f1, f25, f1
-	  fmuls     f4, f24, f29
-	  fmuls     f5, f0, f30
-	  fmuls     f3, f24, f28
-	  fmuls     f2, f1, f30
-	  fmuls     f1, f1, f29
-	  fmuls     f0, f0, f28
-	  fsubs     f26, f5, f4
-	  fsubs     f24, f3, f2
-	  fsubs     f25, f1, f0
-	  bl        0x799F4
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x4C48(r2)
-	  stw       r0, 0x214(r1)
-	  lfs       f0, -0x4C68(r2)
-	  stw       r29, 0x210(r1)
-	  lfd       f1, 0x210(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f0, f1, f0
-	  fmuls     f0, f23, f0
-	  fmuls     f26, f26, f0
-	  fmuls     f24, f24, f0
-	  fmuls     f25, f25, f0
-	  fadds     f23, f28, f26
-	  fadds     f24, f29, f24
-	  fadds     f25, f30, f25
-	  fmuls     f1, f23, f23
-	  fmuls     f0, f24, f24
-	  fmuls     f2, f25, f25
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x190A90
-	  lfs       f0, -0x4C70(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x678
-	  fdivs     f23, f23, f1
-	  fdivs     f24, f24, f1
-	  fdivs     f25, f25, f1
+		} else {
+			scale = std::sqrtf(scale);
+			ptclVel.x /= scale;
+			ptclVel.y /= scale;
+			ptclVel.z /= scale;
+		}
 
-	.loc_0x678:
-	  lfs       f0, 0xD0(r30)
-	  fmuls     f26, f31, f0
-	  bl        0x7997C
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, -0x4C40(r2)
-	  stw       r0, 0x204(r1)
-	  lis       r0, 0x4330
-	  lfd       f3, -0x4C48(r2)
-	  fmuls     f0, f0, f26
-	  stw       r0, 0x200(r1)
-	  lfs       f1, -0x4C68(r2)
-	  lfd       f2, 0x200(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f0, f0, f1
-	  fsubs     f0, f0, f26
-	  fadds     f0, f31, f0
-	  fmuls     f23, f23, f0
-	  fmuls     f24, f24, f0
-	  fmuls     f25, f25, f0
-	  b         .loc_0xCA4
+		scale  = RandShift(1.0f) * tmp4.y;
+		tmp6.x = emitDir.x * scale + ptclVel.x * tmp4.x;
+		tmp6.y = emitDir.y * scale + ptclVel.y * tmp4.x;
+		tmp6.z = emitDir.z * scale + ptclVel.z * tmp4.x;
 
-	.loc_0x6CC:
-	  bl        0x79930
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x4C48(r2)
-	  stw       r0, 0x204(r1)
-	  lis       r29, 0x4330
-	  lfs       f1, -0x4C68(r2)
-	  stw       r29, 0x200(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f2, 0x200(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f20, f0, f1
-	  bl        0x79900
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  stw       r0, 0x20C(r1)
-	  fmr       f1, f20
-	  lfs       f2, -0x4C68(r2)
-	  stw       r29, 0x208(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f3, 0x208(r1)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f23, f0, f2
-	  bl        0x7D548
-	  fmr       f22, f1
-	  fmr       f1, f20
-	  bl        0x7D3A8
-	  fmr       f21, f1
-	  fmr       f1, f23
-	  bl        0x7D530
-	  fmr       f20, f1
-	  fmr       f1, f23
-	  bl        0x7D390
-	  fmuls     f5, f22, f1
-	  lfs       f0, -0x4C70(r2)
-	  fmuls     f6, f22, f20
-	  fmuls     f4, f21, f28
-	  fmuls     f3, f5, f30
-	  fmuls     f2, f6, f30
-	  fmuls     f1, f21, f29
-	  fsubs     f24, f4, f3
-	  fmuls     f5, f5, f29
-	  fsubs     f23, f2, f1
-	  fmuls     f3, f6, f28
-	  fmuls     f1, f24, f24
-	  fmuls     f2, f23, f23
-	  fsubs     f25, f5, f3
-	  fadds     f1, f2, f1
-	  fmuls     f2, f25, f25
-	  fadds     f4, f2, f1
-	  fcmpu     cr0, f0, f4
-	  bne-      .loc_0x7B8
-	  li        r0, 0x1
-	  sth       r0, 0x2C(r31)
-	  li        r0, 0
-	  sth       r0, 0x2E(r31)
-	  stfs      f0, 0x30(r31)
-	  b         .loc_0x824
+		scale     = 1.0f + Rand(d - 1.0f);
+		ptclPos.x = tmp6.x * scale + mEmitPosOffset.x;
+		ptclPos.y = tmp6.y * scale + mEmitPosOffset.y;
+		ptclPos.z = tmp6.z * scale + mEmitPosOffset.z;
 
-	.loc_0x7B8:
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x818
-	  fsqrte    f1, f4
-	  lfd       f3, -0x4C60(r2)
-	  lfd       f2, -0x4C58(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x150(r1)
-	  lfs       f4, 0x150(r1)
+		if (int(mParticleFlags & (PTCLFLAG_Unk2 | PTCLFLAG_Unk3)) == 8) {
+			scale     = initVel + RandShift(initVel * _D0);
+			ptclVel.x = emitDir.x * scale;
+			ptclVel.y = emitDir.y * scale;
+			ptclVel.z = emitDir.z * scale;
+		} else {
+			scale = initVel + RandShift(initVel * _D0);
+			ptclVel.x *= scale;
+			ptclVel.y *= scale;
+			ptclVel.z *= scale;
+		}
+	}
 
-	.loc_0x818:
-	  fdivs     f23, f23, f4
-	  fdivs     f24, f24, f4
-	  fdivs     f25, f25, f4
+	ptclVel.add(mEmitVelocity);
 
-	.loc_0x824:
-	  bl        0x797D8
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, 0xD0(r30)
-	  stw       r0, 0x204(r1)
-	  lis       r29, 0x4330
-	  lfd       f1, -0x4C48(r2)
-	  fsubs     f3, f26, f27
-	  stw       r29, 0x200(r1)
-	  lfs       f4, -0x4C68(r2)
-	  fmuls     f26, f31, f0
-	  lfd       f0, 0x200(r1)
-	  lfs       f2, 0x94(r30)
-	  fsubs     f5, f0, f1
-	  lfs       f1, 0x98(r30)
-	  lfs       f0, 0x9C(r30)
-	  fdivs     f4, f5, f4
-	  fmuls     f3, f3, f4
-	  fadds     f3, f27, f3
-	  fmuls     f5, f23, f3
-	  fmuls     f4, f24, f3
-	  fmuls     f3, f25, f3
-	  fadds     f22, f2, f5
-	  fadds     f21, f1, f4
-	  fadds     f20, f0, f3
-	  bl        0x79778
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, -0x4C40(r2)
-	  stw       r0, 0x20C(r1)
-	  lfd       f3, -0x4C48(r2)
-	  fmuls     f0, f0, f26
-	  stw       r29, 0x208(r1)
-	  lfs       f1, -0x4C68(r2)
-	  lfd       f2, 0x208(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f0, f0, f1
-	  fsubs     f0, f0, f26
-	  fadds     f0, f31, f0
-	  fmuls     f23, f23, f0
-	  fmuls     f24, f24, f0
-	  fmuls     f25, f25, f0
-	  b         .loc_0xCA4
+	ptcl->mPosition.x = ptclPos.x;
+	ptcl->mPosition.y = ptclPos.y;
+	ptcl->mPosition.z = ptclPos.z;
+	ptcl->mVelocity.x = ptclVel.x;
+	ptcl->mVelocity.y = ptclVel.y;
+	ptcl->mVelocity.z = ptclVel.z;
+	ptcl->_24         = (_F4 - 2.0f * _F4 * RandShift(1.0f)) * mScaleSize + mScaleSize;
+	if (ptcl->_24 < 0.0f) {
+		ptcl->_24 = 0.0f;
+	}
 
-	.loc_0x8CC:
-	  cmpwi     r3, 0x2
-	  bne-      .loc_0x9E8
-	  bl        0x79728
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  stw       r0, 0x204(r1)
-	  lis       r29, 0x4330
-	  lfs       f3, -0x4C68(r2)
-	  stw       r29, 0x200(r1)
-	  lfs       f2, -0x4C40(r2)
-	  lfd       f1, 0x200(r1)
-	  lfs       f0, -0x4C50(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, 0x94(r30)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fsubs     f0, f2, f0
-	  fmuls     f0, f22, f0
-	  fadds     f22, f1, f0
-	  bl        0x796E4
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  stw       r0, 0x20C(r1)
-	  lfs       f3, -0x4C68(r2)
-	  stw       r29, 0x208(r1)
-	  lfs       f2, -0x4C40(r2)
-	  lfd       f1, 0x208(r1)
-	  lfs       f0, -0x4C50(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, 0x98(r30)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fsubs     f0, f2, f0
-	  fmuls     f0, f20, f0
-	  fadds     f21, f1, f0
-	  bl        0x796A4
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, 0xD0(r30)
-	  stw       r0, 0x214(r1)
-	  lfd       f1, -0x4C48(r2)
-	  fmuls     f23, f31, f0
-	  stw       r29, 0x210(r1)
-	  lfs       f3, -0x4C68(r2)
-	  lfd       f0, 0x210(r1)
-	  lfs       f2, -0x4C40(r2)
-	  fsubs     f4, f0, f1
-	  lfs       f0, -0x4C50(r2)
-	  lfs       f1, 0x9C(r30)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fsubs     f0, f2, f0
-	  fmuls     f0, f24, f0
-	  fadds     f20, f1, f0
-	  bl        0x7965C
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, -0x4C40(r2)
-	  stw       r0, 0x21C(r1)
-	  lfd       f3, -0x4C48(r2)
-	  fmuls     f0, f0, f23
-	  stw       r29, 0x218(r1)
-	  lfs       f1, -0x4C68(r2)
-	  lfd       f2, 0x218(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f0, f0, f1
-	  fsubs     f0, f0, f23
-	  fadds     f0, f31, f0
-	  fmuls     f23, f28, f0
-	  fmuls     f24, f29, f0
-	  fmuls     f25, f30, f0
-	  b         .loc_0xCA4
-
-	.loc_0x9E8:
-	  bl        0x79614
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x4C48(r2)
-	  stw       r0, 0x204(r1)
-	  lis       r29, 0x4330
-	  lfs       f1, -0x4C68(r2)
-	  stw       r29, 0x200(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f2, 0x200(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f23, f0, f1
-	  bl        0x795E4
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  stw       r0, 0x20C(r1)
-	  fmr       f1, f23
-	  lfs       f2, -0x4C68(r2)
-	  stw       r29, 0x208(r1)
-	  lfs       f0, -0x4C6C(r2)
-	  lfd       f3, 0x208(r1)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f26, f0, f2
-	  bl        0x7D22C
-	  fmr       f25, f1
-	  fmr       f1, f23
-	  bl        0x7D08C
-	  fmr       f24, f1
-	  fmr       f1, f26
-	  bl        0x7D214
-	  fmr       f23, f1
-	  fmr       f1, f26
-	  bl        0x7D074
-	  fmuls     f5, f25, f1
-	  lfs       f0, -0x4C70(r2)
-	  fmuls     f6, f25, f23
-	  fmuls     f4, f24, f28
-	  fmuls     f3, f5, f30
-	  fmuls     f1, f24, f29
-	  fmuls     f2, f6, f30
-	  fsubs     f24, f4, f3
-	  fmuls     f5, f5, f29
-	  fsubs     f23, f2, f1
-	  fmuls     f3, f6, f28
-	  fmuls     f1, f24, f24
-	  fmuls     f2, f23, f23
-	  fsubs     f25, f5, f3
-	  fadds     f1, f2, f1
-	  fmuls     f2, f25, f25
-	  fadds     f4, f2, f1
-	  fcmpu     cr0, f0, f4
-	  bne-      .loc_0xAD4
-	  li        r0, 0x1
-	  sth       r0, 0x2C(r31)
-	  li        r0, 0
-	  sth       r0, 0x2E(r31)
-	  stfs      f0, 0x30(r31)
-	  b         .loc_0xB40
-
-	.loc_0xAD4:
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0xB34
-	  fsqrte    f1, f4
-	  lfd       f3, -0x4C60(r2)
-	  lfd       f2, -0x4C58(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x14C(r1)
-	  lfs       f4, 0x14C(r1)
-
-	.loc_0xB34:
-	  fdivs     f23, f23, f4
-	  fdivs     f24, f24, f4
-	  fdivs     f25, f25, f4
-
-	.loc_0xB40:
-	  bl        0x794BC
-	  xoris     r0, r3, 0x8000
-	  lfd       f7, -0x4C48(r2)
-	  stw       r0, 0x204(r1)
-	  lis       r29, 0x4330
-	  lfs       f5, -0x4C68(r2)
-	  fmuls     f4, f23, f22
-	  stw       r29, 0x200(r1)
-	  lfs       f3, -0x4C40(r2)
-	  fmuls     f2, f24, f22
-	  lfd       f6, 0x200(r1)
-	  lfs       f1, -0x4C50(r2)
-	  fmuls     f0, f25, f22
-	  fsubs     f6, f6, f7
-	  fdivs     f5, f6, f5
-	  fmuls     f3, f3, f5
-	  fsubs     f1, f3, f1
-	  fmuls     f1, f20, f1
-	  fmuls     f5, f28, f1
-	  fmuls     f3, f29, f1
-	  fmuls     f1, f30, f1
-	  fadds     f26, f5, f4
-	  fadds     f22, f3, f2
-	  fadds     f20, f1, f0
-	  bl        0x7945C
-	  xoris     r0, r3, 0x8000
-	  lfs       f2, -0x4C50(r2)
-	  stw       r0, 0x20C(r1)
-	  lwz       r0, 0x84(r30)
-	  fsubs     f0, f21, f2
-	  stw       r29, 0x208(r1)
-	  rlwinm    r0,r0,0,28,29
-	  lfd       f3, -0x4C48(r2)
-	  lfd       f1, 0x208(r1)
-	  lfs       f4, -0x4C68(r2)
-	  cmpwi     r0, 0x8
-	  fsubs     f6, f1, f3
-	  lfs       f5, 0x94(r30)
-	  lfs       f3, 0x98(r30)
-	  lfs       f1, 0x9C(r30)
-	  fdivs     f4, f6, f4
-	  fmuls     f0, f0, f4
-	  fadds     f0, f2, f0
-	  fmuls     f4, f26, f0
-	  fmuls     f2, f22, f0
-	  fmuls     f0, f20, f0
-	  fadds     f22, f5, f4
-	  fadds     f21, f3, f2
-	  fadds     f20, f1, f0
-	  bne-      .loc_0xC58
-	  lfs       f0, 0xD0(r30)
-	  fmuls     f23, f31, f0
-	  bl        0x793EC
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, -0x4C40(r2)
-	  stw       r0, 0x204(r1)
-	  lfd       f3, -0x4C48(r2)
-	  fmuls     f0, f0, f23
-	  stw       r29, 0x200(r1)
-	  lfs       f1, -0x4C68(r2)
-	  lfd       f2, 0x200(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f0, f0, f1
-	  fsubs     f0, f0, f23
-	  fadds     f0, f31, f0
-	  fmuls     f23, f28, f0
-	  fmuls     f24, f29, f0
-	  fmuls     f25, f30, f0
-	  b         .loc_0xCA4
-
-	.loc_0xC58:
-	  lfs       f0, 0xD0(r30)
-	  fmuls     f26, f31, f0
-	  bl        0x7939C
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, -0x4C40(r2)
-	  stw       r0, 0x204(r1)
-	  lfd       f3, -0x4C48(r2)
-	  fmuls     f0, f0, f26
-	  stw       r29, 0x200(r1)
-	  lfs       f1, -0x4C68(r2)
-	  lfd       f2, 0x200(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f0, f0, f1
-	  fsubs     f0, f0, f26
-	  fadds     f0, f31, f0
-	  fmuls     f23, f23, f0
-	  fmuls     f24, f24, f0
-	  fmuls     f25, f25, f0
-
-	.loc_0xCA4:
-	  lfs       f2, 0x1C(r30)
-	  lfs       f1, 0x20(r30)
-	  lfs       f0, 0x24(r30)
-	  fadds     f23, f23, f2
-	  fadds     f24, f24, f1
-	  stfs      f22, 0xC(r31)
-	  fadds     f25, f25, f0
-	  stfs      f21, 0x10(r31)
-	  stfs      f20, 0x14(r31)
-	  stfs      f23, 0x34(r31)
-	  stfs      f24, 0x38(r31)
-	  stfs      f25, 0x3C(r31)
-	  bl        0x79328
-	  xoris     r0, r3, 0x8000
-	  lfd       f1, -0x4C48(r2)
-	  stw       r0, 0x204(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, -0x4C68(r2)
-	  stw       r0, 0x200(r1)
-	  lfs       f2, -0x4C40(r2)
-	  lfd       f0, 0x200(r1)
-	  lfs       f5, 0xF4(r30)
-	  fsubs     f4, f0, f1
-	  lfs       f0, -0x4C50(r2)
-	  fmuls     f1, f2, f5
-	  lfs       f6, 0xF0(r30)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fsubs     f0, f2, f0
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f5, f0
-	  fmuls     f0, f6, f0
-	  fadds     f0, f6, f0
-	  stfs      f0, 0x24(r31)
-	  lfs       f1, 0x24(r31)
-	  lfs       f0, -0x4C70(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xD40
-	  stfs      f0, 0x24(r31)
-
-	.loc_0xD40:
-	  bl        0x792BC
-	  xoris     r3, r3, 0x8000
-	  lha       r0, 0x106(r30)
-	  stw       r3, 0x204(r1)
-	  lis       r29, 0x4330
-	  xoris     r0, r0, 0x8000
-	  lha       r3, 0x104(r30)
-	  stw       r29, 0x200(r1)
-	  xoris     r3, r3, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  lfd       f0, 0x200(r1)
-	  stw       r0, 0x214(r1)
-	  fsubs     f1, f0, f4
-	  lfs       f0, -0x4C68(r2)
-	  stw       r29, 0x210(r1)
-	  lfs       f2, -0x4C40(r2)
-	  fdivs     f3, f1, f0
-	  stw       r3, 0x20C(r1)
-	  lfd       f1, 0x210(r1)
-	  stw       r29, 0x208(r1)
-	  lfs       f0, -0x4C50(r2)
-	  fmuls     f3, f2, f3
-	  lfd       f2, 0x208(r1)
-	  fsubs     f1, f1, f4
-	  fsubs     f2, f2, f4
-	  fsubs     f0, f3, f0
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x218(r1)
-	  lwz       r0, 0x21C(r1)
-	  sth       r0, 0x5A(r31)
-	  bl        0x7923C
-	  xoris     r3, r3, 0x8000
-	  lha       r0, 0x108(r30)
-	  stw       r3, 0x1FC(r1)
-	  xoris     r0, r0, 0x8000
-	  lfd       f4, -0x4C48(r2)
-	  stw       r29, 0x1F8(r1)
-	  lfs       f1, -0x4C68(r2)
-	  lfd       f0, 0x1F8(r1)
-	  stw       r0, 0x1F4(r1)
-	  fsubs     f3, f0, f4
-	  lfs       f2, -0x4C40(r2)
-	  stw       r29, 0x1F0(r1)
-	  lfs       f0, -0x4C50(r2)
-	  fdivs     f3, f3, f1
-	  lfd       f1, 0x1F0(r1)
-	  fmuls     f2, f2, f3
-	  fsubs     f1, f1, f4
-	  fsubs     f0, f2, f0
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x1E8(r1)
-	  lwz       r0, 0x1EC(r1)
-	  sth       r0, 0x58(r31)
-	  lbz       r0, 0x112(r30)
-	  lfd       f1, -0x4C38(r2)
-	  stw       r0, 0x1E4(r1)
-	  stw       r29, 0x1E0(r1)
-	  lfd       f0, 0x1E0(r1)
-	  fsubs     f20, f0, f1
-	  bl        0x791C4
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x4C48(r2)
-	  stw       r0, 0x1DC(r1)
-	  lfs       f0, -0x4C68(r2)
-	  stw       r29, 0x1D8(r1)
-	  lfd       f1, 0x1D8(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f0, f1, f0
-	  fmuls     f0, f20, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x1D0(r1)
-	  lwz       r0, 0x1D4(r1)
-	  stb       r0, 0x4C(r31)
-	  lwz       r3, 0x1DC(r30)
-	  lwz       r0, 0x1E0(r30)
-	  stw       r3, 0x5C(r31)
-	  stw       r0, 0x60(r31)
-	  lwz       r0, 0x1E4(r30)
-	  stw       r0, 0x64(r31)
-	  lwz       r4, 0x18(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xE98
-	  b         .loc_0xE9C
-
-	.loc_0xE98:
-	  addi      r4, r30, 0xC
-
-	.loc_0xE9C:
-	  lwz       r3, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r3, 0x18(r31)
-	  stw       r0, 0x1C(r31)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x20(r31)
-	  lwz       r0, 0x294(r1)
-	  lfd       f31, 0x288(r1)
-	  lfd       f30, 0x280(r1)
-	  lfd       f29, 0x278(r1)
-	  lfd       f28, 0x270(r1)
-	  lfd       f27, 0x268(r1)
-	  lfd       f26, 0x260(r1)
-	  lfd       f25, 0x258(r1)
-	  lfd       f24, 0x250(r1)
-	  lfd       f23, 0x248(r1)
-	  lfd       f22, 0x240(r1)
-	  lfd       f21, 0x238(r1)
-	  lfd       f20, 0x230(r1)
-	  lwz       r31, 0x22C(r1)
-	  lwz       r30, 0x228(r1)
-	  lwz       r29, 0x224(r1)
-	  addi      r1, r1, 0x290
-	  mtlr      r0
-	  blr
-	*/
+	ptcl->_5A          = f32(_104) + f32(_106) * RandShift(1.0f);
+	ptcl->_58          = f32(_108) * RandShift(1.0f);
+	ptcl->_4C          = Rand(_112);
+	ptcl->_5C          = mOrientedNormalVector;
+	ptcl->mLocalOffset = getGPos();
 }
 
 /*
@@ -2541,512 +1021,131 @@ void zen::particleGenerator::PtclsGen(zen::particleMdl*)
  * Address:	8019EF74
  * Size:	000754
  */
-void zen::particleGenerator::pmCalcAccel(zen::particleMdl*)
+void zen::particleGenerator::pmCalcAccel(zen::particleMdl* ptcl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xD0(r1)
-	  stfd      f31, 0xC8(r1)
-	  stfd      f30, 0xC0(r1)
-	  stfd      f29, 0xB8(r1)
-	  stfd      f28, 0xB0(r1)
-	  stfd      f27, 0xA8(r1)
-	  stfd      f26, 0xA0(r1)
-	  stfd      f25, 0x98(r1)
-	  stw       r31, 0x94(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x90(r1)
-	  mr        r30, r3
-	  stw       r29, 0x8C(r1)
-	  lwz       r0, 0x84(r3)
-	  rlwinm.   r0,r0,0,15,15
-	  beq-      .loc_0x78
-	  lfs       f1, 0x40(r31)
-	  lfs       f0, 0x12C(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x40(r31)
-	  lfs       f1, 0x44(r31)
-	  lfs       f0, 0x130(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x44(r31)
-	  lfs       f1, 0x48(r31)
-	  lfs       f0, 0x134(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x48(r31)
+	if (mParticleFlags & PTCLFLAG_UseGravityField) {
+		ptcl->mAcceleration.x += mGravFieldAccel.x;
+		ptcl->mAcceleration.y += mGravFieldAccel.y;
+		ptcl->mAcceleration.z += mGravFieldAccel.z;
+	}
 
-	.loc_0x78:
-	  lwz       r0, 0x84(r30)
-	  rlwinm.   r0,r0,0,13,13
-	  beq-      .loc_0x208
-	  lfs       f4, 0x144(r30)
-	  lfs       f5, 0xC(r31)
-	  lfs       f6, 0x148(r30)
-	  lfs       f7, 0x10(r31)
-	  fmuls     f2, f4, f5
-	  lfs       f8, 0x14C(r30)
-	  fmuls     f1, f6, f7
-	  lfs       f9, 0x14(r31)
-	  lfs       f0, -0x4C70(r2)
-	  fmuls     f3, f8, f9
-	  lfs       f10, 0x15C(r30)
-	  fadds     f1, f2, f1
-	  fcmpu     cr0, f0, f10
-	  fadds     f0, f3, f1
-	  fmuls     f2, f4, f0
-	  fmuls     f1, f6, f0
-	  fmuls     f0, f8, f0
-	  fsubs     f29, f5, f2
-	  fsubs     f30, f7, f1
-	  fsubs     f31, f9, f0
-	  fmuls     f1, f29, f29
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f31, f31
-	  fadds     f0, f1, f0
-	  fadds     f3, f2, f0
-	  bne-      .loc_0xF4
-	  lfs       f2, -0x4C50(r2)
-	  b         .loc_0x110
+	f32 diffX, diffY, diffZ;
+	if (mParticleFlags & PTCLFLAG_UseVortexField) {
+		f32 scale = mVortexCenter.dot(ptcl->mPosition);
+		Vector3f vortexForce;
+		vortexForce.x = ptcl->mPosition.x - mVortexCenter.x * scale;
+		vortexForce.y = ptcl->mPosition.y - mVortexCenter.y * scale;
+		vortexForce.z = ptcl->mPosition.z - mVortexCenter.z * scale;
 
-	.loc_0xF4:
-	  lfs       f1, 0x158(r30)
-	  fadds     f0, f10, f3
-	  lfs       f2, -0x4C50(r2)
-	  fmuls     f1, f1, f10
-	  fsubs     f1, f1, f3
-	  fdivs     f0, f1, f0
-	  fadds     f2, f2, f0
+		scale = vortexForce.x * vortexForce.x + vortexForce.y * vortexForce.y + vortexForce.z * vortexForce.z;
+		f32 v = (_15C == 0.0f) ? 1.0f : (_158 * _15C - scale) / (_15C + scale) + 1.0f;
 
-	.loc_0x110:
-	  lfs       f1, 0x154(r30)
-	  lfs       f0, 0x150(r30)
-	  fmuls     f3, f1, f2
-	  fmuls     f26, f0, f2
-	  fmuls     f29, f29, f3
-	  fmr       f1, f26
-	  fmuls     f30, f30, f3
-	  fmuls     f31, f31, f3
-	  bl        0x7CC44
-	  fmr       f28, f1
-	  fmr       f1, f26
-	  bl        0x7CAA4
-	  lfs       f0, -0x4C50(r2)
-	  lfs       f9, 0x144(r30)
-	  fsubs     f8, f0, f1
-	  lfs       f10, 0x148(r30)
-	  lfs       f25, 0x14C(r30)
-	  fmuls     f13, f28, f9
-	  fmuls     f27, f28, f10
-	  fmuls     f4, f8, f9
-	  lfs       f0, 0xC(r31)
-	  fmuls     f5, f8, f10
-	  lfs       f2, 0x10(r31)
-	  fmuls     f6, f28, f25
-	  fmuls     f7, f10, f4
-	  lfs       f3, 0x14(r31)
-	  fmuls     f26, f25, f4
-	  fmuls     f28, f25, f5
-	  fmuls     f4, f9, f4
-	  fmuls     f5, f10, f5
-	  fadds     f11, f7, f6
-	  fadds     f12, f1, f4
-	  fmuls     f4, f8, f25
-	  fadds     f9, f1, f5
-	  fsubs     f8, f7, f6
-	  fsubs     f10, f26, f27
-	  fmuls     f6, f25, f4
-	  fadds     f5, f26, f27
-	  fsubs     f4, f28, f13
-	  fadds     f7, f28, f13
-	  fadds     f6, f1, f6
-	  fmuls     f12, f0, f12
-	  fmuls     f1, f2, f11
-	  fmuls     f9, f2, f9
-	  fmuls     f8, f0, f8
-	  fadds     f11, f12, f1
-	  fmuls     f10, f3, f10
-	  fmuls     f1, f0, f5
-	  fmuls     f0, f2, f4
-	  fadds     f2, f11, f10
-	  fadds     f5, f9, f8
-	  fmuls     f4, f3, f7
-	  fadds     f7, f29, f2
-	  fmuls     f2, f3, f6
-	  fadds     f0, f1, f0
-	  fadds     f1, f5, f4
-	  stfs      f7, 0xC(r31)
-	  fadds     f0, f2, f0
-	  fadds     f1, f30, f1
-	  fadds     f0, f31, f0
-	  stfs      f1, 0x10(r31)
-	  stfs      f0, 0x14(r31)
+		scale = mVortexStrength * v;
+		vortexForce.x *= scale;
+		vortexForce.y *= scale;
+		vortexForce.z *= scale;
 
-	.loc_0x208:
-	  lwz       r0, 0x84(r30)
-	  rlwinm.   r0,r0,0,12,12
-	  beq-      .loc_0x28C
-	  lfs       f1, 0x160(r30)
-	  lfs       f0, 0xC(r31)
-	  lfs       f2, 0x16C(r30)
-	  fsubs     f1, f1, f0
-	  lfs       f0, 0x34(r31)
-	  lfs       f3, 0x40(r31)
-	  fmuls     f1, f2, f1
-	  fsubs     f0, f1, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x40(r31)
-	  lfs       f1, 0x164(r30)
-	  lfs       f0, 0x10(r31)
-	  lfs       f2, 0x16C(r30)
-	  fsubs     f1, f1, f0
-	  lfs       f0, 0x38(r31)
-	  lfs       f3, 0x44(r31)
-	  fmuls     f1, f2, f1
-	  fsubs     f0, f1, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x44(r31)
-	  lfs       f1, 0x168(r30)
-	  lfs       f0, 0x14(r31)
-	  lfs       f2, 0x16C(r30)
-	  fsubs     f1, f1, f0
-	  lfs       f0, 0x3C(r31)
-	  lfs       f3, 0x48(r31)
-	  fmuls     f1, f2, f1
-	  fsubs     f0, f1, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x48(r31)
+		f32 rotAngle = mVortexRotationSpeed * v;
+		f32 sinTheta = sinf(rotAngle);
+		f32 cosTheta = cosf(rotAngle);
+		f32 cosComp  = 1.0f - cosTheta;
 
-	.loc_0x28C:
-	  lwz       r0, 0x84(r30)
-	  rlwinm.   r0,r0,0,11,11
-	  beq-      .loc_0x2F8
-	  lfs       f1, 0x170(r30)
-	  lfs       f0, 0xC(r31)
-	  lfs       f2, 0x17C(r30)
-	  fsubs     f0, f1, f0
-	  lfs       f1, 0x40(r31)
-	  fmuls     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x40(r31)
-	  lfs       f1, 0x174(r30)
-	  lfs       f0, 0x10(r31)
-	  lfs       f2, 0x17C(r30)
-	  fsubs     f0, f1, f0
-	  lfs       f1, 0x44(r31)
-	  fmuls     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x44(r31)
-	  lfs       f1, 0x178(r30)
-	  lfs       f0, 0x14(r31)
-	  lfs       f2, 0x17C(r30)
-	  fsubs     f0, f1, f0
-	  lfs       f1, 0x48(r31)
-	  fmuls     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x48(r31)
+		f32 axisX = mVortexCenter.x;
+		f32 axisY = mVortexCenter.y;
+		f32 axisZ = mVortexCenter.z;
 
-	.loc_0x2F8:
-	  lwz       r0, 0x84(r30)
-	  rlwinm.   r0,r0,0,10,10
-	  beq-      .loc_0x53C
-	  lfs       f1, 0xC(r31)
-	  li        r0, 0x10
-	  lbz       r3, 0x18C(r30)
-	  li        r8, 0x1
-	  fctiwz    f0, f1
-	  addi      r4, r3, 0x5
-	  lbz       r5, 0x18D(r30)
-	  slw       r0, r0, r3
-	  stfd      f0, 0x80(r1)
-	  add       r6, r5, r0
-	  lwz       r7, 0x84(r1)
-	  slw       r4, r8, r4
-	  add       r7, r7, r6
-	  divw      r6, r7, r4
-	  mullw     r6, r6, r4
-	  sub.      r6, r7, r6
-	  bge-      .loc_0x34C
-	  add       r6, r6, r4
+		diffX = ptcl->mPosition.x;
+		diffY = ptcl->mPosition.y;
+		diffZ = ptcl->mPosition.z;
 
-	.loc_0x34C:
-	  fctiwz    f0, f1
-	  sraw      r6, r6, r3
-	  stfd      f0, 0x80(r1)
-	  lwz       r7, 0x84(r1)
-	  sub       r7, r7, r5
-	  add       r8, r0, r7
-	  divw      r7, r8, r4
-	  mullw     r7, r7, r4
-	  sub.      r7, r8, r7
-	  bge-      .loc_0x378
-	  add       r7, r7, r4
+		ptcl->mPosition.x = (cosComp * axisX * axisX + cosTheta) * diffX + (cosComp * axisX * axisY + sinTheta * axisZ) * diffY
+		                  + (cosComp * axisX * axisZ - sinTheta * axisY) * diffZ + vortexForce.x;
+		ptcl->mPosition.y = (cosComp * axisX * axisY - sinTheta * axisZ) * diffX + (cosComp * axisY * axisY + cosTheta) * diffY
+		                  + (cosComp * axisY * axisZ + sinTheta * axisX) * diffZ + vortexForce.y;
+		ptcl->mPosition.z = (cosComp * axisX * axisZ + sinTheta * axisY) * diffX + (cosComp * axisY * axisZ - sinTheta * axisX) * diffY
+		                  + (cosComp * axisZ * axisZ + cosTheta) * diffZ + vortexForce.z;
+	}
 
-	.loc_0x378:
-	  lfs       f1, 0x10(r31)
-	  add       r8, r5, r0
-	  sraw      r7, r7, r3
-	  fctiwz    f0, f1
-	  stfd      f0, 0x80(r1)
-	  lwz       r9, 0x84(r1)
-	  add       r9, r9, r8
-	  divw      r8, r9, r4
-	  mullw     r8, r8, r4
-	  sub.      r8, r9, r8
-	  bge-      .loc_0x3A8
-	  add       r8, r8, r4
+	if (mParticleFlags & PTCLFLAG_UseDampedNewtonField) {
+		ptcl->mAcceleration.x += (mDampedNewtonFieldDir.x - ptcl->mPosition.x) * mDampedNewtonFieldStrength - ptcl->mVelocity.x;
+		ptcl->mAcceleration.y += (mDampedNewtonFieldDir.y - ptcl->mPosition.y) * mDampedNewtonFieldStrength - ptcl->mVelocity.y;
+		ptcl->mAcceleration.z += (mDampedNewtonFieldDir.z - ptcl->mPosition.z) * mDampedNewtonFieldStrength - ptcl->mVelocity.z;
+	}
 
-	.loc_0x3A8:
-	  fctiwz    f0, f1
-	  sraw      r8, r8, r3
-	  stfd      f0, 0x80(r1)
-	  lwz       r9, 0x84(r1)
-	  sub       r9, r9, r5
-	  add       r10, r0, r9
-	  divw      r9, r10, r4
-	  mullw     r9, r9, r4
-	  sub.      r9, r10, r9
-	  bge-      .loc_0x3D4
-	  add       r9, r9, r4
+	if (mParticleFlags & PTCLFLAG_UseNewtonField) {
+		ptcl->mAcceleration.x += (mNewtonFieldDir.x - ptcl->mPosition.x) * mNewtonFieldStrength;
+		ptcl->mAcceleration.y += (mNewtonFieldDir.y - ptcl->mPosition.y) * mNewtonFieldStrength;
+		ptcl->mAcceleration.z += (mNewtonFieldDir.z - ptcl->mPosition.z) * mNewtonFieldStrength;
+	}
 
-	.loc_0x3D4:
-	  lfs       f1, 0x14(r31)
-	  add       r10, r5, r0
-	  sraw      r9, r9, r3
-	  fctiwz    f0, f1
-	  stfd      f0, 0x80(r1)
-	  lwz       r11, 0x84(r1)
-	  add       r11, r11, r10
-	  divw      r10, r11, r4
-	  mullw     r10, r10, r4
-	  sub.      r10, r11, r10
-	  bge-      .loc_0x404
-	  add       r10, r10, r4
+	if (mParticleFlags & PTCLFLAG_UseSolidTex) {
+		int a     = 1 << (_18C + 5);
+		int b     = 16 << _18C;
+		int xPlus = (int(ptcl->mPosition.x) + _18D + b) % a;
+		if (xPlus < 0)
+			xPlus += a;
+		xPlus >>= _18C;
 
-	.loc_0x404:
-	  fctiwz    f0, f1
-	  sraw      r10, r10, r3
-	  stfd      f0, 0x80(r1)
-	  lwz       r11, 0x84(r1)
-	  sub       r5, r11, r5
-	  add       r5, r0, r5
-	  divw      r0, r5, r4
-	  mullw     r0, r0, r4
-	  sub.      r0, r5, r0
-	  bge-      .loc_0x430
-	  add       r0, r0, r4
+		int xMinus = (int(ptcl->mPosition.x) - _18D + b) % a;
+		if (xMinus < 0)
+			xMinus += a;
+		xMinus >>= _18C;
 
-	.loc_0x430:
-	  sraw      r0, r0, r3
-	  lwz       r3, 0x7C(r30)
-	  rlwinm    r4,r0,5,0,26
-	  lfd       f2, -0x4C48(r2)
-	  add       r5, r4, r9
-	  lfs       f1, 0x180(r30)
-	  rlwinm    r11,r5,1,0,30
-	  lfs       f3, 0x40(r31)
-	  rlwinm    r4,r10,5,0,26
-	  lhzx      r11, r3, r11
-	  add       r5, r4, r8
-	  rlwinm    r4,r9,5,0,26
-	  rlwinm    r9,r5,1,0,30
-	  add       r5, r4, r7
-	  lhzx      r9, r3, r9
-	  rlwinm    r4,r8,5,0,26
-	  add       r4, r4, r6
-	  rlwinm    r5,r5,1,0,30
-	  rlwinm    r4,r4,1,0,30
-	  lhzx      r5, r3, r5
-	  lhzx      r4, r3, r4
-	  rlwinm    r11,r11,27,27,31
-	  rlwinm    r5,r5,22,27,31
-	  rlwinm    r4,r4,22,27,31
-	  sub       r4, r4, r5
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x84(r1)
-	  lis       r5, 0x4330
-	  rlwinm    r8,r9,27,27,31
-	  stw       r5, 0x80(r1)
-	  sub       r8, r8, r11
-	  xoris     r4, r8, 0x8000
-	  lfd       f0, 0x80(r1)
-	  rlwinm    r7,r7,5,0,26
-	  stw       r4, 0x7C(r1)
-	  add       r4, r7, r0
-	  fsubs     f0, f0, f2
-	  rlwinm    r6,r6,5,0,26
-	  stw       r5, 0x78(r1)
-	  add       r0, r6, r10
-	  fmuls     f0, f1, f0
-	  rlwinm    r4,r4,1,0,30
-	  rlwinm    r0,r0,1,0,30
-	  lhzx      r4, r3, r4
-	  lhzx      r0, r3, r0
-	  fadds     f1, f3, f0
-	  lfd       f0, 0x78(r1)
-	  rlwinm    r3,r4,0,27,31
-	  rlwinm    r0,r0,0,27,31
-	  fsubs     f0, f0, f2
-	  stfs      f1, 0x40(r31)
-	  sub       r0, r0, r3
-	  xoris     r0, r0, 0x8000
-	  lfs       f1, 0x184(r30)
-	  stw       r0, 0x74(r1)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x44(r31)
-	  stw       r5, 0x70(r1)
-	  fadds     f1, f1, f0
-	  lfd       f0, 0x70(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f1, 0x44(r31)
-	  lfs       f1, 0x188(r30)
-	  lfs       f2, 0x48(r31)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x48(r31)
+		int yPlus = (int(ptcl->mPosition.y) + _18D + b) % a;
+		if (yPlus < 0)
+			yPlus += a;
+		yPlus >>= _18C;
 
-	.loc_0x53C:
-	  lwz       r0, 0x84(r30)
-	  rlwinm.   r0,r0,0,9,9
-	  beq-      .loc_0x618
-	  lfs       f28, 0x190(r30)
-	  bl        0x78BB0
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, -0x4C40(r2)
-	  stw       r0, 0x74(r1)
-	  lis       r29, 0x4330
-	  lfd       f4, -0x4C48(r2)
-	  fmuls     f0, f0, f28
-	  stw       r29, 0x70(r1)
-	  lfs       f2, -0x4C68(r2)
-	  lfd       f3, 0x70(r1)
-	  lfs       f1, 0x40(r31)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f0, f0, f2
-	  fsubs     f0, f0, f28
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x40(r31)
-	  lfs       f28, 0x190(r30)
-	  bl        0x78B68
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, -0x4C40(r2)
-	  stw       r0, 0x7C(r1)
-	  lfd       f4, -0x4C48(r2)
-	  fmuls     f0, f0, f28
-	  stw       r29, 0x78(r1)
-	  lfs       f2, -0x4C68(r2)
-	  lfd       f3, 0x78(r1)
-	  lfs       f1, 0x44(r31)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f0, f0, f2
-	  fsubs     f0, f0, f28
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x44(r31)
-	  lfs       f28, 0x190(r30)
-	  bl        0x78B24
-	  xoris     r0, r3, 0x8000
-	  lfs       f0, -0x4C40(r2)
-	  stw       r0, 0x84(r1)
-	  lfd       f4, -0x4C48(r2)
-	  fmuls     f0, f0, f28
-	  stw       r29, 0x80(r1)
-	  lfs       f2, -0x4C68(r2)
-	  lfd       f3, 0x80(r1)
-	  lfs       f1, 0x48(r31)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f0, f0, f2
-	  fsubs     f0, f0, f28
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x48(r31)
+		int yMinus = (int(ptcl->mPosition.y) - _18D + b) % a;
+		if (yMinus < 0)
+			yMinus += a;
+		yMinus >>= _18C;
 
-	.loc_0x618:
-	  lwz       r0, 0x84(r30)
-	  rlwinm.   r0,r0,0,8,8
-	  beq-      .loc_0x6E0
-	  lfs       f0, -0x4C70(r2)
-	  stfs      f0, 0x3C(r31)
-	  stfs      f0, 0x38(r31)
-	  stfs      f0, 0x34(r31)
-	  lfs       f11, 0x194(r30)
-	  lfs       f12, 0xC(r31)
-	  lfs       f7, 0x198(r30)
-	  lfs       f8, 0x10(r31)
-	  fmuls     f2, f11, f12
-	  lfs       f9, 0x19C(r30)
-	  fmuls     f1, f7, f8
-	  lfs       f10, 0x14(r31)
-	  lfs       f0, 0x1A0(r30)
-	  fmuls     f6, f9, f10
-	  lfs       f3, 0x1A4(r30)
-	  fadds     f1, f2, f1
-	  lfs       f5, 0x40(r31)
-	  fmuls     f4, f0, f11
-	  fadds     f0, f6, f1
-	  fmuls     f2, f11, f0
-	  fmuls     f1, f7, f0
-	  fmuls     f0, f9, f0
-	  fsubs     f2, f2, f12
-	  fsubs     f1, f1, f8
-	  fsubs     f0, f0, f10
-	  fmuls     f2, f3, f2
-	  fadds     f2, f4, f2
-	  fadds     f2, f5, f2
-	  stfs      f2, 0x40(r31)
-	  lfs       f2, 0x1A4(r30)
-	  lfs       f4, 0x1A0(r30)
-	  lfs       f3, 0x198(r30)
-	  fmuls     f1, f2, f1
-	  lfs       f5, 0x44(r31)
-	  fmuls     f2, f4, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f5, f1
-	  stfs      f1, 0x44(r31)
-	  lfs       f1, 0x1A4(r30)
-	  lfs       f3, 0x1A0(r30)
-	  lfs       f2, 0x19C(r30)
-	  fmuls     f0, f1, f0
-	  lfs       f4, 0x48(r31)
-	  fmuls     f1, f3, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f4, f0
-	  stfs      f0, 0x48(r31)
+		int zPlus = (int(ptcl->mPosition.z) + _18D + b) % a;
+		if (zPlus < 0)
+			zPlus += a;
+		zPlus >>= _18C;
 
-	.loc_0x6E0:
-	  lwz       r0, 0x84(r30)
-	  rlwinm.   r0,r0,0,14,14
-	  beq-      .loc_0x71C
-	  lfs       f1, 0xC(r31)
-	  lfs       f0, 0x138(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r31)
-	  lfs       f1, 0x10(r31)
-	  lfs       f0, 0x13C(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x10(r31)
-	  lfs       f1, 0x14(r31)
-	  lfs       f0, 0x140(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r31)
+		int zMinus = (int(ptcl->mPosition.z) - _18D + b) % a;
+		if (zMinus < 0)
+			zMinus += a;
+		zMinus >>= _18C;
 
-	.loc_0x71C:
-	  lwz       r0, 0xD4(r1)
-	  lfd       f31, 0xC8(r1)
-	  lfd       f30, 0xC0(r1)
-	  lfd       f29, 0xB8(r1)
-	  lfd       f28, 0xB0(r1)
-	  lfd       f27, 0xA8(r1)
-	  lfd       f26, 0xA0(r1)
-	  lfd       f25, 0x98(r1)
-	  lwz       r31, 0x94(r1)
-	  lwz       r30, 0x90(r1)
-	  lwz       r29, 0x8C(r1)
-	  addi      r1, r1, 0xD0
-	  mtlr      r0
-	  blr
-	*/
+		int xScale
+		    = ((mSolidTexFieldData[(yPlus << 5) + xPlus] & 0x7C00) >> 10) - ((mSolidTexFieldData[(yMinus << 5) + xMinus] & 0x7C00) >> 10);
+		int yScale
+		    = ((mSolidTexFieldData[(zPlus << 5) + yPlus] & 0x3E0) >> 5) - ((mSolidTexFieldData[(zMinus << 5) + yMinus] & 0x3E0) >> 5);
+		int zScale = (mSolidTexFieldData[(xPlus << 5) + zPlus] & 0x1F) - (mSolidTexFieldData[(xMinus << 5) + zMinus] & 0x1F);
+
+		ptcl->mAcceleration.x += _180.x * xScale;
+		ptcl->mAcceleration.y += _180.y * yScale;
+		ptcl->mAcceleration.z += _180.z * zScale;
+	}
+
+	if (mParticleFlags & PTCLFLAG_UseJitter) {
+		ptcl->mAcceleration.x += RandShift(mJitterStrength);
+		ptcl->mAcceleration.y += RandShift(mJitterStrength);
+		ptcl->mAcceleration.z += RandShift(mJitterStrength);
+	}
+
+	if (mParticleFlags & PTCLFLAG_Unk23) {
+		Vector3f vec;
+		ptcl->mVelocity.x = ptcl->mVelocity.y = ptcl->mVelocity.z = 0.0f;
+		f32 dot1 = _194.x * ptcl->mPosition.x + _194.y * ptcl->mPosition.y + _194.z * ptcl->mPosition.z;
+		diffX    = _194.x * dot1 - ptcl->mPosition.x;
+		diffY    = _194.y * dot1 - ptcl->mPosition.y;
+		diffZ    = _194.z * dot1 - ptcl->mPosition.z;
+
+		ptcl->mAcceleration.x += _1A0 * _194.x + _1A4 * diffX;
+		ptcl->mAcceleration.y += _1A0 * _194.y + _1A4 * diffY;
+		ptcl->mAcceleration.z += _1A0 * _194.z + _1A4 * diffZ;
+	}
+
+	if (mParticleFlags & PTCLFLAG_UseAirField) {
+		ptcl->mPosition.x += mAirFieldVelocity.x;
+		ptcl->mPosition.y += mAirFieldVelocity.y;
+		ptcl->mPosition.z += mAirFieldVelocity.z;
+	}
 }
 
 /*
@@ -3054,453 +1153,108 @@ void zen::particleGenerator::pmCalcAccel(zen::particleMdl*)
  * Address:	8019F6C8
  * Size:	000648
  */
-void zen::particleGenerator::UpdatePtclsStatus(f32)
+void zen::particleGenerator::UpdatePtclsStatus(f32 timeStep)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x110(r1)
-	  stfd      f31, 0x108(r1)
-	  stfd      f30, 0x100(r1)
-	  stfd      f29, 0xF8(r1)
-	  stfd      f28, 0xF0(r1)
-	  stfd      f27, 0xE8(r1)
-	  stfd      f26, 0xE0(r1)
-	  stfd      f25, 0xD8(r1)
-	  stfd      f24, 0xD0(r1)
-	  stfd      f23, 0xC8(r1)
-	  fmr       f23, f1
-	  stfd      f22, 0xC0(r1)
-	  stfd      f21, 0xB8(r1)
-	  stfd      f20, 0xB0(r1)
-	  stmw      r26, 0x98(r1)
-	  mr        r26, r3
-	  lfs       f24, 0xD8(r3)
-	  bl        0x7895C
-	  xoris     r0, r3, 0x8000
-	  lwz       r29, 0x28(r26)
-	  stw       r0, 0x94(r1)
-	  lis       r30, 0x4330
-	  lfd       f25, -0x4C48(r2)
-	  stw       r30, 0x90(r1)
-	  lfs       f26, -0x4C68(r2)
-	  lfd       f1, 0x90(r1)
-	  lfs       f0, 0xD4(r26)
-	  fsubs     f1, f1, f25
-	  lwz       r3, 0x8(r29)
-	  lfs       f30, -0x4C40(r2)
-	  lfd       f31, -0x4C38(r2)
-	  fdivs     f1, f1, f26
-	  lfs       f21, -0x4C70(r2)
-	  lfs       f22, -0x4C30(r2)
-	  lfd       f27, -0x4C60(r2)
-	  lfd       f28, -0x4C58(r2)
-	  fmuls     f1, f24, f1
-	  lfs       f29, -0x4C50(r2)
-	  fsubs     f24, f0, f1
-	  b         .loc_0x5F0
+	f32 dragFactor  = mDrag - Rand(mDragJitter);
+	zenList* origin = mPtclMdlListManager.getOrigin();
+	zenList* list   = mPtclMdlListManager.getTopList();
+	while (list != origin) {
+		zenList* next     = list->mNext;
+		particleMdl* ptcl = (particleMdl*)list;
 
-	.loc_0xA8:
-	  mr        r27, r3
-	  lwz       r28, 0x8(r3)
-	  lha       r3, 0x2E(r3)
-	  lha       r0, 0x2C(r27)
-	  addi      r3, r3, 0x1
-	  cmpw      r3, r0
-	  blt-      .loc_0xF8
-	  mr        r3, r27
-	  lwz       r31, 0x1D0(r26)
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x0(r31)
-	  mr        r4, r27
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x5EC
+		if (ptcl->mAge + 1 >= ptcl->mLifeTime) {
+			pmPutParticle(ptcl);
+		} else {
+			ptcl->mAcceleration.x = ptcl->mAcceleration.y = ptcl->mAcceleration.z = 0.0f;
+			if (ptcl->mAge >= mFreePtclMotionTime) {
+				pmCalcAccel(ptcl);
+			}
 
-	.loc_0xF8:
-	  stfs      f21, 0x48(r27)
-	  stfs      f21, 0x44(r27)
-	  stfs      f21, 0x40(r27)
-	  lha       r3, 0x2E(r27)
-	  lbz       r0, 0x1A8(r26)
-	  cmpw      r3, r0
-	  blt-      .loc_0x120
-	  addi      r3, r26, 0
-	  addi      r4, r27, 0
-	  bl        -0x870
+			ptcl->mVelocity.x *= dragFactor;
+			ptcl->mVelocity.y *= dragFactor;
+			ptcl->mVelocity.z *= dragFactor;
 
-	.loc_0x120:
-	  lfs       f0, 0x34(r27)
-	  fmuls     f0, f0, f24
-	  stfs      f0, 0x34(r27)
-	  lfs       f0, 0x38(r27)
-	  fmuls     f0, f0, f24
-	  stfs      f0, 0x38(r27)
-	  lfs       f0, 0x3C(r27)
-	  fmuls     f0, f0, f24
-	  stfs      f0, 0x3C(r27)
-	  lfs       f1, 0x34(r27)
-	  lfs       f0, 0x40(r27)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x34(r27)
-	  lfs       f1, 0x38(r27)
-	  lfs       f0, 0x44(r27)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x38(r27)
-	  lfs       f1, 0x3C(r27)
-	  lfs       f0, 0x48(r27)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x3C(r27)
-	  lwz       r0, 0x84(r26)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0x248
-	  lfs       f1, 0x34(r27)
-	  lfs       f0, 0x38(r27)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x3C(r27)
-	  fmuls     f0, f0, f0
-	  lfs       f3, 0xDC(r26)
-	  fmuls     f2, f2, f2
-	  fadds     f1, f1, f0
-	  fmuls     f0, f3, f3
-	  fadds     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  fmr       f2, f1
-	  ble-      .loc_0x248
-	  fcmpo     cr0, f2, f21
-	  ble-      .loc_0x20C
-	  fsqrte    f1, f2
-	  fmul      f0, f1, f1
-	  fmul      f1, f27, f1
-	  fmul      f0, f2, f0
-	  fsub      f0, f28, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f27, f1
-	  fmul      f0, f2, f0
-	  fsub      f0, f28, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f27, f1
-	  fmul      f0, f2, f0
-	  fsub      f0, f28, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f2, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x6C(r1)
-	  lfs       f2, 0x6C(r1)
+			ptcl->mVelocity.x += ptcl->mAcceleration.x;
+			ptcl->mVelocity.y += ptcl->mAcceleration.y;
+			ptcl->mVelocity.z += ptcl->mAcceleration.z;
 
-	.loc_0x20C:
-	  lfs       f0, 0xDC(r26)
-	  lfs       f1, 0x34(r27)
-	  fdivs     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x34(r27)
-	  lfs       f0, 0xDC(r26)
-	  lfs       f1, 0x38(r27)
-	  fdivs     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x38(r27)
-	  lfs       f0, 0xDC(r26)
-	  lfs       f1, 0x3C(r27)
-	  fdivs     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x3C(r27)
+			if (mParticleFlags & PTCLFLAG_ClampVel) {
+				f32 speed
+				    = ptcl->mVelocity.x * ptcl->mVelocity.x + ptcl->mVelocity.y * ptcl->mVelocity.y + ptcl->mVelocity.z * ptcl->mVelocity.z;
+				if (speed > mMaxVel * mMaxVel) {
+					f32 norm = std::sqrtf(speed);
+					ptcl->mVelocity.x *= mMaxVel / norm;
+					ptcl->mVelocity.y *= mMaxVel / norm;
+					ptcl->mVelocity.z *= mMaxVel / norm;
+				}
+			}
 
-	.loc_0x248:
-	  lfs       f1, 0xC(r27)
-	  lfs       f0, 0x34(r27)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r27)
-	  lfs       f1, 0x10(r27)
-	  lfs       f0, 0x38(r27)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x10(r27)
-	  lfs       f1, 0x14(r27)
-	  lfs       f0, 0x3C(r27)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r27)
-	  lha       r3, 0x2E(r27)
-	  lha       r0, 0x2C(r27)
-	  xoris     r3, r3, 0x8000
-	  lfs       f0, 0xE0(r26)
-	  xoris     r0, r0, 0x8000
-	  stw       r3, 0x94(r1)
-	  stw       r0, 0x8C(r1)
-	  stw       r30, 0x90(r1)
-	  stw       r30, 0x88(r1)
-	  lfd       f2, 0x90(r1)
-	  lfd       f1, 0x88(r1)
-	  fsubs     f2, f2, f25
-	  fsubs     f1, f1, f25
-	  fdivs     f3, f2, f1
-	  fcmpo     cr0, f3, f0
-	  bge-      .loc_0x2D0
-	  lfs       f0, 0x6C(r26)
-	  lfs       f1, 0xE8(r26)
-	  fmuls     f0, f3, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x50(r27)
-	  b         .loc_0x2FC
+			ptcl->mPosition.x += ptcl->mVelocity.x;
+			ptcl->mPosition.y += ptcl->mVelocity.y;
+			ptcl->mPosition.z += ptcl->mVelocity.z;
 
-	.loc_0x2D0:
-	  lfs       f0, 0xE4(r26)
-	  fcmpo     cr0, f3, f0
-	  bge-      .loc_0x2E4
-	  stfs      f29, 0x50(r27)
-	  b         .loc_0x2FC
+			f32 normalisedAge = f32(ptcl->mAge) / f32(ptcl->mLifeTime);
+			if (normalisedAge < _E0) {
+				ptcl->_50 = normalisedAge * _6C + _E8;
+			} else if (normalisedAge < _E4) {
+				ptcl->_50 = 1.0f;
+			} else {
+				ptcl->_50 = (1.0f - normalisedAge) * _70 + _EC;
+			}
 
-	.loc_0x2E4:
-	  fsubs     f1, f29, f3
-	  lfs       f0, 0x70(r26)
-	  lfs       f2, 0xEC(r26)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x50(r27)
+			if (normalisedAge < _F8) {
+				ptcl->_54 = normalisedAge * _74;
+			} else if (normalisedAge < _FC) {
+				ptcl->_54 = 1.0f;
+			} else {
+				ptcl->_54 = (1.0f - normalisedAge) * _78;
+			}
 
-	.loc_0x2FC:
-	  lfs       f0, 0xF8(r26)
-	  fcmpo     cr0, f3, f0
-	  bge-      .loc_0x318
-	  lfs       f0, 0x74(r26)
-	  fmuls     f0, f3, f0
-	  stfs      f0, 0x54(r27)
-	  b         .loc_0x33C
+			ptcl->_54 *= (1.0f - Rand(_100));
+			ptcl->_58 += ptcl->_5A;
+			ptcl->_30 += timeStep;
+			ptcl->mAge = RoundOff(ptcl->_30);
 
-	.loc_0x318:
-	  lfs       f0, 0xFC(r26)
-	  fcmpo     cr0, f3, f0
-	  bge-      .loc_0x32C
-	  stfs      f29, 0x54(r27)
-	  b         .loc_0x33C
+			if (mParticleFlags & PTCLFLAG_Unk13 && ((ptcl->mAge + 1) % _125) == 0) {
+				particleChildMdl* child = pmGetParticleChild();
+				if (child) {
+					child->mLocalOffset = ptcl->mLocalOffset;
+					child->mPosition.x  = RandShift(_11C) + ptcl->mPosition.x;
+					child->mPosition.y  = RandShift(_11C) + ptcl->mPosition.y;
+					child->mPosition.z  = RandShift(_11C) + ptcl->mPosition.z;
+					child->_24          = ptcl->_24 * ptcl->_50 * _114;
 
-	.loc_0x32C:
-	  fsubs     f1, f29, f3
-	  lfs       f0, 0x78(r26)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x54(r27)
+					if (mParticleFlags & PTCLFLAG_Unk14) {
+						child->_28.r = ptcl->_28.r;
+						child->_28.g = ptcl->_28.g;
+						child->_28.b = ptcl->_28.b;
+						child->_28.a = ptcl->_28.a;
+					} else {
+						child->_28.r = _120.r;
+						child->_28.g = _120.g;
+						child->_28.b = _120.b;
+						child->_28.a = 255;
+					}
 
-	.loc_0x33C:
-	  lfs       f20, 0x100(r26)
-	  bl        0x78668
-	  xoris     r0, r3, 0x8000
-	  lfs       f1, 0x54(r27)
-	  stw       r0, 0x8C(r1)
-	  stw       r30, 0x88(r1)
-	  lfd       f0, 0x88(r1)
-	  fsubs     f0, f0, f25
-	  fdivs     f0, f0, f26
-	  fmuls     f0, f20, f0
-	  fsubs     f0, f29, f0
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x54(r27)
-	  lhz       r3, 0x58(r27)
-	  lha       r0, 0x5A(r27)
-	  add       r0, r3, r0
-	  sth       r0, 0x58(r27)
-	  lfs       f0, 0x30(r27)
-	  fadds     f0, f0, f23
-	  stfs      f0, 0x30(r27)
-	  lfs       f0, 0x30(r27)
-	  fcmpo     cr0, f0, f21
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x3A4
-	  fadds     f0, f22, f0
-	  b         .loc_0x3A8
+					child->_28.a *= _118;
+					child->_2C = 0.0f;
+					child->_31 = 0;
+					child->_30 = _124;
+					child->_32 = RoundOff(child->_28.a / (child->_30 / timeStep));
+				}
+			}
 
-	.loc_0x3A4:
-	  fsubs     f0, f0, f22
+			ptcl->_6C.update(timeStep, &ptcl->_28, &ptcl->_68);
 
-	.loc_0x3A8:
-	  fctiwz    f0, f0
-	  stfd      f0, 0x88(r1)
-	  lwz       r0, 0x8C(r1)
-	  extsh     r0, r0
-	  sth       r0, 0x2E(r27)
-	  lwz       r0, 0x84(r26)
-	  rlwinm.   r0,r0,0,18,18
-	  beq-      .loc_0x5B4
-	  lha       r4, 0x2E(r27)
-	  lbz       r3, 0x125(r26)
-	  addi      r4, r4, 0x1
-	  divw      r0, r4, r3
-	  mullw     r0, r0, r3
-	  sub.      r0, r4, r0
-	  bne-      .loc_0x5B4
-	  mr        r3, r26
-	  bl        0x1400
-	  mr.       r31, r3
-	  beq-      .loc_0x5B4
-	  lwz       r3, 0x18(r27)
-	  lwz       r0, 0x1C(r27)
-	  stw       r3, 0x18(r31)
-	  stw       r0, 0x1C(r31)
-	  lwz       r0, 0x20(r27)
-	  stw       r0, 0x20(r31)
-	  lfs       f20, 0x11C(r26)
-	  bl        0x78598
-	  xoris     r0, r3, 0x8000
-	  fmuls     f0, f30, f20
-	  stw       r0, 0x8C(r1)
-	  lfs       f1, 0xC(r27)
-	  stw       r30, 0x88(r1)
-	  lfd       f2, 0x88(r1)
-	  fsubs     f2, f2, f25
-	  fdivs     f2, f2, f26
-	  fmuls     f0, f0, f2
-	  fsubs     f0, f0, f20
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r31)
-	  lfs       f20, 0x11C(r26)
-	  bl        0x78560
-	  xoris     r0, r3, 0x8000
-	  fmuls     f0, f30, f20
-	  stw       r0, 0x94(r1)
-	  lfs       f1, 0x10(r27)
-	  stw       r30, 0x90(r1)
-	  lfd       f2, 0x90(r1)
-	  fsubs     f2, f2, f25
-	  fdivs     f2, f2, f26
-	  fmuls     f0, f0, f2
-	  fsubs     f0, f0, f20
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x10(r31)
-	  lfs       f20, 0x11C(r26)
-	  bl        0x78528
-	  xoris     r0, r3, 0x8000
-	  fmuls     f0, f30, f20
-	  stw       r0, 0x84(r1)
-	  lfs       f1, 0x14(r27)
-	  stw       r30, 0x80(r1)
-	  lfd       f2, 0x80(r1)
-	  fsubs     f2, f2, f25
-	  fdivs     f2, f2, f26
-	  fmuls     f0, f0, f2
-	  fsubs     f0, f0, f20
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r31)
-	  lfs       f1, 0x24(r27)
-	  lfs       f0, 0x50(r27)
-	  lfs       f2, 0x114(r26)
-	  fmuls     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x24(r31)
-	  lwz       r0, 0x84(r26)
-	  rlwinm.   r0,r0,0,17,17
-	  beq-      .loc_0x4FC
-	  lbz       r0, 0x28(r27)
-	  stb       r0, 0x28(r31)
-	  lbz       r0, 0x29(r27)
-	  stb       r0, 0x29(r31)
-	  lbz       r0, 0x2A(r27)
-	  stb       r0, 0x2A(r31)
-	  lbz       r0, 0x2B(r27)
-	  stb       r0, 0x2B(r31)
-	  b         .loc_0x51C
+			if (mCallBack2) {
+				mCallBack2->invoke(this, ptcl);
+			}
+		}
 
-	.loc_0x4FC:
-	  lbz       r3, 0x120(r26)
-	  li        r0, 0xFF
-	  stb       r3, 0x28(r31)
-	  lbz       r3, 0x121(r26)
-	  stb       r3, 0x29(r31)
-	  lbz       r3, 0x122(r26)
-	  stb       r3, 0x2A(r31)
-	  stb       r0, 0x2B(r31)
+		list = next;
+	}
 
-	.loc_0x51C:
-	  lbz       r3, 0x2B(r31)
-	  li        r0, 0
-	  lfs       f0, 0x118(r26)
-	  stw       r3, 0x84(r1)
-	  stw       r30, 0x80(r1)
-	  lfd       f1, 0x80(r1)
-	  fsubs     f1, f1, f31
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x88(r1)
-	  lwz       r3, 0x8C(r1)
-	  stb       r3, 0x2B(r31)
-	  stfs      f21, 0x2C(r31)
-	  stb       r0, 0x31(r31)
-	  lbz       r0, 0x124(r26)
-	  stb       r0, 0x30(r31)
-	  lbz       r0, 0x30(r31)
-	  lbz       r3, 0x2B(r31)
-	  stw       r0, 0x7C(r1)
-	  stw       r30, 0x78(r1)
-	  lfd       f0, 0x78(r1)
-	  stw       r3, 0x94(r1)
-	  fsubs     f0, f0, f31
-	  stw       r30, 0x90(r1)
-	  fdivs     f0, f0, f23
-	  lfd       f1, 0x90(r1)
-	  fsubs     f1, f1, f31
-	  fdivs     f0, f1, f0
-	  fcmpo     cr0, f0, f21
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x5A0
-	  fadds     f0, f22, f0
-	  b         .loc_0x5A4
-
-	.loc_0x5A0:
-	  fsubs     f0, f0, f22
-
-	.loc_0x5A4:
-	  fctiwz    f0, f0
-	  stfd      f0, 0x78(r1)
-	  lwz       r0, 0x7C(r1)
-	  stb       r0, 0x32(r31)
-
-	.loc_0x5B4:
-	  fmr       f1, f23
-	  addi      r3, r27, 0x6C
-	  addi      r4, r27, 0x28
-	  addi      r5, r27, 0x68
-	  bl        0x2220
-	  lwz       r3, 0x1D8(r26)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x5EC
-	  lwz       r12, 0x0(r3)
-	  addi      r4, r26, 0
-	  addi      r5, r27, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x5EC:
-	  mr        r3, r28
-
-	.loc_0x5F0:
-	  cmplw     r3, r29
-	  bne+      .loc_0xA8
-	  mr        r3, r26
-	  fmr       f1, f23
-	  bl        0xCDC
-	  lmw       r26, 0x98(r1)
-	  lwz       r0, 0x114(r1)
-	  lfd       f31, 0x108(r1)
-	  lfd       f30, 0x100(r1)
-	  lfd       f29, 0xF8(r1)
-	  lfd       f28, 0xF0(r1)
-	  lfd       f27, 0xE8(r1)
-	  lfd       f26, 0xE0(r1)
-	  lfd       f25, 0xD8(r1)
-	  lfd       f24, 0xD0(r1)
-	  lfd       f23, 0xC8(r1)
-	  lfd       f22, 0xC0(r1)
-	  lfd       f21, 0xB8(r1)
-	  lfd       f20, 0xB0(r1)
-	  addi      r1, r1, 0x110
-	  mtlr      r0
-	  blr
-	*/
+	updatePtclChildren(timeStep);
 }
 
 /*
@@ -3508,124 +1262,58 @@ void zen::particleGenerator::UpdatePtclsStatus(f32)
  * Address:	8019FD10
  * Size:	0001C4
  */
-void zen::particleGenerator::ClearPtclsStatus(Texture*, Texture*)
+void zen::particleGenerator::ClearPtclsStatus(Texture* tex, Texture* childTex)
 {
-	/*
-	.loc_0x0:
-	  stw       r4, 0x58(r3)
-	  li        r7, 0
-	  li        r6, 0x5
-	  stw       r5, 0x5C(r3)
-	  li        r4, 0x32
-	  li        r0, 0xFF
-	  stw       r7, 0x18(r3)
-	  lfs       f0, 0x10E8(r13)
-	  stfs      f0, 0x1C(r3)
-	  lfs       f0, 0x10EC(r13)
-	  stfs      f0, 0x20(r3)
-	  lfs       f0, 0x10F0(r13)
-	  stfs      f0, 0x24(r3)
-	  stw       r7, 0x80(r3)
-	  stw       r6, 0x84(r3)
-	  lfs       f2, -0x4C70(r2)
-	  stfs      f2, 0xC8(r3)
-	  stfs      f2, 0xC4(r3)
-	  stfs      f2, 0xC0(r3)
-	  stfs      f2, 0xBC(r3)
-	  stfs      f2, 0xB4(r3)
-	  stfs      f2, 0xB0(r3)
-	  stfs      f2, 0xAC(r3)
-	  stfs      f2, 0xA8(r3)
-	  stfs      f2, 0xA0(r3)
-	  stfs      f2, 0x9C(r3)
-	  stfs      f2, 0x98(r3)
-	  stfs      f2, 0x94(r3)
-	  lfs       f1, -0x4C50(r2)
-	  stfs      f1, 0xA4(r3)
-	  lfs       f0, -0x4C40(r2)
-	  stfs      f0, 0xB8(r3)
-	  lfs       f0, -0x4C2C(r2)
-	  stfs      f0, 0xCC(r3)
-	  stfs      f2, 0xDC(r3)
-	  stfs      f2, 0xD8(r3)
-	  stfs      f2, 0xD0(r3)
-	  lfs       f0, -0x4C28(r2)
-	  stfs      f0, 0xD4(r3)
-	  stfs      f2, 0x100(r3)
-	  stfs      f2, 0xF8(r3)
-	  stfs      f2, 0x10C(r3)
-	  stfs      f2, 0xF4(r3)
-	  stfs      f2, 0xEC(r3)
-	  stfs      f2, 0xE8(r3)
-	  stfs      f2, 0xE0(r3)
-	  sth       r7, 0x108(r3)
-	  sth       r7, 0x106(r3)
-	  sth       r7, 0x104(r3)
-	  sth       r4, 0x110(r3)
-	  stb       r7, 0x112(r3)
-	  stfs      f1, 0xFC(r3)
-	  stfs      f1, 0xE4(r3)
-	  stfs      f1, 0xF0(r3)
-	  stfs      f1, 0x114(r3)
-	  stfs      f1, 0x118(r3)
-	  stfs      f2, 0x11C(r3)
-	  stb       r6, 0x125(r3)
-	  stb       r6, 0x124(r3)
-	  stb       r7, 0x120(r3)
-	  stb       r7, 0x121(r3)
-	  stb       r7, 0x122(r3)
-	  stb       r0, 0x123(r3)
-	  stfs      f2, 0x1A4(r3)
-	  stfs      f2, 0x1A0(r3)
-	  stfs      f2, 0x19C(r3)
-	  stfs      f2, 0x194(r3)
-	  stfs      f2, 0x190(r3)
-	  stfs      f2, 0x188(r3)
-	  stfs      f2, 0x184(r3)
-	  stfs      f2, 0x180(r3)
-	  stfs      f2, 0x17C(r3)
-	  stfs      f2, 0x178(r3)
-	  stfs      f2, 0x174(r3)
-	  stfs      f2, 0x170(r3)
-	  stfs      f2, 0x16C(r3)
-	  stfs      f2, 0x168(r3)
-	  stfs      f2, 0x164(r3)
-	  stfs      f2, 0x160(r3)
-	  stfs      f2, 0x158(r3)
-	  stfs      f2, 0x154(r3)
-	  stfs      f2, 0x150(r3)
-	  stfs      f2, 0x14C(r3)
-	  stfs      f2, 0x144(r3)
-	  stfs      f2, 0x140(r3)
-	  stfs      f2, 0x13C(r3)
-	  stfs      f2, 0x138(r3)
-	  stfs      f2, 0x134(r3)
-	  stfs      f2, 0x130(r3)
-	  stfs      f2, 0x12C(r3)
-	  stfs      f1, 0x15C(r3)
-	  li        r0, 0x50
-	  stfs      f1, 0x198(r3)
-	  stfs      f1, 0x148(r3)
-	  stb       r7, 0x1A8(r3)
-	  stb       r7, 0x18D(r3)
-	  stb       r7, 0x18E(r3)
-	  stb       r7, 0x18C(r3)
-	  sth       r0, 0x1C8(r3)
-	  stb       r7, 0x1CA(r3)
-	  stfs      f2, 0x88(r3)
-	  stfs      f2, 0x8C(r3)
-	  sth       r7, 0x90(r3)
-	  stb       r7, 0x92(r3)
-	  stb       r7, 0x1CC(r3)
-	  stb       r7, 0x1CB(r3)
-	  lfs       f0, 0x10F4(r13)
-	  stfs      f0, 0x1DC(r3)
-	  lfs       f0, 0x10F8(r13)
-	  stfs      f0, 0x1E0(r3)
-	  lfs       f0, 0x10FC(r13)
-	  stfs      f0, 0x1E4(r3)
-	  blr
-	*/
+	mTexture      = tex;
+	mChildTexture = childTex;
+	mEmitPosPtr   = nullptr;
+	mEmitVelocity.set(0.0f, 0.0f, 0.0f);
+
+	mControlFlags  = 0;
+	mParticleFlags = PTCLFLAG_Unk0 | PTCLFLAG_Unk2;
+
+	_BC = _C0 = _C4 = _C8 = 0.0f;
+	_AC.x = _AC.y = _AC.z = 0.0f;
+	mEmitDir.x = mEmitDir.z = 0.0f;
+	mEmitPosOffset.x = mEmitPosOffset.y = mEmitPosOffset.z = 0.0f;
+
+	mEmitDir.y = 1.0f;
+
+	_B8      = 2.0f;
+	mInitVel = 3.0f;
+	_D0 = mDragJitter = mMaxVel = 0.0f;
+	mDrag                       = 0.99f;
+	_E0 = _E8 = _EC = _F4 = _10C = _F8 = _100 = 0.0f;
+	_104 = _106 = _108 = 0;
+	_110               = 50;
+	_112               = 0;
+	_E4 = _FC  = 1.0f;
+	mScaleSize = 1.0f;
+	_114       = 1.0f;
+	_118       = 1.0f;
+	_11C       = 0.0f;
+	_125       = 5;
+	_124       = 5;
+	_120.set(0, 0, 0, 255);
+
+	// this is necessary for load ordering to work. blame Yamashita, not me.
+	mGravFieldAccel.x = mGravFieldAccel.y = mGravFieldAccel.z = mAirFieldVelocity.x = mAirFieldVelocity.y = mAirFieldVelocity.z
+	    = mVortexCenter.x = mVortexCenter.z = mVortexRotationSpeed = mVortexStrength = _158 = mDampedNewtonFieldDir.x
+	    = mDampedNewtonFieldDir.y = mDampedNewtonFieldDir.z = mDampedNewtonFieldStrength = mNewtonFieldDir.x = mNewtonFieldDir.y
+	    = mNewtonFieldDir.z = mNewtonFieldStrength = _180.x = _180.y = _180.z = mJitterStrength = _194.x = _194.z = _1A0 = _1A4 = 0.0f;
+	_15C                                                                                                                        = 1.0f;
+	_194.y                                                                                                                      = 1.0f;
+	mVortexCenter.y                                                                                                             = 1.0f;
+	_18C = mSolidFieldType = _18D = mFreePtclMotionTime = 0;
+	mMaxFrame                                           = 80;
+	mMaxPasses                                          = 0;
+	_88                                                 = 0.0f;
+	mPassTimer                                          = 0.0f;
+
+	mCurrentFrame = 0;
+	mCurrentPass  = 0;
+	_1CB = _1CC = 0;
+	mOrientedNormalVector.set(0.0f, 1.0f, 0.0f);
 }
 
 /*
@@ -3633,140 +1321,26 @@ void zen::particleGenerator::ClearPtclsStatus(Texture*, Texture*)
  * Address:	8019FED4
  * Size:	0001DC
  */
-void zen::particleGenerator::drawPtclBillboard(Graphics&)
+void zen::particleGenerator::drawPtclBillboard(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stfd      f31, 0x78(r1)
-	  stfd      f30, 0x70(r1)
-	  stfd      f29, 0x68(r1)
-	  stfd      f28, 0x60(r1)
-	  stmw      r26, 0x48(r1)
-	  addi      r26, r4, 0
-	  addi      r27, r3, 0
-	  mr        r3, r26
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r4, 0x2E4(r4)
-	  lwz       r12, 0x74(r12)
-	  addi      r4, r4, 0x1E0
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x6
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0x3
-	  li        r7, 0xFF
-	  bl        0x737C0
-	  mr        r3, r26
-	  lbz       r4, 0x1CB(r27)
-	  lwz       r12, 0x3B4(r26)
-	  lbz       r5, 0x1CC(r27)
-	  lwz       r12, 0x54(r12)
-	  lbz       r6, 0x48(r27)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r26
-	  lwz       r12, 0x3B4(r26)
-	  li        r4, 0
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x1B8
-	  lwz       r29, 0x28(r27)
-	  addi      r30, r1, 0x2C
-	  lfd       f31, -0x4C38(r2)
-	  lis       r31, 0x4330
-	  lwz       r28, 0x8(r29)
-	  lfs       f28, -0x4C70(r2)
-	  lfs       f29, -0x4C30(r2)
-	  lfs       f30, -0x4C24(r2)
-	  b         .loc_0x1B0
+	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
+	GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_LEQUAL, 255);
+	gfx.setBlendMode(_1CB, _1CC, mAnimData._00);
 
-	.loc_0xC4:
-	  lbz       r0, 0x2B(r28)
-	  lfs       f0, 0x54(r28)
-	  stw       r0, 0x44(r1)
-	  lwz       r27, 0x8(r28)
-	  stw       r31, 0x40(r1)
-	  lfd       f1, 0x40(r1)
-	  fsubs     f1, f1, f31
-	  fmuls     f0, f1, f0
-	  fcmpo     cr0, f0, f28
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xF8
-	  fadds     f0, f29, f0
-	  b         .loc_0xFC
+	if (gfx.initParticle(false)) {
+		zenList* origin = mPtclMdlListManager.getOrigin();
+		zenList* list   = mPtclMdlListManager.getTopList();
+		while (list != origin) {
+			zenList* next     = list->mNext;
+			particleMdl* ptcl = (particleMdl*)list;
 
-	.loc_0xF8:
-	  fsubs     f0, f0, f29
+			Colour col(ptcl->_28.r, ptcl->_28.g, ptcl->_28.b, RoundOff(ptcl->_28.a * ptcl->_54));
+			gfx.setPrimEnv(&col, &ptcl->_68);
+			gfx.drawRotParticle(*gfx.mCamera, ptcl->mPosition + ptcl->mLocalOffset, -ptcl->_58, ptcl->_24 * ptcl->_50 * 25.0f);
 
-	.loc_0xFC:
-	  lbz       r7, 0x2A(r28)
-	  fctiwz    f0, f0
-	  lbz       r6, 0x29(r28)
-	  mr        r3, r26
-	  lbz       r0, 0x28(r28)
-	  stfd      f0, 0x40(r1)
-	  addi      r4, r1, 0x38
-	  stb       r0, 0x38(r1)
-	  addi      r5, r28, 0x68
-	  lwz       r0, 0x44(r1)
-	  stb       r6, 0x39(r1)
-	  stb       r7, 0x3A(r1)
-	  stb       r0, 0x3B(r1)
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r12, 0xB0(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, 0xC(r28)
-	  mr        r3, r26
-	  lfs       f0, 0x18(r28)
-	  mr        r5, r30
-	  lfs       f4, 0x14(r28)
-	  lfs       f3, 0x20(r28)
-	  fadds     f0, f1, f0
-	  lfs       f2, 0x10(r28)
-	  lfs       f1, 0x1C(r28)
-	  fadds     f3, f4, f3
-	  stfs      f0, 0x24(r1)
-	  fadds     f1, f2, f1
-	  lfs       f0, 0x24(r1)
-	  stfs      f0, 0x2C(r1)
-	  stfs      f1, 0x30(r1)
-	  stfs      f3, 0x34(r1)
-	  lwz       r12, 0x3B4(r26)
-	  lfs       f1, 0x24(r28)
-	  lfs       f0, 0x50(r28)
-	  lwz       r12, 0x90(r12)
-	  fmuls     f0, f1, f0
-	  lhz       r0, 0x58(r28)
-	  mtlr      r12
-	  lwz       r4, 0x2E4(r26)
-	  neg       r6, r0
-	  fmuls     f1, f30, f0
-	  blrl
-	  mr        r28, r27
-
-	.loc_0x1B0:
-	  cmplw     r28, r29
-	  bne+      .loc_0xC4
-
-	.loc_0x1B8:
-	  lmw       r26, 0x48(r1)
-	  lwz       r0, 0x84(r1)
-	  lfd       f31, 0x78(r1)
-	  lfd       f30, 0x70(r1)
-	  lfd       f29, 0x68(r1)
-	  lfd       f28, 0x60(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+			list = next;
+		}
+	}
 }
 
 /*
@@ -3774,8 +1348,150 @@ void zen::particleGenerator::drawPtclBillboard(Graphics&)
  * Address:	801A00B0
  * Size:	0006A8
  */
-void zen::particleGenerator::drawPtclOriented(Graphics&)
+void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 {
+	gfx.setBlendMode(_1CB, _1CC, mAnimData._00);
+	GXSetCullMode(GX_CULL_NONE);
+	GXClearVtxDesc();
+	GXSetVtxDesc(GX_VA_PNMTXIDX, GX_DIRECT);
+	GXSetVtxDesc(GX_VA_POS, GX_INDEX8);
+	GXSetVtxDesc(GX_VA_TEX0, GX_INDEX8);
+
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_S16, 0);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_U8, 0);
+
+	GXSetArray(GX_VA_POS, lpsPos, 6);
+	GXSetArray(GX_VA_TEX0, lpsCoord, 2);
+
+	GXSetNumChans(0);
+	GXSetNumTexGens(1);
+	GXSetNumTevStages(1);
+	GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
+	GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+	Vector3f vec1;
+	u32 badCompiler1[3];
+	Matrix4f mtx1; // 0x104
+	Mtx mtx2;      // 0xD4
+	Mtx mtx3;      // 0xA4
+	Vector3f vec2;
+	u32 badCompiler[3];
+	Vector3f vec3;
+	mtx3[2][3]      = 0.0f;
+	mtx3[0][3]      = 0.0f;
+	mtx3[1][3]      = 25.0f * _64;
+	zenList* origin = mPtclMdlListManager.getOrigin();
+	zenList* list   = mPtclMdlListManager.getTopList();
+	zenList* next;
+	for (list; list != origin; list = next) {
+		next              = list->mNext;
+		particleMdl* ptcl = (particleMdl*)list;
+
+		f32 cosVal;
+		f32 sinVal;
+		Colour col(ptcl->_28.r, ptcl->_28.g, ptcl->_28.b, RoundOff(ptcl->_28.a * ptcl->_54));
+		gfx.setPrimEnv(&col, &ptcl->_68);
+
+		PSMTXIdentity(mtx2);
+
+		f32 a  = ptcl->_24 * ptcl->_50;
+		cosVal = costable[ptcl->_58 & 0x3FFC];
+		sinVal = sintable[ptcl->_58 & 0x3FFC];
+		(this->*mRotAxisCallBack)(mtx3, sinVal, cosVal);
+
+		MTXTrans(mtx1.mMtx, ptcl->mPosition.x + ptcl->mLocalOffset.x, ptcl->mPosition.y + ptcl->mLocalOffset.y,
+		         ptcl->mPosition.z + ptcl->mLocalOffset.z);
+
+		PSMTXConcat(gfx.mCamera->mLookAtMtx.mMtx, mtx1.mMtx, mtx1.mMtx);
+
+		Vector3f* vec;
+		switch (_68.m0) {
+		case 0:
+			vec = &ptcl->mVelocity;
+			break;
+		case 1:
+			vec = &ptcl->mPosition;
+			break;
+		}
+
+		vec1.x = vec->x;
+		vec1.y = vec->y;
+		vec1.z = vec->z;
+
+		f32 len = vec1.x * vec1.x + vec1.y * vec1.y + vec1.z * vec1.z;
+		if (len != 0.0f) {
+			f32 v = a * _60; // f27
+			vec1.normalize();
+
+			vec2.cross(vec1, ptcl->_5C);
+
+			len = vec2.x * vec2.x + vec2.y * vec2.y + vec2.z * vec2.z;
+			if (len != 0.0f) {
+				vec2.normalize();
+
+				if (_68.m2) {
+					vec3 = ptcl->_5C;
+					vec1.cross(vec3, vec2);
+					vec1.normalize();
+				} else {
+					vec3.cross(vec2, vec1);
+					vec3.normalize();
+				}
+
+				mtx2[0][0] = vec2.x * a;
+				mtx2[1][0] = vec2.y * a;
+				mtx2[2][0] = vec2.z * a;
+
+				mtx2[0][1] = vec1.x * v;
+				mtx2[1][1] = vec1.y * v;
+				mtx2[2][1] = vec1.z * v;
+
+				mtx2[0][2] = vec3.x * a;
+				mtx2[1][2] = vec3.y * a;
+				mtx2[2][2] = vec3.z * a;
+
+				ptcl->_5C = vec3;
+			} else {
+				ptcl->_30  = ptcl->mLifeTime;
+				ptcl->mAge = ptcl->mLifeTime;
+				continue;
+			}
+		} else {
+			ptcl->_30  = ptcl->mLifeTime;
+			ptcl->mAge = ptcl->mLifeTime;
+			continue;
+		}
+
+		PSMTXConcat(mtx2, mtx3, mtx2);
+		PSMTXConcat(mtx1.mMtx, mtx2, mtx1.mMtx);
+
+		GXLoadPosMtxImm(mtx1.mMtx, 0);
+
+		if (_68.m1) {
+			GXBegin(GX_QUADS, GX_VTXFMT0, 8);
+			GXTexCoord2u8(0, 0);
+			GXTexCoord2u8(0, 0);
+			GXTexCoord2u8(1, 1);
+			GXTexCoord2u8(0, 2);
+			GXTexCoord2u8(2, 0);
+			GXTexCoord2u8(3, 3);
+			GXTexCoord2u8(0, 4);
+			GXTexCoord2u8(0, 0);
+			GXTexCoord2u8(5, 1);
+			GXTexCoord2u8(0, 6);
+			GXTexCoord2u8(2, 0);
+			GXTexCoord2u8(7, 3);
+		} else {
+			GXBegin(GX_QUADS, GX_VTXFMT0, 4);
+			GXTexCoord2u8(0, 0);
+			GXTexCoord2u8(0, 0);
+			GXTexCoord2u8(1, 1);
+			GXTexCoord2u8(0, 2);
+			GXTexCoord2u8(2, 0);
+			GXTexCoord2u8(3, 3);
+		}
+	}
+
+	u32 badCompiler2[5];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4244,26 +1960,15 @@ void zen::particleGenerator::drawPtclOriented(Graphics&)
  * Address:	801A0758
  * Size:	00003C
  */
-void zen::particleGenerator::RotAxisX(Mtx&, f32&, f32&)
+void zen::particleGenerator::RotAxisX(Mtx& mtx, f32& p2, f32& p3)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r6)
-	  stfs      f0, 0x28(r4)
-	  stfs      f0, 0x14(r4)
-	  lfs       f1, 0x0(r5)
-	  fneg      f0, f1
-	  stfs      f1, 0x24(r4)
-	  stfs      f0, 0x18(r4)
-	  lfs       f0, -0x4C70(r2)
-	  stfs      f0, 0x20(r4)
-	  stfs      f0, 0x8(r4)
-	  stfs      f0, 0x10(r4)
-	  stfs      f0, 0x4(r4)
-	  lfs       f0, -0x4C50(r2)
-	  stfs      f0, 0x0(r4)
-	  blr
-	*/
+	mtx[1][1] = mtx[2][2] = p3;
+	f32 tmp               = p2;
+	mtx[2][1]             = tmp;
+	mtx[1][2]             = -tmp;
+
+	mtx[0][1] = mtx[1][0] = mtx[0][2] = mtx[2][0] = 0.0f;
+	mtx[0][0]                                     = 1.0f;
 }
 
 /*
@@ -4271,26 +1976,15 @@ void zen::particleGenerator::RotAxisX(Mtx&, f32&, f32&)
  * Address:	801A0794
  * Size:	00003C
  */
-void zen::particleGenerator::RotAxisY(Mtx&, f32&, f32&)
+void zen::particleGenerator::RotAxisY(Mtx& mtx, f32& p2, f32& p3)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r6)
-	  stfs      f0, 0x28(r4)
-	  stfs      f0, 0x0(r4)
-	  lfs       f1, 0x0(r5)
-	  fneg      f0, f1
-	  stfs      f1, 0x8(r4)
-	  stfs      f0, 0x20(r4)
-	  lfs       f0, -0x4C70(r2)
-	  stfs      f0, 0x24(r4)
-	  stfs      f0, 0x18(r4)
-	  stfs      f0, 0x10(r4)
-	  stfs      f0, 0x4(r4)
-	  lfs       f0, -0x4C50(r2)
-	  stfs      f0, 0x14(r4)
-	  blr
-	*/
+	mtx[0][0] = mtx[2][2] = p3;
+	f32 tmp               = p2;
+	mtx[0][2]             = tmp;
+	mtx[2][0]             = -tmp;
+
+	mtx[0][1] = mtx[1][0] = mtx[1][2] = mtx[2][1] = 0.0f;
+	mtx[1][1]                                     = 1.0f;
 }
 
 /*
@@ -4298,26 +1992,15 @@ void zen::particleGenerator::RotAxisY(Mtx&, f32&, f32&)
  * Address:	801A07D0
  * Size:	00003C
  */
-void zen::particleGenerator::RotAxisZ(Mtx&, f32&, f32&)
+void zen::particleGenerator::RotAxisZ(Mtx& mtx, f32& p2, f32& p3)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r6)
-	  stfs      f0, 0x14(r4)
-	  stfs      f0, 0x0(r4)
-	  lfs       f1, 0x0(r5)
-	  fneg      f0, f1
-	  stfs      f1, 0x4(r4)
-	  stfs      f0, 0x10(r4)
-	  lfs       f0, -0x4C70(r2)
-	  stfs      f0, 0x18(r4)
-	  stfs      f0, 0x24(r4)
-	  stfs      f0, 0x20(r4)
-	  stfs      f0, 0x8(r4)
-	  lfs       f0, -0x4C50(r2)
-	  stfs      f0, 0x28(r4)
-	  blr
-	*/
+	mtx[0][0] = mtx[1][1] = p3;
+	f32 tmp               = p2;
+	mtx[0][1]             = tmp;
+	mtx[1][0]             = -tmp;
+
+	mtx[0][2] = mtx[2][0] = mtx[2][1] = mtx[1][2] = 0.0f;
+	mtx[2][2]                                     = 1.0f;
 }
 
 /*
@@ -4325,32 +2008,16 @@ void zen::particleGenerator::RotAxisZ(Mtx&, f32&, f32&)
  * Address:	801A080C
  * Size:	000054
  */
-void zen::particleGenerator::RotAxisXY(Mtx&, f32&, f32&)
+void zen::particleGenerator::RotAxisXY(Mtx& mtx, f32& p2, f32& p3)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r6)
-	  stfs      f0, 0x14(r4)
-	  stfs      f0, 0x0(r4)
-	  lfs       f0, 0x0(r5)
-	  stfs      f0, 0x18(r4)
-	  stfs      f0, 0x20(r4)
-	  lfs       f1, 0x0(r5)
-	  lfs       f0, 0x0(r6)
-	  fneg      f1, f1
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x8(r4)
-	  stfs      f0, 0x24(r4)
-	  lfs       f0, 0x0(r5)
-	  fmuls     f0, f0, f0
-	  stfs      f0, 0x4(r4)
-	  lfs       f0, 0x0(r6)
-	  fmuls     f0, f0, f0
-	  stfs      f0, 0x28(r4)
-	  lfs       f0, -0x4C70(r2)
-	  stfs      f0, 0x10(r4)
-	  blr
-	*/
+	mtx[0][0] = mtx[1][1] = p3;
+	mtx[2][0] = mtx[1][2] = p2;
+
+	mtx[2][1] = mtx[0][2] = -p2 * p3;
+	mtx[0][1]             = p2 * p2;
+	mtx[2][2]             = p3 * p3;
+
+	mtx[1][0] = 0.0f;
 }
 
 /*
@@ -4358,34 +2025,22 @@ void zen::particleGenerator::RotAxisXY(Mtx&, f32&, f32&)
  * Address:	801A0860
  * Size:	00005C
  */
-void zen::particleGenerator::RotAxisXZ(Mtx&, f32&, f32&)
+void zen::particleGenerator::RotAxisXZ(Mtx& mtx, f32& p2, f32& p3)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r6)
-	  stfs      f0, 0x28(r4)
-	  stfs      f0, 0x0(r4)
-	  lfs       f1, 0x0(r5)
-	  fneg      f0, f1
-	  stfs      f1, 0x10(r4)
-	  stfs      f0, 0x24(r4)
-	  lfs       f1, 0x0(r5)
-	  lfs       f0, 0x0(r6)
-	  fmuls     f1, f1, f0
-	  fneg      f0, f1
-	  stfs      f1, 0x18(r4)
-	  stfs      f0, 0x4(r4)
-	  lfs       f1, 0x0(r5)
-	  fneg      f0, f1
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x8(r4)
-	  lfs       f0, 0x0(r6)
-	  fmuls     f0, f0, f0
-	  stfs      f0, 0x14(r4)
-	  lfs       f0, -0x4C70(r2)
-	  stfs      f0, 0x20(r4)
-	  blr
-	*/
+	mtx[0][0] = mtx[2][2] = p3;
+	f32 tmp               = p2;
+	mtx[1][0]             = tmp;
+	mtx[2][1]             = -tmp;
+
+	f32 tmp2  = p2 * p3;
+	mtx[1][2] = tmp2;
+	mtx[0][1] = -tmp2;
+
+	f32 tmp3  = p2;
+	mtx[0][2] = -tmp3 * p2;
+	mtx[1][1] = p3 * p3;
+
+	mtx[2][0] = 0.0f;
 }
 
 /*
@@ -4393,34 +2048,22 @@ void zen::particleGenerator::RotAxisXZ(Mtx&, f32&, f32&)
  * Address:	801A08BC
  * Size:	00005C
  */
-void zen::particleGenerator::RotAxisYZ(Mtx&, f32&, f32&)
+void zen::particleGenerator::RotAxisYZ(Mtx& mtx, f32& p2, f32& p3)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r6)
-	  stfs      f0, 0x28(r4)
-	  stfs      f0, 0x14(r4)
-	  lfs       f1, 0x0(r5)
-	  fneg      f0, f1
-	  stfs      f1, 0x20(r4)
-	  stfs      f0, 0x4(r4)
-	  lfs       f1, 0x0(r5)
-	  lfs       f0, 0x0(r6)
-	  fmuls     f1, f1, f0
-	  fneg      f0, f1
-	  stfs      f1, 0x10(r4)
-	  stfs      f0, 0x8(r4)
-	  lfs       f1, 0x0(r5)
-	  fneg      f0, f1
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x18(r4)
-	  lfs       f0, 0x0(r6)
-	  fmuls     f0, f0, f0
-	  stfs      f0, 0x0(r4)
-	  lfs       f0, -0x4C70(r2)
-	  stfs      f0, 0x24(r4)
-	  blr
-	*/
+	mtx[1][1] = mtx[2][2] = p3;
+	f32 tmp               = p2;
+	mtx[2][0]             = tmp;
+	mtx[0][1]             = -tmp;
+
+	f32 tmp2  = p2 * p3;
+	mtx[1][0] = tmp2;
+	mtx[0][2] = -tmp2;
+
+	f32 tmp3  = p2;
+	mtx[1][2] = -tmp3 * p2;
+	mtx[0][0] = p3 * p3;
+
+	mtx[2][1] = 0.0f;
 }
 
 /*
@@ -4428,46 +2071,14 @@ void zen::particleGenerator::RotAxisYZ(Mtx&, f32&, f32&)
  * Address:	801A0918
  * Size:	00008C
  */
-void zen::particleGenerator::RotAxisXYZ(Mtx&, f32&, f32&)
+void zen::particleGenerator::RotAxisXYZ(Mtx& mtx, f32& p2, f32& p3)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r6)
-	  fmuls     f0, f0, f0
-	  stfs      f0, 0x28(r4)
-	  stfs      f0, 0x0(r4)
-	  lfs       f1, 0x0(r6)
-	  lfs       f0, 0x0(r5)
-	  fneg      f1, f1
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x18(r4)
-	  stfs      f0, 0x4(r4)
-	  lfs       f2, 0x0(r5)
-	  lfs       f1, -0x4C50(r2)
-	  lfs       f0, 0x0(r6)
-	  fsubs     f1, f1, f2
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x24(r4)
-	  stfs      f0, 0x10(r4)
-	  lfs       f0, 0x0(r5)
-	  fneg      f0, f0
-	  stfs      f0, 0x8(r4)
-	  lfs       f2, 0x0(r5)
-	  lfs       f1, 0x0(r6)
-	  fmuls     f0, f2, f2
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r4)
-	  lfs       f0, 0x0(r6)
-	  lfs       f1, 0x0(r5)
-	  fmuls     f0, f0, f0
-	  fadds     f0, f1, f0
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x20(r4)
-	  blr
-	*/
+	mtx[0][0] = mtx[2][2] = p3 * p3;
+	mtx[0][1] = mtx[1][2] = -p3 * p2;
+	mtx[1][0] = mtx[2][1] = (1.0f - p2) * (p3 * p2);
+	mtx[0][2]             = -p2;
+	mtx[1][1]             = p3 * p3 + p2 * p2 * p2;
+	mtx[2][0]             = p2 * (p2 + p3 * p3);
 }
 
 /*
@@ -4475,95 +2086,30 @@ void zen::particleGenerator::RotAxisXYZ(Mtx&, f32&, f32&)
  * Address:	801A09A4
  * Size:	000110
  */
-void zen::particleGenerator::updatePtclChildren(f32)
+void zen::particleGenerator::updatePtclChildren(f32 timeStep)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stfd      f30, 0x48(r1)
-	  stfd      f29, 0x40(r1)
-	  fmr       f29, f1
-	  stmw      r27, 0x2C(r1)
-	  mr        r27, r3
-	  lwz       r30, 0x38(r3)
-	  lfs       f30, -0x4C70(r2)
-	  lwz       r3, 0x8(r30)
-	  lfs       f31, -0x4C30(r2)
-	  b         .loc_0xE8
+	zenList* orig = mPtclChildListManager.getOrigin();
+	zenList* list = mPtclChildListManager.getTopList();
+	zenList* next;
+	while (list != orig) {
+		particleChildMdl* child = (particleChildMdl*)list;
+		next                    = list->mNext;
 
-	.loc_0x38:
-	  mr        r28, r3
-	  lwz       r29, 0x8(r3)
-	  lbz       r3, 0x31(r3)
-	  lbz       r0, 0x30(r28)
-	  addi      r3, r3, 0x1
-	  cmpw      r3, r0
-	  blt-      .loc_0x88
-	  mr        r3, r28
-	  lwz       r31, 0x1D0(r27)
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x10(r31)
-	  mr        r4, r28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xE4
+		if (child->_31 + 1 >= child->_30) {
+			pmPutParticleChild(child);
 
-	.loc_0x88:
-	  lbz       r0, 0x2B(r28)
-	  lbz       r3, 0x32(r28)
-	  cmplw     r0, r3
-	  ble-      .loc_0xA4
-	  sub       r0, r0, r3
-	  stb       r0, 0x2B(r28)
-	  b         .loc_0xAC
+		} else {
+			if (child->_28.a > child->_32) {
+				child->_28.a -= child->_32;
+			} else {
+				child->_28.a = 0;
+			}
+			child->_2C += timeStep;
+			child->_31 = RoundOff(child->_2C);
+		}
 
-	.loc_0xA4:
-	  li        r0, 0
-	  stb       r0, 0x2B(r28)
-
-	.loc_0xAC:
-	  lfs       f0, 0x2C(r28)
-	  fadds     f0, f0, f29
-	  stfs      f0, 0x2C(r28)
-	  lfs       f0, 0x2C(r28)
-	  fcmpo     cr0, f0, f30
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xD0
-	  fadds     f0, f31, f0
-	  b         .loc_0xD4
-
-	.loc_0xD0:
-	  fsubs     f0, f0, f31
-
-	.loc_0xD4:
-	  fctiwz    f0, f0
-	  stfd      f0, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stb       r0, 0x31(r28)
-
-	.loc_0xE4:
-	  mr        r3, r29
-
-	.loc_0xE8:
-	  cmplw     r3, r30
-	  bne+      .loc_0x38
-	  lmw       r27, 0x2C(r1)
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lfd       f30, 0x48(r1)
-	  lfd       f29, 0x40(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+		list = next;
+	}
 }
 
 /*
@@ -4571,99 +2117,28 @@ void zen::particleGenerator::updatePtclChildren(f32)
  * Address:	801A0AB4
  * Size:	000148
  */
-void zen::particleGenerator::drawPtclChildren(Graphics&)
+void zen::particleGenerator::drawPtclChildren(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stfd      f31, 0x48(r1)
-	  stmw      r27, 0x34(r1)
-	  addi      r27, r4, 0
-	  addi      r28, r3, 0
-	  mr        r3, r27
-	  lwz       r12, 0x3B4(r27)
-	  lwz       r4, 0x2E4(r4)
-	  lwz       r12, 0x74(r12)
-	  addi      r4, r4, 0x1E0
-	  mtlr      r12
-	  blrl
-	  mr        r3, r27
-	  lbz       r4, 0x1CB(r28)
-	  lwz       r12, 0x3B4(r27)
-	  li        r6, 0
-	  lbz       r5, 0x1CC(r28)
-	  lwz       r12, 0x54(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  li        r4, 0xF
-	  li        r5, 0xC
-	  li        r6, 0x2
-	  li        r7, 0xF
-	  bl        0x7261C
-	  mr        r3, r27
-	  lwz       r12, 0x3B4(r27)
-	  li        r4, 0x1
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x130
-	  lwz       r30, 0x38(r28)
-	  addi      r31, r1, 0x20
-	  lfs       f31, -0x4C24(r2)
-	  lwz       r29, 0x8(r30)
-	  b         .loc_0x128
+	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
+	gfx.setBlendMode(_1CB, _1CC, 0);
+	GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_ONE, GX_CC_C0, GX_CC_ZERO);
 
-	.loc_0xA8:
-	  mr        r3, r27
-	  lwz       r28, 0x8(r29)
-	  lwz       r12, 0x3B4(r27)
-	  addi      r4, r29, 0x28
-	  addi      r5, r4, 0
-	  lwz       r12, 0xB0(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, 0xC(r29)
-	  mr        r3, r27
-	  lfs       f0, 0x18(r29)
-	  mr        r5, r31
-	  lfs       f4, 0x14(r29)
-	  lfs       f3, 0x20(r29)
-	  fadds     f0, f1, f0
-	  lfs       f2, 0x10(r29)
-	  lfs       f1, 0x1C(r29)
-	  fadds     f3, f4, f3
-	  stfs      f0, 0x1C(r1)
-	  fadds     f1, f2, f1
-	  lfs       f0, 0x1C(r1)
-	  stfs      f0, 0x20(r1)
-	  stfs      f1, 0x24(r1)
-	  stfs      f3, 0x28(r1)
-	  lwz       r12, 0x3B4(r27)
-	  lfs       f0, 0x24(r29)
-	  lwz       r12, 0x8C(r12)
-	  fmuls     f1, f31, f0
-	  lwz       r4, 0x2E4(r27)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r28
+	if (!gfx.initParticle(true)) {
+		return;
+	}
 
-	.loc_0x128:
-	  cmplw     r29, r30
-	  bne+      .loc_0xA8
+	zenList* orig = mPtclChildListManager.getOrigin();
+	zenList* list = mPtclChildListManager.getTopList();
+	zenList* next;
+	while (list != orig) {
+		particleChildMdl* child = (particleChildMdl*)list;
+		next                    = list->mNext;
 
-	.loc_0x130:
-	  lmw       r27, 0x34(r1)
-	  lwz       r0, 0x54(r1)
-	  lfd       f31, 0x48(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+		gfx.setPrimEnv(&child->_28, &child->_28);
+		gfx.drawParticle(*gfx.mCamera, child->mPosition + child->mLocalOffset, 25.0f * child->_24);
+
+		list = next;
+	}
 }
 
 /*
@@ -4674,74 +2149,13 @@ void zen::particleGenerator::drawPtclChildren(Graphics&)
 void zen::particleGenerator::forceFinish()
 {
 	finish();
-	while (true) {
-		particleMdl* child = (particleMdl*)mPtclMdlListManager.getOrigin();
-		if (child == (particleMdl*)mPtclMdlListManager.getTopList()) {
-			break;
-		}
+	while (mPtclMdlListManager.getOrigin() != mPtclMdlListManager.getTopList()) {
+		pmPutParticle(mPtclMdlListManager.getTopList());
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  mr        r29, r3
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r3)
-	  b         .loc_0x5C
 
-	.loc_0x2C:
-	  lwz       r12, 0x0(r30)
-	  mr        r3, r30
-	  lwz       r31, 0x1D0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x5C:
-	  lwz       r3, 0x28(r29)
-	  lwz       r30, 0x8(r3)
-	  cmplw     r3, r30
-	  bne+      .loc_0x2C
-	  b         .loc_0xA0
-
-	.loc_0x70:
-	  lwz       r12, 0x0(r30)
-	  mr        r3, r30
-	  lwz       r31, 0x1D0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x10(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xA0:
-	  lwz       r3, 0x38(r29)
-	  lwz       r30, 0x8(r3)
-	  cmplw     r3, r30
-	  bne+      .loc_0x70
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	while (mPtclChildListManager.getOrigin() != mPtclChildListManager.getTopList()) {
+		pmPutParticleChild(mPtclChildListManager.getTopList());
+	}
 }
 
 /*
@@ -4749,26 +2163,16 @@ void zen::particleGenerator::forceFinish()
  * Address:	801A0CC8
  * Size:	000034
  */
-bool zen::particleGenerator::finish(zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
+bool zen::particleGenerator::finish(zen::CallBack1<zen::particleGenerator*>* cbGen,
+                                    zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x1D4(r3)
-	  cmplw     r0, r4
-	  bne-      .loc_0x2C
-	  lwz       r0, 0x1D8(r3)
-	  cmplw     r0, r5
-	  bne-      .loc_0x2C
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r3)
-	  li        r3, 0x1
-	  blr
+	if (mCallBack1 == cbGen && mCallBack2 == cbPtcl) {
+		PRINT("finish ptcl. call back pointer.\n");
+		finish();
+		return true;
+	}
 
-	.loc_0x2C:
-	  li        r3, 0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -4776,84 +2180,16 @@ bool zen::particleGenerator::finish(zen::CallBack1<zen::particleGenerator*>*, ze
  * Address:	801A0CFC
  * Size:	0000F0
  */
-bool zen::particleGenerator::forceFinish(zen::CallBack1<zen::particleGenerator*>*,
-                                         zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
+bool zen::particleGenerator::forceFinish(zen::CallBack1<zen::particleGenerator*>* cbGen,
+                                         zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  mr        r29, r3
-	  lwz       r0, 0x1D4(r3)
-	  cmplw     r0, r4
-	  bne-      .loc_0xD0
-	  lwz       r0, 0x1D8(r29)
-	  cmplw     r0, r5
-	  bne-      .loc_0xD0
-	  lwz       r0, 0x80(r29)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r29)
-	  b         .loc_0x74
+	if (mCallBack1 == cbGen && mCallBack2 == cbPtcl) {
+		PRINT("force finish ptcl. call back pointer.\n");
+		forceFinish();
+		return true;
+	}
 
-	.loc_0x44:
-	  lwz       r12, 0x0(r30)
-	  mr        r3, r30
-	  lwz       r31, 0x1D0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x74:
-	  lwz       r3, 0x28(r29)
-	  lwz       r30, 0x8(r3)
-	  cmplw     r3, r30
-	  bne+      .loc_0x44
-	  b         .loc_0xB8
-
-	.loc_0x88:
-	  lwz       r12, 0x0(r30)
-	  mr        r3, r30
-	  lwz       r31, 0x1D0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x10(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xB8:
-	  lwz       r3, 0x38(r29)
-	  lwz       r30, 0x8(r3)
-	  cmplw     r3, r30
-	  bne+      .loc_0x88
-	  li        r3, 0x1
-	  b         .loc_0xD4
-
-	.loc_0xD0:
-	  li        r3, 0
-
-	.loc_0xD4:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -4863,41 +2199,11 @@ bool zen::particleGenerator::forceFinish(zen::CallBack1<zen::particleGenerator*>
  */
 zen::particleMdl* zen::particleGenerator::pmGetParticle()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x1D0(r3)
-	  bl        .loc_0x70
-	  mr.       r31, r3
-	  beq-      .loc_0x54
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x28(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x70:
-	*/
+	zenList* ptcl = mMdlMgr->getPtcl();
+	if (ptcl) {
+		mPtclMdlListManager.put(ptcl);
+	}
+	return (particleMdl*)ptcl;
 }
 
 /*
@@ -4907,38 +2213,9 @@ zen::particleMdl* zen::particleGenerator::pmGetParticle()
  */
 zen::particleChildMdl* zen::particleGenerator::pmGetParticleChild()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x1D0(r3)
-	  addi      r3, r3, 0x10
-	  bl        -0x74
-	  mr.       r31, r3
-	  beq-      .loc_0x58
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x38(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x58:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	zenList* child = mMdlMgr->getPtclChild();
+	if (child) {
+		mPtclChildListManager.put(child);
+	}
+	return (particleChildMdl*)child;
 }

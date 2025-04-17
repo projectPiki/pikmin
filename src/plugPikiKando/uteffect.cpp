@@ -82,7 +82,7 @@ bool SlimeEffect::invoke(zen::particleGenerator* gen, zen::particleMdl* mdl)
 		Vector3f velocity = mObj->mVelocity;
 		velocity.y        = 0.0f;
 		velocity          = velocity * gsys->getFrameTime() * 0.9f;
-		mdl->_34          = velocity;
+		mdl->mVelocity    = velocity;
 	}
 	return true;
 }

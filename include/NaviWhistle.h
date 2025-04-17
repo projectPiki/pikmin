@@ -21,11 +21,11 @@ struct NaviWhistle : public KEffect {
 	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _24
 	{
 		// NON-MATCHING
-		Vector3f diff = mNavi->mCursorWorldPos - mNavi->mNaviLightPosition;
-		f32 ratio     = f32(ptcl->_2E) / f32(ptcl->_2C);
-		f32 compRatio = 1.0f - ratio;
-		ptcl->_18     = mNavi->mNaviLightPosition;
-		ptcl->_0C     = diff * ratio;
+		Vector3f diff      = mNavi->mCursorWorldPos - mNavi->mNaviLightPosition;
+		f32 ratio          = f32(ptcl->mAge) / f32(ptcl->mLifeTime);
+		f32 compRatio      = 1.0f - ratio;
+		ptcl->mLocalOffset = mNavi->mNaviLightPosition;
+		ptcl->mPosition    = diff * ratio;
 
 		if (mNavi->mCursorWorldPos.y < mNavi->getPosition().y + 15.0f) {
 			CollTriInfo* tri = mapMgr->getCurrTri(mNavi->mCursorWorldPos.x, mNavi->mCursorWorldPos.z, true);
@@ -46,8 +46,8 @@ struct NaviWhistle : public KEffect {
 			q2.fromMat3f(mtx2);
 			q1.slerp(q2, ratio, 0);
 			q1.genVectorY(ptcl->_5C);
-			q1.genVectorX(ptcl->_34);
-			ptcl->_34.multiply(0.01f);
+			q1.genVectorX(ptcl->mVelocity);
+			ptcl->mVelocity.multiply(0.01f);
 		} else {
 			ptcl->_5C.set(diff);
 		}
@@ -136,7 +136,7 @@ struct NaviFue : public KEffect {
 
 		for (int i = 0; i < mEntryNum; i++) {
 			if (mEntries[i]) {
-				mEntries[i]->setInitVel(0.0f);
+				mEntries[i]->setFreqFrm(0.0f);
 				effectMgr->mPtclMgr.killGenerator(mEntries[i], false);
 			}
 			mEntries[i] = nullptr;

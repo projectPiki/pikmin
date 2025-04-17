@@ -2594,10 +2594,10 @@ void BuildingItem::startBreakEffect()
 	_3D8.init(mPosition, EffectMgr::EFF_Wl_Brk00);
 	_3E8.init(mPosition, EffectMgr::EFF_Wl_Brk01);
 	if (_3D8.mPtclGen) {
-		_3D8.mPtclGen->setInitVel(5.0f);
+		_3D8.mPtclGen->setFreqFrm(5.0f);
 	}
 	if (_3E8.mPtclGen) {
-		_3E8.mPtclGen->setInitVel(3.0f);
+		_3E8.mPtclGen->setFreqFrm(3.0f);
 	}
 }
 
@@ -2609,10 +2609,10 @@ void BuildingItem::startBreakEffect()
 void BuildingItem::stopBreakEffect()
 {
 	if (_3D8.mPtclGen) {
-		_3D8.mPtclGen->setInitVel(0.0f);
+		_3D8.mPtclGen->setFreqFrm(0.0f);
 	}
 	if (_3E8.mPtclGen) {
-		_3E8.mPtclGen->setInitVel(0.0f);
+		_3E8.mPtclGen->setFreqFrm(0.0f);
 	}
 
 	_3D8.kill();
