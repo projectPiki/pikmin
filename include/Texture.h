@@ -247,8 +247,8 @@ struct TextureCacher : public TexCacheInfo {
 	{
 		mCache = new AyuCache(size);
 		mName  = "root";
-		mNext  = this;
 		mPrev  = this;
+		mNext  = this;
 	}
 
 	void updateInfo(CacheTexture*);

@@ -10,8 +10,9 @@
 #include "Dolphin/dvd.h"
 #include "Dolphin/rand.h"
 #include "Dolphin/os.h"
+#include "Delegate.h"
 
-struct Graphics;
+struct DGXGraphics;
 struct BaseApp;
 struct CacheTexture;
 struct TextureCacher;
@@ -32,6 +33,7 @@ struct Shape;
 struct AnimData;
 struct AnimFrameCacher;
 struct MemInfo;
+struct CacheInfo;
 
 /**
  * @brief For mHeaps array in StdSystem.
@@ -228,7 +230,7 @@ public:
 	int mLfInfoCount;             // _230
 	LFInfo* mFlareInfoList;       // _234
 	LFlareGroup* mFlareGroupList; // _238
-	LFlareGroup* _23C;            // _23C
+	int _23C;                     // _23C
 	u32 mDvdReadBytesCount;       // _240
 };
 
@@ -287,32 +289,38 @@ struct System : public StdSystem {
 
 	// _00      = VTBL
 	// _00-_248 = StdSystem
-	u32 _244;                     // _244
-	u32 _248;                     // _248
-	Graphics* mGfx;               // _24C
-	u8 _250[0x4];                 // _250, unknown
-	u32 _254;                     // _254, unknown
-	int _258;                     // _258
-	u32 _25C;                     // _25C
-	CacheTexture* _260;           // _260, unknown
-	u32 _264;                     // _264
-	u32 _268;                     // _268
-	vu32 _26C;                    // _26C
-	u32 _270;                     // _270
-	OSThread* mCurrentThread;     // _274
-	AtxRouter* mAtxRouter;        // _278
-	ControllerMgr mControllerMgr; // _27C
-	u8 _280[0xC];                 // _280, unknown
-	f32 mDeltaTime;               // _28C
-	u32 _290;                     // _290
-	u8 _294[0x2A0 - 0x294];       // _294, unknown
-	u32 _2A0;                     // _2A0
-	u32 _2A4;                     // _2A4, unknown
-	AddressNode _2A8;             // _2A8, unknown size
-	u32 _2BC;                     // _2BC, unknown, could be part of _2A8
-	u8 _2C0[0x32C - 0x2C0];       // _2C0, unknown, adjust with size of AddressNode
-	u32 _32C;                     // _32C
-	u32 _330;                     // _330
+	u32 _244;                           // _244
+	u32 _248;                           // _248
+	DGXGraphics* mGfx;                  // _24C
+	u8 _250[0x4];                       // _250, unknown
+	Delegate1<System, Graphics&>* _254; // _254
+	int _258;                           // _258
+	u32 _25C;                           // _25C
+	u32 _260;                           // _260
+	u32 _264;                           // _264
+	u32 _268;                           // _268
+	vu32 _26C;                          // _26C
+	u32 _270;                           // _270
+	OSThread* mCurrentThread;           // _274
+	AtxRouter* mAtxRouter;              // _278
+	ControllerMgr mControllerMgr;       // _27C
+	u32 _280;                           // _280
+	u32 _284;                           // _284
+	int _288;                           // _288
+	f32 mDeltaTime;                     // _28C
+	f32 _290;                           // _290
+	u32 _294;                           // _294
+	u32 _298;                           // _298
+	u32 _29C;                           // _29C
+	u32 _2A0;                           // _2A0
+	u32 _2A4;                           // _2A4, unknown
+	AddressNode _2A8;                   // _2A8, unknown size
+	u32 _2BC;                           // _2BC, unknown, could be part of _2A8
+	u8 _2C0[0x308 - 0x2C0];             // _2C0, unknown, adjust with size of AddressNode
+	CacheTexture* _308;                 // _308
+	u8 _30C[0x32C - 0x30C];             // _30C
+	u32 _32C;                           // _32C
+	u32 _330;                           // _330
 };
 
 extern System* gsys;
@@ -323,12 +331,15 @@ extern System* gsys;
  * @brief TODO
  */
 struct LogStream : public Stream {
+	LogStream() { }
+
 	virtual void write(void*, int); // _40 (weak)
 	virtual void flush();           // _54 (weak)
 
 	// _04     = VTBL
 	// _00-_08 = Stream
 	// TODO: members
+	u8 _0C[0x108]; // _08
 };
 
 /**
@@ -356,6 +367,7 @@ struct DVDStream : public RandomAccessStream {
 	void init();
 
 	static u32 numOpen;
+	static u8* readBuffer;
 
 	// _04     = VTBL
 	// _00-_08 = RandomAccessStream

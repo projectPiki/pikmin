@@ -79,6 +79,8 @@ struct RandomAccessStream : public Stream {
  * @note Size: 0x20.
  */
 struct BufferedInputStream : public RandomAccessStream {
+	BufferedInputStream() { }
+
 	BufferedInputStream(Stream*, u8*, int);
 
 	virtual void read(void*, int);                                         // _3C

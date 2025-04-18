@@ -4,14 +4,46 @@
 #include "LoadIdler.h"
 #include "Delegate.h"
 #include "Dolphin/os.h"
+#include "Dolphin/ar.h"
+#include "Dolphin/gx.h"
+#include "Dolphin/card.h"
+#include "Dolphin/pad.h"
 #include "DebugLog.h"
+#include "gameflow.h"
+#include "Graphics.h"
+#include "BaseApp.h"
+#include "Font.h"
+#include "sysNew.h"
+#include "jaudio/verysimple.h"
+#include "jaudio/interface.h"
+
+System sys;
 
 bool useSymbols = false;
 System* gsys    = nullptr;
+Stream* sysCon;
+Stream* errCon;
+char* dvdMesgBuffer;
+char* loadMesgBuffer;
+char* sysMesgBuffer;
 
-u32 DVDStream::numOpen = 0;
+int glnWidth  = 640;
+int glnHeight = 480;
 
-System sys;
+OSMessageQueue dvdMesgQueue;
+OSMessageQueue loadMesgQueue;
+OSMessageQueue sysMesgQueue;
+
+u32 DVDStream::numOpen    = 0;
+u8* DVDStream::readBuffer = 0;
+Font* bigFont;
+
+AramStream aramStream;
+char lastName[PATH_MAX];
+DVDStream dvdStream;
+OSThread Thread;
+OSThread dvdThread;
+BufferedInputStream dvdBufferedStream;
 
 /*
  * --INFO--
@@ -26,6 +58,21 @@ DEFINE_ERROR()
  * Size:	0000F0
  */
 DEFINE_PRINT(nullptr)
+
+const char* errorList[][6] = {
+	{ "Reading Game Disc...", nullptr },
+
+	{ "An error has occurred.", "Turn the power OFF and", "check the NINTENDO GAMECUBE", "Instruction Booklet for", "instructions.",
+	  nullptr },
+
+	{ "The Game Disc could not be read.", "Please read the", "NINTENDO GAMECUBE", "Instruction Booklet", "for more information.", nullptr },
+
+	{ "Please insert a", "Pikmin Game Disc.", nullptr },
+
+	{ "Please close the", "Disc Cover.", nullptr },
+
+	{ "This is not a", "Pikmin Game Disc.", "Please insert a", "Pikmin Game Disc.", nullptr },
+};
 
 /*
  * --INFO--
@@ -42,194 +89,246 @@ void DVDStream::init()
  * Address:	800447DC
  * Size:	000254
  */
-RandomAccessStream* System::openFile(char*, bool, bool)
+RandomAccessStream* System::openFile(char* path, bool a1, bool a2)
 {
+	char strPath[PATH_MAX];
+	sprintf(strPath, "%s", a1 ? mCurrentDirectory : "");
+	sprintf(strPath, "%s%s%s", a1 ? mDataRoot : "", path);
+
+	if (a1 && (_200.getChildCount() || _214.getChildCount())) {
+
+		FOREACH_NODE(CoreNode, _200.mChild, node)
+		{
+			if (!strcmp(node->mName, path)) {
+				aramStream.mPending = 0;
+				aramStream._08      = 0;
+				aramStream._0C      = 0;
+				aramStream.mPath    = path;
+				return new BufferedInputStream(&aramStream, DVDStream::readBuffer, dvdStream.mOffset);
+			}
+		}
+
+		FOREACH_NODE(CoreNode, _214.mChild, node)
+		{
+			if (!strcmp(node->mName, path)) {
+				aramStream.mPending = 0;
+				aramStream._08      = 0;
+				aramStream._0C      = 0;
+				aramStream.mPath    = path;
+				return new BufferedInputStream(&aramStream, DVDStream::readBuffer, dvdStream.mOffset);
+			}
+		}
+	}
+
+	dvdStream.mPath = strPath;
+	_23C++;
+	dvdStream.mIsFileOpen = DVDOpen(dvdStream.mPath, &dvdStream.mFileInfo) != FALSE;
+	dvdStream.mOffset     = 0;
+	dvdStream.mPending    = dvdStream.mOffset;
+	sprintf(lastName, dvdStream.mPath);
+	dvdStream.numOpen++;
+
+	if (!dvdStream.mIsFileOpen) {
+		if (dvdStream.numOpen--)
+			DVDClose(&dvdStream.mFileInfo);
+		return nullptr;
+	}
+
+	u32 old            = gsys->mTogglePrint;
+	gsys->mTogglePrint = 1;
+	PRINT("Opened file %s\n", strPath);
+	gsys->mTogglePrint = old;
+	dvdStream.mOffset  = 0;
+	dvdBufferedStream.init(&dvdStream, dvdStream.readBuffer, _25C);
+	return &dvdBufferedStream;
+
+	u32 badcompiler[2];
 	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r5,0,24,31
-	  stwu      r1, -0x138(r1)
-	  stmw      r27, 0x124(r1)
-	  addi      r27, r5, 0
-	  lis       r5, 0x803A
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  subi      r31, r5, 0x7780
-	  beq-      .loc_0x34
-	  lwz       r5, 0x4C(r29)
-	  b         .loc_0x38
+	    .loc_0x0:
+	      mflr      r0
+	      stw       r0, 0x4(r1)
+	      rlwinm.   r0,r5,0,24,31
+	      stwu      r1, -0x138(r1)
+	      stmw      r27, 0x124(r1)
+	      addi      r27, r5, 0
+	      lis       r5, 0x803A
+	      addi      r29, r3, 0
+	      addi      r30, r4, 0
+	      subi      r31, r5, 0x7780
+	      beq-      .loc_0x34
+	      lwz       r5, 0x4C(r29)
+	      b         .loc_0x38
 
-	.loc_0x34:
-	  subi      r5, r13, 0x7840
+	    .loc_0x34:
+	      subi      r5, r13, 0x7840
 
-	.loc_0x38:
-	  crclr     6, 0x6
-	  addi      r3, r1, 0x1C
-	  subi      r4, r13, 0x783C
-	  bl        0x1D1D78
-	  rlwinm.   r0,r27,0,24,31
-	  beq-      .loc_0x58
-	  lwz       r6, 0x50(r29)
-	  b         .loc_0x5C
+	    .loc_0x38:
+	      crclr     6, 0x6
+	      addi      r3, r1, 0x1C
+	      subi      r4, r13, 0x783C
+	      bl        0x1D1D78
+	      rlwinm.   r0,r27,0,24,31
+	      beq-      .loc_0x58
+	      lwz       r6, 0x50(r29)
+	      b         .loc_0x5C
 
-	.loc_0x58:
-	  subi      r6, r13, 0x7840
+	    .loc_0x58:
+	      subi      r6, r13, 0x7840
 
-	.loc_0x5C:
-	  addi      r3, r1, 0x1C
-	  crclr     6, 0x6
-	  addi      r5, r3, 0
-	  addi      r7, r30, 0
-	  subi      r4, r13, 0x7838
-	  bl        0x1D1D4C
-	  rlwinm.   r0,r27,0,24,31
-	  beq-      .loc_0x17C
-	  addi      r3, r29, 0x200
-	  bl        -0x41DC
-	  cmpwi     r3, 0
-	  bne-      .loc_0x9C
-	  addi      r3, r29, 0x214
-	  bl        -0x41EC
-	  cmpwi     r3, 0
-	  beq-      .loc_0x17C
+	    .loc_0x5C:
+	      addi      r3, r1, 0x1C
+	      crclr     6, 0x6
+	      addi      r5, r3, 0
+	      addi      r7, r30, 0
+	      subi      r4, r13, 0x7838
+	      bl        0x1D1D4C
+	      rlwinm.   r0,r27,0,24,31
+	      beq-      .loc_0x17C
+	      addi      r3, r29, 0x200
+	      bl        -0x41DC
+	      cmpwi     r3, 0
+	      bne-      .loc_0x9C
+	      addi      r3, r29, 0x214
+	      bl        -0x41EC
+	      cmpwi     r3, 0
+	      beq-      .loc_0x17C
 
-	.loc_0x9C:
-	  lwz       r27, 0x210(r29)
-	  b         .loc_0x104
+	    .loc_0x9C:
+	      lwz       r27, 0x210(r29)
+	      b         .loc_0x104
 
-	.loc_0xA4:
-	  lwz       r3, 0x4(r27)
-	  mr        r4, r30
-	  bl        0x1D493C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x100
-	  lwz       r5, 0x14(r27)
-	  li        r0, 0
-	  lwz       r4, 0x18(r27)
-	  li        r3, 0x20
-	  stw       r30, 0x3A0(r31)
-	  stw       r5, 0x3B0(r31)
-	  stw       r4, 0x3A8(r31)
-	  stw       r0, 0x3AC(r31)
-	  bl        0x2750
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0xF8
-	  lwz       r5, 0x2E04(r13)
-	  addi      r4, r31, 0x3A0
-	  lwz       r6, 0x504(r31)
-	  bl        -0x1F338
+	    .loc_0xA4:
+	      lwz       r3, 0x4(r27)
+	      mr        r4, r30
+	      bl        0x1D493C
+	      cmpwi     r3, 0
+	      bne-      .loc_0x100
+	      lwz       r5, 0x14(r27)
+	      li        r0, 0
+	      lwz       r4, 0x18(r27)
+	      li        r3, 0x20
+	      stw       r30, 0x3A0(r31)
+	      stw       r5, 0x3B0(r31)
+	      stw       r4, 0x3A8(r31)
+	      stw       r0, 0x3AC(r31)
+	      bl        0x2750
+	      addi      r29, r3, 0
+	      mr.       r3, r29
+	      beq-      .loc_0xF8
+	      lwz       r5, 0x2E04(r13)
+	      addi      r4, r31, 0x3A0
+	      lwz       r6, 0x504(r31)
+	      bl        -0x1F338
 
-	.loc_0xF8:
-	  mr        r3, r29
-	  b         .loc_0x240
+	    .loc_0xF8:
+	      mr        r3, r29
+	      b         .loc_0x240
 
-	.loc_0x100:
-	  lwz       r27, 0xC(r27)
+	    .loc_0x100:
+	      lwz       r27, 0xC(r27)
 
-	.loc_0x104:
-	  cmplwi    r27, 0
-	  bne+      .loc_0xA4
-	  lwz       r27, 0x224(r29)
-	  b         .loc_0x174
+	    .loc_0x104:
+	      cmplwi    r27, 0
+	      bne+      .loc_0xA4
+	      lwz       r27, 0x224(r29)
+	      b         .loc_0x174
 
-	.loc_0x114:
-	  lwz       r3, 0x4(r27)
-	  mr        r4, r30
-	  bl        0x1D48CC
-	  cmpwi     r3, 0
-	  bne-      .loc_0x170
-	  lwz       r5, 0x14(r27)
-	  li        r0, 0
-	  lwz       r4, 0x18(r27)
-	  li        r3, 0x20
-	  stw       r30, 0x3A0(r31)
-	  stw       r5, 0x3B0(r31)
-	  stw       r4, 0x3A8(r31)
-	  stw       r0, 0x3AC(r31)
-	  bl        0x26E0
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x168
-	  lwz       r5, 0x2E04(r13)
-	  addi      r4, r31, 0x3A0
-	  lwz       r6, 0x504(r31)
-	  bl        -0x1F3A8
+	    .loc_0x114:
+	      lwz       r3, 0x4(r27)
+	      mr        r4, r30
+	      bl        0x1D48CC
+	      cmpwi     r3, 0
+	      bne-      .loc_0x170
+	      lwz       r5, 0x14(r27)
+	      li        r0, 0
+	      lwz       r4, 0x18(r27)
+	      li        r3, 0x20
+	      stw       r30, 0x3A0(r31)
+	      stw       r5, 0x3B0(r31)
+	      stw       r4, 0x3A8(r31)
+	      stw       r0, 0x3AC(r31)
+	      bl        0x26E0
+	      addi      r29, r3, 0
+	      mr.       r3, r29
+	      beq-      .loc_0x168
+	      lwz       r5, 0x2E04(r13)
+	      addi      r4, r31, 0x3A0
+	      lwz       r6, 0x504(r31)
+	      bl        -0x1F3A8
 
-	.loc_0x168:
-	  mr        r3, r29
-	  b         .loc_0x240
+	    .loc_0x168:
+	      mr        r3, r29
+	      b         .loc_0x240
 
-	.loc_0x170:
-	  lwz       r27, 0xC(r27)
+	    .loc_0x170:
+	      lwz       r27, 0xC(r27)
 
-	.loc_0x174:
-	  cmplwi    r27, 0
-	  bne+      .loc_0x114
+	    .loc_0x174:
+	      cmplwi    r27, 0
+	      bne+      .loc_0x114
 
-	.loc_0x17C:
-	  lwz       r4, 0x23C(r29)
-	  addi      r3, r1, 0x1C
-	  addi      r27, r31, 0x4BC
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x23C(r29)
-	  mr        r4, r27
-	  stw       r3, 0x4B4(r31)
-	  bl        0x1BA998
-	  neg       r3, r3
-	  crclr     6, 0x6
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x500(r31)
-	  li        r0, 0
-	  addi      r28, r31, 0x500
-	  stw       r0, 0x4F8(r31)
-	  addi      r3, r31, 0x3B4
-	  lwz       r0, 0x4F0(r31)
-	  stw       r0, 0x4FC(r31)
-	  lwz       r4, 0x4B4(r31)
-	  bl        0x1D1BF0
-	  lwz       r3, 0x2E08(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2E08(r13)
-	  lbz       r0, 0x0(r28)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x208
-	  lwz       r3, 0x2E08(r13)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x2E08(r13)
-	  beq-      .loc_0x200
-	  mr        r3, r27
-	  bl        0x1BA9FC
+	    .loc_0x17C:
+	      lwz       r4, 0x23C(r29)
+	      addi      r3, r1, 0x1C
+	      addi      r27, r31, 0x4BC
+	      addi      r0, r4, 0x1
+	      stw       r0, 0x23C(r29)
+	      mr        r4, r27
+	      stw       r3, 0x4B4(r31)
+	      bl        0x1BA998
+	      neg       r3, r3
+	      crclr     6, 0x6
+	      subic     r0, r3, 0x1
+	      subfe     r0, r0, r3
+	      stb       r0, 0x500(r31)
+	      li        r0, 0
+	      addi      r28, r31, 0x500
+	      stw       r0, 0x4F8(r31)
+	      addi      r3, r31, 0x3B4
+	      lwz       r0, 0x4F0(r31)
+	      stw       r0, 0x4FC(r31)
+	      lwz       r4, 0x4B4(r31)
+	      bl        0x1D1BF0
+	      lwz       r3, 0x2E08(r13)
+	      addi      r0, r3, 0x1
+	      stw       r0, 0x2E08(r13)
+	      lbz       r0, 0x0(r28)
+	      cmplwi    r0, 0
+	      bne-      .loc_0x208
+	      lwz       r3, 0x2E08(r13)
+	      subi      r0, r3, 0x1
+	      stw       r0, 0x2E08(r13)
+	      beq-      .loc_0x200
+	      mr        r3, r27
+	      bl        0x1BA9FC
 
-	.loc_0x200:
-	  li        r3, 0
-	  b         .loc_0x240
+	    .loc_0x200:
+	      li        r3, 0
+	      b         .loc_0x240
 
-	.loc_0x208:
-	  lwz       r4, 0x2DEC(r13)
-	  li        r0, 0x1
-	  addi      r3, r31, 0x508
-	  addi      r5, r4, 0x1C
-	  lwz       r6, 0x1C(r4)
-	  addi      r4, r31, 0x4B4
-	  stw       r0, 0x0(r5)
-	  lwz       r5, 0x2DEC(r13)
-	  stw       r6, 0x1C(r5)
-	  stw       r30, 0x4B4(r31)
-	  lwz       r5, 0x2E04(r13)
-	  lwz       r6, 0x25C(r29)
-	  bl        -0x1F514
-	  addi      r3, r31, 0x508
+	    .loc_0x208:
+	      lwz       r4, 0x2DEC(r13)
+	      li        r0, 0x1
+	      addi      r3, r31, 0x508
+	      addi      r5, r4, 0x1C
+	      lwz       r6, 0x1C(r4)
+	      addi      r4, r31, 0x4B4
+	      stw       r0, 0x0(r5)
+	      lwz       r5, 0x2DEC(r13)
+	      stw       r6, 0x1C(r5)
+	      stw       r30, 0x4B4(r31)
+	      lwz       r5, 0x2E04(r13)
+	      lwz       r6, 0x25C(r29)
+	      bl        -0x1F514
+	      addi      r3, r31, 0x508
 
-	.loc_0x240:
-	  lmw       r27, 0x124(r1)
-	  lwz       r0, 0x13C(r1)
-	  addi      r1, r1, 0x138
-	  mtlr      r0
-	  blr
-	*/
+	    .loc_0x240:
+	      lmw       r27, 0x124(r1)
+	      lwz       r0, 0x13C(r1)
+	      addi      r1, r1, 0x138
+	      mtlr      r0
+	      blr
+	    */
 }
 
 /*
@@ -239,29 +338,11 @@ RandomAccessStream* System::openFile(char*, bool, bool)
  */
 void System::initSoftReset()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lwz       r4, 0x2DEC(r13)
-	  stw       r0, 0x2A4(r4)
-	  bl        -0x5184
-	  lwz       r3, 0x24C(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x34
-	  bl        0x2F2C
-
-	.loc_0x34:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	gsys->_2A4 = 0;
+	StdSystem::initSoftReset();
+	if (mGfx) {
+		mGfx->setupRender();
+	}
 }
 
 /*
@@ -271,70 +352,14 @@ void System::initSoftReset()
  */
 void System::beginRender()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  stw       r0, 0x2A0(r3)
-	  lwz       r3, 0x24C(r3)
-	  bl        0x35D4
-	  lwz       r3, 0x24C(r31)
-	  li        r4, 0x3
-	  li        r5, 0
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, -0x7848(r13)
-	  lis       r3, 0x4330
-	  lwz       r0, -0x7844(r13)
-	  xoris     r4, r4, 0x8000
-	  lfs       f1, -0x7B88(r2)
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x1C(r1)
-	  lfd       f4, -0x7B80(r2)
-	  fmr       f2, f1
-	  stw       r0, 0x14(r1)
-	  fmr       f5, f1
-	  lfs       f6, -0x7B84(r2)
-	  stw       r3, 0x18(r1)
-	  stw       r3, 0x10(r1)
-	  lfd       f3, 0x18(r1)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f3, f3, f4
-	  fsubs     f4, f0, f4
-	  bl        0x1CFBAC
-	  lwz       r5, -0x7848(r13)
-	  li        r3, 0
-	  lwz       r6, -0x7844(r13)
-	  li        r4, 0
-	  bl        0x1CFBBC
-	  li        r3, 0x1
-	  bl        0x1CF234
-	  lwz       r3, 0x24C(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x24C(r31)
-	  lwz       r4, -0x7848(r13)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r5, -0x7844(r13)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	_2A0 = 0;
+	mGfx->beginRender();
+	mGfx->clearBuffer(3, false);
+	GXSetViewport(0.0f, 0.0f, glnWidth, glnHeight, 0.0f, 1.0f);
+	GXSetScissor(0, 0, glnWidth, glnHeight);
+	GXSetColorUpdate(GX_TRUE);
+	mGfx->useTexture(nullptr, 0);
+	mGfx->initRender(glnWidth, glnHeight);
 }
 
 /*
@@ -344,18 +369,7 @@ void System::beginRender()
  */
 void System::doneRender()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x24C(r3)
-	  bl        0x3528
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mGfx->doneRender();
 }
 
 /*
@@ -365,18 +379,7 @@ void System::doneRender()
  */
 void System::waitRetrace()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x24C(r3)
-	  bl        0x3534
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mGfx->waitRetrace();
 }
 
 /*
@@ -384,37 +387,21 @@ void System::waitRetrace()
  * Address:	80044BB4
  * Size:	000060
  */
-void System::run(BaseApp*)
+void System::run(BaseApp* app)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bl        0x1CDD50
+	GXInvalidateTexAll();
 
-	.loc_0x20:
-	  bl        -0x2E274
-	  li        r3, 0
-	  bl        0x1C5EC8
-	  li        r3, 0x1
-	  bl        0x1C5EC0
-	  addi      r3, r30, 0x27C
-	  bl        0x25C8
-	  mr        r3, r30
-	  bl        0x78
-	  bl        0x1B8058
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x20
-	*/
+	while (true) {
+		Jac_Gsync();
+		CARDProbe(0);
+		CARDProbe(1);
+		mControllerMgr.update();
+		updateSysClock();
+		OSCheckActiveThreads();
+		app->idle();
+	}
+
+	u32 badcompiler[2];
 }
 
 /*
@@ -424,31 +411,7 @@ void System::run(BaseApp*)
  */
 f32 System::getTime()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  bl        0x1B8798
-	  lis       r4, 0x8000
-	  lfd       f1, -0x7B78(r2)
-	  lwz       r0, 0xF8(r4)
-	  lis       r4, 0x1062
-	  addi      r4, r4, 0x4DD3
-	  rlwinm    r0,r0,30,2,31
-	  mulhwu    r0, r4, r0
-	  rlwinm    r0,r0,26,6,31
-	  divwu     r0, r3, r0
-	  stw       r0, 0x14(r1)
-	  lis       r0, 0x4330
-	  stw       r0, 0x10(r1)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f1, f0, f1
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return OSTicksToMilliseconds(OSGetTick());
 }
 
 /*
@@ -458,94 +421,25 @@ f32 System::getTime()
  */
 void System::updateSysClock()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r3
-	  bl        0x1B8738
-	  lwz       r6, 0x294(r31)
-	  lis       r4, 0x8000
-	  lis       r5, 0x4330
-	  addi      r0, r6, 0x1
-	  stw       r0, 0x294(r31)
-	  lwz       r0, 0x280(r31)
-	  sub       r0, r3, r0
-	  stw       r0, 0x288(r31)
-	  lwz       r6, 0x288(r31)
-	  lwz       r0, 0xF8(r4)
-	  xoris     r4, r6, 0x8000
-	  lfd       f3, -0x7B80(r2)
-	  rlwinm    r0,r0,30,2,31
-	  stw       r4, 0x1C(r1)
-	  lfd       f1, -0x7B78(r2)
-	  stw       r0, 0x14(r1)
-	  stw       r5, 0x18(r1)
-	  stw       r5, 0x10(r1)
-	  lfd       f2, 0x18(r1)
-	  lfd       f0, 0x10(r1)
-	  fsub      f2, f2, f3
-	  fsub      f0, f0, f1
-	  fdiv      f0, f2, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x28C(r31)
-	  lwz       r4, 0x29C(r31)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x29C(r31)
-	  lfs       f1, 0x28C(r31)
-	  lfs       f0, -0x7B70(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x9C
-	  stfs      f0, 0x28C(r31)
+	OSTick tick = OSGetTick();
+	_294++;
+	_288       = tick - _280;
+	mDeltaTime = _288 / (f64)OS_TIMER_CLOCK;
+	_29C++;
+	if (mDeltaTime > f32(1.0f / 30.0f)) {
+		mDeltaTime = f32(1.0f / 30.0f);
+	}
+	if (mDeltaTime < 0.0f) {
+		mDeltaTime = 0.0f;
+	}
 
-	.loc_0x9C:
-	  lfs       f1, 0x28C(r31)
-	  lfs       f0, -0x7B88(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xB0
-	  stfs      f0, 0x28C(r31)
-
-	.loc_0xB0:
-	  lis       r4, 0x8000
-	  lwz       r5, 0x284(r31)
-	  lwz       r0, 0xF8(r4)
-	  sub       r4, r3, r5
-	  rlwinm    r7,r0,30,2,31
-	  cmplw     r4, r7
-	  ble-      .loc_0x124
-	  lwz       r6, 0x298(r31)
-	  xoris     r0, r4, 0x8000
-	  lwz       r5, 0x294(r31)
-	  lis       r4, 0x4330
-	  stw       r0, 0x1C(r1)
-	  sub       r0, r5, r6
-	  lfd       f2, -0x7B78(r2)
-	  mullw     r0, r7, r0
-	  stw       r4, 0x18(r1)
-	  lfd       f1, -0x7B80(r2)
-	  lfd       f0, 0x18(r1)
-	  fsub      f0, f0, f1
-	  stw       r0, 0x14(r1)
-	  stw       r4, 0x10(r1)
-	  lfd       f1, 0x10(r1)
-	  fsub      f1, f1, f2
-	  fdiv      f0, f1, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x290(r31)
-	  stw       r3, 0x284(r31)
-	  lwz       r0, 0x294(r31)
-	  stw       r0, 0x298(r31)
-
-	.loc_0x124:
-	  stw       r3, 0x280(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	int time = tick - _284;
+	if (time > OS_TIMER_CLOCK) {
+		_290 = (f64)(OS_TIMER_CLOCK * (_294 - _298)) / time;
+		_284 = tick;
+		_298 = _294;
+	}
+	_280 = tick;
 }
 
 /*
@@ -553,8 +447,13 @@ void System::updateSysClock()
  * Address:	80044DA8
  * Size:	00039C
  */
-void System::parseArchiveDirectory(char*, char*)
+void System::parseArchiveDirectory(char* path1, char* path2)
 {
+	gsys->getHeap(gsys->mActiveHeapIdx);
+	DVDStream stream;
+	stream.mPath       = path1;
+	stream.mIsFileOpen = DVDOpen(path1, &stream.mFileInfo) != 0;
+	sprintf(lastName, stream.mPath);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -845,6 +744,7 @@ int DVDStream::getPending()
  */
 void ParseMapFile()
 {
+	FORCE_DONT_INLINE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1351,6 +1251,25 @@ void System::findAddress(u32)
  */
 void System::hardReset()
 {
+	int old = _198 != false;
+	_198    = 0;
+	if (useSymbols) {
+		gsys->getHeap(gsys->mActiveHeapIdx);
+		OSGetTick();
+		ParseMapFile();
+		OSGetTick();
+		gsys->getHeap(gsys->mActiveHeapIdx);
+	}
+	_198 = old;
+
+	mCacher  = new TextureCacher(0x96000);
+	int size = 0x20000;
+	gsys->mHeaps[SYSHEAP_Lang].init("language", 2, alloc(size), size);
+	preloadLanguage();
+
+	_29C = 0;
+
+	u32 badcompiler[16];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1457,71 +1376,6 @@ System::System()
 	gsys              = this;
 	_2BC              = 0;
 	mTimer            = nullptr;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  mr        r28, r3
-	  bl        -0x6AF0
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x55F0
-	  lis       r3, 0x802A
-	  stw       r0, 0x1A0(r28)
-	  addi      r0, r3, 0x56DC
-	  lis       r3, 0x8022
-	  stw       r0, 0x27C(r28)
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x8022
-	  stw       r0, 0x2A8(r28)
-	  addi      r0, r3, 0x737C
-	  stw       r0, 0x2A8(r28)
-	  li        r29, 0
-	  lis       r3, 0x802A
-	  stw       r29, 0x2B8(r28)
-	  subi      r30, r13, 0x7840
-	  addi      r3, r3, 0x5474
-	  stw       r29, 0x2B4(r28)
-	  li        r31, 0x1
-	  lis       r0, 0x4
-	  stw       r29, 0x2B0(r28)
-	  stw       r30, 0x2AC(r28)
-	  stw       r3, 0x2A8(r28)
-	  stw       r29, 0x18(r28)
-	  stw       r29, 0x1C(r28)
-	  stw       r29, 0x20(r28)
-	  stw       r29, 0x24(r28)
-	  stw       r31, 0x28(r28)
-	  stw       r29, 0x30(r28)
-	  stw       r0, 0x25C(r28)
-	  bl        0x1B6114
-	  stw       r3, 0x274(r28)
-	  li        r0, -0x1
-	  addi      r3, r28, 0
-	  stw       r29, 0x254(r28)
-	  stw       r0, 0x258(r28)
-	  stw       r29, 0x2A4(r28)
-	  stw       r31, 0x32C(r28)
-	  stw       r31, 0x330(r28)
-	  stw       r30, 0x4C(r28)
-	  stw       r29, 0x278(r28)
-	  stw       r0, 0x194(r28)
-	  stw       r28, 0x2DEC(r13)
-	  stw       r29, 0x2BC(r28)
-	  stw       r29, 0x34(r28)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1541,105 +1395,21 @@ void sysErrorHandler(u16, OSContext*, u32, u32)
  */
 void initBigFont()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x3C
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  bl        0x15C0
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x2C
-	  bl        -0x18C0
+	Texture* tex = new Texture;
+	TexImg* img  = new TexImg;
+	gsys->addTexture(tex, "bigFont.bti");
 
-	.loc_0x2C:
-	  li        r3, 0x34
-	  bl        0x15A8
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0x88
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r30)
-	  addi      r0, r3, 0x737C
-	  stw       r0, 0x0(r30)
-	  li        r5, 0
-	  lis       r3, 0x8023
-	  stw       r5, 0x10(r30)
-	  subi      r4, r13, 0x7804
-	  subi      r3, r3, 0x7EBC
-	  stw       r5, 0xC(r30)
-	  li        r0, 0x1
-	  stw       r5, 0x8(r30)
-	  stw       r4, 0x4(r30)
-	  stw       r3, 0x0(r30)
-	  stw       r0, 0x24(r30)
-	  stw       r5, 0x30(r30)
-
-	.loc_0x88:
-	  lis       r4, 0x802A
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r5, r4, 0x5164
-	  addi      r4, r31, 0
-	  bl        -0x62CC
-	  li        r0, 0x5
-	  stw       r0, 0x18(r30)
-	  li        r0, 0x1F8
-	  li        r3, 0x3F0
-	  stw       r0, 0x1C(r30)
-	  li        r0, 0x101
-	  stw       r3, 0x20(r30)
-	  sth       r0, 0x6(r31)
-	  lwz       r3, 0x18(r30)
-	  lwz       r4, 0x1C(r30)
-	  lwz       r5, 0x20(r30)
-	  bl        -0x1D388
-	  lis       r4, 0x8023
-	  stw       r3, 0x28(r30)
-	  subi      r0, r4, 0x6F40
-	  stw       r0, 0x2C(r30)
-	  addi      r4, r31, 0xC
-	  addi      r5, r31, 0x10
-	  lwz       r3, 0x18(r30)
-	  bl        -0x1D1DC
-	  lwz       r0, 0x1C(r30)
-	  lis       r5, 0x4330
-	  lfd       f1, -0x7B80(r2)
-	  addi      r3, r31, 0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x14(r1)
-	  mr        r4, r30
-	  lfs       f2, -0x7B84(r2)
-	  stw       r5, 0x10(r1)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f0, f0, f1
-	  fdivs     f0, f2, f0
-	  stfs      f0, 0x28(r31)
-	  lwz       r0, 0x20(r30)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0xC(r1)
-	  stw       r5, 0x8(r1)
-	  lfd       f0, 0x8(r1)
-	  fsubs     f0, f0, f1
-	  fdivs     f0, f2, f0
-	  stfs      f0, 0x2C(r31)
-	  bl        -0x1414
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	img->mFormat      = TEX_FMT_IA4;
+	img->mWidth       = 504;
+	img->mHeight      = 1008;
+	tex->mTexFlags    = 0x101;
+	img->mDataSize    = img->calcDataSize(img->mFormat, img->mWidth, img->mHeight);
+	img->mTextureData = bigFont_data;
+	img->getTileSize(img->mFormat, tex->mTileSizeX, tex->mTileSizeY);
+	tex->mWidthFactor  = 1.0f / img->mWidth;
+	tex->mHeightFactor = 1.0f / img->mHeight;
+	tex->decodeData(img);
+	tex->attach();
 }
 
 /*
@@ -1647,8 +1417,26 @@ void initBigFont()
  * Address:	80045B9C
  * Size:	000180
  */
-void System::showDvdError(Graphics&)
+void System::showDvdError(Graphics& gfx)
 {
+	if (_258 < 0) {
+		return;
+	}
+
+	gfx.setColour(Colour(0, 0, 0, 255), true);
+	gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.setAuxColour(Colour(255, 255, 255, 255));
+
+	if (_258) {
+		int y = 160;
+		for (const char* str = errorList[_258][0]; str, str++;) {
+			int x = bigFont->stringWidth((char*)str);
+			y += 28;
+			gfx.texturePrintf(bigFont, 320 - x / 2, y, (char*)str);
+		}
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1763,6 +1551,48 @@ void System::showDvdError(Graphics&)
  */
 void System::Initialise()
 {
+	OSInit();
+	CARDInit();
+	void* lo = OSGetArenaLo();
+	void* hi = OSGetArenaHi();
+	_244     = OSRoundUp32B(OSInitAlloc(lo, hi, 1));
+	_248     = OSRoundDown32B(hi) - _244;
+	if (_248 < 0x1800000) {
+		useSymbols = false;
+	}
+	mHeaps[0].init("sys", 1, (void*)_244, _248);
+	setHeap(0);
+	sysCon = new LogStream;
+	errCon = sysCon;
+	DVDInit();
+	if (!dvdStream.readBuffer) {
+		dvdStream.readBuffer = new (0x20) u8[dvdStream.mOffset];
+	}
+	gsys->getHeap(0);
+	static u32 mMemoryTable;
+	ARInit(&mMemoryTable, 3);
+	ARQInit();
+
+	onceInit();
+
+	mGfx = new DGXGraphics(false);
+
+	// OSInitMessageQueue(&dvdMesgQueue, &dvdMesgBuffer, 1);
+	// OSInitMessageQueue(&loadMesgQueue, &loadMesgBuffer, 1);
+	// OSInitMessageQueue(&sysMesgQueue, &sysMesgBuffer, 1);
+	initBigFont();
+	startDvdThread();
+
+	bigFont = new Font;
+	bigFont->setTexture(loadTexture("bigFont.bti", true), 21, 42);
+	_254 = new Delegate1<System, Graphics&>(this, showDvdError);
+	startLoading(nullptr, true, 0);
+
+	Font* cons = new Font;
+	cons->setTexture(loadTexture("consFont.bti", true), 16, 8);
+	mConsFont = cons;
+
+	endLoading();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2092,30 +1922,6 @@ void System::sndPlaySe(u32)
  */
 System::~System()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  beq-      .loc_0x34
-	  lis       r3, 0x802A
-	  addi      r3, r3, 0x55F0
-	  extsh.    r0, r4
-	  stw       r3, 0x1A0(r31)
-	  ble-      .loc_0x34
-	  mr        r3, r31
-	  bl        0xFC4
-
-	.loc_0x34:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -2144,7 +1950,7 @@ bool System::hasDebugInfo()
  * Address:	80046204
  * Size:	000348
  */
-void loadFunc(void*)
+void* loadFunc(void*)
 {
 	/*
 	.loc_0x0:
@@ -2406,50 +2212,16 @@ void LoadIdler::init()
  * Address:	80046554
  * Size:	000094
  */
-void System::startLoading(LoadIdler*, bool, u32)
+void System::startLoading(LoadIdler* idler, bool a1, u32 a2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r8, 0x803A
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  subi      r31, r8, 0x7780
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  lwz       r7, 0x2DEC(r13)
-	  stw       r0, 0x2A4(r7)
-	  addi      r7, r4, 0
-	  lwz       r0, 0x260(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x7C
-	  stw       r6, 0x264(r30)
-	  rlwinm    r0,r5,0,24,31
-	  lis       r3, 0x8004
-	  stw       r0, 0x268(r30)
-	  addi      r4, r3, 0x6204
-	  addi      r5, r7, 0
-	  addi      r3, r31, 0x538
-	  addi      r6, r31, 0x2860
-	  li        r7, 0x2000
-	  li        r8, 0xF
-	  li        r9, 0
-	  bl        0x1B5B08
-	  li        r0, 0x1
-	  stw       r0, 0x260(r30)
-	  addi      r3, r31, 0x538
-	  bl        0x1B5FF8
-
-	.loc_0x7C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	gsys->_2A4 = 0;
+	if (_260 == 0) {
+		_264 = a2;
+		_268 = a1;
+		OSCreateThread(&Thread, loadFunc, idler, &dvdThread, 0x2000, 15, 0);
+		_260 = 1;
+		OSResumeThread(&Thread);
+	}
 }
 
 /*
@@ -2459,22 +2231,7 @@ void System::startLoading(LoadIdler*, bool, u32)
  */
 void System::nudgeLoading()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  lis       r4, 0x4E45
-	  subi      r3, r3, 0x7420
-	  stwu      r1, -0x8(r1)
-	  addi      r4, r4, 0x5746
-	  li        r5, 0
-	  bl        0x1B320C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	OSSendMessage(&loadMesgQueue, (OSMessage)'NEWF', 0);
 }
 
 /*
@@ -2484,41 +2241,14 @@ void System::nudgeLoading()
  */
 void System::endLoading()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lwz       r4, 0x2DEC(r13)
-	  stw       r0, 0x2A4(r4)
-	  lwz       r0, 0x260(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x64
-	  lis       r3, 0x803A
-	  lis       r4, 0x5155
-	  subi      r3, r3, 0x7420
-	  addi      r4, r4, 0x4954
-	  li        r5, 0x1
-	  bl        0x1B31B8
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x7248
-	  li        r4, 0
-	  bl        0x1B5E18
-	  bl        0x1C8BE4
-	  li        r0, 0
-	  stw       r0, 0x260(r31)
-	  stw       r0, 0x268(r31)
-
-	.loc_0x64:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	gsys->_2A4 = 1;
+	if (_260) {
+		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', 1);
+		OSJoinThread(&Thread, nullptr);
+		GXSetCurrentGXThread();
+		_260 = 0;
+		_268 = 0;
+	}
 }
 
 /*
@@ -2559,6 +2289,7 @@ void doneDMA(u32)
  */
 void System::copyWaitUntilDone()
 {
+	while (_32C == 0) { }
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x32C(r3)
@@ -2573,8 +2304,16 @@ void System::copyWaitUntilDone()
  * Address:	800466F0
  * Size:	000104
  */
-u32 System::copyRamToCache(u32, u32, u32)
+u32 System::copyRamToCache(u32 a1, u32 a2, u32 a3)
 {
+	copyWaitUntilDone();
+
+	BOOL inter = OSDisableInterrupts();
+	OSRestoreInterrupts(inter);
+	gsys->_32C = 0;
+	DCStoreRange((void*)a1, a2);
+	ARQPostRequest(0, 0, 0, 1, a1, a3, a2, doneDMA);
+	return a3;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2654,8 +2393,17 @@ u32 System::copyRamToCache(u32, u32, u32)
  * Address:	800467F4
  * Size:	0000C4
  */
-void System::copyCacheToRam(u32, u32, u32)
+void System::copyCacheToRam(u32 a1, u32 a2, u32 a3)
 {
+	copyWaitUntilDone();
+
+	BOOL inter = OSDisableInterrupts();
+	_308->mCacheInfo->remove();
+	OSRestoreInterrupts(inter);
+	gsys->_32C = 0;
+	DCInvalidateRange((void*)a1, a3);
+	ARQPostRequest(0, 0, 1, 1, a1, a3, a2, doneDMA);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2775,8 +2523,21 @@ void freeBuffer(u32)
  * Address:	80046978
  * Size:	0000CC
  */
-void System::copyCacheToTexture(CacheTexture*)
+void System::copyCacheToTexture(CacheTexture* tex)
 {
+	BOOL inter = OSDisableInterrupts();
+	_308->mCacheInfo->remove();
+
+	int a   = tex->_48;
+	void* b = tex->mTexImage->mTextureData;
+	void* c = tex->mTexImage->mPixelData;
+
+	OSRestoreInterrupts(inter);
+	gsys->_330 = 0;
+	DCInvalidateRange(b, (u32)c);
+	ARQPostRequest(0, (u32)tex, 1, 1, a, (u32)b, (u32)c, freeBuffer);
+
+	while (_330 == 0) { }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2840,174 +2601,69 @@ void System::copyCacheToTexture(CacheTexture*)
  * Address:	80046A44
  * Size:	000224
  */
-void dvdFunc(void*)
+void* dvdFunc(void*)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  subi      r31, r3, 0x7440
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  li        r29, 0
-	  stw       r28, 0x10(r1)
-	  li        r28, 0
+	int stopped      = false;
+	int playedSe     = false;
+	int inputCounter = 0;
 
-	.loc_0x30:
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  li        r5, 0x1
-	  bl        0x1B2E5C
-	  cmpwi     r30, 0
-	  bne-      .loc_0xDC
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0x400
-	  lwzu      r12, 0x27C(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC0
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0x200
-	  lwzu      r12, 0x27C(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC0
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0x1000
-	  lwzu      r12, 0x27C(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC0
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x1E
-	  bne-      .loc_0xC4
-	  bl        -0x2F7D8
-	  li        r30, 0x1
-	  b         .loc_0xC4
+	while (true) {
+		OSReceiveMessage(&dvdMesgQueue, nullptr, 1);
+		if (!stopped) {
+			if (gsys->mControllerMgr.keyDown(KBBTN_DPAD_UP) && gsys->mControllerMgr.keyDown(KBBTN_DPAD_RIGHT)
+			    && gsys->mControllerMgr.keyDown(KBBTN_A)) {
+				inputCounter++;
+				if (inputCounter == 30) {
+					Jac_Freeze_Precall();
+					stopped = true;
+				}
+			} else {
+				inputCounter = 0;
+			}
+			if (OSGetResetSwitchState() != 0) {
+				Jac_Freeze_Precall();
+				stopped = true;
+			}
+		} else {
+			if (OSGetResetSwitchState() == 0 && gsys->_26C == 0 && gsys->_270 == 0) {
+				PADRecalibrate(0xf0000000);
+				Jac_Freeze();
+				VISetBlack(1);
+				VIFlush();
+				VIWaitForRetrace();
+				VIWaitForRetrace();
+				OSResetSystem(0, 0, 0);
+			}
+		}
 
-	.loc_0xC0:
-	  li        r28, 0
+		s32 stat = DVDGetDriveStatus();
+		if (stat == DVD_STATE_FATAL_ERROR)
+			gsys->_258 = 1;
+		else if (stat == DVD_STATE_RETRY)
+			gsys->_258 = 2;
+		else if (stat == DVD_STATE_NO_DISK)
+			gsys->_258 = 3;
+		else if (stat == DVD_STATE_COVER_OPEN)
+			gsys->_258 = 4;
+		else if (stat == DVD_STATE_WRONG_DISK)
+			gsys->_258 = 5;
+		else {
+			int* test = &gsys->_258;
+			if (*test != -1 && stat == 1) {
+				*test = 0;
+			} else {
+				*test = -1;
+			}
+		}
 
-	.loc_0xC4:
-	  bl        0x1B39A0
-	  cmpwi     r3, 0
-	  beq-      .loc_0x134
-	  bl        -0x2F7F4
-	  li        r30, 0x1
-	  b         .loc_0x134
-
-	.loc_0xDC:
-	  bl        0x1B3988
-	  cmpwi     r3, 0
-	  bne-      .loc_0x134
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x26C(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x134
-	  lwz       r0, 0x270(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x134
-	  lis       r3, 0xF000
-	  bl        0x1BE344
-	  bl        -0x2F7D0
-	  li        r3, 0x1
-	  bl        0x1BCEEC
-	  bl        0x1BCD60
-	  bl        0x1BC1F8
-	  bl        0x1BC1F4
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x1B3688
-
-	.loc_0x134:
-	  bl        0x1BAD98
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x150
-	  lwz       r3, 0x2DEC(r13)
-	  li        r0, 0x1
-	  stw       r0, 0x258(r3)
-	  b         .loc_0x1DC
-
-	.loc_0x150:
-	  cmpwi     r3, 0xB
-	  bne-      .loc_0x168
-	  lwz       r3, 0x2DEC(r13)
-	  li        r0, 0x2
-	  stw       r0, 0x258(r3)
-	  b         .loc_0x1DC
-
-	.loc_0x168:
-	  cmpwi     r3, 0x4
-	  bne-      .loc_0x180
-	  lwz       r3, 0x2DEC(r13)
-	  li        r0, 0x3
-	  stw       r0, 0x258(r3)
-	  b         .loc_0x1DC
-
-	.loc_0x180:
-	  cmpwi     r3, 0x5
-	  bne-      .loc_0x198
-	  lwz       r3, 0x2DEC(r13)
-	  li        r0, 0x4
-	  stw       r0, 0x258(r3)
-	  b         .loc_0x1DC
-
-	.loc_0x198:
-	  cmpwi     r3, 0x6
-	  bne-      .loc_0x1B0
-	  lwz       r3, 0x2DEC(r13)
-	  li        r0, 0x5
-	  stw       r0, 0x258(r3)
-	  b         .loc_0x1DC
-
-	.loc_0x1B0:
-	  lwz       r4, 0x2DEC(r13)
-	  lwzu      r0, 0x258(r4)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x1D4
-	  cmpwi     r3, 0x1
-	  bne-      .loc_0x1D4
-	  li        r0, 0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x1DC
-
-	.loc_0x1D4:
-	  li        r0, -0x1
-	  stw       r0, 0x0(r4)
-
-	.loc_0x1DC:
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x258(r3)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x204
-	  cmpwi     r29, 0
-	  bne-      .loc_0x204
-	  li        r3, 0x26
-	  bl        -0x3009C
-	  li        r29, 0x1
-	  b         .loc_0x30
-
-	.loc_0x204:
-	  cmpwi     r0, 0
-	  bge+      .loc_0x30
-	  cmpwi     r29, 0
-	  beq+      .loc_0x30
-	  li        r3, 0x27
-	  bl        -0x300BC
-	  li        r29, 0
-	  b         .loc_0x30
-	*/
+		if (gsys->_258 >= 0 && !playedSe) {
+			Jac_PlaySystemSe(0x26); // no idea what sound these are
+			playedSe = true;
+		} else if (gsys->_258 < 0 && playedSe) {
+			Jac_PlaySystemSe(0x27);
+			playedSe = false;
+		}
+	}
 }
 
 /*
@@ -3017,22 +2673,7 @@ void dvdFunc(void*)
  */
 void System::nudgeDvdThread()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  lis       r4, 0x4E45
-	  subi      r3, r3, 0x7440
-	  stwu      r1, -0x8(r1)
-	  addi      r4, r4, 0x5746
-	  li        r5, 0
-	  bl        0x1B2B8C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	OSSendMessage(&dvdMesgQueue, (OSMessage)'NEWF', 0);
 }
 
 /*
@@ -3042,6 +2683,8 @@ void System::nudgeDvdThread()
  */
 void System::startDvdThread()
 {
+	OSCreateThread(&dvdThread, dvdFunc, nullptr, 0, 0x2000, 0xf, 1);
+	OSResumeThread(&dvdThread);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3217,51 +2860,7 @@ void DVDStream::close()
 	if (mIsFileOpen) {
 		DVDClose(&mFileInfo);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, 0x2E08(r13)
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x2E08(r13)
-	  lbz       r0, 0x4C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2C
-	  addi      r3, r3, 0x8
-	  bl        0x1B853C
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
-
-// /*
-//  * --INFO--
-//  * Address:	80046EAC
-//  * Size:	000030
-//  */
-// void Delegate1<System, Graphics&>::invoke(Graphics&)
-// {
-// 	/*
-// 	.loc_0x0:
-// 	  mflr      r0
-// 	  mr        r5, r3
-// 	  stw       r0, 0x4(r1)
-// 	  addi      r12, r5, 0x8
-// 	  stwu      r1, -0x8(r1)
-// 	  lwz       r3, 0x4(r3)
-// 	  bl        0x1CDE6C
-// 	  nop
-// 	  lwz       r0, 0xC(r1)
-// 	  addi      r1, r1, 0x8
-// 	  mtlr      r0
-// 	  blr
-// 	*/
-// }
 
 /*
  * --INFO--
@@ -3332,40 +2931,10 @@ int AramStream::getPending()
  * Address:	80046F88
  * Size:	00007C
  */
-void AramStream::read(void*, int)
+void AramStream::read(void* data, int size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r6, r5, 0x1F
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  rlwinm    r31,r6,0,0,26
-	  addi      r6, r31, 0
-	  stw       r30, 0x18(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r5, 0x8(r30)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r0, 0xC(r30)
-	  lwz       r12, 0x14(r12)
-	  add       r5, r5, r0
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r30)
-	  add       r0, r0, r31
-	  stw       r0, 0xC(r30)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	int readSize = OSRoundUp32B(size);
+	gsys->copyCacheToRam((u32)data, _08 + _0C, readSize);
+	gsys->copyWaitUntilDone();
+	_0C += readSize;
 }
