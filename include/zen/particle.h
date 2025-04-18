@@ -9,6 +9,7 @@
 #include "Dolphin/mtx.h"
 #include "Colour.h"
 #include "sysNew.h"
+#include "Dolphin/gx.h"
 
 struct Colour;
 struct Graphics;
@@ -24,6 +25,29 @@ struct PtclLoadInfo {
 	char* mPCRPath;  // _00
 	char* mTex1Path; // _04
 	char* mTex2Path; // _08
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size 0x10. This is used by effectMgr to load in geometry for EffShpInst things
+ */
+struct GeometryLoadInfo {
+	char* mMODPath;  // _00
+	char* mAnimPath; // _04
+	f32 mScale;      // _08
+	u8 mLoopMax;     // _0C
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size 0xC. This is used by effectMgr to load in simple particle info.
+ */
+struct SimplePtclLoadInfo {
+	char* mBTIPath; // _00
+	GXColor _04;    // _04
+	GXColor _08;    // _08
 };
 
 namespace zen {
@@ -542,6 +566,8 @@ struct PCRData : public zenList {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct particleLoader : public zenListManager {
 	u8* load(char*, bool);
@@ -572,8 +598,8 @@ struct simplePtclManager {
 	void forceFinish();
 
 	// unused/inlined:
-	void create(Texture*, s16, const Vector3f&, const Vector3f&, const Vector3f&, f32, f32, const Colour&, const Colour&,
-	            zen::CallBack1<zen::particleMdl*>*);
+	zen::particleMdl* create(Texture*, s16, const Vector3f&, const Vector3f&, const Vector3f&, f32, f32, const Colour&, const Colour&,
+	                         zen::CallBack1<zen::particleMdl*>*);
 	~simplePtclManager();
 
 	void init(particleMdlManager* mdlMgr) { mMdlMgr = mdlMgr; }
@@ -617,7 +643,11 @@ struct particleManager {
 	void pmPutPtclGen(zenList* gen) { _20.put(gen); }
 
 	// remaining DLL functions:
-	// particleMdl* createParticle(Texture*, s16, Vector3f&, Vector3f&, Vector3f&, f32, f32, Colour, Colour, CallBack1<particleMdl*>*);
+	particleMdl* createParticle(Texture* tex, s16 p2, Vector3f& p3, Vector3f& p4, Vector3f& p5, f32 p6, f32 p7, Colour p8, Colour p9,
+	                            CallBack1<particleMdl*>* cbPtcl)
+	{
+		return mSimplePtclMgr.create(tex, p2, p3, p4, p5, p6, p7, p8, p9, cbPtcl);
+	}
 
 	static const f32 DEFAULT_FRAME_RATE;
 	static const u16 MAX_PTCLGENS_NUM;

@@ -4,8 +4,12 @@
 #include "types.h"
 #include "Node.h"
 #include "zen/particle.h"
+#include "Shape.h"
 
 struct Texture;
+struct EffectParticleRegistration;
+struct EffectGeometryRegistration;
+struct EffectSimpleParticleRegistration;
 
 /**
  * @brief TODO
@@ -14,11 +18,35 @@ struct SmokeEmitter : public Node {
 
 	/**
 	 * @brief TODO
+	 *
+	 * @note Size: 0x38.
 	 */
 	struct Smoke {
-		Smoke(); // unused/inlined
+		Smoke() { mNext = mPrev = nullptr; }
 
-		// TODO: members
+		void insertAfter(Smoke* newSmoke)
+		{
+			newSmoke->mNext = mNext;
+			newSmoke->mPrev = this;
+			mNext->mPrev    = newSmoke;
+			mNext           = newSmoke;
+		}
+		void remove()
+		{
+			mNext->mPrev = mPrev;
+			mPrev->mNext = mNext;
+		}
+
+		Vector3f mPosition; // _00
+		f32 mSize;          // _0C
+		Smoke* mNext;       // _10
+		Smoke* mPrev;       // _14
+		f32 mLifeTimer;     // _18
+		f32 mExpandRate;    // _1C
+		f32 mAlpha;         // _20
+		f32 mAlphaIncRate;  // _24
+		f32 mMaxSize;       // _28
+		Vector3f mVelocity; // _2C
 	};
 
 	SmokeEmitter(int, Texture*); // unused/inlined
@@ -31,13 +59,31 @@ struct SmokeEmitter : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
+	Smoke* mSmokes;            // _20
+	int mSmokeCount;           // _24
+	int mBlendMode;            // _28
+	Smoke* mActiveSmokeList;   // _2C
+	Smoke* mInactiveSmokeList; // _30
+	Texture* mTexture;         // _34
+	Shape* mModel;             // _38
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x28.
  */
 struct EffectShape : public CoreNode {
+	EffectShape()
+	    : CoreNode("")
+	{
+	}
+
+	EffectShape(char* modelFile)
+	    : CoreNode("")
+	{
+		initShape(modelFile);
+	}
 
 	// unused/inlined:
 	void initShape(char*);
@@ -46,13 +92,22 @@ struct EffectShape : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	Shape* mModel;              // _14
+	ShapeDynMaterials mDynMats; // _18
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x44.
  */
 struct EffShpInst : public CoreNode {
+	EffShpInst()
+	    : CoreNode("")
+	{
+		initEffShpInst();
+		visible();
+	}
 
 	bool update();
 
@@ -60,48 +115,28 @@ struct EffShpInst : public CoreNode {
 	void initEffShpInst();
 	void draw(Graphics&);
 
+	bool isVisible() { return mIsVisible; }
+	void visible() { mIsVisible = true; }
+
+	// DLL inlines to do:
+	void setLoop(u8 loop) { mLoop = loop; }
+	void setLoopMax(u8 max) { mLoopMax = max; }
+	void invisible();
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Vector3f _14;        // _14
-	u8 _20[0x42 - 0x20]; // _20, unknown
-	u8 _42;              // _42
-	                     // TODO: members
+	SRT mSRT;                  // _14
+	EffectShape* mEffectShape; // _38
+	f32 _3C;                   // _3C
+	u8 mLoop;                  // _40
+	u8 mLoopMax;               // _41
+	bool mIsVisible;           // _42
 };
 
 /**
  * @brief TODO
- */
-struct EffectParticleRegistration {
-	EffectParticleRegistration(char*, char*, char*); // unused/inlined
-
-	virtual void create(Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
-	                    zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct EffectGeometryRegistration {
-	EffectGeometryRegistration(char*, char*, f32, u8); // unused/inlined
-
-	virtual EffShpInst* create(Vector3f&, Vector3f&, Vector3f&); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct EffectSimpleParticleRegistration {
-	EffectSimpleParticleRegistration(char*, Colour, Colour); // unused/inlined
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
+ *
+ * @note Size: 0x6B4
  */
 struct EffectMgr : public CoreNode {
 
@@ -446,21 +481,26 @@ struct EffectMgr : public CoreNode {
 		EFF_Rocket_Nke1                 = 328, // rct_nke1.pcr
 		EFF_Rocket_Nke2                 = 329, // rct_nke2.pcr
 		EFF_Rocket_Fkm1                 = 330, // rct_fkm1.pcr
-		EFF_331                         = 331,
+		EFF_331                         = 331, // null?
+		EFF_COUNT,                             // 332
 	};
 
 	/**
 	 * @brief TODO
 	 */
 	enum modelTypeTable {
-		// TODO: members
+		MOD_BlueOnyon   = 0, // b_goal.mod
+		MOD_RedOnyon    = 1, // r_goal.mod
+		MOD_YellowOnyon = 2, // y_goal.mod
+		MOD_COUNT,           // 3
 	};
 
 	/**
 	 * @brief TODO
 	 */
 	enum simpleTypeTable {
-		// TODO: members
+		SIMPLE_Horoki = 0, // hokori4.bti, dark gold + brown?
+		SIMPLE_COUNT,      // 1
 	};
 
 	EffectMgr();
@@ -477,8 +517,8 @@ struct EffectMgr : public CoreNode {
 	void killAllShapes();
 
 	// unused/inlined:
-	zen::particleGenerator* create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32,
-	                               zen::CallBack1<zen::particleMdl*>*);
+	zen::particleMdl* create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32,
+	                         zen::CallBack1<zen::particleMdl*>*);
 	void putShapeInst(EffShpInst*);
 
 	void kill(zen::CallBack1<zen::particleGenerator*>* cb1, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2,
@@ -495,17 +535,72 @@ struct EffectMgr : public CoreNode {
 		killAllShapes();
 	}
 
+	void cullingOn() { mDoCulling = true; }
+
 	// DLL inlines to do:
 	void cullingOff();
-	void cullingOn();
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	zen::particleManager mPtclMgr; // _14
-	u8 _18[0x600];                 // _18
-	bool _6B0;                     // _6B0
+	zen::particleManager mPtclMgr;                         // _14
+	zen::particleLoader mPtclLoader;                       // _B0
+	EffectShape mEffectShapeList;                          // _C0
+	EffShpInst mInactiveGeomList;                          // _E8
+	EffShpInst mActiveGeomList;                            // _12C
+	EffectParticleRegistration* mParticles[332];           // _170
+	EffectSimpleParticleRegistration* mSimpleParticles[1]; // _6A0
+	EffectGeometryRegistration* mModels[3];                // _6A4
+	bool mDoCulling;                                       // _6B0
 };
 
 extern EffectMgr* effectMgr;
+
+/**
+ * @brief TODO
+ */
+struct EffectParticleRegistration {
+	EffectParticleRegistration(char*, char*, char*); // unused/inlined
+
+	virtual zen::particleGenerator* create(Vector3f& pos, zen::CallBack1<zen::particleGenerator*>* cbGen,
+	                                       zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl) // _08
+	{
+		return effectMgr->mPtclMgr.createGenerator(mPtclData, mPtclTex, mChildPtclTex, pos, cbGen, cbPtcl);
+	}
+
+	// _00 = VTBL
+	u8* mPtclData;          // _04
+	Texture* mPtclTex;      // _08
+	Texture* mChildPtclTex; // _0C
+};
+
+/**
+ * @brief TODO
+ */
+struct EffectGeometryRegistration {
+	EffectGeometryRegistration(char*, char*, f32, u8); // unused/inlined
+
+	virtual EffShpInst* create(Vector3f&, Vector3f&, Vector3f&); // _08
+
+	// _00 = VTBL
+	EffectShape* mEffectShape; // _04
+	f32 mScale;                // _08
+	u8 mLoopMax;               // _0C
+};
+
+/**
+ * @brief TODO
+ */
+struct EffectSimpleParticleRegistration {
+	EffectSimpleParticleRegistration(char*, Colour, Colour); // unused/inlined
+
+	zen::particleMdl* create(s16 p1, Vector3f& p2, Vector3f& p3, Vector3f& p4, f32 p5, f32 p6, zen::CallBack1<zen::particleMdl*>* cbPtcl)
+	{
+		return effectMgr->mPtclMgr.createParticle(mTexture, p1, p2, p3, p4, p5, p6, _04, _08, cbPtcl);
+	}
+
+	Texture* mTexture; // _00
+	Colour _04;        // _04
+	Colour _08;        // _08
+};
 
 #endif

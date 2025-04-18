@@ -20,8 +20,8 @@ DEFINE_PRINT("TODO: Replace")
  * Address:	........
  * Size:	000150
  */
-void zen::simplePtclManager::create(Texture*, s16, const Vector3f&, const Vector3f&, const Vector3f&, f32, f32, const Colour&,
-                                    const Colour&, zen::CallBack1<zen::particleMdl*>*)
+zen::particleMdl* zen::simplePtclManager::create(Texture*, s16, const Vector3f&, const Vector3f&, const Vector3f&, f32, f32, const Colour&,
+                                                 const Colour&, zen::CallBack1<zen::particleMdl*>*)
 {
 	// UNUSED FUNCTION
 }

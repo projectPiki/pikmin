@@ -1031,10 +1031,10 @@ void GoalItem::startLand()
 	_3CC = 0;
 	startMotion(mOnionColour + 9);
 	setMotionSpeed(30.0f);
-	_3FC = mSpotModelEff->_14;
+	_3FC = mSpotModelEff->mSRT.mScale;
 	setFlowEffect(true);
 	setFlightLight(true);
-	mSpotModelEff->_14.set(0.0f, 0.0f, 0.0f);
+	mSpotModelEff->mSRT.mScale.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -1046,7 +1046,7 @@ void GoalItem::startConeShrink()
 {
 	mIsClosing     = true;
 	mConeSizeTimer = 0.8f;
-	_3FC           = mSpotModelEff->_14;
+	_3FC           = mSpotModelEff->mSRT.mScale;
 }
 
 /*
@@ -1060,17 +1060,17 @@ void GoalItem::updateConeShrink()
 		return;
 	}
 
-	f32 test     = mConeSizeTimer / 0.8f;
-	Vector3f pos = _3FC;
-	pos.x *= test;
-	pos.z *= test;
+	f32 test       = mConeSizeTimer / 0.8f;
+	Vector3f scale = _3FC;
+	scale.x *= test;
+	scale.z *= test;
 
-	mSpotModelEff->_14 = pos;
+	mSpotModelEff->mSRT.mScale = scale;
 
 	mConeSizeTimer -= gsys->getFrameTime();
 
 	if (mConeSizeTimer <= 0.0f) {
-		mSpotModelEff->_14.set(0.0f, 0.0f, 0.0f);
+		mSpotModelEff->mSRT.mScale.set(0.0f, 0.0f, 0.0f);
 		mIsClosing = false;
 	}
 }
@@ -1103,13 +1103,13 @@ void GoalItem::updateConeEmit()
 	pos.x *= test;
 	pos.z *= test;
 
-	mSpotModelEff->_14 = pos;
+	mSpotModelEff->mSRT.mScale = pos;
 
 	mConeSizeTimer += gsys->getFrameTime();
 
 	if (mConeSizeTimer >= 0.8f) {
-		mSpotModelEff->_14 = _3FC;
-		mIsConeEmit        = false;
+		mSpotModelEff->mSRT.mScale = _3FC;
+		mIsConeEmit                = false;
 		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 	}
 }
@@ -1609,11 +1609,11 @@ void GoalItem::refresh(Graphics& gfx)
 	if (!gfx.mCamera->isPointVisible(mPosition, 200.0f)) {
 		enableAICulling();
 		if (!gameflow.mMoviePlayer->mIsActive) {
-			mSpotModelEff->_42 = 0;
+			mSpotModelEff->mIsVisible = 0;
 		}
 	} else {
 		disableAICulling();
-		mSpotModelEff->_42 = 1;
+		mSpotModelEff->mIsVisible = 1;
 	}
 
 	gfx.setLighting(true, nullptr);

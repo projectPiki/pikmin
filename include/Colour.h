@@ -12,14 +12,6 @@
 struct Colour {
 	Colour() { }
 
-	Colour(const Colour& other)
-	{
-		r = other.r;
-		g = other.g;
-		b = other.b;
-		a = other.a;
-	}
-
 	Colour(u8 _r, u8 _g, u8 _b, u8 _a) { set(_r, _g, _b, _a); }
 
 	void set(u8 _r, u8 _g, u8 _b, u8 _a)

@@ -928,7 +928,7 @@ void MoviePlayer::sndFrameMovie(MovieInfo*)
 void MoviePlayer::sndStopMovie(MovieInfo* info)
 {
 	Jac_FinishDemo();
-	effectMgr->_18[0x600] = 1; // this is probably an inline
+	effectMgr->mDoCulling = 1; // this is probably an inline
 	if (gameflow.mGameInterface) {
 		gameflow.mGameInterface->message(8, info->mMovieIndex);
 	}

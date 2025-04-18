@@ -44,9 +44,9 @@ struct IntroGameSetupSection : public BaseGameSection {
 		_44           = 0;
 		_38           = 0;
 		Jac_SceneSetup(11, 0);
-		EffectMgr* mgr = new EffectMgr;
-		mgr->_6B0      = 0;
-		_39C           = new DayMgr(nullptr, mController);
+		EffectMgr* mgr  = new EffectMgr;
+		mgr->mDoCulling = 0;
+		_39C            = new DayMgr(nullptr, mController);
 
 		int size     = 0x500000;
 		void* memory = System::alloc(size);
