@@ -21,11 +21,11 @@ struct NaviWhistle : public KEffect {
 	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _24
 	{
 		// NON-MATCHING
-		Vector3f diff      = mNavi->mCursorWorldPos - mNavi->mNaviLightPosition;
-		f32 ratio          = f32(ptcl->mAge) / f32(ptcl->mLifeTime);
-		f32 compRatio      = 1.0f - ratio;
-		ptcl->mLocalOffset = mNavi->mNaviLightPosition;
-		ptcl->mPosition    = diff * ratio;
+		Vector3f diff         = mNavi->mCursorWorldPos - mNavi->mNaviLightPosition;
+		f32 ratio             = f32(ptcl->mAge) / f32(ptcl->mLifeTime);
+		f32 compRatio         = 1.0f - ratio;
+		ptcl->mGlobalPosition = mNavi->mNaviLightPosition;
+		ptcl->mLocalPosition  = diff * ratio;
 
 		if (mNavi->mCursorWorldPos.y < mNavi->getPosition().y + 15.0f) {
 			CollTriInfo* tri = mapMgr->getCurrTri(mNavi->mCursorWorldPos.x, mNavi->mCursorWorldPos.z, true);
@@ -45,11 +45,11 @@ struct NaviWhistle : public KEffect {
 			q1.fromMat3f(mtx1);
 			q2.fromMat3f(mtx2);
 			q1.slerp(q2, ratio, 0);
-			q1.genVectorY(ptcl->_5C);
+			q1.genVectorY(ptcl->mOrientedNormal);
 			q1.genVectorX(ptcl->mVelocity);
 			ptcl->mVelocity.multiply(0.01f);
 		} else {
-			ptcl->_5C.set(diff);
+			ptcl->mOrientedNormal.set(diff);
 		}
 
 		return false;

@@ -16,6 +16,9 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT("bBoardColourAnim")
 
+// these are functions in the DLL, but I have no idea what their names are or if they're even in the DLL map we have
+// I think they're probably genuinely static inlines, same as in particleGenerator. Thanks Yamashita.
+
 static inline void bBoard_readU8(u8* outVal, u8*& data, u32 size)
 {
 	*outVal = *data;

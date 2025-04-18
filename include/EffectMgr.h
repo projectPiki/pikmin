@@ -593,14 +593,16 @@ struct EffectGeometryRegistration {
 struct EffectSimpleParticleRegistration {
 	EffectSimpleParticleRegistration(char*, Colour, Colour); // unused/inlined
 
-	zen::particleMdl* create(s16 p1, Vector3f& p2, Vector3f& p3, Vector3f& p4, f32 p5, f32 p6, zen::CallBack1<zen::particleMdl*>* cbPtcl)
+	zen::particleMdl* create(s16 lifeTime, Vector3f& globalPos, Vector3f& vel, Vector3f& accel, f32 size, f32 rotSpeed,
+	                         zen::CallBack1<zen::particleMdl*>* cbPtcl)
 	{
-		return effectMgr->mPtclMgr.createParticle(mTexture, p1, p2, p3, p4, p5, p6, _04, _08, cbPtcl);
+		return effectMgr->mPtclMgr.createParticle(mSimpleTex, lifeTime, globalPos, vel, accel, size, rotSpeed, mPrimColor, mEnvColor,
+		                                          cbPtcl);
 	}
 
-	Texture* mTexture; // _00
-	Colour _04;        // _04
-	Colour _08;        // _08
+	Texture* mSimpleTex; // _00
+	Colour mPrimColor;   // _04
+	Colour mEnvColor;    // _08
 };
 
 #endif

@@ -16,7 +16,7 @@ struct DamageEffect {
 	bool update();
 	void draw(Graphics&);
 
-	// TODO: members
+	f32 mDamageAlpha; // _00
 };
 
 } // namespace zen

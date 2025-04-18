@@ -406,8 +406,8 @@ void zen::particleGenerator::pmSetDDF(u8* data)
 
 	if (mParticleFlags & (PTCLFLAG_Unk10 | PTCLFLAG_Unk11)) {
 		readDDF_U8(&_1C6, data, 4);
-		readDDF_FloatArray(&_1BC, data, _1C6);
-		readDDF_FloatArray(&_1C0, data, _1C6);
+		readDDF_FloatArray(&mInitVelIntpThresholds, data, _1C6);
+		readDDF_FloatArray(&mInitVelIntpValues, data, _1C6);
 	} else {
 		readDDF_Float(&mInitVel, data, 4);
 	}
@@ -416,20 +416,20 @@ void zen::particleGenerator::pmSetDDF(u8* data)
 	readDDF_Float(&mDrag, data, 4);
 	readDDF_Float(&mDragJitter, data, 4);
 	readDDF_Float(&mMaxVel, data, 4);
-	readDDF_Float(&_E0, data, 4);
-	readDDF_Float(&_E4, data, 4);
-	readDDF_Float(&_E8, data, 4);
-	readDDF_Float(&_EC, data, 4);
+	readDDF_Float(&mScaleThreshold1, data, 4);
+	readDDF_Float(&mScaleThreshold2, data, 4);
+	readDDF_Float(&mMinScaleFactor1, data, 4);
+	readDDF_Float(&mMinScaleFactor2, data, 4);
 	readDDF_Float(&mScaleSize, data, 4);
 	readDDF_Float(&_F4, data, 4);
-	readDDF_Float(&_F8, data, 4);
-	readDDF_Float(&_FC, data, 4);
-	readDDF_Float(&_100, data, 4);
+	readDDF_Float(&mAlphaThreshold1, data, 4);
+	readDDF_Float(&mAlphaThreshold2, data, 4);
+	readDDF_Float(&mAlphaJitter, data, 4);
 	readDDF_Float(&_10C, data, 4);
 
-	readDDF_Short(&_104, data, 2);
-	readDDF_Short(&_106, data, 2);
-	readDDF_Short(&_108, data, 2);
+	readDDF_Short(&mRotSpeedMin, data, 2);
+	readDDF_Short(&mRotSpeedJitter, data, 2);
+	readDDF_Short(&mRotAngle, data, 2);
 	readDDF_Short(&_110, data, 2);
 	readDDF_Short(&mMaxFrame, data, 2);
 	readDDF_U8(&mFreePtclMotionTime, data, 1);
@@ -483,12 +483,12 @@ void zen::particleGenerator::pmSetDDF(u8* data)
 	}
 
 	if (mParticleFlags & PTCLFLAG_Unk13) {
-		readDDF_Float(&_114, data, 4);
+		readDDF_Float(&mChildScaleFactor, data, 4);
 		readDDF_Float(&_118, data, 4);
-		readDDF_Float(&_11C, data, 4);
-		readDDF_Colour(&_120, data, 4);
+		readDDF_Float(&mChildPosJitter, data, 4);
+		readDDF_Colour(&mChildColor, data, 4);
 		readDDF_U8(&_124, data, 1);
-		readDDF_U8(&_125, data, 3);
+		readDDF_U8(&mChildSpawnInterval, data, 3);
 	}
 
 	f32 len;
@@ -516,10 +516,10 @@ void zen::particleGenerator::pmSetDDF(u8* data)
 		}
 	}
 
-	_6C = (_E0 == 0.0f) ? 1.0f : (1.0f - _E8) / _E0;
-	_70 = (_E4 == 1.0f) ? 1.0f : (1.0f - _EC) / (1.0f - _E4);
-	_74 = (_F8 == 0.0f) ? 1.0f : 1.0f / _F8;
-	_78 = (_FC == 1.0f) ? 1.0f : 1.0f / (1.0f - _FC);
+	mScaleRate1 = (mScaleThreshold1 == 0.0f) ? 1.0f : (1.0f - mMinScaleFactor1) / mScaleThreshold1;
+	mScaleRate2 = (mScaleThreshold2 == 1.0f) ? 1.0f : (1.0f - mMinScaleFactor2) / (1.0f - mScaleThreshold2);
+	mAlphaRate1 = (mAlphaThreshold1 == 0.0f) ? 1.0f : 1.0f / mAlphaThreshold1;
+	mAlphaRate2 = (mAlphaThreshold2 == 1.0f) ? 1.0f : 1.0f / (1.0f - mAlphaThreshold2);
 
 	u32 badCompiler[6];
 }
@@ -852,9 +852,9 @@ void zen::particleGenerator::PtclsGen(zen::particleMdl* ptcl)
 
 	if (mParticleFlags & (PTCLFLAG_Unk10 | PTCLFLAG_Unk11)) {
 		if (mParticleFlags & PTCLFLAG_Unk10) {
-			initVel = pmIntpManual(_1BC, _1C0);
+			initVel = pmIntpManual(mInitVelIntpThresholds, mInitVelIntpValues);
 		} else {
-			initVel = pmIntpLinear(_1BC, _1C0);
+			initVel = pmIntpLinear(mInitVelIntpThresholds, mInitVelIntpValues);
 		}
 	} else {
 		initVel = mInitVel;
@@ -923,7 +923,7 @@ void zen::particleGenerator::PtclsGen(zen::particleMdl* ptcl)
 			if (scale == 0.0f) {
 				ptcl->mLifeTime = 1;
 				ptcl->mAge      = 0;
-				ptcl->_30       = 0.0f;
+				ptcl->mAgeTimer = 0.0f;
 			} else {
 				scale = std::sqrtf(scale);
 				ptclVel.x /= scale;
@@ -965,7 +965,7 @@ void zen::particleGenerator::PtclsGen(zen::particleMdl* ptcl)
 		if (scale == 0.0f) {
 			ptcl->mLifeTime = 1;
 			ptcl->mAge      = 0;
-			ptcl->_30       = 0.0f;
+			ptcl->mAgeTimer = 0.0f;
 
 		} else {
 			scale = std::sqrtf(scale);
@@ -999,22 +999,22 @@ void zen::particleGenerator::PtclsGen(zen::particleMdl* ptcl)
 
 	ptclVel.add(mEmitVelocity);
 
-	ptcl->mPosition.x = ptclPos.x;
-	ptcl->mPosition.y = ptclPos.y;
-	ptcl->mPosition.z = ptclPos.z;
-	ptcl->mVelocity.x = ptclVel.x;
-	ptcl->mVelocity.y = ptclVel.y;
-	ptcl->mVelocity.z = ptclVel.z;
-	ptcl->_24         = (_F4 - 2.0f * _F4 * RandShift(1.0f)) * mScaleSize + mScaleSize;
-	if (ptcl->_24 < 0.0f) {
-		ptcl->_24 = 0.0f;
+	ptcl->mLocalPosition.x = ptclPos.x;
+	ptcl->mLocalPosition.y = ptclPos.y;
+	ptcl->mLocalPosition.z = ptclPos.z;
+	ptcl->mVelocity.x      = ptclVel.x;
+	ptcl->mVelocity.y      = ptclVel.y;
+	ptcl->mVelocity.z      = ptclVel.z;
+	ptcl->mSize            = (_F4 - 2.0f * _F4 * RandShift(1.0f)) * mScaleSize + mScaleSize;
+	if (ptcl->mSize < 0.0f) {
+		ptcl->mSize = 0.0f;
 	}
 
-	ptcl->_5A          = f32(_104) + f32(_106) * RandShift(1.0f);
-	ptcl->_58          = f32(_108) * RandShift(1.0f);
-	ptcl->_4C          = Rand(_112);
-	ptcl->_5C          = mOrientedNormalVector;
-	ptcl->mLocalOffset = getGPos();
+	ptcl->mRotSpeed       = f32(mRotSpeedMin) + f32(mRotSpeedJitter) * RandShift(1.0f);
+	ptcl->mRotAngle       = f32(mRotAngle) * RandShift(1.0f);
+	ptcl->_4C             = Rand(_112);
+	ptcl->mOrientedNormal = mOrientedNormal;
+	ptcl->mGlobalPosition = getGPos();
 }
 
 /*
@@ -1032,11 +1032,11 @@ void zen::particleGenerator::pmCalcAccel(zen::particleMdl* ptcl)
 
 	f32 diffX, diffY, diffZ;
 	if (mParticleFlags & PTCLFLAG_UseVortexField) {
-		f32 scale = mVortexCenter.dot(ptcl->mPosition);
+		f32 scale = mVortexCenter.dot(ptcl->mLocalPosition);
 		Vector3f vortexForce;
-		vortexForce.x = ptcl->mPosition.x - mVortexCenter.x * scale;
-		vortexForce.y = ptcl->mPosition.y - mVortexCenter.y * scale;
-		vortexForce.z = ptcl->mPosition.z - mVortexCenter.z * scale;
+		vortexForce.x = ptcl->mLocalPosition.x - mVortexCenter.x * scale;
+		vortexForce.y = ptcl->mLocalPosition.y - mVortexCenter.y * scale;
+		vortexForce.z = ptcl->mLocalPosition.z - mVortexCenter.z * scale;
 
 		scale = vortexForce.x * vortexForce.x + vortexForce.y * vortexForce.y + vortexForce.z * vortexForce.z;
 		f32 v = (_15C == 0.0f) ? 1.0f : (_158 * _15C - scale) / (_15C + scale) + 1.0f;
@@ -1055,59 +1055,59 @@ void zen::particleGenerator::pmCalcAccel(zen::particleMdl* ptcl)
 		f32 axisY = mVortexCenter.y;
 		f32 axisZ = mVortexCenter.z;
 
-		diffX = ptcl->mPosition.x;
-		diffY = ptcl->mPosition.y;
-		diffZ = ptcl->mPosition.z;
+		diffX = ptcl->mLocalPosition.x;
+		diffY = ptcl->mLocalPosition.y;
+		diffZ = ptcl->mLocalPosition.z;
 
-		ptcl->mPosition.x = (cosComp * axisX * axisX + cosTheta) * diffX + (cosComp * axisX * axisY + sinTheta * axisZ) * diffY
-		                  + (cosComp * axisX * axisZ - sinTheta * axisY) * diffZ + vortexForce.x;
-		ptcl->mPosition.y = (cosComp * axisX * axisY - sinTheta * axisZ) * diffX + (cosComp * axisY * axisY + cosTheta) * diffY
-		                  + (cosComp * axisY * axisZ + sinTheta * axisX) * diffZ + vortexForce.y;
-		ptcl->mPosition.z = (cosComp * axisX * axisZ + sinTheta * axisY) * diffX + (cosComp * axisY * axisZ - sinTheta * axisX) * diffY
-		                  + (cosComp * axisZ * axisZ + cosTheta) * diffZ + vortexForce.z;
+		ptcl->mLocalPosition.x = (cosComp * axisX * axisX + cosTheta) * diffX + (cosComp * axisX * axisY + sinTheta * axisZ) * diffY
+		                       + (cosComp * axisX * axisZ - sinTheta * axisY) * diffZ + vortexForce.x;
+		ptcl->mLocalPosition.y = (cosComp * axisX * axisY - sinTheta * axisZ) * diffX + (cosComp * axisY * axisY + cosTheta) * diffY
+		                       + (cosComp * axisY * axisZ + sinTheta * axisX) * diffZ + vortexForce.y;
+		ptcl->mLocalPosition.z = (cosComp * axisX * axisZ + sinTheta * axisY) * diffX + (cosComp * axisY * axisZ - sinTheta * axisX) * diffY
+		                       + (cosComp * axisZ * axisZ + cosTheta) * diffZ + vortexForce.z;
 	}
 
 	if (mParticleFlags & PTCLFLAG_UseDampedNewtonField) {
-		ptcl->mAcceleration.x += (mDampedNewtonFieldDir.x - ptcl->mPosition.x) * mDampedNewtonFieldStrength - ptcl->mVelocity.x;
-		ptcl->mAcceleration.y += (mDampedNewtonFieldDir.y - ptcl->mPosition.y) * mDampedNewtonFieldStrength - ptcl->mVelocity.y;
-		ptcl->mAcceleration.z += (mDampedNewtonFieldDir.z - ptcl->mPosition.z) * mDampedNewtonFieldStrength - ptcl->mVelocity.z;
+		ptcl->mAcceleration.x += (mDampedNewtonFieldDir.x - ptcl->mLocalPosition.x) * mDampedNewtonFieldStrength - ptcl->mVelocity.x;
+		ptcl->mAcceleration.y += (mDampedNewtonFieldDir.y - ptcl->mLocalPosition.y) * mDampedNewtonFieldStrength - ptcl->mVelocity.y;
+		ptcl->mAcceleration.z += (mDampedNewtonFieldDir.z - ptcl->mLocalPosition.z) * mDampedNewtonFieldStrength - ptcl->mVelocity.z;
 	}
 
 	if (mParticleFlags & PTCLFLAG_UseNewtonField) {
-		ptcl->mAcceleration.x += (mNewtonFieldDir.x - ptcl->mPosition.x) * mNewtonFieldStrength;
-		ptcl->mAcceleration.y += (mNewtonFieldDir.y - ptcl->mPosition.y) * mNewtonFieldStrength;
-		ptcl->mAcceleration.z += (mNewtonFieldDir.z - ptcl->mPosition.z) * mNewtonFieldStrength;
+		ptcl->mAcceleration.x += (mNewtonFieldDir.x - ptcl->mLocalPosition.x) * mNewtonFieldStrength;
+		ptcl->mAcceleration.y += (mNewtonFieldDir.y - ptcl->mLocalPosition.y) * mNewtonFieldStrength;
+		ptcl->mAcceleration.z += (mNewtonFieldDir.z - ptcl->mLocalPosition.z) * mNewtonFieldStrength;
 	}
 
 	if (mParticleFlags & PTCLFLAG_UseSolidTex) {
 		int a     = 1 << (_18C + 5);
 		int b     = 16 << _18C;
-		int xPlus = (int(ptcl->mPosition.x) + _18D + b) % a;
+		int xPlus = (int(ptcl->mLocalPosition.x) + _18D + b) % a;
 		if (xPlus < 0)
 			xPlus += a;
 		xPlus >>= _18C;
 
-		int xMinus = (int(ptcl->mPosition.x) - _18D + b) % a;
+		int xMinus = (int(ptcl->mLocalPosition.x) - _18D + b) % a;
 		if (xMinus < 0)
 			xMinus += a;
 		xMinus >>= _18C;
 
-		int yPlus = (int(ptcl->mPosition.y) + _18D + b) % a;
+		int yPlus = (int(ptcl->mLocalPosition.y) + _18D + b) % a;
 		if (yPlus < 0)
 			yPlus += a;
 		yPlus >>= _18C;
 
-		int yMinus = (int(ptcl->mPosition.y) - _18D + b) % a;
+		int yMinus = (int(ptcl->mLocalPosition.y) - _18D + b) % a;
 		if (yMinus < 0)
 			yMinus += a;
 		yMinus >>= _18C;
 
-		int zPlus = (int(ptcl->mPosition.z) + _18D + b) % a;
+		int zPlus = (int(ptcl->mLocalPosition.z) + _18D + b) % a;
 		if (zPlus < 0)
 			zPlus += a;
 		zPlus >>= _18C;
 
-		int zMinus = (int(ptcl->mPosition.z) - _18D + b) % a;
+		int zMinus = (int(ptcl->mLocalPosition.z) - _18D + b) % a;
 		if (zMinus < 0)
 			zMinus += a;
 		zMinus >>= _18C;
@@ -1132,10 +1132,10 @@ void zen::particleGenerator::pmCalcAccel(zen::particleMdl* ptcl)
 	if (mParticleFlags & PTCLFLAG_Unk23) {
 		Vector3f vec;
 		ptcl->mVelocity.x = ptcl->mVelocity.y = ptcl->mVelocity.z = 0.0f;
-		f32 dot1 = _194.x * ptcl->mPosition.x + _194.y * ptcl->mPosition.y + _194.z * ptcl->mPosition.z;
-		diffX    = _194.x * dot1 - ptcl->mPosition.x;
-		diffY    = _194.y * dot1 - ptcl->mPosition.y;
-		diffZ    = _194.z * dot1 - ptcl->mPosition.z;
+		f32 dot1 = _194.x * ptcl->mLocalPosition.x + _194.y * ptcl->mLocalPosition.y + _194.z * ptcl->mLocalPosition.z;
+		diffX    = _194.x * dot1 - ptcl->mLocalPosition.x;
+		diffY    = _194.y * dot1 - ptcl->mLocalPosition.y;
+		diffZ    = _194.z * dot1 - ptcl->mLocalPosition.z;
 
 		ptcl->mAcceleration.x += _1A0 * _194.x + _1A4 * diffX;
 		ptcl->mAcceleration.y += _1A0 * _194.y + _1A4 * diffY;
@@ -1143,9 +1143,9 @@ void zen::particleGenerator::pmCalcAccel(zen::particleMdl* ptcl)
 	}
 
 	if (mParticleFlags & PTCLFLAG_UseAirField) {
-		ptcl->mPosition.x += mAirFieldVelocity.x;
-		ptcl->mPosition.y += mAirFieldVelocity.y;
-		ptcl->mPosition.z += mAirFieldVelocity.z;
+		ptcl->mLocalPosition.x += mAirFieldVelocity.x;
+		ptcl->mLocalPosition.y += mAirFieldVelocity.y;
+		ptcl->mLocalPosition.z += mAirFieldVelocity.z;
 	}
 }
 
@@ -1190,40 +1190,40 @@ void zen::particleGenerator::UpdatePtclsStatus(f32 timeStep)
 				}
 			}
 
-			ptcl->mPosition.x += ptcl->mVelocity.x;
-			ptcl->mPosition.y += ptcl->mVelocity.y;
-			ptcl->mPosition.z += ptcl->mVelocity.z;
+			ptcl->mLocalPosition.x += ptcl->mVelocity.x;
+			ptcl->mLocalPosition.y += ptcl->mVelocity.y;
+			ptcl->mLocalPosition.z += ptcl->mVelocity.z;
 
 			f32 normalisedAge = f32(ptcl->mAge) / f32(ptcl->mLifeTime);
-			if (normalisedAge < _E0) {
-				ptcl->_50 = normalisedAge * _6C + _E8;
-			} else if (normalisedAge < _E4) {
-				ptcl->_50 = 1.0f;
+			if (normalisedAge < mScaleThreshold1) {
+				ptcl->mScaleFactor = normalisedAge * mScaleRate1 + mMinScaleFactor1;
+			} else if (normalisedAge < mScaleThreshold2) {
+				ptcl->mScaleFactor = 1.0f;
 			} else {
-				ptcl->_50 = (1.0f - normalisedAge) * _70 + _EC;
+				ptcl->mScaleFactor = (1.0f - normalisedAge) * mScaleRate2 + mMinScaleFactor2;
 			}
 
-			if (normalisedAge < _F8) {
-				ptcl->_54 = normalisedAge * _74;
-			} else if (normalisedAge < _FC) {
-				ptcl->_54 = 1.0f;
+			if (normalisedAge < mAlphaThreshold1) {
+				ptcl->mAlphaFactor = normalisedAge * mAlphaRate1;
+			} else if (normalisedAge < mAlphaThreshold2) {
+				ptcl->mAlphaFactor = 1.0f;
 			} else {
-				ptcl->_54 = (1.0f - normalisedAge) * _78;
+				ptcl->mAlphaFactor = (1.0f - normalisedAge) * mAlphaRate2;
 			}
 
-			ptcl->_54 *= (1.0f - Rand(_100));
-			ptcl->_58 += ptcl->_5A;
-			ptcl->_30 += timeStep;
-			ptcl->mAge = RoundOff(ptcl->_30);
+			ptcl->mAlphaFactor *= (1.0f - Rand(mAlphaJitter));
+			ptcl->mRotAngle += ptcl->mRotSpeed;
+			ptcl->mAgeTimer += timeStep;
+			ptcl->mAge = RoundOff(ptcl->mAgeTimer);
 
-			if (mParticleFlags & PTCLFLAG_Unk13 && ((ptcl->mAge + 1) % _125) == 0) {
+			if (mParticleFlags & PTCLFLAG_Unk13 && ((ptcl->mAge + 1) % mChildSpawnInterval) == 0) {
 				particleChildMdl* child = pmGetParticleChild();
 				if (child) {
-					child->mLocalOffset = ptcl->mLocalOffset;
-					child->mPosition.x  = RandShift(_11C) + ptcl->mPosition.x;
-					child->mPosition.y  = RandShift(_11C) + ptcl->mPosition.y;
-					child->mPosition.z  = RandShift(_11C) + ptcl->mPosition.z;
-					child->_24          = ptcl->_24 * ptcl->_50 * _114;
+					child->mGlobalPosition  = ptcl->mGlobalPosition;
+					child->mLocalPosition.x = RandShift(mChildPosJitter) + ptcl->mLocalPosition.x;
+					child->mLocalPosition.y = RandShift(mChildPosJitter) + ptcl->mLocalPosition.y;
+					child->mLocalPosition.z = RandShift(mChildPosJitter) + ptcl->mLocalPosition.z;
+					child->mSize            = ptcl->mSize * ptcl->mScaleFactor * mChildScaleFactor;
 
 					if (mParticleFlags & PTCLFLAG_Unk14) {
 						child->mPrimaryColor.r = ptcl->mPrimaryColor.r;
@@ -1231,9 +1231,9 @@ void zen::particleGenerator::UpdatePtclsStatus(f32 timeStep)
 						child->mPrimaryColor.b = ptcl->mPrimaryColor.b;
 						child->mPrimaryColor.a = ptcl->mPrimaryColor.a;
 					} else {
-						child->mPrimaryColor.r = _120.r;
-						child->mPrimaryColor.g = _120.g;
-						child->mPrimaryColor.b = _120.b;
+						child->mPrimaryColor.r = mChildColor.r;
+						child->mPrimaryColor.g = mChildColor.g;
+						child->mPrimaryColor.b = mChildColor.b;
 						child->mPrimaryColor.a = 255;
 					}
 
@@ -1284,18 +1284,18 @@ void zen::particleGenerator::ClearPtclsStatus(Texture* tex, Texture* childTex)
 	mInitVel = 3.0f;
 	_D0 = mDragJitter = mMaxVel = 0.0f;
 	mDrag                       = 0.99f;
-	_E0 = _E8 = _EC = _F4 = _10C = _F8 = _100 = 0.0f;
-	_104 = _106 = _108 = 0;
-	_110               = 50;
-	_112               = 0;
-	_E4 = _FC  = 1.0f;
-	mScaleSize = 1.0f;
-	_114       = 1.0f;
-	_118       = 1.0f;
-	_11C       = 0.0f;
-	_125       = 5;
-	_124       = 5;
-	_120.set(0, 0, 0, 255);
+	mScaleThreshold1 = mMinScaleFactor1 = mMinScaleFactor2 = _F4 = _10C = mAlphaThreshold1 = mAlphaJitter = 0.0f;
+	mRotSpeedMin = mRotSpeedJitter = mRotAngle = 0;
+	_110                                       = 50;
+	_112                                       = 0;
+	mScaleThreshold2 = mAlphaThreshold2 = 1.0f;
+	mScaleSize                          = 1.0f;
+	mChildScaleFactor                   = 1.0f;
+	_118                                = 1.0f;
+	mChildPosJitter                     = 0.0f;
+	mChildSpawnInterval                 = 5;
+	_124                                = 5;
+	mChildColor.set(0, 0, 0, 255);
 
 	// this is necessary for load ordering to work. blame Yamashita, not me.
 	mGravFieldAccel.x = mGravFieldAccel.y = mGravFieldAccel.z = mAirFieldVelocity.x = mAirFieldVelocity.y = mAirFieldVelocity.z
@@ -1314,7 +1314,7 @@ void zen::particleGenerator::ClearPtclsStatus(Texture* tex, Texture* childTex)
 	mCurrentFrame = 0;
 	mCurrentPass  = 0;
 	mBlendFactor = mZMode = 0;
-	mOrientedNormalVector.set(0.0f, 1.0f, 0.0f);
+	mOrientedNormal.set(0.0f, 1.0f, 0.0f);
 }
 
 /*
@@ -1335,9 +1335,11 @@ void zen::particleGenerator::drawPtclBillboard(Graphics& gfx)
 			zenList* next     = list->mNext;
 			particleMdl* ptcl = (particleMdl*)list;
 
-			Colour col(ptcl->mPrimaryColor.r, ptcl->mPrimaryColor.g, ptcl->mPrimaryColor.b, RoundOff(ptcl->mPrimaryColor.a * ptcl->_54));
+			Colour col(ptcl->mPrimaryColor.r, ptcl->mPrimaryColor.g, ptcl->mPrimaryColor.b,
+			           RoundOff(ptcl->mPrimaryColor.a * ptcl->mAlphaFactor));
 			gfx.setPrimEnv(&col, &ptcl->mEnvColor);
-			gfx.drawRotParticle(*gfx.mCamera, ptcl->mPosition + ptcl->mLocalOffset, -ptcl->_58, ptcl->_24 * ptcl->_50 * 25.0f);
+			gfx.drawRotParticle(*gfx.mCamera, ptcl->mLocalPosition + ptcl->mGlobalPosition, -ptcl->mRotAngle,
+			                    ptcl->mSize * ptcl->mScaleFactor * 25.0f);
 
 			list = next;
 		}
@@ -1389,18 +1391,19 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 
 		f32 cosVal;
 		f32 sinVal;
-		Colour col(ptcl->mPrimaryColor.r, ptcl->mPrimaryColor.g, ptcl->mPrimaryColor.b, RoundOff(ptcl->mPrimaryColor.a * ptcl->_54));
+		Colour col(ptcl->mPrimaryColor.r, ptcl->mPrimaryColor.g, ptcl->mPrimaryColor.b,
+		           RoundOff(ptcl->mPrimaryColor.a * ptcl->mAlphaFactor));
 		gfx.setPrimEnv(&col, &ptcl->mEnvColor);
 
 		PSMTXIdentity(mtx2);
 
-		f32 a  = ptcl->_24 * ptcl->_50;
-		cosVal = costable[ptcl->_58 & 0x3FFC];
-		sinVal = sintable[ptcl->_58 & 0x3FFC];
+		f32 a  = ptcl->mSize * ptcl->mScaleFactor;
+		cosVal = costable[ptcl->mRotAngle & 0x3FFC];
+		sinVal = sintable[ptcl->mRotAngle & 0x3FFC];
 		(this->*mRotAxisCallBack)(mtx3, sinVal, cosVal);
 
-		MTXTrans(mtx1.mMtx, ptcl->mPosition.x + ptcl->mLocalOffset.x, ptcl->mPosition.y + ptcl->mLocalOffset.y,
-		         ptcl->mPosition.z + ptcl->mLocalOffset.z);
+		MTXTrans(mtx1.mMtx, ptcl->mLocalPosition.x + ptcl->mGlobalPosition.x, ptcl->mLocalPosition.y + ptcl->mGlobalPosition.y,
+		         ptcl->mLocalPosition.z + ptcl->mGlobalPosition.z);
 
 		PSMTXConcat(gfx.mCamera->mLookAtMtx.mMtx, mtx1.mMtx, mtx1.mMtx);
 
@@ -1410,7 +1413,7 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 			vec = &ptcl->mVelocity;
 			break;
 		case 1:
-			vec = &ptcl->mPosition;
+			vec = &ptcl->mLocalPosition;
 			break;
 		}
 
@@ -1423,14 +1426,14 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 			f32 v = a * _60; // f27
 			vec1.normalize();
 
-			vec2.cross(vec1, ptcl->_5C);
+			vec2.cross(vec1, ptcl->mOrientedNormal);
 
 			len = vec2.x * vec2.x + vec2.y * vec2.y + vec2.z * vec2.z;
 			if (len != 0.0f) {
 				vec2.normalize();
 
 				if (_68.m2) {
-					vec3 = ptcl->_5C;
+					vec3 = ptcl->mOrientedNormal;
 					vec1.cross(vec3, vec2);
 					vec1.normalize();
 				} else {
@@ -1450,15 +1453,15 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 				mtx2[1][2] = vec3.y * a;
 				mtx2[2][2] = vec3.z * a;
 
-				ptcl->_5C = vec3;
+				ptcl->mOrientedNormal = vec3;
 			} else {
-				ptcl->_30  = ptcl->mLifeTime;
-				ptcl->mAge = ptcl->mLifeTime;
+				ptcl->mAgeTimer = ptcl->mLifeTime;
+				ptcl->mAge      = ptcl->mLifeTime;
 				continue;
 			}
 		} else {
-			ptcl->_30  = ptcl->mLifeTime;
-			ptcl->mAge = ptcl->mLifeTime;
+			ptcl->mAgeTimer = ptcl->mLifeTime;
+			ptcl->mAge      = ptcl->mLifeTime;
 			continue;
 		}
 
@@ -2136,7 +2139,7 @@ void zen::particleGenerator::drawPtclChildren(Graphics& gfx)
 		next                    = list->mNext;
 
 		gfx.setPrimEnv(&child->mPrimaryColor, &child->mPrimaryColor);
-		gfx.drawParticle(*gfx.mCamera, child->mPosition + child->mLocalOffset, 25.0f * child->_24);
+		gfx.drawParticle(*gfx.mCamera, child->mLocalPosition + child->mGlobalPosition, 25.0f * child->mSize);
 
 		list = next;
 	}

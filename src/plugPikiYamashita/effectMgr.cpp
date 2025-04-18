@@ -385,8 +385,7 @@ SmokeEmitter::SmokeEmitter(int count, Texture* tex)
 		mInactiveSmokeList->insertAfter(&mSmokes[i]);
 	}
 	mBlendMode = 1;
-	mModel     = 0;
-	// UNUSED FUNCTION
+	mModel     = nullptr;
 }
 
 /*
@@ -394,17 +393,17 @@ SmokeEmitter::SmokeEmitter(int count, Texture* tex)
  * Address:	........
  * Size:	0000F0
  */
-SmokeEmitter::Smoke* SmokeEmitter::emit(Vector3f& p1, Vector3f& p2)
+SmokeEmitter::Smoke* SmokeEmitter::emit(Vector3f& pos, Vector3f& vel)
 {
 	if (mInactiveSmokeList->mNext != mInactiveSmokeList) {
 		Smoke* smoke     = mInactiveSmokeList->mNext;
-		smoke->mVelocity = p2;
+		smoke->mVelocity = vel;
 		smoke->mVelocity.x *= 0.85f;
 		smoke->mVelocity.y *= 0.15f;
 		smoke->mVelocity.y += 0.25f;
 		smoke->mVelocity.z *= 0.85f;
 		smoke->mLifeTimer    = 10.0f;
-		smoke->mPosition     = p1;
+		smoke->mPosition     = pos;
 		smoke->mSize         = 0.001f;
 		smoke->mExpandRate   = 5.2f;
 		smoke->mMaxSize      = 2.0f;
@@ -689,10 +688,10 @@ EffShpInst* EffectGeometryRegistration::create(Vector3f& pos, Vector3f& scale, V
  */
 EffectSimpleParticleRegistration::EffectSimpleParticleRegistration(char* texFile, Colour p2, Colour p3)
 {
-	mTexture = gsys->loadTexture(texFile, true);
-	_04      = p2;
-	_08      = p3;
-	if (!mTexture) {
+	mSimpleTex = gsys->loadTexture(texFile, true);
+	mPrimColor = p2;
+	mEnvColor  = p3;
+	if (!mSimpleTex) {
 		ERROR("NO TEX !  \n");
 	}
 }
@@ -841,10 +840,10 @@ EffShpInst* EffectMgr::create(EffectMgr::modelTypeTable modID, Vector3f& pos, Ve
  * Address:	........
  * Size:	000060
  */
-zen::particleMdl* EffectMgr::create(EffectMgr::simpleTypeTable simpleID, Vector3f& p2, s16 p3, Vector3f& p4, Vector3f& p5, f32 p6, f32 p7,
-                                    zen::CallBack1<zen::particleMdl*>* cbPtcl)
+zen::particleMdl* EffectMgr::create(EffectMgr::simpleTypeTable simpleID, Vector3f& globalPos, s16 lifeTime, Vector3f& vel, Vector3f& accel,
+                                    f32 size, f32 rotSpeed, zen::CallBack1<zen::particleMdl*>* cbPtcl)
 {
-	return mSimpleParticles[simpleID]->create(p3, p2, p4, p5, p6, p7, cbPtcl);
+	return mSimpleParticles[simpleID]->create(lifeTime, globalPos, vel, accel, size, rotSpeed, cbPtcl);
 }
 
 /*

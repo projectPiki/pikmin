@@ -116,22 +116,22 @@ struct particleMdlBase : public zenList {
 
 	~particleMdlBase() { }
 
-	Vector3f getPos() { return mPosition + mLocalOffset; }
+	Vector3f getPos() { return mLocalPosition + mGlobalPosition; }
 
 	void InitParam()
 	{
-		mPosition.set(0.0f, 0.0f, 0.0f);
-		mLocalOffset.set(0.0f, 0.0f, 0.0f);
-		_24 = 1.0f;
+		mLocalPosition.set(0.0f, 0.0f, 0.0f);
+		mGlobalPosition.set(0.0f, 0.0f, 0.0f);
+		mSize = 1.0f;
 		mPrimaryColor.set(0, 0, 0, 0);
 	}
 
 	// _00     = VTBL
 	// _00-_0C = zenList
-	Vector3f mPosition;    // _0C
-	Vector3f mLocalOffset; // _18
-	f32 _24;               // _24
-	Colour mPrimaryColor;  // _28
+	Vector3f mLocalPosition;  // _0C
+	Vector3f mGlobalPosition; // _18
+	f32 mSize;                // _24
+	Colour mPrimaryColor;     // _28
 };
 
 /**
@@ -161,38 +161,38 @@ struct particleMdl : public particleMdlBase {
 	{
 		mAge      = 0;
 		mLifeTime = 0;
-		_30       = 0.0f;
+		mAgeTimer = 0.0f;
 		mVelocity.set(0.0f, 0.0f, 0.0f);
-		_54 = 0.0f;
-		_50 = 0.0f;
-		_50 = 0.0f;
-		_5C.set(0.0f, 0.0f, 0.0f);
-		_58   = 0;
-		_5A   = 0;
-		_5C.z = 1.0f;
-		_4C   = 0;
+		mAlphaFactor = 0.0f;
+		mScaleFactor = 0.0f;
+		mScaleFactor = 0.0f;
+		mOrientedNormal.set(0.0f, 0.0f, 0.0f);
+		mRotAngle         = 0;
+		mRotSpeed         = 0;
+		mOrientedNormal.z = 1.0f;
+		_4C               = 0;
 		mEnvColor.set(0, 0, 0, 0);
 		mBBoardColourAnim.init(nullptr, 1);
-		_78 = 0;
+		mSimpleTex = 0;
 	}
 
 	// _00     = VTBL
 	// _00-_2C = particleMdlBase
-	s16 mLifeTime;                      // _2C
-	s16 mAge;                           // _2E
-	f32 _30;                            // _30
-	Vector3f mVelocity;                 // _34
-	Vector3f mAcceleration;             // _40
-	u8 _4C;                             // _4C
-	f32 _50;                            // _50
-	f32 _54;                            // _54
-	u16 _58;                            // _58
-	s16 _5A;                            // _5A
-	Vector3f _5C;                       // _5C
-	Colour mEnvColor;                   // _68
-	bBoardColourAnim mBBoardColourAnim; // _6C
-	u32 _78;                            // _78, unknown
-	u8 _7C[0x4];                        // _7C, unknown
+	s16 mLifeTime;                          // _2C
+	s16 mAge;                               // _2E, rounded version of mAgeTimer
+	f32 mAgeTimer;                          // _30
+	Vector3f mVelocity;                     // _34
+	Vector3f mAcceleration;                 // _40
+	u8 _4C;                                 // _4C
+	f32 mScaleFactor;                       // _50
+	f32 mAlphaFactor;                       // _54
+	u16 mRotAngle;                          // _58
+	s16 mRotSpeed;                          // _5A
+	Vector3f mOrientedNormal;               // _5C
+	Colour mEnvColor;                       // _68
+	bBoardColourAnim mBBoardColourAnim;     // _6C
+	Texture* mSimpleTex;                    // _78
+	CallBack1<particleMdl*>* mPtclCallBack; // _7C
 };
 
 /**
@@ -324,7 +324,7 @@ struct particleGenerator : public zenList {
 	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
 	void setEmitDir(Vector3f& dir) { mEmitDir = dir; }
 	void setEmitVelocity(Vector3f& vel) { mEmitVelocity = vel; }
-	void setOrientedNormalVector(Vector3f& vec) { mOrientedNormalVector = vec; }
+	void setOrientedNormalVector(Vector3f& vec) { mOrientedNormal = vec; }
 	void setCallBack(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2)
 	{
 		mCallBack1 = cb1;
@@ -455,10 +455,10 @@ struct particleGenerator : public zenList {
 		u32 m7 : 1;
 		u32 m8 : 1;
 	} _68;                                                   // _68
-	f32 _6C;                                                 // _6C
-	f32 _70;                                                 // _70
-	f32 _74;                                                 // _74
-	f32 _78;                                                 // _78
+	f32 mScaleRate1;                                         // _6C
+	f32 mScaleRate2;                                         // _70
+	f32 mAlphaRate1;                                         // _74
+	f32 mAlphaRate2;                                         // _78
 	u16* mSolidTexFieldData;                                 // _7C
 	u32 mControlFlags;                                       // _80, see ParticleGeneratorControlFlags enum
 	u32 mParticleFlags;                                      // _84, see ParticleGeneratorFlags enum
@@ -479,27 +479,27 @@ struct particleGenerator : public zenList {
 	f32 mDrag;                                               // _D4
 	f32 mDragJitter;                                         // _D8
 	f32 mMaxVel;                                             // _DC
-	f32 _E0;                                                 // _E0
-	f32 _E4;                                                 // _E4
-	f32 _E8;                                                 // _E8
-	f32 _EC;                                                 // _EC
+	f32 mScaleThreshold1;                                    // _E0
+	f32 mScaleThreshold2;                                    // _E4
+	f32 mMinScaleFactor1;                                    // _E8
+	f32 mMinScaleFactor2;                                    // _EC
 	f32 mScaleSize;                                          // _F0
 	f32 _F4;                                                 // _F4
-	f32 _F8;                                                 // _F8
-	f32 _FC;                                                 // _FC
-	f32 _100;                                                // _100
-	s16 _104;                                                // _104
-	s16 _106;                                                // _106
-	s16 _108;                                                // _108
+	f32 mAlphaThreshold1;                                    // _F8
+	f32 mAlphaThreshold2;                                    // _FC
+	f32 mAlphaJitter;                                        // _100
+	s16 mRotSpeedMin;                                        // _104
+	s16 mRotSpeedJitter;                                     // _106
+	s16 mRotAngle;                                           // _108
 	f32 _10C;                                                // _10C
 	s16 _110;                                                // _110
 	u8 _112;                                                 // _112
-	f32 _114;                                                // _114
+	f32 mChildScaleFactor;                                   // _114
 	f32 _118;                                                // _118
-	f32 _11C;                                                // _11C
-	Colour _120;                                             // _120
+	f32 mChildPosJitter;                                     // _11C
+	Colour mChildColor;                                      // _120
 	u8 _124;                                                 // _124
-	u8 _125;                                                 // _125
+	u8 mChildSpawnInterval;                                  // _125
 	u8 _126[0x6];                                            // _126, unknown
 	Vector3f mGravFieldAccel;                                // _12C
 	Vector3f mAirFieldVelocity;                              // _138
@@ -525,8 +525,8 @@ struct particleGenerator : public zenList {
 	f32* _1B0;                                               // _1B0
 	f32* _1B4;                                               // _1B4
 	f32* _1B8;                                               // _1B8
-	f32* _1BC;                                               // _1BC;
-	f32* _1C0;                                               // _1C0
+	f32* mInitVelIntpThresholds;                             // _1BC;
+	f32* mInitVelIntpValues;                                 // _1C0
 	u8 _1C4;                                                 // _1C4
 	u8 _1C5;                                                 // _1C5
 	u8 _1C6;                                                 // _1C6
@@ -537,7 +537,7 @@ struct particleGenerator : public zenList {
 	particleMdlManager* mMdlMgr;                             // _1D0
 	CallBack1<particleGenerator*>* mCallBack1;               // _1D4
 	CallBack2<particleGenerator*, particleMdl*>* mCallBack2; // _1D8
-	Vector3f mOrientedNormalVector;                          // _1DC
+	Vector3f mOrientedNormal;                                // _1DC
 	PtclDrawCallBack mDrawCallBack;                          // _1E8
 	RotAxisCallBack mRotAxisCallBack;                        // _1F4
 };
@@ -590,7 +590,7 @@ struct particleLoader : public zenListManager {
 /**
  * @brief TODO
  */
-struct simplePtclManager {
+struct simplePtclManager : public zenListManager {
 	simplePtclManager() { mMdlMgr = nullptr; }
 
 	void update(f32);
@@ -598,17 +598,25 @@ struct simplePtclManager {
 	void forceFinish();
 
 	// unused/inlined:
-	zen::particleMdl* create(Texture*, s16, const Vector3f&, const Vector3f&, const Vector3f&, f32, f32, const Colour&, const Colour&,
-	                         zen::CallBack1<zen::particleMdl*>*);
+	zen::particleMdl* create(Texture* simpleTex, s16 lifeTime, const Vector3f& globalPos, const Vector3f& vel, const Vector3f& accel,
+	                         f32 size, f32 rotSpeed, const Colour& primColor, const Colour& envColor,
+	                         zen::CallBack1<zen::particleMdl*>* cbPtcl);
 	~simplePtclManager();
 
 	void init(particleMdlManager* mdlMgr) { mMdlMgr = mdlMgr; }
 
-	// remaining DLL functions:
-	// particleMdl* pmGetParticle();
-	// void pmPutParticle(zenList*);
+	void pmPutParticle(zenList* ptcl) { mMdlMgr->putPtcl(ptcl); }
 
-	zenListManager _00;          // _00
+	particleMdl* pmGetParticle()
+	{
+		particleMdl* ptcl = (particleMdl*)mMdlMgr->getPtcl();
+		if (ptcl) {
+			put(ptcl);
+		}
+		return ptcl;
+	}
+
+	// _00-_10 = zenListManager (type = particleMdl)
 	particleMdlManager* mMdlMgr; // _10
 };
 
@@ -642,11 +650,10 @@ struct particleManager {
 
 	void pmPutPtclGen(zenList* gen) { _20.put(gen); }
 
-	// remaining DLL functions:
-	particleMdl* createParticle(Texture* tex, s16 p2, Vector3f& p3, Vector3f& p4, Vector3f& p5, f32 p6, f32 p7, Colour p8, Colour p9,
-	                            CallBack1<particleMdl*>* cbPtcl)
+	particleMdl* createParticle(Texture* simpleTex, s16 lifeTime, Vector3f& globalPos, Vector3f& vel, Vector3f& accel, f32 size,
+	                            f32 rotSpeed, Colour primColor, Colour envColor, CallBack1<particleMdl*>* cbPtcl)
 	{
-		return mSimplePtclMgr.create(tex, p2, p3, p4, p5, p6, p7, p8, p9, cbPtcl);
+		return mSimplePtclMgr.create(simpleTex, lifeTime, globalPos, vel, accel, size, rotSpeed, primColor, envColor, cbPtcl);
 	}
 
 	static const f32 DEFAULT_FRAME_RATE;
